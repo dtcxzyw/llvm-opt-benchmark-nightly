@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.b, %bb.a, %.loop
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @renameWalkWith(ptr noundef %0, ptr nofree readonly captures(address_is_null) %.96.val) unnamed_addr #0 {
 bb.a:
-  %1 = alloca %struct.Walker, align 8             ; 6 uses
+  %1 = alloca %struct.Walker, align 16            ; 5 uses
   %2 = alloca %struct.NameContext, align 8        ; 7 uses
   %.not = icmp eq ptr %.96.val, null
   br i1 %.not, label %bb.v, label %bb.b
@@ -366,9 +366,9 @@ sqlite3WithPush.exit:                             ; preds = %bb.j, %bb.i, %.loop
 .lr.ph:                                           ; preds = %sqlite3WithPush.exit
   %.not32 = icmp eq ptr %.029, null
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.a, i64 408
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.a, i64 408
+  %i.bt = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %3 = insertelement <2 x ptr> <ptr poison, ptr @renameUnmapExprCb>, ptr %i.a, i64 0
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph, %sqlite3RenameExprlistUnmap.exit
@@ -377,7 +377,7 @@ bb.k:                                             ; preds = %.lr.ph, %sqlite3Ren
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !3047 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #59
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %3, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.bt, i8 0, i64 48, i1 false)
   store ptr %i.a, ptr %2, align 8, !tbaa !3555
   br i1 %.not32, label %bb.m, label %bb.l
 
@@ -403,9 +403,8 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #59
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.br, i8 0, i64 32, i1 false)
-  store ptr %i.a, ptr %1, align 8, !tbaa !3506
-  store ptr @renameUnmapExprCb, ptr %i.bs, align 8, !tbaa !3507
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.br, i8 0, i64 32, i1 false)
+  store <2 x ptr> %3, ptr %1, align 16, !tbaa !450
   %i.ce = load i32, ptr %i.cd, align 8, !tbaa !5  ; 2 uses
   %i.cf = icmp sgt i32 %i.ce, 0
   br i1 %i.cf, label %.lr.ph.preheader.i.i, label %._crit_edge.i
@@ -458,7 +457,7 @@ bb.p:                                             ; preds = %sqlite3RenameTokenR
 bb.q:                                             ; preds = %bb.p
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cl, i64 8
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !3485
-  %.08.i.i = load ptr, ptr %i.bt, align 8, !tbaa !3499 ; 2 uses
+  %.08.i.i = load ptr, ptr %i.bs, align 8, !tbaa !3499 ; 2 uses
   %.not9.i.i = icmp eq ptr %.08.i.i, null
   br i1 %.not9.i.i, label %sqlite3RenameTokenRemap.exit.i, label %.lr.ph.i11.i
 
@@ -861,7 +860,7 @@ sqlite3VdbeAddOp2.exit113:                        ; preds = %sqlite3VdbeAddOp2.e
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @sqlite3WhereBegin(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i16 noundef zeroext range(i16 0, 16896) %6, i32 noundef %7) unnamed_addr #0 {
 bb.a:
-  %8 = alloca %struct.WhereScan, align 8          ; 20 uses
+  %8 = alloca %struct.WhereScan, align 16         ; 20 uses
   %9 = alloca %struct.Walker, align 8             ; 7 uses
   %10 = alloca %struct.WhereLoopBuilder, align 8  ; 12 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -1264,22 +1263,22 @@ bb.bm:                                            ; preds = %bb.bl
 bb.bn:                                            ; preds = %bb.bm
   %i.jf = getelementptr inbounds nuw i8, ptr %i.iw, i64 36
   %i.jg = load i32, ptr %i.jf, align 4, !tbaa !3554 ; 3 uses
-  %i.jh = getelementptr inbounds nuw i8, ptr %.pre622, i64 104 ; 4 uses
+  %i.jh = getelementptr inbounds nuw i8, ptr %.pre622, i64 104 ; 3 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %.pre624, i64 48 ; 7 uses
   store i32 0, ptr %i.ji, align 8, !tbaa !4272
   %i.jj = getelementptr inbounds nuw i8, ptr %.pre624, i64 54
   store i16 0, ptr %i.jj, align 2, !tbaa !4286
-  store ptr %i.jh, ptr %8, align 8, !tbaa !4287
-  %i.jk = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
+  store ptr %i.jh, ptr %8, align 16, !tbaa !4287
+  %i.jk = getelementptr inbounds nuw i8, ptr %8, i64 8
   store ptr %i.jh, ptr %i.jk, align 8, !tbaa !4289
   %i.jl = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 3 uses
   store i8 0, ptr %i.jl, align 8, !tbaa !4290
   %i.jm = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
   %i.jn = getelementptr inbounds nuw i8, ptr %8, i64 36 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.jm, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.jm, i8 0, i64 16, i1 false)
   store i32 130, ptr %i.jn, align 4, !tbaa !4291
   %i.jo = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
-  store i32 0, ptr %i.jo, align 8, !tbaa !4292
+  store i32 0, ptr %i.jo, align 16, !tbaa !4292
   %i.jp = getelementptr inbounds nuw i8, ptr %8, i64 44 ; 2 uses
   store i32 %i.jg, ptr %i.jp, align 4, !tbaa !5
   %i.jq = getelementptr inbounds nuw i8, ptr %8, i64 42 ; 2 uses
@@ -1324,6 +1323,8 @@ bb.bo:                                            ; preds = %.lr.ph.i477
 .lr.ph22.i:                                       ; preds = %.critedge95.i
   %i.kc = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.kd = getelementptr inbounds nuw i8, ptr %.pre624, i64 64
+  %11 = insertelement <2 x ptr> poison, ptr %i.jh, i64 0
+  %12 = shufflevector <2 x ptr> %11, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.bp
 
 bb.bp:                                            ; preds = %bb.cd, %.lr.ph22.i
@@ -1363,12 +1364,11 @@ bb.bs:                                            ; preds = %bb.br
 
 bb.bt:                                            ; preds = %.critedge2.i, %.lr.ph17.i
   %indvars.iv.i478 = phi i64 [ 0, %.lr.ph17.i ], [ %indvars.iv.next.i479, %.critedge2.i ] ; 8 uses
-  store ptr %i.jh, ptr %8, align 8, !tbaa !4287
-  store ptr %i.jh, ptr %i.jk, align 8, !tbaa !4289
+  store <2 x ptr> %12, ptr %8, align 16, !tbaa !1148
   store i8 0, ptr %i.jl, align 8, !tbaa !4290
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.jm, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.jm, i8 0, i64 16, i1 false)
   store i32 %i.ko, ptr %i.jn, align 4, !tbaa !4291
-  store i32 0, ptr %i.jo, align 8, !tbaa !4292
+  store i32 0, ptr %i.jo, align 16, !tbaa !4292
   store i32 %i.jg, ptr %i.jp, align 4, !tbaa !5
   store i8 1, ptr %i.jq, align 2, !tbaa !4293
   store i8 1, ptr %i.jr, align 1, !tbaa !4294
@@ -1396,7 +1396,7 @@ bb.bv:                                            ; preds = %bb.bu
   %i.lh = load ptr, ptr %i.ks, align 8, !tbaa !2803
   %i.li = getelementptr inbounds nuw [8 x i8], ptr %i.lh, i64 %indvars.iv.i478
   %i.lj = load ptr, ptr %i.li, align 8, !tbaa !251
-  store ptr %i.lj, ptr %i.jm, align 8, !tbaa !4298
+  store ptr %i.lj, ptr %i.jm, align 16, !tbaa !4298
   br label %.thread.i.i
 
 bb.bw:                                            ; preds = %bb.bu
@@ -1412,7 +1412,7 @@ bb.bx:                                            ; preds = %bb.bw
   %i.lp = load ptr, ptr %i.ks, align 8, !tbaa !2803
   %i.lq = getelementptr inbounds nuw [8 x i8], ptr %i.lp, i64 %indvars.iv.i478
   %i.lr = load ptr, ptr %i.lq, align 8, !tbaa !251
-  store ptr %i.lr, ptr %i.jm, align 8, !tbaa !4298
+  store ptr %i.lr, ptr %i.jm, align 16, !tbaa !4298
   store i16 -2, ptr %i.js, align 8, !tbaa !330
   %i.ls = call fastcc ptr @whereScanInitIndexExpr(ptr noundef nonnull %8)
   br label %whereScanInit.exit.i
@@ -1815,7 +1815,7 @@ sqlite3TableColumnToIndex.exit:                   ; preds = %bb.d, %bb.a, %bb.b,
 define internal fastcc signext i8 @wherePathSatisfiesOrderBy(ptr noundef %0, ptr nofree noundef readonly captures(address) %1, ptr nofree noundef nonnull readonly captures(none) %2, i16 noundef zeroext %3, i16 noundef zeroext %4, ptr nofree noundef captures(none) %5, ptr nofree noundef nonnull captures(none) %6) unnamed_addr #0 {
 bb.a:
   %7 = alloca %struct.Walker, align 16            ; 6 uses
-  %8 = alloca %struct.WhereScan, align 8          ; 16 uses
+  %8 = alloca %struct.WhereScan, align 16         ; 15 uses
   %i.a = alloca i64, align 8                      ; 7 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !820
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !651  ; 2 uses
@@ -1850,8 +1850,7 @@ bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.not527 = icmp eq i32 %i.h, 0                  ; 7 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.s = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.t = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.u = getelementptr inbounds nuw i8, ptr %8, i64 36
@@ -1874,14 +1873,19 @@ bb.d:                                             ; preds = %bb.c
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 596
   %i.al = zext i16 %4 to i64                      ; 2 uses
   %.not747 = icmp eq i32 %i.h, 0
-  br i1 %.not747, label %.critedge, label %.lr.ph740
+  br i1 %.not747, label %.critedge, label %.lr.ph740.preheader
 
-.lr.ph740:                                        ; preds = %bb.d, %bb.cs
-  %.0257518737 = phi ptr [ %.2259, %bb.cs ], [ null, %bb.d ]
-  %.0244521736 = phi i64 [ %.1245, %bb.cs ], [ 0, %bb.d ] ; 2 uses
-  %.0242522735 = phi i64 [ %.1243, %bb.cs ], [ 0, %bb.d ] ; 2 uses
-  %indvars.iv579732 = phi i64 [ %indvars.iv.next580, %bb.cs ], [ 0, %bb.d ] ; 7 uses
-  %.promoted731 = phi i64 [ %i.mx, %bb.cs ], [ 0, %bb.d ] ; 5 uses
+.lr.ph740.preheader:                              ; preds = %bb.d
+  %9 = insertelement <2 x ptr> poison, ptr %i.r, i64 0
+  %10 = shufflevector <2 x ptr> %9, <2 x ptr> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph740
+
+.lr.ph740:                                        ; preds = %.lr.ph740.preheader, %bb.cs
+  %.0257518737 = phi ptr [ %.2259, %bb.cs ], [ null, %.lr.ph740.preheader ]
+  %.0244521736 = phi i64 [ %.1245, %bb.cs ], [ 0, %.lr.ph740.preheader ] ; 2 uses
+  %.0242522735 = phi i64 [ %.1243, %bb.cs ], [ 0, %.lr.ph740.preheader ] ; 2 uses
+  %indvars.iv579732 = phi i64 [ %indvars.iv.next580, %bb.cs ], [ 0, %.lr.ph740.preheader ] ; 7 uses
+  %.promoted731 = phi i64 [ %i.mx, %bb.cs ], [ 0, %.lr.ph740.preheader ] ; 5 uses
   %.not276 = icmp eq i64 %indvars.iv579732, 0
   br i1 %.not276, label %bb.f, label %bb.e
 
@@ -2007,12 +2011,11 @@ bb.t:                                             ; preds = %bb.s
   %i.cd = getelementptr inbounds nuw i8, ptr %.010.i, i64 48 ; 2 uses
   %i.ce = load i16, ptr %i.cd, align 8, !tbaa !3487 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #59
-  store ptr %i.r, ptr %8, align 8, !tbaa !4287
-  store ptr %i.r, ptr %9, align 8, !tbaa !4289
+  store <2 x ptr> %10, ptr %8, align 16, !tbaa !1148
   store i8 0, ptr %i.s, align 8, !tbaa !4290
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.t, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.t, i8 0, i64 16, i1 false)
   store i32 %spec.select, ptr %i.u, align 4, !tbaa !4291
-  store i32 0, ptr %i.v, align 8, !tbaa !4292
+  store i32 0, ptr %i.v, align 16, !tbaa !4292
   store i32 %i.bh, ptr %i.w, align 4, !tbaa !5
   store i8 1, ptr %i.x, align 2, !tbaa !4293
   store i8 1, ptr %i.y, align 1, !tbaa !4294
@@ -2415,8 +2418,8 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @rtreeInsertCell(ptr noundef %0, ptr noundef %1, ptr nofree noundef nonnull readonly captures(none) %2, i32 noundef %3) unnamed_addr #0 {
 bb.a:
-  %4 = alloca %struct.RtreeCell, align 8          ; 17 uses
-  %5 = alloca %struct.RtreeCell, align 8          ; 17 uses
+  %4 = alloca %struct.RtreeCell, align 8          ; 16 uses
+  %5 = alloca %struct.RtreeCell, align 8          ; 16 uses
   %6 = alloca %struct.RtreeCell, align 8          ; 8 uses
   %7 = alloca %struct.RtreeCell, align 8          ; 6 uses
   %i.a = alloca i32, align 4                      ; 5 uses
@@ -2819,30 +2822,27 @@ cellMargin.exit164.thread.i:                      ; preds = %.split.i155.i
   br i1 %.not.i165.i, label %cellOverlap.exit.thread.i, label %.thread68.us.i.i
 
 .preheader.us.us.i.i:                             ; preds = %cellMargin.exit164.i, %bb.w
-  %indvars.iv94.i.i = phi i64 [ %indvars.iv.next95.i.i, %bb.w ], [ 0, %cellMargin.exit164.i ] ; 5 uses
+  %indvars.iv94.i.i = phi i64 [ %indvars.iv.next95.i.i, %bb.w ], [ 0, %cellMargin.exit164.i ] ; 3 uses
   %.06477.us.us.us.i.i = phi double [ %i.rj, %bb.w ], [ 1.000000e+00, %cellMargin.exit164.i ]
   %i.rg = getelementptr inbounds nuw [4 x i8], ptr %i.kq, i64 %indvars.iv94.i.i
-  %8 = load float, ptr %i.rg, align 8, !tbaa !227 ; 2 uses
   %i.rh = getelementptr inbounds nuw [4 x i8], ptr %i.kp, i64 %indvars.iv94.i.i
-  %9 = load float, ptr %i.rh, align 8, !tbaa !227 ; 2 uses
-  %10 = fcmp ogt float %8, %9
-  %11 = select i1 %10, float %8, float %9         ; 2 uses
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv94.i.i
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 12
-  %14 = load float, ptr %13, align 4, !tbaa !227  ; 2 uses
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv94.i.i
-  %16 = getelementptr inbounds nuw i8, ptr %15, i64 12
-  %17 = load float, ptr %16, align 4, !tbaa !227  ; 2 uses
-  %18 = fcmp olt float %14, %17
-  %.in91.i.i = select i1 %18, float %14, float %17 ; 2 uses
-  %i.ri = fcmp olt float %.in91.i.i, %11
+  %8 = load <2 x float>, ptr %i.rg, align 8, !tbaa !227 ; 3 uses
+  %9 = load <2 x float>, ptr %i.rh, align 8, !tbaa !227 ; 3 uses
+  %10 = shufflevector <2 x float> %9, <2 x float> %8, <2 x i32> <i32 0, i32 3>
+  %11 = shufflevector <2 x float> %8, <2 x float> %9, <2 x i32> <i32 0, i32 3>
+  %12 = fcmp olt <2 x float> %10, %11
+  %13 = select <2 x i1> %12, <2 x float> %8, <2 x float> %9 ; 3 uses
+  %14 = extractelement <2 x float> %13, i64 0
+  %15 = extractelement <2 x float> %13, i64 1
+  %i.ri = fcmp olt float %15, %14
   br i1 %i.ri, label %cellOverlap.exit.i, label %bb.w
 
 bb.w:                                             ; preds = %.preheader.us.us.i.i
-  %.ph.us.us.us.i.i = fpext float %11 to double
-  %19 = fpext float %.in91.i.i to double
-  %20 = fsub double %19, %.ph.us.us.us.i.i
-  %i.rj = fmul double %.06477.us.us.us.i.i, %20   ; 2 uses
+  %16 = fpext <2 x float> %13 to <2 x double>     ; 2 uses
+  %shift349 = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop350 = fsub <2 x double> %shift349, %16
+  %17 = extractelement <2 x double> %foldExtExtBinop350, i64 0
+  %i.rj = fmul double %.06477.us.us.us.i.i, %17   ; 2 uses
   %indvars.iv.next95.i.i = add nuw nsw i64 %indvars.iv94.i.i, 2 ; 2 uses
   %i.rk = icmp samesign ult i64 %indvars.iv.next95.i.i, %i.lo
   br i1 %i.rk, label %.preheader.us.us.i.i, label %cellOverlap.exit.i, !llvm.loop !8068
@@ -3245,68 +3245,70 @@ bb.l:                                             ; preds = %.lr.ph, %select.unf
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %select.unfold ] ; 2 uses
   %.03669 = phi i32 [ 0, %.lr.ph ], [ %i.ba, %select.unfold ]
   %.idx = shl nuw nsw i64 %indvars.iv, 3
-  %3 = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx ; 2 uses
-  %4 = load float, ptr %3, align 4, !tbaa !8107   ; 3 uses
-  %5 = fpext float %4 to double                   ; 6 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %6 = load float, ptr %i.af, align 4, !tbaa !8107
-  %7 = fpext float %6 to double                   ; 5 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %.idx84 = shl nuw nsw i64 %indvars.iv.next, 3
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx84 ; 2 uses
-  %8 = load float, ptr %i.ag, align 4, !tbaa !8107 ; 3 uses
-  %9 = fpext float %8 to double                   ; 3 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.ag, i64 4
-  %11 = load float, ptr %10, align 4, !tbaa !8107
-  %12 = fpext float %11 to double                 ; 3 uses
-  %i.ah = fcmp oeq double %.0.i.i, %5
-  %i.ai = fcmp oeq double %.0.i.i42, %7
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx84
+  %3 = load <2 x float>, ptr %i.af, align 4, !tbaa !8107 ; 2 uses
+  %4 = fpext <2 x float> %3 to <2 x double>       ; 3 uses
+  %5 = load <2 x float>, ptr %i.ag, align 4, !tbaa !8107 ; 2 uses
+  %6 = fpext <2 x float> %5 to <2 x double>       ; 4 uses
+  %7 = extractelement <2 x double> %4, i64 0      ; 5 uses
+  %i.ah = fcmp oeq double %.0.i.i, %7
+  %8 = extractelement <2 x double> %4, i64 1      ; 4 uses
+  %i.ai = fcmp oeq double %.0.i.i42, %8
   %or.cond.i = and i1 %i.ah, %i.ai
   br i1 %or.cond.i, label %.loopexit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.aj = fcmp olt float %4, %8
+  %9 = extractelement <2 x float> %5, i64 0       ; 2 uses
+  %10 = extractelement <2 x float> %3, i64 0      ; 2 uses
+  %i.aj = fcmp olt float %10, %9
   br i1 %i.aj, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.ak = fcmp ole double %.0.i.i, %5
-  %i.al = fcmp ogt double %.0.i.i, %9
+  %i.ak = fcmp ole double %.0.i.i, %7
+  %11 = extractelement <2 x double> %6, i64 0
+  %i.al = fcmp ogt double %.0.i.i, %11
   %or.cond45.i = or i1 %i.ak, %i.al
   br i1 %or.cond45.i, label %select.unfold, label %bb.t
 
 bb.o:                                             ; preds = %bb.m
-  %i.am = fcmp ogt float %4, %8
+  %i.am = fcmp ogt float %10, %9
   br i1 %i.am, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.an = fcmp ole double %.0.i.i, %9
-  %i.ao = fcmp ogt double %.0.i.i, %5
+  %12 = extractelement <2 x double> %6, i64 0
+  %i.an = fcmp ole double %.0.i.i, %12
+  %i.ao = fcmp ogt double %.0.i.i, %7
   %or.cond46.i = or i1 %i.ao, %i.an
   br i1 %or.cond46.i, label %select.unfold, label %bb.t
 
 bb.q:                                             ; preds = %bb.o
-  %i.ap = fcmp une double %.0.i.i, %5
+  %i.ap = fcmp une double %.0.i.i, %7
   br i1 %i.ap, label %select.unfold, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.aq = fcmp olt double %.0.i.i42, %7
-  %i.ar = fcmp olt double %.0.i.i42, %12
+  %i.aq = fcmp olt double %.0.i.i42, %8
+  %13 = extractelement <2 x double> %6, i64 1     ; 2 uses
+  %i.ar = fcmp olt double %.0.i.i42, %13
   %or.cond47.i = and i1 %i.aq, %i.ar
   br i1 %or.cond47.i, label %select.unfold, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.as = fcmp ogt double %.0.i.i42, %7
-  %i.at = fcmp ogt double %.0.i.i42, %12
+  %i.as = fcmp ogt double %.0.i.i42, %8
+  %i.at = fcmp ogt double %.0.i.i42, %13
   %or.cond48.i = and i1 %i.as, %i.at
   br i1 %or.cond48.i, label %select.unfold, label %.loopexit
 
 bb.t:                                             ; preds = %bb.p, %bb.n
-  %i.au = fsub double %12, %7
-  %13 = fsub double %.0.i.i, %5
-  %i.av = fmul double %13, %i.au
-  %14 = fsub double %9, %5
-  %i.aw = fdiv double %i.av, %14
-  %i.ax = fadd double %i.aw, %7                   ; 2 uses
+  %14 = fsub <2 x double> %6, %4                  ; 2 uses
+  %i.au = fsub double %.0.i.i, %7
+  %15 = extractelement <2 x double> %14, i64 1
+  %i.av = fmul double %i.au, %15
+  %16 = extractelement <2 x double> %14, i64 0
+  %i.aw = fdiv double %i.av, %16
+  %i.ax = fadd double %i.aw, %8                   ; 2 uses
   %i.ay = fcmp oeq double %.0.i.i42, %i.ax
   br i1 %i.ay, label %.loopexit, label %bb.u
 

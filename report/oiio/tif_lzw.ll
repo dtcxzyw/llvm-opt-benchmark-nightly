@@ -203,7 +203,7 @@ declare void @TIFFWarningExtR(ptr noundef, ptr noundef, ptr noundef, ...) local_
 define internal range(i32 0, 2) i32 @LZWDecodeCompat(ptr noundef %0, ptr nofree noundef writeonly captures(address) %1, i64 noundef %2, i16 zeroext %3) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1072
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !7    ; 12 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !7    ; 13 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 168 ; 4 uses
   %i.d = load i64, ptr %i.c, align 8, !tbaa !61   ; 6 uses
   %.not = icmp eq i64 %i.d, 0
@@ -401,7 +401,9 @@ bb.e:                                             ; preds = %.unr-lcssa, %bb.a
   %i.cn = load i16, ptr %i.cm, align 8, !tbaa !60
   %i.co = zext i16 %i.cn to i32                   ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.b, i64 136 ; 2 uses
-  %4 = load <2 x i64>, ptr %i.cp, align 8, !tbaa !94 ; 3 uses
+  %4 = load i64, ptr %i.cp, align 8, !tbaa !72    ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 144 ; 2 uses
+  %6 = load i64, ptr %5, align 8, !tbaa !73       ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.b, i64 160 ; 2 uses
   %i.cr = load i64, ptr %i.cq, align 8, !tbaa !62 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.b, i64 208 ; 2 uses
@@ -415,8 +417,6 @@ bb.e:                                             ; preds = %.unr-lcssa, %bb.a
 
 .lr.ph:                                           ; preds = %bb.e
   %i.cz = getelementptr inbounds nuw i8, ptr %i.b, i64 232 ; 7 uses
-  %5 = extractelement <2 x i64> %4, i64 0
-  %6 = extractelement <2 x i64> %4, i64 1
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %.backedge
@@ -424,7 +424,7 @@ bb.f:                                             ; preds = %.lr.ph, %.backedge
   %.0202467 = phi ptr [ %i.ct, %.lr.ph ], [ %.0202.be, %.backedge ] ; 9 uses
   %.0204466 = phi ptr [ %i.cx, %.lr.ph ], [ %.0204.be, %.backedge ] ; 4 uses
   %.0207465 = phi ptr [ %i.cv, %.lr.ph ], [ %.0207.be, %.backedge ] ; 10 uses
-  %.0214464 = phi i64 [ %5, %.lr.ph ], [ %.0214.be, %.backedge ] ; 2 uses
+  %.0214464 = phi i64 [ %4, %.lr.ph ], [ %.0214.be, %.backedge ] ; 2 uses
   %.0220463 = phi i64 [ %i.cr, %.lr.ph ], [ %.0220.be, %.backedge ] ; 4 uses
   %.0223462 = phi i64 [ %6, %.lr.ph ], [ %.0223.be, %.backedge ] ; 4 uses
   %.0233461 = phi i32 [ %i.co, %.lr.ph ], [ %.0233.be, %.backedge ] ; 6 uses
@@ -439,8 +439,6 @@ bb.f:                                             ; preds = %.lr.ph, %.backedge
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 856
   %i.dd = load i32, ptr %i.dc, align 8, !tbaa !78
   tail call void (ptr, ptr, ptr, ...) @TIFFWarningExtR(ptr noundef %0, ptr noundef nonnull @LZWDecodeCompat.module, ptr noundef nonnull @.str.3, i32 noundef %i.dd) #5
-  %7 = insertelement <2 x i64> poison, i64 %.0214464, i64 0
-  %8 = insertelement <2 x i64> %7, i64 %.0223462, i64 1
   br label %.loopexit
 
 bb.g:                                             ; preds = %bb.f
@@ -448,32 +446,32 @@ bb.g:                                             ; preds = %bb.f
   %i.df = load i8, ptr %.0238460, align 1, !tbaa !58
   %i.dg = zext i8 %i.df to i64
   %i.dh = shl i64 %i.dg, %.0223462
-  %9 = add nsw i64 %.0223462, 8                   ; 3 uses
-  %10 = or i64 %i.dh, %.0214464                   ; 2 uses
-  %i.di = icmp slt i64 %9, %i.da
+  %7 = or i64 %i.dh, %.0214464                    ; 2 uses
+  %8 = add nsw i64 %.0223462, 8                   ; 3 uses
+  %i.di = icmp slt i64 %8, %i.da
   br i1 %i.di, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.dj = getelementptr inbounds nuw i8, ptr %.0238460, i64 2
   %i.dk = load i8, ptr %i.de, align 1, !tbaa !58
   %i.dl = zext i8 %i.dk to i64
-  %i.dm = shl i64 %i.dl, %9
-  %i.dn = or i64 %i.dm, %10
+  %i.dm = shl i64 %i.dl, %8
+  %i.dn = or i64 %i.dm, %7
   %i.do = add nsw i64 %.0223462, 16
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h
   %.1239 = phi ptr [ %i.dj, %bb.h ], [ %i.de, %bb.g ] ; 7 uses
-  %.1224 = phi i64 [ %i.do, %bb.h ], [ %9, %bb.g ]
-  %.1215 = phi i64 [ %i.dn, %bb.h ], [ %10, %bb.g ] ; 2 uses
+  %.1224 = phi i64 [ %i.do, %bb.h ], [ %8, %bb.g ]
+  %.1215 = phi i64 [ %i.dn, %bb.h ], [ %7, %bb.g ] ; 2 uses
   %i.dp = and i64 %.1215, %.0220463               ; 4 uses
   %i.dq = zext nneg i32 %.0233461 to i64
-  %i.dr = lshr i64 %.1215, %i.dq                  ; 6 uses
-  %i.ds = sub nsw i64 %.1224, %i.da               ; 6 uses
+  %i.dr = lshr i64 %.1215, %i.dq                  ; 7 uses
+  %i.ds = sub nsw i64 %.1224, %i.da               ; 7 uses
   %i.dt = sub i64 %.0468, %i.da                   ; 8 uses
   %trunc = trunc i64 %i.dp to i16
   switch i16 %trunc, label %bb.o [
-    i16 257, label %.loopexit.loopexit970.split.loop.exit
+    i16 257, label %.loopexit
     i16 256, label %.preheader.preheader
   ]
 
@@ -482,30 +480,21 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 4128 ; 3 uses
   tail call void @_TIFFmemset(ptr noundef nonnull %i.dv, i32 noundef 0, i64 noundef 77776) #5
   %i.dw = icmp ult i64 %i.dt, 9
-  br i1 %i.dw, label %.thread291.loopexit971, label %.lr.ph956
+  br i1 %i.dw, label %.thread291, label %.lr.ph956
 
 .preheader:                                       ; preds = %bb.k
   %i.dx = load ptr, ptr %i.cz, align 8, !tbaa !27
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 4128 ; 3 uses
   tail call void @_TIFFmemset(ptr noundef nonnull %i.dy, i32 noundef 0, i64 noundef 77776) #5
   %i.dz = icmp ult i64 %i.ew, 9
-  br i1 %i.dz, label %.thread291.loopexit, label %.lr.ph956
+  br i1 %i.dz, label %.thread291, label %.lr.ph956
 
-.thread291.loopexit:                              ; preds = %.preheader
-  %11 = insertelement <2 x i64> poison, i64 %i.eu, i64 0
-  %12 = insertelement <2 x i64> %11, i64 %i.ev, i64 1
-  br label %.thread291
-
-.thread291.loopexit971:                           ; preds = %.preheader.preheader
-  %13 = insertelement <2 x i64> poison, i64 %i.dr, i64 0
-  %14 = insertelement <2 x i64> %13, i64 %i.ds, i64 1
-  br label %.thread291
-
-.thread291:                                       ; preds = %.thread291.loopexit971, %.thread291.loopexit
-  %.3241.lcssa = phi ptr [ %.4242, %.thread291.loopexit ], [ %.1239, %.thread291.loopexit971 ]
-  %.2.lcssa.a = phi i64 [ %i.ew, %.thread291.loopexit ], [ %i.dt, %.thread291.loopexit971 ]
-  %.lcssa802 = phi ptr [ %i.dy, %.thread291.loopexit ], [ %i.dv, %.thread291.loopexit971 ]
-  %15 = phi <2 x i64> [ %12, %.thread291.loopexit ], [ %14, %.thread291.loopexit971 ]
+.thread291:                                       ; preds = %.preheader.preheader, %.preheader
+  %.3241.lcssa = phi ptr [ %.4242, %.preheader ], [ %.1239, %.preheader.preheader ]
+  %.3226.lcssa = phi i64 [ %i.ev, %.preheader ], [ %i.ds, %.preheader.preheader ]
+  %.2.lcssa.a = phi i64 [ %i.eu, %.preheader ], [ %i.dr, %.preheader.preheader ]
+  %.2.lcssa = phi i64 [ %i.ew, %.preheader ], [ %i.dt, %.preheader.preheader ]
+  %.lcssa802 = phi ptr [ %i.dy, %.preheader ], [ %i.dv, %.preheader.preheader ]
   %i.ea = load ptr, ptr %i.cz, align 8, !tbaa !27
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 8176
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 856
@@ -587,7 +576,7 @@ bb.n:                                             ; preds = %bb.l
   %.0202.be = phi ptr [ %i.fi, %bb.n ], [ %i.fm, %bb.ad ], [ %i.fm, %bb.ae ] ; 2 uses
   %.0.be = phi i64 [ %i.ew, %bb.n ], [ %i.dt, %bb.ad ], [ %i.dt, %bb.ae ] ; 2 uses
   %i.fj = icmp sgt i64 %.3252.be, 0
-  br i1 %i.fj, label %bb.f, label %.loopexit.loopexit970.split.loop.exit1335
+  br i1 %i.fj, label %bb.f, label %.loopexit
 
 bb.o:                                             ; preds = %bb.i
   %i.fk = load ptr, ptr %i.cz, align 8, !tbaa !27 ; 5 uses
@@ -673,8 +662,6 @@ bb.x:                                             ; preds = %bb.v
   br i1 %i.gr, label %bb.y, label %bb.ab
 
 bb.y:                                             ; preds = %bb.x
-  %16 = insertelement <2 x i64> poison, i64 %i.dr, i64 0
-  %17 = insertelement <2 x i64> %16, i64 %i.ds, i64 1 ; 2 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %i.b, i64 200
   store ptr %i.fm, ptr %i.gs, align 8, !tbaa !68
   %i.gt = trunc nuw i64 %.3252459 to i16
@@ -708,7 +695,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.hd = add nsw i64 %.4253.prol, -1             ; 2 uses
   %prol.iter1162.next = add i64 %prol.iter1162, 1 ; 2 uses
   %prol.iter1162.cmp.not = icmp eq i64 %prol.iter1162.next, %xtraiter1160
-  br i1 %prol.iter1162.cmp.not, label %.prol.loopexit1148, label %.prol.preheader1147, !llvm.loop !95
+  br i1 %prol.iter1162.cmp.not, label %.prol.loopexit1148, label %.prol.preheader1147, !llvm.loop !94
 
 .prol.loopexit1148:                               ; preds = %.prol.preheader1147, %bb.aa
   %.4253.unr = phi i64 [ %.3252459, %bb.aa ], [ %i.hd, %.prol.preheader1147 ]
@@ -776,30 +763,19 @@ bb.ae:                                            ; preds = %bb.u
 .loopexit298:                                     ; preds = %bb.k
   %i.ii = load ptr, ptr %i.cz, align 8, !tbaa !27
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ii, i64 8176
-  %18 = insertelement <2 x i64> poison, i64 %i.eu, i64 0
-  %19 = insertelement <2 x i64> %18, i64 %i.ev, i64 1
   br label %.loopexit
 
-.loopexit.loopexit970.split.loop.exit:            ; preds = %bb.i
-  %20 = insertelement <2 x i64> poison, i64 %i.dr, i64 0
-  %21 = insertelement <2 x i64> %20, i64 %i.ds, i64 1
-  br label %.loopexit
-
-.loopexit.loopexit970.split.loop.exit1335:        ; preds = %.backedge
-  %22 = insertelement <2 x i64> poison, i64 %.0214.be, i64 0
-  %23 = insertelement <2 x i64> %22, i64 %.0223.be, i64 1
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit970.split.loop.exit, %.loopexit.loopexit970.split.loop.exit1335, %.prol.loopexit1148, %.new1149, %bb.e, %.loopexit298, %.thread291, %.thread285
-  %.6255 = phi i64 [ %.3252459, %.thread285 ], [ 0, %.prol.loopexit1148 ], [ %.3252459, %.thread291 ], [ %.3252459, %.loopexit298 ], [ %.2251, %bb.e ], [ 0, %.new1149 ], [ %.3252459, %.loopexit.loopexit970.split.loop.exit ], [ %.3252.be, %.loopexit.loopexit970.split.loop.exit1335 ] ; 2 uses
-  %.6244 = phi ptr [ %.0238460, %.thread285 ], [ %.1239, %.prol.loopexit1148 ], [ %.3241.lcssa, %.thread291 ], [ %.4242, %.loopexit298 ], [ %i.cc, %bb.e ], [ %.1239, %.new1149 ], [ %.1239, %.loopexit.loopexit970.split.loop.exit ], [ %.0238.be, %.loopexit.loopexit970.split.loop.exit1335 ] ; 2 uses
-  %.2235 = phi i32 [ %.0233461, %.thread285 ], [ %.1234, %.prol.loopexit1148 ], [ 9, %.thread291 ], [ 9, %.loopexit298 ], [ %i.co, %bb.e ], [ %.1234, %.new1149 ], [ %.0233461, %.loopexit.loopexit970.split.loop.exit ], [ %.0233.be, %.loopexit.loopexit970.split.loop.exit1335 ]
-  %.2222 = phi i64 [ %.0220463, %.thread285 ], [ %.1221, %.prol.loopexit1148 ], [ 511, %.thread291 ], [ 511, %.loopexit298 ], [ %i.cr, %bb.e ], [ %.1221, %.new1149 ], [ %.0220463, %.loopexit.loopexit970.split.loop.exit ], [ %.0220.be, %.loopexit.loopexit970.split.loop.exit1335 ]
-  %.1208 = phi ptr [ %.0207465, %.thread285 ], [ %i.ge, %.prol.loopexit1148 ], [ %.lcssa802, %.thread291 ], [ %i.ee, %.loopexit298 ], [ %i.cv, %bb.e ], [ %i.ge, %.new1149 ], [ %.0207465, %.loopexit.loopexit970.split.loop.exit ], [ %.0207.be, %.loopexit.loopexit970.split.loop.exit1335 ]
-  %.2206.a = phi ptr [ %.0204466, %.thread285 ], [ %.1205, %.prol.loopexit1148 ], [ %i.eb, %.thread291 ], [ %i.ij, %.loopexit298 ], [ %i.cx, %bb.e ], [ %.1205, %.new1149 ], [ %.0204466, %.loopexit.loopexit970.split.loop.exit ], [ %.0204.be, %.loopexit.loopexit970.split.loop.exit1335 ]
-  %.1203.a = phi ptr [ %.0202467, %.thread285 ], [ %i.fm, %.prol.loopexit1148 ], [ %.0202467, %.thread291 ], [ %.0202467, %.loopexit298 ], [ %i.ct, %bb.e ], [ %i.fm, %.new1149 ], [ %.0202467, %.loopexit.loopexit970.split.loop.exit ], [ %.0202.be, %.loopexit.loopexit970.split.loop.exit1335 ]
-  %.4 = phi i64 [ %.0468, %.thread285 ], [ %i.dt, %.prol.loopexit1148 ], [ %.2.lcssa.a, %.thread291 ], [ %i.ew, %.loopexit298 ], [ %i.cl, %bb.e ], [ %i.dt, %.new1149 ], [ %i.dt, %.loopexit.loopexit970.split.loop.exit ], [ %.0.be, %.loopexit.loopexit970.split.loop.exit1335 ]
-  %24 = phi <2 x i64> [ %8, %.thread285 ], [ %17, %.prol.loopexit1148 ], [ %15, %.thread291 ], [ %19, %.loopexit298 ], [ %4, %bb.e ], [ %17, %.new1149 ], [ %21, %.loopexit.loopexit970.split.loop.exit ], [ %23, %.loopexit.loopexit970.split.loop.exit1335 ]
+.loopexit:                                        ; preds = %.backedge, %bb.i, %.prol.loopexit1148, %.new1149, %bb.e, %.loopexit298, %.thread291, %.thread285
+  %.6255 = phi i64 [ %.3252459, %.thread285 ], [ 0, %.prol.loopexit1148 ], [ %.3252459, %.thread291 ], [ %.3252459, %.loopexit298 ], [ %.2251, %bb.e ], [ 0, %.new1149 ], [ %.3252.be, %.backedge ], [ %.3252459, %bb.i ] ; 2 uses
+  %.6244 = phi ptr [ %.0238460, %.thread285 ], [ %.1239, %.prol.loopexit1148 ], [ %.3241.lcssa, %.thread291 ], [ %.4242, %.loopexit298 ], [ %i.cc, %bb.e ], [ %.1239, %.new1149 ], [ %.0238.be, %.backedge ], [ %.1239, %bb.i ] ; 2 uses
+  %.2235 = phi i32 [ %.0233461, %.thread285 ], [ %.1234, %.prol.loopexit1148 ], [ 9, %.thread291 ], [ 9, %.loopexit298 ], [ %i.co, %bb.e ], [ %.1234, %.new1149 ], [ %.0233.be, %.backedge ], [ %.0233461, %bb.i ]
+  %.6229 = phi i64 [ %.0223462, %.thread285 ], [ %i.ds, %.prol.loopexit1148 ], [ %.3226.lcssa, %.thread291 ], [ %i.ev, %.loopexit298 ], [ %6, %bb.e ], [ %i.ds, %.new1149 ], [ %.0223.be, %.backedge ], [ %i.ds, %bb.i ]
+  %.2222 = phi i64 [ %.0220463, %.thread285 ], [ %.1221, %.prol.loopexit1148 ], [ 511, %.thread291 ], [ 511, %.loopexit298 ], [ %i.cr, %bb.e ], [ %.1221, %.new1149 ], [ %.0220.be, %.backedge ], [ %.0220463, %bb.i ]
+  %.6 = phi i64 [ %.0214464, %.thread285 ], [ %i.dr, %.prol.loopexit1148 ], [ %.2.lcssa.a, %.thread291 ], [ %i.eu, %.loopexit298 ], [ %4, %bb.e ], [ %i.dr, %.new1149 ], [ %.0214.be, %.backedge ], [ %i.dr, %bb.i ]
+  %.2206.a = phi ptr [ %.0207465, %.thread285 ], [ %i.ge, %.prol.loopexit1148 ], [ %.lcssa802, %.thread291 ], [ %i.ee, %.loopexit298 ], [ %i.cv, %bb.e ], [ %i.ge, %.new1149 ], [ %.0207.be, %.backedge ], [ %.0207465, %bb.i ]
+  %.1203.a = phi ptr [ %.0204466, %.thread285 ], [ %.1205, %.prol.loopexit1148 ], [ %i.eb, %.thread291 ], [ %i.ij, %.loopexit298 ], [ %i.cx, %bb.e ], [ %.1205, %.new1149 ], [ %.0204.be, %.backedge ], [ %.0204466, %bb.i ]
+  %.1203 = phi ptr [ %.0202467, %.thread285 ], [ %i.fm, %.prol.loopexit1148 ], [ %.0202467, %.thread291 ], [ %.0202467, %.loopexit298 ], [ %i.ct, %bb.e ], [ %i.fm, %.new1149 ], [ %.0202.be, %.backedge ], [ %.0202467, %bb.i ]
+  %.4 = phi i64 [ %.0468, %.thread285 ], [ %i.dt, %.prol.loopexit1148 ], [ %.2.lcssa, %.thread291 ], [ %i.ew, %.loopexit298 ], [ %i.cl, %bb.e ], [ %i.dt, %.new1149 ], [ %.0.be, %.backedge ], [ %i.dt, %bb.i ]
   %i.ik = load ptr, ptr %i.cb, align 8, !tbaa !69
   %i.il = ptrtoint ptr %.6244 to i64
   %i.im = ptrtoint ptr %i.ik to i64
@@ -812,11 +788,12 @@ bb.ae:                                            ; preds = %bb.u
   store i64 %.4, ptr %i.cj, align 8, !tbaa !71
   %i.ip = trunc nuw i32 %.2235 to i16
   store i16 %i.ip, ptr %i.cm, align 8, !tbaa !60
-  store <2 x i64> %24, ptr %i.cp, align 8, !tbaa !94
+  store i64 %.6, ptr %i.cp, align 8, !tbaa !72
+  store i64 %.6229, ptr %5, align 8, !tbaa !73
   store i64 %.2222, ptr %i.cq, align 8, !tbaa !62
-  store ptr %.1203.a, ptr %i.cs, align 8, !tbaa !64
-  store ptr %.1208, ptr %i.cu, align 8, !tbaa !63
-  store ptr %.2206.a, ptr %i.cw, align 8, !tbaa !65
+  store ptr %.1203, ptr %i.cs, align 8, !tbaa !64
+  store ptr %.2206.a, ptr %i.cu, align 8, !tbaa !63
+  store ptr %.1203.a, ptr %i.cw, align 8, !tbaa !65
   %i.iq = icmp sgt i64 %.6255, 0
   br i1 %i.iq, label %bb.af, label %.thread
 
@@ -955,6 +932,5 @@ attributes #5 = { nounwind }
 !91 = distinct !{!91, !77}
 !92 = distinct !{!92, !77}
 !93 = distinct !{!93, !77}
-!94 = !{!11, !11, i64 0}
-!95 = distinct !{!95, !77}
+!94 = distinct !{!94, !77}
 end_hunk_0

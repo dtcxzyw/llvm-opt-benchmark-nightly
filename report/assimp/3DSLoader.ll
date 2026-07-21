@@ -204,23 +204,19 @@ bb.u:                                             ; preds = %.lr.ph240, %bb.u
 
 _ZN10aiVector3tIfE13NormalizeSafeEv.exit:         ; preds = %_ZN10aiVector3tIfEdVEf.exit.i, %._crit_edge241
   %.sroa.14.1 = phi float [ %i.gs, %_ZN10aiVector3tIfEdVEf.exit.i ], [ %.sroa.14.0.lcssa, %._crit_edge241 ]
-  %i.hf = phi <2 x float> [ %i.gr, %_ZN10aiVector3tIfEdVEf.exit.i ], [ %i.gi, %._crit_edge241 ] ; 2 uses
+  %i.hf = phi <2 x float> [ %i.gr, %_ZN10aiVector3tIfEdVEf.exit.i ], [ %i.gi, %._crit_edge241 ]
   br i1 %.not210234, label %.loopexit, label %.lr.ph247.preheader
 
 .lr.ph247.preheader:                              ; preds = %_ZN10aiVector3tIfE13NormalizeSafeEv.exit
   %i.hg = load ptr, ptr %i.fi, align 8
-  %5 = extractelement <2 x float> %i.hf, i64 0
-  %6 = extractelement <2 x float> %i.hf, i64 1
   br label %.lr.ph247
 
 .lr.ph247:                                        ; preds = %.lr.ph247.preheader, %.lr.ph247
   %.sroa.0137.0246 = phi ptr [ %i.hq, %.lr.ph247 ], [ %i.gf, %.lr.ph247.preheader ] ; 2 uses
   %i.hh = load i32, ptr %.sroa.0137.0246, align 4 ; 2 uses
   %i.hi = zext i32 %i.hh to i64                   ; 2 uses
-  %i.hj = getelementptr inbounds nuw [12 x i8], ptr %i.dv, i64 %i.hi ; 3 uses
-  store float %5, ptr %i.hj, align 4
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hj, i64 4
-  store float %6, ptr %.sroa.9.0..sroa_idx, align 4
+  %i.hj = getelementptr inbounds nuw [12 x i8], ptr %i.dv, i64 %i.hi ; 2 uses
+  store <2 x float> %i.hf, ptr %i.hj, align 4
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hj, i64 8
   store float %.sroa.14.1, ptr %.sroa.14.0..sroa_idx, align 4
   %i.hk = lshr i32 %i.hh, 6
@@ -304,23 +300,19 @@ _ZN10aiVector3tIfEdVEf.exit.i.1:                  ; preds = %._crit_edge241.1
 
 _ZN10aiVector3tIfE13NormalizeSafeEv.exit.1:       ; preds = %_ZN10aiVector3tIfEdVEf.exit.i.1, %._crit_edge241.1
   %.sroa.14.1.1 = phi float [ %i.ja, %_ZN10aiVector3tIfEdVEf.exit.i.1 ], [ %.sroa.14.0.lcssa.1, %._crit_edge241.1 ]
-  %i.jb = phi <2 x float> [ %i.iz, %_ZN10aiVector3tIfEdVEf.exit.i.1 ], [ %i.iq, %._crit_edge241.1 ] ; 2 uses
+  %i.jb = phi <2 x float> [ %i.iz, %_ZN10aiVector3tIfEdVEf.exit.i.1 ], [ %i.iq, %._crit_edge241.1 ]
   br i1 %.not210234.1, label %.loopexit.1, label %.lr.ph247.preheader.1
 
 .lr.ph247.preheader.1:                            ; preds = %_ZN10aiVector3tIfE13NormalizeSafeEv.exit.1
   %i.jc = load ptr, ptr %i.fi, align 8
-  %7 = extractelement <2 x float> %i.jb, i64 0
-  %8 = extractelement <2 x float> %i.jb, i64 1
   br label %.lr.ph247.1
 
 .lr.ph247.1:                                      ; preds = %.lr.ph247.1, %.lr.ph247.preheader.1
   %.sroa.0137.0246.1 = phi ptr [ %i.jm, %.lr.ph247.1 ], [ %i.id, %.lr.ph247.preheader.1 ] ; 2 uses
   %i.jd = load i32, ptr %.sroa.0137.0246.1, align 4 ; 2 uses
   %i.je = zext i32 %i.jd to i64                   ; 2 uses
-  %i.jf = getelementptr inbounds nuw [12 x i8], ptr %i.dv, i64 %i.je ; 3 uses
-  store float %7, ptr %i.jf, align 4
-  %.sroa.9.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.jf, i64 4
-  store float %8, ptr %.sroa.9.0..sroa_idx.1, align 4
+  %i.jf = getelementptr inbounds nuw [12 x i8], ptr %i.dv, i64 %i.je ; 2 uses
+  store <2 x float> %i.jb, ptr %i.jf, align 4
   %.sroa.14.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.jf, i64 8
   store float %.sroa.14.1.1, ptr %.sroa.14.0..sroa_idx.1, align 4
   %i.jg = lshr i32 %i.jd, 6
@@ -723,7 +715,7 @@ bb.ap:                                            ; preds = %_ZN6Assimp12StreamR
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1084) %i.fm, i8 0, i64 1044, i1 false)
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fm, i64 1048
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fm, i64 1052 ; 5 uses
-  %i.fq = getelementptr inbounds nuw i8, ptr %i.fm, i64 1056 ; 3 uses
+  %i.fq = getelementptr inbounds nuw i8, ptr %i.fm, i64 1056
   store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %i.fn, align 4
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fm, i64 1060 ; 4 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fm, i64 1064
@@ -1052,10 +1044,11 @@ _ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit61: ; preds = %_ZN6Assimp12Stream
   %i.jx = load float, ptr %i.io, align 4
   %i.jy = fsub float %i.jw, %i.jx                 ; 4 uses
   store float %i.jy, ptr %i.fr, align 4
-  %7 = load float, ptr %i.fp, align 4             ; 3 uses
-  %8 = load float, ptr %i.fq, align 4             ; 3 uses
-  %9 = fmul float %8, %8
-  %i.jz = call float @llvm.fmuladd.f32(float %7, float %7, float %9)
+  %7 = load <2 x float>, ptr %i.fp, align 4       ; 4 uses
+  %foldExtExtBinop = fmul <2 x float> %7, %7
+  %8 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %9 = extractelement <2 x float> %7, i64 0       ; 2 uses
+  %i.jz = call float @llvm.fmuladd.f32(float %9, float %9, float %8)
   %i.ka = call noundef float @llvm.fmuladd.f32(float %i.jy, float %i.jy, float %i.jz) ; 2 uses
   %sqrt.i = call noundef float @llvm.sqrt.f32(float %i.ka) ; 2 uses
   %i.kb = fpext float %sqrt.i to double
@@ -1088,11 +1081,11 @@ bb.bv:                                            ; preds = %_ZN6Assimp12StreamR
   br i1 %i.ke, label %_ZN10aiVector3tIfEdVEf.exit, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
-  %i.kf = fdiv float 1.000000e+00, %sqrt.i        ; 3 uses
-  %10 = fmul float %7, %i.kf
-  store float %10, ptr %i.fp, align 4
-  %11 = fmul float %8, %i.kf
-  store float %11, ptr %i.fq, align 4
+  %i.kf = fdiv float 1.000000e+00, %sqrt.i        ; 2 uses
+  %10 = insertelement <2 x float> poison, float %i.kf, i64 0
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  %12 = fmul <2 x float> %7, %11
+  store <2 x float> %12, ptr %i.fp, align 4
   %i.kg = fmul float %i.jy, %i.kf
   br label %_ZN10aiVector3tIfEdVEf.exit.sink.split
 
@@ -1495,7 +1488,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit22: ; preds = %_ZN6Assimp12Stream
   %i.bs = getelementptr inbounds nuw i8, ptr %i.ar, i64 1036
   %i.bt = load float, ptr %i.bs, align 4
   %i.bu = fsub float %i.br, %i.bt
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.ar, i64 1048 ; 3 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.ar, i64 1048
   store float %i.bu, ptr %i.bv, align 4
   %i.bw = load ptr, ptr %i.a, align 8             ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 24 ; 2 uses
@@ -1528,21 +1521,22 @@ _ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit23: ; preds = %_ZN6Assimp12Stream
   %i.ci = fsub float %i.cf, %i.ch                 ; 4 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ar, i64 1052 ; 2 uses
   store float %i.ci, ptr %i.cj, align 4
-  %2 = load float, ptr %i.bh, align 4             ; 3 uses
-  %3 = load float, ptr %i.bv, align 4             ; 3 uses
-  %4 = fmul float %3, %3
-  %i.ck = tail call float @llvm.fmuladd.f32(float %2, float %2, float %4)
+  %2 = load <2 x float>, ptr %i.bh, align 4       ; 4 uses
+  %foldExtExtBinop = fmul <2 x float> %2, %2
+  %3 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %4 = extractelement <2 x float> %2, i64 0       ; 2 uses
+  %i.ck = tail call float @llvm.fmuladd.f32(float %4, float %4, float %3)
   %i.cl = tail call noundef float @llvm.fmuladd.f32(float %i.ci, float %i.ci, float %i.ck) ; 2 uses
   %i.cm = fcmp oeq float %i.cl, 0.000000e+00
   br i1 %i.cm, label %_ZN10aiVector3tIfE9NormalizeEv.exit, label %_ZN10aiVector3tIfEdVEf.exit.i
 
 _ZN10aiVector3tIfEdVEf.exit.i:                    ; preds = %_ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit23
   %sqrt.i.i = tail call noundef float @llvm.sqrt.f32(float %i.cl)
-  %i.cn = fdiv float 1.000000e+00, %sqrt.i.i      ; 3 uses
-  %5 = fmul float %2, %i.cn
-  store float %5, ptr %i.bh, align 4
-  %6 = fmul float %3, %i.cn
-  store float %6, ptr %i.bv, align 4
+  %i.cn = fdiv float 1.000000e+00, %sqrt.i.i      ; 2 uses
+  %5 = insertelement <2 x float> poison, float %i.cn, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = fmul <2 x float> %2, %6
+  store <2 x float> %7, ptr %i.bh, align 4
   %i.co = fmul float %i.ci, %i.cn
   store float %i.co, ptr %i.cj, align 4
   br label %_ZN10aiVector3tIfE9NormalizeEv.exit

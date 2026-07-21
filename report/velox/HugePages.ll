@@ -204,7 +204,9 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.ab = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %.pre.i = load i64, ptr %i.ab, align 8, !tbaa !56 ; 10 uses
+  %.pre.i = load i64, ptr %i.ab, align 8, !tbaa !56
+  %1 = insertelement <2 x i64> poison, i64 %.pre.i, i64 0
+  %2 = shufflevector <2 x i64> %1, <2 x i64> poison, <2 x i32> zeroinitializer ; 5 uses
   %i.ac = add nsw i64 %i.z, -3                    ; 2 uses
   %i.ad = add nsw i64 %i.z, -4
   %xtraiter = and i64 %i.ac, 3                    ; 3 uses
@@ -218,31 +220,23 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %.06.i = phi i64 [ 3, %.lr.ph.i.new ], [ %i.aq, %bb.b ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.i.new ], [ %niter.next.3, %bb.b ]
-  %i.af = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.06.i ; 3 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  store i64 %.pre.i, ptr %1, align 8, !tbaa !56
-  store i64 %.pre.i, ptr %i.af, align 8, !tbaa !56
+  %i.af = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.06.i ; 2 uses
+  store <2 x i64> %2, ptr %i.af, align 8, !tbaa !56
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   store i8 0, ptr %i.ag, align 8, !tbaa !55
-  %i.ah = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.06.i ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 32
-  store i64 %.pre.i, ptr %i.ai, align 8, !tbaa !56
-  store i64 %.pre.i, ptr %2, align 8, !tbaa !56
+  %i.ah = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.06.i ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
+  store <2 x i64> %2, ptr %i.ai, align 8, !tbaa !56
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 40
   store i8 0, ptr %i.aj, align 8, !tbaa !55
-  %i.ak = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.06.i ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
-  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
-  store i64 %.pre.i, ptr %i.al, align 8, !tbaa !56
-  store i64 %.pre.i, ptr %3, align 8, !tbaa !56
+  %i.ak = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.06.i ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
+  store <2 x i64> %2, ptr %i.al, align 8, !tbaa !56
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 64
   store i8 0, ptr %i.am, align 8, !tbaa !55
-  %i.an = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.06.i ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.an, i64 72
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 80
-  store i64 %.pre.i, ptr %i.ao, align 8, !tbaa !56
-  store i64 %.pre.i, ptr %4, align 8, !tbaa !56
+  %i.an = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.06.i ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 72
+  store <2 x i64> %2, ptr %i.ao, align 8, !tbaa !56
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 88
   store i8 0, ptr %i.ap, align 8, !tbaa !55
   %i.aq = add nuw i64 %.06.i, 4                   ; 2 uses
@@ -263,10 +257,8 @@ _ZN5boost13match_resultsIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_st
 bb.c:                                             ; preds = %bb.c, %.epil.preheader
   %.06.i.epil = phi i64 [ %.06.i.epil.init, %.epil.preheader ], [ %i.at, %bb.c ] ; 2 uses
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.c ]
-  %i.ar = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.06.i.epil ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
-  store i64 %.pre.i, ptr %5, align 8, !tbaa !56
-  store i64 %.pre.i, ptr %i.ar, align 8, !tbaa !56
+  %i.ar = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.06.i.epil ; 2 uses
+  store <2 x i64> %2, ptr %i.ar, align 8, !tbaa !56
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
   store i8 0, ptr %i.as, align 8, !tbaa !55
   %i.at = add nuw i64 %.06.i.epil, 1
@@ -669,7 +661,7 @@ bb.e:                                             ; preds = %bb.d
 _ZNK5boost11basic_regexIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE10mark_countEv.exit: ; preds = %bb.d, %bb.e, %_ZN5boost13re_detail_50015save_state_initC2EPPNS0_11saved_stateES4_.exit
   %i.z = phi i64 [ 1, %_ZN5boost13re_detail_50015save_state_initC2EPPNS0_11saved_stateES4_.exit ], [ %i.y, %bb.e ], [ 1, %bb.d ] ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !2629 ; 6 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !2629 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #36
   store ptr %i.ab, ptr %4, align 8, !tbaa !2596
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -700,13 +692,16 @@ _ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i: ; preds =
 _ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i: ; preds = %_ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i, %bb.f
   %i.aq = phi ptr [ %i.af, %bb.f ], [ %i.ao, %_ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i ] ; 2 uses
   %.not5.i.i.i.i.i = icmp eq ptr %i.ag, %i.aq
-  br i1 %.not5.i.i.i.i.i, label %.loopexit30, label %.lr.ph.i.i.i.i.i
+  br i1 %.not5.i.i.i.i.i, label %.loopexit30, label %.lr.ph.i.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i, %.lr.ph.i.i.i.i.i
-  %.06.i.i.i.i.i = phi ptr [ %i.as, %.lr.ph.i.i.i.i.i ], [ %i.ag, %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i ] ; 4 uses
-  store ptr %i.ab, ptr %.06.i.i.i.i.i, align 8, !tbaa !2596
-  %6 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 8
-  store ptr %i.ab, ptr %6, align 8, !tbaa !2663
+.lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i
+  %6 = insertelement <2 x ptr> poison, ptr %i.ab, i64 0
+  %7 = shufflevector <2 x ptr> %6, <2 x ptr> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i
+  %.06.i.i.i.i.i = phi ptr [ %i.as, %.lr.ph.i.i.i.i.i ], [ %i.ag, %.lr.ph.i.i.i.i.i.preheader ] ; 3 uses
+  store <2 x ptr> %7, ptr %.06.i.i.i.i.i, align 8, !tbaa !56
   %i.ar = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 16
   store i8 0, ptr %i.ar, align 8, !tbaa !2594
   %i.as = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 24 ; 2 uses
@@ -715,13 +710,16 @@ _ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iterato
 
 bb.g:                                             ; preds = %_ZNK5boost11basic_regexIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE10mark_countEv.exit
   %.not5.i.i.i.i15.i = icmp eq ptr %i.ag, %i.af
-  br i1 %.not5.i.i.i.i15.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5boost9sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit22.i, label %.lr.ph.i.i.i.i16.i
+  br i1 %.not5.i.i.i.i15.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5boost9sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit22.i, label %.lr.ph.i.i.i.i16.i.preheader
 
-.lr.ph.i.i.i.i16.i:                               ; preds = %bb.g, %.lr.ph.i.i.i.i16.i
-  %.06.i.i.i.i20.i = phi ptr [ %i.au, %.lr.ph.i.i.i.i16.i ], [ %i.ag, %bb.g ] ; 4 uses
-  store ptr %i.ab, ptr %.06.i.i.i.i20.i, align 8, !tbaa !2596
-  %7 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i, i64 8
-  store ptr %i.ab, ptr %7, align 8, !tbaa !2663
+.lr.ph.i.i.i.i16.i.preheader:                     ; preds = %bb.g
+  %8 = insertelement <2 x ptr> poison, ptr %i.ab, i64 0
+  %9 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.i.i.i.i16.i
+
+.lr.ph.i.i.i.i16.i:                               ; preds = %.lr.ph.i.i.i.i16.i.preheader, %.lr.ph.i.i.i.i16.i
+  %.06.i.i.i.i20.i = phi ptr [ %i.au, %.lr.ph.i.i.i.i16.i ], [ %i.ag, %.lr.ph.i.i.i.i16.i.preheader ] ; 3 uses
+  store <2 x ptr> %9, ptr %.06.i.i.i.i20.i, align 8, !tbaa !56
   %i.at = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i, i64 16
   store i8 0, ptr %i.at, align 8, !tbaa !2594
   %i.au = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i, i64 24 ; 2 uses
@@ -1124,7 +1122,9 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.ab = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %.pre.i = load ptr, ptr %i.ab, align 8, !tbaa !2663 ; 10 uses
+  %.pre.i = load ptr, ptr %i.ab, align 8, !tbaa !2663
+  %1 = insertelement <2 x ptr> poison, ptr %.pre.i, i64 0
+  %2 = shufflevector <2 x ptr> %1, <2 x ptr> poison, <2 x i32> zeroinitializer ; 5 uses
   %i.ac = add nsw i64 %i.z, -3                    ; 2 uses
   %i.ad = add nsw i64 %i.z, -4
   %xtraiter = and i64 %i.ac, 3                    ; 3 uses
@@ -1138,31 +1138,23 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %.08.i = phi i64 [ 3, %.lr.ph.i.new ], [ %i.aq, %bb.b ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.i.new ], [ %niter.next.3, %bb.b ]
-  %i.af = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 3 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  store ptr %.pre.i, ptr %1, align 8, !tbaa !2663
-  store ptr %.pre.i, ptr %i.af, align 8, !tbaa !2596
+  %i.af = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 2 uses
+  store <2 x ptr> %2, ptr %i.af, align 8, !tbaa !56
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   store i8 0, ptr %i.ag, align 8, !tbaa !2594
-  %i.ah = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 32
-  store ptr %.pre.i, ptr %i.ai, align 8, !tbaa !2663
-  store ptr %.pre.i, ptr %2, align 8, !tbaa !2596
+  %i.ah = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
+  store <2 x ptr> %2, ptr %i.ai, align 8, !tbaa !56
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 40
   store i8 0, ptr %i.aj, align 8, !tbaa !2594
-  %i.ak = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
-  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
-  store ptr %.pre.i, ptr %i.al, align 8, !tbaa !2663
-  store ptr %.pre.i, ptr %3, align 8, !tbaa !2596
+  %i.ak = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
+  store <2 x ptr> %2, ptr %i.al, align 8, !tbaa !56
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 64
   store i8 0, ptr %i.am, align 8, !tbaa !2594
-  %i.an = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.an, i64 72
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 80
-  store ptr %.pre.i, ptr %i.ao, align 8, !tbaa !2663
-  store ptr %.pre.i, ptr %4, align 8, !tbaa !2596
+  %i.an = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 72
+  store <2 x ptr> %2, ptr %i.ao, align 8, !tbaa !56
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 88
   store i8 0, ptr %i.ap, align 8, !tbaa !2594
   %i.aq = add nuw i64 %.08.i, 4                   ; 2 uses
@@ -1183,10 +1175,8 @@ _ZN5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE9set_firstES2_.exit.loopexit
 bb.c:                                             ; preds = %bb.c, %.epil.preheader
   %.08.i.epil = phi i64 [ %.08.i.epil.init, %.epil.preheader ], [ %i.at, %bb.c ] ; 2 uses
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.c ]
-  %i.ar = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i.epil ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
-  store ptr %.pre.i, ptr %5, align 8, !tbaa !2663
-  store ptr %.pre.i, ptr %i.ar, align 8, !tbaa !2596
+  %i.ar = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i.epil ; 2 uses
+  store <2 x ptr> %2, ptr %i.ar, align 8, !tbaa !56
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
   store i8 0, ptr %i.as, align 8, !tbaa !2594
   %i.at = add nuw i64 %.08.i.epil, 1

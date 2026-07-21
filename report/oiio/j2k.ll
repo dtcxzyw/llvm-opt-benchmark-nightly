@@ -204,41 +204,38 @@ bb.aa:                                            ; preds = %bb.z
 
 .preheader753:                                    ; preds = %bb.aa
   %.not989 = icmp eq i32 %i.bk, 1
-  br i1 %.not989, label %.loopexit752, label %.lr.ph
+  br i1 %.not989, label %.loopexit752, label %bb.ab
 
-.lr.ph:                                           ; preds = %.preheader753
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 4800 ; 2 uses
-  br label %bb.ab
-
-bb.ab:                                            ; preds = %.lr.ph, %bb.aj
-  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.aj ] ; 4 uses
+bb.ab:                                            ; preds = %.preheader753, %bb.aj
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.aj ], [ 1, %.preheader753 ] ; 3 uses
   %indvars828 = trunc nuw i64 %indvars.iv to i32  ; 5 uses
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv
-  %6 = load float, ptr %5, align 4, !tbaa !66     ; 4 uses
   %i.bp = add i32 %indvars828, -1                 ; 4 uses
-  %i.bq = getelementptr [4 x i8], ptr %4, i64 %indvars.iv
-  %i.br = getelementptr i8, ptr %i.bq, i64 -4
-  %7 = load float, ptr %i.br, align 4, !tbaa !66  ; 5 uses
-  %.inv = fcmp ole float %6, 1.000000e+00
-  %.0590 = select i1 %.inv, float 1.000000e+00, float %6 ; 3 uses
-  %.inv739 = fcmp ole float %7, 1.000000e+00
-  %.0591 = select i1 %.inv739, float 1.000000e+00, float %7 ; 4 uses
-  %i.bs = fcmp ult float %.0590, %.0591
+  %i.bq = getelementptr [4 x i8], ptr %1, i64 %indvars.iv
+  %i.br = getelementptr i8, ptr %i.bq, i64 4796
+  %4 = load <2 x float>, ptr %i.br, align 4, !tbaa !66 ; 6 uses
+  %5 = fcmp ole <2 x float> %4, splat (float 1.000000e+00)
+  %6 = select <2 x i1> %5, <2 x float> splat (float 1.000000e+00), <2 x float> %4 ; 3 uses
+  %7 = extractelement <2 x float> %6, i64 0       ; 3 uses
+  %8 = extractelement <2 x float> %6, i64 1       ; 2 uses
+  %i.bs = fcmp ult float %8, %7
   br i1 %i.bs, label %bb.aj, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %8 = fcmp une float %.0590, %6
-  %9 = fcmp une float %.0591, %7                  ; 2 uses
-  %i.bt = fpext float %6 to double                ; 4 uses
-  br i1 %8, label %bb.ad, label %bb.ag
+  %9 = fcmp une <2 x float> %6, %4                ; 3 uses
+  %10 = extractelement <2 x float> %4, i64 1
+  %i.bt = fpext float %10 to double               ; 4 uses
+  %11 = extractelement <2 x i1> %9, i64 1
+  br i1 %11, label %bb.ad, label %bb.ag
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.bu = fpext float %.0590 to double            ; 2 uses
-  %i.bv = fpext float %7 to double                ; 2 uses
-  br i1 %9, label %bb.ae, label %bb.af
+  %i.bu = fpext float %8 to double                ; 2 uses
+  %12 = extractelement <2 x float> %4, i64 0
+  %i.bv = fpext float %12 to double               ; 2 uses
+  %13 = extractelement <2 x i1> %9, i64 0
+  br i1 %13, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.bw = fpext float %.0591 to double
+  %i.bw = fpext float %7 to double
   %i.bx = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %3, i32 noundef 2, ptr noundef nonnull @.str.8, i32 noundef %indvars828, double noundef %i.bt, double noundef %i.bu, i32 noundef %i.bp, double noundef %i.bv, double noundef %i.bw) #21 ; 0 uses
   br label %bb.aj
 
@@ -247,11 +244,13 @@ bb.af:                                            ; preds = %bb.ad
   br label %bb.aj
 
 bb.ag:                                            ; preds = %bb.ac
-  %i.bz = fpext float %7 to double                ; 2 uses
-  br i1 %9, label %bb.ah, label %bb.ai
+  %14 = extractelement <2 x float> %4, i64 0
+  %i.bz = fpext float %14 to double               ; 2 uses
+  %15 = extractelement <2 x i1> %9, i64 0
+  br i1 %15, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.ca = fpext float %.0591 to double
+  %i.ca = fpext float %7 to double
   %i.cb = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %3, i32 noundef 2, ptr noundef nonnull @.str.10, i32 noundef %indvars828, double noundef %i.bt, i32 noundef %i.bp, double noundef %i.bz, double noundef %i.ca) #21 ; 0 uses
   br label %bb.aj
 

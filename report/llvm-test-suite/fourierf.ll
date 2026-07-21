@@ -203,43 +203,50 @@ bb.k:                                             ; preds = %bb.j
 .preheader.lr.ph.us:                              ; preds = %bb.k, %bb.j, %bb.i
   %.0102.us = phi double [ %i.aa, %bb.j ], [ f0x3FC8F8B83C69A60A, %bb.k ], [ f0x3FE6A09E667F3BCC, %bb.i ]
   %.0100.us = phi double [ %i.ac, %bb.j ], [ %i.ac, %bb.k ], [ f0x3FE6A09E667F3BCD, %bb.i ] ; 2 uses
-  %i.ah = fmul double %.0100.us, 2.000000e+00     ; 2 uses
+  %i.ah = fmul double %.0100.us, 2.000000e+00
   %.not139 = icmp eq i32 %.0104126.us, 0
-  br i1 %.not139, label %._crit_edge124.us, label %.preheader.us.us
+  br i1 %.not139, label %._crit_edge124.us, label %.preheader.us.us.preheader
+
+.preheader.us.us.preheader:                       ; preds = %.preheader.lr.ph.us
+  %6 = insertelement <2 x double> poison, double %.0102.us, i64 0
+  %7 = insertelement <2 x double> %6, double %.0100.us, i64 1
+  %8 = insertelement <2 x double> poison, double %.0103.us, i64 0
+  %9 = insertelement <2 x double> %8, double %.0101.us, i64 1
+  %10 = insertelement <2 x double> poison, double %i.ah, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  br label %.preheader.us.us
 
 ._crit_edge124.us:                                ; preds = %._crit_edge.us.us, %.preheader.lr.ph.us
   %i.ai = shl i32 %.099127.us, 1                  ; 2 uses
   %.not111.us = icmp ugt i32 %i.ai, %0
   br i1 %.not111.us, label %._crit_edge, label %.lr.ph129.split.us, !llvm.loop !28
 
-.preheader.us.us:                                 ; preds = %.preheader.lr.ph.us, %._crit_edge.us.us
-  %indvars.iv149 = phi i32 [ %indvars.iv.next150, %._crit_edge.us.us ], [ %.0104126.us, %.preheader.lr.ph.us ] ; 2 uses
-  %.1123.us.us = phi i32 [ %i.br, %._crit_edge.us.us ], [ 0, %.preheader.lr.ph.us ] ; 2 uses
+.preheader.us.us:                                 ; preds = %.preheader.us.us.preheader, %._crit_edge.us.us
+  %indvars.iv149 = phi i32 [ %indvars.iv.next150, %._crit_edge.us.us ], [ %.0104126.us, %.preheader.us.us.preheader ] ; 2 uses
+  %.1123.us.us = phi i32 [ %i.br, %._crit_edge.us.us ], [ 0, %.preheader.us.us.preheader ] ; 2 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.preheader.us.us
   %.097121.us.us = phi i32 [ %.1123.us.us, %.preheader.us.us ], [ %i.bq, %bb.l ] ; 3 uses
-  %.sroa.6.0120.us.us = phi double [ %.0102.us, %.preheader.us.us ], [ %9, %bb.l ] ; 2 uses
-  %.sroa.10.0119.us.us = phi double [ %.0103.us, %.preheader.us.us ], [ %.sroa.6.0120.us.us, %bb.l ]
-  %.sroa.68.0117.us.us = phi double [ %.0100.us, %.preheader.us.us ], [ %7, %bb.l ] ; 2 uses
-  %.sroa.1010.0116.us.us = phi double [ %.0101.us, %.preheader.us.us ], [ %.sroa.68.0117.us.us, %bb.l ]
-  %6 = fmul double %i.ah, %.sroa.68.0117.us.us
-  %7 = fsub double %6, %.sroa.1010.0116.us.us     ; 3 uses
-  %8 = fmul double %i.ah, %.sroa.6.0120.us.us
-  %9 = fsub double %8, %.sroa.10.0119.us.us       ; 3 uses
+  %12 = phi <2 x double> [ %7, %.preheader.us.us ], [ %15, %bb.l ] ; 2 uses
+  %13 = phi <2 x double> [ %9, %.preheader.us.us ], [ %12, %bb.l ]
+  %14 = fmul <2 x double> %11, %12
+  %15 = fsub <2 x double> %14, %13                ; 3 uses
   %i.aj = add i32 %.097121.us.us, %.0104126.us
   %i.ak = zext i32 %i.aj to i64                   ; 2 uses
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.ak ; 2 uses
   %i.am = load float, ptr %i.al, align 4, !tbaa !11
   %i.an = fpext float %i.am to double             ; 2 uses
-  %i.ao = fmul double %7, %i.an
+  %16 = extractelement <2 x double> %15, i64 1    ; 2 uses
+  %i.ao = fmul double %16, %i.an
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.ak ; 2 uses
   %i.aq = load float, ptr %i.ap, align 4, !tbaa !11
   %i.ar = fpext float %i.aq to double             ; 2 uses
-  %i.as = fmul double %9, %i.ar
+  %17 = extractelement <2 x double> %15, i64 0    ; 2 uses
+  %i.as = fmul double %17, %i.ar
   %i.at = fsub double %i.ao, %i.as                ; 2 uses
-  %i.au = fmul double %7, %i.ar
-  %i.av = fmul double %9, %i.an
+  %i.au = fmul double %16, %i.ar
+  %i.av = fmul double %17, %i.an
   %i.aw = fadd double %i.av, %i.au                ; 2 uses
   %i.ax = zext i32 %.097121.us.us to i64          ; 2 uses
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.ax ; 3 uses

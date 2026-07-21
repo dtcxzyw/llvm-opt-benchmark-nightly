@@ -204,32 +204,31 @@ bb.nh:                                            ; preds = %bb.ng
   %i.awj = load <2 x float>, ptr %i.awa, align 4
   %i.awk = shufflevector <2 x float> %i.awh, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.awl = insertelement <2 x float> %i.awk, float %i.awc, i64 0
-  %i.awm = fsub <2 x float> %i.awj, %i.awl        ; 3 uses
+  %i.awm = fsub <2 x float> %i.awj, %i.awl        ; 5 uses
   %i.awn = getelementptr i8, ptr %i.avz, i64 -4
   %i.awo = load float, ptr %i.awn, align 4
   %i.awp = extractelement <2 x float> %i.awh, i64 1
   %i.awq = fsub float %i.awo, %i.awp              ; 4 uses
-  %10 = extractelement <2 x float> %i.awm, i64 1  ; 3 uses
-  %11 = fmul float %10, %10
-  %i.awr = extractelement <2 x float> %i.awm, i64 0 ; 3 uses
-  %i.aws = call float @llvm.fmuladd.f32(float %i.awr, float %i.awr, float %11)
+  %foldExtExtBinop = fmul <2 x float> %i.awm, %i.awm
+  %10 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %i.awr = extractelement <2 x float> %i.awm, i64 0 ; 2 uses
+  %i.aws = call float @llvm.fmuladd.f32(float %i.awr, float %i.awr, float %10)
   %i.awt = call noundef float @llvm.fmuladd.f32(float %i.awq, float %i.awq, float %i.aws) ; 2 uses
   %i.awu = fcmp oeq float %i.awt, 0.000000e+00
   br i1 %i.awu, label %bb.ni, label %_ZN10aiVector3tIfEdVEf.exit.i
 
 _ZN10aiVector3tIfEdVEf.exit.i:                    ; preds = %bb.nh
   %sqrt.i.i = call noundef float @llvm.sqrt.f32(float %i.awt)
-  %i.awv = fdiv float 1.000000e+00, %sqrt.i.i     ; 3 uses
-  %12 = fmul float %i.awr, %i.awv
-  %.sroa.0905.0.vec.insert = insertelement <2 x float> poison, float %12, i64 0
-  %13 = fmul float %10, %i.awv
-  %.sroa.0905.4.vec.insert = insertelement <2 x float> %.sroa.0905.0.vec.insert, float %13, i64 1
+  %i.awv = fdiv float 1.000000e+00, %sqrt.i.i     ; 2 uses
+  %.sroa.0905.0.vec.insert = insertelement <2 x float> poison, float %i.awv, i64 0
+  %11 = shufflevector <2 x float> %.sroa.0905.0.vec.insert, <2 x float> poison, <2 x i32> zeroinitializer
+  %12 = fmul <2 x float> %i.awm, %11
   %i.aww = fmul float %i.awq, %i.awv
   br label %bb.ni
 
 bb.ni:                                            ; preds = %bb.nh, %_ZN10aiVector3tIfEdVEf.exit.i
   %.sroa.10.0 = phi float [ %i.awq, %bb.nh ], [ %i.aww, %_ZN10aiVector3tIfEdVEf.exit.i ] ; 2 uses
-  %.sroa.0905.0 = phi <2 x float> [ %i.awm, %bb.nh ], [ %.sroa.0905.4.vec.insert, %_ZN10aiVector3tIfEdVEf.exit.i ] ; 3 uses
+  %.sroa.0905.0 = phi <2 x float> [ %i.awm, %bb.nh ], [ %12, %_ZN10aiVector3tIfEdVEf.exit.i ] ; 3 uses
   %.sroa.0905.4.vec.extract911 = extractelement <2 x float> %.sroa.0905.0, i64 1 ; 2 uses
   %.sroa.0905.0.vec.extract908 = extractelement <2 x float> %.sroa.0905.0, i64 0
   %i.awx = fneg float %.sroa.10.0

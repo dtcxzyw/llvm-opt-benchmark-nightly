@@ -201,13 +201,15 @@ _ZN6duckdb12optional_ptrIN17duckdb_libpgquery6PGListELb1EEptEv.exit: ; preds = %
   %i.i = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 6 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 184 ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 192 ; 4 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 15 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 10 uses
   %i.m = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 9 uses
   %i.n = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 7 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 6 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %7, i64 40 ; 7 uses
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 200 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %8 = insertelement <2 x ptr> poison, ptr %i.l, i64 0
+  %9 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <2 x i32> zeroinitializer ; 3 uses
   br label %bb.d
 
 ._crit_edge285:                                   ; preds = %_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EED2Ev.exit127, %_ZN6duckdb12optional_ptrIN17duckdb_libpgquery6PGListELb1EEptEv.exit
@@ -416,8 +418,7 @@ bb.n:                                             ; preds = %.lr.ph, %_ZNSt3setI
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
   store i32 0, ptr %i.l, align 8, !tbaa !348
   store ptr null, ptr %i.m, align 8, !tbaa !349
-  store ptr %i.l, ptr %i.n, align 8, !tbaa !306
-  store ptr %i.l, ptr %i.o, align 8, !tbaa !311
+  store <2 x ptr> %9, ptr %i.n, align 8, !tbaa !354
   store i64 0, ptr %i.p, align 8, !tbaa !312
   %i.cd = load ptr, ptr %i.bp, align 8, !tbaa !306 ; 2 uses
   %.not7.i.i = icmp eq ptr %i.cd, %i.bq
@@ -620,8 +621,7 @@ bb.z:                                             ; preds = %bb.y
   %i.en = getelementptr inbounds nuw i8, ptr %.sroa.14.1265, i64 40
   store i64 %i.ef, ptr %i.en, align 8, !tbaa !312
   store ptr null, ptr %i.m, align 8, !tbaa !349
-  store ptr %i.l, ptr %i.n, align 8, !tbaa !306
-  store ptr %i.l, ptr %i.o, align 8, !tbaa !311
+  store <2 x ptr> %9, ptr %i.n, align 8, !tbaa !354
   store i64 0, ptr %i.p, align 8, !tbaa !312
   br label %_ZNSt3setImSt4lessImESaImEEC2EOS3_.exit.i.i
 
@@ -687,8 +687,7 @@ bb.ae:                                            ; preds = %_ZNSt12_Vector_base
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fg, i64 8
   store ptr %i.ff, ptr %i.fl, align 8, !tbaa !359
   store ptr null, ptr %i.m, align 8, !tbaa !349
-  store ptr %i.l, ptr %i.n, align 8, !tbaa !306
-  store ptr %i.l, ptr %i.o, align 8, !tbaa !311
+  store <2 x ptr> %9, ptr %i.n, align 8, !tbaa !354
   store i64 0, ptr %i.p, align 8, !tbaa !312
   br label %_ZNSt3setImSt4lessImESaImEEC2EOS3_.exit.i
 

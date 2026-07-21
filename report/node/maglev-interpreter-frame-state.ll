@@ -203,10 +203,10 @@ _ZN2v88internal6maglev12_GLOBAL__N_114AspectIncludesINS0_7ZoneMapIPNS1_9ValueNod
 .lr.ph.lr.ph.i.i:                                 ; preds = %_ZN2v88internal6maglev12_GLOBAL__N_114AspectIncludesINS0_7ZoneMapIPNS1_9ValueNodeENS1_8NodeInfoESt4lessIS6_EEESA_FbRKS7_SC_EPFbSC_EEEbRKT_RKT0_RKT1_T2_.exit22
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.cq = load ptr, ptr %i.cp, align 8
-  %i.cr = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
+  %i.cr = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  %i.cu = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 2 uses
+  %i.cu = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.cv = getelementptr inbounds nuw i8, ptr %5, i64 48 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 7 uses
@@ -219,6 +219,8 @@ _ZN2v88internal6maglev12_GLOBAL__N_114AspectIncludesINS0_7ZoneMapIPNS1_9ValueNod
   %i.de = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %7, i64 40 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %7, i64 48 ; 2 uses
+  %8 = insertelement <2 x ptr> poison, ptr %i.cr, i64 0
+  %9 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %"_ZZNK2v88internal6maglev16KnownNodeAspects26IsCompatibleWithLoopHeaderERKS2_ENK3$_0clINS0_7ZoneMapIPNS1_9ValueNodeES9_St4lessIS9_EEESC_EEDaT_T0_.exit.i.i", %.lr.ph.lr.ph.i.i
@@ -233,8 +235,7 @@ bb.aa:                                            ; preds = %_ZN2v88internal7Zon
   store ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, ptr %5, align 8
   store i32 0, ptr %i.cr, align 8
   store ptr null, ptr %i.cs, align 8
-  store ptr %i.cr, ptr %i.ct, align 8
-  store ptr %i.cr, ptr %i.cu, align 8
+  store <2 x ptr> %9, ptr %i.ct, align 8
   store i64 0, ptr %i.cv, align 8
   %i.di = getelementptr inbounds nuw i8, ptr %.sroa.010.044.i.i, i64 64
   %i.dj = load ptr, ptr %i.di, align 8            ; 2 uses

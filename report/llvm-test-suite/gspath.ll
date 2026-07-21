@@ -200,7 +200,12 @@ bb.g:                                             ; preds = %.lr.ph.preheader
   %i.ba = add nsw i64 %.095, -368640              ; 2 uses
   %i.bb = sub nsw i64 %.0100, %i.ba               ; 2 uses
   %i.bc = icmp slt i64 %i.bb, -368640
-  br i1 %i.bc, label %.lr.ph, label %.loopexit
+  br i1 %i.bc, label %.lr.ph.preheader291, label %.loopexit
+
+.lr.ph.preheader291:                              ; preds = %bb.g
+  %7 = insertelement <2 x double> poison, double %2, i64 0
+  %8 = insertelement <2 x double> %7, double %1, i64 1
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.f
   %i.bd = icmp sgt i64 %i.ag, 368640
@@ -237,30 +242,31 @@ bb.i:                                             ; preds = %.lr.ph
   %i.bz = add nsw i64 %.196181, -368640           ; 2 uses
   %i.ca = sub nsw i64 %.0100, %i.bz               ; 2 uses
   %i.cb = icmp slt i64 %i.ca, -368640
-  br i1 %i.cb, label %.lr.ph, label %.loopexit.loopexit293, !llvm.loop !28
+  br i1 %i.cb, label %.lr.ph, label %.loopexit, !llvm.loop !28
 
-.lr.ph:                                           ; preds = %bb.g, %bb.i
-  %.196181 = phi i64 [ %i.bz, %bb.i ], [ %i.ba, %bb.g ]
-  %.0109179 = phi float [ %.0112178, %bb.i ], [ %i.v, %bb.g ] ; 2 uses
-  %.0112178 = phi float [ %i.cc, %bb.i ], [ %i.ai, %bb.g ] ; 4 uses
-  %.0115177 = phi float [ %12, %bb.i ], [ %i.ap, %bb.g ] ; 2 uses
-  %.0120176 = phi float [ %9, %bb.i ], [ %i.ao, %bb.g ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader291, %bb.i
+  %.196181 = phi i64 [ %i.bz, %bb.i ], [ %i.ba, %.lr.ph.preheader291 ]
+  %.0109179 = phi float [ %.0112178, %bb.i ], [ %i.v, %.lr.ph.preheader291 ] ; 2 uses
+  %.0112178 = phi float [ %i.cc, %bb.i ], [ %i.ai, %.lr.ph.preheader291 ] ; 4 uses
+  %.0115177 = phi float [ %16, %bb.i ], [ %i.ap, %.lr.ph.preheader291 ] ; 2 uses
+  %.0120176 = phi float [ %15, %bb.i ], [ %i.ao, %.lr.ph.preheader291 ] ; 2 uses
   %i.cc = fneg float %.0109179                    ; 3 uses
-  %7 = fpext float %.0112178 to double
-  %8 = fadd double %1, %7
-  %9 = fptrunc double %8 to float                 ; 4 uses
-  %10 = fpext float %i.cc to double
-  %11 = fadd double %2, %10
-  %12 = fptrunc double %11 to float               ; 4 uses
-  %i.cd = fpext float %.0120176 to double
-  %i.ce = fpext float %.0115177 to double
-  %13 = fpext float %9 to double
-  %i.cf = fpext float %12 to double
+  %9 = insertelement <2 x float> poison, float %i.cc, i64 0
+  %10 = insertelement <2 x float> %9, float %.0112178, i64 1
+  %11 = fpext <2 x float> %10 to <2 x double>
+  %12 = fadd <2 x double> %8, %11
+  %13 = fptrunc <2 x double> %12 to <2 x float>   ; 3 uses
+  %14 = fpext float %.0120176 to double
+  %i.cd = fpext float %.0115177 to double
+  %15 = extractelement <2 x float> %13, i64 1     ; 3 uses
+  %i.ce = fpext float %15 to double
+  %16 = extractelement <2 x float> %13, i64 0     ; 3 uses
+  %i.cf = fpext float %16 to double
   %i.cg = fadd float %.0120176, %.0112178
   %i.ch = fpext float %i.cg to double
   %i.ci = fsub float %.0115177, %.0109179
   %i.cj = fpext float %i.ci to double
-  %i.ck = tail call i32 @arc_add(ptr noundef %0, double noundef %i.cd, double noundef %i.ce, double noundef %13, double noundef %i.cf, double noundef %i.ch, double noundef %i.cj, i32 noundef 0) ; 2 uses
+  %i.ck = tail call i32 @arc_add(ptr noundef %0, double noundef %14, double noundef %i.cd, double noundef %i.ce, double noundef %i.cf, double noundef %i.ch, double noundef %i.cj, i32 noundef 0) ; 2 uses
   %i.cl = icmp sgt i32 %i.ck, -1
   br i1 %i.cl, label %bb.i, label %.thread
 
@@ -296,19 +302,14 @@ bb.j:                                             ; preds = %.lr.ph193
   %i.dg = icmp sgt i32 %i.df, -1
   br i1 %i.dg, label %bb.j, label %.thread
 
-.loopexit.loopexit293:                            ; preds = %bb.i
-  %14 = insertelement <2 x float> poison, float %12, i64 0
-  %15 = insertelement <2 x float> %14, float %9, i64 1
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %bb.j, %.loopexit.loopexit293, %bb.g, %bb.h, %.preheader158, %.preheader
-  %.4124 = phi float [ %9, %.loopexit.loopexit293 ], [ %i.af, %.preheader ], [ %i.af, %.preheader158 ], [ %i.bk, %bb.h ], [ %i.ao, %bb.g ], [ %i.cv, %bb.j ]
-  %.4119 = phi float [ %12, %.loopexit.loopexit293 ], [ %i.ae, %.preheader ], [ %i.ae, %.preheader158 ], [ %i.bl, %bb.h ], [ %i.ap, %bb.g ], [ %i.cw, %bb.j ]
-  %.2114 = phi float [ %i.cc, %.loopexit.loopexit293 ], [ %i.v, %.preheader ], [ %i.v, %.preheader158 ], [ %i.u, %bb.h ], [ %i.ai, %bb.g ], [ %.1110190, %bb.j ]
-  %.2111 = phi float [ %.0112178, %.loopexit.loopexit293 ], [ %i.u, %.preheader ], [ %i.u, %.preheader158 ], [ %i.be, %bb.h ], [ %i.v, %bb.g ], [ %i.cp, %bb.j ]
-  %.4108 = phi i32 [ 0, %.loopexit.loopexit293 ], [ 1, %.preheader ], [ 1, %.preheader158 ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %bb.j ]
-  %.0101 = phi i64 [ %i.ca, %.loopexit.loopexit293 ], [ %i.ag, %.preheader ], [ %i.ag, %.preheader158 ], [ %i.bx, %bb.h ], [ %i.bb, %bb.g ], [ %i.cn, %bb.j ] ; 2 uses
-  %i.dh = phi <2 x float> [ %15, %.loopexit.loopexit293 ], [ %i.ad, %.preheader ], [ %i.ad, %.preheader158 ], [ %i.bj, %bb.h ], [ %i.an, %bb.g ], [ %i.cu, %bb.j ]
+.loopexit:                                        ; preds = %bb.i, %bb.j, %bb.g, %bb.h, %.preheader158, %.preheader
+  %.4124 = phi float [ %i.cv, %bb.j ], [ %i.af, %.preheader ], [ %i.af, %.preheader158 ], [ %i.bk, %bb.h ], [ %i.ao, %bb.g ], [ %15, %bb.i ]
+  %.4119 = phi float [ %i.cw, %bb.j ], [ %i.ae, %.preheader ], [ %i.ae, %.preheader158 ], [ %i.bl, %bb.h ], [ %i.ap, %bb.g ], [ %16, %bb.i ]
+  %.2114 = phi float [ %.1110190, %bb.j ], [ %i.v, %.preheader ], [ %i.v, %.preheader158 ], [ %i.u, %bb.h ], [ %i.ai, %bb.g ], [ %i.cc, %bb.i ]
+  %.2111 = phi float [ %i.cp, %bb.j ], [ %i.u, %.preheader ], [ %i.u, %.preheader158 ], [ %i.be, %bb.h ], [ %i.v, %bb.g ], [ %.0112178, %bb.i ]
+  %.4108 = phi i32 [ 0, %bb.j ], [ 1, %.preheader ], [ 1, %.preheader158 ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %bb.i ]
+  %.0101 = phi i64 [ %i.cn, %bb.j ], [ %i.ag, %.preheader ], [ %i.ag, %.preheader158 ], [ %i.bx, %bb.h ], [ %i.bb, %bb.g ], [ %i.ca, %bb.i ] ; 2 uses
+  %i.dh = phi <2 x float> [ %i.cu, %bb.j ], [ %i.ad, %.preheader ], [ %i.ad, %.preheader158 ], [ %i.bj, %bb.h ], [ %i.an, %bb.g ], [ %13, %bb.i ]
   %i.di = icmp eq i64 %.0101, 0
   br i1 %i.di, label %.thread, label %bb.k
 

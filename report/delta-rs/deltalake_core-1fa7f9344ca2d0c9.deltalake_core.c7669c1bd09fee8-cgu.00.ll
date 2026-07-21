@@ -204,7 +204,7 @@ _RNvXNtNtCs6Po7BT7Nknu_5alloc3vec21spec_from_iter_nestedINtB4_3VecjEINtB2_18Spec
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs6Po7BT7Nknu_5alloc3vec14spec_from_iterINtB4_3VecjEINtB2_12SpecFromIterjINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_map9FilterMapINtNtB1m_9enumerate9EnumerateINtNtNtB1q_5slice4iter4IterINtNtB6_4sync3ArcNtNtNtCs4tdlwR1I4n2_7parquet6schema5types16ColumnDescriptorEEENCINvNtNtCs14kWLkQVSKO_14deltalake_core6writer5stats19stats_from_metadataNtNtB6_6string6StringEs_0EE9from_iterB4D_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(32) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 6 uses
+  %i.a = alloca [16 x i8], align 16               ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [16 x i8], align 8                ; 6 uses
   %i.d = alloca [32 x i8], align 8                ; 8 uses
@@ -283,8 +283,10 @@ _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs14kW
   call void @llvm.experimental.noalias.scope.decl(metadata !23729)
   %i.ad = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %2 = insertelement <2 x ptr> poison, ptr %i.ad, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.ae, i64 1
   br label %bb.f
 
 bb.f:                                             ; preds = %.noexc9.i, %_RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs14kWLkQVSKO_14deltalake_core.exit.i
@@ -293,8 +295,7 @@ bb.f:                                             ; preds = %.noexc9.i, %_RNvMs4
   call void @llvm.experimental.noalias.scope.decl(metadata !23737)
   call void @llvm.experimental.noalias.scope.decl(metadata !23740)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !23743
-  store ptr %i.ad, ptr %i.a, align 8, !noalias !23746
-  store ptr %i.ae, ptr %i.af, align 8, !noalias !23746
+  store <2 x ptr> %3, ptr %i.a, align 16, !noalias !23746
   %i.ah = load ptr, ptr %i.ag, align 8, !alias.scope !23749, !noalias !23752, !nonnull !8, !noundef !8
   %.promoted.i.i.i.i.i.i.i = load ptr, ptr %i.d, align 8, !alias.scope !23749, !noalias !23752
   br label %bb.g

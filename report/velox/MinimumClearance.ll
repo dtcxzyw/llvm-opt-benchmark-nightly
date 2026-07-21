@@ -204,26 +204,23 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.d
   %.03244.i = phi i64 [ %i.l, %bb.d ], [ 0, %.preheader.i ] ; 2 uses
-  %i.d = tail call noundef ptr @_ZNK4geos9operation8distance13FacetSequence13getCoordinateEm(ptr noundef nonnull align 8 dereferenceable(64) %1, i64 noundef %.02745.i) ; 3 uses
-  %i.e = tail call noundef ptr @_ZNK4geos9operation8distance13FacetSequence13getCoordinateEm(ptr noundef nonnull align 8 dereferenceable(64) %2, i64 noundef %.03244.i) ; 3 uses
-  %3 = load double, ptr %i.d, align 8, !tbaa !96  ; 2 uses
-  %4 = load double, ptr %i.e, align 8, !tbaa !96  ; 2 uses
-  %5 = fcmp oeq double %3, %4
-  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %7 = load double, ptr %6, align 8               ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %9 = load double, ptr %8, align 8               ; 2 uses
-  %10 = fcmp oeq double %7, %9
-  %.0.i.i = select i1 %5, i1 %10, i1 false
+  %i.d = tail call noundef ptr @_ZNK4geos9operation8distance13FacetSequence13getCoordinateEm(ptr noundef nonnull align 8 dereferenceable(64) %1, i64 noundef %.02745.i) ; 2 uses
+  %i.e = tail call noundef ptr @_ZNK4geos9operation8distance13FacetSequence13getCoordinateEm(ptr noundef nonnull align 8 dereferenceable(64) %2, i64 noundef %.03244.i) ; 2 uses
+  %3 = load <2 x double>, ptr %i.d, align 8       ; 2 uses
+  %4 = load <2 x double>, ptr %i.e, align 8       ; 2 uses
+  %5 = fcmp oeq <2 x double> %3, %4               ; 2 uses
+  %6 = extractelement <2 x i1> %5, i64 0
+  %7 = extractelement <2 x i1> %5, i64 1
+  %.0.i.i = select i1 %6, i1 %7, i1 false
   br i1 %.0.i.i, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i
-  %11 = fsub double %3, %4                        ; 2 uses
-  %12 = fsub double %7, %9                        ; 2 uses
-  %13 = fmul double %11, %11
-  %14 = fmul double %12, %12
-  %15 = fadd double %13, %14                      ; 2 uses
-  %sqrt.i.i = tail call noundef double @llvm.sqrt.f64(double %15) ; 2 uses
+  %8 = fsub <2 x double> %3, %4                   ; 2 uses
+  %9 = fmul <2 x double> %8, %8                   ; 2 uses
+  %shift = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %9, %shift
+  %10 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 2 uses
+  %sqrt.i.i = tail call noundef double @llvm.sqrt.f64(double %10) ; 2 uses
   %i.f = load double, ptr %0, align 8, !tbaa !42
   %i.g = fcmp olt double %sqrt.i.i, %i.f
   br i1 %i.g, label %bb.c, label %bb.d
@@ -231,24 +228,24 @@ bb.b:                                             ; preds = %.lr.ph.i
 bb.c:                                             ; preds = %bb.b
   store double %sqrt.i.i, ptr %0, align 8, !tbaa !42
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !49
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !tbaa.struct !97
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !tbaa.struct !96
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !49
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.j, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !tbaa.struct !97
-  %i.k = fcmp oeq double %15, 0.000000e+00
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.j, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !tbaa.struct !96
+  %i.k = fcmp oeq double %10, 0.000000e+00
   br i1 %i.k, label %_ZZN4geos9precision16MinimumClearance7computeEvEN20MinClearanceDistance14vertexDistanceEPKNS_9operation8distance13FacetSequenceES7_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %.lr.ph.i
   %i.l = add nuw i64 %.03244.i, 1                 ; 2 uses
   %i.m = tail call noundef i64 @_ZNK4geos9operation8distance13FacetSequence4sizeEv(ptr noundef nonnull align 8 dereferenceable(64) %2)
   %.not.i = icmp ult i64 %i.l, %i.m
-  br i1 %.not.i, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !98
+  br i1 %.not.i, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !97
 
 ._crit_edge.i:                                    ; preds = %bb.d, %.preheader.i
   %i.n = add nuw i64 %.02745.i, 1                 ; 2 uses
   %i.o = tail call noundef i64 @_ZNK4geos9operation8distance13FacetSequence4sizeEv(ptr noundef nonnull align 8 dereferenceable(64) %1)
   %i.p = icmp ult i64 %i.n, %i.o
-  br i1 %i.p, label %.preheader.i, label %_ZZN4geos9precision16MinimumClearance7computeEvEN20MinClearanceDistance14vertexDistanceEPKNS_9operation8distance13FacetSequenceES7_.exit, !llvm.loop !99
+  br i1 %i.p, label %.preheader.i, label %_ZZN4geos9precision16MinimumClearance7computeEvEN20MinClearanceDistance14vertexDistanceEPKNS_9operation8distance13FacetSequenceES7_.exit, !llvm.loop !98
 
 _ZZN4geos9precision16MinimumClearance7computeEvEN20MinClearanceDistance14vertexDistanceEPKNS_9operation8distance13FacetSequenceES7_.exit: ; preds = %._crit_edge.i, %bb.c, %bb.a
   %i.q = tail call noundef i64 @_ZNK4geos9operation8distance13FacetSequence4sizeEv(ptr noundef nonnull align 8 dereferenceable(64) %1)
@@ -336,8 +333,8 @@ bb.a:
   %i.f = add i64 %.03851, -1
   %i.g = call noundef ptr @_ZNK4geos9operation8distance13FacetSequence13getCoordinateEm(ptr noundef nonnull align 8 dereferenceable(64) %2, i64 noundef %i.f) ; 4 uses
   %i.h = call noundef ptr @_ZNK4geos9operation8distance13FacetSequence13getCoordinateEm(ptr noundef nonnull align 8 dereferenceable(64) %2, i64 noundef %.03851) ; 4 uses
-  %i.i = load double, ptr %i.e, align 8, !tbaa !96 ; 2 uses
-  %i.j = load double, ptr %i.g, align 8, !tbaa !96
+  %i.i = load double, ptr %i.e, align 8, !tbaa !99 ; 2 uses
+  %i.j = load double, ptr %i.g, align 8, !tbaa !99
   %i.k = fcmp oeq double %i.i, %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.m = load double, ptr %i.l, align 8           ; 2 uses
@@ -348,7 +345,7 @@ bb.a:
   br i1 %.0.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.q = load double, ptr %i.h, align 8, !tbaa !96
+  %i.q = load double, ptr %i.h, align 8, !tbaa !99
   %i.r = fcmp oeq double %i.i, %i.q
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.t = load double, ptr %i.s, align 8
@@ -365,10 +362,10 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   store double %i.v, ptr %0, align 8, !tbaa !42
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.g, i64 24, i1 false), !tbaa.struct !97
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.h, i64 24, i1 false), !tbaa.struct !97
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.g, i64 24, i1 false), !tbaa.struct !96
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.h, i64 24, i1 false), !tbaa.struct !96
   %i.y = load ptr, ptr %i.c, align 8, !tbaa !49
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.y, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !tbaa.struct !97
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.y, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !tbaa.struct !96
   %i.z = load ptr, ptr %i.c, align 8, !tbaa !49
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 24
   call void @_ZNK4geos4geom11LineSegment12closestPointERKNS0_10CoordinateERS2_(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %i.aa)
@@ -771,10 +768,10 @@ attributes #19 = { builtin nounwind }
 !93 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !94, i64 0}
 !94 = !{!"p1 omnipotent char", !10, i64 0}
 !95 = distinct !{null, null}
-!96 = !{!52, !11, i64 0}
-!97 = !{i64 0, i64 8, !74, i64 8, i64 8, !74, i64 16, i64 8, !74}
+!96 = !{i64 0, i64 8, !74, i64 8, i64 8, !74, i64 16, i64 8, !74}
+!97 = distinct !{!97, !81}
 !98 = distinct !{!98, !81}
-!99 = distinct !{!99, !81}
+!99 = !{!52, !11, i64 0}
 !100 = distinct !{!100, !81}
 !101 = distinct !{!101, !81}
 !102 = !{!57, !65, i64 80}

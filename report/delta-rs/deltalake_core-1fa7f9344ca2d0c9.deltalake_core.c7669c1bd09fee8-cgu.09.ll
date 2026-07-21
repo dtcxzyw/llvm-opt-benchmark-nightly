@@ -204,14 +204,13 @@ _RINvYINtNtNtCsbvkFyIu7lgC_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterat
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_3ops5range5RangejENCNvNtNtNtCs14kWLkQVSKO_14deltalake_core10test_utils9factories4data21generate_random_arraysa_0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB2W_8for_each4callNtNtCs6Po7BT7Nknu_5alloc6string6StringNCINvMsj_NtB43_3vecINtB4K_3VecB3Z_E14extend_trustedBN_E0E0EB1z_(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 6 uses
+  %i.a = alloca [24 x i8], align 16               ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 8 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i64, ptr %i.d, align 8, !noundef !4 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = load i64, ptr %i.f, align 8, !noundef !4 ; 2 uses
-  %2 = load ptr, ptr %0, align 8, !nonnull !4, !align !8, !noundef !4
   %.sroa.0.0.copyload = load ptr, ptr %1, align 8 ; 4 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 2 uses
@@ -221,10 +220,11 @@ bb.a:
   br i1 %i.h, label %.lr.ph.i, label %_RINvYINtNtNtCsbvkFyIu7lgC_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBR_8adapters3map8map_foldjNtNtCs6Po7BT7Nknu_5alloc6string6StringuNCNvNtNtNtCs14kWLkQVSKO_14deltalake_core10test_utils9factories4data21generate_random_arraysa_0NCINvNvBL_8for_each4callB25_NCINvMsj_NtB29_3vecINtB4P_3VecB25_E14extend_trustedINtB1B_3MapB3_B2I_EE0E0E0EB2S_.exit
 
 .lr.ph.i:                                         ; preds = %bb.a
+  %2 = load ptr, ptr %0, align 8, !nonnull !4, !align !8, !noundef !4
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.5.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %3 = insertelement <2 x ptr> <ptr inttoptr (i64 1 to ptr), ptr poison>, ptr %2, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map8map_foldjNtNtCs6Po7BT7Nknu_5alloc6string6StringuNCNvNtNtNtCs14kWLkQVSKO_14deltalake_core10test_utils9factories4data21generate_random_arraysa_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsj_NtBZ_3vecINtB49_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB1y_EE0E0E0B1I_.exit.i, %.lr.ph.i
@@ -236,9 +236,8 @@ bb.b:                                             ; preds = %_RNCINvNtNtNtCsbvkF
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8, !noalias !11941
   store i64 0, ptr %.sroa.5.0..sroa_idx.i.i.i.i, align 8, !noalias !11941
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !11941
-  store ptr inttoptr (i64 1 to ptr), ptr %i.a, align 8, !noalias !11951
-  store ptr %2, ptr %i.i, align 8, !noalias !11951
-  store i64 3, ptr %3, align 8, !noalias !11951
+  store <2 x ptr> %3, ptr %i.a, align 16, !noalias !11951
+  store i64 3, ptr %i.i, align 16, !noalias !11951
   invoke void @_RNvXNtNtCs6Po7BT7Nknu_5alloc3vec11spec_extendINtB4_3VechEINtB2_10SpecExtendhINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters4take4TakeINtNtNtCs33QkLPyrmWQ_4rand13distributions12distribution8DistIterRNtNtB27_5other12AlphanumericQNtNtNtB29_4rngs6thread9ThreadRnghEEE11spec_extendCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.a)
           to label %_RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map8map_foldjNtNtCs6Po7BT7Nknu_5alloc6string6StringuNCNvNtNtNtCs14kWLkQVSKO_14deltalake_core10test_utils9factories4data21generate_random_arraysa_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsj_NtBZ_3vecINtB49_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB1y_EE0E0E0B1I_.exit.i unwind label %bb.c, !noalias !11955
 

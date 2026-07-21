@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca i8, align 1                       ; 4 uses
   %i.c = alloca i8, align 1                       ; 4 uses
   %1 = alloca %"class.v8::internal::compiler::MapRef", align 8 ; 6 uses
-  %2 = alloca %"class.v8::base::SmallVector.2648", align 8 ; 9 uses
+  %2 = alloca %"class.v8::base::SmallVector.2648", align 16 ; 10 uses
   %3 = alloca %"class.v8::internal::maglev::(anonymous namespace)::KnownMapsMerger", align 8 ; 10 uses
   %4 = alloca %"class.v8::internal::maglev::MaglevGraphBuilder::MaglevSubGraphBuilder", align 8 ; 26 uses
   %5 = alloca %"class.std::optional.2650", align 4 ; 9 uses
@@ -607,10 +607,11 @@ bb.az:                                            ; preds = %bb.ar
   br i1 %i.lf, label %.lr.ph159, label %._crit_edge160
 
 .lr.ph159:                                        ; preds = %bb.az
-  %i.lg = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  %i.lh = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %i.lg = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %i.lh = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.li = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.lj = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
+  %34 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 32>
+  %i.lj = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.lk = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ll = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -685,15 +686,14 @@ _ZN2v84base11SmallVectorINS_8internal8compiler6MapRefELm1ESaIS4_EEC2ESt16initial
   %i.mi = call noundef ptr @_ZN2v88internal6maglev16KnownNodeAspects18GetOrCreateInfoForEPNS0_8compiler12JSHeapBrokerEPNS1_9ValueNodeE(ptr noundef nonnull align 8 dereferenceable(352) %i.mg, ptr noundef %i.mh, ptr noundef %i.ao) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33
   %i.mj = load i64, ptr %1, align 8
-  store ptr %i.lg, ptr %2, align 8
-  store ptr %i.lj, ptr %i.li, align 8
+  store ptr %i.lj, ptr %i.li, align 16
   store i64 %i.mj, ptr %i.lg, align 8
-  store ptr %i.lj, ptr %i.lh, align 8
+  store <2 x ptr> %34, ptr %2, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #33
   %i.mk = load ptr, ptr %i.x, align 8
   %i.ml = load ptr, ptr %i.ah, align 8
   %i.mm = call noundef ptr @_ZNK2v88internal6maglev21MaglevCompilationUnit4zoneEv(ptr noundef nonnull align 8 dereferenceable(52) %i.ml) #33
-  %i.mn = load ptr, ptr %2, align 8               ; 2 uses
+  %i.mn = load ptr, ptr %2, align 16              ; 2 uses
   %i.mo = load ptr, ptr %i.lh, align 8
   %i.mp = ptrtoint ptr %i.mo to i64
   %i.mq = ptrtoint ptr %i.mn to i64
@@ -1096,7 +1096,7 @@ bb.a:
   %i.f = alloca [1 x ptr], align 8                ; 4 uses
   %i.g = alloca i8, align 1                       ; 4 uses
   %3 = alloca %"class.v8::internal::compiler::MapRef", align 8 ; 6 uses
-  %4 = alloca %"class.v8::base::SmallVector.2648", align 8 ; 9 uses
+  %4 = alloca %"class.v8::base::SmallVector.2648", align 16 ; 10 uses
   %5 = alloca %"class.v8::internal::maglev::(anonymous namespace)::KnownMapsMerger", align 8 ; 10 uses
   %6 = alloca %"class.v8::internal::maglev::MaglevGraphBuilder::MaglevSubGraphBuilder", align 8 ; 31 uses
   %7 = alloca %"class.std::optional.636", align 8 ; 15 uses
@@ -1499,10 +1499,11 @@ bb.ba:                                            ; preds = %bb.as
 .lr.ph213.i:                                      ; preds = %bb.ba
   %i.lz = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 2 uses
   %i.ma = getelementptr inbounds nuw i8, ptr %i.q, i64 24
-  %i.mb = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
-  %i.mc = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.mb = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %i.mc = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.md = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.me = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
+  %32 = getelementptr inbounds nuw i8, ptr %4, <2 x i64> <i64 24, i64 32>
+  %i.me = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.mf = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.mg = getelementptr inbounds nuw i8, ptr %5, i64 16
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 24
@@ -1743,15 +1744,14 @@ _ZNK2v88internal6maglev13VirtualObject3mapEv.exit.i.i: ; preds = %bb.bi
 _ZN2v84base11SmallVectorINS_8internal8compiler6MapRefELm1ESaIS4_EEC2ESt16initializer_listIS4_ERKS5_.exit.i: ; preds = %_ZNK2v88internal6maglev13VirtualObject3mapEv.exit.i.i, %bb.bh, %_ZNSt8_Rb_treeIPN2v88internal6maglev9ValueNodeESt4pairIKS4_NS2_8NodeInfoEESt10_Select1stIS8_ESt4lessIS4_ENS1_13ZoneAllocatorIS8_EEE17_M_emplace_uniqueIJRS4_S7_EEES5_ISt17_Rb_tree_iteratorIS8_EbEDpOT_.exit.i, %_ZN2v88internal6maglev16KnownNodeAspects8FindInfoEPNS1_9ValueNodeE.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #33
   %i.pl = load i64, ptr %3, align 8
-  store ptr %i.mb, ptr %4, align 8
-  store ptr %i.me, ptr %i.md, align 8
+  store ptr %i.me, ptr %i.md, align 16
   store i64 %i.pl, ptr %i.mb, align 8
-  store ptr %i.me, ptr %i.mc, align 8
+  store <2 x ptr> %32, ptr %4, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #33
   %i.pm = load ptr, ptr %i.r, align 8
   %i.pn = load ptr, ptr %i.ab, align 8
   %i.po = call noundef ptr @_ZNK2v88internal6maglev21MaglevCompilationUnit4zoneEv(ptr noundef nonnull align 8 dereferenceable(52) %i.pn) #33, !inline_history !139
-  %i.pp = load ptr, ptr %4, align 8               ; 2 uses
+  %i.pp = load ptr, ptr %4, align 16              ; 2 uses
   %i.pq = load ptr, ptr %i.mc, align 8
   %i.pr = ptrtoint ptr %i.pq to i64
   %i.ps = ptrtoint ptr %i.pp to i64
@@ -2154,7 +2154,7 @@ bb.a:
   %i.g = alloca [1 x ptr], align 8                ; 4 uses
   %i.h = alloca i8, align 1                       ; 4 uses
   %3 = alloca %"class.v8::internal::compiler::MapRef", align 8 ; 6 uses
-  %4 = alloca %"class.v8::base::SmallVector.2648", align 8 ; 10 uses
+  %4 = alloca %"class.v8::base::SmallVector.2648", align 16 ; 10 uses
   %5 = alloca %"class.v8::internal::maglev::(anonymous namespace)::KnownMapsMerger", align 8 ; 10 uses
   %6 = alloca %"class.v8::internal::maglev::MaglevGraphBuilder::MaglevSubGraphBuilder", align 8 ; 31 uses
   %7 = alloca %"class.std::optional.636", align 8 ; 15 uses
@@ -2557,8 +2557,8 @@ bb.at:                                            ; preds = %bb.al
   br i1 %i.ka, label %.lr.ph150, label %._crit_edge151
 
 .lr.ph150:                                        ; preds = %bb.at
-  %i.kb = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
-  %i.kc = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.kb = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %i.kc = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.kd = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ke = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.kf = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -2571,7 +2571,7 @@ bb.at:                                            ; preds = %bb.al
   %.not15.i.i.i = icmp eq ptr %i.q, null
   %i.kl = getelementptr inbounds nuw i8, ptr %i.q, i64 48
   %wide.trip.count = and i64 %i.jv, 2147483647
-  %30 = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %30 = getelementptr inbounds nuw i8, ptr %4, <2 x i64> <i64 24, i64 32>
   br label %bb.au
 
 ._crit_edge151:                                   ; preds = %._crit_edge144, %bb.at
@@ -2633,15 +2633,14 @@ _ZN2v84base11SmallVectorINS_8internal8compiler6MapRefELm1ESaIS4_EEC2ESt16initial
   %i.lc = call noundef ptr @_ZN2v88internal6maglev16KnownNodeAspects18GetOrCreateInfoForEPNS0_8compiler12JSHeapBrokerEPNS1_9ValueNodeE(ptr noundef nonnull align 8 dereferenceable(352) %i.la, ptr noundef %i.lb, ptr noundef %i.q), !inline_history !150 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #33
   %i.ld = load i64, ptr %3, align 8
-  store ptr %i.kb, ptr %4, align 8
-  store ptr %i.ke, ptr %i.kd, align 8
+  store ptr %i.ke, ptr %i.kd, align 16
   store i64 %i.ld, ptr %i.kb, align 8
-  store ptr %30, ptr %i.kc, align 8
+  store <2 x ptr> %30, ptr %4, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #33
   %i.le = load ptr, ptr %i.r, align 8
   %i.lf = load ptr, ptr %i.ab, align 8
   %i.lg = call noundef ptr @_ZNK2v88internal6maglev21MaglevCompilationUnit4zoneEv(ptr noundef nonnull align 8 dereferenceable(52) %i.lf) #33, !inline_history !150
-  %i.lh = load ptr, ptr %4, align 8               ; 2 uses
+  %i.lh = load ptr, ptr %4, align 16              ; 2 uses
   %i.li = load ptr, ptr %i.kc, align 8
   %i.lj = ptrtoint ptr %i.li to i64
   %i.lk = ptrtoint ptr %i.lh to i64
@@ -3044,7 +3043,7 @@ bb.a:
   %i.g = alloca [1 x ptr], align 8                ; 4 uses
   %i.h = alloca i8, align 1                       ; 4 uses
   %8 = alloca %"class.v8::internal::compiler::MapRef", align 8 ; 6 uses
-  %9 = alloca %"class.v8::base::SmallVector.2648", align 8 ; 9 uses
+  %9 = alloca %"class.v8::base::SmallVector.2648", align 16 ; 10 uses
   %10 = alloca %"class.v8::internal::maglev::(anonymous namespace)::KnownMapsMerger", align 8 ; 10 uses
   %11 = alloca %"class.v8::internal::maglev::MaglevGraphBuilder::MaglevSubGraphBuilder", align 8 ; 37 uses
   %12 = alloca %"class.std::optional.636", align 8 ; 17 uses
@@ -3074,10 +3073,11 @@ bb.a:
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.aa = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %9, i64 24
+  %i.ab = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.ac = getelementptr inbounds nuw i8, ptr %9, i64 16
-  %i.ad = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %9, <2 x i64> <i64 24, i64 32>
+  %i.ad = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.af = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.ag = getelementptr inbounds nuw i8, ptr %10, i64 16
@@ -3319,15 +3319,14 @@ _ZNK2v88internal6maglev13VirtualObject3mapEv.exit.i: ; preds = %bb.i
 _ZN2v84base11SmallVectorINS_8internal8compiler6MapRefELm1ESaIS4_EEC2ESt16initializer_listIS4_ERKS5_.exit: ; preds = %_ZNK2v88internal6maglev13VirtualObject3mapEv.exit.i, %bb.h, %_ZNSt8_Rb_treeIPN2v88internal6maglev9ValueNodeESt4pairIKS4_NS2_8NodeInfoEESt10_Select1stIS8_ESt4lessIS4_ENS1_13ZoneAllocatorIS8_EEE17_M_emplace_uniqueIJRS4_S7_EEES5_ISt17_Rb_tree_iteratorIS8_EbEDpOT_.exit, %_ZN2v88internal6maglev16KnownNodeAspects8FindInfoEPNS1_9ValueNodeE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #33
   %i.dl = load i64, ptr %8, align 8
-  store ptr %i.aa, ptr %9, align 8
-  store ptr %i.ad, ptr %i.ac, align 8
+  store ptr %i.ad, ptr %i.ac, align 16
   store i64 %i.dl, ptr %i.aa, align 8
-  store ptr %i.ad, ptr %i.ab, align 8
+  store <2 x ptr> %17, ptr %9, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #33
   %i.dm = load ptr, ptr %i.x, align 8
   %i.dn = load ptr, ptr %i.ae, align 8
   %i.do = call noundef ptr @_ZNK2v88internal6maglev21MaglevCompilationUnit4zoneEv(ptr noundef nonnull align 8 dereferenceable(52) %i.dn) #33
-  %i.dp = load ptr, ptr %9, align 8               ; 2 uses
+  %i.dp = load ptr, ptr %9, align 16              ; 2 uses
   %i.dq = load ptr, ptr %i.ab, align 8
   %i.dr = ptrtoint ptr %i.dq to i64
   %i.ds = ptrtoint ptr %i.dp to i64
@@ -3730,7 +3729,7 @@ bb.a:
   %i.g = alloca [1 x ptr], align 8                ; 4 uses
   %i.h = alloca i8, align 1                       ; 4 uses
   %8 = alloca %"class.v8::internal::compiler::MapRef", align 8 ; 6 uses
-  %9 = alloca %"class.v8::base::SmallVector.2648", align 8 ; 9 uses
+  %9 = alloca %"class.v8::base::SmallVector.2648", align 16 ; 10 uses
   %10 = alloca %"class.v8::internal::maglev::(anonymous namespace)::KnownMapsMerger", align 8 ; 10 uses
   %11 = alloca %"class.v8::internal::maglev::MaglevGraphBuilder::MaglevSubGraphBuilder", align 8 ; 37 uses
   %12 = alloca %"class.std::optional.636", align 8 ; 17 uses
@@ -3760,10 +3759,11 @@ bb.a:
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.aa = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %9, i64 24
+  %i.ab = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.ac = getelementptr inbounds nuw i8, ptr %9, i64 16
-  %i.ad = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %9, <2 x i64> <i64 24, i64 32>
+  %i.ad = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.af = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.ag = getelementptr inbounds nuw i8, ptr %10, i64 16
@@ -4005,15 +4005,14 @@ _ZNK2v88internal6maglev13VirtualObject3mapEv.exit.i: ; preds = %bb.i
 _ZN2v84base11SmallVectorINS_8internal8compiler6MapRefELm1ESaIS4_EEC2ESt16initializer_listIS4_ERKS5_.exit: ; preds = %_ZNK2v88internal6maglev13VirtualObject3mapEv.exit.i, %bb.h, %_ZNSt8_Rb_treeIPN2v88internal6maglev9ValueNodeESt4pairIKS4_NS2_8NodeInfoEESt10_Select1stIS8_ESt4lessIS4_ENS1_13ZoneAllocatorIS8_EEE17_M_emplace_uniqueIJRS4_S7_EEES5_ISt17_Rb_tree_iteratorIS8_EbEDpOT_.exit, %_ZN2v88internal6maglev16KnownNodeAspects8FindInfoEPNS1_9ValueNodeE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #33
   %i.dl = load i64, ptr %8, align 8
-  store ptr %i.aa, ptr %9, align 8
-  store ptr %i.ad, ptr %i.ac, align 8
+  store ptr %i.ad, ptr %i.ac, align 16
   store i64 %i.dl, ptr %i.aa, align 8
-  store ptr %i.ad, ptr %i.ab, align 8
+  store <2 x ptr> %17, ptr %9, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #33
   %i.dm = load ptr, ptr %i.x, align 8
   %i.dn = load ptr, ptr %i.ae, align 8
   %i.do = call noundef ptr @_ZNK2v88internal6maglev21MaglevCompilationUnit4zoneEv(ptr noundef nonnull align 8 dereferenceable(52) %i.dn) #33
-  %i.dp = load ptr, ptr %9, align 8               ; 2 uses
+  %i.dp = load ptr, ptr %9, align 16              ; 2 uses
   %i.dq = load ptr, ptr %i.ab, align 8
   %i.dr = ptrtoint ptr %i.dq to i64
   %i.ds = ptrtoint ptr %i.dp to i64

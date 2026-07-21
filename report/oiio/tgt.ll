@@ -31,26 +31,29 @@ bb.c:                                             ; preds = %bb.a
   store i32 %0, ptr %i.a, align 16, !tbaa !3
   store i32 %1, ptr %i.b, align 16, !tbaa !3
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
+  %3 = insertelement <2 x i32> poison, i32 %0, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %1, i64 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
-  %i.g = phi i32 [ %1, %bb.c ], [ %7, %bb.d ]     ; 2 uses
-  %i.h = phi i32 [ %0, %bb.c ], [ %5, %bb.d ]     ; 2 uses
+  %i.g = phi i32 [ %1, %bb.c ], [ %9, %bb.d ]
+  %i.h = phi i32 [ %0, %bb.c ], [ %10, %bb.d ]
   %i.i = phi i32 [ 0, %bb.c ], [ %i.n, %bb.d ]
   %.059 = phi i32 [ 0, %bb.c ], [ %i.j, %bb.d ]   ; 3 uses
-  %3 = mul nsw i32 %i.g, %i.h                     ; 2 uses
-  %4 = add nsw i32 %i.h, 1
-  %5 = sdiv i32 %4, 2                             ; 2 uses
+  %5 = phi <2 x i32> [ %4, %bb.c ], [ %8, %bb.d ]
+  %6 = mul nsw i32 %i.g, %i.h                     ; 2 uses
+  %7 = add nsw <2 x i32> %5, splat (i32 1)
   %i.j = add i32 %.059, 1                         ; 2 uses
   %i.k = zext i32 %i.j to i64                     ; 2 uses
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.k
-  store i32 %5, ptr %i.l, align 4, !tbaa !3
-  %6 = add nsw i32 %i.g, 1
-  %7 = sdiv i32 %6, 2                             ; 2 uses
+  %8 = sdiv <2 x i32> %7, splat (i32 2)           ; 3 uses
+  %9 = extractelement <2 x i32> %8, i64 1         ; 2 uses
+  %10 = extractelement <2 x i32> %8, i64 0        ; 2 uses
+  store i32 %10, ptr %i.l, align 4, !tbaa !3
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.k
-  store i32 %7, ptr %i.m, align 4, !tbaa !3
-  %i.n = add i32 %i.i, %3                         ; 4 uses
-  %i.o = icmp ugt i32 %3, 1
+  store i32 %9, ptr %i.m, align 4, !tbaa !3
+  %i.n = add i32 %i.i, %6                         ; 4 uses
+  %i.o = icmp ugt i32 %6, 1
   br i1 %i.o, label %bb.d, label %bb.e, !llvm.loop !12
 
 bb.e:                                             ; preds = %bb.d
@@ -409,26 +412,29 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   store i32 %1, ptr %i.a, align 16, !tbaa !3
   store i32 %2, ptr %i.b, align 16, !tbaa !3
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = insertelement <2 x i32> poison, i32 %1, i64 0
+  %5 = insertelement <2 x i32> %4, i32 %2, i64 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.d
-  %i.h = phi i32 [ %2, %bb.d ], [ %8, %bb.e ]     ; 2 uses
-  %i.i = phi i32 [ %1, %bb.d ], [ %6, %bb.e ]     ; 2 uses
+  %i.h = phi i32 [ %2, %bb.d ], [ %10, %bb.e ]
+  %i.i = phi i32 [ %1, %bb.d ], [ %11, %bb.e ]
   %i.j = phi i32 [ 0, %bb.d ], [ %i.o, %bb.e ]
   %.079 = phi i32 [ 0, %bb.d ], [ %i.k, %bb.e ]   ; 3 uses
-  %4 = mul nsw i32 %i.h, %i.i                     ; 2 uses
-  %5 = add nsw i32 %i.i, 1
-  %6 = sdiv i32 %5, 2                             ; 2 uses
+  %6 = phi <2 x i32> [ %5, %bb.d ], [ %9, %bb.e ]
+  %7 = mul nsw i32 %i.h, %i.i                     ; 2 uses
+  %8 = add nsw <2 x i32> %6, splat (i32 1)
   %i.k = add i32 %.079, 1                         ; 2 uses
   %i.l = zext i32 %i.k to i64                     ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.l
-  store i32 %6, ptr %i.m, align 4, !tbaa !3
-  %7 = add nsw i32 %i.h, 1
-  %8 = sdiv i32 %7, 2                             ; 2 uses
+  %9 = sdiv <2 x i32> %8, splat (i32 2)           ; 3 uses
+  %10 = extractelement <2 x i32> %9, i64 1        ; 2 uses
+  %11 = extractelement <2 x i32> %9, i64 0        ; 2 uses
+  store i32 %11, ptr %i.m, align 4, !tbaa !3
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.l
-  store i32 %8, ptr %i.n, align 4, !tbaa !3
-  %i.o = add i32 %i.j, %4                         ; 4 uses
-  %i.p = icmp ugt i32 %4, 1
+  store i32 %10, ptr %i.n, align 4, !tbaa !3
+  %i.o = add i32 %i.j, %7                         ; 4 uses
+  %i.p = icmp ugt i32 %7, 1
   br i1 %i.p, label %bb.e, label %bb.f, !llvm.loop !30
 
 bb.f:                                             ; preds = %bb.e

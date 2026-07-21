@@ -203,7 +203,7 @@ bb.ad:                                            ; preds = %_ZNSt6vectorIN27Ope
 
 bb.ae:                                            ; preds = %.lr.ph260, %._crit_edge250
   %.0120259 = phi i64 [ 0, %.lr.ph260 ], [ %.1121.lcssa, %._crit_edge250 ] ; 2 uses
-  %.0127257 = phi i32 [ 0, %.lr.ph260 ], [ %i.dz, %._crit_edge250 ] ; 7 uses
+  %.0127257 = phi i32 [ 0, %.lr.ph260 ], [ %i.dz, %._crit_edge250 ] ; 6 uses
   %i.dg = invoke noundef i32 @_ZNK27OpenImageIO_v3_1_Imf__3_3_518DeepTiledInputFile9numYTilesEi(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %.0127257)
           to label %bb.af unwind label %bb.aj     ; 2 uses
 
@@ -215,11 +215,16 @@ bb.af:                                            ; preds = %bb.ae
   %i.di = icmp sgt i32 %i.dg, 0
   %i.dj = icmp sgt i32 %i.dh, 0
   %or.cond321 = and i1 %i.di, %i.dj
-  br i1 %or.cond321, label %.preheader.us, label %._crit_edge250
+  br i1 %or.cond321, label %.preheader.us.preheader, label %._crit_edge250
 
-.preheader.us:                                    ; preds = %.preheader164, %._crit_edge.us252
-  %.0119249.us = phi i32 [ %i.dy, %._crit_edge.us252 ], [ 0, %.preheader164 ] ; 3 uses
-  %.1121248.us = phi i64 [ %i.dr, %._crit_edge.us252 ], [ %.0120259, %.preheader164 ]
+.preheader.us.preheader:                          ; preds = %.preheader164
+  %11 = insertelement <2 x i32> poison, i32 %.0127257, i64 0
+  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <2 x i32> zeroinitializer
+  br label %.preheader.us
+
+.preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us252
+  %.0119249.us = phi i32 [ %i.dy, %._crit_edge.us252 ], [ 0, %.preheader.us.preheader ] ; 3 uses
+  %.1121248.us = phi i64 [ %i.dr, %._crit_edge.us252 ], [ %.0120259, %.preheader.us.preheader ]
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.preheader.us, %bb.ai
@@ -240,17 +245,15 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah
   %i.dr = add i64 %.2122244.us, 1                 ; 3 uses
-  %i.ds = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.1, i64 %.2122244.us ; 5 uses
+  %i.ds = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.1, i64 %.2122244.us ; 4 uses
   %i.dt = load i64, ptr %i.df, align 8, !tbaa !196
   store i64 %i.dt, ptr %i.ds, align 8, !tbaa !197
-  %11 = getelementptr inbounds nuw i8, ptr %i.ds, i64 8
-  store i32 %.0118245.us, ptr %11, align 8, !tbaa !199
-  %i.du = getelementptr inbounds nuw i8, ptr %i.ds, i64 12
-  store i32 %.0119249.us, ptr %i.du, align 4, !tbaa !200
-  %i.dv = getelementptr inbounds nuw i8, ptr %i.ds, i64 16
-  store i32 %.0127257, ptr %i.dv, align 8, !tbaa !201
-  %i.dw = getelementptr inbounds nuw i8, ptr %i.ds, i64 20
-  store i32 %.0127257, ptr %i.dw, align 4, !tbaa !202
+  %i.du = getelementptr inbounds nuw i8, ptr %i.ds, i64 8
+  store i32 %.0118245.us, ptr %i.du, align 8, !tbaa !199
+  %i.dv = getelementptr inbounds nuw i8, ptr %i.ds, i64 12
+  store i32 %.0119249.us, ptr %i.dv, align 4, !tbaa !200
+  %i.dw = getelementptr inbounds nuw i8, ptr %i.ds, i64 16
+  store <2 x i32> %12, ptr %i.dw, align 8, !tbaa !3
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #26
   %i.dx = add nuw nsw i32 %.0118245.us, 1         ; 2 uses
   %exitcond284.not = icmp eq i32 %i.dx, %i.dh

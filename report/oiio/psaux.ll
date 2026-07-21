@@ -204,7 +204,7 @@ bb.a:
   %i.i = alloca i32, align 4                      ; 4 uses
   %15 = alloca %struct.CF2_BufferRec_, align 8    ; 8 uses
   %i.j = alloca i32, align 4                      ; 4 uses
-  %16 = alloca %struct.CF2_HintMapRec_, align 8   ; 9 uses
+  %16 = alloca %struct.CF2_HintMapRec_, align 8   ; 8 uses
   %17 = alloca %struct.CF2_HintMaskRec_, align 8  ; 9 uses
   store i32 %5, ptr %i.c, align 4, !tbaa !3
   store i32 %6, ptr %i.d, align 4, !tbaa !3
@@ -254,15 +254,15 @@ bb.a:
   store ptr %0, ptr %13, align 8, !tbaa !563
   %i.ad = getelementptr inbounds nuw i8, ptr %13, i64 8
   store ptr %2, ptr %i.ad, align 8, !tbaa !572
-  %i.ae = getelementptr inbounds nuw i8, ptr %13, i64 18568 ; 6 uses
-  store ptr %i.n, ptr %i.ae, align 8, !tbaa !557
-  %i.af = getelementptr inbounds nuw i8, ptr %13, i64 18576
-  store ptr %i.m, ptr %i.af, align 8, !tbaa !559
-  %i.ag = getelementptr inbounds nuw i8, ptr %13, i64 18584
-  store i64 16, ptr %i.ag, align 8, !tbaa !560
-  %i.ah = getelementptr inbounds nuw i8, ptr %13, i64 18592 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ah, i8 0, i64 32, i1 false)
+  %i.ae = getelementptr inbounds nuw i8, ptr %13, i64 18576
+  store ptr %i.m, ptr %i.ae, align 8, !tbaa !559
+  %i.af = getelementptr inbounds nuw i8, ptr %13, i64 18584
+  store i64 16, ptr %i.af, align 8, !tbaa !560
+  %i.ag = getelementptr inbounds nuw i8, ptr %13, i64 18592 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ag, i8 0, i64 32, i1 false)
+  %i.ah = getelementptr inbounds nuw i8, ptr %13, i64 18568 ; 6 uses
   %18 = getelementptr inbounds nuw i8, ptr %13, i64 12384 ; 5 uses
+  store ptr %i.n, ptr %i.ah, align 8, !tbaa !557
   %i.ai = getelementptr inbounds nuw i8, ptr %13, i64 12408
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(6160) %i.ai, i8 0, i64 6160, i1 false)
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
@@ -274,7 +274,7 @@ bb.a:
   %i.an = getelementptr inbounds nuw i8, ptr %13, i64 12392
   store ptr %18, ptr %i.an, align 8, !tbaa !575
   %i.ao = getelementptr inbounds nuw i8, ptr %13, i64 12400
-  store ptr %i.ae, ptr %i.ao, align 8, !tbaa !576
+  store ptr %i.ah, ptr %i.ao, align 8, !tbaa !576
   %i.ap = getelementptr inbounds nuw i8, ptr %13, i64 6200
   %i.aq = getelementptr inbounds nuw i8, ptr %13, i64 6224
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(6160) %i.aq, i8 0, i64 6160, i1 false)
@@ -285,7 +285,7 @@ bb.a:
   %i.at = getelementptr inbounds nuw i8, ptr %13, i64 6208
   store ptr %18, ptr %i.at, align 8, !tbaa !575
   %i.au = getelementptr inbounds nuw i8, ptr %13, i64 6216
-  store ptr %i.ae, ptr %i.au, align 8, !tbaa !576
+  store ptr %i.ah, ptr %i.au, align 8, !tbaa !576
   %i.av = getelementptr inbounds nuw i8, ptr %13, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(6160) %i.av, i8 0, i64 6160, i1 false)
   %i.aw = getelementptr inbounds nuw i8, ptr %13, i64 41
@@ -295,7 +295,7 @@ bb.a:
   %i.ay = getelementptr inbounds nuw i8, ptr %13, i64 24
   store ptr %18, ptr %i.ay, align 8, !tbaa !575
   %i.az = getelementptr inbounds nuw i8, ptr %13, i64 32
-  store ptr %i.ae, ptr %i.az, align 8, !tbaa !576
+  store ptr %i.ah, ptr %i.az, align 8, !tbaa !576
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !577
   %i.bc = getelementptr inbounds nuw i8, ptr %13, i64 18624
@@ -422,10 +422,9 @@ bb.h:                                             ; preds = %cf2_arrstack_setCou
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.l, i64 1080 ; 8 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.l, i64 928 ; 7 uses
-  %19 = getelementptr inbounds nuw i8, ptr %16, i64 25
-  %i.dc = getelementptr inbounds nuw i8, ptr %16, i64 28
-  %i.dd = getelementptr inbounds nuw i8, ptr %16, i64 8
-  %i.de = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %i.dc = getelementptr inbounds nuw i8, ptr %16, i64 25
+  %i.dd = getelementptr inbounds nuw i8, ptr %16, i64 28
+  %i.de = getelementptr inbounds nuw i8, ptr %16, i64 8
   %i.df = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 4 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %11, i64 32 ; 4 uses
@@ -473,6 +472,8 @@ bb.h:                                             ; preds = %cf2_arrstack_setCou
   %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 97 ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %16, i64 24
+  %19 = insertelement <2 x ptr> poison, ptr %18, i64 0
+  %20 = insertelement <2 x ptr> %19, ptr %i.ah, i64 1
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.h
@@ -875,11 +876,10 @@ bb.rk:                                            ; preds = %bb.rb
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(6160) %i.ez, i8 0, i64 6160, i1 false)
   %i.bci = load i8, ptr %i.aj, align 8, !tbaa !312
-  store i8 %i.bci, ptr %19, align 1, !tbaa !573
-  store i32 %i.bf, ptr %i.dc, align 4, !tbaa !579
+  store i8 %i.bci, ptr %i.dc, align 1, !tbaa !573
+  store i32 %i.bf, ptr %i.dd, align 4, !tbaa !579
   store ptr %0, ptr %16, align 8, !tbaa !574
-  store ptr %18, ptr %i.dd, align 8, !tbaa !575
-  store ptr %i.ae, ptr %i.de, align 8, !tbaa !576
+  store <2 x ptr> %20, ptr %i.de, align 8, !tbaa !22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.df, i8 0, i64 40, i1 false)
   store ptr %i.m, ptr %17, align 8, !tbaa !561
   %.val1323 = load i64, ptr %i.dg, align 8, !tbaa !653
@@ -1282,9 +1282,9 @@ cf2_setError.exit:                                ; preds = %bb.n, %cf2_setError
   %.sroa.28.02045 = phi ptr [ %.sroa.28.02045.ph, %cf2_setError.exit.sink.split ], [ %.sroa.28.0.ph.ph, %cf2_arrstack_setCount.exit.thread ], [ %i.cx, %bb.g ], [ %i.cx, %cf2_arrstack_setCount.exit ], [ %i.cx, %bb.n ]
   %.0.i19432044 = phi ptr [ %.0.i19432044.ph, %cf2_setError.exit.sink.split ], [ %.0.i1943.ph.ph, %cf2_arrstack_setCount.exit.thread ], [ %i.co, %bb.g ], [ %i.co, %cf2_arrstack_setCount.exit ], [ %i.co, %bb.n ] ; 3 uses
   %.not114819442043 = phi i1 [ %.not114819442043.ph, %cf2_setError.exit.sink.split ], [ %.not11481944.ph.ph, %cf2_arrstack_setCount.exit.thread ], [ false, %bb.g ], [ false, %cf2_arrstack_setCount.exit ], [ false, %bb.n ]
-  %i.ccb = load ptr, ptr %i.ae, align 8, !tbaa !557
+  %i.ccb = load ptr, ptr %i.ah, align 8, !tbaa !557
   %i.ccc = getelementptr inbounds nuw i8, ptr %13, i64 18616 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ah, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ag, i8 0, i64 24, i1 false)
   %i.ccd = load ptr, ptr %i.ccc, align 8, !tbaa !672
   call void @ft_mem_free(ptr noundef %i.ccb, ptr noundef %i.ccd) #19
   store ptr null, ptr %i.ccc, align 8, !tbaa !672

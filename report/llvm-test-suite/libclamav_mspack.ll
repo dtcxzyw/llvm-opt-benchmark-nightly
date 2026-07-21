@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.c, label %bb.hc
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 6 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 5 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !203
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 9 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !204  ; 4 uses
@@ -265,7 +265,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.af = load i8, ptr %i.ae, align 8, !tbaa !205 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !187 ; 12 uses
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !187 ; 11 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !197 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -313,6 +313,8 @@ bb.i:                                             ; preds = %bb.h
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 368
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %2 = insertelement <2 x ptr> poison, ptr %i.ah, i64 0
+  %3 = shufflevector <2 x ptr> %2, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph1597, %bb.gw
@@ -715,8 +717,7 @@ bb.gv:                                            ; preds = %bb.gt, %bb.gs
   %sext953 = shl i64 %i.ajk, 32
   %i.ajp = ashr exact i64 %sext953, 32
   %i.ajq = sub nsw i64 %.17921590, %i.ajp
-  store ptr %i.ah, ptr %i.g, align 8, !tbaa !204
-  store ptr %i.ah, ptr %i.e, align 8, !tbaa !203
+  store <2 x ptr> %3, ptr %i.g, align 8, !tbaa !122
   br label %bb.gw
 
 bb.gw:                                            ; preds = %._crit_edge1572._crit_edge, %bb.gr, %bb.gv

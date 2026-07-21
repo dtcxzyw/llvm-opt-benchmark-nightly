@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 .noexc:                                           ; preds = %bb.b
   %i.f = sitofp i64 %i.e to float
   %i.g = fadd float %i.f, -1.000000e+00
-  %i.h = fdiv float 1.000000e+00, %i.g            ; 3 uses
+  %i.h = fdiv float 1.000000e+00, %i.g            ; 2 uses
   %i.i = mul nsw i64 %i.e, %i.e
   %i.j = mul nsw i64 %i.i, %i.e                   ; 2 uses
   %i.k = icmp sgt i64 %i.j, 0
@@ -210,27 +210,28 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %.noexc
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !84
+  %2 = insertelement <2 x float> poison, float %i.h, i64 0
+  %3 = shufflevector <2 x float> %2, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i
   %.028.i = phi i64 [ 0, %.lr.ph.i ], [ %i.r, %bb.c ] ; 4 uses
-  %2 = sdiv i64 %.028.i, %i.e                     ; 2 uses
-  %3 = sdiv i64 %2, %i.e
-  %4 = srem i64 %3, %i.e
-  %5 = sitofp i64 %4 to float
-  %6 = fmul float %i.h, %5
   %.idx.i = mul nuw nsw i64 %.028.i, 12
-  %7 = getelementptr inbounds nuw i8, ptr %i.m, i64 %.idx.i ; 3 uses
-  store float %6, ptr %7, align 4, !tbaa !98
-  %8 = srem i64 %2, %i.e
-  %9 = sitofp i64 %8 to float
-  %10 = fmul float %i.h, %9
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 4
-  store float %10, ptr %11, align 4, !tbaa !98
+  %4 = getelementptr inbounds nuw i8, ptr %i.m, i64 %.idx.i ; 2 uses
+  %5 = sdiv i64 %.028.i, %i.e                     ; 2 uses
+  %6 = sdiv i64 %5, %i.e
+  %7 = srem i64 %5, %i.e
+  %8 = srem i64 %6, %i.e
+  %9 = sitofp i64 %7 to float
+  %10 = sitofp i64 %8 to float
+  %11 = insertelement <2 x float> poison, float %10, i64 0
+  %12 = insertelement <2 x float> %11, float %9, i64 1
+  %13 = fmul <2 x float> %3, %12
+  store <2 x float> %13, ptr %4, align 4, !tbaa !98
   %i.n = srem i64 %.028.i, %i.e
   %i.o = uitofp nneg i64 %i.n to float
   %i.p = fmul float %i.h, %i.o
-  %i.q = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 8
   store float %i.p, ptr %i.q, align 4, !tbaa !98
   %i.r = add nuw nsw i64 %.028.i, 1               ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.r, %i.j
@@ -270,7 +271,7 @@ bb.a:
   %i.d = tail call noundef i64 %i.c(ptr noundef nonnull align 8 dereferenceable(48) %0) ; 9 uses
   %i.e = sitofp i64 %i.d to float
   %i.f = fadd float %i.e, -1.000000e+00
-  %i.g = fdiv float 1.000000e+00, %i.f            ; 3 uses
+  %i.g = fdiv float 1.000000e+00, %i.f            ; 2 uses
   %i.h = mul nsw i64 %i.d, %i.d
   %i.i = mul nsw i64 %i.h, %i.d                   ; 2 uses
   %i.j = icmp sgt i64 %i.i, 0
@@ -279,6 +280,8 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !84
+  %1 = insertelement <2 x float> poison, float %i.g, i64 0
+  %2 = shufflevector <2 x float> %1, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
@@ -286,23 +289,22 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.028 = phi i64 [ 0, %.lr.ph ], [ %i.q, %bb.b ] ; 4 uses
-  %1 = sdiv i64 %.028, %i.d                       ; 2 uses
-  %2 = sdiv i64 %1, %i.d
-  %3 = srem i64 %2, %i.d
-  %4 = sitofp i64 %3 to float
-  %5 = fmul float %i.g, %4
   %.idx = mul nuw nsw i64 %.028, 12
-  %6 = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx ; 3 uses
-  store float %5, ptr %6, align 4, !tbaa !98
-  %7 = srem i64 %1, %i.d
-  %8 = sitofp i64 %7 to float
-  %9 = fmul float %i.g, %8
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 4
-  store float %9, ptr %10, align 4, !tbaa !98
+  %3 = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx ; 2 uses
+  %4 = sdiv i64 %.028, %i.d                       ; 2 uses
+  %5 = sdiv i64 %4, %i.d
+  %6 = srem i64 %4, %i.d
+  %7 = srem i64 %5, %i.d
+  %8 = sitofp i64 %6 to float
+  %9 = sitofp i64 %7 to float
+  %10 = insertelement <2 x float> poison, float %9, i64 0
+  %11 = insertelement <2 x float> %10, float %8, i64 1
+  %12 = fmul <2 x float> %2, %11
+  store <2 x float> %12, ptr %3, align 4, !tbaa !98
   %i.m = srem i64 %.028, %i.d
   %i.n = uitofp nneg i64 %i.m to float
   %i.o = fmul float %i.g, %i.n
-  %i.p = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 8
   store float %i.o, ptr %i.p, align 4, !tbaa !98
   %i.q = add nuw nsw i64 %.028, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.q, %i.i
@@ -705,7 +707,7 @@ bb.b:                                             ; preds = %bb.a
 .noexc.i:                                         ; preds = %bb.b
   %i.h = sitofp i64 %i.g to float
   %i.i = fadd float %i.h, -1.000000e+00
-  %i.j = fdiv float 1.000000e+00, %i.i            ; 3 uses
+  %i.j = fdiv float 1.000000e+00, %i.i            ; 2 uses
   %i.k = mul nsw i64 %i.g, %i.g
   %i.l = mul nsw i64 %i.k, %i.g                   ; 2 uses
   %i.m = icmp sgt i64 %i.l, 0
@@ -714,27 +716,28 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i:                                       ; preds = %.noexc.i
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !84
+  %2 = insertelement <2 x float> poison, float %i.j, i64 0
+  %3 = shufflevector <2 x float> %2, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i
   %.028.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.t, %bb.c ] ; 4 uses
-  %2 = sdiv i64 %.028.i.i, %i.g                   ; 2 uses
-  %3 = sdiv i64 %2, %i.g
-  %4 = srem i64 %3, %i.g
-  %5 = sitofp i64 %4 to float
-  %6 = fmul float %i.j, %5
   %.idx.i.i = mul nuw nsw i64 %.028.i.i, 12
-  %7 = getelementptr inbounds nuw i8, ptr %i.o, i64 %.idx.i.i ; 3 uses
-  store float %6, ptr %7, align 4, !tbaa !98
-  %8 = srem i64 %2, %i.g
-  %9 = sitofp i64 %8 to float
-  %10 = fmul float %i.j, %9
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 4
-  store float %10, ptr %11, align 4, !tbaa !98
+  %4 = getelementptr inbounds nuw i8, ptr %i.o, i64 %.idx.i.i ; 2 uses
+  %5 = sdiv i64 %.028.i.i, %i.g                   ; 2 uses
+  %6 = sdiv i64 %5, %i.g
+  %7 = srem i64 %5, %i.g
+  %8 = srem i64 %6, %i.g
+  %9 = sitofp i64 %7 to float
+  %10 = sitofp i64 %8 to float
+  %11 = insertelement <2 x float> poison, float %10, i64 0
+  %12 = insertelement <2 x float> %11, float %9, i64 1
+  %13 = fmul <2 x float> %3, %12
+  store <2 x float> %13, ptr %4, align 4, !tbaa !98
   %i.p = srem i64 %.028.i.i, %i.g
   %i.q = uitofp nneg i64 %i.p to float
   %i.r = fmul float %i.j, %i.q
-  %i.s = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 8
   store float %i.r, ptr %i.s, align 4, !tbaa !98
   %i.t = add nuw nsw i64 %.028.i.i, 1             ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.t, %i.l
@@ -798,7 +801,7 @@ bb.b:                                             ; preds = %bb.a
 .noexc.i:                                         ; preds = %bb.b
   %i.h = sitofp i64 %i.g to float
   %i.i = fadd float %i.h, -1.000000e+00
-  %i.j = fdiv float 1.000000e+00, %i.i            ; 3 uses
+  %i.j = fdiv float 1.000000e+00, %i.i            ; 2 uses
   %i.k = mul nsw i64 %i.g, %i.g
   %i.l = mul nsw i64 %i.k, %i.g                   ; 2 uses
   %i.m = icmp sgt i64 %i.l, 0
@@ -807,27 +810,28 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i:                                       ; preds = %.noexc.i
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !84
+  %3 = insertelement <2 x float> poison, float %i.j, i64 0
+  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i
   %.028.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.t, %bb.c ] ; 4 uses
-  %3 = sdiv i64 %.028.i.i, %i.g                   ; 2 uses
-  %4 = sdiv i64 %3, %i.g
-  %5 = srem i64 %4, %i.g
-  %6 = sitofp i64 %5 to float
-  %7 = fmul float %i.j, %6
   %.idx.i.i = mul nuw nsw i64 %.028.i.i, 12
-  %8 = getelementptr inbounds nuw i8, ptr %i.o, i64 %.idx.i.i ; 3 uses
-  store float %7, ptr %8, align 4, !tbaa !98
-  %9 = srem i64 %3, %i.g
-  %10 = sitofp i64 %9 to float
-  %11 = fmul float %i.j, %10
-  %12 = getelementptr inbounds nuw i8, ptr %8, i64 4
-  store float %11, ptr %12, align 4, !tbaa !98
+  %5 = getelementptr inbounds nuw i8, ptr %i.o, i64 %.idx.i.i ; 2 uses
+  %6 = sdiv i64 %.028.i.i, %i.g                   ; 2 uses
+  %7 = sdiv i64 %6, %i.g
+  %8 = srem i64 %6, %i.g
+  %9 = srem i64 %7, %i.g
+  %10 = sitofp i64 %8 to float
+  %11 = sitofp i64 %9 to float
+  %12 = insertelement <2 x float> poison, float %11, i64 0
+  %13 = insertelement <2 x float> %12, float %10, i64 1
+  %14 = fmul <2 x float> %4, %13
+  store <2 x float> %14, ptr %5, align 4, !tbaa !98
   %i.p = srem i64 %.028.i.i, %i.g
   %i.q = uitofp nneg i64 %i.p to float
   %i.r = fmul float %i.j, %i.q
-  %i.s = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 8
   store float %i.r, ptr %i.s, align 4, !tbaa !98
   %i.t = add nuw nsw i64 %.028.i.i, 1             ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.t, %i.l
@@ -889,7 +893,7 @@ bb.b:                                             ; preds = %bb.a
 .noexc.i:                                         ; preds = %bb.b
   %i.h = sitofp i64 %i.g to float
   %i.i = fadd float %i.h, -1.000000e+00
-  %i.j = fdiv float 1.000000e+00, %i.i            ; 3 uses
+  %i.j = fdiv float 1.000000e+00, %i.i            ; 2 uses
   %i.k = mul nsw i64 %i.g, %i.g
   %i.l = mul nsw i64 %i.k, %i.g                   ; 2 uses
   %i.m = icmp sgt i64 %i.l, 0
@@ -898,27 +902,28 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i:                                       ; preds = %.noexc.i
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !84
+  %3 = insertelement <2 x float> poison, float %i.j, i64 0
+  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i
   %.028.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.t, %bb.c ] ; 4 uses
-  %3 = sdiv i64 %.028.i.i, %i.g                   ; 2 uses
-  %4 = sdiv i64 %3, %i.g
-  %5 = srem i64 %4, %i.g
-  %6 = sitofp i64 %5 to float
-  %7 = fmul float %i.j, %6
   %.idx.i.i = mul nuw nsw i64 %.028.i.i, 12
-  %8 = getelementptr inbounds nuw i8, ptr %i.o, i64 %.idx.i.i ; 3 uses
-  store float %7, ptr %8, align 4, !tbaa !98
-  %9 = srem i64 %3, %i.g
-  %10 = sitofp i64 %9 to float
-  %11 = fmul float %i.j, %10
-  %12 = getelementptr inbounds nuw i8, ptr %8, i64 4
-  store float %11, ptr %12, align 4, !tbaa !98
+  %5 = getelementptr inbounds nuw i8, ptr %i.o, i64 %.idx.i.i ; 2 uses
+  %6 = sdiv i64 %.028.i.i, %i.g                   ; 2 uses
+  %7 = sdiv i64 %6, %i.g
+  %8 = srem i64 %6, %i.g
+  %9 = srem i64 %7, %i.g
+  %10 = sitofp i64 %8 to float
+  %11 = sitofp i64 %9 to float
+  %12 = insertelement <2 x float> poison, float %11, i64 0
+  %13 = insertelement <2 x float> %12, float %10, i64 1
+  %14 = fmul <2 x float> %4, %13
+  store <2 x float> %14, ptr %5, align 4, !tbaa !98
   %i.p = srem i64 %.028.i.i, %i.g
   %i.q = uitofp nneg i64 %i.p to float
   %i.r = fmul float %i.j, %i.q
-  %i.s = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 8
   store float %i.r, ptr %i.s, align 4, !tbaa !98
   %i.t = add nuw nsw i64 %.028.i.i, 1             ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.t, %i.l

@@ -201,11 +201,15 @@ bb.c:                                             ; preds = %.lr.ph125, %._crit_
   %i.y = sub i64 %i.w, %i.x
   %i.z = ashr exact i64 %i.y, 3
   %.not112117 = icmp eq ptr %i.v, %i.t
-  br i1 %.not112117, label %._crit_edge, label %.lr.ph120
+  br i1 %.not112117, label %._crit_edge, label %.lr.ph120.preheader
 
-.lr.ph120:                                        ; preds = %bb.c, %.loopexit
-  %.sroa.8.0119 = phi i64 [ %i.dx, %.loopexit ], [ 0, %bb.c ]
-  %.sroa.475.0118 = phi ptr [ %i.dw, %.loopexit ], [ %i.t, %bb.c ] ; 2 uses
+.lr.ph120.preheader:                              ; preds = %bb.c
+  %1 = insertelement <2 x ptr> <ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN4LIEF5MachO19IndirectBindingInfoE, i64 16), ptr poison>, ptr %i.r, i64 1
+  br label %.lr.ph120
+
+.lr.ph120:                                        ; preds = %.lr.ph120.preheader, %.loopexit
+  %.sroa.8.0119 = phi i64 [ %i.dx, %.loopexit ], [ 0, %.lr.ph120.preheader ]
+  %.sroa.475.0118 = phi ptr [ %i.dw, %.loopexit ], [ %i.t, %.lr.ph120.preheader ] ; 2 uses
   %i.aa = load ptr, ptr %.sroa.475.0118, align 8  ; 7 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 116
   %i.ac = load i32, ptr %i.ab, align 4
@@ -290,16 +294,14 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN4LIEF5MachO6Symbol22is_valid_index_ordinalEi.exit: ; preds = %_ZN4LIEF12ref_iteratorIRKSt6vectorIPNS_5MachO6SymbolESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit, %bb.f, %bb.g
   %.0 = phi ptr [ %i.bt, %bb.g ], [ null, %bb.f ], [ null, %_ZN4LIEF12ref_iteratorIRKSt6vectorIPNS_5MachO6SymbolESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit ]
-  %i.bu = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #18, !noalias !615 ; 11 uses
+  %i.bu = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #18, !noalias !615 ; 10 uses
   tail call void @_ZN4LIEF6ObjectC2Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.bu) #17, !noalias !615
-  %1 = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 32
   store i64 0, ptr %i.bv, align 8, !noalias !615
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 40
   store i8 0, ptr %i.bw, align 8, !noalias !615
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bu, i64 48
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN4LIEF5MachO19IndirectBindingInfoE, i64 16), ptr %i.bu, align 8, !noalias !615
-  store ptr %i.r, ptr %1, align 8, !noalias !615
+  store <2 x ptr> %1, ptr %i.bu, align 8, !noalias !615
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
   store ptr %i.be, ptr %i.by, align 8, !noalias !615
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bu, i64 24
@@ -702,11 +704,15 @@ bb.c:                                             ; preds = %.lr.ph125, %._crit_
   %i.y = sub i64 %i.w, %i.x
   %i.z = ashr exact i64 %i.y, 3
   %.not112117 = icmp eq ptr %i.v, %i.t
-  br i1 %.not112117, label %._crit_edge, label %.lr.ph120
+  br i1 %.not112117, label %._crit_edge, label %.lr.ph120.preheader
 
-.lr.ph120:                                        ; preds = %bb.c, %.loopexit
-  %.sroa.8.0119 = phi i64 [ %i.dx, %.loopexit ], [ 0, %bb.c ]
-  %.sroa.475.0118 = phi ptr [ %i.dw, %.loopexit ], [ %i.t, %bb.c ] ; 2 uses
+.lr.ph120.preheader:                              ; preds = %bb.c
+  %1 = insertelement <2 x ptr> <ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN4LIEF5MachO19IndirectBindingInfoE, i64 16), ptr poison>, ptr %i.r, i64 1
+  br label %.lr.ph120
+
+.lr.ph120:                                        ; preds = %.lr.ph120.preheader, %.loopexit
+  %.sroa.8.0119 = phi i64 [ %i.dx, %.loopexit ], [ 0, %.lr.ph120.preheader ]
+  %.sroa.475.0118 = phi ptr [ %i.dw, %.loopexit ], [ %i.t, %.lr.ph120.preheader ] ; 2 uses
   %i.aa = load ptr, ptr %.sroa.475.0118, align 8  ; 7 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 116
   %i.ac = load i32, ptr %i.ab, align 4
@@ -791,16 +797,14 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN4LIEF5MachO6Symbol22is_valid_index_ordinalEi.exit: ; preds = %_ZN4LIEF12ref_iteratorIRKSt6vectorIPNS_5MachO6SymbolESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit, %bb.f, %bb.g
   %.0 = phi ptr [ %i.bt, %bb.g ], [ null, %bb.f ], [ null, %_ZN4LIEF12ref_iteratorIRKSt6vectorIPNS_5MachO6SymbolESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit ]
-  %i.bu = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #18, !noalias !1252 ; 11 uses
+  %i.bu = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #18, !noalias !1252 ; 10 uses
   tail call void @_ZN4LIEF6ObjectC2Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.bu) #17, !noalias !1252
-  %1 = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 32
   store i64 0, ptr %i.bv, align 8, !noalias !1252
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 40
   store i8 0, ptr %i.bw, align 8, !noalias !1252
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bu, i64 48
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN4LIEF5MachO19IndirectBindingInfoE, i64 16), ptr %i.bu, align 8, !noalias !1252
-  store ptr %i.r, ptr %1, align 8, !noalias !1252
+  store <2 x ptr> %1, ptr %i.bu, align 8, !noalias !1252
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
   store ptr %i.be, ptr %i.by, align 8, !noalias !1252
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bu, i64 24

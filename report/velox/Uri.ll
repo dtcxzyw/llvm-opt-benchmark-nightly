@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 _ZNK5boost11basic_regexIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE10mark_countEv.exit: ; preds = %bb.d, %bb.e, %_ZN5boost13re_detail_50015save_state_initC2EPPNS0_11saved_stateES4_.exit
   %i.z = phi i64 [ 1, %_ZN5boost13re_detail_50015save_state_initC2EPPNS0_11saved_stateES4_.exit ], [ %i.y, %bb.e ], [ 1, %bb.d ] ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !201 ; 6 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !201 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   store ptr %i.ab, ptr %4, align 8, !tbaa !60
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -235,13 +235,16 @@ _ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i: ; preds =
 _ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i: ; preds = %_ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i, %bb.f
   %i.aq = phi ptr [ %i.af, %bb.f ], [ %i.ao, %_ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i ] ; 2 uses
   %.not5.i.i.i.i.i = icmp eq ptr %i.ag, %i.aq
-  br i1 %.not5.i.i.i.i.i, label %.loopexit30, label %.lr.ph.i.i.i.i.i
+  br i1 %.not5.i.i.i.i.i, label %.loopexit30, label %.lr.ph.i.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i, %.lr.ph.i.i.i.i.i
-  %.06.i.i.i.i.i = phi ptr [ %i.as, %.lr.ph.i.i.i.i.i ], [ %i.ag, %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i ] ; 4 uses
-  store ptr %i.ab, ptr %.06.i.i.i.i.i, align 8, !tbaa !60
-  %6 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 8
-  store ptr %i.ab, ptr %6, align 8, !tbaa !61
+.lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i
+  %6 = insertelement <2 x ptr> poison, ptr %i.ab, i64 0
+  %7 = shufflevector <2 x ptr> %6, <2 x ptr> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i
+  %.06.i.i.i.i.i = phi ptr [ %i.as, %.lr.ph.i.i.i.i.i ], [ %i.ag, %.lr.ph.i.i.i.i.i.preheader ] ; 3 uses
+  store <2 x ptr> %7, ptr %.06.i.i.i.i.i, align 8, !tbaa !157
   %i.ar = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 16
   store i8 0, ptr %i.ar, align 8, !tbaa !2354
   %i.as = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 24 ; 2 uses
@@ -250,13 +253,16 @@ _ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iterato
 
 bb.g:                                             ; preds = %_ZNK5boost11basic_regexIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE10mark_countEv.exit
   %.not5.i.i.i.i15.i = icmp eq ptr %i.ag, %i.af
-  br i1 %.not5.i.i.i.i15.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5boost9sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit22.i, label %.lr.ph.i.i.i.i16.i
+  br i1 %.not5.i.i.i.i15.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5boost9sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit22.i, label %.lr.ph.i.i.i.i16.i.preheader
 
-.lr.ph.i.i.i.i16.i:                               ; preds = %bb.g, %.lr.ph.i.i.i.i16.i
-  %.06.i.i.i.i20.i = phi ptr [ %i.au, %.lr.ph.i.i.i.i16.i ], [ %i.ag, %bb.g ] ; 4 uses
-  store ptr %i.ab, ptr %.06.i.i.i.i20.i, align 8, !tbaa !60
-  %7 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i, i64 8
-  store ptr %i.ab, ptr %7, align 8, !tbaa !61
+.lr.ph.i.i.i.i16.i.preheader:                     ; preds = %bb.g
+  %8 = insertelement <2 x ptr> poison, ptr %i.ab, i64 0
+  %9 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.i.i.i.i16.i
+
+.lr.ph.i.i.i.i16.i:                               ; preds = %.lr.ph.i.i.i.i16.i.preheader, %.lr.ph.i.i.i.i16.i
+  %.06.i.i.i.i20.i = phi ptr [ %i.au, %.lr.ph.i.i.i.i16.i ], [ %i.ag, %.lr.ph.i.i.i.i16.i.preheader ] ; 3 uses
+  store <2 x ptr> %9, ptr %.06.i.i.i.i20.i, align 8, !tbaa !157
   %i.at = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i, i64 16
   store i8 0, ptr %i.at, align 8, !tbaa !2354
   %i.au = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i, i64 24 ; 2 uses
@@ -659,7 +665,9 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.ab = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %.pre.i = load ptr, ptr %i.ab, align 8, !tbaa !61 ; 10 uses
+  %.pre.i = load ptr, ptr %i.ab, align 8, !tbaa !61
+  %1 = insertelement <2 x ptr> poison, ptr %.pre.i, i64 0
+  %2 = shufflevector <2 x ptr> %1, <2 x ptr> poison, <2 x i32> zeroinitializer ; 5 uses
   %i.ac = add nsw i64 %i.z, -3                    ; 2 uses
   %i.ad = add nsw i64 %i.z, -4
   %xtraiter = and i64 %i.ac, 3                    ; 3 uses
@@ -673,31 +681,23 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %.08.i = phi i64 [ 3, %.lr.ph.i.new ], [ %i.aq, %bb.b ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.i.new ], [ %niter.next.3, %bb.b ]
-  %i.af = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 3 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  store ptr %.pre.i, ptr %1, align 8, !tbaa !61
-  store ptr %.pre.i, ptr %i.af, align 8, !tbaa !60
+  %i.af = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 2 uses
+  store <2 x ptr> %2, ptr %i.af, align 8, !tbaa !157
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   store i8 0, ptr %i.ag, align 8, !tbaa !2354
-  %i.ah = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 32
-  store ptr %.pre.i, ptr %i.ai, align 8, !tbaa !61
-  store ptr %.pre.i, ptr %2, align 8, !tbaa !60
+  %i.ah = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
+  store <2 x ptr> %2, ptr %i.ai, align 8, !tbaa !157
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 40
   store i8 0, ptr %i.aj, align 8, !tbaa !2354
-  %i.ak = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
-  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
-  store ptr %.pre.i, ptr %i.al, align 8, !tbaa !61
-  store ptr %.pre.i, ptr %3, align 8, !tbaa !60
+  %i.ak = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
+  store <2 x ptr> %2, ptr %i.al, align 8, !tbaa !157
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 64
   store i8 0, ptr %i.am, align 8, !tbaa !2354
-  %i.an = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.an, i64 72
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 80
-  store ptr %.pre.i, ptr %i.ao, align 8, !tbaa !61
-  store ptr %.pre.i, ptr %4, align 8, !tbaa !60
+  %i.an = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 72
+  store <2 x ptr> %2, ptr %i.ao, align 8, !tbaa !157
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 88
   store i8 0, ptr %i.ap, align 8, !tbaa !2354
   %i.aq = add nuw i64 %.08.i, 4                   ; 2 uses
@@ -718,10 +718,8 @@ _ZN5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE9set_firstES2_.exit.loopexit
 bb.c:                                             ; preds = %bb.c, %.epil.preheader
   %.08.i.epil = phi i64 [ %.08.i.epil.init, %.epil.preheader ], [ %i.at, %bb.c ] ; 2 uses
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.c ]
-  %i.ar = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i.epil ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
-  store ptr %.pre.i, ptr %5, align 8, !tbaa !61
-  store ptr %.pre.i, ptr %i.ar, align 8, !tbaa !60
+  %i.ar = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %.08.i.epil ; 2 uses
+  store <2 x ptr> %2, ptr %i.ar, align 8, !tbaa !157
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
   store i8 0, ptr %i.as, align 8, !tbaa !2354
   %i.at = add nuw i64 %.08.i.epil, 1
@@ -1124,7 +1122,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %bb.e
   %i.ad = phi i64 [ %i.ac, %bb.e ], [ 1, %bb.d ]  ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !201 ; 6 uses
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !201 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
   store ptr %i.af, ptr %6, align 8, !tbaa !60
   %i.ag = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -1155,13 +1153,16 @@ _ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i: ; preds =
 _ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i: ; preds = %_ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i, %bb.g
   %i.au = phi ptr [ %i.aj, %bb.g ], [ %i.as, %_ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i ] ; 2 uses
   %.not5.i.i.i.i.i = icmp eq ptr %i.ak, %i.au
-  br i1 %.not5.i.i.i.i.i, label %.loopexit73, label %.lr.ph.i.i.i.i.i
+  br i1 %.not5.i.i.i.i.i, label %.loopexit73, label %.lr.ph.i.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i, %.lr.ph.i.i.i.i.i
-  %.06.i.i.i.i.i = phi ptr [ %i.aw, %.lr.ph.i.i.i.i.i ], [ %i.ak, %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i ] ; 4 uses
-  store ptr %i.af, ptr %.06.i.i.i.i.i, align 8, !tbaa !60
-  %8 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 8
-  store ptr %i.af, ptr %8, align 8, !tbaa !61
+.lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i
+  %8 = insertelement <2 x ptr> poison, ptr %i.af, i64 0
+  %9 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i
+  %.06.i.i.i.i.i = phi ptr [ %i.aw, %.lr.ph.i.i.i.i.i ], [ %i.ak, %.lr.ph.i.i.i.i.i.preheader ] ; 3 uses
+  store <2 x ptr> %9, ptr %.06.i.i.i.i.i, align 8, !tbaa !157
   %i.av = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 16
   store i8 0, ptr %i.av, align 8, !tbaa !2354
   %i.aw = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 24 ; 2 uses
@@ -1170,13 +1171,16 @@ _ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iterato
 
 bb.h:                                             ; preds = %bb.f
   %.not5.i.i.i.i15.i = icmp eq ptr %i.ak, %i.aj
-  br i1 %.not5.i.i.i.i15.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5boost9sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit22.i, label %.lr.ph.i.i.i.i16.i
+  br i1 %.not5.i.i.i.i15.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5boost9sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit22.i, label %.lr.ph.i.i.i.i16.i.preheader
 
-.lr.ph.i.i.i.i16.i:                               ; preds = %bb.h, %.lr.ph.i.i.i.i16.i
-  %.06.i.i.i.i20.i = phi ptr [ %i.ay, %.lr.ph.i.i.i.i16.i ], [ %i.ak, %bb.h ] ; 4 uses
-  store ptr %i.af, ptr %.06.i.i.i.i20.i, align 8, !tbaa !60
-  %9 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i, i64 8
-  store ptr %i.af, ptr %9, align 8, !tbaa !61
+.lr.ph.i.i.i.i16.i.preheader:                     ; preds = %bb.h
+  %10 = insertelement <2 x ptr> poison, ptr %i.af, i64 0
+  %11 = shufflevector <2 x ptr> %10, <2 x ptr> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.i.i.i.i16.i
+
+.lr.ph.i.i.i.i16.i:                               ; preds = %.lr.ph.i.i.i.i16.i.preheader, %.lr.ph.i.i.i.i16.i
+  %.06.i.i.i.i20.i = phi ptr [ %i.ay, %.lr.ph.i.i.i.i16.i ], [ %i.ak, %.lr.ph.i.i.i.i16.i.preheader ] ; 3 uses
+  store <2 x ptr> %11, ptr %.06.i.i.i.i20.i, align 8, !tbaa !157
   %i.ax = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i, i64 16
   store i8 0, ptr %i.ax, align 8, !tbaa !2354
   %i.ay = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i, i64 24 ; 2 uses
@@ -1517,7 +1521,7 @@ bb.ap:                                            ; preds = %bb.ao
 _ZNK5boost11basic_regexIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE10mark_countEv.exit27: ; preds = %bb.ao, %bb.ap, %bb.an
   %i.fk = phi i64 [ 1, %bb.an ], [ %i.fj, %bb.ap ], [ 1, %bb.ao ] ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !201 ; 6 uses
+  %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !201 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
   store ptr %i.fm, ptr %3, align 8, !tbaa !60
   %i.fn = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -1548,13 +1552,16 @@ _ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i35: ; preds
 _ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i36: ; preds = %_ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i35, %bb.aq
   %i.gb = phi ptr [ %i.fq, %bb.aq ], [ %i.fz, %_ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i35 ] ; 2 uses
   %.not5.i.i.i.i.i37 = icmp eq ptr %i.fr, %i.gb
-  br i1 %.not5.i.i.i.i.i37, label %_ZN5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE8set_sizeEmS2_S2_.exit42, label %.lr.ph.i.i.i.i.i38
+  br i1 %.not5.i.i.i.i.i37, label %_ZN5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE8set_sizeEmS2_S2_.exit42, label %.lr.ph.i.i.i.i.i38.preheader
 
-.lr.ph.i.i.i.i.i38:                               ; preds = %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i36, %.lr.ph.i.i.i.i.i38
-  %.06.i.i.i.i.i39 = phi ptr [ %i.gd, %.lr.ph.i.i.i.i.i38 ], [ %i.fr, %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i36 ] ; 4 uses
-  store ptr %i.fm, ptr %.06.i.i.i.i.i39, align 8, !tbaa !60
-  %10 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i39, i64 8
-  store ptr %i.fm, ptr %10, align 8, !tbaa !61
+.lr.ph.i.i.i.i.i38.preheader:                     ; preds = %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i36
+  %12 = insertelement <2 x ptr> poison, ptr %i.fm, i64 0
+  %13 = shufflevector <2 x ptr> %12, <2 x ptr> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.i.i.i.i.i38
+
+.lr.ph.i.i.i.i.i38:                               ; preds = %.lr.ph.i.i.i.i.i38.preheader, %.lr.ph.i.i.i.i.i38
+  %.06.i.i.i.i.i39 = phi ptr [ %i.gd, %.lr.ph.i.i.i.i.i38 ], [ %i.fr, %.lr.ph.i.i.i.i.i38.preheader ] ; 3 uses
+  store <2 x ptr> %13, ptr %.06.i.i.i.i.i39, align 8, !tbaa !157
   %i.gc = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i39, i64 16
   store i8 0, ptr %i.gc, align 8, !tbaa !2354
   %i.gd = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i39, i64 24 ; 2 uses
@@ -1563,13 +1570,16 @@ _ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iterato
 
 bb.ar:                                            ; preds = %_ZNK5boost11basic_regexIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE10mark_countEv.exit27
   %.not5.i.i.i.i15.i28 = icmp eq ptr %i.fr, %i.fq
-  br i1 %.not5.i.i.i.i15.i28, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5boost9sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit22.i32, label %.lr.ph.i.i.i.i16.i29
+  br i1 %.not5.i.i.i.i15.i28, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5boost9sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit22.i32, label %.lr.ph.i.i.i.i16.i29.preheader
 
-.lr.ph.i.i.i.i16.i29:                             ; preds = %bb.ar, %.lr.ph.i.i.i.i16.i29
-  %.06.i.i.i.i20.i30 = phi ptr [ %i.gf, %.lr.ph.i.i.i.i16.i29 ], [ %i.fr, %bb.ar ] ; 4 uses
-  store ptr %i.fm, ptr %.06.i.i.i.i20.i30, align 8, !tbaa !60
-  %11 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i30, i64 8
-  store ptr %i.fm, ptr %11, align 8, !tbaa !61
+.lr.ph.i.i.i.i16.i29.preheader:                   ; preds = %bb.ar
+  %14 = insertelement <2 x ptr> poison, ptr %i.fm, i64 0
+  %15 = shufflevector <2 x ptr> %14, <2 x ptr> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.i.i.i.i16.i29
+
+.lr.ph.i.i.i.i16.i29:                             ; preds = %.lr.ph.i.i.i.i16.i29.preheader, %.lr.ph.i.i.i.i16.i29
+  %.06.i.i.i.i20.i30 = phi ptr [ %i.gf, %.lr.ph.i.i.i.i16.i29 ], [ %i.fr, %.lr.ph.i.i.i.i16.i29.preheader ] ; 3 uses
+  store <2 x ptr> %15, ptr %.06.i.i.i.i20.i30, align 8, !tbaa !157
   %i.ge = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i30, i64 16
   store i8 0, ptr %i.ge, align 8, !tbaa !2354
   %i.gf = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i30, i64 24 ; 2 uses
@@ -1625,7 +1635,7 @@ _ZNK5boost11basic_regexIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE10mark_c
   %i.gu = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !180 ; 4 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.gx = load ptr, ptr %i.gw, align 8, !tbaa !201 ; 6 uses
+  %i.gx = load ptr, ptr %i.gw, align 8, !tbaa !201 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   store ptr %i.gx, ptr %2, align 8, !tbaa !60
   %i.gy = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -1656,13 +1666,16 @@ _ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i52: ; preds
 _ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i53: ; preds = %_ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i52, %bb.aw
   %i.hm = phi ptr [ %i.hb, %bb.aw ], [ %i.hk, %_ZSt8_DestroyIPN5boost9sub_matchIPKcEES4_EvT_S6_RSaIT0_E.exit.i.i.i.i52 ] ; 2 uses
   %.not5.i.i.i.i.i54 = icmp eq ptr %i.hc, %i.hm
-  br i1 %.not5.i.i.i.i.i54, label %.loopexit72, label %.lr.ph.i.i.i.i.i55
+  br i1 %.not5.i.i.i.i.i54, label %.loopexit72, label %.lr.ph.i.i.i.i.i55.preheader
 
-.lr.ph.i.i.i.i.i55:                               ; preds = %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i53, %.lr.ph.i.i.i.i.i55
-  %.06.i.i.i.i.i56 = phi ptr [ %i.ho, %.lr.ph.i.i.i.i.i55 ], [ %i.hc, %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i53 ] ; 4 uses
-  store ptr %i.gx, ptr %.06.i.i.i.i.i56, align 8, !tbaa !60
-  %12 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i56, i64 8
-  store ptr %i.gx, ptr %12, align 8, !tbaa !61
+.lr.ph.i.i.i.i.i55.preheader:                     ; preds = %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit.i53
+  %16 = insertelement <2 x ptr> poison, ptr %i.gx, i64 0
+  %17 = shufflevector <2 x ptr> %16, <2 x ptr> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.i.i.i.i.i55
+
+.lr.ph.i.i.i.i.i55:                               ; preds = %.lr.ph.i.i.i.i.i55.preheader, %.lr.ph.i.i.i.i.i55
+  %.06.i.i.i.i.i56 = phi ptr [ %i.ho, %.lr.ph.i.i.i.i.i55 ], [ %i.hc, %.lr.ph.i.i.i.i.i55.preheader ] ; 3 uses
+  store <2 x ptr> %17, ptr %.06.i.i.i.i.i56, align 8, !tbaa !157
   %i.hn = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i56, i64 16
   store i8 0, ptr %i.hn, align 8, !tbaa !2354
   %i.ho = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i56, i64 24 ; 2 uses
@@ -1671,13 +1684,16 @@ _ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iterato
 
 bb.ax:                                            ; preds = %_ZNK5boost11basic_regexIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE10mark_countEv.exit44
   %.not5.i.i.i.i15.i45 = icmp eq ptr %i.hc, %i.hb
-  br i1 %.not5.i.i.i.i15.i45, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5boost9sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit22.i49, label %.lr.ph.i.i.i.i16.i46
+  br i1 %.not5.i.i.i.i15.i45, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5boost9sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit22.i49, label %.lr.ph.i.i.i.i16.i46.preheader
 
-.lr.ph.i.i.i.i16.i46:                             ; preds = %bb.ax, %.lr.ph.i.i.i.i16.i46
-  %.06.i.i.i.i20.i47 = phi ptr [ %i.hq, %.lr.ph.i.i.i.i16.i46 ], [ %i.hc, %bb.ax ] ; 4 uses
-  store ptr %i.gx, ptr %.06.i.i.i.i20.i47, align 8, !tbaa !60
-  %13 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i47, i64 8
-  store ptr %i.gx, ptr %13, align 8, !tbaa !61
+.lr.ph.i.i.i.i16.i46.preheader:                   ; preds = %bb.ax
+  %18 = insertelement <2 x ptr> poison, ptr %i.gx, i64 0
+  %19 = shufflevector <2 x ptr> %18, <2 x ptr> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.i.i.i.i16.i46
+
+.lr.ph.i.i.i.i16.i46:                             ; preds = %.lr.ph.i.i.i.i16.i46.preheader, %.lr.ph.i.i.i.i16.i46
+  %.06.i.i.i.i20.i47 = phi ptr [ %i.hq, %.lr.ph.i.i.i.i16.i46 ], [ %i.hc, %.lr.ph.i.i.i.i16.i46.preheader ] ; 3 uses
+  store <2 x ptr> %19, ptr %.06.i.i.i.i20.i47, align 8, !tbaa !157
   %i.hp = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i47, i64 16
   store i8 0, ptr %i.hp, align 8, !tbaa !2354
   %i.hq = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i20.i47, i64 24 ; 2 uses

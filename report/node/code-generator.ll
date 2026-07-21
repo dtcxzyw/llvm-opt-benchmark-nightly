@@ -203,8 +203,8 @@ declare void @_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_17ExternalR
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @"_ZSt16__introsort_loopISt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS5_PS5_ElN9__gnu_cxx5__ops15_Iter_comp_iterIZNS3_13CodeGenerator12AssembleCodeEvE3$_0EEEvT_SF_T0_T1_"(ptr nofree noundef nonnull readonly captures(none) dead_on_return %0, ptr nofree noundef nonnull captures(none) dead_on_return %1, i64 noundef %2) unnamed_addr #14 {
 bb.a:
-  %3 = alloca %"struct.std::_Deque_iterator.41", align 8 ; 7 uses
-  %4 = alloca %"struct.std::_Deque_iterator.41", align 8 ; 7 uses
+  %3 = alloca %"struct.std::_Deque_iterator.41", align 8 ; 6 uses
+  %4 = alloca %"struct.std::_Deque_iterator.41", align 8 ; 6 uses
   %5 = alloca %"struct.std::_Deque_iterator.41", align 8 ; 7 uses
   %6 = alloca %"struct.std::_Deque_iterator.41", align 8 ; 5 uses
   %7 = alloca %"struct.std::_Deque_iterator.41", align 16 ; 3 uses
@@ -228,7 +228,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %i.l = phi ptr [ %.pre100, %bb.a ], [ %.us-phi43.i, %"_ZSt27__unguarded_partition_pivotISt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS5_PS5_EN9__gnu_cxx5__ops15_Iter_comp_iterIZNS3_13CodeGenerator12AssembleCodeEvE3$_0EEET_SF_SF_T0_.exit" ] ; 7 uses
   %i.m = phi ptr [ %.pre, %bb.a ], [ %.us-phi.i, %"_ZSt27__unguarded_partition_pivotISt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS5_PS5_EN9__gnu_cxx5__ops15_Iter_comp_iterIZNS3_13CodeGenerator12AssembleCodeEvE3$_0EEET_SF_SF_T0_.exit" ] ; 8 uses
   %.0 = phi i64 [ %2, %bb.a ], [ %i.dl, %"_ZSt27__unguarded_partition_pivotISt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS5_PS5_EN9__gnu_cxx5__ops15_Iter_comp_iterIZNS3_13CodeGenerator12AssembleCodeEvE3$_0EEET_SF_SF_T0_.exit" ] ; 2 uses
-  %i.n = load ptr, ptr %i.b, align 8              ; 9 uses
+  %i.n = load ptr, ptr %i.b, align 8              ; 8 uses
   %i.o = ptrtoint ptr %i.m to i64                 ; 2 uses
   %i.p = ptrtoint ptr %i.n to i64                 ; 3 uses
   %i.q = sub i64 %i.o, %i.p
@@ -242,7 +242,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %i.x = sub i64 %i.v, %i.w
   %i.y = ashr exact i64 %i.x, 3                   ; 4 uses
   %i.z = add i64 %i.u, %i.y
-  %i.aa = load ptr, ptr %i.d, align 8             ; 5 uses
+  %i.aa = load ptr, ptr %i.d, align 8             ; 4 uses
   %i.ab = load ptr, ptr %0, align 8               ; 13 uses
   %i.ac = ptrtoint ptr %i.aa to i64
   %i.ad = ptrtoint ptr %i.ab to i64               ; 3 uses
@@ -317,7 +317,8 @@ _ZStplRKSt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS4_PS4_
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %i.bh = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.bi = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %8 = insertelement <2 x ptr> poison, ptr %i.aa, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %i.n, i64 1 ; 2 uses
   br label %_ZNSt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS4_PS4_EppEv.exit.i.i.outer
 
 _ZNSt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS4_PS4_EppEv.exit.i.i.outer: ; preds = %bb.p, %"_ZSt11__make_heapISt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS5_PS5_EN9__gnu_cxx5__ops15_Iter_comp_iterIZNS3_13CodeGenerator12AssembleCodeEvE3$_0EEEvT_SF_RT0_.exit.i.i"
@@ -371,8 +372,7 @@ bb.n:                                             ; preds = %"_ZN9__gnu_cxx5__op
   store ptr %.val2.val.i.i, ptr %.sroa.020.0.i.i, align 8
   store ptr %i.ab, ptr %4, align 8
   store ptr %i.aj, ptr %i.bh, align 8
-  store ptr %i.aa, ptr %i.bi, align 8
-  store ptr %i.n, ptr %8, align 8
+  store <2 x ptr> %9, ptr %i.bi, align 8
   call fastcc void @"_ZSt13__adjust_heapISt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS5_PS5_ElS5_N9__gnu_cxx5__ops15_Iter_comp_iterIZNS3_13CodeGenerator12AssembleCodeEvE3$_0EEEvT_T0_SG_T1_T2_"(ptr noundef dead_on_return %4, i64 noundef 0, i64 noundef %i.ag, ptr noundef nonnull %.val.val.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %bb.o
@@ -389,9 +389,8 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZNSt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS4_PS4_EppEv.exit.i.i.outer, !llvm.loop !107
 
 .lr.ph.i.preheader:                               ; preds = %bb.k, %_ZStssRKSt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS4_PS4_ES9_.exit.i.i
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 16
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_ZNSt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS4_PS4_EmmEv.exit.i.i
@@ -430,9 +429,8 @@ _ZNSt15_Deque_iteratorIPN2v88internal8compiler18DeoptimizationExitERS4_PS4_EmmEv
   %i.cr = load ptr, ptr %i.ab, align 8
   store ptr %i.cr, ptr %i.cp, align 8
   store ptr %i.ab, ptr %3, align 8
-  store ptr %i.aj, ptr %9, align 8
-  store ptr %i.aa, ptr %i.cg, align 8
-  store ptr %i.n, ptr %i.ch, align 8
+  store ptr %i.aj, ptr %i.cg, align 8
+  store <2 x ptr> %9, ptr %i.ch, align 8
   %i.cs = sub i64 %.pre-phi.i.i, %i.p
   %i.ct = ashr exact i64 %i.cs, 3
   %i.cu = icmp ne ptr %.sroa.8.1.i, null

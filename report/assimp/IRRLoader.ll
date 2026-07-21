@@ -204,7 +204,7 @@ bb.a:
   %i.m = add i64 %i.l, 1
   store i64 %i.m, ptr %i.k, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 200
-  %i.o = load ptr, ptr %i.n, align 8              ; 13 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 12 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   %i.q = tail call ptr @_ZNK4pugi8xml_node5childEPKc(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.57)
@@ -257,7 +257,6 @@ bb.c:                                             ; preds = %bb.a
   %i.au = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.av = getelementptr inbounds nuw i8, ptr %i.o, i64 24 ; 6 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.o, i64 36 ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.o, i64 28 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.o, i64 32 ; 4 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 4 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.o, i64 56 ; 2 uses
@@ -530,9 +529,9 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit71.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit71
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.av, ptr noundef nonnull align 8 dereferenceable(12) %i.at, i64 12, i1 false)
-  %15 = load float, ptr %i.av, align 8            ; 4 uses
+  %14 = load <2 x float>, ptr %i.av, align 8      ; 5 uses
+  %15 = extractelement <2 x float> %14, i64 0     ; 3 uses
   %16 = fcmp oeq float %15, 0.000000e+00
-  %.pre205 = load float, ptr %14, align 4         ; 4 uses
   br i1 %16, label %bb.q, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit71.thread._ZNK10aiVector3tIfEeqERKS0_.exit.thread_crit_edge
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit71.thread._ZNK10aiVector3tIfEeqERKS0_.exit.thread_crit_edge: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit71.thread
@@ -540,7 +539,8 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %_ZNK10aiVector3tIfEeqERKS0_.exit.thread
 
 bb.q:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit71.thread
-  %i.ex = fcmp oeq float %.pre205, 0.000000e+00
+  %17 = extractelement <2 x float> %14, i64 1
+  %i.ex = fcmp oeq float %17, 0.000000e+00
   %.pre207 = load float, ptr %i.ax, align 8       ; 2 uses
   %i.ey = fcmp oeq float %.pre207, 0.000000e+00
   %or.cond = select i1 %i.ex, i1 %i.ey, i1 false
@@ -553,19 +553,20 @@ bb.r:                                             ; preds = %bb.q
 
 _ZNK10aiVector3tIfEeqERKS0_.exit.thread:          ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit71.thread._ZNK10aiVector3tIfEeqERKS0_.exit.thread_crit_edge, %bb.q
   %i.ez = phi float [ %.pre206, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit71.thread._ZNK10aiVector3tIfEeqERKS0_.exit.thread_crit_edge ], [ %.pre207, %bb.q ] ; 3 uses
-  %17 = fmul float %.pre205, %.pre205
-  %i.fa = call float @llvm.fmuladd.f32(float %15, float %15, float %17)
+  %foldExtExtBinop = fmul <2 x float> %14, %14
+  %18 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %i.fa = call float @llvm.fmuladd.f32(float %15, float %15, float %18)
   %i.fb = call noundef float @llvm.fmuladd.f32(float %i.ez, float %i.ez, float %i.fa) ; 2 uses
   %i.fc = fcmp oeq float %i.fb, 0.000000e+00
   br i1 %i.fc, label %_ZN10aiVector3tIfE9NormalizeEv.exit, label %_ZN10aiVector3tIfEdVEf.exit.i
 
 _ZN10aiVector3tIfEdVEf.exit.i:                    ; preds = %_ZNK10aiVector3tIfEeqERKS0_.exit.thread
   %sqrt.i.i = call noundef float @llvm.sqrt.f32(float %i.fb)
-  %i.fd = fdiv float 1.000000e+00, %sqrt.i.i      ; 3 uses
-  %18 = fmul float %15, %i.fd
-  store float %18, ptr %i.av, align 8
-  %19 = fmul float %.pre205, %i.fd
-  store float %19, ptr %14, align 4
+  %i.fd = fdiv float 1.000000e+00, %sqrt.i.i      ; 2 uses
+  %19 = insertelement <2 x float> poison, float %i.fd, i64 0
+  %20 = shufflevector <2 x float> %19, <2 x float> poison, <2 x i32> zeroinitializer
+  %21 = fmul <2 x float> %14, %20
+  store <2 x float> %21, ptr %i.av, align 8
   %i.fe = fmul float %i.ez, %i.fd
   store float %i.fe, ptr %i.ax, align 8
   br label %_ZN10aiVector3tIfE9NormalizeEv.exit

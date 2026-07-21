@@ -202,11 +202,12 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %i.vz = sext i32 %.118191054 to i64             ; 2 uses
   %i.wa = getelementptr inbounds [4 x i8], ptr @L3psycho_anal.energy, i64 %i.vz
   %i.wb = load float, ptr %i.wa, align 4, !tbaa !18 ; 2 uses
-  %11 = fpext float %i.wb to double               ; 3 uses
   %i.wc = getelementptr inbounds [4 x i8], ptr @L3psycho_anal.cw, i64 %i.vz
   %i.wd = load float, ptr %i.wc, align 4, !tbaa !18
   %i.we = fmul float %i.wb, %i.wd
-  %12 = fpext float %i.we to double               ; 3 uses
+  %11 = insertelement <2 x float> poison, float %i.wb, i64 0
+  %12 = insertelement <2 x float> %11, float %i.we, i64 1
+  %13 = fpext <2 x float> %12 to <2 x double>     ; 3 uses
   %i.wf = getelementptr inbounds nuw [4 x i8], ptr @L3psycho_anal.numlines_l, i64 %indvars.iv1320
   %i.wg = load i32, ptr %i.wf, align 4, !tbaa !4  ; 6 uses
   %.121043 = add nsw i32 %.118191054, 1           ; 2 uses
@@ -223,69 +224,66 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %.0800.prol = add nsw i32 %i.wg, -1
   %i.wk = getelementptr inbounds [4 x i8], ptr @L3psycho_anal.energy, i64 %i.wi
   %i.wl = load float, ptr %i.wk, align 4, !tbaa !18 ; 2 uses
-  %13 = fpext float %i.wl to double
-  %14 = fadd double %11, %13                      ; 2 uses
-  %15 = getelementptr inbounds [4 x i8], ptr @L3psycho_anal.cw, i64 %i.wi
-  %16 = load float, ptr %15, align 4, !tbaa !18
-  %17 = fmul float %i.wl, %16
-  %18 = fpext float %17 to double
-  %19 = fadd double %12, %18                      ; 2 uses
+  %14 = getelementptr inbounds [4 x i8], ptr @L3psycho_anal.cw, i64 %i.wi
+  %15 = load float, ptr %14, align 4, !tbaa !18
+  %16 = fmul float %i.wl, %15
+  %17 = insertelement <2 x float> poison, float %i.wl, i64 0
+  %18 = insertelement <2 x float> %17, float %16, i64 1
+  %19 = fpext <2 x float> %18 to <2 x double>
+  %20 = fadd <2 x double> %13, %19                ; 2 uses
   %indvars.iv.next1317.prol = add nsw i64 %i.wi, 1
   br label %.lr.ph1049.prol.loopexit
 
 .lr.ph1049.prol.loopexit:                         ; preds = %.lr.ph1049.prol, %.lr.ph1049.preheader
   %indvars.iv1316.unr = phi i64 [ %i.wi, %.lr.ph1049.preheader ], [ %indvars.iv.next1317.prol, %.lr.ph1049.prol ]
   %.0800.in1046.unr = phi i32 [ %i.wg, %.lr.ph1049.preheader ], [ %.0800.prol, %.lr.ph1049.prol ]
-  %.08011045.unr = phi double [ %12, %.lr.ph1049.preheader ], [ %19, %.lr.ph1049.prol ]
-  %.08021044.unr = phi double [ %11, %.lr.ph1049.preheader ], [ %14, %.lr.ph1049.prol ]
-  %.lcssa1725.unr = phi double [ poison, %.lr.ph1049.preheader ], [ %14, %.lr.ph1049.prol ]
-  %.lcssa1724.unr = phi double [ poison, %.lr.ph1049.preheader ], [ %19, %.lr.ph1049.prol ]
+  %.unr = phi <2 x double> [ %13, %.lr.ph1049.preheader ], [ %20, %.lr.ph1049.prol ]
+  %.lcssa1724.unr = phi <2 x double> [ poison, %.lr.ph1049.preheader ], [ %20, %.lr.ph1049.prol ]
   %i.wm = icmp eq i32 %i.wg, 2
   br i1 %i.wm, label %._crit_edge1050.loopexit, label %.lr.ph1049
 
 .lr.ph1049:                                       ; preds = %.lr.ph1049.prol.loopexit, %.lr.ph1049
   %indvars.iv1316 = phi i64 [ %indvars.iv.next1317.1, %.lr.ph1049 ], [ %indvars.iv1316.unr, %.lr.ph1049.prol.loopexit ] ; 4 uses
   %.0800.in1046 = phi i32 [ %.0800.1, %.lr.ph1049 ], [ %.0800.in1046.unr, %.lr.ph1049.prol.loopexit ] ; 2 uses
-  %.08011045 = phi double [ %33, %.lr.ph1049 ], [ %.08011045.unr, %.lr.ph1049.prol.loopexit ]
-  %.08021044 = phi double [ %28, %.lr.ph1049 ], [ %.08021044.unr, %.lr.ph1049.prol.loopexit ]
+  %21 = phi <2 x double> [ %35, %.lr.ph1049 ], [ %.unr, %.lr.ph1049.prol.loopexit ]
   %i.wn = getelementptr inbounds [4 x i8], ptr @L3psycho_anal.energy, i64 %indvars.iv1316
   %i.wo = load float, ptr %i.wn, align 4, !tbaa !18 ; 2 uses
-  %20 = fpext float %i.wo to double
-  %21 = fadd double %.08021044, %20
   %22 = getelementptr inbounds [4 x i8], ptr @L3psycho_anal.cw, i64 %indvars.iv1316
   %23 = load float, ptr %22, align 4, !tbaa !18
   %24 = fmul float %i.wo, %23
-  %25 = fpext float %24 to double
-  %26 = fadd double %.08011045, %25
+  %25 = insertelement <2 x float> poison, float %i.wo, i64 0
+  %26 = insertelement <2 x float> %25, float %24, i64 1
+  %27 = fpext <2 x float> %26 to <2 x double>
+  %28 = fadd <2 x double> %21, %27
   %indvars.iv.next1317 = add nsw i64 %indvars.iv1316, 1 ; 2 uses
   %.0800.1 = add nsw i32 %.0800.in1046, -2
   %i.wp = getelementptr inbounds [4 x i8], ptr @L3psycho_anal.energy, i64 %indvars.iv.next1317
   %i.wq = load float, ptr %i.wp, align 4, !tbaa !18 ; 2 uses
-  %27 = fpext float %i.wq to double
-  %28 = fadd double %21, %27                      ; 2 uses
   %29 = getelementptr inbounds [4 x i8], ptr @L3psycho_anal.cw, i64 %indvars.iv.next1317
   %30 = load float, ptr %29, align 4, !tbaa !18
   %31 = fmul float %i.wq, %30
-  %32 = fpext float %31 to double
-  %33 = fadd double %26, %32                      ; 2 uses
+  %32 = insertelement <2 x float> poison, float %i.wq, i64 0
+  %33 = insertelement <2 x float> %32, float %31, i64 1
+  %34 = fpext <2 x float> %33 to <2 x double>
+  %35 = fadd <2 x double> %28, %34                ; 2 uses
   %indvars.iv.next1317.1 = add nsw i64 %indvars.iv1316, 2
   %i.wr = icmp sgt i32 %.0800.in1046, 3
   br i1 %i.wr, label %.lr.ph1049, label %._crit_edge1050.loopexit, !llvm.loop !60
 
 ._crit_edge1050.loopexit:                         ; preds = %.lr.ph1049, %.lr.ph1049.prol.loopexit
-  %.lcssa1725 = phi double [ %.lcssa1725.unr, %.lr.ph1049.prol.loopexit ], [ %28, %.lr.ph1049 ]
-  %.lcssa1724 = phi double [ %.lcssa1724.unr, %.lr.ph1049.prol.loopexit ], [ %33, %.lr.ph1049 ]
+  %.lcssa1724 = phi <2 x double> [ %.lcssa1724.unr, %.lr.ph1049.prol.loopexit ], [ %35, %.lr.ph1049 ]
   %i.ws = add i32 %.118191054, %i.wg
   br label %._crit_edge1050
 
 ._crit_edge1050:                                  ; preds = %._crit_edge1050.loopexit, %.lr.ph1056
-  %.0802.lcssa = phi double [ %11, %.lr.ph1056 ], [ %.lcssa1725, %._crit_edge1050.loopexit ]
-  %.0801.lcssa = phi double [ %12, %.lr.ph1056 ], [ %.lcssa1724, %._crit_edge1050.loopexit ]
   %.12.lcssa = phi i32 [ %.121043, %.lr.ph1056 ], [ %i.ws, %._crit_edge1050.loopexit ] ; 3 uses
-  %34 = getelementptr inbounds nuw [8 x i8], ptr @L3psycho_anal.eb, i64 %indvars.iv1320
-  store double %.0802.lcssa, ptr %34, align 8, !tbaa !19
+  %36 = phi <2 x double> [ %13, %.lr.ph1056 ], [ %.lcssa1724, %._crit_edge1050.loopexit ] ; 2 uses
+  %37 = getelementptr inbounds nuw [8 x i8], ptr @L3psycho_anal.eb, i64 %indvars.iv1320
+  %38 = extractelement <2 x double> %36, i64 0
+  store double %38, ptr %37, align 8, !tbaa !19
   %i.wt = getelementptr inbounds nuw [8 x i8], ptr @L3psycho_anal.cb, i64 %indvars.iv1320
-  store double %.0801.lcssa, ptr %i.wt, align 8, !tbaa !19
+  %39 = extractelement <2 x double> %36, i64 1
+  store double %39, ptr %i.wt, align 8, !tbaa !19
   %indvars.iv.next1321 = add nuw nsw i64 %indvars.iv1320, 1 ; 2 uses
   %i.wu = icmp slt i32 %.12.lcssa, %.lcssa974
   br i1 %i.wu, label %.lr.ph1056, label %.preheader954.loopexit, !llvm.loop !61

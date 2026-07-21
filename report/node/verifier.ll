@@ -203,27 +203,26 @@ _ZNK2v88internal8compiler8AllNodes6IsLiveEPKNS1_4NodeE.exit1150.us.peel: ; preds
 bb.bt:                                            ; preds = %_ZNK2v88internal8compiler8AllNodes6IsLiveEPKNS1_4NodeE.exit1150.us.peel
   %i.nu = load ptr, ptr %i.nf, align 8
   %i.nv = getelementptr inbounds nuw i8, ptr %i.nu, i64 16
-  %i.nw = load i16, ptr %i.nv, align 8            ; 3 uses
+  %i.nw = load i16, ptr %i.nv, align 8            ; 2 uses
   %i.nx = and i16 %i.nw, -2
   %i.ny = icmp eq i16 %i.nx, 4
   br i1 %i.ny, label %.critedge1110.us.peel, label %.critedge1108, !prof !21
 
 .critedge1110.us.peel:                            ; preds = %bb.bt
-  %10 = icmp eq i16 %i.nw, 4                      ; 2 uses
-  %11 = icmp eq i16 %i.nw, 5                      ; 2 uses
+  %10 = insertelement <2 x i16> poison, i16 %i.nw, i64 0
+  %11 = shufflevector <2 x i16> %10, <2 x i16> poison, <2 x i32> zeroinitializer
+  %12 = icmp eq <2 x i16> %11, <i16 5, i16 4>     ; 3 uses
   %.sroa.01218.0.us.peel = load ptr, ptr %.sroa.01218.01355, align 8 ; 2 uses
   %.not1281.us.peel = icmp eq ptr %.sroa.01218.0.us.peel, null
   br i1 %.not1281.us.peel, label %._crit_edge1362, label %.lr.ph1361.split.us.peel.next
 
 .lr.ph1361.split.us.peel.next:                    ; preds = %.critedge1110.us.peel
-  %12 = zext i1 %11 to i32
-  %13 = zext i1 %10 to i32
+  %13 = zext <2 x i1> %12 to <2 x i32>
   br label %.lr.ph1361.split.us
 
 .lr.ph1361.split.us:                              ; preds = %.lr.ph1361.split.us.peel.next, %.critedge1110.us
   %.sroa.01218.01359.us = phi ptr [ %.sroa.01218.0.us, %.critedge1110.us ], [ %.sroa.01218.0.us.peel, %.lr.ph1361.split.us.peel.next ] ; 3 uses
-  %.010881358.us = phi i32 [ %spec.select.us, %.critedge1110.us ], [ %13, %.lr.ph1361.split.us.peel.next ]
-  %.010901357.us = phi i32 [ %.11091.us, %.critedge1110.us ], [ %12, %.lr.ph1361.split.us.peel.next ]
+  %14 = phi <2 x i32> [ %19, %.critedge1110.us ], [ %13, %.lr.ph1361.split.us.peel.next ]
   %i.nz = getelementptr inbounds nuw i8, ptr %.sroa.01218.01359.us, i64 24
   %i.oa = getelementptr inbounds nuw i8, ptr %.sroa.01218.01359.us, i64 16
   %i.ob = load i32, ptr %i.oa, align 8            ; 2 uses
@@ -261,29 +260,31 @@ _ZNK2v88internal8compiler8AllNodes6IsLiveEPKNS1_4NodeE.exit1150.us: ; preds = %_
 bb.bu:                                            ; preds = %_ZNK2v88internal8compiler8AllNodes6IsLiveEPKNS1_4NodeE.exit1150.us
   %i.ou = load ptr, ptr %i.oh, align 8
   %i.ov = getelementptr inbounds nuw i8, ptr %i.ou, i64 16
-  %i.ow = load i16, ptr %i.ov, align 8            ; 3 uses
+  %i.ow = load i16, ptr %i.ov, align 8            ; 2 uses
   %i.ox = and i16 %i.ow, -2
   %i.oy = icmp eq i16 %i.ox, 4
   br i1 %i.oy, label %.critedge1110.us, label %.critedge1108, !prof !21
 
 .critedge1110.us:                                 ; preds = %bb.bu
-  %14 = icmp eq i16 %i.ow, 4
-  %15 = zext i1 %14 to i32
-  %spec.select.us = add nuw nsw i32 %.010881358.us, %15 ; 2 uses
-  %16 = icmp eq i16 %i.ow, 5
-  %17 = zext i1 %16 to i32
-  %.11091.us = add nuw nsw i32 %.010901357.us, %17 ; 2 uses
+  %15 = insertelement <2 x i16> poison, i16 %i.ow, i64 0
+  %16 = shufflevector <2 x i16> %15, <2 x i16> poison, <2 x i32> zeroinitializer
+  %17 = icmp eq <2 x i16> %16, <i16 5, i16 4>
+  %18 = zext <2 x i1> %17 to <2 x i32>
+  %19 = add nuw nsw <2 x i32> %14, %18            ; 2 uses
   %.sroa.01218.0.us = load ptr, ptr %.sroa.01218.01359.us, align 8 ; 2 uses
   %.not1281.us = icmp eq ptr %.sroa.01218.0.us, null
   br i1 %.not1281.us, label %._crit_edge1362.loopexit.loopexit, label %.lr.ph1361.split.us, !llvm.loop !22
 
 ._crit_edge1362.loopexit.loopexit:                ; preds = %.critedge1110.us
-  %18 = icmp eq i32 %spec.select.us, 1
-  %19 = icmp eq i32 %.11091.us, 1
-  br i1 %18, label %bb.bv, label %._crit_edge1362.thread, !prof !24
+  %20 = icmp eq <2 x i32> %19, splat (i32 1)      ; 2 uses
+  %21 = extractelement <2 x i1> %20, i64 0
+  %22 = extractelement <2 x i1> %20, i64 1
+  br i1 %22, label %bb.bv, label %._crit_edge1362.thread, !prof !24
 
 ._crit_edge1362:                                  ; preds = %.critedge1110.us.peel
-  br i1 %10, label %bb.bv, label %._crit_edge1362.thread, !prof !24
+  %23 = extractelement <2 x i1> %12, i64 0
+  %24 = extractelement <2 x i1> %12, i64 1
+  br i1 %24, label %bb.bv, label %._crit_edge1362.thread, !prof !24
 
 _ZNK2v88internal8compiler4Node4Uses14const_iteratordeEv.exit1147: ; preds = %.lr.ph1361
   tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.98) #14
@@ -298,7 +299,7 @@ _ZNK2v88internal8compiler4Node4Uses14const_iteratordeEv.exit1147: ; preds = %.lr
   unreachable
 
 bb.bv:                                            ; preds = %._crit_edge1362.loopexit.loopexit, %._crit_edge1362
-  %.01090.lcssa1452 = phi i1 [ %19, %._crit_edge1362.loopexit.loopexit ], [ %11, %._crit_edge1362 ]
+  %.01090.lcssa1452 = phi i1 [ %21, %._crit_edge1362.loopexit.loopexit ], [ %23, %._crit_edge1362 ]
   br i1 %.01090.lcssa1452, label %bb.bx, label %bb.bw, !prof !9
 
 bb.bw:                                            ; preds = %bb.bv

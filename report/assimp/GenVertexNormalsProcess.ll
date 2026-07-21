@@ -203,11 +203,10 @@ bb.v:                                             ; preds = %bb.u
 
 ._crit_edge245:                                   ; preds = %bb.y, %.preheader
   %.sroa.14182.0.lcssa = phi float [ 0.000000e+00, %.preheader ], [ %.sroa.14182.1, %bb.y ] ; 4 uses
-  %i.fi = phi <2 x float> [ zeroinitializer, %.preheader ], [ %i.gg, %bb.y ] ; 4 uses
-  %5 = extractelement <2 x float> %i.fi, i64 0    ; 2 uses
+  %i.fi = phi <2 x float> [ zeroinitializer, %.preheader ], [ %i.gg, %bb.y ] ; 5 uses
   %foldExtExtBinop330 = fmul <2 x float> %i.fi, %i.fi
-  %i.fj = extractelement <2 x float> %foldExtExtBinop330, i64 0
-  %i.fk = extractelement <2 x float> %i.fi, i64 1 ; 4 uses
+  %i.fj = extractelement <2 x float> %foldExtExtBinop330, i64 1
+  %i.fk = extractelement <2 x float> %i.fi, i64 0 ; 2 uses
   %i.fl = call float @llvm.fmuladd.f32(float %i.fk, float %i.fk, float %i.fj)
   %i.fm = call noundef float @llvm.fmuladd.f32(float %.sroa.14182.0.lcssa, float %.sroa.14182.0.lcssa, float %i.fl) ; 2 uses
   %i.fn = fcmp ogt float %i.fm, 0.000000e+00
@@ -215,16 +214,16 @@ bb.v:                                             ; preds = %bb.u
 
 _ZN10aiVector3tIfEdVEf.exit.i150:                 ; preds = %._crit_edge245
   %sqrt.i.i151 = call noundef float @llvm.sqrt.f32(float %i.fm)
-  %i.fo = fdiv float 1.000000e+00, %sqrt.i.i151   ; 3 uses
-  %6 = fmul float %i.fk, %i.fo
-  %7 = fmul float %5, %i.fo
+  %i.fo = fdiv float 1.000000e+00, %sqrt.i.i151   ; 2 uses
+  %5 = insertelement <2 x float> poison, float %i.fo, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = fmul <2 x float> %i.fi, %6
   %i.fp = fmul float %.sroa.14182.0.lcssa, %i.fo
   br label %_ZN10aiVector3tIfE13NormalizeSafeEv.exit152
 
 _ZN10aiVector3tIfE13NormalizeSafeEv.exit152:      ; preds = %._crit_edge245, %_ZN10aiVector3tIfEdVEf.exit.i150
   %.sroa.14182.2 = phi float [ %i.fp, %_ZN10aiVector3tIfEdVEf.exit.i150 ], [ %.sroa.14182.0.lcssa, %._crit_edge245 ]
-  %.sroa.9180.2 = phi float [ %7, %_ZN10aiVector3tIfEdVEf.exit.i150 ], [ %5, %._crit_edge245 ]
-  %.sroa.0178.2 = phi float [ %6, %_ZN10aiVector3tIfEdVEf.exit.i150 ], [ %i.fk, %._crit_edge245 ]
+  %8 = phi <2 x float> [ %7, %_ZN10aiVector3tIfEdVEf.exit.i150 ], [ %i.fi, %._crit_edge245 ]
   br i1 %.not270, label %.loopexit, label %.lr.ph249
 
 .thread220:                                       ; preds = %bb.v
@@ -249,8 +248,8 @@ bb.w:                                             ; preds = %.lr.ph244, %bb.y
 bb.x:                                             ; preds = %bb.w
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fv, i64 4
   %i.fz = load float, ptr %i.fy, align 4
-  %i.ga = insertelement <2 x float> poison, float %i.fz, i64 0
-  %i.gb = insertelement <2 x float> %i.ga, float %i.fw, i64 1
+  %i.ga = insertelement <2 x float> poison, float %i.fw, i64 0
+  %i.gb = insertelement <2 x float> %i.ga, float %i.fz, i64 1
   %i.gc = fadd <2 x float> %i.fr, %i.gb
   %i.gd = getelementptr inbounds nuw i8, ptr %i.fv, i64 8
   %i.ge = load float, ptr %i.gd, align 4
@@ -270,10 +269,8 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %i.gj = getelementptr inbounds nuw [4 x i8], ptr %i.fc, i64 %indvars.iv285
   %i.gk = load i32, ptr %i.gj, align 4            ; 2 uses
   %i.gl = zext i32 %i.gk to i64                   ; 2 uses
-  %i.gm = getelementptr inbounds nuw [12 x i8], ptr %i.dy, i64 %i.gl ; 3 uses
-  store float %.sroa.0178.2, ptr %i.gm, align 4
-  %.sroa.9180.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gm, i64 4
-  store float %.sroa.9180.2, ptr %.sroa.9180.0..sroa_idx, align 4
+  %i.gm = getelementptr inbounds nuw [12 x i8], ptr %i.dy, i64 %i.gl ; 2 uses
+  store <2 x float> %8, ptr %i.gm, align 4
   %.sroa.14182.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gm, i64 8
   store float %.sroa.14182.2, ptr %.sroa.14182.0..sroa_idx, align 4
   %i.gn = lshr i32 %i.gk, 6

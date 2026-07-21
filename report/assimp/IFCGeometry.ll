@@ -203,7 +203,7 @@ bb.an:                                            ; preds = %.lr.ph483, %._crit_
   %.sroa.0324.0464 = phi double [ 1.000000e+00, %.lr.ph483 ], [ %i.nx, %._crit_edge ] ; 4 uses
   %.sroa.8.0461 = phi double [ 1.000000e+00, %.lr.ph483 ], [ %i.mh, %._crit_edge ] ; 4 uses
   %.sroa.12.0458 = phi double [ 1.000000e+00, %.lr.ph483 ], [ %i.ny, %._crit_edge ] ; 4 uses
-  %i.kf = phi <2 x double> [ %i.ci, %.lr.ph483 ], [ %i.km, %._crit_edge ] ; 3 uses
+  %i.kf = phi <2 x double> [ %i.ci, %.lr.ph483 ], [ %i.km, %._crit_edge ] ; 4 uses
   %i.kg = phi <2 x double> [ zeroinitializer, %.lr.ph483 ], [ %i.km, %._crit_edge ]
   %i.kh = phi <2 x double> [ %i.ci, %.lr.ph483 ], [ %i.kf, %._crit_edge ] ; 2 uses
   %.not152 = icmp eq i64 %.0128480, %i.cj
@@ -356,6 +356,7 @@ _ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split: ; preds = %_ZN10aiV
   br i1 %.not510, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.loopexit397
+  %4 = insertelement <2 x double> poison, double %.sroa.0347.0474, i64 0
   %i.ns = extractelement <2 x double> %i.ni, i64 0
   %i.nt = shufflevector <2 x double> %i.nd, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.nu = insertelement <2 x double> %i.nt, double %i.nr, i64 1
@@ -379,17 +380,19 @@ _ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split: ; preds = %_ZN10aiV
   %.sroa.22.2452 = phi ptr [ %.sroa.22.7, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit ], [ %.sroa.22.1477, %.lr.ph.preheader ] ; 2 uses
   %.sroa.14.1450 = phi double [ %i.pe, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit ], [ %i.mh, %.lr.ph.preheader ] ; 3 uses
   %i.nz = phi <2 x double> [ %i.pf, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit ], [ %i.mm, %.lr.ph.preheader ] ; 6 uses
-  %4 = extractelement <2 x double> %i.nz, i64 0
-  %5 = fadd double %.sroa.0347.0474, %4           ; 2 uses
-  %6 = insertelement <2 x double> %i.nz, double %.sroa.14.1450, i64 0
-  %i.oa = fadd <2 x double> %i.kf, %6             ; 2 uses
+  %5 = insertelement <2 x double> %4, double %.sroa.14.1450, i64 1
+  %6 = shufflevector <2 x double> %i.nz, <2 x double> %i.kf, <2 x i32> <i32 0, i32 2>
+  %7 = fadd <2 x double> %5, %6                   ; 2 uses
+  %8 = extractelement <2 x double> %i.nz, i64 1
+  %i.oa = fadd <2 x double> %i.kf, %i.nz
+  %9 = extractelement <2 x double> %i.oa, i64 1   ; 2 uses
   %.not.i.i = icmp eq ptr %.sroa.16.1453, %.sroa.22.2452
   br i1 %.not.i.i, label %bb.ar, label %bb.aq
 
 bb.aq:                                            ; preds = %.lr.ph
-  store double %5, ptr %.sroa.16.1453, align 8
-  %.sroa.6281.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.16.1453, i64 8
-  store <2 x double> %i.oa, ptr %.sroa.6281.0..sroa_idx, align 8
+  store <2 x double> %7, ptr %.sroa.16.1453, align 8
+  %.sroa.6281.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.16.1453, i64 16
+  store double %9, ptr %.sroa.6281.0..sroa_idx, align 8
   br label %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit
 
 bb.ar:                                            ; preds = %.lr.ph
@@ -421,9 +424,9 @@ _ZNKSt6vectorI10aiVector3tIdESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %
 
 .noexc184:                                        ; preds = %_ZNKSt6vectorI10aiVector3tIdESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.om = getelementptr inbounds nuw i8, ptr %i.ol, i64 %i.od ; 2 uses
-  store double %5, ptr %i.om, align 8
-  %.sroa.6281.0..sroa_idx282 = getelementptr inbounds nuw i8, ptr %i.om, i64 8
-  store <2 x double> %i.oa, ptr %.sroa.6281.0..sroa_idx282, align 8
+  store <2 x double> %7, ptr %i.om, align 8
+  %.sroa.6281.0..sroa_idx282 = getelementptr inbounds nuw i8, ptr %i.om, i64 16
+  store double %9, ptr %.sroa.6281.0..sroa_idx282, align 8
   %.not10.i.i.i.i.i.i = icmp eq ptr %.sroa.0353.2454, %.sroa.16.1453
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorI10aiVector3tIdESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -466,9 +469,8 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit: ; preds = %_ZNSt6vecto
   %i.oz = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nd, <2 x double> %i.nz, <2 x double> %i.oy)
   %i.pa = shufflevector <2 x double> %i.nz, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.pb = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nu, <2 x double> %i.pa, <2 x double> %i.ow)
-  %7 = extractelement <2 x double> %i.oz, i64 0
-  %i.pc = extractelement <2 x double> %i.nz, i64 1
-  %i.pd = call double @llvm.fmuladd.f64(double %i.nv, double %i.pc, double %7)
+  %i.pc = extractelement <2 x double> %i.oz, i64 0
+  %i.pd = call double @llvm.fmuladd.f64(double %i.nv, double %8, double %i.pc)
   %i.pe = fadd double %i.pd, 0.000000e+00
   %i.pf = fadd <2 x double> %i.pb, zeroinitializer
   %exitcond.not = icmp eq i32 %i.oq, %i.m

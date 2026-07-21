@@ -204,12 +204,8 @@ bb.a:
 
 _ZSt10accumulateIPKddET0_T_S3_S2_.exit:           ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.a
   %.0.lcssa.i = phi double [ 0.000000e+00, %bb.a ], [ %.lcssa122.unr, %.lr.ph.i.prol.loopexit ], [ %i.af, %.lr.ph.i ] ; 5 uses
-  %7 = fdiv double 1.000000e+00, %.0.lcssa.i      ; 2 uses
   %i.ah = fdiv double %.0.lcssa.i, %1
   %i.ai = tail call double @log(double noundef %i.ah) #33, !tbaa !3
-  %8 = fmul double %i.ai, 4.000000e+00
-  %9 = fadd double %8, 2.400000e+01
-  %10 = fdiv double %9, %1                        ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 5 uses
   store i32 0, ptr %i.aj, align 4, !tbaa !836
   %i.ak = add nsw i32 %4, -1                      ; 2 uses
@@ -229,8 +225,16 @@ _ZSt10accumulateIPKddET0_T_S3_S2_.exit:           ; preds = %.lr.ph.i.prol.loope
   br i1 %i.av, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %_ZSt10accumulateIPKddET0_T_S3_S2_.exit
+  %7 = fmul double %i.ai, 4.000000e+00
+  %8 = fadd double %7, 2.400000e+01
+  %9 = fdiv double %8, %1
+  %10 = fdiv double 1.000000e+00, %.0.lcssa.i
   %i.aw = add nsw i32 %4, -2
   %i.ax = zext nneg i32 %i.aw to i64
+  %11 = insertelement <2 x double> poison, double %9, i64 0
+  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
+  %13 = insertelement <2 x double> poison, double %10, i64 0
+  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %bb.d
@@ -265,17 +269,17 @@ _ZSt10accumulateIPKddET0_T_S3_S2_.exit:           ; preds = %.lr.ph.i.prol.loope
   %i.bm = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv ; 2 uses
   %i.bn = load double, ptr %i.bm, align 8, !tbaa !621 ; 2 uses
   %i.bo = fadd double %i.bl, %i.bn                ; 4 uses
-  %11 = fmul double %7, %.096                     ; 2 uses
-  %12 = fadd double %.096, %i.bo
-  %13 = fmul double %7, %12                       ; 2 uses
-  %14 = fsub double 1.000000e+00, %11
-  %15 = fmul double %11, %14
-  %16 = fmul double %10, %15                      ; 2 uses
-  %17 = fsub double 1.000000e+00, %13
-  %18 = fmul double %13, %17
-  %19 = fmul double %10, %18                      ; 2 uses
-  %i.bp = fcmp olt double %19, %16
-  %.sroa.speculated86 = select i1 %i.bp, double %19, double %16
+  %15 = fadd double %.096, %i.bo
+  %16 = insertelement <2 x double> poison, double %15, i64 0
+  %17 = insertelement <2 x double> %16, double %.096, i64 1
+  %18 = fmul <2 x double> %14, %17                ; 2 uses
+  %19 = fsub <2 x double> splat (double 1.000000e+00), %18
+  %20 = fmul <2 x double> %18, %19
+  %21 = fmul <2 x double> %12, %20                ; 2 uses
+  %22 = extractelement <2 x double> %21, i64 0    ; 2 uses
+  %23 = extractelement <2 x double> %21, i64 1    ; 2 uses
+  %i.bp = fcmp olt double %22, %23
+  %.sroa.speculated86 = select i1 %i.bp, double %22, double %23
   %i.bq = fmul double %.0.lcssa.i, %.sroa.speculated86
   %i.br = fcmp ugt double %i.bo, %i.bq
   br i1 %i.br, label %bb.c, label %bb.b
@@ -544,12 +548,8 @@ bb.a:
 
 _ZSt10accumulateIPKddET0_T_S3_S2_.exit:           ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.a
   %.0.lcssa.i = phi double [ 0.000000e+00, %bb.a ], [ %.lcssa100.unr, %.lr.ph.i.prol.loopexit ], [ %i.af, %.lr.ph.i ] ; 5 uses
-  %7 = fdiv double 1.000000e+00, %.0.lcssa.i      ; 2 uses
   %i.ah = fdiv double %.0.lcssa.i, %1
   %i.ai = tail call double @log(double noundef %i.ah) #33, !tbaa !3
-  %8 = fmul double %i.ai, 4.000000e+00
-  %9 = fadd double %8, 2.400000e+01
-  %10 = fdiv double %9, %1                        ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 4 uses
   store i32 0, ptr %i.aj, align 4, !tbaa !836
   %i.ak = load double, ptr %2, align 8, !tbaa !621
@@ -563,7 +563,15 @@ _ZSt10accumulateIPKddET0_T_S3_S2_.exit:           ; preds = %.lr.ph.i.prol.loope
   br i1 %i.ap, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %_ZSt10accumulateIPKddET0_T_S3_S2_.exit
+  %7 = fmul double %i.ai, 4.000000e+00
+  %8 = fadd double %7, 2.400000e+01
+  %9 = fdiv double %8, %1
+  %10 = fdiv double 1.000000e+00, %.0.lcssa.i
   %wide.trip.count = zext nneg i32 %4 to i64
+  %11 = insertelement <2 x double> poison, double %9, i64 0
+  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
+  %13 = insertelement <2 x double> poison, double %10, i64 0
+  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %bb.d
@@ -598,17 +606,17 @@ _ZSt10accumulateIPKddET0_T_S3_S2_.exit:           ; preds = %.lr.ph.i.prol.loope
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv ; 2 uses
   %i.bg = load double, ptr %i.bf, align 8, !tbaa !621 ; 2 uses
   %i.bh = fadd double %i.be, %i.bg                ; 4 uses
-  %11 = fmul double %7, %.078                     ; 2 uses
-  %12 = fadd double %.078, %i.bh
-  %13 = fmul double %7, %12                       ; 2 uses
-  %14 = fsub double 1.000000e+00, %11
-  %15 = fmul double %11, %14
-  %16 = fmul double %10, %15                      ; 2 uses
-  %17 = fsub double 1.000000e+00, %13
-  %18 = fmul double %13, %17
-  %19 = fmul double %10, %18                      ; 2 uses
-  %i.bi = fcmp olt double %19, %16
-  %.sroa.speculated68 = select i1 %i.bi, double %19, double %16
+  %15 = fadd double %.078, %i.bh
+  %16 = insertelement <2 x double> poison, double %15, i64 0
+  %17 = insertelement <2 x double> %16, double %.078, i64 1
+  %18 = fmul <2 x double> %14, %17                ; 2 uses
+  %19 = fsub <2 x double> splat (double 1.000000e+00), %18
+  %20 = fmul <2 x double> %18, %19
+  %21 = fmul <2 x double> %12, %20                ; 2 uses
+  %22 = extractelement <2 x double> %21, i64 0    ; 2 uses
+  %23 = extractelement <2 x double> %21, i64 1    ; 2 uses
+  %i.bi = fcmp olt double %22, %23
+  %.sroa.speculated68 = select i1 %i.bi, double %22, double %23
   %i.bj = fmul double %.0.lcssa.i, %.sroa.speculated68
   %i.bk = fcmp ugt double %i.bh, %i.bj
   br i1 %i.bk, label %bb.c, label %bb.b

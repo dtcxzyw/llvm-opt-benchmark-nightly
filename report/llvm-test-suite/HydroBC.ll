@@ -146,7 +146,6 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !23
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.e = sext i32 %3 to i64
   %wide.trip.count = sext i32 %4 to i64
   br label %bb.b
@@ -159,37 +158,35 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.f = getelementptr inbounds [4 x i8], ptr %i.c, i64 %indvars.iv
   %i.g = load i32, ptr %i.f, align 4, !tbaa !4
   %i.h = sext i32 %i.g to i64                     ; 2 uses
-  %i.i = getelementptr inbounds [16 x i8], ptr %1, i64 %i.h ; 3 uses
-  %6 = load double, ptr %i.i, align 8, !tbaa !27, !noalias !28 ; 2 uses
-  %7 = load double, ptr %i.d, align 8, !tbaa !27, !noalias !28 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
-  %9 = load double, ptr %8, align 8, !tbaa !31, !noalias !28 ; 2 uses
-  %10 = load double, ptr %5, align 8, !tbaa !31, !noalias !28 ; 2 uses
-  %11 = fmul double %9, %10
-  %i.j = tail call noundef double @llvm.fmuladd.f64(double %6, double %7, double %11) ; 2 uses
-  %12 = fmul double %7, %i.j
-  %13 = fmul double %10, %i.j
-  %14 = fsub double %6, %12
-  %15 = fsub double %9, %13
-  store double %14, ptr %i.i, align 8, !tbaa !27
-  store double %15, ptr %8, align 8, !tbaa !31
-  %i.k = getelementptr inbounds [16 x i8], ptr %2, i64 %i.h ; 3 uses
-  %16 = load double, ptr %i.k, align 8, !tbaa !27, !noalias !32 ; 2 uses
-  %17 = load double, ptr %i.d, align 8, !tbaa !27, !noalias !32 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
-  %19 = load double, ptr %18, align 8, !tbaa !31, !noalias !32 ; 2 uses
-  %20 = load double, ptr %5, align 8, !tbaa !31, !noalias !32 ; 2 uses
-  %21 = fmul double %19, %20
-  %i.l = tail call noundef double @llvm.fmuladd.f64(double %16, double %17, double %21) ; 2 uses
-  %22 = fmul double %17, %i.l
-  %23 = fmul double %20, %i.l
-  %24 = fsub double %16, %22
-  %25 = fsub double %19, %23
-  store double %24, ptr %i.k, align 8, !tbaa !27
-  store double %25, ptr %18, align 8, !tbaa !31
+  %i.i = getelementptr inbounds [16 x i8], ptr %1, i64 %i.h ; 2 uses
+  %5 = load <2 x double>, ptr %i.i, align 8, !tbaa !22, !noalias !27 ; 3 uses
+  %6 = load <2 x double>, ptr %i.d, align 8, !tbaa !22, !noalias !27 ; 3 uses
+  %foldExtExtBinop = fmul <2 x double> %5, %6
+  %7 = extractelement <2 x double> %foldExtExtBinop, i64 1
+  %8 = extractelement <2 x double> %5, i64 0
+  %9 = extractelement <2 x double> %6, i64 0
+  %i.j = tail call noundef double @llvm.fmuladd.f64(double %8, double %9, double %7)
+  %10 = insertelement <2 x double> poison, double %i.j, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %12 = fmul <2 x double> %6, %11
+  %13 = fsub <2 x double> %5, %12
+  store <2 x double> %13, ptr %i.i, align 8, !tbaa !22
+  %i.k = getelementptr inbounds [16 x i8], ptr %2, i64 %i.h ; 2 uses
+  %14 = load <2 x double>, ptr %i.k, align 8, !tbaa !22, !noalias !30 ; 3 uses
+  %15 = load <2 x double>, ptr %i.d, align 8, !tbaa !22, !noalias !30 ; 3 uses
+  %foldExtExtBinop19 = fmul <2 x double> %14, %15
+  %16 = extractelement <2 x double> %foldExtExtBinop19, i64 1
+  %17 = extractelement <2 x double> %14, i64 0
+  %18 = extractelement <2 x double> %15, i64 0
+  %i.l = tail call noundef double @llvm.fmuladd.f64(double %17, double %18, double %16)
+  %19 = insertelement <2 x double> poison, double %i.l, i64 0
+  %20 = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> zeroinitializer
+  %21 = fmul <2 x double> %15, %20
+  %22 = fsub <2 x double> %14, %21
+  store <2 x double> %22, ptr %i.k, align 8, !tbaa !22
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !35
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !33
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -250,14 +247,12 @@ attributes #10 = { builtin nounwind }
 !24 = !{!14, !14, i64 0}
 !25 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !26 = !{!18, !14, i64 16}
-!27 = !{!12, !13, i64 0}
-!28 = !{!29}
-!29 = distinct !{!29, !30, !"_Z7projectR7double2RKS_: argument 0"}
-!30 = distinct !{!30, !"_Z7projectR7double2RKS_"}
-!31 = !{!12, !13, i64 8}
-!32 = !{!33}
-!33 = distinct !{!33, !34, !"_Z7projectR7double2RKS_: argument 0"}
-!34 = distinct !{!34, !"_Z7projectR7double2RKS_"}
-!35 = distinct !{!35, !36}
-!36 = !{!"llvm.loop.mustprogress"}
+!27 = !{!28}
+!28 = distinct !{!28, !29, !"_Z7projectR7double2RKS_: argument 0"}
+!29 = distinct !{!29, !"_Z7projectR7double2RKS_"}
+!30 = !{!31}
+!31 = distinct !{!31, !32, !"_Z7projectR7double2RKS_: argument 0"}
+!32 = distinct !{!32, !"_Z7projectR7double2RKS_"}
+!33 = distinct !{!33, !34}
+!34 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

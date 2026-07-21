@@ -204,16 +204,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7: ; preds = %bb.f
 define linkonce_odr void @_ZN6duckdb31ZSTDCompressionBufferCollection13GetBufferDataEb(ptr dead_on_unwind noalias writable sret(%"class.duckdb::vector.1201") align 8 %0, ptr noundef nonnull align 8 dereferenceable(136) %1, i1 noundef zeroext %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.a, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %i.b, i64 1 ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12emplace_backIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvDpOT_.exit
   %i.e = phi ptr [ null, %bb.a ], [ %i.ba, %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12emplace_backIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvDpOT_.exit ] ; 8 uses
   %i.f = phi ptr [ null, %bb.a ], [ %i.bb, %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12emplace_backIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvDpOT_.exit ] ; 6 uses
-  %i.g = phi ptr [ null, %bb.a ], [ %i.bc, %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12emplace_backIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvDpOT_.exit ] ; 11 uses
+  %i.g = phi ptr [ null, %bb.a ], [ %i.bc, %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12emplace_backIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvDpOT_.exit ] ; 10 uses
   %.01246 = phi i64 [ 0, %bb.a ], [ %i.be, %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12emplace_backIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvDpOT_.exit ] ; 5 uses
   %i.h = phi ptr [ null, %bb.a ], [ %i.bd, %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12emplace_backIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvDpOT_.exit ] ; 19 uses
   %.not = icmp eq i64 %.01246, 0
@@ -227,13 +229,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  store ptr %i.a, ptr %i.g, align 8, !tbaa !1180
-  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  store ptr %i.b, ptr %3, align 8, !tbaa !1216
+  store <2 x ptr> %4, ptr %i.g, align 8, !tbaa !443
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   store i8 0, ptr %i.i, align 8, !tbaa !1178
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 24 ; 2 uses
-  store ptr %i.j, ptr %i.c, align 8, !tbaa !1217
+  store ptr %i.j, ptr %i.c, align 8, !tbaa !1216
   br label %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12emplace_backIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvDpOT_.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -265,10 +265,8 @@ _ZNKSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12_M
           to label %.noexc14 unwind label %.loopexit35 ; 5 uses
 
 .noexc14:                                         ; preds = %_ZNKSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12_M_check_lenEmPKc.exit.i.i
-  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.m ; 3 uses
-  store ptr %i.a, ptr %i.v, align 8, !tbaa !1180
-  %4 = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  store ptr %i.b, ptr %4, align 8, !tbaa !1216
+  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.m ; 2 uses
+  store <2 x ptr> %4, ptr %i.v, align 8, !tbaa !443
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   store i8 0, ptr %i.w, align 8, !tbaa !1178
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.h, %i.e
@@ -277,7 +275,7 @@ _ZNKSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12_M
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.noexc14, %.lr.ph.i.i.i.i.i.i
   %.012.i.i.i.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i.i.i.i ], [ %i.u, %.noexc14 ] ; 2 uses
   %.0911.i.i.i.i.i.i = phi ptr [ %i.x, %.lr.ph.i.i.i.i.i.i ], [ %i.h, %.noexc14 ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !1218, !alias.scope !1220
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !1217, !alias.scope !1220
   %i.x = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.x, %i.e
@@ -294,7 +292,7 @@ bb.h:                                             ; preds = %_ZNSt6vectorIN6duck
   br label %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE17_M_realloc_insertIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE17_M_realloc_insertIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.h, %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit34.i.i
-  store ptr %i.z, ptr %i.c, align 8, !tbaa !1217
+  store ptr %i.z, ptr %i.c, align 8, !tbaa !1216
   %i.aa = getelementptr inbounds nuw [24 x i8], ptr %i.u, i64 %i.s ; 3 uses
   store ptr %i.aa, ptr %i.d, align 8, !tbaa !1225
   br label %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12emplace_backIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvDpOT_.exit
@@ -321,11 +319,11 @@ bb.i:                                             ; preds = %bb.b
 bb.j:                                             ; preds = %bb.i
   store ptr %i.ab, ptr %i.g, align 8, !tbaa !1180
   %i.af = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  store ptr %i.ac, ptr %i.af, align 8, !tbaa !1216
+  store ptr %i.ac, ptr %i.af, align 8, !tbaa !1218
   %i.ag = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   store i8 %i.ae, ptr %i.ag, align 8, !tbaa !1178
   %i.ah = getelementptr inbounds nuw i8, ptr %i.g, i64 24 ; 2 uses
-  store ptr %i.ah, ptr %i.c, align 8, !tbaa !1217
+  store ptr %i.ah, ptr %i.c, align 8, !tbaa !1216
   br label %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12emplace_backIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvDpOT_.exit
 
 bb.k:                                             ; preds = %bb.i
@@ -360,7 +358,7 @@ _ZNKSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12_M
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.ak ; 3 uses
   store ptr %i.ab, ptr %i.at, align 8, !tbaa !1180
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 8
-  store ptr %i.ac, ptr %i.au, align 8, !tbaa !1216
+  store ptr %i.ac, ptr %i.au, align 8, !tbaa !1218
   %i.av = getelementptr inbounds nuw i8, ptr %i.at, i64 16
   store i8 %i.ae, ptr %i.av, align 8, !tbaa !1178
   %.not10.i.i.i.i.i.i19 = icmp eq ptr %i.h, %i.f
@@ -369,7 +367,7 @@ _ZNKSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12_M
 .lr.ph.i.i.i.i.i.i20:                             ; preds = %.noexc29, %.lr.ph.i.i.i.i.i.i20
   %.012.i.i.i.i.i.i21 = phi ptr [ %i.ax, %.lr.ph.i.i.i.i.i.i20 ], [ %i.as, %.noexc29 ] ; 2 uses
   %.0911.i.i.i.i.i.i22 = phi ptr [ %i.aw, %.lr.ph.i.i.i.i.i.i20 ], [ %i.h, %.noexc29 ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i21, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i22, i64 24, i1 false), !tbaa.struct !1218, !alias.scope !1226
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i21, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i22, i64 24, i1 false), !tbaa.struct !1217, !alias.scope !1226
   %i.aw = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i22, i64 24 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i21, i64 24 ; 2 uses
   %.not.i.i.i.i.i.i23 = icmp eq ptr %i.aw, %i.f
@@ -386,7 +384,7 @@ bb.m:                                             ; preds = %_ZNSt6vectorIN6duck
   br label %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE17_M_realloc_insertIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i27
 
 _ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE17_M_realloc_insertIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i27: ; preds = %bb.m, %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit34.i.i24
-  store ptr %i.ay, ptr %i.c, align 8, !tbaa !1217
+  store ptr %i.ay, ptr %i.c, align 8, !tbaa !1216
   %i.az = getelementptr inbounds nuw [24 x i8], ptr %i.as, i64 %i.aq ; 3 uses
   store ptr %i.az, ptr %i.d, align 8, !tbaa !1225
   br label %_ZNSt6vectorIN6duckdb31ZSTDCompressionBufferCollection10BufferDataESaIS2_EE12emplace_backIJRNS0_12BufferHandleERNS0_26ZSTDCompressionBufferStateENS1_4SlotEEEEvDpOT_.exit
@@ -789,7 +787,7 @@ bb.ai:                                            ; preds = %.lr.ph213, %.loopex
   %i.du = phi i64 [ %.pre240, %.lr.ph213 ], [ 0, %.loopexit ] ; 3 uses
   %i.dv = phi i64 [ %.pre239, %.lr.ph213 ], [ %i.ga, %.loopexit ] ; 4 uses
   %.0125211 = phi i64 [ 0, %.lr.ph213 ], [ %.4129, %.loopexit ] ; 8 uses
-  %.0135209 = phi i64 [ 0, %.lr.ph213 ], [ %i.fz, %.loopexit ] ; 13 uses
+  %.0135209 = phi i64 [ 0, %.lr.ph213 ], [ %i.fz, %.loopexit ] ; 11 uses
   %i.dw = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.dv
   %i.dx = load i16, ptr %i.dw, align 2, !tbaa !670
   %i.dy = zext i16 %i.dx to i64                   ; 2 uses
@@ -817,29 +815,29 @@ vector.ph300:                                     ; preds = %.lr.ph217
   %n.vec302 = and i64 %i.ea, -4                   ; 4 uses
   %i.ej = add i64 %.0125211, %n.vec302            ; 2 uses
   %broadcast.splatinsert303 = insertelement <2 x i64> poison, i64 %i.ec, i64 0
-  %broadcast.splat304.a = shufflevector <2 x i64> %broadcast.splatinsert303, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat304 = shufflevector <2 x i64> %broadcast.splatinsert303, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %15 = insertelement <2 x i64> poison, i64 %.0135209, i64 0
+  %broadcast.splat304.a = shufflevector <2 x i64> %15, <2 x i64> poison, <2 x i32> zeroinitializer
   %i.ek = getelementptr [4 x i8], ptr %i.ei, i64 %.0125211
   br label %vector.body305
 
 vector.body305:                                   ; preds = %vector.body305, %vector.ph300
-  %index306 = phi i64 [ 0, %vector.ph300 ], [ %index.next307, %vector.body305 ] ; 6 uses
+  %index306 = phi i64 [ 0, %vector.ph300 ], [ %index.next307, %vector.body305 ] ; 5 uses
   %i.el = or disjoint i64 %index306, 1
-  %15 = or disjoint i64 %index306, 2
-  %16 = or disjoint i64 %index306, 3
-  %17 = add i64 %index306, %.0135209              ; 2 uses
-  %i.em = add i64 %i.el, %.0135209
-  %18 = insertelement <2 x i64> poison, i64 %17, i64 0
-  %19 = insertelement <2 x i64> %18, i64 %i.em, i64 1
-  %i.en = add i64 %15, %.0135209
-  %20 = add i64 %16, %.0135209
-  %i.eo = insertelement <2 x i64> poison, i64 %i.en, i64 0
-  %21 = insertelement <2 x i64> %i.eo, i64 %20, i64 1
-  %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %17 ; 2 uses
+  %16 = insertelement <2 x i64> poison, i64 %index306, i64 0
+  %17 = shufflevector <2 x i64> %16, <2 x i64> poison, <2 x i32> zeroinitializer
+  %18 = or disjoint <2 x i64> %17, <i64 2, i64 3>
+  %i.em = add i64 %index306, %.0135209            ; 2 uses
+  %i.en = add i64 %i.el, %.0135209
+  %19 = insertelement <2 x i64> poison, i64 %i.em, i64 0
+  %i.eo = insertelement <2 x i64> %19, i64 %i.en, i64 1
+  %20 = add <2 x i64> %18, %broadcast.splat304.a
+  %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %i.em ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 16
-  store <2 x i64> %broadcast.splat304.a, ptr %i.ep, align 8, !tbaa !21
-  store <2 x i64> %broadcast.splat304.a, ptr %i.eq, align 8, !tbaa !21
-  %i.er = trunc <2 x i64> %19 to <2 x i32>
-  %i.es = trunc <2 x i64> %21 to <2 x i32>
+  store <2 x i64> %broadcast.splat304, ptr %i.ep, align 8, !tbaa !21
+  store <2 x i64> %broadcast.splat304, ptr %i.eq, align 8, !tbaa !21
+  %i.er = trunc <2 x i64> %i.eo to <2 x i32>
+  %i.es = trunc <2 x i64> %20 to <2 x i32>
   %i.et = getelementptr [4 x i8], ptr %i.ek, i64 %index306 ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 8
   store <2 x i32> %i.er, ptr %i.et, align 4, !tbaa !3
@@ -896,29 +894,29 @@ vector.ph:                                        ; preds = %.lr.ph207.preheader
   %n.vec = and i64 %i.dz, -4                      ; 4 uses
   %i.ff = add i64 %.0125211, %n.vec               ; 2 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.ec, i64 0
-  %broadcast.splat.a = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %21 = insertelement <2 x i64> poison, i64 %.0135209, i64 0
+  %broadcast.splat.a = shufflevector <2 x i64> %21, <2 x i64> poison, <2 x i32> zeroinitializer
   %i.fg = getelementptr [4 x i8], ptr %i.ds, i64 %.0125211
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 6 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 5 uses
   %i.fh = or disjoint i64 %index, 1
-  %22 = or disjoint i64 %index, 2
-  %23 = or disjoint i64 %index, 3
-  %24 = add i64 %index, %.0135209                 ; 2 uses
-  %i.fi = add i64 %i.fh, %.0135209
-  %25 = insertelement <2 x i64> poison, i64 %24, i64 0
-  %26 = insertelement <2 x i64> %25, i64 %i.fi, i64 1
-  %i.fj = add i64 %22, %.0135209
-  %27 = add i64 %23, %.0135209
-  %i.fk = insertelement <2 x i64> poison, i64 %i.fj, i64 0
-  %28 = insertelement <2 x i64> %i.fk, i64 %27, i64 1
-  %i.fl = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %24 ; 2 uses
+  %22 = insertelement <2 x i64> poison, i64 %index, i64 0
+  %23 = shufflevector <2 x i64> %22, <2 x i64> poison, <2 x i32> zeroinitializer
+  %24 = or disjoint <2 x i64> %23, <i64 2, i64 3>
+  %i.fi = add i64 %index, %.0135209               ; 2 uses
+  %i.fj = add i64 %i.fh, %.0135209
+  %25 = insertelement <2 x i64> poison, i64 %i.fi, i64 0
+  %i.fk = insertelement <2 x i64> %25, i64 %i.fj, i64 1
+  %26 = add <2 x i64> %24, %broadcast.splat.a
+  %i.fl = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %i.fi ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 16
-  store <2 x i64> %broadcast.splat.a, ptr %i.fl, align 8, !tbaa !21
-  store <2 x i64> %broadcast.splat.a, ptr %i.fm, align 8, !tbaa !21
-  %i.fn = trunc <2 x i64> %26 to <2 x i32>
-  %i.fo = trunc <2 x i64> %28 to <2 x i32>
+  store <2 x i64> %broadcast.splat, ptr %i.fl, align 8, !tbaa !21
+  store <2 x i64> %broadcast.splat, ptr %i.fm, align 8, !tbaa !21
+  %i.fn = trunc <2 x i64> %i.fk to <2 x i32>
+  %i.fo = trunc <2 x i64> %26 to <2 x i32>
   %i.fp = getelementptr [4 x i8], ptr %i.fg, i64 %index ; 2 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 8
   store <2 x i32> %i.fn, ptr %i.fp, align 4, !tbaa !3
@@ -1321,7 +1319,7 @@ bb.ai:                                            ; preds = %.lr.ph213, %.loopex
   %i.du = phi i64 [ %.pre240, %.lr.ph213 ], [ 0, %.loopexit ] ; 3 uses
   %i.dv = phi i64 [ %.pre239, %.lr.ph213 ], [ %i.ga, %.loopexit ] ; 4 uses
   %.0125211 = phi i64 [ 0, %.lr.ph213 ], [ %.4129, %.loopexit ] ; 8 uses
-  %.0135209 = phi i64 [ 0, %.lr.ph213 ], [ %i.fz, %.loopexit ] ; 13 uses
+  %.0135209 = phi i64 [ 0, %.lr.ph213 ], [ %i.fz, %.loopexit ] ; 11 uses
   %i.dw = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.dv
   %i.dx = load i16, ptr %i.dw, align 2, !tbaa !670
   %i.dy = zext i16 %i.dx to i64                   ; 2 uses
@@ -1349,29 +1347,29 @@ vector.ph300:                                     ; preds = %.lr.ph217
   %n.vec302 = and i64 %i.ea, -4                   ; 4 uses
   %i.ej = add i64 %.0125211, %n.vec302            ; 2 uses
   %broadcast.splatinsert303 = insertelement <2 x i64> poison, i64 %i.ec, i64 0
-  %broadcast.splat304.a = shufflevector <2 x i64> %broadcast.splatinsert303, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat304 = shufflevector <2 x i64> %broadcast.splatinsert303, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %15 = insertelement <2 x i64> poison, i64 %.0135209, i64 0
+  %broadcast.splat304.a = shufflevector <2 x i64> %15, <2 x i64> poison, <2 x i32> zeroinitializer
   %i.ek = getelementptr [4 x i8], ptr %i.ei, i64 %.0125211
   br label %vector.body305
 
 vector.body305:                                   ; preds = %vector.body305, %vector.ph300
-  %index306 = phi i64 [ 0, %vector.ph300 ], [ %index.next307, %vector.body305 ] ; 6 uses
+  %index306 = phi i64 [ 0, %vector.ph300 ], [ %index.next307, %vector.body305 ] ; 5 uses
   %i.el = or disjoint i64 %index306, 1
-  %15 = or disjoint i64 %index306, 2
-  %16 = or disjoint i64 %index306, 3
-  %17 = add i64 %index306, %.0135209              ; 2 uses
-  %i.em = add i64 %i.el, %.0135209
-  %18 = insertelement <2 x i64> poison, i64 %17, i64 0
-  %19 = insertelement <2 x i64> %18, i64 %i.em, i64 1
-  %i.en = add i64 %15, %.0135209
-  %20 = add i64 %16, %.0135209
-  %i.eo = insertelement <2 x i64> poison, i64 %i.en, i64 0
-  %21 = insertelement <2 x i64> %i.eo, i64 %20, i64 1
-  %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %17 ; 2 uses
+  %16 = insertelement <2 x i64> poison, i64 %index306, i64 0
+  %17 = shufflevector <2 x i64> %16, <2 x i64> poison, <2 x i32> zeroinitializer
+  %18 = or disjoint <2 x i64> %17, <i64 2, i64 3>
+  %i.em = add i64 %index306, %.0135209            ; 2 uses
+  %i.en = add i64 %i.el, %.0135209
+  %19 = insertelement <2 x i64> poison, i64 %i.em, i64 0
+  %i.eo = insertelement <2 x i64> %19, i64 %i.en, i64 1
+  %20 = add <2 x i64> %18, %broadcast.splat304.a
+  %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %i.em ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 16
-  store <2 x i64> %broadcast.splat304.a, ptr %i.ep, align 8, !tbaa !21
-  store <2 x i64> %broadcast.splat304.a, ptr %i.eq, align 8, !tbaa !21
-  %i.er = trunc <2 x i64> %19 to <2 x i32>
-  %i.es = trunc <2 x i64> %21 to <2 x i32>
+  store <2 x i64> %broadcast.splat304, ptr %i.ep, align 8, !tbaa !21
+  store <2 x i64> %broadcast.splat304, ptr %i.eq, align 8, !tbaa !21
+  %i.er = trunc <2 x i64> %i.eo to <2 x i32>
+  %i.es = trunc <2 x i64> %20 to <2 x i32>
   %i.et = getelementptr [4 x i8], ptr %i.ek, i64 %index306 ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 8
   store <2 x i32> %i.er, ptr %i.et, align 4, !tbaa !3
@@ -1428,29 +1426,29 @@ vector.ph:                                        ; preds = %.lr.ph207.preheader
   %n.vec = and i64 %i.dz, -4                      ; 4 uses
   %i.ff = add i64 %.0125211, %n.vec               ; 2 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.ec, i64 0
-  %broadcast.splat.a = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %21 = insertelement <2 x i64> poison, i64 %.0135209, i64 0
+  %broadcast.splat.a = shufflevector <2 x i64> %21, <2 x i64> poison, <2 x i32> zeroinitializer
   %i.fg = getelementptr [4 x i8], ptr %i.ds, i64 %.0125211
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 6 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 5 uses
   %i.fh = or disjoint i64 %index, 1
-  %22 = or disjoint i64 %index, 2
-  %23 = or disjoint i64 %index, 3
-  %24 = add i64 %index, %.0135209                 ; 2 uses
-  %i.fi = add i64 %i.fh, %.0135209
-  %25 = insertelement <2 x i64> poison, i64 %24, i64 0
-  %26 = insertelement <2 x i64> %25, i64 %i.fi, i64 1
-  %i.fj = add i64 %22, %.0135209
-  %27 = add i64 %23, %.0135209
-  %i.fk = insertelement <2 x i64> poison, i64 %i.fj, i64 0
-  %28 = insertelement <2 x i64> %i.fk, i64 %27, i64 1
-  %i.fl = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %24 ; 2 uses
+  %22 = insertelement <2 x i64> poison, i64 %index, i64 0
+  %23 = shufflevector <2 x i64> %22, <2 x i64> poison, <2 x i32> zeroinitializer
+  %24 = or disjoint <2 x i64> %23, <i64 2, i64 3>
+  %i.fi = add i64 %index, %.0135209               ; 2 uses
+  %i.fj = add i64 %i.fh, %.0135209
+  %25 = insertelement <2 x i64> poison, i64 %i.fi, i64 0
+  %i.fk = insertelement <2 x i64> %25, i64 %i.fj, i64 1
+  %26 = add <2 x i64> %24, %broadcast.splat.a
+  %i.fl = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %i.fi ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 16
-  store <2 x i64> %broadcast.splat.a, ptr %i.fl, align 8, !tbaa !21
-  store <2 x i64> %broadcast.splat.a, ptr %i.fm, align 8, !tbaa !21
-  %i.fn = trunc <2 x i64> %26 to <2 x i32>
-  %i.fo = trunc <2 x i64> %28 to <2 x i32>
+  store <2 x i64> %broadcast.splat, ptr %i.fl, align 8, !tbaa !21
+  store <2 x i64> %broadcast.splat, ptr %i.fm, align 8, !tbaa !21
+  %i.fn = trunc <2 x i64> %i.fk to <2 x i32>
+  %i.fo = trunc <2 x i64> %26 to <2 x i32>
   %i.fp = getelementptr [4 x i8], ptr %i.fg, i64 %index ; 2 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 8
   store <2 x i32> %i.fn, ptr %i.fp, align 4, !tbaa !3
@@ -1853,7 +1851,7 @@ bb.ai:                                            ; preds = %.lr.ph214, %.loopex
   %i.du = phi i64 [ %.promoted216, %.lr.ph214 ], [ 0, %.loopexit ] ; 3 uses
   %i.dv = phi i64 [ %.promoted, %.lr.ph214 ], [ %i.fy, %.loopexit ] ; 4 uses
   %.0125212 = phi i64 [ 0, %.lr.ph214 ], [ %.4129, %.loopexit ] ; 8 uses
-  %.0135210 = phi i64 [ 0, %.lr.ph214 ], [ %i.fx, %.loopexit ] ; 13 uses
+  %.0135210 = phi i64 [ 0, %.lr.ph214 ], [ %i.fx, %.loopexit ] ; 11 uses
   %i.dw = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.dv
   %i.dx = load i16, ptr %i.dw, align 2, !tbaa !670
   %i.dy = zext i16 %i.dx to i64                   ; 2 uses
@@ -1882,27 +1880,27 @@ vector.ph300:                                     ; preds = %.lr.ph219
   %i.ej = add i64 %.0125212, %n.vec302            ; 2 uses
   %broadcast.splatinsert303 = insertelement <2 x double> poison, double %i.ec, i64 0
   %broadcast.splat304 = shufflevector <2 x double> %broadcast.splatinsert303, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %15 = insertelement <2 x i64> poison, i64 %.0135210, i64 0
+  %16 = shufflevector <2 x i64> %15, <2 x i64> poison, <2 x i32> zeroinitializer
   %i.ek = getelementptr [4 x i8], ptr %i.ei, i64 %.0125212
   br label %vector.body305
 
 vector.body305:                                   ; preds = %vector.body305, %vector.ph300
-  %index306 = phi i64 [ 0, %vector.ph300 ], [ %index.next307, %vector.body305 ] ; 6 uses
+  %index306 = phi i64 [ 0, %vector.ph300 ], [ %index.next307, %vector.body305 ] ; 5 uses
   %i.el = or disjoint i64 %index306, 1
-  %15 = or disjoint i64 %index306, 2
-  %16 = or disjoint i64 %index306, 3
-  %17 = add i64 %index306, %.0135210              ; 2 uses
-  %i.em = add i64 %i.el, %.0135210
-  %18 = insertelement <2 x i64> poison, i64 %17, i64 0
-  %19 = insertelement <2 x i64> %18, i64 %i.em, i64 1
-  %i.en = add i64 %15, %.0135210
-  %20 = add i64 %16, %.0135210
-  %i.eo = insertelement <2 x i64> poison, i64 %i.en, i64 0
-  %21 = insertelement <2 x i64> %i.eo, i64 %20, i64 1
-  %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %17 ; 2 uses
+  %17 = insertelement <2 x i64> poison, i64 %index306, i64 0
+  %18 = shufflevector <2 x i64> %17, <2 x i64> poison, <2 x i32> zeroinitializer
+  %19 = or disjoint <2 x i64> %18, <i64 2, i64 3>
+  %i.em = add i64 %index306, %.0135210            ; 2 uses
+  %i.en = add i64 %i.el, %.0135210
+  %20 = insertelement <2 x i64> poison, i64 %i.em, i64 0
+  %i.eo = insertelement <2 x i64> %20, i64 %i.en, i64 1
+  %21 = add <2 x i64> %19, %16
+  %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %i.em ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 16
   store <2 x double> %broadcast.splat304, ptr %i.ep, align 8, !tbaa !1390
   store <2 x double> %broadcast.splat304, ptr %i.eq, align 8, !tbaa !1390
-  %i.er = trunc <2 x i64> %19 to <2 x i32>
+  %i.er = trunc <2 x i64> %i.eo to <2 x i32>
   %i.es = trunc <2 x i64> %21 to <2 x i32>
   %i.et = getelementptr [4 x i8], ptr %i.ek, i64 %index306 ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 8
@@ -1955,27 +1953,27 @@ vector.ph:                                        ; preds = %.lr.ph208.preheader
   %i.fe = add i64 %.0125212, %n.vec               ; 2 uses
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.ec, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %22 = insertelement <2 x i64> poison, i64 %.0135210, i64 0
+  %23 = shufflevector <2 x i64> %22, <2 x i64> poison, <2 x i32> zeroinitializer
   %i.ff = getelementptr [4 x i8], ptr %i.ds, i64 %.0125212
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 6 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 5 uses
   %i.fg = or disjoint i64 %index, 1
-  %22 = or disjoint i64 %index, 2
-  %23 = or disjoint i64 %index, 3
-  %24 = add i64 %index, %.0135210                 ; 2 uses
-  %i.fh = add i64 %i.fg, %.0135210
-  %25 = insertelement <2 x i64> poison, i64 %24, i64 0
-  %26 = insertelement <2 x i64> %25, i64 %i.fh, i64 1
-  %i.fi = add i64 %22, %.0135210
-  %27 = add i64 %23, %.0135210
-  %i.fj = insertelement <2 x i64> poison, i64 %i.fi, i64 0
-  %28 = insertelement <2 x i64> %i.fj, i64 %27, i64 1
-  %i.fk = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %24 ; 2 uses
+  %24 = insertelement <2 x i64> poison, i64 %index, i64 0
+  %25 = shufflevector <2 x i64> %24, <2 x i64> poison, <2 x i32> zeroinitializer
+  %26 = or disjoint <2 x i64> %25, <i64 2, i64 3>
+  %i.fh = add i64 %index, %.0135210               ; 2 uses
+  %i.fi = add i64 %i.fg, %.0135210
+  %27 = insertelement <2 x i64> poison, i64 %i.fh, i64 0
+  %i.fj = insertelement <2 x i64> %27, i64 %i.fi, i64 1
+  %28 = add <2 x i64> %26, %23
+  %i.fk = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %i.fh ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fk, i64 16
   store <2 x double> %broadcast.splat, ptr %i.fk, align 8, !tbaa !1390
   store <2 x double> %broadcast.splat, ptr %i.fl, align 8, !tbaa !1390
-  %i.fm = trunc <2 x i64> %26 to <2 x i32>
+  %i.fm = trunc <2 x i64> %i.fj to <2 x i32>
   %i.fn = trunc <2 x i64> %28 to <2 x i32>
   %i.fo = getelementptr [4 x i8], ptr %i.ff, i64 %index ; 2 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 8
@@ -2378,9 +2376,9 @@ begin_hunk_4_@llvm.vector.reduce.add.v2i64
 !1213 = !{!1214}
 !1214 = distinct !{!1214, !1215, !"_ZN6duckdb9Exception16ConstructMessageIJmjEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKS7_DpRKT_: argument 0"}
 !1215 = distinct !{!1215, !"_ZN6duckdb9Exception16ConstructMessageIJmjEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKS7_DpRKT_"}
-!1216 = !{!1175, !1175, i64 0}
-!1217 = !{!1189, !1172, i64 8}
-!1218 = !{i64 0, i64 8, !1180, i64 8, i64 8, !1216, i64 16, i64 1, !1219}
+!1216 = !{!1189, !1172, i64 8}
+!1217 = !{i64 0, i64 8, !1180, i64 8, i64 8, !1218, i64 16, i64 1, !1219}
+!1218 = !{!1175, !1175, i64 0}
 !1219 = !{!1176, !1176, i64 0}
 !1220 = !{!1221, !1223}
 !1221 = distinct !{!1221, !1222, !"_ZSt19__relocate_object_aIN6duckdb31ZSTDCompressionBufferCollection10BufferDataES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}

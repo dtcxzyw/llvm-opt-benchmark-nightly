@@ -203,9 +203,11 @@ _ZN6hermes2vm13MutableHandleINS0_8JSObjectEEC2ERNS0_15HandleRootOwnerEPS2_.exit.
   %i.mu = getelementptr inbounds nuw i8, ptr %6, i64 152
   %i.mv = getelementptr inbounds nuw i8, ptr %6, i64 156
   %i.mw = getelementptr inbounds nuw i8, ptr %6, i64 192 ; 3 uses
-  %i.mx = getelementptr inbounds nuw i8, ptr %6, i64 200 ; 2 uses
+  %i.mx = getelementptr inbounds nuw i8, ptr %6, i64 200
   %i.my = getelementptr inbounds nuw i8, ptr %6, i64 208 ; 3 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %0, i64 9240
+  %8 = insertelement <2 x ptr> poison, ptr %i.ms, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %i.mr, i64 1
   br label %bb.at
 
 bb.at:                                            ; preds = %_ZN6hermes2vm8JSObject14getPrototypeOfENS0_12PseudoHandleIS1_EERNS0_7RuntimeE.exit.thread.i, %.lr.ph201.i
@@ -219,8 +221,7 @@ bb.at:                                            ; preds = %_ZN6hermes2vm8JSObj
   store i32 4, ptr %i.mv, align 4, !tbaa !331
   store ptr %i.ms, ptr %i.mt, align 8
   store i32 1, ptr %i.mu, align 8, !tbaa !330
-  store ptr %i.ms, ptr %i.mw, align 8, !tbaa !46
-  store ptr %i.mr, ptr %i.mx, align 8, !tbaa !56
+  store <2 x ptr> %9, ptr %i.mw, align 8, !tbaa !351
   store i32 0, ptr %i.my, align 8, !tbaa !349
   store ptr %6, ptr %i.o, align 8, !tbaa !43
   %i.nb = call ptr @_ZN6hermes2vm8JSObject18getOwnPropertyKeysENS0_6HandleIS1_EERNS0_7RuntimeENS0_12OwnKeysFlagsE(ptr nonnull %.0.i.i.i.i.i.i72.i, ptr noundef nonnull align 8 dereferenceable(9816) %0, i32 2) ; 3 uses

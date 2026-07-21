@@ -203,7 +203,7 @@ bb.a:
   %3 = alloca %"class.std::vector.456", align 8   ; 11 uses
   %4 = alloca %"class.v8::internal::Script::Iterator", align 8 ; 5 uses
   %5 = alloca %"class.v8::internal::Handle", align 8 ; 4 uses
-  %6 = alloca %"class.v8::internal::wasm::StringBuilder", align 8 ; 13 uses
+  %6 = alloca %"class.v8::internal::wasm::StringBuilder", align 8 ; 12 uses
   %7 = alloca %"class.v8::internal::wasm::NamesProvider", align 8 ; 5 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
@@ -223,7 +223,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 568
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 256 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %6, i64 280 ; 3 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %6, i64 288 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %6, i64 288
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 296
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 304 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
@@ -231,6 +231,8 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 688 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 264
   %i.q = getelementptr inbounds nuw i8, ptr %6, i64 272
+  %8 = insertelement <2 x ptr> poison, ptr %6, i64 0
+  %9 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.b
 
 ._crit_edge127.loopexit:                          ; preds = %_ZNSt6vectorIN2v88internal14CoverageScriptESaIS2_EE8pop_backEv.exit
@@ -343,8 +345,7 @@ bb.g:                                             ; preds = %.lr.ph123, %_ZN2v88
   %i.bu = add i32 %i.bs, %i.bt
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, i8 0, i64 24, i1 false)
-  store ptr %6, ptr %i.i, align 8
-  store ptr %6, ptr %i.j, align 8
+  store <2 x ptr> %9, ptr %i.i, align 8
   store i64 256, ptr %i.k, align 8
   store i8 1, ptr %i.l, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20

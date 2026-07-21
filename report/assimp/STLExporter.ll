@@ -203,70 +203,71 @@ bb.c:                                             ; preds = %bb.b
   %i.v = load i32, ptr %i.u, align 4
   %i.w = zext i32 %i.v to i64
   %i.x = getelementptr inbounds nuw [12 x i8], ptr %i.r, i64 %i.w ; 2 uses
-  %2 = load float, ptr %i.x, align 4
-  %3 = fadd float %16, %2
-  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 4
-  %4 = load <2 x float>, ptr %i.y, align 4
-  %5 = fadd <2 x float> %18, %4
+  %2 = load <2 x float>, ptr %i.x, align 4
+  %3 = fadd <2 x float> %16, %2
+  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
+  %4 = load float, ptr %i.y, align 4
+  %5 = fadd float %18, %4
   br label %bb.d
 
 bb.d:                                             ; preds = %.unr-lcssa, %.epil.preheader
-  %.lcssa58 = phi float [ %16, %.unr-lcssa ], [ %3, %.epil.preheader ] ; 4 uses
-  %.lcssa.a = phi <2 x float> [ %18, %.unr-lcssa ], [ %5, %.epil.preheader ] ; 4 uses
-  %6 = extractelement <2 x float> %.lcssa.a, i64 0 ; 2 uses
+  %.lcssa.a = phi <2 x float> [ %16, %.unr-lcssa ], [ %3, %.epil.preheader ] ; 5 uses
+  %.lcssa = phi float [ %18, %.unr-lcssa ], [ %5, %.epil.preheader ] ; 4 uses
   %foldExtExtBinop = fmul <2 x float> %.lcssa.a, %.lcssa.a
-  %i.z = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %7 = call float @llvm.fmuladd.f32(float %.lcssa58, float %.lcssa58, float %i.z)
-  %8 = extractelement <2 x float> %.lcssa.a, i64 1 ; 4 uses
-  %i.aa = call noundef float @llvm.fmuladd.f32(float %8, float %8, float %7) ; 2 uses
+  %i.z = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %6 = extractelement <2 x float> %.lcssa.a, i64 0 ; 2 uses
+  %7 = call float @llvm.fmuladd.f32(float %6, float %6, float %i.z)
+  %i.aa = call noundef float @llvm.fmuladd.f32(float %.lcssa, float %.lcssa, float %7) ; 2 uses
   %i.ab = fcmp oeq float %i.aa, 0.000000e+00
   br i1 %i.ab, label %_ZN10aiVector3tIfE9NormalizeEv.exit, label %_ZN10aiVector3tIfEdVEf.exit.i
 
 _ZN10aiVector3tIfEdVEf.exit.i:                    ; preds = %bb.d
   %sqrt.i.i = call noundef float @llvm.sqrt.f32(float %i.aa)
-  %i.ac = fdiv float 1.000000e+00, %sqrt.i.i      ; 3 uses
-  %9 = fmul float %.lcssa58, %i.ac
-  %10 = fmul float %6, %i.ac
-  %i.ad = fmul float %8, %i.ac
+  %i.ac = fdiv float 1.000000e+00, %sqrt.i.i      ; 2 uses
+  %8 = insertelement <2 x float> poison, float %i.ac, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = fmul <2 x float> %.lcssa.a, %9
+  %i.ad = fmul float %.lcssa, %i.ac
   br label %_ZN10aiVector3tIfE9NormalizeEv.exit
 
 bb.e:                                             ; preds = %bb.e, %.preheader
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next.1, %bb.e ] ; 3 uses
-  %.sroa.0.032 = phi float [ 0.000000e+00, %.preheader ], [ %16, %bb.e ]
-  %i.ae = phi <2 x float> [ zeroinitializer, %.preheader ], [ %18, %bb.e ]
+  %.sroa.0.032 = phi float [ 0.000000e+00, %.preheader ], [ %18, %bb.e ]
+  %i.ae = phi <2 x float> [ zeroinitializer, %.preheader ], [ %16, %bb.e ]
   %niter = phi i64 [ 0, %.preheader ], [ %niter.next.1, %bb.e ]
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %indvars.iv
   %i.ag = load i32, ptr %i.af, align 4
   %i.ah = zext i32 %i.ag to i64
   %i.ai = getelementptr inbounds nuw [12 x i8], ptr %i.r, i64 %i.ah ; 2 uses
-  %11 = load float, ptr %i.ai, align 4
-  %12 = fadd float %.sroa.0.032, %11
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 4
-  %13 = load <2 x float>, ptr %i.aj, align 4
-  %14 = fadd <2 x float> %i.ae, %13
+  %11 = load <2 x float>, ptr %i.ai, align 4
+  %12 = fadd <2 x float> %i.ae, %11
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
+  %13 = load float, ptr %i.aj, align 4
+  %14 = fadd float %.sroa.0.032, %13
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %indvars.iv
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 4
   %i.am = load i32, ptr %i.al, align 4
   %i.an = zext i32 %i.am to i64
   %i.ao = getelementptr inbounds nuw [12 x i8], ptr %i.r, i64 %i.an ; 2 uses
-  %15 = load float, ptr %i.ao, align 4
-  %16 = fadd float %12, %15                       ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 4
-  %17 = load <2 x float>, ptr %i.ap, align 4
-  %18 = fadd <2 x float> %14, %17                 ; 3 uses
+  %15 = load <2 x float>, ptr %i.ao, align 4
+  %16 = fadd <2 x float> %12, %15                 ; 3 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
+  %17 = load float, ptr %i.ap, align 4
+  %18 = fadd float %14, %17                       ; 3 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.e, !llvm.loop !24
 
 _ZN10aiVector3tIfE9NormalizeEv.exit:              ; preds = %_ZN10aiVector3tIfEdVEf.exit.i, %bb.d, %bb.c
-  %.sroa.14.1 = phi float [ 0.000000e+00, %bb.c ], [ %8, %bb.d ], [ %i.ad, %_ZN10aiVector3tIfEdVEf.exit.i ]
-  %.sroa.8.1 = phi float [ 0.000000e+00, %bb.c ], [ %6, %bb.d ], [ %10, %_ZN10aiVector3tIfEdVEf.exit.i ]
-  %.sroa.0.1 = phi float [ 0.000000e+00, %bb.c ], [ %.lcssa58, %bb.d ], [ %9, %_ZN10aiVector3tIfEdVEf.exit.i ]
+  %.sroa.14.1 = phi float [ 0.000000e+00, %bb.c ], [ %.lcssa, %bb.d ], [ %i.ad, %_ZN10aiVector3tIfEdVEf.exit.i ]
+  %19 = phi <2 x float> [ zeroinitializer, %bb.c ], [ %.lcssa.a, %bb.d ], [ %10, %_ZN10aiVector3tIfEdVEf.exit.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
-  store float %.sroa.0.1, ptr %i.a, align 4
+  %20 = extractelement <2 x float> %19, i64 0
+  store float %20, ptr %i.a, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
-  store float %.sroa.8.1, ptr %i.b, align 4
+  %21 = extractelement <2 x float> %19, i64 1
+  store float %21, ptr %i.b, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
   store float %.sroa.14.1, ptr %i.c, align 4
   %i.aq = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.a, i64 noundef 4) ; 0 uses
@@ -514,71 +515,72 @@ bb.c:                                             ; preds = %bb.b
   %i.q = load i32, ptr %i.p, align 4
   %i.r = zext i32 %i.q to i64
   %i.s = getelementptr inbounds nuw [12 x i8], ptr %i.m, i64 %i.r ; 2 uses
-  %2 = load float, ptr %i.s, align 4
-  %3 = fadd float %16, %2
-  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 4
-  %4 = load <2 x float>, ptr %i.t, align 4
-  %5 = fadd <2 x float> %18, %4
+  %2 = load <2 x float>, ptr %i.s, align 4
+  %3 = fadd <2 x float> %16, %2
+  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
+  %4 = load float, ptr %i.t, align 4
+  %5 = fadd float %18, %4
   br label %bb.d
 
 bb.d:                                             ; preds = %.unr-lcssa, %.epil.preheader
-  %.lcssa58 = phi float [ %16, %.unr-lcssa ], [ %3, %.epil.preheader ] ; 4 uses
-  %.lcssa.a = phi <2 x float> [ %18, %.unr-lcssa ], [ %5, %.epil.preheader ] ; 4 uses
-  %6 = extractelement <2 x float> %.lcssa.a, i64 0 ; 2 uses
+  %.lcssa.a = phi <2 x float> [ %16, %.unr-lcssa ], [ %3, %.epil.preheader ] ; 5 uses
+  %.lcssa = phi float [ %18, %.unr-lcssa ], [ %5, %.epil.preheader ] ; 4 uses
   %foldExtExtBinop = fmul <2 x float> %.lcssa.a, %.lcssa.a
-  %i.u = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %7 = tail call float @llvm.fmuladd.f32(float %.lcssa58, float %.lcssa58, float %i.u)
-  %8 = extractelement <2 x float> %.lcssa.a, i64 1 ; 4 uses
-  %i.v = tail call noundef float @llvm.fmuladd.f32(float %8, float %8, float %7) ; 2 uses
+  %i.u = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %6 = extractelement <2 x float> %.lcssa.a, i64 0 ; 2 uses
+  %7 = tail call float @llvm.fmuladd.f32(float %6, float %6, float %i.u)
+  %i.v = tail call noundef float @llvm.fmuladd.f32(float %.lcssa, float %.lcssa, float %7) ; 2 uses
   %i.w = fcmp ogt float %i.v, 0.000000e+00
   br i1 %i.w, label %_ZN10aiVector3tIfEdVEf.exit.i, label %_ZN10aiVector3tIfE13NormalizeSafeEv.exit
 
 _ZN10aiVector3tIfEdVEf.exit.i:                    ; preds = %bb.d
   %sqrt.i.i = tail call noundef float @llvm.sqrt.f32(float %i.v)
-  %i.x = fdiv float 1.000000e+00, %sqrt.i.i       ; 3 uses
-  %9 = fmul float %.lcssa58, %i.x
-  %10 = fmul float %6, %i.x
-  %i.y = fmul float %8, %i.x
+  %i.x = fdiv float 1.000000e+00, %sqrt.i.i       ; 2 uses
+  %8 = insertelement <2 x float> poison, float %i.x, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = fmul <2 x float> %.lcssa.a, %9
+  %i.y = fmul float %.lcssa, %i.x
   br label %_ZN10aiVector3tIfE13NormalizeSafeEv.exit
 
 bb.e:                                             ; preds = %bb.e, %.preheader
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next.1, %bb.e ] ; 3 uses
-  %.sroa.0.032 = phi float [ 0.000000e+00, %.preheader ], [ %16, %bb.e ]
-  %i.z = phi <2 x float> [ zeroinitializer, %.preheader ], [ %18, %bb.e ]
+  %.sroa.0.032 = phi float [ 0.000000e+00, %.preheader ], [ %18, %bb.e ]
+  %i.z = phi <2 x float> [ zeroinitializer, %.preheader ], [ %16, %bb.e ]
   %niter = phi i64 [ 0, %.preheader ], [ %niter.next.1, %bb.e ]
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv
   %i.ab = load i32, ptr %i.aa, align 4
   %i.ac = zext i32 %i.ab to i64
   %i.ad = getelementptr inbounds nuw [12 x i8], ptr %i.m, i64 %i.ac ; 2 uses
-  %11 = load float, ptr %i.ad, align 4
-  %12 = fadd float %.sroa.0.032, %11
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 4
-  %13 = load <2 x float>, ptr %i.ae, align 4
-  %14 = fadd <2 x float> %i.z, %13
+  %11 = load <2 x float>, ptr %i.ad, align 4
+  %12 = fadd <2 x float> %i.z, %11
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
+  %13 = load float, ptr %i.ae, align 4
+  %14 = fadd float %.sroa.0.032, %13
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 4
   %i.ah = load i32, ptr %i.ag, align 4
   %i.ai = zext i32 %i.ah to i64
   %i.aj = getelementptr inbounds nuw [12 x i8], ptr %i.m, i64 %i.ai ; 2 uses
-  %15 = load float, ptr %i.aj, align 4
-  %16 = fadd float %12, %15                       ; 3 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
-  %17 = load <2 x float>, ptr %i.ak, align 4
-  %18 = fadd <2 x float> %14, %17                 ; 3 uses
+  %15 = load <2 x float>, ptr %i.aj, align 4
+  %16 = fadd <2 x float> %12, %15                 ; 3 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
+  %17 = load float, ptr %i.ak, align 4
+  %18 = fadd float %14, %17                       ; 3 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.e, !llvm.loop !29
 
 _ZN10aiVector3tIfE13NormalizeSafeEv.exit:         ; preds = %_ZN10aiVector3tIfEdVEf.exit.i, %bb.d, %bb.c
-  %.sroa.14.1 = phi float [ 0.000000e+00, %bb.c ], [ %i.y, %_ZN10aiVector3tIfEdVEf.exit.i ], [ %8, %bb.d ]
-  %.sroa.8.1 = phi float [ 0.000000e+00, %bb.c ], [ %10, %_ZN10aiVector3tIfEdVEf.exit.i ], [ %6, %bb.d ]
-  %.sroa.0.1 = phi float [ 0.000000e+00, %bb.c ], [ %9, %_ZN10aiVector3tIfEdVEf.exit.i ], [ %.lcssa58, %bb.d ]
-  %19 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.11, i64 noundef 14) ; 0 uses
-  %i.al = fpext float %.sroa.0.1 to double
+  %.sroa.14.1 = phi float [ 0.000000e+00, %bb.c ], [ %i.y, %_ZN10aiVector3tIfEdVEf.exit.i ], [ %.lcssa, %bb.d ]
+  %19 = phi <2 x float> [ zeroinitializer, %bb.c ], [ %10, %_ZN10aiVector3tIfEdVEf.exit.i ], [ %.lcssa.a, %bb.d ] ; 2 uses
+  %20 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.11, i64 noundef 14) ; 0 uses
+  %21 = extractelement <2 x float> %19, i64 0
+  %i.al = fpext float %21 to double
   %i.am = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %0, double noundef %i.al) ; 2 uses
   %i.an = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.am, ptr noundef nonnull @.str.10, i64 noundef 1) ; 0 uses
-  %i.ao = fpext float %.sroa.8.1 to double
+  %22 = extractelement <2 x float> %19, i64 1
+  %i.ao = fpext float %22 to double
   %i.ap = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.am, double noundef %i.ao) ; 2 uses
   %i.aq = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ap, ptr noundef nonnull @.str.10, i64 noundef 1) ; 0 uses
   %i.ar = fpext float %.sroa.14.1 to double

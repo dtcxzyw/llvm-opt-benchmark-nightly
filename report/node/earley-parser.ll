@@ -203,7 +203,7 @@ bb.a:
   %7 = alloca %"class.std::unordered_map", align 8 ; 19 uses
   %8 = alloca %"class.v8::internal::torque::Symbol", align 8 ; 15 uses
   %9 = alloca %"class.v8::internal::torque::Rule", align 8 ; 9 uses
-  %10 = alloca %"class.v8::internal::torque::Item", align 8 ; 9 uses
+  %10 = alloca %"class.v8::internal::torque::Item", align 8 ; 8 uses
   %11 = alloca %"class.v8::internal::torque::Item", align 8 ; 9 uses
   %12 = alloca %"class.std::vector.4", align 8    ; 6 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -288,16 +288,15 @@ bb.e:                                             ; preds = %_ZNKSt6vectorIN2v88
   %i.af = sub i64 %i.ad, %i.ae
   %i.ag = ashr exact i64 %i.af, 3                 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.ai = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %i.aj = getelementptr inbounds nuw i8, ptr %10, i64 16
-  %i.ak = getelementptr inbounds nuw i8, ptr %10, i64 24
+  %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.aj = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %i.ak = getelementptr inbounds nuw i8, ptr %10, i64 16
   %i.al = getelementptr inbounds nuw i8, ptr %10, i64 32
   %i.am = getelementptr inbounds nuw i8, ptr %4, i64 8
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.e, %._crit_edge
-  %storemerge871 = phi i64 [ 0, %bb.e ], [ %.pre, %._crit_edge ] ; 18 uses
+  %storemerge871 = phi i64 [ 0, %bb.e ], [ %.pre, %._crit_edge ] ; 13 uses
   %.sroa.0389.0870 = phi ptr [ %i.y, %bb.e ], [ %.sroa.0379.1.lcssa, %._crit_edge ] ; 3 uses
   %.sroa.17.0869 = phi ptr [ %i.z, %bb.e ], [ %.sroa.10383.1.lcssa, %._crit_edge ] ; 3 uses
   %.sroa.42.0868 = phi ptr [ %i.z, %bb.e ], [ %.sroa.16.1.lcssa, %._crit_edge ] ; 2 uses
@@ -327,6 +326,8 @@ bb.e:                                             ; preds = %_ZNKSt6vectorIN2v88
   %i.ba = lshr i64 %i.az, 47
   %i.bb = xor i64 %i.ba, %i.az
   %i.bc = mul i64 %i.bb, 3866779316627607737
+  %18 = insertelement <2 x i64> poison, i64 %storemerge871, i64 0
+  %19 = shufflevector <2 x i64> %18, <2 x i64> poison, <2 x i32> zeroinitializer ; 3 uses
   br label %bb.k
 
 bb.f:                                             ; preds = %._crit_edge
@@ -729,7 +730,7 @@ bb.ap:                                            ; preds = %_ZNKSt8__detail15_H
   store ptr %i.js, ptr %i.ju, align 8
   %i.jv = getelementptr inbounds nuw i8, ptr %i.jp, i64 64
   store i64 0, ptr %i.jv, align 8
-  store ptr %i.jp, ptr %18, align 8
+  store ptr %i.jp, ptr %i.ai, align 8
   %i.jw = invoke ptr @_ZNSt10_HashtableISt4pairImPN2v88internal6torque6SymbolEES0_IKS6_St3setIPKNS3_4ItemESt4lessISB_ESaISB_EEESaISG_ENSt8__detail10_Select1stESt8equal_toIS6_ENS1_4base4hashIS6_EENSI_18_Mod_range_hashingENSI_20_Default_ranged_hashENSI_20_Prime_rehash_policyENSI_17_Hashtable_traitsILb1ELb0ELb1EEEE21_M_insert_unique_nodeEmmPNSI_10_Hash_nodeISG_Lb1EEEm(ptr noundef nonnull align 8 dereferenceable(56) %7, i64 noundef %i.iw, i64 noundef %i.iu, ptr noundef nonnull %i.jp, i64 noundef 1)
           to label %_ZNSt10_HashtableISt4pairImPN2v88internal6torque6SymbolEES0_IKS6_St3setIPKNS3_4ItemESt4lessISB_ESaISB_EEESaISG_ENSt8__detail10_Select1stESt8equal_toIS6_ENS1_4base4hashIS6_EENSI_18_Mod_range_hashingENSI_20_Default_ranged_hashENSI_20_Prime_rehash_policyENSI_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit.i240 unwind label %bb.aq
 
@@ -835,7 +836,7 @@ bb.ax:                                            ; preds = %.lr.ph, %_ZNSt6vect
   %i.ky = phi ptr [ %i.kw, %.lr.ph ], [ %i.mz, %_ZNSt6vectorIN2v88internal6torque4ItemESaIS3_EE9push_backEOS3_.exit157 ]
   %.066832 = phi i64 [ 0, %.lr.ph ], [ %i.mx, %_ZNSt6vectorIN2v88internal6torque4ItemESaIS3_EE9push_backEOS3_.exit157 ] ; 2 uses
   %.sroa.0389.3831 = phi ptr [ %.sroa.0389.1851, %.lr.ph ], [ %.sroa.0389.4, %_ZNSt6vectorIN2v88internal6torque4ItemESaIS3_EE9push_backEOS3_.exit157 ] ; 17 uses
-  %.sroa.17.4830 = phi ptr [ %i.bs, %.lr.ph ], [ %.sroa.17.5, %_ZNSt6vectorIN2v88internal6torque4ItemESaIS3_EE9push_backEOS3_.exit157 ] ; 25 uses
+  %.sroa.17.4830 = phi ptr [ %i.bs, %.lr.ph ], [ %.sroa.17.5, %_ZNSt6vectorIN2v88internal6torque4ItemESaIS3_EE9push_backEOS3_.exit157 ] ; 24 uses
   %.sroa.42.3829 = phi ptr [ %.sroa.42.1849, %.lr.ph ], [ %.sroa.42.4, %_ZNSt6vectorIN2v88internal6torque4ItemESaIS3_EE9push_backEOS3_.exit157 ] ; 5 uses
   %i.kz = getelementptr inbounds nuw [8 x i8], ptr %i.ky, i64 %.066832
   %i.la = load ptr, ptr %i.kz, align 8            ; 5 uses
@@ -849,9 +850,8 @@ bb.ax:                                            ; preds = %.lr.ph, %_ZNSt6vect
   %i.lh = sub i64 %i.lf, %i.lg
   %i.li = ashr exact i64 %i.lh, 3
   store ptr %i.la, ptr %10, align 8
-  store i64 %i.li, ptr %i.ai, align 8
-  store i64 %storemerge871, ptr %i.aj, align 8
-  store i64 %storemerge871, ptr %i.ak, align 8
+  store i64 %i.li, ptr %i.aj, align 8
+  store <2 x i64> %19, ptr %i.ak, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.al, i8 0, i64 16, i1 false)
   %i.lj = invoke ptr @_ZNSt10_HashtableIN2v88internal6torque4ItemES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ENS0_4base4hashIS3_EENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb1ELb1ELb1EEEE4findERKS3_(ptr noundef nonnull align 8 dereferenceable(56) %2, ptr noundef nonnull align 8 dereferenceable(48) %10)
           to label %_ZNSt13unordered_setIN2v88internal6torque4ItemENS0_4base4hashIS3_EESt8equal_toIS3_ESaIS3_EE4findERKS3_.exit141 unwind label %bb.bd ; 2 uses
@@ -976,9 +976,7 @@ bb.bf:                                            ; preds = %bb.be
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.17.4830, i64 8
   store i64 0, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.17.4830, i64 16
-  store i64 %storemerge871, ptr %.sroa.7.0..sroa_idx, align 8
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.17.4830, i64 24
-  store i64 %storemerge871, ptr %.sroa.8.0..sroa_idx, align 8
+  store <2 x i64> %19, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.17.4830, i64 32
   store <2 x ptr> splat (ptr null), ptr %.sroa.9.0..sroa_idx, align 8
   br label %_ZNSt6vectorIN2v88internal6torque4ItemESaIS3_EE9push_backEOS3_.exit173
@@ -1011,14 +1009,12 @@ _ZNKSt6vectorIN2v88internal6torque4ItemESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i15
           to label %.noexc172 unwind label %.loopexit425 ; 5 uses
 
 .noexc172:                                        ; preds = %_ZNKSt6vectorIN2v88internal6torque4ItemESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i159
-  %i.mt = getelementptr inbounds nuw i8, ptr %i.ms, i64 %i.mk ; 5 uses
+  %i.mt = getelementptr inbounds nuw i8, ptr %i.ms, i64 %i.mk ; 4 uses
   store ptr %i.la, ptr %i.mt, align 8
-  %.sroa.6.0..sroa_idx252 = getelementptr inbounds nuw i8, ptr %i.mt, i64 8
-  store i64 0, ptr %.sroa.6.0..sroa_idx252, align 8
-  %.sroa.7.0..sroa_idx254.a = getelementptr inbounds nuw i8, ptr %i.mt, i64 16
-  store i64 %storemerge871, ptr %.sroa.7.0..sroa_idx254.a, align 8
-  %.sroa.8.0..sroa_idx256 = getelementptr inbounds nuw i8, ptr %i.mt, i64 24
-  store i64 %storemerge871, ptr %.sroa.8.0..sroa_idx256, align 8
+  %.sroa.7.0..sroa_idx254.a = getelementptr inbounds nuw i8, ptr %i.mt, i64 8
+  store i64 0, ptr %.sroa.7.0..sroa_idx254.a, align 8
+  %.sroa.8.0..sroa_idx256 = getelementptr inbounds nuw i8, ptr %i.mt, i64 16
+  store <2 x i64> %19, ptr %.sroa.8.0..sroa_idx256, align 8
   %.sroa.9.0..sroa_idx258 = getelementptr inbounds nuw i8, ptr %i.mt, i64 32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9.0..sroa_idx258, i8 0, i64 16, i1 false)
   %.not10.i.i.i.i.i.i162 = icmp eq ptr %.sroa.0389.3831, %.sroa.17.4830

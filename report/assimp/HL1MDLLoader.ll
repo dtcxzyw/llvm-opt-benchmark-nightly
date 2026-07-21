@@ -204,24 +204,24 @@ bb.bs:                                            ; preds = %_ZNSt6vectorIP6aiNo
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %22, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #23
-  %i.ui = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 16 uses
+  %i.ui = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 15 uses
   store i32 0, ptr %i.ui, align 8
   %i.uj = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 7 uses
   store ptr null, ptr %i.uj, align 8
   %i.uk = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 2 uses
   store ptr %i.ui, ptr %i.uk, align 8
-  %i.ul = getelementptr inbounds nuw i8, ptr %23, i64 32 ; 2 uses
+  %i.ul = getelementptr inbounds nuw i8, ptr %23, i64 32
   store ptr %i.ui, ptr %i.ul, align 8
   %i.um = getelementptr inbounds nuw i8, ptr %23, i64 40 ; 6 uses
   store i64 0, ptr %i.um, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #23
-  %i.un = getelementptr inbounds nuw i8, ptr %24, i64 8 ; 9 uses
+  %i.un = getelementptr inbounds nuw i8, ptr %24, i64 8 ; 8 uses
   store i32 0, ptr %i.un, align 8
   %i.uo = getelementptr inbounds nuw i8, ptr %24, i64 16 ; 6 uses
   store ptr null, ptr %i.uo, align 8
   %i.up = getelementptr inbounds nuw i8, ptr %24, i64 24 ; 3 uses
   store ptr %i.un, ptr %i.up, align 8
-  %i.uq = getelementptr inbounds nuw i8, ptr %24, i64 32 ; 2 uses
+  %i.uq = getelementptr inbounds nuw i8, ptr %24, i64 32
   store ptr %i.un, ptr %i.uq, align 8
   %i.ur = getelementptr inbounds nuw i8, ptr %24, i64 40 ; 3 uses
   store i64 0, ptr %i.ur, align 8
@@ -251,12 +251,18 @@ bb.bs:                                            ; preds = %_ZNSt6vectorIP6aiNo
   %i.ve = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.vf = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 6 uses
   %i.vg = getelementptr inbounds nuw i8, ptr %22, i64 16 ; 2 uses
-  %i.vh = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 7 uses
+  %i.vh = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 6 uses
   %i.vi = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 2 uses
   %i.vj = getelementptr inbounds nuw i8, ptr %29, i64 24 ; 2 uses
-  %i.vk = getelementptr inbounds nuw i8, ptr %29, i64 32 ; 2 uses
+  %i.vk = getelementptr inbounds nuw i8, ptr %29, i64 32
   %i.vl = getelementptr inbounds nuw i8, ptr %29, i64 40 ; 2 uses
   %i.vm = getelementptr inbounds nuw i8, ptr %27, i64 20
+  %32 = insertelement <2 x ptr> poison, ptr %i.ui, i64 0
+  %33 = shufflevector <2 x ptr> %32, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %34 = insertelement <2 x ptr> poison, ptr %i.un, i64 0
+  %35 = shufflevector <2 x ptr> %34, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %36 = insertelement <2 x ptr> poison, ptr %i.vh, i64 0
+  %37 = shufflevector <2 x ptr> %36, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.bx
 
 ._crit_edge2417:                                  ; preds = %._crit_edge2387
@@ -659,8 +665,7 @@ bb.dc:                                            ; preds = %_ZNSt6vectorIsSaIsE
 
 _ZNSt3mapIsSt3setIsSt4lessIsESaIsEES2_SaISt4pairIKsS4_EEE5clearEv.exit: ; preds = %_ZNSt6vectorIsSaIsEE5clearEv.exit
   store ptr null, ptr %i.uj, align 8
-  store ptr %i.ui, ptr %i.uk, align 8
-  store ptr %i.ui, ptr %i.ul, align 8
+  store <2 x ptr> %33, ptr %i.uk, align 8
   store i64 0, ptr %i.um, align 8
   %i.agq = load ptr, ptr %i.uo, align 8
   invoke void @_ZNSt8_Rb_treeIiSt4pairIKiSt3setIsSt4lessIsESaIsEEESt10_Select1stIS7_ES3_IiESaIS7_EE8_M_eraseEPSt13_Rb_tree_nodeIS7_E(ptr noundef nonnull align 8 dereferenceable(48) %24, ptr noundef %i.agq)
@@ -675,8 +680,7 @@ bb.dd:                                            ; preds = %_ZNSt3mapIsSt3setIs
 
 _ZNSt3mapIiSt3setIsSt4lessIsESaIsEES1_IiESaISt4pairIKiS4_EEE5clearEv.exit: ; preds = %_ZNSt3mapIsSt3setIsSt4lessIsESaIsEES2_SaISt4pairIKsS4_EEE5clearEv.exit
   store ptr null, ptr %i.uo, align 8
-  store ptr %i.un, ptr %i.up, align 8
-  store ptr %i.un, ptr %i.uq, align 8
+  store <2 x ptr> %35, ptr %i.up, align 8
   store i64 0, ptr %i.ur, align 8
   %i.agt = load i16, ptr %i.agk, align 2          ; 2 uses
   %.not3292323 = icmp eq i16 %i.agt, 0
@@ -1079,8 +1083,7 @@ bb.gj:                                            ; preds = %_ZNSt3mapIiSt3setIs
 bb.gk:                                            ; preds = %bb.gj
   store i32 0, ptr %i.vh, align 8
   store ptr null, ptr %i.vi, align 8
-  store ptr %i.vh, ptr %i.vj, align 8
-  store ptr %i.vh, ptr %i.vk, align 8
+  store <2 x ptr> %37, ptr %i.vj, align 8
   store i64 0, ptr %i.vl, align 8
   %.19.i.i.i.i557.sroa.sel725.sroa.sel728.v.sroa.sel.v.sroa.sel.v = select i1 %i.azw, ptr %.0811.i.i.i.i556, ptr %.012.i.i.i.i555
   %.19.i.i.i.i557.sroa.sel725.sroa.sel728.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i557.sroa.sel725.sroa.sel728.v.sroa.sel.v.sroa.sel.v, i64 56
