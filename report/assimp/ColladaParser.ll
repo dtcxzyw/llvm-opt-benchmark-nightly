@@ -204,7 +204,7 @@ bb.a:
   %13 = alloca %"class.pugi::xml_node", align 8   ; 10 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
-  %16 = alloca %"struct.Assimp::Collada::SemanticMappingTable", align 8 ; 17 uses
+  %16 = alloca %"struct.Assimp::Collada::SemanticMappingTable", align 8 ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #28
   %i.c = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 6 uses
   store ptr %i.c, ptr %8, align 8
@@ -296,13 +296,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %bb.
   %i.af = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 4 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %16, i64 8
-  %i.ai = getelementptr inbounds nuw i8, ptr %16, i64 40 ; 3 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %16, i64 40 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %16, i64 48 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %16, i64 56
-  %i.al = getelementptr inbounds nuw i8, ptr %16, i64 64
-  %i.am = getelementptr inbounds nuw i8, ptr %16, i64 72
-  %i.an = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 32 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %16, i64 72
+  %i.am = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %16, i64 32 ; 2 uses
+  %17 = insertelement <2 x ptr> poison, ptr %i.ai, i64 0
+  %18 = shufflevector <2 x ptr> %17, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.i
 
 bb.i:                                             ; preds = %.preheader100, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit80
@@ -626,9 +627,8 @@ bb.am:                                            ; preds = %.noexc57, %.noexc58
   store i8 0, ptr %i.ag, align 8
   store i32 0, ptr %i.ai, align 8
   store ptr null, ptr %i.aj, align 8
-  store ptr %i.ai, ptr %i.ak, align 8
-  store ptr %i.ai, ptr %i.al, align 8
-  store i64 0, ptr %i.am, align 8
+  store <2 x ptr> %18, ptr %i.ak, align 8
+  store i64 0, ptr %i.al, align 8
   %i.dj = load i8, ptr %i.di, align 1
   %i.dk = icmp eq i8 %i.dj, 35
   %spec.select.idx = zext i1 %i.dk to i64
@@ -741,7 +741,7 @@ _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exi
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   store ptr %15, ptr %3, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
-  %i.eh = invoke ptr @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6Assimp7Collada20SemanticMappingTableEESt10_Select1stISB_ESt4lessIS5_ESaISB_EE22_M_emplace_hint_uniqueIJRKSt21piecewise_construct_tSt5tupleIJRS7_EESM_IJEEEEESt17_Rb_tree_iteratorISB_ESt23_Rb_tree_const_iteratorISB_EDpOT_(ptr noundef nonnull align 8 dereferenceable(48) %i.an, ptr %.08.lcssa.i.i.i12.i, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt19piecewise_construct, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  %i.eh = invoke ptr @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6Assimp7Collada20SemanticMappingTableEESt10_Select1stISB_ESt4lessIS5_ESaISB_EE22_M_emplace_hint_uniqueIJRKSt21piecewise_construct_tSt5tupleIJRS7_EESM_IJEEEEESt17_Rb_tree_iteratorISB_ESt23_Rb_tree_const_iteratorISB_EDpOT_(ptr noundef nonnull align 8 dereferenceable(48) %i.am, ptr %.08.lcssa.i.i.i12.i, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt19piecewise_construct, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 1 dereferenceable(1) %4)
           to label %.noexc63 unwind label %bb.au
 
 .noexc63:                                         ; preds = %.critedge.i
@@ -757,12 +757,12 @@ bb.as:                                            ; preds = %.noexc63, %_ZNKSt4l
 
 .noexc64:                                         ; preds = %bb.as
   %i.ej = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i, i64 96
-  %i.ek = invoke noundef nonnull align 8 dereferenceable(48) ptr @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6Assimp7Collada21InputSemanticMapEntryEESt10_Select1stISB_ESt4lessIS5_ESaISB_EEaSERKSH_(ptr noundef nonnull align 8 dereferenceable(48) %i.ej, ptr noundef nonnull align 8 dereferenceable(48) %17)
+  %i.ek = invoke noundef nonnull align 8 dereferenceable(48) ptr @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6Assimp7Collada21InputSemanticMapEntryEESt10_Select1stISB_ESt4lessIS5_ESaISB_EEaSERKSH_(ptr noundef nonnull align 8 dereferenceable(48) %i.ej, ptr noundef nonnull align 8 dereferenceable(48) %i.an)
           to label %_ZN6Assimp7Collada20SemanticMappingTableaSERKS1_.exit unwind label %bb.au ; 0 uses
 
 _ZN6Assimp7Collada20SemanticMappingTableaSERKS1_.exit: ; preds = %.noexc64
   %i.el = load ptr, ptr %i.aj, align 8
-  invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6Assimp7Collada21InputSemanticMapEntryEESt10_Select1stISB_ESt4lessIS5_ESaISB_EE8_M_eraseEPSt13_Rb_tree_nodeISB_E(ptr noundef nonnull align 8 dereferenceable(48) %17, ptr noundef %i.el)
+  invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6Assimp7Collada21InputSemanticMapEntryEESt10_Select1stISB_ESt4lessIS5_ESaISB_EE8_M_eraseEPSt13_Rb_tree_nodeISB_E(ptr noundef nonnull align 8 dereferenceable(48) %i.an, ptr noundef %i.el)
           to label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6Assimp7Collada21InputSemanticMapEntryESt4lessIS5_ESaISt4pairIKS5_S8_EEED2Ev.exit.i unwind label %bb.at
 
 bb.at:                                            ; preds = %_ZN6Assimp7Collada20SemanticMappingTableaSERKS1_.exit
@@ -911,7 +911,7 @@ bb.bb:                                            ; preds = %.loopexit106, %.loo
 
 _ZNSt6vectorIN6Assimp7Collada12MeshInstanceESaIS2_EE9push_backERKS2_.exit: ; preds = %.noexc38, %bb.m
   %i.fv = load ptr, ptr %i.s, align 8
-  invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6Assimp7Collada20SemanticMappingTableEESt10_Select1stISB_ESt4lessIS5_ESaISB_EE8_M_eraseEPSt13_Rb_tree_nodeISB_E(ptr noundef nonnull align 8 dereferenceable(48) %i.an, ptr noundef %i.fv)
+  invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6Assimp7Collada20SemanticMappingTableEESt10_Select1stISB_ESt4lessIS5_ESaISB_EE8_M_eraseEPSt13_Rb_tree_nodeISB_E(ptr noundef nonnull align 8 dereferenceable(48) %i.am, ptr noundef %i.fv)
           to label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6Assimp7Collada20SemanticMappingTableESt4lessIS5_ESaISt4pairIKS5_S8_EEED2Ev.exit.i unwind label %bb.bc
 
 bb.bc:                                            ; preds = %_ZNSt6vectorIN6Assimp7Collada12MeshInstanceESaIS2_EE9push_backERKS2_.exit

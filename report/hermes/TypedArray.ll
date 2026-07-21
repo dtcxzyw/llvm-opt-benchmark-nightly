@@ -201,7 +201,7 @@ define hidden { i32, i64 } @_ZN6hermes2vm23typedArrayPrototypeJoinEPvRNS0_7Runti
 bb.a:
   %3 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
   %4 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
-  %5 = alloca %"class.hermes::vm::GCScope", align 8 ; 16 uses
+  %5 = alloca %"class.hermes::vm::GCScope", align 8 ; 15 uses
   %6 = alloca %"class.hermes::vm::CallResult.184", align 8 ; 10 uses
   %i.a = load ptr, ptr %2, align 8, !tbaa !15, !noalias !461
   %i.b = tail call noundef i32 @_ZN6hermes2vm16JSTypedArrayBase18validateTypedArrayERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEEb(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %i.a, i1 noundef zeroext true) #10
@@ -355,8 +355,9 @@ _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.ex
   %i.bu = getelementptr inbounds nuw i8, ptr %5, i64 152
   %i.bv = getelementptr inbounds nuw i8, ptr %5, i64 156
   %i.bw = getelementptr inbounds nuw i8, ptr %5, i64 192
-  %i.bx = getelementptr inbounds nuw i8, ptr %5, i64 200
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 208
+  %i.bx = getelementptr inbounds nuw i8, ptr %5, i64 208
+  %7 = insertelement <2 x ptr> poison, ptr %i.bs, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %i.br, i64 1
   br label %bb.n
 
 bb.n:                                             ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit, %bb.r
@@ -371,9 +372,8 @@ bb.n:                                             ; preds = %_ZN6hermes2vm13Muta
   store i32 4, ptr %i.bv, align 4, !tbaa !55
   store ptr %i.bs, ptr %i.bt, align 8
   store i32 1, ptr %i.bu, align 8, !tbaa !56
-  store ptr %i.bs, ptr %i.bw, align 8, !tbaa !41
-  store ptr %i.br, ptr %i.bx, align 8, !tbaa !50
-  store i32 0, ptr %7, align 8, !tbaa !57
+  store <2 x ptr> %8, ptr %i.bw, align 8, !tbaa !58
+  store i32 0, ptr %i.bx, align 8, !tbaa !57
   store ptr %5, ptr %i.ac, align 8, !tbaa !38
   %.sroa.0.0.copyload.i.i57 = load i64, ptr %i.d, align 8, !tbaa !21
   %i.bz = and i64 %.sroa.0.0.copyload.i.i57, 281474976710655

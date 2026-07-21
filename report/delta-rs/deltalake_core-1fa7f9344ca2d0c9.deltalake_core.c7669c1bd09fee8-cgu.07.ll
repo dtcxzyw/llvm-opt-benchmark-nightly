@@ -204,8 +204,8 @@ bb.a:
   %i.h = alloca [40 x i8], align 8                ; 8 uses
   %i.i = alloca [24 x i8], align 8                ; 16 uses
   %i.j = alloca [40 x i8], align 8                ; 9 uses
-  %i.k = alloca [32 x i8], align 8                ; 7 uses
-  %i.l = alloca [16 x i8], align 8                ; 7 uses
+  %i.k = alloca [32 x i8], align 16               ; 6 uses
+  %i.l = alloca [16 x i8], align 8                ; 6 uses
   %i.m = alloca [16 x i8], align 8                ; 7 uses
   %i.n = alloca [8 x i8], align 8                 ; 6 uses
   %i.o = alloca [8 x i8], align 8                 ; 4 uses
@@ -245,7 +245,6 @@ bb.c:                                             ; preds = %bb.d, %bb.a
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.ag = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 4 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.ak = getelementptr inbounds nuw i8, ptr %i.j, i64 16
@@ -264,6 +263,8 @@ bb.c:                                             ; preds = %bb.d, %bb.a
   %.sroa.3.0..sroa_idx4.i = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx4.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.p, i64 48
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.l, i64 0
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -487,9 +488,8 @@ bb.ab:                                            ; preds = %_RNvMs4_NtNtCs8CRAY
   store ptr @14, ptr %i.l, align 8, !noalias !17197
   store ptr %.sroa.01.0.i.i.i, ptr %i.ah, align 8, !noalias !17197
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !17197
-  store ptr %i.l, ptr %i.k, align 8, !noalias !17197
-  store ptr %i.l, ptr %3, align 8, !noalias !17197
-  store ptr null, ptr %i.ai, align 8, !noalias !17197
+  store <2 x ptr> %4, ptr %i.k, align 16, !noalias !17197
+  store ptr null, ptr %i.ai, align 16, !noalias !17197
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.i, i64 120
   %i.dp = load i64, ptr %i.do, align 8, !noalias !17208, !noundef !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !17212
@@ -892,8 +892,8 @@ bb.ao:                                            ; preds = %_RNvXs9_NtNtCs4tdlw
 define hidden void @_RNvXs6_NtNtCs8CRAYtH5WmW_12futures_util6stream15futures_orderedINtB5_14FuturesOrderedINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB1q_6future6future6Futurep6OutputINtNtB1q_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB1q_6marker4SendEL_EEENtNtCs7cL0Iqqqcdm_12futures_core6stream6Stream9poll_nextCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef align 8 dereferenceable(64) %1, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 6 uses
-  %i.b = alloca [32 x i8], align 8                ; 7 uses
-  %i.c = alloca [16 x i8], align 8                ; 7 uses
+  %i.b = alloca [32 x i8], align 16               ; 6 uses
+  %i.c = alloca [16 x i8], align 8                ; 6 uses
   %i.d = alloca [8 x i8], align 8                 ; 8 uses
   %i.e = alloca [8 x i8], align 8                 ; 4 uses
   %i.f = alloca [80 x i8], align 8                ; 5 uses
@@ -926,12 +926,13 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 6 uses
   %i.w = load ptr, ptr %2, align 8, !alias.scope !18581, !noalias !18584, !nonnull !3, !align !356, !noundef !3 ; 5 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.7.0..sroa_idx46.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 72
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.c, i64 0
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -1153,9 +1154,8 @@ bb.ac:                                            ; preds = %_RNvMs4_NtNtCs8CRAY
   store ptr @13, ptr %i.c, align 8, !noalias !18589
   store ptr %i.cx, ptr %i.x, align 8, !noalias !18589
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !18589
-  store ptr %i.c, ptr %i.b, align 8, !noalias !18589
-  store ptr %i.c, ptr %3, align 8, !noalias !18589
-  store ptr null, ptr %i.y, align 8, !noalias !18589
+  store <2 x ptr> %4, ptr %i.b, align 16, !noalias !18589
+  store ptr null, ptr %i.y, align 16, !noalias !18589
   call void @llvm.experimental.noalias.scope.decl(metadata !18601)
   %i.cy = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 24
   %i.cz = load i64, ptr %i.cy, align 8, !alias.scope !18601, !noalias !18604, !noundef !3 ; 3 uses
@@ -1315,8 +1315,8 @@ bb.a:
   %.sroa.521.i.i.i = alloca [64 x i8], align 16   ; 6 uses
   %.sroa.3.i.i.i = alloca [88 x i8], align 8      ; 6 uses
   %.sroa.813.i.i.i = alloca [88 x i8], align 8    ; 7 uses
-  %i.i = alloca [32 x i8], align 8                ; 7 uses
-  %i.j = alloca [16 x i8], align 8                ; 7 uses
+  %i.i = alloca [32 x i8], align 16               ; 6 uses
+  %i.j = alloca [16 x i8], align 8                ; 6 uses
   %i.k = alloca [8 x i8], align 8                 ; 6 uses
   %i.l = alloca [8 x i8], align 8                 ; 4 uses
   %i.m = alloca [112 x i8], align 16              ; 5 uses
@@ -1349,7 +1349,6 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 6 uses
   %i.ad = load ptr, ptr %2, align 8, !alias.scope !18617, !noalias !18620, !nonnull !3, !align !356, !noundef !3 ; 5 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.af = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.ag = getelementptr inbounds nuw i8, ptr %i.g, i64 520
   %i.ah = getelementptr inbounds nuw i8, ptr %i.g, i64 608
@@ -1370,6 +1369,8 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 96
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.j, i64 0
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -1605,9 +1606,8 @@ bb.ac:                                            ; preds = %_RNvMs4_NtNtCs8CRAY
   store ptr @15, ptr %i.j, align 8, !noalias !18625
   store ptr %.sroa.01.0.i.i, ptr %i.ae, align 8, !noalias !18625
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !18625
-  store ptr %i.j, ptr %i.i, align 8, !noalias !18625
-  store ptr %i.j, ptr %3, align 8, !noalias !18625
-  store ptr null, ptr %i.af, align 8, !noalias !18625
+  store <2 x ptr> %4, ptr %i.i, align 16, !noalias !18625
+  store ptr null, ptr %i.af, align 16, !noalias !18625
   %i.dp = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 3128
   %i.dq = load i64, ptr %i.dp, align 8, !noalias !18642, !noundef !3 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.3.i.i.i)
@@ -2010,8 +2010,8 @@ bb.a:
   %.sroa.7.i.i.i = alloca [24 x i8], align 8      ; 8 uses
   %.sroa.8.i.i.i = alloca [24 x i8], align 8      ; 8 uses
   %.sroa.10.i.i = alloca [88 x i8], align 8       ; 5 uses
-  %i.ac = alloca [32 x i8], align 8               ; 11 uses
-  %i.ad = alloca [16 x i8], align 8               ; 7 uses
+  %i.ac = alloca [32 x i8], align 16              ; 10 uses
+  %i.ad = alloca [16 x i8], align 8               ; 6 uses
   %i.ae = alloca [8 x i8], align 8                ; 6 uses
   %i.af = alloca [8 x i8], align 8                ; 4 uses
   %i.ag = alloca [112 x i8], align 16             ; 5 uses
@@ -2044,7 +2044,6 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 6 uses
   %i.ax = load ptr, ptr %2, align 8, !alias.scope !18735, !noalias !18738, !nonnull !3, !align !356, !noundef !3 ; 5 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.az = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
   %i.ba = getelementptr inbounds nuw i8, ptr %i.u, i64 52
   %i.bb = getelementptr inbounds nuw i8, ptr %i.t, i64 16
@@ -2083,6 +2082,8 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 96
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.ad, i64 0
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -2350,9 +2351,8 @@ bb.ai:                                            ; preds = %_RNvMs4_NtNtCs8CRAY
   store ptr @16, ptr %i.ad, align 8, !noalias !18744
   store ptr %.sroa.01.0.i.i, ptr %i.ay, align 8, !noalias !18744
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac), !noalias !18744
-  store ptr %i.ad, ptr %i.ac, align 8, !noalias !18744
-  store ptr %i.ad, ptr %3, align 8, !noalias !18744
-  store ptr null, ptr %i.az, align 8, !noalias !18744
+  store <2 x ptr> %4, ptr %i.ac, align 16, !noalias !18744
+  store ptr null, ptr %i.az, align 16, !noalias !18744
   %i.ep = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 840
   %i.eq = load i64, ptr %i.ep, align 8, !noalias !18770, !noundef !3 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10.i.i)
@@ -2755,8 +2755,8 @@ bb.a:
   %.sroa.8.i.i.i.i = alloca [24 x i8], align 8    ; 7 uses
   %i.p = alloca [72 x i8], align 8                ; 8 uses
   %.sroa.7.i.i = alloca [88 x i8], align 8        ; 5 uses
-  %i.q = alloca [32 x i8], align 8                ; 7 uses
-  %i.r = alloca [16 x i8], align 8                ; 7 uses
+  %i.q = alloca [32 x i8], align 16               ; 6 uses
+  %i.r = alloca [16 x i8], align 8                ; 6 uses
   %i.s = alloca [8 x i8], align 8                 ; 6 uses
   %i.t = alloca [8 x i8], align 8                 ; 4 uses
   %i.u = alloca [112 x i8], align 16              ; 5 uses
@@ -2789,7 +2789,6 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 6 uses
   %i.al = load ptr, ptr %2, align 8, !alias.scope !18997, !noalias !19000, !nonnull !3, !align !356, !noundef !3 ; 5 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.r, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.an = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.ao = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %.sroa.10.0..sroa_idx113.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.p, i64 32
@@ -2826,6 +2825,8 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.u, i64 96
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.r, i64 0
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -3095,9 +3096,8 @@ bb.ai:                                            ; preds = %_RNvMs4_NtNtCs8CRAY
   store ptr @17, ptr %i.r, align 8, !noalias !19006
   store ptr %.sroa.01.0.i.i, ptr %i.am, align 8, !noalias !19006
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !19006
-  store ptr %i.r, ptr %i.q, align 8, !noalias !19006
-  store ptr %i.r, ptr %3, align 8, !noalias !19006
-  store ptr null, ptr %i.an, align 8, !noalias !19006
+  store <2 x ptr> %4, ptr %i.q, align 16, !noalias !19006
+  store ptr null, ptr %i.an, align 16, !noalias !19006
   %i.em = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 480
   %i.en = load i64, ptr %i.em, align 8, !noalias !19032, !noundef !3 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i.i)
@@ -3500,8 +3500,8 @@ bb.a:
   %.sroa.325.i.i.i = alloca [64 x i8], align 8    ; 6 uses
   %i.c = alloca [72 x i8], align 8                ; 7 uses
   %.sroa.6.i.i = alloca [64 x i8], align 8        ; 6 uses
-  %i.d = alloca [32 x i8], align 8                ; 7 uses
-  %i.e = alloca [16 x i8], align 8                ; 7 uses
+  %i.d = alloca [32 x i8], align 16               ; 6 uses
+  %i.e = alloca [16 x i8], align 8                ; 6 uses
   %i.f = alloca [16 x i8], align 8                ; 7 uses
   %i.g = alloca [8 x i8], align 8                 ; 6 uses
   %i.h = alloca [8 x i8], align 8                 ; 4 uses
@@ -3536,7 +3536,6 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.z = load ptr, ptr %2, align 8, !alias.scope !19164, !noalias !19167, !nonnull !3, !align !356, !noundef !3 ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.sroa.4.32..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i, i64 24
   %.sroa.325.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -3544,6 +3543,8 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 72
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.e, i64 0
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -3768,9 +3769,8 @@ bb.ab:                                            ; preds = %_RNvMs4_NtNtCs8CRAY
   store ptr @18, ptr %i.e, align 8, !noalias !19173
   store ptr %.sroa.01.0.i.i, ptr %i.ab, align 8, !noalias !19173
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !19173
-  store ptr %i.e, ptr %i.d, align 8, !noalias !19173
-  store ptr %i.e, ptr %3, align 8, !noalias !19173
-  store ptr null, ptr %i.ac, align 8, !noalias !19173
+  store <2 x ptr> %4, ptr %i.d, align 16, !noalias !19173
+  store ptr null, ptr %i.ac, align 16, !noalias !19173
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 144
   %i.dd = load i64, ptr %i.dc, align 8, !noalias !19184, !noundef !3
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i)
@@ -4173,8 +4173,8 @@ bb.a:
   %.sroa.325.i.i.i = alloca [64 x i8], align 8    ; 6 uses
   %i.c = alloca [72 x i8], align 8                ; 7 uses
   %.sroa.6.i.i = alloca [64 x i8], align 8        ; 6 uses
-  %i.d = alloca [32 x i8], align 8                ; 7 uses
-  %i.e = alloca [16 x i8], align 8                ; 7 uses
+  %i.d = alloca [32 x i8], align 16               ; 6 uses
+  %i.e = alloca [16 x i8], align 8                ; 6 uses
   %i.f = alloca [16 x i8], align 8                ; 7 uses
   %i.g = alloca [8 x i8], align 8                 ; 6 uses
   %i.h = alloca [8 x i8], align 8                 ; 4 uses
@@ -4209,7 +4209,6 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.z = load ptr, ptr %2, align 8, !alias.scope !19239, !noalias !19242, !nonnull !3, !align !356, !noundef !3 ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.sroa.4.32..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i, i64 24
   %.sroa.325.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -4217,6 +4216,8 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 72
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.e, i64 0
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -4441,9 +4442,8 @@ bb.ab:                                            ; preds = %_RNvMs4_NtNtCs8CRAY
   store ptr @19, ptr %i.e, align 8, !noalias !19248
   store ptr %.sroa.01.0.i.i, ptr %i.ab, align 8, !noalias !19248
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !19248
-  store ptr %i.e, ptr %i.d, align 8, !noalias !19248
-  store ptr %i.e, ptr %3, align 8, !noalias !19248
-  store ptr null, ptr %i.ac, align 8, !noalias !19248
+  store <2 x ptr> %4, ptr %i.d, align 16, !noalias !19248
+  store ptr null, ptr %i.ac, align 16, !noalias !19248
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 144
   %i.dd = load i64, ptr %i.dc, align 8, !noalias !19259, !noundef !3
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i)
@@ -4846,8 +4846,8 @@ bb.a:
   %.sroa.325.i.i.i = alloca [64 x i8], align 8    ; 6 uses
   %i.a = alloca [72 x i8], align 8                ; 7 uses
   %.sroa.6.i.i = alloca [64 x i8], align 8        ; 7 uses
-  %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [16 x i8], align 8                ; 8 uses
+  %i.b = alloca [32 x i8], align 16               ; 7 uses
+  %i.c = alloca [16 x i8], align 8                ; 7 uses
   %i.d = alloca [16 x i8], align 8                ; 11 uses
   %i.e = alloca [8 x i8], align 8                 ; 8 uses
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
@@ -4882,13 +4882,14 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.x = load ptr, ptr %2, align 8, !alias.scope !19314, !noalias !19317, !nonnull !3, !align !356, !noundef !3 ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.4.32..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i, i64 24
   %.sroa.325.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 72
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.c, i64 0
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -5115,9 +5116,8 @@ bb.ab:                                            ; preds = %_RNvMs4_NtNtCs8CRAY
   store ptr @20, ptr %i.c, align 8, !noalias !19323
   store ptr %i.db, ptr %i.z, align 8, !noalias !19323
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !19323
-  store ptr %i.c, ptr %i.b, align 8, !noalias !19323
-  store ptr %i.c, ptr %3, align 8, !noalias !19323
-  store ptr null, ptr %i.aa, align 8, !noalias !19323
+  store <2 x ptr> %4, ptr %i.b, align 16, !noalias !19323
+  store ptr null, ptr %i.aa, align 16, !noalias !19323
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 144
   %i.dd = load i64, ptr %i.dc, align 8, !noalias !19334, !noundef !3 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i)
@@ -5498,8 +5498,8 @@ bb.a:
   %.sroa.325.i.i.i = alloca [64 x i8], align 8    ; 6 uses
   %i.a = alloca [72 x i8], align 8                ; 7 uses
   %.sroa.6.i.i = alloca [64 x i8], align 8        ; 7 uses
-  %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [16 x i8], align 8                ; 8 uses
+  %i.b = alloca [32 x i8], align 16               ; 7 uses
+  %i.c = alloca [16 x i8], align 8                ; 7 uses
   %i.d = alloca [16 x i8], align 8                ; 11 uses
   %i.e = alloca [8 x i8], align 8                 ; 8 uses
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
@@ -5534,13 +5534,14 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.x = load ptr, ptr %2, align 8, !alias.scope !19355, !noalias !19358, !nonnull !3, !align !356, !noundef !3 ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.4.32..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i, i64 24
   %.sroa.325.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 72
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.c, i64 0
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -5767,9 +5768,8 @@ bb.ab:                                            ; preds = %_RNvMs4_NtNtCs8CRAY
   store ptr @21, ptr %i.c, align 8, !noalias !19364
   store ptr %i.db, ptr %i.z, align 8, !noalias !19364
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !19364
-  store ptr %i.c, ptr %i.b, align 8, !noalias !19364
-  store ptr %i.c, ptr %3, align 8, !noalias !19364
-  store ptr null, ptr %i.aa, align 8, !noalias !19364
+  store <2 x ptr> %4, ptr %i.b, align 16, !noalias !19364
+  store ptr null, ptr %i.aa, align 16, !noalias !19364
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 144
   %i.dd = load i64, ptr %i.dc, align 8, !noalias !19375, !noundef !3 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i)
@@ -6150,8 +6150,8 @@ bb.a:
   %.sroa.325.i.i.i = alloca [64 x i8], align 8    ; 6 uses
   %i.a = alloca [72 x i8], align 8                ; 7 uses
   %.sroa.6.i.i = alloca [64 x i8], align 8        ; 7 uses
-  %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [16 x i8], align 8                ; 8 uses
+  %i.b = alloca [32 x i8], align 16               ; 7 uses
+  %i.c = alloca [16 x i8], align 8                ; 7 uses
   %i.d = alloca [16 x i8], align 8                ; 11 uses
   %i.e = alloca [8 x i8], align 8                 ; 8 uses
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
@@ -6186,13 +6186,14 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.x = load ptr, ptr %2, align 8, !alias.scope !19395, !noalias !19398, !nonnull !3, !align !356, !noundef !3 ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.4.32..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i, i64 24
   %.sroa.325.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 72
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.c, i64 0
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -6419,9 +6420,8 @@ bb.ab:                                            ; preds = %_RNvMs4_NtNtCs8CRAY
   store ptr @22, ptr %i.c, align 8, !noalias !19404
   store ptr %i.db, ptr %i.z, align 8, !noalias !19404
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !19404
-  store ptr %i.c, ptr %i.b, align 8, !noalias !19404
-  store ptr %i.c, ptr %3, align 8, !noalias !19404
-  store ptr null, ptr %i.aa, align 8, !noalias !19404
+  store <2 x ptr> %4, ptr %i.b, align 16, !noalias !19404
+  store ptr null, ptr %i.aa, align 16, !noalias !19404
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 144
   %i.dd = load i64, ptr %i.dc, align 8, !noalias !19415, !noundef !3 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i)
@@ -6802,8 +6802,8 @@ bb.a:
   %.sroa.325.i.i.i = alloca [64 x i8], align 8    ; 6 uses
   %i.a = alloca [72 x i8], align 8                ; 7 uses
   %.sroa.6.i.i = alloca [64 x i8], align 8        ; 7 uses
-  %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [16 x i8], align 8                ; 8 uses
+  %i.b = alloca [32 x i8], align 16               ; 7 uses
+  %i.c = alloca [16 x i8], align 8                ; 7 uses
   %i.d = alloca [16 x i8], align 8                ; 11 uses
   %i.e = alloca [8 x i8], align 8                 ; 8 uses
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
@@ -6838,13 +6838,14 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.x = load ptr, ptr %2, align 8, !alias.scope !19435, !noalias !19438, !nonnull !3, !align !356, !noundef !3 ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.4.32..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i, i64 24
   %.sroa.325.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 72
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.c, i64 0
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -7071,9 +7072,8 @@ bb.ab:                                            ; preds = %_RNvMs4_NtNtCs8CRAY
   store ptr @23, ptr %i.c, align 8, !noalias !19444
   store ptr %i.db, ptr %i.z, align 8, !noalias !19444
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !19444
-  store ptr %i.c, ptr %i.b, align 8, !noalias !19444
-  store ptr %i.c, ptr %3, align 8, !noalias !19444
-  store ptr null, ptr %i.aa, align 8, !noalias !19444
+  store <2 x ptr> %4, ptr %i.b, align 16, !noalias !19444
+  store ptr null, ptr %i.aa, align 16, !noalias !19444
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 144
   %i.dd = load i64, ptr %i.dc, align 8, !noalias !19455, !noundef !3 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i)

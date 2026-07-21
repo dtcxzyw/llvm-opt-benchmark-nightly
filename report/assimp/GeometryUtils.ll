@@ -201,12 +201,12 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %_ZN10aiVector3tIfE9NormalizeEv.exit
   %.011 = phi i64 [ %i.m, %_ZN10aiVector3tIfE9NormalizeEv.exit ], [ 0, %bb.a ] ; 3 uses
-  %i.d = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %.011 ; 5 uses
-  %3 = load float, ptr %i.d, align 4              ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 2 uses
-  %5 = load float, ptr %4, align 4                ; 3 uses
-  %6 = fmul float %5, %5
-  %i.e = tail call float @llvm.fmuladd.f32(float %3, float %3, float %6)
+  %i.d = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %.011 ; 4 uses
+  %3 = load <2 x float>, ptr %i.d, align 4        ; 4 uses
+  %foldExtExtBinop = fmul <2 x float> %3, %3
+  %4 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %5 = extractelement <2 x float> %3, i64 0       ; 2 uses
+  %i.e = tail call float @llvm.fmuladd.f32(float %5, float %5, float %4)
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.g = load float, ptr %i.f, align 4            ; 3 uses
   %i.h = tail call noundef float @llvm.fmuladd.f32(float %i.g, float %i.g, float %i.e) ; 2 uses
@@ -215,11 +215,11 @@ bb.a:
 
 _ZN10aiVector3tIfEdVEf.exit.i:                    ; preds = %.lr.ph
   %sqrt.i.i = tail call noundef float @llvm.sqrt.f32(float %i.h)
-  %i.j = fdiv float 1.000000e+00, %sqrt.i.i       ; 3 uses
-  %7 = fmul float %3, %i.j
-  store float %7, ptr %i.d, align 4
-  %8 = fmul float %5, %i.j
-  store float %8, ptr %4, align 4
+  %i.j = fdiv float 1.000000e+00, %sqrt.i.i       ; 2 uses
+  %6 = insertelement <2 x float> poison, float %i.j, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %8 = fmul <2 x float> %3, %7
+  store <2 x float> %8, ptr %i.d, align 4
   %i.k = fmul float %i.g, %i.j
   store float %i.k, ptr %i.f, align 4
   br label %_ZN10aiVector3tIfE9NormalizeEv.exit

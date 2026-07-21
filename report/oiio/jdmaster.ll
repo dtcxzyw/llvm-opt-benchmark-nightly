@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph75:                                         ; preds = %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 416
-  %i.r = load i32, ptr %i.q, align 8, !tbaa !40   ; 22 uses
+  %i.r = load i32, ptr %i.q, align 8, !tbaa !40   ; 13 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 412
   %i.t = icmp slt i32 %i.r, 8
   br i1 %i.t, label %.lr.ph75.split.us, label %.critedge.preheader
@@ -216,6 +216,22 @@ bb.d:                                             ; preds = %bb.c
 
 .critedge.preheader.new:                          ; preds = %.critedge.preheader
   %unroll_iter = and i32 %i.o, 2147483640
+  %1 = insertelement <2 x i32> poison, i32 %i.r, i64 0
+  %2 = shufflevector <2 x i32> %1, <2 x i32> poison, <2 x i32> zeroinitializer
+  %3 = insertelement <2 x i32> poison, i32 %i.r, i64 0
+  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer
+  %5 = insertelement <2 x i32> poison, i32 %i.r, i64 0
+  %6 = shufflevector <2 x i32> %5, <2 x i32> poison, <2 x i32> zeroinitializer
+  %7 = insertelement <2 x i32> poison, i32 %i.r, i64 0
+  %8 = shufflevector <2 x i32> %7, <2 x i32> poison, <2 x i32> zeroinitializer
+  %9 = insertelement <2 x i32> poison, i32 %i.r, i64 0
+  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <2 x i32> zeroinitializer
+  %11 = insertelement <2 x i32> poison, i32 %i.r, i64 0
+  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <2 x i32> zeroinitializer
+  %13 = insertelement <2 x i32> poison, i32 %i.r, i64 0
+  %14 = shufflevector <2 x i32> %13, <2 x i32> poison, <2 x i32> zeroinitializer
+  %15 = insertelement <2 x i32> poison, i32 %i.r, i64 0
+  %16 = shufflevector <2 x i32> %15, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %.critedge
 
 .lr.ph75.split.us:                                ; preds = %.lr.ph75
@@ -273,15 +289,15 @@ bb.g:                                             ; preds = %bb.f
   %.06074.epil.init = phi ptr [ %i.m, %.critedge.preheader ], [ %i.bd, %.lr.ph.loopexit88.unr-lcssa ]
   %lcmp.mod89 = icmp ne i32 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod89)
+  %17 = insertelement <2 x i32> poison, i32 %i.r, i64 0
+  %18 = shufflevector <2 x i32> %17, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %.critedge.epil
 
 .critedge.epil:                                   ; preds = %.critedge.epil, %.critedge.epil.preheader
-  %.06074.epil = phi ptr [ %i.aq, %.critedge.epil ], [ %.06074.epil.init, %.critedge.epil.preheader ] ; 3 uses
+  %.06074.epil = phi ptr [ %i.aq, %.critedge.epil ], [ %.06074.epil.init, %.critedge.epil.preheader ] ; 2 uses
   %epil.iter = phi i32 [ %epil.iter.next, %.critedge.epil ], [ 0, %.critedge.epil.preheader ]
-  %1 = getelementptr inbounds nuw i8, ptr %.06074.epil, i64 40
-  store i32 %i.r, ptr %1, align 8, !tbaa !46
   %i.ap = getelementptr inbounds nuw i8, ptr %.06074.epil, i64 36
-  store i32 %i.r, ptr %i.ap, align 4, !tbaa !44
+  store <2 x i32> %18, ptr %i.ap, align 4, !tbaa !3
   %i.aq = getelementptr inbounds nuw i8, ptr %.06074.epil, i64 96
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
@@ -295,40 +311,24 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 .critedge:                                        ; preds = %.critedge, %.critedge.preheader.new
-  %.06074 = phi ptr [ %i.m, %.critedge.preheader.new ], [ %i.bd, %.critedge ] ; 17 uses
+  %.06074 = phi ptr [ %i.m, %.critedge.preheader.new ], [ %i.bd, %.critedge ] ; 9 uses
   %niter = phi i32 [ 0, %.critedge.preheader.new ], [ %niter.next.7, %.critedge ]
-  %2 = getelementptr inbounds nuw i8, ptr %.06074, i64 40
-  store i32 %i.r, ptr %2, align 8, !tbaa !46
-  %3 = getelementptr inbounds nuw i8, ptr %.06074, i64 36
-  store i32 %i.r, ptr %3, align 4, !tbaa !44
-  %4 = getelementptr inbounds nuw i8, ptr %.06074, i64 136
-  store i32 %i.r, ptr %4, align 8, !tbaa !46
-  %5 = getelementptr inbounds nuw i8, ptr %.06074, i64 132
-  store i32 %i.r, ptr %5, align 4, !tbaa !44
-  %6 = getelementptr inbounds nuw i8, ptr %.06074, i64 232
-  store i32 %i.r, ptr %6, align 8, !tbaa !46
-  %7 = getelementptr inbounds nuw i8, ptr %.06074, i64 228
-  store i32 %i.r, ptr %7, align 4, !tbaa !44
-  %8 = getelementptr inbounds nuw i8, ptr %.06074, i64 328
-  store i32 %i.r, ptr %8, align 8, !tbaa !46
-  %9 = getelementptr inbounds nuw i8, ptr %.06074, i64 324
-  store i32 %i.r, ptr %9, align 4, !tbaa !44
-  %i.av = getelementptr inbounds nuw i8, ptr %.06074, i64 424
-  store i32 %i.r, ptr %i.av, align 8, !tbaa !46
-  %i.aw = getelementptr inbounds nuw i8, ptr %.06074, i64 420
-  store i32 %i.r, ptr %i.aw, align 4, !tbaa !44
-  %i.ax = getelementptr inbounds nuw i8, ptr %.06074, i64 520
-  store i32 %i.r, ptr %i.ax, align 8, !tbaa !46
-  %i.ay = getelementptr inbounds nuw i8, ptr %.06074, i64 516
-  store i32 %i.r, ptr %i.ay, align 4, !tbaa !44
-  %i.az = getelementptr inbounds nuw i8, ptr %.06074, i64 616
-  store i32 %i.r, ptr %i.az, align 8, !tbaa !46
-  %i.ba = getelementptr inbounds nuw i8, ptr %.06074, i64 612
-  store i32 %i.r, ptr %i.ba, align 4, !tbaa !44
-  %i.bb = getelementptr inbounds nuw i8, ptr %.06074, i64 712
-  store i32 %i.r, ptr %i.bb, align 8, !tbaa !46
+  %i.av = getelementptr inbounds nuw i8, ptr %.06074, i64 36
+  store <2 x i32> %2, ptr %i.av, align 4, !tbaa !3
+  %i.aw = getelementptr inbounds nuw i8, ptr %.06074, i64 132
+  store <2 x i32> %4, ptr %i.aw, align 4, !tbaa !3
+  %i.ax = getelementptr inbounds nuw i8, ptr %.06074, i64 228
+  store <2 x i32> %6, ptr %i.ax, align 4, !tbaa !3
+  %i.ay = getelementptr inbounds nuw i8, ptr %.06074, i64 324
+  store <2 x i32> %8, ptr %i.ay, align 4, !tbaa !3
+  %i.az = getelementptr inbounds nuw i8, ptr %.06074, i64 420
+  store <2 x i32> %10, ptr %i.az, align 4, !tbaa !3
+  %i.ba = getelementptr inbounds nuw i8, ptr %.06074, i64 516
+  store <2 x i32> %12, ptr %i.ba, align 4, !tbaa !3
+  %i.bb = getelementptr inbounds nuw i8, ptr %.06074, i64 612
+  store <2 x i32> %14, ptr %i.bb, align 4, !tbaa !3
   %i.bc = getelementptr inbounds nuw i8, ptr %.06074, i64 708
-  store i32 %i.r, ptr %i.bc, align 4, !tbaa !44
+  store <2 x i32> %16, ptr %i.bc, align 4, !tbaa !3
   %i.bd = getelementptr inbounds nuw i8, ptr %.06074, i64 768 ; 2 uses
   %niter.next.7 = add nuw nsw i32 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
