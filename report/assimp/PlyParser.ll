@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 
 bb.at:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.dx = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
-  %i.dy = load i64, ptr %i.dx, align 8            ; 5 uses
+  %i.dy = load i64, ptr %i.dx, align 8            ; 4 uses
   %i.dz = icmp ugt i64 %i.dw, %i.dy
   br i1 %i.dz, label %bb.au, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i
 
@@ -224,8 +224,7 @@ bb.av:                                            ; preds = %_ZNKSt7__cxx1112bas
 
 bb.aw:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i
   %i.ec = sub i64 %i.dy, %i.dw
-  %spec.select.i.i = call noundef i64 @llvm.umin.i64(i64 %i.dy, i64 %i.ec)
-  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm(ptr noundef nonnull align 8 dereferenceable(32) %i.cz, i64 noundef %i.dw, i64 noundef %spec.select.i.i)
+  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm(ptr noundef nonnull align 8 dereferenceable(32) %i.cz, i64 noundef %i.dw, i64 noundef %i.ec)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit: ; preds = %bb.aw, %bb.av, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.ai

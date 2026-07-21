@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %_ZNSt6vectorINSt7__
 
 bb.e:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.w = load ptr, ptr %i.v, align 8, !tbaa !1877 ; 7 uses
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !1877 ; 6 uses
   %i.x = ptrtoint ptr %i.w to i64
   %i.y = sub i64 %i.x, %i.e
   %i.z = sdiv exact i64 %i.y, 24                  ; 3 uses
@@ -213,7 +213,7 @@ bb.e:                                             ; preds = %bb.a
 
 bb.f:                                             ; preds = %bb.e
   %.not5.i.i.i.i = icmp eq ptr %i.c, %i.w
-  br i1 %.not5.i.i.i.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESt6vectorISC_SaISC_EEEESC_EvT_SI_RKT0_.exit, label %.lr.ph.i.i.i.i
+  br i1 %.not5.i.i.i.i, label %.lr.ph.i.i.i.i12.preheader, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.f
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -232,14 +232,10 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i.i
   store i8 %.pre.i.i.i.i, ptr %i.ag, align 8, !tbaa !1868
   %i.ah = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i.i11 = icmp eq ptr %i.ah, %i.w
-  br i1 %.not.i.i.i.i11, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESt6vectorISC_SaISC_EEEESC_EvT_SI_RKT0_.exit, label %bb.g, !llvm.loop !1878
+  br i1 %.not.i.i.i.i11, label %.lr.ph.i.i.i.i12.preheader, label %bb.g, !llvm.loop !1878
 
-_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESt6vectorISC_SaISC_EEEESC_EvT_SI_RKT0_.exit: ; preds = %bb.g, %bb.f
-  %3 = sub i64 %1, %i.z                           ; 4 uses
-  %.not7.i.i.i.i = icmp eq i64 %3, 0
-  br i1 %.not7.i.i.i.i, label %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEmSC_SC_ET_SE_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i12.preheader
-
-.lr.ph.i.i.i.i12.preheader:                       ; preds = %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESt6vectorISC_SaISC_EEEESC_EvT_SI_RKT0_.exit
+.lr.ph.i.i.i.i12.preheader:                       ; preds = %bb.g, %bb.f
+  %3 = sub i64 %1, %i.z                           ; 3 uses
   %xtraiter30 = and i64 %3, 3                     ; 2 uses
   %lcmp.mod31.not = icmp eq i64 %xtraiter30, 0
   br i1 %lcmp.mod31.not, label %.lr.ph.i.i.i.i12.prol.loopexit, label %.lr.ph.i.i.i.i12.prol
@@ -278,9 +274,9 @@ _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12ba
   %.not.i.i.i.i13.3 = icmp eq i64 %i.ap, 0
   br i1 %.not.i.i.i.i13.3, label %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEmSC_SC_ET_SE_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i12, !llvm.loop !1881
 
-_ZSt24__uninitialized_fill_n_aIPNSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEmSC_SC_ET_SE_T0_RKT1_RSaIT2_E.exit: ; preds = %.lr.ph.i.i.i.i12.prol.loopexit, %.lr.ph.i.i.i.i12, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESt6vectorISC_SaISC_EEEESC_EvT_SI_RKT0_.exit
-  %.0.lcssa.i.i.i.i = phi ptr [ %i.w, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESt6vectorISC_SaISC_EEEESC_EvT_SI_RKT0_.exit ], [ %.lcssa29.unr, %.lr.ph.i.i.i.i12.prol.loopexit ], [ %i.aq, %.lr.ph.i.i.i.i12 ]
-  store ptr %.0.lcssa.i.i.i.i, ptr %i.v, align 8, !tbaa !1877
+_ZSt24__uninitialized_fill_n_aIPNSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEmSC_SC_ET_SE_T0_RKT1_RSaIT2_E.exit: ; preds = %.lr.ph.i.i.i.i12, %.lr.ph.i.i.i.i12.prol.loopexit
+  %.lcssa28 = phi ptr [ %.lcssa29.unr, %.lr.ph.i.i.i.i12.prol.loopexit ], [ %i.aq, %.lr.ph.i.i.i.i12 ]
+  store ptr %.lcssa28, ptr %i.v, align 8, !tbaa !1877
   br label %_ZNSt6vectorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EED2Ev.exit
 
 bb.h:                                             ; preds = %bb.e
