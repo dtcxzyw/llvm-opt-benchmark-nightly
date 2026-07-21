@@ -201,7 +201,7 @@ bb.a:
   %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %19 = alloca %"class.std::allocator.10", align 1 ; 4 uses
   %i.a = bitcast i64 %2 to double
-  switch i32 %1, label %bb.bg [
+  switch i32 %1, label %.unreachabledefault [
     i32 0, label %._crit_edge.i.i
     i32 1, label %._crit_edge.i.i38
     i32 4, label %._crit_edge.i.i42
@@ -210,6 +210,7 @@ bb.a:
     i32 6, label %bb.al
     i32 7, label %bb.as
     i32 3, label %bb.az
+    i32 2, label %bb.bg
   ]
 
 ._crit_edge.i.i:                                  ; preds = %bb.a
@@ -612,9 +613,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit152: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #24
   br label %bb.bm
 
+.unreachabledefault:                              ; preds = %bb.a
+  unreachable
+
 bb.bg:                                            ; preds = %bb.a
-  %20 = icmp eq i32 %1, 2
-  tail call void @llvm.assume(i1 %20)
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #24
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %18, ptr noundef nonnull @.str.36, ptr noundef nonnull align 1 dereferenceable(1) %19)
