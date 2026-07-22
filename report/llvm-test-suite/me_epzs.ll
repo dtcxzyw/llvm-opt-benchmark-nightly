@@ -203,10 +203,11 @@ RoundLog2.exit:                                   ; preds = %.preheader
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph142, %bb.b
+  %indvars.iv157 = phi i32 [ 0, %.lr.ph142 ], [ %indvars.iv.next158, %bb.b ] ; 3 uses
   %.0141 = phi i32 [ %i.l, %.lr.ph142 ], [ %i.aj, %bb.b ] ; 3 uses
-  %.0124140 = phi i64 [ 0, %.lr.ph142 ], [ %indvars.iv.next152.1, %bb.b ] ; 3 uses
+  %3 = sext i32 %indvars.iv157 to i64             ; 2 uses
   %i.p = ashr i32 %i.m, %.0141                    ; 8 uses
-  %i.q = getelementptr [16 x i8], ptr %i.o, i64 %.0124140 ; 8 uses
+  %i.q = getelementptr [16 x i8], ptr %i.o, i64 %3 ; 8 uses
   store i32 %i.p, ptr %i.q, align 4, !tbaa !4
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 4
   store i32 0, ptr %i.r, align 4, !tbaa !4
@@ -224,7 +225,7 @@ bb.b:                                             ; preds = %.lr.ph142, %bb.b
   %i.y = getelementptr i8, ptr %i.q, i64 52
   store i32 %i.p, ptr %i.y, align 4, !tbaa !4
   %i.z = sub nsw i32 0, %i.p                      ; 5 uses
-  %i.aa = getelementptr [16 x i8], ptr %i.o, i64 %.0124140 ; 8 uses
+  %i.aa = getelementptr [16 x i8], ptr %i.o, i64 %3 ; 8 uses
   %i.ab = getelementptr i8, ptr %i.aa, i64 64
   store i32 %i.z, ptr %i.ab, align 4, !tbaa !4
   %i.ac = getelementptr i8, ptr %i.aa, i64 68
@@ -239,11 +240,11 @@ bb.b:                                             ; preds = %.lr.ph142, %bb.b
   store i32 %i.z, ptr %i.ag, align 4, !tbaa !4
   %i.ah = getelementptr i8, ptr %i.aa, i64 112
   store i32 %i.p, ptr %i.ah, align 4, !tbaa !4
-  %indvars.iv.next152.1 = add nuw nsw i64 %.0124140, 8 ; 2 uses
   %i.ai = getelementptr i8, ptr %i.aa, i64 116
   store i32 %i.z, ptr %i.ai, align 4, !tbaa !4
   %i.aj = add nsw i32 %.0141, -1
   %.not156 = icmp eq i32 %.0141, 0
+  %indvars.iv.next158 = add i32 %indvars.iv157, 8
   br i1 %.not156, label %.loopexit.loopexit, label %bb.b, !llvm.loop !36
 
 .preheader157:                                    ; preds = %bb.a, %.preheader157
@@ -266,10 +267,13 @@ RoundLog2.exit129:                                ; preds = %.preheader157
   br label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.lr.ph, %.preheader.preheader
+  %indvars.iv152 = phi i32 [ 8, %.lr.ph ], [ %indvars.iv.next153, %.preheader.preheader ] ; 3 uses
+  %indvars.iv = phi i32 [ 0, %.lr.ph ], [ %indvars.iv.next, %.preheader.preheader ] ; 2 uses
   %.1137 = phi i32 [ %i.ao, %.lr.ph ], [ %i.cq, %.preheader.preheader ] ; 3 uses
-  %.2126136 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next150.1, %.preheader.preheader ] ; 3 uses
+  %4 = sext i32 %indvars.iv152 to i64             ; 2 uses
+  %5 = sext i32 %indvars.iv to i64                ; 2 uses
   %i.as = ashr i32 %i.ap, %.1137                  ; 13 uses
-  %i.at = getelementptr [16 x i8], ptr %i.ar, i64 %.2126136 ; 8 uses
+  %i.at = getelementptr [16 x i8], ptr %i.ar, i64 %5 ; 8 uses
   store i32 %i.as, ptr %i.at, align 4, !tbaa !4
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 4
   store i32 0, ptr %i.au, align 4, !tbaa !4
@@ -287,7 +291,7 @@ RoundLog2.exit129:                                ; preds = %.preheader157
   %i.bb = getelementptr i8, ptr %i.at, i64 52
   store i32 %i.as, ptr %i.bb, align 4, !tbaa !4
   %i.bc = sub nsw i32 0, %i.as                    ; 7 uses
-  %i.bd = getelementptr [16 x i8], ptr %i.ar, i64 %.2126136 ; 8 uses
+  %i.bd = getelementptr [16 x i8], ptr %i.ar, i64 %5 ; 8 uses
   %i.be = getelementptr i8, ptr %i.bd, i64 64
   store i32 %i.bc, ptr %i.be, align 4, !tbaa !4
   %i.bf = getelementptr i8, ptr %i.bd, i64 68
@@ -308,9 +312,6 @@ RoundLog2.exit129:                                ; preds = %.preheader157
   %i.bn = add nsw i32 %i.bm, 1
   %i.bo = shl nsw i32 %i.bn, %i.d
   %i.bp = ashr i32 %i.bo, 1                       ; 7 uses
-  %3 = shl i64 %.2126136, 32
-  %sext = add i64 %3, 34359738368
-  %4 = ashr exact i64 %sext, 32                   ; 3 uses
   %i.bq = getelementptr [16 x i8], ptr %i.ar, i64 %4 ; 12 uses
   store i32 %i.bp, ptr %i.bq, align 4, !tbaa !4
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 4
@@ -359,23 +360,24 @@ RoundLog2.exit129:                                ; preds = %.preheader157
   store i32 %i.cc, ptr %i.cn, align 4, !tbaa !4
   %i.co = getelementptr i8, ptr %i.cd, i64 176
   store i32 %i.as, ptr %i.co, align 4, !tbaa !4
-  %indvars.iv.next150.1 = add nsw i64 %4, 12      ; 2 uses
   %i.cp = getelementptr i8, ptr %i.cd, i64 180
   store i32 %i.cc, ptr %i.cp, align 4, !tbaa !4
   %i.cq = add nsw i32 %.1137, -1
   %.not155 = icmp eq i32 %.1137, 0
+  %indvars.iv.next = add i32 %indvars.iv, 20
+  %indvars.iv.next153 = add i32 %indvars.iv152, 20
   br i1 %.not155, label %.loopexit.loopexit144, label %.preheader.preheader, !llvm.loop !37
 
 .loopexit.loopexit:                               ; preds = %bb.b
-  %5 = trunc nsw i64 %indvars.iv.next152.1 to i32
+  %indvars.iv.next160.1 = add i32 %indvars.iv157, 8
   br label %.loopexit
 
 .loopexit.loopexit144:                            ; preds = %.preheader.preheader
-  %6 = trunc nsw i64 %indvars.iv.next150.1 to i32
+  %indvars.iv.next155.1 = add i32 %indvars.iv152, 12
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit144, %.loopexit.loopexit, %RoundLog2.exit129, %RoundLog2.exit
-  %.5 = phi i32 [ %5, %.loopexit.loopexit ], [ 0, %RoundLog2.exit ], [ 0, %RoundLog2.exit129 ], [ %6, %.loopexit.loopexit144 ]
+  %.5 = phi i32 [ %indvars.iv.next160.1, %.loopexit.loopexit ], [ 0, %RoundLog2.exit ], [ 0, %RoundLog2.exit129 ], [ %indvars.iv.next155.1, %.loopexit.loopexit144 ]
   store i32 %.5, ptr %1, align 8, !tbaa !20
   ret void
 }
@@ -778,10 +780,11 @@ RoundLog2.exit.i:                                 ; preds = %bb.m
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %.lr.ph142.i
+  %indvars.iv157.i = phi i32 [ 0, %.lr.ph142.i ], [ %indvars.iv.next158.i, %bb.n ] ; 2 uses
   %.0141.i = phi i32 [ %i.nb, %.lr.ph142.i ], [ %i.nx, %bb.n ] ; 3 uses
-  %.0124140.i = phi i64 [ 0, %.lr.ph142.i ], [ %indvars.iv.next152.1.i, %bb.n ] ; 2 uses
+  %0 = sext i32 %indvars.iv157.i to i64
   %i.nf = ashr i32 %i.nc, %.0141.i                ; 7 uses
-  %i.ng = getelementptr [16 x i8], ptr %i.ne, i64 %.0124140.i ; 16 uses
+  %i.ng = getelementptr [16 x i8], ptr %i.ne, i64 %0 ; 16 uses
   store i32 %i.nf, ptr %i.ng, align 4, !tbaa !4
   %i.nh = getelementptr inbounds nuw i8, ptr %i.ng, i64 4
   store i32 0, ptr %i.nh, align 4, !tbaa !4
@@ -812,21 +815,20 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph142.i
   store i32 %i.nm, ptr %i.nu, align 4, !tbaa !4
   %i.nv = getelementptr i8, ptr %i.ng, i64 112
   store i32 %i.nf, ptr %i.nv, align 4, !tbaa !4
-  %indvars.iv.next152.1.i = add nuw nsw i64 %.0124140.i, 8 ; 2 uses
   %i.nw = getelementptr i8, ptr %i.ng, i64 116
   store i32 %i.nm, ptr %i.nw, align 4, !tbaa !4
   %i.nx = add nsw i32 %.0141.i, -1
   %.not156.i = icmp eq i32 %.0141.i, 0
+  %indvars.iv.next158.i = add i32 %indvars.iv157.i, 8 ; 2 uses
   br i1 %.not156.i, label %.loopexit.loopexit.i, label %bb.n, !llvm.loop !36
 
 .loopexit.loopexit.i:                             ; preds = %bb.n
-  %0 = trunc nsw i64 %indvars.iv.next152.1.i to i32
   %.pre59 = load i32, ptr %i.mq, align 4, !tbaa !52
   br label %EPZSWindowPredictorInit.exit
 
-EPZSWindowPredictorInit.exit:                     ; preds = %RoundLog2.exit.i, %.loopexit.loopexit.i
-  %i.ny = phi i32 [ %.pre59, %.loopexit.loopexit.i ], [ %i.mr, %RoundLog2.exit.i ]
-  %.5.i = phi i32 [ %0, %.loopexit.loopexit.i ], [ 0, %RoundLog2.exit.i ]
+EPZSWindowPredictorInit.exit:                     ; preds = %.loopexit.loopexit.i, %RoundLog2.exit.i
+  %i.ny = phi i32 [ %i.mr, %RoundLog2.exit.i ], [ %.pre59, %.loopexit.loopexit.i ]
+  %.5.i = phi i32 [ 0, %RoundLog2.exit.i ], [ %indvars.iv.next158.i, %.loopexit.loopexit.i ]
   store i32 %.5.i, ptr %i.ml, align 8, !tbaa !20
   %i.nz = trunc i32 %i.ny to i16
   tail call void @EPZSWindowPredictorInit(i16 noundef signext %i.nz, ptr noundef nonnull %i.mj, i16 noundef signext 1)

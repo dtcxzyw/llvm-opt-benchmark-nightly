@@ -204,14 +204,15 @@ bb.i:                                             ; preds = %bb.a
   br label %.preheader35
 
 .preheader35:                                     ; preds = %.preheader35.lr.ph, %bb.j
+  %indvars.iv = phi i64 [ 64, %.preheader35.lr.ph ], [ %indvars.iv.next, %bb.j ] ; 3 uses
   %.03041 = phi i64 [ 0, %.preheader35.lr.ph ], [ %i.aa, %bb.j ]
-  %.03140 = phi i64 [ 0, %.preheader35.lr.ph ], [ %3, %bb.j ] ; 2 uses
+  %.03140 = phi i64 [ 0, %.preheader35.lr.ph ], [ %indvars.iv, %bb.j ]
   %.03339 = phi ptr [ %i.v, %.preheader35.lr.ph ], [ %i.z, %bb.j ] ; 2 uses
   br label %bb.k
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.i
   %.033.lcssa = phi ptr [ %i.v, %bb.i ], [ %i.z, %bb.j ]
-  %.031.lcssa = phi i64 [ 0, %bb.i ], [ %3, %bb.j ] ; 2 uses
+  %.031.lcssa = phi i64 [ 0, %bb.i ], [ %indvars.iv, %bb.j ] ; 2 uses
   %.not = icmp eq i64 %i.u, 0
   br i1 %.not, label %bb.n, label %.preheader
 
@@ -226,10 +227,10 @@ bb.i:                                             ; preds = %bb.a
   br label %bb.m
 
 bb.j:                                             ; preds = %bb.k
-  %3 = add nuw i64 %.03140, 64                    ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.03339, i64 8 ; 2 uses
   store i64 %.129.3, ptr %.03339, align 8, !tbaa !252
   %i.aa = add nuw nsw i64 %.03041, 1              ; 2 uses
+  %indvars.iv.next = add i64 %indvars.iv, 64
   %exitcond48.not = icmp eq i64 %i.aa, %i.t
   br i1 %exitcond48.not, label %._crit_edge, label %.preheader35, !llvm.loop !805
 
@@ -314,23 +315,23 @@ bb.m:                                             ; preds = %bb.m, %.preheader.n
   %i.bk = shl nuw nsw i64 1, %.045
   %i.bl = select i1 %i.bj, i64 %i.bk, i64 0
   %.1 = or i64 %i.bl, %.02644
-  %i.bm = getelementptr i8, ptr %i.x, i64 %.243
-  %i.bn = getelementptr i8, ptr %i.bm, i64 1
+  %i.bm = getelementptr inbounds nuw i8, ptr %i.x, i64 %.243
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 1
   %i.bo = load i8, ptr %i.bn, align 1, !tbaa !396, !range !41, !noundef !42
   %i.bp = trunc nuw i8 %i.bo to i1
   %i.bq = shl nuw nsw i64 2, %.045
   %i.br = select i1 %i.bp, i64 %i.bq, i64 0
   %.1.1 = or i64 %i.br, %.1
-  %i.bs = getelementptr i8, ptr %i.x, i64 %.243
-  %i.bt = getelementptr i8, ptr %i.bs, i64 2
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.x, i64 %.243
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 2
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !396, !range !41, !noundef !42
   %i.bv = trunc nuw i8 %i.bu to i1
   %i.bw = shl nuw nsw i64 4, %.045
   %i.bx = select i1 %i.bv, i64 %i.bw, i64 0
   %.1.2 = or i64 %i.bx, %.1.1
   %i.by = add nsw i64 %.243, 4                    ; 2 uses
-  %i.bz = getelementptr i8, ptr %i.x, i64 %.243
-  %i.ca = getelementptr i8, ptr %i.bz, i64 3
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.x, i64 %.243
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 3
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !396, !range !41, !noundef !42
   %i.cc = trunc nuw i8 %i.cb to i1
   %i.cd = shl nuw nsw i64 8, %.045

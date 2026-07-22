@@ -204,54 +204,45 @@ bb.w:                                             ; preds = %_ZN11OpenImageIO4v3
   br label %.preheader339
 
 .preheader339:                                    ; preds = %bb.w, %bb.y
-  %indvars.iv443 = phi i64 [ 0, %bb.w ], [ %indvars.iv.next444, %bb.y ] ; 2 uses
-  %.075383 = phi i64 [ 0, %bb.w ], [ %14, %bb.y ] ; 3 uses
-  %.0321381 = phi i64 [ 0, %bb.w ], [ %15, %bb.y ]
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0231.1330, i64 %indvars.iv443
+  %.075383 = phi i64 [ 0, %bb.w ], [ %indvars.iv.next444, %bb.y ] ; 2 uses
+  %.0321381 = phi i64 [ 0, %bb.w ], [ %indvars.iv.next.a, %bb.y ]
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0231.1330, i64 %.075383
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !607
   %i.bp = ptrtoint ptr %i.bo to i64               ; 2 uses
   %i.bq = lshr i64 %i.bp, 23
   %i.br = xor i64 %i.bq, %i.bp
   %i.bs = mul i64 %i.br, 2388976653695081527      ; 2 uses
   %i.bt = lshr i64 %i.bs, 47
-  %12 = trunc i64 %.075383 to i32
-  %13 = or disjoint i32 %12, 64
   %invariant.op596 = xor i64 %i.bt, %i.bs
   br label %.preheader338
 
 bb.x:                                             ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #3
-  store i64 %15, ptr %8, align 16, !tbaa !34
+  store i64 %indvars.iv.next.a, ptr %8, align 16, !tbaa !34
   %i.bu = load ptr, ptr @stdout, align 8, !tbaa !96
   invoke void @_ZN3fmt3v126vprintEP8_IO_FILENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr noundef %i.bu, ptr nonnull @.str.77, i64 8, i64 4, ptr nonnull %8)
           to label %bb.ab unwind label %bb.ac
 
 .preheader338:                                    ; preds = %.preheader339, %bb.z
-  %indvars.iv440 = phi i64 [ 0, %.preheader339 ], [ %indvars.iv.next441, %bb.z ] ; 3 uses
-  %indvars.iv438 = phi i32 [ %13, %.preheader339 ], [ %indvars.iv.next439, %bb.z ] ; 2 uses
-  %.176380 = phi i64 [ %.075383, %.preheader339 ], [ %i.bv, %bb.z ] ; 2 uses
-  %.1322378 = phi i64 [ %.0321381, %.preheader339 ], [ %15, %bb.z ]
-  %invariant.op = mul nuw nsw i64 %indvars.iv440, 4294967808
+  %.176380 = phi i64 [ 0, %.preheader339 ], [ %i.bv, %bb.z ] ; 3 uses
+  %.1322378 = phi i64 [ %.0321381, %.preheader339 ], [ %indvars.iv.next.a, %bb.z ]
+  %invariant.op = mul nuw nsw i64 %.176380, 4294967808
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.z
-  %14 = add nuw nsw i64 %.075383, 4096
-  %indvars.iv.next444 = add nuw nsw i64 %indvars.iv443, 1 ; 2 uses
+  %indvars.iv.next444 = add nuw nsw i64 %.075383, 1 ; 2 uses
   %exitcond446.not = icmp eq i64 %indvars.iv.next444, 244
   br i1 %exitcond446.not, label %bb.x, label %.preheader339, !llvm.loop !625
 
 bb.z:                                             ; preds = %bb.aa
-  %i.bv = add i64 %.176380, 64
-  %indvars.iv.next441 = add nuw nsw i64 %indvars.iv440, 64
-  %i.bw = icmp samesign ult i64 %indvars.iv440, 4032
-  %indvars.iv.next439 = add i32 %indvars.iv438, 64
+  %i.bv = add nuw nsw i64 %.176380, 64
+  %i.bw = icmp samesign ult i64 %.176380, 4032
   br i1 %i.bw, label %.preheader338, label %bb.y, !llvm.loop !626
 
 bb.aa:                                            ; preds = %.preheader338, %bb.aa
-  %indvars.iv = phi i64 [ 0, %.preheader338 ], [ %indvars.iv.next.a, %bb.aa ] ; 2 uses
-  %.277377 = phi i64 [ %.176380, %.preheader338 ], [ %i.ck, %bb.aa ]
-  %.2323375 = phi i64 [ %.1322378, %.preheader338 ], [ %15, %bb.aa ]
-  %.reass = add nuw nsw i64 %invariant.op, %indvars.iv
+  %.277377 = phi i64 [ 0, %.preheader338 ], [ %i.ck, %bb.aa ] ; 3 uses
+  %.2323375 = phi i64 [ %.1322378, %.preheader338 ], [ %indvars.iv.next.a, %bb.aa ]
+  %.reass = add nuw nsw i64 %invariant.op, %.277377
   %i.bx = mul i64 %.reass, 2388976653695081527    ; 2 uses
   %i.by = lshr i64 %i.bx, 47
   %i.bz = xor i64 %i.bx, %i.by
@@ -266,12 +257,10 @@ bb.aa:                                            ; preds = %.preheader338, %bb.
   %i.ch = mul i64 %i.cg, 2388976653695081527      ; 2 uses
   %i.ci = lshr i64 %i.ch, 47
   %i.cj = xor i64 %i.ci, %i.ch
-  %15 = add i64 %i.cj, %.2323375                  ; 4 uses
-  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 64
-  %i.ck = add i64 %.277377, 1                     ; 2 uses
-  %lftr.wideiv = trunc i64 %i.ck to i32
-  %exitcond.not = icmp eq i32 %indvars.iv438, %lftr.wideiv
-  br i1 %exitcond.not, label %bb.z, label %bb.aa, !llvm.loop !627
+  %indvars.iv.next.a = add i64 %i.cj, %.2323375   ; 4 uses
+  %i.ck = add nuw nsw i64 %.277377, 64
+  %12 = icmp samesign ult i64 %.277377, 4032
+  br i1 %12, label %bb.aa, label %bb.z, !llvm.loop !627
 
 bb.ab:                                            ; preds = %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #3
@@ -301,17 +290,14 @@ _ZN3fmt3v125printIJRdEEEvNS0_7fstringIJDpT_EE1tEDpOS4_.exit: ; preds = %bb.ab
   br label %.preheader337
 
 .preheader337:                                    ; preds = %_ZN3fmt3v125printIJRdEEEvNS0_7fstringIJDpT_EE1tEDpOS4_.exit, %bb.ae
-  %indvars.iv457 = phi i64 [ 0, %_ZN3fmt3v125printIJRdEEEvNS0_7fstringIJDpT_EE1tEDpOS4_.exit ], [ %indvars.iv.next458.a, %bb.ae ] ; 2 uses
-  %.378392 = phi i64 [ 0, %_ZN3fmt3v125printIJRdEEEvNS0_7fstringIJDpT_EE1tEDpOS4_.exit ], [ %18, %bb.ae ] ; 3 uses
-  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0231.1330, i64 %indvars.iv457
+  %.378392 = phi i64 [ 0, %_ZN3fmt3v125printIJRdEEEvNS0_7fstringIJDpT_EE1tEDpOS4_.exit ], [ %indvars.iv.next458.a, %bb.ae ] ; 2 uses
+  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0231.1330, i64 %.378392
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !607
   %i.cz = ptrtoint ptr %i.cy to i64               ; 2 uses
   %i.da = lshr i64 %i.cz, 23
   %i.db = xor i64 %i.da, %i.cz
   %i.dc = mul i64 %i.db, 2388976653695081527      ; 2 uses
   %i.dd = lshr i64 %i.dc, 47
-  %16 = trunc i64 %.378392 to i32
-  %17 = or disjoint i32 %16, 64
   %invariant.op597 = xor i64 %i.dd, %i.dc
   br label %.preheader336
 
@@ -326,15 +312,12 @@ bb.ad:                                            ; preds = %bb.ab
   br label %_ZN11OpenImageIO4v3_15TimerD2Ev.exit153
 
 .preheader336:                                    ; preds = %.preheader337, %bb.af
-  %indvars.iv454 = phi i64 [ 0, %.preheader337 ], [ %indvars.iv.next455, %bb.af ] ; 3 uses
-  %indvars.iv450 = phi i32 [ %17, %.preheader337 ], [ %indvars.iv.next451, %bb.af ] ; 2 uses
-  %.479390 = phi i64 [ %.378392, %.preheader337 ], [ %i.en, %bb.af ] ; 2 uses
-  %invariant.op384 = mul nuw nsw i64 %indvars.iv454, 4294967808
+  %.479390 = phi i64 [ 0, %.preheader337 ], [ %i.en, %bb.af ] ; 3 uses
+  %invariant.op384 = mul nuw nsw i64 %.479390, 4294967808
   br label %bb.ag
 
 bb.ae:                                            ; preds = %bb.af
-  %18 = add nuw nsw i64 %.378392, 4096
-  %indvars.iv.next458.a = add nuw nsw i64 %indvars.iv457, 1 ; 2 uses
+  %indvars.iv.next458.a = add nuw nsw i64 %.378392, 1 ; 2 uses
   %exitcond460.not = icmp eq i64 %indvars.iv.next458.a, 244
   br i1 %exitcond460.not, label %.preheader.preheader, label %.preheader337, !llvm.loop !628
 
@@ -409,16 +392,13 @@ bb.ae:                                            ; preds = %bb.af
           to label %bb.ah unwind label %bb.aj
 
 bb.af:                                            ; preds = %bb.ag
-  %i.en = add i64 %.479390, 64
-  %indvars.iv.next455 = add nuw nsw i64 %indvars.iv454, 64
-  %i.eo = icmp samesign ult i64 %indvars.iv454, 4032
-  %indvars.iv.next451 = add i32 %indvars.iv450, 64
+  %i.en = add nuw nsw i64 %.479390, 64
+  %i.eo = icmp samesign ult i64 %.479390, 4032
   br i1 %i.eo, label %.preheader336, label %bb.ae, !llvm.loop !629
 
 bb.ag:                                            ; preds = %.preheader336, %bb.ag
-  %indvars.iv447 = phi i64 [ 0, %.preheader336 ], [ %indvars.iv.next448, %bb.ag ] ; 2 uses
-  %.580388 = phi i64 [ %.479390, %.preheader336 ], [ %i.ft, %bb.ag ]
-  %.reass385 = add nuw nsw i64 %invariant.op384, %indvars.iv447
+  %.580388 = phi i64 [ 0, %.preheader336 ], [ %i.ft, %bb.ag ] ; 3 uses
+  %.reass385 = add nuw nsw i64 %invariant.op384, %.580388
   %i.ep = mul i64 %.reass385, 2388976653695081527 ; 2 uses
   %i.eq = lshr i64 %i.ep, 47
   %i.er = xor i64 %i.ep, %i.eq
@@ -454,11 +434,9 @@ bb.ag:                                            ; preds = %.preheader336, %bb.
   %i.fr = load i64, ptr %i.fq, align 8, !tbaa !110
   %i.fs = add i64 %i.fr, 1
   store i64 %i.fs, ptr %i.fq, align 8, !tbaa !110
-  %indvars.iv.next448 = add nuw nsw i64 %indvars.iv447, 64
-  %i.ft = add i64 %.580388, 1                     ; 2 uses
-  %lftr.wideiv452 = trunc i64 %i.ft to i32
-  %exitcond453.not = icmp eq i32 %indvars.iv450, %lftr.wideiv452
-  br i1 %exitcond453.not, label %bb.af, label %bb.ag, !llvm.loop !630
+  %i.ft = add nuw nsw i64 %.580388, 64
+  %13 = icmp samesign ult i64 %.580388, 4032
+  br i1 %13, label %bb.ag, label %bb.af, !llvm.loop !630
 
 bb.ah:                                            ; preds = %.preheader.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #3

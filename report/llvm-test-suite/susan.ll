@@ -203,15 +203,12 @@ bb.f:                                             ; preds = %bb.e
   %narrow = sub nsw i32 0, %.0173
   %i.ak = sext i32 %narrow to i64
   %i.al = sext i32 %i.z to i64
-  %6 = add i32 %.0173, %i.h                       ; 2 uses
-  %i.am = add i32 %6, 1                           ; 2 uses
-  %7 = zext i32 %i.am to i64
-  %8 = add nuw nsw i64 %7, 1                      ; 2 uses
-  %9 = sext i32 %.0173 to i64
-  %xtraiter = and i32 %6, 1
+  %6 = sext i32 %.0173 to i64
+  %i.am = add i32 %.0173, %i.h                    ; 2 uses
+  %xtraiter = and i32 %i.am, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   %i.an = sub i32 0, %i.h
-  %i.ao = icmp eq i32 %i.am, 0
+  %i.ao = icmp eq i32 %i.am, -1
   br label %.preheader257
 
 bb.g:                                             ; preds = %.preheader259, %bb.g
@@ -257,7 +254,7 @@ bb.g:                                             ; preds = %.preheader259, %bb.
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph300, %bb.j
-  %indvars.iv316 = phi i64 [ %9, %.lr.ph300 ], [ %indvars.iv.next317, %bb.j ] ; 5 uses
+  %indvars.iv316 = phi i64 [ %6, %.lr.ph300 ], [ %indvars.iv.next317, %bb.j ] ; 5 uses
   %i.bi = phi i32 [ %i.bc, %.lr.ph300 ], [ %i.ez, %bb.j ] ; 4 uses
   %.1175299 = phi ptr [ %.0174304, %.lr.ph300 ], [ %.2, %bb.j ] ; 2 uses
   %i.bj = load ptr, ptr %i.a, align 8, !tbaa !11  ; 4 uses
@@ -281,17 +278,17 @@ bb.h:                                             ; preds = %.lr.ph300, %bb.j
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge283
   %.0293 = phi i32 [ %.lcssa, %._crit_edge283 ], [ 0, %.preheader.preheader ] ; 2 uses
-  %.2178292 = phi ptr [ %scevgep313, %._crit_edge283 ], [ %i.ac, %.preheader.preheader ] ; 4 uses
-  %.0183291 = phi ptr [ %i.ds, %._crit_edge283 ], [ %i.bw, %.preheader.preheader ] ; 4 uses
-  %.0185290 = phi i32 [ %.lcssa352, %._crit_edge283 ], [ 0, %.preheader.preheader ] ; 2 uses
+  %.2178292 = phi ptr [ %.lcssa356, %._crit_edge283 ], [ %i.ac, %.preheader.preheader ] ; 3 uses
+  %.0183291 = phi ptr [ %i.ds, %._crit_edge283 ], [ %i.bw, %.preheader.preheader ] ; 3 uses
+  %.0185290 = phi i32 [ %.lcssa355, %._crit_edge283 ], [ 0, %.preheader.preheader ] ; 2 uses
   %.0187289 = phi i32 [ %i.dt, %._crit_edge283 ], [ %i.af, %.preheader.preheader ] ; 2 uses
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.preheader
-  %i.bx = getelementptr inbounds nuw i8, ptr %.0183291, i64 1
+  %i.bx = getelementptr inbounds nuw i8, ptr %.0183291, i64 1 ; 2 uses
   %i.by = load i8, ptr %.0183291, align 1, !tbaa !18 ; 2 uses
   %i.bz = zext i8 %i.by to i32
-  %i.ca = getelementptr inbounds nuw i8, ptr %.2178292, i64 1
+  %i.ca = getelementptr inbounds nuw i8, ptr %.2178292, i64 1 ; 2 uses
   %i.cb = load i8, ptr %.2178292, align 1, !tbaa !18
   %i.cc = zext i8 %i.cb to i32
   %i.cd = zext i8 %i.by to i64
@@ -306,6 +303,8 @@ bb.h:                                             ; preds = %.lr.ph300, %bb.j
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.preheader
+  %.lcssa357.unr = phi ptr [ poison, %.preheader ], [ %i.bx, %.prol.loopexit.unr-lcssa ]
+  %.lcssa356.unr = phi ptr [ poison, %.preheader ], [ %i.ca, %.prol.loopexit.unr-lcssa ]
   %.lcssa352.unr = phi i32 [ poison, %.preheader ], [ %i.cj, %.prol.loopexit.unr-lcssa ]
   %.lcssa.unr = phi i32 [ poison, %.preheader ], [ %i.cl, %.prol.loopexit.unr-lcssa ]
   %.1281.unr = phi i32 [ %.0293, %.preheader ], [ %i.cl, %.prol.loopexit.unr-lcssa ]
@@ -337,10 +336,10 @@ bb.h:                                             ; preds = %.lr.ph300, %bb.j
   %i.cz = mul nuw nsw i32 %i.cx, %i.co
   %i.da = add nsw i32 %i.cz, %.1281
   %i.db = add i32 %.0188277, 1
-  %i.dc = getelementptr inbounds nuw i8, ptr %.1184279, i64 2
+  %i.dc = getelementptr inbounds nuw i8, ptr %.1184279, i64 2 ; 2 uses
   %i.dd = load i8, ptr %i.cm, align 1, !tbaa !18  ; 2 uses
   %i.de = zext i8 %i.dd to i32
-  %i.df = getelementptr inbounds nuw i8, ptr %.3179280, i64 2
+  %i.df = getelementptr inbounds nuw i8, ptr %.3179280, i64 2 ; 2 uses
   %i.dg = load i8, ptr %i.cp, align 1, !tbaa !18
   %i.dh = zext i8 %i.dg to i32
   %i.di = zext i8 %i.dd to i64
@@ -357,17 +356,17 @@ bb.h:                                             ; preds = %.lr.ph300, %bb.j
   br i1 %exitcond314.not.1, label %._crit_edge283, label %.preheader.new, !llvm.loop !31
 
 ._crit_edge283:                                   ; preds = %.preheader.new, %.prol.loopexit
-  %.lcssa352 = phi i32 [ %.lcssa352.unr, %.prol.loopexit ], [ %i.do, %.preheader.new ] ; 2 uses
+  %.lcssa357 = phi ptr [ %.lcssa357.unr, %.prol.loopexit ], [ %i.dc, %.preheader.new ]
+  %.lcssa356 = phi ptr [ %.lcssa356.unr, %.prol.loopexit ], [ %i.df, %.preheader.new ]
+  %.lcssa355 = phi i32 [ %.lcssa352.unr, %.prol.loopexit ], [ %i.do, %.preheader.new ] ; 2 uses
   %.lcssa = phi i32 [ %.lcssa.unr, %.prol.loopexit ], [ %i.dq, %.preheader.new ] ; 2 uses
-  %scevgep = getelementptr i8, ptr %.0183291, i64 %8
-  %scevgep313 = getelementptr i8, ptr %.2178292, i64 %8
-  %i.ds = getelementptr inbounds i8, ptr %scevgep, i64 %i.al
+  %i.ds = getelementptr inbounds i8, ptr %.lcssa357, i64 %i.al
   %i.dt = add i32 %.0187289, 1
   %exitcond315.not = icmp eq i32 %.0187289, %.0173
   br i1 %exitcond315.not, label %._crit_edge294.split, label %.preheader, !llvm.loop !32
 
 ._crit_edge294.split:                             ; preds = %._crit_edge283
-  %i.du = add nsw i32 %.lcssa352, -10000          ; 2 uses
+  %i.du = add nsw i32 %.lcssa355, -10000          ; 2 uses
   %i.dv = icmp eq i32 %i.du, 0
   br i1 %i.dv, label %bb.i, label %._crit_edge294.split.thread
 

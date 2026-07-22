@@ -203,8 +203,8 @@ bb.x:                                             ; preds = %bb.v
   br label %.loopexit210.i
 
 .loopexit210.i:                                   ; preds = %.preheader211.i.preheader, %.lr.ph.preheader.i, %bb.x, %bb.w
-  %i.fs = phi i32 [ %i.fo, %bb.x ], [ %i.fo, %.lr.ph.preheader.i ], [ %i.fj, %bb.w ], [ %i.fj, %.preheader211.i.preheader ]
-  %i.ft = phi i32 [ 0, %bb.x ], [ 0, %.lr.ph.preheader.i ], [ 1, %bb.w ], [ 1, %.preheader211.i.preheader ]
+  %i.fs = phi i32 [ %i.fj, %.preheader211.i.preheader ], [ %i.fo, %.lr.ph.preheader.i ], [ %i.fo, %bb.x ], [ %i.fj, %bb.w ]
+  %i.ft = phi i32 [ 1, %.preheader211.i.preheader ], [ 0, %.lr.ph.preheader.i ], [ 0, %bb.x ], [ 1, %bb.w ]
   %i.fu = load i32, ptr %i.ev, align 8, !tbaa !67
   %.not190231.i = icmp slt i32 %i.fu, 1
   br i1 %.not190231.i, label %._crit_edge238.i, label %.lr.ph237.i
@@ -572,6 +572,7 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb
 ._crit_edge238.i:                                 ; preds = %._crit_edge238.loopexit.i, %.loopexit210.i
   %i.ko = phi i32 [ %.pre44, %._crit_edge238.loopexit.i ], [ %i.fs, %.loopexit210.i ] ; 3 uses
   %i.kp = phi i32 [ %.pre.i33.a, %._crit_edge238.loopexit.i ], [ %i.ft, %.loopexit210.i ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 300
   %.not191.i = icmp eq i32 %i.kp, 0
   %i.kq = icmp sgt i32 %i.ko, 0                   ; 2 uses
   br i1 %.not191.i, label %.preheader.i, label %.preheader206.i
@@ -639,8 +640,7 @@ bb.bh:                                            ; preds = %bb.bg, %.lr.ph242.i
 .loopexit:                                        ; preds = %bb.bf, %bb.bh, %.preheader.i, %.preheader206.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 300
-  %.pre45 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !72
+  %.pre45 = load i32, ptr %2, align 4, !tbaa !72
   %i.ll = icmp eq i32 %.pre45, 0
   br i1 %i.ll, label %bb.bj, label %bb.bi
 

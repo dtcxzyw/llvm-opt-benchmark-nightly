@@ -204,27 +204,36 @@ bb.ac:                                            ; preds = %.lr.ph1245, %bb.ac
   br i1 %exitcond1408.not, label %.loopexit1027, label %bb.ac, !llvm.loop !84
 
 bb.ad:                                            ; preds = %bb.ab
-  %i.hk = shl nsw i32 %i.gx, 2                    ; 2 uses
+  %i.hk = shl i32 %i.gx, 2                        ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #19
-  %.promoted10.i = load ptr, ptr %0, align 8      ; 2 uses
+  %.promoted10.i = load ptr, ptr %0, align 8      ; 5 uses
   %i.hl = icmp sgt i32 %i.gx, 255
   br i1 %i.hl, label %vector.memcheck2082, label %._crit_edge.i
 
-vector.memcheck2082:                              ; preds = %bb.ad, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i
-  %.013.i = phi i32 [ %i.im, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i ], [ %i.hk, %bb.ad ] ; 2 uses
-  %.promoted1112.i = phi ptr [ %.lcssa, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i ], [ %.promoted10.i, %bb.ad ] ; 10 uses
-  %scevgep2084 = getelementptr i8, ptr %.promoted1112.i, i64 1024 ; 2 uses
+vector.memcheck2082:                              ; preds = %bb.ad
+  %scevgep2099 = getelementptr i8, ptr %.promoted10.i, i64 1024
+  %20 = add i32 %i.hk, 1023
+  %smin2100 = call i32 @llvm.smin.i32(i32 %i.hk, i32 2047)
+  %21 = sub i32 %20, %smin2100
+  %22 = and i32 %21, -1024
+  %23 = zext i32 %22 to i64
+  %scevgep2084 = getelementptr i8, ptr %scevgep2099, i64 %23 ; 2 uses
   %bound02088 = icmp ult ptr %0, %scevgep2084
-  %bound12089 = icmp ult ptr %.promoted1112.i, %scevgep2048
+  %bound12089 = icmp ult ptr %.promoted10.i, %scevgep2048
   %found.conflict2090 = and i1 %bound02088, %bound12089
   %conflict.rdx2091 = or i1 %found.conflict2087, %found.conflict2090
   %bound02092 = icmp ult ptr %i.i, %scevgep2084
-  %bound12093 = icmp ult ptr %.promoted1112.i, %scevgep2083
+  %bound12093 = icmp ult ptr %.promoted10.i, %scevgep2083
   %found.conflict2094 = and i1 %bound02092, %bound12093
   %conflict.rdx2095 = or i1 %conflict.rdx2091, %found.conflict2094
+  br label %vector.memcheck2097
+
+vector.memcheck2097:                              ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i, %vector.memcheck2082
+  %.013.i = phi i32 [ %i.im, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i ], [ %i.hk, %vector.memcheck2082 ] ; 2 uses
+  %.promoted1112.i = phi ptr [ %.lcssa, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i ], [ %.promoted10.i, %vector.memcheck2082 ] ; 7 uses
   br i1 %conflict.rdx2095, label %.lr.ph.i.i, label %vector.ph2097
 
-vector.ph2097:                                    ; preds = %vector.memcheck2082
+vector.ph2097:                                    ; preds = %vector.memcheck2097
   %i.hm = getelementptr i8, ptr %.promoted1112.i, i64 1024
   br label %vector.body2098
 
@@ -275,10 +284,10 @@ middle.block2106:                                 ; preds = %vector.body2098
   store ptr %i.hx, ptr %0, align 8, !tbaa !49, !alias.scope !91, !noalias !93
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i
 
-.lr.ph.i.i:                                       ; preds = %vector.memcheck2082, %.lr.ph.i.i
-  %i.hy = phi ptr [ %i.ij, %.lr.ph.i.i ], [ %.promoted1112.i, %vector.memcheck2082 ] ; 5 uses
-  %.05.i.i = phi i32 [ %i.ii, %.lr.ph.i.i ], [ 1024, %vector.memcheck2082 ]
-  %.024.i.i = phi ptr [ %i.il, %.lr.ph.i.i ], [ %i.i, %vector.memcheck2082 ] ; 5 uses
+.lr.ph.i.i:                                       ; preds = %vector.memcheck2097, %.lr.ph.i.i
+  %i.hy = phi ptr [ %i.ij, %.lr.ph.i.i ], [ %.promoted1112.i, %vector.memcheck2097 ] ; 5 uses
+  %.05.i.i = phi i32 [ %i.ii, %.lr.ph.i.i ], [ 1024, %vector.memcheck2097 ]
+  %.024.i.i = phi ptr [ %i.il, %.lr.ph.i.i ], [ %i.i, %vector.memcheck2097 ] ; 5 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hy, i64 1 ; 2 uses
   store ptr %i.hz, ptr %0, align 8, !tbaa !49
   %i.ia = load i8, ptr %i.hy, align 1, !tbaa !51
@@ -307,7 +316,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i: ; preds = %
   %.lcssa = phi ptr [ %i.hm, %middle.block2106 ], [ %i.ij, %.lr.ph.i.i ] ; 2 uses
   %i.im = add nsw i32 %.013.i, -1024              ; 2 uses
   %i.in = icmp sgt i32 %.013.i, 2047
-  br i1 %i.in, label %vector.memcheck2082, label %._crit_edge.i, !llvm.loop !95
+  br i1 %i.in, label %vector.memcheck2097, label %._crit_edge.i, !llvm.loop !95
 
 ._crit_edge.i:                                    ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i, %bb.ad
   %.promoted.i768 = phi ptr [ %.promoted10.i, %bb.ad ], [ %.lcssa, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i ] ; 8 uses
@@ -475,27 +484,36 @@ bb.ae:                                            ; preds = %.lr.ph1242, %.loope
   br i1 %exitcond1402.not, label %.loopexit1031, label %.lr.ph1239, !llvm.loop !108
 
 bb.af:                                            ; preds = %bb.ae
-  %i.km = shl nsw i32 %i.kd, 1                    ; 2 uses
+  %i.km = shl i32 %i.kd, 1                        ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #19
-  %.promoted10.i775 = load ptr, ptr %0, align 8   ; 2 uses
+  %.promoted10.i775 = load ptr, ptr %0, align 8   ; 5 uses
   %i.kn = icmp sgt i32 %i.kd, 511
   br i1 %i.kn, label %vector.memcheck2022, label %._crit_edge.i776
 
-vector.memcheck2022:                              ; preds = %bb.af, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i790
-  %.013.i784 = phi i32 [ %i.lo, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i790 ], [ %i.km, %bb.af ] ; 2 uses
-  %.promoted1112.i785 = phi ptr [ %.lcssa1567, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i790 ], [ %.promoted10.i775, %bb.af ] ; 10 uses
-  %scevgep2024 = getelementptr i8, ptr %.promoted1112.i785, i64 1024 ; 2 uses
+vector.memcheck2022:                              ; preds = %bb.af
+  %scevgep2037 = getelementptr i8, ptr %.promoted10.i775, i64 1024
+  %24 = add i32 %i.km, 1023
+  %smin2038 = call i32 @llvm.smin.i32(i32 %i.km, i32 2047)
+  %25 = sub i32 %24, %smin2038
+  %26 = and i32 %25, -1024
+  %27 = zext i32 %26 to i64
+  %scevgep2024 = getelementptr i8, ptr %scevgep2037, i64 %27 ; 2 uses
   %bound02028 = icmp ult ptr %0, %scevgep2024
-  %bound12029 = icmp ult ptr %.promoted1112.i785, %scevgep1988
+  %bound12029 = icmp ult ptr %.promoted10.i775, %scevgep1988
   %found.conflict2030 = and i1 %bound02028, %bound12029
   %conflict.rdx2031 = or i1 %found.conflict2027, %found.conflict2030
   %bound02032 = icmp ult ptr %i.h, %scevgep2024
-  %bound12033 = icmp ult ptr %.promoted1112.i785, %scevgep2023
+  %bound12033 = icmp ult ptr %.promoted10.i775, %scevgep2023
   %found.conflict2034 = and i1 %bound02032, %bound12033
   %conflict.rdx2035 = or i1 %conflict.rdx2031, %found.conflict2034
+  br label %vector.memcheck2035
+
+vector.memcheck2035:                              ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i790, %vector.memcheck2022
+  %.013.i784 = phi i32 [ %i.lo, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i790 ], [ %i.km, %vector.memcheck2022 ] ; 2 uses
+  %.promoted1112.i785 = phi ptr [ %.lcssa1567, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i790 ], [ %.promoted10.i775, %vector.memcheck2022 ] ; 7 uses
   br i1 %conflict.rdx2035, label %.lr.ph.i.i786, label %vector.ph2037
 
-vector.ph2037:                                    ; preds = %vector.memcheck2022
+vector.ph2037:                                    ; preds = %vector.memcheck2035
   %i.ko = getelementptr i8, ptr %.promoted1112.i785, i64 1024
   br label %vector.body2038
 
@@ -546,10 +564,10 @@ middle.block2046:                                 ; preds = %vector.body2038
   store ptr %i.kz, ptr %0, align 8, !tbaa !49, !alias.scope !115, !noalias !117
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i790
 
-.lr.ph.i.i786:                                    ; preds = %vector.memcheck2022, %.lr.ph.i.i786
-  %i.la = phi ptr [ %i.ll, %.lr.ph.i.i786 ], [ %.promoted1112.i785, %vector.memcheck2022 ] ; 5 uses
-  %.05.i.i787 = phi i32 [ %i.lk, %.lr.ph.i.i786 ], [ 1024, %vector.memcheck2022 ]
-  %.024.i.i788 = phi ptr [ %i.ln, %.lr.ph.i.i786 ], [ %i.h, %vector.memcheck2022 ] ; 5 uses
+.lr.ph.i.i786:                                    ; preds = %vector.memcheck2035, %.lr.ph.i.i786
+  %i.la = phi ptr [ %i.ll, %.lr.ph.i.i786 ], [ %.promoted1112.i785, %vector.memcheck2035 ] ; 5 uses
+  %.05.i.i787 = phi i32 [ %i.lk, %.lr.ph.i.i786 ], [ 1024, %vector.memcheck2035 ]
+  %.024.i.i788 = phi ptr [ %i.ln, %.lr.ph.i.i786 ], [ %i.h, %vector.memcheck2035 ] ; 5 uses
   %i.lb = getelementptr inbounds nuw i8, ptr %i.la, i64 1 ; 2 uses
   store ptr %i.lb, ptr %0, align 8, !tbaa !49
   %i.lc = load i8, ptr %i.la, align 1, !tbaa !51
@@ -578,7 +596,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i790: ; preds 
   %.lcssa1567 = phi ptr [ %i.ko, %middle.block2046 ], [ %i.ll, %.lr.ph.i.i786 ] ; 2 uses
   %i.lo = add nsw i32 %.013.i784, -1024           ; 2 uses
   %i.lp = icmp sgt i32 %.013.i784, 2047
-  br i1 %i.lp, label %vector.memcheck2022, label %._crit_edge.i776, !llvm.loop !95
+  br i1 %i.lp, label %vector.memcheck2035, label %._crit_edge.i776, !llvm.loop !95
 
 ._crit_edge.i776:                                 ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i790, %bb.af
   %.promoted.i777 = phi ptr [ %.promoted10.i775, %bb.af ], [ %.lcssa1567, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i790 ] ; 8 uses
@@ -759,27 +777,36 @@ bb.ag:                                            ; preds = %.lr.ph1236, %.loope
   br i1 %exitcond1396.not, label %.loopexit1035, label %.lr.ph1233, !llvm.loop !131
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.nt = shl nsw i32 %i.nf, 2                    ; 2 uses
+  %i.nt = shl i32 %i.nf, 2                        ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #19
-  %.promoted10.i803 = load ptr, ptr %0, align 8   ; 2 uses
+  %.promoted10.i803 = load ptr, ptr %0, align 8   ; 5 uses
   %i.nu = icmp sgt i32 %i.nf, 255
   br i1 %i.nu, label %vector.memcheck1962, label %._crit_edge.i804
 
-vector.memcheck1962:                              ; preds = %bb.ah, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i818
-  %.013.i812 = phi i32 [ %i.ov, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i818 ], [ %i.nt, %bb.ah ] ; 2 uses
-  %.promoted1112.i813 = phi ptr [ %.lcssa1569, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i818 ], [ %.promoted10.i803, %bb.ah ] ; 10 uses
-  %scevgep1964 = getelementptr i8, ptr %.promoted1112.i813, i64 1024 ; 2 uses
+vector.memcheck1962:                              ; preds = %bb.ah
+  %scevgep1975 = getelementptr i8, ptr %.promoted10.i803, i64 1024
+  %28 = add i32 %i.nt, 1023
+  %smin1976 = call i32 @llvm.smin.i32(i32 %i.nt, i32 2047)
+  %29 = sub i32 %28, %smin1976
+  %30 = and i32 %29, -1024
+  %31 = zext i32 %30 to i64
+  %scevgep1964 = getelementptr i8, ptr %scevgep1975, i64 %31 ; 2 uses
   %bound01968 = icmp ult ptr %0, %scevgep1964
-  %bound11969 = icmp ult ptr %.promoted1112.i813, %scevgep1928
+  %bound11969 = icmp ult ptr %.promoted10.i803, %scevgep1928
   %found.conflict1970 = and i1 %bound01968, %bound11969
   %conflict.rdx1971 = or i1 %found.conflict1967, %found.conflict1970
   %bound01972 = icmp ult ptr %i.g, %scevgep1964
-  %bound11973 = icmp ult ptr %.promoted1112.i813, %scevgep1963
+  %bound11973 = icmp ult ptr %.promoted10.i803, %scevgep1963
   %found.conflict1974 = and i1 %bound01972, %bound11973
   %conflict.rdx1975 = or i1 %conflict.rdx1971, %found.conflict1974
+  br label %vector.memcheck1973
+
+vector.memcheck1973:                              ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i818, %vector.memcheck1962
+  %.013.i812 = phi i32 [ %i.ov, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i818 ], [ %i.nt, %vector.memcheck1962 ] ; 2 uses
+  %.promoted1112.i813 = phi ptr [ %.lcssa1569, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i818 ], [ %.promoted10.i803, %vector.memcheck1962 ] ; 7 uses
   br i1 %conflict.rdx1975, label %.lr.ph.i.i814, label %vector.ph1977
 
-vector.ph1977:                                    ; preds = %vector.memcheck1962
+vector.ph1977:                                    ; preds = %vector.memcheck1973
   %i.nv = getelementptr i8, ptr %.promoted1112.i813, i64 1024
   br label %vector.body1978
 
@@ -830,10 +857,10 @@ middle.block1986:                                 ; preds = %vector.body1978
   store ptr %i.og, ptr %0, align 8, !tbaa !49, !alias.scope !138, !noalias !140
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i818
 
-.lr.ph.i.i814:                                    ; preds = %vector.memcheck1962, %.lr.ph.i.i814
-  %i.oh = phi ptr [ %i.os, %.lr.ph.i.i814 ], [ %.promoted1112.i813, %vector.memcheck1962 ] ; 5 uses
-  %.05.i.i815 = phi i32 [ %i.or, %.lr.ph.i.i814 ], [ 1024, %vector.memcheck1962 ]
-  %.024.i.i816 = phi ptr [ %i.ou, %.lr.ph.i.i814 ], [ %i.g, %vector.memcheck1962 ] ; 5 uses
+.lr.ph.i.i814:                                    ; preds = %vector.memcheck1973, %.lr.ph.i.i814
+  %i.oh = phi ptr [ %i.os, %.lr.ph.i.i814 ], [ %.promoted1112.i813, %vector.memcheck1973 ] ; 5 uses
+  %.05.i.i815 = phi i32 [ %i.or, %.lr.ph.i.i814 ], [ 1024, %vector.memcheck1973 ]
+  %.024.i.i816 = phi ptr [ %i.ou, %.lr.ph.i.i814 ], [ %i.g, %vector.memcheck1973 ] ; 5 uses
   %i.oi = getelementptr inbounds nuw i8, ptr %i.oh, i64 1 ; 2 uses
   store ptr %i.oi, ptr %0, align 8, !tbaa !49
   %i.oj = load i8, ptr %i.oh, align 1, !tbaa !51
@@ -862,7 +889,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i818: ; preds 
   %.lcssa1569 = phi ptr [ %i.nv, %middle.block1986 ], [ %i.os, %.lr.ph.i.i814 ] ; 2 uses
   %i.ov = add nsw i32 %.013.i812, -1024           ; 2 uses
   %i.ow = icmp sgt i32 %.013.i812, 2047
-  br i1 %i.ow, label %vector.memcheck1962, label %._crit_edge.i804, !llvm.loop !95
+  br i1 %i.ow, label %vector.memcheck1973, label %._crit_edge.i804, !llvm.loop !95
 
 ._crit_edge.i804:                                 ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i818, %bb.ah
   %.promoted.i805 = phi ptr [ %.promoted10.i803, %bb.ah ], [ %.lcssa1569, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i818 ] ; 8 uses
@@ -1153,27 +1180,36 @@ bb.am:                                            ; preds = %.lr.ph1230, %.loope
   br i1 %exitcond1390.not, label %.loopexit1039, label %.lr.ph1227, !llvm.loop !154
 
 bb.an:                                            ; preds = %bb.am
-  %i.sr = shl nsw i32 %i.se, 2                    ; 2 uses
+  %i.sr = shl i32 %i.se, 2                        ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #19
-  %.promoted10.i831 = load ptr, ptr %0, align 8   ; 2 uses
+  %.promoted10.i831 = load ptr, ptr %0, align 8   ; 5 uses
   %i.ss = icmp sgt i32 %i.se, 255
   br i1 %i.ss, label %vector.memcheck1902, label %._crit_edge.i832
 
-vector.memcheck1902:                              ; preds = %bb.an, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i846
-  %.013.i840 = phi i32 [ %i.tt, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i846 ], [ %i.sr, %bb.an ] ; 2 uses
-  %.promoted1112.i841 = phi ptr [ %.lcssa1571, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i846 ], [ %.promoted10.i831, %bb.an ] ; 10 uses
-  %scevgep1904 = getelementptr i8, ptr %.promoted1112.i841, i64 1024 ; 2 uses
+vector.memcheck1902:                              ; preds = %bb.an
+  %scevgep1913 = getelementptr i8, ptr %.promoted10.i831, i64 1024
+  %32 = add i32 %i.sr, 1023
+  %smin1914 = call i32 @llvm.smin.i32(i32 %i.sr, i32 2047)
+  %33 = sub i32 %32, %smin1914
+  %34 = and i32 %33, -1024
+  %35 = zext i32 %34 to i64
+  %scevgep1904 = getelementptr i8, ptr %scevgep1913, i64 %35 ; 2 uses
   %bound01908 = icmp ult ptr %0, %scevgep1904
-  %bound11909 = icmp ult ptr %.promoted1112.i841, %scevgep1868
+  %bound11909 = icmp ult ptr %.promoted10.i831, %scevgep1868
   %found.conflict1910 = and i1 %bound01908, %bound11909
   %conflict.rdx1911 = or i1 %found.conflict1907, %found.conflict1910
   %bound01912 = icmp ult ptr %i.f, %scevgep1904
-  %bound11913 = icmp ult ptr %.promoted1112.i841, %scevgep1903
+  %bound11913 = icmp ult ptr %.promoted10.i831, %scevgep1903
   %found.conflict1914 = and i1 %bound01912, %bound11913
   %conflict.rdx1915 = or i1 %conflict.rdx1911, %found.conflict1914
+  br label %vector.memcheck1911
+
+vector.memcheck1911:                              ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i846, %vector.memcheck1902
+  %.013.i840 = phi i32 [ %i.tt, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i846 ], [ %i.sr, %vector.memcheck1902 ] ; 2 uses
+  %.promoted1112.i841 = phi ptr [ %.lcssa1571, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i846 ], [ %.promoted10.i831, %vector.memcheck1902 ] ; 7 uses
   br i1 %conflict.rdx1915, label %.lr.ph.i.i842, label %vector.ph1917
 
-vector.ph1917:                                    ; preds = %vector.memcheck1902
+vector.ph1917:                                    ; preds = %vector.memcheck1911
   %i.st = getelementptr i8, ptr %.promoted1112.i841, i64 1024
   br label %vector.body1918
 
@@ -1224,10 +1260,10 @@ middle.block1926:                                 ; preds = %vector.body1918
   store ptr %i.te, ptr %0, align 8, !tbaa !49, !alias.scope !161, !noalias !163
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i846
 
-.lr.ph.i.i842:                                    ; preds = %vector.memcheck1902, %.lr.ph.i.i842
-  %i.tf = phi ptr [ %i.tq, %.lr.ph.i.i842 ], [ %.promoted1112.i841, %vector.memcheck1902 ] ; 5 uses
-  %.05.i.i843 = phi i32 [ %i.tp, %.lr.ph.i.i842 ], [ 1024, %vector.memcheck1902 ]
-  %.024.i.i844 = phi ptr [ %i.ts, %.lr.ph.i.i842 ], [ %i.f, %vector.memcheck1902 ] ; 5 uses
+.lr.ph.i.i842:                                    ; preds = %vector.memcheck1911, %.lr.ph.i.i842
+  %i.tf = phi ptr [ %i.tq, %.lr.ph.i.i842 ], [ %.promoted1112.i841, %vector.memcheck1911 ] ; 5 uses
+  %.05.i.i843 = phi i32 [ %i.tp, %.lr.ph.i.i842 ], [ 1024, %vector.memcheck1911 ]
+  %.024.i.i844 = phi ptr [ %i.ts, %.lr.ph.i.i842 ], [ %i.f, %vector.memcheck1911 ] ; 5 uses
   %i.tg = getelementptr inbounds nuw i8, ptr %i.tf, i64 1 ; 2 uses
   store ptr %i.tg, ptr %0, align 8, !tbaa !49
   %i.th = load i8, ptr %i.tf, align 1, !tbaa !51
@@ -1256,7 +1292,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i846: ; preds 
   %.lcssa1571 = phi ptr [ %i.st, %middle.block1926 ], [ %i.tq, %.lr.ph.i.i842 ] ; 2 uses
   %i.tt = add nsw i32 %.013.i840, -1024           ; 2 uses
   %i.tu = icmp sgt i32 %.013.i840, 2047
-  br i1 %i.tu, label %vector.memcheck1902, label %._crit_edge.i832, !llvm.loop !95
+  br i1 %i.tu, label %vector.memcheck1911, label %._crit_edge.i832, !llvm.loop !95
 
 ._crit_edge.i832:                                 ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i846, %bb.an
   %.promoted.i833 = phi ptr [ %.promoted10.i831, %bb.an ], [ %.lcssa1571, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i846 ] ; 8 uses
@@ -1445,27 +1481,36 @@ bb.ap:                                            ; preds = %bb.ap, %.lr.ph1220.
   br i1 %niter2216.ncmp.1, label %.loopexit1043.loopexit.unr-lcssa, label %bb.ap, !llvm.loop !177
 
 bb.aq:                                            ; preds = %bb.ao
-  %i.vy = shl nsw i32 %i.vk, 1                    ; 2 uses
+  %i.vy = shl i32 %i.vk, 1                        ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #19
-  %.promoted10.i853 = load ptr, ptr %0, align 8   ; 2 uses
+  %.promoted10.i853 = load ptr, ptr %0, align 8   ; 5 uses
   %i.vz = icmp sgt i32 %i.vk, 511
   br i1 %i.vz, label %vector.memcheck1842, label %._crit_edge.i854
 
-vector.memcheck1842:                              ; preds = %bb.aq, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i868
-  %.013.i862 = phi i32 [ %i.xa, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i868 ], [ %i.vy, %bb.aq ] ; 2 uses
-  %.promoted1112.i863 = phi ptr [ %.lcssa1573, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i868 ], [ %.promoted10.i853, %bb.aq ] ; 10 uses
-  %scevgep1844 = getelementptr i8, ptr %.promoted1112.i863, i64 1024 ; 2 uses
+vector.memcheck1842:                              ; preds = %bb.aq
+  %scevgep1851 = getelementptr i8, ptr %.promoted10.i853, i64 1024
+  %36 = add i32 %i.vy, 1023
+  %smin1852 = call i32 @llvm.smin.i32(i32 %i.vy, i32 2047)
+  %37 = sub i32 %36, %smin1852
+  %38 = and i32 %37, -1024
+  %39 = zext i32 %38 to i64
+  %scevgep1844 = getelementptr i8, ptr %scevgep1851, i64 %39 ; 2 uses
   %bound01848 = icmp ult ptr %0, %scevgep1844
-  %bound11849 = icmp ult ptr %.promoted1112.i863, %scevgep1808
+  %bound11849 = icmp ult ptr %.promoted10.i853, %scevgep1808
   %found.conflict1850 = and i1 %bound01848, %bound11849
   %conflict.rdx1851 = or i1 %found.conflict1847, %found.conflict1850
   %bound01852 = icmp ult ptr %i.e, %scevgep1844
-  %bound11853 = icmp ult ptr %.promoted1112.i863, %scevgep1843
+  %bound11853 = icmp ult ptr %.promoted10.i853, %scevgep1843
   %found.conflict1854 = and i1 %bound01852, %bound11853
   %conflict.rdx1855 = or i1 %conflict.rdx1851, %found.conflict1854
+  br label %vector.memcheck1849
+
+vector.memcheck1849:                              ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i868, %vector.memcheck1842
+  %.013.i862 = phi i32 [ %i.xa, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i868 ], [ %i.vy, %vector.memcheck1842 ] ; 2 uses
+  %.promoted1112.i863 = phi ptr [ %.lcssa1573, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i868 ], [ %.promoted10.i853, %vector.memcheck1842 ] ; 7 uses
   br i1 %conflict.rdx1855, label %.lr.ph.i.i864, label %vector.ph1857
 
-vector.ph1857:                                    ; preds = %vector.memcheck1842
+vector.ph1857:                                    ; preds = %vector.memcheck1849
   %i.wa = getelementptr i8, ptr %.promoted1112.i863, i64 1024
   br label %vector.body1858
 
@@ -1516,10 +1561,10 @@ middle.block1866:                                 ; preds = %vector.body1858
   store ptr %i.wl, ptr %0, align 8, !tbaa !49, !alias.scope !184, !noalias !186
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i868
 
-.lr.ph.i.i864:                                    ; preds = %vector.memcheck1842, %.lr.ph.i.i864
-  %i.wm = phi ptr [ %i.wx, %.lr.ph.i.i864 ], [ %.promoted1112.i863, %vector.memcheck1842 ] ; 5 uses
-  %.05.i.i865 = phi i32 [ %i.ww, %.lr.ph.i.i864 ], [ 1024, %vector.memcheck1842 ]
-  %.024.i.i866 = phi ptr [ %i.wz, %.lr.ph.i.i864 ], [ %i.e, %vector.memcheck1842 ] ; 5 uses
+.lr.ph.i.i864:                                    ; preds = %vector.memcheck1849, %.lr.ph.i.i864
+  %i.wm = phi ptr [ %i.wx, %.lr.ph.i.i864 ], [ %.promoted1112.i863, %vector.memcheck1849 ] ; 5 uses
+  %.05.i.i865 = phi i32 [ %i.ww, %.lr.ph.i.i864 ], [ 1024, %vector.memcheck1849 ]
+  %.024.i.i866 = phi ptr [ %i.wz, %.lr.ph.i.i864 ], [ %i.e, %vector.memcheck1849 ] ; 5 uses
   %i.wn = getelementptr inbounds nuw i8, ptr %i.wm, i64 1 ; 2 uses
   store ptr %i.wn, ptr %0, align 8, !tbaa !49
   %i.wo = load i8, ptr %i.wm, align 1, !tbaa !51
@@ -1548,7 +1593,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i868: ; preds 
   %.lcssa1573 = phi ptr [ %i.wa, %middle.block1866 ], [ %i.wx, %.lr.ph.i.i864 ] ; 2 uses
   %i.xa = add nsw i32 %.013.i862, -1024           ; 2 uses
   %i.xb = icmp sgt i32 %.013.i862, 2047
-  br i1 %i.xb, label %vector.memcheck1842, label %._crit_edge.i854, !llvm.loop !95
+  br i1 %i.xb, label %vector.memcheck1849, label %._crit_edge.i854, !llvm.loop !95
 
 ._crit_edge.i854:                                 ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i868, %bb.aq
   %.promoted.i855 = phi ptr [ %.promoted10.i853, %bb.aq ], [ %.lcssa1573, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i868 ] ; 8 uses
@@ -1751,27 +1796,36 @@ bb.ar:                                            ; preds = %.lr.ph1217, %.loope
   br i1 %exitcond1378.not, label %.loopexit1047, label %.lr.ph1214, !llvm.loop !200
 
 bb.as:                                            ; preds = %bb.ar
-  %i.zj = shl nsw i32 %i.yv, 2                    ; 2 uses
+  %i.zj = shl i32 %i.yv, 2                        ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #19
-  %.promoted10.i881 = load ptr, ptr %0, align 8   ; 2 uses
+  %.promoted10.i881 = load ptr, ptr %0, align 8   ; 5 uses
   %i.zk = icmp sgt i32 %i.yv, 255
   br i1 %i.zk, label %vector.memcheck1782, label %._crit_edge.i882
 
-vector.memcheck1782:                              ; preds = %bb.as, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i896
-  %.013.i890 = phi i32 [ %i.aal, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i896 ], [ %i.zj, %bb.as ] ; 2 uses
-  %.promoted1112.i891 = phi ptr [ %.lcssa1575, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i896 ], [ %.promoted10.i881, %bb.as ] ; 10 uses
-  %scevgep1784 = getelementptr i8, ptr %.promoted1112.i891, i64 1024 ; 2 uses
+vector.memcheck1782:                              ; preds = %bb.as
+  %scevgep1789 = getelementptr i8, ptr %.promoted10.i881, i64 1024
+  %40 = add i32 %i.zj, 1023
+  %smin1790 = call i32 @llvm.smin.i32(i32 %i.zj, i32 2047)
+  %41 = sub i32 %40, %smin1790
+  %42 = and i32 %41, -1024
+  %43 = zext i32 %42 to i64
+  %scevgep1784 = getelementptr i8, ptr %scevgep1789, i64 %43 ; 2 uses
   %bound01788 = icmp ult ptr %0, %scevgep1784
-  %bound11789 = icmp ult ptr %.promoted1112.i891, %scevgep1748
+  %bound11789 = icmp ult ptr %.promoted10.i881, %scevgep1748
   %found.conflict1790 = and i1 %bound01788, %bound11789
   %conflict.rdx1791 = or i1 %found.conflict1787, %found.conflict1790
   %bound01792 = icmp ult ptr %i.d, %scevgep1784
-  %bound11793 = icmp ult ptr %.promoted1112.i891, %scevgep1783
+  %bound11793 = icmp ult ptr %.promoted10.i881, %scevgep1783
   %found.conflict1794 = and i1 %bound01792, %bound11793
   %conflict.rdx1795 = or i1 %conflict.rdx1791, %found.conflict1794
+  br label %vector.memcheck1787
+
+vector.memcheck1787:                              ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i896, %vector.memcheck1782
+  %.013.i890 = phi i32 [ %i.aal, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i896 ], [ %i.zj, %vector.memcheck1782 ] ; 2 uses
+  %.promoted1112.i891 = phi ptr [ %.lcssa1575, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i896 ], [ %.promoted10.i881, %vector.memcheck1782 ] ; 7 uses
   br i1 %conflict.rdx1795, label %.lr.ph.i.i892, label %vector.ph1797
 
-vector.ph1797:                                    ; preds = %vector.memcheck1782
+vector.ph1797:                                    ; preds = %vector.memcheck1787
   %i.zl = getelementptr i8, ptr %.promoted1112.i891, i64 1024
   br label %vector.body1798
 
@@ -1822,10 +1876,10 @@ middle.block1806:                                 ; preds = %vector.body1798
   store ptr %i.zw, ptr %0, align 8, !tbaa !49, !alias.scope !207, !noalias !209
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i896
 
-.lr.ph.i.i892:                                    ; preds = %vector.memcheck1782, %.lr.ph.i.i892
-  %i.zx = phi ptr [ %i.aai, %.lr.ph.i.i892 ], [ %.promoted1112.i891, %vector.memcheck1782 ] ; 5 uses
-  %.05.i.i893 = phi i32 [ %i.aah, %.lr.ph.i.i892 ], [ 1024, %vector.memcheck1782 ]
-  %.024.i.i894 = phi ptr [ %i.aak, %.lr.ph.i.i892 ], [ %i.d, %vector.memcheck1782 ] ; 5 uses
+.lr.ph.i.i892:                                    ; preds = %vector.memcheck1787, %.lr.ph.i.i892
+  %i.zx = phi ptr [ %i.aai, %.lr.ph.i.i892 ], [ %.promoted1112.i891, %vector.memcheck1787 ] ; 5 uses
+  %.05.i.i893 = phi i32 [ %i.aah, %.lr.ph.i.i892 ], [ 1024, %vector.memcheck1787 ]
+  %.024.i.i894 = phi ptr [ %i.aak, %.lr.ph.i.i892 ], [ %i.d, %vector.memcheck1787 ] ; 5 uses
   %i.zy = getelementptr inbounds nuw i8, ptr %i.zx, i64 1 ; 2 uses
   store ptr %i.zy, ptr %0, align 8, !tbaa !49
   %i.zz = load i8, ptr %i.zx, align 1, !tbaa !51
@@ -1854,7 +1908,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i896: ; preds 
   %.lcssa1575 = phi ptr [ %i.zl, %middle.block1806 ], [ %i.aai, %.lr.ph.i.i892 ] ; 2 uses
   %i.aal = add nsw i32 %.013.i890, -1024          ; 2 uses
   %i.aam = icmp sgt i32 %.013.i890, 2047
-  br i1 %i.aam, label %vector.memcheck1782, label %._crit_edge.i882, !llvm.loop !95
+  br i1 %i.aam, label %vector.memcheck1787, label %._crit_edge.i882, !llvm.loop !95
 
 ._crit_edge.i882:                                 ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i896, %bb.as
   %.promoted.i883 = phi ptr [ %.promoted10.i881, %bb.as ], [ %.lcssa1575, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i896 ] ; 8 uses
@@ -2150,27 +2204,36 @@ bb.ay:                                            ; preds = %.lr.ph1207, %bb.ay
   br i1 %exitcond1372.not, label %.loopexit1051, label %bb.ay, !llvm.loop !223
 
 bb.az:                                            ; preds = %bb.ax
-  %i.aej = shl nsw i32 %i.adv, 2                  ; 2 uses
+  %i.aej = shl i32 %i.adv, 2                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
-  %.promoted10.i909 = load ptr, ptr %0, align 8   ; 2 uses
+  %.promoted10.i909 = load ptr, ptr %0, align 8   ; 5 uses
   %i.aek = icmp sgt i32 %i.adv, 255
   br i1 %i.aek, label %vector.memcheck1722, label %._crit_edge.i910
 
-vector.memcheck1722:                              ; preds = %bb.az, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i924
-  %.013.i918 = phi i32 [ %i.afl, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i924 ], [ %i.aej, %bb.az ] ; 2 uses
-  %.promoted1112.i919 = phi ptr [ %.lcssa1577, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i924 ], [ %.promoted10.i909, %bb.az ] ; 10 uses
-  %scevgep1724 = getelementptr i8, ptr %.promoted1112.i919, i64 1024 ; 2 uses
+vector.memcheck1722:                              ; preds = %bb.az
+  %scevgep1727 = getelementptr i8, ptr %.promoted10.i909, i64 1024
+  %44 = add i32 %i.aej, 1023
+  %smin1728 = call i32 @llvm.smin.i32(i32 %i.aej, i32 2047)
+  %45 = sub i32 %44, %smin1728
+  %46 = and i32 %45, -1024
+  %47 = zext i32 %46 to i64
+  %scevgep1724 = getelementptr i8, ptr %scevgep1727, i64 %47 ; 2 uses
   %bound01728 = icmp ult ptr %0, %scevgep1724
-  %bound11729 = icmp ult ptr %.promoted1112.i919, %scevgep1688
+  %bound11729 = icmp ult ptr %.promoted10.i909, %scevgep1688
   %found.conflict1730 = and i1 %bound01728, %bound11729
   %conflict.rdx1731 = or i1 %found.conflict1727, %found.conflict1730
   %bound01732 = icmp ult ptr %i.c, %scevgep1724
-  %bound11733 = icmp ult ptr %.promoted1112.i919, %scevgep1723
+  %bound11733 = icmp ult ptr %.promoted10.i909, %scevgep1723
   %found.conflict1734 = and i1 %bound01732, %bound11733
   %conflict.rdx1735 = or i1 %conflict.rdx1731, %found.conflict1734
+  br label %vector.memcheck1725
+
+vector.memcheck1725:                              ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i924, %vector.memcheck1722
+  %.013.i918 = phi i32 [ %i.afl, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i924 ], [ %i.aej, %vector.memcheck1722 ] ; 2 uses
+  %.promoted1112.i919 = phi ptr [ %.lcssa1577, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i924 ], [ %.promoted10.i909, %vector.memcheck1722 ] ; 7 uses
   br i1 %conflict.rdx1735, label %.lr.ph.i.i920, label %vector.ph1737
 
-vector.ph1737:                                    ; preds = %vector.memcheck1722
+vector.ph1737:                                    ; preds = %vector.memcheck1725
   %i.ael = getelementptr i8, ptr %.promoted1112.i919, i64 1024
   br label %vector.body1738
 
@@ -2221,10 +2284,10 @@ middle.block1746:                                 ; preds = %vector.body1738
   store ptr %i.aew, ptr %0, align 8, !tbaa !49, !alias.scope !230, !noalias !232
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i924
 
-.lr.ph.i.i920:                                    ; preds = %vector.memcheck1722, %.lr.ph.i.i920
-  %i.aex = phi ptr [ %i.afi, %.lr.ph.i.i920 ], [ %.promoted1112.i919, %vector.memcheck1722 ] ; 5 uses
-  %.05.i.i921 = phi i32 [ %i.afh, %.lr.ph.i.i920 ], [ 1024, %vector.memcheck1722 ]
-  %.024.i.i922 = phi ptr [ %i.afk, %.lr.ph.i.i920 ], [ %i.c, %vector.memcheck1722 ] ; 5 uses
+.lr.ph.i.i920:                                    ; preds = %vector.memcheck1725, %.lr.ph.i.i920
+  %i.aex = phi ptr [ %i.afi, %.lr.ph.i.i920 ], [ %.promoted1112.i919, %vector.memcheck1725 ] ; 5 uses
+  %.05.i.i921 = phi i32 [ %i.afh, %.lr.ph.i.i920 ], [ 1024, %vector.memcheck1725 ]
+  %.024.i.i922 = phi ptr [ %i.afk, %.lr.ph.i.i920 ], [ %i.c, %vector.memcheck1725 ] ; 5 uses
   %i.aey = getelementptr inbounds nuw i8, ptr %i.aex, i64 1 ; 2 uses
   store ptr %i.aey, ptr %0, align 8, !tbaa !49
   %i.aez = load i8, ptr %i.aex, align 1, !tbaa !51
@@ -2253,7 +2316,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i924: ; preds 
   %.lcssa1577 = phi ptr [ %i.ael, %middle.block1746 ], [ %i.afi, %.lr.ph.i.i920 ] ; 2 uses
   %i.afl = add nsw i32 %.013.i918, -1024          ; 2 uses
   %i.afm = icmp sgt i32 %.013.i918, 2047
-  br i1 %i.afm, label %vector.memcheck1722, label %._crit_edge.i910, !llvm.loop !95
+  br i1 %i.afm, label %vector.memcheck1725, label %._crit_edge.i910, !llvm.loop !95
 
 ._crit_edge.i910:                                 ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i924, %bb.az
   %.promoted.i911 = phi ptr [ %.promoted10.i909, %bb.az ], [ %.lcssa1577, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i924 ] ; 8 uses
@@ -2446,27 +2509,36 @@ bb.bb:                                            ; preds = %bb.bb, %.lr.ph1200.
   br i1 %niter2195.ncmp.1, label %.loopexit1055.loopexit.unr-lcssa, label %bb.bb, !llvm.loop !246
 
 bb.bc:                                            ; preds = %bb.ba
-  %i.ahw = shl nsw i32 %i.ahc, 1                  ; 2 uses
+  %i.ahw = shl i32 %i.ahc, 1                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
-  %.promoted10.i931 = load ptr, ptr %0, align 8   ; 2 uses
+  %.promoted10.i931 = load ptr, ptr %0, align 8   ; 5 uses
   %i.ahx = icmp sgt i32 %i.ahc, 511
   br i1 %i.ahx, label %vector.memcheck1662, label %._crit_edge.i932
 
-vector.memcheck1662:                              ; preds = %bb.bc, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i946
-  %.013.i940 = phi i32 [ %i.aiy, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i946 ], [ %i.ahw, %bb.bc ] ; 2 uses
-  %.promoted1112.i941 = phi ptr [ %.lcssa1579, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i946 ], [ %.promoted10.i931, %bb.bc ] ; 10 uses
-  %scevgep1664 = getelementptr i8, ptr %.promoted1112.i941, i64 1024 ; 2 uses
+vector.memcheck1662:                              ; preds = %bb.bc
+  %scevgep1665 = getelementptr i8, ptr %.promoted10.i931, i64 1024
+  %48 = add i32 %i.ahw, 1023
+  %smin1666 = call i32 @llvm.smin.i32(i32 %i.ahw, i32 2047)
+  %49 = sub i32 %48, %smin1666
+  %50 = and i32 %49, -1024
+  %51 = zext i32 %50 to i64
+  %scevgep1664 = getelementptr i8, ptr %scevgep1665, i64 %51 ; 2 uses
   %bound01668 = icmp ult ptr %0, %scevgep1664
-  %bound11669 = icmp ult ptr %.promoted1112.i941, %scevgep1628
+  %bound11669 = icmp ult ptr %.promoted10.i931, %scevgep1628
   %found.conflict1670 = and i1 %bound01668, %bound11669
   %conflict.rdx1671 = or i1 %found.conflict1667, %found.conflict1670
   %bound01672 = icmp ult ptr %i.b, %scevgep1664
-  %bound11673 = icmp ult ptr %.promoted1112.i941, %scevgep1663
+  %bound11673 = icmp ult ptr %.promoted10.i931, %scevgep1663
   %found.conflict1674 = and i1 %bound01672, %bound11673
   %conflict.rdx1675 = or i1 %conflict.rdx1671, %found.conflict1674
+  br label %vector.memcheck1663
+
+vector.memcheck1663:                              ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i946, %vector.memcheck1662
+  %.013.i940 = phi i32 [ %i.aiy, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i946 ], [ %i.ahw, %vector.memcheck1662 ] ; 2 uses
+  %.promoted1112.i941 = phi ptr [ %.lcssa1579, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i946 ], [ %.promoted10.i931, %vector.memcheck1662 ] ; 7 uses
   br i1 %conflict.rdx1675, label %.lr.ph.i.i942, label %vector.ph1677
 
-vector.ph1677:                                    ; preds = %vector.memcheck1662
+vector.ph1677:                                    ; preds = %vector.memcheck1663
   %i.ahy = getelementptr i8, ptr %.promoted1112.i941, i64 1024
   br label %vector.body1678
 
@@ -2517,10 +2589,10 @@ middle.block1686:                                 ; preds = %vector.body1678
   store ptr %i.aij, ptr %0, align 8, !tbaa !49, !alias.scope !253, !noalias !255
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i946
 
-.lr.ph.i.i942:                                    ; preds = %vector.memcheck1662, %.lr.ph.i.i942
-  %i.aik = phi ptr [ %i.aiv, %.lr.ph.i.i942 ], [ %.promoted1112.i941, %vector.memcheck1662 ] ; 5 uses
-  %.05.i.i943 = phi i32 [ %i.aiu, %.lr.ph.i.i942 ], [ 1024, %vector.memcheck1662 ]
-  %.024.i.i944 = phi ptr [ %i.aix, %.lr.ph.i.i942 ], [ %i.b, %vector.memcheck1662 ] ; 5 uses
+.lr.ph.i.i942:                                    ; preds = %vector.memcheck1663, %.lr.ph.i.i942
+  %i.aik = phi ptr [ %i.aiv, %.lr.ph.i.i942 ], [ %.promoted1112.i941, %vector.memcheck1663 ] ; 5 uses
+  %.05.i.i943 = phi i32 [ %i.aiu, %.lr.ph.i.i942 ], [ 1024, %vector.memcheck1663 ]
+  %.024.i.i944 = phi ptr [ %i.aix, %.lr.ph.i.i942 ], [ %i.b, %vector.memcheck1663 ] ; 5 uses
   %i.ail = getelementptr inbounds nuw i8, ptr %i.aik, i64 1 ; 2 uses
   store ptr %i.ail, ptr %0, align 8, !tbaa !49
   %i.aim = load i8, ptr %i.aik, align 1, !tbaa !51
@@ -2549,7 +2621,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i946: ; preds 
   %.lcssa1579 = phi ptr [ %i.ahy, %middle.block1686 ], [ %i.aiv, %.lr.ph.i.i942 ] ; 2 uses
   %i.aiy = add nsw i32 %.013.i940, -1024          ; 2 uses
   %i.aiz = icmp sgt i32 %.013.i940, 2047
-  br i1 %i.aiz, label %vector.memcheck1662, label %._crit_edge.i932, !llvm.loop !95
+  br i1 %i.aiz, label %vector.memcheck1663, label %._crit_edge.i932, !llvm.loop !95
 
 ._crit_edge.i932:                                 ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i946, %bb.bc
   %.promoted.i933 = phi ptr [ %.promoted10.i931, %bb.bc ], [ %.lcssa1579, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i946 ] ; 8 uses
@@ -2756,27 +2828,36 @@ bb.be:                                            ; preds = %.lr.ph1194, %bb.be
   br i1 %exitcond1360.not, label %.loopexit1059, label %bb.be, !llvm.loop !269
 
 bb.bf:                                            ; preds = %bb.bd
-  %i.alj = shl nsw i32 %i.akw, 2                  ; 2 uses
+  %i.alj = shl i32 %i.akw, 2                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
-  %.promoted10.i959 = load ptr, ptr %0, align 8   ; 2 uses
+  %.promoted10.i959 = load ptr, ptr %0, align 8   ; 5 uses
   %i.alk = icmp sgt i32 %i.akw, 255
   br i1 %i.alk, label %vector.memcheck1602.a, label %._crit_edge.i960
 
-vector.memcheck1602.a:                            ; preds = %bb.bf, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i974
-  %.013.i968 = phi i32 [ %i.aml, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i974 ], [ %i.alj, %bb.bf ] ; 2 uses
-  %.promoted1112.i969 = phi ptr [ %.lcssa1581, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i974 ], [ %.promoted10.i959, %bb.bf ] ; 10 uses
-  %scevgep1604.a = getelementptr i8, ptr %.promoted1112.i969, i64 1024 ; 2 uses
+vector.memcheck1602.a:                            ; preds = %bb.bf
+  %scevgep1604 = getelementptr i8, ptr %.promoted10.i959, i64 1024
+  %52 = add i32 %i.alj, 1023
+  %smin = call i32 @llvm.smin.i32(i32 %i.alj, i32 2047)
+  %53 = sub i32 %52, %smin
+  %54 = and i32 %53, -1024
+  %55 = zext i32 %54 to i64
+  %scevgep1604.a = getelementptr i8, ptr %scevgep1604, i64 %55 ; 2 uses
   %bound01608 = icmp ult ptr %0, %scevgep1604.a
-  %bound11609 = icmp ult ptr %.promoted1112.i969, %scevgep
+  %bound11609 = icmp ult ptr %.promoted10.i959, %scevgep
   %found.conflict1610 = and i1 %bound01608, %bound11609
   %conflict.rdx1611 = or i1 %found.conflict1607, %found.conflict1610
   %bound01612 = icmp ult ptr %i.a, %scevgep1604.a
-  %bound11613 = icmp ult ptr %.promoted1112.i969, %scevgep1603
+  %bound11613 = icmp ult ptr %.promoted10.i959, %scevgep1603
   %found.conflict1614 = and i1 %bound01612, %bound11613
   %conflict.rdx1615 = or i1 %conflict.rdx1611, %found.conflict1614
+  br label %vector.memcheck1602
+
+vector.memcheck1602:                              ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i974, %vector.memcheck1602.a
+  %.013.i968 = phi i32 [ %i.aml, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i974 ], [ %i.alj, %vector.memcheck1602.a ] ; 2 uses
+  %.promoted1112.i969 = phi ptr [ %.lcssa1581, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i974 ], [ %.promoted10.i959, %vector.memcheck1602.a ] ; 7 uses
   br i1 %conflict.rdx1615, label %.lr.ph.i.i970, label %vector.ph1617
 
-vector.ph1617:                                    ; preds = %vector.memcheck1602.a
+vector.ph1617:                                    ; preds = %vector.memcheck1602
   %i.all = getelementptr i8, ptr %.promoted1112.i969, i64 1024
   br label %vector.body1618
 
@@ -2827,10 +2908,10 @@ middle.block1626:                                 ; preds = %vector.body1618
   store ptr %i.alw, ptr %0, align 8, !tbaa !49, !alias.scope !276, !noalias !278
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i974
 
-.lr.ph.i.i970:                                    ; preds = %vector.memcheck1602.a, %.lr.ph.i.i970
-  %i.alx = phi ptr [ %i.ami, %.lr.ph.i.i970 ], [ %.promoted1112.i969, %vector.memcheck1602.a ] ; 5 uses
-  %.05.i.i971 = phi i32 [ %i.amh, %.lr.ph.i.i970 ], [ 1024, %vector.memcheck1602.a ]
-  %.024.i.i972 = phi ptr [ %i.amk, %.lr.ph.i.i970 ], [ %i.a, %vector.memcheck1602.a ] ; 5 uses
+.lr.ph.i.i970:                                    ; preds = %vector.memcheck1602, %.lr.ph.i.i970
+  %i.alx = phi ptr [ %i.ami, %.lr.ph.i.i970 ], [ %.promoted1112.i969, %vector.memcheck1602 ] ; 5 uses
+  %.05.i.i971 = phi i32 [ %i.amh, %.lr.ph.i.i970 ], [ 1024, %vector.memcheck1602 ]
+  %.024.i.i972 = phi ptr [ %i.amk, %.lr.ph.i.i970 ], [ %i.a, %vector.memcheck1602 ] ; 5 uses
   %i.aly = getelementptr inbounds nuw i8, ptr %i.alx, i64 1 ; 2 uses
   store ptr %i.aly, ptr %0, align 8, !tbaa !49
   %i.alz = load i8, ptr %i.alx, align 1, !tbaa !51
@@ -2859,7 +2940,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i974: ; preds 
   %.lcssa1581 = phi ptr [ %i.all, %middle.block1626 ], [ %i.ami, %.lr.ph.i.i970 ] ; 2 uses
   %i.aml = add nsw i32 %.013.i968, -1024          ; 2 uses
   %i.amm = icmp sgt i32 %.013.i968, 2047
-  br i1 %i.amm, label %vector.memcheck1602.a, label %._crit_edge.i960, !llvm.loop !95
+  br i1 %i.amm, label %vector.memcheck1602, label %._crit_edge.i960, !llvm.loop !95
 
 ._crit_edge.i960:                                 ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i974, %bb.bf
   %.promoted.i961 = phi ptr [ %.promoted10.i959, %bb.bf ], [ %.lcssa1581, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i974 ] ; 8 uses
@@ -3262,35 +3343,41 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = trunc i64 %2 to i32
-  %i.e = shl i32 %i.d, 2                          ; 3 uses
+  %i.e = shl i32 %i.d, 2                          ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
-  %.promoted10.i = load ptr, ptr %0, align 8      ; 2 uses
+  %.promoted10.i = load ptr, ptr %0, align 8      ; 5 uses
   %i.f = icmp sgt i32 %i.e, 1023
-  br i1 %i.f, label %.lr.ph.i.preheader.i.preheader, label %._crit_edge.i
+  br i1 %i.f, label %vector.memcheck165, label %._crit_edge.i
 
-.lr.ph.i.preheader.i.preheader:                   ; preds = %bb.b
-  %scevgep166 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %scevgep167 = getelementptr inbounds nuw i8, ptr %i.c, i64 1024 ; 2 uses
-  %bound0169 = icmp ult ptr %0, %scevgep167
-  %bound1170 = icmp ult ptr %i.c, %scevgep166
-  %found.conflict171 = and i1 %bound0169, %bound1170
-  br label %vector.memcheck165
-
-vector.memcheck165:                               ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i, %.lr.ph.i.preheader.i.preheader
-  %.013.i = phi i32 [ %i.ag, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i ], [ %i.e, %.lr.ph.i.preheader.i.preheader ] ; 2 uses
-  %.promoted1112.i = phi ptr [ %.lcssa, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i ], [ %.promoted10.i, %.lr.ph.i.preheader.i.preheader ] ; 10 uses
-  %scevgep168.a = getelementptr i8, ptr %.promoted1112.i, i64 1024 ; 2 uses
+vector.memcheck165:                               ; preds = %bb.b
+  %scevgep167 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %scevgep168 = getelementptr inbounds nuw i8, ptr %i.c, i64 1024 ; 2 uses
+  %3 = add nuw i32 %i.e, 1023
+  %smin169 = tail call i32 @llvm.smin.i32(i32 %i.e, i32 2047)
+  %4 = sub i32 %3, %smin169
+  %5 = and i32 %4, -1024
+  %6 = zext i32 %5 to i64
+  %7 = getelementptr i8, ptr %.promoted10.i, i64 %6
+  %scevgep168.a = getelementptr i8, ptr %7, i64 1024 ; 2 uses
+  %bound0171 = icmp ult ptr %0, %scevgep168
+  %bound1172 = icmp ult ptr %i.c, %scevgep167
+  %found.conflict173 = and i1 %bound0171, %bound1172
   %bound0172 = icmp ult ptr %0, %scevgep168.a
-  %bound1173 = icmp ult ptr %.promoted1112.i, %scevgep166
+  %bound1173 = icmp ult ptr %.promoted10.i, %scevgep167
   %found.conflict174 = and i1 %bound0172, %bound1173
-  %conflict.rdx175 = or i1 %found.conflict171, %found.conflict174
+  %conflict.rdx175 = or i1 %found.conflict173, %found.conflict174
   %bound0176 = icmp ult ptr %i.c, %scevgep168.a
-  %bound1177 = icmp ult ptr %.promoted1112.i, %scevgep167
+  %bound1177 = icmp ult ptr %.promoted10.i, %scevgep168
   %found.conflict178 = and i1 %bound0176, %bound1177
   %conflict.rdx179 = or i1 %conflict.rdx175, %found.conflict178
+  br label %vector.memcheck166
+
+vector.memcheck166:                               ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i, %vector.memcheck165
+  %.013.i = phi i32 [ %i.ag, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i ], [ %i.e, %vector.memcheck165 ] ; 2 uses
+  %.promoted1112.i = phi ptr [ %.lcssa, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i ], [ %.promoted10.i, %vector.memcheck165 ] ; 7 uses
   br i1 %conflict.rdx179, label %.lr.ph.i.i, label %vector.ph181
 
-vector.ph181:                                     ; preds = %vector.memcheck165
+vector.ph181:                                     ; preds = %vector.memcheck166
   %i.g = getelementptr i8, ptr %.promoted1112.i, i64 1024
   br label %vector.body182
 
@@ -3341,10 +3428,10 @@ middle.block190:                                  ; preds = %vector.body182
   store ptr %i.r, ptr %0, align 8, !tbaa !49, !alias.scope !319, !noalias !321
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i
 
-.lr.ph.i.i:                                       ; preds = %vector.memcheck165, %.lr.ph.i.i
-  %i.s = phi ptr [ %i.ad, %.lr.ph.i.i ], [ %.promoted1112.i, %vector.memcheck165 ] ; 5 uses
-  %.05.i.i = phi i32 [ %i.ac, %.lr.ph.i.i ], [ 1024, %vector.memcheck165 ]
-  %.024.i.i = phi ptr [ %i.af, %.lr.ph.i.i ], [ %i.c, %vector.memcheck165 ] ; 5 uses
+.lr.ph.i.i:                                       ; preds = %vector.memcheck166, %.lr.ph.i.i
+  %i.s = phi ptr [ %i.ad, %.lr.ph.i.i ], [ %.promoted1112.i, %vector.memcheck166 ] ; 5 uses
+  %.05.i.i = phi i32 [ %i.ac, %.lr.ph.i.i ], [ 1024, %vector.memcheck166 ]
+  %.024.i.i = phi ptr [ %i.af, %.lr.ph.i.i ], [ %i.c, %vector.memcheck166 ] ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1 ; 2 uses
   store ptr %i.t, ptr %0, align 8, !tbaa !49
   %i.u = load i8, ptr %i.s, align 1, !tbaa !51
@@ -3373,7 +3460,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i: ; preds = %
   %.lcssa = phi ptr [ %i.g, %middle.block190 ], [ %i.ad, %.lr.ph.i.i ] ; 2 uses
   %i.ag = add nsw i32 %.013.i, -1024              ; 2 uses
   %i.ah = icmp sgt i32 %.013.i, 2047
-  br i1 %i.ah, label %vector.memcheck165, label %._crit_edge.i, !llvm.loop !95
+  br i1 %i.ah, label %vector.memcheck166, label %._crit_edge.i, !llvm.loop !95
 
 ._crit_edge.i:                                    ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i, %bb.b
   %.promoted.i = phi ptr [ %.promoted10.i, %bb.b ], [ %.lcssa, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i ] ; 8 uses
@@ -3498,35 +3585,41 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_53Xdr4skipINS_9CharPtrIOEPKcEEvRT0_i.exit: ; pred
 
 bb.c:                                             ; preds = %bb.a
   %i.bp = trunc i64 %2 to i32
-  %i.bq = shl i32 %i.bp, 1                        ; 3 uses
+  %i.bq = shl i32 %i.bp, 1                        ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
-  %.promoted10.i8 = load ptr, ptr %0, align 8     ; 2 uses
+  %.promoted10.i8 = load ptr, ptr %0, align 8     ; 5 uses
   %i.br = icmp sgt i32 %i.bq, 1023
-  br i1 %i.br, label %.lr.ph.i.preheader.i16.preheader, label %._crit_edge.i9
+  br i1 %i.br, label %vector.memcheck106.a, label %._crit_edge.i9
 
-.lr.ph.i.preheader.i16.preheader:                 ; preds = %bb.c
+vector.memcheck106.a:                             ; preds = %bb.c
   %scevgep107 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %scevgep108 = getelementptr inbounds nuw i8, ptr %i.b, i64 1024 ; 2 uses
-  %bound0110 = icmp ult ptr %0, %scevgep108
-  %bound1111 = icmp ult ptr %i.b, %scevgep107
-  %found.conflict112 = and i1 %bound0110, %bound1111
-  br label %vector.memcheck106.a
-
-vector.memcheck106.a:                             ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i23, %.lr.ph.i.preheader.i16.preheader
-  %.013.i17 = phi i32 [ %i.cs, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i23 ], [ %i.bq, %.lr.ph.i.preheader.i16.preheader ] ; 2 uses
-  %.promoted1112.i18 = phi ptr [ %.lcssa62, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i23 ], [ %.promoted10.i8, %.lr.ph.i.preheader.i16.preheader ] ; 10 uses
-  %scevgep109 = getelementptr i8, ptr %.promoted1112.i18, i64 1024 ; 2 uses
+  %8 = add nuw i32 %i.bq, 1023
+  %smin109 = tail call i32 @llvm.smin.i32(i32 %i.bq, i32 2047)
+  %9 = sub i32 %8, %smin109
+  %10 = and i32 %9, -1024
+  %11 = zext i32 %10 to i64
+  %12 = getelementptr i8, ptr %.promoted10.i8, i64 %11
+  %scevgep109 = getelementptr i8, ptr %12, i64 1024 ; 2 uses
+  %bound0111 = icmp ult ptr %0, %scevgep108
+  %bound1112 = icmp ult ptr %i.b, %scevgep107
+  %found.conflict113 = and i1 %bound0111, %bound1112
   %bound0113 = icmp ult ptr %0, %scevgep109
-  %bound1114 = icmp ult ptr %.promoted1112.i18, %scevgep107
+  %bound1114 = icmp ult ptr %.promoted10.i8, %scevgep107
   %found.conflict115 = and i1 %bound0113, %bound1114
-  %conflict.rdx116 = or i1 %found.conflict112, %found.conflict115
+  %conflict.rdx116 = or i1 %found.conflict113, %found.conflict115
   %bound0117 = icmp ult ptr %i.b, %scevgep109
-  %bound1118 = icmp ult ptr %.promoted1112.i18, %scevgep108
+  %bound1118 = icmp ult ptr %.promoted10.i8, %scevgep108
   %found.conflict119 = and i1 %bound0117, %bound1118
   %conflict.rdx120 = or i1 %conflict.rdx116, %found.conflict119
+  br label %vector.memcheck106
+
+vector.memcheck106:                               ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i23, %vector.memcheck106.a
+  %.013.i17 = phi i32 [ %i.cs, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i23 ], [ %i.bq, %vector.memcheck106.a ] ; 2 uses
+  %.promoted1112.i18 = phi ptr [ %.lcssa62, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i23 ], [ %.promoted10.i8, %vector.memcheck106.a ] ; 7 uses
   br i1 %conflict.rdx120, label %.lr.ph.i.i19, label %vector.ph122
 
-vector.ph122:                                     ; preds = %vector.memcheck106.a
+vector.ph122:                                     ; preds = %vector.memcheck106
   %i.bs = getelementptr i8, ptr %.promoted1112.i18, i64 1024
   br label %vector.body123
 
@@ -3577,10 +3670,10 @@ middle.block131:                                  ; preds = %vector.body123
   store ptr %i.cd, ptr %0, align 8, !tbaa !49, !alias.scope !340, !noalias !342
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i23
 
-.lr.ph.i.i19:                                     ; preds = %vector.memcheck106.a, %.lr.ph.i.i19
-  %i.ce = phi ptr [ %i.cp, %.lr.ph.i.i19 ], [ %.promoted1112.i18, %vector.memcheck106.a ] ; 5 uses
-  %.05.i.i20 = phi i32 [ %i.co, %.lr.ph.i.i19 ], [ 1024, %vector.memcheck106.a ]
-  %.024.i.i21 = phi ptr [ %i.cr, %.lr.ph.i.i19 ], [ %i.b, %vector.memcheck106.a ] ; 5 uses
+.lr.ph.i.i19:                                     ; preds = %vector.memcheck106, %.lr.ph.i.i19
+  %i.ce = phi ptr [ %i.cp, %.lr.ph.i.i19 ], [ %.promoted1112.i18, %vector.memcheck106 ] ; 5 uses
+  %.05.i.i20 = phi i32 [ %i.co, %.lr.ph.i.i19 ], [ 1024, %vector.memcheck106 ]
+  %.024.i.i21 = phi ptr [ %i.cr, %.lr.ph.i.i19 ], [ %i.b, %vector.memcheck106 ] ; 5 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 1 ; 2 uses
   store ptr %i.cf, ptr %0, align 8, !tbaa !49
   %i.cg = load i8, ptr %i.ce, align 1, !tbaa !51
@@ -3609,7 +3702,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i23: ; preds =
   %.lcssa62 = phi ptr [ %i.bs, %middle.block131 ], [ %i.cp, %.lr.ph.i.i19 ] ; 2 uses
   %i.cs = add nsw i32 %.013.i17, -1024            ; 2 uses
   %i.ct = icmp sgt i32 %.013.i17, 2047
-  br i1 %i.ct, label %vector.memcheck106.a, label %._crit_edge.i9, !llvm.loop !95
+  br i1 %i.ct, label %vector.memcheck106, label %._crit_edge.i9, !llvm.loop !95
 
 ._crit_edge.i9:                                   ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i23, %bb.c
   %.promoted.i10 = phi ptr [ %.promoted10.i8, %bb.c ], [ %.lcssa62, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i23 ] ; 8 uses
@@ -3734,35 +3827,41 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_53Xdr4skipINS_9CharPtrIOEPKcEEvRT0_i.exit24: ; pr
 
 bb.d:                                             ; preds = %bb.a
   %i.eb = trunc i64 %2 to i32
-  %i.ec = shl i32 %i.eb, 2                        ; 3 uses
+  %i.ec = shl i32 %i.eb, 2                        ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
-  %.promoted10.i25 = load ptr, ptr %0, align 8    ; 2 uses
+  %.promoted10.i25 = load ptr, ptr %0, align 8    ; 5 uses
   %i.ed = icmp sgt i32 %i.ec, 1023
-  br i1 %i.ed, label %.lr.ph.i.preheader.i33.preheader, label %._crit_edge.i26
+  br i1 %i.ed, label %vector.memcheck.a, label %._crit_edge.i26
 
-.lr.ph.i.preheader.i33.preheader:                 ; preds = %bb.d
+vector.memcheck.a:                                ; preds = %bb.d
   %scevgep = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %scevgep66 = getelementptr inbounds nuw i8, ptr %i.a, i64 1024 ; 2 uses
+  %13 = add nuw i32 %i.ec, 1023
+  %smin = tail call i32 @llvm.smin.i32(i32 %i.ec, i32 2047)
+  %14 = sub i32 %13, %smin
+  %15 = and i32 %14, -1024
+  %16 = zext i32 %15 to i64
+  %17 = getelementptr i8, ptr %.promoted10.i25, i64 %16
+  %scevgep67 = getelementptr i8, ptr %17, i64 1024 ; 2 uses
   %bound0 = icmp ult ptr %0, %scevgep66
   %bound1 = icmp ult ptr %i.a, %scevgep
   %found.conflict = and i1 %bound0, %bound1
-  br label %vector.memcheck.a
-
-vector.memcheck.a:                                ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i40, %.lr.ph.i.preheader.i33.preheader
-  %.013.i34 = phi i32 [ %i.fe, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i40 ], [ %i.ec, %.lr.ph.i.preheader.i33.preheader ] ; 2 uses
-  %.promoted1112.i35 = phi ptr [ %.lcssa64, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i40 ], [ %.promoted10.i25, %.lr.ph.i.preheader.i33.preheader ] ; 10 uses
-  %scevgep67 = getelementptr i8, ptr %.promoted1112.i35, i64 1024 ; 2 uses
   %bound068 = icmp ult ptr %0, %scevgep67
-  %bound169 = icmp ult ptr %.promoted1112.i35, %scevgep
+  %bound169 = icmp ult ptr %.promoted10.i25, %scevgep
   %found.conflict70 = and i1 %bound068, %bound169
   %conflict.rdx = or i1 %found.conflict, %found.conflict70
   %bound071 = icmp ult ptr %i.a, %scevgep67
-  %bound172 = icmp ult ptr %.promoted1112.i35, %scevgep66
+  %bound172 = icmp ult ptr %.promoted10.i25, %scevgep66
   %found.conflict73 = and i1 %bound071, %bound172
   %conflict.rdx74 = or i1 %conflict.rdx, %found.conflict73
+  br label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i40, %vector.memcheck.a
+  %.013.i34 = phi i32 [ %i.fe, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i40 ], [ %i.ec, %vector.memcheck.a ] ; 2 uses
+  %.promoted1112.i35 = phi ptr [ %.lcssa64, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i40 ], [ %.promoted10.i25, %vector.memcheck.a ] ; 7 uses
   br i1 %conflict.rdx74, label %.lr.ph.i.i36, label %vector.ph
 
-vector.ph:                                        ; preds = %vector.memcheck.a
+vector.ph:                                        ; preds = %vector.memcheck
   %i.ee = getelementptr i8, ptr %.promoted1112.i35, i64 1024
   br label %vector.body
 
@@ -3813,10 +3912,10 @@ middle.block:                                     ; preds = %vector.body
   store ptr %i.ep, ptr %0, align 8, !tbaa !49, !alias.scope !361, !noalias !363
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i40
 
-.lr.ph.i.i36:                                     ; preds = %vector.memcheck.a, %.lr.ph.i.i36
-  %i.eq = phi ptr [ %i.fb, %.lr.ph.i.i36 ], [ %.promoted1112.i35, %vector.memcheck.a ] ; 5 uses
-  %.05.i.i37 = phi i32 [ %i.fa, %.lr.ph.i.i36 ], [ 1024, %vector.memcheck.a ]
-  %.024.i.i38 = phi ptr [ %i.fd, %.lr.ph.i.i36 ], [ %i.a, %vector.memcheck.a ] ; 5 uses
+.lr.ph.i.i36:                                     ; preds = %vector.memcheck, %.lr.ph.i.i36
+  %i.eq = phi ptr [ %i.fb, %.lr.ph.i.i36 ], [ %.promoted1112.i35, %vector.memcheck ] ; 5 uses
+  %.05.i.i37 = phi i32 [ %i.fa, %.lr.ph.i.i36 ], [ 1024, %vector.memcheck ]
+  %.024.i.i38 = phi ptr [ %i.fd, %.lr.ph.i.i36 ], [ %i.a, %vector.memcheck ] ; 5 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 1 ; 2 uses
   store ptr %i.er, ptr %0, align 8, !tbaa !49
   %i.es = load i8, ptr %i.eq, align 1, !tbaa !51
@@ -3845,7 +3944,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i40: ; preds =
   %.lcssa64 = phi ptr [ %i.ee, %middle.block ], [ %i.fb, %.lr.ph.i.i36 ] ; 2 uses
   %i.fe = add nsw i32 %.013.i34, -1024            ; 2 uses
   %i.ff = icmp sgt i32 %.013.i34, 2047
-  br i1 %i.ff, label %vector.memcheck.a, label %._crit_edge.i26, !llvm.loop !95
+  br i1 %i.ff, label %vector.memcheck, label %._crit_edge.i26, !llvm.loop !95
 
 ._crit_edge.i26:                                  ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i40, %bb.d
   %.promoted.i27 = phi ptr [ %.promoted10.i25, %bb.d ], [ %.lcssa64, %_ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i40 ] ; 8 uses
@@ -4247,6 +4346,9 @@ declare <2 x i64> @llvm.umax.v2i64(<2 x i64>, <2 x i64>) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.umax.v2i64(<2 x i64>) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #18
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

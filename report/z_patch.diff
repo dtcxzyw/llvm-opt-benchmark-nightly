@@ -1,0 +1,492 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index c74708fc73e5a..9cc13f52ecac0 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -5986,6 +5986,24 @@ const SCEV *ScalarEvolution::createAddRecFromPHI(PHINode *PN) {
+   if (!BEValueV || !StartValueV)
+     return nullptr;
+ 
++  // If the start value is a PHI defined in a loop that strictly encloses L and
++  // has not been analyzed yet, analyze it first. A parent IV that advances by
++  // an entire inner loop is only recognized as an add-recurrence once the IVs
++  // it depends on have been resolved (see the nested-add-recurrence handling
++  // below). Analyzing the enclosing PHI first establishes that top-down order;
++  // it may recursively compute PN, which is fine as we re-check below. Guarding
++  // on a missing SCEV prevents unbounded recursion.
++  if (auto *StartPN = dyn_cast<PHINode>(StartValueV)) {
++    const Loop *StartLoop = LI.getLoopFor(StartPN->getParent());
++    if (StartLoop && StartLoop != L && StartLoop->contains(L) &&
++        StartLoop->getHeader() == StartPN->getParent() &&
++        !getExistingSCEV(StartPN)) {
++      getSCEV(StartPN);
++      if (const SCEV *S = getExistingSCEV(PN))
++        return S;
++    }
++  }
++
+   assert(ValueExprMap.find_as(PN) == ValueExprMap.end() &&
+          "PHI node already processed?");
+ 
+@@ -6002,6 +6020,19 @@ const SCEV *ScalarEvolution::createAddRecFromPHI(PHINode *PN) {
+   // the back-edge.
+   const SCEV *BEValue = getSCEV(BEValueV);
+ 
++  // If the value coming around the backedge is an add recurrence of a loop
++  // nested inside L, then the PHI is advanced by the entire inner loop on each
++  // iteration of L (e.g. a pointer or integer IV that keeps accumulating across
++  // an inner loop). Its closed form only becomes an add recurrence in L once
++  // the inner loop's contribution is summarized by its exit value, so fold the
++  // backedge value at the scope of L to expose the "SymbolicName + step" shape
++  // handled below.
++  if (const auto *BEAddRec = dyn_cast<SCEVAddRecExpr>(BEValue)) {
++    const Loop *BELoop = BEAddRec->getLoop();
++    if (BELoop != L && L->contains(BELoop))
++      BEValue = getSCEVAtScope(BEValue, L);
++  }
++
+   // NOTE: If BEValue is loop invariant, we know that the PHI node just
+   // has a special value for the first iteration of the loop.
+ 
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/symbolic-stride.ll b/llvm/test/Analysis/LoopAccessAnalysis/symbolic-stride.ll
+index 88cf23e412183..4e575b97691fe 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/symbolic-stride.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/symbolic-stride.ll
+@@ -200,8 +200,8 @@ define void @single_stride_castexpr(i32 %offset, ptr %src, ptr %dst, i1 %cond) {
+ ; CHECK-NEXT:          %gep.src = getelementptr inbounds i32, ptr %src, i32 %iv.3
+ ; CHECK-NEXT:      Grouped accesses:
+ ; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: ((4 * %iv.1) + %dst) High: (804 + (4 * %iv.1) + %dst))
+-; CHECK-NEXT:            Member: {((4 * %iv.1) + %dst),+,4}<%inner.loop>
++; CHECK-NEXT:          (Low: {%dst,+,804}<%outer.header> High: {(804 + %dst),+,804}<%outer.header>)
++; CHECK-NEXT:            Member: {{\{\{}}%dst,+,804}<%outer.header>,+,4}<%inner.loop>
+ ; CHECK-NEXT:        Group GRP1:
+ ; CHECK-NEXT:          (Low: %src High: (804 + %src))
+ ; CHECK-NEXT:            Member: {%src,+,4}<nuw><%inner.loop>
+@@ -212,8 +212,8 @@ define void @single_stride_castexpr(i32 %offset, ptr %src, ptr %dst, i1 %cond) {
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:      Expressions re-written:
+ ; CHECK-NEXT:      [PSE] %gep.dst = getelementptr i32, ptr %dst, i64 %iv.2:
+-; CHECK-NEXT:        {((4 * %iv.1) + %dst),+,(4 * (sext i32 %offset to i64))<nsw>}<%inner.loop>
+-; CHECK-NEXT:        --> {((4 * %iv.1) + %dst),+,4}<%inner.loop>
++; CHECK-NEXT:        {{\{\{}}%dst,+,(804 * (sext i32 %offset to i64))<nsw>}<%outer.header>,+,(4 * (sext i32 %offset to i64))<nsw>}<%inner.loop>
++; CHECK-NEXT:        --> {{\{\{}}%dst,+,804}<%outer.header>,+,4}<%inner.loop>
+ ; CHECK-NEXT:    outer.header:
+ ; CHECK-NEXT:      Report: loop is not the innermost loop
+ ; CHECK-NEXT:      Dependences:
+@@ -262,8 +262,8 @@ define void @single_stride_castexpr_multiuse(i32 %offset, ptr %src, ptr %dst, i1
+ ; CHECK-NEXT:          %gep.src = getelementptr inbounds i32, ptr %src, i64 %iv.3
+ ; CHECK-NEXT:      Grouped accesses:
+ ; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: ((4 * %iv.1) + %dst) High: (804 + (4 * %iv.1) + (-4 * (zext i32 %offset to i64))<nsw> + %dst))
+-; CHECK-NEXT:            Member: {((4 * %iv.1) + %dst),+,4}<%inner.loop>
++; CHECK-NEXT:          (Low: {%dst,+,800}<%outer.header> High: {(804 + (-4 * (zext i32 %offset to i64))<nsw> + %dst),+,800}<%outer.header>)
++; CHECK-NEXT:            Member: {{\{\{}}%dst,+,800}<%outer.header>,+,4}<%inner.loop>
+ ; CHECK-NEXT:        Group GRP1:
+ ; CHECK-NEXT:          (Low: (4 + %src) High: (808 + (-4 * (zext i32 %offset to i64))<nsw> + %src))
+ ; CHECK-NEXT:            Member: {(4 + %src),+,4}<%inner.loop>
+@@ -277,8 +277,8 @@ define void @single_stride_castexpr_multiuse(i32 %offset, ptr %src, ptr %dst, i1
+ ; CHECK-NEXT:        {((4 * (zext i32 %offset to i64))<nuw><nsw> + %src),+,4}<%inner.loop>
+ ; CHECK-NEXT:        --> {(4 + %src),+,4}<%inner.loop>
+ ; CHECK-NEXT:      [PSE] %gep.dst = getelementptr i32, ptr %dst, i64 %iv.2:
+-; CHECK-NEXT:        {((4 * %iv.1) + %dst),+,(4 * (sext i32 %offset to i64))<nsw>}<%inner.loop>
+-; CHECK-NEXT:        --> {((4 * %iv.1) + %dst),+,4}<%inner.loop>
++; CHECK-NEXT:        {{\{\{}}%dst,+,(4 * (sext i32 %offset to i64) * (201 + (-1 * (zext i32 %offset to i64))<nsw>)<nsw>)}<%outer.header>,+,(4 * (sext i32 %offset to i64))<nsw>}<%inner.loop>
++; CHECK-NEXT:        --> {{\{\{}}%dst,+,800}<%outer.header>,+,4}<%inner.loop>
+ ; CHECK-NEXT:    outer.header:
+ ; CHECK-NEXT:      Report: loop is not the innermost loop
+ ; CHECK-NEXT:      Dependences:
+diff --git a/llvm/test/Analysis/ScalarEvolution/nested-addrec-via-inner-loop.ll b/llvm/test/Analysis/ScalarEvolution/nested-addrec-via-inner-loop.ll
+new file mode 100644
+index 0000000000000..050b54dd5e765
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/nested-addrec-via-inner-loop.ll
+@@ -0,0 +1,130 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py
++; RUN: opt < %s -S -disable-output "-passes=print<scalar-evolution>" 2>&1 | FileCheck %s
++
++; An outer-loop IV that is advanced by an entire inner loop (with a computable
++; backedge-taken count) should be recognized as an add-recurrence of the outer
++; loop, using the inner loop's exit value as its step.
++
++; %outer.ptr advances by 8 bytes per inner iteration for %n iterations, so its
++; outer step is 8 * %n and it should become {%p,+,(8 * %n)}<%outer>.
++define void @outer_ptr_advanced_by_inner(ptr %p, i32 %n, i32 %m) {
++; CHECK-LABEL: 'outer_ptr_advanced_by_inner'
++; CHECK-NEXT:  Classifying expressions for: @outer_ptr_advanced_by_inner
++; CHECK-NEXT:    %guard = and i1 %n.pos, %m.pos
++; CHECK-NEXT:    --> (%n.pos umin %m.pos) U: full-set S: full-set
++; CHECK-NEXT:    %outer.iv = phi i32 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%outer> U: [0,-2147483648) S: [0,-2147483648) Exits: (-1 + %m) LoopDispositions: { %outer: Computable, %inner: Invariant }
++; CHECK-NEXT:    %outer.ptr = phi ptr [ %p, %entry ], [ %inner.ptr.next.lcssa, %outer.latch ]
++; CHECK-NEXT:    --> {%p,+,(8 + (8 * (zext i32 (-1 + %n) to i64))<nuw><nsw>)<nuw><nsw>}<%outer> U: full-set S: full-set Exits: (((zext i32 (-1 + %m) to i64) * (8 + (8 * (zext i32 (-1 + %n) to i64))<nuw><nsw>)<nuw><nsw>) + %p) LoopDispositions: { %outer: Computable, %inner: Invariant }
++; CHECK-NEXT:    %inner.iv = phi i32 [ 0, %outer ], [ %inner.iv.next, %inner ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%inner> U: [0,-2147483648) S: [0,-2147483648) Exits: (-1 + %n) LoopDispositions: { %inner: Computable, %outer: Uniform }
++; CHECK-NEXT:    %inner.ptr = phi ptr [ %outer.ptr, %outer ], [ %inner.ptr.next, %inner ]
++; CHECK-NEXT:    --> {{\{\{}}%p,+,(8 + (8 * (zext i32 (-1 + %n) to i64))<nuw><nsw>)<nuw><nsw>}<%outer>,+,8}<nuw><%inner> U: full-set S: full-set Exits: {((8 * (zext i32 (-1 + %n) to i64))<nuw><nsw> + %p),+,(8 + (8 * (zext i32 (-1 + %n) to i64))<nuw><nsw>)<nuw><nsw>}<%outer> LoopDispositions: { %inner: Computable, %outer: Variant }
++; CHECK-NEXT:    %inner.ptr.next = getelementptr inbounds i8, ptr %inner.ptr, i64 8
++; CHECK-NEXT:    --> {{\{\{}}(8 + %p),+,(8 + (8 * (zext i32 (-1 + %n) to i64))<nuw><nsw>)<nuw><nsw>}<%outer>,+,8}<nw><%inner> U: full-set S: full-set Exits: {(8 + (8 * (zext i32 (-1 + %n) to i64))<nuw><nsw> + %p),+,(8 + (8 * (zext i32 (-1 + %n) to i64))<nuw><nsw>)<nuw><nsw>}<%outer> LoopDispositions: { %inner: Computable, %outer: Variant }
++; CHECK-NEXT:    %inner.iv.next = add nuw nsw i32 %inner.iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%inner> U: [1,-2147483648) S: [1,-2147483648) Exits: %n LoopDispositions: { %inner: Computable, %outer: Uniform }
++; CHECK-NEXT:    %inner.ptr.next.lcssa = phi ptr [ %inner.ptr.next, %inner ]
++; CHECK-NEXT:    --> {{\{\{}}(8 + %p),+,(8 + (8 * (zext i32 (-1 + %n) to i64))<nuw><nsw>)<nuw><nsw>}<%outer>,+,8}<nw><%inner> U: full-set S: full-set --> {(8 + (8 * (zext i32 (-1 + %n) to i64))<nuw><nsw> + %p),+,(8 + (8 * (zext i32 (-1 + %n) to i64))<nuw><nsw>)<nuw><nsw>}<%outer> U: full-set S: full-set Exits: (8 + (8 * (zext i32 (-1 + %n) to i64))<nuw><nsw> + ((zext i32 (-1 + %m) to i64) * (8 + (8 * (zext i32 (-1 + %n) to i64))<nuw><nsw>)<nuw><nsw>) + %p) LoopDispositions: { %outer: Variant, %inner: Computable }
++; CHECK-NEXT:    %outer.iv.next = add nuw nsw i32 %outer.iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%outer> U: [1,-2147483648) S: [1,-2147483648) Exits: %m LoopDispositions: { %outer: Computable, %inner: Invariant }
++; CHECK-NEXT:  Determining loop execution counts for: @outer_ptr_advanced_by_inner
++; CHECK-NEXT:  Loop %inner: backedge-taken count is (-1 + %n)
++; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is (-1 + %n)
++; CHECK-NEXT:  Loop %inner: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer: backedge-taken count is (-1 + %m)
++; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %outer: symbolic max backedge-taken count is (-1 + %m)
++; CHECK-NEXT:  Loop %outer: Trip multiple is 1
++;
++entry:
++  %n.pos = icmp ne i32 %n, 0
++  %m.pos = icmp ne i32 %m, 0
++  %guard = and i1 %n.pos, %m.pos
++  br i1 %guard, label %outer, label %exit
++
++outer:
++  %outer.iv = phi i32 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %outer.ptr = phi ptr [ %p, %entry ], [ %inner.ptr.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %inner.iv = phi i32 [ 0, %outer ], [ %inner.iv.next, %inner ]
++  %inner.ptr = phi ptr [ %outer.ptr, %outer ], [ %inner.ptr.next, %inner ]
++  store i64 0, ptr %inner.ptr, align 8
++  %inner.ptr.next = getelementptr inbounds i8, ptr %inner.ptr, i64 8
++  %inner.iv.next = add nuw nsw i32 %inner.iv, 1
++  %inner.ec = icmp eq i32 %inner.iv.next, %n
++  br i1 %inner.ec, label %outer.latch, label %inner
++
++outer.latch:
++  %inner.ptr.next.lcssa = phi ptr [ %inner.ptr.next, %inner ]
++  %outer.iv.next = add nuw nsw i32 %outer.iv, 1
++  %outer.ec = icmp eq i32 %outer.iv.next, %m
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; Negative test: the inner trip count depends on the outer IV (triangular
++; loop), so the outer IV's step is not loop-invariant and the outer PHI must
++; not be turned into an affine add-recurrence.
++define void @triangular_not_affine(ptr %p, i32 %m) {
++; CHECK-LABEL: 'triangular_not_affine'
++; CHECK-NEXT:  Classifying expressions for: @triangular_not_affine
++; CHECK-NEXT:    %outer.iv = phi i32 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%outer> U: [0,-2147483648) S: [0,-2147483648) Exits: (-1 + %m) LoopDispositions: { %outer: Computable, %inner: Invariant }
++; CHECK-NEXT:    %outer.ptr = phi ptr [ %p, %entry ], [ %inner.ptr.next.lcssa, %outer.latch ]
++; CHECK-NEXT:    --> %outer.ptr U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %outer: Variant, %inner: Invariant }
++; CHECK-NEXT:    %inner.iv = phi i32 [ 0, %outer ], [ %inner.iv.next, %inner ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%inner> U: [0,2147483647) S: [0,2147483647) Exits: {-1,+,1}<nw><%outer> LoopDispositions: { %inner: Computable, %outer: Uniform }
++; CHECK-NEXT:    %inner.ptr = phi ptr [ %outer.ptr, %outer ], [ %inner.ptr.next, %inner ]
++; CHECK-NEXT:    --> {%outer.ptr,+,8}<nuw><%inner> U: full-set S: full-set Exits: ((8 * (zext i32 {-1,+,1}<nw><%outer> to i64))<nuw><nsw> + %outer.ptr) LoopDispositions: { %inner: Computable, %outer: Variant }
++; CHECK-NEXT:    %inner.ptr.next = getelementptr inbounds i8, ptr %inner.ptr, i64 8
++; CHECK-NEXT:    --> {(8 + %outer.ptr),+,8}<nw><%inner> U: full-set S: full-set Exits: (8 + (8 * (zext i32 {-1,+,1}<nw><%outer> to i64))<nuw><nsw> + %outer.ptr) LoopDispositions: { %inner: Computable, %outer: Variant }
++; CHECK-NEXT:    %inner.iv.next = add nuw nsw i32 %inner.iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%inner> U: [1,-2147483648) S: [1,-2147483648) Exits: {0,+,1}<nuw><nsw><%outer> LoopDispositions: { %inner: Computable, %outer: Uniform }
++; CHECK-NEXT:    %inner.ptr.next.lcssa = phi ptr [ %inner.ptr.next, %inner ], [ %outer.ptr, %outer ]
++; CHECK-NEXT:    --> %inner.ptr.next.lcssa U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %outer: Variant, %inner: Invariant }
++; CHECK-NEXT:    %outer.iv.next = add nuw nsw i32 %outer.iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%outer> U: [1,-2147483648) S: [1,-2147483648) Exits: %m LoopDispositions: { %outer: Computable, %inner: Invariant }
++; CHECK-NEXT:  Determining loop execution counts for: @triangular_not_affine
++; CHECK-NEXT:  Loop %inner: backedge-taken count is {-1,+,1}<nw><%outer>
++; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 2147483646
++; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is {-1,+,1}<nw><%outer>
++; CHECK-NEXT:  Loop %inner: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer: backedge-taken count is (-1 + %m)
++; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %outer: symbolic max backedge-taken count is (-1 + %m)
++; CHECK-NEXT:  Loop %outer: Trip multiple is 1
++;
++entry:
++  %m.pos = icmp ne i32 %m, 0
++  br i1 %m.pos, label %outer, label %exit
++
++outer:
++  %outer.iv = phi i32 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %outer.ptr = phi ptr [ %p, %entry ], [ %inner.ptr.next.lcssa, %outer.latch ]
++  %inner.guard = icmp ne i32 %outer.iv, 0
++  br i1 %inner.guard, label %inner, label %outer.latch
++
++inner:
++  %inner.iv = phi i32 [ 0, %outer ], [ %inner.iv.next, %inner ]
++  %inner.ptr = phi ptr [ %outer.ptr, %outer ], [ %inner.ptr.next, %inner ]
++  store i64 0, ptr %inner.ptr, align 8
++  %inner.ptr.next = getelementptr inbounds i8, ptr %inner.ptr, i64 8
++  %inner.iv.next = add nuw nsw i32 %inner.iv, 1
++  %inner.ec = icmp eq i32 %inner.iv.next, %outer.iv
++  br i1 %inner.ec, label %outer.latch, label %inner
++
++outer.latch:
++  %inner.ptr.next.lcssa = phi ptr [ %inner.ptr.next, %inner ], [ %outer.ptr, %outer ]
++  %outer.iv.next = add nuw nsw i32 %outer.iv, 1
++  %outer.ec = icmp eq i32 %outer.iv.next, %m
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/postinc-iv-used-by-urem-and-udiv.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/postinc-iv-used-by-urem-and-udiv.ll
+index 1fec73972ec51..ff658fb84b1db 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/postinc-iv-used-by-urem-and-udiv.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/postinc-iv-used-by-urem-and-udiv.ll
+@@ -136,44 +136,44 @@ define i64 @test_normalization_failure_in_any_extend(ptr %i, i64 %i1, i8 %i25) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP_1_HEADER:%.*]]
+ ; CHECK:       loop.1.header:
+-; CHECK-NEXT:    [[IV_1:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[IV_1_NEXT:%.*]], [[LOOP_1_LATCH:%.*]] ]
+-; CHECK-NEXT:    [[IV_2:%.*]] = phi i64 [ [[I1]], [[ENTRY]] ], [ [[TMP1:%.*]], [[LOOP_1_LATCH]] ]
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[IV_2]], 2
++; CHECK-NEXT:    [[LSR_IV1:%.*]] = phi i64 [ [[LSR_IV_NEXT2:%.*]], [[LOOP_1_LATCH:%.*]] ], [ [[I1]], [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[IV_1:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[IV_1_NEXT:%.*]], [[LOOP_1_LATCH]] ]
+ ; CHECK-NEXT:    br label [[LOOP_2:%.*]]
+ ; CHECK:       loop.2:
++; CHECK-NEXT:    [[LSR_IV3:%.*]] = phi i64 [ [[LSR_IV_NEXT4:%.*]], [[LOOP_2]] ], [ 0, [[LOOP_1_HEADER]] ]
+ ; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i32 [ [[LSR_IV_NEXT:%.*]], [[LOOP_2]] ], [ 2, [[LOOP_1_HEADER]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nsw i32 [[LSR_IV]], -1
++; CHECK-NEXT:    [[LSR_IV_NEXT4]] = add nsw i64 [[LSR_IV3]], -1
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp sgt i32 [[LSR_IV_NEXT]], 0
+ ; CHECK-NEXT:    br i1 [[C_1]], label [[LOOP_2]], label [[LOOP_3_PREHEADER:%.*]]
+ ; CHECK:       loop.3.preheader:
++; CHECK-NEXT:    [[TMP0:%.*]] = sub i64 [[LSR_IV1]], [[LSR_IV3]]
+ ; CHECK-NEXT:    br label [[LOOP_3:%.*]]
+ ; CHECK:       loop.3:
+-; CHECK-NEXT:    [[LSR_IV5:%.*]] = phi i64 [ 0, [[LOOP_3_PREHEADER]] ], [ [[LSR_IV_NEXT6:%.*]], [[LOOP_3]] ]
+-; CHECK-NEXT:    [[LSR_IV1:%.*]] = phi i64 [ 2, [[LOOP_3_PREHEADER]] ], [ [[LSR_IV_NEXT2:%.*]], [[LOOP_3]] ]
++; CHECK-NEXT:    [[LSR_IV9:%.*]] = phi i64 [ [[TMP0]], [[LOOP_3_PREHEADER]] ], [ [[LSR_IV_NEXT10:%.*]], [[LOOP_3]] ]
++; CHECK-NEXT:    [[LSR_IV5:%.*]] = phi i64 [ 2, [[LOOP_3_PREHEADER]] ], [ [[LSR_IV_NEXT6:%.*]], [[LOOP_3]] ]
+ ; CHECK-NEXT:    [[IV_5:%.*]] = phi i32 [ [[IV_5_NEXT:%.*]], [[LOOP_3]] ], [ 1, [[LOOP_3_PREHEADER]] ]
+ ; CHECK-NEXT:    [[IV_5_NEXT]] = add nsw i32 [[IV_5]], -1
+ ; CHECK-NEXT:    [[LSR:%.*]] = trunc i32 [[IV_5_NEXT]] to i8
+-; CHECK-NEXT:    [[LSR_IV_NEXT2]] = add nsw i64 [[LSR_IV1]], -1
+-; CHECK-NEXT:    [[TMP:%.*]] = trunc i64 [[LSR_IV_NEXT2]] to i32
+ ; CHECK-NEXT:    [[LSR_IV_NEXT6]] = add nsw i64 [[LSR_IV5]], -1
++; CHECK-NEXT:    [[TMP:%.*]] = trunc i64 [[LSR_IV_NEXT6]] to i32
++; CHECK-NEXT:    [[LSR_IV_NEXT10]] = add i64 [[LSR_IV9]], 1
+ ; CHECK-NEXT:    [[C_2:%.*]] = icmp sgt i32 [[TMP]], 0
+ ; CHECK-NEXT:    br i1 [[C_2]], label [[LOOP_3]], label [[LOOP_1_LATCH]]
+ ; CHECK:       loop.1.latch:
+ ; CHECK-NEXT:    [[IV_1_NEXT]] = add nuw nsw i32 [[IV_1]], 1
+-; CHECK-NEXT:    [[TMP1]] = sub i64 [[TMP0]], [[LSR_IV_NEXT6]]
++; CHECK-NEXT:    [[LSR_IV_NEXT2]] = add i64 [[LSR_IV1]], 4
+ ; CHECK-NEXT:    [[C_3:%.*]] = icmp eq i32 [[IV_1_NEXT]], 8
+ ; CHECK-NEXT:    br i1 [[C_3]], label [[EXIT:%.*]], label [[LOOP_1_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    call void @use.i32(i32 [[IV_5_NEXT]])
+-; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[IV_2]], 1
+-; CHECK-NEXT:    [[TMP3:%.*]] = sub i64 [[TMP2]], [[LSR_IV_NEXT6]]
+-; CHECK-NEXT:    call void @use(i64 [[TMP3]])
+-; CHECK-NEXT:    call void @use(i64 [[LSR_IV_NEXT2]])
+-; CHECK-NEXT:    [[TMP4:%.*]] = udiv i32 [[IV_5_NEXT]], 53
+-; CHECK-NEXT:    [[TMP5:%.*]] = trunc i32 [[TMP4]] to i8
+-; CHECK-NEXT:    [[TMP6:%.*]] = mul i8 [[TMP5]], 53
+-; CHECK-NEXT:    [[TMP7:%.*]] = sub i8 [[LSR]], [[TMP6]]
+-; CHECK-NEXT:    call void @use.i8(i8 [[TMP7]])
++; CHECK-NEXT:    call void @use(i64 [[LSR_IV_NEXT10]])
++; CHECK-NEXT:    call void @use(i64 [[LSR_IV_NEXT6]])
++; CHECK-NEXT:    [[TMP1:%.*]] = udiv i32 [[IV_5_NEXT]], 53
++; CHECK-NEXT:    [[TMP2:%.*]] = trunc i32 [[TMP1]] to i8
++; CHECK-NEXT:    [[TMP3:%.*]] = mul i8 [[TMP2]], 53
++; CHECK-NEXT:    [[TMP4:%.*]] = sub i8 [[LSR]], [[TMP3]]
++; CHECK-NEXT:    call void @use.i8(i8 [[TMP4]])
+ ; CHECK-NEXT:    [[I26:%.*]] = xor i8 [[I25]], 5
+ ; CHECK-NEXT:    [[I27:%.*]] = zext i8 [[I26]] to i64
+ ; CHECK-NEXT:    ret i64 [[I27]]
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/nonintegral.ll b/llvm/test/Transforms/LoopStrengthReduce/nonintegral.ll
+index 6c0eb9bb4995d..27ca2d9a3e1df 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/nonintegral.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/nonintegral.ll
+@@ -13,29 +13,27 @@ define void @japi1__unsafe_getindex_65028(ptr addrspace(10) %arg) {
+ ; CHECK-LABEL: define void @japi1__unsafe_getindex_65028
+ ; CHECK-SAME: (ptr addrspace(10) [[ARG:%.*]]) {
+ ; CHECK-NEXT:  top:
++; CHECK-NEXT:    [[SCEVGEP8:%.*]] = getelementptr i8, ptr addrspace(10) [[ARG]], i64 -24
+ ; CHECK-NEXT:    br label [[L86:%.*]]
+ ; CHECK:       L86:
+-; CHECK-NEXT:    [[LSR_IV4:%.*]] = phi i64 [ [[LSR_IV_NEXT5:%.*]], [[L86]] ], [ -2, [[TOP:%.*]] ]
+-; CHECK-NEXT:    [[LSR_IV_NEXT5]] = add nsw i64 [[LSR_IV4]], 2
++; CHECK-NEXT:    [[LSR_IV9:%.*]] = phi ptr addrspace(10) [ [[SCEVGEP10:%.*]], [[L86]] ], [ [[SCEVGEP8]], [[TOP:%.*]] ]
++; CHECK-NEXT:    [[SCEVGEP10]] = getelementptr i8, ptr addrspace(10) [[LSR_IV9]], i64 16
+ ; CHECK-NEXT:    br i1 false, label [[L86]], label [[IF29:%.*]]
+ ; CHECK:       if29:
+-; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr addrspace(10) [[ARG]], i64 -8
++; CHECK-NEXT:    [[SCEVGEP10_LCSSA:%.*]] = phi ptr addrspace(10) [ [[SCEVGEP10]], [[L86]] ]
+ ; CHECK-NEXT:    br label [[IF31:%.*]]
+ ; CHECK:       if31:
+-; CHECK-NEXT:    %"#temp#1.sroa.0.022" = phi i64 [ 0, [[IF29]] ], [ [[TMP3_LCSSA:%.*]], [[IF38:%.*]] ]
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[LSR_IV_NEXT5]], %"#temp#1.sroa.0.022"
+-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 3
+-; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr addrspace(10) [[SCEVGEP]], i64 [[TMP1]]
++; CHECK-NEXT:    [[LSR_IV2:%.*]] = phi ptr addrspace(10) [ [[SCEVGEP3:%.*]], [[IF38:%.*]] ], [ [[SCEVGEP10_LCSSA]], [[IF29]] ]
+ ; CHECK-NEXT:    br label [[L119:%.*]]
+ ; CHECK:       L119:
+-; CHECK-NEXT:    [[LSR_IV2:%.*]] = phi ptr addrspace(10) [ [[SCEVGEP3:%.*]], [[L119]] ], [ [[SCEVGEP1]], [[IF31]] ]
+-; CHECK-NEXT:    [[I5_0:%.*]] = phi i64 [ %"#temp#1.sroa.0.022", [[IF31]] ], [ [[TMP3:%.*]], [[L119]] ]
+-; CHECK-NEXT:    [[TMP3]] = add i64 [[I5_0]], 1
+-; CHECK-NEXT:    [[SCEVGEP3]] = getelementptr i8, ptr addrspace(10) [[LSR_IV2]], i64 8
++; CHECK-NEXT:    [[LSR_IV4:%.*]] = phi i64 [ [[LSR_IV_NEXT:%.*]], [[L119]] ], [ 0, [[IF31]] ]
++; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nuw nsw i64 [[LSR_IV4]], 1
+ ; CHECK-NEXT:    br i1 false, label [[L119]], label [[IF38]]
+ ; CHECK:       if38:
+-; CHECK-NEXT:    [[TMP3_LCSSA]] = phi i64 [ [[TMP3]], [[L119]] ]
+-; CHECK-NEXT:    [[TMP6:%.*]] = load i64, ptr addrspace(10) [[SCEVGEP3]], align 8
++; CHECK-NEXT:    [[TMP0:%.*]] = shl i64 [[LSR_IV_NEXT]], 3
++; CHECK-NEXT:    [[SCEVGEP5:%.*]] = getelementptr i8, ptr addrspace(10) [[LSR_IV2]], i64 [[TMP0]]
++; CHECK-NEXT:    [[TMP6:%.*]] = load i64, ptr addrspace(10) [[SCEVGEP5]], align 8
++; CHECK-NEXT:    [[SCEVGEP3]] = getelementptr i8, ptr addrspace(10) [[LSR_IV2]], i64 8
+ ; CHECK-NEXT:    br i1 true, label [[DONE:%.*]], label [[IF31]]
+ ; CHECK:       done:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/LoopVectorize/nested-loop-interleave-group.ll b/llvm/test/Transforms/LoopVectorize/nested-loop-interleave-group.ll
+new file mode 100644
+index 0000000000000..46a597e4fea1f
+--- /dev/null
++++ b/llvm/test/Transforms/LoopVectorize/nested-loop-interleave-group.ll
+@@ -0,0 +1,142 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
++; RUN: opt -passes=loop-vectorize -enable-interleaved-mem-accesses -force-vector-width=4 -force-vector-interleave=1 -S %s | FileCheck %s
++
++target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
++
++; Two stores in an inner loop write to adjacent elements through two pointers
++; (%pA and %pB = %dst + 1) that are both advanced by 2 elements each inner
++; iteration and carried across the outer loop. Recognizing the outer pointer
++; PHIs as add-recurrences lets ScalarEvolution compute a constant distance
++; between the stores, so a stride-2 interleave group can be formed instead of
++; scalarizing the stores.
++define void @nested_interleave_group(ptr noalias %src, ptr noalias %dst, i64 %width, i64 %height) {
++; CHECK-LABEL: @nested_interleave_group(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[DST_1:%.*]] = getelementptr inbounds nuw i8, ptr [[DST:%.*]], i64 4
++; CHECK-NEXT:    [[WIDTH_POS:%.*]] = icmp ne i64 [[WIDTH:%.*]], 0
++; CHECK-NEXT:    [[HEIGHT_POS:%.*]] = icmp ne i64 [[HEIGHT:%.*]], 0
++; CHECK-NEXT:    [[GUARD:%.*]] = and i1 [[WIDTH_POS]], [[HEIGHT_POS]]
++; CHECK-NEXT:    br i1 [[GUARD]], label [[OUTER_PH:%.*]], label [[EXIT:%.*]]
++; CHECK:       outer.ph:
++; CHECK-NEXT:    [[TMP0:%.*]] = mul i64 [[HEIGHT]], [[WIDTH]]
++; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 3
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[DST]], i64 [[TMP1]]
++; CHECK-NEXT:    [[TMP2:%.*]] = shl i64 [[WIDTH]], 3
++; CHECK-NEXT:    [[TMP3:%.*]] = shl i64 [[HEIGHT]], 2
++; CHECK-NEXT:    [[TMP4:%.*]] = shl i64 [[WIDTH]], 2
++; CHECK-NEXT:    [[TMP5:%.*]] = add i64 [[TMP3]], [[TMP4]]
++; CHECK-NEXT:    [[TMP6:%.*]] = add i64 [[TMP5]], -4
++; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[SRC:%.*]], i64 [[TMP6]]
++; CHECK-NEXT:    br label [[OUTER:%.*]]
++; CHECK:       outer:
++; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ 0, [[OUTER_PH]] ], [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ]
++; CHECK-NEXT:    [[PA:%.*]] = phi ptr [ [[DST]], [[OUTER_PH]] ], [ [[PA_NEXT_LCSSA:%.*]], [[OUTER_LATCH]] ]
++; CHECK-NEXT:    [[PB:%.*]] = phi ptr [ [[DST_1]], [[OUTER_PH]] ], [ [[PB_NEXT_LCSSA:%.*]], [[OUTER_LATCH]] ]
++; CHECK-NEXT:    [[ROW:%.*]] = getelementptr inbounds float, ptr [[SRC]], i64 [[OUTER_IV]]
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[WIDTH]], 4
++; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label [[SCALAR_PH:%.*]], label [[VECTOR_MEMCHECK:%.*]]
++; CHECK:       vector.memcheck:
++; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[DST]], [[SCEVGEP1]]
++; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[SRC]], [[SCEVGEP]]
++; CHECK-NEXT:    [[FOUND_CONFLICT:%.*]] = and i1 [[BOUND0]], [[BOUND1]]
++; CHECK-NEXT:    [[STRIDE_CHECK:%.*]] = icmp slt i64 [[TMP2]], 0
++; CHECK-NEXT:    [[TMP7:%.*]] = or i1 [[FOUND_CONFLICT]], [[STRIDE_CHECK]]
++; CHECK-NEXT:    br i1 [[TMP7]], label [[SCALAR_PH]], label [[VECTOR_PH:%.*]]
++; CHECK:       vector.ph:
++; CHECK-NEXT:    [[N_MOD_VF:%.*]] = urem i64 [[WIDTH]], 4
++; CHECK-NEXT:    [[N_VEC:%.*]] = sub i64 [[WIDTH]], [[N_MOD_VF]]
++; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[N_VEC]], 3
++; CHECK-NEXT:    [[TMP9:%.*]] = getelementptr i8, ptr [[PA]], i64 [[TMP8]]
++; CHECK-NEXT:    [[TMP10:%.*]] = getelementptr i8, ptr [[PB]], i64 [[TMP8]]
++; CHECK-NEXT:    br label [[VECTOR_BODY:%.*]]
++; CHECK:       vector.body:
++; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[TMP11:%.*]] = shl i64 [[INDEX]], 3
++; CHECK-NEXT:    [[NEXT_GEP:%.*]] = getelementptr i8, ptr [[PA]], i64 [[TMP11]]
++; CHECK-NEXT:    [[TMP12:%.*]] = getelementptr inbounds float, ptr [[ROW]], i64 [[INDEX]]
++; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <4 x float>, ptr [[TMP12]], align 4, !alias.scope [[META0:![0-9]+]]
++; CHECK-NEXT:    [[TMP13:%.*]] = fmul <4 x float> [[WIDE_LOAD]], splat (float 2.000000e+00)
++; CHECK-NEXT:    [[TMP14:%.*]] = fmul <4 x float> [[WIDE_LOAD]], splat (float 3.000000e+00)
++; CHECK-NEXT:    [[TMP15:%.*]] = shufflevector <4 x float> [[TMP13]], <4 x float> [[TMP14]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    [[INTERLEAVED_VEC:%.*]] = shufflevector <8 x float> [[TMP15]], <8 x float> poison, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
++; CHECK-NEXT:    store <8 x float> [[INTERLEAVED_VEC]], ptr [[NEXT_GEP]], align 4, !alias.scope [[META3:![0-9]+]], !noalias [[META0]]
++; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 4
++; CHECK-NEXT:    [[TMP16:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[TMP16]], label [[MIDDLE_BLOCK:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP5:![0-9]+]]
++; CHECK:       middle.block:
++; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[WIDTH]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[CMP_N]], label [[OUTER_LATCH]], label [[SCALAR_PH]]
++; CHECK:       scalar.ph:
++; CHECK-NEXT:    [[BC_RESUME_VAL:%.*]] = phi i64 [ [[N_VEC]], [[MIDDLE_BLOCK]] ], [ 0, [[OUTER]] ], [ 0, [[VECTOR_MEMCHECK]] ]
++; CHECK-NEXT:    [[BC_RESUME_VAL2:%.*]] = phi ptr [ [[TMP9]], [[MIDDLE_BLOCK]] ], [ [[PA]], [[OUTER]] ], [ [[PA]], [[VECTOR_MEMCHECK]] ]
++; CHECK-NEXT:    [[BC_RESUME_VAL3:%.*]] = phi ptr [ [[TMP10]], [[MIDDLE_BLOCK]] ], [ [[PB]], [[OUTER]] ], [ [[PB]], [[VECTOR_MEMCHECK]] ]
++; CHECK-NEXT:    br label [[INNER:%.*]]
++; CHECK:       inner:
++; CHECK-NEXT:    [[INNER_IV:%.*]] = phi i64 [ [[BC_RESUME_VAL]], [[SCALAR_PH]] ], [ [[INNER_IV_NEXT:%.*]], [[INNER]] ]
++; CHECK-NEXT:    [[PA_INNER:%.*]] = phi ptr [ [[BC_RESUME_VAL2]], [[SCALAR_PH]] ], [ [[PA_NEXT:%.*]], [[INNER]] ]
++; CHECK-NEXT:    [[PB_INNER:%.*]] = phi ptr [ [[BC_RESUME_VAL3]], [[SCALAR_PH]] ], [ [[PB_NEXT:%.*]], [[INNER]] ]
++; CHECK-NEXT:    [[GEP_SRC:%.*]] = getelementptr inbounds float, ptr [[ROW]], i64 [[INNER_IV]]
++; CHECK-NEXT:    [[LD:%.*]] = load float, ptr [[GEP_SRC]], align 4
++; CHECK-NEXT:    [[MUL_A:%.*]] = fmul float [[LD]], 2.000000e+00
++; CHECK-NEXT:    store float [[MUL_A]], ptr [[PA_INNER]], align 4
++; CHECK-NEXT:    [[MUL_B:%.*]] = fmul float [[LD]], 3.000000e+00
++; CHECK-NEXT:    store float [[MUL_B]], ptr [[PB_INNER]], align 4
++; CHECK-NEXT:    [[PA_NEXT]] = getelementptr inbounds nuw i8, ptr [[PA_INNER]], i64 8
++; CHECK-NEXT:    [[PB_NEXT]] = getelementptr inbounds nuw i8, ptr [[PB_INNER]], i64 8
++; CHECK-NEXT:    [[INNER_IV_NEXT]] = add nuw nsw i64 [[INNER_IV]], 1
++; CHECK-NEXT:    [[INNER_EC:%.*]] = icmp eq i64 [[INNER_IV_NEXT]], [[WIDTH]]
++; CHECK-NEXT:    br i1 [[INNER_EC]], label [[OUTER_LATCH]], label [[INNER]], !llvm.loop [[LOOP8:![0-9]+]]
++; CHECK:       outer.latch:
++; CHECK-NEXT:    [[PA_NEXT_LCSSA]] = phi ptr [ [[PA_NEXT]], [[INNER]] ], [ [[TMP9]], [[MIDDLE_BLOCK]] ]
++; CHECK-NEXT:    [[PB_NEXT_LCSSA]] = phi ptr [ [[PB_NEXT]], [[INNER]] ], [ [[TMP10]], [[MIDDLE_BLOCK]] ]
++; CHECK-NEXT:    [[OUTER_IV_NEXT]] = add nuw nsw i64 [[OUTER_IV]], 1
++; CHECK-NEXT:    [[OUTER_EC:%.*]] = icmp eq i64 [[OUTER_IV_NEXT]], [[HEIGHT]]
++; CHECK-NEXT:    br i1 [[OUTER_EC]], label [[EXIT_LOOPEXIT:%.*]], label [[OUTER]]
++; CHECK:       exit.loopexit:
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %dst.1 = getelementptr inbounds nuw i8, ptr %dst, i64 4
++  %width.pos = icmp ne i64 %width, 0
++  %height.pos = icmp ne i64 %height, 0
++  %guard = and i1 %width.pos, %height.pos
++  br i1 %guard, label %outer.ph, label %exit
++
++outer.ph:
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %outer.ph ], [ %outer.iv.next, %outer.latch ]
++  %pA = phi ptr [ %dst, %outer.ph ], [ %pA.next.lcssa, %outer.latch ]
++  %pB = phi ptr [ %dst.1, %outer.ph ], [ %pB.next.lcssa, %outer.latch ]
++  %row = getelementptr inbounds float, ptr %src, i64 %outer.iv
++  br label %inner
++
++inner:
++  %inner.iv = phi i64 [ 0, %outer ], [ %inner.iv.next, %inner ]
++  %pA.inner = phi ptr [ %pA, %outer ], [ %pA.next, %inner ]
++  %pB.inner = phi ptr [ %pB, %outer ], [ %pB.next, %inner ]
++  %gep.src = getelementptr inbounds float, ptr %row, i64 %inner.iv
++  %ld = load float, ptr %gep.src, align 4
++  %mul.a = fmul float %ld, 2.000000e+00
++  store float %mul.a, ptr %pA.inner, align 4
++  %mul.b = fmul float %ld, 3.000000e+00
++  store float %mul.b, ptr %pB.inner, align 4
++  %pA.next = getelementptr inbounds nuw i8, ptr %pA.inner, i64 8
++  %pB.next = getelementptr inbounds nuw i8, ptr %pB.inner, i64 8
++  %inner.iv.next = add nuw nsw i64 %inner.iv, 1
++  %inner.ec = icmp eq i64 %inner.iv.next, %width
++  br i1 %inner.ec, label %outer.latch, label %inner
++
++outer.latch:
++  %pA.next.lcssa = phi ptr [ %pA.next, %inner ]
++  %pB.next.lcssa = phi ptr [ %pB.next, %inner ]
++  %outer.iv.next = add nuw nsw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %height
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}

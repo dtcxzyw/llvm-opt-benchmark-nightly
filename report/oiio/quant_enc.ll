@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader67:                                     ; preds = %bb.b, %.preheader67
   %i.di = phi i32 [ %.pre, %bb.b ], [ %i.do, %.preheader67 ]
-  %indvars.iv89 = phi i64 [ 0, %bb.b ], [ %indvars.iv.next90, %.preheader67 ] ; 2 uses
-  %indvars.iv = phi i64 [ 0, %bb.b ], [ %indvars.iv.next88, %.preheader67 ] ; 7 uses
+  %indvars.iv89 = phi i64 [ 0, %bb.b ], [ %indvars.iv.next88, %.preheader67 ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %bb.b ], [ %indvars.iv.next90, %.preheader67 ] ; 7 uses
   %.075 = phi i32 [ %i.bd, %bb.b ], [ %i.ep, %.preheader67 ]
   %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.dc, i64 %indvars.iv89 ; 5 uses
   %i.dk = load i32, ptr %i.dj, align 4, !tbaa !3
@@ -228,7 +228,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.dw, ptr %i.dj, align 4, !tbaa !3
   store i32 %i.dw, ptr %i.df, align 8, !tbaa !3
   store i16 0, ptr %i.dv, align 8, !tbaa !47
-  %i.dx = trunc nsw i64 %indvars.iv.next.a to i32
+  %i.dx = trunc nuw nsw i64 %indvars.iv.next.a to i32
   %i.dy = shl nuw i32 %i.dw, %i.dx
   %i.dz = or i32 %i.dy, %i.dr
   %indvars.iv.next.1 = or disjoint i64 %indvars.iv, 2 ; 3 uses
@@ -240,7 +240,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.ee, ptr %i.dj, align 4, !tbaa !3
   store i32 %i.ee, ptr %i.dg, align 4, !tbaa !3
   store i16 0, ptr %i.ed, align 8, !tbaa !47
-  %i.ef = trunc nsw i64 %indvars.iv.next.1 to i32
+  %i.ef = trunc nuw nsw i64 %indvars.iv.next.1 to i32
   %i.eg = shl nuw i32 %i.ee, %i.ef
   %i.eh = or i32 %i.eg, %i.dz
   %indvars.iv.next.2 = or disjoint i64 %indvars.iv, 3 ; 3 uses
@@ -252,12 +252,12 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.em, ptr %i.dj, align 4, !tbaa !3
   store i32 %i.em, ptr %i.dh, align 8, !tbaa !3
   store i16 0, ptr %i.el, align 8, !tbaa !47
-  %i.en = trunc nsw i64 %indvars.iv.next.2 to i32
+  %i.en = trunc nuw nsw i64 %indvars.iv.next.2 to i32
   %i.eo = shl nuw i32 %i.em, %i.en
   %i.ep = or i32 %i.eo, %i.eh                     ; 2 uses
-  %indvars.iv.next88 = add nuw nsw i64 %indvars.iv, 4
-  %indvars.iv.next90 = add nuw nsw i64 %indvars.iv89, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next90, 4
+  %indvars.iv.next88 = add nuw nsw i64 %indvars.iv89, 1 ; 2 uses
+  %indvars.iv.next90 = add nuw nsw i64 %indvars.iv, 4
+  %exitcond.not = icmp eq i64 %indvars.iv.next88, 4
   br i1 %exitcond.not, label %.loopexit, label %.preheader67, !llvm.loop !233
 
 .loopexit:                                        ; preds = %.preheader67, %.preheader

@@ -119,37 +119,44 @@ bb.b:                                             ; preds = %bb.a, %mkAtomCellLi
   %i.br = add nsw i32 %spec.select.i, -2
   %.042.i = select i1 %i.bq, i32 %i.br, i32 -1    ; 2 uses
   %i.bs = icmp eq i64 %indvars.iv, 2
-  %.039.i = select i1 %i.bs, i32 1, i32 %i.bm     ; 3 uses
+  %.039.i = select i1 %i.bs, i32 1, i32 %i.bm     ; 4 uses
   %i.bt = icmp eq i64 %indvars.iv, 3
   %i.bu = add nsw i32 %.039.i, -2
-  %.040.i = select i1 %i.bt, i32 %i.bu, i32 -1    ; 2 uses
+  %.040.i = select i1 %i.bt, i32 %i.bu, i32 -1    ; 3 uses
   %i.bv = icmp eq i64 %indvars.iv, 4
-  %.037.i = select i1 %i.bv, i32 1, i32 %i.bo     ; 3 uses
+  %.037.i = select i1 %i.bv, i32 1, i32 %i.bo     ; 4 uses
   %i.bw = icmp eq i64 %indvars.iv, 5
   %i.bx = add nsw i32 %.037.i, -2
-  %.038.i = select i1 %i.bw, i32 %i.bx, i32 -1    ; 2 uses
+  %.038.i = select i1 %i.bw, i32 %i.bx, i32 -1    ; 3 uses
   %i.by = icmp slt i32 %.042.i, %spec.select.i
   %i.bz = icmp slt i32 %.040.i, %.039.i
   %or.cond.i = select i1 %i.by, i1 %i.bz, i1 false
   %i.ca = icmp slt i32 %.038.i, %.037.i
   %or.cond60.i = select i1 %or.cond.i, i1 %i.ca, i1 false
-  br i1 %or.cond60.i, label %.preheader43.us.i, label %mkAtomCellList.exit
+  br i1 %or.cond60.i, label %.preheader43.us.preheader.i, label %mkAtomCellList.exit
 
-.preheader43.us.i:                                ; preds = %bb.b, %._crit_edge48.split.us.us.i
-  %.03551.us.i.a = phi i32 [ %i.cf, %._crit_edge48.split.us.us.i ], [ %.042.i, %bb.b ] ; 2 uses
-  %.03650.us.i = phi i64 [ %indvars.iv.next.i.a, %._crit_edge48.split.us.us.i ], [ 0, %bb.b ]
+.preheader43.us.preheader.i:                      ; preds = %bb.b
+  %2 = sub i32 %.037.i, %.038.i                   ; 2 uses
+  %3 = sub i32 %.039.i, %.040.i
+  %4 = mul i32 %2, %3
+  br label %.preheader43.us.i
+
+.preheader43.us.i:                                ; preds = %._crit_edge48.split.us.us.i, %.preheader43.us.preheader.i
+  %.03551.us.i.a = phi i32 [ 0, %.preheader43.us.preheader.i ], [ %i.cf, %._crit_edge48.split.us.us.i ] ; 2 uses
+  %.03551.us.i = phi i32 [ %.042.i, %.preheader43.us.preheader.i ], [ %6, %._crit_edge48.split.us.us.i ] ; 2 uses
   br label %.preheader.us.us.i
 
 .preheader.us.us.i:                               ; preds = %._crit_edge.us.us.i, %.preheader43.us.i
-  %.03447.us.us.i = phi i32 [ %.040.i, %.preheader43.us.i ], [ %i.ce, %._crit_edge.us.us.i ] ; 2 uses
-  %.146.us.us.i = phi i64 [ %.03650.us.i, %.preheader43.us.i ], [ %indvars.iv.next.i.a, %._crit_edge.us.us.i ]
+  %indvars.iv56.i = phi i32 [ %indvars.iv.next57.i, %._crit_edge.us.us.i ], [ %.03551.us.i.a, %.preheader43.us.i ] ; 2 uses
+  %.03447.us.us.i = phi i32 [ %i.ce, %._crit_edge.us.us.i ], [ %.040.i, %.preheader43.us.i ] ; 2 uses
+  %5 = sext i32 %indvars.iv56.i to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.preheader.us.us.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.a, %bb.c ], [ %.146.us.us.i, %.preheader.us.us.i ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.a, %bb.c ], [ %5, %.preheader.us.us.i ] ; 2 uses
   %.045.us.us.i = phi i32 [ %i.cd, %bb.c ], [ %.038.i, %.preheader.us.us.i ] ; 2 uses
-  %i.cb = tail call i32 @getBoxFromTuple(ptr noundef nonnull %1, i32 noundef %.03551.us.i.a, i32 noundef %.03447.us.us.i, i32 noundef %.045.us.us.i) #13
-  %indvars.iv.next.i.a = add nsw i64 %indvars.iv.i, 1 ; 3 uses
+  %i.cb = tail call i32 @getBoxFromTuple(ptr noundef nonnull %1, i32 noundef %.03551.us.i, i32 noundef %.03447.us.us.i, i32 noundef %.045.us.us.i) #13
+  %indvars.iv.next.i.a = add nsw i64 %indvars.iv.i, 1
   %i.cc = getelementptr inbounds [4 x i8], ptr %i.bi, i64 %indvars.iv.i
   store i32 %i.cb, ptr %i.cc, align 4, !tbaa !4
   %i.cd = add i32 %.045.us.us.i, 1                ; 2 uses
@@ -158,12 +165,14 @@ bb.c:                                             ; preds = %bb.c, %.preheader.u
 
 ._crit_edge.us.us.i:                              ; preds = %bb.c
   %i.ce = add i32 %.03447.us.us.i, 1              ; 2 uses
+  %indvars.iv.next57.i = add i32 %indvars.iv56.i, %2
   %exitcond57.not.i = icmp eq i32 %i.ce, %.039.i
   br i1 %exitcond57.not.i, label %._crit_edge48.split.us.us.i, label %.preheader.us.us.i
 
 ._crit_edge48.split.us.us.i:                      ; preds = %._crit_edge.us.us.i
-  %i.cf = add i32 %.03551.us.i.a, 1               ; 2 uses
-  %exitcond58.not.i = icmp eq i32 %i.cf, %spec.select.i
+  %6 = add i32 %.03551.us.i, 1                    ; 2 uses
+  %i.cf = add i32 %4, %.03551.us.i.a
+  %exitcond58.not.i = icmp eq i32 %6, %spec.select.i
   br i1 %exitcond58.not.i, label %mkAtomCellList.exit, label %.preheader43.us.i
 
 mkAtomCellList.exit:                              ; preds = %._crit_edge48.split.us.us.i, %bb.b
@@ -566,30 +575,37 @@ bb.h:                                             ; preds = %bb.c, %bb.g, %bb.f,
 .preheader50.lr.ph.i:                             ; preds = %bb.h, %bb.d, %bb.c
   %.04478.i = phi i32 [ -1, %bb.h ], [ %i.bb, %bb.d ], [ 0, %bb.c ]
   %.04577.i = phi i32 [ %.045.i, %bb.h ], [ %i.ax, %bb.d ], [ 1, %bb.c ]
-  %.04676.i = phi i32 [ %.046.i, %bb.h ], [ 0, %bb.d ], [ 0, %bb.c ] ; 2 uses
-  %.04775.i = phi i32 [ %.047.i, %bb.h ], [ %i.az, %bb.d ], [ %i.az, %bb.c ] ; 2 uses
-  %.04874.i = phi i32 [ %.048.i, %bb.h ], [ 0, %bb.d ], [ 0, %bb.c ] ; 2 uses
-  %.04973.i = phi i32 [ %.049.i, %bb.h ], [ %i.ay, %bb.d ], [ %i.ay, %bb.c ] ; 2 uses
+  %.04676.i = phi i32 [ %.046.i, %bb.h ], [ 0, %bb.d ], [ 0, %bb.c ] ; 3 uses
+  %.04775.i = phi i32 [ %.047.i, %bb.h ], [ %i.az, %bb.d ], [ %i.az, %bb.c ] ; 3 uses
+  %.04874.i = phi i32 [ %.048.i, %bb.h ], [ 0, %bb.d ], [ 0, %bb.c ] ; 3 uses
+  %.04973.i = phi i32 [ %.049.i, %bb.h ], [ %i.ay, %bb.d ], [ %i.ay, %bb.c ] ; 3 uses
   %i.bh = icmp slt i32 %.04676.i, %.04973.i
   %i.bi = icmp slt i32 %.04874.i, %.04775.i
   %or.cond.i = select i1 %i.bh, i1 %i.bi, i1 false
-  br i1 %or.cond.i, label %.preheader50.us.i, label %mkForceSendCellList.exit
+  br i1 %or.cond.i, label %.preheader50.us.preheader.i, label %mkForceSendCellList.exit
 
-.preheader50.us.i:                                ; preds = %.preheader50.lr.ph.i, %._crit_edge55.split.us.us.i
-  %.04258.us.i.a = phi i32 [ %i.bn, %._crit_edge55.split.us.us.i ], [ %.04478.i, %.preheader50.lr.ph.i ] ; 2 uses
-  %.04357.us.i = phi i64 [ %indvars.iv.next.i.a, %._crit_edge55.split.us.us.i ], [ 0, %.preheader50.lr.ph.i ]
+.preheader50.us.preheader.i:                      ; preds = %.preheader50.lr.ph.i
+  %2 = sub i32 %.04775.i, %.04874.i               ; 2 uses
+  %3 = sub i32 %.04973.i, %.04676.i
+  %4 = mul i32 %2, %3
+  br label %.preheader50.us.i
+
+.preheader50.us.i:                                ; preds = %._crit_edge55.split.us.us.i, %.preheader50.us.preheader.i
+  %.04258.us.i.a = phi i32 [ 0, %.preheader50.us.preheader.i ], [ %i.bn, %._crit_edge55.split.us.us.i ] ; 2 uses
+  %.04258.us.i = phi i32 [ %.04478.i, %.preheader50.us.preheader.i ], [ %6, %._crit_edge55.split.us.us.i ] ; 2 uses
   br label %.preheader.us.us.i
 
 .preheader.us.us.i:                               ; preds = %._crit_edge.us.us.i, %.preheader50.us.i
-  %.04154.us.us.i = phi i32 [ %.04676.i, %.preheader50.us.i ], [ %i.bm, %._crit_edge.us.us.i ] ; 2 uses
-  %.153.us.us.i = phi i64 [ %.04357.us.i, %.preheader50.us.i ], [ %indvars.iv.next.i.a, %._crit_edge.us.us.i ]
+  %indvars.iv63.i = phi i32 [ %indvars.iv.next64.i, %._crit_edge.us.us.i ], [ %.04258.us.i.a, %.preheader50.us.i ] ; 2 uses
+  %.04154.us.us.i = phi i32 [ %i.bm, %._crit_edge.us.us.i ], [ %.04676.i, %.preheader50.us.i ] ; 2 uses
+  %5 = sext i32 %indvars.iv63.i to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %.preheader.us.us.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.a, %bb.i ], [ %.153.us.us.i, %.preheader.us.us.i ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.a, %bb.i ], [ %5, %.preheader.us.us.i ] ; 2 uses
   %.052.us.us.i = phi i32 [ %i.bl, %bb.i ], [ %.04874.i, %.preheader.us.us.i ] ; 2 uses
-  %i.bj = tail call i32 @getBoxFromTuple(ptr noundef nonnull %1, i32 noundef %.04258.us.i.a, i32 noundef %.04154.us.us.i, i32 noundef %.052.us.us.i) #13
-  %indvars.iv.next.i.a = add nsw i64 %indvars.iv.i, 1 ; 3 uses
+  %i.bj = tail call i32 @getBoxFromTuple(ptr noundef nonnull %1, i32 noundef %.04258.us.i, i32 noundef %.04154.us.us.i, i32 noundef %.052.us.us.i) #13
+  %indvars.iv.next.i.a = add nsw i64 %indvars.iv.i, 1
   %i.bk = getelementptr inbounds [4 x i8], ptr %i.aw, i64 %indvars.iv.i
   store i32 %i.bj, ptr %i.bk, align 4, !tbaa !4
   %i.bl = add i32 %.052.us.us.i, 1                ; 2 uses
@@ -598,12 +614,14 @@ bb.i:                                             ; preds = %bb.i, %.preheader.u
 
 ._crit_edge.us.us.i:                              ; preds = %bb.i
   %i.bm = add i32 %.04154.us.us.i, 1              ; 2 uses
+  %indvars.iv.next64.i = add i32 %indvars.iv63.i, %2
   %exitcond64.not.i = icmp eq i32 %i.bm, %.04973.i
   br i1 %exitcond64.not.i, label %._crit_edge55.split.us.us.i, label %.preheader.us.us.i
 
 ._crit_edge55.split.us.us.i:                      ; preds = %._crit_edge.us.us.i
-  %i.bn = add i32 %.04258.us.i.a, 1               ; 2 uses
-  %exitcond65.not.i = icmp eq i32 %i.bn, %.04577.i
+  %6 = add i32 %.04258.us.i, 1                    ; 2 uses
+  %i.bn = add i32 %4, %.04258.us.i.a
+  %exitcond65.not.i = icmp eq i32 %6, %.04577.i
   br i1 %exitcond65.not.i, label %mkForceSendCellList.exit, label %.preheader50.us.i
 
 mkForceSendCellList.exit:                         ; preds = %._crit_edge55.split.us.us.i, %bb.h, %.preheader50.lr.ph.i
@@ -650,30 +668,37 @@ bb.n:                                             ; preds = %mkForceSendCellList
 .preheader50.lr.ph.i56:                           ; preds = %bb.n, %bb.j, %mkForceSendCellList.exit
   %.04478.i57 = phi i32 [ -1, %bb.n ], [ %i.bq, %bb.j ], [ -1, %mkForceSendCellList.exit ]
   %.04577.i58 = phi i32 [ %.045.i55, %bb.n ], [ %i.bt, %bb.j ], [ 0, %mkForceSendCellList.exit ]
-  %.04676.i59 = phi i32 [ %.046.i54, %bb.n ], [ 0, %bb.j ], [ 0, %mkForceSendCellList.exit ] ; 2 uses
-  %.04775.i60 = phi i32 [ %.047.i53, %bb.n ], [ %i.bs, %bb.j ], [ %i.bs, %mkForceSendCellList.exit ] ; 2 uses
-  %.04874.i61 = phi i32 [ %.048.i52, %bb.n ], [ 0, %bb.j ], [ 0, %mkForceSendCellList.exit ] ; 2 uses
-  %.04973.i62 = phi i32 [ %.049.i51, %bb.n ], [ %i.br, %bb.j ], [ %i.br, %mkForceSendCellList.exit ] ; 2 uses
+  %.04676.i59 = phi i32 [ %.046.i54, %bb.n ], [ 0, %bb.j ], [ 0, %mkForceSendCellList.exit ] ; 3 uses
+  %.04775.i60 = phi i32 [ %.047.i53, %bb.n ], [ %i.bs, %bb.j ], [ %i.bs, %mkForceSendCellList.exit ] ; 3 uses
+  %.04874.i61 = phi i32 [ %.048.i52, %bb.n ], [ 0, %bb.j ], [ 0, %mkForceSendCellList.exit ] ; 3 uses
+  %.04973.i62 = phi i32 [ %.049.i51, %bb.n ], [ %i.br, %bb.j ], [ %i.br, %mkForceSendCellList.exit ] ; 3 uses
   %i.bz = icmp slt i32 %.04676.i59, %.04973.i62
   %i.ca = icmp slt i32 %.04874.i61, %.04775.i60
   %or.cond.i63 = select i1 %i.bz, i1 %i.ca, i1 false
-  br i1 %or.cond.i63, label %.preheader50.us.i64, label %mkForceRecvCellList.exit
+  br i1 %or.cond.i63, label %.preheader50.us.preheader.i64, label %mkForceRecvCellList.exit
 
-.preheader50.us.i64:                              ; preds = %.preheader50.lr.ph.i56, %._crit_edge55.split.us.us.i76
-  %.04258.us.i65 = phi i32 [ %i.cf, %._crit_edge55.split.us.us.i76 ], [ %.04478.i57, %.preheader50.lr.ph.i56 ] ; 2 uses
-  %.04357.us.i66 = phi i64 [ %indvars.iv.next.i72, %._crit_edge55.split.us.us.i76 ], [ 0, %.preheader50.lr.ph.i56 ]
+.preheader50.us.preheader.i64:                    ; preds = %.preheader50.lr.ph.i56
+  %7 = sub i32 %.04775.i60, %.04874.i61           ; 2 uses
+  %8 = sub i32 %.04973.i62, %.04676.i59
+  %9 = mul i32 %7, %8
+  br label %.preheader50.us.i64
+
+.preheader50.us.i64:                              ; preds = %._crit_edge55.split.us.us.i76, %.preheader50.us.preheader.i64
+  %.04258.us.i65 = phi i32 [ 0, %.preheader50.us.preheader.i64 ], [ %i.cf, %._crit_edge55.split.us.us.i76 ] ; 2 uses
+  %.04258.us.i67 = phi i32 [ %.04478.i57, %.preheader50.us.preheader.i64 ], [ %11, %._crit_edge55.split.us.us.i76 ] ; 2 uses
   br label %.preheader.us.us.i67
 
 .preheader.us.us.i67:                             ; preds = %._crit_edge.us.us.i74, %.preheader50.us.i64
-  %.04154.us.us.i68 = phi i32 [ %.04676.i59, %.preheader50.us.i64 ], [ %i.ce, %._crit_edge.us.us.i74 ] ; 2 uses
-  %.153.us.us.i69 = phi i64 [ %.04357.us.i66, %.preheader50.us.i64 ], [ %indvars.iv.next.i72, %._crit_edge.us.us.i74 ]
+  %indvars.iv63.i69 = phi i32 [ %indvars.iv.next64.i76, %._crit_edge.us.us.i74 ], [ %.04258.us.i65, %.preheader50.us.i64 ] ; 2 uses
+  %.04154.us.us.i68 = phi i32 [ %i.ce, %._crit_edge.us.us.i74 ], [ %.04676.i59, %.preheader50.us.i64 ] ; 2 uses
+  %10 = sext i32 %indvars.iv63.i69 to i64
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.o, %.preheader.us.us.i67
-  %indvars.iv.i70 = phi i64 [ %indvars.iv.next.i72, %bb.o ], [ %.153.us.us.i69, %.preheader.us.us.i67 ] ; 2 uses
+  %indvars.iv.i70 = phi i64 [ %indvars.iv.next.i72, %bb.o ], [ %10, %.preheader.us.us.i67 ] ; 2 uses
   %.052.us.us.i71 = phi i32 [ %i.cd, %bb.o ], [ %.04874.i61, %.preheader.us.us.i67 ] ; 2 uses
-  %i.cb = tail call i32 @getBoxFromTuple(ptr noundef nonnull %1, i32 noundef %.04258.us.i65, i32 noundef %.04154.us.us.i68, i32 noundef %.052.us.us.i71) #13
-  %indvars.iv.next.i72 = add nsw i64 %indvars.iv.i70, 1 ; 3 uses
+  %i.cb = tail call i32 @getBoxFromTuple(ptr noundef nonnull %1, i32 noundef %.04258.us.i67, i32 noundef %.04154.us.us.i68, i32 noundef %.052.us.us.i71) #13
+  %indvars.iv.next.i72 = add nsw i64 %indvars.iv.i70, 1
   %i.cc = getelementptr inbounds [4 x i8], ptr %i.bp, i64 %indvars.iv.i70
   store i32 %i.cb, ptr %i.cc, align 4, !tbaa !4
   %i.cd = add i32 %.052.us.us.i71, 1              ; 2 uses
@@ -682,12 +707,14 @@ bb.o:                                             ; preds = %bb.o, %.preheader.u
 
 ._crit_edge.us.us.i74:                            ; preds = %bb.o
   %i.ce = add i32 %.04154.us.us.i68, 1            ; 2 uses
+  %indvars.iv.next64.i76 = add i32 %indvars.iv63.i69, %7
   %exitcond64.not.i75 = icmp eq i32 %i.ce, %.04973.i62
   br i1 %exitcond64.not.i75, label %._crit_edge55.split.us.us.i76, label %.preheader.us.us.i67
 
 ._crit_edge55.split.us.us.i76:                    ; preds = %._crit_edge.us.us.i74
-  %i.cf = add i32 %.04258.us.i65, 1               ; 2 uses
-  %exitcond65.not.i77 = icmp eq i32 %i.cf, %.04577.i58
+  %11 = add i32 %.04258.us.i67, 1                 ; 2 uses
+  %i.cf = add i32 %9, %.04258.us.i65
+  %exitcond65.not.i77 = icmp eq i32 %11, %.04577.i58
   br i1 %exitcond65.not.i77, label %mkForceRecvCellList.exit, label %.preheader50.us.i64
 
 mkForceRecvCellList.exit:                         ; preds = %._crit_edge55.split.us.us.i76, %bb.n, %.preheader50.lr.ph.i56

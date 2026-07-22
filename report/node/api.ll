@@ -204,14 +204,15 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader28.preheader, %._crit_edge
-  %.123 = phi i64 [ %.022.lcssa, %._crit_edge ], [ %op.rdx, %.preheader28.preheader ] ; 3 uses
-  %.1 = phi ptr [ %.021.lcssa, %._crit_edge ], [ %i.t, %.preheader28.preheader ] ; 4 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %.1, i64 128 ; 2 uses
+  %indvars.iv.pn = phi ptr [ %indvars.iv, %.preheader28.preheader ], [ %.021.lcssa, %._crit_edge ] ; 5 uses
+  %.123 = phi i64 [ %op.rdx, %.preheader28.preheader ], [ %.022.lcssa, %._crit_edge ] ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %indvars.iv.pn, i64 128
   %i.u = icmp ult ptr %i.t, %i.s
   br i1 %i.u, label %.preheader28.preheader, label %.preheader
 
 .preheader28.preheader:                           ; preds = %bb.b
-  %i.v = load <16 x i64>, ptr %.1, align 8
+  %indvars.iv = getelementptr i8, ptr %indvars.iv.pn, i64 128
+  %i.v = load <16 x i64>, ptr %indvars.iv.pn, align 8
   %i.w = tail call i64 @llvm.vector.reduce.or.v16i64(<16 x i64> %i.v)
   %op.rdx = or i64 %i.w, %.123                    ; 2 uses
   %i.x = and i64 %op.rdx, -71777214294589696
@@ -219,11 +220,11 @@ bb.b:                                             ; preds = %.preheader28.prehea
   br i1 %.not27, label %bb.b, label %.sink.split, !llvm.loop !435
 
 .preheader:                                       ; preds = %bb.b
-  %.not37 = icmp eq ptr %.1, %i.b
+  %.not37 = icmp eq ptr %indvars.iv.pn, %i.b
   br i1 %.not37, label %._crit_edge41, label %.lr.ph40
 
 .lr.ph40:                                         ; preds = %.preheader, %.lr.ph40
-  %.339 = phi ptr [ %i.y, %.lr.ph40 ], [ %.1, %.preheader ] ; 2 uses
+  %.339 = phi ptr [ %i.y, %.lr.ph40 ], [ %indvars.iv.pn, %.preheader ] ; 2 uses
   %.32538 = phi i64 [ %i.ab, %.lr.ph40 ], [ %.123, %.preheader ]
   %i.y = getelementptr inbounds nuw i8, ptr %.339, i64 2 ; 2 uses
   %i.z = load i16, ptr %.339, align 2

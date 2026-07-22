@@ -204,13 +204,13 @@ bb.a:
   %i.b = add i32 %i.a, %3
   %i.c = zext i32 %i.b to i64
   %i.d = shl nuw nsw i64 %i.c, 2
-  %i.e = tail call ptr @opj_malloc(i64 noundef %i.d) #8 ; 13 uses
+  %i.e = tail call ptr @opj_malloc(i64 noundef %i.d) #8 ; 14 uses
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = zext i32 %3 to i64                       ; 10 uses
-  %i.g = getelementptr [4 x i8], ptr %i.e, i64 %i.f ; 4 uses
+  %i.f = zext i32 %3 to i64                       ; 11 uses
+  %i.g = getelementptr [4 x i8], ptr %i.e, i64 %i.f ; 5 uses
   %i.h = zext i32 %i.a to i64                     ; 3 uses
   %.not66 = icmp eq i32 %i.a, 0
   br i1 %.not66, label %.preheader54, label %.lr.ph.preheader
@@ -261,6 +261,9 @@ middle.block:                                     ; preds = %vector.body
 
 .preheader53.us.us.preheader:                     ; preds = %.preheader54
   %i.v = shl nuw nsw i64 %i.f, 2
+  %5 = add nuw nsw i64 %i.v, 4
+  %6 = mul i64 %5, %i.f
+  %scevgep85 = getelementptr i8, ptr %i.e, i64 %6
   %xtraiter = and i64 %i.f, 3                     ; 3 uses
   %i.w = icmp ult i32 %3, 4
   %unroll_iter = and i64 %i.f, 4294967292
@@ -281,7 +284,7 @@ middle.block:                                     ; preds = %vector.body
 
 ..preheader_crit_edge.us.us:                      ; preds = %..preheader_crit_edge.us.us.preheader, %.loopexit
   %indvars.iv74 = phi i64 [ %indvars.iv.next75, %.loopexit ], [ 0, %..preheader_crit_edge.us.us.preheader ] ; 2 uses
-  %.062.us.us = phi ptr [ %.lcssa, %.loopexit ], [ %i.g, %..preheader_crit_edge.us.us.preheader ] ; 6 uses
+  %.062.us.us = phi ptr [ %.lcssa, %.loopexit ], [ %i.g, %..preheader_crit_edge.us.us.preheader ] ; 4 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv74 ; 2 uses
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !24  ; 9 uses
   store i32 0, ptr %i.aa, align 4, !tbaa !3
@@ -289,12 +292,11 @@ middle.block:                                     ; preds = %vector.body
 
 vector.memcheck:                                  ; preds = %..preheader_crit_edge.us.us
   %scevgep = getelementptr i8, ptr %i.aa, i64 4   ; 2 uses
-  %scevgep85 = getelementptr i8, ptr %.062.us.us, i64 %i.v
   %bound0 = icmp ult ptr %i.aa, %i.g
   %bound1 = icmp ult ptr %i.e, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   %bound086 = icmp ult ptr %i.aa, %scevgep85
-  %bound187 = icmp ult ptr %.062.us.us, %scevgep
+  %bound187 = icmp ult ptr %i.g, %scevgep
   %found.conflict88 = and i1 %bound086, %bound187
   %conflict.rdx = or i1 %found.conflict, %found.conflict88
   br i1 %conflict.rdx, label %scalar.ph89.preheader, label %vector.ph91

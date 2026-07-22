@@ -143,15 +143,16 @@ bb.h:                                             ; preds = %bb.e
   br label %bb.l
 
 .lr.ph:                                           ; preds = %.preheader214, %bb.j
+  %.pn = phi ptr [ %indvars.iv, %bb.j ], [ %1, %.preheader214 ] ; 2 uses
   %.2220 = phi i64 [ %i.el, %bb.j ], [ %i.i, %.preheader214 ]
   %.1183219 = phi i64 [ %i.ej, %bb.j ], [ %2, %.preheader214 ]
-  %.1187218 = phi ptr [ %scevgep, %bb.j ], [ %1, %.preheader214 ] ; 2 uses
   %.3194217 = phi i64 [ %i.ek, %bb.j ], [ %i.j, %.preheader214 ]
+  %indvars.iv = getelementptr i8, ptr %.pn, i64 5552 ; 3 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %.lr.ph
   %.4195 = phi i64 [ %.3194217, %.lr.ph ], [ %i.ef, %bb.i ]
-  %.2188 = phi ptr [ %.1187218, %.lr.ph ], [ %i.eh, %bb.i ] ; 17 uses
+  %.2188 = phi ptr [ %.pn, %.lr.ph ], [ %i.eh, %bb.i ] ; 17 uses
   %.3 = phi i64 [ %.2220, %.lr.ph ], [ %i.eg, %bb.i ]
   %.0 = phi i32 [ 347, %.lr.ph ], [ %i.ei, %bb.i ]
   %i.bg = load i8, ptr %.2188, align 1, !tbaa !9
@@ -240,7 +241,6 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph
 
 bb.j:                                             ; preds = %bb.i
   %i.ej = add i64 %.1183219, -5552                ; 6 uses
-  %scevgep = getelementptr i8, ptr %.1187218, i64 5552 ; 3 uses
   %i.ek = urem i64 %i.ef, 65521                   ; 4 uses
   %i.el = urem i64 %i.eg, 65521                   ; 4 uses
   %i.em = icmp ugt i64 %i.ej, 5551
@@ -257,7 +257,7 @@ bb.j:                                             ; preds = %bb.i
 .lr.ph228.preheader:                              ; preds = %.preheader214, %.preheader213
   %.4227.ph = phi i64 [ %i.i, %.preheader214 ], [ %i.el, %.preheader213 ]
   %.2184226.ph = phi i64 [ %2, %.preheader214 ], [ %i.ej, %.preheader213 ]
-  %.3189225.ph = phi ptr [ %1, %.preheader214 ], [ %scevgep, %.preheader213 ]
+  %.3189225.ph = phi ptr [ %1, %.preheader214 ], [ %indvars.iv, %.preheader213 ]
   %.5196224.ph = phi i64 [ %i.j, %.preheader214 ], [ %i.ek, %.preheader213 ]
   br label %.lr.ph228
 
@@ -268,7 +268,7 @@ bb.j:                                             ; preds = %bb.i
 .lr.ph238.preheader:                              ; preds = %.preheader213, %.preheader212
   %.5237.ph = phi i64 [ %i.el, %.preheader213 ], [ %i.hw, %.preheader212 ] ; 2 uses
   %.3185236.ph = phi i64 [ %i.ej, %.preheader213 ], [ %i.ev, %.preheader212 ] ; 4 uses
-  %.4190235.ph = phi ptr [ %scevgep, %.preheader213 ], [ %i.hx, %.preheader212 ] ; 2 uses
+  %.4190235.ph = phi ptr [ %indvars.iv, %.preheader213 ], [ %i.hx, %.preheader212 ] ; 2 uses
   %.6197234.ph = phi i64 [ %i.ek, %.preheader213 ], [ %i.hv, %.preheader212 ] ; 2 uses
   %xtraiter = and i64 %.3185236.ph, 3             ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

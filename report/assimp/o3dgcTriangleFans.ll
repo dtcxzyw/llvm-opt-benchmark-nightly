@@ -203,7 +203,7 @@ _ZN5o3dgc6VectorIlE8AllocateEm.exit:              ; preds = %bb.a, %bb.e
   ret i32 0
 
 .lr.ph:                                           ; preds = %_ZN5o3dgc6VectorIlE8AllocateEm.exit, %_ZN5o3dgc6VectorIlE8PushBackERKl.exit.6
-  %.01622 = phi i64 [ %3, %_ZN5o3dgc6VectorIlE8PushBackERKl.exit.6 ], [ 0, %_ZN5o3dgc6VectorIlE8AllocateEm.exit ]
+  %.01622 = phi i64 [ %indvars.iv.next, %_ZN5o3dgc6VectorIlE8PushBackERKl.exit.6 ], [ 7, %_ZN5o3dgc6VectorIlE8AllocateEm.exit ] ; 2 uses
   %i.ay = load i64, ptr %2, align 8               ; 2 uses
   %i.az = add i64 %i.ay, 1
   store i64 %i.az, ptr %2, align 8
@@ -532,9 +532,9 @@ _ZN5o3dgc6VectorIlE8PushBackERKl.exit.6:          ; preds = %bb.ag, %._crit_edge
   store i64 %i.fq, ptr %i.ax, align 8
   %i.fr = getelementptr inbounds nuw [8 x i8], ptr %i.fp, i64 %i.fo
   store i64 %i.fc, ptr %i.fr, align 8
-  %3 = add i64 %.01622, 7                         ; 2 uses
-  %4 = icmp ult i64 %3, %i.aj
-  br i1 %4, label %.lr.ph, label %._crit_edge, !llvm.loop !25
+  %3 = icmp ult i64 %.01622, %i.aj
+  %indvars.iv.next = add i64 %.01622, 7
+  br i1 %3, label %.lr.ph, label %._crit_edge, !llvm.loop !25
 }
 
 ; Function Attrs: mustprogress uwtable

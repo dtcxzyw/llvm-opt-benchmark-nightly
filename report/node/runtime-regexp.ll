@@ -204,7 +204,7 @@ _ZN2v88internal31SharedStringAccessGuardIfNeededD2Ev.exit22: ; preds = %_ZN2v88i
   %i.gm = getelementptr inbounds nuw i8, ptr %10, i64 12
   %i.gn = load i32, ptr %i.gm, align 4
   %i.go = icmp eq i32 %i.gn, 1                    ; 2 uses
-  %i.gp = load ptr, ptr %10, align 8              ; 30 uses
+  %i.gp = load ptr, ptr %10, align 8              ; 33 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.gr = load i32, ptr %i.gq, align 8            ; 15 uses
   %i.gs = zext i32 %i.gr to i64                   ; 20 uses
@@ -231,21 +231,28 @@ bb.ar:                                            ; preds = %bb.aq
 
 _ZNK2v84base6VectorIKhE6lengthEv.exit.i.i:        ; preds = %bb.aq
   %i.gz = sext i32 %.0.i to i64                   ; 2 uses
-  %i.ha = getelementptr inbounds i8, ptr %i.gp, i64 %i.gz ; 2 uses
+  %i.ha = getelementptr i8, ptr %i.gp, i64 %i.gz  ; 3 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %i.gp, i64 %i.gs ; 4 uses
-  %i.hc = add nsw i64 %i.gz, 4080
+  %i.hc = add nsw i64 %i.gz, 4080                 ; 2 uses
   %.not44.i.i = icmp sgt i64 %i.hc, %i.gs
-  br i1 %.not44.i.i, label %.preheader.i.i, label %.preheader38.i.i
+  br i1 %.not44.i.i, label %.preheader.i.i, label %.preheader38.preheader.i.i
 
-.preheader38.i.i:                                 ; preds = %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.i, %bb.as
-  %.048.i.i = phi i32 [ %i.hu, %bb.as ], [ 0, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.i ]
-  %.06547.i.i = phi ptr [ %.267.i.i, %bb.as ], [ null, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.i ]
-  %.sroa.047.046.i.i = phi <2 x i64> [ %.sroa.047.2.i.i, %bb.as ], [ undef, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.i ]
-  %.06845.i.i = phi ptr [ %scevgep75.i.i, %bb.as ], [ %i.ha, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.i ] ; 3 uses
+.preheader38.preheader.i.i:                       ; preds = %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.i
+  %scevgep.i.i = getelementptr i8, ptr %i.ha, i64 4064
+  %scevgep76.i.i = getelementptr i8, ptr %i.gp, i64 %i.hc
+  br label %.preheader38.i.i
+
+.preheader38.i.i:                                 ; preds = %bb.as, %.preheader38.preheader.i.i
+  %indvars.iv77.i.i = phi ptr [ %scevgep76.i.i, %.preheader38.preheader.i.i ], [ %scevgep78.i.i, %bb.as ] ; 3 uses
+  %indvars.iv.i.i = phi ptr [ %scevgep.i.i, %.preheader38.preheader.i.i ], [ %scevgep75.i.i, %bb.as ] ; 2 uses
+  %.048.i.i = phi i32 [ 0, %.preheader38.preheader.i.i ], [ %i.hu, %bb.as ]
+  %.06547.i.i = phi ptr [ null, %.preheader38.preheader.i.i ], [ %.267.i.i, %bb.as ]
+  %.sroa.047.046.i.i = phi <2 x i64> [ undef, %.preheader38.preheader.i.i ], [ %.sroa.047.2.i.i, %bb.as ]
+  %.06845.i.i = phi ptr [ %i.ha, %.preheader38.preheader.i.i ], [ %indvars.iv77.i.i, %bb.as ]
   br label %bb.at
 
 .preheader.i.i:                                   ; preds = %bb.as, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.i
-  %.068.lcssa.i.i = phi ptr [ %i.ha, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.i ], [ %scevgep75.i.i, %bb.as ] ; 3 uses
+  %.068.lcssa.i.i = phi ptr [ %i.ha, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.i ], [ %indvars.iv77.i.i, %bb.as ] ; 3 uses
   %.sroa.047.0.lcssa.i.i = phi <2 x i64> [ undef, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.i ], [ %.sroa.047.2.i.i, %bb.as ] ; 2 uses
   %.065.lcssa.i.i = phi ptr [ null, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.i ], [ %.267.i.i, %bb.as ] ; 2 uses
   %.0.lcssa.i.i = phi i32 [ 0, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.i ], [ %i.hu, %bb.as ]
@@ -254,7 +261,6 @@ _ZNK2v84base6VectorIKhE6lengthEv.exit.i.i:        ; preds = %bb.aq
   br i1 %.not7552.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 bb.as:                                            ; preds = %bb.at
-  %scevgep75.i.i = getelementptr i8, ptr %.06845.i.i, i64 4080 ; 2 uses
   %i.he = bitcast <16 x i8> %i.ib to <8 x i16>
   %i.hf = lshr <8 x i16> %i.he, splat (i16 8)
   %i.hg = bitcast <16 x i8> %i.ib to <8 x i16>
@@ -272,8 +278,10 @@ bb.as:                                            ; preds = %bb.at
   %i.hs = extractelement <8 x i16> %i.hr, i64 0
   %i.ht = zext i16 %i.hs to i32
   %i.hu = add nuw nsw i32 %.048.i.i, %i.ht        ; 2 uses
-  %i.hv = getelementptr i8, ptr %.06845.i.i, i64 8160
+  %i.hv = getelementptr inbounds nuw i8, ptr %indvars.iv.i.i, i64 4096
   %.not.i.i = icmp ugt ptr %i.hv, %i.hb
+  %scevgep75.i.i = getelementptr i8, ptr %indvars.iv.i.i, i64 4080
+  %scevgep78.i.i = getelementptr i8, ptr %indvars.iv77.i.i, i64 4080
   br i1 %.not.i.i, label %.preheader.i.i, label %.preheader38.i.i, !llvm.loop !195
 
 bb.at:                                            ; preds = %bb.au, %.preheader38.i.i
@@ -523,22 +531,29 @@ bb.ba:                                            ; preds = %bb.az
 _ZNK2v84base6VectorIKtE6lengthEv.exit.i.i:        ; preds = %bb.az
   %i.lt = sext i32 %.0.i to i64
   %.idx.i.i = shl nsw i64 %i.lt, 1                ; 2 uses
-  %i.lu = getelementptr inbounds i8, ptr %i.gp, i64 %.idx.i.i ; 2 uses
+  %i.lu = getelementptr i8, ptr %i.gp, i64 %.idx.i.i ; 3 uses
   %.idx49.i.i = shl nuw nsw i64 %i.gs, 1          ; 2 uses
   %i.lv = getelementptr inbounds nuw i8, ptr %i.gp, i64 %.idx49.i.i ; 5 uses
-  %i.lw = add nsw i64 %.idx.i.i, 1048560
+  %i.lw = add nsw i64 %.idx.i.i, 1048560          ; 2 uses
   %.not22.i.i = icmp sgt i64 %i.lw, %.idx49.i.i
-  br i1 %.not22.i.i, label %.preheader.i90.i, label %.preheader16.i.i
+  br i1 %.not22.i.i, label %.preheader.i90.i, label %.preheader16.preheader.i.i
 
-.preheader16.i.i:                                 ; preds = %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i, %bb.bb
-  %.026.i.i = phi i32 [ %i.me, %bb.bb ], [ 0, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i ]
-  %.06525.i.i = phi ptr [ %.267.i87.i, %bb.bb ], [ null, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i ]
-  %.sroa.047.024.i.i = phi <2 x i64> [ %.sroa.047.2.i86.i, %bb.bb ], [ undef, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i ]
-  %.06823.i.i = phi ptr [ %scevgep54.i.i, %bb.bb ], [ %i.lu, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i ] ; 3 uses
+.preheader16.preheader.i.i:                       ; preds = %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i
+  %scevgep.i86.i = getelementptr i8, ptr %i.lu, i64 1048544
+  %scevgep55.i.i = getelementptr i8, ptr %i.gp, i64 %i.lw
+  br label %.preheader16.i.i
+
+.preheader16.i.i:                                 ; preds = %bb.bb, %.preheader16.preheader.i.i
+  %indvars.iv56.i.i = phi ptr [ %scevgep55.i.i, %.preheader16.preheader.i.i ], [ %scevgep57.i.i, %bb.bb ] ; 3 uses
+  %indvars.iv.i87.i = phi ptr [ %scevgep.i86.i, %.preheader16.preheader.i.i ], [ %scevgep54.i.i, %bb.bb ] ; 2 uses
+  %.026.i.i = phi i32 [ 0, %.preheader16.preheader.i.i ], [ %i.me, %bb.bb ]
+  %.06525.i.i = phi ptr [ null, %.preheader16.preheader.i.i ], [ %.267.i87.i, %bb.bb ]
+  %.sroa.047.024.i.i = phi <2 x i64> [ undef, %.preheader16.preheader.i.i ], [ %.sroa.047.2.i86.i, %bb.bb ]
+  %.06823.i.i = phi ptr [ %i.lu, %.preheader16.preheader.i.i ], [ %indvars.iv56.i.i, %bb.bb ]
   br label %bb.bc
 
 .preheader.i90.i:                                 ; preds = %bb.bb, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i
-  %.068.lcssa.i91.i = phi ptr [ %i.lu, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i ], [ %scevgep54.i.i, %bb.bb ] ; 3 uses
+  %.068.lcssa.i91.i = phi ptr [ %i.lu, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i ], [ %indvars.iv56.i.i, %bb.bb ] ; 3 uses
   %.sroa.047.0.lcssa.i92.i = phi <2 x i64> [ undef, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i ], [ %.sroa.047.2.i86.i, %bb.bb ] ; 2 uses
   %.065.lcssa.i93.i = phi ptr [ null, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i ], [ %.267.i87.i, %bb.bb ] ; 2 uses
   %.0.lcssa.i94.i = phi i32 [ 0, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i ], [ %i.me, %bb.bb ]
@@ -547,7 +562,6 @@ _ZNK2v84base6VectorIKtE6lengthEv.exit.i.i:        ; preds = %bb.az
   br i1 %.not7530.i.i, label %._crit_edge.i100.i, label %.lr.ph.i95.i
 
 bb.bb:                                            ; preds = %bb.bc
-  %scevgep54.i.i = getelementptr i8, ptr %.06823.i.i, i64 1048560 ; 2 uses
   %i.ly = bitcast <8 x i16> %i.ml to <4 x i32>
   %i.lz = lshr <4 x i32> %i.ly, splat (i32 16)
   %i.ma = bitcast <8 x i16> %i.ml to <4 x i32>
@@ -555,8 +569,10 @@ bb.bb:                                            ; preds = %bb.bc
   %i.mc = add nuw nsw <4 x i32> %i.mb, %i.lz
   %i.md = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.mc)
   %i.me = add i32 %i.md, %.026.i.i                ; 2 uses
-  %i.mf = getelementptr i8, ptr %.06823.i.i, i64 2097120
+  %i.mf = getelementptr inbounds nuw i8, ptr %indvars.iv.i87.i, i64 1048576
   %.not.i89.i = icmp ugt ptr %i.mf, %i.lv
+  %scevgep54.i.i = getelementptr i8, ptr %indvars.iv.i87.i, i64 1048560
+  %scevgep57.i.i = getelementptr i8, ptr %indvars.iv56.i.i, i64 1048560
   br i1 %.not.i89.i, label %.preheader.i90.i, label %.preheader16.i.i, !llvm.loop !200
 
 bb.bc:                                            ; preds = %bb.bd, %.preheader16.i.i
@@ -959,22 +975,29 @@ bb.cb:                                            ; preds = %bb.ca
 _ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i:     ; preds = %bb.ca
   %i.tr = sext i32 %.0.i to i64
   %.idx.i138.i = shl nsw i64 %i.tr, 1             ; 2 uses
-  %i.ts = getelementptr inbounds i8, ptr %i.gp, i64 %.idx.i138.i ; 2 uses
+  %i.ts = getelementptr i8, ptr %i.gp, i64 %.idx.i138.i ; 3 uses
   %.idx49.i139.i = shl nuw nsw i64 %i.gs, 1       ; 2 uses
   %i.tt = getelementptr inbounds nuw i8, ptr %i.gp, i64 %.idx49.i139.i ; 5 uses
-  %i.tu = add nsw i64 %.idx.i138.i, 1048560
+  %i.tu = add nsw i64 %.idx.i138.i, 1048560       ; 2 uses
   %.not22.i140.i = icmp sgt i64 %i.tu, %.idx49.i139.i
-  br i1 %.not22.i140.i, label %.preheader.i155.i, label %.preheader16.i141.i
+  br i1 %.not22.i140.i, label %.preheader.i155.i, label %.preheader16.preheader.i143.i
 
-.preheader16.i141.i:                              ; preds = %_ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i, %bb.cc
-  %.026.i142.i = phi i32 [ %i.uc, %bb.cc ], [ 0, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i ]
-  %.06525.i143.i = phi ptr [ %.267.i151.i, %bb.cc ], [ null, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i ]
-  %.sroa.047.024.i144.i = phi <2 x i64> [ %.sroa.047.2.i150.i, %bb.cc ], [ undef, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i ]
-  %.06823.i145.i = phi ptr [ %scevgep54.i153.i, %bb.cc ], [ %i.ts, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i ] ; 3 uses
+.preheader16.preheader.i143.i:                    ; preds = %_ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i
+  %scevgep.i144.i = getelementptr i8, ptr %i.ts, i64 1048544
+  %scevgep55.i145.i = getelementptr i8, ptr %i.gp, i64 %i.tu
+  br label %.preheader16.i141.i
+
+.preheader16.i141.i:                              ; preds = %bb.cc, %.preheader16.preheader.i143.i
+  %indvars.iv56.i147.i = phi ptr [ %scevgep55.i145.i, %.preheader16.preheader.i143.i ], [ %scevgep57.i162.i, %bb.cc ] ; 3 uses
+  %indvars.iv.i148.i = phi ptr [ %scevgep.i144.i, %.preheader16.preheader.i143.i ], [ %scevgep54.i161.i, %bb.cc ] ; 2 uses
+  %.026.i142.i = phi i32 [ 0, %.preheader16.preheader.i143.i ], [ %i.uc, %bb.cc ]
+  %.06525.i143.i = phi ptr [ null, %.preheader16.preheader.i143.i ], [ %.267.i151.i, %bb.cc ]
+  %.sroa.047.024.i144.i = phi <2 x i64> [ undef, %.preheader16.preheader.i143.i ], [ %.sroa.047.2.i150.i, %bb.cc ]
+  %.06823.i145.i = phi ptr [ %i.ts, %.preheader16.preheader.i143.i ], [ %indvars.iv56.i147.i, %bb.cc ]
   br label %bb.cd
 
 .preheader.i155.i:                                ; preds = %bb.cc, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i
-  %.068.lcssa.i156.i = phi ptr [ %i.ts, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i ], [ %scevgep54.i153.i, %bb.cc ] ; 3 uses
+  %.068.lcssa.i156.i = phi ptr [ %i.ts, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i ], [ %indvars.iv56.i147.i, %bb.cc ] ; 3 uses
   %.sroa.047.0.lcssa.i157.i = phi <2 x i64> [ undef, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i ], [ %.sroa.047.2.i150.i, %bb.cc ] ; 2 uses
   %.065.lcssa.i158.i = phi ptr [ null, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i ], [ %.267.i151.i, %bb.cc ] ; 2 uses
   %.0.lcssa.i159.i = phi i32 [ 0, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i ], [ %i.uc, %bb.cc ]
@@ -983,7 +1006,6 @@ _ZNK2v84base6VectorIKtE6lengthEv.exit.i137.i:     ; preds = %bb.ca
   br i1 %.not7530.i160.i, label %._crit_edge.i169.i, label %.lr.ph.i161.i
 
 bb.cc:                                            ; preds = %bb.cd
-  %scevgep54.i153.i = getelementptr i8, ptr %.06823.i145.i, i64 1048560 ; 2 uses
   %i.tw = bitcast <8 x i16> %i.uj to <4 x i32>
   %i.tx = lshr <4 x i32> %i.tw, splat (i32 16)
   %i.ty = bitcast <8 x i16> %i.uj to <4 x i32>
@@ -991,8 +1013,10 @@ bb.cc:                                            ; preds = %bb.cd
   %i.ua = add nuw nsw <4 x i32> %i.tz, %i.tx
   %i.ub = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ua)
   %i.uc = add i32 %i.ub, %.026.i142.i             ; 2 uses
-  %i.ud = getelementptr i8, ptr %.06823.i145.i, i64 2097120
+  %i.ud = getelementptr inbounds nuw i8, ptr %indvars.iv.i148.i, i64 1048576
   %.not.i154.i = icmp ugt ptr %i.ud, %i.tt
+  %scevgep54.i161.i = getelementptr i8, ptr %indvars.iv.i148.i, i64 1048560
+  %scevgep57.i162.i = getelementptr i8, ptr %indvars.iv56.i147.i, i64 1048560
   br i1 %.not.i154.i, label %.preheader.i155.i, label %.preheader16.i141.i, !llvm.loop !214
 
 bb.cd:                                            ; preds = %bb.ce, %.preheader16.i141.i
