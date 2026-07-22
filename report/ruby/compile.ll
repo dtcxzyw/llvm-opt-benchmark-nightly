@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.f = inttoptr i64 %1 to ptr                   ; 5 uses
   %i.g = load i64, ptr %i.f, align 8, !tbaa !74
   %i.h = trunc i64 %i.g to i32
-  %i.i = and i32 %i.h, 31                         ; 2 uses
+  %i.i = and i32 %i.h, 31                         ; 3 uses
   %i.j = icmp eq i64 %0, 0
   %i.k = and i64 %0, 7
   %i.l = icmp ne i64 %i.k, 0
@@ -220,14 +220,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not, label %bb.e, label %common.ret56
 
 bb.e:                                             ; preds = %bb.d
-  switch i32 %i.i, label %.unreachabledefault [
+  switch i32 %i.i, label %bb.m [
     i32 20, label %common.ret56
     i32 5, label %bb.f
     i32 10, label %bb.g
     i32 4, label %bb.h
     i32 15, label %bb.i
     i32 14, label %bb.k
-    i32 6, label %bb.m
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -253,7 +252,7 @@ bb.i:                                             ; preds = %bb.e
   %.not50 = icmp eq i32 %i.aa, 0
   br i1 %.not50, label %bb.j, label %common.ret56
 
-common.ret56:                                     ; preds = %bb.c, %bb.b, %bb.e, %bb.k, %bb.i, %bb.d, %bb.a, %bb.m, %bb.h, %bb.g, %bb.f, %bb.l, %bb.j
+common.ret56:                                     ; preds = %bb.c, %bb.b, %bb.k, %bb.e, %bb.i, %bb.d, %bb.a, %bb.m, %bb.h, %bb.g, %bb.f, %bb.l, %bb.j
   %common.ret56.op = phi i32 [ %i.at, %bb.l ], [ %i.ah, %bb.j ], [ 1, %bb.i ], [ 1, %bb.b ], [ %i.av, %bb.m ], [ 0, %bb.a ], [ -1, %bb.c ], [ -1, %bb.d ], [ 1, %bb.k ], [ %i.r, %bb.f ], [ %i.u, %bb.g ], [ %i.v, %bb.h ], [ 1, %bb.e ]
   ret i32 %common.ret56.op
 
@@ -286,10 +285,9 @@ bb.l:                                             ; preds = %bb.k
   %i.at = zext i1 %i.as to i32
   br label %common.ret56
 
-.unreachabledefault:                              ; preds = %bb.e
-  unreachable
-
 bb.m:                                             ; preds = %bb.e
+  %2 = icmp eq i32 %i.i, 6
+  tail call void @llvm.assume(i1 %2)
   %i.au = tail call i64 @rb_reg_equal(i64 noundef %0, i64 noundef %1) #37
   %.not48 = icmp eq i64 %i.au, 0
   %i.av = sext i1 %.not48 to i32

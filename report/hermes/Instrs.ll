@@ -159,7 +159,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.assume(i1 %i.h)
   %i.i = icmp ne i8 %i.b, 79
   tail call void @llvm.assume(i1 %i.i)
-  switch i8 %i.b, label %.thread112.unreachabledefault [
+  switch i8 %i.b, label %bb.m [
     i8 80, label %bb.c
     i8 81, label %bb.f
     i8 82, label %bb.g
@@ -168,7 +168,6 @@ bb.b:                                             ; preds = %bb.a
     i8 85, label %bb.j
     i8 86, label %bb.k
     i8 87, label %bb.l
-    i8 88, label %bb.m
   ]
 
 bb.c:                                             ; preds = %.thread112
@@ -244,9 +243,6 @@ bb.k:                                             ; preds = %.thread112
 bb.l:                                             ; preds = %.thread112
   %i.au = tail call noundef ptr @_ZNK6hermes13SwitchImmInst12getSuccessorEj(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef %1)
   br label %bb.n
-
-.thread112.unreachabledefault:                    ; preds = %.thread112
-  unreachable
 
 bb.m:                                             ; preds = %.thread112
   %.not = icmp eq i8 %i.b, 88
