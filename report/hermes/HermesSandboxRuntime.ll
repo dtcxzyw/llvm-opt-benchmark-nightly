@@ -203,8 +203,6 @@ $_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = comdat any
 @__func__._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl17createArrayBufferESt10shared_ptrIN8facebook3jsi13MutableBufferEE = private unnamed_addr constant [18 x i8] c"createArrayBuffer\00", align 1
 @__func__._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl4dataERKN8facebook3jsi11ArrayBufferE = private unnamed_addr constant [5 x i8] c"data\00", align 1
 @.str.15 = private unnamed_addr constant [27 x i8] c"Array index out of bounds.\00", align 1
-@switch.table._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl17HostObjectWrapper3getEP10w2c_hermesjjjj = private unnamed_addr constant [4 x i16] [i16 616, i16 632, i16 608, i16 624], align 8
-@switch.table._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE = private unnamed_addr constant [4 x i32] [i32 -2147483643, i32 -2147483642, i32 -2147483641, i32 -2147483639], align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define hidden noundef i32 @w2c_wasi__snapshot__preview1_environ_get(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
@@ -607,8 +605,8 @@ bb.ab:                                            ; preds = %_ZN12_GLOBAL__N_111
 bb.ac:                                            ; preds = %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.cp = load i32, ptr %10, align 8, !tbaa !300  ; 4 uses
-  switch i32 %i.cp, label %switch.lookup [
+  %i.cp = load i32, ptr %10, align 8, !tbaa !300  ; 5 uses
+  switch i32 %i.cp, label %18 [
     i32 0, label %.fold.split.i.i.i
     i32 1, label %.fold.split.i.i.i
     i32 2, label %bb.ad
@@ -626,24 +624,36 @@ bb.ae:                                            ; preds = %bb.ac
   %i.ct = load i64, ptr %i.cs, align 8, !tbaa !24
   br label %.fold.split.i.i.i
 
-switch.lookup:                                    ; preds = %bb.ac
-  %18 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %19 = load ptr, ptr %18, align 8, !tbaa !24
-  %i.cu = getelementptr i8, ptr %19, i64 12
-  %.val.i.i.i = load i32, ptr %i.cu, align 4, !tbaa !303
+18:                                               ; preds = %bb.ac
+  %19 = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %20 = load ptr, ptr %19, align 8, !tbaa !24
+  %21 = getelementptr i8, ptr %20, i64 12
+  %.val.i.i.i = load i32, ptr %21, align 4, !tbaa !303
+  switch i32 %i.cp, label %24 [
+    i32 6, label %switch.lookup
+    i32 7, label %22
+    i32 4, label %23
+  ]
+
+22:                                               ; preds = %18
+  br label %switch.lookup
+
+23:                                               ; preds = %18
+  br label %switch.lookup
+
+24:                                               ; preds = %18
+  %25 = icmp eq i32 %i.cp, 5
+  call void @llvm.assume(i1 %25)
+  br label %switch.lookup
+
+switch.lookup:                                    ; preds = %24, %23, %22, %18
+  %.sink28.i.i.i = phi i64 [ 632, %24 ], [ 616, %23 ], [ 624, %22 ], [ 608, %18 ]
+  %.sroa.0.0.i.i.i = phi i32 [ -2147483642, %24 ], [ -2147483643, %23 ], [ -2147483639, %22 ], [ -2147483641, %18 ]
+  %i.cu = getelementptr inbounds nuw i8, ptr %i.i, i64 %.sink28.i.i.i
+  %26 = load ptr, ptr %i.cu, align 8, !tbaa !308
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 1024
-  %20 = load i32, ptr %i.cv, align 8, !tbaa !137
-  %switch.tableidx = add nsw i32 %i.cp, -4        ; 2 uses
-  %21 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl17HostObjectWrapper3getEP10w2c_hermesjjjj, i64 %21
-  %switch.load = load i16, ptr %switch.gep, align 2
-  %switch.ext = zext i16 %switch.load to i64
-  %22 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep34 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE, i64 %22
-  %switch.load35 = load i32, ptr %switch.gep34, align 4
-  %23 = getelementptr inbounds nuw i8, ptr %i.i, i64 %switch.ext
-  %24 = load ptr, ptr %23, align 8, !tbaa !308
-  %i.cw = invoke noundef i32 %24(ptr noundef nonnull %0, i32 noundef %20, i32 noundef %.val.i.i.i)
+  %switch.load35 = load i32, ptr %i.cv, align 8, !tbaa !137
+  %i.cw = invoke noundef i32 %26(ptr noundef nonnull %0, i32 noundef %switch.load35, i32 noundef %.val.i.i.i)
           to label %.noexc38.i.i unwind label %bb.ai, !inline_history !309
 
 .noexc38.i.i:                                     ; preds = %switch.lookup
@@ -651,7 +661,7 @@ switch.lookup:                                    ; preds = %bb.ac
   br label %.fold.split.i.i.i
 
 .fold.split.i.i.i:                                ; preds = %bb.ac, %.noexc38.i.i, %bb.ae, %bb.ad, %bb.ac
-  %.sroa.0.1.i.i.i = phi i32 [ %switch.load35, %.noexc38.i.i ], [ %i.cp, %bb.ac ], [ 2, %bb.ad ], [ 4, %bb.ae ], [ %i.cp, %bb.ac ]
+  %.sroa.0.1.i.i.i = phi i32 [ %.sroa.0.0.i.i.i, %.noexc38.i.i ], [ %i.cp, %bb.ac ], [ 2, %bb.ad ], [ 4, %bb.ae ], [ %i.cp, %bb.ac ]
   %.sroa.9.1.i.i.i = phi i64 [ %.sroa.2.8.insert.ext.i16.pn.i.i.i, %.noexc38.i.i ], [ undef, %bb.ac ], [ %.sroa.2.8.insert.ext.i.i.i.i, %bb.ad ], [ %i.ct, %bb.ae ], [ undef, %bb.ac ]
   call void @_ZN8facebook3jsi5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %10) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #31
@@ -1054,8 +1064,8 @@ _ZN12_GLOBAL__N_111NativeTableISt10shared_ptrIN8facebook3jsi10HostObjectEEE2atEm
           to label %bb.o unwind label %bb.s
 
 bb.o:                                             ; preds = %_ZN12_GLOBAL__N_111NativeTableISt10shared_ptrIN8facebook3jsi10HostObjectEEE2atEm.exit.i.i
-  %i.cd = load i32, ptr %6, align 8, !tbaa !300   ; 4 uses
-  switch i32 %i.cd, label %switch.lookup [
+  %i.cd = load i32, ptr %6, align 8, !tbaa !300   ; 5 uses
+  switch i32 %i.cd, label %14 [
     i32 0, label %.fold.split.i.i.i
     i32 1, label %.fold.split.i.i.i
     i32 2, label %bb.p
@@ -1073,23 +1083,35 @@ bb.q:                                             ; preds = %bb.o
   %i.ch = load i64, ptr %i.cg, align 8, !tbaa !24
   br label %.fold.split.i.i.i
 
-switch.lookup:                                    ; preds = %bb.o
-  %14 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %15 = load ptr, ptr %14, align 8, !tbaa !24
-  %i.ci = getelementptr i8, ptr %15, i64 12
-  %.val.i.i.i = load i32, ptr %i.ci, align 4, !tbaa !303
+14:                                               ; preds = %bb.o
+  %15 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %16 = load ptr, ptr %15, align 8, !tbaa !24
+  %17 = getelementptr i8, ptr %16, i64 12
+  %.val.i.i.i = load i32, ptr %17, align 4, !tbaa !303
+  switch i32 %i.cd, label %20 [
+    i32 6, label %switch.lookup
+    i32 7, label %18
+    i32 4, label %19
+  ]
+
+18:                                               ; preds = %14
+  br label %switch.lookup
+
+19:                                               ; preds = %14
+  br label %switch.lookup
+
+20:                                               ; preds = %14
+  %21 = icmp eq i32 %i.cd, 5
+  call void @llvm.assume(i1 %21)
+  br label %switch.lookup
+
+switch.lookup:                                    ; preds = %20, %19, %18, %14
+  %.sink28.i.i.i = phi i64 [ 632, %20 ], [ 616, %19 ], [ 624, %18 ], [ 608, %14 ]
+  %.sroa.0.0.i.i.i = phi i32 [ -2147483642, %20 ], [ -2147483643, %19 ], [ -2147483639, %18 ], [ -2147483641, %14 ]
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.g, i64 %.sink28.i.i.i
+  %22 = load ptr, ptr %i.ci, align 8, !tbaa !308
   %i.cj = load i32, ptr %i.j, align 8, !tbaa !137
-  %switch.tableidx = add nsw i32 %i.cd, -4        ; 2 uses
-  %16 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl17HostObjectWrapper3getEP10w2c_hermesjjjj, i64 %16
-  %switch.load = load i16, ptr %switch.gep, align 2
-  %switch.ext = zext i16 %switch.load to i64
-  %17 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep26 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE, i64 %17
-  %switch.load27 = load i32, ptr %switch.gep26, align 4
-  %18 = getelementptr inbounds nuw i8, ptr %i.g, i64 %switch.ext
-  %19 = load ptr, ptr %18, align 8, !tbaa !308
-  %i.ck = invoke noundef i32 %19(ptr noundef nonnull %0, i32 noundef %i.cj, i32 noundef %.val.i.i.i)
+  %i.ck = invoke noundef i32 %22(ptr noundef nonnull %0, i32 noundef %i.cj, i32 noundef %.val.i.i.i)
           to label %.noexc.i.i unwind label %bb.t, !inline_history !309
 
 .noexc.i.i:                                       ; preds = %switch.lookup
@@ -1097,7 +1119,7 @@ switch.lookup:                                    ; preds = %bb.o
   br label %.fold.split.i.i.i
 
 .fold.split.i.i.i:                                ; preds = %bb.o, %.noexc.i.i, %bb.q, %bb.p, %bb.o
-  %.sroa.0.1.i.i.i = phi i32 [ %switch.load27, %.noexc.i.i ], [ %i.cd, %bb.o ], [ 2, %bb.p ], [ 4, %bb.q ], [ %i.cd, %bb.o ]
+  %.sroa.0.1.i.i.i = phi i32 [ %.sroa.0.0.i.i.i, %.noexc.i.i ], [ %i.cd, %bb.o ], [ 2, %bb.p ], [ 4, %bb.q ], [ %i.cd, %bb.o ]
   %.sroa.9.1.i.i.i = phi i64 [ %.sroa.2.8.insert.ext.i16.pn.i.i.i, %.noexc.i.i ], [ undef, %bb.o ], [ %.sroa.2.8.insert.ext.i.i.i.i, %bb.p ], [ %i.ch, %bb.q ], [ undef, %bb.o ]
   call void @_ZN8facebook3jsi5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %6) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #31
@@ -1500,7 +1522,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit: ; preds = %bb.c
-  %i.j = load i32, ptr %3, align 8, !tbaa !300    ; 4 uses
+  %i.j = load i32, ptr %3, align 8, !tbaa !300    ; 5 uses
   switch i32 %i.j, label %switch.lookup [
     i32 0, label %_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE.exit
     i32 1, label %_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE.exit
@@ -1522,18 +1544,33 @@ bb.f:                                             ; preds = %_ZN12_GLOBAL__N_110
 switch.lookup:                                    ; preds = %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !24
-  %4 = getelementptr i8, ptr %i.p, i64 12
-  %.val.i = load i32, ptr %4, align 4, !tbaa !303
-  %5 = sext i32 %i.j to i64
-  %6 = getelementptr [4 x i8], ptr @switch.table._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE, i64 %5
-  %switch.gep = getelementptr i8, ptr %6, i64 -16
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %.sroa.2.8.insert.ext.i15.pn.i = zext i32 %.val.i to i64
+  %switch.gep = getelementptr i8, ptr %i.p, i64 12
+  %switch.load = load i32, ptr %switch.gep, align 4, !tbaa !303
+  switch i32 %i.j, label %6 [
+    i32 6, label %8
+    i32 7, label %4
+    i32 4, label %5
+  ]
+
+4:                                                ; preds = %switch.lookup
+  br label %8
+
+5:                                                ; preds = %switch.lookup
+  br label %8
+
+6:                                                ; preds = %switch.lookup
+  %7 = icmp eq i32 %i.j, 5
+  tail call void @llvm.assume(i1 %7)
+  br label %8
+
+8:                                                ; preds = %6, %5, %4, %switch.lookup
+  %.sroa.0.0.i = phi i32 [ -2147483642, %6 ], [ -2147483639, %4 ], [ -2147483643, %5 ], [ -2147483641, %switch.lookup ]
+  %.sroa.2.8.insert.ext.i15.pn.i = zext i32 %switch.load to i64
   br label %_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE.exit
 
-_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE.exit: ; preds = %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit, %bb.e, %bb.f, %switch.lookup
-  %.sroa.0.1.i = phi i32 [ %switch.load, %switch.lookup ], [ %i.j, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit ], [ 2, %bb.e ], [ 4, %bb.f ], [ %i.j, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit ]
-  %.sroa.9.1.i = phi i64 [ %.sroa.2.8.insert.ext.i15.pn.i, %switch.lookup ], [ undef, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit ], [ %.sroa.2.8.insert.ext.i.i, %bb.e ], [ %i.n, %bb.f ], [ undef, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit ]
+_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE.exit: ; preds = %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit, %bb.e, %bb.f, %8
+  %.sroa.0.1.i = phi i32 [ %.sroa.0.0.i, %8 ], [ %i.j, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit ], [ 2, %bb.e ], [ 4, %bb.f ], [ %i.j, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit ]
+  %.sroa.9.1.i = phi i64 [ %.sroa.2.8.insert.ext.i15.pn.i, %8 ], [ undef, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit ], [ %.sroa.2.8.insert.ext.i.i, %bb.e ], [ %i.n, %bb.f ], [ undef, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit ]
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.val.val = load ptr, ptr %i.q, align 8, !tbaa !18
   %i.r = getelementptr inbounds nuw i8, ptr %.val.val, i64 %i.d ; 2 uses
@@ -1936,7 +1973,7 @@ _ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43: ; pred
   store i32 4, ptr %i.ap, align 8, !tbaa !24
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
   store double %i.an, ptr %.sroa.47.0..sroa_idx, align 8, !tbaa !24
-  %i.aq = load i32, ptr %3, align 8, !tbaa !300   ; 4 uses
+  %i.aq = load i32, ptr %3, align 8, !tbaa !300   ; 5 uses
   switch i32 %i.aq, label %switch.lookup [
     i32 0, label %_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE.exit
     i32 1, label %_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE.exit
@@ -1958,18 +1995,33 @@ bb.o:                                             ; preds = %_ZN12_GLOBAL__N_110
 switch.lookup:                                    ; preds = %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !24
-  %6 = getelementptr i8, ptr %i.aw, i64 12
-  %.val.i = load i32, ptr %6, align 4, !tbaa !303
-  %7 = sext i32 %i.aq to i64
-  %8 = getelementptr [4 x i8], ptr @switch.table._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE, i64 %7
-  %switch.gep = getelementptr i8, ptr %8, i64 -16
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %.sroa.2.8.insert.ext.i15.pn.i = zext i32 %.val.i to i64
+  %switch.gep = getelementptr i8, ptr %i.aw, i64 12
+  %switch.load = load i32, ptr %switch.gep, align 4, !tbaa !303
+  switch i32 %i.aq, label %8 [
+    i32 6, label %10
+    i32 7, label %6
+    i32 4, label %7
+  ]
+
+6:                                                ; preds = %switch.lookup
+  br label %10
+
+7:                                                ; preds = %switch.lookup
+  br label %10
+
+8:                                                ; preds = %switch.lookup
+  %9 = icmp eq i32 %i.aq, 5
+  tail call void @llvm.assume(i1 %9)
+  br label %10
+
+10:                                               ; preds = %8, %7, %6, %switch.lookup
+  %.sroa.0.0.i = phi i32 [ -2147483642, %8 ], [ -2147483639, %6 ], [ -2147483643, %7 ], [ -2147483641, %switch.lookup ]
+  %.sroa.2.8.insert.ext.i15.pn.i = zext i32 %switch.load to i64
   br label %_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE.exit
 
-_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE.exit: ; preds = %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43, %bb.n, %bb.o, %switch.lookup
-  %.sroa.0.1.i = phi i32 [ %switch.load, %switch.lookup ], [ %i.aq, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43 ], [ 2, %bb.n ], [ 4, %bb.o ], [ %i.aq, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43 ]
-  %.sroa.9.1.i = phi i64 [ %.sroa.2.8.insert.ext.i15.pn.i, %switch.lookup ], [ undef, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43 ], [ %.sroa.2.8.insert.ext.i.i, %bb.n ], [ %i.au, %bb.o ], [ undef, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43 ]
+_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE.exit: ; preds = %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43, %bb.n, %bb.o, %10
+  %.sroa.0.1.i = phi i32 [ %.sroa.0.0.i, %10 ], [ %i.aq, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43 ], [ 2, %bb.n ], [ 4, %bb.o ], [ %i.aq, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43 ]
+  %.sroa.9.1.i = phi i64 [ %.sroa.2.8.insert.ext.i15.pn.i, %10 ], [ undef, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43 ], [ %.sroa.2.8.insert.ext.i.i, %bb.n ], [ %i.au, %bb.o ], [ undef, %_ZN12_GLOBAL__N_110StackAllocINS_12SandboxValueEEC2EP10w2c_hermes.exit43 ]
   %.val.val = load ptr, ptr %i.ao, align 8, !tbaa !18
   %i.ax = getelementptr inbounds nuw i8, ptr %.val.val, i64 %i.aa ; 2 uses
   store i32 %.sroa.0.1.i, ptr %i.ax, align 8, !tbaa !24
@@ -2372,7 +2424,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.lr.ph, %_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit
   %.080 = phi i64 [ 0, %.lr.ph ], [ %i.af, %_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit ] ; 3 uses
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %.080 ; 4 uses
-  %i.w = load i32, ptr %i.v, align 8, !tbaa !300  ; 4 uses
+  %i.w = load i32, ptr %i.v, align 8, !tbaa !300  ; 5 uses
   switch i32 %i.w, label %switch.lookup [
     i32 0, label %_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit
     i32 1, label %_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit
@@ -2394,18 +2446,33 @@ bb.j:                                             ; preds = %bb.h
 switch.lookup:                                    ; preds = %bb.h
   %i.ab = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !24
-  %6 = getelementptr i8, ptr %i.ac, i64 12
-  %.val.i = load i32, ptr %6, align 4, !tbaa !303
-  %7 = sext i32 %i.w to i64
-  %8 = getelementptr [4 x i8], ptr @switch.table._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE, i64 %7
-  %switch.gep = getelementptr i8, ptr %8, i64 -16
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %.sroa.2.8.insert.ext.i15.pn.i = zext i32 %.val.i to i64
+  %switch.gep = getelementptr i8, ptr %i.ac, i64 12
+  %switch.load = load i32, ptr %switch.gep, align 4, !tbaa !303
+  switch i32 %i.w, label %8 [
+    i32 6, label %10
+    i32 7, label %6
+    i32 4, label %7
+  ]
+
+6:                                                ; preds = %switch.lookup
+  br label %10
+
+7:                                                ; preds = %switch.lookup
+  br label %10
+
+8:                                                ; preds = %switch.lookup
+  %9 = icmp eq i32 %i.w, 5
+  tail call void @llvm.assume(i1 %9)
+  br label %10
+
+10:                                               ; preds = %8, %7, %6, %switch.lookup
+  %.sroa.0.0.i = phi i32 [ -2147483642, %8 ], [ -2147483639, %6 ], [ -2147483643, %7 ], [ -2147483641, %switch.lookup ]
+  %.sroa.2.8.insert.ext.i15.pn.i = zext i32 %switch.load to i64
   br label %_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit
 
-_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit: ; preds = %bb.h, %switch.lookup, %bb.j, %bb.i, %bb.h
-  %.sroa.0.1.i = phi i32 [ %switch.load, %switch.lookup ], [ %i.w, %bb.h ], [ 2, %bb.i ], [ 4, %bb.j ], [ %i.w, %bb.h ]
-  %.sroa.9.1.i = phi i64 [ %.sroa.2.8.insert.ext.i15.pn.i, %switch.lookup ], [ undef, %bb.h ], [ %.sroa.2.8.insert.ext.i.i, %bb.i ], [ %i.aa, %bb.j ], [ undef, %bb.h ]
+_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit: ; preds = %bb.h, %10, %bb.j, %bb.i, %bb.h
+  %.sroa.0.1.i = phi i32 [ %.sroa.0.0.i, %10 ], [ %i.w, %bb.h ], [ 2, %bb.i ], [ 4, %bb.j ], [ %i.w, %bb.h ]
+  %.sroa.9.1.i = phi i64 [ %.sroa.2.8.insert.ext.i15.pn.i, %10 ], [ undef, %bb.h ], [ %.sroa.2.8.insert.ext.i.i, %bb.i ], [ %i.aa, %bb.j ], [ undef, %bb.h ]
   %.val29.val = load ptr, ptr %i.n, align 8, !tbaa !18
   %i.ad = getelementptr inbounds nuw i8, ptr %.val29.val, i64 %i.e
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %.080 ; 2 uses
@@ -2444,7 +2511,7 @@ bb.m:                                             ; preds = %bb.l
   unreachable
 
 _ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit: ; preds = %bb.l
-  %i.an = load i32, ptr %3, align 8, !tbaa !300   ; 4 uses
+  %i.an = load i32, ptr %3, align 8, !tbaa !300   ; 5 uses
   switch i32 %i.an, label %switch.lookup85 [
     i32 0, label %.fold.split.i57
     i32 1, label %.fold.split.i57
@@ -2466,18 +2533,33 @@ bb.o:                                             ; preds = %_ZN12_GLOBAL__N_110
 switch.lookup85:                                  ; preds = %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !24
-  %9 = getelementptr i8, ptr %i.at, i64 12
-  %.val.i58 = load i32, ptr %9, align 4, !tbaa !303
-  %10 = sext i32 %i.an to i64
-  %11 = getelementptr [4 x i8], ptr @switch.table._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE, i64 %10
-  %switch.gep86 = getelementptr i8, ptr %11, i64 -16
-  %switch.load87 = load i32, ptr %switch.gep86, align 4
-  %.sroa.2.8.insert.ext.i15.pn.i60 = zext i32 %.val.i58 to i64
+  %switch.gep86 = getelementptr i8, ptr %i.at, i64 12
+  %switch.load87 = load i32, ptr %switch.gep86, align 4, !tbaa !303
+  switch i32 %i.an, label %13 [
+    i32 6, label %15
+    i32 7, label %11
+    i32 4, label %12
+  ]
+
+11:                                               ; preds = %switch.lookup85
+  br label %15
+
+12:                                               ; preds = %switch.lookup85
+  br label %15
+
+13:                                               ; preds = %switch.lookup85
+  %14 = icmp eq i32 %i.an, 5
+  tail call void @llvm.assume(i1 %14)
+  br label %15
+
+15:                                               ; preds = %13, %12, %11, %switch.lookup85
+  %.sroa.0.0.i59 = phi i32 [ -2147483642, %13 ], [ -2147483639, %11 ], [ -2147483643, %12 ], [ -2147483641, %switch.lookup85 ]
+  %.sroa.2.8.insert.ext.i15.pn.i60 = zext i32 %switch.load87 to i64
   br label %.fold.split.i57
 
-.fold.split.i57:                                  ; preds = %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit, %switch.lookup85, %bb.o, %bb.n, %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit
-  %.sroa.0.1.i52 = phi i32 [ %switch.load87, %switch.lookup85 ], [ %i.an, %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit ], [ 2, %bb.n ], [ 4, %bb.o ], [ %i.an, %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit ]
-  %.sroa.9.1.i53 = phi i64 [ %.sroa.2.8.insert.ext.i15.pn.i60, %switch.lookup85 ], [ undef, %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit ], [ %.sroa.2.8.insert.ext.i.i56, %bb.n ], [ %i.ar, %bb.o ], [ undef, %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit ]
+.fold.split.i57:                                  ; preds = %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit, %15, %bb.o, %bb.n, %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit
+  %.sroa.0.1.i52 = phi i32 [ %.sroa.0.0.i59, %15 ], [ %i.an, %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit ], [ 2, %bb.n ], [ 4, %bb.o ], [ %i.an, %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit ]
+  %.sroa.9.1.i53 = phi i64 [ %.sroa.2.8.insert.ext.i15.pn.i60, %15 ], [ undef, %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit ], [ %.sroa.2.8.insert.ext.i.i56, %bb.n ], [ %i.ar, %bb.o ], [ undef, %_ZN12_GLOBAL__N_110StackAllocINS_19SandboxValueOrErrorEEC2EP10w2c_hermes.exit ]
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %.val.val = load ptr, ptr %i.au, align 8, !tbaa !18
   %i.av = getelementptr inbounds nuw i8, ptr %.val.val, i64 %i.q ; 2 uses
@@ -2679,7 +2761,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.lr.ph, %_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit
   %.049 = phi i64 [ 0, %.lr.ph ], [ %i.af, %_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit ] ; 3 uses
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %.049 ; 4 uses
-  %i.w = load i32, ptr %i.v, align 8, !tbaa !300  ; 4 uses
+  %i.w = load i32, ptr %i.v, align 8, !tbaa !300  ; 5 uses
   switch i32 %i.w, label %switch.lookup [
     i32 0, label %_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit
     i32 1, label %_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit
@@ -2701,18 +2783,33 @@ bb.j:                                             ; preds = %bb.h
 switch.lookup:                                    ; preds = %bb.h
   %i.ab = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !24
-  %5 = getelementptr i8, ptr %i.ac, i64 12
-  %.val.i = load i32, ptr %5, align 4, !tbaa !303
-  %6 = sext i32 %i.w to i64
-  %7 = getelementptr [4 x i8], ptr @switch.table._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE, i64 %6
-  %switch.gep = getelementptr i8, ptr %7, i64 -16
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %.sroa.2.8.insert.ext.i15.pn.i = zext i32 %.val.i to i64
+  %switch.gep = getelementptr i8, ptr %i.ac, i64 12
+  %switch.load = load i32, ptr %switch.gep, align 4, !tbaa !303
+  switch i32 %i.w, label %7 [
+    i32 6, label %9
+    i32 7, label %5
+    i32 4, label %6
+  ]
+
+5:                                                ; preds = %switch.lookup
+  br label %9
+
+6:                                                ; preds = %switch.lookup
+  br label %9
+
+7:                                                ; preds = %switch.lookup
+  %8 = icmp eq i32 %i.w, 5
+  tail call void @llvm.assume(i1 %8)
+  br label %9
+
+9:                                                ; preds = %7, %6, %5, %switch.lookup
+  %.sroa.0.0.i = phi i32 [ -2147483642, %7 ], [ -2147483639, %5 ], [ -2147483643, %6 ], [ -2147483641, %switch.lookup ]
+  %.sroa.2.8.insert.ext.i15.pn.i = zext i32 %switch.load to i64
   br label %_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit
 
-_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit: ; preds = %bb.h, %switch.lookup, %bb.j, %bb.i, %bb.h
-  %.sroa.0.1.i = phi i32 [ %switch.load, %switch.lookup ], [ %i.w, %bb.h ], [ 2, %bb.i ], [ 4, %bb.j ], [ %i.w, %bb.h ]
-  %.sroa.9.1.i = phi i64 [ %.sroa.2.8.insert.ext.i15.pn.i, %switch.lookup ], [ undef, %bb.h ], [ %.sroa.2.8.insert.ext.i.i, %bb.i ], [ %i.aa, %bb.j ], [ undef, %bb.h ]
+_ZN12_GLOBAL__N_19LIFOAllocINS_12SandboxValueEEC2EP10w2c_hermesj.exit: ; preds = %bb.h, %9, %bb.j, %bb.i, %bb.h
+  %.sroa.0.1.i = phi i32 [ %.sroa.0.0.i, %9 ], [ %i.w, %bb.h ], [ 2, %bb.i ], [ 4, %bb.j ], [ %i.w, %bb.h ]
+  %.sroa.9.1.i = phi i64 [ %.sroa.2.8.insert.ext.i15.pn.i, %9 ], [ undef, %bb.h ], [ %.sroa.2.8.insert.ext.i.i, %bb.i ], [ %i.aa, %bb.j ], [ undef, %bb.h ]
   %.val.val = load ptr, ptr %i.n, align 8, !tbaa !18
   %i.ad = getelementptr inbounds nuw i8, ptr %.val.val, i64 %i.e
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %.049 ; 2 uses
@@ -3115,10 +3212,10 @@ _ZN12_GLOBAL__N_12sb3PtrINS_12SandboxValueEE3setEjj.exit: ; preds = %bb.c
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: write, target_mem: none) uwtable
 define internal fastcc { i32, i64 } @_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #21 align 2 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8, !tbaa !300    ; 4 uses
+  %i.a = load i32, ptr %0, align 8, !tbaa !300    ; 5 uses
   switch i32 %i.a, label %switch.lookup [
     i32 0, label %.fold.split
     i32 1, label %.fold.split
@@ -3140,18 +3237,33 @@ bb.c:                                             ; preds = %bb.a
 switch.lookup:                                    ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !24
-  %1 = getelementptr i8, ptr %i.g, i64 12
-  %.val = load i32, ptr %1, align 4, !tbaa !303
-  %2 = sext i32 %i.a to i64
-  %3 = getelementptr [4 x i8], ptr @switch.table._ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl14toSandboxValueERKN8facebook3jsi5ValueE, i64 %2
-  %switch.gep = getelementptr i8, ptr %3, i64 -16
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %.sroa.2.8.insert.ext.i15.pn = zext i32 %.val to i64
+  %switch.gep = getelementptr i8, ptr %i.g, i64 12
+  %switch.load = load i32, ptr %switch.gep, align 4, !tbaa !303
+  switch i32 %i.a, label %3 [
+    i32 6, label %5
+    i32 7, label %1
+    i32 4, label %2
+  ]
+
+1:                                                ; preds = %switch.lookup
+  br label %5
+
+2:                                                ; preds = %switch.lookup
+  br label %5
+
+3:                                                ; preds = %switch.lookup
+  %4 = icmp eq i32 %i.a, 5
+  tail call void @llvm.assume(i1 %4)
+  br label %5
+
+5:                                                ; preds = %switch.lookup, %3, %2, %1
+  %.sroa.0.0 = phi i32 [ -2147483642, %3 ], [ -2147483639, %1 ], [ -2147483643, %2 ], [ -2147483641, %switch.lookup ]
+  %.sroa.2.8.insert.ext.i15.pn = zext i32 %switch.load to i64
   br label %.fold.split
 
-.fold.split:                                      ; preds = %bb.a, %bb.a, %switch.lookup, %bb.c, %bb.b
-  %.sroa.0.1 = phi i32 [ %switch.load, %switch.lookup ], [ %i.a, %bb.a ], [ 2, %bb.b ], [ 4, %bb.c ], [ %i.a, %bb.a ]
-  %.sroa.9.1 = phi i64 [ %.sroa.2.8.insert.ext.i15.pn, %switch.lookup ], [ undef, %bb.a ], [ %.sroa.2.8.insert.ext.i, %bb.b ], [ %i.e, %bb.c ], [ undef, %bb.a ]
+.fold.split:                                      ; preds = %bb.a, %bb.a, %5, %bb.c, %bb.b
+  %.sroa.0.1 = phi i32 [ %.sroa.0.0, %5 ], [ %i.a, %bb.a ], [ 2, %bb.b ], [ 4, %bb.c ], [ %i.a, %bb.a ]
+  %.sroa.9.1 = phi i64 [ %.sroa.2.8.insert.ext.i15.pn, %5 ], [ undef, %bb.a ], [ %.sroa.2.8.insert.ext.i, %bb.b ], [ %i.e, %bb.c ], [ undef, %bb.a ]
   %.fca.0.insert = insertvalue { i32, i64 } poison, i32 %.sroa.0.1, 0
   %.fca.1.insert = insertvalue { i32, i64 } %.fca.0.insert, i64 %.sroa.9.1, 1
   ret { i32, i64 } %.fca.1.insert
@@ -3554,7 +3666,7 @@ attributes #17 = { mustprogress norecurse nounwind willreturn memory(argmem: rea
 attributes #18 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #19 = { cold noreturn nounwind memory(inaccessiblemem: write) }
 attributes #20 = { nounwind memory(none) }
-attributes #21 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #21 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: write, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #22 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #23 = { mustprogress noinline nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #24 = { cold noreturn }

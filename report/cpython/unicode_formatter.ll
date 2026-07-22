@@ -141,7 +141,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %i.y = load i32, ptr %i.x, align 4, !tbaa !27   ; 2 uses
+  %i.y = load i32, ptr %i.x, align 4, !tbaa !27   ; 3 uses
   %i.z = icmp eq i32 %i.y, 61
   br i1 %i.z, label %bb.r, label %bb.s
 
@@ -180,7 +180,6 @@ bb.u:                                             ; preds = %bb.t
   switch i32 %i.y, label %._crit_edge.unreachabledefault.i [
     i32 62, label %bb.v
     i32 94, label %bb.w
-    i32 60, label %calc_padding.exit.i
   ]
 
 bb.v:                                             ; preds = %._crit_edge.i
@@ -193,10 +192,12 @@ bb.w:                                             ; preds = %._crit_edge.i
   br label %calc_padding.exit.i
 
 ._crit_edge.unreachabledefault.i:                 ; preds = %._crit_edge.i
-  unreachable
+  %6 = icmp eq i32 %i.y, 60
+  tail call void @llvm.assume(i1 %6)
+  br label %calc_padding.exit.i
 
-calc_padding.exit.i:                              ; preds = %._crit_edge.i, %bb.w, %bb.v
-  %.sink29.i.i = phi i64 [ %i.al, %bb.w ], [ %i.aj, %bb.v ], [ 0, %._crit_edge.i ] ; 3 uses
+calc_padding.exit.i:                              ; preds = %._crit_edge.unreachabledefault.i, %bb.w, %bb.v
+  %.sink29.i.i = phi i64 [ %i.al, %bb.w ], [ 0, %._crit_edge.unreachabledefault.i ], [ %i.aj, %bb.v ] ; 3 uses
   %i.am = add i64 %.sink29.i.i, %.057.i           ; 2 uses
   %i.an = sub i64 %.sink.i.i, %i.am               ; 2 uses
   %i.ao = getelementptr i8, ptr %0, i64 20        ; 2 uses
@@ -599,10 +600,9 @@ bb.ab:                                            ; preds = %bb.aa
   %..i.i = call i64 @llvm.smax.i64(i64 %i.cm, i64 %i.co)
   %i.cp = icmp slt i64 %i.co, 0
   %.sink.i.i = select i1 %i.cp, i64 %i.cm, i64 %..i.i ; 8 uses
-  switch i32 %i.ac, label %.unreachabledefault [
+  switch i32 %i.ac, label %bb.ae [
     i32 62, label %bb.ac
     i32 94, label %bb.ad
-    i32 60, label %bb.ae
   ]
 
 bb.ac:                                            ; preds = %bb.ab
@@ -613,9 +613,6 @@ bb.ad:                                            ; preds = %bb.ab
   %i.cr = sub i64 %.sink.i.i, %i.cm
   %i.cs = sdiv i64 %i.cr, 2
   br label %calc_padding.exit.i
-
-.unreachabledefault:                              ; preds = %bb.ab
-  unreachable
 
 bb.ae:                                            ; preds = %bb.ab
   %i.ct = icmp eq i32 %i.ac, 60
