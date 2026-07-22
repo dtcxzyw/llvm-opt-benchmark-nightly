@@ -203,9 +203,9 @@ _ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EE17_S_check_init_lenEmRKS3_.ex
   %.not.i.i.i.i = icmp ne i32 %2, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.c = mul nuw nsw i64 %i.b, 12                 ; 2 uses
-  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #28 ; 6 uses
+  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #28 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.d, i8 0, i64 12, i1 false)
-  %i.e = add nsw i64 %i.b, -1                     ; 2 uses
+  %i.e = add nsw i64 %i.b, -1                     ; 3 uses
   %i.f = icmp eq i64 %i.e, 0
   br i1 %i.f, label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EEC2EmRKS3_.exit, label %bb.c
 
@@ -227,14 +227,19 @@ _ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EEC2EmRKS3_.exit: ; preds = %.l
   br i1 %i.j, label %.lr.ph, label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EEC2EmRKS3_.exit
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 14 uses
   %i.l = add nsw i32 %2, -1
-  %i.m = zext nneg i32 %i.l to i64
+  %i.m = zext nneg i32 %i.l to i64                ; 2 uses
   %wide.trip.count = zext nneg i32 %2 to i64
+  %.not23 = icmp eq i64 %i.e, 0
+  br i1 %.not23, label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit.loopexit.peel.begin, label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph
+  %3 = add nsw i64 %wide.trip.count, -2
   br label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph, %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12 ] ; 3 uses
+bb.d:                                             ; preds = %.lr.ph.split, %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12
+  %indvars.iv = phi i64 [ 0, %.lr.ph.split ], [ %indvars.iv.next, %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12 ] ; 4 uses
   %i.n = load ptr, ptr %i.k, align 8              ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 32 ; 4 uses
@@ -375,10 +380,150 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 _ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12: ; preds = %bb.q, %bb.n, %bb.m, %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit11
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit, label %bb.d, !llvm.loop !116
+  %exitcond.not = icmp eq i64 %indvars.iv, %3
+  br i1 %exitcond.not, label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit.loopexit.peel.begin, label %bb.d, !llvm.loop !116
 
-_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit: ; preds = %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12, %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EEC2EmRKS3_.exit
+_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit.loopexit.peel.begin: ; preds = %.lr.ph, %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12
+  %4 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12 ] ; 2 uses
+  %5 = load ptr, ptr %i.k, align 8                ; 5 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 4 uses
+  %8 = load i32, ptr %7, align 8                  ; 2 uses
+  %9 = add nsw i32 %8, 1
+  store i32 %9, ptr %7, align 8
+  %10 = sext i32 %8 to i64
+  %11 = load ptr, ptr %6, align 8
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 %10
+  store i8 123, ptr %12, align 1
+  %13 = load i32, ptr %7, align 8                 ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %15 = load i32, ptr %14, align 8
+  %16 = icmp eq i32 %13, %15
+  br i1 %16, label %17, label %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit.peel
+
+17:                                               ; preds = %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit.loopexit.peel.begin
+  %18 = getelementptr inbounds nuw i8, ptr %5, i64 36 ; 2 uses
+  %19 = load i8, ptr %18, align 4, !range !65, !noundef !66
+  %20 = trunc nuw i8 %19 to i1
+  br i1 %20, label %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit.peel, label %21
+
+21:                                               ; preds = %17
+  %22 = load ptr, ptr %5, align 8                 ; 2 uses
+  %23 = load ptr, ptr %6, align 8
+  %24 = load ptr, ptr %22, align 8
+  %25 = getelementptr inbounds nuw i8, ptr %24, i64 32
+  %26 = load ptr, ptr %25, align 8
+  %27 = tail call noundef i32 %26(ptr noundef nonnull align 8 dereferenceable(8) %22, ptr noundef %23, i32 noundef %13) #30, !inline_history !112
+  %28 = icmp eq i32 %27, 1
+  br i1 %28, label %29, label %30
+
+29:                                               ; preds = %21
+  store i8 1, ptr %18, align 4
+  br label %30
+
+30:                                               ; preds = %29, %21
+  store i32 0, ptr %7, align 8
+  br label %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit.peel
+
+_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit.peel: ; preds = %30, %17, %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit.loopexit.peel.begin
+  %31 = load ptr, ptr %i.k, align 8
+  tail call void @_ZN2v88internal18OutputStreamWriter9AddStringEPKc(ptr noundef nonnull align 8 dereferenceable(37) %31, ptr noundef nonnull @.str.46)
+  %32 = load ptr, ptr %i.k, align 8
+  %33 = getelementptr inbounds nuw [12 x i8], ptr %i.d, i64 %4 ; 2 uses
+  %34 = load i32, ptr %33, align 4
+  tail call void @_ZN2v88internal18OutputStreamWriter9AddNumberIiEEvT_(ptr noundef nonnull align 8 dereferenceable(37) %32, i32 noundef %34)
+  %35 = load ptr, ptr %i.k, align 8
+  tail call void @_ZN2v88internal18OutputStreamWriter9AddStringEPKc(ptr noundef nonnull align 8 dereferenceable(37) %35, ptr noundef nonnull @.str.47)
+  %36 = load ptr, ptr %i.k, align 8
+  %37 = getelementptr inbounds nuw i8, ptr %33, i64 8
+  %38 = load i32, ptr %37, align 4
+  tail call void @_ZN2v88internal18OutputStreamWriter9AddNumberIjEEvT_(ptr noundef nonnull align 8 dereferenceable(37) %36, i32 noundef %38)
+  %39 = load ptr, ptr %i.k, align 8               ; 5 uses
+  %40 = getelementptr inbounds nuw i8, ptr %39, i64 16 ; 2 uses
+  %41 = getelementptr inbounds nuw i8, ptr %39, i64 32 ; 4 uses
+  %42 = load i32, ptr %41, align 8                ; 2 uses
+  %43 = add nsw i32 %42, 1
+  store i32 %43, ptr %41, align 8
+  %44 = sext i32 %42 to i64
+  %45 = load ptr, ptr %40, align 8
+  %46 = getelementptr inbounds nuw i8, ptr %45, i64 %44
+  store i8 125, ptr %46, align 1
+  %47 = load i32, ptr %41, align 8                ; 2 uses
+  %48 = getelementptr inbounds nuw i8, ptr %39, i64 8
+  %49 = load i32, ptr %48, align 8
+  %50 = icmp eq i32 %47, %49
+  br i1 %50, label %51, label %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit11.peel
+
+51:                                               ; preds = %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit.peel
+  %52 = getelementptr inbounds nuw i8, ptr %39, i64 36 ; 2 uses
+  %53 = load i8, ptr %52, align 4, !range !65, !noundef !66
+  %54 = trunc nuw i8 %53 to i1
+  br i1 %54, label %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit11.peel, label %55
+
+55:                                               ; preds = %51
+  %56 = load ptr, ptr %39, align 8                ; 2 uses
+  %57 = load ptr, ptr %40, align 8
+  %58 = load ptr, ptr %56, align 8
+  %59 = getelementptr inbounds nuw i8, ptr %58, i64 32
+  %60 = load ptr, ptr %59, align 8
+  %61 = tail call noundef i32 %60(ptr noundef nonnull align 8 dereferenceable(8) %56, ptr noundef %57, i32 noundef %47) #30, !inline_history !112
+  %62 = icmp eq i32 %61, 1
+  br i1 %62, label %63, label %64
+
+63:                                               ; preds = %55
+  store i8 1, ptr %52, align 4
+  br label %64
+
+64:                                               ; preds = %63, %55
+  store i32 0, ptr %41, align 8
+  br label %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit11.peel
+
+_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit11.peel: ; preds = %64, %51, %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit.peel
+  %.not.peel = icmp eq i64 %4, %i.m
+  br i1 %.not.peel, label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit, label %65
+
+65:                                               ; preds = %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit11.peel
+  %66 = load ptr, ptr %i.k, align 8               ; 5 uses
+  %67 = getelementptr inbounds nuw i8, ptr %66, i64 16 ; 2 uses
+  %68 = getelementptr inbounds nuw i8, ptr %66, i64 32 ; 4 uses
+  %69 = load i32, ptr %68, align 8                ; 2 uses
+  %70 = add nsw i32 %69, 1
+  store i32 %70, ptr %68, align 8
+  %71 = sext i32 %69 to i64
+  %72 = load ptr, ptr %67, align 8
+  %73 = getelementptr inbounds nuw i8, ptr %72, i64 %71
+  store i8 44, ptr %73, align 1
+  %74 = load i32, ptr %68, align 8                ; 2 uses
+  %75 = getelementptr inbounds nuw i8, ptr %66, i64 8
+  %76 = load i32, ptr %75, align 8
+  %77 = icmp eq i32 %74, %76
+  br i1 %77, label %78, label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit
+
+78:                                               ; preds = %65
+  %79 = getelementptr inbounds nuw i8, ptr %66, i64 36 ; 2 uses
+  %80 = load i8, ptr %79, align 4, !range !65, !noundef !66
+  %81 = trunc nuw i8 %80 to i1
+  br i1 %81, label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit, label %82
+
+82:                                               ; preds = %78
+  %83 = load ptr, ptr %66, align 8                ; 2 uses
+  %84 = load ptr, ptr %67, align 8
+  %85 = load ptr, ptr %83, align 8
+  %86 = getelementptr inbounds nuw i8, ptr %85, i64 32
+  %87 = load ptr, ptr %86, align 8
+  %88 = tail call noundef i32 %87(ptr noundef nonnull align 8 dereferenceable(8) %83, ptr noundef %84, i32 noundef %74) #30, !inline_history !112
+  %89 = icmp eq i32 %88, 1
+  br i1 %89, label %90, label %91
+
+90:                                               ; preds = %82
+  store i8 1, ptr %79, align 4
+  br label %91
+
+91:                                               ; preds = %90, %82
+  store i32 0, ptr %68, align 8
+  br label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit
+
+_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit: ; preds = %91, %78, %65, %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit11.peel, %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EEC2EmRKS3_.exit
   tail call void @_ZdlPvm(ptr noundef nonnull %i.d, i64 noundef %i.c) #29
   ret void
 }
@@ -526,7 +671,7 @@ bb.u:                                             ; preds = %bb.t
   %i.ae = load ptr, ptr %i.ac, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
   %i.ag = load ptr, ptr %i.af, align 8
-  %i.ah = tail call noundef i32 %i.ag(ptr noundef nonnull align 8 dereferenceable(8) %i.ac, ptr noundef %i.ad, i32 noundef %i.x) #30, !inline_history !117
+  %i.ah = tail call noundef i32 %i.ag(ptr noundef nonnull align 8 dereferenceable(8) %i.ac, ptr noundef %i.ad, i32 noundef %i.x) #30, !inline_history !118
   %i.ai = icmp eq i32 %i.ah, 1
   br i1 %i.ai, label %bb.v, label %bb.w
 
@@ -541,7 +686,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 _ZN2v88internal18OutputStreamWriter15MaybeWriteChunkEv.exit: ; preds = %_ZN2v88internal7MemCopyEPvPKvm.exit, %bb.t, %bb.w
   %i.aj = phi i32 [ %i.x, %_ZN2v88internal7MemCopyEPvPKvm.exit ], [ %i.x, %bb.t ], [ 0, %bb.w ]
   %i.ak = icmp ult ptr %i.v, %i.b
-  br i1 %i.ak, label %bb.b, label %._crit_edge, !llvm.loop !118
+  br i1 %i.ak, label %bb.b, label %._crit_edge, !llvm.loop !119
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal18OutputStreamWriter15MaybeWriteChunkEv.exit, %bb.a
   ret void
@@ -564,7 +709,7 @@ bb.a:
   %i.i = sext i32 %i.h to i64                     ; 3 uses
   %i.j = load i64, ptr %i.c, align 8
   %i.k = icmp eq i64 %i.j, %i.i
-  br i1 %i.k, label %.lr.ph, label %tailrecurse.us._crit_edge, !prof !119
+  br i1 %i.k, label %.lr.ph, label %tailrecurse.us._crit_edge, !prof !120
 
 tailrecurse.us._crit_edge:                        ; preds = %_ZN2v88internal18OutputStreamWriter10WriteChunkEv.exit.us, %.split.us
   %.lcssa32 = phi i64 [ %i.i, %.split.us ], [ %i.ab, %_ZN2v88internal18OutputStreamWriter10WriteChunkEv.exit.us ]
@@ -591,7 +736,7 @@ bb.c:                                             ; preds = %bb.b
   %i.u = load ptr, ptr %i.s, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 32
   %i.w = load ptr, ptr %i.v, align 8
-  %i.x = tail call noundef i32 %i.w(ptr noundef nonnull align 8 dereferenceable(8) %i.s, ptr noundef %i.t, i32 noundef %i.o) #30, !inline_history !120
+  %i.x = tail call noundef i32 %i.w(ptr noundef nonnull align 8 dereferenceable(8) %i.s, ptr noundef %i.t, i32 noundef %i.o) #30, !inline_history !121
   %i.y = icmp eq i32 %i.x, 1
   br i1 %i.y, label %bb.d, label %bb.e
 
@@ -609,7 +754,7 @@ _ZN2v88internal18OutputStreamWriter10WriteChunkEv.exit.us: ; preds = %bb.e, %bb.
   %i.aa = phi i32 [ 0, %bb.e ], [ %i.o, %bb.b ]   ; 2 uses
   %i.ab = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ac = icmp eq i64 %i.z, %i.ab
-  br i1 %i.ac, label %.lr.ph, label %tailrecurse.us._crit_edge, !prof !121
+  br i1 %i.ac, label %.lr.ph, label %tailrecurse.us._crit_edge, !prof !122
 
 tailrecurse:                                      ; preds = %bb.a, %tailrecurse.backedge
   %i.ad = phi i32 [ %.be, %tailrecurse.backedge ], [ %i.h, %bb.a ] ; 2 uses
@@ -665,7 +810,7 @@ bb.n:                                             ; preds = %bb.l
   %i.as = udiv i32 %.02230.i.i.i, 10000
   %i.at = add i32 %.02329.i.i.i, 4                ; 2 uses
   %i.au = icmp ult i32 %.02230.i.i.i, 100000
-  br i1 %i.au, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !122
+  br i1 %i.au, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !123
 
 _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i:  ; preds = %bb.n, %bb.m, %bb.k, %bb.i, %bb.h
   %.0.i.i.i = phi i32 [ %i.ar, %bb.m ], [ %i.an, %bb.i ], [ %i.ap, %bb.k ], [ 1, %bb.h ], [ %i.at, %bb.n ] ; 2 uses
@@ -708,7 +853,7 @@ bb.o:                                             ; preds = %_ZNSt8__detail14__t
   store i8 %i.bl, ptr %i.bo, align 1
   %i.bp = add i32 %.01819.i.i.i, -2
   %i.bq = icmp ugt i32 %.020.i.i.i, 9999
-  br i1 %i.bq, label %.lr.ph.i9.i.i, label %._crit_edge.i.i.i, !llvm.loop !123
+  br i1 %i.bq, label %.lr.ph.i9.i.i, label %._crit_edge.i.i.i, !llvm.loop !124
 
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i9.i.i, %bb.o
   %.0.lcssa.i.i.i = phi i32 [ %.0.i, %bb.o ], [ %i.be, %.lr.ph.i9.i.i ] ; 3 uses
@@ -760,7 +905,7 @@ bb.t:                                             ; preds = %bb.s
   %i.cn = load ptr, ptr %i.cm, align 8
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 32
   %i.cp = load ptr, ptr %i.co, align 8
-  %i.cq = tail call noundef i32 %i.cp(ptr noundef nonnull align 8 dereferenceable(8) %i.cm, ptr noundef %i.cc, i32 noundef %i.cg) #30, !inline_history !117
+  %i.cq = tail call noundef i32 %i.cp(ptr noundef nonnull align 8 dereferenceable(8) %i.cm, ptr noundef %i.cc, i32 noundef %i.cg) #30, !inline_history !118
   %i.cr = icmp eq i32 %i.cq, 1
   br i1 %i.cr, label %bb.u, label %bb.v
 
@@ -796,7 +941,7 @@ bb.y:                                             ; preds = %bb.x
   %i.cy = load ptr, ptr %i.cw, align 8
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 32
   %i.da = load ptr, ptr %i.cz, align 8
-  %i.db = tail call noundef i32 %i.da(ptr noundef nonnull align 8 dereferenceable(8) %i.cw, ptr noundef %i.cx, i32 noundef %i.cs) #30, !inline_history !120
+  %i.db = tail call noundef i32 %i.da(ptr noundef nonnull align 8 dereferenceable(8) %i.cw, ptr noundef %i.cx, i32 noundef %i.cs) #30, !inline_history !121
   %i.dc = icmp eq i32 %i.db, 1
   br i1 %i.dc, label %bb.z, label %bb.aa
 
@@ -827,7 +972,7 @@ bb.a:
   %i.g = sext i32 %i.f to i64                     ; 3 uses
   %i.h = load i64, ptr %i.c, align 8
   %i.i = icmp eq i64 %i.h, %i.g
-  br i1 %i.i, label %.lr.ph, label %.loopexit, !prof !119
+  br i1 %i.i, label %.lr.ph, label %.loopexit, !prof !120
 
 .lr.ph:                                           ; preds = %.split.us, %_ZN2v88internal18OutputStreamWriter10WriteChunkEv.exit.us
   %i.j = phi i64 [ %i.v, %_ZN2v88internal18OutputStreamWriter10WriteChunkEv.exit.us ], [ %i.g, %.split.us ]
@@ -846,7 +991,7 @@ bb.c:                                             ; preds = %bb.b
   %i.q = load ptr, ptr %i.o, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 32
   %i.s = load ptr, ptr %i.r, align 8
-  %i.t = tail call noundef i32 %i.s(ptr noundef nonnull align 8 dereferenceable(8) %i.o, ptr noundef %i.p, i32 noundef %i.k) #30, !inline_history !120
+  %i.t = tail call noundef i32 %i.s(ptr noundef nonnull align 8 dereferenceable(8) %i.o, ptr noundef %i.p, i32 noundef %i.k) #30, !inline_history !121
   %i.u = icmp eq i32 %i.t, 1
   br i1 %i.u, label %bb.d, label %bb.e
 
@@ -864,7 +1009,7 @@ _ZN2v88internal18OutputStreamWriter10WriteChunkEv.exit.us: ; preds = %bb.e, %bb.
   %i.w = phi i32 [ 0, %bb.e ], [ %i.k, %bb.b ]    ; 2 uses
   %i.x = zext nneg i32 %i.w to i64                ; 2 uses
   %i.y = icmp eq i64 %i.v, %i.x
-  br i1 %i.y, label %.lr.ph, label %.loopexit, !prof !121
+  br i1 %i.y, label %.lr.ph, label %.loopexit, !prof !122
 
 .split:                                           ; preds = %bb.a
   %i.z = icmp ult i32 %1, 10
@@ -876,7 +1021,7 @@ tailrecurse.us35.preheader:                       ; preds = %.split
   %i.ab = sext i32 %.pre62 to i64                 ; 2 uses
   %i.ac = load i64, ptr %i.c, align 8
   %.not107 = icmp sgt i64 %i.ac, %i.ab
-  br i1 %.not107, label %.split38.us, label %.lr.ph108, !prof !124
+  br i1 %.not107, label %.split38.us, label %.lr.ph108, !prof !125
 
 .lr.ph108:                                        ; preds = %tailrecurse.us35.preheader, %_ZN2v88internal18OutputStreamWriter10WriteChunkEv.exit.us36
   %i.ad = phi ptr [ %i.ap, %_ZN2v88internal18OutputStreamWriter10WriteChunkEv.exit.us36 ], [ %i.aa, %tailrecurse.us35.preheader ]
@@ -894,7 +1039,7 @@ bb.g:                                             ; preds = %bb.f
   %i.aj = load ptr, ptr %i.ai, align 8
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 32
   %i.al = load ptr, ptr %i.ak, align 8
-  %i.am = tail call noundef i32 %i.al(ptr noundef nonnull align 8 dereferenceable(8) %i.ai, ptr noundef %i.ad, i32 noundef %i.ae) #30, !inline_history !120
+  %i.am = tail call noundef i32 %i.al(ptr noundef nonnull align 8 dereferenceable(8) %i.ai, ptr noundef %i.ad, i32 noundef %i.ae) #30, !inline_history !121
   %i.an = icmp eq i32 %i.am, 1
   br i1 %i.an, label %bb.h, label %bb.i
 
@@ -912,7 +1057,7 @@ _ZN2v88internal18OutputStreamWriter10WriteChunkEv.exit.us36: ; preds = %bb.i, %b
   %i.aq = sext i32 %i.ao to i64                   ; 2 uses
   %i.ar = load i64, ptr %i.c, align 8
   %.not = icmp sgt i64 %i.ar, %i.aq
-  br i1 %.not, label %.split38.us, label %.lr.ph108, !prof !125
+  br i1 %.not, label %.split38.us, label %.lr.ph108, !prof !126
 
 tailrecurse:                                      ; preds = %tailrecurse.outer, %bb.x
   br i1 %i.dk, label %bb.w, label %.lr.ph.i.i.i, !prof !8
@@ -947,7 +1092,7 @@ bb.o:                                             ; preds = %bb.m
   %i.ay = udiv i32 %.02230.i.i.i, 10000
   %i.az = add i32 %.02329.i.i.i, 4                ; 2 uses
   %i.ba = icmp ult i32 %.02230.i.i.i, 100000
-  br i1 %i.ba, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !122
+  br i1 %i.ba, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !123
 
 _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i:  ; preds = %bb.o, %bb.n, %bb.l, %bb.j
   %.0.i.i.i = phi i32 [ %i.ax, %bb.n ], [ %i.at, %bb.j ], [ %i.av, %bb.l ], [ %i.az, %bb.o ] ; 2 uses
@@ -989,7 +1134,7 @@ _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i:  ; preds = %bb.o, %bb.n, %bb.l,
   store i8 %i.bq, ptr %i.bt, align 1
   %i.bu = add i32 %.01819.i.i.i, -2
   %i.bv = icmp ugt i32 %.020.i.i.i, 9999
-  br i1 %i.bv, label %.lr.ph.i9.i.i, label %._crit_edge.i.i.i, !llvm.loop !123
+  br i1 %i.bv, label %.lr.ph.i9.i.i, label %._crit_edge.i.i.i, !llvm.loop !124
 
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i9.i.i, %.split38.us
   %.0.lcssa.i.i.i = phi i32 [ %1, %.split38.us ], [ %i.bj, %.lr.ph.i9.i.i ] ; 3 uses
@@ -1045,7 +1190,7 @@ bb.t:                                             ; preds = %bb.s
   %i.cu = load ptr, ptr %i.ct, align 8
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 32
   %i.cw = load ptr, ptr %i.cv, align 8
-  %i.cx = tail call noundef i32 %i.cw(ptr noundef nonnull align 8 dereferenceable(8) %i.ct, ptr noundef %i.cj, i32 noundef %i.cn) #30, !inline_history !117
+  %i.cx = tail call noundef i32 %i.cw(ptr noundef nonnull align 8 dereferenceable(8) %i.ct, ptr noundef %i.cj, i32 noundef %i.cn) #30, !inline_history !118
   %i.cy = icmp eq i32 %i.cx, 1
   br i1 %i.cy, label %bb.u, label %bb.v
 
@@ -1075,7 +1220,7 @@ bb.y:                                             ; preds = %bb.x
   %i.dd = load ptr, ptr %i.dc, align 8
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 32
   %i.df = load ptr, ptr %i.de, align 8
-  %i.dg = tail call noundef i32 %i.df(ptr noundef nonnull align 8 dereferenceable(8) %i.dc, ptr noundef %i.db, i32 noundef %.ph) #30, !inline_history !120
+  %i.dg = tail call noundef i32 %i.df(ptr noundef nonnull align 8 dereferenceable(8) %i.dc, ptr noundef %i.db, i32 noundef %.ph) #30, !inline_history !121
   %i.dh = icmp eq i32 %i.dg, 1
   br i1 %i.dh, label %bb.z, label %bb.aa
 
@@ -1303,7 +1448,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 _ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit: ; preds = %bb.k, %bb.h, %bb.g
   %i.bd = add nuw nsw i32 %.08, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %.08, %i.d
-  br i1 %exitcond.not, label %._crit_edge.loopexit.peel.begin, label %bb.g, !llvm.loop !126
+  br i1 %exitcond.not, label %._crit_edge.loopexit.peel.begin, label %bb.g, !llvm.loop !127
 }
 
 declare noundef ptr @_ZNK2v814CpuProfileNode8GetChildEi(ptr noundef nonnull align 1 dereferenceable(1), i32 noundef) local_unnamed_addr #4
@@ -1706,18 +1851,18 @@ attributes #32 = { noreturn }
 !113 = distinct !{null, null}
 !114 = distinct !{null}
 !115 = distinct !{!115, !6}
-!116 = distinct !{!116, !6}
-!117 = distinct !{null, null}
-!118 = distinct !{!118, !6}
-!119 = !{!"branch_weights", i32 1, i32 1999}
-!120 = distinct !{null}
-!121 = !{!"branch_weights", i32 0, i32 1}
-!122 = distinct !{!122, !6}
+!116 = distinct !{!116, !6, !117}
+!117 = !{!"llvm.loop.peeled.count", i32 1}
+!118 = distinct !{null, null}
+!119 = distinct !{!119, !6}
+!120 = !{!"branch_weights", i32 1, i32 1999}
+!121 = distinct !{null}
+!122 = !{!"branch_weights", i32 0, i32 1}
 !123 = distinct !{!123, !6}
-!124 = !{!"branch_weights", i32 3995999, i32 4001}
-!125 = !{!"branch_weights", i32 4001, i32 0}
-!126 = distinct !{!126, !6, !127}
-!127 = !{!"llvm.loop.peeled.count", i32 1}
+!124 = distinct !{!124, !6}
+!125 = !{!"branch_weights", i32 3995999, i32 4001}
+!126 = !{!"branch_weights", i32 4001, i32 0}
+!127 = distinct !{!127, !6, !117}
 !128 = distinct !{!128, !6}
 !129 = distinct !{!129, !6}
 !130 = !{!131}
