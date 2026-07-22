@@ -204,7 +204,7 @@ _ZN6icu_7817CollationIterator20nextSkippedCodePointER10UErrorCode.exit69: ; pred
   br i1 %i.eb, label %_ZN6icu_7817CollationIterator20nextSkippedCodePointER10UErrorCode.exit69.thread, label %bb.bg
 
 _ZN6icu_7817CollationIterator20nextSkippedCodePointER10UErrorCode.exit69.thread: ; preds = %bb.ae, %_ZN6icu_7817CollationIterator20nextSkippedCodePointER10UErrorCode.exit69, %bb.aa
-  %i.ec = sub i32 0, %.037
+  %i.ec = sub nsw i32 0, %.037
   %i.ed = and i32 %2, 1024
   %.not58 = icmp eq i32 %i.ed, 0
   br i1 %.not58, label %_ZNK6icu_7813CollationData8getFCD16Ei.exit.thread, label %bb.aj
@@ -607,7 +607,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %_ZN6icu_7817CollationIterator20nextSkippedCodePointER10UErrorCode.exit.thread133, %_ZN6icu_7817CollationIterator20nextSkippedCodePointER10UErrorCode.exit
   %.0.i135 = phi i32 [ %i.av, %_ZN6icu_7817CollationIterator20nextSkippedCodePointER10UErrorCode.exit.thread133 ], [ %.0.i, %_ZN6icu_7817CollationIterator20nextSkippedCodePointER10UErrorCode.exit ] ; 6 uses
-  %i.cg = add i32 %4, 1
+  %i.cg = add nuw i32 %4, 1
   %i.ch = load ptr, ptr %i.c, align 8, !nonnull !18, !align !19 ; 3 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 8
   %i.cj = load i16, ptr %i.ci, align 8

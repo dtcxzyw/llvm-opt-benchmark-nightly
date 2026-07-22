@@ -204,7 +204,7 @@ bb.ao:                                            ; preds = %bb.am
   tail call void @png_read_IDAT_data(ptr noundef nonnull %0, ptr noundef %i.bm, i64 noundef %i.bo) #13
   %i.bp = load ptr, ptr %i.bk, align 8, !tbaa !45 ; 3 uses
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !46  ; 3 uses
-  %i.br = zext i8 %i.bq to i32
+  %i.br = zext nneg i8 %i.bq to i32
   %.not121 = icmp eq i8 %i.bq, 0
   br i1 %.not121, label %bb.as, label %bb.ap
 

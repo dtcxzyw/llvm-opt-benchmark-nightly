@@ -201,7 +201,7 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   %.not222 = icmp eq i32 %i.ar, 0
   %i.at = zext i32 %i.ar to i64
   %i.au = icmp ult i32 %i.ar, 128
-  %i.av = trunc nuw i32 %i.ar to i8
+  %i.av = trunc nuw nsw i32 %i.ar to i8
   br label %bb.s
 
 bb.s:                                             ; preds = %encode_varint.exit261, %bb.r
@@ -271,7 +271,7 @@ bb.ac:                                            ; preds = %bb.aa, %bb.ab
   %.not220 = icmp eq i32 %i.bl, 0
   %i.bn = zext i32 %i.bl to i64
   %i.bo = icmp ult i32 %i.bl, 128
-  %i.bp = trunc nuw i32 %i.bl to i8
+  %i.bp = trunc nuw nsw i32 %i.bl to i8
   br label %bb.ad
 
 bb.ad:                                            ; preds = %encode_varint.exit255, %bb.ac
@@ -342,7 +342,7 @@ bb.an:                                            ; preds = %bb.al, %bb.am
   %.not218 = icmp eq i32 %i.cg, 0
   %i.ci = zext i32 %i.cg to i64
   %i.cj = icmp ult i32 %i.cg, 128
-  %i.ck = trunc nuw i32 %i.cg to i8
+  %i.ck = trunc nuw nsw i32 %i.cg to i8
   br label %bb.ao
 
 bb.ao:                                            ; preds = %encode_varint.exit249, %bb.an
@@ -413,7 +413,7 @@ bb.ay:                                            ; preds = %bb.aw, %bb.ax
   %.not216 = icmp eq i32 %i.db, 0
   %i.dd = zext i32 %i.db to i64
   %i.de = icmp ult i32 %i.db, 128
-  %i.df = trunc nuw i32 %i.db to i8
+  %i.df = trunc nuw nsw i32 %i.db to i8
   br label %bb.az
 
 bb.az:                                            ; preds = %encode_varint.exit243, %bb.ay
@@ -479,7 +479,7 @@ bb.bi:                                            ; preds = %bb.bg, %bb.bh
   %.not214 = icmp eq i32 %i.du, 0
   %i.dw = zext i32 %i.du to i64
   %i.dx = icmp ult i32 %i.du, 128
-  %i.dy = trunc nuw i32 %i.du to i8
+  %i.dy = trunc nuw nsw i32 %i.du to i8
   br label %bb.bj
 
 bb.bj:                                            ; preds = %encode_varint.exit237, %bb.bi
@@ -553,7 +553,7 @@ bb.bt:                                            ; preds = %bb.br, %bb.bs
   %.not212 = icmp eq i32 %i.es, 0
   %i.eu = zext i32 %i.es to i64
   %i.ev = icmp ult i32 %i.es, 128
-  %i.ew = trunc nuw i32 %i.es to i8
+  %i.ew = trunc nuw nsw i32 %i.es to i8
   br label %bb.bu
 
 bb.bu:                                            ; preds = %encode_varint.exit, %bb.bt

@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 22 ; 4 uses
   %i.f = load i8, ptr %i.e, align 2, !tbaa !1968  ; 3 uses
-  %i.g = zext i8 %i.f to i32
+  %i.g = zext nneg i8 %i.f to i32
   switch i8 %i.f, label %bb.i [
     i8 5, label %bb.c
     i8 3, label %bb.c
@@ -608,7 +608,7 @@ bb.ahi:                                           ; preds = %.lr.ph113.i.i.i
 bb.ahj:                                           ; preds = %bb.ahi
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #59
   store ptr null, ptr %i.i, align 8, !tbaa !2489
-  %20 = sext i32 %i.epd to i64
+  %20 = zext nneg i32 %i.epd to i64
   %i.epe = icmp sgt i32 %i.epd, 16
   br i1 %i.epe, label %.lr.ph.i.i.i.i, label %.loopexit.i.i.i
 
@@ -1011,7 +1011,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ab = phi ptr [ %i.d, %bb.a ], [ %.pr, %bb.h ] ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 22 ; 6 uses
   %i.ad = load i8, ptr %i.ac, align 2, !tbaa !1968 ; 3 uses
-  %i.ae = zext i8 %i.ad to i32
+  %i.ae = zext nneg i8 %i.ad to i32
   switch i8 %i.ad, label %bb.o [
     i8 5, label %bb.i
     i8 3, label %bb.i
@@ -1414,7 +1414,7 @@ bb.p:                                             ; preds = %.thread719
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !227 ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %.0512774, i64 48
   %i.ce = load i16, ptr %i.cd, align 8, !tbaa !3487 ; 3 uses
-  %7 = sext i16 %i.ce to i64
+  %7 = zext nneg i16 %i.ce to i64
   %i.cf = icmp slt i16 %i.ce, 0
   br i1 %i.cf, label %sqlite3TableColumnAffinity.exit.thread, label %bb.q
 
@@ -1817,7 +1817,7 @@ split:                                            ; preds = %bb.c, %._crit_edge
   %i.f = phi ptr [ %.pre, %._crit_edge ], [ %i.e, %bb.c ] ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.024.ph, i64 48
   %i.h = load i16, ptr %i.g, align 8, !tbaa !3487 ; 3 uses
-  %1 = sext i16 %i.h to i64
+  %1 = zext nneg i16 %i.h to i64
   %i.i = icmp slt i16 %i.h, 0
   br i1 %i.i, label %sqlite3TableColumnAffinity.exit, label %bb.d
 
@@ -2220,7 +2220,7 @@ sqlite3VectorFieldSubexpr.exit:                   ; preds = %bb.al, %sqlite3Expr
   %i.fu = load ptr, ptr %i.ft, align 8, !tbaa !902
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 48
   %i.fw = load i16, ptr %i.fv, align 8, !tbaa !3487 ; 3 uses
-  %7 = sext i16 %i.fw to i64
+  %7 = zext nneg i16 %i.fw to i64
   %i.fx = icmp slt i16 %i.fw, 0
   br i1 %i.fx, label %sqlite3TableColumnAffinity.exit, label %bb.as
 
@@ -2623,9 +2623,9 @@ bb.bm:                                            ; preds = %bb.bp, %.lr.ph.i233
   br i1 %i.oa, label %bb.bn, label %bb.bp
 
 bb.bn:                                            ; preds = %bb.bm
-  %2 = zext nneg i16 %i.nz to i64                 ; 2 uses
-  %3 = load ptr, ptr %i.nw, align 8, !tbaa !882
-  %i.ob = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %2
+  %2 = load ptr, ptr %i.nw, align 8, !tbaa !882
+  %3 = zext nneg i16 %i.nz to i64                 ; 2 uses
+  %i.ob = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %3
   %i.oc = getelementptr inbounds nuw i8, ptr %i.ob, i64 14
   %i.od = load i16, ptr %i.oc, align 2, !tbaa !883
   %i.oe = and i16 %i.od, 32
@@ -2635,7 +2635,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %or.cond.i, label %bb.bo, label %bb.bp
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.oh = shl nuw nsw i64 1, %2
+  %i.oh = shl nuw nsw i64 1, %3
   %i.oi = or i64 %i.oh, %.017.i
   br label %bb.bp
 
@@ -3038,9 +3038,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.e
   br i1 %i.k, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %1 = zext nneg i16 %i.j to i64                  ; 2 uses
-  %2 = load ptr, ptr %i.g, align 8, !tbaa !882
-  %i.l = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %1
+  %1 = load ptr, ptr %i.g, align 8, !tbaa !882
+  %2 = zext nneg i16 %i.j to i64                  ; 2 uses
+  %i.l = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %2
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 14
   %i.n = load i16, ptr %i.m, align 2, !tbaa !883
   %i.o = and i16 %i.n, 32
@@ -3050,7 +3050,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = shl nuw nsw i64 1, %1
+  %i.r = shl nuw nsw i64 1, %2
   %i.s = or i64 %i.r, %.017
   br label %bb.e
 
@@ -3453,7 +3453,7 @@ bb.jn:                                            ; preds = %bb.jm, %sqlite3Sche
   %.0.in.i.i = phi ptr [ %i.axp, %bb.jm ], [ %i.hg, %sqlite3SchemaToIndex.exit.i.i ]
   %.0.i680.i = load ptr, ptr %.0.in.i.i, align 8, !tbaa !3525 ; 5 uses
   %i.axq = load i16, ptr %i.ha, align 8, !tbaa !3487 ; 2 uses
-  %4 = sext i16 %i.axq to i64
+  %4 = zext nneg i16 %i.axq to i64
   %i.axr = icmp eq ptr %.0.i680.i, null
   br i1 %i.axr, label %sqlite3AuthRead.exit.i, label %bb.jo
 
@@ -3856,7 +3856,7 @@ split.i:                                          ; preds = %bb.g, %._crit_edge.
   %i.bf = phi ptr [ %.pre.i, %._crit_edge.i ], [ %i.be, %bb.g ] ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.024.ph.i, i64 48
   %i.bh = load i16, ptr %i.bg, align 8, !tbaa !3487 ; 3 uses
-  %5 = sext i16 %i.bh to i64
+  %5 = zext nneg i16 %i.bh to i64
   %i.bi = icmp slt i16 %i.bh, 0
   br i1 %i.bi, label %sqlite3ExprAffinity.exit.thread, label %bb.h
 
@@ -4259,7 +4259,7 @@ bb.bt:                                            ; preds = %.critedge2.i, %.lr.
   %i.kv = load ptr, ptr %i.kr, align 8, !tbaa !878
   %i.kw = getelementptr inbounds nuw [2 x i8], ptr %i.kv, i64 %indvars.iv.i478
   %i.kx = load i16, ptr %i.kw, align 2, !tbaa !330 ; 6 uses
-  %11 = sext i16 %i.kx to i64
+  %11 = zext nneg i16 %i.kx to i64
   %i.ky = load ptr, ptr %i.ks, align 8, !tbaa !1098 ; 2 uses
   %i.kz = getelementptr inbounds nuw i8, ptr %i.ky, i64 52
   %i.la = load i16, ptr %i.kz, align 4, !tbaa !891
@@ -4662,7 +4662,7 @@ split.i:                                          ; preds = %bb.f, %._crit_edge.
   %i.r = phi ptr [ %.pre.i, %._crit_edge.i ], [ %i.q, %bb.f ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.024.ph.i, i64 48
   %i.t = load i16, ptr %i.s, align 8, !tbaa !3487 ; 3 uses
-  %1 = sext i16 %i.t to i64
+  %1 = zext nneg i16 %i.t to i64
   %i.u = icmp slt i16 %i.t, 0
   br i1 %i.u, label %sqlite3ExprAffinity.exit, label %bb.g
 
@@ -5065,7 +5065,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.p
   %i.p = load ptr, ptr %i.e, align 8, !tbaa !878
   %i.q = getelementptr inbounds nuw [2 x i8], ptr %i.p, i64 %indvars.iv
   %i.r = load i16, ptr %i.q, align 2, !tbaa !330  ; 3 uses
-  %5 = sext i16 %i.r to i64
+  %5 = zext nneg i16 %i.r to i64
   %i.s = icmp eq i16 %i.r, -2
   br i1 %i.s, label %bb.c, label %bb.d
 
@@ -5468,8 +5468,8 @@ bb.k:                                             ; preds = %bb.j
   %i.ce = add i16 %i.bz, -25
   %i.cf = getelementptr inbounds nuw i8, ptr %i.e, i64 22
   %.not.i249 = icmp slt i16 %i.bq, 43
-  %i.cg = icmp ult i16 %i.bq, 93
-  %i.ch = icmp ugt i16 %i.bq, 74
+  %i.cg = icmp samesign ult i16 %i.bq, 93
+  %i.ch = icmp samesign ugt i16 %i.bq, 74
   %i.ci = zext nneg i16 %i.bq to i64
   %i.cj = getelementptr i8, ptr @sqlite3LogEstAdd.x, i64 %i.ci
   %i.ck = getelementptr i8, ptr %i.cj, i64 -43
@@ -5872,7 +5872,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ar = zext i16 %i.ae to i64                   ; 11 uses
   %i.as = getelementptr inbounds nuw [2 x i8], ptr %i.aq, i64 %i.ar
   %i.at = load i16, ptr %i.as, align 2, !tbaa !330 ; 6 uses
-  %5 = sext i16 %i.at to i64
+  %5 = zext nneg i16 %i.at to i64
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !1098 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 52
@@ -6275,7 +6275,7 @@ sqlite3CompareAffinity.exit.i:                    ; preds = %bb.bq, %bb.bp
   %.0.i57.i = phi i8 [ %..i.i, %bb.bp ], [ %i.nd, %bb.bq ]
   %i.ne = load ptr, ptr %i.au, align 8, !tbaa !1098 ; 2 uses
   %i.nf = load i16, ptr %i.mk, align 8, !tbaa !3487 ; 3 uses
-  %6 = sext i16 %i.nf to i64
+  %6 = zext nneg i16 %i.nf to i64
   %i.ng = icmp slt i16 %i.nf, 0
   br i1 %i.ng, label %sqlite3TableColumnAffinity.exit.i, label %bb.br
 
@@ -6678,7 +6678,7 @@ bb.ez:                                            ; preds = %bb.ey
 bb.fa:                                            ; preds = %.preheader.i.i79.i
   %i.za = trunc nuw nsw i64 %indvars.iv.i.i77.i to i32
   %i.zb = sub nsw i32 %i.za, %indvars.iv67.i.i.i  ; 2 uses
-  %6 = sdiv i32 %i.zb, 2
+  %6 = lshr i32 %i.zb, 1
   %i.zc = icmp sgt i32 %i.zb, 1
   br i1 %i.zc, label %bb.fb, label %fts3SnippetShift.exit.thread.i.i
 

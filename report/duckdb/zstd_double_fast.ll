@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.bj = zext nneg i32 %i.az to i64
-  %i.bk = shl i64 4, %i.bj
+  %i.bk = shl nuw i64 4, %i.bj
   %i.bl = zext nneg i32 %i.bb to i64
-  %i.bm = shl i64 4, %i.bl
+  %i.bm = shl nuw i64 4, %i.bl
   %.not251.i = icmp ugt i32 %i.az, 61
   br i1 %.not251.i, label %.preheader.i, label %.lr.ph.i
 
@@ -218,7 +218,7 @@ bb.c:                                             ; preds = %bb.b
   %.0396.i183.i = phi i64 [ %i.bo, %.lr.ph.i ], [ 0, %bb.c ] ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.al, i64 %.0396.i183.i
   tail call void @llvm.prefetch.p0(ptr %i.bn, i32 0, i32 2, i32 1)
-  %i.bo = add i64 %.0396.i183.i, 64               ; 2 uses
+  %i.bo = add nuw i64 %.0396.i183.i, 64           ; 2 uses
   %i.bp = icmp ult i64 %i.bo, %i.bk
   br i1 %i.bp, label %.lr.ph.i, label %.preheader.i, !llvm.loop !94
 
@@ -226,7 +226,7 @@ bb.c:                                             ; preds = %bb.b
   %.0397.i184.i = phi i64 [ %i.br, %.lr.ph185.i ], [ 0, %.preheader.i ] ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.an, i64 %.0397.i184.i
   tail call void @llvm.prefetch.p0(ptr %i.bq, i32 0, i32 2, i32 1)
-  %i.br = add i64 %.0397.i184.i, 64               ; 2 uses
+  %i.br = add nuw i64 %.0397.i184.i, 64           ; 2 uses
   %i.bs = icmp ult i64 %i.br, %i.bm
   br i1 %i.bs, label %.lr.ph185.i, label %.loopexit.i, !llvm.loop !95
 
@@ -629,9 +629,9 @@ bb.cp:                                            ; preds = %bb.a
 
 bb.cq:                                            ; preds = %bb.cp
   %i.wb = zext nneg i32 %i.az to i64
-  %i.wc = shl i64 4, %i.wb
+  %i.wc = shl nuw i64 4, %i.wb
   %i.wd = zext nneg i32 %i.bb to i64
-  %i.we = shl i64 4, %i.wd
+  %i.we = shl nuw i64 4, %i.wd
   %.not251.i28 = icmp ugt i32 %i.az, 61
   br i1 %.not251.i28, label %.preheader.i31, label %.lr.ph.i29
 
@@ -643,7 +643,7 @@ bb.cq:                                            ; preds = %bb.cp
   %.0396.i183.i30 = phi i64 [ %i.wg, %.lr.ph.i29 ], [ 0, %bb.cq ] ; 2 uses
   %i.wf = getelementptr inbounds nuw i8, ptr %i.al, i64 %.0396.i183.i30
   tail call void @llvm.prefetch.p0(ptr %i.wf, i32 0, i32 2, i32 1)
-  %i.wg = add i64 %.0396.i183.i30, 64             ; 2 uses
+  %i.wg = add nuw i64 %.0396.i183.i30, 64         ; 2 uses
   %i.wh = icmp ult i64 %i.wg, %i.wc
   br i1 %i.wh, label %.lr.ph.i29, label %.preheader.i31, !llvm.loop !94
 
@@ -651,7 +651,7 @@ bb.cq:                                            ; preds = %bb.cp
   %.0397.i184.i34 = phi i64 [ %i.wj, %.lr.ph185.i33 ], [ 0, %.preheader.i31 ] ; 2 uses
   %i.wi = getelementptr inbounds nuw i8, ptr %i.an, i64 %.0397.i184.i34
   tail call void @llvm.prefetch.p0(ptr %i.wi, i32 0, i32 2, i32 1)
-  %i.wj = add i64 %.0397.i184.i34, 64             ; 2 uses
+  %i.wj = add nuw i64 %.0397.i184.i34, 64         ; 2 uses
   %i.wk = icmp ult i64 %i.wj, %i.we
   br i1 %i.wk, label %.lr.ph185.i33, label %.loopexit.i35, !llvm.loop !95
 
@@ -1054,9 +1054,9 @@ bb.gd:                                            ; preds = %bb.a
 
 bb.ge:                                            ; preds = %bb.gd
   %i.aqq = zext nneg i32 %i.az to i64
-  %i.aqr = shl i64 4, %i.aqq
+  %i.aqr = shl nuw i64 4, %i.aqq
   %i.aqs = zext nneg i32 %i.bb to i64
-  %i.aqt = shl i64 4, %i.aqs
+  %i.aqt = shl nuw i64 4, %i.aqs
   %.not251.i267 = icmp ugt i32 %i.az, 61
   br i1 %.not251.i267, label %.preheader.i270, label %.lr.ph.i268
 
@@ -1068,7 +1068,7 @@ bb.ge:                                            ; preds = %bb.gd
   %.0396.i183.i269 = phi i64 [ %i.aqv, %.lr.ph.i268 ], [ 0, %bb.ge ] ; 2 uses
   %i.aqu = getelementptr inbounds nuw i8, ptr %i.al, i64 %.0396.i183.i269
   tail call void @llvm.prefetch.p0(ptr %i.aqu, i32 0, i32 2, i32 1)
-  %i.aqv = add i64 %.0396.i183.i269, 64           ; 2 uses
+  %i.aqv = add nuw i64 %.0396.i183.i269, 64       ; 2 uses
   %i.aqw = icmp ult i64 %i.aqv, %i.aqr
   br i1 %i.aqw, label %.lr.ph.i268, label %.preheader.i270, !llvm.loop !94
 
@@ -1076,7 +1076,7 @@ bb.ge:                                            ; preds = %bb.gd
   %.0397.i184.i273 = phi i64 [ %i.aqy, %.lr.ph185.i272 ], [ 0, %.preheader.i270 ] ; 2 uses
   %i.aqx = getelementptr inbounds nuw i8, ptr %i.an, i64 %.0397.i184.i273
   tail call void @llvm.prefetch.p0(ptr %i.aqx, i32 0, i32 2, i32 1)
-  %i.aqy = add i64 %.0397.i184.i273, 64           ; 2 uses
+  %i.aqy = add nuw i64 %.0397.i184.i273, 64       ; 2 uses
   %i.aqz = icmp ult i64 %i.aqy, %i.aqt
   br i1 %i.aqz, label %.lr.ph185.i272, label %.loopexit.i274, !llvm.loop !95
 
@@ -1479,9 +1479,9 @@ bb.jr:                                            ; preds = %bb.a
 
 bb.js:                                            ; preds = %bb.jr
   %i.blf = zext nneg i32 %i.az to i64
-  %i.blg = shl i64 4, %i.blf
+  %i.blg = shl nuw i64 4, %i.blf
   %i.blh = zext nneg i32 %i.bb to i64
-  %i.bli = shl i64 4, %i.blh
+  %i.bli = shl nuw i64 4, %i.blh
   %.not251.i511 = icmp ugt i32 %i.az, 61
   br i1 %.not251.i511, label %.preheader.i514, label %.lr.ph.i512
 
@@ -1493,7 +1493,7 @@ bb.js:                                            ; preds = %bb.jr
   %.0396.i183.i513 = phi i64 [ %i.blk, %.lr.ph.i512 ], [ 0, %bb.js ] ; 2 uses
   %i.blj = getelementptr inbounds nuw i8, ptr %i.al, i64 %.0396.i183.i513
   tail call void @llvm.prefetch.p0(ptr %i.blj, i32 0, i32 2, i32 1)
-  %i.blk = add i64 %.0396.i183.i513, 64           ; 2 uses
+  %i.blk = add nuw i64 %.0396.i183.i513, 64       ; 2 uses
   %i.bll = icmp ult i64 %i.blk, %i.blg
   br i1 %i.bll, label %.lr.ph.i512, label %.preheader.i514, !llvm.loop !94
 
@@ -1501,7 +1501,7 @@ bb.js:                                            ; preds = %bb.jr
   %.0397.i184.i517 = phi i64 [ %i.bln, %.lr.ph185.i516 ], [ 0, %.preheader.i514 ] ; 2 uses
   %i.blm = getelementptr inbounds nuw i8, ptr %i.an, i64 %.0397.i184.i517
   tail call void @llvm.prefetch.p0(ptr %i.blm, i32 0, i32 2, i32 1)
-  %i.bln = add i64 %.0397.i184.i517, 64           ; 2 uses
+  %i.bln = add nuw i64 %.0397.i184.i517, 64       ; 2 uses
   %i.blo = icmp ult i64 %i.bln, %i.bli
   br i1 %i.blo, label %.lr.ph185.i516, label %.loopexit.i518, !llvm.loop !95
 

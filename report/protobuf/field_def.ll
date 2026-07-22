@@ -203,7 +203,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define hidden ptr @_upb_Extensions_New(ptr noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #3 {
 bb.a:
-  %6 = sext i32 %1 to i64
+  %6 = zext nneg i32 %1 to i64
   %i.a = icmp eq i32 %1, 0
   br i1 %i.a, label %._crit_edge, label %bb.b
 
@@ -307,7 +307,7 @@ _upb_FieldDef_CreateExt.exit:                     ; preds = %bb.h
 ; Function Attrs: nounwind uwtable
 define hidden ptr @_upb_FieldDefs_New(ptr noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr nofree noundef writeonly captures(none) %6) local_unnamed_addr #3 {
 bb.a:
-  %7 = sext i32 %1 to i64
+  %7 = zext nneg i32 %1 to i64
   %i.a = icmp eq i32 %1, 0
   br i1 %i.a, label %._crit_edge, label %bb.b
 
