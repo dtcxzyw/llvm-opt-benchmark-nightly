@@ -204,11 +204,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.ac = phi i64 [ 0, %.lr.ph ], [ %i.cr, %bb.f ] ; 2 uses
   %i.ad = getelementptr inbounds i8, ptr %i.ab, i64 %i.ac ; 3 uses
   %i.ae = load <16 x i16>, ptr %i.ad, align 1, !tbaa !30, !noalias !114
-  %8 = lshr <16 x i16> %i.ae, splat (i16 4)
+  %8 = ashr <16 x i16> %i.ae, splat (i16 4)
   %i.af = load ptr, ptr %i.x, align 8, !tbaa !98
   %i.ag = getelementptr inbounds i8, ptr %i.af, i64 %i.ac ; 2 uses
   %i.ah = load <16 x i16>, ptr %i.ag, align 1, !tbaa !30, !noalias !123
-  %9 = lshr <16 x i16> %i.ah, splat (i16 4)
+  %9 = ashr <16 x i16> %i.ah, splat (i16 4)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   %i.ai = bitcast <16 x i16> %8 to <32 x i8>
   %i.aj = and <32 x i8> %i.ai, splat (i8 15)      ; 2 uses
@@ -249,7 +249,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.bn = icmp eq <32 x i8> %i.bl, %i.n
   %i.bo = bitcast <32 x i1> %i.bn to i32
   %i.bp = call noundef range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.bo)
-  %i.bq = add nsw i32 %i.bp, %i.az
+  %i.bq = add nsw i32 %i.az, %i.bp
   store i32 %i.bq, ptr %i.b, align 4, !tbaa !3
   %i.br = bitcast <32 x i8> %i.au to <8 x i32>
   %i.bs = shufflevector <8 x i32> %i.br, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
@@ -652,11 +652,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.ac = phi i64 [ 0, %.lr.ph ], [ %i.cr, %bb.f ] ; 2 uses
   %i.ad = getelementptr inbounds i8, ptr %i.ab, i64 %i.ac ; 3 uses
   %i.ae = load <16 x i16>, ptr %i.ad, align 1, !tbaa !30, !noalias !355
-  %8 = lshr <16 x i16> %i.ae, splat (i16 4)
+  %8 = ashr <16 x i16> %i.ae, splat (i16 4)
   %i.af = load ptr, ptr %i.x, align 8, !tbaa !340
   %i.ag = getelementptr inbounds i8, ptr %i.af, i64 %i.ac ; 2 uses
   %i.ah = load <16 x i16>, ptr %i.ag, align 1, !tbaa !30, !noalias !364
-  %9 = lshr <16 x i16> %i.ah, splat (i16 4)
+  %9 = ashr <16 x i16> %i.ah, splat (i16 4)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   %i.ai = bitcast <16 x i16> %8 to <32 x i8>
   %i.aj = and <32 x i8> %i.ai, splat (i8 15)      ; 2 uses
@@ -697,7 +697,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.bn = icmp eq <32 x i8> %i.bl, %i.n
   %i.bo = bitcast <32 x i1> %i.bn to i32
   %i.bp = call noundef range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.bo)
-  %i.bq = add nsw i32 %i.bp, %i.az
+  %i.bq = add nsw i32 %i.az, %i.bp
   store i32 %i.bq, ptr %i.b, align 4, !tbaa !3
   %i.br = bitcast <32 x i8> %i.au to <8 x i32>
   %i.bs = shufflevector <8 x i32> %i.br, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
