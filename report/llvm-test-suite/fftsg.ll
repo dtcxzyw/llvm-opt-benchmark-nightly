@@ -202,21 +202,24 @@ bb.a:
   store double %i.fl, ptr %i.w, align 8, !tbaa !8
   %i.fm = fsub double %i.fe, %i.ey
   store double %i.fm, ptr %i.y, align 8, !tbaa !8
-  %2 = fadd <2 x double> %i.da, %i.co             ; 2 uses
-  %3 = fadd <2 x double> %i.df, %i.dp             ; 2 uses
-  %4 = fadd <2 x double> %2, %3
-  %5 = shufflevector <2 x double> %4, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %6 = fsub <2 x double> %2, %3
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
-  %i.fn = shufflevector <4 x double> %7, <4 x double> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
-  %i.fo = shufflevector <4 x double> %5, <4 x double> %i.fn, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %2 = shufflevector <2 x double> %i.da, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %3 = shufflevector <2 x double> %i.co, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %4 = fadd <4 x double> %2, %3                   ; 2 uses
+  %5 = shufflevector <2 x double> %i.df, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %6 = shufflevector <2 x double> %i.dp, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %7 = fadd <4 x double> %5, %6                   ; 2 uses
+  %8 = fadd <4 x double> %4, %7
+  %9 = fsub <4 x double> %4, %7
+  %i.fn = shufflevector <4 x double> %9, <4 x double> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
+  %i.fo = shufflevector <4 x double> %8, <4 x double> %i.fn, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   store <4 x double> %i.fo, ptr %0, align 8, !tbaa !8
-  %8 = fsub <2 x double> %i.da, %i.co
-  %i.fp = shufflevector <2 x double> %8, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %10 = shufflevector <2 x double> %i.da, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %i.fp = shufflevector <2 x double> %i.co, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %11 = fsub <4 x double> %10, %i.fp              ; 2 uses
   %i.fq = fsub <2 x double> %i.df, %i.dp
   %i.fr = shufflevector <2 x double> %i.fq, <2 x double> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0> ; 2 uses
-  %i.fs = fsub <4 x double> %i.fp, %i.fr
-  %i.ft = fadd <4 x double> %i.fp, %i.fr
+  %i.fs = fsub <4 x double> %11, %i.fr
+  %i.ft = fadd <4 x double> %11, %i.fr
   %i.fu = shufflevector <4 x double> %i.fs, <4 x double> %i.ft, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
   store <4 x double> %i.fu, ptr %i.p, align 8, !tbaa !8
   ret void
@@ -294,7 +297,9 @@ bb.a:
   %i.v = extractelement <2 x double> %foldExtExtBinop128, i64 0 ; 2 uses
   %foldExtExtBinop130 = fsub <2 x double> %i.s, %i.t
   %i.w = extractelement <2 x double> %foldExtExtBinop130, i64 1 ; 2 uses
-  %2 = fadd <2 x double> %i.p, %i.u               ; 2 uses
+  %2 = shufflevector <2 x double> %i.p, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %3 = shufflevector <2 x double> %i.u, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %4 = fadd <4 x double> %2, %3                   ; 2 uses
   %i.x = fsub double %i.q, %i.w                   ; 2 uses
   %i.y = fadd double %i.r, %i.v                   ; 2 uses
   %i.z = fadd double %i.q, %i.w                   ; 2 uses
@@ -313,7 +318,9 @@ bb.a:
   %i.aj = extractelement <2 x double> %foldExtExtBinop136, i64 0 ; 2 uses
   %foldExtExtBinop138 = fsub <2 x double> %i.ag, %i.ah
   %i.ak = extractelement <2 x double> %foldExtExtBinop138, i64 1 ; 2 uses
-  %3 = fadd <2 x double> %i.ad, %i.ai             ; 2 uses
+  %5 = shufflevector <2 x double> %i.ad, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %6 = shufflevector <2 x double> %i.ai, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %7 = fadd <4 x double> %5, %6                   ; 2 uses
   %i.al = fsub double %i.ae, %i.ak                ; 2 uses
   %i.am = fadd double %i.af, %i.aj                ; 2 uses
   %i.an = fadd double %i.ae, %i.ak                ; 2 uses
@@ -342,19 +349,18 @@ bb.a:
   store double %i.bd, ptr %i.l, align 8, !tbaa !8
   %i.be = fsub double %i.aa, %i.au
   store double %i.be, ptr %i.m, align 8, !tbaa !8
-  %4 = fadd <2 x double> %2, %3
-  %5 = shufflevector <2 x double> %4, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %6 = fsub <2 x double> %2, %3
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
-  %i.bf = shufflevector <4 x double> %7, <4 x double> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
-  %i.bg = shufflevector <4 x double> %5, <4 x double> %i.bf, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %8 = fadd <4 x double> %4, %7
+  %9 = fsub <4 x double> %4, %7
+  %i.bf = shufflevector <4 x double> %9, <4 x double> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
+  %i.bg = shufflevector <4 x double> %8, <4 x double> %i.bf, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   store <4 x double> %i.bg, ptr %0, align 8, !tbaa !8
-  %8 = fsub <2 x double> %i.p, %i.u
-  %i.bh = shufflevector <2 x double> %8, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %10 = shufflevector <2 x double> %i.p, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %i.bh = shufflevector <2 x double> %i.u, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %11 = fsub <4 x double> %10, %i.bh              ; 2 uses
   %i.bi = fsub <2 x double> %i.ad, %i.ai
   %i.bj = shufflevector <2 x double> %i.bi, <2 x double> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0> ; 2 uses
-  %i.bk = fsub <4 x double> %i.bh, %i.bj
-  %i.bl = fadd <4 x double> %i.bh, %i.bj
+  %i.bk = fsub <4 x double> %11, %i.bj
+  %i.bl = fadd <4 x double> %11, %i.bj
   %i.bm = shufflevector <4 x double> %i.bk, <4 x double> %i.bl, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
   store <4 x double> %i.bm, ptr %i.e, align 8, !tbaa !8
   ret void
