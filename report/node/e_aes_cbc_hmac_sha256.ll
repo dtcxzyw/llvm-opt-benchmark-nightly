@@ -203,11 +203,11 @@ declare i32 @EVP_CIPHER_get_asn1_iv(ptr noundef, ptr noundef) #1
 ; Function Attrs: nounwind uwtable
 define internal i32 @aesni_cbc_hmac_sha256_ctrl(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3) #0 {
 bb.a:
-  %4 = alloca [8 x %struct.HASH_DESC], align 16   ; 13 uses
-  %5 = alloca [8 x %struct.HASH_DESC], align 16   ; 17 uses
-  %6 = alloca [8 x %struct.CIPH_DESC], align 16   ; 14 uses
+  %4 = alloca [8 x %struct.HASH_DESC], align 16   ; 11 uses
+  %5 = alloca [8 x %struct.HASH_DESC], align 16   ; 15 uses
+  %6 = alloca [8 x %struct.CIPH_DESC], align 16   ; 13 uses
   %i.a = alloca [288 x i8], align 16              ; 4 uses
-  %7 = alloca [8 x %union.anon.2], align 16       ; 18 uses
+  %7 = alloca [8 x %union.anon.2], align 16       ; 16 uses
   %i.b = alloca [64 x i8], align 16               ; 22 uses
   %i.c = tail call ptr @EVP_CIPHER_CTX_get_cipher_data(ptr noundef %0) #5 ; 48 uses
   switch i32 %1, label %bb.bb [
@@ -610,7 +610,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.gz = ptrtoint ptr %i.a to i64
   %i.ha = and i64 %i.gz, 16
   %i.hb = sub nsw i64 0, %i.ha
-  %i.hc = getelementptr inbounds i8, ptr %i.gy, i64 %i.hb ; 29 uses
+  %i.hc = getelementptr inbounds i8, ptr %i.gy, i64 %i.hb ; 27 uses
   %i.hd = trunc i64 %i.gq to i32                  ; 2 uses
   %i.he = add nuw nsw i32 %i.gt, 1                ; 2 uses
   %i.hf = lshr i32 %i.hd, %i.he                   ; 6 uses
@@ -633,11 +633,11 @@ bb.at:                                            ; preds = %bb.as
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as, %bb.ar
-  %.0352.i = phi i32 [ %i.hp, %bb.at ], [ %i.hi, %bb.as ], [ %i.hi, %bb.ar ] ; 6 uses
-  %.0351.i = phi i32 [ %i.ho, %bb.at ], [ %i.hf, %bb.as ], [ %i.hf, %bb.ar ] ; 8 uses
+  %.0352.i = phi i32 [ %i.hp, %bb.at ], [ %i.hi, %bb.as ], [ %i.hi, %bb.ar ] ; 4 uses
+  %.0351.i = phi i32 [ %i.ho, %bb.at ], [ %i.hf, %bb.as ], [ %i.hf, %bb.ar ] ; 6 uses
   store ptr %i.go, ptr %4, align 16, !tbaa !42
   store ptr %i.go, ptr %6, align 16, !tbaa !44
-  %i.hq = getelementptr inbounds nuw i8, ptr %i.gm, i64 21
+  %i.hq = getelementptr inbounds nuw i8, ptr %i.gm, i64 21 ; 2 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %i.hq, ptr %i.hr, align 8, !tbaa !46
   %i.hs = getelementptr inbounds nuw i8, ptr %i.gm, i64 5
@@ -663,6 +663,7 @@ bb.au:                                            ; preds = %bb.at, %bb.as, %bb.
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.av, %.lr.ph.i
+  %8 = phi ptr [ %i.hq, %.lr.ph.i ], [ %i.if, %bb.av ]
   %i.ib = phi ptr [ %i.go, %.lr.ph.i ], [ %i.ic, %bb.av ]
   %indvars.iv.i = phi i64 [ 1, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.av ] ; 3 uses
   %.pn374.i = phi ptr [ %7, %.lr.ph.i ], [ %.0359.i, %bb.av ]
@@ -670,11 +671,9 @@ bb.av:                                            ; preds = %bb.av, %.lr.ph.i
   %i.ic = getelementptr inbounds nuw i8, ptr %i.ib, i64 %i.hz ; 3 uses
   %i.id = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %indvars.iv.i
   store ptr %i.ic, ptr %i.id, align 16, !tbaa !42
-  %i.ie = getelementptr inbounds nuw [40 x i8], ptr %6, i64 %indvars.iv.i ; 4 uses
+  %i.ie = getelementptr inbounds nuw [40 x i8], ptr %6, i64 %indvars.iv.i ; 3 uses
   store ptr %i.ic, ptr %i.ie, align 8, !tbaa !44
-  %8 = getelementptr i8, ptr %i.ie, i64 -32
-  %9 = load ptr, ptr %8, align 8, !tbaa !46
-  %i.if = getelementptr inbounds nuw i8, ptr %9, i64 %i.ia ; 2 uses
+  %i.if = getelementptr inbounds nuw i8, ptr %8, i64 %i.ia ; 3 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %i.ie, i64 8
   store ptr %i.if, ptr %i.ig, align 8, !tbaa !46
   %i.ih = getelementptr inbounds i8, ptr %i.if, i64 -16
@@ -689,40 +688,39 @@ bb.av:                                            ; preds = %bb.av, %.lr.ph.i
   %i.ij = getelementptr inbounds nuw i8, ptr %i.c, i64 508
   %i.ik = load i64, ptr %i.ij, align 4            ; 2 uses
   store i64 %i.ik, ptr %7, align 16
-  %i.il = call i64 asm "bswapq $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.ik) #6, !srcloc !47 ; 2 uses
+  %i.il = call i64 asm "bswapq $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.ik) #6, !srcloc !47
   %i.im = getelementptr inbounds nuw i8, ptr %i.c, i64 468
-  %i.in = add i32 %i.gu, -1
-  %i.io = load i32, ptr %i.im, align 4, !tbaa !5  ; 2 uses
+  %i.in = add nsw i32 %i.gu, -1
+  %i.io = load i32, ptr %i.im, align 4, !tbaa !5
   %i.ip = getelementptr inbounds nuw i8, ptr %i.c, i64 472
-  %i.iq = load i32, ptr %i.ip, align 4, !tbaa !5  ; 2 uses
-  %i.ir = getelementptr inbounds nuw i8, ptr %i.hc, i64 32 ; 2 uses
+  %i.iq = load i32, ptr %i.ip, align 4, !tbaa !5
+  %i.ir = getelementptr inbounds nuw i8, ptr %i.hc, i64 32
   %i.is = getelementptr inbounds nuw i8, ptr %i.c, i64 476
-  %i.it = load i32, ptr %i.is, align 4, !tbaa !5  ; 2 uses
-  %i.iu = getelementptr inbounds nuw i8, ptr %i.hc, i64 64 ; 2 uses
+  %i.it = load i32, ptr %i.is, align 4, !tbaa !5
+  %i.iu = getelementptr inbounds nuw i8, ptr %i.hc, i64 64
   %i.iv = getelementptr inbounds nuw i8, ptr %i.c, i64 480
-  %i.iw = load i32, ptr %i.iv, align 4, !tbaa !5  ; 2 uses
-  %i.ix = getelementptr inbounds nuw i8, ptr %i.hc, i64 96 ; 2 uses
+  %i.iw = load i32, ptr %i.iv, align 4, !tbaa !5
+  %i.ix = getelementptr inbounds nuw i8, ptr %i.hc, i64 96
   %i.iy = getelementptr inbounds nuw i8, ptr %i.c, i64 484
-  %i.iz = load i32, ptr %i.iy, align 4, !tbaa !5  ; 2 uses
-  %i.ja = getelementptr inbounds nuw i8, ptr %i.hc, i64 128 ; 2 uses
+  %i.iz = load i32, ptr %i.iy, align 4, !tbaa !5
+  %i.ja = getelementptr inbounds nuw i8, ptr %i.hc, i64 128
   %i.jb = getelementptr inbounds nuw i8, ptr %i.c, i64 488
-  %i.jc = load i32, ptr %i.jb, align 4, !tbaa !5  ; 2 uses
-  %i.jd = getelementptr inbounds nuw i8, ptr %i.hc, i64 160 ; 2 uses
+  %i.jc = load i32, ptr %i.jb, align 4, !tbaa !5
+  %i.jd = getelementptr inbounds nuw i8, ptr %i.hc, i64 160
   %i.je = getelementptr inbounds nuw i8, ptr %i.c, i64 492
-  %i.jf = load i32, ptr %i.je, align 4, !tbaa !5  ; 2 uses
-  %i.jg = getelementptr inbounds nuw i8, ptr %i.hc, i64 192 ; 2 uses
+  %i.jf = load i32, ptr %i.je, align 4, !tbaa !5
+  %i.jg = getelementptr inbounds nuw i8, ptr %i.hc, i64 192
   %i.jh = getelementptr inbounds nuw i8, ptr %i.c, i64 496
-  %i.ji = load i32, ptr %i.jh, align 4, !tbaa !5  ; 2 uses
-  %i.jj = getelementptr inbounds nuw i8, ptr %i.hc, i64 224 ; 2 uses
-  %i.jk = getelementptr inbounds nuw i8, ptr %i.c, i64 516 ; 2 uses
-  %i.jl = getelementptr inbounds nuw i8, ptr %i.c, i64 517 ; 2 uses
-  %i.jm = getelementptr inbounds nuw i8, ptr %i.c, i64 518 ; 2 uses
-  %i.jn = zext i32 %i.in to i64                   ; 2 uses
-  %10 = add nsw i64 %wide.trip.count.i, -2
+  %i.ji = load i32, ptr %i.jh, align 4, !tbaa !5
+  %i.jj = getelementptr inbounds nuw i8, ptr %i.hc, i64 224
+  %i.jk = getelementptr inbounds nuw i8, ptr %i.c, i64 516
+  %i.jl = getelementptr inbounds nuw i8, ptr %i.c, i64 517
+  %i.jm = getelementptr inbounds nuw i8, ptr %i.c, i64 518
+  %i.jn = zext i32 %i.in to i64
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.aw, %.lr.ph378.split.i
-  %indvars.iv414.i = phi i64 [ 0, %.lr.ph378.split.i ], [ %indvars.iv.next415.i, %bb.aw ] ; 15 uses
+  %indvars.iv414.i = phi i64 [ 0, %.lr.ph378.split.i ], [ %indvars.iv.next415.i, %bb.aw ] ; 14 uses
   %i.jo = icmp eq i64 %indvars.iv414.i, %i.jn
   %i.jp = select i1 %i.jo, i32 %.0352.i, i32 %.0351.i ; 3 uses
   %i.jq = getelementptr inbounds nuw [4 x i8], ptr %i.hc, i64 %indvars.iv414.i
@@ -775,66 +773,11 @@ bb.aw:                                            ; preds = %bb.aw, %.lr.ph378.s
   store ptr %i.ka, ptr %i.kt, align 16, !tbaa !42
   %i.ku = getelementptr inbounds nuw i8, ptr %i.kt, i64 8
   store i32 1, ptr %i.ku, align 8, !tbaa !50
-  %indvars.iv.next415.i = add nuw nsw i64 %indvars.iv414.i, 1 ; 14 uses
-  %exitcond418.not.i = icmp eq i64 %indvars.iv414.i, %10
-  br i1 %exitcond418.not.i, label %._crit_edge379.loopexit.peel.begin.i, label %bb.aw, !llvm.loop !51
+  %indvars.iv.next415.i = add nuw nsw i64 %indvars.iv414.i, 1 ; 2 uses
+  %exitcond418.not.i = icmp eq i64 %indvars.iv.next415.i, %wide.trip.count.i
+  br i1 %exitcond418.not.i, label %._crit_edge379.i, label %bb.aw, !llvm.loop !51
 
-._crit_edge379.loopexit.peel.begin.i:             ; preds = %bb.aw
-  %11 = icmp eq i64 %indvars.iv.next415.i, %i.jn
-  %12 = select i1 %11, i32 %.0352.i, i32 %.0351.i ; 3 uses
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.hc, i64 %indvars.iv.next415.i
-  store i32 %i.io, ptr %13, align 4, !tbaa !5
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.ir, i64 %indvars.iv.next415.i
-  store i32 %i.iq, ptr %14, align 4, !tbaa !5
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.iu, i64 %indvars.iv.next415.i
-  store i32 %i.it, ptr %15, align 4, !tbaa !5
-  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.ix, i64 %indvars.iv.next415.i
-  store i32 %i.iw, ptr %16, align 4, !tbaa !5
-  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.ja, i64 %indvars.iv.next415.i
-  store i32 %i.iz, ptr %17, align 4, !tbaa !5
-  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.jd, i64 %indvars.iv.next415.i
-  store i32 %i.jc, ptr %18, align 4, !tbaa !5
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.jg, i64 %indvars.iv.next415.i
-  store i32 %i.jf, ptr %19, align 4, !tbaa !5
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %i.jj, i64 %indvars.iv.next415.i
-  store i32 %i.ji, ptr %20, align 4, !tbaa !5
-  %21 = add i64 %indvars.iv.next415.i, %i.il
-  %22 = call i64 asm "bswapq $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %21) #6, !srcloc !49
-  %23 = getelementptr inbounds nuw [128 x i8], ptr %7, i64 %indvars.iv.next415.i ; 8 uses
-  store i64 %22, ptr %23, align 16, !tbaa !10
-  %24 = load i8, ptr %i.jk, align 4, !tbaa !10
-  %25 = getelementptr inbounds nuw i8, ptr %23, i64 8
-  store i8 %24, ptr %25, align 8, !tbaa !10
-  %26 = load i8, ptr %i.jl, align 1, !tbaa !10
-  %27 = getelementptr inbounds nuw i8, ptr %23, i64 9
-  store i8 %26, ptr %27, align 1, !tbaa !10
-  %28 = load i8, ptr %i.jm, align 2, !tbaa !10
-  %29 = getelementptr inbounds nuw i8, ptr %23, i64 10
-  store i8 %28, ptr %29, align 2, !tbaa !10
-  %30 = lshr i32 %12, 8
-  %31 = trunc i32 %30 to i8
-  %32 = getelementptr inbounds nuw i8, ptr %23, i64 11
-  store i8 %31, ptr %32, align 1, !tbaa !10
-  %33 = trunc i32 %12 to i8
-  %34 = getelementptr inbounds nuw i8, ptr %23, i64 12
-  store i8 %33, ptr %34, align 4, !tbaa !10
-  %35 = getelementptr inbounds nuw i8, ptr %23, i64 13
-  %36 = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %indvars.iv.next415.i ; 3 uses
-  %37 = load ptr, ptr %36, align 16, !tbaa !42    ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(51) %35, ptr noundef nonnull align 1 dereferenceable(51) %37, i64 51, i1 false)
-  %38 = getelementptr inbounds nuw i8, ptr %37, i64 51
-  store ptr %38, ptr %36, align 16, !tbaa !42
-  %39 = add i32 %12, -51
-  %40 = lshr i32 %39, 6
-  %41 = getelementptr inbounds nuw i8, ptr %36, i64 8
-  store i32 %40, ptr %41, align 8, !tbaa !50
-  %42 = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %indvars.iv.next415.i ; 2 uses
-  store ptr %23, ptr %42, align 16, !tbaa !42
-  %43 = getelementptr inbounds nuw i8, ptr %42, i64 8
-  store i32 1, ptr %43, align 8, !tbaa !50
-  br label %._crit_edge379.i
-
-._crit_edge379.i:                                 ; preds = %._crit_edge379.loopexit.peel.begin.i, %._crit_edge.thread.i
+._crit_edge379.i:                                 ; preds = %bb.aw, %._crit_edge.thread.i
   call void @sha256_multi_block(ptr noundef nonnull %i.hc, ptr noundef nonnull %5, i32 noundef range(i32 0, 1073741824) %i.gt) #5
   %i.kv = call i32 @llvm.umin.i32(i32 %.0351.i, i32 %.0352.i)
   %i.kw = add i32 %i.kv, -51                      ; 2 uses
@@ -873,23 +816,23 @@ bb.ax:                                            ; preds = %bb.ax, %.lr.ph384.u
   %i.lh = getelementptr inbounds nuw [40 x i8], ptr %6, i64 %indvars.iv424.i ; 5 uses
   %i.li = getelementptr inbounds nuw i8, ptr %i.lh, i64 8
   %i.lj = load ptr, ptr %i.li, align 8, !tbaa !46
-  %i.lk = load <2 x ptr>, ptr %i.lh, align 8, !tbaa !53
+  %i.lk = load <2 x ptr>, ptr %i.lh, align 8, !tbaa !52
   %i.ll = getelementptr inbounds nuw i8, <2 x ptr> %i.lk, i64 2048
-  store <2 x ptr> %i.ll, ptr %i.lh, align 8, !tbaa !53
+  store <2 x ptr> %i.ll, ptr %i.lh, align 8, !tbaa !52
   %i.lm = getelementptr inbounds nuw i8, ptr %i.lh, i64 16
-  store i32 128, ptr %i.lm, align 8, !tbaa !54
+  store i32 128, ptr %i.lm, align 8, !tbaa !53
   %i.ln = getelementptr inbounds nuw i8, ptr %i.lh, i64 24
   %i.lo = getelementptr inbounds nuw i8, ptr %i.lj, i64 2032
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ln, ptr noundef nonnull align 1 dereferenceable(16) %i.lo, i64 16, i1 false)
   %indvars.iv.next425.i = add nuw nsw i64 %indvars.iv424.i, 1 ; 2 uses
   %exitcond428.not.i = icmp eq i64 %indvars.iv.next425.i, %wide.trip.count422.i
-  br i1 %exitcond428.not.i, label %._crit_edge385.us.i, label %bb.ax, !llvm.loop !55
+  br i1 %exitcond428.not.i, label %._crit_edge385.us.i, label %bb.ax, !llvm.loop !54
 
 ._crit_edge385.us.i:                              ; preds = %bb.ax
   %i.lp = add i32 %.0356.us.i, 2048               ; 2 uses
   %i.lq = add nsw i32 %.0355.us.i, -32            ; 2 uses
   %i.lr = icmp ugt i32 %i.lq, 32
-  br i1 %i.lr, label %.lr.ph384.us.i, label %.loopexit.i, !llvm.loop !56
+  br i1 %i.lr, label %.lr.ph384.us.i, label %.loopexit.i, !llvm.loop !55
 
 .lr.ph381.i:                                      ; preds = %.lr.ph381.i, %.lr.ph381.preheader.i
   %indvars.iv419.i = phi i64 [ 0, %.lr.ph381.preheader.i ], [ %indvars.iv.next420.i.1, %.lr.ph381.i ] ; 5 uses
@@ -901,7 +844,7 @@ bb.ax:                                            ; preds = %bb.ax, %.lr.ph384.u
   store i32 32, ptr %i.lv, align 8, !tbaa !50
   %i.lw = getelementptr inbounds nuw [40 x i8], ptr %6, i64 %indvars.iv419.i
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lw, i64 16
-  store i32 128, ptr %i.lx, align 16, !tbaa !54
+  store i32 128, ptr %i.lx, align 16, !tbaa !53
   %indvars.iv.next420.i = or disjoint i64 %indvars.iv419.i, 1 ; 3 uses
   %i.ly = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %indvars.iv.next420.i
   %i.lz = load ptr, ptr %i.ly, align 16, !tbaa !42
@@ -911,10 +854,10 @@ bb.ax:                                            ; preds = %bb.ax, %.lr.ph384.u
   store i32 32, ptr %i.mb, align 8, !tbaa !50
   %i.mc = getelementptr inbounds nuw [40 x i8], ptr %6, i64 %indvars.iv.next420.i
   %i.md = getelementptr inbounds nuw i8, ptr %i.mc, i64 16
-  store i32 128, ptr %i.md, align 8, !tbaa !54
+  store i32 128, ptr %i.md, align 8, !tbaa !53
   %indvars.iv.next420.i.1 = add nuw nsw i64 %indvars.iv419.i, 2 ; 2 uses
   %exitcond423.not.i.1 = icmp eq i64 %indvars.iv.next420.i.1, %wide.trip.count422.i
-  br i1 %exitcond423.not.i.1, label %.lr.ph384.us.i, label %.lr.ph381.i, !llvm.loop !57
+  br i1 %exitcond423.not.i.1, label %.lr.ph384.us.i, label %.lr.ph381.i, !llvm.loop !56
 
 .preheader.split.i:                               ; preds = %.preheader373.i, %.preheader.split.i
   %.0355.i = phi i32 [ %i.me, %.preheader.split.i ], [ %i.kx, %.preheader373.i ]
@@ -922,7 +865,7 @@ bb.ax:                                            ; preds = %bb.ax, %.lr.ph384.u
   call void @aesni_multi_cbc_encrypt(ptr noundef nonnull %6, ptr noundef nonnull %i.c, i32 noundef 0) #5
   %i.me = add nsw i32 %.0355.i, -32               ; 2 uses
   %i.mf = icmp ugt i32 %i.me, 32
-  br i1 %i.mf, label %.preheader.split.i, label %.loopexit.thread.i, !llvm.loop !56
+  br i1 %i.mf, label %.preheader.split.i, label %.loopexit.thread.i, !llvm.loop !55
 
 .loopexit.thread.i:                               ; preds = %.preheader.split.i
   call void @sha256_multi_block(ptr noundef nonnull %i.hc, ptr noundef nonnull %4, i32 noundef range(i32 0, 1073741824) 0) #5
@@ -930,16 +873,15 @@ bb.ax:                                            ; preds = %bb.ax, %.lr.ph384.u
   br label %._crit_edge389.thread.i
 
 .loopexit.i:                                      ; preds = %._crit_edge385.us.i, %._crit_edge379.i
-  %.1357.i = phi i32 [ 0, %._crit_edge379.i ], [ %i.lp, %._crit_edge385.us.i ] ; 6 uses
+  %.1357.i = phi i32 [ 0, %._crit_edge379.i ], [ %i.lp, %._crit_edge385.us.i ] ; 3 uses
   call void @sha256_multi_block(ptr noundef nonnull %i.hc, ptr noundef nonnull %4, i32 noundef range(i32 0, 1073741824) %i.gt) #5
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %7, i8 0, i64 1024, i1 false)
   br i1 %.not402.i, label %._crit_edge389.thread.i, label %.lr.ph388.split.i
 
 .lr.ph388.split.i:                                ; preds = %.loopexit.i
   %i.mg = add nsw i32 %i.gu, -1
-  %i.mh = zext i32 %i.mg to i64                   ; 3 uses
-  %wide.trip.count432.i = zext i32 %i.gu to i64   ; 2 uses
-  %44 = add nsw i64 %wide.trip.count432.i, -1     ; 15 uses
+  %i.mh = zext i32 %i.mg to i64                   ; 2 uses
+  %wide.trip.count432.i = zext i32 %i.gu to i64   ; 3 uses
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ay, %.lr.ph388.split.i
@@ -974,57 +916,8 @@ bb.ay:                                            ; preds = %bb.ay, %.lr.ph388.s
   store i32 %.472.i, ptr %i.nc, align 8, !tbaa !50
   store ptr %i.mu, ptr %i.nb, align 16, !tbaa !42
   %indvars.iv.next430.i = add nuw nsw i64 %indvars.iv429.i, 1 ; 2 uses
-  %exitcond433.not.i = icmp eq i64 %indvars.iv.next430.i, %44
-  br i1 %exitcond433.not.i, label %._crit_edge389.loopexit.peel.begin.i, label %bb.ay, !llvm.loop !58
-
-._crit_edge389.loopexit.peel.begin.i:             ; preds = %bb.ay
-  %45 = icmp eq i64 %44, %i.mh
-  %46 = select i1 %45, i32 %.0352.i, i32 %.0351.i ; 7 uses
-  %47 = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %44 ; 2 uses
-  %48 = getelementptr inbounds nuw i8, ptr %47, i64 8
-  %49 = load i32, ptr %48, align 8, !tbaa !50
-  %50 = shl nsw i32 %49, 6                        ; 2 uses
-  %51 = load ptr, ptr %47, align 16, !tbaa !42
-  %52 = zext i32 %50 to i64
-  %53 = getelementptr inbounds nuw i8, ptr %51, i64 %52
-  %.neg183 = add i32 %46, -51
-  %54 = add i32 %.1357.i, %50
-  %55 = sub i32 %.neg183, %54                     ; 2 uses
-  %56 = getelementptr inbounds nuw [128 x i8], ptr %7, i64 %44 ; 4 uses
-  %57 = zext i32 %55 to i64                       ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %56, ptr align 1 %53, i64 %57, i1 false)
-  %58 = getelementptr inbounds nuw i8, ptr %56, i64 %57
-  store i8 -128, ptr %58, align 1, !tbaa !10
-  %59 = shl i32 %46, 3
-  %60 = add i32 %59, 616
-  %61 = icmp ult i32 %55, 56                      ; 2 uses
-  %62 = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %60) #6
-  %63 = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %44 ; 2 uses
-  %64 = getelementptr inbounds nuw i8, ptr %63, i64 8
-  %.474.i = select i1 %61, i32 1, i32 2
-  %.473.i.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %61, i64 60, i64 124
-  %.473.i.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %56, i64 %.473.i.sroa.sel.v.sroa.sel.v.sroa.sel.v
-  store i32 %62, ptr %.473.i.sroa.sel.v.sroa.sel.v.sroa.sel, align 4, !tbaa !10
-  store i32 %.474.i, ptr %64, align 8, !tbaa !50
-  store ptr %56, ptr %63, align 16, !tbaa !42
-  call void @sha256_multi_block(ptr noundef nonnull %i.hc, ptr noundef nonnull %5, i32 noundef range(i32 0, 1073741824) %i.gt) #5
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %7, i8 0, i64 1024, i1 false)
-  %i.nd = getelementptr inbounds nuw i8, ptr %i.c, i64 356
-  %i.ne = getelementptr inbounds nuw i8, ptr %i.hc, i64 32 ; 3 uses
-  %i.nf = getelementptr inbounds nuw i8, ptr %i.c, i64 360
-  %i.ng = getelementptr inbounds nuw i8, ptr %i.hc, i64 64 ; 3 uses
-  %i.nh = getelementptr inbounds nuw i8, ptr %i.c, i64 364
-  %i.ni = getelementptr inbounds nuw i8, ptr %i.hc, i64 96 ; 3 uses
-  %i.nj = getelementptr inbounds nuw i8, ptr %i.c, i64 368
-  %i.nk = getelementptr inbounds nuw i8, ptr %i.hc, i64 128 ; 3 uses
-  %i.nl = getelementptr inbounds nuw i8, ptr %i.c, i64 372
-  %i.nm = getelementptr inbounds nuw i8, ptr %i.hc, i64 160 ; 3 uses
-  %i.nn = getelementptr inbounds nuw i8, ptr %i.c, i64 376
-  %i.no = getelementptr inbounds nuw i8, ptr %i.hc, i64 192 ; 3 uses
-  %i.np = getelementptr inbounds nuw i8, ptr %i.c, i64 380
-  %i.nq = getelementptr inbounds nuw i8, ptr %i.hc, i64 224 ; 3 uses
-  %i.nr = getelementptr inbounds nuw i8, ptr %i.c, i64 384
-  br label %bb.az
+  %exitcond433.not.i = icmp eq i64 %indvars.iv.next430.i, %wide.trip.count432.i
+  br i1 %exitcond433.not.i, label %._crit_edge389.loopexit.peel.begin.i, label %bb.ay, !llvm.loop !57
 
 ._crit_edge389.thread.i:                          ; preds = %.loopexit.i, %.loopexit.thread.i
   call void @sha256_multi_block(ptr noundef nonnull %i.hc, ptr noundef nonnull %5, i32 noundef range(i32 0, 1073741824) %i.gt) #5
@@ -1032,67 +925,87 @@ bb.ay:                                            ; preds = %bb.ay, %.lr.ph388.s
   call void @sha256_multi_block(ptr noundef nonnull %i.hc, ptr noundef nonnull %5, i32 noundef range(i32 0, 1073741824) %i.gt) #5
   br label %._crit_edge401.i
 
+._crit_edge389.loopexit.peel.begin.i:             ; preds = %bb.ay
+  call void @sha256_multi_block(ptr noundef nonnull %i.hc, ptr noundef nonnull %5, i32 noundef range(i32 0, 1073741824) %i.gt) #5
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %7, i8 0, i64 1024, i1 false)
+  %i.nd = getelementptr inbounds nuw i8, ptr %i.c, i64 356
+  %i.ne = getelementptr inbounds nuw i8, ptr %i.hc, i64 32 ; 2 uses
+  %i.nf = getelementptr inbounds nuw i8, ptr %i.c, i64 360
+  %i.ng = getelementptr inbounds nuw i8, ptr %i.hc, i64 64 ; 2 uses
+  %i.nh = getelementptr inbounds nuw i8, ptr %i.c, i64 364
+  %i.ni = getelementptr inbounds nuw i8, ptr %i.hc, i64 96 ; 2 uses
+  %i.nj = getelementptr inbounds nuw i8, ptr %i.c, i64 368
+  %i.nk = getelementptr inbounds nuw i8, ptr %i.hc, i64 128 ; 2 uses
+  %i.nl = getelementptr inbounds nuw i8, ptr %i.c, i64 372
+  %i.nm = getelementptr inbounds nuw i8, ptr %i.hc, i64 160 ; 2 uses
+  %i.nn = getelementptr inbounds nuw i8, ptr %i.c, i64 376
+  %i.no = getelementptr inbounds nuw i8, ptr %i.hc, i64 192 ; 2 uses
+  %i.np = getelementptr inbounds nuw i8, ptr %i.c, i64 380
+  %i.nq = getelementptr inbounds nuw i8, ptr %i.hc, i64 224 ; 2 uses
+  %i.nr = getelementptr inbounds nuw i8, ptr %i.c, i64 384
+  br label %bb.az
+
 bb.az:                                            ; preds = %bb.az, %._crit_edge389.loopexit.peel.begin.i
   %indvars.iv436.i = phi i64 [ 0, %._crit_edge389.loopexit.peel.begin.i ], [ %indvars.iv.next437.i, %bb.az ] ; 11 uses
   %i.ns = getelementptr inbounds nuw [4 x i8], ptr %i.hc, i64 %indvars.iv436.i ; 2 uses
   %i.nt = load i32, ptr %i.ns, align 4, !tbaa !5
-  %i.nu = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.nt) #6, !srcloc !59
+  %i.nu = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.nt) #6, !srcloc !58
   %i.nv = getelementptr inbounds nuw [128 x i8], ptr %7, i64 %indvars.iv436.i ; 11 uses
   store i32 %i.nu, ptr %i.nv, align 16, !tbaa !10
   %i.nw = load i32, ptr %i.nd, align 4, !tbaa !5
   store i32 %i.nw, ptr %i.ns, align 4, !tbaa !5
   %i.nx = getelementptr inbounds nuw [4 x i8], ptr %i.ne, i64 %indvars.iv436.i ; 2 uses
   %i.ny = load i32, ptr %i.nx, align 4, !tbaa !5
-  %i.nz = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.ny) #6, !srcloc !60
+  %i.nz = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.ny) #6, !srcloc !59
   %i.oa = getelementptr inbounds nuw i8, ptr %i.nv, i64 4
   store i32 %i.nz, ptr %i.oa, align 4, !tbaa !10
   %i.ob = load i32, ptr %i.nf, align 4, !tbaa !5
   store i32 %i.ob, ptr %i.nx, align 4, !tbaa !5
   %i.oc = getelementptr inbounds nuw [4 x i8], ptr %i.ng, i64 %indvars.iv436.i ; 2 uses
   %i.od = load i32, ptr %i.oc, align 4, !tbaa !5
-  %i.oe = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.od) #6, !srcloc !61
+  %i.oe = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.od) #6, !srcloc !60
   %i.of = getelementptr inbounds nuw i8, ptr %i.nv, i64 8
   store i32 %i.oe, ptr %i.of, align 8, !tbaa !10
   %i.og = load i32, ptr %i.nh, align 4, !tbaa !5
   store i32 %i.og, ptr %i.oc, align 4, !tbaa !5
   %i.oh = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %indvars.iv436.i ; 2 uses
   %i.oi = load i32, ptr %i.oh, align 4, !tbaa !5
-  %i.oj = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.oi) #6, !srcloc !62
+  %i.oj = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.oi) #6, !srcloc !61
   %i.ok = getelementptr inbounds nuw i8, ptr %i.nv, i64 12
   store i32 %i.oj, ptr %i.ok, align 4, !tbaa !10
   %i.ol = load i32, ptr %i.nj, align 4, !tbaa !5
   store i32 %i.ol, ptr %i.oh, align 4, !tbaa !5
   %i.om = getelementptr inbounds nuw [4 x i8], ptr %i.nk, i64 %indvars.iv436.i ; 2 uses
   %i.on = load i32, ptr %i.om, align 4, !tbaa !5
-  %i.oo = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.on) #6, !srcloc !63
+  %i.oo = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.on) #6, !srcloc !62
   %i.op = getelementptr inbounds nuw i8, ptr %i.nv, i64 16
   store i32 %i.oo, ptr %i.op, align 16, !tbaa !10
   %i.oq = load i32, ptr %i.nl, align 4, !tbaa !5
   store i32 %i.oq, ptr %i.om, align 4, !tbaa !5
   %i.or = getelementptr inbounds nuw [4 x i8], ptr %i.nm, i64 %indvars.iv436.i ; 2 uses
   %i.os = load i32, ptr %i.or, align 4, !tbaa !5
-  %i.ot = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.os) #6, !srcloc !64
+  %i.ot = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.os) #6, !srcloc !63
   %i.ou = getelementptr inbounds nuw i8, ptr %i.nv, i64 20
   store i32 %i.ot, ptr %i.ou, align 4, !tbaa !10
   %i.ov = load i32, ptr %i.nn, align 4, !tbaa !5
   store i32 %i.ov, ptr %i.or, align 4, !tbaa !5
   %i.ow = getelementptr inbounds nuw [4 x i8], ptr %i.no, i64 %indvars.iv436.i ; 2 uses
   %i.ox = load i32, ptr %i.ow, align 4, !tbaa !5
-  %i.oy = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.ox) #6, !srcloc !65
+  %i.oy = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.ox) #6, !srcloc !64
   %i.oz = getelementptr inbounds nuw i8, ptr %i.nv, i64 24
   store i32 %i.oy, ptr %i.oz, align 8, !tbaa !10
   %i.pa = load i32, ptr %i.np, align 4, !tbaa !5
   store i32 %i.pa, ptr %i.ow, align 4, !tbaa !5
   %i.pb = getelementptr inbounds nuw [4 x i8], ptr %i.nq, i64 %indvars.iv436.i ; 2 uses
   %i.pc = load i32, ptr %i.pb, align 4, !tbaa !5
-  %i.pd = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.pc) #6, !srcloc !66
+  %i.pd = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.pc) #6, !srcloc !65
   %i.pe = getelementptr inbounds nuw i8, ptr %i.nv, i64 28
   store i32 %i.pd, ptr %i.pe, align 4, !tbaa !10
   %i.pf = load i32, ptr %i.nr, align 4, !tbaa !5
   store i32 %i.pf, ptr %i.pb, align 4, !tbaa !5
   %i.pg = getelementptr inbounds nuw i8, ptr %i.nv, i64 32
   store i8 -128, ptr %i.pg, align 16, !tbaa !10
-  %i.ph = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 768) #6, !srcloc !67
+  %i.ph = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 768) #6, !srcloc !66
   %i.pi = getelementptr inbounds nuw i8, ptr %i.nv, i64 60
   store i32 %i.ph, ptr %i.pi, align 4, !tbaa !10
   %i.pj = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %indvars.iv436.i ; 2 uses
@@ -1101,13 +1014,13 @@ bb.az:                                            ; preds = %bb.az, %._crit_edge
   store i32 1, ptr %i.pk, align 8, !tbaa !50
   %indvars.iv.next437.i = add nuw nsw i64 %indvars.iv436.i, 1 ; 2 uses
   %exitcond440.not.i = icmp eq i64 %indvars.iv.next437.i, %wide.trip.count432.i
-  br i1 %exitcond440.not.i, label %.lr.ph400.split.i, label %bb.az, !llvm.loop !68
+  br i1 %exitcond440.not.i, label %.lr.ph400.split.i, label %bb.az, !llvm.loop !67
 
 .lr.ph400.split.i:                                ; preds = %bb.az
   call void @sha256_multi_block(ptr noundef nonnull %i.hc, ptr noundef nonnull %5, i32 noundef range(i32 0, 1073741824) %i.gt) #5
-  %i.pl = getelementptr inbounds nuw i8, ptr %i.c, i64 516 ; 2 uses
-  %i.pm = getelementptr inbounds nuw i8, ptr %i.c, i64 517 ; 2 uses
-  %i.pn = getelementptr inbounds nuw i8, ptr %i.c, i64 518 ; 2 uses
+  %i.pl = getelementptr inbounds nuw i8, ptr %i.c, i64 516
+  %i.pm = getelementptr inbounds nuw i8, ptr %i.c, i64 517
+  %i.pn = getelementptr inbounds nuw i8, ptr %i.c, i64 518
   %invariant.op = sub i32 48, %.1357.i
   br label %bb.ba
 
@@ -1131,41 +1044,41 @@ bb.ba:                                            ; preds = %bb.ba, %.lr.ph400.s
   %i.pz = getelementptr i8, ptr %.0349398.i, i64 %i.py ; 9 uses
   %i.qa = getelementptr inbounds nuw [4 x i8], ptr %i.hc, i64 %indvars.iv442.i
   %i.qb = load i32, ptr %i.qa, align 4, !tbaa !5
-  %i.qc = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qb) #6, !srcloc !69
+  %i.qc = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qb) #6, !srcloc !68
   store i32 %i.qc, ptr %i.pz, align 4, !tbaa !5
   %i.qd = getelementptr inbounds nuw [4 x i8], ptr %i.ne, i64 %indvars.iv442.i
   %i.qe = load i32, ptr %i.qd, align 4, !tbaa !5
-  %i.qf = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qe) #6, !srcloc !70
+  %i.qf = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qe) #6, !srcloc !69
   %i.qg = getelementptr inbounds nuw i8, ptr %i.pz, i64 4
   store i32 %i.qf, ptr %i.qg, align 4, !tbaa !5
   %i.qh = getelementptr inbounds nuw [4 x i8], ptr %i.ng, i64 %indvars.iv442.i
   %i.qi = load i32, ptr %i.qh, align 4, !tbaa !5
-  %i.qj = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qi) #6, !srcloc !71
+  %i.qj = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qi) #6, !srcloc !70
   %i.qk = getelementptr inbounds nuw i8, ptr %i.pz, i64 8
   store i32 %i.qj, ptr %i.qk, align 4, !tbaa !5
   %i.ql = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %indvars.iv442.i
   %i.qm = load i32, ptr %i.ql, align 4, !tbaa !5
-  %i.qn = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qm) #6, !srcloc !72
+  %i.qn = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qm) #6, !srcloc !71
   %i.qo = getelementptr inbounds nuw i8, ptr %i.pz, i64 12
   store i32 %i.qn, ptr %i.qo, align 4, !tbaa !5
   %i.qp = getelementptr inbounds nuw [4 x i8], ptr %i.nk, i64 %indvars.iv442.i
   %i.qq = load i32, ptr %i.qp, align 4, !tbaa !5
-  %i.qr = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qq) #6, !srcloc !73
+  %i.qr = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qq) #6, !srcloc !72
   %i.qs = getelementptr inbounds nuw i8, ptr %i.pz, i64 16
   store i32 %i.qr, ptr %i.qs, align 4, !tbaa !5
   %i.qt = getelementptr inbounds nuw [4 x i8], ptr %i.nm, i64 %indvars.iv442.i
   %i.qu = load i32, ptr %i.qt, align 4, !tbaa !5
-  %i.qv = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qu) #6, !srcloc !74
+  %i.qv = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qu) #6, !srcloc !73
   %i.qw = getelementptr inbounds nuw i8, ptr %i.pz, i64 20
   store i32 %i.qv, ptr %i.qw, align 4, !tbaa !5
   %i.qx = getelementptr inbounds nuw [4 x i8], ptr %i.no, i64 %indvars.iv442.i
   %i.qy = load i32, ptr %i.qx, align 4, !tbaa !5
-  %i.qz = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qy) #6, !srcloc !75
+  %i.qz = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qy) #6, !srcloc !74
   %i.ra = getelementptr inbounds nuw i8, ptr %i.pz, i64 24
   store i32 %i.qz, ptr %i.ra, align 4, !tbaa !5
   %i.rb = getelementptr inbounds nuw [4 x i8], ptr %i.nq, i64 %indvars.iv442.i
   %i.rc = load i32, ptr %i.rb, align 4, !tbaa !5
-  %i.rd = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.rc) #6, !srcloc !76
+  %i.rd = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.rc) #6, !srcloc !75
   %i.re = getelementptr inbounds nuw i8, ptr %i.pz, i64 28
   store i32 %i.rd, ptr %i.re, align 4, !tbaa !5
   %i.rf = getelementptr i8, ptr %i.pz, i64 32
@@ -1179,12 +1092,12 @@ bb.ba:                                            ; preds = %bb.ba, %.lr.ph400.s
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.rf, i8 %i.ri, i64 %i.rm, i1 false), !tbaa !10
   %scevgep.i = getelementptr i8, ptr %.0349398.i, i64 33
   %i.rn = getelementptr i8, ptr %scevgep.i, i64 %i.py
-  %scevgep441.i = getelementptr i8, ptr %i.rn, i64 %i.rl ; 7 uses
+  %scevgep441.i = getelementptr i8, ptr %i.rn, i64 %i.rl
   %i.ro = and i32 %i.pp, -16                      ; 3 uses
   %.reass.i.reass.reass = add i32 %i.ro, %invariant.op
   %i.rp = lshr i32 %.reass.i.reass.reass, 4
   %i.rq = getelementptr inbounds nuw i8, ptr %i.pq, i64 16
-  store i32 %i.rp, ptr %i.rq, align 8, !tbaa !54
+  store i32 %i.rp, ptr %i.rq, align 8, !tbaa !53
   %i.rr = add i32 %i.ro, 64                       ; 2 uses
   %i.rs = load i8, ptr %i.pl, align 4, !tbaa !10
   store i8 %i.rs, ptr %.0349398.i, align 1, !tbaa !10
@@ -1204,97 +1117,11 @@ bb.ba:                                            ; preds = %bb.ba, %.lr.ph400.s
   %i.sc = add i32 %.0358396.i, 69
   %i.sd = add i32 %i.sc, %i.ro                    ; 2 uses
   %indvars.iv.next443.i = add nuw nsw i64 %indvars.iv442.i, 1 ; 2 uses
-  %exitcond446.not.i = icmp eq i64 %indvars.iv.next443.i, %44
-  br i1 %exitcond446.not.i, label %._crit_edge401.loopexit.peel.begin.i, label %bb.ba, !llvm.loop !77
+  %exitcond446.not.i = icmp eq i64 %indvars.iv.next443.i, %wide.trip.count432.i
+  br i1 %exitcond446.not.i, label %._crit_edge401.i, label %bb.ba, !llvm.loop !76
 
-._crit_edge401.loopexit.peel.begin.i:             ; preds = %bb.ba
-  %65 = getelementptr inbounds nuw [40 x i8], ptr %6, i64 %44 ; 4 uses
-  %66 = getelementptr inbounds nuw i8, ptr %65, i64 8 ; 2 uses
-  %67 = load ptr, ptr %66, align 16, !tbaa !46
-  %68 = load ptr, ptr %65, align 8, !tbaa !44
-  %69 = sub i32 %46, %.1357.i
-  %70 = zext i32 %69 to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %67, ptr align 1 %68, i64 %70, i1 false)
-  %71 = load ptr, ptr %66, align 16, !tbaa !46
-  store ptr %71, ptr %65, align 8, !tbaa !44
-  %72 = add i32 %46, 21
-  %73 = zext i32 %72 to i64
-  %74 = getelementptr i8, ptr %scevgep441.i, i64 %73 ; 9 uses
-  %75 = getelementptr inbounds nuw [4 x i8], ptr %i.hc, i64 %44
-  %76 = load i32, ptr %75, align 4, !tbaa !5
-  %77 = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %76) #6, !srcloc !69
-  store i32 %77, ptr %74, align 4, !tbaa !5
-  %78 = getelementptr inbounds nuw [4 x i8], ptr %i.ne, i64 %44
-  %79 = load i32, ptr %78, align 4, !tbaa !5
-  %80 = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %79) #6, !srcloc !70
-  %81 = getelementptr inbounds nuw i8, ptr %74, i64 4
-  store i32 %80, ptr %81, align 4, !tbaa !5
-  %82 = getelementptr inbounds nuw [4 x i8], ptr %i.ng, i64 %44
-  %83 = load i32, ptr %82, align 4, !tbaa !5
-  %84 = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %83) #6, !srcloc !71
-  %85 = getelementptr inbounds nuw i8, ptr %74, i64 8
-  store i32 %84, ptr %85, align 4, !tbaa !5
-  %86 = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %44
-  %87 = load i32, ptr %86, align 4, !tbaa !5
-  %88 = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %87) #6, !srcloc !72
-  %89 = getelementptr inbounds nuw i8, ptr %74, i64 12
-  store i32 %88, ptr %89, align 4, !tbaa !5
-  %90 = getelementptr inbounds nuw [4 x i8], ptr %i.nk, i64 %44
-  %91 = load i32, ptr %90, align 4, !tbaa !5
-  %92 = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %91) #6, !srcloc !73
-  %93 = getelementptr inbounds nuw i8, ptr %74, i64 16
-  store i32 %92, ptr %93, align 4, !tbaa !5
-  %94 = getelementptr inbounds nuw [4 x i8], ptr %i.nm, i64 %44
-  %95 = load i32, ptr %94, align 4, !tbaa !5
-  %96 = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %95) #6, !srcloc !74
-  %97 = getelementptr inbounds nuw i8, ptr %74, i64 20
-  store i32 %96, ptr %97, align 4, !tbaa !5
-  %98 = getelementptr inbounds nuw [4 x i8], ptr %i.no, i64 %44
-  %99 = load i32, ptr %98, align 4, !tbaa !5
-  %100 = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %99) #6, !srcloc !75
-  %101 = getelementptr inbounds nuw i8, ptr %74, i64 24
-  store i32 %100, ptr %101, align 4, !tbaa !5
-  %102 = getelementptr inbounds nuw [4 x i8], ptr %i.nq, i64 %44
-  %103 = load i32, ptr %102, align 4, !tbaa !5
-  %104 = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %103) #6, !srcloc !76
-  %105 = getelementptr inbounds nuw i8, ptr %74, i64 28
-  store i32 %104, ptr %105, align 4, !tbaa !5
-  %106 = getelementptr i8, ptr %74, i64 32
-  %107 = trunc i32 %46 to i8
-  %108 = and i8 %107, 15
-  %109 = xor i8 %108, 15
-  %110 = and i32 %46, 15
-  %narrow.i = sub nuw nsw i32 16, %110
-  %111 = zext nneg i32 %narrow.i to i64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %106, i8 %109, i64 %111, i1 false), !tbaa !10
-  %112 = and i32 %46, -16                         ; 3 uses
-  %reass.sub.peel.i = add i32 %112, 48
-  %113 = sub i32 %reass.sub.peel.i, %.1357.i
-  %114 = lshr i32 %113, 4
-  %115 = getelementptr inbounds nuw i8, ptr %65, i64 16
-  store i32 %114, ptr %115, align 8, !tbaa !54
-  %116 = add i32 %112, 64                         ; 2 uses
-  %117 = load i8, ptr %i.pl, align 4, !tbaa !10
-  store i8 %117, ptr %scevgep441.i, align 1, !tbaa !10
-  %118 = load i8, ptr %i.pm, align 1, !tbaa !10
-  %119 = getelementptr inbounds nuw i8, ptr %scevgep441.i, i64 1
-  store i8 %118, ptr %119, align 1, !tbaa !10
-  %120 = load i8, ptr %i.pn, align 2, !tbaa !10
-  %121 = getelementptr inbounds nuw i8, ptr %scevgep441.i, i64 2
-  store i8 %120, ptr %121, align 1, !tbaa !10
-  %122 = lshr i32 %116, 8
-  %123 = trunc i32 %122 to i8
-  %124 = getelementptr inbounds nuw i8, ptr %scevgep441.i, i64 3
-  store i8 %123, ptr %124, align 1, !tbaa !10
-  %125 = trunc i32 %116 to i8
-  %126 = getelementptr inbounds nuw i8, ptr %scevgep441.i, i64 4
-  store i8 %125, ptr %126, align 1, !tbaa !10
-  %127 = add i32 %112, 69
-  %128 = add i32 %127, %i.sd
-  br label %._crit_edge401.i
-
-._crit_edge401.i:                                 ; preds = %._crit_edge401.loopexit.peel.begin.i, %._crit_edge389.thread.i
-  %.0358.lcssa.i = phi i32 [ 0, %._crit_edge389.thread.i ], [ %128, %._crit_edge401.loopexit.peel.begin.i ]
+._crit_edge401.i:                                 ; preds = %bb.ba, %._crit_edge389.thread.i
+  %.0358.lcssa.i = phi i32 [ 0, %._crit_edge389.thread.i ], [ %i.sd, %bb.ba ]
   call void @aesni_multi_cbc_encrypt(ptr noundef nonnull %6, ptr noundef %i.c, i32 noundef range(i32 0, 1073741824) %i.gt) #5
   call void @OPENSSL_cleanse(ptr noundef nonnull %7, i64 noundef 1024) #5
   call void @OPENSSL_cleanse(ptr noundef nonnull %i.hc, i64 noundef 256) #5
@@ -1485,31 +1312,30 @@ attributes #6 = { nounwind memory(none) }
 !48 = distinct !{!48, !25}
 !49 = !{i64 2149824485}
 !50 = !{!43, !6, i64 8}
-!51 = distinct !{!51, !25, !52}
-!52 = !{!"llvm.loop.peeled.count", i32 1}
-!53 = !{!37, !37, i64 0}
-!54 = !{!45, !6, i64 16}
+!51 = distinct !{!51, !25}
+!52 = !{!37, !37, i64 0}
+!53 = !{!45, !6, i64 16}
+!54 = distinct !{!54, !25}
 !55 = distinct !{!55, !25}
 !56 = distinct !{!56, !25}
 !57 = distinct !{!57, !25}
-!58 = distinct !{!58, !25, !52}
-!59 = !{i64 2149825009}
-!60 = !{i64 2149825164}
-!61 = !{i64 2149825319}
-!62 = !{i64 2149825474}
-!63 = !{i64 2149825629}
-!64 = !{i64 2149825784}
-!65 = !{i64 2149825939}
-!66 = !{i64 2149826094}
-!67 = !{i64 2149826249}
-!68 = distinct !{!68, !25}
-!69 = !{i64 2149826450}
-!70 = !{i64 2149826647}
-!71 = !{i64 2149826844}
-!72 = !{i64 2149827042}
-!73 = !{i64 2149827240}
-!74 = !{i64 2149827438}
-!75 = !{i64 2149827636}
-!76 = !{i64 2149827834}
-!77 = distinct !{!77, !25, !52}
+!58 = !{i64 2149825009}
+!59 = !{i64 2149825164}
+!60 = !{i64 2149825319}
+!61 = !{i64 2149825474}
+!62 = !{i64 2149825629}
+!63 = !{i64 2149825784}
+!64 = !{i64 2149825939}
+!65 = !{i64 2149826094}
+!66 = !{i64 2149826249}
+!67 = distinct !{!67, !25}
+!68 = !{i64 2149826450}
+!69 = !{i64 2149826647}
+!70 = !{i64 2149826844}
+!71 = !{i64 2149827042}
+!72 = !{i64 2149827240}
+!73 = !{i64 2149827438}
+!74 = !{i64 2149827636}
+!75 = !{i64 2149827834}
+!76 = distinct !{!76, !25}
 end_hunk_1

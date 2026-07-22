@@ -204,8 +204,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 bb.di:                                            ; preds = %._crit_edge1526.i, %.lr.ph1528.i
   %indvars.iv1737.i = phi i64 [ 0, %.lr.ph1528.i ], [ %indvars.iv.next1738.i, %._crit_edge1526.i ] ; 3 uses
   %i.aja = getelementptr inbounds nuw i8, ptr %i.aa, i64 %indvars.iv1737.i
-  %i.ajb = load i8, ptr %i.aja, align 1, !tbaa !34 ; 7 uses
-  %i.ajc = zext i8 %i.ajb to i64                  ; 27 uses
+  %i.ajb = load i8, ptr %i.aja, align 1, !tbaa !34 ; 6 uses
+  %i.ajc = zext i8 %i.ajb to i64                  ; 25 uses
   %i.ajd = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ajc
   %i.aje = load i8, ptr %i.ajd, align 1, !tbaa !34 ; 2 uses
   %.not13481522.i = icmp eq i8 %i.ajb, 0
@@ -221,17 +221,9 @@ vector.scevcheck485:                              ; preds = %iter.check501
   %i.ajh = add nsw i32 %i.ajg, -1
   %i.aji = zext i8 %i.ajf to i32
   %i.ajj = icmp ult i32 %i.ajh, %i.aji
-  br i1 %i.ajj, label %.lr.ph1525.i.preheader, label %vector.memcheck
+  br i1 %i.ajj, label %.lr.ph1525.i.preheader, label %vector.main.loop.iter.check488
 
-vector.memcheck:                                  ; preds = %vector.scevcheck485
-  %1 = zext i8 %i.ajb to i64
-  %2 = add nuw nsw i64 %1, 4294967295
-  %3 = and i64 %2, 4294967295
-  %4 = sub nsw i64 %i.ajc, %3
-  %diff.check = icmp ugt i64 %4, -32
-  br i1 %diff.check, label %.lr.ph1525.i.preheader, label %vector.main.loop.iter.check488
-
-vector.main.loop.iter.check488:                   ; preds = %vector.memcheck
+vector.main.loop.iter.check488:                   ; preds = %vector.scevcheck485
   %min.iters.check489 = icmp ult i8 %i.ajb, 32
   br i1 %min.iters.check489, label %vec.epilog.ph505, label %vector.ph490
 
@@ -382,8 +374,8 @@ vec.epilog.middle.block512:                       ; preds = %vec.epilog.vector.b
   %cmp.n513 = icmp eq i64 %n.vec507, %i.ajc
   br i1 %cmp.n513, label %._crit_edge1526.i, label %.lr.ph1525.i.preheader
 
-.lr.ph1525.i.preheader:                           ; preds = %vector.memcheck, %vector.scevcheck485, %iter.check501, %vec.epilog.iter.check503, %vec.epilog.middle.block512
-  %indvars.iv.i.ph = phi i64 [ %i.ajc, %iter.check501 ], [ %i.ajc, %vector.scevcheck485 ], [ %i.ajc, %vector.memcheck ], [ %i.ajk, %vec.epilog.iter.check503 ], [ %i.alv, %vec.epilog.middle.block512 ] ; 6 uses
+.lr.ph1525.i.preheader:                           ; preds = %vector.scevcheck485, %iter.check501, %vec.epilog.iter.check503, %vec.epilog.middle.block512
+  %indvars.iv.i.ph = phi i64 [ %i.ajc, %iter.check501 ], [ %i.ajc, %vector.scevcheck485 ], [ %i.ajk, %vec.epilog.iter.check503 ], [ %i.alv, %vec.epilog.middle.block512 ] ; 6 uses
   %i.ame = trunc nuw i64 %indvars.iv.i.ph to i8
   %xtraiter = and i8 %i.ame, 1
   %lcmp.mod.not = icmp eq i8 %xtraiter, 0
