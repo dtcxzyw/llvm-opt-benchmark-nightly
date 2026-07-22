@@ -203,7 +203,7 @@ define internal void @_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper16setPropertyVal
 bb.a:
   %4 = alloca %struct.HermesABIValue, align 8     ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
-  %i.a = load i32, ptr %3, align 8, !tbaa !253    ; 2 uses
+  %i.a = load i32, ptr %3, align 8, !tbaa !253    ; 3 uses
   switch i32 %i.a, label %bb.d [
     i32 0, label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
     i32 1, label %.fold.split.i
@@ -228,32 +228,33 @@ bb.d:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !52
   %i.h = getelementptr i8, ptr %i.g, i64 16
-  %.val.i = load ptr, ptr %i.h, align 8, !tbaa !52
-  %5 = ptrtoint ptr %.val.i to i64                ; 4 uses
-  switch i32 %i.a, label %.unreachabledefault.i [
+  %.val.i = load ptr, ptr %i.h, align 8, !tbaa !52 ; 4 uses
+  switch i32 %i.a, label %bb.h [
     i32 6, label %bb.e
     i32 7, label %bb.f
     i32 4, label %bb.g
-    i32 5, label %bb.h
   ]
 
 bb.e:                                             ; preds = %bb.d
+  %5 = ptrtoint ptr %.val.i to i64
   %.fca.1.insert.i19.i = insertvalue { i32, i64 } { i32 -2147483641, i64 poison }, i64 %5, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
 bb.f:                                             ; preds = %bb.d
-  %.fca.1.insert.i20.i = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %5, 1
+  %6 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i20.i = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %6, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
 bb.g:                                             ; preds = %bb.d
-  %.fca.1.insert.i21.i = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %5, 1
+  %7 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i21.i = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %7, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
-.unreachabledefault.i:                            ; preds = %bb.d
-  unreachable
-
 bb.h:                                             ; preds = %bb.d
-  %.fca.1.insert.i22.i = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %5, 1
+  %8 = icmp eq i32 %i.a, 5
+  tail call void @llvm.assume(i1 %8)
+  %9 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i22.i = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %9, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
 .fold.split.i:                                    ; preds = %bb.a
@@ -307,7 +308,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 %i.b, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %i.d = load i32, ptr %3, align 8, !tbaa !253    ; 2 uses
+  %i.d = load i32, ptr %3, align 8, !tbaa !253    ; 3 uses
   switch i32 %i.d, label %bb.d [
     i32 0, label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
     i32 1, label %.fold.split.i
@@ -332,32 +333,33 @@ bb.d:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !52
   %i.k = getelementptr i8, ptr %i.j, i64 16
-  %.val.i = load ptr, ptr %i.k, align 8, !tbaa !52
-  %6 = ptrtoint ptr %.val.i to i64                ; 4 uses
-  switch i32 %i.d, label %.unreachabledefault.i [
+  %.val.i = load ptr, ptr %i.k, align 8, !tbaa !52 ; 4 uses
+  switch i32 %i.d, label %bb.h [
     i32 6, label %bb.e
     i32 7, label %bb.f
     i32 4, label %bb.g
-    i32 5, label %bb.h
   ]
 
 bb.e:                                             ; preds = %bb.d
+  %6 = ptrtoint ptr %.val.i to i64
   %.fca.1.insert.i19.i = insertvalue { i32, i64 } { i32 -2147483641, i64 poison }, i64 %6, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
 bb.f:                                             ; preds = %bb.d
-  %.fca.1.insert.i20.i = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %6, 1
+  %7 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i20.i = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %7, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
 bb.g:                                             ; preds = %bb.d
-  %.fca.1.insert.i21.i = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %6, 1
+  %8 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i21.i = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %8, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
-.unreachabledefault.i:                            ; preds = %bb.d
-  unreachable
-
 bb.h:                                             ; preds = %bb.d
-  %.fca.1.insert.i22.i = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %6, 1
+  %9 = icmp eq i32 %i.d, 5
+  tail call void @llvm.assume(i1 %9)
+  %10 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i22.i = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %10, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
 .fold.split.i:                                    ; preds = %bb.a
@@ -760,7 +762,7 @@ bb.g:                                             ; preds = %bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %6, i64 8
   store double %i.x, ptr %i.y, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
-  %i.z = load i32, ptr %3, align 8, !tbaa !253    ; 2 uses
+  %i.z = load i32, ptr %3, align 8, !tbaa !253    ; 3 uses
   switch i32 %i.z, label %bb.j [
     i32 0, label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
     i32 1, label %.fold.split.i
@@ -785,32 +787,33 @@ bb.j:                                             ; preds = %bb.g
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !52
   %i.ag = getelementptr i8, ptr %i.af, i64 16
-  %.val.i = load ptr, ptr %i.ag, align 8, !tbaa !52
-  %8 = ptrtoint ptr %.val.i to i64                ; 4 uses
-  switch i32 %i.z, label %.unreachabledefault.i [
+  %.val.i = load ptr, ptr %i.ag, align 8, !tbaa !52 ; 4 uses
+  switch i32 %i.z, label %bb.n [
     i32 6, label %bb.k
     i32 7, label %bb.l
     i32 4, label %bb.m
-    i32 5, label %bb.n
   ]
 
 bb.k:                                             ; preds = %bb.j
+  %8 = ptrtoint ptr %.val.i to i64
   %.fca.1.insert.i19.i = insertvalue { i32, i64 } { i32 -2147483641, i64 poison }, i64 %8, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
 bb.l:                                             ; preds = %bb.j
-  %.fca.1.insert.i20.i = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %8, 1
+  %9 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i20.i = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %9, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
 bb.m:                                             ; preds = %bb.j
-  %.fca.1.insert.i21.i = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %8, 1
+  %10 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i21.i = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %10, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
-.unreachabledefault.i:                            ; preds = %bb.j
-  unreachable
-
 bb.n:                                             ; preds = %bb.j
-  %.fca.1.insert.i22.i = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %8, 1
+  %11 = icmp eq i32 %i.z, 5
+  tail call void @llvm.assume(i1 %11)
+  %12 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i22.i = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %12, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
 .fold.split.i:                                    ; preds = %bb.g
@@ -1065,7 +1068,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.12.0.lcssa = phi i64 [ 0, %bb.b ], [ %i.e, %._crit_edge.loopexit ]
   %.sroa.041.0.lcssa = phi ptr [ null, %bb.b ], [ %.sroa.041.3, %._crit_edge.loopexit ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
-  %i.f = load i32, ptr %3, align 8, !tbaa !253    ; 2 uses
+  %i.f = load i32, ptr %3, align 8, !tbaa !253    ; 3 uses
   switch i32 %i.f, label %bb.e [
     i32 0, label %bb.v
     i32 1, label %.fold.split.i
@@ -1090,32 +1093,33 @@ bb.e:                                             ; preds = %._crit_edge
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !52
   %i.m = getelementptr i8, ptr %i.l, i64 16
-  %.val.i = load ptr, ptr %i.m, align 8, !tbaa !52
-  %8 = ptrtoint ptr %.val.i to i64                ; 4 uses
-  switch i32 %i.f, label %.unreachabledefault.i [
+  %.val.i = load ptr, ptr %i.m, align 8, !tbaa !52 ; 4 uses
+  switch i32 %i.f, label %bb.i [
     i32 6, label %bb.f
     i32 7, label %bb.g
     i32 4, label %bb.h
-    i32 5, label %bb.i
   ]
 
 bb.f:                                             ; preds = %bb.e
+  %8 = ptrtoint ptr %.val.i to i64
   %.fca.1.insert.i19.i = insertvalue { i32, i64 } { i32 -2147483641, i64 poison }, i64 %8, 1
   br label %bb.v
 
 bb.g:                                             ; preds = %bb.e
-  %.fca.1.insert.i20.i = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %8, 1
+  %9 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i20.i = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %9, 1
   br label %bb.v
 
 bb.h:                                             ; preds = %bb.e
-  %.fca.1.insert.i21.i = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %8, 1
+  %10 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i21.i = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %10, 1
   br label %bb.v
 
-.unreachabledefault.i:                            ; preds = %bb.e
-  unreachable
-
 bb.i:                                             ; preds = %bb.e
-  %.fca.1.insert.i22.i = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %8, 1
+  %11 = icmp eq i32 %i.f, 5
+  tail call void @llvm.assume(i1 %11)
+  %12 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i22.i = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %12, 1
   br label %bb.v
 
 .fold.split.i:                                    ; preds = %._crit_edge
@@ -1127,7 +1131,7 @@ bb.i:                                             ; preds = %bb.e
   %.sroa.12.073 = phi ptr [ %.sroa.12.2, %_ZNSt6vectorI14HermesABIValueSaIS0_EE9push_backEOS0_.exit ], [ %i.c, %.lr.ph.preheader ] ; 7 uses
   %.sroa.19.072 = phi ptr [ %.sroa.19.3, %_ZNSt6vectorI14HermesABIValueSaIS0_EE9push_backEOS0_.exit ], [ %i.d, %.lr.ph.preheader ] ; 2 uses
   %i.n = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %.01075 ; 4 uses
-  %i.o = load i32, ptr %i.n, align 8, !tbaa !253  ; 2 uses
+  %i.o = load i32, ptr %i.n, align 8, !tbaa !253  ; 3 uses
   switch i32 %i.o, label %bb.l [
     i32 0, label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit25
     i32 1, label %.fold.split.i18
@@ -1152,32 +1156,33 @@ bb.l:                                             ; preds = %.lr.ph
   %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !52
   %i.v = getelementptr i8, ptr %i.u, i64 16
-  %.val.i19 = load ptr, ptr %i.v, align 8, !tbaa !52
-  %9 = ptrtoint ptr %.val.i19 to i64              ; 4 uses
-  switch i32 %i.o, label %.unreachabledefault.i24 [
+  %.val.i19 = load ptr, ptr %i.v, align 8, !tbaa !52 ; 4 uses
+  switch i32 %i.o, label %bb.p [
     i32 6, label %bb.m
     i32 7, label %bb.n
     i32 4, label %bb.o
-    i32 5, label %bb.p
   ]
 
 bb.m:                                             ; preds = %bb.l
-  %.fca.1.insert.i19.i23 = insertvalue { i32, i64 } { i32 -2147483641, i64 poison }, i64 %9, 1
+  %13 = ptrtoint ptr %.val.i19 to i64
+  %.fca.1.insert.i19.i23 = insertvalue { i32, i64 } { i32 -2147483641, i64 poison }, i64 %13, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit25
 
 bb.n:                                             ; preds = %bb.l
-  %.fca.1.insert.i20.i22 = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %9, 1
+  %14 = ptrtoint ptr %.val.i19 to i64
+  %.fca.1.insert.i20.i22 = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %14, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit25
 
 bb.o:                                             ; preds = %bb.l
-  %.fca.1.insert.i21.i21 = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %9, 1
+  %15 = ptrtoint ptr %.val.i19 to i64
+  %.fca.1.insert.i21.i21 = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %15, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit25
 
-.unreachabledefault.i24:                          ; preds = %bb.l
-  unreachable
-
 bb.p:                                             ; preds = %bb.l
-  %.fca.1.insert.i22.i20 = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %9, 1
+  %16 = icmp eq i32 %i.o, 5
+  tail call void @llvm.assume(i1 %16)
+  %17 = ptrtoint ptr %.val.i19 to i64
+  %.fca.1.insert.i22.i20 = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %17, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit25
 
 .fold.split.i18:                                  ; preds = %.lr.ph
@@ -1376,7 +1381,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.12.060 = phi ptr [ %.sroa.12.2, %_ZNSt6vectorI14HermesABIValueSaIS0_EE9push_backEOS0_.exit ], [ %i.c, %.lr.ph.preheader ] ; 7 uses
   %.sroa.19.059 = phi ptr [ %.sroa.19.3, %_ZNSt6vectorI14HermesABIValueSaIS0_EE9push_backEOS0_.exit ], [ %i.d, %.lr.ph.preheader ] ; 2 uses
   %i.e = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %.0962 ; 4 uses
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !253  ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !253  ; 3 uses
   switch i32 %i.f, label %bb.e [
     i32 0, label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
     i32 1, label %.fold.split.i
@@ -1401,32 +1406,33 @@ bb.e:                                             ; preds = %.lr.ph
   %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !52
   %i.m = getelementptr i8, ptr %i.l, i64 16
-  %.val.i = load ptr, ptr %i.m, align 8, !tbaa !52
-  %6 = ptrtoint ptr %.val.i to i64                ; 4 uses
-  switch i32 %i.f, label %.unreachabledefault.i [
+  %.val.i = load ptr, ptr %i.m, align 8, !tbaa !52 ; 4 uses
+  switch i32 %i.f, label %bb.i [
     i32 6, label %bb.f
     i32 7, label %bb.g
     i32 4, label %bb.h
-    i32 5, label %bb.i
   ]
 
 bb.f:                                             ; preds = %bb.e
+  %6 = ptrtoint ptr %.val.i to i64
   %.fca.1.insert.i19.i = insertvalue { i32, i64 } { i32 -2147483641, i64 poison }, i64 %6, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
 bb.g:                                             ; preds = %bb.e
-  %.fca.1.insert.i20.i = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %6, 1
+  %7 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i20.i = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %7, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
 bb.h:                                             ; preds = %bb.e
-  %.fca.1.insert.i21.i = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %6, 1
+  %8 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i21.i = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %8, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
-.unreachabledefault.i:                            ; preds = %bb.e
-  unreachable
-
 bb.i:                                             ; preds = %bb.e
-  %.fca.1.insert.i22.i = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %6, 1
+  %9 = icmp eq i32 %i.f, 5
+  tail call void @llvm.assume(i1 %9)
+  %10 = ptrtoint ptr %.val.i to i64
+  %.fca.1.insert.i22.i = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %10, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE.exit
 
 .fold.split.i:                                    ; preds = %.lr.ph
@@ -1829,7 +1835,7 @@ _ZN12_GLOBAL__N_123HermesABIRuntimeWrapper20cloneToJSIPropNameIDE19HermesABIProp
 bb.d:                                             ; preds = %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper20cloneToJSIPropNameIDE19HermesABIPropNameID.exit.i.i
   %.val.i.i = load ptr, ptr %i.c, align 8         ; 4 uses
   %.val7.i.i = load ptr, ptr %i.g, align 8        ; 4 uses
-  %i.ab = load i32, ptr %4, align 8, !tbaa !253   ; 2 uses
+  %i.ab = load i32, ptr %4, align 8, !tbaa !253   ; 3 uses
   switch i32 %i.ab, label %bb.g [
     i32 0, label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper15cloneToABIValueERKN8facebook3jsi5ValueE.exit.i.i
     i32 1, label %.fold.split.i.i.i
@@ -1855,11 +1861,10 @@ bb.g:                                             ; preds = %bb.d
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !52
   %i.ai = getelementptr i8, ptr %i.ah, i64 16
   %.val.i.i.i = load ptr, ptr %i.ai, align 8, !tbaa !52 ; 4 uses
-  switch i32 %i.ab, label %.unreachabledefault.i.i.i [
+  switch i32 %i.ab, label %bb.k [
     i32 6, label %bb.h
     i32 7, label %bb.i
     i32 4, label %bb.j
-    i32 5, label %bb.k
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -1895,10 +1900,9 @@ bb.j:                                             ; preds = %bb.g
   %.fca.1.insert.i.i25.i.i.i = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %i.au, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper15cloneToABIValueERKN8facebook3jsi5ValueE.exit.i.i
 
-.unreachabledefault.i.i.i:                        ; preds = %bb.g
-  unreachable
-
 bb.k:                                             ; preds = %bb.g
+  %10 = icmp eq i32 %i.ab, 5
+  call void @llvm.assume(i1 %10)
   %i.av = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 72
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !422
   %i.ax = invoke ptr %i.aw(ptr noundef %.val7.i.i, ptr %.val.i.i.i)
@@ -2301,10 +2305,10 @@ declare noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_st
 
 declare void @__cxa_end_catch() local_unnamed_addr
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: write, target_mem: none) uwtable
 define internal fastcc { i32, i64 } @_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper10toABIValueERKN8facebook3jsi5ValueE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) unnamed_addr #21 align 2 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8, !tbaa !253    ; 2 uses
+  %i.a = load i32, ptr %0, align 8, !tbaa !253    ; 3 uses
   switch i32 %i.a, label %bb.d [
     i32 0, label %bb.i
     i32 1, label %.fold.split
@@ -2329,32 +2333,33 @@ bb.d:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !52
   %i.h = getelementptr i8, ptr %i.g, i64 16
-  %.val = load ptr, ptr %i.h, align 8, !tbaa !52
-  %1 = ptrtoint ptr %.val to i64                  ; 4 uses
-  switch i32 %i.a, label %.unreachabledefault [
+  %.val = load ptr, ptr %i.h, align 8, !tbaa !52  ; 4 uses
+  switch i32 %i.a, label %bb.h [
     i32 6, label %bb.e
     i32 7, label %bb.f
     i32 4, label %bb.g
-    i32 5, label %bb.h
   ]
 
 bb.e:                                             ; preds = %bb.d
+  %1 = ptrtoint ptr %.val to i64
   %.fca.1.insert.i19 = insertvalue { i32, i64 } { i32 -2147483641, i64 poison }, i64 %1, 1
   br label %bb.i
 
 bb.f:                                             ; preds = %bb.d
-  %.fca.1.insert.i20 = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %1, 1
+  %2 = ptrtoint ptr %.val to i64
+  %.fca.1.insert.i20 = insertvalue { i32, i64 } { i32 -2147483639, i64 poison }, i64 %2, 1
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.d
-  %.fca.1.insert.i21 = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %1, 1
+  %3 = ptrtoint ptr %.val to i64
+  %.fca.1.insert.i21 = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %3, 1
   br label %bb.i
 
-.unreachabledefault:                              ; preds = %bb.d
-  unreachable
-
 bb.h:                                             ; preds = %bb.d
-  %.fca.1.insert.i22 = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %1, 1
+  %4 = icmp eq i32 %i.a, 5
+  tail call void @llvm.assume(i1 %4)
+  %5 = ptrtoint ptr %.val to i64
+  %.fca.1.insert.i22 = insertvalue { i32, i64 } { i32 -2147483642, i64 poison }, i64 %5, 1
   br label %bb.i
 
 .fold.split:                                      ; preds = %bb.a
@@ -2757,7 +2762,7 @@ bb.o:                                             ; preds = %bb.n
   %.val.i.i = load ptr, ptr %i.z, align 8         ; 4 uses
   %i.aa = getelementptr i8, ptr %i.d, i64 24
   %.val17.i.i = load ptr, ptr %i.aa, align 8      ; 4 uses
-  %i.ab = load i32, ptr %8, align 8, !tbaa !253   ; 2 uses
+  %i.ab = load i32, ptr %8, align 8, !tbaa !253   ; 3 uses
   switch i32 %i.ab, label %bb.r [
     i32 0, label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper15cloneToABIValueERKN8facebook3jsi5ValueE.exit.i.i
     i32 1, label %.fold.split.i.i.i
@@ -2783,11 +2788,10 @@ bb.r:                                             ; preds = %bb.o
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !52
   %i.ai = getelementptr i8, ptr %i.ah, i64 16
   %.val.i.i.i = load ptr, ptr %i.ai, align 8, !tbaa !52 ; 4 uses
-  switch i32 %i.ab, label %.unreachabledefault.i.i.i [
+  switch i32 %i.ab, label %bb.v [
     i32 6, label %bb.s
     i32 7, label %bb.t
     i32 4, label %bb.u
-    i32 5, label %bb.v
   ]
 
 bb.s:                                             ; preds = %bb.r
@@ -2823,10 +2827,9 @@ bb.u:                                             ; preds = %bb.r
   %.fca.1.insert.i.i25.i.i.i = insertvalue { i32, i64 } { i32 -2147483643, i64 poison }, i64 %i.au, 1
   br label %_ZN12_GLOBAL__N_123HermesABIRuntimeWrapper15cloneToABIValueERKN8facebook3jsi5ValueE.exit.i.i
 
-.unreachabledefault.i.i.i:                        ; preds = %bb.r
-  unreachable
-
 bb.v:                                             ; preds = %bb.r
+  %14 = icmp eq i32 %i.ab, 5
+  call void @llvm.assume(i1 %14)
   %i.av = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 72
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !422
   %i.ax = invoke ptr %i.aw(ptr noundef %.val17.i.i, ptr %.val.i.i.i)
@@ -3229,7 +3232,7 @@ attributes #17 = { nocallback nocreateundeforpoison nofree nosync nounwind specu
 attributes #18 = { inlinehint nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #19 = { uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #20 = { nounwind memory(none) }
-attributes #21 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #21 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: write, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #22 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #23 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #24 = { builtin allocsize(0) }
