@@ -204,7 +204,7 @@ bb.a:
   call void @_ZN6duckdb10NodeHandleINS_9Node7LeafEEC2ERNS_3ARTENS_4NodeE(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(433) %0, i64 %.sroa.0.0.copyload)
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1393, !nonnull !36 ; 3 uses
-  %i.c = load i8, ptr %i.b, align 1, !tbaa !177   ; 10 uses
+  %i.c = load i8, ptr %i.b, align 1, !tbaa !177   ; 9 uses
   %.not.not = icmp eq i8 %i.c, 7                  ; 2 uses
   br i1 %.not.not, label %bb.d, label %bb.b
 
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %_ZN6duckdb8BaseLeafILh7ELNS_5NTypeE8EE18InsertByteInternalERS2_h.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.b
-  %wide.trip.count.i = zext i8 %i.c to i64        ; 9 uses
+  %wide.trip.count.i = zext i8 %i.c to i64        ; 7 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.preheader.i
@@ -251,17 +251,9 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.s = add nsw i32 %i.r, -1
   %i.t = zext i8 %i.q to i32
   %i.u = icmp ult i32 %i.s, %i.t
-  br i1 %i.u, label %.lr.ph25.i.preheader, label %vector.memcheck
+  br i1 %i.u, label %.lr.ph25.i.preheader, label %vector.main.loop.iter.check
 
-vector.memcheck:                                  ; preds = %vector.scevcheck
-  %5 = zext i8 %i.c to i64
-  %6 = add nuw nsw i64 %5, 4294967295
-  %7 = and i64 %6, 4294967295
-  %8 = sub nsw i64 %wide.trip.count.i, %7
-  %diff.check = icmp ugt i64 %8, -32
-  br i1 %diff.check, label %.lr.ph25.i.preheader, label %vector.main.loop.iter.check
-
-vector.main.loop.iter.check:                      ; preds = %vector.memcheck
+vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
   %min.iters.check18 = icmp ult i8 %i.l, 31
   br i1 %min.iters.check18, label %vec.epilog.ph, label %vector.ph
 
@@ -323,8 +315,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n25 = icmp eq i64 %i.n, %n.vec21
   br i1 %cmp.n25, label %_ZN6duckdb8BaseLeafILh7ELNS_5NTypeE8EE18InsertByteInternalERS2_h.exit, label %.lr.ph25.i.preheader
 
-.lr.ph25.i.preheader:                             ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv27.i.ph = phi i64 [ %wide.trip.count.i, %iter.check ], [ %wide.trip.count.i, %vector.scevcheck ], [ %wide.trip.count.i, %vector.memcheck ], [ %i.v, %vec.epilog.iter.check ], [ %i.ag, %vec.epilog.middle.block ]
+.lr.ph25.i.preheader:                             ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv27.i.ph = phi i64 [ %wide.trip.count.i, %iter.check ], [ %wide.trip.count.i, %vector.scevcheck ], [ %i.v, %vec.epilog.iter.check ], [ %i.ag, %vec.epilog.middle.block ]
   br label %.lr.ph25.i
 
 .lr.ph25.i:                                       ; preds = %.lr.ph25.i.preheader, %.lr.ph25.i
@@ -678,7 +670,7 @@ bb.a:
   call void @_ZN6duckdb10NodeHandleINS_10Node15LeafEEC2ERNS_3ARTENS_4NodeE(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(433) %0, i64 %.sroa.0.0.copyload)
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1410, !nonnull !36 ; 3 uses
-  %i.c = load i8, ptr %i.b, align 1, !tbaa !186   ; 10 uses
+  %i.c = load i8, ptr %i.b, align 1, !tbaa !186   ; 9 uses
   %.not.not = icmp eq i8 %i.c, 15                 ; 2 uses
   br i1 %.not.not, label %bb.d, label %bb.b
 
@@ -688,7 +680,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %_ZN6duckdb8BaseLeafILh15ELNS_5NTypeE9EE18InsertByteInternalERS2_h.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.b
-  %wide.trip.count.i = zext i8 %i.c to i64        ; 9 uses
+  %wide.trip.count.i = zext i8 %i.c to i64        ; 7 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.preheader.i
@@ -725,17 +717,9 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.s = add nsw i32 %i.r, -1
   %i.t = zext i8 %i.q to i32
   %i.u = icmp ult i32 %i.s, %i.t
-  br i1 %i.u, label %.lr.ph25.i.preheader, label %vector.memcheck
+  br i1 %i.u, label %.lr.ph25.i.preheader, label %vector.main.loop.iter.check
 
-vector.memcheck:                                  ; preds = %vector.scevcheck
-  %6 = zext i8 %i.c to i64
-  %7 = add nuw nsw i64 %6, 4294967295
-  %8 = and i64 %7, 4294967295
-  %9 = sub nsw i64 %wide.trip.count.i, %8
-  %diff.check = icmp ugt i64 %9, -32
-  br i1 %diff.check, label %.lr.ph25.i.preheader, label %vector.main.loop.iter.check
-
-vector.main.loop.iter.check:                      ; preds = %vector.memcheck
+vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
   %min.iters.check18 = icmp ult i8 %i.l, 31
   br i1 %min.iters.check18, label %vec.epilog.ph, label %vector.ph
 
@@ -797,8 +781,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n25 = icmp eq i64 %i.n, %n.vec21
   br i1 %cmp.n25, label %_ZN6duckdb8BaseLeafILh15ELNS_5NTypeE9EE18InsertByteInternalERS2_h.exit, label %.lr.ph25.i.preheader
 
-.lr.ph25.i.preheader:                             ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv27.i.ph = phi i64 [ %wide.trip.count.i, %iter.check ], [ %wide.trip.count.i, %vector.scevcheck ], [ %wide.trip.count.i, %vector.memcheck ], [ %i.v, %vec.epilog.iter.check ], [ %i.ag, %vec.epilog.middle.block ]
+.lr.ph25.i.preheader:                             ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv27.i.ph = phi i64 [ %wide.trip.count.i, %iter.check ], [ %wide.trip.count.i, %vector.scevcheck ], [ %i.v, %vec.epilog.iter.check ], [ %i.ag, %vec.epilog.middle.block ]
   br label %.lr.ph25.i
 
 .lr.ph25.i:                                       ; preds = %.lr.ph25.i.preheader, %.lr.ph25.i
