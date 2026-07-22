@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 1161
   store i8 1, ptr %i.y, align 1, !tbaa !1489
   %i.z = load ptr, ptr %i.s, align 8, !tbaa !1459
-  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 3 uses
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512 ; 2 uses
+  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 4 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 3 uses
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !1521
   %i.ae = icmp eq i64 %i.ab, %i.ad
@@ -215,7 +215,8 @@ bb.e:                                             ; preds = %bb.d
   %i.af = add i64 %.025, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   store ptr %i.x, ptr %4, align 8, !tbaa !11245
-  %i.ag = lshr i64 %i.ab, 11                      ; 3 uses
+  %5 = load i64, ptr %i.aa, align 8, !tbaa !168
+  %i.ag = lshr i64 %5, 11                         ; 3 uses
   store i64 %i.ag, ptr %i.t, align 8, !tbaa !168
   %i.ah = load i64, ptr %i.aa, align 8, !tbaa !168
   %i.ai = and i64 %i.ah, 2047                     ; 3 uses
@@ -363,8 +364,8 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 1161
   store i8 1, ptr %i.y, align 1, !tbaa !1489
   %i.z = load ptr, ptr %i.s, align 8, !tbaa !1459
-  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 3 uses
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512 ; 2 uses
+  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 4 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 3 uses
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !1521
   %i.ae = icmp eq i64 %i.ab, %i.ad
@@ -374,7 +375,8 @@ bb.e:                                             ; preds = %bb.d
   %i.af = add i64 %.025, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   store ptr %i.x, ptr %4, align 8, !tbaa !11252
-  %i.ag = lshr i64 %i.ab, 11                      ; 3 uses
+  %5 = load i64, ptr %i.aa, align 8, !tbaa !168
+  %i.ag = lshr i64 %5, 11                         ; 3 uses
   store i64 %i.ag, ptr %i.t, align 8, !tbaa !168
   %i.ah = load i64, ptr %i.aa, align 8, !tbaa !168
   %i.ai = and i64 %i.ah, 2047                     ; 3 uses
@@ -521,8 +523,8 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 1161
   store i8 1, ptr %i.y, align 1, !tbaa !1489
   %i.z = load ptr, ptr %i.s, align 8, !tbaa !1459
-  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 3 uses
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512 ; 2 uses
+  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 4 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 3 uses
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !1521
   %i.ae = icmp eq i64 %i.ab, %i.ad
@@ -532,7 +534,8 @@ bb.e:                                             ; preds = %bb.d
   %i.af = add i64 %.025, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   store ptr %i.x, ptr %4, align 8, !tbaa !11259
-  %i.ag = lshr i64 %i.ab, 11                      ; 3 uses
+  %5 = load i64, ptr %i.aa, align 8, !tbaa !168
+  %i.ag = lshr i64 %5, 11                         ; 3 uses
   store i64 %i.ag, ptr %i.t, align 8, !tbaa !168
   %i.ah = load i64, ptr %i.aa, align 8, !tbaa !168
   %i.ai = and i64 %i.ah, 2047                     ; 3 uses
@@ -679,8 +682,8 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 1161
   store i8 1, ptr %i.y, align 1, !tbaa !1489
   %i.z = load ptr, ptr %i.s, align 8, !tbaa !1459
-  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 3 uses
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512 ; 2 uses
+  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 4 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 3 uses
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !1521
   %i.ae = icmp eq i64 %i.ab, %i.ad
@@ -690,7 +693,8 @@ bb.e:                                             ; preds = %bb.d
   %i.af = add i64 %.025, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   store ptr %i.x, ptr %4, align 8, !tbaa !11266
-  %i.ag = lshr i64 %i.ab, 11                      ; 3 uses
+  %5 = load i64, ptr %i.aa, align 8, !tbaa !168
+  %i.ag = lshr i64 %5, 11                         ; 3 uses
   store i64 %i.ag, ptr %i.t, align 8, !tbaa !168
   %i.ah = load i64, ptr %i.aa, align 8, !tbaa !168
   %i.ai = and i64 %i.ah, 2047                     ; 3 uses
@@ -837,8 +841,8 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 1161
   store i8 1, ptr %i.y, align 1, !tbaa !1489
   %i.z = load ptr, ptr %i.s, align 8, !tbaa !1459
-  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 3 uses
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512 ; 2 uses
+  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 4 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 3 uses
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !1521
   %i.ae = icmp eq i64 %i.ab, %i.ad
@@ -848,7 +852,8 @@ bb.e:                                             ; preds = %bb.d
   %i.af = add i64 %.025, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   store ptr %i.x, ptr %4, align 8, !tbaa !11273
-  %i.ag = lshr i64 %i.ab, 11                      ; 3 uses
+  %5 = load i64, ptr %i.aa, align 8, !tbaa !168
+  %i.ag = lshr i64 %5, 11                         ; 3 uses
   store i64 %i.ag, ptr %i.t, align 8, !tbaa !168
   %i.ah = load i64, ptr %i.aa, align 8, !tbaa !168
   %i.ai = and i64 %i.ah, 2047                     ; 3 uses
@@ -995,8 +1000,8 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 1161
   store i8 1, ptr %i.y, align 1, !tbaa !1489
   %i.z = load ptr, ptr %i.s, align 8, !tbaa !1459
-  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 3 uses
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512 ; 2 uses
+  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 4 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 3 uses
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !1521
   %i.ae = icmp eq i64 %i.ab, %i.ad
@@ -1006,7 +1011,8 @@ bb.e:                                             ; preds = %bb.d
   %i.af = add i64 %.025, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   store ptr %i.x, ptr %4, align 8, !tbaa !11280
-  %i.ag = lshr i64 %i.ab, 11                      ; 3 uses
+  %5 = load i64, ptr %i.aa, align 8, !tbaa !168
+  %i.ag = lshr i64 %5, 11                         ; 3 uses
   store i64 %i.ag, ptr %i.t, align 8, !tbaa !168
   %i.ah = load i64, ptr %i.aa, align 8, !tbaa !168
   %i.ai = and i64 %i.ah, 2047                     ; 3 uses
@@ -1153,8 +1159,8 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 1161
   store i8 1, ptr %i.y, align 1, !tbaa !1489
   %i.z = load ptr, ptr %i.s, align 8, !tbaa !1459
-  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 3 uses
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512 ; 2 uses
+  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 4 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 3 uses
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !1521
   %i.ae = icmp eq i64 %i.ab, %i.ad
@@ -1164,7 +1170,8 @@ bb.e:                                             ; preds = %bb.d
   %i.af = add i64 %.025, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   store ptr %i.x, ptr %4, align 8, !tbaa !11287
-  %i.ag = lshr i64 %i.ab, 11                      ; 3 uses
+  %5 = load i64, ptr %i.aa, align 8, !tbaa !168
+  %i.ag = lshr i64 %5, 11                         ; 3 uses
   store i64 %i.ag, ptr %i.t, align 8, !tbaa !168
   %i.ah = load i64, ptr %i.aa, align 8, !tbaa !168
   %i.ai = and i64 %i.ah, 2047                     ; 3 uses
@@ -1311,8 +1318,8 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 1161
   store i8 1, ptr %i.y, align 1, !tbaa !1489
   %i.z = load ptr, ptr %i.s, align 8, !tbaa !1459
-  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 3 uses
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512 ; 2 uses
+  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 4 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 3 uses
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !1521
   %i.ae = icmp eq i64 %i.ab, %i.ad
@@ -1322,7 +1329,8 @@ bb.e:                                             ; preds = %bb.d
   %i.af = add i64 %.025, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   store ptr %i.x, ptr %4, align 8, !tbaa !11294
-  %i.ag = lshr i64 %i.ab, 11                      ; 3 uses
+  %5 = load i64, ptr %i.aa, align 8, !tbaa !168
+  %i.ag = lshr i64 %5, 11                         ; 3 uses
   store i64 %i.ag, ptr %i.t, align 8, !tbaa !168
   %i.ah = load i64, ptr %i.aa, align 8, !tbaa !168
   %i.ai = and i64 %i.ah, 2047                     ; 3 uses
@@ -1469,8 +1477,8 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 1161
   store i8 1, ptr %i.y, align 1, !tbaa !1489
   %i.z = load ptr, ptr %i.s, align 8, !tbaa !1459
-  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 3 uses
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512 ; 2 uses
+  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.02224 ; 4 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !1512
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 3 uses
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !1521
   %i.ae = icmp eq i64 %i.ab, %i.ad
@@ -1480,7 +1488,8 @@ bb.e:                                             ; preds = %bb.d
   %i.af = add i64 %.025, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   store ptr %i.x, ptr %4, align 8, !tbaa !11301
-  %i.ag = lshr i64 %i.ab, 11                      ; 3 uses
+  %5 = load i64, ptr %i.aa, align 8, !tbaa !168
+  %i.ag = lshr i64 %5, 11                         ; 3 uses
   store i64 %i.ag, ptr %i.t, align 8, !tbaa !168
   %i.ah = load i64, ptr %i.aa, align 8, !tbaa !168
   %i.ai = and i64 %i.ah, 2047                     ; 3 uses

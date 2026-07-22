@@ -204,9 +204,8 @@ slide_intron.exit:                                ; preds = %bb.hg, %._crit_edge
   br label %.lr.ph259.i
 
 .lr.ph259.i:                                      ; preds = %._crit_edge.i510, %.lr.ph259.preheader.i
-  %11 = phi i32 [ 0, %.lr.ph259.preheader.i ], [ %i.bzl, %._crit_edge.i510 ] ; 2 uses
   %indvars.iv.i502 = phi i64 [ %i.btj, %.lr.ph259.preheader.i ], [ %indvars.iv.next.i511, %._crit_edge.i510 ] ; 4 uses
-  %.0161256.i = phi ptr [ %3, %.lr.ph259.preheader.i ], [ %i.btm, %._crit_edge.i510 ] ; 4 uses
+  %.0161256.i = phi ptr [ %3, %.lr.ph259.preheader.i ], [ %i.btm, %._crit_edge.i510 ] ; 6 uses
   %.0167255.i = phi i32 [ %i.bte, %.lr.ph259.preheader.i ], [ %.2169.i, %._crit_edge.i510 ] ; 3 uses
   %.0170254.i = phi i32 [ %i.btf, %.lr.ph259.preheader.i ], [ %.1171.i, %._crit_edge.i510 ] ; 4 uses
   %.0185253.i = phi i32 [ 0, %.lr.ph259.preheader.i ], [ %i.bzk, %._crit_edge.i510 ] ; 5 uses
@@ -227,7 +226,9 @@ slide_intron.exit:                                ; preds = %bb.hg, %._crit_edge
   br i1 %.not205.i, label %bb.hk, label %bb.hh
 
 bb.hh:                                            ; preds = %.lr.ph259.i
-  %.not208.i = icmp eq i32 %11, 0
+  %11 = getelementptr inbounds nuw i8, ptr %.0161256.i, i64 8
+  %12 = load i32, ptr %11, align 4, !tbaa !50
+  %.not208.i = icmp eq i32 %12, 0
   br i1 %.not208.i, label %bb.hj, label %bb.hi
 
 bb.hi:                                            ; preds = %bb.hh
@@ -274,7 +275,9 @@ bb.hk:                                            ; preds = %.lr.ph259.i
   br i1 %.not206.i, label %.critedge.i504, label %bb.hl
 
 bb.hl:                                            ; preds = %bb.hk
-  %.not207.i = icmp eq i32 %11, 0
+  %13 = getelementptr inbounds nuw i8, ptr %.0161256.i, i64 8
+  %14 = load i32, ptr %13, align 4, !tbaa !50
+  %.not207.i = icmp eq i32 %14, 0
   br i1 %.not207.i, label %.critedge.i504, label %bb.hm
 
 bb.hm:                                            ; preds = %bb.hl
@@ -581,7 +584,7 @@ bb.ib:                                            ; preds = %.lr.ph246.i
   %.1195.lcssa.i = phi i32 [ %.0194251.i, %bb.hz ], [ %.4.i509, %.loopexit.i508 ] ; 3 uses
   %.0174.lcssa.i = phi i32 [ 0, %bb.hz ], [ %.3177.i, %.loopexit.i508 ]
   %.0172.lcssa.i = phi i32 [ 0, %bb.hz ], [ %.1173.i, %.loopexit.i508 ]
-  %i.bzl = load i32, ptr %i.bux, align 4, !tbaa !50 ; 2 uses
+  %i.bzl = load i32, ptr %i.bux, align 4, !tbaa !50
   %i.bzm = load i32, ptr %i.btp, align 4, !tbaa !51
   %i.bzn = add i32 %i.bzi, %i.bzj
   %reass.sub679 = sub i32 %.0172.lcssa.i, %i.bzn

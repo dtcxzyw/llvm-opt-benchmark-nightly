@@ -203,9 +203,9 @@ bb.am:                                            ; preds = %.lr.ph573, %bb.cj
   %i.qd = getelementptr inbounds nuw i8, ptr %i.qc, i64 24
   %i.qe = load ptr, ptr %i.qd, align 8
   %i.qf = load ptr, ptr %i.mh, align 8
-  %i.qg = getelementptr inbounds nuw [4 x i8], ptr %i.qf, i64 %.065572
+  %i.qg = getelementptr inbounds nuw [4 x i8], ptr %i.qf, i64 %.065572 ; 2 uses
   %i.qh = load i32, ptr %i.qg, align 4
-  %i.qi = zext i32 %i.qh to i64                   ; 2 uses
+  %i.qi = zext i32 %i.qh to i64
   %i.qj = getelementptr inbounds nuw [8 x i8], ptr %i.qe, i64 %i.qi
   %i.qk = load ptr, ptr %i.qj, align 8            ; 13 uses
   %i.ql = getelementptr inbounds nuw i8, ptr %i.qk, i64 8
@@ -221,7 +221,9 @@ bb.an:                                            ; preds = %bb.am
 
 bb.ao:                                            ; preds = %bb.an
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
-  invoke void @_ZN6Assimp15ColladaExporter17GetObjectUniqueIdB5cxx11ENS0_12AiObjectTypeEm(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %10, ptr noundef nonnull align 8 dereferenceable(1248) %0, i32 noundef 0, i64 noundef %i.qi)
+  %13 = load i32, ptr %i.qg, align 4
+  %14 = zext i32 %13 to i64
+  invoke void @_ZN6Assimp15ColladaExporter17GetObjectUniqueIdB5cxx11ENS0_12AiObjectTypeEm(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %10, ptr noundef nonnull align 8 dereferenceable(1248) %0, i32 noundef 0, i64 noundef %14)
           to label %bb.ap unwind label %bb.ar
 
 bb.ap:                                            ; preds = %bb.ao

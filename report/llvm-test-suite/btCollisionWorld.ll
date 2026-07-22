@@ -203,8 +203,10 @@ bb.b:                                             ; preds = %bb.a
   %i.k = load float, ptr %i.j, align 8, !tbaa !77
   store float %i.k, ptr %i.g, align 8, !tbaa !80
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
-  %i.l = getelementptr inbounds nuw i8, ptr %8, i64 328
-  store i8 0, ptr %i.l, align 4
+  %i.l = getelementptr inbounds nuw i8, ptr %8, i64 328 ; 2 uses
+  %20 = load i8, ptr %i.l, align 4
+  %21 = and i8 %20, -16
+  store i8 %21, ptr %i.l, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #14
   invoke void @_ZN22btSubsimplexConvexCastC1EPK13btConvexShapeS2_P22btVoronoiSimplexSolver(ptr noundef nonnull align 8 dereferenceable(32) %9, ptr noundef nonnull %6, ptr noundef nonnull %3, ptr noundef nonnull %8)
           to label %bb.c unwind label %bb.i
@@ -607,8 +609,10 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load float, ptr %i.g, align 8, !tbaa !115
   store float %i.h, ptr %i.d, align 8, !tbaa !80
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #14
-  %i.i = getelementptr inbounds nuw i8, ptr %9, i64 328
-  store i8 0, ptr %i.i, align 4
+  %i.i = getelementptr inbounds nuw i8, ptr %9, i64 328 ; 2 uses
+  %26 = load i8, ptr %i.i, align 4
+  %27 = and i8 %26, -16
+  store i8 %27, ptr %i.i, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #14
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV30btGjkEpaPenetrationDepthSolver, i64 16), ptr %10, align 8, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #14

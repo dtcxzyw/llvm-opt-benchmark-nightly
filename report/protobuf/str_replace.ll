@@ -51,8 +51,8 @@ bb.b:                                             ; preds = %.lr.ph54, %.critedg
   %.03653 = phi i32 [ 0, %.lr.ph54 ], [ %.1, %.critedge ] ; 2 uses
   %.03752 = phi i64 [ 0, %.lr.ph54 ], [ %.138, %.critedge ] ; 6 uses
   %i.i = getelementptr inbounds i8, ptr %i.h, i64 -40 ; 2 uses
-  %i.j = getelementptr inbounds i8, ptr %i.h, i64 -8 ; 4 uses
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !10   ; 3 uses
+  %i.j = getelementptr inbounds i8, ptr %i.h, i64 -8 ; 5 uses
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !10   ; 2 uses
   %.not = icmp ult i64 %i.k, %.03752
   br i1 %.not, label %thread-pre-split, label %bb.c
 
@@ -62,7 +62,8 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
-  %i.l = sub i64 %i.k, %.03752
+  %7 = load i64, ptr %i.j, align 8, !tbaa !10
+  %i.l = sub i64 %7, %.03752
   %i.m = sub nuw i64 %0, %.03752
   %.sroa.speculated.i = call i64 @llvm.umin.i64(i64 %i.m, i64 %i.l)
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 %.03752

@@ -204,10 +204,10 @@ _ZSt11__make_heapISt15_Deque_iteratorIdRdPdEN9__gnu_cxx5__ops15_Iter_less_iterEE
 bb.i:                                             ; preds = %.lr.ph, %_ZNSt15_Deque_iteratorIdRdPdEppEv.exit
   %.sroa.18.038 = phi ptr [ %i.bb, %.lr.ph ], [ %.sroa.18.1, %_ZNSt15_Deque_iteratorIdRdPdEppEv.exit ] ; 2 uses
   %.sroa.13.037 = phi ptr [ %i.bk, %.lr.ph ], [ %.sroa.13.1, %_ZNSt15_Deque_iteratorIdRdPdEppEv.exit ] ; 2 uses
-  %.sroa.016.036 = phi ptr [ %i.bc, %.lr.ph ], [ %.sroa.016.1, %_ZNSt15_Deque_iteratorIdRdPdEppEv.exit ] ; 3 uses
-  %i.bn = load ptr, ptr %0, align 8, !tbaa !23    ; 3 uses
-  %i.bo = load double, ptr %.sroa.016.036, align 8, !tbaa !16 ; 2 uses
-  %i.bp = load double, ptr %i.bn, align 8, !tbaa !16 ; 2 uses
+  %.sroa.016.036 = phi ptr [ %i.bc, %.lr.ph ], [ %.sroa.016.1, %_ZNSt15_Deque_iteratorIdRdPdEppEv.exit ] ; 4 uses
+  %i.bn = load ptr, ptr %0, align 8, !tbaa !23    ; 4 uses
+  %i.bo = load double, ptr %.sroa.016.036, align 8, !tbaa !16
+  %i.bp = load double, ptr %i.bn, align 8, !tbaa !16
   %i.bq = fcmp olt double %i.bo, %i.bp
   br i1 %i.bq, label %bb.j, label %bb.k
 
@@ -217,7 +217,9 @@ bb.j:                                             ; preds = %bb.i
   %i.bt = load ptr, ptr %i.i, align 8, !tbaa !30
   %i.bu = load ptr, ptr %i.l, align 8, !tbaa !32  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  store double %i.bp, ptr %.sroa.016.036, align 8, !tbaa !16
+  %5 = load double, ptr %.sroa.016.036, align 8, !tbaa !16
+  %6 = load double, ptr %i.bn, align 8, !tbaa !16
+  store double %6, ptr %.sroa.016.036, align 8, !tbaa !16
   store ptr %i.bn, ptr %3, align 8, !tbaa !23
   %i.bv = load ptr, ptr %i.d, align 8, !tbaa !31
   %i.bw = load <2 x ptr>, ptr %i.b, align 8, !tbaa !40
@@ -241,7 +243,7 @@ bb.j:                                             ; preds = %bb.i
   %i.cl = ashr exact i64 %i.ck, 3
   %i.cm = add nsw i64 %i.ch, %i.cl
   %i.cn = add i64 %i.cm, %i.cd
-  call void @_ZSt13__adjust_heapISt15_Deque_iteratorIdRdPdEldN9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S8_T1_T2_(ptr noundef nonnull dead_on_return %3, i64 noundef 0, i64 noundef %i.cn, double noundef %i.bo)
+  call void @_ZSt13__adjust_heapISt15_Deque_iteratorIdRdPdEldN9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S8_T1_T2_(ptr noundef nonnull dead_on_return %3, i64 noundef 0, i64 noundef %i.cn, double noundef %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.k
 

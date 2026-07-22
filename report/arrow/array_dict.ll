@@ -204,7 +204,7 @@ _ZN5arrow6ResultISt10shared_ptrINS_12ChunkedArrayEEEC2IRKS3_vEEOT_.exit: ; preds
 define internal fastcc void @_ZN5arrow12_GLOBAL__N_116RecursiveUnifier5UnifyESt10shared_ptrINS_8DataTypeEEPSt6vectorIS2_INS_9ArrayDataEESaIS7_EE(ptr dead_on_unwind noalias nonnull writable align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1, ptr nofree noundef nonnull captures(none) %2, ptr nofree noundef nonnull readonly captures(none) %3) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.std::shared_ptr.10", align 8 ; 10 uses
-  %5 = alloca %"class.std::vector.13", align 8    ; 18 uses
+  %5 = alloca %"class.std::vector.13", align 8    ; 16 uses
   %6 = alloca %"class.arrow::Result.88", align 8  ; 9 uses
   %7 = alloca %"class.std::shared_ptr.10", align 16 ; 4 uses
   %8 = alloca %"class.arrow::Result.56", align 8  ; 19 uses
@@ -340,23 +340,27 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 _ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ; preds = %bb.i
+  store i64 0, ptr %5, align 8
   %.not.i.i.i.i126 = icmp eq ptr %i.an, %i.ao
-  br i1 %.not.i.i.i.i126, label %.thread.a, label %.lr.ph.preheader.i.i.i.i.i
-
-.thread.a:                                        ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
-  %18 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.at = getelementptr inbounds nuw i8, ptr %5, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
-  br label %.lr.ph288
+  br i1 %.not.i.i.i.i126, label %bb.k, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
-  %19 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ar) #26
-          to label %bb.k unwind label %bb.m       ; 4 uses
+  %18 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ar) #26
+          to label %.thread.a unwind label %bb.m  ; 4 uses
 
-bb.k:                                             ; preds = %.lr.ph.preheader.i.i.i.i.i
-  store ptr %19, ptr %5, align 8, !tbaa !889
-  %i.au = getelementptr i8, ptr %19, i64 %i.ar    ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %19, i8 0, i64 %i.ar, i1 false)
+.thread.a:                                        ; preds = %.lr.ph.preheader.i.i.i.i.i
+  store ptr %18, ptr %5, align 8, !tbaa !889
+  %i.at = getelementptr i8, ptr %18, i64 %i.ar
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %18, i8 0, i64 %i.ar, i1 false)
+  br label %bb.k
+
+bb.k:                                             ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i, %.thread.a
+  %19 = phi ptr [ %18, %.thread.a ], [ null, %_ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
+  %.sink.i = phi ptr [ %i.at, %.thread.a ], [ null, %_ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ] ; 3 uses
+  %20 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
+  store ptr %.sink.i, ptr %i.au, align 8, !tbaa !890
+  store ptr %.sink.i, ptr %20, align 8, !tbaa !891
   %.pre300.a = load ptr, ptr %i.ad, align 8, !tbaa !912
   %.pre301.a = load ptr, ptr %i.ac, align 8, !tbaa !913
   %.pre306 = ptrtoint ptr %.pre300.a to i64
@@ -365,15 +369,9 @@ bb.k:                                             ; preds = %.lr.ph.preheader.i.
   %.pre311 = lshr exact i64 %.pre309, 4
   %.pre313 = trunc i64 %.pre311 to i32
   %i.av = icmp sgt i32 %.pre313, 0
-  %20 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %21 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
-  store ptr %i.au, ptr %21, align 8, !tbaa !890
-  store ptr %i.au, ptr %20, align 8, !tbaa !891
   br i1 %i.av, label %.lr.ph288, label %.critedge
 
-.lr.ph288:                                        ; preds = %.thread.a, %bb.k
-  %22 = phi ptr [ %i.at, %.thread.a ], [ %21, %bb.k ] ; 2 uses
-  %23 = phi ptr [ %18, %.thread.a ], [ %20, %bb.k ] ; 2 uses
+.lr.ph288:                                        ; preds = %bb.k
   %i.aw = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.ax = getelementptr inbounds nuw i8, ptr %6, i64 8
   br label %bb.n
@@ -712,7 +710,7 @@ _ZN5arrow6ResultIbED2Ev.exit138:                  ; preds = %.loopexit280, %bb.a
 
 bb.at:                                            ; preds = %_ZN5arrow6ResultIbED2Ev.exit138
   %i.fn = load ptr, ptr %5, align 8, !tbaa !889   ; 3 uses
-  %i.fo = load ptr, ptr %23, align 8, !tbaa !891  ; 2 uses
+  %i.fo = load ptr, ptr %20, align 8, !tbaa !891  ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.fn, %i.fo
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPSt10shared_ptrIN5arrow9ArrayDataEES3_EvT_S5_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
@@ -782,7 +780,7 @@ _ZSt8_DestroyIPSt10shared_ptrIN5arrow9ArrayDataEES3_EvT_S5_RSaIT0_E.exit.i: ; pr
   br i1 %.not.i.i1.i, label %_ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EED2Ev.exit, label %bb.ba
 
 bb.ba:                                            ; preds = %_ZSt8_DestroyIPSt10shared_ptrIN5arrow9ArrayDataEES3_EvT_S5_RSaIT0_E.exit.i
-  %i.gi = load ptr, ptr %22, align 8, !tbaa !890
+  %i.gi = load ptr, ptr %i.au, align 8, !tbaa !890
   %i.gj = ptrtoint ptr %i.gi to i64
   %i.gk = ptrtoint ptr %i.gh to i64
   %i.gl = sub i64 %i.gj, %i.gk
@@ -800,12 +798,11 @@ bb.bb:                                            ; preds = %bb.aj, %bb.m
 
 .critedge.loopexit:                               ; preds = %bb.l
   %.pre303.a = load ptr, ptr %5, align 8, !tbaa !889
-  %.pre304 = load ptr, ptr %23, align 8, !tbaa !891
+  %.pre304 = load ptr, ptr %20, align 8, !tbaa !891
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.k
-  %24 = phi ptr [ %21, %bb.k ], [ %22, %.critedge.loopexit ]
-  %i.gm = phi ptr [ %i.au, %bb.k ], [ %.pre304, %.critedge.loopexit ] ; 2 uses
+  %i.gm = phi ptr [ %.sink.i, %bb.k ], [ %.pre304, %.critedge.loopexit ] ; 2 uses
   %i.gn = phi ptr [ %19, %bb.k ], [ %.pre303.a, %.critedge.loopexit ] ; 3 uses
   %.0.lcssa = phi i8 [ 0, %bb.k ], [ %.1383385, %.critedge.loopexit ]
   %.not4.i.i.i140 = icmp eq ptr %i.gn, %i.gm
@@ -877,7 +874,7 @@ _ZSt8_DestroyIPSt10shared_ptrIN5arrow9ArrayDataEES3_EvT_S5_RSaIT0_E.exit.i151: ;
   br i1 %.not.i.i1.i152, label %_ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EED2Ev.exit153, label %bb.bi
 
 bb.bi:                                            ; preds = %_ZSt8_DestroyIPSt10shared_ptrIN5arrow9ArrayDataEES3_EvT_S5_RSaIT0_E.exit.i151
-  %i.hh = load ptr, ptr %24, align 8, !tbaa !890
+  %i.hh = load ptr, ptr %i.au, align 8, !tbaa !890
   %i.hi = ptrtoint ptr %i.hh to i64
   %i.hj = ptrtoint ptr %i.hg to i64
   %i.hk = sub i64 %i.hi, %i.hj

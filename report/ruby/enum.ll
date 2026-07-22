@@ -203,13 +203,16 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   %i.v = phi ptr [ %i.u, %bb.j ], [ @nmin_cmp, %bb.i ]
   %i.w = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 3 uses
   store ptr %i.v, ptr %i.w, align 8, !tbaa !20
-  %i.x = getelementptr inbounds nuw i8, ptr %5, i64 48
+  %i.x = getelementptr inbounds nuw i8, ptr %5, i64 48 ; 2 uses
   %i.y = trunc i32 %3 to i8
-  %i.z = and i8 %i.y, 1
+  %6 = load i8, ptr %i.x, align 8
+  %7 = and i8 %i.y, 1
+  %i.z = and i8 %6, -4
   %i.aa = trunc i32 %2 to i8
   %i.ab = shl i8 %i.aa, 1
   %i.ac = and i8 %i.ab, 2
-  %i.ad = or disjoint i8 %i.ac, %i.z
+  %8 = or disjoint i8 %i.ac, %7
+  %i.ad = or disjoint i8 %8, %i.z
   store i8 %i.ad, ptr %i.x, align 8
   %.not42 = icmp eq i32 %4, 0
   br i1 %.not42, label %bb.n, label %.preheader
@@ -612,7 +615,7 @@ enum_yield_array.exit:                            ; preds = %bb.s, %RARRAY_AREF.
 define internal noundef i64 @zip_i(i64 %0, i64 noundef %1, i32 noundef %2, ptr noundef %3, i64 %4) #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
-  %i.b = alloca [2 x i64], align 16               ; 7 uses
+  %i.b = alloca [2 x i64], align 16               ; 6 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
   %i.d = inttoptr i64 %1 to ptr                   ; 2 uses
   %i.e = getelementptr i8, ptr %i.d, i64 16
@@ -660,17 +663,17 @@ rb_enum_values_pack.exit:                         ; preds = %rb_array_len.exit, 
   tail call void @rb_ary_store(i64 noundef %i.q, i64 noundef 0, i64 noundef %.0.i18) #13
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.v = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.w = inttoptr i64 %i.h to ptr                 ; 6 uses
+  %i.w = inttoptr i64 %i.h to ptr                 ; 7 uses
   %i.x = getelementptr i8, ptr %i.w, i64 16
   %i.y = getelementptr i8, ptr %i.w, i64 16
-  %i.z = getelementptr i8, ptr %i.w, i64 16
-  %i.aa = getelementptr i8, ptr %i.w, i64 32
+  %i.z = getelementptr i8, ptr %i.w, i64 32
+  %i.aa = getelementptr i8, ptr %i.w, i64 16
   %i.ab = getelementptr i8, ptr %i.w, i64 32
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.l, %rb_enum_values_pack.exit
   %.0 = phi i32 [ 0, %rb_enum_values_pack.exit ], [ %i.ba, %bb.l ] ; 2 uses
-  %i.ac = sext i32 %.0 to i64                     ; 6 uses
+  %i.ac = sext i32 %.0 to i64                     ; 5 uses
   %i.ad = load i64, ptr %i.w, align 8, !tbaa !21  ; 2 uses
   %i.ae = and i64 %i.ad, 8192
   %.not.i19 = icmp eq i64 %i.ae, 0
@@ -688,33 +691,33 @@ rb_array_len.exit21.thread:                       ; preds = %bb.f
   br i1 %i.aj, label %RARRAY_AREF.exit.thread, label %bb.m
 
 RARRAY_AREF.exit.a:                               ; preds = %rb_array_len.exit21
-  %i.ak = load ptr, ptr %i.aa, align 8, !tbaa !23
-  %5 = getelementptr [8 x i8], ptr %i.ak, i64 %i.ac
-  %6 = load i64, ptr %5, align 8, !tbaa !11
-  %7 = icmp eq i64 %6, 4
-  br i1 %7, label %bb.g, label %bb.i
+  %i.ak = load ptr, ptr %i.z, align 8, !tbaa !23
+  br label %RARRAY_AREF.exit.thread
 
-RARRAY_AREF.exit.thread:                          ; preds = %rb_array_len.exit21.thread
-  %i.al = getelementptr [8 x i8], ptr %i.y, i64 %i.ac
+RARRAY_AREF.exit.thread:                          ; preds = %rb_array_len.exit21.thread, %RARRAY_AREF.exit.a
+  %.0.i.i = phi ptr [ %i.ak, %RARRAY_AREF.exit.a ], [ %i.y, %rb_array_len.exit21.thread ]
+  %i.al = getelementptr [8 x i8], ptr %.0.i.i, i64 %i.ac
   %i.am = load i64, ptr %i.al, align 8, !tbaa !11
   %i.an = icmp eq i64 %i.am, 4
   br i1 %i.an, label %bb.g, label %bb.h
 
-bb.g:                                             ; preds = %RARRAY_AREF.exit.thread, %RARRAY_AREF.exit.a
+bb.g:                                             ; preds = %RARRAY_AREF.exit.thread
   %i.ao = call i64 @rb_ary_push(i64 noundef %i.q, i64 noundef 4) #13 ; 0 uses
   br label %bb.l
 
 bb.h:                                             ; preds = %RARRAY_AREF.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
-  br label %RARRAY_AREF.exit24
+  %5 = load i64, ptr %i.w, align 8, !tbaa !21
+  %6 = and i64 %5, 8192
+  %.not.i.i22 = icmp eq i64 %6, 0
+  br i1 %.not.i.i22, label %bb.i, label %RARRAY_AREF.exit24
 
-bb.i:                                             ; preds = %RARRAY_AREF.exit.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
+bb.i:                                             ; preds = %bb.h
   %i.ap = load ptr, ptr %i.ab, align 8, !tbaa !23
   br label %RARRAY_AREF.exit24
 
 RARRAY_AREF.exit24:                               ; preds = %bb.h, %bb.i
-  %.0.i.i23 = phi ptr [ %i.z, %bb.h ], [ %i.ap, %bb.i ]
+  %.0.i.i23 = phi ptr [ %i.ap, %bb.i ], [ %i.aa, %bb.h ]
   %i.aq = getelementptr [8 x i8], ptr %.0.i.i23, i64 %i.ac
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !11
   store i64 %i.ar, ptr %i.u, align 8, !tbaa !11

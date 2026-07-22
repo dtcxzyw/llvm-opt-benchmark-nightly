@@ -201,7 +201,7 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_15StringPrimitiveEEENS0_6HandleIT
 
 bb.a:                                             ; preds = %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_15StringPrimitiveEEENS0_6HandleIT_EEPS5_.exit
   %i.af = ptrtoint ptr %i.ae to i64
-  %i.ag = or i64 %i.af, -844424930131968          ; 3 uses
+  %i.ag = or i64 %i.af, -844424930131968          ; 2 uses
   %i.ah = load ptr, ptr %i.b, align 8, !tbaa !9   ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 192 ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !13 ; 4 uses
@@ -217,13 +217,11 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_15StringPrimitiveEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.ao = call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %i.ah, i64 %i.ag) #10 ; 2 uses
-  %.sroa.0.0.copyload.i.i.i34.pre = load i64, ptr %i.ao, align 8, !tbaa !7, !noalias !112
+  %i.ao = call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %i.ah, i64 %i.ag) #10
   br label %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_15StringPrimitiveEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit
 
 _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_15StringPrimitiveEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.copyload.i.i.i34 = phi i64 [ %i.ag, %bb.b ], [ %.sroa.0.0.copyload.i.i.i34.pre, %bb.c ]
-  %.0.i.i.i.i.i.i33 = phi ptr [ %i.aj, %bb.b ], [ %i.ao, %bb.c ] ; 2 uses
+  %.0.i.i.i.i.i.i33 = phi ptr [ %i.aj, %bb.b ], [ %i.ao, %bb.c ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
   call void @llvm.experimental.noalias.scope.decl(metadata !112)
   %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
@@ -233,6 +231,7 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_15StringPrimitiveEEENS0_6HandleIT
   store i32 0, ptr %i.aq, align 8, !tbaa !29, !alias.scope !112
   %i.ar = getelementptr inbounds nuw i8, ptr %6, i64 12
   store i32 32, ptr %i.ar, align 4, !tbaa !28, !alias.scope !112
+  %.sroa.0.0.copyload.i.i.i34 = load i64, ptr %.0.i.i.i.i.i.i33, align 8, !tbaa !7, !noalias !112
   %i.as = and i64 %.sroa.0.0.copyload.i.i.i34, 281474976710655
   %i.at = inttoptr i64 %i.as to ptr               ; 10 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 4

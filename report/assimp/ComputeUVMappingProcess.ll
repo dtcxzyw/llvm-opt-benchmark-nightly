@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %.lr.ph124
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 1048
-  %i.aj = load ptr, ptr %i.ai, align 8            ; 6 uses
+  %i.aj = load ptr, ptr %i.ai, align 8            ; 7 uses
   %i.ak = load i32, ptr %i.aj, align 4
   %.not81 = icmp eq i32 %i.ak, 0
   br i1 %.not81, label %.critedge, label %bb.k
@@ -243,13 +243,14 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n,
   br label %bb.br
 
 bb.r:                                             ; preds = %bb.p, %bb.l
-  %i.aw = load i32, ptr %i.aj, align 4            ; 3 uses
+  %i.aw = load i32, ptr %i.aj, align 4
   %i.ax = icmp eq i32 %i.aw, 5
   br i1 %i.ax, label %.critedge, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
-  store i32 %i.aw, ptr %3, align 4
+  %4 = load i32, ptr %i.aj, align 4               ; 2 uses
+  store i32 %4, ptr %3, align 4
   store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %i.m, align 4
   store float 0.000000e+00, ptr %i.o, align 4
   store i32 0, ptr %i.p, align 4
@@ -315,7 +316,7 @@ bb.y:                                             ; preds = %_ZN9__gnu_cxx5__ops
   %.sroa.03.06.i.i.i = phi ptr [ %i.bo, %.lr.ph.i.i.i ], [ %i.ce, %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.thread.i.i.i ] ; 6 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.03.06.i.i.i, i64 16
   %i.bt = load i32, ptr %i.bs, align 4
-  %i.bu = icmp eq i32 %i.bt, %i.aw
+  %i.bu = icmp eq i32 %i.bt, %4
   br i1 %i.bu, label %bb.z, label %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.thread.i.i.i
 
 bb.z:                                             ; preds = %bb.y

@@ -145,17 +145,17 @@ _ZN3upb9generator23ParseGeneratorParameterB5cxx11ESt17basic_string_viewIcSt11cha
   br i1 %.not30, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN3upb9generator23ParseGeneratorParameterB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE.exit, %bb.l
-  %.sroa.020.031 = phi ptr [ %i.aw, %bb.l ], [ %i.b, %_ZN3upb9generator23ParseGeneratorParameterB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE.exit ] ; 4 uses
+  %.sroa.020.031 = phi ptr [ %i.aw, %bb.l ], [ %i.b, %_ZN3upb9generator23ParseGeneratorParameterB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE.exit ] ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.020.031, i64 8
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !14   ; 2 uses
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !14
   %i.g = icmp eq i64 %i.f, 14
-  %.pre = load ptr, ptr %.sroa.020.031, align 8, !tbaa !19 ; 3 uses
   br i1 %i.g, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread23
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit: ; preds = %.lr.ph
-  %i.h = load i64, ptr %.pre, align 1
+  %7 = load ptr, ptr %.sroa.020.031, align 8, !tbaa !19 ; 2 uses
+  %i.h = load i64, ptr %7, align 1
   %i.i = xor i64 %i.h, 8245933105138658404
-  %i.j = getelementptr i8, ptr %.pre, i64 6
+  %i.j = getelementptr i8, ptr %7, i64 6
   %i.k = load i64, ptr %i.j, align 1
   %i.l = xor i64 %i.k, 7810197660563173999
   %i.m = or i64 %i.i, %i.l
@@ -175,7 +175,10 @@ bb.c:                                             ; preds = %_ZSteqIcSt11char_tr
   br label %bb.m
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread23: ; preds = %.lr.ph, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.020.031, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
+  %9 = load ptr, ptr %.sroa.020.031, align 8, !tbaa !19
+  %10 = load i64, ptr %8, align 8, !tbaa !14
   call void @llvm.experimental.noalias.scope.decl(metadata !20)
   %i.s = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 10 uses
   store ptr %i.s, ptr %6, align 8, !tbaa !23, !alias.scope !20
@@ -183,9 +186,9 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   store i64 0, ptr %i.t, align 8, !tbaa !14, !alias.scope !20
   store i8 0, ptr %i.s, align 8, !tbaa !24, !alias.scope !20
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15, !noalias !20
-  store i64 %i.f, ptr %4, align 16, !noalias !20
+  store i64 %10, ptr %4, align 16, !noalias !20
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store ptr %.pre, ptr %i.u, align 8, !noalias !20
+  store ptr %9, ptr %i.u, align 8, !noalias !20
   invoke void @_ZN4absl12lts_2025051219substitute_internal24SubstituteAndAppendArrayEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS5_EPKSA_m(ptr noundef nonnull align 8 %6, i64 21, ptr nonnull @.str.1, ptr noundef nonnull %4, i64 noundef 1)
           to label %bb.e unwind label %bb.d
 

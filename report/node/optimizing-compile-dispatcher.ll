@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %_ZN2v88internal28Op
   %i.ac = load ptr, ptr %i.ab, align 8            ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
   %.sroa.0.0.copyload.i7 = load ptr, ptr %i.ad, align 8
-  %i.ae = load i64, ptr %.sroa.0.0.copyload.i7, align 8 ; 2 uses
+  %i.ae = load i64, ptr %.sroa.0.0.copyload.i7, align 8
   %i.af = load ptr, ptr %0, align 8               ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 560 ; 2 uses
   %i.ah = load ptr, ptr %i.ag, align 8            ; 2 uses
@@ -217,7 +217,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN2v88internal6HandleINS0_10JSFunctionEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
 
 _ZN2v88internal6HandleINS0_10JSFunctionEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit: ; preds = %bb.e, %bb.f
-  %.0.i.i = phi ptr [ %i.al, %bb.f ], [ %i.ah, %bb.e ] ; 4 uses
+  %.0.i.i = phi ptr [ %i.al, %bb.f ], [ %i.ah, %bb.e ] ; 5 uses
   %i.am = ptrtoint ptr %.0.i.i to i64
   %i.an = add i64 %i.am, 8
   %i.ao = inttoptr i64 %i.an to ptr
@@ -230,7 +230,8 @@ _ZN2v88internal6HandleINS0_10JSFunctionEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
   br i1 %.not48, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %_ZN2v88internal6HandleINS0_10JSFunctionEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
-  store i64 %i.ae, ptr %1, align 8
+  %3 = load i64, ptr %.0.i.i, align 8
+  store i64 %3, ptr %1, align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
   %i.as = load i8, ptr %i.ar, align 8
   %i.at = call noundef zeroext i1 @_ZNK2v88internal10JSFunction20HasAvailableCodeKindENS0_17IsolateForSandboxENS0_8CodeKindE(ptr noundef nonnull align 8 dereferenceable(8) %1, i8 noundef zeroext %i.as) #15

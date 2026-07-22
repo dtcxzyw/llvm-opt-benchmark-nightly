@@ -204,14 +204,14 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
 
 bb.af:                                            ; preds = %._crit_edge474
   %i.gh = load ptr, ptr %4, align 8, !tbaa !7     ; 2 uses
-  %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 48 ; 2 uses
+  %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 48 ; 3 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gh, i64 56 ; 2 uses
   %i.gk = load i64, ptr %i.gj, align 8, !tbaa !20 ; 2 uses
   %.not.i = icmp ult i64 %i.gk, 11
   br i1 %.not.i, label %.thread370, label %_ZNK4llvh9StringRef10startswithES0_.exit
 
 _ZNK4llvh9StringRef10startswithES0_.exit:         ; preds = %bb.af
-  %i.gl = load ptr, ptr %i.gi, align 8, !tbaa !17 ; 3 uses
+  %i.gl = load ptr, ptr %i.gi, align 8, !tbaa !17 ; 2 uses
   %i.gm = load i64, ptr %i.gl, align 1
   %i.gn = xor i64 %i.gm, 7306080422883257953
   %i.go = getelementptr i8, ptr %i.gl, i64 3
@@ -225,7 +225,8 @@ _ZNK4llvh9StringRef10startswithES0_.exit:         ; preds = %bb.af
 
 _ZNK4llvh9StringRef10startswithES0_.exit.thread367: ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
-  %i.gv = getelementptr inbounds nuw i8, ptr %i.gl, i64 11
+  %9 = load ptr, ptr %i.gi, align 8, !tbaa !17
+  %i.gv = getelementptr inbounds nuw i8, ptr %9, i64 11
   %i.gw = add i64 %i.gk, -11                      ; 2 uses
   store ptr %i.gv, ptr %6, align 8
   %i.gx = getelementptr inbounds nuw i8, ptr %6, i64 8

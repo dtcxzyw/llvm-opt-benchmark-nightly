@@ -203,7 +203,7 @@ _ZN5folly13CacheLocality13readFromSysfsEv.exit:   ; preds = %bb.b, %bb.a, %bb.c
 define void @_ZN5folly13CacheLocality19readFromProcCpuinfoEv(ptr dead_on_unwind noalias writable sret(%"struct.folly::CacheLocality") align 8 %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.std::vector.45", align 8    ; 14 uses
-  %2 = alloca %"class.std::basic_ifstream", align 8 ; 12 uses
+  %2 = alloca %"class.std::basic_ifstream", align 8 ; 13 uses
   %i.a = alloca [8192 x i8], align 16             ; 7 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #35
@@ -214,11 +214,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %2, align 8, !tbaa !11
-  %i.c = getelementptr i8, ptr %i.b, i64 -24
-  %i.d = load i64, ptr %i.c, align 8              ; 2 uses
+  %i.c = getelementptr i8, ptr %i.b, i64 -24      ; 2 uses
+  %i.d = load i64, ptr %i.c, align 8
   %i.e = getelementptr inbounds i8, ptr %2, i64 %i.d
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 32
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !13   ; 2 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !13
   %i.h = and i32 %i.g, 5
   %.not = icmp eq i32 %i.h, 0
   br i1 %.not, label %bb.h, label %bb.c
@@ -250,7 +250,11 @@ bb.g:                                             ; preds = %bb.c
 
 bb.h:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #35
-  %i.m = icmp eq i32 %i.g, 0
+  %4 = load i64, ptr %i.c, align 8                ; 2 uses
+  %5 = getelementptr inbounds i8, ptr %2, i64 %4
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %7 = load i32, ptr %6, align 8, !tbaa !13
+  %i.m = icmp eq i32 %7, 0
   br i1 %i.m, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.h
@@ -261,7 +265,7 @@ bb.h:                                             ; preds = %bb.b
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit22
-  %i.r = phi i64 [ %i.d, %.lr.ph ], [ %i.bq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit22 ]
+  %i.r = phi i64 [ %4, %.lr.ph ], [ %i.bq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit22 ]
   %i.s = load ptr, ptr %i.n, align 8, !tbaa !24
   %i.t = load ptr, ptr %1, align 8, !tbaa !27
   %i.u = ptrtoint ptr %i.s to i64

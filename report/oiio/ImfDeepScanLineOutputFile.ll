@@ -204,24 +204,21 @@ bb.cr:                                            ; preds = %bb.cq
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fm, i64 4096 ; 3 uses
   %i.fo = icmp sgt i32 %i.ef, 0
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(4096) %i.fm, i8 0, i64 4096, i1 false)
-  br i1 %i.fo, label %.lr.ph.preheader, label %_ZNSt6vectorIcSaIcEED2Ev.exit99
+  br i1 %i.fo, label %.lr.ph, label %_ZNSt6vectorIcSaIcEED2Ev.exit99
 
-.lr.ph.preheader:                                 ; preds = %bb.cr
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ed, i64 176
-  %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !106
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.dd
-  %8 = phi i32 [ %i.hs, %bb.dd ], [ %.pre, %.lr.ph.preheader ]
-  %.sroa.0100.0127 = phi ptr [ %.sroa.0100.2, %bb.dd ], [ %i.fm, %.lr.ph.preheader ] ; 11 uses
-  %.sroa.24.0126 = phi ptr [ %.sroa.24.2, %bb.dd ], [ %i.fn, %.lr.ph.preheader ] ; 7 uses
-  %.sroa.17.0125 = phi ptr [ %.sroa.17.1, %bb.dd ], [ %i.fn, %.lr.ph.preheader ] ; 6 uses
+.lr.ph:                                           ; preds = %bb.cr, %bb.dd
+  %8 = phi ptr [ %i.hi, %bb.dd ], [ %i.ed, %bb.cr ]
+  %.sroa.0100.0127 = phi ptr [ %.sroa.0100.2, %bb.dd ], [ %i.fm, %bb.cr ] ; 11 uses
+  %.sroa.24.0126 = phi ptr [ %.sroa.24.2, %bb.dd ], [ %i.fn, %bb.cr ] ; 7 uses
+  %.sroa.17.0125 = phi ptr [ %.sroa.17.1, %bb.dd ], [ %i.fn, %bb.cr ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   %i.fp = ptrtoint ptr %.sroa.17.0125 to i64      ; 2 uses
   %i.fq = ptrtoint ptr %.sroa.0100.0127 to i64    ; 2 uses
   %i.fr = sub i64 %i.fp, %i.fq                    ; 9 uses
   store i64 %i.fr, ptr %i.a, align 8, !tbaa !131
-  invoke void @_ZN27OpenImageIO_v3_1_Imf__3_3_521DeepScanLineInputFile12rawPixelDataEiPcRm(ptr noundef nonnull align 8 dereferenceable(32) %1, i32 noundef %8, ptr noundef nonnull %.sroa.0100.0127, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 176
+  %10 = load i32, ptr %9, align 8, !tbaa !106
+  invoke void @_ZN27OpenImageIO_v3_1_Imf__3_3_521DeepScanLineInputFile12rawPixelDataEiPcRm(ptr noundef nonnull align 8 dereferenceable(32) %1, i32 noundef %10, ptr noundef nonnull %.sroa.0100.0127, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
           to label %bb.cs unwind label %.loopexit
 
 bb.cs:                                            ; preds = %.lr.ph
@@ -354,7 +351,7 @@ bb.dc:                                            ; preds = %bb.db
           to label %bb.dd unwind label %bb.de
 
 bb.dd:                                            ; preds = %bb.dc
-  %i.hi = load ptr, ptr %i.b, align 8, !tbaa !92  ; 4 uses
+  %i.hi = load ptr, ptr %i.b, align 8, !tbaa !92  ; 5 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hi, i64 184
   %i.hk = load i32, ptr %i.hj, align 8, !tbaa !112
   %i.hl = icmp eq i32 %i.hk, 0
@@ -364,7 +361,7 @@ bb.dd:                                            ; preds = %bb.dc
   %i.hp = select i1 %i.hl, i32 %i.hn, i32 %i.ho
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hi, i64 176 ; 2 uses
   %i.hr = load i32, ptr %i.hq, align 8, !tbaa !106
-  %i.hs = add nsw i32 %i.hr, %i.hp                ; 2 uses
+  %i.hs = add nsw i32 %i.hr, %i.hp
   store i32 %i.hs, ptr %i.hq, align 8, !tbaa !106
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hi, i64 180 ; 2 uses
   %i.hu = load i32, ptr %i.ht, align 4, !tbaa !111

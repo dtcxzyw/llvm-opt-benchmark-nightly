@@ -204,8 +204,8 @@ bb.vu:                                            ; preds = %.lr.ph2588, %bb.wu
 
 bb.vv:                                            ; preds = %bb.vu
   %i.cbf = getelementptr inbounds nuw [32 x i8], ptr %i.caz, i64 %indvars.iv ; 2 uses
-  %i.cbg = getelementptr inbounds nuw i8, ptr %i.cbf, i64 8
-  %i.cbh = load i64, ptr %i.cbg, align 8, !tbaa !22 ; 5 uses
+  %i.cbg = getelementptr inbounds nuw i8, ptr %i.cbf, i64 8 ; 2 uses
+  %i.cbh = load i64, ptr %i.cbg, align 8, !tbaa !22
   %.not829 = icmp eq i64 %i.cbh, 0
   br i1 %.not829, label %bb.wu, label %bb.vw
 
@@ -213,9 +213,10 @@ bb.vw:                                            ; preds = %bb.vv
   call void @llvm.lifetime.start.p0(ptr nonnull %193) #30
   store ptr %i.bzk, ptr %193, align 8, !tbaa !16
   %i.cbi = load ptr, ptr %i.cbf, align 8, !tbaa !19 ; 2 uses
+  %408 = load i64, ptr %i.cbg, align 8, !tbaa !22 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #30
-  store i64 %i.cbh, ptr %i.p, align 8, !tbaa !18
-  %i.cbj = icmp ugt i64 %i.cbh, 15
+  store i64 %408, ptr %i.p, align 8, !tbaa !18
+  %i.cbj = icmp ugt i64 %408, 15
   br i1 %i.cbj, label %.noexc.i1421, label %._crit_edge.i.i1420
 
 .noexc.i1421:                                     ; preds = %bb.vw
@@ -230,8 +231,10 @@ bb.vw:                                            ; preds = %bb.vv
 
 ._crit_edge.i.i1420:                              ; preds = %.noexc1422, %bb.vw
   %i.cbm = phi ptr [ %i.cbk, %.noexc1422 ], [ %i.bzk, %bb.vw ] ; 2 uses
-  %cond = icmp eq i64 %i.cbh, 1
-  br i1 %cond, label %bb.vx, label %bb.vy
+  switch i64 %408, label %bb.vy [
+    i64 1, label %bb.vx
+    i64 0, label %bb.vz
+  ]
 
 bb.vx:                                            ; preds = %._crit_edge.i.i1420
   %i.cbn = load i8, ptr %i.cbi, align 1, !tbaa !21
@@ -239,10 +242,10 @@ bb.vx:                                            ; preds = %._crit_edge.i.i1420
   br label %bb.vz
 
 bb.vy:                                            ; preds = %._crit_edge.i.i1420
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cbm, ptr align 1 %i.cbi, i64 %i.cbh, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cbm, ptr align 1 %i.cbi, i64 %408, i1 false)
   br label %bb.vz
 
-bb.vz:                                            ; preds = %bb.vy, %bb.vx
+bb.vz:                                            ; preds = %bb.vy, %bb.vx, %._crit_edge.i.i1420
   %i.cbo = load i64, ptr %i.p, align 8, !tbaa !18 ; 2 uses
   store i64 %i.cbo, ptr %i.bzl, align 8, !tbaa !22
   %i.cbp = load ptr, ptr %193, align 8, !tbaa !19

@@ -201,15 +201,18 @@ bb.dx:                                            ; preds = %bb.l
   %i.wf = getelementptr inbounds nuw i8, ptr %i.cb, i64 16 ; 2 uses
   %i.wg = getelementptr inbounds nuw i8, ptr %i.cb, i64 32 ; 3 uses
   store ptr %i.ac, ptr %i.d, align 8, !tbaa !43
-  %i.wh = getelementptr inbounds nuw i8, ptr %i.cb, i64 8 ; 3 uses
-  %i.wi = load i32, ptr %i.wh, align 8, !tbaa !8  ; 2 uses
+  %i.wh = getelementptr inbounds nuw i8, ptr %i.cb, i64 8 ; 4 uses
+  %i.wi = load i32, ptr %i.wh, align 8, !tbaa !8
   %i.wj = icmp eq i32 %i.wi, 3
   br i1 %i.wj, label %bb.eb, label %bb.dy
 
 bb.dy:                                            ; preds = %bb.dx
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
-  %cond = icmp eq i32 %i.wi, 4
-  br i1 %cond, label %bb.dz, label %bb.ea
+  %4 = load i32, ptr %i.wh, align 8, !tbaa !8
+  switch i32 %4, label %bb.ea [
+    i32 3, label %luaV_tonumber.exit.thread
+    i32 4, label %bb.dz
+  ]
 
 bb.dz:                                            ; preds = %bb.dy
   %i.wk = load ptr, ptr %i.cb, align 8, !tbaa !10
@@ -222,24 +225,30 @@ luaV_tonumber.exit.thread.a:                      ; preds = %bb.dz
   %i.wn = load double, ptr %i.c, align 8, !tbaa !11
   store double %i.wn, ptr %i.cb, align 8, !tbaa !10
   store i32 3, ptr %i.wh, align 8, !tbaa !8
+  br label %luaV_tonumber.exit.thread
+
+luaV_tonumber.exit.thread:                        ; preds = %luaV_tonumber.exit.thread.a, %bb.dy
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br label %bb.eb
 
-bb.ea:                                            ; preds = %bb.dy, %bb.dz
+bb.ea:                                            ; preds = %bb.dz, %bb.dy
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   call void (ptr, ptr, ...) @luaG_runerror(ptr noundef nonnull %0, ptr noundef nonnull @.str.7) #8
   br label %bb.ej
 
-bb.eb:                                            ; preds = %luaV_tonumber.exit.thread.a, %bb.dx
-  %i.wo = getelementptr inbounds nuw i8, ptr %i.cb, i64 24 ; 2 uses
-  %i.wp = load i32, ptr %i.wo, align 8, !tbaa !8  ; 2 uses
+bb.eb:                                            ; preds = %luaV_tonumber.exit.thread, %bb.dx
+  %i.wo = getelementptr inbounds nuw i8, ptr %i.cb, i64 24 ; 3 uses
+  %i.wp = load i32, ptr %i.wo, align 8, !tbaa !8
   %i.wq = icmp eq i32 %i.wp, 3
   br i1 %i.wq, label %bb.ef, label %bb.ec
 
 bb.ec:                                            ; preds = %bb.eb
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  %cond955 = icmp eq i32 %i.wp, 4
-  br i1 %cond955, label %bb.ed, label %bb.ee
+  %5 = load i32, ptr %i.wo, align 8, !tbaa !8
+  switch i32 %5, label %bb.ee [
+    i32 3, label %luaV_tonumber.exit815.thread
+    i32 4, label %bb.ed
+  ]
 
 bb.ed:                                            ; preds = %bb.ec
   %i.wr = load ptr, ptr %i.wf, align 8, !tbaa !10
@@ -252,24 +261,30 @@ luaV_tonumber.exit815.thread.a:                   ; preds = %bb.ed
   %i.wu = load double, ptr %i.b, align 8, !tbaa !11
   store double %i.wu, ptr %i.wf, align 8, !tbaa !10
   store i32 3, ptr %i.wo, align 8, !tbaa !8
+  br label %luaV_tonumber.exit815.thread
+
+luaV_tonumber.exit815.thread:                     ; preds = %luaV_tonumber.exit815.thread.a, %bb.ec
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   br label %bb.ef
 
-bb.ee:                                            ; preds = %bb.ec, %bb.ed
+bb.ee:                                            ; preds = %bb.ed, %bb.ec
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   call void (ptr, ptr, ...) @luaG_runerror(ptr noundef nonnull %0, ptr noundef nonnull @.str.8) #8
   br label %bb.ej
 
-bb.ef:                                            ; preds = %luaV_tonumber.exit815.thread.a, %bb.eb
-  %i.wv = getelementptr inbounds nuw i8, ptr %i.cb, i64 40 ; 2 uses
-  %i.ww = load i32, ptr %i.wv, align 8, !tbaa !8  ; 2 uses
+bb.ef:                                            ; preds = %luaV_tonumber.exit815.thread, %bb.eb
+  %i.wv = getelementptr inbounds nuw i8, ptr %i.cb, i64 40 ; 3 uses
+  %i.ww = load i32, ptr %i.wv, align 8, !tbaa !8
   %i.wx = icmp eq i32 %i.ww, 3
   br i1 %i.wx, label %bb.ej, label %bb.eg
 
 bb.eg:                                            ; preds = %bb.ef
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  %cond956 = icmp eq i32 %i.ww, 4
-  br i1 %cond956, label %bb.eh, label %bb.ei
+  %6 = load i32, ptr %i.wv, align 8, !tbaa !8
+  switch i32 %6, label %bb.ei [
+    i32 3, label %luaV_tonumber.exit818.thread
+    i32 4, label %bb.eh
+  ]
 
 bb.eh:                                            ; preds = %bb.eg
   %i.wy = load ptr, ptr %i.wg, align 8, !tbaa !10
@@ -282,15 +297,18 @@ luaV_tonumber.exit818.thread.a:                   ; preds = %bb.eh
   %i.xb = load double, ptr %i.a, align 8, !tbaa !11
   store double %i.xb, ptr %i.wg, align 8, !tbaa !10
   store i32 3, ptr %i.wv, align 8, !tbaa !8
+  br label %luaV_tonumber.exit818.thread
+
+luaV_tonumber.exit818.thread:                     ; preds = %luaV_tonumber.exit818.thread.a, %bb.eg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   br label %bb.ej
 
-bb.ei:                                            ; preds = %bb.eg, %bb.eh
+bb.ei:                                            ; preds = %bb.eh, %bb.eg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   call void (ptr, ptr, ...) @luaG_runerror(ptr noundef nonnull %0, ptr noundef nonnull @.str.9) #8
   unreachable
 
-bb.ej:                                            ; preds = %luaV_tonumber.exit818.thread.a, %bb.ee, %bb.ef, %bb.ea
+bb.ej:                                            ; preds = %luaV_tonumber.exit818.thread, %bb.ee, %bb.ef, %bb.ea
   %i.xc = load double, ptr %i.cb, align 8, !tbaa !10
   %i.xd = load double, ptr %i.wg, align 8, !tbaa !10
   %i.xe = fsub double %i.xc, %i.xd

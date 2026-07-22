@@ -203,7 +203,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit90.i: ; preds = %.
   br label %bb.as
 
 ._crit_edge149.i:                                 ; preds = %bb.ag, %bb.af
-  %i.gj = phi i64 [ %i.fi, %bb.ag ], [ %i.ep, %bb.af ]
+  %i.gj = phi i64 [ %i.ep, %bb.af ], [ %i.fi, %bb.ag ]
   %i.gk = getelementptr inbounds nuw i8, ptr %i.fd, i64 24
   %i.gl = load i64, ptr %i.gk, align 8, !tbaa !110, !noalias !47
   %i.gm = icmp slt i64 %i.gl, %i.gj
@@ -606,7 +606,7 @@ bb.h:                                             ; preds = %bb.a
   %i.al = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
   %i.am = load i64, ptr %i.al, align 8, !tbaa !53, !noalias !841
   %i.an = add nsw i64 %i.am, %i.ak
-  %.val.i = load ptr, ptr %1, align 8, !tbaa !39, !noalias !841 ; 6 uses
+  %.val.i = load ptr, ptr %1, align 8, !tbaa !39, !noalias !841 ; 5 uses
   %.val46.i = load i8, ptr %i.i, align 8, !noalias !841
   call void @llvm.experimental.noalias.scope.decl(metadata !854)
   %i.ao = getelementptr inbounds nuw i8, ptr %.val.i, i64 16 ; 2 uses
@@ -633,9 +633,8 @@ bb.i:                                             ; preds = %_ZN5arrow8internal1
           to label %_ZN5arrow6StatusD2Ev.exit9 unwind label %bb.s
 
 _ZN5arrow6StatusD2Ev.exit9.thread:                ; preds = %_ZN5arrow8internal12_GLOBAL__N_117ValidateArrayImpl13IsBufferValidEi.exit.thread.i
-  store ptr null, ptr %0, align 8, !tbaa !149
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18, !noalias !841
-  br label %_ZN5arrow6StatusD2Ev.exit5
+  br label %bb.af
 
 bb.j:                                             ; preds = %_ZN5arrow8internal12_GLOBAL__N_117ValidateArrayImpl13IsBufferValidEi.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18, !noalias !857
@@ -727,11 +726,7 @@ _ZN5arrow6StatusD2Ev.exit9:                       ; preds = %.noexc13, %bb.i
   store ptr %.pr, ptr %0, align 8, !tbaa !149
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18, !noalias !841
   %i.bv = icmp eq ptr %.pr, null
-  br i1 %i.bv, label %_ZN5arrow6StatusD2Ev.exit9._ZN5arrow6StatusD2Ev.exit5_crit_edge, label %_ZN5arrow8internal12_GLOBAL__N_117ValidateArrayImpl16ValidateListLikeINS_8ListTypeEEENS_6StatusERKT_.exit
-
-_ZN5arrow6StatusD2Ev.exit9._ZN5arrow6StatusD2Ev.exit5_crit_edge: ; preds = %_ZN5arrow6StatusD2Ev.exit9
-  %.pre = load ptr, ptr %1, align 8, !tbaa !39, !noalias !841
-  br label %_ZN5arrow6StatusD2Ev.exit5
+  br i1 %i.bv, label %_ZN5arrow6StatusD2Ev.exit5, label %_ZN5arrow8internal12_GLOBAL__N_117ValidateArrayImpl16ValidateListLikeINS_8ListTypeEEENS_6StatusERKT_.exit
 
 bb.s:                                             ; preds = %bb.q, %bb.m, %bb.i
   %i.bw = landingpad { ptr, i32 }
@@ -743,15 +738,15 @@ bb.s:                                             ; preds = %bb.q, %bb.m, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18, !noalias !841
   br label %bb.ag
 
-_ZN5arrow6StatusD2Ev.exit5:                       ; preds = %_ZN5arrow6StatusD2Ev.exit9._ZN5arrow6StatusD2Ev.exit5_crit_edge, %_ZN5arrow6StatusD2Ev.exit9.thread
-  %8 = phi ptr [ %.pre, %_ZN5arrow6StatusD2Ev.exit9._ZN5arrow6StatusD2Ev.exit5_crit_edge ], [ %.val.i, %_ZN5arrow6StatusD2Ev.exit9.thread ] ; 3 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %8, i64 16
+_ZN5arrow6StatusD2Ev.exit5:                       ; preds = %_ZN5arrow6StatusD2Ev.exit9
+  %.pre = load ptr, ptr %1, align 8, !tbaa !39, !noalias !841 ; 3 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %.pre, i64 16
   %i.by = load i64, ptr %i.bx, align 8, !tbaa !53 ; 2 uses
   %i.bz = icmp sgt i64 %i.by, 0
   br i1 %i.bz, label %bb.t, label %bb.af
 
 bb.t:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit5
-  %i.ca = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.ca = getelementptr inbounds nuw i8, ptr %.pre, i64 40
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !77
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 16
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !104 ; 2 uses
@@ -761,7 +756,7 @@ bb.t:                                             ; preds = %_ZN5arrow6StatusD2E
   br i1 %i.cg, label %bb.u, label %bb.af
 
 bb.u:                                             ; preds = %bb.t
-  %i.ch = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %i.ch = getelementptr inbounds nuw i8, ptr %.pre, i64 32
   %i.ci = load i64, ptr %i.ch, align 8, !tbaa !98
   %i.cj = getelementptr inbounds nuw i8, ptr %i.cd, i64 16
   %i.ck = load ptr, ptr %i.cj, align 8
@@ -830,7 +825,7 @@ bb.ae:                                            ; preds = %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18, !noalias !841
   br label %bb.af
 
-bb.af:                                            ; preds = %bb.ae, %bb.t, %_ZN5arrow6StatusD2Ev.exit5
+bb.af:                                            ; preds = %_ZN5arrow6StatusD2Ev.exit9.thread, %bb.ae, %bb.t, %_ZN5arrow6StatusD2Ev.exit5
   store ptr null, ptr %0, align 8, !tbaa !149, !alias.scope !866
   br label %_ZN5arrow8internal12_GLOBAL__N_117ValidateArrayImpl16ValidateListLikeINS_8ListTypeEEENS_6StatusERKT_.exit
 
@@ -1004,7 +999,7 @@ bb.h:                                             ; preds = %bb.a
   %i.al = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
   %i.am = load i64, ptr %i.al, align 8, !tbaa !53, !noalias !875
   %i.an = add nsw i64 %i.am, %i.ak
-  %.val.i = load ptr, ptr %1, align 8, !tbaa !39, !noalias !875 ; 6 uses
+  %.val.i = load ptr, ptr %1, align 8, !tbaa !39, !noalias !875 ; 5 uses
   %.val45.i = load i8, ptr %i.i, align 8, !noalias !875
   call void @llvm.experimental.noalias.scope.decl(metadata !888)
   %i.ao = getelementptr inbounds nuw i8, ptr %.val.i, i64 16 ; 2 uses
@@ -1031,9 +1026,8 @@ bb.i:                                             ; preds = %_ZN5arrow8internal1
           to label %_ZN5arrow6StatusD2Ev.exit9 unwind label %bb.s
 
 _ZN5arrow6StatusD2Ev.exit9.thread:                ; preds = %_ZN5arrow8internal12_GLOBAL__N_117ValidateArrayImpl13IsBufferValidEi.exit.thread.i
-  store ptr null, ptr %0, align 8, !tbaa !149
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18, !noalias !875
-  br label %_ZN5arrow6StatusD2Ev.exit5
+  br label %bb.af
 
 bb.j:                                             ; preds = %_ZN5arrow8internal12_GLOBAL__N_117ValidateArrayImpl13IsBufferValidEi.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18, !noalias !891
@@ -1125,11 +1119,7 @@ _ZN5arrow6StatusD2Ev.exit9:                       ; preds = %.noexc13, %bb.i
   store ptr %.pr, ptr %0, align 8, !tbaa !149
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18, !noalias !875
   %i.bv = icmp eq ptr %.pr, null
-  br i1 %i.bv, label %_ZN5arrow6StatusD2Ev.exit9._ZN5arrow6StatusD2Ev.exit5_crit_edge, label %_ZN5arrow8internal12_GLOBAL__N_117ValidateArrayImpl16ValidateListLikeINS_13LargeListTypeEEENS_6StatusERKT_.exit
-
-_ZN5arrow6StatusD2Ev.exit9._ZN5arrow6StatusD2Ev.exit5_crit_edge: ; preds = %_ZN5arrow6StatusD2Ev.exit9
-  %.pre = load ptr, ptr %1, align 8, !tbaa !39, !noalias !875
-  br label %_ZN5arrow6StatusD2Ev.exit5
+  br i1 %i.bv, label %_ZN5arrow6StatusD2Ev.exit5, label %_ZN5arrow8internal12_GLOBAL__N_117ValidateArrayImpl16ValidateListLikeINS_13LargeListTypeEEENS_6StatusERKT_.exit
 
 bb.s:                                             ; preds = %bb.q, %bb.m, %bb.i
   %i.bw = landingpad { ptr, i32 }
@@ -1141,15 +1131,15 @@ bb.s:                                             ; preds = %bb.q, %bb.m, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18, !noalias !875
   br label %bb.ag
 
-_ZN5arrow6StatusD2Ev.exit5:                       ; preds = %_ZN5arrow6StatusD2Ev.exit9._ZN5arrow6StatusD2Ev.exit5_crit_edge, %_ZN5arrow6StatusD2Ev.exit9.thread
-  %8 = phi ptr [ %.pre, %_ZN5arrow6StatusD2Ev.exit9._ZN5arrow6StatusD2Ev.exit5_crit_edge ], [ %.val.i, %_ZN5arrow6StatusD2Ev.exit9.thread ] ; 3 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %8, i64 16
+_ZN5arrow6StatusD2Ev.exit5:                       ; preds = %_ZN5arrow6StatusD2Ev.exit9
+  %.pre = load ptr, ptr %1, align 8, !tbaa !39, !noalias !875 ; 3 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %.pre, i64 16
   %i.by = load i64, ptr %i.bx, align 8, !tbaa !53 ; 2 uses
   %i.bz = icmp sgt i64 %i.by, 0
   br i1 %i.bz, label %bb.t, label %bb.af
 
 bb.t:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit5
-  %i.ca = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.ca = getelementptr inbounds nuw i8, ptr %.pre, i64 40
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !77
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 16
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !104 ; 2 uses
@@ -1159,7 +1149,7 @@ bb.t:                                             ; preds = %_ZN5arrow6StatusD2E
   br i1 %i.cg, label %bb.u, label %bb.af
 
 bb.u:                                             ; preds = %bb.t
-  %i.ch = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %i.ch = getelementptr inbounds nuw i8, ptr %.pre, i64 32
   %i.ci = load i64, ptr %i.ch, align 8, !tbaa !98
   %i.cj = getelementptr inbounds nuw i8, ptr %i.cd, i64 16
   %i.ck = load ptr, ptr %i.cj, align 8
@@ -1225,7 +1215,7 @@ bb.ae:                                            ; preds = %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18, !noalias !875
   br label %bb.af
 
-bb.af:                                            ; preds = %bb.ae, %bb.t, %_ZN5arrow6StatusD2Ev.exit5
+bb.af:                                            ; preds = %_ZN5arrow6StatusD2Ev.exit9.thread, %bb.ae, %bb.t, %_ZN5arrow6StatusD2Ev.exit5
   store ptr null, ptr %0, align 8, !tbaa !149, !alias.scope !900
   br label %_ZN5arrow8internal12_GLOBAL__N_117ValidateArrayImpl16ValidateListLikeINS_13LargeListTypeEEENS_6StatusERKT_.exit
 
@@ -1628,7 +1618,7 @@ bb.b:                                             ; preds = %bb.a
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 64
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 72
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !205, !noalias !1513
-  %i.aa = load ptr, ptr %i.x, align 8, !tbaa !206, !noalias !1513 ; 5 uses
+  %i.aa = load ptr, ptr %i.x, align 8, !tbaa !206, !noalias !1513 ; 6 uses
   %i.ab = ptrtoint ptr %i.z to i64
   %i.ac = ptrtoint ptr %i.aa to i64
   %i.ad = sub i64 %i.ab, %i.ac                    ; 2 uses
@@ -1702,7 +1692,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g, %bb.f
   %i.av = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 3 uses
-  %i.aw = load ptr, ptr %i.aa, align 8, !tbaa !138 ; 2 uses
+  %i.aw = load ptr, ptr %i.aa, align 8, !tbaa !138
   %.not109 = icmp eq ptr %i.aw, null
   br i1 %.not109, label %bb.j, label %bb.k
 
@@ -1721,8 +1711,9 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #18, !noalias !1513
+  %26 = load ptr, ptr %i.aa, align 8, !tbaa !138
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #18, !noalias !1521
-  store ptr %i.aw, ptr %10, align 8, !tbaa !33, !noalias !1521
+  store ptr %26, ptr %10, align 8, !tbaa !33, !noalias !1521
   %i.ay = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.ba = load i8, ptr %i.az, align 8, !tbaa !36, !range !75, !noalias !1521, !noundef !40
@@ -2023,7 +2014,7 @@ bb.az:                                            ; preds = %bb.a
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 64
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dp, i64 72
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !205, !noalias !1536
-  %i.dt = load ptr, ptr %i.dq, align 8, !tbaa !206, !noalias !1536 ; 5 uses
+  %i.dt = load ptr, ptr %i.dq, align 8, !tbaa !206, !noalias !1536 ; 6 uses
   %i.du = ptrtoint ptr %i.ds to i64
   %i.dv = ptrtoint ptr %i.dt to i64
   %i.dw = sub i64 %i.du, %i.dv                    ; 2 uses
@@ -2093,7 +2084,7 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %bb.be, %bb.bd
   %i.eo = getelementptr inbounds nuw i8, ptr %i.dt, i64 16 ; 3 uses
-  %i.ep = load ptr, ptr %i.dt, align 8, !tbaa !138 ; 2 uses
+  %i.ep = load ptr, ptr %i.dt, align 8, !tbaa !138
   %.not107 = icmp eq ptr %i.ep, null
   br i1 %.not107, label %bb.bh, label %bb.bi
 
@@ -2112,8 +2103,9 @@ bb.bj:                                            ; preds = %bb.bi
 
 bb.bk:                                            ; preds = %bb.bi
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #18, !noalias !1536
+  %27 = load ptr, ptr %i.dt, align 8, !tbaa !138
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18, !noalias !1544
-  store ptr %i.ep, ptr %7, align 8, !tbaa !33, !noalias !1544
+  store ptr %27, ptr %7, align 8, !tbaa !33, !noalias !1544
   %i.er = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.es = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.et = load i8, ptr %i.es, align 8, !tbaa !36, !range !75, !noalias !1544, !noundef !40
@@ -2414,7 +2406,7 @@ bb.cx:                                            ; preds = %bb.a
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hi, i64 64
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hi, i64 72
   %i.hl = load ptr, ptr %i.hk, align 8, !tbaa !205, !noalias !1559
-  %i.hm = load ptr, ptr %i.hj, align 8, !tbaa !206, !noalias !1559 ; 5 uses
+  %i.hm = load ptr, ptr %i.hj, align 8, !tbaa !206, !noalias !1559 ; 6 uses
   %i.hn = ptrtoint ptr %i.hl to i64
   %i.ho = ptrtoint ptr %i.hm to i64
   %i.hp = sub i64 %i.hn, %i.ho                    ; 2 uses
@@ -2484,7 +2476,7 @@ bb.dd:                                            ; preds = %bb.dc
 
 bb.de:                                            ; preds = %bb.dc, %bb.db
   %i.ih = getelementptr inbounds nuw i8, ptr %i.hm, i64 16 ; 3 uses
-  %i.ii = load ptr, ptr %i.hm, align 8, !tbaa !138 ; 2 uses
+  %i.ii = load ptr, ptr %i.hm, align 8, !tbaa !138
   %.not = icmp eq ptr %i.ii, null
   br i1 %.not, label %bb.df, label %bb.dg
 
@@ -2503,8 +2495,9 @@ bb.dh:                                            ; preds = %bb.dg
 
 bb.di:                                            ; preds = %bb.dg
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #18, !noalias !1559
+  %28 = load ptr, ptr %i.hm, align 8, !tbaa !138
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18, !noalias !1567
-  store ptr %i.ii, ptr %4, align 8, !tbaa !33, !noalias !1567
+  store ptr %28, ptr %4, align 8, !tbaa !33, !noalias !1567
   %i.ik = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.il = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.im = load i8, ptr %i.il, align 8, !tbaa !36, !range !75, !noalias !1567, !noundef !40

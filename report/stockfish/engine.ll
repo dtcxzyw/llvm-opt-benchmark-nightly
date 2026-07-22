@@ -204,16 +204,17 @@ bb.d:                                             ; preds = %.lr.ph56, %bb.ah
   %i.ab = phi ptr [ null, %.lr.ph56 ], [ %i.ei, %bb.ah ] ; 4 uses
   %i.ac = phi ptr [ null, %.lr.ph56 ], [ %i.ej, %bb.ah ] ; 7 uses
   %i.ad = phi ptr [ null, %.lr.ph56 ], [ %.promoted61, %bb.ah ] ; 9 uses
-  %.sroa.045.055 = phi ptr [ %i.h, %.lr.ph56 ], [ %i.ek, %bb.ah ] ; 3 uses
-  %i.ae = load i64, ptr %.sroa.045.055, align 8, !tbaa !482 ; 2 uses
+  %.sroa.045.055 = phi ptr [ %i.h, %.lr.ph56 ], [ %i.ek, %bb.ah ] ; 4 uses
+  %i.ae = load i64, ptr %.sroa.045.055, align 8, !tbaa !482
   %i.af = icmp eq i64 %i.ae, 0
   br i1 %i.af, label %bb.ah, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
+  %.sroa.0.0.copyload = load i64, ptr %.sroa.045.055, align 8, !tbaa !25
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.045.055, i64 8
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !246
-  call void @_ZN9Stockfish5splitESt17basic_string_viewIcSt11char_traitsIcEES3_(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.179") align 8 %3, i64 %i.ae, ptr %.sroa.2.0.copyload, i64 1, ptr nonnull @.str.50)
+  call void @_ZN9Stockfish5splitESt17basic_string_viewIcSt11char_traitsIcEES3_(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.179") align 8 %3, i64 %.sroa.0.0.copyload, ptr %.sroa.2.0.copyload, i64 1, ptr nonnull @.str.50)
   %i.ag = load ptr, ptr %i.k, align 8, !tbaa !484
   %i.ah = load ptr, ptr %3, align 8, !tbaa !243   ; 6 uses
   %i.ai = ptrtoint ptr %i.ag to i64

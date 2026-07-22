@@ -204,25 +204,21 @@ _ZN5folly3f146detail22ValueContainerIteratorIPKSt4pairIKPKNSt7__cxx1112basic_str
   %i.ajo = load i64, ptr %i.es, align 8, !tbaa !19762 ; 2 uses
   %i.ajp = lshr i64 %i.ajo, 8
   switch i64 %i.ajp, label %bb.dh [
-    i64 0, label %..noexc298_crit_edge
+    i64 0, label %.noexc298
     i64 1, label %bb.dg
   ]
-
-..noexc298_crit_edge:                             ; preds = %_ZN5folly3f146detail22ValueContainerIteratorIPKSt4pairIKPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEEEppEv.exit
-  %.pre = load ptr, ptr %.sroa.01185.01759, align 8, !tbaa !19858
-  br label %.noexc298
 
 bb.dg:                                            ; preds = %_ZN5folly3f146detail22ValueContainerIteratorIPKSt4pairIKPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEEEppEv.exit
   %i.ajq = load i64, ptr %i.et, align 8, !tbaa !19739
   %i.ajr = and i64 %i.ajq, -16
   %i.ajs = inttoptr i64 %i.ajr to ptr             ; 2 uses
-  %i.ajt = load ptr, ptr %.sroa.01185.01759, align 8, !tbaa !19858 ; 2 uses
+  %i.ajt = load ptr, ptr %.sroa.01185.01759, align 8, !tbaa !19858
   %i.aju = load ptr, ptr %i.ajs, align 16, !tbaa !19858
   %i.ajv = icmp eq ptr %i.ajt, %i.aju
   br i1 %i.ajv, label %_ZN5folly7get_ptrINS_10F14FastMapIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache17MatchToRegexEntryENS_23HeterogeneousAccessHashIS9_vEENS_26HeterogeneousAccessEqualToIS9_vEESaISt4pairIKS9_SB_EEEES9_EEDaRKT_RKT0_.exit, label %.noexc298
 
 bb.dh:                                            ; preds = %_ZN5folly3f146detail22ValueContainerIteratorIPKSt4pairIKPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEEEppEv.exit
-  %i.ajw = load ptr, ptr %.sroa.01185.01759, align 8, !tbaa !19858 ; 4 uses
+  %i.ajw = load ptr, ptr %.sroa.01185.01759, align 8, !tbaa !19858 ; 2 uses
   %i.ajx = ptrtoint ptr %i.ajw to i64             ; 2 uses
   %i.ajy = call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 0, i64 %i.ajx) ; 2 uses
   %i.ajz = lshr i64 %i.ajy, 24
@@ -286,9 +282,9 @@ _ZN5folly7get_ptrINS_10F14FastMapIPKNSt7__cxx1112basic_stringIcSt11char_traitsIc
   %i.alf = getelementptr inbounds nuw i8, ptr %.sroa.018.148.i641, i64 8
   br label %bb.dp
 
-.noexc298:                                        ; preds = %bb.dk, %bb.dl, %..noexc298_crit_edge, %bb.dg
-  %106 = phi ptr [ %.pre, %..noexc298_crit_edge ], [ %i.ajt, %bb.dg ], [ %i.ajw, %bb.dl ], [ %i.ajw, %bb.dk ] ; 2 uses
+.noexc298:                                        ; preds = %bb.dk, %bb.dl, %_ZN5folly3f146detail22ValueContainerIteratorIPKSt4pairIKPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_15RegexMatchCache23StringQueueForwardEntryEEEppEv.exit, %bb.dg
   call void @llvm.lifetime.start.p0(ptr nonnull %89) #41
+  %106 = load ptr, ptr %.sroa.01185.01759, align 8, !tbaa !19858 ; 2 uses
   %i.alg = load ptr, ptr %106, align 8, !tbaa !19733
   %i.alh = getelementptr inbounds nuw i8, ptr %106, i64 8
   %i.ali = load i64, ptr %i.alh, align 8, !tbaa !19738

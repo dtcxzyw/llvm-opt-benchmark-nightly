@@ -203,7 +203,7 @@ ftc_basic_family_compare.exit.thread:             ; preds = %bb.e, %bb.f, %bb.g,
 bb.i:                                             ; preds = %.thread, %.loopexit
   %i.bf = phi ptr [ %.080, %.thread ], [ %i.bd, %.loopexit ] ; 8 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 16 ; 4 uses
-  %i.bh = load i32, ptr %i.bg, align 8, !tbaa !75 ; 3 uses
+  %i.bh = load i32, ptr %i.bg, align 8, !tbaa !75
   %i.bi = add i32 %i.bh, 1
   store i32 %i.bi, ptr %i.bg, align 8, !tbaa !75
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
@@ -296,15 +296,14 @@ FTC_MruNode_Up.exit116:                           ; preds = %bb.n
   store ptr null, ptr %i.b, align 8, !tbaa !46
   %i.cw = call fastcc i32 @FTC_Cache_NewNode(ptr noundef nonnull %0, i64 noundef %i.ad, ptr noundef %5, ptr noundef %i.b)
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !46
-  %.pre140 = load i32, ptr %i.bg, align 8, !tbaa !75
-  %6 = add i32 %.pre140, -1
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %FTC_MruNode_Up.exit116, %._crit_edge
-  %7 = phi i32 [ %6, %._crit_edge ], [ %i.bh, %FTC_MruNode_Up.exit116 ], [ %i.bh, %bb.n ] ; 2 uses
   %i.cx = phi ptr [ %.pre, %._crit_edge ], [ %i.by, %FTC_MruNode_Up.exit116 ], [ %i.by, %bb.n ] ; 3 uses
   %.1 = phi i32 [ %i.cw, %._crit_edge ], [ 0, %FTC_MruNode_Up.exit116 ], [ 0, %bb.n ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
+  %6 = load i32, ptr %i.bg, align 8, !tbaa !75
+  %7 = add i32 %6, -1                             ; 2 uses
   store i32 %7, ptr %i.bg, align 8, !tbaa !75
   %i.cy = icmp eq i32 %7, 0
   br i1 %i.cy, label %bb.p, label %bb.s
@@ -707,7 +706,7 @@ ftc_basic_family_compare.exit.thread:             ; preds = %bb.g, %bb.h, %bb.i,
 bb.o:                                             ; preds = %.thread, %.loopexit
   %i.bz = phi ptr [ %.081, %.thread ], [ %i.bx, %.loopexit ] ; 8 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 16 ; 4 uses
-  %i.cb = load i32, ptr %i.ca, align 8, !tbaa !75 ; 3 uses
+  %i.cb = load i32, ptr %i.ca, align 8, !tbaa !75
   %i.cc = add i32 %i.cb, 1
   store i32 %i.cc, ptr %i.ca, align 8, !tbaa !75
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
@@ -800,15 +799,14 @@ FTC_MruNode_Up.exit117:                           ; preds = %bb.t
   store ptr null, ptr %i.b, align 8, !tbaa !46
   %i.dq = call fastcc i32 @FTC_Cache_NewNode(ptr noundef nonnull %0, i64 noundef %i.al, ptr noundef %6, ptr noundef %i.b)
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !46
-  %.pre140 = load i32, ptr %i.ca, align 8, !tbaa !75
-  %7 = add i32 %.pre140, -1
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %FTC_MruNode_Up.exit117, %._crit_edge
-  %8 = phi i32 [ %7, %._crit_edge ], [ %i.cb, %FTC_MruNode_Up.exit117 ], [ %i.cb, %bb.t ] ; 2 uses
   %i.dr = phi ptr [ %.pre, %._crit_edge ], [ %i.cs, %FTC_MruNode_Up.exit117 ], [ %i.cs, %bb.t ] ; 3 uses
   %.1 = phi i32 [ %i.dq, %._crit_edge ], [ 0, %FTC_MruNode_Up.exit117 ], [ 0, %bb.t ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
+  %7 = load i32, ptr %i.ca, align 8, !tbaa !75
+  %8 = add i32 %7, -1                             ; 2 uses
   store i32 %8, ptr %i.ca, align 8, !tbaa !75
   %i.ds = icmp eq i32 %8, 0
   br i1 %i.ds, label %bb.v, label %bb.y

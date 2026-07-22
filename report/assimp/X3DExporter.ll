@@ -201,8 +201,8 @@ bb.bs:                                            ; preds = %.lr.ph, %bb.cn
   %i.td = getelementptr inbounds nuw [1028 x i8], ptr %i.tc, i64 %.048202 ; 5 uses
   %i.te = getelementptr inbounds nuw i8, ptr %i.ta, i64 16
   %i.tf = load ptr, ptr %i.te, align 8
-  %i.tg = getelementptr inbounds nuw [16 x i8], ptr %i.tf, i64 %.048202 ; 6 uses
-  %i.th = load i32, ptr %i.tg, align 8            ; 3 uses
+  %i.tg = getelementptr inbounds nuw [16 x i8], ptr %i.tf, i64 %.048202 ; 7 uses
+  %i.th = load i32, ptr %i.tg, align 8
   switch i32 %i.th, label %bb.bz [
     i32 0, label %bb.bu
     i32 4, label %bb.bv
@@ -254,8 +254,9 @@ bb.by:                                            ; preds = %bb.bs
 bb.bz:                                            ; preds = %bb.bs
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #26
+  %25 = load i32, ptr %i.tg, align 8              ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !169)
-  %i.ty = call i32 @llvm.abs.i32(i32 %i.th, i1 false) ; 5 uses
+  %i.ty = call i32 @llvm.abs.i32(i32 %25, i1 false) ; 5 uses
   %i.tz = icmp ult i32 %i.ty, 10
   br i1 %i.tz, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %.lr.ph.i.i120
 
@@ -293,7 +294,7 @@ bb.cf:                                            ; preds = %bb.cd
 
 _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.cf, %bb.ce, %bb.cc, %bb.ca, %bb.bz
   %.0.i.i = phi i32 [ %i.uf, %bb.ce ], [ %i.ub, %bb.ca ], [ %i.ud, %bb.cc ], [ 1, %bb.bz ], [ %i.uh, %bb.cf ] ; 2 uses
-  %.lobit.i = lshr i32 %i.th, 31                  ; 2 uses
+  %.lobit.i = lshr i32 %25, 31                    ; 2 uses
   %i.uj = add i32 %.0.i.i, %.lobit.i
   %i.uk = zext i32 %i.uj to i64
   store ptr %i.sx, ptr %22, align 8, !alias.scope !169

@@ -201,7 +201,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeInters
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.l
 
-_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i: ; preds = %bb.d, %bb.c
+_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i: ; preds = %bb.c, %bb.d
   %.sroa.03.i.i.sroa.0.0.copyload = load <3 x double>, ptr %.sroa.0.019.i.ptr, align 8
   br label %bb.h
 
@@ -302,7 +302,7 @@ bb.q:                                             ; preds = %bb.a
 
 bb.r:                                             ; preds = %bb.ac, %.lr.ph.i18
   %.sroa.0.019.i19 = phi ptr [ %.sroa.0.016.i16, %.lr.ph.i18 ], [ %.sroa.0.0.i27, %bb.ac ] ; 6 uses
-  %.pn18.i20 = phi ptr [ %0, %.lr.ph.i18 ], [ %.sroa.0.019.i19, %bb.ac ] ; 4 uses
+  %.pn18.i20 = phi ptr [ %0, %.lr.ph.i18 ], [ %.sroa.0.019.i19, %bb.ac ] ; 5 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.pn18.i20, i64 72
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !158 ; 5 uses
   %i.am = load i64, ptr %i.ai, align 8, !tbaa !158 ; 2 uses
@@ -311,11 +311,11 @@ bb.r:                                             ; preds = %bb.ac, %.lr.ph.i18
 
 bb.s:                                             ; preds = %bb.r
   %i.ao = icmp eq i64 %i.al, %i.am
-  %4 = getelementptr inbounds nuw i8, ptr %.pn18.i20, i64 64
-  %5 = load double, ptr %4, align 8, !tbaa !106   ; 3 uses
   br i1 %i.ao, label %bb.t, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i21
 
 bb.t:                                             ; preds = %bb.s
+  %4 = getelementptr inbounds nuw i8, ptr %.pn18.i20, i64 64
+  %5 = load double, ptr %4, align 8, !tbaa !207
   %i.ap = load double, ptr %i.aj, align 8, !tbaa !207
   %i.aq = fcmp olt double %5, %i.ap
   br i1 %i.aq, label %bb.u, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i21
@@ -352,6 +352,8 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeInters
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i21: ; preds = %bb.t, %bb.s
   %.sroa.03.i.i14.sroa.0.0.copyload = load <3 x double>, ptr %.sroa.0.019.i19, align 8
+  %.sroa.4.0..sroa_idx.i.i24 = getelementptr inbounds nuw i8, ptr %.pn18.i20, i64 64
+  %.sroa.4.0.copyload.i.i25 = load double, ptr %.sroa.4.0..sroa_idx.i.i24, align 8, !tbaa !106 ; 2 uses
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.ab, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i21
@@ -369,7 +371,7 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z
   %i.bc = getelementptr inbounds i8, ptr %.sroa.08.0.i.i22, i64 -16
   %i.bd = load double, ptr %i.bc, align 8, !tbaa !207
-  %i.be = fcmp olt double %5, %i.bd
+  %i.be = fcmp olt double %.sroa.4.0.copyload.i.i25, %i.bd
   br i1 %i.be, label %bb.ab, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i24
 
 bb.ab:                                            ; preds = %bb.aa, %bb.y
@@ -379,7 +381,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.y
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i24: ; preds = %bb.aa, %bb.z
   store <3 x double> %.sroa.03.i.i14.sroa.0.0.copyload, ptr %.sroa.08.0.i.i22, align 8
   %.sroa.4.0..sroa_idx4.i.i25 = getelementptr inbounds nuw i8, ptr %.sroa.08.0.i.i22, i64 24
-  store double %5, ptr %.sroa.4.0..sroa_idx4.i.i25, align 8, !tbaa !106
+  store double %.sroa.4.0.copyload.i.i25, ptr %.sroa.4.0..sroa_idx4.i.i25, align 8, !tbaa !106
   %.sroa.5.0..sroa_idx6.i.i26 = getelementptr inbounds nuw i8, ptr %.sroa.08.0.i.i22, i64 32
   store i64 %i.al, ptr %.sroa.5.0..sroa_idx6.i.i26, align 8, !tbaa !118
   br label %bb.ac

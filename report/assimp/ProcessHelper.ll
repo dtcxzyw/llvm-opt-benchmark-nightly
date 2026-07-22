@@ -75,7 +75,7 @@ _ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exitthread-pre-split: ; preds = %b
   br label %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit
 
 _ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit: ; preds = %bb.c, %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exitthread-pre-split
-  %i.q = phi i8 [ %.pr, %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exitthread-pre-split ], [ %i.o, %bb.c ] ; 2 uses
+  %i.q = phi i8 [ %.pr, %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exitthread-pre-split ], [ %i.o, %bb.c ]
   %.0.lcssa.i.i = phi ptr [ %scevgep.i.i, %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exitthread-pre-split ], [ %.0.i.i, %bb.c ] ; 4 uses
   %i.r = icmp eq i8 %i.q, 39
   br i1 %i.r, label %bb.f, label %bb.m
@@ -175,8 +175,8 @@ bb.m:                                             ; preds = %_ZN6Assimp20SkipSpa
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.p, %bb.m
-  %3 = phi i8 [ %i.q, %bb.m ], [ %.pre38, %bb.p ]
-  %.0.i.i.i = phi ptr [ %.0.lcssa.i.i, %bb.m ], [ %i.at, %bb.p ] ; 3 uses
+  %.0.i.i.i = phi ptr [ %.0.lcssa.i.i, %bb.m ], [ %i.at, %bb.p ] ; 4 uses
+  %3 = load i8, ptr %.0.i.i.i, align 1, !noalias !6
   switch i8 %3, label %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit.i [
     i8 32, label %bb.o
     i8 9, label %bb.o
@@ -189,8 +189,7 @@ bb.o:                                             ; preds = %bb.n, %bb.n, %bb.n,
   br i1 %.not.i.i.i, label %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.at = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 1 ; 2 uses
-  %.pre38 = load i8, ptr %i.at, align 1, !noalias !6
+  %i.at = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 1
   br label %bb.n, !llvm.loop !3
 
 _ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit.i: ; preds = %bb.o, %bb.n

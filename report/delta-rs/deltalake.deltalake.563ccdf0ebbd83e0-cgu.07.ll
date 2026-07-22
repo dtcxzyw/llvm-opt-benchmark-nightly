@@ -204,13 +204,15 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvMNtNtCskFSgV2vI2Ct_13opentelemetry5trace6tracerNtB3_11SpanBuilder9from_nameReECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([272 x i8]) align 16 captures(none) dereferenceable(272) initializes((0, 16), (32, 40), (48, 112), (120, 124), (136, 140), (144, 265)) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RINvMNtNtCskFSgV2vI2Ct_13opentelemetry5trace6tracerNtB3_11SpanBuilder9from_nameReECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([272 x i8]) align 16 captures(none) dereferenceable(272) initializes((0, 124), (128, 140), (144, 265)) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [272 x i8], align 16              ; 15 uses
+  %i.a = alloca [272 x i8], align 16              ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i128 0, ptr %i.a, align 16
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   store i64 0, ptr %i.b, align 16
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 264
   store i8 5, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 144 ; 4 uses
@@ -219,8 +221,10 @@ bb.a:
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.415.0..sroa_idx, align 8
   %.sroa.516.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 160
   store i64 0, ptr %.sroa.516.0..sroa_idx, align 16
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 112
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   store i32 1000000000, ptr %i.e, align 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 136
   store i32 1000000000, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 168 ; 2 uses
@@ -233,9 +237,15 @@ bb.a:
   store i64 -9223372036854775807, ptr %i.j, align 16
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
   store i64 -9223372036854775808, ptr %i.k, align 16
+  %7 = load i128, ptr %3, align 16
   store i128 0, ptr %0, align 16
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i128 %7, ptr %8, align 16
+  %9 = load i64, ptr %4, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 0, ptr %i.l, align 16
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store i64 %9, ptr %10, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 264
   store i8 5, ptr %i.m, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 144
@@ -244,8 +254,14 @@ bb.a:
   store ptr %1, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 160
   store i64 %2, ptr %.sroa.5.0..sroa_idx, align 16
+  %11 = load i64, ptr %5, align 16
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 112
+  store i64 %11, ptr %12, align 16
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 120
   store i32 1000000000, ptr %i.o, align 8
+  %13 = load i64, ptr %6, align 16
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 128
+  store i64 %13, ptr %14, align 16
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i32 1000000000, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 168

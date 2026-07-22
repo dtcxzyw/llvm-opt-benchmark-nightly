@@ -204,8 +204,8 @@ _ZN5arrow6StatusD2Ev.exit45:                      ; preds = %bb.g, %bb.h, %bb.i
 
 bb.j:                                             ; preds = %bb.e, %bb.f
   %i.aa = load ptr, ptr %2, align 8, !tbaa !834   ; 7 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
-  %i.ac = load i8, ptr %i.ab, align 8, !tbaa !508 ; 3 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 3 uses
+  %i.ac = load i8, ptr %i.ab, align 8, !tbaa !508
   %switch.tableidx.i46 = add i8 %i.ac, -1         ; 2 uses
   %i.ad = icmp ult i8 %switch.tableidx.i46, 5
   %switch.idx.cast.i47 = zext i8 %switch.tableidx.i46 to i32
@@ -218,7 +218,8 @@ bb.j:                                             ; preds = %bb.e, %bb.f
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %64) #26
-  %.not.i.i.i = icmp eq i8 %i.ac, 4
+  %73 = load i8, ptr %i.ab, align 8, !tbaa !508
+  %.not.i.i.i = icmp eq i8 %73, 4
   br i1 %.not.i.i.i, label %_ZNK5arrow5Datum12record_batchEv.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -621,7 +622,8 @@ _ZN5arrow6ResultISt10shared_ptrINS_11RecordBatchEEED2Ev.exit: ; preds = %_ZN5arr
 
 bb.gg:                                            ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %68) #26
-  %.not.i.i.i72 = icmp eq i8 %i.ac, 5
+  %74 = load i8, ptr %i.ab, align 8, !tbaa !508
+  %.not.i.i.i72 = icmp eq i8 %74, 5
   br i1 %.not.i.i.i72, label %_ZNK5arrow5Datum5tableEv.exit, label %bb.gh
 
 bb.gh:                                            ; preds = %bb.gg

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.aj
   %i.z = phi ptr [ %i.f, %.lr.ph ], [ %i.fl, %bb.aj ]
   %.03494 = phi i64 [ 0, %.lr.ph ], [ %i.fj, %bb.aj ] ; 4 uses
   %i.aa = getelementptr [96 x i8], ptr %i.z, i64 %.03494 ; 7 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 24 ; 3 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 24 ; 4 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !145 ; 3 uses
   %.not = icmp eq ptr %i.ac, null
   br i1 %.not, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread, label %bb.c
@@ -290,7 +290,7 @@ _ZN6google8protobuf2io7Printer5PrintIJEEEvSt17basic_string_viewIcSt11char_traits
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZN6google8protobuf2io7Printer5PrintIJEEEvSt17basic_string_viewIcSt11char_traitsIcEEDpRKT_.exit, %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread
-  %i.bh = phi ptr [ %.pre, %_ZN6google8protobuf2io7Printer5PrintIJEEEvSt17basic_string_viewIcSt11char_traitsIcEEDpRKT_.exit ], [ %i.ac, %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread ] ; 4 uses
+  %i.bh = phi ptr [ %.pre, %_ZN6google8protobuf2io7Printer5PrintIJEEEvSt17basic_string_viewIcSt11char_traitsIcEEDpRKT_.exit ], [ %i.ac, %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread ] ; 3 uses
   %.not38 = icmp eq ptr %i.bh, null
   br i1 %.not38, label %bb.t, label %bb.j
 
@@ -304,7 +304,8 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #40
-  %i.bm = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
+  %12 = load ptr, ptr %i.ab, align 8, !tbaa !145
+  %i.bm = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !116 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 2
   %.0.copyload.i.i.i40 = load i16, ptr %i.bo, align 1
@@ -472,8 +473,8 @@ bb.x:                                             ; preds = %bb.r, %_ZNSt7__cxx1
   br i1 %2, label %bb.y, label %.critedge
 
 bb.y:                                             ; preds = %bb.x
-  %i.dn = getelementptr inbounds nuw i8, ptr %i.aa, i64 40
-  %i.do = load i32, ptr %i.dn, align 8, !tbaa !21 ; 2 uses
+  %i.dn = getelementptr inbounds nuw i8, ptr %i.aa, i64 40 ; 2 uses
+  %i.do = load i32, ptr %i.dn, align 8, !tbaa !21
   %i.dp = icmp sgt i32 %i.do, -1
   br i1 %i.dp, label %bb.z, label %bb.aj
 
@@ -481,7 +482,8 @@ bb.z:                                             ; preds = %bb.y
   %i.dq = load ptr, ptr %i.g, align 8, !tbaa !662
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #40
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #40
-  %i.dr = call noundef ptr @_ZN4absl12lts_2025051216numbers_internal15FastIntToBufferEiPc(i32 noundef %i.do, ptr noundef nonnull %i.u)
+  %13 = load i32, ptr %i.dn, align 8, !tbaa !21
+  %i.dr = call noundef ptr @_ZN4absl12lts_2025051216numbers_internal15FastIntToBufferEiPc(i32 noundef %13, ptr noundef nonnull %i.u)
   %i.ds = ptrtoint ptr %i.dr to i64
   %i.dt = sub i64 %i.ds, %i.v                     ; 5 uses
   store i64 %i.dt, ptr %9, align 8, !tbaa !695
@@ -561,8 +563,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit61: ; preds = %bb.
   br label %common.resume
 
 .critedge:                                        ; preds = %bb.x
-  %i.el = getelementptr inbounds nuw i8, ptr %i.aa, i64 44
-  %i.em = load i32, ptr %i.el, align 4, !tbaa !23 ; 2 uses
+  %i.el = getelementptr inbounds nuw i8, ptr %i.aa, i64 44 ; 2 uses
+  %i.em = load i32, ptr %i.el, align 4, !tbaa !23
   %i.en = icmp sgt i32 %i.em, -1
   br i1 %i.en, label %bb.ae, label %bb.aj
 
@@ -570,7 +572,8 @@ bb.ae:                                            ; preds = %.critedge
   %i.eo = load ptr, ptr %i.g, align 8, !tbaa !662
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #40
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #40
-  %i.ep = call noundef ptr @_ZN4absl12lts_2025051216numbers_internal15FastIntToBufferEiPc(i32 noundef %i.em, ptr noundef nonnull %i.p)
+  %14 = load i32, ptr %i.el, align 4, !tbaa !23
+  %i.ep = call noundef ptr @_ZN4absl12lts_2025051216numbers_internal15FastIntToBufferEiPc(i32 noundef %14, ptr noundef nonnull %i.p)
   %i.eq = ptrtoint ptr %i.ep to i64
   %i.er = sub i64 %i.eq, %i.q                     ; 5 uses
   store i64 %i.er, ptr %11, align 8, !tbaa !695

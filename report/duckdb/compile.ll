@@ -204,7 +204,7 @@ _ZNSt5stackIN10duckdb_re29WalkStateINS0_4FragEEESt5dequeIS3_SaIS3_EEE3topEv.exit
   %i.bd = phi ptr [ %i.bc, %bb.h ], [ %i.aw, %bb.g ] ; 17 uses
   %i.be = getelementptr inbounds i8, ptr %i.bd, i64 -72
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !179 ; 6 uses
-  %i.bg = getelementptr inbounds i8, ptr %i.bd, i64 -64 ; 6 uses
+  %i.bg = getelementptr inbounds i8, ptr %i.bd, i64 -64 ; 7 uses
   %i.bh = load i32, ptr %i.bg, align 8, !tbaa !188 ; 2 uses
   %cond = icmp eq i32 %i.bh, -1
   br i1 %cond, label %bb.i, label %bb.p
@@ -370,7 +370,7 @@ bb.o:                                             ; preds = %bb.k
   br label %bb.y
 
 bb.p:                                             ; preds = %.thread, %_ZNSt5stackIN10duckdb_re29WalkStateINS0_4FragEEESt5dequeIS3_SaIS3_EEE3topEv.exit
-  %.pre110 = phi i32 [ %.pre110.pre, %.thread ], [ %i.bh, %_ZNSt5stackIN10duckdb_re29WalkStateINS0_4FragEEESt5dequeIS3_SaIS3_EEE3topEv.exit ] ; 6 uses
+  %.pre110 = phi i32 [ %.pre110.pre, %.thread ], [ %i.bh, %_ZNSt5stackIN10duckdb_re29WalkStateINS0_4FragEEESt5dequeIS3_SaIS3_EEE3topEv.exit ] ; 5 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.bf, i64 6 ; 2 uses
   %i.dp = load i16, ptr %i.do, align 2, !tbaa !157 ; 3 uses
   %.not95 = icmp eq i16 %i.dp, 0
@@ -388,13 +388,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q
   %i.dv = icmp sgt i32 %.pre110, 0
   %or.cond = and i1 %4, %i.dv
-  br i1 %or.cond, label %bb.s, label %._crit_edge
-
-._crit_edge:                                      ; preds = %bb.r
-  %.phi.trans.insert = sext i32 %.pre110 to i64
-  %.phi.trans.insert109 = getelementptr inbounds [8 x i8], ptr %.0.i, i64 %.phi.trans.insert
-  %.pre = load ptr, ptr %.phi.trans.insert109, align 8, !tbaa !126
-  br label %._crit_edge115
+  br i1 %or.cond, label %bb.s, label %._crit_edge115
 
 bb.s:                                             ; preds = %bb.r
   %i.dw = add nsw i32 %.pre110, -1
@@ -403,7 +397,7 @@ bb.s:                                             ; preds = %bb.r
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !126
   %i.ea = zext nneg i32 %.pre110 to i64
   %i.eb = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %i.ea
-  %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !126 ; 2 uses
+  %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !126
   %i.ed = icmp eq ptr %i.dz, %i.ec
   br i1 %i.ed, label %bb.t, label %._crit_edge115
 
@@ -433,12 +427,15 @@ bb.t:                                             ; preds = %bb.s
   store i32 %i.eq, ptr %i.bg, align 8, !tbaa !188
   br label %.backedge, !llvm.loop !197
 
-._crit_edge115:                                   ; preds = %bb.s, %._crit_edge
-  %9 = phi ptr [ %.pre, %._crit_edge ], [ %i.ec, %bb.s ]
+._crit_edge115:                                   ; preds = %bb.s, %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22
+  %9 = load i32, ptr %i.bg, align 8, !tbaa !188
+  %10 = sext i32 %9 to i64
+  %11 = getelementptr inbounds [8 x i8], ptr %.0.i, i64 %10
+  %12 = load ptr, ptr %11, align 8, !tbaa !126
   %i.er = getelementptr inbounds i8, ptr %i.bd, i64 -44
   %i.es = load <2 x i64>, ptr %i.er, align 4
-  store ptr %9, ptr %8, align 8, !tbaa !179
+  store ptr %12, ptr %8, align 8, !tbaa !179
   store i32 -1, ptr %i.al, align 8, !tbaa !188
   store <2 x i64> %i.es, ptr %i.am, align 4
   store i32 0, ptr %i.an, align 4, !tbaa !73

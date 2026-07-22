@@ -201,7 +201,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
-  %i.d = alloca i64, align 8                      ; 7 uses
+  %i.d = alloca i64, align 8                      ; 6 uses
   %i.e = alloca ptr, align 8                      ; 5 uses
   %i.f = alloca ptr, align 8                      ; 5 uses
   %i.g = tail call ptr @rb_string_value_cstr(ptr noundef nonnull %0) #22 ; 3 uses
@@ -326,33 +326,41 @@ bb.i:                                             ; preds = %.lr.ph, %bb.q
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.p, %bb.i
-  %.161 = phi i64 [ 0, %bb.i ], [ %i.cq, %bb.p ]  ; 4 uses
+  %.161 = phi i64 [ 0, %bb.i ], [ %i.cq, %bb.p ]  ; 3 uses
   %i.bc = load i64, ptr %i.b, align 8, !tbaa !14
-  %i.bd = inttoptr i64 %i.bc to ptr               ; 4 uses
+  %i.bd = inttoptr i64 %i.bc to ptr               ; 5 uses
   %i.be = load i64, ptr %i.bd, align 8, !tbaa !11 ; 2 uses
   %i.bf = and i64 %i.be, 8192
   %.not.i76 = icmp eq i64 %i.bf, 0
-  br i1 %.not.i76, label %rb_array_len.exit, label %rb_array_len.exit.thread
+  br i1 %.not.i76, label %5, label %2
 
-rb_array_len.exit:                                ; preds = %bb.j
-  %2 = getelementptr i8, ptr %i.bd, i64 16
-  %3 = load i64, ptr %2, align 8, !tbaa !36
-  %i.bg = icmp slt i64 %.161, %3
-  br i1 %i.bg, label %bb.l, label %bb.q
+2:                                                ; preds = %bb.j
+  %3 = lshr i64 %i.be, 15
+  %4 = and i64 %3, 127
+  br label %rb_array_len.exit
 
-rb_array_len.exit.thread:                         ; preds = %bb.j
-  %4 = lshr i64 %i.be, 15
-  %i.bh = and i64 %4, 127
-  %5 = icmp samesign ult i64 %.161, %i.bh
-  br i1 %5, label %bb.k, label %bb.q
+5:                                                ; preds = %bb.j
+  %6 = getelementptr i8, ptr %i.bd, i64 16
+  %7 = load i64, ptr %6, align 8, !tbaa !36
+  br label %rb_array_len.exit
+
+rb_array_len.exit:                                ; preds = %2, %5
+  %.0.i = phi i64 [ %4, %2 ], [ %7, %5 ]
+  %i.bg = icmp slt i64 %.161, %.0.i
+  br i1 %i.bg, label %rb_array_len.exit.thread, label %bb.q
+
+rb_array_len.exit.thread:                         ; preds = %rb_array_len.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #22
+  %8 = load i64, ptr %i.bd, align 8, !tbaa !11
+  %i.bh = and i64 %8, 8192
+  %.not.i.i = icmp eq i64 %i.bh, 0
+  br i1 %.not.i.i, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %rb_array_len.exit.thread
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #22
   %i.bi = getelementptr i8, ptr %i.bd, i64 16
   br label %RARRAY_AREF.exit
 
-bb.l:                                             ; preds = %rb_array_len.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #22
+bb.l:                                             ; preds = %rb_array_len.exit.thread
   %i.bj = getelementptr i8, ptr %i.bd, i64 32
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !36
   br label %RARRAY_AREF.exit
@@ -443,7 +451,7 @@ bb.p:                                             ; preds = %rb_get_path.exit, %
   %i.cq = add nuw nsw i64 %.161, 1
   br label %bb.j, !llvm.loop !120
 
-bb.q:                                             ; preds = %rb_array_len.exit.thread, %rb_array_len.exit
+bb.q:                                             ; preds = %rb_array_len.exit
   call void @rb_str_set_len(i64 noundef %i.aq, i64 noundef %i.au) #22
   %i.cr = add i64 %.05993, 1                      ; 2 uses
   %i.cs = getelementptr [8 x i8], ptr %1, i64 %i.cr
@@ -531,7 +539,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 10 uses
   %i.c = alloca i64, align 8                      ; 5 uses
   %i.d = alloca ptr, align 8                      ; 5 uses
-  %i.e = alloca i64, align 8                      ; 7 uses
+  %i.e = alloca i64, align 8                      ; 6 uses
   %i.f = alloca ptr, align 8                      ; 5 uses
   store i64 %0, ptr %i.b, align 8, !tbaa !14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #22
@@ -612,33 +620,41 @@ bb.f:                                             ; preds = %is_explicit_relativ
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.l, %bb.f
-  %.021 = phi i64 [ 0, %bb.f ], [ %i.bw, %bb.l ]  ; 4 uses
+  %.021 = phi i64 [ 0, %bb.f ], [ %i.bw, %bb.l ]  ; 3 uses
   %i.al = load i64, ptr %i.c, align 8, !tbaa !14
-  %i.am = inttoptr i64 %i.al to ptr               ; 4 uses
+  %i.am = inttoptr i64 %i.al to ptr               ; 5 uses
   %i.an = load i64, ptr %i.am, align 8, !tbaa !11 ; 2 uses
   %i.ao = and i64 %i.an, 8192
   %.not.i32 = icmp eq i64 %i.ao, 0
-  br i1 %.not.i32, label %rb_array_len.exit, label %rb_array_len.exit.thread
+  br i1 %.not.i32, label %4, label %1
 
-rb_array_len.exit:                                ; preds = %bb.g
-  %1 = getelementptr i8, ptr %i.am, i64 16
-  %2 = load i64, ptr %1, align 8, !tbaa !36
-  %i.ap = icmp slt i64 %.021, %2
-  br i1 %i.ap, label %bb.i, label %bb.m
+1:                                                ; preds = %bb.g
+  %2 = lshr i64 %i.an, 15
+  %3 = and i64 %2, 127
+  br label %rb_array_len.exit
 
-rb_array_len.exit.thread:                         ; preds = %bb.g
-  %3 = lshr i64 %i.an, 15
-  %i.aq = and i64 %3, 127
-  %4 = icmp samesign ult i64 %.021, %i.aq
-  br i1 %4, label %bb.h, label %bb.m
+4:                                                ; preds = %bb.g
+  %5 = getelementptr i8, ptr %i.am, i64 16
+  %6 = load i64, ptr %5, align 8, !tbaa !36
+  br label %rb_array_len.exit
+
+rb_array_len.exit:                                ; preds = %1, %4
+  %.0.i = phi i64 [ %3, %1 ], [ %6, %4 ]
+  %i.ap = icmp slt i64 %.021, %.0.i
+  br i1 %i.ap, label %rb_array_len.exit.thread, label %bb.m
+
+rb_array_len.exit.thread:                         ; preds = %rb_array_len.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #22
+  %7 = load i64, ptr %i.am, align 8, !tbaa !11
+  %i.aq = and i64 %7, 8192
+  %.not.i.i = icmp eq i64 %i.aq, 0
+  br i1 %.not.i.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %rb_array_len.exit.thread
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #22
   %i.ar = getelementptr i8, ptr %i.am, i64 16
   br label %RARRAY_AREF.exit
 
-bb.i:                                             ; preds = %rb_array_len.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #22
+bb.i:                                             ; preds = %rb_array_len.exit.thread
   %i.as = getelementptr i8, ptr %i.am, i64 32
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !36
   br label %RARRAY_AREF.exit
@@ -721,7 +737,7 @@ bb.l:                                             ; preds = %rb_get_path.exit, %
   %i.bw = add nuw nsw i64 %.021, 1
   br label %bb.g, !llvm.loop !125
 
-bb.m:                                             ; preds = %rb_array_len.exit.thread, %rb_array_len.exit
+bb.m:                                             ; preds = %rb_array_len.exit
   %i.bx = call i64 @rb_str_resize(i64 noundef %i.ah, i64 noundef 0) #22 ; 0 uses
   br label %.thread42
 
@@ -1124,8 +1140,8 @@ RARRAY_AREF.exit62:                               ; preds = %rb_array_len.exit59
   br label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i
 
 bb.k:                                             ; preds = %RARRAY_AREF.exit62
-  %i.bi = inttoptr i64 %i.bd to ptr
-  %i.bj = load i64, ptr %i.bi, align 8, !tbaa !11 ; 2 uses
+  %i.bi = inttoptr i64 %i.bd to ptr               ; 2 uses
+  %i.bj = load i64, ptr %i.bi, align 8, !tbaa !11
   %i.bk = trunc i64 %i.bj to i32
   %i.bl = and i32 %i.bk, 31
   switch i32 %i.bl, label %rbimpl_RB_TYPE_P_fastpath.exit.i.i [
@@ -1177,7 +1193,8 @@ bb.p:                                             ; preds = %bb.n
 
 rbimpl_RB_TYPE_P_fastpath.exit.i.i:               ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  %i.bw = and i64 %i.bj, 31
+  %1 = load i64, ptr %i.bi, align 8, !tbaa !11
+  %i.bw = and i64 %1, 31
   %i.bx = icmp eq i64 %i.bw, 5
   br i1 %i.bx, label %rb_get_path.exit, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i
 
@@ -1580,15 +1597,17 @@ rb_check_arity.exit.preheader:                    ; preds = %rb_check_arity.exit
   br label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i
 
 rbimpl_RB_TYPE_P_fastpath.exit:                   ; preds = %rb_check_arity.exit.preheader
-  %i.l = inttoptr i64 %i.g to ptr
+  %i.l = inttoptr i64 %i.g to ptr                 ; 2 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !11
-  %i.n = and i64 %i.m, 31                         ; 2 uses
+  %i.n = and i64 %i.m, 31
   %i.o = icmp eq i64 %i.n, 11
   br i1 %i.o, label %rb_check_arity.exit, label %rbimpl_RB_TYPE_P_fastpath.exit.i.i
 
 rbimpl_RB_TYPE_P_fastpath.exit.i.i:               ; preds = %rbimpl_RB_TYPE_P_fastpath.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  %i.p = icmp eq i64 %i.n, 5
+  %3 = load i64, ptr %i.l, align 8, !tbaa !11
+  %4 = and i64 %3, 31
+  %i.p = icmp eq i64 %4, 5
   br i1 %i.p, label %rb_get_path.exit, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i
 
 rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i:        ; preds = %.thread, %rbimpl_RB_TYPE_P_fastpath.exit.i.i

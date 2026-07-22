@@ -203,8 +203,8 @@ bb.g:                                             ; preds = %bb.f, %bb.x, %bb.w,
   %.065142 = phi i32 [ %.267, %.loopexit ], [ 0, %.preheader113 ] ; 2 uses
   %.sroa.099.0141 = phi ptr [ %i.em, %.loopexit ], [ %i.al, %.preheader113 ] ; 7 uses
   %i.bk = load ptr, ptr %i.ag, align 8, !tbaa !108 ; 6 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.099.0141, i64 8
-  %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !124 ; 4 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.099.0141, i64 8 ; 2 uses
+  %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !124 ; 3 uses
   %i.bn = sext i32 %.063143 to i64                ; 7 uses
   %i.bo = getelementptr inbounds [8 x i8], ptr %i.bk, i64 %i.bn ; 5 uses
   %i.bp = icmp ult ptr %i.bo, %i.bm
@@ -320,9 +320,10 @@ bb.h:                                             ; preds = %._crit_edge, %._cri
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #30
   %i.cy = load ptr, ptr %.sroa.099.0141, align 8, !tbaa !130
   store ptr %i.cy, ptr %i.c, align 16, !tbaa !62
+  %6 = load ptr, ptr %i.bl, align 8, !tbaa !124
   %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.099.0141, i64 20
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !131
-  %i.db = invoke noundef ptr @_ZN10duckdb_re26Regexp17AlternateNoFactorEPPS0_iNS0_10ParseFlagsE(ptr noundef %i.bm, i32 noundef %i.da, i32 noundef %2)
+  %i.db = invoke noundef ptr @_ZN10duckdb_re26Regexp17AlternateNoFactorEPPS0_iNS0_10ParseFlagsE(ptr noundef %6, i32 noundef %i.da, i32 noundef %2)
           to label %bb.i unwind label %bb.k
 
 bb.i:                                             ; preds = %bb.h
@@ -725,7 +726,7 @@ _ZNSt5stackIN10duckdb_re29WalkStateIiEESt5dequeIS2_SaIS2_EEE3topEv.exit: ; preds
   %i.ar = phi ptr [ %i.aq, %bb.g ], [ %i.ak, %.thread80 ] ; 12 uses
   %i.as = getelementptr inbounds i8, ptr %i.ar, i64 -32
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !243 ; 6 uses
-  %i.au = getelementptr inbounds i8, ptr %i.ar, i64 -24 ; 6 uses
+  %i.au = getelementptr inbounds i8, ptr %i.ar, i64 -24 ; 7 uses
   %i.av = load i32, ptr %i.au, align 8, !tbaa !250 ; 2 uses
   %cond = icmp eq i32 %i.av, -1
   br i1 %cond, label %bb.h, label %bb.o
@@ -796,7 +797,7 @@ bb.n:                                             ; preds = %bb.j
   br label %bb.y
 
 bb.o:                                             ; preds = %.thread, %_ZNSt5stackIN10duckdb_re29WalkStateIiEESt5dequeIS2_SaIS2_EEE3topEv.exit
-  %.pre87 = phi i32 [ %.pre87.pre, %.thread ], [ %i.av, %_ZNSt5stackIN10duckdb_re29WalkStateIiEESt5dequeIS2_SaIS2_EEE3topEv.exit ] ; 6 uses
+  %.pre87 = phi i32 [ %.pre87.pre, %.thread ], [ %i.av, %_ZNSt5stackIN10duckdb_re29WalkStateIiEESt5dequeIS2_SaIS2_EEE3topEv.exit ] ; 5 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.at, i64 6 ; 2 uses
   %i.bw = load i16, ptr %i.bv, align 2, !tbaa !61 ; 3 uses
   %.not71 = icmp eq i16 %i.bw, 0
@@ -814,13 +815,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.cb = icmp sgt i32 %.pre87, 0
   %or.cond = and i1 %3, %i.cb
-  br i1 %or.cond, label %bb.r, label %._crit_edge
-
-._crit_edge:                                      ; preds = %bb.q
-  %.phi.trans.insert = sext i32 %.pre87 to i64
-  %.phi.trans.insert86 = getelementptr inbounds [8 x i8], ptr %.0.i, i64 %.phi.trans.insert
-  %.pre = load ptr, ptr %.phi.trans.insert86, align 8, !tbaa !62
-  br label %._crit_edge90
+  br i1 %or.cond, label %bb.r, label %._crit_edge90
 
 bb.r:                                             ; preds = %bb.q
   %i.cc = add nsw i32 %.pre87, -1
@@ -829,7 +824,7 @@ bb.r:                                             ; preds = %bb.q
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !62
   %i.cg = zext nneg i32 %.pre87 to i64
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %i.cg
-  %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !62 ; 2 uses
+  %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !62
   %i.cj = icmp eq ptr %i.cf, %i.ci
   br i1 %i.cj, label %bb.s, label %._crit_edge90
 
@@ -852,12 +847,15 @@ bb.s:                                             ; preds = %bb.r
   store i32 %i.cx, ptr %i.au, align 8, !tbaa !250
   br label %.thread80.backedge
 
-._crit_edge90:                                    ; preds = %bb.r, %._crit_edge
-  %7 = phi ptr [ %.pre, %._crit_edge ], [ %i.ci, %bb.r ]
+._crit_edge90:                                    ; preds = %bb.r, %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
+  %7 = load i32, ptr %i.au, align 8, !tbaa !250
+  %8 = sext i32 %7 to i64
+  %9 = getelementptr inbounds [8 x i8], ptr %.0.i, i64 %8
+  %10 = load ptr, ptr %9, align 8, !tbaa !62
   %i.cy = getelementptr inbounds i8, ptr %i.ar, i64 -16
   %i.cz = load i32, ptr %i.cy, align 8, !tbaa !259
-  store ptr %7, ptr %6, align 8, !tbaa !243
+  store ptr %10, ptr %6, align 8, !tbaa !243
   store i32 -1, ptr %i.af, align 8, !tbaa !250
   store i32 %i.cz, ptr %i.ag, align 4, !tbaa !251
   store ptr null, ptr %i.ah, align 8, !tbaa !246

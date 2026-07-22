@@ -203,22 +203,24 @@ bb.d:                                             ; preds = %bb.c, %_ZN4absl12lt
 
 bb.e:                                             ; preds = %_ZNK4absl12lts_202505124Cord4sizeEv.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !30
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !30   ; 2 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !152
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   tail call void @llvm.experimental.noalias.scope.decl(metadata !182)
+  %11 = load i64, ptr %i.l, align 8, !tbaa !152, !noalias !182
   br label %_ZNK4absl12lts_202505124Cord5emptyEv.exit.i
 
 bb.f:                                             ; preds = %_ZNK4absl12lts_202505124Cord4sizeEv.exit.thread
   %i.n = sext i8 %i.f to i64
-  %i.o = lshr exact i64 %i.n, 1
+  %i.o = lshr exact i64 %i.n, 1                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   br label %_ZNK4absl12lts_202505124Cord5emptyEv.exit.i
 
 _ZNK4absl12lts_202505124Cord5emptyEv.exit.i:      ; preds = %bb.f, %bb.e
-  %.pn80 = phi i64 [ %i.m, %bb.e ], [ %i.o, %bb.f ] ; 2 uses
+  %.pn80 = phi i64 [ %i.m, %bb.e ], [ %i.o, %bb.f ]
+  %12 = phi i64 [ %11, %bb.e ], [ %i.o, %bb.f ]
   %i.p = add i64 %.pn80, %i.e
-  %i.q = icmp eq i64 %.pn80, 0
+  %i.q = icmp eq i64 %12, 0
   br i1 %i.q, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %_ZNK4absl12lts_202505124Cord5emptyEv.exit.i

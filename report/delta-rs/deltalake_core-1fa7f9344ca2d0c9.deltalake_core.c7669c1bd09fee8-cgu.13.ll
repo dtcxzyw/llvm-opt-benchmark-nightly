@@ -204,7 +204,7 @@ bb.a:
   %i.r = alloca [24 x i8], align 8                ; 4 uses
   %.sroa.0.i = alloca [72 x i8], align 8          ; 5 uses
   %i.s = alloca [48 x i8], align 8                ; 5 uses
-  %i.t = alloca [16 x i8], align 8                ; 6 uses
+  %i.t = alloca [16 x i8], align 8                ; 7 uses
   %i.u = alloca [24 x i8], align 8                ; 5 uses
   %i.v = alloca [48 x i8], align 8                ; 7 uses
   %i.w = alloca [24 x i8], align 8                ; 6 uses
@@ -522,7 +522,7 @@ bb.an:                                            ; preds = %bb.ah
 
 bb.ao:                                            ; preds = %bb.an
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 336
-  %i.cf = load ptr, ptr %i.ce, align 16, !alias.scope !24468, !noalias !24473, !nonnull !4, !align !18, !noundef !4 ; 2 uses
+  %i.cf = load ptr, ptr %i.ce, align 16, !alias.scope !24468, !noalias !24473, !nonnull !4, !align !18, !noundef !4
   %i.cg = atomicrmw add ptr %i.cd, i64 1 monotonic, align 8, !noalias !24473
   %i.ch = icmp slt i64 %i.cg, 0
   br i1 %i.ch, label %bb.as, label %bb.ar
@@ -532,7 +532,6 @@ bb.ap:                                            ; preds = %bb.an
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ar, %bb.ap
-  %3 = phi ptr [ %i.cf, %bb.ar ], [ undef, %bb.ap ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !24471
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !24471
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 232
@@ -666,6 +665,8 @@ bb.bf:                                            ; preds = %bb.bb, %bb.ba
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0230.sroa.16, ptr noundef nonnull align 8 dereferenceable(48) %i.v, i64 48, i1 false)
   %.sroa.0232.24..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0232, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0232.24..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.u, i64 24, i1 false), !noalias !24468
+  %3 = getelementptr inbounds nuw i8, ptr %i.t, i64 8
+  %4 = load ptr, ptr %3, align 8, !noalias !24471
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0230.sroa.15, ptr noundef nonnull align 8 dereferenceable(48) %i.s, i64 48, i1 false)
   %.sroa.0232.48..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0232, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.0232.48..sroa_idx, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.0.i, i64 72, i1 false), !noalias !24468
@@ -706,7 +707,7 @@ bb.bf:                                            ; preds = %bb.bb, %bb.ba
   %.sroa.0230.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 1296
   store ptr %i.cd, ptr %.sroa.0230.sroa.17.0..sroa_idx, align 16
   %.sroa.0230.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 1304
-  store ptr %3, ptr %.sroa.0230.sroa.18.0..sroa_idx, align 8
+  store ptr %4, ptr %.sroa.0230.sroa.18.0..sroa_idx, align 8
   %.sroa.0230.sroa.19.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 1312
   store ptr %i.da, ptr %.sroa.0230.sroa.19.0..sroa_idx, align 16
   %.sroa.0230.sroa.20.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 1320
@@ -1109,7 +1110,7 @@ bb.a:
   %i.ae = alloca [16 x i8], align 8               ; 6 uses
   %i.af = alloca [24 x i8], align 8               ; 5 uses
   %i.ag = alloca [24 x i8], align 8               ; 5 uses
-  %i.ah = alloca [16 x i8], align 8               ; 7 uses
+  %i.ah = alloca [16 x i8], align 8               ; 8 uses
   %i.ai = alloca [24 x i8], align 8               ; 5 uses
   %i.aj = alloca [24 x i8], align 8               ; 5 uses
   %i.ak = alloca [48 x i8], align 8               ; 6 uses
@@ -1197,7 +1198,7 @@ bb.k:                                             ; preds = %bb.h
 
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 1640
-  %i.ba = load ptr, ptr %i.az, align 8, !nonnull !4, !align !18, !noundef !4 ; 2 uses
+  %i.ba = load ptr, ptr %i.az, align 8, !nonnull !4, !align !18, !noundef !4
   %i.bb = atomicrmw add ptr %i.ay, i64 1 monotonic, align 8
   %i.bc = icmp slt i64 %i.bb, 0
   br i1 %i.bc, label %bb.p, label %bb.o
@@ -1207,7 +1208,6 @@ bb.m:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.o, %bb.m
-  %2 = phi ptr [ %i.ba, %bb.o ], [ undef, %bb.m ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 1080
@@ -1610,10 +1610,12 @@ bb.cd:                                            ; preds = %bb.bx
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fg, ptr noundef nonnull align 8 dereferenceable(24) %i.aj, i64 24, i1 false)
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 1056
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fh, ptr noundef nonnull align 8 dereferenceable(24) %i.ai, i64 24, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
+  %3 = load ptr, ptr %2, align 8
   %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 1632
   store ptr %i.ay, ptr %i.fi, align 8
   %i.fj = getelementptr inbounds nuw i8, ptr %0, i64 1640
-  store ptr %2, ptr %i.fj, align 8
+  store ptr %3, ptr %i.fj, align 8
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 1080
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fk, ptr noundef nonnull align 8 dereferenceable(24) %i.ag, i64 24, i1 false)
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 1104

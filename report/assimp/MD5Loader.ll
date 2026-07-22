@@ -204,8 +204,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105: ; preds = %_Z
 
 bb.av:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105
   %i.jy = load ptr, ptr %i.ct, align 8            ; 2 uses
-  %i.jz = getelementptr inbounds nuw i8, ptr %i.jy, i64 8
-  %i.ka = load ptr, ptr %i.jz, align 8            ; 2 uses
+  %i.jz = getelementptr inbounds nuw i8, ptr %i.jy, i64 8 ; 2 uses
+  %i.ka = load ptr, ptr %i.jz, align 8
   %i.kb = getelementptr inbounds nuw i8, ptr %i.ka, i64 1104
   %i.kc = load i32, ptr %i.kb, align 8
   %.not69 = icmp eq i32 %i.kc, 0
@@ -213,7 +213,8 @@ bb.av:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.aw:                                            ; preds = %bb.av
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #23
-  %i.kd = getelementptr inbounds nuw i8, ptr %i.ka, i64 1112
+  %9 = load ptr, ptr %i.jz, align 8
+  %i.kd = getelementptr inbounds nuw i8, ptr %9, i64 1112
   %i.ke = load ptr, ptr %i.kd, align 8
   %i.kf = load ptr, ptr %i.ke, align 8
   invoke void @_ZN6Assimp19SkeletonMeshBuilderC1EP7aiSceneP6aiNodeb(ptr noundef nonnull align 8 dereferenceable(73) %8, ptr noundef nonnull %i.jy, ptr noundef %i.kf, i1 noundef zeroext false)
@@ -616,7 +617,7 @@ bb.an:                                            ; preds = %bb.am
 
 bb.ao:                                            ; preds = %bb.an
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
-  %i.ig = getelementptr inbounds nuw i8, ptr %.sroa.0351.0455, i64 72 ; 6 uses
+  %i.ig = getelementptr inbounds nuw i8, ptr %.sroa.0351.0455, i64 72 ; 7 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %.sroa.0351.0455, i64 76 ; 8 uses
   store ptr %i.ey, ptr %6, align 8
   %i.ii = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ih) #23 ; 4 uses
@@ -1019,7 +1020,7 @@ bb.cc:                                            ; preds = %bb.cb
   %i.xe = load i32, ptr %i.xd, align 8
   %i.xf = add i32 %i.xe, 1
   store i32 %i.xf, ptr %i.xd, align 8
-  %i.xg = load i32, ptr %i.ig, align 8            ; 3 uses
+  %i.xg = load i32, ptr %i.ig, align 8
   %.not219 = icmp eq i32 %i.xg, 0
   br i1 %.not219, label %bb.cr, label %bb.cd
 
@@ -1030,14 +1031,15 @@ bb.cd:                                            ; preds = %bb.cc
 
 bb.ce:                                            ; preds = %bb.cd
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #23
+  %12 = load i32, ptr %i.ig, align 8              ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1024) %i.fc, i8 0, i64 1024, i1 false)
-  %spec.select.i291 = call i32 @llvm.umin.i32(i32 %i.xg, i32 1023) ; 3 uses
+  %spec.select.i291 = call i32 @llvm.umin.i32(i32 %12, i32 1023) ; 3 uses
   store i32 %spec.select.i291, ptr %8, align 4
   %i.xi = zext nneg i32 %spec.select.i291 to i64  ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.fc, ptr nonnull align 4 %i.ih, i64 %i.xi, i1 false)
   %i.xj = getelementptr inbounds nuw i8, ptr %i.fc, i64 %i.xi ; 2 uses
   store i8 0, ptr %i.xj, align 1
-  %i.xk = icmp ugt i32 %i.xg, 1013
+  %i.xk = icmp ugt i32 %12, 1013
   br i1 %i.xk, label %_ZN8aiString6AppendEPKc.exit, label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce

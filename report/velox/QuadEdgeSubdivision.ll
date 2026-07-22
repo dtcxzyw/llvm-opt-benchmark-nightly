@@ -203,7 +203,7 @@ _ZNSt5stackIPN4geos11triangulate8quadedge8QuadEdgeESt5dequeIS4_SaIS4_EEE4pushERK
   br i1 %.not20.us, label %.split24.us, label %.split.us, !llvm.loop !114
 
 .split:                                           ; preds = %bb.a, %_ZNSt5stackIPN4geos11triangulate8quadedge8QuadEdgeESt5dequeIS4_SaIS4_EEE4pushERKS4_.exit
-  %.017 = phi ptr [ %i.cd, %_ZNSt5stackIPN4geos11triangulate8quadedge8QuadEdgeESt5dequeIS4_SaIS4_EEE4pushERKS4_.exit ], [ %1, %bb.a ] ; 10 uses
+  %.017 = phi ptr [ %i.cd, %_ZNSt5stackIPN4geos11triangulate8quadedge8QuadEdgeESt5dequeIS4_SaIS4_EEE4pushERKS4_.exit ], [ %1, %bb.a ] ; 9 uses
   %.016 = phi i64 [ %i.bv, %_ZNSt5stackIPN4geos11triangulate8quadedge8QuadEdgeESt5dequeIS4_SaIS4_EEE4pushERKS4_.exit ], [ 0, %bb.a ] ; 2 uses
   %.0 = phi i1 [ %.1, %_ZNSt5stackIPN4geos11triangulate8quadedge8QuadEdgeESt5dequeIS4_SaIS4_EEE4pushERKS4_.exit ], [ false, %bb.a ]
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.016
@@ -236,7 +236,7 @@ _ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision13isFrameVertexERKNS1_6Verte
 
 bb.f:                                             ; preds = %_ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision13isFrameVertexERKNS1_6VertexE.exit.i
   %i.ax = getelementptr inbounds nuw i8, ptr %.017, i64 32
-  %i.ay = load i8, ptr %i.ax, align 8, !tbaa !10  ; 2 uses
+  %i.ay = load i8, ptr %i.ax, align 8, !tbaa !10
   %i.az = icmp slt i8 %i.ay, 2
   %.v.i.i.i = select i1 %i.az, i64 80, i64 -80
   %i.ba = getelementptr inbounds i8, ptr %.017, i64 %.v.i.i.i ; 2 uses
@@ -262,15 +262,13 @@ _ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision11isFrameEdgeERKNS1_8QuadEdg
   br i1 %cond.fr, label %_ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision11isFrameEdgeERKNS1_8QuadEdgeE.exit.thread, label %bb.h
 
 _ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision11isFrameEdgeERKNS1_8QuadEdgeE.exit.thread: ; preds = %.split, %bb.e, %bb.f, %bb.g, %_ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision13isFrameVertexERKNS1_6VertexE.exit.i, %_ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision11isFrameEdgeERKNS1_8QuadEdgeE.exit
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.017, i64 32
-  %.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !10
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision11isFrameEdgeERKNS1_8QuadEdgeE.exit.thread, %_ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision11isFrameEdgeERKNS1_8QuadEdgeE.exit
-  %4 = phi i8 [ %i.ay, %_ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision11isFrameEdgeERKNS1_8QuadEdgeE.exit ], [ %.pre, %_ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision11isFrameEdgeERKNS1_8QuadEdgeE.exit.thread ]
   %.1 = phi i1 [ %.0, %_ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision11isFrameEdgeERKNS1_8QuadEdgeE.exit ], [ true, %_ZNK4geos11triangulate8quadedge19QuadEdgeSubdivision11isFrameEdgeERKNS1_8QuadEdgeE.exit.thread ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
-  %i.bk = getelementptr inbounds nuw i8, ptr %.017, i64 32
+  %i.bk = getelementptr inbounds nuw i8, ptr %.017, i64 32 ; 2 uses
+  %4 = load i8, ptr %i.bk, align 8, !tbaa !10     ; 3 uses
   %i.bl = icmp slt i8 %4, 2
   %.v.i = select i1 %i.bl, i64 80, i64 -80
   %i.bm = getelementptr inbounds i8, ptr %.017, i64 %.v.i ; 3 uses
@@ -295,13 +293,14 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   call void @_ZNSt5dequeIPN4geos11triangulate8quadedge8QuadEdgeESaIS4_EE16_M_push_back_auxIJRKS4_EEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(80) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
+  %.pre = load i8, ptr %i.bk, align 8, !tbaa !10
   br label %_ZNSt5stackIPN4geos11triangulate8quadedge8QuadEdgeESt5dequeIS4_SaIS4_EEE4pushERKS4_.exit
 
 _ZNSt5stackIPN4geos11triangulate8quadedge8QuadEdgeESt5dequeIS4_SaIS4_EEE4pushERKS4_.exit: ; preds = %bb.k, %bb.j, %bb.h
+  %5 = phi i8 [ %.pre, %bb.k ], [ %4, %bb.j ], [ %4, %bb.h ]
   %i.bu = getelementptr inbounds nuw i8, ptr %.017, i64 34
   store i8 1, ptr %i.bu, align 2, !tbaa !88
   %i.bv = add i64 %.016, 1
-  %5 = load i8, ptr %i.bk, align 8, !tbaa !10
   %i.bw = icmp sgt i8 %5, 0
   %i.bx = select i1 %i.bw, i64 -16, i64 144
   %i.by = getelementptr inbounds i8, ptr %.017, i64 %i.bx

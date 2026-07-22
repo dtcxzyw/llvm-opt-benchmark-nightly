@@ -203,8 +203,8 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit47.thread: ; preds = %_ZNK6icu_7819Colla
   %i.eb = icmp slt i16 %i.ea, 0
   %i.ec = ashr i16 %i.ea, 5
   %i.ed = sext i16 %i.ec to i32
-  %i.ee = getelementptr inbounds nuw i8, ptr %i.dy, i64 12
-  %i.ef = load i32, ptr %i.ee, align 4            ; 2 uses
+  %i.ee = getelementptr inbounds nuw i8, ptr %i.dy, i64 12 ; 2 uses
+  %i.ef = load i32, ptr %i.ee, align 4
   %i.eg = select i1 %i.eb, i32 %i.ef, i32 %i.ed
   %.not32 = icmp slt i32 %.026, %i.eg
   br i1 %.not32, label %bb.o, label %bb.l
@@ -236,7 +236,8 @@ bb.o:                                             ; preds = %_ZNK6icu_7813Unicod
   %i.eo = icmp slt i16 %i.en, 0
   %i.ep = ashr i16 %i.en, 5
   %i.eq = sext i16 %i.ep to i32
-  %i.er = select i1 %i.eo, i32 %i.ef, i32 %i.eq
+  %3 = load i32, ptr %i.ee, align 4
+  %i.er = select i1 %i.eo, i32 %3, i32 %i.eq
   %i.es = icmp ult i32 %.026, %i.er
   br i1 %i.es, label %_ZNK6icu_7813UnicodeString6charAtEi.exit53, label %_ZNK6icu_7813UnicodeString6charAtEi.exit53.thread
 

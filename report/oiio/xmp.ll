@@ -204,14 +204,15 @@ _ZN11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEEC2EPKc.exit.i: ; pr
   br i1 %i.ae, label %bb.k, label %bb.ag
 
 bb.k:                                             ; preds = %.noexc78
-  %i.af = getelementptr inbounds nuw i8, ptr %i.x, i64 24
-  %i.ag = load i32, ptr %i.af, align 8, !tbaa !98 ; 3 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.x, i64 24 ; 2 uses
+  %i.ag = load i32, ptr %i.af, align 8, !tbaa !98
   %i.ah = and i32 %i.ag, 16
   %.not10.i = icmp eq i32 %i.ah, 0
   br i1 %.not10.i, label %bb.l, label %.loopexit
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #29
+  %.val13.i = load i32, ptr %i.af, align 8        ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !99)
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.07.021.i, i64 8
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %i.ai, align 8, !noalias !99
@@ -223,7 +224,7 @@ bb.l:                                             ; preds = %bb.k
   ]
 
 bb.m:                                             ; preds = %bb.l
-  %i.ak = and i32 %i.ag, 128
+  %i.ak = and i32 %.val13.i, 128
   %.not12.i.i = icmp eq i32 %i.ak, 0
   br i1 %.not12.i.i, label %.invoke, label %_ZN11OpenImageIO4v3_1L9stringizeB5cxx11ERKNS0_10ParamValueERKNS0_12_GLOBAL__N_16XMPtagE.exit.thread42.i
 
@@ -247,7 +248,7 @@ _ZN11OpenImageIO4v3_1L9stringizeB5cxx11ERKNS0_10ParamValueERKNS0_12_GLOBAL__N_16
   br label %bb.r
 
 bb.n:                                             ; preds = %bb.l
-  %i.au = and i32 %i.ag, 1
+  %i.au = and i32 %.val13.i, 1
   %.not.i20.i = icmp eq i32 %i.au, 0
   br i1 %.not.i20.i, label %.invoke, label %bb.o
 
@@ -364,7 +365,7 @@ bb.r:                                             ; preds = %_ZN11OpenImageIO4v3
 bb.s:                                             ; preds = %bb.r
   store ptr %i.x, ptr %i.p, align 8, !tbaa !113
   %i.cu = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 4 uses
-  %i.cv = getelementptr inbounds nuw i8, ptr %i.p, i64 24 ; 5 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %i.p, i64 24 ; 4 uses
   store ptr %i.cv, ptr %i.cu, align 8, !tbaa !70
   %i.cw = load ptr, ptr %6, align 8, !tbaa !83    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #29
@@ -395,14 +396,13 @@ bb.u:                                             ; preds = %._crit_edge.i.i.i.i
   %i.db = phi ptr [ %i.cy, %._crit_edge.i.i.i.i.thread.i ], [ %i.cv, %._crit_edge.i.i.i.i.i ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.db, ptr noundef nonnull align 1 dereferenceable(1) %i.cw, i64 %i.ct, i1 false)
   %.pre = load i64, ptr %i.d, align 8, !tbaa !64
-  %.pre333 = load ptr, ptr %i.cu, align 8, !tbaa !83
   br label %_ZNSt4pairIPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2IRS5_RSB_TnNSt9enable_ifIXaaclsr5_PCCPE22_MoveConstructiblePairIT_T0_EEclsr5_PCCPE30_ImplicitlyMoveConvertiblePairISH_SI_EEEbE4typeELb1EEEOSH_OSI_.exit.i.i
 
 _ZNSt4pairIPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2IRS5_RSB_TnNSt9enable_ifIXaaclsr5_PCCPE22_MoveConstructiblePairIT_T0_EEclsr5_PCCPE30_ImplicitlyMoveConvertiblePairISH_SI_EEEbE4typeELb1EEEOSH_OSI_.exit.i.i: ; preds = %bb.u, %bb.t
-  %29 = phi ptr [ %.pre333, %bb.u ], [ %i.cv, %bb.t ]
   %i.dc = phi i64 [ %.pre, %bb.u ], [ 1, %bb.t ]  ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   store i64 %i.dc, ptr %i.dd, align 8, !tbaa !72
+  %29 = load ptr, ptr %i.cu, align 8, !tbaa !83
   %i.de = getelementptr inbounds nuw i8, ptr %29, i64 %i.dc
   store i8 0, ptr %i.de, align 1, !tbaa !74
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #29

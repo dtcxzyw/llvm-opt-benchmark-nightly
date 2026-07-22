@@ -204,16 +204,16 @@ _ZNK6google8protobuf15FieldDescriptor21real_containing_oneofEv.exit:
   %67 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %68 = alloca %"class.std::__cxx11::basic_string", align 8 ; 24 uses
   %69 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
-  %70 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
-  %71 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
-  %72 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
-  %73 = alloca %"class.std::__cxx11::basic_string", align 8 ; 18 uses
-  %74 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 7 uses
+  %70 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 5 uses
+  %71 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 5 uses
+  %72 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 5 uses
+  %73 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
+  %74 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %75 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %76 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  %77 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 8 uses
-  %78 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 8 uses
-  %79 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 8 uses
+  %77 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 7 uses
+  %78 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 7 uses
+  %79 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 7 uses
   %80 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %81 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %82 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -264,52 +264,45 @@ _ZNK6google8protobuf15FieldDescriptor21real_containing_oneofEv.exit:
   tail call fastcc void @_ZN6google8protobuf8compiler3php12_GLOBAL__N_123GenerateFieldDocCommentEPNS0_2io7PrinterEPKNS0_15FieldDescriptorERKNS2_7OptionsEi(ptr noundef %2, ptr noundef nonnull %0, ptr noundef nonnull align 8 dereferenceable(40) %1, i32 noundef 2)
   call void @llvm.lifetime.start.p0(ptr nonnull %69) #26
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !884
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !884  ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 93
   %i.t = load i8, ptr %i.s, align 1, !tbaa !52, !range !18, !noundef !19
   %i.u = trunc nuw i8 %i.t to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %70) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %71) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %72) #26
-  br i1 %i.u, label %bb.a, label %.thread1032
+  br i1 %i.u, label %.thread1032, label %._crit_edge.i.i
 
 .thread1032:                                      ; preds = %_ZNK6google8protobuf15FieldDescriptor21real_containing_oneofEv.exit
-  %i.v = getelementptr inbounds nuw i8, ptr %69, i64 16 ; 2 uses
-  store ptr %i.v, ptr %69, align 8, !tbaa !50
-  %i.w = getelementptr inbounds nuw i8, ptr %69, i64 8
-  store i64 0, ptr %i.w, align 8, !tbaa !40
-  store i8 0, ptr %i.v, align 8, !tbaa !52
-  call void @llvm.lifetime.end.p0(ptr nonnull %72) #26
-  call void @llvm.lifetime.end.p0(ptr nonnull %71) #26
-  call void @llvm.lifetime.end.p0(ptr nonnull %70) #26
-  call void @llvm.lifetime.start.p0(ptr nonnull %73) #26
-  call void @llvm.lifetime.start.p0(ptr nonnull %74) #26
-  call void @llvm.lifetime.start.p0(ptr nonnull %77) #26
-  call void @llvm.lifetime.start.p0(ptr nonnull %78) #26
-  call void @llvm.lifetime.start.p0(ptr nonnull %79) #26
-  br label %._crit_edge.i.i296
-
-bb.a:                                             ; preds = %_ZNK6google8protobuf15FieldDescriptor21real_containing_oneofEv.exit
   store i64 16, ptr %70, align 8
-  %122 = getelementptr inbounds nuw i8, ptr %70, i64 8
-  store ptr @.str.153, ptr %122, align 8
-  %123 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %124 = load ptr, ptr %123, align 8, !tbaa !404  ; 2 uses
-  %.0.copyload.i.i.i = load i16, ptr %124, align 1
-  %125 = zext i16 %.0.copyload.i.i.i to i64       ; 2 uses
-  %126 = xor i64 %125, -1
-  %127 = getelementptr inbounds i8, ptr %124, i64 %126
-  store i64 %125, ptr %71, align 8, !tbaa !51
+  %i.v = getelementptr inbounds nuw i8, ptr %70, i64 8
+  store ptr @.str.153, ptr %i.v, align 8
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %122 = load ptr, ptr %i.w, align 8, !tbaa !404  ; 2 uses
+  %.0.copyload.i.i.i = load i16, ptr %122, align 1
+  %123 = zext i16 %.0.copyload.i.i.i to i64       ; 2 uses
+  %124 = xor i64 %123, -1
+  %125 = getelementptr inbounds i8, ptr %122, i64 %124
+  store i64 %123, ptr %71, align 8, !tbaa !51
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %71, i64 8
-  store ptr %127, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !225
+  store ptr %125, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !225
   store i64 46, ptr %72, align 8
-  %128 = getelementptr inbounds nuw i8, ptr %72, i64 8
-  store ptr @.str.154, ptr %128, align 8
+  %126 = getelementptr inbounds nuw i8, ptr %72, i64 8
+  store ptr @.str.154, ptr %126, align 8
   call void @_ZN4absl12lts_202505126StrCatB5cxx11ERKNS0_8AlphaNumES3_S3_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %69, ptr noundef nonnull align 8 dereferenceable(48) %70, ptr noundef nonnull align 8 dereferenceable(48) %71, ptr noundef nonnull align 8 dereferenceable(48) %72)
   %.pre = load ptr, ptr %i.q, align 8, !tbaa !884
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 93
-  %.pre742 = load i8, ptr %.phi.trans.insert, align 1, !tbaa !52, !range !18
-  %129 = trunc nuw i8 %.pre742 to i1
+  br label %bb.a
+
+._crit_edge.i.i:                                  ; preds = %_ZNK6google8protobuf15FieldDescriptor21real_containing_oneofEv.exit
+  %127 = getelementptr inbounds nuw i8, ptr %69, i64 16 ; 2 uses
+  store ptr %127, ptr %69, align 8, !tbaa !50
+  %128 = getelementptr inbounds nuw i8, ptr %69, i64 8
+  store i64 0, ptr %128, align 8, !tbaa !40
+  store i8 0, ptr %127, align 8, !tbaa !52
+  br label %bb.a
+
+bb.a:                                             ; preds = %._crit_edge.i.i, %.thread1032
+  %129 = phi ptr [ %i.r, %._crit_edge.i.i ], [ %.pre, %.thread1032 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %72) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %71) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %70) #26
@@ -318,7 +311,10 @@ bb.a:                                             ; preds = %_ZNK6google8protobu
   call void @llvm.lifetime.start.p0(ptr nonnull %77) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %78) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %79) #26
-  br i1 %129, label %bb.b, label %._crit_edge.i.i296
+  %130 = getelementptr inbounds nuw i8, ptr %129, i64 93
+  %131 = load i8, ptr %130, align 1, !tbaa !52, !range !18, !noundef !19
+  %132 = trunc nuw i8 %131 to i1
+  br i1 %132, label %bb.b, label %._crit_edge.i.i296
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %75) #26
@@ -646,7 +642,7 @@ bb.m:                                             ; preds = %_ZNKSt7__cxx1112bas
   invoke void @_ZN4absl12lts_202505126StrCatB5cxx11ERKNS0_8AlphaNumES3_S3_S3_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %73, ptr noundef nonnull align 8 dereferenceable(48) %74, ptr noundef nonnull align 8 dereferenceable(48) %77, ptr noundef nonnull align 8 dereferenceable(48) %78, ptr noundef nonnull align 8 dereferenceable(48) %79)
           to label %.critedge276 unwind label %.thread721
 
-._crit_edge.i.i296:                               ; preds = %.thread1032, %bb.a
+._crit_edge.i.i296:                               ; preds = %bb.a
   %i.di = getelementptr inbounds nuw i8, ptr %73, i64 16 ; 2 uses
   store ptr %i.di, ptr %73, align 8, !tbaa !50
   %i.dj = getelementptr inbounds nuw i8, ptr %73, i64 8

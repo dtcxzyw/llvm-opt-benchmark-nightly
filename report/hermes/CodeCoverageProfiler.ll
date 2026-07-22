@@ -203,8 +203,8 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes2vm13RuntimeModuleESt6vectorIbSaIbE
   ret void
 
 bb.e:                                             ; preds = %.lr.ph49, %_ZN4llvh16DenseMapIteratorIPN6hermes2vm13RuntimeModuleESt6vectorIbSaIbEENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S7_EELb0EEppEv.exit
-  %.sroa.040.048 = phi ptr [ %.pn14.i, %.lr.ph49 ], [ %.sroa.040.2, %_ZN4llvh16DenseMapIteratorIPN6hermes2vm13RuntimeModuleESt6vectorIbSaIbEENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S7_EELb0EEppEv.exit ] ; 5 uses
-  %i.ap = load ptr, ptr %.sroa.040.048, align 8, !tbaa !112 ; 3 uses
+  %.sroa.040.048 = phi ptr [ %.pn14.i, %.lr.ph49 ], [ %.sroa.040.2, %_ZN4llvh16DenseMapIteratorIPN6hermes2vm13RuntimeModuleESt6vectorIbSaIbEENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S7_EELb0EEppEv.exit ] ; 6 uses
+  %i.ap = load ptr, ptr %.sroa.040.048, align 8, !tbaa !112
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 80
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !94 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #14
@@ -212,9 +212,10 @@ bb.e:                                             ; preds = %.lr.ph49, %_ZN4llvh
   %i.at = load i32, ptr %i.as, align 8, !tbaa !145
   store i32 %i.at, ptr %i.f, align 4, !tbaa !3
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
-  %i.au = getelementptr inbounds nuw i8, ptr %i.ap, i64 104
+  %9 = load ptr, ptr %.sroa.040.048, align 8, !tbaa !112 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %9, i64 104
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !139
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.ap, i64 112
+  %i.aw = getelementptr inbounds nuw i8, ptr %9, i64 112
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !146
   store ptr %i.av, ptr %6, align 8
   store i64 %i.ax, ptr %i.y, align 8
@@ -296,20 +297,21 @@ bb.g:                                             ; preds = %.lr.ph, %bb.aj
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   call void @_ZNK6hermes3hbc20BCProviderFromBuffer32getExceptionTableAndDebugOffsetsEj(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.269") align 8 %5, ptr noundef nonnull align 8 dereferenceable(376) %i.ar, i32 noundef %.046) #14
-  %i.cd = load ptr, ptr %i.z, align 8, !tbaa !150 ; 2 uses
+  %i.cd = load ptr, ptr %i.z, align 8, !tbaa !150 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   %i.ce = icmp ne ptr %i.cd, null
   %or.cond = and i1 %i.bp, %i.ce
   br i1 %or.cond, label %bb.i, label %bb.z
 
 bb.i:                                             ; preds = %bb.h
-  %i.cf = load i32, ptr %i.cd, align 4, !tbaa !155 ; 2 uses
+  %i.cf = load i32, ptr %i.cd, align 4, !tbaa !155
   %.not = icmp eq i32 %i.cf, -1
   br i1 %.not, label %bb.z, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
-  call void @_ZNK6hermes3hbc9DebugInfo21getLocationForAddressEjj(ptr dead_on_unwind nonnull writable sret(%"class.hermes::OptValue") align 4 %7, ptr noundef nonnull align 8 dereferenceable(136) %i.bc, i32 noundef %i.cf, i32 noundef 0) #14
+  %10 = load i32, ptr %i.cd, align 4, !tbaa !155
+  call void @_ZNK6hermes3hbc9DebugInfo21getLocationForAddressEjj(ptr dead_on_unwind nonnull writable sret(%"class.hermes::OptValue") align 4 %7, ptr noundef nonnull align 8 dereferenceable(136) %i.bc, i32 noundef %10, i32 noundef 0) #14
   %i.cg = load i8, ptr %i.aa, align 4, !tbaa !157, !range !160, !noundef !89
   %i.ch = trunc nuw i8 %i.cg to i1
   br i1 %i.ch, label %bb.k, label %bb.y

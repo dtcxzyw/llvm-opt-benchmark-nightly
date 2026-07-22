@@ -201,7 +201,7 @@ bb.t:                                             ; preds = %bb.j
   br i1 %i.bm, label %bb.u, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit37
 
 bb.u:                                             ; preds = %bb.t
-  %i.bn = getelementptr inbounds i8, ptr %i.am, i64 -24
+  %i.bn = getelementptr inbounds i8, ptr %i.am, i64 -24 ; 2 uses
   %i.bo = load i64, ptr %i.bn, align 8, !tbaa !13
   %i.bp = icmp eq i64 %i.bo, 1
   br i1 %i.bp, label %bb.v, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit37
@@ -212,8 +212,9 @@ bb.v:                                             ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 45, ptr %i.a, align 1, !tbaa !16, !noalias !47
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !29, !noalias !47
+  %7 = load i64, ptr %i.bn, align 8, !tbaa !13, !noalias !47
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #31, !noalias !47
-  invoke void @_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %6, ptr noundef nonnull %i.a, i64 noundef 1, ptr noundef %i.br, i64 noundef 1, ptr noundef nonnull align 1 dereferenceable(1) %2)
+  invoke void @_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %6, ptr noundef nonnull %i.a, i64 noundef 1, ptr noundef %i.br, i64 noundef %7, ptr noundef nonnull align 1 dereferenceable(1) %2)
           to label %bb.w unwind label %bb.ad
 
 bb.w:                                             ; preds = %bb.v

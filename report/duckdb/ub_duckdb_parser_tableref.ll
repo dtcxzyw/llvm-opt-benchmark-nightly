@@ -201,8 +201,8 @@ define void @_ZNK6duckdb17ExpressionListRef8ToStringB5cxx11Ev(ptr dead_on_unwind
   %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = alloca i64, align 8                      ; 6 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
-  %i.d = alloca i64, align 8                      ; 4 uses
-  %i.e = alloca i64, align 8                      ; 4 uses
+  %i.d = alloca i64, align 8                      ; 7 uses
+  %i.e = alloca i64, align 8                      ; 7 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
@@ -277,7 +277,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i29: ; pre
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit32: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i29, %bb.b
   %i.u = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6duckdb6vectorINS0_INS_10unique_ptrINS_16ParsedExpressionESt14default_deleteIS2_ELb1EEELb1ESaIS5_EEELb1ESaIS7_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 noundef %.01394)
-          to label %bb.e unwind label %.loopexit87 ; 5 uses
+          to label %bb.e unwind label %.loopexit87 ; 6 uses
 
 bb.e:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit32
   %i.v = load i64, ptr %i.g, align 8, !tbaa !14
@@ -296,15 +296,31 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i33: ; pre
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit36.preheader unwind label %.loopexit87 ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit36.preheader: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i33
-  %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 8 ; 4 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 8 ; 5 uses
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !173
-  %i.aa = load ptr, ptr %i.u, align 8, !tbaa !174 ; 2 uses
+  %i.aa = load ptr, ptr %i.u, align 8, !tbaa !174
   %.not97 = icmp eq ptr %i.z, %i.aa
-  br i1 %.not97, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit36._crit_edge, label %bb.f
+  br i1 %.not97, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit36._crit_edge, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit44.peel
 
-bb.f:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit36.preheader
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit44.peel: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit36.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !16 ; 3 uses
+  %7 = load ptr, ptr %i.y, align 8, !tbaa !173    ; 2 uses
+  %8 = load ptr, ptr %i.u, align 8, !tbaa !174    ; 3 uses
+  %9 = ptrtoint ptr %7 to i64
+  %10 = ptrtoint ptr %8 to i64
+  %11 = sub i64 %9, %10
+  %12 = ashr exact i64 %11, 3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
+  store i64 0, ptr %i.d, align 8, !tbaa !37
+  store i64 %12, ptr %i.e, align 8, !tbaa !37
+  %.not.i.i.i.peel.not = icmp eq ptr %7, %8
+  br i1 %.not.i.i.i.peel.not, label %.noexc.i68, label %bb.f, !prof !35
+
+bb.f:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit44.peel
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
+  %i.ab = load ptr, ptr %8, align 8, !tbaa !16    ; 3 uses
   %.not.i.peel = icmp eq ptr %i.ab, null
   br i1 %.not.i.peel, label %.noexc.i72, label %_ZNK6duckdb10unique_ptrINS_16ParsedExpressionESt14default_deleteIS1_ELb1EEptEv.exit.peel, !prof !35
 
@@ -394,11 +410,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i41: ; pre
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit44: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i41
-  %.pre114 = load ptr, ptr %i.u, align 8, !tbaa !174 ; 2 uses
-  %.pre = load ptr, ptr %i.y, align 8, !tbaa !173
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
+  %.pre = load ptr, ptr %i.y, align 8, !tbaa !173
+  %13 = load ptr, ptr %i.u, align 8, !tbaa !174   ; 2 uses
   %i.ba = ptrtoint ptr %.pre to i64
-  %i.bb = ptrtoint ptr %.pre114 to i64
+  %i.bb = ptrtoint ptr %13 to i64
   %i.bc = sub i64 %i.ba, %i.bb
   %i.bd = ashr exact i64 %i.bc, 3                 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
@@ -408,7 +424,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit44: ; preds = %_
   %.not.i.i.i = icmp ult i64 %.093, %i.bd
   br i1 %.not.i.i.i, label %bb.l, label %.noexc.i68, !prof !175
 
-.noexc.i68:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit44
+.noexc.i68:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit44.peel, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit44
   %i.be = call ptr @__cxa_allocate_exception(i64 16) #25 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
@@ -469,7 +485,7 @@ bb.k:                                             ; preds = %bb.h
 bb.l:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit44
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %.pre114, i64 %.093
+  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %.093
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !16 ; 3 uses
   %.not.i = icmp eq ptr %i.bp, null
   br i1 %.not.i, label %.noexc.i72, label %_ZNK6duckdb10unique_ptrINS_16ParsedExpressionESt14default_deleteIS1_ELb1EEptEv.exit, !prof !35

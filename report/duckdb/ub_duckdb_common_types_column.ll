@@ -203,8 +203,8 @@ _ZNSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE4findERKj.exit: ; preds = %b
 
 bb.q:                                             ; preds = %.lr.ph81, %_ZNSt13unordered_mapImN6duckdb12BufferHandleESt4hashImESt8equal_toImESaISt4pairIKmS1_EEE4findERS7_.exit
   %.sroa.037.080 = phi ptr [ %.sroa.037.078, %.lr.ph81 ], [ %.sroa.037.0, %_ZNSt13unordered_mapImN6duckdb12BufferHandleESt4hashImESt8equal_toImESaISt4pairIKmS1_EEE4findERS7_.exit ] ; 2 uses
-  %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.037.080, i64 8 ; 2 uses
-  %i.bh = load i32, ptr %i.bg, align 4, !tbaa !3  ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.037.080, i64 8 ; 3 uses
+  %i.bh = load i32, ptr %i.bg, align 4, !tbaa !3
   %i.bi = zext i32 %i.bh to i64                   ; 4 uses
   %i.bj = load i64, ptr %i.be, align 8, !tbaa !121
   %.not.not.i.i23 = icmp eq i64 %i.bj, 0
@@ -260,7 +260,8 @@ bb.v:                                             ; preds = %.lr.ph.i.i.i.i25
 
 .loopexit:                                        ; preds = %.lr.ph.i.i.i.i25, %.preheader, %..loopexit_crit_edge21.i.i.i.i29, %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
-  call void @_ZN6duckdb19ColumnDataAllocator3PinEj(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::BufferHandle") align 8 %3, ptr noundef nonnull align 8 dereferenceable(176) %0, i32 noundef %i.bh)
+  %4 = load i32, ptr %i.bg, align 4, !tbaa !3
+  call void @_ZN6duckdb19ColumnDataAllocator3PinEj(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::BufferHandle") align 8 %3, ptr noundef nonnull align 8 dereferenceable(176) %0, i32 noundef %4)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   %i.cb = load i32, ptr %i.bg, align 4, !tbaa !3
   %i.cc = zext i32 %i.cb to i64
@@ -663,9 +664,9 @@ _ZNK6duckdb18ColumnDataConsumer14ChunkReference17GetMinimumBlockIDEv.exit37: ; p
 
 .preheader109:                                    ; preds = %_ZNK6duckdb18ColumnDataConsumer14ChunkReference17GetMinimumBlockIDEv.exit37
   %i.bd = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 2 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %i.r, i64 24 ; 2 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %i.r, i64 24 ; 3 uses
   %i.bf = zext i32 %i.ak to i64                   ; 2 uses
-  %i.bg = load ptr, ptr %i.be, align 8, !tbaa !49 ; 2 uses
+  %i.bg = load ptr, ptr %i.be, align 8, !tbaa !49
   %i.bh = load ptr, ptr %i.bd, align 8, !tbaa !48 ; 2 uses
   %i.bi = ptrtoint ptr %i.bg to i64
   %i.bj = ptrtoint ptr %i.bh to i64               ; 2 uses
@@ -686,12 +687,12 @@ _ZNK6duckdb18ColumnDataConsumer14ChunkReference17GetMinimumBlockIDEv.exit37: ; p
   br label %bb.ao
 
 .lr.ph:                                           ; preds = %.preheader109, %_ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit
-  %13 = phi ptr [ %i.fh, %_ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit ], [ %i.bg, %.preheader109 ]
   %i.br = phi i64 [ %i.fk, %_ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit ], [ %i.bj, %.preheader109 ]
   %i.bs = phi ptr [ %i.fi, %_ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit ], [ %i.bh, %.preheader109 ]
   %i.bt = phi i64 [ %i.fg, %_ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit ], [ %i.bf, %.preheader109 ] ; 3 uses
   %.025113 = phi i32 [ %i.ff, %_ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit ], [ %i.ak, %.preheader109 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #24
+  %13 = load ptr, ptr %i.be, align 8, !tbaa !49
   %i.bu = ptrtoint ptr %13 to i64
   %i.bv = sub i64 %i.bu, %i.br
   %i.bw = sdiv exact i64 %i.bv, 40                ; 2 uses
@@ -1083,7 +1084,7 @@ _ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #24
   %i.ff = add i32 %.025113, 1                     ; 2 uses
   %i.fg = zext i32 %i.ff to i64                   ; 2 uses
-  %i.fh = load ptr, ptr %i.be, align 8, !tbaa !49 ; 2 uses
+  %i.fh = load ptr, ptr %i.be, align 8, !tbaa !49
   %i.fi = load ptr, ptr %i.bd, align 8, !tbaa !48 ; 2 uses
   %i.fj = ptrtoint ptr %i.fh to i64
   %i.fk = ptrtoint ptr %i.fi to i64               ; 2 uses

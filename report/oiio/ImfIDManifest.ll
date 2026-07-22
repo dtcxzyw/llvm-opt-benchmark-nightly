@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   %.080505 = phi i64 [ 1, %.lr.ph ], [ %i.er, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit145 ] ; 4 uses
   %i.ag = getelementptr [32 x i8], ptr %i.af, i64 %.080505 ; 3 uses
   %i.ah = getelementptr i8, ptr %i.ag, i64 -32
-  %i.ai = getelementptr i8, ptr %i.ag, i64 -24
+  %i.ai = getelementptr i8, ptr %i.ag, i64 -24    ; 2 uses
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !14 ; 2 uses
   %i.ak = icmp ugt i64 %i.aj, 255
   %i.al = load ptr, ptr %i.ag, align 8, !tbaa !18 ; 2 uses
@@ -227,7 +227,7 @@ bb.k:                                             ; preds = %bb.n
 
 bb.l:                                             ; preds = %bb.i, %bb.j
   %.090 = phi i64 [ 2, %bb.j ], [ 1, %bb.i ]      ; 4 uses
-  %.083 = phi i64 [ %i.as, %bb.j ], [ %i.an, %bb.i ] ; 5 uses
+  %.083 = phi i64 [ %i.as, %bb.j ], [ %i.an, %bb.i ] ; 2 uses
   %i.au = icmp ugt i64 %.083, %i.aj
   br i1 %i.au, label %bb.m, label %bb.p
 
@@ -250,11 +250,13 @@ bb.p:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #32
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #32
   call void @llvm.experimental.noalias.scope.decl(metadata !20)
+  %11 = load i64, ptr %i.ai, align 8, !tbaa !14, !noalias !20
   store ptr %i.r, ptr %7, align 8, !tbaa !23, !alias.scope !20
   %i.ax = load ptr, ptr %i.ah, align 8, !tbaa !18, !noalias !20 ; 2 uses
+  %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %.083, i64 %11) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #32, !noalias !20
-  store i64 %.083, ptr %i.d, align 8, !tbaa !24, !noalias !20
-  %i.ay = icmp samesign ugt i64 %.083, 15
+  store i64 %spec.select.i.i.i, ptr %i.d, align 8, !tbaa !24, !noalias !20
+  %i.ay = icmp samesign ugt i64 %spec.select.i.i.i, 15
   br i1 %i.ay, label %.noexc10.i.i, label %._crit_edge.i.i.i
 
 .noexc10.i.i:                                     ; preds = %bb.p
@@ -269,7 +271,7 @@ bb.p:                                             ; preds = %bb.l
 
 ._crit_edge.i.i.i:                                ; preds = %.noexc127, %bb.p
   %i.bb = phi ptr [ %i.az, %.noexc127 ], [ %i.r, %bb.p ] ; 2 uses
-  switch i64 %.083, label %bb.r [
+  switch i64 %spec.select.i.i.i, label %bb.r [
     i64 1, label %bb.q
     i64 0, label %bb.s
   ]
@@ -280,7 +282,7 @@ bb.q:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.s
 
 bb.r:                                             ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bb, ptr align 1 %i.ax, i64 %.083, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bb, ptr align 1 %i.ax, i64 %spec.select.i.i.i, i1 false)
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q, %._crit_edge.i.i.i

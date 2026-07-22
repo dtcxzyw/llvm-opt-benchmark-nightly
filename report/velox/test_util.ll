@@ -203,8 +203,8 @@ bb.fp:                                            ; preds = %bb.fg
 
 bb.fq:                                            ; preds = %.lr.ph566, %bb.in
   %.sroa.0499.0564 = phi ptr [ %i.ns, %.lr.ph566 ], [ %i.vv, %bb.in ] ; 5 uses
-  %i.os = getelementptr inbounds nuw i8, ptr %.sroa.0499.0564, i64 16
-  %i.ot = load i8, ptr %i.os, align 8, !tbaa !39  ; 2 uses
+  %i.os = getelementptr inbounds nuw i8, ptr %.sroa.0499.0564, i64 16 ; 2 uses
+  %i.ot = load i8, ptr %i.os, align 8, !tbaa !39
   %i.ou = icmp eq i8 %i.ot, 2
   br i1 %i.ou, label %bb.fr, label %bb.ic
 
@@ -607,7 +607,8 @@ bb.ib:                                            ; preds = %bb.ia, %bb.hu
 
 bb.ic:                                            ; preds = %bb.fq
   call void @llvm.lifetime.start.p0(ptr nonnull %55) #19
-  %.not.i.i.i375 = icmp eq i8 %i.ot, 1
+  %70 = load i8, ptr %i.os, align 8, !tbaa !39
+  %.not.i.i.i375 = icmp eq i8 %70, 1
   br i1 %.not.i.i.i375, label %_ZNK5arrow5Datum6scalarEv.exit, label %bb.id
 
 bb.id:                                            ; preds = %bb.ic
@@ -1010,15 +1011,15 @@ bb.z:                                             ; preds = %bb.a
   %i.bu = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bv = load <2 x ptr>, ptr %.phi.trans.insert, align 8, !tbaa !29, !noalias !403
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !375, !noalias !403 ; 2 uses
-  %.pre168 = load ptr, ptr %.pre, align 8, !tbaa !32
-  %.phi.trans.insert169 = getelementptr inbounds nuw i8, ptr %.pre168, i64 32
-  %.pre170 = load ptr, ptr %.phi.trans.insert169, align 8
   store ptr null, ptr %i.bu, align 8, !tbaa !28, !noalias !403
   store <2 x ptr> %i.bv, ptr %7, align 16, !tbaa !29, !alias.scope !403
   store ptr null, ptr %i.bs, align 8, !tbaa !375, !noalias !403
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #19
-  invoke void %.pre170(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result.124") align 8 %9, ptr noundef nonnull align 8 dereferenceable(192) %.pre, ptr noundef %1)
+  %18 = load ptr, ptr %.pre, align 8, !tbaa !32
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 32
+  %20 = load ptr, ptr %19, align 8
+  invoke void %20(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result.124") align 8 %9, ptr noundef nonnull align 8 dereferenceable(192) %.pre, ptr noundef %1)
           to label %bb.aa unwind label %bb.ai
 
 bb.aa:                                            ; preds = %bb.z

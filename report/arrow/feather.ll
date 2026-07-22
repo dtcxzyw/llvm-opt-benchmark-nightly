@@ -203,11 +203,11 @@ bb.g:                                             ; preds = %_ZNSt12__shared_ptr
   store ptr %2, ptr %i.ad, align 8, !tbaa !461
   %i.ae = getelementptr inbounds nuw i8, ptr %42, i64 16
   store ptr %3, ptr %i.ae, align 8, !tbaa !465
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 50 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 51 uses
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !250, !noalias !466
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !253, !noalias !466 ; 3 uses
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !253, !noalias !466
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 40
-  %i.aj = load i32, ptr %i.ai, align 8, !tbaa !256, !noalias !466 ; 2 uses
+  %i.aj = load i32, ptr %i.ai, align 8, !tbaa !256, !noalias !466
   %i.ak = icmp eq i32 %i.aj, 29
   br i1 %i.ak, label %bb.h, label %bb.i
 
@@ -222,8 +222,12 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #24, !noalias !466
+  %43 = load ptr, ptr %i.af, align 8, !tbaa !250, !noalias !466
+  %44 = load ptr, ptr %43, align 8, !tbaa !253, !noalias !466 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !470)
-  switch i32 %i.aj, label %bb.ac [
+  %45 = getelementptr inbounds nuw i8, ptr %44, i64 40
+  %46 = load i32, ptr %45, align 8, !tbaa !256, !noalias !470
+  switch i32 %46, label %bb.ac [
     i32 1, label %bb.j
     i32 3, label %bb.k
     i32 5, label %bb.l
@@ -362,10 +366,10 @@ bb.ab:                                            ; preds = %bb.i
 bb.ac:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #24, !noalias !470
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24, !noalias !470
-  %i.bg = load ptr, ptr %i.ah, align 8, !tbaa !43, !noalias !470
+  %i.bg = load ptr, ptr %44, align 8, !tbaa !43, !noalias !470
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 32
   %i.bi = load ptr, ptr %i.bh, align 8, !noalias !470
-  invoke void %i.bi(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %6, ptr noundef nonnull align 8 dereferenceable(72) %i.ah, i1 noundef zeroext false)
+  invoke void %i.bi(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %6, ptr noundef nonnull align 8 dereferenceable(72) %44, i1 noundef zeroext false)
           to label %.noexc143 unwind label %bb.js, !inline_history !474
 
 .noexc143:                                        ; preds = %bb.ac

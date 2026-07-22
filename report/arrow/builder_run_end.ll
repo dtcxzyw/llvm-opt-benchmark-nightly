@@ -203,14 +203,11 @@ _ZN5arrow6StatusD2Ev.exit50:                      ; preds = %_ZN5arrow6StatusD2E
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 104
   %.pre = load i64, ptr %i.bb, align 8, !tbaa !151
   %.pre83 = load ptr, ptr %i.bc, align 8, !tbaa !67, !noalias !259
-  %.pre84 = load ptr, ptr %.pre83, align 8, !tbaa !58, !noalias !259 ; 2 uses
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre84, i64 112
-  %.pre85 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !82, !noalias !262
+  %.pre84 = load ptr, ptr %.pre83, align 8, !tbaa !58, !noalias !259
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN5arrow6StatusD2Ev.exit57
-  %8 = phi i64 [ %.pre85, %.lr.ph ], [ %i.cv, %_ZN5arrow6StatusD2Ev.exit57 ] ; 2 uses
-  %i.be = phi ptr [ %.pre84, %.lr.ph ], [ %i.ct, %_ZN5arrow6StatusD2Ev.exit57 ] ; 9 uses
+  %i.be = phi ptr [ %.pre84, %.lr.ph ], [ %i.ct, %_ZN5arrow6StatusD2Ev.exit57 ] ; 10 uses
   %i.bf = phi i64 [ %.pre, %.lr.ph ], [ %i.bk, %_ZN5arrow6StatusD2Ev.exit57 ]
   %.sroa.11.081 = phi i64 [ %i.ak, %.lr.ph ], [ %i.cy, %_ZN5arrow6StatusD2Ev.exit57 ] ; 2 uses
   %.sroa.7.080 = phi i64 [ 0, %.lr.ph ], [ %.sroa.speculated.i.i, %_ZN5arrow6StatusD2Ev.exit57 ]
@@ -221,64 +218,66 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN5arrow6
   %.sroa.speculated.i.i.i51 = call noundef i64 @llvm.smin.i64(i64 %4, i64 %.sroa.speculated4.i.i.i)
   %i.bj = sub nsw i64 %.sroa.speculated.i.i.i51, %.sroa.7.080
   %i.bk = add nsw i64 %i.bj, %i.bf                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #18, !noalias !267
-  %i.bl = load ptr, ptr %i.be, align 8, !tbaa !54, !noalias !262
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #18, !noalias !262
+  %8 = getelementptr inbounds nuw i8, ptr %i.be, i64 112
+  %9 = load i64, ptr %8, align 8, !tbaa !82, !noalias !265 ; 2 uses
+  %i.bl = load ptr, ptr %i.be, align 8, !tbaa !54, !noalias !265
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 16
-  %i.bn = load ptr, ptr %i.bm, align 8, !noalias !262
-  %i.bo = call noundef i64 %i.bn(ptr noundef nonnull align 8 dereferenceable(216) %i.be), !noalias !262, !inline_history !268 ; 2 uses
-  %.not.i.not.i.i = icmp slt i64 %i.bo, %8
+  %i.bn = load ptr, ptr %i.bm, align 8, !noalias !265
+  %i.bo = call noundef i64 %i.bn(ptr noundef nonnull align 8 dereferenceable(216) %i.be), !noalias !265, !inline_history !268 ; 2 uses
+  %.not.i.not.i.i = icmp slt i64 %i.bo, %9
   br i1 %.not.i.not.i.i, label %_ZN5arrow6StatusD2Ev.exit10.thread.i.i, label %_ZN5arrow6StatusD2Ev.exit.i.i
 
 _ZN5arrow6StatusD2Ev.exit10.thread.i.i:           ; preds = %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18, !noalias !267
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18, !noalias !262
   br label %_ZN5arrow6StatusD2Ev.exit57
 
 _ZN5arrow6StatusD2Ev.exit.i.i:                    ; preds = %bb.b
   %i.bp = add nsw i64 %i.bo, 1
-  %i.bq = shl nsw i64 %8, 1
+  %i.bq = shl nsw i64 %9, 1
   %.sroa.speculated.i.i.i.i = call noundef i64 @llvm.smax.i64(i64 %i.bp, i64 %i.bq)
-  %i.br = load ptr, ptr %i.be, align 8, !tbaa !54, !noalias !262
+  %i.br = load ptr, ptr %i.be, align 8, !tbaa !54, !noalias !265
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 24
-  %i.bt = load ptr, ptr %i.bs, align 8, !noalias !262
-  call void %i.bt(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %6, ptr noundef nonnull align 8 dereferenceable(216) %i.be, i64 noundef %.sroa.speculated.i.i.i.i), !noalias !267, !inline_history !268
-  %.pr.i.i = load ptr, ptr %6, align 8, !tbaa !86, !noalias !267 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18, !noalias !267
+  %i.bt = load ptr, ptr %i.bs, align 8, !noalias !265
+  call void %i.bt(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %6, ptr noundef nonnull align 8 dereferenceable(216) %i.be, i64 noundef %.sroa.speculated.i.i.i.i), !noalias !262, !inline_history !268
+  %.pr.i.i = load ptr, ptr %6, align 8, !tbaa !86, !noalias !262 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18, !noalias !262
   %i.bu = icmp eq ptr %.pr.i.i, null
   br i1 %i.bu, label %_ZN5arrow6StatusD2Ev.exit57, label %.critedge.sink.split
 
 _ZN5arrow6StatusD2Ev.exit57:                      ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i, %_ZN5arrow6StatusD2Ev.exit10.thread.i.i
   %i.bv = getelementptr inbounds nuw i8, ptr %i.be, i64 48
-  %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !52, !noalias !267
+  %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !52, !noalias !262
   %i.bx = getelementptr inbounds nuw i8, ptr %i.be, i64 80 ; 3 uses
-  %i.by = load i64, ptr %i.bx, align 8, !tbaa !269, !noalias !267 ; 2 uses
+  %i.by = load i64, ptr %i.bx, align 8, !tbaa !269, !noalias !262 ; 2 uses
   %i.bz = sdiv i64 %i.by, 8
   %i.ca = getelementptr inbounds i8, ptr %i.bw, i64 %i.bz ; 2 uses
-  %i.cb = load i8, ptr %i.ca, align 1, !tbaa !65, !noalias !267
+  %i.cb = load i8, ptr %i.ca, align 1, !tbaa !65, !noalias !262
   %i.cc = srem i64 %i.by, 8
   %i.cd = getelementptr inbounds i8, ptr @_ZN5arrow8bit_utilL8kBitmaskE, i64 %i.cc
-  %i.ce = load i8, ptr %i.cd, align 1, !tbaa !65, !noalias !267
+  %i.ce = load i8, ptr %i.cd, align 1, !tbaa !65, !noalias !262
   %i.cf = or i8 %i.ce, %i.cb
-  store i8 %i.cf, ptr %i.ca, align 1, !tbaa !65, !noalias !267
-  %i.cg = load i64, ptr %i.bx, align 8, !tbaa !269, !noalias !267
+  store i8 %i.cf, ptr %i.ca, align 1, !tbaa !65, !noalias !262
+  %i.cg = load i64, ptr %i.bx, align 8, !tbaa !269, !noalias !262
   %i.ch = add nsw i64 %i.cg, 1
-  store i64 %i.ch, ptr %i.bx, align 8, !tbaa !269, !noalias !267
+  store i64 %i.ch, ptr %i.bx, align 8, !tbaa !269, !noalias !262
   %i.ci = getelementptr inbounds nuw i8, ptr %i.be, i64 104 ; 2 uses
-  %i.cj = load i64, ptr %i.ci, align 8, !tbaa !252, !noalias !267
+  %i.cj = load i64, ptr %i.ci, align 8, !tbaa !252, !noalias !262
   %i.ck = add nsw i64 %i.cj, 1
-  store i64 %i.ck, ptr %i.ci, align 8, !tbaa !252, !noalias !267
+  store i64 %i.ck, ptr %i.ci, align 8, !tbaa !252, !noalias !262
   %i.cl = getelementptr inbounds nuw i8, ptr %i.be, i64 184
-  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !52, !noalias !267
+  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !52, !noalias !262
   %i.cn = getelementptr inbounds nuw i8, ptr %i.be, i64 200 ; 3 uses
-  %i.co = load i64, ptr %i.cn, align 8, !tbaa !270, !noalias !267
+  %i.co = load i64, ptr %i.cn, align 8, !tbaa !270, !noalias !262
   %i.cp = getelementptr inbounds i8, ptr %i.cm, i64 %i.co
-  store i64 %i.bk, ptr %i.cp, align 1, !noalias !267
-  %i.cq = load i64, ptr %i.cn, align 8, !tbaa !270, !noalias !267
+  store i64 %i.bk, ptr %i.cp, align 1, !noalias !262
+  %i.cq = load i64, ptr %i.cn, align 8, !tbaa !270, !noalias !262
   %i.cr = add nsw i64 %i.cq, 8
-  store i64 %i.cr, ptr %i.cn, align 8, !tbaa !270, !noalias !267
+  store i64 %i.cr, ptr %i.cn, align 8, !tbaa !270, !noalias !262
   %i.cs = load ptr, ptr %i.bc, align 8, !tbaa !67
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !58 ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 112
-  %i.cv = load i64, ptr %i.cu, align 8, !tbaa !82 ; 2 uses
+  %i.cv = load i64, ptr %i.cu, align 8, !tbaa !82
   store i64 %i.cv, ptr %i.ap, align 8, !tbaa !82
   store i64 %i.bk, ptr %i.bd, align 8, !tbaa !84
   store i64 %i.bk, ptr %i.bb, align 8, !tbaa !151
@@ -681,12 +680,12 @@ begin_hunk_1_@llvm.smin.i64
 !259 = !{!260}
 !260 = distinct !{!260, !261, !"_ZN5arrow20RunEndEncodedBuilder14DoAppendRunEndIlEENS_6StatusEl: argument 0"}
 !261 = distinct !{!261, !"_ZN5arrow20RunEndEncodedBuilder14DoAppendRunEndIlEENS_6StatusEl"}
-!262 = !{!263, !265, !260}
-!263 = distinct !{!263, !264, !"_ZN5arrow12ArrayBuilder7ReserveEl: argument 0"}
-!264 = distinct !{!264, !"_ZN5arrow12ArrayBuilder7ReserveEl"}
-!265 = distinct !{!265, !266, !"_ZN5arrow14NumericBuilderINS_9Int64TypeEE6AppendEl: argument 0"}
-!266 = distinct !{!266, !"_ZN5arrow14NumericBuilderINS_9Int64TypeEE6AppendEl"}
-!267 = !{!265, !260}
+!262 = !{!263, !260}
+!263 = distinct !{!263, !264, !"_ZN5arrow14NumericBuilderINS_9Int64TypeEE6AppendEl: argument 0"}
+!264 = distinct !{!264, !"_ZN5arrow14NumericBuilderINS_9Int64TypeEE6AppendEl"}
+!265 = !{!266, !263, !260}
+!266 = distinct !{!266, !267, !"_ZN5arrow12ArrayBuilder7ReserveEl: argument 0"}
+!267 = distinct !{!267, !"_ZN5arrow12ArrayBuilder7ReserveEl"}
 !268 = distinct !{null, null, null}
 !269 = !{!37, !28, i64 56}
 !270 = !{!38, !28, i64 40}

@@ -204,7 +204,7 @@ bb.ah:                                            ; preds = %.lr.ph494.i
 thread-pre-split461.i:                            ; preds = %bb.ah, %bb.af, %bb.ae, %bb.ad, %.loopexit.i
   %i.em = phi i8 [ %i.cu, %.loopexit.i ], [ %i.cx, %bb.ae ], [ %.pr462.pre.i, %bb.ad ], [ %i.ds, %bb.af ], [ %i.eh, %bb.ah ]
   %.1317.i = phi i64 [ -1, %.loopexit.i ], [ -1, %bb.ae ], [ %spec.store.select.i, %bb.ad ], [ %i.dq, %bb.af ], [ %i.ef, %bb.ah ] ; 13 uses
-  %.4305.i = phi ptr [ %.2303.i, %.loopexit.i ], [ %i.cw, %bb.ae ], [ %i.dl, %bb.ad ], [ %i.dr, %bb.af ], [ %i.eg, %bb.ah ] ; 25 uses
+  %.4305.i = phi ptr [ %.2303.i, %.loopexit.i ], [ %i.cw, %bb.ae ], [ %i.dl, %bb.ad ], [ %i.dr, %bb.af ], [ %i.eg, %bb.ah ] ; 26 uses
   switch i8 %i.em, label %bb.ak [
     i8 108, label %bb.ai
     i8 122, label %bb.al
@@ -213,7 +213,7 @@ thread-pre-split461.i:                            ; preds = %bb.ah, %bb.af, %bb.
   ]
 
 bb.ai:                                            ; preds = %thread-pre-split461.i
-  %i.en = getelementptr i8, ptr %.4305.i, i64 1   ; 6 uses
+  %i.en = getelementptr i8, ptr %.4305.i, i64 1   ; 7 uses
   %i.eo = load i8, ptr %i.en, align 1, !tbaa !205 ; 2 uses
   switch i8 %i.eo, label %bb.ao [
     i8 108, label %bb.aj
@@ -221,7 +221,7 @@ bb.ai:                                            ; preds = %thread-pre-split461
   ]
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.ep = getelementptr i8, ptr %.4305.i, i64 2   ; 4 uses
+  %i.ep = getelementptr i8, ptr %.4305.i, i64 2   ; 5 uses
   %.pr464.i.jt2 = load i8, ptr %i.ep, align 1, !tbaa !205 ; 2 uses
   %.not397.i.jt2 = icmp eq i8 %.pr464.i.jt2, 0
   br i1 %.not397.i.jt2, label %.thread567.i.jt1, label %bb.ap
@@ -232,19 +232,19 @@ bb.ak:                                            ; preds = %thread-pre-split461
   br i1 %.not397.i.jt0, label %.thread567.i.jt1, label %bb.aq
 
 bb.al:                                            ; preds = %thread-pre-split461.i
-  %i.eq = getelementptr i8, ptr %.4305.i, i64 1   ; 4 uses
+  %i.eq = getelementptr i8, ptr %.4305.i, i64 1   ; 5 uses
   %.pr464.i.jt3 = load i8, ptr %i.eq, align 1, !tbaa !205 ; 2 uses
   %.not397.i.jt3 = icmp eq i8 %.pr464.i.jt3, 0
   br i1 %.not397.i.jt3, label %.thread567.i.jt1, label %bb.ar
 
 bb.am:                                            ; preds = %thread-pre-split461.i
-  %i.er = getelementptr i8, ptr %.4305.i, i64 1   ; 4 uses
+  %i.er = getelementptr i8, ptr %.4305.i, i64 1   ; 5 uses
   %.pr464.i.jt4 = load i8, ptr %i.er, align 1, !tbaa !205 ; 2 uses
   %.not397.i.jt4 = icmp eq i8 %.pr464.i.jt4, 0
   br i1 %.not397.i.jt4, label %.thread567.i.jt1, label %bb.as
 
 bb.an:                                            ; preds = %thread-pre-split461.i
-  %i.es = getelementptr i8, ptr %.4305.i, i64 1   ; 4 uses
+  %i.es = getelementptr i8, ptr %.4305.i, i64 1   ; 5 uses
   %.pr464.i.jt5 = load i8, ptr %i.es, align 1, !tbaa !205 ; 2 uses
   %.not397.i.jt5 = icmp eq i8 %.pr464.i.jt5, 0
   br i1 %.not397.i.jt5, label %.thread567.i.jt1, label %bb.at
@@ -307,7 +307,7 @@ bb.au:                                            ; preds = %bb.ao, %bb.ap, %bb.
 
 bb.av:                                            ; preds = %bb.ao
   store i8 0, ptr %i.h, align 4, !tbaa !347
-  %.pre504.i.jt1 = load i8, ptr %i.en, align 1, !tbaa !205 ; 4 uses
+  %.pre504.i.jt1 = load i8, ptr %i.en, align 1, !tbaa !205 ; 3 uses
   switch i8 %.pre504.i.jt1, label %.thread567.i.jt1 [
     i8 115, label %.thread189
     i8 86, label %.thread189
@@ -321,7 +321,7 @@ bb.av:                                            ; preds = %bb.ao
 
 bb.aw:                                            ; preds = %bb.ap
   store i8 0, ptr %i.h, align 4, !tbaa !347
-  %.pre504.i.jt2 = load i8, ptr %i.ep, align 1, !tbaa !205 ; 2 uses
+  %.pre504.i.jt2 = load i8, ptr %i.ep, align 1, !tbaa !205
   switch i8 %.pre504.i.jt2, label %.thread567.i.jt1 [
     i8 100, label %bb.bp
     i8 105, label %bb.bp
@@ -333,7 +333,7 @@ bb.aw:                                            ; preds = %bb.ap
 
 bb.ax:                                            ; preds = %bb.aq
   store i8 0, ptr %i.h, align 4, !tbaa !347
-  %.pre504.i.jt0 = load i8, ptr %.4305.i, align 1, !tbaa !205 ; 6 uses
+  %.pre504.i.jt0 = load i8, ptr %.4305.i, align 1, !tbaa !205 ; 5 uses
   switch i8 %.pre504.i.jt0, label %.thread567.i.jt1 [
     i8 86, label %.thread189
     i8 115, label %.thread189
@@ -355,7 +355,7 @@ bb.ax:                                            ; preds = %bb.aq
 
 bb.ay:                                            ; preds = %bb.ar
   store i8 0, ptr %i.h, align 4, !tbaa !347
-  %.pre504.i.jt3 = load i8, ptr %i.eq, align 1, !tbaa !205 ; 2 uses
+  %.pre504.i.jt3 = load i8, ptr %i.eq, align 1, !tbaa !205
   switch i8 %.pre504.i.jt3, label %.thread567.i.jt1 [
     i8 100, label %bb.br
     i8 105, label %bb.br
@@ -367,7 +367,7 @@ bb.ay:                                            ; preds = %bb.ar
 
 bb.az:                                            ; preds = %bb.as
   store i8 0, ptr %i.h, align 4, !tbaa !347
-  %.pre504.i.jt4 = load i8, ptr %i.er, align 1, !tbaa !205 ; 2 uses
+  %.pre504.i.jt4 = load i8, ptr %i.er, align 1, !tbaa !205
   switch i8 %.pre504.i.jt4, label %.thread567.i.jt1 [
     i8 100, label %bb.bs
     i8 105, label %bb.bs
@@ -379,7 +379,7 @@ bb.az:                                            ; preds = %bb.as
 
 bb.ba:                                            ; preds = %bb.at
   store i8 0, ptr %i.h, align 4, !tbaa !347
-  %.pre504.i.jt5 = load i8, ptr %i.es, align 1, !tbaa !205 ; 2 uses
+  %.pre504.i.jt5 = load i8, ptr %i.es, align 1, !tbaa !205
   switch i8 %.pre504.i.jt5, label %.thread567.i.jt1 [
     i8 100, label %bb.bt
     i8 105, label %bb.bt
@@ -408,10 +408,10 @@ bb.bc:                                            ; preds = %bb.au, %bb.au
   br i1 %.not398.i135, label %.thread189, label %.thread567.i.jt1
 
 .thread189:                                       ; preds = %bb.ax, %bb.ax, %bb.av, %bb.av, %.thread567.i, %bb.bc, %bb.bb, %bb.au, %bb.au, %bb.au, %bb.au, %bb.au, %bb.au
-  %.5306.i164 = phi ptr [ %.5306.i145, %.thread567.i ], [ %.5306.i145, %bb.bc ], [ %.5306.i146, %bb.bb ], [ %.5306.i145, %bb.au ], [ %.5306.i145, %bb.au ], [ %.5306.i145, %bb.au ], [ %.5306.i145, %bb.au ], [ %.5306.i145, %bb.au ], [ %.5306.i145, %bb.au ], [ %.4305.i, %bb.ax ], [ %.4305.i, %bb.ax ], [ %i.en, %bb.av ], [ %i.en, %bb.av ] ; 19 uses
+  %.5306.i164 = phi ptr [ %.5306.i145, %.thread567.i ], [ %.5306.i145, %bb.bc ], [ %.5306.i146, %bb.bb ], [ %.5306.i145, %bb.au ], [ %.5306.i145, %bb.au ], [ %.5306.i145, %bb.au ], [ %.5306.i145, %bb.au ], [ %.5306.i145, %bb.au ], [ %.5306.i145, %bb.au ], [ %.4305.i, %bb.ax ], [ %.4305.i, %bb.ax ], [ %i.en, %bb.av ], [ %i.en, %bb.av ] ; 20 uses
   %.0332.i144 = phi i32 [ %.0332.i141, %.thread567.i ], [ %.0332.i141, %bb.bc ], [ %.0332.i142, %bb.bb ], [ %.0332.i141, %bb.au ], [ %.0332.i141, %bb.au ], [ %.0332.i141, %bb.au ], [ %.0332.i141, %bb.au ], [ %.0332.i141, %bb.au ], [ %.0332.i141, %bb.au ], [ 0, %bb.ax ], [ 0, %bb.ax ], [ 1, %bb.av ], [ 1, %bb.av ]
   %.not398.i140 = phi i1 [ true, %.thread567.i ], [ %.not398.i135, %bb.bc ], [ %.not398.i136, %bb.bb ], [ %.not398.i135, %bb.au ], [ %.not398.i135, %bb.au ], [ %.not398.i135, %bb.au ], [ %.not398.i135, %bb.au ], [ %.not398.i135, %bb.au ], [ %.not398.i135, %bb.au ], [ true, %bb.ax ], [ true, %bb.ax ], [ false, %bb.av ], [ false, %bb.av ] ; 2 uses
-  %i.fr = phi i8 [ %i.fm, %.thread567.i ], [ %i.fm, %bb.bc ], [ %i.fn, %bb.bb ], [ %i.fm, %bb.au ], [ %i.fm, %bb.au ], [ %i.fm, %bb.au ], [ %i.fm, %bb.au ], [ %i.fm, %bb.au ], [ %i.fm, %bb.au ], [ %.pre504.i.jt0, %bb.ax ], [ %.pre504.i.jt0, %bb.ax ], [ %.pre504.i.jt1, %bb.av ], [ %.pre504.i.jt1, %bb.av ] ; 7 uses
+  %i.fr = phi i8 [ %i.fm, %.thread567.i ], [ %i.fm, %bb.bc ], [ %i.fn, %bb.bb ], [ %i.fm, %bb.au ], [ %i.fm, %bb.au ], [ %i.fm, %bb.au ], [ %i.fm, %bb.au ], [ %i.fm, %bb.au ], [ %i.fm, %bb.au ], [ %.pre504.i.jt0, %bb.ax ], [ %.pre504.i.jt0, %bb.ax ], [ %.pre504.i.jt1, %bb.av ], [ %.pre504.i.jt1, %bb.av ]
   switch i8 %i.fr, label %.thread567.i.jt1 [
     i8 99, label %bb.bd
     i8 100, label %bb.bn
@@ -517,6 +517,7 @@ _PyUnicodeWriter_WriteCharInline.exit.thread:     ; preds = %bb.bk, %bb.bl, %bb.
 
 bb.bn:                                            ; preds = %.thread189, %.thread189, %.thread189, %.thread189, %.thread189, %.thread189
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
+  %4 = load i8, ptr %.5306.i164, align 1, !tbaa !205 ; 6 uses
   %i.gu = load i32, ptr %3, align 16              ; 7 uses
   %i.gv = icmp ult i32 %i.gu, 41                  ; 6 uses
   switch i32 %.0332.i144, label %bb.fv [
@@ -529,36 +530,42 @@ bb.bn:                                            ; preds = %.thread189, %.threa
 
 bb.bo:                                            ; preds = %bb.av, %bb.av, %bb.av, %bb.av, %bb.av, %bb.av
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
+  %5 = load i8, ptr %i.en, align 1, !tbaa !205
   %i.gw = load i32, ptr %3, align 16              ; 2 uses
   %i.gx = icmp ult i32 %i.gw, 41
   br label %bb.bu
 
 bb.bp:                                            ; preds = %bb.aw, %bb.aw, %bb.aw, %bb.aw, %bb.aw, %bb.aw
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
+  %6 = load i8, ptr %i.ep, align 1, !tbaa !205
   %i.gy = load i32, ptr %3, align 16              ; 2 uses
   %i.gz = icmp ult i32 %i.gy, 41
   br label %bb.cp
 
 bb.bq:                                            ; preds = %bb.ax, %bb.ax, %bb.ax, %bb.ax, %bb.ax, %bb.ax
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
+  %7 = load i8, ptr %.4305.i, align 1, !tbaa !205
   %i.ha = load i32, ptr %3, align 16              ; 2 uses
   %i.hb = icmp ult i32 %i.ha, 41
   br label %bb.fv
 
 bb.br:                                            ; preds = %bb.ay, %bb.ay, %bb.ay, %bb.ay, %bb.ay, %bb.ay
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
+  %8 = load i8, ptr %i.eq, align 1, !tbaa !205
   %i.hc = load i32, ptr %3, align 16              ; 2 uses
   %i.hd = icmp ult i32 %i.hc, 41
   br label %bb.dk
 
 bb.bs:                                            ; preds = %bb.az, %bb.az, %bb.az, %bb.az, %bb.az, %bb.az
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
+  %9 = load i8, ptr %i.er, align 1, !tbaa !205
   %i.he = load i32, ptr %3, align 16              ; 2 uses
   %i.hf = icmp ult i32 %i.he, 41
   br label %bb.ef
 
 bb.bt:                                            ; preds = %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba, %bb.ba
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
+  %10 = load i8, ptr %i.es, align 1, !tbaa !205
   %i.hg = load i32, ptr %3, align 16              ; 2 uses
   %i.hh = icmp ult i32 %i.hg, 41
   br label %bb.fa
@@ -566,7 +573,7 @@ bb.bt:                                            ; preds = %bb.ba, %bb.ba, %bb.
 bb.bu:                                            ; preds = %bb.bo, %bb.bn
   %i.hi = phi i1 [ %i.gx, %bb.bo ], [ %i.gv, %bb.bn ] ; 5 uses
   %i.hj = phi i32 [ %i.gw, %bb.bo ], [ %i.gu, %bb.bn ] ; 10 uses
-  %i.hk = phi i8 [ %.pre504.i.jt1, %bb.bo ], [ %i.fr, %bb.bn ]
+  %i.hk = phi i8 [ %5, %bb.bo ], [ %4, %bb.bn ]
   %.5306.i162 = phi ptr [ %i.en, %bb.bo ], [ %.5306.i164, %bb.bn ] ; 5 uses
   switch i8 %i.hk, label %bb.cl [
     i8 111, label %bb.bv
@@ -693,7 +700,7 @@ bb.co:                                            ; preds = %bb.cn, %bb.cm
 bb.cp:                                            ; preds = %bb.bp, %bb.bn
   %i.je = phi i1 [ %i.gz, %bb.bp ], [ %i.gv, %bb.bn ] ; 5 uses
   %i.jf = phi i32 [ %i.gy, %bb.bp ], [ %i.gu, %bb.bn ] ; 10 uses
-  %i.jg = phi i8 [ %.pre504.i.jt2, %bb.bp ], [ %i.fr, %bb.bn ]
+  %i.jg = phi i8 [ %6, %bb.bp ], [ %4, %bb.bn ]
   %.5306.i158 = phi ptr [ %i.ep, %bb.bp ], [ %.5306.i164, %bb.bn ] ; 5 uses
   switch i8 %i.jg, label %bb.dg [
     i8 111, label %bb.cq
@@ -820,7 +827,7 @@ bb.dj:                                            ; preds = %bb.di, %bb.dh
 bb.dk:                                            ; preds = %bb.br, %bb.bn
   %i.la = phi i1 [ %i.hd, %bb.br ], [ %i.gv, %bb.bn ] ; 5 uses
   %i.lb = phi i32 [ %i.hc, %bb.br ], [ %i.gu, %bb.bn ] ; 10 uses
-  %i.lc = phi i8 [ %.pre504.i.jt3, %bb.br ], [ %i.fr, %bb.bn ]
+  %i.lc = phi i8 [ %8, %bb.br ], [ %4, %bb.bn ]
   %.5306.i161 = phi ptr [ %i.eq, %bb.br ], [ %.5306.i164, %bb.bn ] ; 5 uses
   switch i8 %i.lc, label %bb.eb [
     i8 111, label %bb.dl
@@ -947,7 +954,7 @@ bb.ee:                                            ; preds = %bb.ed, %bb.ec
 bb.ef:                                            ; preds = %bb.bs, %bb.bn
   %i.mw = phi i1 [ %i.hf, %bb.bs ], [ %i.gv, %bb.bn ] ; 5 uses
   %i.mx = phi i32 [ %i.he, %bb.bs ], [ %i.gu, %bb.bn ] ; 10 uses
-  %i.my = phi i8 [ %.pre504.i.jt4, %bb.bs ], [ %i.fr, %bb.bn ]
+  %i.my = phi i8 [ %9, %bb.bs ], [ %4, %bb.bn ]
   %.5306.i160 = phi ptr [ %i.er, %bb.bs ], [ %.5306.i164, %bb.bn ] ; 5 uses
   switch i8 %i.my, label %bb.ew [
     i8 111, label %bb.eg
@@ -1074,7 +1081,7 @@ bb.ez:                                            ; preds = %bb.ey, %bb.ex
 bb.fa:                                            ; preds = %bb.bt, %bb.bn
   %i.os = phi i1 [ %i.hh, %bb.bt ], [ %i.gv, %bb.bn ] ; 5 uses
   %i.ot = phi i32 [ %i.hg, %bb.bt ], [ %i.gu, %bb.bn ] ; 10 uses
-  %i.ou = phi i8 [ %.pre504.i.jt5, %bb.bt ], [ %i.fr, %bb.bn ]
+  %i.ou = phi i8 [ %10, %bb.bt ], [ %4, %bb.bn ]
   %.5306.i159 = phi ptr [ %i.es, %bb.bt ], [ %.5306.i164, %bb.bn ] ; 5 uses
   switch i8 %i.ou, label %bb.fr [
     i8 111, label %bb.fb
@@ -1201,7 +1208,7 @@ bb.fu:                                            ; preds = %bb.ft, %bb.fs
 bb.fv:                                            ; preds = %bb.bq, %bb.bn
   %i.qo = phi i1 [ %i.hb, %bb.bq ], [ %i.gv, %bb.bn ] ; 5 uses
   %i.qp = phi i32 [ %i.ha, %bb.bq ], [ %i.gu, %bb.bn ] ; 10 uses
-  %i.qq = phi i8 [ %.pre504.i.jt0, %bb.bq ], [ %i.fr, %bb.bn ]
+  %i.qq = phi i8 [ %7, %bb.bq ], [ %4, %bb.bn ]
   %.5306.i163 = phi ptr [ %.4305.i, %bb.bq ], [ %.5306.i164, %bb.bn ] ; 5 uses
   switch i8 %i.qq, label %bb.gm [
     i8 111, label %bb.fw

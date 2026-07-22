@@ -204,17 +204,18 @@ _ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; 
   br i1 %.not179, label %.loopexit151, label %.lr.ph170
 
 bb.j:                                             ; preds = %_ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
-  %i.ec = getelementptr inbounds i8, ptr %i.dw, i64 -32
-  %i.ed = load i64, ptr %i.ec, align 8            ; 3 uses
+  %i.ec = getelementptr inbounds i8, ptr %i.dw, i64 -32 ; 2 uses
+  %i.ed = load i64, ptr %i.ec, align 8
   %.not143 = icmp eq i64 %i.ed, 0
   br i1 %.not143, label %.loopexit151, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.ee = getelementptr inbounds i8, ptr %i.dw, i64 -40
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
-  %i.ef = trunc i64 %i.ed to i32
+  %8 = load i64, ptr %i.ec, align 8               ; 2 uses
+  %i.ef = trunc i64 %8 to i32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1024) %i.bz, i8 0, i64 1024, i1 false)
-  %i.eg = and i64 %i.ed, 4294966272
+  %i.eg = and i64 %8, 4294966272
   %.not.i = icmp eq i64 %i.eg, 0
   %spec.select.i = select i1 %.not.i, i32 %i.ef, i32 1023 ; 2 uses
   store i32 %spec.select.i, ptr %5, align 4

@@ -60,8 +60,8 @@ bb.a:
   %.2 = phi i32 [ %.3, %bb.am ], [ -1, %bb.a ]    ; 22 uses
   %.056.i = phi i32 [ %i.bi, %bb.am ], [ %0, %bb.a ] ; 26 uses
   %.04255.i = phi ptr [ %i.bh, %bb.am ], [ %1, %bb.a ] ; 28 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %.04255.i, i64 8 ; 5 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !8    ; 11 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %.04255.i, i64 8 ; 6 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !8    ; 9 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !11
   %i.g = icmp eq i8 %i.f, 45
   br i1 %i.g, label %bb.b, label %.critedge.i
@@ -260,7 +260,8 @@ _Y_cmdlines.exit.i:                               ; preds = %.critedge.i.i, %bb.
 
 bb.z:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
-  %i.au = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.e) #6
+  %2 = load ptr, ptr %i.d, align 8, !tbaa !8      ; 2 uses
+  %i.au = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #6
   %i.av = icmp eq i64 %i.au, 2
   br i1 %i.av, label %bb.aa, label %bb.ab
 
@@ -271,7 +272,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %bb.ac
 
 bb.ab:                                            ; preds = %bb.z
-  %i.az = getelementptr inbounds nuw i8, ptr %i.e, i64 2
+  %i.az = getelementptr inbounds nuw i8, ptr %2, i64 2
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa

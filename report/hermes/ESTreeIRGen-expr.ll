@@ -203,8 +203,8 @@ _ZNKSt4lessISt4pairIPN6hermes12UniqueStringES3_EEclERKS4_S7_.exit.thread6.i.i.i:
 _ZN6hermes7Context17getCompiledRegExpEPNS_12UniqueStringES2_.exit: ; preds = %bb.a, %_ZNSt8_Rb_treeISt4pairIPN6hermes12UniqueStringES3_ES0_IKS4_NS1_14CompiledRegExpEESt10_Select1stIS7_ESt4lessIS4_ESaIS7_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS7_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i, %bb.c, %_ZNKSt4lessISt4pairIPN6hermes12UniqueStringES3_EEclERKS4_S7_.exit.i.i.i, %_ZNKSt4lessISt4pairIPN6hermes12UniqueStringES3_EEclERKS4_S7_.exit.thread6.i.i.i
   %.sroa.0.0.i.i.i = phi ptr [ %.19.i.i.i.i, %_ZNKSt4lessISt4pairIPN6hermes12UniqueStringES3_EEclERKS4_S7_.exit.thread6.i.i.i ], [ %i.p, %bb.a ], [ %i.p, %_ZNSt8_Rb_treeISt4pairIPN6hermes12UniqueStringES3_ES0_IKS4_NS1_14CompiledRegExpEESt10_Select1stIS7_ESt4lessIS4_ESaIS7_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS7_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i ], [ %i.p, %_ZNKSt4lessISt4pairIPN6hermes12UniqueStringES3_EEclERKS4_S7_.exit.i.i.i ], [ %i.p, %bb.c ] ; 7 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 216 ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 224 ; 2 uses
-  %i.ai = load i32, ptr %i.ah, align 8, !tbaa !216 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 224 ; 3 uses
+  %i.ai = load i32, ptr %i.ah, align 8, !tbaa !216
   %.not = icmp eq i32 %i.ai, 0
   br i1 %.not, label %_ZN6hermes7Context17getCompiledRegExpEPNS_12UniqueStringES2_.exit._crit_edge, label %bb.e
 
@@ -224,6 +224,7 @@ bb.e:                                             ; preds = %_ZN6hermes7Context1
   br i1 %.not3132, label %._crit_edge.thread, label %.lr.ph
 
 ._crit_edge.thread:                               ; preds = %bb.e
+  %6 = load i32, ptr %i.ah, align 8, !tbaa !216
   %i.aq = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   store ptr %i.aq, ptr %5, align 8, !tbaa !219
   %i.ar = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -244,20 +245,20 @@ bb.e:                                             ; preds = %_ZN6hermes7Context1
   br label %bb.i
 
 ._crit_edge:                                      ; preds = %_ZNSt15_Deque_iteratorIN4llvh11SmallVectorIDsLj5EEERS2_PS2_EppEv.exit
-  %.pre = load i32, ptr %i.ah, align 8, !tbaa !216 ; 2 uses
-  %.pre36.a = load i32, ptr %i.ak, align 8, !tbaa !220 ; 4 uses
+  %.pre = load i32, ptr %i.ak, align 8, !tbaa !220 ; 4 uses
+  %.pre36.a = load i32, ptr %i.ah, align 8, !tbaa !216 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 5 uses
   store ptr %i.bb, ptr %5, align 8, !tbaa !219
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store i32 0, ptr %i.bc, align 8, !tbaa !220
   %i.bd = getelementptr inbounds nuw i8, ptr %5, i64 12
   store i32 4, ptr %i.bd, align 4, !tbaa !221
-  %.not.i.i = icmp eq i32 %.pre36.a, 0
+  %.not.i.i = icmp eq i32 %.pre, 0
   br i1 %.not.i.i, label %_ZN4llvh11SmallVectorISt4pairIPN6hermes7LiteralES4_ELj4EEC2ERKS6_.exit, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge
-  %i.be = zext i32 %.pre36.a to i64               ; 2 uses
-  %i.bf = icmp ugt i32 %.pre36.a, 4
+  %i.be = zext i32 %.pre to i64                   ; 2 uses
+  %i.bf = icmp ugt i32 %.pre, 4
   br i1 %i.bf, label %_ZSt4copyIPKSt4pairIPN6hermes7LiteralES3_EPS4_ET0_T_S9_S8_.exit35.i.i, label %_ZSt4copyIPKSt4pairIPN6hermes7LiteralES3_EPS4_ET0_T_S9_S8_.exit35.i.thread.i
 
 _ZSt4copyIPKSt4pairIPN6hermes7LiteralES3_EPS4_ET0_T_S9_S8_.exit35.i.i: ; preds = %bb.f
@@ -280,12 +281,12 @@ _ZSt4copyIPKSt4pairIPN6hermes7LiteralES3_EPS4_ET0_T_S9_S8_.exit35.i.thread.i: ; 
   br label %.sink.split.i.i
 
 .sink.split.i.i:                                  ; preds = %_ZSt4copyIPKSt4pairIPN6hermes7LiteralES3_EPS4_ET0_T_S9_S8_.exit35.i.thread.i, %_ZSt4copyIPKSt4pairIPN6hermes7LiteralES3_EPS4_ET0_T_S9_S8_.exit35.i.i
-  store i32 %.pre36.a, ptr %i.bc, align 8, !tbaa !220
+  store i32 %.pre, ptr %i.bc, align 8, !tbaa !220
   br label %_ZN4llvh11SmallVectorISt4pairIPN6hermes7LiteralES4_ELj4EEC2ERKS6_.exit
 
 _ZN4llvh11SmallVectorISt4pairIPN6hermes7LiteralES4_ELj4EEC2ERKS6_.exit: ; preds = %._crit_edge.thread, %._crit_edge, %.sink.split.i.i
   %i.bi = phi ptr [ %i.aq, %._crit_edge.thread ], [ %i.bb, %._crit_edge ], [ %i.bb, %.sink.split.i.i ]
-  %i.bj = phi i32 [ %i.ai, %._crit_edge.thread ], [ %.pre, %._crit_edge ], [ %.pre, %.sink.split.i.i ]
+  %i.bj = phi i32 [ %6, %._crit_edge.thread ], [ %.pre36.a, %._crit_edge ], [ %.pre36.a, %.sink.split.i.i ]
   %i.bk = call noundef ptr @_ZN6hermes9IRBuilder34createHBCAllocObjectFromBufferInstEN4llvh11SmallVectorISt4pairIPNS_7LiteralES5_ELj4EEEj(ptr noundef nonnull align 8 dereferenceable(40) %i.c, ptr noundef nonnull %5, i32 noundef %i.bj) #16
   %i.bl = load ptr, ptr %5, align 8, !tbaa !219   ; 2 uses
   %i.bm = icmp eq ptr %i.bl, %i.bi

@@ -203,12 +203,12 @@ bb.c:                                             ; preds = %.lr.ph, %bb.m
   %i.z = phi ptr [ %i.o, %.lr.ph ], [ %i.bh, %bb.m ]
   %i.aa = phi ptr [ %i.p, %.lr.ph ], [ %i.bg, %bb.m ]
   %.043 = phi i64 [ 0, %.lr.ph ], [ %i.bi, %bb.m ] ; 5 uses
-  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.aa, i64 %.043 ; 2 uses
-  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !35 ; 2 uses
+  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.aa, i64 %.043 ; 3 uses
+  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !35
   %i.ad = load i64, ptr %.sroa.038.045, align 8, !tbaa !35
   %i.ae = icmp eq i64 %i.ac, %i.ad
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %i.ag = load i64, ptr %i.af, align 8            ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 8 ; 2 uses
+  %i.ag = load i64, ptr %i.af, align 8
   %i.ah = load i64, ptr %i.r, align 8
   %i.ai = icmp eq i64 %i.ag, %i.ah
   %i.aj = select i1 %i.ae, i1 %i.ai, i1 false
@@ -216,6 +216,8 @@ bb.c:                                             ; preds = %.lr.ph, %bb.m
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #17
+  %.sroa.01.0.copyload = load i64, ptr %i.ab, align 8, !tbaa !65
+  %.sroa.2.0.copyload = load i64, ptr %i.af, align 8, !tbaa !65
   %i.ak = load ptr, ptr %i.k, align 8, !tbaa !159
   %i.al = load ptr, ptr %2, align 8, !tbaa !160   ; 2 uses
   %i.am = ptrtoint ptr %i.ak to i64
@@ -291,7 +293,7 @@ bb.i:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.ba = getelementptr inbounds nuw [24 x i8], ptr %i.al, i64 %.043
-  invoke void @_ZN6duckdb13CMBindingInfoC1ENS_13ColumnBindingERKNS_11LogicalTypeE(ptr noundef nonnull align 8 dereferenceable(56) %6, i64 %i.ac, i64 %i.ag, ptr noundef nonnull align 8 dereferenceable(24) %i.ba)
+  invoke void @_ZN6duckdb13CMBindingInfoC1ENS_13ColumnBindingERKNS_11LogicalTypeE(ptr noundef nonnull align 8 dereferenceable(56) %6, i64 %.sroa.01.0.copyload, i64 %.sroa.2.0.copyload, ptr noundef nonnull align 8 dereferenceable(24) %i.ba)
           to label %bb.j unwind label %bb.k
 
 bb.j:                                             ; preds = %bb.i

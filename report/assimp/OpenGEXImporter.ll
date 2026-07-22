@@ -203,10 +203,10 @@ bb.c:                                             ; preds = %bb.b
   ]
 
 .preheader82:                                     ; preds = %bb.c
-  %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 24 ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8
-  %i.v = load ptr, ptr %i.s, align 8              ; 2 uses
+  %i.v = load ptr, ptr %i.s, align 8
   %.not95 = icmp eq ptr %i.u, %i.v
   br i1 %.not95, label %.loopexit, label %.lr.ph
 
@@ -402,9 +402,9 @@ _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmSt4lessIS5_ESaISt
   br i1 %i.cf, label %.lr.ph91.splitthread-pre-split, label %.loopexit, !llvm.loop !19
 
 .lr.ph:                                           ; preds = %.preheader82, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %4 = phi ptr [ %i.ef, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.v, %.preheader82 ]
   %.02489 = phi i64 [ %i.ed, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ 0, %.preheader82 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #32
+  %4 = load ptr, ptr %i.s, align 8
   %i.cg = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %.02489 ; 2 uses
   store ptr %i.f, ptr %3, align 8
   %i.ch = load ptr, ptr %i.cg, align 8            ; 2 uses
@@ -586,7 +586,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #32
   %i.ed = add nuw i64 %.02489, 1                  ; 2 uses
   %i.ee = load ptr, ptr %i.t, align 8
-  %i.ef = load ptr, ptr %i.s, align 8             ; 2 uses
+  %i.ef = load ptr, ptr %i.s, align 8
   %i.eg = ptrtoint ptr %i.ee to i64
   %i.eh = ptrtoint ptr %i.ef to i64
   %i.ei = sub i64 %i.eg, %i.eh
@@ -755,15 +755,16 @@ bb.e:                                             ; preds = %.lr.ph, %bb.ap
   br i1 %.not33, label %bb.ap, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.p = getelementptr inbounds nuw i8, ptr %.074, i64 8
-  %i.q = load ptr, ptr %i.p, align 8              ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %.074, i64 8 ; 2 uses
+  %i.q = load ptr, ptr %i.p, align 8
   %i.r = load i32, ptr %i.q, align 8
   %i.s = icmp eq i32 %i.r, 12
   br i1 %i.s, label %bb.g, label %bb.ap
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #32
-  %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  %5 = load ptr, ptr %i.p, align 8
+  %i.t = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.u = load ptr, ptr %i.t, align 8              ; 4 uses
   store ptr %i.j, ptr %3, align 8
   %i.v = icmp eq ptr %i.u, null
@@ -1166,48 +1167,39 @@ bb.j:                                             ; preds = %bb.f
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
   %.pre.i = load float, ptr %i.a, align 16
-  %.phi.trans.insert9.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %3 = load <12 x float>, ptr %.phi.trans.insert9.i, align 4
-  %4 = shufflevector <12 x float> %3, <12 x float> poison, <4 x i32> <i32 0, i32 3, i32 7, i32 11>
-  %.phi.trans.insert17.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %5 = load <12 x float>, ptr %.phi.trans.insert17.i, align 8
-  %6 = shufflevector <12 x float> %5, <12 x float> poison, <4 x i32> <i32 0, i32 3, i32 7, i32 11>
-  %.phi.trans.insert25.i = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %7 = load <12 x float>, ptr %.phi.trans.insert25.i, align 4
-  %8 = shufflevector <12 x float> %7, <12 x float> poison, <4 x i32> <i32 0, i32 3, i32 7, i32 11>
-  %.phi.trans.insert27.i = getelementptr inbounds nuw i8, ptr %i.a, i64 28
-  %.pre28.i = load float, ptr %.phi.trans.insert27.i, align 4
-  %.phi.trans.insert29.i = getelementptr inbounds nuw i8, ptr %i.a, i64 44
-  %.pre30.i = load float, ptr %.phi.trans.insert29.i, align 4
-  %.phi.trans.insert31.i = getelementptr inbounds nuw i8, ptr %i.a, i64 60
-  %.pre32.i = load float, ptr %.phi.trans.insert31.i, align 4
-  %9 = shufflevector <4 x float> %4, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 3, i32 0>
-  %10 = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 3, i32 0>
-  %11 = shufflevector <4 x float> %8, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 3, i32 0>
   br label %_ZN6Assimp7OpenGEXL9setMatrixEP6aiNodePN10ODDLParser13DataArrayListE.exit
 
 _ZN6Assimp7OpenGEXL9setMatrixEP6aiNodePN10ODDLParser13DataArrayListE.exit: ; preds = %bb.j, %._crit_edge.loopexit.i
-  %i.u = phi float [ %.pre32.i, %._crit_edge.loopexit.i ], [ undef, %bb.j ]
-  %12 = phi float [ %.pre30.i, %._crit_edge.loopexit.i ], [ undef, %bb.j ]
-  %13 = phi float [ %.pre28.i, %._crit_edge.loopexit.i ], [ undef, %bb.j ]
-  %14 = phi float [ %.pre.i, %._crit_edge.loopexit.i ], [ %i.o, %bb.j ]
-  %15 = phi <4 x float> [ %9, %._crit_edge.loopexit.i ], [ undef, %bb.j ]
-  %16 = phi <4 x float> [ %10, %._crit_edge.loopexit.i ], [ undef, %bb.j ]
-  %17 = phi <4 x float> [ %11, %._crit_edge.loopexit.i ], [ undef, %bb.j ]
-  %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 1028
-  store float %14, ptr %i.v, align 4
-  %i.w = getelementptr inbounds nuw i8, ptr %i.k, i64 1032
-  store <4 x float> %15, ptr %i.w, align 4
-  %i.x = getelementptr inbounds nuw i8, ptr %i.k, i64 1048
-  store <4 x float> %16, ptr %i.x, align 4
-  %i.y = getelementptr inbounds nuw i8, ptr %i.k, i64 1064
-  store <4 x float> %17, ptr %i.y, align 4
-  %i.z = getelementptr inbounds nuw i8, ptr %i.k, i64 1080
-  store float %13, ptr %i.z, align 4
+  %i.u = phi float [ %.pre.i, %._crit_edge.loopexit.i ], [ %i.o, %bb.j ]
+  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 1028
+  store float %i.u, ptr %3, align 4
+  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 1032
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %6 = load <12 x float>, ptr %5, align 4
+  %7 = shufflevector <12 x float> %6, <12 x float> poison, <4 x i32> <i32 3, i32 7, i32 11, i32 0>
+  store <4 x float> %7, ptr %4, align 4
+  %8 = getelementptr inbounds nuw i8, ptr %i.k, i64 1048
+  %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %9 = load <12 x float>, ptr %i.v, align 8
+  %10 = shufflevector <12 x float> %9, <12 x float> poison, <4 x i32> <i32 3, i32 7, i32 11, i32 0>
+  store <4 x float> %10, ptr %8, align 4
+  %11 = getelementptr inbounds nuw i8, ptr %i.k, i64 1064
+  %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  %12 = load <12 x float>, ptr %i.w, align 4
+  %13 = shufflevector <12 x float> %12, <12 x float> poison, <4 x i32> <i32 3, i32 7, i32 11, i32 0>
+  store <4 x float> %13, ptr %11, align 4
+  %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 28
+  %14 = load float, ptr %i.x, align 4
+  %i.y = getelementptr inbounds nuw i8, ptr %i.k, i64 1080
+  store float %14, ptr %i.y, align 4
+  %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 44
+  %15 = load float, ptr %i.z, align 4
   %i.aa = getelementptr inbounds nuw i8, ptr %i.k, i64 1084
-  store float %12, ptr %i.aa, align 4
+  store float %15, ptr %i.aa, align 4
+  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 60
+  %17 = load float, ptr %16, align 4
   %i.ab = getelementptr inbounds nuw i8, ptr %i.k, i64 1088
-  store float %i.u, ptr %i.ab, align 4
+  store float %17, ptr %i.ab, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #32
   br label %bb.k
 
@@ -1610,14 +1602,15 @@ bb.b:                                             ; preds = %.lr.ph, %bb.o
   br i1 %.not16, label %bb.o, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %i.o = load ptr, ptr %i.n, align 8              ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8
   %.not17 = icmp eq ptr %i.o, null
   br i1 %.not17, label %bb.o, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #32
-  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
+  %3 = load ptr, ptr %i.n, align 8
+  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.q = load ptr, ptr %i.p, align 8              ; 4 uses
   store ptr %i.f, ptr %2, align 8
   %i.r = icmp eq ptr %i.q, null
@@ -2020,14 +2013,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.j,
   br i1 %.not, label %bb.w, label %bb.k
 
 bb.k:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
-  %i.bh = load ptr, ptr %i.bg, align 8            ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.bb, i64 8 ; 2 uses
+  %i.bh = load ptr, ptr %i.bg, align 8
   %.not14 = icmp eq ptr %i.bh, null
   br i1 %.not14, label %bb.w, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #32
-  %i.bi = invoke noundef ptr @_ZNK10ODDLParser5Value9getStringEv(ptr noundef nonnull align 8 dereferenceable(32) %i.bh)
+  %6 = load ptr, ptr %i.bg, align 8
+  %i.bi = invoke noundef ptr @_ZNK10ODDLParser5Value9getStringEv(ptr noundef nonnull align 8 dereferenceable(32) %6)
           to label %bb.m unwind label %bb.t       ; 4 uses
 
 bb.m:                                             ; preds = %bb.l

@@ -203,14 +203,14 @@ bb.a:
   %12 = alloca %"class.std::__cxx11::basic_ostringstream", align 8 ; 9 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %i.c = alloca i64, align 8                      ; 6 uses
-  %i.d = alloca i64, align 8                      ; 8 uses
+  %i.d = alloca i64, align 8                      ; 6 uses
   %i.e = alloca i64, align 8                      ; 6 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %15 = alloca %"class.std::vector.16", align 8   ; 13 uses
   %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %17 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
-  %19 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
+  %19 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %20 = alloca %"class.std::shared_ptr.10", align 8 ; 11 uses
   %21 = alloca %"class.std::map", align 8         ; 19 uses
   %22 = alloca %"class.std::vector.16", align 16  ; 18 uses
@@ -399,7 +399,7 @@ _ZNSt10shared_ptrIN16OpenColorIO_v2_512_GLOBAL__N_113CachedFileHDLEEC2IS2_vEEPT_
   %i.bn = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 9 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %16, i64 8
   %i.bp = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 2 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %19, i64 16 ; 9 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %19, i64 16 ; 7 uses
   %i.br = getelementptr inbounds nuw i8, ptr %19, i64 8
   %i.bs = getelementptr inbounds nuw i8, ptr %15, i64 16
   br label %bb.j
@@ -616,7 +616,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i24
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i24.i
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #26
-  %i.dv = load ptr, ptr %15, align 8, !tbaa !68   ; 7 uses
+  %i.dv = load ptr, ptr %15, align 8, !tbaa !68   ; 6 uses
   %i.dw = load ptr, ptr %i.bp, align 8, !tbaa !68 ; 2 uses
   %i.dx = icmp eq ptr %i.dv, %i.dw
   br i1 %i.dx, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i, label %bb.x, !llvm.loop !70
@@ -678,8 +678,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit35.i: ; preds = %_
   br label %bb.ai
 
 bb.x:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26.i
-  %i.eo = getelementptr inbounds nuw i8, ptr %i.dv, i64 8
-  %i.ep = load i64, ptr %i.eo, align 8, !tbaa !16 ; 5 uses
+  %i.eo = getelementptr inbounds nuw i8, ptr %i.dv, i64 8 ; 2 uses
+  %i.ep = load i64, ptr %i.eo, align 8, !tbaa !16
   %i.eq = icmp eq i64 %i.ep, 4
   br i1 %i.eq, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread54.i
 
@@ -689,23 +689,16 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.et = icmp ne i32 %i.es, 980710764
   %i.eu = zext i1 %i.et to i32
   %i.ev = icmp eq i32 %i.eu, 0
-  br i1 %i.ev, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i, label %._crit_edge.i.i36.thread.i
+  br i1 %i.ev, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread54.i
 
-._crit_edge.i.i36.thread.i:                       ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %19) #26
-  store ptr %i.bq, ptr %19, align 8, !tbaa !13
-  %68 = load ptr, ptr %i.dv, align 8, !tbaa !29
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #26
-  store i64 4, ptr %i.d, align 8, !tbaa !57
-  br label %bb.z
-
-_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread54.i: ; preds = %bb.x
+_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread54.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, %bb.x
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #26
   store ptr %i.bq, ptr %19, align 8, !tbaa !13
   %i.ew = load ptr, ptr %i.dv, align 8, !tbaa !29 ; 2 uses
+  %68 = load i64, ptr %i.eo, align 8, !tbaa !16   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #26
-  store i64 %i.ep, ptr %i.d, align 8, !tbaa !57
-  %i.ex = icmp ugt i64 %i.ep, 15
+  store i64 %68, ptr %i.d, align 8, !tbaa !57
+  %i.ex = icmp ugt i64 %68, 15
   br i1 %i.ex, label %.noexc.i37.i, label %._crit_edge.i.i36.i
 
 .noexc.i37.i:                                     ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread54.i
@@ -720,7 +713,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 ._crit_edge.i.i36.i:                              ; preds = %.noexc38.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread54.i
   %i.fa = phi ptr [ %i.ey, %.noexc38.i ], [ %i.bq, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread54.i ] ; 2 uses
-  switch i64 %i.ep, label %bb.z [
+  switch i64 %68, label %bb.z [
     i64 1, label %bb.y
     i64 0, label %bb.aa
   ]
@@ -730,10 +723,8 @@ bb.y:                                             ; preds = %._crit_edge.i.i36.i
   store i8 %i.fb, ptr %i.fa, align 1, !tbaa !19
   br label %bb.aa
 
-bb.z:                                             ; preds = %._crit_edge.i.i36.i, %._crit_edge.i.i36.thread.i
-  %69 = phi ptr [ %i.bq, %._crit_edge.i.i36.thread.i ], [ %i.fa, %._crit_edge.i.i36.i ]
-  %70 = phi ptr [ %68, %._crit_edge.i.i36.thread.i ], [ %i.ew, %._crit_edge.i.i36.i ]
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %69, ptr align 1 %70, i64 %i.ep, i1 false)
+bb.z:                                             ; preds = %._crit_edge.i.i36.i
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.fa, ptr align 1 %i.ew, i64 %68, i1 false)
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y, %._crit_edge.i.i36.i

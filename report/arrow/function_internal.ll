@@ -201,9 +201,9 @@ bb.af:                                            ; preds = %bb.x
 
 bb.ag:                                            ; preds = %bb.af
   %i.ck = load ptr, ptr %14, align 8, !tbaa !165  ; 2 uses
-  %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 8
+  %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 8 ; 2 uses
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !168
-  %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !104 ; 3 uses
+  %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !104
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 40
   %i.cp = load i32, ptr %i.co, align 8, !tbaa !269
   %.not26 = icmp eq i32 %i.cp, 26
@@ -212,10 +212,12 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ag
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #21
-  %i.cq = load ptr, ptr %i.cn, align 8, !tbaa !37
+  %20 = load ptr, ptr %i.cl, align 8, !tbaa !168
+  %21 = load ptr, ptr %20, align 8, !tbaa !104    ; 2 uses
+  %i.cq = load ptr, ptr %21, align 8, !tbaa !37
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 32
   %i.cs = load ptr, ptr %i.cr, align 8
-  invoke void %i.cs(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %16, ptr noundef nonnull align 8 dereferenceable(72) %i.cn, i1 noundef zeroext false)
+  invoke void %i.cs(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %16, ptr noundef nonnull align 8 dereferenceable(72) %21, i1 noundef zeroext false)
           to label %bb.ai unwind label %bb.ao
 
 bb.ai:                                            ; preds = %bb.ah

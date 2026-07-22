@@ -203,8 +203,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs3JXekYNd0JR_7dashmap6mapref8multiple8RefMultiNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1C_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit11.i, %bb.a
-  %.pre.i = phi i64 [ %.pre.pre.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs3JXekYNd0JR_7dashmap6mapref8multiple8RefMultiNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1C_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit11.i ], [ undef, %bb.a ] ; 2 uses
   %.pre.i.i = phi ptr [ %.pre.i.pre.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs3JXekYNd0JR_7dashmap6mapref8multiple8RefMultiNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1C_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit11.i ], [ null, %bb.a ] ; 3 uses
+  %.pre.i = load i64, ptr %i.e, align 8, !noalias !8563 ; 2 uses
   %.not.i.i31 = icmp eq ptr %.pre.i.i, null       ; 2 uses
   %i.f = icmp eq i64 %.pre.i, 0
   %or.cond.i32 = select i1 %.not.i.i31, i1 true, i1 %i.f
@@ -578,7 +578,6 @@ bb.v:                                             ; preds = %bb.u
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs3JXekYNd0JR_7dashmap6mapref8multiple8RefMultiNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1C_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit11.i: ; preds = %bb.v, %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !8563
   %.pre.i.pre.i = load ptr, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !8575, !noalias !8573
-  %.pre.pre.i = load i64, ptr %i.e, align 8, !noalias !8563
   br label %bb.b
 
 bb.w:                                             ; preds = %bb.t, %bb.p
@@ -621,8 +620,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs3JXekYNd0JR_7dashmap6mapref8multiple8RefMultiNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1C_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit11.i, %bb.a
-  %.pre.i = phi i64 [ %.pre.pre.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs3JXekYNd0JR_7dashmap6mapref8multiple8RefMultiNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1C_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit11.i ], [ undef, %bb.a ] ; 2 uses
   %.pre.i.i = phi ptr [ %.pre.i.pre.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs3JXekYNd0JR_7dashmap6mapref8multiple8RefMultiNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1C_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit11.i ], [ null, %bb.a ] ; 3 uses
+  %.pre.i = load i64, ptr %i.e, align 8, !noalias !8654 ; 2 uses
   %.not.i.i31 = icmp eq ptr %.pre.i.i, null       ; 2 uses
   %i.f = icmp eq i64 %.pre.i, 0
   %or.cond.i32 = select i1 %.not.i.i31, i1 true, i1 %i.f
@@ -996,7 +995,6 @@ bb.v:                                             ; preds = %bb.u
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs3JXekYNd0JR_7dashmap6mapref8multiple8RefMultiNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1C_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit11.i: ; preds = %bb.v, %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !8654
   %.pre.i.pre.i = load ptr, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !8666, !noalias !8664
-  %.pre.pre.i = load i64, ptr %i.e, align 8, !noalias !8654
   br label %bb.b
 
 bb.w:                                             ; preds = %bb.t, %bb.p

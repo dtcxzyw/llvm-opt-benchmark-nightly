@@ -204,8 +204,8 @@ _ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicy
 bb.s:                                             ; preds = %.lr.ph, %bb.ag
   %.sroa.063.075 = phi ptr [ %i.ac, %.lr.ph ], [ %i.cz, %bb.ag ] ; 2 uses
   %i.bl = load ptr, ptr %.sroa.063.075, align 8, !tbaa !33 ; 6 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 1 ; 2 uses
-  %i.bn = load i8, ptr %i.bm, align 1             ; 2 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 1 ; 3 uses
+  %i.bn = load i8, ptr %i.bm, align 1
   %i.bo = and i8 %i.bn, 8
   %.not73 = icmp eq i8 %i.bo, 0
   br i1 %.not73, label %bb.y, label %bb.t
@@ -249,17 +249,18 @@ bb.y:                                             ; preds = %bb.s
   br i1 %.not.i.i.not, label %_ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %8 = and i8 %i.bn, 16
-  %.not.i.i.i = icmp eq i8 %8, 0
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bl, i64 40 ; 2 uses
   %i.cg = load ptr, ptr %i.cf, align 8, !nonnull !50 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #35
+  %8 = load i8, ptr %i.bm, align 1
+  %9 = and i8 %8, 16
+  %.not.i = icmp eq i8 %9, 0
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !51
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 72
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !54
   %i.cl = ptrtoint ptr %i.cg to i64
-  %i.cm = select i1 %.not.i.i.i, i64 0, i64 %i.cl
+  %i.cm = select i1 %.not.i, i64 0, i64 %i.cl
   %i.cn = ptrtoint ptr %i.ck to i64
   %i.co = sub i64 %i.cm, %i.cn
   %i.cp = sdiv exact i64 %i.co, 56
@@ -662,8 +663,8 @@ _ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicy
 bb.s:                                             ; preds = %.lr.ph, %bb.al
   %.sroa.069.081 = phi ptr [ %i.ac, %.lr.ph ], [ %i.dp, %bb.al ] ; 2 uses
   %i.bn = load ptr, ptr %.sroa.069.081, align 8, !tbaa !33 ; 6 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 1 ; 2 uses
-  %i.bp = load i8, ptr %i.bo, align 1             ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 1 ; 3 uses
+  %i.bp = load i8, ptr %i.bo, align 1
   %i.bq = and i8 %i.bp, 8
   %.not79 = icmp eq i8 %i.bq, 0
   br i1 %.not79, label %bb.ad, label %bb.t
@@ -741,17 +742,18 @@ bb.ad:                                            ; preds = %bb.s
   br i1 %.not.i.i.not, label %_ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %8 = and i8 %i.bp, 16
-  %.not.i.i.i = icmp eq i8 %8, 0
   %i.cv = getelementptr inbounds nuw i8, ptr %i.bn, i64 40 ; 2 uses
   %i.cw = load ptr, ptr %i.cv, align 8, !nonnull !50 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #35
+  %8 = load i8, ptr %i.bo, align 1
+  %9 = and i8 %8, 16
+  %.not.i = icmp eq i8 %9, 0
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 16
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !51
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 72
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !54
   %i.db = ptrtoint ptr %i.cw to i64
-  %i.dc = select i1 %.not.i.i.i, i64 0, i64 %i.db
+  %i.dc = select i1 %.not.i, i64 0, i64 %i.db
   %i.dd = ptrtoint ptr %i.da to i64
   %i.de = sub i64 %i.dc, %i.dd
   %i.df = sdiv exact i64 %i.de, 56

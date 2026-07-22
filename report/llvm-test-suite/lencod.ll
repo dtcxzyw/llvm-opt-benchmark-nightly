@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n, %bb.i
   %i.md = load ptr, ptr @stdout, align 8, !tbaa !19
   %i.me = tail call i64 @fwrite(ptr nonnull @.str.44, i64 36, i64 1, ptr %i.md) ; 0 uses
   %i.mf = load ptr, ptr @stats, align 8, !tbaa !8
-  %i.mg = getelementptr inbounds nuw i8, ptr %i.mf, i64 700 ; 4 uses
+  %i.mg = getelementptr inbounds nuw i8, ptr %i.mf, i64 700 ; 5 uses
   %i.mh = load i32, ptr %i.mg, align 4, !tbaa !15 ; 2 uses
   %i.mi = icmp sgt i32 %i.mh, 0
   br i1 %i.mi, label %bb.p, label %bb.u
@@ -231,7 +231,9 @@ bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
   store i16 73, ptr %i.d, align 16
   %i.mu = getelementptr inbounds nuw i8, ptr %i.mj, i64 2964 ; 3 uses
-  br label %.lr.ph
+  %0 = load i32, ptr %i.mg, align 4, !tbaa !15
+  %1 = icmp sgt i32 %0, 0
+  br i1 %1, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.093155 = phi i32 [ %i.nc, %.lr.ph ], [ 0, %.lr.ph.preheader ]
@@ -249,7 +251,7 @@ bb.q:                                             ; preds = %bb.p
   %i.ne = icmp slt i32 %i.nc, %i.nd
   br i1 %i.ne, label %.lr.ph, label %._crit_edge, !llvm.loop !223
 
-._crit_edge:                                      ; preds = %.lr.ph
+._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph.preheader
   %i.nf = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #26
   %i.ng = trunc i64 %i.nf to i32
   %i.nh = sub i32 79, %i.ng

@@ -204,7 +204,7 @@ bb.ak:                                            ; preds = %bb.af, %.lr.ph124
 .preheader:                                       ; preds = %bb.ai, %bb.at
   %.sroa.073.0130 = phi ptr [ %i.cn, %bb.at ], [ %i.bl, %bb.ai ] ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.073.0130, i64 192 ; 3 uses
-  %i.bz = load i32, ptr %i.by, align 4, !tbaa !10741 ; 2 uses
+  %i.bz = load i32, ptr %i.by, align 4, !tbaa !10741
   %i.ca = icmp eq i32 %i.bz, -1
   br i1 %i.ca, label %bb.at, label %bb.al
 
@@ -235,17 +235,14 @@ bb.ao:                                            ; preds = %bb.an
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i: ; preds = %bb.an
   store ptr null, ptr %i.q, align 8, !tbaa !10747, !alias.scope !10743
-  %.sroa.0.0.copyload.pre.pre = load i32, ptr %i.by, align 8, !tbaa !7
   br label %_ZNKSt8weak_ptrIN5folly17ShutdownSocketSetEE4lockEv.exit.thread
 
 _ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i: ; preds = %bb.ao
   %i.ci = load atomic i32, ptr %i.cc monotonic, align 8, !noalias !10743
   %.not.i.i.i = icmp eq i32 %i.ci, 0
-  %.sroa.0.0.copyload.pre.pre139 = load i32, ptr %i.by, align 8, !tbaa !7 ; 3 uses
   br i1 %.not.i.i.i, label %_ZNKSt8weak_ptrIN5folly17ShutdownSocketSetEE4lockEv.exit.thread, label %_ZNKSt8weak_ptrIN5folly17ShutdownSocketSetEE4lockEv.exit
 
 _ZNKSt8weak_ptrIN5folly17ShutdownSocketSetEE4lockEv.exit.thread: ; preds = %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i, %bb.al
-  %.sroa.0.0.copyload.pre = phi i32 [ %.sroa.0.0.copyload.pre.pre139, %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i ], [ %.sroa.0.0.copyload.pre.pre, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i ], [ %i.bz, %bb.al ]
   store ptr null, ptr %7, align 8, !tbaa !10749, !alias.scope !10743
   br label %bb.ar
 
@@ -256,7 +253,8 @@ _ZNKSt8weak_ptrIN5folly17ShutdownSocketSetEE4lockEv.exit: ; preds = %_ZNKSt14__s
   br i1 %.not84, label %bb.ar, label %bb.ap
 
 bb.ap:                                            ; preds = %_ZNKSt8weak_ptrIN5folly17ShutdownSocketSetEE4lockEv.exit
-  %i.ck = invoke noundef i32 @_ZN5folly17ShutdownSocketSet5closeENS_13NetworkSocketE(ptr noundef nonnull align 8 dereferenceable(24) %i.cj, i32 %.sroa.0.0.copyload.pre.pre139)
+  %.sroa.05.0.copyload = load i32, ptr %i.by, align 8, !tbaa !7
+  %i.ck = invoke noundef i32 @_ZN5folly17ShutdownSocketSet5closeENS_13NetworkSocketE(ptr noundef nonnull align 8 dereferenceable(24) %i.cj, i32 %.sroa.05.0.copyload)
           to label %bb.as unwind label %bb.aq     ; 0 uses
 
 bb.aq:                                            ; preds = %bb.ar, %bb.ap
@@ -267,7 +265,7 @@ bb.aq:                                            ; preds = %bb.ar, %bb.ap
   br label %bb.bj
 
 bb.ar:                                            ; preds = %_ZNKSt8weak_ptrIN5folly17ShutdownSocketSetEE4lockEv.exit.thread, %_ZNKSt8weak_ptrIN5folly17ShutdownSocketSetEE4lockEv.exit
-  %.sroa.0.0.copyload = phi i32 [ %.sroa.0.0.copyload.pre, %_ZNKSt8weak_ptrIN5folly17ShutdownSocketSetEE4lockEv.exit.thread ], [ %.sroa.0.0.copyload.pre.pre139, %_ZNKSt8weak_ptrIN5folly17ShutdownSocketSetEE4lockEv.exit ]
+  %.sroa.0.0.copyload = load i32, ptr %i.by, align 8, !tbaa !7
   %i.cm = invoke noundef i32 @_ZN5folly10closeNoIntENS_13NetworkSocketE(i32 %.sroa.0.0.copyload)
           to label %bb.as unwind label %bb.aq     ; 0 uses
 

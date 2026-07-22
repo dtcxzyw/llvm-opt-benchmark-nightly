@@ -203,7 +203,7 @@ bb.as:                                            ; preds = %_ZNSt10shared_ptrIN
 
 bb.at:                                            ; preds = %bb.aq
   %i.dl = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !2581 ; 3 uses
+  %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !2581 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #36
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %12, i8 0, i64 16, i1 false)
   %i.dn = load i32, ptr %i.dm, align 4, !tbaa !3
@@ -216,22 +216,41 @@ bb.at:                                            ; preds = %bb.aq
 
 _ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i: ; preds = %bb.at
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dq, i64 12
-  %i.du = load i16, ptr %i.dt, align 2, !tbaa !139 ; 2 uses
+  %i.du = load i16, ptr %i.dt, align 2, !tbaa !139
   %.not.i.i.i92 = icmp eq i16 %i.du, 0
   br i1 %.not.i.i.i92, label %.thread288, label %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95.a
 
 _ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95.a: ; preds = %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #36
-  %32 = zext i16 %i.du to i64
-  %33 = getelementptr inbounds nuw i8, ptr %i.dm, i64 %32 ; 2 uses
-  %34 = load i32, ptr %33, align 4, !tbaa !3
-  %35 = zext i32 %34 to i64
-  %36 = getelementptr inbounds nuw i8, ptr %33, i64 %35
-  invoke void @_ZN5arrow3ipc8internal19GetKeyValueMetadataEPKN22arrow_vendored_private11flatbuffers6VectorINS3_6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEEjEEPSt10shared_ptrINS_16KeyValueMetadataEE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %14, ptr noundef nonnull %36, ptr noundef nonnull %12)
+  %32 = load i32, ptr %i.dm, align 4, !tbaa !3
+  %33 = sext i32 %32 to i64
+  %34 = sub nsw i64 0, %33
+  %35 = getelementptr inbounds i8, ptr %i.dm, i64 %34 ; 2 uses
+  %36 = load i16, ptr %35, align 2, !tbaa !139
+  %37 = icmp ugt i16 %36, 12
+  br i1 %37, label %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i93, label %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95
+
+_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i93: ; preds = %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95.a
+  %38 = getelementptr inbounds nuw i8, ptr %35, i64 12
+  %39 = load i16, ptr %38, align 2, !tbaa !139    ; 2 uses
+  %.not.i.i.i94 = icmp eq i16 %39, 0
+  br i1 %.not.i.i.i94, label %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95, label %40
+
+40:                                               ; preds = %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i93
+  %41 = zext i16 %39 to i64
+  %42 = getelementptr inbounds nuw i8, ptr %i.dm, i64 %41 ; 2 uses
+  %43 = load i32, ptr %42, align 4, !tbaa !3
+  %44 = zext i32 %43 to i64
+  %45 = getelementptr inbounds nuw i8, ptr %42, i64 %44
+  br label %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95
+
+_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95: ; preds = %40, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i93, %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95.a
+  %46 = phi ptr [ %45, %40 ], [ null, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i93 ], [ null, %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95.a ]
+  invoke void @_ZN5arrow3ipc8internal19GetKeyValueMetadataEPKN22arrow_vendored_private11flatbuffers6VectorINS3_6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEEjEEPSt10shared_ptrINS_16KeyValueMetadataEE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %14, ptr noundef %46, ptr noundef nonnull %12)
           to label %_ZN5arrow6StatusD2Ev.exit unwind label %bb.ax
 
-_ZN5arrow6StatusD2Ev.exit:                        ; preds = %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95.a
+_ZN5arrow6StatusD2Ev.exit:                        ; preds = %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95
   %i.dv = load ptr, ptr %14, align 8, !tbaa !52   ; 2 uses
   store ptr %i.dv, ptr %13, align 8, !tbaa !52
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #36
@@ -254,7 +273,7 @@ bb.aw:                                            ; preds = %bb.av
   call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(8) %13) #36
   br label %bb.ay
 
-bb.ax:                                            ; preds = %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95.a
+bb.ax:                                            ; preds = %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit95
   %i.eb = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #36
@@ -657,7 +676,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #36
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 200 ; 2 uses
   %.val42 = load ptr, ptr %i.a, align 8, !tbaa !415 ; 4 uses
-  %i.b = load i32, ptr %.val42, align 4, !tbaa !3 ; 2 uses
+  %i.b = load i32, ptr %.val42, align 4, !tbaa !3
   %i.c = sext i32 %i.b to i64
   %i.d = sub nsw i64 0, %i.c
   %i.e = getelementptr inbounds i8, ptr %.val42, i64 %i.d ; 3 uses
@@ -734,7 +753,7 @@ _ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i
 bb.c:                                             ; preds = %_ZN5arrow6ResultINS_3ipc8internal9FileBlockEED2Ev.exit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %.val = load ptr, ptr %i.a, align 8, !tbaa !415 ; 3 uses
-  %i.aj = load i32, ptr %.val, align 4, !tbaa !3  ; 2 uses
+  %i.aj = load i32, ptr %.val, align 4, !tbaa !3
   %i.ak = sext i32 %i.aj to i64
   %i.al = sub nsw i64 0, %i.ak
   %i.am = getelementptr inbounds i8, ptr %.val, i64 %i.al ; 2 uses
@@ -743,10 +762,9 @@ bb.c:                                             ; preds = %_ZN5arrow6ResultINS
   br i1 %i.ao, label %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i47, label %.critedge41, !llvm.loop !2938
 
 _ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i47: ; preds = %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i47.lr.ph, %bb.c
-  %9 = phi i32 [ %i.b, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i47.lr.ph ], [ %i.aj, %bb.c ]
   %indvars.iv = phi i64 [ 0, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i47.lr.ph ], [ %indvars.iv.next, %bb.c ] ; 4 uses
   %i.ap = phi ptr [ %i.e, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i47.lr.ph ], [ %i.am, %bb.c ]
-  %.val71 = phi ptr [ %.val42, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i47.lr.ph ], [ %.val, %bb.c ] ; 3 uses
+  %.val71 = phi ptr [ %.val42, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i47.lr.ph ], [ %.val, %bb.c ] ; 4 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
   %i.ar = load i16, ptr %i.aq, align 2, !tbaa !139 ; 2 uses
   %.not.i.i.i.i48 = icmp eq i16 %i.ar, 0
@@ -766,6 +784,7 @@ _ZNK3org6apache5arrow7flatbuf6Footer12dictionariesEv.exit.i49: ; preds = %_ZNK22
 bb.d:                                             ; preds = %_ZNK3org6apache5arrow7flatbuf6Footer12dictionariesEv.exit.i49
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #36
   %.val43 = load i64, ptr %i.ae, align 8
+  %9 = load i32, ptr %.val71, align 4, !tbaa !3, !noalias !2939
   %i.ba = sext i32 %9 to i64
   %i.bb = sub nsw i64 0, %i.ba
   %i.bc = getelementptr inbounds i8, ptr %.val71, i64 %i.bb
@@ -1168,7 +1187,7 @@ bb.a:
   %3 = alloca %"class.arrow::Result.859", align 8 ; 13 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 200 ; 2 uses
   %.val36 = load ptr, ptr %i.a, align 8, !tbaa !415 ; 3 uses
-  %i.b = load i32, ptr %.val36, align 4, !tbaa !3 ; 2 uses
+  %i.b = load i32, ptr %.val36, align 4, !tbaa !3
   %i.c = sext i32 %i.b to i64
   %i.d = sub nsw i64 0, %i.c
   %i.e = getelementptr inbounds i8, ptr %.val36, i64 %i.d ; 2 uses
@@ -1188,7 +1207,7 @@ _ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i
 bb.b:                                             ; preds = %_ZN5arrow6ResultINS_3ipc8internal9FileBlockEED2Ev.exit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %.val = load ptr, ptr %i.a, align 8, !tbaa !415 ; 3 uses
-  %i.l = load i32, ptr %.val, align 4, !tbaa !3   ; 2 uses
+  %i.l = load i32, ptr %.val, align 4, !tbaa !3
   %i.m = sext i32 %i.l to i64
   %i.n = sub nsw i64 0, %i.m
   %i.o = getelementptr inbounds i8, ptr %.val, i64 %i.n ; 2 uses
@@ -1197,10 +1216,9 @@ bb.b:                                             ; preds = %_ZN5arrow6ResultINS
   br i1 %i.q, label %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i, label %.critedge, !llvm.loop !3048
 
 _ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i: ; preds = %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.lr.ph, %bb.b
-  %4 = phi i32 [ %i.b, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.lr.ph ], [ %i.l, %bb.b ]
   %indvars.iv = phi i64 [ 0, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 3 uses
   %i.r = phi ptr [ %i.e, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.lr.ph ], [ %i.o, %bb.b ]
-  %.val38 = phi ptr [ %.val36, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.lr.ph ], [ %.val, %bb.b ] ; 3 uses
+  %.val38 = phi ptr [ %.val36, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.lr.ph ], [ %.val, %bb.b ] ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.t = load i16, ptr %i.s, align 2, !tbaa !139  ; 2 uses
   %.not.i.i.i.i = icmp eq i16 %i.t, 0
@@ -1220,6 +1238,7 @@ _ZNK3org6apache5arrow7flatbuf6Footer12dictionariesEv.exit.i: ; preds = %_ZNK22ar
 bb.c:                                             ; preds = %_ZNK3org6apache5arrow7flatbuf6Footer12dictionariesEv.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #36
   %.val19 = load i64, ptr %i.h, align 8
+  %4 = load i32, ptr %.val38, align 4, !tbaa !3, !noalias !3049
   %i.ac = sext i32 %4 to i64
   %i.ad = sub nsw i64 0, %i.ac
   %i.ae = getelementptr inbounds i8, ptr %.val38, i64 %i.ad
@@ -1622,7 +1641,7 @@ bb.q:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #36, !noalias !3146
   %i.aj = getelementptr i8, ptr %.val80.i.i.i, i64 200 ; 2 uses
   %.val87.i.i.i = load ptr, ptr %i.aj, align 8, !tbaa !415 ; 7 uses
-  %i.ak = load i32, ptr %.val87.i.i.i, align 4, !tbaa !3 ; 2 uses
+  %i.ak = load i32, ptr %.val87.i.i.i, align 4, !tbaa !3
   %i.al = sext i32 %i.ak to i64
   %i.am = sub nsw i64 0, %i.al                    ; 2 uses
   %i.an = getelementptr inbounds i8, ptr %.val87.i.i.i, i64 %i.am ; 2 uses
@@ -1672,7 +1691,7 @@ _ZNSt12_Vector_baseIN5arrow6FutureISt10shared_ptrINS0_3ipc7MessageEEEESaIS6_EEC2
   %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.bb, i64 %i.ay
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.bb, i8 0, i64 %i.ba, i1 false)
   %scevgep.i.i.i.i.i.i.i.i = getelementptr i8, ptr %i.bb, i64 %i.ba
-  %.pre.i.i.i = load i32, ptr %.val87.i.i.i, align 4, !tbaa !3 ; 2 uses
+  %.pre.i.i.i = load i32, ptr %.val87.i.i.i, align 4, !tbaa !3
   %.pre335.i.i.i = sext i32 %.pre.i.i.i to i64
   %.pre336.i.i.i = sub nsw i64 0, %.pre335.i.i.i  ; 2 uses
   %.phi.trans.insert.i.i = getelementptr inbounds i8, ptr %.val87.i.i.i, i64 %.pre336.i.i.i
@@ -1683,7 +1702,6 @@ bb.s:                                             ; preds = %.noexc102.i.i.i, %_
   %i.bd = phi i16 [ %.pre.i.i, %.noexc102.i.i.i ], [ %i.ao, %_ZNSt12_Vector_baseIN5arrow6FutureISt10shared_ptrINS0_3ipc7MessageEEEESaIS6_EEC2EmRKS7_.exit.thread.i.i.i.i ]
   %.pre-phi337.i.i.i = phi i64 [ %.pre336.i.i.i, %.noexc102.i.i.i ], [ %i.am, %_ZNSt12_Vector_baseIN5arrow6FutureISt10shared_ptrINS0_3ipc7MessageEEEESaIS6_EEC2EmRKS7_.exit.thread.i.i.i.i ]
   %i.be = phi ptr [ %i.bb, %.noexc102.i.i.i ], [ null, %_ZNSt12_Vector_baseIN5arrow6FutureISt10shared_ptrINS0_3ipc7MessageEEEESaIS6_EEC2EmRKS7_.exit.thread.i.i.i.i ]
-  %40 = phi i32 [ %.pre.i.i.i, %.noexc102.i.i.i ], [ %i.ak, %_ZNSt12_Vector_baseIN5arrow6FutureISt10shared_ptrINS0_3ipc7MessageEEEESaIS6_EEC2EmRKS7_.exit.thread.i.i.i.i ]
   %.sink.i.i.i.i = phi ptr [ %i.bc, %.noexc102.i.i.i ], [ null, %_ZNSt12_Vector_baseIN5arrow6FutureISt10shared_ptrINS0_3ipc7MessageEEEESaIS6_EEC2EmRKS7_.exit.thread.i.i.i.i ] ; 2 uses
   %.0.lcssa.i.i.i.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i.i.i.i, %.noexc102.i.i.i ], [ null, %_ZNSt12_Vector_baseIN5arrow6FutureISt10shared_ptrINS0_3ipc7MessageEEEESaIS6_EEC2EmRKS7_.exit.thread.i.i.i.i ] ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 4 uses
@@ -1703,7 +1721,7 @@ _ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i
 bb.t:                                             ; preds = %_ZN5arrow6ResultINS_3ipc8internal9FileBlockEED2Ev.exit.i.i.i
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1
   %.val86.i.i.i = load ptr, ptr %i.aj, align 8, !tbaa !415 ; 3 uses
-  %i.bm = load i32, ptr %.val86.i.i.i, align 4, !tbaa !3 ; 2 uses
+  %i.bm = load i32, ptr %.val86.i.i.i, align 4, !tbaa !3
   %i.bn = sext i32 %i.bm to i64
   %i.bo = sub nsw i64 0, %i.bn
   %i.bp = getelementptr inbounds i8, ptr %.val86.i.i.i, i64 %i.bo ; 2 uses
@@ -1712,10 +1730,9 @@ bb.t:                                             ; preds = %_ZN5arrow6ResultINS
   br i1 %i.br, label %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i103.i.i.i, label %.critedge.loopexit.i.i.i, !llvm.loop !3153
 
 _ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i103.i.i.i: ; preds = %bb.t, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i103.lr.ph.i.i.i
-  %41 = phi i32 [ %40, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i103.lr.ph.i.i.i ], [ %i.bm, %bb.t ]
   %indvars.iv.i.i.i = phi i64 [ 0, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i103.lr.ph.i.i.i ], [ %indvars.iv.next.i.i.i, %bb.t ] ; 4 uses
   %i.bs = phi ptr [ %i.bi, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i103.lr.ph.i.i.i ], [ %i.bp, %bb.t ]
-  %.val89.i.i.i = phi ptr [ %.val87.i.i.i, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i103.lr.ph.i.i.i ], [ %.val86.i.i.i, %bb.t ] ; 3 uses
+  %.val89.i.i.i = phi ptr [ %.val87.i.i.i, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i103.lr.ph.i.i.i ], [ %.val86.i.i.i, %bb.t ] ; 4 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   %i.bu = load i16, ptr %i.bt, align 2, !tbaa !139 ; 2 uses
   %.not.i.i.i.i104.i.i.i = icmp eq i16 %i.bu, 0
@@ -1740,7 +1757,8 @@ bb.u:                                             ; preds = %.lr.ph.preheader.i.
 bb.v:                                             ; preds = %_ZNK3org6apache5arrow7flatbuf6Footer12dictionariesEv.exit.i105.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #36, !noalias !3146
   %.val88.i.i.i = load i64, ptr %i.bj, align 8
-  %i.ce = sext i32 %41 to i64
+  %40 = load i32, ptr %.val89.i.i.i, align 4, !tbaa !3, !noalias !3154
+  %i.ce = sext i32 %40 to i64
   %i.cf = sub nsw i64 0, %i.ce
   %i.cg = getelementptr inbounds i8, ptr %.val89.i.i.i, i64 %i.cf
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 8

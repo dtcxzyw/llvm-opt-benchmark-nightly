@@ -203,8 +203,8 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.ad
 
 bb.e:                                             ; preds = %.thread
-  %i.t = getelementptr i8, ptr %i.p, i64 8
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !17   ; 5 uses
+  %i.t = getelementptr i8, ptr %i.p, i64 8        ; 2 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !17   ; 4 uses
   %.not89 = icmp eq ptr %i.u, null
   br i1 %.not89, label %bb.n, label %bb.f
 
@@ -223,7 +223,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
-  %i.z = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef nonnull %i.u, ptr noundef nonnull %i.d) #10 ; 3 uses
+  %3 = load ptr, ptr %i.t, align 8, !tbaa !17
+  %i.z = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef %3, ptr noundef nonnull %i.d) #10 ; 3 uses
   %i.aa = icmp eq ptr %i.z, null
   br i1 %i.aa, label %.thread109, label %bb.i
 
@@ -272,8 +273,8 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o, %bb.n
   %.169 = phi i64 [ %i.ah, %bb.o ], [ %.068, %bb.n ] ; 2 uses
   %.062 = phi ptr [ %i.ag, %bb.o ], [ @_Py_NoneStruct, %bb.n ] ; 3 uses
-  %i.ai = getelementptr i8, ptr %i.p, i64 24
-  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !17 ; 5 uses
+  %i.ai = getelementptr i8, ptr %i.p, i64 24      ; 2 uses
+  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !17 ; 4 uses
   %.not95 = icmp eq ptr %i.aj, null
   br i1 %.not95, label %bb.y, label %bb.q
 
@@ -292,7 +293,8 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #10
-  %i.ao = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef nonnull %i.aj, ptr noundef nonnull %i.e) #10 ; 3 uses
+  %4 = load ptr, ptr %i.ai, align 8, !tbaa !17
+  %i.ao = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef %4, ptr noundef nonnull %i.e) #10 ; 3 uses
   %i.ap = icmp eq ptr %i.ao, null
   br i1 %i.ap, label %.thread112, label %bb.t
 

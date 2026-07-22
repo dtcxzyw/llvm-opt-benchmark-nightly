@@ -204,8 +204,8 @@ bb.aa:                                            ; preds = %bb.x
   store i64 0, ptr %i.bg, align 8, !tbaa !98
   store i8 0, ptr %i.bf, align 8, !tbaa !97
   %i.bh = getelementptr inbounds nuw i8, ptr %14, i64 32
-  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !1500 ; 5 uses
-  %i.bj = load i8, ptr %i.bi, align 8, !tbaa !1510 ; 2 uses
+  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !1500 ; 6 uses
+  %i.bj = load i8, ptr %i.bi, align 8, !tbaa !1510
   switch i8 %i.bj, label %.thread [
     i8 4, label %bb.ab
     i8 3, label %bb.ab
@@ -235,7 +235,8 @@ _ZN6duckdbL20GetLikeStringEscapedEPN10duckdb_re26RegexpEb.exit.thread218: ; pred
   br label %bb.ao
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.br = icmp eq i8 %i.bj, 4
+  %28 = load i8, ptr %i.bi, align 8, !tbaa !1510, !noalias !1513
+  %i.br = icmp eq i8 %28, 4
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bi, i64 24
   %i.bt = load i32, ptr %i.bs, align 8, !tbaa !97, !noalias !1513 ; 3 uses
   br i1 %i.br, label %bb.ad, label %bb.ai

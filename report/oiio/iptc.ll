@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.ap
   ret i1 %i.y
 
 _ZN11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEEC2EPKc.exit: ; preds = %_ZNSt6vectorIcSaIcEE5clearEv.exit, %bb.ap
-  %indvars.iv = phi i64 [ 0, %_ZNSt6vectorIcSaIcEE5clearEv.exit ], [ %indvars.iv.next, %bb.ap ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %_ZNSt6vectorIcSaIcEE5clearEv.exit ], [ %indvars.iv.next, %bb.ap ] ; 3 uses
   %i.z = getelementptr inbounds nuw [32 x i8], ptr @_ZN11OpenImageIO4v3_112_GLOBAL__N_16iimtagE, i64 %indvars.iv ; 6 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !17 ; 2 uses
@@ -242,9 +242,6 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e
   %i.al = getelementptr inbounds nuw i8, ptr %i.z, i64 28
-  %15 = shl nuw i64 1, %indvars.iv
-  %16 = and i64 %15, 4503597429623727
-  %.not139 = icmp eq i64 %16, 0
   br label %bb.h
 
 ._crit_edge:                                      ; preds = %bb.y
@@ -314,7 +311,7 @@ bb.h:                                             ; preds = %.lr.ph, %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #13
   %i.bc = load ptr, ptr %.sroa.077.089, align 8, !tbaa !14
   store ptr %i.bc, ptr %8, align 8, !tbaa !23
-  %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.077.089, i64 8 ; 7 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.077.089, i64 8 ; 8 uses
   %i.be = load i64, ptr %i.bd, align 8, !tbaa !16
   store i64 %i.be, ptr %i.p, align 8, !tbaa !25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, i8 0, i64 16, i1 false)
@@ -335,19 +332,22 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSIN11OpenImageIO4v3_117bas
   br i1 %.not41, label %bb.y, label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSIN11OpenImageIO4v3_117basic_string_viewIcS2_EEEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_St17basic_string_viewIcS2_EESt6__not_ISB_IPSD_PKS4_EESI_ISB_ISE_PKcEEEE5valueERS4_E4typeESE_.exit
-  %i.bk = load i32, ptr %i.al, align 4, !tbaa !47 ; 2 uses
-  %i.bl = zext i32 %i.bk to i64                   ; 3 uses
+  %i.bk = load i32, ptr %i.al, align 4, !tbaa !47
+  %i.bl = zext i32 %i.bk to i64                   ; 2 uses
   %i.bm = icmp ugt i64 %i.bj, %i.bl
   br i1 %i.bm, label %bb.k, label %bb.w
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #13
   call void @llvm.experimental.noalias.scope.decl(metadata !48)
+  %15 = load i64, ptr %i.bd, align 8, !tbaa !16, !noalias !48
   store ptr %i.r, ptr %10, align 8, !tbaa !8, !alias.scope !48
   %i.bn = load ptr, ptr %.sroa.077.089, align 8, !tbaa !14, !noalias !48 ; 2 uses
+  %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.bl, i64 %15) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13, !noalias !48
-  store i64 %i.bl, ptr %i.b, align 8, !tbaa !12, !noalias !48
-  br i1 %.not139, label %._crit_edge.i.i.i, label %.noexc10.i.i
+  store i64 %spec.select.i.i.i, ptr %i.b, align 8, !tbaa !12, !noalias !48
+  %16 = icmp samesign ugt i64 %spec.select.i.i.i, 15
+  br i1 %16, label %.noexc10.i.i, label %._crit_edge.i.i.i
 
 .noexc10.i.i:                                     ; preds = %bb.k
   %i.bo = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %10, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i64 noundef 0)
@@ -361,7 +361,8 @@ bb.k:                                             ; preds = %bb.j
 
 ._crit_edge.i.i.i:                                ; preds = %.noexc, %bb.k
   %i.bq = phi ptr [ %i.bo, %.noexc ], [ %i.r, %bb.k ] ; 2 uses
-  switch i32 %i.bk, label %bb.m [
+  %trunc = trunc nuw i64 %spec.select.i.i.i to i32
+  switch i32 %trunc, label %bb.m [
     i32 1, label %bb.l
     i32 0, label %bb.n
   ]
@@ -372,7 +373,7 @@ bb.l:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.n
 
 bb.m:                                             ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bq, ptr align 1 %i.bn, i64 %i.bl, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bq, ptr align 1 %i.bn, i64 %spec.select.i.i.i, i1 false)
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %._crit_edge.i.i.i

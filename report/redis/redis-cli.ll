@@ -204,23 +204,19 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.aq, label %bb.p, label %bb.h, !llvm.loop !168
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.ar = load ptr, ptr %i.ai, align 8, !tbaa !88 ; 2 uses
+  %i.ar = load ptr, ptr %i.ai, align 8, !tbaa !88
   %.not43 = icmp eq ptr %i.ar, null
   br i1 %.not43, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   %i.as = call fastcc i32 @clusterManagerNodeConnect(ptr noundef nonnull %i.ai)
   %.not44 = icmp eq i32 %i.as, 0
-  br i1 %.not44, label %bb.p, label %._crit_edge58, !llvm.loop !168
+  br i1 %.not44, label %bb.p, label %bb.j, !llvm.loop !168
 
-._crit_edge58:                                    ; preds = %bb.i
-  %.pre = load ptr, ptr %i.ai, align 8, !tbaa !88
-  br label %bb.j, !llvm.loop !168
-
-bb.j:                                             ; preds = %._crit_edge58, %bb.h
-  %3 = phi ptr [ %.pre, %._crit_edge58 ], [ %i.ar, %bb.h ]
+bb.j:                                             ; preds = %bb.i, %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #32
   store ptr null, ptr %i.a, align 8, !tbaa !39
+  %3 = load ptr, ptr %i.ai, align 8, !tbaa !88
   %i.at = call i32 @redisAppendCommandArgv(ptr noundef %3, i32 noundef %i.t, ptr noundef nonnull %i.u, ptr noundef %i.x) #32 ; 0 uses
   %i.au = load ptr, ptr %i.ai, align 8, !tbaa !88
   %i.av = call i32 @redisGetReply(ptr noundef %i.au, ptr noundef nonnull %i.a) #32
@@ -623,8 +619,8 @@ bb.vx:                                            ; preds = %bb.yx, %bb.vw
   %i.bxf = getelementptr inbounds nuw i8, ptr %i.bxd, i64 56
   %i.bxg = load ptr, ptr %i.bxf, align 8, !tbaa !38
   %i.bxh = getelementptr inbounds nuw i8, ptr %i.bxg, i64 8
-  %i.bxi = load ptr, ptr %i.bxh, align 8, !tbaa !39 ; 2 uses
-  %i.bxj = getelementptr inbounds nuw i8, ptr %i.bxi, i64 48 ; 5 uses
+  %i.bxi = load ptr, ptr %i.bxh, align 8, !tbaa !39 ; 3 uses
+  %i.bxj = getelementptr inbounds nuw i8, ptr %i.bxi, i64 48 ; 6 uses
   %i.bxk = load i64, ptr %i.bxj, align 8, !tbaa !33 ; 3 uses
   %i.bxl = zext i32 %.079.i to i64
   %i.bxm = icmp ugt i64 %i.bxk, %i.bxl
@@ -653,15 +649,23 @@ bb.wb:                                            ; preds = %bb.wa, %bb.vx
   %.180.i = phi i32 [ %i.bxs, %bb.wa ], [ %.079.i, %bb.vx ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #32
   %.not35.i.i107 = icmp eq i64 %i.bxt, 0
-  br i1 %.not35.i.i107, label %getKeyFreqs.exit.thread.i.a, label %.lr.ph.i.i108
+  br i1 %.not35.i.i107, label %.getKeyFreqs.exit_crit_edge.i, label %.lr.ph.i.i108
+
+.getKeyFreqs.exit_crit_edge.i:                    ; preds = %bb.wb
+  %.pre.i126 = load i64, ptr %i.bxj, align 8, !tbaa !33
+  br label %getKeyFreqs.exit.thread.i.a
 
 .lr.ph.i.i108:                                    ; preds = %bb.wb
-  %i.bxu = getelementptr inbounds nuw i8, ptr %i.bxi, i64 56 ; 4 uses
+  %i.bxu = getelementptr inbounds nuw i8, ptr %i.bxi, i64 56 ; 3 uses
   br label %bb.wc
 
 .preheader.i.i:                                   ; preds = %bb.wc
   %i.bxv = icmp eq i64 %i.byi, 0
-  br i1 %i.bxv, label %getKeyFreqs.exit.thread.i.a, label %.lr.ph34.i.i
+  br i1 %i.bxv, label %getKeyFreqs.exit.thread.i, label %.lr.ph34.i.i
+
+getKeyFreqs.exit.thread.i:                        ; preds = %.preheader.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #32
+  br label %._crit_edge.i112
 
 bb.wc:                                            ; preds = %bb.wc, %.lr.ph.i.i108
   %i.bxw = phi i64 [ 0, %.lr.ph.i.i108 ], [ %i.byh, %bb.wc ]
@@ -669,15 +673,16 @@ bb.wc:                                            ; preds = %bb.wc, %.lr.ph.i.i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #32
   store <2 x ptr> <ptr @.str.843, ptr @.str.844>, ptr %i.n, align 16, !tbaa !29
   %i.bxx = load ptr, ptr %i.bxu, align 8, !tbaa !38
-  %i.bxy = getelementptr inbounds nuw [8 x i8], ptr %i.bxx, i64 %i.bxw
-  %i.bxz = load ptr, ptr %i.bxy, align 8, !tbaa !39 ; 2 uses
+  %i.bxy = getelementptr inbounds nuw [8 x i8], ptr %i.bxx, i64 %i.bxw ; 2 uses
+  %i.bxz = load ptr, ptr %i.bxy, align 8, !tbaa !39
   %i.bya = getelementptr inbounds nuw i8, ptr %i.bxz, i64 32
   %i.byb = load ptr, ptr %i.bya, align 8, !tbaa !42
   store ptr %i.byb, ptr %i.bvq, align 16, !tbaa !29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #32
   store i64 6, ptr %i.o, align 16, !tbaa !26
   store i64 4, ptr %i.bvr, align 8, !tbaa !26
-  %i.byc = getelementptr inbounds nuw i8, ptr %i.bxz, i64 24
+  %36 = load ptr, ptr %i.bxy, align 8, !tbaa !39
+  %i.byc = getelementptr inbounds nuw i8, ptr %36, i64 24
   %i.byd = load i64, ptr %i.byc, align 8, !tbaa !70
   store i64 %i.byd, ptr %i.bvs, align 16, !tbaa !26
   %i.bye = load ptr, ptr @context, align 8, !tbaa !219
@@ -766,21 +771,22 @@ bb.wi:                                            ; preds = %bb.wh, %bb.wg
   %i.bzz = zext i32 %i.bzy to i64                 ; 2 uses
   %i.caa = load i64, ptr %i.bxj, align 8, !tbaa !33 ; 2 uses
   %i.cab = icmp ugt i64 %i.caa, %i.bzz
-  br i1 %i.cab, label %.lr.ph34.i.i, label %getKeyFreqs.exit.i, !llvm.loop !370
+  br i1 %i.cab, label %.lr.ph34.i.i, label %getKeyFreqs.exit.thread.i.a, !llvm.loop !370
 
-getKeyFreqs.exit.thread.i.a:                      ; preds = %.preheader.i.i, %bb.wb
+getKeyFreqs.exit.thread.i.a:                      ; preds = %bb.wi, %.getKeyFreqs.exit_crit_edge.i
+  %37 = phi i64 [ %.pre.i126, %.getKeyFreqs.exit_crit_edge.i ], [ %i.caa, %bb.wi ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #32
-  br label %._crit_edge.i112
+  %.not133.i = icmp eq i64 %37, 0
+  br i1 %.not133.i, label %._crit_edge.i112, label %getKeyFreqs.exit.i
 
-getKeyFreqs.exit.i:                               ; preds = %bb.wi
-  %36 = icmp eq i64 %i.caa, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #32
-  br i1 %36, label %._crit_edge.i112, label %.lr.ph.i110
+getKeyFreqs.exit.i:                               ; preds = %getKeyFreqs.exit.thread.i.a
+  %38 = getelementptr inbounds nuw i8, ptr %i.bxi, i64 56
+  br label %.lr.ph.i110
 
-.lr.ph.i110:                                      ; preds = %getKeyFreqs.exit.i, %.critedge.i111
-  %i.cac = phi i64 [ %i.ccr, %.critedge.i111 ], [ 0, %getKeyFreqs.exit.i ] ; 2 uses
-  %.175127.i = phi i64 [ %i.cad, %.critedge.i111 ], [ %.074.i, %getKeyFreqs.exit.i ]
-  %.078126.i = phi i32 [ %i.ccq, %.critedge.i111 ], [ 0, %getKeyFreqs.exit.i ]
+.lr.ph.i110:                                      ; preds = %.critedge.i111, %getKeyFreqs.exit.i
+  %i.cac = phi i64 [ 0, %getKeyFreqs.exit.i ], [ %i.ccr, %.critedge.i111 ] ; 2 uses
+  %.175127.i = phi i64 [ %.074.i, %getKeyFreqs.exit.i ], [ %i.cad, %.critedge.i111 ]
+  %.078126.i = phi i32 [ 0, %getKeyFreqs.exit.i ], [ %i.ccq, %.critedge.i111 ]
   %i.cad = add i64 %.175127.i, 1                  ; 4 uses
   %i.cae = urem i64 %i.cad, 1000000
   %i.caf = icmp eq i64 %i.cae, 0
@@ -918,7 +924,7 @@ bb.xd:                                            ; preds = %bb.xc, %._crit_edge
   %i.ccb = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.pre-phi.i120
   store i64 %i.cca, ptr %i.ccb, align 8, !tbaa !339
   %i.ccc = call ptr @hi_sdsempty() #32
-  %i.ccd = load ptr, ptr %i.bxu, align 8, !tbaa !38
+  %i.ccd = load ptr, ptr %38, align 8, !tbaa !38
   %i.cce = getelementptr inbounds nuw [8 x i8], ptr %i.ccd, i64 %i.cac
   %i.ccf = load ptr, ptr %i.cce, align 8, !tbaa !39 ; 2 uses
   %i.ccg = getelementptr inbounds nuw i8, ptr %i.ccf, i64 32
@@ -949,8 +955,8 @@ bb.xf:                                            ; preds = %bb.xe
   %i.cct = icmp ugt i64 %i.ccs, %i.ccr
   br i1 %i.cct, label %.lr.ph.i110, label %._crit_edge.i112, !llvm.loop !371
 
-._crit_edge.i112:                                 ; preds = %.critedge.i111, %getKeyFreqs.exit.i, %getKeyFreqs.exit.thread.i.a
-  %.175.lcssa.i = phi i64 [ %.074.i, %getKeyFreqs.exit.i ], [ %.074.i, %getKeyFreqs.exit.thread.i.a ], [ %i.cad, %.critedge.i111 ] ; 6 uses
+._crit_edge.i112:                                 ; preds = %.critedge.i111, %getKeyFreqs.exit.thread.i.a, %getKeyFreqs.exit.thread.i
+  %.175.lcssa.i = phi i64 [ %.074.i, %getKeyFreqs.exit.thread.i.a ], [ %.074.i, %getKeyFreqs.exit.thread.i ], [ %i.cad, %.critedge.i111 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #32
   %i.ccu = call i32 @gettimeofday(ptr noundef nonnull %8, ptr noundef null) #32 ; 0 uses
   %i.ccv = load i64, ptr %8, align 8, !tbaa !318
@@ -1353,14 +1359,15 @@ bb.b:                                             ; preds = %.lr.ph99, %bb.m
   br i1 %.not59, label %bb.c, label %bb.m
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !119  ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !119
   %.not60 = icmp eq ptr %i.l, null
   br i1 %.not60, label %bb.m, label %bb.d, !llvm.loop !533
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #32
-  %i.m = load i64, ptr %i.l, align 1
+  %2 = load ptr, ptr %i.k, align 8, !tbaa !119
+  %i.m = load i64, ptr %2, align 1
   store i64 %i.m, ptr %i.a, align 8
   store i8 0, ptr %i.d, align 8, !tbaa !73
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #32
@@ -1763,14 +1770,15 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #32
   store ptr @.str.791, ptr %i.b, align 16, !tbaa !29
   %i.k = load ptr, ptr %i.g, align 8, !tbaa !38
-  %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.j
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !39   ; 2 uses
+  %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.j ; 2 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !39
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !42
   store ptr %i.o, ptr %i.f, align 8, !tbaa !29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #32
   store i64 4, ptr %i.c, align 16, !tbaa !26
-  %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 24
+  %3 = load ptr, ptr %i.l, align 8, !tbaa !39
+  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.q = load i64, ptr %i.p, align 8, !tbaa !70
   store i64 %i.q, ptr %i.h, align 8, !tbaa !26
   %i.r = load ptr, ptr @context, align 8, !tbaa !219
@@ -1933,15 +1941,16 @@ bb.b:                                             ; preds = %.lr.ph.split.us.spl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #32
   store <2 x ptr> <ptr @.str.796, ptr @.str.797>, ptr %i.d, align 16, !tbaa !29
   %i.ab = load ptr, ptr %i.k, align 8, !tbaa !38
-  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %i.y
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !39 ; 2 uses
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %i.y ; 2 uses
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !39
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !42
   store ptr %i.af, ptr %i.t, align 16, !tbaa !29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #32
   store i64 6, ptr %i.e, align 16, !tbaa !26
   store i64 5, ptr %i.u, align 8, !tbaa !26
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
+  %5 = load ptr, ptr %i.ac, align 8, !tbaa !39
+  %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !70
   store i64 %i.ah, ptr %i.v, align 16, !tbaa !26
   %i.ai = load ptr, ptr @context, align 8, !tbaa !219
@@ -1972,8 +1981,8 @@ bb.d:                                             ; preds = %.lr.ph.split.us.spl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #32
   store <2 x ptr> <ptr @.str.796, ptr @.str.797>, ptr %i.f, align 16, !tbaa !29
   %i.at = load ptr, ptr %i.k, align 8, !tbaa !38
-  %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.ap
-  %i.av = load ptr, ptr %i.au, align 8, !tbaa !39 ; 2 uses
+  %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.ap ; 2 uses
+  %i.av = load ptr, ptr %i.au, align 8, !tbaa !39
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 32
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !42
   store ptr %i.ax, ptr %i.m, align 16, !tbaa !29
@@ -1982,7 +1991,8 @@ bb.d:                                             ; preds = %.lr.ph.split.us.spl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #32
   store i64 6, ptr %i.g, align 16, !tbaa !26
   store i64 5, ptr %i.p, align 8, !tbaa !26
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.av, i64 24
+  %6 = load ptr, ptr %i.au, align 8, !tbaa !39
+  %i.ay = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.az = load i64, ptr %i.ay, align 8, !tbaa !70
   store i64 %i.az, ptr %i.q, align 16, !tbaa !26
   store i64 7, ptr %i.r, align 8, !tbaa !26
@@ -2064,17 +2074,18 @@ bb.j:                                             ; preds = %hi_sdslen.exit.us, 
   br i1 %.not60, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph.split
-  %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 8 ; 2 uses
-  %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !365 ; 2 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 8 ; 3 uses
+  %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !365
   %.not67 = icmp eq ptr %i.cf, null
   br i1 %.not67, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #32
-  store ptr %i.cf, ptr %i.b, align 16, !tbaa !29
+  %7 = load ptr, ptr %i.ce, align 8, !tbaa !365
+  store ptr %7, ptr %i.b, align 16, !tbaa !29
   %i.cg = load ptr, ptr %i.k, align 8, !tbaa !38
-  %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.cg, i64 %i.cb
-  %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !39 ; 2 uses
+  %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.cg, i64 %i.cb ; 2 uses
+  %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !39
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 32
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !42
   store ptr %i.ck, ptr %i.j, align 8, !tbaa !29
@@ -2082,7 +2093,8 @@ bb.l:                                             ; preds = %bb.k
   %i.cl = load ptr, ptr %i.ce, align 8, !tbaa !365
   %i.cm = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.cl) #34
   store i64 %i.cm, ptr %i.c, align 16, !tbaa !26
-  %i.cn = getelementptr inbounds nuw i8, ptr %i.ci, i64 24
+  %8 = load ptr, ptr %i.ch, align 8, !tbaa !39
+  %i.cn = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.co = load i64, ptr %i.cn, align 8, !tbaa !70
   store i64 %i.co, ptr %i.l, align 8, !tbaa !26
   %i.cp = load ptr, ptr @context, align 8, !tbaa !219

@@ -201,8 +201,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br label %.backedge
 
 bb.f:                                             ; preds = %bb.b
-  %i.s = getelementptr inbounds nuw i8, ptr %.03852, i64 1 ; 6 uses
-  %i.t = load i8, ptr %i.s, align 1, !tbaa !10    ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %.03852, i64 1 ; 7 uses
+  %i.t = load i8, ptr %i.s, align 1, !tbaa !10
   %i.u = icmp eq i8 %i.t, 37
   br i1 %i.u, label %bb.g, label %bb.j
 
@@ -230,11 +230,12 @@ bb.j:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
   %i.ac = add nsw i32 %.03653, 1                  ; 9 uses
-  %.not41.i = icmp eq i8 %i.t, 0
+  %2 = load i8, ptr %i.s, align 1, !tbaa !10      ; 2 uses
+  %.not41.i = icmp eq i8 %2, 0
   br i1 %.not41.i, label %.critedge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.j, %bb.k
-  %i.ad = phi i8 [ %i.ai, %bb.k ], [ %i.t, %bb.j ] ; 3 uses
+  %i.ad = phi i8 [ %i.ai, %bb.k ], [ %2, %bb.j ]  ; 3 uses
   %.042.i = phi ptr [ %i.ah, %bb.k ], [ %i.s, %bb.j ] ; 2 uses
   %i.ae = zext nneg i8 %i.ad to i64
   %memchr.bounds.i = icmp ugt i8 %i.ad, 63

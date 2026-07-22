@@ -204,13 +204,13 @@ bb.cu:                                            ; preds = %.lr.ph2119, %bb.df
   %i.xv = phi ptr [ %i.xn, %.lr.ph2119 ], [ %i.afu, %bb.df ]
   %.04552118 = phi i64 [ 0, %.lr.ph2119 ], [ %i.afs, %bb.df ] ; 5 uses
   %i.xw = getelementptr inbounds nuw [16 x i8], ptr %i.xv, i64 %.04552118 ; 2 uses
-  %i.xx = load ptr, ptr %i.xw, align 8            ; 3 uses
+  %i.xx = load ptr, ptr %i.xw, align 8            ; 5 uses
   %i.xy = getelementptr inbounds nuw i8, ptr %i.xw, i64 8
   %i.xz = load i32, ptr %i.xy, align 8
-  %i.ya = zext i32 %i.xz to i64                   ; 3 uses
+  %i.ya = zext i32 %i.xz to i64                   ; 5 uses
   %i.yb = load ptr, ptr %i.xx, align 8
   %i.yc = getelementptr inbounds nuw [8 x i8], ptr %i.yb, i64 %i.ya
-  %i.yd = load ptr, ptr %i.yc, align 8            ; 5 uses
+  %i.yd = load ptr, ptr %i.yc, align 8            ; 3 uses
   %i.ye = getelementptr inbounds nuw i8, ptr %i.yd, i64 296
   %i.yf = load i64, ptr %i.ye, align 8
   %.not532 = icmp eq i64 %i.yf, %.0446
@@ -250,7 +250,10 @@ bb.da:                                            ; preds = %.noexc633, %bb.dd, 
 
 bb.db:                                            ; preds = %bb.cy
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #34
-  %i.yn = invoke noundef i64 @_ZN5glTF28Accessor11ExtractDataI9aiColor4tIhEEEmRPT_PKSt6vectorIjSaIjEE(ptr noundef nonnull align 8 dereferenceable(376) %i.yd, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef %.0450)
+  %5 = load ptr, ptr %i.xx, align 8
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.ya
+  %7 = load ptr, ptr %6, align 8
+  %i.yn = invoke noundef i64 @_ZN5glTF28Accessor11ExtractDataI9aiColor4tIhEEEmRPT_PKSt6vectorIjSaIjEE(ptr noundef nonnull align 8 dereferenceable(376) %7, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef %.0450)
           to label %.noexc620 unwind label %bb.da ; 0 uses
 
 .noexc620:                                        ; preds = %bb.db
@@ -417,7 +420,10 @@ bb.dc:                                            ; preds = %._crit_edge.thread.
 
 bb.dd:                                            ; preds = %bb.cy
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #34
-  %i.acc = invoke noundef i64 @_ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE(ptr noundef nonnull align 8 dereferenceable(376) %i.yd, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef %.0450)
+  %8 = load ptr, ptr %i.xx, align 8
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.ya
+  %10 = load ptr, ptr %9, align 8
+  %i.acc = invoke noundef i64 @_ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE(ptr noundef nonnull align 8 dereferenceable(376) %10, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef %.0450)
           to label %.noexc633 unwind label %bb.da ; 0 uses
 
 .noexc633:                                        ; preds = %bb.dd
@@ -820,9 +826,9 @@ bb.f:                                             ; preds = %_ZNSt7__cxx1112basi
   br i1 %.not.i, label %_ZNK10glTFCommon3RefIN5glTF28AccessorEEcvbEv.exit.thread, label %_ZNK10glTFCommon3RefIN5glTF28AccessorEEcvbEv.exit
 
 _ZNK10glTFCommon3RefIN5glTF28AccessorEEcvbEv.exit: ; preds = %bb.f
-  %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 8
+  %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 8 ; 2 uses
   %i.ao = load i32, ptr %i.an, align 8
-  %i.ap = zext i32 %i.ao to i64                   ; 2 uses
+  %i.ap = zext i32 %i.ao to i64
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %i.ar = load ptr, ptr %i.aq, align 8
   %i.as = load ptr, ptr %i.am, align 8
@@ -857,8 +863,10 @@ bb.h:                                             ; preds = %_ZNK10glTFCommon3Re
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #34
   store ptr null, ptr %i.b, align 8
   %i.bl = load ptr, ptr %i.al, align 8
+  %4 = load i32, ptr %i.an, align 8
+  %5 = zext i32 %4 to i64
   %i.bm = load ptr, ptr %i.bl, align 8
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %i.ap
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %5
   %i.bo = load ptr, ptr %i.bn, align 8
   %i.bp = invoke noundef i64 @_ZN5glTF28Accessor11ExtractDataIfEEmRPT_PKSt6vectorIjSaIjEE(ptr noundef nonnull align 8 dereferenceable(376) %i.bo, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef null)
           to label %bb.i unwind label %bb.n       ; 0 uses
@@ -1133,9 +1141,9 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %.not.i158, label %_ZNK10glTFCommon3RefIN5glTF28AccessorEEcvbEv.exit159.thread, label %_ZNK10glTFCommon3RefIN5glTF28AccessorEEcvbEv.exit159
 
 _ZNK10glTFCommon3RefIN5glTF28AccessorEEcvbEv.exit159: ; preds = %bb.ab
-  %i.gb = getelementptr inbounds nuw i8, ptr %i.fz, i64 8
+  %i.gb = getelementptr inbounds nuw i8, ptr %i.fz, i64 8 ; 2 uses
   %i.gc = load i32, ptr %i.gb, align 8
-  %i.gd = zext i32 %i.gc to i64                   ; 2 uses
+  %i.gd = zext i32 %i.gc to i64
   %i.ge = getelementptr inbounds nuw i8, ptr %i.ga, i64 8
   %i.gf = load ptr, ptr %i.ge, align 8
   %i.gg = load ptr, ptr %i.ga, align 8
@@ -1170,8 +1178,10 @@ bb.ad:                                            ; preds = %_ZNK10glTFCommon3Re
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #34
   store ptr null, ptr %i.d, align 8
   %i.gz = load ptr, ptr %i.fz, align 8
+  %6 = load i32, ptr %i.gb, align 8
+  %7 = zext i32 %6 to i64
   %i.ha = load ptr, ptr %i.gz, align 8
-  %i.hb = getelementptr inbounds nuw [8 x i8], ptr %i.ha, i64 %i.gd
+  %i.hb = getelementptr inbounds nuw [8 x i8], ptr %i.ha, i64 %7
   %i.hc = load ptr, ptr %i.hb, align 8
   %i.hd = invoke noundef i64 @_ZN5glTF28Accessor11ExtractDataIfEEmRPT_PKSt6vectorIjSaIjEE(ptr noundef nonnull align 8 dereferenceable(376) %i.hc, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef null)
           to label %bb.ae unwind label %bb.ai     ; 0 uses
@@ -1574,9 +1584,9 @@ bb.f:                                             ; preds = %_ZNSt7__cxx1112basi
   br i1 %.not.i, label %_ZNK10glTFCommon3RefIN5glTF28AccessorEEcvbEv.exit.thread, label %_ZNK10glTFCommon3RefIN5glTF28AccessorEEcvbEv.exit
 
 _ZNK10glTFCommon3RefIN5glTF28AccessorEEcvbEv.exit: ; preds = %bb.f
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 8
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 8 ; 2 uses
   %i.ai = load i32, ptr %i.ah, align 8
-  %i.aj = zext i32 %i.ai to i64                   ; 2 uses
+  %i.aj = zext i32 %i.ai to i64
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.al = load ptr, ptr %i.ak, align 8
   %i.am = load ptr, ptr %i.ag, align 8
@@ -1611,8 +1621,10 @@ bb.h:                                             ; preds = %_ZNK10glTFCommon3Re
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #34
   store ptr null, ptr %i.b, align 8
   %i.bf = load ptr, ptr %i.af, align 8
+  %4 = load i32, ptr %i.ah, align 8
+  %5 = zext i32 %4 to i64
   %i.bg = load ptr, ptr %i.bf, align 8
-  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %i.aj
+  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %5
   %i.bi = load ptr, ptr %i.bh, align 8
   %i.bj = invoke noundef i64 @_ZN5glTF28Accessor11ExtractDataIfEEmRPT_PKSt6vectorIjSaIjEE(ptr noundef nonnull align 8 dereferenceable(376) %i.bi, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef null)
           to label %bb.i unwind label %bb.o       ; 0 uses
@@ -2015,15 +2027,16 @@ bb.c:                                             ; preds = %.lr.ph, %bb.k
   %i.aj = and i64 %i.ai, 281474976710655
   %i.ak = inttoptr i64 %i.aj to ptr
   %i.al = getelementptr inbounds nuw [16 x i8], ptr %i.ak, i64 %indvars.iv ; 3 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 14
-  %i.an = load i16, ptr %i.am, align 2            ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 14 ; 2 uses
+  %i.an = load i16, ptr %i.am, align 2
   %i.ao = and i16 %i.an, 1024
   %.not308 = icmp eq i16 %i.ao, 0
   br i1 %.not308, label %bb.k, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
-  %i.ap = and i16 %i.an, 4096
+  %19 = load i16, ptr %i.am, align 2
+  %i.ap = and i16 %19, 4096
   %.not.i.i = icmp eq i16 %i.ap, 0
   %i.aq = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   %i.ar = load ptr, ptr %i.aq, align 8
@@ -2426,15 +2439,16 @@ bb.c:                                             ; preds = %.lr.ph, %bb.k
   %i.z = and i64 %i.y, 281474976710655
   %i.aa = inttoptr i64 %i.z to ptr
   %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.aa, i64 %indvars.iv ; 3 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 14
-  %i.ad = load i16, ptr %i.ac, align 2            ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 14 ; 2 uses
+  %i.ad = load i16, ptr %i.ac, align 2
   %i.ae = and i16 %i.ad, 1024
   %.not79 = icmp eq i16 %i.ae, 0
   br i1 %.not79, label %bb.k, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
-  %i.af = and i16 %i.ad, 4096
+  %7 = load i16, ptr %i.ac, align 2
+  %i.af = and i16 %7, 4096
   %.not.i.i = icmp eq i16 %i.af, 0
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8
@@ -2837,7 +2851,7 @@ _ZN9rapidjson19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEE3PutEc.exit: ;
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph85, %.critedge
-  %.03783 = phi ptr [ %i.n, %.lr.ph85 ], [ %i.fk, %.critedge ] ; 3 uses
+  %.03783 = phi ptr [ %i.n, %.lr.ph85 ], [ %i.fk, %.critedge ] ; 4 uses
   %i.s = load ptr, ptr %i.a, align 8
   %i.t = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.u = ptrtoint ptr %i.s to i64
@@ -2862,9 +2876,9 @@ _ZN9rapidjson19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEE3PutEc.exit41:
   br i1 %.not3980.not, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN9rapidjson19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEE3PutEc.exit41, %bb.aw
-  %.02981 = phi i64 [ %i.fh, %bb.aw ], [ 0, %_ZN9rapidjson19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEE3PutEc.exit41 ] ; 5 uses
+  %.02981 = phi i64 [ %i.fh, %bb.aw ], [ 0, %_ZN9rapidjson19GenericStringBufferINS_4UTF8IcEENS_12CrtAllocatorEE3PutEc.exit41 ] ; 6 uses
   %i.ac = load ptr, ptr %.03783, align 8
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.02981 ; 3 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.02981
   %i.ae = load i8, ptr %i.ad, align 1             ; 5 uses
   switch i8 %i.ae, label %bb.am [
     i8 126, label %bb.e
@@ -3160,8 +3174,10 @@ switch.early.test.i:                              ; preds = %bb.am
 
 _ZNK9rapidjson14GenericPointerINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES5_E17NeedPercentEncodeEc.exit: ; preds = %switch.early.test.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #34
-  store ptr %i.ad, ptr %2, align 8
-  store ptr %i.ad, ptr %i.r, align 8
+  %4 = load ptr, ptr %.03783, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %.02981 ; 2 uses
+  store ptr %5, ptr %2, align 8
+  store ptr %5, ptr %i.r, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
   store ptr %1, ptr %3, align 8
   %i.eb = call noundef zeroext i1 @_ZN9rapidjson4UTF8IcE8ValidateINS_19GenericStringStreamIS1_EENS_14GenericPointerINS_12GenericValueIS1_NS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES8_E19PercentEncodeStreamINS_19GenericStringBufferIS1_S8_EEEEEEbRT_RT0_(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(8) %3)
@@ -3564,7 +3580,7 @@ _ZN10glTFCommonL15MemberOrDefaultImEET_RN9rapidjson12GenericValueINS2_4UTF8IcEEN
   %i.bh = load ptr, ptr %i.bg, align 8
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.bj = load ptr, ptr %i.bi, align 8
-  %i.bk = call noundef ptr @_ZN10glTFCommon19FindStringInContextERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKcSA_SA_(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull @.str.122, ptr noundef %i.bh, ptr noundef %i.bj) ; 5 uses
+  %i.bk = call noundef ptr @_ZN10glTFCommon19FindStringInContextERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKcSA_SA_(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull @.str.122, ptr noundef %i.bh, ptr noundef %i.bj) ; 6 uses
   %.not = icmp eq ptr %i.bk, null
   br i1 %.not, label %bb.g, label %bb.k
 
@@ -3589,23 +3605,24 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %_ZN10glTFCommonL15MemberOrDefaultImEET_RN9rapidjson12GenericValueINS2_4UTF8IcEENS2_19MemoryPoolAllocatorINS2_12CrtAllocatorEEEEEPKcS1_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #34
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.bk, i64 14
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.bk, i64 14 ; 2 uses
   %i.bo = load i16, ptr %i.bn, align 2
   %i.bp = and i16 %i.bo, 4096
   %.not.i.i71 = icmp eq i16 %i.bp, 0
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   %i.br = load ptr, ptr %i.bq, align 8
-  %i.bs = ptrtoint ptr %i.br to i64               ; 3 uses
+  %i.bs = ptrtoint ptr %i.br to i64
   %i.bt = and i64 %i.bs, 281474976710655
   %i.bu = inttoptr i64 %i.bt to ptr
   %i.bv = select i1 %.not.i.i71, ptr %i.bu, ptr %i.bk ; 2 uses
   store ptr %i.bv, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
-  %12 = and i64 %i.bs, 1152921504606846976
-  %.not.i.i72 = icmp eq i64 %12, 0
-  %13 = lshr i64 %i.bs, 40
-  %14 = trunc i64 %13 to i8
-  %i.bw = sext i8 %14 to i32
+  %12 = load i16, ptr %i.bn, align 2
+  %13 = and i16 %12, 4096
+  %.not.i.i72 = icmp eq i16 %13, 0
+  %14 = getelementptr inbounds nuw i8, ptr %i.bk, i64 13
+  %15 = load i8, ptr %14, align 1
+  %i.bw = sext i8 %15 to i32
   %i.bx = sub nsw i32 13, %i.bw
   %i.by = load i32, ptr %i.bk, align 8
   %i.bz = select i1 %.not.i.i72, i32 %i.by, i32 %i.bx

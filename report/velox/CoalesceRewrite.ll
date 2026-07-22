@@ -204,8 +204,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit37: ; preds = %bb.
   br label %bb.bi
 
 bb.f:                                             ; preds = %.lr.ph, %_ZNSt10shared_ptrIKN8facebook5velox4core10ITypedExprEEC2ERKS5_.exit
-  %.sroa.081.096 = phi ptr [ %i.ab, %.lr.ph ], [ %i.cz, %_ZNSt10shared_ptrIKN8facebook5velox4core10ITypedExprEEC2ERKS5_.exit ] ; 11 uses
-  %i.an = load ptr, ptr %.sroa.081.096, align 8, !tbaa !7 ; 4 uses
+  %.sroa.081.096 = phi ptr [ %i.ab, %.lr.ph ], [ %i.cz, %_ZNSt10shared_ptrIKN8facebook5velox4core10ITypedExprEEC2ERKS5_.exit ] ; 12 uses
+  %i.an = load ptr, ptr %.sroa.081.096, align 8, !tbaa !7 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.ap = load i32, ptr %i.ao, align 8, !tbaa !13
   %i.aq = icmp eq i32 %i.ap, 6
@@ -345,9 +345,10 @@ bb.w:                                             ; preds = %.noexc39, %bb.p
 
 bb.x:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
-  store ptr %i.an, ptr %i.b, align 8, !tbaa !53
+  %8 = load ptr, ptr %.sroa.081.096, align 8, !tbaa !7 ; 2 uses
+  store ptr %8, ptr %i.b, align 8, !tbaa !53
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28, !noalias !61
-  %i.cf = invoke noundef i64 @_ZNK8facebook5velox4core16ITypedExprHasherclEPKNS1_10ITypedExprE(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull %i.an)
+  %i.cf = invoke noundef i64 @_ZNK8facebook5velox4core16ITypedExprHasherclEPKNS1_10ITypedExprE(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef %8)
           to label %.noexc42 unwind label %bb.af  ; 2 uses
 
 .noexc42:                                         ; preds = %bb.x

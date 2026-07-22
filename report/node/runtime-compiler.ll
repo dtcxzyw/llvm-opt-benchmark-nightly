@@ -203,7 +203,7 @@ _ZNSt10unique_ptrIN2v824ConvertableToTraceFormatESt14default_deleteIS1_EED2Ev.ex
 
 _ZN2v88internal28JavaScriptStackFrameIteratorC2EPNS0_7IsolateE.exit: ; preds = %_ZNSt10unique_ptrIN2v824ConvertableToTraceFormatESt14default_deleteIS1_EED2Ev.exit.1, %bb.c
   %i.aj = call ptr @_ZNK2v88internal11Deoptimizer8functionEv(ptr noundef nonnull align 8 dereferenceable(370) %i.h) #14 ; 5 uses
-  %i.ak = call ptr @_ZNK2v88internal11Deoptimizer13compiled_codeEv(ptr noundef nonnull align 8 dereferenceable(370) %i.h) #14 ; 2 uses
+  %i.ak = call ptr @_ZNK2v88internal11Deoptimizer13compiled_codeEv(ptr noundef nonnull align 8 dereferenceable(370) %i.h) #14 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.h, i64 40
   %i.am = load i8, ptr %i.al, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #14
@@ -358,7 +358,7 @@ bb.o:                                             ; preds = %bb.n
   br label %_ZN2v88internal10JSFunction20ResetTieringRequestsEv.exit
 
 _ZN2v88internal10JSFunction20ResetTieringRequestsEv.exit: ; preds = %_ZNK2v88internal15JSDispatchEntry7GetCodeEv.exit.i.i, %bb.n, %bb.o
-  %i.dg = load i64, ptr %i.ak, align 8            ; 2 uses
+  %i.dg = load i64, ptr %i.ak, align 8
   %i.dh = add i64 %i.dg, 51
   %i.di = inttoptr i64 %i.dh to ptr
   %i.dj = load atomic volatile i32, ptr %i.di monotonic, align 4
@@ -368,7 +368,8 @@ _ZN2v88internal10JSFunction20ResetTieringRequestsEv.exit: ; preds = %_ZNK2v88int
 
 bb.p:                                             ; preds = %_ZN2v88internal10JSFunction20ResetTieringRequestsEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #14
-  store i64 %i.dg, ptr %12, align 8
+  %13 = load i64, ptr %i.ak, align 8
+  store i64 %13, ptr %12, align 8
   call void @_ZN2v88internal4Code26SetMarkedForDeoptimizationEPNS0_7IsolateENS0_20LazyDeoptimizeReasonE(ptr noundef nonnull align 8 dereferenceable(8) %12, ptr noundef nonnull %2, i8 noundef zeroext 15) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #14
   br i1 %i.bv, label %bb.q, label %bb.ah

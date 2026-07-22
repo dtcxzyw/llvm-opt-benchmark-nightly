@@ -203,12 +203,11 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.153 = phi ptr [ %i.p, %bb.g ], [ %.052, %bb.f ] ; 2 uses
   %.2.ptr100 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.1.idx ; 2 uses
-  %i.q = load i8, ptr %.153, align 1, !tbaa !30   ; 2 uses
+  %i.q = load i8, ptr %.153, align 1, !tbaa !30
   %.not63101 = icmp eq i8 %i.q, 0
   br i1 %.not63101, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.h, %bb.an
-  %2 = phi i8 [ %i.kb, %bb.an ], [ %i.q, %bb.h ]
   %.2.ptr104 = phi ptr [ %.2.ptr, %bb.an ], [ %.2.ptr100, %bb.h ] ; 7 uses
   %.2.idx103 = phi i64 [ %.4.idx, %bb.an ], [ %.1.idx, %bb.h ] ; 8 uses
   %.254102 = phi ptr [ %.5, %bb.an ], [ %.153, %bb.h ] ; 9 uses
@@ -219,12 +218,11 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 bb.i:                                             ; preds = %.lr.ph
   %i.s = load ptr, ptr @no_fpos, align 8, !tbaa !8 ; 2 uses
   %i.t = call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str.75, i32 noundef 0, ptr noundef %i.s, ptr noundef %i.s) #18 ; 0 uses
-  %.pre = load i8, ptr %.254102, align 1, !tbaa !30
   br label %Assert.exit
 
 Assert.exit:                                      ; preds = %.lr.ph, %bb.i
-  %3 = phi i8 [ %2, %.lr.ph ], [ %.pre, %bb.i ]   ; 2 uses
-  %i.u = icmp eq i8 %3, 95
+  %2 = load i8, ptr %.254102, align 1, !tbaa !30  ; 2 uses
+  %i.u = icmp eq i8 %2, 95
   br i1 %i.u, label %bb.j, label %bb.am
 
 bb.j:                                             ; preds = %Assert.exit
@@ -627,7 +625,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
 bb.am:                                            ; preds = %bb.j, %Assert.exit
   %i.ka = getelementptr inbounds nuw i8, ptr %.254102, i64 1
   %.2.add = add nuw nsw i64 %.2.idx103, 1
-  store i8 %3, ptr %.2.ptr104, align 1, !tbaa !30
+  store i8 %2, ptr %.2.ptr104, align 1, !tbaa !30
   br label %bb.an
 
 bb.an:                                            ; preds = %PDFKeyword_Find.exit, %PDFPage_ProcessDocInfoKeyword.exit, %PDFKeyword_Find.exit94.thread, %bb.al, %bb.p, %bb.am
@@ -635,7 +633,7 @@ bb.an:                                            ; preds = %PDFKeyword_Find.exi
   %.4.idx = phi i64 [ %.2.add65, %PDFKeyword_Find.exit ], [ %.2.idx103, %bb.p ], [ %.2.idx103, %PDFPage_ProcessDocInfoKeyword.exit ], [ %.3.idx, %bb.al ], [ %.add, %PDFKeyword_Find.exit94.thread ], [ %.2.add, %bb.am ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
   %.2.ptr = getelementptr inbounds nuw i8, ptr %i.a, i64 %.4.idx ; 2 uses
-  %i.kb = load i8, ptr %.5, align 1, !tbaa !30    ; 2 uses
+  %i.kb = load i8, ptr %.5, align 1, !tbaa !30
   %.not63 = icmp eq i8 %i.kb, 0
   br i1 %.not63, label %._crit_edge, label %.lr.ph, !llvm.loop !54
 

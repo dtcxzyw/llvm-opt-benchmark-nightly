@@ -204,9 +204,9 @@ bb.aj:                                            ; preds = %bb.ai
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !170 ; 2 uses
   %i.ea = lshr exact i64 %i.du, 16
   %i.eb = add nsw i64 %i.ea, -1                   ; 2 uses
-  %i.ec = load ptr, ptr %i.f, align 8, !tbaa !684
+  %i.ec = load ptr, ptr %i.f, align 8, !tbaa !684 ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 24
-  %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !686 ; 2 uses
+  %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !686
   %i.ef = getelementptr inbounds [16 x i8], ptr %i.ee, i64 %i.eb
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 12
   %i.eh = load i32, ptr %i.eg, align 4, !tbaa !690 ; 3 uses
@@ -229,8 +229,6 @@ bb.ak:                                            ; preds = %bb.aj
 
 ..thread271_crit_edge.i:                          ; preds = %bb.ak
   %.pre324.i = load ptr, ptr %i.f, align 8, !tbaa !684
-  %.phi.trans.insert325.i = getelementptr inbounds nuw i8, ptr %.pre324.i, i64 24
-  %.pre326.i = load ptr, ptr %.phi.trans.insert325.i, align 8, !tbaa !686
   br label %.thread271.i
 
 .thread273.i:                                     ; preds = %bb.ak
@@ -241,8 +239,10 @@ bb.ak:                                            ; preds = %bb.aj
   br label %bb.bt
 
 .thread271.i:                                     ; preds = %..thread271_crit_edge.i, %bb.aj
-  %i.er = phi ptr [ %.pre326.i, %..thread271_crit_edge.i ], [ %i.ee, %bb.aj ]
-  %i.es = getelementptr inbounds [16 x i8], ptr %i.er, i64 %i.eb
+  %i.er = phi ptr [ %.pre324.i, %..thread271_crit_edge.i ], [ %i.ec, %bb.aj ]
+  %1 = getelementptr inbounds nuw i8, ptr %i.er, i64 24
+  %2 = load ptr, ptr %1, align 8, !tbaa !686
+  %i.es = getelementptr inbounds [16 x i8], ptr %2, i64 %i.eb
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 8
   %i.eu = load i32, ptr %i.et, align 8, !tbaa !693
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #26

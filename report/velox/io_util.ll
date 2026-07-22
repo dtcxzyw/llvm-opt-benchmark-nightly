@@ -203,7 +203,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %.not.i156.i, label %bb.ao, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %i.hb = getelementptr inbounds nuw i8, ptr %i.gz, i64 16 ; 5 uses
+  %i.hb = getelementptr inbounds nuw i8, ptr %i.gz, i64 16 ; 4 uses
   store ptr %i.hb, ptr %i.gz, align 8, !tbaa !7
   %i.hc = load ptr, ptr %22, align 8, !tbaa !13, !noalias !542 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #35, !noalias !542
@@ -234,14 +234,13 @@ bb.an:                                            ; preds = %._crit_edge.i.i.i15
   %i.hh = phi ptr [ %i.he, %._crit_edge.i.i.i157.thread.i ], [ %i.hb, %._crit_edge.i.i.i157.i ]
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.hh, ptr align 1 %i.hc, i64 %i.gt, i1 false)
   %.pre287 = load i64, ptr %i.e, align 8, !tbaa !11, !noalias !542
-  %.pre288 = load ptr, ptr %i.gz, align 8, !tbaa !13
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i158.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i158.i: ; preds = %bb.an, %bb.am
-  %32 = phi ptr [ %.pre288, %bb.an ], [ %i.hb, %bb.am ]
   %i.hi = phi i64 [ %.pre287, %bb.an ], [ 1, %bb.am ] ; 2 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %i.gz, i64 8
   store i64 %i.hi, ptr %i.hj, align 8, !tbaa !16
+  %32 = load ptr, ptr %i.gz, align 8, !tbaa !13
   %i.hk = getelementptr inbounds nuw i8, ptr %32, i64 %i.hi
   store i8 0, ptr %i.hk, align 1, !tbaa !15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #35, !noalias !542

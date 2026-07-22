@@ -203,47 +203,44 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 192 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !46   ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 200
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !56   ; 2 uses
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !56
   %i.u = icmp ult ptr %i.r, %i.t
   br i1 %i.u, label %bb.b, label %bb.c, !prof !42
 
 bb.b:                                             ; preds = %bb.a
-  %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   store ptr %i.v, ptr %i.q, align 8, !tbaa !46
   store i64 %i.n, ptr %i.r, align 8, !tbaa !40
   br label %_ZN6hermes2vm6HandleINS0_11HiddenClassEEC2ERNS0_15HandleRootOwnerEPS2_.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.w = tail call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %i.p, i64 %i.n) #17
-  %.pre = load ptr, ptr %i.o, align 8, !tbaa !43  ; 3 uses
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 192
-  %.pre114 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !46
-  %.phi.trans.insert115 = getelementptr inbounds nuw i8, ptr %.pre, i64 200
-  %.pre116 = load ptr, ptr %.phi.trans.insert115, align 8, !tbaa !56
+  %.pre = load ptr, ptr %i.o, align 8, !tbaa !43
   br label %_ZN6hermes2vm6HandleINS0_11HiddenClassEEC2ERNS0_15HandleRootOwnerEPS2_.exit
 
 _ZN6hermes2vm6HandleINS0_11HiddenClassEEC2ERNS0_15HandleRootOwnerEPS2_.exit: ; preds = %bb.b, %bb.c
-  %i.x = phi ptr [ %i.t, %bb.b ], [ %.pre116, %bb.c ]
-  %i.y = phi ptr [ %i.v, %bb.b ], [ %.pre114, %bb.c ] ; 4 uses
-  %8 = phi ptr [ %i.p, %bb.b ], [ %.pre, %bb.c ]  ; 2 uses
-  %.0.i.i.i.i.i = phi ptr [ %i.r, %bb.b ], [ %i.w, %bb.c ] ; 4 uses
+  %i.x = phi ptr [ %i.p, %bb.b ], [ %.pre, %bb.c ] ; 3 uses
+  %i.y = phi ptr [ %i.r, %bb.b ], [ %i.w, %bb.c ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #17
-  %i.z = icmp ult ptr %i.y, %i.x
+  %8 = getelementptr inbounds nuw i8, ptr %i.x, i64 192 ; 2 uses
+  %9 = load ptr, ptr %8, align 8, !tbaa !46       ; 4 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.x, i64 200
+  %11 = load ptr, ptr %10, align 8, !tbaa !56
+  %i.z = icmp ult ptr %9, %11
   br i1 %i.z, label %bb.d, label %bb.e, !prof !42
 
 bb.d:                                             ; preds = %_ZN6hermes2vm6HandleINS0_11HiddenClassEEC2ERNS0_15HandleRootOwnerEPS2_.exit
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 192
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  store ptr %i.aa, ptr %9, align 8, !tbaa !46
-  store i64 -281474976710656, ptr %i.y, align 8, !tbaa !40
+  %i.aa = getelementptr inbounds nuw i8, ptr %9, i64 8
+  store ptr %i.aa, ptr %8, align 8, !tbaa !46
+  store i64 -281474976710656, ptr %9, align 8, !tbaa !40
   br label %_ZN6hermes2vm13MutableHandleINS0_18SegmentedArrayBaseINS0_11HermesValueEEEEC2ERNS0_15HandleRootOwnerEPS4_.exit
 
 bb.e:                                             ; preds = %_ZN6hermes2vm6HandleINS0_11HiddenClassEEC2ERNS0_15HandleRootOwnerEPS2_.exit
-  %i.ab = tail call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %8, i64 -281474976710656) #17
+  %i.ab = tail call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %i.x, i64 -281474976710656) #17
   br label %_ZN6hermes2vm13MutableHandleINS0_18SegmentedArrayBaseINS0_11HermesValueEEEEC2ERNS0_15HandleRootOwnerEPS4_.exit
 
 _ZN6hermes2vm13MutableHandleINS0_18SegmentedArrayBaseINS0_11HermesValueEEEEC2ERNS0_15HandleRootOwnerEPS4_.exit: ; preds = %bb.d, %bb.e
-  %.0.i.i.i.i.i.i = phi ptr [ %i.y, %bb.d ], [ %i.ab, %bb.e ] ; 2 uses
+  %.0.i.i.i.i.i.i = phi ptr [ %9, %bb.d ], [ %i.ab, %bb.e ] ; 2 uses
   store ptr %.0.i.i.i.i.i.i, ptr %7, align 8, !tbaa !316
   %.sroa.0.0.copyload.i.i34 = load i64, ptr %1, align 8, !tbaa !40 ; 3 uses
   %i.ac = and i64 %.sroa.0.0.copyload.i.i34, 281474976710655
@@ -266,7 +263,7 @@ bb.f:                                             ; preds = %_ZN6hermes2vm13Muta
   br i1 %or.cond99, label %bb.g, label %_ZNK6hermes2vm8JSObject16shouldCacheForInERNS0_7RuntimeE.exit.thread
 
 bb.g:                                             ; preds = %bb.f
-  %.sroa.0.0.copyload.i.i36 = load i64, ptr %.0.i.i.i.i.i, align 8, !tbaa !40
+  %.sroa.0.0.copyload.i.i36 = load i64, ptr %i.y, align 8, !tbaa !40
   %i.ao = and i64 %.sroa.0.0.copyload.i.i36, 281474976710655
   %i.ap = inttoptr i64 %i.ao to ptr
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 44
@@ -461,7 +458,7 @@ _ZNK6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE4sizeERNS0_11PointerBaseE.
   br label %bb.co
 
 bb.q:                                             ; preds = %_ZN6hermes2vm12_GLOBAL__N_119matchesProtoClassesERNS0_7RuntimeENS0_6HandleINS0_8JSObjectEEENS4_INS0_18SegmentedArrayBaseINS0_11HermesValueEEEEE.exit.thread, %_ZN6hermes2vm12_GLOBAL__N_119matchesProtoClassesERNS0_7RuntimeENS0_6HandleINS0_8JSObjectEEENS4_INS0_18SegmentedArrayBaseINS0_11HermesValueEEEEE.exit
-  %.sroa.0.0.copyload.i.i40 = load i64, ptr %.0.i.i.i.i.i, align 8, !tbaa !40
+  %.sroa.0.0.copyload.i.i40 = load i64, ptr %i.y, align 8, !tbaa !40
   %i.ed = and i64 %.sroa.0.0.copyload.i.i40, 281474976710655
   %i.ee = inttoptr i64 %i.ed to ptr
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 44 ; 3 uses
@@ -496,7 +493,7 @@ _ZN6hermes2vm11HiddenClass15clearForInCacheERNS0_7RuntimeE.exit: ; preds = %bb.q
 
 _ZNK6hermes2vm8JSObject16shouldCacheForInERNS0_7RuntimeE.exit.thread: ; preds = %_ZN6hermes2vm13MutableHandleINS0_18SegmentedArrayBaseINS0_11HermesValueEEEEC2ERNS0_15HandleRootOwnerEPS4_.exit, %bb.f, %bb.g, %_ZN6hermes2vm11HiddenClass15clearForInCacheERNS0_7RuntimeE.exit
   %.sroa.0.0.copyload.i.i42 = phi i64 [ %.sroa.0.0.copyload.i.i34, %_ZN6hermes2vm13MutableHandleINS0_18SegmentedArrayBaseINS0_11HermesValueEEEEC2ERNS0_15HandleRootOwnerEPS4_.exit ], [ %.sroa.0.0.copyload.i.i34, %bb.f ], [ %.sroa.0.0.copyload.i.i42.pre117, %bb.g ], [ %.sroa.0.0.copyload.i.i42.pre, %_ZN6hermes2vm11HiddenClass15clearForInCacheERNS0_7RuntimeE.exit ]
-  %.sroa.0.0.copyload.i.i41 = load i64, ptr %.0.i.i.i.i.i, align 8, !tbaa !40
+  %.sroa.0.0.copyload.i.i41 = load i64, ptr %i.y, align 8, !tbaa !40
   %i.es = and i64 %.sroa.0.0.copyload.i.i41, 281474976710655
   %i.et = inttoptr i64 %i.es to ptr
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 12
@@ -899,7 +896,7 @@ bb.cl:                                            ; preds = %_ZN6hermes2vm12_GLO
   br i1 %or.cond, label %bb.co, label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl
-  %.sroa.0.0.copyload.i.i76 = load i64, ptr %.0.i.i.i.i.i, align 8, !tbaa !40
+  %.sroa.0.0.copyload.i.i76 = load i64, ptr %i.y, align 8, !tbaa !40
   %i.up = and i64 %.sroa.0.0.copyload.i.i76, 281474976710655
   %i.uq = inttoptr i64 %i.up to ptr
   %.sroa.0.0.copyload.i.i.i77 = load i64, ptr %.sroa.0.0.copyload.pre119, align 8, !tbaa !40 ; 2 uses

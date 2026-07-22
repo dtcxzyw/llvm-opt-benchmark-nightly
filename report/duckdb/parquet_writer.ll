@@ -203,7 +203,7 @@ bb.bu:                                            ; preds = %bb.bt
           to label %bb.bv unwind label %bb.cc     ; 8 uses
 
 bb.bv:                                            ; preds = %bb.bu
-  %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 8
+  %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 8 ; 2 uses
   %i.iz = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_18ColumnStatsUnifierESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.cd)
           to label %bb.bw unwind label %bb.cd
 
@@ -213,7 +213,7 @@ bb.bw:                                            ; preds = %bb.bv
           to label %bb.bx unwind label %bb.cd     ; 2 uses
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.jc = load double, ptr %i.iy, align 8, !tbaa !687 ; 2 uses
+  %i.jc = load double, ptr %i.iy, align 8, !tbaa !687
   %i.jd = call double @llvm.fabs.f64(double %i.jc)
   %i.je = fcmp ueq double %i.jd, +inf
   br i1 %i.je, label %_ZNK6duckdb14GeometryExtent5HasXYEv.exit.thread, label %bb.by
@@ -241,7 +241,8 @@ _ZNK6duckdb14GeometryExtent5HasXYEv.exit:         ; preds = %bb.bz
 
 bb.ca:                                            ; preds = %_ZNK6duckdb14GeometryExtent5HasXYEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #22
-  invoke void @_ZN6duckdb5Value6DOUBLEEd(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %21, double noundef %i.jc)
+  %44 = load double, ptr %i.iy, align 8, !tbaa !687
+  invoke void @_ZN6duckdb5Value6DOUBLEEd(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %21, double noundef %44)
           to label %._crit_edge.i.i267 unwind label %bb.ce
 
 ._crit_edge.i.i267:                               ; preds = %bb.ca
@@ -351,8 +352,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit302: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #22
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %27) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #22
-  %i.kk = getelementptr inbounds nuw i8, ptr %i.ix, i64 24
-  %i.kl = load double, ptr %i.kk, align 8, !tbaa !692 ; 2 uses
+  %i.kk = getelementptr inbounds nuw i8, ptr %i.ix, i64 24 ; 2 uses
+  %i.kl = load double, ptr %i.kk, align 8, !tbaa !692
   %i.km = call double @llvm.fabs.f64(double %i.kl)
   %i.kn = fcmp one double %i.km, +inf
   %i.ko = getelementptr inbounds nuw i8, ptr %i.ix, i64 56 ; 2 uses
@@ -364,7 +365,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit302: ; preds = %_Z
 
 bb.cb:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit302
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #22
-  invoke void @_ZN6duckdb5Value6DOUBLEEd(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %29, double noundef %i.kl)
+  %45 = load double, ptr %i.kk, align 8, !tbaa !692
+  invoke void @_ZN6duckdb5Value6DOUBLEEd(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %29, double noundef %45)
           to label %._crit_edge.i.i303 unwind label %bb.cq
 
 ._crit_edge.i.i303:                               ; preds = %bb.cb
@@ -587,8 +589,8 @@ bb.cv:                                            ; preds = %_ZNSt7__cxx1112basi
   br label %bb.ee
 
 bb.cw:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit320, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit302
-  %i.mc = getelementptr inbounds nuw i8, ptr %i.ix, i64 32
-  %i.md = load double, ptr %i.mc, align 8, !tbaa !694 ; 2 uses
+  %i.mc = getelementptr inbounds nuw i8, ptr %i.ix, i64 32 ; 2 uses
+  %i.md = load double, ptr %i.mc, align 8, !tbaa !694
   %i.me = call double @llvm.fabs.f64(double %i.md)
   %i.mf = fcmp one double %i.me, +inf
   %i.mg = getelementptr inbounds nuw i8, ptr %i.ix, i64 64 ; 2 uses
@@ -600,7 +602,8 @@ bb.cw:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.cx:                                            ; preds = %bb.cw
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #22
-  invoke void @_ZN6duckdb5Value6DOUBLEEd(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %33, double noundef %i.md)
+  %46 = load double, ptr %i.mc, align 8, !tbaa !694
+  invoke void @_ZN6duckdb5Value6DOUBLEEd(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %33, double noundef %46)
           to label %._crit_edge.i.i339 unwind label %bb.cy
 
 ._crit_edge.i.i339:                               ; preds = %bb.cx

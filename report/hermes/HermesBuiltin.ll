@@ -203,7 +203,7 @@ bb.m:                                             ; preds = %bb.k
   br label %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit.i
 
 _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit.i: ; preds = %bb.m, %bb.l
-  %i.bv = phi ptr [ %i.br, %bb.l ], [ %.pre127.i, %bb.m ] ; 2 uses
+  %i.bv = phi ptr [ %i.br, %bb.l ], [ %.pre127.i, %bb.m ]
   %i.bw = phi ptr [ %i.bt, %bb.l ], [ %.pre125.i, %bb.m ] ; 4 uses
   %i.bx = phi ptr [ %i.bn, %bb.l ], [ %.pre.i, %bb.m ] ; 3 uses
   %.0.i.i.i.i.i.i.i = phi ptr [ %i.bp, %bb.l ], [ %i.bu, %bb.m ] ; 8 uses
@@ -212,38 +212,35 @@ _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.ex
 
 bb.n:                                             ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit.i
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bx, i64 192
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.bw, i64 8 ; 2 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   store ptr %i.ca, ptr %i.bz, align 8, !tbaa !48
   store i64 -1688849860263936, ptr %i.bw, align 8, !tbaa !16
   br label %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit61.i
 
 bb.o:                                             ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit.i
   %i.cb = call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %i.bx, i64 -1688849860263936) #10
-  %.pre128.i = load ptr, ptr %i.b, align 8, !tbaa !34 ; 3 uses
-  %.phi.trans.insert129.i = getelementptr inbounds nuw i8, ptr %.pre128.i, i64 192
-  %.pre130.i = load ptr, ptr %.phi.trans.insert129.i, align 8, !tbaa !48
-  %.phi.trans.insert131.i = getelementptr inbounds nuw i8, ptr %.pre128.i, i64 200
-  %.pre132.i = load ptr, ptr %.phi.trans.insert131.i, align 8, !tbaa !49
+  %.pre128.i = load ptr, ptr %i.b, align 8, !tbaa !34
   br label %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit61.i
 
 _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit61.i: ; preds = %bb.o, %bb.n
-  %i.cc = phi ptr [ %i.bv, %bb.n ], [ %.pre132.i, %bb.o ]
-  %i.cd = phi ptr [ %i.ca, %bb.n ], [ %.pre130.i, %bb.o ] ; 4 uses
-  %15 = phi ptr [ %i.bx, %bb.n ], [ %.pre128.i, %bb.o ] ; 3 uses
-  %.0.i.i.i.i.i.i60.i = phi ptr [ %i.bw, %bb.n ], [ %i.cb, %bb.o ] ; 2 uses
+  %i.cc = phi ptr [ %i.bx, %bb.n ], [ %.pre128.i, %bb.o ] ; 4 uses
+  %i.cd = phi ptr [ %i.bw, %bb.n ], [ %i.cb, %bb.o ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
-  %i.ce = icmp ult ptr %i.cd, %i.cc
+  %15 = getelementptr inbounds nuw i8, ptr %i.cc, i64 192 ; 2 uses
+  %16 = load ptr, ptr %15, align 8, !tbaa !48     ; 4 uses
+  %17 = getelementptr inbounds nuw i8, ptr %i.cc, i64 200
+  %18 = load ptr, ptr %17, align 8, !tbaa !49
+  %i.ce = icmp ult ptr %16, %18
   br i1 %i.ce, label %bb.p, label %bb.q, !prof !31
 
 bb.p:                                             ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit61.i
-  %16 = getelementptr inbounds nuw i8, ptr %15, i64 192
-  %i.cf = getelementptr inbounds nuw i8, ptr %i.cd, i64 8 ; 2 uses
-  store ptr %i.cf, ptr %16, align 8, !tbaa !48
-  store i64 -1266636858327041, ptr %i.cd, align 8, !tbaa !16
+  %i.cf = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 2 uses
+  store ptr %i.cf, ptr %15, align 8, !tbaa !48
+  store i64 -1266636858327041, ptr %16, align 8, !tbaa !16
   br label %_ZN6hermes2vm13MutableHandleINS0_8SymbolIDEEC2ERNS0_15HandleRootOwnerES2_.exit.i
 
 bb.q:                                             ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit61.i
-  %i.cg = call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %15, i64 -1266636858327041) #10
+  %i.cg = call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %i.cc, i64 -1266636858327041) #10
   %.pre133.i.a = load ptr, ptr %i.b, align 8, !tbaa !34 ; 2 uses
   %.phi.trans.insert134.i = getelementptr inbounds nuw i8, ptr %.pre133.i.a, i64 192
   %.pre135.i = load ptr, ptr %.phi.trans.insert134.i, align 8, !tbaa !48
@@ -251,8 +248,8 @@ bb.q:                                             ; preds = %_ZN6hermes2vm13Muta
 
 _ZN6hermes2vm13MutableHandleINS0_8SymbolIDEEC2ERNS0_15HandleRootOwnerES2_.exit.i: ; preds = %bb.q, %bb.p
   %i.ch = phi ptr [ %i.cf, %bb.p ], [ %.pre135.i, %bb.q ] ; 2 uses
-  %i.ci = phi ptr [ %15, %bb.p ], [ %.pre133.i.a, %bb.q ] ; 6 uses
-  %.0.i.i.i.i.i.i62.i = phi ptr [ %i.cd, %bb.p ], [ %i.cg, %bb.q ]
+  %i.ci = phi ptr [ %i.cc, %bb.p ], [ %.pre133.i.a, %bb.q ] ; 6 uses
+  %.0.i.i.i.i.i.i62.i = phi ptr [ %16, %bb.p ], [ %i.cg, %bb.q ]
   store ptr %.0.i.i.i.i.i.i62.i, ptr %3, align 8, !tbaa !106
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 192 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 208 ; 3 uses
@@ -499,8 +496,8 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
 
 bb.al:                                            ; preds = %bb.ak
   %i.gc = extractvalue { i32, i64 } %i.fz, 1
-  store i64 %i.gc, ptr %.0.i.i.i.i.i.i60.i, align 8, !tbaa !18
-  %i.gd = call i32 @_ZN6hermes2vm8JSObject17defineOwnComputedENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS0_19DefinePropertyFlagsES7_NS0_11PropOpFlagsE(ptr nonnull %.sroa.07.0.copyload, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %.0.i.i.i.i.i.i.i, i32 319, ptr nonnull %.0.i.i.i.i.i.i60.i, i32 0) #10 ; 0 uses
+  store i64 %i.gc, ptr %i.cd, align 8, !tbaa !18
+  %i.gd = call i32 @_ZN6hermes2vm8JSObject17defineOwnComputedENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS0_19DefinePropertyFlagsES7_NS0_11PropOpFlagsE(ptr nonnull %.sroa.07.0.copyload, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %.0.i.i.i.i.i.i.i, i32 319, ptr nonnull %i.cd, i32 0) #10 ; 0 uses
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.aj
@@ -563,7 +560,7 @@ bb.aq:                                            ; preds = %bb.ao
   br label %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit
 
 _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit: ; preds = %bb.ap, %bb.aq
-  %i.gt = phi ptr [ %i.gp, %bb.ap ], [ %.pre46, %bb.aq ] ; 2 uses
+  %i.gt = phi ptr [ %i.gp, %bb.ap ], [ %.pre46, %bb.aq ]
   %i.gu = phi ptr [ %i.gr, %bb.ap ], [ %.pre44, %bb.aq ] ; 4 uses
   %i.gv = phi ptr [ %i.gl, %bb.ap ], [ %.pre, %bb.aq ] ; 3 uses
   %.0.i.i.i.i.i.i31 = phi ptr [ %i.gn, %bb.ap ], [ %i.gs, %bb.aq ]
@@ -574,45 +571,42 @@ _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.ex
 
 bb.ar:                                            ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gv, i64 192
-  %i.gy = getelementptr inbounds nuw i8, ptr %i.gu, i64 8 ; 2 uses
+  %i.gy = getelementptr inbounds nuw i8, ptr %i.gu, i64 8
   store ptr %i.gy, ptr %i.gx, align 8, !tbaa !48
   store i64 -1688849860263936, ptr %i.gu, align 8, !tbaa !16
   br label %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit33
 
 bb.as:                                            ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit
   %i.gz = call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %i.gv, i64 -1688849860263936) #10
-  %.pre47 = load ptr, ptr %i.b, align 8, !tbaa !34 ; 3 uses
-  %.phi.trans.insert48 = getelementptr inbounds nuw i8, ptr %.pre47, i64 192
-  %.pre49 = load ptr, ptr %.phi.trans.insert48, align 8, !tbaa !48
-  %.phi.trans.insert50 = getelementptr inbounds nuw i8, ptr %.pre47, i64 200
-  %.pre51 = load ptr, ptr %.phi.trans.insert50, align 8, !tbaa !49
+  %.pre47 = load ptr, ptr %i.b, align 8, !tbaa !34
   br label %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit33
 
 _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit33: ; preds = %bb.ar, %bb.as
-  %i.ha = phi ptr [ %i.gt, %bb.ar ], [ %.pre51, %bb.as ]
-  %i.hb = phi ptr [ %i.gy, %bb.ar ], [ %.pre49, %bb.as ] ; 4 uses
-  %17 = phi ptr [ %i.gv, %bb.ar ], [ %.pre47, %bb.as ] ; 2 uses
-  %.0.i.i.i.i.i.i32 = phi ptr [ %i.gu, %bb.ar ], [ %i.gz, %bb.as ]
-  store ptr %.0.i.i.i.i.i.i32, ptr %11, align 8, !tbaa !106
+  %i.ha = phi ptr [ %i.gv, %bb.ar ], [ %.pre47, %bb.as ] ; 3 uses
+  %i.hb = phi ptr [ %i.gu, %bb.ar ], [ %i.gz, %bb.as ]
+  store ptr %i.hb, ptr %11, align 8, !tbaa !106
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #10
-  %i.hc = icmp ult ptr %i.hb, %i.ha
+  %19 = getelementptr inbounds nuw i8, ptr %i.ha, i64 192 ; 2 uses
+  %20 = load ptr, ptr %19, align 8, !tbaa !48     ; 4 uses
+  %21 = getelementptr inbounds nuw i8, ptr %i.ha, i64 200
+  %22 = load ptr, ptr %21, align 8, !tbaa !49
+  %i.hc = icmp ult ptr %20, %22
   br i1 %i.hc, label %bb.at, label %bb.au, !prof !31
 
 bb.at:                                            ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit33
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 192
-  %i.hd = getelementptr inbounds nuw i8, ptr %i.hb, i64 8
-  store ptr %i.hd, ptr %18, align 8, !tbaa !48
-  store i64 -1266636858327041, ptr %i.hb, align 8, !tbaa !16
+  %i.hd = getelementptr inbounds nuw i8, ptr %20, i64 8
+  store ptr %i.hd, ptr %19, align 8, !tbaa !48
+  store i64 -1266636858327041, ptr %20, align 8, !tbaa !16
   br label %_ZN6hermes2vm13MutableHandleINS0_8SymbolIDEEC2ERNS0_15HandleRootOwnerES2_.exit
 
 bb.au:                                            ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit33
-  %i.he = call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %17, i64 -1266636858327041) #10
+  %i.he = call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %i.ha, i64 -1266636858327041) #10
   %.sroa.01.0.copyload.pre = load ptr, ptr %8, align 8
   br label %_ZN6hermes2vm13MutableHandleINS0_8SymbolIDEEC2ERNS0_15HandleRootOwnerES2_.exit
 
 _ZN6hermes2vm13MutableHandleINS0_8SymbolIDEEC2ERNS0_15HandleRootOwnerES2_.exit: ; preds = %bb.at, %bb.au
   %.sroa.01.0.copyload = phi ptr [ %storemerge, %bb.at ], [ %.sroa.01.0.copyload.pre, %bb.au ]
-  %.0.i.i.i.i.i.i34 = phi ptr [ %i.hb, %bb.at ], [ %i.he, %bb.au ]
+  %.0.i.i.i.i.i.i34 = phi ptr [ %20, %bb.at ], [ %i.he, %bb.au ]
   store ptr %.0.i.i.i.i.i.i34, ptr %12, align 8, !tbaa !106
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #10
   store ptr %8, ptr %13, align 8, !tbaa !119

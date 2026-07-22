@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %rb_class_of.exit
   br i1 %.not7.i.i.i, label %rb_callable_method_entry_with_refinements.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.q = load i8, ptr %i.p, align 8               ; 2 uses
+  %i.q = load i8, ptr %i.p, align 8
   %i.r = and i8 %i.q, 15
   switch i8 %i.r, label %rb_callable_method_entry_with_refinements.exit.thread18 [
     i8 7, label %rb_callable_method_entry_with_refinements.exit.thread
@@ -215,20 +215,13 @@ rb_callable_method_entry_with_refinements.exit:   ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
   %i.s = call fastcc ptr @method_entry_resolve_refinement(i64 noundef %.0.i, i64 noundef %2, i32 noundef 1, ptr noundef nonnull %i.d)
   %i.t = load i64, ptr %i.d, align 8, !tbaa !11
-  %i.u = call fastcc ptr @prepare_callable_method_entry(i64 noundef %i.t, i64 noundef %2, ptr noundef %i.s, i32 noundef 1) ; 3 uses
+  %i.u = call fastcc ptr @prepare_callable_method_entry(i64 noundef %i.t, i64 noundef %2, ptr noundef %i.s, i32 noundef 1) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #23
   %.not = icmp eq ptr %i.u, null
-  br i1 %.not, label %rb_callable_method_entry_with_refinements.exit.thread, label %rb_callable_method_entry_with_refinements.exit.rb_callable_method_entry_with_refinements.exit.thread18_crit_edge
+  br i1 %.not, label %rb_callable_method_entry_with_refinements.exit.thread, label %rb_callable_method_entry_with_refinements.exit.thread18
 
-rb_callable_method_entry_with_refinements.exit.rb_callable_method_entry_with_refinements.exit.thread18_crit_edge: ; preds = %rb_callable_method_entry_with_refinements.exit
-  %.phi.trans.insert = getelementptr i8, ptr %i.u, i64 16
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !83
-  %.pre22 = load i8, ptr %.pre, align 8
-  br label %rb_callable_method_entry_with_refinements.exit.thread18
-
-rb_callable_method_entry_with_refinements.exit.thread18: ; preds = %rb_callable_method_entry_with_refinements.exit.rb_callable_method_entry_with_refinements.exit.thread18_crit_edge, %bb.i
-  %10 = phi i8 [ %.pre22, %rb_callable_method_entry_with_refinements.exit.rb_callable_method_entry_with_refinements.exit.thread18_crit_edge ], [ %i.q, %bb.i ]
-  %.0.i.i.i21 = phi ptr [ %i.u, %rb_callable_method_entry_with_refinements.exit.rb_callable_method_entry_with_refinements.exit.thread18_crit_edge ], [ %i.n, %bb.i ]
+rb_callable_method_entry_with_refinements.exit.thread18: ; preds = %bb.i, %rb_callable_method_entry_with_refinements.exit
+  %.0.i.i.i21 = phi ptr [ %i.u, %rb_callable_method_entry_with_refinements.exit ], [ %i.n, %bb.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23
   store i64 3190810, ptr %9, align 8, !tbaa !442
   %i.v = getelementptr inbounds nuw i8, ptr %9, i64 8
@@ -248,7 +241,10 @@ rb_callable_method_entry_with_refinements.exit.thread18: ; preds = %rb_callable_
   %i.aa = select i1 %i.z, i32 64, i32 0           ; 2 uses
   store i32 %i.aa, ptr %i.b, align 4, !tbaa !7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
-  %i.ab = and i8 %10, 15
+  %10 = getelementptr i8, ptr %.0.i.i.i21, i64 16
+  %11 = load ptr, ptr %10, align 8, !tbaa !83
+  %12 = load i8, ptr %11, align 8
+  %i.ab = and i8 %12, 15
   %i.ac = icmp eq i8 %i.ab, 0
   %i.ad = icmp sgt i32 %3, 128
   %i.ae = and i1 %i.ad, %i.ac
@@ -651,8 +647,11 @@ callable_method_entry.exit54:                     ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   %i.m = icmp sgt i32 %6, 0
-  %i.n = getelementptr inbounds nuw i8, ptr %13, i64 40
+  %i.n = getelementptr inbounds nuw i8, ptr %13, i64 40 ; 2 uses
   %i.o = zext i1 %i.m to i8
+  %14 = load i8, ptr %i.n, align 8
+  %15 = and i8 %14, -4
+  %16 = or disjoint i8 %15, %i.o
   br label %bb.e
 
 basic_obj_respond_to_missing.exit:                ; preds = %callable_method_entry.exit54
@@ -713,15 +712,18 @@ basic_obj_respond_to_missing.exit:                ; preds = %callable_method_ent
 
 bb.d:                                             ; preds = %basic_obj_respond_to_missing.exit
   %i.ai = icmp sgt i32 %6, 0
-  %i.aj = getelementptr inbounds nuw i8, ptr %13, i64 40
+  %i.aj = getelementptr inbounds nuw i8, ptr %13, i64 40 ; 2 uses
   %i.ak = zext i1 %i.ai to i8
+  %17 = load i8, ptr %i.aj, align 8
+  %18 = and i8 %17, -4
   %i.al = icmp eq i64 %.fr, 36
   %spec.select = select i1 %i.al, i8 0, i8 2
-  %i.am = or disjoint i8 %spec.select, %i.ak
+  %19 = or disjoint i8 %spec.select, %i.ak
+  %i.am = or disjoint i8 %19, %18
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.thread
-  %i.an = phi i8 [ %i.am, %bb.d ], [ %i.o, %.thread ]
+  %i.an = phi i8 [ %i.am, %bb.d ], [ %16, %.thread ]
   %i.ao = phi ptr [ %i.aj, %bb.d ], [ %i.n, %.thread ]
   store i8 %i.an, ptr %i.ao, align 8
   %i.ap = call fastcc ptr @callable_method_entry_or_negative(i64 noundef %1, i64 noundef 2913, ptr noundef nonnull %13) ; 4 uses
@@ -1124,8 +1126,8 @@ bb.a:
   %i.c = getelementptr i8, ptr %1, i64 16         ; 22 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !124  ; 5 uses
   %i.e = getelementptr i8, ptr %i.d, i64 16       ; 3 uses
-  %i.f = getelementptr i8, ptr %i.d, i64 24
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !175  ; 3 uses
+  %i.f = getelementptr i8, ptr %i.d, i64 24       ; 2 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !175  ; 2 uses
   %i.h = getelementptr i8, ptr %i.d, i64 40
   %i.i = load i32, ptr %i.h, align 8, !tbaa !746  ; 2 uses
   %i.j = add i32 %i.i, %i.g                       ; 16 uses
@@ -1247,9 +1249,10 @@ bb.h:                                             ; preds = %._crit_edge
   br i1 %.not374, label %rbimpl_RB_TYPE_P_fastpath.exit466.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
+  %7 = load i32, ptr %i.f, align 8, !tbaa !175
   %.not375 = icmp eq i32 %i.x, 0                  ; 2 uses
   %i.ay = select i1 %.not375, i32 1, i32 2
-  %i.az = add i32 %i.g, %i.ay
+  %i.az = add i32 %7, %i.ay
   %i.ba = icmp eq i32 %i.ah, %i.az
   %i.bb = and i16 %i.av, 522
   %i.bc = icmp eq i16 %i.bb, 0

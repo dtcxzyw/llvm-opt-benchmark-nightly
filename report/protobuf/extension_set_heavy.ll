@@ -203,14 +203,20 @@ define noundef ptr @_ZN6google8protobuf8internal12ExtensionSet10ParseFieldEmPKcP
 bb.a:
   %6 = alloca %"class.google::protobuf::internal::GeneratedExtensionFinder", align 8 ; 6 uses
   %7 = alloca %"class.google::protobuf::internal::DescriptorPoolExtensionFinder", align 8 ; 8 uses
-  %8 = alloca %"struct.google::protobuf::internal::ExtensionInfo", align 8 ; 10 uses
+  %8 = alloca %"struct.google::protobuf::internal::ExtensionInfo", align 8 ; 12 uses
   %i.a = lshr i64 %1, 3
   %i.b = trunc i64 %i.a to i32                    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 14 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %8, i8 0, i64 14, i1 false)
+  %10 = load i8, ptr %9, align 2
+  %11 = and i8 %10, -4
+  store i8 %11, ptr %9, align 2
+  %12 = getelementptr inbounds nuw i8, ptr %8, i64 15
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(33) %12, i8 0, i64 33, i1 false)
   %i.c = trunc i64 %1 to i32
   %i.d = and i32 %i.c, 7                          ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 96
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %8, i8 0, i64 48, i1 false)
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !96   ; 2 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.b, label %bb.d

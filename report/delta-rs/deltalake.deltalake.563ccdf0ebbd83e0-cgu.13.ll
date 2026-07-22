@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define hidden void @_RINvMs2_NtCs9kEa9DYq95x_14datafusion_ffi14table_providerNtB6_17FFI_TableProvider3newNtNtNtB8_9execution17task_ctx_provider23FFI_TaskContextProviderECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias noundef writable sret([224 x i8]) align 8 captures(none) dereferenceable(224) %0, ptr noundef nonnull %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(144) %2, i1 noundef zeroext %3, i64 noundef range(i64 0, 3) %4, ptr %5, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(40) %6, ptr noundef %7, ptr %8) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 4 uses
-  %i.b = alloca [16 x i8], align 8                ; 6 uses
+  %i.b = alloca [16 x i8], align 8                ; 7 uses
   %i.c = alloca [16 x i8], align 8                ; 5 uses
   %i.d = alloca [144 x i8], align 8               ; 2 uses
   %i.e = alloca [40 x i8], align 8                ; 6 uses
@@ -288,7 +288,6 @@ bb.l:                                             ; preds = %bb.f
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.n, %bb.l
-  %9 = phi ptr [ %5, %bb.n ], [ undef, %bb.l ]
   %i.t = phi i64 [ %.sroa.0.0.i, %bb.n ], [ 2, %bb.l ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @_RNvXs2_NtNtCs9kEa9DYq95x_14datafusion_ffi9execution17task_ctx_providerNtB5_23FFI_TaskContextProviderNtNtCsbvkFyIu7lgC_4core5clone5Clone5clone(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.e)
@@ -307,7 +306,9 @@ bb.o:                                             ; preds = %bb.p
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8ojAJGM8ADl_16datafusion_proto12logical_plan21LogicalExtensionCodecNtNtB4_6marker4SendEL_EECs7p2uQeJxui2_9deltalake.exit
 
 bb.p:                                             ; preds = %bb.m
-  invoke void @_RINvMs2_NtNtCs9kEa9DYq95x_14datafusion_ffi5proto23logical_extension_codecNtB6_25FFI_LogicalExtensionCodec3newNtNtNtBa_9execution17task_ctx_provider23FFI_TaskContextProviderECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull sret([144 x i8]) align 8 captures(none) dereferenceable(144) %i.d, ptr noundef nonnull %i.o, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(128) %i.n, i64 noundef %i.t, ptr %9, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(40) %i.a)
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %10 = load ptr, ptr %9, align 8
+  invoke void @_RINvMs2_NtNtCs9kEa9DYq95x_14datafusion_ffi5proto23logical_extension_codecNtB6_25FFI_LogicalExtensionCodec3newNtNtNtBa_9execution17task_ctx_provider23FFI_TaskContextProviderECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull sret([144 x i8]) align 8 captures(none) dereferenceable(144) %i.d, ptr noundef nonnull %i.o, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(128) %i.n, i64 noundef %i.t, ptr %10, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(40) %i.a)
           to label %bb.q unwind label %bb.o
 
 bb.q:                                             ; preds = %bb.p

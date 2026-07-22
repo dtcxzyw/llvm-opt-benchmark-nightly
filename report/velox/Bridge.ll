@@ -204,8 +204,8 @@ bb.do:                                            ; preds = %bb.dn, %bb.dm
 bb.dp:                                            ; preds = %.lr.ph, %bb.ed
   %.0158 = phi i64 [ 0, %.lr.ph ], [ %i.lm, %bb.ed ] ; 3 uses
   %i.ke = load ptr, ptr %i.jr, align 8, !tbaa !380
-  %i.kf = getelementptr inbounds nuw [8 x i8], ptr %i.ke, i64 %.0158
-  %i.kg = load ptr, ptr %i.kf, align 8, !tbaa !364 ; 3 uses
+  %i.kf = getelementptr inbounds nuw [8 x i8], ptr %i.ke, i64 %.0158 ; 2 uses
+  %i.kg = load ptr, ptr %i.kf, align 8, !tbaa !364
   %.not47 = icmp eq ptr %i.kg, null
   br i1 %.not47, label %bb.dq, label %bb.dt, !prof !132
 
@@ -223,10 +223,11 @@ bb.ds:                                            ; preds = %bb.dq
 
 bb.dt:                                            ; preds = %bb.dp
   call void @llvm.lifetime.start.p0(ptr nonnull %45) #38
-  %i.ki = getelementptr inbounds nuw i8, ptr %i.kg, i64 48
+  %51 = load ptr, ptr %i.kf, align 8, !tbaa !364  ; 2 uses
+  %i.ki = getelementptr inbounds nuw i8, ptr %51, i64 48
   %i.kj = load ptr, ptr %i.ki, align 8, !tbaa !359, !noalias !509 ; 2 uses
   %.not.i123 = icmp eq ptr %i.kj, null
-  %..i = select i1 %.not.i123, ptr %i.kg, ptr %i.kj ; 2 uses
+  %..i = select i1 %.not.i123, ptr %51, ptr %i.kj ; 2 uses
   %i.kk = load ptr, ptr %..i, align 8, !tbaa !360, !noalias !509
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #38, !noalias !509
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %5, ptr noundef nonnull align 8 dereferenceable(72) %..i, i64 72, i1 false), !tbaa.struct !445, !noalias !509
@@ -629,8 +630,8 @@ bb.m:                                             ; preds = %bb.i
 
 bb.n:                                             ; preds = %bb.m
   %i.bb = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !90
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !82 ; 2 uses
+  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !90 ; 2 uses
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !82
   %.not104 = icmp eq ptr %i.bd, null
   br i1 %.not104, label %bb.o, label %bb.r, !prof !132
 
@@ -648,12 +649,13 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %102) #38
+  %136 = load ptr, ptr %i.bc, align 8, !tbaa !82
   %i.bf = load i64, ptr %2, align 8, !tbaa !99
   %i.bg = add i64 %i.bf, 7
   %i.bh = lshr i64 %i.bg, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y)
-  store ptr %i.bd, ptr %i.x, align 8, !tbaa !82, !noalias !7701
+  store ptr %136, ptr %i.x, align 8, !tbaa !82, !noalias !7701
   store i64 %i.bh, ptr %i.y, align 8, !tbaa !397, !noalias !7701
   %i.bi = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !529, !noalias !7701

@@ -204,7 +204,7 @@ _ZNSt6vectorIN6hermes2vm14StackTraceInfoESaIS2_EE2atEm.exit: ; preds = %bb.q
   store i32 %i.bk, ptr %i.t, align 8, !tbaa !56
   store ptr %i.dr, ptr %i.s, align 8, !tbaa !55
   store ptr %i.bj, ptr %i.r, align 8, !tbaa !54
-  %i.ds = getelementptr inbounds nuw [16 x i8], ptr %i.dj, i64 %i.de ; 6 uses
+  %i.ds = getelementptr inbounds nuw [16 x i8], ptr %i.dj, i64 %i.de ; 7 uses
   %i.dt = load i32, ptr %i.cc, align 4, !tbaa !52
   %i.du = zext i32 %i.dt to i64
   %i.dv = load i32, ptr %i.cd, align 8, !tbaa !53
@@ -268,7 +268,7 @@ _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit113: ; preds = %.thread.i11
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZN6hermes2vm7JSError25appendFunctionNameAtIndexERNS0_7RuntimeENS0_6HandleIS1_EEmRN4llvh15SmallVectorImplIDsEE.exit.thread, %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit113
-  %i.eu = load ptr, ptr %i.ds, align 8, !tbaa !338 ; 3 uses
+  %i.eu = load ptr, ptr %i.ds, align 8, !tbaa !338
   %.not = icmp eq ptr %i.eu, null
   br i1 %.not, label %.preheader.preheader, label %bb.t
 
@@ -300,10 +300,11 @@ _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit122: ; preds = %.thread.i12
 
 bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #17
+  %10 = load ptr, ptr %i.ds, align 8, !tbaa !338  ; 2 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.ds, i64 8 ; 2 uses
   %i.fg = load i32, ptr %i.ff, align 8, !tbaa !340
   call void @llvm.experimental.noalias.scope.decl(metadata !341)
-  %i.fh = call i64 @_ZNK6hermes2vm9CodeBlock29getDebugSourceLocationsOffsetEv(ptr noundef nonnull align 8 dereferenceable(40) %i.eu) #17, !noalias !341 ; 2 uses
+  %i.fh = call i64 @_ZNK6hermes2vm9CodeBlock29getDebugSourceLocationsOffsetEv(ptr noundef nonnull align 8 dereferenceable(40) %10) #17, !noalias !341 ; 2 uses
   %i.fi = and i64 %i.fh, 4294967296
   %.not.i = icmp eq i64 %i.fi, 0
   br i1 %.not.i, label %_ZN6hermes2vm7JSError12getDebugInfoEPNS0_9CodeBlockEj.exit.thread, label %bb.u
@@ -315,7 +316,7 @@ _ZN6hermes2vm7JSError12getDebugInfoEPNS0_9CodeBlockEj.exit.thread: ; preds = %bb
   br label %bb.x
 
 bb.u:                                             ; preds = %bb.t
-  %i.fj = load ptr, ptr %i.eu, align 8, !tbaa !348, !noalias !341
+  %i.fj = load ptr, ptr %10, align 8, !tbaa !348, !noalias !341
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 80
   %i.fl = load ptr, ptr %i.fk, align 8, !tbaa !351, !noalias !341 ; 3 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 240 ; 2 uses

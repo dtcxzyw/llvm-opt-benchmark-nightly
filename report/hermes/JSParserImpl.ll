@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %bb.f
   store ptr %2, ptr %2, align 8, !tbaa !231
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   store ptr %2, ptr %i.z, align 8, !tbaa !234
-  %i.aa = load i32, ptr %i.y, align 8, !tbaa !235 ; 2 uses
+  %i.aa = load i32, ptr %i.y, align 8, !tbaa !235
   %i.ab = icmp eq i32 %i.aa, 51
   br i1 %i.ab, label %._crit_edge, label %.lr.ph
 
@@ -218,14 +218,15 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %bb.w
-  %6 = phi i32 [ %i.aa, %.lr.ph ], [ %i.ct, %bb.w ]
-  %i.aj = phi ptr [ %i.y, %.lr.ph ], [ %i.cs, %bb.w ]
+  %i.aj = phi ptr [ %i.y, %.lr.ph ], [ %i.cs, %bb.w ] ; 2 uses
   %.sroa.046.066 = phi ptr [ null, %.lr.ph ], [ %.sroa.046.1, %bb.w ] ; 4 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  %.sroa.0.0.copyload.i37 = load ptr, ptr %i.ak, align 8, !tbaa !229 ; 5 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 2 uses
+  %.sroa.0.0.copyload.i37 = load ptr, ptr %i.ak, align 8, !tbaa !229 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   store ptr %3, ptr %3, align 8, !tbaa !231
   store ptr %3, ptr %i.ac, align 8, !tbaa !234
+  %.sroa.0.0.copyload.i38 = load ptr, ptr %i.ak, align 8, !tbaa !229
+  %6 = load i32, ptr %i.aj, align 8, !tbaa !235
   switch i32 %6, label %_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit39 [
     i32 17, label %bb.j
     i32 21, label %bb.k
@@ -290,7 +291,7 @@ bb.m:                                             ; preds = %bb.k, %.thread, %bb
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i32 92, ptr %i.a, align 4, !tbaa !264
-  call void @_ZN6hermes6parser6detail12JSParserImpl13errorExpectedEN4llvh8ArrayRefINS0_9TokenKindEEEPKcS8_NS3_5SMLocE(ptr noundef nonnull readonly align 8 dereferenceable(2824) %0, ptr nonnull %i.a, i64 1, ptr noundef nonnull @.str.158, ptr noundef nonnull @.str.159, ptr %.sroa.0.0.copyload.i37)
+  call void @_ZN6hermes6parser6detail12JSParserImpl13errorExpectedEN4llvh8ArrayRefINS0_9TokenKindEEEPKcS8_NS3_5SMLocE(ptr noundef nonnull readonly align 8 dereferenceable(2824) %0, ptr nonnull %i.a, i64 1, ptr noundef nonnull @.str.158, ptr noundef nonnull @.str.159, ptr %.sroa.0.0.copyload.i38)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %.critedge
 
@@ -410,7 +411,7 @@ _ZN6hermes6ESTree14SwitchCaseNodeC2EPNS0_4NodeEON4llvh12simple_ilistIS2_JEEE.exi
 bb.w:                                             ; preds = %_ZN6hermes6ESTree14SwitchCaseNodeC2EPNS0_4NodeEON4llvh12simple_ilistIS2_JEEE.exit, %_ZN6hermes6parser6detail12JSParserImpl18parseStatementListIJNS0_9TokenKindES4_EEEN4llvh8OptionalIbEENS1_5ParamES4_bNS2_17AllowImportExportERNS5_12simple_ilistINS_6ESTree4NodeEJEEEDpT_.exit
   %i.cs = phi ptr [ %.pre, %_ZN6hermes6ESTree14SwitchCaseNodeC2EPNS0_4NodeEON4llvh12simple_ilistIS2_JEEE.exit ], [ %i.ba, %_ZN6hermes6parser6detail12JSParserImpl18parseStatementListIJNS0_9TokenKindES4_EEEN4llvh8OptionalIbEENS1_5ParamES4_bNS2_17AllowImportExportERNS5_12simple_ilistINS_6ESTree4NodeEJEEEDpT_.exit ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
-  %i.ct = load i32, ptr %i.cs, align 8, !tbaa !235 ; 2 uses
+  %i.ct = load i32, ptr %i.cs, align 8, !tbaa !235
   %i.cu = icmp eq i32 %i.ct, 51
   br i1 %i.cu, label %._crit_edge, label %bb.i, !llvm.loop !412
 

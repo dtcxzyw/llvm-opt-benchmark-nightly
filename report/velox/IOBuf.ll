@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %_ZNK5folly5IOBuf18c
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.h, %bb.c
-  %.0.i3 = phi ptr [ %1, %bb.c ], [ %i.m, %bb.h ] ; 3 uses
-  %i.e = load i64, ptr %.0.i3, align 8, !tbaa !3809 ; 2 uses
+  %.0.i3 = phi ptr [ %1, %bb.c ], [ %i.m, %bb.h ] ; 4 uses
+  %i.e = load i64, ptr %.0.i3, align 8, !tbaa !3809
   %.not.i4 = icmp eq i64 %i.e, 0
   br i1 %.not.i4, label %bb.h, label %bb.e
 
@@ -211,7 +211,8 @@ bb.e:                                             ; preds = %bb.d
   %i.f = getelementptr inbounds nuw i8, ptr %.0.i3, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !3806
   store ptr %i.g, ptr %2, align 8, !tbaa !3943
-  store i64 %i.e, ptr %i.b, align 8, !tbaa !3945
+  %3 = load i64, ptr %.0.i3, align 8, !tbaa !3809
+  store i64 %3, ptr %i.b, align 8, !tbaa !3945
   %i.h = load ptr, ptr %i.c, align 8, !tbaa !3946 ; 2 uses
   %i.i = load ptr, ptr %i.d, align 8, !tbaa !3950
   %.not.i.i = icmp eq ptr %i.h, %i.i
@@ -366,8 +367,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %bb.a
-  %.0 = phi ptr [ %0, %bb.a ], [ %i.l, %bb.f ]    ; 3 uses
-  %i.d = load i64, ptr %.0, align 8, !tbaa !3809  ; 2 uses
+  %.0 = phi ptr [ %0, %bb.a ], [ %i.l, %bb.f ]    ; 4 uses
+  %i.d = load i64, ptr %.0, align 8, !tbaa !3809
   %.not = icmp eq i64 %i.d, 0
   br i1 %.not, label %bb.f, label %bb.c
 
@@ -376,7 +377,8 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %.0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !3806
   store ptr %i.f, ptr %2, align 8, !tbaa !3943
-  store i64 %i.d, ptr %i.a, align 8, !tbaa !3945
+  %3 = load i64, ptr %.0, align 8, !tbaa !3809
+  store i64 %3, ptr %i.a, align 8, !tbaa !3945
   %i.g = load ptr, ptr %i.b, align 8, !tbaa !3946 ; 2 uses
   %i.h = load ptr, ptr %i.c, align 8, !tbaa !3950
   %.not.i = icmp eq ptr %i.g, %i.h

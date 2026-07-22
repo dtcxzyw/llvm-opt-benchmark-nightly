@@ -201,10 +201,10 @@ bb.e:                                             ; preds = %bb.c
   %i.h = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull @.str.4, i64 noundef 1) ; 0 uses
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 12 uses
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   %.pre = load ptr, ptr %i.c, align 8
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 16
   %.pre51 = load ptr, ptr %.phi.trans.insert, align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   store ptr %i.i, ptr %3, align 8
   %i.k = icmp eq ptr %.pre51, null
   br i1 %i.k, label %.noexc, label %bb.f

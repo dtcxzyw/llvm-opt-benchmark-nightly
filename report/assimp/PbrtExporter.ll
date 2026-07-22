@@ -204,13 +204,14 @@ bb.f:                                             ; preds = %.lr.ph, %bb.j
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 24
   %i.fk = load ptr, ptr %i.fj, align 8
   %i.fl = load ptr, ptr %i.fa, align 8
-  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %indvars.iv
-  %i.fn = load i32, ptr %i.fm, align 4            ; 2 uses
+  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %indvars.iv ; 2 uses
+  %i.fn = load i32, ptr %i.fm, align 4
   %i.fo = zext i32 %i.fn to i64
   %i.fp = getelementptr inbounds nuw [8 x i8], ptr %i.fk, i64 %i.fo
   %i.fq = load ptr, ptr %i.fp, align 8            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
-  store i32 %i.fn, ptr %i.a, align 4
+  %5 = load i32, ptr %i.fm, align 4
+  store i32 %5, ptr %i.a, align 4
   %i.fr = call noundef nonnull align 4 dereferenceable(4) ptr @_ZNSt3mapIiiSt4lessIiESaISt4pairIKiiEEEixEOi(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
   %i.fs = load i32, ptr %i.fr, align 4
   %i.ft = icmp eq i32 %i.fs, 1
