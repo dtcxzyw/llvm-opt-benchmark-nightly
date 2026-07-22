@@ -203,10 +203,10 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN4llvh13ManagedStaticIN12_GLOBAL__N_113StatisticInfoENS_14object_creatorIS2_EENS_14object_deleterIS2_EEEdeEv.exit
 
 _ZN4llvh13ManagedStaticIN12_GLOBAL__N_113StatisticInfoENS_14object_creatorIS2_EENS_14object_deleterIS2_EEEdeEv.exit: ; preds = %bb.a, %bb.b
-  %i.d = load atomic ptr, ptr @_ZL8StatInfo monotonic, align 8 ; 5 uses
+  %i.d = load atomic ptr, ptr @_ZL8StatInfo monotonic, align 8 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !26   ; 3 uses
-  %i.g = load ptr, ptr %i.d, align 8, !tbaa !32   ; 4 uses
+  %i.g = load ptr, ptr %i.d, align 8, !tbaa !32   ; 3 uses
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = sub i64 %i.h, %i.i
@@ -408,11 +408,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39: ; preds = %_ZN
   br label %bb.t
 
 bb.m:                                             ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit43
-  %5 = phi ptr [ %i.g, %.lr.ph ], [ %i.dy, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit43 ]
   %.068 = phi i64 [ 0, %.lr.ph ], [ %i.ee, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit43 ] ; 3 uses
   %.06367 = phi i32 [ 0, %.lr.ph ], [ %.sroa.speculated, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit43 ]
   %.06466 = phi i32 [ 0, %.lr.ph ], [ %.sroa.speculated54, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit43 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
+  %5 = load ptr, ptr %i.d, align 8, !tbaa !32
   %i.cw = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %.068
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !30
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 24
@@ -504,7 +504,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i41
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit43: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i42, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i41
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
-  %i.dy = load ptr, ptr %i.d, align 8, !tbaa !32  ; 3 uses
+  %i.dy = load ptr, ptr %i.d, align 8, !tbaa !32  ; 2 uses
   %i.dz = getelementptr inbounds nuw [8 x i8], ptr %i.dy, i64 %.068
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !30
   %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !52
