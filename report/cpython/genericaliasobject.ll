@@ -204,7 +204,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define hidden ptr @_Py_subs_parameters(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 5 uses
+  %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca ptr, align 8                      ; 6 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
   %i.d = alloca ptr, align 8                      ; 10 uses
@@ -254,8 +254,8 @@ bb.e:                                             ; preds = %bb.d
   %i.u = getelementptr [8 x i8], ptr %i.s, i64 %.02382.i
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !26   ; 7 uses
   store ptr %i.v, ptr %i.c, align 8, !tbaa !26
-  %i.w = getelementptr i8, ptr %i.v, i64 8
-  %.val61.i = load ptr, ptr %i.w, align 8, !tbaa !11 ; 3 uses
+  %i.w = getelementptr i8, ptr %i.v, i64 8        ; 2 uses
+  %.val61.i = load ptr, ptr %i.w, align 8, !tbaa !11
   %i.x = getelementptr i8, ptr %.val61.i, i64 168
   %.val61.val.i = load i64, ptr %i.x, align 8, !tbaa !15
   %i.y = and i64 %.val61.val.i, 2147483648
@@ -264,11 +264,12 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %.lr.ph.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  %.not.i7.i.i = icmp eq ptr %.val61.i, @Py_GenericAliasType
+  %.val.i.i = load ptr, ptr %i.w, align 8, !tbaa !11 ; 2 uses
+  %.not.i7.i.i = icmp eq ptr %.val.i.i, @Py_GenericAliasType
   br i1 %.not.i7.i.i, label %PyObject_TypeCheck.exit.thread.i.i, label %PyObject_TypeCheck.exit.i.i
 
 PyObject_TypeCheck.exit.i.i:                      ; preds = %bb.f
-  %i.z = call i32 @PyType_IsSubtype(ptr noundef %.val61.i, ptr noundef nonnull @Py_GenericAliasType) #8, !inline_history !33
+  %i.z = call i32 @PyType_IsSubtype(ptr noundef %.val.i.i, ptr noundef nonnull @Py_GenericAliasType) #8, !inline_history !33
   %.not9.i.i = icmp eq i32 %i.z, 0
   br i1 %.not9.i.i, label %bb.j, label %PyObject_TypeCheck.exit.thread.i.i
 
@@ -671,7 +672,7 @@ bb.bj:                                            ; preds = %.lr.ph289, %Py_XDEC
   %.0118286 = phi i64 [ 0, %.lr.ph289 ], [ %i.jj, %Py_XDECREF.exit236.thread258 ] ; 3 uses
   %i.eh = getelementptr [8 x i8], ptr %i.dz, i64 %.0118286
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !26 ; 9 uses
-  %i.ej = getelementptr i8, ptr %i.ei, i64 8      ; 2 uses
+  %i.ej = getelementptr i8, ptr %i.ei, i64 8      ; 3 uses
   %.val230 = load ptr, ptr %i.ej, align 8, !tbaa !11
   %i.ek = getelementptr i8, ptr %.val230, i64 168
   %.val230.val = load i64, ptr %i.ek, align 8, !tbaa !15 ; 2 uses
@@ -850,11 +851,23 @@ Py_XDECREF.exit239:                               ; preds = %Py_DECREF.exit175, 
 
 bb.cj:                                            ; preds = %bb.bm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  %4 = call i32 @PyObject_GetOptionalAttr(ptr noundef nonnull %i.ei, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 70952), ptr noundef nonnull %i.a) #8 ; 2 uses
-  %5 = icmp sgt i32 %4, 0
-  br i1 %5, label %bb.ck, label %_is_unpacked_typevartuple.exit
+  %.val.i240 = load ptr, ptr %i.ej, align 8, !tbaa !11
+  %4 = getelementptr i8, ptr %.val.i240, i64 168
+  %.val.val.i = load i64, ptr %4, align 8, !tbaa !15
+  %5 = and i64 %.val.val.i, 2147483648
+  %.not6.i = icmp eq i64 %5, 0
+  br i1 %.not6.i, label %6, label %_is_unpacked_typevartuple.exit.thread
 
-bb.ck:                                            ; preds = %bb.cj
+_is_unpacked_typevartuple.exit.thread:            ; preds = %bb.cj
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  br label %bb.cv
+
+6:                                                ; preds = %bb.cj
+  %7 = call i32 @PyObject_GetOptionalAttr(ptr noundef nonnull %i.ei, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 70952), ptr noundef nonnull %i.a) #8 ; 2 uses
+  %8 = icmp sgt i32 %7, 0
+  br i1 %8, label %bb.ck, label %_is_unpacked_typevartuple.exit
+
+bb.ck:                                            ; preds = %6
   %i.ga = load ptr, ptr %i.a, align 8, !tbaa !26
   %i.gb = call i32 @PyObject_IsTrue(ptr noundef %i.ga) #8 ; 3 uses
   %i.gc = load ptr, ptr %i.a, align 8, !tbaa !26  ; 3 uses
@@ -872,8 +885,8 @@ bb.cm:                                            ; preds = %bb.cl
   call void @_Py_Dealloc(ptr noundef nonnull %i.gc) #8
   br label %_is_unpacked_typevartuple.exit
 
-_is_unpacked_typevartuple.exit:                   ; preds = %bb.cj, %bb.ck, %bb.cl, %bb.cm
-  %.04.i = phi i32 [ %i.gb, %bb.cm ], [ %4, %bb.cj ], [ %i.gb, %bb.ck ], [ %i.gb, %bb.cl ] ; 2 uses
+_is_unpacked_typevartuple.exit:                   ; preds = %6, %bb.ck, %bb.cl, %bb.cm
+  %.04.i = phi i32 [ %i.gb, %bb.cm ], [ %7, %6 ], [ %i.gb, %bb.ck ], [ %i.gb, %bb.cl ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   %i.gg = icmp slt i32 %.04.i, 0
   br i1 %i.gg, label %bb.cn, label %bb.cv
@@ -929,7 +942,8 @@ bb.cu:                                            ; preds = %bb.ct
   call void @_Py_Dealloc(ptr noundef nonnull %.0119) #8
   br label %Py_XDECREF.exit
 
-bb.cv:                                            ; preds = %_is_unpacked_typevartuple.exit
+bb.cv:                                            ; preds = %_is_unpacked_typevartuple.exit.thread, %_is_unpacked_typevartuple.exit
+  %.04.i254 = phi i32 [ 0, %_is_unpacked_typevartuple.exit.thread ], [ %.04.i, %_is_unpacked_typevartuple.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #8
   %i.gs = call i32 @PyObject_GetOptionalAttr(ptr noundef nonnull %i.ei, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 71104), ptr noundef nonnull %i.g) #8
   %i.gt = icmp slt i32 %i.gs, 0
@@ -1072,7 +1086,7 @@ Py_DECREF.exit157:                                ; preds = %Py_DECREF.exit159, 
   br label %Py_XDECREF.exit236.thread263
 
 bb.dp:                                            ; preds = %Py_DECREF.exit161
-  %.not137 = icmp eq i32 %.04.i, 0
+  %.not137 = icmp eq i32 %.04.i254, 0
   br i1 %.not137, label %bb.ee, label %bb.dq
 
 bb.dq:                                            ; preds = %bb.dp

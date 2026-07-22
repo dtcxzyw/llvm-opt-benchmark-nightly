@@ -143,10 +143,10 @@ bb.a:
   %2 = alloca %"struct.Assimp::D3DS::Material", align 8 ; 10 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 6 uses
-  %i.c = load ptr, ptr %i.b, align 8              ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8              ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8
-  %i.f = load ptr, ptr %i.c, align 8              ; 2 uses
+  %i.f = load ptr, ptr %i.c, align 8
   %.not96 = icmp eq ptr %i.e, %i.f
   br i1 %.not96, label %._crit_edge77.thread, label %.lr.ph76
 
@@ -172,12 +172,13 @@ bb.a:
   br i1 %.not6388, label %._crit_edge93.thread, label %.lr.ph92
 
 bb.b:                                             ; preds = %.lr.ph76, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.q = phi ptr [ %i.f, %.lr.ph76 ], [ %i.ca, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+  %i.q = phi ptr [ %i.c, %.lr.ph76 ], [ %i.bx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   %i.r = phi i64 [ 0, %.lr.ph76 ], [ %i.bw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
   %.02674 = phi i32 [ -842150451, %.lr.ph76 ], [ %.127.fr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 4 uses
   %.02972 = phi i32 [ 0, %.lr.ph76 ], [ %i.bv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #24
-  %i.s = getelementptr inbounds nuw [696 x i8], ptr %i.q, i64 %i.r ; 2 uses
+  %4 = load ptr, ptr %i.q, align 8
+  %i.s = getelementptr inbounds nuw [696 x i8], ptr %4, i64 %i.r ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store ptr %i.g, ptr %1, align 8
   %i.u = load ptr, ptr %i.t, align 8              ; 2 uses
@@ -314,10 +315,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.l,
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   %i.bv = add i32 %.02972, 1                      ; 2 uses
   %i.bw = zext i32 %i.bv to i64                   ; 2 uses
-  %i.bx = load ptr, ptr %i.b, align 8             ; 3 uses
+  %i.bx = load ptr, ptr %i.b, align 8             ; 4 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   %i.bz = load ptr, ptr %i.by, align 8
-  %i.ca = load ptr, ptr %i.bx, align 8            ; 2 uses
+  %i.ca = load ptr, ptr %i.bx, align 8
   %i.cb = ptrtoint ptr %i.bz to i64
   %i.cc = ptrtoint ptr %i.ca to i64
   %i.cd = sub i64 %i.cb, %i.cc

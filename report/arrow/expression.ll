@@ -204,8 +204,8 @@ _ZN5arrow6StatusD2Ev.exit104:                     ; preds = %_ZN5arrow6StatusD2E
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph, %.thread216
-  %.sroa.0188.0221 = phi ptr [ %i.bj, %.lr.ph ], [ %i.my, %.thread216 ] ; 4 uses
-  %i.bx = load ptr, ptr %.sroa.0188.0221, align 8, !tbaa !63 ; 7 uses
+  %.sroa.0188.0221 = phi ptr [ %i.bj, %.lr.ph ], [ %i.my, %.thread216 ] ; 5 uses
+  %i.bx = load ptr, ptr %.sroa.0188.0221, align 8, !tbaa !63 ; 2 uses
   %.not.i.i = icmp eq ptr %i.bx, null
   br i1 %.not.i.i, label %.thread216, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
 
@@ -217,14 +217,25 @@ _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt
 
 _ZNK5arrow7compute10Expression4callEv.exit.i.a:   ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #31
+  %.val85 = load ptr, ptr %.sroa.0188.0221, align 8, !tbaa !63 ; 7 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !718)
-  %25 = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
-  %26 = load i64, ptr %25, align 8, !tbaa !38, !noalias !718
-  %i.cb = icmp eq i64 %26, 9
-  br i1 %i.cb, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, label %_ZNK5arrow7compute10Expression4callEv.exit.i28.i
+  %i.cb = icmp eq ptr %.val85, null
+  br i1 %i.cb, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i134, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i
 
-_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i: ; preds = %_ZNK5arrow7compute10Expression4callEv.exit.i.a
-  %i.cc = load ptr, ptr %i.bx, align 8, !tbaa !33, !noalias !718 ; 2 uses
+_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i: ; preds = %_ZNK5arrow7compute10Expression4callEv.exit.i.a
+  %25 = getelementptr inbounds nuw i8, ptr %.val85, i64 144
+  %26 = load i8, ptr %25, align 8, !tbaa !67, !noalias !718
+  %27 = icmp eq i8 %26, 2
+  br i1 %27, label %_ZNK5arrow7compute10Expression4callEv.exit.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i134
+
+_ZNK5arrow7compute10Expression4callEv.exit.i:     ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i
+  %28 = getelementptr inbounds nuw i8, ptr %.val85, i64 8
+  %29 = load i64, ptr %28, align 8, !tbaa !38, !noalias !718
+  %30 = icmp eq i64 %29, 9
+  br i1 %30, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, label %_ZNK5arrow7compute10Expression4callEv.exit.i28.i
+
+_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i: ; preds = %_ZNK5arrow7compute10Expression4callEv.exit.i
+  %i.cc = load ptr, ptr %.val85, align 8, !tbaa !33, !noalias !718 ; 2 uses
   %i.cd = load i64, ptr %i.cc, align 1
   %i.ce = xor i64 %i.cd, 7954875833152139887
   %i.cf = getelementptr i8, ptr %i.cc, i64 8
@@ -238,7 +249,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.cm, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i, label %_ZNK5arrow7compute10Expression4callEv.exit.i28.i
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i
-  %i.cn = getelementptr inbounds nuw i8, ptr %i.bx, i64 32 ; 2 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %.val85, i64 32 ; 2 uses
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !130, !noalias !718
   %.val15.i = load ptr, ptr %i.co, align 8, !tbaa !63, !noalias !718 ; 4 uses
   %.not.i.i.i.i106 = icmp eq ptr %.val15.i, null
@@ -346,8 +357,8 @@ _ZNK5arrow7compute10Expression9field_refEv.exit.i: ; preds = %_ZSt6get_ifIN5arro
 .noexc108:                                        ; preds = %_ZNK5arrow7compute10Expression9field_refEv.exit.i
   br i1 %i.ei, label %bb.ag, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i134
 
-_ZNK5arrow7compute10Expression4callEv.exit.i28.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, %_ZNK5arrow7compute10Expression4callEv.exit.i.a
-  %i.ej = invoke noundef ptr @_ZN5arrow7compute10Comparison3GetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(32) %i.bx)
+_ZNK5arrow7compute10Expression4callEv.exit.i28.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, %_ZNK5arrow7compute10Expression4callEv.exit.i
+  %i.ej = invoke noundef ptr @_ZN5arrow7compute10Comparison3GetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(32) %.val85)
           to label %.noexc109 unwind label %bb.ap ; 2 uses
 
 .noexc109:                                        ; preds = %_ZNK5arrow7compute10Expression4callEv.exit.i28.i
@@ -360,7 +371,7 @@ bb.ae:                                            ; preds = %.noexc109
   br i1 %i.el, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i134, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.em = getelementptr inbounds nuw i8, ptr %i.bx, i64 32
+  %i.em = getelementptr inbounds nuw i8, ptr %.val85, i64 32
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !130, !noalias !724 ; 2 uses
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !63, !noalias !724 ; 3 uses
   %.not.i.i.i.i30.i = icmp eq ptr %i.eo, null
@@ -727,7 +738,7 @@ bb.bt:                                            ; preds = %_ZN5arrow6ResultINS
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #31
   br label %bb.dm
 
-_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i134: ; preds = %_ZNK5arrow7compute10Expression7literalEv.exit.i35.i, %bb.ae, %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i31.i, %_ZNK5arrow7compute10Expression9field_refEv.exit.i32.i, %bb.af, %.noexc109, %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i, %_ZNK5arrow7compute10Expression4callEv.exit21.i, %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i18.i, %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i, %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i, %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i, %_ZNK5arrow7compute10Expression7literalEv.exit.i.i, %bb.ac, %_ZNK5arrow7compute10Expression9field_refEv.exit.i.i, %bb.ad, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i, %.noexc108, %.noexc, %_ZN5arrow7compute12_GLOBAL__N_110Inequality24ExtractOneFromComparisonERKNS0_10ExpressionE.exit.i, %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i34.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit23.thread.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit23.i, %_ZN5arrow6ResultINS_7compute10ExpressionEED2Ev.exit
+_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i134: ; preds = %_ZNK5arrow7compute10Expression7literalEv.exit.i35.i, %bb.ae, %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i31.i, %_ZNK5arrow7compute10Expression9field_refEv.exit.i32.i, %bb.af, %.noexc109, %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i, %_ZNK5arrow7compute10Expression4callEv.exit21.i, %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i18.i, %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i, %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i, %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i, %_ZNK5arrow7compute10Expression7literalEv.exit.i.i, %bb.ac, %_ZNK5arrow7compute10Expression9field_refEv.exit.i.i, %bb.ad, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i, %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i, %.noexc108, %.noexc, %_ZN5arrow7compute12_GLOBAL__N_110Inequality24ExtractOneFromComparisonERKNS0_10ExpressionE.exit.i, %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i34.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit23.thread.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit23.i, %_ZNK5arrow7compute10Expression4callEv.exit.i.a, %_ZN5arrow6ResultINS_7compute10ExpressionEED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #31
   %i.ih = load ptr, ptr %.sroa.0188.0221, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.ih, i64 8

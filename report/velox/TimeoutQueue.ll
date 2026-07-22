@@ -201,8 +201,8 @@ _ZN5boost11multi_index6detail18ordered_index_implINS0_6memberIN5folly12TimeoutQu
 
 .lr.ph:                                           ; preds = %_ZN5boost11multi_index6detail18ordered_index_implINS0_6memberIN5folly12TimeoutQueue5EventElXadL_ZNS6_10expirationEEEEESt4lessIlENS1_9nth_layerILi2ES6_NS0_10indexed_byINS0_14ordered_uniqueINS3_IS6_lXadL_ZNS6_2idEEEEEN4mpl_2naESF_EENS0_18ordered_non_uniqueIS7_SF_SF_EESF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_EESaIS6_EEENS_3mpl7vector0ISF_EENS1_22ordered_non_unique_tagENS1_19null_augment_policyEE5eraseENS1_19bidir_node_iteratorINS1_18ordered_index_nodeISQ_NS1_15index_node_baseIS6_SK_EEEEEESX_.exit, %bb.al
   %.sroa.060.087 = phi ptr [ %i.gz, %bb.al ], [ %i.bt, %_ZN5boost11multi_index6detail18ordered_index_implINS0_6memberIN5folly12TimeoutQueue5EventElXadL_ZNS6_10expirationEEEEESt4lessIlENS1_9nth_layerILi2ES6_NS0_10indexed_byINS0_14ordered_uniqueINS3_IS6_lXadL_ZNS6_2idEEEEEN4mpl_2naESF_EENS0_18ordered_non_uniqueIS7_SF_SF_EESF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_SF_EESaIS6_EEENS_3mpl7vector0ISF_EENS1_22ordered_non_unique_tagENS1_19null_augment_policyEE5eraseENS1_19bidir_node_iteratorINS1_18ordered_index_nodeISQ_NS1_15index_node_baseIS6_SK_EEEEEESX_.exit ] ; 6 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.060.087, i64 16
-  %i.by = load i64, ptr %i.bx, align 8, !tbaa !32 ; 3 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.060.087, i64 16 ; 2 uses
+  %i.by = load i64, ptr %i.bx, align 8, !tbaa !32
   %i.bz = icmp sgt i64 %i.by, -1
   br i1 %i.bz, label %bb.h, label %bb.al
 
@@ -210,9 +210,10 @@ bb.h:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #13
   %i.ca = load i64, ptr %.sroa.060.087, align 8, !tbaa !27 ; 2 uses
   store i64 %i.ca, ptr %8, align 8, !tbaa !27
-  %i.cb = add nsw i64 %i.by, %1
+  %9 = load i64, ptr %i.bx, align 8, !tbaa !32    ; 2 uses
+  %i.cb = add nsw i64 %9, %1
   store i64 %i.cb, ptr %i.f, align 8, !tbaa !31
-  store i64 %i.by, ptr %i.g, align 8, !tbaa !32
+  store i64 %9, ptr %i.g, align 8, !tbaa !32
   %i.cc = getelementptr inbounds nuw i8, ptr %.sroa.060.087, i64 40 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.h, i8 0, i64 32, i1 false)
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !34 ; 2 uses

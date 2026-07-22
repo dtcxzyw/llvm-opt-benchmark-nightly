@@ -201,10 +201,10 @@ bb.amk:                                           ; preds = %bb.amj
   br i1 %i.ezv, label %.loopexit3113, label %.preheader3112
 
 .preheader3112:                                   ; preds = %bb.amk
-  %i.ezw = load ptr, ptr %i.eyh, align 8, !tbaa !49, !nonnull !50, !align !51 ; 2 uses
-  %i.ezx = getelementptr inbounds nuw i8, ptr %i.ezw, i64 8
-  %i.ezy = load ptr, ptr %i.ezx, align 8, !tbaa !42 ; 2 uses
-  %i.ezz = load ptr, ptr %i.ezw, align 8, !tbaa !45 ; 2 uses
+  %i.ezw = load ptr, ptr %i.eyh, align 8, !tbaa !49, !nonnull !50, !align !51 ; 3 uses
+  %i.ezx = getelementptr inbounds nuw i8, ptr %i.ezw, i64 8 ; 2 uses
+  %i.ezy = load ptr, ptr %i.ezx, align 8, !tbaa !42
+  %i.ezz = load ptr, ptr %i.ezw, align 8, !tbaa !45
   %.not3542 = icmp eq ptr %i.ezy, %i.ezz
   br i1 %.not3542, label %.loopexit3113, label %.lr.ph3451
 
@@ -270,12 +270,14 @@ bb.amp:                                           ; preds = %bb.amj, %bb.ami
   br label %.body
 
 bb.amq:                                           ; preds = %.lr.ph3451, %_ZN6duckdb20CorrelatedColumnInfoD2Ev.exit
-  %i.fat = phi ptr [ %i.ezz, %.lr.ph3451 ], [ %i.fdy, %_ZN6duckdb20CorrelatedColumnInfoD2Ev.exit ] ; 2 uses
-  %i.fau = phi ptr [ %i.ezy, %.lr.ph3451 ], [ %i.fdx, %_ZN6duckdb20CorrelatedColumnInfoD2Ev.exit ]
+  %i.fat = phi ptr [ %i.ezx, %.lr.ph3451 ], [ %i.fdw, %_ZN6duckdb20CorrelatedColumnInfoD2Ev.exit ]
+  %i.fau = phi ptr [ %i.ezw, %.lr.ph3451 ], [ %i.fdv, %_ZN6duckdb20CorrelatedColumnInfoD2Ev.exit ]
   %storemerge5873450 = phi i64 [ 0, %.lr.ph3451 ], [ %i.fdu, %_ZN6duckdb20CorrelatedColumnInfoD2Ev.exit ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %180) #22
-  %i.fav = ptrtoint ptr %i.fau to i64
-  %i.faw = ptrtoint ptr %i.fat to i64
+  %197 = load ptr, ptr %i.fat, align 8, !tbaa !42
+  %198 = load ptr, ptr %i.fau, align 8, !tbaa !45 ; 2 uses
+  %i.fav = ptrtoint ptr %197 to i64
+  %i.faw = ptrtoint ptr %198 to i64
   %i.fax = sub i64 %i.fav, %i.faw
   %i.fay = sdiv exact i64 %i.fax, 80              ; 2 uses
   %.not.i.i.i2545 = icmp ult i64 %storemerge5873450, %i.fay
@@ -289,7 +291,7 @@ bb.amr:                                           ; preds = %bb.amq
   unreachable
 
 bb.ams:                                           ; preds = %bb.amq
-  %i.faz = getelementptr inbounds nuw [80 x i8], ptr %i.fat, i64 %storemerge5873450 ; 5 uses
+  %i.faz = getelementptr inbounds nuw [80 x i8], ptr %198, i64 %storemerge5873450 ; 5 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %180, ptr noundef nonnull align 8 dereferenceable(80) %i.faz, i64 16, i1 false), !tbaa.struct !262
   %i.fba = getelementptr inbounds nuw i8, ptr %i.faz, i64 16
   invoke void @_ZN6duckdb11LogicalTypeC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.faa, ptr noundef nonnull align 8 dereferenceable(24) %i.fba)
@@ -550,10 +552,10 @@ _ZN6duckdb20CorrelatedColumnInfoD2Ev.exit:        ; preds = %_ZNSt10unique_ptrIN
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.faa) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %180) #22
   %i.fdu = add nuw i64 %storemerge5873450, 1      ; 2 uses
-  %i.fdv = load ptr, ptr %i.eyh, align 8, !tbaa !49, !nonnull !50, !align !51 ; 2 uses
-  %i.fdw = getelementptr inbounds nuw i8, ptr %i.fdv, i64 8
-  %i.fdx = load ptr, ptr %i.fdw, align 8, !tbaa !42 ; 2 uses
-  %i.fdy = load ptr, ptr %i.fdv, align 8, !tbaa !45 ; 2 uses
+  %i.fdv = load ptr, ptr %i.eyh, align 8, !tbaa !49, !nonnull !50, !align !51 ; 3 uses
+  %i.fdw = getelementptr inbounds nuw i8, ptr %i.fdv, i64 8 ; 2 uses
+  %i.fdx = load ptr, ptr %i.fdw, align 8, !tbaa !42
+  %i.fdy = load ptr, ptr %i.fdv, align 8, !tbaa !45
   %i.fdz = ptrtoint ptr %i.fdx to i64
   %i.fea = ptrtoint ptr %i.fdy to i64
   %i.feb = sub i64 %i.fdz, %i.fea

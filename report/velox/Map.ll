@@ -204,8 +204,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %80) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
-  %i.y = load ptr, ptr %4, align 8, !tbaa !155
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !171  ; 2 uses
+  %i.y = load ptr, ptr %4, align 8, !tbaa !155    ; 2 uses
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !171
   store ptr %i.z, ptr %i.a, align 8, !tbaa !193
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   store ptr null, ptr %i.b, align 8, !tbaa !194
@@ -214,12 +214,13 @@ bb.b:                                             ; preds = %bb.a
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !196 ; 2 uses
   store i32 %i.ab, ptr %i.c, align 4, !tbaa !3
   call void @llvm.lifetime.start.p0(ptr nonnull %81) #23
+  %127 = load ptr, ptr %i.y, align 8, !tbaa !171
   %i.ac = sext i32 %i.ab to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %79) #23, !noalias !206
   store i32 0, ptr %79, align 4, !tbaa !30, !noalias !206
   %i.ad = getelementptr inbounds nuw i8, ptr %79, i64 4
   store i8 1, ptr %i.ad, align 4, !tbaa !209, !noalias !206
-  call void @_ZN8facebook5velox13AlignedBuffer8allocateIiEEN5boost13intrusive_ptrINS0_6BufferEEEmPNS0_6memory10MemoryPoolERKSt8optionalIT_Eb(ptr dead_on_unwind nonnull writable sret(%"class.boost::intrusive_ptr") align 8 %81, i64 noundef %i.ac, ptr noundef %i.z, ptr noundef nonnull align 4 dereferenceable(8) %79, i1 noundef zeroext false)
+  call void @_ZN8facebook5velox13AlignedBuffer8allocateIiEEN5boost13intrusive_ptrINS0_6BufferEEEmPNS0_6memory10MemoryPoolERKSt8optionalIT_Eb(ptr dead_on_unwind nonnull writable sret(%"class.boost::intrusive_ptr") align 8 %81, i64 noundef %i.ac, ptr noundef %127, ptr noundef nonnull align 4 dereferenceable(8) %79, i1 noundef zeroext false)
   call void @llvm.lifetime.end.p0(ptr nonnull %79) #23, !noalias !206
   call void @llvm.lifetime.start.p0(ptr nonnull %82) #23
   %i.ae = load i32, ptr %i.aa, align 8, !tbaa !196
@@ -622,8 +623,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %77) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
-  %i.y = load ptr, ptr %4, align 8, !tbaa !155
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !171  ; 2 uses
+  %i.y = load ptr, ptr %4, align 8, !tbaa !155    ; 2 uses
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !171
   store ptr %i.z, ptr %i.a, align 8, !tbaa !193
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   store ptr null, ptr %i.b, align 8, !tbaa !194
@@ -632,12 +633,13 @@ bb.b:                                             ; preds = %bb.a
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !196 ; 2 uses
   store i32 %i.ab, ptr %i.c, align 4, !tbaa !3
   call void @llvm.lifetime.start.p0(ptr nonnull %78) #23
+  %124 = load ptr, ptr %i.y, align 8, !tbaa !171
   %i.ac = sext i32 %i.ab to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %76) #23, !noalias !887
   store i32 0, ptr %76, align 4, !tbaa !30, !noalias !887
   %i.ad = getelementptr inbounds nuw i8, ptr %76, i64 4
   store i8 1, ptr %i.ad, align 4, !tbaa !209, !noalias !887
-  call void @_ZN8facebook5velox13AlignedBuffer8allocateIiEEN5boost13intrusive_ptrINS0_6BufferEEEmPNS0_6memory10MemoryPoolERKSt8optionalIT_Eb(ptr dead_on_unwind nonnull writable sret(%"class.boost::intrusive_ptr") align 8 %78, i64 noundef %i.ac, ptr noundef %i.z, ptr noundef nonnull align 4 dereferenceable(8) %76, i1 noundef zeroext false)
+  call void @_ZN8facebook5velox13AlignedBuffer8allocateIiEEN5boost13intrusive_ptrINS0_6BufferEEEmPNS0_6memory10MemoryPoolERKSt8optionalIT_Eb(ptr dead_on_unwind nonnull writable sret(%"class.boost::intrusive_ptr") align 8 %78, i64 noundef %i.ac, ptr noundef %124, ptr noundef nonnull align 4 dereferenceable(8) %76, i1 noundef zeroext false)
   call void @llvm.lifetime.end.p0(ptr nonnull %76) #23, !noalias !887
   call void @llvm.lifetime.start.p0(ptr nonnull %79) #23
   %i.ae = load i32, ptr %i.aa, align 8, !tbaa !196

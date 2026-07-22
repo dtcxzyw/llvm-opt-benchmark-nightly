@@ -201,7 +201,7 @@ bb.a:
   %i.e = alloca [24 x i8], align 8                ; 5 uses
   %i.f = alloca [24 x i8], align 8                ; 5 uses
   %.sroa.55.i = alloca [16 x i8], align 8         ; 2 uses
-  %i.g = alloca [32 x i8], align 8                ; 7 uses
+  %i.g = alloca [32 x i8], align 8                ; 8 uses
   %i.h = alloca [328 x i8], align 8               ; 5 uses
   %.sroa.5.i23 = alloca [320 x i8], align 8       ; 4 uses
   %i.i = alloca [328 x i8], align 8               ; 4 uses
@@ -604,7 +604,7 @@ bb.bi:                                            ; preds = %bb.bg
   br label %_RNvXsfd_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_6ForXmlNtNtCsbvkFyIu7lgC_4core5clone5Clone5clone.exit.sink.split.i
 
 _RNvXsfd_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_6ForXmlNtNtCsbvkFyIu7lgC_4core5clone5Clone5clone.exit.sink.split.i: ; preds = %.noexc37, %.noexc36, %bb.bg, %bb.bf
-  %.sroa.0.0.i.sink.i = phi i64 [ -9223372036854775808, %bb.bf ], [ %.sroa.0.0.copyload.i.i32, %.noexc36 ], [ %.sroa.03.0.copyload.i.i, %.noexc37 ], [ -9223372036854775808, %bb.bg ] ; 2 uses
+  %.sroa.0.0.i.sink.i = phi i64 [ -9223372036854775808, %bb.bf ], [ %.sroa.0.0.copyload.i.i32, %.noexc36 ], [ %.sroa.03.0.copyload.i.i, %.noexc37 ], [ -9223372036854775808, %bb.bg ]
   %.sink.i = phi ptr [ %i.cq, %bb.bf ], [ %i.cq, %.noexc36 ], [ %i.cp, %.noexc37 ], [ %i.cp, %bb.bg ]
   %i.cv = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store i64 %.sroa.0.0.i.sink.i, ptr %i.cv, align 8, !alias.scope !11976, !noalias !11984
@@ -613,7 +613,6 @@ _RNvXsfd_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_6ForXmlNtNtCsbvkFyIu7lgC_4co
   br label %_RNvXsfd_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_6ForXmlNtNtCsbvkFyIu7lgC_4core5clone5Clone5clone.exit.i
 
 _RNvXsfd_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_6ForXmlNtNtCsbvkFyIu7lgC_4core5clone5Clone5clone.exit.i: ; preds = %_RNvXsfd_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_6ForXmlNtNtCsbvkFyIu7lgC_4core5clone5Clone5clone.exit.sink.split.i, %bb.be, %bb.be
-  %.sroa.660.0.copyload62 = phi i64 [ %.sroa.0.0.i.sink.i, %_RNvXsfd_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_6ForXmlNtNtCsbvkFyIu7lgC_4core5clone5Clone5clone.exit.sink.split.i ], [ undef, %bb.be ], [ undef, %bb.be ]
   store i64 %i.cg, ptr %i.g, align 8, !alias.scope !11976, !noalias !11984
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !11975
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !11975
@@ -652,6 +651,8 @@ bb.bm:                                            ; preds = %bb.bo, %_RNvXsfd_Nt
   %.sroa.03.0.i = phi i64 [ %.sroa.03.0.copyload4.i, %bb.bo ], [ -9223372036854775808, %_RNvXsfd_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_6ForXmlNtNtCsbvkFyIu7lgC_4core5clone5Clone5clone.exit.i ] ; 4 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 58
   %i.dh = load i8, ptr %i.dg, align 2, !range !9417, !alias.scope !11970, !noalias !11973, !noundef !3
+  %.sroa.660.0..sroa_idx61 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  %.sroa.660.0.copyload62 = load i64, ptr %.sroa.660.0..sroa_idx61, align 8, !noalias !11970
   %.sroa.763.0..sroa_idx64 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.763, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.763.0..sroa_idx64, i64 16, i1 false), !noalias !11970
   %.sroa.865.sroa.0.0.extract.trunc = trunc i64 %.sroa.03.0.i to i8

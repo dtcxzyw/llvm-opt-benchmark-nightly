@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ag = phi ptr [ %i.cg, %_ZN2v88internal10JSReceiver15GetDataPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit ], [ %i.aa, %_ZNK2v88internal11MaybeHandleINS0_10FixedArrayEE5CheckEv.exit.preheader ]
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %indvars.iv
-  %i.aj = load atomic volatile i64, ptr %i.ai monotonic, align 8 ; 2 uses
+  %i.aj = load atomic volatile i64, ptr %i.ai monotonic, align 8
   %i.ak = load ptr, ptr %i.g, align 8             ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 560 ; 2 uses
   %i.am = load ptr, ptr %i.al, align 8            ; 2 uses
@@ -215,7 +215,7 @@ bb.e:                                             ; preds = %.lr.ph
   br label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit
 
 _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %.lr.ph, %bb.e
-  %.0.i = phi ptr [ %i.aq, %bb.e ], [ %i.am, %.lr.ph ] ; 5 uses
+  %.0.i = phi ptr [ %i.aq, %bb.e ], [ %i.am, %.lr.ph ] ; 6 uses
   %i.ar = ptrtoint ptr %.0.i to i64
   %i.as = add i64 %i.ar, 8
   %i.at = inttoptr i64 %i.as to ptr
@@ -224,7 +224,8 @@ _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %.lr.
   %i.au = load ptr, ptr %i.g, align 8             ; 6 uses
   %.sroa.03.0.copyload = load ptr, ptr %i.s, align 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
-  %i.av = add i64 %i.aj, -1
+  %.pre.pre.i = load i64, ptr %.0.i, align 8
+  %i.av = add i64 %.pre.pre.i, -1
   %i.aw = inttoptr i64 %i.av to ptr               ; 3 uses
   %i.ax = load atomic volatile i64, ptr %i.aw monotonic, align 8
   %i.ay = add i64 %i.ax, 11

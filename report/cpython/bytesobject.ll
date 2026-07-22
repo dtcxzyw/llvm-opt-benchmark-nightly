@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.046 = phi i64 [ %i.q, %bb.e ], [ %i.o, %bb.d ]
-  %i.r = getelementptr i8, ptr %i.n, i64 8
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !11   ; 4 uses
+  %i.r = getelementptr i8, ptr %i.n, i64 8        ; 2 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !11   ; 3 uses
   %.not62 = icmp eq ptr %i.s, null
   br i1 %.not62, label %.thread78, label %bb.g
 
@@ -224,7 +224,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
-  %i.w = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef nonnull %i.s, ptr noundef nonnull %i.b) #19 ; 4 uses
+  %3 = load ptr, ptr %i.r, align 8, !tbaa !11
+  %i.w = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef %3, ptr noundef nonnull %i.b) #19 ; 4 uses
   %i.x = icmp eq ptr %i.w, null
   br i1 %i.x, label %.thread76, label %bb.j
 

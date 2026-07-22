@@ -203,15 +203,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr i8, ptr %1, i64 40
-  %3 = load i64, ptr %i.k, align 8, !tbaa !13
-  %4 = getelementptr i8, ptr %1, i64 32
-  %i.l = load i64, ptr %4, align 8, !tbaa !13
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !13
   %i.m = getelementptr i8, ptr %1, i64 24
-  %5 = load i64, ptr %i.m, align 8, !tbaa !13
-  %6 = getelementptr i8, ptr %1, i64 16
-  %7 = load i64, ptr %6, align 8, !tbaa !13
-  %8 = getelementptr i8, ptr %1, i64 8
-  %9 = load i64, ptr %8, align 8, !tbaa !13
+  %3 = load <2 x i64>, ptr %i.m, align 8, !tbaa !13
+  %4 = shufflevector <2 x i64> %3, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  %5 = getelementptr i8, ptr %1, i64 8
+  %6 = load <2 x i64>, ptr %5, align 8, !tbaa !13
+  %7 = shufflevector <2 x i64> %6, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %i.n = load i64, ptr %1, align 8, !tbaa !13
   %i.o = getelementptr i8, ptr %1, i64 64
   %i.p = load i64, ptr %i.o, align 8, !tbaa !13
@@ -238,19 +236,25 @@ bb.d:                                             ; preds = %.preheader
 bb.e:                                             ; preds = %.preheader, %bb.d
   %i.x = phi i64 [ %i.w, %bb.d ], [ 4, %.preheader ]
   %.286.i = phi i32 [ 2, %bb.d ], [ 1, %.preheader ] ; 4 uses
+  %.sroa.2.8.vec.insert = insertelement <2 x i64> <i64 poison, i64 undef>, i64 %i.x, i64 0 ; 2 uses
   %i.y = icmp samesign ult i32 %.286.i, %0
-  br i1 %i.y, label %bb.f, label %bb.g
+  br i1 %i.y, label %bb.f, label %8
+
+8:                                                ; preds = %bb.e
+  %.sroa.2.16.vec.insert = insertelement <2 x i64> %.sroa.2.8.vec.insert, i64 4, i64 1
+  br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.z = zext nneg i32 %.286.i to i64
   %i.aa = getelementptr [8 x i8], ptr %1, i64 %i.z
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !13
+  %.sroa.2.16.vec.insert141 = insertelement <2 x i64> %.sroa.2.8.vec.insert, i64 %i.ab, i64 1
   %i.ac = add nuw nsw i32 %.286.i, 1
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.e, %bb.f
-  %10 = phi i64 [ %i.ab, %bb.f ], [ 4, %bb.e ]
-  %.286.i.1 = phi i32 [ %i.ac, %bb.f ], [ %.286.i, %bb.e ] ; 4 uses
+bb.g:                                             ; preds = %bb.f, %8
+  %.sroa.2.0 = phi <2 x i64> [ %.sroa.2.16.vec.insert141, %bb.f ], [ %.sroa.2.16.vec.insert, %8 ]
+  %.286.i.1 = phi i32 [ %i.ac, %bb.f ], [ %.286.i, %8 ] ; 4 uses
   %i.ad = icmp samesign ult i32 %.286.i.1, %0
   br i1 %i.ad, label %bb.h, label %bb.i
 
@@ -258,25 +262,31 @@ bb.h:                                             ; preds = %bb.g
   %i.ae = zext nneg i32 %.286.i.1 to i64
   %i.af = getelementptr [8 x i8], ptr %1, i64 %i.ae
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !13
+  %.sroa.8.24.vec.insert144 = insertelement <2 x i64> <i64 poison, i64 undef>, i64 %i.ag, i64 0
   %i.ah = add nuw nsw i32 %.286.i.1, 1
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h
-  %11 = phi i64 [ %i.ag, %bb.h ], [ 4, %bb.g ]
+  %.sroa.8.0 = phi <2 x i64> [ %.sroa.8.24.vec.insert144, %bb.h ], [ <i64 4, i64 undef>, %bb.g ] ; 2 uses
   %.286.i.2 = phi i32 [ %i.ah, %bb.h ], [ %.286.i.1, %bb.g ] ; 4 uses
   %i.ai = icmp samesign ult i32 %.286.i.2, %0
-  br i1 %i.ai, label %bb.j, label %bb.k
+  br i1 %i.ai, label %bb.j, label %9
+
+9:                                                ; preds = %bb.i
+  %.sroa.8.32.vec.insert = insertelement <2 x i64> %.sroa.8.0, i64 4, i64 1
+  br label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.aj = zext nneg i32 %.286.i.2 to i64
   %i.ak = getelementptr [8 x i8], ptr %1, i64 %i.aj
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !13
+  %.sroa.8.32.vec.insert147 = insertelement <2 x i64> %.sroa.8.0, i64 %i.al, i64 1
   %i.am = add nuw nsw i32 %.286.i.2, 1
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.i, %bb.j
-  %12 = phi i64 [ %i.al, %bb.j ], [ 4, %bb.i ]
-  %.286.i.3 = phi i32 [ %i.am, %bb.j ], [ %.286.i.2, %bb.i ] ; 4 uses
+bb.k:                                             ; preds = %bb.j, %9
+  %.sroa.8.1 = phi <2 x i64> [ %.sroa.8.32.vec.insert147, %bb.j ], [ %.sroa.8.32.vec.insert, %9 ]
+  %.286.i.3 = phi i32 [ %i.am, %bb.j ], [ %.286.i.2, %9 ] ; 4 uses
   %i.an = icmp samesign ult i32 %.286.i.3, %0
   br i1 %i.an, label %bb.l, label %bb.m
 
@@ -318,14 +328,12 @@ rb_scan_args_set.exit:                            ; preds = %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %rb_scan_args_set.exit, %bb.b
-  %13 = phi i64 [ %i.as, %rb_scan_args_set.exit ], [ %i.n, %bb.b ] ; 8 uses
-  %14 = phi i64 [ %i.ay, %rb_scan_args_set.exit ], [ 4, %bb.b ] ; 7 uses
-  %i.bd = phi i64 [ %12, %rb_scan_args_set.exit ], [ %9, %bb.b ] ; 7 uses
-  %15 = phi i64 [ %11, %rb_scan_args_set.exit ], [ %7, %bb.b ] ; 7 uses
-  %16 = phi i64 [ %10, %rb_scan_args_set.exit ], [ %5, %bb.b ] ; 7 uses
-  %i.be = phi i64 [ %i.x, %rb_scan_args_set.exit ], [ %i.l, %bb.b ] ; 2 uses
-  %i.bf = phi i64 [ %i.u, %rb_scan_args_set.exit ], [ %3, %bb.b ] ; 5 uses
-  %storemerge = phi i64 [ %i.bc, %rb_scan_args_set.exit ], [ %i.s, %bb.b ]
+  %i.bd = phi i64 [ %i.n, %bb.b ], [ %i.as, %rb_scan_args_set.exit ] ; 8 uses
+  %.sroa.8.2 = phi <2 x i64> [ %7, %bb.b ], [ %.sroa.8.1, %rb_scan_args_set.exit ] ; 2 uses
+  %.sroa.2.1 = phi <2 x i64> [ %4, %bb.b ], [ %.sroa.2.0, %rb_scan_args_set.exit ] ; 2 uses
+  %i.be = phi i64 [ 4, %bb.b ], [ %i.ay, %rb_scan_args_set.exit ] ; 7 uses
+  %i.bf = phi i64 [ %i.l, %bb.b ], [ %i.u, %rb_scan_args_set.exit ] ; 5 uses
+  %storemerge = phi i64 [ %i.s, %bb.b ], [ %i.bc, %rb_scan_args_set.exit ]
   store i64 %storemerge, ptr %i.c, align 8
   %i.bg = icmp eq i64 %i.bf, 0
   %i.bh = and i64 %i.bf, 7
@@ -351,11 +359,12 @@ rbimpl_RB_TYPE_P_fastpath.exit.thread.i:          ; preds = %rbimpl_RB_TYPE_P_fa
 obj2vint.exit:                                    ; preds = %bb.r, %rbimpl_RB_TYPE_P_fastpath.exit.thread.i
   %.0.i = phi i64 [ %i.bo, %bb.r ], [ %i.bp, %rbimpl_RB_TYPE_P_fastpath.exit.thread.i ]
   store i64 %.0.i, ptr %2, align 8, !tbaa !65
-  %i.bq = icmp eq i64 %i.be, 4
+  %.sroa.2.8.vec.extract = extractelement <2 x i64> %.sroa.2.1, i64 0 ; 2 uses
+  %i.bq = icmp eq i64 %.sroa.2.8.vec.extract, 4
   br i1 %i.bq, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %obj2vint.exit
-  %i.br = tail call fastcc i32 @month_arg(i64 noundef %i.be)
+  %i.br = tail call fastcc i32 @month_arg(i64 noundef %.sroa.2.8.vec.extract)
   %i.bs = shl nuw nsw i32 %i.br, 9
   %i.bt = zext nneg i32 %i.bs to i64
   br label %bb.t
@@ -366,29 +375,30 @@ bb.t:                                             ; preds = %obj2vint.exit, %bb.
   %i.bu = and i64 %.sink132, -7681
   %i.bv = or disjoint i64 %i.bu, %.sink131        ; 2 uses
   store i64 %i.bv, ptr %i.c, align 8
-  %i.bw = icmp eq i64 %16, 4
+  %.sroa.2.16.vec.extract = extractelement <2 x i64> %.sroa.2.1, i64 1 ; 7 uses
+  %i.bw = icmp eq i64 %.sroa.2.16.vec.extract, 4
   br i1 %i.bw, label %bb.z, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.bx = icmp eq i64 %16, 0
-  %i.by = and i64 %16, 7
+  %i.bx = icmp eq i64 %.sroa.2.16.vec.extract, 0
+  %i.by = and i64 %.sroa.2.16.vec.extract, 7
   %i.bz = icmp ne i64 %i.by, 0
   %i.ca = or i1 %i.bx, %i.bz
   br i1 %i.ca, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i, label %rbimpl_RB_TYPE_P_fastpath.exit.i.i
 
 rbimpl_RB_TYPE_P_fastpath.exit.i.i:               ; preds = %bb.u
-  %i.cb = inttoptr i64 %16 to ptr
+  %i.cb = inttoptr i64 %.sroa.2.16.vec.extract to ptr
   %i.cc = load i64, ptr %i.cb, align 8, !tbaa !30
   %i.cd = and i64 %i.cc, 31
   %i.ce = icmp eq i64 %i.cd, 5
   br i1 %i.ce, label %bb.v, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i
 
 bb.v:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i
-  %i.cf = tail call i64 @rb_str_to_inum(i64 noundef %16, i32 noundef 10, i32 noundef 1) #18
+  %i.cf = tail call i64 @rb_str_to_inum(i64 noundef %.sroa.2.16.vec.extract, i32 noundef 10, i32 noundef 1) #18
   br label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i
 
 rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i:        ; preds = %bb.v, %rbimpl_RB_TYPE_P_fastpath.exit.i.i, %bb.u
-  %.0.i.i = phi i64 [ %i.cf, %bb.v ], [ %16, %rbimpl_RB_TYPE_P_fastpath.exit.i.i ], [ %16, %bb.u ] ; 3 uses
+  %.0.i.i = phi i64 [ %i.cf, %bb.v ], [ %.sroa.2.16.vec.extract, %rbimpl_RB_TYPE_P_fastpath.exit.i.i ], [ %.sroa.2.16.vec.extract, %bb.u ] ; 3 uses
   %i.cg = trunc i64 %.0.i.i to i1
   br i1 %i.cg, label %bb.w, label %bb.x
 
@@ -553,29 +563,30 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %.sink.split, %leap_year_p.exit.thread90, %bb.ak, %bb.z
   %i.eq = phi i64 [ %i.dx, %leap_year_p.exit.thread90 ], [ %i.cp, %bb.z ], [ %i.cp, %bb.ak ], [ %.sink, %.sink.split ]
-  %i.er = icmp eq i64 %15, 4
+  %.sroa.8.24.vec.extract = extractelement <2 x i64> %.sroa.8.2, i64 0 ; 7 uses
+  %i.er = icmp eq i64 %.sroa.8.24.vec.extract, 4
   br i1 %i.er, label %bb.as, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %i.es = icmp eq i64 %15, 0
-  %i.et = and i64 %15, 7
+  %i.es = icmp eq i64 %.sroa.8.24.vec.extract, 0
+  %i.et = and i64 %.sroa.8.24.vec.extract, 7
   %i.eu = icmp ne i64 %i.et, 0
   %i.ev = or i1 %i.es, %i.eu
   br i1 %i.ev, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i62, label %rbimpl_RB_TYPE_P_fastpath.exit.i.i61
 
 rbimpl_RB_TYPE_P_fastpath.exit.i.i61:             ; preds = %bb.an
-  %i.ew = inttoptr i64 %15 to ptr
+  %i.ew = inttoptr i64 %.sroa.8.24.vec.extract to ptr
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !30
   %i.ey = and i64 %i.ex, 31
   %i.ez = icmp eq i64 %i.ey, 5
   br i1 %i.ez, label %bb.ao, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i62
 
 bb.ao:                                            ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i61
-  %i.fa = tail call i64 @rb_str_to_inum(i64 noundef %15, i32 noundef 10, i32 noundef 1) #18
+  %i.fa = tail call i64 @rb_str_to_inum(i64 noundef %.sroa.8.24.vec.extract, i32 noundef 10, i32 noundef 1) #18
   br label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i62
 
 rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i62:      ; preds = %bb.ao, %rbimpl_RB_TYPE_P_fastpath.exit.i.i61, %bb.an
-  %.0.i.i63 = phi i64 [ %i.fa, %bb.ao ], [ %15, %rbimpl_RB_TYPE_P_fastpath.exit.i.i61 ], [ %15, %bb.an ] ; 3 uses
+  %.0.i.i63 = phi i64 [ %i.fa, %bb.ao ], [ %.sroa.8.24.vec.extract, %rbimpl_RB_TYPE_P_fastpath.exit.i.i61 ], [ %.sroa.8.24.vec.extract, %bb.an ] ; 3 uses
   %i.fb = trunc i64 %.0.i.i63 to i1
   br i1 %i.fb, label %bb.ap, label %bb.aq
 
@@ -610,29 +621,30 @@ bb.as:                                            ; preds = %bb.am, %obj2ubits.e
   %i.fk = and i64 %i.fi, -8126465
   %i.fl = or disjoint i64 %i.fk, %i.fj            ; 2 uses
   store i64 %i.fl, ptr %i.c, align 8
-  %i.fm = icmp eq i64 %i.bd, 4
+  %.sroa.8.32.vec.extract = extractelement <2 x i64> %.sroa.8.2, i64 1 ; 7 uses
+  %i.fm = icmp eq i64 %.sroa.8.32.vec.extract, 4
   br i1 %i.fm, label %bb.ay, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %i.fn = icmp eq i64 %i.bd, 0
-  %i.fo = and i64 %i.bd, 7
+  %i.fn = icmp eq i64 %.sroa.8.32.vec.extract, 0
+  %i.fo = and i64 %.sroa.8.32.vec.extract, 7
   %i.fp = icmp ne i64 %i.fo, 0
   %i.fq = or i1 %i.fn, %i.fp
   br i1 %i.fq, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i69, label %rbimpl_RB_TYPE_P_fastpath.exit.i.i68
 
 rbimpl_RB_TYPE_P_fastpath.exit.i.i68:             ; preds = %bb.at
-  %i.fr = inttoptr i64 %i.bd to ptr
+  %i.fr = inttoptr i64 %.sroa.8.32.vec.extract to ptr
   %i.fs = load i64, ptr %i.fr, align 8, !tbaa !30
   %i.ft = and i64 %i.fs, 31
   %i.fu = icmp eq i64 %i.ft, 5
   br i1 %i.fu, label %bb.au, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i69
 
 bb.au:                                            ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i68
-  %i.fv = tail call i64 @rb_str_to_inum(i64 noundef %i.bd, i32 noundef 10, i32 noundef 1) #18
+  %i.fv = tail call i64 @rb_str_to_inum(i64 noundef %.sroa.8.32.vec.extract, i32 noundef 10, i32 noundef 1) #18
   br label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i69
 
 rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i69:      ; preds = %bb.au, %rbimpl_RB_TYPE_P_fastpath.exit.i.i68, %bb.at
-  %.0.i.i70 = phi i64 [ %i.fv, %bb.au ], [ %i.bd, %rbimpl_RB_TYPE_P_fastpath.exit.i.i68 ], [ %i.bd, %bb.at ] ; 3 uses
+  %.0.i.i70 = phi i64 [ %i.fv, %bb.au ], [ %.sroa.8.32.vec.extract, %rbimpl_RB_TYPE_P_fastpath.exit.i.i68 ], [ %.sroa.8.32.vec.extract, %bb.at ] ; 3 uses
   %i.fw = trunc i64 %.0.i.i70 to i1
   br i1 %i.fw, label %bb.av, label %bb.aw
 
@@ -667,35 +679,35 @@ bb.ay:                                            ; preds = %bb.as, %obj2ubits.e
   %i.gf = and i64 %i.gd, -528482305
   %i.gg = or disjoint i64 %i.gf, %i.ge            ; 3 uses
   store i64 %i.gg, ptr %i.c, align 8
-  %i.gh = icmp eq i64 %14, 4
+  %i.gh = icmp eq i64 %i.be, 4
   %i.gi = icmp ne i32 %0, 7
   %or.cond.not = or i1 %i.gi, %i.gh
-  %i.gj = icmp eq i64 %13, 4                      ; 2 uses
+  %i.gj = icmp eq i64 %i.bd, 4                    ; 2 uses
   br i1 %or.cond.not, label %bb.br, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
   br i1 %i.gj, label %bb.bf, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.gk = icmp eq i64 %13, 0
-  %i.gl = and i64 %13, 7
+  %i.gk = icmp eq i64 %i.bd, 0
+  %i.gl = and i64 %i.bd, 7
   %i.gm = icmp ne i64 %i.gl, 0
   %i.gn = or i1 %i.gk, %i.gm
   br i1 %i.gn, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i76, label %rbimpl_RB_TYPE_P_fastpath.exit.i.i75
 
 rbimpl_RB_TYPE_P_fastpath.exit.i.i75:             ; preds = %bb.ba
-  %i.go = inttoptr i64 %13 to ptr
+  %i.go = inttoptr i64 %i.bd to ptr
   %i.gp = load i64, ptr %i.go, align 8, !tbaa !30
   %i.gq = and i64 %i.gp, 31
   %i.gr = icmp eq i64 %i.gq, 5
   br i1 %i.gr, label %bb.bb, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i76
 
 bb.bb:                                            ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i75
-  %i.gs = tail call i64 @rb_str_to_inum(i64 noundef %13, i32 noundef 10, i32 noundef 1) #18
+  %i.gs = tail call i64 @rb_str_to_inum(i64 noundef %i.bd, i32 noundef 10, i32 noundef 1) #18
   br label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i76
 
 rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i76:      ; preds = %bb.bb, %rbimpl_RB_TYPE_P_fastpath.exit.i.i75, %bb.ba
-  %.0.i.i77 = phi i64 [ %i.gs, %bb.bb ], [ %13, %rbimpl_RB_TYPE_P_fastpath.exit.i.i75 ], [ %13, %bb.ba ] ; 3 uses
+  %.0.i.i77 = phi i64 [ %i.gs, %bb.bb ], [ %i.bd, %rbimpl_RB_TYPE_P_fastpath.exit.i.i75 ], [ %i.bd, %bb.ba ] ; 3 uses
   %i.gt = trunc i64 %.0.i.i77 to i1
   br i1 %i.gt, label %bb.bc, label %bb.bd
 
@@ -729,25 +741,25 @@ bb.bf:                                            ; preds = %bb.az, %obj2ubits.e
   %i.hb = and i64 %i.gz, -270582939649
   %i.hc = or i64 %i.hb, %i.ha
   store i64 %i.hc, ptr %i.c, align 8
-  %i.hd = icmp eq i64 %14, 0
-  %i.he = and i64 %14, 7
+  %i.hd = icmp eq i64 %i.be, 0
+  %i.he = and i64 %i.be, 7
   %i.hf = icmp ne i64 %i.he, 0
   %i.hg = or i1 %i.hd, %i.hf
   br i1 %i.hg, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i83, label %rbimpl_RB_TYPE_P_fastpath.exit.i82
 
 rbimpl_RB_TYPE_P_fastpath.exit.i82:               ; preds = %bb.bf
-  %i.hh = inttoptr i64 %14 to ptr
+  %i.hh = inttoptr i64 %i.be to ptr
   %i.hi = load i64, ptr %i.hh, align 8, !tbaa !30
   %i.hj = and i64 %i.hi, 31
   %i.hk = icmp eq i64 %i.hj, 5
   br i1 %i.hk, label %bb.bg, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i83
 
 bb.bg:                                            ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i82
-  %i.hl = tail call i64 @rb_str_to_inum(i64 noundef %14, i32 noundef 10, i32 noundef 1) #18
+  %i.hl = tail call i64 @rb_str_to_inum(i64 noundef %i.be, i32 noundef 10, i32 noundef 1) #18
   br label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i83
 
 rbimpl_RB_TYPE_P_fastpath.exit.thread.i83:        ; preds = %bb.bg, %rbimpl_RB_TYPE_P_fastpath.exit.i82, %bb.bf
-  %.0.i84 = phi i64 [ %i.hl, %bb.bg ], [ %14, %rbimpl_RB_TYPE_P_fastpath.exit.i82 ], [ %14, %bb.bf ]
+  %.0.i84 = phi i64 [ %i.hl, %bb.bg ], [ %i.be, %rbimpl_RB_TYPE_P_fastpath.exit.i82 ], [ %i.be, %bb.bf ]
   %i.hm = tail call fastcc i64 @num_exact(i64 noundef %.0.i84) ; 7 uses
   %i.hn = and i64 %i.hm, 1
   %or.cond.not.i.i = icmp eq i64 %i.hn, 0
@@ -855,7 +867,7 @@ bb.bs:                                            ; preds = %bb.br
   br label %bb.bu
 
 bb.bt:                                            ; preds = %bb.br
-  %i.jc = call fastcc i32 @obj2subsecx(i64 noundef %13, ptr noundef %i.a)
+  %i.jc = call fastcc i32 @obj2subsecx(i64 noundef %i.bd, ptr noundef %i.a)
   %i.jd = zext nneg i32 %i.jc to i64
   %i.je = load i64, ptr %i.c, align 8
   %i.jf = shl nuw nsw i64 %i.jd, 32

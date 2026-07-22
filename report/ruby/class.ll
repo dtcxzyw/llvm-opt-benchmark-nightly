@@ -201,8 +201,8 @@ bb.p:                                             ; preds = %.lr.ph, %class_dupl
   br i1 %or.cond, label %rbimpl_RB_TYPE_P_fastpath.exit, label %class_duplicate_iclass_classext.exit
 
 rbimpl_RB_TYPE_P_fastpath.exit:                   ; preds = %bb.p
-  %i.cc = inttoptr i64 %i.ca to ptr               ; 16 uses
-  %i.cd = load i64, ptr %i.cc, align 8, !tbaa !19 ; 2 uses
+  %i.cc = inttoptr i64 %i.ca to ptr               ; 17 uses
+  %i.cd = load i64, ptr %i.cc, align 8, !tbaa !19
   %i.ce = and i64 %i.cd, 31
   %i.cf = icmp eq i64 %i.ce, 28
   br i1 %i.cf, label %bb.q, label %class_duplicate_iclass_classext.exit
@@ -216,7 +216,8 @@ bb.q:                                             ; preds = %rbimpl_RB_TYPE_P_fa
 bb.r:                                             ; preds = %bb.q
   %i.cj = getelementptr i8, ptr %i.cc, i64 24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
-  %i.ck = and i64 %i.cd, 65536
+  %7 = load i64, ptr %i.cc, align 8, !tbaa !19
+  %i.ck = and i64 %7, 65536
   %.not.i.i.i = icmp eq i64 %i.ck, 0
   br i1 %.not.i.i.i, label %RCLASS_EXT_TABLE_LOOKUP_INTERNAL.exit.thread.i, label %RCLASS_CLASSEXT_TBL.exit.i.i
 

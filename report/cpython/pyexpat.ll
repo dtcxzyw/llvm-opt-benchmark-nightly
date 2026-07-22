@@ -203,13 +203,13 @@ bb.c:                                             ; preds = %bb.b, %.thread
   br i1 %.not60, label %pyexpat_ParserCreate_impl.exit, label %.thread78
 
 .thread78:                                        ; preds = %bb.b, %bb.c
-  %i.j = phi ptr [ %i.i, %bb.c ], [ %1, %bb.b ]   ; 3 uses
+  %i.j = phi ptr [ %i.i, %bb.c ], [ %1, %bb.b ]   ; 4 uses
   %i.k = phi i64 [ %i.h, %bb.c ], [ %2, %bb.b ]   ; 3 uses
   %.not61 = icmp eq i64 %i.k, 0
   br i1 %.not61, label %.thread103, label %bb.d
 
 bb.d:                                             ; preds = %.thread78
-  %i.l = load ptr, ptr %i.j, align 8, !tbaa !19   ; 5 uses
+  %i.l = load ptr, ptr %i.j, align 8, !tbaa !19   ; 4 uses
   %.not62 = icmp eq ptr %i.l, null
   br i1 %.not62, label %bb.m, label %bb.e
 
@@ -228,7 +228,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  %i.q = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef nonnull %i.l, ptr noundef nonnull %i.b) #8 ; 3 uses
+  %4 = load ptr, ptr %i.j, align 8, !tbaa !19
+  %i.q = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef %4, ptr noundef nonnull %i.b) #8 ; 3 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %.thread80, label %bb.h
 
@@ -264,8 +265,8 @@ bb.l:                                             ; preds = %bb.j, %bb.e
 bb.m:                                             ; preds = %bb.l, %bb.d
   %.048 = phi i64 [ %i.v, %bb.l ], [ %i.k, %bb.d ]
   %.146 = phi ptr [ %.045, %bb.l ], [ null, %bb.d ] ; 3 uses
-  %i.w = getelementptr i8, ptr %i.j, i64 8
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !19   ; 5 uses
+  %i.w = getelementptr i8, ptr %i.j, i64 8        ; 2 uses
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !19   ; 4 uses
   %.not66 = icmp eq ptr %i.x, null
   br i1 %.not66, label %bb.v, label %bb.n
 
@@ -284,7 +285,8 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
-  %i.ac = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef nonnull %i.x, ptr noundef nonnull %i.c) #8 ; 3 uses
+  %5 = load ptr, ptr %i.w, align 8, !tbaa !19
+  %i.ac = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef %5, ptr noundef nonnull %i.c) #8 ; 3 uses
   %i.ad = icmp eq ptr %i.ac, null
   br i1 %i.ad, label %.thread83, label %bb.q
 
@@ -687,8 +689,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %pyexpat_xmlparser_ExternalEntityParserCreate_impl.exit, label %.thread
 
 .thread:                                          ; preds = %bb.a, %bb.b
-  %i.i = phi ptr [ %i.h, %bb.b ], [ %2, %bb.a ]   ; 2 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !19   ; 4 uses
+  %i.i = phi ptr [ %i.h, %bb.b ], [ %2, %bb.a ]   ; 3 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !19   ; 3 uses
   %i.k = icmp eq ptr %i.j, @_Py_NoneStruct
   br i1 %i.k, label %bb.i, label %bb.c
 
@@ -703,7 +705,8 @@ bb.c:                                             ; preds = %.thread
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  %i.o = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef %i.j, ptr noundef nonnull %i.b) #8 ; 3 uses
+  %5 = load ptr, ptr %i.i, align 8, !tbaa !19
+  %i.o = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef %5, ptr noundef nonnull %i.b) #8 ; 3 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %.thread50, label %bb.e
 

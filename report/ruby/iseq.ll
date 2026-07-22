@@ -204,15 +204,16 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph10.i
 
 .lr.ph14.i:                                       ; preds = %.preheader4.i, %bb.m
   %i.aq = phi i32 [ %i.ax, %bb.m ], [ %i.ai, %.preheader4.i ]
-  %.213.i = phi ptr [ %i.az, %bb.m ], [ %.1.lcssa.i, %.preheader4.i ] ; 4 uses
+  %.213.i = phi ptr [ %i.az, %bb.m ], [ %.1.lcssa.i, %.preheader4.i ] ; 5 uses
   %.04512.i = phi i32 [ %i.ay, %bb.m ], [ 0, %.preheader4.i ]
-  %i.ar = load ptr, ptr %.213.i, align 8, !tbaa !120 ; 2 uses
+  %i.ar = load ptr, ptr %.213.i, align 8, !tbaa !120
   %.not53.i = icmp eq ptr %i.ar, null
   br i1 %.not53.i, label %bb.m, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph14.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
-  %i.as = ptrtoint ptr %i.ar to i64
+  %2 = load ptr, ptr %.213.i, align 8, !tbaa !120
+  %i.as = ptrtoint ptr %2 to i64
   store i64 %i.as, ptr %i.a, align 8, !tbaa !11
   call void @rb_gc_mark_and_move(ptr noundef nonnull %i.a) #20
   %i.at = load i64, ptr %i.a, align 8, !tbaa !11  ; 2 uses
@@ -461,14 +462,15 @@ bb.ad:                                            ; preds = %bb.ac, %bb.z
 .lr.ph:                                           ; preds = %.preheader146, %bb.av
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.av ], [ 0, %.preheader146 ] ; 2 uses
   %i.dm = load ptr, ptr %i.di, align 8, !tbaa !86
-  %i.dn = getelementptr [16 x i8], ptr %i.dm, i64 %indvars.iv ; 4 uses
-  %i.do = load ptr, ptr %i.dn, align 8, !tbaa !128 ; 2 uses
+  %i.dn = getelementptr [16 x i8], ptr %i.dm, i64 %indvars.iv ; 5 uses
+  %i.do = load ptr, ptr %i.dn, align 8, !tbaa !128
   %.not115 = icmp eq ptr %i.do, null
   br i1 %.not115, label %bb.ah, label %bb.ae
 
 bb.ae:                                            ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #20
-  %i.dp = ptrtoint ptr %i.do to i64
+  %3 = load ptr, ptr %i.dn, align 8, !tbaa !128
+  %i.dp = ptrtoint ptr %3 to i64
   store i64 %i.dp, ptr %i.e, align 8, !tbaa !11
   call void @rb_gc_mark_and_move(ptr noundef nonnull %i.e) #20
   %i.dq = load i64, ptr %i.e, align 8, !tbaa !11  ; 2 uses
@@ -635,14 +637,15 @@ bb.ay:                                            ; preds = %bb.ax
   %i.fs = phi i32 [ %i.gb, %bb.bc ], [ %i.fr, %.preheader ]
   %indvars.iv168 = phi i64 [ %indvars.iv.next169, %bb.bc ], [ 0, %.preheader ] ; 2 uses
   %i.ft = getelementptr [32 x i8], ptr %i.fq, i64 %indvars.iv168
-  %i.fu = getelementptr i8, ptr %i.ft, i64 12     ; 3 uses
-  %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !143 ; 2 uses
+  %i.fu = getelementptr i8, ptr %i.ft, i64 12     ; 4 uses
+  %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !143
   %.not113 = icmp eq ptr %i.fv, null
   br i1 %.not113, label %bb.bc, label %bb.az
 
 bb.az:                                            ; preds = %.lr.ph157
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #20
-  %i.fw = ptrtoint ptr %i.fv to i64
+  %4 = load ptr, ptr %i.fu, align 8, !tbaa !143
+  %i.fw = ptrtoint ptr %4 to i64
   store i64 %i.fw, ptr %i.g, align 8, !tbaa !11
   call void @rb_gc_mark_and_move(ptr noundef nonnull %i.g) #20
   %i.fx = load i64, ptr %i.g, align 8, !tbaa !11  ; 2 uses

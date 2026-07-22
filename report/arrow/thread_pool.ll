@@ -201,8 +201,8 @@ bb.d:                                             ; preds = %bb.c
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN5arrow8internal12_GLOBAL__N_14TaskD2Ev.exit
-  %i.u = phi ptr [ %i.cu, %_ZN5arrow8internal12_GLOBAL__N_14TaskD2Ev.exit ], [ %i.p, %.lr.ph.preheader ] ; 5 uses
-  %.val = load ptr, ptr %i.u, align 8, !tbaa !42  ; 6 uses
+  %i.u = phi ptr [ %i.cu, %_ZN5arrow8internal12_GLOBAL__N_14TaskD2Ev.exit ], [ %i.p, %.lr.ph.preheader ] ; 6 uses
+  %.val = load ptr, ptr %i.u, align 8, !tbaa !42
   %i.v = getelementptr i8, ptr %i.u, i64 8
   %.val15 = load ptr, ptr %i.v, align 8, !tbaa !42
   %i.w = icmp eq ptr %.val, %.val15
@@ -210,17 +210,18 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #32
-  %i.x = load i64, ptr %.val, align 8, !tbaa !50
+  %.val18 = load ptr, ptr %i.u, align 8, !tbaa !42 ; 5 uses
+  %i.x = load i64, ptr %.val18, align 8, !tbaa !50
   store i64 %i.x, ptr %2, align 8, !tbaa !50
-  store ptr null, ptr %.val, align 8, !tbaa !50
-  %i.y = getelementptr inbounds nuw i8, ptr %.val, i64 8 ; 2 uses
+  store ptr null, ptr %.val18, align 8, !tbaa !50
+  %i.y = getelementptr inbounds nuw i8, ptr %.val18, i64 8 ; 2 uses
   store ptr null, ptr %i.n, align 8, !tbaa !34
-  %i.z = getelementptr inbounds nuw i8, ptr %.val, i64 16
+  %i.z = getelementptr inbounds nuw i8, ptr %.val18, i64 16
   %i.aa = load <2 x ptr>, ptr %i.y, align 8, !tbaa !52
   store ptr null, ptr %i.z, align 8, !tbaa !34
   store <2 x ptr> %i.aa, ptr %i.m, align 8, !tbaa !52
   store ptr null, ptr %i.y, align 8, !tbaa !53
-  %i.ab = getelementptr inbounds nuw i8, ptr %.val, i64 24 ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %.val18, i64 24 ; 2 uses
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !56
   store i64 %i.ac, ptr %i.o, align 8, !tbaa !56
   store ptr null, ptr %i.ab, align 8, !tbaa !56

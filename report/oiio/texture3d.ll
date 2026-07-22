@@ -204,12 +204,12 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.hr, label %bb.iy, label %bb.r
 
 bb.r:                                             ; preds = %.loopexit555
-  %i.hs = getelementptr inbounds nuw i8, ptr %i.r, i64 48 ; 3 uses
-  %i.ht = load i32, ptr %i.hs, align 4, !tbaa !221 ; 3 uses
-  %i.hu = getelementptr inbounds nuw i8, ptr %i.r, i64 52 ; 3 uses
-  %i.hv = load i32, ptr %i.hu, align 4, !tbaa !222 ; 3 uses
-  %i.hw = getelementptr inbounds nuw i8, ptr %i.r, i64 56 ; 2 uses
-  %i.hx = load i32, ptr %i.hw, align 4, !tbaa !223 ; 2 uses
+  %i.hs = getelementptr inbounds nuw i8, ptr %i.r, i64 48 ; 4 uses
+  %i.ht = load i32, ptr %i.hs, align 4, !tbaa !221
+  %i.hu = getelementptr inbounds nuw i8, ptr %i.r, i64 52 ; 4 uses
+  %i.hv = load i32, ptr %i.hu, align 4, !tbaa !222
+  %i.hw = getelementptr inbounds nuw i8, ptr %i.r, i64 56 ; 3 uses
+  %i.hx = load i32, ptr %i.hw, align 4, !tbaa !223
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %17, i8 0, i64 64, i1 false), !tbaa !235
@@ -219,15 +219,18 @@ bb.r:                                             ; preds = %.loopexit555
   %i.ib = load i32, ptr %i.b, align 4, !tbaa !3   ; 3 uses
   %i.ic = load i32, ptr %i.r, align 4, !tbaa !213
   %i.id = sub nsw i32 %i.ib, %i.ic
-  %i.ie = srem i32 %i.id, %i.ht                   ; 3 uses
+  %21 = load i32, ptr %i.hs, align 4, !tbaa !221  ; 2 uses
+  %i.ie = srem i32 %i.id, %21                     ; 3 uses
   %i.if = load i32, ptr %i.c, align 4, !tbaa !3   ; 3 uses
   %i.ig = load i32, ptr %i.cg, align 4, !tbaa !215
   %i.ih = sub nsw i32 %i.if, %i.ig
-  %i.ii = srem i32 %i.ih, %i.hv                   ; 3 uses
+  %22 = load i32, ptr %i.hu, align 4, !tbaa !222  ; 2 uses
+  %i.ii = srem i32 %i.ih, %22                     ; 3 uses
   %i.ij = load i32, ptr %i.d, align 4, !tbaa !3   ; 3 uses
   %i.ik = load i32, ptr %i.cr, align 4, !tbaa !217
   %i.il = sub nsw i32 %i.ij, %i.ik
-  %i.im = srem i32 %i.il, %i.hx                   ; 3 uses
+  %23 = load i32, ptr %i.hw, align 4, !tbaa !223
+  %i.im = srem i32 %i.il, %23                     ; 3 uses
   %i.in = icmp ne i32 %i.ie, %i.hy
   %i.io = add nsw i32 %i.ib, 1
   %i.ip = load i32, ptr %i.bp, align 4, !tbaa !3
@@ -463,8 +466,8 @@ bb.ae:                                            ; preds = %bb.ad
   br label %.critedge373
 
 .preheader553:                                    ; preds = %.preheader554, %.critedge371.thread544
-  %i.nq = phi i32 [ %i.hv, %.preheader554 ], [ %i.uj, %.critedge371.thread544 ]
-  %i.nr = phi i32 [ %i.ht, %.preheader554 ], [ %i.uk, %.critedge371.thread544 ]
+  %i.nq = phi i32 [ %22, %.preheader554 ], [ %i.uj, %.critedge371.thread544 ]
+  %i.nr = phi i32 [ %21, %.preheader554 ], [ %i.uk, %.critedge371.thread544 ]
   %.not585 = phi i1 [ true, %.preheader554 ], [ false, %.critedge371.thread544 ]
   %indvars.iv594.sroa.phi = phi ptr [ %17, %.preheader554 ], [ %indvars.iv594.sroa.gep1047, %.critedge371.thread544 ]
   %indvars.iv594.sroa.phi1048 = phi ptr [ %i.e, %.preheader554 ], [ %indvars.iv594.sroa.gep1050, %.critedge371.thread544 ]

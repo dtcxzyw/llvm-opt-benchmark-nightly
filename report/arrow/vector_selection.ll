@@ -203,12 +203,12 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNK5arrow5Datum13chunked_arrayEv.exit:           ; preds = %bb.a
-  %i.f = load ptr, ptr %i.a, align 8, !tbaa !225  ; 4 uses
+  %i.f = load ptr, ptr %i.a, align 8, !tbaa !225  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !228
-  %i.i = load ptr, ptr %i.f, align 8, !tbaa !231  ; 2 uses
+  %i.i = load ptr, ptr %i.f, align 8, !tbaa !231
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k
@@ -237,9 +237,9 @@ _ZNK5arrow5Datum13chunked_arrayEv.exit:           ; preds = %bb.a
           to label %_ZN5arrow6StatusD2Ev.exit unwind label %bb.h
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN5arrow9ArraySpanD2Ev.exit
-  %8 = phi ptr [ %i.i, %.lr.ph ], [ %i.ar, %_ZN5arrow9ArraySpanD2Ev.exit ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN5arrow9ArraySpanD2Ev.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
+  %8 = load ptr, ptr %i.f, align 8, !tbaa !231
   %i.y = getelementptr inbounds nuw [16 x i8], ptr %8, i64 %indvars.iv
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !245
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
@@ -312,7 +312,7 @@ _ZN5arrow9ArraySpanD2Ev.exit:                     ; preds = %_ZSt8_DestroyIPN5ar
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #24
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.aq = load ptr, ptr %i.g, align 8, !tbaa !228
-  %i.ar = load ptr, ptr %i.f, align 8, !tbaa !231 ; 2 uses
+  %i.ar = load ptr, ptr %i.f, align 8, !tbaa !231
   %i.as = ptrtoint ptr %i.aq to i64
   %i.at = ptrtoint ptr %i.ar to i64
   %i.au = sub i64 %i.as, %i.at
@@ -715,10 +715,10 @@ bb.d:                                             ; preds = %bb.a
   %i.k = load ptr, ptr %1, align 8, !tbaa !245
   %i.l = tail call noundef i64 @_ZNK5arrow5Array10null_countEv(ptr noundef nonnull align 8 dereferenceable(32) %i.k)
   %i.m = load ptr, ptr %1, align 8, !tbaa !245
-  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !248  ; 6 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !248  ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %i.q = load i64, ptr %i.p, align 8, !tbaa !881  ; 2 uses
+  %i.q = load i64, ptr %i.p, align 8, !tbaa !881
   %i.r = icmp eq i64 %i.l, %i.q
   br i1 %i.r, label %bb.e, label %bb.y
 
@@ -976,17 +976,20 @@ _ZNSt12__shared_ptrIN5arrow9NullArrayELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ;
 
 bb.ag:                                            ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #24
+  %.val = load ptr, ptr %i.n, align 8, !tbaa !248 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !907)
-  %i.cr = getelementptr inbounds nuw i8, ptr %i.o, i64 40
+  %i.cr = getelementptr inbounds nuw i8, ptr %.val, i64 40
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !622, !noalias !907
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24, !noalias !907
-  store i64 %i.q, ptr %i.a, align 8, !tbaa !357, !noalias !907
+  %14 = getelementptr inbounds nuw i8, ptr %.val, i64 16
+  %15 = load i64, ptr %14, align 8, !tbaa !881, !noalias !907
+  store i64 %15, ptr %i.a, align 8, !tbaa !357, !noalias !907
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #24, !noalias !907
   store ptr null, ptr %i.b, align 8, !tbaa !910, !noalias !907
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24, !noalias !907
   store i32 0, ptr %i.c, align 4, !tbaa !3, !noalias !907
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24, !noalias !907
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.o, i64 32
+  %i.ct = getelementptr inbounds nuw i8, ptr %.val, i64 32
   %i.cu = load i64, ptr %i.ct, align 8, !tbaa !912, !noalias !907
   store i64 %i.cu, ptr %i.d, align 8, !tbaa !357, !noalias !907
   tail call void @llvm.experimental.noalias.scope.decl(metadata !913)

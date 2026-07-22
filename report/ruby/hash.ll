@@ -203,7 +203,7 @@ bb.l:                                             ; preds = %RHASH_EMPTY_P.exit,
 define internal i64 @rb_hash_transform_keys_bang(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %i.b = alloca i64, align 8                      ; 7 uses
+  %i.b = alloca i64, align 8                      ; 6 uses
   %or.cond.not = icmp ult i32 %0, 2
   br i1 %or.cond.not, label %rb_check_arity.exit, label %bb.b
 
@@ -322,7 +322,7 @@ RHASH_SIZE.exit:                                  ; preds = %bb.k, %bb.l
   %i.ao = shl i64 %.0.i, 1
   %i.ap = tail call i64 @rb_ary_hidden_new(i64 noundef %i.ao) #29 ; 3 uses
   tail call void @rb_hash_foreach(i64 noundef %2, ptr noundef @flatten_i, i64 noundef %i.ap)
-  %i.aq = inttoptr i64 %i.ap to ptr               ; 4 uses
+  %i.aq = inttoptr i64 %i.ap to ptr               ; 5 uses
   %i.ar = getelementptr i8, ptr %i.aq, i64 16     ; 3 uses
   %i.as = getelementptr i8, ptr %i.aq, i64 32     ; 2 uses
   %.not37 = icmp eq i64 %.032, 0
@@ -332,29 +332,34 @@ RHASH_SIZE.exit:                                  ; preds = %bb.k, %bb.l
   br label %bb.m
 
 bb.m:                                             ; preds = %hash_stlike_lookup.exit.thread52, %RHASH_SIZE.exit
-  %.034 = phi i64 [ 0, %RHASH_SIZE.exit ], [ %i.cj, %hash_stlike_lookup.exit.thread52 ] ; 5 uses
+  %.034 = phi i64 [ 0, %RHASH_SIZE.exit ], [ %i.cj, %hash_stlike_lookup.exit.thread52 ] ; 4 uses
   %i.aw = load i64, ptr %i.aq, align 8, !tbaa !13 ; 2 uses
   %i.ax = and i64 %i.aw, 8192
   %.not.i = icmp eq i64 %i.ax, 0
-  br i1 %.not.i, label %rb_array_len.exit.a, label %rb_array_len.exit.thread
+  br i1 %.not.i, label %5, label %rb_array_len.exit.a
 
 rb_array_len.exit.a:                              ; preds = %bb.m
-  %3 = load i64, ptr %i.ar, align 8, !tbaa !24
-  %4 = icmp slt i64 %.034, %3
-  br i1 %4, label %bb.n, label %bb.x
+  %3 = lshr i64 %i.aw, 15
+  %4 = and i64 %3, 127
+  br label %rb_array_len.exit.thread
 
-rb_array_len.exit.thread:                         ; preds = %bb.m
-  %5 = lshr i64 %i.aw, 15
-  %6 = and i64 %5, 127
-  %i.ay = icmp slt i64 %.034, %6
+5:                                                ; preds = %bb.m
+  %6 = load i64, ptr %i.ar, align 8, !tbaa !24
+  br label %rb_array_len.exit.thread
+
+rb_array_len.exit.thread:                         ; preds = %rb_array_len.exit.a, %5
+  %.0.i41 = phi i64 [ %4, %rb_array_len.exit.a ], [ %6, %5 ]
+  %i.ay = icmp slt i64 %.034, %.0.i41
   br i1 %i.ay, label %.thread, label %bb.x
 
 .thread:                                          ; preds = %rb_array_len.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #29
-  br label %RARRAY_AREF.exit
+  %7 = load i64, ptr %i.aq, align 8, !tbaa !13
+  %8 = and i64 %7, 8192
+  %.not.i.i42 = icmp eq i64 %8, 0
+  br i1 %.not.i.i42, label %bb.n, label %RARRAY_AREF.exit
 
-bb.n:                                             ; preds = %rb_array_len.exit.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #29
+bb.n:                                             ; preds = %.thread
   %i.az = load ptr, ptr %i.as, align 8, !tbaa !24
   br label %RARRAY_AREF.exit
 
@@ -464,7 +469,7 @@ hash_stlike_lookup.exit.thread52:                 ; preds = %ar_find_entry.exit.
   %i.cj = add i64 %.034, 2
   br label %bb.m, !llvm.loop !106
 
-bb.x:                                             ; preds = %rb_array_len.exit.thread, %rb_array_len.exit.a
+bb.x:                                             ; preds = %rb_array_len.exit.thread
   %i.ck = call i64 @rb_ary_clear(i64 noundef %i.ap) #29 ; 0 uses
   %i.cl = call i64 @rb_hash_clear(i64 noundef %i.ad) ; 0 uses
   %.pre58 = load i64, ptr %i.n, align 8, !tbaa !13

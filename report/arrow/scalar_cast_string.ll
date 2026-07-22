@@ -204,12 +204,13 @@ bb.a:
   %17 = alloca %"class.std::shared_ptr.266", align 8 ; 8 uses
   %18 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 6 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 7 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.g = load i32, ptr %i.f, align 8, !tbaa !2486 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #28
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 32
+  %19 = load ptr, ptr %i.d, align 8, !tbaa !694
+  %i.h = getelementptr inbounds nuw i8, ptr %19, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !567, !noalias !2490 ; 8 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i.i, label %bb.b
@@ -612,12 +613,13 @@ bb.a:
   %17 = alloca %"class.std::shared_ptr.266", align 8 ; 8 uses
   %18 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 6 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 7 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.g = load i32, ptr %i.f, align 8, !tbaa !2486 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #28
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 32
+  %19 = load ptr, ptr %i.d, align 8, !tbaa !694
+  %i.h = getelementptr inbounds nuw i8, ptr %19, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !567, !noalias !2567 ; 8 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i.i, label %bb.b
@@ -1020,12 +1022,13 @@ bb.a:
   %17 = alloca %"class.std::shared_ptr.266", align 8 ; 8 uses
   %18 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 6 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 7 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.g = load i32, ptr %i.f, align 8, !tbaa !2486 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #28
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 32
+  %19 = load ptr, ptr %i.d, align 8, !tbaa !694
+  %i.h = getelementptr inbounds nuw i8, ptr %19, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !567, !noalias !2643 ; 8 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i.i, label %bb.b
@@ -1428,12 +1431,13 @@ bb.a:
   %17 = alloca %"class.std::shared_ptr.266", align 8 ; 8 uses
   %18 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 6 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 7 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.g = load i32, ptr %i.f, align 8, !tbaa !2486 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #28
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 32
+  %19 = load ptr, ptr %i.d, align 8, !tbaa !694
+  %i.h = getelementptr inbounds nuw i8, ptr %19, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !567, !noalias !2719 ; 8 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i.i, label %bb.b
@@ -1836,12 +1840,13 @@ bb.a:
   %17 = alloca %"class.std::shared_ptr.266", align 8 ; 8 uses
   %18 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 6 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 7 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.g = load i32, ptr %i.f, align 8, !tbaa !2486 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #28
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 32
+  %19 = load ptr, ptr %i.d, align 8, !tbaa !694
+  %i.h = getelementptr inbounds nuw i8, ptr %19, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !567, !noalias !6788 ; 8 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i.i, label %bb.b
@@ -2244,12 +2249,13 @@ bb.a:
   %17 = alloca %"class.std::shared_ptr.266", align 8 ; 8 uses
   %18 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 6 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 7 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.g = load i32, ptr %i.f, align 8, !tbaa !2486 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #28
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 32
+  %19 = load ptr, ptr %i.d, align 8, !tbaa !694
+  %i.h = getelementptr inbounds nuw i8, ptr %19, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !567, !noalias !6865 ; 8 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i.i, label %bb.b
@@ -2652,12 +2658,13 @@ bb.a:
   %17 = alloca %"class.std::shared_ptr.266", align 8 ; 8 uses
   %18 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 6 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 7 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.g = load i32, ptr %i.f, align 8, !tbaa !2486 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #28
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 32
+  %19 = load ptr, ptr %i.d, align 8, !tbaa !694
+  %i.h = getelementptr inbounds nuw i8, ptr %19, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !567, !noalias !6941 ; 8 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i.i, label %bb.b
@@ -3060,12 +3067,13 @@ bb.a:
   %17 = alloca %"class.std::shared_ptr.266", align 8 ; 8 uses
   %18 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 6 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !577  ; 7 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !694
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.g = load i32, ptr %i.f, align 8, !tbaa !2486 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #28
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 32
+  %19 = load ptr, ptr %i.d, align 8, !tbaa !694
+  %i.h = getelementptr inbounds nuw i8, ptr %19, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !567, !noalias !7017 ; 8 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i.i, label %bb.b

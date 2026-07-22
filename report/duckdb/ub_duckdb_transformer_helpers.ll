@@ -201,16 +201,28 @@ bb.bg:                                            ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.ce
 
 bb.bh:                                            ; preds = %bb.bc, %bb.ak
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !442 ; 4 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
+  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !442
   %.not48 = icmp eq ptr %i.bu, null
-  br i1 %.not48, label %bb.bw, label %bb.bi
+  br i1 %.not48, label %bb.bw, label %19
 
-bb.bi:                                            ; preds = %bb.bh
+19:                                               ; preds = %bb.bh
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #19
-  %19 = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 5 uses
-  store ptr %19, ptr %17, align 8, !tbaa !22
-  %i.bv = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.bu) #19 ; 4 uses
+  %20 = load ptr, ptr %i.bt, align 8, !tbaa !442  ; 4 uses
+  %21 = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 5 uses
+  store ptr %21, ptr %17, align 8, !tbaa !22
+  %22 = icmp eq ptr %20, null
+  br i1 %22, label %23, label %bb.bi
+
+23:                                               ; preds = %19
+  invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.442) #20
+          to label %.noexc unwind label %bb.bu
+
+.noexc:                                           ; preds = %23
+  unreachable
+
+bb.bi:                                            ; preds = %19
+  %i.bv = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %20) #19 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   store i64 %i.bv, ptr %i.a, align 8, !tbaa !24
   %i.bw = icmp ugt i64 %i.bv, 15
@@ -223,23 +235,23 @@ bb.bi:                                            ; preds = %bb.bh
 .noexc69:                                         ; preds = %.noexc.i
   store ptr %i.bx, ptr %17, align 8, !tbaa !26
   %i.by = load i64, ptr %i.a, align 8, !tbaa !24
-  store i64 %i.by, ptr %19, align 8, !tbaa !10
+  store i64 %i.by, ptr %21, align 8, !tbaa !10
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.noexc69, %bb.bi
-  %i.bz = phi ptr [ %i.bx, %.noexc69 ], [ %19, %bb.bi ] ; 2 uses
+  %i.bz = phi ptr [ %i.bx, %.noexc69 ], [ %21, %bb.bi ] ; 2 uses
   switch i64 %i.bv, label %bb.bk [
     i64 1, label %bb.bj
     i64 0, label %bb.bl
   ]
 
 bb.bj:                                            ; preds = %._crit_edge.i.i
-  %i.ca = load i8, ptr %i.bu, align 1, !tbaa !10
+  %i.ca = load i8, ptr %20, align 1, !tbaa !10
   store i8 %i.ca, ptr %i.bz, align 1, !tbaa !10
   br label %bb.bl
 
 bb.bk:                                            ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bz, ptr nonnull align 1 %i.bu, i64 %i.bv, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bz, ptr nonnull align 1 %20, i64 %i.bv, i1 false)
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bj, %._crit_edge.i.i
@@ -393,7 +405,7 @@ bb.bt:                                            ; preds = %bb.bs
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 65
   store i8 %.09.i, ptr %i.eb, align 1, !tbaa !441
   %i.ec = load ptr, ptr %17, align 8, !tbaa !26   ; 2 uses
-  %i.ed = icmp eq ptr %i.ec, %19
+  %i.ed = icmp eq ptr %i.ec, %21
   br i1 %i.ed, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit73, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i71
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i71: ; preds = %bb.bt
@@ -404,7 +416,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit73: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #19
   br label %bb.bw
 
-bb.bu:                                            ; preds = %.noexc.i
+bb.bu:                                            ; preds = %.noexc.i, %23
   %i.ee = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit76
@@ -417,7 +429,7 @@ bb.bv:                                            ; preds = %bb.bl, %bb.bs
 .body:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit21.i, %bb.bv
   %eh.lpad-body = phi { ptr, i32 } [ %i.ef, %bb.bv ], [ %.pn.pn.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit21.i ] ; 2 uses
   %i.eg = load ptr, ptr %17, align 8, !tbaa !26   ; 2 uses
-  %i.eh = icmp eq ptr %i.eg, %19
+  %i.eh = icmp eq ptr %i.eg, %21
   br i1 %i.eh, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit76, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i74
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i74: ; preds = %.body

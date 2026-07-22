@@ -201,18 +201,19 @@ _ZN6Assimp4Ogre20OgreBinarySerializer4ReadIbEET_v.exit22: ; preds = %_ZN6Assimp4
   store ptr %i.cm, ptr %i.b, align 8
   call void @_ZN6Assimp6Logger12verboseDebugIJRA27_KcPS2_EEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(12) %i.cj, ptr noundef nonnull align 1 dereferenceable(27) @.str.16, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
-  %i.cn = load ptr, ptr %i.bf, align 8            ; 2 uses
-  %i.co = load i32, ptr %i.cn, align 8            ; 2 uses
+  %i.cn = load ptr, ptr %i.bf, align 8            ; 3 uses
+  %i.co = load i32, ptr %i.cn, align 8
   %.not = icmp eq i32 %i.co, 0
   br i1 %.not, label %bb.af, label %bb.q
 
 bb.q:                                             ; preds = %_ZN6Assimp4Ogre20OgreBinarySerializer4ReadIbEET_v.exit22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
+  %3 = load i32, ptr %i.cn, align 8
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
   %i.cq = load i8, ptr %i.cp, align 8, !range !5, !noundef !6
   %i.cr = trunc nuw i8 %i.cq to i1
   %i.cs = select i1 %i.cr, i32 2, i32 1
-  %i.ct = shl i32 %i.co, %i.cs                    ; 2 uses
+  %i.ct = shl i32 %3, %i.cs                       ; 2 uses
   store i32 %i.ct, ptr %i.c, align 4
   %i.cu = zext i32 %i.ct to i64                   ; 3 uses
   %i.cv = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.cu) #23 ; 2 uses

@@ -204,8 +204,8 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN11OpenImageIO4v3_113intrusive_ptrINS3
 
 bb.gm:                                            ; preds = %.lr.ph1241, %bb.gv
   %.02041239 = phi i64 [ 0, %.lr.ph1241 ], [ %i.ajc, %bb.gv ] ; 3 uses
-  %i.aie = getelementptr inbounds nuw [8 x i8], ptr %i.ahr, i64 %.02041239 ; 2 uses
-  %i.aif = load ptr, ptr %i.aie, align 8, !tbaa !553 ; 5 uses
+  %i.aie = getelementptr inbounds nuw [8 x i8], ptr %i.ahr, i64 %.02041239 ; 3 uses
+  %i.aif = load ptr, ptr %i.aie, align 8, !tbaa !553 ; 4 uses
   %i.aig = getelementptr inbounds nuw i8, ptr %i.aif, i64 166
   %i.aih = load i16, ptr %i.aig, align 2, !tbaa !202
   %.not1155 = icmp eq i16 %i.aih, 0
@@ -231,7 +231,8 @@ bb.go:                                            ; preds = %bb.gn
 
 bb.gp:                                            ; preds = %bb.go, %bb.gn
   call void @llvm.lifetime.start.p0(ptr nonnull %51) #5
-  %i.aiu = getelementptr inbounds nuw i8, ptr %i.aif, i64 16
+  %60 = load ptr, ptr %i.aie, align 8, !tbaa !553
+  %i.aiu = getelementptr inbounds nuw i8, ptr %60, i64 16
   %.sroa.0.0.copyload.i = load ptr, ptr %i.aiu, align 8, !tbaa !114
   store ptr %.sroa.0.0.copyload.i, ptr %51, align 8
   invoke void @_ZN3fmt3v125printIJRA7_KcN11OpenImageIO4v3_17ustringEEEEvRSoNS0_7fstringIJDpT_EE1tEDpOSA_(ptr noundef nonnull align 8 dereferenceable(8) %19, ptr nonnull @.str.152, i64 10, ptr noundef nonnull align 1 dereferenceable(7) @.str.153, ptr noundef nonnull align 8 dereferenceable(8) %51)
@@ -634,8 +635,8 @@ bb.im:                                            ; preds = %_ZSt4sortIN9__gnu_c
   br label %.body697
 
 bb.in:                                            ; preds = %.lr.ph1263, %bb.it
-  %.sroa.01026.01261 = phi ptr [ %i.aoi, %.lr.ph1263 ], [ %i.aph, %bb.it ] ; 3 uses
-  %i.aom = load ptr, ptr %.sroa.01026.01261, align 8, !tbaa !553 ; 3 uses
+  %.sroa.01026.01261 = phi ptr [ %i.aoi, %.lr.ph1263 ], [ %i.aph, %bb.it ] ; 5 uses
+  %i.aom = load ptr, ptr %.sroa.01026.01261, align 8, !tbaa !553 ; 2 uses
   %i.aon = getelementptr inbounds nuw i8, ptr %i.aom, i64 25
   %i.aoo = load i8, ptr %i.aon, align 1, !tbaa !166, !range !368, !noundef !290
   %i.aop = trunc nuw i8 %i.aoo to i1
@@ -656,14 +657,19 @@ bb.ip:                                            ; preds = %bb.io
 
 bb.iq:                                            ; preds = %bb.ip
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v) #5
-  %i.aow = getelementptr inbounds nuw i8, ptr %i.aom, i64 192
+  %61 = load ptr, ptr %.sroa.01026.01261, align 8, !tbaa !553
+  %i.aow = getelementptr inbounds nuw i8, ptr %61, i64 192
   %i.aox = load i64, ptr %i.aow, align 8, !tbaa !752
-  %i.aoy = uitofp i64 %i.aox to double            ; 2 uses
+  %i.aoy = uitofp i64 %i.aox to double
   %i.aoz = fmul nnan double %i.aoy, f0x3F50000000000000
   %i.apa = fmul nnan double %i.aoz, f0x3F50000000000000
   store double %i.apa, ptr %i.v, align 8, !tbaa !71
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w) #5
-  %i.apb = fmul nnan double %i.aoy, 1.000000e+02
+  %62 = load ptr, ptr %.sroa.01026.01261, align 8, !tbaa !553
+  %63 = getelementptr inbounds nuw i8, ptr %62, i64 192
+  %64 = load i64, ptr %63, align 8, !tbaa !752
+  %65 = uitofp i64 %64 to double
+  %i.apb = fmul nnan double %65, 1.000000e+02
   %i.apc = fdiv double %i.apb, %i.aok
   store double %i.apc, ptr %i.w, align 8, !tbaa !71
   call void @llvm.lifetime.start.p0(ptr nonnull %54) #5
@@ -1066,8 +1072,8 @@ bb.jt:                                            ; preds = %_ZSt4sortIN9__gnu_c
   br label %bb.ju
 
 bb.ju:                                            ; preds = %.lr.ph1286, %bb.kb
-  %.sroa.01018.01284 = phi ptr [ %i.atl, %.lr.ph1286 ], [ %i.aup, %bb.kb ] ; 4 uses
-  %i.atq = load ptr, ptr %.sroa.01018.01284, align 8, !tbaa !553 ; 3 uses
+  %.sroa.01018.01284 = phi ptr [ %i.atl, %.lr.ph1286 ], [ %i.aup, %bb.kb ] ; 5 uses
+  %i.atq = load ptr, ptr %.sroa.01018.01284, align 8, !tbaa !553 ; 2 uses
   %i.atr = getelementptr inbounds nuw i8, ptr %i.atq, i64 25
   %i.ats = load i8, ptr %i.atr, align 1, !tbaa !166, !range !368, !noundef !290
   %i.att = trunc nuw i8 %i.ats to i1
@@ -1088,7 +1094,8 @@ bb.jw:                                            ; preds = %bb.jv
 
 bb.jx:                                            ; preds = %bb.jw
   call void @llvm.lifetime.start.p0(ptr nonnull %55) #5
-  %i.aua = getelementptr inbounds nuw i8, ptr %i.atq, i64 224
+  %66 = load ptr, ptr %.sroa.01018.01284, align 8, !tbaa !553
+  %i.aua = getelementptr inbounds nuw i8, ptr %66, i64 224
   %i.aub = load double, ptr %i.aua, align 8, !tbaa !71
   invoke void @_ZN11OpenImageIO4v3_17Strutil18timeintervalformatB5cxx11Edi(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %55, double noundef %i.aub, i32 noundef 1)
           to label %bb.jy unwind label %bb.kc
@@ -1440,8 +1447,8 @@ bb.ky:                                            ; preds = %_ZSt4sortIN9__gnu_c
   br label %bb.kz
 
 bb.kz:                                            ; preds = %.lr.ph1292, %bb.lg
-  %.sroa.01010.01290 = phi ptr [ %i.aye, %.lr.ph1292 ], [ %i.aze, %bb.lg ] ; 3 uses
-  %i.ayi = load ptr, ptr %.sroa.01010.01290, align 8, !tbaa !553 ; 4 uses
+  %.sroa.01010.01290 = phi ptr [ %i.aye, %.lr.ph1292 ], [ %i.aze, %bb.lg ] ; 5 uses
+  %i.ayi = load ptr, ptr %.sroa.01010.01290, align 8, !tbaa !553 ; 3 uses
   %i.ayj = getelementptr inbounds nuw i8, ptr %i.ayi, i64 25
   %i.ayk = load i8, ptr %i.ayj, align 1, !tbaa !166, !range !368, !noundef !290
   %i.ayl = trunc nuw i8 %i.ayk to i1
@@ -1454,8 +1461,8 @@ bb.la:                                            ; preds = %bb.kz
   br i1 %i.ayo, label %bb.lb, label %bb.lg
 
 bb.lb:                                            ; preds = %bb.la
-  %i.ayp = getelementptr inbounds nuw i8, ptr %i.ayi, i64 224 ; 2 uses
-  %i.ayq = load double, ptr %i.ayp, align 8, !tbaa !71 ; 2 uses
+  %i.ayp = getelementptr inbounds nuw i8, ptr %i.ayi, i64 224
+  %i.ayq = load double, ptr %i.ayp, align 8, !tbaa !71
   %i.ayr = fcmp olt double %i.ayq, 2.500000e-01
   %or.cond31 = and i1 %i.ayg, %i.ayr
   br i1 %or.cond31, label %bb.lg, label %bb.lc
@@ -1469,20 +1476,24 @@ bb.lc:                                            ; preds = %bb.lb
 
 bb.ld:                                            ; preds = %bb.lc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y) #5
-  %i.ayv = getelementptr inbounds nuw i8, ptr %i.ayi, i64 192
+  %67 = load ptr, ptr %.sroa.01010.01290, align 8, !tbaa !553
+  %i.ayv = getelementptr inbounds nuw i8, ptr %67, i64 192
   %i.ayw = load i64, ptr %i.ayv, align 8, !tbaa !752
   %i.ayx = uitofp i64 %i.ayw to double
   %i.ayy = fmul nnan double %i.ayx, f0x3EB0000000000000 ; 2 uses
   store double %i.ayy, ptr %i.y, align 8, !tbaa !71
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z) #5
-  %i.ayz = fdiv double %i.ayy, %i.ayq
+  %68 = load ptr, ptr %.sroa.01010.01290, align 8, !tbaa !553
+  %69 = getelementptr inbounds nuw i8, ptr %68, i64 224 ; 2 uses
+  %70 = load double, ptr %69, align 8, !tbaa !71
+  %i.ayz = fdiv double %i.ayy, %70
   store double %i.ayz, ptr %i.z, align 8, !tbaa !71
   call void @llvm.lifetime.start.p0(ptr nonnull %57) #5
   invoke void @_ZNK11OpenImageIO4v3_114ImageCacheImpl17onefile_stat_lineB5cxx11ERKNS0_13intrusive_ptrINS0_14ImageCacheFileEEEib(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %57, ptr noundef nonnull align 64 dereferenceable(25240) %1, ptr noundef nonnull align 8 dereferenceable(8) %.sroa.01010.01290, i32 noundef -1, i1 noundef zeroext false)
           to label %bb.le unwind label %bb.lh
 
 bb.le:                                            ; preds = %bb.ld
-  invoke void @_ZN3fmt3v125printIJRiRdS3_S3_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvRSoNS0_7fstringIJDpT_EE1tEDpOSC_(ptr noundef nonnull align 8 dereferenceable(8) %19, ptr nonnull @.str.166, i64 46, ptr noundef nonnull align 4 dereferenceable(4) %i.u, ptr noundef nonnull align 8 dereferenceable(8) %i.z, ptr noundef nonnull align 8 dereferenceable(8) %i.y, ptr noundef nonnull align 8 dereferenceable(8) %i.ayp, ptr noundef nonnull align 8 dereferenceable(32) %57)
+  invoke void @_ZN3fmt3v125printIJRiRdS3_S3_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvRSoNS0_7fstringIJDpT_EE1tEDpOSC_(ptr noundef nonnull align 8 dereferenceable(8) %19, ptr nonnull @.str.166, i64 46, ptr noundef nonnull align 4 dereferenceable(4) %i.u, ptr noundef nonnull align 8 dereferenceable(8) %i.z, ptr noundef nonnull align 8 dereferenceable(8) %i.y, ptr noundef nonnull align 8 dereferenceable(8) %69, ptr noundef nonnull align 8 dereferenceable(32) %57)
           to label %bb.lf unwind label %bb.li
 
 bb.lf:                                            ; preds = %bb.le
@@ -1885,8 +1896,8 @@ bb.mh:                                            ; preds = %_ZSt4sortIN9__gnu_c
   br label %bb.mi
 
 bb.mi:                                            ; preds = %.lr.ph1314, %bb.mo
-  %.sroa.0998.01312 = phi ptr [ %i.bed, %.lr.ph1314 ], [ %i.bfg, %bb.mo ] ; 4 uses
-  %i.beh = load ptr, ptr %.sroa.0998.01312, align 8, !tbaa !553 ; 3 uses
+  %.sroa.0998.01312 = phi ptr [ %i.bed, %.lr.ph1314 ], [ %i.bfg, %bb.mo ] ; 5 uses
+  %i.beh = load ptr, ptr %.sroa.0998.01312, align 8, !tbaa !553 ; 2 uses
   %i.bei = getelementptr inbounds nuw i8, ptr %i.beh, i64 25
   %i.bej = load i8, ptr %i.bei, align 1, !tbaa !166, !range !368, !noundef !290
   %i.bek = trunc nuw i8 %i.bej to i1
@@ -1907,7 +1918,8 @@ bb.mk:                                            ; preds = %bb.mj
 
 bb.ml:                                            ; preds = %bb.mk
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab) #5
-  %i.ber = getelementptr inbounds nuw i8, ptr %i.beh, i64 208
+  %71 = load ptr, ptr %.sroa.0998.01312, align 8, !tbaa !553
+  %i.ber = getelementptr inbounds nuw i8, ptr %71, i64 208
   %i.bes = load atomic i64, ptr %i.ber seq_cst, align 8
   %i.bet = uitofp i64 %i.bes to double
   %i.beu = fmul nnan double %i.bet, f0x3F50000000000000

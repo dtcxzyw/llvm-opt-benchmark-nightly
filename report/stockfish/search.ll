@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %i.fj = phi ptr [ %.pre, %bb.s ], [ %i.ex, %bb.r ] ; 3 uses
+  %i.fj = phi ptr [ %.pre, %bb.s ], [ %i.ex, %bb.r ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #33
   %i.fk = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 6 uses
   store ptr %i.fk, ptr %9, align 8, !tbaa !225
@@ -214,7 +214,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fj, i64 48
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fj, i64 56
   %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !192
-  %i.fp = load ptr, ptr %i.fm, align 8, !tbaa !189 ; 2 uses
+  %i.fp = load ptr, ptr %i.fm, align 8, !tbaa !189
   %i.fq = ptrtoint ptr %i.fo to i64
   %i.fr = ptrtoint ptr %i.fp to i64
   %i.fs = sub i64 %i.fq, %i.fr
@@ -228,14 +228,14 @@ bb.u:                                             ; preds = %bb.t
 
 ._crit_edge:                                      ; preds = %bb.u
   %.pre83 = load ptr, ptr %i.ew, align 8, !tbaa !233
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre83, i64 48
-  %.pre84 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !189
   br label %bb.v
 
 bb.v:                                             ; preds = %._crit_edge, %bb.t
-  %i.fw = phi ptr [ %.pre84, %._crit_edge ], [ %i.fp, %bb.t ]
+  %i.fw = phi ptr [ %.pre83, %._crit_edge ], [ %i.fj, %bb.t ]
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #33
-  %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 2
+  %12 = getelementptr inbounds nuw i8, ptr %i.fw, i64 48
+  %13 = load ptr, ptr %12, align 8, !tbaa !189
+  %i.fx = getelementptr inbounds nuw i8, ptr %13, i64 2
   %.sroa.08.0.copyload = load i16, ptr %i.fx, align 2, !tbaa !191
   %i.fy = getelementptr inbounds nuw i8, ptr %0, i64 11420461
   %i.fz = load i8, ptr %i.fy, align 1, !tbaa !243, !range !221, !noundef !48
@@ -638,16 +638,17 @@ bb.d:                                             ; preds = %.lr.ph56, %bb.ah
   %i.ab = phi ptr [ null, %.lr.ph56 ], [ %i.ei, %bb.ah ] ; 4 uses
   %i.ac = phi ptr [ null, %.lr.ph56 ], [ %i.ej, %bb.ah ] ; 7 uses
   %i.ad = phi ptr [ null, %.lr.ph56 ], [ %.promoted61, %bb.ah ] ; 9 uses
-  %.sroa.045.055 = phi ptr [ %i.h, %.lr.ph56 ], [ %i.ek, %bb.ah ] ; 3 uses
-  %i.ae = load i64, ptr %.sroa.045.055, align 8, !tbaa !613 ; 2 uses
+  %.sroa.045.055 = phi ptr [ %i.h, %.lr.ph56 ], [ %i.ek, %bb.ah ] ; 4 uses
+  %i.ae = load i64, ptr %.sroa.045.055, align 8, !tbaa !613
   %i.af = icmp eq i64 %i.ae, 0
   br i1 %i.af, label %bb.ah, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #33
+  %.sroa.0.0.copyload = load i64, ptr %.sroa.045.055, align 8, !tbaa !25
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.045.055, i64 8
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !301
-  call void @_ZN9Stockfish5splitESt17basic_string_viewIcSt11char_traitsIcEES3_(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.347") align 8 %3, i64 %i.ae, ptr %.sroa.2.0.copyload, i64 1, ptr nonnull @.str.24)
+  call void @_ZN9Stockfish5splitESt17basic_string_viewIcSt11char_traitsIcEES3_(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.347") align 8 %3, i64 %.sroa.0.0.copyload, ptr %.sroa.2.0.copyload, i64 1, ptr nonnull @.str.24)
   %i.ag = load ptr, ptr %i.k, align 8, !tbaa !614
   %i.ah = load ptr, ptr %3, align 8, !tbaa !610   ; 6 uses
   %i.ai = ptrtoint ptr %i.ag to i64
@@ -1050,8 +1051,8 @@ bb.cl:                                            ; preds = %bb.ck
 
 .thread1076:                                      ; preds = %bb.cg, %bb.cj, %bb.cl, %bb.ci, %bb.ch, %bb.cf
   %i.rx = load ptr, ptr %i.a, align 8, !tbaa !762
-  %i.ry = getelementptr inbounds nuw i8, ptr %i.rx, i64 32
-  %i.rz = load i32, ptr %i.ry, align 8, !tbaa !252 ; 2 uses
+  %i.ry = getelementptr inbounds nuw i8, ptr %i.rx, i64 32 ; 2 uses
+  %i.rz = load i32, ptr %i.ry, align 8, !tbaa !252
   %i.sa = icmp sge i32 %i.rz, %.sroa.speculated819
   %i.sb = load i8, ptr %i.b, align 1, !tbaa !313, !range !221, !noundef !48
   %i.sc = zext i1 %i.sa to i8
@@ -1100,7 +1101,8 @@ bb.co:                                            ; preds = %bb.cn
 bb.cp:                                            ; preds = %bb.co
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #33
   %.sroa.0144.0.copyload = load i16, ptr %i.dd, align 8, !tbaa !191
-  %i.sw = sub nsw i32 %i.sq, %i.rz
+  %15 = load i32, ptr %i.ry, align 8, !tbaa !252
+  %i.sw = sub nsw i32 %i.sq, %15
   %i.sx = getelementptr inbounds nuw i8, ptr %0, i64 917504
   call void @_ZN9Stockfish10MovePickerC1ERKNS_8PositionENS_4MoveEiPKNS_10MultiArrayINS_10StatsEntryIsLi10692ELb0EEELm16EJLm64ELm8EEEE(ptr noundef nonnull align 8 dereferenceable(2164) %13, ptr noundef nonnull align 8 dereferenceable(1048) %1, i16 %.sroa.0144.0.copyload, i32 noundef %i.sw, ptr noundef nonnull %i.sx) #33
   %i.sy = add nsw i32 %.210361086, -5
@@ -1503,8 +1505,8 @@ bb.bt:                                            ; preds = %bb.bs
 
 .thread1038:                                      ; preds = %bb.bo, %bb.br, %bb.bt, %bb.bq, %bb.bp, %bb.bn
   %i.pj = load ptr, ptr %i.a, align 8, !tbaa !762
-  %i.pk = getelementptr inbounds nuw i8, ptr %i.pj, i64 32
-  %i.pl = load i32, ptr %i.pk, align 8, !tbaa !252 ; 2 uses
+  %i.pk = getelementptr inbounds nuw i8, ptr %i.pj, i64 32 ; 2 uses
+  %i.pl = load i32, ptr %i.pk, align 8, !tbaa !252
   %i.pm = icmp sge i32 %i.pl, %.sroa.speculated720
   %i.pn = load i8, ptr %i.b, align 1, !tbaa !313, !range !221, !noundef !48
   %i.po = zext i1 %i.pm to i8
@@ -1552,7 +1554,8 @@ bb.bw:                                            ; preds = %bb.bv
 bb.bx:                                            ; preds = %bb.bw
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #33
   %.sroa.0137.0.copyload = load i16, ptr %i.dd, align 8, !tbaa !191
-  %i.qi = sub nsw i32 %i.qc, %i.pl
+  %15 = load i32, ptr %i.pk, align 8, !tbaa !252
+  %i.qi = sub nsw i32 %i.qc, %15
   %i.qj = getelementptr inbounds nuw i8, ptr %0, i64 917504
   call void @_ZN9Stockfish10MovePickerC1ERKNS_8PositionENS_4MoveEiPKNS_10MultiArrayINS_10StatsEntryIsLi10692ELb0EEELm16EJLm64ELm8EEEE(ptr noundef nonnull align 8 dereferenceable(2164) %13, ptr noundef nonnull align 8 dereferenceable(1048) %1, i16 %.sroa.0137.0.copyload, i32 noundef %i.qi, ptr noundef nonnull %i.qj) #33
   %i.qk = add nsw i32 %.29841048, -5

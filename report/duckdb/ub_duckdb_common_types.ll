@@ -204,7 +204,7 @@ define noundef zeroext i1 @_ZN6duckdb25CoordinateReferenceSystem16TryParsePROJJS
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
-  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
+  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
@@ -276,14 +276,25 @@ _ZN13duckdb_yyjsonL25unsafe_yyjson_equals_strnEPvPKcm.exit201: ; preds = %.lr.ph
   br i1 %.not.i156.not, label %.thread320, label %.lr.ph, !llvm.loop !3182
 
 bb.d:                                             ; preds = %_ZN13duckdb_yyjsonL25unsafe_yyjson_equals_strnEPvPKcm.exit201
-  %i.ae = getelementptr inbounds nuw i8, ptr %.011.i350, i64 16
+  %i.ae = getelementptr inbounds nuw i8, ptr %.011.i350, i64 16 ; 2 uses
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !3180
   %i.ag = and i64 %i.af, 7
   %i.ah = icmp eq i64 %i.ag, 5
-  br i1 %i.ah, label %_ZN13duckdb_yyjsonL14yyjson_get_strEPNS_10yyjson_valE.exit155, label %.thread320
+  br i1 %i.ah, label %18, label %.thread320
 
-_ZN13duckdb_yyjsonL14yyjson_get_strEPNS_10yyjson_valE.exit155: ; preds = %bb.d
+18:                                               ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #46
+  %19 = load i64, ptr %i.ae, align 8, !tbaa !3180
+  %20 = and i64 %19, 7
+  %21 = icmp eq i64 %20, 5
+  br i1 %21, label %_ZN13duckdb_yyjsonL14yyjson_get_strEPNS_10yyjson_valE.exit155, label %_ZN13duckdb_yyjsonL14yyjson_get_strEPNS_10yyjson_valE.exit155.thread
+
+_ZN13duckdb_yyjsonL14yyjson_get_strEPNS_10yyjson_valE.exit155.thread: ; preds = %18
+  %22 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store ptr %22, ptr %2, align 8, !tbaa !151
+  br label %bb.e
+
+_ZN13duckdb_yyjsonL14yyjson_get_strEPNS_10yyjson_valE.exit155: ; preds = %18
   %i.ai = getelementptr inbounds nuw i8, ptr %.011.i350, i64 24
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !153 ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
@@ -291,7 +302,7 @@ _ZN13duckdb_yyjsonL14yyjson_get_strEPNS_10yyjson_valE.exit155: ; preds = %bb.d
   %i.al = icmp eq ptr %i.aj, null
   br i1 %i.al, label %bb.e, label %bb.f
 
-bb.e:                                             ; preds = %_ZN13duckdb_yyjsonL14yyjson_get_strEPNS_10yyjson_valE.exit155
+bb.e:                                             ; preds = %_ZN13duckdb_yyjsonL14yyjson_get_strEPNS_10yyjson_valE.exit155.thread, %_ZN13duckdb_yyjsonL14yyjson_get_strEPNS_10yyjson_valE.exit155
   invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.436) #49
           to label %.noexc213 unwind label %bb.k
 

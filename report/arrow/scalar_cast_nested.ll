@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit
 
 _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit: ; preds = %_ZNK5arrow7compute10ExecResult4typeEv.exit, %bb.d, %bb.e
-  %i.x = phi ptr [ %i.o, %_ZNK5arrow7compute10ExecResult4typeEv.exit ], [ %i.o, %bb.d ], [ %.pre, %bb.e ] ; 3 uses
+  %i.x = phi ptr [ %i.o, %_ZNK5arrow7compute10ExecResult4typeEv.exit ], [ %i.o, %bb.d ], [ %.pre, %bb.e ] ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 40
   %i.z = load i32, ptr %i.y, align 8, !tbaa !861
   %i.aa = icmp eq i32 %i.z, 26
@@ -214,7 +214,7 @@ bb.f:                                             ; preds = %_ZNSt10shared_ptrIN
   %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 48
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 56
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !862
-  %i.ae = load ptr, ptr %i.ab, align 8, !tbaa !282 ; 4 uses
+  %i.ae = load ptr, ptr %i.ab, align 8, !tbaa !282 ; 2 uses
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = sub i64 %i.af, %i.ag
@@ -257,15 +257,15 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.av = atomicrmw volatile add ptr %i.ar, i32 1 acq_rel, align 4 ; 0 uses
-  %.pre309 = load ptr, ptr %12, align 16, !tbaa !256
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre309, i64 48
-  %.pre310.a = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !282
+  %.pre310.a = load ptr, ptr %12, align 16, !tbaa !256
   br label %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit93
 
 _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit93: ; preds = %bb.i, %bb.k, %bb.l
-  %i.aw = phi ptr [ %i.ae, %bb.i ], [ %i.ae, %bb.k ], [ %.pre310.a, %bb.l ]
+  %i.aw = phi ptr [ %i.x, %bb.i ], [ %i.x, %bb.k ], [ %.pre310.a, %bb.l ]
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #20
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
+  %38 = getelementptr inbounds nuw i8, ptr %i.aw, i64 48
+  %39 = load ptr, ptr %38, align 8, !tbaa !282
+  %i.ax = getelementptr inbounds nuw i8, ptr %39, i64 16
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !285 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 56
   %i.ba = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 2 uses
@@ -668,7 +668,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit
 
 _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit: ; preds = %_ZNK5arrow7compute10ExecResult4typeEv.exit, %bb.d, %bb.e
-  %i.x = phi ptr [ %i.o, %_ZNK5arrow7compute10ExecResult4typeEv.exit ], [ %i.o, %bb.d ], [ %.pre, %bb.e ] ; 3 uses
+  %i.x = phi ptr [ %i.o, %_ZNK5arrow7compute10ExecResult4typeEv.exit ], [ %i.o, %bb.d ], [ %.pre, %bb.e ] ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 40
   %i.z = load i32, ptr %i.y, align 8, !tbaa !861
   %i.aa = icmp eq i32 %i.z, 26
@@ -678,7 +678,7 @@ bb.f:                                             ; preds = %_ZNSt10shared_ptrIN
   %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 48
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 56
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !862
-  %i.ae = load ptr, ptr %i.ab, align 8, !tbaa !282 ; 4 uses
+  %i.ae = load ptr, ptr %i.ab, align 8, !tbaa !282 ; 2 uses
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = sub i64 %i.af, %i.ag
@@ -721,15 +721,15 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.av = atomicrmw volatile add ptr %i.ar, i32 1 acq_rel, align 4 ; 0 uses
-  %.pre309 = load ptr, ptr %12, align 16, !tbaa !256
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre309, i64 48
-  %.pre310.a = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !282
+  %.pre310.a = load ptr, ptr %12, align 16, !tbaa !256
   br label %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit93
 
 _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit93: ; preds = %bb.i, %bb.k, %bb.l
-  %i.aw = phi ptr [ %i.ae, %bb.i ], [ %i.ae, %bb.k ], [ %.pre310.a, %bb.l ]
+  %i.aw = phi ptr [ %i.x, %bb.i ], [ %i.x, %bb.k ], [ %.pre310.a, %bb.l ]
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #20
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
+  %38 = getelementptr inbounds nuw i8, ptr %i.aw, i64 48
+  %39 = load ptr, ptr %38, align 8, !tbaa !282
+  %i.ax = getelementptr inbounds nuw i8, ptr %39, i64 16
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !285 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 56
   %i.ba = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 2 uses
@@ -1132,7 +1132,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit
 
 _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit: ; preds = %_ZNK5arrow7compute10ExecResult4typeEv.exit, %bb.d, %bb.e
-  %i.x = phi ptr [ %i.o, %_ZNK5arrow7compute10ExecResult4typeEv.exit ], [ %i.o, %bb.d ], [ %.pre, %bb.e ] ; 3 uses
+  %i.x = phi ptr [ %i.o, %_ZNK5arrow7compute10ExecResult4typeEv.exit ], [ %i.o, %bb.d ], [ %.pre, %bb.e ] ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 40
   %i.z = load i32, ptr %i.y, align 8, !tbaa !861
   %i.aa = icmp eq i32 %i.z, 26
@@ -1142,7 +1142,7 @@ bb.f:                                             ; preds = %_ZNSt10shared_ptrIN
   %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 48
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 56
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !862
-  %i.ae = load ptr, ptr %i.ab, align 8, !tbaa !282 ; 4 uses
+  %i.ae = load ptr, ptr %i.ab, align 8, !tbaa !282 ; 2 uses
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = sub i64 %i.af, %i.ag
@@ -1185,15 +1185,15 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.av = atomicrmw volatile add ptr %i.ar, i32 1 acq_rel, align 4 ; 0 uses
-  %.pre321 = load ptr, ptr %14, align 16, !tbaa !256
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre321, i64 48
-  %.pre322.a = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !282
+  %.pre322.a = load ptr, ptr %14, align 16, !tbaa !256
   br label %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit93
 
 _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit93: ; preds = %bb.i, %bb.k, %bb.l
-  %i.aw = phi ptr [ %i.ae, %bb.i ], [ %i.ae, %bb.k ], [ %.pre322.a, %bb.l ]
+  %i.aw = phi ptr [ %i.x, %bb.i ], [ %i.x, %bb.k ], [ %.pre322.a, %bb.l ]
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #20
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
+  %40 = getelementptr inbounds nuw i8, ptr %i.aw, i64 48
+  %41 = load ptr, ptr %40, align 8, !tbaa !282
+  %i.ax = getelementptr inbounds nuw i8, ptr %41, i64 16
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !285 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 56
   %i.ba = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 2 uses
@@ -1596,7 +1596,7 @@ bb.cc:                                            ; preds = %bb.ca
 bb.cd:                                            ; preds = %bb.cc, %bb.cb, %_ZNK5arrow5Datum5arrayEv.exit
   %i.iv = load i64, ptr %i.af, align 8, !tbaa !327
   %i.iw = load ptr, ptr %i.ai, align 8, !tbaa !315
-  %i.ix = getelementptr inbounds [4 x i8], ptr %i.iw, i64 %i.iv
+  %i.ix = getelementptr inbounds [4 x i8], ptr %i.iw, i64 %i.iv ; 2 uses
   %i.iy = invoke noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %i.z)
           to label %bb.ce unwind label %bb.dr
 
@@ -1999,14 +1999,15 @@ bb.fq:                                            ; preds = %bb.fp, %bb.ds
   br label %.body152
 
 bb.fr:                                            ; preds = %bb.ce
-  %i.th = load i32, ptr %i.ix, align 4, !tbaa !3  ; 2 uses
+  %i.th = load i32, ptr %i.ix, align 4, !tbaa !3
   %.not = icmp eq i32 %i.th, 0
   br i1 %.not, label %bb.gh, label %bb.fs
 
 bb.fs:                                            ; preds = %bb.fr
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #20
   %i.ti = load ptr, ptr %28, align 16, !tbaa !278
-  %i.tj = sext i32 %i.th to i64
+  %38 = load i32, ptr %i.ix, align 4, !tbaa !3
+  %i.tj = sext i32 %38 to i64
   %i.tk = load i64, ptr %i.ap, align 8, !tbaa !332
   %i.tl = sext i32 %i.ae to i64
   %i.tm = mul nsw i64 %i.tk, %i.tl
@@ -2409,7 +2410,7 @@ bb.cc:                                            ; preds = %bb.ca
 bb.cd:                                            ; preds = %bb.cc, %bb.cb, %_ZNK5arrow5Datum5arrayEv.exit
   %i.iv = load i64, ptr %i.af, align 8, !tbaa !327
   %i.iw = load ptr, ptr %i.ai, align 8, !tbaa !315
-  %i.ix = getelementptr inbounds [4 x i8], ptr %i.iw, i64 %i.iv
+  %i.ix = getelementptr inbounds [4 x i8], ptr %i.iw, i64 %i.iv ; 2 uses
   %i.iy = invoke noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %i.z)
           to label %bb.ce unwind label %bb.dr
 
@@ -2812,14 +2813,15 @@ bb.fq:                                            ; preds = %bb.fp, %bb.ds
   br label %.body152
 
 bb.fr:                                            ; preds = %bb.ce
-  %i.th = load i32, ptr %i.ix, align 4, !tbaa !3  ; 2 uses
+  %i.th = load i32, ptr %i.ix, align 4, !tbaa !3
   %.not = icmp eq i32 %i.th, 0
   br i1 %.not, label %bb.gh, label %bb.fs
 
 bb.fs:                                            ; preds = %bb.fr
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #20
   %i.ti = load ptr, ptr %28, align 16, !tbaa !278
-  %i.tj = sext i32 %i.th to i64
+  %38 = load i32, ptr %i.ix, align 4, !tbaa !3
+  %i.tj = sext i32 %38 to i64
   %i.tk = load i64, ptr %i.ap, align 8, !tbaa !332
   %i.tl = sext i32 %i.ae to i64
   %i.tm = mul nsw i64 %i.tk, %i.tl
@@ -3222,7 +3224,7 @@ bb.cc:                                            ; preds = %bb.ca
 bb.cd:                                            ; preds = %bb.cc, %bb.cb, %_ZNK5arrow5Datum5arrayEv.exit
   %i.iw = load i64, ptr %i.af, align 8, !tbaa !327
   %i.ix = load ptr, ptr %i.ai, align 8, !tbaa !315
-  %i.iy = getelementptr inbounds [8 x i8], ptr %i.ix, i64 %i.iw
+  %i.iy = getelementptr inbounds [8 x i8], ptr %i.ix, i64 %i.iw ; 2 uses
   %i.iz = invoke noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %i.z)
           to label %bb.ce unwind label %bb.dr
 
@@ -3625,16 +3627,17 @@ bb.fq:                                            ; preds = %bb.fp, %bb.ds
   br label %.body152
 
 bb.fr:                                            ; preds = %bb.ce
-  %i.tg = load i64, ptr %i.iy, align 8, !tbaa !319 ; 2 uses
+  %i.tg = load i64, ptr %i.iy, align 8, !tbaa !319
   %.not = icmp eq i64 %i.tg, 0
   br i1 %.not, label %bb.gh, label %bb.fs
 
 bb.fs:                                            ; preds = %bb.fr
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #20
   %i.th = load ptr, ptr %28, align 16, !tbaa !278
+  %38 = load i64, ptr %i.iy, align 8, !tbaa !319
   %i.ti = load i64, ptr %i.aq, align 8, !tbaa !332
   %i.tj = mul nsw i64 %i.ti, %i.am
-  invoke void @_ZNK5arrow9ArrayData5SliceEll(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.64") align 8 %37, ptr noundef nonnull align 8 dereferenceable(120) %i.th, i64 noundef %i.tg, i64 noundef %i.tj)
+  invoke void @_ZNK5arrow9ArrayData5SliceEll(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.64") align 8 %37, ptr noundef nonnull align 8 dereferenceable(120) %i.th, i64 noundef %38, i64 noundef %i.tj)
           to label %bb.ft unwind label %bb.gg
 
 bb.ft:                                            ; preds = %bb.fs
@@ -4037,7 +4040,7 @@ bb.cc:                                            ; preds = %bb.ca
 bb.cd:                                            ; preds = %bb.cc, %bb.cb, %_ZNK5arrow5Datum5arrayEv.exit
   %i.iw = load i64, ptr %i.af, align 8, !tbaa !327
   %i.ix = load ptr, ptr %i.ai, align 8, !tbaa !315
-  %i.iy = getelementptr inbounds [8 x i8], ptr %i.ix, i64 %i.iw
+  %i.iy = getelementptr inbounds [8 x i8], ptr %i.ix, i64 %i.iw ; 2 uses
   %i.iz = invoke noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %i.z)
           to label %bb.ce unwind label %bb.dr
 
@@ -4440,16 +4443,17 @@ bb.fq:                                            ; preds = %bb.fp, %bb.ds
   br label %.body152
 
 bb.fr:                                            ; preds = %bb.ce
-  %i.tg = load i64, ptr %i.iy, align 8, !tbaa !319 ; 2 uses
+  %i.tg = load i64, ptr %i.iy, align 8, !tbaa !319
   %.not = icmp eq i64 %i.tg, 0
   br i1 %.not, label %bb.gh, label %bb.fs
 
 bb.fs:                                            ; preds = %bb.fr
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #20
   %i.th = load ptr, ptr %28, align 16, !tbaa !278
+  %38 = load i64, ptr %i.iy, align 8, !tbaa !319
   %i.ti = load i64, ptr %i.aq, align 8, !tbaa !332
   %i.tj = mul nsw i64 %i.ti, %i.am
-  invoke void @_ZNK5arrow9ArrayData5SliceEll(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.64") align 8 %37, ptr noundef nonnull align 8 dereferenceable(120) %i.th, i64 noundef %i.tg, i64 noundef %i.tj)
+  invoke void @_ZNK5arrow9ArrayData5SliceEll(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.64") align 8 %37, ptr noundef nonnull align 8 dereferenceable(120) %i.th, i64 noundef %38, i64 noundef %i.tj)
           to label %bb.ft unwind label %bb.gg
 
 bb.ft:                                            ; preds = %bb.fs
@@ -4852,7 +4856,7 @@ bb.ce:                                            ; preds = %bb.cd, %bb.bi
 bb.cf:                                            ; preds = %bb.ar
   %i.lg = sext i32 %i.hn to i64                   ; 2 uses
   %i.lh = load ptr, ptr %i.q, align 8, !tbaa !282
-  %i.li = getelementptr inbounds nuw [16 x i8], ptr %i.lh, i64 %i.lg ; 2 uses
+  %i.li = getelementptr inbounds nuw [16 x i8], ptr %i.lh, i64 %i.lg ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #20
   %i.lj = load ptr, ptr %i.gq, align 8, !tbaa !321
@@ -4941,10 +4945,11 @@ bb.cq:                                            ; preds = %bb.cp
   br i1 %i.mo, label %bb.cr, label %bb.dj
 
 bb.cr:                                            ; preds = %bb.cq
-  %i.mp = load ptr, ptr %i.li, align 8, !tbaa !285 ; 2 uses
+  %i.mp = load ptr, ptr %i.li, align 8, !tbaa !285
   %i.mq = getelementptr inbounds nuw i8, ptr %i.mp, i64 24
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #20
-  %i.mr = getelementptr inbounds nuw i8, ptr %i.mp, i64 56
+  %27 = load ptr, ptr %i.li, align 8, !tbaa !285
+  %i.mr = getelementptr inbounds nuw i8, ptr %27, i64 56
   %i.ms = load ptr, ptr %i.mr, align 8, !tbaa !256 ; 2 uses
   %i.mt = load ptr, ptr %i.ms, align 8, !tbaa !44
   %i.mu = getelementptr inbounds nuw i8, ptr %i.mt, i64 32

@@ -204,8 +204,8 @@ bb.q:                                             ; preds = %._crit_edge.thread
 bb.r:                                             ; preds = %.lr.ph118, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmRKS4_.exit59.thread
   %.sroa.081.0116 = phi ptr [ %i.bd, %.lr.ph118 ], [ %i.dl, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmRKS4_.exit59.thread ] ; 4 uses
   %i.bk = load i64, ptr %i.l, align 8, !tbaa !24  ; 7 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.081.0116, i64 8
-  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !24 ; 6 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.081.0116, i64 8 ; 2 uses
+  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !24 ; 3 uses
   %spec.select.i.i50 = call noundef i64 @llvm.umin.i64(i64 %i.bk, i64 %i.bm) ; 2 uses
   %i.bn = icmp eq i64 %spec.select.i.i50, 0
   br i1 %i.bn, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmRKS4_.exit59, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i52
@@ -226,13 +226,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmRKS4_.exit59: ;
 bb.s:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i52, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmRKS4_.exit59
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #31
-  %i.bq = sub i64 %i.bm, %i.bk                    ; 4 uses
+  %6 = load i64, ptr %i.bl, align 8, !tbaa !24    ; 3 uses
+  %i.bq = sub i64 %6, %i.bk                       ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1353)
-  %i.br = icmp ugt i64 %i.bk, %i.bm
+  %i.br = icmp ugt i64 %i.bk, %6
   br i1 %i.br, label %bb.t, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.t:                                             ; preds = %bb.s
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.463, ptr noundef nonnull @.str.484, i64 noundef %i.bk, i64 noundef %i.bm) #34
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.463, ptr noundef nonnull @.str.484, i64 noundef %i.bk, i64 noundef %6) #34
           to label %.noexc60 unwind label %.loopexit.split-lp
 
 .noexc60:                                         ; preds = %bb.t

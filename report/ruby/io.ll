@@ -205,7 +205,7 @@ rb_io_check_closed.exit:                          ; preds = %rb_io_check_initial
 rbimpl_RB_TYPE_P_fastpath.exit118.thread:         ; preds = %bb.a, %rb_io_check_closed.exit, %rbimpl_RB_TYPE_P_fastpath.exit118
   %.not109 = phi i1 [ true, %rbimpl_RB_TYPE_P_fastpath.exit118 ], [ %.not, %rb_io_check_closed.exit ], [ true, %bb.a ]
   %i.w = inttoptr i64 %0 to ptr
-  %i.x = getelementptr i8, ptr %i.w, i64 32       ; 13 uses
+  %i.x = getelementptr i8, ptr %i.w, i64 32       ; 14 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !75   ; 5 uses
   %i.z = getelementptr i8, ptr %i.y, i64 80       ; 2 uses
   %i.aa = load i8, ptr %i.z, align 8, !tbaa !175  ; 3 uses
@@ -318,7 +318,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 bb.t:                                             ; preds = %bb.bk, %bb.s
   %i.bj = load ptr, ptr %i.x, align 8, !tbaa !75  ; 2 uses
   %i.bk = getelementptr i8, ptr %i.bj, i64 32
-  %i.bl = load i64, ptr %i.bk, align 8, !tbaa !176 ; 2 uses
+  %i.bl = load i64, ptr %i.bk, align 8, !tbaa !176
   %i.bm = inttoptr i64 %i.bl to ptr               ; 2 uses
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !16 ; 2 uses
   %i.bo = and i64 %i.bn, 8192
@@ -342,7 +342,10 @@ rb_array_len.exit126:                             ; preds = %bb.u, %bb.v
 
 bb.w:                                             ; preds = %rb_array_len.exit126
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
-  %i.bu = call i64 @rb_ary_shift(i64 noundef %i.bl) #28 ; 2 uses
+  %3 = load ptr, ptr %i.x, align 8, !tbaa !75
+  %4 = getelementptr i8, ptr %3, i64 32
+  %5 = load i64, ptr %4, align 8, !tbaa !176
+  %i.bu = call i64 @rb_ary_shift(i64 noundef %5) #28 ; 2 uses
   store i64 %i.bu, ptr %i.b, align 8, !tbaa !13
   %i.bv = call i64 @rb_get_path(i64 noundef %i.bu) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #28
@@ -745,8 +748,11 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 
 extract_getline_opts.exit:                        ; preds = %bb.o, %bb.r
   %.0.i = phi i8 [ 0, %bb.o ], [ %i.bc, %bb.r ]
-  %i.bd = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i8 %.0.i, ptr %i.bd, align 8
+  %i.bd = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
+  %5 = load i8, ptr %i.bd, align 8
+  %6 = and i8 %5, -2
+  %7 = or disjoint i8 %6, %.0.i
+  store i8 %7, ptr %i.bd, align 8
   %i.be = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 %i.as, ptr %4, align 8, !tbaa !206
   call fastcc void @check_getline_args(ptr noundef nonnull %i.be, i64 noundef %i.as)
@@ -908,8 +914,11 @@ bb.p:                                             ; preds = %bb.o, %bb.n
 
 extract_getline_opts.exit:                        ; preds = %bb.m, %bb.p
   %.0.i = phi i8 [ 0, %bb.m ], [ %i.ay, %bb.p ]
-  %i.az = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i8 %.0.i, ptr %i.az, align 8
+  %i.az = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
+  %5 = load i8, ptr %i.az, align 8
+  %6 = and i8 %5, -2
+  %7 = or disjoint i8 %6, %.0.i
+  store i8 %7, ptr %i.az, align 8
   %i.ba = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 %i.ao, ptr %4, align 8, !tbaa !206
   call fastcc void @check_getline_args(ptr noundef nonnull %i.ba, i64 noundef %i.ao)

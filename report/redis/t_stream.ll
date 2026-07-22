@@ -201,14 +201,15 @@ bb.h:                                             ; preds = %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %i.l, i64 64
   store i64 %i.ap, ptr %i.aq, align 8, !tbaa !61
   call void @raxStop(ptr noundef nonnull %1) #18
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.j, i64 80
-  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !31 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.j, i64 80 ; 2 uses
+  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !31
   %i.at = icmp eq ptr %i.as, null
   br i1 %i.at, label %bb.ah, label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
-  call void @raxStart(ptr noundef nonnull %2, ptr noundef nonnull %i.as) #18
+  %6 = load ptr, ptr %i.ar, align 8, !tbaa !31
+  call void @raxStart(ptr noundef nonnull %2, ptr noundef %6) #18
   %i.au = call i32 @raxSeek(ptr noundef nonnull %2, ptr noundef nonnull @.str.3, ptr noundef null, i64 noundef 0) #18 ; 0 uses
   %i.av = call i32 @raxNext(ptr noundef nonnull %2) #18
   %.not6888 = icmp eq i32 %i.av, 0
@@ -611,8 +612,8 @@ bb.a:
   %i.h = getelementptr inbounds nuw [96 x i8], ptr %i.e, i64 %i.g ; 3 uses
   %i.i = add i32 %i.d, 1                          ; 2 uses
   store i32 %i.i, ptr @handleClaimableStreamEntries.current_db, align 4, !tbaa !9
-  %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !242  ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 3 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !242  ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   %i.m = load i64, ptr %i.l, align 8, !tbaa !13
   %i.n = icmp eq i64 %i.m, 0
@@ -626,7 +627,8 @@ bb.b:                                             ; preds = %.lr.ph30
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph30
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #18
-  call void @dictInitSafeIterator(ptr noundef nonnull %0, ptr noundef nonnull %i.k) #18
+  %1 = load ptr, ptr %i.j, align 8, !tbaa !242
+  call void @dictInitSafeIterator(ptr noundef nonnull %0, ptr noundef %1) #18
   %i.r = call ptr @dictNext(ptr noundef nonnull %0) #18 ; 2 uses
   %.not27 = icmp eq ptr %i.r, null
   br i1 %.not27, label %._crit_edge, label %.lr.ph
@@ -784,8 +786,8 @@ bb.b:                                             ; preds = %.lr.ph64, %bb.t
   %i.n = getelementptr inbounds nuw [96 x i8], ptr %i.k, i64 %i.m ; 2 uses
   %i.o = add i32 %i.j, 1                          ; 2 uses
   store i32 %i.o, ptr @handleExpiredIdmpEntries.current_db, align 4, !tbaa !9
-  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 48 ; 4 uses
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !216  ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 48 ; 5 uses
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !216  ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %i.s = load i64, ptr %i.r, align 8, !tbaa !13
   %i.t = icmp eq i64 %i.s, 0
@@ -799,7 +801,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #18
-  call void @dictInitSafeIterator(ptr noundef nonnull %0, ptr noundef nonnull %i.q) #18
+  %2 = load ptr, ptr %i.p, align 8, !tbaa !216
+  call void @dictInitSafeIterator(ptr noundef nonnull %0, ptr noundef %2) #18
   %i.x = call ptr @dictNext(ptr noundef nonnull %0) #18 ; 2 uses
   %.not58 = icmp eq ptr %i.x, null
   br i1 %.not58, label %._crit_edge61, label %.lr.ph60
@@ -832,8 +835,8 @@ bb.g:                                             ; preds = %bb.e
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !275
   %.neg = mul i64 %i.al, -1000
   %i.am = add i64 %.neg, %i.aj
-  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, i64 136 ; 5 uses
-  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !33 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, i64 136 ; 6 uses
+  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !33
   %i.ap = icmp eq ptr %i.ao, null
   br i1 %i.ap, label %bb.h, label %bb.i
 
@@ -844,7 +847,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #18
-  call void @raxStart(ptr noundef nonnull %1, ptr noundef nonnull %i.ao) #18
+  %3 = load ptr, ptr %i.an, align 8, !tbaa !33
+  call void @raxStart(ptr noundef nonnull %1, ptr noundef %3) #18
   %i.as = call i32 @raxSeek(ptr noundef nonnull %1, ptr noundef nonnull @.str.3, ptr noundef null, i64 noundef 0) #18 ; 0 uses
   %i.at = call i32 @raxNext(ptr noundef nonnull %1) #18
   %.not4956 = icmp eq i32 %i.at, 0

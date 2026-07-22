@@ -204,14 +204,14 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #18
   %i.lr = load ptr, ptr %i.jh, align 8, !tbaa !328
   %i.ls = getelementptr inbounds nuw i8, ptr %i.lr, i64 104
-  %i.lt = load ptr, ptr %i.ls, align 8, !tbaa !329 ; 3 uses
+  %i.lt = load ptr, ptr %i.ls, align 8, !tbaa !329 ; 4 uses
   %.not358.i = icmp eq ptr %i.lt, null
   br i1 %.not358.i, label %.thread399.i, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
   %i.lu = load ptr, ptr %i.lt, align 8, !tbaa !333
   %i.lv = getelementptr inbounds nuw i8, ptr %i.lu, i64 16
-  %i.lw = load ptr, ptr %i.lv, align 8, !tbaa !351 ; 2 uses
+  %i.lw = load ptr, ptr %i.lv, align 8, !tbaa !351
   %.not359.i = icmp eq ptr %i.lw, null
   br i1 %.not359.i, label %.thread399.i, label %bb.bf
 
@@ -232,9 +232,12 @@ bb.bf:                                            ; preds = %bb.be
   %i.mb = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 2 uses
   %i.mc = load <2 x i64>, ptr %i.ma, align 8, !tbaa !134
   store <2 x i64> %i.mc, ptr %i.mb, align 8, !tbaa !134
+  %12 = load ptr, ptr %i.lt, align 8, !tbaa !333
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %14 = load ptr, ptr %13, align 8, !tbaa !351
   %i.md = getelementptr inbounds nuw i8, ptr %i.lt, i64 8
   %i.me = load ptr, ptr %i.md, align 8, !tbaa !339
-  %i.mf = call i32 %i.lw(ptr noundef %i.me, i32 noundef %.0297.i, i8 noundef zeroext 0, ptr noundef nonnull %10) #18, !inline_history !269 ; 2 uses
+  %i.mf = call i32 %14(ptr noundef %i.me, i32 noundef %.0297.i, i8 noundef zeroext 0, ptr noundef nonnull %10) #18, !inline_history !269 ; 2 uses
   %i.mg = load i64, ptr %10, align 8, !tbaa !353
   store i64 %i.mg, ptr %i.lx, align 8, !tbaa !352
   %i.mh = load <2 x i64>, ptr %i.mb, align 8, !tbaa !134

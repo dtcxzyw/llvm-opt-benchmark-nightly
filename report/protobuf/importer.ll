@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZNSt10unique_ptrIN6google8protobuf2io19ZeroCopyInputStreamESt14default_deleteIS3_EED2Ev.exit.thread
-  %.sroa.0159.0205 = phi ptr [ %i.i, %.lr.ph ], [ %i.hw, %_ZNSt10unique_ptrIN6google8protobuf2io19ZeroCopyInputStreamESt14default_deleteIS3_EED2Ev.exit.thread ] ; 6 uses
+  %.sroa.0159.0205 = phi ptr [ %i.i, %.lr.ph ], [ %i.hw, %_ZNSt10unique_ptrIN6google8protobuf2io19ZeroCopyInputStreamESt14default_deleteIS3_EED2Ev.exit.thread ] ; 7 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.0159.0205, i64 32 ; 2 uses
   %i.ax = load ptr, ptr %i.l, align 8, !tbaa !9   ; 2 uses
   %i.ay = load ptr, ptr %i.aw, align 8, !tbaa !49
@@ -322,10 +322,10 @@ bb.o:                                             ; preds = %_ZN6google8protobuf
   br label %bb.ao
 
 bb.p:                                             ; preds = %bb.l
-  %i.bw = load ptr, ptr %.sroa.0159.0205, align 8, !tbaa !49 ; 2 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.0159.0205, i64 8 ; 2 uses
+  %i.bw = load ptr, ptr %.sroa.0159.0205, align 8, !tbaa !49
+  %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.0159.0205, i64 8 ; 3 uses
   %i.by = load i64, ptr %i.bx, align 8, !tbaa !53
-  %.fr208 = freeze i64 %i.by                      ; 4 uses
+  %.fr208 = freeze i64 %i.by                      ; 3 uses
   %i.bz = load i32, ptr %i.s, align 4, !tbaa !3
   %i.ca = or i32 %i.bz, 2
   store i32 %i.ca, ptr %i.s, align 4, !tbaa !3
@@ -392,13 +392,15 @@ _ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4t
 
 .loopexit172:                                     ; preds = %_ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit.i, %_ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit.i.us, %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #31
+  %15 = load ptr, ptr %.sroa.0159.0205, align 8, !tbaa !49
+  %16 = load i64, ptr %i.bx, align 8, !tbaa !53
   %.sroa.05.0.copyload = load i64, ptr %8, align 8, !tbaa !55
   %.sroa.26.0.copyload = load ptr, ptr %i.b, align 8, !tbaa !97
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #31, !noalias !98
   store i64 8, ptr %7, align 8, !noalias !98
   store ptr @.str, ptr %i.al, align 8, !noalias !98
-  store i64 %.fr208, ptr %i.am, align 8, !noalias !98
-  store ptr %i.bw, ptr %i.an, align 8, !noalias !98
+  store i64 %16, ptr %i.am, align 8, !noalias !98
+  store ptr %15, ptr %i.an, align 8, !noalias !98
   store i64 14, ptr %i.ao, align 8, !noalias !98
   store ptr @.str.1, ptr %i.ap, align 8, !noalias !98
   store i64 %.sroa.05.0.copyload, ptr %i.aq, align 8, !noalias !98

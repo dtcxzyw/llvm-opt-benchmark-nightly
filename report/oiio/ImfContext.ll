@@ -203,12 +203,16 @@ bb.hf:                                            ; preds = %bb.he
           to label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit unwind label %bb.hg
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit: ; preds = %bb.hf
-  %.pre = load ptr, ptr %i.d, align 8, !tbaa !31  ; 2 uses
+  %.pre = load ptr, ptr %i.d, align 8, !tbaa !31  ; 3 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 24
-  %.pre404 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !25 ; 2 uses
+  %.pre404 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !25
   %.pre405 = load i32, ptr %.pre404, align 8, !tbaa !115
   %i.nj = icmp sgt i32 %.pre405, 0
-  br i1 %i.nj, label %.lr.ph, label %._crit_edge
+  br i1 %i.nj, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit
+  %64 = getelementptr inbounds nuw i8, ptr %.pre, i64 24
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit174, %bb.he, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit
   %.lcssa = phi ptr [ %.pre, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit ], [ %i.bv, %bb.he ], [ %i.pe, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit174 ]
@@ -222,11 +226,12 @@ bb.hg:                                            ; preds = %bb.hf
           cleanup
   br label %bb.hz
 
-.lr.ph:                                           ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit174
-  %i.nm = phi ptr [ %i.pg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit174 ], [ %.pre404, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit ]
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit174 ], [ 0, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit174
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit174 ] ; 3 uses
+  %i.nm = phi ptr [ %64, %.lr.ph.preheader ], [ %i.pf, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit174 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %58) #27
-  %i.nn = getelementptr inbounds nuw i8, ptr %i.nm, i64 8
+  %65 = load ptr, ptr %i.nm, align 8, !tbaa !25
+  %i.nn = getelementptr inbounds nuw i8, ptr %65, i64 8
   %i.no = load ptr, ptr %i.nn, align 8, !tbaa !117
   %i.np = getelementptr inbounds nuw [16 x i8], ptr %i.no, i64 %indvars.iv ; 2 uses
   %i.nq = getelementptr inbounds nuw i8, ptr %i.np, i64 8
@@ -379,8 +384,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit174: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %58) #27
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.pe = load ptr, ptr %i.d, align 8, !tbaa !31  ; 2 uses
-  %i.pf = getelementptr inbounds nuw i8, ptr %i.pe, i64 24
-  %i.pg = load ptr, ptr %i.pf, align 8, !tbaa !25 ; 2 uses
+  %i.pf = getelementptr inbounds nuw i8, ptr %i.pe, i64 24 ; 2 uses
+  %i.pg = load ptr, ptr %i.pf, align 8, !tbaa !25
   %i.ph = load i32, ptr %i.pg, align 8, !tbaa !115
   %i.pi = sext i32 %i.ph to i64
   %i.pj = icmp slt i64 %indvars.iv.next, %i.pi

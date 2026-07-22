@@ -204,14 +204,15 @@ bb.a:
   %i.j = phi ptr [ %i.o, %bb.c ], [ %i.i, %bb.a ] ; 2 uses
   %i.k = phi ptr [ %i.p, %bb.c ], [ %i.h, %bb.a ]
   %.06 = phi i64 [ %i.q, %bb.c ], [ 0, %bb.a ]    ; 3 uses
-  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %.06
-  %i.m = load i32, ptr %i.l, align 4              ; 2 uses
+  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %.06 ; 2 uses
+  %i.m = load i32, ptr %i.l, align 4
   %.not = icmp eq i32 %i.m, -1
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #29
-  %.sroa.2.0.insert.ext.i = zext i32 %i.m to i64
+  %3 = load i32, ptr %i.l, align 4
+  %.sroa.2.0.insert.ext.i = zext i32 %3 to i64
   %.sroa.2.0.insert.shift.i = shl nuw i64 %.sroa.2.0.insert.ext.i, 32
   %.sroa.0.0.insert.ext.i = and i64 %.06, 4294967295
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i

@@ -204,12 +204,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #19
   %i.aj = getelementptr i8, ptr %.047112.us, i64 8
-  %.047.val.us = load ptr, ptr %i.aj, align 8     ; 4 uses
+  %.047.val.us = load ptr, ptr %i.aj, align 8     ; 5 uses
   %.not53.us = icmp eq ptr %.047.val.us, null
   br i1 %.not53.us, label %bb.p, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph.split.us
-  %.val69.us = load ptr, ptr %.047.val.us, align 8 ; 2 uses
+  %.val69.us = load ptr, ptr %.047.val.us, align 8
   %.not54.us = icmp eq ptr %i.v, %.val69.us
   br i1 %.not54.us, label %bb.p, label %bb.l
 
@@ -217,11 +217,12 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #19
+  %.val68.us = load ptr, ptr %.047.val.us, align 8
   store ptr null, ptr %i.g, align 8
   store ptr null, ptr %i.d, align 8
   %i.ak = load ptr, ptr %i.a, align 8
   %.val.us = load i32, ptr %i.ak, align 8
-  %i.al = call fastcc range(i32 0, 2) i32 @cnf_ContainsPredicateIntern(ptr noundef %.val69.us, i32 noundef %.val.us, i32 noundef 1, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.d, ptr noundef nonnull %i.g)
+  %i.al = call fastcc range(i32 0, 2) i32 @cnf_ContainsPredicateIntern(ptr noundef %.val68.us, i32 noundef %.val.us, i32 noundef 1, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.d, ptr noundef nonnull %i.g)
   %.not57.us = icmp eq i32 %i.al, 0
   br i1 %.not57.us, label %bb.n, label %bb.m
 
@@ -304,12 +305,12 @@ bb.q:                                             ; preds = %bb.p, %list_Delete.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #19
   %i.bh = getelementptr i8, ptr %.047112, i64 8
-  %.047.val = load ptr, ptr %i.bh, align 8        ; 4 uses
+  %.047.val = load ptr, ptr %i.bh, align 8        ; 5 uses
   %.not53 = icmp eq ptr %.047.val, null
   br i1 %.not53, label %bb.w, label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph.split
-  %.val69 = load ptr, ptr %.047.val, align 8      ; 3 uses
+  %.val69 = load ptr, ptr %.047.val, align 8
   %.not54 = icmp eq ptr %i.v, %.val69
   br i1 %.not54, label %bb.w, label %bb.s
 
@@ -317,12 +318,13 @@ bb.s:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #19
+  %.val68 = load ptr, ptr %.047.val, align 8      ; 2 uses
   store ptr null, ptr %i.g, align 8
   store ptr null, ptr %i.d, align 8
   store i32 0, ptr %i.c, align 4
   %i.bi = load ptr, ptr %i.a, align 8
   %.val58 = load i32, ptr %i.bi, align 8
-  %i.bj = call fastcc range(i32 0, 2) i32 @cnf_ContainsPredicateIntern(ptr noundef %.val69, i32 noundef %.val58, i32 noundef 1, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.d, ptr noundef nonnull %i.g)
+  %i.bj = call fastcc range(i32 0, 2) i32 @cnf_ContainsPredicateIntern(ptr noundef %.val68, i32 noundef %.val58, i32 noundef 1, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.d, ptr noundef nonnull %i.g)
   %.not55 = icmp eq i32 %i.bj, 0
   br i1 %.not55, label %bb.v, label %bb.t
 
@@ -336,7 +338,7 @@ bb.t:                                             ; preds = %bb.s
   %i.bp = getelementptr i8, ptr %i.bo, i64 16
   %.val60 = load ptr, ptr %i.bp, align 8
   %i.bq = load ptr, ptr %i.g, align 8
-  %i.br = call ptr @cnf_DefTargetConvert(ptr noundef %.val69, ptr noundef %i.bl, ptr noundef %i.bk, ptr noundef %.val61, ptr noundef %.val60, ptr poison, ptr noundef %i.bq, ptr noundef %.val71, ptr noundef %.val72, ptr noundef nonnull %i.c) ; 2 uses
+  %i.br = call ptr @cnf_DefTargetConvert(ptr noundef %.val68, ptr noundef %i.bl, ptr noundef %i.bk, ptr noundef %.val61, ptr noundef %.val60, ptr poison, ptr noundef %i.bq, ptr noundef %.val71, ptr noundef %.val72, ptr noundef nonnull %i.c) ; 2 uses
   %i.bs = load ptr, ptr %i.d, align 8             ; 2 uses
   %.not6.i = icmp eq ptr %i.bs, null
   br i1 %.not6.i, label %list_Delete.exit, label %.lr.ph.i

@@ -204,8 +204,8 @@ bb.qr:                                            ; preds = %_ZN5arrow6StatusD2E
 
 bb.qs:                                            ; preds = %bb.qr
   %i.fee = load ptr, ptr %i.feb, align 8, !tbaa !1162, !noalias !1149
-  %i.fef = getelementptr inbounds nuw [16 x i8], ptr %i.fee, i64 %indvars.iv186.i
-  %i.feg = load ptr, ptr %i.fef, align 8, !tbaa !190, !noalias !1149 ; 2 uses
+  %i.fef = getelementptr inbounds nuw [16 x i8], ptr %i.fee, i64 %indvars.iv186.i ; 2 uses
+  %i.feg = load ptr, ptr %i.fef, align 8, !tbaa !190, !noalias !1149
   %.not168.i = icmp eq ptr %i.feg, null
   br i1 %.not168.i, label %_ZN5arrow6StatusD2Ev.exit105.i, label %_ZN5arrow6StatusD2Ev.exit111.i
 
@@ -228,11 +228,12 @@ _ZN5arrow6StatusD2Ev.exit111.i:                   ; preds = %bb.qs
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #20, !noalias !1149
   %i.fep = load ptr, ptr %i.fcn, align 8, !tbaa !229, !noalias !1149
   %i.feq = getelementptr inbounds nuw [16 x i8], ptr %i.fep, i64 %indvars.iv186.i
-  %i.fer = load ptr, ptr %i.feq, align 8, !tbaa !919, !noalias !1149 ; 2 uses
-  %i.fes = load ptr, ptr %i.fer, align 8, !tbaa !93, !noalias !1165
+  %107 = load ptr, ptr %i.feq, align 8, !tbaa !919, !noalias !1149 ; 2 uses
+  %i.fer = load ptr, ptr %i.fef, align 8, !tbaa !190, !noalias !1149
+  %i.fes = load ptr, ptr %107, align 8, !tbaa !93, !noalias !1165
   %i.fet = getelementptr inbounds nuw i8, ptr %i.fes, i64 72
   %i.feu = load ptr, ptr %i.fet, align 8, !noalias !1165
-  call void %i.feu(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %27, ptr noundef nonnull align 8 dereferenceable(144) %i.fer, ptr noundef nonnull align 8 dereferenceable(41) %i.feg, i64 noundef 1), !noalias !1149, !inline_history !1168
+  call void %i.feu(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %27, ptr noundef nonnull align 8 dereferenceable(144) %107, ptr noundef nonnull align 8 dereferenceable(41) %i.fer, i64 noundef 1), !noalias !1149, !inline_history !1168
   %i.fev = load ptr, ptr %27, align 8, !tbaa !53, !noalias !1149 ; 2 uses
   store ptr %i.fev, ptr %0, align 8, !tbaa !53, !alias.scope !1149
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #20, !noalias !1149
@@ -635,8 +636,8 @@ bb.se:                                            ; preds = %_ZN5arrow6StatusD2E
 
 bb.sf:                                            ; preds = %bb.se
   %i.eul = load ptr, ptr %i.eui, align 8, !tbaa !1162, !noalias !2062
-  %i.eum = getelementptr inbounds nuw [16 x i8], ptr %i.eul, i64 %indvars.iv187.i
-  %i.eun = load ptr, ptr %i.eum, align 8, !tbaa !190, !noalias !2062 ; 2 uses
+  %i.eum = getelementptr inbounds nuw [16 x i8], ptr %i.eul, i64 %indvars.iv187.i ; 2 uses
+  %i.eun = load ptr, ptr %i.eum, align 8, !tbaa !190, !noalias !2062
   %.not168.i = icmp eq ptr %i.eun, null
   br i1 %.not168.i, label %_ZN5arrow6StatusD2Ev.exit104.i, label %_ZN5arrow6StatusD2Ev.exit110.i
 
@@ -659,11 +660,12 @@ _ZN5arrow6StatusD2Ev.exit110.i:                   ; preds = %bb.sf
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #20, !noalias !2062
   %i.euw = load ptr, ptr %i.esx, align 8, !tbaa !229, !noalias !2062
   %i.eux = getelementptr inbounds nuw [16 x i8], ptr %i.euw, i64 %indvars.iv187.i
-  %i.euy = load ptr, ptr %i.eux, align 8, !tbaa !919, !noalias !2062 ; 2 uses
-  %i.euz = load ptr, ptr %i.euy, align 8, !tbaa !93, !noalias !2074
+  %107 = load ptr, ptr %i.eux, align 8, !tbaa !919, !noalias !2062 ; 2 uses
+  %i.euy = load ptr, ptr %i.eum, align 8, !tbaa !190, !noalias !2062
+  %i.euz = load ptr, ptr %107, align 8, !tbaa !93, !noalias !2074
   %i.eva = getelementptr inbounds nuw i8, ptr %i.euz, i64 72
   %i.evb = load ptr, ptr %i.eva, align 8, !noalias !2074
-  call void %i.evb(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %27, ptr noundef nonnull align 8 dereferenceable(144) %i.euy, ptr noundef nonnull align 8 dereferenceable(41) %i.eun, i64 noundef 1), !noalias !2062, !inline_history !2077
+  call void %i.evb(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %27, ptr noundef nonnull align 8 dereferenceable(144) %107, ptr noundef nonnull align 8 dereferenceable(41) %i.euy, i64 noundef 1), !noalias !2062, !inline_history !2077
   %i.evc = load ptr, ptr %27, align 8, !tbaa !53, !noalias !2062 ; 2 uses
   store ptr %i.evc, ptr %0, align 8, !tbaa !53, !alias.scope !2062
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #20, !noalias !2062

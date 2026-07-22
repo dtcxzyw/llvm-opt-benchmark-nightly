@@ -203,19 +203,20 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
 
 .preheader:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !61   ; 2 uses
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !61   ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !27
-  %i.aa = load ptr, ptr %i.x, align 8, !tbaa !28  ; 2 uses
+  %i.aa = load ptr, ptr %i.x, align 8, !tbaa !28
   %.not44 = icmp eq ptr %i.z, %i.aa
   br i1 %.not44, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit, label %bb.e
 
 bb.e:                                             ; preds = %.preheader
   %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
-  %.pre.a = load ptr, ptr %i.aa, align 8, !tbaa !34
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
-  %i.ad = getelementptr inbounds nuw i8, ptr %.pre.a, i64 48
+  %.pre.a = load ptr, ptr %i.x, align 8, !tbaa !28
+  %5 = load ptr, ptr %.pre.a, align 8, !tbaa !34
+  %i.ad = getelementptr inbounds nuw i8, ptr %5, i64 48
   %i.ae = load i32, ptr %i.ad, align 8, !tbaa !85
   invoke void (ptr, ptr, ...) @_ZN10duckdb_re212StringPrintfB5cxx11EPKcz(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %4, ptr noundef nonnull @.str.3, i32 noundef %i.ae)
           to label %bb.f unwind label %.loopexit.split-lp52
@@ -339,12 +340,12 @@ bb.m:                                             ; preds = %.noexc28, %_ZNKSt7_
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 %i.bj
   store i8 0, ptr %i.bt, align 1, !tbaa !89
   %.pre60 = load ptr, ptr %i.w, align 8, !tbaa !61
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   %.pre61 = load ptr, ptr %.pre60, align 8, !tbaa !28
   %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %.pre61, i64 %.043
   %.pre62 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !34
   %.phi.trans.insert63 = getelementptr inbounds nuw i8, ptr %.pre62, i64 48
   %.pre64 = load i32, ptr %.phi.trans.insert63, align 8, !tbaa !85
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   invoke void (ptr, ptr, ...) @_ZN10duckdb_re212StringPrintfB5cxx11EPKcz(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %4, ptr noundef nonnull @.str.3, i32 noundef %.pre64)
           to label %bb.n unwind label %.loopexit51
 
@@ -747,10 +748,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i31: ; pre
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit34.preheader: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i31
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !61   ; 2 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !61   ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !27
-  %i.v = load ptr, ptr %i.s, align 8, !tbaa !28   ; 2 uses
+  %i.v = load ptr, ptr %i.s, align 8, !tbaa !28
   %.not82 = icmp eq ptr %i.u, %i.v
   br i1 %.not82, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit34._crit_edge, label %bb.c
 
@@ -759,9 +760,10 @@ bb.c:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
-  %.pre.a = load ptr, ptr %i.v, align 8, !tbaa !34
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
-  %i.aa = getelementptr inbounds nuw i8, ptr %.pre.a, i64 48
+  %.pre.a = load ptr, ptr %i.s, align 8, !tbaa !28
+  %5 = load ptr, ptr %.pre.a, align 8, !tbaa !34
+  %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 48
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !85
   invoke void (ptr, ptr, ...) @_ZN10duckdb_re212StringPrintfB5cxx11EPKcz(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %3, ptr noundef nonnull @.str.3, i32 noundef %i.ab)
           to label %bb.d unwind label %.loopexit.split-lp87
@@ -910,12 +912,12 @@ bb.g:                                             ; preds = %.noexc39, %_ZNKSt7_
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.bm
   store i8 0, ptr %i.bw, align 1, !tbaa !89
   %.pre104 = load ptr, ptr %i.r, align 8, !tbaa !61
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   %.pre105 = load ptr, ptr %.pre104, align 8, !tbaa !28
   %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %.pre105, i64 %.081
   %.pre106 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !34
   %.phi.trans.insert107 = getelementptr inbounds nuw i8, ptr %.pre106, i64 48
   %.pre108 = load i32, ptr %.phi.trans.insert107, align 8, !tbaa !85
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   invoke void (ptr, ptr, ...) @_ZN10duckdb_re212StringPrintfB5cxx11EPKcz(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %3, ptr noundef nonnull @.str.3, i32 noundef %.pre108)
           to label %bb.h unwind label %.loopexit86
 

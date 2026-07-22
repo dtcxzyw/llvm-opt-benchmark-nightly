@@ -204,10 +204,10 @@ RSTRING_PTR.exit1138:                             ; preds = %bb.fb, %bb.fc
   br label %bb.fd
 
 bb.fd:                                            ; preds = %.lr.ph1582, %bb.fx
-  %.208081581 = phi ptr [ %.07881675, %.lr.ph1582 ], [ %.28816, %bb.fx ] ; 3 uses
+  %.208081581 = phi ptr [ %.07881675, %.lr.ph1582 ], [ %.28816, %bb.fx ] ; 4 uses
   %.09561580 = phi i64 [ 0, %.lr.ph1582 ], [ %.1957, %bb.fx ] ; 2 uses
   %.09581579 = phi ptr [ %i.ss, %.lr.ph1582 ], [ %.1959.lcssa, %bb.fx ] ; 2 uses
-  %i.sv = load i8, ptr %.208081581, align 1, !tbaa !15 ; 2 uses
+  %i.sv = load i8, ptr %.208081581, align 1, !tbaa !15
   %i.sw = add i8 %i.sv, -33
   %or.cond1086 = icmp ult i8 %i.sw, 64
   br i1 %or.cond1086, label %bb.fe, label %.critedge55
@@ -215,7 +215,8 @@ bb.fd:                                            ; preds = %.lr.ph1582, %bb.fx
 bb.fe:                                            ; preds = %bb.fd
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.sx = getelementptr i8, ptr %.208081581, i64 1 ; 2 uses
-  %i.sy = and i8 %i.sv, 63
+  %4 = load i8, ptr %.208081581, align 1, !tbaa !15
+  %i.sy = and i8 %4, 63
   %i.sz = xor i8 %i.sy, 32
   %i.ta = zext nneg i8 %i.sz to i64               ; 2 uses
   %i.tb = add i64 %.09561580, %i.ta               ; 3 uses

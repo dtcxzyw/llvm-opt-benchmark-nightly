@@ -203,8 +203,8 @@ bb.c:                                             ; preds = %_ZN2v88internal7Iso
 .lr.ph67:                                         ; preds = %bb.c, %bb.e
   %.sroa.047.065 = phi ptr [ %.sroa.047.0, %bb.e ], [ %.sroa.047.064, %bb.c ] ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.047.065, i64 8
-  %.sroa.07.0.copyload = load ptr, ptr %i.m, align 8
-  %i.n = load i64, ptr %.sroa.07.0.copyload, align 8 ; 2 uses
+  %.sroa.07.0.copyload = load ptr, ptr %i.m, align 8 ; 2 uses
+  %i.n = load i64, ptr %.sroa.07.0.copyload, align 8
   %i.o = add i64 %i.n, 23
   %i.p = inttoptr i64 %i.o to ptr
   %i.q = load i64, ptr %i.p, align 8
@@ -218,7 +218,8 @@ bb.d:                                             ; preds = %.lr.ph67
 
 bb.e:                                             ; preds = %.lr.ph67
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
-  store i64 %i.n, ptr %3, align 8
+  %5 = load i64, ptr %.sroa.07.0.copyload, align 8
+  store i64 %5, ptr %3, align 8
   call void @_ZN2v88internal6Module11RecordErrorEPNS0_7IsolateENS0_6TaggedINS0_6ObjectEEE(ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull %1, i64 %.sroa.0.0.copyload.i.i) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
   %.sroa.047.0 = load ptr, ptr %.sroa.047.065, align 8 ; 2 uses

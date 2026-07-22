@@ -203,10 +203,10 @@ bb.d:                                             ; preds = %bb.a
   %i.k = load ptr, ptr %1, align 8, !tbaa !217
   %i.l = tail call noundef i64 @_ZNK5arrow5Array10null_countEv(ptr noundef nonnull align 8 dereferenceable(32) %i.k)
   %i.m = load ptr, ptr %1, align 8, !tbaa !217
-  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !220  ; 6 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !220  ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %i.q = load i64, ptr %i.p, align 8, !tbaa !901  ; 2 uses
+  %i.q = load i64, ptr %i.p, align 8, !tbaa !901
   %i.r = icmp eq i64 %i.l, %i.q
   br i1 %i.r, label %bb.e, label %bb.x
 
@@ -457,17 +457,20 @@ _ZNSt12__shared_ptrIN5arrow9NullArrayELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ;
 
 bb.af:                                            ; preds = %bb.x
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #23
+  %.val = load ptr, ptr %i.n, align 8, !tbaa !220 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !924)
-  %i.cn = getelementptr inbounds nuw i8, ptr %i.o, i64 40
+  %i.cn = getelementptr inbounds nuw i8, ptr %.val, i64 40
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !601, !noalias !924
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23, !noalias !924
-  store i64 %i.q, ptr %i.a, align 8, !tbaa !11, !noalias !924
+  %14 = getelementptr inbounds nuw i8, ptr %.val, i64 16
+  %15 = load i64, ptr %14, align 8, !tbaa !901, !noalias !924
+  store i64 %15, ptr %i.a, align 8, !tbaa !11, !noalias !924
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23, !noalias !924
   store ptr null, ptr %i.b, align 8, !tbaa !927, !noalias !924
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23, !noalias !924
   store i32 0, ptr %i.c, align 4, !tbaa !3, !noalias !924
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23, !noalias !924
-  %i.cp = getelementptr inbounds nuw i8, ptr %i.o, i64 32
+  %i.cp = getelementptr inbounds nuw i8, ptr %.val, i64 32
   %i.cq = load i64, ptr %i.cp, align 8, !tbaa !929, !noalias !924
   store i64 %i.cq, ptr %i.d, align 8, !tbaa !11, !noalias !924
   tail call void @llvm.experimental.noalias.scope.decl(metadata !930)

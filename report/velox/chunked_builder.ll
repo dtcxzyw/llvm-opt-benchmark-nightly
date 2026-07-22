@@ -203,16 +203,16 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i:
   br label %_ZNSt10shared_ptrIN5arrow6BufferEEaSERKS2_.exit
 
 _ZNSt10shared_ptrIN5arrow6BufferEEaSERKS2_.exit:  ; preds = %bb.af, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i
-  %i.ev = phi ptr [ %i.dr, %bb.af ], [ %.pre164, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i ] ; 7 uses
+  %i.ev = phi ptr [ %i.dr, %bb.af ], [ %.pre164, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i ] ; 8 uses
   %i.ew = phi ptr [ %i.dp, %bb.af ], [ %.pre163, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i ] ; 3 uses
-  %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 8 ; 2 uses
+  %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 8 ; 3 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ev, i64 16
-  %i.ez = load i64, ptr %i.ey, align 8, !tbaa !238 ; 2 uses
+  %i.ez = load i64, ptr %i.ey, align 8, !tbaa !238
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.fb = load ptr, ptr %i.fa, align 8, !tbaa !116
   %i.fc = getelementptr inbounds nuw [8 x i8], ptr %i.fb, i64 %1
   store i64 %i.ez, ptr %i.fc, align 8, !tbaa !50
-  %i.fd = load ptr, ptr %i.ev, align 8, !tbaa !7  ; 2 uses
+  %i.fd = load ptr, ptr %i.ev, align 8, !tbaa !7
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 40
   %i.ff = load i32, ptr %i.fe, align 8, !tbaa !13
   %i.fg = icmp eq i32 %i.ff, 0
@@ -220,9 +220,12 @@ _ZNSt10shared_ptrIN5arrow6BufferEEaSERKS2_.exit:  ; preds = %bb.af, %_ZNSt16_Sp_
 
 bb.aq:                                            ; preds = %_ZNSt10shared_ptrIN5arrow6BufferEEaSERKS2_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #23
+  %19 = load ptr, ptr %i.ex, align 8, !tbaa !231
+  %20 = getelementptr inbounds nuw i8, ptr %19, i64 16
+  %21 = load i64, ptr %20, align 8, !tbaa !238
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !67
-  invoke void @_ZN5arrow14AllocateBitmapElPNS_10MemoryPoolE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result") align 8 %14, i64 noundef %i.ez, ptr noundef %i.fi)
+  invoke void @_ZN5arrow14AllocateBitmapElPNS_10MemoryPoolE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result") align 8 %14, i64 noundef %21, ptr noundef %i.fi)
           to label %bb.ar unwind label %bb.az
 
 bb.ar:                                            ; preds = %bb.aq
@@ -625,7 +628,8 @@ bb.cp:                                            ; preds = %bb.co
 bb.cq:                                            ; preds = %bb.cl
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #23
   call void @llvm.experimental.noalias.scope.decl(metadata !287)
-  %i.mc = getelementptr inbounds nuw i8, ptr %i.fd, i64 48 ; 3 uses
+  %22 = load ptr, ptr %i.ev, align 8, !tbaa !7, !noalias !287
+  %i.mc = getelementptr inbounds nuw i8, ptr %22, i64 48 ; 3 uses
   %i.md = getelementptr inbounds nuw i8, ptr %i.ev, i64 64
   %i.me = getelementptr inbounds nuw i8, ptr %i.ev, i64 72
   %i.mf = load ptr, ptr %i.me, align 8, !tbaa !284, !noalias !287

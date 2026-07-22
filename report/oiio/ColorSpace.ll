@@ -203,13 +203,13 @@ bb.ae:                                            ; preds = %_ZStlsISt11char_tra
 
 .loopexit319:                                     ; preds = %_ZNSolsEf.exit197, %_ZNSolsEf.exit.preheader, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit182
   %i.hc = load ptr, ptr %1, align 8, !tbaa !70    ; 3 uses
-  %i.hd = getelementptr inbounds nuw i8, ptr %i.hc, i64 352
-  %i.he = getelementptr inbounds nuw i8, ptr %i.hc, i64 360
+  %i.hd = getelementptr inbounds nuw i8, ptr %i.hc, i64 352 ; 2 uses
+  %i.he = getelementptr inbounds nuw i8, ptr %i.hc, i64 360 ; 2 uses
   %i.hf = load ptr, ptr %i.he, align 8, !tbaa !74
-  %i.hg = load ptr, ptr %i.hd, align 8, !tbaa !73 ; 2 uses
+  %i.hg = load ptr, ptr %i.hd, align 8, !tbaa !73
   %i.hh = ptrtoint ptr %i.hf to i64
   %i.hi = ptrtoint ptr %i.hg to i64
-  %i.hj = sub i64 %i.hh, %i.hi                    ; 2 uses
+  %i.hj = sub i64 %i.hh, %i.hi
   %i.hk = and i64 %i.hj, 137438953440
   %.not94 = icmp eq i64 %i.hk, 0
   br i1 %.not94, label %bb.aw, label %bb.af
@@ -217,7 +217,12 @@ bb.ae:                                            ; preds = %_ZStlsISt11char_tra
 bb.af:                                            ; preds = %.loopexit319
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
-  %i.hl = lshr exact i64 %i.hj, 5
+  %10 = load ptr, ptr %i.he, align 8, !tbaa !74
+  %11 = load ptr, ptr %i.hd, align 8, !tbaa !73   ; 2 uses
+  %12 = ptrtoint ptr %10 to i64
+  %13 = ptrtoint ptr %11 to i64
+  %14 = sub i64 %12, %13
+  %i.hl = lshr exact i64 %14, 5
   %i.hm = trunc i64 %i.hl to i32
   %i.hn = icmp sgt i32 %i.hm, 0
   br i1 %i.hn, label %.lr.ph329, label %._crit_edge330
@@ -235,7 +240,7 @@ bb.af:                                            ; preds = %.loopexit319
 
 bb.ag:                                            ; preds = %.lr.ph329, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %indvars.iv338 = phi i64 [ 0, %.lr.ph329 ], [ %indvars.iv.next339, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
-  %i.ht = phi ptr [ %i.hg, %.lr.ph329 ], [ %i.iz, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+  %i.ht = phi ptr [ %11, %.lr.ph329 ], [ %i.iz, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
   %i.hu = getelementptr inbounds nuw [32 x i8], ptr %i.ht, i64 %indvars.iv338
   %i.hv = load ptr, ptr %i.hu, align 8, !tbaa !7  ; 4 uses

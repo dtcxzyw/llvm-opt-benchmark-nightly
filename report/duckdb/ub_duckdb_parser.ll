@@ -203,8 +203,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.t
   br i1 %i.ab, label %bb.h, label %bb.t
 
 bb.h:                                             ; preds = %bb.g
-  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.052.073, i64 8 ; 2 uses
-  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !391 ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.052.073, i64 8 ; 3 uses
+  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !391
   %i.ae = load ptr, ptr %1, align 8, !tbaa !9     ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.ad
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !18
@@ -213,6 +213,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
+  %5 = load i64, ptr %i.ac, align 8, !tbaa !391
   call void @llvm.experimental.noalias.scope.decl(metadata !392)
   %i.ai = load i64, ptr %i.h, align 8, !tbaa !15, !noalias !392 ; 3 uses
   %i.aj = icmp ugt i64 %.01574, %i.ai
@@ -226,7 +227,7 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i27: ; preds = %bb.i
-  %i.ak = sub i64 %i.ad, %.01574
+  %i.ak = sub i64 %5, %.01574
   store ptr %i.i, ptr %3, align 8, !tbaa !16, !alias.scope !392
   %i.al = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.01574 ; 2 uses
   %i.am = sub nuw i64 %i.ai, %.01574
@@ -629,8 +630,8 @@ bb.j:                                             ; preds = %bb.g, %bb.h
 
 bb.k:                                             ; preds = %.lr.ph, %.thread
   %.sroa.0245.0320 = phi ptr [ %i.t, %.lr.ph ], [ %i.bk, %.thread ] ; 3 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0245.0320, i64 16
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !496  ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0245.0320, i64 16 ; 2 uses
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !496
   %.not = icmp eq ptr %i.z, null
   br i1 %.not, label %.thread, label %bb.l
 
@@ -641,9 +642,10 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #27
+  %19 = load ptr, ptr %i.y, align 8, !tbaa !496
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0245.0320, i64 24
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !505
-  invoke void %i.z(ptr dead_on_unwind nonnull writable sret(%"struct.duckdb::ParserOverrideResult") align 8 %6, ptr noundef %i.ad, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(25) %i.b)
+  invoke void %19(ptr dead_on_unwind nonnull writable sret(%"struct.duckdb::ParserOverrideResult") align 8 %6, ptr noundef %i.ad, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(25) %i.b)
           to label %bb.n unwind label %bb.q
 
 bb.n:                                             ; preds = %bb.m
@@ -1046,16 +1048,17 @@ bb.ch:                                            ; preds = %bb.cc, %bb.cd
 bb.ci:                                            ; preds = %.lr.ph325, %.thread278
   %.2113324 = phi i64 [ %.0111332, %.lr.ph325 ], [ %.4115283, %.thread278 ] ; 4 uses
   %.0118323 = phi i1 [ false, %.lr.ph325 ], [ %.2120282, %.thread278 ] ; 2 uses
-  %.sroa.0237.0322 = phi ptr [ %i.fj, %.lr.ph325 ], [ %i.il, %.thread278 ] ; 4 uses
-  %i.fo = load ptr, ptr %.sroa.0237.0322, align 8, !tbaa !516 ; 2 uses
+  %.sroa.0237.0322 = phi ptr [ %i.fj, %.lr.ph325 ], [ %i.il, %.thread278 ] ; 5 uses
+  %i.fo = load ptr, ptr %.sroa.0237.0322, align 8, !tbaa !516
   %.not139 = icmp eq ptr %i.fo, null
   br i1 %.not139, label %.thread278, label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #27
+  %20 = load ptr, ptr %.sroa.0237.0322, align 8, !tbaa !516
   %i.fp = getelementptr inbounds nuw i8, ptr %.sroa.0237.0322, i64 24
   %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !505
-  invoke void %i.fo(ptr dead_on_unwind nonnull writable sret(%"struct.duckdb::ParserExtensionParseResult") align 8 %16, ptr noundef %i.fq, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0241.0331)
+  invoke void %20(ptr dead_on_unwind nonnull writable sret(%"struct.duckdb::ParserExtensionParseResult") align 8 %16, ptr noundef %i.fq, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0241.0331)
           to label %bb.ck unwind label %bb.cr
 
 bb.ck:                                            ; preds = %bb.cj

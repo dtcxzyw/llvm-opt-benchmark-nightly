@@ -204,8 +204,8 @@ _ZNK10glTFCommon3RefIN5glTF28AccessorEEcvbEv.exit597.thread: ; preds = %._ZNK10g
   %i.aos = phi ptr [ %i.aof, %.preheader.lr.ph ], [ %i.asj, %.critedge ] ; 2 uses
   %indvars.iv996 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next997, %.critedge ] ; 2 uses
   %i.aot = phi ptr [ %i.aol, %.preheader.lr.ph ], [ %i.asn, %.critedge ]
-  %i.aou = getelementptr inbounds nuw [8 x i8], ptr %i.aot, i64 %indvars.iv996
-  %i.aov = load ptr, ptr %i.aou, align 8          ; 4 uses
+  %i.aou = getelementptr inbounds nuw [8 x i8], ptr %i.aot, i64 %indvars.iv996 ; 2 uses
+  %i.aov = load ptr, ptr %i.aou, align 8          ; 2 uses
   %i.aow = getelementptr inbounds nuw i8, ptr %i.aov, i64 264
   %i.aox = getelementptr inbounds nuw i8, ptr %i.aov, i64 272
   %i.aoy = load ptr, ptr %i.aox, align 8          ; 2 uses
@@ -236,10 +236,11 @@ bb.fb:                                            ; preds = %.lr.ph933
 
 bb.fc:                                            ; preds = %.lr.ph933
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #31
-  %i.apo = getelementptr inbounds nuw i8, ptr %i.aov, i64 16
+  %16 = load ptr, ptr %i.aou, align 8             ; 2 uses
+  %i.apo = getelementptr inbounds nuw i8, ptr %16, i64 16
   store ptr %i.aoq, ptr %15, align 8
   %i.app = load ptr, ptr %i.apo, align 8          ; 2 uses
-  %i.apq = getelementptr inbounds nuw i8, ptr %i.aov, i64 24
+  %i.apq = getelementptr inbounds nuw i8, ptr %16, i64 24
   %i.apr = load i64, ptr %i.apq, align 8          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #31
   store i64 %i.apr, ptr %i.a, align 8

@@ -199,8 +199,8 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %.backedge2093, %bb.m
-  %i.av = load ptr, ptr %i.a, align 8, !tbaa !13  ; 4 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 32
+  %i.av = load ptr, ptr %i.a, align 8, !tbaa !13  ; 5 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 32 ; 2 uses
   %i.ax = load i8, ptr %i.aw, align 8, !tbaa !8   ; 3 uses
   switch i8 %i.ax, label %.thread [
     i8 11, label %bb.o
@@ -259,7 +259,14 @@ bb.w:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
   store ptr %i.av, ptr @zz_hold, align 8, !tbaa !13
-  %.in1361 = load i8, ptr getelementptr inbounds nuw (i8, ptr @zz_lengths, i64 106), align 1, !tbaa !8 ; 2 uses
+  %5 = load i8, ptr %i.aw, align 8, !tbaa !8      ; 2 uses
+  %.off = add i8 %5, -11
+  %switch = icmp ult i8 %.off, 2
+  %6 = getelementptr inbounds nuw i8, ptr %i.av, i64 33
+  %7 = zext i8 %5 to i64
+  %8 = getelementptr inbounds nuw i8, ptr @zz_lengths, i64 %7
+  %.in1361.in = select i1 %switch, ptr %6, ptr %8
+  %.in1361 = load i8, ptr %.in1361.in, align 1, !tbaa !8 ; 2 uses
   %i.bp = zext i8 %.in1361 to i32
   store i32 %i.bp, ptr @zz_size, align 4, !tbaa !4
   %i.bq = zext i8 %.in1361 to i64

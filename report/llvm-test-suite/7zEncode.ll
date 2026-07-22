@@ -203,7 +203,7 @@ _ZN8NArchive3N7z10CCoderInfoD2Ev.exit:            ; preds = %_ZN8NArchive3N7z10C
   %.1175 = phi i32 [ 0, %_ZN8NArchive3N7z10CCoderInfoD2Ev.exit.lr.ph ], [ %.11.ph, %bb.c ] ; 2 uses
   %i.aw = load ptr, ptr %i.am, align 8, !tbaa !40
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %indvars.iv187
-  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !41 ; 2 uses
+  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !41 ; 3 uses
   %i.az = call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #15 ; 4 uses
   store i64 0, ptr %i.az, align 8, !tbaa !42
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 8
@@ -223,13 +223,14 @@ _ZN8NArchive3N7z10CCoderInfoD2Ev.exit:            ; preds = %_ZN8NArchive3N7z10C
   %i.bj = getelementptr [8 x i8], ptr %i.bh, i64 %i.bi
   %i.bk = getelementptr i8, ptr %i.bj, i64 -8
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !41
-  %i.bm = load i64, ptr %i.ay, align 8, !tbaa !47 ; 2 uses
+  %i.bm = load i64, ptr %i.ay, align 8, !tbaa !47
   store i64 %i.bm, ptr %i.bl, align 8, !tbaa !42
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
   store ptr null, ptr %2, align 8, !tbaa !50
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   store ptr null, ptr %3, align 8, !tbaa !36
-  %i.bn = invoke noundef i32 @_Z11CreateCoderyR9CMyComPtrI14ICompressCoderERS_I15ICompressCoder2Eb(i64 noundef %i.bm, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext true)
+  %6 = load i64, ptr %i.ay, align 8, !tbaa !47
+  %i.bn = invoke noundef i32 @_Z11CreateCoderyR9CMyComPtrI14ICompressCoderERS_I15ICompressCoder2Eb(i64 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext true)
           to label %bb.d unwind label %bb.e       ; 2 uses
 
 bb.d:                                             ; preds = %_ZN8NArchive3N7z10CCoderInfoD2Ev.exit

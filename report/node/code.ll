@@ -201,8 +201,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %i.bx = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.10, i64 noundef 1) #7 ; 0 uses
   %i.by = add i64 %.sroa.0.0.copyload, 15
-  %i.bz = inttoptr i64 %i.by to ptr               ; 2 uses
-  %i.ca = load i64, ptr %i.bz, align 8            ; 2 uses
+  %i.bz = inttoptr i64 %i.by to ptr               ; 3 uses
+  %i.ca = load i64, ptr %i.bz, align 8
   %.not.i75.i = icmp eq i64 %i.ca, 0
   br i1 %.not.i75.i, label %_ZNK2v88internal4Code25has_source_position_tableEv.exit.thread.i, label %_ZNK2v88internal4Code25has_source_position_tableEv.exit.i
 
@@ -214,7 +214,8 @@ _ZNK2v88internal4Code25has_source_position_tableEv.exit.i: ; preds = %bb.j
 
 bb.k:                                             ; preds = %_ZNK2v88internal4Code25has_source_position_tableEv.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #7
-  call void @_ZN2v88internal27SourcePositionTableIteratorC1ENS0_6TaggedINS0_16TrustedByteArrayEEENS1_15IterationFilterENS1_19FunctionEntryFilterE(ptr noundef nonnull align 8 dereferenceable(56) %6, i64 %i.ca, i32 noundef 0, i32 noundef 0) #7
+  %15 = load i64, ptr %i.bz, align 8
+  call void @_ZN2v88internal27SourcePositionTableIteratorC1ENS0_6TaggedINS0_16TrustedByteArrayEEENS1_15IterationFilterENS1_19FunctionEntryFilterE(ptr noundef nonnull align 8 dereferenceable(56) %6, i64 %15, i32 noundef 0, i32 noundef 0) #7
   %i.cd = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 3 uses
   %i.ce = load i32, ptr %i.cd, align 8
   %i.cf = icmp eq i32 %i.ce, -1

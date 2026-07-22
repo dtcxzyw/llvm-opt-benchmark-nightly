@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   %i.af = load i64, ptr %1, align 8
   store i64 %i.af, ptr %2, align 8
-  %i.ag = call i64 @_ZN2v88internal22JSFinalizationRegistry14PopClearedCellEPNS0_7IsolateEPb(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %0, ptr noundef nonnull %i.a) ; 2 uses
+  %i.ag = call i64 @_ZN2v88internal22JSFinalizationRegistry14PopClearedCellEPNS0_7IsolateEPb(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %0, ptr noundef nonnull %i.a)
   %i.ah = load ptr, ptr %i.f, align 8             ; 2 uses
   %i.ai = load ptr, ptr %i.h, align 8
   %i.aj = icmp eq ptr %i.ah, %i.ai
@@ -212,7 +212,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN2v88internal6HandleINS0_8WeakCellEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
 
 _ZN2v88internal6HandleINS0_8WeakCellEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit: ; preds = %bb.d, %bb.e
-  %.0.i.i22 = phi ptr [ %i.ak, %bb.e ], [ %i.ah, %bb.d ] ; 2 uses
+  %.0.i.i22 = phi ptr [ %i.ak, %bb.e ], [ %i.ah, %bb.d ] ; 3 uses
   %i.al = ptrtoint ptr %.0.i.i22 to i64
   %i.am = add i64 %i.al, 8
   %i.an = inttoptr i64 %i.am to ptr
@@ -220,7 +220,8 @@ _ZN2v88internal6HandleINS0_8WeakCellEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit: ;
   store i64 %i.ag, ptr %.0.i.i22, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  %i.ao = add i64 %i.ag, -1
+  %4 = load i64, ptr %.0.i.i22, align 8
+  %i.ao = add i64 %4, -1
   %i.ap = inttoptr i64 %i.ao to ptr
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 32
   %i.ar = load i64, ptr %i.aq, align 8

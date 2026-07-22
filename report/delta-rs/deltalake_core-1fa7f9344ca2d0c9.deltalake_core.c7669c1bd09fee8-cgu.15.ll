@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction8protocolNtB2_15ProtocolChecker10can_commit(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %1, ptr noundef nonnull %2, ptr noalias noundef readonly align 8 captures(none) dereferenceable(56) %3, ptr noalias noundef nonnull readonly align 8 captures(address) %4, i64 noundef range(i64 0, 33909456017848441) %5, ptr noalias noundef readonly align 8 captures(none) dereferenceable(408) %6) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [72 x i8], align 8                ; 5 uses
+  %i.a = alloca [72 x i8], align 8                ; 8 uses
   %i.b = alloca [72 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction8protocolNtB2_15ProtocolChecker12can_write_to(ptr noalias noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %1, ptr noundef nonnull %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %3)
@@ -265,9 +265,15 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.aa, label %bb.i, label %.loopexit
 
 bb.h:                                             ; preds = %bb.e
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
+  %.sroa.525.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %.sroa.525.0.copyload = load i64, ptr %.sroa.525.0..sroa_idx, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store i64 -9223372036854775783, ptr %0, align 8
   %.sroa.236.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr inttoptr (i64 -9223372036854775808 to ptr), ptr %.sroa.236.0..sroa_idx, align 8
+  %.sroa.337.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %.sroa.525.0.copyload, ptr %.sroa.337.0..sroa_idx, align 8
   br label %bb.o
 
 bb.i:                                             ; preds = %bb.g

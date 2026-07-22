@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph, %bb.l
   %i.l = phi ptr [ %i.g, %.lr.ph ], [ %i.bd, %bb.l ]
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !141  ; 4 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !141  ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.p = load i32, ptr %i.o, align 8, !tbaa !500
   %i.q = and i32 %i.p, %i.f
@@ -214,11 +214,11 @@ bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 20 ; 4 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !502
   %i.t = icmp eq i32 %i.s, 0
-  %.pre = load ptr, ptr %i.n, align 8, !tbaa !498 ; 2 uses
   br i1 %i.t, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.u = getelementptr inbounds nuw i8, ptr %.pre, i64 76
+  %6 = load ptr, ptr %i.n, align 8, !tbaa !498
+  %i.u = getelementptr inbounds nuw i8, ptr %6, i64 76
   %i.v = load i32, ptr %i.u, align 4, !tbaa !276
   %i.w = and i32 %i.v, 8
   %.not16 = icmp eq i32 %i.w, 0
@@ -226,9 +226,10 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #31
+  %7 = load ptr, ptr %i.n, align 8, !tbaa !498
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.h, i8 0, i64 104, i1 false)
   store ptr @RM_GetApi, ptr %5, align 8, !tbaa !127
-  store ptr %.pre, ptr %i.i, align 8, !tbaa !106
+  store ptr %7, ptr %i.i, align 8, !tbaa !106
   store i32 64, ptr %i.j, align 8, !tbaa !102
   %i.x = load i64, ptr @moduleTempClientCount, align 8, !tbaa !29 ; 2 uses
   %.not.i.i = icmp eq i64 %i.x, 0

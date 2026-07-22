@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %bb.e
 define internal fastcc i64 @dir_globs(i64 noundef %0, i64 noundef %1, i32 noundef range(i32 0, -8) %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 3 uses
-  %i.b = alloca i64, align 8                      ; 6 uses
+  %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
   %i.d = alloca ptr, align 8                      ; 5 uses
   store i64 %0, ptr %i.a, align 8, !tbaa !11
@@ -212,32 +212,40 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.g, %bb.a
   %i.f = phi i64 [ %0, %bb.a ], [ %.pre, %bb.g ]
-  %.0 = phi i64 [ 0, %bb.a ], [ %i.u, %bb.g ]     ; 4 uses
-  %i.g = inttoptr i64 %i.f to ptr                 ; 4 uses
+  %.0 = phi i64 [ 0, %bb.a ], [ %i.u, %bb.g ]     ; 3 uses
+  %i.g = inttoptr i64 %i.f to ptr                 ; 5 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !59   ; 2 uses
   %i.i = and i64 %i.h, 8192
   %.not.i = icmp eq i64 %i.i, 0
-  br i1 %.not.i, label %rb_array_len.exit, label %rb_array_len.exit.thread
+  br i1 %.not.i, label %6, label %3
 
-rb_array_len.exit:                                ; preds = %bb.b
-  %3 = getelementptr i8, ptr %i.g, i64 16
-  %4 = load i64, ptr %3, align 8, !tbaa !20
-  %i.j = icmp slt i64 %.0, %4
-  br i1 %i.j, label %bb.d, label %bb.h
+3:                                                ; preds = %bb.b
+  %4 = lshr i64 %i.h, 15
+  %5 = and i64 %4, 127
+  br label %rb_array_len.exit
 
-rb_array_len.exit.thread:                         ; preds = %bb.b
-  %5 = lshr i64 %i.h, 15
-  %i.k = and i64 %5, 127
-  %6 = icmp samesign ult i64 %.0, %i.k
-  br i1 %6, label %bb.c, label %bb.h
+6:                                                ; preds = %bb.b
+  %7 = getelementptr i8, ptr %i.g, i64 16
+  %8 = load i64, ptr %7, align 8, !tbaa !20
+  br label %rb_array_len.exit
+
+rb_array_len.exit:                                ; preds = %3, %6
+  %.0.i = phi i64 [ %5, %3 ], [ %8, %6 ]
+  %i.j = icmp slt i64 %.0, %.0.i
+  br i1 %i.j, label %rb_array_len.exit.thread, label %bb.h
+
+rb_array_len.exit.thread:                         ; preds = %rb_array_len.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20
+  %9 = load i64, ptr %i.g, align 8, !tbaa !59
+  %i.k = and i64 %9, 8192
+  %.not.i.i = icmp eq i64 %i.k, 0
+  br i1 %.not.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %rb_array_len.exit.thread
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20
   %i.l = getelementptr i8, ptr %i.g, i64 16
   br label %RARRAY_AREF.exit
 
-bb.d:                                             ; preds = %rb_array_len.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20
+bb.d:                                             ; preds = %rb_array_len.exit.thread
   %i.m = getelementptr i8, ptr %i.g, i64 32
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !20
   br label %RARRAY_AREF.exit
@@ -275,7 +283,7 @@ bb.g:                                             ; preds = %RARRAY_AREF.exit
   %.pre = load i64, ptr %i.a, align 8, !tbaa !11
   br label %bb.b, !llvm.loop !176
 
-bb.h:                                             ; preds = %rb_array_len.exit.thread, %rb_array_len.exit
+bb.h:                                             ; preds = %rb_array_len.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #20
   store ptr %i.a, ptr %i.d, align 8, !tbaa !47
   call void asm sideeffect "", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(ptr) %i.d) #20, !srcloc !177

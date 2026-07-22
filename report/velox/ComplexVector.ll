@@ -204,18 +204,19 @@ bb.c:                                             ; preds = %.lr.ph, %bb.s
   %i.z = phi ptr [ %i.e, %.lr.ph ], [ %i.bs, %bb.s ] ; 2 uses
   %i.aa = phi ptr [ %i.d, %.lr.ph ], [ %i.bt, %bb.s ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 3 uses
-  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %indvars.iv
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !47 ; 3 uses
+  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %indvars.iv ; 2 uses
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !47
   %.not = icmp eq ptr %i.ac, null
   br i1 %.not, label %bb.s, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #39
+  %7 = load ptr, ptr %i.ab, align 8, !tbaa !47    ; 2 uses
   %i.ad = load i32, ptr %i.a, align 4, !tbaa !3
-  %i.ae = load ptr, ptr %i.ac, align 8, !tbaa !50
+  %i.ae = load ptr, ptr %7, align 8, !tbaa !50
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 240
   %i.ag = load ptr, ptr %i.af, align 8
-  invoke void %i.ag(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.4") align 8 %5, ptr noundef nonnull align 8 dereferenceable(94) %i.ac, i32 noundef %2, i32 noundef %i.ad)
+  invoke void %i.ag(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.4") align 8 %5, ptr noundef nonnull align 8 dereferenceable(94) %7, i32 noundef %2, i32 noundef %i.ad)
           to label %bb.e unwind label %bb.r
 
 bb.e:                                             ; preds = %bb.d

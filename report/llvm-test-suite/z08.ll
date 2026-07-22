@@ -201,9 +201,12 @@ bb.fe:                                            ; preds = %bb.c, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #9
   %i.alx = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.aly = load i8, ptr %i.alx, align 4
-  %i.alz = getelementptr inbounds nuw i8, ptr %11, i64 4 ; 2 uses
+  %i.alz = getelementptr inbounds nuw i8, ptr %11, i64 4 ; 3 uses
+  %14 = load i8, ptr %i.alz, align 4
+  %15 = and i8 %14, -128
   %i.ama = and i8 %i.aly, 127
-  store i8 %i.ama, ptr %i.alz, align 4
+  %16 = or disjoint i8 %15, %i.ama
+  store i8 %16, ptr %i.alz, align 4
   %i.amb = load i16, ptr %i.alz, align 4
   %i.amc = load <4 x i16>, ptr %2, align 4        ; 2 uses
   %i.amd = load i16, ptr %2, align 4              ; 3 uses
@@ -606,9 +609,12 @@ bb.pu:                                            ; preds = %bb.pt, %bb.ps
   %i.cel = phi ptr [ %.pre2643, %bb.pt ], [ %i.ceg, %bb.ps ]
   %i.cem = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.cen = load i8, ptr %i.cem, align 4
-  %i.ceo = getelementptr inbounds nuw i8, ptr %13, i64 4 ; 2 uses
+  %i.ceo = getelementptr inbounds nuw i8, ptr %13, i64 4 ; 3 uses
+  %17 = load i8, ptr %i.ceo, align 4
+  %18 = and i8 %17, -128
   %i.cep = and i8 %i.cen, 127
-  store i8 %i.cep, ptr %i.ceo, align 4
+  %19 = or disjoint i8 %18, %i.cep
+  store i8 %19, ptr %i.ceo, align 4
   %i.ceq = load i16, ptr %i.ceo, align 4
   %i.cer = load <4 x i16>, ptr %2, align 4        ; 2 uses
   %i.ces = load i16, ptr %2, align 4              ; 2 uses
@@ -962,9 +968,12 @@ bb.qw:                                            ; preds = %.thread3009, %bb.qv
 bb.qx:                                            ; preds = %bb.c, %bb.c, %bb.c, %bb.c
   %i.ckk = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.ckl = load i8, ptr %i.ckk, align 4
-  %i.ckm = getelementptr inbounds nuw i8, ptr %13, i64 4 ; 2 uses
+  %i.ckm = getelementptr inbounds nuw i8, ptr %13, i64 4 ; 3 uses
+  %20 = load i8, ptr %i.ckm, align 4
+  %21 = and i8 %20, -128
   %i.ckn = and i8 %i.ckl, 127
-  store i8 %i.ckn, ptr %i.ckm, align 4
+  %22 = or disjoint i8 %21, %i.ckn
+  store i8 %22, ptr %i.ckm, align 4
   %i.cko = load i16, ptr %i.ckm, align 4
   %i.ckp = load <4 x i16>, ptr %2, align 4        ; 2 uses
   %i.ckq = load i16, ptr %2, align 4              ; 2 uses

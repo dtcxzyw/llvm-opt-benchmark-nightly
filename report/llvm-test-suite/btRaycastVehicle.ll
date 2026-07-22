@@ -203,8 +203,8 @@ bb.ac:                                            ; preds = %.lr.ph223, %bb.ag
   store <2 x float> %i.qa, ptr %4, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i181, ptr %i.pj, align 8
   %i.qg = load ptr, ptr %i.pk, align 8, !tbaa !29
-  %i.qh = getelementptr inbounds nuw [4 x i8], ptr %i.qg, i64 %indvars.iv234
-  %i.qi = load float, ptr %i.qh, align 4, !tbaa !50 ; 3 uses
+  %i.qh = getelementptr inbounds nuw [4 x i8], ptr %i.qg, i64 %indvars.iv234 ; 2 uses
+  %i.qi = load float, ptr %i.qh, align 4, !tbaa !50
   %i.qj = fcmp une float %i.qi, 0.000000e+00
   br i1 %i.qj, label %bb.ad, label %bb.ae
 
@@ -212,13 +212,14 @@ bb.ad:                                            ; preds = %bb.ac
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   %i.qk = load ptr, ptr %i.pl, align 8, !tbaa !22
   %i.ql = getelementptr inbounds nuw [16 x i8], ptr %i.qk, i64 %indvars.iv234 ; 2 uses
+  %9 = load float, ptr %i.qh, align 4, !tbaa !50  ; 2 uses
   %i.qm = load <2 x float>, ptr %i.ql, align 4, !tbaa !50
-  %i.qn = insertelement <2 x float> poison, float %i.qi, i64 0
+  %i.qn = insertelement <2 x float> poison, float %9, i64 0
   %i.qo = shufflevector <2 x float> %i.qn, <2 x float> poison, <2 x i32> zeroinitializer
   %i.qp = fmul <2 x float> %i.qo, %i.qm
   %i.qq = getelementptr inbounds nuw i8, ptr %i.ql, i64 8
   %i.qr = load float, ptr %i.qq, align 4, !tbaa !50
-  %i.qs = fmul float %i.qi, %i.qr
+  %i.qs = fmul float %9, %i.qr
   %.sroa.3.12.vec.insert.i186 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.qs, i64 0
   store <2 x float> %i.qp, ptr %5, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i186, ptr %i.pm, align 8

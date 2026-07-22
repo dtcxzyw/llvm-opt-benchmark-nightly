@@ -204,8 +204,8 @@ bb.z:                                             ; preds = %.lr.ph473, %bb.v, %
 
 bb.aa:                                            ; preds = %.sink.split, %bb.t, %._crit_edge
   %.4 = phi i64 [ 0, %._crit_edge ], [ 0, %bb.t ], [ %.3230, %.sink.split ] ; 3 uses
-  %i.dw = getelementptr i8, ptr %i.c, i64 72
-  %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !76 ; 5 uses
+  %i.dw = getelementptr i8, ptr %i.c, i64 72      ; 2 uses
+  %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !76
   %.not246 = icmp eq ptr %i.dx, null
   br i1 %.not246, label %bb.dq, label %bb.ab
 
@@ -221,11 +221,12 @@ bb.ac:                                            ; preds = %bb.ab
   %i.eb = getelementptr inbounds nuw i8, ptr %19, i64 8
   store ptr %i.ea, ptr %i.eb, align 8, !tbaa !78
   store ptr %i.c, ptr %19, align 8, !tbaa !80
+  %20 = load ptr, ptr %i.dw, align 8, !tbaa !76   ; 4 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %19, i64 96 ; 15 uses
-  store ptr %i.dx, ptr %i.ec, align 8, !tbaa !81
+  store ptr %20, ptr %i.ec, align 8, !tbaa !81
   %i.ed = getelementptr i8, ptr %i.c, i64 80
   %i.ee = load i64, ptr %i.ed, align 8, !tbaa !82
-  %i.ef = getelementptr i8, ptr %i.dx, i64 %i.ee  ; 2 uses
+  %i.ef = getelementptr i8, ptr %20, i64 %i.ee    ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %19, i64 112 ; 2 uses
   store ptr %i.ef, ptr %i.eg, align 8, !tbaa !83
   %i.eh = getelementptr i8, ptr %i.c, i64 96
@@ -234,7 +235,7 @@ bb.ac:                                            ; preds = %bb.ab
   store ptr %i.ei, ptr %i.ej, align 8, !tbaa !85
   %i.ek = getelementptr inbounds nuw i8, ptr %19, i64 32 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ek, i8 0, i64 32, i1 false)
-  %i.el = icmp ult ptr %i.dx, %i.ef
+  %i.el = icmp ult ptr %20, %i.ef
   br i1 %i.el, label %.lr.ph475, label %._crit_edge476
 
 .lr.ph475:                                        ; preds = %bb.ac
@@ -281,7 +282,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph475, %debug_info_read.exit
-  %i.fx = phi ptr [ %i.dx, %.lr.ph475 ], [ %i.aab, %debug_info_read.exit ] ; 4 uses
+  %i.fx = phi ptr [ %20, %.lr.ph475 ], [ %i.aab, %debug_info_read.exit ] ; 4 uses
   store i32 4, ptr %i.em, align 8, !tbaa !86
   store ptr %i.fx, ptr %i.en, align 8, !tbaa !87
   %i.fy = getelementptr i8, ptr %i.fx, i64 4      ; 3 uses

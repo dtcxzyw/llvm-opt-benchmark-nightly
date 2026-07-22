@@ -202,7 +202,8 @@ bb.b:                                             ; preds = %bb.a
   %i.g = trunc i64 %.fr to i32                    ; 2 uses
   %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
   %i.h = icmp sgt i32 %i.g, 0
-  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 8 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 9 uses
+  %.promoted = load i32, ptr %i.i, align 4        ; 7 uses
   br i1 %i.h, label %.lr.ph.us.preheader, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.b
@@ -443,7 +444,7 @@ rc4_crypt.exit.us:                                ; preds = %.lr.ph.i.us
 
 .split35.us:                                      ; preds = %._crit_edge.us, %.split.preheader, %.split.1, %.split.2, %.split.3, %.split.4, %.split.5
   %i.du = phi ptr [ %i.i, %.split.preheader ], [ %i.i, %.split.5 ], [ %i.i, %.split.4 ], [ %i.i, %.split.3 ], [ %i.i, %.split.2 ], [ %i.i, %.split.1 ], [ %i.k, %._crit_edge.us ]
-  %.us-phi = phi i32 [ undef, %.split.preheader ], [ undef, %.split.5 ], [ undef, %.split.4 ], [ undef, %.split.3 ], [ undef, %.split.2 ], [ undef, %.split.1 ], [ %i.df, %._crit_edge.us ]
+  %.us-phi = phi i32 [ %.promoted, %.split.preheader ], [ %.promoted, %.split.5 ], [ %.promoted, %.split.4 ], [ %.promoted, %.split.3 ], [ %.promoted, %.split.2 ], [ %.promoted, %.split.1 ], [ %i.df, %._crit_edge.us ]
   store i32 %.us-phi, ptr %i.du, align 1
   %puts19 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.2) ; 0 uses
   br label %bb.d
@@ -526,7 +527,7 @@ rc4_crypt.exit.us:                                ; preds = %.lr.ph.i.us
 
 .split38.us:                                      ; preds = %bb.c, %.split38.us.loopexit42
   %i.fq = phi ptr [ %i.i, %.split38.us.loopexit42 ], [ %i.k, %bb.c ]
-  %.us-phi39 = phi i32 [ undef, %.split38.us.loopexit42 ], [ %i.df, %bb.c ]
+  %.us-phi39 = phi i32 [ %.promoted, %.split38.us.loopexit42 ], [ %i.df, %bb.c ]
   store i32 %.us-phi39, ptr %i.fq, align 1
   %putchar = tail call i32 @putchar(i32 10)       ; 0 uses
   br label %bb.d

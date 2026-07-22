@@ -201,11 +201,11 @@ bb.a:
   %4 = alloca %"class.std::shared_ptr.0", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_ZN16OpenColorIO_v2_513ColorSpaceSet6CreateEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %3)
-  %i.a = load ptr, ptr %2, align 8, !tbaa !68
+  %i.a = load ptr, ptr %2, align 8, !tbaa !68     ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !23   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !29   ; 2 uses
-  %i.e = load ptr, ptr %i.b, align 8, !tbaa !26   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !29
+  %i.e = load ptr, ptr %i.b, align 8, !tbaa !26
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
@@ -225,20 +225,23 @@ _ZNSt12__shared_ptrIN16OpenColorIO_v2_513ColorSpaceSetELN9__gnu_cxx12_Lock_polic
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %5 = phi ptr [ %i.e, %.lr.ph ], [ %i.bd, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 2 uses
-  %i.n = phi ptr [ %i.d, %.lr.ph ], [ %i.bc, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 3 uses
+  %i.n = phi ptr [ %i.a, %.lr.ph ], [ %i.az, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   call void @llvm.experimental.noalias.scope.decl(metadata !75)
+  %5 = load ptr, ptr %i.n, align 8, !tbaa !23, !noalias !75 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !78)
-  %i.o = ptrtoint ptr %i.n to i64
-  %i.p = ptrtoint ptr %5 to i64
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %7 = load ptr, ptr %6, align 8, !tbaa !29, !noalias !81
+  %8 = load ptr, ptr %5, align 8, !tbaa !26, !noalias !81 ; 2 uses
+  %i.o = ptrtoint ptr %7 to i64
+  %i.p = ptrtoint ptr %8 to i64
   %i.q = sub i64 %i.o, %i.p
   %sext = shl i64 %i.q, 28
   %i.r = ashr i64 %sext, 32
   %.not.i.i12 = icmp slt i64 %indvars.iv, %i.r
   call void @llvm.assume(i1 %.not.i.i12)
-  %i.s = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %indvars.iv ; 2 uses
+  %i.s = getelementptr inbounds nuw [16 x i8], ptr %8, i64 %indvars.iv ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !38, !noalias !81 ; 3 uses
   store ptr %i.t, ptr %4, align 8, !tbaa !64, !alias.scope !81
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 8
@@ -343,11 +346,11 @@ bb.n:                                             ; preds = %_ZN9__gnu_cxx27__ex
 _ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %_ZN16OpenColorIO_v2_513ColorSpaceSet13addColorSpaceERKSt10shared_ptrIKNS_10ColorSpaceEE.exit, %bb.j, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i15, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.az = load ptr, ptr %2, align 8, !tbaa !68
+  %i.az = load ptr, ptr %2, align 8, !tbaa !68    ; 2 uses
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !23 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
-  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !29 ; 2 uses
-  %i.bd = load ptr, ptr %i.ba, align 8, !tbaa !26 ; 2 uses
+  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !29
+  %i.bd = load ptr, ptr %i.ba, align 8, !tbaa !26
   %i.be = ptrtoint ptr %i.bc to i64
   %i.bf = ptrtoint ptr %i.bd to i64
   %i.bg = sub i64 %i.be, %i.bf
@@ -423,11 +426,11 @@ bb.a:
   %4 = alloca %"class.std::shared_ptr.0", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_ZN16OpenColorIO_v2_513ColorSpaceSet6CreateEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %3)
-  %i.a = load ptr, ptr %1, align 8, !tbaa !68
+  %i.a = load ptr, ptr %1, align 8, !tbaa !68     ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !23   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !29   ; 2 uses
-  %i.e = load ptr, ptr %i.b, align 8, !tbaa !26   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !29
+  %i.e = load ptr, ptr %i.b, align 8, !tbaa !26
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
@@ -447,20 +450,23 @@ _ZNSt12__shared_ptrIN16OpenColorIO_v2_513ColorSpaceSetELN9__gnu_cxx12_Lock_polic
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %5 = phi ptr [ %i.e, %.lr.ph ], [ %i.bd, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 2 uses
-  %i.n = phi ptr [ %i.d, %.lr.ph ], [ %i.bc, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 3 uses
+  %i.n = phi ptr [ %i.a, %.lr.ph ], [ %i.az, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   call void @llvm.experimental.noalias.scope.decl(metadata !83)
+  %5 = load ptr, ptr %i.n, align 8, !tbaa !23, !noalias !83 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !86)
-  %i.o = ptrtoint ptr %i.n to i64
-  %i.p = ptrtoint ptr %5 to i64
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %7 = load ptr, ptr %6, align 8, !tbaa !29, !noalias !89
+  %8 = load ptr, ptr %5, align 8, !tbaa !26, !noalias !89 ; 2 uses
+  %i.o = ptrtoint ptr %7 to i64
+  %i.p = ptrtoint ptr %8 to i64
   %i.q = sub i64 %i.o, %i.p
   %sext = shl i64 %i.q, 28
   %i.r = ashr i64 %sext, 32
   %.not.i.i12 = icmp slt i64 %indvars.iv, %i.r
   call void @llvm.assume(i1 %.not.i.i12)
-  %i.s = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %indvars.iv ; 2 uses
+  %i.s = getelementptr inbounds nuw [16 x i8], ptr %8, i64 %indvars.iv ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !38, !noalias !89 ; 3 uses
   store ptr %i.t, ptr %4, align 8, !tbaa !64, !alias.scope !89
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 8
@@ -565,11 +571,11 @@ bb.n:                                             ; preds = %_ZN9__gnu_cxx27__ex
 _ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %_ZN16OpenColorIO_v2_513ColorSpaceSet13addColorSpaceERKSt10shared_ptrIKNS_10ColorSpaceEE.exit, %bb.j, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i15, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.az = load ptr, ptr %1, align 8, !tbaa !68
+  %i.az = load ptr, ptr %1, align 8, !tbaa !68    ; 2 uses
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !23 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
-  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !29 ; 2 uses
-  %i.bd = load ptr, ptr %i.ba, align 8, !tbaa !26 ; 2 uses
+  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !29
+  %i.bd = load ptr, ptr %i.ba, align 8, !tbaa !26
   %i.be = ptrtoint ptr %i.bc to i64
   %i.bf = ptrtoint ptr %i.bd to i64
   %i.bg = sub i64 %i.be, %i.bf

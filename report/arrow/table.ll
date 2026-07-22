@@ -203,7 +203,7 @@ bb.u:                                             ; preds = %_ZNSt6vectorISt10sh
   br label %bb.fb
 
 bb.v:                                             ; preds = %.lr.ph, %_ZNSt6vectorIiSaIiEED2Ev.exit.jt3
-  %.sroa.0266.0295 = phi ptr [ %i.br, %.lr.ph ], [ %i.nk, %_ZNSt6vectorIiSaIiEED2Ev.exit.jt3 ] ; 9 uses
+  %.sroa.0266.0295 = phi ptr [ %i.br, %.lr.ph ], [ %i.nk, %_ZNSt6vectorIiSaIiEED2Ev.exit.jt3 ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #27
   %i.cr = load ptr, ptr %12, align 8, !tbaa !35   ; 2 uses
   %i.cs = load ptr, ptr %.sroa.0266.0295, align 8, !tbaa !53 ; 2 uses
@@ -606,10 +606,11 @@ bb.bq:                                            ; preds = %bb.bp
 
 bb.br:                                            ; preds = %bb.bq
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #27
-  %i.hi = load ptr, ptr %.sroa.0266.0295, align 8, !tbaa !53 ; 2 uses
+  %i.hi = load ptr, ptr %.sroa.0266.0295, align 8, !tbaa !53
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hi, i64 24
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #27
-  %i.hk = getelementptr inbounds nuw i8, ptr %i.hi, i64 56
+  %37 = load ptr, ptr %.sroa.0266.0295, align 8, !tbaa !53
+  %i.hk = getelementptr inbounds nuw i8, ptr %37, i64 56
   %i.hl = load ptr, ptr %i.hk, align 8, !tbaa !190 ; 2 uses
   %i.hm = load ptr, ptr %i.hl, align 8, !tbaa !33
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hm, i64 32
@@ -1012,8 +1013,8 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.bu
 
 bb.f:                                             ; preds = %.lr.ph, %.critedge
-  %.sroa.082.085 = phi ptr [ %i.l, %.lr.ph ], [ %i.cr, %.critedge ] ; 2 uses
-  %i.w = load ptr, ptr %.sroa.082.085, align 8, !tbaa !82 ; 3 uses
+  %.sroa.082.085 = phi ptr [ %i.l, %.lr.ph ], [ %i.cr, %.critedge ] ; 3 uses
+  %i.w = load ptr, ptr %.sroa.082.085, align 8, !tbaa !82 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !172
   %i.z = load ptr, ptr %i.w, align 8, !tbaa !170  ; 4 uses
@@ -1031,7 +1032,8 @@ bb.g:                                             ; preds = %bb.aj
 
 bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #27
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.w, i64 24
+  %12 = load ptr, ptr %.sroa.082.085, align 8, !tbaa !82
+  %i.ag = getelementptr inbounds nuw i8, ptr %12, i64 24
   %i.ah = load i64, ptr %i.r, align 8, !tbaa !103
   invoke void @_ZN5arrow15MakeArrayOfNullERKSt10shared_ptrINS_8DataTypeEElPNS_10MemoryPoolE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result.137") align 8 %6, ptr noundef nonnull align 8 dereferenceable(16) %i.ag, i64 noundef %i.ah, ptr noundef %2)
           to label %bb.i unwind label %bb.k

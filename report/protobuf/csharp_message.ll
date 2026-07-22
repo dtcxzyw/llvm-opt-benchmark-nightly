@@ -203,8 +203,8 @@ bb.bz:                                            ; preds = %._crit_edge
 
 bb.ca:                                            ; preds = %bb.bz
   %i.ik = load ptr, ptr %i.f, align 8, !tbaa !21  ; 2 uses
-  %i.il = getelementptr inbounds nuw i8, ptr %i.ik, i64 32
-  %i.im = load ptr, ptr %i.il, align 8, !tbaa !153 ; 2 uses
+  %i.il = getelementptr inbounds nuw i8, ptr %i.ik, i64 32 ; 2 uses
+  %i.im = load ptr, ptr %i.il, align 8, !tbaa !153
   %.not = icmp eq ptr %i.im, null
   br i1 %.not, label %bb.cb, label %bb.cu
 
@@ -472,7 +472,8 @@ bb.cu:                                            ; preds = %bb.ca
   call void @llvm.lifetime.start.p0(ptr nonnull %40) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %42) #28
-  invoke void @_ZN6google8protobuf8compiler6csharp12GetClassNameB5cxx11EPKNS0_10DescriptorE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %42, ptr noundef nonnull %i.im)
+  %58 = load ptr, ptr %i.il, align 8, !tbaa !153
+  invoke void @_ZN6google8protobuf8compiler6csharp12GetClassNameB5cxx11EPKNS0_10DescriptorE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %42, ptr noundef %58)
           to label %bb.cv unwind label %bb.di
 
 bb.cv:                                            ; preds = %bb.cu
@@ -875,9 +876,9 @@ bb.f:                                             ; preds = %.lr.ph, %_ZNSt10uni
   %i.av = zext i8 %i.au to i64
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr @_ZN6google8protobuf8internal14WireFormatLite21kWireTypeForFieldTypeE, i64 %i.av
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !445
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.as, i64 4
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.as, i64 4 ; 2 uses
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !7
-  %i.ba = shl i32 %i.az, 3                        ; 2 uses
+  %i.ba = shl i32 %i.az, 3
   %i.bb = or i32 %i.ba, %i.ax
   %i.bc = getelementptr inbounds nuw i8, ptr %i.as, i64 1
   %i.bd = load i8, ptr %i.bc, align 1
@@ -891,7 +892,9 @@ bb.f:                                             ; preds = %.lr.ph, %_ZNSt10uni
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #28
-  %i.bi = or disjoint i32 %i.ba, 2
+  %14 = load i32, ptr %i.ay, align 4, !tbaa !7
+  %15 = shl i32 %14, 3
+  %i.bi = or disjoint i32 %15, 2
   %i.bj = invoke noundef ptr @_ZN4absl12lts_2025051216numbers_internal15FastIntToBufferEjPc(i32 noundef %i.bi, ptr noundef nonnull %i.ae)
           to label %bb.h unwind label %bb.m
 

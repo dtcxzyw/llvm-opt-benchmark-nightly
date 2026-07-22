@@ -203,7 +203,10 @@ bb.e:                                             ; preds = %_ZN4llvh5APIntlSEj.
   br label %_ZN4llvh6detail9IEEEFloatC2ERKNS_12fltSemanticsE.exit
 
 _ZN4llvh6detail9IEEEFloatC2ERKNS_12fltSemanticsE.exit: ; preds = %_ZN4llvh5APIntlSEj.exit, %bb.e
-  %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 18 ; 5 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 18 ; 6 uses
+  %5 = load i8, ptr %i.bb, align 2
+  %6 = and i8 %5, -16
+  %7 = or disjoint i8 %6, 3
   %i.bc = load i32, ptr %i.aa, align 8, !tbaa !20 ; 3 uses
   %i.bd = zext i32 %i.bc to i64
   %i.be = add nuw nsw i64 %i.bd, 63
@@ -230,7 +233,7 @@ bb.g:                                             ; preds = %_ZN4llvh6detail9IEE
 
 _ZN4llvh5APIntC2ERKS0_.exit.i:                    ; preds = %bb.g, %bb.f
   %.pre12.i = phi ptr [ %2, %bb.f ], [ %i.bl, %bb.g ]
-  store i8 3, ptr %i.bb, align 2
+  store i8 %7, ptr %i.bb, align 2
   %i.bm = call noundef i32 @_ZN4llvh6detail9IEEEFloat24convertFromUnsignedPartsEPKmjNS_11APFloatBase12roundingModeE(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef %.pre12.i, i32 noundef %i.bg, i32 noundef 0) ; 2 uses
   %i.bn = load i32, ptr %i.bh, align 8, !tbaa !20
   %i.bo = icmp ugt i32 %i.bn, 64
@@ -633,17 +636,21 @@ _ZN4llvh5APIntD2Ev.exit:                          ; preds = %bb.h, %bb.g, %bb.e,
   %i.ao = and i64 %i.an, 2047                     ; 4 uses
   %i.ap = and i64 %i.h, 4503599627370495          ; 6 uses
   store ptr @_ZN4llvhL13semIEEEdoubleE, ptr %2, align 8, !tbaa !13
-  %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 18 ; 5 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 18 ; 6 uses
+  %3 = load i8, ptr %i.aq, align 2
   %sh.diff.i20.i = lshr i64 %i.h, 60
   %tr.sh.diff.i21.i = trunc nuw nsw i64 %sh.diff.i20.i to i8
-  %i.ar = and i8 %tr.sh.diff.i21.i, 8             ; 4 uses
+  %4 = and i8 %tr.sh.diff.i21.i, 8
+  %i.ar = and i8 %3, -9
+  %5 = or disjoint i8 %i.ar, %4                   ; 3 uses
   %i.as = icmp eq i64 %i.ao, 0
   %i.at = or i64 %i.ao, %i.ap
   %or.cond.i22.i = icmp eq i64 %i.at, 0
   br i1 %or.cond.i22.i, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %.cont
-  %i.au = or disjoint i8 %i.ar, 3
+  %6 = and i8 %5, -8
+  %i.au = or disjoint i8 %6, 3
   store i8 %i.au, ptr %i.aq, align 2
   br label %_ZN4llvh5APIntD2Ev.exit5
 
@@ -654,23 +661,25 @@ bb.j:                                             ; preds = %.cont
   br i1 %or.cond3.i23.i, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  store i8 %i.ar, ptr %i.aq, align 2
+  %7 = and i8 %5, -8
+  store i8 %7, ptr %i.aq, align 2
   br label %_ZN4llvh5APIntD2Ev.exit5
 
 bb.l:                                             ; preds = %bb.j
   %i.ax = icmp ne i64 %i.ap, 0
   %or.cond5.i24.i = and i1 %i.ax, %i.aw
+  %8 = and i8 %5, -8                              ; 2 uses
   br i1 %or.cond5.i24.i, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.ay = or disjoint i8 %i.ar, 1
+  %i.ay = or disjoint i8 %8, 1
   store i8 %i.ay, ptr %i.aq, align 2
   %i.az = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 %i.ap, ptr %i.az, align 8, !tbaa !22
   br label %_ZN4llvh5APIntD2Ev.exit5
 
 bb.n:                                             ; preds = %bb.l
-  %i.ba = or disjoint i8 %i.ar, 2
+  %i.ba = or disjoint i8 %8, 2
   store i8 %i.ba, ptr %i.aq, align 2
   %i.bb = trunc nuw nsw i64 %i.ao to i16
   %i.bc = add nsw i16 %i.bb, -1023
@@ -1073,18 +1082,19 @@ bb.u:                                             ; preds = %_ZN4llvh23SmallVect
   %i.ds = load i16, ptr %i.dr, align 8, !tbaa !19
   %i.dt = sext i16 %i.ds to i32
   %i.du = load ptr, ptr %0, align 8, !tbaa !13
-  %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 4
-  %i.dw = load i32, ptr %i.dv, align 4, !tbaa !7  ; 4 uses
+  %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 4 ; 2 uses
+  %i.dw = load i32, ptr %i.dv, align 4, !tbaa !7
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
-  %i.dx = add i32 %i.dw, -64
+  %17 = load i32, ptr %i.dv, align 4, !tbaa !7    ; 3 uses
+  %i.dx = add i32 %17, -64
   %i.dy = icmp ult i32 %i.dx, -128
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ea = load ptr, ptr %i.dz, align 8
   %.0.i.i = select i1 %i.dy, ptr %i.ea, ptr %i.dz
-  %i.eb = add i32 %i.dw, 63
+  %i.eb = add i32 %17, 63
   %i.ec = lshr i32 %i.eb, 6
   %i.ed = zext nneg i32 %i.ec to i64
-  call void @_ZN4llvh5APIntC1EjNS_8ArrayRefImEE(ptr noundef nonnull align 8 dereferenceable(12) %9, i32 noundef %i.dw, ptr %.0.i.i, i64 %i.ed) #25
+  call void @_ZN4llvh5APIntC1EjNS_8ArrayRefImEE(ptr noundef nonnull align 8 dereferenceable(12) %9, i32 noundef %17, ptr %.0.i.i, i64 %i.ed) #25
   %.not128 = icmp eq i32 %2, 0
   br i1 %.not128, label %bb.v, label %bb.w
 
@@ -1487,7 +1497,7 @@ declare void @_ZN4llvh5APInt7udivremERKS0_S2_RS0_S3_(ptr noundef nonnull align 8
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef zeroext i1 @_ZNK4llvh6detail9IEEEFloat15getExactInverseEPNS_7APFloatE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #2 align 2 {
 bb.a:
-  %2 = alloca %"class.llvh::detail::IEEEFloat", align 8 ; 15 uses
+  %2 = alloca %"class.llvh::detail::IEEEFloat", align 8 ; 16 uses
   %3 = alloca %"class.llvh::APFloat", align 8     ; 8 uses
   %4 = alloca %"class.llvh::detail::IEEEFloat", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 2 uses
@@ -1523,7 +1533,12 @@ bb.c:                                             ; preds = %bb.b
   store ptr %i.q, ptr %2, align 8, !tbaa !13
   %i.u = add i32 %i.s, 64                         ; 3 uses
   %i.v = icmp ugt i32 %i.u, 127
-  br i1 %i.v, label %bb.d, label %_ZN4llvh6detail9IEEEFloatC2ERKNS_12fltSemanticsEm.exit
+  br i1 %i.v, label %bb.d, label %._ZN4llvh6detail9IEEEFloat10initializeEPKNS_12fltSemanticsE.exit_crit_edge.i
+
+._ZN4llvh6detail9IEEEFloat10initializeEPKNS_12fltSemanticsE.exit_crit_edge.i: ; preds = %bb.c
+  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8
+  br label %_ZN4llvh6detail9IEEEFloatC2ERKNS_12fltSemanticsEm.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.w = lshr i32 %i.u, 3
@@ -1534,10 +1549,13 @@ bb.d:                                             ; preds = %bb.c
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !18
   br label %_ZN4llvh6detail9IEEEFloatC2ERKNS_12fltSemanticsEm.exit
 
-_ZN4llvh6detail9IEEEFloatC2ERKNS_12fltSemanticsEm.exit: ; preds = %bb.c, %bb.d
-  %i.ab = phi ptr [ %i.z, %bb.d ], [ undef, %bb.c ]
-  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 18 ; 5 uses
-  store i8 2, ptr %i.ac, align 2
+_ZN4llvh6detail9IEEEFloatC2ERKNS_12fltSemanticsEm.exit: ; preds = %._ZN4llvh6detail9IEEEFloat10initializeEPKNS_12fltSemanticsE.exit_crit_edge.i, %bb.d
+  %i.ab = phi ptr [ %.pre.i, %._ZN4llvh6detail9IEEEFloat10initializeEPKNS_12fltSemanticsE.exit_crit_edge.i ], [ %i.z, %bb.d ]
+  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 18 ; 6 uses
+  %5 = load i8, ptr %i.ac, align 2
+  %6 = and i8 %5, -16
+  %7 = or disjoint i8 %6, 2
+  store i8 %7, ptr %i.ac, align 2
   %i.ad = add i32 %i.s, -64
   %i.ae = icmp ult i32 %i.ad, -128
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
@@ -1639,8 +1657,11 @@ bb.i:                                             ; preds = %bb.h
   store i64 %i.ca, ptr %i.cg, align 8, !tbaa !18
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i16 %i.cc, ptr %i.ch, align 8, !tbaa !19
-  %i.ci = getelementptr inbounds nuw i8, ptr %3, i64 26
-  store i8 %i.cf, ptr %i.ci, align 2
+  %i.ci = getelementptr inbounds nuw i8, ptr %3, i64 26 ; 2 uses
+  %8 = load i8, ptr %i.ci, align 2
+  %9 = and i8 %8, -16
+  %10 = or disjoint i8 %9, %i.cf
+  store i8 %10, ptr %i.ci, align 2
   br label %_ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit
 
 _ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit.i.i: ; preds = %bb.h
@@ -2043,8 +2064,11 @@ define hidden void @_ZN4llvh6detail13DoubleAPFloat11makeLargestEb(ptr nofree nou
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   store ptr @_ZN4llvhL13semIEEEdoubleE, ptr %i.a, align 8, !tbaa !13
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 26
-  store i8 2, ptr %i.b, align 2
+  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 26 ; 2 uses
+  %4 = load i8, ptr %i.b, align 2
+  %5 = and i8 %4, -16
+  %6 = or disjoint i8 %5, 2
+  store i8 %6, ptr %i.b, align 2
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24
   store i16 1023, ptr %i.c, align 8, !tbaa !19
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
@@ -2082,8 +2106,11 @@ _ZN4llvh5APIntD2Ev.exit.cont:                     ; preds = %bb.a, %bb.b, %bb.c,
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   store ptr @_ZN4llvhL13semIEEEdoubleE, ptr %i.p, align 8, !tbaa !13
-  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 26
-  store i8 2, ptr %i.q, align 2
+  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 26 ; 2 uses
+  %7 = load i8, ptr %i.q, align 2
+  %8 = and i8 %7, -16
+  %9 = or disjoint i8 %8, 2
+  store i8 %9, ptr %i.q, align 2
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i16 969, ptr %i.r, align 8, !tbaa !19
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -2178,8 +2205,11 @@ define hidden void @_ZN4llvh6detail13DoubleAPFloat22makeSmallestNormalizedEb(ptr
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   store ptr @_ZN4llvhL13semIEEEdoubleE, ptr %i.a, align 8, !tbaa !13
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 26
-  store i8 2, ptr %i.b, align 2
+  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 26 ; 2 uses
+  %3 = load i8, ptr %i.b, align 2
+  %4 = and i8 %3, -16
+  %5 = or disjoint i8 %4, 2
+  store i8 %5, ptr %i.b, align 2
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24
   store i16 -969, ptr %i.c, align 8, !tbaa !19
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
@@ -2582,8 +2612,11 @@ bb.a:
   %i.b = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #23, !inline_history !210
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.b, ptr %i.c, align 8, !tbaa !18
-  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 26 ; 3 uses
-  store i8 3, ptr %i.d, align 2
+  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 26 ; 4 uses
+  %7 = load i8, ptr %i.d, align 2
+  %8 = and i8 %7, -16
+  %9 = or disjoint i8 %8, 3
+  store i8 %9, ptr %i.d, align 2
   %i.e = call noundef zeroext i1 @_ZN4llvh6detail9IEEEFloat25convertFromStringSpecialsENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr %1, i64 %2)
   br i1 %i.e, label %_ZN4llvh7APFloat17convertFromStringENS_9StringRefENS_11APFloatBase12roundingModeE.exit, label %bb.b
 
@@ -2986,8 +3019,11 @@ _ZN4llvh7APFloat16convertFromAPIntERKNS_5APIntEbNS_11APFloatBase12roundingModeE.
   %i.b = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #23, !inline_history !210
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.b, ptr %i.c, align 8, !tbaa !18
-  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 26
-  store i8 3, ptr %i.d, align 2
+  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 26 ; 2 uses
+  %7 = load i8, ptr %i.d, align 2
+  %8 = and i8 %7, -16
+  %9 = or disjoint i8 %8, 3
+  store i8 %9, ptr %i.d, align 2
   %i.e = call noundef i32 @_ZN4llvh6detail9IEEEFloat16convertFromAPIntERKNS_5APIntEbNS_11APFloatBase12roundingModeE(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(12) %1, i1 noundef zeroext %2, i32 noundef %3), !inline_history !219
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
@@ -3073,8 +3109,11 @@ _ZN4llvh7APFloat30convertFromSignExtendedIntegerEPKmjbNS_11APFloatBase12rounding
   %i.b = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #23, !inline_history !210
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   store ptr %i.b, ptr %i.c, align 8, !tbaa !18
-  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 26
-  store i8 3, ptr %i.d, align 2
+  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 26 ; 2 uses
+  %8 = load i8, ptr %i.d, align 2
+  %9 = and i8 %8, -16
+  %10 = or disjoint i8 %9, 3
+  store i8 %10, ptr %i.d, align 2
   %i.e = call noundef i32 @_ZN4llvh6detail9IEEEFloat30convertFromSignExtendedIntegerEPKmjbNS_11APFloatBase12roundingModeE(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef %1, i32 noundef %2, i1 noundef zeroext %3, i32 noundef %4), !inline_history !223
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
@@ -3160,8 +3199,11 @@ _ZN4llvh7APFloat30convertFromZeroExtendedIntegerEPKmjbNS_11APFloatBase12rounding
   %i.b = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #23, !inline_history !210
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   store ptr %i.b, ptr %i.c, align 8, !tbaa !18
-  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 26
-  store i8 3, ptr %i.d, align 2
+  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 26 ; 2 uses
+  %8 = load i8, ptr %i.d, align 2
+  %9 = and i8 %8, -16
+  %10 = or disjoint i8 %9, 3
+  store i8 %10, ptr %i.d, align 2
   %i.e = call noundef i32 @_ZN4llvh6detail9IEEEFloat30convertFromZeroExtendedIntegerEPKmjbNS_11APFloatBase12roundingModeE(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef %1, i32 noundef %2, i1 noundef zeroext %3, i32 noundef %4), !inline_history !227
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
@@ -3564,8 +3606,11 @@ bb.g:                                             ; preds = %_ZN4llvh5APIntD2Ev.
   %i.k = call noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #23, !inline_history !210
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.k, ptr %i.l, align 8, !tbaa !18
-  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 26
-  store i8 3, ptr %i.m, align 2
+  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 26 ; 2 uses
+  %7 = load i8, ptr %i.m, align 2
+  %8 = and i8 %7, -16
+  %9 = or disjoint i8 %8, 3
+  store i8 %9, ptr %i.m, align 2
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !18
   %.not13 = icmp eq ptr %i.n, @_ZN4llvhL18semPPCDoubleDoubleE
   br i1 %.not13, label %bb.i, label %bb.h
@@ -3968,8 +4013,11 @@ _ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit: ; preds = %bb
   store i64 %i.ae, ptr %i.al, align 8, !tbaa !18
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 24
   store i16 %i.ag, ptr %i.am, align 8, !tbaa !19
-  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 26
-  store i8 %i.aj, ptr %i.an, align 2
+  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 26 ; 2 uses
+  %7 = load i8, ptr %i.an, align 2
+  %8 = and i8 %7, -16
+  %9 = or disjoint i8 %8, %i.aj
+  store i8 %9, ptr %i.an, align 2
   %i.ao = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN4llvh7APFloat7StorageaSEOS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.ak) ; 0 uses
   %i.ap = load ptr, ptr %i.ak, align 8, !tbaa !18 ; 2 uses
   %.not.i23 = icmp eq ptr %i.ap, @_ZN4llvhL18semPPCDoubleDoubleE

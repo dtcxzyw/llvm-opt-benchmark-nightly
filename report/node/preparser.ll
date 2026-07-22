@@ -204,9 +204,12 @@ _ZNK2v88internal10ParserBaseINS0_9PreParserEE13NewClassScopeEPNS0_5ScopeEb.exit:
   store i32 0, ptr %i.ac, align 4
   %i.ad = getelementptr inbounds nuw i8, ptr %8, i64 64 ; 2 uses
   store i8 0, ptr %i.ad, align 8
-  %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 65 ; 3 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 65 ; 4 uses
+  %10 = load i8, ptr %i.ae, align 1
+  %11 = and i8 %10, -32
   %i.af = select i1 %i.e, i8 16, i8 0
-  store i8 %i.af, ptr %i.ae, align 1
+  %12 = or disjoint i8 %11, %i.af
+  store i8 %12, ptr %i.ae, align 1
   %i.ag = load ptr, ptr %0, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 104
   store i32 %6, ptr %i.ah, align 8

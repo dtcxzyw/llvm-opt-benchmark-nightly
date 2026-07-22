@@ -203,7 +203,7 @@ _ZN6hermes2vm9toBooleanENS0_11HermesValueE.exit.thread: ; preds = %_ZN6hermes2vm
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden ptr @_ZN6hermes2vm23symbolDescriptiveStringERNS0_7RuntimeENS0_6HandleINS0_8SymbolIDEEE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nofree readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca %"class.hermes::vm::CallResult.260", align 8 ; 9 uses
+  %2 = alloca %"class.hermes::vm::CallResult.260", align 8 ; 12 uses
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %1, align 8, !tbaa !10
   %i.a = trunc i64 %.sroa.0.0.copyload.i.i.i to i32
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 9240
@@ -286,6 +286,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   store i8 1, ptr %i.aj, align 8, !tbaa !160, !alias.scope !157
   %i.ak = ptrtoint ptr %.0.i.i.i.i.i.i.i.i to i64
   store i64 %i.ak, ptr %2, align 8, !alias.scope !157
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i32 0, ptr %3, align 8, !alias.scope !157
   %.sroa.63.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 16
   store ptr %0, ptr %.sroa.63.8..sroa_idx.i, align 8, !alias.scope !157
   %.sroa.0.0.copyload.i.i.i6 = load i64, ptr %.0.i.i.i.i.i.i.i.i, align 8, !tbaa !10
@@ -320,7 +322,11 @@ bb.n:                                             ; preds = %bb.l
 
 _ZN6hermes2vm15StringPrimitive26castToASCIIPointerForWriteEv.exit.i: ; preds = %bb.n, %bb.m, %bb.k
   %.0.i.i = phi ptr [ %i.as, %bb.k ], [ %i.au, %bb.m ], [ %i.av, %bb.n ]
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.0.i.i, ptr noundef nonnull align 1 dereferenceable(7) @.str.28, i64 7, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %5 = load i32, ptr %4, align 8, !tbaa !164      ; 2 uses
+  %6 = zext i32 %5 to i64
+  %7 = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 %6
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %7, ptr noundef nonnull align 1 dereferenceable(7) @.str.28, i64 7, i1 false)
   br label %_ZN6hermes2vm13StringBuilder14appendASCIIRefEN4llvh8ArrayRefIcEE.exit
 
 bb.o:                                             ; preds = %bb.i
@@ -345,19 +351,25 @@ bb.s:                                             ; preds = %bb.q
   br label %_ZN6hermes2vm15StringPrimitive26castToUTF16PointerForWriteEv.exit.i
 
 _ZN6hermes2vm15StringPrimitive26castToUTF16PointerForWriteEv.exit.i: ; preds = %bb.s, %bb.r, %bb.p
-  %.0.i4.i = phi ptr [ %i.ax, %bb.p ], [ %i.az, %bb.r ], [ %i.ba, %bb.s ] ; 4 uses
-  store <4 x i16> <i16 83, i16 121, i16 109, i16 98>, ptr %.0.i4.i, align 2, !tbaa !46
-  %i.bb = getelementptr inbounds nuw i8, ptr %.0.i4.i, i64 8
+  %.0.i4.i = phi ptr [ %i.ax, %bb.p ], [ %i.az, %bb.r ], [ %i.ba, %bb.s ]
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %9 = load i32, ptr %8, align 8, !tbaa !164      ; 2 uses
+  %10 = zext i32 %9 to i64
+  %11 = getelementptr inbounds nuw [2 x i8], ptr %.0.i4.i, i64 %10 ; 4 uses
+  store <4 x i16> <i16 83, i16 121, i16 109, i16 98>, ptr %11, align 2, !tbaa !46
+  %i.bb = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i16 111, ptr %i.bb, align 2, !tbaa !46
-  %i.bc = getelementptr inbounds nuw i8, ptr %.0.i4.i, i64 10
+  %i.bc = getelementptr inbounds nuw i8, ptr %11, i64 10
   store i16 108, ptr %i.bc, align 2, !tbaa !46
-  %i.bd = getelementptr inbounds nuw i8, ptr %.0.i4.i, i64 12
+  %i.bd = getelementptr inbounds nuw i8, ptr %11, i64 12
   store i16 40, ptr %i.bd, align 2, !tbaa !46
   br label %_ZN6hermes2vm13StringBuilder14appendASCIIRefEN4llvh8ArrayRefIcEE.exit
 
 _ZN6hermes2vm13StringBuilder14appendASCIIRefEN4llvh8ArrayRefIcEE.exit: ; preds = %_ZN6hermes2vm15StringPrimitive26castToUTF16PointerForWriteEv.exit.i, %_ZN6hermes2vm15StringPrimitive26castToASCIIPointerForWriteEv.exit.i
+  %12 = phi i32 [ %9, %_ZN6hermes2vm15StringPrimitive26castToUTF16PointerForWriteEv.exit.i ], [ %5, %_ZN6hermes2vm15StringPrimitive26castToASCIIPointerForWriteEv.exit.i ]
   %i.be = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  store i32 7, ptr %i.be, align 8, !tbaa !164
+  %13 = add i32 %12, 7
+  store i32 %13, ptr %i.be, align 8, !tbaa !164
   %.sroa.0.0.copyload.i.i.i7 = load i64, ptr %.0.i.i.i.i.i.i, align 8, !tbaa !10
   %i.bf = and i64 %.sroa.0.0.copyload.i.i.i7, 281474976710655
   %i.bg = inttoptr i64 %i.bf to ptr

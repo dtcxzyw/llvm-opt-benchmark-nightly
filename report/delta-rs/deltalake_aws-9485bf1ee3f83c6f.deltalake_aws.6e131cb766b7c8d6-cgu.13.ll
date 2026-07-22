@@ -203,9 +203,9 @@ bb.a:
   %i.d = alloca [24 x i8], align 8                ; 5 uses
   %i.e = alloca [8 x i8], align 8                 ; 4 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
-  %i.g = alloca [16 x i8], align 8                ; 7 uses
+  %i.g = alloca [16 x i8], align 8                ; 8 uses
   %i.h = alloca [40 x i8], align 8                ; 4 uses
-  %i.i = alloca [16 x i8], align 8                ; 7 uses
+  %i.i = alloca [16 x i8], align 8                ; 8 uses
   %i.j = alloca [16 x i8], align 8                ; 6 uses
   %i.k = alloca [8 x i8], align 8                 ; 5 uses
   %i.l = alloca [8 x i8], align 8                 ; 5 uses
@@ -268,7 +268,7 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %bb.h
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 160
-  %i.ae = load ptr, ptr %i.ad, align 8, !nonnull !4, !align !19, !noundef !4 ; 2 uses
+  %i.ae = load ptr, ptr %i.ad, align 8, !nonnull !4, !align !19, !noundef !4
   %i.af = atomicrmw add ptr %i.ac, i64 1 monotonic, align 8
   %i.ag = icmp slt i64 %i.af, 0
   br i1 %i.ag, label %bb.n, label %bb.m
@@ -278,7 +278,6 @@ bb.k:                                             ; preds = %bb.h
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.m, %bb.k
-  %2 = phi ptr [ %i.ae, %bb.m ], [ undef, %bb.k ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 72
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.h, ptr noundef nonnull align 8 dereferenceable(40) %i.ah, i64 40, i1 false)
@@ -300,7 +299,7 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.l
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 176
-  %i.am = load ptr, ptr %i.al, align 8, !nonnull !4, !align !19, !noundef !4 ; 2 uses
+  %i.am = load ptr, ptr %i.al, align 8, !nonnull !4, !align !19, !noundef !4
   %i.an = atomicrmw add ptr %i.aj, i64 1 monotonic, align 8
   %i.ao = icmp slt i64 %i.an, 0
   br i1 %i.ao, label %bb.s, label %bb.r
@@ -310,7 +309,6 @@ bb.p:                                             ; preds = %bb.l
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.r, %bb.p
-  %3 = phi ptr [ %i.am, %bb.r ], [ undef, %bb.p ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.aq = load i64, ptr %i.ap, align 8, !range !6, !noundef !4
@@ -426,16 +424,20 @@ bb.ai:                                            ; preds = %bb.ag, %bb.ak
   store ptr %i.v, ptr %i.bm, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 120
   store ptr %i.x, ptr %i.bn, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %3 = load ptr, ptr %2, align 8
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 152
   store ptr %i.ac, ptr %i.bo, align 8
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store ptr %2, ptr %i.bp, align 8
+  store ptr %3, ptr %i.bp, align 8
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 72
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bq, ptr noundef nonnull align 8 dereferenceable(40) %i.h, i64 40, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  %5 = load ptr, ptr %4, align 8
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 168
   store ptr %i.aj, ptr %i.br, align 8
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 176
-  store ptr %3, ptr %i.bs, align 8
+  store ptr %5, ptr %i.bs, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bt, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false)
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 184

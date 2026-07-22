@@ -201,8 +201,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not117, label %bb.at, label %bb.e
 
 bb.e:                                             ; preds = %.thread
-  %i.t = getelementptr i8, ptr %i.r, i64 8
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !11   ; 4 uses
+  %i.t = getelementptr i8, ptr %i.r, i64 8        ; 2 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !11   ; 3 uses
   %.not118 = icmp eq ptr %i.u, null
   br i1 %.not118, label %.thread158, label %bb.f
 
@@ -221,7 +221,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
-  %i.y = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef nonnull %i.u, ptr noundef nonnull %i.e) #6 ; 4 uses
+  %4 = load ptr, ptr %i.t, align 8, !tbaa !11
+  %i.y = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef %4, ptr noundef nonnull %i.e) #6 ; 4 uses
   %i.z = icmp eq ptr %i.y, null
   br i1 %i.z, label %.thread155, label %bb.i
 
@@ -272,8 +273,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 bb.o:                                             ; preds = %bb.n, %.thread158
   %.292 = phi i64 [ %i.aj, %bb.n ], [ %.191, %.thread158 ] ; 2 uses
   %.085 = phi i32 [ %i.ag, %bb.n ], [ -1, %.thread158 ] ; 5 uses
-  %i.ak = getelementptr i8, ptr %i.r, i64 24
-  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !11 ; 5 uses
+  %i.ak = getelementptr i8, ptr %i.r, i64 24      ; 2 uses
+  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !11 ; 4 uses
   %.not125 = icmp eq ptr %i.al, null
   br i1 %.not125, label %bb.x, label %bb.p
 
@@ -292,7 +293,8 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
-  %i.aq = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef nonnull %i.al, ptr noundef nonnull %i.f) #6 ; 3 uses
+  %5 = load ptr, ptr %i.ak, align 8, !tbaa !11
+  %i.aq = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef %5, ptr noundef nonnull %i.f) #6 ; 3 uses
   %i.ar = icmp eq ptr %i.aq, null
   br i1 %i.ar, label %.thread162, label %bb.s
 
@@ -328,8 +330,8 @@ bb.w:                                             ; preds = %bb.u, %bb.p
 bb.x:                                             ; preds = %bb.w, %bb.o
   %.393 = phi i64 [ %i.av, %bb.w ], [ %.292, %bb.o ] ; 2 uses
   %.183 = phi ptr [ %.082, %bb.w ], [ null, %bb.o ] ; 4 uses
-  %i.aw = getelementptr i8, ptr %i.r, i64 32
-  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !11 ; 5 uses
+  %i.aw = getelementptr i8, ptr %i.r, i64 32      ; 2 uses
+  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !11 ; 4 uses
   %.not129 = icmp eq ptr %i.ax, null
   br i1 %.not129, label %bb.ag, label %bb.y
 
@@ -348,7 +350,8 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #6
-  %i.bc = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef nonnull %i.ax, ptr noundef nonnull %i.g) #6 ; 3 uses
+  %6 = load ptr, ptr %i.aw, align 8, !tbaa !11
+  %i.bc = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef %6, ptr noundef nonnull %i.g) #6 ; 3 uses
   %i.bd = icmp eq ptr %i.bc, null
   br i1 %i.bd, label %.thread165, label %bb.ab
 
@@ -384,8 +387,8 @@ bb.af:                                            ; preds = %bb.ad, %bb.y
 bb.ag:                                            ; preds = %bb.af, %bb.x
   %.4 = phi i64 [ %i.bh, %bb.af ], [ %.393, %bb.x ] ; 2 uses
   %.180 = phi ptr [ %.079, %bb.af ], [ null, %bb.x ] ; 3 uses
-  %i.bi = getelementptr i8, ptr %i.r, i64 40
-  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !11 ; 5 uses
+  %i.bi = getelementptr i8, ptr %i.r, i64 40      ; 2 uses
+  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !11 ; 4 uses
   %.not133 = icmp eq ptr %i.bj, null
   br i1 %.not133, label %bb.ap, label %bb.ah
 
@@ -404,7 +407,8 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #6
-  %i.bo = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef nonnull %i.bj, ptr noundef nonnull %i.h) #6 ; 3 uses
+  %7 = load ptr, ptr %i.bi, align 8, !tbaa !11
+  %i.bo = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef %7, ptr noundef nonnull %i.h) #6 ; 3 uses
   %i.bp = icmp eq ptr %i.bo, null
   br i1 %i.bp, label %.thread168, label %bb.ak
 

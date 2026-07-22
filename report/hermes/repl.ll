@@ -203,12 +203,12 @@ bb.aj:                                            ; preds = %_ZN6hermes6parser7J
   br i1 %i.hk, label %.thread35.i, label %"_ZZL16needsAnotherLineN4llvh9StringRefEENK3$_1clEN6hermes8OptValueINS2_6parser9TokenKindEEE.exit.peel.i"
 
 "_ZZL16needsAnotherLineN4llvh9StringRefEENK3$_1clEN6hermes8OptValueINS2_6parser9TokenKindEEE.exit.peel.i": ; preds = %bb.aj
-  %i.hl = call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %5, i32 noundef 0) #21 ; 3 uses
+  %i.hl = call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %5, i32 noundef 0) #21 ; 4 uses
   %.not.peel.i = icmp eq ptr %i.hl, null
   br i1 %.not.peel.i, label %.loopexit.i, label %bb.ak
 
 bb.ak:                                            ; preds = %"_ZZL16needsAnotherLineN4llvh9StringRefEENK3$_1clEN6hermes8OptValueINS2_6parser9TokenKindEEE.exit.peel.i"
-  %i.hm = load i32, ptr %i.hl, align 8, !tbaa !98 ; 3 uses
+  %i.hm = load i32, ptr %i.hl, align 8, !tbaa !98
   switch i32 %i.hm, label %.preheader.peel.next.i.preheader [
     i32 120, label %.loopexit.i
     i32 49, label %bb.ap
@@ -271,7 +271,8 @@ bb.ao:                                            ; preds = %_ZNSt5stackIN6herme
 
 bb.ap:                                            ; preds = %bb.ak, %bb.ak, %bb.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
-  store i32 %i.hm, ptr %i.a, align 4, !tbaa !110
+  %14 = load i32, ptr %i.hl, align 8, !tbaa !98   ; 2 uses
+  store i32 %14, ptr %i.a, align 4, !tbaa !110
   %i.ig = load ptr, ptr %i.et, align 8, !tbaa !97 ; 3 uses
   %i.ih = load ptr, ptr %i.ew, align 8, !tbaa !112
   %i.ii = getelementptr inbounds i8, ptr %i.ih, i64 -4
@@ -279,7 +280,7 @@ bb.ap:                                            ; preds = %bb.ak, %bb.ak, %bb.
   br i1 %.not.i.i.i.peel.i, label %bb.ar, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  store i32 %i.hm, ptr %i.ig, align 4, !tbaa !110
+  store i32 %14, ptr %i.ig, align 4, !tbaa !110
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ig, i64 4
   store ptr %i.ij, ptr %i.et, align 8, !tbaa !97
   br label %_ZNSt5stackIN6hermes6parser9TokenKindESt5dequeIS2_SaIS2_EEE4pushEOS2_.exit.peel.i
@@ -311,12 +312,12 @@ switch.lookup:                                    ; preds = %.preheader.peel.nex
 
 "_ZZL16needsAnotherLineN4llvh9StringRefEENK3$_1clEN6hermes8OptValueINS2_6parser9TokenKindEEE.exit.i": ; preds = %.preheader.peel.next.i, %switch.lookup
   %not..i = phi i32 [ %switch.ext, %switch.lookup ], [ 1, %.preheader.peel.next.i ]
-  %i.im = call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %5, i32 noundef %not..i) #21 ; 3 uses
+  %i.im = call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %5, i32 noundef %not..i) #21 ; 4 uses
   %.not.i62 = icmp eq ptr %i.im, null
   br i1 %.not.i62, label %.loopexit.i, label %bb.as
 
 bb.as:                                            ; preds = %"_ZZL16needsAnotherLineN4llvh9StringRefEENK3$_1clEN6hermes8OptValueINS2_6parser9TokenKindEEE.exit.i"
-  %i.in = load i32, ptr %i.im, align 8, !tbaa !98 ; 3 uses
+  %i.in = load i32, ptr %i.im, align 8, !tbaa !98
   switch i32 %i.in, label %.preheader.peel.next.i.backedge [
     i32 120, label %.loopexit.i
     i32 49, label %bb.at
@@ -329,7 +330,8 @@ bb.as:                                            ; preds = %"_ZZL16needsAnother
 
 bb.at:                                            ; preds = %bb.as, %bb.as, %bb.as
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
-  store i32 %i.in, ptr %i.a, align 4, !tbaa !110
+  %15 = load i32, ptr %i.im, align 8, !tbaa !98   ; 2 uses
+  store i32 %15, ptr %i.a, align 4, !tbaa !110
   %i.io = load ptr, ptr %i.et, align 8, !tbaa !97 ; 3 uses
   %i.ip = load ptr, ptr %i.ew, align 8, !tbaa !112
   %i.iq = getelementptr inbounds i8, ptr %i.ip, i64 -4
@@ -337,7 +339,7 @@ bb.at:                                            ; preds = %bb.as, %bb.as, %bb.
   br i1 %.not.i.i.i.i, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  store i32 %i.in, ptr %i.io, align 4, !tbaa !110
+  store i32 %15, ptr %i.io, align 4, !tbaa !110
   %i.ir = getelementptr inbounds nuw i8, ptr %i.io, i64 4
   store ptr %i.ir, ptr %i.et, align 8, !tbaa !97
   br label %_ZNSt5stackIN6hermes6parser9TokenKindESt5dequeIS2_SaIS2_EEE4pushEOS2_.exit.i

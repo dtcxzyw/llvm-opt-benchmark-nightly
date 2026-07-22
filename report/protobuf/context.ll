@@ -201,17 +201,17 @@ bb.ac:                                            ; preds = %.body44, %bb.ab
   br label %bb.bj
 
 bb.ad:                                            ; preds = %"_ZN4absl12lts_202505129c_find_ifISt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_ESaISA_EEZN6google8protobuf8compiler4rust7Options5ParseESt17basic_string_viewIcS7_EE3$_1EEDTcl5beginclsr3stdE7declvalIRT_EEEESM_OT0_.exit"
-  %i.ly = getelementptr inbounds nuw i8, ptr %.sroa.08.0.in.sroa.speculated.i.i.i.i, i64 32
+  %i.ly = getelementptr inbounds nuw i8, ptr %.sroa.08.0.in.sroa.speculated.i.i.i.i, i64 32 ; 2 uses
   %i.lz = getelementptr inbounds nuw i8, ptr %.sroa.08.0.in.sroa.speculated.i.i.i.i, i64 40
   %i.ma = load i64, ptr %i.lz, align 8, !tbaa !10 ; 2 uses
   %cond = icmp eq i64 %i.ma, 3
-  %.pre = load ptr, ptr %i.ly, align 8, !tbaa !15 ; 5 uses
   br i1 %cond, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit49.thread235
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit: ; preds = %bb.ad
-  %i.mb = load i16, ptr %.pre, align 1
+  %10 = load ptr, ptr %i.ly, align 8, !tbaa !15   ; 4 uses
+  %i.mb = load i16, ptr %10, align 1
   %i.mc = xor i16 %i.mb, 28789
-  %i.md = getelementptr i8, ptr %.pre, i64 2
+  %i.md = getelementptr i8, ptr %10, i64 2
   %i.me = load i8, ptr %i.md, align 1
   %i.mf = zext i8 %i.me to i16
   %i.mg = xor i16 %i.mf, 98
@@ -222,9 +222,9 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.mk, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit49
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit49: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
-  %i.ml = load i16, ptr %.pre, align 1
+  %i.ml = load i16, ptr %10, align 1
   %i.mm = xor i16 %i.ml, 28771
-  %i.mn = getelementptr i8, ptr %.pre, i64 2
+  %i.mn = getelementptr i8, ptr %10, i64 2
   %i.mo = load i8, ptr %i.mn, align 1
   %i.mp = zext i8 %i.mo to i16
   %i.mq = xor i16 %i.mp, 112
@@ -237,6 +237,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit49.thread235: ; preds = %bb.ad, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit49
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #13
+  %11 = load ptr, ptr %i.ly, align 8, !tbaa !15
   call void @llvm.experimental.noalias.scope.decl(metadata !29)
   %i.mv = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 7 uses
   store ptr %i.mv, ptr %9, align 8, !tbaa !21, !alias.scope !29
@@ -246,7 +247,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13, !noalias !29
   store i64 %i.ma, ptr %3, align 16, !noalias !29
   %i.mx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr %.pre, ptr %i.mx, align 8, !noalias !29
+  store ptr %11, ptr %i.mx, align 8, !noalias !29
   invoke void @_ZN4absl12lts_2025051219substitute_internal24SubstituteAndAppendArrayEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS5_EPKSA_m(ptr noundef nonnull align 8 %9, i64 51, ptr nonnull @.str.4, ptr noundef nonnull %3, i64 noundef 1)
           to label %bb.af unwind label %bb.ae
 

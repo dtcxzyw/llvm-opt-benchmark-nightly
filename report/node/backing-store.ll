@@ -203,7 +203,7 @@ _ZN2v88internal11HandleScopeD2Ev.exit:            ; preds = %._crit_edge.thread,
   br i1 %i.aa, label %bb.c, label %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE13GetHeapObjectEPNS0_6TaggedINS0_10HeapObjectEEE.exit
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.ab = and i64 %i.w, -3                        ; 3 uses
+  %i.ab = and i64 %i.w, -3                        ; 2 uses
   %i.ac = load ptr, ptr %i.a, align 8             ; 2 uses
   %i.ad = load ptr, ptr %i.c, align 8
   %i.ae = icmp eq ptr %i.ac, %i.ad
@@ -214,7 +214,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit
 
 _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %bb.c, %bb.d
-  %.0.i16 = phi ptr [ %i.af, %bb.d ], [ %i.ac, %bb.c ] ; 3 uses
+  %.0.i16 = phi ptr [ %i.af, %bb.d ], [ %i.ac, %bb.c ] ; 4 uses
   %i.ag = ptrtoint ptr %.0.i16 to i64
   %i.ah = add i64 %i.ag, 8
   %i.ai = inttoptr i64 %i.ah to ptr
@@ -232,7 +232,8 @@ _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %bb.c
 
 bb.e:                                             ; preds = %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #16
-  store i64 %i.ab, ptr %1, align 8
+  %2 = load i64, ptr %.0.i16, align 8
+  store i64 %2, ptr %1, align 8
   call void @_ZN2v88internal16WasmMemoryObject15UpdateInstancesEPNS0_7IsolateE(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %0) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #16
   br label %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE13GetHeapObjectEPNS0_6TaggedINS0_10HeapObjectEEE.exit
