@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ao = lshr i64 %.sroa.6.0.i.i103.i, 32
   %i.ap = trunc nuw i64 %i.ao to i32              ; 2 uses
   store i32 %i.ap, ptr %i.c, align 16, !tbaa !3
-  %i.aq = trunc i64 %.sroa.6.0.i.i103.i to i32    ; 2 uses
+  %i.aq = trunc i64 %.sroa.6.0.i.i103.i to i32
   store i32 %i.aq, ptr %i.an, align 4, !tbaa !3
   %i.ar = lshr i64 %.sroa.0.0.i.i104.i, 32
   %i.as = trunc nuw i64 %i.ar to i32
@@ -219,7 +219,7 @@ bb.k:                                             ; preds = %bb.i
   %i.aw = trunc nuw i64 %.sroa.6.0.i.i103.i to i32 ; 2 uses
   store i32 %i.aw, ptr %i.c, align 16, !tbaa !3
   %i.ax = lshr i64 %.sroa.0.0.i.i104.i, 32
-  %i.ay = trunc nuw i64 %i.ax to i32              ; 2 uses
+  %i.ay = trunc nuw i64 %i.ax to i32
   store i32 %i.ay, ptr %i.an, align 4, !tbaa !3
   %i.az = trunc i64 %.sroa.0.0.i.i104.i to i32
   %i.ba = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -234,7 +234,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bc = lshr i64 %.sroa.0.0.i.i104.i, 32
   %i.bd = trunc nuw i64 %i.bc to i32              ; 2 uses
   store i32 %i.bd, ptr %i.c, align 16, !tbaa !3
-  %i.be = trunc i64 %.sroa.0.0.i.i104.i to i32    ; 2 uses
+  %i.be = trunc i64 %.sroa.0.0.i.i104.i to i32
   %i.bf = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   store i32 %i.be, ptr %i.bf, align 4, !tbaa !3
   br label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit108.i
@@ -249,7 +249,6 @@ bb.o:                                             ; preds = %bb.n
   br label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit108.i
 
 _ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit108.i: ; preds = %bb.o, %bb.n, %bb.m, %bb.k, %bb.j
-  %4 = phi i32 [ %i.aq, %bb.j ], [ %i.ay, %bb.k ], [ %i.be, %bb.m ], [ undef, %bb.o ], [ undef, %bb.n ]
   %i.bi = phi i32 [ %i.ap, %bb.j ], [ %i.aw, %bb.k ], [ %i.bd, %bb.m ], [ %i.bh, %bb.o ], [ undef, %bb.n ] ; 7 uses
   %i.bj = phi i1 [ true, %bb.j ], [ true, %bb.k ], [ true, %bb.m ], [ true, %bb.o ], [ false, %bb.n ]
   %i.bk = phi i1 [ true, %bb.j ], [ true, %bb.k ], [ true, %bb.m ], [ false, %bb.o ], [ false, %bb.n ] ; 2 uses
@@ -539,8 +538,6 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.fz = shl i32 %i.fy, %i.es
   store i32 %i.fz, ptr %.0.i.sroa.phi.i, align 4, !tbaa !3
   %.pre = load i32, ptr %i.c, align 16, !tbaa !3
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %.pre11 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !3
   br label %.lr.ph34.i
 
 .lr.ph.i114.i:                                    ; preds = %.lr.ph.i114.i.preheader40, %.lr.ph.i114.i
@@ -558,10 +555,11 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond.not.i117.i, label %._crit_edge.i113.loopexit.i, label %.lr.ph.i114.i, !llvm.loop !21
 
 .lr.ph34.i:                                       ; preds = %bb.ac, %._crit_edge.i113.i
-  %i.gi = phi i32 [ %.pre11, %._crit_edge.i113.i ], [ %4, %bb.ac ]
-  %5 = phi i32 [ %.pre, %._crit_edge.i113.i ], [ %i.bi, %bb.ac ] ; 5 uses
-  %6 = zext i32 %5 to i64
-  %i.gj = zext i32 %i.gi to i64
+  %i.gi = phi i32 [ %.pre, %._crit_edge.i113.i ], [ %i.bi, %bb.ac ] ; 5 uses
+  %4 = zext i32 %i.gi to i64
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %6 = load i32, ptr %5, align 4, !tbaa !3
+  %i.gj = zext i32 %6 to i64
   %i.gk = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.pre12
   %i.gl = add nsw i64 %.0.i107.i, -2              ; 2 uses
   %i.gm = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.gl
@@ -706,7 +704,7 @@ bb.ah:                                            ; preds = %._crit_edge.thread.
   %i.jn = add nuw nsw i64 %.08433.i, 1            ; 3 uses
   %i.jo = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.jn
   %i.jp = load i32, ptr %i.jo, align 4, !tbaa !3  ; 2 uses
-  %.not98.i = icmp eq i32 %i.jm, %5
+  %.not98.i = icmp eq i32 %i.jm, %i.gi
   br i1 %.not98.i, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
@@ -714,13 +712,13 @@ bb.ai:                                            ; preds = %bb.ah
   %i.jr = zext i32 %i.jm to i64
   %i.js = shl nuw i64 %i.jr, 32
   %i.jt = or disjoint i64 %i.js, %i.jq
-  %i.ju = udiv i64 %i.jt, %6
+  %i.ju = udiv i64 %i.jt, %4
   %i.jv = trunc i64 %i.ju to i32
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %.089.i = phi i32 [ %i.jv, %bb.ai ], [ -1, %bb.ah ] ; 2 uses
-  %i.jw = mul i32 %.089.i, %5
+  %i.jw = mul i32 %.089.i, %i.gi
   %i.jx = sub i32 %i.jp, %i.jw
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jl, i64 8
   %i.jz = load i32, ptr %i.jy, align 4, !tbaa !3
@@ -740,8 +738,8 @@ bb.ak:                                            ; preds = %bb.al, %bb.aj
 
 bb.al:                                            ; preds = %bb.ak
   %i.kh = add i32 %.190.i, -1                     ; 2 uses
-  %i.ki = add i32 %.088.i, %5                     ; 2 uses
-  %i.kj = icmp ult i32 %i.ki, %5
+  %i.ki = add i32 %.088.i, %i.gi                  ; 2 uses
+  %i.kj = icmp ult i32 %i.ki, %i.gi
   br i1 %i.kj, label %bb.am, label %bb.ak, !llvm.loop !22
 
 bb.am:                                            ; preds = %bb.al, %bb.ak

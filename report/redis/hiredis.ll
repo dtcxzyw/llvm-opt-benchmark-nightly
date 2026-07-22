@@ -152,8 +152,8 @@ bb.c:                                             ; preds = %.preheader300, %.th
   ]
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = getelementptr inbounds nuw i8, ptr %.0185, i64 1 ; 2 uses
-  %i.j = load i8, ptr %i.i, align 1, !tbaa !27    ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %.0185, i64 1 ; 4 uses
+  %i.j = load i8, ptr %i.i, align 1, !tbaa !27
   switch i8 %i.j, label %.lr.ph.preheader [
     i8 0, label %.thread
     i8 115, label %bb.t
@@ -359,18 +359,20 @@ bb.ae:                                            ; preds = %bb.d
 .lr.ph.preheader:                                 ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
-  br label %.lr.ph
+  %4 = load i8, ptr %i.i, align 1, !tbaa !27      ; 2 uses
+  %.not228333 = icmp eq i8 %4, 0
+  br i1 %.not228333, label %.critedge4, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.af
-  %i.ck = phi i8 [ %i.cp, %bb.af ], [ %i.j, %.lr.ph.preheader ] ; 4 uses
-  %.0334 = phi ptr [ %i.co, %bb.af ], [ %i.i, %.lr.ph.preheader ] ; 3 uses
+  %i.ck = phi i8 [ %i.cp, %bb.af ], [ %4, %.lr.ph.preheader ] ; 3 uses
+  %.0334 = phi ptr [ %i.co, %bb.af ], [ %i.i, %.lr.ph.preheader ] ; 2 uses
   %i.cl = zext nneg i8 %i.ck to i64
   %memchr.bounds = icmp ugt i8 %i.ck, 63
   %i.cm = shl nuw i64 1, %i.cl
   %i.cn = and i64 %i.cm, 325494096527361
   %memchr.bits = icmp eq i64 %i.cn, 0
   %memchr229.not = select i1 %memchr.bounds, i1 true, i1 %memchr.bits
-  br i1 %memchr229.not, label %.critedge, label %bb.af
+  br i1 %memchr229.not, label %.lr.ph339, label %bb.af
 
 bb.af:                                            ; preds = %.lr.ph
   %i.co = getelementptr inbounds nuw i8, ptr %.0334, i64 1 ; 3 uses
@@ -378,11 +380,7 @@ bb.af:                                            ; preds = %.lr.ph
   %.not228 = icmp eq i8 %i.cp, 0
   br i1 %.not228, label %.critedge4, label %.lr.ph
 
-.critedge:                                        ; preds = %.lr.ph
-  %.not231337 = icmp eq i8 %i.ck, 0
-  br i1 %.not231337, label %.critedge4, label %.lr.ph339
-
-.lr.ph339:                                        ; preds = %.critedge
+.lr.ph339:                                        ; preds = %.lr.ph
   %i.cq = tail call ptr @__ctype_b_loc() #15
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !34 ; 2 uses
   br label %bb.ag
@@ -422,8 +420,8 @@ bb.ai:                                            ; preds = %.preheader298
   %.not234 = icmp eq i16 %i.de, 0
   br i1 %.not234, label %.critedge4, label %.preheader298
 
-.critedge4:                                       ; preds = %bb.af, %bb.ah, %bb.ai, %.preheader298, %.critedge, %.critedge2
-  %.3 = phi ptr [ %.1338, %.critedge2 ], [ %.0334, %.critedge ], [ %i.cx, %bb.ah ], [ %.2, %bb.ai ], [ %.2, %.preheader298 ], [ %i.co, %bb.af ] ; 9 uses
+.critedge4:                                       ; preds = %bb.af, %bb.ah, %bb.ai, %.preheader298, %.lr.ph.preheader, %.critedge2
+  %.3 = phi ptr [ %.1338, %.critedge2 ], [ %i.cx, %bb.ah ], [ %.2, %bb.ai ], [ %i.i, %.lr.ph.preheader ], [ %.2, %.preheader298 ], [ %i.co, %bb.af ] ; 9 uses
   call void @llvm.va_copy.p0(ptr nonnull %3, ptr %2)
   %i.df = load i8, ptr %.3, align 1, !tbaa !27    ; 3 uses
   %i.dg = sext i8 %i.df to i32                    ; 2 uses

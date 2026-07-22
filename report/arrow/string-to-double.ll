@@ -203,7 +203,7 @@ _ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit264:
 
 bb.aj:                                            ; preds = %_ZN14arrow_vendored17double_conversion12_GLOBAL__N_121ConsumeFirstCharacterEcPKcb.exit256._crit_edge, %bb.w
   %i.ds = phi ptr [ %.pre544, %_ZN14arrow_vendored17double_conversion12_GLOBAL__N_121ConsumeFirstCharacterEcPKcb.exit256._crit_edge ], [ %.pre545, %bb.w ] ; 4 uses
-  %i.dt = load i8, ptr %i.ds, align 1, !tbaa !15  ; 2 uses
+  %i.dt = load i8, ptr %i.ds, align 1, !tbaa !15
   %i.du = icmp eq i8 %i.dt, 48                    ; 3 uses
   br i1 %i.du, label %bb.ak, label %.critedge227
 
@@ -457,18 +457,17 @@ _ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread: 
   br label %.thread
 
 ._crit_edge:                                      ; preds = %.backedge411, %.backedge411.us, %bb.ap, %bb.aw
-  %.lcssa445 = phi ptr [ %.promoted444, %bb.aw ], [ %.promoted444, %bb.ap ], [ %i.gc, %.backedge411.us ], [ %i.gj, %.backedge411 ] ; 3 uses
+  %.lcssa445 = phi ptr [ %.promoted444, %bb.aw ], [ %.promoted444, %bb.ap ], [ %i.gc, %.backedge411.us ], [ %i.gj, %.backedge411 ] ; 2 uses
   store ptr %.lcssa445, ptr %i.b, align 8
   %i.gx = trunc i32 %i.el to i8
   %i.gy = lshr i8 %i.gx, 1
-  %.pre549 = load i8, ptr %.lcssa445, align 1, !tbaa !15
   br label %.critedge227
 
 .critedge227:                                     ; preds = %bb.aj, %._crit_edge
-  %5 = phi i8 [ %i.dt, %bb.aj ], [ %.pre549, %._crit_edge ] ; 3 uses
-  %.promoted451 = phi ptr [ %i.ds, %bb.aj ], [ %.lcssa445, %._crit_edge ] ; 2 uses
+  %.promoted451 = phi ptr [ %i.ds, %bb.aj ], [ %.lcssa445, %._crit_edge ] ; 3 uses
   %i.gz = phi i8 [ 0, %bb.aj ], [ %i.gy, %._crit_edge ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #8
+  %5 = load i8, ptr %.promoted451, align 1, !tbaa !15 ; 3 uses
   %i.ha = add i8 %5, -48
   %or.cond228453 = icmp ult i8 %i.ha, 10
   br i1 %or.cond228453, label %.lr.ph459, label %.critedge
@@ -871,7 +870,7 @@ _ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S4_.exit264:
 
 bb.aj:                                            ; preds = %_ZN14arrow_vendored17double_conversion12_GLOBAL__N_121ConsumeFirstCharacterEcPKcb.exit256._crit_edge, %bb.w
   %i.du = phi ptr [ %.pre532, %_ZN14arrow_vendored17double_conversion12_GLOBAL__N_121ConsumeFirstCharacterEcPKcb.exit256._crit_edge ], [ %.pre533, %bb.w ] ; 4 uses
-  %i.dv = load i16, ptr %i.du, align 2, !tbaa !41 ; 2 uses
+  %i.dv = load i16, ptr %i.du, align 2, !tbaa !41
   %i.dw = icmp eq i16 %i.dv, 48                   ; 3 uses
   br i1 %i.dw, label %bb.ak, label %.critedge227
 
@@ -1083,18 +1082,17 @@ _ZN14arrow_vendored17double_conversionL7AdvanceIPKtEEbPT_tiRS4_.exit281.thread: 
   br label %.thread
 
 ._crit_edge:                                      ; preds = %.backedge411, %.backedge411.us, %bb.ap, %bb.aw
-  %.lcssa445 = phi ptr [ %.promoted444, %bb.aw ], [ %.promoted444, %bb.ap ], [ %i.ft, %.backedge411.us ], [ %i.gb, %.backedge411 ] ; 3 uses
+  %.lcssa445 = phi ptr [ %.promoted444, %bb.aw ], [ %.promoted444, %bb.ap ], [ %i.ft, %.backedge411.us ], [ %i.gb, %.backedge411 ] ; 2 uses
   store ptr %.lcssa445, ptr %i.a, align 8
   %i.go = trunc i32 %i.ej to i8
   %i.gp = lshr i8 %i.go, 1
-  %.pre537 = load i16, ptr %.lcssa445, align 2, !tbaa !41
   br label %.critedge227
 
 .critedge227:                                     ; preds = %bb.aj, %._crit_edge
-  %5 = phi i16 [ %i.dv, %bb.aj ], [ %.pre537, %._crit_edge ] ; 3 uses
-  %.promoted451 = phi ptr [ %i.du, %bb.aj ], [ %.lcssa445, %._crit_edge ] ; 2 uses
+  %.promoted451 = phi ptr [ %i.du, %bb.aj ], [ %.lcssa445, %._crit_edge ] ; 3 uses
   %i.gq = phi i8 [ 0, %bb.aj ], [ %i.gp, %._crit_edge ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
+  %5 = load i16, ptr %.promoted451, align 2, !tbaa !41 ; 3 uses
   %i.gr = add i16 %5, -48
   %or.cond228453 = icmp ult i16 %i.gr, 10
   br i1 %or.cond228453, label %.lr.ph459, label %.critedge

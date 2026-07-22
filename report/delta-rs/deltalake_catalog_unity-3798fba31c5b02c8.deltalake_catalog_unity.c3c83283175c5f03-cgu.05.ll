@@ -201,7 +201,7 @@ bb.a:
   %.sroa.3.sroa.5.i.sroa.5 = alloca [16 x i8], align 8 ; 7 uses
   %.sroa.566.i = alloca [24 x i8], align 8        ; 6 uses
   %i.t = alloca [72 x i8], align 8                ; 11 uses
-  %i.u = alloca [40 x i8], align 8                ; 16 uses
+  %i.u = alloca [40 x i8], align 8                ; 17 uses
   %i.v = alloca [32 x i8], align 8                ; 4 uses
   %.sroa.22.sroa.5 = alloca [40 x i8], align 8    ; 6 uses
   %.sroa.26 = alloca [176 x i8], align 8          ; 2 uses
@@ -593,7 +593,7 @@ bb.ab:                                            ; preds = %bb.z
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %.sroa.3.sroa.0.0.copyload.i = load i64, ptr %.sroa.3.0..sroa_idx.i, align 8, !noalias !908 ; 3 uses
   %.sroa.3.sroa.3.0..sroa.3.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 16
-  %.sroa.3.sroa.3.0.copyload.i = load ptr, ptr %.sroa.3.sroa.3.0..sroa.3.0..sroa_idx.sroa_idx.i, align 8, !noalias !908 ; 4 uses
+  %.sroa.3.sroa.3.0.copyload.i = load ptr, ptr %.sroa.3.sroa.3.0..sroa.3.0..sroa_idx.sroa_idx.i, align 8, !noalias !908 ; 2 uses
   %.sroa.3.sroa.5.0..sroa.3.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   %.sroa.3.sroa.5.i.sroa.0.0.copyload = load i64, ptr %.sroa.3.sroa.5.0..sroa.3.0..sroa_idx.sroa_idx.i, align 8, !noalias !908 ; 2 uses
   %.sroa.3.sroa.5.i.sroa.5.0..sroa.3.sroa.5.0..sroa.3.0..sroa_idx.sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 32
@@ -789,9 +789,8 @@ bb.ar:                                            ; preds = %bb.cd, %bb.cc, %.bo
   unreachable
 
 bb.as:                                            ; preds = %bb.az, %bb.au, %bb.aq
-  %3 = phi ptr [ %i.fp, %bb.az ], [ %i.fp, %bb.au ], [ %i.ec, %bb.aq ]
-  %i.fi = phi ptr [ %i.fq, %bb.az ], [ %i.fq, %bb.au ], [ %i.ed, %bb.aq ]
-  %i.fj = phi ptr [ %4, %bb.az ], [ %4, %bb.au ], [ %.sroa.3.sroa.3.0.copyload.i, %bb.aq ]
+  %i.fi = phi ptr [ %i.fp, %bb.az ], [ %i.fp, %bb.au ], [ %i.ec, %bb.aq ]
+  %i.fj = phi ptr [ %i.fq, %bb.az ], [ %i.fq, %bb.au ], [ %i.ed, %bb.aq ]
   %i.fk = phi ptr [ %i.fr, %bb.az ], [ %i.fr, %bb.au ], [ %i.ep, %bb.aq ]
   %.pn26.i = phi { ptr, i32 } [ %i.fv, %bb.az ], [ %i.fo, %bb.au ], [ %.pn16.i, %bb.aq ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.081.i)
@@ -804,8 +803,8 @@ bb.at:                                            ; preds = %_RINvNtCsbvkFyIu7lg
   br label %bb.cf
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i: ; preds = %bb.w, %bb.x, %bb.ad, %bb.cd, %bb.be
-  %i.fl = phi ptr [ %5, %bb.cd ], [ %5, %bb.be ], [ %i.ec, %bb.ad ], [ %i.ec, %bb.w ], [ %i.ec, %bb.x ]
-  %i.fm = phi ptr [ %i.ge, %bb.cd ], [ %i.ge, %bb.be ], [ %i.ed, %bb.ad ], [ %i.ed, %bb.w ], [ %i.ed, %bb.x ]
+  %i.fl = phi ptr [ %i.ge, %bb.cd ], [ %i.ge, %bb.be ], [ %i.ec, %bb.ad ], [ %i.ec, %bb.w ], [ %i.ec, %bb.x ]
+  %i.fm = phi ptr [ %i.gf, %bb.cd ], [ %i.gf, %bb.be ], [ %i.ed, %bb.ad ], [ %i.ed, %bb.w ], [ %i.ed, %bb.x ]
   %.pn29.pn.i = phi { ptr, i32 } [ %.pn26.pn.i, %bb.cd ], [ %.pn26.pn.i, %bb.be ], [ %i.ek, %bb.ad ], [ %i.dy, %bb.w ], [ %i.dy, %bb.x ]
   %i.fn = getelementptr inbounds nuw i8, ptr %1, i64 505
   store i8 0, ptr %i.fn, align 1, !noalias !908
@@ -823,7 +822,6 @@ bb.au:                                            ; preds = %bb.av
 bb.av:                                            ; preds = %bb.ap, %bb.s
   %i.fp = phi ptr [ %i.cy, %bb.s ], [ %i.ec, %bb.ap ] ; 5 uses
   %i.fq = phi ptr [ %i.cx, %bb.s ], [ %i.ed, %bb.ap ] ; 4 uses
-  %4 = phi ptr [ undef, %bb.s ], [ %.sroa.3.sroa.3.0.copyload.i, %bb.ap ] ; 3 uses
   %i.fr = phi ptr [ undef, %bb.s ], [ %i.ep, %bb.ap ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !908
   %i.fs = getelementptr inbounds nuw i8, ptr %1, i64 512 ; 5 uses
@@ -903,10 +901,9 @@ bb.bd:                                            ; preds = %bb.cb, %bb.bc
   br label %bb.cf
 
 bb.be:                                            ; preds = %bb.cc, %bb.bb, %bb.as
-  %5 = phi ptr [ %3, %bb.as ], [ %6, %bb.cc ], [ %6, %bb.bb ] ; 2 uses
   %i.ge = phi ptr [ %i.fi, %bb.as ], [ %i.gm, %bb.cc ], [ %i.gm, %bb.bb ] ; 2 uses
-  %i.gf = phi ptr [ %i.fj, %bb.as ], [ %i.gp, %bb.cc ], [ %i.gp, %bb.bb ]
-  %i.gg = phi ptr [ %i.fk, %bb.as ], [ %i.go, %bb.cc ], [ %i.go, %bb.bb ]
+  %i.gf = phi ptr [ %i.fj, %bb.as ], [ %i.gn, %bb.cc ], [ %i.gn, %bb.bb ] ; 2 uses
+  %i.gg = phi ptr [ %i.fk, %bb.as ], [ %i.gp, %bb.cc ], [ %i.gp, %bb.bb ]
   %.pn26.pn.i = phi { ptr, i32 } [ %.pn26.i, %bb.as ], [ %eh.lpad-body53.i, %bb.cc ], [ %eh.lpad-body53.i, %bb.bb ] ; 2 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %1, i64 504
   store i8 0, ptr %i.gh, align 8, !noalias !908
@@ -922,13 +919,12 @@ bb.bf:                                            ; preds = %bb.bk, %bb.bj
   br label %.body52.i
 
 .body52.i:                                        ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i, %bb.bf
-  %6 = phi ptr [ %i.cy, %bb.bf ], [ %i.gx, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i ] ; 2 uses
-  %i.gm = phi ptr [ %i.cx, %bb.bf ], [ %i.gy, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i ] ; 2 uses
-  %i.gn = phi ptr [ %i.gq, %bb.bf ], [ %i.ha, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i ]
-  %i.go = phi ptr [ undef, %bb.bf ], [ %i.hb, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i ] ; 2 uses
-  %i.gp = phi ptr [ undef, %bb.bf ], [ %8, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i ] ; 2 uses
+  %i.gm = phi ptr [ %i.cy, %bb.bf ], [ %i.gx, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i ] ; 2 uses
+  %i.gn = phi ptr [ %i.cx, %bb.bf ], [ %i.gy, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i ] ; 2 uses
+  %i.go = phi ptr [ %i.gq, %bb.bf ], [ %i.ha, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i ]
+  %i.gp = phi ptr [ undef, %bb.bf ], [ %i.hb, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i ] ; 2 uses
   %eh.lpad-body53.i = phi { ptr, i32 } [ %i.gl, %bb.bf ], [ %.pn4.pn.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i ] ; 2 uses
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBM_8Response4jsonNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models16GetTableResponseE0EB1U_(ptr noundef nonnull align 8 %i.gn) #20
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBM_8Response4jsonNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models16GetTableResponseE0EB1U_(ptr noundef nonnull align 8 %i.go) #20
           to label %bb.bb unwind label %bb.ar, !noalias !912
 
 bb.bg:                                            ; preds = %bb.q
@@ -957,7 +953,6 @@ bb.bi:                                            ; preds = %bb.bg, %.thread.i
   %i.gt = phi ptr [ %.sroa.8109.0..sroa_idx.i, %.thread.i ], [ %.phi.trans.insert.i, %bb.bg ]
   %i.gu = phi ptr [ %i.fs, %.thread.i ], [ %i.gq, %bb.bg ] ; 2 uses
   %i.gv = phi ptr [ %i.fr, %.thread.i ], [ undef, %bb.bg ]
-  %7 = phi ptr [ %4, %.thread.i ], [ undef, %bb.bg ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !917
   %i.gw = getelementptr inbounds nuw i8, ptr %1, i64 648
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %i.gw, ptr noundef nonnull align 8 dereferenceable(136) %i.gu, i64 136, i1 false), !noalias !917
@@ -985,7 +980,6 @@ bb.bl:                                            ; preds = %bb.bi, %bb.bh
   %i.gz = phi ptr [ %i.gt, %bb.bi ], [ %.phi.trans.insert.i, %bb.bh ] ; 4 uses
   %i.ha = phi ptr [ %i.gu, %bb.bi ], [ %i.gq, %bb.bh ]
   %i.hb = phi ptr [ %i.gv, %bb.bi ], [ undef, %bb.bh ]
-  %8 = phi ptr [ %7, %bb.bi ], [ undef, %bb.bh ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !917
   %i.hc = getelementptr inbounds nuw i8, ptr %1, i64 648 ; 3 uses
   invoke fastcc void @_RNCNvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtB4_8Response5bytes0CsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.e, ptr noundef nonnull align 8 %i.hc, ptr noalias noundef nonnull align 8 dereferenceable(32) %2)
@@ -1172,9 +1166,11 @@ bb.cd:                                            ; preds = %bb.be
   %i.ig = getelementptr inbounds nuw i8, ptr %i.gg, i64 32
   %i.ih = load ptr, ptr %i.ig, align 8, !noalias !957, !nonnull !3, !noundef !3
   %i.ii = getelementptr inbounds nuw i8, ptr %i.u, i64 24
+  %3 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
+  %4 = load ptr, ptr %3, align 8, !alias.scope !958, !noalias !908, !noundef !3
   %i.ij = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.ik = load i64, ptr %i.ij, align 8, !alias.scope !958, !noalias !908, !noundef !3
-  invoke void %i.ih(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.ii, ptr noundef %i.gf, i64 noundef %i.ik)
+  invoke void %i.ih(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.ii, ptr noundef %4, i64 noundef %i.ik)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i unwind label %bb.ar, !noalias !912, !inline_history !395
 
 bb.ce:                                            ; preds = %bb.aa, %bb.ax, %bb.by

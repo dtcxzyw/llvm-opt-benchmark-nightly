@@ -203,24 +203,23 @@ _ZN12_GLOBAL__N_130determineCapturedVariableUsageEPN6hermes8FunctionERN4llvh8Den
   %i.anc = load ptr, ptr %i.a, align 8, !tbaa !18 ; 3 uses
   %i.and = getelementptr inbounds nuw i8, ptr %i.anc, i64 88
   %i.ane = getelementptr inbounds nuw i8, ptr %i.anc, i64 80 ; 2 uses
-  %.sroa.0288.0441.i.i = load ptr, ptr %i.and, align 8, !tbaa !7 ; 3 uses
+  %.sroa.0288.0441.i.i = load ptr, ptr %i.and, align 8, !tbaa !7 ; 2 uses
   %.not310442.i.i = icmp eq ptr %.sroa.0288.0441.i.i, %i.ane
   br i1 %.not310442.i.i, label %._crit_edge446.i.i, label %.lr.ph445.i.i
 
 ._crit_edge446.loopexit.i.i:                      ; preds = %_ZN6hermes10pred_countEPKNS_10BasicBlockE.exit.thread.i.i
-  %.pre577.i.i = load ptr, ptr %i.a, align 8, !tbaa !18 ; 2 uses
-  %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %.pre577.i.i, i64 88
-  %.sroa.0252.0451.pre.i.i = load ptr, ptr %.phi.trans.insert.i.i, align 8, !tbaa !7
+  %.pre577.i.i = load ptr, ptr %i.a, align 8, !tbaa !18
   br label %._crit_edge446.i.i
 
 ._crit_edge446.i.i:                               ; preds = %._crit_edge446.loopexit.i.i, %_ZN12_GLOBAL__N_130determineCapturedVariableUsageEPN6hermes8FunctionERN4llvh8DenseMapIPNS0_10BasicBlockENS3_8DenseSetIPNS0_8VariableENS3_12DenseMapInfoIS9_EEEENSA_IS6_EENS3_6detail12DenseMapPairIS6_SC_EEEERNS3_9SetVectorIS2_St6vectorIS2_SaIS2_EENS7_IS2_NSA_IS2_EEEEEE.exit.i.i
-  %.sroa.0252.0451.i.i = phi ptr [ %.sroa.0252.0451.pre.i.i, %._crit_edge446.loopexit.i.i ], [ %.sroa.0288.0441.i.i, %_ZN12_GLOBAL__N_130determineCapturedVariableUsageEPN6hermes8FunctionERN4llvh8DenseMapIPNS0_10BasicBlockENS3_8DenseSetIPNS0_8VariableENS3_12DenseMapInfoIS9_EEEENSA_IS6_EENS3_6detail12DenseMapPairIS6_SC_EEEERNS3_9SetVectorIS2_St6vectorIS2_SaIS2_EENS7_IS2_NSA_IS2_EEEEEE.exit.i.i ] ; 2 uses
-  %i.anf = phi ptr [ %.pre577.i.i, %._crit_edge446.loopexit.i.i ], [ %i.anc, %_ZN12_GLOBAL__N_130determineCapturedVariableUsageEPN6hermes8FunctionERN4llvh8DenseMapIPNS0_10BasicBlockENS3_8DenseSetIPNS0_8VariableENS3_12DenseMapInfoIS9_EEEENSA_IS6_EENS3_6detail12DenseMapPairIS6_SC_EEEERNS3_9SetVectorIS2_St6vectorIS2_SaIS2_EENS7_IS2_NSA_IS2_EEEEEE.exit.i.i ]
+  %i.anf = phi ptr [ %.pre577.i.i, %._crit_edge446.loopexit.i.i ], [ %i.anc, %_ZN12_GLOBAL__N_130determineCapturedVariableUsageEPN6hermes8FunctionERN4llvh8DenseMapIPNS0_10BasicBlockENS3_8DenseSetIPNS0_8VariableENS3_12DenseMapInfoIS9_EEEENSA_IS6_EENS3_6detail12DenseMapPairIS6_SC_EEEERNS3_9SetVectorIS2_St6vectorIS2_SaIS2_EENS7_IS2_NSA_IS2_EEEEEE.exit.i.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #11
   store ptr %i.af, ptr %18, align 8, !tbaa !71
   store i32 0, ptr %i.ag, align 8, !tbaa !72
   store i32 4, ptr %i.ah, align 4, !tbaa !73
+  %22 = getelementptr inbounds nuw i8, ptr %i.anf, i64 88
   %i.ang = getelementptr inbounds nuw i8, ptr %i.anf, i64 80 ; 2 uses
+  %.sroa.0252.0451.i.i = load ptr, ptr %22, align 8, !tbaa !7 ; 2 uses
   %.not311452.i.i = icmp eq ptr %.sroa.0252.0451.i.i, %i.ang
   br i1 %.not311452.i.i, label %_ZN4llvh11SmallVectorIN12_GLOBAL__N_110StorePointELj4EED2Ev.exit.i.i, label %.lr.ph455.i.i
 

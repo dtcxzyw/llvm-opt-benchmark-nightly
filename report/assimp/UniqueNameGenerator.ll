@@ -201,15 +201,11 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIP
 bb.k:                                             ; preds = %bb.d
   %i.bs = load ptr, ptr %1, align 8
   %i.bt = getelementptr inbounds nuw [32 x i8], ptr %i.bs, i64 %storemerge265 ; 3 uses
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
-  %i.bv = load i64, ptr %i.bu, align 8            ; 4 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8 ; 2 uses
+  %i.bv = load i64, ptr %i.bu, align 8            ; 3 uses
   %i.bw = load i64, ptr %i.k, align 8
   %i.bx = icmp eq i64 %i.bv, %i.bw
-  br i1 %i.bx, label %bb.l, label %._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread168_crit_edge
-
-._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread168_crit_edge: ; preds = %bb.k
-  %.pre = load ptr, ptr %i.bt, align 8, !noalias !9
-  br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread168
+  br i1 %i.bx, label %bb.l, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread168
 
 bb.l:                                             ; preds = %bb.k
   %i.by = icmp eq i64 %i.bv, 0
@@ -217,18 +213,19 @@ bb.l:                                             ; preds = %bb.k
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit: ; preds = %bb.l
   %i.bz = load ptr, ptr %0, align 8
-  %i.ca = load ptr, ptr %i.bt, align 8            ; 2 uses
+  %i.ca = load ptr, ptr %i.bt, align 8
   %bcmp.i = call i32 @bcmp(ptr %i.ca, ptr %i.bz, i64 %i.bv)
   %i.cb = icmp eq i32 %bcmp.i, 0
   br i1 %i.cb, label %.critedge.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread168
 
-_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread168: ; preds = %._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread168_crit_edge, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
-  %12 = phi ptr [ %.pre, %._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread168_crit_edge ], [ %i.ca, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit ] ; 2 uses
+_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread168: ; preds = %bb.k, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   %i.cc = load i64, ptr %i.q, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !9)
+  %12 = load i64, ptr %i.bu, align 8, !noalias !9
   store ptr %i.ak, ptr %6, align 8, !alias.scope !9
-  %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.cc, i64 %i.bv) ; 4 uses
+  %13 = load ptr, ptr %i.bt, align 8, !noalias !9 ; 2 uses
+  %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.cc, i64 %12) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #22, !noalias !9
   store i64 %spec.select.i.i.i, ptr %i.c, align 8, !noalias !9
   %i.cd = icmp ugt i64 %spec.select.i.i.i, 15
@@ -252,12 +249,12 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   ]
 
 bb.m:                                             ; preds = %._crit_edge.i.i.i
-  %i.ch = load i8, ptr %12, align 1
+  %i.ch = load i8, ptr %13, align 1
   store i8 %i.ch, ptr %i.cg, align 1
   br label %bb.o
 
 bb.n:                                             ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cg, ptr align 1 %12, i64 %spec.select.i.i.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cg, ptr align 1 %13, i64 %spec.select.i.i.i, i1 false)
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %._crit_edge.i.i.i

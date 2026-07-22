@@ -201,8 +201,8 @@ _ZNSt6vectorIN5arrow5DatumESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = 
   store ptr %i.bh, ptr %i.bj, align 8, !tbaa !174
   store ptr %i.bh, ptr %i.bi, align 8, !tbaa !170
   %i.bk = getelementptr inbounds nuw i8, ptr %25, i64 16 ; 2 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %28, i64 8 ; 2 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %28, i64 16 ; 2 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %28, i64 8
+  %i.bm = getelementptr inbounds nuw i8, ptr %28, i64 16 ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %27, i64 16
   %i.bo = getelementptr inbounds nuw i8, ptr %27, i64 32 ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %26, i64 24
@@ -220,7 +220,7 @@ bb.r:                                             ; preds = %.lr.ph, %_ZN5arrow5
   %i.bu = phi ptr [ %i.bb, %.lr.ph ], [ %i.fr, %_ZN5arrow5DatumD2Ev.exit121 ]
   %.066178 = phi i64 [ 0, %.lr.ph ], [ %i.fp, %_ZN5arrow5DatumD2Ev.exit121 ] ; 6 uses
   %i.bv = load ptr, ptr %i.i, align 8, !tbaa !156
-  %i.bw = getelementptr inbounds nuw [24 x i8], ptr %i.bv, i64 %.066178 ; 4 uses
+  %i.bw = getelementptr inbounds nuw [24 x i8], ptr %i.bv, i64 %.066178 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #21
   %i.bx = getelementptr inbounds nuw [24 x i8], ptr %i.bu, i64 %.066178 ; 2 uses
   store i8 -1, ptr %i.bk, align 8, !tbaa !356
@@ -257,24 +257,18 @@ bb.v:                                             ; preds = %bb.u
           to label %_ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit unwind label %bb.at
 
 _ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit: ; preds = %bb.v
-  br i1 %i.ch, label %.critedge93, label %_ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit._ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit.thread_crit_edge
+  br i1 %i.ch, label %.critedge93, label %_ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit.thread
 
-_ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit._ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit.thread_crit_edge: ; preds = %_ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit
-  %.pre180 = load ptr, ptr %i.bw, align 8, !tbaa !525
-  br label %_ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit.thread
-
-_ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit.thread: ; preds = %_ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit._ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit.thread_crit_edge, %bb.u
-  %39 = phi ptr [ %.pre180, %_ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit._ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit.thread_crit_edge ], [ null, %bb.u ]
+_ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit.thread: ; preds = %bb.u, %_ZNK5arrow10TypeHoldereqERKSt10shared_ptrINS_8DataTypeEE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #21
   %i.ci = load ptr, ptr %2, align 8, !tbaa !173
   %i.cj = getelementptr inbounds nuw [24 x i8], ptr %i.ci, i64 %.066178
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #21
-  store ptr %39, ptr %28, align 16, !tbaa !525
-  %40 = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
+  %39 = load <2 x ptr>, ptr %i.bw, align 8, !tbaa !186
+  store <2 x ptr> %39, ptr %28, align 16, !tbaa !186
   %i.ck = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
-  %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !188 ; 2 uses
-  %41 = load <2 x ptr>, ptr %40, align 8, !tbaa !168
-  store <2 x ptr> %41, ptr %i.bl, align 8, !tbaa !168
+  %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !188 ; 3 uses
+  store ptr %i.cl, ptr %i.bm, align 16, !tbaa !188
   %.not.i.i.i.i115 = icmp eq ptr %i.cl, null
   br i1 %.not.i.i.i.i115, label %_ZN5arrow10TypeHolderC2ERKS0_.exit, label %bb.w
 

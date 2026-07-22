@@ -204,11 +204,11 @@ bb.p:                                             ; preds = %_ZN4llvh6detail12De
 bb.q:                                             ; preds = %.lr.ph175, %.critedge
   %.054174 = phi ptr [ %i.dh, %.lr.ph175 ], [ %i.gk, %.critedge ] ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %.054174, i64 8 ; 3 uses
-  %i.dp = load ptr, ptr %i.do, align 8, !tbaa !288 ; 3 uses
+  %i.dp = load ptr, ptr %i.do, align 8, !tbaa !288
   %i.dq = load ptr, ptr %i.dd, align 8, !tbaa !154 ; 4 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 152 ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dp, i64 48
-  %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !382 ; 5 uses
+  %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !382 ; 3 uses
   %i.du = load ptr, ptr %i.dr, align 8, !tbaa !490 ; 4 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dq, i64 168
   %i.dw = load i32, ptr %i.dv, align 8, !tbaa !491 ; 4 uses
@@ -272,18 +272,16 @@ _ZN4llvh9MapVectorIPKN6hermes12UniqueStringENS_11SmallVectorIPNS1_6ESTree23Funct
 
 bb.t:                                             ; preds = %_ZN4llvh9MapVectorIPKN6hermes12UniqueStringENS_11SmallVectorIPNS1_6ESTree23FunctionDeclarationNodeELj4EEENS_8DenseMapIS4_jNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEESt6vectorISt4pairIS4_S9_ESaISJ_EEE4findERKS4_.exit.i
   %i.fc = call ptr @_ZN4llvh9MapVectorIPKN6hermes12UniqueStringENS_11SmallVectorIPNS1_6ESTree23FunctionDeclarationNodeELj4EEENS_8DenseMapIS4_jNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEESt6vectorISt4pairIS4_S9_ESaISJ_EEE5eraseEN9__gnu_cxx17__normal_iteratorIPSJ_SL_EE(ptr noundef nonnull align 8 dereferenceable(48) %i.dr, ptr %i.fa) ; 0 uses
-  %.pre = load ptr, ptr %i.do, align 8, !tbaa !288 ; 2 uses
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 48
-  %.pre193 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !382
   br label %_ZN6hermes3sem12BlockContext12stopHoistingEPNS_6ESTree14IdentifierNodeE.exit
 
 _ZN6hermes3sem12BlockContext12stopHoistingEPNS_6ESTree14IdentifierNodeE.exit: ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes12UniqueStringEjNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_jEEEES5_jS7_SA_E4findES5_.exit.i.i, %_ZN4llvh9MapVectorIPKN6hermes12UniqueStringENS_11SmallVectorIPNS1_6ESTree23FunctionDeclarationNodeELj4EEENS_8DenseMapIS4_jNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEESt6vectorISt4pairIS4_S9_ESaISJ_EEE4findERKS4_.exit.i, %bb.t
-  %27 = phi ptr [ %i.dt, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes12UniqueStringEjNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_jEEEES5_jS7_SA_E4findES5_.exit.i.i ], [ %i.dt, %_ZN4llvh9MapVectorIPKN6hermes12UniqueStringENS_11SmallVectorIPNS1_6ESTree23FunctionDeclarationNodeELj4EEENS_8DenseMapIS4_jNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEESt6vectorISt4pairIS4_S9_ESaISJ_EEE4findERKS4_.exit.i ], [ %.pre193, %bb.t ]
-  %28 = phi ptr [ %i.dp, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes12UniqueStringEjNS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_jEEEES5_jS7_SA_E4findES5_.exit.i.i ], [ %i.dp, %_ZN4llvh9MapVectorIPKN6hermes12UniqueStringENS_11SmallVectorIPNS1_6ESTree23FunctionDeclarationNodeELj4EEENS_8DenseMapIS4_jNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEESt6vectorISt4pairIS4_S9_ESaISJ_EEE4findERKS4_.exit.i ], [ %.pre, %bb.t ]
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #20
-  store ptr %27, ptr %26, align 8
-  store ptr %28, ptr %i.dm, align 8
+  %27 = load ptr, ptr %i.do, align 8, !tbaa !288  ; 2 uses
+  %28 = getelementptr inbounds nuw i8, ptr %27, i64 48
+  %29 = load ptr, ptr %28, align 8, !tbaa !382
+  store ptr %29, ptr %26, align 8
+  store ptr %27, ptr %i.dm, align 8
   call void @_ZN4llvh12DenseMapBaseINS_13SmallDenseMapIPN6hermes12UniqueStringEPNS2_6ESTree14IdentifierNodeELj8ENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S7_EEEES4_S7_S9_SC_E11try_emplaceIJS7_EEESt4pairINS_16DenseMapIteratorIS4_S7_S9_SC_Lb0EEEbEOS4_DpOT_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.168") align 8 %25, ptr noundef nonnull align 1 dereferenceable(1) %21, ptr noundef nonnull align 8 dereferenceable(16) %26, ptr noundef nonnull align 8 dereferenceable(8) %i.dm)
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #20
   %i.fd = load i8, ptr %i.dn, align 8, !tbaa !463, !range !160, !noundef !91

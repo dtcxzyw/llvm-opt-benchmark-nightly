@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %.04258, i64 1 ; 7 uses
-  %i.u = load i8, ptr %i.t, align 1, !tbaa !10    ; 2 uses
+  %i.u = load i8, ptr %i.t, align 1, !tbaa !10
   %i.v = icmp eq i8 %i.u, 37
   br i1 %i.v, label %bb.g, label %bb.j
 
@@ -234,11 +234,10 @@ bb.j:                                             ; preds = %bb.f
 
 bb.k:                                             ; preds = %bb.j
   %i.ae = call i32 @luaL_argerror(ptr noundef %0, i32 noundef %i.ad, ptr noundef nonnull @.str.28) #10 ; 0 uses
-  %.pre62 = load i8, ptr %i.t, align 1, !tbaa !10
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %2 = phi i8 [ %.pre62, %bb.k ], [ %i.u, %bb.j ] ; 2 uses
+  %2 = load i8, ptr %i.t, align 1, !tbaa !10      ; 2 uses
   %.not41.i = icmp eq i8 %2, 0
   br i1 %.not41.i, label %.critedge.i, label %.lr.ph.i
 

@@ -201,7 +201,7 @@ bb.bx:                                            ; preds = %bb.bw
   br label %bb.ca
 
 bb.by:                                            ; preds = %bb.bx
-  %i.mi = getelementptr inbounds nuw i8, ptr %i.md, i64 16 ; 5 uses
+  %i.mi = getelementptr inbounds nuw i8, ptr %i.md, i64 16 ; 4 uses
   store ptr %i.mi, ptr %i.md, align 8, !tbaa !41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
   store i64 %i.lu, ptr %i.b, align 8, !tbaa !23
@@ -229,18 +229,17 @@ bb.bz:                                            ; preds = %._crit_edge.i.i.i.i
 
 bb.ca:                                            ; preds = %._crit_edge.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.thread238.i.i, %._crit_edge.i.i.i.i.i.thread.i.i
   %i.mn = phi ptr [ %i.mh, %._crit_edge.i.i.i.i.i.thread.i.i ], [ %i.mi, %._crit_edge.i.i.i.i.i.i.i ], [ %i.mk, %._crit_edge.i.i.i.i.i.thread238.i.i ]
-  %i.mo = phi ptr [ %i.mf, %._crit_edge.i.i.i.i.i.thread.i.i ], [ %i.md, %._crit_edge.i.i.i.i.i.i.i ], [ %i.md, %._crit_edge.i.i.i.i.i.thread238.i.i ] ; 2 uses
+  %i.mo = phi ptr [ %i.mf, %._crit_edge.i.i.i.i.i.thread.i.i ], [ %i.md, %._crit_edge.i.i.i.i.i.i.i ], [ %i.md, %._crit_edge.i.i.i.i.i.thread238.i.i ]
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.mn, ptr nonnull align 1 %i.lv, i64 %i.lu, i1 false)
   %.pre.i = load i64, ptr %i.b, align 8, !tbaa !23
-  %.pre149.i = load ptr, ptr %i.mo, align 8, !tbaa !12
   br label %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE9constructIS5_JRSt17basic_string_viewIcS3_EEEEvPT_DpOT0_.exit.i.i.i
 
 _ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE9constructIS5_JRSt17basic_string_viewIcS3_EEEEvPT_DpOT0_.exit.i.i.i: ; preds = %bb.ca, %bb.bz
-  %65 = phi ptr [ %.pre149.i, %bb.ca ], [ %i.mi, %bb.bz ]
   %i.mp = phi i64 [ %.pre.i, %bb.ca ], [ 1, %bb.bz ] ; 2 uses
-  %i.mq = phi ptr [ %i.mo, %bb.ca ], [ %i.md, %bb.bz ]
+  %i.mq = phi ptr [ %i.mo, %bb.ca ], [ %i.md, %bb.bz ] ; 2 uses
   %i.mr = getelementptr inbounds nuw i8, ptr %i.mq, i64 8
   store i64 %i.mp, ptr %i.mr, align 8, !tbaa !25
+  %65 = load ptr, ptr %i.mq, align 8, !tbaa !12
   %i.ms = getelementptr inbounds nuw i8, ptr %65, i64 %i.mp
   store i8 0, ptr %i.ms, align 1, !tbaa !17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #27

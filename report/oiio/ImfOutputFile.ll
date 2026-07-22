@@ -203,12 +203,7 @@ bb.cd:                                            ; preds = %bb.cc
 
 .preheader:                                       ; preds = %bb.cd
   %i.ei = icmp sgt i32 %i.eb, 0
-  br i1 %i.ei, label %.lr.ph.preheader, label %._crit_edge
-
-.lr.ph.preheader:                                 ; preds = %.preheader
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.dz, i64 120
-  %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !91
-  br label %.lr.ph
+  br i1 %i.ei, label %.lr.ph, label %._crit_edge
 
 bb.ce:                                            ; preds = %bb.cd
   invoke void @_Z13iex_debugTrapv()
@@ -310,11 +305,13 @@ bb.cr:                                            ; preds = %bb.cq, %bb.cn
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #23
   br label %bb.cw
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.cu
-  %8 = phi i32 [ %i.gf, %bb.cu ], [ %.pre, %.lr.ph.preheader ]
+.lr.ph:                                           ; preds = %.preheader, %bb.cu
+  %8 = phi ptr [ %i.fv, %bb.cu ], [ %i.dz, %.preheader ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
-  invoke void @_ZN27OpenImageIO_v3_1_Imf__3_3_59InputFile12rawPixelDataEiRPKcRi(ptr noundef nonnull align 8 dereferenceable(32) %1, i32 noundef %8, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 120
+  %10 = load i32, ptr %9, align 8, !tbaa !91
+  invoke void @_ZN27OpenImageIO_v3_1_Imf__3_3_59InputFile12rawPixelDataEiRPKcRi(ptr noundef nonnull align 8 dereferenceable(32) %1, i32 noundef %10, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
           to label %bb.cs unwind label %bb.cv
 
 bb.cs:                                            ; preds = %.lr.ph
@@ -337,7 +334,7 @@ bb.ct:                                            ; preds = %bb.cs
           to label %bb.cu unwind label %bb.cv
 
 bb.cu:                                            ; preds = %bb.ct
-  %i.fv = load ptr, ptr %i.c, align 8, !tbaa !77  ; 4 uses
+  %i.fv = load ptr, ptr %i.c, align 8, !tbaa !77  ; 5 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 128
   %i.fx = load i32, ptr %i.fw, align 8, !tbaa !97
   %i.fy = icmp eq i32 %i.fx, 0
@@ -347,7 +344,7 @@ bb.cu:                                            ; preds = %bb.ct
   %i.gc = select i1 %i.fy, i32 %i.ga, i32 %i.gb
   %i.gd = getelementptr inbounds nuw i8, ptr %i.fv, i64 120 ; 2 uses
   %i.ge = load i32, ptr %i.gd, align 8, !tbaa !91
-  %i.gf = add nsw i32 %i.ge, %i.gc                ; 2 uses
+  %i.gf = add nsw i32 %i.ge, %i.gc
   store i32 %i.gf, ptr %i.gd, align 8, !tbaa !91
   %i.gg = getelementptr inbounds nuw i8, ptr %i.fv, i64 124 ; 2 uses
   %i.gh = load i32, ptr %i.gg, align 4, !tbaa !96

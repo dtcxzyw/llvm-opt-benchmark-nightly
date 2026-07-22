@@ -203,7 +203,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.bw = load ptr, ptr %i.f, align 8, !tbaa !9   ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 56
-  %i.by = load ptr, ptr %i.bx, align 8, !tbaa !84 ; 2 uses
+  %i.by = load ptr, ptr %i.bx, align 8, !tbaa !84
   %i.bz = getelementptr inbounds nuw [48 x i8], ptr %i.by, i64 %indvars.iv
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 24
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !85
@@ -248,16 +248,15 @@ bb.r:                                             ; preds = %bb.q
 
 _ZN6google8protobuf2io7Printer5PrintIJEEEvSt17basic_string_viewIcSt11char_traitsIcEEDpRKT_.exit55: ; preds = %bb.p, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #24
-  %.pre = load ptr, ptr %i.f, align 8, !tbaa !9   ; 2 uses
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 56
-  %.pre192 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !84
+  %.pre = load ptr, ptr %i.f, align 8, !tbaa !9
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.m, %_ZN6google8protobuf2io7Printer5PrintIJEEEvSt17basic_string_viewIcSt11char_traitsIcEEDpRKT_.exit55
-  %i.co = phi ptr [ %i.by, %bb.m ], [ %.pre192, %_ZN6google8protobuf2io7Printer5PrintIJEEEvSt17basic_string_viewIcSt11char_traitsIcEEDpRKT_.exit55 ]
-  %20 = phi ptr [ %i.bw, %bb.m ], [ %.pre, %_ZN6google8protobuf2io7Printer5PrintIJEEEvSt17basic_string_viewIcSt11char_traitsIcEEDpRKT_.exit55 ]
+  %i.co = phi ptr [ %i.bw, %bb.m ], [ %.pre, %_ZN6google8protobuf2io7Printer5PrintIJEEEvSt17basic_string_viewIcSt11char_traitsIcEEDpRKT_.exit55 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #24
-  %i.cp = getelementptr inbounds nuw [48 x i8], ptr %i.co, i64 %indvars.iv
+  %20 = getelementptr inbounds nuw i8, ptr %i.co, i64 56
+  %21 = load ptr, ptr %20, align 8, !tbaa !84
+  %i.cp = getelementptr inbounds nuw [48 x i8], ptr %21, i64 %indvars.iv
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 8 ; 2 uses
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !90 ; 2 uses
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !39
@@ -266,7 +265,7 @@ bb.s:                                             ; preds = %bb.m, %_ZN6google8p
   store i64 %i.cu, ptr %11, align 8
   store ptr %i.cs, ptr %i.at, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #24
-  %i.cv = getelementptr inbounds nuw i8, ptr %20, i64 8
+  %i.cv = getelementptr inbounds nuw i8, ptr %i.co, i64 8
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !38 ; 2 uses
   %.0.copyload.i.i.i56 = load i16, ptr %i.cw, align 1
   %i.cx = zext i16 %.0.copyload.i.i.i56 to i64    ; 2 uses

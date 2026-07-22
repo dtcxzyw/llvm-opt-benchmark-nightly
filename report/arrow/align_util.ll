@@ -201,13 +201,13 @@ define void @_ZN5arrow4util15EnsureAlignmentESt10shared_ptrINS_9ArrayDataEElPNS_
 bb.a:
   %4 = alloca %"class.std::vector", align 16      ; 14 uses
   %5 = alloca %"class.arrow::Result", align 8     ; 10 uses
-  %6 = alloca %"class.std::shared_ptr", align 8   ; 4 uses
+  %6 = alloca %"class.std::shared_ptr", align 16  ; 4 uses
   %7 = alloca %"class.arrow::Result.57", align 8  ; 10 uses
   %8 = alloca %"class.std::shared_ptr.18", align 16 ; 4 uses
   %9 = alloca %"class.arrow::Result.57", align 8  ; 10 uses
   %10 = alloca %"class.std::shared_ptr.18", align 16 ; 4 uses
   %11 = alloca %"class.std::shared_ptr.18", align 16 ; 5 uses
-  %12 = alloca %"class.std::shared_ptr.10", align 8 ; 4 uses
+  %12 = alloca %"class.std::shared_ptr.10", align 16 ; 4 uses
   %13 = alloca %"class.std::vector", align 16     ; 7 uses
   %14 = alloca %"class.std::vector.13", align 8   ; 8 uses
   %15 = alloca %"class.std::shared_ptr.18", align 16 ; 4 uses
@@ -334,7 +334,7 @@ _ZN5arrow4util12_GLOBAL__N_117GetTypeForBuffersERKNS_9ArrayDataE.exit: ; preds =
 
 .lr.ph:                                           ; preds = %_ZN5arrow4util12_GLOBAL__N_117GetTypeForBuffersERKNS_9ArrayDataE.exit
   %i.ax = icmp eq i64 %2, -3
-  %i.ay = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 16
   br label %bb.l
@@ -349,7 +349,7 @@ bb.l:                                             ; preds = %.lr.ph, %bb.ap
   %i.bd = phi ptr [ %i.af, %.lr.ph ], [ %i.dv, %bb.ap ]
   %.047187 = phi i64 [ 0, %.lr.ph ], [ %i.dw, %bb.ap ] ; 4 uses
   %i.be = getelementptr inbounds nuw [16 x i8], ptr %i.bc, i64 %.047187 ; 4 uses
-  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !73 ; 2 uses
+  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !73
   %.not182 = icmp eq ptr %i.bf, null
   br i1 %.not182, label %bb.ap, label %bb.m
 
@@ -363,7 +363,6 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.bi = sext i32 %i.bh to i64
-  %.pre195 = load ptr, ptr %i.be, align 8, !tbaa !73
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.n
@@ -372,15 +371,13 @@ bb.p:                                             ; preds = %bb.n
   br label %bb.em
 
 bb.q:                                             ; preds = %bb.o, %bb.m
-  %16 = phi ptr [ %.pre195, %bb.o ], [ %i.bf, %bb.m ]
   %.053 = phi i64 [ %i.bi, %bb.o ], [ %2, %bb.m ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
-  store ptr %16, ptr %6, align 8, !tbaa !73
   store ptr null, ptr %i.ay, align 8, !tbaa !95
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.be, i64 8 ; 2 uses
-  %17 = load ptr, ptr %i.bk, align 8, !tbaa !95
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.be, i64 8
+  %16 = load <2 x ptr>, ptr %i.be, align 8, !tbaa !135
   store ptr null, ptr %i.bk, align 8, !tbaa !95
-  store ptr %17, ptr %i.ay, align 8, !tbaa !95
+  store <2 x ptr> %16, ptr %6, align 16, !tbaa !135
   store ptr null, ptr %i.be, align 8, !tbaa !73
   invoke void @_ZN5arrow4util15EnsureAlignmentESt10shared_ptrINS_6BufferEElPNS_10MemoryPoolE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result") align 8 %5, ptr noundef nonnull %6, i64 noundef %.053, ptr noundef %3)
           to label %bb.r unwind label %bb.z
@@ -783,7 +780,7 @@ _ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit: ; preds = %bb.bi, %_Z
 
 .critedge65:                                      ; preds = %.critedge65.loopexit, %.critedge
   %i.gu = phi ptr [ %.pre198.a, %.critedge65.loopexit ], [ %i.eb, %.critedge ] ; 4 uses
-  %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !47 ; 2 uses
+  %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !47
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gv, i64 40
   %i.gx = load i32, ptr %i.gw, align 8, !tbaa !53
   %i.gy = icmp eq i32 %i.gx, 29
@@ -997,24 +994,22 @@ _ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit116: ; preds = %_ZN5arr
   br i1 %i.hu, label %_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit116._crit_edge, label %.loopexit183
 
 _ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit116._crit_edge: ; preds = %_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit116
-  %.pre199.a = load ptr, ptr %1, align 8, !tbaa !77 ; 2 uses
-  %.pre200 = load ptr, ptr %.pre199.a, align 8, !tbaa !47
+  %.pre199.a = load ptr, ptr %1, align 8, !tbaa !77
   br label %bb.cp
 
 bb.cp:                                            ; preds = %_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit116._crit_edge, %.critedge65
-  %18 = phi ptr [ %.pre200, %_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit116._crit_edge ], [ %i.gv, %.critedge65 ]
-  %i.jo = phi ptr [ %.pre199.a, %_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit116._crit_edge ], [ %i.gu, %.critedge65 ] ; 3 uses
+  %i.jo = phi ptr [ %.pre199.a, %_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit116._crit_edge ], [ %i.gu, %.critedge65 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #19
-  store ptr %18, ptr %12, align 8, !tbaa !47
-  %i.jp = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %i.jo, i64 8
-  %20 = load ptr, ptr %19, align 8, !tbaa !95     ; 3 uses
-  store ptr %20, ptr %i.jp, align 8, !tbaa !95
-  %.not.i.i.i117 = icmp eq ptr %20, null
+  %17 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %i.jp = getelementptr inbounds nuw i8, ptr %i.jo, i64 8
+  %18 = load ptr, ptr %i.jp, align 8, !tbaa !95   ; 2 uses
+  %19 = load <2 x ptr>, ptr %i.jo, align 8, !tbaa !135
+  store <2 x ptr> %19, ptr %12, align 16, !tbaa !135
+  %.not.i.i.i117 = icmp eq ptr %18, null
   br i1 %.not.i.i.i117, label %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit, label %bb.cq
 
 bb.cq:                                            ; preds = %bb.cp
-  %i.jq = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 3 uses
+  %i.jq = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 3 uses
   %i.jr = load i8, ptr @__libc_single_threaded, align 1, !tbaa !100
   %.not.i.i.i.i118 = icmp eq i8 %i.jr, 0
   br i1 %.not.i.i.i.i118, label %bb.cs, label %bb.cr
@@ -1371,7 +1366,7 @@ bb.dv:                                            ; preds = %_ZSt8_DestroyIPSt10
   br label %_ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EED2Ev.exit
 
 _ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EED2Ev.exit: ; preds = %_ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exit.i, %bb.dv
-  %i.oh = load ptr, ptr %i.jp, align 8, !tbaa !95 ; 8 uses
+  %i.oh = load ptr, ptr %17, align 8, !tbaa !95   ; 8 uses
   %.not.i.i148 = icmp eq ptr %i.oh, null
   br i1 %.not.i.i148, label %_ZNSt12__shared_ptrIN5arrow9ArrayDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit156, label %bb.dw
 
@@ -1774,7 +1769,7 @@ bb.a:
   %4 = alloca %"class.std::vector.24", align 8    ; 12 uses
   %5 = alloca %"class.std::vector.28", align 8    ; 13 uses
   %6 = alloca %"class.arrow::Result.71", align 8  ; 10 uses
-  %7 = alloca %"class.std::shared_ptr.40", align 8 ; 4 uses
+  %7 = alloca %"class.std::shared_ptr.40", align 16 ; 4 uses
   %8 = alloca %"class.std::vector.28", align 8    ; 7 uses
   %9 = alloca %"class.std::shared_ptr.10", align 16 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
@@ -1893,7 +1888,7 @@ _ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EEC2ERKS5_.exit: ; preds = %_ZN
   br i1 %.not71, label %.lr.ph, label %.critedge31
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EEC2ERKS5_.exit
-  %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %6, i64 16
   br label %bb.j
@@ -1925,18 +1920,17 @@ bb.j:                                             ; preds = %.lr.ph, %.critedge
 
 bb.k:                                             ; preds = %bb.j
   %i.bd = load ptr, ptr %5, align 8, !tbaa !89
-  %i.be = getelementptr inbounds nuw [16 x i8], ptr %i.bd, i64 %indvars.iv ; 3 uses
-  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !90 ; 2 uses
+  %i.be = getelementptr inbounds nuw [16 x i8], ptr %i.bd, i64 %indvars.iv ; 4 uses
+  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !90
   %.not70 = icmp eq ptr %i.bf, null
   br i1 %.not70, label %.critedge, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
-  store ptr %i.bf, ptr %7, align 8, !tbaa !90
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 8 ; 2 uses
-  %10 = load ptr, ptr %i.bg, align 8, !tbaa !95
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 8
+  %10 = load <2 x ptr>, ptr %i.be, align 8, !tbaa !135
   store ptr null, ptr %i.bg, align 8, !tbaa !95
-  store ptr %10, ptr %i.ap, align 8, !tbaa !95
+  store <2 x ptr> %10, ptr %7, align 16, !tbaa !135
   store ptr null, ptr %i.be, align 8, !tbaa !90
   invoke void @_ZN5arrow4util15EnsureAlignmentESt10shared_ptrINS_5ArrayEElPNS_10MemoryPoolE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result.71") align 8 %6, ptr noundef nonnull %7, i64 noundef %2, ptr noundef %3)
           to label %bb.m unwind label %bb.u
@@ -2339,7 +2333,7 @@ bb.a:
   %4 = alloca %"class.std::vector.24", align 8    ; 12 uses
   %5 = alloca %"class.std::vector.28", align 16   ; 13 uses
   %6 = alloca %"class.arrow::Result.71", align 8  ; 10 uses
-  %7 = alloca %"class.std::shared_ptr.40", align 8 ; 4 uses
+  %7 = alloca %"class.std::shared_ptr.40", align 16 ; 4 uses
   %8 = alloca %"class.std::shared_ptr.83", align 16 ; 7 uses
   %9 = alloca %"class.std::shared_ptr.43", align 16 ; 4 uses
   %10 = alloca %"class.std::vector.28", align 16  ; 7 uses
@@ -2448,7 +2442,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
 _ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EEC2ERKS5_.exit: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i, %.noexc32
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.v, %.noexc32 ], [ %i.aj, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i ]
   store ptr %.0.lcssa.i.i.i.i.i, ptr %i.w, align 8, !tbaa !86
-  %i.al = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %6, i64 16
   br label %bb.i
@@ -2493,18 +2487,17 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n
   %i.bb = load ptr, ptr %5, align 16, !tbaa !89
-  %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.bb, i64 %indvars.iv ; 3 uses
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !90 ; 2 uses
+  %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.bb, i64 %indvars.iv ; 4 uses
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !90
   %.not78 = icmp eq ptr %i.bd, null
   br i1 %.not78, label %.critedge, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
-  store ptr %i.bd, ptr %7, align 8, !tbaa !90
-  %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 8 ; 2 uses
-  %12 = load ptr, ptr %i.be, align 8, !tbaa !95
+  %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
+  %12 = load <2 x ptr>, ptr %i.bc, align 8, !tbaa !135
   store ptr null, ptr %i.be, align 8, !tbaa !95
-  store ptr %12, ptr %i.al, align 8, !tbaa !95
+  store <2 x ptr> %12, ptr %7, align 16, !tbaa !135
   store ptr null, ptr %i.bc, align 8, !tbaa !90
   invoke void @_ZN5arrow4util15EnsureAlignmentESt10shared_ptrINS_5ArrayEElPNS_10MemoryPoolE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result.71") align 8 %6, ptr noundef nonnull %7, i64 noundef %2, ptr noundef %3)
           to label %bb.q unwind label %bb.y
@@ -2907,7 +2900,7 @@ bb.a:
   %5 = alloca %"class.std::vector.96", align 16   ; 15 uses
   %6 = alloca %"class.std::vector.28", align 8    ; 16 uses
   %7 = alloca %"class.arrow::Result.71", align 8  ; 10 uses
-  %8 = alloca %"class.std::shared_ptr.40", align 8 ; 4 uses
+  %8 = alloca %"class.std::shared_ptr.40", align 16 ; 4 uses
   %9 = alloca %"class.arrow::Result.75", align 8  ; 10 uses
   %10 = alloca %"class.std::vector.28", align 8   ; 7 uses
   %11 = alloca %"class.std::shared_ptr.10", align 16 ; 4 uses
@@ -3020,7 +3013,7 @@ _ZNSt6vectorISt10shared_ptrIN5arrow12ChunkedArrayEESaIS3_EEC2ERKS5_.exit: ; pred
   store ptr %.0.lcssa.i.i.i.i.i, ptr %i.w, align 8, !tbaa !237
   %i.al = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.aq = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
@@ -3061,18 +3054,18 @@ bb.l:                                             ; preds = %bb.i
 bb.m:                                             ; preds = %_ZNK5arrow5Table11num_columnsEv.exit
   %i.bd = add nsw i64 %indvars.iv, -1             ; 5 uses
   %i.be = load ptr, ptr %5, align 16, !tbaa !240
-  %i.bf = getelementptr inbounds nuw [16 x i8], ptr %i.be, i64 %i.bd
-  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !106 ; 4 uses
+  %i.bf = getelementptr inbounds nuw [16 x i8], ptr %i.be, i64 %i.bd ; 2 uses
+  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !106 ; 3 uses
   %.not176 = icmp eq ptr %i.bg, null
   br i1 %.not176, label %.critedge, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 8 ; 2 uses
-  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !86 ; 2 uses
-  %i.bj = load ptr, ptr %i.bg, align 8, !tbaa !89 ; 2 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
+  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !86
+  %i.bj = load ptr, ptr %i.bg, align 8, !tbaa !89
   %i.bk = ptrtoint ptr %i.bi to i64
   %i.bl = ptrtoint ptr %i.bj to i64
-  %i.bm = sub i64 %i.bk, %i.bl                    ; 4 uses
+  %i.bm = sub i64 %i.bk, %i.bl
   %i.bn = lshr exact i64 %i.bm, 4
   %i.bo = trunc i64 %i.bn to i32
   %.05152 = add i32 %i.bo, 1
@@ -3097,12 +3090,19 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
+  %15 = load ptr, ptr %i.bf, align 8, !tbaa !106  ; 3 uses
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 2 uses
+  %17 = load ptr, ptr %16, align 8, !tbaa !86     ; 2 uses
+  %18 = load ptr, ptr %15, align 8, !tbaa !89     ; 2 uses
+  %19 = ptrtoint ptr %17 to i64
+  %20 = ptrtoint ptr %18 to i64
+  %21 = sub i64 %19, %20                          ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
-  %.not.i.i.i.i73 = icmp eq ptr %i.bi, %i.bj
+  %.not.i.i.i.i73 = icmp eq ptr %17, %18
   br i1 %.not.i.i.i.i73, label %.noexc82, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.cc = icmp ugt i64 %i.bm, 9223372036854775792
+  %i.cc = icmp ugt i64 %21, 9223372036854775792
   br i1 %i.cc, label %.noexc.i.i80, label %_ZNSt15__new_allocatorISt10shared_ptrIN5arrow5ArrayEEE8allocateEmPKv.exit.i.i.i.i, !prof !101
 
 .noexc.i.i80:                                     ; preds = %bb.p
@@ -3113,17 +3113,17 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 _ZNSt15__new_allocatorISt10shared_ptrIN5arrow5ArrayEEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.p
-  %i.cd = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bm) #23
+  %i.cd = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %21) #23
           to label %.noexc82 unwind label %.loopexit
 
 .noexc82:                                         ; preds = %_ZNSt15__new_allocatorISt10shared_ptrIN5arrow5ArrayEEE8allocateEmPKv.exit.i.i.i.i, %bb.o
   %i.ce = phi ptr [ null, %bb.o ], [ %i.cd, %_ZNSt15__new_allocatorISt10shared_ptrIN5arrow5ArrayEEE8allocateEmPKv.exit.i.i.i.i ] ; 6 uses
   store ptr %i.ce, ptr %6, align 8, !tbaa !89
   store ptr %i.ce, ptr %i.al, align 8, !tbaa !86
-  %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.bm
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 %21
   store ptr %i.cf, ptr %i.am, align 8, !tbaa !207
-  %i.cg = load ptr, ptr %i.bg, align 8, !tbaa !206 ; 2 uses
-  %i.ch = load ptr, ptr %i.bh, align 8, !tbaa !206 ; 2 uses
+  %i.cg = load ptr, ptr %15, align 8, !tbaa !206  ; 2 uses
+  %i.ch = load ptr, ptr %16, align 8, !tbaa !206  ; 2 uses
   %i.ci = icmp eq ptr %i.cg, %i.ch
   br i1 %i.ci, label %.critedge66, label %.lr.ph.i.i.i.i.i74
 
@@ -3179,8 +3179,8 @@ _ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EEC2ERKS5_.exit: ; preds = %_ZS
   %i.cu = phi ptr [ %i.ge, %.critedge5 ], [ %.pre188, %_ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EEC2ERKS5_.exit ] ; 3 uses
   %i.cv = phi ptr [ %i.gf, %.critedge5 ], [ %i.cs, %_ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EEC2ERKS5_.exit ] ; 2 uses
   %.045183 = phi i64 [ %i.gg, %.critedge5 ], [ 0, %_ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EEC2ERKS5_.exit ] ; 4 uses
-  %i.cw = getelementptr inbounds nuw [16 x i8], ptr %i.cu, i64 %.045183 ; 3 uses
-  %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !90 ; 2 uses
+  %i.cw = getelementptr inbounds nuw [16 x i8], ptr %i.cu, i64 %.045183 ; 4 uses
+  %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !90
   %.not178 = icmp eq ptr %i.cx, null
   br i1 %.not178, label %.critedge5, label %bb.t
 
@@ -3215,12 +3215,11 @@ bb.t:                                             ; preds = %.lr.ph
 
 bb.u:                                             ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
-  store ptr %i.cx, ptr %8, align 8, !tbaa !90
   store ptr null, ptr %i.an, align 8, !tbaa !95
-  %i.du = getelementptr inbounds nuw i8, ptr %i.cw, i64 8 ; 2 uses
-  %15 = load ptr, ptr %i.du, align 8, !tbaa !95
+  %i.du = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
+  %22 = load <2 x ptr>, ptr %i.cw, align 8, !tbaa !135
   store ptr null, ptr %i.du, align 8, !tbaa !95
-  store ptr %15, ptr %i.an, align 8, !tbaa !95
+  store <2 x ptr> %22, ptr %8, align 16, !tbaa !135
   store ptr null, ptr %i.cw, align 8, !tbaa !90
   invoke void @_ZN5arrow4util15EnsureAlignmentESt10shared_ptrINS_5ArrayEElPNS_10MemoryPoolE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result.71") align 8 %7, ptr noundef nonnull %8, i64 noundef %2, ptr noundef %3)
           to label %bb.v unwind label %bb.ad

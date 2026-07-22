@@ -203,7 +203,7 @@ bb.an:                                            ; preds = %bb.am
   %i.dt = load ptr, ptr %14, align 8, !tbaa !694  ; 3 uses
   %i.du = getelementptr inbounds nuw i8, ptr %2, i64 152 ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dt, i64 336 ; 2 uses
-  %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !1280 ; 2 uses
+  %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !1280
   %.not = icmp eq ptr %i.dw, null
   br i1 %.not, label %bb.ao, label %bb.bf
 
@@ -408,12 +408,7 @@ bb.bf:                                            ; preds = %bb.an
   %i.ft = getelementptr inbounds nuw i8, ptr %26, i64 120
   br label %.noexc.i202
 
-._crit_edge.loopexit:                             ; preds = %_ZN6duckdb14ConstantBinderD2Ev.exit
-  %.pre = load ptr, ptr %i.dv, align 8, !tbaa !1280
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.bf
-  %39 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.dw, %bb.bf ]
+._crit_edge:                                      ; preds = %_ZN6duckdb14ConstantBinderD2Ev.exit, %bb.bf
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #23
   %i.fu = load ptr, ptr %i.ah, align 8, !tbaa !42, !nonnull !40, !align !41
   store ptr %i.fu, ptr %35, align 8, !tbaa !1292
@@ -423,6 +418,7 @@ bb.bf:                                            ; preds = %bb.an
   %i.fx = getelementptr inbounds nuw i8, ptr %35, i64 16
   store ptr %25, ptr %i.fx, align 8, !tbaa !1294
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #23
+  %39 = load ptr, ptr %i.dv, align 8, !tbaa !1280
   invoke void %39(ptr dead_on_unwind nonnull writable sret(%"struct.duckdb::LogicalType") align 8 %36, ptr noundef nonnull align 8 dereferenceable(24) %35)
           to label %bb.cv unwind label %bb.dc
 
@@ -800,7 +796,7 @@ _ZN6duckdb14ConstantBinderD2Ev.exit:              ; preds = %_ZNSt10unique_ptrIN
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #23
   %i.jc = getelementptr inbounds nuw i8, ptr %.sroa.0281.0349, i64 8 ; 2 uses
   %.not308 = icmp eq ptr %i.jc, %i.fj
-  br i1 %.not308, label %._crit_edge.loopexit, label %.noexc.i202
+  br i1 %.not308, label %._crit_edge, label %.noexc.i202
 
 bb.cr:                                            ; preds = %bb.cm, %bb.cl
   %i.jd = landingpad { ptr, i32 }

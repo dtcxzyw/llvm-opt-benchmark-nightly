@@ -201,11 +201,11 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.p, %bb.a
-  %.sroa.527.sroa.4.0.copyload.a = phi i64 [ %.sroa.527.sroa.4.0.copyload.pre, %bb.p ], [ undef, %bb.a ]
-  %.sroa.527.sroa.0.0.copyload = phi ptr [ %.sroa.527.sroa.0.0.copyload.pre, %bb.p ], [ undef, %bb.a ]
-  %.sroa.025.0.copyload = phi i64 [ %.sroa.025.0.copyload.pre, %bb.p ], [ 4, %bb.a ] ; 2 uses
+  %.sroa.527.sroa.4.0.copyload.a = phi i64 [ %.sroa.025.0.copyload.pre, %bb.p ], [ 4, %bb.a ] ; 2 uses
+  %.sroa.527.sroa.0.0.copyload = load ptr, ptr %.sroa.323.0..sroa_idx, align 8
+  %.sroa.527.sroa.4.0.copyload = load i64, ptr %.sroa.527.sroa.4.0..sroa.323.0..sroa_idx.sroa_idx, align 8
   store i64 4, ptr %i.v, align 8
-  %.not = icmp eq i64 %.sroa.025.0.copyload, 4
+  %.not = icmp eq i64 %.sroa.527.sroa.4.0.copyload.a, 4
   br i1 %.not, label %bb.c, label %_RNvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB5_8IntoIterINtCs2EMQEx3u6w6_4diff6ResultReEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4nextCsfY7SmN0bPrO_14deltalake_test.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -241,9 +241,9 @@ bb.d:                                             ; preds = %bb.c
   br label %.body
 
 _RNvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB5_8IntoIterINtCs2EMQEx3u6w6_4diff6ResultReEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4nextCsfY7SmN0bPrO_14deltalake_test.exit: ; preds = %bb.b, %bb.d
-  %.sroa.10.1 = phi i64 [ %.sroa.10.0.copyload, %bb.d ], [ %.sroa.527.sroa.4.0.copyload.a, %bb.b ] ; 5 uses
+  %.sroa.10.1 = phi i64 [ %.sroa.10.0.copyload, %bb.d ], [ %.sroa.527.sroa.4.0.copyload, %bb.b ] ; 5 uses
   %.sroa.8.1 = phi ptr [ %.sroa.8.0.copyload, %bb.d ], [ %.sroa.527.sroa.0.0.copyload, %bb.b ] ; 9 uses
-  %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload, %bb.d ], [ %.sroa.025.0.copyload, %bb.b ] ; 3 uses
+  %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload, %bb.d ], [ %.sroa.527.sroa.4.0.copyload.a, %bb.b ] ; 3 uses
   %.not66 = icmp eq i64 %.sroa.0.0, 3
   br i1 %.not66, label %_RNvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB5_8IntoIterINtCs2EMQEx3u6w6_4diff6ResultReEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4nextCsfY7SmN0bPrO_14deltalake_test.exit.thread, label %bb.e
 
@@ -338,8 +338,6 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.bf, %_RNvXsb_NtCsbvkFyIu7lgC_4core3fmtNtB5_9FormatterNtB5_5Write9write_fmt.exit126, %bb.ae, %bb.s, %bb.o
   %.sroa.025.0.copyload.pre = load i64, ptr %i.v, align 8
-  %.sroa.527.sroa.0.0.copyload.pre = load ptr, ptr %.sroa.323.0..sroa_idx, align 8
-  %.sroa.527.sroa.4.0.copyload.pre = load i64, ptr %.sroa.527.sroa.4.0..sroa.323.0..sroa_idx.sroa_idx, align 8
   br label %bb.b
 
 bb.q:                                             ; preds = %bb.k
