@@ -203,7 +203,8 @@ bb.is:                                            ; preds = %_ZNSt12_Vector_base
   %.sroa.088.0105.i = phi ptr [ %i.yb, %bb.je ], [ %i.wt, %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE7reserveEm.exit.i ] ; 2 uses
   %i.xf = load i32, ptr %.sroa.088.0105.i, align 4, !tbaa !3, !noalias !264 ; 3 uses
   %i.xg = srem i32 %i.xf, 1000                    ; 2 uses
-  %95 = sdiv i32 %i.xf, 1000
+  %.lhs.trunc.i = trunc i32 %i.xf to i16
+  %95 = sdiv i16 %.lhs.trunc.i, 1000
   %i.xh = add nsw i32 %i.xg, -8
   %or.cond.i348 = icmp ult i32 %i.xh, -7
   br i1 %or.cond.i348, label %bb.it, label %bb.iy
@@ -309,8 +310,8 @@ bb.jd:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.je:                                            ; preds = %bb.iy
   %i.xv = shl nuw nsw i32 1, %i.xg
-  %96 = and i32 %95, 255
-  %i.xw = zext nneg i32 %96 to i64
+  %96 = and i16 %95, 255
+  %i.xw = zext nneg i16 %96 to i64
   %i.xx = getelementptr inbounds nuw i8, ptr %8, i64 %i.xw ; 2 uses
   %i.xy = load i8, ptr %i.xx, align 1, !tbaa !18, !noalias !264
   %i.xz = trunc nuw i32 %i.xv to i8

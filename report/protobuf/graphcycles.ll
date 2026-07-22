@@ -1,5 +1,5 @@
-inline.NumInlined: 333
-inline.NumDeleted: 136
+inline.NumInlined: 335
+inline.NumDeleted: 137
 loop-unroll.NumRuntimeUnrolled: 2
 loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet6insertEi:bb.a
@@ -203,15 +203,14 @@ _ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_14NodeC2Ev.exit: ; 
   br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIPNS2_4NodeEE9push_backERKS5_.exit
 
 bb.g:                                             ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_14NodeC2Ev.exit
-  %2 = add i32 %.val, 1
   %.not.i21 = icmp eq i32 %.val, -1
   br i1 %.not.i21, label %bb.h, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.g, %.lr.ph.i.i
   %i.ba = phi i32 [ %i.bb, %.lr.ph.i.i ], [ %.val, %bb.g ]
   %i.bb = shl i32 %i.ba, 1                        ; 4 uses
-  %3 = icmp ult i32 %i.bb, %2
-  br i1 %3, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !16
+  %.not5.i = icmp ugt i32 %i.bb, %.val
+  br i1 %.not5.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !16
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
   store i32 %i.bb, ptr %i.ax, align 4, !tbaa !15
@@ -614,15 +613,14 @@ bb.o:                                             ; preds = %_ZN4absl12lts_20250
   br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit
 
 bb.p:                                             ; preds = %bb.o
-  %2 = add i32 %i.dg, 1
   %.not.i47 = icmp eq i32 %i.dg, -1
   br i1 %.not.i47, label %bb.q, label %.lr.ph.i.i48
 
 .lr.ph.i.i48:                                     ; preds = %bb.p, %.lr.ph.i.i48
   %i.dk = phi i32 [ %i.dl, %.lr.ph.i.i48 ], [ %i.dg, %bb.p ]
   %i.dl = shl i32 %i.dk, 1                        ; 4 uses
-  %3 = icmp ult i32 %i.dl, %2
-  br i1 %3, label %.lr.ph.i.i48, label %._crit_edge.i.i, !llvm.loop !47
+  %.not5.i = icmp ugt i32 %i.dl, %i.dg
+  br i1 %.not5.i, label %._crit_edge.i.i, label %.lr.ph.i.i48, !llvm.loop !47
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i48
   store i32 %i.dl, ptr %i.dh, align 4, !tbaa !28
@@ -1025,15 +1023,14 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit49.i
 
 bb.j:                                             ; preds = %bb.i
-  %3 = add i32 %i.az, 1
   %.not.i39.i = icmp eq i32 %i.az, -1
   br i1 %.not.i39.i, label %bb.k, label %.lr.ph.i.i40.i
 
 .lr.ph.i.i40.i:                                   ; preds = %bb.j, %.lr.ph.i.i40.i
   %i.bc = phi i32 [ %i.bd, %.lr.ph.i.i40.i ], [ %i.az, %bb.j ]
   %i.bd = shl i32 %i.bc, 1                        ; 4 uses
-  %4 = icmp ult i32 %i.bd, %3
-  br i1 %4, label %.lr.ph.i.i40.i, label %._crit_edge.i.i41.i, !llvm.loop !47
+  %.not5.i41.i = icmp ugt i32 %i.bd, %i.az
+  br i1 %.not5.i41.i, label %._crit_edge.i.i41.i, label %.lr.ph.i.i40.i, !llvm.loop !47
 
 ._crit_edge.i.i41.i:                              ; preds = %.lr.ph.i.i40.i
   store i32 %i.bd, ptr %i.ai, align 4, !tbaa !28
@@ -1144,15 +1141,14 @@ bb.s:                                             ; preds = %bb.r
   br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit63.i
 
 bb.t:                                             ; preds = %bb.s
-  %5 = add i32 %i.ci, 1
   %.not.i53.i = icmp eq i32 %i.ci, -1
   br i1 %.not.i53.i, label %bb.u, label %.lr.ph.i.i54.i
 
 .lr.ph.i.i54.i:                                   ; preds = %bb.t, %.lr.ph.i.i54.i
   %i.cl = phi i32 [ %i.cm, %.lr.ph.i.i54.i ], [ %i.ci, %bb.t ]
   %i.cm = shl i32 %i.cl, 1                        ; 4 uses
-  %6 = icmp ult i32 %i.cm, %5
-  br i1 %6, label %.lr.ph.i.i54.i, label %._crit_edge.i.i55.i, !llvm.loop !47
+  %.not5.i56.i = icmp ugt i32 %i.cm, %i.ci
+  br i1 %.not5.i56.i, label %._crit_edge.i.i55.i, label %.lr.ph.i.i54.i, !llvm.loop !47
 
 ._crit_edge.i.i55.i:                              ; preds = %.lr.ph.i.i54.i
   store i32 %i.cm, ptr %i.an, align 4, !tbaa !28
@@ -1474,15 +1470,14 @@ bb.af:                                            ; preds = %bb.ae
   br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit36.i
 
 bb.ag:                                            ; preds = %bb.af
-  %7 = add i32 %i.hp, 1
   %.not.i26.i = icmp eq i32 %i.hp, -1
   br i1 %.not.i26.i, label %bb.ah, label %.lr.ph.i.i27.i
 
 .lr.ph.i.i27.i:                                   ; preds = %bb.ag, %.lr.ph.i.i27.i
   %i.hs = phi i32 [ %i.ht, %.lr.ph.i.i27.i ], [ %i.hp, %bb.ag ]
   %i.ht = shl i32 %i.hs, 1                        ; 4 uses
-  %8 = icmp ult i32 %i.ht, %7
-  br i1 %8, label %.lr.ph.i.i27.i, label %._crit_edge.i.i28.i, !llvm.loop !47
+  %.not5.i28.i = icmp ugt i32 %i.ht, %i.hp
+  br i1 %.not5.i28.i, label %._crit_edge.i.i28.i, label %.lr.ph.i.i27.i, !llvm.loop !47
 
 ._crit_edge.i.i28.i:                              ; preds = %.lr.ph.i.i27.i
   store i32 %i.ht, ptr %i.hd, align 4, !tbaa !28
@@ -1591,15 +1586,14 @@ bb.ap:                                            ; preds = %bb.ao
   br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit50.i
 
 bb.aq:                                            ; preds = %bb.ap
-  %9 = add i32 %i.iy, 1
   %.not.i40.i = icmp eq i32 %i.iy, -1
   br i1 %.not.i40.i, label %bb.ar, label %.lr.ph.i.i41.i
 
 .lr.ph.i.i41.i:                                   ; preds = %bb.aq, %.lr.ph.i.i41.i
   %i.jb = phi i32 [ %i.jc, %.lr.ph.i.i41.i ], [ %i.iy, %bb.aq ]
   %i.jc = shl i32 %i.jb, 1                        ; 4 uses
-  %10 = icmp ult i32 %i.jc, %9
-  br i1 %10, label %.lr.ph.i.i41.i, label %._crit_edge.i.i42.i, !llvm.loop !47
+  %.not5.i43.i = icmp ugt i32 %i.jc, %i.iy
+  br i1 %.not5.i43.i, label %._crit_edge.i.i42.i, label %.lr.ph.i.i41.i, !llvm.loop !47
 
 ._crit_edge.i.i42.i:                              ; preds = %.lr.ph.i.i41.i
   store i32 %i.jc, ptr %i.an, align 4, !tbaa !28
@@ -1678,54 +1672,237 @@ _ZN4absl12lts_2025051224synchronization_internalL11BackwardDFSEPNS1_11GraphCycle
   %.val38.i = load ptr, ptr %i.ae, align 8, !tbaa !24
   %.val39.i = load i32, ptr %i.ah, align 8, !tbaa !27
   tail call fastcc void @_ZN4absl12lts_2025051224synchronization_internalL4SortERKNS1_12_GLOBAL__N_13VecIPNS2_4NodeEEEPNS3_IiEE(ptr noundef nonnull align 8 dereferenceable(80) %i.a, ptr %.val38.i, i32 %.val39.i)
-  %i.jt = getelementptr inbounds nuw i8, ptr %i.a, i64 1048792 ; 5 uses
+  %i.jt = getelementptr inbounds nuw i8, ptr %i.a, i64 1048792 ; 9 uses
   %i.ju = load ptr, ptr %i.jt, align 8, !tbaa !24 ; 2 uses
-  %i.jv = getelementptr inbounds nuw i8, ptr %i.a, i64 1048800 ; 2 uses
+  %i.jv = getelementptr inbounds nuw i8, ptr %i.a, i64 1048800 ; 6 uses
   %.not.i.i.i83 = icmp eq ptr %i.ju, %i.jv
-  br i1 %.not.i.i.i83, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a, label %bb.aw
+  br i1 %.not.i.i.i83, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84, label %3
 
-bb.aw:                                            ; preds = %_ZN4absl12lts_2025051224synchronization_internalL11BackwardDFSEPNS1_11GraphCycles3RepEii.exit
+3:                                                ; preds = %_ZN4absl12lts_2025051224synchronization_internalL11BackwardDFSEPNS1_11GraphCycles3RepEii.exit
   tail call void @_ZN4absl12lts_2025051213base_internal13LowLevelAlloc4FreeEPv(ptr noundef %i.ju)
-  br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a
+  br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84
 
-_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a: ; preds = %bb.aw, %_ZN4absl12lts_2025051224synchronization_internalL11BackwardDFSEPNS1_11GraphCycles3RepEii.exit
+_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84: ; preds = %3, %_ZN4absl12lts_2025051224synchronization_internalL11BackwardDFSEPNS1_11GraphCycles3RepEii.exit
   store ptr %i.jv, ptr %i.jt, align 8, !tbaa !24
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 1048832 ; 2 uses
-  store i32 0, ptr %11, align 8, !tbaa !27
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 1048836
-  store i32 8, ptr %12, align 4, !tbaa !28
-  %.val44.i.a = load ptr, ptr %i.gz, align 8, !tbaa !24
-  %.val45.i = load i32, ptr %i.hc, align 8, !tbaa !27
-  tail call fastcc void @_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_(ptr noundef nonnull %i.a, ptr %.val44.i.a, i32 %.val45.i, ptr noundef nonnull %i.jt)
-  %.val42.i.a = load ptr, ptr %i.ae, align 8, !tbaa !24
-  %.val43.i.a = load i32, ptr %i.ah, align 8, !tbaa !27
-  tail call fastcc void @_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_(ptr noundef nonnull %i.a, ptr %.val42.i.a, i32 %.val43.i.a, ptr noundef nonnull %i.jt)
-  %i.jw = getelementptr inbounds nuw i8, ptr %i.a, i64 1048840 ; 5 uses
-  %.val28.i85 = load i32, ptr %i.hc, align 8, !tbaa !27 ; 2 uses
-  %.val27.i.a = load i32, ptr %i.ah, align 8, !tbaa !27 ; 2 uses
-  %13 = add i32 %.val27.i.a, %.val28.i85          ; 3 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 1048884 ; 2 uses
-  %i.jx = load i32, ptr %14, align 4, !tbaa !28   ; 2 uses
-  %15 = icmp ugt i32 %13, %i.jx
-  br i1 %15, label %.lr.ph.i.i.i, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit._ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit_crit_edge.i
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 1048832 ; 12 uses
+  store i32 0, ptr %4, align 8, !tbaa !27
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 1048836 ; 5 uses
+  store i32 8, ptr %5, align 4, !tbaa !28
+  %.val44.i = load ptr, ptr %i.gz, align 8, !tbaa !24 ; 2 uses
+  %.val45.i = load i32, ptr %i.hc, align 8, !tbaa !27 ; 2 uses
+  %6 = zext i32 %.val45.i to i64
+  %.idx.i.i = shl nuw nsw i64 %6, 2
+  %7 = getelementptr inbounds nuw i8, ptr %.val44.i, i64 %.idx.i.i
+  %.not2.i.i = icmp eq i32 %.val45.i, 0
+  br i1 %.not2.i.i, label %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit.i, label %.lr.ph.i.i85
 
-_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit._ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit_crit_edge.i: ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a
-  %.val31.pre.i = load ptr, ptr %i.jw, align 8, !tbaa !24
+.lr.ph.i.i85:                                     ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i.i
+  %.pre.i.i.i = phi ptr [ %.pre.i.i80.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i.i ], [ %i.jv, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84 ]
+  %.03.i.i = phi ptr [ %37, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i.i ], [ %.val44.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84 ] ; 3 uses
+  %8 = load i32, ptr %.03.i.i, align 4, !tbaa !3  ; 2 uses
+  %.val12.i.i = load ptr, ptr %i.a, align 8, !tbaa !20
+  %9 = zext i32 %8 to i64
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %.val12.i.i, i64 %9
+  %11 = load ptr, ptr %10, align 8, !tbaa !22     ; 2 uses
+  %12 = load i32, ptr %11, align 8, !tbaa !43
+  store i32 %12, ptr %.03.i.i, align 4, !tbaa !3
+  %13 = getelementptr inbounds nuw i8, ptr %11, i64 12
+  store i8 0, ptr %13, align 4, !tbaa !40
+  %14 = load i32, ptr %4, align 8, !tbaa !27      ; 5 uses
+  %15 = load i32, ptr %5, align 4, !tbaa !28
+  %16 = icmp eq i32 %14, %15
+  br i1 %16, label %17, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i.i
+
+17:                                               ; preds = %.lr.ph.i.i85
+  %.not.i.i46.i = icmp eq i32 %14, -1
+  br i1 %.not.i.i46.i, label %22, label %.lr.ph.i.i.i.i
+
+.lr.ph.i.i.i.i:                                   ; preds = %17, %.lr.ph.i.i.i.i
+  %18 = phi i32 [ %19, %.lr.ph.i.i.i.i ], [ %14, %17 ]
+  %19 = shl i32 %18, 1                            ; 4 uses
+  %.not5.i.i.i = icmp ugt i32 %19, %14
+  br i1 %.not5.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !47
+
+._crit_edge.i.i.i.i:                              ; preds = %.lr.ph.i.i.i.i
+  store i32 %19, ptr %5, align 4, !tbaa !28
+  %20 = zext i32 %19 to i64
+  %21 = shl nuw nsw i64 %20, 2
+  br label %22
+
+22:                                               ; preds = %._crit_edge.i.i.i.i, %17
+  %.lcssa.i.i.i.i = phi i64 [ %21, %._crit_edge.i.i.i.i ], [ 17179869180, %17 ]
+  %23 = load ptr, ptr @_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_15arenaE, align 8, !tbaa !18
+  %24 = tail call noundef ptr @_ZN4absl12lts_2025051213base_internal13LowLevelAlloc14AllocWithArenaEmPNS2_5ArenaE(i64 noundef %.lcssa.i.i.i.i, ptr noundef %23) ; 4 uses
+  %25 = load ptr, ptr %i.jt, align 8, !tbaa !24   ; 4 uses
+  %26 = load i32, ptr %4, align 8, !tbaa !27      ; 2 uses
+  switch i32 %26, label %27 [
+    i32 0, label %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i.i
+    i32 1, label %29
+  ], !prof !21
+
+27:                                               ; preds = %22
+  %28 = zext i32 %26 to i64
+  %.idx.i.i.i.i.i.i = shl nuw nsw i64 %28, 2
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %24, ptr align 4 %25, i64 %.idx.i.i.i.i.i.i, i1 false)
+  %.pre.i.i.i.i = load ptr, ptr %i.jt, align 8, !tbaa !24
+  br label %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i.i
+
+29:                                               ; preds = %22
+  %30 = load i32, ptr %25, align 4, !tbaa !3
+  store i32 %30, ptr %24, align 4, !tbaa !3
+  br label %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i.i
+
+_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i.i:      ; preds = %29, %27, %22
+  %31 = phi ptr [ %25, %22 ], [ %.pre.i.i.i.i, %27 ], [ %25, %29 ] ; 2 uses
+  %.not.i4.i.i.i.i = icmp eq ptr %31, %i.jv
+  br i1 %.not.i4.i.i.i.i, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i.i, label %bb.aw
+
+bb.aw:                                            ; preds = %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i.i
+  tail call void @_ZN4absl12lts_2025051213base_internal13LowLevelAlloc4FreeEPv(ptr noundef %31)
+  br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i.i
+
+_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i.i: ; preds = %bb.aw, %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i.i
+  store ptr %24, ptr %i.jt, align 8, !tbaa !24
+  %.pre1.i.i.i = load i32, ptr %4, align 8, !tbaa !27
+  br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i.i
+
+_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i.i: ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i.i, %.lr.ph.i.i85
+  %.pre.i.i80.i = phi ptr [ %24, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i.i ], [ %.pre.i.i.i, %.lr.ph.i.i85 ] ; 3 uses
+  %32 = phi i32 [ %.pre1.i.i.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i.i ], [ %14, %.lr.ph.i.i85 ]
+  %33 = zext i32 %32 to i64
+  %34 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i80.i, i64 %33
+  store i32 %8, ptr %34, align 4, !tbaa !3
+  %35 = load i32, ptr %4, align 8, !tbaa !27
+  %36 = add i32 %35, 1
+  store i32 %36, ptr %4, align 8, !tbaa !27
+  %37 = getelementptr inbounds nuw i8, ptr %.03.i.i, i64 4 ; 2 uses
+  %.not.i.i = icmp eq ptr %37, %7
+  br i1 %.not.i.i, label %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit.i, label %.lr.ph.i.i85
+
+_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit.i: ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84
+  %.pre.i.i5384.i = phi ptr [ %i.jv, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84 ], [ %.pre.i.i80.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i.i ]
+  %.val42.i = load ptr, ptr %i.ae, align 8, !tbaa !24 ; 2 uses
+  %.val43.i = load i32, ptr %i.ah, align 8, !tbaa !27 ; 2 uses
+  %38 = zext i32 %.val43.i to i64
+  %.idx.i47.i = shl nuw nsw i64 %38, 2
+  %39 = getelementptr inbounds nuw i8, ptr %.val42.i, i64 %.idx.i47.i
+  %.not2.i48.i = icmp eq i32 %.val43.i, 0
+  br i1 %.not2.i48.i, label %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit67.i, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a
+
+_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a: ; preds = %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i54.i
+  %.pre.i.i53.i = phi ptr [ %.pre.i.i5382.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i54.i ], [ %.pre.i.i5384.i, %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit.i ]
+  %.03.i50.i = phi ptr [ %65, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i54.i ], [ %.val42.i, %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit.i ] ; 3 uses
+  %40 = load i32, ptr %.03.i50.i, align 4, !tbaa !3 ; 2 uses
+  %.val44.i.a = load ptr, ptr %i.a, align 8, !tbaa !20
+  %41 = zext i32 %40 to i64
+  %42 = getelementptr inbounds nuw [8 x i8], ptr %.val44.i.a, i64 %41
+  %.val42.i.a = load ptr, ptr %42, align 8, !tbaa !22 ; 2 uses
+  %.val43.i.a = load i32, ptr %.val42.i.a, align 8, !tbaa !43
+  store i32 %.val43.i.a, ptr %.03.i50.i, align 4, !tbaa !3
+  %i.jw = getelementptr inbounds nuw i8, ptr %.val42.i.a, i64 12
+  store i8 0, ptr %i.jw, align 4, !tbaa !40
+  %.val27.i.a = load i32, ptr %4, align 8, !tbaa !27 ; 5 uses
+  %i.jx = load i32, ptr %5, align 4, !tbaa !28
+  %43 = icmp eq i32 %.val27.i.a, %i.jx
+  br i1 %43, label %44, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i54.i
+
+44:                                               ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a
+  %.not.i.i56.i = icmp eq i32 %.val27.i.a, -1
+  br i1 %.not.i.i56.i, label %49, label %.lr.ph.i.i.i57.i
+
+.lr.ph.i.i.i57.i:                                 ; preds = %44, %.lr.ph.i.i.i57.i
+  %45 = phi i32 [ %46, %.lr.ph.i.i.i57.i ], [ %.val27.i.a, %44 ]
+  %46 = shl i32 %45, 1                            ; 4 uses
+  %.not5.i.i58.i = icmp ugt i32 %46, %.val27.i.a
+  br i1 %.not5.i.i58.i, label %._crit_edge.i.i.i59.i, label %.lr.ph.i.i.i57.i, !llvm.loop !47
+
+._crit_edge.i.i.i59.i:                            ; preds = %.lr.ph.i.i.i57.i
+  store i32 %46, ptr %5, align 4, !tbaa !28
+  %47 = zext i32 %46 to i64
+  %48 = shl nuw nsw i64 %47, 2
+  br label %49
+
+49:                                               ; preds = %._crit_edge.i.i.i59.i, %44
+  %.lcssa.i.i.i60.i = phi i64 [ %48, %._crit_edge.i.i.i59.i ], [ 17179869180, %44 ]
+  %50 = load ptr, ptr @_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_15arenaE, align 8, !tbaa !18
+  %51 = tail call noundef ptr @_ZN4absl12lts_2025051213base_internal13LowLevelAlloc14AllocWithArenaEmPNS2_5ArenaE(i64 noundef %.lcssa.i.i.i60.i, ptr noundef %50) ; 4 uses
+  %52 = load ptr, ptr %i.jt, align 8, !tbaa !24   ; 4 uses
+  %53 = load i32, ptr %4, align 8, !tbaa !27      ; 2 uses
+  switch i32 %53, label %54 [
+    i32 0, label %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i61.i
+    i32 1, label %56
+  ], !prof !21
+
+54:                                               ; preds = %49
+  %55 = zext i32 %53 to i64
+  %.idx.i.i.i.i.i65.i = shl nuw nsw i64 %55, 2
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %51, ptr align 4 %52, i64 %.idx.i.i.i.i.i65.i, i1 false)
+  %.pre.i.i.i66.i = load ptr, ptr %i.jt, align 8, !tbaa !24
+  br label %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i61.i
+
+56:                                               ; preds = %49
+  %57 = load i32, ptr %52, align 4, !tbaa !3
+  store i32 %57, ptr %51, align 4, !tbaa !3
+  br label %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i61.i
+
+_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i61.i:    ; preds = %56, %54, %49
+  %58 = phi ptr [ %52, %49 ], [ %.pre.i.i.i66.i, %54 ], [ %52, %56 ] ; 2 uses
+  %.not.i4.i.i.i62.i = icmp eq ptr %58, %i.jv
+  br i1 %.not.i4.i.i.i62.i, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i63.i, label %59
+
+59:                                               ; preds = %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i61.i
+  tail call void @_ZN4absl12lts_2025051213base_internal13LowLevelAlloc4FreeEPv(ptr noundef %58)
+  br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i63.i
+
+_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i63.i: ; preds = %59, %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i61.i
+  store ptr %51, ptr %i.jt, align 8, !tbaa !24
+  %.pre1.i.i64.i = load i32, ptr %4, align 8, !tbaa !27
+  br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i54.i
+
+_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i54.i: ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i63.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a
+  %.pre.i.i5382.i = phi ptr [ %51, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i63.i ], [ %.pre.i.i53.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a ] ; 2 uses
+  %60 = phi i32 [ %.pre1.i.i64.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i63.i ], [ %.val27.i.a, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a ]
+  %61 = zext i32 %60 to i64
+  %62 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i5382.i, i64 %61
+  store i32 %40, ptr %62, align 4, !tbaa !3
+  %63 = load i32, ptr %4, align 8, !tbaa !27
+  %64 = add i32 %63, 1
+  store i32 %64, ptr %4, align 8, !tbaa !27
+  %65 = getelementptr inbounds nuw i8, ptr %.03.i50.i, i64 4 ; 2 uses
+  %.not.i55.i = icmp eq ptr %65, %39
+  br i1 %.not.i55.i, label %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit67.loopexit.i, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a
+
+_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit67.loopexit.i: ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit.i54.i
+  %.val27.pre.i = load i32, ptr %i.ah, align 8, !tbaa !27
+  br label %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit67.i
+
+_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit67.i: ; preds = %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit67.loopexit.i, %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit.i
+  %.val27.i = phi i32 [ %.val27.pre.i, %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit67.loopexit.i ], [ 0, %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit.i ] ; 2 uses
+  %66 = getelementptr inbounds nuw i8, ptr %i.a, i64 1048840 ; 5 uses
+  %.val28.i86 = load i32, ptr %i.hc, align 8, !tbaa !27 ; 2 uses
+  %67 = add i32 %.val28.i86, %.val27.i            ; 3 uses
+  %68 = getelementptr inbounds nuw i8, ptr %i.a, i64 1048884 ; 2 uses
+  %69 = load i32, ptr %68, align 4, !tbaa !28     ; 2 uses
+  %70 = icmp ugt i32 %67, %69
+  br i1 %70, label %.lr.ph.i.i.i, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit._ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit_crit_edge.i
+
+_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit._ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit_crit_edge.i: ; preds = %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit67.i
+  %.val31.pre.i = load ptr, ptr %66, align 8, !tbaa !24
   br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit.i
 
-.lr.ph.i.i.i:                                     ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a, %.lr.ph.i.i.i
-  %i.jy = phi i32 [ %i.jz, %.lr.ph.i.i.i ], [ %i.jx, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit.i84.a ]
+.lr.ph.i.i.i:                                     ; preds = %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit67.i, %.lr.ph.i.i.i
+  %i.jy = phi i32 [ %i.jz, %.lr.ph.i.i.i ], [ %69, %_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_.exit67.i ]
   %i.jz = shl i32 %i.jy, 1                        ; 4 uses
-  %i.ka = icmp ult i32 %i.jz, %13
+  %i.ka = icmp ult i32 %i.jz, %67
   br i1 %i.ka, label %.lr.ph.i.i.i, label %bb.ax, !llvm.loop !47
 
 bb.ax:                                            ; preds = %.lr.ph.i.i.i
-  store i32 %i.jz, ptr %14, align 4, !tbaa !28
+  store i32 %i.jz, ptr %68, align 4, !tbaa !28
   %i.kb = zext i32 %i.jz to i64
   %i.kc = shl nuw nsw i64 %i.kb, 2
   %i.kd = load ptr, ptr @_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_15arenaE, align 8, !tbaa !18
   %i.ke = tail call noundef ptr @_ZN4absl12lts_2025051213base_internal13LowLevelAlloc14AllocWithArenaEmPNS2_5ArenaE(i64 noundef %i.kc, ptr noundef %i.kd) ; 4 uses
-  %i.kf = load ptr, ptr %i.jw, align 8, !tbaa !24 ; 4 uses
+  %i.kf = load ptr, ptr %66, align 8, !tbaa !24   ; 4 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %i.a, i64 1048880
   %i.kh = load i32, ptr %i.kg, align 8, !tbaa !27 ; 2 uses
   switch i32 %i.kh, label %bb.ay [
@@ -1737,7 +1914,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.ki = zext i32 %i.kh to i64
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.ki, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.ke, ptr align 4 %i.kf, i64 %.idx.i.i.i.i.i, i1 false)
-  %.pre.i.i.i.a = load ptr, ptr %i.jw, align 8, !tbaa !24
+  %.pre.i.i.i.a = load ptr, ptr %66, align 8, !tbaa !24
   br label %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i
 
 bb.az:                                            ; preds = %bb.ax
@@ -1756,17 +1933,17 @@ bb.ba:                                            ; preds = %_ZSt6copy_nIPijS0_E
   br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i
 
 _ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i: ; preds = %bb.ba, %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i.i
-  store ptr %i.ke, ptr %i.jw, align 8, !tbaa !24
+  store ptr %i.ke, ptr %66, align 8, !tbaa !24
   %.val37.pre.i = load i32, ptr %i.hc, align 8, !tbaa !27
   %.val35.pre.i = load i32, ptr %i.ah, align 8, !tbaa !27
   br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit.i
 
 _ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit.i: ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit._ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit_crit_edge.i
   %.val31.i = phi ptr [ %.val31.pre.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit._ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit_crit_edge.i ], [ %i.ke, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i ] ; 2 uses
-  %.val35.i = phi i32 [ %.val27.i.a, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit._ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit_crit_edge.i ], [ %.val35.pre.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i ] ; 2 uses
-  %.val37.i = phi i32 [ %.val28.i85, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit._ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit_crit_edge.i ], [ %.val37.pre.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i ] ; 2 uses
+  %.val35.i = phi i32 [ %.val27.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit._ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit_crit_edge.i ], [ %.val35.pre.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i ] ; 2 uses
+  %.val37.i = phi i32 [ %.val28.i86, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE5clearEv.exit._ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE6resizeEj.exit_crit_edge.i ], [ %.val37.pre.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i.i ] ; 2 uses
   %i.km = getelementptr inbounds nuw i8, ptr %i.a, i64 1048880
-  store i32 %13, ptr %i.km, align 8, !tbaa !27
+  store i32 %67, ptr %i.km, align 8, !tbaa !27
   %.val33.i = load ptr, ptr %i.gz, align 8, !tbaa !24 ; 3 uses
   %i.kn = zext i32 %.val37.i to i64
   %.idx.i = shl nuw nsw i64 %i.kn, 2
@@ -1844,12 +2021,12 @@ bb.bg:                                            ; preds = %bb.bf
   br label %_ZSt5mergeIPiS0_S0_ET1_T_S2_T0_S3_S1_.exit.i
 
 _ZSt5mergeIPiS0_S0_ET1_T_S2_T0_S3_S1_.exit.i:     ; preds = %bb.bg, %bb.bf, %bb.be
-  %.val26.i = load i32, ptr %11, align 8, !tbaa !27 ; 3 uses
+  %.val26.i = load i32, ptr %4, align 8, !tbaa !27 ; 3 uses
   %.not.i86 = icmp eq i32 %.val26.i, 0
   br i1 %.not.i86, label %_ZN4absl12lts_2025051224synchronization_internalL7ReorderEPNS1_11GraphCycles3RepE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZSt5mergeIPiS0_S0_ET1_T_S2_T0_S3_S1_.exit.i
-  %.val30.i87 = load ptr, ptr %i.jw, align 8, !tbaa !24 ; 5 uses
+  %.val30.i87 = load ptr, ptr %66, align 8, !tbaa !24 ; 5 uses
   %.val29.i = load ptr, ptr %i.jt, align 8, !tbaa !24 ; 5 uses
   %.val.i88 = load ptr, ptr %i.a, align 8, !tbaa !20 ; 5 uses
   %wide.trip.count.i89 = zext i32 %.val26.i to i64 ; 2 uses
@@ -2022,9 +2199,9 @@ thread-pre-split:                                 ; preds = %thread-pre-split.lo
 
 bb.f:                                             ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit, %thread-pre-split
   %.040113 = phi i32 [ 0, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit ], [ %.141.ph, %thread-pre-split ] ; 4 uses
-  %.val46112 = phi i32 [ 1, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit ], [ %.val46.pr, %thread-pre-split ] ; 2 uses
+  %.val46112 = phi i32 [ 1, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit ], [ %.val46.pr, %thread-pre-split ]
   %.val47 = load ptr, ptr %i.ae, align 8, !tbaa !24 ; 2 uses
-  %i.ak = add i32 %.val46112, -1                  ; 5 uses
+  %i.ak = add i32 %.val46112, -1                  ; 6 uses
   %i.al = zext i32 %i.ak to i64                   ; 2 uses
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %.val47, i64 %i.al
   %i.an = load i32, ptr %i.am, align 4, !tbaa !3  ; 4 uses
@@ -2070,8 +2247,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 .lr.ph.i.i59:                                     ; preds = %bb.k, %.lr.ph.i.i59
   %i.bg = phi i32 [ %i.bh, %.lr.ph.i.i59 ], [ %i.ak, %bb.k ]
   %i.bh = shl i32 %i.bg, 1                        ; 4 uses
-  %6 = icmp ult i32 %i.bh, %.val46112
-  br i1 %6, label %.lr.ph.i.i59, label %bb.l, !llvm.loop !47
+  %.not5.i60 = icmp ugt i32 %i.bh, %i.ak
+  br i1 %.not5.i60, label %bb.l, label %.lr.ph.i.i59, !llvm.loop !47
 
 bb.l:                                             ; preds = %.lr.ph.i.i59
   store i32 %i.bh, ptr %i.ai, align 4, !tbaa !28
@@ -2190,15 +2367,14 @@ bb.w:                                             ; preds = %bb.v
   br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit86
 
 bb.x:                                             ; preds = %bb.w
-  %7 = add i32 %i.ci, 1
   %.not.i74 = icmp eq i32 %i.ci, -1
   br i1 %.not.i74, label %bb.y, label %.lr.ph.i.i75
 
 .lr.ph.i.i75:                                     ; preds = %bb.x, %.lr.ph.i.i75
   %i.cl = phi i32 [ %i.cm, %.lr.ph.i.i75 ], [ %i.ci, %bb.x ]
   %i.cm = shl i32 %i.cl, 1                        ; 4 uses
-  %8 = icmp ult i32 %i.cm, %7
-  br i1 %8, label %.lr.ph.i.i75, label %._crit_edge.i.i76, !llvm.loop !47
+  %.not5.i77 = icmp ugt i32 %i.cm, %i.ci
+  br i1 %.not5.i77, label %._crit_edge.i.i76, label %.lr.ph.i.i75, !llvm.loop !47
 
 ._crit_edge.i.i76:                                ; preds = %.lr.ph.i.i75
   store i32 %i.cm, ptr %i.ai, align 4, !tbaa !28
@@ -2601,111 +2777,6 @@ _ZSt4sortIPiZN4absl12lts_2025051224synchronization_internalL4SortERKNS3_12_GLOBA
   ret void
 }
 
-; Function Attrs: mustprogress uwtable
-define internal fastcc void @_ZN4absl12lts_2025051224synchronization_internalL10MoveToListEPNS1_11GraphCycles3RepEPNS1_12_GLOBAL__N_13VecIiEES8_(ptr nofree noundef readonly captures(none) %0, ptr nofree captures(address) %.0.val, i32 %.40.val, ptr nofree noundef captures(address) %1) unnamed_addr #0 {
-  %3 = zext i32 %.40.val to i64
-  %.idx = shl nuw nsw i64 %3, 2
-  %4 = getelementptr inbounds nuw i8, ptr %.0.val, i64 %.idx
-  %.not2 = icmp eq i32 %.40.val, 0
-  br i1 %.not2, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %2
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  br label %8
-
-._crit_edge:                                      ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit, %2
-  ret void
-
-8:                                                ; preds = %.lr.ph, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit
-  %.03 = phi ptr [ %.0.val, %.lr.ph ], [ %42, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit ] ; 3 uses
-  %9 = load i32, ptr %.03, align 4, !tbaa !3      ; 2 uses
-  %.val12 = load ptr, ptr %0, align 8, !tbaa !20
-  %10 = zext i32 %9 to i64
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %.val12, i64 %10
-  %12 = load ptr, ptr %11, align 8, !tbaa !22     ; 2 uses
-  %13 = load i32, ptr %12, align 8, !tbaa !43
-  store i32 %13, ptr %.03, align 4, !tbaa !3
-  %14 = getelementptr inbounds nuw i8, ptr %12, i64 12
-  store i8 0, ptr %14, align 4, !tbaa !40
-  %15 = load i32, ptr %5, align 8, !tbaa !27      ; 5 uses
-  %16 = load i32, ptr %6, align 4, !tbaa !28
-  %17 = icmp eq i32 %15, %16
-  br i1 %17, label %18, label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %8
-  %.pre.i = load ptr, ptr %1, align 8, !tbaa !24
-  br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit
-
-18:                                               ; preds = %8
-  %19 = add i32 %15, 1
-  %.not.i = icmp eq i32 %15, -1
-  br i1 %.not.i, label %25, label %.lr.ph.i.i
-
-.lr.ph.i.i:                                       ; preds = %18, %.lr.ph.i.i
-  %20 = phi i32 [ %21, %.lr.ph.i.i ], [ %15, %18 ]
-  %21 = shl i32 %20, 1                            ; 4 uses
-  %22 = icmp ult i32 %21, %19
-  br i1 %22, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !47
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
-  store i32 %21, ptr %6, align 4, !tbaa !28
-  %23 = zext i32 %21 to i64
-  %24 = shl nuw nsw i64 %23, 2
-  br label %25
-
-25:                                               ; preds = %._crit_edge.i.i, %18
-  %.lcssa.i.i = phi i64 [ %24, %._crit_edge.i.i ], [ 17179869180, %18 ]
-  %26 = load ptr, ptr @_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_15arenaE, align 8, !tbaa !18
-  %27 = tail call noundef ptr @_ZN4absl12lts_2025051213base_internal13LowLevelAlloc14AllocWithArenaEmPNS2_5ArenaE(i64 noundef %.lcssa.i.i, ptr noundef %26) ; 4 uses
-  %28 = load ptr, ptr %1, align 8, !tbaa !24      ; 4 uses
-  %29 = load i32, ptr %5, align 8, !tbaa !27      ; 2 uses
-  switch i32 %29, label %30 [
-    i32 0, label %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i
-    i32 1, label %32
-  ], !prof !21
-
-30:                                               ; preds = %25
-  %31 = zext i32 %29 to i64
-  %.idx.i.i.i.i = shl nuw nsw i64 %31, 2
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %27, ptr align 4 %28, i64 %.idx.i.i.i.i, i1 false)
-  %.pre.i.i = load ptr, ptr %1, align 8, !tbaa !24
-  br label %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i
-
-32:                                               ; preds = %25
-  %33 = load i32, ptr %28, align 4, !tbaa !3
-  store i32 %33, ptr %27, align 4, !tbaa !3
-  br label %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i
-
-_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i:          ; preds = %32, %30, %25
-  %34 = phi ptr [ %28, %25 ], [ %.pre.i.i, %30 ], [ %28, %32 ] ; 2 uses
-  %.not.i4.i.i = icmp eq ptr %34, %7
-  br i1 %.not.i4.i.i, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i, label %35
-
-35:                                               ; preds = %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i
-  tail call void @_ZN4absl12lts_2025051213base_internal13LowLevelAlloc4FreeEPv(ptr noundef %34)
-  br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i
-
-_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i: ; preds = %35, %_ZSt6copy_nIPijS0_ET1_T_T0_S1_.exit.i.i
-  store ptr %27, ptr %1, align 8, !tbaa !24
-  %.pre1.i = load i32, ptr %5, align 8, !tbaa !27
-  br label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit
-
-_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit: ; preds = %._crit_edge.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i
-  %36 = phi i32 [ %15, %._crit_edge.i ], [ %.pre1.i, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i ]
-  %37 = phi ptr [ %.pre.i, %._crit_edge.i ], [ %27, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE4GrowEj.exit.i ]
-  %38 = zext i32 %36 to i64
-  %39 = getelementptr inbounds nuw [4 x i8], ptr %37, i64 %38
-  store i32 %9, ptr %39, align 4, !tbaa !3
-  %40 = load i32, ptr %5, align 8, !tbaa !27
-  %41 = add i32 %40, 1
-  store i32 %41, ptr %5, align 8, !tbaa !27
-  %42 = getelementptr inbounds nuw i8, ptr %.03, i64 4 ; 2 uses
-  %.not = icmp eq ptr %42, %4
-  br i1 %.not, label %._crit_edge, label %8
-}
-
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZSt16__introsort_loopIPilN9__gnu_cxx5__ops15_Iter_comp_iterIZN4absl12lts_2025051224synchronization_internalL4SortERKNS6_12_GLOBAL__N_13VecIPNS7_4NodeEEEPNS8_IiEEE6ByRankEEEvT_SI_T0_T1_(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr nofree readonly captures(none) %3) unnamed_addr #11 {
 bb.a:
@@ -2915,7 +2986,7 @@ _ZSt13__adjust_heapIPiliN9__gnu_cxx5__ops15_Iter_comp_iterIZN4absl12lts_20250512
   %i.cs = sub i64 %i.cr, %i.a                     ; 3 uses
   %i.ct = ashr exact i64 %i.cs, 2                 ; 3 uses
   %i.cu = add nsw i64 %i.ct, -1
-  %4 = sdiv i64 %i.cu, 2
+  %4 = lshr i64 %i.cu, 1
   %i.cv = icmp sgt i64 %i.ct, 2
   br i1 %i.cv, label %.lr.ph.i.i.i16.i, label %._crit_edge.i.i.i6.i
 
