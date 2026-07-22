@@ -203,6 +203,7 @@ bb.jw:                                            ; preds = %.lr.ph514, %bb.jv
 
 bb.jx:                                            ; preds = %._crit_edge515
   %i.ayu = load i16, ptr %i.ayt, align 2, !tbaa !34 ; 5 uses
+  %wide.trip.count573 = zext i16 %i.ayu to i64
   %i.ayv = sext i16 %i.ayu to i64
   %i.ayw = shl nsw i64 %i.ayv, 1
   %i.ayx = call noalias ptr @malloc(i64 noundef %i.ayw) #15 ; 6 uses
@@ -226,13 +227,13 @@ bb.jz:                                            ; preds = %bb.jy, %bb.jx
 .lr.ph518.preheader:                              ; preds = %bb.jz
   %.pre583 = load i32, ptr %i.aqx, align 8, !tbaa !8 ; 3 uses
   %.pre584 = load i32, ptr %i.aqy, align 8, !tbaa !8 ; 3 uses
-  %narrow = add nsw i16 %i.ayu, -1                ; 3 uses
+  %3 = add nsw i64 %wide.trip.count573, -1        ; 3 uses
+  %xtraiter764 = and i64 %3, 1
   %i.azf = icmp eq i16 %i.ayu, 2
   br i1 %i.azf, label %.lr.ph518.epil.preheader, label %.lr.ph518.preheader.new
 
 .lr.ph518.preheader.new:                          ; preds = %.lr.ph518.preheader
-  %3 = and i16 %narrow, -2
-  %unroll_iter = sext i16 %3 to i64
+  %unroll_iter = and i64 %3, -2
   br label %.lr.ph518
 
 .lr.ph518:                                        ; preds = %.lr.ph518, %.lr.ph518.preheader.new
@@ -266,13 +267,12 @@ bb.ka:                                            ; preds = %._crit_edge515
   br label %.loopexit
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph518
-  %4 = and i16 %narrow, 1
-  %lcmp.mod765.not = icmp eq i16 %4, 0
+  %lcmp.mod765.not = icmp eq i64 %xtraiter764, 0
   br i1 %lcmp.mod765.not, label %.loopexit, label %.lr.ph518.epil.preheader
 
 .lr.ph518.epil.preheader:                         ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph518.preheader
   %indvars.iv570.epil.init = phi i64 [ 1, %.lr.ph518.preheader ], [ %indvars.iv.next571.1, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod766 = trunc i16 %narrow to i1
+  %lcmp.mod766 = trunc i64 %3 to i1
   call void @llvm.assume(i1 %lcmp.mod766)
   %i.azv = getelementptr inbounds nuw [2 x i8], ptr %i.ayt, i64 %indvars.iv570.epil.init
   %i.azw = load i16, ptr %i.azv, align 2, !tbaa !34

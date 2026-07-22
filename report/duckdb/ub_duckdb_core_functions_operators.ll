@@ -204,7 +204,7 @@ bb.a:
   %12 = alloca %"class.std::allocator", align 1   ; 5 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %i.a = zext i8 %0 to i32
+  %i.a = zext nneg i8 %0 to i32
   %i.b = icmp slt i8 %0, 0
   br i1 %i.b, label %bb.b, label %bb.f
 
@@ -607,7 +607,7 @@ bb.a:
   %12 = alloca %"class.std::allocator", align 1   ; 5 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %i.a = zext i16 %0 to i32
+  %i.a = zext nneg i16 %0 to i32
   %i.b = icmp slt i16 %0, 0
   br i1 %i.b, label %bb.b, label %bb.f
 
@@ -1010,7 +1010,7 @@ bb.a:
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %i.a = zext i8 %0 to i32
+  %i.a = zext nneg i8 %0 to i32
   %i.b = zext i8 %1 to i32                        ; 2 uses
   %i.c = icmp ugt i8 %1, 8
   br i1 %i.c, label %bb.b, label %bb.g
@@ -1256,7 +1256,7 @@ bb.a:
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %i.a = zext i16 %0 to i32
+  %i.a = zext nneg i16 %0 to i32
   %i.b = zext i16 %1 to i32                       ; 2 uses
   %i.c = icmp ugt i16 %1, 16
   br i1 %i.c, label %bb.b, label %bb.g

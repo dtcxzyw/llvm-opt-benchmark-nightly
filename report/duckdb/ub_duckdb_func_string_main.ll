@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %_ZNK6duckdb21Templa
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bs, i64 4
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   %i.bx = load ptr, ptr %i.bw, align 8            ; 2 uses
-  %i.by = zext i32 %i.bt to i64
+  %i.by = zext nneg i32 %i.bt to i64
   %i.bz = invoke noundef i64 @_ZN6duckdb10ListVector15GetListCapacityERKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %2)
           to label %.noexc91.i unwind label %bb.ag
 
@@ -607,7 +607,7 @@ bb.ab:                                            ; preds = %_ZNK6duckdb21Templa
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bz, i64 4
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8            ; 2 uses
-  %i.cf = zext i32 %i.ca to i64
+  %i.cf = zext nneg i32 %i.ca to i64
   %i.cg = invoke noundef i64 @_ZN6duckdb10ListVector15GetListCapacityERKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %2)
           to label %.noexc91.i unwind label %bb.ah
 
@@ -1010,7 +1010,7 @@ bb.de:                                            ; preds = %_ZNK6duckdb21Templa
   %i.kc = getelementptr inbounds nuw i8, ptr %i.jz, i64 4
   %i.kd = getelementptr inbounds nuw i8, ptr %i.jz, i64 8
   %i.ke = load ptr, ptr %i.kd, align 8            ; 2 uses
-  %i.kf = zext i32 %i.ka to i64
+  %i.kf = zext nneg i32 %i.ka to i64
   %i.kg = invoke noundef i64 @_ZN6duckdb10ListVector15GetListCapacityERKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %2)
           to label %.noexc91.i92 unwind label %bb.dk
 

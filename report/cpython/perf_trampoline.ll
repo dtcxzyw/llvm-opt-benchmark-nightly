@@ -203,18 +203,20 @@ bb.e:                                             ; preds = %_PyAnnotateMemoryMa
 
 round_up.exit:                                    ; preds = %_PyAnnotateMemoryMap.exit, %bb.e
   %.1.i41 = phi i64 [ %.0.i, %bb.e ], [ %i.k, %_PyAnnotateMemoryMap.exit ] ; 7 uses
-  %0 = udiv i64 65536, %.1.i41                    ; 3 uses
+  %.rhs.trunc = trunc i64 %.1.i41 to i32
+  %0 = udiv i32 65536, %.rhs.trunc                ; 2 uses
+  %.zext = zext nneg i32 %0 to i64                ; 2 uses
   %.not = icmp ugt i64 %.1.i41, 65536
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %round_up.exit
-  %1 = add nsw i64 %0, -1
-  %xtraiter = and i64 %0, 3                       ; 3 uses
-  %i.r = icmp ult i64 %1, 3
+  %xtraiter = and i64 %.zext, 3                   ; 3 uses
+  %1 = add nsw i32 %0, -1
+  %i.r = icmp ult i32 %1, 3
   br i1 %i.r, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %0, 131068
+  %unroll_iter = and i64 %.zext, 131068
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph

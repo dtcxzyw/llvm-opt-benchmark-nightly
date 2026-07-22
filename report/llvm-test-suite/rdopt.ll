@@ -203,7 +203,7 @@ bb.ce:                                            ; preds = %.loopexit233.thread
   %i.akh = load i8, ptr %i.akg, align 1, !tbaa !46 ; 2 uses
   %i.aki = getelementptr inbounds i8, ptr %i.akb, i64 %i.aju
   %i.akj = load i8, ptr %i.aki, align 1, !tbaa !46 ; 2 uses
-  %1 = sext i8 %i.akj to i64
+  %1 = zext nneg i8 %i.akj to i64
   %i.akk = icmp sgt i8 %i.akh, -1
   br i1 %i.akk, label %bb.cf, label %bb.cg
 
@@ -240,7 +240,7 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg
   %i.ald = load i8, ptr %i.alc, align 1, !tbaa !46 ; 2 uses
   %i.ale = getelementptr inbounds i8, ptr %i.akb, i64 %indvars.iv.next312
   %i.alf = load i8, ptr %i.ale, align 1, !tbaa !46 ; 2 uses
-  %2 = sext i8 %i.alf to i64
+  %2 = zext nneg i8 %i.alf to i64
   %i.alg = icmp sgt i8 %i.ald, -1
   br i1 %i.alg, label %bb.cj, label %bb.ck
 
@@ -277,7 +277,7 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck
   %i.alz = load i8, ptr %i.aly, align 1, !tbaa !46 ; 2 uses
   %i.ama = getelementptr inbounds i8, ptr %i.akb, i64 %indvars.iv.next312.1
   %i.amb = load i8, ptr %i.ama, align 1, !tbaa !46 ; 2 uses
-  %3 = sext i8 %i.amb to i64
+  %3 = zext nneg i8 %i.amb to i64
   %i.amc = icmp sgt i8 %i.alz, -1
   br i1 %i.amc, label %bb.cn, label %bb.co
 
@@ -314,7 +314,7 @@ bb.cq:                                            ; preds = %bb.cp, %bb.co
   %i.amv = load i8, ptr %i.amu, align 1, !tbaa !46 ; 2 uses
   %i.amw = getelementptr inbounds i8, ptr %i.akb, i64 %indvars.iv.next312.2
   %i.amx = load i8, ptr %i.amw, align 1, !tbaa !46 ; 2 uses
-  %4 = sext i8 %i.amx to i64
+  %4 = zext nneg i8 %i.amx to i64
   %i.amy = icmp sgt i8 %i.amv, -1
   br i1 %i.amy, label %bb.cr, label %bb.cs
 

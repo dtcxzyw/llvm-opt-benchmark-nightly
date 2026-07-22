@@ -204,7 +204,7 @@ bb.a:
   %i.b = sext i32 %i.a to i64
   %i.c = getelementptr inbounds [8 x i8], ptr @QP2Qstep.QP2QSTEP, i64 %i.b
   %i.d = load double, ptr %i.c, align 8, !tbaa !53 ; 3 uses
-  %1 = sdiv i32 %0, 6                             ; 3 uses
+  %1 = udiv i32 %0, 6                             ; 3 uses
   %i.e = icmp sgt i32 %0, 5
   br i1 %i.e, label %.lr.ph.preheader, label %._crit_edge
 

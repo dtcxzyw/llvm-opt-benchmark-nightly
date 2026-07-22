@@ -204,8 +204,7 @@ _ZNSt12_Vector_baseISt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS4_EESaIS6_EEC2Em
   %i.zh = getelementptr inbounds nuw i8, ptr %25, i64 16
   %i.zi = getelementptr inbounds nuw i8, ptr %28, i64 16
   %i.zj = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 2 uses
-  %73 = call i32 @llvm.umax.i32(i32 %i.uq, i32 1)
-  %wide.trip.count310.i = zext nneg i32 %73 to i64
+  %wide.trip.count310.i = zext nneg i32 %i.uq to i64
   br label %bb.ir
 
 bb.io:                                            ; preds = %_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit.i91
@@ -607,9 +606,6 @@ declare i64 @llvm.umin.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #6
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

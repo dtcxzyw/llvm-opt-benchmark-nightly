@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.bt = sub i64 %i.bs, %i.bo                    ; 2 uses
   %i.bu = sdiv exact i64 %i.bt, 24                ; 3 uses
   %i.bv = add nsw i64 %i.bu, -1
-  %12 = sdiv i64 %i.bv, 2
+  %12 = lshr i64 %i.bv, 1
   %i.bw = icmp sgt i64 %i.bt, 48
   br i1 %i.bw, label %.lr.ph.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i
 
@@ -239,20 +239,23 @@ bb.f:                                             ; preds = %._crit_edge.i.i.i.i
   br i1 %i.cm, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.cn = shl nsw i64 %.0.lcssa.i.i.i.i.i.i.i.i.i, 1
+  %i.cn = shl nuw nsw i64 %.0.lcssa.i.i.i.i.i.i.i.i.i, 1
   %i.co = or disjoint i64 %i.cn, 1                ; 2 uses
-  %i.cp = getelementptr inbounds [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %i.co
-  %i.cq = getelementptr inbounds [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %.0.lcssa.i.i.i.i.i.i.i.i.i
+  %i.cp = getelementptr inbounds nuw [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %i.co
+  %i.cq = getelementptr inbounds nuw [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %.0.lcssa.i.i.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cq, ptr noundef nonnull align 8 dereferenceable(24) %i.cp, i64 24, i1 false), !tbaa.struct !37
-  br label %bb.h
+  br label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
 
-bb.h:                                             ; preds = %bb.g, %bb.f, %._crit_edge.i.i.i.i.i.i.i.i.i
-  %.1.i.i.i.i.i.i.i.i.i = phi i64 [ %i.co, %bb.g ], [ %.0.lcssa.i.i.i.i.i.i.i.i.i, %bb.f ], [ %.0.lcssa.i.i.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.i.i.i ] ; 3 uses
-  %13 = icmp sgt i64 %.1.i.i.i.i.i.i.i.i.i, 0
-  br i1 %13, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4geos5index7strtree19TemplateSTRNodePairIPKNS2_9operation8distance13FacetSequenceENS4_14EnvelopeTraitsEZNKS7_20IndexedFacetDistance8distanceEPKNS2_4geom8GeometryEE13FacetDistanceEESt6vectorISI_SaISI_EEEENS0_5__ops15_Iter_comp_iterINS4_23TemplateSTRtreeDistanceISA_SB_SH_E16PairQueueCompareEEEEvT_SU_SU_RT0_.exit.i.i.i.i.i.i.i
+bb.h:                                             ; preds = %bb.f, %._crit_edge.i.i.i.i.i.i.i.i.i
+  %.not.i.i.i.i.i.i.i.i = icmp eq i64 %.0.lcssa.i.i.i.i.i.i.i.i.i, 0
+  br i1 %.not.i.i.i.i.i.i.i.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4geos5index7strtree19TemplateSTRNodePairIPKNS2_9operation8distance13FacetSequenceENS4_14EnvelopeTraitsEZNKS7_20IndexedFacetDistance8distanceEPKNS2_4geom8GeometryEE13FacetDistanceEESt6vectorISI_SaISI_EEEENS0_5__ops15_Iter_comp_iterINS4_23TemplateSTRtreeDistanceISA_SB_SH_E16PairQueueCompareEEEEvT_SU_SU_RT0_.exit.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %bb.h, %bb.i
-  %.06.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.097.i.i.i.i.i.i.i.i.i.i, %bb.i ], [ %.1.i.i.i.i.i.i.i.i.i, %bb.h ] ; 4 uses
+.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader:             ; preds = %bb.h, %bb.g
+  %.06.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %.0.lcssa.i.i.i.i.i.i.i.i.i, %bb.h ], [ %i.co, %bb.g ]
+  br label %.lr.ph.i.i.i.i.i.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %bb.i
+  %.06.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.097.i.i.i.i.i.i.i.i.i.i, %bb.i ], [ %.06.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ] ; 4 uses
   %.097.in.i.i.i.i.i.i.i.i.i.i = add nsw i64 %.06.i.i.i.i.i.i.i.i.i.i, -1
   %.097.i.i.i.i.i.i.i.i.i.i = sdiv i64 %.097.in.i.i.i.i.i.i.i.i.i.i, 2 ; 3 uses
   %i.cr = getelementptr inbounds nuw [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %.097.i.i.i.i.i.i.i.i.i.i ; 2 uses
@@ -268,8 +271,8 @@ bb.i:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %i.cv, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4geos5index7strtree19TemplateSTRNodePairIPKNS2_9operation8distance13FacetSequenceENS4_14EnvelopeTraitsEZNKS7_20IndexedFacetDistance8distanceEPKNS2_4geom8GeometryEE13FacetDistanceEESt6vectorISI_SaISI_EEEENS0_5__ops15_Iter_comp_iterINS4_23TemplateSTRtreeDistanceISA_SB_SH_E16PairQueueCompareEEEEvT_SU_SU_RT0_.exit.i.i.i.i.i.i.i, !llvm.loop !40
 
 _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4geos5index7strtree19TemplateSTRNodePairIPKNS2_9operation8distance13FacetSequenceENS4_14EnvelopeTraitsEZNKS7_20IndexedFacetDistance8distanceEPKNS2_4geom8GeometryEE13FacetDistanceEESt6vectorISI_SaISI_EEEENS0_5__ops15_Iter_comp_iterINS4_23TemplateSTRtreeDistanceISA_SB_SH_E16PairQueueCompareEEEEvT_SU_SU_RT0_.exit.i.i.i.i.i.i.i: ; preds = %bb.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i, %bb.h
-  %.0.lcssa.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.1.i.i.i.i.i.i.i.i.i, %bb.h ], [ %.097.i.i.i.i.i.i.i.i.i.i, %bb.i ], [ %.06.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i ]
-  %i.cw = getelementptr inbounds [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %.0.lcssa.i.i.i.i.i.i.i.i.i.i ; 2 uses
+  %.0.lcssa.i.i.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %.097.i.i.i.i.i.i.i.i.i.i, %bb.i ], [ %.06.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i ]
+  %i.cw = getelementptr inbounds nuw [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %.0.lcssa.i.i.i.i.i.i.i.i.i.i ; 2 uses
   store <2 x ptr> %.sroa.03.i.i.i.i.i.i.i.i.sroa.0.0.copyload, ptr %i.cw, align 8
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.cw, i64 16
   store double %.sroa.46.0.copyload.i.i.i.i.i.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !tbaa !32
@@ -672,7 +675,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.bt = sub i64 %i.bs, %i.bo                    ; 2 uses
   %i.bu = sdiv exact i64 %i.bt, 24                ; 3 uses
   %i.bv = add nsw i64 %i.bu, -1
-  %13 = sdiv i64 %i.bv, 2
+  %13 = lshr i64 %i.bv, 1
   %i.bw = icmp sgt i64 %i.bt, 48
   br i1 %i.bw, label %.lr.ph.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i
 
@@ -708,20 +711,23 @@ bb.f:                                             ; preds = %._crit_edge.i.i.i.i
   br i1 %i.cm, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.cn = shl nsw i64 %.0.lcssa.i.i.i.i.i.i.i.i.i, 1
+  %i.cn = shl nuw nsw i64 %.0.lcssa.i.i.i.i.i.i.i.i.i, 1
   %i.co = or disjoint i64 %i.cn, 1                ; 2 uses
-  %i.cp = getelementptr inbounds [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %i.co
-  %i.cq = getelementptr inbounds [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %.0.lcssa.i.i.i.i.i.i.i.i.i
+  %i.cp = getelementptr inbounds nuw [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %i.co
+  %i.cq = getelementptr inbounds nuw [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %.0.lcssa.i.i.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cq, ptr noundef nonnull align 8 dereferenceable(24) %i.cp, i64 24, i1 false), !tbaa.struct !37
-  br label %bb.h
+  br label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
 
-bb.h:                                             ; preds = %bb.g, %bb.f, %._crit_edge.i.i.i.i.i.i.i.i.i
-  %.1.i.i.i.i.i.i.i.i.i = phi i64 [ %i.co, %bb.g ], [ %.0.lcssa.i.i.i.i.i.i.i.i.i, %bb.f ], [ %.0.lcssa.i.i.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.i.i.i ] ; 3 uses
-  %14 = icmp sgt i64 %.1.i.i.i.i.i.i.i.i.i, 0
-  br i1 %14, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4geos5index7strtree19TemplateSTRNodePairIPKNS2_9operation8distance13FacetSequenceENS4_14EnvelopeTraitsEZNKS7_20IndexedFacetDistance16nearestLocationsEPKNS2_4geom8GeometryEE13FacetDistanceEESt6vectorISI_SaISI_EEEENS0_5__ops15_Iter_comp_iterINS4_23TemplateSTRtreeDistanceISA_SB_SH_E16PairQueueCompareEEEEvT_SU_SU_RT0_.exit.i.i.i.i.i.i.i
+bb.h:                                             ; preds = %bb.f, %._crit_edge.i.i.i.i.i.i.i.i.i
+  %.not.i.i.i.i.i.i.i.i = icmp eq i64 %.0.lcssa.i.i.i.i.i.i.i.i.i, 0
+  br i1 %.not.i.i.i.i.i.i.i.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4geos5index7strtree19TemplateSTRNodePairIPKNS2_9operation8distance13FacetSequenceENS4_14EnvelopeTraitsEZNKS7_20IndexedFacetDistance16nearestLocationsEPKNS2_4geom8GeometryEE13FacetDistanceEESt6vectorISI_SaISI_EEEENS0_5__ops15_Iter_comp_iterINS4_23TemplateSTRtreeDistanceISA_SB_SH_E16PairQueueCompareEEEEvT_SU_SU_RT0_.exit.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %bb.h, %bb.i
-  %.06.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.097.i.i.i.i.i.i.i.i.i.i, %bb.i ], [ %.1.i.i.i.i.i.i.i.i.i, %bb.h ] ; 4 uses
+.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader:             ; preds = %bb.h, %bb.g
+  %.06.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %.0.lcssa.i.i.i.i.i.i.i.i.i, %bb.h ], [ %i.co, %bb.g ]
+  br label %.lr.ph.i.i.i.i.i.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %bb.i
+  %.06.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.097.i.i.i.i.i.i.i.i.i.i, %bb.i ], [ %.06.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ] ; 4 uses
   %.097.in.i.i.i.i.i.i.i.i.i.i = add nsw i64 %.06.i.i.i.i.i.i.i.i.i.i, -1
   %.097.i.i.i.i.i.i.i.i.i.i = sdiv i64 %.097.in.i.i.i.i.i.i.i.i.i.i, 2 ; 3 uses
   %i.cr = getelementptr inbounds nuw [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %.097.i.i.i.i.i.i.i.i.i.i ; 2 uses
@@ -737,8 +743,8 @@ bb.i:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %i.cv, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4geos5index7strtree19TemplateSTRNodePairIPKNS2_9operation8distance13FacetSequenceENS4_14EnvelopeTraitsEZNKS7_20IndexedFacetDistance16nearestLocationsEPKNS2_4geom8GeometryEE13FacetDistanceEESt6vectorISI_SaISI_EEEENS0_5__ops15_Iter_comp_iterINS4_23TemplateSTRtreeDistanceISA_SB_SH_E16PairQueueCompareEEEEvT_SU_SU_RT0_.exit.i.i.i.i.i.i.i, !llvm.loop !74
 
 _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4geos5index7strtree19TemplateSTRNodePairIPKNS2_9operation8distance13FacetSequenceENS4_14EnvelopeTraitsEZNKS7_20IndexedFacetDistance16nearestLocationsEPKNS2_4geom8GeometryEE13FacetDistanceEESt6vectorISI_SaISI_EEEENS0_5__ops15_Iter_comp_iterINS4_23TemplateSTRtreeDistanceISA_SB_SH_E16PairQueueCompareEEEEvT_SU_SU_RT0_.exit.i.i.i.i.i.i.i: ; preds = %bb.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i, %bb.h
-  %.0.lcssa.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.1.i.i.i.i.i.i.i.i.i, %bb.h ], [ %.097.i.i.i.i.i.i.i.i.i.i, %bb.i ], [ %.06.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i ]
-  %i.cw = getelementptr inbounds [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %.0.lcssa.i.i.i.i.i.i.i.i.i.i ; 2 uses
+  %.0.lcssa.i.i.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %.097.i.i.i.i.i.i.i.i.i.i, %bb.i ], [ %.06.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i ]
+  %i.cw = getelementptr inbounds nuw [24 x i8], ptr %.val3028.i.i.i.i.i, i64 %.0.lcssa.i.i.i.i.i.i.i.i.i.i ; 2 uses
   store <2 x ptr> %.sroa.03.i.i.i.i.i.i.i.i.sroa.0.0.copyload, ptr %i.cw, align 8
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.cw, i64 16
   store double %.sroa.46.0.copyload.i.i.i.i.i.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !tbaa !32

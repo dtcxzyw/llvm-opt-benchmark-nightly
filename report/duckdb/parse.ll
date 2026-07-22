@@ -203,7 +203,7 @@ bb.bp:                                            ; preds = %bb.bo
   %i.fx = phi ptr [ %i.gg, %bb.br ], [ %i.fm, %.lr.ph.i.i.preheader ] ; 5 uses
   %i.fy = phi i32 [ %i.gf, %bb.br ], [ 0, %.lr.ph.i.i.preheader ] ; 4 uses
   %i.fz = load i8, ptr %i.fx, align 1, !tbaa !27  ; 3 uses
-  %i.ga = zext i8 %i.fz to i32
+  %i.ga = zext nneg i8 %i.fz to i32
   %i.gb = add i8 %i.fz, -48
   %isdigit15.i.i = icmp ult i8 %i.gb, 10
   br i1 %isdigit15.i.i, label %bb.bq, label %bb.bs
@@ -606,7 +606,7 @@ bb.d:                                             ; preds = %bb.c
   %.01317 = phi i32 [ %i.t, %bb.f ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.m = phi i64 [ %i.v, %bb.f ], [ %i.b, %.lr.ph.preheader ]
   %i.n = load i8, ptr %i.l, align 1, !tbaa !27    ; 2 uses
-  %i.o = zext i8 %i.n to i32
+  %i.o = zext nneg i8 %i.n to i32
   %i.p = add i8 %i.n, -48
   %isdigit15 = icmp ult i8 %i.p, 10
   br i1 %isdigit15, label %bb.e, label %.critedge

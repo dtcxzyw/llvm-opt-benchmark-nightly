@@ -203,7 +203,7 @@ bb.a:
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %1, i8 0, i64 %i.c, i1 false)
-  %i.d = add i32 %5, -3
+  %i.d = add nsw i32 %5, -3
   %i.e = icmp sgt i32 %5, 6
   br i1 %i.e, label %.preheader.lr.ph, label %._crit_edge153.split
 
@@ -561,7 +561,7 @@ bb.a:
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %1, i8 0, i64 %i.c, i1 false)
-  %i.d = add i32 %5, -1
+  %i.d = add nsw i32 %5, -1
   %i.e = icmp sgt i32 %5, 2
   br i1 %i.e, label %.preheader.lr.ph, label %._crit_edge59.split
 
@@ -964,7 +964,7 @@ bb.a:
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %1, i8 0, i64 %i.c, i1 false)
-  %i.d = add i32 %6, -3
+  %i.d = add nsw i32 %6, -3
   %i.e = icmp sgt i32 %6, 6
   br i1 %i.e, label %.preheader872.lr.ph, label %._crit_edge878.split
 
@@ -1367,7 +1367,7 @@ bb.a:
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %1, i8 0, i64 %i.c, i1 false)
-  %i.d = add i32 %6, -1
+  %i.d = add nsw i32 %6, -1
   %i.e = icmp sgt i32 %6, 2
   br i1 %i.e, label %.preheader276.lr.ph, label %._crit_edge282.split
 
@@ -1770,7 +1770,7 @@ bb.x:                                             ; preds = %setup_brightness_lu
 
 bb.y:                                             ; preds = %bb.x
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.bg, i8 0, i64 %i.bf, i1 false)
-  %i.bx = add i32 %i.bc, -1
+  %i.bx = add nsw i32 %i.bc, -1
   %i.by = icmp sgt i32 %i.bc, 2
   br i1 %i.by, label %.preheader.lr.ph.i, label %susan_principle_small.exit
 
