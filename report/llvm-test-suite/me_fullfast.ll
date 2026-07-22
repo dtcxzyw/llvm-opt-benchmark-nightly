@@ -204,7 +204,8 @@ bb.z:                                             ; preds = %bb.y
 
 .preheader548:                                    ; preds = %bb.z, %bb.ab
   %indvars.iv782 = phi i64 [ 0, %bb.z ], [ %indvars.iv.next783, %bb.ab ] ; 2 uses
-  %.3649 = phi ptr [ @SetupFastFullPelSearch.orig_pels, %bb.z ], [ %scevgep779, %bb.ab ] ; 2 uses
+  %indvars.iv780 = phi ptr [ getelementptr inbounds nuw (i8, ptr @SetupFastFullPelSearch.orig_pels, i64 128), %bb.z ], [ %scevgep781, %bb.ab ] ; 3 uses
+  %.3649 = phi ptr [ @SetupFastFullPelSearch.orig_pels, %bb.z ], [ %indvars.iv780, %bb.ab ]
   %.0439648 = phi ptr [ %i.kj, %bb.z ], [ %scevgep780, %bb.ab ] ; 2 uses
   %.0479646 = phi i32 [ 0, %bb.z ], [ %i.pt, %bb.ab ]
   %i.km = load i32, ptr %i.kl, align 8, !tbaa !179
@@ -345,7 +346,6 @@ bb.aa:                                            ; preds = %.preheader548, %bb.
   br i1 %exitcond781.not, label %bb.ab, label %bb.aa, !llvm.loop !180
 
 bb.ab:                                            ; preds = %bb.aa
-  %scevgep779 = getelementptr i8, ptr %.3649, i64 128 ; 2 uses
   %i.pg = shl nsw i64 %i.ks, 3
   %scevgep780 = getelementptr i8, ptr %.0439648, i64 %i.pg
   %i.ph = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv782 ; 4 uses
@@ -366,6 +366,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ps = getelementptr inbounds nuw [4 x i8], ptr %i.pr, i64 %indvars.iv793
   store i32 %i.pd, ptr %i.ps, align 4, !tbaa !4
   %i.pt = add nuw nsw i32 %.0479646, 1            ; 2 uses
+  %scevgep781 = getelementptr i8, ptr %indvars.iv780, i64 128
   %exitcond785.not = icmp eq i32 %i.pt, 4
   br i1 %exitcond785.not, label %bb.ac, label %.preheader548, !llvm.loop !181
 
@@ -389,7 +390,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 .preheader546:                                    ; preds = %.preheader550, %._crit_edge691
   %indvars.iv786 = phi i64 [ 0, %.preheader550 ], [ %indvars.iv.next787, %._crit_edge691 ] ; 2 uses
-  %.6701 = phi ptr [ %scevgep779, %.preheader550 ], [ %.7.lcssa, %._crit_edge691 ] ; 2 uses
+  %.6701 = phi ptr [ %indvars.iv780, %.preheader550 ], [ %.7.lcssa, %._crit_edge691 ] ; 2 uses
   %.2441700 = phi ptr [ %i.qa, %.preheader550 ], [ %.3442.lcssa, %._crit_edge691 ] ; 2 uses
   %.1480698 = phi i32 [ 0, %.preheader550 ], [ %i.uv, %._crit_edge691 ]
   %i.qf = load i32, ptr %i.qc, align 4, !tbaa !171 ; 2 uses
@@ -792,7 +793,8 @@ bb.ak:                                            ; preds = %bb.ak, %.lr.ph679.1
 
 .preheader549:                                    ; preds = %bb.y, %bb.am
   %indvars.iv768 = phi i64 [ %indvars.iv.next769, %bb.am ], [ 0, %bb.y ] ; 2 uses
-  %.12579 = phi ptr [ %scevgep, %bb.am ], [ @SetupFastFullPelSearch.orig_pels, %bb.y ] ; 2 uses
+  %indvars.iv767 = phi ptr [ %scevgep, %bb.am ], [ getelementptr inbounds nuw (i8, ptr @SetupFastFullPelSearch.orig_pels, i64 128), %bb.y ] ; 3 uses
+  %.12579 = phi ptr [ %indvars.iv767, %bb.am ], [ @SetupFastFullPelSearch.orig_pels, %bb.y ]
   %.8447578 = phi ptr [ %scevgep767, %bb.am ], [ %i.kj, %bb.y ] ; 2 uses
   %.2481576 = phi i32 [ %i.agr, %bb.am ], [ 0, %bb.y ]
   %i.zx = load i32, ptr @img_padded_size_x, align 4, !tbaa !4
@@ -972,7 +974,6 @@ bb.al:                                            ; preds = %.preheader549, %bb.
   br i1 %exitcond.not, label %bb.am, label %bb.al, !llvm.loop !189
 
 bb.am:                                            ; preds = %bb.al
-  %scevgep = getelementptr i8, ptr %.12579, i64 128 ; 2 uses
   %i.age = shl nsw i64 %i.zy, 3
   %scevgep767 = getelementptr i8, ptr %.8447578, i64 %i.age
   %i.agf = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv768 ; 4 uses
@@ -993,6 +994,7 @@ bb.am:                                            ; preds = %bb.al
   %i.agq = getelementptr inbounds nuw [4 x i8], ptr %i.agp, i64 %indvars.iv793
   store i32 %i.agb, ptr %i.agq, align 4, !tbaa !4
   %i.agr = add nuw nsw i32 %.2481576, 1           ; 2 uses
+  %scevgep = getelementptr i8, ptr %indvars.iv767, i64 128
   %exitcond771.not = icmp eq i32 %i.agr, 4
   br i1 %exitcond771.not, label %bb.an, label %.preheader549, !llvm.loop !190
 
@@ -1015,7 +1017,7 @@ bb.an:                                            ; preds = %bb.am
 
 .preheader547:                                    ; preds = %.preheader551.preheader, %._crit_edge621
   %indvars.iv772 = phi i64 [ 0, %.preheader551.preheader ], [ %indvars.iv.next773, %._crit_edge621 ] ; 2 uses
-  %.15636 = phi ptr [ %scevgep, %.preheader551.preheader ], [ %.16.lcssa, %._crit_edge621 ] ; 4 uses
+  %.15636 = phi ptr [ %indvars.iv767, %.preheader551.preheader ], [ %.16.lcssa, %._crit_edge621 ] ; 4 uses
   %.10449635 = phi ptr [ %i.agy, %.preheader551.preheader ], [ %.11450.lcssa, %._crit_edge621 ] ; 4 uses
   %.3482633 = phi i32 [ 0, %.preheader551.preheader ], [ %i.aqs, %._crit_edge621 ]
   %i.ahc = load i32, ptr %i.aha, align 4, !tbaa !171 ; 4 uses

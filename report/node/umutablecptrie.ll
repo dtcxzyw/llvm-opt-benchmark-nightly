@@ -204,18 +204,20 @@ bb.df:                                            ; preds = %bb.de, %bb.dd, %bb.
 
 .preheader351.lr.ph.i.i.i:                        ; preds = %._crit_edge.i.i85.i.i
   %i.zr = load i32, ptr %i.ym, align 4
-  %i.zs = zext nneg i32 %i.zn to i64
+  %i.zs = zext nneg i32 %i.zn to i64              ; 2 uses
+  %7 = or disjoint i64 %i.zs, 32
   %sext.i.i = zext nneg i32 %i.zp to i64
   br label %.preheader351.i.i.i
 
 .preheader351.i.i.i:                              ; preds = %bb.dn, %.preheader351.lr.ph.i.i.i
-  %indvars.iv428.i.i.i = phi i64 [ %i.zs, %.preheader351.lr.ph.i.i.i ], [ %7, %bb.dn ] ; 6 uses
-  %.2239367.i.i.i = phi i32 [ %i.zr, %.preheader351.lr.ph.i.i.i ], [ %.3240.i.i.i, %bb.dn ] ; 5 uses
-  %.0250366.i.i.i = phi i32 [ 0, %.preheader351.lr.ph.i.i.i ], [ %.3253.i.i.i, %bb.dn ] ; 5 uses
-  %.0267365.i.i.i = phi i1 [ false, %.preheader351.lr.ph.i.i.i ], [ %.2269.i.i.i, %bb.dn ] ; 4 uses
+  %indvars.iv220.i.i = phi i64 [ %indvars.iv.next221.i.i, %bb.dn ], [ %i.zs, %.preheader351.lr.ph.i.i.i ] ; 6 uses
+  %indvars.iv428.i.i.i = phi i64 [ %indvars.iv.next219.i.i, %bb.dn ], [ %7, %.preheader351.lr.ph.i.i.i ] ; 2 uses
+  %.2239367.i.i.i = phi i32 [ %.3240.i.i.i, %bb.dn ], [ %i.zr, %.preheader351.lr.ph.i.i.i ] ; 5 uses
+  %.0250366.i.i.i = phi i32 [ %.3253.i.i.i, %bb.dn ], [ 0, %.preheader351.lr.ph.i.i.i ] ; 5 uses
+  %.0267365.i.i.i = phi i1 [ %.2269.i.i.i, %bb.dn ], [ false, %.preheader351.lr.ph.i.i.i ] ; 4 uses
   %i.zt = load ptr, ptr %0, align 8               ; 2 uses
   %i.zu = load i32, ptr %i.yh, align 8
-  %i.zv = getelementptr inbounds nuw [4 x i8], ptr %i.zt, i64 %indvars.iv428.i.i.i ; 2 uses
+  %i.zv = getelementptr inbounds nuw [4 x i8], ptr %i.zt, i64 %indvars.iv220.i.i ; 2 uses
   %i.zw = load <32 x i32>, ptr %i.zv, align 4     ; 33 uses
   %i.zx = extractelement <32 x i32> %i.zw, i64 0
   %i.zy = extractelement <32 x i32> %i.zw, i64 1
@@ -286,7 +288,6 @@ bb.df:                                            ; preds = %bb.de, %bb.dd, %bb.
   %i.acl = freeze <32 x i1> %i.ack
   %i.acm = bitcast <32 x i1> %i.acl to i32
   %i.acn = icmp eq i32 %i.acm, -1
-  %7 = add nuw nsw i64 %indvars.iv428.i.i.i, 32   ; 2 uses
   br i1 %i.acn, label %bb.dg, label %bb.di
 
 ._crit_edge.i86.i.i:                              ; preds = %bb.dn, %._crit_edge.i.i85.i.i
@@ -309,7 +310,7 @@ bb.df:                                            ; preds = %bb.de, %bb.dd, %bb.
   br i1 %i.ada, label %bb.do, label %bb.dp
 
 bb.dg:                                            ; preds = %.preheader351.i.i.i
-  %i.adb = getelementptr inbounds nuw i8, ptr %i.gg, i64 %indvars.iv428.i.i.i
+  %i.adb = getelementptr inbounds nuw i8, ptr %i.gg, i64 %indvars.iv220.i.i
   store i8 0, ptr %i.adb, align 1
   %i.adc = icmp slt i32 %.2239367.i.i.i, 0
   br i1 %i.adc, label %bb.dh, label %bb.dn
@@ -326,10 +327,10 @@ bb.di:                                            ; preds = %.preheader351.i.i.i
   br i1 %i.ade, label %bb.dj, label %bb.dm
 
 bb.dj:                                            ; preds = %bb.di
-  %i.adf = trunc nuw nsw i64 %indvars.iv428.i.i.i to i32
+  %i.adf = trunc nuw nsw i64 %indvars.iv220.i.i to i32
   %i.adg = call fastcc noundef i32 @_ZNK6icu_7812_GLOBAL__N_111MixedBlocks9findBlockItjEEiPKT_PKT0_i(ptr noundef nonnull align 8 dereferenceable(28) %6, ptr noundef nonnull %i.a, ptr noundef nonnull %i.zt, i32 noundef %i.adf) ; 2 uses
   %i.adh = icmp sgt i32 %i.adg, -1
-  %i.adi = getelementptr inbounds nuw i8, ptr %i.gg, i64 %indvars.iv428.i.i.i ; 2 uses
+  %i.adi = getelementptr inbounds nuw i8, ptr %i.gg, i64 %indvars.iv220.i.i ; 2 uses
   br i1 %i.adh, label %bb.dk, label %bb.dl
 
 bb.dk:                                            ; preds = %bb.dj
@@ -343,7 +344,7 @@ bb.dl:                                            ; preds = %bb.dj
   br label %bb.dn
 
 bb.dm:                                            ; preds = %bb.di
-  %i.adk = getelementptr inbounds nuw i8, ptr %i.gg, i64 %indvars.iv428.i.i.i
+  %i.adk = getelementptr inbounds nuw i8, ptr %i.gg, i64 %indvars.iv220.i.i
   store i8 3, ptr %i.adk, align 1
   %i.adl = add nsw i32 %.0250366.i.i.i, 36
   br label %bb.dn
@@ -352,7 +353,9 @@ bb.dn:                                            ; preds = %bb.dm, %bb.dl, %bb.
   %.2269.i.i.i = phi i1 [ %.1268.i.i.i, %bb.dh ], [ %.0267365.i.i.i, %bb.dg ], [ true, %bb.dm ], [ %.0267365.i.i.i, %bb.dl ], [ %.0267365.i.i.i, %bb.dk ] ; 2 uses
   %.3253.i.i.i = phi i32 [ %.1251.i.i.i, %bb.dh ], [ %.0250366.i.i.i, %bb.dg ], [ %i.adl, %bb.dm ], [ %i.adj, %bb.dl ], [ %.0250366.i.i.i, %bb.dk ] ; 2 uses
   %.3240.i.i.i = phi i32 [ 0, %bb.dh ], [ %.2239367.i.i.i, %bb.dg ], [ %.2239367.i.i.i, %bb.dm ], [ %.2239367.i.i.i, %bb.dl ], [ %.2239367.i.i.i, %bb.dk ]
-  %i.adm = icmp samesign ult i64 %7, %sext.i.i
+  %i.adm = icmp samesign ult i64 %indvars.iv428.i.i.i, %sext.i.i
+  %indvars.iv.next219.i.i = add nuw nsw i64 %indvars.iv428.i.i.i, 32
+  %indvars.iv.next221.i.i = add nuw nsw i64 %indvars.iv220.i.i, 32
   br i1 %i.adm, label %.preheader351.i.i.i, label %._crit_edge.i86.i.i, !llvm.loop !56
 
 bb.do:                                            ; preds = %._crit_edge.i86.i.i

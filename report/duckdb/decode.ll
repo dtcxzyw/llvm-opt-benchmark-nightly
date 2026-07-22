@@ -204,10 +204,6 @@ _ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit411:
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 764 ; 3 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 2 uses
-  %scevgep = getelementptr i8, ptr %0, i64 848
-  %scevgep765 = getelementptr i8, ptr %0, i64 848
-  %scevgep768 = getelementptr i8, ptr %0, i64 1392
-  %scevgep770 = getelementptr i8, ptr %0, i64 1392
   %scevgep777 = getelementptr i8, ptr %0, i64 864
   %scevgep778 = getelementptr i8, ptr %0, i64 864
   %scevgep780 = getelementptr i8, ptr %0, i64 1520
@@ -610,7 +606,7 @@ bb.co:                                            ; preds = %bb.cn, %bb.v
   br i1 %.not378, label %.backedge.backedge, label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co
-  %i.uo = load i64, ptr %i.ar, align 8, !tbaa !81 ; 2 uses
+  %i.uo = load i64, ptr %i.ar, align 8, !tbaa !81 ; 4 uses
   %i.up = load i64, ptr %i.as, align 8, !tbaa !82 ; 10 uses
   %i.uq = load i16, ptr %i.br, align 2, !tbaa !107
   %i.ur = zext i16 %i.uq to i64                   ; 2 uses
@@ -691,16 +687,26 @@ middle.block797:                                  ; preds = %vector.body791
   br i1 %i.vk, label %.preheader.i461, label %.lr.ph.i459
 
 .preheader.i461:                                  ; preds = %.lr.ph.i459.prol.loopexit, %.lr.ph.i459, %middle.block797, %bb.cp
-  %.033.lcssa.i = phi i64 [ 16, %bb.cp ], [ %i.uw, %middle.block797 ], [ %.lcssa812.unr, %.lr.ph.i459.prol.loopexit ], [ %i.we, %.lr.ph.i459 ] ; 2 uses
+  %.033.lcssa.i = phi i64 [ 16, %bb.cp ], [ %i.uw, %middle.block797 ], [ %.lcssa812.unr, %.lr.ph.i459.prol.loopexit ], [ %i.we, %.lr.ph.i459 ] ; 4 uses
   %i.vl = icmp ult i64 %.033.lcssa.i, %i.ur
   br i1 %i.vl, label %.lr.ph44.i, label %_ZN13duckdb_brotliL20CalculateDistanceLutEPNS_24BrotliDecoderStateStructE.exit
 
 .lr.ph44.i:                                       ; preds = %.preheader.i461
   %i.vm = add i64 %i.up, 1
-  %scevgep766 = getelementptr i8, ptr %scevgep765, i64 %i.uu
+  %6 = add i64 %.033.lcssa.i, 848                 ; 2 uses
+  %7 = shl i64 %.033.lcssa.i, 3
+  %8 = add i64 %7, 1392                           ; 2 uses
   %i.vn = shl nuw nsw i64 %i.uu, 3
-  %scevgep771 = getelementptr i8, ptr %scevgep770, i64 %i.vn
   %min.iters.check = icmp ult i32 %i.us, 2
+  %9 = and i64 %i.uo, 4294967295
+  %10 = add nuw nsw i64 %9, 3
+  %11 = getelementptr i8, ptr %0, i64 %8
+  %12 = getelementptr i8, ptr %11, i64 %i.vn
+  %13 = getelementptr i8, ptr %0, i64 %8
+  %14 = and i64 %i.uo, 4294967295
+  %15 = getelementptr i8, ptr %0, i64 %6
+  %scevgep771 = getelementptr i8, ptr %15, i64 %i.uu
+  %16 = getelementptr i8, ptr %0, i64 %6
   %n.vec = and i64 %i.uu, 4294967292              ; 2 uses
   %xtraiter824 = and i64 %i.uu, 1
   %i.vo = icmp eq i32 %i.us, 0
@@ -740,9 +746,10 @@ middle.block797:                                  ; preds = %vector.body791
   br i1 %exitcond.not.i.3, label %.preheader.i461, label %.lr.ph.i459, !llvm.loop !118
 
 bb.cq:                                            ; preds = %middle.block, %.lr.ph44.i
-  %.13443.i = phi i64 [ %.033.lcssa.i, %.lr.ph44.i ], [ %.lcssa753, %middle.block ] ; 7 uses
-  %.03542.i = phi i64 [ 0, %.lr.ph44.i ], [ %i.xj, %middle.block ] ; 3 uses
-  %.03641.i = phi i64 [ 1, %.lr.ph44.i ], [ %i.xi, %middle.block ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %middle.block ], [ 0, %.lr.ph44.i ] ; 3 uses
+  %.13443.i = phi i64 [ %.lcssa753, %middle.block ], [ %.033.lcssa.i, %.lr.ph44.i ] ; 4 uses
+  %.03542.i = phi i64 [ %i.xj, %middle.block ], [ 0, %.lr.ph44.i ] ; 3 uses
+  %.03641.i = phi i64 [ %i.xi, %middle.block ], [ 1, %.lr.ph44.i ] ; 3 uses
   %i.wf = add nuw nsw i64 %.03542.i, 2
   %i.wg = shl i64 %i.wf, %.03641.i
   %i.wh = add i64 %i.wg, -4
@@ -755,13 +762,14 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %b
   br i1 %i.vo, label %scalar.ph.epil.preheader, label %scalar.ph
 
 vector.memcheck:                                  ; preds = %bb.cq
-  %scevgep764.a = getelementptr i8, ptr %scevgep, i64 %.13443.i
-  %scevgep767 = getelementptr i8, ptr %scevgep766, i64 %.13443.i
-  %i.wl = shl i64 %.13443.i, 3                    ; 2 uses
-  %scevgep769 = getelementptr i8, ptr %scevgep768, i64 %i.wl
-  %scevgep772 = getelementptr i8, ptr %scevgep771, i64 %i.wl
-  %bound0 = icmp ult ptr %scevgep764.a, %scevgep772
-  %bound1 = icmp ult ptr %scevgep769, %scevgep767
+  %17 = shl i64 %indvar, %10                      ; 2 uses
+  %scevgep764.a = getelementptr i8, ptr %12, i64 %17
+  %scevgep767 = getelementptr i8, ptr %13, i64 %17
+  %i.wl = shl i64 %indvar, %14                    ; 2 uses
+  %scevgep769 = getelementptr i8, ptr %scevgep771, i64 %i.wl
+  %scevgep772 = getelementptr i8, ptr %16, i64 %i.wl
+  %bound0 = icmp ult ptr %scevgep772, %scevgep764.a
+  %bound1 = icmp ult ptr %scevgep767, %scevgep769
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -835,6 +843,7 @@ middle.block:                                     ; preds = %vector.body, %scala
   %i.xi = add i64 %.03641.i, %.03542.i
   %i.xj = xor i64 %.03542.i, 1
   %i.xk = icmp ult i64 %.lcssa753, %i.ur
+  %indvar.next = add i64 %indvar, 1
   br i1 %i.xk, label %bb.cq, label %_ZN13duckdb_brotliL20CalculateDistanceLutEPNS_24BrotliDecoderStateStructE.exit, !llvm.loop !126
 
 _ZN13duckdb_brotliL20CalculateDistanceLutEPNS_24BrotliDecoderStateStructE.exit: ; preds = %middle.block, %.preheader.i461

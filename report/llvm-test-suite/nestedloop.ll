@@ -30,10 +30,22 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %.preheader31.us.preheader, label %._crit_edge
 
 .preheader31.us.preheader:                        ; preds = %bb.a, %bb.b
-  %i.g = phi i32 [ %i.e, %bb.b ], [ 46, %bb.a ]   ; 2 uses
-  %i.h = mul i32 %i.g, %i.g                       ; 3 uses
-  %i.i = mul i32 %i.h, %i.h
-  %i.j = mul i32 %i.h, %i.i
+  %i.g = phi i32 [ %i.e, %bb.b ], [ 46, %bb.a ]   ; 6 uses
+  %2 = add nsw i32 %i.g, -1                       ; 4 uses
+  %3 = add nuw i32 %i.g, 1
+  %4 = mul i32 %2, %3
+  %5 = mul i32 %i.g, %i.g
+  %6 = mul i32 %i.g, 3                            ; 2 uses
+  %7 = add i32 %4, %6
+  %8 = add i32 %7, 4
+  %9 = mul i32 %8, %2
+  %10 = add i32 %9, %6
+  %11 = add i32 %10, 6
+  %i.h = mul i32 %11, %2
+  %12 = add i32 %i.h, 3
+  %i.i = mul i32 %2, %12
+  %13 = add i32 %5, %i.i
+  %i.j = mul i32 %i.g, %13
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.preheader31.us.preheader, %bb.b

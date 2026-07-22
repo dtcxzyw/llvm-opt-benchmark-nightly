@@ -203,13 +203,15 @@ bb.aa:                                            ; preds = %.lr.ph.6
   %i.fd = load i32, ptr %i.fc, align 8, !tbaa !48 ; 6 uses
   %i.fe = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ht, i64 400), align 16, !tbaa !41 ; 3 uses
   %i.ff = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ht, i64 592), align 16, !tbaa !41 ; 3 uses
+  %scevgep.i = getelementptr i8, ptr %0, i64 8
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.an, %._crit_edge
-  %.052.i = phi ptr [ %0, %._crit_edge ], [ %i.hz, %bb.an ] ; 7 uses
-  %.048.i = phi i32 [ 0, %._crit_edge ], [ %.351.2.i, %bb.an ] ; 2 uses
-  %.042.i = phi i32 [ 0, %._crit_edge ], [ %i.hu, %bb.an ] ; 2 uses
-  %.039.i = phi i32 [ 0, %._crit_edge ], [ %i.hy, %bb.an ] ; 2 uses
+  %indvars.iv.i = phi ptr [ %scevgep67.i, %bb.an ], [ %scevgep.i, %._crit_edge ] ; 2 uses
+  %.052.i = phi ptr [ %i.hz, %bb.an ], [ %0, %._crit_edge ] ; 6 uses
+  %.048.i = phi i32 [ %.351.2.i, %bb.an ], [ 0, %._crit_edge ] ; 2 uses
+  %.042.i = phi i32 [ %i.hu, %bb.an ], [ 0, %._crit_edge ] ; 2 uses
+  %.039.i = phi i32 [ %i.hy, %bb.an ], [ 0, %._crit_edge ] ; 2 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %.052.i, i64 12
   %i.fh = load i32, ptr %i.fg, align 4, !tbaa !4  ; 3 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %.052.i, i64 4
@@ -362,8 +364,9 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %i.hw = load i8, ptr %i.hv, align 1, !tbaa !25
   %i.hx = zext i8 %i.hw to i32
   %i.hy = add nsw i32 %.5.2.i, %i.hx              ; 3 uses
-  %i.hz = getelementptr i8, ptr %.052.i, i64 24   ; 2 uses
+  %i.hz = getelementptr inbounds nuw i8, ptr %indvars.iv.i, i64 16 ; 2 uses
   %i.ia = icmp ult ptr %i.hz, %1
+  %scevgep67.i = getelementptr i8, ptr %indvars.iv.i, i64 24
   br i1 %i.ia, label %bb.ab, label %count_bit_short_ESC.exit, !llvm.loop !49
 
 count_bit_short_ESC.exit:                         ; preds = %bb.an

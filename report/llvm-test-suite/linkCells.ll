@@ -204,13 +204,31 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f
 
 getTuple.exit:                                    ; preds = %bb.b, %bb.j
   %.276.i = phi i32 [ %i.e, %bb.b ], [ %i.aw, %bb.j ] ; 2 uses
-  %.273.i = phi i32 [ %i.i, %bb.b ], [ %i.ax, %bb.j ] ; 2 uses
-  %.270.i = phi i32 [ %i.j, %bb.b ], [ %.169.i, %bb.j ] ; 2 uses
+  %.273.i = phi i32 [ %i.i, %bb.b ], [ %i.ax, %bb.j ] ; 4 uses
+  %.270.i = phi i32 [ %i.j, %bb.b ], [ %.169.i, %bb.j ] ; 5 uses
   %i.ay = add nsw i32 %.276.i, -1
-  %i.az = add nsw i32 %.273.i, -1
-  %i.ba = add nsw i32 %.270.i, -1
+  %i.az = add i32 %.273.i, -1                     ; 2 uses
+  %i.ba = add i32 %.270.i, -1                     ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
+  %3 = sext i32 %.270.i to i64
+  %4 = add nsw i64 %3, 1
+  %5 = sext i32 %i.ba to i64
+  %smax = tail call i64 @llvm.smax.i64(i64 %4, i64 %5)
+  %6 = trunc i64 %smax to i32                     ; 2 uses
+  %7 = add i32 %6, 2
+  %8 = sub i32 %7, %.270.i                        ; 2 uses
+  %9 = sext i32 %.273.i to i64
+  %10 = add nsw i64 %9, 1
+  %11 = sext i32 %i.az to i64
+  %smax31 = tail call i64 @llvm.smax.i64(i64 %10, i64 %11)
+  %12 = trunc i64 %smax31 to i32
+  %13 = add i32 %12, 1
+  %14 = sub i32 %13, %.273.i
+  %15 = mul i32 %8, %14
+  %16 = add i32 %15, %6
+  %17 = add i32 %16, 2
+  %18 = sub i32 %17, %.270.i
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.m
@@ -218,19 +236,21 @@ bb.k:                                             ; preds = %bb.m
   ret i32 %i.bd
 
 bb.l:                                             ; preds = %getTuple.exit, %bb.m
-  %.01530.a = phi i32 [ %i.ay, %getTuple.exit ], [ %i.bf, %bb.m ] ; 5 uses
-  %.01629 = phi i64 [ 0, %getTuple.exit ], [ %indvars.iv.next.a, %bb.m ]
-  %i.be = icmp eq i32 %.01530.a, -1
-  %i.bf = add i32 %.01530.a, 1                    ; 5 uses
+  %.01530.a = phi i32 [ 0, %getTuple.exit ], [ %indvars.iv.next, %bb.m ] ; 2 uses
+  %.01530 = phi i32 [ %i.ay, %getTuple.exit ], [ %i.bf, %bb.m ] ; 5 uses
+  %i.be = icmp eq i32 %.01530, -1
+  %i.bf = add i32 %.01530, 1                      ; 5 uses
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.o
-  %.not = icmp sgt i32 %.01530.a, %.276.i
+  %.not = icmp sgt i32 %.01530, %.276.i
+  %indvars.iv.next = add i32 %.01530.a, %18
   br i1 %.not, label %bb.k, label %bb.l
 
 bb.n:                                             ; preds = %bb.l, %bb.o
+  %indvars.iv32 = phi i32 [ %.01530.a, %bb.l ], [ %indvars.iv.next33, %bb.o ] ; 2 uses
   %.01428 = phi i32 [ %i.az, %bb.l ], [ %i.bi, %bb.o ] ; 9 uses
-  %.127 = phi i64 [ %.01629, %bb.l ], [ %indvars.iv.next.a, %bb.o ]
+  %19 = sext i32 %indvars.iv32 to i64
   %i.bg = icmp eq i32 %.01428, -1
   %i.bh = shl i32 %.01428, 1
   %i.bi = add nsw i32 %.01428, 1                  ; 2 uses
@@ -239,10 +259,11 @@ bb.n:                                             ; preds = %bb.l, %bb.o
 
 bb.o:                                             ; preds = %getBoxFromTuple.exit
   %.not17 = icmp sgt i32 %.01428, %.273.i
+  %indvars.iv.next33 = add i32 %indvars.iv32, %8
   br i1 %.not17, label %bb.m, label %bb.n
 
 bb.p:                                             ; preds = %bb.n, %getBoxFromTuple.exit
-  %indvars.iv = phi i64 [ %.127, %bb.n ], [ %indvars.iv.next.a, %getBoxFromTuple.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ %19, %bb.n ], [ %indvars.iv.next.a, %getBoxFromTuple.exit ] ; 2 uses
   %.026 = phi i32 [ %i.ba, %bb.n ], [ %i.dj, %getBoxFromTuple.exit ] ; 10 uses
   %i.bk = load i32, ptr %i.bb, align 4, !tbaa !4  ; 6 uses
   %i.bl = icmp eq i32 %.026, %i.bk
@@ -315,7 +336,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.v
   %i.cx = load i32, ptr %0, align 4, !tbaa !4     ; 2 uses
-  %i.cy = icmp eq i32 %.01530.a, %i.cx
+  %i.cy = icmp eq i32 %.01530, %i.cx
   br i1 %i.cy, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
@@ -340,12 +361,12 @@ bb.ab:                                            ; preds = %bb.z
   %i.dg = mul i32 %i.cf, %.026
   %reass.add.i = add i32 %i.dg, %.01428
   %reass.mul.i = mul i32 %i.cx, %reass.add.i
-  %i.dh = add i32 %reass.mul.i, %.01530.a
+  %i.dh = add i32 %reass.mul.i, %.01530
   br label %getBoxFromTuple.exit
 
 getBoxFromTuple.exit:                             ; preds = %bb.q, %bb.s, %bb.u, %bb.w, %bb.y, %bb.aa, %bb.ab
   %.0.i19 = phi i32 [ %i.bu, %bb.q ], [ %i.ce, %bb.s ], [ %i.cn, %bb.u ], [ %i.cw, %bb.w ], [ %i.db, %bb.y ], [ %i.df, %bb.aa ], [ %i.dh, %bb.ab ]
-  %indvars.iv.next.a = add nsw i64 %indvars.iv, 1 ; 4 uses
+  %indvars.iv.next.a = add nsw i64 %indvars.iv, 1 ; 2 uses
   %i.di = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv
   store i32 %.0.i19, ptr %i.di, align 4, !tbaa !4
   %i.dj = add nsw i32 %.026, 1
@@ -746,6 +767,9 @@ declare double @llvm.floor.f64(double) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #11

@@ -202,9 +202,9 @@ bb.a:
   %.sroa.17.0..sroa.17.4.492 = phi i32 [ %.sroa.17.0..sroa.17.4.491543, %.preheader205.loopexit ], [ 0, %.preheader207 ] ; 6 uses
   %.sroa.0485.0..sroa.0485.0.488 = phi i32 [ %.sroa.0485.0..sroa.0485.0.486538, %.preheader205.loopexit ], [ 0, %.preheader207 ] ; 11 uses
   %.sroa.32.0 = phi i32 [ %i.m, %.preheader205.loopexit ], [ -1, %.preheader207 ] ; 10 uses
-  %i.n = add nsw i32 %.sroa.0485.0..sroa.0485.0.488, -1 ; 12 uses
+  %i.n = add nsw i32 %.sroa.0485.0..sroa.0485.0.488, -1 ; 13 uses
   %i.o = add nsw i32 %.sroa.17.0..sroa.17.4.492, -1 ; 9 uses
-  %i.p = mul nsw i32 %i.o, %i.n
+  %i.p = mul nsw i32 %i.o, %i.n                   ; 2 uses
   %i.q = mul nsw i32 %i.p, %.sroa.32.0            ; 4 uses
   %i.r = mul nsw i32 %.sroa.17.0..sroa.17.4.492, %.sroa.0485.0..sroa.0485.0.488 ; 4 uses
   %i.s = tail call ptr @hypre_CAlloc(i32 noundef %i.q, i32 noundef 4) #5 ; 11 uses
@@ -607,22 +607,23 @@ bb.an:                                            ; preds = %._crit_edge554, %bb
 
 .preheader201.us:                                 ; preds = %.preheader201.us.preheader, %._crit_edge291.split.us.us
   %indvars.iv426 = phi i64 [ 0, %.preheader201.us.preheader ], [ %indvars.iv.next427, %._crit_edge291.split.us.us ] ; 3 uses
-  %.2179297.us.a = phi i32 [ 0, %.preheader201.us.preheader ], [ %.5.us.us, %._crit_edge291.split.us.us ]
-  %.1183296.us = phi i64 [ 0, %.preheader201.us.preheader ], [ %indvars.iv.next415.a, %._crit_edge291.split.us.us ]
+  %.2179297.us.a = phi i32 [ 0, %.preheader201.us.preheader ], [ %indvars.iv.next415, %._crit_edge291.split.us.us ] ; 2 uses
+  %.2179297.us = phi i32 [ 0, %.preheader201.us.preheader ], [ %.5.us.us, %._crit_edge291.split.us.us ]
   %i.ld = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv426
   %i.le = trunc nuw nsw i64 %indvars.iv426 to i32
   br label %.preheader.us.us
 
 .preheader.us.us:                                 ; preds = %._crit_edge285.us.us, %.preheader201.us
   %indvars.iv421 = phi i64 [ %indvars.iv.next422, %._crit_edge285.us.us ], [ 0, %.preheader201.us ] ; 3 uses
-  %.3180289.us.us = phi i32 [ %.5.us.us, %._crit_edge285.us.us ], [ %.2179297.us.a, %.preheader201.us ]
-  %.2184288.us.us = phi i64 [ %indvars.iv.next415.a, %._crit_edge285.us.us ], [ %.1183296.us, %.preheader201.us ]
+  %indvars.iv416 = phi i32 [ %indvars.iv.next417, %._crit_edge285.us.us ], [ %.2179297.us.a, %.preheader201.us ] ; 2 uses
+  %.3180289.us.us = phi i32 [ %.5.us.us, %._crit_edge285.us.us ], [ %.2179297.us, %.preheader201.us ]
+  %1 = sext i32 %indvars.iv416 to i64
   %i.lf = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv421
   %i.lg = trunc nuw nsw i64 %indvars.iv421 to i32
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.aq, %.preheader.us.us
-  %indvars.iv414 = phi i64 [ %indvars.iv.next415.a, %bb.aq ], [ %.2184288.us.us, %.preheader.us.us ] ; 2 uses
+  %indvars.iv414 = phi i64 [ %indvars.iv.next415.a, %bb.aq ], [ %1, %.preheader.us.us ] ; 2 uses
   %indvars.iv412 = phi i64 [ %indvars.iv.next413, %bb.aq ], [ 0, %.preheader.us.us ] ; 3 uses
   %.4181282.us.us = phi i32 [ %.5.us.us, %bb.aq ], [ %.3180289.us.us, %.preheader.us.us ] ; 3 uses
   %i.lh = getelementptr inbounds [4 x i8], ptr %i.s, i64 %indvars.iv414
@@ -674,18 +675,20 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
   %.5.us.us = phi i32 [ %i.mp, %bb.ap ], [ %.4181282.us.us, %bb.ao ] ; 3 uses
-  %indvars.iv.next415.a = add nsw i64 %indvars.iv414, 1 ; 3 uses
+  %indvars.iv.next415.a = add nsw i64 %indvars.iv414, 1
   %indvars.iv.next413 = add nuw nsw i64 %indvars.iv412, 1 ; 2 uses
   %exitcond420.not = icmp eq i64 %indvars.iv.next413, %wide.trip.count419
   br i1 %exitcond420.not, label %._crit_edge285.us.us, label %bb.ao, !llvm.loop !44
 
 ._crit_edge285.us.us:                             ; preds = %bb.aq
   %indvars.iv.next422 = add nuw nsw i64 %indvars.iv421, 1 ; 2 uses
+  %indvars.iv.next417 = add i32 %indvars.iv416, %i.n
   %exitcond425.not = icmp eq i64 %indvars.iv.next422, %wide.trip.count424
   br i1 %exitcond425.not, label %._crit_edge291.split.us.us, label %.preheader.us.us, !llvm.loop !45
 
 ._crit_edge291.split.us.us:                       ; preds = %._crit_edge285.us.us
   %indvars.iv.next427 = add nuw nsw i64 %indvars.iv426, 1 ; 2 uses
+  %indvars.iv.next415 = add i32 %.2179297.us.a, %i.p
   %exitcond430.not = icmp eq i64 %indvars.iv.next427, %wide.trip.count429
   br i1 %exitcond430.not, label %._crit_edge300.split, label %.preheader201.us, !llvm.loop !46
 

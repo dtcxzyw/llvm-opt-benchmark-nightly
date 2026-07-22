@@ -204,8 +204,9 @@ bb.an:                                            ; preds = %.critedge2
 
 .preheader167:                                    ; preds = %.preheader167.preheader, %bb.ar
   %indvars.iv227.a = phi i64 [ %indvars.iv.next228.a, %bb.ar ], [ 0, %.preheader167.preheader ] ; 3 uses
-  %indvars.iv225 = phi i64 [ %indvars.iv.next226, %bb.ar ], [ 1, %.preheader167.preheader ] ; 2 uses
-  %.0120188 = phi i64 [ %indvars.iv.next218, %bb.ar ], [ 0, %.preheader167.preheader ]
+  %indvars.iv225 = phi i64 [ %indvars.iv.next226, %bb.ar ], [ 1, %.preheader167.preheader ] ; 3 uses
+  %indvars.iv219 = phi i32 [ %indvars.iv.next220, %bb.ar ], [ 0, %.preheader167.preheader ] ; 2 uses
+  %0 = sext i32 %indvars.iv219 to i64
   %i.hw = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv227.a
   %i.hx = load i32, ptr %i.hw, align 4, !tbaa !4  ; 4 uses
   br label %bb.ao
@@ -342,7 +343,7 @@ bb.an:                                            ; preds = %.critedge2
   ret ptr %i.b
 
 bb.ao:                                            ; preds = %.preheader167, %bb.aq
-  %indvars.iv217 = phi i64 [ %.0120188, %.preheader167 ], [ %indvars.iv.next218, %bb.aq ] ; 2 uses
+  %indvars.iv217 = phi i64 [ %0, %.preheader167 ], [ %indvars.iv.next218, %bb.aq ] ; 2 uses
   %indvars.iv215 = phi i64 [ 0, %.preheader167 ], [ %indvars.iv.next216, %bb.aq ] ; 3 uses
   %.not147 = icmp eq i64 %indvars.iv227.a, %indvars.iv215
   br i1 %.not147, label %bb.aq, label %bb.ap
@@ -363,7 +364,7 @@ bb.aq:                                            ; preds = %bb.ao, %bb.ap
   %i.me = sext i32 %.0129 to i64
   %i.mf = getelementptr inbounds [8 x i8], ptr %i.md, i64 %i.me
   %i.mg = load double, ptr %i.mf, align 8, !tbaa !107
-  %indvars.iv.next218 = add nsw i64 %indvars.iv217, 1 ; 2 uses
+  %indvars.iv.next218 = add nsw i64 %indvars.iv217, 1
   %i.mh = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv217
   store double %i.mg, ptr %i.mh, align 8, !tbaa !107
   %indvars.iv.next216 = add nuw nsw i64 %indvars.iv215, 1 ; 2 uses
@@ -373,6 +374,8 @@ bb.aq:                                            ; preds = %bb.ao, %bb.ap
 bb.ar:                                            ; preds = %bb.aq
   %indvars.iv.next228.a = add nuw nsw i64 %indvars.iv227.a, 1 ; 2 uses
   %indvars.iv.next226 = add nuw nsw i64 %indvars.iv225, 1
+  %1 = trunc nuw nsw i64 %indvars.iv225 to i32
+  %indvars.iv.next220 = add i32 %indvars.iv219, %1
   %exitcond232.not = icmp eq i64 %indvars.iv.next228.a, 20
   br i1 %exitcond232.not, label %.preheader, label %.preheader167, !llvm.loop !255
 }

@@ -204,11 +204,11 @@ bb.a:
   %i.aq = getelementptr inbounds nuw i8, ptr %i.c, i64 44
   %i.ar = load float, ptr %i.aq, align 1          ; 2 uses
   %i.as = fdiv float %i.ap, %i.ar
-  %i.at = fptoui float %i.as to i32               ; 6 uses
+  %i.at = fptoui float %i.as to i32               ; 7 uses
   %i.au = fptoui float %i.ar to i32               ; 12 uses
   call void @_ZN6Assimp11HMPImporter14CreateMaterialEPKhPS2_(ptr noundef nonnull align 8 dereferenceable(159) %0, ptr noundef nonnull %i.d, ptr noundef nonnull %i.a)
-  %i.av = load ptr, ptr %i.a, align 8
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 36 ; 2 uses
+  %i.av = load ptr, ptr %i.a, align 8             ; 2 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 36 ; 4 uses
   %i.ax = zext i32 %i.at to i64
   %i.ay = zext i32 %i.au to i64
   %i.az = shl nuw nsw i64 %i.ay, 2
@@ -225,16 +225,47 @@ bb.a:
   br i1 %.not68, label %._crit_edge66.split, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.be = load ptr, ptr %i.n, align 8
-  %i.bf = load ptr, ptr %i.ao, align 8
+  %i.be = load ptr, ptr %i.n, align 8             ; 5 uses
+  %i.bf = load ptr, ptr %i.ao, align 8            ; 5 uses
   %i.bg = add i32 %i.au, -1
-  %i.bh = zext i32 %i.bg to i64                   ; 2 uses
-  %i.bi = mul nuw nsw i64 %i.bh, 12
-  %i.bj = add nuw nsw i64 %i.bi, 12               ; 2 uses
+  %1 = zext i32 %i.bg to i64                      ; 2 uses
+  %2 = mul nuw nsw i64 %1, 12                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 12
+  %4 = add i32 %i.at, -1
+  %i.bh = zext i32 %4 to i64                      ; 2 uses
+  %i.bi = mul i64 %3, %i.bh
+  %5 = add i64 %i.bi, %2
+  %i.bj = add i64 %5, 12                          ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.be, i64 %i.bj ; 3 uses
+  %scevgep86 = getelementptr i8, ptr %i.bf, i64 %i.bj ; 3 uses
   %scevgep87 = getelementptr i8, ptr %i.c, i64 44 ; 2 uses
-  %i.bk = shl nuw nsw i64 %i.bh, 2
+  %i.bk = shl nuw nsw i64 %1, 2                   ; 2 uses
+  %6 = add nuw nsw i64 %i.bk, 4
+  %7 = mul i64 %6, %i.bh
+  %8 = getelementptr i8, ptr %i.av, i64 %7
+  %9 = getelementptr i8, ptr %8, i64 %i.bk
+  %scevgep88 = getelementptr i8, ptr %9, i64 40   ; 2 uses
   %i.bl = zext i32 %i.au to i64                   ; 2 uses
   %min.iters.check = icmp ult i32 %i.au, 5
+  %bound0 = icmp ult ptr %i.be, %scevgep86
+  %bound1 = icmp ult ptr %i.bf, %scevgep
+  %found.conflict = and i1 %bound0, %bound1
+  %bound089 = icmp ult ptr %i.be, %scevgep87
+  %bound190 = icmp ult ptr %i.bc, %scevgep
+  %found.conflict91 = and i1 %bound089, %bound190
+  %conflict.rdx = or i1 %found.conflict, %found.conflict91
+  %bound092 = icmp ult ptr %i.be, %scevgep88
+  %bound193 = icmp ult ptr %i.aw, %scevgep
+  %found.conflict94 = and i1 %bound092, %bound193
+  %conflict.rdx95 = or i1 %conflict.rdx, %found.conflict94
+  %bound096 = icmp ult ptr %i.bf, %scevgep87
+  %bound197 = icmp ult ptr %i.bc, %scevgep86
+  %found.conflict98 = and i1 %bound096, %bound197
+  %conflict.rdx99 = or i1 %conflict.rdx95, %found.conflict98
+  %bound0100 = icmp ult ptr %i.bf, %scevgep88
+  %bound1101 = icmp ult ptr %i.aw, %scevgep86
+  %found.conflict102 = and i1 %bound0100, %bound1101
+  %conflict.rdx103 = or i1 %conflict.rdx99, %found.conflict102
   %n.mod.vf = and i64 %i.bl, 3                    ; 2 uses
   %i.bm = icmp eq i64 %n.mod.vf, 0
   %i.bn = select i1 %i.bm, i64 4, i64 %n.mod.vf
@@ -246,9 +277,9 @@ bb.a:
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
   %.04565 = phi i32 [ %i.eg, %._crit_edge ], [ 0, %.preheader.preheader ] ; 2 uses
-  %.04664 = phi ptr [ %i.fn, %._crit_edge ], [ %i.aw, %.preheader.preheader ] ; 10 uses
-  %.04763 = phi ptr [ %i.fm, %._crit_edge ], [ %i.bf, %.preheader.preheader ] ; 11 uses
-  %.04962 = phi ptr [ %i.fl, %._crit_edge ], [ %i.be, %.preheader.preheader ] ; 8 uses
+  %.04664 = phi ptr [ %i.fn, %._crit_edge ], [ %i.aw, %.preheader.preheader ] ; 7 uses
+  %.04763 = phi ptr [ %i.fm, %._crit_edge ], [ %i.bf, %.preheader.preheader ] ; 7 uses
+  %.04962 = phi ptr [ %i.fl, %._crit_edge ], [ %i.be, %.preheader.preheader ] ; 4 uses
   %i.br = uitofp i32 %.04565 to float             ; 2 uses
   br i1 %min.iters.check, label %_ZN10aiVector3tIfEdVEf.exit.i.preheader, label %vector.memcheck
 
@@ -260,29 +291,6 @@ _ZN10aiVector3tIfEdVEf.exit.i.preheader:          ; preds = %vector.body, %vecto
   br label %_ZN10aiVector3tIfEdVEf.exit.i
 
 vector.memcheck:                                  ; preds = %.preheader
-  %scevgep = getelementptr i8, ptr %.04962, i64 %i.bj ; 3 uses
-  %scevgep86 = getelementptr i8, ptr %.04763, i64 %i.bj ; 3 uses
-  %1 = getelementptr i8, ptr %.04664, i64 %i.bk
-  %scevgep88 = getelementptr i8, ptr %1, i64 4    ; 2 uses
-  %bound0 = icmp ult ptr %.04962, %scevgep86
-  %bound1 = icmp ult ptr %.04763, %scevgep
-  %found.conflict = and i1 %bound0, %bound1
-  %bound089 = icmp ult ptr %.04962, %scevgep87
-  %bound190 = icmp ult ptr %i.bc, %scevgep
-  %found.conflict91 = and i1 %bound089, %bound190
-  %conflict.rdx = or i1 %found.conflict, %found.conflict91
-  %bound092 = icmp ult ptr %.04962, %scevgep88
-  %bound193 = icmp ult ptr %.04664, %scevgep
-  %found.conflict94 = and i1 %bound092, %bound193
-  %conflict.rdx95 = or i1 %conflict.rdx, %found.conflict94
-  %bound096 = icmp ult ptr %.04763, %scevgep87
-  %bound197 = icmp ult ptr %i.bc, %scevgep86
-  %found.conflict98 = and i1 %bound096, %bound197
-  %conflict.rdx99 = or i1 %conflict.rdx95, %found.conflict98
-  %bound0100 = icmp ult ptr %.04763, %scevgep88
-  %bound1101 = icmp ult ptr %.04664, %scevgep86
-  %found.conflict102 = and i1 %bound0100, %bound1101
-  %conflict.rdx103 = or i1 %conflict.rdx99, %found.conflict102
   br i1 %conflict.rdx103, label %_ZN10aiVector3tIfEdVEf.exit.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
