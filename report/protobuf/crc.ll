@@ -204,7 +204,7 @@ _ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit.1: ; 
   br i1 %.not.i.2.1, label %.preheader, label %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit.1, !llvm.loop !9
 
 .preheader:                                       ; preds = %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit.1, %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit24.14
-  %indvars.iv = phi i64 [ %indvars.iv.next45, %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit24.14 ], [ 0, %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit.1 ] ; 16 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit24.14 ], [ 0, %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit.1 ] ; 16 uses
   %.01343 = phi i64 [ %i.ij, %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit24.14 ], [ 1, %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit.1 ]
   %.13341 = phi i32 [ %spec.select.i20.14.1, %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit24.14 ], [ %spec.select.i.2.1, %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit.1 ] ; 18 uses
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
@@ -607,9 +607,9 @@ bb.p:                                             ; preds = %bb.p, %_ZN4absl12lt
   br i1 %.not.i23.14.1, label %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit24.14, label %bb.p, !llvm.loop !9
 
 _ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit24.14: ; preds = %bb.p
-  %indvars.iv.next45 = add nuw nsw i64 %indvars.iv, 15
   %i.ij = shl i64 %.01343, 4                      ; 2 uses
   %.not = icmp eq i64 %i.ij, 0
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 15
   br i1 %.not, label %bb.q, label %.preheader, !llvm.loop !10
 
 bb.q:                                             ; preds = %_ZN4absl12lts_2025051212crc_internal12_GLOBAL__N_112PolyMultiplyEPjjj.exit24.14

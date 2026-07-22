@@ -125,7 +125,7 @@ bb.h:                                             ; preds = %bb.g
 
 .preheader84.i:                                   ; preds = %bb.h, %.preheader84.i
   %.sroa.11.0.i = phi double [ %i.bg, %.preheader84.i ], [ 0.000000e+00, %bb.h ]
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i.1, %.preheader84.i ], [ 0, %bb.h ] ; 3 uses
+  %indvars.iv.i.a = phi i64 [ %indvars.iv.next101.i.1, %.preheader84.i ], [ 0, %bb.h ] ; 3 uses
   %.07092.i = phi i32 [ %9, %.preheader84.i ], [ 0, %bb.h ]
   %i.aq = phi <2 x double> [ %i.bl, %.preheader84.i ], [ zeroinitializer, %bb.h ]
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %indvars.iv.i.a ; 3 uses
@@ -149,8 +149,8 @@ bb.h:                                             ; preds = %bb.g
   %i.bj = insertelement <2 x double> poison, double %i.bi, i64 0
   %i.bk = insertelement <2 x double> %i.bj, double %i.bd, i64 1 ; 2 uses
   %i.bl = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bk, <2 x double> %i.bk, <2 x double> %i.ba) ; 5 uses
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i.a, 6
   %9 = add nuw nsw i32 %.07092.i, 2               ; 2 uses
+  %indvars.iv.next101.i.1 = add nuw nsw i64 %indvars.iv.i.a, 6
   %exitcond.not.i.1 = icmp eq i32 %9, 192
   br i1 %exitcond.not.i.1, label %init_outer_loop.exit, label %.preheader84.i, !llvm.loop !26
 
@@ -393,7 +393,7 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader84:                                     ; preds = %bb.b, %.preheader84
   %.sroa.11.0 = phi double [ %i.ae, %.preheader84 ], [ 0.000000e+00, %bb.b ]
-  %indvars.iv.a = phi i64 [ %indvars.iv.next.1, %.preheader84 ], [ 0, %bb.b ] ; 5 uses
+  %indvars.iv.a = phi i64 [ %indvars.iv.next101.1, %.preheader84 ], [ 0, %bb.b ] ; 5 uses
   %.07092 = phi i32 [ %3, %.preheader84 ], [ 0, %bb.b ]
   %i.m = phi <2 x double> [ %i.ak, %.preheader84 ], [ zeroinitializer, %bb.b ]
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.a
@@ -421,8 +421,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ai = insertelement <2 x double> poison, double %i.aa, i64 0
   %i.aj = insertelement <2 x double> %i.ai, double %i.ah, i64 1 ; 2 uses
   %i.ak = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aj, <2 x double> %i.aj, <2 x double> %i.y) ; 5 uses
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.a, 6
   %3 = add nuw nsw i32 %.07092, 2                 ; 2 uses
+  %indvars.iv.next101.1 = add nuw nsw i64 %indvars.iv.a, 6
   %exitcond.not.1 = icmp eq i32 %3, 192
   br i1 %exitcond.not.1, label %.preheader83.preheader, label %.preheader84, !llvm.loop !26
 
@@ -825,7 +825,7 @@ bb.i:                                             ; preds = %bb.h
 
 .preheader84.i:                                   ; preds = %bb.i, %.preheader84.i
   %.sroa.11.0.i = phi double [ %i.bx, %.preheader84.i ], [ 0.000000e+00, %bb.i ]
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i.1, %.preheader84.i ], [ 0, %bb.i ] ; 3 uses
+  %indvars.iv.i.a = phi i64 [ %indvars.iv.next101.i.1, %.preheader84.i ], [ 0, %bb.i ] ; 3 uses
   %.07092.i = phi i32 [ %12, %.preheader84.i ], [ 0, %bb.i ]
   %i.bh = phi <2 x double> [ %i.cc, %.preheader84.i ], [ zeroinitializer, %bb.i ]
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv.i.a ; 3 uses
@@ -849,8 +849,8 @@ bb.i:                                             ; preds = %bb.h
   %i.ca = insertelement <2 x double> poison, double %i.bz, i64 0
   %i.cb = insertelement <2 x double> %i.ca, double %i.bu, i64 1 ; 2 uses
   %i.cc = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cb, <2 x double> %i.cb, <2 x double> %i.br) ; 5 uses
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i.a, 6
   %12 = add nuw nsw i32 %.07092.i, 2              ; 2 uses
+  %indvars.iv.next101.i.1 = add nuw nsw i64 %indvars.iv.i.a, 6
   %exitcond.not.i.1 = icmp eq i32 %12, 192
   br i1 %exitcond.not.i.1, label %init_outer_loop.exit, label %.preheader84.i, !llvm.loop !26
 
@@ -1253,7 +1253,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 .preheader84.i338:                                ; preds = %bb.ab, %.preheader84.i338
   %.sroa.11.0.i340 = phi double [ %i.ni, %.preheader84.i338 ], [ 0.000000e+00, %bb.ab ]
-  %indvars.iv.i342 = phi i64 [ %indvars.iv.next.i344.1, %.preheader84.i338 ], [ 0, %bb.ab ] ; 3 uses
+  %indvars.iv.i342 = phi i64 [ %indvars.iv.next101.i344.1, %.preheader84.i338 ], [ 0, %bb.ab ] ; 3 uses
   %.07092.i343 = phi i32 [ %13, %.preheader84.i338 ], [ 0, %bb.ab ]
   %i.ms = phi <2 x double> [ %i.nn, %.preheader84.i338 ], [ zeroinitializer, %bb.ab ]
   %i.mt = getelementptr inbounds nuw [8 x i8], ptr %i.mg, i64 %indvars.iv.i342 ; 3 uses
@@ -1277,8 +1277,8 @@ bb.ab:                                            ; preds = %bb.aa
   %i.nl = insertelement <2 x double> poison, double %i.nk, i64 0
   %i.nm = insertelement <2 x double> %i.nl, double %i.nf, i64 1 ; 2 uses
   %i.nn = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nm, <2 x double> %i.nm, <2 x double> %i.nc) ; 5 uses
-  %indvars.iv.next.i344.1 = add nuw nsw i64 %indvars.iv.i342, 6
   %13 = add nuw nsw i32 %.07092.i343, 2           ; 2 uses
+  %indvars.iv.next101.i344.1 = add nuw nsw i64 %indvars.iv.i342, 6
   %exitcond.not.i345.1 = icmp eq i32 %13, 192
   br i1 %exitcond.not.i345.1, label %init_outer_loop.exit351, label %.preheader84.i338, !llvm.loop !26
 

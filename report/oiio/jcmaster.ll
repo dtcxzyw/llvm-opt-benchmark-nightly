@@ -138,8 +138,8 @@ bb.i:                                             ; preds = %bb.g
   br label %.loopexit247.i
 
 .loopexit247.i:                                   ; preds = %.preheader248.i.preheader, %.loopexit247.sink.split.i, %bb.i, %bb.h, %bb.f
-  %i.aq = phi i32 [ %i.af, %bb.h ], [ %i.am, %bb.i ], [ %.sink.i, %.loopexit247.sink.split.i ], [ %i.aa, %bb.f ], [ %i.af, %.preheader248.i.preheader ]
-  %i.ar = phi i32 [ 1, %bb.h ], [ 0, %bb.i ], [ 0, %.loopexit247.sink.split.i ], [ 0, %bb.f ], [ 1, %.preheader248.i.preheader ]
+  %i.aq = phi i32 [ %i.af, %.preheader248.i.preheader ], [ %.sink.i, %.loopexit247.sink.split.i ], [ %i.am, %bb.i ], [ %i.af, %bb.h ], [ %i.aa, %bb.f ]
+  %i.ar = phi i32 [ 1, %.preheader248.i.preheader ], [ 0, %.loopexit247.sink.split.i ], [ 0, %bb.i ], [ 1, %bb.h ], [ 0, %bb.f ]
   %i.as = load i32, ptr %i.j, align 8, !tbaa !37
   %.not224271.i = icmp slt i32 %i.as, 1
   br i1 %.not224271.i, label %._crit_edge278.i, label %.lr.ph277.i

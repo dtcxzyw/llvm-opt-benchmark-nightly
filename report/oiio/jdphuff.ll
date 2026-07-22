@@ -38,10 +38,10 @@ bb.a:
   br i1 %i.q, label %.preheader, label %._crit_edge
 
 .preheader:                                       ; preds = %bb.a, %.preheader
+  %.pn = phi ptr [ %indvars.iv, %.preheader ], [ %i.n, %bb.a ] ; 2 uses
   %.01926 = phi i32 [ %i.r, %.preheader ], [ 0, %bb.a ]
-  %.02025 = phi ptr [ %scevgep, %.preheader ], [ %i.n, %bb.a ] ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(256) %.02025, i8 -1, i64 256, i1 false), !tbaa !3
-  %scevgep = getelementptr i8, ptr %.02025, i64 256
+  %indvars.iv = getelementptr i8, ptr %.pn, i64 256
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(256) %.pn, i8 -1, i64 256, i1 false), !tbaa !3
   %i.r = add nuw nsw i32 %.01926, 1               ; 2 uses
   %i.s = load i32, ptr %i.i, align 8, !tbaa !42
   %i.t = icmp slt i32 %i.r, %i.s

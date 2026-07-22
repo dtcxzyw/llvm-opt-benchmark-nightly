@@ -204,17 +204,17 @@ bb.a:
   %.01118 = phi i32 [ 0, %.preheader14 ], [ %i.i, %.preheader ] ; 2 uses
   %.117 = phi i32 [ %.01319, %.preheader14 ], [ %i.h, %.preheader ] ; 7 uses
   %i.b = mul nuw nsw i32 %.01118, 51              ; 6 uses
-  %i.c = add i32 %.117, 1
+  %i.c = add nuw nsw i32 %.117, 1
   tail call fastcc void @png_create_colormap_entry(ptr noundef %0, i32 noundef %.117, i32 noundef %i.a, i32 noundef %i.b, i32 noundef 0, i32 noundef 255, i32 noundef 1)
-  %i.d = add i32 %.117, 2
+  %i.d = add nuw nsw i32 %.117, 2
   tail call fastcc void @png_create_colormap_entry(ptr noundef %0, i32 noundef %i.c, i32 noundef %i.a, i32 noundef %i.b, i32 noundef 51, i32 noundef 255, i32 noundef 1)
-  %i.e = add i32 %.117, 3
+  %i.e = add nuw nsw i32 %.117, 3
   tail call fastcc void @png_create_colormap_entry(ptr noundef %0, i32 noundef %i.d, i32 noundef %i.a, i32 noundef %i.b, i32 noundef 102, i32 noundef 255, i32 noundef 1)
-  %i.f = add i32 %.117, 4
+  %i.f = add nuw nsw i32 %.117, 4
   tail call fastcc void @png_create_colormap_entry(ptr noundef %0, i32 noundef %i.e, i32 noundef %i.a, i32 noundef %i.b, i32 noundef 153, i32 noundef 255, i32 noundef 1)
-  %i.g = add i32 %.117, 5
+  %i.g = add nuw nsw i32 %.117, 5
   tail call fastcc void @png_create_colormap_entry(ptr noundef %0, i32 noundef %i.f, i32 noundef %i.a, i32 noundef %i.b, i32 noundef 204, i32 noundef 255, i32 noundef 1)
-  %i.h = add i32 %.117, 6                         ; 3 uses
+  %i.h = add nuw nsw i32 %.117, 6                 ; 2 uses
   tail call fastcc void @png_create_colormap_entry(ptr noundef %0, i32 noundef %i.g, i32 noundef %i.a, i32 noundef %i.b, i32 noundef 255, i32 noundef 255, i32 noundef 1)
   %i.i = add nuw nsw i32 %.01118, 1               ; 2 uses
   %exitcond.not = icmp eq i32 %i.i, 6
@@ -226,7 +226,7 @@ bb.b:                                             ; preds = %.preheader
   br i1 %exitcond21.not, label %bb.c, label %.preheader14, !llvm.loop !193
 
 bb.c:                                             ; preds = %bb.b
-  ret i32 %i.h
+  ret i32 216
 }
 
 declare void @png_set_tRNS_to_alpha(ptr noundef) local_unnamed_addr #2

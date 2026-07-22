@@ -204,11 +204,13 @@ bb.ar:                                            ; preds = %bb.ap, %bb.aq, %bb.
 ; Function Attrs: nounwind uwtable
 define void @png_combine_row(ptr noalias noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 631
   %i.b = load i8, ptr %i.a, align 1, !tbaa !54    ; 12 uses
   %i.c = zext i8 %i.b to i32                      ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 560
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !55
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !55   ; 2 uses
+  %4 = ptrtoaddr ptr %i.e to i64                  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 1 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 508
   %i.h = load i32, ptr %i.g, align 4, !tbaa !56   ; 3 uses
@@ -609,24 +611,23 @@ bb.ax:                                            ; preds = %bb.aw
   %i.ff = zext nneg i32 %i.fe to i64              ; 2 uses
   %i.fg = add nsw i64 %i.et, -4                   ; 2 uses
   %i.fh = lshr i64 %i.fg, 2
-  %i.fi = add nuw nsw i64 %i.fh, 1                ; 2 uses
-  %min.iters.check498 = icmp ult i64 %i.fg, 28
-  %n.vec501 = and i64 %i.fi, 9223372036854775800  ; 4 uses
+  %5 = add nuw nsw i64 %i.fh, 1                   ; 2 uses
+  %min.iters.check496 = icmp ult i64 %i.fg, 28
+  %6 = sub i64 %3, %4
+  %i.fi = add i64 %6, -2
+  %min.iters.check498 = icmp ult i64 %i.fi, 31
+  %n.vec501 = and i64 %5, 9223372036854775800     ; 4 uses
   %i.fj = shl i64 %n.vec501, 2                    ; 2 uses
   %i.fk = mul i64 %n.vec501, -4
   %i.fl = or disjoint i64 %i.fk, %i.et
-  %cmp.n510 = icmp eq i64 %i.fi, %n.vec501
+  %cmp.n510 = icmp eq i64 %5, %n.vec501
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.az, %bb.ax
   %.5252 = phi i64 [ %i.cu, %bb.ax ], [ %i.gz, %bb.az ] ; 2 uses
-  %.0236 = phi ptr [ %i.cv, %bb.ax ], [ %i.hb, %bb.az ] ; 4 uses
-  %.0233 = phi ptr [ %i.cw, %bb.ax ], [ %i.ha, %bb.az ] ; 4 uses
-  %.0233496 = ptrtoaddr ptr %.0233 to i64
-  %.0236495 = ptrtoaddr ptr %.0236 to i64
-  %3 = sub i64 %.0233496, %.0236495
-  %diff.check497 = icmp ugt i64 %3, -32
-  %or.cond557 = select i1 %min.iters.check498, i1 true, i1 %diff.check497
+  %.0236 = phi ptr [ %i.cv, %bb.ax ], [ %i.hb, %bb.az ] ; 3 uses
+  %.0233 = phi ptr [ %i.cw, %bb.ax ], [ %i.ha, %bb.az ] ; 3 uses
+  %or.cond557 = select i1 %min.iters.check496, i1 true, i1 %min.iters.check498
   br i1 %or.cond557, label %scalar.ph.preheader, label %vector.ph499
 
 vector.ph499:                                     ; preds = %bb.ay
@@ -653,9 +654,9 @@ middle.block509:                                  ; preds = %vector.body502
   br i1 %cmp.n510, label %.loopexit555, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %bb.ay, %middle.block509
-  %.1237.ph = phi ptr [ %.0236, %bb.ay ], [ %i.fm, %middle.block509 ] ; 2 uses
-  %.1234.ph = phi ptr [ %.0233, %bb.ay ], [ %i.fn, %middle.block509 ] ; 2 uses
-  %.0232.ph = phi i64 [ %i.et, %bb.ay ], [ %i.fl, %middle.block509 ] ; 3 uses
+  %.1237.ph = phi ptr [ %i.fm, %middle.block509 ], [ %.0236, %bb.ay ] ; 2 uses
+  %.1234.ph = phi ptr [ %i.fn, %middle.block509 ], [ %.0233, %bb.ay ] ; 2 uses
+  %.0232.ph = phi i64 [ %i.fl, %middle.block509 ], [ %i.et, %bb.ay ] ; 3 uses
   %i.fs = add i64 %.0232.ph, -4                   ; 2 uses
   %i.ft = lshr i64 %i.fs, 2
   %i.fu = add nuw nsw i64 %i.ft, 1
@@ -879,32 +880,31 @@ bb.ba:                                            ; preds = %bb.aw
   %i.it = zext nneg i32 %i.is to i64              ; 2 uses
   %i.iu = add nsw i64 %i.et, -2                   ; 3 uses
   %i.iv = lshr exact i64 %i.iu, 1
-  %i.iw = add nuw i64 %i.iv, 1                    ; 5 uses
-  %min.iters.check.a = icmp ult i64 %i.iu, 6
+  %7 = add nuw i64 %i.iv, 1                       ; 5 uses
+  %min.iters.check = icmp ult i64 %i.iu, 6
+  %8 = sub i64 %3, %4
+  %i.iw = add i64 %8, -2
+  %min.iters.check.a = icmp ult i64 %i.iw, 31
   %min.iters.check438 = icmp ult i64 %i.iu, 30
-  %n.mod.vf = and i64 %i.iw, 12
-  %n.vec = and i64 %i.iw, -16                     ; 5 uses
+  %n.mod.vf = and i64 %7, 12
+  %n.vec = and i64 %7, -16                        ; 5 uses
   %i.ix = shl i64 %n.vec, 1                       ; 2 uses
   %i.iy = mul i64 %n.vec, -2
   %i.iz = or disjoint i64 %i.iy, %i.et
-  %cmp.n = icmp eq i64 %i.iw, %n.vec
+  %cmp.n = icmp eq i64 %7, %n.vec
   %min.epilog.iters.check = icmp eq i64 %n.mod.vf, 0
-  %n.vec444 = and i64 %i.iw, -4                   ; 4 uses
+  %n.vec444 = and i64 %7, -4                      ; 4 uses
   %i.ja = shl i64 %n.vec444, 1                    ; 2 uses
   %i.jb = shl i64 %n.vec444, 1
   %i.jc = sub i64 %i.et, %i.jb
-  %cmp.n450 = icmp eq i64 %i.iw, %n.vec444
+  %cmp.n450 = icmp eq i64 %7, %n.vec444
   br label %iter.check
 
 iter.check:                                       ; preds = %bb.bb, %bb.ba
   %.8 = phi i64 [ %i.cu, %bb.ba ], [ %i.ku, %bb.bb ] ; 2 uses
-  %.0229 = phi ptr [ %i.cv, %bb.ba ], [ %i.kw, %bb.bb ] ; 6 uses
-  %.0226 = phi ptr [ %i.cw, %bb.ba ], [ %i.kv, %bb.bb ] ; 6 uses
-  %.0226437 = ptrtoaddr ptr %.0226 to i64
-  %.0229436 = ptrtoaddr ptr %.0229 to i64
-  %4 = sub i64 %.0226437, %.0229436
-  %diff.check = icmp ugt i64 %4, -32
-  %or.cond559 = select i1 %min.iters.check.a, i1 true, i1 %diff.check
+  %.0229 = phi ptr [ %i.cv, %bb.ba ], [ %i.kw, %bb.bb ] ; 5 uses
+  %.0226 = phi ptr [ %i.cw, %bb.ba ], [ %i.kv, %bb.bb ] ; 5 uses
+  %or.cond559 = select i1 %min.iters.check, i1 true, i1 %min.iters.check.a
   br i1 %or.cond559, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -957,9 +957,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n450, label %.loopexit556, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.1230.ph = phi ptr [ %.0229, %iter.check ], [ %i.jd, %vec.epilog.iter.check ], [ %i.jj, %vec.epilog.middle.block ] ; 2 uses
-  %.1227.ph = phi ptr [ %.0226, %iter.check ], [ %i.je, %vec.epilog.iter.check ], [ %i.jk, %vec.epilog.middle.block ] ; 2 uses
-  %.0.ph = phi i64 [ %i.et, %iter.check ], [ %i.iz, %vec.epilog.iter.check ], [ %i.jc, %vec.epilog.middle.block ] ; 3 uses
+  %.1230.ph = phi ptr [ %.0229, %iter.check ], [ %i.jj, %vec.epilog.middle.block ], [ %i.jd, %vec.epilog.iter.check ] ; 2 uses
+  %.1227.ph = phi ptr [ %.0226, %iter.check ], [ %i.jk, %vec.epilog.middle.block ], [ %i.je, %vec.epilog.iter.check ] ; 2 uses
+  %.0.ph = phi i64 [ %i.et, %iter.check ], [ %i.jc, %vec.epilog.middle.block ], [ %i.iz, %vec.epilog.iter.check ] ; 3 uses
   %i.jn = add i64 %.0.ph, -2                      ; 2 uses
   %i.jo = lshr i64 %i.jn, 1
   %i.jp = add nuw i64 %i.jo, 1

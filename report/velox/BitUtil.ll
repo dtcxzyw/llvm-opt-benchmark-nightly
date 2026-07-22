@@ -204,26 +204,26 @@ bb.a:
   br i1 %.not, label %.preheader, label %.preheader21
 
 .preheader21:                                     ; preds = %bb.a, %.preheader21
+  %.pn = phi ptr [ %indvars.iv35, %.preheader21 ], [ %0, %bb.a ] ; 2 uses
   %.01726 = phi i64 [ %i.i, %.preheader21 ], [ 0, %bb.a ]
-  %.01825 = phi ptr [ %scevgep, %.preheader21 ], [ %0, %bb.a ] ; 2 uses
-  %.01924 = phi ptr [ %i.h, %.preheader21 ], [ %2, %bb.a ] ; 3 uses
-  %.019.promoted = load i64, ptr %.01924, align 8, !tbaa !7
-  %i.c = load <64 x i8>, ptr %.01825, align 1, !tbaa !29
+  %.01825 = phi ptr [ %i.h, %.preheader21 ], [ %2, %bb.a ] ; 3 uses
+  %indvars.iv35 = getelementptr i8, ptr %.pn, i64 64 ; 2 uses
+  %.019.promoted = load i64, ptr %.01825, align 8, !tbaa !7
+  %i.c = load <64 x i8>, ptr %.pn, align 1, !tbaa !29
   %i.d = shl nuw <64 x i8> %i.c, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>
   %i.e = zext <64 x i8> %i.d to <64 x i64>
   %i.f = shl nuw <64 x i64> %i.e, <i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 8, i64 9, i64 10, i64 11, i64 12, i64 13, i64 14, i64 15, i64 16, i64 17, i64 18, i64 19, i64 20, i64 21, i64 22, i64 23, i64 24, i64 25, i64 26, i64 27, i64 28, i64 29, i64 30, i64 31, i64 32, i64 33, i64 34, i64 35, i64 36, i64 37, i64 38, i64 39, i64 40, i64 41, i64 42, i64 43, i64 44, i64 45, i64 46, i64 47, i64 48, i64 49, i64 50, i64 51, i64 52, i64 53, i64 54, i64 55, i64 56, i64 57, i64 58, i64 59, i64 60, i64 61, i64 62, i64 63>
   %i.g = tail call i64 @llvm.vector.reduce.or.v64i64(<64 x i64> %i.f)
   %op.rdx = or i64 %i.g, %.019.promoted
-  %scevgep = getelementptr i8, ptr %.01825, i64 64 ; 2 uses
-  store i64 %op.rdx, ptr %.01924, align 8, !tbaa !7
-  %i.h = getelementptr inbounds nuw i8, ptr %.01924, i64 8 ; 2 uses
+  store i64 %op.rdx, ptr %.01825, align 8, !tbaa !7
+  %i.h = getelementptr inbounds nuw i8, ptr %.01825, i64 8 ; 2 uses
   %i.i = add nuw nsw i64 %.01726, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.i, %i.a
   br i1 %exitcond.not, label %.preheader, label %.preheader21, !llvm.loop !31
 
 .preheader:                                       ; preds = %.preheader21, %bb.a
   %.019.lcssa = phi ptr [ %2, %bb.a ], [ %i.h, %.preheader21 ] ; 2 uses
-  %.018.lcssa = phi ptr [ %0, %bb.a ], [ %scevgep, %.preheader21 ] ; 5 uses
+  %.018.lcssa = phi ptr [ %0, %bb.a ], [ %indvars.iv35, %.preheader21 ] ; 5 uses
   %.not31 = icmp eq i64 %i.b, 0
   br i1 %.not31, label %bb.b, label %iter.check
 

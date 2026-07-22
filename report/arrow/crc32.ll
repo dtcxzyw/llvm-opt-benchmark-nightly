@@ -75,17 +75,18 @@ bb.a:
   br label %.preheader77
 
 .preheader76:                                     ; preds = %.preheader77, %.preheader76
+  %.069.lcssa.pn = phi ptr [ %indvars.iv, %.preheader76 ], [ %.069.lcssa, %.preheader77 ] ; 17 uses
   %.189 = phi i64 [ %i.po, %.preheader76 ], [ %.0.lcssa, %.preheader77 ]
   %.16488 = phi i32 [ %i.pn, %.preheader76 ], [ %.063.lcssa, %.preheader77 ]
-  %.07187 = phi ptr [ %scevgep, %.preheader76 ], [ %.069.lcssa, %.preheader77 ] ; 17 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %.07187, i64 4
-  %i.aw = load i32, ptr %.07187, align 4, !tbaa !3
+  %indvars.iv = getelementptr i8, ptr %.069.lcssa.pn, i64 64 ; 2 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 4
+  %i.aw = load i32, ptr %.069.lcssa.pn, align 4, !tbaa !3
   %i.ax = xor i32 %i.aw, %.16488                  ; 4 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %.07187, i64 8
+  %i.ay = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 8
   %i.az = load i32, ptr %i.av, align 4, !tbaa !3  ; 4 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %.07187, i64 12
+  %i.ba = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 12
   %i.bb = load i32, ptr %i.ay, align 4, !tbaa !3  ; 4 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %.07187, i64 16
+  %i.bc = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 16
   %i.bd = load i32, ptr %i.ba, align 4, !tbaa !3  ; 4 uses
   %i.be = lshr i32 %i.bd, 24
   %i.bf = zext nneg i32 %i.be to i64
@@ -174,14 +175,14 @@ bb.a:
   %i.ek = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN5arrow8internalL12crc32_lookupE, i64 15360), i64 %i.ej
   %i.el = load i32, ptr %i.ek, align 4, !tbaa !3
   %i.em = xor i32 %i.eh, %i.el
-  %i.en = getelementptr inbounds nuw i8, ptr %.07187, i64 20
+  %i.en = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 20
   %i.eo = load i32, ptr %i.bc, align 4, !tbaa !3
   %i.ep = xor i32 %i.eo, %i.em                    ; 4 uses
-  %i.eq = getelementptr inbounds nuw i8, ptr %.07187, i64 24
+  %i.eq = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 24
   %i.er = load i32, ptr %i.en, align 4, !tbaa !3  ; 4 uses
-  %i.es = getelementptr inbounds nuw i8, ptr %.07187, i64 28
+  %i.es = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 28
   %i.et = load i32, ptr %i.eq, align 4, !tbaa !3  ; 4 uses
-  %i.eu = getelementptr inbounds nuw i8, ptr %.07187, i64 32
+  %i.eu = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 32
   %i.ev = load i32, ptr %i.es, align 4, !tbaa !3  ; 4 uses
   %i.ew = lshr i32 %i.ev, 24
   %i.ex = zext nneg i32 %i.ew to i64
@@ -270,14 +271,14 @@ bb.a:
   %i.ic = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN5arrow8internalL12crc32_lookupE, i64 15360), i64 %i.ib
   %i.id = load i32, ptr %i.ic, align 4, !tbaa !3
   %i.ie = xor i32 %i.hz, %i.id
-  %i.if = getelementptr inbounds nuw i8, ptr %.07187, i64 36
+  %i.if = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 36
   %i.ig = load i32, ptr %i.eu, align 4, !tbaa !3
   %i.ih = xor i32 %i.ig, %i.ie                    ; 4 uses
-  %i.ii = getelementptr inbounds nuw i8, ptr %.07187, i64 40
+  %i.ii = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 40
   %i.ij = load i32, ptr %i.if, align 4, !tbaa !3  ; 4 uses
-  %i.ik = getelementptr inbounds nuw i8, ptr %.07187, i64 44
+  %i.ik = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 44
   %i.il = load i32, ptr %i.ii, align 4, !tbaa !3  ; 4 uses
-  %i.im = getelementptr inbounds nuw i8, ptr %.07187, i64 48
+  %i.im = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 48
   %i.in = load i32, ptr %i.ik, align 4, !tbaa !3  ; 4 uses
   %i.io = lshr i32 %i.in, 24
   %i.ip = zext nneg i32 %i.io to i64
@@ -366,12 +367,12 @@ bb.a:
   %i.lu = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN5arrow8internalL12crc32_lookupE, i64 15360), i64 %i.lt
   %i.lv = load i32, ptr %i.lu, align 4, !tbaa !3
   %i.lw = xor i32 %i.lr, %i.lv
-  %i.lx = getelementptr inbounds nuw i8, ptr %.07187, i64 52
+  %i.lx = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 52
   %i.ly = load i32, ptr %i.im, align 4, !tbaa !3
   %i.lz = xor i32 %i.ly, %i.lw                    ; 4 uses
-  %i.ma = getelementptr inbounds nuw i8, ptr %.07187, i64 56
+  %i.ma = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 56
   %i.mb = load i32, ptr %i.lx, align 4, !tbaa !3  ; 4 uses
-  %i.mc = getelementptr inbounds nuw i8, ptr %.07187, i64 60
+  %i.mc = getelementptr inbounds nuw i8, ptr %.069.lcssa.pn, i64 60
   %i.md = load i32, ptr %i.ma, align 4, !tbaa !3  ; 4 uses
   %i.me = load i32, ptr %i.mc, align 4, !tbaa !3  ; 4 uses
   %i.mf = lshr i32 %i.me, 24
@@ -461,13 +462,12 @@ bb.a:
   %i.pl = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN5arrow8internalL12crc32_lookupE, i64 15360), i64 %i.pk
   %i.pm = load i32, ptr %i.pl, align 4, !tbaa !3
   %i.pn = xor i32 %i.pi, %i.pm                    ; 2 uses
-  %scevgep = getelementptr i8, ptr %.07187, i64 64 ; 2 uses
   %i.po = add i64 %.189, -64                      ; 3 uses
   %i.pp = icmp ugt i64 %i.po, 63
   br i1 %i.pp, label %.preheader76, label %.preheader, !llvm.loop !8
 
 .preheader:                                       ; preds = %.preheader76, %.preheader77
-  %.071.lcssa = phi ptr [ %.069.lcssa, %.preheader77 ], [ %scevgep, %.preheader76 ] ; 2 uses
+  %.071.lcssa = phi ptr [ %.069.lcssa, %.preheader77 ], [ %indvars.iv, %.preheader76 ] ; 2 uses
   %.164.lcssa = phi i32 [ %.063.lcssa, %.preheader77 ], [ %i.pn, %.preheader76 ] ; 2 uses
   %.1.lcssa = phi i64 [ %.0.lcssa, %.preheader77 ], [ %i.po, %.preheader76 ] ; 3 uses
   %i.pq = icmp samesign ugt i64 %.1.lcssa, 7

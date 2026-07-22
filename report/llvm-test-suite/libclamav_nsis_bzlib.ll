@@ -204,7 +204,7 @@ bb.fy:                                            ; preds = %bb.fw
 
 .preheader1385.i:                                 ; preds = %._crit_edge1562.i, %.preheader1385.i
   %indvars.iv1782.i = phi i64 [ %indvars.iv.next1783.i, %.preheader1385.i ], [ 15, %._crit_edge1562.i ] ; 3 uses
-  %indvars.iv1780.i = phi i64 [ %indvars.iv.next1781.i, %.preheader1385.i ], [ 4095, %._crit_edge1562.i ] ; 3 uses
+  %indvars.iv1780.i = phi i64 [ %indvars.iv.next1775.i, %.preheader1385.i ], [ 4095, %._crit_edge1562.i ] ; 3 uses
   %i.brm = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %indvars.iv1782.i ; 17 uses
   %i.brn = load i32, ptr %i.brm, align 4, !tbaa !4
   %i.bro = sext i32 %i.brn to i64
@@ -318,11 +318,11 @@ bb.fy:                                            ; preds = %bb.fw
   %i.bvc = load i8, ptr %i.bvb, align 1, !tbaa !34
   %i.bvd = getelementptr inbounds i8, ptr %i.ai, i64 %indvars.iv.next1777.14.i
   store i8 %i.bvc, ptr %i.bvd, align 1, !tbaa !34
-  %i.bve = trunc nsw i64 %indvars.iv.next1777.14.i to i32
-  %indvars.iv.next1781.i = add nsw i64 %indvars.iv1780.i, -16
+  %i.bve = trunc nuw nsw i64 %indvars.iv.next1777.14.i to i32
   store i32 %i.bve, ptr %i.brm, align 4, !tbaa !4
   %indvars.iv.next1783.i = add nsw i64 %indvars.iv1782.i, -1
   %.not2003.i = icmp eq i64 %indvars.iv1782.i, 0
+  %indvars.iv.next1775.i = add nsw i64 %indvars.iv1780.i, -16
   br i1 %.not2003.i, label %.loopexit1387.i, label %.preheader1385.i, !llvm.loop !114
 
 .loopexit1387.i:                                  ; preds = %.preheader1385.i, %._crit_edge1562.i, %._crit_edge1574.i

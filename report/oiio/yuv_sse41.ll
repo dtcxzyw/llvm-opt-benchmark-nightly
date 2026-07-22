@@ -204,7 +204,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ni = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.mj, <8 x i16> %i.nf)
   store <16 x i8> %i.ni, ptr %i.nh, align 1, !tbaa !7
   %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 32 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32
+  %indvars = trunc nuw nsw i64 %indvars.iv.next to i32
   %i.nj = getelementptr inbounds nuw i8, ptr %.054, i64 96 ; 2 uses
   %i.nk = icmp sgt i32 %i.a, %indvars
   br i1 %i.nk, label %.lr.ph, label %.preheader.loopexit, !llvm.loop !53
@@ -607,7 +607,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ni = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.mj, <8 x i16> %i.nf)
   store <16 x i8> %i.ni, ptr %i.nh, align 1, !tbaa !7
   %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 32 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32
+  %indvars = trunc nuw nsw i64 %indvars.iv.next to i32
   %i.nj = getelementptr inbounds nuw i8, ptr %.054, i64 96 ; 2 uses
   %i.nk = icmp sgt i32 %i.a, %indvars
   br i1 %i.nk, label %.lr.ph, label %.preheader.loopexit, !llvm.loop !65
