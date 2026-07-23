@@ -201,7 +201,7 @@ vector.ph430:                                     ; preds = %.lr.ph.i.i.i.i.i.i.
 
 vector.body435:                                   ; preds = %vector.body435, %vector.ph430
   %index436 = phi i64 [ 0, %vector.ph430 ], [ %index.next447, %vector.body435 ] ; 3 uses
-  %vec.phi437 = phi <4 x i1> [ %i.bh, %vector.ph430 ], [ %predphi444, %vector.body435 ]
+  %vec.phi437 = phi <4 x i1> [ %i.bh, %vector.ph430 ], [ %predphi441, %vector.body435 ]
   %vec.phi438 = phi <4 x i1> [ splat (i1 true), %vector.ph430 ], [ %predphi446, %vector.body435 ]
   %i.bi = getelementptr [4 x i8], ptr %invariant.gep.i.i.i.i.i.i.i.i.i.i, i64 %index436 ; 2 uses
   %i.bj = getelementptr i8, ptr %i.bi, i64 16
@@ -225,10 +225,10 @@ vector.body435:                                   ; preds = %vector.body435, %ve
   %i.bx = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.bv)
   %i.by = fcmp ole <4 x float> %i.bw, %broadcast.splat434
   %i.bz = fcmp ole <4 x float> %i.bx, %broadcast.splat434
-  %i.ca = or <4 x i1> %i.bm, %i.bs
-  %predphi443 = select <4 x i1> %i.ca, <4 x i1> splat (i1 true), <4 x i1> %i.by
-  %predphi444 = and <4 x i1> %vec.phi437, %predphi443 ; 2 uses
-  %10 = or <4 x i1> %i.bn, %i.bt
+  %i.ca = or <4 x i1> %i.bs, %i.bm
+  %10 = or <4 x i1> %i.bt, %i.bn
+  %11 = select <4 x i1> %i.ca, <4 x i1> splat (i1 true), <4 x i1> %i.by
+  %predphi441 = and <4 x i1> %vec.phi437, %11     ; 2 uses
   %predphi445 = select <4 x i1> %10, <4 x i1> splat (i1 true), <4 x i1> %i.bz
   %predphi446 = and <4 x i1> %vec.phi438, %predphi445 ; 2 uses
   %index.next447 = add nuw i64 %index436, 8       ; 2 uses
@@ -236,7 +236,7 @@ vector.body435:                                   ; preds = %vector.body435, %ve
   br i1 %i.cb, label %middle.block448, label %vector.body435, !llvm.loop !786
 
 middle.block448:                                  ; preds = %vector.body435
-  %bin.rdx449 = and <4 x i1> %predphi446, %predphi444
+  %bin.rdx449 = and <4 x i1> %predphi446, %predphi441
   %i.cc = bitcast <4 x i1> %bin.rdx449 to i4
   %i.cd = icmp eq i4 %i.cc, -1                    ; 2 uses
   %cmp.n450 = icmp eq i64 %i.av, %n.vec432
@@ -315,7 +315,7 @@ vector.ph405:                                     ; preds = %.lr.ph.i13.i.i.i.i.
 
 vector.body410:                                   ; preds = %vector.body410, %vector.ph405
   %index411 = phi i64 [ 0, %vector.ph405 ], [ %index.next422, %vector.body410 ] ; 2 uses
-  %vec.phi412 = phi <4 x i1> [ %i.db, %vector.ph405 ], [ %predphi419, %vector.body410 ]
+  %vec.phi412 = phi <4 x i1> [ %i.db, %vector.ph405 ], [ %predphi418, %vector.body410 ]
   %vec.phi413 = phi <4 x i1> [ splat (i1 true), %vector.ph405 ], [ %predphi421, %vector.body410 ]
   %i.dc = add nsw i64 %index411, %i.cw            ; 2 uses
   %i.dd = getelementptr [4 x i8], ptr %invariant.gep.i14.i.i.i.i.i.i.i.i.i, i64 %i.dc ; 2 uses
@@ -340,18 +340,18 @@ vector.body410:                                   ; preds = %vector.body410, %ve
   %i.ds = call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.dq)
   %i.dt = fcmp ole <4 x float> %i.dr, %broadcast.splat409
   %i.du = fcmp ole <4 x float> %i.ds, %broadcast.splat409
-  %i.dv = or <4 x i1> %i.dh, %i.dn
-  %predphi418 = select <4 x i1> %i.dv, <4 x i1> splat (i1 true), <4 x i1> %i.dt
-  %predphi419 = and <4 x i1> %vec.phi412, %predphi418 ; 2 uses
-  %11 = or <4 x i1> %i.di, %i.do
-  %predphi420 = select <4 x i1> %11, <4 x i1> splat (i1 true), <4 x i1> %i.du
+  %i.dv = or <4 x i1> %i.dn, %i.dh
+  %12 = or <4 x i1> %i.do, %i.di
+  %13 = select <4 x i1> %i.dv, <4 x i1> splat (i1 true), <4 x i1> %i.dt
+  %predphi418 = and <4 x i1> %vec.phi412, %13     ; 2 uses
+  %predphi420 = select <4 x i1> %12, <4 x i1> splat (i1 true), <4 x i1> %i.du
   %predphi421 = and <4 x i1> %vec.phi413, %predphi420 ; 2 uses
   %index.next422 = add nuw i64 %index411, 8       ; 2 uses
   %i.dw = icmp eq i64 %index.next422, %n.vec407
   br i1 %i.dw, label %middle.block423, label %vector.body410, !llvm.loop !788
 
 middle.block423:                                  ; preds = %vector.body410
-  %bin.rdx424 = and <4 x i1> %predphi421, %predphi419
+  %bin.rdx424 = and <4 x i1> %predphi421, %predphi418
   %i.dx = bitcast <4 x i1> %bin.rdx424 to i4
   %i.dy = icmp eq i4 %i.dx, -1                    ; 2 uses
   %cmp.n425 = icmp eq i64 %i.cu, %n.vec407
