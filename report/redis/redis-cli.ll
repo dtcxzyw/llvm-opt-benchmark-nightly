@@ -204,16 +204,16 @@ vector.body:                                      ; preds = %pred.store.continue
   %i.tl = getelementptr inbounds nuw i8, ptr %i.tk, i64 4
   %wide.load = load <4 x i8>, ptr %i.tk, align 1, !tbaa !73
   %wide.load853 = load <4 x i8>, ptr %i.tl, align 1, !tbaa !73
-  %i.tm = icmp ne <4 x i8> %wide.load, zeroinitializer ; 2 uses
-  %i.tn = icmp ne <4 x i8> %wide.load853, zeroinitializer ; 2 uses
+  %i.tm = icmp ne <4 x i8> %wide.load, zeroinitializer
+  %i.tn = icmp ne <4 x i8> %wide.load853, zeroinitializer
   %i.to = getelementptr inbounds nuw i8, ptr %i.d, i64 %index ; 3 uses
   %i.tp = getelementptr inbounds nuw i8, ptr %i.to, i64 4
   %wide.load854 = load <4 x i8>, ptr %i.to, align 8, !tbaa !73
   %wide.load855 = load <4 x i8>, ptr %i.tp, align 4, !tbaa !73
-  %i.tq = icmp eq <4 x i8> %wide.load854, zeroinitializer ; 2 uses
-  %i.tr = icmp eq <4 x i8> %wide.load855, zeroinitializer ; 2 uses
-  %i.ts = select <4 x i1> %i.tm, <4 x i1> %i.tq, <4 x i1> zeroinitializer ; 4 uses
-  %i.tt = select <4 x i1> %i.tn, <4 x i1> %i.tr, <4 x i1> zeroinitializer ; 4 uses
+  %i.tq = icmp eq <4 x i8> %wide.load854, zeroinitializer
+  %i.tr = icmp eq <4 x i8> %wide.load855, zeroinitializer
+  %i.ts = select <4 x i1> %i.tm, <4 x i1> %i.tq, <4 x i1> zeroinitializer ; 5 uses
+  %i.tt = select <4 x i1> %i.tn, <4 x i1> %i.tr, <4 x i1> zeroinitializer ; 5 uses
   %i.tu = extractelement <4 x i1> %i.ts, i64 0
   br i1 %i.tu, label %pred.store.if, label %pred.store.continue
 
@@ -292,11 +292,9 @@ pred.store.if868:                                 ; preds = %pred.store.continue
   br label %pred.store.continue869
 
 pred.store.continue869:                           ; preds = %pred.store.if868, %pred.store.continue867
-  %narrow = select <4 x i1> %i.tm, <4 x i1> %i.tq, <4 x i1> zeroinitializer
-  %predphi.a = zext <4 x i1> %narrow to <4 x i32>
+  %predphi.a = zext <4 x i1> %i.ts to <4 x i32>
   %predphi870.a = add <4 x i32> %vec.phi, %predphi.a ; 2 uses
-  %narrow873 = select <4 x i1> %i.tn, <4 x i1> %i.tr, <4 x i1> zeroinitializer
-  %predphi871 = zext <4 x i1> %narrow873 to <4 x i32>
+  %predphi871 = zext <4 x i1> %i.tt to <4 x i32>
   %predphi872 = add <4 x i32> %vec.phi852, %predphi871 ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.uq = icmp eq i64 %index.next, 16384
