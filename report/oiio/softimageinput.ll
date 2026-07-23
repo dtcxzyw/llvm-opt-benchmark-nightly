@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph.i.preheader:                               ; preds = %bb.k
   %.promoted = load i16, ptr %i.b, align 2, !tbaa !168
-  %i.bl = call noundef i16 @llvm.bswap.i16(i16 %.promoted)
+  %i.bl = call i16 @llvm.bswap.i16(i16 %.promoted)
   br label %_ZN11OpenImageIO4v3_111swap_endianItEEvPT_i.exit
 
 bb.l:                                             ; preds = %bb.j

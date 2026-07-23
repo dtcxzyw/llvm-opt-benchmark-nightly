@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.t = load i32, ptr %i.s, align 4, !tbaa !80
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
-  %i.u = call noundef i32 @llvm.bswap.i32(i32 %i.t)
+  %i.u = call i32 @llvm.bswap.i32(i32 %i.t)
   store i32 %i.u, ptr %i.k, align 16, !tbaa !3
   %i.v = call noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.k, i64 noundef 4, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
@@ -214,7 +214,7 @@ bb.d:                                             ; preds = %bb.c
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.x = load i32, ptr %i.w, align 8, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
-  %i.y = call noundef i32 @llvm.bswap.i32(i32 %i.x)
+  %i.y = call i32 @llvm.bswap.i32(i32 %i.x)
   store i32 %i.y, ptr %i.j, align 16, !tbaa !3
   %i.z = call noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.j, i64 noundef 4, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
@@ -267,7 +267,7 @@ bb.i:                                             ; preds = %bb.h
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 26
   %i.ao = load i16, ptr %i.an, align 2, !tbaa !96
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  %i.ap = call noundef i16 @llvm.bswap.i16(i16 %i.ao)
+  %i.ap = call i16 @llvm.bswap.i16(i16 %i.ao)
   store i16 %i.ap, ptr %i.e, align 16, !tbaa !95
   %i.aq = call noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.e, i64 noundef 2, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -277,7 +277,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !97
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.at = call noundef i32 @llvm.bswap.i32(i32 %i.as)
+  %i.at = call i32 @llvm.bswap.i32(i32 %i.as)
   store i32 %i.at, ptr %i.d, align 16, !tbaa !3
   %i.au = call noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.d, i64 noundef 4, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
@@ -286,7 +286,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.av = load i32, ptr %1, align 8, !tbaa !98
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %i.aw = call noundef i32 @llvm.bswap.i32(i32 %i.av)
+  %i.aw = call i32 @llvm.bswap.i32(i32 %i.av)
   store i32 %i.aw, ptr %i.c, align 16, !tbaa !3
   %i.ax = call noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.c, i64 noundef 4, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -296,7 +296,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !99
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.ba = call noundef i32 @llvm.bswap.i32(i32 %i.az)
+  %i.ba = call i32 @llvm.bswap.i32(i32 %i.az)
   store i32 %i.ba, ptr %i.b, align 16, !tbaa !3
   %i.bb = call noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.b, i64 noundef 4, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -699,7 +699,7 @@ bb.em:                                            ; preds = %.lr.ph2044
   %i.alv = and i64 %i.alu, 4294967294
   %i.alw = getelementptr inbounds nuw i8, ptr %i.akr, i64 %i.alv
   %i.alx = load i16, ptr %i.alw, align 1
-  %i.aly = call noundef i16 @llvm.bswap.i16(i16 %i.alx) ; 2 uses
+  %i.aly = call i16 @llvm.bswap.i16(i16 %i.alx)   ; 2 uses
   %i.alz = trunc i16 %i.aly to i8
   %i.ama = getelementptr inbounds nuw i8, ptr %.84292041, i64 1
   store i8 %i.alz, ptr %.84292041, align 1, !tbaa !16
@@ -734,7 +734,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   %.8414 = phi i32 [ %.2408, %bb.bm ], [ %.34091475, %.thread1458 ], [ %.6412, %bb.ea ], [ %i.gc, %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit.thread ], [ %i.gc, %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit624 ], [ %.74131578, %.thread1559 ], [ %.34091475, %._crit_edge2090 ], [ %i.gc, %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit ], [ %.74131578, %._crit_edge2052 ]
   %savedstack = call ptr @llvm.stacksave.p0()
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
-  %i.amh = call noundef i32 @llvm.bswap.i32(i32 %.4)
+  %i.amh = call i32 @llvm.bswap.i32(i32 %.4)
   store i32 %i.amh, ptr %i.q, align 16, !tbaa !3
   %i.ami = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.q, i64 noundef 4, i64 noundef 1)
           to label %bb.en unwind label %bb.eo
@@ -752,7 +752,7 @@ bb.eo:                                            ; preds = %bb.ev, %bb.et, %bb.
 bb.ep:                                            ; preds = %bb.en
   %i.amk = trunc i32 %i.ey to i16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
-  %i.aml = call noundef i16 @llvm.bswap.i16(i16 %i.amk)
+  %i.aml = call i16 @llvm.bswap.i16(i16 %i.amk)
   store i16 %i.aml, ptr %i.p, align 16, !tbaa !95
   %i.amm = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.p, i64 noundef 2, i64 noundef 1)
           to label %bb.eq unwind label %bb.eo
@@ -774,7 +774,7 @@ bb.es:                                            ; preds = %bb.er
 bb.et:                                            ; preds = %bb.es
   %i.amo = trunc i32 %i.fa to i16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
-  %i.amp = call noundef i16 @llvm.bswap.i16(i16 %i.amo)
+  %i.amp = call i16 @llvm.bswap.i16(i16 %i.amo)
   store i16 %i.amp, ptr %i.n, align 16, !tbaa !95
   %i.amq = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.n, i64 noundef 2, i64 noundef 1)
           to label %bb.eu unwind label %bb.eo
@@ -786,7 +786,7 @@ bb.eu:                                            ; preds = %bb.et
 bb.ev:                                            ; preds = %bb.eu
   %i.amr = trunc i32 %i.fc to i16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
-  %i.ams = call noundef i16 @llvm.bswap.i16(i16 %i.amr)
+  %i.ams = call i16 @llvm.bswap.i16(i16 %i.amr)
   store i16 %i.ams, ptr %i.m, align 16, !tbaa !95
   %i.amt = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.m, i64 noundef 2, i64 noundef 1)
           to label %bb.ew unwind label %bb.eo
@@ -1189,7 +1189,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   %.114431619 = phi i32 [ %i.asu, %bb.gf ], [ %i.asu, %.loopexit1706 ], [ %i.anz, %_ZNSt6vectorIhSaIhEED2Ev.exit895.thread ], [ %i.anz, %._crit_edge2128 ]
   %savedstack919 = call ptr @llvm.stacksave.p0()
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
-  %i.awz = call noundef i32 @llvm.bswap.i32(i32 %.114431619)
+  %i.awz = call i32 @llvm.bswap.i32(i32 %.114431619)
   store i32 %i.awz, ptr %i.l, align 16, !tbaa !3
   %i.axa = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.l, i64 noundef 4, i64 noundef 1)
           to label %bb.gu unwind label %bb.gv
@@ -1207,7 +1207,7 @@ bb.gv:                                            ; preds = %bb.hc, %bb.ha, %bb.
 bb.gw:                                            ; preds = %bb.gu
   %i.axc = trunc i32 %i.ey to i16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
-  %i.axd = call noundef i16 @llvm.bswap.i16(i16 %i.axc)
+  %i.axd = call i16 @llvm.bswap.i16(i16 %i.axc)
   store i16 %i.axd, ptr %i.k, align 16, !tbaa !95
   %i.axe = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.k, i64 noundef 2, i64 noundef 1)
           to label %bb.gx unwind label %bb.gv
@@ -1229,7 +1229,7 @@ bb.gz:                                            ; preds = %bb.gy
 bb.ha:                                            ; preds = %bb.gz
   %i.axg = trunc i32 %i.fa to i16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
-  %i.axh = call noundef i16 @llvm.bswap.i16(i16 %i.axg)
+  %i.axh = call i16 @llvm.bswap.i16(i16 %i.axg)
   store i16 %i.axh, ptr %i.i, align 16, !tbaa !95
   %i.axi = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.i, i64 noundef 2, i64 noundef 1)
           to label %bb.hb unwind label %bb.gv
@@ -1241,7 +1241,7 @@ bb.hb:                                            ; preds = %bb.ha
 bb.hc:                                            ; preds = %bb.hb
   %i.axj = trunc i32 %i.fc to i16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
-  %i.axk = call noundef i16 @llvm.bswap.i16(i16 %i.axj)
+  %i.axk = call i16 @llvm.bswap.i16(i16 %i.axj)
   store i16 %i.axk, ptr %i.h, align 16, !tbaa !95
   %i.axl = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.h, i64 noundef 2, i64 noundef 1)
           to label %bb.hd unwind label %bb.gv
@@ -1324,7 +1324,7 @@ bb.hi:                                            ; preds = %._crit_edge2148
 _ZN11OpenImageIO4v3_111swap_endianIjEEvPT_i.exit.i940: ; preds = %bb.hi
   %savedstack941 = call ptr @llvm.stacksave.p0()
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  %i.aym = call noundef i32 @llvm.bswap.i32(i32 %i.ayh)
+  %i.aym = call i32 @llvm.bswap.i32(i32 %i.ayh)
   store i32 %i.aym, ptr %i.g, align 16, !tbaa !3
   %i.ayn = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.g, i64 noundef 4, i64 noundef 1)
           to label %bb.hj unwind label %bb.hl
@@ -1354,7 +1354,7 @@ bb.hm:                                            ; preds = %bb.hj
 _ZN11OpenImageIO4v3_111swap_endianIjEEvPT_i.exit.i948: ; preds = %bb.hm
   %savedstack949 = call ptr @llvm.stacksave.p0()
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  %i.ayu = call noundef i32 @llvm.bswap.i32(i32 %i.ayk)
+  %i.ayu = call i32 @llvm.bswap.i32(i32 %i.ayk)
   store i32 %i.ayu, ptr %i.f, align 16, !tbaa !3
   %i.ayv = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.f, i64 noundef 4, i64 noundef 1)
           to label %bb.hn unwind label %bb.hl
@@ -1591,7 +1591,7 @@ bb.d:                                             ; preds = %bb.c, %_ZN11OpenIma
   %i.n = load i64, ptr %i.b, align 8, !tbaa !23
   %i.o = trunc i64 %i.n to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.p = tail call noundef i32 @llvm.bswap.i32(i32 %i.o)
+  %i.p = tail call i32 @llvm.bswap.i32(i32 %i.o)
   store i32 %i.p, ptr %i.a, align 16, !tbaa !3
   %i.q = call noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(384) %0, ptr noundef nonnull %i.a, i64 noundef 4, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)

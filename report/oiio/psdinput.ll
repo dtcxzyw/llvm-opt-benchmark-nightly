@@ -204,7 +204,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIssEEbRT0_.exit: ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   %.promoted.i = load i16, ptr %i.a, align 2, !tbaa !26
-  %i.d = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i) ; 2 uses
+  %i.d = call i16 @llvm.bswap.i16(i16 %.promoted.i) ; 2 uses
   store i16 %i.d, ptr %i.b, align 8, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
   %i.e = icmp ugt i16 %i.d, 767
@@ -413,7 +413,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit: ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   %.promoted.i = load i32, ptr %i.e, align 4, !tbaa !3
-  %i.g = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i)
+  %i.g = call i32 @llvm.bswap.i32(i32 %.promoted.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #37
   %i.h = add i32 %i.g, -3
   %or.cond = icmp ult i32 %i.h, -2
@@ -434,7 +434,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIddEEbRT0_.exit: ; preds = %bb.d
 
 .noexc.i:                                         ; preds = %bb.d
   %.promoted.i8 = load i64, ptr %i.d, align 8, !tbaa !28
-  %i.j = call noundef i64 @llvm.bswap.i64(i64 %.promoted.i8)
+  %i.j = call i64 @llvm.bswap.i64(i64 %.promoted.i8)
   %i.k = bitcast i64 %i.j to double
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #37
@@ -837,7 +837,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit: ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   %.promoted.i = load i32, ptr %i.a, align 4, !tbaa !3 ; 4 uses
-  %i.d = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i) ; 2 uses
+  %i.d = call i32 @llvm.bswap.i32(i32 %.promoted.i) ; 2 uses
   store i32 %i.d, ptr %i.b, align 8, !tbaa !3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 674
@@ -932,7 +932,7 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.c unwind label %bb.j
 
 bb.c:                                             ; preds = %bb.b
-  %i.o = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i)
+  %i.o = call i32 @llvm.bswap.i32(i32 %.promoted.i)
   %i.p = zext i32 %i.o to i64
   %i.q = add nsw i64 %i.n, %i.p                   ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -1279,7 +1279,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.preheader.i:                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 696
   %.promoted.i = load i32, ptr %i.e, align 4, !tbaa !3
-  %i.k = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i)
+  %i.k = call i32 @llvm.bswap.i32(i32 %.promoted.i)
   %i.l = zext i32 %i.k to i64
   store i64 %i.l, ptr %i.j, align 8, !tbaa !25
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjmEEbRT0_.exit
@@ -1296,7 +1296,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i.preheader.i49:                           ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 696
   %.promoted.i50 = load i64, ptr %i.d, align 8, !tbaa !25
-  %i.o = call noundef i64 @llvm.bswap.i64(i64 %.promoted.i50)
+  %i.o = call i64 @llvm.bswap.i64(i64 %.promoted.i50)
   store i64 %i.o, ptr %i.n, align 8, !tbaa !25
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeImmEEbRT0_.exit
 
@@ -1333,7 +1333,7 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.preheader.i51:                           ; preds = %bb.g
   %.promoted.i52 = load i32, ptr %i.c, align 4, !tbaa !3
-  %i.z = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i52)
+  %i.z = call i32 @llvm.bswap.i32(i32 %.promoted.i52)
   %i.aa = zext i32 %i.z to i64
   store i64 %i.aa, ptr %i.v, align 8, !tbaa !25
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjmEEbRT0_.exit53
@@ -1349,7 +1349,7 @@ bb.h:                                             ; preds = %bb.f
 
 .lr.ph.i.preheader.i54:                           ; preds = %bb.h
   %.promoted.i55 = load i64, ptr %i.b, align 8, !tbaa !25
-  %i.ac = call noundef i64 @llvm.bswap.i64(i64 %.promoted.i55)
+  %i.ac = call i64 @llvm.bswap.i64(i64 %.promoted.i55)
   store i64 %i.ac, ptr %i.v, align 8, !tbaa !25
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeImmEEbRT0_.exit56
 
@@ -1380,7 +1380,7 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph.i.preheader.i57:                           ; preds = %bb.k
   %.promoted.i58 = load i16, ptr %i.a, align 2, !tbaa !26
-  %i.ak = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i58) ; 2 uses
+  %i.ak = call i16 @llvm.bswap.i16(i16 %.promoted.i58) ; 2 uses
   store i16 %i.ak, ptr %i.ai, align 8, !tbaa !26
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIssEEbRT0_.exit
 
@@ -1513,7 +1513,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit.thread: ; preds = %bb.d
 
 _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit: ; preds = %bb.d
   %.promoted.i = load i32, ptr %i.e, align 4, !tbaa !3 ; 2 uses
-  %i.t = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i)
+  %i.t = call i32 @llvm.bswap.i32(i32 %.promoted.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #37
   %i.u = call noundef i64 @_ZNK11OpenImageIO4v3_110ImageInput6iotellEv(ptr noundef nonnull align 8 dereferenceable(184) %0)
   %i.v = zext i32 %i.t to i64
@@ -1532,7 +1532,7 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.i.preheader.i19:                           ; preds = %bb.f
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 776
   %.promoted.i20 = load i16, ptr %i.d, align 2, !tbaa !26
-  %i.z = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i20)
+  %i.z = call i16 @llvm.bswap.i16(i16 %.promoted.i20)
   store i16 %i.z, ptr %i.y, align 8, !tbaa !26
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit
 
@@ -1545,7 +1545,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit: ; preds = %bb.f, %.lr.p
 .lr.ph.i.preheader.i21:                           ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit28.3
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 786
   %.promoted.i22 = load i16, ptr %i.c, align 2, !tbaa !26
-  %i.ac = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i22)
+  %i.ac = call i16 @llvm.bswap.i16(i16 %.promoted.i22)
   store i16 %i.ac, ptr %i.ab, align 2, !tbaa !26
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit23
 
@@ -1578,7 +1578,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIsaEEbRT0_.exit: ; preds = %_ZN11OpenIma
 .lr.ph.i.preheader.i26:                           ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 778
   %.promoted.i27 = load i16, ptr %i.a, align 2, !tbaa !26
-  %i.aq = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i27)
+  %i.aq = call i16 @llvm.bswap.i16(i16 %.promoted.i27)
   store i16 %i.aq, ptr %i.ap, align 2, !tbaa !26
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit28
 
@@ -1591,7 +1591,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit28: ; preds = %_ZN11OpenI
 .lr.ph.i.preheader.i26.1:                         ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit28
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 780
   %.promoted.i27.1 = load i16, ptr %i.a, align 2, !tbaa !26
-  %i.at = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i27.1)
+  %i.at = call i16 @llvm.bswap.i16(i16 %.promoted.i27.1)
   store i16 %i.at, ptr %i.as, align 4, !tbaa !26
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit28.1
 
@@ -1604,7 +1604,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit28.1: ; preds = %.lr.ph.i
 .lr.ph.i.preheader.i26.2:                         ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit28.1
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 782
   %.promoted.i27.2 = load i16, ptr %i.a, align 2, !tbaa !26
-  %i.aw = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i27.2)
+  %i.aw = call i16 @llvm.bswap.i16(i16 %.promoted.i27.2)
   store i16 %i.aw, ptr %i.av, align 2, !tbaa !26
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit28.2
 
@@ -1617,7 +1617,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit28.2: ; preds = %.lr.ph.i
 .lr.ph.i.preheader.i26.3:                         ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit28.2
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 784
   %.promoted.i27.3 = load i16, ptr %i.a, align 2, !tbaa !26
-  %i.az = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i27.3)
+  %i.az = call i16 @llvm.bswap.i16(i16 %.promoted.i27.3)
   store i16 %i.az, ptr %i.ay, align 8, !tbaa !26
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit28.3
 
@@ -1800,7 +1800,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit: ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   %.promoted.i = load i16, ptr %i.a, align 2, !tbaa !26 ; 2 uses
-  %i.l = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i) ; 3 uses
+  %i.l = call i16 @llvm.bswap.i16(i16 %.promoted.i) ; 3 uses
   store i16 %i.l, ptr %i.b, align 2, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
   %or.cond = icmp ugt i16 %i.l, 1
@@ -2203,7 +2203,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit: ; preds = %bb.b
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 660
   %.promoted.i = load i16, ptr %i.f, align 2, !tbaa !26
-  %i.k = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i)
+  %i.k = call i16 @llvm.bswap.i16(i16 %.promoted.i)
   store i16 %i.k, ptr %i.j, align 4, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #37
   %i.l = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioseekEli(ptr noundef nonnull align 8 dereferenceable(184) %0, i64 noundef 6, i32 noundef 1)
@@ -2221,7 +2221,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit3: ; preds = %bb.d
 bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 662
   %.promoted.i2 = load i16, ptr %i.e, align 2, !tbaa !26
-  %i.o = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i2)
+  %i.o = call i16 @llvm.bswap.i16(i16 %.promoted.i2)
   store i16 %i.o, ptr %i.n, align 2, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #37
@@ -2235,7 +2235,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit: ; preds = %bb.e
 bb.f:                                             ; preds = %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 664
   %.promoted.i5 = load i32, ptr %i.d, align 4, !tbaa !3
-  %i.r = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i5)
+  %i.r = call i32 @llvm.bswap.i32(i32 %.promoted.i5)
   store i32 %i.r, ptr %i.q, align 8, !tbaa !3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #37
@@ -2249,7 +2249,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit8: ; preds = %bb.f
 bb.g:                                             ; preds = %bb.f
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 668
   %.promoted.i7 = load i32, ptr %i.c, align 4, !tbaa !3
-  %i.u = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i7)
+  %i.u = call i32 @llvm.bswap.i32(i32 %.promoted.i7)
   store i32 %i.u, ptr %i.t, align 4, !tbaa !3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #37
@@ -2263,7 +2263,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit11: ; preds = %bb.g
 bb.h:                                             ; preds = %bb.g
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 672
   %.promoted.i10 = load i16, ptr %i.b, align 2, !tbaa !26
-  %i.x = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i10)
+  %i.x = call i16 @llvm.bswap.i16(i16 %.promoted.i10)
   store i16 %i.x, ptr %i.w, align 8, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #37
@@ -2273,7 +2273,7 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph.i.preheader.i12:                           ; preds = %bb.h
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 674
   %.promoted.i13 = load i16, ptr %i.a, align 2, !tbaa !26
-  %i.aa = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i13)
+  %i.aa = call i16 @llvm.bswap.i16(i16 %.promoted.i13)
   store i16 %i.aa, ptr %i.z, align 2, !tbaa !26
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit14
 
@@ -2584,7 +2584,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit: ; preds = %bb.b
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
   %.promoted.i = load i16, ptr %i.b, align 2, !tbaa !26
-  %i.f = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i)
+  %i.f = call i16 @llvm.bswap.i16(i16 %.promoted.i)
   store i16 %i.f, ptr %i.e, align 4, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #37
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -2600,7 +2600,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.i.preheader.i11:                           ; preds = %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 40
   %.promoted.i12 = load i32, ptr %i.a, align 4, !tbaa !3
-  %i.k = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i12)
+  %i.k = call i32 @llvm.bswap.i32(i32 %.promoted.i12)
   store i32 %i.k, ptr %i.j, align 8, !tbaa !3
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit
 
@@ -2942,7 +2942,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit59: ; preds = %bb.b
 
 bb.c:                                             ; preds = %bb.b
   %.promoted.i58 = load i32, ptr %i.j, align 4, !tbaa !3
-  %i.u = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i58)
+  %i.u = call i32 @llvm.bswap.i32(i32 %.promoted.i58)
   store i32 %i.u, ptr %i.l, align 4, !tbaa !3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #37
@@ -2955,7 +2955,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit62: ; preds = %bb.c
 
 bb.d:                                             ; preds = %bb.c
   %.promoted.i61 = load i32, ptr %i.i, align 4, !tbaa !3
-  %i.w = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i61) ; 2 uses
+  %i.w = call i32 @llvm.bswap.i32(i32 %.promoted.i61) ; 2 uses
   store i32 %i.w, ptr %i.m, align 4, !tbaa !3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #37
@@ -2968,7 +2968,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit65: ; preds = %bb.d
 
 bb.e:                                             ; preds = %bb.d
   %.promoted.i64 = load i32, ptr %i.h, align 4, !tbaa !3
-  %i.y = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i64) ; 4 uses
+  %i.y = call i32 @llvm.bswap.i32(i32 %.promoted.i64) ; 4 uses
   store i32 %i.y, ptr %i.n, align 4, !tbaa !3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #37
@@ -2981,7 +2981,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit68: ; preds = %bb.e
 
 bb.f:                                             ; preds = %bb.e
   %.promoted.i67 = load i32, ptr %i.g, align 4, !tbaa !3
-  %i.aa = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i67) ; 2 uses
+  %i.aa = call i32 @llvm.bswap.i32(i32 %.promoted.i67) ; 2 uses
   store i32 %i.aa, ptr %i.o, align 4, !tbaa !3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #37
@@ -3000,7 +3000,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit: ; preds = %bb.g
 
 bb.h:                                             ; preds = %bb.g
   %.promoted.i73 = load i16, ptr %i.e, align 2, !tbaa !26
-  %i.ad = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i73)
+  %i.ad = call i16 @llvm.bswap.i16(i16 %.promoted.i73)
   store i16 %i.ad, ptr %i.p, align 2, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #37
@@ -3013,7 +3013,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit76: ; preds = %bb.h
 
 bb.i:                                             ; preds = %bb.h
   %.promoted.i75 = load i16, ptr %i.d, align 2, !tbaa !26 ; 2 uses
-  %i.af = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i75)
+  %i.af = call i16 @llvm.bswap.i16(i16 %.promoted.i75)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #37
   %i.ag = load i16, ptr %i.p, align 2, !tbaa !26  ; 3 uses
   %i.ah = icmp ne i16 %i.ag, 24
@@ -3416,7 +3416,7 @@ bb.a:
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.a
   %.promoted.i = load i32, ptr %i.v, align 4, !tbaa !3
-  %i.z = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i)
+  %i.z = call i32 @llvm.bswap.i32(i32 %.promoted.i)
   store i32 %i.z, ptr %1, align 8, !tbaa !3
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit
 
@@ -3429,7 +3429,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit: ; preds = %bb.a, %.lr.p
 
 .lr.ph.i.preheader.i117:                          ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit
   %.promoted.i118 = load i32, ptr %i.u, align 4, !tbaa !3
-  %i.ac = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i118)
+  %i.ac = call i32 @llvm.bswap.i32(i32 %.promoted.i118)
   store i32 %i.ac, ptr %i.aa, align 4, !tbaa !3
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit119
 
@@ -3443,7 +3443,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit119: ; preds = %_ZN11Open
 .lr.ph.i.preheader.i120:                          ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit119
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.promoted.i121 = load i32, ptr %i.t, align 4, !tbaa !3
-  %i.ag = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i121)
+  %i.ag = call i32 @llvm.bswap.i32(i32 %.promoted.i121)
   store i32 %i.ag, ptr %i.af, align 8, !tbaa !3
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit122
 
@@ -3457,7 +3457,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit122: ; preds = %_ZN11Open
 
 .lr.ph.i.preheader.i123:                          ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit122
   %.promoted.i124 = load i32, ptr %i.s, align 4, !tbaa !3
-  %i.ak = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i124)
+  %i.ak = call i32 @llvm.bswap.i32(i32 %.promoted.i124)
   store i32 %i.ak, ptr %i.ai, align 4, !tbaa !3
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit125
 
@@ -3475,7 +3475,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit.thread: ; preds = %_ZN11
 _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit: ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit125
   %i.an = and i1 %i.ah, %i.aj
   %.promoted.i127 = load i16, ptr %i.r, align 2, !tbaa !26
-  %i.ao = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i127) ; 2 uses
+  %i.ao = call i16 @llvm.bswap.i16(i16 %.promoted.i127) ; 2 uses
   store i16 %i.ao, ptr %i.al, align 8, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #37
   br i1 %i.an, label %bb.b, label %bb.ag
@@ -3521,7 +3521,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.f
 
 .lr.ph.i.preheader.i128:                          ; preds = %bb.c
   %.promoted.i129 = load i16, ptr %i.q, align 2, !tbaa !26
-  %i.bh = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i129)
+  %i.bh = call i16 @llvm.bswap.i16(i16 %.promoted.i129)
   store i16 %i.bh, ptr %i.bf, align 2, !tbaa !26
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIssEEbRT0_.exit
 
@@ -3540,7 +3540,7 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
 .lr.ph.i.preheader.i130:                          ; preds = %bb.d
   %i.bm = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   %.promoted.i131 = load i32, ptr %i.p, align 4, !tbaa !3
-  %i.bn = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i131)
+  %i.bn = call i32 @llvm.bswap.i32(i32 %.promoted.i131)
   %i.bo = zext i32 %i.bn to i64
   store i64 %i.bo, ptr %i.bm, align 8, !tbaa !25
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjmEEbRT0_.exit
@@ -3557,7 +3557,7 @@ bb.e:                                             ; preds = %_ZN11OpenImageIO4v3
 .lr.ph.i.preheader.i132:                          ; preds = %bb.e
   %i.bq = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   %.promoted.i133 = load i64, ptr %i.o, align 8, !tbaa !25
-  %i.br = call noundef i64 @llvm.bswap.i64(i64 %.promoted.i133)
+  %i.br = call i64 @llvm.bswap.i64(i64 %.promoted.i133)
   store i64 %i.br, ptr %i.bq, align 8, !tbaa !25
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeImmEEbRT0_.exit
 
@@ -3642,7 +3642,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIhhEEbRT0_.exit135._ZN11OpenImageIO4v3_1
 
 .lr.ph.i.preheader.i136:                          ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIhhEEbRT0_.exit135
   %.promoted.i137 = load i32, ptr %i.k, align 4, !tbaa !3
-  %i.cr = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i137) ; 2 uses
+  %i.cr = call i32 @llvm.bswap.i32(i32 %.promoted.i137) ; 2 uses
   store i32 %i.cr, ptr %i.cp, align 8, !tbaa !3
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit138
 
@@ -3660,7 +3660,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit141.thread: ; preds = %_Z
 _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit141: ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit138
   %i.cu = and i1 %i.cq, %i.co
   %.promoted.i140 = load i32, ptr %i.j, align 4, !tbaa !3 ; 2 uses
-  %i.cv = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i140) ; 3 uses
+  %i.cv = call i32 @llvm.bswap.i32(i32 %.promoted.i140) ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #37
   br i1 %i.cu, label %bb.m, label %.loopexit
 
@@ -3683,7 +3683,7 @@ bb.o:                                             ; preds = %bb.n
 .lr.ph.i.preheader.i142:                          ; preds = %bb.o
   %i.db = getelementptr inbounds nuw i8, ptr %1, i64 116
   %.promoted.i143 = load i32, ptr %i.i, align 4, !tbaa !3
-  %i.dc = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i143)
+  %i.dc = call i32 @llvm.bswap.i32(i32 %.promoted.i143)
   store i32 %i.dc, ptr %i.db, align 4, !tbaa !3
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit144
 
@@ -3696,7 +3696,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit144: ; preds = %bb.o, %.l
 .lr.ph.i.preheader.i145:                          ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit144
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 120
   %.promoted.i146 = load i32, ptr %i.h, align 4, !tbaa !3
-  %i.df = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i146)
+  %i.df = call i32 @llvm.bswap.i32(i32 %.promoted.i146)
   store i32 %i.df, ptr %i.de, align 8, !tbaa !3
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit147
 
@@ -3710,7 +3710,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit147: ; preds = %_ZN11Open
 .lr.ph.i.preheader.i148:                          ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit147
   %i.di = getelementptr inbounds nuw i8, ptr %1, i64 124
   %.promoted.i149 = load i32, ptr %i.g, align 4, !tbaa !3
-  %i.dj = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i149)
+  %i.dj = call i32 @llvm.bswap.i32(i32 %.promoted.i149)
   store i32 %i.dj, ptr %i.di, align 4, !tbaa !3
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit150
 
@@ -3724,7 +3724,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit150: ; preds = %_ZN11Open
 .lr.ph.i.preheader.i151:                          ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit150
   %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 128
   %.promoted.i152 = load i32, ptr %i.f, align 4, !tbaa !3
-  %i.dn = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i152)
+  %i.dn = call i32 @llvm.bswap.i32(i32 %.promoted.i152)
   store i32 %i.dn, ptr %i.dm, align 8, !tbaa !3
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit153
 
@@ -3777,7 +3777,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit158.thread: ; preds = %bb
 
 _ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit158: ; preds = %bb.s
   %.promoted.i157 = load i32, ptr %i.c, align 4, !tbaa !3
-  %i.eb = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i157) ; 2 uses
+  %i.eb = call i32 @llvm.bswap.i32(i32 %.promoted.i157) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #37
   %i.ec = zext i32 %i.eb to i64
   %i.ed = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioseekEli(ptr noundef nonnull align 8 dereferenceable(184) %0, i64 noundef %i.ec, i32 noundef 1)
@@ -3904,7 +3904,7 @@ bb.ad:                                            ; preds = %bb.ac
 .lr.ph.i.preheader.i159:                          ; preds = %bb.ad
   %i.fx = getelementptr inbounds i8, ptr %i.fi, i64 -16
   %.promoted.i160 = load i64, ptr %i.b, align 8, !tbaa !25
-  %i.fy = call noundef i64 @llvm.bswap.i64(i64 %.promoted.i160)
+  %i.fy = call i64 @llvm.bswap.i64(i64 %.promoted.i160)
   store i64 %i.fy, ptr %i.fx, align 8, !tbaa !25
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeImmEEbRT0_.exit161
 
@@ -3920,7 +3920,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ab
 .lr.ph.i.preheader.i162:                          ; preds = %bb.ae
   %i.ga = getelementptr inbounds i8, ptr %i.fi, i64 -16
   %.promoted.i163 = load i32, ptr %i.a, align 4, !tbaa !3
-  %i.gb = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i163)
+  %i.gb = call i32 @llvm.bswap.i32(i32 %.promoted.i163)
   %i.gc = zext i32 %i.gb to i64
   store i64 %i.gc, ptr %i.ga, align 8, !tbaa !25
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjmEEbRT0_.exit164
@@ -4323,7 +4323,7 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit: ; preds = %bb.b
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   %.promoted.i = load i16, ptr %i.a, align 2, !tbaa !26
-  %i.h = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i)
+  %i.h = call i16 @llvm.bswap.i16(i16 %.promoted.i)
   store i16 %i.h, ptr %i.g, align 8, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
   %.pr = load i64, ptr %i.c, align 8, !tbaa !235
@@ -4726,7 +4726,7 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.i.preheader.i:                             ; preds = %bb.f
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv
   %.promoted.i = load i16, ptr %i.b, align 2, !tbaa !26
-  %i.u = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i)
+  %i.u = call i16 @llvm.bswap.i16(i16 %.promoted.i)
   %i.v = zext i16 %i.u to i32
   store i32 %i.v, ptr %i.t, align 4, !tbaa !3
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeItjEEbRT0_.exit
@@ -4743,7 +4743,7 @@ bb.g:                                             ; preds = %bb.e
 .lr.ph.i.preheader.i14:                           ; preds = %bb.g
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv
   %.promoted.i15 = load i32, ptr %i.a, align 4, !tbaa !3
-  %i.y = call noundef i32 @llvm.bswap.i32(i32 %.promoted.i15)
+  %i.y = call i32 @llvm.bswap.i32(i32 %.promoted.i15)
   store i32 %i.y, ptr %i.x, align 4, !tbaa !3
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIjjEEbRT0_.exit
 
@@ -5146,7 +5146,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.d
   %.promoted.i = load i16, ptr %i.a, align 2, !tbaa !26
-  %i.k = call noundef i16 @llvm.bswap.i16(i16 %.promoted.i) ; 2 uses
+  %i.k = call i16 @llvm.bswap.i16(i16 %.promoted.i) ; 2 uses
   store i16 %i.k, ptr %i.i, align 8, !tbaa !26
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIssEEbRT0_.exit
 
