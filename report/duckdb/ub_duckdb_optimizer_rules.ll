@@ -204,7 +204,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.al = phi i1 [ false, %bb.k ], [ %i.ak, %bb.l ] ; 4 uses
   %.val = load ptr, ptr %i.v, align 8             ; 8 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 3 uses
-  %.val43 = load i64, ptr %i.am, align 8          ; 11 uses
+  %.val43 = load i64, ptr %i.am, align 8          ; 10 uses
   %i.an = icmp eq i64 %.val43, 0
   br i1 %i.an, label %.loopexit105, label %.lr.ph.i
 
@@ -519,7 +519,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59: ; preds = %bb.
   br label %.body51
 
 .lr.ph.i60:                                       ; preds = %.lr.ph.i60.preheader, %bb.al
-  %.01.i = phi i64 [ %i.dq, %bb.al ], [ 0, %.lr.ph.i60.preheader ] ; 5 uses
+  %.01.i = phi i64 [ %i.dq, %bb.al ], [ 0, %.lr.ph.i60.preheader ] ; 4 uses
   %i.do = getelementptr inbounds nuw i8, ptr %.val, i64 %.01.i
   %i.dp = load i8, ptr %i.do, align 1, !tbaa !97
   %.not.i61 = icmp eq i8 %i.dp, 37
@@ -532,17 +532,13 @@ bb.al:                                            ; preds = %.lr.ph.i60
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i60
   %i.dr = icmp eq i64 %.01.i, 0
-  br i1 %i.dr, label %.lr.ph.i82.preheader, label %.preheader.i62
+  br i1 %i.dr, label %.lr.ph.i82.preheader, label %.lr.ph5.i
 
 .lr.ph.i82.preheader:                             ; preds = %.lr.ph5.i, %.lr.ph5.i, %._crit_edge.i
   br label %.lr.ph.i82
 
-.preheader.i62:                                   ; preds = %._crit_edge.i
-  %18 = icmp ult i64 %.01.i, %.val43
-  br i1 %18, label %.lr.ph5.i, label %.loopexit102
-
-.lr.ph5.i:                                        ; preds = %.preheader.i62, %bb.am
-  %.14.i = phi i64 [ %i.du, %bb.am ], [ %.01.i, %.preheader.i62 ] ; 2 uses
+.lr.ph5.i:                                        ; preds = %._crit_edge.i, %bb.am
+  %.14.i = phi i64 [ %i.du, %bb.am ], [ %.01.i, %._crit_edge.i ] ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %.val, i64 %.14.i
   %i.dt = load i8, ptr %i.ds, align 1, !tbaa !97
   switch i8 %i.dt, label %bb.am [
@@ -555,7 +551,7 @@ bb.am:                                            ; preds = %.lr.ph5.i
   %exitcond12.not.i = icmp eq i64 %i.du, %.val43
   br i1 %exitcond12.not.i, label %.loopexit102, label %.lr.ph5.i, !llvm.loop !1133
 
-.loopexit102:                                     ; preds = %bb.al, %bb.am, %.preheader.i62
+.loopexit102:                                     ; preds = %bb.al, %bb.am
   invoke void @_ZN6duckdb9SuffixFun11GetFunctionEv(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::ScalarFunction") align 8 %14)
           to label %bb.an unwind label %bb.s
 

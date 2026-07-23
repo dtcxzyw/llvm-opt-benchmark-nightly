@@ -204,7 +204,7 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %.not.i.i72, label %_ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.thread.i, label %.lr.ph.i.i73
 
 .lr.ph.i.i73:                                     ; preds = %bb.aj, %bb.ak
-  %.0811.i.i = phi i64 [ %i.fq, %bb.ak ], [ 0, %bb.aj ] ; 9 uses
+  %.0811.i.i = phi i64 [ %i.fq, %bb.ak ], [ 0, %bb.aj ] ; 8 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %3, i64 %.0811.i.i
   %i.fo = load i8, ptr %i.fn, align 1, !tbaa !62
   %i.fp = icmp slt i8 %i.fo, 0
@@ -218,14 +218,10 @@ bb.ak:                                            ; preds = %.lr.ph.i.i73
 _ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.i: ; preds = %.lr.ph.i.i73
   %i.fr = getelementptr inbounds nuw i8, ptr %3, i64 %.0811.i.i ; 6 uses
   %i.fs = sub i64 %4, %.0811.i.i                  ; 8 uses
-  %6 = icmp eq i64 %4, %.0811.i.i
-  br i1 %6, label %_ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.thread.i, label %.lr.ph.i34.i.preheader
-
-.lr.ph.i34.i.preheader:                           ; preds = %_ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.i
   %min.iters.check = icmp ult i64 %i.fs, 4
   br i1 %min.iters.check, label %.lr.ph.i34.i.preheader150, label %vector.ph
 
-vector.ph:                                        ; preds = %.lr.ph.i34.i.preheader
+vector.ph:                                        ; preds = %_ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.i
   %n.vec = and i64 %i.fs, -4                      ; 3 uses
   %i.ft = and i64 %i.fs, 3
   %i.fu = getelementptr i8, ptr %i.fr, i64 %n.vec
@@ -255,13 +251,13 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.fs, %n.vec
   br i1 %cmp.n, label %_ZN11OpenImageIO4v3_14pugi4impl14latin1_decoder7processINS2_12utf8_counterEEENT_10value_typeEPKhmS7_S6_.exit.i, label %.lr.ph.i34.i.preheader150
 
-.lr.ph.i34.i.preheader150:                        ; preds = %.lr.ph.i34.i.preheader, %middle.block
-  %.010.i.i.ph = phi i64 [ 0, %.lr.ph.i34.i.preheader ], [ %i.gd, %middle.block ]
-  %.059.i.i.ph = phi i64 [ %i.fs, %.lr.ph.i34.i.preheader ], [ %i.ft, %middle.block ]
-  %.068.i.i.ph = phi ptr [ %i.fr, %.lr.ph.i34.i.preheader ], [ %i.fu, %middle.block ]
+.lr.ph.i34.i.preheader150:                        ; preds = %_ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.i, %middle.block
+  %.010.i.i.ph = phi i64 [ 0, %_ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.i ], [ %i.gd, %middle.block ]
+  %.059.i.i.ph = phi i64 [ %i.fs, %_ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.i ], [ %i.ft, %middle.block ]
+  %.068.i.i.ph = phi ptr [ %i.fr, %_ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.i ], [ %i.fu, %middle.block ]
   br label %.lr.ph.i34.i
 
-_ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.thread.i: ; preds = %bb.ak, %_ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.i, %bb.aj
+_ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.thread.i: ; preds = %bb.ak, %bb.aj
   br i1 %5, label %_ZN11OpenImageIO4v3_14pugi4impl18get_mutable_bufferERPcRmPKvmb.exit.sink.split.i, label %bb.al
 
 bb.al:                                            ; preds = %_ZN11OpenImageIO4v3_14pugi4impl29get_latin1_7bit_prefix_lengthEPKhm.exit.thread.i

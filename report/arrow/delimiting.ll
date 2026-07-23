@@ -201,7 +201,7 @@ bb.a:
   br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.a, %bb.b
-  %.0111420.i.i = phi i64 [ %i.c, %bb.b ], [ 0, %bb.a ] ; 5 uses
+  %.0111420.i.i = phi i64 [ %i.c, %bb.b ], [ 0, %bb.a ] ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 %.0111420.i.i
   %i.b = load i8, ptr %i.a, align 1, !tbaa !26
   switch i8 %i.b, label %bb.b [
@@ -216,14 +216,10 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %i.d = icmp eq i64 %.0111420.i.i, -1
-  br i1 %i.d, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread, label %7
+  br i1 %i.d, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8
 
-7:                                                ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit
-  %8 = icmp ult i64 %.0111420.i.i, %4
-  br i1 %8, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.thread
-
-_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8:    ; preds = %7, %bb.c
-  %.0710.i.i = phi i64 [ %i.g, %bb.c ], [ %.0111420.i.i, %7 ] ; 4 uses
+_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8:    ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit, %bb.c
+  %.0710.i.i = phi i64 [ %i.g, %bb.c ], [ %.0111420.i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit ] ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 %.0710.i.i
   %i.f = load i8, ptr %i.e, align 1, !tbaa !26
   switch i8 %i.f, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit [
@@ -240,7 +236,7 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit: ; p
   %i.h = icmp eq i64 %.0710.i.i, -1
   br i1 %i.h, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.thread, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.thread: ; preds = %bb.c, %7, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit
+_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.thread: ; preds = %bb.c, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit
   br label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread: ; preds = %bb.b, %bb.a, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.thread, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit

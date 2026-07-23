@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 284 ; 4 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !18   ; 10 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !18   ; 9 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph.i, label %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.thread
 
@@ -215,23 +215,18 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.d ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.d ] ; 2 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !276
   %i.h = icmp eq ptr %i.g, %2
-  br i1 %i.h, label %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit, label %bb.d
+  br i1 %i.h, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.thread, label %bb.c
 
-_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit: ; preds = %bb.c
-  %4 = trunc nuw nsw i64 %indvars.iv.i to i32
-  %5 = icmp eq i32 %i.b, %4
-  br i1 %5, label %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.thread, label %bb.i
-
-_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.thread: ; preds = %bb.d, %bb.b, %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit
+_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.thread: ; preds = %bb.d, %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !19
   %i.k = icmp eq i32 %i.b, %i.j
@@ -378,7 +373,7 @@ _ZN20btAlignedObjectArrayIP17btCollisionObjectE9push_backERKS1_.exit: ; preds = 
   store i32 %i.bc, ptr %i.a, align 4, !tbaa !18
   br label %bb.i
 
-bb.i:                                             ; preds = %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit, %_ZN20btAlignedObjectArrayIP17btCollisionObjectE9push_backERKS1_.exit, %bb.a
+bb.i:                                             ; preds = %bb.c, %_ZN20btAlignedObjectArrayIP17btCollisionObjectE9push_backERKS1_.exit, %bb.a
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 832
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !109
   %i.bf = sext i32 %1 to i64
@@ -781,7 +776,7 @@ bb.o:                                             ; preds = %.lr.ph234, %bb.ag
   %i.cg = ashr exact i64 %sext, 27
   %i.ch = getelementptr inbounds i8, ptr %i.cf, i64 %i.cg ; 7 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 4 ; 5 uses
-  %i.cj = load i32, ptr %i.ci, align 4, !tbaa !154 ; 10 uses
+  %i.cj = load i32, ptr %i.ci, align 4, !tbaa !154 ; 9 uses
   %i.ck = icmp sgt i32 %i.cj, 0
   br i1 %i.ck, label %.lr.ph.i, label %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit.thread
 
@@ -792,23 +787,18 @@ bb.o:                                             ; preds = %.lr.ph234, %bb.ag
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.q, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.q ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.q ] ; 2 uses
   %i.cn = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %indvars.iv.i
   %i.co = load i32, ptr %i.cn, align 4, !tbaa !4
   %i.cp = icmp eq i32 %i.co, %i.ce
-  br i1 %i.cp, label %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit, label %bb.q
+  br i1 %i.cp, label %bb.z, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit.thread, label %bb.p
 
-_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit: ; preds = %bb.p
-  %5 = trunc nuw nsw i64 %indvars.iv.i to i32
-  %6 = icmp eq i32 %i.cj, %5
-  br i1 %6, label %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit.thread, label %bb.z
-
-_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit.thread: ; preds = %bb.q, %bb.o, %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit
+_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit.thread: ; preds = %bb.q, %bb.o
   %i.cq = getelementptr inbounds nuw i8, ptr %i.ch, i64 8 ; 2 uses
   %i.cr = load i32, ptr %i.cq, align 8, !tbaa !155
   %i.cs = icmp eq i32 %i.cj, %i.cr
@@ -993,13 +983,13 @@ bb.y:                                             ; preds = %bb.af, %bb.ae, %bb.
           cleanup
   br label %bb.ap
 
-bb.z:                                             ; preds = %_ZN20btAlignedObjectArrayIiE9push_backERKi.exit, %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit
-  %i.es = phi ptr [ %.pre, %_ZN20btAlignedObjectArrayIiE9push_backERKi.exit ], [ %i.cf, %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit ]
+bb.z:                                             ; preds = %bb.p, %_ZN20btAlignedObjectArrayIiE9push_backERKi.exit
+  %i.es = phi ptr [ %.pre, %_ZN20btAlignedObjectArrayIiE9push_backERKi.exit ], [ %i.cf, %bb.p ]
   %sext211 = shl i64 %i.cd, 32
   %i.et = ashr exact i64 %sext211, 27
   %i.eu = getelementptr inbounds i8, ptr %i.es, i64 %i.et ; 7 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %i.eu, i64 4 ; 5 uses
-  %i.ew = load i32, ptr %i.ev, align 4, !tbaa !154 ; 10 uses
+  %i.ew = load i32, ptr %i.ev, align 4, !tbaa !154 ; 9 uses
   %i.ex = icmp sgt i32 %i.ew, 0
   br i1 %i.ex, label %.lr.ph.i166, label %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit172.thread
 
@@ -1010,23 +1000,18 @@ bb.z:                                             ; preds = %_ZN20btAlignedObjec
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.ab, %.lr.ph.i166
-  %indvars.iv.i168 = phi i64 [ 0, %.lr.ph.i166 ], [ %indvars.iv.next.i169, %bb.ab ] ; 3 uses
+  %indvars.iv.i168 = phi i64 [ 0, %.lr.ph.i166 ], [ %indvars.iv.next.i169, %bb.ab ] ; 2 uses
   %i.fa = getelementptr inbounds nuw [4 x i8], ptr %i.ez, i64 %indvars.iv.i168
   %i.fb = load i32, ptr %i.fa, align 4, !tbaa !4
   %i.fc = icmp eq i32 %i.fb, %i.by
-  br i1 %i.fc, label %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit172, label %bb.ab
+  br i1 %i.fc, label %bb.ag, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %indvars.iv.next.i169 = add nuw nsw i64 %indvars.iv.i168, 1 ; 2 uses
   %exitcond.not.i170 = icmp eq i64 %indvars.iv.next.i169, %wide.trip.count.i167
   br i1 %exitcond.not.i170, label %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit172.thread, label %bb.aa
 
-_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit172: ; preds = %bb.aa
-  %7 = trunc nuw nsw i64 %indvars.iv.i168 to i32
-  %8 = icmp eq i32 %i.ew, %7
-  br i1 %8, label %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit172.thread, label %bb.ag
-
-_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit172.thread: ; preds = %bb.ab, %bb.z, %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit172
+_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit172.thread: ; preds = %bb.ab, %bb.z
   %i.fd = getelementptr inbounds nuw i8, ptr %i.eu, i64 8 ; 2 uses
   %i.fe = load i32, ptr %i.fd, align 8, !tbaa !155
   %i.ff = icmp eq i32 %i.ew, %i.fe
@@ -1180,7 +1165,7 @@ _ZN20btAlignedObjectArrayIiE9push_backERKi.exit191: ; preds = %_ZNK20btAlignedOb
   store i32 %i.gy, ptr %i.ev, align 4, !tbaa !154
   br label %bb.ag
 
-bb.ag:                                            ; preds = %_ZN20btAlignedObjectArrayIiE9push_backERKi.exit191, %_ZNK20btAlignedObjectArrayIiE16findLinearSearchERKi.exit172
+bb.ag:                                            ; preds = %bb.aa, %_ZN20btAlignedObjectArrayIiE9push_backERKi.exit191
   %indvars.iv.next286 = add nuw nsw i64 %indvars.iv285, 1 ; 2 uses
   %i.gz = load i32, ptr %i.n, align 4, !tbaa !114
   %i.ha = sext i32 %i.gz to i64
@@ -1583,7 +1568,7 @@ bb.k:                                             ; preds = %bb.j, %bb.h
 _ZN10btSoftBody7ClusterD2Ev.exit:                 ; preds = %_ZN20btAlignedObjectArrayIfED2Ev.exit.i, %bb.f
   tail call void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.e)
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 1340 ; 2 uses
-  %i.am = load i32, ptr %i.al, align 4, !tbaa !146 ; 4 uses
+  %i.am = load i32, ptr %i.al, align 4, !tbaa !146 ; 3 uses
   %i.an = icmp sgt i32 %i.am, 0
   br i1 %i.an, label %.lr.ph.i.i, label %_ZN20btAlignedObjectArrayIPN10btSoftBody7ClusterEE6removeERKS2_.exit
 
@@ -1593,23 +1578,18 @@ _ZN10btSoftBody7ClusterD2Ev.exit:                 ; preds = %_ZN20btAlignedObjec
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.m, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.m ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.m ] ; 3 uses
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.i.i
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !287 ; 2 uses
   %i.ar = icmp eq ptr %i.aq, %i.e
-  br i1 %i.ar, label %_ZNK20btAlignedObjectArrayIPN10btSoftBody7ClusterEE16findLinearSearchERKS2_.exit.i, label %bb.m
+  br i1 %i.ar, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %_ZN20btAlignedObjectArrayIPN10btSoftBody7ClusterEE6removeERKS2_.exit, label %bb.l
 
-_ZNK20btAlignedObjectArrayIPN10btSoftBody7ClusterEE16findLinearSearchERKS2_.exit.i: ; preds = %bb.l
-  %2 = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  %3 = icmp sgt i32 %i.am, %2
-  br i1 %3, label %bb.n, label %_ZN20btAlignedObjectArrayIPN10btSoftBody7ClusterEE6removeERKS2_.exit
-
-bb.n:                                             ; preds = %_ZNK20btAlignedObjectArrayIPN10btSoftBody7ClusterEE16findLinearSearchERKS2_.exit.i
+bb.n:                                             ; preds = %bb.l
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.i.i
   %i.at = add nsw i32 %i.am, -1                   ; 2 uses
   %i.au = zext nneg i32 %i.at to i64
@@ -1620,7 +1600,7 @@ bb.n:                                             ; preds = %_ZNK20btAlignedObje
   store i32 %i.at, ptr %i.al, align 4, !tbaa !146
   br label %_ZN20btAlignedObjectArrayIPN10btSoftBody7ClusterEE6removeERKS2_.exit
 
-_ZN20btAlignedObjectArrayIPN10btSoftBody7ClusterEE6removeERKS2_.exit: ; preds = %bb.m, %_ZN10btSoftBody7ClusterD2Ev.exit, %_ZNK20btAlignedObjectArrayIPN10btSoftBody7ClusterEE16findLinearSearchERKS2_.exit.i, %bb.n
+_ZN20btAlignedObjectArrayIPN10btSoftBody7ClusterEE6removeERKS2_.exit: ; preds = %bb.m, %_ZN10btSoftBody7ClusterD2Ev.exit, %bb.n
   ret void
 }
 
@@ -2023,7 +2003,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.pz = load ptr, ptr %i.fz, align 8, !tbaa !109
   %i.qa = getelementptr inbounds [120 x i8], ptr %i.pz, i64 %i.pt ; 2 uses
   %i.qb = getelementptr inbounds nuw i8, ptr %i.py, i64 4 ; 4 uses
-  %i.qc = load i32, ptr %i.qb, align 4, !tbaa !358 ; 10 uses
+  %i.qc = load i32, ptr %i.qb, align 4, !tbaa !358 ; 9 uses
   %i.qd = icmp sgt i32 %i.qc, 0
   br i1 %i.qd, label %.lr.ph.i275, label %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.thread
 
@@ -2034,23 +2014,18 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ag, %.lr.ph.i275
-  %indvars.iv.i277 = phi i64 [ 0, %.lr.ph.i275 ], [ %indvars.iv.next.i278, %bb.ag ] ; 3 uses
+  %indvars.iv.i277 = phi i64 [ 0, %.lr.ph.i275 ], [ %indvars.iv.next.i278, %bb.ag ] ; 2 uses
   %i.qg = getelementptr inbounds nuw [8 x i8], ptr %i.qf, i64 %indvars.iv.i277
   %i.qh = load ptr, ptr %i.qg, align 8, !tbaa !251
   %i.qi = icmp eq ptr %i.qh, %i.qa
-  br i1 %i.qi, label %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit, label %bb.ag
+  br i1 %i.qi, label %bb.an, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %indvars.iv.next.i278 = add nuw nsw i64 %indvars.iv.i277, 1 ; 2 uses
   %exitcond.not.i279 = icmp eq i64 %indvars.iv.next.i278, %wide.trip.count.i276
   br i1 %exitcond.not.i279, label %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.thread, label %bb.af
 
-_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit: ; preds = %bb.af
-  %3 = trunc nuw nsw i64 %indvars.iv.i277 to i32
-  %4 = icmp eq i32 %i.qc, %3
-  br i1 %4, label %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.thread, label %bb.an
-
-_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.thread: ; preds = %bb.ag, %bb.ae, %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit
+_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.thread: ; preds = %bb.ag, %bb.ae
   %i.qj = getelementptr inbounds nuw i8, ptr %i.py, i64 8 ; 2 uses
   %i.qk = load i32, ptr %i.qj, align 8, !tbaa !390
   %i.ql = icmp eq i32 %i.qc, %i.qk
@@ -2209,7 +2184,7 @@ bb.am:                                            ; preds = %bb.au, %bb.at, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #34
   br label %bb.bs
 
-bb.an:                                            ; preds = %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit, %bb.al, %bb.ad
+bb.an:                                            ; preds = %bb.af, %bb.al, %bb.ad
   %i.sf = trunc i64 %indvars.iv716 to i32
   %i.sg = add i32 %i.sf, 2
   %i.sh = urem i32 %i.sg, 3
@@ -2229,7 +2204,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.sr = load ptr, ptr %i.fz, align 8, !tbaa !109
   %i.ss = getelementptr inbounds [120 x i8], ptr %i.sr, i64 %i.sl ; 2 uses
   %i.st = getelementptr inbounds nuw i8, ptr %i.sq, i64 4 ; 4 uses
-  %i.su = load i32, ptr %i.st, align 4, !tbaa !358 ; 10 uses
+  %i.su = load i32, ptr %i.st, align 4, !tbaa !358 ; 9 uses
   %i.sv = icmp sgt i32 %i.su, 0
   br i1 %i.sv, label %.lr.ph.i275.1, label %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.thread.1
 
@@ -2240,23 +2215,18 @@ bb.ao:                                            ; preds = %bb.an
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.aq, %.lr.ph.i275.1
-  %indvars.iv.i277.1 = phi i64 [ 0, %.lr.ph.i275.1 ], [ %indvars.iv.next.i278.1, %bb.aq ] ; 3 uses
+  %indvars.iv.i277.1 = phi i64 [ 0, %.lr.ph.i275.1 ], [ %indvars.iv.next.i278.1, %bb.aq ] ; 2 uses
   %i.sy = getelementptr inbounds nuw [8 x i8], ptr %i.sx, i64 %indvars.iv.i277.1
   %i.sz = load ptr, ptr %i.sy, align 8, !tbaa !251
   %i.ta = icmp eq ptr %i.sz, %i.ss
-  br i1 %i.ta, label %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.1, label %bb.aq
+  br i1 %i.ta, label %bb.aw, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
   %indvars.iv.next.i278.1 = add nuw nsw i64 %indvars.iv.i277.1, 1 ; 2 uses
   %exitcond.not.i279.1 = icmp eq i64 %indvars.iv.next.i278.1, %wide.trip.count.i276.1
   br i1 %exitcond.not.i279.1, label %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.thread.1, label %bb.ap
 
-_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.1: ; preds = %bb.ap
-  %5 = trunc nuw nsw i64 %indvars.iv.i277.1 to i32
-  %6 = icmp eq i32 %i.su, %5
-  br i1 %6, label %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.thread.1, label %bb.aw
-
-_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.thread.1: ; preds = %bb.aq, %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.1, %bb.ao
+_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.thread.1: ; preds = %bb.aq, %bb.ao
   %i.tb = getelementptr inbounds nuw i8, ptr %i.sq, i64 8 ; 2 uses
   %i.tc = load i32, ptr %i.tb, align 8, !tbaa !390
   %i.td = icmp eq i32 %i.su, %i.tc
@@ -2409,7 +2379,7 @@ bb.av:                                            ; preds = %_ZN20btAlignedObjec
   store i32 %i.uv, ptr %i.st, align 4, !tbaa !358
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.av, %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.1, %bb.an
+bb.aw:                                            ; preds = %bb.ap, %bb.av, %bb.an
   %exitcond719.not = icmp eq i64 %indvars.iv.next717, 3
   br i1 %exitcond719.not, label %bb.ac, label %bb.ad
 
@@ -2812,8 +2782,8 @@ bb.h:                                             ; preds = %.lr.ph50, %_ZN10btS
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit.i, %.lr.ph.i27
-  %i.bx = phi ptr [ %.pre.i, %.lr.ph.i27 ], [ %4, %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit.i ]
-  %.011.i = phi i32 [ 0, %.lr.ph.i27 ], [ %.1.i, %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit.i ] ; 6 uses
+  %i.bx = phi ptr [ %.pre.i, %.lr.ph.i27 ], [ %2, %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit.i ]
+  %.011.i = phi i32 [ 0, %.lr.ph.i27 ], [ %.1.i, %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit.i ] ; 5 uses
   %i.by = sext i32 %.011.i to i64                 ; 3 uses
   %i.bz = getelementptr inbounds [8 x i8], ptr %i.bx, i64 %i.by
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !249 ; 2 uses
@@ -2837,8 +2807,8 @@ bb.i:                                             ; preds = %_ZN20btAlignedObjec
 
 bb.j:                                             ; preds = %bb.i
   tail call void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.ch)
-  %i.cm = load ptr, ptr %i.bv, align 8, !tbaa !137 ; 8 uses
-  %i.cn = load i32, ptr %i.bs, align 4, !tbaa !138 ; 7 uses
+  %i.cm = load ptr, ptr %i.bv, align 8, !tbaa !137 ; 7 uses
+  %i.cn = load i32, ptr %i.bs, align 4, !tbaa !138 ; 5 uses
   %i.co = icmp sgt i32 %i.cn, 0
   br i1 %i.co, label %.lr.ph.i.i.i, label %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit.i
 
@@ -2849,23 +2819,18 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.l, %.lr.ph.i.i.i
-  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i ], [ %indvars.iv.next.i.i.i, %bb.l ] ; 4 uses
+  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i ], [ %indvars.iv.next.i.i.i, %bb.l ] ; 3 uses
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr %i.cm, i64 %indvars.iv.i.i.i
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !249 ; 2 uses
   %i.ct = icmp eq ptr %i.cs, %i.cq
-  br i1 %i.ct, label %_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i.i, label %bb.l
+  br i1 %i.ct, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
   br i1 %exitcond.not.i.i.i, label %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit.i, label %bb.k
 
-_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i.i: ; preds = %bb.k
-  %1 = trunc nuw nsw i64 %indvars.iv.i.i.i to i32
-  %2 = icmp sgt i32 %i.cn, %1
-  br i1 %2, label %bb.m, label %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit.i
-
-bb.m:                                             ; preds = %_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i.i
+bb.m:                                             ; preds = %bb.k
   %i.cu = getelementptr inbounds nuw [8 x i8], ptr %i.cm, i64 %indvars.iv.i.i.i
   %i.cv = add nsw i32 %i.cn, -1                   ; 3 uses
   %i.cw = zext nneg i32 %i.cv to i64
@@ -2876,11 +2841,11 @@ bb.m:                                             ; preds = %_ZNK20btAlignedObje
   store i32 %i.cv, ptr %i.bs, align 4, !tbaa !138
   br label %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit.i
 
-_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit.i: ; preds = %bb.l, %bb.m, %_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i.i, %bb.j, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge.i
-  %3 = phi i32 [ %.pre14.i, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge.i ], [ %i.cn, %bb.j ], [ %i.cv, %bb.m ], [ %i.cn, %_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i.i ], [ %i.cn, %bb.l ]
-  %4 = phi ptr [ %i.cf, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge.i ], [ %i.cm, %bb.j ], [ %i.cm, %bb.m ], [ %i.cm, %_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i.i ], [ %i.cm, %bb.l ]
-  %.1.i = phi i32 [ %i.cl, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge.i ], [ %.011.i, %bb.j ], [ %.011.i, %bb.m ], [ %.011.i, %_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i.i ], [ %.011.i, %bb.l ] ; 2 uses
-  %i.cz = icmp slt i32 %.1.i, %3
+_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit.i: ; preds = %bb.l, %bb.m, %bb.j, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge.i
+  %1 = phi i32 [ %.pre14.i, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge.i ], [ %i.cn, %bb.j ], [ %i.cv, %bb.m ], [ %i.cn, %bb.l ]
+  %2 = phi ptr [ %i.cf, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge.i ], [ %i.cm, %bb.j ], [ %i.cm, %bb.m ], [ %i.cm, %bb.l ]
+  %.1.i = phi i32 [ %i.cl, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge.i ], [ %.011.i, %bb.j ], [ %.011.i, %bb.m ], [ %.011.i, %bb.l ] ; 2 uses
+  %i.cz = icmp slt i32 %.1.i, %1
   br i1 %i.cz, label %bb.i, label %_ZN10btSoftBody15cleanupClustersEv.exit
 
 _ZN10btSoftBody15cleanupClustersEv.exit:          ; preds = %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit.i, %bb.h
@@ -2975,8 +2940,8 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit
-  %i.f = phi ptr [ %.pre, %.lr.ph ], [ %4, %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit ]
-  %.011 = phi i32 [ 0, %.lr.ph ], [ %.1, %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit ] ; 6 uses
+  %i.f = phi ptr [ %.pre, %.lr.ph ], [ %2, %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit ]
+  %.011 = phi i32 [ 0, %.lr.ph ], [ %.1, %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit ] ; 5 uses
   %i.g = sext i32 %.011 to i64                    ; 3 uses
   %i.h = getelementptr inbounds [8 x i8], ptr %i.f, i64 %i.g
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !249  ; 2 uses
@@ -3000,8 +2965,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN20btAli
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.p)
-  %i.u = load ptr, ptr %i.d, align 8, !tbaa !137  ; 8 uses
-  %i.v = load i32, ptr %i.a, align 4, !tbaa !138  ; 7 uses
+  %i.u = load ptr, ptr %i.d, align 8, !tbaa !137  ; 7 uses
+  %i.v = load i32, ptr %i.a, align 4, !tbaa !138  ; 5 uses
   %i.w = icmp sgt i32 %i.v, 0
   br i1 %i.w, label %.lr.ph.i.i, label %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit
 
@@ -3012,23 +2977,18 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.e ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.e ] ; 3 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv.i.i
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !249 ; 2 uses
   %i.ab = icmp eq ptr %i.aa, %i.y
-  br i1 %i.ab, label %_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i, label %bb.e
+  br i1 %i.ab, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit, label %bb.d
 
-_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i: ; preds = %bb.d
-  %1 = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  %2 = icmp sgt i32 %i.v, %1
-  br i1 %2, label %bb.f, label %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit
-
-bb.f:                                             ; preds = %_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i
+bb.f:                                             ; preds = %bb.d
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv.i.i
   %i.ad = add nsw i32 %i.v, -1                    ; 3 uses
   %i.ae = zext nneg i32 %i.ad to i64
@@ -3039,11 +2999,11 @@ bb.f:                                             ; preds = %_ZNK20btAlignedObje
   store i32 %i.ad, ptr %i.a, align 4, !tbaa !138
   br label %_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit
 
-_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit: ; preds = %bb.e, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge, %bb.f, %_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i, %bb.c
-  %3 = phi i32 [ %.pre14, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge ], [ %i.v, %bb.c ], [ %i.ad, %bb.f ], [ %i.v, %_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i ], [ %i.v, %bb.e ]
-  %4 = phi ptr [ %i.n, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge ], [ %i.u, %bb.c ], [ %i.u, %bb.f ], [ %i.u, %_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i ], [ %i.u, %bb.e ]
-  %.1 = phi i32 [ %i.t, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge ], [ %.011, %bb.c ], [ %.011, %bb.f ], [ %.011, %_ZNK20btAlignedObjectArrayIPN10btSoftBody5JointEE16findLinearSearchERKS2_.exit.i ], [ %.011, %bb.e ] ; 2 uses
-  %i.ah = icmp slt i32 %.1, %3
+_ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit: ; preds = %bb.e, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge, %bb.f, %bb.c
+  %1 = phi i32 [ %.pre14, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge ], [ %i.v, %bb.c ], [ %i.ad, %bb.f ], [ %i.v, %bb.e ]
+  %2 = phi ptr [ %i.n, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge ], [ %i.u, %bb.c ], [ %i.u, %bb.f ], [ %i.u, %bb.e ]
+  %.1 = phi i32 [ %i.t, %._ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE6removeERKS2_.exit_crit_edge ], [ %.011, %bb.c ], [ %.011, %bb.f ], [ %.011, %bb.e ] ; 2 uses
+  %i.ah = icmp slt i32 %.1, %1
   br i1 %i.ah, label %bb.b, label %._crit_edge
 }
 

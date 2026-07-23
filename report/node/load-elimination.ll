@@ -203,7 +203,7 @@ bb.v:                                             ; preds = %bb.u
   %.pre.i.i.i.i = load i64, ptr %i.du, align 8
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.u, %bb.v
+bb.w:                                             ; preds = %bb.v, %bb.u
   %i.ed = phi i64 [ %.pre.i.i.i.i, %bb.v ], [ %i.ea, %bb.u ] ; 2 uses
   %i.ee = inttoptr i64 %i.ed to ptr               ; 4 uses
   %i.ef = add i64 %i.ed, 536
@@ -564,7 +564,7 @@ bb.z:                                             ; preds = %bb.y
   %.pre.i.i.i.i = load i64, ptr %i.df, align 8
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.y, %bb.z
+bb.aa:                                            ; preds = %bb.z, %bb.y
   %i.do = phi i64 [ %.pre.i.i.i.i, %bb.z ], [ %i.dl, %bb.y ] ; 2 uses
   %i.dp = inttoptr i64 %i.do to ptr               ; 4 uses
   %i.dq = add i64 %i.do, 536
@@ -619,7 +619,7 @@ bb.a:
   %7 = alloca %"class.v8::internal::ZoneCompactSet", align 8 ; 4 uses
   %8 = alloca %"class.v8::internal::ZoneCompactSet", align 8 ; 4 uses
   %9 = alloca %"class.v8::internal::compiler::LoadElimination::AliasStateInfo", align 8 ; 6 uses
-  %10 = alloca %"class.v8::internal::compiler::LoadElimination::AliasStateInfo", align 8 ; 6 uses
+  %10 = alloca %"class.v8::internal::compiler::LoadElimination::AliasStateInfo", align 8 ; 7 uses
   %i.c = load ptr, ptr %1, align 8
   %i.d = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZN2v88internal8compiler20ElementsTransitionOfEPKNS1_8OperatorE(ptr noundef %i.c) #22 ; 3 uses
   %.sroa.050.0.copyload = load i8, ptr %i.d, align 8
@@ -750,7 +750,7 @@ bb.l:                                             ; preds = %bb.k
   %.pre.i.i.i = load i64, ptr %i.bh, align 8
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.k, %bb.l
+bb.m:                                             ; preds = %bb.l, %bb.k
   %i.bq = phi i64 [ %.pre.i.i.i, %bb.l ], [ %i.bn, %bb.k ] ; 2 uses
   %i.br = inttoptr i64 %i.bq to ptr               ; 4 uses
   %i.bs = add i64 %i.bq, 536
@@ -783,10 +783,10 @@ bb.n:                                             ; preds = %bb.h, %_ZNK2v88inte
   %.0 = phi ptr [ %i.ce, %_ZNK2v88internal8compiler15LoadElimination13AbstractState9KillFieldERKNS2_14AliasStateInfoENS2_10IndexRangeENS0_11MaybeHandleINS0_4NameEEEPNS0_4ZoneE.exit ], [ %i.bb, %bb.h ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   store i64 1, ptr %6, align 8
-  %i.cf = getelementptr inbounds nuw i8, ptr %.0, i64 520 ; 5 uses
-  %i.cg = load ptr, ptr %i.cf, align 8            ; 3 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %.0, i64 520 ; 4 uses
+  %i.cg = load ptr, ptr %i.cf, align 8            ; 4 uses
   %.not.i37 = icmp eq ptr %i.cg, null
-  br i1 %.not.i37, label %bb.ab, label %.preheader.i
+  br i1 %.not.i37, label %11, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.n, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.i.i.i
   %.0.i.i.i = phi ptr [ %i.de, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.i.i.i ], [ %i.s, %bb.n ] ; 5 uses
@@ -1002,7 +1002,11 @@ _ZNK2v88internal8compiler15LoadElimination13AbstractState7SetMapsEPNS1_4NodeENS0
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #22
   br label %bb.af
 
-bb.ab:                                            ; preds = %bb.n, %_ZNKSt3mapIPN2v88internal8compiler4NodeENS1_14ZoneCompactSetINS2_6MapRefEEESt4lessIS4_ENS1_13ZoneAllocatorISt4pairIKS4_S7_EEEE4findERSC_.exit.i.i, %_ZN2v88internal8compiler12_GLOBAL__N_114ResolveRenamesEPNS1_4NodeE.exit.i.i, %_ZNKSt8_Rb_treeIPN2v88internal8compiler4NodeESt4pairIKS4_NS1_14ZoneCompactSetINS2_6MapRefEEEESt10_Select1stISA_ESt4lessIS4_ENS1_13ZoneAllocatorISA_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeISA_EPKSt18_Rb_tree_node_baseRS6_.exit.i.i.i.i
+11:                                               ; preds = %bb.n
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #22
+  br label %_ZNK2v88internal8compiler15LoadElimination13AbstractState8KillMapsERKNS2_14AliasStateInfoEPNS0_4ZoneE.exit49
+
+bb.ab:                                            ; preds = %_ZNKSt3mapIPN2v88internal8compiler4NodeENS1_14ZoneCompactSetINS2_6MapRefEEESt4lessIS4_ENS1_13ZoneAllocatorISt4pairIKS4_S7_EEEE4findERSC_.exit.i.i, %_ZN2v88internal8compiler12_GLOBAL__N_114ResolveRenamesEPNS1_4NodeE.exit.i.i, %_ZNKSt8_Rb_treeIPN2v88internal8compiler4NodeESt4pairIKS4_NS1_14ZoneCompactSetINS2_6MapRefEEEESt10_Select1stISA_ESt4lessIS4_ENS1_13ZoneAllocatorISA_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeISA_EPKSt18_Rb_tree_node_baseRS6_.exit.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #22
   store ptr %.0, ptr %10, align 8
   %i.fd = getelementptr inbounds nuw i8, ptr %10, i64 8
@@ -1010,17 +1014,12 @@ bb.ab:                                            ; preds = %bb.n, %_ZNKSt3mapIP
   %i.fe = getelementptr inbounds nuw i8, ptr %10, i64 16
   store ptr %.sroa.451.0.copyload, ptr %i.fe, align 8
   %i.ff = load ptr, ptr %i.am, align 8            ; 4 uses
-  %i.fg = load ptr, ptr %i.cf, align 8            ; 2 uses
-  %.not.i45 = icmp eq ptr %i.fg, null
-  br i1 %.not.i45, label %_ZNK2v88internal8compiler15LoadElimination13AbstractState8KillMapsERKNS2_14AliasStateInfoEPNS0_4ZoneE.exit49, label %11
+  %12 = call noundef ptr @_ZNK2v88internal8compiler15LoadElimination12AbstractMaps4KillERKNS2_14AliasStateInfoEPNS0_4ZoneE(ptr noundef nonnull align 8 dereferenceable(56) %i.cg, ptr noundef nonnull readonly align 8 dereferenceable(24) %10, ptr noundef %i.ff) ; 2 uses
+  %i.fg = load ptr, ptr %i.cf, align 8
+  %.not.i45 = icmp eq ptr %i.fg, %12
+  br i1 %.not.i45, label %_ZNK2v88internal8compiler15LoadElimination13AbstractState8KillMapsERKNS2_14AliasStateInfoEPNS0_4ZoneE.exit49, label %bb.ac
 
-11:                                               ; preds = %bb.ab
-  %12 = call noundef ptr @_ZNK2v88internal8compiler15LoadElimination12AbstractMaps4KillERKNS2_14AliasStateInfoEPNS0_4ZoneE(ptr noundef nonnull align 8 dereferenceable(56) %i.fg, ptr noundef nonnull readonly align 8 dereferenceable(24) %10, ptr noundef %i.ff) ; 2 uses
-  %13 = load ptr, ptr %i.cf, align 8
-  %.not12.not.i46 = icmp eq ptr %13, %12
-  br i1 %.not12.not.i46, label %_ZNK2v88internal8compiler15LoadElimination13AbstractState8KillMapsERKNS2_14AliasStateInfoEPNS0_4ZoneE.exit49, label %bb.ac
-
-bb.ac:                                            ; preds = %11
+bb.ac:                                            ; preds = %bb.ab
   %i.fh = getelementptr inbounds nuw i8, ptr %i.ff, i64 24
   %i.fi = load i64, ptr %i.fh, align 8
   %i.fj = getelementptr inbounds nuw i8, ptr %i.ff, i64 16 ; 3 uses
@@ -1044,8 +1043,8 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   store ptr %12, ptr %i.fq, align 8
   br label %_ZNK2v88internal8compiler15LoadElimination13AbstractState8KillMapsERKNS2_14AliasStateInfoEPNS0_4ZoneE.exit49
 
-_ZNK2v88internal8compiler15LoadElimination13AbstractState8KillMapsERKNS2_14AliasStateInfoEPNS0_4ZoneE.exit49: ; preds = %bb.ab, %11, %bb.ae
-  %.1.i47 = phi ptr [ %i.fo, %bb.ae ], [ %.0, %bb.ab ], [ %.0, %11 ]
+_ZNK2v88internal8compiler15LoadElimination13AbstractState8KillMapsERKNS2_14AliasStateInfoEPNS0_4ZoneE.exit49: ; preds = %11, %bb.ab, %bb.ae
+  %.1.i47 = phi ptr [ %i.fo, %bb.ae ], [ %.0, %11 ], [ %.0, %bb.ab ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #22
   br label %bb.af
 
@@ -1376,7 +1375,7 @@ bb.t:                                             ; preds = %bb.s
   %.pre.i.i.i = load i64, ptr %i.dj, align 8
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.s, %bb.t
+bb.u:                                             ; preds = %bb.t, %bb.s
   %i.ds = phi i64 [ %.pre.i.i.i, %bb.t ], [ %i.dp, %bb.s ] ; 2 uses
   %i.dt = inttoptr i64 %i.ds to ptr               ; 4 uses
   %i.du = add i64 %i.ds, 536
@@ -1779,7 +1778,7 @@ bb.v:                                             ; preds = %bb.u
   %.pre.i.i.i.i30 = load i64, ptr %i.ed, align 8
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.u, %bb.v
+bb.w:                                             ; preds = %bb.v, %bb.u
   %i.em = phi i64 [ %.pre.i.i.i.i30, %bb.v ], [ %i.ej, %bb.u ] ; 2 uses
   %i.en = inttoptr i64 %i.em to ptr               ; 4 uses
   %i.eo = add i64 %i.em, 536
@@ -2182,7 +2181,7 @@ bb.y:                                             ; preds = %bb.x
   %.pre.i.i.i.i = load i64, ptr %i.es, align 8
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.x, %bb.y
+bb.z:                                             ; preds = %bb.y, %bb.x
   %i.fb = phi i64 [ %.pre.i.i.i.i, %bb.y ], [ %i.ey, %bb.x ] ; 2 uses
   %i.fc = inttoptr i64 %i.fb to ptr               ; 4 uses
   %i.fd = add i64 %i.fb, 536
@@ -2271,7 +2270,7 @@ bb.ag:                                            ; preds = %bb.af
   %.pre.i.i.i.i101 = load i64, ptr %i.gg, align 8
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.af, %bb.ag
+bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.gp = phi i64 [ %.pre.i.i.i.i101, %bb.ag ], [ %i.gm, %bb.af ] ; 2 uses
   %i.gq = inttoptr i64 %i.gp to ptr               ; 4 uses
   %i.gr = add i64 %i.gp, 536
@@ -2674,7 +2673,7 @@ bb.bq:                                            ; preds = %bb.bp
   %.pre.i.i.i.i164 = load i64, ptr %i.oh, align 8
   br label %bb.br
 
-bb.br:                                            ; preds = %bb.bp, %bb.bq
+bb.br:                                            ; preds = %bb.bq, %bb.bp
   %i.oq = phi i64 [ %.pre.i.i.i.i164, %bb.bq ], [ %i.on, %bb.bp ] ; 2 uses
   %i.or = inttoptr i64 %i.oq to ptr               ; 4 uses
   %i.os = add i64 %i.oq, 536
@@ -3077,7 +3076,7 @@ bb.cv:                                            ; preds = %bb.cu
   %.pre.i.i.i186 = load i64, ptr %i.vh, align 8
   br label %bb.cw
 
-bb.cw:                                            ; preds = %bb.cu, %bb.cv
+bb.cw:                                            ; preds = %bb.cv, %bb.cu
   %i.vq = phi i64 [ %.pre.i.i.i186, %bb.cv ], [ %i.vn, %bb.cu ] ; 2 uses
   %i.vr = inttoptr i64 %i.vq to ptr               ; 4 uses
   %i.vs = add i64 %i.vq, 536

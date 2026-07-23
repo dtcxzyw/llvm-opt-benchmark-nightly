@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %.preheader.us.i74.i
   br i1 %i.df, label %.lr.ph.i71.i.i, label %.preheader56.i.i.i, !llvm.loop !663
 
 asciilib_fastsearch.exit.i:                       ; preds = %bb.ac, %bb.v, %bb.s
-  %.0.i.i84 = phi i64 [ %i.az, %bb.v ], [ %i.aq, %bb.s ], [ %.15065.us.i.i.i, %bb.ac ] ; 5 uses
+  %.0.i.i84 = phi i64 [ %i.aq, %bb.s ], [ %i.az, %bb.v ], [ %.15065.us.i.i.i, %bb.ac ] ; 5 uses
   %i.dg = icmp slt i64 %.0.i.i84, 0
   br i1 %i.dg, label %asciilib_fastsearch.exit.thread.i, label %bb.ag
 
@@ -607,7 +607,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %or.cond5, label %bb.s, label %bb.ab
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %i.al = add nsw i64 %3, -1                      ; 12 uses
+  %i.al = add nsw i64 %3, -1                      ; 11 uses
   %i.am = getelementptr i8, ptr %2, i64 %i.al
   %i.an = load i8, ptr %i.am, align 1, !tbaa !205 ; 5 uses
   %xtraiter = and i64 %i.al, 1
@@ -653,7 +653,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br i1 %.not108.i, label %asciilib_find_char.exit, label %.lr.ph111.split.us.i
 
 .lr.ph111.split.us.i:                             ; preds = %._crit_edge.i, %bb.z
-  %.066109.us.i = phi i64 [ %i.ca, %bb.z ], [ 0, %._crit_edge.i ] ; 9 uses
+  %.066109.us.i = phi i64 [ %i.ca, %bb.z ], [ 0, %._crit_edge.i ] ; 8 uses
   %i.be = getelementptr i8, ptr %i.az, i64 %.066109.us.i
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !205
   %i.bg = icmp eq i8 %i.bf, %i.an
@@ -677,19 +677,15 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.z
 
 bb.v:                                             ; preds = %.preheader.us.i, %bb.aa
-  %.0102.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.cb, %bb.aa ] ; 4 uses
+  %.0102.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.cb, %bb.aa ] ; 3 uses
   %i.bp = getelementptr i8, ptr %i.cc, i64 %.0102.us.i
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !205
   %i.br = getelementptr i8, ptr %2, i64 %.0102.us.i
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !205
   %.not90.us.i = icmp eq i8 %i.bq, %i.bs
-  br i1 %.not90.us.i, label %bb.aa, label %._crit_edge104.us.i
+  br i1 %.not90.us.i, label %bb.aa, label %bb.w
 
-._crit_edge104.us.i:                              ; preds = %bb.v
-  %5 = icmp eq i64 %.0102.us.i, %i.al
-  br i1 %5, label %asciilib_find_char.exit, label %bb.w
-
-bb.w:                                             ; preds = %._crit_edge104.us.i
+bb.w:                                             ; preds = %bb.v
   %i.bt = add i64 %.066109.us.i, 1                ; 2 uses
   %.not91.us.i = icmp sgt i64 %i.bt, %i.ay
   br i1 %.not91.us.i, label %bb.y, label %bb.x
@@ -896,8 +892,8 @@ bb.ak:                                            ; preds = %.preheader.us.i74
   %i.fi = icmp sgt i64 %.04958.i, 2
   br i1 %i.fi, label %.lr.ph.i71, label %.preheader56.i, !llvm.loop !663
 
-asciilib_find_char.exit:                          ; preds = %bb.z, %._crit_edge104.us.i, %bb.aa, %bb.aj, %bb.af, %bb.ak, %bb.n, %bb.i, %bb.m, %.preheader56.i, %._crit_edge.i, %bb.o, %bb.l, %bb.k, %bb.h, %bb.g, %bb.f, %.preheader.i, %bb.c, %bb.a, %bb.ad, %bb.ac
-  %.0 = phi i64 [ %i.db, %bb.ac ], [ -1, %bb.a ], [ -1, %bb.c ], [ -1, %bb.n ], [ -1, %bb.i ], [ %i.dc, %bb.ad ], [ -1, %bb.m ], [ %i.l, %bb.g ], [ -1, %bb.f ], [ %i.q, %bb.h ], [ -1, %.preheader.i ], [ %i.x, %bb.l ], [ -1, %bb.k ], [ %i.ag, %bb.o ], [ -1, %._crit_edge.i ], [ %.15065.us.i, %bb.ak ], [ -1, %bb.aj ], [ -1, %.preheader56.i ], [ %.066109.us.i, %bb.aa ], [ -1, %bb.af ], [ %.066109.us.i, %._crit_edge104.us.i ], [ -1, %bb.z ]
+asciilib_find_char.exit:                          ; preds = %bb.z, %bb.aa, %bb.aj, %bb.af, %bb.ak, %bb.n, %bb.i, %bb.m, %.preheader56.i, %._crit_edge.i, %bb.o, %bb.l, %bb.k, %bb.h, %bb.g, %bb.f, %.preheader.i, %bb.c, %bb.a, %bb.ad, %bb.ac
+  %.0 = phi i64 [ %i.db, %bb.ac ], [ -1, %bb.a ], [ -1, %bb.c ], [ -1, %bb.aj ], [ %.15065.us.i, %bb.ak ], [ %i.dc, %bb.ad ], [ -1, %bb.n ], [ %i.l, %bb.g ], [ -1, %bb.f ], [ %i.q, %bb.h ], [ -1, %.preheader.i ], [ %i.x, %bb.l ], [ -1, %bb.k ], [ %i.ag, %bb.o ], [ -1, %._crit_edge.i ], [ -1, %bb.m ], [ -1, %bb.i ], [ -1, %.preheader56.i ], [ %.066109.us.i, %bb.aa ], [ -1, %bb.af ], [ -1, %bb.z ]
   ret i64 %.0
 }
 
@@ -1300,7 +1296,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond5, label %bb.v, label %bb.ah
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %i.bi = add nsw i64 %3, -1                      ; 13 uses
+  %i.bi = add nsw i64 %3, -1                      ; 12 uses
   %i.bj = getelementptr i8, ptr %2, i64 %i.bi
   %i.bk = load i8, ptr %i.bj, align 1, !tbaa !205 ; 5 uses
   %xtraiter = and i64 %i.bi, 1
@@ -1375,19 +1371,15 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.af
 
 bb.y:                                             ; preds = %.preheader.us.i, %bb.ag
-  %.0102.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.db, %bb.ag ] ; 4 uses
+  %.0102.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.db, %bb.ag ] ; 3 uses
   %i.cm = getelementptr i8, ptr %i.dc, i64 %.0102.us.i
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !205
   %i.co = getelementptr i8, ptr %2, i64 %.0102.us.i
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !205
   %.not90.us.i = icmp eq i8 %i.cn, %i.cp
-  br i1 %.not90.us.i, label %bb.ag, label %._crit_edge104.us.i
+  br i1 %.not90.us.i, label %bb.ag, label %bb.z
 
-._crit_edge104.us.i:                              ; preds = %bb.y
-  %6 = icmp eq i64 %.0102.us.i, %i.bi
-  br i1 %6, label %._crit_edge104.us.thread.i, label %bb.z
-
-bb.z:                                             ; preds = %._crit_edge104.us.i
+bb.z:                                             ; preds = %bb.y
   %i.cq = add i64 %.066110.us.i, 1                ; 2 uses
   %.not91.us.i = icmp sgt i64 %i.cq, %i.bv
   br i1 %.not91.us.i, label %bb.ab, label %bb.aa
@@ -1410,7 +1402,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %.167.us.i = add i64 %.078.pn.us.i, %.066110.us.i
   br label %bb.af
 
-._crit_edge104.us.thread.i:                       ; preds = %bb.ag, %._crit_edge104.us.i
+._crit_edge104.us.thread.i:                       ; preds = %bb.ag
   br i1 %.not93.i, label %bb.ad, label %ucs1lib_find_char.exit
 
 bb.ad:                                            ; preds = %._crit_edge104.us.thread.i
@@ -1813,7 +1805,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %or.cond5, label %bb.ab, label %bb.an
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z
-  %i.bu = add nsw i64 %3, -1                      ; 12 uses
+  %i.bu = add nsw i64 %3, -1                      ; 11 uses
   %i.bv = getelementptr [2 x i8], ptr %2, i64 %i.bu
   %i.bw = load i16, ptr %i.bv, align 2, !tbaa !208 ; 4 uses
   %min.iters.check = icmp ult i64 %3, 9
@@ -1902,19 +1894,15 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.al
 
 bb.ae:                                            ; preds = %.preheader.us.i, %bb.am
-  %.0102.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.dt, %bb.am ] ; 4 uses
+  %.0102.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.dt, %bb.am ] ; 3 uses
   %i.de = getelementptr [2 x i8], ptr %i.du, i64 %.0102.us.i
   %i.df = load i16, ptr %i.de, align 2, !tbaa !208
   %i.dg = getelementptr [2 x i8], ptr %2, i64 %.0102.us.i
   %i.dh = load i16, ptr %i.dg, align 2, !tbaa !208
   %.not90.us.i = icmp eq i16 %i.df, %i.dh
-  br i1 %.not90.us.i, label %bb.am, label %._crit_edge104.us.i
+  br i1 %.not90.us.i, label %bb.am, label %bb.af
 
-._crit_edge104.us.i:                              ; preds = %bb.ae
-  %6 = icmp eq i64 %.0102.us.i, %i.bu
-  br i1 %6, label %._crit_edge104.us.thread.i, label %bb.af
-
-bb.af:                                            ; preds = %._crit_edge104.us.i
+bb.af:                                            ; preds = %bb.ae
   %i.di = add i64 %.066110.us.i, 1                ; 2 uses
   %.not91.us.i = icmp sgt i64 %i.di, %i.cn
   br i1 %.not91.us.i, label %bb.ah, label %bb.ag
@@ -1937,7 +1925,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %.167.us.i = add i64 %.078.pn.us.i, %.066110.us.i
   br label %bb.al
 
-._crit_edge104.us.thread.i:                       ; preds = %bb.am, %._crit_edge104.us.i
+._crit_edge104.us.thread.i:                       ; preds = %bb.am
   br i1 %i.b, label %bb.aj, label %ucs2lib_rfind_char.exit
 
 bb.aj:                                            ; preds = %._crit_edge104.us.thread.i
@@ -2340,7 +2328,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %or.cond5, label %bb.ae, label %bb.aq
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
-  %i.cg = add nsw i64 %3, -1                      ; 12 uses
+  %i.cg = add nsw i64 %3, -1                      ; 11 uses
   %i.ch = getelementptr [4 x i8], ptr %2, i64 %i.cg
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !7  ; 4 uses
   %min.iters.check = icmp ult i64 %3, 15
@@ -2433,19 +2421,15 @@ bb.ag:                                            ; preds = %bb.af
   br label %bb.ao
 
 bb.ah:                                            ; preds = %.preheader.us.i, %bb.ap
-  %.0102.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.ef, %bb.ap ] ; 4 uses
+  %.0102.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.ef, %bb.ap ] ; 3 uses
   %i.dq = getelementptr [4 x i8], ptr %i.eg, i64 %.0102.us.i
   %i.dr = load i32, ptr %i.dq, align 4, !tbaa !7
   %i.ds = getelementptr [4 x i8], ptr %2, i64 %.0102.us.i
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !7
   %.not90.us.i = icmp eq i32 %i.dr, %i.dt
-  br i1 %.not90.us.i, label %bb.ap, label %._crit_edge104.us.i
+  br i1 %.not90.us.i, label %bb.ap, label %bb.ai
 
-._crit_edge104.us.i:                              ; preds = %bb.ah
-  %6 = icmp eq i64 %.0102.us.i, %i.cg
-  br i1 %6, label %._crit_edge104.us.thread.i, label %bb.ai
-
-bb.ai:                                            ; preds = %._crit_edge104.us.i
+bb.ai:                                            ; preds = %bb.ah
   %i.du = add i64 %.066110.us.i, 1                ; 2 uses
   %.not91.us.i = icmp sgt i64 %i.du, %i.cz
   br i1 %.not91.us.i, label %bb.ak, label %bb.aj
@@ -2468,7 +2452,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %.167.us.i = add i64 %.078.pn.us.i, %.066110.us.i
   br label %bb.ao
 
-._crit_edge104.us.thread.i:                       ; preds = %bb.ap, %._crit_edge104.us.i
+._crit_edge104.us.thread.i:                       ; preds = %bb.ap
   br i1 %.not93.i, label %bb.am, label %ucs4lib_find_char.exit
 
 bb.am:                                            ; preds = %._crit_edge104.us.thread.i

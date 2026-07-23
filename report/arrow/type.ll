@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.bp
   %.sroa.0.0172 = phi i64 [ %i.c, %bb.b ], [ %.sroa.0.1, %bb.bp ]
   %.sroa.15.0171 = phi ptr [ %i.h, %bb.b ], [ %.sroa.15.1, %bb.bp ] ; 2 uses
   %i.m = load i8, ptr %.sroa.15.0171, align 1, !tbaa !43
-  %i.n = add i64 %.sroa.0.0172, -1                ; 7 uses
+  %i.n = add i64 %.sroa.0.0172, -1                ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.15.0171, i64 1 ; 5 uses
   switch i8 %i.m, label %bb.bj [
     i8 46, label %bb.d
@@ -607,7 +607,7 @@ bb.ay:                                            ; preds = %bb.c
   br i1 %.not96, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.ay, %bb.az
-  %.0710.i.i = phi i64 [ %i.ej, %bb.az ], [ 0, %bb.ay ] ; 5 uses
+  %.0710.i.i = phi i64 [ %i.ej, %bb.az ], [ 0, %bb.ay ] ; 4 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %i.o, i64 %.0710.i.i
   %i.ef = load i8, ptr %i.ee, align 1, !tbaa !43  ; 3 uses
   %i.eg = zext nneg i8 %i.ef to i64
@@ -734,31 +734,15 @@ bb.bh:                                            ; preds = %bb.bf
 
 _ZNSt6vectorIN5arrow8FieldRefESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit: ; preds = %bb.bh, %.noexc42
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
-  %i.fl = add nuw i64 %.0710.i.i, 1               ; 3 uses
-  %.not97 = icmp ult i64 %.0710.i.i, %i.n
-  br i1 %.not97, label %12, label %11
-
-11:                                               ; preds = %_ZNSt6vectorIN5arrow8FieldRefESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.228, ptr noundef nonnull @.str.227, i64 noundef %i.fl, i64 noundef %i.n) #39
-          to label %.noexc46 unwind label %15
-
-.noexc46:                                         ; preds = %11
-  unreachable
-
-12:                                               ; preds = %_ZNSt6vectorIN5arrow8FieldRefESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit
-  %13 = sub nuw i64 %i.n, %i.fl
-  %14 = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.fl
+  %i.fl = add nuw i64 %.0710.i.i, 1               ; 2 uses
+  %11 = sub nuw i64 %i.n, %i.fl
+  %12 = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.fl
   br label %bb.bp, !llvm.loop !1538
 
 bb.bi:                                            ; preds = %bb.bh, %bb.bg
   %i.fm = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
-  br label %bb.ca
-
-15:                                               ; preds = %11
-  %16 = landingpad { ptr, i32 }
-          cleanup
   br label %bb.ca
 
 bb.bj:                                            ; preds = %bb.c
@@ -832,9 +816,9 @@ bb.bo:                                            ; preds = %bb.bj
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #37
   br label %bb.ca
 
-bb.bp:                                            ; preds = %12, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %.sroa.15.1 = phi ptr [ %.str.53.sink.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %14, %12 ]
-  %.sroa.0.1 = phi i64 [ %.sink.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %13, %12 ] ; 2 uses
+bb.bp:                                            ; preds = %_ZNSt6vectorIN5arrow8FieldRefESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %.sroa.15.1 = phi ptr [ %.str.53.sink.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %12, %_ZNSt6vectorIN5arrow8FieldRefESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ]
+  %.sroa.0.1 = phi i64 [ %.sink.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %11, %_ZNSt6vectorIN5arrow8FieldRefESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 2 uses
   %i.gd = icmp eq i64 %.sroa.0.1, 0
   br i1 %i.gd, label %bb.bq, label %bb.c
 
@@ -996,8 +980,8 @@ _ZNSt6vectorIN5arrow8FieldRefESaIS1_EED2Ev.exit72: ; preds = %_ZSt8_DestroyIPN5a
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #37
   br label %bb.cb
 
-bb.ca:                                            ; preds = %.body, %.body54, %15, %bb.bi, %.body37, %bb.by
-  %.pn22.pn = phi { ptr, i32 } [ %i.hl, %bb.by ], [ %eh.lpad-body55, %.body54 ], [ %.pn20, %.body ], [ %i.fm, %bb.bi ], [ %eh.lpad-body38, %.body37 ], [ %16, %15 ]
+bb.ca:                                            ; preds = %.body, %.body54, %bb.bi, %.body37, %bb.by
+  %.pn22.pn = phi { ptr, i32 } [ %i.hl, %bb.by ], [ %eh.lpad-body55, %.body54 ], [ %.pn20, %.body ], [ %i.fm, %bb.bi ], [ %eh.lpad-body38, %.body37 ]
   call void @_ZNSt6vectorIN5arrow8FieldRefESaIS1_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %5) #37
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #37
   resume { ptr, i32 } %.pn22.pn
