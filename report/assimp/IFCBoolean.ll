@@ -201,6 +201,7 @@ bb.dq:                                            ; preds = %.noexc388, %.noexc3
   %i.anl = insertelement <2 x double> poison, double %i.amc, i64 0
   %i.anm = insertelement <2 x double> %i.anl, double %i.amg, i64 1
   %i.ann = insertelement <2 x double> poison, double %i.amk, i64 0
+  %19 = insertelement <2 x double> poison, double %i.alb, i64 1
   br label %.lr.ph967
 
 ._crit_edge968:                                   ; preds = %.critedge10, %.critedge8
@@ -238,12 +239,11 @@ bb.dq:                                            ; preds = %.noexc388, %.noexc3
   %i.aom = fsub double %i.aof, %i.amo             ; 2 uses
   %i.aon = fsub double %i.aol, %i.amq             ; 2 uses
   %i.aoo = fmul double %i.ald, %i.aon
-  %19 = insertelement <2 x double> %i.ann, double %i.aom, i64 1
-  %i.aop = insertelement <2 x double> poison, double %i.anx, i64 0
-  %i.aoq = insertelement <2 x double> %i.aop, double %i.alb, i64 1
+  %i.aop = insertelement <2 x double> %i.ann, double %i.aom, i64 1
+  %i.aoq = insertelement <2 x double> %19, double %i.anx, i64 0
   %i.aor = shufflevector <2 x double> %i.aoj, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.aos = insertelement <2 x double> %i.aor, double %i.aoo, i64 1
-  %i.aot = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %19, <2 x double> %i.aoq, <2 x double> %i.aos) ; 2 uses
+  %i.aot = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aop, <2 x double> %i.aoq, <2 x double> %i.aos) ; 2 uses
   %i.aou = extractelement <2 x double> %i.aot, i64 0
   %i.aov = fadd double %i.amm, %i.aou
   %i.aow = fsub double %i.aov, %.sroa.17.0        ; 2 uses
