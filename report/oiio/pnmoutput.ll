@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.g
 
 _ZNK9Imath_3_14halfcvfEv.exit.us.us:              ; preds = %bb.i, %bb.h, %bb.f, %bb.e
   %.sroa.0.0.i.i.us.us = phi i32 [ %i.ai, %bb.i ], [ %i.ah, %bb.h ], [ %i.ae, %bb.f ], [ %i.w, %bb.e ]
-  %i.aj = call noundef i32 @llvm.bswap.i32(i32 %.sroa.0.0.i.i.us.us)
+  %i.aj = call i32 @llvm.bswap.i32(i32 %.sroa.0.0.i.i.us.us)
   store i32 %i.aj, ptr %i.a, align 4, !tbaa !66
   %i.ak = call noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull %i.a, i64 noundef 4, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
@@ -311,7 +311,7 @@ bb.q:                                             ; preds = %bb.a
   %i.bt = zext i32 %i.bs to i64
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.bt
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !66
-  %i.bw = call noundef i32 @llvm.bswap.i32(i32 %i.bv)
+  %i.bw = call i32 @llvm.bswap.i32(i32 %i.bv)
   store i32 %i.bw, ptr %i.b, align 4, !tbaa !66
   %i.bx = call noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull %i.b, i64 noundef 4, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
@@ -388,7 +388,7 @@ bb.t:                                             ; preds = %bb.a
   %i.cs = load double, ptr %i.cr, align 8, !tbaa !71
   %i.ct = fptrunc double %i.cs to float
   %.promoted.us.us.cast = bitcast float %i.ct to i32
-  %i.cu = call noundef i32 @llvm.bswap.i32(i32 %.promoted.us.us.cast)
+  %i.cu = call i32 @llvm.bswap.i32(i32 %.promoted.us.us.cast)
   store i32 %i.cu, ptr %i.c, align 4, !tbaa !66
   %i.cv = call noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull %i.c, i64 noundef 4, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #26

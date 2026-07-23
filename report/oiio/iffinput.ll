@@ -204,28 +204,28 @@ bb.j:                                             ; preds = %bb.h, %bb.h
 
 .lr.ph.i.i71.preheader:                           ; preds = %.lr.ph.i.i65.preheader
   %.promoted = load i16, ptr %i.e, align 2, !tbaa !24
-  %i.ap = call noundef i16 @llvm.bswap.i16(i16 %.promoted)
+  %i.ap = call i16 @llvm.bswap.i16(i16 %.promoted)
   store i16 %i.ap, ptr %i.e, align 2, !tbaa !24
   %i.aq = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.f, i64 noundef 2, i64 noundef 1)
   br i1 %i.aq, label %.lr.ph.i.i76.preheader, label %_ZN11OpenImageIO4v3_18IffInput4readIjEEbPT_m.exit
 
 .lr.ph.i.i76.preheader:                           ; preds = %.lr.ph.i.i71.preheader
   %.promoted162 = load i16, ptr %i.f, align 2, !tbaa !24
-  %i.ar = call noundef i16 @llvm.bswap.i16(i16 %.promoted162)
+  %i.ar = call i16 @llvm.bswap.i16(i16 %.promoted162)
   store i16 %i.ar, ptr %i.f, align 2, !tbaa !24
   %i.as = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.c, i64 noundef 4, i64 noundef 1)
   br i1 %i.as, label %.lr.ph.i.i82.preheader, label %_ZN11OpenImageIO4v3_18IffInput4readIjEEbPT_m.exit
 
 .lr.ph.i.i82.preheader:                           ; preds = %.lr.ph.i.i76.preheader
   %.promoted164 = load i32, ptr %i.c, align 4, !tbaa !3
-  %i.at = call noundef i32 @llvm.bswap.i32(i32 %.promoted164)
+  %i.at = call i32 @llvm.bswap.i32(i32 %.promoted164)
   store i32 %i.at, ptr %i.c, align 4, !tbaa !3
   %i.au = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.d, i64 noundef 2, i64 noundef 1)
   br i1 %i.au, label %.lr.ph.i.i88.preheader, label %_ZN11OpenImageIO4v3_18IffInput4readIjEEbPT_m.exit
 
 .lr.ph.i.i88.preheader:                           ; preds = %.lr.ph.i.i82.preheader
   %.promoted166 = load i16, ptr %i.d, align 2, !tbaa !24
-  %i.av = call noundef i16 @llvm.bswap.i16(i16 %.promoted166)
+  %i.av = call i16 @llvm.bswap.i16(i16 %.promoted166)
   store i16 %i.av, ptr %i.d, align 2, !tbaa !24
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 242 ; 6 uses
   %i.ax = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.aw, i64 noundef 2, i64 noundef 1)
@@ -628,28 +628,28 @@ bb.bg:                                            ; preds = %bb.bf
 
 .lr.ph.i.i131.preheader:                          ; preds = %bb.bg
   %.promoted173 = load i16, ptr %i.g, align 2, !tbaa !24
-  %i.fs = call noundef i16 @llvm.bswap.i16(i16 %.promoted173)
+  %i.fs = call i16 @llvm.bswap.i16(i16 %.promoted173)
   store i16 %i.fs, ptr %i.g, align 2, !tbaa !24
   %i.ft = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.i, i64 noundef 2, i64 noundef 1)
   br i1 %i.ft, label %.lr.ph.i.i137.preheader, label %_ZN11OpenImageIO4v3_18IffInput4readItEEbPT_m.exit135
 
 .lr.ph.i.i137.preheader:                          ; preds = %.lr.ph.i.i131.preheader
   %.promoted175 = load i16, ptr %i.i, align 2, !tbaa !24
-  %i.fu = call noundef i16 @llvm.bswap.i16(i16 %.promoted175)
+  %i.fu = call i16 @llvm.bswap.i16(i16 %.promoted175)
   store i16 %i.fu, ptr %i.i, align 2, !tbaa !24
   %i.fv = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.h, i64 noundef 2, i64 noundef 1)
   br i1 %i.fv, label %.lr.ph.i.i143.preheader, label %_ZN11OpenImageIO4v3_18IffInput4readItEEbPT_m.exit135
 
 .lr.ph.i.i143.preheader:                          ; preds = %.lr.ph.i.i137.preheader
   %.promoted177 = load i16, ptr %i.h, align 2, !tbaa !24
-  %i.fw = call noundef i16 @llvm.bswap.i16(i16 %.promoted177)
+  %i.fw = call i16 @llvm.bswap.i16(i16 %.promoted177)
   store i16 %i.fw, ptr %i.h, align 2, !tbaa !24
   %i.fx = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.j, i64 noundef 2, i64 noundef 1)
   br i1 %i.fx, label %.lr.ph.i.i149.preheader, label %_ZN11OpenImageIO4v3_18IffInput4readItEEbPT_m.exit135
 
 .lr.ph.i.i149.preheader:                          ; preds = %.lr.ph.i.i143.preheader
   %.promoted179 = load i16, ptr %i.j, align 2, !tbaa !24
-  %i.fy = call noundef i16 @llvm.bswap.i16(i16 %.promoted179) ; 3 uses
+  %i.fy = call i16 @llvm.bswap.i16(i16 %.promoted179) ; 3 uses
   %i.fz = load i16, ptr %i.g, align 2, !tbaa !24  ; 2 uses
   %i.ga = load i16, ptr %i.h, align 2, !tbaa !24  ; 3 uses
   %i.gb = zext i16 %i.ga to i32
@@ -1052,28 +1052,28 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.h
   %.promoted948 = load i16, ptr %i.c, align 2, !tbaa !24
-  %i.cc = call noundef i16 @llvm.bswap.i16(i16 %.promoted948)
+  %i.cc = call i16 @llvm.bswap.i16(i16 %.promoted948)
   store i16 %i.cc, ptr %i.c, align 2, !tbaa !24
   %i.cd = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.e, i64 noundef 2, i64 noundef 1)
   br i1 %i.cd, label %.lr.ph.i.i515.preheader, label %_ZN11OpenImageIO4v3_18IffInput4readItEEbPT_m.exit
 
 .lr.ph.i.i515.preheader:                          ; preds = %.lr.ph.i.i.preheader
   %.promoted950 = load i16, ptr %i.e, align 2, !tbaa !24
-  %i.ce = call noundef i16 @llvm.bswap.i16(i16 %.promoted950)
+  %i.ce = call i16 @llvm.bswap.i16(i16 %.promoted950)
   store i16 %i.ce, ptr %i.e, align 2, !tbaa !24
   %i.cf = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.d, i64 noundef 2, i64 noundef 1)
   br i1 %i.cf, label %.lr.ph.i.i521.preheader, label %_ZN11OpenImageIO4v3_18IffInput4readItEEbPT_m.exit
 
 .lr.ph.i.i521.preheader:                          ; preds = %.lr.ph.i.i515.preheader
   %.promoted952 = load i16, ptr %i.d, align 2, !tbaa !24
-  %i.cg = call noundef i16 @llvm.bswap.i16(i16 %.promoted952)
+  %i.cg = call i16 @llvm.bswap.i16(i16 %.promoted952)
   store i16 %i.cg, ptr %i.d, align 2, !tbaa !24
   %i.ch = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.f, i64 noundef 2, i64 noundef 1)
   br i1 %i.ch, label %.lr.ph.i.i527.preheader, label %_ZN11OpenImageIO4v3_18IffInput4readItEEbPT_m.exit
 
 .lr.ph.i.i527.preheader:                          ; preds = %.lr.ph.i.i521.preheader
   %.promoted954 = load i16, ptr %i.f, align 2, !tbaa !24
-  %i.ci = call noundef i16 @llvm.bswap.i16(i16 %.promoted954) ; 3 uses
+  %i.ci = call i16 @llvm.bswap.i16(i16 %.promoted954) ; 3 uses
   store i16 %i.ci, ptr %i.f, align 2, !tbaa !24
   %i.cj = load i16, ptr %i.d, align 2, !tbaa !24  ; 2 uses
   %i.ck = zext i16 %i.cj to i32                   ; 2 uses
@@ -1476,7 +1476,7 @@ bb.ct:                                            ; preds = %.lr.ph963
   %i.vd = and i64 %i.vc, 4294967294
   %i.ve = getelementptr inbounds nuw i8, ptr %i.uw, i64 %i.vd
   %i.vf = load i16, ptr %i.ve, align 1
-  %i.vg = call noundef i16 @llvm.bswap.i16(i16 %i.vf)
+  %i.vg = call i16 @llvm.bswap.i16(i16 %i.vf)
   store i16 %i.vg, ptr %.sroa.0731.1960, align 2, !tbaa !24
   %i.vh = add i64 %.sroa.7733.1959, -1            ; 2 uses
   %i.vi = getelementptr inbounds nuw i8, ptr %.sroa.0731.1960, i64 2 ; 2 uses
@@ -1695,28 +1695,28 @@ bb.dk:                                            ; preds = %bb.dj
 
 .lr.ph.i.i618.preheader:                          ; preds = %bb.dk
   %.promoted = load i16, ptr %i.s, align 2, !tbaa !24
-  %i.xb = call noundef i16 @llvm.bswap.i16(i16 %.promoted)
+  %i.xb = call i16 @llvm.bswap.i16(i16 %.promoted)
   store i16 %i.xb, ptr %i.s, align 2, !tbaa !24
   %i.xc = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.u, i64 noundef 2, i64 noundef 1)
   br i1 %i.xc, label %.lr.ph.i.i624.preheader, label %.thread852
 
 .lr.ph.i.i624.preheader:                          ; preds = %.lr.ph.i.i618.preheader
   %.promoted917 = load i16, ptr %i.u, align 2, !tbaa !24
-  %i.xd = call noundef i16 @llvm.bswap.i16(i16 %.promoted917)
+  %i.xd = call i16 @llvm.bswap.i16(i16 %.promoted917)
   store i16 %i.xd, ptr %i.u, align 2, !tbaa !24
   %i.xe = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.t, i64 noundef 2, i64 noundef 1)
   br i1 %i.xe, label %.lr.ph.i.i630.preheader, label %.thread852
 
 .lr.ph.i.i630.preheader:                          ; preds = %.lr.ph.i.i624.preheader
   %.promoted919 = load i16, ptr %i.t, align 2, !tbaa !24
-  %i.xf = call noundef i16 @llvm.bswap.i16(i16 %.promoted919)
+  %i.xf = call i16 @llvm.bswap.i16(i16 %.promoted919)
   store i16 %i.xf, ptr %i.t, align 2, !tbaa !24
   %i.xg = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull %i.v, i64 noundef 2, i64 noundef 1)
   br i1 %i.xg, label %.lr.ph.i.i636.preheader, label %.thread852
 
 .lr.ph.i.i636.preheader:                          ; preds = %.lr.ph.i.i630.preheader
   %.promoted921 = load i16, ptr %i.v, align 2, !tbaa !24
-  %i.xh = call noundef i16 @llvm.bswap.i16(i16 %.promoted921) ; 3 uses
+  %i.xh = call i16 @llvm.bswap.i16(i16 %.promoted921) ; 3 uses
   store i16 %i.xh, ptr %i.v, align 2, !tbaa !24
   %i.xi = load i16, ptr %i.t, align 2, !tbaa !24  ; 2 uses
   %i.xj = zext i16 %i.xi to i32                   ; 2 uses

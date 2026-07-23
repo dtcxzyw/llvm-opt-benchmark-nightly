@@ -201,7 +201,7 @@ _ZN11OpenImageIO4v3_13pvt7dataptrERK12TIFFDirEntryNS0_4spanIKhLm1844674407370955
   %i.t = sext i32 %i.q to i64
   %i.u = getelementptr inbounds [2 x i8], ptr %.1.i33, i64 %i.t
   %i.v = load i16, ptr %i.u, align 2, !tbaa !16
-  %i.w = call noundef i16 @llvm.bswap.i16(i16 %i.v)
+  %i.w = call i16 @llvm.bswap.i16(i16 %i.v)
   %i.x = sext i16 %i.w to i32                     ; 2 uses
   %.not25.us = icmp eq i32 %8, %i.x
   br i1 %.not25.us, label %bb.g, label %bb.e
@@ -342,7 +342,7 @@ _ZN11OpenImageIO4v3_13pvt7dataptrERK12TIFFDirEntryNS0_4spanIKhLm1844674407370955
   %i.t = sext i32 %i.q to i64
   %i.u = getelementptr inbounds [2 x i8], ptr %.1.i33, i64 %i.t
   %i.v = load i16, ptr %i.u, align 2, !tbaa !16
-  %i.w = call noundef i16 @llvm.bswap.i16(i16 %i.v)
+  %i.w = call i16 @llvm.bswap.i16(i16 %i.v)
   %i.x = zext i16 %i.w to i32                     ; 2 uses
   %.not25.us = icmp eq i32 %8, %i.x
   br i1 %.not25.us, label %bb.g, label %bb.e

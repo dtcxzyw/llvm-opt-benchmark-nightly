@@ -204,7 +204,7 @@ _ZN11OpenImageIO4v3_19RLAOutput5writeItEEbPKT_m.exit: ; preds = %bb.a
   %i.i = shl i16 %i.h, 2
   %savedstack = tail call ptr @llvm.stacksave.p0()
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.j = tail call noundef i16 @llvm.bswap.i16(i16 %i.i)
+  %i.j = tail call i16 @llvm.bswap.i16(i16 %i.i)
   store i16 %i.j, ptr %i.a, align 16, !tbaa !77
   %i.k = call noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput7iowriteEPKvmm(ptr noundef nonnull align 8 dereferenceable(1032) %0, ptr noundef nonnull %i.a, i64 noundef 2, i64 noundef 1) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
