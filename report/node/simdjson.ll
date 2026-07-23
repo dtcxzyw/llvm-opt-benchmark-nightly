@@ -203,16 +203,16 @@ _ZNK8simdjson8westmere12_GLOBAL__N_16stage116buf_block_readerILm64EE13get_remain
   %i.pu = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.11.0.lcssa1595.i
   %i.pv = sub i64 %.01315811594.i, %.sroa.11.0.lcssa1595.i
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr readonly align 1 %i.pu, i64 %i.pv, i1 false)
-  %.0..0..0..0..0..i = load <2 x i64>, ptr %i.a, align 16 ; 4 uses
+  %.0..0..0..0..0..i = load <2 x i64>, ptr %i.a, align 16 ; 6 uses
   %.16..16..16..16..16..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.16..16..16..16..16..i = load <2 x i64>, ptr %.16..16..16..16..16..sroa_idx, align 16 ; 4 uses
+  %.16..16..16..16..16..i = load <2 x i64>, ptr %.16..16..16..16..16..sroa_idx, align 16 ; 6 uses
   %.32..32..32..32..32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %.32..32..32..32..32..i = load <2 x i64>, ptr %.32..32..32..32..32..sroa_idx, align 16 ; 4 uses
   %.48..48..48..48..48..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %.48..48..48..48..48..i = load <2 x i64>, ptr %.48..48..48..48..48..sroa_idx, align 16 ; 4 uses
-  %i.pw = bitcast <2 x i64> %.0..0..0..0..0..i to <16 x i8> ; 12 uses
+  %i.pw = bitcast <2 x i64> %.0..0..0..0..0..i to <16 x i8> ; 10 uses
   %i.px = icmp eq <16 x i8> %i.pw, splat (i8 92)
-  %i.py = bitcast <2 x i64> %.16..16..16..16..16..i to <16 x i8> ; 12 uses
+  %i.py = bitcast <2 x i64> %.16..16..16..16..16..i to <16 x i8> ; 10 uses
   %i.pz = icmp eq <16 x i8> %i.py, splat (i8 92)
   %i.qa = bitcast <2 x i64> %.32..32..32..32..32..i to <16 x i8> ; 12 uses
   %i.qb = icmp eq <16 x i8> %i.qa, splat (i8 92)
@@ -273,8 +273,9 @@ _ZN8simdjson8westmere12_GLOBAL__N_16stage123json_structural_indexer4stepILm64EEE
   %i.rw = bitcast <16 x i1> %i.rt to i16
   %i.rx = zext i16 %i.rw to i64
   %i.ry = shufflevector <16 x i8> %i.ro, <16 x i8> %i.rp, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %4 = shufflevector <16 x i8> %i.pw, <16 x i8> %i.py, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %i.rz = icmp eq <32 x i8> %i.ry, %4
+  %4 = shufflevector <2 x i64> %.0..0..0..0..0..i, <2 x i64> %.16..16..16..16..16..i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %5 = bitcast <4 x i64> %4 to <32 x i8>
+  %i.rz = icmp eq <32 x i8> %i.ry, %5
   %i.sa = bitcast <32 x i1> %i.rz to i32
   %i.sb = zext i32 %i.sa to i64
   %i.sc = shl nuw nsw i64 %i.rv, 32
@@ -318,8 +319,9 @@ _ZN8simdjson8westmere12_GLOBAL__N_16stage123json_structural_indexer4stepILm64EEE
   %i.to = zext i16 %i.tn to i64
   %i.tp = bitcast <16 x i1> %i.tm to i16
   %i.tq = zext i16 %i.tp to i64
-  %5 = shufflevector <16 x i8> %i.pw, <16 x i8> %i.py, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %i.tr = icmp ult <32 x i8> %5, splat (i8 32)
+  %6 = shufflevector <2 x i64> %.0..0..0..0..0..i, <2 x i64> %.16..16..16..16..16..i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %7 = bitcast <4 x i64> %6 to <32 x i8>
+  %i.tr = icmp ult <32 x i8> %7, splat (i8 32)
   %i.ts = bitcast <32 x i1> %i.tr to i32
   %i.tt = zext i32 %i.ts to i64
   %i.tu = shl nuw nsw i64 %i.to, 32
