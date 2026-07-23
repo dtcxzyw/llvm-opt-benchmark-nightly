@@ -201,7 +201,7 @@ _ZN2v88internal31SharedStringAccessGuardIfNeededD2Ev.exit.i: ; preds = %bb.af, %
   %i.fr = load ptr, ptr %5, align 8               ; 4 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.ft = load i32, ptr %i.fs, align 8            ; 2 uses
-  %i.fu = zext i32 %i.ft to i64                   ; 11 uses
+  %i.fu = zext i32 %i.ft to i64                   ; 9 uses
   %.not17.i.i = icmp eq i32 %i.ft, 0              ; 2 uses
   br i1 %i.fq, label %bb.ag, label %bb.aj
 
@@ -255,7 +255,7 @@ _ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorI
   br label %bb.ao
 
 .lr.ph.i13.i:                                     ; preds = %bb.aj, %bb.al
-  %storemerge18.i.i = phi i64 [ %i.gv, %bb.al ], [ 0, %bb.aj ] ; 9 uses
+  %storemerge18.i.i = phi i64 [ %i.gv, %bb.al ], [ 0, %bb.aj ] ; 7 uses
   %i.gl = getelementptr inbounds nuw [2 x i8], ptr %i.fr, i64 %storemerge18.i.i
   %i.gm = load i16, ptr %i.gl, align 2            ; 3 uses
   %i.gn = icmp ult i16 %i.gm, 256
@@ -267,7 +267,10 @@ bb.ak:                                            ; preds = %.lr.ph.i13.i
   %i.gq = load i8, ptr %i.gp, align 1
   %i.gr = and i8 %i.gq, 8
   %.not.i19.i = icmp eq i8 %i.gr, 0
-  br i1 %.not.i19.i, label %.critedge.i14.i, label %bb.al
+  br i1 %.not.i19.i, label %.lr.ph23.i.i.preheader, label %bb.al
+
+.lr.ph23.i.i.preheader:                           ; preds = %_ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit.i.i, %bb.ak
+  br label %.lr.ph23.i.i
 
 _ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit.i.i: ; preds = %.lr.ph.i13.i
   %i.gs = zext i16 %i.gm to i32                   ; 2 uses
@@ -275,19 +278,15 @@ _ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit.i.i: ; preds = %.lr.ph.i13.
   %i.gu = and i32 %i.gs, 65534
   %switch.i.i.i = icmp eq i32 %i.gu, 8232
   %or.cond.i.i.i = or i1 %switch.i.i.i, %i.gt
-  br i1 %or.cond.i.i.i, label %bb.al, label %.critedge.i14.i
+  br i1 %or.cond.i.i.i, label %bb.al, label %.lr.ph23.i.i.preheader
 
 bb.al:                                            ; preds = %_ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit.i.i, %bb.ak
   %i.gv = add nuw nsw i64 %storemerge18.i.i, 1    ; 2 uses
   %exitcond.not.i18.i = icmp eq i64 %i.gv, %i.fu
   br i1 %exitcond.not.i18.i, label %_ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorIhEESt4pairIiiENS_4base6VectorIKT_EE.exit.i, label %.lr.ph.i13.i, !llvm.loop !209
 
-.critedge.i14.i:                                  ; preds = %_ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit.i.i, %bb.ak
-  %8 = icmp samesign ult i64 %storemerge18.i.i, %i.fu
-  br i1 %8, label %.lr.ph23.i.i, label %_ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorIhEESt4pairIiiENS_4base6VectorIKT_EE.exit.i
-
-.lr.ph23.i.i:                                     ; preds = %.critedge.i14.i, %bb.an
-  %storemerge322.i.i = phi i64 [ %i.gw, %bb.an ], [ %i.fu, %.critedge.i14.i ] ; 3 uses
+.lr.ph23.i.i:                                     ; preds = %.lr.ph23.i.i.preheader, %bb.an
+  %storemerge322.i.i = phi i64 [ %i.gw, %bb.an ], [ %i.fu, %.lr.ph23.i.i.preheader ] ; 3 uses
   %i.gw = add i64 %storemerge322.i.i, -1          ; 3 uses
   %i.gx = getelementptr inbounds nuw [2 x i8], ptr %i.fr, i64 %i.gw
   %i.gy = load i16, ptr %i.gx, align 2            ; 3 uses
@@ -317,9 +316,9 @@ bb.an:                                            ; preds = %_ZN2v88internal28Is
 ._ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorIhEESt4pairIiiENS_4base6VectorIKT_EE.exit.i.loopexit_crit_edge371: ; preds = %.lr.ph
   br label %_ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorIhEESt4pairIiiENS_4base6VectorIKT_EE.exit.i, !llvm.loop !208
 
-_ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorIhEESt4pairIiiENS_4base6VectorIKT_EE.exit.i: ; preds = %bb.al, %bb.an, %_ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit7.i.i, %bb.am, %bb.ai, %.critedge.i.i, %._ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorIhEESt4pairIiiENS_4base6VectorIKT_EE.exit.i.loopexit_crit_edge371, %.critedge.i14.i
-  %.sroa.7.0.in.i = phi i64 [ %umin.i.i, %bb.ai ], [ %storemerge322.i.i, %bb.am ], [ %i.fu, %.critedge.i14.i ], [ %umin.i.i, %.critedge.i.i ], [ %storemerge3.i.i370, %._ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorIhEESt4pairIiiENS_4base6VectorIKT_EE.exit.i.loopexit_crit_edge371 ], [ %storemerge18.i.i, %bb.an ], [ %storemerge322.i.i, %_ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit7.i.i ], [ %i.fu, %bb.al ]
-  %.sroa.025.0.in.i = phi i64 [ %storemerge.lcssa.i.i, %bb.ai ], [ %storemerge18.i.i, %bb.an ], [ %storemerge18.i.i, %.critedge.i14.i ], [ %storemerge.lcssa.i.i, %.critedge.i.i ], [ %storemerge.lcssa.i.i, %._ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorIhEESt4pairIiiENS_4base6VectorIKT_EE.exit.i.loopexit_crit_edge371 ], [ %storemerge18.i.i, %bb.am ], [ %storemerge18.i.i, %_ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit7.i.i ], [ %i.fu, %bb.al ]
+_ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorIhEESt4pairIiiENS_4base6VectorIKT_EE.exit.i: ; preds = %bb.al, %bb.an, %_ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit7.i.i, %bb.am, %bb.ai, %.critedge.i.i, %._ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorIhEESt4pairIiiENS_4base6VectorIKT_EE.exit.i.loopexit_crit_edge371
+  %.sroa.7.0.in.i = phi i64 [ %umin.i.i, %bb.ai ], [ %storemerge322.i.i, %bb.am ], [ %umin.i.i, %.critedge.i.i ], [ %storemerge3.i.i370, %._ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorIhEESt4pairIiiENS_4base6VectorIKT_EE.exit.i.loopexit_crit_edge371 ], [ %storemerge322.i.i, %_ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit7.i.i ], [ %storemerge18.i.i, %bb.an ], [ %i.fu, %bb.al ]
+  %.sroa.025.0.in.i = phi i64 [ %storemerge.lcssa.i.i, %bb.ai ], [ %storemerge18.i.i, %bb.an ], [ %storemerge.lcssa.i.i, %.critedge.i.i ], [ %storemerge.lcssa.i.i, %._ZN2v88internal12_GLOBAL__N_148FindLeadingAndTrailingWhiteSpaceOrLineTerminatorIhEESt4pairIiiENS_4base6VectorIKT_EE.exit.i.loopexit_crit_edge371 ], [ %storemerge18.i.i, %bb.am ], [ %storemerge18.i.i, %_ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit7.i.i ], [ %i.fu, %bb.al ]
   %.sroa.025.0.i = trunc i64 %.sroa.025.0.in.i to i32 ; 2 uses
   %.sroa.7.0.i = trunc i64 %.sroa.7.0.in.i to i32 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22

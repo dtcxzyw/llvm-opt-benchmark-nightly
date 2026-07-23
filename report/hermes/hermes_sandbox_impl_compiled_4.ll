@@ -203,7 +203,7 @@ bb.m:                                             ; preds = %bb.k
   %.val1948 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.ck = getelementptr inbounds nuw i8, ptr %.val1948, i64 %i.ae
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 4
-  %.0.copyload.i2086 = load i32, ptr %i.cl, align 1 ; 8 uses
+  %.0.copyload.i2086 = load i32, ptr %i.cl, align 1 ; 7 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i2086) #7, !srcloc !13
   %.not1838 = icmp eq i32 %.0.copyload.i2086, 0
   %i.cm = select i1 %.not1838, i32 70392, i32 %i.cj
@@ -606,7 +606,7 @@ bb.cf:                                            ; preds = %.loopexit2163
   br label %bb.cg
 
 bb.cg:                                            ; preds = %bb.ci, %bb.cf
-  %.2 = phi i32 [ 2, %bb.cf ], [ %i.tf, %bb.ci ]  ; 3 uses
+  %.2 = phi i32 [ 2, %bb.cf ], [ %i.tf, %bb.ci ]  ; 2 uses
   %.val1972 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.sj = getelementptr inbounds nuw i8, ptr %.val1972, i64 %i.e
   %i.sk = getelementptr inbounds nuw i8, ptr %i.sj, i64 8
@@ -616,9 +616,7 @@ bb.cg:                                            ; preds = %bb.ci, %bb.cf
   store i32 1, ptr %i.sl, align 1
   %i.sm = shl i32 %.2, 3
   %i.sn = sub i32 %i.cj, %i.sm
-  %.not1861 = icmp ult i32 %.2, %.0.copyload.i2086
-  %5 = select i1 %.not1861, i32 %i.sn, i32 70392
-  tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AJSObject0x3A0x3AputComputedWithReceiver_RJS0x28hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AJSObject0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3APropOpFlags0x29(ptr noundef nonnull %0, i32 noundef %i.lb, i32 noundef %.01807, i32 noundef %3, i32 noundef %.01803, i32 noundef %5, i32 noundef %.01807, i32 noundef %i.si) #7
+  tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AJSObject0x3A0x3AputComputedWithReceiver_RJS0x28hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AJSObject0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3APropOpFlags0x29(ptr noundef nonnull %0, i32 noundef %i.lb, i32 noundef %.01807, i32 noundef %3, i32 noundef %.01803, i32 noundef %i.sn, i32 noundef %.01807, i32 noundef %i.si) #7
   %.val2042 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.so = getelementptr inbounds nuw i8, ptr %.val2042, i64 %i.ld
   %.0.copyload.i2149 = load i8, ptr %i.so, align 1 ; 2 uses

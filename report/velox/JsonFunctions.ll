@@ -204,8 +204,6 @@ begin_hunk_0
 @.str.223 = private unnamed_addr constant [3 x i8] c"[]\00", align 1
 @.str.224 = private unnamed_addr constant [2 x i8] c",\00", align 1
 @_ZSt7nothrow = external global %"struct.std::nothrow_t", align 1
-@.str.229 = private unnamed_addr constant [26 x i8] c"basic_string_view::substr\00", align 1
-@.str.230 = private unnamed_addr constant [49 x i8] c"%s: __pos (which is %zu) > __size (which is %zu)\00", align 1
 @_ZZZZN8facebook5velox7Variant11dynamicFreeEvENKUlvE_clEvENKUlvE_clEvE18veloxCheckFailArgs = linkonce_odr constant %"struct.facebook::velox::detail::VeloxCheckFailArgs" { ptr @.str.233, i64 599, ptr @.str.64, ptr @.str, ptr @_ZN8facebook5velox12error_source19kErrorSourceRuntimeE, ptr @_ZN8facebook5velox10error_code13kInvalidStateE, i8 0 }, comdat, align 8
 @.str.233 = private unnamed_addr constant [51 x i8] c"/opt-bench/work/velox/velox/./velox/type/Variant.h\00", align 1
 @_ZZZZN8facebook5velox7Variant11dynamicFreeEvENKUlvE0_clEvENKUlvE_clEvE18veloxCheckFailArgs = linkonce_odr constant %"struct.facebook::velox::detail::VeloxCheckFailArgs" { ptr @.str.233, i64 601, ptr @.str.64, ptr @.str, ptr @_ZN8facebook5velox12error_source19kErrorSourceRuntimeE, ptr @_ZN8facebook5velox10error_code13kInvalidStateE, i8 0 }, comdat, align 8
@@ -607,9 +605,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv.exit: ; pred
   store i64 %.0, ptr %i.h, align 8, !tbaa !20
   ret void
 }
-
-; Function Attrs: noreturn
-declare void @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef, ...) local_unnamed_addr #9
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -1013,12 +1008,12 @@ _ZN8simdjson8fallback8ondemand13json_iterator10skip_childEi.exit.i.thread: ; pre
   %i.bd = phi ptr [ %i.o, %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit.i.thread ], [ %i.k, %bb.a ], [ %i.p, %bb.f ], [ %i.p, %bb.c ], [ %i.ar, %bb.i ]
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !3, !noalias !2417
   %i.bf = zext i32 %i.be to i64
-  %gepdiff = sub nsw i64 %i.bf, %i.e              ; 6 uses
+  %gepdiff = sub nsw i64 %i.bf, %i.e              ; 4 uses
   %.not.i12 = icmp eq i64 %gepdiff, 0
   br i1 %.not.i12, label %_ZN8simdjson4trimESt17basic_string_viewIcSt11char_traitsIcEE.exit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %_ZN8simdjson8fallback8ondemand13json_iterator10skip_childEi.exit.i.thread, %bb.k
-  %.0710.i.i.i = phi i64 [ %i.bl, %bb.k ], [ 0, %_ZN8simdjson8fallback8ondemand13json_iterator10skip_childEi.exit.i.thread ] ; 8 uses
+  %.0710.i.i.i = phi i64 [ %i.bl, %bb.k ], [ 0, %_ZN8simdjson8fallback8ondemand13json_iterator10skip_childEi.exit.i.thread ] ; 6 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.f, i64 %.0710.i.i.i
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !20  ; 2 uses
   %i.bi = zext nneg i8 %i.bh to i64
@@ -1050,37 +1045,19 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i:  ; preds = %_ZNKSt17basic_strin
   %i.bs = and i64 %i.br, 4294977024
   %memchr.bits25.i = icmp eq i64 %i.bs, 0
   %memchr.not26.i = select i1 %memchr.bounds24.i, i1 true, i1 %memchr.bits25.i
-  br i1 %memchr.not26.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i, label %bb.l
+  br i1 %memchr.not26.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i
   %.not15.i.i.i = icmp eq i64 %.1.i.i.i, 0
-  br i1 %.not15.i.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i, !llvm.loop !2419
+  br i1 %.not15.i.i.i, label %bb.m, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i, !llvm.loop !2419
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i: ; preds = %bb.l, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i
+bb.m:                                             ; preds = %bb.l, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i
   %.010.i.i.i = phi i64 [ %.1.i.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i ], [ -1, %bb.l ]
-  %2 = icmp ugt i64 %.0710.i.i.i, %gepdiff
-  br i1 %2, label %3, label %bb.m
-
-3:                                                ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.230, ptr noundef nonnull @.str.229, i64 noundef %.0710.i.i.i, i64 noundef %gepdiff) #49
-          to label %.noexc.i unwind label %4
-
-.noexc.i:                                         ; preds = %3
-  unreachable
-
-bb.m:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i
   %reass.sub = sub i64 %.010.i.i.i, %.0710.i.i.i
   %i.bt = add i64 %reass.sub, 1
   %i.bu = sub nuw i64 %gepdiff, %.0710.i.i.i
   %.sroa.speculated.i.i = tail call i64 @llvm.umin.i64(i64 %i.bu, i64 %i.bt)
   br label %_ZN8simdjson4trimESt17basic_string_viewIcSt11char_traitsIcEE.exit
-
-4:                                                ; preds = %3
-  %5 = landingpad { ptr, i32 }
-          catch ptr null
-  %6 = extractvalue { ptr, i32 } %5, 0
-  tail call void @__clang_call_terminate(ptr %6) #48
-  unreachable
 
 _ZN8simdjson4trimESt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %bb.k, %_ZN8simdjson8fallback8ondemand13json_iterator10skip_childEi.exit.i.thread, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i, %bb.m
   %.sroa.3.0.i = phi ptr [ %i.bm, %bb.m ], [ null, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ null, %_ZN8simdjson8fallback8ondemand13json_iterator10skip_childEi.exit.i.thread ], [ null, %bb.k ]
@@ -1287,12 +1264,12 @@ _ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_tra
   %i.bz = phi ptr [ %.pre, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread..loopexit_crit_edge ], [ %i.al, %bb.j ], [ %i.al, %bb.g ], [ %i.bn, %bb.m ]
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !3, !noalias !2420
   %i.cb = zext i32 %i.ca to i64
-  %gepdiff = sub nsw i64 %i.cb, %i.f              ; 6 uses
+  %gepdiff = sub nsw i64 %i.cb, %i.f              ; 4 uses
   %.not.i14 = icmp eq i64 %gepdiff, 0
   br i1 %.not.i14, label %_ZN8simdjson4trimESt17basic_string_viewIcSt11char_traitsIcEE.exit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %.loopexit, %bb.o
-  %.0710.i.i.i = phi i64 [ %i.ch, %bb.o ], [ 0, %.loopexit ] ; 8 uses
+  %.0710.i.i.i = phi i64 [ %i.ch, %bb.o ], [ 0, %.loopexit ] ; 6 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.g, i64 %.0710.i.i.i
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !20  ; 2 uses
   %i.ce = zext nneg i8 %i.cd to i64
@@ -1324,37 +1301,19 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i:  ; preds = %_ZNKSt17basic_strin
   %i.co = and i64 %i.cn, 4294977024
   %memchr.bits25.i = icmp eq i64 %i.co, 0
   %memchr.not26.i = select i1 %memchr.bounds24.i, i1 true, i1 %memchr.bits25.i
-  br i1 %memchr.not26.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i, label %bb.p
+  br i1 %memchr.not26.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i
   %.not15.i.i.i = icmp eq i64 %.1.i.i.i, 0
-  br i1 %.not15.i.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i, !llvm.loop !2419
+  br i1 %.not15.i.i.i, label %bb.q, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i, !llvm.loop !2419
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i: ; preds = %bb.p, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i
+bb.q:                                             ; preds = %bb.p, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i
   %.010.i.i.i = phi i64 [ %.1.i.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i ], [ -1, %bb.p ]
-  %2 = icmp ugt i64 %.0710.i.i.i, %gepdiff
-  br i1 %2, label %3, label %bb.q
-
-3:                                                ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.230, ptr noundef nonnull @.str.229, i64 noundef %.0710.i.i.i, i64 noundef %gepdiff) #49
-          to label %.noexc.i unwind label %4
-
-.noexc.i:                                         ; preds = %3
-  unreachable
-
-bb.q:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i
   %reass.sub = sub i64 %.010.i.i.i, %.0710.i.i.i
   %i.cp = add i64 %reass.sub, 1
   %i.cq = sub nuw i64 %gepdiff, %.0710.i.i.i
   %.sroa.speculated.i.i = tail call i64 @llvm.umin.i64(i64 %i.cq, i64 %i.cp)
   br label %_ZN8simdjson4trimESt17basic_string_viewIcSt11char_traitsIcEE.exit
-
-4:                                                ; preds = %3
-  %5 = landingpad { ptr, i32 }
-          catch ptr null
-  %6 = extractvalue { ptr, i32 } %5, 0
-  tail call void @__clang_call_terminate(ptr %6) #48
-  unreachable
 
 _ZN8simdjson4trimESt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %bb.o, %.loopexit, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i, %bb.q
   %.sroa.3.0.i = phi ptr [ %i.ci, %bb.q ], [ null, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ null, %.loopexit ], [ null, %bb.o ]
@@ -1494,12 +1453,12 @@ bb.j:                                             ; preds = %.lr.ph, %bb.i, %bb.
   %i.az = phi ptr [ %.pre, %bb.a ], [ %i.l, %bb.f ], [ %i.l, %bb.c ], [ %i.an, %bb.i ]
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !3, !noalias !2423
   %i.bb = zext i32 %i.ba to i64
-  %gepdiff = sub nsw i64 %i.bb, %i.f              ; 6 uses
+  %gepdiff = sub nsw i64 %i.bb, %i.f              ; 4 uses
   %.not.i12 = icmp eq i64 %gepdiff, 0
   br i1 %.not.i12, label %_ZN8simdjson4trimESt17basic_string_viewIcSt11char_traitsIcEE.exit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %.loopexit, %bb.k
-  %.0710.i.i.i = phi i64 [ %i.bh, %bb.k ], [ 0, %.loopexit ] ; 8 uses
+  %.0710.i.i.i = phi i64 [ %i.bh, %bb.k ], [ 0, %.loopexit ] ; 6 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.g, i64 %.0710.i.i.i
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !20  ; 2 uses
   %i.be = zext nneg i8 %i.bd to i64
@@ -1531,37 +1490,19 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i:  ; preds = %_ZNKSt17basic_strin
   %i.bo = and i64 %i.bn, 4294977024
   %memchr.bits25.i = icmp eq i64 %i.bo, 0
   %memchr.not26.i = select i1 %memchr.bounds24.i, i1 true, i1 %memchr.bits25.i
-  br i1 %memchr.not26.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i, label %bb.l
+  br i1 %memchr.not26.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i
   %.not15.i.i.i = icmp eq i64 %.1.i.i.i, 0
-  br i1 %.not15.i.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i, !llvm.loop !2419
+  br i1 %.not15.i.i.i, label %bb.m, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i, !llvm.loop !2419
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i: ; preds = %bb.l, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i
+bb.m:                                             ; preds = %bb.l, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i
   %.010.i.i.i = phi i64 [ %.1.i.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i ], [ -1, %bb.l ]
-  %2 = icmp ugt i64 %.0710.i.i.i, %gepdiff
-  br i1 %2, label %3, label %bb.m
-
-3:                                                ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.230, ptr noundef nonnull @.str.229, i64 noundef %.0710.i.i.i, i64 noundef %gepdiff) #49
-          to label %.noexc.i unwind label %4
-
-.noexc.i:                                         ; preds = %3
-  unreachable
-
-bb.m:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i
   %reass.sub = sub i64 %.010.i.i.i, %.0710.i.i.i
   %i.bp = add i64 %reass.sub, 1
   %i.bq = sub nuw i64 %gepdiff, %.0710.i.i.i
   %.sroa.speculated.i.i = tail call i64 @llvm.umin.i64(i64 %i.bq, i64 %i.bp)
   br label %_ZN8simdjson4trimESt17basic_string_viewIcSt11char_traitsIcEE.exit
-
-4:                                                ; preds = %3
-  %5 = landingpad { ptr, i32 }
-          catch ptr null
-  %6 = extractvalue { ptr, i32 } %5, 0
-  tail call void @__clang_call_terminate(ptr %6) #48
-  unreachable
 
 _ZN8simdjson4trimESt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %bb.k, %.loopexit, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i, %bb.m
   %.sroa.3.0.i = phi ptr [ %i.bi, %bb.m ], [ null, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ], [ null, %.loopexit ], [ null, %bb.k ]
@@ -1965,12 +1906,12 @@ bb.l:                                             ; preds = %bb.a
   %i.br = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !3  ; 2 uses
   %i.bt = sub i32 %i.bs, %i.e
-  %i.bu = zext i32 %i.bt to i64                   ; 5 uses
+  %i.bu = zext i32 %i.bt to i64                   ; 3 uses
   %.not.i27 = icmp eq i32 %i.bs, %i.e
   br i1 %.not.i27, label %_ZN8simdjson4trimESt17basic_string_viewIcSt11char_traitsIcEE.exit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %bb.l, %bb.m
-  %.0710.i.i.i = phi i64 [ %i.ca, %bb.m ], [ 0, %bb.l ] ; 7 uses
+  %.0710.i.i.i = phi i64 [ %i.ca, %bb.m ], [ 0, %bb.l ] ; 5 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.g, i64 %.0710.i.i.i
   %i.bw = load i8, ptr %i.bv, align 1, !tbaa !20  ; 2 uses
   %i.bx = zext nneg i8 %i.bw to i64
@@ -2001,37 +1942,19 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i:  ; preds = %_ZNSt11char_traitsI
   %i.cg = and i64 %i.cf, 4294977024
   %memchr.bits25.i = icmp eq i64 %i.cg, 0
   %memchr.not26.i = select i1 %memchr.bounds24.i, i1 true, i1 %memchr.bits25.i
-  br i1 %memchr.not26.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i, label %bb.n
+  br i1 %memchr.not26.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i
   %.not15.i.i.i = icmp eq i64 %.1.i.i.i, 0
-  br i1 %.not15.i.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i, !llvm.loop !2419
+  br i1 %.not15.i.i.i, label %bb.o, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i, !llvm.loop !2419
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i: ; preds = %bb.n, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i
+bb.o:                                             ; preds = %bb.n, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i
   %.010.i.i.i = phi i64 [ %.1.i.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i5.i ], [ -1, %bb.n ]
-  %4 = icmp samesign ugt i64 %.0710.i.i.i, %i.bu
-  br i1 %4, label %5, label %bb.o
-
-5:                                                ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.230, ptr noundef nonnull @.str.229, i64 noundef %.0710.i.i.i, i64 noundef %i.bu) #49
-          to label %.noexc.i unwind label %6
-
-.noexc.i:                                         ; preds = %5
-  unreachable
-
-bb.o:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i
   %reass.sub = sub i64 %.010.i.i.i, %.0710.i.i.i
   %i.ch = add i64 %reass.sub, 1
   %i.ci = sub nuw nsw i64 %i.bu, %.0710.i.i.i
   %.sroa.speculated.i.i = tail call i64 @llvm.umin.i64(i64 %i.ci, i64 %i.ch)
   br label %_ZN8simdjson4trimESt17basic_string_viewIcSt11char_traitsIcEE.exit
-
-6:                                                ; preds = %5
-  %7 = landingpad { ptr, i32 }
-          catch ptr null
-  %8 = extractvalue { ptr, i32 } %7, 0
-  tail call void @__clang_call_terminate(ptr %8) #48
-  unreachable
 
 _ZN8simdjson4trimESt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %bb.m, %bb.l, %bb.o
   %.sroa.3.0.i = phi ptr [ %i.cb, %bb.o ], [ null, %bb.l ], [ null, %bb.m ]

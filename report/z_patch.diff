@@ -1,0 +1,747 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index 0a9a4370d5e80..7503b6c4ea3e7 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -2207,6 +2207,15 @@ class ScalarEvolution {
+                                 bool isSigned, bool IsSubExpr,
+                                 bool AllowPredicates = false);
+ 
++  /// Return true if \p Start is known to be >= the largest value the unit-stride
++  /// affine recurrence \p RHS takes over its loop's iteration space, i.e. \p RHS
++  /// never exceeds \p Start. This proves the clamp min(\p RHS, \p Start) == \p
++  /// RHS. \p Pred must be the >= predicate matching \p IsSigned (SGE / UGE). \p L
++  /// is the loop whose exit count is being computed; entry guards of \p L may be
++  /// used for the final comparison.
++  bool isStartKnownGERecurrenceMax(const SCEV *Start, const SCEV *RHS,
++                                   const Loop *L, CmpPredicate Pred);
++
+   /// Return a predecessor of BB (which may not be an immediate predecessor)
+   /// which has exactly one successor from which BB is reachable, or null if
+   /// no such block is found.
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index c74708fc73e5a..2f8719fad57bf 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -13887,6 +13887,67 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+                    Predicates);
+ }
+ 
++bool ScalarEvolution::isStartKnownGERecurrenceMax(const SCEV *Start,
++                                                  const SCEV *RHS,
++                                                  const Loop *L,
++                                                  CmpPredicate Pred) {
++  // Only handle a unit-stride affine recurrence: a step of one cannot cross the
++  // wrap boundary in a single iteration, which keeps the no-wrap reasoning
++  // below a simple endpoint comparison.
++  const auto *RHSAR = dyn_cast<SCEVAddRecExpr>(RHS);
++  if (!RHSAR || !RHSAR->isAffine() ||
++      RHSAR->getStepRecurrence(*this) != getOne(RHSAR->getType()))
++    return false;
++
++  const Loop *RHSLoop = RHSAR->getLoop();
++  const SCEV *SymMax = getSymbolicMaxBackedgeTakenCount(RHSLoop);
++  const SCEV *ConstMax = getConstantMaxBackedgeTakenCount(RHSLoop);
++  // evaluateAtIteration truncates the iteration count to the recurrence's type,
++  // so a wider count could underestimate the last value. Require both counts to
++  // be no wider, then extend them to that type.
++  auto TooWide = [&](const SCEV *N) {
++    return isa<SCEVCouldNotCompute>(N) ||
++           getTypeSizeInBits(N->getType()) > getTypeSizeInBits(RHSAR->getType());
++  };
++  if (TooWide(SymMax) || TooWide(ConstMax))
++    return false;
++  SymMax = getNoopOrZeroExtend(SymMax, RHSAR->getType());
++  ConstMax = getNoopOrZeroExtend(ConstMax, RHSAR->getType());
++
++  // The no-wrap check below is proven at ConstMax, but the final bound is taken
++  // at SymMax, so soundness relies on SymMax <= ConstMax. This holds at the loop
++  // level: getSymbolicMaxBackedgeTakenCount is a sequential-umin over the
++  // per-exit counts, while getConstantMaxBackedgeTakenCount is a umin (over
++  // must-exit exits) / umax (over the remaining exits) of their upper bounds, so
++  // the constant max is never smaller than the symbolic one. Assert it
++  // defensively so a future change to that aggregation cannot silently turn this
++  // into a miscompile.
++  assert(!isKnownPredicate(ICmpInst::ICMP_UGT, SymMax, ConstMax) &&
++         "symbolic max backedge-taken count exceeds the constant max");
++
++  // The counts are only upper bounds on the trip count, and the recurrence's
++  // no-wrap flags may have been inferred from an exit whose count is unknown,
++  // so the recurrence could wrap before reaching them. With a unit stride,
++  // Start(RHS) <= RHS-at-ConstMax proves it does not over [0, ConstMax]: had it
++  // wrapped, the endpoint would appear smaller than the start (a single +1 walk
++  // of length <= 2^width - 1 crosses the wrap boundary at most once). The
++  // constant count is used here because it is a literal and thus easier to
++  // reason about than the symbolic one.
++  CmpPredicate LEPred = ICmpInst::getSwappedCmpPredicate(Pred);
++  const SCEV *RHSAtConstMax = RHSAR->evaluateAtIteration(ConstMax, *this);
++  if (!isKnownPredicate(LEPred, RHSAR->getStart(), RHSAtConstMax))
++    return false;
++
++  // No-wrap over [0, ConstMax] implies no-wrap over [0, SymMax] as well (since
++  // SymMax <= ConstMax), so with the positive unit stride the recurrence is
++  // increasing there and RHS-at-SymMax is an upper bound on every value RHS
++  // takes. The Start >= that-bound relation only has to hold on executions that
++  // reach L, so loop-entry guards of L may be used in addition to known facts.
++  const SCEV *RHSMax = RHSAR->evaluateAtIteration(SymMax, *this);
++  return isKnownPredicate(LEPred, RHSMax, Start) ||
++         isLoopEntryGuardedByCond(L, LEPred, RHSMax, Start);
++}
++
+ ScalarEvolution::ExitLimit ScalarEvolution::howManyGreaterThans(
+     const SCEV *LHS, const SCEV *RHS, const Loop *L, bool IsSigned,
+     bool ControlsOnlyExit, bool AllowPredicates) {
+@@ -13929,8 +13990,10 @@ ScalarEvolution::ExitLimit ScalarEvolution::howManyGreaterThans(
+   if (!isLoopEntryGuardedByCond(L, Cond, getAddExpr(Start, Stride), RHS)) {
+     // If we know that Start >= RHS in the context of loop, then we know that
+     // min(RHS, Start) = RHS at this point.
+-    if (isLoopEntryGuardedByCond(
+-            L, IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE, Start, RHS))
++    ICmpInst::Predicate GEPred =
++        IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE;
++    if (isLoopEntryGuardedByCond(L, GEPred, Start, RHS) ||
++        isStartKnownGERecurrenceMax(Start, RHS, L, GEPred))
+       End = RHS;
+     else
+       End = IsSigned ? getSMinExpr(RHS, Start) : getUMinExpr(RHS, Start);
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index da92f978cc08c..aab17e149f088 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -944,7 +944,12 @@ static void dumpConstraint(ArrayRef<int64_t> C,
+ 
+ void State::addInfoForInductions(BasicBlock &BB) {
+   auto *L = LI.getLoopFor(&BB);
+-  if (!L || L->getHeader() != &BB)
++  if (!L)
++    return;
++
++  BasicBlock *Header = L->getHeader();
++  BasicBlock *Latch = L->getLoopLatch();
++  if (Header != &BB && Latch != &BB)
+     return;
+ 
+   // A is either a phi or a post-increment PN + C with constant step. For the
+@@ -960,10 +965,15 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   if (!match(BB.getTerminator(),
+              m_Br(m_c_ICmp(Pred, IndValue, m_Value(B)), m_Value(), m_Value())))
+     return;
+-  if (PN->getParent() != &BB || PN->getNumIncomingValues() != 2 ||
++  if (PN->getParent() != Header || PN->getNumIncomingValues() != 2 ||
+       !SE.isSCEVable(PN->getType()))
+     return;
+ 
++  // Only use the condition in the latch to inject facts in the header when
++  // comparing a post-inc IV.
++  if (&BB == Latch && !IncStep)
++    return;
++
+   BasicBlock *InLoopSucc = nullptr;
+   if (Pred == CmpInst::ICMP_NE)
+     InLoopSucc = cast<CondBrInst>(BB.getTerminator())->getSuccessor(0);
+@@ -1109,9 +1119,9 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   WorkList.push_back(FactOrCheck::getConditionFact(DTN, CmpInst::ICMP_ULT, PN,
+                                                    B, StartBeforeBoundULE));
+ 
+-  // Try to add condition from header to the dedicated exit blocks. When exiting
+-  // either with EQ or NE in the header, we know that the induction value must
+-  // be u<= B, as other exits may only exit earlier.
++  // Try to add condition from the header or latch to the dedicated exit
++  // blocks. When exiting either with EQ or NE, we know that the induction value
++  // must be u<= B, as other exits may only exit earlier.
+   assert(!StepOffset->isNegative() && "induction must be increasing");
+   assert((Pred == CmpInst::ICMP_EQ || Pred == CmpInst::ICMP_NE) &&
+          "unsupported predicate");
+diff --git a/llvm/test/Analysis/ScalarEvolution/greater-than-clamp-outer-iv.ll b/llvm/test/Analysis/ScalarEvolution/greater-than-clamp-outer-iv.ll
+new file mode 100644
+index 0000000000000..21530783d4540
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/greater-than-clamp-outer-iv.ll
+@@ -0,0 +1,514 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py
++; RUN: opt < %s -disable-output "-passes=print<scalar-evolution>" 2>&1 | FileCheck %s
++
++target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
++
++; Tests for dropping the min(RHS, Start) clamp in howManyGreaterThans when RHS
++; is a unit-stride induction variable of a surrounding loop whose maximum value
++; is provably <= the countdown's start value. Folding the clamp keeps the
++; backedge-taken count an affine recurrence (enabling e.g. runtime unrolling)
++; instead of an expensive smin expression.
++
++; Positive, signed: countdown start is the zero-extended trip count, RHS is the
++; surrounding loop's IV which reaches at most trip-count-1. The clamp is dropped.
++define void @signed_zext_tripcount(i32 %n) {
++; CHECK-LABEL: 'signed_zext_tripcount'
++; CHECK-NEXT:  Classifying expressions for: @signed_zext_tripcount
++; CHECK-NEXT:    %wtc = zext nneg i32 %n to i64
++; CHECK-NEXT:    --> (zext i32 %n to i64) U: [0,4294967296) S: [0,4294967296)
++; CHECK-NEXT:    %j = phi i64 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%outer> U: [0,2147483647) S: [0,2147483647) Exits: <<Unknown>> LoopDispositions: { %outer: Computable }
++; CHECK-NEXT:    %pos = call i1 @cond()
++; CHECK-NEXT:    --> %pos U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %outer: Variant }
++; CHECK-NEXT:    %j.next = add nuw nsw i64 %j, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%outer> U: [1,2147483648) S: [1,2147483648) Exits: <<Unknown>> LoopDispositions: { %outer: Computable }
++; CHECK-NEXT:    %k = phi i64 [ %k.next, %countdown ], [ %wtc, %outer ]
++; CHECK-NEXT:    --> {(zext i32 %n to i64),+,-1}<nsw><%countdown> U: [-4294967294,4294967296) S: [-4294967294,4294967296) Exits: {1,+,1}<nuw><nsw><%outer> LoopDispositions: { %countdown: Computable }
++; CHECK-NEXT:    %k.next = add nsw i64 %k, -1
++; CHECK-NEXT:    --> {(-1 + (zext i32 %n to i64))<nsw>,+,-1}<nsw><%countdown> U: [-4294967295,4294967295) S: [-4294967295,4294967295) Exits: {0,+,1}<nuw><nsw><%outer> LoopDispositions: { %countdown: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @signed_zext_tripcount
++; CHECK-NEXT:  Loop %countdown: backedge-taken count is {(-1 + (zext i32 %n to i64))<nsw>,+,-1}<nw><%outer>
++; CHECK-NEXT:  Loop %countdown: constant max backedge-taken count is i64 4294967294
++; CHECK-NEXT:  Loop %countdown: symbolic max backedge-taken count is {(-1 + (zext i32 %n to i64))<nsw>,+,-1}<nw><%outer>
++; CHECK-NEXT:  Loop %countdown: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer: <multiple exits> Unpredictable backedge-taken count.
++; CHECK-NEXT:    exit count for outer: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    exit count for outer.latch: (-1 + (zext i32 %n to i64))<nsw>
++; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i64 2147483646
++; CHECK-NEXT:  Loop %outer: symbolic max backedge-taken count is (-1 + (zext i32 %n to i64))<nsw>
++; CHECK-NEXT:    symbolic max exit count for outer: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    symbolic max exit count for outer.latch: (-1 + (zext i32 %n to i64))<nsw>
++;
++entry:
++  %c = icmp sgt i32 %n, 0
++  br i1 %c, label %outer.ph, label %exit
++
++outer.ph:
++  %wtc = zext nneg i32 %n to i64
++  br label %outer
++
++outer:
++  %j = phi i64 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++  %pos = call i1 @cond()
++  br i1 %pos, label %outer.latch, label %countdown
++
++outer.latch:
++  %j.next = add nuw nsw i64 %j, 1
++  %done = icmp eq i64 %j.next, %wtc
++  br i1 %done, label %exit, label %outer
++
++countdown:
++  %k = phi i64 [ %k.next, %countdown ], [ %wtc, %outer ]
++  %k.next = add nsw i64 %k, -1
++  store i64 %k.next, ptr null, align 8
++  %gt = icmp sgt i64 %k.next, %j
++  br i1 %gt, label %countdown, label %exit
++
++exit:
++  ret void
++}
++
++; Positive, unsigned: same shape but the countdown exit uses an unsigned compare.
++define void @unsigned_zext_tripcount(i32 %n) {
++; CHECK-LABEL: 'unsigned_zext_tripcount'
++; CHECK-NEXT:  Classifying expressions for: @unsigned_zext_tripcount
++; CHECK-NEXT:    %wtc = zext i32 %n to i64
++; CHECK-NEXT:    --> (zext i32 %n to i64) U: [0,4294967296) S: [0,4294967296)
++; CHECK-NEXT:    %j = phi i64 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%outer> U: [0,4294967295) S: [0,4294967295) Exits: <<Unknown>> LoopDispositions: { %outer: Computable }
++; CHECK-NEXT:    %pos = call i1 @cond()
++; CHECK-NEXT:    --> %pos U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %outer: Variant }
++; CHECK-NEXT:    %j.next = add nuw nsw i64 %j, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%outer> U: [1,4294967296) S: [1,4294967296) Exits: <<Unknown>> LoopDispositions: { %outer: Computable }
++; CHECK-NEXT:    %k = phi i64 [ %k.next, %countdown ], [ %wtc, %outer ]
++; CHECK-NEXT:    --> {(zext i32 %n to i64),+,-1}<nsw><%countdown> U: [-9223372036854775808,4294967296) S: [-9223372036854775808,4294967296) Exits: {1,+,1}<nuw><nsw><%outer> LoopDispositions: { %countdown: Computable }
++; CHECK-NEXT:    %k.next = add nsw i64 %k, -1
++; CHECK-NEXT:    --> {(-1 + (zext i32 %n to i64))<nsw>,+,-1}<nsw><%countdown> U: [-9223372036854775808,4294967295) S: [-9223372036854775808,4294967295) Exits: {0,+,1}<nuw><nsw><%outer> LoopDispositions: { %countdown: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @unsigned_zext_tripcount
++; CHECK-NEXT:  Loop %countdown: backedge-taken count is {(-1 + (zext i32 %n to i64))<nsw>,+,-1}<nw><%outer>
++; CHECK-NEXT:  Loop %countdown: constant max backedge-taken count is i64 -1
++; CHECK-NEXT:  Loop %countdown: symbolic max backedge-taken count is {(-1 + (zext i32 %n to i64))<nsw>,+,-1}<nw><%outer>
++; CHECK-NEXT:  Loop %countdown: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer: <multiple exits> Unpredictable backedge-taken count.
++; CHECK-NEXT:    exit count for outer: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    exit count for outer.latch: (-1 + (zext i32 %n to i64))<nsw>
++; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i64 4294967294
++; CHECK-NEXT:  Loop %outer: symbolic max backedge-taken count is (-1 + (zext i32 %n to i64))<nsw>
++; CHECK-NEXT:    symbolic max exit count for outer: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    symbolic max exit count for outer.latch: (-1 + (zext i32 %n to i64))<nsw>
++;
++entry:
++  %c = icmp ugt i32 %n, 0
++  br i1 %c, label %outer.ph, label %exit
++
++outer.ph:
++  %wtc = zext i32 %n to i64
++  br label %outer
++
++outer:
++  %j = phi i64 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++  %pos = call i1 @cond()
++  br i1 %pos, label %outer.latch, label %countdown
++
++outer.latch:
++  %j.next = add nuw nsw i64 %j, 1
++  %done = icmp eq i64 %j.next, %wtc
++  br i1 %done, label %exit, label %outer
++
++countdown:
++  %k = phi i64 [ %k.next, %countdown ], [ %wtc, %outer ]
++  %k.next = add nsw i64 %k, -1
++  store i64 %k.next, ptr null, align 8
++  %gt = icmp ugt i64 %k.next, %j
++  br i1 %gt, label %countdown, label %exit
++
++exit:
++  ret void
++}
++
++; Positive, narrow type: the surrounding loop's constant maximum backedge-taken
++; count (9) is small enough that its IV cannot exceed the countdown start (20),
++; so the clamp is still dropped even though the type is i8.
++define void @valid_small_i8() {
++; CHECK-LABEL: 'valid_small_i8'
++; CHECK-NEXT:  Classifying expressions for: @valid_small_i8
++; CHECK-NEXT:    %j = phi i8 [ 0, %entry ], [ %j.next, %outer.latch ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%outer> U: [0,10) S: [0,10) Exits: 9 LoopDispositions: { %outer: Computable, %countdown: Invariant }
++; CHECK-NEXT:    %k = phi i8 [ 20, %outer ], [ %k.next, %countdown ]
++; CHECK-NEXT:    --> {20,+,-1}<nsw><%countdown> U: [1,21) S: [1,21) Exits: {1,+,1}<nuw><nsw><%outer> LoopDispositions: { %countdown: Computable, %outer: Uniform }
++; CHECK-NEXT:    %k.next = add nsw i8 %k, -1
++; CHECK-NEXT:    --> {19,+,-1}<nsw><%countdown> U: [0,20) S: [0,20) Exits: {0,+,1}<nuw><nsw><%outer> LoopDispositions: { %countdown: Computable, %outer: Uniform }
++; CHECK-NEXT:    %j.next = add nsw i8 %j, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%outer> U: [1,11) S: [1,11) Exits: 10 LoopDispositions: { %outer: Computable, %countdown: Invariant }
++; CHECK-NEXT:  Determining loop execution counts for: @valid_small_i8
++; CHECK-NEXT:  Loop %countdown: backedge-taken count is {19,+,-1}<nsw><%outer>
++; CHECK-NEXT:  Loop %countdown: constant max backedge-taken count is i8 19
++; CHECK-NEXT:  Loop %countdown: symbolic max backedge-taken count is {19,+,-1}<nsw><%outer>
++; CHECK-NEXT:  Loop %countdown: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer: backedge-taken count is i8 9
++; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i8 9
++; CHECK-NEXT:  Loop %outer: symbolic max backedge-taken count is i8 9
++; CHECK-NEXT:  Loop %outer: Trip multiple is 10
++;
++entry:
++  br label %outer
++
++outer:
++  %j = phi i8 [ 0, %entry ], [ %j.next, %outer.latch ]
++  br label %countdown
++
++countdown:
++  %k = phi i8 [ 20, %outer ], [ %k.next, %countdown ]
++  %k.next = add nsw i8 %k, -1
++  %gt = icmp sgt i8 %k.next, %j
++  br i1 %gt, label %countdown, label %outer.latch
++
++outer.latch:
++  %j.next = add nsw i8 %j, 1
++  %done = icmp eq i8 %j.next, 10
++  br i1 %done, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; Negative: the surrounding loop's maximum backedge-taken count is only an
++; over-approximation. The outer i8 IV %j can reach 127 (its nsw bound) on a path
++; that exits early, which is larger than the countdown start (50). The clamp
++; must be preserved; folding it would compute a wrong (too large) count.
++define void @start_below_outer_iv_max_i8(i1 %early, ptr %p) {
++; CHECK-LABEL: 'start_below_outer_iv_max_i8'
++; CHECK-NEXT:  Classifying expressions for: @start_below_outer_iv_max_i8
++; CHECK-NEXT:    %j = phi i8 [ 0, %entry ], [ %j.next, %outer.latch ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%outer> U: [0,-128) S: [0,-128) Exits: <<Unknown>> LoopDispositions: { %outer: Computable }
++; CHECK-NEXT:    %j.next = add nsw i8 %j, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%outer> U: [1,0) S: [1,0) Exits: <<Unknown>> LoopDispositions: { %outer: Computable }
++; CHECK-NEXT:    %k = phi i8 [ 50, %outer ], [ %k.next, %countdown ]
++; CHECK-NEXT:    --> {50,+,-1}<nsw><%countdown> U: [1,51) S: [1,51) Exits: (1 + (49 smin {0,+,1}<nuw><nsw><%outer>))<nuw><nsw> LoopDispositions: { %countdown: Computable }
++; CHECK-NEXT:    %k.next = add nsw i8 %k, -1
++; CHECK-NEXT:    --> {49,+,-1}<nsw><%countdown> U: [0,50) S: [0,50) Exits: (49 smin {0,+,1}<nuw><nsw><%outer>) LoopDispositions: { %countdown: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @start_below_outer_iv_max_i8
++; CHECK-NEXT:  Loop %countdown: backedge-taken count is (49 + (-1 * (49 smin {0,+,1}<nuw><nsw><%outer>))<nsw>)<nsw>
++; CHECK-NEXT:  Loop %countdown: constant max backedge-taken count is i8 49
++; CHECK-NEXT:  Loop %countdown: symbolic max backedge-taken count is (49 + (-1 * (49 smin {0,+,1}<nuw><nsw><%outer>))<nsw>)<nsw>
++; CHECK-NEXT:  Loop %countdown: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer: <multiple exits> Unpredictable backedge-taken count.
++; CHECK-NEXT:    exit count for outer: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    exit count for outer.latch: i8 -1
++; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i8 -1
++; CHECK-NEXT:  Loop %outer: symbolic max backedge-taken count is i8 -1
++; CHECK-NEXT:    symbolic max exit count for outer: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    symbolic max exit count for outer.latch: i8 -1
++;
++entry:
++  br label %outer
++
++outer:
++  %j = phi i8 [ 0, %entry ], [ %j.next, %outer.latch ]
++  br i1 %early, label %countdown, label %outer.latch
++
++outer.latch:
++  %j.next = add nsw i8 %j, 1
++  %done = icmp eq i8 %j.next, 0
++  br i1 %done, label %exit, label %outer
++
++countdown:
++  %k = phi i8 [ 50, %outer ], [ %k.next, %countdown ]
++  %k.next = add nsw i8 %k, -1
++  store i8 %k.next, ptr %p, align 1
++  %gt = icmp sgt i8 %k.next, %j
++  br i1 %gt, label %countdown, label %exit
++
++exit:
++  ret void
++}
++
++; Negative: the countdown start (5) is below the surrounding loop's IV maximum
++; (9), so RHS can exceed Start; the clamp must be preserved.
++define void @start_below_small_i8() {
++; CHECK-LABEL: 'start_below_small_i8'
++; CHECK-NEXT:  Classifying expressions for: @start_below_small_i8
++; CHECK-NEXT:    %j = phi i8 [ 0, %entry ], [ %j.next, %outer.latch ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%outer> U: [0,10) S: [0,10) Exits: 9 LoopDispositions: { %outer: Computable, %countdown: Invariant }
++; CHECK-NEXT:    %k = phi i8 [ 5, %outer ], [ %k.next, %countdown ]
++; CHECK-NEXT:    --> {5,+,-1}<nsw><%countdown> U: [1,6) S: [1,6) Exits: (1 + (4 smin {0,+,1}<nuw><nsw><%outer>))<nuw><nsw> LoopDispositions: { %countdown: Computable, %outer: Uniform }
++; CHECK-NEXT:    %k.next = add nsw i8 %k, -1
++; CHECK-NEXT:    --> {4,+,-1}<nsw><%countdown> U: [0,5) S: [0,5) Exits: (4 smin {0,+,1}<nuw><nsw><%outer>) LoopDispositions: { %countdown: Computable, %outer: Uniform }
++; CHECK-NEXT:    %j.next = add nsw i8 %j, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%outer> U: [1,11) S: [1,11) Exits: 10 LoopDispositions: { %outer: Computable, %countdown: Invariant }
++; CHECK-NEXT:  Determining loop execution counts for: @start_below_small_i8
++; CHECK-NEXT:  Loop %countdown: backedge-taken count is (4 + (-1 * (4 smin {0,+,1}<nuw><nsw><%outer>))<nsw>)<nsw>
++; CHECK-NEXT:  Loop %countdown: constant max backedge-taken count is i8 4
++; CHECK-NEXT:  Loop %countdown: symbolic max backedge-taken count is (4 + (-1 * (4 smin {0,+,1}<nuw><nsw><%outer>))<nsw>)<nsw>
++; CHECK-NEXT:  Loop %countdown: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer: backedge-taken count is i8 9
++; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i8 9
++; CHECK-NEXT:  Loop %outer: symbolic max backedge-taken count is i8 9
++; CHECK-NEXT:  Loop %outer: Trip multiple is 10
++;
++entry:
++  br label %outer
++
++outer:
++  %j = phi i8 [ 0, %entry ], [ %j.next, %outer.latch ]
++  br label %countdown
++
++countdown:
++  %k = phi i8 [ 5, %outer ], [ %k.next, %countdown ]
++  %k.next = add nsw i8 %k, -1
++  %gt = icmp sgt i8 %k.next, %j
++  br i1 %gt, label %countdown, label %outer.latch
++
++outer.latch:
++  %j.next = add nsw i8 %j, 1
++  %done = icmp eq i8 %j.next, 10
++  br i1 %done, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; Negative: the surrounding loop's IV has a non-unit stride (2), which the fold
++; does not handle, so the clamp is preserved.
++define void @non_unit_stride_outer_iv(i32 %n, i1 %early, ptr %p) {
++; CHECK-LABEL: 'non_unit_stride_outer_iv'
++; CHECK-NEXT:  Classifying expressions for: @non_unit_stride_outer_iv
++; CHECK-NEXT:    %wtc = zext nneg i32 %n to i64
++; CHECK-NEXT:    --> (zext i32 %n to i64) U: [0,4294967296) S: [0,4294967296)
++; CHECK-NEXT:    %j = phi i64 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++; CHECK-NEXT:    --> {0,+,2}<nuw><nsw><%outer> U: [0,4294967295) S: [0,4294967295) Exits: <<Unknown>> LoopDispositions: { %outer: Computable }
++; CHECK-NEXT:    %j.next = add nuw nsw i64 %j, 2
++; CHECK-NEXT:    --> {2,+,2}<nuw><nsw><%outer> U: [2,4294967297) S: [2,4294967297) Exits: <<Unknown>> LoopDispositions: { %outer: Computable }
++; CHECK-NEXT:    %k = phi i64 [ %k.next, %countdown ], [ %wtc, %outer ]
++; CHECK-NEXT:    --> {(zext i32 %n to i64),+,-1}<nsw><%countdown> U: [-4294967294,4294967296) S: [-4294967294,4294967296) Exits: (1 + ((-1 + (zext i32 %n to i64))<nsw> smin {0,+,2}<nuw><nsw><%outer>))<nsw> LoopDispositions: { %countdown: Computable }
++; CHECK-NEXT:    %k.next = add nsw i64 %k, -1
++; CHECK-NEXT:    --> {(-1 + (zext i32 %n to i64))<nsw>,+,-1}<nsw><%countdown> U: [-4294967295,4294967295) S: [-4294967295,4294967295) Exits: ((-1 + (zext i32 %n to i64))<nsw> smin {0,+,2}<nuw><nsw><%outer>) LoopDispositions: { %countdown: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @non_unit_stride_outer_iv
++; CHECK-NEXT:  Loop %countdown: backedge-taken count is (-1 + (zext i32 %n to i64) + (-1 * ((-1 + (zext i32 %n to i64))<nsw> smin {0,+,2}<nuw><nsw><%outer>))<nsw>)
++; CHECK-NEXT:  Loop %countdown: constant max backedge-taken count is i64 4294967294
++; CHECK-NEXT:  Loop %countdown: symbolic max backedge-taken count is (-1 + (zext i32 %n to i64) + (-1 * ((-1 + (zext i32 %n to i64))<nsw> smin {0,+,2}<nuw><nsw><%outer>))<nsw>)
++; CHECK-NEXT:  Loop %countdown: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer: <multiple exits> Unpredictable backedge-taken count.
++; CHECK-NEXT:    exit count for outer: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    exit count for outer.latch: ((-1 + (zext i32 %n to i64))<nsw> /u 2)
++; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i64 2147483647
++; CHECK-NEXT:  Loop %outer: symbolic max backedge-taken count is ((-1 + (zext i32 %n to i64))<nsw> /u 2)
++; CHECK-NEXT:    symbolic max exit count for outer: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    symbolic max exit count for outer.latch: ((-1 + (zext i32 %n to i64))<nsw> /u 2)
++;
++entry:
++  %c = icmp sgt i32 %n, 0
++  br i1 %c, label %outer.ph, label %exit
++
++outer.ph:
++  %wtc = zext nneg i32 %n to i64
++  br label %outer
++
++outer:
++  %j = phi i64 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++  br i1 %early, label %countdown, label %outer.latch
++
++outer.latch:
++  %j.next = add nuw nsw i64 %j, 2
++  %done = icmp sge i64 %j.next, %wtc
++  br i1 %done, label %exit, label %outer
++
++countdown:
++  %k = phi i64 [ %k.next, %countdown ], [ %wtc, %outer ]
++  %k.next = add nsw i64 %k, -1
++  store i64 %k.next, ptr %p, align 8
++  %gt = icmp sgt i64 %k.next, %j
++  br i1 %gt, label %countdown, label %exit
++
++exit:
++  ret void
++}
++
++; Positive via a loop-entry guard: the countdown start %s is opaque, so the max
++; value of the surrounding IV (zext(n)-1) cannot be shown <= %s from known facts
++; alone. A dominating guard %s >= zext(n)-1 supplies the missing relation, which
++; exercises the isLoopEntryGuardedByCond disjunct in isStartKnownGERecurrenceMax.
++; The countdown compares the pre-decrement %k so Start == %s matches the guard
++; exactly. The surrounding loop also has an unknown early exit, so its symbolic
++; max backedge-taken count (zext(n)-1) differs from its constant max, covering
++; the SymMax <= ConstMax reasoning the fold relies on.
++define void @guard_ge_recurrence_max(i32 %n, i64 %s, ptr %p) {
++; CHECK-LABEL: 'guard_ge_recurrence_max'
++; CHECK-NEXT:  Classifying expressions for: @guard_ge_recurrence_max
++; CHECK-NEXT:    %wtc = zext nneg i32 %n to i64
++; CHECK-NEXT:    --> (zext i32 %n to i64) U: [0,4294967296) S: [0,4294967296)
++; CHECK-NEXT:    %bound = add i64 %wtc, -1
++; CHECK-NEXT:    --> (-1 + (zext i32 %n to i64))<nsw> U: [-1,4294967295) S: [-1,4294967295)
++; CHECK-NEXT:    %j = phi i64 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%outer> U: [0,2147483647) S: [0,2147483647) Exits: <<Unknown>> LoopDispositions: { %outer: Computable }
++; CHECK-NEXT:    %pos = call i1 @cond()
++; CHECK-NEXT:    --> %pos U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %outer: Variant }
++; CHECK-NEXT:    %j.next = add nuw nsw i64 %j, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%outer> U: [1,2147483648) S: [1,2147483648) Exits: <<Unknown>> LoopDispositions: { %outer: Computable }
++; CHECK-NEXT:    %k = phi i64 [ %k.next, %countdown ], [ %s, %outer ]
++; CHECK-NEXT:    --> {%s,+,-1}<nsw><%countdown> U: full-set S: full-set Exits: {0,+,1}<nuw><nsw><%outer> LoopDispositions: { %countdown: Computable }
++; CHECK-NEXT:    %k.next = add nsw i64 %k, -1
++; CHECK-NEXT:    --> {(-1 + %s),+,-1}<nw><%countdown> U: full-set S: full-set Exits: {-1,+,1}<nsw><%outer> LoopDispositions: { %countdown: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @guard_ge_recurrence_max
++; CHECK-NEXT:  Loop %countdown: backedge-taken count is {%s,+,-1}<nw><%outer>
++; CHECK-NEXT:  Loop %countdown: constant max backedge-taken count is i64 9223372036854775807
++; CHECK-NEXT:  Loop %countdown: symbolic max backedge-taken count is {%s,+,-1}<nw><%outer>
++; CHECK-NEXT:  Loop %countdown: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer: <multiple exits> Unpredictable backedge-taken count.
++; CHECK-NEXT:    exit count for outer: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    exit count for outer.latch: (-1 + (zext i32 %n to i64))<nsw>
++; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i64 2147483646
++; CHECK-NEXT:  Loop %outer: symbolic max backedge-taken count is (-1 + (zext i32 %n to i64))<nsw>
++; CHECK-NEXT:    symbolic max exit count for outer: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    symbolic max exit count for outer.latch: (-1 + (zext i32 %n to i64))<nsw>
++;
++entry:
++  %c = icmp sgt i32 %n, 0
++  br i1 %c, label %guard, label %exit
++
++guard:
++  %wtc = zext nneg i32 %n to i64
++  %bound = add i64 %wtc, -1
++  %g = icmp sge i64 %s, %bound
++  br i1 %g, label %outer.ph, label %exit
++
++outer.ph:
++  br label %outer
++
++outer:
++  %j = phi i64 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++  %pos = call i1 @cond()
++  br i1 %pos, label %outer.latch, label %countdown
++
++outer.latch:
++  %j.next = add nuw nsw i64 %j, 1
++  %done = icmp eq i64 %j.next, %wtc
++  br i1 %done, label %exit, label %outer
++
++countdown:
++  %k = phi i64 [ %k.next, %countdown ], [ %s, %outer ]
++  %k.next = add nsw i64 %k, -1
++  store i64 %k.next, ptr %p, align 8
++  %gt = icmp sgt i64 %k, %j
++  br i1 %gt, label %countdown, label %exit
++
++exit:
++  ret void
++}
++
++; Negative: the surrounding loop's backedge-taken count is expressed in a type
++; (i64, from the %cnt counter) wider than the surrounding IV %j (i32). Extending
++; the count could underestimate the recurrence's last value, so the TooWide
++; guard bails and the clamp is preserved.
++define void @outer_count_wider_than_iv(i64 %m, i32 %s, ptr %p) {
++; CHECK-LABEL: 'outer_count_wider_than_iv'
++; CHECK-NEXT:  Classifying expressions for: @outer_count_wider_than_iv
++; CHECK-NEXT:    %j = phi i32 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%outer> U: [0,-2147483648) S: [0,-2147483648) Exits: (-1 + (trunc i64 %m to i32)) LoopDispositions: { %outer: Computable, %countdown: Invariant }
++; CHECK-NEXT:    %cnt = phi i64 [ 0, %outer.ph ], [ %cnt.next, %outer.latch ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%outer> U: [0,-9223372036854775808) S: [0,-9223372036854775808) Exits: (-1 + %m) LoopDispositions: { %outer: Computable, %countdown: Invariant }
++; CHECK-NEXT:    %k = phi i32 [ %s, %outer ], [ %k.next, %countdown ]
++; CHECK-NEXT:    --> {%s,+,-1}<nsw><%countdown> U: full-set S: full-set Exits: ({0,+,1}<nuw><nsw><%outer> smin %s) LoopDispositions: { %countdown: Computable, %outer: Uniform }
++; CHECK-NEXT:    %k.next = add nsw i32 %k, -1
++; CHECK-NEXT:    --> {(-1 + %s),+,-1}<nw><%countdown> U: full-set S: full-set Exits: (-1 + ({0,+,1}<nuw><nsw><%outer> smin %s)) LoopDispositions: { %countdown: Computable, %outer: Uniform }
++; CHECK-NEXT:    %j.next = add nsw i32 %j, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%outer> U: [1,0) S: [1,0) Exits: (trunc i64 %m to i32) LoopDispositions: { %outer: Computable, %countdown: Invariant }
++; CHECK-NEXT:    %cnt.next = add nsw i64 %cnt, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%outer> U: [1,-9223372036854775808) S: [1,-9223372036854775808) Exits: %m LoopDispositions: { %outer: Computable, %countdown: Invariant }
++; CHECK-NEXT:  Determining loop execution counts for: @outer_count_wider_than_iv
++; CHECK-NEXT:  Loop %countdown: backedge-taken count is ((-1 * ({0,+,1}<nuw><nsw><%outer> smin %s)) + %s)
++; CHECK-NEXT:  Loop %countdown: constant max backedge-taken count is i32 2147483647
++; CHECK-NEXT:  Loop %countdown: symbolic max backedge-taken count is ((-1 * ({0,+,1}<nuw><nsw><%outer> smin %s)) + %s)
++; CHECK-NEXT:  Loop %countdown: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer: backedge-taken count is (-1 + %m)
++; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i64 -2
++; CHECK-NEXT:  Loop %outer: symbolic max backedge-taken count is (-1 + %m)
++; CHECK-NEXT:  Loop %outer: Trip multiple is 1
++;
++entry:
++  %pos = icmp ugt i64 %m, 0
++  br i1 %pos, label %guard, label %exit
++
++guard:
++  %g = icmp sge i32 %s, 2000000000
++  br i1 %g, label %outer.ph, label %exit
++
++outer.ph:
++  br label %outer
++
++outer:
++  %j = phi i32 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++  %cnt = phi i64 [ 0, %outer.ph ], [ %cnt.next, %outer.latch ]
++  br label %countdown
++
++countdown:
++  %k = phi i32 [ %s, %outer ], [ %k.next, %countdown ]
++  %k.next = add nsw i32 %k, -1
++  store i32 %k.next, ptr %p, align 4
++  %gt = icmp sgt i32 %k, %j
++  br i1 %gt, label %countdown, label %outer.latch
++
++outer.latch:
++  %j.next = add nsw i32 %j, 1
++  %cnt.next = add nsw i64 %cnt, 1
++  %done = icmp eq i64 %cnt.next, %m
++  br i1 %done, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; Negative: the surrounding loop has a single, symbolic-trip latch exit, so its
++; constant max backedge-taken count is the full type range (-1). The no-wrap
++; endpoint check then compares Start(RHS) against RHS-at-(2^64-1), which is
++; Start-1, so it cannot prove no-wrap and the clamp is preserved even though the
++; guard would otherwise supply Start >= RHS-max.
++define void @outer_full_range_const_max(i64 %b, i64 %s, ptr %p) {
++; CHECK-LABEL: 'outer_full_range_const_max'
++; CHECK-NEXT:  Classifying expressions for: @outer_full_range_const_max
++; CHECK-NEXT:    %j = phi i64 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%outer> U: [0,-9223372036854775808) S: [0,-9223372036854775808) Exits: (-1 + %b) LoopDispositions: { %outer: Computable, %countdown: Invariant }
++; CHECK-NEXT:    %k = phi i64 [ %s, %outer ], [ %k.next, %countdown ]
++; CHECK-NEXT:    --> {%s,+,-1}<nsw><%countdown> U: full-set S: full-set Exits: ({0,+,1}<nuw><nsw><%outer> smin %s) LoopDispositions: { %countdown: Computable, %outer: Uniform }
++; CHECK-NEXT:    %k.next = add nsw i64 %k, -1
++; CHECK-NEXT:    --> {(-1 + %s),+,-1}<nw><%countdown> U: full-set S: full-set Exits: (-1 + ({0,+,1}<nuw><nsw><%outer> smin %s)) LoopDispositions: { %countdown: Computable, %outer: Uniform }
++; CHECK-NEXT:    %j.next = add nuw nsw i64 %j, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%outer> U: [1,-9223372036854775808) S: [1,-9223372036854775808) Exits: %b LoopDispositions: { %outer: Computable, %countdown: Invariant }
++; CHECK-NEXT:  Determining loop execution counts for: @outer_full_range_const_max
++; CHECK-NEXT:  Loop %countdown: backedge-taken count is ((-1 * ({0,+,1}<nuw><nsw><%outer> smin %s)) + %s)
++; CHECK-NEXT:  Loop %countdown: constant max backedge-taken count is i64 9223372036854775807
++; CHECK-NEXT:  Loop %countdown: symbolic max backedge-taken count is ((-1 * ({0,+,1}<nuw><nsw><%outer> smin %s)) + %s)
++; CHECK-NEXT:  Loop %countdown: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer: backedge-taken count is (-1 + %b)
++; CHECK-NEXT:  Loop %outer: constant max backedge-taken count is i64 -1
++; CHECK-NEXT:  Loop %outer: symbolic max backedge-taken count is (-1 + %b)
++; CHECK-NEXT:  Loop %outer: Trip multiple is 1
++;
++entry:
++  %g = icmp sge i64 %s, %b
++  br i1 %g, label %outer.ph, label %exit
++
++outer.ph:
++  br label %outer
++
++outer:
++  %j = phi i64 [ 0, %outer.ph ], [ %j.next, %outer.latch ]
++  br label %countdown
++
++countdown:
++  %k = phi i64 [ %s, %outer ], [ %k.next, %countdown ]
++  %k.next = add nsw i64 %k, -1
++  store i64 %k.next, ptr %p, align 8
++  %gt = icmp sgt i64 %k, %j
++  br i1 %gt, label %countdown, label %outer.latch
++
++outer.latch:
++  %j.next = add nuw nsw i64 %j, 1
++  %done = icmp eq i64 %j.next, %b
++  br i1 %done, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++declare i1 @cond()
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+index 51fc9be6743a5..1f075bad904af 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+@@ -15,8 +15,7 @@ define i1 @latch_counted_header_check_removable(ptr %p, i64 %n, i64 %lim) {
+ ; CHECK:       [[LOOP_HEADER]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[PH]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
+ ; CHECK-NEXT:    [[OFF:%.*]] = shl nuw nsw i64 [[IV]], 2
+-; CHECK-NEXT:    [[RC:%.*]] = icmp ult i64 [[OFF]], [[LIM]]
+-; CHECK-NEXT:    br i1 [[RC]], label %[[LOOP_LATCH]], label %[[EXIT_1]]
++; CHECK-NEXT:    br i1 true, label %[[LOOP_LATCH]], label %[[EXIT_1]]
+ ; CHECK:       [[LOOP_LATCH]]:
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[OFF]]
+ ; CHECK-NEXT:    store i8 0, ptr [[GEP]], align 1
+@@ -129,8 +128,7 @@ define i1 @latch_counted_bound_consumer_not_folded(ptr %s, i64 %n) {
+ ; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label %[[EXIT:.*]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[N]], -1
+-; CHECK-NEXT:    [[CMP_NOT:%.*]] = icmp eq i64 [[SUB]], 0
+-; CHECK-NEXT:    ret i1 [[CMP_NOT]]
++; CHECK-NEXT:    ret i1 false
+ ;
+ entry:
+   br label %loop.header
+diff --git a/llvm/test/Transforms/ConstraintElimination/loops-bottom-tested-pointer-cmps.ll b/llvm/test/Transforms/ConstraintElimination/loops-bottom-tested-pointer-cmps.ll
+index 91546d4abf438..6491f46e4f124 100644
+--- a/llvm/test/Transforms/ConstraintElimination/loops-bottom-tested-pointer-cmps.ll
++++ b/llvm/test/Transforms/ConstraintElimination/loops-bottom-tested-pointer-cmps.ll
+@@ -21,8 +21,7 @@ define void @checks_in_loops_removable(ptr %ptr, ptr %lower, ptr %upper, i8 %n)
+ ; CHECK:       loop.header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i16 [ 0, [[PRE_2]] ], [ [[IV_NEXT:%.*]], [[LOOP_LATCH:%.*]] ]
+ ; CHECK-NEXT:    [[PTR_IV:%.*]] = getelementptr inbounds i8, ptr [[PTR]], i16 [[IV]]
+-; CHECK-NEXT:    [[CMP_PTR_IV_LOWER:%.*]] = icmp ugt ptr [[LOWER]], [[PTR_IV]]
+-; CHECK-NEXT:    [[CMP_PTR_IV_UPPER:%.*]] = icmp ule ptr [[UPPER]], [[PTR_IV]]
++; CHECK-NEXT:    [[CMP_PTR_IV_UPPER:%.*]] = or i1 false, false
+ ; CHECK-NEXT:    br i1 [[CMP_PTR_IV_UPPER]], label [[TRAP]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    store i8 0, ptr [[PTR_IV]], align 4
+@@ -85,14 +84,12 @@ define void @some_checks_in_loops_removable(ptr %ptr, ptr %lower, ptr %upper, i8
+ ; CHECK:       loop.header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i16 [ 0, [[PRE_2]] ], [ [[IV_NEXT:%.*]], [[LOOP_LATCH:%.*]] ]
+ ; CHECK-NEXT:    [[PTR_IV:%.*]] = getelementptr inbounds i8, ptr [[PTR]], i16 [[IV]]
+-; CHECK-NEXT:    [[CMP_PTR_IV_LOWER:%.*]] = icmp ugt ptr [[LOWER]], [[PTR_IV]]
+-; CHECK-NEXT:    [[CMP_PTR_IV_UPPER:%.*]] = icmp ule ptr [[UPPER]], [[PTR_IV]]
++; CHECK-NEXT:    [[CMP_PTR_IV_UPPER:%.*]] = or i1 false, false
+ ; CHECK-NEXT:    br i1 [[CMP_PTR_IV_UPPER]], label [[TRAP]], label [[LOOP_BODY:%.*]]
+ ; CHECK:       loop.body:
+ ; CHECK-NEXT:    [[IV_1:%.*]] = add nuw nsw i16 [[IV]], 1
+ ; CHECK-NEXT:    [[PTR_IV_1:%.*]] = getelementptr inbounds i8, ptr [[PTR]], i16 [[IV_1]]
+-; CHECK-NEXT:    [[CMP_PTR_IV_1_UPPER:%.*]] = icmp ule ptr [[UPPER]], [[PTR_IV_1]]
+-; CHECK-NEXT:    [[OR_1:%.*]] = or i1 false, [[CMP_PTR_IV_1_UPPER]]
++; CHECK-NEXT:    [[OR_1:%.*]] = or i1 false, false
+ ; CHECK-NEXT:    br i1 [[CMP_PTR_IV_UPPER]], label [[TRAP]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    store i8 0, ptr [[PTR_IV]], align 4
+@@ -161,15 +158,15 @@ define void @no_checks_in_loops_removable(ptr %ptr, ptr %lower, ptr %upper, i8 %
+ ; CHECK:       loop.header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i16 [ 0, [[PRE_1]] ], [ [[IV_NEXT:%.*]], [[LOOP_LATCH:%.*]] ]
+ ; CHECK-NEXT:    [[PTR_IV:%.*]] = getelementptr inbounds i8, ptr [[PTR]], i16 [[IV]]
+-; CHECK-NEXT:    [[CMP_PTR_IV_LOWER:%.*]] = icmp ugt ptr [[LOWER]], [[PTR_IV]]
+ ; CHECK-NEXT:    [[CMP_PTR_IV_UPPER:%.*]] = icmp ule ptr [[UPPER]], [[PTR_IV]]
+-; CHECK-NEXT:    br i1 [[CMP_PTR_IV_UPPER]], label [[TRAP]], label [[LOOP_BODY:%.*]]
++; CHECK-NEXT:    [[OR:%.*]] = or i1 false, [[CMP_PTR_IV_UPPER]]
++; CHECK-NEXT:    br i1 [[OR]], label [[TRAP]], label [[LOOP_BODY:%.*]]
+ ; CHECK:       loop.body:
+ ; CHECK-NEXT:    [[IV_1:%.*]] = add nuw nsw i16 [[IV]], 1
+ ; CHECK-NEXT:    [[PTR_IV_1:%.*]] = getelementptr inbounds i8, ptr [[PTR]], i16 [[IV_1]]
+ ; CHECK-NEXT:    [[CMP_PTR_IV_1_UPPER:%.*]] = icmp ule ptr [[UPPER]], [[PTR_IV_1]]
+ ; CHECK-NEXT:    [[OR_1:%.*]] = or i1 false, [[CMP_PTR_IV_1_UPPER]]
+-; CHECK-NEXT:    br i1 [[CMP_PTR_IV_UPPER]], label [[TRAP]], label [[LOOP_LATCH]]
++; CHECK-NEXT:    br i1 [[OR]], label [[TRAP]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    store i8 0, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i16 [[IV]], 1

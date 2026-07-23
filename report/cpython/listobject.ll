@@ -203,7 +203,7 @@ bb.ak:                                            ; preds = %found_new_run.exit,
   %.0138 = phi i64 [ %.val191, %reverse_slice.exit206 ], [ %i.mj, %found_new_run.exit ] ; 12 uses
   %.8.val.fr.i = freeze ptr %.sroa.23.1           ; 20 uses
   %i.dv = icmp sgt i64 %.0138, 1
-  br i1 %i.dv, label %.lr.ph.i208, label %._crit_edge.thread182.i.a
+  br i1 %i.dv, label %.lr.ph.i208, label %._crit_edge.i
 
 .lr.ph.i208:                                      ; preds = %bb.ak, %bb.am
   %.069141.i = phi i64 [ %i.ed, %bb.am ], [ 1, %bb.ak ] ; 8 uses
@@ -218,26 +218,26 @@ bb.ak:                                            ; preds = %found_new_run.exit,
 
 bb.al:                                            ; preds = %.lr.ph.i208
   %.not.i209 = icmp eq i32 %i.eb, 0
-  br i1 %.not.i209, label %bb.am, label %._crit_edge.i
+  br i1 %.not.i209, label %bb.am, label %._crit_edge.thread182.i.a
 
 bb.am:                                            ; preds = %bb.al
   %i.ed = add nuw nsw i64 %.069141.i, 1           ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ed, %.0138
   br i1 %exitcond.not.i, label %count_run.exit, label %.lr.ph.i208, !llvm.loop !92
 
-._crit_edge.thread182.i.a:                        ; preds = %bb.ak
-  %4 = icmp eq i64 %.0138, 1
-  br i1 %4, label %count_run.exit.thread274, label %sortslice_reverse.exit.i
+._crit_edge.thread182.i.a:                        ; preds = %bb.al
+  %4 = getelementptr i8, ptr %i.dx, i64 -8        ; 3 uses
+  %5 = icmp samesign ugt i64 %.069141.i, 1
+  br i1 %5, label %bb.an, label %sortslice_reverse.exit.i
 
-._crit_edge.i:                                    ; preds = %bb.al
-  %5 = getelementptr i8, ptr %i.dx, i64 -8        ; 3 uses
-  %6 = icmp samesign ugt i64 %.069141.i, 1
-  br i1 %6, label %bb.an, label %sortslice_reverse.exit.i
+._crit_edge.i:                                    ; preds = %bb.ak
+  %6 = icmp eq i64 %.0138, 1
+  br i1 %6, label %count_run.exit.thread274, label %sortslice_reverse.exit.i
 
-bb.an:                                            ; preds = %._crit_edge.i
+bb.an:                                            ; preds = %._crit_edge.thread182.i.a
   %i.ee = load ptr, ptr %i.dt, align 8, !tbaa !73
   %i.ef = load ptr, ptr %.sroa.0.1, align 8, !tbaa !50
-  %i.eg = load ptr, ptr %5, align 8, !tbaa !50
+  %i.eg = load ptr, ptr %4, align 8, !tbaa !50
   %i.eh = call i32 %i.ee(ptr noundef %i.ef, ptr noundef %i.eg, ptr noundef nonnull %3) #13, !inline_history !91 ; 2 uses
   %i.ei = icmp slt i32 %i.eh, 0
   br i1 %i.ei, label %found_new_run.exit.thread282, label %bb.ao
@@ -247,11 +247,11 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %.not77.i, label %bb.ap, label %count_run.exit.thread274
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.ej = icmp ult ptr %.sroa.0.1, %5
+  %i.ej = icmp ult ptr %.sroa.0.1, %4
   br i1 %i.ej, label %.lr.ph.i.i.i, label %reverse_slice.exit.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.ap, %.lr.ph.i.i.i
-  %.01013.i.i.i = phi ptr [ %.010.i.i.i, %.lr.ph.i.i.i ], [ %5, %bb.ap ] ; 3 uses
+  %.01013.i.i.i = phi ptr [ %.010.i.i.i, %.lr.ph.i.i.i ], [ %4, %bb.ap ] ; 3 uses
   %.012.i.i.i = phi ptr [ %i.em, %.lr.ph.i.i.i ], [ %.sroa.0.1, %bb.ap ] ; 3 uses
   %i.ek = load ptr, ptr %.012.i.i.i, align 8, !tbaa !50
   %i.el = load ptr, ptr %.01013.i.i.i, align 8, !tbaa !50
@@ -282,8 +282,8 @@ reverse_slice.exit.i.i:                           ; preds = %.lr.ph.i.i.i, %bb.a
   %i.et = icmp ult ptr %i.es, %.010.i10.i.i
   br i1 %i.et, label %.lr.ph.i7.i.i, label %sortslice_reverse.exit.i, !llvm.loop !90
 
-sortslice_reverse.exit.i:                         ; preds = %.lr.ph.i7.i.i, %reverse_slice.exit.i.i, %._crit_edge.i, %._crit_edge.thread182.i.a
-  %.069.lcssa184186.i = phi i64 [ 1, %._crit_edge.thread182.i.a ], [ %.069141.i, %._crit_edge.i ], [ %.069141.i, %reverse_slice.exit.i.i ], [ %.069141.i, %.lr.ph.i7.i.i ] ; 2 uses
+sortslice_reverse.exit.i:                         ; preds = %.lr.ph.i7.i.i, %reverse_slice.exit.i.i, %._crit_edge.thread182.i.a, %._crit_edge.i
+  %.069.lcssa184186.i = phi i64 [ 1, %._crit_edge.i ], [ %.069141.i, %._crit_edge.thread182.i.a ], [ %.069141.i, %reverse_slice.exit.i.i ], [ %.069141.i, %.lr.ph.i7.i.i ] ; 2 uses
   %.170144.i = add nuw i64 %.069.lcssa184186.i, 1 ; 3 uses
   %i.eu = icmp slt i64 %.170144.i, %.0138
   br i1 %i.eu, label %.lr.ph148.i, label %sortslice_reverse.exit113.i
@@ -496,8 +496,8 @@ count_run.exit:                                   ; preds = %bb.am, %bb.aw, %bb.
   %i.hj = icmp slt i64 %.068.i, 0
   br i1 %i.hj, label %found_new_run.exit.thread282, label %count_run.exit.thread274
 
-count_run.exit.thread274:                         ; preds = %._crit_edge.thread182.i.a, %bb.ao, %count_run.exit
-  %.068.i276 = phi i64 [ %.068.i, %count_run.exit ], [ 1, %._crit_edge.thread182.i.a ], [ %.069141.i, %bb.ao ] ; 3 uses
+count_run.exit.thread274:                         ; preds = %._crit_edge.i, %bb.ao, %count_run.exit
+  %.068.i276 = phi i64 [ %.068.i, %count_run.exit ], [ 1, %._crit_edge.i ], [ %.069141.i, %bb.ao ] ; 3 uses
   %i.hk = load i64, ptr %i.cv, align 8, !tbaa !84
   %i.hl = load i64, ptr %i.df, align 8, !tbaa !89
   %i.hm = add i64 %i.hl, %i.hk                    ; 2 uses

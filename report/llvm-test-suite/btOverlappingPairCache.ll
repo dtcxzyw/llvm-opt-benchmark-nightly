@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   %spec.select.i = select i1 %i.i, ptr %1, ptr %2
   %spec.select8.i = select i1 %i.i, ptr %2, ptr %1
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !17   ; 3 uses
+  %i.k = load i32, ptr %i.j, align 4, !tbaa !17   ; 2 uses
   %i.l = icmp sgt i32 %i.k, 0
   br i1 %i.l, label %.lr.ph.i, label %.thread
 
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.d ] ; 4 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.d ] ; 3 uses
   %i.o = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %indvars.iv.i ; 4 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !51
   %i.q = icmp eq ptr %i.p, %spec.select.i
@@ -222,19 +222,14 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph.i
   %i.s = load ptr, ptr %i.r, align 8
   %i.t = icmp eq ptr %i.s, %spec.select8.i
   %i.u = select i1 %i.q, i1 %i.t, i1 false
-  br i1 %i.u, label %_ZNK20btAlignedObjectArrayI16btBroadphasePairE16findLinearSearchERKS0_.exit, label %bb.d
+  br i1 %i.u, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %.thread, label %bb.c
 
-_ZNK20btAlignedObjectArrayI16btBroadphasePairE16findLinearSearchERKS0_.exit: ; preds = %bb.c
-  %4 = trunc nuw nsw i64 %indvars.iv.i to i32
-  %5 = icmp sgt i32 %i.k, %4
-  br i1 %5, label %bb.e, label %.thread
-
-bb.e:                                             ; preds = %_ZNK20btAlignedObjectArrayI16btBroadphasePairE16findLinearSearchERKS0_.exit
+bb.e:                                             ; preds = %bb.c
   %i.v = load i32, ptr @gOverlappingPairs, align 4, !tbaa !4
   %i.w = add nsw i32 %i.v, -1
   store i32 %i.w, ptr @gOverlappingPairs, align 4, !tbaa !4
@@ -278,8 +273,8 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   store i32 %i.av, ptr %i.j, align 4, !tbaa !17
   br label %.thread
 
-.thread:                                          ; preds = %bb.d, %bb.b, %_ZNK20btAlignedObjectArrayI16btBroadphasePairE16findLinearSearchERKS0_.exit, %bb.a, %bb.g
-  %.1 = phi ptr [ %i.y, %bb.g ], [ null, %bb.a ], [ null, %_ZNK20btAlignedObjectArrayI16btBroadphasePairE16findLinearSearchERKS0_.exit ], [ null, %bb.b ], [ null, %bb.d ]
+.thread:                                          ; preds = %bb.d, %bb.b, %bb.a, %bb.g
+  %.1 = phi ptr [ %i.y, %bb.g ], [ null, %bb.a ], [ null, %bb.b ], [ null, %bb.d ]
   ret ptr %.1
 }
 
@@ -529,7 +524,7 @@ bb.d:                                             ; preds = %bb.b, %_ZNK28btSort
   %spec.select.i = select i1 %i.u, ptr %1, ptr %2
   %spec.select8.i = select i1 %i.u, ptr %2, ptr %1
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !17   ; 3 uses
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !17   ; 2 uses
   %i.x = icmp sgt i32 %i.w, 0
   br i1 %i.x, label %.lr.ph.i, label %_ZNK28btSortedOverlappingPairCache24needsBroadphaseCollisionEP17btBroadphaseProxyS1_.exit.thread
 
@@ -540,7 +535,7 @@ bb.d:                                             ; preds = %bb.b, %_ZNK28btSort
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.f ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.f ] ; 2 uses
   %i.aa = getelementptr inbounds nuw [32 x i8], ptr %i.z, i64 %indvars.iv.i ; 3 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !51
   %i.ac = icmp eq ptr %i.ab, %spec.select.i
@@ -548,21 +543,15 @@ bb.e:                                             ; preds = %bb.f, %.lr.ph.i
   %i.ae = load ptr, ptr %i.ad, align 8
   %i.af = icmp eq ptr %i.ae, %spec.select8.i
   %i.ag = select i1 %i.ac, i1 %i.af, i1 false
-  br i1 %i.ag, label %_ZNK20btAlignedObjectArrayI16btBroadphasePairE16findLinearSearchERKS0_.exit, label %bb.f
+  br i1 %i.ag, label %_ZNK28btSortedOverlappingPairCache24needsBroadphaseCollisionEP17btBroadphaseProxyS1_.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZNK28btSortedOverlappingPairCache24needsBroadphaseCollisionEP17btBroadphaseProxyS1_.exit.thread, label %bb.e
 
-_ZNK20btAlignedObjectArrayI16btBroadphasePairE16findLinearSearchERKS0_.exit: ; preds = %bb.e
-  %3 = trunc nuw nsw i64 %indvars.iv.i to i32
-  %4 = icmp sgt i32 %i.w, %3
-  %spec.select = select i1 %4, ptr %i.aa, ptr null
-  br label %_ZNK28btSortedOverlappingPairCache24needsBroadphaseCollisionEP17btBroadphaseProxyS1_.exit.thread
-
-_ZNK28btSortedOverlappingPairCache24needsBroadphaseCollisionEP17btBroadphaseProxyS1_.exit.thread: ; preds = %bb.f, %_ZNK20btAlignedObjectArrayI16btBroadphasePairE16findLinearSearchERKS0_.exit, %bb.d, %bb.c, %bb.b, %_ZNK28btSortedOverlappingPairCache24needsBroadphaseCollisionEP17btBroadphaseProxyS1_.exit
-  %.1 = phi ptr [ null, %bb.c ], [ null, %_ZNK28btSortedOverlappingPairCache24needsBroadphaseCollisionEP17btBroadphaseProxyS1_.exit ], [ null, %bb.b ], [ null, %bb.d ], [ %spec.select, %_ZNK20btAlignedObjectArrayI16btBroadphasePairE16findLinearSearchERKS0_.exit ], [ null, %bb.f ]
+_ZNK28btSortedOverlappingPairCache24needsBroadphaseCollisionEP17btBroadphaseProxyS1_.exit.thread: ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %_ZNK28btSortedOverlappingPairCache24needsBroadphaseCollisionEP17btBroadphaseProxyS1_.exit
+  %.1 = phi ptr [ null, %bb.c ], [ null, %_ZNK28btSortedOverlappingPairCache24needsBroadphaseCollisionEP17btBroadphaseProxyS1_.exit ], [ null, %bb.b ], [ null, %bb.d ], [ null, %bb.f ], [ %i.aa, %bb.e ]
   ret ptr %.1
 }
 

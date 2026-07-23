@@ -203,7 +203,7 @@ bb.g:                                             ; preds = %.loopexit486
   %i.dn = icmp ne ptr %i.dm, null
   br label %.preheader.preheader
 
-.preheader.preheader:                             ; preds = %.loopexit482, %.preheader483
+.preheader.preheader:                             ; preds = %.preheader483, %.loopexit482
   %.2408 = phi i32 [ %.0403, %.loopexit482 ], [ %.1407, %.preheader483 ]
   %.0404 = phi i32 [ %i.gv, %.loopexit482 ], [ 1, %.preheader483 ] ; 2 uses
   br label %.preheader
@@ -418,7 +418,7 @@ bb.v:                                             ; preds = %func_types_eq.exit4
   %.not432 = icmp eq i32 %i.do, 0
   br i1 %.not432, label %.loopexit482, label %.preheader
 
-.loopexit482:                                     ; preds = %bb.v, %bb.q
+.loopexit482:                                     ; preds = %bb.q, %bb.v
   %i.gv = add i32 %.0404, 1                       ; 2 uses
   %.not433 = icmp eq i32 %i.gv, %2
   br i1 %.not433, label %.loopexit, label %.preheader.preheader

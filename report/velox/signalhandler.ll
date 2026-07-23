@@ -108,7 +108,6 @@ bb.d:                                             ; preds = %.preheader, %bb.d
 bb.e:                                             ; preds = %bb.a
   %i.q = call i64 @time(ptr noundef null) #11     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
-  %.0.lcssa.i.sroa.gep.i = getelementptr inbounds nuw i8, ptr %i.b, i64 15 ; 3 uses
   store <8 x i8> <i8 42, i8 42, i8 42, i8 32, i8 65, i8 98, i8 111, i8 114>, ptr %i.b, align 16, !tbaa !7
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store <4 x i8> <i8 116, i8 101, i8 100, i8 32>, ptr %i.r, align 8, !tbaa !7
@@ -118,6 +117,7 @@ bb.e:                                             ; preds = %bb.a
   store i8 116, ptr %i.t, align 1, !tbaa !7
   %.0.lcssa.i.sroa.gep65.i = getelementptr inbounds nuw i8, ptr %i.b, i64 14
   store i8 32, ptr %.0.lcssa.i.sroa.gep65.i, align 2, !tbaa !7
+  %.ptr.i = getelementptr inbounds nuw i8, ptr %i.b, i64 15 ; 3 uses
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.g
@@ -127,7 +127,7 @@ bb.f:                                             ; preds = %bb.g
 bb.g:                                             ; preds = %bb.e, %bb.f
   %.014.i.i139 = phi i64 [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 3 uses
   %indvars.iv138 = phi i64 [ 0, %bb.e ], [ %indvars.iv.next, %bb.f ] ; 3 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.sroa.gep.i, i64 %indvars.iv138
+  %i.u = getelementptr inbounds nuw i8, ptr %.ptr.i, i64 %indvars.iv138
   %i.v = urem i64 %.014.i.i139, 10
   %i.w = udiv i64 %.014.i.i139, 10
   %i.x = trunc nuw nsw i64 %i.v to i8
@@ -154,14 +154,14 @@ split.i.i:                                        ; preds = %bb.g
   br label %bb.s
 
 .lr.ph.i.i.preheader.i.i:                         ; preds = %bb.f, %split.i.i
-  %.pre-phi.i96.i = phi i64 [ %indvars.iv.next, %split.i.i ], [ 241, %bb.f ] ; 13 uses
-  %i.ae = getelementptr i8, ptr %.0.lcssa.i.sroa.gep.i, i64 %.pre-phi.i96.i
+  %.pre-phi.i96.i = phi i64 [ %indvars.iv.next, %split.i.i ], [ 241, %bb.f ] ; 14 uses
+  %i.ae = getelementptr i8, ptr %.ptr.i, i64 %.pre-phi.i96.i
   %.012.i.i.i.i = getelementptr i8, ptr %i.ae, i64 -1
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i.preheader.i.i
   %.014.i.i.i.i = phi ptr [ %.0.i.i.i.i, %.lr.ph.i.i.i.i ], [ %.012.i.i.i.i, %.lr.ph.i.i.preheader.i.i ] ; 3 uses
-  %.0913.i.i.i.i = phi ptr [ %i.ah, %.lr.ph.i.i.i.i ], [ %.0.lcssa.i.sroa.gep.i, %.lr.ph.i.i.preheader.i.i ] ; 3 uses
+  %.0913.i.i.i.i = phi ptr [ %i.ah, %.lr.ph.i.i.i.i ], [ %.ptr.i, %.lr.ph.i.i.preheader.i.i ] ; 3 uses
   %i.af = load i8, ptr %.0913.i.i.i.i, align 1, !tbaa !7
   %i.ag = load i8, ptr %.014.i.i.i.i, align 1, !tbaa !7
   store i8 %i.ag, ptr %.0913.i.i.i.i, align 1, !tbaa !7
@@ -172,14 +172,14 @@ split.i.i:                                        ; preds = %bb.g
   br i1 %i.ai, label %.lr.ph.i.i.i.i, label %_ZN6google12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit.i, !llvm.loop !15
 
 _ZN6google12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit.i: ; preds = %.lr.ph.i.i.i.i
-  %.add.i = add nuw nsw i64 %.pre-phi.i96.i, 15   ; 4 uses
+  %.add.i = add nuw nsw i64 %.pre-phi.i96.i, 15   ; 3 uses
   %.ptr48.i = getelementptr inbounds nuw i8, ptr %i.b, i64 %.add.i ; 12 uses
   %i.aj = icmp samesign ult i64 %.pre-phi.i96.i, 241
   br i1 %i.aj, label %bb.h, label %_ZN6google12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit6.i
 
 bb.h:                                             ; preds = %_ZN6google12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit.i
   store i8 32, ptr %.ptr48.i, align 1, !tbaa !7
-  %.not.i = icmp eq i64 %.add.i, 255
+  %.not.i = icmp eq i64 %.pre-phi.i96.i, 240
   br i1 %.not.i, label %_ZN6google12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit6.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -582,7 +582,6 @@ _ZN6google12_GLOBAL__N_112DumpTimeInfoEv.exit:    ; preds = %_ZN6google12_GLOBAL
   call fastcc void @_ZN6google12_GLOBAL__N_118DumpStackFrameInfoEPKcPv(ptr noundef nonnull @.str.2, ptr noundef null)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #11
   %i.dz = call noundef i32 @_ZN6google13GetStackTraceEPPvii(ptr noundef nonnull %i.d, i32 noundef 32, i32 noundef 1) ; 2 uses
-  %.0.lcssa.i.sroa.gep.i11 = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 5 uses
   %switch.tableidx = add i32 %0, -4               ; 3 uses
   %i.ea = icmp ult i32 %switch.tableidx, 12
   %switch.maskindex = trunc i32 %switch.tableidx to i16
@@ -597,16 +596,17 @@ switch.lookup:                                    ; preds = %_ZN6google12_GLOBAL
   %switch.load = load ptr, ptr %switch.gep, align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store <4 x i8> <i8 42, i8 42, i8 42, i8 32>, ptr %i.a, align 16, !tbaa !7
+  %.ptr172.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 5 uses
   %i.ec = load i8, ptr %switch.load, align 1, !tbaa !7 ; 2 uses
   %.not9.i.i = icmp eq i8 %i.ec, 0
   br i1 %.not9.i.i, label %.thread307.i, label %.lr.ph.i.i.preheader
 
 .thread307.i:                                     ; preds = %switch.lookup
-  store i8 32, ptr %.0.lcssa.i.sroa.gep.i11, align 4, !tbaa !7
+  store i8 32, ptr %.ptr172.i, align 4, !tbaa !7
   br label %.sink.split
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader
-  %i.ed = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.sroa.gep.i11, i64 %i.er
+  %i.ed = getelementptr inbounds nuw i8, ptr %.ptr172.i, i64 %i.er
   store i8 %i.et, ptr %i.ed, align 1, !tbaa !7
   %i.ee = or disjoint i64 %.010.i12.i140, 2       ; 3 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %switch.load, i64 %i.ee
@@ -615,7 +615,7 @@ switch.lookup:                                    ; preds = %_ZN6google12_GLOBAL
   br i1 %.not.i14.i.1, label %_ZN6google12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit15.loopexit.i, label %.lr.ph.i.i.1, !llvm.loop !18
 
 .lr.ph.i.i.1:                                     ; preds = %.lr.ph.i.i
-  %i.eh = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.sroa.gep.i11, i64 %i.ee
+  %i.eh = getelementptr inbounds nuw i8, ptr %.ptr172.i, i64 %i.ee
   store i8 %i.eg, ptr %i.eh, align 2, !tbaa !7
   %i.ei = or disjoint i64 %.010.i12.i140, 3       ; 3 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %switch.load, i64 %i.ei
@@ -624,7 +624,7 @@ switch.lookup:                                    ; preds = %_ZN6google12_GLOBAL
   br i1 %.not.i14.i.2, label %_ZN6google12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit15.loopexit.i, label %.lr.ph.i.i.2, !llvm.loop !18
 
 .lr.ph.i.i.2:                                     ; preds = %.lr.ph.i.i.1
-  %i.el = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.sroa.gep.i11, i64 %i.ei
+  %i.el = getelementptr inbounds nuw i8, ptr %.ptr172.i, i64 %i.ei
   store i8 %i.ek, ptr %i.el, align 1, !tbaa !7
   %i.em = add nuw nsw i64 %.010.i12.i140, 4       ; 4 uses
   %i.en = getelementptr inbounds nuw i8, ptr %switch.load, i64 %i.em
@@ -639,7 +639,7 @@ switch.lookup:                                    ; preds = %_ZN6google12_GLOBAL
 .lr.ph.i.i.preheader:                             ; preds = %switch.lookup, %.lr.ph.i.i.3
   %.010.i12.i140 = phi i64 [ %i.em, %.lr.ph.i.i.3 ], [ 0, %switch.lookup ] ; 5 uses
   %i.ep = phi i8 [ %i.eo, %.lr.ph.i.i.3 ], [ %i.ec, %switch.lookup ]
-  %i.eq = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.sroa.gep.i11, i64 %.010.i12.i140
+  %i.eq = getelementptr inbounds nuw i8, ptr %.ptr172.i, i64 %.010.i12.i140
   store i8 %i.ep, ptr %i.eq, align 4, !tbaa !7
   %i.er = or disjoint i64 %.010.i12.i140, 1       ; 3 uses
   %i.es = getelementptr inbounds nuw i8, ptr %switch.load, i64 %i.er
