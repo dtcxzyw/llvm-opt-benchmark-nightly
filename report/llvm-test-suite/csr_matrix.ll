@@ -202,7 +202,7 @@ scalar.ph519:                                     ; preds = %scalar.ph519.prehea
   br i1 %i.ee, label %.lr.ph252.us.us.preheader, label %.loopexit209.us.us
 
 .lr.ph252.us.us.preheader:                        ; preds = %.lr.ph257.split.us.split.us
-  %i.ef = add i32 %i.eb, -1                       ; 2 uses
+  %i.ef = add nsw i32 %i.eb, -1                   ; 2 uses
   %i.eg = sext i32 %i.dy to i64
   %wide.trip.count371 = sext i32 %i.ed to i64
   %wide.trip.count366 = sext i32 %i.ef to i64
@@ -284,7 +284,7 @@ bb.g:                                             ; preds = %.lr.ph489, %.lr.ph2
   br i1 %i.ez, label %.lr.ph252.us.preheader, label %.loopexit209.us
 
 .lr.ph252.us.preheader:                           ; preds = %.lr.ph257.split.us.split
-  %i.fa = add i32 %i.ew, -1                       ; 2 uses
+  %i.fa = add nsw i32 %i.ew, -1                   ; 2 uses
   %i.fb = sext i32 %i.et to i64
   %wide.trip.count356 = sext i32 %i.ey to i64
   %wide.trip.count351 = sext i32 %i.fa to i64
@@ -374,7 +374,7 @@ bb.h:                                             ; preds = %.lr.ph486, %.lr.ph2
   br i1 %i.fx, label %.lr.ph252.preheader, label %.loopexit209
 
 .lr.ph252.preheader:                              ; preds = %.lr.ph257.split
-  %i.fy = add i32 %i.fu, -1                       ; 2 uses
+  %i.fy = add nsw i32 %i.fu, -1                   ; 2 uses
   %i.fz = sext i32 %i.fr to i64
   %wide.trip.count341 = sext i32 %i.fw to i64
   %wide.trip.count336 = sext i32 %i.fy to i64

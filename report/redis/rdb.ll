@@ -201,7 +201,7 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %.176 = phi i64 [ %i.cv, %bb.ad ], [ %.075139, %bb.ac ] ; 4 uses
   %i.cw = call i32 @rdbSaveKeyValuePair(ptr noundef nonnull %0, ptr noundef nonnull %6, ptr noundef %i.cj, i64 noundef %i.ct, i32 noundef %1) ; 2 uses
-  %7 = sext i32 %i.cw to i64
+  %7 = zext nneg i32 %i.cw to i64
   %i.cx = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6644), align 4, !tbaa !205
   %.not103 = icmp eq i32 %i.cx, 0
   br i1 %.not103, label %bb.ag, label %bb.af

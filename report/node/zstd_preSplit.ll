@@ -154,7 +154,7 @@ fpDistance.exit28.i:                              ; preds = %vector.body73
 
 bb.b:                                             ; preds = %bb.a
   %i.bz = add nsw i32 %2, -1                      ; 3 uses
-  %5 = sext i32 %i.bz to i64
+  %5 = zext nneg i32 %i.bz to i64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(8208) %3, i8 0, i64 8208, i1 false)
   switch i32 %i.bz, label %default.switch.case.unreachable.i [
     i32 0, label %call.0.i
@@ -322,7 +322,7 @@ call.3.i:                                         ; preds = %bb.b
 
 .lr.ph.i:                                         ; preds = %.tail.i
   %i.fj = getelementptr inbounds nuw i8, ptr %3, i64 4104 ; 17 uses
-  %i.fk = getelementptr inbounds [4 x i8], ptr @ZSTD_splitBlock_byChunks.hashParams, i64 %5
+  %i.fk = getelementptr inbounds nuw [4 x i8], ptr @ZSTD_splitBlock_byChunks.hashParams, i64 %5
   %i.fl = getelementptr inbounds nuw i8, ptr %3, i64 4096
   %i.fm = getelementptr inbounds nuw i8, ptr %3, i64 8200 ; 2 uses
   br label %bb.c

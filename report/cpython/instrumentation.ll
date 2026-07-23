@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   %i.e = sext i32 %1 to i64
   %i.f = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 -2147483648, 2147483648) %i.e, i1 false)
   %i.g = trunc nuw nsw i64 %i.f to i32            ; 2 uses
-  %i.h = sub nsw i32 63, %i.g
+  %i.h = sub nuw nsw i32 63, %i.g
   %i.i = add nsw i32 %i.g, -64
   %or.cond = icmp ult i32 %i.i, -19
   br i1 %or.cond, label %bb.e, label %bb.f

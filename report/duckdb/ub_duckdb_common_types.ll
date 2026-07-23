@@ -204,7 +204,7 @@ bb.cp:                                            ; preds = %_ZN6duckdb12_GLOBAL
   %i.se = load i32, ptr %0, align 8, !tbaa !153   ; 4 uses
   %i.sf = icmp ult i32 %i.se, 13
   %i.sg = load ptr, ptr %i.u, align 8             ; 2 uses
-  %i.sh = zext i32 %i.se to i64
+  %i.sh = zext nneg i32 %i.se to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   store i32 %i.se, ptr %.sroa.0.i, align 8, !tbaa !153
   br i1 %i.sf, label %bb.cq, label %bb.cs
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.l = sub i64 %i.k, %i.a                       ; 3 uses
   %i.m = ashr exact i64 %i.l, 2                   ; 3 uses
   %i.n = add nsw i64 %i.m, -1
-  %4 = sdiv i64 %i.n, 2
+  %4 = lshr i64 %i.n, 1
   %i.o = icmp sgt i64 %i.m, 2
   br i1 %i.o, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -647,7 +647,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ai
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !3
-  %i.al = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !3
   br label %.lr.ph.i.i.i.i.i.preheader
 

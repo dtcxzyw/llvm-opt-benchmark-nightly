@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.bo, %.lr.ph.i
 
 .split.us.preheader.i.i:                          ; preds = %bb.f
   %i.et = icmp sgt i32 %i.dx, 0
-  %15 = icmp slt i32 %i.dy, 1
+  %15 = icmp eq i32 %i.dy, 0
   %i.eu = sext i32 %i.du to i64                   ; 3 uses
   %wide.trip.count146.i.i = zext nneg i32 %i.dw to i64 ; 3 uses
   %wide.trip.count.i.i = zext nneg i32 %i.dy to i64 ; 2 uses

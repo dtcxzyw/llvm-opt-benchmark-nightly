@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.i, ptr %i.k, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9971)
-  %i.l = shl i64 %2, 2
+  %i.l = shl nuw i64 %2, 2
   %i.m = icmp ugt i64 %2, 4611686018427387903
   br i1 %i.m, label %.invoke.i, label %bb.c, !prof !4
 
@@ -344,7 +344,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.i, ptr %i.k, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10016)
-  %i.l = shl i64 %2, 3
+  %i.l = shl nuw i64 %2, 3
   %i.m = icmp ugt i64 %2, 2305843009213693951
   br i1 %i.m, label %.invoke.i, label %bb.c, !prof !4
 

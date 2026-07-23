@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %.critedge.i, %.lr.p
 
 r_short.exit56.i:                                 ; preds = %bb.h
   %i.ba = load i16, ptr %i.az, align 1            ; 3 uses
-  %1 = sext i16 %i.ba to i32
+  %1 = zext nneg i16 %i.ba to i32
   %i.bb = icmp slt i16 %i.ba, 0
   br i1 %i.bb, label %.thread72.i, label %bb.i
 
@@ -286,7 +286,7 @@ bb.m:                                             ; preds = %.critedge.i44, %.lr
 
 r_short.exit56.i42:                               ; preds = %bb.m
   %i.cb = load i16, ptr %i.ca, align 1            ; 3 uses
-  %i.cc = zext i16 %i.cb to i32
+  %i.cc = zext nneg i16 %i.cb to i32
   %i.cd = icmp slt i16 %i.cb, 0
   br i1 %i.cd, label %.thread72.i46, label %bb.n
 
