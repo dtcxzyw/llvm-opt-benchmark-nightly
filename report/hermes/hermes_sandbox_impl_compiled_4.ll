@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.j, %bb.c
   %.0126 = phi i32 [ 0, %bb.c ], [ %i.ae, %bb.j ] ; 2 uses
-  %i.m = shl i32 %.0126, 2                        ; 2 uses
+  %i.m = shl nuw nsw i32 %.0126, 2                ; 2 uses
   %.val140 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.n = getelementptr inbounds nuw i8, ptr %.val140, i64 %i.e
   %.0.copyload.i147 = load i32, ptr %i.n, align 1 ; 2 uses
@@ -263,7 +263,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.g, %bb.i
-  %i.ae = add i32 %.0126, 2                       ; 2 uses
+  %i.ae = add nuw nsw i32 %.0126, 2               ; 2 uses
   %.not130 = icmp eq i32 %i.ae, %i.l
   br i1 %.not130, label %.loopexit.loopexit, label %bb.d
 

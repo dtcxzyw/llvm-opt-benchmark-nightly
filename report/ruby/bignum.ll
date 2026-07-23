@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.o, %.preheader72
   %i.mk = getelementptr [4 x i8], ptr %i.ab, i64 %i.ma
   store i32 %i.mj, ptr %i.mk, align 4, !tbaa !7
   %i.ml = ashr i64 %i.mi, 32                      ; 3 uses
-  %i.mm = add nuw i64 %.06278.i.i683, 2           ; 2 uses
+  %i.mm = add nuw nsw i64 %.06278.i.i683, 2       ; 2 uses
   %niter3384.next.1 = add i64 %niter3384, 2       ; 2 uses
   %niter3384.ncmp.1 = icmp eq i64 %niter3384.next.1, %unroll_iter3383
   br i1 %niter3384.ncmp.1, label %._crit_edge.i.i686.loopexit.unr-lcssa, label %.lr.ph.i.i682, !llvm.loop !48
