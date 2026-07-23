@@ -1,0 +1,101 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 71997a6c9e5f1..f228b4fd518f4 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -656,7 +656,15 @@ static Decomposition decompose(Value *V,
+     return V;
+   }
+ 
+-  if (match(V, m_NUWSub(m_Value(Op0), m_Value(Op1)))) {
++  if (match(V, m_Sub(m_Value(Op0), m_Value(Op1)))) {
++    // a - b decomposes to a - b in the unsigned system only when there is no
++    // borrow (Op1 u<= Op0). Decompose only when that is already known;
++    if (!cast<OverflowingBinaryOperator>(V)->hasNoUnsignedWrap()) {
++      if (auto *I = dyn_cast<Instruction>(V);
++          !I || !isImpliedByDomCondition(CmpInst::ICMP_ULE, Op1, Op0, I, DL)
++                     .value_or(false))
++        return V;
++    }
+     auto ResA = decompose(Op0, Preconditions, IsSigned, DL);
+     auto ResB = decompose(Op1, Preconditions, IsSigned, DL);
+     if (!ResA.sub(ResB))
+diff --git a/llvm/test/Transforms/ConstraintElimination/reproducer-remarks.ll b/llvm/test/Transforms/ConstraintElimination/reproducer-remarks.ll
+index 700585160e95e..44dc4e0f690cc 100644
+--- a/llvm/test/Transforms/ConstraintElimination/reproducer-remarks.ll
++++ b/llvm/test/Transforms/ConstraintElimination/reproducer-remarks.ll
+@@ -264,6 +264,33 @@ entry:
+   ret i1 %c.5
+ }
+ 
++; Variable shared operand: with 'b <=u a' in scope the decomposed subs still
++; cancel, so the compare is retained (contrast @shared_operand above).
++define i1 @shared_operand_no_const(i8 %a, i8 %b) {
++; CHECK-LABEL: define i1 @"{{.+}}shared_operand_no_constrepro"(i8 %a, i8 %b) {
++; CHECK-NEXT: entry:
++; CHECK-NEXT:   %0 = icmp ule i8 %b, %a
++; CHECK-NEXT:   call void @llvm.assume(i1 %0)
++; CHECK-NEXT:   %sub = sub i8 %a, %b
++; CHECK-NEXT:   %sub.2 = sub nuw i8 %sub, 0
++; CHECK-NEXT:   %c.5 = icmp ult i8 %sub.2, %sub
++; CHECK-NEXT:   ret i1 %c.5
++; CHECK-NEXT: }
++;
++entry:
++  %precond = icmp ule i8 %b, %a
++  br i1 %precond, label %then, label %exit
++
++then:
++  %sub = sub i8 %a, %b
++  %sub.2 = sub nuw i8 %sub, 0
++  %c.5 = icmp ult i8 %sub.2, %sub
++  ret i1 %c.5
++
++exit:
++  ret i1 false
++}
++
+ @glob = external global i32
+ 
+ define i1 @load_global() {
+diff --git a/llvm/test/Transforms/ConstraintElimination/sub.ll b/llvm/test/Transforms/ConstraintElimination/sub.ll
+index 78143dc62883c..e2fb7819ca0b2 100644
+--- a/llvm/test/Transforms/ConstraintElimination/sub.ll
++++ b/llvm/test/Transforms/ConstraintElimination/sub.ll
+@@ -239,3 +239,37 @@ if.end:                                           ; preds = %entry
+ 
+ 
+ declare void @use(i1)
++
++; A `sub` without nsw/nuw is decomposed in the unsigned system under the
++; recorded precondition (Op1 u<= Op0). Given `%b u<= %a`, `%a - %b u<= %a` is
++; therefore known and the check folds to true. Without the precondition (the
++; check before the branch) it must NOT fold.
++define i1 @sub_no_wrap_flags_ule(i8 %a, i8 %b) {
++; CHECK-LABEL: @sub_no_wrap_flags_ule(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[SUB_NEG:%.*]] = sub i8 [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    [[C_NEG:%.*]] = icmp ule i8 [[SUB_NEG]], [[A]]
++; CHECK-NEXT:    call void @use(i1 [[C_NEG]])
++; CHECK-NEXT:    [[PRECOND:%.*]] = icmp ule i8 [[B]], [[A]]
++; CHECK-NEXT:    br i1 [[PRECOND]], label [[THEN:%.*]], label [[ELSE:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    [[SUB:%.*]] = sub i8 [[A]], [[B]]
++; CHECK-NEXT:    ret i1 true
++; CHECK:       else:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %sub.neg = sub i8 %a, %b
++  %c.neg = icmp ule i8 %sub.neg, %a
++  call void @use(i1 %c.neg)
++  %precond = icmp ule i8 %b, %a
++  br i1 %precond, label %then, label %else
++
++then:
++  %sub = sub i8 %a, %b
++  %c = icmp ule i8 %sub, %a
++  ret i1 %c
++
++else:
++  ret i1 false
++}
