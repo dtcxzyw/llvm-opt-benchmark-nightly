@@ -84,8 +84,9 @@ bb.a:
   %i.o = load double, ptr @A3, align 8, !tbaa !8  ; 2 uses
   %i.p = load double, ptr @A2, align 8, !tbaa !8  ; 2 uses
   %i.q = load double, ptr @A1, align 8, !tbaa !8  ; 2 uses
-  %i.r = insertelement <2 x double> poison, double %i.k, i64 0
-  %i.s = insertelement <2 x double> %i.r, double %i.m, i64 1
+  %0 = insertelement <2 x double> poison, double %i.k, i64 0
+  %i.r = insertelement <2 x double> %0, double %i.m, i64 1
+  %i.s = insertelement <2 x double> poison, double %i.l, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.b
@@ -101,9 +102,8 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %i.aa = tail call double @llvm.fmuladd.f64(double %i.v, double %i.z, double %i.j)
   %i.ab = insertelement <2 x double> poison, double %i.v, i64 0
   %i.ac = shufflevector <2 x double> %i.ab, <2 x double> poison, <2 x i32> zeroinitializer
-  %0 = insertelement <2 x double> poison, double %i.aa, i64 0
-  %i.ad = insertelement <2 x double> %0, double %i.l, i64 1
-  %i.ae = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ac, <2 x double> %i.ad, <2 x double> %i.s) ; 3 uses
+  %i.ad = insertelement <2 x double> %i.s, double %i.aa, i64 0
+  %i.ae = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ac, <2 x double> %i.ad, <2 x double> %i.r) ; 3 uses
   %foldExtExtBinop = fmul <2 x double> %i.ae, %i.ae
   %i.af = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.ag = fmul double %i.u, %i.af

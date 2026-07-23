@@ -201,6 +201,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.e = fmul double %i.b, 1.250000e-01
+  %6 = insertelement <2 x double> poison, double %2, i64 1
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %bb.c, %bb.a
@@ -231,8 +232,7 @@ bb.b:                                             ; preds = %bb.d, %tailrecurse
   %i.v = load ptr, ptr %1, align 8
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = tail call noundef double %i.w(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(57) %0) #12 ; 3 uses
-  %6 = insertelement <2 x double> poison, double %i.x, i64 0
-  %i.y = insertelement <2 x double> %6, double %2, i64 1
+  %i.y = insertelement <2 x double> %6, double %i.x, i64 0
   %i.z = insertelement <2 x double> poison, double %.035, i64 0
   %i.aa = insertelement <2 x double> %i.z, double %i.x, i64 1
   %i.ab = fsub <2 x double> %i.y, %i.aa

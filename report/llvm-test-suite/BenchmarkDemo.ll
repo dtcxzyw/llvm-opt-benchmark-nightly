@@ -204,6 +204,7 @@ bb.a:
   %.sroa.6129.0172 = phi float [ 2.000000e+01, %bb.a ], [ %i.i, %bb.c ] ; 2 uses
   %i.c = fadd float %.0176, 3.000000e+00          ; 2 uses
   %i.d = fadd float %.sroa.6129.0172, 2.500000e+01
+  %4 = insertelement <2 x float> poison, float %i.d, i64 1
   br label %bb.d
 
 bb.b:                                             ; preds = %bb.c
@@ -240,8 +241,7 @@ bb.f:                                             ; preds = %bb.d, %bb.ai
   %i.q = call float @llvm.fmuladd.f32(float %i.p, float %i.c, float %.048175)
   %i.r = fmul float %i.q, 5.000000e+00
   %i.s = fadd float %i.r, 0.000000e+00
-  %.sroa.0.0.vec.insert.i56 = insertelement <2 x float> poison, float %i.s, i64 0
-  %.sroa.0.4.vec.insert.i57 = insertelement <2 x float> %.sroa.0.0.vec.insert.i56, float %i.d, i64 1 ; 3 uses
+  %.sroa.0.4.vec.insert.i57 = insertelement <2 x float> %4, float %i.s, i64 0 ; 3 uses
   %i.t = call i32 @rand() #21
   %i.u = srem i32 %i.t, 9                         ; 4 uses
   switch i32 %i.u, label %bb.ai [
@@ -633,6 +633,7 @@ bb.d:                                             ; preds = %.preheader80, %bb.d
   %.sroa.564.084 = phi float [ 2.000000e+01, %bb.b ], [ %i.s, %bb.f ] ; 2 uses
   %i.m = fadd float %.04185, 3.000000e+00         ; 2 uses
   %i.n = fadd float %.sroa.564.084, 2.500000e+01
+  %4 = insertelement <2 x float> poison, float %i.n, i64 1
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.f
@@ -698,8 +699,7 @@ _ZN15DemoApplication20localCreateRigidBodyEfRK11btTransformP16btCollisionShape.e
   %i.ah = call float @llvm.fmuladd.f32(float %i.ag, float %i.m, float %.04086)
   %i.ai = fmul float %i.ah, 5.000000e+00
   %i.aj = fadd float %i.ai, 0.000000e+00
-  %.sroa.0.0.vec.insert.i43 = insertelement <2 x float> poison, float %i.aj, i64 0
-  %.sroa.0.4.vec.insert.i44 = insertelement <2 x float> %.sroa.0.0.vec.insert.i43, float %i.n, i64 1
+  %.sroa.0.4.vec.insert.i44 = insertelement <2 x float> %4, float %i.aj, i64 0
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   store float 1.000000e+00, ptr %i.ak, align 8
   %.sroa.470.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 12
@@ -1102,6 +1102,7 @@ bb.i:                                             ; preds = %bb.c
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.bd = extractelement <2 x float> %i.bb, i64 0
   %i.be = extractelement <2 x float> %i.bb, i64 1
+  %6 = insertelement <2 x float> poison, float %.sroa.661.070, i64 1
   br label %.lr.ph
 
 ._crit_edge68:                                    ; preds = %._crit_edge, %.preheader
@@ -1172,8 +1173,7 @@ _ZN15DemoApplication20localCreateRigidBodyEfRK11btTransformP16btCollisionShape.e
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.bv, i64 0
   %i.bw = uitofp nneg i32 %.065 to float
   %i.bx = call float @llvm.fmuladd.f32(float %i.bw, float %i.ba, float %i.be)
-  %6 = insertelement <2 x float> poison, float %i.bx, i64 0
-  %i.by = insertelement <2 x float> %6, float %.sroa.661.070, i64 1
+  %i.by = insertelement <2 x float> %6, float %i.bx, i64 0
   %i.bz = fadd <2 x float> %i.by, %i.bm
   %i.ca = getelementptr inbounds nuw i8, ptr %i.br, i64 8
   store float 1.000000e+00, ptr %i.ca, align 8
@@ -1389,6 +1389,7 @@ bb.i:                                             ; preds = %bb.c
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
   %i.bb = load float, ptr %i.b, align 4, !tbaa !36
+  %7 = insertelement <2 x float> poison, float %i.an, i64 1
   %i.bc = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.an, i64 0
   br label %.preheader.us
 
@@ -1398,8 +1399,7 @@ bb.i:                                             ; preds = %bb.c
   %.094107.us = phi float [ %i.fw, %._crit_edge.us ], [ %i.bb, %.preheader.us.preheader ] ; 5 uses
   %i.bd = phi <2 x float> [ %i.gy, %._crit_edge.us ], [ <float 1.000000e+00, float 0.000000e+00>, %.preheader.us.preheader ]
   %i.be = phi <2 x float> [ %i.gt, %._crit_edge.us ], [ <float 0.000000e+00, float 1.000000e+00>, %.preheader.us.preheader ]
-  %7 = insertelement <2 x float> poison, float %.094107.us, i64 0
-  %i.bf = insertelement <2 x float> %7, float %i.an, i64 1
+  %i.bf = insertelement <2 x float> %7, float %.094107.us, i64 0
   %i.bg = insertelement <2 x float> <float 0.000000e+00, float poison>, float %.094107.us, i64 1
   br label %bb.j
 
@@ -1802,6 +1802,7 @@ define linkonce_odr dso_local void @_ZN13btRaycastBar2C2Efff(ptr noundef nonnull
   store float 1.000000e+00, ptr %i.j, align 8, !tbaa !169
   %i.k = insertelement <2 x float> poison, float %1, i64 0
   %i.l = shufflevector <2 x float> %i.k, <2 x float> poison, <2 x i32> zeroinitializer
+  %4 = insertelement <2 x float> poison, float %3, i64 1
   br label %bb.b
 
 bb.a:                                             ; preds = %bb.b
@@ -1869,8 +1870,7 @@ bb.b:                                             ; preds = %.preheader82.prehea
   store float %2, ptr %.sroa.559.0..sroa_idx, align 8
   %.sroa.660.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bi, i64 12
   store float 0.000000e+00, ptr %.sroa.660.0..sroa_idx, align 4, !tbaa !60
-  %4 = insertelement <2 x float> poison, float %i.bh, i64 0
-  %i.bj = insertelement <2 x float> %4, float %3, i64 1
+  %i.bj = insertelement <2 x float> %4, float %i.bh, i64 0
   %i.bk = fadd <2 x float> %i.bj, %i.bf
   %i.bl = fadd float %2, %i.bg
   %.sroa.3.12.vec.insert.i51 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.bl, i64 0
