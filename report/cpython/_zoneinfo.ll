@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %parse_digits.exit19
   store ptr %.129, ptr %0, align 8, !tbaa !134
   br label %parse_digits.exit
 
-parse_digits.exit:                                ; preds = %bb.h, %bb.i, %bb.f, %bb.g, %bb.c, %bb.j
-  %.011 = phi i32 [ 0, %bb.j ], [ -1, %bb.f ], [ -1, %bb.c ], [ -1, %bb.g ], [ -1, %bb.i ], [ -1, %bb.h ]
+parse_digits.exit:                                ; preds = %bb.f, %bb.g, %bb.h, %bb.i, %bb.c, %bb.j
+  %.011 = phi i32 [ 0, %bb.j ], [ -1, %bb.h ], [ -1, %bb.c ], [ -1, %bb.i ], [ -1, %bb.g ], [ -1, %bb.f ]
   ret i32 %.011
 }
 
