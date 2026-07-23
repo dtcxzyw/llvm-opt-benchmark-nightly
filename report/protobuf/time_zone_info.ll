@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond171.i.i.i.i, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit87.sink.split.i.i.i.i, label %.lr.ph.i.i.i.i
 
 bb.v:                                             ; preds = %bb.x
-  %i.cv = add i64 %.041149.i.i.i.i, 1             ; 2 uses
+  %i.cv = add nuw nsw i64 %.041149.i.i.i.i, 1     ; 2 uses
   %.not58.i.i.i.i = icmp eq i64 %i.cv, %i.ct
   br i1 %.not58.i.i.i.i, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit87.sink.split.i.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !288
 
@@ -442,7 +442,7 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.gj, label %bb.an, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.gk = add i64 %.041149.i.i.i.i.1, 1           ; 2 uses
+  %i.gk = add nuw nsw i64 %.041149.i.i.i.i.1, 1   ; 2 uses
   %.not58.i.i.i.i.1 = icmp eq i64 %i.gk, %i.fr
   br i1 %.not58.i.i.i.i.1, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit87.sink.split.i.i.i.i.1, label %.lr.ph.i.i.i.i.1, !llvm.loop !288
 
@@ -554,7 +554,7 @@ bb.au:                                            ; preds = %bb.at
   br i1 %i.ie, label %bb.aw, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %i.if = add i64 %.041149.i.i.i.i.2, 1           ; 2 uses
+  %i.if = add nuw nsw i64 %.041149.i.i.i.i.2, 1   ; 2 uses
   %.not58.i.i.i.i.2 = icmp eq i64 %i.if, %i.hm
   br i1 %.not58.i.i.i.i.2, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit87.sink.split.i.i.i.i.2, label %.lr.ph.i.i.i.i.2, !llvm.loop !288
 

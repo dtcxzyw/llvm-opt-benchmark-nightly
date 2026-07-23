@@ -1,7 +1,7 @@
 inline.NumInlined: 13
 inline.NumDeleted: 4
-loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@mbedtls_pkcs5_pbes2_ext:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #6
@@ -203,8 +203,8 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @pkcs5_pbkdf2_hmac(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, i32 noundef %5, i32 noundef %6, ptr nofree noundef writeonly captures(none) %7) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [64 x i8], align 16               ; 12 uses
-  %i.b = alloca [64 x i8], align 16               ; 14 uses
+  %i.a = alloca [64 x i8], align 16               ; 25 uses
+  %i.b = alloca [64 x i8], align 16               ; 28 uses
   %i.c = alloca [4 x i8], align 4                 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
@@ -235,9 +235,41 @@ bb.a:
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check135 = icmp ult i64 %i.m, 24
-  %n.vec138 = and i64 %i.o, 4611686018427387900   ; 3 uses
+  %n.vec138 = and i64 %i.o, 4611686018427387900   ; 8 uses
   %i.p = shl i64 %n.vec138, 3                     ; 3 uses
   %i.q = or disjoint i64 %i.p, 8
+  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %10 = icmp eq i64 %n.vec138, 4
+  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %15 = icmp eq i64 %n.vec138, 8
+  %16 = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %i.b, i64 80 ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 64
+  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 80
+  %20 = icmp eq i64 %n.vec138, 12
+  %21 = getelementptr inbounds nuw i8, ptr %i.b, i64 96 ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %i.b, i64 112 ; 2 uses
+  %23 = getelementptr inbounds nuw i8, ptr %i.a, i64 96
+  %24 = getelementptr inbounds nuw i8, ptr %i.a, i64 112
+  %25 = icmp eq i64 %n.vec138, 16
+  %26 = getelementptr inbounds nuw i8, ptr %i.b, i64 128 ; 2 uses
+  %27 = getelementptr inbounds nuw i8, ptr %i.b, i64 144 ; 2 uses
+  %28 = getelementptr inbounds nuw i8, ptr %i.a, i64 128
+  %29 = getelementptr inbounds nuw i8, ptr %i.a, i64 144
+  %30 = icmp eq i64 %n.vec138, 20
+  %31 = getelementptr inbounds nuw i8, ptr %i.b, i64 160 ; 2 uses
+  %32 = getelementptr inbounds nuw i8, ptr %i.b, i64 176 ; 2 uses
+  %33 = getelementptr inbounds nuw i8, ptr %i.a, i64 160
+  %34 = getelementptr inbounds nuw i8, ptr %i.a, i64 176
+  %35 = icmp eq i64 %n.vec138, 24
+  %36 = getelementptr inbounds nuw i8, ptr %i.b, i64 192 ; 2 uses
+  %37 = getelementptr inbounds nuw i8, ptr %i.b, i64 208 ; 2 uses
+  %38 = getelementptr inbounds nuw i8, ptr %i.a, i64 192
+  %39 = getelementptr inbounds nuw i8, ptr %i.a, i64 208
   %cmp.n147 = icmp eq i64 %i.o, %n.vec138
   br label %.lr.ph76.split.us
 
@@ -305,7 +337,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.ad = call i32 @mbedtls_md_hmac_reset(ptr noundef nonnull %0) #6 ; 2 uses
   %.not61.us = icmp eq i32 %i.ad, 0
-  br i1 %.not61.us, label %.preheader63.us.a, label %.loopexit
+  br i1 %.not61.us, label %.preheader63.us, label %.loopexit
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader149, %.lr.ph.us
   %i.ae = phi i64 [ %i.ai, %.lr.ph.us ], [ %.ph, %.lr.ph.us.preheader149 ] ; 3 uses
@@ -337,8 +369,8 @@ mbedtls_xor.exit.us:                              ; preds = %.lr.ph70.us, %middl
   %exitcond.not = icmp eq i64 %i.ap, %i.h
   br i1 %exitcond.not, label %mbedtls_xor.exit.us, label %.lr.ph70.us, !llvm.loop !27
 
-.preheader.us:                                    ; preds = %.lr.ph.us, %middle.block146, %.preheader63.us.a
-  %.0.i.lcssa.us = phi i64 [ 0, %.preheader63.us.a ], [ %i.p, %middle.block146 ], [ %i.ae, %.lr.ph.us ] ; 7 uses
+.preheader.us:                                    ; preds = %.lr.ph.us, %middle.block146, %.preheader63.us
+  %.0.i.lcssa.us = phi i64 [ 0, %.preheader63.us ], [ %i.p, %middle.block146 ], [ %i.ae, %.lr.ph.us ] ; 7 uses
   %i.aq = icmp samesign ult i64 %.0.i.lcssa.us, %i.h
   br i1 %i.aq, label %iter.check, label %mbedtls_xor.exit.us
 
@@ -411,37 +443,95 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.1.i69.us.ph = phi i64 [ %.0.i.lcssa.us, %iter.check ], [ %i.as, %vec.epilog.iter.check ], [ %i.bb, %vec.epilog.middle.block ]
   br label %.lr.ph70.us
 
-.preheader63.us.a:                                ; preds = %bb.k
-  br i1 %.not.i67, label %.preheader.us, label %.lr.ph.us.preheader.a
+.preheader63.us:                                  ; preds = %bb.k
+  br i1 %.not.i67, label %.preheader.us, label %.lr.ph.us.preheader
+
+.lr.ph.us.preheader:                              ; preds = %.preheader63.us
+  br i1 %min.iters.check135, label %.lr.ph.us.preheader149, label %vector.body139
+
+vector.body139:                                   ; preds = %.lr.ph.us.preheader
+  %wide.load141 = load <2 x i64>, ptr %i.b, align 16
+  %wide.load142 = load <2 x i64>, ptr %8, align 16
+  %wide.load143 = load <2 x i64>, ptr %i.a, align 16
+  %wide.load144 = load <2 x i64>, ptr %9, align 16
+  %40 = xor <2 x i64> %wide.load143, %wide.load141
+  %41 = xor <2 x i64> %wide.load144, %wide.load142
+  store <2 x i64> %40, ptr %i.b, align 16
+  store <2 x i64> %41, ptr %8, align 16
+  br i1 %10, label %middle.block146, label %vector.body139.1
+
+vector.body139.1:                                 ; preds = %vector.body139
+  %wide.load141.1 = load <2 x i64>, ptr %11, align 16
+  %wide.load142.1 = load <2 x i64>, ptr %12, align 16
+  %wide.load143.1 = load <2 x i64>, ptr %13, align 16
+  %wide.load144.1 = load <2 x i64>, ptr %14, align 16
+  %42 = xor <2 x i64> %wide.load143.1, %wide.load141.1
+  %43 = xor <2 x i64> %wide.load144.1, %wide.load142.1
+  store <2 x i64> %42, ptr %11, align 16
+  store <2 x i64> %43, ptr %12, align 16
+  br i1 %15, label %middle.block146, label %vector.body139.2
+
+vector.body139.2:                                 ; preds = %vector.body139.1
+  %wide.load141.2 = load <2 x i64>, ptr %16, align 16
+  %wide.load142.2 = load <2 x i64>, ptr %17, align 16
+  %wide.load143.2 = load <2 x i64>, ptr %18, align 16
+  %wide.load144.2 = load <2 x i64>, ptr %19, align 16
+  %44 = xor <2 x i64> %wide.load143.2, %wide.load141.2
+  %45 = xor <2 x i64> %wide.load144.2, %wide.load142.2
+  store <2 x i64> %44, ptr %16, align 16
+  store <2 x i64> %45, ptr %17, align 16
+  br i1 %20, label %middle.block146, label %.preheader63.us.a
+
+.preheader63.us.a:                                ; preds = %vector.body139.2
+  %wide.load141.3 = load <2 x i64>, ptr %21, align 16
+  %wide.load142.3 = load <2 x i64>, ptr %22, align 16
+  %wide.load143.3 = load <2 x i64>, ptr %23, align 16
+  %wide.load144.3 = load <2 x i64>, ptr %24, align 16
+  %46 = xor <2 x i64> %wide.load143.3, %wide.load141.3
+  %47 = xor <2 x i64> %wide.load144.3, %wide.load142.3
+  store <2 x i64> %46, ptr %21, align 16
+  store <2 x i64> %47, ptr %22, align 16
+  br i1 %25, label %middle.block146, label %.lr.ph.us.preheader.a
 
 .lr.ph.us.preheader.a:                            ; preds = %.preheader63.us.a
-  br i1 %min.iters.check135, label %.lr.ph.us.preheader149, label %vector.body139.a
+  %wide.load141.4 = load <2 x i64>, ptr %26, align 16
+  %wide.load142.4 = load <2 x i64>, ptr %27, align 16
+  %wide.load143.4 = load <2 x i64>, ptr %28, align 16
+  %wide.load144.4 = load <2 x i64>, ptr %29, align 16
+  %48 = xor <2 x i64> %wide.load143.4, %wide.load141.4
+  %49 = xor <2 x i64> %wide.load144.4, %wide.load142.4
+  store <2 x i64> %48, ptr %26, align 16
+  store <2 x i64> %49, ptr %27, align 16
+  br i1 %30, label %middle.block146, label %vector.body139.a
 
-vector.body139.a:                                 ; preds = %.lr.ph.us.preheader.a, %vector.body139.a
-  %index140 = phi i64 [ %index.next145, %vector.body139.a ], [ 0, %.lr.ph.us.preheader.a ] ; 2 uses
-  %8 = shl i64 %index140, 3                       ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 %8 ; 3 uses
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
-  %wide.load141.a = load <2 x i64>, ptr %9, align 16
-  %wide.load142.a = load <2 x i64>, ptr %10, align 16
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 %8 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 16
-  %wide.load143.a = load <2 x i64>, ptr %11, align 16
-  %wide.load144.a = load <2 x i64>, ptr %12, align 16
+vector.body139.a:                                 ; preds = %.lr.ph.us.preheader.a
+  %wide.load141.a = load <2 x i64>, ptr %31, align 16
+  %wide.load142.a = load <2 x i64>, ptr %32, align 16
+  %wide.load143.a = load <2 x i64>, ptr %33, align 16
+  %wide.load144.a = load <2 x i64>, ptr %34, align 16
   %i.bh = xor <2 x i64> %wide.load143.a, %wide.load141.a
   %i.bi = xor <2 x i64> %wide.load144.a, %wide.load142.a
-  store <2 x i64> %i.bh, ptr %9, align 16
-  store <2 x i64> %i.bi, ptr %10, align 16
-  %index.next145 = add nuw i64 %index140, 4       ; 2 uses
-  %13 = icmp eq i64 %index.next145, %n.vec138
-  br i1 %13, label %middle.block146, label %vector.body139.a, !llvm.loop !31
+  store <2 x i64> %i.bh, ptr %31, align 16
+  store <2 x i64> %i.bi, ptr %32, align 16
+  br i1 %35, label %middle.block146, label %vector.body139.6
 
-middle.block146:                                  ; preds = %vector.body139.a
+vector.body139.6:                                 ; preds = %vector.body139.a
+  %wide.load141.6 = load <2 x i64>, ptr %36, align 16
+  %wide.load142.6 = load <2 x i64>, ptr %37, align 16
+  %wide.load143.6 = load <2 x i64>, ptr %38, align 16
+  %wide.load144.6 = load <2 x i64>, ptr %39, align 16
+  %50 = xor <2 x i64> %wide.load143.6, %wide.load141.6
+  %51 = xor <2 x i64> %wide.load144.6, %wide.load142.6
+  store <2 x i64> %50, ptr %36, align 16
+  store <2 x i64> %51, ptr %37, align 16
+  br label %middle.block146
+
+middle.block146:                                  ; preds = %vector.body139.6, %vector.body139.a, %.lr.ph.us.preheader.a, %.preheader63.us.a, %vector.body139.2, %vector.body139.1, %vector.body139
   br i1 %cmp.n147, label %.preheader.us, label %.lr.ph.us.preheader149
 
-.lr.ph.us.preheader149:                           ; preds = %.lr.ph.us.preheader.a, %middle.block146
-  %.ph = phi i64 [ 8, %.lr.ph.us.preheader.a ], [ %i.q, %middle.block146 ]
-  %.0.i68.us.ph = phi i64 [ 0, %.lr.ph.us.preheader.a ], [ %i.p, %middle.block146 ]
+.lr.ph.us.preheader149:                           ; preds = %.lr.ph.us.preheader, %middle.block146
+  %.ph = phi i64 [ 8, %.lr.ph.us.preheader ], [ %i.q, %middle.block146 ]
+  %.0.i68.us.ph = phi i64 [ 0, %.lr.ph.us.preheader ], [ %i.p, %middle.block146 ]
   br label %.lr.ph.us
 
 ._crit_edge.us:                                   ; preds = %mbedtls_xor.exit.us
@@ -844,5 +934,4 @@ attributes #6 = { nounwind }
 !28 = distinct !{!28, !22, !25, !24}
 !29 = !{!"branch_weights", i32 8, i32 24}
 !30 = distinct !{!30, !22, !25, !24}
-!31 = distinct !{!31, !22, !25, !24}
 end_hunk_1

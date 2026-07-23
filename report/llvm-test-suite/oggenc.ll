@@ -204,7 +204,7 @@ sum.exit:                                         ; preds = %.lr.ph.i.prol.loope
   %i.by = sub i64 %i.bw, %i.bx
   %i.bz = ashr exact i64 %i.by, 2
   %i.ca = sdiv i64 %i.bz, %i.v
-  %i.cb = add i64 %i.ca, %.080.lcssa              ; 7 uses
+  %i.cb = add i64 %i.ca, %.080.lcssa              ; 6 uses
   %i.cc = load i32, ptr %i.c, align 4             ; 2 uses
   %i.cd = zext i32 %i.cc to i64
   %i.ce = icmp ult i64 %i.cb, %i.cd
@@ -229,11 +229,8 @@ bb.e:                                             ; preds = %._crit_edge99
   %i.cr = add i64 %i.cn, %i.cq                    ; 2 uses
   %i.cs = lshr i64 %i.cr, 2
   %i.ct = add nuw nsw i64 %i.cs, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cr, 60
-  %9 = shl i64 %i.cb, 2
-  %diff.check = icmp ugt i64 %9, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph105.preheader146, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.cr, 28
+  br i1 %min.iters.check, label %.lr.ph105.preheader146, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph105.preheader
   %n.vec = and i64 %i.ct, 9223372036854775800     ; 3 uses
@@ -636,7 +633,7 @@ attributes #71 = { nounwind allocsize(0,1) }
 !137 = distinct !{!137, !6}
 !138 = distinct !{!138, !6}
 !139 = distinct !{!139, !6, !61, !103}
-!140 = distinct !{!140, !6, !61}
+!140 = distinct !{!140, !6, !103, !61}
 !141 = distinct !{!141, !6}
 !142 = distinct !{!142, !6}
 !143 = distinct !{!143, !6}
