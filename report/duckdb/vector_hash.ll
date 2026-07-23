@@ -203,7 +203,7 @@ bb.ut:                                            ; preds = %bb.us
 
 bb.uu:                                            ; preds = %bb.ut
   %i.ezy = invoke noundef i64 @_ZN6duckdb9ArrayType7GetSizeERKNS_11LogicalTypeE(ptr noundef nonnull align 8 dereferenceable(24) %i.lm)
-          to label %bb.uv unwind label %bb.vd, !inline_history !1388 ; 19 uses
+          to label %bb.uv unwind label %bb.vd, !inline_history !1388 ; 21 uses
 
 bb.uv:                                            ; preds = %bb.uu
   %i.ezz = load i8, ptr %1, align 8, !tbaa !7     ; 2 uses
@@ -251,12 +251,11 @@ _ZN6duckdb10FlatVector7GetDataImEEPT_RNS_6VectorE.exit.i: ; preds = %bb.va
   %i.fai = load ptr, ptr %i.fah, align 8, !tbaa !49 ; 2 uses
   %.not.i100.i = icmp eq ptr %i.fai, null
   %.not1255 = icmp eq i64 %i.ezy, 0               ; 2 uses
-  %umax = call i64 @llvm.umax.i64(i64 %i.ezy, i64 1) ; 3 uses
-  %xtraiter2162 = and i64 %umax, 1
-  %33 = icmp ult i64 %i.ezy, 2
-  %unroll_iter2166 = and i64 %umax, -2
+  %xtraiter2162 = and i64 %i.ezy, 1
+  %33 = icmp eq i64 %i.ezy, 1
+  %unroll_iter2166 = and i64 %i.ezy, -2
   %lcmp.mod2164.not = icmp eq i64 %xtraiter2162, 0
-  %lcmp.mod2165 = trunc i64 %umax to i1
+  %lcmp.mod2165 = trunc i64 %i.ezy to i1
   br label %bb.vi
 
 ._crit_edge:                                      ; preds = %.loopexit1221, %_ZN6duckdb10FlatVector7GetDataImEEPT_RNS_6VectorE.exit.i

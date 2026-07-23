@@ -29,7 +29,7 @@ bb.a:
   %i.c = zext i8 %i.b to i64                      ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr @trans, i64 %i.c
   %i.e = load i8, ptr %i.d, align 1, !tbaa !10    ; 3 uses
-  %3 = sext i8 %i.e to i64
+  %3 = zext nneg i8 %i.e to i64
   %i.f = icmp slt i8 %i.e, 0
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -55,7 +55,7 @@ bb.e:                                             ; preds = %bb.c
   %i.p = zext i8 %i.o to i64
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.p
   %i.r = load i8, ptr %i.q, align 1, !tbaa !10    ; 4 uses
-  %4 = sext i8 %i.r to i64
+  %4 = zext nneg i8 %i.r to i64
   %i.s = icmp slt i8 %i.r, 0
   br i1 %i.s, label %bb.f, label %bb.g
 
@@ -83,7 +83,7 @@ bb.i:                                             ; preds = %bb.g
   %i.ae = zext i8 %i.ad to i64
   %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ae
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !10  ; 3 uses
-  %5 = sext i8 %i.ag to i64
+  %5 = zext nneg i8 %i.ag to i64
   %i.ah = icmp slt i8 %i.ag, 0
   br i1 %i.ah, label %bb.j, label %bb.k
 
@@ -103,7 +103,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ao = zext i8 %i.an to i64
   %i.ap = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ao
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !10  ; 3 uses
-  %6 = sext i8 %i.aq to i64
+  %6 = zext nneg i8 %i.aq to i64
   %i.ar = icmp slt i8 %i.aq, 0
   br i1 %i.ar, label %bb.m, label %bb.n
 
@@ -123,7 +123,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ay = zext i8 %i.ax to i64
   %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.ay
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !10  ; 3 uses
-  %7 = sext i8 %i.ba to i64
+  %7 = zext nneg i8 %i.ba to i64
   %i.bb = icmp slt i8 %i.ba, 0
   br i1 %i.bb, label %bb.p, label %bb.q
 
@@ -178,7 +178,7 @@ bb.a:
   %i.c = zext i8 %i.b to i64                      ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr @trans, i64 %i.c
   %i.e = load i8, ptr %i.d, align 1, !tbaa !10    ; 3 uses
-  %3 = sext i8 %i.e to i64
+  %3 = zext nneg i8 %i.e to i64
   %i.f = icmp slt i8 %i.e, 0
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.c
   %i.o = zext i8 %i.n to i64
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.o
   %i.q = load i8, ptr %i.p, align 1, !tbaa !10    ; 4 uses
-  %4 = sext i8 %i.q to i64
+  %4 = zext nneg i8 %i.q to i64
   %i.r = icmp slt i8 %i.q, 0
   br i1 %i.r, label %bb.f, label %bb.g
 
@@ -229,7 +229,7 @@ bb.i:                                             ; preds = %bb.g
   %i.ab = zext i8 %i.aa to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.ab
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !10  ; 3 uses
-  %5 = sext i8 %i.ad to i64
+  %5 = zext nneg i8 %i.ad to i64
   %i.ae = icmp slt i8 %i.ad, 0
   br i1 %i.ae, label %bb.j, label %bb.k
 

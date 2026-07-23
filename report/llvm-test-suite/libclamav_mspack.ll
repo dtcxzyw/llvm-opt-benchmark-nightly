@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.aa
   %i.ge = shl i16 %.4754, 1
   %i.gf = shl i16 %.4772, 1
   %i.gg = or disjoint i16 %i.gf, 1
-  %i.gh = zext i8 %.5698 to i32
+  %i.gh = zext nneg i8 %.5698 to i32
   %i.gi = icmp ult i8 %.5698, 17
   br i1 %i.gi, label %bb.ae, label %bb.am
 
@@ -420,7 +420,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ax
   %i.ju = shl i16 %.6756, 1
   %i.jv = shl i16 %.6774, 1
   %i.jw = or disjoint i16 %i.jv, 1
-  %i.jx = zext i8 %.7 to i32
+  %i.jx = zext nneg i8 %.7 to i32
   %i.jy = icmp ult i8 %.7, 17
   br i1 %i.jy, label %bb.bb, label %bb.bi
 
@@ -629,7 +629,7 @@ bb.bu:                                            ; preds = %bb.bt, %bb.br
   %i.ni = shl i16 %.9759, 1
   %i.nj = shl i16 %.9777, 1
   %i.nk = or disjoint i16 %i.nj, 1
-  %i.nl = zext i8 %.9 to i32
+  %i.nl = zext nneg i8 %.9 to i32
   %i.nm = icmp ult i8 %.9, 17
   br i1 %i.nm, label %bb.bv, label %bb.cd
 
@@ -714,7 +714,7 @@ bb.ce:                                            ; preds = %bb.bs
   %.07871527 = phi i32 [ %i.pw, %bb.cn ], [ 0, %bb.ce ]
   %.158361526 = phi ptr [ %.17838, %bb.cn ], [ %.12833, %bb.ce ] ; 3 uses
   %.158681525 = phi ptr [ %.17870, %bb.cn ], [ %.12865, %bb.ce ] ; 3 uses
-  %i.os = zext i8 %.111529 to i32
+  %i.os = zext nneg i8 %.111529 to i32
   %i.ot = icmp ult i8 %.111529, 17
   br i1 %i.ot, label %bb.cf, label %bb.cn
 
@@ -913,7 +913,7 @@ bb.cx:                                            ; preds = %bb.cw, %bb.cu
   %i.sd = shl i16 %.11761, 1
   %i.se = shl i16 %.11779, 1
   %i.sf = or disjoint i16 %i.se, 1
-  %i.sg = zext i8 %.13 to i32
+  %i.sg = zext nneg i8 %.13 to i32
   %i.sh = icmp ult i8 %.13, 17
   br i1 %i.sh, label %bb.cy, label %bb.dg
 
@@ -998,7 +998,7 @@ bb.dh:                                            ; preds = %bb.cv
   %.17881505 = phi i32 [ %i.ur, %bb.dq ], [ 0, %bb.dh ]
   %.218421504 = phi ptr [ %.23844, %bb.dq ], [ %.18839, %bb.dh ] ; 3 uses
   %.218741503 = phi ptr [ %.23876, %bb.dq ], [ %.18871, %bb.dh ] ; 3 uses
-  %i.tn = zext i8 %.151507 to i32
+  %i.tn = zext nneg i8 %.151507 to i32
   %i.to = icmp ult i8 %.151507, 17
   br i1 %i.to, label %bb.di, label %bb.dq
 
@@ -1197,7 +1197,7 @@ bb.ea:                                            ; preds = %bb.dz, %bb.dx
   %i.wy = shl i16 %.13763, 1
   %i.wz = shl i16 %.13781, 1
   %i.xa = or disjoint i16 %i.wz, 1
-  %i.xb = zext i8 %.17 to i32
+  %i.xb = zext nneg i8 %.17 to i32
   %i.xc = icmp ult i8 %.17, 17
   br i1 %i.xc, label %bb.eb, label %bb.ej
 
@@ -1282,7 +1282,7 @@ bb.ek:                                            ; preds = %bb.dy
   %.27891461 = phi i32 [ %i.zm, %bb.et ], [ 0, %bb.ek ]
   %.278481460 = phi ptr [ %.29850, %bb.et ], [ %.24845, %bb.ek ] ; 3 uses
   %.278801459 = phi ptr [ %.29882, %bb.et ], [ %.24877, %bb.ek ] ; 3 uses
-  %i.yi = zext i8 %.191463 to i32
+  %i.yi = zext nneg i8 %.191463 to i32
   %i.yj = icmp ult i8 %.191463, 17
   br i1 %i.yj, label %bb.el, label %bb.et
 
@@ -1494,7 +1494,7 @@ bb.fc:                                            ; preds = %bb.fb, %bb.ez
   %i.aby = shl i16 %.15765, 1
   %i.abz = shl i16 %.15783, 1
   %i.aca = or disjoint i16 %i.abz, 1
-  %i.acb = zext i8 %.21 to i32
+  %i.acb = zext nneg i8 %.21 to i32
   %i.acc = icmp ult i8 %.21, 17
   br i1 %i.acc, label %bb.fd, label %bb.fl
 
@@ -1579,7 +1579,7 @@ bb.fm:                                            ; preds = %bb.fa
   %.37901483 = phi i32 [ %i.aem, %bb.fv ], [ 0, %bb.fm ]
   %.331482 = phi ptr [ %.35, %bb.fv ], [ %.30851, %bb.fm ] ; 3 uses
   %.338861481 = phi ptr [ %.35888, %bb.fv ], [ %.30883, %bb.fm ] ; 3 uses
-  %i.adi = zext i8 %.231485 to i32
+  %i.adi = zext nneg i8 %.231485 to i32
   %i.adj = icmp ult i8 %.231485, 17
   br i1 %i.adj, label %bb.fn, label %bb.fv
 

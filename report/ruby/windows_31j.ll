@@ -46,7 +46,7 @@ bb.a:
   %i.c = zext i8 %i.b to i64                      ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr @trans, i64 %i.c
   %i.e = load i8, ptr %i.d, align 1, !tbaa !10    ; 3 uses
-  %3 = sext i8 %i.e to i64
+  %3 = zext nneg i8 %i.e to i64
   %i.f = icmp slt i8 %i.e, 0
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -90,7 +90,7 @@ bb.a:
   %i.c = zext i8 %i.b to i64                      ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr @trans, i64 %i.c
   %i.e = load i8, ptr %i.d, align 1, !tbaa !10    ; 3 uses
-  %3 = sext i8 %i.e to i64
+  %3 = zext nneg i8 %i.e to i64
   %i.f = icmp slt i8 %i.e, 0
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -230,7 +230,7 @@ bb.c:                                             ; preds = %bb.a
   %i.j = zext i8 %i.b to i64                      ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr @trans, i64 %i.j
   %i.l = load i8, ptr %i.k, align 1, !tbaa !10    ; 2 uses
-  %5 = sext i8 %i.l to i64
+  %5 = zext nneg i8 %i.l to i64
   %i.m = icmp slt i8 %i.l, 0
   br i1 %i.m, label %bb.d, label %bb.e
 
@@ -361,7 +361,7 @@ bb.a:
   %i.c = zext i8 %i.b to i64                      ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr @trans, i64 %i.c
   %i.e = load i8, ptr %i.d, align 1, !tbaa !10    ; 3 uses
-  %5 = sext i8 %i.e to i64                        ; 2 uses
+  %5 = zext nneg i8 %i.e to i64                   ; 2 uses
   %i.f = icmp slt i8 %i.e, 0
   br i1 %i.f, label %mbc_to_code.exit.thread, label %bb.b
 
@@ -717,7 +717,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %.1, i64 1 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr @trans, i64 %.pre-phi
   %i.o = load i8, ptr %i.n, align 1, !tbaa !10    ; 3 uses
-  %4 = sext i8 %i.o to i64
+  %4 = zext nneg i8 %i.o to i64
   %i.p = icmp slt i8 %i.o, 0
   br i1 %i.p, label %bb.c, label %bb.d
 

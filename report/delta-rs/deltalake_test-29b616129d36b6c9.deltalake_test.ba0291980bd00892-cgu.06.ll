@@ -201,9 +201,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs6Po7BT7Nknu_5alloc11collections11binary_heap7PeekMutINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtB4_6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB3g_5ErrorEEEECsfY7SmN0bPrO_14deltalake_test.exit, label %bb.c
 
 bb.c:                                             ; preds = %.thread, %bb.b
-  %i.c = phi i64 [ %2, %.thread ], [ %.pre, %bb.b ] ; 4 uses
+  %i.c = phi i64 [ %2, %.thread ], [ %.pre, %bb.b ] ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.e = add nsw i64 %i.c, -1                     ; 9 uses
+  %i.e = add nsw i64 %i.c, -1                     ; 8 uses
   store i64 %i.e, ptr %i.d, align 8, !alias.scope !368, !noalias !371
   %i.f = load i64, ptr %1, align 8, !range !29, !alias.scope !368, !noalias !371, !noundef !3
   %i.g = icmp samesign ult i64 %i.e, %i.f
@@ -235,7 +235,7 @@ bb.e:                                             ; preds = %bb.d
 _RINvNtCsbvkFyIu7lgC_4core10intrinsics25typed_swap_nonoverlappingINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtB4_6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB2B_5ErrorEEECsfY7SmN0bPrO_14deltalake_test.exit.i.i: ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(80) %i.i, i64 80, i1 false), !noalias !377
-  %3 = call i64 @llvm.usub.sat.i64(i64 %i.e, i64 2)
+  %3 = add nsw i64 %i.c, -3
   %.not.not8.i.i.i = icmp samesign ult i64 %i.c, 4
   br i1 %.not.not8.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 

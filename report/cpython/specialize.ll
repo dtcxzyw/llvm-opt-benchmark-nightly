@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not18.i.i, label %specialize_module_load_attr.exit.thread44, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.y = trunc i64 %i.v to i16
+  %i.y = trunc nuw i64 %i.v to i16
   %.not17.i.i = icmp ult i64 %i.v, 65536
   br i1 %.not17.i.i, label %bb.h, label %specialize_module_load_attr.exit.thread44
 
@@ -606,7 +606,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not55.i, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.m = trunc i64 %i.g to i16
+  %i.m = trunc nuw i64 %i.g to i16
   %.not60.i = icmp ult i64 %i.g, 65536
   br i1 %.not60.i, label %bb.h, label %bb.q
 
@@ -647,7 +647,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.z, label %bb.q, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.aa = trunc i64 %i.y to i16
+  %i.aa = trunc nuw i64 %i.y to i16
   %.not58.i = icmp ult i64 %i.y, 65536
   br i1 %.not58.i, label %bb.m, label %bb.q
 
@@ -657,7 +657,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ac, label %bb.q, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.ad = trunc i32 %i.ab to i16
+  %i.ad = trunc nuw i32 %i.ab to i16
   %.not59.i = icmp ult i32 %i.ab, 65536
   br i1 %.not59.i, label %bb.o, label %bb.q
 

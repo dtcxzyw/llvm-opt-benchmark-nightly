@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.l = sub i64 %i.k, %i.a                       ; 3 uses
   %i.m = ashr exact i64 %i.l, 3                   ; 3 uses
   %i.n = add nsw i64 %i.m, -1
-  %4 = sdiv i64 %i.n, 2
+  %4 = lshr i64 %i.n, 1
   %i.o = icmp sgt i64 %i.m, 2
   br i1 %i.o, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -248,7 +248,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ak = shl nuw nsw i64 %.0.lcssa.i.i.i.i, 1
   %i.al = or disjoint i64 %i.ak, 1                ; 2 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.al
-  %i.an = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   %i.ao = load i64, ptr %i.am, align 8
   store i64 %i.ao, ptr %i.an, align 8
   br label %.lr.ph.i.i.i.i.i.preheader
@@ -651,7 +651,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.at = sub i64 %i.as, %i.a                     ; 3 uses
   %i.au = ashr exact i64 %i.at, 4                 ; 3 uses
   %i.av = add nsw i64 %i.au, -1
-  %10 = sdiv i64 %i.av, 2
+  %10 = lshr i64 %i.av, 1
   %i.aw = icmp sgt i64 %i.au, 2
   br i1 %i.aw, label %.lr.ph.i.i.i22.i, label %._crit_edge.i.i.i13.i
 
@@ -690,7 +690,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i13
   %i.bn = shl nuw nsw i64 %.0.lcssa.i.i.i14.i, 1
   %i.bo = or disjoint i64 %i.bn, 1                ; 2 uses
   %i.bp = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.bo
-  %i.bq = getelementptr inbounds [16 x i8], ptr %0, i64 %.0.lcssa.i.i.i14.i
+  %i.bq = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.0.lcssa.i.i.i14.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bq, ptr noundef nonnull align 8 dereferenceable(16) %i.bp, i64 16, i1 false)
   br label %.lr.ph.i.i.i.i16.i.preheader
 
@@ -1093,7 +1093,7 @@ _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristic
   %i.av = sub i64 %i.au, %i.a                     ; 3 uses
   %i.aw = ashr exact i64 %i.av, 4                 ; 3 uses
   %i.ax = add nsw i64 %i.aw, -1
-  %3 = sdiv i64 %i.ax, 2
+  %3 = lshr i64 %i.ax, 1
   %i.ay = icmp sgt i64 %i.aw, 2
   br i1 %i.ay, label %.lr.ph.i.i.i21.i, label %._crit_edge.i.i.i12.i
 
@@ -1132,7 +1132,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i12
   %i.bp = shl nuw nsw i64 %.0.lcssa.i.i.i13.i, 1
   %i.bq = or disjoint i64 %i.bp, 1                ; 2 uses
   %i.br = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.bq
-  %i.bs = getelementptr inbounds [16 x i8], ptr %0, i64 %.0.lcssa.i.i.i13.i
+  %i.bs = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.0.lcssa.i.i.i13.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bs, ptr noundef nonnull align 8 dereferenceable(16) %i.br, i64 16, i1 false), !tbaa.struct !65
   br label %.lr.ph.i.i.i.i15.i.preheader
 
@@ -1535,7 +1535,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.bb = sub i64 %i.ba, %i.a                     ; 3 uses
   %i.bc = ashr exact i64 %i.bb, 4                 ; 3 uses
   %i.bd = add nsw i64 %i.bc, -1
-  %3 = sdiv i64 %i.bd, 2
+  %3 = lshr i64 %i.bd, 1
   %i.be = icmp sgt i64 %i.bc, 2
   br i1 %i.be, label %.lr.ph.i.i.i21.i, label %._crit_edge.i.i.i13.i
 
@@ -1575,7 +1575,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i13
   %i.bw = shl nuw nsw i64 %.0.lcssa.i.i.i14.i, 1
   %i.bx = or disjoint i64 %i.bw, 1                ; 2 uses
   %i.by = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.bx
-  %i.bz = getelementptr inbounds [16 x i8], ptr %0, i64 %.0.lcssa.i.i.i14.i
+  %i.bz = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.0.lcssa.i.i.i14.i
   %i.ca = load <2 x i64>, ptr %i.by, align 8, !tbaa !66
   store <2 x i64> %i.ca, ptr %i.bz, align 8, !tbaa !66
   br label %.lr.ph.i.i.i.i16.i.preheader

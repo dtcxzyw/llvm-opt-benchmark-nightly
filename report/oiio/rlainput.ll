@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph68, %.loopexi
   %i.e = add nuw i64 %.03867, 1                   ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 %.03867
   %i.g = load i8, ptr %i.f, align 1, !tbaa !16    ; 3 uses
-  %6 = sext i8 %i.g to i32
+  %6 = zext nneg i8 %i.g to i32
   %i.h = icmp sgt i8 %i.g, -1
   %i.i = icmp ult i64 %i.e, %5                    ; 2 uses
   br i1 %i.h, label %.preheader, label %bb.e
@@ -219,7 +219,7 @@ bb.b:                                             ; preds = %.lr.ph68, %.loopexi
   %.pre = load i8, ptr %i.j, align 1, !tbaa !16   ; 9 uses
   %i.l = add nuw nsw i32 %umin, 1                 ; 2 uses
   %xtraiter = and i32 %i.l, 7                     ; 3 uses
-  %i.m = icmp ult i32 %umin, 7
+  %i.m = icmp samesign ult i32 %umin, 7
   br i1 %i.m, label %.epil.preheader, label %.lr.ph61.new
 
 .lr.ph61.new:                                     ; preds = %.lr.ph61
@@ -622,7 +622,7 @@ bb.s:                                             ; preds = %.loopexit.i, %.lr.p
   %i.ds = add nuw i64 %.03867.i, 1                ; 4 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dj, i64 %.03867.i
   %i.du = load i8, ptr %i.dt, align 1, !tbaa !16  ; 3 uses
-  %6 = sext i8 %i.du to i32
+  %6 = zext nneg i8 %i.du to i32
   %i.dv = icmp sgt i8 %i.du, -1
   %i.dw = icmp ult i64 %i.ds, %.0164354660        ; 2 uses
   br i1 %i.dv, label %.preheader.i, label %bb.v
@@ -637,7 +637,7 @@ bb.s:                                             ; preds = %.loopexit.i, %.lr.p
   %.pre.i = load i8, ptr %i.dx, align 1, !tbaa !16 ; 9 uses
   %i.dz = add nuw nsw i32 %umin.i, 1              ; 2 uses
   %xtraiter = and i32 %i.dz, 7                    ; 3 uses
-  %i.ea = icmp ult i32 %umin.i, 7
+  %i.ea = icmp samesign ult i32 %umin.i, 7
   br i1 %i.ea, label %.epil.preheader, label %.lr.ph61.i.new
 
 .lr.ph61.i.new:                                   ; preds = %.lr.ph61.i

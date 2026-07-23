@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.k
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !213
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 %indvars.iv33.i
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !214 ; 2 uses
-  %2 = sext i8 %i.bg to i64
+  %2 = zext nneg i8 %i.bg to i64
   %i.bh = icmp sgt i8 %i.ba, -1
   br i1 %i.bh, label %bb.n, label %bb.o
 
@@ -347,7 +347,7 @@ bb.w:                                             ; preds = %bb.u
   %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !213
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 %indvars.iv33.i57
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !214 ; 2 uses
-  %3 = sext i8 %i.eg to i64
+  %3 = zext nneg i8 %i.eg to i64
   %i.eh = icmp sgt i8 %i.ea, -1
   br i1 %i.eh, label %bb.x, label %bb.y
 
@@ -750,7 +750,7 @@ bb.e:                                             ; preds = %bb.i, %.lr.ph482.us
   %i.jv = load i8, ptr %i.ju, align 1, !tbaa !214 ; 2 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jp, i64 %indvars.iv525
   %i.jx = load i8, ptr %i.jw, align 1, !tbaa !214 ; 2 uses
-  %1 = sext i8 %i.jx to i64
+  %1 = zext nneg i8 %i.jx to i64
   %i.jy = icmp sgt i8 %i.jv, -1
   br i1 %i.jy, label %bb.f, label %bb.g
 
@@ -903,7 +903,7 @@ bb.s:                                             ; preds = %bb.j
   %i.nb = load ptr, ptr %i.na, align 8, !tbaa !213
   %i.nc = getelementptr inbounds nuw i8, ptr %i.nb, i64 %indvars.iv517
   %i.nd = load i8, ptr %i.nc, align 1, !tbaa !214 ; 2 uses
-  %2 = sext i8 %i.nd to i64
+  %2 = zext nneg i8 %i.nd to i64
   %i.ne = icmp sgt i8 %i.ll, -1
   br i1 %i.ne, label %bb.t, label %bb.u
 
@@ -1306,7 +1306,6 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   %i.acd = load ptr, ptr %i.acc, align 8, !tbaa !213
   %i.ace = getelementptr inbounds nuw i8, ptr %i.acd, i64 %i.aae
   %i.acf = load i8, ptr %i.ace, align 1, !tbaa !214 ; 5 uses
-  %3 = sext i8 %i.acf to i64                      ; 2 uses
   %i.acg = icmp eq i8 %i.acf, -1
   %i.ach = getelementptr inbounds nuw i8, ptr %i.aai, i64 6488
   %i.aci = load ptr, ptr %i.ach, align 8, !tbaa !90
@@ -1344,6 +1343,7 @@ bb.ah:                                            ; preds = %bb.af
 bb.ai:                                            ; preds = %bb.ah
   %i.adc = load ptr, ptr %i.a, align 8, !tbaa !62 ; 2 uses
   %i.add = getelementptr inbounds nuw i8, ptr %i.adc, i64 3192
+  %3 = zext nneg i8 %i.acf to i64                 ; 2 uses
   %i.ade = getelementptr inbounds nuw [8 x i8], ptr %i.add, i64 %3
   %i.adf = load i64, ptr %i.ade, align 8, !tbaa !215
   %i.adg = load ptr, ptr %i.xz, align 8, !tbaa !64
@@ -1392,7 +1392,6 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ag
   %i.ael = load ptr, ptr %i.aek, align 8, !tbaa !213
   %i.aem = getelementptr inbounds nuw i8, ptr %i.ael, i64 %i.aae
   %i.aen = load i8, ptr %i.aem, align 1, !tbaa !214 ; 5 uses
-  %4 = sext i8 %i.aen to i64                      ; 2 uses
   %i.aeo = icmp eq i8 %i.aen, -1
   %i.aep = load ptr, ptr %i.xy, align 8, !tbaa !65
   %i.aeq = getelementptr inbounds nuw i8, ptr %i.aep, i64 6488
@@ -1434,6 +1433,7 @@ bb.am:                                            ; preds = %bb.ak
 bb.an:                                            ; preds = %bb.am
   %i.afo = load ptr, ptr %i.a, align 8, !tbaa !62 ; 2 uses
   %i.afp = getelementptr inbounds nuw i8, ptr %i.afo, i64 3456
+  %4 = zext nneg i8 %i.aen to i64                 ; 2 uses
   %i.afq = getelementptr inbounds nuw [8 x i8], ptr %i.afp, i64 %4
   %i.afr = load i64, ptr %i.afq, align 8, !tbaa !215
   %i.afs = load ptr, ptr %i.xz, align 8, !tbaa !64
@@ -1836,7 +1836,7 @@ bb.a:
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !213
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %indvars.iv33
   %i.x = load i8, ptr %i.w, align 1, !tbaa !214   ; 2 uses
-  %1 = sext i8 %i.x to i64
+  %1 = zext nneg i8 %i.x to i64
   %i.y = icmp sgt i8 %i.r, -1
   br i1 %i.y, label %bb.b, label %bb.c
 

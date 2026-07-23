@@ -201,7 +201,7 @@ bb.z:                                             ; preds = %rb_array_len.exit.i
   unreachable
 
 RARRAY_LENINT.exit:                               ; preds = %rb_array_len.exit.i
-  %i.dg = trunc nsw i64 %.0.i.i to i32
+  %i.dg = trunc nuw nsw i64 %.0.i.i to i32
   %i.dh = icmp slt i64 %.0.i.i, 8
   br i1 %i.dh, label %bb.aa, label %bb.af
 

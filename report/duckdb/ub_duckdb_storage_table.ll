@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ck = sub i64 %i.cj, %i.a                     ; 3 uses
   %i.cl = ashr exact i64 %i.ck, 2                 ; 3 uses
   %i.cm = add nsw i64 %i.cl, -1
-  %4 = sdiv i64 %i.cm, 2
+  %4 = lshr i64 %i.cm, 1
   %i.cn = icmp sgt i64 %i.cl, 2
   br i1 %i.cn, label %.lr.ph.i.i.i16.i, label %._crit_edge.i.i.i6.i
 
