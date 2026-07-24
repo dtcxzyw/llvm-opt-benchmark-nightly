@@ -203,7 +203,7 @@ declare void @_ZN16btCollisionWorld18addCollisionObjectEP17btCollisionObjectss(p
 define dso_local void @_ZN24btSoftRigidDynamicsWorld14removeSoftBodyEP10btSoftBody(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 380 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !18   ; 4 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !18   ; 3 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph.i.i, label %_ZN20btAlignedObjectArrayIP10btSoftBodyE6removeERKS1_.exit
 
@@ -214,23 +214,18 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 3 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i.i
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !76   ; 2 uses
   %i.h = icmp eq ptr %i.g, %1
-  br i1 %i.h, label %_ZNK20btAlignedObjectArrayIP10btSoftBodyE16findLinearSearchERKS1_.exit.i, label %bb.c
+  br i1 %i.h, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %_ZN20btAlignedObjectArrayIP10btSoftBodyE6removeERKS1_.exit, label %bb.b
 
-_ZNK20btAlignedObjectArrayIP10btSoftBodyE16findLinearSearchERKS1_.exit.i: ; preds = %bb.b
-  %2 = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  %3 = icmp sgt i32 %i.b, %2
-  br i1 %3, label %bb.d, label %_ZN20btAlignedObjectArrayIP10btSoftBodyE6removeERKS1_.exit
-
-bb.d:                                             ; preds = %_ZNK20btAlignedObjectArrayIP10btSoftBodyE16findLinearSearchERKS1_.exit.i
+bb.d:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i.i
   %i.j = add nsw i32 %i.b, -1                     ; 2 uses
   %i.k = zext nneg i32 %i.j to i64
@@ -241,7 +236,7 @@ bb.d:                                             ; preds = %_ZNK20btAlignedObje
   store i32 %i.j, ptr %i.a, align 4, !tbaa !18
   br label %_ZN20btAlignedObjectArrayIP10btSoftBodyE6removeERKS1_.exit
 
-_ZN20btAlignedObjectArrayIP10btSoftBodyE6removeERKS1_.exit: ; preds = %bb.c, %bb.a, %_ZNK20btAlignedObjectArrayIP10btSoftBodyE16findLinearSearchERKS1_.exit.i, %bb.d
+_ZN20btAlignedObjectArrayIP10btSoftBodyE6removeERKS1_.exit: ; preds = %bb.c, %bb.a, %bb.d
   tail call void @_ZN16btCollisionWorld21removeCollisionObjectEP17btCollisionObject(ptr noundef nonnull align 8 dereferenceable(129) %0, ptr noundef %1)
   ret void
 }
@@ -260,7 +255,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 380 ; 2 uses
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !18   ; 4 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !18   ; 3 uses
   %i.f = icmp sgt i32 %i.e, 0
   br i1 %i.f, label %.lr.ph.i.i.i, label %_ZN24btSoftRigidDynamicsWorld14removeSoftBodyEP10btSoftBody.exit
 
@@ -271,23 +266,18 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.i.i.i
-  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i ], [ %indvars.iv.next.i.i.i, %bb.d ] ; 4 uses
+  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i ], [ %indvars.iv.next.i.i.i, %bb.d ] ; 3 uses
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv.i.i.i
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !76   ; 2 uses
   %i.k = icmp eq ptr %i.j, %1
-  br i1 %i.k, label %_ZNK20btAlignedObjectArrayIP10btSoftBodyE16findLinearSearchERKS1_.exit.i.i, label %bb.d
+  br i1 %i.k, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
   br i1 %exitcond.not.i.i.i, label %_ZN24btSoftRigidDynamicsWorld14removeSoftBodyEP10btSoftBody.exit, label %bb.c
 
-_ZNK20btAlignedObjectArrayIP10btSoftBodyE16findLinearSearchERKS1_.exit.i.i: ; preds = %bb.c
-  %2 = trunc nuw nsw i64 %indvars.iv.i.i.i to i32
-  %3 = icmp sgt i32 %i.e, %2
-  br i1 %3, label %bb.e, label %_ZN24btSoftRigidDynamicsWorld14removeSoftBodyEP10btSoftBody.exit
-
-bb.e:                                             ; preds = %_ZNK20btAlignedObjectArrayIP10btSoftBodyE16findLinearSearchERKS1_.exit.i.i
+bb.e:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv.i.i.i
   %i.m = add nsw i32 %i.e, -1                     ; 2 uses
   %i.n = zext nneg i32 %i.m to i64
@@ -298,7 +288,7 @@ bb.e:                                             ; preds = %_ZNK20btAlignedObje
   store i32 %i.m, ptr %i.d, align 4, !tbaa !18
   br label %_ZN24btSoftRigidDynamicsWorld14removeSoftBodyEP10btSoftBody.exit
 
-_ZN24btSoftRigidDynamicsWorld14removeSoftBodyEP10btSoftBody.exit: ; preds = %bb.d, %bb.b, %_ZNK20btAlignedObjectArrayIP10btSoftBodyE16findLinearSearchERKS1_.exit.i.i, %bb.e
+_ZN24btSoftRigidDynamicsWorld14removeSoftBodyEP10btSoftBody.exit: ; preds = %bb.d, %bb.b, %bb.e
   tail call void @_ZN16btCollisionWorld21removeCollisionObjectEP17btCollisionObject(ptr noundef nonnull align 8 dereferenceable(536) %0, ptr noundef nonnull %1)
   br label %bb.g
 

@@ -203,15 +203,14 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %._cri
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ak
   store i8 0, ptr %i.an, align 1, !tbaa !20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #34, !noalias !499
-  %i.ao = load ptr, ptr %6, align 8, !tbaa !15    ; 10 uses
-  %13 = ptrtoint ptr %i.ao to i64
+  %i.ao = load ptr, ptr %6, align 8, !tbaa !15    ; 9 uses
   %i.ap = load i64, ptr %i.al, align 8, !tbaa !18 ; 12 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.ap
   %.not176179 = icmp samesign eq i64 %i.ap, 0
   br i1 %.not176179, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.i
-  %i.ar = ptrtoaddr ptr %i.ao to i64
+  %i.ar = ptrtoaddr ptr %i.ao to i64              ; 2 uses
   %min.iters.check = icmp ult i64 %i.ap, 4
   %i.as = sub i64 %i.ar, %i.y
   %diff.check = icmp ugt i64 %i.as, -32
@@ -273,8 +272,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.preheader:                                 ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.033181.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec229, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.0151.0180.ph = phi ptr [ %i.ao, %iter.check ], [ %i.at, %vec.epilog.iter.check ], [ %i.ay, %vec.epilog.middle.block ] ; 3 uses
-  %i.bb = add i64 %i.ap, %13                      ; 2 uses
-  %.sroa.0151.0180.ph279 = ptrtoint ptr %.sroa.0151.0180.ph to i64 ; 2 uses
+  %i.bb = add i64 %i.ap, %i.ar                    ; 2 uses
+  %.sroa.0151.0180.ph279 = ptrtoaddr ptr %.sroa.0151.0180.ph to i64 ; 2 uses
   %i.bc = sub i64 %i.bb, %.sroa.0151.0180.ph279
   %xtraiter = and i64 %i.bc, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -677,7 +676,7 @@ declare void @_ZN6duckdb22PhysicalBatchCollectorC2ERNS_12PhysicalPlanERNS_21Prep
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN6duckdb10unique_ptrINS0_17ArrowArrayWrapperESt14default_deleteIS2_ELb1EEESaIS5_EE15_M_range_insertISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPS5_S7_EEEEEvSD_T_SF_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 4 uses
   %.not116 = icmp eq ptr %2, %3
   br i1 %.not116, label %_ZSt4copyISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPN6duckdb10unique_ptrINS3_17ArrowArrayWrapperESt14default_deleteIS5_ELb1EEESt6vectorIS8_SaIS8_EEEEESD_ET0_T_SG_SF_.exit, label %bb.b
 
@@ -1046,8 +1045,7 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_17ArrowArrayWrapperESt14default_del
   br i1 %.not11.i.i.i.i.i72, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6duckdb10unique_ptrINS0_17ArrowArrayWrapperESt14default_deleteIS2_ELb1EEES6_SaIS5_EET0_T_S9_S8_RT1_.exit, label %.lr.ph.i.i.i.i.i73.preheader
 
 .lr.ph.i.i.i.i.i73.preheader:                     ; preds = %_ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_17ArrowArrayWrapperESt14default_deleteIS2_ELb1EEESaIS5_EE11_M_allocateEm.exit
-  %5 = ptrtoint ptr %1 to i64
-  %i.dz = sub i64 %5, %i.dn
+  %i.dz = sub i64 %4, %i.dn
   %i.ea = add i64 %i.dz, -8                       ; 2 uses
   %i.eb = lshr i64 %i.ea, 3
   %i.ec = add nuw nsw i64 %i.eb, 1                ; 2 uses
@@ -1183,8 +1181,7 @@ _ZSt22__uninitialized_copy_aISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPN
   br i1 %.not11.i.i.i.i.i85, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6duckdb10unique_ptrINS0_17ArrowArrayWrapperESt14default_deleteIS2_ELb1EEES6_SaIS5_EET0_T_S9_S8_RT1_.exit91, label %.lr.ph.i.i.i.i.i86.preheader
 
 .lr.ph.i.i.i.i.i86.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPN6duckdb10unique_ptrINS3_17ArrowArrayWrapperESt14default_deleteIS5_ELb1EEESt6vectorIS8_SaIS8_EEEEES9_S8_ET0_T_SG_SF_RSaIT1_E.exit84
-  %6 = ptrtoint ptr %1 to i64
-  %i.fl = sub i64 %i.j, %6
+  %i.fl = sub i64 %i.j, %4
   %i.fm = add i64 %i.fl, -8                       ; 2 uses
   %i.fn = lshr i64 %i.fm, 3
   %i.fo = add nuw nsw i64 %i.fn, 1                ; 2 uses

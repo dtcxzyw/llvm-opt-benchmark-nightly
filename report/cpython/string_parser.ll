@@ -56,7 +56,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.k, label %.lr.ph105.i, label %.loopexit.i
 
 .lr.ph105.i:                                      ; preds = %bb.f
-  %5 = ptrtoint ptr %i.j to i64
+  %5 = ptrtoaddr ptr %i.j to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %Py_DECREF.exit69.i, %.lr.ph105.i
@@ -91,17 +91,17 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %.thread.i, %bb.g
   %i.s = phi i8 [ %.pr.i, %.thread.i ], [ %i.l, %bb.g ] ; 2 uses
-  %.1.i = phi ptr [ %i.n, %.thread.i ], [ %.0102.i, %bb.g ] ; 7 uses
+  %.1.i = phi ptr [ %i.n, %.thread.i ], [ %.0102.i, %bb.g ] ; 8 uses
   %.147.i = phi ptr [ %i.q, %.thread.i ], [ %.046103.i, %bb.g ] ; 5 uses
   %.not64.i = icmp sgt i8 %i.s, -1
   br i1 %.not64.i, label %.thread84.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %6 = ptrtoint ptr %.1.i to i64                  ; 3 uses
   %i.t = icmp ult ptr %.1.i, %i.j
   br i1 %i.t, label %.lr.ph.preheader.i.i, label %decode_utf8.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.l
+  %6 = ptrtoaddr ptr %.1.i to i64
   %i.u = sub i64 %5, %6
   %scevgep.i.i = getelementptr i8, ptr %.1.i, i64 %i.u
   br label %.lr.ph.i.i
@@ -110,22 +110,18 @@ bb.l:                                             ; preds = %bb.k
   %.010.i.i = phi ptr [ %i.w, %bb.m ], [ %.1.i, %.lr.ph.preheader.i.i ] ; 3 uses
   %i.v = load i8, ptr %.010.i.i, align 1, !tbaa !11
   %.not.i72.i = icmp sgt i8 %i.v, -1
-  br i1 %.not.i72.i, label %.critedge.loopexit.i.i, label %bb.m
+  br i1 %.not.i72.i, label %decode_utf8.exit.i, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph.i.i
   %i.w = getelementptr i8, ptr %.010.i.i, i64 1   ; 2 uses
   %exitcond.not.i.i = icmp eq ptr %i.w, %i.j
-  br i1 %exitcond.not.i.i, label %.critedge.loopexit.i.i, label %.lr.ph.i.i, !llvm.loop !12
+  br i1 %exitcond.not.i.i, label %decode_utf8.exit.i, label %.lr.ph.i.i, !llvm.loop !12
 
-.critedge.loopexit.i.i:                           ; preds = %bb.m, %.lr.ph.i.i
-  %.0.lcssa.ph.i.i = phi ptr [ %.010.i.i, %.lr.ph.i.i ], [ %scevgep.i.i, %bb.m ] ; 2 uses
-  %.pre.i.i = ptrtoint ptr %.0.lcssa.ph.i.i to i64
-  br label %decode_utf8.exit.i
-
-decode_utf8.exit.i:                               ; preds = %.critedge.loopexit.i.i, %bb.l
-  %.pre-phi.i.i = phi i64 [ %.pre.i.i, %.critedge.loopexit.i.i ], [ %6, %bb.l ]
-  %.0.lcssa.i.i = phi ptr [ %.0.lcssa.ph.i.i, %.critedge.loopexit.i.i ], [ %.1.i, %bb.l ] ; 3 uses
-  %i.x = sub i64 %.pre-phi.i.i, %6
+decode_utf8.exit.i:                               ; preds = %bb.m, %.lr.ph.i.i, %bb.l
+  %.0.lcssa.i.i = phi ptr [ %.1.i, %bb.l ], [ %scevgep.i.i, %bb.m ], [ %.010.i.i, %.lr.ph.i.i ] ; 4 uses
+  %7 = ptrtoint ptr %.0.lcssa.i.i to i64
+  %8 = ptrtoint ptr %.1.i to i64
+  %i.x = sub i64 %7, %8
   %i.y = tail call ptr @PyUnicode_DecodeUTF8(ptr noundef nonnull %.1.i, i64 noundef %i.x, ptr noundef null) #7 ; 8 uses
   %.not65.i = icmp eq ptr %i.y, null
   br i1 %.not65.i, label %bb.n, label %bb.q
@@ -528,8 +524,8 @@ declare ptr @_PyUnicode_DecodeUnicodeEscapeInternal2(ptr noundef, i64 noundef, p
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1, 1) i32 @warn_invalid_escape_sequence(ptr noundef %0, ptr nofree noundef readonly captures(address) %1, ptr noundef nonnull %2, ptr noundef %3) unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 2 uses
-  %5 = ptrtoint ptr %2 to i64                     ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = ptrtoaddr ptr %2 to i64                    ; 2 uses
   %i.a = getelementptr i8, ptr %0, i64 148
   %i.b = load i32, ptr %i.a, align 4, !tbaa !38
   %.not = icmp eq i32 %i.b, 0

@@ -202,7 +202,8 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %._crit_edge
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
-  %.02239 = phi ptr [ %i.h, %.lr.ph ], [ %i.m, %._crit_edge ] ; 9 uses
+  %.02239 = phi ptr [ %i.h, %.lr.ph ], [ %i.m, %._crit_edge ] ; 8 uses
+  %.0223959 = ptrtoaddr ptr %.02239 to i64        ; 6 uses
   %i.k = load i32, ptr @tokensetsize, align 4, !tbaa !4 ; 2 uses
   %i.l = sext i32 %i.k to i64
   %.idx = shl nsw i64 %i.l, 2                     ; 3 uses
@@ -215,7 +216,6 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   br i1 %or.cond, label %.lr.ph.us.preheader, label %._crit_edge
 
 .lr.ph.us.preheader:                              ; preds = %bb.b
-  %.0223959 = ptrtoint ptr %.02239 to i64         ; 3 uses
   %scevgep = getelementptr i8, ptr %.02239, i64 4
   %i.p = add i64 %.idx, %.0223959
   %i.q = add i64 %.0223959, 4
@@ -225,11 +225,10 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   %i.t = and i64 %i.s, -4                         ; 2 uses
   %scevgep60 = getelementptr i8, ptr %scevgep, i64 %i.t
   %scevgep62 = getelementptr i8, ptr %scevgep61, i64 %i.t
-  %0 = ptrtoint ptr %.02239 to i64                ; 3 uses
-  %i.u = add i64 %.idx, %0
-  %i.v = add i64 %0, 4
+  %i.u = add i64 %.idx, %.0223959
+  %i.v = add i64 %.0223959, 4
   %i.w = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.v)
-  %i.x = xor i64 %0, -1
+  %i.x = xor i64 %.0223959, -1
   %i.y = add i64 %i.w, %i.x                       ; 2 uses
   %i.z = lshr i64 %i.y, 2
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses
@@ -632,8 +631,8 @@ bb.a:
   %i.i = sext i32 %0 to i64                       ; 2 uses
   %i.j = getelementptr inbounds [2 x i8], ptr %i.h, i64 %i.i ; 5 uses
   store i16 %i.g, ptr %i.j, align 2, !tbaa !22
-  %i.k = load ptr, ptr @F, align 8, !tbaa !46     ; 8 uses
-  %1 = ptrtoint ptr %i.k to i64                   ; 3 uses
+  %i.k = load ptr, ptr @F, align 8, !tbaa !46     ; 6 uses
+  %1 = ptrtoaddr ptr %i.k to i64                  ; 9 uses
   %i.l = load i32, ptr @tokensetsize, align 4, !tbaa !4
   %.fr46 = freeze i32 %i.l                        ; 4 uses
   %i.m = mul i32 %.fr46, %0
@@ -675,15 +674,14 @@ bb.a:
   %scevgep = getelementptr i8, ptr %i.aj, i64 4
   %i.ak = getelementptr i8, ptr %i.k, i64 %i.ah
   %scevgep74 = getelementptr i8, ptr %i.ak, i64 4
-  %2 = ptrtoint ptr %i.k to i64                   ; 3 uses
   %i.al = shl nsw i64 %i.n, 2                     ; 2 uses
-  %i.am = add i64 %.idx, %2
+  %i.am = add i64 %.idx, %1
   %i.an = add i64 %i.am, %i.al
-  %i.ao = add i64 %i.al, %2
+  %i.ao = add i64 %i.al, %1
   %i.ap = add i64 %i.ao, 4
   %i.aq = tail call i64 @llvm.umax.i64(i64 %i.an, i64 %i.ap)
   %i.ar = shl nsw i64 %i.n, 2
-  %i.as = add i64 %i.ar, %2
+  %i.as = add i64 %i.ar, %1
   %i.at = xor i64 %i.as, -1
   %i.au = add i64 %i.aq, %i.at                    ; 2 uses
   %i.av = lshr i64 %i.au, 2
@@ -848,15 +846,14 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.di, label %.lr.ph.us45.preheader, label %.loopexit
 
 .lr.ph.us45.preheader:                            ; preds = %.lr.ph44
-  %3 = ptrtoint ptr %i.k to i64                   ; 3 uses
   %i.dk = shl nsw i64 %i.n, 2                     ; 2 uses
-  %i.dl = add i64 %.idx, %3
+  %i.dl = add i64 %.idx, %1
   %i.dm = add i64 %i.dl, %i.dk
-  %i.dn = add i64 %i.dk, %3
+  %i.dn = add i64 %i.dk, %1
   %i.do = add i64 %i.dn, 4
   %i.dp = tail call i64 @llvm.umax.i64(i64 %i.dm, i64 %i.do)
   %i.dq = shl nsw i64 %i.n, 2
-  %i.dr = add i64 %i.dq, %3
+  %i.dr = add i64 %i.dq, %1
   %i.ds = xor i64 %i.dr, -1
   %i.dt = add i64 %i.dp, %i.ds                    ; 2 uses
   %i.du = lshr i64 %i.dt, 2

@@ -203,7 +203,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZNK4llvh9SourceMgr10GetMessageENS_5SMLocENS0_8DiagKindERKNS_5TwineENS_8ArrayRefINS_7SMRangeEEENS6_INS_7SMFixItEEE(ptr dead_on_unwind noalias writable sret(%"class.llvh::SMDiagnostic") align 8 %0, ptr noundef nonnull align 8 dereferenceable(120) %1, ptr %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(18) %4, ptr nofree noundef readonly byval(%"class.llvh::ArrayRef") align 8 captures(none) %5, ptr nofree noundef readonly byval(%"class.llvh::ArrayRef.41") align 8 captures(none) %6) local_unnamed_addr #0 align 2 {
 bb.a:
-  %7 = ptrtoint ptr %2 to i64                     ; 4 uses
+  %7 = ptrtoaddr ptr %2 to i64                    ; 2 uses
   %8 = alloca %"struct.std::pair.36", align 8     ; 5 uses
   %i.a = alloca i64, align 8                      ; 6 uses
   %9 = alloca %"class.llvh::SmallVector.49", align 8 ; 10 uses
@@ -312,7 +312,7 @@ _ZNK4llvh9SourceMgr23FindBufferContainingLocENS_5SMLocE.exit: ; preds = %.crited
   %i.ap = extractvalue { ptr, i64 } %i.an, 1
   %i.aq = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !75 ; 3 uses
-  %16 = ptrtoint ptr %i.ar to i64
+  %16 = ptrtoaddr ptr %i.ar to i64
   %i.as = sub i64 %16, %7
   %scevgep = getelementptr i8, ptr %2, i64 %i.as  ; 2 uses
   %.not109 = icmp eq ptr %2, %i.ar
@@ -342,7 +342,7 @@ bb.g:                                             ; preds = %.lr.ph111
   br i1 %.not4575, label %.critedge2, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.critedge
-  %17 = ptrtoint ptr %i.aw to i64
+  %17 = ptrtoaddr ptr %i.aw to i64
   %i.ax = sub i64 %17, %7
   %scevgep84 = getelementptr i8, ptr %2, i64 %i.ax
   br label %.lr.ph
@@ -351,31 +351,26 @@ bb.g:                                             ; preds = %.lr.ph111
   %.03976 = phi ptr [ %i.az, %bb.h ], [ %2, %.lr.ph.preheader ] ; 4 uses
   %i.ay = load i8, ptr %.03976, align 1, !tbaa !11
   switch i8 %i.ay, label %bb.h [
-    i8 10, label %.critedge2.loopexit
-    i8 13, label %.critedge2.loopexit
+    i8 10, label %.critedge2
+    i8 13, label %.critedge2
   ]
 
 bb.h:                                             ; preds = %.lr.ph
   %i.az = getelementptr inbounds nuw i8, ptr %.03976, i64 1 ; 2 uses
   %.not45 = icmp eq ptr %i.az, %i.aw
-  br i1 %.not45, label %.critedge2.loopexit, label %.lr.ph, !llvm.loop !130
+  br i1 %.not45, label %.critedge2, label %.lr.ph, !llvm.loop !130
 
-.critedge2.loopexit:                              ; preds = %.lr.ph, %.lr.ph, %bb.h
-  %.039.lcssa.ph = phi ptr [ %scevgep84, %bb.h ], [ %.03976, %.lr.ph ], [ %.03976, %.lr.ph ] ; 2 uses
-  %.pre87 = ptrtoint ptr %.039.lcssa.ph to i64
-  br label %.critedge2
-
-.critedge2:                                       ; preds = %.critedge2.loopexit, %.critedge
-  %.pre-phi = phi i64 [ %.pre87, %.critedge2.loopexit ], [ %7, %.critedge ]
-  %.039.lcssa = phi ptr [ %.039.lcssa.ph, %.critedge2.loopexit ], [ %2, %.critedge ] ; 3 uses
+.critedge2:                                       ; preds = %bb.h, %.lr.ph, %.lr.ph, %.critedge
+  %.039.lcssa = phi ptr [ %2, %.critedge ], [ %.03976, %.lr.ph ], [ %.03976, %.lr.ph ], [ %scevgep84, %bb.h ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #19
   %i.ba = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 9 uses
   store ptr %i.ba, ptr %11, align 8, !tbaa !26
   %i.bb = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 7 uses
   store i64 0, ptr %i.bb, align 8, !tbaa !25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
+  %18 = ptrtoint ptr %.039.lcssa to i64
   %i.bc = ptrtoint ptr %.0.lcssa to i64           ; 3 uses
-  %i.bd = sub i64 %.pre-phi, %i.bc                ; 4 uses
+  %i.bd = sub i64 %18, %i.bc                      ; 4 uses
   store i64 %i.bd, ptr %i.a, align 8, !tbaa !51
   %i.be = icmp ugt i64 %i.bd, 15
   br i1 %i.be, label %bb.i, label %._crit_edge.i.i
@@ -504,8 +499,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   call void @_ZNK4llvh9SourceMgr8FindLineENS_5SMLocEj(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.36") align 8 %8, ptr noundef nonnull align 8 dereferenceable(120) %1, ptr nonnull %2, i32 noundef %.1.i)
   %i.cj = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.ck = load ptr, ptr %8, align 8, !tbaa !120
+  %19 = ptrtoint ptr %2 to i64
   %i.cl = ptrtoint ptr %i.ck to i64
-  %i.cm = sub i64 %7, %i.cl
+  %i.cm = sub i64 %19, %i.cl
   %i.cn = load i32, ptr %i.cj, align 8, !tbaa !3
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #19
   %i.co = trunc i64 %i.cm to i32

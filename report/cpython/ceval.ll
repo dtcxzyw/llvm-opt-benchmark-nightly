@@ -203,7 +203,7 @@ PyStackRef_CLOSE.exit337.i:                       ; preds = %bb.n, %bb.m, %.preh
 
 bb.o:                                             ; preds = %.loopexit394.i
   %i.dx = getelementptr i8, ptr %5, i64 16
-  %.val331.i = load i64, ptr %i.dx, align 8, !tbaa !119 ; 5 uses
+  %.val331.i = load i64, ptr %i.dx, align 8, !tbaa !119 ; 4 uses
   %invariant.gep.i = getelementptr [8 x i8], ptr %3, i64 %4 ; 2 uses
   %i.dy = icmp sgt i64 %.val331.i, 0
   br i1 %i.dy, label %.lr.ph455.i, label %PyStackRef_CLOSE.exit339.thread367.i
@@ -216,7 +216,7 @@ bb.o:                                             ; preds = %.loopexit394.i
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.bn, %.lr.ph455.i
-  %.1453.i = phi i64 [ 0, %.lr.ph455.i ], [ %i.lq, %bb.bn ] ; 5 uses
+  %.1453.i = phi i64 [ 0, %.lr.ph455.i ], [ %i.lq, %bb.bn ] ; 4 uses
   %i.ed = getelementptr [8 x i8], ptr %i.dz, i64 %.1453.i
   %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !117 ; 9 uses
   %gep.i = getelementptr [8 x i8], ptr %invariant.gep.i, i64 %.1453.i
@@ -619,9 +619,8 @@ positional_only_passed_as_keyword.exit.thread.critedge.i: ; preds = %bb.ar
   tail call void %i.lc(ptr noundef nonnull %i.fg) #21, !inline_history !372
   br label %positional_only_passed_as_keyword.exit.thread.i
 
-positional_only_passed_as_keyword.exit.thread.i:  ; preds = %bb.bf, %.lr.ph451.i, %bb.bl, %positional_only_passed_as_keyword.exit.thread.critedge.i, %.thread361.i, %bb.be, %bb.bb, %bb.ba, %.sink.split.sink.split.i.i, %bb.aq, %.thread146.i.i, %bb.w, %bb.r
-  %7 = icmp slt i64 %.1453.i, %.val331.i
-  br i1 %7, label %.lr.ph463.i, label %.loopexit69
+positional_only_passed_as_keyword.exit.thread.i:  ; preds = %bb.bf, %.lr.ph451.i, %bb.r, %bb.w, %.thread146.i.i, %bb.aq, %.sink.split.sink.split.i.i, %bb.ba, %bb.bb, %bb.be, %.thread361.i, %positional_only_passed_as_keyword.exit.thread.critedge.i, %bb.bl
+  br label %.lr.ph463.i
 
 .lr.ph463.i:                                      ; preds = %positional_only_passed_as_keyword.exit.thread.i, %PyStackRef_CLOSE.exit341.i
   %.2462.i = phi i64 [ %i.lj, %PyStackRef_CLOSE.exit341.i ], [ %.1453.i, %positional_only_passed_as_keyword.exit.thread.i ] ; 2 uses
@@ -1024,7 +1023,7 @@ PyStackRef_CLOSE.exit349.i:                       ; preds = %bb.dg, %bb.df, %.lr
   %exitcond508.not.i = icmp eq i64 %i.rk, %i.rb
   br i1 %exitcond508.not.i, label %.loopexit69, label %.lr.ph445.i, !llvm.loop !388
 
-.loopexit69:                                      ; preds = %PyStackRef_CLOSE.exit349.i, %PyStackRef_CLOSE.exit341.i, %.sink.split.i344.i, %positional_only_passed_as_keyword.exit.thread.i, %bb.cs, %.loopexit397.i, %bb.bs, %bb.bv, %bb.bw, %bb.ce, %bb.cf, %bb.db, %.thread380.i, %bb.de
+.loopexit69:                                      ; preds = %PyStackRef_CLOSE.exit349.i, %PyStackRef_CLOSE.exit341.i, %.sink.split.i344.i, %bb.cs, %.loopexit397.i, %bb.bs, %bb.bv, %bb.bw, %bb.ce, %bb.cf, %bb.db, %.thread380.i, %bb.de
   call void @_PyFrame_ClearExceptCode(ptr noundef nonnull %i.j) #21
   %.sroa.0.0.copyload.i = load i64, ptr %i.j, align 8, !tbaa !121 ; 2 uses
   store i64 1, ptr %i.j, align 8, !tbaa !121
@@ -1427,7 +1426,7 @@ parse_varint.exit53:                              ; preds = %.lr.ph.i47, %scan_b
   br i1 %i.am, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %.loopexit
-  %4 = ptrtoint ptr %.3 to i64
+  %4 = ptrtoaddr ptr %.3 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %skip_to_next_entry.exit
@@ -1547,7 +1546,7 @@ bb.g:                                             ; preds = %parse_varint.exit69
   br i1 %i.co, label %.lr.ph.preheader.i, label %skip_to_next_entry.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.g
-  %5 = ptrtoint ptr %i.bm to i64
+  %5 = ptrtoaddr ptr %i.bm to i64
   %i.cp = sub i64 %4, %5
   %scevgep.i = getelementptr i8, ptr %i.bm, i64 %i.cp
   br label %.lr.ph.i87

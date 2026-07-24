@@ -204,7 +204,7 @@ _ZN9SampleICC18IccCurveTypeReaderD2Ev.exit:       ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN9SampleICC18IccCurveTypeReader4ReadERSij(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i16, align 2                      ; 9 uses
+  %i.a = alloca i16, align 2                      ; 7 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = alloca i32, align 4                      ; 6 uses
   %i.d = icmp ult i32 %2, 12
@@ -284,19 +284,15 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.e
   br label %_ZNSt6vectorIfSaIfEE6resizeEm.exit
 
 _ZNSt6vectorIfSaIfEE6resizeEm.exit:               ; preds = %bb.c, %bb.d, %bb.e, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i
-  %i.as = phi i32 [ %.pre, %bb.c ], [ %.cast, %bb.d ], [ %.cast, %bb.e ], [ %.cast, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i ] ; 4 uses
+  %i.as = phi i32 [ %.pre, %bb.c ], [ %.cast, %bb.d ], [ %.cast, %bb.e ], [ %.cast, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i ] ; 3 uses
   %.not8 = icmp eq i32 %i.as, 0
-  br i1 %.not8, label %3, label %bb.f
+  br i1 %.not8, label %_ZN9SampleICC6Read32ERSiPvi.exit14.thread, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIfSaIfEE6resizeEm.exit
   %i.at = load ptr, ptr %i.af, align 8, !tbaa !217
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   %i.au = icmp sgt i32 %i.as, 0
-  br i1 %i.au, label %.lr.ph.preheader.i, label %_ZN9SampleICC11Read16FloatERSiPvi.exit.thread21
-
-_ZN9SampleICC11Read16FloatERSiPvi.exit.thread21:  ; preds = %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
-  br label %_ZN9SampleICC6Read32ERSiPvi.exit14.thread
+  br i1 %i.au, label %.lr.ph.preheader.i, label %_ZN9SampleICC11Read16FloatERSiPvi.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.f
   %.pre.i = load ptr, ptr %1, align 8, !tbaa !15
@@ -305,7 +301,7 @@ _ZN9SampleICC11Read16FloatERSiPvi.exit.thread21:  ; preds = %bb.f
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.i.preheader.i, %.lr.ph.preheader.i
   %i.aw = phi ptr [ %i.be, %.lr.ph.i.i.preheader.i ], [ %.pre.i, %.lr.ph.preheader.i ]
-  %.012.i = phi i32 [ %i.br, %.lr.ph.i.i.preheader.i ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
+  %.012.i = phi i32 [ %i.br, %.lr.ph.i.i.preheader.i ], [ 0, %.lr.ph.preheader.i ]
   %.0711.i = phi ptr [ %i.bq, %.lr.ph.i.i.preheader.i ], [ %i.at, %.lr.ph.preheader.i ] ; 2 uses
   %i.ax = getelementptr i8, ptr %i.aw, i64 -24
   %i.ay = load i64, ptr %i.ax, align 8
@@ -338,22 +334,15 @@ _ZN9SampleICC5Read8ERSiPvi.exit.i.i:              ; preds = %.lr.ph.i
   %i.bq = getelementptr inbounds nuw i8, ptr %.0711.i, i64 4
   %i.br = add nuw nsw i32 %.012.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.br, %i.as
-  br i1 %exitcond.not.i, label %_ZN9SampleICC11Read16FloatERSiPvi.exit.thread, label %.lr.ph.i, !llvm.loop !32
+  br i1 %exitcond.not.i, label %_ZN9SampleICC11Read16FloatERSiPvi.exit, label %.lr.ph.i, !llvm.loop !32
 
-_ZN9SampleICC11Read16FloatERSiPvi.exit.thread:    ; preds = %.lr.ph.i.i.preheader.i
+_ZN9SampleICC11Read16FloatERSiPvi.exit:           ; preds = %_ZN9SampleICC5Read8ERSiPvi.exit.i.i, %.lr.ph.i, %.lr.ph.i.i.preheader.i, %bb.f
+  %.0.ph = phi i1 [ false, %bb.f ], [ true, %.lr.ph.i.i.preheader.i ], [ false, %.lr.ph.i ], [ false, %_ZN9SampleICC5Read8ERSiPvi.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
-  br label %3
-
-_ZN9SampleICC11Read16FloatERSiPvi.exit:           ; preds = %.lr.ph.i, %_ZN9SampleICC5Read8ERSiPvi.exit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
-  %.not9 = icmp eq i32 %i.as, %.012.i
-  br i1 %.not9, label %3, label %_ZN9SampleICC6Read32ERSiPvi.exit14.thread
-
-3:                                                ; preds = %_ZN9SampleICC11Read16FloatERSiPvi.exit.thread, %_ZN9SampleICC11Read16FloatERSiPvi.exit, %_ZNSt6vectorIfSaIfEE6resizeEm.exit
   br label %_ZN9SampleICC6Read32ERSiPvi.exit14.thread
 
-_ZN9SampleICC6Read32ERSiPvi.exit14.thread:        ; preds = %_ZN9SampleICC5Read8ERSiPvi.exit.i10, %_ZN9SampleICC11Read16FloatERSiPvi.exit.thread21, %_ZN9SampleICC11Read16FloatERSiPvi.exit, %3
-  %.0 = phi i1 [ false, %_ZN9SampleICC5Read8ERSiPvi.exit.i10 ], [ true, %3 ], [ false, %_ZN9SampleICC11Read16FloatERSiPvi.exit ], [ false, %_ZN9SampleICC11Read16FloatERSiPvi.exit.thread21 ]
+_ZN9SampleICC6Read32ERSiPvi.exit14.thread:        ; preds = %_ZN9SampleICC11Read16FloatERSiPvi.exit, %_ZNSt6vectorIfSaIfEE6resizeEm.exit, %_ZN9SampleICC5Read8ERSiPvi.exit.i10
+  %.0 = phi i1 [ true, %_ZNSt6vectorIfSaIfEE6resizeEm.exit ], [ false, %_ZN9SampleICC5Read8ERSiPvi.exit.i10 ], [ %.0.ph, %_ZN9SampleICC11Read16FloatERSiPvi.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #30
   br label %_ZN9SampleICC6Read32ERSiPvi.exit
 

@@ -203,17 +203,16 @@ bb.ac:                                            ; preds = %bb.ac, %bb.ab
   br i1 %i.du, label %bb.ac, label %ZSTD_wildcopy.exit.i, !llvm.loop !85
 
 ZSTD_wildcopy.exit.i:                             ; preds = %bb.ac, %bb.aa, %bb.z
-  %.014.i = phi ptr [ %i.cw, %bb.z ], [ %i.aa, %bb.aa ], [ %i.aa, %bb.ac ] ; 8 uses
+  %.014.i = phi ptr [ %i.cw, %bb.z ], [ %i.aa, %bb.aa ], [ %i.aa, %bb.ac ] ; 7 uses
   %.0.i = phi ptr [ %i.cz, %bb.z ], [ %i.do, %bb.aa ], [ %i.do, %bb.ac ] ; 6 uses
   %i.dv = icmp ult ptr %.014.i, %i.cu
   br i1 %i.dv, label %iter.check, label %ZSTD_wildcopy.exit
 
 iter.check:                                       ; preds = %ZSTD_wildcopy.exit.i
-  %.014.i208 = ptrtoaddr ptr %.014.i to i64
+  %.014.i208 = ptrtoaddr ptr %.014.i to i64       ; 2 uses
   %.0.i207 = ptrtoaddr ptr %.0.i to i64
-  %.014.i209 = ptrtoint ptr %.014.i to i64
   %i.dw = add i64 %.sroa.010.sroa.4.0.extract.shift.i, %i.ba
-  %i.dx = sub i64 %i.dw, %.014.i209               ; 7 uses
+  %i.dx = sub i64 %i.dw, %.014.i208               ; 7 uses
   %min.iters.check = icmp ult i64 %i.dx, 4
   %i.dy = sub i64 %.014.i208, %.0.i207
   %diff.check = icmp ugt i64 %i.dy, -32
@@ -278,11 +277,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.121.i.ph = phi ptr [ %.0.i, %iter.check ], [ %i.dz, %vec.epilog.iter.check ], [ %i.ee, %vec.epilog.middle.block ] ; 2 uses
   %.11520.i.ph = phi ptr [ %.014.i, %iter.check ], [ %i.ea, %vec.epilog.iter.check ], [ %i.ef, %vec.epilog.middle.block ] ; 3 uses
   %i.eh = add i64 %.sroa.010.sroa.4.0.extract.shift.i, %i.ba
-  %.11520.i.ph251 = ptrtoint ptr %.11520.i.ph to i64 ; 2 uses
-  %i.ei = sub i64 %i.eh, %.11520.i.ph251
+  %.11520.i.ph250 = ptrtoaddr ptr %.11520.i.ph to i64 ; 2 uses
+  %i.ei = sub i64 %i.eh, %.11520.i.ph250
   %i.ej = add i64 %i.ba, -1
   %i.ek = add i64 %i.ej, %.sroa.010.sroa.4.0.extract.shift.i
-  %i.el = sub i64 %i.ek, %.11520.i.ph251
+  %i.el = sub i64 %i.ek, %.11520.i.ph250
   %xtraiter = and i64 %i.ei, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i84.prol.loopexit, label %.lr.ph.i84.prol

@@ -201,7 +201,6 @@ declare void @_ZSt20__throw_length_errorPKc(ptr noundef) local_unnamed_addr #9
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !27   ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !26     ; 10 uses
@@ -222,7 +221,7 @@ _ZNKSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14defa
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 5 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -236,8 +235,7 @@ _ZNKSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14defa
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %4 = ptrtoint ptr %1 to i64
-  %i.s = sub i64 %4, %i.e
+  %i.s = sub i64 %i.m, %i.e
   %i.t = add i64 %i.s, -8                         ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
@@ -245,7 +243,7 @@ _ZNKSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14defa
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %i.w = add i64 %3, -8
+  %i.w = add i64 %i.m, -8
   %i.x = sub i64 %i.w, %i.e
   %i.y = and i64 %i.x, -8
   %i.z = add i64 %i.y, 8                          ; 2 uses
@@ -312,8 +310,7 @@ _ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14defau
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
-  %5 = ptrtoint ptr %1 to i64
-  %i.am = sub i64 %i.d, %5
+  %i.am = sub i64 %i.d, %i.m
   %i.an = add i64 %i.am, -8                       ; 2 uses
   %i.ao = lshr i64 %i.an, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
@@ -322,7 +319,7 @@ _ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14defau
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader
   %i.aq = add i64 %i.d, -8
-  %i.ar = sub i64 %i.aq, %3
+  %i.ar = sub i64 %i.aq, %i.m
   %i.as = and i64 %i.ar, -8                       ; 2 uses
   %i.at = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %i.as
   %scevgep40 = getelementptr i8, ptr %i.at, i64 16

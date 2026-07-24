@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.n = getelementptr i8, ptr %0, i64 40         ; 4 uses
   %.val69.i.i = load ptr, ptr %i.n, align 8, !tbaa !23 ; 5 uses
-  %.val6996.i.i = ptrtoint ptr %.val69.i.i to i64 ; 3 uses
+  %.val6996.i.i = ptrtoaddr ptr %.val69.i.i to i64 ; 3 uses
   %i.o = getelementptr i8, ptr %0, i64 16
   %.val70.i.i = load i64, ptr %i.o, align 8, !tbaa !25 ; 4 uses
   %i.p = getelementptr i8, ptr %.val69.i.i, i64 %.val70.i.i ; 4 uses
@@ -214,7 +214,7 @@ bb.f:                                             ; preds = %bb.d
 .thread:                                          ; preds = %.thread32.i
   %i.r = getelementptr i8, ptr %0, i64 40         ; 3 uses
   %.val69.i.i30 = load ptr, ptr %i.r, align 8, !tbaa !23 ; 4 uses
-  %.val6996.i.i31 = ptrtoint ptr %.val69.i.i30 to i64 ; 2 uses
+  %.val6996.i.i31 = ptrtoaddr ptr %.val69.i.i30 to i64 ; 2 uses
   %i.s = getelementptr i8, ptr %0, i64 16
   %.val70.i.i32 = load i64, ptr %i.s, align 8, !tbaa !25 ; 3 uses
   %i.t = getelementptr i8, ptr %.val69.i.i30, i64 %.val70.i.i32 ; 3 uses
@@ -224,7 +224,7 @@ bb.f:                                             ; preds = %bb.d
 .thread57.i:                                      ; preds = %bb.e
   %i.v = getelementptr i8, ptr %0, i64 40         ; 3 uses
   %.val69.i59.i = load ptr, ptr %i.v, align 8, !tbaa !23 ; 4 uses
-  %.val6996.i60.i = ptrtoint ptr %.val69.i59.i to i64 ; 2 uses
+  %.val6996.i60.i = ptrtoaddr ptr %.val69.i59.i to i64 ; 2 uses
   %i.w = getelementptr i8, ptr %0, i64 16
   %.val70.i61.i = load i64, ptr %i.w, align 8, !tbaa !25 ; 3 uses
   %i.x = getelementptr i8, ptr %.val69.i59.i, i64 %.val70.i61.i ; 3 uses
@@ -399,7 +399,7 @@ bb.y:                                             ; preds = %bb.u
   br i1 %i.bw, label %.lr.ph91.i.i, label %stringlib_expandtabs.exit
 
 .lr.ph91.i.i:                                     ; preds = %bb.y
-  %.val97.i.i = ptrtoint ptr %.val.i.i to i64     ; 2 uses
+  %.val97.i.i = ptrtoaddr ptr %.val.i.i to i64    ; 2 uses
   %i.bx = icmp sgt i32 %.062.i, 0
   %i.by = zext i32 %.062.i to i64                 ; 3 uses
   %i.bz = add i64 %.val6996.i65.i, %.val70.i67.i
@@ -802,7 +802,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %or.cond5, label %bb.w, label %bb.ai
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %i.bk = add nsw i64 %3, -1                      ; 13 uses
+  %i.bk = add nsw i64 %3, -1                      ; 12 uses
   %i.bl = getelementptr i8, ptr %2, i64 %i.bk
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !22  ; 5 uses
   %xtraiter = and i64 %i.bk, 1
@@ -873,19 +873,15 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.ag
 
 bb.z:                                             ; preds = %.preheader.us.i, %bb.ah
-  %.0102.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.dd, %bb.ah ] ; 4 uses
+  %.0102.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.dd, %bb.ah ] ; 3 uses
   %i.co = getelementptr i8, ptr %i.de, i64 %.0102.us.i
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !22
   %i.cq = getelementptr i8, ptr %2, i64 %.0102.us.i
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !22
   %.not90.us.i = icmp eq i8 %i.cp, %i.cr
-  br i1 %.not90.us.i, label %bb.ah, label %._crit_edge104.us.i
+  br i1 %.not90.us.i, label %bb.ah, label %bb.aa
 
-._crit_edge104.us.i:                              ; preds = %bb.z
-  %6 = icmp eq i64 %.0102.us.i, %i.bk
-  br i1 %6, label %._crit_edge104.us.thread.i, label %bb.aa
-
-bb.aa:                                            ; preds = %._crit_edge104.us.i
+bb.aa:                                            ; preds = %bb.z
   %i.cs = add i64 %.066110.us.i, 1                ; 2 uses
   %.not91.us.i = icmp sgt i64 %i.cs, %i.bx
   br i1 %.not91.us.i, label %bb.ac, label %bb.ab
@@ -908,7 +904,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %.167.us.i = add i64 %.078.pn.us.i, %.066110.us.i
   br label %bb.ag
 
-._crit_edge104.us.thread.i:                       ; preds = %bb.ah, %._crit_edge104.us.i
+._crit_edge104.us.thread.i:                       ; preds = %bb.ah
   br i1 %i.b, label %bb.ae, label %stringlib_find_char.exit
 
 bb.ae:                                            ; preds = %._crit_edge104.us.thread.i

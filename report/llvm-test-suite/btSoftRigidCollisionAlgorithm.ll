@@ -61,7 +61,7 @@ bb.a:
   %i.d = select i1 %i.c, ptr %2, ptr %1           ; 3 uses
   %i.e = select i1 %i.c, ptr %1, ptr %2           ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 284
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !20   ; 3 uses
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !20   ; 2 uses
   %i.h = icmp sgt i32 %i.g, 0
   br i1 %i.h, label %.lr.ph.i, label %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.thread
 
@@ -72,27 +72,22 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.c ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.c ] ; 2 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv.i
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !26
   %i.m = icmp eq ptr %i.l, %i.e
-  br i1 %i.m, label %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit, label %bb.c
+  br i1 %i.m, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.thread, label %bb.b
 
-_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit: ; preds = %bb.b
-  %5 = trunc nuw nsw i64 %indvars.iv.i to i32
-  %6 = icmp eq i32 %i.g, %5
-  br i1 %6, label %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.thread, label %bb.d
-
-_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.thread: ; preds = %bb.c, %bb.a, %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit
+_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.thread: ; preds = %bb.c, %bb.a
   tail call void @_ZN10btSoftBody23defaultCollisionHandlerEP17btCollisionObject(ptr noundef nonnull align 8 dereferenceable(1496) %i.d, ptr noundef %i.e)
   br label %bb.d
 
-bb.d:                                             ; preds = %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.thread, %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit
+bb.d:                                             ; preds = %bb.b, %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.thread
   ret void
 }
 

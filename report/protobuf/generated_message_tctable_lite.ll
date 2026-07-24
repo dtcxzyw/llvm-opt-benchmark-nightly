@@ -203,9 +203,8 @@ bb.k:                                             ; preds = %bb.j
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIbhLb0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_bEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64
   %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
-  %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.c = sub i64 %i.a, %i.b                       ; 4 uses
   %i.d = icmp sgt i64 %i.c, 15
   br i1 %i.d, label %bb.b, label %bb.o
@@ -310,7 +309,7 @@ iter.check:                                       ; preds = %_ZN6google8protobuf
   %.0.i.i.i58 = getelementptr inbounds nuw i8, ptr %.0.v.i.i.i57, i64 8
   %i.aq = sext i32 %i.am to i64                   ; 2 uses
   %i.ar = getelementptr inbounds i8, ptr %.0.i.i.i58, i64 %i.aq ; 6 uses
-  %i.as = sub i64 %i.a, %4                        ; 7 uses
+  %i.as = sub i64 %i.a, %i.b                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.as, 4
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
@@ -385,7 +384,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.04881.ph = phi ptr [ %0, %iter.check ], [ %0, %vector.memcheck ], [ %i.aw, %vec.epilog.iter.check ], [ %i.bf, %vec.epilog.middle.block ] ; 3 uses
   %.05080.ph = phi ptr [ %i.ar, %iter.check ], [ %i.ar, %vector.memcheck ], [ %i.ax, %vec.epilog.iter.check ], [ %i.bg, %vec.epilog.middle.block ] ; 2 uses
-  %.04881.ph151 = ptrtoint ptr %.04881.ph to i64  ; 2 uses
+  %.04881.ph151 = ptrtoaddr ptr %.04881.ph to i64 ; 2 uses
   %i.bk = sub i64 %i.a, %.04881.ph151
   %xtraiter = and i64 %i.bk, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -788,9 +787,8 @@ bb.k:                                             ; preds = %bb.j
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIbtLb0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_bEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64
   %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
-  %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.c = sub i64 %i.a, %i.b                       ; 4 uses
   %i.d = icmp sgt i64 %i.c, 15
   br i1 %i.d, label %bb.b, label %bb.o
@@ -895,7 +893,7 @@ iter.check:                                       ; preds = %_ZN6google8protobuf
   %.0.i.i.i58 = getelementptr inbounds nuw i8, ptr %.0.v.i.i.i57, i64 8
   %i.aq = sext i32 %i.am to i64                   ; 2 uses
   %i.ar = getelementptr inbounds i8, ptr %.0.i.i.i58, i64 %i.aq ; 6 uses
-  %i.as = sub i64 %i.a, %4                        ; 7 uses
+  %i.as = sub i64 %i.a, %i.b                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.as, 4
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
@@ -970,7 +968,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.04881.ph = phi ptr [ %0, %iter.check ], [ %0, %vector.memcheck ], [ %i.aw, %vec.epilog.iter.check ], [ %i.bf, %vec.epilog.middle.block ] ; 3 uses
   %.05080.ph = phi ptr [ %i.ar, %iter.check ], [ %i.ar, %vector.memcheck ], [ %i.ax, %vec.epilog.iter.check ], [ %i.bg, %vec.epilog.middle.block ] ; 2 uses
-  %.04881.ph151 = ptrtoint ptr %.04881.ph to i64  ; 2 uses
+  %.04881.ph151 = ptrtoaddr ptr %.04881.ph to i64 ; 2 uses
   %i.bk = sub i64 %i.a, %.04881.ph151
   %xtraiter = and i64 %i.bk, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -1373,9 +1371,8 @@ bb.m:                                             ; preds = %bb.l
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIjhLb0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_jEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64
-  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.b = ptrtoint ptr %0 to i64
+  %i.a = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
   %i.d = icmp sgt i64 %i.c, 15
   br i1 %i.d, label %bb.b, label %bb.k
@@ -1430,9 +1427,7 @@ _ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaEPNS0_5ArenaEi.exit: ; pr
   %.0.i.i.i = getelementptr i8, ptr %.0.v.i.i.i, i64 8
   %i.w = sext i32 %i.s to i64                     ; 2 uses
   %i.x = getelementptr [4 x i8], ptr %.0.i.i.i, i64 %i.w ; 5 uses
-  %5 = ptrtoint ptr %1 to i64                     ; 3 uses
-  %6 = ptrtoint ptr %0 to i64
-  %i.y = sub i64 %5, %6                           ; 3 uses
+  %i.y = sub i64 %i.a, %i.b                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.y, 32
   br i1 %min.iters.check, label %.lr.ph.preheader108, label %vector.memcheck
 
@@ -1440,7 +1435,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.z = add i64 %i.a, %i.w
   %i.aa = shl i64 %i.z, 2
   %i.ab = add i64 %i.aa, 8
-  %i.ac = shl i64 %4, 2
+  %i.ac = shl i64 %i.b, 2
   %i.ad = sub i64 %i.ab, %i.ac
   %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.ad
   %bound0 = icmp ult ptr %i.x, %1
@@ -1479,8 +1474,8 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.preheader108:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %.03563.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.ae, %middle.block ] ; 3 uses
   %.03762.ph = phi ptr [ %i.x, %vector.memcheck ], [ %i.x, %.lr.ph.preheader ], [ %i.ag, %middle.block ] ; 2 uses
-  %.03563.ph110 = ptrtoint ptr %.03563.ph to i64  ; 2 uses
-  %i.an = sub i64 %5, %.03563.ph110
+  %.03563.ph110 = ptrtoaddr ptr %.03563.ph to i64 ; 2 uses
+  %i.an = sub i64 %i.a, %.03563.ph110
   %xtraiter = and i64 %i.an, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -1502,7 +1497,7 @@ middle.block:                                     ; preds = %vector.body
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader108 ], [ %i.ar, %.lr.ph.prol ]
   %.03563.unr = phi ptr [ %.03563.ph, %.lr.ph.preheader108 ], [ %i.ar, %.lr.ph.prol ]
   %.03762.unr = phi ptr [ %.03762.ph, %.lr.ph.preheader108 ], [ %i.aq, %.lr.ph.prol ]
-  %i.as = sub i64 %.03563.ph110, %5
+  %i.as = sub i64 %.03563.ph110, %i.a
   %i.at = icmp ugt i64 %i.as, -8
   br i1 %i.at, label %_ZN6google8protobuf13RepeatedFieldIjE8TruncateEi.exit, label %.lr.ph
 
@@ -1905,9 +1900,8 @@ bb.m:                                             ; preds = %bb.l
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIjtLb0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_jEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64
-  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.b = ptrtoint ptr %0 to i64
+  %i.a = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
   %i.d = icmp sgt i64 %i.c, 15
   br i1 %i.d, label %bb.b, label %bb.k
@@ -1962,9 +1956,7 @@ _ZN6google8protobuf13RepeatedFieldIjE16ReserveWithArenaEPNS0_5ArenaEi.exit: ; pr
   %.0.i.i.i = getelementptr i8, ptr %.0.v.i.i.i, i64 8
   %i.w = sext i32 %i.s to i64                     ; 2 uses
   %i.x = getelementptr [4 x i8], ptr %.0.i.i.i, i64 %i.w ; 5 uses
-  %5 = ptrtoint ptr %1 to i64                     ; 3 uses
-  %6 = ptrtoint ptr %0 to i64
-  %i.y = sub i64 %5, %6                           ; 3 uses
+  %i.y = sub i64 %i.a, %i.b                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.y, 32
   br i1 %min.iters.check, label %.lr.ph.preheader108, label %vector.memcheck
 
@@ -1972,7 +1964,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.z = add i64 %i.a, %i.w
   %i.aa = shl i64 %i.z, 2
   %i.ab = add i64 %i.aa, 8
-  %i.ac = shl i64 %4, 2
+  %i.ac = shl i64 %i.b, 2
   %i.ad = sub i64 %i.ab, %i.ac
   %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.ad
   %bound0 = icmp ult ptr %i.x, %1
@@ -2011,8 +2003,8 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.preheader108:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %.03563.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.ae, %middle.block ] ; 3 uses
   %.03762.ph = phi ptr [ %i.x, %vector.memcheck ], [ %i.x, %.lr.ph.preheader ], [ %i.ag, %middle.block ] ; 2 uses
-  %.03563.ph110 = ptrtoint ptr %.03563.ph to i64  ; 2 uses
-  %i.an = sub i64 %5, %.03563.ph110
+  %.03563.ph110 = ptrtoaddr ptr %.03563.ph to i64 ; 2 uses
+  %i.an = sub i64 %i.a, %.03563.ph110
   %xtraiter = and i64 %i.an, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -2034,7 +2026,7 @@ middle.block:                                     ; preds = %vector.body
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader108 ], [ %i.ar, %.lr.ph.prol ]
   %.03563.unr = phi ptr [ %.03563.ph, %.lr.ph.preheader108 ], [ %i.ar, %.lr.ph.prol ]
   %.03762.unr = phi ptr [ %.03762.ph, %.lr.ph.preheader108 ], [ %i.aq, %.lr.ph.prol ]
-  %i.as = sub i64 %.03563.ph110, %5
+  %i.as = sub i64 %.03563.ph110, %i.a
   %i.at = icmp ugt i64 %i.as, -8
   br i1 %i.at, label %_ZN6google8protobuf13RepeatedFieldIjE8TruncateEi.exit, label %.lr.ph
 
@@ -2437,9 +2429,8 @@ bb.k:                                             ; preds = %bb.j
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintImhLb0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_mEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64                     ; 2 uses
   %i.a = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.b = ptrtoint ptr %0 to i64
+  %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
   %i.d = icmp sgt i64 %i.c, 15
   br i1 %i.d, label %bb.b, label %bb.k
@@ -2494,7 +2485,7 @@ _ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaEPNS0_5ArenaEi.exit: ; pr
   %.0.i.i.i = getelementptr inbounds nuw i8, ptr %.0.v.i.i.i, i64 8
   %i.w = sext i32 %i.s to i64
   %i.x = getelementptr inbounds [8 x i8], ptr %.0.i.i.i, i64 %i.w ; 2 uses
-  %i.y = sub i64 %i.a, %4
+  %i.y = sub i64 %i.a, %i.b
   %xtraiter = and i64 %i.y, 7                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -2516,7 +2507,7 @@ _ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaEPNS0_5ArenaEi.exit: ; pr
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %i.ac, %.lr.ph.prol ]
   %.03562.unr = phi ptr [ %0, %.lr.ph.preheader ], [ %i.ac, %.lr.ph.prol ]
   %.03761.unr = phi ptr [ %i.x, %.lr.ph.preheader ], [ %i.ab, %.lr.ph.prol ]
-  %i.ad = sub i64 %4, %i.a
+  %i.ad = sub i64 %i.b, %i.a
   %i.ae = icmp ugt i64 %i.ad, -8
   br i1 %i.ae, label %_ZN6google8protobuf13RepeatedFieldImE8TruncateEi.exit, label %.lr.ph
 
@@ -2919,9 +2910,8 @@ bb.k:                                             ; preds = %bb.j
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintImtLb0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_mEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64                     ; 2 uses
   %i.a = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.b = ptrtoint ptr %0 to i64
+  %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
   %i.d = icmp sgt i64 %i.c, 15
   br i1 %i.d, label %bb.b, label %bb.k
@@ -2976,7 +2966,7 @@ _ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaEPNS0_5ArenaEi.exit: ; pr
   %.0.i.i.i = getelementptr inbounds nuw i8, ptr %.0.v.i.i.i, i64 8
   %i.w = sext i32 %i.s to i64
   %i.x = getelementptr inbounds [8 x i8], ptr %.0.i.i.i, i64 %i.w ; 2 uses
-  %i.y = sub i64 %i.a, %4
+  %i.y = sub i64 %i.a, %i.b
   %xtraiter = and i64 %i.y, 7                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -2998,7 +2988,7 @@ _ZN6google8protobuf13RepeatedFieldImE16ReserveWithArenaEPNS0_5ArenaEi.exit: ; pr
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %i.ac, %.lr.ph.prol ]
   %.03562.unr = phi ptr [ %0, %.lr.ph.preheader ], [ %i.ac, %.lr.ph.prol ]
   %.03761.unr = phi ptr [ %i.x, %.lr.ph.preheader ], [ %i.ab, %.lr.ph.prol ]
-  %i.ad = sub i64 %4, %i.a
+  %i.ad = sub i64 %i.b, %i.a
   %i.ae = icmp ugt i64 %i.ad, -8
   br i1 %i.ae, label %_ZN6google8protobuf13RepeatedFieldImE8TruncateEi.exit, label %.lr.ph
 
@@ -3401,9 +3391,8 @@ bb.m:                                             ; preds = %bb.l
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIihLb1EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_iEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64
-  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.b = ptrtoint ptr %0 to i64
+  %i.a = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
   %i.d = icmp sgt i64 %i.c, 15
   br i1 %i.d, label %bb.b, label %bb.k
@@ -3458,9 +3447,7 @@ _ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaEPNS0_5ArenaEi.exit: ; pr
   %.0.i.i.i = getelementptr i8, ptr %.0.v.i.i.i, i64 8
   %i.w = sext i32 %i.s to i64                     ; 2 uses
   %i.x = getelementptr [4 x i8], ptr %.0.i.i.i, i64 %i.w ; 5 uses
-  %5 = ptrtoint ptr %1 to i64                     ; 3 uses
-  %6 = ptrtoint ptr %0 to i64
-  %i.y = sub i64 %5, %6                           ; 3 uses
+  %i.y = sub i64 %i.a, %i.b                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.y, 16
   br i1 %min.iters.check, label %.lr.ph.preheader108, label %vector.memcheck
 
@@ -3468,7 +3455,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.z = add i64 %i.a, %i.w
   %i.aa = shl i64 %i.z, 2
   %i.ab = add i64 %i.aa, 8
-  %i.ac = shl i64 %4, 2
+  %i.ac = shl i64 %i.b, 2
   %i.ad = sub i64 %i.ab, %i.ac
   %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.ad
   %bound0 = icmp ult ptr %i.x, %1
@@ -3515,8 +3502,8 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.preheader108:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %.03563.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.ae, %middle.block ] ; 3 uses
   %.03762.ph = phi ptr [ %i.x, %vector.memcheck ], [ %i.x, %.lr.ph.preheader ], [ %i.ag, %middle.block ] ; 2 uses
-  %.03563.ph110 = ptrtoint ptr %.03563.ph to i64  ; 2 uses
-  %i.av = sub i64 %5, %.03563.ph110
+  %.03563.ph110 = ptrtoaddr ptr %.03563.ph to i64 ; 2 uses
+  %i.av = sub i64 %i.a, %.03563.ph110
   %xtraiter = and i64 %i.av, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -3542,7 +3529,7 @@ middle.block:                                     ; preds = %vector.body
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader108 ], [ %i.bd, %.lr.ph.prol ]
   %.03563.unr = phi ptr [ %.03563.ph, %.lr.ph.preheader108 ], [ %i.bd, %.lr.ph.prol ]
   %.03762.unr = phi ptr [ %.03762.ph, %.lr.ph.preheader108 ], [ %i.bc, %.lr.ph.prol ]
-  %i.be = sub i64 %.03563.ph110, %5
+  %i.be = sub i64 %.03563.ph110, %i.a
   %i.bf = icmp ugt i64 %i.be, -4
   br i1 %i.bf, label %_ZN6google8protobuf13RepeatedFieldIiE8TruncateEi.exit, label %.lr.ph
 
@@ -3945,9 +3932,8 @@ bb.m:                                             ; preds = %bb.l
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIitLb1EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_iEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64
-  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.b = ptrtoint ptr %0 to i64
+  %i.a = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
   %i.d = icmp sgt i64 %i.c, 15
   br i1 %i.d, label %bb.b, label %bb.k
@@ -4002,9 +3988,7 @@ _ZN6google8protobuf13RepeatedFieldIiE16ReserveWithArenaEPNS0_5ArenaEi.exit: ; pr
   %.0.i.i.i = getelementptr i8, ptr %.0.v.i.i.i, i64 8
   %i.w = sext i32 %i.s to i64                     ; 2 uses
   %i.x = getelementptr [4 x i8], ptr %.0.i.i.i, i64 %i.w ; 5 uses
-  %5 = ptrtoint ptr %1 to i64                     ; 3 uses
-  %6 = ptrtoint ptr %0 to i64
-  %i.y = sub i64 %5, %6                           ; 3 uses
+  %i.y = sub i64 %i.a, %i.b                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.y, 16
   br i1 %min.iters.check, label %.lr.ph.preheader108, label %vector.memcheck
 
@@ -4012,7 +3996,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.z = add i64 %i.a, %i.w
   %i.aa = shl i64 %i.z, 2
   %i.ab = add i64 %i.aa, 8
-  %i.ac = shl i64 %4, 2
+  %i.ac = shl i64 %i.b, 2
   %i.ad = sub i64 %i.ab, %i.ac
   %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.ad
   %bound0 = icmp ult ptr %i.x, %1
@@ -4059,8 +4043,8 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.preheader108:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %.03563.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.ae, %middle.block ] ; 3 uses
   %.03762.ph = phi ptr [ %i.x, %vector.memcheck ], [ %i.x, %.lr.ph.preheader ], [ %i.ag, %middle.block ] ; 2 uses
-  %.03563.ph110 = ptrtoint ptr %.03563.ph to i64  ; 2 uses
-  %i.av = sub i64 %5, %.03563.ph110
+  %.03563.ph110 = ptrtoaddr ptr %.03563.ph to i64 ; 2 uses
+  %i.av = sub i64 %i.a, %.03563.ph110
   %xtraiter = and i64 %i.av, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -4086,7 +4070,7 @@ middle.block:                                     ; preds = %vector.body
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader108 ], [ %i.bd, %.lr.ph.prol ]
   %.03563.unr = phi ptr [ %.03563.ph, %.lr.ph.preheader108 ], [ %i.bd, %.lr.ph.prol ]
   %.03762.unr = phi ptr [ %.03762.ph, %.lr.ph.preheader108 ], [ %i.bc, %.lr.ph.prol ]
-  %i.be = sub i64 %.03563.ph110, %5
+  %i.be = sub i64 %.03563.ph110, %i.a
   %i.bf = icmp ugt i64 %i.be, -4
   br i1 %i.bf, label %_ZN6google8protobuf13RepeatedFieldIiE8TruncateEi.exit, label %.lr.ph
 
@@ -4489,9 +4473,8 @@ bb.k:                                             ; preds = %bb.j
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIlhLb1EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_lEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64
-  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.b = ptrtoint ptr %0 to i64
+  %i.a = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
   %i.d = icmp sgt i64 %i.c, 15
   br i1 %i.d, label %bb.b, label %bb.k
@@ -4546,9 +4529,7 @@ _ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaEPNS0_5ArenaEi.exit: ; pr
   %.0.i.i.i = getelementptr i8, ptr %.0.v.i.i.i, i64 8
   %i.w = sext i32 %i.s to i64                     ; 2 uses
   %i.x = getelementptr [8 x i8], ptr %.0.i.i.i, i64 %i.w ; 5 uses
-  %5 = ptrtoint ptr %1 to i64                     ; 3 uses
-  %6 = ptrtoint ptr %0 to i64
-  %i.y = sub i64 %5, %6                           ; 3 uses
+  %i.y = sub i64 %i.a, %i.b                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.y, 20
   br i1 %min.iters.check, label %.lr.ph.preheader110, label %vector.memcheck
 
@@ -4556,7 +4537,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.z = add i64 %i.a, %i.w
   %i.aa = shl i64 %i.z, 3
   %i.ab = add i64 %i.aa, 8
-  %i.ac = shl i64 %4, 3
+  %i.ac = shl i64 %i.b, 3
   %i.ad = sub i64 %i.ab, %i.ac
   %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.ad
   %bound0 = icmp ult ptr %i.x, %1
@@ -4603,8 +4584,8 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.preheader110:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %.03562.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.ae, %middle.block ] ; 3 uses
   %.03761.ph = phi ptr [ %i.x, %vector.memcheck ], [ %i.x, %.lr.ph.preheader ], [ %i.ag, %middle.block ] ; 2 uses
-  %.03562.ph112 = ptrtoint ptr %.03562.ph to i64  ; 2 uses
-  %i.av = sub i64 %5, %.03562.ph112
+  %.03562.ph112 = ptrtoaddr ptr %.03562.ph to i64 ; 2 uses
+  %i.av = sub i64 %i.a, %.03562.ph112
   %xtraiter = and i64 %i.av, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -4630,7 +4611,7 @@ middle.block:                                     ; preds = %vector.body
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader110 ], [ %i.bd, %.lr.ph.prol ]
   %.03562.unr = phi ptr [ %.03562.ph, %.lr.ph.preheader110 ], [ %i.bd, %.lr.ph.prol ]
   %.03761.unr = phi ptr [ %.03761.ph, %.lr.ph.preheader110 ], [ %i.bc, %.lr.ph.prol ]
-  %i.be = sub i64 %.03562.ph112, %5
+  %i.be = sub i64 %.03562.ph112, %i.a
   %i.bf = icmp ugt i64 %i.be, -4
   br i1 %i.bf, label %_ZN6google8protobuf13RepeatedFieldIlE8TruncateEi.exit, label %.lr.ph
 
@@ -5033,9 +5014,8 @@ bb.k:                                             ; preds = %bb.j
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIltLb1EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_lEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64
-  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.b = ptrtoint ptr %0 to i64
+  %i.a = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
   %i.d = icmp sgt i64 %i.c, 15
   br i1 %i.d, label %bb.b, label %bb.k
@@ -5090,9 +5070,7 @@ _ZN6google8protobuf13RepeatedFieldIlE16ReserveWithArenaEPNS0_5ArenaEi.exit: ; pr
   %.0.i.i.i = getelementptr i8, ptr %.0.v.i.i.i, i64 8
   %i.w = sext i32 %i.s to i64                     ; 2 uses
   %i.x = getelementptr [8 x i8], ptr %.0.i.i.i, i64 %i.w ; 5 uses
-  %5 = ptrtoint ptr %1 to i64                     ; 3 uses
-  %6 = ptrtoint ptr %0 to i64
-  %i.y = sub i64 %5, %6                           ; 3 uses
+  %i.y = sub i64 %i.a, %i.b                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.y, 20
   br i1 %min.iters.check, label %.lr.ph.preheader110, label %vector.memcheck
 
@@ -5100,7 +5078,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.z = add i64 %i.a, %i.w
   %i.aa = shl i64 %i.z, 3
   %i.ab = add i64 %i.aa, 8
-  %i.ac = shl i64 %4, 3
+  %i.ac = shl i64 %i.b, 3
   %i.ad = sub i64 %i.ab, %i.ac
   %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.ad
   %bound0 = icmp ult ptr %i.x, %1
@@ -5147,8 +5125,8 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.preheader110:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %.03562.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.ae, %middle.block ] ; 3 uses
   %.03761.ph = phi ptr [ %i.x, %vector.memcheck ], [ %i.x, %.lr.ph.preheader ], [ %i.ag, %middle.block ] ; 2 uses
-  %.03562.ph112 = ptrtoint ptr %.03562.ph to i64  ; 2 uses
-  %i.av = sub i64 %5, %.03562.ph112
+  %.03562.ph112 = ptrtoaddr ptr %.03562.ph to i64 ; 2 uses
+  %i.av = sub i64 %i.a, %.03562.ph112
   %xtraiter = and i64 %i.av, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -5174,7 +5152,7 @@ middle.block:                                     ; preds = %vector.body
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader110 ], [ %i.bd, %.lr.ph.prol ]
   %.03562.unr = phi ptr [ %.03562.ph, %.lr.ph.preheader110 ], [ %i.bd, %.lr.ph.prol ]
   %.03761.unr = phi ptr [ %.03761.ph, %.lr.ph.preheader110 ], [ %i.bc, %.lr.ph.prol ]
-  %i.be = sub i64 %.03562.ph112, %5
+  %i.be = sub i64 %.03562.ph112, %i.a
   %i.bf = icmp ugt i64 %i.be, -4
   br i1 %i.bf, label %_ZN6google8protobuf13RepeatedFieldIlE8TruncateEi.exit, label %.lr.ph
 

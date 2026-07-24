@@ -204,8 +204,8 @@ bb.ad:                                            ; preds = %bb.y
 
 _ZNSt12_Vector_baseISt4pairIjfESaIS1_EE11_M_allocateEm.exit.i: ; preds = %.lr.ph376
   %i.ik = getelementptr inbounds nuw i8, ptr %i.hw, i64 8 ; 2 uses
-  %i.il = load ptr, ptr %i.ik, align 8            ; 4 uses
-  %i.im = ptrtoint ptr %i.il to i64
+  %i.il = load ptr, ptr %i.ik, align 8            ; 3 uses
+  %i.im = ptrtoint ptr %i.il to i64               ; 2 uses
   %i.in = sub i64 %i.im, %i.ig
   %i.io = shl nuw nsw i64 %i.ib, 3
   %i.ip = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.io) #29
@@ -217,8 +217,7 @@ _ZNSt12_Vector_baseISt4pairIjfESaIS1_EE11_M_allocateEm.exit.i: ; preds = %.lr.ph
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc197
   %i.iq = ptrtoaddr ptr %i.ip to i64
-  %1 = ptrtoint ptr %i.il to i64
-  %i.ir = sub i64 %1, %i.ig
+  %i.ir = sub i64 %i.im, %i.ig
   %i.is = add i64 %i.ir, -8                       ; 2 uses
   %i.it = lshr i64 %i.is, 3
   %i.iu = add nuw nsw i64 %i.it, 1                ; 2 uses
@@ -621,8 +620,8 @@ bb.a:
   %i.j = load i32, ptr %i.f, align 4              ; 2 uses
   %i.k = add i32 %i.j, 1                          ; 2 uses
   store i32 %i.k, ptr %i.f, align 4
-  %1 = ptrtoint ptr %i.h to i64
-  %2 = ptrtoint ptr %i.i to i64                   ; 7 uses
+  %1 = ptrtoaddr ptr %i.h to i64
+  %2 = ptrtoaddr ptr %i.i to i64                  ; 7 uses
   %i.l = sub i64 %2, %1
   %scevgep.i.i = getelementptr i8, ptr %i.h, i64 %i.l
   br label %bb.b
@@ -674,7 +673,7 @@ bb.g:                                             ; preds = %bb.f, %bb.f, %bb.f,
   %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %storemerge.i = select i1 %.not11.i, ptr %i.r, ptr %i.t ; 4 uses
   store ptr %storemerge.i, ptr %i.c, align 8
-  %3 = ptrtoint ptr %storemerge.i to i64
+  %3 = ptrtoaddr ptr %storemerge.i to i64
   %i.u = sub i64 %2, %3
   %scevgep.i = getelementptr i8, ptr %storemerge.i, i64 %i.u
   br label %bb.h
@@ -787,7 +786,7 @@ bb.q:                                             ; preds = %bb.p, %bb.p, %bb.p,
   %i.ar = load i32, ptr %i.f, align 4
   %i.as = add i32 %i.ar, 1
   store i32 %i.as, ptr %i.f, align 4
-  %4 = ptrtoint ptr %i.aq to i64
+  %4 = ptrtoaddr ptr %i.aq to i64
   %i.at = sub i64 %2, %4
   %scevgep.i.i.i = getelementptr i8, ptr %i.aq, i64 %i.at
   br label %bb.r
@@ -811,7 +810,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.r, !llvm.loop !106
 
 _ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.i:       ; preds = %bb.p, %bb.o
-  call void @_ZN6Assimp11SMDImporter13ParseNodeInfoEPKcPS2_S2_(ptr noundef nonnull align 8 dereferenceable(226) %0, ptr noundef %i.al, ptr noundef nonnull %i.b, ptr noundef %i.i)
+  call void @_ZN6Assimp11SMDImporter13ParseNodeInfoEPKcPS2_S2_(ptr noundef nonnull align 8 dereferenceable(226) %0, ptr noundef %i.al, ptr noundef nonnull %i.b, ptr noundef readnone %i.i)
   %.pre.i = load ptr, ptr %i.b, align 8
   br label %bb.o, !llvm.loop !110
 
@@ -851,7 +850,7 @@ bb.x:                                             ; preds = %bb.ac, %bb.w
   %i.bb = phi ptr [ %.pre.i21, %bb.ac ], [ %storemerge.i14, %bb.w ] ; 3 uses
   %i.bc = add i32 %i.ba, 1
   store i32 %i.bc, ptr %i.f, align 4
-  %5 = ptrtoint ptr %i.bb to i64
+  %5 = ptrtoaddr ptr %i.bb to i64
   %i.bd = sub i64 %2, %5
   %scevgep.i.i.i16 = getelementptr i8, ptr %i.bb, i64 %i.bd
   br label %bb.y
@@ -936,7 +935,7 @@ bb.ac:                                            ; preds = %bb.ab, %.tail.i
   %i.bv = phi ptr [ %storemerge.i.i, %_ZN6Assimp10TokenMatchIKcEEbRPT_PS1_j.exit.i ], [ %i.bg, %_ZN6Assimp11SMDImporter20SkipSpacesAndLineEndEPKcPS2_S2_.exit.i ] ; 3 uses
   %i.bw = add i32 %i.ba, 2
   store i32 %i.bw, ptr %i.f, align 4
-  %6 = ptrtoint ptr %i.bv to i64
+  %6 = ptrtoaddr ptr %i.bv to i64
   %i.bx = sub i64 %2, %6
   %scevgep.i.i5.i = getelementptr i8, ptr %i.bv, i64 %i.bx
   br label %bb.ad
@@ -1017,7 +1016,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.ak, %bb.
   br label %.backedge.backedge
 
 bb.am:                                            ; preds = %bb.aj, %bb.ak
-  %7 = ptrtoint ptr %i.o to i64
+  %7 = ptrtoaddr ptr %i.o to i64
   %i.ci = sub i64 %2, %7
   %scevgep.i.i34 = getelementptr i8, ptr %i.o, i64 %i.ci
   br label %bb.an
@@ -1043,7 +1042,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 .critedge.i.i:                                    ; preds = %bb.ao, %bb.an, %bb.an, %bb.an, %bb.an
   %.0.lcssa.i.i36 = phi ptr [ %.0.i.i35, %bb.an ], [ %.0.i.i35, %bb.an ], [ %.0.i.i35, %bb.an ], [ %.0.i.i35, %bb.an ], [ %scevgep.i.i34, %bb.ao ] ; 3 uses
-  %.0.lcssa24.i.i = ptrtoint ptr %.0.lcssa.i.i36 to i64
+  %.0.lcssa24.i.i = ptrtoaddr ptr %.0.lcssa.i.i36 to i64
   %i.cl = sub i64 %2, %.0.lcssa24.i.i
   %scevgep25.i.i = getelementptr i8, ptr %.0.lcssa.i.i36, i64 %i.cl
   br label %bb.aq
@@ -1077,7 +1076,7 @@ _ZN6Assimp10SkipSpacesIcEEbPKT_PS3_S3_.exit:      ; preds = %.critedge.i, %.crit
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6Assimp11SMDImporter17ParseNodesSectionEPKcPS2_S2_(ptr noundef nonnull align 8 dereferenceable(226) %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr noundef %3) local_unnamed_addr #3 align 2 {
+define void @_ZN6Assimp11SMDImporter17ParseNodesSectionEPKcPS2_S2_(ptr noundef nonnull align 8 dereferenceable(226) %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readnone captures(address) %3) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 3 uses
   store ptr %1, ptr %i.a, align 8
@@ -1107,8 +1106,8 @@ bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c,
   %i.i = load i32, ptr %i.h, align 4
   %i.j = add i32 %i.i, 1
   store i32 %i.j, ptr %i.h, align 4
-  %4 = ptrtoint ptr %i.g to i64
-  %5 = ptrtoint ptr %3 to i64
+  %4 = ptrtoaddr ptr %i.g to i64
+  %5 = ptrtoaddr ptr %3 to i64
   %i.k = sub i64 %5, %4
   %scevgep.i.i = getelementptr i8, ptr %i.g, i64 %i.k
   br label %bb.e
@@ -1147,7 +1146,7 @@ define void @_ZN6Assimp11SMDImporter21ParseTrianglesSectionEPKcPS2_S2_(ptr nound
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 220 ; 3 uses
-  %4 = ptrtoint ptr %3 to i64                     ; 2 uses
+  %4 = ptrtoaddr ptr %3 to i64                    ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.g, %bb.a
@@ -1155,7 +1154,7 @@ bb.b:                                             ; preds = %bb.g, %bb.a
   %i.d = load i32, ptr %i.b, align 4              ; 2 uses
   %i.e = add i32 %i.d, 1
   store i32 %i.e, ptr %i.b, align 4
-  %5 = ptrtoint ptr %i.c to i64
+  %5 = ptrtoaddr ptr %i.c to i64
   %i.f = sub i64 %4, %5
   %scevgep.i.i = getelementptr i8, ptr %i.c, i64 %i.f
   br label %bb.c
@@ -1239,7 +1238,7 @@ bb.g:                                             ; preds = %.tail, %bb.f
   %i.x = phi ptr [ %storemerge.i, %_ZN6Assimp10TokenMatchIKcEEbRPT_PS1_j.exit ], [ %i.i, %_ZN6Assimp11SMDImporter20SkipSpacesAndLineEndEPKcPS2_S2_.exit ] ; 3 uses
   %i.y = add i32 %i.d, 2
   store i32 %i.y, ptr %i.b, align 4
-  %6 = ptrtoint ptr %i.x to i64
+  %6 = ptrtoaddr ptr %i.x to i64
   %i.z = sub i64 %4, %6
   %scevgep.i.i5 = getelementptr i8, ptr %i.x, i64 %i.z
   br label %bb.h
@@ -1275,7 +1274,7 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 8 uses
   store ptr %1, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 220 ; 6 uses
-  %4 = ptrtoint ptr %3 to i64                     ; 5 uses
+  %4 = ptrtoaddr ptr %3 to i64                    ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 168
@@ -1292,7 +1291,7 @@ bb.b:                                             ; preds = %.outer, %_ZN6Assimp
   %i.i = load i32, ptr %i.c, align 4
   %i.j = add i32 %i.i, 1
   store i32 %i.j, ptr %i.c, align 4
-  %5 = ptrtoint ptr %i.h to i64
+  %5 = ptrtoaddr ptr %i.h to i64
   %i.k = sub i64 %4, %5
   %scevgep.i.i = getelementptr i8, ptr %i.h, i64 %i.k
   br label %bb.c
@@ -1389,7 +1388,7 @@ bb.i:                                             ; preds = %bb.h, %bb.h, %bb.h,
   %i.af = getelementptr inbounds nuw i8, ptr %i.n, i64 5
   %storemerge.i16 = select i1 %.not11.i15, ptr %i.ad, ptr %i.af ; 8 uses
   store ptr %storemerge.i16, ptr %i.b, align 8
-  %6 = ptrtoint ptr %storemerge.i16 to i64
+  %6 = ptrtoaddr ptr %storemerge.i16 to i64
   %i.ag = sub i64 %4, %6
   %scevgep.i.i.i = getelementptr i8, ptr %storemerge.i16, i64 %i.ag ; 2 uses
   br label %bb.j
@@ -1489,7 +1488,7 @@ bb.s:                                             ; preds = %._crit_edge.i.i.i, 
   br i1 %.not, label %bb.t, label %_ZN6Assimp11SMDImporter14ParseSignedIntEPKcPS2_S2_Ri.exit.thread33
 
 bb.t:                                             ; preds = %bb.s
-  %7 = ptrtoint ptr %i.ax to i64
+  %7 = ptrtoaddr ptr %i.ax to i64
   %i.bc = sub i64 %4, %7
   %scevgep.i.i19 = getelementptr i8, ptr %i.ax, i64 %i.bc
   br label %bb.u
@@ -1514,7 +1513,7 @@ bb.w:                                             ; preds = %bb.v
 
 .critedge.i.i:                                    ; preds = %bb.v, %bb.u, %bb.u, %bb.u, %bb.u
   %.0.lcssa.i.i21 = phi ptr [ %.0.i.i20, %bb.u ], [ %.0.i.i20, %bb.u ], [ %.0.i.i20, %bb.u ], [ %.0.i.i20, %bb.u ], [ %scevgep.i.i19, %bb.v ] ; 3 uses
-  %.0.lcssa24.i.i = ptrtoint ptr %.0.lcssa.i.i21 to i64
+  %.0.lcssa24.i.i = ptrtoaddr ptr %.0.lcssa.i.i21 to i64
   %i.bf = sub i64 %4, %.0.lcssa24.i.i
   %scevgep25.i.i = getelementptr i8, ptr %.0.lcssa.i.i21, i64 %i.bf
   br label %bb.x
@@ -1653,7 +1652,7 @@ _ZNSt6vectorIN6Assimp3SMD4FaceESaIS2_EE8pop_backEv.exit: ; preds = %bb.ai, %_ZN6
   %i.da = load i32, ptr %i.c, align 4
   %i.db = add i32 %i.da, 1
   store i32 %i.db, ptr %i.c, align 4
-  %8 = ptrtoint ptr %i.ca to i64
+  %8 = ptrtoaddr ptr %i.ca to i64
   %i.dc = sub i64 %4, %8
   %scevgep.i.i23 = getelementptr i8, ptr %i.ca, i64 %i.dc
   br label %bb.aj
@@ -1689,7 +1688,7 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 7 uses
   store ptr %1, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 220 ; 4 uses
-  %4 = ptrtoint ptr %3 to i64                     ; 4 uses
+  %4 = ptrtoaddr ptr %3 to i64                    ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
   br label %.outer
 
@@ -1703,7 +1702,7 @@ bb.b:                                             ; preds = %.outer, %bb.z
   %i.f = load i32, ptr %i.c, align 4
   %i.g = add i32 %i.f, 1
   store i32 %i.g, ptr %i.c, align 4
-  %5 = ptrtoint ptr %i.e to i64
+  %5 = ptrtoaddr ptr %i.e to i64
   %i.h = sub i64 %4, %5
   %scevgep.i.i = getelementptr i8, ptr %i.e, i64 %i.h
   br label %bb.c
@@ -1800,7 +1799,7 @@ bb.i:                                             ; preds = %bb.h, %bb.h, %bb.h,
   %i.ad = getelementptr inbounds nuw i8, ptr %i.k, i64 5
   %storemerge.i9 = select i1 %.not11.i8, ptr %i.ac, ptr %i.ad ; 8 uses
   store ptr %storemerge.i9, ptr %i.b, align 8
-  %6 = ptrtoint ptr %storemerge.i9 to i64
+  %6 = ptrtoaddr ptr %storemerge.i9 to i64
   %i.ae = sub i64 %4, %6
   %scevgep.i.i.i = getelementptr i8, ptr %storemerge.i9, i64 %i.ae ; 2 uses
   br label %bb.j
@@ -1898,7 +1897,7 @@ bb.s:                                             ; preds = %._crit_edge.i.i.i, 
   %i.az = load i32, ptr %i.d, align 8
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %.0.i.i11, i32 %i.az)
   store i32 %.sroa.speculated, ptr %i.d, align 8
-  %7 = ptrtoint ptr %i.av to i64
+  %7 = ptrtoaddr ptr %i.av to i64
   %i.ba = sub i64 %4, %7
   %scevgep.i.i12 = getelementptr i8, ptr %i.av, i64 %i.ba
   br label %bb.t
@@ -1923,7 +1922,7 @@ bb.v:                                             ; preds = %bb.u
 
 .critedge.i.i:                                    ; preds = %bb.u, %bb.t, %bb.t, %bb.t, %bb.t
   %.0.lcssa.i.i14 = phi ptr [ %.0.i.i13, %bb.t ], [ %.0.i.i13, %bb.t ], [ %.0.i.i13, %bb.t ], [ %.0.i.i13, %bb.t ], [ %scevgep.i.i12, %bb.u ] ; 3 uses
-  %.0.lcssa24.i.i = ptrtoint ptr %.0.lcssa.i.i14 to i64
+  %.0.lcssa24.i.i = ptrtoaddr ptr %.0.lcssa.i.i14 to i64
   %i.bd = sub i64 %4, %.0.lcssa24.i.i
   %scevgep25.i.i = getelementptr i8, ptr %.0.lcssa.i.i14, i64 %i.bd
   br label %bb.w
@@ -1966,8 +1965,8 @@ _ZN6Assimp11SMDImporter14ParseSignedIntEPKcPS2_S2_Ri.exit: ; preds = %_ZN6Assimp
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr noundef zeroext i1 @_ZN6Assimp11SMDImporter8SkipLineEPKcPS2_S2_(ptr noundef nonnull align 8 dereferenceable(226) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #13 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64
-  %5 = ptrtoint ptr %3 to i64                     ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64
+  %5 = ptrtoaddr ptr %3 to i64                    ; 2 uses
   %i.a = sub i64 %5, %4
   %scevgep.i = getelementptr i8, ptr %1, i64 %i.a
   br label %bb.b
@@ -1992,7 +1991,7 @@ bb.d:                                             ; preds = %bb.c
 
 .critedge.i:                                      ; preds = %bb.c, %bb.b, %bb.b, %bb.b, %bb.b
   %.0.lcssa.i = phi ptr [ %.0.i, %bb.b ], [ %.0.i, %bb.b ], [ %.0.i, %bb.b ], [ %.0.i, %bb.b ], [ %scevgep.i, %bb.c ] ; 3 uses
-  %.0.lcssa24.i = ptrtoint ptr %.0.lcssa.i to i64
+  %.0.lcssa24.i = ptrtoaddr ptr %.0.lcssa.i to i64
   %i.d = sub i64 %5, %.0.lcssa24.i
   %scevgep25.i = getelementptr i8, ptr %.0.lcssa.i, i64 %i.d
   br label %bb.e
@@ -2395,7 +2394,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_b
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6Assimp11SMDImporter13ParseNodeInfoEPKcPS2_S2_(ptr noundef nonnull align 8 dereferenceable(226) %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr noundef %3) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN6Assimp11SMDImporter13ParseNodeInfoEPKcPS2_S2_(ptr noundef nonnull align 8 dereferenceable(226) %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readnone captures(address) %3) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca [1024 x i8], align 16             ; 4 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
@@ -2408,8 +2407,8 @@ bb.a:
   %i.h = load i32, ptr %i.g, align 4
   %i.i = add i32 %i.h, 1                          ; 2 uses
   store i32 %i.i, ptr %i.g, align 4
-  %5 = ptrtoint ptr %1 to i64
-  %6 = ptrtoint ptr %3 to i64                     ; 11 uses
+  %5 = ptrtoaddr ptr %1 to i64
+  %6 = ptrtoaddr ptr %3 to i64                    ; 11 uses
   %i.j = sub i64 %6, %5
   %scevgep.i.i = getelementptr i8, ptr %1, i64 %i.j
   br label %bb.b
@@ -2434,7 +2433,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN6Assimp11SMDImporter20SkipSpacesAndLineEndEPKcPS2_S2_.exit: ; preds = %bb.b, %bb.c
   %.0.lcssa.i.i = phi ptr [ %.0.i.i, %bb.b ], [ %scevgep.i.i, %bb.c ] ; 3 uses
-  %7 = ptrtoint ptr %.0.lcssa.i.i to i64
+  %7 = ptrtoaddr ptr %.0.lcssa.i.i to i64
   %i.m = sub i64 %6, %7
   %scevgep.i.i.i = getelementptr i8, ptr %.0.lcssa.i.i, i64 %i.m ; 2 uses
   br label %bb.e
@@ -2492,7 +2491,7 @@ bb.h:                                             ; preds = %.critedge.i.i.i
   %i.y = phi i8 [ %i.p, %bb.h ], [ %i.w, %.lr.ph.i.i ]
   %.1104.ph = phi i32 [ 0, %bb.h ], [ %i.u, %.lr.ph.i.i ] ; 3 uses
   %.1102.ph = phi ptr [ %.0.lcssa.i.i.i, %bb.h ], [ %i.v, %.lr.ph.i.i ] ; 3 uses
-  %8 = ptrtoint ptr %.1102.ph to i64
+  %8 = ptrtoaddr ptr %.1102.ph to i64
   %i.z = sub i64 %6, %8
   %scevgep.i = getelementptr i8, ptr %.1102.ph, i64 %i.z ; 2 uses
   br label %bb.i
@@ -2553,7 +2552,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ah = tail call noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
   call void @_ZN6Assimp6Logger5errorIJRA1024_cEEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(12) %i.ah, ptr noundef nonnull align 1 dereferenceable(1024) %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #27
-  %9 = ptrtoint ptr %.0.lcssa.i to i64
+  %9 = ptrtoaddr ptr %.0.lcssa.i to i64
   %i.ai = sub i64 %6, %9
   %scevgep.i.i35 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.ai
   br label %bb.p
@@ -2578,7 +2577,7 @@ bb.r:                                             ; preds = %bb.q
 
 .critedge.i.i:                                    ; preds = %bb.q, %bb.p, %bb.p, %bb.p, %bb.p
   %.0.lcssa.i.i37 = phi ptr [ %.0.i.i36, %bb.p ], [ %.0.i.i36, %bb.p ], [ %.0.i.i36, %bb.p ], [ %.0.i.i36, %bb.p ], [ %scevgep.i.i35, %bb.q ] ; 3 uses
-  %.0.lcssa24.i.i = ptrtoint ptr %.0.lcssa.i.i37 to i64
+  %.0.lcssa24.i.i = ptrtoaddr ptr %.0.lcssa.i.i37 to i64
   %i.al = sub i64 %6, %.0.lcssa24.i.i
   %scevgep25.i.i = getelementptr i8, ptr %.0.lcssa.i.i37, i64 %i.al
   br label %bb.s
@@ -2688,7 +2687,7 @@ bb.y:                                             ; preds = %.critedge, %.crited
   %i.bx = tail call noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
   call void @_ZN6Assimp6Logger5errorIJRA1024_cEEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(12) %i.bx, ptr noundef nonnull align 1 dereferenceable(1024) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #27
-  %10 = ptrtoint ptr %i.bg to i64
+  %10 = ptrtoaddr ptr %i.bg to i64
   %i.by = sub i64 %6, %10
   %scevgep.i.i39 = getelementptr i8, ptr %i.bg, i64 %i.by
   br label %bb.z
@@ -2713,7 +2712,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 .critedge.i.i41:                                  ; preds = %bb.aa, %bb.z, %bb.z, %bb.z, %bb.z
   %.0.lcssa.i.i42 = phi ptr [ %.0.i.i40, %bb.z ], [ %.0.i.i40, %bb.z ], [ %.0.i.i40, %bb.z ], [ %.0.i.i40, %bb.z ], [ %scevgep.i.i39, %bb.aa ] ; 3 uses
-  %.0.lcssa24.i.i43 = ptrtoint ptr %.0.lcssa.i.i42 to i64
+  %.0.lcssa24.i.i43 = ptrtoaddr ptr %.0.lcssa.i.i42 to i64
   %i.cb = sub i64 %6, %.0.lcssa24.i.i43
   %scevgep25.i.i44 = getelementptr i8, ptr %.0.lcssa.i.i42, i64 %i.cb
   br label %bb.ac
@@ -2874,7 +2873,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
   %i.do = getelementptr inbounds nuw i8, ptr %i.bc, i64 32
-  %11 = ptrtoint ptr %.1 to i64
+  %11 = ptrtoaddr ptr %.1 to i64
   %i.dp = sub i64 %6, %11
   %scevgep.i.i.i53 = getelementptr i8, ptr %.1, i64 %i.dp ; 3 uses
   br label %bb.ap
@@ -2994,7 +2993,7 @@ bb.ba:                                            ; preds = %bb.az
 
 .critedge.i.i64:                                  ; preds = %bb.az, %bb.ay, %bb.ay, %bb.ay, %bb.ay
   %.0.lcssa.i.i65 = phi ptr [ %.0.i.i63, %bb.ay ], [ %.0.i.i63, %bb.ay ], [ %.0.i.i63, %bb.ay ], [ %.0.i.i63, %bb.ay ], [ %scevgep.i.i.i53, %bb.az ] ; 3 uses
-  %.0.lcssa24.i.i66 = ptrtoint ptr %.0.lcssa.i.i65 to i64
+  %.0.lcssa24.i.i66 = ptrtoaddr ptr %.0.lcssa.i.i65 to i64
   %i.eo = sub i64 %6, %.0.lcssa24.i.i66
   %scevgep25.i.i67 = getelementptr i8, ptr %.0.lcssa.i.i65, i64 %i.eo
   br label %bb.bb
@@ -3019,7 +3018,7 @@ bb.be:                                            ; preds = %._crit_edge.i.i.i, 
   %.0.i.i60 = phi i32 [ %i.eh, %bb.aw ], [ %.0.lcssa.i.i4.i, %bb.ax ], [ %.0.lcssa.i.i4.i, %._crit_edge.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   store i32 %.0.i.i60, ptr %i.do, align 8
-  %12 = ptrtoint ptr %.08.lcssa.i.i.i to i64
+  %12 = ptrtoaddr ptr %.08.lcssa.i.i.i to i64
   %i.er = sub i64 %6, %12
   %scevgep.i.i73 = getelementptr i8, ptr %.08.lcssa.i.i.i, i64 %i.er
   br label %bb.bf
@@ -3044,7 +3043,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 .critedge.i.i75:                                  ; preds = %bb.bg, %bb.bf, %bb.bf, %bb.bf, %bb.bf
   %.0.lcssa.i.i76 = phi ptr [ %.0.i.i74, %bb.bf ], [ %.0.i.i74, %bb.bf ], [ %.0.i.i74, %bb.bf ], [ %.0.i.i74, %bb.bf ], [ %scevgep.i.i73, %bb.bg ] ; 3 uses
-  %.0.lcssa24.i.i77 = ptrtoint ptr %.0.lcssa.i.i76 to i64
+  %.0.lcssa24.i.i77 = ptrtoaddr ptr %.0.lcssa.i.i76 to i64
   %i.eu = sub i64 %6, %.0.lcssa24.i.i77
   %scevgep25.i.i78 = getelementptr i8, ptr %.0.lcssa.i.i76, i64 %i.eu
   br label %bb.bi
@@ -3118,8 +3117,8 @@ bb.c:                                             ; preds = %bb.a
 _ZNSt6vectorIN6Assimp3SMD4FaceESaIS2_EE12emplace_backIJEEERS2_DpOT_.exit: ; preds = %bb.b, %bb.c
   %i.q = phi ptr [ %i.o, %bb.b ], [ %.pre, %bb.c ] ; 4 uses
   %i.r = getelementptr inbounds i8, ptr %i.q, i64 -200
-  %5 = ptrtoint ptr %1 to i64
-  %6 = ptrtoint ptr %3 to i64                     ; 2 uses
+  %5 = ptrtoaddr ptr %1 to i64
+  %6 = ptrtoaddr ptr %3 to i64                    ; 2 uses
   %i.s = sub i64 %6, %5
   %scevgep.i = getelementptr i8, ptr %1, i64 %i.s
   br label %bb.d
@@ -3298,11 +3297,11 @@ bb.p:                                             ; preds = %_ZN6Assimp11SMDImpo
 }
 
 ; Function Attrs: mustprogress uwtable
-define noundef zeroext i1 @_ZN6Assimp11SMDImporter14ParseSignedIntEPKcPS2_S2_Ri(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(226) %0, ptr noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr noundef %3, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(4) %4) local_unnamed_addr #3 align 2 {
+define noundef zeroext i1 @_ZN6Assimp11SMDImporter14ParseSignedIntEPKcPS2_S2_Ri(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(226) %0, ptr noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef readnone captures(address) %3, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(4) %4) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %5 = ptrtoint ptr %1 to i64
-  %6 = ptrtoint ptr %3 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %6 = ptrtoaddr ptr %3 to i64
   %i.b = sub i64 %6, %5
   %scevgep.i.i = getelementptr i8, ptr %1, i64 %i.b ; 2 uses
   br label %bb.b
@@ -3426,8 +3425,8 @@ bb.a:
   %i.g = alloca ptr, align 8                      ; 37 uses
   %i.h = alloca i32, align 4                      ; 5 uses
   %6 = alloca %"struct.std::pair", align 4        ; 5 uses
-  %7 = ptrtoint ptr %1 to i64
-  %8 = ptrtoint ptr %3 to i64                     ; 12 uses
+  %7 = ptrtoaddr ptr %1 to i64
+  %8 = ptrtoaddr ptr %3 to i64                    ; 12 uses
   %i.i = sub i64 %8, %7
   %scevgep.i.i = getelementptr i8, ptr %1, i64 %i.i
   br label %bb.b
@@ -3452,7 +3451,7 @@ bb.d:                                             ; preds = %bb.c
   %i.l = phi ptr [ %.0.i.i, %bb.b ], [ %scevgep.i.i, %bb.c ] ; 5 uses
   store ptr %i.l, ptr %i.g, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 36
-  %9 = ptrtoint ptr %i.l to i64
+  %9 = ptrtoaddr ptr %i.l to i64
   %i.n = sub i64 %8, %9
   %scevgep.i.i.i = getelementptr i8, ptr %i.l, i64 %i.n ; 3 uses
   br label %bb.e
@@ -3574,7 +3573,7 @@ bb.p:                                             ; preds = %bb.o
 
 .critedge.i.i73:                                  ; preds = %bb.o, %bb.n, %bb.n, %bb.n, %bb.n
   %.0.lcssa.i.i74 = phi ptr [ %.0.i.i72, %bb.n ], [ %.0.i.i72, %bb.n ], [ %.0.i.i72, %bb.n ], [ %.0.i.i72, %bb.n ], [ %scevgep.i.i.i, %bb.o ] ; 3 uses
-  %.0.lcssa24.i.i = ptrtoint ptr %.0.lcssa.i.i74 to i64
+  %.0.lcssa24.i.i = ptrtoaddr ptr %.0.lcssa.i.i74 to i64
   %i.ao = sub i64 %8, %.0.lcssa24.i.i
   %scevgep25.i.i = getelementptr i8, ptr %.0.lcssa.i.i74, i64 %i.ao
   br label %bb.q
@@ -3607,7 +3606,7 @@ bb.t:                                             ; preds = %._crit_edge.i.i.i, 
   %.0.i.i70 = phi i32 [ %i.ag, %bb.l ], [ %.0.lcssa.i.i4.i, %bb.m ], [ %.0.lcssa.i.i4.i, %._crit_edge.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   store i32 %.0.i.i70, ptr %i.m, align 4
-  %10 = ptrtoint ptr %i.ae to i64
+  %10 = ptrtoaddr ptr %i.ae to i64
   %i.at = sub i64 %8, %10
   %scevgep.i.i.i75 = getelementptr i8, ptr %i.ae, i64 %i.at ; 3 uses
   br label %bb.u
@@ -3672,7 +3671,7 @@ bb.z:                                             ; preds = %bb.y
 
 .critedge.i.i84:                                  ; preds = %bb.y, %bb.x, %bb.x, %bb.x, %bb.x
   %.0.lcssa.i.i85 = phi ptr [ %.0.i.i83, %bb.x ], [ %.0.i.i83, %bb.x ], [ %.0.i.i83, %bb.x ], [ %.0.i.i83, %bb.x ], [ %scevgep.i.i.i75, %bb.y ] ; 3 uses
-  %.0.lcssa24.i.i86 = ptrtoint ptr %.0.lcssa.i.i85 to i64
+  %.0.lcssa24.i.i86 = ptrtoaddr ptr %.0.lcssa.i.i85 to i64
   %i.bd = sub i64 %8, %.0.lcssa24.i.i86
   %scevgep25.i.i87 = getelementptr i8, ptr %.0.lcssa.i.i85, i64 %i.bd
   br label %bb.aa
@@ -3705,7 +3704,7 @@ bb.ad:                                            ; preds = %.critedge.i.i.i80
   %i.bi = call noundef ptr @_ZN6Assimp17fast_atoreal_moveIf17DeadlyImportErrorEEPKcS3_RT_b(ptr noundef nonnull %.0.lcssa.i.i.i81, ptr noundef nonnull align 4 dereferenceable(4) %4, i1 noundef zeroext true) ; 5 uses
   store ptr %i.bi, ptr %i.g, align 8
   %i.bj = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %11 = ptrtoint ptr %i.bi to i64
+  %11 = ptrtoaddr ptr %i.bi to i64
   %i.bk = sub i64 %8, %11
   %scevgep.i.i.i93 = getelementptr i8, ptr %i.bi, i64 %i.bk ; 3 uses
   br label %bb.ae
@@ -3770,7 +3769,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 .critedge.i.i103:                                 ; preds = %bb.ai, %bb.ah, %bb.ah, %bb.ah, %bb.ah
   %.0.lcssa.i.i104 = phi ptr [ %.0.i.i102, %bb.ah ], [ %.0.i.i102, %bb.ah ], [ %.0.i.i102, %bb.ah ], [ %.0.i.i102, %bb.ah ], [ %scevgep.i.i.i93, %bb.ai ] ; 3 uses
-  %.0.lcssa24.i.i105 = ptrtoint ptr %.0.lcssa.i.i104 to i64
+  %.0.lcssa24.i.i105 = ptrtoaddr ptr %.0.lcssa.i.i104 to i64
   %i.bu = sub i64 %8, %.0.lcssa24.i.i105
   %scevgep25.i.i106 = getelementptr i8, ptr %.0.lcssa.i.i104, i64 %i.bu
   br label %bb.ak
@@ -3803,7 +3802,7 @@ bb.an:                                            ; preds = %.critedge.i.i.i98
   %i.bz = call noundef ptr @_ZN6Assimp17fast_atoreal_moveIf17DeadlyImportErrorEEPKcS3_RT_b(ptr noundef nonnull %.0.lcssa.i.i.i99, ptr noundef nonnull align 4 dereferenceable(4) %i.bj, i1 noundef zeroext true) ; 5 uses
   store ptr %i.bz, ptr %i.g, align 8
   %i.ca = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %12 = ptrtoint ptr %i.bz to i64
+  %12 = ptrtoaddr ptr %i.bz to i64
   %i.cb = sub i64 %8, %12
   %scevgep.i.i.i112 = getelementptr i8, ptr %i.bz, i64 %i.cb ; 3 uses
   br label %bb.ao
@@ -3868,7 +3867,7 @@ bb.at:                                            ; preds = %bb.as
 
 .critedge.i.i122:                                 ; preds = %bb.as, %bb.ar, %bb.ar, %bb.ar, %bb.ar
   %.0.lcssa.i.i123 = phi ptr [ %.0.i.i121, %bb.ar ], [ %.0.i.i121, %bb.ar ], [ %.0.i.i121, %bb.ar ], [ %.0.i.i121, %bb.ar ], [ %scevgep.i.i.i112, %bb.as ] ; 3 uses
-  %.0.lcssa24.i.i124 = ptrtoint ptr %.0.lcssa.i.i123 to i64
+  %.0.lcssa24.i.i124 = ptrtoaddr ptr %.0.lcssa.i.i123 to i64
   %i.cl = sub i64 %8, %.0.lcssa24.i.i124
   %scevgep25.i.i125 = getelementptr i8, ptr %.0.lcssa.i.i123, i64 %i.cl
   br label %bb.au
@@ -3901,7 +3900,7 @@ bb.ax:                                            ; preds = %.critedge.i.i.i117
   %i.cq = call noundef ptr @_ZN6Assimp17fast_atoreal_moveIf17DeadlyImportErrorEEPKcS3_RT_b(ptr noundef nonnull %.0.lcssa.i.i.i118, ptr noundef nonnull align 4 dereferenceable(4) %i.ca, i1 noundef zeroext true) ; 5 uses
   store ptr %i.cq, ptr %i.g, align 8
   %i.cr = getelementptr inbounds nuw i8, ptr %4, i64 12
-  %13 = ptrtoint ptr %i.cq to i64
+  %13 = ptrtoaddr ptr %i.cq to i64
   %i.cs = sub i64 %8, %13
   %scevgep.i.i.i131 = getelementptr i8, ptr %i.cq, i64 %i.cs ; 3 uses
   br label %bb.ay
@@ -3966,7 +3965,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 .critedge.i.i141:                                 ; preds = %bb.bc, %bb.bb, %bb.bb, %bb.bb, %bb.bb
   %.0.lcssa.i.i142 = phi ptr [ %.0.i.i140, %bb.bb ], [ %.0.i.i140, %bb.bb ], [ %.0.i.i140, %bb.bb ], [ %.0.i.i140, %bb.bb ], [ %scevgep.i.i.i131, %bb.bc ] ; 3 uses
-  %.0.lcssa24.i.i143 = ptrtoint ptr %.0.lcssa.i.i142 to i64
+  %.0.lcssa24.i.i143 = ptrtoaddr ptr %.0.lcssa.i.i142 to i64
   %i.dc = sub i64 %8, %.0.lcssa24.i.i143
   %scevgep25.i.i144 = getelementptr i8, ptr %.0.lcssa.i.i142, i64 %i.dc
   br label %bb.be
@@ -3999,7 +3998,7 @@ bb.bh:                                            ; preds = %.critedge.i.i.i136
   %i.dh = call noundef ptr @_ZN6Assimp17fast_atoreal_moveIf17DeadlyImportErrorEEPKcS3_RT_b(ptr noundef nonnull %.0.lcssa.i.i.i137, ptr noundef nonnull align 4 dereferenceable(4) %i.cr, i1 noundef zeroext true) ; 4 uses
   store ptr %i.dh, ptr %i.g, align 8
   %i.di = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %14 = ptrtoint ptr %i.dh to i64
+  %14 = ptrtoaddr ptr %i.dh to i64
   %i.dj = sub i64 %8, %14
   %scevgep.i.i.i150 = getelementptr i8, ptr %i.dh, i64 %i.dj ; 2 uses
   br label %bb.bi
@@ -4180,8 +4179,8 @@ bb.a:
   store <2 x float> zeroinitializer, ptr %6, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   store float 0.000000e+00, ptr %i.i, align 8
-  %8 = ptrtoint ptr %1 to i64
-  %9 = ptrtoint ptr %3 to i64                     ; 11 uses
+  %8 = ptrtoaddr ptr %1 to i64
+  %9 = ptrtoaddr ptr %3 to i64                    ; 11 uses
   %i.j = sub i64 %9, %8
   %scevgep.i.i.i = getelementptr i8, ptr %1, i64 %i.j ; 3 uses
   br label %bb.b
@@ -4260,7 +4259,7 @@ bb.h:                                             ; preds = %bb.g
 
 .critedge.i.i:                                    ; preds = %bb.g, %bb.f, %bb.f, %bb.f, %bb.f
   %.0.lcssa.i.i34 = phi ptr [ %.0.i.i, %bb.f ], [ %.0.i.i, %bb.f ], [ %.0.i.i, %bb.f ], [ %.0.i.i, %bb.f ], [ %scevgep.i.i.i, %bb.g ] ; 3 uses
-  %.0.lcssa24.i.i = ptrtoint ptr %.0.lcssa.i.i34 to i64
+  %.0.lcssa24.i.i = ptrtoaddr ptr %.0.lcssa.i.i34 to i64
   %i.y = sub i64 %9, %.0.lcssa24.i.i
   %scevgep25.i.i = getelementptr i8, ptr %.0.lcssa.i.i34, i64 %i.y
   br label %bb.i
@@ -4316,7 +4315,7 @@ bb.l:                                             ; preds = %.loopexit
   %i.ar = tail call noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
   call void @_ZN6Assimp6Logger5errorIJRA1024_cEEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(12) %i.ar, ptr noundef nonnull align 1 dereferenceable(1024) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #27
-  %10 = ptrtoint ptr %i.af to i64
+  %10 = ptrtoaddr ptr %i.af to i64
   %i.as = sub i64 %9, %10
   %scevgep.i.i35 = getelementptr i8, ptr %i.af, i64 %i.as
   br label %bb.m
@@ -4341,7 +4340,7 @@ bb.o:                                             ; preds = %bb.n
 
 .critedge.i.i37:                                  ; preds = %bb.n, %bb.m, %bb.m, %bb.m, %bb.m
   %.0.lcssa.i.i38 = phi ptr [ %.0.i.i36, %bb.m ], [ %.0.i.i36, %bb.m ], [ %.0.i.i36, %bb.m ], [ %.0.i.i36, %bb.m ], [ %scevgep.i.i35, %bb.n ] ; 3 uses
-  %.0.lcssa24.i.i39 = ptrtoint ptr %.0.lcssa.i.i38 to i64
+  %.0.lcssa24.i.i39 = ptrtoaddr ptr %.0.lcssa.i.i38 to i64
   %i.av = sub i64 %9, %.0.lcssa24.i.i39
   %scevgep25.i.i40 = getelementptr i8, ptr %.0.lcssa.i.i38, i64 %i.av
   br label %bb.p
@@ -4425,7 +4424,7 @@ _ZNSt6vectorIN6Assimp3SMD4Bone9Animation9MatrixKeyESaIS4_EE12emplace_backIJEEERS
   %i.by = sitofp i32 %4 to double
   %i.bz = getelementptr inbounds i8, ptr %i.bw, i64 -8
   store double %i.by, ptr %i.bz, align 8
-  %11 = ptrtoint ptr %i.af to i64
+  %11 = ptrtoaddr ptr %i.af to i64
   %i.ca = sub i64 %9, %11
   %scevgep.i.i.i46 = getelementptr i8, ptr %i.af, i64 %i.ca ; 3 uses
   br label %bb.v
@@ -4490,7 +4489,7 @@ bb.aa:                                            ; preds = %bb.z
 
 .critedge.i.i55:                                  ; preds = %bb.z, %bb.y, %bb.y, %bb.y, %bb.y
   %.0.lcssa.i.i56 = phi ptr [ %.0.i.i54, %bb.y ], [ %.0.i.i54, %bb.y ], [ %.0.i.i54, %bb.y ], [ %.0.i.i54, %bb.y ], [ %scevgep.i.i.i46, %bb.z ] ; 3 uses
-  %.0.lcssa24.i.i57 = ptrtoint ptr %.0.lcssa.i.i56 to i64
+  %.0.lcssa24.i.i57 = ptrtoaddr ptr %.0.lcssa.i.i56 to i64
   %i.ck = sub i64 %9, %.0.lcssa24.i.i57
   %scevgep25.i.i58 = getelementptr i8, ptr %.0.lcssa.i.i56, i64 %i.ck
   br label %bb.ab
@@ -4521,7 +4520,7 @@ _ZN6Assimp11SMDImporter8SkipLineEPKcPS2_S2_.exit63: ; preds = %bb.ab, %bb.ac
 bb.ae:                                            ; preds = %.critedge.i.i.i51
   %i.cp = call noundef ptr @_ZN6Assimp17fast_atoreal_moveIf17DeadlyImportErrorEEPKcS3_RT_b(ptr noundef nonnull %.0.lcssa.i.i.i52, ptr noundef nonnull align 4 dereferenceable(4) %5, i1 noundef zeroext true) ; 5 uses
   store ptr %i.cp, ptr %i.e, align 8
-  %12 = ptrtoint ptr %i.cp to i64
+  %12 = ptrtoaddr ptr %i.cp to i64
   %i.cq = sub i64 %9, %12
   %scevgep.i.i.i64 = getelementptr i8, ptr %i.cp, i64 %i.cq ; 3 uses
   br label %bb.af
@@ -4586,7 +4585,7 @@ bb.ak:                                            ; preds = %bb.aj
 
 .critedge.i.i74:                                  ; preds = %bb.aj, %bb.ai, %bb.ai, %bb.ai, %bb.ai
   %.0.lcssa.i.i75 = phi ptr [ %.0.i.i73, %bb.ai ], [ %.0.i.i73, %bb.ai ], [ %.0.i.i73, %bb.ai ], [ %.0.i.i73, %bb.ai ], [ %scevgep.i.i.i64, %bb.aj ] ; 3 uses
-  %.0.lcssa24.i.i76 = ptrtoint ptr %.0.lcssa.i.i75 to i64
+  %.0.lcssa24.i.i76 = ptrtoaddr ptr %.0.lcssa.i.i75 to i64
   %i.da = sub i64 %9, %.0.lcssa24.i.i76
   %scevgep25.i.i77 = getelementptr i8, ptr %.0.lcssa.i.i75, i64 %i.da
   br label %bb.al
@@ -4617,7 +4616,7 @@ _ZN6Assimp11SMDImporter8SkipLineEPKcPS2_S2_.exit82: ; preds = %bb.al, %bb.am
 bb.ao:                                            ; preds = %.critedge.i.i.i69
   %i.df = call noundef ptr @_ZN6Assimp17fast_atoreal_moveIf17DeadlyImportErrorEEPKcS3_RT_b(ptr noundef nonnull %.0.lcssa.i.i.i70, ptr noundef nonnull align 4 dereferenceable(4) %i.f, i1 noundef zeroext true) ; 5 uses
   store ptr %i.df, ptr %i.e, align 8
-  %13 = ptrtoint ptr %i.df to i64
+  %13 = ptrtoaddr ptr %i.df to i64
   %i.dg = sub i64 %9, %13
   %scevgep.i.i.i83 = getelementptr i8, ptr %i.df, i64 %i.dg ; 3 uses
   br label %bb.ap
@@ -4682,7 +4681,7 @@ bb.au:                                            ; preds = %bb.at
 
 .critedge.i.i93:                                  ; preds = %bb.at, %bb.as, %bb.as, %bb.as, %bb.as
   %.0.lcssa.i.i94 = phi ptr [ %.0.i.i92, %bb.as ], [ %.0.i.i92, %bb.as ], [ %.0.i.i92, %bb.as ], [ %.0.i.i92, %bb.as ], [ %scevgep.i.i.i83, %bb.at ] ; 3 uses
-  %.0.lcssa24.i.i95 = ptrtoint ptr %.0.lcssa.i.i94 to i64
+  %.0.lcssa24.i.i95 = ptrtoaddr ptr %.0.lcssa.i.i94 to i64
   %i.dq = sub i64 %9, %.0.lcssa24.i.i95
   %scevgep25.i.i96 = getelementptr i8, ptr %.0.lcssa.i.i94, i64 %i.dq
   br label %bb.av
@@ -4713,7 +4712,7 @@ _ZN6Assimp11SMDImporter8SkipLineEPKcPS2_S2_.exit101: ; preds = %bb.av, %bb.aw
 bb.ay:                                            ; preds = %.critedge.i.i.i88
   %i.dv = call noundef ptr @_ZN6Assimp17fast_atoreal_moveIf17DeadlyImportErrorEEPKcS3_RT_b(ptr noundef nonnull %.0.lcssa.i.i.i89, ptr noundef nonnull align 4 dereferenceable(4) %i.g, i1 noundef zeroext true) ; 4 uses
   store ptr %i.dv, ptr %i.e, align 8
-  %14 = ptrtoint ptr %i.dv to i64
+  %14 = ptrtoaddr ptr %i.dv to i64
   %i.dw = sub i64 %9, %14
   %scevgep.i.i.i102 = getelementptr i8, ptr %i.dv, i64 %i.dw ; 2 uses
   br label %bb.az
@@ -4831,10 +4830,10 @@ bb.bh:                                            ; preds = %_ZN6Assimp11SMDImpo
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define noundef zeroext i1 @_ZN6Assimp11SMDImporter16ParseUnsignedIntEPKcPS2_S2_Rj(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr noundef %3, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(4) %4) local_unnamed_addr #16 align 2 {
+define noundef zeroext i1 @_ZN6Assimp11SMDImporter16ParseUnsignedIntEPKcPS2_S2_Rj(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef readnone captures(address) %3, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(4) %4) local_unnamed_addr #16 align 2 {
 bb.a:
-  %5 = ptrtoint ptr %1 to i64
-  %6 = ptrtoint ptr %3 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %6 = ptrtoaddr ptr %3 to i64
   %i.a = sub i64 %6, %5
   %scevgep.i.i = getelementptr i8, ptr %1, i64 %i.a ; 2 uses
   br label %bb.b
@@ -4910,10 +4909,10 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit:         ; preds = %switch.hole_check, 
 }
 
 ; Function Attrs: mustprogress uwtable
-define noundef zeroext i1 @_ZN6Assimp11SMDImporter10ParseFloatEPKcPS2_S2_Rf(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr noundef %3, ptr noundef nonnull align 4 dereferenceable(4) %4) local_unnamed_addr #3 align 2 {
+define noundef zeroext i1 @_ZN6Assimp11SMDImporter10ParseFloatEPKcPS2_S2_Rf(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readnone captures(address) %3, ptr noundef nonnull align 4 dereferenceable(4) %4) local_unnamed_addr #3 align 2 {
 bb.a:
-  %5 = ptrtoint ptr %1 to i64
-  %6 = ptrtoint ptr %3 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %6 = ptrtoaddr ptr %3 to i64
   %i.a = sub i64 %6, %5
   %scevgep.i.i = getelementptr i8, ptr %1, i64 %i.a ; 2 uses
   br label %bb.b

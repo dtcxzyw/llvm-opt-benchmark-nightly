@@ -201,8 +201,8 @@ bb.af:                                            ; preds = %bb.y
 
 _ZNSt12_Vector_baseI10aiVector2tIfESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.af
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.ca = load ptr, ptr %i.bz, align 8            ; 4 uses
-  %i.cb = ptrtoint ptr %i.ca to i64
+  %i.ca = load ptr, ptr %i.bz, align 8            ; 3 uses
+  %i.cb = ptrtoint ptr %i.ca to i64               ; 2 uses
   %i.cc = sub i64 %i.cb, %i.bv
   %i.cd = shl nuw nsw i64 %i.bq, 3
   %i.ce = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cd) #28
@@ -214,8 +214,7 @@ _ZNSt12_Vector_baseI10aiVector2tIfESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc
   %i.cf = ptrtoaddr ptr %i.ce to i64
-  %18 = ptrtoint ptr %i.ca to i64
-  %i.cg = sub i64 %18, %i.bv
+  %i.cg = sub i64 %i.cb, %i.bv
   %i.ch = add i64 %i.cg, -8                       ; 2 uses
   %i.ci = lshr i64 %i.ch, 3
   %i.cj = add nuw nsw i64 %i.ci, 1                ; 2 uses
@@ -618,8 +617,8 @@ bb.bb:                                            ; preds = %bb.az
 
 _ZNSt12_Vector_baseI10aiVector2tIfESaIS1_EE11_M_allocateEm.exit.i113: ; preds = %bb.bb
   %i.gz = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.ha = load ptr, ptr %i.gz, align 8            ; 4 uses
-  %i.hb = ptrtoint ptr %i.ha to i64
+  %i.ha = load ptr, ptr %i.gz, align 8            ; 3 uses
+  %i.hb = ptrtoint ptr %i.ha to i64               ; 2 uses
   %i.hc = sub i64 %i.hb, %i.gv
   %i.hd = shl nuw nsw i64 %i.gp, 3
   %i.he = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hd) #28 ; 7 uses
@@ -628,8 +627,7 @@ _ZNSt12_Vector_baseI10aiVector2tIfESaIS1_EE11_M_allocateEm.exit.i113: ; preds = 
 
 .lr.ph.i.i.i.i115.preheader:                      ; preds = %_ZNSt12_Vector_baseI10aiVector2tIfESaIS1_EE11_M_allocateEm.exit.i113
   %i.hf = ptrtoaddr ptr %i.he to i64
-  %19 = ptrtoint ptr %i.ha to i64
-  %i.hg = sub i64 %19, %i.gv
+  %i.hg = sub i64 %i.hb, %i.gv
   %i.hh = add i64 %i.hg, -8                       ; 2 uses
   %i.hi = lshr i64 %i.hh, 3
   %i.hj = add nuw nsw i64 %i.hi, 1                ; 2 uses

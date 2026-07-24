@@ -204,7 +204,7 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %.not.i.i87.i, label %_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.thread.i.i, label %.lr.ph.i.i88.i
 
 .lr.ph.i.i88.i:                                   ; preds = %bb.bl, %bb.bm
-  %.0811.i.i.i = phi i64 [ %i.mm, %bb.bm ], [ 0, %bb.bl ] ; 9 uses
+  %.0811.i.i.i = phi i64 [ %i.mm, %bb.bm ], [ 0, %bb.bl ] ; 8 uses
   %i.mj = getelementptr inbounds nuw i8, ptr %3, i64 %.0811.i.i.i
   %i.mk = load i8, ptr %i.mj, align 1
   %i.ml = icmp slt i8 %i.mk, 0
@@ -218,14 +218,10 @@ bb.bm:                                            ; preds = %.lr.ph.i.i88.i
 _ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.i.i: ; preds = %.lr.ph.i.i88.i
   %i.mn = getelementptr inbounds nuw i8, ptr %3, i64 %.0811.i.i.i ; 6 uses
   %i.mo = sub i64 %4, %.0811.i.i.i                ; 8 uses
-  %11 = icmp eq i64 %4, %.0811.i.i.i
-  br i1 %11, label %_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.thread.i.i, label %.preheader.i.i.preheader
-
-.preheader.i.i.preheader:                         ; preds = %_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.i.i
   %min.iters.check = icmp ult i64 %i.mo, 4
   br i1 %min.iters.check, label %.preheader.i.i.preheader1731, label %vector.ph
 
-vector.ph:                                        ; preds = %.preheader.i.i.preheader
+vector.ph:                                        ; preds = %_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.i.i
   %n.vec = and i64 %i.mo, -4                      ; 3 uses
   %i.mp = and i64 %i.mo, 3
   %i.mq = getelementptr i8, ptr %i.mn, i64 %n.vec
@@ -255,13 +251,13 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.mo, %n.vec
   br i1 %cmp.n, label %_ZN4pugi4impl12_GLOBAL__N_114latin1_decoder7processINS1_12utf8_counterEEENT_10value_typeEPKhmS6_S5_.exit.i.i, label %.preheader.i.i.preheader1731
 
-.preheader.i.i.preheader1731:                     ; preds = %.preheader.i.i.preheader, %middle.block
-  %.09.i.i.i.ph = phi i64 [ 0, %.preheader.i.i.preheader ], [ %i.mz, %middle.block ]
-  %.058.i.i.i.ph = phi i64 [ %i.mo, %.preheader.i.i.preheader ], [ %i.mp, %middle.block ]
-  %.067.i.i.i.ph = phi ptr [ %i.mn, %.preheader.i.i.preheader ], [ %i.mq, %middle.block ]
+.preheader.i.i.preheader1731:                     ; preds = %_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.i.i, %middle.block
+  %.09.i.i.i.ph = phi i64 [ 0, %_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.i.i ], [ %i.mz, %middle.block ]
+  %.058.i.i.i.ph = phi i64 [ %i.mo, %_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.i.i ], [ %i.mp, %middle.block ]
+  %.067.i.i.i.ph = phi ptr [ %i.mn, %_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.i.i ], [ %i.mq, %middle.block ]
   br label %.preheader.i.i.a
 
-_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.thread.i.i: ; preds = %bb.bm, %_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.i.i, %bb.bl
+_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.thread.i.i: ; preds = %bb.bm, %bb.bl
   br i1 %7, label %_ZN4pugi4impl12_GLOBAL__N_114convert_bufferERPcRmNS_12xml_encodingEPKvmb.exit, label %bb.bn
 
 bb.bn:                                            ; preds = %_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.thread.i.i
@@ -664,8 +660,8 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond.not.i23.i, label %.lr.ph.i24.i.preheader, label %_ZN4pugi4impl12_GLOBAL__N_129convert_buffer_output_genericINS1_12utf8_decoderENS1_12utf32_writerEEEmNT0_10value_typeEPKcmT_S5_b.exit.i
 
 .lr.ph.i24.i.preheader:                           ; preds = %bb.u
-  %3 = ptrtoint ptr %i.eg to i64
-  %4 = ptrtoint ptr %0 to i64
+  %3 = ptrtoaddr ptr %i.eg to i64
+  %4 = ptrtoaddr ptr %0 to i64
   %i.eh = sub i64 %3, %4
   %i.ei = add i64 %i.eh, -2052                    ; 2 uses
   %i.ej = lshr i64 %i.ei, 2
@@ -1068,8 +1064,8 @@ bb.f:                                             ; preds = %bb.c
   %.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   %.idx.i.sroa.sel.sroa.sel = select i1 %i.p, ptr %.sroa.gep.sroa.gep, ptr %.sroa.gep ; 9 uses
   store i8 %i.q, ptr %.idx.i.sroa.sel.sroa.sel, align 1
-  %3 = ptrtoint ptr %i.l to i64
-  %4 = ptrtoint ptr %.idx.i.sroa.sel.sroa.sel to i64
+  %3 = ptrtoaddr ptr %i.l to i64
+  %4 = ptrtoaddr ptr %.idx.i.sroa.sel.sroa.sel to i64
   %i.r = sub i64 %4, %3
   %scevgep.i.i = getelementptr i8, ptr %i.l, i64 %i.r ; 2 uses
   %.not.i.i87 = icmp eq ptr %.idx.i.sroa.sel.sroa.sel, %i.l

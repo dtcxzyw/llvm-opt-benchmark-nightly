@@ -32,8 +32,8 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader.us, %.loopexit.us
   %.03242.us = phi ptr [ %.02945.us, %.preheader.us ], [ %i.ap, %.loopexit.us ] ; 2 uses
-  %.03341.us = phi ptr [ %0, %.preheader.us ], [ %.2.us, %.loopexit.us ] ; 10 uses
-  %.03341.us50 = ptrtoint ptr %.03341.us to i64   ; 3 uses
+  %.03341.us = phi ptr [ %0, %.preheader.us ], [ %.2.us, %.loopexit.us ] ; 9 uses
+  %.03341.us50 = ptrtoaddr ptr %.03341.us to i64  ; 6 uses
   %i.l = load i32, ptr %.03242.us, align 4, !tbaa !4
   %i.m = and i32 %i.l, %.03044.us
   %.not.us = icmp eq i32 %i.m, 0                  ; 2 uses
@@ -43,11 +43,10 @@ bb.b:                                             ; preds = %.preheader.us, %.lo
   br i1 %brmerge, label %.loopexit.us, label %.lr.ph.us.preheader
 
 .lr.ph.us.preheader:                              ; preds = %bb.b
-  %2 = ptrtoint ptr %.03341.us to i64             ; 3 uses
-  %i.o = add i64 %2, %i.h
-  %i.p = add i64 %2, 4
+  %i.o = add i64 %.03341.us50, %i.h
+  %i.p = add i64 %.03341.us50, 4
   %i.q = tail call i64 @llvm.umax.i64(i64 %i.o, i64 %i.p)
-  %i.r = xor i64 %2, -1
+  %i.r = xor i64 %.03341.us50, -1
   %i.s = add i64 %i.q, %i.r                       ; 2 uses
   %i.t = lshr i64 %i.s, 2
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
@@ -166,8 +165,8 @@ bb.a:
 
 bb.b:                                             ; preds = %.loopexit.us.i, %.preheader.us.i
   %.03242.us.i = phi ptr [ %.02945.us.i, %.preheader.us.i ], [ %i.ap, %.loopexit.us.i ] ; 2 uses
-  %.03341.us.i = phi ptr [ %0, %.preheader.us.i ], [ %.2.us.i, %.loopexit.us.i ] ; 9 uses
-  %.03341.us.i25 = ptrtoint ptr %.03341.us.i to i64 ; 3 uses
+  %.03341.us.i = phi ptr [ %0, %.preheader.us.i ], [ %.2.us.i, %.loopexit.us.i ] ; 8 uses
+  %.03341.us.i25 = ptrtoaddr ptr %.03341.us.i to i64 ; 6 uses
   %i.l = load i32, ptr %.03242.us.i, align 4, !tbaa !4
   %i.m = and i32 %i.l, %.03044.us.i
   %.not.us.i = icmp eq i32 %i.m, 0
@@ -175,11 +174,10 @@ bb.b:                                             ; preds = %.loopexit.us.i, %.p
   br i1 %.not.us.i, label %.loopexit.us.i, label %.lr.ph.us.i.preheader
 
 .lr.ph.us.i.preheader:                            ; preds = %bb.b
-  %2 = ptrtoint ptr %.03341.us.i to i64           ; 3 uses
-  %i.o = add i64 %2, %i.h
-  %i.p = add i64 %2, 4
+  %i.o = add i64 %.03341.us.i25, %i.h
+  %i.p = add i64 %.03341.us.i25, 4
   %i.q = tail call i64 @llvm.umax.i64(i64 %i.o, i64 %i.p)
-  %i.r = xor i64 %2, -1
+  %i.r = xor i64 %.03341.us.i25, -1
   %i.s = add i64 %i.q, %i.r                       ; 2 uses
   %i.t = lshr i64 %i.s, 2
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
