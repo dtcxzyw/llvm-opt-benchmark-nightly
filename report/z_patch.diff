@@ -1,0 +1,235 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index da92f978cc08c..2f0fc0d75d2de 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -301,10 +301,13 @@ class ConstraintInfo {
+   /// Turn a comparison of the form \p Op0 \p Pred \p Op1 into a vector of
+   /// constraints, using indices from the corresponding constraint system.
+   /// New variables that need to be added to the system are collected in
+-  /// \p NewVariables.
++  /// \p NewVariables. If \p ShouldDecompose is false, the operands are used
++  /// as-is instead of being decomposed, which avoids introducing decomposition
++  /// preconditions.
+   ConstraintTy getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+                              SmallVectorImpl<Value *> &NewVariables,
+-                             bool ForceSignedSystem = false) const;
++                             bool ForceSignedSystem = false,
++                             bool ShouldDecompose = true) const;
+ 
+   /// Turns a comparison of the form \p Op0 \p Pred \p Op1 into a vector of
+   /// constraints using getConstraint. Returns an empty constraint if the result
+@@ -314,7 +317,8 @@ class ConstraintInfo {
+   /// which increases the effectiveness of the signed <-> unsigned transfer
+   /// logic.
+   ConstraintTy getConstraintForSolving(CmpInst::Predicate Pred, Value *Op0,
+-                                       Value *Op1) const;
++                                       Value *Op1,
++                                       bool ShouldDecompose = true) const;
+ 
+   /// Try to add information from \p A \p Pred \p B to the unsigned/signed
+   /// system if \p Pred is signed/unsigned.
+@@ -670,7 +674,8 @@ static Decomposition decompose(Value *V,
+ ConstraintTy
+ ConstraintInfo::getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+                               SmallVectorImpl<Value *> &NewVariables,
+-                              bool ForceSignedSystem) const {
++                              bool ForceSignedSystem,
++                              bool ShouldDecompose) const {
+   assert(NewVariables.empty() && "NewVariables must be empty when passed in");
+   assert((!ForceSignedSystem || CmpInst::isEquality(Pred)) &&
+          "signed system can only be forced on eq/ne");
+@@ -716,10 +721,14 @@ ConstraintInfo::getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+   SmallVector<ConditionTy, 4> Preconditions;
+   bool IsSigned = ForceSignedSystem || CmpInst::isSigned(Pred);
+   auto &Value2Index = getValue2Index(IsSigned);
+-  auto ADec = decompose(Op0->stripPointerCastsSameRepresentation(),
+-                        Preconditions, IsSigned, DL);
+-  auto BDec = decompose(Op1->stripPointerCastsSameRepresentation(),
+-                        Preconditions, IsSigned, DL);
++  Decomposition ADec = Op0->stripPointerCastsSameRepresentation();
++  Decomposition BDec = Op1->stripPointerCastsSameRepresentation();
++  if (ShouldDecompose) {
++    ADec = decompose(Op0->stripPointerCastsSameRepresentation(), Preconditions,
++                     IsSigned, DL);
++    BDec = decompose(Op1->stripPointerCastsSameRepresentation(), Preconditions,
++                     IsSigned, DL);
++  }
+   int64_t Offset1 = ADec.Offset;
+   int64_t Offset2 = BDec.Offset;
+   Offset1 *= -1;
+@@ -784,9 +793,10 @@ ConstraintInfo::getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+   return Res;
+ }
+ 
+-ConstraintTy ConstraintInfo::getConstraintForSolving(CmpInst::Predicate Pred,
+-                                                     Value *Op0,
+-                                                     Value *Op1) const {
++ConstraintTy
++ConstraintInfo::getConstraintForSolving(CmpInst::Predicate Pred, Value *Op0,
++                                        Value *Op1,
++                                        bool ShouldDecompose) const {
+   Constant *NullC = Constant::getNullValue(Op0->getType());
+   // Handle trivially true compares directly to avoid adding V UGE 0 constraints
+   // for all variables in the unsigned system.
+@@ -807,7 +817,9 @@ ConstraintTy ConstraintInfo::getConstraintForSolving(CmpInst::Predicate Pred,
+     Pred = ICmpInst::getUnsignedPredicate(Pred);
+ 
+   SmallVector<Value *> NewVariables;
+-  ConstraintTy R = getConstraint(Pred, Op0, Op1, NewVariables);
++  ConstraintTy R =
++      getConstraint(Pred, Op0, Op1, NewVariables,
++                    /*ForceSignedSystem=*/false, ShouldDecompose);
+   if (!NewVariables.empty())
+     return {};
+   return R;
+@@ -1542,7 +1554,12 @@ static std::optional<bool> checkCondition(CmpInst::Predicate Pred, Value *A,
+     return std::nullopt;
+   };
+ 
+-  auto R = Info.getConstraintForSolving(Pred, A, B);
++  // If the constraint has a pre-condition, skip the constraint if it does not
++  // hold. Try to decompose the operands first; if that does not yield a usable
++  // constraint, retry without decomposition.
++  auto R = Info.getConstraintForSolving(Pred, A, B, /*ShouldDecompose=*/true);
++  if (R.empty() || !R.isValid(Info))
++    R = Info.getConstraintForSolving(Pred, A, B, /*ShouldDecompose=*/false);
+   if (auto ImpliedCondition = TryWithConstraint(R))
+     return ImpliedCondition;
+ 
+@@ -1771,13 +1788,21 @@ void ConstraintInfo::addFactImpl(CmpInst::Predicate Pred, Value *A, Value *B,
+                                  SmallVectorImpl<StackEntry> &DFSInStack,
+                                  bool ForceSignedSystem) {
+   // If the constraint has a pre-condition, skip the constraint if it does not
+-  // hold.
++  // hold. Try to decompose the operands first; if that does not yield a usable
++  // constraint, retry without decomposition.
+   SmallVector<Value *> NewVariables;
+   auto R = getConstraint(Pred, A, B, NewVariables, ForceSignedSystem);
+ 
+   // TODO: Support non-equality for facts as well.
+-  if (!R.isValid(*this) || R.isNe())
++  if (R.isNe())
+     return;
++  if (!R.isValid(*this)) {
++    NewVariables.clear();
++    R = getConstraint(Pred, A, B, NewVariables, ForceSignedSystem,
++                      /*ShouldDecompose=*/false);
++    if (!R.isValid(*this))
++      return;
++  }
+ 
+   LLVM_DEBUG(dbgs() << "Adding '"; dumpUnpackedICmp(dbgs(), Pred, A, B);
+              dbgs() << "'\n");
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+index b1ac763592750..94ee3ff1b181f 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+@@ -177,10 +177,9 @@ define i1 @postinc_negative_step_not_folded(i1 %c) {
+ ; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV_NEXT]], 0
+ ; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[RES:%.*]] = icmp ugt i64 [[IV_NEXT]], 0
+ ; CHECK-NEXT:    br i1 [[C]], label %[[EXIT_0:.*]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT_0]]:
+-; CHECK-NEXT:    ret i1 [[RES]]
++; CHECK-NEXT:    ret i1 true
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    ret i1 false
+ ;
+diff --git a/llvm/test/Transforms/ConstraintElimination/large-system-growth.ll b/llvm/test/Transforms/ConstraintElimination/large-system-growth.ll
+index 147bc4210d557..bfdcccd84f29b 100644
+--- a/llvm/test/Transforms/ConstraintElimination/large-system-growth.ll
++++ b/llvm/test/Transforms/ConstraintElimination/large-system-growth.ll
+@@ -15,13 +15,11 @@ define void @test(i64 %x, ptr %y, ptr %z, ptr %w) {
+ ; CHECK-NEXT:    [[TMP30:%.*]] = icmp ult ptr [[TMP29]], [[Z]]
+ ; CHECK-NEXT:    br i1 [[TMP30]], label [[EARLY_EXIT]], label [[BB32:%.*]]
+ ; CHECK:       bb32:
+-; CHECK-NEXT:    [[TMP33:%.*]] = icmp ult ptr [[TMP29]], [[Z]]
+-; CHECK-NEXT:    br i1 [[TMP33]], label [[BB35:%.*]], label [[EARLY_EXIT]]
++; CHECK-NEXT:    br i1 false, label [[BB35:%.*]], label [[EARLY_EXIT]]
+ ; CHECK:       bb35:
+-; CHECK-NEXT:    [[TMP36:%.*]] = icmp ult ptr [[Y]], [[Z]]
+-; CHECK-NEXT:    br i1 [[TMP36]], label [[EARLY_EXIT]], label [[BB38:%.*]]
++; CHECK-NEXT:    br i1 true, label [[EARLY_EXIT]], label [[BB38:%.*]]
+ ; CHECK:       bb38:
+-; CHECK-NEXT:    br i1 false, label [[EARLY_EXIT]], label [[BB43:%.*]]
++; CHECK-NEXT:    br i1 true, label [[EARLY_EXIT]], label [[BB43:%.*]]
+ ; CHECK:       bb43:
+ ; CHECK-NEXT:    [[TMP47:%.*]] = getelementptr inbounds i8, ptr [[W:%.*]], i64 [[X]]
+ ; CHECK-NEXT:    [[TMP48:%.*]] = icmp ult ptr [[TMP47]], [[Y]]
+@@ -31,8 +29,7 @@ define void @test(i64 %x, ptr %y, ptr %z, ptr %w) {
+ ; CHECK-NEXT:    [[TMP53:%.*]] = icmp ult ptr [[TMP52]], [[Y]]
+ ; CHECK-NEXT:    br i1 [[TMP53]], label [[EARLY_EXIT]], label [[BB55:%.*]]
+ ; CHECK:       bb55:
+-; CHECK-NEXT:    [[TMP57:%.*]] = icmp ult ptr [[W]], [[Y]]
+-; CHECK-NEXT:    br i1 [[TMP57]], label [[BB59:%.*]], label [[EARLY_EXIT]]
++; CHECK-NEXT:    br i1 true, label [[BB59:%.*]], label [[EARLY_EXIT]]
+ ; CHECK:       bb59:
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/ConstraintElimination/retry-without-decomposition.ll b/llvm/test/Transforms/ConstraintElimination/retry-without-decomposition.ll
+new file mode 100644
+index 0000000000000..55ad13bba8581
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/retry-without-decomposition.ll
+@@ -0,0 +1,46 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++
++; %add = add nsw %x, %y decomposes to %x + %y, which requires %x >=s 0 and
++; %y >=s 0. Those preconditions are unknown here, but %t can be proven without
++; decomposition.
++define i1 @retry_recovers_uge(i16 %x, i16 %y, i16 %z) {
++; CHECK-LABEL: define i1 @retry_recovers_uge(
++; CHECK-SAME: i16 [[X:%.*]], i16 [[Y:%.*]], i16 [[Z:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i16 [[X]], [[Y]]
++; CHECK-NEXT:    [[C:%.*]] = icmp ugt i16 [[ADD]], [[Z]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[T:%.*]] = icmp uge i16 [[ADD]], [[Z]]
++; CHECK-NEXT:    ret i1 [[T]]
++;
++entry:
++  %add = add nsw i16 %x, %y
++  %c = icmp ugt i16 %add, %z
++  call void @llvm.assume(i1 %c)
++  %t = icmp uge i16 %add, %z
++  ret i1 %t
++}
++
++; Same as @retry_recovers_uge, but with preconditions holding.
++define i1 @decompose_used_when_precondition_holds(i16 %x, i16 %y, i16 %z) {
++; CHECK-LABEL: define i1 @decompose_used_when_precondition_holds(
++; CHECK-SAME: i16 [[X:%.*]], i16 [[Y:%.*]], i16 [[Z:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[X_POS:%.*]] = and i16 [[X]], 127
++; CHECK-NEXT:    [[Y_POS:%.*]] = and i16 [[Y]], 127
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i16 [[X_POS]], [[Y_POS]]
++; CHECK-NEXT:    [[C:%.*]] = icmp ugt i16 [[ADD]], [[Z]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %x.pos = and i16 %x, 127
++  %y.pos = and i16 %y, 127
++  %add = add nsw i16 %x.pos, %y.pos
++  %c = icmp ugt i16 %add, %z
++  call void @llvm.assume(i1 %c)
++  %t = icmp uge i16 %add, %z
++  ret i1 %t
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/sext-unsigned-predicates.ll b/llvm/test/Transforms/ConstraintElimination/sext-unsigned-predicates.ll
+index 00dc48ef89c99..fee057d95b929 100644
+--- a/llvm/test/Transforms/ConstraintElimination/sext-unsigned-predicates.ll
++++ b/llvm/test/Transforms/ConstraintElimination/sext-unsigned-predicates.ll
+@@ -13,8 +13,7 @@ define void @uge_sext(i16 %x, i32 %y) {
+ ; CHECK-NEXT:    [[AND:%.*]] = and i1 [[C_1]], [[C_2]]
+ ; CHECK-NEXT:    br i1 [[AND]], label [[BB1:%.*]], label [[BB2:%.*]]
+ ; CHECK:       bb1:
+-; CHECK-NEXT:    [[T_1:%.*]] = icmp uge i32 [[X_EXT]], [[Y]]
+-; CHECK-NEXT:    call void @use(i1 [[T_1]])
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    [[C_3:%.*]] = icmp uge i16 [[X]], -10
+ ; CHECK-NEXT:    call void @use(i1 [[C_3]])
+ ; CHECK-NEXT:    [[C_4:%.*]] = icmp uge i32 [[X_EXT]], -9
