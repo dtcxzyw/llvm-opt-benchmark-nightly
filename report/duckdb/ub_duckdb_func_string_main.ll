@@ -204,7 +204,7 @@ vector.ph53:                                      ; preds = %.lr.ph.us.i.i.i.pre
 
 vector.body56:                                    ; preds = %vector.body56, %vector.ph53
   %index57 = phi i64 [ 0, %vector.ph53 ], [ %index.next62, %vector.body56 ] ; 2 uses
-  %i.bv = add i64 %.014.us.i.i.i, %index57        ; 3 uses
+  %i.bv = add nuw i64 %.014.us.i.i.i, %index57    ; 3 uses
   %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.q, i64 %i.bv
   %i.bx = getelementptr [16 x i8], ptr %i.q, i64 %i.bv
   %i.by = getelementptr i8, ptr %i.bx, i64 32
@@ -278,7 +278,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.cu = add i64 %.014.i.i.i, %index             ; 3 uses
+  %i.cu = add nuw i64 %.014.i.i.i, %index         ; 3 uses
   %i.cv = getelementptr inbounds nuw [16 x i8], ptr %i.q, i64 %i.cu
   %i.cw = getelementptr [16 x i8], ptr %i.q, i64 %i.cu
   %i.cx = getelementptr i8, ptr %i.cw, i64 32
@@ -681,7 +681,7 @@ vector.ph53:                                      ; preds = %.lr.ph.us.i.i.i.pre
 
 vector.body56:                                    ; preds = %vector.body56, %vector.ph53
   %index57 = phi i64 [ 0, %vector.ph53 ], [ %index.next62, %vector.body56 ] ; 2 uses
-  %i.by = add i64 %.014.us.i.i.i, %index57        ; 3 uses
+  %i.by = add nuw i64 %.014.us.i.i.i, %index57    ; 3 uses
   %i.bz = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %i.by
   %i.ca = getelementptr [16 x i8], ptr %i.r, i64 %i.by
   %i.cb = getelementptr i8, ptr %i.ca, i64 32
@@ -758,7 +758,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.da = add i64 %.014.i.i.i, %index             ; 3 uses
+  %i.da = add nuw i64 %.014.i.i.i, %index         ; 3 uses
   %i.db = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %i.da
   %i.dc = getelementptr [16 x i8], ptr %i.r, i64 %i.da
   %i.dd = getelementptr i8, ptr %i.dc, i64 32
@@ -1161,7 +1161,7 @@ vector.ph56:                                      ; preds = %.lr.ph.us.i.i.i.pre
 
 vector.body59:                                    ; preds = %vector.body59, %vector.ph56
   %index60 = phi i64 [ 0, %vector.ph56 ], [ %index.next65, %vector.body59 ] ; 2 uses
-  %i.bt = add i64 %.014.us.i.i.i, %index60        ; 3 uses
+  %i.bt = add nuw i64 %.014.us.i.i.i, %index60    ; 3 uses
   %i.bu = getelementptr inbounds nuw [16 x i8], ptr %i.p, i64 %i.bt
   %i.bv = getelementptr [16 x i8], ptr %i.p, i64 %i.bt
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
@@ -1234,7 +1234,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.cq = add i64 %.014.i.i.i, %index             ; 3 uses
+  %i.cq = add nuw i64 %.014.i.i.i, %index         ; 3 uses
   %i.cr = getelementptr inbounds nuw [16 x i8], ptr %i.p, i64 %i.cq
   %i.cs = getelementptr [16 x i8], ptr %i.p, i64 %i.cq
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
@@ -1637,7 +1637,7 @@ vector.ph:                                        ; preds = %"_ZN6duckdb19Binary
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.cw = add i64 %.016.i.i.i.i, %index           ; 3 uses
+  %i.cw = add nuw i64 %.016.i.i.i.i, %index       ; 3 uses
   %i.cx = getelementptr inbounds nuw [16 x i8], ptr %i.ah, i64 %i.cw
   %i.cy = getelementptr [16 x i8], ptr %i.ah, i64 %i.cw
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cx, i64 8

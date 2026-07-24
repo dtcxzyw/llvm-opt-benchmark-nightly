@@ -204,10 +204,9 @@ vec.epilog.ph:                                    ; preds = %vector.memcheck
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index231 = phi i64 [ 0, %vec.epilog.ph ], [ %index.next234, %vec.epilog.vector.body ] ; 3 uses
-  %5 = and i64 %index231, 2305843009213693944
   %i.aar = shl i64 %index231, 1
   %next.gep232 = getelementptr i8, ptr %.026.lcssa.i213.i, i64 %i.aar
-  %i.aas = getelementptr inbounds nuw i8, ptr %.025.lcssa.i214.i, i64 %5
+  %i.aas = getelementptr inbounds nuw i8, ptr %.025.lcssa.i214.i, i64 %index231
   %wide.load233 = load <8 x i8>, ptr %i.aas, align 1, !alias.scope !65
   %i.aat = zext <8 x i8> %wide.load233 to <8 x i16>
   store <8 x i16> %i.aat, ptr %next.gep232, align 2, !tbaa !41, !alias.scope !68, !noalias !65
@@ -610,10 +609,9 @@ vector.main.loop.iter.check1273:                  ; preds = %vector.memcheck1263
 
 vector.body1278:                                  ; preds = %vector.main.loop.iter.check1273, %vector.body1278
   %index1279 = phi i64 [ %index.next1285, %vector.body1278 ], [ 0, %vector.main.loop.iter.check1273 ] ; 3 uses
-  %5 = and i64 %index1279, 2305843009213693920
   %i.aam = shl i64 %index1279, 2
   %next.gep1280 = getelementptr i8, ptr %.026.lcssa.i277, i64 %i.aam ; 4 uses
-  %i.aan = getelementptr inbounds nuw i8, ptr %.025.lcssa.i278, i64 %5 ; 4 uses
+  %i.aan = getelementptr inbounds nuw i8, ptr %.025.lcssa.i278, i64 %index1279 ; 4 uses
   %i.aao = getelementptr inbounds nuw i8, ptr %i.aan, i64 8
   %i.aap = getelementptr inbounds nuw i8, ptr %i.aan, i64 16
   %i.aaq = getelementptr inbounds nuw i8, ptr %i.aan, i64 24
@@ -645,10 +643,9 @@ vec.epilog.ph1295:                                ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body1298:                       ; preds = %vec.epilog.vector.body1298, %vec.epilog.ph1295
   %index1299 = phi i64 [ 0, %vec.epilog.ph1295 ], [ %index.next1302, %vec.epilog.vector.body1298 ] ; 3 uses
-  %6 = and i64 %index1299, 2305843009213693944
   %i.abc = shl i64 %index1299, 2
   %next.gep1300 = getelementptr i8, ptr %.026.lcssa.i277, i64 %i.abc
-  %i.abd = getelementptr inbounds nuw i8, ptr %.025.lcssa.i278, i64 %6
+  %i.abd = getelementptr inbounds nuw i8, ptr %.025.lcssa.i278, i64 %index1299
   %wide.load1301 = load <8 x i8>, ptr %i.abd, align 1, !alias.scope !120
   %i.abe = zext <8 x i8> %wide.load1301 to <8 x i32>
   store <8 x i32> %i.abe, ptr %next.gep1300, align 4, !tbaa !3, !alias.scope !123, !noalias !120
@@ -1051,9 +1048,8 @@ vector.body1243:                                  ; preds = %vector.main.loop.it
   %index1244 = phi i64 [ %index.next1249, %vector.body1243 ], [ 0, %vector.main.loop.iter.check ] ; 3 uses
   %i.ber = shl i64 %index1244, 2
   %next.gep1245 = getelementptr i8, ptr %.026.lcssa.i435, i64 %i.ber ; 4 uses
-  %i.bes = shl i64 %index1244, 1
-  %7 = and i64 %i.bes, 2305843009213693888
-  %i.bet = getelementptr inbounds nuw i8, ptr %.025.lcssa.i436, i64 %7 ; 4 uses
+  %i.bes = shl nuw nsw i64 %index1244, 1
+  %i.bet = getelementptr inbounds nuw i8, ptr %.025.lcssa.i436, i64 %i.bes ; 4 uses
   %i.beu = getelementptr inbounds nuw i8, ptr %i.bet, i64 16
   %i.bev = getelementptr inbounds nuw i8, ptr %i.bet, i64 32
   %i.bew = getelementptr inbounds nuw i8, ptr %i.bet, i64 48
@@ -1087,9 +1083,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index1256 = phi i64 [ 0, %vec.epilog.ph ], [ %index.next1259, %vec.epilog.vector.body ] ; 3 uses
   %i.bfi = shl i64 %index1256, 2
   %next.gep1257 = getelementptr i8, ptr %.026.lcssa.i435, i64 %i.bfi
-  %i.bfj = shl i64 %index1256, 1
-  %8 = and i64 %i.bfj, 2305843009213693936
-  %i.bfk = getelementptr inbounds nuw i8, ptr %.025.lcssa.i436, i64 %8
+  %i.bfj = shl nuw nsw i64 %index1256, 1
+  %i.bfk = getelementptr inbounds nuw i8, ptr %.025.lcssa.i436, i64 %i.bfj
   %wide.load1258 = load <8 x i16>, ptr %i.bfk, align 1, !alias.scope !151
   %i.bfl = zext <8 x i16> %wide.load1258 to <8 x i32>
   store <8 x i32> %i.bfl, ptr %next.gep1257, align 4, !tbaa !3, !alias.scope !154, !noalias !151

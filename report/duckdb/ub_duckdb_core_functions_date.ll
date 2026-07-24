@@ -204,7 +204,7 @@ vector.ph52:                                      ; preds = %.lr.ph.us.i.i.i.pre
 
 vector.body55:                                    ; preds = %vector.body55, %vector.ph52
   %index56 = phi i64 [ 0, %vector.ph52 ], [ %index.next59, %vector.body55 ] ; 2 uses
-  %i.bu = add i64 %.014.us.i.i.i, %index56        ; 2 uses
+  %i.bu = add nuw i64 %.014.us.i.i.i, %index56    ; 2 uses
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.bu ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 16
   %wide.load57 = load <2 x i64>, ptr %i.bv, align 8, !tbaa !44, !alias.scope !655, !noalias !658 ; 2 uses
@@ -278,7 +278,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.cu = add i64 %.014.i.i.i, %index             ; 2 uses
+  %i.cu = add nuw i64 %.014.i.i.i, %index         ; 2 uses
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.cu ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 16
   %wide.load = load <2 x i64>, ptr %i.cv, align 8, !tbaa !44, !alias.scope !655, !noalias !658 ; 2 uses
@@ -681,7 +681,7 @@ vector.ph46:                                      ; preds = %.lr.ph.us.i.i.i.pre
 
 vector.body49:                                    ; preds = %vector.body49, %vector.ph46
   %index50 = phi i64 [ 0, %vector.ph46 ], [ %index.next52, %vector.body49 ] ; 2 uses
-  %i.ai = add i64 %.014.us.i.i.i, %index50        ; 2 uses
+  %i.ai = add nuw i64 %.014.us.i.i.i, %index50    ; 2 uses
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.ai
   %wide.load51 = load <2 x i64>, ptr %i.aj, align 8, !tbaa !44, !alias.scope !1860, !noalias !1863
   %i.ak = sitofp <2 x i64> %wide.load51 to <2 x double>
@@ -746,7 +746,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bb = add i64 %.014.i.i.i, %index             ; 2 uses
+  %i.bb = add nuw i64 %.014.i.i.i, %index         ; 2 uses
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.bb
   %wide.load = load <2 x i64>, ptr %i.bc, align 8, !tbaa !44, !alias.scope !1860, !noalias !1863
   %i.bd = sitofp <2 x i64> %wide.load to <2 x double>
@@ -1149,7 +1149,7 @@ vector.ph46:                                      ; preds = %.lr.ph.us.i.i.i.pre
 
 vector.body49:                                    ; preds = %vector.body49, %vector.ph46
   %index50 = phi i64 [ 0, %vector.ph46 ], [ %index.next52, %vector.body49 ] ; 2 uses
-  %i.ak = add i64 %.014.us.i.i.i, %index50        ; 2 uses
+  %i.ak = add nuw i64 %.014.us.i.i.i, %index50    ; 2 uses
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.ak
   %wide.load51 = load <2 x i64>, ptr %i.al, align 8, !tbaa !44, !alias.scope !1919, !noalias !1922
   %i.am = lshr <2 x i64> %wide.load51, splat (i64 24)
@@ -1216,7 +1216,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bf = add i64 %.014.i.i.i, %index             ; 2 uses
+  %i.bf = add nuw i64 %.014.i.i.i, %index         ; 2 uses
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.bf
   %wide.load = load <2 x i64>, ptr %i.bg, align 8, !tbaa !44, !alias.scope !1919, !noalias !1922
   %i.bh = lshr <2 x i64> %wide.load, splat (i64 24)
@@ -1619,7 +1619,7 @@ vector.ph4528:                                    ; preds = %.lr.ph.i.i.i.i.i165
 
 vector.body4533:                                  ; preds = %vector.body4533, %vector.ph4528
   %index4534 = phi i64 [ 0, %vector.ph4528 ], [ %index.next4537, %vector.body4533 ] ; 2 uses
-  %i.cno = add i64 %.014.i.i.i.i.i, %index4534    ; 2 uses
+  %i.cno = add nuw i64 %.014.i.i.i.i.i, %index4534 ; 2 uses
   %i.cnp = getelementptr inbounds nuw [8 x i8], ptr %i.cmn, i64 %i.cno ; 2 uses
   %i.cnq = getelementptr inbounds nuw i8, ptr %i.cnp, i64 16
   %wide.load4535 = load <2 x i64>, ptr %i.cnp, align 8, !tbaa !44, !alias.scope !4947, !noalias !4955
@@ -1863,7 +1863,7 @@ vector.ph4500:                                    ; preds = %.lr.ph.i.i51.i.i.i
 
 vector.body4503:                                  ; preds = %vector.body4503, %vector.ph4500
   %index4504 = phi i64 [ 0, %vector.ph4500 ], [ %index.next4507, %vector.body4503 ] ; 2 uses
-  %i.cqe = add i64 %.014.i.i45.i.i.i, %index4504  ; 2 uses
+  %i.cqe = add nuw i64 %.014.i.i45.i.i.i, %index4504 ; 2 uses
   %i.cqf = getelementptr inbounds nuw [8 x i8], ptr %i.cpf, i64 %i.cqe ; 2 uses
   %i.cqg = getelementptr inbounds nuw i8, ptr %i.cqf, i64 16
   %wide.load4505 = load <2 x i64>, ptr %i.cqf, align 8, !tbaa !44, !alias.scope !4967, !noalias !4972
@@ -2104,7 +2104,7 @@ vector.ph4470:                                    ; preds = %.lr.ph.i.i80.i.i.i.
 
 vector.body4473:                                  ; preds = %vector.body4473, %vector.ph4470
   %index4474 = phi i64 [ 0, %vector.ph4470 ], [ %index.next4479, %vector.body4473 ] ; 2 uses
-  %i.csu = add i64 %.014.i.i75.i.i.i, %index4474  ; 3 uses
+  %i.csu = add nuw i64 %.014.i.i75.i.i.i, %index4474 ; 3 uses
   %i.csv = getelementptr inbounds nuw [8 x i8], ptr %i.crt, i64 %i.csu ; 2 uses
   %i.csw = getelementptr inbounds nuw i8, ptr %i.csv, i64 16
   %wide.load4475 = load <2 x i64>, ptr %i.csv, align 8, !tbaa !44, !alias.scope !4981, !noalias !4988
@@ -2507,7 +2507,7 @@ vector.ph4167:                                    ; preds = %.lr.ph.i.i.i.i.i145
 
 vector.body4172:                                  ; preds = %vector.body4172, %vector.ph4167
   %index4173 = phi i64 [ 0, %vector.ph4167 ], [ %index.next4176, %vector.body4172 ] ; 2 uses
-  %i.cdm = add i64 %.014.i.i.i.i.i, %index4173    ; 2 uses
+  %i.cdm = add nuw i64 %.014.i.i.i.i.i, %index4173 ; 2 uses
   %i.cdn = getelementptr inbounds nuw [8 x i8], ptr %i.ccl, i64 %i.cdm ; 2 uses
   %i.cdo = getelementptr inbounds nuw i8, ptr %i.cdn, i64 16
   %wide.load4174 = load <2 x i64>, ptr %i.cdn, align 8, !tbaa !44, !alias.scope !8041, !noalias !8049
@@ -2751,7 +2751,7 @@ vector.ph4139:                                    ; preds = %.lr.ph.i.i51.i.i.i
 
 vector.body4142:                                  ; preds = %vector.body4142, %vector.ph4139
   %index4143 = phi i64 [ 0, %vector.ph4139 ], [ %index.next4146, %vector.body4142 ] ; 2 uses
-  %i.cgc = add i64 %.014.i.i45.i.i.i, %index4143  ; 2 uses
+  %i.cgc = add nuw i64 %.014.i.i45.i.i.i, %index4143 ; 2 uses
   %i.cgd = getelementptr inbounds nuw [8 x i8], ptr %i.cfd, i64 %i.cgc ; 2 uses
   %i.cge = getelementptr inbounds nuw i8, ptr %i.cgd, i64 16
   %wide.load4144 = load <2 x i64>, ptr %i.cgd, align 8, !tbaa !44, !alias.scope !8061, !noalias !8066
@@ -2992,7 +2992,7 @@ vector.ph4109:                                    ; preds = %.lr.ph.i.i80.i.i.i.
 
 vector.body4112:                                  ; preds = %vector.body4112, %vector.ph4109
   %index4113 = phi i64 [ 0, %vector.ph4109 ], [ %index.next4118, %vector.body4112 ] ; 2 uses
-  %i.cis = add i64 %.014.i.i75.i.i.i, %index4113  ; 3 uses
+  %i.cis = add nuw i64 %.014.i.i75.i.i.i, %index4113 ; 3 uses
   %i.cit = getelementptr inbounds nuw [8 x i8], ptr %i.chr, i64 %i.cis ; 2 uses
   %i.ciu = getelementptr inbounds nuw i8, ptr %i.cit, i64 16
   %wide.load4114 = load <2 x i64>, ptr %i.cit, align 8, !tbaa !44, !alias.scope !8075, !noalias !8082
@@ -3395,7 +3395,7 @@ vector.ph51:                                      ; preds = %.lr.ph.us.i.i.i.pre
 
 vector.body54:                                    ; preds = %vector.body54, %vector.ph51
   %index55 = phi i64 [ 0, %vector.ph51 ], [ %index.next57, %vector.body54 ] ; 2 uses
-  %i.bn = add i64 %.014.us.i.i.i, %index55        ; 2 uses
+  %i.bn = add nuw i64 %.014.us.i.i.i, %index55    ; 2 uses
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.bn
   %wide.load56 = load <2 x i64>, ptr %i.bo, align 8, !tbaa !44, !alias.scope !10207, !noalias !10210
   %i.bp = sitofp <2 x i64> %wide.load56 to <2 x double>
@@ -3460,7 +3460,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.cg = add i64 %.014.i.i.i, %index             ; 2 uses
+  %i.cg = add nuw i64 %.014.i.i.i, %index         ; 2 uses
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.cg
   %wide.load = load <2 x i64>, ptr %i.ch, align 8, !tbaa !44, !alias.scope !10207, !noalias !10210
   %i.ci = sitofp <2 x i64> %wide.load to <2 x double>
@@ -3863,7 +3863,7 @@ vector.ph51:                                      ; preds = %.lr.ph.us.i.i.i.pre
 
 vector.body54:                                    ; preds = %vector.body54, %vector.ph51
   %index55 = phi i64 [ 0, %vector.ph51 ], [ %index.next57, %vector.body54 ] ; 2 uses
-  %i.bp = add i64 %.014.us.i.i.i, %index55        ; 2 uses
+  %i.bp = add nuw i64 %.014.us.i.i.i, %index55    ; 2 uses
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.bp
   %wide.load56 = load <2 x i64>, ptr %i.bq, align 8, !tbaa !44, !alias.scope !10265, !noalias !10268
   %i.br = lshr <2 x i64> %wide.load56, splat (i64 24)
@@ -3930,7 +3930,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ck = add i64 %.014.i.i.i, %index             ; 2 uses
+  %i.ck = add nuw i64 %.014.i.i.i, %index         ; 2 uses
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.ck
   %wide.load = load <2 x i64>, ptr %i.cl, align 8, !tbaa !44, !alias.scope !10265, !noalias !10268
   %i.cm = lshr <2 x i64> %wide.load, splat (i64 24)
@@ -4333,7 +4333,7 @@ vector.ph52:                                      ; preds = %.lr.ph.us.i.i.i.pre
 
 vector.body55:                                    ; preds = %vector.body55, %vector.ph52
   %index56 = phi i64 [ 0, %vector.ph52 ], [ %index.next59, %vector.body55 ] ; 2 uses
-  %i.br = add i64 %.014.us.i.i.i, %index56        ; 2 uses
+  %i.br = add nuw i64 %.014.us.i.i.i, %index56    ; 2 uses
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.br ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   %wide.load57 = load <2 x i64>, ptr %i.bs, align 8, !tbaa !44, !alias.scope !10405, !noalias !10408
@@ -4404,7 +4404,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.co = add i64 %.014.i.i.i, %index             ; 2 uses
+  %i.co = add nuw i64 %.014.i.i.i, %index         ; 2 uses
   %i.cp = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.co ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 16
   %wide.load = load <2 x i64>, ptr %i.cp, align 8, !tbaa !44, !alias.scope !10405, !noalias !10408
@@ -4807,7 +4807,7 @@ vector.ph52:                                      ; preds = %.lr.ph.us.i.i.i.pre
 
 vector.body55:                                    ; preds = %vector.body55, %vector.ph52
   %index56 = phi i64 [ 0, %vector.ph52 ], [ %index.next59, %vector.body55 ] ; 2 uses
-  %i.bo = add i64 %.014.us.i.i.i, %index56        ; 2 uses
+  %i.bo = add nuw i64 %.014.us.i.i.i, %index56    ; 2 uses
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.bo ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
   %wide.load57 = load <2 x i64>, ptr %i.bp, align 8, !tbaa !44, !alias.scope !10551, !noalias !10554
@@ -4875,7 +4875,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ci = add i64 %.014.i.i.i, %index             ; 2 uses
+  %i.ci = add nuw i64 %.014.i.i.i, %index         ; 2 uses
   %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.ci ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 16
   %wide.load = load <2 x i64>, ptr %i.cj, align 8, !tbaa !44, !alias.scope !10551, !noalias !10554

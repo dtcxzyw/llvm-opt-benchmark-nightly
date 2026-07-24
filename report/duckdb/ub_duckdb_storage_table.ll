@@ -204,12 +204,12 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.av = add i64 %1, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %3, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.aw = getelementptr [8 x i8], ptr %i.as, i64 %1
+  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ax = getelementptr [8 x i8], ptr %i.aw, i64 %index ; 2 uses
+  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %index ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
   store <2 x i64> %broadcast.splat, ptr %i.ax, align 8, !tbaa !24
   store <2 x i64> %broadcast.splat, ptr %i.ay, align 8, !tbaa !24
@@ -353,12 +353,12 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.as = add i64 %2, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %1, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.at = getelementptr [8 x i8], ptr %i.ap, i64 %2
+  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %2
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.au = getelementptr [8 x i8], ptr %i.at, i64 %index ; 2 uses
+  %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %index ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   store <2 x i64> %broadcast.splat, ptr %i.au, align 8, !tbaa !24
   store <2 x i64> %broadcast.splat, ptr %i.av, align 8, !tbaa !24
@@ -761,13 +761,13 @@ vector.ph:                                        ; preds = %_ZNK6duckdb15Select
   %i.ct = add i64 %.0.lcssa.i.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.i, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.cu = getelementptr [8 x i8], ptr %4, i64 %.0.lcssa.i.i
+  %i.cu = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.0.lcssa.i.i
   %i.cv = getelementptr [4 x i8], ptr %i.b, i64 %.4.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.cw = getelementptr [8 x i8], ptr %i.cu, i64 %index ; 2 uses
+  %i.cw = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %index ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 16
   %wide.load = load <2 x i64>, ptr %i.cw, align 8, !tbaa !24
   %wide.load112 = load <2 x i64>, ptr %i.cx, align 8, !tbaa !24
@@ -1170,13 +1170,13 @@ vector.ph:                                        ; preds = %.lr.ph72.i.us.us.pr
   %i.dd = add i64 %.0.lcssa.i.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.k, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.de = getelementptr [8 x i8], ptr %4, i64 %.0.lcssa.i.i
+  %i.de = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.0.lcssa.i.i
   %i.df = getelementptr [4 x i8], ptr %i.b, i64 %.4.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dg = getelementptr [8 x i8], ptr %i.de, i64 %index ; 2 uses
+  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.de, i64 %index ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 16
   %wide.load = load <2 x i64>, ptr %i.dg, align 8, !tbaa !24
   %wide.load94 = load <2 x i64>, ptr %i.dh, align 8, !tbaa !24
@@ -1579,13 +1579,13 @@ vector.ph:                                        ; preds = %_ZNK6duckdb15Select
   %i.di = add i64 %.0.lcssa.i.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.k, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.dj = getelementptr [8 x i8], ptr %4, i64 %.0.lcssa.i.i
+  %i.dj = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.0.lcssa.i.i
   %i.dk = getelementptr [4 x i8], ptr %i.b, i64 %.4.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dl = getelementptr [8 x i8], ptr %i.dj, i64 %index ; 2 uses
+  %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.dj, i64 %index ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 16
   %wide.load = load <2 x i64>, ptr %i.dl, align 8, !tbaa !24
   %wide.load92 = load <2 x i64>, ptr %i.dm, align 8, !tbaa !24
@@ -1988,13 +1988,13 @@ vector.ph:                                        ; preds = %_ZNK6duckdb15Select
   %i.dd = add i64 %.0.lcssa.i.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.k, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.de = getelementptr [8 x i8], ptr %4, i64 %.0.lcssa.i.i
+  %i.de = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.0.lcssa.i.i
   %i.df = getelementptr [4 x i8], ptr %i.b, i64 %.4.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dg = getelementptr [8 x i8], ptr %i.de, i64 %index ; 2 uses
+  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.de, i64 %index ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 16
   %wide.load = load <2 x i64>, ptr %i.dg, align 8, !tbaa !24
   %wide.load92 = load <2 x i64>, ptr %i.dh, align 8, !tbaa !24
@@ -2397,13 +2397,13 @@ vector.ph:                                        ; preds = %_ZNK6duckdb15Select
   %i.di = add i64 %.0.lcssa.i.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.k, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.dj = getelementptr [8 x i8], ptr %4, i64 %.0.lcssa.i.i
+  %i.dj = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.0.lcssa.i.i
   %i.dk = getelementptr [4 x i8], ptr %i.b, i64 %.4.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dl = getelementptr [8 x i8], ptr %i.dj, i64 %index ; 2 uses
+  %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.dj, i64 %index ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 16
   %wide.load = load <2 x i64>, ptr %i.dl, align 8, !tbaa !24
   %wide.load92 = load <2 x i64>, ptr %i.dm, align 8, !tbaa !24
@@ -2806,13 +2806,13 @@ vector.ph:                                        ; preds = %.lr.ph72.i.us.us.pr
   %i.dd = add i64 %.0.lcssa.i.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.k, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.de = getelementptr [8 x i8], ptr %4, i64 %.0.lcssa.i.i
+  %i.de = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.0.lcssa.i.i
   %i.df = getelementptr [4 x i8], ptr %i.b, i64 %.4.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dg = getelementptr [8 x i8], ptr %i.de, i64 %index ; 2 uses
+  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.de, i64 %index ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 16
   %wide.load = load <2 x i64>, ptr %i.dg, align 8, !tbaa !24
   %wide.load94 = load <2 x i64>, ptr %i.dh, align 8, !tbaa !24
@@ -3215,13 +3215,13 @@ vector.ph:                                        ; preds = %_ZNK6duckdb15Select
   %i.di = add i64 %.0.lcssa.i.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.k, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.dj = getelementptr [8 x i8], ptr %4, i64 %.0.lcssa.i.i
+  %i.dj = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.0.lcssa.i.i
   %i.dk = getelementptr [4 x i8], ptr %i.b, i64 %.4.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dl = getelementptr [8 x i8], ptr %i.dj, i64 %index ; 2 uses
+  %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.dj, i64 %index ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 16
   %wide.load = load <2 x i64>, ptr %i.dl, align 8, !tbaa !24
   %wide.load92 = load <2 x i64>, ptr %i.dm, align 8, !tbaa !24
@@ -3624,13 +3624,13 @@ vector.ph:                                        ; preds = %_ZNK6duckdb15Select
   %i.dd = add i64 %.0.lcssa.i.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.k, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.de = getelementptr [8 x i8], ptr %4, i64 %.0.lcssa.i.i
+  %i.de = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.0.lcssa.i.i
   %i.df = getelementptr [4 x i8], ptr %i.b, i64 %.4.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dg = getelementptr [8 x i8], ptr %i.de, i64 %index ; 2 uses
+  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.de, i64 %index ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 16
   %wide.load = load <2 x i64>, ptr %i.dg, align 8, !tbaa !24
   %wide.load92 = load <2 x i64>, ptr %i.dh, align 8, !tbaa !24
@@ -4033,13 +4033,13 @@ vector.ph:                                        ; preds = %_ZNK6duckdb15Select
   %i.di = add i64 %.0.lcssa.i.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.k, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.dj = getelementptr [8 x i8], ptr %4, i64 %.0.lcssa.i.i
+  %i.dj = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.0.lcssa.i.i
   %i.dk = getelementptr [4 x i8], ptr %i.b, i64 %.4.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dl = getelementptr [8 x i8], ptr %i.dj, i64 %index ; 2 uses
+  %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.dj, i64 %index ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 16
   %wide.load = load <2 x i64>, ptr %i.dl, align 8, !tbaa !24
   %wide.load92 = load <2 x i64>, ptr %i.dm, align 8, !tbaa !24
@@ -4442,13 +4442,13 @@ vector.ph:                                        ; preds = %_ZNK6duckdb15Select
   %i.dd = add i64 %.0.lcssa.i.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.k, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.de = getelementptr [8 x i8], ptr %4, i64 %.0.lcssa.i.i
+  %i.de = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.0.lcssa.i.i
   %i.df = getelementptr [4 x i8], ptr %i.b, i64 %.4.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dg = getelementptr [8 x i8], ptr %i.de, i64 %index ; 2 uses
+  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.de, i64 %index ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 16
   %wide.load = load <2 x i64>, ptr %i.dg, align 8, !tbaa !24
   %wide.load92 = load <2 x i64>, ptr %i.dh, align 8, !tbaa !24
@@ -4851,13 +4851,13 @@ vector.ph:                                        ; preds = %_ZNK6duckdb15Select
   %i.di = add i64 %.0.lcssa.i.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.k, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.dj = getelementptr [8 x i8], ptr %4, i64 %.0.lcssa.i.i
+  %i.dj = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.0.lcssa.i.i
   %i.dk = getelementptr [4 x i8], ptr %i.b, i64 %.4.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dl = getelementptr [8 x i8], ptr %i.dj, i64 %index ; 2 uses
+  %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.dj, i64 %index ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 16
   %wide.load = load <2 x i64>, ptr %i.dl, align 8, !tbaa !24
   %wide.load92 = load <2 x i64>, ptr %i.dm, align 8, !tbaa !24

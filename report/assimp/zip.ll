@@ -204,7 +204,7 @@ tdefl_calculate_minimum_redundancy.exit:          ; preds = %._crit_edge108.i
   %i.lm = add nuw nsw i64 %n.vec, %i.lj
   %.promoted.i = load i32, ptr %i.lk, align 4
   %i.ln = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.promoted.i, i64 0
-  %i.lo = getelementptr [4 x i8], ptr %i.c, i64 %i.lj ; 2 uses
+  %i.lo = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.lj ; 2 uses
   %i.lp = getelementptr inbounds nuw i8, ptr %i.lo, i64 4
   %i.lq = getelementptr inbounds nuw i8, ptr %i.lo, i64 20
   %wide.load = load <4 x i32>, ptr %i.lp, align 4
@@ -215,7 +215,7 @@ tdefl_calculate_minimum_redundancy.exit:          ; preds = %._crit_edge108.i
 
 vector.body.1:                                    ; preds = %.preheader35.i
   %i.lt = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  %i.lu = getelementptr [4 x i8], ptr %i.lt, i64 %i.lj ; 2 uses
+  %i.lu = getelementptr inbounds nuw [4 x i8], ptr %i.lt, i64 %i.lj ; 2 uses
   %i.lv = getelementptr inbounds nuw i8, ptr %i.lu, i64 4
   %i.lw = getelementptr inbounds nuw i8, ptr %i.lu, i64 20
   %wide.load.1 = load <4 x i32>, ptr %i.lv, align 4
@@ -227,7 +227,7 @@ vector.body.1:                                    ; preds = %.preheader35.i
 
 vector.body.2:                                    ; preds = %vector.body.1
   %i.ma = getelementptr inbounds nuw i8, ptr %i.c, i64 64
-  %i.mb = getelementptr [4 x i8], ptr %i.ma, i64 %i.lj ; 2 uses
+  %i.mb = getelementptr inbounds nuw [4 x i8], ptr %i.ma, i64 %i.lj ; 2 uses
   %i.mc = getelementptr inbounds nuw i8, ptr %i.mb, i64 4
   %i.md = getelementptr inbounds nuw i8, ptr %i.mb, i64 20
   %wide.load.2 = load <4 x i32>, ptr %i.mc, align 4

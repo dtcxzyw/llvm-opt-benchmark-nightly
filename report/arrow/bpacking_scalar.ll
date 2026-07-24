@@ -204,10 +204,9 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %5 = and i64 %index, 2305843009213693936
   %i.aqb = shl i64 %index, 1
   %next.gep = getelementptr i8, ptr %.026.lcssa.i190.i, i64 %i.aqb ; 2 uses
-  %i.aqc = getelementptr inbounds nuw i8, ptr %.025.lcssa.i191.i, i64 %5 ; 2 uses
+  %i.aqc = getelementptr inbounds nuw i8, ptr %.025.lcssa.i191.i, i64 %index ; 2 uses
   %i.aqd = getelementptr inbounds nuw i8, ptr %i.aqc, i64 8
   %wide.load = load <8 x i8>, ptr %i.aqc, align 1, !alias.scope !62
   %wide.load225 = load <8 x i8>, ptr %i.aqd, align 1, !alias.scope !62
@@ -238,10 +237,9 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index229 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next232, %vec.epilog.vector.body ] ; 3 uses
-  %6 = and i64 %index229, 2305843009213693948
   %i.aql = shl i64 %index229, 1
   %next.gep230 = getelementptr i8, ptr %.026.lcssa.i190.i, i64 %i.aql
-  %i.aqm = getelementptr inbounds nuw i8, ptr %.025.lcssa.i191.i, i64 %6
+  %i.aqm = getelementptr inbounds nuw i8, ptr %.025.lcssa.i191.i, i64 %index229
   %wide.load231 = load <4 x i8>, ptr %i.aqm, align 1, !alias.scope !62
   %i.aqn = zext <4 x i8> %wide.load231 to <4 x i16>
   store <4 x i16> %i.aqn, ptr %next.gep230, align 2, !tbaa !38, !alias.scope !65, !noalias !62
@@ -644,10 +642,9 @@ vector.ph1979:                                    ; preds = %vector.memcheck1970
 
 vector.body1982:                                  ; preds = %vector.body1982, %vector.ph1979
   %index1983 = phi i64 [ 0, %vector.ph1979 ], [ %index.next1987, %vector.body1982 ] ; 3 uses
-  %5 = and i64 %index1983, 2305843009213693944
   %i.ane = shl i64 %index1983, 2
   %next.gep1984 = getelementptr i8, ptr %.026.lcssa.i254, i64 %i.ane ; 2 uses
-  %i.anf = getelementptr inbounds nuw i8, ptr %.025.lcssa.i255, i64 %5 ; 2 uses
+  %i.anf = getelementptr inbounds nuw i8, ptr %.025.lcssa.i255, i64 %index1983 ; 2 uses
   %i.ang = getelementptr inbounds nuw i8, ptr %i.anf, i64 4
   %wide.load1985 = load <4 x i8>, ptr %i.anf, align 1, !alias.scope !118
   %wide.load1986 = load <4 x i8>, ptr %i.ang, align 1, !alias.scope !118
@@ -1050,9 +1047,8 @@ vector.body1934:                                  ; preds = %vector.body1934, %v
   %index1935 = phi i64 [ 0, %vector.ph1931 ], [ %index.next1938, %vector.body1934 ] ; 3 uses
   %i.cuk = shl i64 %index1935, 2
   %next.gep1936 = getelementptr i8, ptr %.026.lcssa.i471, i64 %i.cuk ; 2 uses
-  %i.cul = shl i64 %index1935, 1
-  %6 = and i64 %i.cul, 2305843009213693936
-  %i.cum = getelementptr inbounds nuw i8, ptr %.025.lcssa.i472, i64 %6 ; 2 uses
+  %i.cul = shl nuw nsw i64 %index1935, 1
+  %i.cum = getelementptr inbounds nuw i8, ptr %.025.lcssa.i472, i64 %i.cul ; 2 uses
   %i.cun = getelementptr inbounds nuw i8, ptr %i.cum, i64 8
   %wide.load = load <4 x i16>, ptr %i.cum, align 1, !alias.scope !154
   %wide.load1937 = load <4 x i16>, ptr %i.cun, align 1, !alias.scope !154
@@ -1455,7 +1451,7 @@ vector.ph1749:                                    ; preds = %vector.memcheck1741
 
 vector.body1752:                                  ; preds = %vector.body1752, %vector.ph1749
   %index1753 = phi i64 [ 0, %vector.ph1749 ], [ %index.next1755, %vector.body1752 ] ; 3 uses
-  %i.imr = mul i64 %index1753, 24                 ; 4 uses
+  %i.imr = mul nuw i64 %index1753, 24             ; 4 uses
   %i.ims = add i64 %i.imr, 48
   %i.imt = add i64 %i.imr, 72
   %i.imu = shl i64 %index1753, 2

@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.as = add i64 %index, %i.ap                   ; 2 uses
+  %i.as = add nuw i64 %index, %i.ap               ; 2 uses
   %i.at = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %i.as
   %i.au = getelementptr [2 x i8], ptr %i.f, i64 %i.as
   %i.av = getelementptr i8, ptr %i.au, i64 16
@@ -607,9 +607,8 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.aa = shl i64 %index, 1                       ; 2 uses
-  %6 = and i64 %index, 9223372036854775792
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.q, i64 %6 ; 3 uses
+  %i.aa = shl nuw i64 %index, 1                   ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.q, i64 %index ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8 ; 2 uses
   %wide.load = load <8 x i8>, ptr %i.ab, align 1, !tbaa !9, !alias.scope !90
   %wide.load78 = load <8 x i8>, ptr %i.ac, align 1, !tbaa !9, !alias.scope !90
@@ -646,9 +645,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index84 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next88, %vec.epilog.vector.body ] ; 3 uses
-  %i.am = shl i64 %index84, 1
-  %7 = and i64 %index84, 9223372036854775804
-  %i.an = getelementptr inbounds nuw i8, ptr %i.q, i64 %7
+  %i.am = shl nuw i64 %index84, 1
+  %i.an = getelementptr inbounds nuw i8, ptr %i.q, i64 %index84
   %wide.load85 = load <4 x i8>, ptr %i.an, align 1, !tbaa !9, !alias.scope !90 ; 2 uses
   %i.ao = lshr <4 x i8> %wide.load85, splat (i8 4)
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 %i.am

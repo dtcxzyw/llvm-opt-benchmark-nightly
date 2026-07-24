@@ -201,12 +201,12 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %i.az = add i64 %.138.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %spec.store.select.i, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.ba = getelementptr [8 x i8], ptr %i.ah, i64 %.138.i
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %.138.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bb = getelementptr [8 x i8], ptr %i.ba, i64 %index ; 2 uses
+  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %index ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   store <2 x ptr> %broadcast.splat, ptr %i.bb, align 8, !tbaa !14
   store <2 x ptr> %broadcast.splat, ptr %i.bc, align 8, !tbaa !14
@@ -609,12 +609,12 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i.
   %i.ce = add i64 %.138.i.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %i.bi, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.cf = getelementptr [8 x i8], ptr %i.bn, i64 %.138.i.i
+  %i.cf = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %.138.i.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.cg = getelementptr [8 x i8], ptr %i.cf, i64 %index ; 2 uses
+  %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %index ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
   store <2 x ptr> %broadcast.splat, ptr %i.cg, align 8, !tbaa !14
   store <2 x ptr> %broadcast.splat, ptr %i.ch, align 8, !tbaa !14
@@ -846,12 +846,12 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %i.ai = add i64 %.138.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %spec.store.select.i, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.aj = getelementptr [8 x i8], ptr %i.q, i64 %.138.i
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %.138.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ak = getelementptr [8 x i8], ptr %i.aj, i64 %index ; 2 uses
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %index ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   store <2 x ptr> %broadcast.splat, ptr %i.ak, align 8, !tbaa !14
   store <2 x ptr> %broadcast.splat, ptr %i.al, align 8, !tbaa !14
@@ -1254,12 +1254,12 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %i.aj = add i64 %.138.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %spec.store.select.i, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.ak = getelementptr [8 x i8], ptr %i.r, i64 %.138.i
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %.138.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.al = getelementptr [8 x i8], ptr %i.ak, i64 %index ; 2 uses
+  %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %index ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 16
   store <2 x ptr> %broadcast.splat, ptr %i.al, align 8, !tbaa !14
   store <2 x ptr> %broadcast.splat, ptr %i.am, align 8, !tbaa !14
@@ -1365,12 +1365,12 @@ vector.ph4:                                       ; preds = %.lr.ph.preheader.i7
   %i.bw = add i64 %.138.i72, %n.vec6
   %broadcast.splatinsert7 = insertelement <2 x ptr> poison, ptr %2, i64 0
   %broadcast.splat8 = shufflevector <2 x ptr> %broadcast.splatinsert7, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.bx = getelementptr [8 x i8], ptr %i.be, i64 %.138.i72
+  %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %.138.i72
   br label %vector.body9
 
 vector.body9:                                     ; preds = %vector.body9, %vector.ph4
   %index10 = phi i64 [ 0, %vector.ph4 ], [ %index.next11, %vector.body9 ] ; 2 uses
-  %i.by = getelementptr [8 x i8], ptr %i.bx, i64 %index10 ; 2 uses
+  %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %index10 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 16
   store <2 x ptr> %broadcast.splat8, ptr %i.by, align 8, !tbaa !14
   store <2 x ptr> %broadcast.splat8, ptr %i.bz, align 8, !tbaa !14
@@ -1669,12 +1669,12 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %i.ai = add i64 %.138.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %2, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.aj = getelementptr [8 x i8], ptr %i.q, i64 %.138.i
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %.138.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ak = getelementptr [8 x i8], ptr %i.aj, i64 %index ; 2 uses
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %index ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   store <2 x ptr> %broadcast.splat, ptr %i.ak, align 8, !tbaa !14
   store <2 x ptr> %broadcast.splat, ptr %i.al, align 8, !tbaa !14

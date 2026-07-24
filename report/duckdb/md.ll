@@ -202,7 +202,7 @@ vector.ph106:                                     ; preds = %vector.main.loop.it
 
 vector.body109:                                   ; preds = %vector.body109, %vector.ph106
   %index110 = phi i64 [ 0, %vector.ph106 ], [ %index.next115, %vector.body109 ] ; 2 uses
-  %i.bd = add i64 %.0.i44.lcssa, %index110        ; 2 uses
+  %i.bd = add nuw i64 %.0.i44.lcssa, %index110    ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.bd ; 3 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 16 ; 2 uses
   %wide.load111 = load <16 x i8>, ptr %i.be, align 1, !tbaa !27, !alias.scope !28, !noalias !31
@@ -235,7 +235,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index121 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next124, %vec.epilog.vector.body ] ; 2 uses
-  %i.bm = add i64 %.0.i44.lcssa, %index121        ; 2 uses
+  %i.bm = add nuw i64 %.0.i44.lcssa, %index121    ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.bm ; 2 uses
   %wide.load122 = load <8 x i8>, ptr %i.bn, align 1, !tbaa !27, !alias.scope !28, !noalias !31
   %i.bo = getelementptr inbounds nuw i8, ptr %.031, i64 %i.bm
@@ -411,7 +411,7 @@ vector.ph161:                                     ; preds = %vector.main.loop.it
 
 vector.body164:                                   ; preds = %vector.body164, %vector.ph161
   %index165 = phi i64 [ 0, %vector.ph161 ], [ %index.next170, %vector.body164 ] ; 2 uses
-  %i.dx = add i64 %.0.i.lcssa, %index165          ; 2 uses
+  %i.dx = add nuw i64 %.0.i.lcssa, %index165      ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.dx ; 3 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 16 ; 2 uses
   %wide.load166 = load <16 x i8>, ptr %i.dy, align 1, !tbaa !27, !alias.scope !46, !noalias !49
@@ -444,7 +444,7 @@ vec.epilog.ph179:                                 ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body182:                        ; preds = %vec.epilog.vector.body182, %vec.epilog.ph179
   %index183 = phi i64 [ %vec.epilog.resume.val173, %vec.epilog.ph179 ], [ %index.next186, %vec.epilog.vector.body182 ] ; 2 uses
-  %i.eg = add i64 %.0.i.lcssa, %index183          ; 2 uses
+  %i.eg = add nuw i64 %.0.i.lcssa, %index183      ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.eg ; 2 uses
   %wide.load184 = load <8 x i8>, ptr %i.eh, align 1, !tbaa !27, !alias.scope !46, !noalias !49
   %i.ei = getelementptr inbounds nuw i8, ptr %.031, i64 %i.eg

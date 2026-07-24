@@ -204,9 +204,8 @@ vector.ph269:                                     ; preds = %vector.main.loop.it
 
 vector.body272:                                   ; preds = %vector.body272, %vector.ph269
   %index273 = phi i64 [ 0, %vector.ph269 ], [ %index.next278, %vector.body272 ] ; 2 uses
-  %i.hk = shl i64 %index273, 3
-  %28 = and i64 %i.hk, 2305843009213693824
-  %i.hl = getelementptr inbounds nuw i8, ptr %i.hb, i64 %28 ; 5 uses
+  %i.hk = shl nuw nsw i64 %index273, 3
+  %i.hl = getelementptr inbounds nuw i8, ptr %i.hb, i64 %i.hk ; 5 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hl, i64 32 ; 2 uses
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hl, i64 64 ; 2 uses
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hl, i64 96 ; 2 uses
@@ -243,9 +242,8 @@ vec.epilog.ph287:                                 ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body290:                        ; preds = %vec.epilog.vector.body290, %vec.epilog.ph287
   %index291 = phi i64 [ %vec.epilog.resume.val281, %vec.epilog.ph287 ], [ %index.next293, %vec.epilog.vector.body290 ] ; 2 uses
-  %i.hw = shl i64 %index291, 3
-  %29 = and i64 %i.hw, 2305843009213693920
-  %i.hx = getelementptr inbounds nuw i8, ptr %i.hb, i64 %29 ; 2 uses
+  %i.hw = shl nuw nsw i64 %index291, 3
+  %i.hx = getelementptr inbounds nuw i8, ptr %i.hb, i64 %i.hw ; 2 uses
   %wide.load292 = load <4 x i64>, ptr %i.hx, align 8, !tbaa !143
   %i.hy = xor <4 x i64> %wide.load292, splat (i64 -1)
   store <4 x i64> %i.hy, ptr %i.hx, align 8, !tbaa !143
@@ -297,13 +295,12 @@ vector.ph302:                                     ; preds = %vector.main.loop.it
   %i.im = add i64 %i.il, %i.ic
   %i.in = add i64 %i.id, %i.il                    ; 2 uses
   %i.io = lshr exact i64 %i.ic, 3
+  %28 = getelementptr inbounds nuw i8, ptr %i.hb, i64 %i.io
   br label %vector.body305
 
 vector.body305:                                   ; preds = %vector.body305, %vector.ph302
   %index306 = phi i64 [ 0, %vector.ph302 ], [ %index.next311, %vector.body305 ] ; 2 uses
-  %30 = add i64 %i.io, %index306
-  %31 = and i64 %30, 2305843009213693944
-  %i.ip = getelementptr inbounds nuw i8, ptr %i.hb, i64 %31 ; 5 uses
+  %i.ip = getelementptr inbounds nuw i8, ptr %28, i64 %index306 ; 5 uses
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ip, i64 32 ; 2 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %i.ip, i64 64 ; 2 uses
   %i.is = getelementptr inbounds nuw i8, ptr %i.ip, i64 96 ; 2 uses
@@ -339,13 +336,12 @@ vec.epilog.ph321:                                 ; preds = %vector.main.loop.it
   %i.iz = add i64 %i.iy, %i.ic
   %i.ja = add i64 %i.id, %i.iy                    ; 2 uses
   %i.jb = lshr exact i64 %i.ic, 3
+  %29 = getelementptr inbounds nuw i8, ptr %i.hb, i64 %i.jb
   br label %vec.epilog.vector.body324
 
 vec.epilog.vector.body324:                        ; preds = %vec.epilog.vector.body324, %vec.epilog.ph321
   %index325 = phi i64 [ %vec.epilog.resume.val315, %vec.epilog.ph321 ], [ %index.next327, %vec.epilog.vector.body324 ] ; 2 uses
-  %32 = add i64 %i.jb, %index325
-  %33 = and i64 %32, 2305843009213693944
-  %i.jc = getelementptr inbounds nuw i8, ptr %i.hb, i64 %33 ; 2 uses
+  %i.jc = getelementptr inbounds nuw i8, ptr %29, i64 %index325 ; 2 uses
   %wide.load326 = load <16 x i8>, ptr %i.jc, align 1, !tbaa !30
   %i.jd = xor <16 x i8> %wide.load326, splat (i8 -1)
   store <16 x i8> %i.jd, ptr %i.jc, align 1, !tbaa !30
@@ -615,9 +611,8 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.mu = shl i64 %index, 3
-  %34 = and i64 %i.mu, 2305843009213693824
-  %i.mv = getelementptr inbounds nuw i8, ptr %i.ml, i64 %34 ; 5 uses
+  %i.mu = shl nuw nsw i64 %index, 3
+  %i.mv = getelementptr inbounds nuw i8, ptr %i.ml, i64 %i.mu ; 5 uses
   %i.mw = getelementptr inbounds nuw i8, ptr %i.mv, i64 32 ; 2 uses
   %i.mx = getelementptr inbounds nuw i8, ptr %i.mv, i64 64 ; 2 uses
   %i.my = getelementptr inbounds nuw i8, ptr %i.mv, i64 96 ; 2 uses
@@ -654,9 +649,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index225 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next227, %vec.epilog.vector.body ] ; 2 uses
-  %i.ng = shl i64 %index225, 3
-  %35 = and i64 %i.ng, 2305843009213693920
-  %i.nh = getelementptr inbounds nuw i8, ptr %i.ml, i64 %35 ; 2 uses
+  %i.ng = shl nuw nsw i64 %index225, 3
+  %i.nh = getelementptr inbounds nuw i8, ptr %i.ml, i64 %i.ng ; 2 uses
   %wide.load226 = load <4 x i64>, ptr %i.nh, align 8, !tbaa !143
   %i.ni = xor <4 x i64> %wide.load226, splat (i64 -1)
   store <4 x i64> %i.ni, ptr %i.nh, align 8, !tbaa !143
@@ -708,13 +702,12 @@ vector.ph235:                                     ; preds = %vector.main.loop.it
   %i.nw = add i64 %i.nv, %i.nm
   %i.nx = add i64 %i.nn, %i.nv                    ; 2 uses
   %i.ny = lshr exact i64 %i.nm, 3
+  %30 = getelementptr inbounds nuw i8, ptr %i.ml, i64 %i.ny
   br label %vector.body238
 
 vector.body238:                                   ; preds = %vector.body238, %vector.ph235
   %index239 = phi i64 [ 0, %vector.ph235 ], [ %index.next244, %vector.body238 ] ; 2 uses
-  %36 = add i64 %i.ny, %index239
-  %37 = and i64 %36, 2305843009213693944
-  %i.nz = getelementptr inbounds nuw i8, ptr %i.ml, i64 %37 ; 5 uses
+  %i.nz = getelementptr inbounds nuw i8, ptr %30, i64 %index239 ; 5 uses
   %i.oa = getelementptr inbounds nuw i8, ptr %i.nz, i64 32 ; 2 uses
   %i.ob = getelementptr inbounds nuw i8, ptr %i.nz, i64 64 ; 2 uses
   %i.oc = getelementptr inbounds nuw i8, ptr %i.nz, i64 96 ; 2 uses
@@ -750,13 +743,12 @@ vec.epilog.ph253:                                 ; preds = %vector.main.loop.it
   %i.oj = add i64 %i.oi, %i.nm
   %i.ok = add i64 %i.nn, %i.oi                    ; 2 uses
   %i.ol = lshr exact i64 %i.nm, 3
+  %31 = getelementptr inbounds nuw i8, ptr %i.ml, i64 %i.ol
   br label %vec.epilog.vector.body256
 
 vec.epilog.vector.body256:                        ; preds = %vec.epilog.vector.body256, %vec.epilog.ph253
   %index257 = phi i64 [ %vec.epilog.resume.val247, %vec.epilog.ph253 ], [ %index.next259, %vec.epilog.vector.body256 ] ; 2 uses
-  %38 = add i64 %i.ol, %index257
-  %39 = and i64 %38, 2305843009213693944
-  %i.om = getelementptr inbounds nuw i8, ptr %i.ml, i64 %39 ; 2 uses
+  %i.om = getelementptr inbounds nuw i8, ptr %31, i64 %index257 ; 2 uses
   %wide.load258 = load <16 x i8>, ptr %i.om, align 1, !tbaa !30
   %i.on = xor <16 x i8> %wide.load258, splat (i8 -1)
   store <16 x i8> %i.on, ptr %i.om, align 1, !tbaa !30
@@ -1159,9 +1151,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.phi78 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.de, %vector.body ]
   %vec.phi79 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.df, %vector.body ]
   %vec.phi80 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.dg, %vector.body ]
-  %i.cq = shl i64 %index, 3
-  %20 = and i64 %i.cq, 2305843009213693824
-  %i.cr = getelementptr inbounds nuw i8, ptr %i.cg, i64 %20 ; 4 uses
+  %i.cq = shl nuw nsw i64 %index, 3
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.cq ; 4 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 32
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 64
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cr, i64 96
@@ -1209,9 +1200,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index89 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next92, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi90 = phi <4 x i32> [ %i.dl, %vec.epilog.ph ], [ %i.dq, %vec.epilog.vector.body ]
-  %i.dm = shl i64 %index89, 3
-  %21 = and i64 %i.dm, 2305843009213693920
-  %i.dn = getelementptr inbounds nuw i8, ptr %i.cg, i64 %21
+  %i.dm = shl nuw nsw i64 %index89, 3
+  %i.dn = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.dm
   %wide.load91 = load <4 x i64>, ptr %i.dn, align 8, !tbaa !143
   %i.do = call range(i64 0, 65) <4 x i64> @llvm.ctpop.v4i64(<4 x i64> %wide.load91)
   %i.dp = trunc nuw nsw <4 x i64> %i.do to <4 x i32>
@@ -1614,9 +1604,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.phi79 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.de, %vector.body ]
   %vec.phi80 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.df, %vector.body ]
   %vec.phi81 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.dg, %vector.body ]
-  %i.cq = shl i64 %index, 3
-  %20 = and i64 %i.cq, 2305843009213693824
-  %i.cr = getelementptr inbounds nuw i8, ptr %i.cg, i64 %20 ; 4 uses
+  %i.cq = shl nuw nsw i64 %index, 3
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.cq ; 4 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 32
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 64
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cr, i64 96
@@ -1664,9 +1653,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index90 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next93, %vec.epilog.vector.body ] ; 2 uses
   %vec.phi91 = phi <4 x i32> [ %i.dl, %vec.epilog.ph ], [ %i.dq, %vec.epilog.vector.body ]
-  %i.dm = shl i64 %index90, 3
-  %21 = and i64 %i.dm, 2305843009213693920
-  %i.dn = getelementptr inbounds nuw i8, ptr %i.cg, i64 %21
+  %i.dm = shl nuw nsw i64 %index90, 3
+  %i.dn = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.dm
   %wide.load92 = load <4 x i64>, ptr %i.dn, align 8, !tbaa !143
   %i.do = call range(i64 0, 65) <4 x i64> @llvm.ctpop.v4i64(<4 x i64> %wide.load92)
   %i.dp = trunc nuw nsw <4 x i64> %i.do to <4 x i32>
@@ -2069,7 +2057,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 
 vector.body:                                      ; preds = %vector.main.loop.iter.check, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %i.dg = add i64 %index, %i.cx                   ; 2 uses
+  %i.dg = add nuw i64 %index, %i.cx               ; 2 uses
   %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.cy, i64 %i.dg ; 4 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 32
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dh, i64 64
@@ -2096,7 +2084,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.vector.body:                           ; preds = %vector.main.loop.iter.check, %vec.epilog.vector.body
   %index74 = phi i64 [ %index.next76, %vec.epilog.vector.body ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %i.dq = add i64 %index74, %i.cx                 ; 2 uses
+  %i.dq = add nuw i64 %index74, %i.cx             ; 2 uses
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %i.cy, i64 %i.dq
   %wide.load75 = load <4 x i64>, ptr %i.dr, align 8, !tbaa !143
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.cz, i64 %i.dq
@@ -2499,7 +2487,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
 
 vector.body:                                      ; preds = %vector.main.loop.iter.check, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %i.dc = add i64 %index, %i.cm
+  %i.dc = add nuw i64 %index, %i.cm
   %i.dd = shl i64 %i.dc, 32
   %i.de = ashr exact i64 %i.dd, 29
   %i.df = getelementptr inbounds i8, ptr %i.cn, i64 %i.de ; 4 uses
@@ -2520,7 +2508,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.vector.body:                           ; preds = %vector.main.loop.iter.check, %vec.epilog.vector.body
   %index82 = phi i64 [ %index.next83, %vec.epilog.vector.body ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %i.dk = add i64 %index82, %i.cm
+  %i.dk = add nuw i64 %index82, %i.cm
   %i.dl = shl i64 %i.dk, 32
   %i.dm = ashr exact i64 %i.dl, 29
   %i.dn = getelementptr inbounds i8, ptr %i.cn, i64 %i.dm
@@ -2923,7 +2911,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
 
 vector.body:                                      ; preds = %vector.main.loop.iter.check, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %i.do = add i64 %index, %i.cx
+  %i.do = add nuw i64 %index, %i.cx
   %i.dp = shl i64 %i.do, 32
   %i.dq = ashr exact i64 %i.dp, 32                ; 2 uses
   %i.dr = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %i.dq ; 4 uses
@@ -2952,7 +2940,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.vector.body:                           ; preds = %vector.main.loop.iter.check, %vec.epilog.vector.body
   %index74 = phi i64 [ %index.next76, %vec.epilog.vector.body ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %i.ea = add i64 %index74, %i.cx
+  %i.ea = add nuw i64 %index74, %i.cx
   %i.eb = shl i64 %i.ea, 32
   %i.ec = ashr exact i64 %i.eb, 32                ; 2 uses
   %i.ed = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %i.ec

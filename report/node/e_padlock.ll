@@ -204,7 +204,7 @@ vec.epilog.ph:                                    ; preds = %vector.memcheck
   %i.w = sub i64 %3, %n.vec98                     ; 2 uses
   %i.x = getelementptr i8, ptr %2, i64 %n.vec98   ; 2 uses
   %wide.load102 = load <4 x i8>, ptr %2, align 1, !tbaa !14
-  %i.y = getelementptr i8, ptr %i.k, i64 %i.n
+  %i.y = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.n
   %wide.load103 = load <4 x i8>, ptr %i.y, align 1, !tbaa !14
   %i.z = xor <4 x i8> %wide.load103, %wide.load102
   store <4 x i8> %i.z, ptr %1, align 1, !tbaa !14
@@ -215,8 +215,8 @@ vec.epilog.vector.body.1:                         ; preds = %vec.epilog.ph
   %next.gep100.1 = getelementptr i8, ptr %1, i64 4
   %next.gep101.1 = getelementptr i8, ptr %2, i64 4
   %wide.load102.1 = load <4 x i8>, ptr %next.gep101.1, align 1, !tbaa !14
-  %i.ab = getelementptr i8, ptr %i.k, i64 4
-  %i.ac = getelementptr i8, ptr %i.ab, i64 %i.n
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.k, i64 4
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.n
   %wide.load103.1 = load <4 x i8>, ptr %i.ac, align 1, !tbaa !14
   %i.ad = xor <4 x i8> %wide.load103.1, %wide.load102.1
   store <4 x i8> %i.ad, ptr %next.gep100.1, align 1, !tbaa !14
@@ -227,8 +227,8 @@ vec.epilog.vector.body.2:                         ; preds = %vec.epilog.vector.b
   %next.gep100.2 = getelementptr i8, ptr %1, i64 8
   %next.gep101.2 = getelementptr i8, ptr %2, i64 8
   %wide.load102.2 = load <4 x i8>, ptr %next.gep101.2, align 1, !tbaa !14
-  %i.af = getelementptr i8, ptr %i.k, i64 8
-  %i.ag = getelementptr i8, ptr %i.af, i64 %i.n
+  %i.af = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.n
   %wide.load103.2 = load <4 x i8>, ptr %i.ag, align 1, !tbaa !14
   %i.ah = xor <4 x i8> %wide.load103.2, %wide.load102.2
   store <4 x i8> %i.ah, ptr %next.gep100.2, align 1, !tbaa !14

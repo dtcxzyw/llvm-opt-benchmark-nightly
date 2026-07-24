@@ -204,7 +204,7 @@ vector.ph193:                                     ; preds = %vector.main.loop.it
   %i.gx = getelementptr inbounds nuw i8, ptr %i.z, i64 17
   %wide.load199 = load <16 x i8>, ptr %i.gw, align 1, !tbaa !15
   %wide.load200 = load <16 x i8>, ptr %i.gx, align 1, !tbaa !15
-  %i.gy = getelementptr i8, ptr %0, i64 %i.gm     ; 2 uses
+  %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 %i.gm ; 2 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 16
   store <16 x i8> %wide.load199, ptr %i.gy, align 1, !tbaa !15
   store <16 x i8> %wide.load200, ptr %i.gz, align 1, !tbaa !15
@@ -216,8 +216,8 @@ vector.body196.1:                                 ; preds = %vector.ph193
   %i.hc = getelementptr i8, ptr %i.z, i64 49
   %wide.load199.1 = load <16 x i8>, ptr %i.hb, align 1, !tbaa !15
   %wide.load200.1 = load <16 x i8>, ptr %i.hc, align 1, !tbaa !15
-  %i.hd = getelementptr i8, ptr %0, i64 32
-  %i.he = getelementptr i8, ptr %i.hd, i64 %i.gm  ; 2 uses
+  %i.hd = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.he = getelementptr inbounds nuw i8, ptr %i.hd, i64 %i.gm ; 2 uses
   %i.hf = getelementptr inbounds nuw i8, ptr %i.he, i64 16
   store <16 x i8> %wide.load199.1, ptr %i.he, align 1, !tbaa !15
   store <16 x i8> %wide.load200.1, ptr %i.hf, align 1, !tbaa !15
@@ -229,8 +229,8 @@ vector.body196.2:                                 ; preds = %vector.body196.1
   %i.hi = getelementptr i8, ptr %i.z, i64 81
   %wide.load199.2 = load <16 x i8>, ptr %i.hh, align 1, !tbaa !15
   %wide.load200.2 = load <16 x i8>, ptr %i.hi, align 1, !tbaa !15
-  %i.hj = getelementptr i8, ptr %0, i64 64
-  %i.hk = getelementptr i8, ptr %i.hj, i64 %i.gm  ; 2 uses
+  %i.hj = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %i.hk = getelementptr inbounds nuw i8, ptr %i.hj, i64 %i.gm ; 2 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %i.hk, i64 16
   store <16 x i8> %wide.load199.2, ptr %i.hk, align 1, !tbaa !15
   store <16 x i8> %wide.load200.2, ptr %i.hl, align 1, !tbaa !15
@@ -242,8 +242,8 @@ vector.body196.3:                                 ; preds = %vector.body196.2
   %i.ho = getelementptr i8, ptr %i.z, i64 113
   %wide.load199.3 = load <16 x i8>, ptr %i.hn, align 1, !tbaa !15
   %wide.load200.3 = load <16 x i8>, ptr %i.ho, align 1, !tbaa !15
-  %i.hp = getelementptr i8, ptr %0, i64 96
-  %i.hq = getelementptr i8, ptr %i.hp, i64 %i.gm  ; 2 uses
+  %i.hp = getelementptr inbounds nuw i8, ptr %0, i64 96
+  %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 %i.gm ; 2 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hq, i64 16
   store <16 x i8> %wide.load199.3, ptr %i.hq, align 1, !tbaa !15
   store <16 x i8> %wide.load200.3, ptr %i.hr, align 1, !tbaa !15
@@ -255,8 +255,8 @@ vector.body196.4:                                 ; preds = %vector.body196.3
   %i.hu = getelementptr i8, ptr %i.z, i64 145
   %wide.load199.4 = load <16 x i8>, ptr %i.ht, align 1, !tbaa !15
   %wide.load200.4 = load <16 x i8>, ptr %i.hu, align 1, !tbaa !15
-  %i.hv = getelementptr i8, ptr %0, i64 128
-  %i.hw = getelementptr i8, ptr %i.hv, i64 %i.gm  ; 2 uses
+  %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 %i.gm ; 2 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hw, i64 16
   store <16 x i8> %wide.load199.4, ptr %i.hw, align 1, !tbaa !15
   store <16 x i8> %wide.load200.4, ptr %i.hx, align 1, !tbaa !15
@@ -268,8 +268,8 @@ vector.body196.5:                                 ; preds = %vector.body196.4
   %i.ia = getelementptr i8, ptr %i.z, i64 177
   %wide.load199.5 = load <16 x i8>, ptr %i.hz, align 1, !tbaa !15
   %wide.load200.5 = load <16 x i8>, ptr %i.ia, align 1, !tbaa !15
-  %i.ib = getelementptr i8, ptr %0, i64 160
-  %i.ic = getelementptr i8, ptr %i.ib, i64 %i.gm  ; 2 uses
+  %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 160
+  %i.ic = getelementptr inbounds nuw i8, ptr %i.ib, i64 %i.gm ; 2 uses
   %i.id = getelementptr inbounds nuw i8, ptr %i.ic, i64 16
   store <16 x i8> %wide.load199.5, ptr %i.ic, align 1, !tbaa !15
   store <16 x i8> %wide.load200.5, ptr %i.id, align 1, !tbaa !15
@@ -281,8 +281,8 @@ vector.body196.6:                                 ; preds = %vector.body196.5
   %i.ig = getelementptr i8, ptr %i.z, i64 209
   %wide.load199.6 = load <16 x i8>, ptr %i.if, align 1, !tbaa !15
   %wide.load200.6 = load <16 x i8>, ptr %i.ig, align 1, !tbaa !15
-  %i.ih = getelementptr i8, ptr %0, i64 192
-  %i.ii = getelementptr i8, ptr %i.ih, i64 %i.gm  ; 2 uses
+  %i.ih = getelementptr inbounds nuw i8, ptr %0, i64 192
+  %i.ii = getelementptr inbounds nuw i8, ptr %i.ih, i64 %i.gm ; 2 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ii, i64 16
   store <16 x i8> %wide.load199.6, ptr %i.ii, align 1, !tbaa !15
   store <16 x i8> %wide.load200.6, ptr %i.ij, align 1, !tbaa !15

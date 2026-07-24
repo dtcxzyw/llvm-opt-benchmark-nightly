@@ -204,9 +204,8 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.cd = shl i64 %index, 1                       ; 2 uses
-  %7 = and i64 %index, 9223372036854775792
-  %i.ce = getelementptr inbounds nuw i8, ptr %i.by, i64 %7 ; 2 uses
+  %i.cd = shl nuw i64 %index, 1                   ; 2 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %i.by, i64 %index ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
   %wide.load = load <8 x i8>, ptr %i.ce, align 1, !tbaa !7 ; 2 uses
   %wide.load521 = load <8 x i8>, ptr %i.cf, align 1, !tbaa !7 ; 2 uses
@@ -241,9 +240,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index525 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next528, %vec.epilog.vector.body ] ; 3 uses
-  %i.cp = shl i64 %index525, 1
-  %8 = and i64 %index525, 9223372036854775804
-  %i.cq = getelementptr inbounds nuw i8, ptr %i.by, i64 %8
+  %i.cp = shl nuw i64 %index525, 1
+  %i.cq = getelementptr inbounds nuw i8, ptr %i.by, i64 %index525
   %wide.load526 = load <4 x i8>, ptr %i.cq, align 1, !tbaa !7 ; 2 uses
   %i.cr = lshr <4 x i8> %wide.load526, splat (i8 4)
   %i.cs = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.cp
@@ -646,7 +644,7 @@ vector.ph534:                                     ; preds = %vector.main.loop.it
 
 vector.body539:                                   ; preds = %vector.body539, %vector.ph534
   %index540 = phi i64 [ 0, %vector.ph534 ], [ %index.next543, %vector.body539 ] ; 2 uses
-  %i.zd = add i64 %index540, %i.za                ; 2 uses
+  %i.zd = add nuw i64 %index540, %i.za            ; 2 uses
   %i.ze = getelementptr inbounds nuw [2 x i8], ptr %i.bm, i64 %i.zd
   %i.zf = getelementptr [2 x i8], ptr %i.bm, i64 %i.zd
   %i.zg = getelementptr i8, ptr %i.zf, i64 16

@@ -203,7 +203,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.al = add i64 %2, %index                      ; 2 uses
+  %i.al = add nuw i64 %2, %index                  ; 2 uses
   %i.am = getelementptr inbounds nuw [2 x i8], ptr %i.o, i64 %i.al ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %wide.load = load <8 x i16>, ptr %i.am, align 2, !tbaa !1512
@@ -232,7 +232,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index59 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next61, %vec.epilog.vector.body ] ; 2 uses
-  %i.as = add i64 %2, %index59                    ; 2 uses
+  %i.as = add nuw i64 %2, %index59                ; 2 uses
   %i.at = getelementptr inbounds nuw [2 x i8], ptr %i.o, i64 %i.as
   %wide.load60 = load <4 x i16>, ptr %i.at, align 2, !tbaa !1512
   %i.au = getelementptr [2 x i8], ptr %invariant.gep52, i64 %i.as
@@ -635,7 +635,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.al = add i64 %2, %index                      ; 2 uses
+  %i.al = add nuw i64 %2, %index                  ; 2 uses
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.al ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %wide.load = load <4 x i32>, ptr %i.am, align 4, !tbaa !3
@@ -1038,7 +1038,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.al = add i64 %2, %index                      ; 2 uses
+  %i.al = add nuw i64 %2, %index                  ; 2 uses
   %i.am = getelementptr inbounds nuw [2 x i8], ptr %i.o, i64 %i.al ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %wide.load = load <8 x i16>, ptr %i.am, align 2, !tbaa !1512
@@ -1067,7 +1067,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index59 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next61, %vec.epilog.vector.body ] ; 2 uses
-  %i.as = add i64 %2, %index59                    ; 2 uses
+  %i.as = add nuw i64 %2, %index59                ; 2 uses
   %i.at = getelementptr inbounds nuw [2 x i8], ptr %i.o, i64 %i.as
   %wide.load60 = load <4 x i16>, ptr %i.at, align 2, !tbaa !1512
   %i.au = getelementptr [2 x i8], ptr %invariant.gep52, i64 %i.as
@@ -1470,7 +1470,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.al = add i64 %2, %index                      ; 2 uses
+  %i.al = add nuw i64 %2, %index                  ; 2 uses
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.al ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %wide.load = load <4 x i32>, ptr %i.am, align 4, !tbaa !3
@@ -1873,7 +1873,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.al = add i64 %2, %index                      ; 2 uses
+  %i.al = add nuw i64 %2, %index                  ; 2 uses
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.al ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %wide.load = load <4 x float>, ptr %i.am, align 4, !tbaa !222
@@ -2276,7 +2276,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.al = add i64 %2, %index                      ; 2 uses
+  %i.al = add nuw i64 %2, %index                  ; 2 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.al ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %wide.load = load <2 x double>, ptr %i.am, align 8, !tbaa !1467
@@ -2679,7 +2679,7 @@ vector.ph:                                        ; preds = %.lr.ph.split.us.pre
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.af = add i64 %2, %index                      ; 2 uses
+  %i.af = add nuw i64 %2, %index                  ; 2 uses
   %i.ag = getelementptr inbounds nuw [2 x i8], ptr %i.o, i64 %i.af ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %wide.load = load <4 x i16>, ptr %i.ag, align 2, !tbaa !1512

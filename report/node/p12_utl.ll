@@ -54,12 +54,11 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.o = shl i64 %index, 1                        ; 2 uses
+  %i.o = shl nuw i64 %index, 1                    ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.o
   %i.q = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.o
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %4 = and i64 %index, 9223372036854775792
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 %4 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 %index ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %wide.load = load <8 x i8>, ptr %i.s, align 1, !tbaa !9
   %wide.load42 = load <8 x i8>, ptr %i.t, align 1, !tbaa !9
@@ -87,10 +86,9 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index46 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next49, %vec.epilog.vector.body ] ; 3 uses
-  %i.w = shl i64 %index46, 1
+  %i.w = shl nuw i64 %index46, 1
   %i.x = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.w
-  %5 = and i64 %index46, 9223372036854775804
-  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 %5
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 %index46
   %wide.load47 = load <4 x i8>, ptr %i.y, align 1, !tbaa !9
   %interleaved.vec48 = shufflevector <4 x i8> zeroinitializer, <4 x i8> %wide.load47, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   store <8 x i8> %interleaved.vec48, ptr %i.x, align 1, !tbaa !9
@@ -214,7 +212,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.s = shl i64 %index, 1                        ; 16 uses
+  %i.s = shl nuw i64 %index, 1                    ; 16 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.s
   %i.u = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.s
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 2
@@ -278,8 +276,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cb = insertelement <16 x i8> %i.ca, i8 %i.bl, i64 13
   %i.cc = insertelement <16 x i8> %i.cb, i8 %i.bm, i64 14
   %i.cd = insertelement <16 x i8> %i.cc, i8 %i.bn, i64 15
-  %2 = and i64 %index, 9223372036854775792
-  %i.ce = getelementptr inbounds nuw i8, ptr %i.j, i64 %2
+  %i.ce = getelementptr inbounds nuw i8, ptr %i.j, i64 %index
   store <16 x i8> %i.cd, ptr %i.ce, align 1, !tbaa !9
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.cf = icmp eq i64 %index.next, %n.vec
@@ -300,7 +297,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index32 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next33, %vec.epilog.vector.body ] ; 3 uses
-  %i.cj = shl i64 %index32, 1                     ; 8 uses
+  %i.cj = shl nuw i64 %index32, 1                 ; 8 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.cj
   %i.cl = getelementptr i8, ptr %i.h, i64 %i.cj
   %i.cm = getelementptr i8, ptr %i.cl, i64 2
@@ -332,8 +329,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.dm = insertelement <8 x i8> %i.dl, i8 %i.de, i64 5
   %i.dn = insertelement <8 x i8> %i.dm, i8 %i.df, i64 6
   %i.do = insertelement <8 x i8> %i.dn, i8 %i.dg, i64 7
-  %3 = and i64 %index32, 9223372036854775807
-  %i.dp = getelementptr inbounds nuw i8, ptr %i.j, i64 %3
+  %i.dp = getelementptr inbounds nuw i8, ptr %i.j, i64 %index32
   store <8 x i8> %i.do, ptr %i.dp, align 1, !tbaa !9
   %index.next33 = add nuw i64 %index32, 8         ; 2 uses
   %i.dq = icmp eq i64 %index.next33, %n.vec31
@@ -423,12 +419,11 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.u = shl i64 %index, 1                        ; 2 uses
+  %i.u = shl nuw i64 %index, 1                    ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.u
   %i.w = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.u
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16
-  %4 = and i64 %index, 9223372036854775792
-  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 %4 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 %index ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %wide.load = load <8 x i8>, ptr %i.y, align 1, !tbaa !9
   %wide.load91 = load <8 x i8>, ptr %i.z, align 1, !tbaa !9
@@ -456,10 +451,9 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index95 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next98, %vec.epilog.vector.body ] ; 3 uses
-  %i.ac = shl i64 %index95, 1
+  %i.ac = shl nuw i64 %index95, 1
   %i.ad = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.ac
-  %5 = and i64 %index95, 9223372036854775804
-  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 %5
+  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 %index95
   %wide.load96 = load <4 x i8>, ptr %i.ae, align 1, !tbaa !9
   %interleaved.vec97 = shufflevector <4 x i8> zeroinitializer, <4 x i8> %wide.load96, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   store <8 x i8> %interleaved.vec97, ptr %i.ad, align 1, !tbaa !9
@@ -720,7 +714,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.az = shl i64 %index, 1                       ; 16 uses
+  %i.az = shl nuw i64 %index, 1                   ; 16 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.az
   %i.bb = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.az
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 2
@@ -784,8 +778,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.di = insertelement <16 x i8> %i.dh, i8 %i.cs, i64 13
   %i.dj = insertelement <16 x i8> %i.di, i8 %i.ct, i64 14
   %i.dk = insertelement <16 x i8> %i.dj, i8 %i.cu, i64 15
-  %2 = and i64 %index, 9223372036854775792
-  %i.dl = getelementptr inbounds nuw i8, ptr %i.ar, i64 %2
+  %i.dl = getelementptr inbounds nuw i8, ptr %i.ar, i64 %index
   store <16 x i8> %i.dk, ptr %i.dl, align 1, !tbaa !9
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.dm = icmp eq i64 %index.next, %n.vec
@@ -806,7 +799,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index109 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next110, %vec.epilog.vector.body ] ; 3 uses
-  %i.dq = shl i64 %index109, 1                    ; 8 uses
+  %i.dq = shl nuw i64 %index109, 1                ; 8 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.dq
   %i.ds = getelementptr i8, ptr %i.as, i64 %i.dq
   %i.dt = getelementptr i8, ptr %i.ds, i64 2
@@ -838,8 +831,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.et = insertelement <8 x i8> %i.es, i8 %i.el, i64 5
   %i.eu = insertelement <8 x i8> %i.et, i8 %i.em, i64 6
   %i.ev = insertelement <8 x i8> %i.eu, i8 %i.en, i64 7
-  %3 = and i64 %index109, 9223372036854775807
-  %i.ew = getelementptr inbounds nuw i8, ptr %i.ar, i64 %3
+  %i.ew = getelementptr inbounds nuw i8, ptr %i.ar, i64 %index109
   store <8 x i8> %i.ev, ptr %i.ew, align 1, !tbaa !9
   %index.next110 = add nuw i64 %index109, 8       ; 2 uses
   %i.ex = icmp eq i64 %index.next110, %n.vec108

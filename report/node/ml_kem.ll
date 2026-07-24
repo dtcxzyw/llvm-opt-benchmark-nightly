@@ -203,7 +203,7 @@ vector.body68:                                    ; preds = %vector.body59, %vec
 
 vector.body74:                                    ; preds = %vector.body68, %vector.body74
   %index75 = phi i64 [ %index.next76, %vector.body74 ], [ 0, %vector.body68 ] ; 3 uses
-  %i.er = shl i64 %index75, 3                     ; 8 uses
+  %i.er = shl nuw i64 %index75, 3                 ; 8 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.a, i64 %index75
   %i.et = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %i.er ; 8 uses
   %i.eu = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %i.er ; 8 uses
@@ -606,7 +606,7 @@ vector.body:                                      ; preds = %bb.a, %vector.body
   %next.gep83 = getelementptr i8, ptr %i.j, i64 18
   %i.k = getelementptr i8, ptr %i.a, i64 %i.d     ; 3 uses
   %next.gep84 = getelementptr i8, ptr %i.k, i64 21
-  %i.l = shl i64 %index, 3
+  %i.l = shl nuw i64 %index, 3
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %i.l
   %i.n = getelementptr inbounds nuw i8, ptr %next.gep, i64 1
   %i.o = getelementptr i8, ptr %i.e, i64 4
@@ -773,7 +773,7 @@ bb.a:
 
 vector.body:                                      ; preds = %bb.a, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %bb.a ] ; 3 uses
-  %i.d = shl i64 %index, 2
+  %i.d = shl nuw i64 %index, 2
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 %index
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %i.d
   %wide.load = load <4 x i8>, ptr %i.e, align 4, !tbaa !44
@@ -943,14 +943,14 @@ vector.ph:                                        ; preds = %bb.b
   %i.p = getelementptr i8, ptr %.020.ptr, i64 %i.n
   %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %i.d, i64 0
   %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer
-  %i.q = getelementptr i8, ptr %0, i64 %.020.add
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 %.020.add
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.r = shl i64 %index, 1                        ; 2 uses
   %next.gep = getelementptr i8, ptr %.020.ptr, i64 %i.r ; 2 uses
-  %i.s = getelementptr i8, ptr %i.q, i64 %i.r     ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.r ; 2 uses
   %wide.load = load <8 x i16>, ptr %next.gep, align 2, !tbaa !38 ; 2 uses
   %wide.load44 = load <8 x i16>, ptr %i.s, align 2, !tbaa !38
   %i.t = zext <8 x i16> %wide.load44 to <8 x i32>
@@ -1072,14 +1072,14 @@ vector.ph48:                                      ; preds = %.preheader38
   %i.ck = getelementptr i8, ptr %.020.ptr.1, i64 %i.ci
   %broadcast.splatinsert51 = insertelement <8 x i32> poison, i32 %i.by, i64 0
   %broadcast.splat52 = shufflevector <8 x i32> %broadcast.splatinsert51, <8 x i32> poison, <8 x i32> zeroinitializer
-  %i.cl = getelementptr i8, ptr %0, i64 %.020.add.1
+  %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 %.020.add.1
   br label %vector.body53
 
 vector.body53:                                    ; preds = %vector.body53, %vector.ph48
   %index54 = phi i64 [ 0, %vector.ph48 ], [ %index.next58, %vector.body53 ] ; 2 uses
   %i.cm = shl i64 %index54, 1                     ; 2 uses
   %next.gep55 = getelementptr i8, ptr %.020.ptr.1, i64 %i.cm ; 2 uses
-  %i.cn = getelementptr i8, ptr %i.cl, i64 %i.cm  ; 2 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.cm ; 2 uses
   %wide.load56 = load <8 x i16>, ptr %next.gep55, align 2, !tbaa !38 ; 2 uses
   %wide.load57 = load <8 x i16>, ptr %i.cn, align 2, !tbaa !38
   %i.co = zext <8 x i16> %wide.load57 to <8 x i32>
@@ -1201,14 +1201,14 @@ vector.ph66:                                      ; preds = %.preheader37
   %i.ff = getelementptr i8, ptr %.020.ptr.2, i64 %i.fd
   %broadcast.splatinsert69 = insertelement <8 x i32> poison, i32 %i.et, i64 0
   %broadcast.splat70 = shufflevector <8 x i32> %broadcast.splatinsert69, <8 x i32> poison, <8 x i32> zeroinitializer
-  %i.fg = getelementptr i8, ptr %0, i64 %.020.add.2
+  %i.fg = getelementptr inbounds nuw i8, ptr %0, i64 %.020.add.2
   br label %vector.body71
 
 vector.body71:                                    ; preds = %vector.body71, %vector.ph66
   %index72 = phi i64 [ 0, %vector.ph66 ], [ %index.next76, %vector.body71 ] ; 2 uses
   %i.fh = shl i64 %index72, 1                     ; 2 uses
   %next.gep73 = getelementptr i8, ptr %.020.ptr.2, i64 %i.fh ; 2 uses
-  %i.fi = getelementptr i8, ptr %i.fg, i64 %i.fh  ; 2 uses
+  %i.fi = getelementptr inbounds nuw i8, ptr %i.fg, i64 %i.fh ; 2 uses
   %wide.load74 = load <8 x i16>, ptr %next.gep73, align 2, !tbaa !38 ; 2 uses
   %wide.load75 = load <8 x i16>, ptr %i.fi, align 2, !tbaa !38
   %i.fj = zext <8 x i16> %wide.load75 to <8 x i32>
@@ -1330,14 +1330,14 @@ vector.ph84:                                      ; preds = %.preheader36
   %i.ia = getelementptr i8, ptr %.020.ptr.3, i64 %i.hy
   %broadcast.splatinsert87 = insertelement <8 x i32> poison, i32 %i.ho, i64 0
   %broadcast.splat88 = shufflevector <8 x i32> %broadcast.splatinsert87, <8 x i32> poison, <8 x i32> zeroinitializer
-  %i.ib = getelementptr i8, ptr %0, i64 %.020.add.3
+  %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 %.020.add.3
   br label %vector.body89
 
 vector.body89:                                    ; preds = %vector.body89, %vector.ph84
   %index90 = phi i64 [ 0, %vector.ph84 ], [ %index.next94, %vector.body89 ] ; 2 uses
   %i.ic = shl i64 %index90, 1                     ; 2 uses
   %next.gep91 = getelementptr i8, ptr %.020.ptr.3, i64 %i.ic ; 2 uses
-  %i.id = getelementptr i8, ptr %i.ib, i64 %i.ic  ; 2 uses
+  %i.id = getelementptr inbounds nuw i8, ptr %i.ib, i64 %i.ic ; 2 uses
   %wide.load92 = load <8 x i16>, ptr %next.gep91, align 2, !tbaa !38 ; 2 uses
   %wide.load93 = load <8 x i16>, ptr %i.id, align 2, !tbaa !38
   %i.ie = zext <8 x i16> %wide.load93 to <8 x i32>
@@ -1442,7 +1442,7 @@ vector.ph101:                                     ; preds = %vector.memcheck
 
 vector.body102:                                   ; preds = %vector.body102, %vector.ph101
   %index103 = phi i64 [ 0, %vector.ph101 ], [ %index.next106, %vector.body102 ] ; 3 uses
-  %i.kj = shl i64 %index103, 5                    ; 8 uses
+  %i.kj = shl nuw i64 %index103, 5                ; 8 uses
   %i.kk = shl i64 %index103, 1
   %next.gep104 = getelementptr i8, ptr %i.hm, i64 %i.kk
   %i.kl = getelementptr inbounds nuw i8, ptr %0, i64 %i.kj ; 17 uses
@@ -1845,7 +1845,7 @@ vector.ph116:                                     ; preds = %vector.memcheck108
 
 vector.body117:                                   ; preds = %vector.body117, %vector.ph116
   %index118 = phi i64 [ 0, %vector.ph116 ], [ %index.next121, %vector.body117 ] ; 3 uses
-  %i.aon = shl i64 %index118, 4                   ; 8 uses
+  %i.aon = shl nuw i64 %index118, 4               ; 8 uses
   %i.aoo = shl i64 %index118, 1
   %next.gep119 = getelementptr i8, ptr %.lcssa39, i64 %i.aoo
   %i.aop = getelementptr inbounds nuw i8, ptr %0, i64 %i.aon ; 9 uses
@@ -2242,7 +2242,7 @@ vector.memcheck123:                               ; preds = %vector.body117, %sc
 
 vector.body131:                                   ; preds = %vector.memcheck123, %vector.body131
   %index132 = phi i64 [ %index.next136, %vector.body131 ], [ 0, %vector.memcheck123 ] ; 3 uses
-  %i.bcm = shl i64 %index132, 3                   ; 8 uses
+  %i.bcm = shl nuw i64 %index132, 3               ; 8 uses
   %i.bcn = shl i64 %index132, 1
   %next.gep133 = getelementptr i8, ptr %.lcssa, i64 %i.bcn
   %i.bco = getelementptr inbounds nuw i8, ptr %0, i64 %i.bcm ; 5 uses
@@ -2645,7 +2645,7 @@ bb.e:                                             ; preds = %middle.block215, %m
 
 vector.body210:                                   ; preds = %bb.e, %vector.body210
   %index211 = phi i64 [ %index.next214, %vector.body210 ], [ 0, %bb.e ] ; 3 uses
-  %i.ln = shl i64 %index211, 2
+  %i.ln = shl nuw i64 %index211, 2
   %i.lo = getelementptr inbounds nuw i8, ptr %i.b, i64 %index211
   %i.lp = getelementptr inbounds nuw i8, ptr %.07.i, i64 %i.ln
   %wide.load212 = load <4 x i8>, ptr %i.lo, align 4, !tbaa !44
@@ -2904,7 +2904,7 @@ vector_encode.exit:                               ; preds = %scalar_encode.exit.
 
 vector.body244:                                   ; preds = %vector_encode.exit, %vector.body244
   %index245 = phi i64 [ %index.next248, %vector.body244 ], [ 0, %vector_encode.exit ] ; 3 uses
-  %i.qm = shl i64 %index245, 2
+  %i.qm = shl nuw i64 %index245, 2
   %i.qn = getelementptr inbounds nuw i8, ptr %i.a, i64 %index245
   %i.qo = getelementptr inbounds nuw i8, ptr %3, i64 %i.qm
   %wide.load246 = load <4 x i8>, ptr %i.qn, align 4, !tbaa !44
@@ -2980,7 +2980,7 @@ vector.body252:                                   ; preds = %vector.body252, %mi
 
 vector.body262:                                   ; preds = %vector.body252, %vector.body262
   %index263 = phi i64 [ %index.next267, %vector.body262 ], [ 0, %vector.body252 ] ; 3 uses
-  %i.sj = shl i64 %index263, 4                    ; 8 uses
+  %i.sj = shl nuw i64 %index263, 4                ; 8 uses
   %next.gep264 = getelementptr i8, ptr %1, i64 %index263
   %i.sk = getelementptr inbounds nuw i8, ptr %6, i64 %i.sj ; 9 uses
   %i.sl = getelementptr inbounds nuw i8, ptr %6, i64 %i.sj ; 8 uses
@@ -3383,7 +3383,7 @@ vector.memcheck:
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 3 uses
-  %i.a = shl i64 %index, 3                        ; 8 uses
+  %i.a = shl nuw i64 %index, 3                    ; 8 uses
   %i.b = shl i64 %index, 1
   %next.gep = getelementptr i8, ptr @kInverseNTTRoots, i64 %i.b
   %i.c = getelementptr i8, ptr %0, i64 %i.a       ; 5 uses
@@ -3611,7 +3611,7 @@ vector.ph58:                                      ; preds = %vector.memcheck50
 
 vector.body59:                                    ; preds = %vector.body59, %vector.ph58
   %index60 = phi i64 [ 0, %vector.ph58 ], [ %index.next64, %vector.body59 ] ; 3 uses
-  %i.gn = shl i64 %index60, 4                     ; 8 uses
+  %i.gn = shl nuw i64 %index60, 4                 ; 8 uses
   %i.go = shl i64 %index60, 1
   %next.gep61 = getelementptr i8, ptr %.lcssa49, i64 %i.go
   %i.gp = getelementptr i8, ptr %0, i64 %i.gn     ; 9 uses
@@ -3960,7 +3960,7 @@ vector.ph73:                                      ; preds = %vector.memcheck66
 
 vector.body74:                                    ; preds = %vector.body74, %vector.ph73
   %index75 = phi i64 [ 0, %vector.ph73 ], [ %index.next78, %vector.body74 ] ; 3 uses
-  %i.su = shl i64 %index75, 5                     ; 8 uses
+  %i.su = shl nuw i64 %index75, 5                 ; 8 uses
   %i.sv = shl i64 %index75, 1
   %next.gep76 = getelementptr i8, ptr %.lcssa48, i64 %i.sv
   %i.sw = getelementptr i8, ptr %0, i64 %i.su     ; 17 uses
@@ -4363,7 +4363,7 @@ scalar.ph126:                                     ; preds = %scalar.ph126.prehea
 
 vector.body146:                                   ; preds = %.loopexit, %vector.body146
   %index147 = phi i64 [ %index.next149, %vector.body146 ], [ 0, %.loopexit ] ; 2 uses
-  %i.bgi = shl i64 %index147, 1
+  %i.bgi = shl nuw i64 %index147, 1
   %i.bgj = getelementptr inbounds nuw i8, ptr %0, i64 %i.bgi ; 2 uses
   %wide.load148 = load <8 x i16>, ptr %i.bgj, align 2, !tbaa !38
   %i.bgk = zext <8 x i16> %wide.load148 to <8 x i32>

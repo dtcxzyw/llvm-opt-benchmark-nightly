@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %.lr.ph154.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.br = shl i64 %index, 3
+  %i.br = shl nuw i64 %index, 3
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.br ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bs, i64 24

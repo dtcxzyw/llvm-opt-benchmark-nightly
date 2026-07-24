@@ -204,7 +204,7 @@ vector.ph842:                                     ; preds = %vector.memcheck
 
 vector.body845:                                   ; preds = %vector.body845, %vector.ph842
   %index846 = phi i64 [ 0, %vector.ph842 ], [ %index.next849, %vector.body845 ] ; 2 uses
-  %i.blp = add i64 %index846, %i.bky              ; 2 uses
+  %i.blp = add nuw i64 %index846, %i.bky          ; 2 uses
   %i.blq = trunc nuw i64 %i.blp to i32
   %i.blr = add i32 %i.bkv, %i.blq
   %i.bls = zext i32 %i.blr to i64

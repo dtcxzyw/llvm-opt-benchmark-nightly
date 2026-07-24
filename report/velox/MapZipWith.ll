@@ -204,9 +204,8 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %99 = and i64 %index, 288230376151711728        ; 2 uses
-  %i.bkv = getelementptr inbounds nuw [8 x i8], ptr %i.bjv, i64 %99 ; 5 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+  %i.bkv = getelementptr inbounds nuw [8 x i8], ptr %i.bjv, i64 %index ; 5 uses
   %i.bkw = getelementptr inbounds nuw i8, ptr %i.bkv, i64 32 ; 2 uses
   %i.bkx = getelementptr inbounds nuw i8, ptr %i.bkv, i64 64 ; 2 uses
   %i.bky = getelementptr inbounds nuw i8, ptr %i.bkv, i64 96 ; 2 uses
@@ -214,7 +213,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load946 = load <4 x i64>, ptr %i.bkw, align 8, !tbaa !135, !alias.scope !360, !noalias !363
   %wide.load947 = load <4 x i64>, ptr %i.bkx, align 8, !tbaa !135, !alias.scope !360, !noalias !363
   %wide.load948 = load <4 x i64>, ptr %i.bky, align 8, !tbaa !135, !alias.scope !360, !noalias !363
-  %i.bkz = getelementptr inbounds nuw [8 x i8], ptr %i.bkk, i64 %99 ; 4 uses
+  %i.bkz = getelementptr inbounds nuw [8 x i8], ptr %i.bkk, i64 %index ; 4 uses
   %i.bla = getelementptr inbounds nuw i8, ptr %i.bkz, i64 32
   %i.blb = getelementptr inbounds nuw i8, ptr %i.bkz, i64 64
   %i.blc = getelementptr inbounds nuw i8, ptr %i.bkz, i64 96
@@ -254,11 +253,10 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
-  %index956 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next959, %vec.epilog.vector.body ] ; 2 uses
-  %100 = and i64 %index956, 288230376151711740    ; 2 uses
-  %i.blo = getelementptr inbounds nuw [8 x i8], ptr %i.bjv, i64 %100 ; 2 uses
+  %index956 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next959, %vec.epilog.vector.body ] ; 3 uses
+  %i.blo = getelementptr inbounds nuw [8 x i8], ptr %i.bjv, i64 %index956 ; 2 uses
   %wide.load957 = load <4 x i64>, ptr %i.blo, align 8, !tbaa !135, !alias.scope !360, !noalias !363
-  %i.blp = getelementptr inbounds nuw [8 x i8], ptr %i.bkk, i64 %100
+  %i.blp = getelementptr inbounds nuw [8 x i8], ptr %i.bkk, i64 %index956
   %wide.load958 = load <4 x i64>, ptr %i.blp, align 8, !tbaa !135, !alias.scope !365, !noalias !349
   %i.blq = xor <4 x i64> %wide.load958, splat (i64 -1)
   %i.blr = and <4 x i64> %wide.load957, %i.blq

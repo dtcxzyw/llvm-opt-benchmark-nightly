@@ -203,12 +203,12 @@ tailrecurse:                                      ; preds = %tailrecurse, %bb.a
 vector.ph:                                        ; preds = %.lr.ph55.preheader74
   %n.vec = and i64 %i.at, -4                      ; 3 uses
   %i.au = add nsw i64 %indvars.iv.next68.peel, %n.vec
-  %i.av = getelementptr [8 x i8], ptr %0, i64 %indvars.iv.next68.peel
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next68.peel
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.aw = getelementptr [8 x i8], ptr %i.av, i64 %index ; 2 uses
+  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %index ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   store <2 x i64> zeroinitializer, ptr %i.aw, align 4
   store <2 x i64> zeroinitializer, ptr %i.ax, align 4
@@ -611,7 +611,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.m = add i64 %index, %i.i                     ; 2 uses
+  %i.m = add nuw i64 %index, %i.i                 ; 2 uses
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.m ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %wide.load = load <2 x i64>, ptr %i.n, align 1
@@ -729,7 +729,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.k = add i64 %index, %i.d                     ; 2 uses
+  %i.k = add nuw i64 %index, %i.d                 ; 2 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.k ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %wide.load = load <2 x i64>, ptr %i.l, align 1
