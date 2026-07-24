@@ -201,7 +201,7 @@ resume.entry:
     i3 2, label %.critedge35
     i3 3, label %CoroEnd
     i3 -4, label %CoroEnd
-  ]
+  ], !prof !2259
 
 .critedge:                                        ; preds = %resume.entry
   %i.a = load ptr, ptr @_ZZN5folly4coro12ServerSocket6acceptEvE8vlocal__, align 8, !tbaa !24 ; 2 uses
@@ -253,14 +253,14 @@ _ZNK5folly17CancellationToken23isCancellationRequestedEv.exit.i.i: ; preds = %.c
 
 bb.g:                                             ; preds = %_ZNK5folly17CancellationToken23isCancellationRequestedEv.exit.i.i
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #25, !noalias !2259
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5folly18OperationCancelledE, i64 16), ptr %3, align 8, !tbaa !34, !noalias !2259
-  call void @llvm.lifetime.start.p0(ptr nonnull %4), !noalias !2259
-  store ptr %3, ptr %4, align 8, !noalias !2262
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #25, !noalias !2260
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5folly18OperationCancelledE, i64 16), ptr %3, align 8, !tbaa !34, !noalias !2260
+  call void @llvm.lifetime.start.p0(ptr nonnull %4), !noalias !2260
+  store ptr %3, ptr %4, align 8, !noalias !2263
   call void @_ZN5folly6detail24make_exception_ptr_with_ERKNS0_28make_exception_ptr_with_arg_EPv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(32) @_ZZNK5folly26make_exception_ptr_with_fnclIZNKS0_4makeINS_18OperationCancelledEJOS3_EEEDaDpOT0_EUlvE_TnPDTclclscPDoFRT_vELDnEEEELPS3_0EEENSt15__exception_ptr13exception_ptrES9_E3arg, ptr noundef nonnull %4) #25
-  call void @llvm.lifetime.end.p0(ptr nonnull %4), !noalias !2259
+  call void @llvm.lifetime.end.p0(ptr nonnull %4), !noalias !2260
   call void @_ZNSt9exceptionD2Ev(ptr noundef nonnull align 8 dereferenceable(8) %3) #25
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #25, !noalias !2259
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #25, !noalias !2260
   %i.n = load i32, ptr %i.m, align 16, !tbaa !2048
   store i32 2, ptr %i.m, align 16, !tbaa !2048
   switch i32 %i.n, label %_ZN5folly4coro17variant_awaitableIJNS0_6detail15TaskPromiseBase12FinalAwaiterENS0_15ready_awaitableIvEEEE13await_suspendINS2_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteISB_EEEEEEDaNSt7__n486116coroutine_handleIT_EE.exit [
@@ -278,7 +278,7 @@ _ZNKSt14default_deleteIN5folly4coro9TransportEEclEPS2_.exit.i.i.i.i.i.i: ; preds
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !34
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.s = load ptr, ptr %i.r, align 8
-  call void %i.s(ptr noundef nonnull align 8 dereferenceable(25) %i.p) #25, !call_target !2052, !inline_history !2265
+  call void %i.s(ptr noundef nonnull align 8 dereferenceable(25) %i.p) #25, !call_target !2052, !inline_history !2266
   br label %_ZN5folly4coro17variant_awaitableIJNS0_6detail15TaskPromiseBase12FinalAwaiterENS0_15ready_awaitableIvEEEE13await_suspendINS2_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteISB_EEEEEEDaNSt7__n486116coroutine_handleIT_EE.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -297,9 +297,9 @@ bb.j:                                             ; preds = %bb.i
 
 _ZN5folly4coro17variant_awaitableIJNS0_6detail15TaskPromiseBase12FinalAwaiterENS0_15ready_awaitableIvEEEE13await_suspendINS2_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteISB_EEEEEEDaNSt7__n486116coroutine_handleIT_EE.exit: ; preds = %bb.j, %bb.i, %_ZNKSt14default_deleteIN5folly4coro9TransportEEclEPS2_.exit.i.i.i.i.i.i, %bb.h, %bb.g
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 104
-  call void @llvm.experimental.noalias.scope.decl(metadata !2266)
-  %i.w = load i64, ptr %2, align 8, !noalias !2266
-  store i64 %i.w, ptr %i.v, align 8, !alias.scope !2266
+  call void @llvm.experimental.noalias.scope.decl(metadata !2267)
+  %i.w = load i64, ptr %2, align 8, !noalias !2267
+  store i64 %i.w, ptr %i.v, align 8, !alias.scope !2267
   store i32 1, ptr %i.m, align 16, !tbaa !2000
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   store i16 0, ptr %.reload.addr228, align 16
@@ -332,8 +332,8 @@ _ZN5folly4coro17variant_awaitableIJNS0_6detail15TaskPromiseBase12FinalAwaiterENS
 
 .critedge31:                                      ; preds = %resume.entry, %.critedge31.from._ZN5folly4coro6detail19TaskPromiseCrtpBaseINS1_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteIS5_EEEES8_E15await_transformENS0_15co_safe_point_tE.exit.thread
   %.reload.addr226 = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 2 uses
-  %.reload227 = load ptr, ptr %.reload.addr226, align 16, !tbaa !2269 ; 3 uses
-  store ptr null, ptr %.reload.addr232, align 16, !tbaa !2271
+  %.reload227 = load ptr, ptr %.reload.addr226, align 16, !tbaa !2270 ; 3 uses
+  store ptr null, ptr %.reload.addr232, align 16, !tbaa !2272
   %i.ac = load ptr, ptr %.reload227, align 8, !tbaa !11 ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.reload227, i64 8
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !17 ; 3 uses
@@ -365,7 +365,7 @@ _ZNSt12__shared_ptrIN5folly17AsyncServerSocketELN9__gnu_cxx12_Lock_policyE2EED2E
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 240
   store ptr null, ptr %i.am, align 16, !tbaa !2043
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 248
-  store ptr %.reload.addr232, ptr %i.an, align 8, !tbaa !2273
+  store ptr %.reload.addr232, ptr %i.an, align 8, !tbaa !2274
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 256
   store ptr %i.ac, ptr %i.ao, align 16, !tbaa !11
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 264
@@ -374,16 +374,16 @@ _ZNSt12__shared_ptrIN5folly17AsyncServerSocketELN9__gnu_cxx12_Lock_policyE2EED2E
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 96
   %i.as = load ptr, ptr %i.ar, align 8
   invoke void %i.as(ptr noundef nonnull align 8 dereferenceable(352) %i.ak, ptr noundef nonnull %.reload.addr229, ptr noundef null, i32 noundef 5)
-          to label %bb.l unwind label %.from.204, !call_target !2274
+          to label %bb.l unwind label %.from.204, !call_target !2275
 
 bb.l:                                             ; preds = %_ZNSt12__shared_ptrIN5folly17AsyncServerSocketELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %.reload225 = load ptr, ptr %.reload.addr226, align 16, !tbaa !2269
+  %.reload225 = load ptr, ptr %.reload.addr226, align 16, !tbaa !2270
   %i.at = load ptr, ptr %.reload225, align 8, !tbaa !11 ; 2 uses
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !34
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 104
   %i.aw = load ptr, ptr %i.av, align 8
   invoke void %i.aw(ptr noundef nonnull align 8 dereferenceable(352) %i.at)
-          to label %.critedge33 unwind label %.from.204, !call_target !2282
+          to label %.critedge33 unwind label %.from.204, !call_target !2283
 
 .from.204:                                        ; preds = %_ZNSt12__shared_ptrIN5folly17AsyncServerSocketELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.l
   %i.ax = landingpad { ptr, i32 }
@@ -392,14 +392,14 @@ bb.l:                                             ; preds = %_ZNSt12__shared_ptr
 
 .critedge33:                                      ; preds = %bb.l
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store ptr null, ptr %.reload.addr233, align 8, !tbaa !2285
+  store ptr null, ptr %.reload.addr233, align 8, !tbaa !2286
   %i.az = load ptr, ptr %i.ay, align 16, !tbaa !2034 ; 5 uses
   %.not.i = icmp eq ptr %i.az, null               ; 2 uses
   br i1 %.not.i, label %_ZN5folly17CancellationTokenC2ERKS0_.exit, label %bb.m
 
 bb.m:                                             ; preds = %.critedge33
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 8
-  %i.bb = atomicrmw add ptr %i.ba, i64 8 monotonic, align 8, !noalias !2287 ; 0 uses
+  %i.bb = atomicrmw add ptr %i.ba, i64 8 monotonic, align 8, !noalias !2288 ; 0 uses
   store ptr %i.az, ptr %.reload.addr233, align 8, !tbaa !2034
   br label %_ZN5folly17CancellationTokenC2ERKS0_.exit
 
@@ -409,13 +409,13 @@ _ZN5folly17CancellationTokenC2ERKS0_.exit:        ; preds = %bb.m, %.critedge33
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 200
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(105) %.reload.addr228, i8 0, i64 24, i1 false)
-  store ptr %.reload.addr232, ptr %i.bd, align 16, !tbaa !2273
+  store ptr %.reload.addr232, ptr %i.bd, align 16, !tbaa !2274
   store ptr @"_ZN5folly6detail8function5call_IZNS_4coro12ServerSocket6acceptEvE3$_0Lb1ELb0EvJEEET2_DpT3_RNS1_4DataE", ptr %i.be, align 16, !tbaa !2113
   store ptr @_ZN5folly6detail8function20DispatchSmallTrivial5exec_ILm16EEEmNS1_2OpEPNS1_4DataES6_, ptr %i.bf, align 8, !tbaa !2032
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 208
-  store ptr null, ptr %i.bg, align 16, !tbaa !2290
+  store ptr null, ptr %i.bg, align 16, !tbaa !2291
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 216
-  store i8 0, ptr %i.bh, align 8, !tbaa !2291
+  store i8 0, ptr %i.bh, align 8, !tbaa !2292
   br i1 %.not.i, label %.from..i.i.i.i, label %bb.n
 
 bb.n:                                             ; preds = %_ZN5folly17CancellationTokenC2ERKS0_.exit
@@ -428,16 +428,16 @@ bb.o:                                             ; preds = %bb.n
 
 .from..i.i.i.i:                                   ; preds = %bb.o, %bb.n, %_ZN5folly17CancellationTokenC2ERKS0_.exit
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 73 ; 2 uses
-  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !2063, !noalias !2292
+  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !2063, !noalias !2293
   %i.bl = icmp eq i8 %i.bk, 2
   %i.bm = zext i1 %i.bl to i8
-  store i8 %i.bm, ptr %i.bj, align 1, !tbaa !2063, !noalias !2292
+  store i8 %i.bm, ptr %i.bj, align 1, !tbaa !2063, !noalias !2293
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !2075, !noalias !2295
-  call void @llvm.experimental.noalias.scope.decl(metadata !2298)
-  call void @llvm.experimental.noalias.scope.decl(metadata !2301)
+  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !2075, !noalias !2296
+  call void @llvm.experimental.noalias.scope.decl(metadata !2299)
+  call void @llvm.experimental.noalias.scope.decl(metadata !2302)
   %i.bp = invoke noundef ptr @folly_coro_async_malloc(i64 noundef 104)
-          to label %.from.189 unwind label %.body72.from._ZN5folly17ExecutorKeepAliveINS_8ExecutorEED2Ev.exit4.i, !noalias !2298 ; 8 uses
+          to label %.from.189 unwind label %.body72.from._ZN5folly17ExecutorKeepAliveINS_8ExecutorEED2Ev.exit4.i, !noalias !2299 ; 8 uses
 
 .body72.from._ZN5folly17ExecutorKeepAliveINS_8ExecutorEED2Ev.exit4.i: ; preds = %.from..i.i.i.i
   %i.bq = landingpad { ptr, i32 }
@@ -446,24 +446,24 @@ bb.o:                                             ; preds = %bb.n
 
 .from.189:                                        ; preds = %.from..i.i.i.i
   %i.br = or i64 %i.bo, 2
-  store ptr @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.resume, ptr %i.bp, align 8, !noalias !2304
+  store ptr @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.resume, ptr %i.bp, align 8, !noalias !2305
   %destroy.addr.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
-  store ptr @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.destroy, ptr %destroy.addr.i.i.i.i, align 8, !noalias !2304
+  store ptr @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.destroy, ptr %destroy.addr.i.i.i.i, align 8, !noalias !2305
   %.reload.addr14.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bp, i64 32
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.bt, i8 0, i64 56, i1 false), !noalias !2304
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.bt, i8 0, i64 56, i1 false), !noalias !2305
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bp, i64 88
-  store ptr @_ZZN5folly4coro28ExtendedCoroutinePromiseCrtpINS0_6detail12ViaCoroutineILb0EE12promise_typeEEC1EvENUlPNS0_23ExtendedCoroutineHandle11PromiseBaseERNS_17exception_wrapperEE_8__invokeES9_SB_, ptr %i.bu, align 8, !tbaa !1998, !noalias !2304
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5folly4coro6detail12ViaCoroutineILb0EE12promise_typeE, i64 16), ptr %.reload.addr14.i.i.i.i, align 8, !tbaa !34, !noalias !2304
-  store ptr %i.bp, ptr %.reload.addr230, align 16, !tbaa !2003, !alias.scope !2305
+  store ptr @_ZZN5folly4coro28ExtendedCoroutinePromiseCrtpINS0_6detail12ViaCoroutineILb0EE12promise_typeEEC1EvENUlPNS0_23ExtendedCoroutineHandle11PromiseBaseERNS_17exception_wrapperEE_8__invokeES9_SB_, ptr %i.bu, align 8, !tbaa !1998, !noalias !2305
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5folly4coro6detail12ViaCoroutineILb0EE12promise_typeE, i64 16), ptr %.reload.addr14.i.i.i.i, align 8, !tbaa !34, !noalias !2305
+  store ptr %i.bp, ptr %.reload.addr230, align 16, !tbaa !2003, !alias.scope !2306
   %index.addr15.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 96
-  store i1 false, ptr %index.addr15.i.i.i.i, align 8, !noalias !2304
-  store i64 %i.br, ptr %i.bs, align 8, !tbaa !2075, !noalias !2304
+  store i1 false, ptr %index.addr15.i.i.i.i, align 8, !noalias !2305
+  store i64 %i.br, ptr %i.bs, align 8, !tbaa !2075, !noalias !2305
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 280
-  store ptr %.reload.addr232, ptr %i.bv, align 8, !tbaa !2273, !alias.scope !2308
+  store ptr %.reload.addr232, ptr %i.bv, align 8, !tbaa !2274, !alias.scope !2309
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 288
-  store ptr null, ptr %i.bw, align 16, !tbaa !2313, !alias.scope !2308
+  store ptr null, ptr %i.bw, align 16, !tbaa !2314, !alias.scope !2309
   %i.bx = load atomic ptr, ptr %.reload.addr232 acquire, align 16
   %i.by = icmp eq ptr %i.bx, %.reload.addr232
   br i1 %i.by, label %.critedge35, label %AfterCoroSave162
@@ -483,7 +483,7 @@ bb.p:                                             ; preds = %.critedge35
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   %i.cc = load ptr, ptr %i.cb, align 8
   invoke void %i.cc(ptr nonnull %i.ca)
-          to label %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS0_5BatonEE12await_resumeEv.exit unwind label %bb.q, !inline_history !2314
+          to label %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS0_5BatonEE12await_resumeEv.exit unwind label %bb.q, !inline_history !2315
 
 bb.q:                                             ; preds = %bb.p
   %i.cd = landingpad { ptr, i32 }
@@ -501,7 +501,7 @@ bb.r:                                             ; preds = %_ZN5folly4coro17Via
   %i.cf = getelementptr inbounds nuw i8, ptr %.pr, i64 8
   %i.cg = load ptr, ptr %i.cf, align 8
   invoke void %i.cg(ptr nonnull %.pr)
-          to label %_ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEED2Ev.exit51 unwind label %bb.s, !inline_history !2314
+          to label %_ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEED2Ev.exit51 unwind label %bb.s, !inline_history !2315
 
 bb.s:                                             ; preds = %bb.r
   %i.ch = landingpad { ptr, i32 }
@@ -523,21 +523,21 @@ _ZNK5folly17CancellationToken23isCancellationRequestedEv.exit: ; preds = %_ZN5fo
 
 bb.t:                                             ; preds = %_ZNK5folly17CancellationToken23isCancellationRequestedEv.exit
   %.reload.addr222 = getelementptr inbounds nuw i8, ptr %0, i64 336
-  %.reload223 = load ptr, ptr %.reload.addr222, align 16, !tbaa !2269
+  %.reload223 = load ptr, ptr %.reload.addr222, align 16, !tbaa !2270
   %i.cn = load ptr, ptr %.reload223, align 8, !tbaa !11
   %i.co = invoke noundef i32 @_ZN5folly17AsyncServerSocket13stopAcceptingEi(ptr noundef nonnull align 8 dereferenceable(352) %i.cn, i32 noundef -1)
           to label %bb.u unwind label %.body72.from.201 ; 0 uses
 
 bb.u:                                             ; preds = %bb.t
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #25, !noalias !2315
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5folly18OperationCancelledE, i64 16), ptr %5, align 8, !tbaa !34, !noalias !2315
-  call void @llvm.lifetime.start.p0(ptr nonnull %6), !noalias !2315
-  store ptr %5, ptr %6, align 8, !noalias !2318
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #25, !noalias !2316
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5folly18OperationCancelledE, i64 16), ptr %5, align 8, !tbaa !34, !noalias !2316
+  call void @llvm.lifetime.start.p0(ptr nonnull %6), !noalias !2316
+  store ptr %5, ptr %6, align 8, !noalias !2319
   call void @_ZN5folly6detail24make_exception_ptr_with_ERKNS0_28make_exception_ptr_with_arg_EPv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 dereferenceable(8) %.reload.addr234, ptr noundef nonnull align 8 dereferenceable(32) @_ZZNK5folly26make_exception_ptr_with_fnclIZNKS0_4makeINS_18OperationCancelledEJOS3_EEEDaDpOT0_EUlvE_TnPDTclclscPDoFRT_vELDnEEEELPS3_0EEENSt15__exception_ptr13exception_ptrES9_E3arg, ptr noundef nonnull %6) #25
-  call void @llvm.lifetime.end.p0(ptr nonnull %6), !noalias !2315
+  call void @llvm.lifetime.end.p0(ptr nonnull %6), !noalias !2316
   call void @_ZNSt9exceptionD2Ev(ptr noundef nonnull align 8 dereferenceable(8) %5) #25
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #25, !noalias !2315
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #25, !noalias !2316
   %i.cq = load i32, ptr %i.cp, align 16, !tbaa !2048
   store i32 2, ptr %i.cp, align 16, !tbaa !2048
   switch i32 %i.cq, label %bb.y [
@@ -571,10 +571,10 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.u, %bb.v, %_ZNKSt14default_deleteIN5folly4coro9TransportEEclEPS2_.exit.i.i.i.i, %bb.w, %bb.x
   %.reload.addr238 = getelementptr inbounds nuw i8, ptr %0, i64 345
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 104
-  call void @llvm.experimental.noalias.scope.decl(metadata !2321)
-  %i.cz = load i64, ptr %.reload.addr234, align 16, !noalias !2321
-  store i64 %i.cz, ptr %i.cy, align 8, !alias.scope !2321
-  store i64 0, ptr %.reload.addr234, align 16, !noalias !2321
+  call void @llvm.experimental.noalias.scope.decl(metadata !2322)
+  %i.cz = load i64, ptr %.reload.addr234, align 16, !noalias !2322
+  store i64 %i.cz, ptr %i.cy, align 8, !alias.scope !2322
+  store i64 0, ptr %.reload.addr234, align 16, !noalias !2322
   store i32 1, ptr %i.cp, align 16, !tbaa !2000
   store i3 3, ptr %index.addr, align 8
   %i.da = call ptr @_ZN5folly4coro6detail15TaskPromiseBase12FinalAwaiter13await_suspendINS1_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteIS7_EEEEEENSt7__n486116coroutine_handleIvEENSD_IT_EE(ptr noundef nonnull align 1 dereferenceable(1) %.reload.addr238, ptr nonnull %0) #25 ; 2 uses
@@ -596,9 +596,9 @@ _ZNK5folly17CancellationToken23isCancellationRequestedEv.exit.thread: ; preds = 
 bb.z:                                             ; preds = %_ZNK5folly17CancellationToken23isCancellationRequestedEv.exit.thread
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
   %i.dg = ptrtoint ptr %i.de to i64
-  call void @llvm.experimental.noalias.scope.decl(metadata !2324)
-  store i64 %i.dg, ptr %.reload.addr235, align 8, !alias.scope !2324
-  store i64 0, ptr %i.dd, align 16, !noalias !2324
+  call void @llvm.experimental.noalias.scope.decl(metadata !2325)
+  store i64 %i.dg, ptr %.reload.addr235, align 8, !alias.scope !2325
+  store i64 0, ptr %i.dd, align 16, !noalias !2325
   %i.dh = load i32, ptr %i.df, align 16, !tbaa !2048
   store i32 2, ptr %i.df, align 16, !tbaa !2048
   switch i32 %i.dh, label %bb.ad [
@@ -632,10 +632,10 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %bb.z, %bb.aa, %_ZNKSt14default_deleteIN5folly4coro9TransportEEclEPS2_.exit.i.i.i.i65, %bb.ab, %bb.ac
   %.reload.addr239 = getelementptr inbounds nuw i8, ptr %0, i64 346
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 104
-  call void @llvm.experimental.noalias.scope.decl(metadata !2327)
-  %i.dq = load i64, ptr %.reload.addr235, align 8, !noalias !2327
-  store i64 %i.dq, ptr %i.dp, align 8, !alias.scope !2327
-  store i64 0, ptr %.reload.addr235, align 8, !noalias !2327
+  call void @llvm.experimental.noalias.scope.decl(metadata !2328)
+  %i.dq = load i64, ptr %.reload.addr235, align 8, !noalias !2328
+  store i64 %i.dq, ptr %i.dp, align 8, !alias.scope !2328
+  store i64 0, ptr %.reload.addr235, align 8, !noalias !2328
   store i32 1, ptr %i.df, align 16, !tbaa !2000
   store i3 -4, ptr %index.addr, align 8
   %i.dr = call ptr @_ZN5folly4coro6detail15TaskPromiseBase12FinalAwaiter13await_suspendINS1_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteIS7_EEEEEENSt7__n486116coroutine_handleIvEENSD_IT_EE(ptr noundef nonnull align 1 dereferenceable(1) %.reload.addr239, ptr nonnull %0) #25 ; 2 uses
@@ -645,22 +645,22 @@ bb.ad:                                            ; preds = %bb.z, %bb.aa, %_ZNK
 
 bb.ae:                                            ; preds = %_ZNK5folly17CancellationToken23isCancellationRequestedEv.exit.thread
   %.reload.addr220 = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 2 uses
-  %.reload221 = load ptr, ptr %.reload.addr220, align 16, !tbaa !2269
+  %.reload221 = load ptr, ptr %.reload.addr220, align 16, !tbaa !2270
   %i.dt = load ptr, ptr %.reload221, align 8, !tbaa !11 ; 2 uses
   %i.du = load ptr, ptr %i.dt, align 8, !tbaa !34
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 32
   %i.dw = load ptr, ptr %i.dv, align 8
   %i.dx = invoke noundef ptr %i.dw(ptr noundef nonnull align 8 dereferenceable(352) %i.dt)
-          to label %bb.af unwind label %.body72.from., !call_target !2330
+          to label %bb.af unwind label %.body72.from., !call_target !2331
 
 bb.af:                                            ; preds = %bb.ae
-  %.reload219 = load ptr, ptr %.reload.addr220, align 16, !tbaa !2269
+  %.reload219 = load ptr, ptr %.reload.addr220, align 16, !tbaa !2270
   %i.dy = load ptr, ptr %.reload219, align 8, !tbaa !11 ; 2 uses
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !34
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 32
   %i.eb = load ptr, ptr %i.ea, align 8
   %i.ec = invoke noundef ptr %i.eb(ptr noundef nonnull align 8 dereferenceable(352) %i.dy)
-          to label %bb.ag unwind label %.body72.from.195, !call_target !2330
+          to label %bb.ag unwind label %.body72.from.195, !call_target !2331
 
 bb.ag:                                            ; preds = %bb.af
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 232
@@ -669,16 +669,16 @@ bb.ag:                                            ; preds = %bb.af
           to label %.noexc unwind label %.body72.from.195 ; 5 uses
 
 .noexc:                                           ; preds = %bb.ag
-  store i8 0, ptr %.reload.addr230, align 16, !tbaa !18, !noalias !2335
+  store i8 0, ptr %.reload.addr230, align 16, !tbaa !18, !noalias !2336
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 280
-  store i8 0, ptr %i.eg, align 8, !tbaa !2338, !noalias !2335
+  store i8 0, ptr %i.eg, align 8, !tbaa !2339, !noalias !2336
   invoke void @_ZN5folly11AsyncSocketC1EPNS_9EventBaseENS_13NetworkSocketEjPKNS_13SocketAddressENS_8OptionalINSt6chrono10time_pointINS8_3_V212steady_clockENS8_8durationIlSt5ratioILl1ELl1000000000EEEEEEEE(ptr noundef nonnull align 8 dereferenceable(1169) %i.ef, ptr noundef %i.ec, i32 %i.ee, i32 noundef 0, ptr noundef null, ptr noundef nonnull dead_on_return %.reload.addr230)
-          to label %bb.ah unwind label %.body72.from.197, !noalias !2335
+          to label %bb.ah unwind label %.body72.from.197, !noalias !2336
 
 .body72.from.197:                                 ; preds = %.noexc
   %i.eh = landingpad { ptr, i32 }
           catch ptr null
-  call void @_ZdlPvm(ptr noundef nonnull %i.ef, i64 noundef 1176) #26, !noalias !2335
+  call void @_ZdlPvm(ptr noundef nonnull %i.ef, i64 noundef 1176) #26, !noalias !2336
   br label %.from..body72
 
 bb.ah:                                            ; preds = %.noexc
@@ -687,14 +687,14 @@ bb.ah:                                            ; preds = %.noexc
 
 bb.ai:                                            ; preds = %bb.ah
   %i.ej = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 128) (i8, ptr @_ZTVN5folly4coro9TransportE, i64 16), ptr %i.ei, align 8, !tbaa !34, !noalias !2340
+  store ptr getelementptr inbounds nuw inrange(-16, 128) (i8, ptr @_ZTVN5folly4coro9TransportE, i64 16), ptr %i.ei, align 8, !tbaa !34, !noalias !2341
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ei, i64 8
-  store ptr %i.dx, ptr %i.ek, align 8, !tbaa !2343, !noalias !2340
+  store ptr %i.dx, ptr %i.ek, align 8, !tbaa !2344, !noalias !2341
   %i.el = getelementptr inbounds nuw i8, ptr %i.ei, i64 16
   %i.em = ptrtoint ptr %i.ef to i64
-  store i64 %i.em, ptr %i.el, align 8, !tbaa !2353, !noalias !2340
+  store i64 %i.em, ptr %i.el, align 8, !tbaa !2354, !noalias !2341
   %i.en = getelementptr inbounds nuw i8, ptr %i.ei, i64 24
-  store i8 0, ptr %i.en, align 8, !tbaa !2354, !noalias !2340
+  store i8 0, ptr %i.en, align 8, !tbaa !2355, !noalias !2341
   %i.eo = load i32, ptr %i.ej, align 16, !tbaa !2048
   store i32 2, ptr %i.ej, align 16, !tbaa !2048
   switch i32 %i.eo, label %_ZNSt10unique_ptrIN5folly11AsyncSocketENS0_18DelayedDestruction10DestructorEED2Ev.exit [
@@ -712,7 +712,7 @@ _ZNKSt14default_deleteIN5folly4coro9TransportEEclEPS2_.exit.i.i.i.i77: ; preds =
   %i.er = load ptr, ptr %i.eq, align 8, !tbaa !34
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 8
   %i.et = load ptr, ptr %i.es, align 8
-  call void %i.et(ptr noundef nonnull align 8 dereferenceable(25) %i.eq) #25, !call_target !2052, !inline_history !2355
+  call void %i.et(ptr noundef nonnull align 8 dereferenceable(25) %i.eq) #25, !call_target !2052, !inline_history !2356
   br label %_ZNSt10unique_ptrIN5folly11AsyncSocketENS0_18DelayedDestruction10DestructorEED2Ev.exit
 
 bb.ak:                                            ; preds = %bb.ai
@@ -747,7 +747,7 @@ bb.an:                                            ; preds = %bb.am, %_ZNSt10uniq
 
 bb.ao:                                            ; preds = %bb.an
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %i.fd = call noundef i64 %i.fb(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %i.fc, ptr noundef null) #25, !inline_history !2356 ; 0 uses
+  %i.fd = call noundef i64 %i.fb(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %i.fc, ptr noundef null) #25, !inline_history !2357 ; 0 uses
   br label %_ZN5folly20CancellationCallbackD2Ev.exit
 
 _ZN5folly20CancellationCallbackD2Ev.exit:         ; preds = %bb.ao, %bb.an
@@ -774,7 +774,7 @@ bb.as:                                            ; preds = %bb.aq
   %i.fj = load ptr, ptr %i.fe, align 8, !tbaa !34
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 8
   %i.fl = load ptr, ptr %i.fk, align 8
-  call void %i.fl(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.fe) #25, !call_target !2035, !inline_history !2357
+  call void %i.fl(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.fe) #25, !call_target !2035, !inline_history !2358
   br label %_ZN5folly17CancellationTokenD2Ev.exit
 
 _ZN5folly17CancellationTokenD2Ev.exit:            ; preds = %bb.as, %bb.ar, %bb.ap, %_ZN5folly20CancellationCallbackD2Ev.exit
@@ -859,7 +859,7 @@ bb.ay:                                            ; preds = %bb.ah
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 24
   %i.gj = load ptr, ptr %i.gi, align 8
   invoke void %i.gj(ptr noundef nonnull align 8 dereferenceable(13) %i.ef)
-          to label %.from..body72 unwind label %bb.az, !inline_history !2358
+          to label %.from..body72 unwind label %bb.az, !inline_history !2359
 
 bb.az:                                            ; preds = %bb.ay
   %i.gk = landingpad { ptr, i32 }
@@ -927,7 +927,7 @@ resume.entry:
     i3 3, label %AfterCoroSuspend168
     i3 -4, label %AfterCoroSuspend172
     i3 -3, label %AfterCoroSuspend
-  ]
+  ], !prof !2360
 
 AfterCoroSuspend164:                              ; preds = %resume.entry
   %.reload.addr230 = getelementptr inbounds nuw i8, ptr %0, i64 272
@@ -939,7 +939,7 @@ bb.a:                                             ; preds = %AfterCoroSuspend164
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = load ptr, ptr %i.b, align 8
   invoke void %i.c(ptr nonnull %i.a)
-          to label %.critedge39 unwind label %bb.b, !inline_history !2314
+          to label %.critedge39 unwind label %bb.b, !inline_history !2315
 
 bb.b:                                             ; preds = %bb.a
   %i.d = landingpad { ptr, i32 }
@@ -983,7 +983,7 @@ bb.d:                                             ; preds = %bb.c, %.critedge39
 
 bb.e:                                             ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %i.m = tail call noundef i64 %i.k(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %i.l, ptr noundef null) #25, !inline_history !2356 ; 0 uses
+  %i.m = tail call noundef i64 %i.k(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %i.l, ptr noundef null) #25, !inline_history !2357 ; 0 uses
   br label %_ZN5folly20CancellationCallbackD2Ev.exit96
 
 _ZN5folly20CancellationCallbackD2Ev.exit96:       ; preds = %bb.e, %bb.d
@@ -1010,7 +1010,7 @@ bb.i:                                             ; preds = %bb.g
   %i.s = load ptr, ptr %i.n, align 8, !tbaa !34
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.u = load ptr, ptr %i.t, align 8
-  tail call void %i.u(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.n) #25, !call_target !2035, !inline_history !2357
+  tail call void %i.u(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.n) #25, !call_target !2035, !inline_history !2358
   br label %_ZN5folly17CancellationTokenD2Ev.exit99
 
 _ZN5folly17CancellationTokenD2Ev.exit99:          ; preds = %bb.i, %bb.h, %bb.f, %_ZN5folly20CancellationCallbackD2Ev.exit96
@@ -1097,7 +1097,7 @@ _ZNKSt14default_deleteIN5folly4coro9TransportEEclEPS2_.exit.i.i.i: ; preds = %bb
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !34
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.au = load ptr, ptr %i.at, align 8
-  tail call void %i.au(ptr noundef nonnull align 8 dereferenceable(25) %i.ar) #25, !call_target !2052, !inline_history !2359
+  tail call void %i.au(ptr noundef nonnull align 8 dereferenceable(25) %i.ar) #25, !call_target !2052, !inline_history !2361
   br label %_ZN5folly6detail7TryBaseISt10unique_ptrINS_4coro9TransportESt14default_deleteIS4_EEED2Ev.exit.i
 
 bb.p:                                             ; preds = %AfterCoroSuspend
@@ -1135,7 +1135,7 @@ bb.u:                                             ; preds = %bb.s
   %i.bd = load ptr, ptr %i.ay, align 8, !tbaa !34
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
   %i.bf = load ptr, ptr %i.be, align 8
-  tail call void %i.bf(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.ay) #25, !call_target !2035, !inline_history !2360
+  tail call void %i.bf(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.ay) #25, !call_target !2035, !inline_history !2362
   br label %_ZN5folly17CancellationTokenD2Ev.exit.i.i
 
 _ZN5folly17CancellationTokenD2Ev.exit.i.i:        ; preds = %bb.u, %bb.t, %bb.r, %_ZN5folly6detail7TryBaseISt10unique_ptrINS_4coro9TransportESt14default_deleteIS4_EEED2Ev.exit.i
@@ -1156,7 +1156,7 @@ bb.w:                                             ; preds = %bb.v
   %i.bl = load ptr, ptr %i.bj, align 8, !tbaa !34
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 48
   %i.bn = load ptr, ptr %i.bm, align 8
-  tail call void %i.bn(ptr noundef nonnull align 8 dereferenceable(8) %i.bj) #25, !call_target !2085, !inline_history !2361
+  tail call void %i.bn(ptr noundef nonnull align 8 dereferenceable(8) %i.bj) #25, !call_target !2085, !inline_history !2363
   br label %_ZN5folly4coro6detail19TaskPromiseCrtpBaseINS1_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteIS5_EEEES8_ED2Ev.exit
 
 _ZN5folly4coro6detail19TaskPromiseCrtpBaseINS1_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteIS5_EEEES8_ED2Ev.exit: ; preds = %_ZN5folly17CancellationTokenD2Ev.exit.i.i, %bb.v, %bb.w
@@ -1559,107 +1559,109 @@ begin_hunk_1_@_ZN5folly4coro12ServerSocket6acceptEv.destroy:resume.entry
 !2256 = !{!2257}
 !2257 = distinct !{!2257, !2258, !"_ZZNK5folly26make_exception_ptr_with_fn4makeINS_18OperationCancelledEJOS2_EEEDaDpOT0_ENKUlvE_clEv: argument 0"}
 !2258 = distinct !{!2258, !"_ZZNK5folly26make_exception_ptr_with_fn4makeINS_18OperationCancelledEJOS2_EEEDaDpOT0_ENKUlvE_clEv"}
-!2259 = !{!2260}
-!2260 = distinct !{!2260, !2261, !"_ZNK5folly4coro14co_cancelled_tcvNS0_8co_errorEEv: argument 0"}
-!2261 = distinct !{!2261, !"_ZNK5folly4coro14co_cancelled_tcvNS0_8co_errorEEv"}
-!2262 = !{!2263, !2260}
-!2263 = distinct !{!2263, !2264, !"_ZNK5folly26make_exception_ptr_with_fnclIZNKS0_4makeINS_18OperationCancelledEJOS3_EEEDaDpOT0_EUlvE_TnPDTclclscPDoFRT_vELDnEEEELPS3_0EEENSt15__exception_ptr13exception_ptrES9_: argument 0"}
-!2264 = distinct !{!2264, !"_ZNK5folly26make_exception_ptr_with_fnclIZNKS0_4makeINS_18OperationCancelledEJOS3_EEEDaDpOT0_EUlvE_TnPDTclclscPDoFRT_vELDnEEEELPS3_0EEENSt15__exception_ptr13exception_ptrES9_"}
-!2265 = distinct !{null, null, null, null, null, null, null}
-!2266 = !{!2267}
-!2267 = distinct !{!2267, !2268, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE: argument 0"}
-!2268 = distinct !{!2268, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE"}
-!2269 = !{!2270, !2270, i64 0}
-!2270 = !{!"_ZN5folly4coro12ServerSocket6acceptEv.Frame Slot", !10, i64 0}
-!2271 = !{!2272, !14, i64 0}
-!2272 = !{!"_ZTSSt13__atomic_baseIPvE", !14, i64 0}
-!2273 = !{!2019, !2019, i64 0}
-!2274 = !DISubprogram(name: "addAcceptCallback", linkageName: "_ZN5folly17AsyncServerSocket17addAcceptCallbackEPNS0_14AcceptCallbackEPNS_9EventBaseEj", scope: !38, file: !37, line: 509, type: !2275, scopeLine: 509, containingType: !38, virtualIndex: 12, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!2275 = !DISubroutineType(types: !2276)
-!2276 = !{null, !42, !2277, !2279, !1765}
-!2277 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !2278, size: 64)
-!2278 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "AcceptCallback", scope: !38, file: !37, line: 151, size: 64, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSN5folly17AsyncServerSocket14AcceptCallbackE")
-!2279 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !2280, size: 64)
-!2280 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "EventBase", scope: !39, file: !2281, line: 135, size: 5120, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSN5folly9EventBaseE")
-!2281 = !DIFile(filename: "_deps/folly-src/folly/io/async/EventBase.h", directory: "/opt-bench/work/velox/velox/build", checksumkind: CSK_MD5, checksum: "ae166e4a5ffdcb76f16ff01f69d8b9d6")
-!2282 = !DISubprogram(name: "startAccepting", linkageName: "_ZN5folly17AsyncServerSocket14startAcceptingEv", scope: !38, file: !37, line: 560, type: !2283, scopeLine: 560, containingType: !38, virtualIndex: 13, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!2283 = !DISubroutineType(types: !2284)
-!2284 = !{null, !42}
-!2285 = !{!2286, !2027, i64 0}
-!2286 = !{!"_ZTSSt10_Head_baseILm0EPN5folly6detail17CancellationStateELb0EE", !2027, i64 0}
-!2287 = !{!2288}
-!2288 = distinct !{!2288, !2289, !"_ZN5folly6detail17CancellationState17addTokenReferenceEv: argument 0"}
-!2289 = distinct !{!2289, !"_ZN5folly6detail17CancellationState17addTokenReferenceEv"}
-!2290 = !{!2024, !2029, i64 96}
-!2291 = !{!2031, !21, i64 0}
-!2292 = !{!2293}
-!2293 = distinct !{!2293, !2294, !"_ZN5folly4coro6detail11BasePromiseINS_4UnitEE15await_transformIRNS0_5BatonETnNSt9enable_ifIXntsr5folly3extE22must_use_immediately_vIT_EEiE4typeELi0EEEDaOS9_: argument 0"}
-!2294 = distinct !{!2294, !"_ZN5folly4coro6detail11BasePromiseINS_4UnitEE15await_transformIRNS0_5BatonETnNSt9enable_ifIXntsr5folly3extE22must_use_immediately_vIT_EEiE4typeELi0EEEDaOS9_"}
-!2295 = !{!2296, !2293}
-!2296 = distinct !{!2296, !2297, !"_ZNK5folly17ExecutorKeepAliveINS_8ExecutorEE9get_aliasEv: argument 0"}
-!2297 = distinct !{!2297, !"_ZNK5folly17ExecutorKeepAliveINS_8ExecutorEE9get_aliasEv"}
-!2298 = !{!2299}
-!2299 = distinct !{!2299, !2300, !"_ZNO5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEEawEv: argument 0"}
-!2300 = distinct !{!2300, !"_ZNO5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEEawEv"}
-!2301 = !{!2302}
-!2302 = distinct !{!2302, !2303, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE6createENS_17ExecutorKeepAliveINS_8ExecutorEEE: argument 0"}
-!2303 = distinct !{!2303, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE6createENS_17ExecutorKeepAliveINS_8ExecutorEEE"}
-!2304 = !{!2302, !2299}
-!2305 = !{!2306, !2302, !2299}
-!2306 = distinct !{!2306, !2307, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE12promise_type17get_return_objectEv: argument 0"}
-!2307 = distinct !{!2307, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE12promise_type17get_return_objectEv"}
-!2308 = !{!2309, !2311, !2299}
-!2309 = distinct !{!2309, !2310, !"_ZNK5folly4coro5BatonawEv: argument 0"}
-!2310 = distinct !{!2310, !"_ZNK5folly4coro5BatonawEv"}
-!2311 = distinct !{!2311, !2312, !"_ZNK5folly4coro14get_awaiter_fnclIRNS0_5BatonETnNSt9enable_ifIXsr6detail29_has_member_operator_co_awaitIT_EE5valueEiE4typeELi0EEEDcOS6_: argument 0"}
-!2312 = distinct !{!2312, !"_ZNK5folly4coro14get_awaiter_fnclIRNS0_5BatonETnNSt9enable_ifIXsr6detail29_has_member_operator_co_awaitIT_EE5valueEiE4typeELi0EEEDcOS6_"}
-!2313 = !{!2020, !14, i64 0}
-!2314 = distinct !{null}
-!2315 = !{!2316}
-!2316 = distinct !{!2316, !2317, !"_ZNK5folly4coro14co_cancelled_tcvNS0_8co_errorEEv: argument 0"}
-!2317 = distinct !{!2317, !"_ZNK5folly4coro14co_cancelled_tcvNS0_8co_errorEEv"}
-!2318 = !{!2319, !2316}
-!2319 = distinct !{!2319, !2320, !"_ZNK5folly26make_exception_ptr_with_fnclIZNKS0_4makeINS_18OperationCancelledEJOS3_EEEDaDpOT0_EUlvE_TnPDTclclscPDoFRT_vELDnEEEELPS3_0EEENSt15__exception_ptr13exception_ptrES9_: argument 0"}
-!2320 = distinct !{!2320, !"_ZNK5folly26make_exception_ptr_with_fnclIZNKS0_4makeINS_18OperationCancelledEJOS3_EEEDaDpOT0_EUlvE_TnPDTclclscPDoFRT_vELDnEEEELPS3_0EEENSt15__exception_ptr13exception_ptrES9_"}
-!2321 = !{!2322}
-!2322 = distinct !{!2322, !2323, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE: argument 0"}
-!2323 = distinct !{!2323, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE"}
-!2324 = !{!2325}
-!2325 = distinct !{!2325, !2326, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE: argument 0"}
-!2326 = distinct !{!2326, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE"}
-!2327 = !{!2328}
-!2328 = distinct !{!2328, !2329, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE: argument 0"}
-!2329 = distinct !{!2329, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE"}
-!2330 = !DISubprogram(name: "getEventBase", linkageName: "_ZNK5folly17AsyncServerSocket12getEventBaseEv", scope: !38, file: !37, line: 312, type: !2331, scopeLine: 312, containingType: !38, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!2331 = !DISubroutineType(types: !2332)
-!2332 = !{!2279, !2333}
-!2333 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !2334, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!2334 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !38)
-!2335 = !{!2336}
-!2336 = distinct !{!2336, !2337, !"_ZN5folly11AsyncSocket9newSocketEPNS_9EventBaseENS_13NetworkSocketEPKNS_13SocketAddressE: argument 0"}
-!2337 = distinct !{!2337, !"_ZN5folly11AsyncSocket9newSocketEPNS_9EventBaseENS_13NetworkSocketEPKNS_13SocketAddressE"}
-!2338 = !{!2339, !21, i64 8}
-!2339 = !{!"_ZTSN5folly8OptionalINSt6chrono10time_pointINS1_3_V212steady_clockENS1_8durationIlSt5ratioILl1ELl1000000000EEEEEEE28StorageTriviallyDestructibleE", !9, i64 0, !21, i64 8}
-!2340 = !{!2341}
-!2341 = distinct !{!2341, !2342, !"_ZSt11make_uniqueIN5folly4coro9TransportEJPNS0_9EventBaseESt10unique_ptrINS0_11AsyncSocketENS0_18DelayedDestruction10DestructorEEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!2342 = distinct !{!2342, !"_ZSt11make_uniqueIN5folly4coro9TransportEJPNS0_9EventBaseESt10unique_ptrINS0_11AsyncSocketENS0_18DelayedDestruction10DestructorEEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
-!2343 = !{!2344, !1911, i64 8}
-!2344 = !{!"_ZTSN5folly4coro9TransportE", !2345, i64 0, !1911, i64 8, !2346, i64 16, !21, i64 24}
-!2345 = !{!"_ZTSN5folly4coro11TransportIfE"}
-!2346 = !{!"_ZTSSt10unique_ptrIN5folly14AsyncTransportENS0_18DelayedDestruction10DestructorEE", !2347, i64 0}
-!2347 = !{!"_ZTSSt15__uniq_ptr_dataIN5folly14AsyncTransportENS0_18DelayedDestruction10DestructorELb1ELb1EE", !2348, i64 0}
-!2348 = !{!"_ZTSSt15__uniq_ptr_implIN5folly14AsyncTransportENS0_18DelayedDestruction10DestructorEE", !2349, i64 0}
-!2349 = !{!"_ZTSSt5tupleIJPN5folly14AsyncTransportENS0_18DelayedDestruction10DestructorEEE", !2350, i64 0}
-!2350 = !{!"_ZTSSt11_Tuple_implILm0EJPN5folly14AsyncTransportENS0_18DelayedDestruction10DestructorEEE", !2351, i64 0}
-!2351 = !{!"_ZTSSt10_Head_baseILm0EPN5folly14AsyncTransportELb0EE", !2352, i64 0}
-!2352 = !{!"p1 _ZTSN5folly14AsyncTransportE", !14, i64 0}
-!2353 = !{!2352, !2352, i64 0}
-!2354 = !{!2344, !21, i64 24}
-!2355 = distinct !{null, null, null, null, null}
-!2356 = distinct !{ptr @_ZN5folly20CancellationCallbackD2Ev, null, null}
-!2357 = distinct !{ptr @_ZN5folly17CancellationTokenD2Ev, null, null, null}
-!2358 = distinct !{null}
-!2359 = distinct !{null, null, null, null}
-!2360 = distinct !{null, null, ptr @_ZN5folly17CancellationTokenD2Ev, null, null, null}
+!2259 = !{!"branch_weights", i32 0, i32 -2147483648, i32 223695599, i32 177092074, i32 140197489, i32 192771731}
+!2260 = !{!2261}
+!2261 = distinct !{!2261, !2262, !"_ZNK5folly4coro14co_cancelled_tcvNS0_8co_errorEEv: argument 0"}
+!2262 = distinct !{!2262, !"_ZNK5folly4coro14co_cancelled_tcvNS0_8co_errorEEv"}
+!2263 = !{!2264, !2261}
+!2264 = distinct !{!2264, !2265, !"_ZNK5folly26make_exception_ptr_with_fnclIZNKS0_4makeINS_18OperationCancelledEJOS3_EEEDaDpOT0_EUlvE_TnPDTclclscPDoFRT_vELDnEEEELPS3_0EEENSt15__exception_ptr13exception_ptrES9_: argument 0"}
+!2265 = distinct !{!2265, !"_ZNK5folly26make_exception_ptr_with_fnclIZNKS0_4makeINS_18OperationCancelledEJOS3_EEEDaDpOT0_EUlvE_TnPDTclclscPDoFRT_vELDnEEEELPS3_0EEENSt15__exception_ptr13exception_ptrES9_"}
+!2266 = distinct !{null, null, null, null, null, null, null}
+!2267 = !{!2268}
+!2268 = distinct !{!2268, !2269, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE: argument 0"}
+!2269 = distinct !{!2269, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE"}
+!2270 = !{!2271, !2271, i64 0}
+!2271 = !{!"_ZN5folly4coro12ServerSocket6acceptEv.Frame Slot", !10, i64 0}
+!2272 = !{!2273, !14, i64 0}
+!2273 = !{!"_ZTSSt13__atomic_baseIPvE", !14, i64 0}
+!2274 = !{!2019, !2019, i64 0}
+!2275 = !DISubprogram(name: "addAcceptCallback", linkageName: "_ZN5folly17AsyncServerSocket17addAcceptCallbackEPNS0_14AcceptCallbackEPNS_9EventBaseEj", scope: !38, file: !37, line: 509, type: !2276, scopeLine: 509, containingType: !38, virtualIndex: 12, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!2276 = !DISubroutineType(types: !2277)
+!2277 = !{null, !42, !2278, !2280, !1765}
+!2278 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !2279, size: 64)
+!2279 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "AcceptCallback", scope: !38, file: !37, line: 151, size: 64, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSN5folly17AsyncServerSocket14AcceptCallbackE")
+!2280 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !2281, size: 64)
+!2281 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "EventBase", scope: !39, file: !2282, line: 135, size: 5120, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSN5folly9EventBaseE")
+!2282 = !DIFile(filename: "_deps/folly-src/folly/io/async/EventBase.h", directory: "/opt-bench/work/velox/velox/build", checksumkind: CSK_MD5, checksum: "ae166e4a5ffdcb76f16ff01f69d8b9d6")
+!2283 = !DISubprogram(name: "startAccepting", linkageName: "_ZN5folly17AsyncServerSocket14startAcceptingEv", scope: !38, file: !37, line: 560, type: !2284, scopeLine: 560, containingType: !38, virtualIndex: 13, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!2284 = !DISubroutineType(types: !2285)
+!2285 = !{null, !42}
+!2286 = !{!2287, !2027, i64 0}
+!2287 = !{!"_ZTSSt10_Head_baseILm0EPN5folly6detail17CancellationStateELb0EE", !2027, i64 0}
+!2288 = !{!2289}
+!2289 = distinct !{!2289, !2290, !"_ZN5folly6detail17CancellationState17addTokenReferenceEv: argument 0"}
+!2290 = distinct !{!2290, !"_ZN5folly6detail17CancellationState17addTokenReferenceEv"}
+!2291 = !{!2024, !2029, i64 96}
+!2292 = !{!2031, !21, i64 0}
+!2293 = !{!2294}
+!2294 = distinct !{!2294, !2295, !"_ZN5folly4coro6detail11BasePromiseINS_4UnitEE15await_transformIRNS0_5BatonETnNSt9enable_ifIXntsr5folly3extE22must_use_immediately_vIT_EEiE4typeELi0EEEDaOS9_: argument 0"}
+!2295 = distinct !{!2295, !"_ZN5folly4coro6detail11BasePromiseINS_4UnitEE15await_transformIRNS0_5BatonETnNSt9enable_ifIXntsr5folly3extE22must_use_immediately_vIT_EEiE4typeELi0EEEDaOS9_"}
+!2296 = !{!2297, !2294}
+!2297 = distinct !{!2297, !2298, !"_ZNK5folly17ExecutorKeepAliveINS_8ExecutorEE9get_aliasEv: argument 0"}
+!2298 = distinct !{!2298, !"_ZNK5folly17ExecutorKeepAliveINS_8ExecutorEE9get_aliasEv"}
+!2299 = !{!2300}
+!2300 = distinct !{!2300, !2301, !"_ZNO5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEEawEv: argument 0"}
+!2301 = distinct !{!2301, !"_ZNO5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEEawEv"}
+!2302 = !{!2303}
+!2303 = distinct !{!2303, !2304, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE6createENS_17ExecutorKeepAliveINS_8ExecutorEEE: argument 0"}
+!2304 = distinct !{!2304, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE6createENS_17ExecutorKeepAliveINS_8ExecutorEEE"}
+!2305 = !{!2303, !2300}
+!2306 = !{!2307, !2303, !2300}
+!2307 = distinct !{!2307, !2308, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE12promise_type17get_return_objectEv: argument 0"}
+!2308 = distinct !{!2308, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE12promise_type17get_return_objectEv"}
+!2309 = !{!2310, !2312, !2300}
+!2310 = distinct !{!2310, !2311, !"_ZNK5folly4coro5BatonawEv: argument 0"}
+!2311 = distinct !{!2311, !"_ZNK5folly4coro5BatonawEv"}
+!2312 = distinct !{!2312, !2313, !"_ZNK5folly4coro14get_awaiter_fnclIRNS0_5BatonETnNSt9enable_ifIXsr6detail29_has_member_operator_co_awaitIT_EE5valueEiE4typeELi0EEEDcOS6_: argument 0"}
+!2313 = distinct !{!2313, !"_ZNK5folly4coro14get_awaiter_fnclIRNS0_5BatonETnNSt9enable_ifIXsr6detail29_has_member_operator_co_awaitIT_EE5valueEiE4typeELi0EEEDcOS6_"}
+!2314 = !{!2020, !14, i64 0}
+!2315 = distinct !{null}
+!2316 = !{!2317}
+!2317 = distinct !{!2317, !2318, !"_ZNK5folly4coro14co_cancelled_tcvNS0_8co_errorEEv: argument 0"}
+!2318 = distinct !{!2318, !"_ZNK5folly4coro14co_cancelled_tcvNS0_8co_errorEEv"}
+!2319 = !{!2320, !2317}
+!2320 = distinct !{!2320, !2321, !"_ZNK5folly26make_exception_ptr_with_fnclIZNKS0_4makeINS_18OperationCancelledEJOS3_EEEDaDpOT0_EUlvE_TnPDTclclscPDoFRT_vELDnEEEELPS3_0EEENSt15__exception_ptr13exception_ptrES9_: argument 0"}
+!2321 = distinct !{!2321, !"_ZNK5folly26make_exception_ptr_with_fnclIZNKS0_4makeINS_18OperationCancelledEJOS3_EEEDaDpOT0_EUlvE_TnPDTclclscPDoFRT_vELDnEEEELPS3_0EEENSt15__exception_ptr13exception_ptrES9_"}
+!2322 = !{!2323}
+!2323 = distinct !{!2323, !2324, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE: argument 0"}
+!2324 = distinct !{!2324, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE"}
+!2325 = !{!2326}
+!2326 = distinct !{!2326, !2327, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE: argument 0"}
+!2327 = distinct !{!2327, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE"}
+!2328 = !{!2329}
+!2329 = distinct !{!2329, !2330, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE: argument 0"}
+!2330 = distinct !{!2330, !"_ZN5folly6detail21extract_exception_ptrEONSt15__exception_ptr13exception_ptrE"}
+!2331 = !DISubprogram(name: "getEventBase", linkageName: "_ZNK5folly17AsyncServerSocket12getEventBaseEv", scope: !38, file: !37, line: 312, type: !2332, scopeLine: 312, containingType: !38, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!2332 = !DISubroutineType(types: !2333)
+!2333 = !{!2280, !2334}
+!2334 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !2335, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!2335 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !38)
+!2336 = !{!2337}
+!2337 = distinct !{!2337, !2338, !"_ZN5folly11AsyncSocket9newSocketEPNS_9EventBaseENS_13NetworkSocketEPKNS_13SocketAddressE: argument 0"}
+!2338 = distinct !{!2338, !"_ZN5folly11AsyncSocket9newSocketEPNS_9EventBaseENS_13NetworkSocketEPKNS_13SocketAddressE"}
+!2339 = !{!2340, !21, i64 8}
+!2340 = !{!"_ZTSN5folly8OptionalINSt6chrono10time_pointINS1_3_V212steady_clockENS1_8durationIlSt5ratioILl1ELl1000000000EEEEEEE28StorageTriviallyDestructibleE", !9, i64 0, !21, i64 8}
+!2341 = !{!2342}
+!2342 = distinct !{!2342, !2343, !"_ZSt11make_uniqueIN5folly4coro9TransportEJPNS0_9EventBaseESt10unique_ptrINS0_11AsyncSocketENS0_18DelayedDestruction10DestructorEEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
+!2343 = distinct !{!2343, !"_ZSt11make_uniqueIN5folly4coro9TransportEJPNS0_9EventBaseESt10unique_ptrINS0_11AsyncSocketENS0_18DelayedDestruction10DestructorEEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!2344 = !{!2345, !1911, i64 8}
+!2345 = !{!"_ZTSN5folly4coro9TransportE", !2346, i64 0, !1911, i64 8, !2347, i64 16, !21, i64 24}
+!2346 = !{!"_ZTSN5folly4coro11TransportIfE"}
+!2347 = !{!"_ZTSSt10unique_ptrIN5folly14AsyncTransportENS0_18DelayedDestruction10DestructorEE", !2348, i64 0}
+!2348 = !{!"_ZTSSt15__uniq_ptr_dataIN5folly14AsyncTransportENS0_18DelayedDestruction10DestructorELb1ELb1EE", !2349, i64 0}
+!2349 = !{!"_ZTSSt15__uniq_ptr_implIN5folly14AsyncTransportENS0_18DelayedDestruction10DestructorEE", !2350, i64 0}
+!2350 = !{!"_ZTSSt5tupleIJPN5folly14AsyncTransportENS0_18DelayedDestruction10DestructorEEE", !2351, i64 0}
+!2351 = !{!"_ZTSSt11_Tuple_implILm0EJPN5folly14AsyncTransportENS0_18DelayedDestruction10DestructorEEE", !2352, i64 0}
+!2352 = !{!"_ZTSSt10_Head_baseILm0EPN5folly14AsyncTransportELb0EE", !2353, i64 0}
+!2353 = !{!"p1 _ZTSN5folly14AsyncTransportE", !14, i64 0}
+!2354 = !{!2353, !2353, i64 0}
+!2355 = !{!2345, !21, i64 24}
+!2356 = distinct !{null, null, null, null, null}
+!2357 = distinct !{ptr @_ZN5folly20CancellationCallbackD2Ev, null, null}
+!2358 = distinct !{ptr @_ZN5folly17CancellationTokenD2Ev, null, null, null}
+!2359 = distinct !{null}
+!2360 = !{!"branch_weights", i32 0, i32 -2147483648, i32 223695599, i32 177092074, i32 140197489, i32 192771731, i32 115666334}
 !2361 = distinct !{null, null, null, null}
+!2362 = distinct !{null, null, ptr @_ZN5folly17CancellationTokenD2Ev, null, null, null}
+!2363 = distinct !{null, null, null, null}
 end_hunk_1
