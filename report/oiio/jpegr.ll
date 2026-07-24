@@ -203,8 +203,14 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.i.i.i
   %i.bh = tail call { <2 x float>, float } %i.bg(<2 x float> %.fca.0.extract101.i.i.i, float %.fca.1.extract102.i.i.i), !inline_history !479 ; 2 uses
   %.fca.0.extract91.i.i.i = extractvalue { <2 x float>, float } %i.bh, 0 ; 2 uses
   %.fca.1.extract92.i.i.i = extractvalue { <2 x float>, float } %i.bh, 1 ; 2 uses
-  %1 = fcmp contract olt <2 x float> %.fca.0.extract91.i.i.i, zeroinitializer
-  %2 = select <2 x i1> %1, <2 x float> zeroinitializer, <2 x float> %.fca.0.extract91.i.i.i ; 5 uses
+  %.sroa.03.0.vec.extract.i.i.i.i = extractelement <2 x float> %.fca.0.extract91.i.i.i, i64 0 ; 2 uses
+  %1 = fcmp contract olt float %.sroa.03.0.vec.extract.i.i.i.i, 0.000000e+00
+  %2 = select contract i1 %1, float 0.000000e+00, float %.sroa.03.0.vec.extract.i.i.i.i ; 3 uses
+  %.sroa.04.0.vec.insert.i.i.i.i = insertelement <2 x float> poison, float %2, i64 0
+  %.sroa.03.4.vec.extract.i.i.i.i = extractelement <2 x float> %.fca.0.extract91.i.i.i, i64 1 ; 2 uses
+  %3 = fcmp contract olt float %.sroa.03.4.vec.extract.i.i.i.i, 0.000000e+00
+  %4 = select contract i1 %3, float 0.000000e+00, float %.sroa.03.4.vec.extract.i.i.i.i ; 3 uses
+  %.sroa.04.4.vec.insert.i.i.i.i = insertelement <2 x float> %.sroa.04.0.vec.insert.i.i.i.i, float %4, i64 1
   %i.bi = fcmp contract olt float %.fca.1.extract92.i.i.i, 0.000000e+00
   %i.bj = select contract i1 %i.bi, float 0.000000e+00, float %.fca.1.extract92.i.i.i ; 3 uses
   %i.bk = load ptr, ptr %i.aa, align 8, !tbaa !482
@@ -247,9 +253,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.cd, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %3 = extractelement <2 x float> %2, i64 0
-  %i.ce = fmul contract float %3, 2.030000e+02
-  %4 = extractelement <2 x float> %2, i64 1
+  %i.ce = fmul contract float %2, 2.030000e+02
   %i.cf = fmul contract float %4, 2.030000e+02
   %i.cg = fmul contract float %i.bj, 2.030000e+02
   %i.ch = extractelement <2 x float> %i.bz, i64 0
@@ -296,7 +300,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.dq = load ptr, ptr %i.ai, align 8, !tbaa !492
-  %i.dr = tail call contract noundef float %i.dq(<2 x float> %2, float %i.bj), !inline_history !479
+  %i.dr = tail call contract noundef float %i.dq(<2 x float> %.sroa.04.4.vec.insert.i.i.i.i, float %i.bj), !inline_history !479
   %i.ds = load ptr, ptr %i.ai, align 8, !tbaa !492
   %i.dt = tail call contract noundef float %i.ds(<2 x float> %i.bz, float %i.cb), !inline_history !479
   %i.du = insertelement <2 x float> poison, float %i.dt, i64 0
@@ -304,12 +308,13 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
-  %5 = shufflevector <2 x float> %i.bz, <2 x float> %2, <2 x i32> <i32 1, i32 3>
+  %5 = shufflevector <2 x float> %i.bz, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %6 = insertelement <2 x float> %5, float %4, i64 1
   %i.dw = insertelement <2 x float> poison, float %i.cb, i64 0
   %i.dx = insertelement <2 x float> %i.dw, float %i.bj, i64 1
-  %i.dy = tail call nsz contract <2 x float> @llvm.maxnum.v2f32(<2 x float> %5, <2 x float> %i.dx)
-  %6 = shufflevector <2 x float> %i.bz, <2 x float> %2, <2 x i32> <i32 0, i32 2>
-  %i.dz = tail call nsz contract <2 x float> @llvm.maxnum.v2f32(<2 x float> %6, <2 x float> %i.dy)
+  %i.dy = tail call nsz contract <2 x float> @llvm.maxnum.v2f32(<2 x float> %6, <2 x float> %i.dx)
+  %7 = insertelement <2 x float> %i.bz, float %2, i64 1
+  %i.dz = tail call nsz contract <2 x float> @llvm.maxnum.v2f32(<2 x float> %7, <2 x float> %i.dy)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -540,8 +545,14 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.i.i.i
   %i.bx = tail call { <2 x float>, float } %i.bw(<2 x float> %.fca.0.extract121.i.i.i, float %.fca.1.extract122.i.i.i), !inline_history !507 ; 2 uses
   %.fca.0.extract111.i.i.i = extractvalue { <2 x float>, float } %i.bx, 0 ; 2 uses
   %.fca.1.extract112.i.i.i = extractvalue { <2 x float>, float } %i.bx, 1 ; 2 uses
-  %1 = fcmp contract olt <2 x float> %.fca.0.extract111.i.i.i, zeroinitializer
-  %2 = select <2 x i1> %1, <2 x float> zeroinitializer, <2 x float> %.fca.0.extract111.i.i.i ; 5 uses
+  %.sroa.03.0.vec.extract.i.i.i.i = extractelement <2 x float> %.fca.0.extract111.i.i.i, i64 0 ; 2 uses
+  %1 = fcmp contract olt float %.sroa.03.0.vec.extract.i.i.i.i, 0.000000e+00
+  %2 = select contract i1 %1, float 0.000000e+00, float %.sroa.03.0.vec.extract.i.i.i.i ; 3 uses
+  %.sroa.04.0.vec.insert.i.i.i.i = insertelement <2 x float> poison, float %2, i64 0
+  %.sroa.03.4.vec.extract.i.i.i.i = extractelement <2 x float> %.fca.0.extract111.i.i.i, i64 1 ; 2 uses
+  %3 = fcmp contract olt float %.sroa.03.4.vec.extract.i.i.i.i, 0.000000e+00
+  %4 = select contract i1 %3, float 0.000000e+00, float %.sroa.03.4.vec.extract.i.i.i.i ; 3 uses
+  %.sroa.04.4.vec.insert.i.i.i.i = insertelement <2 x float> %.sroa.04.0.vec.insert.i.i.i.i, float %4, i64 1
   %i.by = fcmp contract olt float %.fca.1.extract112.i.i.i, 0.000000e+00
   %i.bz = select contract i1 %i.by, float 0.000000e+00, float %.fca.1.extract112.i.i.i ; 3 uses
   %i.ca = load ptr, ptr %i.aa, align 8, !tbaa !510
@@ -584,9 +595,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.ct, label %.loopexit.loopexit.i.i.i, label %bb.i
 
 .loopexit.loopexit.i.i.i:                         ; preds = %bb.h
-  %3 = extractelement <2 x float> %2, i64 0
-  %i.cu = fmul contract float %3, 2.030000e+02
-  %4 = extractelement <2 x float> %2, i64 1
+  %i.cu = fmul contract float %2, 2.030000e+02
   %i.cv = fmul contract float %4, 2.030000e+02
   %i.cw = fmul contract float %i.bz, 2.030000e+02
   %i.cx = extractelement <2 x float> %i.cp, i64 0
@@ -635,7 +644,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.eh = load ptr, ptr %i.ai, align 8, !tbaa !518
-  %i.ei = tail call contract noundef float %i.eh(<2 x float> %2, float %i.bz), !inline_history !507
+  %i.ei = tail call contract noundef float %i.eh(<2 x float> %.sroa.04.4.vec.insert.i.i.i.i, float %i.bz), !inline_history !507
   %i.ej = load ptr, ptr %i.ai, align 8, !tbaa !518
   %i.ek = tail call contract noundef float %i.ej(<2 x float> %i.cp, float %i.cr), !inline_history !507
   %i.el = insertelement <2 x float> poison, float %i.ek, i64 0
@@ -643,12 +652,13 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.i
-  %5 = shufflevector <2 x float> %i.cp, <2 x float> %2, <2 x i32> <i32 1, i32 3>
+  %5 = shufflevector <2 x float> %i.cp, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %6 = insertelement <2 x float> %5, float %4, i64 1
   %i.en = insertelement <2 x float> poison, float %i.cr, i64 0
   %i.eo = insertelement <2 x float> %i.en, float %i.bz, i64 1
-  %i.ep = tail call nsz contract <2 x float> @llvm.maxnum.v2f32(<2 x float> %5, <2 x float> %i.eo)
-  %6 = shufflevector <2 x float> %i.cp, <2 x float> %2, <2 x i32> <i32 0, i32 2>
-  %i.eq = tail call nsz contract <2 x float> @llvm.maxnum.v2f32(<2 x float> %6, <2 x float> %i.ep)
+  %i.ep = tail call nsz contract <2 x float> @llvm.maxnum.v2f32(<2 x float> %6, <2 x float> %i.eo)
+  %7 = insertelement <2 x float> %i.cp, float %2, i64 1
+  %i.eq = tail call nsz contract <2 x float> @llvm.maxnum.v2f32(<2 x float> %7, <2 x float> %i.ep)
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j

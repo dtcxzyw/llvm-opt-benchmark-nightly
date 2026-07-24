@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %.028, i64 12
   %i.m = load float, ptr %i.l, align 4, !tbaa !12
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.01926, ptr noundef nonnull align 4 dereferenceable(16) %.028, i64 16, i1 false)
-  %i.n = getelementptr inbounds nuw i8, ptr %.01926, i64 4 ; 4 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %.01926, i64 4 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.01926, i64 8 ; 6 uses
   %i.p = load float, ptr %i.o, align 4, !tbaa !12 ; 2 uses
   %i.q = fcmp ogt float %i.p, 0.000000e+00
@@ -261,23 +261,20 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.bd = fadd float %i.ax, %i.bc                 ; 2 uses
   store float %i.bd, ptr %i.o, align 4, !tbaa !12
   %i.be = load float, ptr %i.b, align 8, !tbaa !12
-  %i.bf = fmul float %i.az, %i.be                 ; 3 uses
+  %i.bf = fmul float %i.az, %i.be                 ; 2 uses
   store float %i.bf, ptr %.01926, align 4, !tbaa !12
   %i.bg = load float, ptr %i.j, align 4, !tbaa !12
-  %i.bh = fmul float %i.bb, %i.bg                 ; 3 uses
+  %i.bh = fmul float %i.bb, %i.bg                 ; 2 uses
   store float %i.bh, ptr %i.n, align 4, !tbaa !12
   %i.bi = load float, ptr %i.k, align 8, !tbaa !12
   %i.bj = fmul float %i.bd, %i.bi                 ; 2 uses
-  %4 = fcmp ogt float %i.bf, 0.000000e+00
-  %.sroa.speculated2.i.i20 = select i1 %4, float %i.bf, float 0.000000e+00 ; 2 uses
-  %5 = fcmp ogt float %.sroa.speculated2.i.i20, 1.000000e+00
-  %.sroa.speculated.i.i21 = select i1 %5, float 1.000000e+00, float %.sroa.speculated2.i.i20
-  store float %.sroa.speculated.i.i21, ptr %.01926, align 4, !tbaa !12
-  %6 = fcmp ogt float %i.bh, 0.000000e+00
-  %.sroa.speculated2.i6.i22 = select i1 %6, float %i.bh, float 0.000000e+00 ; 2 uses
-  %7 = fcmp ogt float %.sroa.speculated2.i6.i22, 1.000000e+00
-  %.sroa.speculated.i7.i23 = select i1 %7, float 1.000000e+00, float %.sroa.speculated2.i6.i22
-  store float %.sroa.speculated.i7.i23, ptr %i.n, align 4, !tbaa !12
+  %4 = insertelement <2 x float> poison, float %i.bf, i64 0
+  %5 = insertelement <2 x float> %4, float %i.bh, i64 1 ; 2 uses
+  %6 = fcmp ogt <2 x float> %5, zeroinitializer
+  %7 = select <2 x i1> %6, <2 x float> %5, <2 x float> zeroinitializer ; 2 uses
+  %8 = fcmp ogt <2 x float> %7, splat (float 1.000000e+00)
+  %9 = select <2 x i1> %8, <2 x float> splat (float 1.000000e+00), <2 x float> %7
+  store <2 x float> %9, ptr %.01926, align 4, !tbaa !12
   %i.bk = fcmp ogt float %i.bj, 0.000000e+00
   %.sroa.speculated2.i8.i24 = select i1 %i.bk, float %i.bj, float 0.000000e+00 ; 2 uses
   %i.bl = fcmp ogt float %.sroa.speculated2.i8.i24, 1.000000e+00

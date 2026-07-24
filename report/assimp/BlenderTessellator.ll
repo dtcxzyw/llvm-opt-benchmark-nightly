@@ -204,7 +204,7 @@ declare void @_ZN6Assimp21BlenderBMeshConverter7AddFaceEiiii(ptr noundef nonnull
 define hidden noundef float @_ZNK6Assimp21BlenderTessellatorP2T21FindLargestMatrixElemERK12aiMatrix3x3tIfE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(8) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(36) %1) local_unnamed_addr #11 align 2 {
 .split.us.2:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.b = load float, ptr %1, align 4
+  %i.b = load float, ptr %1, align 4              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = load float, ptr %i.c, align 4
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -228,9 +228,9 @@ define hidden noundef float @_ZNK6Assimp21BlenderTessellatorP2T21FindLargestMatr
   %i.w = tail call noundef float @llvm.fabs.f32(float %i.g) ; 2 uses
   %i.x = tail call noundef float @llvm.fabs.f32(float %i.f) ; 2 uses
   %i.y = tail call noundef float @llvm.fabs.f32(float %i.d) ; 2 uses
-  %2 = tail call noundef float @llvm.fabs.f32(float %i.b) ; 2 uses
-  %3 = fcmp ogt float %2, 0.000000e+00
-  %i.z = select i1 %3, float %2, float 0.000000e+00 ; 2 uses
+  %2 = fcmp one float %i.b, 0.000000e+00
+  %3 = tail call noundef float @llvm.fabs.f32(float %i.b)
+  %i.z = select i1 %2, float %3, float 0.000000e+00 ; 2 uses
   %i.aa = fcmp ogt float %i.y, %i.z
   %i.ab = select i1 %i.aa, float %i.y, float %i.z ; 2 uses
   %i.ac = fcmp ogt float %i.x, %i.ab
@@ -300,10 +300,10 @@ bb.a:
   %i.x = tail call noundef float @llvm.fabs.f32(float %i.p) ; 2 uses
   %i.y = tail call noundef float @llvm.fabs.f32(float %i.q) ; 2 uses
   %i.z = tail call noundef float @llvm.fabs.f32(float %i.r) ; 2 uses
-  %i.aa = extractelement <4 x float> %i.o, i64 0
-  %2 = tail call noundef float @llvm.fabs.f32(float %i.aa) ; 2 uses
-  %3 = fcmp ogt float %2, 0.000000e+00
-  %i.ab = select i1 %3, float %2, float 0.000000e+00 ; 2 uses
+  %i.aa = extractelement <4 x float> %i.o, i64 0  ; 2 uses
+  %2 = fcmp one float %i.aa, 0.000000e+00
+  %3 = tail call noundef float @llvm.fabs.f32(float %i.aa)
+  %i.ab = select i1 %2, float %3, float 0.000000e+00 ; 2 uses
   %i.ac = fcmp ogt float %i.z, %i.ab
   %i.ad = select i1 %i.ac, float %i.z, float %i.ab ; 2 uses
   %i.ae = fcmp ogt float %i.y, %i.ad
