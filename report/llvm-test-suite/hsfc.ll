@@ -107,9 +107,8 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define dso_local void @hsfc3d(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #2 {
 bb.a:
   %i.a = tail call i32 @llvm.umin.i32(i32 %1, i32 3) ; 2 uses
-  %.tr = trunc nuw nsw i32 %i.a to i8
-  %.lhs.trunc = shl nuw nsw i8 %.tr, 5
-  %3 = udiv i8 %.lhs.trunc, 3
+  %3 = shl nuw nsw i32 %i.a, 5
+  %4 = udiv i32 %3, 3
   %.b = load i1, ptr @hsfc3d.init, align 4
   br i1 %.b, label %bb.b, label %.preheader81
 
@@ -128,12 +127,10 @@ bb.b:                                             ; preds = %.preheader81, %bb.a
   %i.d = shl nuw nsw i64 %i.c, 2
   %i.e = add nuw nsw i64 %i.d, 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %2, i8 0, i64 %i.e, i1 false), !tbaa !4
-  %narrow107 = add nuw nsw i8 %3, 1
-  %4 = zext nneg i8 %narrow107 to i32
   br label %.lr.ph92
 
 .lr.ph92:                                         ; preds = %.lr.ph92.preheader, %bb.j
-  %.191 = phi i32 [ %i.cd, %bb.j ], [ 1, %.lr.ph92.preheader ] ; 3 uses
+  %.191 = phi i32 [ %i.cd, %bb.j ], [ 1, %.lr.ph92.preheader ] ; 4 uses
   %.sroa.26.090 = phi i8 [ %.sroa.26.1, %bb.j ], [ 4, %.lr.ph92.preheader ] ; 8 uses
   %.sroa.14.089 = phi i8 [ %.sroa.14.1, %bb.j ], [ 2, %.lr.ph92.preheader ] ; 8 uses
   %.sroa.0.088 = phi i8 [ %.sroa.0.1, %bb.j ], [ 0, %.lr.ph92.preheader ] ; 8 uses
@@ -262,8 +259,8 @@ bb.j:                                             ; preds = %.lr.ph92, %bb.h, %b
   %.sroa.0.1 = phi i8 [ %i.cb, %bb.h ], [ %.sroa.0.088, %bb.c ], [ %.sroa.0.088, %bb.d ], [ %i.bv, %bb.e ], [ %.sroa.26.090, %bb.f ], [ %.sroa.26.090, %.lr.ph92 ], [ %.sroa.0.088, %bb.g ]
   %.sroa.14.1 = phi i8 [ %.sroa.14.089, %bb.h ], [ %.sroa.26.090, %bb.c ], [ %.sroa.14.089, %bb.d ], [ %i.bw, %bb.e ], [ %i.bx, %bb.f ], [ %.sroa.14.089, %.lr.ph92 ], [ %i.bz, %bb.g ]
   %.sroa.26.1 = phi i8 [ %i.cc, %bb.h ], [ %.sroa.14.089, %bb.c ], [ %.sroa.26.090, %bb.d ], [ %.sroa.14.089, %bb.e ], [ %i.by, %bb.f ], [ %.sroa.0.088, %.lr.ph92 ], [ %i.ca, %bb.g ]
-  %i.cd = add nuw nsw i32 %.191, 1                ; 2 uses
-  %exitcond = icmp eq i32 %i.cd, %4
+  %i.cd = add nuw nsw i32 %.191, 1
+  %exitcond = icmp eq i32 %.191, %4
   br i1 %exitcond, label %._crit_edge, label %.lr.ph92, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.b
