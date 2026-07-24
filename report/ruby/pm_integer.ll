@@ -26,8 +26,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define hidden void @pm_integer_parse(ptr nofree noundef captures(none) %0, i32 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoint ptr %3 to i64                     ; 3 uses
-  %5 = alloca %struct.pm_integer_t, align 8       ; 6 uses
+  %4 = alloca %struct.pm_integer_t, align 8       ; 6 uses
   %i.a = load i8, ptr %2, align 1, !tbaa !11
   %i.b = icmp eq i8 %i.a, 43
   %spec.select.idx = zext i1 %i.b to i64
@@ -68,8 +67,9 @@ bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c
 bb.e:                                             ; preds = %bb.a
   %i.j = load i8, ptr %spec.select, align 1, !tbaa !11
   %i.k = icmp eq i8 %i.j, 48
+  %5 = ptrtoint ptr %3 to i64
   %i.l = ptrtoint ptr %spec.select to i64
-  %i.m = sub i64 %4, %i.l
+  %i.m = sub i64 %5, %i.l
   %i.n = icmp sgt i64 %i.m, 1
   %or.cond = select i1 %i.k, i1 %i.n, i1 false
   %spec.select57.idx = select i1 %or.cond, i64 2, i64 0
@@ -83,8 +83,9 @@ bb.f:                                             ; preds = %bb.a
 bb.g:                                             ; preds = %bb.a
   %i.p = load i8, ptr %spec.select, align 1, !tbaa !11
   %i.q = icmp eq i8 %i.p, 48
+  %6 = ptrtoint ptr %3 to i64
   %i.r = ptrtoint ptr %spec.select to i64
-  %i.s = sub i64 %4, %i.r
+  %i.s = sub i64 %6, %i.r
   %i.t = icmp sgt i64 %i.s, 1
   %or.cond56 = select i1 %i.q, i1 %i.t, i1 false
   br i1 %or.cond56, label %bb.h, label %.loopexit
@@ -140,7 +141,6 @@ bb.n:                                             ; preds = %bb.h
   %.3 = phi ptr [ %spec.select, %bb.a ], [ %i.u, %bb.h ], [ %i.f, %bb.b ], [ %spec.select, %bb.g ], [ %i.u, %bb.h ], [ %i.g, %bb.c ], [ %spec.select57, %bb.e ], [ %i.o, %bb.f ], [ %i.w, %bb.i ], [ %i.i, %bb.d ], [ %i.x, %bb.j ], [ %i.y, %bb.k ], [ %i.z, %bb.l ], [ %i.aa, %bb.m ], [ %i.u, %bb.h ], [ %i.u, %bb.h ], [ %i.u, %bb.h ], [ %i.u, %bb.h ], [ %i.u, %bb.h ], [ %i.u, %bb.h ], [ %.146, %.preheader ] ; 5 uses
   %i.ab = phi i1 [ true, %bb.a ], [ false, %bb.h ], [ false, %bb.b ], [ true, %bb.g ], [ false, %bb.h ], [ false, %bb.c ], [ true, %bb.e ], [ false, %bb.f ], [ false, %bb.i ], [ false, %bb.d ], [ false, %bb.j ], [ false, %bb.k ], [ true, %bb.l ], [ false, %bb.m ], [ false, %bb.h ], [ false, %bb.h ], [ false, %bb.h ], [ false, %bb.h ], [ false, %bb.h ], [ false, %bb.h ], [ true, %.preheader ]
   %.044 = phi i32 [ 10, %bb.a ], [ 8, %bb.h ], [ 2, %bb.b ], [ 10, %bb.g ], [ 8, %bb.h ], [ 8, %bb.c ], [ 10, %bb.e ], [ 16, %bb.f ], [ 8, %bb.i ], [ 8, %bb.d ], [ 2, %bb.j ], [ 8, %bb.k ], [ 10, %bb.l ], [ 16, %bb.m ], [ 8, %bb.h ], [ 8, %bb.h ], [ 8, %bb.h ], [ 8, %bb.h ], [ 8, %bb.h ], [ 8, %bb.h ], [ 10, %.preheader ] ; 2 uses
-  %.367 = ptrtoint ptr %.3 to i64
   %.not = icmp ult ptr %.3, %3
   br i1 %.not, label %bb.o, label %bb.ag
 
@@ -164,7 +164,6 @@ pm_integer_parse_digit.exit:                      ; preds = %bb.o
 
 .lr.ph:                                           ; preds = %pm_integer_parse_digit.exit
   %i.ai = zext nneg i32 %.044 to i64
-  %6 = sub i64 %4, %.367
   br label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph, %bb.af
@@ -193,7 +192,10 @@ pm_integer_parse_digit.exit59:                    ; preds = %bb.r
   br i1 %i.ar, label %bb.t, label %bb.af
 
 bb.t:                                             ; preds = %pm_integer_parse_digit.exit59
-  %i.as = tail call noalias ptr @malloc(i64 noundef %6) #14 ; 4 uses
+  %7 = ptrtoint ptr %3 to i64
+  %8 = ptrtoint ptr %.3 to i64
+  %9 = sub i64 %7, %8
+  %i.as = tail call noalias ptr @malloc(i64 noundef %9) #14 ; 4 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.t, %bb.w
@@ -230,7 +232,7 @@ bb.w:                                             ; preds = %pm_integer_parse_di
   br i1 %i.ab, label %bb.x, label %.preheader.i
 
 bb.x:                                             ; preds = %._crit_edge.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.bb = add i64 %.1.i, 8
   %i.bc = udiv i64 %i.bb, 9                       ; 2 uses
   %i.bd = tail call noalias ptr @calloc(i64 noundef %i.bc, i64 noundef 4) #15 ; 3 uses
@@ -264,14 +266,14 @@ bb.z:                                             ; preds = %bb.y, %.lr.ph.i.i
   br i1 %exitcond.not.i.i, label %pm_integer_parse_decimal.exit.i, label %.lr.ph.i.i, !llvm.loop !15
 
 pm_integer_parse_decimal.exit.i:                  ; preds = %bb.z, %bb.x
-  store i64 %i.bc, ptr %5, align 8, !tbaa !16
-  %i.bq = getelementptr inbounds nuw i8, ptr %5, i64 8
+  store i64 %i.bc, ptr %4, align 8, !tbaa !16
+  %i.bq = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr %i.bd, ptr %i.bq, align 8, !tbaa !22
-  %i.br = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.br = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i64 0, ptr %i.br, align 8
-  call fastcc void @pm_integer_convert_base(ptr noundef %0, ptr noundef nonnull %5, i64 noundef 1000000000, i64 noundef 4294967296)
+  call fastcc void @pm_integer_convert_base(ptr noundef %0, ptr noundef nonnull %4, i64 noundef 1000000000, i64 noundef 4294967296)
   tail call void @free(ptr noundef %i.bd) #16
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %pm_integer_parse_big.exit
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %.preheader.i

@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.t
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define range(i32 -4, 3) i32 @tinfl_decompress(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef captures(none) %5, i32 noundef %6) local_unnamed_addr #15 {
 bb.a:
-  %7 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %7 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = alloca [3 x ptr], align 16               ; 6 uses
   %i.b = alloca [3 x ptr], align 16               ; 6 uses
   %i.c = alloca [17 x i32], align 16              ; 18 uses
@@ -607,7 +607,7 @@ bb.fc:                                            ; preds = %bb.ey, %bb.fb
   br i1 %i.aio, label %.lr.ph1802.preheader, label %._crit_edge1803
 
 .lr.ph1802.preheader:                             ; preds = %bb.fc
-  %.7312541895 = ptrtoint ptr %.731254 to i64
+  %.7312541895 = ptrtoaddr ptr %.731254 to i64
   %i.aip = add i32 %i.ail, -8                     ; 2 uses
   %i.aiq = lshr exact i32 %i.aip, 3
   %i.air = zext nneg i32 %i.aiq to i64
@@ -768,7 +768,7 @@ bb.fo:                                            ; preds = %bb.g, %bb.g, %bb.g,
   br i1 %i.akd, label %.lr.ph1809.preheader, label %.thread1657
 
 .lr.ph1809.preheader:                             ; preds = %bb.fo
-  %.8212631897 = ptrtoint ptr %.821263 to i64
+  %.8212631897 = ptrtoaddr ptr %.821263 to i64
   %i.ake = add i32 %.84.fr, -8                    ; 2 uses
   %i.akf = lshr i32 %i.ake, 3
   %i.akg = zext nneg i32 %i.akf to i64
@@ -802,8 +802,9 @@ bb.fo:                                            ; preds = %bb.g, %bb.g, %bb.g,
   store i32 %.8210011671, ptr %i.ak, align 4
   store i32 %.8010881670, ptr %i.am, align 8
   store i64 %.7514291667, ptr %i.ao, align 8
-  %i.akr = ptrtoint ptr %.841265 to i64
-  %i.aks = sub i64 %i.akr, %7
+  %8 = ptrtoint ptr %.841265 to i64
+  %i.akr = ptrtoint ptr %1 to i64
+  %i.aks = sub i64 %8, %i.akr
   store i64 %i.aks, ptr %2, align 8
   %i.akt = ptrtoint ptr %.8013531668 to i64
   %i.aku = ptrtoint ptr %4 to i64
