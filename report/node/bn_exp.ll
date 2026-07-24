@@ -204,8 +204,8 @@ bb.ae:                                            ; preds = %bb.ac
 bb.af:                                            ; preds = %bb.ae, %bb.ad
   %spec.select339 = phi ptr [ null, %bb.ad ], [ %i.cc, %bb.ae ] ; 9 uses
   %.0297 = phi ptr [ %i.ca, %bb.ad ], [ %i.cc, %bb.ae ] ; 2 uses
-  %i.ce = ptrtoint ptr %.0297 to i64              ; 3 uses
-  %i.cf = and i64 %i.ce, 63
+  %i.ce = ptrtoint ptr %.0297 to i64              ; 2 uses
+  %i.cf = and i64 %i.ce, 63                       ; 2 uses
   %i.cg = sub nuw nsw i64 64, %i.cf
   %i.ch = getelementptr inbounds nuw i8, ptr %.0297, i64 %i.cg ; 83 uses
   %i.ci = sext i32 %i.bw to i64
@@ -252,13 +252,12 @@ bb.ag:                                            ; preds = %bb.af
 .lr.ph.preheader:                                 ; preds = %bb.ag
   %wide.trip.count = zext nneg i32 %i.c to i64    ; 4 uses
   %i.df = add nsw i64 %wide.trip.count, -1        ; 3 uses
-  %min.iters.check = icmp ult i64 %i.df, 14
+  %min.iters.check = icmp ult i64 %i.df, 12
   br i1 %min.iters.check, label %.lr.ph.preheader580, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.dg = add i64 %i.cm, %i.ce
-  %8 = and i64 %i.ce, 63
-  %i.dh = add i64 %8, %i.cy
+  %i.dh = add i64 %i.cf, %i.cy
   %i.di = sub i64 %i.dg, %i.dh
   %i.dj = add i64 %i.di, 63
   %diff.check = icmp ult i64 %i.dj, 31

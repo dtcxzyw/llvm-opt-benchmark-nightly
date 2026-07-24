@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.af
   %.0109166 = phi i32 [ %i.a, %.lr.ph ], [ %i.gg, %bb.af ] ; 3 uses
   %.0112163 = phi ptr [ %4, %.lr.ph ], [ %i.gf, %bb.af ] ; 11 uses
   %i.aj = phi i32 [ %.promoted, %.lr.ph ], [ %i.bo, %bb.af ] ; 7 uses
-  %.0112163209 = ptrtoint ptr %.0112163 to i64    ; 3 uses
+  %.0112163209 = ptrtoaddr ptr %.0112163 to i64   ; 3 uses
   %i.ak = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.ai ; 5 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.am = load i32, ptr %i.al, align 4, !tbaa !238 ; 5 uses
@@ -415,17 +415,16 @@ bb.ab:                                            ; preds = %bb.ab, %bb.aa
   br i1 %i.dk, label %bb.ab, label %_ZN11duckdb_zstdL13ZSTD_wildcopyEPvPKvlNS_14ZSTD_overlap_eE.exit.i, !llvm.loop !389
 
 _ZN11duckdb_zstdL13ZSTD_wildcopyEPvPKvlNS_14ZSTD_overlap_eE.exit.i: ; preds = %bb.ab, %bb.z, %bb.y
-  %.014.i = phi ptr [ %.0112163, %bb.y ], [ %i.aa, %bb.z ], [ %i.aa, %bb.ab ] ; 8 uses
+  %.014.i = phi ptr [ %.0112163, %bb.y ], [ %i.aa, %bb.z ], [ %i.aa, %bb.ab ] ; 7 uses
   %.0.i138 = phi ptr [ %i.cq, %bb.y ], [ %i.de, %bb.z ], [ %i.de, %bb.ab ] ; 6 uses
   %i.dl = icmp ult ptr %.014.i, %i.cp
   br i1 %i.dl, label %iter.check, label %_ZN11duckdb_zstdL13ZSTD_wildcopyEPvPKvlNS_14ZSTD_overlap_eE.exit
 
 iter.check:                                       ; preds = %_ZN11duckdb_zstdL13ZSTD_wildcopyEPvPKvlNS_14ZSTD_overlap_eE.exit.i
-  %.014.i208 = ptrtoaddr ptr %.014.i to i64
+  %.014.i208 = ptrtoaddr ptr %.014.i to i64       ; 2 uses
   %.0.i138207 = ptrtoaddr ptr %.0.i138 to i64
-  %.014.i210 = ptrtoint ptr %.014.i to i64
   %i.dm = add i64 %.0112163209, %i.cn
-  %i.dn = sub i64 %i.dm, %.014.i210               ; 7 uses
+  %i.dn = sub i64 %i.dm, %.014.i208               ; 7 uses
   %min.iters.check = icmp ult i64 %i.dn, 4
   %i.do = sub i64 %.014.i208, %.0.i138207
   %diff.check = icmp ugt i64 %i.do, -32
@@ -490,11 +489,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.121.i.ph = phi ptr [ %.0.i138, %iter.check ], [ %i.dp, %vec.epilog.iter.check ], [ %i.du, %vec.epilog.middle.block ] ; 2 uses
   %.11520.i.ph = phi ptr [ %.014.i, %iter.check ], [ %i.dq, %vec.epilog.iter.check ], [ %i.dv, %vec.epilog.middle.block ] ; 3 uses
   %i.dx = add i64 %.0112163209, %i.cn
-  %.11520.i.ph227 = ptrtoint ptr %.11520.i.ph to i64 ; 2 uses
-  %i.dy = sub i64 %i.dx, %.11520.i.ph227
+  %.11520.i.ph226 = ptrtoaddr ptr %.11520.i.ph to i64 ; 2 uses
+  %i.dy = sub i64 %i.dx, %.11520.i.ph226
   %i.dz = add i64 %.0112163209, -1
   %i.ea = add i64 %i.dz, %i.cn
-  %i.eb = sub i64 %i.ea, %.11520.i.ph227
+  %i.eb = sub i64 %i.ea, %.11520.i.ph226
   %xtraiter = and i64 %i.dy, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
@@ -794,7 +793,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.aj
   %.0139232 = phi i32 [ 0, %.lr.ph ], [ %.3142, %bb.aj ] ; 4 uses
   %.0145231 = phi i32 [ 0, %.lr.ph ], [ %.2147, %bb.aj ]
   %i.ai = phi i32 [ %.promoted, %.lr.ph ], [ %i.bv, %bb.aj ] ; 6 uses
-  %.0131233299 = ptrtoint ptr %.0131233 to i64    ; 3 uses
+  %.0131233299 = ptrtoaddr ptr %.0131233 to i64   ; 3 uses
   %i.aj = zext i32 %.0114238 to i64               ; 2 uses
   %i.ak = icmp ugt i64 %3, %i.aj
   %.not159 = icmp eq i32 %.0145231, 0
@@ -1043,17 +1042,16 @@ bb.af:                                            ; preds = %bb.af, %bb.ae
   br i1 %i.dr, label %bb.af, label %_ZN11duckdb_zstdL13ZSTD_wildcopyEPvPKvlNS_14ZSTD_overlap_eE.exit.i, !llvm.loop !389
 
 _ZN11duckdb_zstdL13ZSTD_wildcopyEPvPKvlNS_14ZSTD_overlap_eE.exit.i: ; preds = %bb.af, %bb.ad, %bb.ac
-  %.014.i = phi ptr [ %.0131233, %bb.ac ], [ %i.aa, %bb.ad ], [ %i.aa, %bb.af ] ; 8 uses
+  %.014.i = phi ptr [ %.0131233, %bb.ac ], [ %i.aa, %bb.ad ], [ %i.aa, %bb.af ] ; 7 uses
   %.0.i174 = phi ptr [ %i.cx, %bb.ac ], [ %i.dl, %bb.ad ], [ %i.dl, %bb.af ] ; 6 uses
   %i.ds = icmp ult ptr %.014.i, %i.cw
   br i1 %i.ds, label %iter.check, label %_ZN11duckdb_zstdL13ZSTD_wildcopyEPvPKvlNS_14ZSTD_overlap_eE.exit
 
 iter.check:                                       ; preds = %_ZN11duckdb_zstdL13ZSTD_wildcopyEPvPKvlNS_14ZSTD_overlap_eE.exit.i
-  %.014.i298 = ptrtoaddr ptr %.014.i to i64
+  %.014.i298 = ptrtoaddr ptr %.014.i to i64       ; 2 uses
   %.0.i174297 = ptrtoaddr ptr %.0.i174 to i64
-  %.014.i300 = ptrtoint ptr %.014.i to i64
   %i.dt = add i64 %.0131233299, %i.cu
-  %i.du = sub i64 %i.dt, %.014.i300               ; 7 uses
+  %i.du = sub i64 %i.dt, %.014.i298               ; 7 uses
   %min.iters.check = icmp ult i64 %i.du, 4
   %i.dv = sub i64 %.014.i298, %.0.i174297
   %diff.check = icmp ugt i64 %i.dv, -32
@@ -1118,11 +1116,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.121.i.ph = phi ptr [ %.0.i174, %iter.check ], [ %i.dw, %vec.epilog.iter.check ], [ %i.eb, %vec.epilog.middle.block ] ; 2 uses
   %.11520.i.ph = phi ptr [ %.014.i, %iter.check ], [ %i.dx, %vec.epilog.iter.check ], [ %i.ec, %vec.epilog.middle.block ] ; 3 uses
   %i.ee = add i64 %.0131233299, %i.cu
-  %.11520.i.ph324 = ptrtoint ptr %.11520.i.ph to i64 ; 2 uses
-  %i.ef = sub i64 %i.ee, %.11520.i.ph324
+  %.11520.i.ph323 = ptrtoaddr ptr %.11520.i.ph to i64 ; 2 uses
+  %i.ef = sub i64 %i.ee, %.11520.i.ph323
   %i.eg = add i64 %.0131233299, -1
   %i.eh = add i64 %i.eg, %i.cu
-  %i.ei = sub i64 %i.eh, %.11520.i.ph324
+  %i.ei = sub i64 %i.eh, %.11520.i.ph323
   %xtraiter = and i64 %i.ef, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol

@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %bb.h
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorISt10shared_ptrIKN8facebook5velox4TypeEESaIS5_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEvNSA_IPS5_S7_EET_SG_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 4 uses
   %i.a = icmp eq ptr %2, %3
   br i1 %i.a, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKSt10shared_ptrIKN8facebook5velox4TypeEESt6vectorIS7_SaIS7_EEEENS1_IPS7_SC_EEET0_T_SH_SG_.exit, label %bb.b
 
@@ -604,8 +604,7 @@ _ZNSt12_Vector_baseISt10shared_ptrIKN8facebook5velox4TypeEESaIS5_EE11_M_allocate
   br i1 %i.ha, label %_ZSt34__uninitialized_move_if_noexcept_aIPSt10shared_ptrIKN8facebook5velox4TypeEES6_SaIS5_EET0_T_S9_S8_RT1_.exit, label %.lr.ph.i.i.i.i.i78.preheader
 
 .lr.ph.i.i.i.i.i78.preheader:                     ; preds = %_ZNSt12_Vector_baseISt10shared_ptrIKN8facebook5velox4TypeEESaIS5_EE11_M_allocateEm.exit
-  %5 = ptrtoint ptr %1 to i64
-  %i.hb = sub i64 %5, %i.go
+  %i.hb = sub i64 %4, %i.go
   %i.hc = add i64 %i.hb, -16                      ; 2 uses
   %i.hd = lshr i64 %i.hc, 4
   %i.he = add nuw nsw i64 %i.hd, 1                ; 2 uses
@@ -716,8 +715,7 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKSt10shared_ptrIKN8
   br i1 %i.if, label %_ZSt34__uninitialized_move_if_noexcept_aIPSt10shared_ptrIKN8facebook5velox4TypeEES6_SaIS5_EET0_T_S9_S8_RT1_.exit94, label %.lr.ph.i.i.i.i.i90.preheader
 
 .lr.ph.i.i.i.i.i90.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKSt10shared_ptrIKN8facebook5velox4TypeEESt6vectorIS7_SaIS7_EEEEPS7_S7_ET0_T_SG_SF_RSaIT1_E.exit89
-  %6 = ptrtoint ptr %1 to i64
-  %i.ig = sub i64 %i.k, %6
+  %i.ig = sub i64 %i.k, %4
   %i.ih = add i64 %i.ig, -16                      ; 2 uses
   %i.ii = lshr i64 %i.ih, 4
   %i.ij = add nuw nsw i64 %i.ii, 1                ; 2 uses

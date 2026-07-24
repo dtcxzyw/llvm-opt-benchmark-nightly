@@ -203,7 +203,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZSt4copyIPN11OpenImageIO4v3_18TypeDescES3_ET0_T_S5_S4_.exit
 
 _ZSt4copyIPN11OpenImageIO4v3_18TypeDescES3_ET0_T_S5_S4_.exit: ; preds = %bb.l, %bb.m, %bb.n
-  %i.ae = load ptr, ptr %1, align 8, !tbaa !78    ; 3 uses
+  %i.ae = load ptr, ptr %1, align 8, !tbaa !78    ; 2 uses
   %i.af = load ptr, ptr %i.u, align 8, !tbaa !127 ; 4 uses
   %i.ag = load ptr, ptr %0, align 8, !tbaa !78
   %i.ah = ptrtoint ptr %i.af to i64               ; 2 uses
@@ -215,11 +215,10 @@ _ZSt4copyIPN11OpenImageIO4v3_18TypeDescES3_ET0_T_S5_S4_.exit: ; preds = %bb.l, %
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN11OpenImageIO4v3_18TypeDescESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPN11OpenImageIO4v3_18TypeDescES3_ET0_T_S5_S4_.exit
-  %i.am = ptrtoaddr ptr %i.ae to i64
-  %2 = ptrtoint ptr %i.al to i64
-  %3 = ptrtoint ptr %i.ae to i64
+  %i.am = ptrtoaddr ptr %i.ae to i64              ; 2 uses
+  %2 = ptrtoaddr ptr %i.al to i64
   %i.an = add i64 %i.ai, %2
-  %i.ao = add i64 %3, %i.ah
+  %i.ao = add i64 %i.am, %i.ah
   %i.ap = sub i64 %i.an, %i.ao
   %i.aq = add i64 %i.ap, -8                       ; 2 uses
   %i.ar = lshr i64 %i.aq, 3

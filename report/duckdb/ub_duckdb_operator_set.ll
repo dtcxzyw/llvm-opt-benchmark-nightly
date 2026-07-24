@@ -201,14 +201,14 @@ bb.i:                                             ; preds = %bb.d
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorISt17reference_wrapperIKN6duckdb16PhysicalOperatorEESaIS4_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPS4_S6_EEEEvSB_T_SC_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %.not94 = icmp eq ptr %2, %3
   br i1 %.not94, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapperIKN6duckdb16PhysicalOperatorEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = ptrtoint ptr %3 to i64                   ; 5 uses
-  %i.c = ptrtoint ptr %2 to i64                   ; 7 uses
-  %i.d = sub i64 %i.b, %i.c                       ; 8 uses
+  %i.b = ptrtoint ptr %3 to i64                   ; 4 uses
+  %i.c = ptrtoint ptr %2 to i64                   ; 6 uses
+  %i.d = sub i64 %i.b, %i.c                       ; 9 uses
   %i.e = ashr exact i64 %i.d, 3                   ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !375
@@ -234,9 +234,8 @@ bb.d:                                             ; preds = %bb.c
   %i.s = add i64 %i.r, -8                         ; 2 uses
   %i.t = lshr i64 %i.s, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
-  %min.iters.check143 = icmp ult i64 %i.s, 72
-  %4 = sub i64 %i.c, %i.b
-  %diff.check141 = icmp ugt i64 %4, -32
+  %min.iters.check143 = icmp ult i64 %i.s, 56
+  %diff.check141 = icmp ult i64 %i.d, 32
   %or.cond = or i1 %min.iters.check143, %diff.check141
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.ph144
 
@@ -509,8 +508,8 @@ _ZNSt12_Vector_baseISt17reference_wrapperIKN6duckdb16PhysicalOperatorEESaIS4_EE1
 
 .lr.ph.i.i.i.i.i60.preheader:                     ; preds = %_ZNSt12_Vector_baseISt17reference_wrapperIKN6duckdb16PhysicalOperatorEESaIS4_EE11_M_allocateEm.exit
   %i.cx = ptrtoaddr ptr %i.cw to i64
-  %5 = ptrtoint ptr %1 to i64
-  %i.cy = sub i64 %5, %i.cl
+  %4 = ptrtoaddr ptr %1 to i64
+  %i.cy = sub i64 %4, %i.cl
   %i.cz = add i64 %i.cy, -8                       ; 2 uses
   %i.da = lshr i64 %i.cz, 3
   %i.db = add nuw nsw i64 %i.da, 1                ; 2 uses
@@ -622,8 +621,7 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapp
 
 .lr.ph.i.i.i.i.i73.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapperIKN6duckdb16PhysicalOperatorEESt6vectorIS6_SaIS6_EEEES7_S6_ET0_T_SD_SC_RSaIT1_E.exit71
   %.lcssa117196 = ptrtoaddr ptr %.lcssa117 to i64
-  %6 = ptrtoint ptr %1 to i64
-  %i.ec = sub i64 %i.k, %6
+  %i.ec = sub i64 %i.k, %i.a
   %i.ed = add i64 %i.ec, -8                       ; 2 uses
   %i.ee = lshr i64 %i.ed, 3
   %i.ef = add nuw nsw i64 %i.ee, 1                ; 2 uses

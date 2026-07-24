@@ -203,7 +203,7 @@ declare i32 @ull2string(ptr noundef, i64 noundef, i64 noundef) local_unnamed_add
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local noundef ptr @sdstrim(ptr noundef returned %0, ptr nofree noundef readonly %1) local_unnamed_addr #13 {
 bb.a:
-  %2 = ptrtoint ptr %0 to i64                     ; 3 uses
+  %2 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = getelementptr i8, ptr %0, i64 -1         ; 3 uses
   %.val.i = load i8, ptr %i.a, align 1, !tbaa !17 ; 2 uses
   %i.b = and i8 %.val.i, 7
@@ -269,13 +269,13 @@ bb.g:                                             ; preds = %.lr.ph
 
 .critedge.loopexit:                               ; preds = %bb.g, %.lr.ph
   %.0.lcssa.ph = phi ptr [ %.033, %.lr.ph ], [ %i.v, %bb.g ] ; 2 uses
-  %.pre = ptrtoint ptr %.0.lcssa.ph to i64
+  %.pre = ptrtoaddr ptr %.0.lcssa.ph to i64
   br label %.critedge
 
 .critedge:                                        ; preds = %sdslen.exit.thread, %.critedge.loopexit, %sdslen.exit
   %i.w = phi ptr [ %i.r, %.critedge.loopexit ], [ %i.r, %sdslen.exit ], [ %i.c, %sdslen.exit.thread ] ; 3 uses
-  %.0.lcssa41.pre-phi = phi i64 [ %.pre, %.critedge.loopexit ], [ %2, %sdslen.exit ], [ %2, %sdslen.exit.thread ] ; 2 uses
-  %.0.lcssa = phi ptr [ %.0.lcssa.ph, %.critedge.loopexit ], [ %0, %sdslen.exit ], [ %0, %sdslen.exit.thread ] ; 4 uses
+  %.0.lcssa41.pre-phi = phi i64 [ %.pre, %.critedge.loopexit ], [ %2, %sdslen.exit ], [ %2, %sdslen.exit.thread ]
+  %.0.lcssa = phi ptr [ %.0.lcssa.ph, %.critedge.loopexit ], [ %0, %sdslen.exit ], [ %0, %sdslen.exit.thread ] ; 5 uses
   %i.x = icmp ugt ptr %i.w, %.0.lcssa
   br i1 %i.x, label %.lr.ph37.preheader, label %.critedge2
 
@@ -299,8 +299,9 @@ bb.h:                                             ; preds = %.lr.ph37
 
 .critedge2:                                       ; preds = %.lr.ph37, %bb.h, %.critedge
   %.026.lcssa = phi ptr [ %i.w, %.critedge ], [ %scevgep, %bb.h ], [ %.02636, %.lr.ph37 ]
-  %i.ae = ptrtoint ptr %.026.lcssa to i64
-  %i.af = sub i64 %i.ae, %.0.lcssa41.pre-phi
+  %3 = ptrtoint ptr %.026.lcssa to i64
+  %i.ae = ptrtoint ptr %.0.lcssa to i64
+  %i.af = sub i64 %3, %i.ae
   %i.ag = add nsw i64 %i.af, 1                    ; 7 uses
   %.not30 = icmp eq ptr %0, %.0.lcssa
   br i1 %.not30, label %bb.j, label %bb.i

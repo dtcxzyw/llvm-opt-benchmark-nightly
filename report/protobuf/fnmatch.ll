@@ -25,7 +25,7 @@ bb.a:
   %.0880 = phi i8 [ %.210, %bb.m ], [ 0, %bb.a ]  ; 2 uses
   %.sroa.024.079 = phi i64 [ %.sroa.024.1, %bb.m ], [ %2, %bb.a ] ; 8 uses
   %.sroa.1030.078 = phi ptr [ %.sroa.1030.1, %bb.m ], [ %3, %bb.a ] ; 8 uses
-  %.sroa.035.077 = phi i64 [ %.sroa.035.1, %bb.m ], [ %0, %bb.a ] ; 9 uses
+  %.sroa.035.077 = phi i64 [ %.sroa.035.1, %bb.m ], [ %0, %bb.a ] ; 8 uses
   %.sroa.12.076 = phi ptr [ %.sroa.12.1, %bb.m ], [ %1, %bb.a ] ; 8 uses
   %i.d = icmp eq i64 %.sroa.024.079, 0
   br i1 %i.d, label %.lr.ph.i, label %bb.c
@@ -75,8 +75,8 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.f, %bb.g
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.12.076, i64 %.0111420.i.i
   %i.s = load i8, ptr %i.r, align 1, !tbaa !7
   switch i8 %i.s, label %bb.g [
-    i8 63, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit
-    i8 42, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit
+    i8 63, label %bb.h
+    i8 42, label %bb.h
   ]
 
 bb.g:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
@@ -84,16 +84,13 @@ bb.g:                                             ; preds = %_ZNSt11char_traitsI
   %exitcond.not.i.i = icmp eq i64 %i.t, %.sroa.035.077
   br i1 %exitcond.not.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
+bb.h:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %.not14 = icmp eq i64 %.0111420.i.i, -1
-  br i1 %.not14, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread, label %bb.h
-
-bb.h:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit
-  %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %.sroa.035.077, i64 %.0111420.i.i)
+  %spec.select82 = select i1 %.not14, i64 %.sroa.035.077, i64 %.0111420.i.i
   br label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread: ; preds = %bb.g, %bb.h, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit
-  %.sroa.0.0 = phi i64 [ %.sroa.035.077, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit ], [ %.sroa.speculated.i, %bb.h ], [ %.sroa.035.077, %bb.g ] ; 8 uses
+_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread: ; preds = %bb.g, %bb.h
+  %.sroa.0.0 = phi i64 [ %spec.select82, %bb.h ], [ %.sroa.035.077, %bb.g ] ; 8 uses
   %i.u = icmp eq i64 %.sroa.0.0, 0
   br i1 %i.u, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread52, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread.thread
 
@@ -116,7 +113,7 @@ bb.i:                                             ; preds = %bb.j, %.lr.ph.i.i17
   br i1 %i.y, label %.critedge, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i18
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i18:   ; preds = %bb.i
-  %i.z = tail call ptr @memchr(ptr noundef %.02132.i.i, i32 noundef %i.w, i64 noundef %.reass.reass.i.reass.reass.i.reass.reass.reass) #4 ; 4 uses
+  %i.z = tail call ptr @memchr(ptr noundef %.02132.i.i, i32 noundef %i.w, i64 noundef %.reass.reass.i.reass.reass.i.reass.reass.reass) #3 ; 4 uses
   %.not26.i.i = icmp eq ptr %i.z, null
   br i1 %.not26.i.i, label %.critedge, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
 
@@ -179,17 +176,13 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare ptr @memchr(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #1
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #2
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #3
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #2
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
-attributes #4 = { nounwind }
+attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #3 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

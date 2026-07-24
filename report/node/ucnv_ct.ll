@@ -204,7 +204,7 @@ _ZL19findStateFromEscSeqPKcS0_PKhiP10UErrorCode.exit.thread: ; preds = %.loopexi
   br i1 %i.au, label %.lr.ph135.preheader, label %._crit_edge
 
 .lr.ph135.preheader:                              ; preds = %.preheader
-  %.075129249251 = ptrtoint ptr %.075129 to i64   ; 2 uses
+  %.075129249251 = ptrtoaddr ptr %.075129 to i64  ; 2 uses
   %i.av = sub i64 %i.q, %.075129249251
   %xtraiter = and i64 %i.av, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -289,8 +289,8 @@ bb.j:                                             ; preds = %_ZL19findStateFromE
 
 bb.k:                                             ; preds = %bb.j, %bb.c
   %.278 = phi i32 [ %i.cd, %bb.j ], [ %.076128, %bb.c ] ; 6 uses
-  %.3 = phi ptr [ %i.cl, %bb.j ], [ %.075129, %bb.c ] ; 9 uses
-  %.3160 = ptrtoint ptr %.3 to i64                ; 2 uses
+  %.3 = phi ptr [ %i.cl, %bb.j ], [ %.075129, %bb.c ] ; 10 uses
+  %.3160 = ptrtoaddr ptr %.3 to i64
   %i.cm = icmp eq i32 %.278, 0
   %i.cn = icmp ult ptr %.3, %i.f                  ; 2 uses
   br i1 %i.cm, label %.preheader98, label %bb.o
@@ -332,7 +332,8 @@ bb.o:                                             ; preds = %bb.k
   br i1 %i.cn, label %bb.p, label %.loopexit
 
 bb.p:                                             ; preds = %bb.o
-  %i.cw = sub i64 %i.q, %.3160                    ; 4 uses
+  %3 = ptrtoint ptr %.3 to i64
+  %i.cw = sub i64 %i.q, %3                        ; 4 uses
   %i.cx = trunc i64 %i.cw to i32
   %i.cy = icmp sgt i32 %i.cx, 1
   br i1 %i.cy, label %.lr.ph.preheader.i90, label %_ZL11findNextEscPKcS0_.exit
@@ -438,7 +439,7 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8              ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.i = load ptr, ptr %i.h, align 8              ; 3 uses
-  %2 = ptrtoint ptr %i.i to i64
+  %2 = ptrtoaddr ptr %i.i to i64
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8              ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -527,7 +528,7 @@ bb.j:                                             ; preds = %bb.g, %bb.c
   %.2118 = phi i32 [ %.1117, %bb.g ], [ %.0116, %bb.c ] ; 5 uses
   %.3107 = phi ptr [ %i.ak, %bb.g ], [ %i.y, %bb.c ] ; 3 uses
   %.2 = phi ptr [ %.1, %bb.g ], [ %.0103, %bb.c ] ; 5 uses
-  %.2217 = ptrtoint ptr %.2 to i64                ; 2 uses
+  %.2217 = ptrtoaddr ptr %.2 to i64               ; 2 uses
   switch i32 %.2130, label %bb.k [
     i32 10, label %_ZL8getStatei.exit
     i32 9, label %_ZL8getStatei.exit

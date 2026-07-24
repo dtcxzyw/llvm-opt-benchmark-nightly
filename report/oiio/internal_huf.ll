@@ -39,7 +39,7 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
 define hidden range(i32 0, 5) i32 @internal_huf_compress(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1, i64 noundef %2, ptr nofree noundef readonly captures(none) %3, i64 noundef %4, ptr noundef %5, i64 noundef %6) local_unnamed_addr #2 {
 bb.a:
-  %7 = ptrtoint ptr %1 to i64                     ; 6 uses
+  %7 = ptrtoaddr ptr %1 to i64                    ; 8 uses
   %i.a = alloca [59 x i64], align 16              ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %2 ; 14 uses
@@ -442,8 +442,7 @@ hufBuildEncTable.exit:                            ; preds = %bb.ad
 
 .lr.ph201.i.preheader:                            ; preds = %hufBuildEncTable.exit
   %i.kh = add i64 %2, %7                          ; 3 uses
-  %8 = ptrtoint ptr %1 to i64
-  %i.ki = add i64 %2, %8
+  %i.ki = add i64 %2, %7
   br label %.lr.ph201.i
 
 .lr.ph201.i:                                      ; preds = %.lr.ph201.i.preheader, %.thread132.i
@@ -451,7 +450,7 @@ hufBuildEncTable.exit:                            ; preds = %bb.ad
   %.081198.i = phi ptr [ %.889140.i, %.thread132.i ], [ %i.b, %.lr.ph201.i.preheader ] ; 13 uses
   %.097197.i = phi i64 [ %.4101139.i, %.thread132.i ], [ 0, %.lr.ph201.i.preheader ] ; 2 uses
   %.0103196.i = phi i32 [ %.8111138.i, %.thread132.i ], [ 0, %.lr.ph201.i.preheader ] ; 9 uses
-  %.081198.i244 = ptrtoint ptr %.081198.i to i64  ; 3 uses
+  %.081198.i244 = ptrtoaddr ptr %.081198.i to i64 ; 3 uses
   %i.kj = zext i32 %.077199.i to i64              ; 2 uses
   %i.kk = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.kj
   %i.kl = load i64, ptr %i.kk, align 8, !tbaa !9
@@ -580,8 +579,8 @@ bb.aj:                                            ; preds = %.lr.ph182.i
   %i.mh = add i32 %i.mg, 15
   %i.mi = lshr i32 %i.mh, 3
   %i.mj = zext nneg i32 %i.mi to i64
-  %9 = ptrtoint ptr %.182.lcssa.i to i64
-  %i.mk = tail call i64 @llvm.usub.sat.i64(i64 %i.ki, i64 %9)
+  %8 = ptrtoaddr ptr %.182.lcssa.i to i64
+  %i.mk = tail call i64 @llvm.usub.sat.i64(i64 %i.ki, i64 %8)
   %i.ml = tail call i64 @llvm.umin.i64(i64 %i.mj, i64 %i.mk) ; 2 uses
   %min.iters.check249 = icmp samesign ult i64 %i.ml, 16
   br i1 %min.iters.check249, label %.lr.ph187.i.preheader, label %vector.ph250
@@ -833,8 +832,7 @@ hufPackEncTable.exit:                             ; preds = %bb.ap, %._crit_edge
   %i.ps = and i64 %i.pn, 63                       ; 2 uses
   %i.pt = lshr i64 %i.pn, 6                       ; 2 uses
   %i.pu = add i64 %2, %7                          ; 3 uses
-  %10 = ptrtoint ptr %1 to i64
-  %i.pv = add i64 %2, %10
+  %i.pv = add i64 %2, %7
   br label %bb.aq
 
 bb.aq:                                            ; preds = %.loopexit268.i, %.lr.ph347.i
@@ -844,7 +842,7 @@ bb.aq:                                            ; preds = %.loopexit268.i, %.l
   %.0201343.i = phi i32 [ %i.po, %.lr.ph347.i ], [ %.2203.i, %.loopexit268.i ] ; 3 uses
   %.0205342.i = phi i32 [ 0, %.lr.ph347.i ], [ %.3208.i, %.loopexit268.i ] ; 7 uses
   %.0211341.i = phi i64 [ 1, %.lr.ph347.i ], [ %i.uu, %.loopexit268.i ] ; 2 uses
-  %.0161346.i358 = ptrtoint ptr %.0161346.i to i64
+  %.0161346.i358 = ptrtoaddr ptr %.0161346.i to i64
   %i.pw = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %.0211341.i
   %i.px = load i16, ptr %i.pw, align 2, !tbaa !7, !alias.scope !41, !noalias !45
   %i.py = zext i16 %i.px to i32                   ; 5 uses
@@ -958,7 +956,7 @@ bb.at:                                            ; preds = %.lr.ph327.i
   br i1 %i.ro, label %.critedge235.i, label %.lr.ph332.preheader.i
 
 .lr.ph332.preheader.i:                            ; preds = %.critedge.i61
-  %.1162.lcssa.i335 = ptrtoint ptr %.1162.lcssa.i to i64
+  %.1162.lcssa.i335 = ptrtoaddr ptr %.1162.lcssa.i to i64
   %i.rp = zext nneg i32 %.fr493 to i64            ; 4 uses
   %i.rq = tail call i64 @llvm.usub.sat.i64(i64 %i.rp, i64 15)
   %i.rr = add nuw nsw i64 %i.rq, 7
@@ -1037,7 +1035,7 @@ bb.au:                                            ; preds = %.lr.ph332.i
   %i.ss = phi i32 [ %i.sm, %.critedge235.thread.i ], [ %i.sq, %.critedge235.i ] ; 3 uses
   %i.st = phi i64 [ %i.sl, %.critedge235.thread.i ], [ %i.sp, %.critedge235.i ] ; 3 uses
   %.2163.lcssa450.i = phi ptr [ %i.sg, %.critedge235.thread.i ], [ %.1162.lcssa.i, %.critedge235.i ] ; 4 uses
-  %.2163.lcssa450.i312 = ptrtoint ptr %.2163.lcssa450.i to i64
+  %.2163.lcssa450.i312 = ptrtoaddr ptr %.2163.lcssa450.i to i64
   %i.su = zext nneg i32 %i.ss to i64              ; 3 uses
   %i.sv = add i32 %i.ss, 7
   %smin311 = tail call i32 @llvm.smin.i32(i32 %i.ss, i32 15)
@@ -1128,8 +1126,8 @@ bb.aw:                                            ; preds = %.critedge239.loopex
   %i.tz = sub nsw i64 %i.tx, %i.ty
   %i.ua = add nuw nsw i64 %i.tz, 7
   %i.ub = lshr i64 %i.ua, 3
-  %11 = ptrtoint ptr %.4165320.i to i64
-  %i.uc = tail call i64 @llvm.usub.sat.i64(i64 %i.pv, i64 %11)
+  %9 = ptrtoaddr ptr %.4165320.i to i64
+  %i.uc = tail call i64 @llvm.usub.sat.i64(i64 %i.pv, i64 %9)
   %i.ud = tail call i64 @llvm.umin.i64(i64 %i.ub, i64 %i.uc) ; 2 uses
   %min.iters.check381 = icmp samesign ult i64 %i.ud, 16
   br i1 %min.iters.check381, label %.lr.ph.i57.preheader, label %vector.ph382
@@ -1202,7 +1200,7 @@ bb.ay:                                            ; preds = %bb.aq
   br i1 %exitcond.not.i56, label %.thread254.i, label %bb.aq, !llvm.loop !59
 
 .thread254.i:                                     ; preds = %.loopexit268.i
-  %.8169.i400.le = ptrtoint ptr %.8169.i to i64
+  %.8169.i400.le = ptrtoaddr ptr %.8169.i to i64
   %i.uv = zext nneg i32 %.2203.i to i64
   %i.uw = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.uv
   %i.ux = load i64, ptr %i.uw, align 8, !tbaa !9, !alias.scope !38, !noalias !48 ; 4 uses
@@ -1322,7 +1320,7 @@ bb.ba:                                            ; preds = %.lr.ph367.i
   br i1 %i.ws, label %.critedge243.i, label %.lr.ph372.preheader.i
 
 .lr.ph372.preheader.i:                            ; preds = %.critedge241.i
-  %.10171.lcssa.i423 = ptrtoint ptr %.10171.lcssa.i to i64
+  %.10171.lcssa.i423 = ptrtoaddr ptr %.10171.lcssa.i to i64
   %i.wt = zext nneg i32 %i.wr to i64              ; 5 uses
   %i.wu = add nuw nsw i64 %i.wt, 7
   %smin422 = tail call i64 @llvm.smin.i64(i64 %i.wt, i64 15)
@@ -1404,7 +1402,7 @@ bb.bb:                                            ; preds = %.lr.ph372.i
   %i.xx = phi i32 [ %i.xr, %.critedge243.thread.i ], [ %i.xv, %.critedge243.i ] ; 3 uses
   %i.xy = phi i64 [ %i.xq, %.critedge243.thread.i ], [ %i.xu, %.critedge243.i ] ; 3 uses
   %.11172.lcssa477.i = phi ptr [ %i.xl, %.critedge243.thread.i ], [ %.10171.lcssa.i, %.critedge243.i ] ; 4 uses
-  %.11172.lcssa477.i446 = ptrtoint ptr %.11172.lcssa477.i to i64
+  %.11172.lcssa477.i446 = ptrtoaddr ptr %.11172.lcssa477.i to i64
   %i.xz = zext nneg i32 %i.xx to i64              ; 3 uses
   %i.ya = add i32 %i.xx, 7
   %smin445 = tail call i32 @llvm.smin.i32(i32 %i.xx, i32 15)
@@ -1496,8 +1494,8 @@ bb.bd:                                            ; preds = %.critedge247.loopex
   %i.zf = sub nsw i64 %i.zd, %i.ze
   %i.zg = add nuw nsw i64 %i.zf, 7
   %i.zh = lshr i64 %i.zg, 3
-  %12 = ptrtoint ptr %.13174360.i to i64
-  %i.zi = tail call i64 @llvm.usub.sat.i64(i64 %i.vn, i64 %12)
+  %10 = ptrtoaddr ptr %.13174360.i to i64
+  %i.zi = tail call i64 @llvm.usub.sat.i64(i64 %i.vn, i64 %10)
   %i.zj = tail call i64 @llvm.umin.i64(i64 %i.zh, i64 %i.zi) ; 2 uses
   %min.iters.check469 = icmp samesign ult i64 %i.zj, 16
   br i1 %min.iters.check469, label %.lr.ph355.i.preheader, label %vector.ph470

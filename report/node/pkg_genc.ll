@@ -203,10 +203,10 @@ bb.a:
   %16 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
   %17 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
   %18 = alloca %"class.icu_78::StringPiece", align 8 ; 2 uses
-  %i.a = tail call ptr @findBasename(ptr noundef %0) #16 ; 8 uses
-  %19 = ptrtoint ptr %i.a to i64                  ; 2 uses
+  %i.a = tail call ptr @findBasename(ptr noundef %0) #16 ; 9 uses
+  %19 = ptrtoaddr ptr %i.a to i64
   %i.b = tail call noundef ptr @strrchr(ptr noundef nonnull dereferenceable(1) %i.a, i32 noundef 46) #13 ; 4 uses
-  %20 = ptrtoint ptr %i.b to i64
+  %20 = ptrtoaddr ptr %i.b to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
   %i.c = getelementptr inbounds nuw i8, ptr %7, i64 13 ; 2 uses
   store ptr %i.c, ptr %7, align 8
@@ -252,8 +252,9 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b, %bb.a
+  %21 = ptrtoint ptr %i.a to i64
   %i.r = ptrtoint ptr %0 to i64
-  %i.s = sub i64 %19, %i.r
+  %i.s = sub i64 %21, %i.r
   %i.t = trunc i64 %i.s to i32
   %i.u = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEPKciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %7, ptr noundef %0, i32 noundef %i.t, ptr noundef nonnull align 4 dereferenceable(4) %i.k) #16 ; 0 uses
   br label %bb.e

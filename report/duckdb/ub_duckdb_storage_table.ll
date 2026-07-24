@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %_ZNK6duckdb14TableI
 
 _ZNSt12_Vector_baseIN6duckdb12optional_idxESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.e
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %i.an = load ptr, ptr %i.am, align 8, !tbaa !3397 ; 4 uses
-  %i.ao = ptrtoint ptr %i.an to i64
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !3397 ; 3 uses
+  %i.ao = ptrtoint ptr %i.an to i64               ; 2 uses
   %i.ap = sub i64 %i.ao, %i.aj
   %i.aq = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #38
           to label %.noexc81 unwind label %bb.i   ; 7 uses
@@ -216,8 +216,7 @@ _ZNSt12_Vector_baseIN6duckdb12optional_idxESaIS1_EE11_M_allocateEm.exit.i: ; pre
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc81
   %i.ar = ptrtoaddr ptr %i.aq to i64
-  %12 = ptrtoint ptr %i.an to i64
-  %i.as = sub i64 %12, %i.aj
+  %i.as = sub i64 %i.ao, %i.aj
   %i.at = add i64 %i.as, -8                       ; 2 uses
   %i.au = lshr i64 %i.at, 3
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -620,7 +619,7 @@ _ZNKSt6vectorIN6duckdb12optional_idxESaIS1_EE12_M_check_lenEmPKc.exit: ; preds =
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.m = ptrtoint ptr %1 to i64                   ; 4 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -637,8 +636,7 @@ _ZNSt16allocator_traitsISaIN6duckdb12optional_idxEEE9constructIS1_JRmEEEvRS2_PT_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN6duckdb12optional_idxESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt16allocator_traitsISaIN6duckdb12optional_idxEEE9constructIS1_JRmEEEvRS2_PT_DpOT0_.exit
-  %3 = ptrtoint ptr %1 to i64
-  %i.t = sub i64 %3, %i.e
+  %i.t = sub i64 %i.m, %i.e
   %i.u = add i64 %i.t, -8                         ; 2 uses
   %i.v = lshr i64 %i.u, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
@@ -701,8 +699,7 @@ _ZNSt6vectorIN6duckdb12optional_idxESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ;
   br i1 %.not10.i.i.i.i26, label %_ZNSt6vectorIN6duckdb12optional_idxESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit32, label %.lr.ph.i.i.i.i27.preheader
 
 .lr.ph.i.i.i.i27.preheader:                       ; preds = %_ZNSt6vectorIN6duckdb12optional_idxESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
-  %4 = ptrtoint ptr %1 to i64
-  %i.aj = sub i64 %i.d, %4
+  %i.aj = sub i64 %i.d, %i.m
   %i.ak = add i64 %i.aj, -8                       ; 2 uses
   %i.al = lshr i64 %i.ak, 3
   %i.am = add nuw nsw i64 %i.al, 1                ; 2 uses

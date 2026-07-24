@@ -148,8 +148,8 @@ bb.f:                                             ; preds = %bb.e, %bb.e, %bb.e,
   br i1 %.not96.i.i, label %.lr.ph.preheader.i.i, label %tailrecurse._crit_edge.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
-  %4 = ptrtoint ptr %2 to i64
-  %5 = ptrtoint ptr %i.j to i64
+  %4 = ptrtoaddr ptr %2 to i64
+  %5 = ptrtoaddr ptr %i.j to i64
   %i.k = sub i64 %4, %5
   %scevgep.i.i = getelementptr i8, ptr %i.j, i64 %i.k
   br label %.lr.ph.i.i
@@ -552,7 +552,7 @@ declare void @uriResetUriA(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @uriParseIPv6address2A(ptr nofree noundef nonnull %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoint ptr %2 to i64
+  %4 = ptrtoaddr ptr %2 to i64
   %i.a = alloca [4 x i8], align 1                 ; 16 uses
   %i.b = alloca [14 x i8], align 1                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
@@ -955,7 +955,7 @@ bb.ay:                                            ; preds = %bb.ax
   br label %.thread372
 
 bb.az:                                            ; preds = %.preheader381
-  %.2297.lcssa706717 = ptrtoint ptr %.2297 to i64
+  %.2297.lcssa706717 = ptrtoaddr ptr %.2297 to i64
   %i.ha = icmp sgt i32 %.1285, 6
   br i1 %i.ha, label %bb.bb, label %bb.ba
 
@@ -1358,13 +1358,16 @@ bb.i:                                             ; preds = %bb.g
   store ptr %1, ptr %i.v, align 8, !tbaa !40
   %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 64
   store ptr %1, ptr %i.w, align 8, !tbaa !38
-  %i.x = getelementptr inbounds nuw i8, ptr %.tr3.i, i64 1 ; 3 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %.tr3.i, i64 1 ; 5 uses
   %.not21.i = icmp ult ptr %i.x, %2
   br i1 %.not21.i, label %.lr.ph.preheader.i, label %uriParseIpFutLoopA.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.i
-  %4 = ptrtoint ptr %2 to i64
-  %scevgep.i = getelementptr i8, ptr inttoptr (i64 -1 to ptr), i64 %4
+  %4 = ptrtoaddr ptr %2 to i64
+  %5 = ptrtoaddr ptr %i.x to i64
+  %6 = xor i64 %5, -1
+  %7 = getelementptr i8, ptr %i.x, i64 %6
+  %scevgep.i = getelementptr i8, ptr %7, i64 %4
   %.pre.i = load i8, ptr %i.x, align 1, !tbaa !12
   br label %.lr.ph.i52
 
@@ -1701,8 +1704,8 @@ bb.a:
   br i1 %.not62, label %.lr.ph.preheader, label %tailrecurse._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %4 = ptrtoint ptr %2 to i64
-  %5 = ptrtoint ptr %1 to i64
+  %4 = ptrtoaddr ptr %2 to i64
+  %5 = ptrtoaddr ptr %1 to i64
   %i.a = sub i64 %4, %5
   %scevgep = getelementptr i8, ptr %1, i64 %i.a
   br label %.lr.ph

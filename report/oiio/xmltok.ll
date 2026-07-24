@@ -48,8 +48,8 @@ bb.a:
   br i1 %i.b, label %.lr.ph.preheader, label %select.unfold
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %2 = ptrtoint ptr %i.a to i64
-  %3 = ptrtoint ptr %0 to i64
+  %2 = ptrtoaddr ptr %i.a to i64
+  %3 = ptrtoaddr ptr %0 to i64
   %i.c = sub i64 %3, %2
   %scevgep = getelementptr i8, ptr %i.a, i64 %i.c
   br label %.lr.ph
@@ -452,7 +452,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nounwind uwtable
 define internal i32 @normal_prologTok(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef writeonly captures(none) %3) #5 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 4 uses
+  %4 = ptrtoaddr ptr %1 to i64
   %.not = icmp ult ptr %1, %2
   br i1 %.not, label %bb.b, label %.loopexit
 
@@ -715,7 +715,8 @@ bb.aj:                                            ; preds = %bb.b
 
 bb.ak:                                            ; preds = %bb.b
   %i.bu = ptrtoint ptr %2 to i64
-  %i.bv = sub i64 %i.bu, %4
+  %5 = ptrtoint ptr %1 to i64
+  %i.bv = sub i64 %i.bu, %5
   %i.bw = icmp slt i64 %i.bv, 2
   br i1 %i.bw, label %.loopexit, label %bb.al
 
@@ -750,7 +751,8 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.b
   %i.cg = ptrtoint ptr %2 to i64
-  %i.ch = sub i64 %i.cg, %4
+  %6 = ptrtoint ptr %1 to i64
+  %i.ch = sub i64 %i.cg, %6
   %i.ci = icmp slt i64 %i.ch, 3
   br i1 %i.ci, label %.loopexit, label %bb.ar
 
@@ -785,7 +787,8 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.b
   %i.cs = ptrtoint ptr %2 to i64
-  %i.ct = sub i64 %i.cs, %4
+  %7 = ptrtoint ptr %1 to i64
+  %i.ct = sub i64 %i.cs, %7
   %i.cu = icmp slt i64 %i.ct, 4
   br i1 %i.cu, label %.loopexit, label %bb.ax
 
@@ -1188,7 +1191,7 @@ bb.a:
   br i1 %i.k, label %.lr.ph.preheader.i, label %_INTERNAL_trim_to_complete_utf8_characters.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %5 = ptrtoint ptr %spec.select to i64
+  %5 = ptrtoaddr ptr %spec.select to i64
   %i.l = sub i64 %i.c, %5
   %scevgep.i = getelementptr i8, ptr %spec.select, i64 %i.l
   br label %.lr.ph.i

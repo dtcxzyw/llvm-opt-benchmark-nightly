@@ -204,8 +204,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br i1 %.not8.i, label %_ZNK6google8protobuf8compiler3cpp15NumToEntryTable6size16Ev.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.noexc101
-  %21 = ptrtoint ptr %i.je to i64
-  %22 = ptrtoint ptr %i.jc to i64
+  %21 = ptrtoaddr ptr %i.je to i64
+  %22 = ptrtoaddr ptr %i.jc to i64
   %i.jf = sub i64 %21, %22
   %i.jg = add i64 %i.jf, -32                      ; 2 uses
   %min.iters.check = icmp ult i64 %i.jg, 128
@@ -608,8 +608,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br i1 %.not8.i, label %_ZNK6google8protobuf8compiler3cpp15NumToEntryTable6size16Ev.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.noexc144
-  %28 = ptrtoint ptr %i.jt to i64
-  %29 = ptrtoint ptr %i.jr to i64
+  %28 = ptrtoaddr ptr %i.jt to i64
+  %29 = ptrtoaddr ptr %i.jr to i64
   %i.ju = sub i64 %28, %29
   %i.jv = add i64 %i.ju, -32                      ; 2 uses
   %min.iters.check = icmp ult i64 %i.jv, 128
@@ -1012,10 +1012,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %exitcond.not, label %.lr.ph39, label %.lr.ph, !llvm.loop !384
 
 bb.c:                                             ; preds = %.lr.ph39, %bb.g
-  %.136 = phi ptr [ %i.ad, %.lr.ph39 ], [ %i.dr, %bb.g ] ; 22 uses
+  %.136 = phi ptr [ %i.ad, %.lr.ph39 ], [ %i.dr, %bb.g ] ; 21 uses
   %.02735 = phi ptr [ %i.f, %.lr.ph39 ], [ %i.dq, %bb.g ] ; 3 uses
-  %.13664 = ptrtoint ptr %.136 to i64             ; 2 uses
-  %.13648 = ptrtoaddr ptr %.136 to i64
+  %.13648 = ptrtoaddr ptr %.136 to i64            ; 3 uses
   %i.ap = load i8, ptr %.02735, align 1, !tbaa !149 ; 5 uses
   %.not = icmp eq i8 %i.ap, 0
   br i1 %.not, label %bb.g, label %bb.d
@@ -1168,12 +1167,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.09.i.i.i.ph = phi ptr [ %i.av, %iter.check ], [ %i.ay, %vec.epilog.iter.check ], [ %i.bu, %vec.epilog.middle.block ] ; 2 uses
   %.068.i.i.i.ph = phi ptr [ %.136, %iter.check ], [ %i.az, %vec.epilog.iter.check ], [ %i.bv, %vec.epilog.middle.block ] ; 3 uses
-  %i.bx = add i64 %.13664, %i.aq
-  %.068.i.i.i.ph65 = ptrtoint ptr %.068.i.i.i.ph to i64 ; 2 uses
-  %i.by = sub i64 %i.bx, %.068.i.i.i.ph65
-  %i.bz = add i64 %.13664, -1
+  %i.bx = add i64 %.13648, %i.aq
+  %.068.i.i.i.ph64 = ptrtoaddr ptr %.068.i.i.i.ph to i64 ; 2 uses
+  %i.by = sub i64 %i.bx, %.068.i.i.i.ph64
+  %i.bz = add i64 %.13648, -1
   %i.ca = add i64 %i.bz, %i.aq
-  %i.cb = sub i64 %i.ca, %.068.i.i.i.ph65
+  %i.cb = sub i64 %i.ca, %.068.i.i.i.ph64
   %xtraiter = and i64 %i.by, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol

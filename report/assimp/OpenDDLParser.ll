@@ -203,8 +203,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not9.i, label %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.b
-  %11 = ptrtoint ptr %2 to i64
-  %12 = ptrtoint ptr %i.h to i64
+  %11 = ptrtoaddr ptr %2 to i64
+  %12 = ptrtoaddr ptr %i.h to i64
   %i.i = sub i64 %11, %12
   %scevgep.i = getelementptr i8, ptr %i.h, i64 %i.i
   br label %.lr.ph.i
@@ -475,8 +475,8 @@ bb.t:                                             ; preds = %_ZNSt6vectorIPN10OD
   br i1 %or.cond.i, label %_ZN10ODDLParser13OpenDDLParser9parseNameEPcS1_PPNS_4NameE.exit.thread, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.t
-  %13 = ptrtoint ptr %2 to i64
-  %14 = ptrtoint ptr %.0.lcssa.i to i64
+  %13 = ptrtoaddr ptr %2 to i64
+  %14 = ptrtoaddr ptr %.0.lcssa.i to i64
   %i.cp = sub i64 %13, %14
   %scevgep.i.i = getelementptr i8, ptr %.0.lcssa.i, i64 %i.cp ; 2 uses
   br label %.lr.ph.i.i
@@ -512,7 +512,7 @@ bb.u:                                             ; preds = %_ZN10ODDLParser16lo
   %i.cu = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
   store ptr null, ptr %i.b, align 8
-  %i.cv = call noundef ptr @_ZN10ODDLParser13OpenDDLParser15parseIdentifierEPcS1_PPNS_4TextE(ptr noundef nonnull %i.cu, ptr noundef %2, ptr noundef nonnull %i.b) ; 2 uses
+  %i.cv = call noundef ptr @_ZN10ODDLParser13OpenDDLParser15parseIdentifierEPcS1_PPNS_4TextE(ptr noundef nonnull %i.cu, ptr noundef readnone %2, ptr noundef nonnull %i.b) ; 2 uses
   %i.cw = load ptr, ptr %i.b, align 8             ; 2 uses
   %.not25.i = icmp eq ptr %i.cw, null
   br i1 %.not25.i, label %_ZN10ODDLParser13OpenDDLParser9parseNameEPcS1_PPNS_4NameE.exit.thread162, label %bb.v
@@ -655,8 +655,8 @@ _ZN10ODDLParser13OpenDDLParser9parseNameEPcS1_PPNS_4NameE.exit.thread: ; preds =
   br i1 %.not9.i119, label %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit127, label %.lr.ph.preheader.i120
 
 .lr.ph.preheader.i120:                            ; preds = %_ZN10ODDLParser13OpenDDLParser9parseNameEPcS1_PPNS_4NameE.exit.thread
-  %15 = ptrtoint ptr %2 to i64
-  %16 = ptrtoint ptr %.0.i114161168 to i64
+  %15 = ptrtoaddr ptr %2 to i64
+  %16 = ptrtoaddr ptr %.0.i114161168 to i64
   %i.eb = sub i64 %15, %16
   %scevgep.i121 = getelementptr i8, ptr %.0.i114161168, i64 %i.eb
   br label %.lr.ph.i122
@@ -699,7 +699,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %.thread171
 
 .lr.ph:                                           ; preds = %bb.aj
-  %17 = ptrtoint ptr %2 to i64
+  %17 = ptrtoaddr ptr %2 to i64
   %i.eh = load i8, ptr %i.eg, align 1
   %.not96248 = icmp eq i8 %i.eh, 41
   br i1 %.not96248, label %._crit_edge, label %.lr.ph252
@@ -713,7 +713,7 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %.not9.i128, label %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit136, label %.lr.ph.preheader.i129
 
 .lr.ph.preheader.i129:                            ; preds = %.lr.ph252
-  %18 = ptrtoint ptr %i.ei to i64
+  %18 = ptrtoaddr ptr %i.ei to i64
   %i.ej = sub i64 %17, %18
   %scevgep.i130 = getelementptr i8, ptr %i.ei, i64 %i.ej
   br label %.lr.ph.i131
@@ -955,8 +955,8 @@ bb.a:
 .lr.ph.preheader.i:                               ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
   store i8 0, ptr %i.b, align 1
-  %6 = ptrtoint ptr %2 to i64                     ; 3 uses
-  %7 = ptrtoint ptr %1 to i64
+  %6 = ptrtoaddr ptr %2 to i64                    ; 2 uses
+  %7 = ptrtoaddr ptr %1 to i64
   %i.e = sub i64 %6, %7
   %scevgep.i = getelementptr i8, ptr %1, i64 %i.e
   br label %.lr.ph.i
@@ -1014,8 +1014,9 @@ bb.e:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store i64 0, ptr %i.n, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
+  %8 = ptrtoint ptr %2 to i64
   %i.o = ptrtoint ptr %.0.lcssa.i to i64
-  %i.p = sub i64 %6, %i.o                         ; 4 uses
+  %i.p = sub i64 %8, %i.o                         ; 4 uses
   store i64 %i.p, ptr %i.a, align 8
   %i.q = icmp ugt i64 %i.p, 15
   br i1 %i.q, label %.noexc.i, label %._crit_edge.i.i
@@ -1192,8 +1193,8 @@ bb.s:                                             ; preds = %.critedge, %_ZN10OD
   br i1 %.not9.i58, label %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit66, label %.lr.ph.preheader.i59
 
 .lr.ph.preheader.i59:                             ; preds = %bb.s
-  %8 = ptrtoint ptr %.132 to i64
-  %i.bk = sub i64 %6, %8
+  %9 = ptrtoaddr ptr %.132 to i64
+  %i.bk = sub i64 %6, %9
   %scevgep.i60 = getelementptr i8, ptr %.132, i64 %i.bk
   br label %.lr.ph.i61
 
@@ -1243,7 +1244,7 @@ bb.u:                                             ; preds = %bb.a, %_ZN10ODDLPar
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser15parseIdentifierEPcS1_PPNS_4TextE(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser15parseIdentifierEPcS1_PPNS_4TextE(ptr noundef %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   store ptr null, ptr %2, align 8
   %i.a = icmp eq ptr %0, null
@@ -1252,8 +1253,8 @@ bb.a:
   br i1 %or.cond, label %bb.f, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %3 = ptrtoint ptr %1 to i64                     ; 2 uses
-  %4 = ptrtoint ptr %0 to i64
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %0 to i64
   %i.c = sub i64 %3, %4
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.c
   br label %.lr.ph.i
@@ -1276,7 +1277,7 @@ bb.a:
 
 _ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit: ; preds = %.lr.ph.i, %.critedge2.i
   %.0.lcssa.i = phi ptr [ %scevgep.i, %.critedge2.i ], [ %.010.i, %.lr.ph.i ] ; 8 uses
-  %.0.lcssa.i75 = ptrtoint ptr %.0.lcssa.i to i64
+  %.0.lcssa.i75 = ptrtoaddr ptr %.0.lcssa.i to i64
   %i.f = icmp eq ptr %.0.lcssa.i, %1
   br i1 %i.f, label %bb.f, label %bb.b
 
@@ -1341,7 +1342,7 @@ bb.f:                                             ; preds = %bb.b, %_ZN10ODDLPar
 declare void @_ZN10ODDLParser4TextD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24)) unnamed_addr #12
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser9parseNameEPcS1_PPNS_4NameE(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser9parseNameEPcS1_PPNS_4NameE(ptr noundef %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   store ptr null, ptr %2, align 8
@@ -1351,8 +1352,8 @@ bb.a:
   br i1 %or.cond, label %bb.g, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %3 = ptrtoint ptr %1 to i64
-  %4 = ptrtoint ptr %0 to i64
+  %3 = ptrtoaddr ptr %1 to i64
+  %4 = ptrtoaddr ptr %0 to i64
   %i.d = sub i64 %3, %4
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.d ; 2 uses
   br label %.lr.ph.i
@@ -1428,7 +1429,7 @@ declare void @_ZN10ODDLParser4NameD1Ev(ptr noundef nonnull align 8 dead_on_retur
 ; Function Attrs: mustprogress uwtable
 define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser13parsePropertyEPcS1_PPNS_8PropertyE(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 10 uses
+  %i.a = alloca ptr, align 8                      ; 8 uses
   %i.b = alloca ptr, align 8                      ; 10 uses
   %3 = alloca %"class.std::vector.6", align 8     ; 10 uses
   store ptr null, ptr %2, align 8
@@ -1438,8 +1439,8 @@ bb.a:
   br i1 %or.cond, label %bb.ae, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %4 = ptrtoint ptr %1 to i64                     ; 3 uses
-  %5 = ptrtoint ptr %0 to i64
+  %4 = ptrtoaddr ptr %1 to i64                    ; 3 uses
+  %5 = ptrtoaddr ptr %0 to i64
   %i.e = sub i64 %4, %5
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.e
   br label %.lr.ph.i
@@ -1465,7 +1466,7 @@ _ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit: ; preds = %.lr.ph.i, %.crit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
   store ptr null, ptr %i.a, align 8
   %i.h = call noundef ptr @_ZN10ODDLParser13OpenDDLParser15parseIdentifierEPcS1_PPNS_4TextE(ptr noundef %.0.lcssa.i, ptr noundef %1, ptr noundef nonnull %i.a) ; 6 uses
-  %i.i = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.i = load ptr, ptr %i.a, align 8              ; 5 uses
   %.not = icmp eq ptr %i.i, null
   br i1 %.not, label %bb.ad, label %bb.b
 
@@ -1474,7 +1475,7 @@ bb.b:                                             ; preds = %_ZN10ODDLParser16lo
   br i1 %.not9.i51, label %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit59, label %.lr.ph.preheader.i52
 
 .lr.ph.preheader.i52:                             ; preds = %bb.b
-  %6 = ptrtoint ptr %i.h to i64
+  %6 = ptrtoaddr ptr %i.h to i64
   %i.j = sub i64 %4, %6
   %scevgep.i53 = getelementptr i8, ptr %i.h, i64 %i.j
   br label %.lr.ph.i54
@@ -1511,7 +1512,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not9.i.i, label %_ZN10ODDLParser12getNextTokenIcEEPT_S2_S2_.exit, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.d
-  %7 = ptrtoint ptr %i.o to i64
+  %7 = ptrtoaddr ptr %i.o to i64
   %i.p = sub i64 %4, %7
   %scevgep.i.i = getelementptr i8, ptr %i.o, i64 %i.p
   br label %.lr.ph.i.i
@@ -1627,9 +1628,8 @@ bb.j:                                             ; preds = %.loopexit
   br i1 %.not.i64, label %_ZN10ODDLParserL22createPropertyWithDataEPNS_4TextEPNS_5ValueEPPNS_8PropertyE.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %8 = load ptr, ptr %i.a, align 8
   %i.ak = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #31 ; 4 uses
-  invoke void @_ZN10ODDLParser8PropertyC1EPNS_4TextE(ptr noundef nonnull align 8 dereferenceable(32) %i.ak, ptr noundef %8)
+  invoke void @_ZN10ODDLParser8PropertyC1EPNS_4TextE(ptr noundef nonnull align 8 dereferenceable(32) %i.ak, ptr noundef nonnull %i.i)
           to label %bb.l unwind label %bb.m
 
 bb.l:                                             ; preds = %bb.k
@@ -1651,9 +1651,8 @@ bb.n:                                             ; preds = %.loopexit
 
 bb.o:                                             ; preds = %bb.n
   %i.ap = call noundef ptr @_ZN10ODDLParser13OpenDDLParser18parseStringLiteralEPcS1_PPNS_5ValueE(ptr noundef nonnull %spec.select.i, ptr noundef %1, ptr noundef nonnull %i.b)
-  %9 = load ptr, ptr %i.a, align 8
   %i.aq = load ptr, ptr %i.b, align 8
-  tail call fastcc void @_ZN10ODDLParserL22createPropertyWithDataEPNS_4TextEPNS_5ValueEPPNS_8PropertyE(ptr noundef %9, ptr noundef %i.aq, ptr noundef nonnull %2)
+  tail call fastcc void @_ZN10ODDLParserL22createPropertyWithDataEPNS_4TextEPNS_5ValueEPPNS_8PropertyE(ptr noundef nonnull %i.i, ptr noundef %i.aq, ptr noundef nonnull %2)
   br label %_ZN10ODDLParserL22createPropertyWithDataEPNS_4TextEPNS_5ValueEPPNS_8PropertyE.exit
 
 bb.p:                                             ; preds = %bb.n
@@ -2056,8 +2055,8 @@ bb.a:
   br i1 %.not9.i, label %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %7 = ptrtoint ptr %2 to i64
-  %8 = ptrtoint ptr %.032 to i64
+  %7 = ptrtoaddr ptr %2 to i64
+  %8 = ptrtoaddr ptr %.032 to i64
   %i.n = sub i64 %7, %8
   %scevgep.i = getelementptr i8, ptr %.032, i64 %i.n
   br label %.lr.ph.i
@@ -2094,8 +2093,8 @@ bb.b:                                             ; preds = %_ZN10ODDLParser16lo
   br i1 %.not9.i42, label %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit50thread-pre-split, label %.lr.ph.preheader.i43
 
 .lr.ph.preheader.i43:                             ; preds = %bb.b
-  %9 = ptrtoint ptr %2 to i64
-  %10 = ptrtoint ptr %i.q to i64
+  %9 = ptrtoaddr ptr %2 to i64
+  %10 = ptrtoaddr ptr %i.q to i64
   %i.s = sub i64 %9, %10
   %scevgep.i44 = getelementptr i8, ptr %i.q, i64 %i.s
   br label %.lr.ph.i45
@@ -2264,8 +2263,8 @@ bb.l:                                             ; preds = %_ZN10ODDLParserL20s
   br i1 %.not9.i58, label %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit66, label %.lr.ph.preheader.i59
 
 .lr.ph.preheader.i59:                             ; preds = %bb.l
-  %11 = ptrtoint ptr %2 to i64
-  %12 = ptrtoint ptr %.234 to i64
+  %11 = ptrtoaddr ptr %2 to i64
+  %12 = ptrtoaddr ptr %.234 to i64
   %i.bs = sub i64 %11, %12
   %scevgep.i60 = getelementptr i8, ptr %.234, i64 %i.bs
   br label %.lr.ph.i61
@@ -2668,8 +2667,8 @@ bb.a:
   br i1 %or.cond, label %bb.af, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %8 = ptrtoint ptr %1 to i64                     ; 4 uses
-  %9 = ptrtoint ptr %0 to i64
+  %8 = ptrtoaddr ptr %1 to i64                    ; 4 uses
+  %9 = ptrtoaddr ptr %0 to i64
   %i.d = sub i64 %8, %9
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.d
   br label %.lr.ph.i
@@ -2718,7 +2717,7 @@ bb.c:                                             ; preds = %bb.b
   %.071123169 = phi ptr [ %.0.lcssa.i110, %.lr.ph.preheader.i92.backedge ], [ %i.i, %.lr.ph ] ; 3 uses
   %.069124168 = phi ptr [ %.2, %.lr.ph.preheader.i92.backedge ], [ null, %.lr.ph ] ; 3 uses
   store ptr null, ptr %i.a, align 8
-  %10 = ptrtoint ptr %.071123169 to i64
+  %10 = ptrtoaddr ptr %.071123169 to i64
   %i.l = sub i64 %8, %10
   %scevgep.i93 = getelementptr i8, ptr %.071123169, i64 %i.l
   br label %.lr.ph.i94
@@ -2950,7 +2949,7 @@ bb.x:                                             ; preds = %_ZN10ODDLParser16lo
   br i1 %or.cond.i104, label %_ZN10ODDLParser13OpenDDLParser18parseStringLiteralEPcS1_PPNS_5ValueE.exit.thread, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.x
-  %11 = ptrtoint ptr %.0.lcssa.i98 to i64
+  %11 = ptrtoaddr ptr %.0.lcssa.i98 to i64
   %i.be = sub i64 %8, %11
   %scevgep.i.i = getelementptr i8, ptr %.0.lcssa.i98, i64 %i.be ; 2 uses
   br label %.lr.ph.i.i
@@ -3046,7 +3045,7 @@ _ZN10ODDLParser13OpenDDLParser18parseStringLiteralEPcS1_PPNS_5ValueE.exit.thread
   br i1 %.not5.i, label %_ZN10ODDLParserL16getNextSeparatorIcEEPT_S2_S2_.exit, label %.lr.ph.preheader.i107
 
 .lr.ph.preheader.i107:                            ; preds = %_ZN10ODDLParser13OpenDDLParser18parseStringLiteralEPcS1_PPNS_5ValueE.exit.thread
-  %12 = ptrtoint ptr %.172117 to i64
+  %12 = ptrtoaddr ptr %.172117 to i64
   %i.cg = sub i64 %8, %12
   %scevgep.i108 = getelementptr i8, ptr %.172117, i64 %i.cg
   br label %.lr.ph.i109
@@ -3137,8 +3136,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond36, label %bb.l, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.b
-  %4 = ptrtoint ptr %1 to i64                     ; 2 uses
-  %5 = ptrtoint ptr %0 to i64
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = ptrtoaddr ptr %0 to i64
   %i.h = sub i64 %4, %5
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.h ; 2 uses
   br label %.lr.ph.i
@@ -3260,7 +3259,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not9.i38, label %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit46, label %.lr.ph.preheader.i39
 
 .lr.ph.preheader.i39:                             ; preds = %bb.k
-  %6 = ptrtoint ptr %i.n to i64
+  %6 = ptrtoaddr ptr %i.n to i64
   %i.aj = sub i64 %4, %6
   %scevgep.i40 = getelementptr i8, ptr %i.n, i64 %i.aj
   br label %.lr.ph.i41
@@ -3468,7 +3467,7 @@ declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #18
 declare i32 @strncmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #18
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser14parseReferenceEPcS1_RSt6vectorIPNS_4NameESaIS4_EE(ptr noundef %0, ptr noundef %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser14parseReferenceEPcS1_RSt6vectorIPNS_4NameESaIS4_EE(ptr noundef %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 7 uses
   %i.b = alloca ptr, align 8                      ; 7 uses
@@ -3478,8 +3477,8 @@ bb.a:
   br i1 %or.cond, label %.critedge, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.a
-  %3 = ptrtoint ptr %1 to i64                     ; 3 uses
-  %4 = ptrtoint ptr %0 to i64
+  %3 = ptrtoaddr ptr %1 to i64                    ; 3 uses
+  %4 = ptrtoaddr ptr %0 to i64
   %i.e = sub i64 %3, %4
   %scevgep.i.i = getelementptr i8, ptr %0, i64 %i.e ; 2 uses
   br label %.lr.ph.i.i
@@ -3515,7 +3514,7 @@ bb.b:                                             ; preds = %_ZN10ODDLParser16lo
   %i.j = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
   store ptr null, ptr %i.b, align 8
-  %i.k = call noundef ptr @_ZN10ODDLParser13OpenDDLParser15parseIdentifierEPcS1_PPNS_4TextE(ptr noundef nonnull %i.j, ptr noundef %1, ptr noundef nonnull %i.b) ; 3 uses
+  %i.k = call noundef ptr @_ZN10ODDLParser13OpenDDLParser15parseIdentifierEPcS1_PPNS_4TextE(ptr noundef nonnull %i.j, ptr noundef readnone %1, ptr noundef nonnull %i.b) ; 3 uses
   %i.l = load ptr, ptr %i.b, align 8              ; 2 uses
   %.not25.i = icmp eq ptr %i.l, null
   br i1 %.not25.i, label %_ZN10ODDLParser13OpenDDLParser9parseNameEPcS1_PPNS_4NameE.exit.thread64, label %bb.c
@@ -3623,7 +3622,7 @@ bb.k:                                             ; preds = %.lr.ph, %_ZNSt6vect
   br i1 %i.ao, label %.lr.ph.preheader.i, label %.critedge
 
 .lr.ph.preheader.i:                               ; preds = %bb.k
-  %5 = ptrtoint ptr %.02082 to i64
+  %5 = ptrtoaddr ptr %.02082 to i64
   %i.ap = sub i64 %3, %5
   %scevgep.i = getelementptr i8, ptr %.02082, i64 %i.ap
   br label %.lr.ph.i
@@ -3658,7 +3657,7 @@ bb.m:                                             ; preds = %_ZN10ODDLParserL16g
   br i1 %i.at, label %.lr.ph.preheader.i.i30, label %.critedge
 
 .lr.ph.preheader.i.i30:                           ; preds = %bb.m
-  %6 = ptrtoint ptr %.0.lcssa.i to i64
+  %6 = ptrtoaddr ptr %.0.lcssa.i to i64
   %i.au = sub i64 %3, %6
   %scevgep.i.i31 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.au ; 2 uses
   br label %.lr.ph.i.i32
@@ -3694,7 +3693,7 @@ bb.n:                                             ; preds = %_ZN10ODDLParser16lo
   %i.az = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i39, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
   store ptr null, ptr %i.a, align 8
-  %i.ba = call noundef ptr @_ZN10ODDLParser13OpenDDLParser15parseIdentifierEPcS1_PPNS_4TextE(ptr noundef nonnull %i.az, ptr noundef %1, ptr noundef nonnull %i.a) ; 3 uses
+  %i.ba = call noundef ptr @_ZN10ODDLParser13OpenDDLParser15parseIdentifierEPcS1_PPNS_4TextE(ptr noundef nonnull %i.az, ptr noundef readnone %1, ptr noundef nonnull %i.a) ; 3 uses
   %i.bb = load ptr, ptr %i.a, align 8             ; 2 uses
   %.not25.i42 = icmp eq ptr %i.bb, null
   br i1 %.not25.i42, label %_ZN10ODDLParser13OpenDDLParser9parseNameEPcS1_PPNS_4NameE.exit44.thread71, label %bb.o
@@ -3790,7 +3789,7 @@ _ZNSt6vectorIPN10ODDLParser4NameESaIS2_EE9push_backERKS2_.exit52: ; preds = %_ZN
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser19parseBooleanLiteralEPcS1_PPNS_5ValueE(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) local_unnamed_addr #3 align 2 {
+define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser19parseBooleanLiteralEPcS1_PPNS_5ValueE(ptr nofree noundef readonly captures(address, ret: address, provenance) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) local_unnamed_addr #3 align 2 {
 bb.a:
   store ptr null, ptr %2, align 8
   %i.a = icmp eq ptr %0, null
@@ -3799,8 +3798,8 @@ bb.a:
   br i1 %or.cond, label %bb.d, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %3 = ptrtoint ptr %1 to i64                     ; 2 uses
-  %4 = ptrtoint ptr %0 to i64
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %0 to i64
   %i.c = sub i64 %3, %4
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.c
   br label %.lr.ph.i
@@ -3827,7 +3826,7 @@ _ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit: ; preds = %.lr.ph.i, %.crit
   br i1 %.not32, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit
-  %.0.lcssa.i60 = ptrtoint ptr %.0.lcssa.i to i64
+  %.0.lcssa.i60 = ptrtoaddr ptr %.0.lcssa.i to i64
   %i.f = sub i64 %3, %.0.lcssa.i60                ; 2 uses
   %scevgep = getelementptr i8, ptr %.0.lcssa.i, i64 %i.f
   br label %.lr.ph
@@ -3881,7 +3880,7 @@ declare noundef ptr @_ZN10ODDLParser14ValueAllocator13allocPrimDataENS_5Value9Va
 declare void @_ZN10ODDLParser5Value7setBoolEb(ptr noundef nonnull align 8 dereferenceable(32), i1 noundef zeroext) local_unnamed_addr #16
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser19parseIntegerLiteralEPcS1_PPNS_5ValueENS2_9ValueTypeE(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2, i32 noundef %3) local_unnamed_addr #3 align 2 {
+define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser19parseIntegerLiteralEPcS1_PPNS_5ValueENS2_9ValueTypeE(ptr noundef %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2, i32 noundef %3) local_unnamed_addr #3 align 2 {
 bb.a:
   store ptr null, ptr %2, align 8
   %i.a = icmp ne ptr %0, null
@@ -3893,8 +3892,8 @@ bb.a:
   br i1 %or.cond45, label %.lr.ph.preheader.i, label %bb.l
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %4 = ptrtoint ptr %1 to i64                     ; 2 uses
-  %5 = ptrtoint ptr %0 to i64
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = ptrtoaddr ptr %0 to i64
   %i.e = sub i64 %4, %5
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.e
   br label %.lr.ph.i
@@ -3921,7 +3920,7 @@ _ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit: ; preds = %.lr.ph.i, %.crit
   br i1 %.not49, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit
-  %.0.lcssa.i67 = ptrtoint ptr %.0.lcssa.i to i64
+  %.0.lcssa.i67 = ptrtoaddr ptr %.0.lcssa.i to i64
   %i.h = sub i64 %4, %.0.lcssa.i67
   %scevgep = getelementptr i8, ptr %.0.lcssa.i, i64 %i.h
   br label %.lr.ph
@@ -4031,7 +4030,7 @@ declare void @_ZN10ODDLParser5Value16setUnsignedInt32Ej(ptr noundef nonnull alig
 declare void @_ZN10ODDLParser5Value16setUnsignedInt64Em(ptr noundef nonnull align 8 dereferenceable(32), i64 noundef) local_unnamed_addr #16
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser20parseFloatingLiteralEPcS1_PPNS_5ValueENS2_9ValueTypeE(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2, i32 noundef %3) local_unnamed_addr #3 align 2 {
+define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser20parseFloatingLiteralEPcS1_PPNS_5ValueENS2_9ValueTypeE(ptr nofree noundef readonly captures(address, ret: address, provenance) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2, i32 noundef %3) local_unnamed_addr #3 align 2 {
 bb.a:
   store ptr null, ptr %2, align 8
   %i.a = icmp eq ptr %0, null
@@ -4040,8 +4039,8 @@ bb.a:
   br i1 %or.cond, label %.critedge36, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %4 = ptrtoint ptr %1 to i64                     ; 2 uses
-  %5 = ptrtoint ptr %0 to i64
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = ptrtoaddr ptr %0 to i64
   %i.c = sub i64 %4, %5
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.c
   br label %.lr.ph.i
@@ -4068,7 +4067,7 @@ _ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit: ; preds = %.lr.ph.i, %.crit
   br i1 %.not46, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit
-  %.0.lcssa.i64 = ptrtoint ptr %.0.lcssa.i to i64
+  %.0.lcssa.i64 = ptrtoaddr ptr %.0.lcssa.i to i64
   %i.f = sub i64 %4, %.0.lcssa.i64
   %scevgep = getelementptr i8, ptr %.0.lcssa.i, i64 %i.f
   br label %.lr.ph
@@ -4154,9 +4153,8 @@ bb.i:                                             ; preds = %.critedge38
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser16parseHexaLiteralEPcS1_PPNS_5ValueE(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) local_unnamed_addr #3 align 2 {
+define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser16parseHexaLiteralEPcS1_PPNS_5ValueE(ptr nofree noundef readonly captures(address, ret: address, provenance) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) local_unnamed_addr #3 align 2 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 3 uses
   store ptr null, ptr %2, align 8
   %i.a = icmp eq ptr %0, null
   %i.b = icmp eq ptr %0, %1
@@ -4164,7 +4162,8 @@ bb.a:
   br i1 %or.cond, label %bb.g, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %4 = ptrtoint ptr %0 to i64
+  %3 = ptrtoaddr ptr %1 to i64                    ; 3 uses
+  %4 = ptrtoaddr ptr %0 to i64
   %i.c = sub i64 %3, %4
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.c ; 2 uses
   br label %.lr.ph.i
@@ -4192,7 +4191,7 @@ _ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exitthread-pre-split: ; preds = %
 _ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exit: ; preds = %.lr.ph.i, %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exitthread-pre-split
   %i.f = phi i8 [ %.pr, %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exitthread-pre-split ], [ %i.d, %.lr.ph.i ]
   %.0.lcssa.i = phi ptr [ %scevgep.i, %_ZN10ODDLParser16lookForNextTokenIcEEPT_S2_S2_.exitthread-pre-split ], [ %.010.i, %.lr.ph.i ] ; 5 uses
-  %.0.lcssa.i104 = ptrtoint ptr %.0.lcssa.i to i64 ; 2 uses
+  %.0.lcssa.i104 = ptrtoaddr ptr %.0.lcssa.i to i64 ; 2 uses
   %.not = icmp eq i8 %i.f, 48
   br i1 %.not, label %bb.b, label %bb.g
 
@@ -4304,7 +4303,7 @@ declare void @_ZN10ODDLParser5Value9setDoubleEd(ptr noundef nonnull align 8 dere
 declare void @_ZN10ODDLParser5Value8setFloatEf(ptr noundef nonnull align 8 dereferenceable(32), float noundef) local_unnamed_addr #16
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser18parseStringLiteralEPcS1_PPNS_5ValueE(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(none) initializes((0, 8)) %2) local_unnamed_addr #3 align 2 {
+define hidden noundef ptr @_ZN10ODDLParser13OpenDDLParser18parseStringLiteralEPcS1_PPNS_5ValueE(ptr nofree noundef readonly captures(address, ret: address, provenance) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef captures(none) initializes((0, 8)) %2) local_unnamed_addr #3 align 2 {
 bb.a:
   store ptr null, ptr %2, align 8
   %i.a = icmp eq ptr %0, null
@@ -4313,8 +4312,8 @@ bb.a:
   br i1 %or.cond, label %bb.c, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %3 = ptrtoint ptr %1 to i64
-  %4 = ptrtoint ptr %0 to i64
+  %3 = ptrtoaddr ptr %1 to i64
+  %4 = ptrtoaddr ptr %0 to i64
   %i.c = sub i64 %3, %4
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.c ; 2 uses
   br label %.lr.ph.i
