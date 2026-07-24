@@ -204,10 +204,9 @@ vec.epilog.ph:                                    ; preds = %vector.memcheck
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index231 = phi i64 [ 0, %vec.epilog.ph ], [ %index.next234, %vec.epilog.vector.body ] ; 3 uses
-  %5 = and i64 %index231, 2305843009213693944
   %i.ace = shl i64 %index231, 1
   %next.gep232 = getelementptr i8, ptr %.026.lcssa.i177.i, i64 %i.ace
-  %i.acf = getelementptr inbounds nuw i8, ptr %.025.lcssa.i178.i, i64 %5
+  %i.acf = getelementptr inbounds nuw i8, ptr %.025.lcssa.i178.i, i64 %index231
   %wide.load233 = load <8 x i8>, ptr %i.acf, align 1, !alias.scope !65
   %i.acg = zext <8 x i8> %wide.load233 to <8 x i16>
   store <8 x i16> %i.acg, ptr %next.gep232, align 2, !tbaa !41, !alias.scope !68, !noalias !65
@@ -610,10 +609,9 @@ vector.main.loop.iter.check1207:                  ; preds = %vector.memcheck1197
 
 vector.body1212:                                  ; preds = %vector.main.loop.iter.check1207, %vector.body1212
   %index1213 = phi i64 [ %index.next1219, %vector.body1212 ], [ 0, %vector.main.loop.iter.check1207 ] ; 3 uses
-  %5 = and i64 %index1213, 2305843009213693920
   %i.ale = shl i64 %index1213, 2
   %next.gep1214 = getelementptr i8, ptr %.026.lcssa.i241, i64 %i.ale ; 4 uses
-  %i.alf = getelementptr inbounds nuw i8, ptr %.025.lcssa.i242, i64 %5 ; 4 uses
+  %i.alf = getelementptr inbounds nuw i8, ptr %.025.lcssa.i242, i64 %index1213 ; 4 uses
   %i.alg = getelementptr inbounds nuw i8, ptr %i.alf, i64 8
   %i.alh = getelementptr inbounds nuw i8, ptr %i.alf, i64 16
   %i.ali = getelementptr inbounds nuw i8, ptr %i.alf, i64 24
@@ -645,10 +643,9 @@ vec.epilog.ph1229:                                ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body1232:                       ; preds = %vec.epilog.vector.body1232, %vec.epilog.ph1229
   %index1233 = phi i64 [ 0, %vec.epilog.ph1229 ], [ %index.next1236, %vec.epilog.vector.body1232 ] ; 3 uses
-  %6 = and i64 %index1233, 2305843009213693944
   %i.alu = shl i64 %index1233, 2
   %next.gep1234 = getelementptr i8, ptr %.026.lcssa.i241, i64 %i.alu
-  %i.alv = getelementptr inbounds nuw i8, ptr %.025.lcssa.i242, i64 %6
+  %i.alv = getelementptr inbounds nuw i8, ptr %.025.lcssa.i242, i64 %index1233
   %wide.load1235 = load <8 x i8>, ptr %i.alv, align 1, !alias.scope !120
   %i.alw = zext <8 x i8> %wide.load1235 to <8 x i32>
   store <8 x i32> %i.alw, ptr %next.gep1234, align 4, !tbaa !3, !alias.scope !123, !noalias !120
@@ -1051,9 +1048,8 @@ vector.body1177:                                  ; preds = %vector.main.loop.it
   %index1178 = phi i64 [ %index.next1183, %vector.body1177 ], [ 0, %vector.main.loop.iter.check ] ; 3 uses
   %i.bze = shl i64 %index1178, 2
   %next.gep1179 = getelementptr i8, ptr %.026.lcssa.i391, i64 %i.bze ; 4 uses
-  %i.bzf = shl i64 %index1178, 1
-  %7 = and i64 %i.bzf, 2305843009213693888
-  %i.bzg = getelementptr inbounds nuw i8, ptr %.025.lcssa.i392, i64 %7 ; 4 uses
+  %i.bzf = shl nuw nsw i64 %index1178, 1
+  %i.bzg = getelementptr inbounds nuw i8, ptr %.025.lcssa.i392, i64 %i.bzf ; 4 uses
   %i.bzh = getelementptr inbounds nuw i8, ptr %i.bzg, i64 16
   %i.bzi = getelementptr inbounds nuw i8, ptr %i.bzg, i64 32
   %i.bzj = getelementptr inbounds nuw i8, ptr %i.bzg, i64 48
@@ -1087,9 +1083,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index1190 = phi i64 [ 0, %vec.epilog.ph ], [ %index.next1193, %vec.epilog.vector.body ] ; 3 uses
   %i.bzv = shl i64 %index1190, 2
   %next.gep1191 = getelementptr i8, ptr %.026.lcssa.i391, i64 %i.bzv
-  %i.bzw = shl i64 %index1190, 1
-  %8 = and i64 %i.bzw, 2305843009213693936
-  %i.bzx = getelementptr inbounds nuw i8, ptr %.025.lcssa.i392, i64 %8
+  %i.bzw = shl nuw nsw i64 %index1190, 1
+  %i.bzx = getelementptr inbounds nuw i8, ptr %.025.lcssa.i392, i64 %i.bzw
   %wide.load1192 = load <8 x i16>, ptr %i.bzx, align 1, !alias.scope !151
   %i.bzy = zext <8 x i16> %wide.load1192 to <8 x i32>
   store <8 x i32> %i.bzy, ptr %next.gep1191, align 4, !tbaa !3, !alias.scope !154, !noalias !151
@@ -1492,7 +1487,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dmy = mul i64 %index, 24                     ; 8 uses
+  %i.dmy = mul nuw i64 %index, 24                 ; 8 uses
   %i.dmz = add i64 %i.dmy, 72
   %i.dna = add i64 %i.dmy, 96
   %i.dnb = add i64 %i.dmy, 120

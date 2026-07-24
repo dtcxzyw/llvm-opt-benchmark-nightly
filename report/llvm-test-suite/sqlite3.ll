@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.dw = shl i64 %index, 1                       ; 16 uses
+  %i.dw = shl nuw i64 %index, 1                   ; 16 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.da, i64 %i.dw ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.da, i64 %i.dw ; 2 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 2
@@ -335,8 +335,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %predphi120 = select <16 x i1> %i.im, <16 x i32> %predphi119, <16 x i32> %i.il
   %i.ip = or <16 x i32> %predphi120, %i.gn
   %i.iq = trunc <16 x i32> %i.ip to <16 x i8>
-  %5 = and i64 %index, 9223372036854775792
-  %i.ir = getelementptr inbounds nuw i8, ptr %.0.i32.i, i64 %5
+  %i.ir = getelementptr inbounds nuw i8, ptr %.0.i32.i, i64 %index
   store <16 x i8> %i.iq, ptr %i.ir, align 1, !tbaa !37, !alias.scope !1641, !noalias !1638
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.is = icmp eq i64 %index.next, %n.vec

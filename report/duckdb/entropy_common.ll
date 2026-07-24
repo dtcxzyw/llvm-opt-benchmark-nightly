@@ -201,9 +201,8 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.s = shl i64 %index, 1                        ; 2 uses
-  %10 = and i64 %index, 9223372036854775792
-  %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 %10 ; 3 uses
+  %i.s = shl nuw i64 %index, 1                    ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 %index ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 2 uses
   %wide.load = load <8 x i8>, ptr %i.t, align 1, !tbaa !14, !alias.scope !15
   %wide.load31 = load <8 x i8>, ptr %i.u, align 1, !tbaa !14, !alias.scope !15
@@ -240,9 +239,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index37 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next41, %vec.epilog.vector.body ] ; 3 uses
-  %i.ae = shl i64 %index37, 1
-  %11 = and i64 %index37, 9223372036854775804
-  %i.af = getelementptr inbounds nuw i8, ptr %i.i, i64 %11
+  %i.ae = shl nuw i64 %index37, 1
+  %i.af = getelementptr inbounds nuw i8, ptr %i.i, i64 %index37
   %wide.load38 = load <4 x i8>, ptr %i.af, align 1, !tbaa !14, !alias.scope !15 ; 2 uses
   %i.ag = lshr <4 x i8> %wide.load38, splat (i8 4)
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 %i.ae
@@ -437,9 +435,8 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.q = shl i64 %index, 1                        ; 2 uses
-  %9 = and i64 %index, 9223372036854775792
-  %i.r = getelementptr inbounds nuw i8, ptr %i.g, i64 %9 ; 3 uses
+  %i.q = shl nuw i64 %index, 1                    ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.g, i64 %index ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 2 uses
   %wide.load = load <8 x i8>, ptr %i.r, align 1, !tbaa !14, !alias.scope !27
   %wide.load35 = load <8 x i8>, ptr %i.s, align 1, !tbaa !14, !alias.scope !27
@@ -476,9 +473,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index41 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next45, %vec.epilog.vector.body ] ; 3 uses
-  %i.ac = shl i64 %index41, 1
-  %10 = and i64 %index41, 9223372036854775804
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.g, i64 %10
+  %i.ac = shl nuw i64 %index41, 1
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.g, i64 %index41
   %wide.load42 = load <4 x i8>, ptr %i.ad, align 1, !tbaa !14, !alias.scope !27 ; 2 uses
   %i.ae = lshr <4 x i8> %wide.load42, splat (i8 4)
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 %i.ac
