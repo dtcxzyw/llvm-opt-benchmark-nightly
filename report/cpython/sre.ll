@@ -204,10 +204,10 @@ bb.ps:                                            ; preds = %bb.pr
   %i.ber = sext i32 %i.beo to i64
   %i.bes = getelementptr [8 x i8], ptr %i.beq, i64 %i.ber ; 2 uses
   %i.bet = load ptr, ptr %i.bes, align 8, !tbaa !95 ; 5 uses
-  %3 = ptrtoint ptr %i.bet to i64
+  %3 = ptrtoaddr ptr %i.bet to i64
   %i.beu = getelementptr i8, ptr %i.bes, i64 8
   %i.bev = load ptr, ptr %i.beu, align 8, !tbaa !95 ; 5 uses
-  %4 = ptrtoint ptr %i.bev to i64
+  %4 = ptrtoaddr ptr %i.bev to i64
   %i.bew = icmp eq ptr %i.bet, null
   %i.bex = icmp eq ptr %i.bev, null
   %i.bey = icmp ult ptr %i.bev, %i.bet
@@ -272,10 +272,10 @@ bb.py:                                            ; preds = %bb.px
   %i.bfr = sext i32 %i.bfo to i64
   %i.bfs = getelementptr [8 x i8], ptr %i.bfq, i64 %i.bfr ; 2 uses
   %i.bft = load ptr, ptr %i.bfs, align 8, !tbaa !95 ; 5 uses
-  %5 = ptrtoint ptr %i.bft to i64
+  %5 = ptrtoaddr ptr %i.bft to i64
   %i.bfu = getelementptr i8, ptr %i.bfs, i64 8
   %i.bfv = load ptr, ptr %i.bfu, align 8, !tbaa !95 ; 5 uses
-  %6 = ptrtoint ptr %i.bfv to i64
+  %6 = ptrtoaddr ptr %i.bfv to i64
   %i.bfw = icmp eq ptr %i.bft, null
   %i.bfx = icmp eq ptr %i.bfv, null
   %i.bfy = icmp ult ptr %i.bfv, %i.bft
@@ -427,10 +427,10 @@ bb.qm:                                            ; preds = %bb.ql
   %i.bic = sext i32 %i.bhz to i64
   %i.bid = getelementptr [8 x i8], ptr %i.bib, i64 %i.bic ; 2 uses
   %i.bie = load ptr, ptr %i.bid, align 8, !tbaa !95 ; 5 uses
-  %7 = ptrtoint ptr %i.bie to i64
+  %7 = ptrtoaddr ptr %i.bie to i64
   %i.bif = getelementptr i8, ptr %i.bid, i64 8
   %i.big = load ptr, ptr %i.bif, align 8, !tbaa !95 ; 5 uses
-  %8 = ptrtoint ptr %i.big to i64
+  %8 = ptrtoaddr ptr %i.big to i64
   %i.bih = icmp eq ptr %i.bie, null
   %i.bii = icmp eq ptr %i.big, null
   %i.bij = icmp ult ptr %i.big, %i.bie
@@ -833,17 +833,17 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define internal fastcc i64 @sre_ucs1_count(ptr noundef %0, ptr noundef %1, i64 noundef range(i64 0, 4294967296) %2) unnamed_addr #6 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !81     ; 42 uses
-  %3 = ptrtoint ptr %i.a to i64                   ; 12 uses
   %i.b = getelementptr i8, ptr %0, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !84   ; 2 uses
-  %i.d = ptrtoint ptr %i.c to i64
-  %i.e = sub i64 %i.d, %3
+  %3 = ptrtoint ptr %i.c to i64
+  %i.d = ptrtoint ptr %i.a to i64                 ; 12 uses
+  %i.e = sub i64 %3, %i.d
   %i.f = icmp slt i64 %2, %i.e
   %i.g = icmp ne i64 %2, 4294967295
   %or.cond = and i1 %i.g, %i.f
   %i.h = getelementptr i8, ptr %i.a, i64 %2
   %spec.select = select i1 %or.cond, ptr %i.h, ptr %i.c ; 24 uses
-  %spec.select207 = ptrtoint ptr %spec.select to i64 ; 10 uses
+  %spec.select207 = ptrtoaddr ptr %spec.select to i64 ; 10 uses
   %i.i = load i32, ptr %1, align 4, !tbaa !7
   switch i32 %i.i, label %.preheader [
     i32 13, label %.preheader127
@@ -864,7 +864,7 @@ bb.a:
   br i1 %i.j, label %.lr.ph179.preheader, label %.critedge
 
 .lr.ph179.preheader:                              ; preds = %.preheader128
-  %i.k = sub i64 %spec.select207, %3
+  %i.k = sub i64 %spec.select207, %i.d
   %scevgep222 = getelementptr i8, ptr %i.a, i64 %i.k
   br label %.lr.ph179
 
@@ -874,7 +874,7 @@ bb.a:
   br i1 %i.m, label %.lr.ph184.preheader, label %.critedge
 
 .lr.ph184.preheader:                              ; preds = %.preheader127
-  %i.n = sub i64 %spec.select207, %3
+  %i.n = sub i64 %spec.select207, %i.d
   %scevgep224 = getelementptr i8, ptr %i.a, i64 %i.n
   br label %.lr.ph184
 
@@ -912,7 +912,7 @@ bb.d:                                             ; preds = %bb.a
 
 .lr.ph174:                                        ; preds = %bb.d
   %i.x = trunc nuw i32 %i.v to i8
-  %i.y = sub i64 %spec.select207, %3
+  %i.y = sub i64 %spec.select207, %i.d
   %scevgep220 = getelementptr i8, ptr %i.a, i64 %i.y
   br label %bb.e
 
@@ -934,7 +934,7 @@ bb.g:                                             ; preds = %bb.a
   br i1 %i.ae, label %.lr.ph170.preheader, label %.critedge
 
 .lr.ph170.preheader:                              ; preds = %bb.g
-  %i.af = sub i64 %spec.select207, %3
+  %i.af = sub i64 %spec.select207, %i.d
   %scevgep218 = getelementptr i8, ptr %i.a, i64 %i.af
   br label %.lr.ph170
 
@@ -968,7 +968,7 @@ bb.j:                                             ; preds = %bb.a
   br i1 %i.aq, label %.lr.ph165.preheader, label %.critedge
 
 .lr.ph165.preheader:                              ; preds = %bb.j
-  %i.ar = sub i64 %spec.select207, %3
+  %i.ar = sub i64 %spec.select207, %i.d
   %scevgep216 = getelementptr i8, ptr %i.a, i64 %i.ar
   br label %.lr.ph165
 
@@ -992,7 +992,7 @@ bb.l:                                             ; preds = %bb.a
   br i1 %i.az, label %.lr.ph161.preheader, label %.critedge
 
 .lr.ph161.preheader:                              ; preds = %bb.l
-  %i.ba = sub i64 %spec.select207, %3
+  %i.ba = sub i64 %spec.select207, %i.d
   %scevgep214 = getelementptr i8, ptr %i.a, i64 %i.ba
   br label %.lr.ph161
 
@@ -1037,7 +1037,7 @@ bb.n:                                             ; preds = %bb.a
 
 .lr.ph156:                                        ; preds = %.preheader135
   %i.bq = trunc nuw i32 %i.bo to i8
-  %i.br = sub i64 %spec.select207, %3
+  %i.br = sub i64 %spec.select207, %i.d
   %scevgep212 = getelementptr i8, ptr %i.a, i64 %i.br
   br label %bb.o
 
@@ -1059,7 +1059,7 @@ bb.q:                                             ; preds = %bb.a
   br i1 %i.bw, label %.lr.ph152.preheader, label %.critedge
 
 .lr.ph152.preheader:                              ; preds = %bb.q
-  %i.bx = sub i64 %spec.select207, %3
+  %i.bx = sub i64 %spec.select207, %i.d
   %scevgep210 = getelementptr i8, ptr %i.a, i64 %i.bx
   br label %.lr.ph152
 
@@ -1093,7 +1093,7 @@ bb.t:                                             ; preds = %bb.a
   br i1 %i.ch, label %.lr.ph147.preheader, label %.critedge
 
 .lr.ph147.preheader:                              ; preds = %bb.t
-  %i.ci = sub i64 %spec.select207, %3
+  %i.ci = sub i64 %spec.select207, %i.d
   %scevgep208 = getelementptr i8, ptr %i.a, i64 %i.ci
   br label %.lr.ph147
 
@@ -1117,7 +1117,7 @@ bb.v:                                             ; preds = %bb.a
   br i1 %i.cp, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.v
-  %i.cq = sub i64 %spec.select207, %3
+  %i.cq = sub i64 %spec.select207, %i.d
   %scevgep = getelementptr i8, ptr %i.a, i64 %i.cq
   br label %.lr.ph
 
@@ -1171,7 +1171,7 @@ bb.z:                                             ; preds = %bb.y
 split:                                            ; preds = %.preheader, %._crit_edge
   %i.dh = phi ptr [ %.pre, %._crit_edge ], [ %i.dd, %.preheader ]
   %i.di = ptrtoint ptr %i.dh to i64
-  %i.dj = sub i64 %i.di, %3
+  %i.dj = sub i64 %i.di, %i.d
   br label %.loopexit
 
 .critedge:                                        ; preds = %bb.x, %char_loc_ignore.exit122, %bb.w, %.lr.ph, %bb.u, %.lr.ph147, %bb.s, %sre_lower_ascii.exit119, %bb.o, %bb.p, %char_loc_ignore.exit.thread, %char_loc_ignore.exit, %bb.k, %.lr.ph165, %bb.i, %sre_lower_ascii.exit, %bb.e, %bb.f, %bb.c, %.lr.ph179, %bb.b, %.lr.ph184, %bb.v, %bb.t, %bb.q, %.preheader135, %bb.l, %bb.j, %bb.g, %.preheader128, %.preheader127, %bb.n, %bb.a, %bb.d

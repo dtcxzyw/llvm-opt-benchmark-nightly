@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not350369, label %._crit_edge, label %iter.check526
 
 iter.check526:                                    ; preds = %.critedge194
-  %9 = ptrtoint ptr %i.ph to i64
-  %10 = ptrtoint ptr %i.pg to i64
+  %9 = ptrtoaddr ptr %i.ph to i64
+  %10 = ptrtoaddr ptr %i.pg to i64
   %i.pi = add i64 %9, -72
   %i.pj = sub i64 %i.pi, %10                      ; 3 uses
   %i.pk = udiv i64 %i.pj, 72
@@ -608,7 +608,7 @@ define dso_local void @_ZN9Stockfish16syzygy_extend_pvERKNS_10OptionsMapERKNS_6S
   %13 = alloca %"struct.Stockfish::MoveList", align 8 ; 6 uses
   %14 = alloca %"struct.Stockfish::StateInfo", align 8 ; 3 uses
   %15 = alloca %"struct.Stockfish::MoveList", align 8 ; 10 uses
-  %16 = ptrtoint ptr %15 to i64
+  %16 = ptrtoaddr ptr %15 to i64
   %17 = alloca %"class.std::function.197", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #33
   %i.c = tail call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #33
@@ -1011,7 +1011,7 @@ _ZNSt6vectorIN9Stockfish6Search8RootMoveESaIS2_EE12emplace_backIJRKNS0_4MoveEEEE
   br i1 %.not211, label %bb.ak, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt6vectorIN9Stockfish6Search8RootMoveESaIS2_EE12emplace_backIJRKNS0_4MoveEEEERS2_DpOT_.exit129
-  %18 = ptrtoint ptr %i.ka to i64
+  %18 = ptrtoaddr ptr %i.ka to i64
   %i.kb = getelementptr inbounds nuw i8, ptr %i.jy, i64 36 ; 2 uses
   %.promoted = load i32, ptr %i.kb, align 4, !tbaa !188 ; 3 uses
   %.reass = add i64 %18, %invariant.op            ; 3 uses

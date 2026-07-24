@@ -203,8 +203,7 @@ declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i6
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @elf_init_ehframe(ptr nofree noundef nonnull captures(none) initializes((16, 32)) %0) unnamed_addr #6 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !39     ; 9 uses
-  %1 = ptrtoint ptr %i.a to i64                   ; 4 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !39     ; 10 uses
   %i.b = getelementptr i8, ptr %i.a, i64 4
   store i32 0, ptr %i.b, align 4, !tbaa !7
   %i.c = getelementptr i8, ptr %i.a, i64 8
@@ -218,28 +217,28 @@ bb.a:
   store <8 x i8> <i8 120, i8 16, i8 1, i8 27, i8 12, i8 7, i8 8, i8 -112>, ptr %i.f, align 1, !tbaa !225
   %i.h = getelementptr i8, ptr %i.a, i64 22       ; 3 uses
   store i8 1, ptr %i.g, align 1, !tbaa !225
-  %i.i = ptrtoint ptr %i.h to i64                 ; 3 uses
+  %i.i = ptrtoint ptr %i.h to i64                 ; 2 uses
   %i.j = and i64 %i.i, 7
   %.not109 = icmp eq i64 %i.j, 0
   br i1 %.not109, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %1 = ptrtoaddr ptr %i.a to i64                  ; 2 uses
   %i.k = sub i64 1, %1
   %i.l = and i64 %i.k, 7                          ; 3 uses
   %i.m = add nuw nsw i64 %i.l, 1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.h, i8 0, i64 %i.m, i1 false), !tbaa !225
   %i.n = getelementptr i8, ptr %i.a, i64 %i.l
-  %scevgep = getelementptr i8, ptr %i.n, i64 23   ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.n, i64 23
   %i.o = add i64 %i.l, %1
   %i.p = add i64 %i.o, 23
-  %.pre = ptrtoint ptr %scevgep to i64
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.a
-  %.0.lcssa124.pre-phi = phi i64 [ %.pre, %.lr.ph.preheader ], [ %i.i, %bb.a ] ; 2 uses
-  %.0.lcssa = phi ptr [ %scevgep, %.lr.ph.preheader ], [ %i.h, %bb.a ] ; 14 uses
-  %.lcssa108 = phi i64 [ %i.p, %.lr.ph.preheader ], [ %i.i, %bb.a ] ; 2 uses
-  %i.q = sub i64 %.lcssa108, %1
+  %.0.lcssa = phi ptr [ %i.h, %bb.a ], [ %scevgep, %.lr.ph.preheader ] ; 15 uses
+  %.lcssa108 = phi i64 [ %i.i, %bb.a ], [ %i.p, %.lr.ph.preheader ] ; 2 uses
+  %2 = ptrtoint ptr %i.a to i64                   ; 2 uses
+  %i.q = sub i64 %.lcssa108, %2
   %i.r = trunc i64 %i.q to i32
   %i.s = add i32 %i.r, -4
   store i32 %i.s, ptr %i.a, align 4, !tbaa !7
@@ -247,7 +246,7 @@ bb.a:
   store ptr %.0.lcssa, ptr %i.t, align 8, !tbaa !230
   %i.u = getelementptr i8, ptr %.0.lcssa, i64 4   ; 2 uses
   %i.v = ptrtoint ptr %i.u to i64
-  %i.w = sub i64 %i.v, %1
+  %i.w = sub i64 %i.v, %2
   %i.x = trunc i64 %i.w to i32
   store i32 %i.x, ptr %i.u, align 4, !tbaa !7
   %i.y = getelementptr i8, ptr %.0.lcssa, i64 8   ; 2 uses
@@ -280,13 +279,14 @@ bb.a:
   br i1 %.not102112, label %._crit_edge116, label %.lr.ph115.preheader
 
 .lr.ph115.preheader:                              ; preds = %._crit_edge
-  %i.an = sub i64 2, %.0.lcssa124.pre-phi
+  %.0.lcssa124 = ptrtoaddr ptr %.0.lcssa to i64   ; 2 uses
+  %i.an = sub i64 2, %.0.lcssa124
   %i.ao = and i64 %i.an, 7                        ; 3 uses
   %i.ap = add nuw nsw i64 %i.ao, 1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ak, i8 0, i64 %i.ap, i1 false), !tbaa !225
   %i.aq = getelementptr i8, ptr %.0.lcssa, i64 %i.ao
   %scevgep125 = getelementptr i8, ptr %i.aq, i64 30
-  %i.ar = add i64 %.0.lcssa124.pre-phi, %i.ao
+  %i.ar = add i64 %i.ao, %.0.lcssa124
   %i.as = add i64 %i.ar, 30
   br label %._crit_edge116
 

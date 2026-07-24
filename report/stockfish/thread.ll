@@ -203,8 +203,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not2931.i.i, label %._crit_edge.thread.i.i, label %iter.check
 
 iter.check:                                       ; preds = %bb.f
-  %21 = ptrtoint ptr %i.bs to i64
-  %22 = ptrtoint ptr %i.bq to i64
+  %21 = ptrtoaddr ptr %i.bs to i64
+  %22 = ptrtoaddr ptr %i.bq to i64
   %i.bt = add i64 %21, -48
   %i.bu = sub i64 %i.bt, %22                      ; 5 uses
   %i.bv = udiv i64 %i.bu, 48
@@ -607,8 +607,8 @@ _ZNSt13unordered_mapIN9Stockfish4MoveElNS1_8MoveHashESt8equal_toIS1_ESaISt4pairI
   br i1 %.not9396, label %._crit_edge107, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt13unordered_mapIN9Stockfish4MoveElNS1_8MoveHashESt8equal_toIS1_ESaISt4pairIKS1_lEEEC2EmRKS2_RKS4_RKS8_.exit
-  %2 = ptrtoint ptr %i.ai to i64
-  %3 = ptrtoint ptr %i.ah to i64
+  %2 = ptrtoaddr ptr %i.ai to i64
+  %3 = ptrtoaddr ptr %i.ah to i64
   %i.aj = add i64 %2, -8
   %i.ak = sub i64 %i.aj, %3                       ; 3 uses
   %i.al = lshr i64 %i.ak, 3
@@ -1011,8 +1011,8 @@ bb.a:
   br i1 %i.f, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %2 = ptrtoint ptr %i.e to i64
-  %3 = ptrtoint ptr %i.c to i64
+  %2 = ptrtoaddr ptr %i.e to i64
+  %3 = ptrtoaddr ptr %i.c to i64
   %i.g = add i64 %2, -8
   %i.h = sub i64 %i.g, %3                         ; 3 uses
   %i.i = lshr i64 %i.h, 3

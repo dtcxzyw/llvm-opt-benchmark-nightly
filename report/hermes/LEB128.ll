@@ -203,13 +203,13 @@ bb.a:
   br i1 %i.k, label %.split.us.i, label %_ZN4llvh13decodeSLEB128EPKhPjS1_PPKc.exit, !llvm.loop !30
 
 _ZN4llvh13decodeSLEB128EPKhPjS1_PPKc.exit:        ; preds = %.split.us.i
-  %4 = ptrtoint ptr %i.b to i64
   %.not32.i = icmp samesign ult i8 %i.d, 64
   %i.l = zext nneg i32 %i.j to i64
   %i.m = shl nsw i64 -1, %i.l
   %i.n = select i1 %.not32.i, i64 0, i64 %i.m
   %.1.i = or i64 %i.i, %i.n
   %.pn.i = ptrtoint ptr %i.c to i64
+  %4 = ptrtoint ptr %i.b to i64
   %.sink68.i = sub i64 %.pn.i, %4
   %i.o = trunc i64 %.sink68.i to i32
   store i64 %.1.i, ptr %3, align 8, !tbaa !31

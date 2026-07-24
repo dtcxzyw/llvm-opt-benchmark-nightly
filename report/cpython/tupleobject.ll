@@ -203,7 +203,7 @@ _Py_RefcntAdd.exit:                               ; preds = %bb.m, %bb.n
   br i1 %i.an, label %.lr.ph60.preheader, label %_Py_memory_repeat.exit
 
 .lr.ph60.preheader:                               ; preds = %_Py_RefcntAdd.exit
-  %2 = ptrtoint ptr %.2.i55 to i64                ; 3 uses
+  %2 = ptrtoaddr ptr %.2.i55 to i64               ; 3 uses
   %i.ao = shl i64 %1, 3
   %i.ap = add i64 %i.ao, %2
   %i.aq = add i64 %i.ap, 32
