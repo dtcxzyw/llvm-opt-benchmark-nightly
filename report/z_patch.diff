@@ -1,0 +1,353 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index 0a9a4370d5e80..78b0bdcef0af4 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -268,6 +268,9 @@ class SCEV : public FoldingSetNode {
+   /// have no SCEVUse flags.
+   const SCEV *CanonicalSCEV = nullptr;
+ 
++  /// Immutable type of the SCEV.
++  Type *const Ty;
++
+ public:
+   using NoWrapFlags = SCEVNoWrapFlags;
+   static constexpr auto FlagAnyWrap = SCEVNoWrapFlags::FlagAnyWrap;
+@@ -277,15 +280,15 @@ class SCEV : public FoldingSetNode {
+   static constexpr auto NoWrapMask = SCEVNoWrapFlags::NoWrapMask;
+ 
+   explicit SCEV(const FoldingSetNodeIDRef ID, SCEVTypes SCEVTy,
+-                unsigned short ExpressionSize)
+-      : FastID(ID), SCEVType(SCEVTy), ExpressionSize(ExpressionSize) {}
++                unsigned short ExpressionSize, Type *Ty)
++      : FastID(ID), SCEVType(SCEVTy), ExpressionSize(ExpressionSize), Ty(Ty) {}
+   SCEV(const SCEV &) = delete;
+   SCEV &operator=(const SCEV &) = delete;
+ 
+   SCEVTypes getSCEVType() const { return SCEVType; }
+ 
+   /// Return the LLVM type of this SCEV expression.
+-  LLVM_ABI Type *getType() const;
++  Type *getType() const { return Ty; }
+ 
+   /// Return operands of this SCEV expression.
+   LLVM_ABI ArrayRef<SCEVUse> operands() const;
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h b/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
+index f103a789716ca..61a717461e673 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
+@@ -65,14 +65,12 @@ class SCEVConstant : public SCEV {
+   ConstantInt *V;
+ 
+   SCEVConstant(const FoldingSetNodeIDRef ID, ConstantInt *v)
+-      : SCEV(ID, scConstant, 1), V(v) {}
++      : SCEV(ID, scConstant, 1, v->getType()), V(v) {}
+ 
+ public:
+   ConstantInt *getValue() const { return V; }
+   const APInt &getAPInt() const { return getValue()->getValue(); }
+ 
+-  Type *getType() const { return V->getType(); }
+-
+   /// Methods for support type inquiry through isa, cast, and dyn_cast:
+   static bool classof(const SCEV *S) { return S->getSCEVType() == scConstant; }
+ };
+@@ -83,13 +81,9 @@ class SCEVVScale : public SCEV {
+   friend class ScalarEvolution;
+ 
+   SCEVVScale(const FoldingSetNodeIDRef ID, Type *ty)
+-      : SCEV(ID, scVScale, 0), Ty(ty) {}
+-
+-  Type *Ty;
++      : SCEV(ID, scVScale, 0, ty) {}
+ 
+ public:
+-  Type *getType() const { return Ty; }
+-
+   /// Methods for support type inquiry through isa, cast, and dyn_cast:
+   static bool classof(const SCEV *S) { return S->getSCEVType() == scVScale; }
+ };
+@@ -105,7 +99,6 @@ inline unsigned short computeExpressionSize(ArrayRef<SCEVUse> Args) {
+ class SCEVCastExpr : public SCEV {
+ protected:
+   SCEVUse Op;
+-  Type *Ty;
+ 
+   LLVM_ABI SCEVCastExpr(const FoldingSetNodeIDRef ID, SCEVTypes SCEVTy,
+                         SCEVUse op, Type *ty);
+@@ -118,7 +111,6 @@ class SCEVCastExpr : public SCEV {
+   }
+   ArrayRef<SCEVUse> operands() const { return Op; }
+   size_t getNumOperands() const { return 1; }
+-  Type *getType() const { return Ty; }
+ 
+   /// Methods for support type inquiry through isa, cast, and dyn_cast:
+   static bool classof(const SCEV *S) {
+@@ -219,8 +211,8 @@ class SCEVNAryExpr : public SCEV {
+   size_t NumOperands;
+ 
+   SCEVNAryExpr(const FoldingSetNodeIDRef ID, enum SCEVTypes T, const SCEVUse *O,
+-               size_t N)
+-      : SCEV(ID, T, computeExpressionSize(ArrayRef(O, N))), Operands(O),
++               size_t N, Type *Ty)
++      : SCEV(ID, T, computeExpressionSize(ArrayRef(O, N)), Ty), Operands(O),
+         NumOperands(N) {}
+ 
+ public:
+@@ -262,8 +254,8 @@ class SCEVNAryExpr : public SCEV {
+ class SCEVCommutativeExpr : public SCEVNAryExpr {
+ protected:
+   SCEVCommutativeExpr(const FoldingSetNodeIDRef ID, enum SCEVTypes T,
+-                      const SCEVUse *O, size_t N)
+-      : SCEVNAryExpr(ID, T, O, N) {}
++                      const SCEVUse *O, size_t N, Type *Ty)
++      : SCEVNAryExpr(ID, T, O, N, Ty) {}
+ 
+ public:
+   /// Methods for support type inquiry through isa, cast, and dyn_cast:
+@@ -283,21 +275,21 @@ class SCEVCommutativeExpr : public SCEVNAryExpr {
+ class SCEVAddExpr : public SCEVCommutativeExpr {
+   friend class ScalarEvolution;
+ 
+-  Type *Ty;
++  /// The type of an add is the type of its first pointer-typed operand, if
++  /// any, otherwise the type of operand 0.
++  static Type *computeType(const SCEVUse *O, size_t N) {
++    ArrayRef<SCEVUse> Ops(O, N);
++    auto *FirstPointerTypedOp =
++        find_if(Ops, [](SCEVUse Op) { return Op->getType()->isPointerTy(); });
++    if (FirstPointerTypedOp != Ops.end())
++      return (*FirstPointerTypedOp)->getType();
++    return Ops[0]->getType();
++  }
+ 
+   SCEVAddExpr(const FoldingSetNodeIDRef ID, const SCEVUse *O, size_t N)
+-      : SCEVCommutativeExpr(ID, scAddExpr, O, N) {
+-    auto *FirstPointerTypedOp = find_if(
+-        operands(), [](SCEVUse Op) { return Op->getType()->isPointerTy(); });
+-    if (FirstPointerTypedOp != operands().end())
+-      Ty = (*FirstPointerTypedOp)->getType();
+-    else
+-      Ty = getOperand(0)->getType();
+-  }
++      : SCEVCommutativeExpr(ID, scAddExpr, O, N, computeType(O, N)) {}
+ 
+ public:
+-  Type *getType() const { return Ty; }
+-
+   /// Methods for support type inquiry through isa, cast, and dyn_cast:
+   static bool classof(const SCEV *S) { return S->getSCEVType() == scAddExpr; }
+   static bool classof(const SCEVUse *U) { return classof(U->getPointer()); }
+@@ -308,11 +300,9 @@ class SCEVMulExpr : public SCEVCommutativeExpr {
+   friend class ScalarEvolution;
+ 
+   SCEVMulExpr(const FoldingSetNodeIDRef ID, const SCEVUse *O, size_t N)
+-      : SCEVCommutativeExpr(ID, scMulExpr, O, N) {}
++      : SCEVCommutativeExpr(ID, scMulExpr, O, N, O[0]->getType()) {}
+ 
+ public:
+-  Type *getType() const { return getOperand(0)->getType(); }
+-
+   /// Methods for support type inquiry through isa, cast, and dyn_cast:
+   static bool classof(const SCEV *S) { return S->getSCEVType() == scMulExpr; }
+   static bool classof(const SCEVUse *U) { return classof(U->getPointer()); }
+@@ -325,7 +315,13 @@ class SCEVUDivExpr : public SCEV {
+   std::array<SCEVUse, 2> Operands;
+ 
+   SCEVUDivExpr(const FoldingSetNodeIDRef ID, SCEVUse lhs, SCEVUse rhs)
+-      : SCEV(ID, scUDivExpr, computeExpressionSize({lhs, rhs})) {
++      // In most cases the types of LHS and RHS will be the same, but in some
++      // crazy cases one or the other may be a pointer. ScalarEvolution doesn't
++      // depend on the type for correctness, but handling types carefully can
++      // avoid extra casts in the SCEVExpander. The LHS is more likely to be
++      // a pointer type than the RHS, so use the RHS' type here.
++      : SCEV(ID, scUDivExpr, computeExpressionSize({lhs, rhs}),
++             rhs->getType()) {
+     Operands[0] = lhs;
+     Operands[1] = rhs;
+   }
+@@ -341,15 +337,6 @@ class SCEVUDivExpr : public SCEV {
+ 
+   ArrayRef<SCEVUse> operands() const { return Operands; }
+ 
+-  Type *getType() const {
+-    // In most cases the types of LHS and RHS will be the same, but in some
+-    // crazy cases one or the other may be a pointer. ScalarEvolution doesn't
+-    // depend on the type for correctness, but handling types carefully can
+-    // avoid extra casts in the SCEVExpander. The LHS is more likely to be
+-    // a pointer type than the RHS, so use the RHS' type here.
+-    return getRHS()->getType();
+-  }
+-
+   /// Methods for support type inquiry through isa, cast, and dyn_cast:
+   static bool classof(const SCEV *S) { return S->getSCEVType() == scUDivExpr; }
+ };
+@@ -369,10 +356,9 @@ class SCEVAddRecExpr : public SCEVNAryExpr {
+ 
+   SCEVAddRecExpr(const FoldingSetNodeIDRef ID, const SCEVUse *O, size_t N,
+                  const Loop *l)
+-      : SCEVNAryExpr(ID, scAddRecExpr, O, N), L(l) {}
++      : SCEVNAryExpr(ID, scAddRecExpr, O, N, O[0]->getType()), L(l) {}
+ 
+ public:
+-  Type *getType() const { return getStart()->getType(); }
+   SCEVUse getStart() const { return Operands[0]; }
+   const Loop *getLoop() const { return L; }
+ 
+@@ -452,15 +438,13 @@ class SCEVMinMaxExpr : public SCEVCommutativeExpr {
+   /// Note: Constructing subclasses via this constructor is allowed
+   SCEVMinMaxExpr(const FoldingSetNodeIDRef ID, enum SCEVTypes T,
+                  const SCEVUse *O, size_t N)
+-      : SCEVCommutativeExpr(ID, T, O, N) {
++      : SCEVCommutativeExpr(ID, T, O, N, O[0]->getType()) {
+     assert(isMinMaxType(T));
+     // Min and max never overflow
+     setNoWrapFlags(FlagNUW | FlagNSW);
+   }
+ 
+ public:
+-  Type *getType() const { return getOperand(0)->getType(); }
+-
+   static bool classof(const SCEV *S) { return isMinMaxType(S->getSCEVType()); }
+ 
+   static enum SCEVTypes negate(enum SCEVTypes T) {
+@@ -549,15 +533,13 @@ class SCEVSequentialMinMaxExpr : public SCEVNAryExpr {
+   /// Note: Constructing subclasses via this constructor is allowed
+   SCEVSequentialMinMaxExpr(const FoldingSetNodeIDRef ID, enum SCEVTypes T,
+                            const SCEVUse *O, size_t N)
+-      : SCEVNAryExpr(ID, T, O, N) {
++      : SCEVNAryExpr(ID, T, O, N, O[0]->getType()) {
+     assert(isSequentialMinMaxType(T));
+     // Min and max never overflow
+     setNoWrapFlags(FlagNUW | FlagNSW);
+   }
+ 
+ public:
+-  Type *getType() const { return getOperand(0)->getType(); }
+-
+   static SCEVTypes getEquivalentNonSequentialSCEVType(SCEVTypes Ty) {
+     assert(isSequentialMinMaxType(Ty));
+     switch (Ty) {
+@@ -610,7 +592,8 @@ class LLVM_ABI SCEVUnknown final : public SCEV, private CallbackVH {
+ 
+   SCEVUnknown(const FoldingSetNodeIDRef ID, Value *V, ScalarEvolution *se,
+               SCEVUnknown *next)
+-      : SCEV(ID, scUnknown, 1), CallbackVH(V), SE(se), Next(next) {}
++      : SCEV(ID, scUnknown, 1, V->getType()), CallbackVH(V), SE(se),
++        Next(next) {}
+ 
+   // Implement CallbackVH.
+   void deleted() override;
+@@ -619,8 +602,6 @@ class LLVM_ABI SCEVUnknown final : public SCEV, private CallbackVH {
+ public:
+   Value *getValue() const { return getValPtr(); }
+ 
+-  Type *getType() const { return getValPtr()->getType(); }
+-
+   /// Methods for support type inquiry through isa, cast, and dyn_cast:
+   static bool classof(const SCEV *S) { return S->getSCEVType() == scUnknown; }
+ };
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index c74708fc73e5a..6928ce6a4b9bb 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -460,41 +460,6 @@ void SCEV::print(raw_ostream &OS) const {
+   llvm_unreachable("Unknown SCEV kind!");
+ }
+ 
+-Type *SCEV::getType() const {
+-  switch (getSCEVType()) {
+-  case scConstant:
+-    return cast<SCEVConstant>(this)->getType();
+-  case scVScale:
+-    return cast<SCEVVScale>(this)->getType();
+-  case scPtrToAddr:
+-  case scPtrToInt:
+-  case scTruncate:
+-  case scZeroExtend:
+-  case scSignExtend:
+-    return cast<SCEVCastExpr>(this)->getType();
+-  case scAddRecExpr:
+-    return cast<SCEVAddRecExpr>(this)->getType();
+-  case scMulExpr:
+-    return cast<SCEVMulExpr>(this)->getType();
+-  case scUMaxExpr:
+-  case scSMaxExpr:
+-  case scUMinExpr:
+-  case scSMinExpr:
+-    return cast<SCEVMinMaxExpr>(this)->getType();
+-  case scSequentialUMinExpr:
+-    return cast<SCEVSequentialMinMaxExpr>(this)->getType();
+-  case scAddExpr:
+-    return cast<SCEVAddExpr>(this)->getType();
+-  case scUDivExpr:
+-    return cast<SCEVUDivExpr>(this)->getType();
+-  case scUnknown:
+-    return cast<SCEVUnknown>(this)->getType();
+-  case scCouldNotCompute:
+-    llvm_unreachable("Attempt to use a SCEVCouldNotCompute object!");
+-  }
+-  llvm_unreachable("Unknown SCEV kind!");
+-}
+-
+ ArrayRef<SCEVUse> SCEV::operands() const {
+   switch (getSCEVType()) {
+   case scConstant:
+@@ -542,8 +507,8 @@ bool SCEV::isNonConstantNegative() const {
+   return SC->getAPInt().isNegative();
+ }
+ 
+-SCEVCouldNotCompute::SCEVCouldNotCompute() :
+-  SCEV(FoldingSetNodeIDRef(), scCouldNotCompute, 0) {}
++SCEVCouldNotCompute::SCEVCouldNotCompute()
++    : SCEV(FoldingSetNodeIDRef(), scCouldNotCompute, 0, nullptr) {}
+ 
+ bool SCEVCouldNotCompute::classof(const SCEV *S) {
+   return S->getSCEVType() == scCouldNotCompute;
+@@ -597,19 +562,19 @@ const SCEV *ScalarEvolution::getElementCount(Type *Ty, ElementCount EC,
+ 
+ SCEVCastExpr::SCEVCastExpr(const FoldingSetNodeIDRef ID, SCEVTypes SCEVTy,
+                            SCEVUse op, Type *ty)
+-    : SCEV(ID, SCEVTy, computeExpressionSize(op)), Op(op), Ty(ty) {}
++    : SCEV(ID, SCEVTy, computeExpressionSize(op), ty), Op(op) {}
+ 
+ SCEVPtrToAddrExpr::SCEVPtrToAddrExpr(const FoldingSetNodeIDRef ID,
+                                      const SCEV *Op, Type *ITy)
+     : SCEVCastExpr(ID, scPtrToAddr, Op, ITy) {
+-  assert(getOperand()->getType()->isPointerTy() && Ty->isIntegerTy() &&
++  assert(getOperand()->getType()->isPointerTy() && getType()->isIntegerTy() &&
+          "Must be a non-bit-width-changing pointer-to-integer cast!");
+ }
+ 
+ SCEVPtrToIntExpr::SCEVPtrToIntExpr(const FoldingSetNodeIDRef ID, SCEVUse Op,
+                                    Type *ITy)
+     : SCEVCastExpr(ID, scPtrToInt, Op, ITy) {
+-  assert(getOperand()->getType()->isPointerTy() && Ty->isIntegerTy() &&
++  assert(getOperand()->getType()->isPointerTy() && getType()->isIntegerTy() &&
+          "Must be a non-bit-width-changing pointer-to-integer cast!");
+ }
+ 
+@@ -621,21 +586,21 @@ SCEVIntegralCastExpr::SCEVIntegralCastExpr(const FoldingSetNodeIDRef ID,
+ SCEVTruncateExpr::SCEVTruncateExpr(const FoldingSetNodeIDRef ID, SCEVUse op,
+                                    Type *ty)
+     : SCEVIntegralCastExpr(ID, scTruncate, op, ty) {
+-  assert(getOperand()->getType()->isIntOrPtrTy() && Ty->isIntOrPtrTy() &&
++  assert(getOperand()->getType()->isIntOrPtrTy() && getType()->isIntOrPtrTy() &&
+          "Cannot truncate non-integer value!");
+ }
+ 
+ SCEVZeroExtendExpr::SCEVZeroExtendExpr(const FoldingSetNodeIDRef ID, SCEVUse op,
+                                        Type *ty)
+     : SCEVIntegralCastExpr(ID, scZeroExtend, op, ty) {
+-  assert(getOperand()->getType()->isIntOrPtrTy() && Ty->isIntOrPtrTy() &&
++  assert(getOperand()->getType()->isIntOrPtrTy() && getType()->isIntOrPtrTy() &&
+          "Cannot zero extend non-integer value!");
+ }
+ 
+ SCEVSignExtendExpr::SCEVSignExtendExpr(const FoldingSetNodeIDRef ID, SCEVUse op,
+                                        Type *ty)
+     : SCEVIntegralCastExpr(ID, scSignExtend, op, ty) {
+-  assert(getOperand()->getType()->isIntOrPtrTy() && Ty->isIntOrPtrTy() &&
++  assert(getOperand()->getType()->isIntOrPtrTy() && getType()->isIntOrPtrTy() &&
+          "Cannot sign extend non-integer value!");
+ }
+ 
