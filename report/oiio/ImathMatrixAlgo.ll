@@ -204,7 +204,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load <2 x double>, ptr %0, align 8, !tbaa !7 ; 3 uses
   %i.f = extractelement <2 x double> %i.e, i64 0  ; 2 uses
-  %i.g = load double, ptr %i.a, align 8, !tbaa !7 ; 2 uses
+  %i.g = load double, ptr %i.a, align 8, !tbaa !7 ; 3 uses
   %i.h = load <2 x double>, ptr %i.d, align 8, !tbaa !7 ; 4 uses
   %i.i = extractelement <2 x double> %i.h, i64 0  ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -234,8 +234,8 @@ bb.a:
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.y, i8 0, i64 24, i1 false)
   store double 1.000000e+00, ptr %i.z, align 8, !tbaa !7
-  %i.aa = tail call noundef double @llvm.fabs.f64(double %i.g) ; 2 uses
-  %6 = fcmp ogt double %i.aa, 0.000000e+00
+  %i.aa = tail call noundef double @llvm.fabs.f64(double %i.g)
+  %6 = fcmp one double %i.g, 0.000000e+00
   %.sroa.speculated28.i.i = select i1 %6, double %i.aa, double 0.000000e+00 ; 2 uses
   %i.ab = tail call noundef double @llvm.fabs.f64(double %i.c) ; 2 uses
   %i.ac = fcmp olt double %.sroa.speculated28.i.i, %i.ab
@@ -638,9 +638,9 @@ bb.h:                                             ; preds = %_ZN9Imath_3_112_GLO
   %i.sb = phi <2 x double> [ %i.pk, %_ZN9Imath_3_112_GLOBAL__N_122twoSidedJacobiRotationIdLi1ELi2ELi0EEEbRNS_8Matrix33IT_EES5_S5_S3_.exit.thread.i ], [ %i.mn, %_ZN9Imath_3_112_GLOBAL__N_122twoSidedJacobiRotationIdLi1ELi2ELi0EEEbRNS_8Matrix33IT_EES5_S5_S3_.exit.i ] ; 4 uses
   %i.sc = extractelement <2 x double> %i.sa, i64 1
   %i.sd = extractelement <2 x double> %i.sa, i64 0
-  %i.se = extractelement <2 x double> %i.sb, i64 0 ; 2 uses
-  %i.sf = tail call noundef double @llvm.fabs.f64(double %i.se) ; 2 uses
-  %7 = fcmp ogt double %i.sf, 0.000000e+00
+  %i.se = extractelement <2 x double> %i.sb, i64 0 ; 3 uses
+  %i.sf = tail call noundef double @llvm.fabs.f64(double %i.se)
+  %7 = fcmp one double %i.se, 0.000000e+00
   %.sroa.speculated28.i119.i = select i1 %7, double %i.sf, double 0.000000e+00 ; 2 uses
   %i.sg = tail call noundef double @llvm.fabs.f64(double %i.sd) ; 2 uses
   %i.sh = fcmp olt double %.sroa.speculated28.i119.i, %i.sg
@@ -927,7 +927,7 @@ define weak_odr void @_ZN9Imath_3_19jacobiSVDIfEEvRKNS_8Matrix33IT_EERS3_RNS_4Ve
 bb.a:
   %i.a = load float, ptr %0, align 4, !tbaa !26   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.c = load float, ptr %i.b, align 4, !tbaa !26 ; 2 uses
+  %i.c = load float, ptr %i.b, align 4, !tbaa !26 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load float, ptr %i.d, align 4, !tbaa !26 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -965,8 +965,8 @@ bb.a:
   store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %i.ad, align 4, !tbaa !26
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 6 uses
   store float 1.000000e+00, ptr %i.ah, align 4, !tbaa !26
-  %i.ai = tail call noundef float @llvm.fabs.f32(float %i.c) ; 2 uses
-  %6 = fcmp ogt float %i.ai, 0.000000e+00
+  %i.ai = tail call noundef float @llvm.fabs.f32(float %i.c)
+  %6 = fcmp one float %i.c, 0.000000e+00
   %.sroa.speculated28.i.i = select i1 %6, float %i.ai, float 0.000000e+00 ; 2 uses
   %i.aj = tail call noundef float @llvm.fabs.f32(float %i.e) ; 2 uses
   %i.ak = fcmp olt float %.sroa.speculated28.i.i, %i.aj
@@ -1369,9 +1369,9 @@ bb.g:                                             ; preds = %_ZN9Imath_3_112_GLO
   %i.sd = phi <4 x float> [ %i.po, %_ZN9Imath_3_112_GLOBAL__N_122twoSidedJacobiRotationIfLi1ELi2ELi0EEEbRNS_8Matrix33IT_EES5_S5_S3_.exit.thread.i ], [ %i.sb, %_ZN9Imath_3_112_GLOBAL__N_122twoSidedJacobiRotationIfLi1ELi2ELi0EEEbRNS_8Matrix33IT_EES5_S5_S3_.exit.i ] ; 5 uses
   %i.se = extractelement <4 x float> %i.sd, i64 1
   %i.sf = extractelement <4 x float> %i.sd, i64 0
-  %i.sg = extractelement <4 x float> %i.sd, i64 3 ; 2 uses
-  %i.sh = tail call noundef float @llvm.fabs.f32(float %i.sg) ; 2 uses
-  %7 = fcmp ogt float %i.sh, 0.000000e+00
+  %i.sg = extractelement <4 x float> %i.sd, i64 3 ; 3 uses
+  %i.sh = tail call noundef float @llvm.fabs.f32(float %i.sg)
+  %7 = fcmp one float %i.sg, 0.000000e+00
   %.sroa.speculated28.i119.i = select i1 %7, float %i.sh, float 0.000000e+00 ; 2 uses
   %i.si = tail call noundef float @llvm.fabs.f32(float %i.se) ; 2 uses
   %i.sj = fcmp olt float %.sroa.speculated28.i119.i, %i.si
@@ -1638,7 +1638,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %6, i64 12
   %i.e = load <4 x float>, ptr %0, align 4, !tbaa !26 ; 3 uses
-  %i.f = load float, ptr %i.a, align 4, !tbaa !26
+  %i.f = load float, ptr %i.a, align 4, !tbaa !26 ; 2 uses
   store <4 x float> %i.e, ptr %6, align 16, !tbaa !26
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
@@ -1689,9 +1689,9 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 60 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ak, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %i.al, align 4, !tbaa !26
-  %7 = tail call noundef float @llvm.fabs.f32(float %i.f) ; 2 uses
-  %8 = fcmp ogt float %7, 0.000000e+00
-  %.sroa.speculated.1.i.i = select i1 %8, float %7, float 0.000000e+00 ; 2 uses
+  %7 = fcmp one float %i.f, 0.000000e+00
+  %8 = tail call noundef float @llvm.fabs.f32(float %i.f)
+  %.sroa.speculated.1.i.i = select i1 %7, float %8, float 0.000000e+00 ; 2 uses
   %i.am = extractelement <4 x float> %i.e, i64 2
   %i.an = tail call noundef float @llvm.fabs.f32(float %i.am) ; 2 uses
   %i.ao = fcmp olt float %.sroa.speculated.1.i.i, %i.an
@@ -1758,7 +1758,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader163.i
   %i.ch = add nuw nsw i32 %.0137.i, 1
-  %i.ci = load float, ptr %i.b, align 4, !tbaa !26
+  %i.ci = load float, ptr %i.b, align 4, !tbaa !26 ; 2 uses
   %i.cj = load float, ptr %i.c, align 8, !tbaa !26
   %i.ck = load float, ptr %i.d, align 4, !tbaa !26
   %i.cl = load float, ptr %i.h, align 16, !tbaa !26
@@ -1770,9 +1770,9 @@ bb.b:                                             ; preds = %.preheader163.i
   %i.cr = load float, ptr %i.v, align 16, !tbaa !26
   %i.cs = load float, ptr %i.w, align 4, !tbaa !26
   %i.ct = load float, ptr %i.x, align 8, !tbaa !26
-  %9 = tail call noundef float @llvm.fabs.f32(float %i.ci) ; 2 uses
-  %10 = fcmp ogt float %9, 0.000000e+00
-  %.sroa.speculated.1.i146.i = select i1 %10, float %9, float 0.000000e+00 ; 2 uses
+  %9 = fcmp one float %i.ci, 0.000000e+00
+  %10 = tail call noundef float @llvm.fabs.f32(float %i.ci)
+  %.sroa.speculated.1.i146.i = select i1 %9, float %10, float 0.000000e+00 ; 2 uses
   %i.cu = tail call noundef float @llvm.fabs.f32(float %i.cj) ; 2 uses
   %i.cv = fcmp olt float %.sroa.speculated.1.i146.i, %i.cu
   %.sroa.speculated.2.i147.i = select i1 %i.cv, float %i.cu, float %.sroa.speculated.1.i146.i ; 2 uses
@@ -2175,7 +2175,7 @@ bb.a:
   %6 = alloca %"class.Imath_3_1::Matrix44", align 16 ; 23 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.c = load double, ptr %i.a, align 8, !tbaa !7
+  %i.c = load double, ptr %i.a, align 8, !tbaa !7 ; 2 uses
   %i.d = load <2 x double>, ptr %0, align 8, !tbaa !7
   store <2 x double> %i.d, ptr %6, align 16, !tbaa !7
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2239,9 +2239,9 @@ bb.a:
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 120 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.aq, i8 0, i64 32, i1 false)
   store double 1.000000e+00, ptr %i.ar, align 8, !tbaa !7
-  %7 = tail call noundef double @llvm.fabs.f64(double %i.c) ; 2 uses
-  %8 = fcmp ogt double %7, 0.000000e+00
-  %.sroa.speculated.1.i.i = select i1 %8, double %7, double 0.000000e+00 ; 2 uses
+  %7 = fcmp one double %i.c, 0.000000e+00
+  %8 = tail call noundef double @llvm.fabs.f64(double %i.c)
+  %.sroa.speculated.1.i.i = select i1 %7, double %8, double 0.000000e+00 ; 2 uses
   %i.as = extractelement <2 x double> %i.h, i64 0
   %i.at = tail call noundef double @llvm.fabs.f64(double %i.as) ; 2 uses
   %i.au = fcmp olt double %.sroa.speculated.1.i.i, %i.at
@@ -2309,7 +2309,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader163.i
   %i.co = add nuw nsw i32 %.0137.i, 1
-  %i.cp = load double, ptr %i.b, align 8, !tbaa !7
+  %i.cp = load double, ptr %i.b, align 8, !tbaa !7 ; 2 uses
   %i.cq = load double, ptr %i.f, align 16, !tbaa !7
   %i.cr = load double, ptr %i.g, align 8, !tbaa !7
   %i.cs = load double, ptr %i.j, align 16, !tbaa !7
@@ -2321,9 +2321,9 @@ bb.b:                                             ; preds = %.preheader163.i
   %i.cy = load double, ptr %i.z, align 16, !tbaa !7
   %i.cz = load double, ptr %i.aa, align 8, !tbaa !7
   %i.da = load double, ptr %i.ad, align 16, !tbaa !7
-  %9 = tail call noundef double @llvm.fabs.f64(double %i.cp) ; 2 uses
-  %10 = fcmp ogt double %9, 0.000000e+00
-  %.sroa.speculated.1.i146.i = select i1 %10, double %9, double 0.000000e+00 ; 2 uses
+  %9 = fcmp one double %i.cp, 0.000000e+00
+  %10 = tail call noundef double @llvm.fabs.f64(double %i.cp)
+  %.sroa.speculated.1.i146.i = select i1 %9, double %10, double 0.000000e+00 ; 2 uses
   %i.db = tail call noundef double @llvm.fabs.f64(double %i.cq) ; 2 uses
   %i.dc = fcmp olt double %.sroa.speculated.1.i146.i, %i.db
   %.sroa.speculated.2.i147.i = select i1 %i.dc, double %i.db, double %.sroa.speculated.1.i146.i ; 2 uses
@@ -2726,14 +2726,14 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   store float %i.n, ptr %i.o, align 4, !tbaa !26
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 8 uses
-  %i.q = load float, ptr %i.p, align 4, !tbaa !26 ; 2 uses
+  %i.q = load float, ptr %i.p, align 4, !tbaa !26 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.s = load float, ptr %i.r, align 4, !tbaa !26 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 8 uses
   %i.u = load float, ptr %i.t, align 4, !tbaa !26 ; 2 uses
-  %4 = tail call noundef float @llvm.fabs.f32(float %i.q) ; 2 uses
-  %5 = fcmp ogt float %4, 0.000000e+00
-  %.sroa.speculated.i = select i1 %5, float %4, float 0.000000e+00 ; 2 uses
+  %4 = fcmp one float %i.q, 0.000000e+00
+  %5 = tail call noundef float @llvm.fabs.f32(float %i.q)
+  %.sroa.speculated.i = select i1 %4, float %5, float 0.000000e+00 ; 2 uses
   %i.v = tail call noundef float @llvm.fabs.f32(float %i.s) ; 2 uses
   %i.w = fcmp olt float %.sroa.speculated.i, %i.v
   %.sroa.speculated.121.i = select i1 %i.w, float %i.v, float %.sroa.speculated.i ; 2 uses
@@ -2994,12 +2994,12 @@ _ZN9Imath_3_112_GLOBAL__N_114jacobiRotationILi1ELi2ELi0EfEEbRNS_8Matrix33IT2_EES
   br i1 %i.gk, label %bb.i, label %.loopexit
 
 bb.i:                                             ; preds = %_ZN9Imath_3_112_GLOBAL__N_114jacobiRotationILi1ELi2ELi0EfEEbRNS_8Matrix33IT2_EES5_RNS_4Vec3IS3_EES3_.exit
-  %i.gl = load float, ptr %i.p, align 4, !tbaa !26 ; 2 uses
+  %i.gl = load float, ptr %i.p, align 4, !tbaa !26 ; 3 uses
   %i.gm = load float, ptr %i.r, align 4, !tbaa !26 ; 2 uses
   %i.gn = load float, ptr %i.t, align 4, !tbaa !26 ; 2 uses
-  %6 = tail call noundef float @llvm.fabs.f32(float %i.gl) ; 2 uses
-  %7 = fcmp ogt float %6, 0.000000e+00
-  %.sroa.speculated.i44 = select i1 %7, float %6, float 0.000000e+00 ; 2 uses
+  %6 = fcmp one float %i.gl, 0.000000e+00
+  %7 = tail call noundef float @llvm.fabs.f32(float %i.gl)
+  %.sroa.speculated.i44 = select i1 %6, float %7, float 0.000000e+00 ; 2 uses
   %i.go = tail call noundef float @llvm.fabs.f32(float %i.gm) ; 2 uses
   %i.gp = fcmp olt float %.sroa.speculated.i44, %i.go
   %.sroa.speculated.121.i45 = select i1 %i.gp, float %i.go, float %.sroa.speculated.i44 ; 2 uses
@@ -3038,14 +3038,14 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   store double %i.j, ptr %i.k, align 8, !tbaa !7
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
-  %i.m = load double, ptr %i.l, align 8, !tbaa !7 ; 2 uses
+  %i.m = load double, ptr %i.l, align 8, !tbaa !7 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
   %i.o = load double, ptr %i.n, align 8, !tbaa !7 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 8 uses
   %i.q = load double, ptr %i.p, align 8, !tbaa !7 ; 2 uses
-  %4 = tail call noundef double @llvm.fabs.f64(double %i.m) ; 2 uses
-  %5 = fcmp ogt double %4, 0.000000e+00
-  %.sroa.speculated.i = select i1 %5, double %4, double 0.000000e+00 ; 2 uses
+  %4 = fcmp one double %i.m, 0.000000e+00
+  %5 = tail call noundef double @llvm.fabs.f64(double %i.m)
+  %.sroa.speculated.i = select i1 %4, double %5, double 0.000000e+00 ; 2 uses
   %i.r = tail call noundef double @llvm.fabs.f64(double %i.o) ; 2 uses
   %i.s = fcmp olt double %.sroa.speculated.i, %i.r
   %.sroa.speculated.121.i = select i1 %i.s, double %i.r, double %.sroa.speculated.i ; 2 uses
@@ -3314,12 +3314,12 @@ _ZN9Imath_3_112_GLOBAL__N_114jacobiRotationILi1ELi2ELi0EdEEbRNS_8Matrix33IT2_EES
   br i1 %i.go, label %bb.i, label %.loopexit
 
 bb.i:                                             ; preds = %_ZN9Imath_3_112_GLOBAL__N_114jacobiRotationILi1ELi2ELi0EdEEbRNS_8Matrix33IT2_EES5_RNS_4Vec3IS3_EES3_.exit
-  %i.gp = load double, ptr %i.l, align 8, !tbaa !7 ; 2 uses
+  %i.gp = load double, ptr %i.l, align 8, !tbaa !7 ; 3 uses
   %i.gq = load double, ptr %i.n, align 8, !tbaa !7 ; 2 uses
   %i.gr = load double, ptr %i.p, align 8, !tbaa !7 ; 2 uses
-  %6 = tail call noundef double @llvm.fabs.f64(double %i.gp) ; 2 uses
-  %7 = fcmp ogt double %6, 0.000000e+00
-  %.sroa.speculated.i44 = select i1 %7, double %6, double 0.000000e+00 ; 2 uses
+  %6 = fcmp one double %i.gp, 0.000000e+00
+  %7 = tail call noundef double @llvm.fabs.f64(double %i.gp)
+  %.sroa.speculated.i44 = select i1 %6, double %7, double 0.000000e+00 ; 2 uses
   %i.gs = tail call noundef double @llvm.fabs.f64(double %i.gq) ; 2 uses
   %i.gt = fcmp olt double %.sroa.speculated.i44, %i.gs
   %.sroa.speculated.121.i45 = select i1 %i.gt, double %i.gs, double %.sroa.speculated.i44 ; 2 uses
@@ -3366,7 +3366,7 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
   store float %i.o, ptr %i.p, align 4, !tbaa !26
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 12 uses
-  %i.r = load float, ptr %i.q, align 4, !tbaa !26 ; 2 uses
+  %i.r = load float, ptr %i.q, align 4, !tbaa !26 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 7 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 12 uses
@@ -3379,9 +3379,9 @@ bb.a:
   %i.ab = extractelement <2 x float> %i.z, i64 0
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 13 uses
   %i.ad = load float, ptr %i.ac, align 4, !tbaa !26
-  %4 = tail call noundef float @llvm.fabs.f32(float %i.r) ; 2 uses
-  %5 = fcmp ogt float %4, 0.000000e+00
-  %.sroa.speculated.i = select i1 %5, float %4, float 0.000000e+00 ; 2 uses
+  %4 = fcmp one float %i.r, 0.000000e+00
+  %5 = tail call noundef float @llvm.fabs.f32(float %i.r)
+  %.sroa.speculated.i = select i1 %4, float %5, float 0.000000e+00 ; 2 uses
   %i.ae = tail call noundef float @llvm.fabs.f32(float %i.y) ; 2 uses
   %i.af = fcmp olt float %.sroa.speculated.i, %i.ae
   %.sroa.speculated.121.i = select i1 %i.af, float %i.ae, float %.sroa.speculated.i ; 2 uses
@@ -3784,7 +3784,7 @@ _ZN9Imath_3_112_GLOBAL__N_114jacobiRotationILi2ELi3ELi0ELi1EfEEbRNS_8Matrix44IT3
   %i.pu = fadd float %.sroa.17.2, %i.pt           ; 2 uses
   store float %i.pu, ptr %i.p, align 4, !tbaa !26
   store float %i.pu, ptr %i.n, align 4, !tbaa !26
-  %i.pv = load float, ptr %i.q, align 4, !tbaa !26 ; 2 uses
+  %i.pv = load float, ptr %i.q, align 4, !tbaa !26 ; 3 uses
   %i.pw = load <2 x float>, ptr %i.s, align 4, !tbaa !26 ; 3 uses
   %i.px = extractelement <2 x float> %i.pw, i64 1
   %i.py = extractelement <2 x float> %i.pw, i64 0 ; 2 uses
@@ -3792,9 +3792,9 @@ _ZN9Imath_3_112_GLOBAL__N_114jacobiRotationILi2ELi3ELi0ELi1EfEEbRNS_8Matrix44IT3
   %i.qa = extractelement <2 x float> %i.pz, i64 1
   %i.qb = extractelement <2 x float> %i.pz, i64 0
   %i.qc = load float, ptr %i.ac, align 4, !tbaa !26
-  %6 = tail call noundef float @llvm.fabs.f32(float %i.pv) ; 2 uses
-  %7 = fcmp ogt float %6, 0.000000e+00
-  %.sroa.speculated.i62 = select i1 %7, float %6, float 0.000000e+00 ; 2 uses
+  %6 = fcmp one float %i.pv, 0.000000e+00
+  %7 = tail call noundef float @llvm.fabs.f32(float %i.pv)
+  %.sroa.speculated.i62 = select i1 %6, float %7, float 0.000000e+00 ; 2 uses
   %i.qd = tail call noundef float @llvm.fabs.f32(float %i.py) ; 2 uses
   %i.qe = fcmp olt float %.sroa.speculated.i62, %i.qd
   %.sroa.speculated.121.i63 = select i1 %i.qe, float %i.qd, float %.sroa.speculated.i62 ; 2 uses
@@ -3850,7 +3850,7 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   store double %i.o, ptr %i.p, align 8, !tbaa !7
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 12 uses
-  %i.r = load double, ptr %i.q, align 8, !tbaa !7 ; 2 uses
+  %i.r = load double, ptr %i.q, align 8, !tbaa !7 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 8 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 7 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 12 uses
@@ -3863,9 +3863,9 @@ bb.a:
   %i.ab = extractelement <2 x double> %i.z, i64 0
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 13 uses
   %i.ad = load double, ptr %i.ac, align 8, !tbaa !7
-  %4 = tail call noundef double @llvm.fabs.f64(double %i.r) ; 2 uses
-  %5 = fcmp ogt double %4, 0.000000e+00
-  %.sroa.speculated.i = select i1 %5, double %4, double 0.000000e+00 ; 2 uses
+  %4 = fcmp one double %i.r, 0.000000e+00
+  %5 = tail call noundef double @llvm.fabs.f64(double %i.r)
+  %.sroa.speculated.i = select i1 %4, double %5, double 0.000000e+00 ; 2 uses
   %i.ae = tail call noundef double @llvm.fabs.f64(double %i.y) ; 2 uses
   %i.af = fcmp olt double %.sroa.speculated.i, %i.ae
   %.sroa.speculated.121.i = select i1 %i.af, double %i.ae, double %.sroa.speculated.i ; 2 uses
@@ -4268,7 +4268,7 @@ _ZN9Imath_3_112_GLOBAL__N_114jacobiRotationILi2ELi3ELi0ELi1EdEEbRNS_8Matrix44IT3
   %i.qb = fadd double %.sroa.17.2, %i.qa          ; 2 uses
   store double %i.qb, ptr %i.p, align 8, !tbaa !7
   store double %i.qb, ptr %i.n, align 8, !tbaa !7
-  %i.qc = load double, ptr %i.q, align 8, !tbaa !7 ; 2 uses
+  %i.qc = load double, ptr %i.q, align 8, !tbaa !7 ; 3 uses
   %i.qd = load <2 x double>, ptr %i.s, align 8, !tbaa !7 ; 3 uses
   %i.qe = extractelement <2 x double> %i.qd, i64 1
   %i.qf = extractelement <2 x double> %i.qd, i64 0 ; 2 uses
@@ -4276,9 +4276,9 @@ _ZN9Imath_3_112_GLOBAL__N_114jacobiRotationILi2ELi3ELi0ELi1EdEEbRNS_8Matrix44IT3
   %i.qh = extractelement <2 x double> %i.qg, i64 1
   %i.qi = extractelement <2 x double> %i.qg, i64 0
   %i.qj = load double, ptr %i.ac, align 8, !tbaa !7
-  %6 = tail call noundef double @llvm.fabs.f64(double %i.qc) ; 2 uses
-  %7 = fcmp ogt double %6, 0.000000e+00
-  %.sroa.speculated.i62 = select i1 %7, double %6, double 0.000000e+00 ; 2 uses
+  %6 = fcmp one double %i.qc, 0.000000e+00
+  %7 = tail call noundef double @llvm.fabs.f64(double %i.qc)
+  %.sroa.speculated.i62 = select i1 %6, double %7, double 0.000000e+00 ; 2 uses
   %i.qk = tail call noundef double @llvm.fabs.f64(double %i.qf) ; 2 uses
   %i.ql = fcmp olt double %.sroa.speculated.i62, %i.qk
   %.sroa.speculated.121.i63 = select i1 %i.ql, double %i.qk, double %.sroa.speculated.i62 ; 2 uses

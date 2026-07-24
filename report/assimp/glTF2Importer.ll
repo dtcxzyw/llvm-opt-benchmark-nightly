@@ -204,12 +204,12 @@ bb.m:                                             ; preds = %.lr.ph.us, %bb.m
   %i.eu = zext i32 %.05265.us to i64
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.et, i64 %i.eu
   %i.ew = load float, ptr %i.ev, align 4          ; 2 uses
-  %.inv.us = fcmp ole float %i.ew, 0.000000e+00
-  %4 = select i1 %.inv.us, float 0.000000e+00, float %i.ew
-  %5 = fpext float %4 to double
+  %4 = fcmp olt float %i.ew, 0.000000e+00
+  %5 = fpext float %i.ew to double
+  %6 = select i1 %4, double 0.000000e+00, double %5
   %i.ex = load ptr, ptr %i.ep, align 8
   %i.ey = getelementptr inbounds nuw [8 x i8], ptr %i.ex, i64 %indvars.iv
-  store double %5, ptr %i.ey, align 8
+  store double %6, ptr %i.ey, align 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ez = add i32 %.05265.us, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.dw
