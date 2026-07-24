@@ -1,0 +1,17 @@
+diff --git a/llvm/lib/Analysis/LazyValueInfo.cpp b/llvm/lib/Analysis/LazyValueInfo.cpp
+index c8f76ccd4b0e9..6cbc328ad590b 100644
+--- a/llvm/lib/Analysis/LazyValueInfo.cpp
++++ b/llvm/lib/Analysis/LazyValueInfo.cpp
+@@ -1875,6 +1875,12 @@ getValueOnEdge(Value *V, BasicBlock *FromBB, BasicBlock *ToBB,
+ ValueLatticeElement LazyValueInfoImpl::getValueAtUse(const Use &U) {
+   Value *V = U.get();
+   auto *CxtI = cast<Instruction>(U.getUser());
++  if (!isa<PHINode>(CxtI) && CxtI->hasOneUse() &&
++      isSafeToSpeculativelyExecuteWithVariableReplaced(CxtI)) {
++    auto *SingleUser = cast<Instruction>(CxtI->user_back());
++    if (!isa<PHINode>(SingleUser))
++      CxtI = SingleUser;
++  }
+   ValueLatticeElement VL = getValueInBlock(V, CxtI->getParent(), CxtI);
+ 
+   // Check whether the only (possibly transitive) use of the value is in a

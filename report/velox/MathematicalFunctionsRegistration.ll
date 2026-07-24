@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %_ZNK8facebook5velox
   br i1 %.not.i.i.i.us34.i, label %_ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEii.exit, label %_ZNK8facebook5velox4exec12VectorReaderINS0_7VarcharEE12containsNullEi.exit.thread.us18.preheader.i
 
 _ZNK8facebook5velox4exec12VectorReaderINS0_7VarcharEE12containsNullEi.exit.thread.us18.preheader.i: ; preds = %.lr.ph.split.split.us.i
-  %i.by = add nsw i32 %i.bd, -1                   ; 2 uses
+  %i.by = add i32 %i.bd, -1                       ; 2 uses
   %exitcond42.not.not.i58 = icmp eq i32 %i.ay, %i.by
   br i1 %exitcond42.not.not.i58, label %_ZNK8facebook5velox4exec12VectorReaderINS0_7VarcharEE12containsNullEii.exit.thread32, label %.lr.ph60, !llvm.loop !20290
 
@@ -337,7 +337,7 @@ bb.l:                                             ; preds = %_ZNK8facebook5velox
   br i1 %.not.i.i.i.us34.i25, label %_ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEii.exit, label %_ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEi.exit.thread.us18.preheader.i
 
 _ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEi.exit.thread.us18.preheader.i: ; preds = %.lr.ph.split.split.us.i24
-  %i.en = add nsw i32 %i.ds, -1                   ; 2 uses
+  %i.en = add i32 %i.ds, -1                       ; 2 uses
   %exitcond42.not.not.i27.not65 = icmp eq i32 %i.dn, %i.en
   br i1 %exitcond42.not.not.i27.not65, label %_ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEii.exit, label %.lr.ph67, !llvm.loop !20291
 
@@ -740,7 +740,7 @@ bb.cy:                                            ; preds = %_ZNK8facebook5velox
   br i1 %.not.i.i.i.us34.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.noexc.i.thread.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEi.exit.thread.us18.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i
 
 _ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEi.exit.thread.us18.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.split.split.us.i.i.i.i.i.i.i.i.i.i.i.i.i
-  %i.vc = add nsw i32 %i.uh, -1                   ; 2 uses
+  %i.vc = add i32 %i.uh, -1                       ; 2 uses
   %exitcond42.not.not.i.not.i.i.i.i.i.i.i.i.i.i.i.i271 = icmp eq i32 %i.uc, %i.vc
   br i1 %exitcond42.not.not.i.not.i.i.i.i.i.i.i.i.i.i.i.i271, label %.noexc.i.thread39.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph273, !llvm.loop !20291
 
@@ -1143,7 +1143,7 @@ bb.i:                                             ; preds = %_ZNK8facebook5velox
   br i1 %.not.i.i.i.us34.i, label %_ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEii.exit, label %_ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEi.exit.thread.us18.preheader.i
 
 _ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEi.exit.thread.us18.preheader.i: ; preds = %.lr.ph.split.split.us.i
-  %i.bz = add nsw i32 %i.be, -1                   ; 2 uses
+  %i.bz = add i32 %i.be, -1                       ; 2 uses
   %exitcond42.not.not.i.not19 = icmp eq i32 %i.az, %i.bz
   br i1 %exitcond42.not.not.i.not19, label %_ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEii.exit, label %.lr.ph21, !llvm.loop !20291
 
@@ -1546,7 +1546,7 @@ bb.cy:                                            ; preds = %_ZNK8facebook5velox
   br i1 %.not.i.i.i.us34.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.noexc.i.thread.i.i.i.i.i.i.i.i.i.i.i, label %_ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEi.exit.thread.us18.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i
 
 _ZNK8facebook5velox4exec12VectorReaderIdE12containsNullEi.exit.thread.us18.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.split.split.us.i.i.i.i.i.i.i.i.i.i.i.i.i
-  %i.vc = add nsw i32 %i.uh, -1                   ; 2 uses
+  %i.vc = add i32 %i.uh, -1                       ; 2 uses
   %exitcond42.not.not.i.not.i.i.i.i.i.i.i.i.i.i.i.i271 = icmp eq i32 %i.uc, %i.vc
   br i1 %exitcond42.not.not.i.not.i.i.i.i.i.i.i.i.i.i.i.i271, label %.noexc.i.thread39.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph273, !llvm.loop !20291
 

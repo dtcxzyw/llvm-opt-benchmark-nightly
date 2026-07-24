@@ -201,18 +201,17 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.m = load atomic i64, ptr %i.l seq_cst, align 8
   %i.n = trunc i64 %i.m to i32                    ; 2 uses
-  %i.o = add i32 %i.n, -1                         ; 2 uses
+  %i.o = add i32 %i.n, -1                         ; 3 uses
   %.not36 = icmp eq i32 %i.o, 0
   br i1 %.not36, label %._crit_edge34, label %.lr.ph33
 
 .lr.ph33:                                         ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
-  %wide.trip.count = zext i32 %i.o to i64         ; 2 uses
+  %wide.trip.count = zext i32 %i.o to i64
   br label %bb.c
 
 ._crit_edge34:                                    ; preds = %._crit_edge, %bb.b
-  %.pre-phi = phi i64 [ 0, %bb.b ], [ %wide.trip.count, %._crit_edge ]
   %i.r = load atomic i32, ptr %i.g seq_cst, align 8
   %i.s = add nsw i32 %i.r, 15
   %i.t = add i32 %i.n, 3
@@ -221,7 +220,8 @@ bb.b:                                             ; preds = %bb.a
   %i.w = and i32 %i.s, %i.v
   %i.x = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.y = load ptr, ptr %i.x, align 8
-  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %.pre-phi
+  %3 = zext i32 %i.o to i64
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %3
   %i.aa = load ptr, ptr %i.z, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -447,7 +447,7 @@ _ZNSt10_HashtableImmSaImENSt8__detail9_IdentityESt8equal_toImESt4hashImENS1_18_M
   br i1 %i.di, label %bb.d, label %._crit_edge, !llvm.loop !48
 
 bb.w:                                             ; preds = %._crit_edge34, %"_ZZN2v88internal21StringForwardingTable8TearDownEvENK3$_0clEPNS1_6RecordE.exit14"
-  %.023.i35 = phi i32 [ 0, %._crit_edge34 ], [ %i.eo, %"_ZZN2v88internal21StringForwardingTable8TearDownEvENK3$_0clEPNS1_6RecordE.exit14" ] ; 2 uses
+  %.023.i35 = phi i32 [ 0, %._crit_edge34 ], [ %i.eo, %"_ZZN2v88internal21StringForwardingTable8TearDownEvENK3$_0clEPNS1_6RecordE.exit14" ] ; 3 uses
   %i.dj = sext i32 %.023.i35 to i64
   %i.dk = getelementptr inbounds [24 x i8], ptr %i.ab, i64 %i.dj ; 2 uses
   %i.dl = load atomic volatile i64, ptr %i.dk acquire, align 8
@@ -534,9 +534,9 @@ _ZNKSt13unordered_setImSt4hashImESt8equal_toImESaImEE5countERKm.exit.i11: ; pred
   br label %"_ZZN2v88internal21StringForwardingTable8TearDownEvENK3$_0clEPNS1_6RecordE.exit14"
 
 "_ZZN2v88internal21StringForwardingTable8TearDownEvENK3$_0clEPNS1_6RecordE.exit14": ; preds = %bb.w, %_ZNKSt13unordered_setImSt4hashImESt8equal_toImESaImEE5countERKm.exit.i11
-  %i.eo = add i32 %.023.i35, 1                    ; 2 uses
-  %.not = icmp ugt i32 %i.eo, %i.w
-  br i1 %.not, label %"_ZN2v88internal21StringForwardingTable15IterateElementsIZNS1_8TearDownEvE3$_0EEvOT_.exit", label %bb.w, !llvm.loop !49
+  %i.eo = add nuw i32 %.023.i35, 1
+  %exitcond49.not = icmp eq i32 %.023.i35, %i.w
+  br i1 %exitcond49.not, label %"_ZN2v88internal21StringForwardingTable15IterateElementsIZNS1_8TearDownEvE3$_0EEvOT_.exit", label %bb.w, !llvm.loop !49
 
 "_ZN2v88internal21StringForwardingTable15IterateElementsIZNS1_8TearDownEvE3$_0EEvOT_.exit": ; preds = %"_ZZN2v88internal21StringForwardingTable8TearDownEvENK3$_0clEPNS1_6RecordE.exit14", %bb.a
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 8

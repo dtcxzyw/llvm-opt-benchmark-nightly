@@ -203,7 +203,7 @@ bb.gg:                                            ; preds = %bb.fz, %_ZNKSt7__cx
   br i1 %.not.i.i.i.i472, label %._crit_edge1156, label %.lr.ph1155
 
 .lr.ph1155:                                       ; preds = %bb.gg
-  %56 = lshr exact i64 %i.adm, 3
+  %56 = ashr exact i64 %i.adm, 3
   %i.afv = getelementptr inbounds nuw i8, ptr %38, i64 16 ; 4 uses
   %i.afw = getelementptr inbounds nuw i8, ptr %37, i64 8 ; 2 uses
   %i.afx = getelementptr inbounds nuw i8, ptr %37, i64 16 ; 2 uses

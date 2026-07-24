@@ -203,7 +203,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph, label %._crit_edge44.sink.split
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.f = trunc nuw i32 %i.d to i8                 ; 16 uses
+  %i.f = trunc i32 %i.d to i8                     ; 16 uses
   %i.g = zext nneg i32 %i.d to i64
   %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %i.c, i64 0
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer
@@ -606,7 +606,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.t, label %.lr.ph.i, label %._crit_edge44.sink.split.i
 
 .lr.ph.i:                                         ; preds = %bb.i
-  %i.u = trunc nuw i32 %i.s to i8                 ; 16 uses
+  %i.u = trunc i32 %i.s to i8                     ; 16 uses
   %i.v = zext nneg i32 %i.s to i64                ; 2 uses
   %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %i.r, i64 0
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer

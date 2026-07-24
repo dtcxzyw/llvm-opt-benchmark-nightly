@@ -74,7 +74,7 @@ bb.b:                                             ; preds = %bb.p, %bb.a
   %.0158193.i = phi i64 [ 0, %bb.a ], [ %.2160.i.lcssa, %bb.p ]
   %.0161192.i = phi i64 [ 0, %bb.a ], [ %.2163.i.lcssa, %bb.p ]
   %i.u = icmp eq i64 %indvars.iv212.i, 62
-  %i.v = shl nuw nsw i64 1, %indvars.iv212.i      ; 4 uses
+  %i.v = shl nuw i64 1, %indvars.iv212.i          ; 4 uses
   %indvars.iv.next213.i = add nuw nsw i64 %indvars.iv212.i, 1 ; 3 uses
   %i.w = trunc nuw nsw i64 %indvars.iv210.i to i32 ; 8 uses
   %i.x = trunc nuw nsw i64 %indvars.iv212.i to i32 ; 4 uses
@@ -89,7 +89,7 @@ bb.b:                                             ; preds = %bb.p, %bb.a
   %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 12
   store i32 1, ptr %i.ad, align 4, !tbaa !16
   %i.ae = shl nuw i64 1, %indvars.iv210.i
-  %i.af = add nuw i64 %i.ae, %i.v                 ; 6 uses
+  %i.af = add i64 %i.ae, %i.v                     ; 6 uses
   %i.ag = and i64 %i.af, 4095
   %i.ah = icmp eq i64 %i.ag, 0                    ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.z, i64 16
@@ -151,7 +151,7 @@ size_class.exit178.i:                             ; preds = %bb.e, %.thread.i175
   %i.be = getelementptr inbounds nuw i8, ptr %i.ba, i64 12
   store i32 2, ptr %i.be, align 4, !tbaa !16
   %i.bf = shl i64 2, %indvars.iv210.i
-  %i.bg = add nuw i64 %i.bf, %i.v                 ; 6 uses
+  %i.bg = add i64 %i.bf, %i.v                     ; 6 uses
   %i.bh = and i64 %i.bg, 4095
   %i.bi = icmp eq i64 %i.bh, 0                    ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ba, i64 16
@@ -282,7 +282,7 @@ bb.l:                                             ; preds = %size_class.exit178.
   %i.di = getelementptr inbounds nuw i8, ptr %i.de, i64 12
   store i32 4, ptr %i.di, align 4, !tbaa !16
   %i.dj = shl i64 4, %indvars.iv210.i
-  %i.dk = add nuw i64 %i.dj, %i.v                 ; 7 uses
+  %i.dk = add i64 %i.dj, %i.v                     ; 7 uses
   %i.dl = and i64 %i.dk, 4095
   %i.dm = icmp eq i64 %i.dl, 0                    ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.de, i64 16

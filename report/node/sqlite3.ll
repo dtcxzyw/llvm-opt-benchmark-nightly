@@ -205,7 +205,7 @@ bb.af:                                            ; preds = %bb.ae, %sqlite3_mut
 .lr.ph:                                           ; preds = %bb.af
   %i.fs = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !61
-  %5 = zext nneg i32 %.0 to i64
+  %5 = sext i32 %.0 to i64
   %.not.i169 = icmp eq i32 %4, 0
   br label %bb.ag
 
@@ -608,7 +608,7 @@ bb.ac:                                            ; preds = %._crit_edge.i.i
 bb.ad:                                            ; preds = %bb.ac
   %i.il = load i32, ptr %i.gm, align 8, !tbaa !2223 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #59
-  %i.im = add nsw i32 %i.il, 24                   ; 2 uses
+  %i.im = add nsw i32 %i.il, 24                   ; 3 uses
   %i.in = call i32 @sqlite3_initialize(), !inline_history !2320
   %.not.i.i234.i.i = icmp ne i32 %i.in, 0
   %i.io = icmp slt i32 %i.il, -23
@@ -616,7 +616,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %or.cond.i.i.i.i, label %walRewriteChecksums.exit.thread.i.i, label %sqlite3_malloc.exit.i.i.i
 
 sqlite3_malloc.exit.i.i.i:                        ; preds = %bb.ad
-  %i.ip = zext nneg i32 %i.im to i64              ; 3 uses
+  %i.ip = zext nneg i32 %i.im to i64              ; 2 uses
   %i.iq = call fastcc ptr @sqlite3Malloc(i64 noundef %i.ip), !inline_history !2320 ; 16 uses
   %i.ir = icmp eq ptr %i.iq, null
   br i1 %i.ir, label %walRewriteChecksums.exit.thread.i.i, label %bb.ae
@@ -681,6 +681,7 @@ bb.ae:                                            ; preds = %sqlite3_malloc.exit
   br i1 %i.kr, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.ae
+  %5 = sext i32 %i.im to i64
   %i.ks = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.kt = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.ku = getelementptr inbounds nuw i8, ptr %i.iq, i64 24
@@ -700,8 +701,8 @@ bb.af:                                            ; preds = %bb.ai, %.lr.ph.i.i.
   %.03744.i.i.i = phi i32 [ %i.ko, %.lr.ph.i.i.i ], [ %i.nb, %bb.ai ] ; 2 uses
   %i.lf = add i32 %.03744.i.i.i, -1
   %i.lg = zext i32 %i.lf to i64
-  %i.lh = mul nuw nsw i64 %i.lg, %i.ip
-  %i.li = add nuw nsw i64 %i.lh, 32               ; 2 uses
+  %i.lh = mul nsw i64 %i.lg, %5
+  %i.li = add nsw i64 %i.lh, 32                   ; 2 uses
   %i.lj = load ptr, ptr %i.go, align 8, !tbaa !2194 ; 2 uses
   %i.lk = load ptr, ptr %i.lj, align 8, !tbaa !473
   %i.ll = getelementptr inbounds nuw i8, ptr %i.lk, i64 16
@@ -1104,7 +1105,7 @@ bb.ag:                                            ; preds = %.thread, %bb.af
   %i.ec = add nsw i16 %1, -10
   %i.ed = add nsw i32 %i.h, -1
   %i.ee = icmp samesign ugt i32 %.0270, 1
-  %i.ef = zext nneg i32 %i.ed to i64
+  %i.ef = zext i32 %i.ed to i64
   %wide.trip.count = zext i8 %i.g to i64          ; 3 uses
   %i.eg = add nsw i32 %.0270, -1                  ; 3 uses
   %xtraiter = and i32 %i.eg, 1
@@ -1507,7 +1508,7 @@ sqlite3_value_double.exit45:                      ; preds = %bb.g, %bb.i, %bb.j,
 .lr.ph:                                           ; preds = %.preheader
   %i.ad = add nsw i32 %i.ab, -1
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.ad to i64
+  %wide.trip.count = zext i32 %i.ad to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph, %select.unfold

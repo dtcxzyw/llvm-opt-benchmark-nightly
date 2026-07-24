@@ -203,6 +203,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i, label %__zip_find_disk_trailer.exit.thread, label %.lr.ph102.i
 
 .lr.ph102.i:                                      ; preds = %bb.e
+  %6 = icmp sgt i64 %i.f, 1023
   %i.i = ptrtoint ptr %i.h to i64
   %i.j = trunc i64 %i.f to i32
   %i.k = and i64 %i.f, 4294967295                 ; 2 uses
@@ -220,15 +221,14 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %.loopexit81.i, %.lr.ph102.i
   %.066101.i = phi i32 [ 0, %.lr.ph102.i ], [ %.4.i, %.loopexit81.i ]
-  %.070100.i = phi i64 [ %i.f, %.lr.ph102.i ], [ %.171.i, %.loopexit81.i ] ; 5 uses
-  %i.n = icmp samesign ugt i64 %.070100.i, 1023
+  %.070100.i = phi i64 [ %i.f, %.lr.ph102.i ], [ %.171.i, %.loopexit81.i ] ; 4 uses
+  %i.n = icmp samesign ugt i64 %.070100.i, 1023   ; 2 uses
   %i.o = icmp eq i64 %.070100.i, %i.f
   %.171.v.i = select i1 %i.o, i64 -1024, i64 -1002
   %.171.i = add nsw i64 %.171.v.i, %.070100.i     ; 2 uses
   %.272.i = select i1 %i.n, i64 %.171.i, i64 0    ; 3 uses
-  %6 = or i64 %.070100.i, %i.f
-  %.not130.i = icmp ult i64 %6, 1024
-  %.169.i = select i1 %.not130.i, i64 %.070100.i, i64 1024 ; 3 uses
+  %7 = or i1 %6, %i.n
+  %.169.i = select i1 %7, i64 1024, i64 %.070100.i ; 3 uses
   %i.p = call i64 @lseek(i32 noundef %i.d, i64 noundef %.272.i, i32 noundef 0) #11
   %i.q = icmp slt i64 %i.p, 0
   br i1 %i.q, label %bb.g, label %bb.h

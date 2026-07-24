@@ -203,7 +203,7 @@ bb.cz:                                            ; preds = %_ZNK11NCoderMixer9C
   %i.so = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.sp = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.sq = zext nneg i32 %i.p to i64
-  %18 = zext nneg i32 %i.sn to i64
+  %18 = sext i32 %i.sn to i64
   br label %bb.da
 
 bb.da:                                            ; preds = %.lr.ph364, %_ZN7CBufferIhEaSERKS0_.exit
@@ -214,7 +214,7 @@ bb.da:                                            ; preds = %.lr.ph364, %_ZN7CBu
   %i.st = load ptr, ptr %i.ss, align 8, !tbaa !41 ; 2 uses
   %i.su = sub nuw nsw i64 %18, %indvars.iv416
   %i.sv = load ptr, ptr %i.sp, align 8, !tbaa !40
-  %i.sw = getelementptr inbounds nuw [8 x i8], ptr %i.sv, i64 %i.su
+  %i.sw = getelementptr inbounds [8 x i8], ptr %i.sv, i64 %i.su
   %i.sx = load ptr, ptr %i.sw, align 8, !tbaa !41 ; 2 uses
   %i.sy = getelementptr inbounds nuw i8, ptr %i.sx, i64 24 ; 2 uses
   %i.sz = load ptr, ptr %i.sy, align 8, !tbaa !79 ; 2 uses

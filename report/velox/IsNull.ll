@@ -204,7 +204,7 @@ vec.epilog.middle.block328:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph34.preheader.i:                             ; preds = %.preheader.i
   %i.jr = zext nneg i32 %.1.lcssa.i to i64
-  %wide.trip.count186 = zext nneg i32 %i.hc to i64
+  %wide.trip.count186 = zext i32 %i.hc to i64
   br label %.lr.ph34.i
 
 .lr.ph31.i:                                       ; preds = %.lr.ph31.i.preheader, %.lr.ph31.i
@@ -607,7 +607,7 @@ vec.epilog.middle.block260:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph34.preheader.i135:                          ; preds = %.preheader.i133
   %i.ph = zext nneg i32 %.1.lcssa.i134 to i64
-  %wide.trip.count = zext nneg i32 %i.ms to i64
+  %wide.trip.count = zext i32 %i.ms to i64
   br label %.lr.ph34.i136
 
 .lr.ph31.i130:                                    ; preds = %.lr.ph31.i130.preheader, %.lr.ph31.i130

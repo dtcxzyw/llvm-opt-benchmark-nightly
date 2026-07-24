@@ -201,7 +201,8 @@ bb.g:                                             ; preds = %lpLength.exit
 .lr.ph132:                                        ; preds = %._crit_edge
   %.not60 = icmp eq ptr %3, null
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 3 uses
-  %i.aa = add nsw i32 %4, -2
+  %5 = tail call i32 @llvm.smax.i32(i32 %4, i32 2)
+  %i.aa = add nsw i32 %5, -2
   br label %bb.h
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
@@ -602,6 +603,9 @@ declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #17

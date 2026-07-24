@@ -204,6 +204,7 @@ _ZN14arrow_vendored10fast_float9small_mulILt62EEEbRNS0_8stackvecIXT_EEEm.exit: ;
   %.0..0..0. = load i64, ptr %3, align 8
   %i.aq = shl nuw nsw i16 %.496..496., 3
   %.idx.i.i.i.i = zext nneg i16 %i.aq to i64
+  %umax74 = tail call i64 @llvm.umax.i64(i64 %2, i64 2) ; 2 uses
   br i1 %.not.i35, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.critedge.us
@@ -417,7 +418,7 @@ _ZN14arrow_vendored10fast_float8stackvecILt62EE8try_pushEm.exit.thread.i.i.us: ;
   %i.dm = phi i16 [ %i.ar, %.lr.ph.split.us ], [ %i.dl, %_ZN14arrow_vendored10fast_float8stackvecILt62EE8try_pushEm.exit.thread.i.i.us ], [ %i.cp, %._crit_edge.i49.us ], [ %i.cp, %bb.q ], [ %i.cp, %.lr.ph107 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   %i.dn = add nuw i64 %.02769.us, 1               ; 2 uses
-  %exitcond75.not = icmp eq i64 %i.dn, %2
+  %exitcond75.not = icmp eq i64 %i.dn, %umax74
   br i1 %exitcond75.not, label %.critedge34, label %.lr.ph.split.us, !llvm.loop !104
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %.critedge
@@ -431,7 +432,7 @@ _ZN14arrow_vendored10fast_float8stackvecILt62EE8try_pushEm.exit.thread.i.i.us: ;
 .critedge:                                        ; preds = %.lr.ph.split
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   %i.dq = add nuw i64 %.02769, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.dq, %2
+  %exitcond.not = icmp eq i64 %i.dq, %umax74
   br i1 %exitcond.not, label %.critedge34, label %.lr.ph.split, !llvm.loop !104
 
 _ZN14arrow_vendored10fast_float8stackvecILt62EE10try_extendENS0_4spanImEE.exit: ; preds = %.lr.ph.split, %bb.m, %bb.o, %.critedge.i.i.us
