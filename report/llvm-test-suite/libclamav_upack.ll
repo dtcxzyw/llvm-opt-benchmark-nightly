@@ -204,22 +204,18 @@ bb.ab:                                            ; preds = %bb.aa
   %or.cond310 = and i1 %.not296, %i.fi
   %or.cond311.not = icmp ult i32 %i.fe, %1
   %or.cond334 = select i1 %or.cond310, i1 %or.cond311.not, i1 false
-  br i1 %or.cond334, label %10, label %.critedge
+  br i1 %or.cond334, label %bb.ac, label %.critedge
 
-10:                                               ; preds = %bb.ab
-  %11 = zext i32 %.3233 to i64
-  %12 = sub nsw i64 0, %11                        ; 3 uses
-  %13 = getelementptr inbounds i8, ptr %.0216, i64 %12 ; 2 uses
-  %.not299 = icmp ult ptr %13, %0
-  br i1 %.not299, label %.critedge, label %bb.ac
-
-bb.ac:                                            ; preds = %10
-  %i.fj = getelementptr inbounds nuw i8, ptr %13, i64 %i.fg
-  %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 1 ; 2 uses
-  %.not300 = icmp ule ptr %i.fk, %i.n
-  %14 = icmp ugt ptr %i.fk, %0
-  %or.cond312 = and i1 %.not300, %14
-  br i1 %or.cond312, label %bb.ad, label %.critedge
+bb.ac:                                            ; preds = %bb.ab
+  %10 = zext i32 %.3233 to i64
+  %11 = sub nsw i64 0, %10                        ; 3 uses
+  %i.fj = getelementptr inbounds i8, ptr %.0216, i64 %11 ; 2 uses
+  %.not299 = icmp uge ptr %i.fj, %0
+  %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 %i.fg
+  %12 = getelementptr inbounds nuw i8, ptr %i.fk, i64 1
+  %.not300 = icmp ule ptr %12, %i.n
+  %or.cond358 = select i1 %.not299, i1 %.not300, i1 false
+  br i1 %or.cond358, label %bb.ad, label %.critedge
 
 bb.ad:                                            ; preds = %bb.ac
   %.not357 = icmp eq i32 %i.fe, 0
@@ -228,7 +224,7 @@ bb.ad:                                            ; preds = %bb.ac
 .lr.ph:                                           ; preds = %bb.ad, %.lr.ph
   %.1217354 = phi ptr [ %i.fo, %.lr.ph ], [ %.0216, %bb.ad ] ; 3 uses
   %.1225353 = phi i32 [ %i.fn, %.lr.ph ], [ 0, %bb.ad ]
-  %i.fl = getelementptr inbounds i8, ptr %.1217354, i64 %12
+  %i.fl = getelementptr inbounds i8, ptr %.1217354, i64 %11
   %i.fm = load i8, ptr %i.fl, align 1, !tbaa !8
   store i8 %i.fm, ptr %.1217354, align 1, !tbaa !8
   %i.fn = add nuw i32 %.1225353, 1                ; 2 uses
@@ -245,7 +241,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.fr = phi i32 [ %i.fd, %bb.ad ], [ %.pre, %._crit_edge.loopexit ]
   %.1217.lcssa = phi ptr [ %.0216, %bb.ad ], [ %i.fo, %._crit_edge.loopexit ] ; 2 uses
   %i.fs = and i32 %i.fr, -256
-  %i.ft = getelementptr inbounds i8, ptr %.1217.lcssa, i64 %12
+  %i.ft = getelementptr inbounds i8, ptr %.1217.lcssa, i64 %11
   %i.fu = load i8, ptr %i.ft, align 1, !tbaa !8
   %i.fv = zext i8 %i.fu to i32
   %i.fw = or disjoint i32 %i.fs, %i.fv
@@ -385,8 +381,8 @@ bb.ao:                                            ; preds = %bb.an, %bb.x
   %i.hy = icmp ult ptr %.3, %6
   br i1 %i.hy, label %bb.a, label %.critedge, !llvm.loop !37
 
-.critedge:                                        ; preds = %bb.ak, %bb.ai, %bb.ah, %bb.ao, %.thread324, %bb.am, %bb.al, %bb.aa, %bb.ab, %10, %bb.ac, %bb.y, %bb.u, %bb.v, %bb.w, %bb.n, %bb.d, %bb.c, %bb.g, %.split
-  %.13 = phi i32 [ -1, %.split ], [ -1, %bb.u ], [ -1, %bb.ah ], [ -1, %bb.am ], [ -1, %bb.ab ], [ -1, %bb.ak ], [ -1, %10 ], [ -1, %bb.ac ], [ -1, %bb.v ], [ -1, %bb.w ], [ -1, %bb.ai ], [ 1, %bb.ao ], [ -1, %bb.d ], [ -1, %bb.c ], [ -1, %bb.aa ], [ -1, %bb.n ], [ -1, %bb.y ], [ -1, %bb.al ], [ -1, %.thread324 ], [ -1, %bb.g ]
+.critedge:                                        ; preds = %bb.ak, %bb.ai, %bb.ah, %bb.ao, %.thread324, %bb.am, %bb.al, %bb.aa, %bb.ab, %bb.ac, %bb.y, %bb.u, %bb.v, %bb.w, %bb.n, %bb.d, %bb.c, %bb.g, %.split
+  %.13 = phi i32 [ -1, %.split ], [ -1, %.thread324 ], [ -1, %bb.ah ], [ -1, %bb.am ], [ -1, %bb.ab ], [ -1, %bb.ak ], [ -1, %bb.ac ], [ -1, %bb.u ], [ -1, %bb.v ], [ -1, %bb.w ], [ -1, %bb.ai ], [ 1, %bb.ao ], [ -1, %bb.d ], [ -1, %bb.c ], [ -1, %bb.aa ], [ -1, %bb.n ], [ -1, %bb.y ], [ -1, %bb.al ], [ -1, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
