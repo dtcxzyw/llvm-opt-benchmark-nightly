@@ -203,7 +203,7 @@ _ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit.thread.thread1
 
 .thread:                                          ; preds = %bb.e, %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit.thread.thread110
   %i.ai = phi double [ %i.ah, %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit.thread.thread110 ], [ %i.r, %bb.e ] ; 2 uses
-  %i.aj = fcmp ogt double %i.ai, -0.000000e+00
+  %i.aj = fcmp ogt double %i.ai, 0.000000e+00
   %.sroa.speculated5.i17 = select i1 %i.aj, double %i.ai, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit19
 
@@ -222,7 +222,7 @@ bb.h:                                             ; preds = %_ZNK2v88internal8co
 
 .thread93:                                        ; preds = %bb.f, %bb.h
   %i.at = phi double [ %i.as, %bb.h ], [ %i.ab, %bb.f ] ; 2 uses
-  %i.au = fcmp ogt double %i.at, -0.000000e+00
+  %i.au = fcmp ogt double %i.at, 0.000000e+00
   %.sroa.speculated.i15 = select i1 %i.au, double %i.at, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit19
 
@@ -303,7 +303,7 @@ _ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit.thread.thread1
 
 .thread97:                                        ; preds = %bb.i, %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit.thread.thread113
   %i.bt = phi double [ %i.bs, %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit.thread.thread113 ], [ %i.be, %bb.i ] ; 2 uses
-  %i.bu = fcmp olt double %i.bt, -0.000000e+00
+  %i.bu = fcmp olt double %i.bt, 0.000000e+00
   %.sroa.speculated5.i31 = select i1 %i.bu, double %i.bt, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit33
 
@@ -318,7 +318,7 @@ bb.l:                                             ; preds = %_ZNK2v88internal8co
 
 .thread98:                                        ; preds = %bb.j, %bb.l
   %i.ca = phi double [ %i.bz, %bb.l ], [ %i.bl, %bb.j ] ; 2 uses
-  %i.cb = fcmp olt double %i.ca, -0.000000e+00
+  %i.cb = fcmp olt double %i.ca, 0.000000e+00
   %.sroa.speculated.i29 = select i1 %i.cb, double %i.ca, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit33
 
@@ -427,19 +427,17 @@ bb.f:                                             ; preds = %bb.b
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit15
 
 bb.g:                                             ; preds = %bb.c
-  %i.u = fcmp olt double %i.h, -0.000000e+00
-  %.sroa.speculated5.i = select i1 %i.u, double %i.h, double -0.000000e+00 ; 2 uses
-  %4 = fcmp ole double %.sroa.speculated5.i, 0.000000e+00
-  %5 = select i1 %4, i32 3, i32 1
+  %i.u = fcmp olt double %i.h, 0.000000e+00
+  %.sroa.speculated5.i = select i1 %i.u, double %i.h, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit15
 
 bb.h:                                             ; preds = %bb.d
-  %i.v = fcmp olt double %i.p, -0.000000e+00
+  %i.v = fcmp olt double %i.p, 0.000000e+00
   %.sroa.speculated.i11 = select i1 %i.v, double %i.p, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit15
 
 _ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit15: ; preds = %.thread, %bb.f, %bb.g, %bb.d, %bb.h
-  %i.w = phi i32 [ %i.t, %bb.f ], [ %i.j, %.thread ], [ %5, %bb.g ], [ %i.s, %bb.h ], [ %i.s, %bb.d ] ; 2 uses
+  %i.w = phi i32 [ %i.t, %bb.f ], [ %i.j, %.thread ], [ 3, %bb.g ], [ %i.s, %bb.h ], [ %i.s, %bb.d ] ; 2 uses
   %.0.i12 = phi double [ %..i14, %bb.f ], [ %i.h, %.thread ], [ %.sroa.speculated5.i, %bb.g ], [ %.sroa.speculated.i11, %bb.h ], [ %i.p, %bb.d ] ; 3 uses
   %i.x = tail call noundef i1 @llvm.is.fpclass.f64(double %.0.i12, /* (nzero) */ i32 32)
   br i1 %i.x, label %_ZN2v88internal8compiler10turboshaft9FloatTypeILm64EE5RangeEddjPNS0_4ZoneE.exit, label %_ZN2v88internal8compiler10turboshaft9FloatTypeILm64EE17IdentifyMinusZeroERd.exit.i, !prof !31
@@ -506,19 +504,17 @@ bb.n:                                             ; preds = %bb.j
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit30
 
 bb.o:                                             ; preds = %bb.k
-  %i.aw = fcmp ogt double %i.ag, -0.000000e+00
-  %.sroa.speculated5.i22 = select i1 %i.aw, double %i.ag, double -0.000000e+00 ; 2 uses
-  %6 = fcmp oge double %.sroa.speculated5.i22, 0.000000e+00
-  %7 = select i1 %6, i32 3, i32 1
+  %i.aw = fcmp ogt double %i.ag, 0.000000e+00
+  %.sroa.speculated5.i22 = select i1 %i.aw, double %i.ag, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit30
 
 bb.p:                                             ; preds = %bb.l
-  %i.ax = fcmp ogt double %i.ar, -0.000000e+00
+  %i.ax = fcmp ogt double %i.ar, 0.000000e+00
   %.sroa.speculated.i26 = select i1 %i.ax, double %i.ar, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit30
 
 _ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit30: ; preds = %.thread88, %bb.n, %bb.o, %bb.l, %bb.p
-  %i.ay = phi i32 [ %i.av, %bb.n ], [ %i.ai, %.thread88 ], [ %7, %bb.o ], [ %i.au, %bb.p ], [ %i.au, %bb.l ] ; 2 uses
+  %i.ay = phi i32 [ %i.av, %bb.n ], [ %i.ai, %.thread88 ], [ 3, %bb.o ], [ %i.au, %bb.p ], [ %i.au, %bb.l ] ; 2 uses
   %.0.i27 = phi double [ %..i29, %bb.n ], [ %i.ag, %.thread88 ], [ %.sroa.speculated5.i22, %bb.o ], [ %.sroa.speculated.i26, %bb.p ], [ %i.ar, %bb.l ] ; 3 uses
   %i.az = tail call noundef i1 @llvm.is.fpclass.f64(double %.0.i27, /* (nzero) */ i32 32)
   br i1 %i.az, label %_ZN2v88internal8compiler10turboshaft9FloatTypeILm64EE5RangeEddjPNS0_4ZoneE.exit35, label %_ZN2v88internal8compiler10turboshaft9FloatTypeILm64EE17IdentifyMinusZeroERd.exit5.i, !prof !31
@@ -615,7 +611,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not10.i, label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.s = fcmp ogt double %i.r, -0.000000e+00
+  %i.s = fcmp ogt double %i.r, 0.000000e+00
   %.sroa.speculated5.i = select i1 %i.s, double %i.r, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit
 
@@ -633,7 +629,7 @@ bb.h:                                             ; preds = %bb.d
   br i1 %.not10.i, label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ac = fcmp ogt double %i.ab, -0.000000e+00
+  %i.ac = fcmp ogt double %i.ab, 0.000000e+00
   %.sroa.speculated.i = select i1 %i.ac, double %i.ab, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit
 
@@ -662,7 +658,7 @@ bb.l:                                             ; preds = %_ZNK2v88internal8co
   br i1 %.not10.i9, label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ai = fcmp olt double %i.ah, -0.000000e+00
+  %i.ai = fcmp olt double %i.ah, 0.000000e+00
   %.sroa.speculated5.i13 = select i1 %i.ai, double %i.ah, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit
 
@@ -677,7 +673,7 @@ bb.n:                                             ; preds = %_ZNK2v88internal8co
   br i1 %.not10.i9, label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ap = fcmp olt double %i.ao, -0.000000e+00
+  %i.ap = fcmp olt double %i.ao, 0.000000e+00
   %.sroa.speculated.i11 = select i1 %i.ap, double %i.ao, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit
 
@@ -704,7 +700,7 @@ bb.r:                                             ; preds = %_ZNK2v88internal8co
   br i1 %.not10.i, label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit21, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.au = fcmp ogt double %i.at, -0.000000e+00
+  %i.au = fcmp ogt double %i.at, 0.000000e+00
   %.sroa.speculated5.i19 = select i1 %i.au, double %i.at, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit21
 
@@ -722,7 +718,7 @@ bb.t:                                             ; preds = %_ZNK2v88internal8co
   br i1 %.not10.i, label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit21, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.be = fcmp ogt double %i.bd, -0.000000e+00
+  %i.be = fcmp ogt double %i.bd, 0.000000e+00
   %.sroa.speculated.i17 = select i1 %i.be, double %i.bd, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit21
 
@@ -761,7 +757,7 @@ bb.x:                                             ; preds = %_ZN2v88internal8com
   br i1 %.not10.i9, label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit29, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.bj = fcmp olt double %i.bi, -0.000000e+00
+  %i.bj = fcmp olt double %i.bi, 0.000000e+00
   %.sroa.speculated5.i27 = select i1 %i.bj, double %i.bi, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit29
 
@@ -776,7 +772,7 @@ bb.z:                                             ; preds = %_ZN2v88internal8com
   br i1 %.not10.i9, label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit29, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.bq = fcmp olt double %i.bp, -0.000000e+00
+  %i.bq = fcmp olt double %i.bp, 0.000000e+00
   %.sroa.speculated.i25 = select i1 %i.bq, double %i.bp, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit29
 
@@ -897,7 +893,7 @@ _ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit.thread.thread1
 
 .thread:                                          ; preds = %bb.c, %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit.thread.thread123
   %i.w = phi double [ %i.v, %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit.thread.thread123 ], [ %i.h, %bb.c ] ; 2 uses
-  %i.x = fcmp olt double %i.w, -0.000000e+00
+  %i.x = fcmp olt double %i.w, 0.000000e+00
   %.sroa.speculated5.i17 = select i1 %i.x, double %i.w, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit19
 
@@ -912,7 +908,7 @@ bb.f:                                             ; preds = %_ZNK2v88internal8co
 
 .thread106:                                       ; preds = %bb.d, %bb.f
   %i.ad = phi double [ %i.ac, %bb.f ], [ %i.o, %bb.d ] ; 2 uses
-  %i.ae = fcmp olt double %i.ad, -0.000000e+00
+  %i.ae = fcmp olt double %i.ad, 0.000000e+00
   %.sroa.speculated.i15 = select i1 %i.ae, double %i.ad, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3minEv.exit19
 
@@ -1001,7 +997,7 @@ _ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit.thread.thread1
 
 .thread110:                                       ; preds = %bb.i, %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit.thread.thread126
   %i.bi = phi double [ %i.bh, %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit.thread.thread126 ], [ %i.ar, %bb.i ] ; 2 uses
-  %i.bj = fcmp ogt double %i.bi, -0.000000e+00
+  %i.bj = fcmp ogt double %i.bi, 0.000000e+00
   %.sroa.speculated5.i32 = select i1 %i.bj, double %i.bi, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit34
 
@@ -1020,7 +1016,7 @@ bb.l:                                             ; preds = %_ZNK2v88internal8co
 
 .thread111:                                       ; preds = %bb.j, %bb.l
   %i.bt = phi double [ %i.bs, %bb.l ], [ %i.bb, %bb.j ] ; 2 uses
-  %i.bu = fcmp ogt double %i.bt, -0.000000e+00
+  %i.bu = fcmp ogt double %i.bt, 0.000000e+00
   %.sroa.speculated.i30 = select i1 %i.bu, double %i.bt, double -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm64EE3maxEv.exit34
 

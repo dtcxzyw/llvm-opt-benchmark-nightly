@@ -204,7 +204,8 @@ bb.a:
   %i.m = trunc i64 %i.k to i32
   %i.n = icmp ugt i64 %i.k, 4294967295
   %n.vec = and i64 %wide.trip.count.i, 4294967288 ; 4 uses
-  %ind.escape = add nsw i64 %n.vec, -1
+  %ind.escape = add nsw i64 %n.vec, -1            ; 2 uses
+  %6 = trunc i64 %ind.escape to i32
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i
   %xtraiter = and i64 %wide.trip.count.i, 3       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -253,7 +254,6 @@ vector.scevcheck:                                 ; preds = %.preheader32.us.i
 
 vector.body:                                      ; preds = %vector.scevcheck, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.scevcheck ] ; 2 uses
-  %6 = phi i32 [ %7, %vector.body ], [ 3, %vector.scevcheck ] ; 2 uses
   %i.ak = trunc i64 %index to i32                 ; 2 uses
   %i.al = add i32 %i.r, %i.ak
   %i.am = zext i32 %i.al to i64
@@ -268,12 +268,10 @@ vector.body:                                      ; preds = %vector.scevcheck, %
   store <4 x i32> %wide.load, ptr %i.ar, align 4, !tbaa !3
   store <4 x i32> %wide.load373, ptr %i.as, align 4, !tbaa !3
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %7 = add i32 %6, 8
   %i.at = icmp eq i64 %index.next, %n.vec
   br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !53
 
 middle.block:                                     ; preds = %vector.body
-  %8 = add i32 %6, 4
   br i1 %cmp.n, label %..preheader31_crit_edge.us.i, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.preheader32.us.i, %middle.block
@@ -357,7 +355,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 ..preheader31_crit_edge.us.i:                     ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.i.lcssa = phi i64 [ %ind.escape, %middle.block ], [ %indvars.iv.i.lcssa379.unr, %scalar.ph.prol.loopexit ], [ %indvars.iv.next.i.2, %scalar.ph ]
-  %.lcssa371 = phi i32 [ %8, %middle.block ], [ %.lcssa378.unr, %scalar.ph.prol.loopexit ], [ %i.ce, %scalar.ph ]
+  %.lcssa371 = phi i32 [ %6, %middle.block ], [ %.lcssa378.unr, %scalar.ph.prol.loopexit ], [ %i.ce, %scalar.ph ]
   %i.cm = icmp samesign ult i64 %indvars.iv.i.lcssa, 7
   br i1 %i.cm, label %.lr.ph37.us.i, label %._crit_edge.us.i
 
@@ -760,7 +758,8 @@ bb.b:                                             ; preds = %bb.a
   %i.n = trunc i64 %i.l to i32
   %i.o = icmp ugt i64 %i.l, 4294967295
   %n.vec = and i64 %wide.trip.count.i, 4294967288 ; 4 uses
-  %ind.escape = add nsw i64 %n.vec, -1
+  %ind.escape = add nsw i64 %n.vec, -1            ; 2 uses
+  %6 = trunc i64 %ind.escape to i32
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i
   %xtraiter = and i64 %wide.trip.count.i, 3       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -809,7 +808,6 @@ vector.scevcheck:                                 ; preds = %.preheader32.us.i
 
 vector.body:                                      ; preds = %vector.scevcheck, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.scevcheck ] ; 2 uses
-  %6 = phi i32 [ %7, %vector.body ], [ 3, %vector.scevcheck ] ; 2 uses
   %i.al = trunc i64 %index to i32                 ; 2 uses
   %i.am = add i32 %i.s, %i.al
   %i.an = zext i32 %i.am to i64
@@ -824,12 +822,10 @@ vector.body:                                      ; preds = %vector.scevcheck, %
   store <4 x i32> %wide.load, ptr %i.as, align 4, !tbaa !3
   store <4 x i32> %wide.load171, ptr %i.at, align 4, !tbaa !3
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %7 = add i32 %6, 8
   %i.au = icmp eq i64 %index.next, %n.vec
   br i1 %i.au, label %middle.block, label %vector.body, !llvm.loop !170
 
 middle.block:                                     ; preds = %vector.body
-  %8 = add i32 %6, 4
   br i1 %cmp.n, label %..preheader31_crit_edge.us.i, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.preheader32.us.i, %middle.block
@@ -913,7 +909,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 ..preheader31_crit_edge.us.i:                     ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.i.lcssa = phi i64 [ %ind.escape, %middle.block ], [ %indvars.iv.i.lcssa177.unr, %scalar.ph.prol.loopexit ], [ %indvars.iv.next.i.2, %scalar.ph ]
-  %.lcssa = phi i32 [ %8, %middle.block ], [ %.lcssa176.unr, %scalar.ph.prol.loopexit ], [ %i.cf, %scalar.ph ]
+  %.lcssa = phi i32 [ %6, %middle.block ], [ %.lcssa176.unr, %scalar.ph.prol.loopexit ], [ %i.cf, %scalar.ph ]
   %i.cn = icmp samesign ult i64 %indvars.iv.i.lcssa, 7
   br i1 %i.cn, label %.lr.ph37.us.i, label %._crit_edge.us.i
 
