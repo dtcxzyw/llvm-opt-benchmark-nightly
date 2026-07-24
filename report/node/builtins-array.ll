@@ -203,7 +203,7 @@ bb.n:                                             ; preds = %_ZNK2v88internal11M
 .lr.ph674.i.i:                                    ; preds = %bb.n
   %i.dn = getelementptr inbounds nuw i8, ptr %2, i64 648 ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %2, i64 656 ; 5 uses
-  %17 = zext nneg i32 %i.dg to i64
+  %17 = sext i32 %i.dg to i64
   br label %bb.o
 
 ._crit_edge.loopexit.i.i:                         ; preds = %_ZN2v88internal11HandleScopeD2Ev.exit.i.i, %bb.p, %.critedge.thread.i.thread.i
@@ -606,7 +606,7 @@ bb.ak:                                            ; preds = %bb.aj
 .lr.ph691.i.i:                                    ; preds = %bb.ak
   %i.kw = getelementptr inbounds nuw i8, ptr %2, i64 656
   %i.kx = getelementptr inbounds nuw i8, ptr %2, i64 9080
-  %wide.trip.count.i.i = zext nneg i32 %i.dg to i64
+  %wide.trip.count.i.i = zext i32 %i.dg to i64
   br label %bb.al
 
 bb.al:                                            ; preds = %.loopexit.i.i, %.lr.ph691.i.i
@@ -1009,7 +1009,7 @@ _ZN2v88internal12_GLOBAL__N_118ArrayConcatVisitorC2EPNS0_7IsolateENS0_12DirectHa
   %i.td = getelementptr inbounds nuw i8, ptr %2, i64 656
   %i.te = getelementptr inbounds nuw i8, ptr %7, i64 4
   %i.tf = getelementptr inbounds nuw i8, ptr %7, i64 24
-  %wide.trip.count751.i.i = zext nneg i32 %i.dg to i64
+  %wide.trip.count751.i.i = zext i32 %i.dg to i64
   br label %bb.bk
 
 bb.bk:                                            ; preds = %.critedge255.i.i, %.lr.ph696.i.i
@@ -1412,7 +1412,7 @@ _ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit: ; preds = %bb.d, %bb
   br i1 %.not161, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %wide.trip.count = zext nneg i32 %i.z to i64
+  %wide.trip.count = zext i32 %i.z to i64
   br label %.lr.ph
 
 bb.f:                                             ; preds = %_ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit
@@ -1815,7 +1815,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 568 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 344
-  %wide.trip.count = zext nneg i32 %i.j to i64
+  %wide.trip.count = zext i32 %i.j to i64
   br label %bb.d
 
 bb.c:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_113IsSimpleArrayEPNS0_7IsolateENS0_12DirectHandleINS0_7JSArrayEEE.exit

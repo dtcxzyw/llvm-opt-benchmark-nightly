@@ -202,7 +202,7 @@ bb.a:
   br i1 %i.b, label %.preheader105.preheader, label %.preheader
 
 .preheader105.preheader:                          ; preds = %bb.a
-  %4 = zext nneg i32 %0 to i64
+  %4 = sext i32 %0 to i64
   br label %.preheader105
 
 .preheader105:                                    ; preds = %.preheader105.preheader, %._crit_edge109

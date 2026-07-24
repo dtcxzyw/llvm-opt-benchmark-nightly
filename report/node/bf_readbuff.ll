@@ -188,7 +188,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.s, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %3 = zext nneg i32 %i.c to i64
+  %3 = sext i32 %i.c to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.g
@@ -212,7 +212,7 @@ bb.g:                                             ; preds = %.lr.ph
   %i.z = load i32, ptr %i.j, align 8, !tbaa !21   ; 2 uses
   %i.aa = sext i32 %i.z to i64
   %i.ab = icmp slt i64 %indvars.iv.next, %i.aa
-  %4 = icmp samesign ult i64 %indvars.iv.next, %3
+  %4 = icmp slt i64 %indvars.iv.next, %3
   %i.ac = select i1 %i.ab, i1 %4, i1 false
   br i1 %i.ac, label %.lr.ph, label %.loopexit.loopexit, !llvm.loop !27
 

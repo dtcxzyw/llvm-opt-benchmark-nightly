@@ -47,7 +47,7 @@ bb.a:
   store double 0.000000e+00, ptr %i.b, align 8, !tbaa !8
   %i.t = sdiv i32 %3, 10
   %i.u = tail call i32 @llvm.smax.i32(i32 %i.t, i32 1)
-  %i.v = tail call i32 @llvm.umin.i32(i32 %i.u, i32 50)
+  %i.v = tail call i32 @llvm.smin.i32(i32 %i.u, i32 50)
   %i.w = tail call noundef double @_Z7mytimerv()
   %i.x = tail call noundef i32 @_Z6waxpbyidPKddS0_Pd(i32 noundef %i.f, double noundef 1.000000e+00, ptr noundef %2, double noundef 0.000000e+00, ptr noundef %2, ptr noundef nonnull %i.r) ; 0 uses
   %i.y = tail call noundef double @_Z7mytimerv()
@@ -372,10 +372,10 @@ declare void @_ZSt16__throw_bad_castv() local_unnamed_addr #6
 declare void @_ZNKSt5ctypeIcE13_M_widen_initEv(ptr noundef nonnull align 8 dereferenceable(570)) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #7
+declare i32 @llvm.smin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #7
+declare i32 @llvm.smax.i32(i32, i32) #7
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
