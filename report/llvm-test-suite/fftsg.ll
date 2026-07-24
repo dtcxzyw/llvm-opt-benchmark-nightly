@@ -202,14 +202,12 @@ bb.a:
   %i.ek = fadd <2 x double> %i.da, %i.dk
   %i.el = shufflevector <2 x double> %i.ek, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.em = fadd <2 x double> %i.dv, %i.ef          ; 2 uses
-  %i.en = fadd <2 x double> %i.eh, %i.el
-  %2 = shufflevector <2 x double> %i.en, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
-  %i.eo = fadd <2 x double> %i.ej, %i.em
-  %3 = shufflevector <2 x double> %i.eo, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
-  %4 = fadd <4 x double> %2, %3
-  %5 = fsub <4 x double> %2, %3
-  %6 = shufflevector <4 x double> %4, <4 x double> %5, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  store <4 x double> %6, ptr %0, align 8, !tbaa !8
+  %i.en = fadd <2 x double> %i.eh, %i.el          ; 2 uses
+  %i.eo = fadd <2 x double> %i.ej, %i.em          ; 2 uses
+  %2 = fadd <2 x double> %i.en, %i.eo
+  %3 = fsub <2 x double> %i.en, %i.eo
+  %4 = shufflevector <2 x double> %2, <2 x double> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %4, ptr %0, align 8, !tbaa !8
   %i.ep = fsub <2 x double> %i.eh, %i.el
   %i.eq = shufflevector <2 x double> %i.ep, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
   %i.er = fsub <2 x double> %i.ej, %i.em
