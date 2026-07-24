@@ -204,29 +204,29 @@ resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 4 uses
   %index = load i2, ptr %index.addr, align 16
   %i.a = icmp eq i2 %index, 0
-  br i1 %i.a, label %_ZN5folly8FunctionIFviEEC2EOS2_.exit.i, label %AfterCoroSuspend58
+  br i1 %i.a, label %_ZN5folly8FunctionIFviEEC2EOS2_.exit.i, label %AfterCoroSuspend58, !prof !657
 
 _ZN5folly8FunctionIFviEEC2EOS2_.exit.i:           ; preds = %resume.entry
   %.reload.addr83 = getelementptr inbounds nuw i8, ptr %0, i64 328
   %.reload.addr80 = getelementptr inbounds nuw i8, ptr %0, i64 320
-  %.reload81 = load ptr, ptr %.reload.addr80, align 16, !tbaa !657
+  %.reload81 = load ptr, ptr %.reload.addr80, align 16, !tbaa !658
   %.reload.addr77 = getelementptr inbounds nuw i8, ptr %0, i64 348
-  %.reload78 = load i32, ptr %.reload.addr77, align 4, !tbaa !657
+  %.reload78 = load i32, ptr %.reload.addr77, align 4, !tbaa !658
   %.reload.addr = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %.reload = load ptr, ptr %.reload.addr, align 8, !tbaa !657
-  store ptr null, ptr %.reload.addr92, align 16, !tbaa !659
+  %.reload = load ptr, ptr %.reload.addr, align 8, !tbaa !658
+  store ptr null, ptr %.reload.addr92, align 16, !tbaa !660
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 3 uses
-  store ptr %.reload.addr92, ptr %.reload.addr90, align 16, !tbaa !661
+  store ptr %.reload.addr92, ptr %.reload.addr90, align 16, !tbaa !662
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 248
-  store ptr %.reload.addr93, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !662
+  store ptr %.reload.addr93, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !663
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 3 uses
   store i32 %.reload78, ptr %.reload.addr88, align 16, !tbaa !7
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   store ptr %.reload81, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !415
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
-  %i.f = load <2 x i64>, ptr %.reload.addr83, align 8, !tbaa !657
+  %i.f = load <2 x i64>, ptr %.reload.addr83, align 8, !tbaa !658
   store <2 x i64> %i.f, ptr %.sroa.6.0..sroa_idx.i, align 16, !tbaa !98
   store ptr @"_ZN5folly6detail8function5call_IZNS_13SimpleAsyncIO6pwriteEiPKvmlNS_8FunctionIFviEEEE3$_0Lb1ELb0EvJPNS_11AsyncBaseOpEEEET2_DpT3_RNS1_4DataE", ptr %i.d, align 16, !tbaa !167
   store ptr @_ZN5folly6detail8function20DispatchSmallTrivial5exec_ILm32EEEmNS1_2OpEPNS1_4DataES6_, ptr %i.e, align 8, !tbaa !169
@@ -246,7 +246,7 @@ bb.a:                                             ; preds = %_ZN5folly8FunctionI
   br i1 %.not.i.i6.i, label %_ZN5folly8FunctionIFviEED2Ev.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = tail call noundef i64 %i.i(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr89, ptr noundef null) #16, !inline_history !663 ; 0 uses
+  %i.j = tail call noundef i64 %i.i(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr89, ptr noundef null) #16, !inline_history !664 ; 0 uses
   br label %_ZN5folly8FunctionIFviEED2Ev.exit.i
 
 _ZN5folly8FunctionIFviEED2Ev.exit.i:              ; preds = %bb.b, %bb.a
@@ -255,7 +255,7 @@ _ZN5folly8FunctionIFviEED2Ev.exit.i:              ; preds = %bb.b, %bb.a
   br i1 %.not.i.i7.i, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5folly8FunctionIFviEED2Ev.exit.i
-  %i.l = tail call noundef i64 %i.k(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr88, ptr noundef null) #16, !inline_history !664 ; 0 uses
+  %i.l = tail call noundef i64 %i.k(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr88, ptr noundef null) #16, !inline_history !665 ; 0 uses
   br label %bb.g
 
 bb.d:                                             ; preds = %_ZN5folly8FunctionIFviEEC2EOS2_.exit.i
@@ -266,7 +266,7 @@ bb.d:                                             ; preds = %_ZN5folly8FunctionI
   br i1 %.not.i.i8.i, label %_ZN5folly8FunctionIFviEED2Ev.exit9.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = tail call noundef i64 %i.n(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr89, ptr noundef null) #16, !inline_history !663 ; 0 uses
+  %i.o = tail call noundef i64 %i.n(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr89, ptr noundef null) #16, !inline_history !664 ; 0 uses
   br label %_ZN5folly8FunctionIFviEED2Ev.exit9.i
 
 _ZN5folly8FunctionIFviEED2Ev.exit9.i:             ; preds = %bb.e, %bb.d
@@ -275,7 +275,7 @@ _ZN5folly8FunctionIFviEED2Ev.exit9.i:             ; preds = %bb.e, %bb.d
   br i1 %.not.i.i10.i, label %.body, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5folly8FunctionIFviEED2Ev.exit9.i
-  %i.q = tail call noundef i64 %i.p(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr88, ptr noundef null) #16, !inline_history !664 ; 0 uses
+  %i.q = tail call noundef i64 %i.p(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr88, ptr noundef null) #16, !inline_history !665 ; 0 uses
   br label %.body
 
 bb.g:                                             ; preds = %bb.c, %_ZN5folly8FunctionIFviEED2Ev.exit.i
@@ -289,16 +289,16 @@ bb.h:                                             ; preds = %bb.g
 
 .from..i.i.i.i:                                   ; preds = %bb.h, %bb.g
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 73 ; 2 uses
-  %i.u = load i8, ptr %i.t, align 1, !tbaa !584, !noalias !665
+  %i.u = load i8, ptr %i.t, align 1, !tbaa !584, !noalias !666
   %i.v = icmp eq i8 %i.u, 2
   %i.w = zext i1 %i.v to i8
-  store i8 %i.w, ptr %i.t, align 1, !tbaa !584, !noalias !665
+  store i8 %i.w, ptr %i.t, align 1, !tbaa !584, !noalias !666
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.y = load i64, ptr %i.x, align 8, !tbaa !66, !noalias !668
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !671)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !674)
+  %i.y = load i64, ptr %i.x, align 8, !tbaa !66, !noalias !669
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !672)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !675)
   %i.z = invoke noundef ptr @folly_coro_async_malloc(i64 noundef 104)
-          to label %.from.68 unwind label %_ZN5folly8FunctionIFviEED2Ev.exit26.from._ZN5folly17ExecutorKeepAliveINS_8ExecutorEED2Ev.exit4.i, !noalias !671 ; 8 uses
+          to label %.from.68 unwind label %_ZN5folly8FunctionIFviEED2Ev.exit26.from._ZN5folly17ExecutorKeepAliveINS_8ExecutorEED2Ev.exit4.i, !noalias !672 ; 8 uses
 
 _ZN5folly8FunctionIFviEED2Ev.exit26.from._ZN5folly17ExecutorKeepAliveINS_8ExecutorEED2Ev.exit4.i: ; preds = %.from..i.i.i.i
   %i.aa = landingpad { ptr, i32 }
@@ -307,22 +307,22 @@ _ZN5folly8FunctionIFviEED2Ev.exit26.from._ZN5folly17ExecutorKeepAliveINS_8Execut
 
 .from.68:                                         ; preds = %.from..i.i.i.i
   %i.ab = or i64 %i.y, 2
-  store ptr @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.resume, ptr %i.z, align 8, !noalias !677
+  store ptr @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.resume, ptr %i.z, align 8, !noalias !678
   %destroy.addr.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 8
-  store ptr @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.destroy, ptr %destroy.addr.i.i.i.i, align 8, !noalias !677
+  store ptr @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.destroy, ptr %destroy.addr.i.i.i.i, align 8, !noalias !678
   %.reload.addr14.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 24
   %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 32
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.ad, i8 0, i64 56, i1 false), !noalias !677
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.ad, i8 0, i64 56, i1 false), !noalias !678
   %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 88
-  store ptr @_ZZN5folly4coro28ExtendedCoroutinePromiseCrtpINS0_6detail12ViaCoroutineILb0EE12promise_typeEEC1EvENUlPNS0_23ExtendedCoroutineHandle11PromiseBaseERNS_17exception_wrapperEE_8__invokeES9_SB_, ptr %i.ae, align 8, !tbaa !550, !noalias !677
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5folly4coro6detail12ViaCoroutineILb0EE12promise_typeE, i64 16), ptr %.reload.addr14.i.i.i.i, align 8, !tbaa !16, !noalias !677
-  store ptr %i.z, ptr %.reload.addr88, align 16, !tbaa !415, !alias.scope !678
+  store ptr @_ZZN5folly4coro28ExtendedCoroutinePromiseCrtpINS0_6detail12ViaCoroutineILb0EE12promise_typeEEC1EvENUlPNS0_23ExtendedCoroutineHandle11PromiseBaseERNS_17exception_wrapperEE_8__invokeES9_SB_, ptr %i.ae, align 8, !tbaa !550, !noalias !678
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5folly4coro6detail12ViaCoroutineILb0EE12promise_typeE, i64 16), ptr %.reload.addr14.i.i.i.i, align 8, !tbaa !16, !noalias !678
+  store ptr %i.z, ptr %.reload.addr88, align 16, !tbaa !415, !alias.scope !679
   %index.addr15.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 96
-  store i1 false, ptr %index.addr15.i.i.i.i, align 8, !noalias !677
-  store i64 %i.ab, ptr %i.ac, align 8, !tbaa !66, !noalias !677
-  store ptr %.reload.addr92, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !661, !alias.scope !681
-  store ptr null, ptr %.sroa.6.0..sroa_idx.i, align 16, !tbaa !686, !alias.scope !681
+  store i1 false, ptr %index.addr15.i.i.i.i, align 8, !noalias !678
+  store i64 %i.ab, ptr %i.ac, align 8, !tbaa !66, !noalias !678
+  store ptr %.reload.addr92, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !662, !alias.scope !682
+  store ptr null, ptr %.sroa.6.0..sroa_idx.i, align 16, !tbaa !687, !alias.scope !682
   %i.af = load atomic ptr, ptr %.reload.addr92 acquire, align 16
   %i.ag = icmp eq ptr %i.af, %.reload.addr92
   br i1 %i.ag, label %AfterCoroSuspend58, label %AfterCoroSave56
@@ -351,7 +351,7 @@ bb.i:                                             ; preds = %AfterCoroSuspend58
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.am = load ptr, ptr %i.al, align 8
   invoke void %i.am(ptr nonnull %i.ak)
-          to label %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS0_5BatonEE12await_resumeEv.exit unwind label %bb.j, !inline_history !687
+          to label %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS0_5BatonEE12await_resumeEv.exit unwind label %bb.j, !inline_history !688
 
 bb.j:                                             ; preds = %bb.i
   %i.an = landingpad { ptr, i32 }
@@ -369,7 +369,7 @@ bb.k:                                             ; preds = %_ZN5folly4coro17Via
   %i.ap = getelementptr inbounds nuw i8, ptr %.pr, i64 8
   %i.aq = load ptr, ptr %i.ap, align 8
   invoke void %i.aq(ptr nonnull %.pr)
-          to label %_ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEED2Ev.exit32 unwind label %bb.l, !inline_history !687
+          to label %_ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEED2Ev.exit32 unwind label %bb.l, !inline_history !688
 
 bb.l:                                             ; preds = %bb.k
   %i.ar = landingpad { ptr, i32 }
@@ -438,7 +438,7 @@ resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 352
   %index = load i2, ptr %index.addr, align 16
   %i.a = icmp eq i2 %index, 1
-  br i1 %i.a, label %.critedge21.critedge, label %AfterCoroSuspend
+  br i1 %i.a, label %.critedge21.critedge, label %AfterCoroSuspend, !prof !689
 
 .critedge21.critedge:                             ; preds = %resume.entry
   %.reload.addr88 = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -450,7 +450,7 @@ bb.a:                                             ; preds = %.critedge21.critedg
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.d = load ptr, ptr %i.c, align 8
   invoke void %i.d(ptr nonnull %i.b)
-          to label %_ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEED2Ev.exit37 unwind label %bb.b, !inline_history !687
+          to label %_ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEED2Ev.exit37 unwind label %bb.b, !inline_history !688
 
 bb.b:                                             ; preds = %bb.a
   %i.e = landingpad { ptr, i32 }
@@ -481,7 +481,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN5folly6detail7TryBaseIiED2Ev.exit.i:           ; preds = %bb.d, %bb.c, %AfterCoroSuspend
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.l = load ptr, ptr %i.k, align 16, !tbaa !688 ; 5 uses
+  %i.l = load ptr, ptr %i.k, align 16, !tbaa !690 ; 5 uses
   %.not.i.i.i1.i = icmp eq ptr %i.l, null
   br i1 %.not.i.i.i1.i, label %_ZN5folly17CancellationTokenD2Ev.exit.i.i, label %bb.e
 
@@ -504,7 +504,7 @@ bb.h:                                             ; preds = %bb.f
   %i.q = load ptr, ptr %i.l, align 8, !tbaa !16
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.s = load ptr, ptr %i.r, align 8
-  tail call void %i.s(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.l) #16, !call_target !690, !inline_history !696
+  tail call void %i.s(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.l) #16, !call_target !692, !inline_history !698
   br label %_ZN5folly17CancellationTokenD2Ev.exit.i.i
 
 _ZN5folly17CancellationTokenD2Ev.exit.i.i:        ; preds = %bb.h, %bb.g, %bb.e, %_ZN5folly6detail7TryBaseIiED2Ev.exit.i
@@ -525,7 +525,7 @@ bb.j:                                             ; preds = %bb.i
   %i.y = load ptr, ptr %i.w, align 8, !tbaa !16
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 48
   %i.aa = load ptr, ptr %i.z, align 8
-  tail call void %i.aa(ptr noundef nonnull align 8 dereferenceable(8) %i.w) #16, !call_target !99, !inline_history !697
+  tail call void %i.aa(ptr noundef nonnull align 8 dereferenceable(8) %i.w) #16, !call_target !99, !inline_history !699
   br label %_ZN5folly4coro6detail19TaskPromiseCrtpBaseINS1_11TaskPromiseIiEEiED2Ev.exit
 
 _ZN5folly4coro6detail19TaskPromiseCrtpBaseINS1_11TaskPromiseIiEEiED2Ev.exit: ; preds = %_ZN5folly17CancellationTokenD2Ev.exit.i.i, %bb.i, %bb.j
@@ -555,29 +555,29 @@ resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 4 uses
   %index = load i2, ptr %index.addr, align 16
   %i.a = icmp eq i2 %index, 0
-  br i1 %i.a, label %_ZN5folly8FunctionIFviEEC2EOS2_.exit.i, label %AfterCoroSuspend58
+  br i1 %i.a, label %_ZN5folly8FunctionIFviEEC2EOS2_.exit.i, label %AfterCoroSuspend58, !prof !657
 
 _ZN5folly8FunctionIFviEEC2EOS2_.exit.i:           ; preds = %resume.entry
   %.reload.addr83 = getelementptr inbounds nuw i8, ptr %0, i64 328
   %.reload.addr80 = getelementptr inbounds nuw i8, ptr %0, i64 320
-  %.reload81 = load ptr, ptr %.reload.addr80, align 16, !tbaa !698
+  %.reload81 = load ptr, ptr %.reload.addr80, align 16, !tbaa !700
   %.reload.addr77 = getelementptr inbounds nuw i8, ptr %0, i64 348
-  %.reload78 = load i32, ptr %.reload.addr77, align 4, !tbaa !698
+  %.reload78 = load i32, ptr %.reload.addr77, align 4, !tbaa !700
   %.reload.addr = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %.reload = load ptr, ptr %.reload.addr, align 8, !tbaa !698
-  store ptr null, ptr %.reload.addr92, align 16, !tbaa !659
+  %.reload = load ptr, ptr %.reload.addr, align 8, !tbaa !700
+  store ptr null, ptr %.reload.addr92, align 16, !tbaa !660
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 3 uses
-  store ptr %.reload.addr92, ptr %.reload.addr90, align 16, !tbaa !661
+  store ptr %.reload.addr92, ptr %.reload.addr90, align 16, !tbaa !662
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 248
-  store ptr %.reload.addr93, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !662
+  store ptr %.reload.addr93, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !663
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 3 uses
   store i32 %.reload78, ptr %.reload.addr88, align 16, !tbaa !7
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   store ptr %.reload81, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !415
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
-  %i.f = load <2 x i64>, ptr %.reload.addr83, align 8, !tbaa !698
+  %i.f = load <2 x i64>, ptr %.reload.addr83, align 8, !tbaa !700
   store <2 x i64> %i.f, ptr %.sroa.6.0..sroa_idx.i, align 16, !tbaa !98
   store ptr @"_ZN5folly6detail8function5call_IZNS_13SimpleAsyncIO5preadEiPvmlNS_8FunctionIFviEEEE3$_0Lb1ELb0EvJPNS_11AsyncBaseOpEEEET2_DpT3_RNS1_4DataE", ptr %i.d, align 16, !tbaa !167
   store ptr @_ZN5folly6detail8function20DispatchSmallTrivial5exec_ILm32EEEmNS1_2OpEPNS1_4DataES6_, ptr %i.e, align 8, !tbaa !169
@@ -597,7 +597,7 @@ bb.a:                                             ; preds = %_ZN5folly8FunctionI
   br i1 %.not.i.i6.i, label %_ZN5folly8FunctionIFviEED2Ev.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = tail call noundef i64 %i.i(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr89, ptr noundef null) #16, !inline_history !700 ; 0 uses
+  %i.j = tail call noundef i64 %i.i(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr89, ptr noundef null) #16, !inline_history !702 ; 0 uses
   br label %_ZN5folly8FunctionIFviEED2Ev.exit.i
 
 _ZN5folly8FunctionIFviEED2Ev.exit.i:              ; preds = %bb.b, %bb.a
@@ -606,7 +606,7 @@ _ZN5folly8FunctionIFviEED2Ev.exit.i:              ; preds = %bb.b, %bb.a
   br i1 %.not.i.i7.i, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5folly8FunctionIFviEED2Ev.exit.i
-  %i.l = tail call noundef i64 %i.k(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr88, ptr noundef null) #16, !inline_history !701 ; 0 uses
+  %i.l = tail call noundef i64 %i.k(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr88, ptr noundef null) #16, !inline_history !703 ; 0 uses
   br label %bb.g
 
 bb.d:                                             ; preds = %_ZN5folly8FunctionIFviEEC2EOS2_.exit.i
@@ -617,7 +617,7 @@ bb.d:                                             ; preds = %_ZN5folly8FunctionI
   br i1 %.not.i.i8.i, label %_ZN5folly8FunctionIFviEED2Ev.exit9.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = tail call noundef i64 %i.n(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr89, ptr noundef null) #16, !inline_history !700 ; 0 uses
+  %i.o = tail call noundef i64 %i.n(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr89, ptr noundef null) #16, !inline_history !702 ; 0 uses
   br label %_ZN5folly8FunctionIFviEED2Ev.exit9.i
 
 _ZN5folly8FunctionIFviEED2Ev.exit9.i:             ; preds = %bb.e, %bb.d
@@ -626,7 +626,7 @@ _ZN5folly8FunctionIFviEED2Ev.exit9.i:             ; preds = %bb.e, %bb.d
   br i1 %.not.i.i10.i, label %.body, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5folly8FunctionIFviEED2Ev.exit9.i
-  %i.q = tail call noundef i64 %i.p(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr88, ptr noundef null) #16, !inline_history !701 ; 0 uses
+  %i.q = tail call noundef i64 %i.p(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %.reload.addr88, ptr noundef null) #16, !inline_history !703 ; 0 uses
   br label %.body
 
 bb.g:                                             ; preds = %bb.c, %_ZN5folly8FunctionIFviEED2Ev.exit.i
@@ -640,16 +640,16 @@ bb.h:                                             ; preds = %bb.g
 
 .from..i.i.i.i:                                   ; preds = %bb.h, %bb.g
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 73 ; 2 uses
-  %i.u = load i8, ptr %i.t, align 1, !tbaa !584, !noalias !702
+  %i.u = load i8, ptr %i.t, align 1, !tbaa !584, !noalias !704
   %i.v = icmp eq i8 %i.u, 2
   %i.w = zext i1 %i.v to i8
-  store i8 %i.w, ptr %i.t, align 1, !tbaa !584, !noalias !702
+  store i8 %i.w, ptr %i.t, align 1, !tbaa !584, !noalias !704
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.y = load i64, ptr %i.x, align 8, !tbaa !66, !noalias !705
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !708)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !711)
+  %i.y = load i64, ptr %i.x, align 8, !tbaa !66, !noalias !707
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !710)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !713)
   %i.z = invoke noundef ptr @folly_coro_async_malloc(i64 noundef 104)
-          to label %.from.68 unwind label %_ZN5folly8FunctionIFviEED2Ev.exit26.from._ZN5folly17ExecutorKeepAliveINS_8ExecutorEED2Ev.exit4.i, !noalias !708 ; 8 uses
+          to label %.from.68 unwind label %_ZN5folly8FunctionIFviEED2Ev.exit26.from._ZN5folly17ExecutorKeepAliveINS_8ExecutorEED2Ev.exit4.i, !noalias !710 ; 8 uses
 
 _ZN5folly8FunctionIFviEED2Ev.exit26.from._ZN5folly17ExecutorKeepAliveINS_8ExecutorEED2Ev.exit4.i: ; preds = %.from..i.i.i.i
   %i.aa = landingpad { ptr, i32 }
@@ -658,22 +658,22 @@ _ZN5folly8FunctionIFviEED2Ev.exit26.from._ZN5folly17ExecutorKeepAliveINS_8Execut
 
 .from.68:                                         ; preds = %.from..i.i.i.i
   %i.ab = or i64 %i.y, 2
-  store ptr @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.resume, ptr %i.z, align 8, !noalias !714
+  store ptr @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.resume, ptr %i.z, align 8, !noalias !716
   %destroy.addr.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 8
-  store ptr @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.destroy, ptr %destroy.addr.i.i.i.i, align 8, !noalias !714
+  store ptr @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.destroy, ptr %destroy.addr.i.i.i.i, align 8, !noalias !716
   %.reload.addr14.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 24
   %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 32
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.ad, i8 0, i64 56, i1 false), !noalias !714
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.ad, i8 0, i64 56, i1 false), !noalias !716
   %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 88
-  store ptr @_ZZN5folly4coro28ExtendedCoroutinePromiseCrtpINS0_6detail12ViaCoroutineILb0EE12promise_typeEEC1EvENUlPNS0_23ExtendedCoroutineHandle11PromiseBaseERNS_17exception_wrapperEE_8__invokeES9_SB_, ptr %i.ae, align 8, !tbaa !550, !noalias !714
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5folly4coro6detail12ViaCoroutineILb0EE12promise_typeE, i64 16), ptr %.reload.addr14.i.i.i.i, align 8, !tbaa !16, !noalias !714
-  store ptr %i.z, ptr %.reload.addr88, align 16, !tbaa !415, !alias.scope !715
+  store ptr @_ZZN5folly4coro28ExtendedCoroutinePromiseCrtpINS0_6detail12ViaCoroutineILb0EE12promise_typeEEC1EvENUlPNS0_23ExtendedCoroutineHandle11PromiseBaseERNS_17exception_wrapperEE_8__invokeES9_SB_, ptr %i.ae, align 8, !tbaa !550, !noalias !716
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5folly4coro6detail12ViaCoroutineILb0EE12promise_typeE, i64 16), ptr %.reload.addr14.i.i.i.i, align 8, !tbaa !16, !noalias !716
+  store ptr %i.z, ptr %.reload.addr88, align 16, !tbaa !415, !alias.scope !717
   %index.addr15.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 96
-  store i1 false, ptr %index.addr15.i.i.i.i, align 8, !noalias !714
-  store i64 %i.ab, ptr %i.ac, align 8, !tbaa !66, !noalias !714
-  store ptr %.reload.addr92, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !661, !alias.scope !718
-  store ptr null, ptr %.sroa.6.0..sroa_idx.i, align 16, !tbaa !686, !alias.scope !718
+  store i1 false, ptr %index.addr15.i.i.i.i, align 8, !noalias !716
+  store i64 %i.ab, ptr %i.ac, align 8, !tbaa !66, !noalias !716
+  store ptr %.reload.addr92, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !662, !alias.scope !720
+  store ptr null, ptr %.sroa.6.0..sroa_idx.i, align 16, !tbaa !687, !alias.scope !720
   %i.af = load atomic ptr, ptr %.reload.addr92 acquire, align 16
   %i.ag = icmp eq ptr %i.af, %.reload.addr92
   br i1 %i.ag, label %AfterCoroSuspend58, label %AfterCoroSave56
@@ -702,7 +702,7 @@ bb.i:                                             ; preds = %AfterCoroSuspend58
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.am = load ptr, ptr %i.al, align 8
   invoke void %i.am(ptr nonnull %i.ak)
-          to label %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS0_5BatonEE12await_resumeEv.exit unwind label %bb.j, !inline_history !687
+          to label %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS0_5BatonEE12await_resumeEv.exit unwind label %bb.j, !inline_history !688
 
 bb.j:                                             ; preds = %bb.i
   %i.an = landingpad { ptr, i32 }
@@ -720,7 +720,7 @@ bb.k:                                             ; preds = %_ZN5folly4coro17Via
   %i.ap = getelementptr inbounds nuw i8, ptr %.pr, i64 8
   %i.aq = load ptr, ptr %i.ap, align 8
   invoke void %i.aq(ptr nonnull %.pr)
-          to label %_ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEED2Ev.exit32 unwind label %bb.l, !inline_history !687
+          to label %_ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEED2Ev.exit32 unwind label %bb.l, !inline_history !688
 
 bb.l:                                             ; preds = %bb.k
   %i.ar = landingpad { ptr, i32 }
@@ -789,7 +789,7 @@ resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 352
   %index = load i2, ptr %index.addr, align 16
   %i.a = icmp eq i2 %index, 1
-  br i1 %i.a, label %.critedge21.critedge, label %AfterCoroSuspend
+  br i1 %i.a, label %.critedge21.critedge, label %AfterCoroSuspend, !prof !689
 
 .critedge21.critedge:                             ; preds = %resume.entry
   %.reload.addr88 = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -801,7 +801,7 @@ bb.a:                                             ; preds = %.critedge21.critedg
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.d = load ptr, ptr %i.c, align 8
   invoke void %i.d(ptr nonnull %i.b)
-          to label %_ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEED2Ev.exit37 unwind label %bb.b, !inline_history !687
+          to label %_ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEED2Ev.exit37 unwind label %bb.b, !inline_history !688
 
 bb.b:                                             ; preds = %bb.a
   %i.e = landingpad { ptr, i32 }
@@ -832,7 +832,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN5folly6detail7TryBaseIiED2Ev.exit.i:           ; preds = %bb.d, %bb.c, %AfterCoroSuspend
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.l = load ptr, ptr %i.k, align 16, !tbaa !688 ; 5 uses
+  %i.l = load ptr, ptr %i.k, align 16, !tbaa !690 ; 5 uses
   %.not.i.i.i1.i = icmp eq ptr %i.l, null
   br i1 %.not.i.i.i1.i, label %_ZN5folly17CancellationTokenD2Ev.exit.i.i, label %bb.e
 
@@ -855,7 +855,7 @@ bb.h:                                             ; preds = %bb.f
   %i.q = load ptr, ptr %i.l, align 8, !tbaa !16
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.s = load ptr, ptr %i.r, align 8
-  tail call void %i.s(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.l) #16, !call_target !690, !inline_history !696
+  tail call void %i.s(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.l) #16, !call_target !692, !inline_history !698
   br label %_ZN5folly17CancellationTokenD2Ev.exit.i.i
 
 _ZN5folly17CancellationTokenD2Ev.exit.i.i:        ; preds = %bb.h, %bb.g, %bb.e, %_ZN5folly6detail7TryBaseIiED2Ev.exit.i
@@ -876,7 +876,7 @@ bb.j:                                             ; preds = %bb.i
   %i.y = load ptr, ptr %i.w, align 8, !tbaa !16
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 48
   %i.aa = load ptr, ptr %i.z, align 8
-  tail call void %i.aa(ptr noundef nonnull align 8 dereferenceable(8) %i.w) #16, !call_target !99, !inline_history !697
+  tail call void %i.aa(ptr noundef nonnull align 8 dereferenceable(8) %i.w) #16, !call_target !99, !inline_history !699
   br label %_ZN5folly4coro6detail19TaskPromiseCrtpBaseINS1_11TaskPromiseIiEEiED2Ev.exit
 
 _ZN5folly4coro6detail19TaskPromiseCrtpBaseINS1_11TaskPromiseIiEEiED2Ev.exit: ; preds = %_ZN5folly17CancellationTokenD2Ev.exit.i.i, %bb.i, %bb.j
@@ -1279,70 +1279,72 @@ begin_hunk_1_@_ZN5folly13SimpleAsyncIO8co_preadEiPvml.destroy:resume.entry
 !654 = !{!655, !570, i64 0}
 !655 = !{!"_ZTSZN5folly13SimpleAsyncIO8co_preadEiPvmlE3$_0", !570, i64 0, !610, i64 8}
 !656 = !{!655, !610, i64 8}
-!657 = !{!658, !658, i64 0}
-!658 = !{!"_ZN5folly13SimpleAsyncIO9co_pwriteEiPKvml.Frame Slot", !10, i64 0}
-!659 = !{!660, !13, i64 0}
-!660 = !{!"_ZTSSt13__atomic_baseIPvE", !13, i64 0}
-!661 = !{!570, !570, i64 0}
-!662 = !{!610, !610, i64 0}
-!663 = distinct !{ptr @_ZN5folly13SimpleAsyncIO6pwriteEiPKvmlNS_8FunctionIFviEEE, null, null}
+!657 = !{!"branch_weights", i32 -2147483648, i32 223695893}
+!658 = !{!659, !659, i64 0}
+!659 = !{!"_ZN5folly13SimpleAsyncIO9co_pwriteEiPKvml.Frame Slot", !10, i64 0}
+!660 = !{!661, !13, i64 0}
+!661 = !{!"_ZTSSt13__atomic_baseIPvE", !13, i64 0}
+!662 = !{!570, !570, i64 0}
+!663 = !{!610, !610, i64 0}
 !664 = distinct !{ptr @_ZN5folly13SimpleAsyncIO6pwriteEiPKvmlNS_8FunctionIFviEEE, null, null}
-!665 = !{!666}
-!666 = distinct !{!666, !667, !"_ZN5folly4coro6detail11BasePromiseINS_4UnitEE15await_transformIRNS0_5BatonETnNSt9enable_ifIXntsr5folly3extE22must_use_immediately_vIT_EEiE4typeELi0EEEDaOS9_: argument 0"}
-!667 = distinct !{!667, !"_ZN5folly4coro6detail11BasePromiseINS_4UnitEE15await_transformIRNS0_5BatonETnNSt9enable_ifIXntsr5folly3extE22must_use_immediately_vIT_EEiE4typeELi0EEEDaOS9_"}
-!668 = !{!669, !666}
-!669 = distinct !{!669, !670, !"_ZNK5folly17ExecutorKeepAliveINS_8ExecutorEE9get_aliasEv: argument 0"}
-!670 = distinct !{!670, !"_ZNK5folly17ExecutorKeepAliveINS_8ExecutorEE9get_aliasEv"}
-!671 = !{!672}
-!672 = distinct !{!672, !673, !"_ZNO5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEEawEv: argument 0"}
-!673 = distinct !{!673, !"_ZNO5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEEawEv"}
-!674 = !{!675}
-!675 = distinct !{!675, !676, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE6createENS_17ExecutorKeepAliveINS_8ExecutorEEE: argument 0"}
-!676 = distinct !{!676, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE6createENS_17ExecutorKeepAliveINS_8ExecutorEEE"}
-!677 = !{!675, !672}
-!678 = !{!679, !675, !672}
-!679 = distinct !{!679, !680, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE12promise_type17get_return_objectEv: argument 0"}
-!680 = distinct !{!680, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE12promise_type17get_return_objectEv"}
-!681 = !{!682, !684, !672}
-!682 = distinct !{!682, !683, !"_ZNK5folly4coro5BatonawEv: argument 0"}
-!683 = distinct !{!683, !"_ZNK5folly4coro5BatonawEv"}
-!684 = distinct !{!684, !685, !"_ZNK5folly4coro14get_awaiter_fnclIRNS0_5BatonETnNSt9enable_ifIXsr6detail29_has_member_operator_co_awaitIT_EE5valueEiE4typeELi0EEEDcOS6_: argument 0"}
-!685 = distinct !{!685, !"_ZNK5folly4coro14get_awaiter_fnclIRNS0_5BatonETnNSt9enable_ifIXsr6detail29_has_member_operator_co_awaitIT_EE5valueEiE4typeELi0EEEDcOS6_"}
-!686 = !{!571, !13, i64 0}
-!687 = distinct !{null}
-!688 = !{!689, !689, i64 0}
-!689 = !{!"p1 _ZTSN5folly6detail17CancellationStateE", !13, i64 0}
-!690 = !DISubprogram(name: "~CancellationState", linkageName: "_ZN5folly6detail17CancellationStateD4Ev", scope: !692, file: !691, line: 43, type: !693, scopeLine: 43, containingType: !692, virtualIndex: 0, flags: DIFlagProtected | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!691 = !DIFile(filename: "_deps/folly-src/folly/CancellationToken-inl.h", directory: "/opt-bench/work/velox/velox/build", checksumkind: CSK_MD5, checksum: "0fe5390f30e4d65ce495e93960df2e48")
-!692 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "CancellationState", scope: !180, file: !691, line: 33, size: 256, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSN5folly6detail17CancellationStateE")
-!693 = !DISubroutineType(types: !694)
-!694 = !{null, !695}
-!695 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !692, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!696 = distinct !{null, null, null, null, null, null}
-!697 = distinct !{null, null, null, null}
-!698 = !{!699, !699, i64 0}
-!699 = !{!"_ZN5folly13SimpleAsyncIO8co_preadEiPvml.Frame Slot", !10, i64 0}
-!700 = distinct !{ptr @_ZN5folly13SimpleAsyncIO5preadEiPvmlNS_8FunctionIFviEEE, null, null}
-!701 = distinct !{ptr @_ZN5folly13SimpleAsyncIO5preadEiPvmlNS_8FunctionIFviEEE, null, null}
-!702 = !{!703}
-!703 = distinct !{!703, !704, !"_ZN5folly4coro6detail11BasePromiseINS_4UnitEE15await_transformIRNS0_5BatonETnNSt9enable_ifIXntsr5folly3extE22must_use_immediately_vIT_EEiE4typeELi0EEEDaOS9_: argument 0"}
-!704 = distinct !{!704, !"_ZN5folly4coro6detail11BasePromiseINS_4UnitEE15await_transformIRNS0_5BatonETnNSt9enable_ifIXntsr5folly3extE22must_use_immediately_vIT_EEiE4typeELi0EEEDaOS9_"}
-!705 = !{!706, !703}
-!706 = distinct !{!706, !707, !"_ZNK5folly17ExecutorKeepAliveINS_8ExecutorEE9get_aliasEv: argument 0"}
-!707 = distinct !{!707, !"_ZNK5folly17ExecutorKeepAliveINS_8ExecutorEE9get_aliasEv"}
-!708 = !{!709}
-!709 = distinct !{!709, !710, !"_ZNO5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEEawEv: argument 0"}
-!710 = distinct !{!710, !"_ZNO5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEEawEv"}
-!711 = !{!712}
-!712 = distinct !{!712, !713, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE6createENS_17ExecutorKeepAliveINS_8ExecutorEEE: argument 0"}
-!713 = distinct !{!713, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE6createENS_17ExecutorKeepAliveINS_8ExecutorEEE"}
-!714 = !{!712, !709}
-!715 = !{!716, !712, !709}
-!716 = distinct !{!716, !717, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE12promise_type17get_return_objectEv: argument 0"}
-!717 = distinct !{!717, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE12promise_type17get_return_objectEv"}
-!718 = !{!719, !721, !709}
-!719 = distinct !{!719, !720, !"_ZNK5folly4coro5BatonawEv: argument 0"}
-!720 = distinct !{!720, !"_ZNK5folly4coro5BatonawEv"}
-!721 = distinct !{!721, !722, !"_ZNK5folly4coro14get_awaiter_fnclIRNS0_5BatonETnNSt9enable_ifIXsr6detail29_has_member_operator_co_awaitIT_EE5valueEiE4typeELi0EEEDcOS6_: argument 0"}
-!722 = distinct !{!722, !"_ZNK5folly4coro14get_awaiter_fnclIRNS0_5BatonETnNSt9enable_ifIXsr6detail29_has_member_operator_co_awaitIT_EE5valueEiE4typeELi0EEEDcOS6_"}
+!665 = distinct !{ptr @_ZN5folly13SimpleAsyncIO6pwriteEiPKvmlNS_8FunctionIFviEEE, null, null}
+!666 = !{!667}
+!667 = distinct !{!667, !668, !"_ZN5folly4coro6detail11BasePromiseINS_4UnitEE15await_transformIRNS0_5BatonETnNSt9enable_ifIXntsr5folly3extE22must_use_immediately_vIT_EEiE4typeELi0EEEDaOS9_: argument 0"}
+!668 = distinct !{!668, !"_ZN5folly4coro6detail11BasePromiseINS_4UnitEE15await_transformIRNS0_5BatonETnNSt9enable_ifIXntsr5folly3extE22must_use_immediately_vIT_EEiE4typeELi0EEEDaOS9_"}
+!669 = !{!670, !667}
+!670 = distinct !{!670, !671, !"_ZNK5folly17ExecutorKeepAliveINS_8ExecutorEE9get_aliasEv: argument 0"}
+!671 = distinct !{!671, !"_ZNK5folly17ExecutorKeepAliveINS_8ExecutorEE9get_aliasEv"}
+!672 = !{!673}
+!673 = distinct !{!673, !674, !"_ZNO5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEEawEv: argument 0"}
+!674 = distinct !{!674, !"_ZNO5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEEawEv"}
+!675 = !{!676}
+!676 = distinct !{!676, !677, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE6createENS_17ExecutorKeepAliveINS_8ExecutorEEE: argument 0"}
+!677 = distinct !{!677, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE6createENS_17ExecutorKeepAliveINS_8ExecutorEEE"}
+!678 = !{!676, !673}
+!679 = !{!680, !676, !673}
+!680 = distinct !{!680, !681, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE12promise_type17get_return_objectEv: argument 0"}
+!681 = distinct !{!681, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE12promise_type17get_return_objectEv"}
+!682 = !{!683, !685, !673}
+!683 = distinct !{!683, !684, !"_ZNK5folly4coro5BatonawEv: argument 0"}
+!684 = distinct !{!684, !"_ZNK5folly4coro5BatonawEv"}
+!685 = distinct !{!685, !686, !"_ZNK5folly4coro14get_awaiter_fnclIRNS0_5BatonETnNSt9enable_ifIXsr6detail29_has_member_operator_co_awaitIT_EE5valueEiE4typeELi0EEEDcOS6_: argument 0"}
+!686 = distinct !{!686, !"_ZNK5folly4coro14get_awaiter_fnclIRNS0_5BatonETnNSt9enable_ifIXsr6detail29_has_member_operator_co_awaitIT_EE5valueEiE4typeELi0EEEDcOS6_"}
+!687 = !{!571, !13, i64 0}
+!688 = distinct !{null}
+!689 = !{!"branch_weights", i32 223695893, i32 -1580787451}
+!690 = !{!691, !691, i64 0}
+!691 = !{!"p1 _ZTSN5folly6detail17CancellationStateE", !13, i64 0}
+!692 = !DISubprogram(name: "~CancellationState", linkageName: "_ZN5folly6detail17CancellationStateD4Ev", scope: !694, file: !693, line: 43, type: !695, scopeLine: 43, containingType: !694, virtualIndex: 0, flags: DIFlagProtected | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!693 = !DIFile(filename: "_deps/folly-src/folly/CancellationToken-inl.h", directory: "/opt-bench/work/velox/velox/build", checksumkind: CSK_MD5, checksum: "0fe5390f30e4d65ce495e93960df2e48")
+!694 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "CancellationState", scope: !180, file: !693, line: 33, size: 256, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSN5folly6detail17CancellationStateE")
+!695 = !DISubroutineType(types: !696)
+!696 = !{null, !697}
+!697 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !694, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!698 = distinct !{null, null, null, null, null, null}
+!699 = distinct !{null, null, null, null}
+!700 = !{!701, !701, i64 0}
+!701 = !{!"_ZN5folly13SimpleAsyncIO8co_preadEiPvml.Frame Slot", !10, i64 0}
+!702 = distinct !{ptr @_ZN5folly13SimpleAsyncIO5preadEiPvmlNS_8FunctionIFviEEE, null, null}
+!703 = distinct !{ptr @_ZN5folly13SimpleAsyncIO5preadEiPvmlNS_8FunctionIFviEEE, null, null}
+!704 = !{!705}
+!705 = distinct !{!705, !706, !"_ZN5folly4coro6detail11BasePromiseINS_4UnitEE15await_transformIRNS0_5BatonETnNSt9enable_ifIXntsr5folly3extE22must_use_immediately_vIT_EEiE4typeELi0EEEDaOS9_: argument 0"}
+!706 = distinct !{!706, !"_ZN5folly4coro6detail11BasePromiseINS_4UnitEE15await_transformIRNS0_5BatonETnNSt9enable_ifIXntsr5folly3extE22must_use_immediately_vIT_EEiE4typeELi0EEEDaOS9_"}
+!707 = !{!708, !705}
+!708 = distinct !{!708, !709, !"_ZNK5folly17ExecutorKeepAliveINS_8ExecutorEE9get_aliasEv: argument 0"}
+!709 = distinct !{!709, !"_ZNK5folly17ExecutorKeepAliveINS_8ExecutorEE9get_aliasEv"}
+!710 = !{!711}
+!711 = distinct !{!711, !712, !"_ZNO5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEEawEv: argument 0"}
+!712 = distinct !{!712, !"_ZNO5folly4coro29StackAwareViaIfAsyncAwaitableIRNS0_5BatonEEawEv"}
+!713 = !{!714}
+!714 = distinct !{!714, !715, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE6createENS_17ExecutorKeepAliveINS_8ExecutorEEE: argument 0"}
+!715 = distinct !{!715, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE6createENS_17ExecutorKeepAliveINS_8ExecutorEEE"}
+!716 = !{!714, !711}
+!717 = !{!718, !714, !711}
+!718 = distinct !{!718, !719, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE12promise_type17get_return_objectEv: argument 0"}
+!719 = distinct !{!719, !"_ZN5folly4coro6detail12ViaCoroutineILb0EE12promise_type17get_return_objectEv"}
+!720 = !{!721, !723, !711}
+!721 = distinct !{!721, !722, !"_ZNK5folly4coro5BatonawEv: argument 0"}
+!722 = distinct !{!722, !"_ZNK5folly4coro5BatonawEv"}
+!723 = distinct !{!723, !724, !"_ZNK5folly4coro14get_awaiter_fnclIRNS0_5BatonETnNSt9enable_ifIXsr6detail29_has_member_operator_co_awaitIT_EE5valueEiE4typeELi0EEEDcOS6_: argument 0"}
+!724 = distinct !{!724, !"_ZNK5folly4coro14get_awaiter_fnclIRNS0_5BatonETnNSt9enable_ifIXsr6detail29_has_member_operator_co_awaitIT_EE5valueEiE4typeELi0EEEDcOS6_"}
 end_hunk_1
