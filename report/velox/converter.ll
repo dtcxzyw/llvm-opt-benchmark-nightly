@@ -204,11 +204,15 @@ _ZN5arrow6StatusD2Ev.exit26.us.peel.i:            ; preds = %.lr.ph.split.us.i
 _ZN5arrow6StatusD2Ev.exit30.us.peel.i:            ; preds = %_ZN5arrow6StatusD2Ev.exit26.us.peel.i, %.lr.ph.split.us.i
   %.0 = phi i64 [ %i.cp, %_ZN5arrow6StatusD2Ev.exit26.us.peel.i ], [ 0, %.lr.ph.split.us.i ] ; 2 uses
   %.not.us.peel.i.not = icmp eq i64 %i.br, 1
-  br i1 %.not.us.peel.i.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i
+  br i1 %.not.us.peel.i.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i.preheader
 
-.peel.next.i:                                     ; preds = %_ZN5arrow6StatusD2Ev.exit30.us.peel.i, %_ZN5arrow6StatusD2Ev.exit30.us.i
-  %.1 = phi i64 [ %.2, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ %.0, %_ZN5arrow6StatusD2Ev.exit30.us.peel.i ] ; 2 uses
-  %.0183.us.i = phi i64 [ %i.dk, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ 1, %_ZN5arrow6StatusD2Ev.exit30.us.peel.i ] ; 3 uses
+.peel.next.i.preheader:                           ; preds = %_ZN5arrow6StatusD2Ev.exit30.us.peel.i
+  %smax = call i64 @llvm.smax.i64(i64 %i.br, i64 2)
+  br label %.peel.next.i
+
+.peel.next.i:                                     ; preds = %.peel.next.i.preheader, %_ZN5arrow6StatusD2Ev.exit30.us.i
+  %.1 = phi i64 [ %.2, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ %.0, %.peel.next.i.preheader ] ; 2 uses
+  %.0183.us.i = phi i64 [ %i.dk, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ 1, %.peel.next.i.preheader ] ; 3 uses
   %i.cq = add nsw i64 %.0183.us.i, %i.by          ; 2 uses
   %i.cr = lshr i64 %i.cq, 3
   %i.cs = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.cr
@@ -237,7 +241,7 @@ _ZN5arrow6StatusD2Ev.exit26.us.i:                 ; preds = %.peel.next.i
 _ZN5arrow6StatusD2Ev.exit30.us.i:                 ; preds = %_ZN5arrow6StatusD2Ev.exit26.us.i, %.peel.next.i
   %.2 = phi i64 [ %i.dj, %_ZN5arrow6StatusD2Ev.exit26.us.i ], [ %.1, %.peel.next.i ] ; 2 uses
   %i.dk = add nuw nsw i64 %.0183.us.i, 1          ; 2 uses
-  %exitcond.not = icmp eq i64 %i.dk, %i.br
+  %exitcond.not = icmp eq i64 %i.dk, %smax
   br i1 %exitcond.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i, !llvm.loop !1939
 
 .lr.ph.splitthread-pre-split.i:                   ; preds = %_ZN5arrow6StatusD2Ev.exit30.i
@@ -640,11 +644,15 @@ _ZN5arrow6StatusD2Ev.exit26.us.peel.i:            ; preds = %.lr.ph.split.us.i
 _ZN5arrow6StatusD2Ev.exit30.us.peel.i:            ; preds = %_ZN5arrow6StatusD2Ev.exit26.us.peel.i, %.lr.ph.split.us.i
   %.0 = phi i64 [ %i.cp, %_ZN5arrow6StatusD2Ev.exit26.us.peel.i ], [ 0, %.lr.ph.split.us.i ] ; 2 uses
   %.not.us.peel.i.not = icmp eq i64 %i.br, 1
-  br i1 %.not.us.peel.i.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i
+  br i1 %.not.us.peel.i.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i.preheader
 
-.peel.next.i:                                     ; preds = %_ZN5arrow6StatusD2Ev.exit30.us.peel.i, %_ZN5arrow6StatusD2Ev.exit30.us.i
-  %.1 = phi i64 [ %.2, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ %.0, %_ZN5arrow6StatusD2Ev.exit30.us.peel.i ] ; 2 uses
-  %.0183.us.i = phi i64 [ %i.dk, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ 1, %_ZN5arrow6StatusD2Ev.exit30.us.peel.i ] ; 3 uses
+.peel.next.i.preheader:                           ; preds = %_ZN5arrow6StatusD2Ev.exit30.us.peel.i
+  %smax = call i64 @llvm.smax.i64(i64 %i.br, i64 2)
+  br label %.peel.next.i
+
+.peel.next.i:                                     ; preds = %.peel.next.i.preheader, %_ZN5arrow6StatusD2Ev.exit30.us.i
+  %.1 = phi i64 [ %.2, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ %.0, %.peel.next.i.preheader ] ; 2 uses
+  %.0183.us.i = phi i64 [ %i.dk, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ 1, %.peel.next.i.preheader ] ; 3 uses
   %i.cq = add nsw i64 %.0183.us.i, %i.by          ; 2 uses
   %i.cr = lshr i64 %i.cq, 3
   %i.cs = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.cr
@@ -673,7 +681,7 @@ _ZN5arrow6StatusD2Ev.exit26.us.i:                 ; preds = %.peel.next.i
 _ZN5arrow6StatusD2Ev.exit30.us.i:                 ; preds = %_ZN5arrow6StatusD2Ev.exit26.us.i, %.peel.next.i
   %.2 = phi i64 [ %i.dj, %_ZN5arrow6StatusD2Ev.exit26.us.i ], [ %.1, %.peel.next.i ] ; 2 uses
   %i.dk = add nuw nsw i64 %.0183.us.i, 1          ; 2 uses
-  %exitcond.not = icmp eq i64 %i.dk, %i.br
+  %exitcond.not = icmp eq i64 %i.dk, %smax
   br i1 %exitcond.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i, !llvm.loop !2109
 
 .lr.ph.splitthread-pre-split.i:                   ; preds = %_ZN5arrow6StatusD2Ev.exit30.i
@@ -1076,11 +1084,15 @@ _ZN5arrow6StatusD2Ev.exit26.us.peel.i:            ; preds = %.lr.ph.split.us.i
 _ZN5arrow6StatusD2Ev.exit30.us.peel.i:            ; preds = %_ZN5arrow6StatusD2Ev.exit26.us.peel.i, %.lr.ph.split.us.i
   %.0 = phi i64 [ %i.cp, %_ZN5arrow6StatusD2Ev.exit26.us.peel.i ], [ 0, %.lr.ph.split.us.i ] ; 2 uses
   %.not.us.peel.i.not = icmp eq i64 %i.br, 1
-  br i1 %.not.us.peel.i.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i
+  br i1 %.not.us.peel.i.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i.preheader
 
-.peel.next.i:                                     ; preds = %_ZN5arrow6StatusD2Ev.exit30.us.peel.i, %_ZN5arrow6StatusD2Ev.exit30.us.i
-  %.1 = phi i64 [ %.2, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ %.0, %_ZN5arrow6StatusD2Ev.exit30.us.peel.i ] ; 2 uses
-  %.0183.us.i = phi i64 [ %i.dk, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ 1, %_ZN5arrow6StatusD2Ev.exit30.us.peel.i ] ; 3 uses
+.peel.next.i.preheader:                           ; preds = %_ZN5arrow6StatusD2Ev.exit30.us.peel.i
+  %smax = call i64 @llvm.smax.i64(i64 %i.br, i64 2)
+  br label %.peel.next.i
+
+.peel.next.i:                                     ; preds = %.peel.next.i.preheader, %_ZN5arrow6StatusD2Ev.exit30.us.i
+  %.1 = phi i64 [ %.2, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ %.0, %.peel.next.i.preheader ] ; 2 uses
+  %.0183.us.i = phi i64 [ %i.dk, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ 1, %.peel.next.i.preheader ] ; 3 uses
   %i.cq = add nsw i64 %.0183.us.i, %i.by          ; 2 uses
   %i.cr = lshr i64 %i.cq, 3
   %i.cs = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.cr
@@ -1109,7 +1121,7 @@ _ZN5arrow6StatusD2Ev.exit26.us.i:                 ; preds = %.peel.next.i
 _ZN5arrow6StatusD2Ev.exit30.us.i:                 ; preds = %_ZN5arrow6StatusD2Ev.exit26.us.i, %.peel.next.i
   %.2 = phi i64 [ %i.dj, %_ZN5arrow6StatusD2Ev.exit26.us.i ], [ %.1, %.peel.next.i ] ; 2 uses
   %i.dk = add nuw nsw i64 %.0183.us.i, 1          ; 2 uses
-  %exitcond.not = icmp eq i64 %i.dk, %i.br
+  %exitcond.not = icmp eq i64 %i.dk, %smax
   br i1 %exitcond.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i, !llvm.loop !2159
 
 .lr.ph.splitthread-pre-split.i:                   ; preds = %_ZN5arrow6StatusD2Ev.exit30.i
@@ -1512,11 +1524,15 @@ _ZN5arrow6StatusD2Ev.exit26.us.peel.i:            ; preds = %.lr.ph.split.us.i
 _ZN5arrow6StatusD2Ev.exit30.us.peel.i:            ; preds = %_ZN5arrow6StatusD2Ev.exit26.us.peel.i, %.lr.ph.split.us.i
   %.0 = phi i64 [ %i.cp, %_ZN5arrow6StatusD2Ev.exit26.us.peel.i ], [ 0, %.lr.ph.split.us.i ] ; 2 uses
   %.not.us.peel.i.not = icmp eq i64 %i.br, 1
-  br i1 %.not.us.peel.i.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i
+  br i1 %.not.us.peel.i.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i.preheader
 
-.peel.next.i:                                     ; preds = %_ZN5arrow6StatusD2Ev.exit30.us.peel.i, %_ZN5arrow6StatusD2Ev.exit30.us.i
-  %.1 = phi i64 [ %.2, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ %.0, %_ZN5arrow6StatusD2Ev.exit30.us.peel.i ] ; 2 uses
-  %.0183.us.i = phi i64 [ %i.dk, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ 1, %_ZN5arrow6StatusD2Ev.exit30.us.peel.i ] ; 3 uses
+.peel.next.i.preheader:                           ; preds = %_ZN5arrow6StatusD2Ev.exit30.us.peel.i
+  %smax = call i64 @llvm.smax.i64(i64 %i.br, i64 2)
+  br label %.peel.next.i
+
+.peel.next.i:                                     ; preds = %.peel.next.i.preheader, %_ZN5arrow6StatusD2Ev.exit30.us.i
+  %.1 = phi i64 [ %.2, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ %.0, %.peel.next.i.preheader ] ; 2 uses
+  %.0183.us.i = phi i64 [ %i.dk, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ 1, %.peel.next.i.preheader ] ; 3 uses
   %i.cq = add nsw i64 %.0183.us.i, %i.by          ; 2 uses
   %i.cr = lshr i64 %i.cq, 3
   %i.cs = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.cr
@@ -1545,7 +1561,7 @@ _ZN5arrow6StatusD2Ev.exit26.us.i:                 ; preds = %.peel.next.i
 _ZN5arrow6StatusD2Ev.exit30.us.i:                 ; preds = %_ZN5arrow6StatusD2Ev.exit26.us.i, %.peel.next.i
   %.2 = phi i64 [ %i.dj, %_ZN5arrow6StatusD2Ev.exit26.us.i ], [ %.1, %.peel.next.i ] ; 2 uses
   %i.dk = add nuw nsw i64 %.0183.us.i, 1          ; 2 uses
-  %exitcond.not = icmp eq i64 %i.dk, %i.br
+  %exitcond.not = icmp eq i64 %i.dk, %smax
   br i1 %exitcond.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i, !llvm.loop !2324
 
 .lr.ph.splitthread-pre-split.i:                   ; preds = %_ZN5arrow6StatusD2Ev.exit30.i
@@ -1948,11 +1964,15 @@ _ZN5arrow6StatusD2Ev.exit26.us.peel.i:            ; preds = %.lr.ph.split.us.i
 _ZN5arrow6StatusD2Ev.exit30.us.peel.i:            ; preds = %_ZN5arrow6StatusD2Ev.exit26.us.peel.i, %.lr.ph.split.us.i
   %.0 = phi i64 [ %i.bw, %_ZN5arrow6StatusD2Ev.exit26.us.peel.i ], [ 0, %.lr.ph.split.us.i ] ; 2 uses
   %.not.us.peel.i.not = icmp eq i64 %i.ay, 1
-  br i1 %.not.us.peel.i.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i
+  br i1 %.not.us.peel.i.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i.preheader
 
-.peel.next.i:                                     ; preds = %_ZN5arrow6StatusD2Ev.exit30.us.peel.i, %_ZN5arrow6StatusD2Ev.exit30.us.i
-  %.1 = phi i64 [ %.2, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ %.0, %_ZN5arrow6StatusD2Ev.exit30.us.peel.i ] ; 2 uses
-  %.0183.us.i = phi i64 [ %i.cr, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ 1, %_ZN5arrow6StatusD2Ev.exit30.us.peel.i ] ; 3 uses
+.peel.next.i.preheader:                           ; preds = %_ZN5arrow6StatusD2Ev.exit30.us.peel.i
+  %smax = call i64 @llvm.smax.i64(i64 %i.ay, i64 2)
+  br label %.peel.next.i
+
+.peel.next.i:                                     ; preds = %.peel.next.i.preheader, %_ZN5arrow6StatusD2Ev.exit30.us.i
+  %.1 = phi i64 [ %.2, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ %.0, %.peel.next.i.preheader ] ; 2 uses
+  %.0183.us.i = phi i64 [ %i.cr, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ 1, %.peel.next.i.preheader ] ; 3 uses
   %i.bx = add nsw i64 %.0183.us.i, %i.bf          ; 2 uses
   %i.by = lshr i64 %i.bx, 3
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.by
@@ -1981,7 +2001,7 @@ _ZN5arrow6StatusD2Ev.exit26.us.i:                 ; preds = %.peel.next.i
 _ZN5arrow6StatusD2Ev.exit30.us.i:                 ; preds = %_ZN5arrow6StatusD2Ev.exit26.us.i, %.peel.next.i
   %.2 = phi i64 [ %i.cq, %_ZN5arrow6StatusD2Ev.exit26.us.i ], [ %.1, %.peel.next.i ] ; 2 uses
   %i.cr = add nuw nsw i64 %.0183.us.i, 1          ; 2 uses
-  %exitcond.not = icmp eq i64 %i.cr, %i.ay
+  %exitcond.not = icmp eq i64 %i.cr, %smax
   br i1 %exitcond.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i, !llvm.loop !2374
 
 .lr.ph.splitthread-pre-split.i:                   ; preds = %_ZN5arrow6StatusD2Ev.exit30.i
@@ -2384,11 +2404,15 @@ _ZN5arrow6StatusD2Ev.exit26.us.peel.i:            ; preds = %.lr.ph.split.us.i
 _ZN5arrow6StatusD2Ev.exit30.us.peel.i:            ; preds = %_ZN5arrow6StatusD2Ev.exit26.us.peel.i, %.lr.ph.split.us.i
   %.0 = phi i64 [ %i.bw, %_ZN5arrow6StatusD2Ev.exit26.us.peel.i ], [ 0, %.lr.ph.split.us.i ] ; 2 uses
   %.not.us.peel.i.not = icmp eq i64 %i.ay, 1
-  br i1 %.not.us.peel.i.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i
+  br i1 %.not.us.peel.i.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i.preheader
 
-.peel.next.i:                                     ; preds = %_ZN5arrow6StatusD2Ev.exit30.us.peel.i, %_ZN5arrow6StatusD2Ev.exit30.us.i
-  %.1 = phi i64 [ %.2, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ %.0, %_ZN5arrow6StatusD2Ev.exit30.us.peel.i ] ; 2 uses
-  %.0183.us.i = phi i64 [ %i.cr, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ 1, %_ZN5arrow6StatusD2Ev.exit30.us.peel.i ] ; 3 uses
+.peel.next.i.preheader:                           ; preds = %_ZN5arrow6StatusD2Ev.exit30.us.peel.i
+  %smax = call i64 @llvm.smax.i64(i64 %i.ay, i64 2)
+  br label %.peel.next.i
+
+.peel.next.i:                                     ; preds = %.peel.next.i.preheader, %_ZN5arrow6StatusD2Ev.exit30.us.i
+  %.1 = phi i64 [ %.2, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ %.0, %.peel.next.i.preheader ] ; 2 uses
+  %.0183.us.i = phi i64 [ %i.cr, %_ZN5arrow6StatusD2Ev.exit30.us.i ], [ 1, %.peel.next.i.preheader ] ; 3 uses
   %i.bx = add nsw i64 %.0183.us.i, %i.bf          ; 2 uses
   %i.by = lshr i64 %i.bx, 3
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.by
@@ -2417,7 +2441,7 @@ _ZN5arrow6StatusD2Ev.exit26.us.i:                 ; preds = %.peel.next.i
 _ZN5arrow6StatusD2Ev.exit30.us.i:                 ; preds = %_ZN5arrow6StatusD2Ev.exit26.us.i, %.peel.next.i
   %.2 = phi i64 [ %i.cq, %_ZN5arrow6StatusD2Ev.exit26.us.i ], [ %.1, %.peel.next.i ] ; 2 uses
   %i.cr = add nuw nsw i64 %.0183.us.i, 1          ; 2 uses
-  %exitcond.not = icmp eq i64 %i.cr, %i.ay
+  %exitcond.not = icmp eq i64 %i.cr, %smax
   br i1 %exitcond.not, label %_ZN5arrow6StatusD2Ev.exit59, label %.peel.next.i, !llvm.loop !2423
 
 .lr.ph.splitthread-pre-split.i:                   ; preds = %_ZN5arrow6StatusD2Ev.exit30.i

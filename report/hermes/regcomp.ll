@@ -204,6 +204,7 @@ bb.ab:                                            ; preds = %.preheader.i
   %i.cn = add nuw nsw i32 %i.ck, 7
   %i.co = lshr i32 %i.cn, 3
   %i.cp = load ptr, ptr %i.ad, align 8, !tbaa !38
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %i.co, i32 1)
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ad, %.lr.ph.i.i
@@ -219,7 +220,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.ct = load i32, ptr %i.ac, align 8, !tbaa !22
   %i.cu = sext i32 %i.ct to i64
   %i.cv = getelementptr inbounds i8, ptr %.01013.i.i, i64 %i.cu
-  %exitcond.not.i.i = icmp eq i32 %i.cs, %i.co
+  %exitcond.not.i.i = icmp eq i32 %i.cs, %smax.i.i
   br i1 %exitcond.not.i.i, label %isinsets.exit.thread.i, label %bb.ac, !llvm.loop !39
 
 isinsets.exit.i:                                  ; preds = %bb.ac
@@ -249,6 +250,7 @@ bb.ae:                                            ; preds = %.lr.ph.i101
   %i.dg = lshr i32 %i.df, 3
   %i.dh = load ptr, ptr %i.ad, align 8, !tbaa !38
   %i.di = and i64 %indvars.iv.next12.i, 255
+  %smax.i27.i = call i32 @llvm.smax.i32(i32 %i.dg, i32 1)
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ag, %.lr.ph.i26.i
@@ -266,7 +268,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.do = load i32, ptr %i.ac, align 8, !tbaa !22
   %i.dp = sext i32 %i.do to i64
   %i.dq = getelementptr inbounds i8, ptr %.01316.i.i, i64 %i.dp
-  %exitcond.not.i28.i = icmp eq i32 %i.dn, %i.dg
+  %exitcond.not.i28.i = icmp eq i32 %i.dn, %smax.i27.i
   br i1 %exitcond.not.i28.i, label %.loopexit.i, label %bb.af, !llvm.loop !41
 
 .loopexit.i:                                      ; preds = %bb.ag, %bb.ae
@@ -667,6 +669,9 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   ret void
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #14

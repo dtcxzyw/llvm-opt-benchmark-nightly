@@ -204,6 +204,7 @@ _ZNK6duckdb15AggregateObject15GetFunctionDataEv.exit: ; preds = %bb.a, %bb.b
   %i.ar = add i64 %i.aq, %i.af
   %i.as = getelementptr inbounds nuw i8, ptr %i.f, i64 1600
   %i.at = getelementptr inbounds nuw i8, ptr %i.f, i64 1520
+  %5 = add i64 %i.af, 1
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 432 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 472 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.b, i64 440 ; 2 uses
@@ -233,8 +234,8 @@ bb.c:                                             ; preds = %.lr.ph, %bb.k
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !252 ; 2 uses
   %i.bh = call noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorImLb1ESaImEEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.ac, i64 noundef %.0108111)
   store i64 %i.bg, ptr %i.bh, align 8, !tbaa !252
-  %.not118 = icmp ugt i64 %i.bg, %i.af
-  br i1 %.not118, label %bb.g, label %bb.d
+  %6 = icmp ult i64 %i.bg, %5
+  br i1 %6, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
   %i.bi = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN6duckdb6vectorISt5tupleIJmmEELb1ESaIS2_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, i64 noundef %.0108111)
