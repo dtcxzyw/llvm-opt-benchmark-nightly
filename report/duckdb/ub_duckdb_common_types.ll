@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.aa = shl i64 %index, 3
+  %i.aa = shl nuw i64 %index, 3
   %i.ab = getelementptr inbounds nuw i8, ptr %i.e, i64 %index
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 2
   %wide.load = load <16 x i8>, ptr %i.ac, align 1, !tbaa !153, !alias.scope !169 ; 6 uses
@@ -254,7 +254,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index46 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next56, %vec.epilog.vector.body ] ; 3 uses
-  %i.bd = shl i64 %index46, 3
+  %i.bd = shl nuw i64 %index46, 3
   %i.be = getelementptr inbounds nuw i8, ptr %i.e, i64 %index46
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 2 ; 2 uses
   %wide.load47 = load <8 x i8>, ptr %i.bf, align 1, !tbaa !153, !alias.scope !169 ; 4 uses
@@ -657,7 +657,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.029, i64 %index
-  %i.bf = shl i64 %index, 3
+  %i.bf = shl nuw i64 %index, 3
   %i.bg = or disjoint i64 %i.m, %i.bf             ; 16 uses
   %i.bh = getelementptr i8, ptr %i.e, i64 %i.bg   ; 8 uses
   %i.bi = getelementptr i8, ptr %i.e, i64 %i.bg   ; 8 uses
@@ -1060,7 +1060,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index55 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next57, %vec.epilog.vector.body ] ; 3 uses
   %next.gep56 = getelementptr i8, ptr %.029, i64 %index55
-  %i.rv = shl i64 %index55, 3
+  %i.rv = shl nuw i64 %index55, 3
   %i.rw = or disjoint i64 %i.m, %i.rv             ; 8 uses
   %i.rx = getelementptr i8, ptr %i.e, i64 %i.rw   ; 8 uses
   %i.ry = getelementptr i8, ptr %i.e, i64 %i.rw   ; 8 uses
@@ -1463,7 +1463,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.mod.vf = and i64 %i.eu, 24
   %n.vec = and i64 %i.eu, -32                     ; 4 uses
   %i.ez = add i64 %.8198, %n.vec
-  %i.fa = getelementptr i8, ptr %4, i64 %.8198
+  %i.fa = getelementptr inbounds nuw i8, ptr %4, i64 %.8198
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1472,7 +1472,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.fc = getelementptr inbounds nuw i8, ptr %i.fb, i64 16
   %wide.load = load <16 x i8>, ptr %i.fb, align 1, !tbaa !153
   %wide.load220 = load <16 x i8>, ptr %i.fc, align 1, !tbaa !153
-  %i.fd = getelementptr i8, ptr %i.fa, i64 %index ; 2 uses
+  %i.fd = getelementptr inbounds nuw i8, ptr %i.fa, i64 %index ; 2 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 16
   store <16 x i8> %wide.load, ptr %i.fd, align 1, !tbaa !153
   store <16 x i8> %wide.load220, ptr %i.fe, align 1, !tbaa !153
@@ -1492,14 +1492,14 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec222 = and i64 %i.eu, -8                   ; 3 uses
   %i.fg = add i64 %.8198, %n.vec222
-  %i.fh = getelementptr i8, ptr %4, i64 %.8198
+  %i.fh = getelementptr inbounds nuw i8, ptr %4, i64 %.8198
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index223 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next225, %vec.epilog.vector.body ] ; 3 uses
   %i.fi = getelementptr inbounds i8, ptr %i.eq, i64 %index223
   %wide.load224 = load <8 x i8>, ptr %i.fi, align 1, !tbaa !153
-  %i.fj = getelementptr i8, ptr %i.fh, i64 %index223
+  %i.fj = getelementptr inbounds nuw i8, ptr %i.fh, i64 %index223
   store <8 x i8> %wide.load224, ptr %i.fj, align 1, !tbaa !153
   %index.next225 = add nuw i64 %index223, 8       ; 2 uses
   %i.fk = icmp eq i64 %index.next225, %n.vec222

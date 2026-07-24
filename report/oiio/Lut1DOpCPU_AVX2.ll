@@ -201,7 +201,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dt = shl i64 %index, 4
   %next.gep = getelementptr i8, ptr %.049.lcssa, i64 %i.dt
   %wide.vec = load <16 x float>, ptr %next.gep, align 4, !tbaa !12, !alias.scope !14
-  %.idx = shl i64 %index, 4
+  %.idx = shl nuw i64 %index, 4
   %i.du = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx
   store <16 x float> %wide.vec, ptr %i.du, align 16, !tbaa !12, !alias.scope !17, !noalias !14
   %index.next = add nuw i64 %index, 4             ; 2 uses
@@ -604,7 +604,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ed = shl i64 %index, 4
   %next.gep = getelementptr i8, ptr %.049.lcssa, i64 %i.ed
   %wide.vec = load <16 x float>, ptr %next.gep, align 4, !tbaa !12, !alias.scope !33
-  %.idx = shl i64 %index, 4
+  %.idx = shl nuw i64 %index, 4
   %i.ee = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx
   store <16 x float> %wide.vec, ptr %i.ee, align 16, !tbaa !12, !alias.scope !36, !noalias !33
   %index.next = add nuw i64 %index, 4             ; 2 uses
@@ -761,7 +761,7 @@ vector.body129:                                   ; preds = %vector.body129, %ve
   %index130 = phi i64 [ 0, %vector.ph126 ], [ %index.next138, %vector.body129 ] ; 3 uses
   %i.is = shl i64 %index130, 3
   %next.gep131 = getelementptr i8, ptr %.050.lcssa, i64 %i.is
-  %.idx143 = shl i64 %index130, 3
+  %.idx143 = shl nuw i64 %index130, 3
   %i.it = getelementptr inbounds nuw i8, ptr %i.b, i64 %.idx143
   %wide.vec132 = load <32 x i16>, ptr %i.it, align 16, !tbaa !39, !alias.scope !41
   store <32 x i16> %wide.vec132, ptr %next.gep131, align 2, !tbaa !39, !alias.scope !44, !noalias !41
@@ -1013,7 +1013,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ed = shl i64 %index, 4
   %next.gep = getelementptr i8, ptr %.049.lcssa, i64 %i.ed
   %wide.vec = load <16 x float>, ptr %next.gep, align 4, !tbaa !12, !alias.scope !50
-  %.idx = shl i64 %index, 4
+  %.idx = shl nuw i64 %index, 4
   %i.ee = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx
   store <16 x float> %wide.vec, ptr %i.ee, align 16, !tbaa !12, !alias.scope !53, !noalias !50
   %index.next = add nuw i64 %index, 4             ; 2 uses
@@ -1170,7 +1170,7 @@ vector.body129:                                   ; preds = %vector.body129, %ve
   %index130 = phi i64 [ 0, %vector.ph126 ], [ %index.next138, %vector.body129 ] ; 3 uses
   %i.is = shl i64 %index130, 3
   %next.gep131 = getelementptr i8, ptr %.050.lcssa, i64 %i.is
-  %.idx143 = shl i64 %index130, 3
+  %.idx143 = shl nuw i64 %index130, 3
   %i.it = getelementptr inbounds nuw i8, ptr %i.b, i64 %.idx143
   %wide.vec132 = load <32 x i16>, ptr %i.it, align 16, !tbaa !39, !alias.scope !56
   store <32 x i16> %wide.vec132, ptr %next.gep131, align 2, !tbaa !39, !alias.scope !59, !noalias !56
@@ -1422,7 +1422,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ed = shl i64 %index, 4
   %next.gep = getelementptr i8, ptr %.049.lcssa, i64 %i.ed
   %wide.vec = load <16 x float>, ptr %next.gep, align 4, !tbaa !12, !alias.scope !65
-  %.idx = shl i64 %index, 4
+  %.idx = shl nuw i64 %index, 4
   %i.ee = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx
   store <16 x float> %wide.vec, ptr %i.ee, align 16, !tbaa !12, !alias.scope !68, !noalias !65
   %index.next = add nuw i64 %index, 4             ; 2 uses
@@ -1579,7 +1579,7 @@ vector.body129:                                   ; preds = %vector.body129, %ve
   %index130 = phi i64 [ 0, %vector.ph126 ], [ %index.next138, %vector.body129 ] ; 3 uses
   %i.is = shl i64 %index130, 3
   %next.gep131 = getelementptr i8, ptr %.050.lcssa, i64 %i.is
-  %.idx143 = shl i64 %index130, 3
+  %.idx143 = shl nuw i64 %index130, 3
   %i.it = getelementptr inbounds nuw i8, ptr %i.b, i64 %.idx143
   %wide.vec132 = load <32 x i16>, ptr %i.it, align 16, !tbaa !39, !alias.scope !71
   store <32 x i16> %wide.vec132, ptr %next.gep131, align 2, !tbaa !39, !alias.scope !74, !noalias !71
@@ -1796,7 +1796,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cr = shl i64 %index, 4
   %next.gep = getelementptr i8, ptr %.049.lcssa, i64 %i.cr
   %wide.vec = load <16 x float>, ptr %next.gep, align 4, !tbaa !12, !alias.scope !80
-  %.idx = shl i64 %index, 4
+  %.idx = shl nuw i64 %index, 4
   %i.cs = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx
   store <16 x float> %wide.vec, ptr %i.cs, align 16, !tbaa !12, !alias.scope !83, !noalias !80
   %index.next = add nuw i64 %index, 4             ; 2 uses
@@ -1916,7 +1916,7 @@ vector.body129:                                   ; preds = %vector.body129, %ve
   %index130 = phi i64 [ 0, %vector.ph126 ], [ %index.next138, %vector.body129 ] ; 3 uses
   %i.fv = shl i64 %index130, 3
   %next.gep131 = getelementptr i8, ptr %.050.lcssa, i64 %i.fv
-  %.idx143 = shl i64 %index130, 3
+  %.idx143 = shl nuw i64 %index130, 3
   %i.fw = getelementptr inbounds nuw i8, ptr %7, i64 %.idx143
   %wide.vec132 = load <32 x i16>, ptr %i.fw, align 16, !tbaa !39, !alias.scope !86
   store <32 x i16> %wide.vec132, ptr %next.gep131, align 2, !tbaa !39, !alias.scope !89, !noalias !86
@@ -2125,7 +2125,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ck = shl i64 %index, 4
   %next.gep = getelementptr i8, ptr %.047.lcssa, i64 %i.ck
   %wide.vec = load <16 x float>, ptr %next.gep, align 4, !tbaa !12, !alias.scope !95
-  %.idx = shl i64 %index, 4
+  %.idx = shl nuw i64 %index, 4
   %i.cl = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx
   store <16 x float> %wide.vec, ptr %i.cl, align 16, !tbaa !12, !alias.scope !98, !noalias !95
   %index.next = add nuw i64 %index, 4             ; 2 uses
@@ -2239,7 +2239,7 @@ vector.body125:                                   ; preds = %vector.body125, %ve
   %index126 = phi i64 [ 0, %vector.ph122 ], [ %index.next134, %vector.body125 ] ; 3 uses
   %i.fg = shl i64 %index126, 4
   %next.gep127 = getelementptr i8, ptr %.048.lcssa, i64 %i.fg
-  %.idx139 = shl i64 %index126, 4
+  %.idx139 = shl nuw i64 %index126, 4
   %i.fh = getelementptr inbounds nuw i8, ptr %i.b, i64 %.idx139
   %wide.vec128 = load <16 x float>, ptr %i.fh, align 16, !tbaa !12, !alias.scope !101
   store <16 x float> %wide.vec128, ptr %next.gep127, align 4, !tbaa !12, !alias.scope !104, !noalias !101

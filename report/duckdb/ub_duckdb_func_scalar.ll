@@ -204,12 +204,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i.preheader: ; preds = %.lr.
 vector.ph1872:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i.preheader
   %n.vec1874 = and i64 %i.l, -4                   ; 3 uses
   %i.m = add i64 %.sroa.0690.0.copyload, %n.vec1874
-  %i.n = getelementptr [8 x i8], ptr %i.i, i64 %.sroa.0690.0.copyload
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.sroa.0690.0.copyload
   br label %vector.body1875
 
 vector.body1875:                                  ; preds = %vector.body1875, %vector.ph1872
   %index1876 = phi i64 [ 0, %vector.ph1872 ], [ %index.next1879, %vector.body1875 ] ; 2 uses
-  %i.o = getelementptr [8 x i8], ptr %i.n, i64 %index1876 ; 3 uses
+  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %index1876 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
   %wide.load1877 = load <2 x i64>, ptr %i.o, align 8, !tbaa !14
   %wide.load1878 = load <2 x i64>, ptr %i.p, align 8, !tbaa !14
@@ -250,12 +250,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.preheader: ; preds = %.lr.ph.
 vector.ph1859:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.preheader
   %n.vec1861 = and i64 %i.x, -4                   ; 3 uses
   %i.y = add i64 %.sroa.0690.0.copyload, %n.vec1861
-  %i.z = getelementptr [8 x i8], ptr %i.i, i64 %.sroa.0690.0.copyload
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.sroa.0690.0.copyload
   br label %vector.body1862
 
 vector.body1862:                                  ; preds = %vector.body1862, %vector.ph1859
   %index1863 = phi i64 [ 0, %vector.ph1859 ], [ %index.next1866, %vector.body1862 ] ; 2 uses
-  %i.aa = getelementptr [8 x i8], ptr %i.z, i64 %index1863 ; 3 uses
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %index1863 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 2 uses
   %wide.load1864 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !14
   %wide.load1865 = load <2 x i64>, ptr %i.ab, align 8, !tbaa !14
@@ -458,12 +458,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i85.preheader: ; preds = %.l
 vector.ph1846:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i85.preheader
   %n.vec1848 = and i64 %i.cw, -4                  ; 3 uses
   %i.cx = add i64 %.sroa.0698.0.copyload, %n.vec1848
-  %i.cy = getelementptr [8 x i8], ptr %i.ct, i64 %.sroa.0698.0.copyload
+  %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.ct, i64 %.sroa.0698.0.copyload
   br label %vector.body1849
 
 vector.body1849:                                  ; preds = %vector.body1849, %vector.ph1846
   %index1850 = phi i64 [ 0, %vector.ph1846 ], [ %index.next1853, %vector.body1849 ] ; 2 uses
-  %i.cz = getelementptr [8 x i8], ptr %i.cy, i64 %index1850 ; 3 uses
+  %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.cy, i64 %index1850 ; 3 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 16 ; 2 uses
   %wide.load1851 = load <2 x i64>, ptr %i.cz, align 8, !tbaa !14
   %wide.load1852 = load <2 x i64>, ptr %i.da, align 8, !tbaa !14
@@ -504,12 +504,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i79.preheader: ; preds = %.lr.p
 vector.ph1833:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i79.preheader
   %n.vec1835 = and i64 %i.di, -4                  ; 3 uses
   %i.dj = add i64 %.sroa.0698.0.copyload, %n.vec1835
-  %i.dk = getelementptr [8 x i8], ptr %i.ct, i64 %.sroa.0698.0.copyload
+  %i.dk = getelementptr inbounds nuw [8 x i8], ptr %i.ct, i64 %.sroa.0698.0.copyload
   br label %vector.body1836
 
 vector.body1836:                                  ; preds = %vector.body1836, %vector.ph1833
   %index1837 = phi i64 [ 0, %vector.ph1833 ], [ %index.next1840, %vector.body1836 ] ; 2 uses
-  %i.dl = getelementptr [8 x i8], ptr %i.dk, i64 %index1837 ; 3 uses
+  %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.dk, i64 %index1837 ; 3 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 16 ; 2 uses
   %wide.load1838 = load <2 x i64>, ptr %i.dl, align 8, !tbaa !14
   %wide.load1839 = load <2 x i64>, ptr %i.dm, align 8, !tbaa !14
@@ -712,12 +712,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i128.preheader: ; preds = %.
 vector.ph1820:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i128.preheader
   %n.vec1822 = and i64 %i.gh, -4                  ; 3 uses
   %i.gi = add i64 %.sroa.0708.0.copyload, %n.vec1822
-  %i.gj = getelementptr [8 x i8], ptr %i.ge, i64 %.sroa.0708.0.copyload
+  %i.gj = getelementptr inbounds nuw [8 x i8], ptr %i.ge, i64 %.sroa.0708.0.copyload
   br label %vector.body1823
 
 vector.body1823:                                  ; preds = %vector.body1823, %vector.ph1820
   %index1824 = phi i64 [ 0, %vector.ph1820 ], [ %index.next1827, %vector.body1823 ] ; 2 uses
-  %i.gk = getelementptr [8 x i8], ptr %i.gj, i64 %index1824 ; 3 uses
+  %i.gk = getelementptr inbounds nuw [8 x i8], ptr %i.gj, i64 %index1824 ; 3 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 16 ; 2 uses
   %wide.load1825 = load <2 x i64>, ptr %i.gk, align 8, !tbaa !14
   %wide.load1826 = load <2 x i64>, ptr %i.gl, align 8, !tbaa !14
@@ -758,12 +758,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i122.preheader: ; preds = %.lr.
 vector.ph1807:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i122.preheader
   %n.vec1809 = and i64 %i.gt, -4                  ; 3 uses
   %i.gu = add i64 %.sroa.0708.0.copyload, %n.vec1809
-  %i.gv = getelementptr [8 x i8], ptr %i.ge, i64 %.sroa.0708.0.copyload
+  %i.gv = getelementptr inbounds nuw [8 x i8], ptr %i.ge, i64 %.sroa.0708.0.copyload
   br label %vector.body1810
 
 vector.body1810:                                  ; preds = %vector.body1810, %vector.ph1807
   %index1811 = phi i64 [ 0, %vector.ph1807 ], [ %index.next1814, %vector.body1810 ] ; 2 uses
-  %i.gw = getelementptr [8 x i8], ptr %i.gv, i64 %index1811 ; 3 uses
+  %i.gw = getelementptr inbounds nuw [8 x i8], ptr %i.gv, i64 %index1811 ; 3 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 16 ; 2 uses
   %wide.load1812 = load <2 x i64>, ptr %i.gw, align 8, !tbaa !14
   %wide.load1813 = load <2 x i64>, ptr %i.gx, align 8, !tbaa !14
@@ -966,12 +966,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i171.preheader: ; preds = %.
 vector.ph1794:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i171.preheader
   %n.vec1796 = and i64 %i.js, -4                  ; 3 uses
   %i.jt = add i64 %.sroa.0718.0.copyload, %n.vec1796
-  %i.ju = getelementptr [8 x i8], ptr %i.jp, i64 %.sroa.0718.0.copyload
+  %i.ju = getelementptr inbounds nuw [8 x i8], ptr %i.jp, i64 %.sroa.0718.0.copyload
   br label %vector.body1797
 
 vector.body1797:                                  ; preds = %vector.body1797, %vector.ph1794
   %index1798 = phi i64 [ 0, %vector.ph1794 ], [ %index.next1801, %vector.body1797 ] ; 2 uses
-  %i.jv = getelementptr [8 x i8], ptr %i.ju, i64 %index1798 ; 3 uses
+  %i.jv = getelementptr inbounds nuw [8 x i8], ptr %i.ju, i64 %index1798 ; 3 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 16 ; 2 uses
   %wide.load1799 = load <2 x i64>, ptr %i.jv, align 8, !tbaa !14
   %wide.load1800 = load <2 x i64>, ptr %i.jw, align 8, !tbaa !14
@@ -1012,12 +1012,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i165.preheader: ; preds = %.lr.
 vector.ph1781:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i165.preheader
   %n.vec1783 = and i64 %i.ke, -4                  ; 3 uses
   %i.kf = add i64 %.sroa.0718.0.copyload, %n.vec1783
-  %i.kg = getelementptr [8 x i8], ptr %i.jp, i64 %.sroa.0718.0.copyload
+  %i.kg = getelementptr inbounds nuw [8 x i8], ptr %i.jp, i64 %.sroa.0718.0.copyload
   br label %vector.body1784
 
 vector.body1784:                                  ; preds = %vector.body1784, %vector.ph1781
   %index1785 = phi i64 [ 0, %vector.ph1781 ], [ %index.next1788, %vector.body1784 ] ; 2 uses
-  %i.kh = getelementptr [8 x i8], ptr %i.kg, i64 %index1785 ; 3 uses
+  %i.kh = getelementptr inbounds nuw [8 x i8], ptr %i.kg, i64 %index1785 ; 3 uses
   %i.ki = getelementptr inbounds nuw i8, ptr %i.kh, i64 16 ; 2 uses
   %wide.load1786 = load <2 x i64>, ptr %i.kh, align 8, !tbaa !14
   %wide.load1787 = load <2 x i64>, ptr %i.ki, align 8, !tbaa !14
@@ -1220,12 +1220,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i215.preheader: ; preds = %.
 vector.ph1768:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i215.preheader
   %n.vec1770 = and i64 %i.nb, -4                  ; 3 uses
   %i.nc = add i64 %.sroa.0728.0.copyload, %n.vec1770
-  %i.nd = getelementptr [8 x i8], ptr %i.my, i64 %.sroa.0728.0.copyload
+  %i.nd = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %.sroa.0728.0.copyload
   br label %vector.body1771
 
 vector.body1771:                                  ; preds = %vector.body1771, %vector.ph1768
   %index1772 = phi i64 [ 0, %vector.ph1768 ], [ %index.next1775, %vector.body1771 ] ; 2 uses
-  %i.ne = getelementptr [8 x i8], ptr %i.nd, i64 %index1772 ; 3 uses
+  %i.ne = getelementptr inbounds nuw [8 x i8], ptr %i.nd, i64 %index1772 ; 3 uses
   %i.nf = getelementptr inbounds nuw i8, ptr %i.ne, i64 16 ; 2 uses
   %wide.load1773 = load <2 x i64>, ptr %i.ne, align 8, !tbaa !14
   %wide.load1774 = load <2 x i64>, ptr %i.nf, align 8, !tbaa !14
@@ -1266,12 +1266,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i208.preheader: ; preds = %.lr.
 vector.ph1755:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i208.preheader
   %n.vec1757 = and i64 %i.nn, -4                  ; 3 uses
   %i.no = add i64 %.sroa.0728.0.copyload, %n.vec1757
-  %i.np = getelementptr [8 x i8], ptr %i.my, i64 %.sroa.0728.0.copyload
+  %i.np = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %.sroa.0728.0.copyload
   br label %vector.body1758
 
 vector.body1758:                                  ; preds = %vector.body1758, %vector.ph1755
   %index1759 = phi i64 [ 0, %vector.ph1755 ], [ %index.next1762, %vector.body1758 ] ; 2 uses
-  %i.nq = getelementptr [8 x i8], ptr %i.np, i64 %index1759 ; 3 uses
+  %i.nq = getelementptr inbounds nuw [8 x i8], ptr %i.np, i64 %index1759 ; 3 uses
   %i.nr = getelementptr inbounds nuw i8, ptr %i.nq, i64 16 ; 2 uses
   %wide.load1760 = load <2 x i64>, ptr %i.nq, align 8, !tbaa !14
   %wide.load1761 = load <2 x i64>, ptr %i.nr, align 8, !tbaa !14
@@ -1474,12 +1474,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i259.preheader: ; preds = %.
 vector.ph1742:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i259.preheader
   %n.vec1744 = and i64 %i.qk, -4                  ; 3 uses
   %i.ql = add i64 %.sroa.0738.0.copyload, %n.vec1744
-  %i.qm = getelementptr [8 x i8], ptr %i.qh, i64 %.sroa.0738.0.copyload
+  %i.qm = getelementptr inbounds nuw [8 x i8], ptr %i.qh, i64 %.sroa.0738.0.copyload
   br label %vector.body1745
 
 vector.body1745:                                  ; preds = %vector.body1745, %vector.ph1742
   %index1746 = phi i64 [ 0, %vector.ph1742 ], [ %index.next1749, %vector.body1745 ] ; 2 uses
-  %i.qn = getelementptr [8 x i8], ptr %i.qm, i64 %index1746 ; 3 uses
+  %i.qn = getelementptr inbounds nuw [8 x i8], ptr %i.qm, i64 %index1746 ; 3 uses
   %i.qo = getelementptr inbounds nuw i8, ptr %i.qn, i64 16 ; 2 uses
   %wide.load1747 = load <2 x i64>, ptr %i.qn, align 8, !tbaa !14
   %wide.load1748 = load <2 x i64>, ptr %i.qo, align 8, !tbaa !14
@@ -1520,12 +1520,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i252.preheader: ; preds = %.lr.
 vector.ph1729:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i252.preheader
   %n.vec1731 = and i64 %i.qw, -4                  ; 3 uses
   %i.qx = add i64 %.sroa.0738.0.copyload, %n.vec1731
-  %i.qy = getelementptr [8 x i8], ptr %i.qh, i64 %.sroa.0738.0.copyload
+  %i.qy = getelementptr inbounds nuw [8 x i8], ptr %i.qh, i64 %.sroa.0738.0.copyload
   br label %vector.body1732
 
 vector.body1732:                                  ; preds = %vector.body1732, %vector.ph1729
   %index1733 = phi i64 [ 0, %vector.ph1729 ], [ %index.next1736, %vector.body1732 ] ; 2 uses
-  %i.qz = getelementptr [8 x i8], ptr %i.qy, i64 %index1733 ; 3 uses
+  %i.qz = getelementptr inbounds nuw [8 x i8], ptr %i.qy, i64 %index1733 ; 3 uses
   %i.ra = getelementptr inbounds nuw i8, ptr %i.qz, i64 16 ; 2 uses
   %wide.load1734 = load <2 x i64>, ptr %i.qz, align 8, !tbaa !14
   %wide.load1735 = load <2 x i64>, ptr %i.ra, align 8, !tbaa !14
@@ -1728,12 +1728,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i303.preheader: ; preds = %.
 vector.ph1716:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i303.preheader
   %n.vec1718 = and i64 %i.tt, -4                  ; 3 uses
   %i.tu = add i64 %.sroa.0748.0.copyload, %n.vec1718
-  %i.tv = getelementptr [8 x i8], ptr %i.tq, i64 %.sroa.0748.0.copyload
+  %i.tv = getelementptr inbounds nuw [8 x i8], ptr %i.tq, i64 %.sroa.0748.0.copyload
   br label %vector.body1719
 
 vector.body1719:                                  ; preds = %vector.body1719, %vector.ph1716
   %index1720 = phi i64 [ 0, %vector.ph1716 ], [ %index.next1723, %vector.body1719 ] ; 2 uses
-  %i.tw = getelementptr [8 x i8], ptr %i.tv, i64 %index1720 ; 3 uses
+  %i.tw = getelementptr inbounds nuw [8 x i8], ptr %i.tv, i64 %index1720 ; 3 uses
   %i.tx = getelementptr inbounds nuw i8, ptr %i.tw, i64 16 ; 2 uses
   %wide.load1721 = load <2 x i64>, ptr %i.tw, align 8, !tbaa !14
   %wide.load1722 = load <2 x i64>, ptr %i.tx, align 8, !tbaa !14
@@ -1774,12 +1774,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i296.preheader: ; preds = %.lr.
 vector.ph1703:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i296.preheader
   %n.vec1705 = and i64 %i.uf, -4                  ; 3 uses
   %i.ug = add i64 %.sroa.0748.0.copyload, %n.vec1705
-  %i.uh = getelementptr [8 x i8], ptr %i.tq, i64 %.sroa.0748.0.copyload
+  %i.uh = getelementptr inbounds nuw [8 x i8], ptr %i.tq, i64 %.sroa.0748.0.copyload
   br label %vector.body1706
 
 vector.body1706:                                  ; preds = %vector.body1706, %vector.ph1703
   %index1707 = phi i64 [ 0, %vector.ph1703 ], [ %index.next1710, %vector.body1706 ] ; 2 uses
-  %i.ui = getelementptr [8 x i8], ptr %i.uh, i64 %index1707 ; 3 uses
+  %i.ui = getelementptr inbounds nuw [8 x i8], ptr %i.uh, i64 %index1707 ; 3 uses
   %i.uj = getelementptr inbounds nuw i8, ptr %i.ui, i64 16 ; 2 uses
   %wide.load1708 = load <2 x i64>, ptr %i.ui, align 8, !tbaa !14
   %wide.load1709 = load <2 x i64>, ptr %i.uj, align 8, !tbaa !14
@@ -1982,12 +1982,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i347.preheader: ; preds = %.
 vector.ph1690:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i347.preheader
   %n.vec1692 = and i64 %i.xc, -4                  ; 3 uses
   %i.xd = add i64 %.sroa.0758.0.copyload, %n.vec1692
-  %i.xe = getelementptr [8 x i8], ptr %i.wz, i64 %.sroa.0758.0.copyload
+  %i.xe = getelementptr inbounds nuw [8 x i8], ptr %i.wz, i64 %.sroa.0758.0.copyload
   br label %vector.body1693
 
 vector.body1693:                                  ; preds = %vector.body1693, %vector.ph1690
   %index1694 = phi i64 [ 0, %vector.ph1690 ], [ %index.next1697, %vector.body1693 ] ; 2 uses
-  %i.xf = getelementptr [8 x i8], ptr %i.xe, i64 %index1694 ; 3 uses
+  %i.xf = getelementptr inbounds nuw [8 x i8], ptr %i.xe, i64 %index1694 ; 3 uses
   %i.xg = getelementptr inbounds nuw i8, ptr %i.xf, i64 16 ; 2 uses
   %wide.load1695 = load <2 x i64>, ptr %i.xf, align 8, !tbaa !14
   %wide.load1696 = load <2 x i64>, ptr %i.xg, align 8, !tbaa !14
@@ -2028,12 +2028,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i340.preheader: ; preds = %.lr.
 vector.ph1677:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i340.preheader
   %n.vec1679 = and i64 %i.xo, -4                  ; 3 uses
   %i.xp = add i64 %.sroa.0758.0.copyload, %n.vec1679
-  %i.xq = getelementptr [8 x i8], ptr %i.wz, i64 %.sroa.0758.0.copyload
+  %i.xq = getelementptr inbounds nuw [8 x i8], ptr %i.wz, i64 %.sroa.0758.0.copyload
   br label %vector.body1680
 
 vector.body1680:                                  ; preds = %vector.body1680, %vector.ph1677
   %index1681 = phi i64 [ 0, %vector.ph1677 ], [ %index.next1684, %vector.body1680 ] ; 2 uses
-  %i.xr = getelementptr [8 x i8], ptr %i.xq, i64 %index1681 ; 3 uses
+  %i.xr = getelementptr inbounds nuw [8 x i8], ptr %i.xq, i64 %index1681 ; 3 uses
   %i.xs = getelementptr inbounds nuw i8, ptr %i.xr, i64 16 ; 2 uses
   %wide.load1682 = load <2 x i64>, ptr %i.xr, align 8, !tbaa !14
   %wide.load1683 = load <2 x i64>, ptr %i.xs, align 8, !tbaa !14
@@ -2236,12 +2236,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i391.preheader: ; preds = %.
 vector.ph1664:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i391.preheader
   %n.vec1666 = and i64 %i.aal, -4                 ; 3 uses
   %i.aam = add i64 %.sroa.0768.0.copyload, %n.vec1666
-  %i.aan = getelementptr [8 x i8], ptr %i.aai, i64 %.sroa.0768.0.copyload
+  %i.aan = getelementptr inbounds nuw [8 x i8], ptr %i.aai, i64 %.sroa.0768.0.copyload
   br label %vector.body1667
 
 vector.body1667:                                  ; preds = %vector.body1667, %vector.ph1664
   %index1668 = phi i64 [ 0, %vector.ph1664 ], [ %index.next1671, %vector.body1667 ] ; 2 uses
-  %i.aao = getelementptr [8 x i8], ptr %i.aan, i64 %index1668 ; 3 uses
+  %i.aao = getelementptr inbounds nuw [8 x i8], ptr %i.aan, i64 %index1668 ; 3 uses
   %i.aap = getelementptr inbounds nuw i8, ptr %i.aao, i64 16 ; 2 uses
   %wide.load1669 = load <2 x i64>, ptr %i.aao, align 8, !tbaa !14
   %wide.load1670 = load <2 x i64>, ptr %i.aap, align 8, !tbaa !14
@@ -2282,12 +2282,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i384.preheader: ; preds = %.lr.
 vector.ph1651:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i384.preheader
   %n.vec1653 = and i64 %i.aax, -4                 ; 3 uses
   %i.aay = add i64 %.sroa.0768.0.copyload, %n.vec1653
-  %i.aaz = getelementptr [8 x i8], ptr %i.aai, i64 %.sroa.0768.0.copyload
+  %i.aaz = getelementptr inbounds nuw [8 x i8], ptr %i.aai, i64 %.sroa.0768.0.copyload
   br label %vector.body1654
 
 vector.body1654:                                  ; preds = %vector.body1654, %vector.ph1651
   %index1655 = phi i64 [ 0, %vector.ph1651 ], [ %index.next1658, %vector.body1654 ] ; 2 uses
-  %i.aba = getelementptr [8 x i8], ptr %i.aaz, i64 %index1655 ; 3 uses
+  %i.aba = getelementptr inbounds nuw [8 x i8], ptr %i.aaz, i64 %index1655 ; 3 uses
   %i.abb = getelementptr inbounds nuw i8, ptr %i.aba, i64 16 ; 2 uses
   %wide.load1656 = load <2 x i64>, ptr %i.aba, align 8, !tbaa !14
   %wide.load1657 = load <2 x i64>, ptr %i.abb, align 8, !tbaa !14
@@ -2490,12 +2490,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i435.preheader: ; preds = %.
 vector.ph1638:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i435.preheader
   %n.vec1640 = and i64 %i.adu, -4                 ; 3 uses
   %i.adv = add i64 %.sroa.0778.0.copyload, %n.vec1640
-  %i.adw = getelementptr [8 x i8], ptr %i.adr, i64 %.sroa.0778.0.copyload
+  %i.adw = getelementptr inbounds nuw [8 x i8], ptr %i.adr, i64 %.sroa.0778.0.copyload
   br label %vector.body1641
 
 vector.body1641:                                  ; preds = %vector.body1641, %vector.ph1638
   %index1642 = phi i64 [ 0, %vector.ph1638 ], [ %index.next1645, %vector.body1641 ] ; 2 uses
-  %i.adx = getelementptr [8 x i8], ptr %i.adw, i64 %index1642 ; 3 uses
+  %i.adx = getelementptr inbounds nuw [8 x i8], ptr %i.adw, i64 %index1642 ; 3 uses
   %i.ady = getelementptr inbounds nuw i8, ptr %i.adx, i64 16 ; 2 uses
   %wide.load1643 = load <2 x i64>, ptr %i.adx, align 8, !tbaa !14
   %wide.load1644 = load <2 x i64>, ptr %i.ady, align 8, !tbaa !14
@@ -2536,12 +2536,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i428.preheader: ; preds = %.lr.
 vector.ph1625:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i428.preheader
   %n.vec1627 = and i64 %i.aeg, -4                 ; 3 uses
   %i.aeh = add i64 %.sroa.0778.0.copyload, %n.vec1627
-  %i.aei = getelementptr [8 x i8], ptr %i.adr, i64 %.sroa.0778.0.copyload
+  %i.aei = getelementptr inbounds nuw [8 x i8], ptr %i.adr, i64 %.sroa.0778.0.copyload
   br label %vector.body1628
 
 vector.body1628:                                  ; preds = %vector.body1628, %vector.ph1625
   %index1629 = phi i64 [ 0, %vector.ph1625 ], [ %index.next1632, %vector.body1628 ] ; 2 uses
-  %i.aej = getelementptr [8 x i8], ptr %i.aei, i64 %index1629 ; 3 uses
+  %i.aej = getelementptr inbounds nuw [8 x i8], ptr %i.aei, i64 %index1629 ; 3 uses
   %i.aek = getelementptr inbounds nuw i8, ptr %i.aej, i64 16 ; 2 uses
   %wide.load1630 = load <2 x i64>, ptr %i.aej, align 8, !tbaa !14
   %wide.load1631 = load <2 x i64>, ptr %i.aek, align 8, !tbaa !14
@@ -2744,12 +2744,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i479.preheader: ; preds = %.
 vector.ph1612:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i479.preheader
   %n.vec1614 = and i64 %i.ahd, -4                 ; 3 uses
   %i.ahe = add i64 %.sroa.0788.0.copyload, %n.vec1614
-  %i.ahf = getelementptr [8 x i8], ptr %i.aha, i64 %.sroa.0788.0.copyload
+  %i.ahf = getelementptr inbounds nuw [8 x i8], ptr %i.aha, i64 %.sroa.0788.0.copyload
   br label %vector.body1615
 
 vector.body1615:                                  ; preds = %vector.body1615, %vector.ph1612
   %index1616 = phi i64 [ 0, %vector.ph1612 ], [ %index.next1619, %vector.body1615 ] ; 2 uses
-  %i.ahg = getelementptr [8 x i8], ptr %i.ahf, i64 %index1616 ; 3 uses
+  %i.ahg = getelementptr inbounds nuw [8 x i8], ptr %i.ahf, i64 %index1616 ; 3 uses
   %i.ahh = getelementptr inbounds nuw i8, ptr %i.ahg, i64 16 ; 2 uses
   %wide.load1617 = load <2 x i64>, ptr %i.ahg, align 8, !tbaa !14
   %wide.load1618 = load <2 x i64>, ptr %i.ahh, align 8, !tbaa !14
@@ -2790,12 +2790,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i472.preheader: ; preds = %.lr.
 vector.ph1599:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i472.preheader
   %n.vec1601 = and i64 %i.ahp, -4                 ; 3 uses
   %i.ahq = add i64 %.sroa.0788.0.copyload, %n.vec1601
-  %i.ahr = getelementptr [8 x i8], ptr %i.aha, i64 %.sroa.0788.0.copyload
+  %i.ahr = getelementptr inbounds nuw [8 x i8], ptr %i.aha, i64 %.sroa.0788.0.copyload
   br label %vector.body1602
 
 vector.body1602:                                  ; preds = %vector.body1602, %vector.ph1599
   %index1603 = phi i64 [ 0, %vector.ph1599 ], [ %index.next1606, %vector.body1602 ] ; 2 uses
-  %i.ahs = getelementptr [8 x i8], ptr %i.ahr, i64 %index1603 ; 3 uses
+  %i.ahs = getelementptr inbounds nuw [8 x i8], ptr %i.ahr, i64 %index1603 ; 3 uses
   %i.aht = getelementptr inbounds nuw i8, ptr %i.ahs, i64 16 ; 2 uses
   %wide.load1604 = load <2 x i64>, ptr %i.ahs, align 8, !tbaa !14
   %wide.load1605 = load <2 x i64>, ptr %i.aht, align 8, !tbaa !14
@@ -2998,12 +2998,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i523.preheader: ; preds = %.
 vector.ph1586:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i523.preheader
   %n.vec1588 = and i64 %i.akm, -4                 ; 3 uses
   %i.akn = add i64 %.sroa.0798.0.copyload, %n.vec1588
-  %i.ako = getelementptr [8 x i8], ptr %i.akj, i64 %.sroa.0798.0.copyload
+  %i.ako = getelementptr inbounds nuw [8 x i8], ptr %i.akj, i64 %.sroa.0798.0.copyload
   br label %vector.body1589
 
 vector.body1589:                                  ; preds = %vector.body1589, %vector.ph1586
   %index1590 = phi i64 [ 0, %vector.ph1586 ], [ %index.next1593, %vector.body1589 ] ; 2 uses
-  %i.akp = getelementptr [8 x i8], ptr %i.ako, i64 %index1590 ; 3 uses
+  %i.akp = getelementptr inbounds nuw [8 x i8], ptr %i.ako, i64 %index1590 ; 3 uses
   %i.akq = getelementptr inbounds nuw i8, ptr %i.akp, i64 16 ; 2 uses
   %wide.load1591 = load <2 x i64>, ptr %i.akp, align 8, !tbaa !14
   %wide.load1592 = load <2 x i64>, ptr %i.akq, align 8, !tbaa !14
@@ -3044,12 +3044,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i516.preheader: ; preds = %.lr.
 vector.ph1573:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i516.preheader
   %n.vec1575 = and i64 %i.aky, -4                 ; 3 uses
   %i.akz = add i64 %.sroa.0798.0.copyload, %n.vec1575
-  %i.ala = getelementptr [8 x i8], ptr %i.akj, i64 %.sroa.0798.0.copyload
+  %i.ala = getelementptr inbounds nuw [8 x i8], ptr %i.akj, i64 %.sroa.0798.0.copyload
   br label %vector.body1576
 
 vector.body1576:                                  ; preds = %vector.body1576, %vector.ph1573
   %index1577 = phi i64 [ 0, %vector.ph1573 ], [ %index.next1580, %vector.body1576 ] ; 2 uses
-  %i.alb = getelementptr [8 x i8], ptr %i.ala, i64 %index1577 ; 3 uses
+  %i.alb = getelementptr inbounds nuw [8 x i8], ptr %i.ala, i64 %index1577 ; 3 uses
   %i.alc = getelementptr inbounds nuw i8, ptr %i.alb, i64 16 ; 2 uses
   %wide.load1578 = load <2 x i64>, ptr %i.alb, align 8, !tbaa !14
   %wide.load1579 = load <2 x i64>, ptr %i.alc, align 8, !tbaa !14
@@ -3252,12 +3252,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i567.preheader: ; preds = %.
 vector.ph1560:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i567.preheader
   %n.vec1562 = and i64 %i.anv, -4                 ; 3 uses
   %i.anw = add i64 %.sroa.0808.0.copyload, %n.vec1562
-  %i.anx = getelementptr [8 x i8], ptr %i.ans, i64 %.sroa.0808.0.copyload
+  %i.anx = getelementptr inbounds nuw [8 x i8], ptr %i.ans, i64 %.sroa.0808.0.copyload
   br label %vector.body1563
 
 vector.body1563:                                  ; preds = %vector.body1563, %vector.ph1560
   %index1564 = phi i64 [ 0, %vector.ph1560 ], [ %index.next1567, %vector.body1563 ] ; 2 uses
-  %i.any = getelementptr [8 x i8], ptr %i.anx, i64 %index1564 ; 3 uses
+  %i.any = getelementptr inbounds nuw [8 x i8], ptr %i.anx, i64 %index1564 ; 3 uses
   %i.anz = getelementptr inbounds nuw i8, ptr %i.any, i64 16 ; 2 uses
   %wide.load1565 = load <2 x i64>, ptr %i.any, align 8, !tbaa !14
   %wide.load1566 = load <2 x i64>, ptr %i.anz, align 8, !tbaa !14
@@ -3298,12 +3298,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i560.preheader: ; preds = %.lr.
 vector.ph1547:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i560.preheader
   %n.vec1549 = and i64 %i.aoh, -4                 ; 3 uses
   %i.aoi = add i64 %.sroa.0808.0.copyload, %n.vec1549
-  %i.aoj = getelementptr [8 x i8], ptr %i.ans, i64 %.sroa.0808.0.copyload
+  %i.aoj = getelementptr inbounds nuw [8 x i8], ptr %i.ans, i64 %.sroa.0808.0.copyload
   br label %vector.body1550
 
 vector.body1550:                                  ; preds = %vector.body1550, %vector.ph1547
   %index1551 = phi i64 [ 0, %vector.ph1547 ], [ %index.next1554, %vector.body1550 ] ; 2 uses
-  %i.aok = getelementptr [8 x i8], ptr %i.aoj, i64 %index1551 ; 3 uses
+  %i.aok = getelementptr inbounds nuw [8 x i8], ptr %i.aoj, i64 %index1551 ; 3 uses
   %i.aol = getelementptr inbounds nuw i8, ptr %i.aok, i64 16 ; 2 uses
   %wide.load1552 = load <2 x i64>, ptr %i.aok, align 8, !tbaa !14
   %wide.load1553 = load <2 x i64>, ptr %i.aol, align 8, !tbaa !14
@@ -3506,12 +3506,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i611.preheader: ; preds = %.
 vector.ph1534:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i611.preheader
   %n.vec1536 = and i64 %i.are, -4                 ; 3 uses
   %i.arf = add i64 %.sroa.0818.0.copyload, %n.vec1536
-  %i.arg = getelementptr [8 x i8], ptr %i.arb, i64 %.sroa.0818.0.copyload
+  %i.arg = getelementptr inbounds nuw [8 x i8], ptr %i.arb, i64 %.sroa.0818.0.copyload
   br label %vector.body1537
 
 vector.body1537:                                  ; preds = %vector.body1537, %vector.ph1534
   %index1538 = phi i64 [ 0, %vector.ph1534 ], [ %index.next1541, %vector.body1537 ] ; 2 uses
-  %i.arh = getelementptr [8 x i8], ptr %i.arg, i64 %index1538 ; 3 uses
+  %i.arh = getelementptr inbounds nuw [8 x i8], ptr %i.arg, i64 %index1538 ; 3 uses
   %i.ari = getelementptr inbounds nuw i8, ptr %i.arh, i64 16 ; 2 uses
   %wide.load1539 = load <2 x i64>, ptr %i.arh, align 8, !tbaa !14
   %wide.load1540 = load <2 x i64>, ptr %i.ari, align 8, !tbaa !14
@@ -3552,12 +3552,12 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i604.preheader: ; preds = %.lr.
 vector.ph1521:                                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i604.preheader
   %n.vec1523 = and i64 %i.arq, -4                 ; 3 uses
   %i.arr = add i64 %.sroa.0818.0.copyload, %n.vec1523
-  %i.ars = getelementptr [8 x i8], ptr %i.arb, i64 %.sroa.0818.0.copyload
+  %i.ars = getelementptr inbounds nuw [8 x i8], ptr %i.arb, i64 %.sroa.0818.0.copyload
   br label %vector.body1524
 
 vector.body1524:                                  ; preds = %vector.body1524, %vector.ph1521
   %index1525 = phi i64 [ 0, %vector.ph1521 ], [ %index.next1528, %vector.body1524 ] ; 2 uses
-  %i.art = getelementptr [8 x i8], ptr %i.ars, i64 %index1525 ; 3 uses
+  %i.art = getelementptr inbounds nuw [8 x i8], ptr %i.ars, i64 %index1525 ; 3 uses
   %i.aru = getelementptr inbounds nuw i8, ptr %i.art, i64 16 ; 2 uses
   %wide.load1526 = load <2 x i64>, ptr %i.art, align 8, !tbaa !14
   %wide.load1527 = load <2 x i64>, ptr %i.aru, align 8, !tbaa !14
@@ -3815,7 +3815,7 @@ vector.ph1485:                                    ; preds = %vector.memcheck
 
 vector.body1488:                                  ; preds = %vector.body1488, %vector.ph1485
   %index1489 = phi i64 [ 0, %vector.ph1485 ], [ %index.next1491, %vector.body1488 ] ; 2 uses
-  %i.avj = add i64 %.sroa.0828.0.copyload, %index1489 ; 2 uses
+  %i.avj = add nuw i64 %.sroa.0828.0.copyload, %index1489 ; 2 uses
   %i.avk = getelementptr inbounds nuw [8 x i8], ptr %i.aup, i64 %i.avj ; 3 uses
   %wide.load1490 = load <2 x i64>, ptr %i.avk, align 8, !tbaa !14, !alias.scope !670, !noalias !673 ; 2 uses
   %i.avl = add <2 x i64> %wide.load1490, splat (i64 1)
@@ -3865,7 +3865,7 @@ vector.body1506:                                  ; preds = %vector.body1506, %v
   %index1507 = phi i64 [ 0, %vector.ph1503 ], [ %index.next1514, %vector.body1506 ] ; 2 uses
   %vec.phi1508 = phi <2 x i64> [ %i.awc, %vector.ph1503 ], [ %i.awn, %vector.body1506 ]
   %vec.phi1509 = phi <2 x i64> [ zeroinitializer, %vector.ph1503 ], [ %i.awo, %vector.body1506 ]
-  %i.awd = add i64 %.sroa.0828.0.copyload, %index1507 ; 2 uses
+  %i.awd = add nuw i64 %.sroa.0828.0.copyload, %index1507 ; 2 uses
   %i.awe = getelementptr inbounds nuw [16 x i8], ptr %i.auj, i64 %i.awd
   %i.awf = getelementptr [16 x i8], ptr %i.auj, i64 %i.awd
   %i.awg = getelementptr i8, ptr %i.awf, i64 32

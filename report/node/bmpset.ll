@@ -203,7 +203,7 @@ vector.ph225:                                     ; preds = %.preheader51.prehea
   %i.cu = add nuw nsw i64 %n.vec227, %i.cs
   %broadcast.splatinsert228 = insertelement <4 x i32> poison, i32 %i.bx, i64 0
   %broadcast.splat229 = shufflevector <4 x i32> %broadcast.splatinsert228, <4 x i32> poison, <4 x i32> zeroinitializer ; 14 uses
-  %i.cv = getelementptr [4 x i8], ptr %i.al, i64 %i.cs ; 3 uses
+  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %i.cs ; 3 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 16 ; 2 uses
   %wide.load232 = load <4 x i32>, ptr %i.cv, align 4
   %wide.load233 = load <4 x i32>, ptr %i.cw, align 4
@@ -215,7 +215,7 @@ vector.ph225:                                     ; preds = %.preheader51.prehea
   br i1 %i.cz, label %middle.block235, label %vector.body230.1
 
 vector.body230.1:                                 ; preds = %vector.ph225
-  %i.da = getelementptr [4 x i8], ptr %i.am, i64 %i.cs ; 3 uses
+  %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %i.cs ; 3 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 16 ; 2 uses
   %wide.load232.1 = load <4 x i32>, ptr %i.da, align 4
   %wide.load233.1 = load <4 x i32>, ptr %i.db, align 4
@@ -227,7 +227,7 @@ vector.body230.1:                                 ; preds = %vector.ph225
   br i1 %i.de, label %middle.block235, label %vector.body230.2
 
 vector.body230.2:                                 ; preds = %vector.body230.1
-  %i.df = getelementptr [4 x i8], ptr %i.an, i64 %i.cs ; 3 uses
+  %i.df = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %i.cs ; 3 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 16 ; 2 uses
   %wide.load232.2 = load <4 x i32>, ptr %i.df, align 4
   %wide.load233.2 = load <4 x i32>, ptr %i.dg, align 4
@@ -239,7 +239,7 @@ vector.body230.2:                                 ; preds = %vector.body230.1
   br i1 %i.dj, label %middle.block235, label %vector.body230.3
 
 vector.body230.3:                                 ; preds = %vector.body230.2
-  %i.dk = getelementptr [4 x i8], ptr %i.ao, i64 %i.cs ; 3 uses
+  %i.dk = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %i.cs ; 3 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 16 ; 2 uses
   %wide.load232.3 = load <4 x i32>, ptr %i.dk, align 4
   %wide.load233.3 = load <4 x i32>, ptr %i.dl, align 4
@@ -251,7 +251,7 @@ vector.body230.3:                                 ; preds = %vector.body230.2
   br i1 %i.do, label %middle.block235, label %vector.body230.4
 
 vector.body230.4:                                 ; preds = %vector.body230.3
-  %i.dp = getelementptr [4 x i8], ptr %i.ap, i64 %i.cs ; 3 uses
+  %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.ap, i64 %i.cs ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 16 ; 2 uses
   %wide.load232.4 = load <4 x i32>, ptr %i.dp, align 4
   %wide.load233.4 = load <4 x i32>, ptr %i.dq, align 4
@@ -263,7 +263,7 @@ vector.body230.4:                                 ; preds = %vector.body230.3
   br i1 %i.dt, label %middle.block235, label %vector.body230.5
 
 vector.body230.5:                                 ; preds = %vector.body230.4
-  %i.du = getelementptr [4 x i8], ptr %i.aq, i64 %i.cs ; 3 uses
+  %i.du = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %i.cs ; 3 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 16 ; 2 uses
   %wide.load232.5 = load <4 x i32>, ptr %i.du, align 4
   %wide.load233.5 = load <4 x i32>, ptr %i.dv, align 4
@@ -275,7 +275,7 @@ vector.body230.5:                                 ; preds = %vector.body230.4
   br i1 %i.dy, label %middle.block235, label %vector.body230.6
 
 vector.body230.6:                                 ; preds = %vector.body230.5
-  %i.dz = getelementptr [4 x i8], ptr %i.ar, i64 %i.cs ; 3 uses
+  %i.dz = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %i.cs ; 3 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 16 ; 2 uses
   %wide.load232.6 = load <4 x i32>, ptr %i.dz, align 4
   %wide.load233.6 = load <4 x i32>, ptr %i.ea, align 4
@@ -678,7 +678,7 @@ vector.ph280:                                     ; preds = %.preheader51.prehea
   %i.jo = add nuw nsw i64 %n.vec282, %i.jm
   %broadcast.splatinsert283 = insertelement <4 x i32> poison, i32 %i.ir, i64 0
   %broadcast.splat284 = shufflevector <4 x i32> %broadcast.splatinsert283, <4 x i32> poison, <4 x i32> zeroinitializer ; 14 uses
-  %i.jp = getelementptr [4 x i8], ptr %i.gp, i64 %i.jm ; 3 uses
+  %i.jp = getelementptr inbounds nuw [4 x i8], ptr %i.gp, i64 %i.jm ; 3 uses
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jp, i64 16 ; 2 uses
   %wide.load287 = load <4 x i32>, ptr %i.jp, align 4
   %wide.load288 = load <4 x i32>, ptr %i.jq, align 4
@@ -690,7 +690,7 @@ vector.ph280:                                     ; preds = %.preheader51.prehea
   br i1 %i.jt, label %middle.block290, label %vector.body285.1
 
 vector.body285.1:                                 ; preds = %vector.ph280
-  %i.ju = getelementptr [4 x i8], ptr %i.gq, i64 %i.jm ; 3 uses
+  %i.ju = getelementptr inbounds nuw [4 x i8], ptr %i.gq, i64 %i.jm ; 3 uses
   %i.jv = getelementptr inbounds nuw i8, ptr %i.ju, i64 16 ; 2 uses
   %wide.load287.1 = load <4 x i32>, ptr %i.ju, align 4
   %wide.load288.1 = load <4 x i32>, ptr %i.jv, align 4
@@ -702,7 +702,7 @@ vector.body285.1:                                 ; preds = %vector.ph280
   br i1 %i.jy, label %middle.block290, label %vector.body285.2
 
 vector.body285.2:                                 ; preds = %vector.body285.1
-  %i.jz = getelementptr [4 x i8], ptr %i.gr, i64 %i.jm ; 3 uses
+  %i.jz = getelementptr inbounds nuw [4 x i8], ptr %i.gr, i64 %i.jm ; 3 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jz, i64 16 ; 2 uses
   %wide.load287.2 = load <4 x i32>, ptr %i.jz, align 4
   %wide.load288.2 = load <4 x i32>, ptr %i.ka, align 4
@@ -714,7 +714,7 @@ vector.body285.2:                                 ; preds = %vector.body285.1
   br i1 %i.kd, label %middle.block290, label %vector.body285.3
 
 vector.body285.3:                                 ; preds = %vector.body285.2
-  %i.ke = getelementptr [4 x i8], ptr %i.gs, i64 %i.jm ; 3 uses
+  %i.ke = getelementptr inbounds nuw [4 x i8], ptr %i.gs, i64 %i.jm ; 3 uses
   %i.kf = getelementptr inbounds nuw i8, ptr %i.ke, i64 16 ; 2 uses
   %wide.load287.3 = load <4 x i32>, ptr %i.ke, align 4
   %wide.load288.3 = load <4 x i32>, ptr %i.kf, align 4
@@ -726,7 +726,7 @@ vector.body285.3:                                 ; preds = %vector.body285.2
   br i1 %i.ki, label %middle.block290, label %vector.body285.4
 
 vector.body285.4:                                 ; preds = %vector.body285.3
-  %i.kj = getelementptr [4 x i8], ptr %i.gt, i64 %i.jm ; 3 uses
+  %i.kj = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.jm ; 3 uses
   %i.kk = getelementptr inbounds nuw i8, ptr %i.kj, i64 16 ; 2 uses
   %wide.load287.4 = load <4 x i32>, ptr %i.kj, align 4
   %wide.load288.4 = load <4 x i32>, ptr %i.kk, align 4
@@ -738,7 +738,7 @@ vector.body285.4:                                 ; preds = %vector.body285.3
   br i1 %i.kn, label %middle.block290, label %vector.body285.5
 
 vector.body285.5:                                 ; preds = %vector.body285.4
-  %i.ko = getelementptr [4 x i8], ptr %i.gu, i64 %i.jm ; 3 uses
+  %i.ko = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %i.jm ; 3 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %i.ko, i64 16 ; 2 uses
   %wide.load287.5 = load <4 x i32>, ptr %i.ko, align 4
   %wide.load288.5 = load <4 x i32>, ptr %i.kp, align 4
@@ -750,7 +750,7 @@ vector.body285.5:                                 ; preds = %vector.body285.4
   br i1 %i.ks, label %middle.block290, label %vector.body285.6
 
 vector.body285.6:                                 ; preds = %vector.body285.5
-  %i.kt = getelementptr [4 x i8], ptr %i.gv, i64 %i.jm ; 3 uses
+  %i.kt = getelementptr inbounds nuw [4 x i8], ptr %i.gv, i64 %i.jm ; 3 uses
   %i.ku = getelementptr inbounds nuw i8, ptr %i.kt, i64 16 ; 2 uses
   %wide.load287.6 = load <4 x i32>, ptr %i.kt, align 4
   %wide.load288.6 = load <4 x i32>, ptr %i.ku, align 4

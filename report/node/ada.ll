@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.g = shl i64 %index, 3
+  %i.g = shl nuw i64 %index, 3
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %i.g ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %i.h, align 1  ; 3 uses
@@ -608,7 +608,7 @@ vector.ph674:                                     ; preds = %.lr.ph.i.i.preheade
 
 vector.body677:                                   ; preds = %vector.body677, %vector.ph674
   %index678 = phi i64 [ 0, %vector.ph674 ], [ %index.next681, %vector.body677 ] ; 2 uses
-  %i.aa = shl i64 %index678, 3
+  %i.aa = shl nuw i64 %index678, 3
   %i.ab = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.aa ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16 ; 2 uses
   %wide.load679 = load <2 x i64>, ptr %i.ab, align 1, !noalias !52 ; 3 uses
@@ -1011,7 +1011,7 @@ vector.ph:                                        ; preds = %.lr.ph.i555.prehead
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.jw = shl i64 %index, 3
+  %i.jw = shl nuw i64 %index, 3
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jp, i64 %i.jw ; 3 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jx, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %i.jx, align 1 ; 3 uses
@@ -1414,9 +1414,9 @@ bb.ts:                                            ; preds = %bb.ah
   unreachable
 
 .critedge326:                                     ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread, %bb.mz, %.sink.split.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865
-  %.sroa.01503.2 = phi i16 [ %.sroa.01503.024032907, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931 ], [ %.sroa.01503.024032907, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sroa.01503.02403, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860 ], [ %.sroa.01503.024032907, %bb.mz ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sroa.01503.024032907, %.sink.split.i.i ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092 ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.sroa.01503.02403, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865 ]
-  %.15283 = phi i64 [ %.11279296629742984, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931 ], [ %.11279296629742984, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.92772950, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860 ], [ %.11279296629742984, %bb.mz ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.11279296629742984, %.sink.split.i.i ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092 ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.92772951, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865 ] ; 2 uses
-  %.18 = phi i32 [ %.12296729732989, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931 ], [ %.12296729732989, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.82952, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860 ], [ %.12296729732989, %bb.mz ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.12296729732989, %.sink.split.i.i ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092 ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.82953, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865 ]
+  %.sroa.01503.2 = phi i16 [ %.sroa.01503.024032907, %bb.mz ], [ %.sroa.01503.02403, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860 ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sroa.01503.024032907, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931 ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sroa.01503.024032907, %.sink.split.i.i ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092 ], [ %.sroa.01503.024032907, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread ], [ %.sroa.01503.02403, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865 ]
+  %.15283 = phi i64 [ %.11279296629742984, %bb.mz ], [ %.92772950, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860 ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.11279296629742984, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931 ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.11279296629742984, %.sink.split.i.i ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092 ], [ %.11279296629742984, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread ], [ %.92772951, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865 ] ; 2 uses
+  %.18 = phi i32 [ %.12296729732989, %bb.mz ], [ %.82952, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860 ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.12296729732989, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931 ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.12296729732989, %.sink.split.i.i ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092 ], [ %.12296729732989, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread ], [ %.82953, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865 ]
   %.not = icmp ugt i64 %.15283, %.sroa.01347.1
   br i1 %.not, label %.loopexit3090, label %bb.ah, !llvm.loop !94
 
@@ -1819,7 +1819,7 @@ vector.ph:                                        ; preds = %.lr.ph.i593.prehead
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.kg = shl i64 %index, 3
+  %i.kg = shl nuw i64 %index, 3
   %i.kh = getelementptr inbounds nuw i8, ptr %i.jz, i64 %i.kg ; 3 uses
   %i.ki = getelementptr inbounds nuw i8, ptr %i.kh, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %i.kh, align 1 ; 3 uses
@@ -2222,8 +2222,8 @@ bb.px:                                            ; preds = %bb.ah
   br label %bb.by, !llvm.loop !135
 
 .critedge369:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit892, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit897
-  %.15326 = phi i64 [ %.93202617, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit892 ], [ %.93202618, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit897 ] ; 2 uses
-  %.18 = phi i32 [ %.82619, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit892 ], [ %.82620, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit897 ]
+  %.15326 = phi i64 [ %.93202618, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit897 ], [ %.93202617, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit892 ] ; 2 uses
+  %.18 = phi i32 [ %.82620, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit897 ], [ %.82619, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit892 ]
   %.not = icmp ugt i64 %.15326, %.sroa.01243.1
   br i1 %.not, label %.loopexit2650, label %bb.ah, !llvm.loop !135
 
@@ -2626,7 +2626,7 @@ vector.ph:                                        ; preds = %.lr.ph.i558.prehead
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.js = shl i64 %index, 3
+  %i.js = shl nuw i64 %index, 3
   %i.jt = getelementptr inbounds nuw i8, ptr %i.jl, i64 %i.js ; 3 uses
   %i.ju = getelementptr inbounds nuw i8, ptr %i.jt, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %i.jt, align 1 ; 3 uses
@@ -3029,7 +3029,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.fx = shl i64 %index, 3
+  %i.fx = shl nuw i64 %index, 3
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fq, i64 %i.fx ; 3 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %i.fy, align 1 ; 3 uses
@@ -3432,7 +3432,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.gf = shl i64 %index, 3
+  %i.gf = shl nuw i64 %index, 3
   %i.gg = getelementptr inbounds nuw i8, ptr %i.fy, i64 %i.gf ; 3 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %i.gg, align 1 ; 3 uses
@@ -3835,7 +3835,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.l, %vector.body ]
   %vec.phi45 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.m, %vector.body ]
-  %i.g = shl i64 %index, 3
+  %i.g = shl nuw i64 %index, 3
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %i.g ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %i.h, align 1  ; 4 uses
@@ -4046,7 +4046,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ad = shl i64 %index, 3
+  %i.ad = shl nuw i64 %index, 3
   %i.ae = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.ad ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %i.ae, align 1 ; 3 uses

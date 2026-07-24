@@ -204,68 +204,68 @@ vector.ph:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %scevgep18, i8 14, i64 64, i1 false), !tbaa !21
   %scevgep = getelementptr i8, ptr %0, i64 192
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %scevgep, i8 15, i64 64, i1 false), !tbaa !21
-  %i.a = getelementptr i8, ptr %0, i64 256
-  %i.b = getelementptr i8, ptr %0, i64 272
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 256
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 272
   store <16 x i8> splat (i8 16), ptr %i.a, align 1, !tbaa !21
   store <16 x i8> splat (i8 16), ptr %i.b, align 1, !tbaa !21
-  %i.c = getelementptr i8, ptr %0, i64 288
-  %i.d = getelementptr i8, ptr %0, i64 304
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 288
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 304
   store <16 x i8> splat (i8 16), ptr %i.c, align 1, !tbaa !21
   store <16 x i8> splat (i8 16), ptr %i.d, align 1, !tbaa !21
-  %i.e = getelementptr i8, ptr %0, i64 320
-  %i.f = getelementptr i8, ptr %0, i64 336
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 320
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 336
   store <16 x i8> splat (i8 16), ptr %i.e, align 1, !tbaa !21
   store <16 x i8> splat (i8 16), ptr %i.f, align 1, !tbaa !21
-  %i.g = getelementptr i8, ptr %0, i64 352
-  %i.h = getelementptr i8, ptr %0, i64 368
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 352
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 368
   store <16 x i8> splat (i8 16), ptr %i.g, align 1, !tbaa !21
   store <16 x i8> splat (i8 16), ptr %i.h, align 1, !tbaa !21
-  %i.i = getelementptr i8, ptr %0, i64 384
-  %i.j = getelementptr i8, ptr %0, i64 400
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 384
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 400
   store <16 x i8> splat (i8 17), ptr %i.i, align 1, !tbaa !21
   store <16 x i8> splat (i8 17), ptr %i.j, align 1, !tbaa !21
-  %i.k = getelementptr i8, ptr %0, i64 416
-  %i.l = getelementptr i8, ptr %0, i64 432
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 416
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 432
   store <16 x i8> splat (i8 17), ptr %i.k, align 1, !tbaa !21
   store <16 x i8> splat (i8 17), ptr %i.l, align 1, !tbaa !21
-  %i.m = getelementptr i8, ptr %0, i64 448
-  %i.n = getelementptr i8, ptr %0, i64 464
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 448
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 464
   store <16 x i8> splat (i8 17), ptr %i.m, align 1, !tbaa !21
   store <16 x i8> splat (i8 17), ptr %i.n, align 1, !tbaa !21
-  %i.o = getelementptr i8, ptr %0, i64 480
-  %i.p = getelementptr i8, ptr %0, i64 496
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 480
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 496
   store <16 x i8> splat (i8 17), ptr %i.o, align 1, !tbaa !21
   store <16 x i8> splat (i8 17), ptr %i.p, align 1, !tbaa !21
-  %i.q = getelementptr i8, ptr %0, i64 512
-  %i.r = getelementptr i8, ptr %0, i64 528
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 512
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 528
   store <16 x i8> splat (i8 18), ptr %i.q, align 1, !tbaa !21
   store <16 x i8> splat (i8 18), ptr %i.r, align 1, !tbaa !21
-  %i.s = getelementptr i8, ptr %0, i64 544
-  %i.t = getelementptr i8, ptr %0, i64 560
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 544
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 560
   store <16 x i8> splat (i8 18), ptr %i.s, align 1, !tbaa !21
   store <16 x i8> splat (i8 18), ptr %i.t, align 1, !tbaa !21
-  %i.u = getelementptr i8, ptr %0, i64 576
-  %i.v = getelementptr i8, ptr %0, i64 592
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 576
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 592
   store <16 x i8> splat (i8 18), ptr %i.u, align 1, !tbaa !21
   store <16 x i8> splat (i8 18), ptr %i.v, align 1, !tbaa !21
-  %i.w = getelementptr i8, ptr %0, i64 608
-  %i.x = getelementptr i8, ptr %0, i64 624
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 608
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 624
   store <16 x i8> splat (i8 18), ptr %i.w, align 1, !tbaa !21
   store <16 x i8> splat (i8 18), ptr %i.x, align 1, !tbaa !21
-  %i.y = getelementptr i8, ptr %0, i64 640
-  %i.z = getelementptr i8, ptr %0, i64 656
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 640
+  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 656
   store <16 x i8> splat (i8 18), ptr %i.y, align 1, !tbaa !21
   store <16 x i8> splat (i8 18), ptr %i.z, align 1, !tbaa !21
-  %i.aa = getelementptr i8, ptr %0, i64 672
-  %i.ab = getelementptr i8, ptr %0, i64 688
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 672
+  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 688
   store <16 x i8> splat (i8 18), ptr %i.aa, align 1, !tbaa !21
   store <16 x i8> splat (i8 18), ptr %i.ab, align 1, !tbaa !21
-  %i.ac = getelementptr i8, ptr %0, i64 704
-  %i.ad = getelementptr i8, ptr %0, i64 720
+  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 704
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 720
   store <16 x i8> splat (i8 18), ptr %i.ac, align 1, !tbaa !21
   store <16 x i8> splat (i8 18), ptr %i.ad, align 1, !tbaa !21
-  %i.ae = getelementptr i8, ptr %0, i64 736
-  %i.af = getelementptr i8, ptr %0, i64 752
+  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 736
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 752
   store <16 x i8> splat (i8 18), ptr %i.ae, align 1, !tbaa !21
   store <16 x i8> splat (i8 18), ptr %i.af, align 1, !tbaa !21
   %i.ag = getelementptr i8, ptr %0, i64 768

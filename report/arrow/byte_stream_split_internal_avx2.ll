@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.dh = add i64 %i.cy, %index                   ; 2 uses
+  %i.dh = add nuw i64 %i.cy, %index               ; 2 uses
   %i.di = getelementptr i8, ptr %0, i64 %i.dh     ; 5 uses
   %i.dj = getelementptr i8, ptr %i.di, i64 16
   %i.dk = getelementptr i8, ptr %i.di, i64 32
@@ -267,7 +267,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index115 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next118, %vec.epilog.vector.body ] ; 2 uses
-  %i.en = add i64 %i.cy, %index115                ; 2 uses
+  %i.en = add nuw i64 %i.cy, %index115            ; 2 uses
   %i.eo = getelementptr i8, ptr %0, i64 %i.en     ; 2 uses
   %wide.load116 = load <8 x i8>, ptr %i.eo, align 1, !tbaa !7, !alias.scope !26
   %i.ep = getelementptr i8, ptr %i.eo, i64 %3
@@ -670,7 +670,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ct = add i64 %i.ce, %index                   ; 2 uses
+  %i.ct = add nuw i64 %i.ce, %index               ; 2 uses
   %i.cu = getelementptr i8, ptr %0, i64 %i.ct     ; 4 uses
   %wide.load = load <8 x i8>, ptr %i.cu, align 1, !tbaa !7, !alias.scope !58
   %i.cv = getelementptr i8, ptr %i.cu, i64 %3
@@ -1073,7 +1073,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ex = add i64 %i.dw, %index                   ; 2 uses
+  %i.ex = add nuw i64 %i.dw, %index               ; 2 uses
   %i.ey = getelementptr i8, ptr %0, i64 %i.ex     ; 8 uses
   %wide.load = load <4 x i8>, ptr %i.ey, align 1, !tbaa !7, !alias.scope !101
   %i.ez = getelementptr i8, ptr %i.ey, i64 %3
@@ -1476,7 +1476,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.dc = add i64 %i.ct, %index                   ; 3 uses
+  %i.dc = add nuw i64 %i.ct, %index               ; 3 uses
   %i.dd = shl nuw nsw i64 %i.dc, 1
   %i.de = shl i64 %i.dc, 1
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 %i.dd
@@ -1517,7 +1517,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index29 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next33, %vec.epilog.vector.body ] ; 2 uses
-  %i.do = add i64 %i.ct, %index29                 ; 2 uses
+  %i.do = add nuw i64 %i.ct, %index29             ; 2 uses
   %i.dp = shl nuw nsw i64 %i.do, 1
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 %i.dp
   %i.dr = getelementptr i8, ptr %3, i64 %i.do     ; 2 uses
@@ -1920,7 +1920,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ds = add i64 %i.dj, %index                   ; 2 uses
+  %i.ds = add nuw i64 %i.dj, %index               ; 2 uses
   %i.dt = shl nuw nsw i64 %i.ds, 2
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 %i.dt
   %i.dv = getelementptr i8, ptr %3, i64 %i.ds     ; 4 uses
@@ -1957,7 +1957,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index60 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next66, %vec.epilog.vector.body ] ; 2 uses
-  %i.eb = add i64 %i.dj, %index60                 ; 2 uses
+  %i.eb = add nuw i64 %i.dj, %index60             ; 2 uses
   %i.ec = shl nuw nsw i64 %i.eb, 2
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 %i.ec
   %i.ee = getelementptr i8, ptr %3, i64 %i.eb     ; 4 uses
@@ -2360,7 +2360,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bbs = add i64 %i.bbf, %index                 ; 33 uses
+  %i.bbs = add nuw i64 %i.bbf, %index             ; 33 uses
   %i.bbt = shl nuw nsw i64 %i.bbs, 3
   %i.bbu = shl i64 %i.bbs, 3
   %i.bbv = shl i64 %i.bbs, 3
@@ -2763,7 +2763,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index310 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next311, %vec.epilog.vector.body ] ; 2 uses
-  %i.cic = add i64 %i.bbf, %index310              ; 17 uses
+  %i.cic = add nuw i64 %i.bbf, %index310          ; 17 uses
   %i.cid = shl nuw nsw i64 %i.cic, 3
   %i.cie = shl i64 %i.cic, 3
   %i.cif = shl i64 %i.cic, 3

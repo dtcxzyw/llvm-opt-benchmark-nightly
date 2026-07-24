@@ -203,7 +203,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.aj = shl i64 %index, 2
+  %i.aj = shl nuw i64 %index, 2
   %gep = getelementptr i8, ptr %invariant.gep, i64 %i.aj ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %gep, i64 16
   store <4 x i32> splat (i32 7), ptr %gep, align 4, !tbaa !3
@@ -606,7 +606,7 @@ vector.ph:                                        ; preds = %.lr.ph.i20.preheade
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.aw = shl i64 %index, 2
+  %i.aw = shl nuw i64 %index, 2
   %gep = getelementptr i8, ptr %invariant.gep, i64 %i.aw ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %gep, i64 16
   store <4 x i32> splat (i32 7), ptr %gep, align 4, !tbaa !3

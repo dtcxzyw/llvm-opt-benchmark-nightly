@@ -203,7 +203,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.fg = getelementptr [4 x i8], ptr %.0.lcssa.sroa.phi, i64 %index ; 2 uses
+  %i.fg = getelementptr inbounds nuw [4 x i8], ptr %.0.lcssa.sroa.phi, i64 %index ; 2 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 16
   store <4 x i32> splat (i32 100000), ptr %i.fg, align 4, !tbaa !4
   store <4 x i32> splat (i32 100000), ptr %i.fh, align 4, !tbaa !4

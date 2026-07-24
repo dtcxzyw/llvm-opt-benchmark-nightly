@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.mod.vf = and i64 %i.eu, 24
   %n.vec = and i64 %i.eu, -32                     ; 4 uses
   %i.ez = add i64 %.8198, %n.vec
-  %i.fa = getelementptr i8, ptr %4, i64 %.8198
+  %i.fa = getelementptr inbounds nuw i8, ptr %4, i64 %.8198
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -213,7 +213,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.fc = getelementptr inbounds nuw i8, ptr %i.fb, i64 16
   %wide.load = load <16 x i8>, ptr %i.fb, align 1, !tbaa !79
   %wide.load220 = load <16 x i8>, ptr %i.fc, align 1, !tbaa !79
-  %i.fd = getelementptr i8, ptr %i.fa, i64 %index ; 2 uses
+  %i.fd = getelementptr inbounds nuw i8, ptr %i.fa, i64 %index ; 2 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 16
   store <16 x i8> %wide.load, ptr %i.fd, align 1, !tbaa !79
   store <16 x i8> %wide.load220, ptr %i.fe, align 1, !tbaa !79
@@ -233,14 +233,14 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec222 = and i64 %i.eu, -8                   ; 3 uses
   %i.fg = add i64 %.8198, %n.vec222
-  %i.fh = getelementptr i8, ptr %4, i64 %.8198
+  %i.fh = getelementptr inbounds nuw i8, ptr %4, i64 %.8198
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index223 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next225, %vec.epilog.vector.body ] ; 3 uses
   %i.fi = getelementptr inbounds i8, ptr %i.eq, i64 %index223
   %wide.load224 = load <8 x i8>, ptr %i.fi, align 1, !tbaa !79
-  %i.fj = getelementptr i8, ptr %i.fh, i64 %index223
+  %i.fj = getelementptr inbounds nuw i8, ptr %i.fh, i64 %index223
   store <8 x i8> %wide.load224, ptr %i.fj, align 1, !tbaa !79
   %index.next225 = add nuw i64 %index223, 8       ; 2 uses
   %i.fk = icmp eq i64 %index.next225, %n.vec222
@@ -643,7 +643,7 @@ vector.ph107:                                     ; preds = %.lr.ph.us.preheader
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
   %index111 = phi i64 [ 0, %vector.ph107 ], [ %index.next114, %vector.body110 ] ; 2 uses
-  %i.ax = add i64 %.05470.us, %index111           ; 2 uses
+  %i.ax = add nuw i64 %.05470.us, %index111       ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %wide.load112 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !33
@@ -714,7 +714,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bv = add i64 %.05470, %index                 ; 2 uses
+  %i.bv = add nuw i64 %.05470, %index             ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %wide.load = load <2 x i64>, ptr %i.bw, align 8, !tbaa !33
@@ -1117,7 +1117,7 @@ vector.ph107:                                     ; preds = %.lr.ph.us.preheader
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
   %index111 = phi i64 [ 0, %vector.ph107 ], [ %index.next114, %vector.body110 ] ; 2 uses
-  %i.ax = add i64 %.05470.us, %index111           ; 2 uses
+  %i.ax = add nuw i64 %.05470.us, %index111       ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %wide.load112 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !33
@@ -1188,7 +1188,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bv = add i64 %.05470, %index                 ; 2 uses
+  %i.bv = add nuw i64 %.05470, %index             ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %wide.load = load <2 x i64>, ptr %i.bw, align 8, !tbaa !33
@@ -1591,7 +1591,7 @@ vector.ph107:                                     ; preds = %.lr.ph.us.preheader
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
   %index111 = phi i64 [ 0, %vector.ph107 ], [ %index.next114, %vector.body110 ] ; 2 uses
-  %i.ax = add i64 %.05470.us, %index111           ; 2 uses
+  %i.ax = add nuw i64 %.05470.us, %index111       ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %wide.load112 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !33
@@ -1662,7 +1662,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bv = add i64 %.05470, %index                 ; 2 uses
+  %i.bv = add nuw i64 %.05470, %index             ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %wide.load = load <2 x i64>, ptr %i.bw, align 8, !tbaa !33
@@ -2065,7 +2065,7 @@ vector.ph107:                                     ; preds = %.lr.ph.us.preheader
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
   %index111 = phi i64 [ 0, %vector.ph107 ], [ %index.next114, %vector.body110 ] ; 2 uses
-  %i.ax = add i64 %.05470.us, %index111           ; 2 uses
+  %i.ax = add nuw i64 %.05470.us, %index111       ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %wide.load112 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !33
@@ -2136,7 +2136,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bv = add i64 %.05470, %index                 ; 2 uses
+  %i.bv = add nuw i64 %.05470, %index             ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %wide.load = load <2 x i64>, ptr %i.bw, align 8, !tbaa !33
@@ -2539,7 +2539,7 @@ vector.ph107:                                     ; preds = %.lr.ph.us.preheader
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
   %index111 = phi i64 [ 0, %vector.ph107 ], [ %index.next114, %vector.body110 ] ; 2 uses
-  %i.ax = add i64 %.05470.us, %index111           ; 2 uses
+  %i.ax = add nuw i64 %.05470.us, %index111       ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %wide.load112 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !33
@@ -2610,7 +2610,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bv = add i64 %.05470, %index                 ; 2 uses
+  %i.bv = add nuw i64 %.05470, %index             ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %wide.load = load <2 x i64>, ptr %i.bw, align 8, !tbaa !33
@@ -3013,7 +3013,7 @@ vector.ph107:                                     ; preds = %.lr.ph.us.preheader
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
   %index111 = phi i64 [ 0, %vector.ph107 ], [ %index.next114, %vector.body110 ] ; 2 uses
-  %i.ax = add i64 %.05470.us, %index111           ; 2 uses
+  %i.ax = add nuw i64 %.05470.us, %index111       ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %wide.load112 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !33
@@ -3084,7 +3084,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bv = add i64 %.05470, %index                 ; 2 uses
+  %i.bv = add nuw i64 %.05470, %index             ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %wide.load = load <2 x i64>, ptr %i.bw, align 8, !tbaa !33
@@ -3487,7 +3487,7 @@ vector.ph107:                                     ; preds = %.lr.ph.us.preheader
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
   %index111 = phi i64 [ 0, %vector.ph107 ], [ %index.next114, %vector.body110 ] ; 2 uses
-  %i.ax = add i64 %.05470.us, %index111           ; 2 uses
+  %i.ax = add nuw i64 %.05470.us, %index111       ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %wide.load112 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !33
@@ -3558,7 +3558,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bv = add i64 %.05470, %index                 ; 2 uses
+  %i.bv = add nuw i64 %.05470, %index             ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %wide.load = load <2 x i64>, ptr %i.bw, align 8, !tbaa !33
@@ -3961,7 +3961,7 @@ vector.ph107:                                     ; preds = %.lr.ph.us.preheader
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
   %index111 = phi i64 [ 0, %vector.ph107 ], [ %index.next114, %vector.body110 ] ; 2 uses
-  %i.ax = add i64 %.05470.us, %index111           ; 2 uses
+  %i.ax = add nuw i64 %.05470.us, %index111       ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %wide.load112 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !33
@@ -4032,7 +4032,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bv = add i64 %.05470, %index                 ; 2 uses
+  %i.bv = add nuw i64 %.05470, %index             ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %wide.load = load <2 x i64>, ptr %i.bw, align 8, !tbaa !33
@@ -4435,7 +4435,7 @@ vector.ph107:                                     ; preds = %.lr.ph.us.preheader
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
   %index111 = phi i64 [ 0, %vector.ph107 ], [ %index.next114, %vector.body110 ] ; 2 uses
-  %i.ax = add i64 %.05470.us, %index111           ; 2 uses
+  %i.ax = add nuw i64 %.05470.us, %index111       ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %wide.load112 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !33
@@ -4506,7 +4506,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bv = add i64 %.05470, %index                 ; 2 uses
+  %i.bv = add nuw i64 %.05470, %index             ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %wide.load = load <2 x i64>, ptr %i.bw, align 8, !tbaa !33
@@ -4909,7 +4909,7 @@ vector.ph107:                                     ; preds = %.lr.ph.us.preheader
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
   %index111 = phi i64 [ 0, %vector.ph107 ], [ %index.next114, %vector.body110 ] ; 2 uses
-  %i.ax = add i64 %.05470.us, %index111           ; 2 uses
+  %i.ax = add nuw i64 %.05470.us, %index111       ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %wide.load112 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !33
@@ -4980,7 +4980,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bv = add i64 %.05470, %index                 ; 2 uses
+  %i.bv = add nuw i64 %.05470, %index             ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %wide.load = load <2 x i64>, ptr %i.bw, align 8, !tbaa !33
@@ -5383,7 +5383,7 @@ vector.ph107:                                     ; preds = %.lr.ph.us.preheader
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
   %index111 = phi i64 [ 0, %vector.ph107 ], [ %index.next114, %vector.body110 ] ; 2 uses
-  %i.ax = add i64 %.05470.us, %index111           ; 2 uses
+  %i.ax = add nuw i64 %.05470.us, %index111       ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %wide.load112 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !33
@@ -5454,7 +5454,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bv = add i64 %.05470, %index                 ; 2 uses
+  %i.bv = add nuw i64 %.05470, %index             ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %wide.load = load <2 x i64>, ptr %i.bw, align 8, !tbaa !33
@@ -5857,7 +5857,7 @@ vector.ph107:                                     ; preds = %.lr.ph.us.preheader
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
   %index111 = phi i64 [ 0, %vector.ph107 ], [ %index.next114, %vector.body110 ] ; 2 uses
-  %i.ax = add i64 %.05470.us, %index111           ; 2 uses
+  %i.ax = add nuw i64 %.05470.us, %index111       ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   %wide.load112 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !33
@@ -5928,7 +5928,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bv = add i64 %.05470, %index                 ; 2 uses
+  %i.bv = add nuw i64 %.05470, %index             ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %wide.load = load <2 x i64>, ptr %i.bw, align 8, !tbaa !33

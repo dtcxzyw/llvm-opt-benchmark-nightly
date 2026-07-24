@@ -203,7 +203,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -273,7 +273,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -384,7 +384,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -787,7 +787,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -857,7 +857,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -968,7 +968,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -1371,7 +1371,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -1441,7 +1441,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -1552,7 +1552,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -1955,7 +1955,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -2025,7 +2025,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -2136,7 +2136,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -2539,7 +2539,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -2609,7 +2609,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -2720,7 +2720,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -3123,7 +3123,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -3193,7 +3193,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -3304,7 +3304,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -3707,7 +3707,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -3777,7 +3777,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -3888,7 +3888,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -4291,7 +4291,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -4361,7 +4361,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -4472,7 +4472,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -4875,7 +4875,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -4945,7 +4945,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -5056,7 +5056,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -5459,7 +5459,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -5529,7 +5529,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -5640,7 +5640,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -6043,7 +6043,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -6113,7 +6113,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -6224,7 +6224,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -6627,7 +6627,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -6697,7 +6697,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -6808,7 +6808,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -7211,7 +7211,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -7281,7 +7281,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -7392,7 +7392,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -7795,7 +7795,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -7865,7 +7865,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -7976,7 +7976,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -8379,7 +8379,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -8449,7 +8449,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -8560,7 +8560,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -8963,7 +8963,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -9033,7 +9033,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -9144,7 +9144,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -9547,7 +9547,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -9617,7 +9617,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -9728,7 +9728,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -10131,7 +10131,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -10201,7 +10201,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -10312,7 +10312,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -10715,7 +10715,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -10785,7 +10785,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -10896,7 +10896,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -11299,7 +11299,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -11369,7 +11369,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -11480,7 +11480,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -11883,7 +11883,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -11953,7 +11953,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -12064,7 +12064,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -12467,7 +12467,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -12537,7 +12537,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -12648,7 +12648,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -13051,7 +13051,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -13121,7 +13121,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -13232,7 +13232,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -13635,7 +13635,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -13705,7 +13705,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -13816,7 +13816,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -14219,7 +14219,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -14289,7 +14289,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -14400,7 +14400,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -14803,7 +14803,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -14873,7 +14873,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -14984,7 +14984,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -15387,7 +15387,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -15457,7 +15457,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -15568,7 +15568,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -15971,7 +15971,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -16041,7 +16041,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -16152,7 +16152,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -16555,7 +16555,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -16625,7 +16625,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -16736,7 +16736,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -17139,7 +17139,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -17209,7 +17209,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -17320,7 +17320,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -17723,7 +17723,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -17793,7 +17793,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -17904,7 +17904,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -18307,7 +18307,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -18377,7 +18377,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -18488,7 +18488,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -18891,7 +18891,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -18961,7 +18961,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -19072,7 +19072,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -19475,7 +19475,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -19545,7 +19545,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -19656,7 +19656,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -20059,7 +20059,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -20129,7 +20129,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -20240,7 +20240,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12
@@ -20643,7 +20643,7 @@ vector.ph307:                                     ; preds = %vector.memcheck298
 
 vector.body310:                                   ; preds = %vector.body310, %vector.ph307
   %index311 = phi i64 [ 0, %vector.ph307 ], [ %index.next312, %vector.body310 ] ; 5 uses
-  %i.na = add i64 %index311, 32768                ; 2 uses
+  %i.na = add nuw i64 %index311, 32768            ; 2 uses
   %i.nb = mul nuw nsw i64 %i.na, 12
   %i.nc = mul i64 %index311, 12
   %i.nd = mul i64 %index311, 12
@@ -20713,7 +20713,7 @@ vector.ph275:                                     ; preds = %vector.memcheck266
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph275
   %index279 = phi i64 [ 0, %vector.ph275 ], [ %index.next280, %vector.body278 ] ; 5 uses
-  %i.ok = add i64 %index279, 32768                ; 2 uses
+  %i.ok = add nuw i64 %index279, 32768            ; 2 uses
   %i.ol = mul nuw nsw i64 %i.ok, 12
   %i.om = mul i64 %index279, 12
   %i.on = mul i64 %index279, 12
@@ -20824,7 +20824,7 @@ vector.ph244:                                     ; preds = %.preheader.split105
 
 vector.body247:                                   ; preds = %vector.body247, %vector.ph244
   %index248 = phi i64 [ 0, %vector.ph244 ], [ %index.next249, %vector.body247 ] ; 5 uses
-  %i.qh = add i64 %index248, 32768                ; 4 uses
+  %i.qh = add nuw i64 %index248, 32768            ; 4 uses
   %i.qi = mul nuw nsw i64 %i.qh, 12
   %i.qj = mul i64 %index248, 12
   %i.qk = mul i64 %index248, 12

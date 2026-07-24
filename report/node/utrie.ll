@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.preheader
   %i.an = add nuw nsw i64 %i.am, %.idx
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %3, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 8 uses
-  %i.ao = getelementptr i8, ptr %i.ai, i64 %.idx  ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.ai, i64 %.idx ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 16
   store <4 x i32> %broadcast.splat, ptr %i.ao, align 4
   store <4 x i32> %broadcast.splat, ptr %i.ap, align 4
@@ -212,8 +212,8 @@ vector.ph:                                        ; preds = %.lr.ph.i.preheader
   br i1 %i.aq, label %middle.block, label %vector.body.1
 
 vector.body.1:                                    ; preds = %vector.ph
-  %i.ar = getelementptr i8, ptr %i.ai, i64 32
-  %i.as = getelementptr i8, ptr %i.ar, i64 %.idx  ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %.idx ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 16
   store <4 x i32> %broadcast.splat, ptr %i.as, align 4
   store <4 x i32> %broadcast.splat, ptr %i.at, align 4
@@ -221,8 +221,8 @@ vector.body.1:                                    ; preds = %vector.ph
   br i1 %i.au, label %middle.block, label %vector.body.2
 
 vector.body.2:                                    ; preds = %vector.body.1
-  %i.av = getelementptr i8, ptr %i.ai, i64 64
-  %i.aw = getelementptr i8, ptr %i.av, i64 %.idx  ; 2 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %i.ai, i64 64
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %.idx ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   store <4 x i32> %broadcast.splat, ptr %i.aw, align 4
   store <4 x i32> %broadcast.splat, ptr %i.ax, align 4
@@ -230,8 +230,8 @@ vector.body.2:                                    ; preds = %vector.body.1
   br i1 %i.ay, label %middle.block, label %vector.body.3
 
 vector.body.3:                                    ; preds = %vector.body.2
-  %i.az = getelementptr i8, ptr %i.ai, i64 96
-  %i.ba = getelementptr i8, ptr %i.az, i64 %.idx  ; 2 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %i.ai, i64 96
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 %.idx ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 16
   store <4 x i32> %broadcast.splat, ptr %i.ba, align 4
   store <4 x i32> %broadcast.splat, ptr %i.bb, align 4

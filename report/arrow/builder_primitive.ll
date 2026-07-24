@@ -204,8 +204,8 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.bd = shl i64 %index, 3
-  %i.be = add i64 %.1, %i.bd                      ; 16 uses
+  %i.bd = shl nuw i64 %index, 3
+  %i.be = add nuw i64 %.1, %i.bd                  ; 16 uses
   %next.gep = getelementptr i8, ptr %.040.i.i, i64 %index
   %i.bf = getelementptr i8, ptr %2, i64 %i.be     ; 8 uses
   %i.bg = getelementptr i8, ptr %2, i64 %i.be     ; 8 uses
@@ -608,8 +608,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index54 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next56, %vec.epilog.vector.body ] ; 3 uses
-  %i.rq = shl i64 %index54, 3
-  %i.rr = add i64 %.1, %i.rq                      ; 4 uses
+  %i.rq = shl nuw i64 %index54, 3
+  %i.rr = add nuw i64 %.1, %i.rq                  ; 4 uses
   %next.gep55 = getelementptr i8, ptr %.040.i.i, i64 %index54
   %i.rs = getelementptr i8, ptr %2, i64 %i.rr     ; 8 uses
   %i.rt = getelementptr i8, ptr %2, i64 %i.rr     ; 8 uses
@@ -1012,8 +1012,8 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.bb = shl i64 %index, 3
-  %i.bc = add i64 %.1, %i.bb                      ; 16 uses
+  %i.bb = shl nuw i64 %index, 3
+  %i.bc = add nuw i64 %.1, %i.bb                  ; 16 uses
   %next.gep = getelementptr i8, ptr %.040.i.i, i64 %index
   %i.bd = getelementptr i8, ptr %2, i64 %i.bc     ; 8 uses
   %i.be = getelementptr i8, ptr %2, i64 %i.bc     ; 8 uses
@@ -1416,8 +1416,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index51 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next53, %vec.epilog.vector.body ] ; 3 uses
-  %i.ro = shl i64 %index51, 3
-  %i.rp = add i64 %.1, %i.ro                      ; 4 uses
+  %i.ro = shl nuw i64 %index51, 3
+  %i.rp = add nuw i64 %.1, %i.ro                  ; 4 uses
   %next.gep52 = getelementptr i8, ptr %.040.i.i, i64 %index51
   %i.rq = getelementptr i8, ptr %2, i64 %i.rp     ; 8 uses
   %i.rr = getelementptr i8, ptr %2, i64 %i.rp     ; 8 uses

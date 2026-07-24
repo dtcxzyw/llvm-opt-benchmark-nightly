@@ -202,7 +202,7 @@ vector.ph257:                                     ; preds = %.lr.ph190
 
 vector.body262:                                   ; preds = %vector.body262, %vector.ph257
   %index263 = phi i64 [ 0, %vector.ph257 ], [ %index.next268, %vector.body262 ] ; 2 uses
-  %i.gh = add i64 %indvars.iv214, %index263       ; 3 uses
+  %i.gh = add nuw i64 %indvars.iv214, %index263   ; 3 uses
   %i.gi = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.gh ; 2 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gi, i64 16
   %wide.load264 = load <2 x double>, ptr %i.gi, align 8, !tbaa !11
@@ -509,7 +509,7 @@ vector.ph:                                        ; preds = %.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.lm = add i64 %indvars.iv214, %index          ; 2 uses
+  %i.lm = add nuw i64 %indvars.iv214, %index      ; 2 uses
   %i.ln = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.lm ; 2 uses
   %i.lo = getelementptr inbounds nuw i8, ptr %i.ln, i64 16
   %wide.load = load <2 x double>, ptr %i.ln, align 8, !tbaa !11

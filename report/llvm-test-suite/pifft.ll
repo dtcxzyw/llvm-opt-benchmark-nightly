@@ -203,7 +203,7 @@ vector.ph57:                                      ; preds = %.lr.ph.preheader.i
 
 vector.body60:                                    ; preds = %vector.body60, %vector.ph57
   %index61 = phi i64 [ 0, %vector.ph57 ], [ %index.next63, %vector.body60 ] ; 2 uses
-  %.idx = shl i64 %index61, 4
+  %.idx = shl nuw i64 %index61, 4
   %i.at = getelementptr inbounds nuw i8, ptr %3, i64 %.idx
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 24 ; 2 uses
   %wide.vec = load <4 x double>, ptr %i.au, align 8, !tbaa !24 ; 2 uses
@@ -606,7 +606,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.dp = shl i64 %index, 1
+  %i.dp = shl nuw i64 %index, 1
   %i.dq = or disjoint i64 %i.dp, 3                ; 2 uses
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.dq
   %wide.vec = load <4 x double>, ptr %i.dr, align 8, !tbaa !24, !alias.scope !64 ; 2 uses
@@ -797,7 +797,7 @@ vector.ph209:                                     ; preds = %vector.memcheck198
 
 vector.body212:                                   ; preds = %vector.body212, %vector.ph209
   %index213 = phi i64 [ 0, %vector.ph209 ], [ %index.next221, %vector.body212 ] ; 2 uses
-  %i.hd = shl i64 %index213, 1
+  %i.hd = shl nuw i64 %index213, 1
   %i.he = or disjoint i64 %i.hd, 3                ; 2 uses
   %i.hf = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.he
   %wide.vec214 = load <4 x double>, ptr %i.hf, align 8, !tbaa !24, !alias.scope !71 ; 2 uses
@@ -997,7 +997,7 @@ vector.ph241:                                     ; preds = %vector.memcheck225
 
 vector.body244:                                   ; preds = %vector.body244, %vector.ph241
   %index245 = phi i64 [ 0, %vector.ph241 ], [ %index.next256, %vector.body244 ] ; 2 uses
-  %i.kn = shl i64 %index245, 1
+  %i.kn = shl nuw i64 %index245, 1
   %i.ko = or disjoint i64 %i.kn, 3                ; 3 uses
   %i.kp = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.ko
   %wide.vec246 = load <4 x double>, ptr %i.kp, align 8, !tbaa !24, !alias.scope !78 ; 2 uses
@@ -1194,7 +1194,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i2
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %.idx = shl i64 %index, 4
+  %.idx = shl nuw i64 %index, 4
   %i.be = getelementptr inbounds nuw i8, ptr %5, i64 %.idx
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 24 ; 2 uses
   %wide.vec = load <4 x double>, ptr %i.bf, align 8, !tbaa !24 ; 2 uses
@@ -1597,7 +1597,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.dn = shl i64 %index, 1
+  %i.dn = shl nuw i64 %index, 1
   %i.do = or disjoint i64 %i.dn, 3                ; 2 uses
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.do
   %wide.vec = load <4 x double>, ptr %i.dp, align 8, !tbaa !24, !alias.scope !93 ; 2 uses
@@ -1689,7 +1689,7 @@ vector.ph124:                                     ; preds = %.lr.ph.preheader.i9
 
 vector.body127:                                   ; preds = %vector.body127, %vector.ph124
   %index128 = phi i64 [ 0, %vector.ph124 ], [ %index.next133, %vector.body127 ] ; 2 uses
-  %.idx = shl i64 %index128, 4
+  %.idx = shl nuw i64 %index128, 4
   %i.fj = getelementptr inbounds nuw i8, ptr %6, i64 %.idx
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 24 ; 2 uses
   %wide.vec129 = load <4 x double>, ptr %i.fk, align 8, !tbaa !24 ; 2 uses
@@ -2092,7 +2092,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %.idx = shl i64 %index, 4
+  %.idx = shl nuw i64 %index, 4
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 %.idx
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 24 ; 2 uses
   %wide.vec = load <4 x double>, ptr %i.p, align 8, !tbaa !24 ; 2 uses
@@ -2380,7 +2380,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.x = shl i64 %index, 1
+  %i.x = shl nuw i64 %index, 1
   %i.y = or disjoint i64 %i.x, 3                  ; 2 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.y
   %wide.vec = load <4 x double>, ptr %i.z, align 8, !tbaa !24, !alias.scope !131 ; 2 uses
@@ -2735,7 +2735,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.y = shl i64 %index, 1
+  %i.y = shl nuw i64 %index, 1
   %i.z = or disjoint i64 %i.y, 3                  ; 3 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.z
   %wide.vec = load <4 x double>, ptr %i.aa, align 8, !tbaa !24, !alias.scope !142 ; 2 uses
@@ -3036,7 +3036,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.cz = shl i64 %index, 1
+  %i.cz = shl nuw i64 %index, 1
   %i.da = or disjoint i64 %i.cz, 3                ; 2 uses
   %i.db = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.da
   %wide.vec = load <4 x double>, ptr %i.db, align 8, !tbaa !24, !alias.scope !152 ; 2 uses
@@ -3271,7 +3271,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bt = shl i64 %index, 1
+  %i.bt = shl nuw i64 %index, 1
   %i.bu = or disjoint i64 %i.bt, 3                ; 2 uses
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.bu
   %wide.vec = load <4 x double>, ptr %i.bv, align 8, !tbaa !24, !alias.scope !160 ; 2 uses
@@ -3374,7 +3374,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %.idx = shl i64 %index, 4
+  %.idx = shl nuw i64 %index, 4
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 %.idx
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 24 ; 2 uses
   %wide.vec = load <4 x double>, ptr %i.p, align 8, !tbaa !24 ; 2 uses
@@ -3777,7 +3777,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.preheade
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %.idx = shl i64 %index, 4
+  %.idx = shl nuw i64 %index, 4
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 %.idx
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 24 ; 2 uses
   %wide.vec = load <4 x double>, ptr %i.az, align 8, !tbaa !24 ; 2 uses
@@ -3934,7 +3934,7 @@ vector.ph196:                                     ; preds = %.lr.ph.preheader.i.
 
 vector.body199:                                   ; preds = %vector.body199, %vector.ph196
   %index200 = phi i64 [ 0, %vector.ph196 ], [ %index.next205, %vector.body199 ] ; 2 uses
-  %.idx209 = shl i64 %index200, 4
+  %.idx209 = shl nuw i64 %index200, 4
   %i.dl = getelementptr inbounds nuw i8, ptr %7, i64 %.idx209
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 24 ; 2 uses
   %wide.vec201 = load <4 x double>, ptr %i.dm, align 8, !tbaa !24 ; 2 uses

@@ -203,11 +203,11 @@ vector.ph12:                                      ; preds = %vector.body
 vector.body13:                                    ; preds = %vector.body13, %vector.ph12
   %index14 = phi i64 [ 0, %vector.ph12 ], [ %index.next21, %vector.body13 ] ; 3 uses
   %vector.recur16 = phi <2 x i64> [ %vector.recur.init15, %vector.ph12 ], [ %wide.load18, %vector.body13 ]
-  %i.af = getelementptr [8 x i8], ptr %0, i64 %index14 ; 4 uses
-  %i.ag = getelementptr i8, ptr %i.af, i64 1248
-  %i.ah = getelementptr [8 x i8], ptr %0, i64 %index14 ; 2 uses
-  %i.ai = getelementptr i8, ptr %i.ah, i64 1256
-  %i.aj = getelementptr i8, ptr %i.ah, i64 1272
+  %i.af = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %index14 ; 4 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 1248
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %index14 ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 1256
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 1272
   %wide.load17 = load <2 x i64>, ptr %i.ai, align 8, !tbaa !392 ; 4 uses
   %wide.load18 = load <2 x i64>, ptr %i.aj, align 8, !tbaa !392 ; 5 uses
   %i.ak = shufflevector <2 x i64> %vector.recur16, <2 x i64> %wide.load17, <2 x i32> <i32 1, i32 2>
@@ -233,7 +233,7 @@ vector.body13:                                    ; preds = %vector.body13, %vec
   %i.bc = select <2 x i1> %i.ba, <2 x i64> zeroinitializer, <2 x i64> splat (i64 -5403634167711393303)
   %i.bd = xor <2 x i64> %i.av, %i.bb
   %i.be = xor <2 x i64> %i.aw, %i.bc
-  %i.bf = getelementptr i8, ptr %i.af, i64 1264
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.af, i64 1264
   store <2 x i64> %i.bd, ptr %i.ag, align 8, !tbaa !392
   store <2 x i64> %i.be, ptr %i.bf, align 8, !tbaa !392
   %index.next21 = add nuw i64 %index14, 4         ; 2 uses

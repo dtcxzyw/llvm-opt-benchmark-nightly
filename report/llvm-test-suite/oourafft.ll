@@ -203,7 +203,7 @@ vector.ph80:                                      ; preds = %vector.memcheck
 
 vector.body83:                                    ; preds = %vector.body83, %vector.ph80
   %index84 = phi i64 [ 0, %vector.ph80 ], [ %index.next90, %vector.body83 ] ; 2 uses
-  %i.ga = shl i64 %index84, 1                     ; 2 uses
+  %i.ga = shl nuw i64 %index84, 1                 ; 2 uses
   %i.gb = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ga ; 2 uses
   %wide.vec = load <4 x double>, ptr %i.gb, align 8, !tbaa !8 ; 2 uses
   %strided.vec = shufflevector <4 x double> %wide.vec, <4 x double> poison, <2 x i32> <i32 0, i32 2> ; 2 uses
@@ -398,7 +398,7 @@ vector.ph222:                                     ; preds = %vector.memcheck94
 
 vector.body225:                                   ; preds = %vector.body225, %vector.ph222
   %index226 = phi i64 [ 0, %vector.ph222 ], [ %index.next243, %vector.body225 ] ; 2 uses
-  %i.hg = shl i64 %index226, 1                    ; 2 uses
+  %i.hg = shl nuw i64 %index226, 1                ; 2 uses
   %i.hh = add nuw nsw i64 %i.hg, %i.gj            ; 2 uses
   %i.hi = add nuw nsw i64 %i.hh, %i.gj            ; 2 uses
   %i.hj = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.hg ; 2 uses
@@ -801,7 +801,7 @@ vector.memcheck:                                  ; preds = %.lr.ph121.preheader
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 3 uses
-  %i.t = shl i64 %index, 1                        ; 2 uses
+  %i.t = shl nuw i64 %index, 1                    ; 2 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.t ; 2 uses
   %wide.load = load <2 x double>, ptr %i.u, align 8, !tbaa !8 ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %i.t ; 2 uses
@@ -980,7 +980,7 @@ vector.ph288:                                     ; preds = %vector.memcheck160
 
 vector.body291:                                   ; preds = %vector.body291, %vector.ph288
   %index292 = phi i64 [ 0, %vector.ph288 ], [ %index.next306, %vector.body291 ] ; 2 uses
-  %i.ax = shl i64 %index292, 1                    ; 2 uses
+  %i.ax = shl nuw i64 %index292, 1                ; 2 uses
   %i.ay = add nuw nsw i64 %i.ax, %i.z             ; 2 uses
   %i.az = add nuw nsw i64 %i.ay, %i.z             ; 2 uses
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ax ; 2 uses
@@ -1226,8 +1226,8 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
-  %i.cl = shl i64 %index, 1
-  %i.cm = shl i64 %index, 4                       ; 2 uses
+  %i.cl = shl nuw i64 %index, 1
+  %i.cm = shl nuw i64 %index, 4                   ; 2 uses
   %i.cn = or disjoint i64 %i.cl, 2                ; 2 uses
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.cn
   %wide.vec = load <4 x double>, ptr %i.co, align 8, !tbaa !8, !alias.scope !48 ; 2 uses
@@ -1630,7 +1630,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ac = shl i64 %index, 1                       ; 2 uses
+  %i.ac = shl nuw i64 %index, 1                   ; 2 uses
   %i.ad = add nuw nsw i64 %i.ac, %i.c             ; 2 uses
   %i.ae = add nuw nsw i64 %i.ad, %i.c             ; 2 uses
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ac ; 2 uses

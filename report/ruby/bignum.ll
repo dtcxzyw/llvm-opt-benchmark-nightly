@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.fh = add i64 %.3.i.i, %index                 ; 2 uses
+  %i.fh = add nuw i64 %.3.i.i, %index             ; 2 uses
   %i.fi = getelementptr [4 x i8], ptr %.063.i.i, i64 %i.fh ; 2 uses
   %i.fj = getelementptr i8, ptr %i.fi, i64 16
   %wide.load = load <4 x i32>, ptr %i.fi, align 4, !tbaa !7
@@ -607,7 +607,7 @@ vector.ph687:                                     ; preds = %.lr.ph93.i.i.prehea
 
 vector.body690:                                   ; preds = %vector.body690, %vector.ph687
   %index691 = phi i64 [ 0, %vector.ph687 ], [ %index.next694, %vector.body690 ] ; 2 uses
-  %i.ex = add i64 %.5.i.i, %index691              ; 2 uses
+  %i.ex = add nuw i64 %.5.i.i, %index691          ; 2 uses
   %i.ey = getelementptr [4 x i8], ptr %2, i64 %i.ex ; 2 uses
   %i.ez = getelementptr i8, ptr %i.ey, i64 16
   %wide.load692 = load <4 x i32>, ptr %i.ey, align 4, !tbaa !7
@@ -1010,7 +1010,7 @@ vector.ph729:                                     ; preds = %vector.memcheck724
 
 vector.body732:                                   ; preds = %vector.body732, %vector.ph729
   %index733 = phi i64 [ 0, %vector.ph729 ], [ %index.next736, %vector.body732 ] ; 2 uses
-  %i.ta = add i64 %.3.i, %index733                ; 2 uses
+  %i.ta = add nuw i64 %.3.i, %index733            ; 2 uses
   %i.tb = getelementptr [4 x i8], ptr %.063.i, i64 %i.ta ; 2 uses
   %i.tc = getelementptr i8, ptr %i.tb, i64 16
   %wide.load734 = load <4 x i32>, ptr %i.tb, align 4, !tbaa !7
@@ -1244,7 +1244,7 @@ vector.ph745:                                     ; preds = %vector.memcheck740
 
 vector.body748:                                   ; preds = %vector.body748, %vector.ph745
   %index749 = phi i64 [ 0, %vector.ph745 ], [ %index.next752, %vector.body748 ] ; 2 uses
-  %i.wo = add i64 %.3.i.i350, %index749           ; 2 uses
+  %i.wo = add nuw i64 %.3.i.i350, %index749       ; 2 uses
   %i.wp = getelementptr [4 x i8], ptr %.063.i.i, i64 %i.wo ; 2 uses
   %i.wq = getelementptr i8, ptr %i.wp, i64 16
   %wide.load750 = load <4 x i32>, ptr %i.wp, align 4, !tbaa !7
@@ -1455,7 +1455,7 @@ vector.ph761:                                     ; preds = %vector.memcheck756
 
 vector.body764:                                   ; preds = %vector.body764, %vector.ph761
   %index765 = phi i64 [ 0, %vector.ph761 ], [ %index.next768, %vector.body764 ] ; 2 uses
-  %i.zh = add i64 %.182.i.i396, %index765         ; 2 uses
+  %i.zh = add nuw i64 %.182.i.i396, %index765     ; 2 uses
   %i.zi = getelementptr [4 x i8], ptr %.063.i.i366610, i64 %i.zh ; 2 uses
   %i.zj = getelementptr i8, ptr %i.zi, i64 16
   %wide.load766 = load <4 x i32>, ptr %i.zi, align 4, !tbaa !7
@@ -1858,7 +1858,7 @@ vector.ph:                                        ; preds = %.lr.ph91.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.db = add i64 %.3.i.i, %index                 ; 2 uses
+  %i.db = add nuw i64 %.3.i.i, %index             ; 2 uses
   %i.dc = getelementptr [4 x i8], ptr %.063.i.i, i64 %i.db ; 2 uses
   %i.dd = getelementptr i8, ptr %i.dc, i64 16
   %wide.load = load <4 x i32>, ptr %i.dc, align 4, !tbaa !7
@@ -2261,7 +2261,7 @@ vector.ph2905:                                    ; preds = %vector.memcheck2900
 
 vector.body2908:                                  ; preds = %vector.body2908, %vector.ph2905
   %index2909 = phi i64 [ 0, %vector.ph2905 ], [ %index.next2912, %vector.body2908 ] ; 2 uses
-  %i.kk = add i64 %.3.i.i666, %index2909          ; 2 uses
+  %i.kk = add nuw i64 %.3.i.i666, %index2909      ; 2 uses
   %i.kl = getelementptr [4 x i8], ptr %.063.i.i6472472, i64 %i.kk ; 2 uses
   %i.km = getelementptr i8, ptr %i.kl, i64 16
   %wide.load2910 = load <4 x i32>, ptr %i.kl, align 4, !tbaa !7
@@ -2558,7 +2558,7 @@ vector.ph2889:                                    ; preds = %vector.memcheck2885
 
 vector.body2892:                                  ; preds = %vector.body2892, %vector.ph2889
   %index2893 = phi i64 [ 0, %vector.ph2889 ], [ %index.next2896, %vector.body2892 ] ; 2 uses
-  %i.pn = add i64 %.5.i.i697, %index2893          ; 2 uses
+  %i.pn = add nuw i64 %.5.i.i697, %index2893      ; 2 uses
   %i.po = getelementptr [4 x i8], ptr %i.at, i64 %i.pn ; 2 uses
   %i.pp = getelementptr i8, ptr %i.po, i64 16
   %wide.load2894 = load <4 x i32>, ptr %i.po, align 4, !tbaa !7
@@ -2961,7 +2961,7 @@ vector.ph2934:                                    ; preds = %vector.memcheck2929
 
 vector.body2937:                                  ; preds = %vector.body2937, %vector.ph2934
   %index2938 = phi i64 [ 0, %vector.ph2934 ], [ %index.next2941, %vector.body2937 ] ; 2 uses
-  %i.yc = add i64 %.3.i.i836, %index2938          ; 2 uses
+  %i.yc = add nuw i64 %.3.i.i836, %index2938      ; 2 uses
   %i.yd = getelementptr [4 x i8], ptr %.063.i.i817, i64 %i.yc ; 2 uses
   %i.ye = getelementptr i8, ptr %i.yd, i64 16
   %wide.load2939 = load <4 x i32>, ptr %i.yd, align 4, !tbaa !7
@@ -3364,7 +3364,7 @@ vector.ph2992:                                    ; preds = %vector.memcheck2987
 
 vector.body2995:                                  ; preds = %vector.body2995, %vector.ph2992
   %index2996 = phi i64 [ 0, %vector.ph2992 ], [ %index.next2999, %vector.body2995 ] ; 2 uses
-  %i.afl = add i64 %.3.i.i953, %index2996         ; 2 uses
+  %i.afl = add nuw i64 %.3.i.i953, %index2996     ; 2 uses
   %i.afm = getelementptr [4 x i8], ptr %.063.i.i9342509, i64 %i.afl ; 2 uses
   %i.afn = getelementptr i8, ptr %i.afm, i64 16
   %wide.load2997 = load <4 x i32>, ptr %i.afm, align 4, !tbaa !7
@@ -3661,7 +3661,7 @@ vector.ph2976:                                    ; preds = %vector.memcheck2971
 
 vector.body2979:                                  ; preds = %vector.body2979, %vector.ph2976
   %index2980 = phi i64 [ 0, %vector.ph2976 ], [ %index.next2983, %vector.body2979 ] ; 2 uses
-  %i.ako = add i64 %.5.i.i985, %index2980         ; 2 uses
+  %i.ako = add nuw i64 %.5.i.i985, %index2980     ; 2 uses
   %i.akp = getelementptr [4 x i8], ptr %.0546, i64 %i.ako ; 2 uses
   %i.akq = getelementptr i8, ptr %i.akp, i64 16
   %wide.load2981 = load <4 x i32>, ptr %i.akp, align 4, !tbaa !7
@@ -4064,7 +4064,7 @@ vector.ph3075:                                    ; preds = %vector.memcheck3071
 
 vector.body3078:                                  ; preds = %vector.body3078, %vector.ph3075
   %index3079 = phi i64 [ 0, %vector.ph3075 ], [ %index.next3082, %vector.body3078 ] ; 2 uses
-  %i.bbb = add i64 %.5.i.i1301, %index3079        ; 2 uses
+  %i.bbb = add nuw i64 %.5.i.i1301, %index3079    ; 2 uses
   %i.bbc = getelementptr [4 x i8], ptr %i.ah, i64 %i.bbb ; 2 uses
   %i.bbd = getelementptr i8, ptr %i.bbc, i64 16
   %wide.load3080 = load <4 x i32>, ptr %i.bbc, align 4, !tbaa !7
@@ -4467,7 +4467,7 @@ vector.ph3176:                                    ; preds = %vector.memcheck3171
 
 vector.body3179:                                  ; preds = %vector.body3179, %vector.ph3176
   %index3180 = phi i64 [ 0, %vector.ph3176 ], [ %index.next3183, %vector.body3179 ] ; 2 uses
-  %i.bvt = add i64 %.3.i.i1744, %index3180        ; 2 uses
+  %i.bvt = add nuw i64 %.3.i.i1744, %index3180    ; 2 uses
   %i.bvu = getelementptr [4 x i8], ptr %.063.i.i17252538, i64 %i.bvt ; 2 uses
   %i.bvv = getelementptr i8, ptr %i.bvu, i64 16
   %wide.load3181 = load <4 x i32>, ptr %i.bvu, align 4, !tbaa !7
@@ -4832,7 +4832,7 @@ vector.ph3192:                                    ; preds = %vector.memcheck3187
 
 vector.body3195:                                  ; preds = %vector.body3195, %vector.ph3192
   %index3196 = phi i64 [ 0, %vector.ph3192 ], [ %index.next3199, %vector.body3195 ] ; 2 uses
-  %i.cbr = add i64 %.3.i.i1815, %index3196        ; 2 uses
+  %i.cbr = add nuw i64 %.3.i.i1815, %index3196    ; 2 uses
   %i.cbs = getelementptr [4 x i8], ptr %.063.i.i1796, i64 %i.cbr ; 2 uses
   %i.cbt = getelementptr i8, ptr %i.cbs, i64 16
   %wide.load3197 = load <4 x i32>, ptr %i.cbs, align 4, !tbaa !7
@@ -5235,7 +5235,7 @@ vector.ph3208:                                    ; preds = %vector.memcheck3203
 
 vector.body3211:                                  ; preds = %vector.body3211, %vector.ph3208
   %index3212 = phi i64 [ 0, %vector.ph3208 ], [ %index.next3215, %vector.body3211 ] ; 2 uses
-  %i.cix = add i64 %.3.i.i1886, %index3212        ; 2 uses
+  %i.cix = add nuw i64 %.3.i.i1886, %index3212    ; 2 uses
   %i.ciy = getelementptr [4 x i8], ptr %.063.i.i18672557, i64 %i.cix ; 2 uses
   %i.ciz = getelementptr i8, ptr %i.ciy, i64 16
   %wide.load3213 = load <4 x i32>, ptr %i.ciy, align 4, !tbaa !7
@@ -5638,7 +5638,7 @@ vector.ph298:                                     ; preds = %.lr.ph91.i.i.prehea
 
 vector.body301:                                   ; preds = %vector.body301, %vector.ph298
   %index302 = phi i64 [ 0, %vector.ph298 ], [ %index.next305, %vector.body301 ] ; 2 uses
-  %i.dw = add i64 %.3.i.i, %index302              ; 2 uses
+  %i.dw = add nuw i64 %.3.i.i, %index302          ; 2 uses
   %i.dx = getelementptr [4 x i8], ptr %.063.i.i265, i64 %i.dw ; 2 uses
   %i.dy = getelementptr i8, ptr %i.dx, i64 16
   %wide.load303 = load <4 x i32>, ptr %i.dx, align 4, !tbaa !7
@@ -5879,7 +5879,7 @@ vector.ph:                                        ; preds = %.lr.ph91.i.i177.pre
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.hs = add i64 %.182.i.i181, %index            ; 2 uses
+  %i.hs = add nuw i64 %.182.i.i181, %index        ; 2 uses
   %i.ht = getelementptr [4 x i8], ptr %.063.i.i151, i64 %i.hs ; 2 uses
   %i.hu = getelementptr i8, ptr %i.ht, i64 16
   %wide.load = load <4 x i32>, ptr %i.ht, align 4, !tbaa !7
@@ -6282,7 +6282,7 @@ vector.ph204:                                     ; preds = %.preheader.preheade
 
 vector.body207:                                   ; preds = %vector.body207, %vector.ph204
   %index208 = phi i64 [ 0, %vector.ph204 ], [ %index.next211, %vector.body207 ] ; 2 uses
-  %i.bn = add i64 %.2, %index208                  ; 2 uses
+  %i.bn = add nuw i64 %.2, %index208              ; 2 uses
   %i.bo = getelementptr [4 x i8], ptr %.0.i92, i64 %i.bn ; 2 uses
   %i.bp = getelementptr i8, ptr %i.bo, i64 16
   %wide.load209 = load <4 x i32>, ptr %i.bo, align 4, !tbaa !7
@@ -6685,7 +6685,7 @@ vector.ph:                                        ; preds = %.preheader.preheade
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.cb = add i64 %.2, %index                     ; 2 uses
+  %i.cb = add nuw i64 %.2, %index                 ; 2 uses
   %i.cc = getelementptr [4 x i8], ptr %.0.i84, i64 %i.cb ; 2 uses
   %i.cd = getelementptr i8, ptr %i.cc, i64 16
   %wide.load = load <4 x i32>, ptr %i.cc, align 4, !tbaa !7
@@ -7088,7 +7088,7 @@ vector.ph:                                        ; preds = %.lr.ph91.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.dn = add i64 %.3.i.i, %index                 ; 2 uses
+  %i.dn = add nuw i64 %.3.i.i, %index             ; 2 uses
   %i.do = getelementptr [4 x i8], ptr %.063.i.i, i64 %i.dn ; 2 uses
   %i.dp = getelementptr i8, ptr %i.do, i64 16
   %wide.load = load <4 x i32>, ptr %i.do, align 4, !tbaa !7
@@ -7491,7 +7491,7 @@ vector.ph196:                                     ; preds = %.lr.ph93.i.preheade
 
 vector.body201:                                   ; preds = %vector.body201, %vector.ph196
   %index202 = phi i64 [ 0, %vector.ph196 ], [ %index.next205, %vector.body201 ] ; 2 uses
-  %i.bf = add i64 %.158.lcssa.i, %index202        ; 2 uses
+  %i.bf = add nuw i64 %.158.lcssa.i, %index202    ; 2 uses
   %i.bg = getelementptr [4 x i8], ptr %.0.i.i, i64 %i.bf ; 2 uses
   %i.bh = getelementptr i8, ptr %i.bg, i64 16
   %wide.load203 = load <4 x i32>, ptr %i.bg, align 4, !tbaa !7
@@ -7894,7 +7894,7 @@ vector.ph166:                                     ; preds = %.lr.ph82.preheader
 
 vector.body169:                                   ; preds = %vector.body169, %vector.ph166
   %index170 = phi i64 [ 0, %vector.ph166 ], [ %index.next173, %vector.body169 ] ; 2 uses
-  %i.jb = add i64 %.035.lcssa, %index170          ; 2 uses
+  %i.jb = add nuw i64 %.035.lcssa, %index170      ; 2 uses
   %i.jc = getelementptr [4 x i8], ptr %.0.i43, i64 %i.jb ; 2 uses
   %i.jd = getelementptr i8, ptr %i.jc, i64 16
   %wide.load171 = load <4 x i32>, ptr %i.jc, align 4, !tbaa !7
@@ -8297,7 +8297,7 @@ vector.ph169:                                     ; preds = %.lr.ph82.preheader
 
 vector.body172:                                   ; preds = %vector.body172, %vector.ph169
   %index173 = phi i64 [ 0, %vector.ph169 ], [ %index.next176, %vector.body172 ] ; 2 uses
-  %i.ir = add i64 %.035.lcssa, %index173          ; 2 uses
+  %i.ir = add nuw i64 %.035.lcssa, %index173      ; 2 uses
   %i.is = getelementptr [4 x i8], ptr %.0.i43, i64 %i.ir ; 2 uses
   %i.it = getelementptr i8, ptr %i.is, i64 16
   %wide.load174 = load <4 x i32>, ptr %i.is, align 4, !tbaa !7
@@ -8700,7 +8700,7 @@ vector.ph179:                                     ; preds = %.lr.ph71.i.preheade
 
 vector.body184:                                   ; preds = %vector.body184, %vector.ph179
   %index185 = phi i64 [ 0, %vector.ph179 ], [ %index.next188, %vector.body184 ] ; 2 uses
-  %i.cl = add i64 %spec.store.select.i, %index185 ; 2 uses
+  %i.cl = add nuw i64 %spec.store.select.i, %index185 ; 2 uses
   %i.cm = getelementptr [4 x i8], ptr %.0.i52.i, i64 %i.cl ; 2 uses
   %i.cn = getelementptr i8, ptr %i.cm, i64 16
   %wide.load186 = load <4 x i32>, ptr %i.cm, align 4, !tbaa !7
@@ -9103,7 +9103,7 @@ vector.ph149:                                     ; preds = %.lr.ph73.preheader
 
 vector.body152:                                   ; preds = %vector.body152, %vector.ph149
   %index153 = phi i64 [ 0, %vector.ph149 ], [ %index.next156, %vector.body152 ] ; 2 uses
-  %i.kq = add i64 %.033.lcssa, %index153          ; 2 uses
+  %i.kq = add nuw i64 %.033.lcssa, %index153      ; 2 uses
   %i.kr = getelementptr [4 x i8], ptr %.0.i39, i64 %i.kq ; 2 uses
   %i.ks = getelementptr i8, ptr %i.kr, i64 16
   %wide.load154 = load <4 x i32>, ptr %i.kr, align 4, !tbaa !7
@@ -9506,7 +9506,7 @@ vector.ph83:                                      ; preds = %.lr.ph93.i.i.prehea
 
 vector.body86:                                    ; preds = %vector.body86, %vector.ph83
   %index87 = phi i64 [ 0, %vector.ph83 ], [ %index.next90, %vector.body86 ] ; 2 uses
-  %i.ee = add i64 %.5.i.i, %index87               ; 2 uses
+  %i.ee = add nuw i64 %.5.i.i, %index87           ; 2 uses
   %i.ef = getelementptr [4 x i8], ptr %.0.i23, i64 %i.ee ; 2 uses
   %i.eg = getelementptr i8, ptr %i.ef, i64 16
   %wide.load88 = load <4 x i32>, ptr %i.ef, align 4, !tbaa !7

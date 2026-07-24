@@ -204,7 +204,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <2 x i64> [ %i.cp, %vector.ph ], [ %i.cx, %vector.body ]
   %vec.phi347 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.cy, %vector.body ]
-  %i.cq = add i64 %i.bv, %index                   ; 2 uses
+  %i.cq = add nuw i64 %i.bv, %index               ; 2 uses
   %i.cr = getelementptr inbounds nuw [16 x i8], ptr %i.bc, i64 %i.cq
   %i.cs = getelementptr [16 x i8], ptr %i.bc, i64 %i.cq
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
@@ -607,13 +607,13 @@ vector.ph363:                                     ; preds = %vector.memcheck
   %n.vec365 = and i64 %i.kc, -8                   ; 4 uses
   %i.lj = add i64 %i.ke, %n.vec365
   %i.lk = add i64 %.1117230.us, %n.vec365         ; 2 uses
-  %i.ll = getelementptr [4 x i8], ptr %i.lc, i64 %i.ke
+  %i.ll = getelementptr inbounds nuw [4 x i8], ptr %i.lc, i64 %i.ke
   %i.lm = getelementptr [4 x i8], ptr %i.ju, i64 %.1117230.us
   br label %vector.body366
 
 vector.body366:                                   ; preds = %vector.body366, %vector.ph363
   %index367 = phi i64 [ 0, %vector.ph363 ], [ %index.next369, %vector.body366 ] ; 3 uses
-  %i.ln = getelementptr [4 x i8], ptr %i.ll, i64 %index367 ; 2 uses
+  %i.ln = getelementptr inbounds nuw [4 x i8], ptr %i.ll, i64 %index367 ; 2 uses
   %i.lo = getelementptr inbounds nuw i8, ptr %i.ln, i64 16
   %wide.load = load <4 x i32>, ptr %i.ln, align 4, !tbaa !3
   %wide.load368 = load <4 x i32>, ptr %i.lo, align 4, !tbaa !3
@@ -774,13 +774,13 @@ vector.ph396:                                     ; preds = %vector.memcheck392
   %n.vec398 = and i64 %i.nb, -8                   ; 4 uses
   %i.nn = add i64 %i.nd, %n.vec398
   %i.no = add i64 %.1117230, %n.vec398            ; 2 uses
-  %i.np = getelementptr [4 x i8], ptr %i.ng, i64 %i.nd
+  %i.np = getelementptr inbounds nuw [4 x i8], ptr %i.ng, i64 %i.nd
   %i.nq = getelementptr [4 x i8], ptr %i.ju, i64 %.1117230
   br label %vector.body399
 
 vector.body399:                                   ; preds = %vector.body399, %vector.ph396
   %index400 = phi i64 [ 0, %vector.ph396 ], [ %index.next403, %vector.body399 ] ; 3 uses
-  %i.nr = getelementptr [4 x i8], ptr %i.np, i64 %index400 ; 2 uses
+  %i.nr = getelementptr inbounds nuw [4 x i8], ptr %i.np, i64 %index400 ; 2 uses
   %i.ns = getelementptr inbounds nuw i8, ptr %i.nr, i64 16
   %wide.load401 = load <4 x i32>, ptr %i.nr, align 4, !tbaa !3
   %wide.load402 = load <4 x i32>, ptr %i.ns, align 4, !tbaa !3

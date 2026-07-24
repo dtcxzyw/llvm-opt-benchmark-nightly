@@ -204,8 +204,8 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.fk = shl i64 %index, 3
-  %i.fl = add i64 %.1, %i.fk                      ; 16 uses
+  %i.fk = shl nuw i64 %index, 3
+  %i.fl = add nuw i64 %.1, %i.fk                  ; 16 uses
   %next.gep = getelementptr i8, ptr %.040.i, i64 %index
   %i.fm = getelementptr i8, ptr %i.dk, i64 %i.fl  ; 8 uses
   %i.fn = getelementptr i8, ptr %i.dk, i64 %i.fl  ; 8 uses
@@ -608,8 +608,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index125 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next127, %vec.epilog.vector.body ] ; 3 uses
-  %i.vx = shl i64 %index125, 3
-  %i.vy = add i64 %.1, %i.vx                      ; 4 uses
+  %i.vx = shl nuw i64 %index125, 3
+  %i.vy = add nuw i64 %.1, %i.vx                  ; 4 uses
   %next.gep126 = getelementptr i8, ptr %.040.i, i64 %index125
   %i.vz = getelementptr i8, ptr %i.dk, i64 %i.vy  ; 8 uses
   %i.wa = getelementptr i8, ptr %i.dk, i64 %i.vy  ; 8 uses

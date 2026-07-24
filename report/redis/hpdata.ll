@@ -203,14 +203,14 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.cf = shl i64 %n.vec, 6
   %i.cg = sub i64 %i.ax, %i.cf                    ; 2 uses
   %i.ch = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.bx, i64 0
-  %i.ci = getelementptr [8 x i8], ptr %i.bt, i64 %.029.i9.i
+  %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %.029.i9.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <2 x i64> [ %i.ch, %vector.ph ], [ %i.cn, %vector.body ]
   %vec.phi220 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.co, %vector.body ]
-  %i.cj = getelementptr [8 x i8], ptr %i.ci, i64 %index ; 2 uses
+  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %index ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 16
   %wide.load = load <2 x i64>, ptr %i.cj, align 8, !tbaa !35
   %wide.load221 = load <2 x i64>, ptr %i.ck, align 8, !tbaa !35

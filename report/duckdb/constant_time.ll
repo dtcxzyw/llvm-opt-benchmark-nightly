@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.l = add i64 %.027.lcssa, %index              ; 3 uses
+  %i.l = add nuw i64 %.027.lcssa, %index          ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 %i.l
   %wide.load = load <16 x i8>, ptr %i.m, align 1, !tbaa !7
   %i.n = zext <16 x i8> %wide.load to <16 x i64>
@@ -565,12 +565,12 @@ vector.ph70:                                      ; preds = %vector.main.loop.it
   %i.dj = add i64 %i.fn, %n.vec72
   %broadcast.splatinsert73 = insertelement <16 x i8> poison, i8 %i.dg, i64 0
   %broadcast.splat74 = shufflevector <16 x i8> %broadcast.splatinsert73, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
-  %i.dk = getelementptr i8, ptr %0, i64 %i.fn
+  %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 %i.fn
   br label %vector.body75
 
 vector.body75:                                    ; preds = %vector.body75, %vector.ph70
   %index76 = phi i64 [ 0, %vector.ph70 ], [ %index.next79, %vector.body75 ] ; 2 uses
-  %i.dl = getelementptr i8, ptr %i.dk, i64 %index76 ; 3 uses
+  %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 %index76 ; 3 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 16 ; 2 uses
   %wide.load77 = load <16 x i8>, ptr %i.dl, align 1, !tbaa !7
   %wide.load78 = load <16 x i8>, ptr %i.dm, align 1, !tbaa !7
@@ -596,12 +596,12 @@ vec.epilog.ph87:                                  ; preds = %vector.main.loop.it
   %i.dq = add i64 %i.fn, %n.vec89
   %broadcast.splatinsert90 = insertelement <8 x i8> poison, i8 %i.dg, i64 0
   %broadcast.splat91 = shufflevector <8 x i8> %broadcast.splatinsert90, <8 x i8> poison, <8 x i32> zeroinitializer
-  %i.dr = getelementptr i8, ptr %0, i64 %i.fn
+  %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 %i.fn
   br label %vec.epilog.vector.body92
 
 vec.epilog.vector.body92:                         ; preds = %vec.epilog.vector.body92, %vec.epilog.ph87
   %index93 = phi i64 [ %vec.epilog.resume.val82, %vec.epilog.ph87 ], [ %index.next95, %vec.epilog.vector.body92 ] ; 2 uses
-  %i.ds = getelementptr i8, ptr %i.dr, i64 %index93 ; 2 uses
+  %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 %index93 ; 2 uses
   %wide.load94 = load <8 x i8>, ptr %i.ds, align 1, !tbaa !7
   %i.dt = and <8 x i8> %wide.load94, %broadcast.splat91
   store <8 x i8> %i.dt, ptr %i.ds, align 1, !tbaa !7
@@ -646,7 +646,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.dz = add i64 %i.cy, %index                   ; 2 uses
+  %i.dz = add nuw i64 %i.cy, %index               ; 2 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.dz ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 16
   %wide.load = load <16 x i8>, ptr %i.ea, align 1, !tbaa !7, !alias.scope !25
@@ -683,7 +683,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index59 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next62, %vec.epilog.vector.body ] ; 2 uses
-  %i.ek = add i64 %i.cy, %index59                 ; 2 uses
+  %i.ek = add nuw i64 %i.cy, %index59             ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.ek
   %wide.load60 = load <8 x i8>, ptr %i.el, align 1, !tbaa !7, !alias.scope !25
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 %i.ek ; 2 uses
@@ -805,12 +805,12 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.f = add i64 %.0.lcssa, %n.vec
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.d, i64 0
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
-  %i.g = getelementptr i8, ptr %1, i64 %.0.lcssa
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %.0.lcssa
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.h = getelementptr i8, ptr %i.g, i64 %index   ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 %index ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.h, align 1, !tbaa !7
   %wide.load23 = load <16 x i8>, ptr %i.i, align 1, !tbaa !7
@@ -836,12 +836,12 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %i.m = add i64 %.0.lcssa, %n.vec25
   %broadcast.splatinsert26 = insertelement <8 x i8> poison, i8 %i.d, i64 0
   %broadcast.splat27 = shufflevector <8 x i8> %broadcast.splatinsert26, <8 x i8> poison, <8 x i32> zeroinitializer
-  %i.n = getelementptr i8, ptr %1, i64 %.0.lcssa
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 %.0.lcssa
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index28 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next30, %vec.epilog.vector.body ] ; 2 uses
-  %i.o = getelementptr i8, ptr %i.n, i64 %index28 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %index28 ; 2 uses
   %wide.load29 = load <8 x i8>, ptr %i.o, align 1, !tbaa !7
   %i.p = and <8 x i8> %wide.load29, %broadcast.splat27
   store <8 x i8> %i.p, ptr %i.o, align 1, !tbaa !7

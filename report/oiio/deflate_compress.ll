@@ -204,60 +204,60 @@ deflate_init_offset_slot_full.exit:               ; preds = %middle.block, %midd
   %i.hp = getelementptr inbounds nuw i8, ptr %i.d, i64 592
   store <4 x i32> splat (i32 2), ptr %i.ho, align 16, !tbaa !3
   store <4 x i32> splat (i32 2), ptr %i.hp, align 16, !tbaa !3
-  %i.hq = getelementptr i8, ptr %i.d, i64 608
-  %i.hr = getelementptr i8, ptr %i.d, i64 624
+  %i.hq = getelementptr inbounds nuw i8, ptr %i.d, i64 608
+  %i.hr = getelementptr inbounds nuw i8, ptr %i.d, i64 624
   store <4 x i32> splat (i32 1), ptr %i.hq, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.hr, align 16, !tbaa !3
-  %i.hs = getelementptr i8, ptr %i.d, i64 640
-  %i.ht = getelementptr i8, ptr %i.d, i64 656
+  %i.hs = getelementptr inbounds nuw i8, ptr %i.d, i64 640
+  %i.ht = getelementptr inbounds nuw i8, ptr %i.d, i64 656
   store <4 x i32> splat (i32 1), ptr %i.hs, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.ht, align 16, !tbaa !3
-  %i.hu = getelementptr i8, ptr %i.d, i64 672
-  %i.hv = getelementptr i8, ptr %i.d, i64 688
+  %i.hu = getelementptr inbounds nuw i8, ptr %i.d, i64 672
+  %i.hv = getelementptr inbounds nuw i8, ptr %i.d, i64 688
   store <4 x i32> splat (i32 1), ptr %i.hu, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.hv, align 16, !tbaa !3
-  %i.hw = getelementptr i8, ptr %i.d, i64 704
-  %i.hx = getelementptr i8, ptr %i.d, i64 720
+  %i.hw = getelementptr inbounds nuw i8, ptr %i.d, i64 704
+  %i.hx = getelementptr inbounds nuw i8, ptr %i.d, i64 720
   store <4 x i32> splat (i32 1), ptr %i.hw, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.hx, align 16, !tbaa !3
-  %i.hy = getelementptr i8, ptr %i.d, i64 736
-  %i.hz = getelementptr i8, ptr %i.d, i64 752
+  %i.hy = getelementptr inbounds nuw i8, ptr %i.d, i64 736
+  %i.hz = getelementptr inbounds nuw i8, ptr %i.d, i64 752
   store <4 x i32> splat (i32 1), ptr %i.hy, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.hz, align 16, !tbaa !3
-  %i.ia = getelementptr i8, ptr %i.d, i64 768
-  %i.ib = getelementptr i8, ptr %i.d, i64 784
+  %i.ia = getelementptr inbounds nuw i8, ptr %i.d, i64 768
+  %i.ib = getelementptr inbounds nuw i8, ptr %i.d, i64 784
   store <4 x i32> splat (i32 1), ptr %i.ia, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.ib, align 16, !tbaa !3
-  %i.ic = getelementptr i8, ptr %i.d, i64 800
-  %i.id = getelementptr i8, ptr %i.d, i64 816
+  %i.ic = getelementptr inbounds nuw i8, ptr %i.d, i64 800
+  %i.id = getelementptr inbounds nuw i8, ptr %i.d, i64 816
   store <4 x i32> splat (i32 1), ptr %i.ic, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.id, align 16, !tbaa !3
-  %i.ie = getelementptr i8, ptr %i.d, i64 832
-  %i.if = getelementptr i8, ptr %i.d, i64 848
+  %i.ie = getelementptr inbounds nuw i8, ptr %i.d, i64 832
+  %i.if = getelementptr inbounds nuw i8, ptr %i.d, i64 848
   store <4 x i32> splat (i32 1), ptr %i.ie, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.if, align 16, !tbaa !3
-  %i.ig = getelementptr i8, ptr %i.d, i64 864
-  %i.ih = getelementptr i8, ptr %i.d, i64 880
+  %i.ig = getelementptr inbounds nuw i8, ptr %i.d, i64 864
+  %i.ih = getelementptr inbounds nuw i8, ptr %i.d, i64 880
   store <4 x i32> splat (i32 1), ptr %i.ig, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.ih, align 16, !tbaa !3
-  %i.ii = getelementptr i8, ptr %i.d, i64 896
-  %i.ij = getelementptr i8, ptr %i.d, i64 912
+  %i.ii = getelementptr inbounds nuw i8, ptr %i.d, i64 896
+  %i.ij = getelementptr inbounds nuw i8, ptr %i.d, i64 912
   store <4 x i32> splat (i32 1), ptr %i.ii, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.ij, align 16, !tbaa !3
-  %i.ik = getelementptr i8, ptr %i.d, i64 928
-  %i.il = getelementptr i8, ptr %i.d, i64 944
+  %i.ik = getelementptr inbounds nuw i8, ptr %i.d, i64 928
+  %i.il = getelementptr inbounds nuw i8, ptr %i.d, i64 944
   store <4 x i32> splat (i32 1), ptr %i.ik, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.il, align 16, !tbaa !3
-  %i.im = getelementptr i8, ptr %i.d, i64 960
-  %i.in = getelementptr i8, ptr %i.d, i64 976
+  %i.im = getelementptr inbounds nuw i8, ptr %i.d, i64 960
+  %i.in = getelementptr inbounds nuw i8, ptr %i.d, i64 976
   store <4 x i32> splat (i32 1), ptr %i.im, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.in, align 16, !tbaa !3
-  %i.io = getelementptr i8, ptr %i.d, i64 992
-  %i.ip = getelementptr i8, ptr %i.d, i64 1008
+  %i.io = getelementptr inbounds nuw i8, ptr %i.d, i64 992
+  %i.ip = getelementptr inbounds nuw i8, ptr %i.d, i64 1008
   store <4 x i32> splat (i32 1), ptr %i.io, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.ip, align 16, !tbaa !3
-  %i.iq = getelementptr i8, ptr %i.d, i64 1024
-  %i.ir = getelementptr i8, ptr %i.d, i64 1040
+  %i.iq = getelementptr inbounds nuw i8, ptr %i.d, i64 1024
+  %i.ir = getelementptr inbounds nuw i8, ptr %i.d, i64 1040
   store <4 x i32> splat (i32 1), ptr %i.iq, align 16, !tbaa !3
   store <4 x i32> splat (i32 1), ptr %i.ir, align 16, !tbaa !3
   %i.is = getelementptr inbounds nuw i8, ptr %i.d, i64 1056
@@ -660,7 +660,7 @@ vector.body733:                                   ; preds = %vector.body733, %mi
   %vec.phi736 = phi <4 x i32> [ zeroinitializer, %middle.block ], [ %i.bu, %vector.body733 ]
   %vec.phi737 = phi <4 x i32> [ %i.bj, %middle.block ], [ %i.bx, %vector.body733 ]
   %vec.phi738 = phi <4 x i32> [ zeroinitializer, %middle.block ], [ %i.by, %vector.body733 ]
-  %i.bk = add i64 %index734, 144                  ; 2 uses
+  %i.bk = add nuw i64 %index734, 144              ; 2 uses
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.bk ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 16
   %wide.load739 = load <4 x i32>, ptr %i.bl, align 4, !tbaa !3 ; 2 uses
