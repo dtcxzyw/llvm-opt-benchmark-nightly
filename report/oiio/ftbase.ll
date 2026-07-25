@@ -204,12 +204,12 @@ bb.e:                                             ; preds = %bb.c
   %i.p = extractelement <2 x i64> %i.c, i64 0     ; 2 uses
   %sext.i130 = shl i64 %i.p, 32
   %i.q = ashr exact i64 %sext.i130, 32
-  %.023.i = tail call i64 @llvm.abs.i64(i64 %i.p, i1 true)
+  %.023.i = tail call i64 @llvm.abs.i64(i64 %i.p, i1 false)
   %i.r = icmp slt i64 %1, -1
   %i.s = extractelement <2 x i64> %i.c, i64 1     ; 2 uses
   %sext.i144 = shl i64 %i.s, 32
   %i.t = ashr exact i64 %sext.i144, 32
-  %.023.i150 = tail call i64 @llvm.abs.i64(i64 %i.s, i1 true)
+  %.023.i150 = tail call i64 @llvm.abs.i64(i64 %i.s, i1 false)
   %i.u = icmp slt i64 %2, -1
   br label %bb.f
 

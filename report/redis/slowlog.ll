@@ -54,7 +54,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %.not55 = icmp samesign ugt i32 %2, 32
+  %.not55 = icmp sgt i32 %2, 32
   %i.g = add nsw i32 %spec.store.select, -1
   %i.h = add nuw i32 %2, 1
   %i.i = sub i32 %i.h, %spec.store.select

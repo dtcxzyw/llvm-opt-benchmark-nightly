@@ -155,7 +155,7 @@ bb.a:
   %i.al = sext i32 %i.q to i64
   %i.am = sext i32 %i.l to i64
   %i.an = sext i32 %i.ac to i64
-  %wide.trip.count272 = zext nneg i32 %i.m to i64
+  %wide.trip.count272 = sext i32 %i.m to i64
   %i.ao = add nsw i64 %i.ak, %i.aj                ; 2 uses
   %i.ap = getelementptr inbounds [8 x i8], ptr %i.y, i64 %i.ao
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !48
@@ -484,7 +484,7 @@ bb.h:                                             ; preds = %bb.e, %bb.f, %bb.d
   %i.ht = sext i32 %i.p to i64                    ; 9 uses
   %i.hu = sext i32 %i.q to i64
   %i.hv = sext i32 %i.l to i64
-  %wide.trip.count = zext nneg i32 %i.m to i64
+  %wide.trip.count = sext i32 %i.m to i64
   %.phi.trans.insert = getelementptr inbounds [8 x i8], ptr %i.hs, i64 %i.ht
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !59
   %indvars.iv.next236 = or disjoint i64 %i.ht, 1  ; 3 uses
@@ -887,7 +887,7 @@ bb.a:
   %i.q = sext i32 %i.e to i64                     ; 10 uses
   %i.r = sext i32 %i.f to i64
   %i.s = sext i32 %i.b to i64
-  %wide.trip.count = zext nneg i32 %i.c to i64
+  %wide.trip.count = sext i32 %i.c to i64
   %invariant.gep60 = getelementptr [8 x i8], ptr %i.j, i64 %i.q
   %i.t = getelementptr inbounds [8 x i8], ptr %i.p, i64 %i.q
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !59
@@ -924,7 +924,7 @@ bb.a:
   %i.ap = sext i32 %i.e to i64                    ; 10 uses
   %i.aq = sext i32 %i.f to i64
   %i.ar = sext i32 %i.b to i64
-  %wide.trip.count57 = zext nneg i32 %i.c to i64
+  %wide.trip.count57 = sext i32 %i.c to i64
   %invariant.gep62 = getelementptr [8 x i8], ptr %i.j, i64 %i.ap
   %i.as = getelementptr inbounds [8 x i8], ptr %i.ao, i64 %i.ap
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !59

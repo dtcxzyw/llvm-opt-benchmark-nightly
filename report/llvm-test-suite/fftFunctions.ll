@@ -203,7 +203,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv200
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !52
   %i.bc = trunc nuw nsw i64 %i.at to i32
-  %4 = uitofp nneg i32 %i.bc to double
+  %4 = sitofp i32 %i.bc to double
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph155, %bb.j

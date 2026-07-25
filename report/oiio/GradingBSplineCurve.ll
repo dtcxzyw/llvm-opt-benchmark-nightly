@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.as, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %wide.trip.count = zext nneg i32 %i.ar to i64
+  %wide.trip.count = zext i32 %i.ar to i64
   %invariant.gep = getelementptr [4 x i8], ptr %i.u, i64 %i.t
   br label %.lr.ph
 
@@ -372,7 +372,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.bl, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %wide.trip.count = zext nneg i32 %i.bk to i64
+  %wide.trip.count = zext i32 %i.bk to i64
   %invariant.gep = getelementptr [4 x i8], ptr %i.ad, i64 %i.ac
   br label %.lr.ph
 
@@ -532,7 +532,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
   br i1 %i.bp, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.f
-  %wide.trip.count103 = zext nneg i32 %i.bo to i64 ; 2 uses
+  %wide.trip.count103 = zext i32 %i.bo to i64     ; 2 uses
   %invariant.gep114 = getelementptr [4 x i8], ptr %i.ag, i64 %i.af ; 2 uses
   br i1 %i.aj, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
