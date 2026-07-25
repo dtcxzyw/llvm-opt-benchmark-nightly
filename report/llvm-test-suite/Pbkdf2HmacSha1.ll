@@ -108,11 +108,6 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec59, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
-.loopexit:                                        ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %vector.body
-  %9 = add i32 %.037.us, -1                       ; 2 uses
-  %10 = icmp ugt i32 %9, 1
-  br i1 %10, label %iter.check, label %._crit_edge.us, !llvm.loop !14
-
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %vec.epilog.scalar.ph ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
@@ -123,7 +118,12 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   store i8 %i.w, ptr %i.u, align 1, !tbaa !8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.m
-  br i1 %exitcond.not, label %.loopexit, label %vec.epilog.scalar.ph, !llvm.loop !15
+  br i1 %exitcond.not, label %.loopexit, label %vec.epilog.scalar.ph, !llvm.loop !14
+
+.loopexit:                                        ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %vector.body
+  %9 = add i32 %.037.us, -1                       ; 2 uses
+  %10 = icmp ugt i32 %9, 1
+  br i1 %10, label %iter.check, label %._crit_edge.us, !llvm.loop !15
 
 ._crit_edge.us:                                   ; preds = %.loopexit
   %i.x = getelementptr inbounds nuw i8, ptr %.03141.us, i64 %i.m
@@ -270,8 +270,8 @@ attributes #5 = { nounwind }
 !11 = !{!"llvm.loop.mustprogress"}
 !12 = !{!"llvm.loop.isvectorized", i32 1}
 !13 = !{!"llvm.loop.unroll.runtime.disable"}
-!14 = distinct !{!14, !11}
-!15 = distinct !{!15, !11, !13, !12}
+!14 = distinct !{!14, !11, !13, !12}
+!15 = distinct !{!15, !11}
 !16 = distinct !{!16, !11}
 !17 = distinct !{!17, !11}
 end_hunk_0

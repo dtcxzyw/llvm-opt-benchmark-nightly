@@ -203,42 +203,42 @@ bb.f:                                             ; preds = %_ZN15CByteOutBufWra
   %.not45 = icmp eq ptr %5, null
   br i1 %.not45, label %.lr.ph64.split.us, label %.lr.ph64.split
 
-.lr.ph64.split.us:                                ; preds = %.lr.ph64, %.backedge.us.a
-  %i.bg = phi i64 [ %6, %.backedge.us.a ], [ 0, %.lr.ph64 ]
+.lr.ph64.split.us:                                ; preds = %.lr.ph64, %.lr.ph.us
+  %i.bg = phi i64 [ %11, %.lr.ph.us ], [ 0, %.lr.ph64 ]
   %i.bh = load i32, ptr %i.b, align 4, !tbaa !4
   %i.bi = icmp eq i32 %i.bh, 0
-  br i1 %i.bi, label %.split.us, label %.lr.ph.us
+  br i1 %i.bi, label %.split.us, label %.backedge.us.a
 
-bb.g:                                             ; preds = %.lr.ph.us
+bb.g:                                             ; preds = %.backedge.us.a
   %indvars.iv.next79 = add nuw nsw i64 %indvars.iv78, 1 ; 2 uses
   %i.bj = load i32, ptr %i.b, align 4, !tbaa !4
   %i.bk = zext i32 %i.bj to i64                   ; 2 uses
   %.not44.us = icmp samesign ult i64 %indvars.iv.next79, %i.bk
-  br i1 %.not44.us, label %.lr.ph.us, label %.backedge.us.a, !llvm.loop !70
+  br i1 %.not44.us, label %.backedge.us.a, label %.lr.ph.us, !llvm.loop !70
 
-.backedge.us.a:                                   ; preds = %bb.g
-  %6 = add i64 %i.bg, %i.bk                       ; 2 uses
-  store i64 %6, ptr %i.a, align 8, !tbaa !41
+.backedge.us.a:                                   ; preds = %.lr.ph64.split.us, %bb.g
+  %indvars.iv78 = phi i64 [ %indvars.iv.next79, %bb.g ], [ 0, %.lr.ph64.split.us ] ; 2 uses
+  %6 = load ptr, ptr %i.d, align 8, !tbaa !69
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %indvars.iv78
+  %8 = load i8, ptr %7, align 1, !tbaa !29
+  %9 = zext i8 %8 to i32
+  call void @Ppmd8_EncodeSymbol(ptr noundef nonnull %i.i, i32 noundef %9)
+  %10 = load i32, ptr %i.w, align 8, !tbaa !68    ; 2 uses
+  %.not42.us.a = icmp eq i32 %10, 0
+  br i1 %.not42.us.a, label %bb.g, label %.thread49
+
+.lr.ph.us:                                        ; preds = %bb.g
+  %11 = add i64 %i.bg, %i.bk                      ; 2 uses
+  store i64 %11, ptr %i.a, align 8, !tbaa !41
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
-  %7 = load ptr, ptr %i.d, align 8, !tbaa !69
-  %8 = load ptr, ptr %1, align 8, !tbaa !10
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 40
-  %10 = load ptr, ptr %9, align 8
-  %11 = call noundef i32 %10(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %7, i32 noundef 1048576, ptr noundef nonnull %i.b) ; 2 uses
-  %.not42.us.a = icmp eq i32 %11, 0
-  br i1 %.not42.us.a, label %.lr.ph64.split.us, label %.thread49, !llvm.loop !71
-
-.lr.ph.us:                                        ; preds = %.lr.ph64.split.us, %bb.g
-  %indvars.iv78 = phi i64 [ %indvars.iv.next79, %bb.g ], [ 0, %.lr.ph64.split.us ] ; 2 uses
   %12 = load ptr, ptr %i.d, align 8, !tbaa !69
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 %indvars.iv78
-  %14 = load i8, ptr %13, align 1, !tbaa !29
-  %15 = zext i8 %14 to i32
-  call void @Ppmd8_EncodeSymbol(ptr noundef nonnull %i.i, i32 noundef %15)
-  %16 = load i32, ptr %i.w, align 8, !tbaa !68    ; 2 uses
+  %13 = load ptr, ptr %1, align 8, !tbaa !10
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 40
+  %15 = load ptr, ptr %14, align 8
+  %16 = call noundef i32 %15(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %12, i32 noundef 1048576, ptr noundef nonnull %i.b) ; 2 uses
   %.not43.us = icmp eq i32 %16, 0
-  br i1 %.not43.us, label %bb.g, label %.thread49
+  br i1 %.not43.us, label %.lr.ph64.split.us, label %.thread49, !llvm.loop !71
 
 .lr.ph64.split:                                   ; preds = %.lr.ph64, %.backedge
   %i.bl = load i32, ptr %i.b, align 4, !tbaa !4
@@ -301,8 +301,8 @@ bb.h:                                             ; preds = %.lr.ph
   %.not42 = icmp eq i32 %i.cm, 0
   br i1 %.not42, label %.lr.ph64.split, label %.thread49, !llvm.loop !71
 
-.thread49:                                        ; preds = %.backedge, %.lr.ph, %.backedge.us.a, %.lr.ph.us, %bb.f, %.split.us
-  %.8.ph = phi i32 [ %i.bn, %.split.us ], [ %16, %.lr.ph.us ], [ %11, %.backedge.us.a ], [ %i.bf, %bb.f ], [ %i.bu, %.lr.ph ], [ %i.cm, %.backedge ]
+.thread49:                                        ; preds = %.backedge, %.lr.ph, %.lr.ph.us, %.backedge.us.a, %bb.f, %.split.us
+  %.8.ph = phi i32 [ %i.bn, %.split.us ], [ %10, %.backedge.us.a ], [ %16, %.lr.ph.us ], [ %i.bf, %bb.f ], [ %i.bu, %.lr.ph ], [ %i.cm, %.backedge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   br label %.loopexit
 

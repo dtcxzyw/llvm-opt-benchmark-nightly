@@ -204,13 +204,6 @@ vec.epilog.scalar.ph224.prol.loopexit:            ; preds = %vec.epilog.scalar.p
   %i.bl = icmp ugt i64 %i.bk, -4
   br i1 %i.bl, label %.mbedtls_xor_no_simd.exit_crit_edge.us, label %vec.epilog.scalar.ph224
 
-3:                                                ; preds = %.mbedtls_xor_no_simd.exit_crit_edge.us
-  %4 = sub i64 %.164102.us, %i.l                  ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.1103.us, i64 %i.l ; 2 uses
-  %6 = add nuw i64 %.059104.us, 1                 ; 2 uses
-  %7 = icmp ult i64 %6, %i.as
-  br i1 %7, label %iter.check223, label %._crit_edge, !llvm.loop !30
-
 vec.epilog.scalar.ph224:                          ; preds = %vec.epilog.scalar.ph224.prol.loopexit, %vec.epilog.scalar.ph224
   %.1.i100.us = phi i64 [ %i.cj, %vec.epilog.scalar.ph224 ], [ %.1.i100.us.unr, %vec.epilog.scalar.ph224.prol.loopexit ] ; 6 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.1103.us, i64 %.1.i100.us
@@ -242,7 +235,14 @@ vec.epilog.scalar.ph224:                          ; preds = %vec.epilog.scalar.p
   store i8 %i.ci, ptr %i.cg, align 1, !tbaa !17
   %i.cj = add nuw nsw i64 %.1.i100.us, 4          ; 2 uses
   %exitcond120.not.3 = icmp eq i64 %i.cj, %i.l
-  br i1 %exitcond120.not.3, label %.mbedtls_xor_no_simd.exit_crit_edge.us, label %vec.epilog.scalar.ph224, !llvm.loop !31
+  br i1 %exitcond120.not.3, label %.mbedtls_xor_no_simd.exit_crit_edge.us, label %vec.epilog.scalar.ph224, !llvm.loop !30
+
+3:                                                ; preds = %.mbedtls_xor_no_simd.exit_crit_edge.us
+  %4 = sub i64 %.164102.us, %i.l                  ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %.1103.us, i64 %i.l ; 2 uses
+  %6 = add nuw i64 %.059104.us, 1                 ; 2 uses
+  %7 = icmp ult i64 %6, %i.as
+  br i1 %7, label %iter.check223, label %._crit_edge, !llvm.loop !31
 
 .mbedtls_xor_no_simd.exit_crit_edge.us:           ; preds = %vec.epilog.scalar.ph224.prol.loopexit, %vec.epilog.scalar.ph224, %vec.epilog.vector.body230
   %i.ck = call i32 @mbedtls_cipher_update(ptr noundef nonnull %0, ptr noundef nonnull %i.g, i64 noundef %i.l, ptr noundef nonnull %i.g, ptr noundef nonnull %i.a) #10 ; 2 uses
@@ -364,7 +364,7 @@ bb.i:                                             ; preds = %mbedtls_xor_no_simd
   %i.do = add nuw i64 %.059104, 1                 ; 2 uses
   %i.dp = icmp ult i64 %i.do, %i.as
   %indvar.next = add i64 %indvar, 1
-  br i1 %i.dp, label %.preheader88, label %._crit_edge, !llvm.loop !30
+  br i1 %i.dp, label %.preheader88, label %._crit_edge, !llvm.loop !31
 
 ._crit_edge:                                      ; preds = %bb.i, %3, %bb.g
   %.164.lcssa = phi i64 [ %.063, %bb.g ], [ %4, %3 ], [ %i.dm, %bb.i ] ; 3 uses
@@ -767,8 +767,8 @@ attributes #12 = { nounwind willreturn memory(read) }
 !27 = distinct !{!27, !25}
 !28 = distinct !{!28, !29}
 !29 = !{!"llvm.loop.unroll.disable"}
-!30 = distinct !{!30, !19}
-!31 = distinct !{!31, !19, !20}
+!30 = distinct !{!30, !19, !20}
+!31 = distinct !{!31, !19}
 !32 = !{!33}
 !33 = distinct !{!33, !34}
 !34 = distinct !{!34, !"LVerDomain"}

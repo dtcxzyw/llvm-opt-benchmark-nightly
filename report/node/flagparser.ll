@@ -76,12 +76,6 @@ bb.e:                                             ; preds = %bb.d
   %.not64.us = icmp eq i8 %i.ab, 10
   br i1 %.not64.us, label %bb.f, label %6
 
-6:                                                ; preds = %bb.e
-  tail call void @T_FileStream_rewind(ptr noundef nonnull %i.a) #5
-  %7 = load i32, ptr %5, align 4
-  %8 = icmp sgt i32 %7, 0
-  br i1 %8, label %.critedge, label %.preheader.split.us, !llvm.loop !5
-
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.not.i.us = icmp eq i8 %i.r, 0
   br i1 %.not.i.us, label %.thread.i.us, label %bb.g
@@ -104,7 +98,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.lr.ph.i.i.us
   %indvars.iv.next.i.i.us = add nuw nsw i64 %indvars.iv.i.i.us, 1 ; 2 uses
   %exitcond.not.i.i.us = icmp eq i64 %indvars.iv.next.i.i.us, %wide.trip.count.i.i.us
-  br i1 %exitcond.not.i.i.us, label %_ZL13getFlagOffsetPKci.exit.i.us, label %.lr.ph.i.i.us, !llvm.loop !7
+  br i1 %exitcond.not.i.i.us, label %_ZL13getFlagOffsetPKci.exit.i.us, label %.lr.ph.i.i.us, !llvm.loop !5
 
 bb.i:                                             ; preds = %.lr.ph.i.i.us
   %i.ag = trunc nuw nsw i64 %indvars.iv.i.i.us to i32
@@ -147,7 +141,7 @@ bb.k:                                             ; preds = %.lr.ph.i.us
   %i.aw = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv.i.us
   store i8 %i.av, ptr %i.aw, align 1
   %exitcond.not.i.us = icmp eq i64 %indvars.iv.next.i.us, %wide.trip.count.i
-  br i1 %exitcond.not.i.us, label %.critedge.sink.split, label %.lr.ph.i.us, !llvm.loop !8
+  br i1 %exitcond.not.i.us, label %.critedge.sink.split, label %.lr.ph.i.us, !llvm.loop !7
 
 .loopexit60.i.us:                                 ; preds = %.lr.ph.i.us
   %i.ax = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv.i.us
@@ -181,7 +175,7 @@ bb.m:                                             ; preds = %bb.n, %.lr.ph53.i.u
 bb.n:                                             ; preds = %bb.m
   %indvars.iv.next62.i.us = add nuw nsw i64 %indvars.iv61.i.us, 1 ; 2 uses
   %exitcond65.not.i.us = icmp eq i64 %indvars.iv.next62.i.us, %wide.trip.count64.i
-  br i1 %exitcond65.not.i.us, label %_ZL11extractFlagPciS_iPPKciP10UErrorCode.exit.us, label %bb.m, !llvm.loop !10
+  br i1 %exitcond65.not.i.us, label %_ZL11extractFlagPciS_iPPKciP10UErrorCode.exit.us, label %bb.m, !llvm.loop !9
 
 .loopexit.loopexit.split.loop.exit72.i.us:        ; preds = %bb.m
   %i.bf = trunc nuw nsw i64 %indvars.iv61.i.us to i32
@@ -217,7 +211,13 @@ bb.r:                                             ; preds = %bb.o
   %i.bm = load ptr, ptr %i.bl, align 8
   %i.bn = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.bm, ptr noundef nonnull dereferenceable(1) %i.g) #5 ; 0 uses
   %i.bo = icmp slt i32 %.150.us, %4
-  br i1 %i.bo, label %.lr.ph.us, label %.critedge, !llvm.loop !11
+  br i1 %i.bo, label %.lr.ph.us, label %.critedge, !llvm.loop !10
+
+6:                                                ; preds = %bb.e
+  tail call void @T_FileStream_rewind(ptr noundef nonnull %i.a) #5
+  %7 = load i32, ptr %5, align 4
+  %8 = icmp sgt i32 %7, 0
+  br i1 %8, label %.critedge, label %.preheader.split.us, !llvm.loop !11
 
 .backedge.us:                                     ; preds = %bb.p, %.lr.ph
   %i.bp = load i32, ptr @_ZL17currentBufferSize, align 4
@@ -315,9 +315,9 @@ attributes #7 = { nounwind willreturn memory(read) }
 !4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
 !5 = distinct !{!5, !6}
 !6 = !{!"llvm.loop.mustprogress"}
-!7 = distinct !{!7, !6}
-!8 = distinct !{!8, !6, !9}
-!9 = !{!"llvm.loop.peeled.count", i32 1}
+!7 = distinct !{!7, !6, !8}
+!8 = !{!"llvm.loop.peeled.count", i32 1}
+!9 = distinct !{!9, !6}
 !10 = distinct !{!10, !6}
 !11 = distinct !{!11, !6}
 end_hunk_0

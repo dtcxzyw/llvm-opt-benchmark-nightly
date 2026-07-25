@@ -204,18 +204,6 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   %.not68.us = icmp eq i32 %.val67.us, %i.bm
   br i1 %.not68.us, label %bb.k, label %.preheader.us
 
-3:                                                ; preds = %._crit_edge79.us
-  %4 = load i32, ptr %i.bj, align 8               ; 2 uses
-  %5 = or i32 %4, 1
-  store i32 %5, ptr %i.bj, align 8
-  %.not51.us = icmp eq i32 %.244.us, 0
-  br i1 %.not51.us, label %6, label %bb.k
-
-6:                                                ; preds = %3
-  %7 = or i32 %4, 3
-  store i32 %7, ptr %i.bj, align 8
-  br label %bb.k
-
 bb.g:                                             ; preds = %.preheader.us, %bb.j
   %indvars.iv92 = phi i64 [ %i.be, %.preheader.us ], [ %indvars.iv.next93, %bb.j ] ; 3 uses
   %.04277.us = phi i32 [ 0, %.preheader.us ], [ %.244.us, %bb.j ] ; 2 uses
@@ -253,6 +241,18 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   %i.bv = icmp slt i64 %indvars.iv.next93, %i.bf
   %i.bw = and i1 %i.bv, %.247.shrunk.us
   br i1 %i.bw, label %bb.g, label %._crit_edge79.us, !llvm.loop !46
+
+3:                                                ; preds = %._crit_edge79.us
+  %4 = load i32, ptr %i.bj, align 8               ; 2 uses
+  %5 = or i32 %4, 1
+  store i32 %5, ptr %i.bj, align 8
+  %.not51.us = icmp eq i32 %.244.us, 0
+  br i1 %.not51.us, label %6, label %bb.k
+
+6:                                                ; preds = %3
+  %7 = or i32 %4, 3
+  store i32 %7, ptr %i.bj, align 8
+  br label %bb.k
 
 bb.k:                                             ; preds = %6, %3, %._crit_edge79.us, %.lr.ph83.split.us
   %indvars.iv.next96 = add nsw i64 %indvars.iv95, 1 ; 2 uses
@@ -656,6 +656,10 @@ bb.h:                                             ; preds = %.lr.ph241, %.lr.ph4
   %.not28.us.i = icmp eq ptr %i.z, null
   br i1 %.not28.us.i, label %.lr.ph40.i, label %..critedge.us_crit_edge.i, !llvm.loop !60
 
+.lr.ph40.i:                                       ; preds = %bb.h
+  %.not27.us.i = icmp eq i32 %i.w, %i.q
+  br i1 %.not27.us.i, label %.lr.ph40.i.._crit_edge31.split.us.i_crit_edge, label %bb.h, !llvm.loop !60
+
 ..critedge.us_crit_edge.i:                        ; preds = %bb.h
   store i32 %i.v, ptr @stack_POINTER, align 4
   br label %.critedge.us.i
@@ -670,10 +674,6 @@ bb.h:                                             ; preds = %.lr.ph241, %.lr.ph4
   %.val23.us.i = load ptr, ptr %i.aa, align 8
   store ptr %.val23.us.i, ptr %i.ab, align 8
   br label %.split.us.i, !llvm.loop !61
-
-.lr.ph40.i:                                       ; preds = %bb.h
-  %.not27.us.i = icmp eq i32 %i.w, %i.q
-  br i1 %.not27.us.i, label %.lr.ph40.i.._crit_edge31.split.us.i_crit_edge, label %bb.h, !llvm.loop !60
 
 .lr.ph.us.i:                                      ; preds = %bb.g
   %i.ad = add i32 %stack_POINTER.promoted36.us.i, -1 ; 3 uses

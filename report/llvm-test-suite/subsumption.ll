@@ -203,12 +203,6 @@ bb.k:                                             ; preds = %bb.j
   %i.dw = getelementptr inbounds nuw [8 x i8], ptr @vec_VECTOR, i64 %i.dv ; 2 uses
   br label %bb.l
 
-4:                                                ; preds = %._crit_edge.us.i
-  %5 = add nsw i32 %.02129.us.i, 1                ; 2 uses
-  %6 = load i32, ptr @vec_MAX, align 4
-  %7 = icmp slt i32 %5, %6
-  br i1 %7, label %.preheader.us.i, label %subs_SearchTopRes.exit, !llvm.loop !58
-
 bb.l:                                             ; preds = %cont_BackTrack.exit.us.i, %.preheader.us.i
   %i.dx = phi i32 [ %.pre31.i, %.preheader.us.i ], [ %.pre6370, %cont_BackTrack.exit.us.i ] ; 2 uses
   %i.dy = phi i32 [ %.pre.i, %.preheader.us.i ], [ %.pre67, %cont_BackTrack.exit.us.i ]
@@ -324,7 +318,13 @@ cont_BackTrack.exit.us.i:                         ; preds = %bb.m, %._crit_edge.
   %i.fv = icmp slt i32 %i.fu, %3
   %i.fw = icmp samesign ult i32 %spec.select.us.i, 2 ; 2 uses
   %i.fx = select i1 %i.fv, i1 %i.fw, i1 false
-  br i1 %i.fx, label %bb.l, label %._crit_edge.us.i, !llvm.loop !59
+  br i1 %i.fx, label %bb.l, label %._crit_edge.us.i, !llvm.loop !58
+
+4:                                                ; preds = %._crit_edge.us.i
+  %5 = add nsw i32 %.02129.us.i, 1                ; 2 uses
+  %6 = load i32, ptr @vec_MAX, align 4
+  %7 = icmp slt i32 %5, %6
+  br i1 %7, label %.preheader.us.i, label %subs_SearchTopRes.exit, !llvm.loop !59
 
 ._crit_edge.us.i:                                 ; preds = %cont_BackTrack.exit.us.i
   br i1 %i.fw, label %.split.us.loopexit.i, label %4

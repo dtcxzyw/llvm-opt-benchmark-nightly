@@ -203,11 +203,6 @@ bb.f:                                             ; preds = %bb.c
   %.not.us = icmp eq i32 %i.w, %i.y
   br i1 %.not.us, label %.preheader.us, label %4
 
-4:                                                ; preds = %._crit_edge.us, %.lr.ph46.split.us
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.033.044.us, i64 40 ; 2 uses
-  %.not39.us = icmp eq ptr %5, %i.t
-  br i1 %.not39.us, label %.loopexit, label %.lr.ph46.split.us
-
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.042.us = phi i64 [ %i.ai, %scalar.ph ], [ %.042.us.ph, %scalar.ph.preheader ] ; 3 uses
   %.02441.us = phi i1 [ %spec.select.us, %scalar.ph ], [ %.02441.us.ph, %scalar.ph.preheader ]
@@ -224,6 +219,11 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ai = add nuw i64 %.042.us, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.ai, %umax
   br i1 %exitcond.not, label %._crit_edge.us, label %scalar.ph, !llvm.loop !194
+
+4:                                                ; preds = %._crit_edge.us, %.lr.ph46.split.us
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.033.044.us, i64 40 ; 2 uses
+  %.not39.us = icmp eq ptr %5, %i.t
+  br i1 %.not39.us, label %.loopexit, label %.lr.ph46.split.us
 
 .preheader.us:                                    ; preds = %.lr.ph46.split.us
   %i.aj = load ptr, ptr %3, align 8, !tbaa !58    ; 2 uses

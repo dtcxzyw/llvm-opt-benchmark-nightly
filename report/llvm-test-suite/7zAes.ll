@@ -203,49 +203,49 @@ bb.b:                                             ; preds = %.lr.ph.split.us.spl
   %exitcond116.not = icmp eq i64 %indvars.iv.next113, %wide.trip.count115
   br i1 %exitcond116.not, label %.thread, label %.lr.ph.split.us.split.us, !llvm.loop !33
 
-.lr.ph.split.us.split:                            ; preds = %.lr.ph.split.us, %.critedge.us.a
-  %indvars.iv107 = phi i64 [ %indvars.iv.next108.a, %.critedge.us.a ], [ 0, %.lr.ph.split.us ] ; 3 uses
+.lr.ph.split.us.split:                            ; preds = %.lr.ph.split.us, %bb.e
+  %indvars.iv107 = phi i64 [ %i.ai, %bb.e ], [ 0, %.lr.ph.split.us ] ; 3 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv107
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !32   ; 5 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 4
   %i.y = load i32, ptr %i.x, align 4, !tbaa !8
   %.not.i.us = icmp eq i32 %i.y, 0
-  br i1 %.not.i.us, label %bb.c, label %.critedge.us.a
+  br i1 %.not.i.us, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %.lr.ph.split.us.split
   %i.z = load i32, ptr %i.w, align 8, !tbaa !14
   %.not12.i.us = icmp eq i32 %i.h, %i.z
-  br i1 %.not12.i.us, label %.preheader.i.us, label %.critedge.us.a
+  br i1 %.not12.i.us, label %.preheader.i.us, label %bb.e
 
 .preheader.i.us:                                  ; preds = %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 32
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !18
   %.not.i.i.us = icmp eq i64 %.fr83, %i.ab
-  br i1 %.not.i.i.us, label %.preheader.i.i.us, label %.critedge.us.a
+  br i1 %.not.i.i.us, label %.preheader.i.i.us, label %bb.e
 
 .preheader.i.i.us:                                ; preds = %.preheader.i.us
   %i.ac = getelementptr inbounds nuw i8, ptr %i.w, i64 40
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !19
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.e, %.preheader.i.i.us
-  %.01013.i.i.us = phi i64 [ 0, %.preheader.i.i.us ], [ %i.ai, %bb.e ] ; 3 uses
+bb.d:                                             ; preds = %.critedge.us.a, %.preheader.i.i.us
+  %.01013.i.i.us = phi i64 [ 0, %.preheader.i.i.us ], [ %indvars.iv.next108.a, %.critedge.us.a ] ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.n, i64 %.01013.i.i.us
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !17
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.01013.i.i.us
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !17
   %.not12.i.i.us = icmp eq i8 %i.af, %i.ah
-  br i1 %.not12.i.i.us, label %bb.e, label %.critedge.us.a
+  br i1 %.not12.i.i.us, label %.critedge.us.a, label %bb.e
 
-.critedge.us.a:                                   ; preds = %bb.d, %.preheader.i.us, %bb.c, %.lr.ph.split.us.split
-  %indvars.iv.next108.a = add nuw nsw i64 %indvars.iv107, 1 ; 2 uses
-  %exitcond111.not.a = icmp eq i64 %indvars.iv.next108.a, %wide.trip.count115
-  br i1 %exitcond111.not.a, label %.thread, label %.lr.ph.split.us.split, !llvm.loop !33
+.critedge.us.a:                                   ; preds = %bb.d
+  %indvars.iv.next108.a = add nuw i64 %.01013.i.i.us, 1 ; 2 uses
+  %exitcond111.not.a = icmp eq i64 %indvars.iv.next108.a, %.fr83
+  br i1 %exitcond111.not.a, label %_ZNK7NCrypto7NSevenZ8CKeyInfo9IsEqualToERKS1_.exit, label %bb.d, !llvm.loop !20
 
-bb.e:                                             ; preds = %bb.d
-  %i.ai = add nuw i64 %.01013.i.i.us, 1           ; 2 uses
-  %exitcond.not.i.i.us = icmp eq i64 %i.ai, %.fr83
-  br i1 %exitcond.not.i.i.us, label %_ZNK7NCrypto7NSevenZ8CKeyInfo9IsEqualToERKS1_.exit, label %bb.d, !llvm.loop !20
+bb.e:                                             ; preds = %bb.d, %.preheader.i.us, %bb.c, %.lr.ph.split.us.split
+  %i.ai = add nuw nsw i64 %indvars.iv107, 1       ; 2 uses
+  %exitcond.not.i.i.us = icmp eq i64 %i.ai, %wide.trip.count115
+  br i1 %exitcond.not.i.i.us, label %.thread, label %.lr.ph.split.us.split, !llvm.loop !33
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   br i1 %i.l, label %.lr.ph.split.split.us, label %.lr.ph.split.split
@@ -350,9 +350,9 @@ bb.m:                                             ; preds = %bb.l, %.preheader.i
   %.not12.i.i = icmp eq i8 %i.bl, %i.bn
   br i1 %.not12.i.i, label %bb.l, label %.critedge
 
-_ZNK7NCrypto7NSevenZ8CKeyInfo9IsEqualToERKS1_.exit: ; preds = %bb.l, %._crit_edge.i.loopexit.us, %bb.e, %.preheader.i.us.us
-  %i.bo = phi ptr [ %i.p, %.preheader.i.us.us ], [ %i.w, %bb.e ], [ %i.ak, %._crit_edge.i.loopexit.us ], [ %i.aw, %bb.l ] ; 35 uses
-  %.02039.in = phi i64 [ %indvars.iv112, %.preheader.i.us.us ], [ %indvars.iv107, %bb.e ], [ %indvars.iv102, %._crit_edge.i.loopexit.us ], [ %indvars.iv, %bb.l ]
+_ZNK7NCrypto7NSevenZ8CKeyInfo9IsEqualToERKS1_.exit: ; preds = %bb.l, %._crit_edge.i.loopexit.us, %.critedge.us.a, %.preheader.i.us.us
+  %i.bo = phi ptr [ %i.p, %.preheader.i.us.us ], [ %i.w, %.critedge.us.a ], [ %i.ak, %._crit_edge.i.loopexit.us ], [ %i.aw, %bb.l ] ; 35 uses
+  %.02039.in = phi i64 [ %indvars.iv112, %.preheader.i.us.us ], [ %indvars.iv107, %.critedge.us.a ], [ %indvars.iv102, %._crit_edge.i.loopexit.us ], [ %indvars.iv, %bb.l ]
   %.02039 = trunc i64 %.02039.in to i32           ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 48 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -576,8 +576,8 @@ _ZN13CObjectVectorIN7NCrypto7NSevenZ8CKeyInfoEE6DeleteEii.exit: ; preds = %bb.s,
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count115
   br i1 %exitcond.not, label %.thread, label %.lr.ph.split.split, !llvm.loop !33
 
-.thread:                                          ; preds = %.critedge, %.critedge.us56, %.critedge.us.a, %.critedge.us.us, %bb.a, %_ZN13CObjectVectorIN7NCrypto7NSevenZ8CKeyInfoEE6DeleteEii.exit, %_ZNK7NCrypto7NSevenZ8CKeyInfo9IsEqualToERKS1_.exit
-  %i.gl = phi i1 [ true, %_ZNK7NCrypto7NSevenZ8CKeyInfo9IsEqualToERKS1_.exit ], [ true, %_ZN13CObjectVectorIN7NCrypto7NSevenZ8CKeyInfoEE6DeleteEii.exit ], [ false, %bb.a ], [ false, %.critedge.us56 ], [ false, %.critedge.us.a ], [ false, %.critedge.us.us ], [ false, %.critedge ]
+.thread:                                          ; preds = %.critedge, %.critedge.us56, %bb.e, %.critedge.us.us, %bb.a, %_ZN13CObjectVectorIN7NCrypto7NSevenZ8CKeyInfoEE6DeleteEii.exit, %_ZNK7NCrypto7NSevenZ8CKeyInfo9IsEqualToERKS1_.exit
+  %i.gl = phi i1 [ true, %_ZNK7NCrypto7NSevenZ8CKeyInfo9IsEqualToERKS1_.exit ], [ true, %_ZN13CObjectVectorIN7NCrypto7NSevenZ8CKeyInfoEE6DeleteEii.exit ], [ false, %bb.a ], [ false, %.critedge.us56 ], [ false, %bb.e ], [ false, %.critedge.us.us ], [ false, %.critedge ]
   ret i1 %i.gl
 }
 

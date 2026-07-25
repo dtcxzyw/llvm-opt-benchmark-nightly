@@ -204,12 +204,6 @@ bb.q:                                             ; preds = %_ZN11OpenImageIO4v3
   store i32 0, ptr %i.d, align 4, !tbaa !3
   br label %bb.r
 
-.critedge53.us:                                   ; preds = %..critedge_crit_edge.us, %bb.q, %_ZN11OpenImageIO4v3_18GIFInput18decode_line_numberEii.exit.us
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #28
-  %2 = add nuw nsw i32 %.03477.us, 1              ; 2 uses
-  %exitcond129.not = icmp eq i32 %2, %.fr118
-  br i1 %exitcond129.not, label %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit60, label %.lr.ph79.split.us, !llvm.loop !115
-
 bb.r:                                             ; preds = %.lr.ph.us, %bb.v
   %i.bp = phi i32 [ 0, %.lr.ph.us ], [ %i.dc, %bb.v ] ; 3 uses
   %i.bq = zext nneg i32 %i.bp to i64
@@ -239,7 +233,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.cd = zext i8 %i.bs to i64
   %i.ce = getelementptr inbounds nuw [3 x i8], ptr %.031, i64 %i.cd
-  %i.cf = load i8, ptr %i.ce, align 1, !tbaa !116
+  %i.cf = load i8, ptr %i.ce, align 1, !tbaa !115
   %i.cg = sext i32 %i.bz to i64                   ; 4 uses
   %i.ch = load ptr, ptr %i.aw, align 8, !tbaa !53
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.cg
@@ -248,7 +242,7 @@ bb.u:                                             ; preds = %bb.t
   %i.ck = zext i8 %i.cj to i64
   %i.cl = getelementptr inbounds nuw [3 x i8], ptr %.031, i64 %i.ck
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 1
-  %i.cn = load i8, ptr %i.cm, align 1, !tbaa !118
+  %i.cn = load i8, ptr %i.cm, align 1, !tbaa !117
   %i.co = load ptr, ptr %i.aw, align 8, !tbaa !53
   %i.cp = getelementptr i8, ptr %i.co, i64 %i.cg
   %i.cq = getelementptr i8, ptr %i.cp, i64 1
@@ -257,7 +251,7 @@ bb.u:                                             ; preds = %bb.t
   %i.cs = zext i8 %i.cr to i64
   %i.ct = getelementptr inbounds nuw [3 x i8], ptr %.031, i64 %i.cs
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 2
-  %i.cv = load i8, ptr %i.cu, align 1, !tbaa !119
+  %i.cv = load i8, ptr %i.cu, align 1, !tbaa !118
   %i.cw = load ptr, ptr %i.aw, align 8, !tbaa !53
   %i.cx = getelementptr i8, ptr %i.cw, i64 %i.cg
   %i.cy = getelementptr i8, ptr %i.cx, i64 2
@@ -272,7 +266,13 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s
   %i.dc = add nuw nsw i32 %i.bp, 1                ; 3 uses
   store i32 %i.dc, ptr %i.d, align 4, !tbaa !3
   %.not49.us = icmp slt i32 %i.dc, %.fr117
-  br i1 %.not49.us, label %bb.r, label %..critedge_crit_edge.us, !llvm.loop !120
+  br i1 %.not49.us, label %bb.r, label %..critedge_crit_edge.us, !llvm.loop !119
+
+.critedge53.us:                                   ; preds = %..critedge_crit_edge.us, %bb.q, %_ZN11OpenImageIO4v3_18GIFInput18decode_line_numberEii.exit.us
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #28
+  %2 = add nuw nsw i32 %.03477.us, 1              ; 2 uses
+  %exitcond129.not = icmp eq i32 %2, %.fr118
+  br i1 %exitcond129.not, label %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit60, label %.lr.ph79.split.us, !llvm.loop !120
 
 ..critedge_crit_edge.us:                          ; preds = %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #28
@@ -299,7 +299,7 @@ bb.w:                                             ; preds = %.lr.ph79.split.spli
 _ZN11OpenImageIO4v3_18GIFInput18decode_line_numberEii.exit.us88: ; preds = %bb.w
   %i.dg = add nuw nsw i32 %.03477.us87, 1         ; 2 uses
   %exitcond128.not = icmp eq i32 %i.dg, %.fr118
-  br i1 %exitcond128.not, label %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit60, label %.lr.ph79.split.split.us, !llvm.loop !115
+  br i1 %exitcond128.not, label %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit60, label %.lr.ph79.split.split.us, !llvm.loop !120
 
 .loopexit.split.split.us:                         ; preds = %.lr.ph79.split.split.us
   %lpad.loopexit.us92 = landingpad { ptr, i32 }
@@ -330,7 +330,7 @@ _ZN11OpenImageIO4v3_18GIFInput18decode_line_numberEii.exit.us104: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #28
   %i.dk = add nuw nsw i32 %.03477.us99, 1         ; 2 uses
   %exitcond.not = icmp eq i32 %i.dk, %.fr118
-  br i1 %exitcond.not, label %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit60, label %.lr.ph79.split.split.split.us, !llvm.loop !115
+  br i1 %exitcond.not, label %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit60, label %.lr.ph79.split.split.split.us, !llvm.loop !120
 
 .loopexit.split.split.split.us:                   ; preds = %.lr.ph79.split.split.split.us
   %lpad.loopexit.us108 = landingpad { ptr, i32 }
@@ -733,11 +733,11 @@ attributes #32 = { nounwind allocsize(0) }
 !112 = !{!62, !4, i64 48}
 !113 = !{!62, !4, i64 44}
 !114 = !{!62, !4, i64 40}
-!115 = distinct !{!115, !70}
-!116 = !{!117, !5, i64 0}
-!117 = !{!"_ZTS12GifColorType", !5, i64 0, !5, i64 1, !5, i64 2}
-!118 = !{!117, !5, i64 1}
-!119 = !{!117, !5, i64 2}
+!115 = !{!116, !5, i64 0}
+!116 = !{!"_ZTS12GifColorType", !5, i64 0, !5, i64 1, !5, i64 2}
+!117 = !{!116, !5, i64 1}
+!118 = !{!116, !5, i64 2}
+!119 = distinct !{!119, !70}
 !120 = distinct !{!120, !70}
 !121 = !{!122}
 !122 = distinct !{!122, !123, !"_ZN11OpenImageIO4v3_17Strutil3fmt6formatIPKcJEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_DpOT0_: argument 0"}

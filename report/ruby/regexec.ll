@@ -203,6 +203,17 @@ bb.y:                                             ; preds = %.loopexit.i.us.i, %
   %.not.i.us.i = icmp eq i8 %i.dw, %i.dx
   br i1 %.not.i.us.i, label %8, label %bb.z
 
+8:                                                ; preds = %.lr.ph.i.us.i
+  %9 = getelementptr i8, ptr %.018.i.us.i, i64 1
+  %10 = getelementptr i8, ptr %.116.i.us.i, i64 1
+  %exitcond.not.i.us.i = icmp eq ptr %.018.i.us.i, %scevgep23.i.us.i
+  br i1 %exitcond.not.i.us.i, label %.loopexit.i.us.i, label %.lr.ph.i.us.i, !llvm.loop !139
+
+.loopexit.i.us.i:                                 ; preds = %8, %bb.y
+  %.1.lcssa.i.us.i = phi ptr [ %.01219.i.us.i, %bb.y ], [ %scevgep22.i.us.i, %8 ] ; 2 uses
+  %11 = icmp ult ptr %.1.lcssa.i.us.i, %i.dh
+  br i1 %11, label %bb.y, label %str_lower_case_match.exit.thread.i, !llvm.loop !140
+
 bb.z:                                             ; preds = %.lr.ph.i.us.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -225,18 +236,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.ee = sext i32 %i.ed to i64
   %i.ef = getelementptr i8, ptr %.02640.us.i, i64 %i.ee ; 2 uses
   %i.eg = icmp ult ptr %i.ef, %spec.select.i210
-  br i1 %i.eg, label %.lr.ph20.i.us.i, label %slow_search.exit.thread, !llvm.loop !139
-
-8:                                                ; preds = %.lr.ph.i.us.i
-  %9 = getelementptr i8, ptr %.018.i.us.i, i64 1
-  %10 = getelementptr i8, ptr %.116.i.us.i, i64 1
-  %exitcond.not.i.us.i = icmp eq ptr %.018.i.us.i, %scevgep23.i.us.i
-  br i1 %exitcond.not.i.us.i, label %.loopexit.i.us.i, label %.lr.ph.i.us.i, !llvm.loop !140
-
-.loopexit.i.us.i:                                 ; preds = %8, %bb.y
-  %.1.lcssa.i.us.i = phi ptr [ %.01219.i.us.i, %bb.y ], [ %scevgep22.i.us.i, %8 ] ; 2 uses
-  %11 = icmp ult ptr %.1.lcssa.i.us.i, %i.dh
-  br i1 %11, label %bb.y, label %str_lower_case_match.exit.thread.i, !llvm.loop !141
+  br i1 %i.eg, label %.lr.ph20.i.us.i, label %slow_search.exit.thread, !llvm.loop !141
 
 .lr.ph.split.i212:                                ; preds = %.lr.ph.i211
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
@@ -489,6 +489,17 @@ bb.an:                                            ; preds = %.loopexit.i.us.i231
   %.not.i.us.i240 = icmp eq i8 %i.iv, %i.iw
   br i1 %.not.i.us.i240, label %12, label %bb.ao
 
+12:                                               ; preds = %.lr.ph.i.us.i237
+  %13 = getelementptr i8, ptr %.018.i.us.i238, i64 1
+  %14 = getelementptr i8, ptr %.116.i.us.i239, i64 1
+  %exitcond.not.i.us.i241 = icmp eq ptr %.018.i.us.i238, %scevgep23.i.us.i236
+  br i1 %exitcond.not.i.us.i241, label %.loopexit.i.us.i231, label %.lr.ph.i.us.i237, !llvm.loop !139
+
+.loopexit.i.us.i231:                              ; preds = %12, %bb.an
+  %.1.lcssa.i.us.i232 = phi ptr [ %.01219.i.us.i230, %bb.an ], [ %scevgep22.i.us.i235, %12 ] ; 2 uses
+  %15 = icmp ult ptr %.1.lcssa.i.us.i232, %i.hy
+  br i1 %15, label %bb.an, label %str_lower_case_match.exit.thread.i228.loopexit, !llvm.loop !140
+
 bb.ao:                                            ; preds = %.lr.ph.i.us.i237
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -504,17 +515,6 @@ bb.ap:                                            ; preds = %bb.ao
   %i.jc = getelementptr i8, ptr %.02942.us.i, i64 %i.jb ; 2 uses
   %i.jd = icmp ult ptr %i.jc, %spec.select.i223
   br i1 %i.jd, label %.lr.ph20.i.us.i229, label %slow_search.exit.thread, !llvm.loop !150
-
-12:                                               ; preds = %.lr.ph.i.us.i237
-  %13 = getelementptr i8, ptr %.018.i.us.i238, i64 1
-  %14 = getelementptr i8, ptr %.116.i.us.i239, i64 1
-  %exitcond.not.i.us.i241 = icmp eq ptr %.018.i.us.i238, %scevgep23.i.us.i236
-  br i1 %exitcond.not.i.us.i241, label %.loopexit.i.us.i231, label %.lr.ph.i.us.i237, !llvm.loop !140
-
-.loopexit.i.us.i231:                              ; preds = %12, %bb.an
-  %.1.lcssa.i.us.i232 = phi ptr [ %.01219.i.us.i230, %bb.an ], [ %scevgep22.i.us.i235, %12 ] ; 2 uses
-  %15 = icmp ult ptr %.1.lcssa.i.us.i232, %i.hy
-  br i1 %15, label %bb.an, label %str_lower_case_match.exit.thread.i228.loopexit, !llvm.loop !141
 
 .lr.ph.split.i227:                                ; preds = %.lr.ph.i226
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -590,6 +590,17 @@ bb.ar:                                            ; preds = %.loopexit.i.us.i249
   %.not.i.us.i258 = icmp eq i8 %i.kg, %i.kh
   br i1 %.not.i.us.i258, label %16, label %bb.as
 
+16:                                               ; preds = %.lr.ph.i.us.i255
+  %17 = getelementptr i8, ptr %.018.i.us.i256, i64 1
+  %18 = getelementptr i8, ptr %.116.i.us.i257, i64 1
+  %exitcond.not.i.us.i259 = icmp eq ptr %.018.i.us.i256, %scevgep23.i.us.i254
+  br i1 %exitcond.not.i.us.i259, label %.loopexit.i.us.i249, label %.lr.ph.i.us.i255, !llvm.loop !139
+
+.loopexit.i.us.i249:                              ; preds = %16, %bb.ar
+  %.1.lcssa.i.us.i250 = phi ptr [ %.01219.i.us.i248, %bb.ar ], [ %scevgep22.i.us.i253, %16 ] ; 2 uses
+  %19 = icmp ult ptr %.1.lcssa.i.us.i250, %i.jh
+  br i1 %19, label %bb.ar, label %str_lower_case_match.exit.thread.i246, !llvm.loop !140
+
 bb.as:                                            ; preds = %.lr.ph.i.us.i255
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -635,17 +646,6 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %i.ld = icmp ult ptr %i.kz, %.044.i
   %i.le = and i1 %i.ld, %i.lc
   br i1 %i.le, label %.split.us63.i, label %.split56.us61.i, !llvm.loop !152
-
-16:                                               ; preds = %.lr.ph.i.us.i255
-  %17 = getelementptr i8, ptr %.018.i.us.i256, i64 1
-  %18 = getelementptr i8, ptr %.116.i.us.i257, i64 1
-  %exitcond.not.i.us.i259 = icmp eq ptr %.018.i.us.i256, %scevgep23.i.us.i254
-  br i1 %exitcond.not.i.us.i259, label %.loopexit.i.us.i249, label %.lr.ph.i.us.i255, !llvm.loop !140
-
-.loopexit.i.us.i249:                              ; preds = %16, %bb.ar
-  %.1.lcssa.i.us.i250 = phi ptr [ %.01219.i.us.i248, %bb.ar ], [ %scevgep22.i.us.i253, %16 ] ; 2 uses
-  %19 = icmp ult ptr %.1.lcssa.i.us.i250, %i.jh
-  br i1 %19, label %bb.ar, label %str_lower_case_match.exit.thread.i246, !llvm.loop !141
 
 .split56.us61.i:                                  ; preds = %bb.aw, %bb.ax
   %.us-phi.us.i = phi ptr [ %i.lj, %bb.ax ], [ %i.kz, %bb.aw ] ; 2 uses
@@ -1049,19 +1049,19 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.aw = getelementptr i8, ptr %i.ak, i64 56
   br i1 %i.av, label %.lr.ph20.i.us.i, label %.lr.ph.split.i
 
-.lr.ph20.i.us.i:                                  ; preds = %.lr.ph.i97, %bb.k
-  %.136.us.i = phi ptr [ %8, %bb.k ], [ %.0.i96, %.lr.ph.i97 ] ; 3 uses
+.lr.ph20.i.us.i:                                  ; preds = %.lr.ph.i97, %.loopexit.i.us.i
+  %.136.us.i = phi ptr [ %11, %.loopexit.i.us.i ], [ %.0.i96, %.lr.ph.i97 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %.136.us.i, ptr %i.a, align 8, !tbaa !19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   br label %bb.j
 
-bb.j:                                             ; preds = %.loopexit.i.us.i, %.lr.ph20.i.us.i
-  %.01219.i.us.i = phi ptr [ %i.am, %.lr.ph20.i.us.i ], [ %.1.lcssa.i.us.i, %.loopexit.i.us.i ] ; 3 uses
+bb.j:                                             ; preds = %bb.l, %.lr.ph20.i.us.i
+  %.01219.i.us.i = phi ptr [ %i.am, %.lr.ph20.i.us.i ], [ %.1.lcssa.i.us.i, %bb.l ] ; 3 uses
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !64
   %i.ay = call i32 %i.ax(i32 noundef %i.al, ptr noundef nonnull %i.a, ptr noundef %2, ptr noundef nonnull %i.b, ptr noundef %i.ak) #21, !inline_history !161 ; 2 uses
   %i.az = icmp sgt i32 %i.ay, 0
-  br i1 %i.az, label %.lr.ph.preheader.i.us.i, label %.loopexit.i.us.i
+  br i1 %i.az, label %.lr.ph.preheader.i.us.i, label %bb.l
 
 .lr.ph.preheader.i.us.i:                          ; preds = %bb.j
   %scevgep.i.us.i = getelementptr i8, ptr %.01219.i.us.i, i64 1
@@ -1071,39 +1071,39 @@ bb.j:                                             ; preds = %.loopexit.i.us.i, %
   %scevgep23.i.us.i = getelementptr i8, ptr %i.b, i64 %i.bb
   br label %.lr.ph.i.us.i
 
-.lr.ph.i.us.i:                                    ; preds = %bb.l, %.lr.ph.preheader.i.us.i
-  %.018.i.us.i = phi ptr [ %9, %bb.l ], [ %i.b, %.lr.ph.preheader.i.us.i ] ; 3 uses
-  %.116.i.us.i = phi ptr [ %10, %bb.l ], [ %.01219.i.us.i, %.lr.ph.preheader.i.us.i ] ; 2 uses
+.lr.ph.i.us.i:                                    ; preds = %bb.k, %.lr.ph.preheader.i.us.i
+  %.018.i.us.i = phi ptr [ %8, %bb.k ], [ %i.b, %.lr.ph.preheader.i.us.i ] ; 3 uses
+  %.116.i.us.i = phi ptr [ %9, %bb.k ], [ %.01219.i.us.i, %.lr.ph.preheader.i.us.i ] ; 2 uses
   %i.bc = load i8, ptr %.116.i.us.i, align 1, !tbaa !59
   %i.bd = load i8, ptr %.018.i.us.i, align 1, !tbaa !59
   %.not.i.us.i = icmp eq i8 %i.bc, %i.bd
-  br i1 %.not.i.us.i, label %bb.l, label %bb.k
+  br i1 %.not.i.us.i, label %bb.k, label %.loopexit.i.us.i
 
 bb.k:                                             ; preds = %.lr.ph.i.us.i
+  %8 = getelementptr i8, ptr %.018.i.us.i, i64 1
+  %9 = getelementptr i8, ptr %.116.i.us.i, i64 1
+  %exitcond.not.i.us.i = icmp eq ptr %.018.i.us.i, %scevgep23.i.us.i
+  br i1 %exitcond.not.i.us.i, label %bb.l, label %.lr.ph.i.us.i, !llvm.loop !139
+
+bb.l:                                             ; preds = %bb.k, %bb.j
+  %.1.lcssa.i.us.i = phi ptr [ %.01219.i.us.i, %bb.j ], [ %scevgep22.i.us.i, %bb.k ] ; 2 uses
+  %10 = icmp ult ptr %.1.lcssa.i.us.i, %i.an
+  br i1 %10, label %bb.j, label %str_lower_case_match.exit.thread.i, !llvm.loop !140
+
+.loopexit.i.us.i:                                 ; preds = %.lr.ph.i.us.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %8 = call ptr @onigenc_get_prev_char_head(ptr noundef %i.ak, ptr noundef %5, ptr noundef %.136.us.i, ptr noundef %2) #21 ; 2 uses
-  %.not.us.i = icmp ult ptr %8, %4
-  br i1 %.not.us.i, label %slow_search_backward.exit.thread, label %.lr.ph20.i.us.i, !llvm.loop !162
-
-bb.l:                                             ; preds = %.lr.ph.i.us.i
-  %9 = getelementptr i8, ptr %.018.i.us.i, i64 1
-  %10 = getelementptr i8, ptr %.116.i.us.i, i64 1
-  %exitcond.not.i.us.i = icmp eq ptr %.018.i.us.i, %scevgep23.i.us.i
-  br i1 %exitcond.not.i.us.i, label %.loopexit.i.us.i, label %.lr.ph.i.us.i, !llvm.loop !140
-
-.loopexit.i.us.i:                                 ; preds = %bb.l, %bb.j
-  %.1.lcssa.i.us.i = phi ptr [ %.01219.i.us.i, %bb.j ], [ %scevgep22.i.us.i, %bb.l ] ; 2 uses
-  %i.be = icmp ult ptr %.1.lcssa.i.us.i, %i.an
-  br i1 %i.be, label %bb.j, label %str_lower_case_match.exit.thread.i, !llvm.loop !141
+  %11 = call ptr @onigenc_get_prev_char_head(ptr noundef %i.ak, ptr noundef %5, ptr noundef %.136.us.i, ptr noundef %2) #21 ; 2 uses
+  %i.be = icmp ult ptr %11, %4
+  br i1 %i.be, label %slow_search_backward.exit.thread, label %.lr.ph20.i.us.i, !llvm.loop !162
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i97
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   br label %str_lower_case_match.exit.thread.i
 
-str_lower_case_match.exit.thread.i:               ; preds = %.loopexit.i.us.i, %.lr.ph.split.i
-  %.134.i = phi ptr [ %.0.i96, %.lr.ph.split.i ], [ %.136.us.i, %.loopexit.i.us.i ]
+str_lower_case_match.exit.thread.i:               ; preds = %bb.l, %.lr.ph.split.i
+  %.134.i = phi ptr [ %.0.i96, %.lr.ph.split.i ], [ %.136.us.i, %bb.l ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %slow_search_backward.exit
@@ -1259,8 +1259,8 @@ bb.ad:                                            ; preds = %bb.aa, %bb.ab, %bb.
   store ptr %i.dj, ptr %7, align 8, !tbaa !19
   br label %slow_search_backward.exit.thread
 
-slow_search_backward.exit.thread:                 ; preds = %bb.z, %bb.m, %bb.i, %bb.e, %slow_search_backward.exit, %bb.n, %bb.k, %bb.f, %.thread, %bb.ad, %bb.a
-  %.0 = phi i32 [ 1, %.thread ], [ 0, %bb.a ], [ 1, %bb.ad ], [ 0, %bb.n ], [ 0, %bb.k ], [ 0, %bb.f ], [ 0, %slow_search_backward.exit ], [ 0, %bb.e ], [ 0, %bb.i ], [ 0, %bb.m ], [ 0, %bb.z ]
+slow_search_backward.exit.thread:                 ; preds = %bb.z, %bb.m, %bb.i, %bb.e, %slow_search_backward.exit, %bb.n, %.loopexit.i.us.i, %bb.f, %.thread, %bb.ad, %bb.a
+  %.0 = phi i32 [ 1, %.thread ], [ 0, %bb.a ], [ 1, %bb.ad ], [ 0, %bb.n ], [ 0, %.loopexit.i.us.i ], [ 0, %bb.f ], [ 0, %slow_search_backward.exit ], [ 0, %bb.e ], [ 0, %bb.i ], [ 0, %bb.m ], [ 0, %bb.z ]
   ret i32 %.0
 }
 

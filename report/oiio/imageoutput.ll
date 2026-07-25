@@ -204,15 +204,6 @@ bb.j:                                             ; preds = %.lr.ph159.us.us, %1
   %.pre191 = load i32, ptr %i.b, align 8, !tbaa !3
   br label %.lr.ph.us.us
 
-14:                                               ; preds = %._crit_edge.us.us, %bb.j
-  %.pre190194 = phi i32 [ %.pre193, %._crit_edge.us.us ], [ %.pre190195, %bb.j ] ; 2 uses
-  %15 = phi i32 [ %.pre193, %._crit_edge.us.us ], [ %i.cb, %bb.j ] ; 2 uses
-  %.sroa.0.2.lcssa.us.us = phi ptr [ %.sroa.0.5.us.us, %._crit_edge.us.us ], [ %.sroa.0.1155.us.us, %bb.j ] ; 4 uses
-  %.2.lcssa.us.us = phi i8 [ %.3.us.le.us, %._crit_edge.us.us ], [ 0, %bb.j ] ; 3 uses
-  %16 = add nsw i32 %15, %.074156.us172.us        ; 2 uses
-  %17 = icmp slt i32 %16, %4
-  br i1 %17, label %bb.j, label %._crit_edge160.split.us173.us, !llvm.loop !127
-
 .lr.ph.us.us:                                     ; preds = %.lr.ph.us.us.preheader, %bb.q
   %i.ci = phi i32 [ %i.dl, %bb.q ], [ %.pre191, %.lr.ph.us.us.preheader ] ; 3 uses
   %.071152.us.us = phi i32 [ %i.dp, %bb.q ], [ %1, %.lr.ph.us.us.preheader ] ; 4 uses
@@ -224,12 +215,12 @@ bb.j:                                             ; preds = %.lr.ph159.us.us, %1
   br i1 %.not137.us.us, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph.us.us
-  %i.ck = load i32, ptr %i.n, align 4, !tbaa !128
+  %i.ck = load i32, ptr %i.n, align 4, !tbaa !127
   %i.cl = icmp eq i32 %.sroa.speculated95.us.us, %i.ck
   br i1 %i.cl, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
-  %i.cm = load i32, ptr %i.u, align 8, !tbaa !129
+  %i.cm = load i32, ptr %i.u, align 8, !tbaa !128
   %i.cn = icmp eq i32 %.sroa.speculated99.us.us, %i.cm
   br i1 %i.cn, label %bb.m, label %bb.n
 
@@ -250,7 +241,7 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit.us.us: ; preds
   %i.ct = mul i64 %i.cs, %i.br                    ; 2 uses
   %i.cu = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ct) #41 ; 2 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.cu, i8 0, i64 %i.ct, i1 false)
-  %.pre192 = load i32, ptr %i.b, align 8, !tbaa !130
+  %.pre192 = load i32, ptr %i.b, align 8, !tbaa !129
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit.us.us, %bb.n
@@ -266,7 +257,7 @@ bb.o:                                             ; preds = %_ZNSt10unique_ptrIA
 
 bb.p:                                             ; preds = %bb.o
   %.sroa.0.0.copyload.us.us = load i64, ptr %13, align 8
-  %i.dc = load i32, ptr %i.b, align 8, !tbaa !130
+  %i.dc = load i32, ptr %i.b, align 8, !tbaa !129
   %i.dd = sext i32 %i.dc to i64
   %i.de = mul nsw i64 %i.br, %i.dd
   %i.df = call noundef i64 @_ZNK11OpenImageIO4v3_19ImageSpec11tile_pixelsEv(ptr noundef nonnull align 8 dereferenceable(160) %i.a) #2
@@ -280,18 +271,27 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p, %bb.m
   %.sroa.0.5.us.us = phi ptr [ %.sroa.0.2150.us.us, %bb.m ], [ %.sroa.0.4.us.us, %bb.p ] ; 2 uses
   %.3.in.us.us = phi i1 [ %i.cr, %bb.m ], [ %i.dk, %bb.p ] ; 2 uses
-  %i.dl = load i32, ptr %i.b, align 8, !tbaa !130 ; 3 uses
+  %i.dl = load i32, ptr %i.b, align 8, !tbaa !129 ; 3 uses
   %i.dm = sext i32 %i.dl to i64
   %i.dn = mul nsw i64 %.1122, %i.dm
   %i.do = getelementptr inbounds i8, ptr %.073151.us.us, i64 %i.dn
   %i.dp = add nsw i32 %i.dl, %.071152.us.us       ; 2 uses
   %i.dq = icmp slt i32 %i.dp, %2
   %i.dr = select i1 %.3.in.us.us, i1 %i.dq, i1 false
-  br i1 %i.dr, label %.lr.ph.us.us, label %._crit_edge.us.us, !llvm.loop !131
+  br i1 %i.dr, label %.lr.ph.us.us, label %._crit_edge.us.us, !llvm.loop !130
+
+14:                                               ; preds = %._crit_edge.us.us, %bb.j
+  %.pre190194 = phi i32 [ %.pre193, %._crit_edge.us.us ], [ %.pre190195, %bb.j ] ; 2 uses
+  %15 = phi i32 [ %.pre193, %._crit_edge.us.us ], [ %i.cb, %bb.j ] ; 2 uses
+  %.sroa.0.2.lcssa.us.us = phi ptr [ %.sroa.0.5.us.us, %._crit_edge.us.us ], [ %.sroa.0.1155.us.us, %bb.j ] ; 4 uses
+  %.2.lcssa.us.us = phi i8 [ %.3.us.le.us, %._crit_edge.us.us ], [ 0, %bb.j ] ; 3 uses
+  %16 = add nsw i32 %15, %.074156.us172.us        ; 2 uses
+  %17 = icmp slt i32 %16, %4
+  br i1 %17, label %bb.j, label %._crit_edge160.split.us173.us, !llvm.loop !131
 
 ._crit_edge.us.us:                                ; preds = %bb.q
   %.3.us.le.us = zext i1 %.3.in.us.us to i8
-  %.pre193 = load i32, ptr %i.n, align 4, !tbaa !128 ; 2 uses
+  %.pre193 = load i32, ptr %i.n, align 4, !tbaa !127 ; 2 uses
   br label %14
 
 ._crit_edge160.split.us173.us:                    ; preds = %14
@@ -400,7 +400,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !130
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !129
   %.not = icmp eq i32 %i.f, 0
   br i1 %.not, label %bb.e, label %bb.d
 
@@ -803,9 +803,9 @@ bb.x:                                             ; preds = %._crit_edge, %bb.t,
 define noundef ptr @_ZN11OpenImageIO4v3_111ImageOutput14to_native_tileENS0_8TypeDescEPKvlllRSt6vectorIhSaIhEEjiii(ptr noundef nonnull align 8 dereferenceable(184) %0, i64 %1, ptr noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, ptr noundef nonnull align 8 dereferenceable(24) %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !130
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !129
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 60
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !128
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !127
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.f = load i32, ptr %i.e, align 8, !tbaa !3
   %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %i.f, i32 1)
@@ -1099,7 +1099,7 @@ bb.k:                                             ; preds = %.thread196, %bb.m, 
 
 bb.l:                                             ; preds = %bb.j, %bb.h
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.be = load i32, ptr %i.bd, align 8, !tbaa !130
+  %i.be = load i32, ptr %i.bd, align 8, !tbaa !129
   %.not127 = icmp eq i32 %i.be, 0
   br i1 %.not127, label %bb.s, label %bb.m
 
@@ -1133,7 +1133,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.br, label %.lr.ph222.split.preheader, label %.thread183
 
 .lr.ph222.split.preheader:                        ; preds = %.lr.ph222
-  %.pre272 = load i32, ptr %i.bn, align 8, !tbaa !129
+  %.pre272 = load i32, ptr %i.bn, align 8, !tbaa !128
   br label %.lr.ph222.split
 
 .lr.ph222.split:                                  ; preds = %.lr.ph222.split.preheader, %._crit_edge
@@ -1154,7 +1154,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bz = sext i32 %.0118219 to i64
   %i.ca = mul nsw i64 %.0176, %i.bz
   %i.cb = getelementptr inbounds i8, ptr %2, i64 %i.ca ; 2 uses
-  %.pre274 = load i32, ptr %i.bp, align 4, !tbaa !128 ; 2 uses
+  %.pre274 = load i32, ptr %i.bp, align 4, !tbaa !127 ; 2 uses
   br i1 %.not126, label %.lr.ph.split.us, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
@@ -1188,7 +1188,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %.lr.ph.split.us
   %i.cv = select i1 %i.cu, i8 %.1110216.us, i8 0  ; 2 uses
-  %i.cw = load i32, ptr %i.bp, align 4, !tbaa !128 ; 2 uses
+  %i.cw = load i32, ptr %i.bp, align 4, !tbaa !127 ; 2 uses
   %i.cx = add nsw i32 %i.cw, %.0119215.us         ; 2 uses
   %i.cy = load i32, ptr %i.v, align 8, !tbaa !111 ; 3 uses
   %.not133.us = icmp slt i32 %i.cx, %i.cy
@@ -1246,7 +1246,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.ak
 
 bb.r:                                             ; preds = %bb.q
-  %i.ed = load i32, ptr %i.bp, align 4, !tbaa !128 ; 2 uses
+  %i.ed = load i32, ptr %i.bp, align 4, !tbaa !127 ; 2 uses
   %i.ee = add nsw i32 %i.ed, %.0119215            ; 2 uses
   %i.ef = load i32, ptr %i.v, align 8, !tbaa !111 ; 3 uses
   %.not133 = icmp slt i32 %i.ee, %i.ef
@@ -1259,7 +1259,7 @@ bb.r:                                             ; preds = %bb.q
 ._crit_edge:                                      ; preds = %bb.o, %._crit_edge.loopexit293, %.lr.ph222.split
   %i.eh = phi i32 [ %i.bs, %.lr.ph222.split ], [ %i.ef, %._crit_edge.loopexit293 ], [ %i.cy, %bb.o ]
   %.1110.lcssa = phi i8 [ %.0109221, %.lr.ph222.split ], [ %i.eg, %._crit_edge.loopexit293 ], [ %i.cv, %bb.o ] ; 2 uses
-  %i.ei = load i32, ptr %i.bn, align 8, !tbaa !129 ; 2 uses
+  %i.ei = load i32, ptr %i.bn, align 8, !tbaa !128 ; 2 uses
   %i.ej = add nsw i32 %i.ei, %.0118219            ; 2 uses
   %i.ek = load i32, ptr %i.bk, align 4, !tbaa !133 ; 2 uses
   %.not134 = icmp slt i32 %i.ej, %i.ek
@@ -1662,7 +1662,7 @@ define noundef zeroext i1 @_ZN11OpenImageIO4v3_111ImageOutput25copy_tile_to_imag
 bb.a:
   %11 = alloca %"struct.OpenImageIO::v3_1::TypeDesc", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !130  ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !129  ; 2 uses
   %.not = icmp eq i32 %i.b, 0
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4              ; 2 uses
@@ -2065,13 +2065,13 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.aj, %bb.ai
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
-  %i.fl = load i32, ptr %i.fk, align 8, !tbaa !130
+  %i.fl = load i32, ptr %i.fk, align 8, !tbaa !129
   %.not27 = icmp eq i32 %i.fl, 0
   br i1 %.not27, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
   %i.fm = getelementptr inbounds nuw i8, ptr %0, i64 60
-  %i.fn = load i32, ptr %i.fm, align 4, !tbaa !128
+  %i.fn = load i32, ptr %i.fm, align 4, !tbaa !127
   %.not28 = icmp eq i32 %i.fn, 0
   br i1 %.not28, label %bb.at, label %bb.an
 
@@ -2098,19 +2098,19 @@ bb.ao:                                            ; preds = %bb.an
   br label %bb.bj
 
 bb.ap:                                            ; preds = %bb.an
-  %i.fx = load i32, ptr %i.fk, align 8, !tbaa !130
+  %i.fx = load i32, ptr %i.fk, align 8, !tbaa !129
   %i.fy = icmp slt i32 %i.fx, 1
   br i1 %i.fy, label %bb.as, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 60
-  %i.ga = load i32, ptr %i.fz, align 4, !tbaa !128
+  %i.ga = load i32, ptr %i.fz, align 4, !tbaa !127
   %i.gb = icmp slt i32 %i.ga, 1
   br i1 %i.gb, label %bb.as, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
   %i.gc = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.gd = load i32, ptr %i.gc, align 8, !tbaa !129
+  %i.gd = load i32, ptr %i.gc, align 8, !tbaa !128
   %i.ge = icmp slt i32 %i.gd, 1
   br i1 %i.ge, label %bb.as, label %bb.at
 
@@ -2513,10 +2513,10 @@ attributes #46 = { nounwind willreturn memory(none) }
 !124 = !{!80, !4, i64 56}
 !125 = !{!80, !4, i64 16}
 !126 = !{!80, !4, i64 20}
-!127 = distinct !{!127, !36}
-!128 = !{!79, !4, i64 60}
-!129 = !{!79, !4, i64 64}
-!130 = !{!79, !4, i64 56}
+!127 = !{!79, !4, i64 60}
+!128 = !{!79, !4, i64 64}
+!129 = !{!79, !4, i64 56}
+!130 = distinct !{!130, !36}
 !131 = distinct !{!131, !36}
 !132 = distinct !{!132, !36}
 !133 = !{!79, !4, i64 28}

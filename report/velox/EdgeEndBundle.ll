@@ -203,24 +203,24 @@ _ZNK4geos9geomgraph5Label11getLocationEjj.exit.i.i.us: ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 17
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !31
   switch i8 %i.ak, label %.critedge.i.i.us [
-    i8 0, label %bb.e
-    i8 2, label %2
+    i8 0, label %2
+    i8 2, label %bb.e
   ]
 
-2:                                                ; preds = %_ZNK4geos9geomgraph5Label11getLocationEjj.exit.i.i.us
+bb.e:                                             ; preds = %_ZNK4geos9geomgraph5Label11getLocationEjj.exit.i.i.us
   store i8 2, ptr %i.ae, align 1, !tbaa !31
   br label %.critedge.i.i.us
 
-bb.e:                                             ; preds = %_ZNK4geos9geomgraph5Label11getLocationEjj.exit.i.i.us
-  store i8 0, ptr %i.ae, align 1, !tbaa !31
-  br label %.lr.ph.i3.i.us
-
-.critedge.i.i.us:                                 ; preds = %bb.d, %2, %_ZNK4geos9geomgraph5Label11getLocationEjj.exit.i.i.us
+.critedge.i.i.us:                                 ; preds = %bb.d, %bb.e, %_ZNK4geos9geomgraph5Label11getLocationEjj.exit.i.i.us
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.016.029.i.i.us, i64 8 ; 2 uses
   %.not.i.i11.us = icmp eq ptr %i.al, %i.ac
   br i1 %.not.i.i11.us, label %.lr.ph.i3.i.us, label %bb.d
 
-.lr.ph.i3.i.us:                                   ; preds = %.critedge.i.i.us, %bb.e
+2:                                                ; preds = %_ZNK4geos9geomgraph5Label11getLocationEjj.exit.i.i.us
+  store i8 0, ptr %i.ae, align 1, !tbaa !31
+  br label %.lr.ph.i3.i.us
+
+.lr.ph.i3.i.us:                                   ; preds = %.critedge.i.i.us, %2
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 2 uses
   br label %bb.f
 
@@ -236,24 +236,24 @@ _ZNK4geos9geomgraph5Label11getLocationEjj.exit.i7.i.us: ; preds = %bb.f
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 18
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !31
   switch i8 %i.as, label %.critedge.i5.i.us [
-    i8 0, label %bb.g
-    i8 2, label %3
+    i8 0, label %3
+    i8 2, label %bb.g
   ]
 
-3:                                                ; preds = %_ZNK4geos9geomgraph5Label11getLocationEjj.exit.i7.i.us
+bb.g:                                             ; preds = %_ZNK4geos9geomgraph5Label11getLocationEjj.exit.i7.i.us
   store i8 2, ptr %i.am, align 2, !tbaa !31
   br label %.critedge.i5.i.us
 
-bb.g:                                             ; preds = %_ZNK4geos9geomgraph5Label11getLocationEjj.exit.i7.i.us
-  store i8 0, ptr %i.am, align 2, !tbaa !31
-  br label %.lr.ph.i.us.1.preheader
-
-.critedge.i5.i.us:                                ; preds = %3, %_ZNK4geos9geomgraph5Label11getLocationEjj.exit.i7.i.us, %bb.f
+.critedge.i5.i.us:                                ; preds = %bb.g, %_ZNK4geos9geomgraph5Label11getLocationEjj.exit.i7.i.us, %bb.f
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.016.029.i4.i.us, i64 8 ; 2 uses
   %.not.i6.i.us = icmp eq ptr %i.at, %i.ac
   br i1 %.not.i6.i.us, label %.lr.ph.i.us.1.preheader, label %bb.f
 
-.lr.ph.i.us.1.preheader:                          ; preds = %.critedge.i5.i.us, %bb.g
+3:                                                ; preds = %_ZNK4geos9geomgraph5Label11getLocationEjj.exit.i7.i.us
+  store i8 0, ptr %i.am, align 2, !tbaa !31
+  br label %.lr.ph.i.us.1.preheader
+
+.lr.ph.i.us.1.preheader:                          ; preds = %.critedge.i5.i.us, %3
   br label %.lr.ph.i.us.1
 
 .lr.ph.i.us.1:                                    ; preds = %.lr.ph.i.us.1.preheader, %.thread.i.us.1

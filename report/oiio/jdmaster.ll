@@ -204,6 +204,10 @@ bb.f:                                             ; preds = %bb.e
   %i.az = icmp eq i32 %i.ay, 0
   br i1 %i.az, label %1, label %.critedge.us
 
+1:                                                ; preds = %bb.f
+  %2 = icmp slt i32 %.068.us, 4
+  br i1 %2, label %bb.e, label %.critedge.us, !llvm.loop !62
+
 .critedge.us:                                     ; preds = %bb.f, %1, %bb.e
   %.0.lcssa.us = phi i32 [ %i.aw, %1 ], [ %.068.us, %bb.e ], [ %.068.us, %bb.f ] ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %.06074.us, i64 40
@@ -213,11 +217,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bc = add nuw nsw i32 %.06173.us, 1           ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.06074.us, i64 96
   %exitcond79.not = icmp eq i32 %i.bc, %i.o
-  br i1 %exitcond79.not, label %.lr.ph, label %.lr.ph.us, !llvm.loop !62
-
-1:                                                ; preds = %bb.f
-  %2 = icmp slt i32 %.068.us, 4
-  br i1 %2, label %bb.e, label %.critedge.us, !llvm.loop !63
+  br i1 %exitcond79.not, label %.lr.ph, label %.lr.ph.us, !llvm.loop !63
 
 .lr.ph.loopexit88.unr-lcssa:                      ; preds = %.critedge
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -270,7 +270,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bu = getelementptr inbounds nuw i8, ptr %.06074, i64 768 ; 2 uses
   %niter.next.7 = add nuw nsw i32 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %.lr.ph.loopexit88.unr-lcssa, label %.critedge, !llvm.loop !62
+  br i1 %niter.ncmp.7, label %.lr.ph.loopexit88.unr-lcssa, label %.critedge, !llvm.loop !63
 
 bb.g:                                             ; preds = %.lr.ph, %bb.g
   %.177 = phi ptr [ %i.m, %.lr.ph ], [ %i.cz, %bb.g ] ; 6 uses

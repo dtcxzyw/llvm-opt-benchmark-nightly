@@ -203,8 +203,8 @@ bb.ay:                                            ; preds = %count_run.exit.thre
   %.not.i211 = icmp eq ptr %.8.val.fr.i, null
   br i1 %.not.i211, label %.lr.ph10.split.us.i, label %.lr.ph10.split.i
 
-.lr.ph10.split.us.i:                              ; preds = %.lr.ph10.i, %._crit_edge.us.i.a
-  %.1547.us.i = phi i64 [ %i.ij, %._crit_edge.us.i.a ], [ %spec.select.i210, %.lr.ph10.i ] ; 8 uses
+.lr.ph10.split.us.i:                              ; preds = %.lr.ph10.i, %.lr.ph.us.i
+  %.1547.us.i = phi i64 [ %i.il, %.lr.ph.us.i ], [ %spec.select.i210, %.lr.ph10.i ] ; 8 uses
   %i.hx = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.1547.us.i
   %i.hy = load ptr, ptr %i.hx, align 8, !tbaa !50 ; 2 uses
   br label %bb.az
@@ -229,26 +229,26 @@ bb.ba:                                            ; preds = %bb.az
   %i.ih = icmp slt i64 %.149.us.i, %.1.us.i
   br i1 %i.ih, label %bb.az, label %.preheader.us.i, !llvm.loop !96
 
-._crit_edge.us.i.a:                               ; preds = %.lr.ph.us.i, %middle.block, %.preheader.us.i
-  %i.ii = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.149.us.i
-  store ptr %i.hy, ptr %i.ii, align 8, !tbaa !50
-  %i.ij = add nuw nsw i64 %.1547.us.i, 1          ; 2 uses
-  %exitcond23.not.i = icmp eq i64 %i.ij, %i.hv
-  br i1 %exitcond23.not.i, label %binarysort.exit.thread, label %.lr.ph10.split.us.i, !llvm.loop !97
-
-.lr.ph.us.i:                                      ; preds = %.lr.ph.us.i.preheader495, %.lr.ph.us.i
-  %.0502.us.i = phi i64 [ %i.il, %.lr.ph.us.i ], [ %.0502.us.i.ph, %.lr.ph.us.i.preheader495 ] ; 2 uses
-  %i.ik = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.0502.us.i ; 2 uses
-  %4 = getelementptr i8, ptr %i.ik, i64 -8
+._crit_edge.us.i.a:                               ; preds = %.lr.ph.us.i.preheader495, %._crit_edge.us.i.a
+  %.0502.us.i = phi i64 [ %i.ij, %._crit_edge.us.i.a ], [ %.0502.us.i.ph, %.lr.ph.us.i.preheader495 ] ; 2 uses
+  %i.ii = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.0502.us.i ; 2 uses
+  %4 = getelementptr i8, ptr %i.ii, i64 -8
   %5 = load ptr, ptr %4, align 8, !tbaa !50
-  store ptr %5, ptr %i.ik, align 8, !tbaa !50
-  %i.il = add nsw i64 %.0502.us.i, -1             ; 2 uses
-  %6 = icmp sgt i64 %i.il, %.149.us.i
-  br i1 %6, label %.lr.ph.us.i, label %._crit_edge.us.i.a, !llvm.loop !98
+  store ptr %5, ptr %i.ii, align 8, !tbaa !50
+  %i.ij = add nsw i64 %.0502.us.i, -1             ; 2 uses
+  %6 = icmp sgt i64 %i.ij, %.149.us.i
+  br i1 %6, label %._crit_edge.us.i.a, label %.lr.ph.us.i, !llvm.loop !97
+
+.lr.ph.us.i:                                      ; preds = %._crit_edge.us.i.a, %middle.block, %.preheader.us.i
+  %i.ik = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.149.us.i
+  store ptr %i.hy, ptr %i.ik, align 8, !tbaa !50
+  %i.il = add nuw nsw i64 %.1547.us.i, 1          ; 2 uses
+  %exitcond23.not.i = icmp eq i64 %i.il, %i.hv
+  br i1 %exitcond23.not.i, label %binarysort.exit.thread, label %.lr.ph10.split.us.i, !llvm.loop !98
 
 .preheader.us.i:                                  ; preds = %bb.ba
   %i.im = icmp sgt i64 %.1547.us.i, %.149.us.i
-  br i1 %i.im, label %.lr.ph.us.i.preheader, label %._crit_edge.us.i.a
+  br i1 %i.im, label %.lr.ph.us.i.preheader, label %.lr.ph.us.i
 
 .lr.ph.us.i.preheader:                            ; preds = %.preheader.us.i
   %i.in = sub i64 %.1547.us.i, %.149.us.i         ; 3 uses
@@ -278,11 +278,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.in, %n.vec
-  br i1 %cmp.n, label %._crit_edge.us.i.a, label %.lr.ph.us.i.preheader495
+  br i1 %cmp.n, label %.lr.ph.us.i, label %.lr.ph.us.i.preheader495
 
 .lr.ph.us.i.preheader495:                         ; preds = %.lr.ph.us.i.preheader, %middle.block
   %.0502.us.i.ph = phi i64 [ %.1547.us.i, %.lr.ph.us.i.preheader ], [ %i.io, %middle.block ]
-  br label %.lr.ph.us.i
+  br label %._crit_edge.us.i.a
 
 .lr.ph10.split.i:                                 ; preds = %.lr.ph10.i, %._crit_edge6.i
   %.1547.i = phi i64 [ %i.ks, %._crit_edge6.i ], [ %spec.select.i210, %.lr.ph10.i ] ; 14 uses
@@ -419,10 +419,10 @@ middle.block478:                                  ; preds = %vector.body473
   store ptr %i.kq, ptr %i.kr, align 8, !tbaa !50
   %i.ks = add nuw nsw i64 %.1547.i, 1             ; 2 uses
   %exitcond.not.i214 = icmp eq i64 %i.ks, %i.hv
-  br i1 %exitcond.not.i214, label %binarysort.exit.thread, label %.lr.ph10.split.i, !llvm.loop !97
+  br i1 %exitcond.not.i214, label %binarysort.exit.thread, label %.lr.ph10.split.i, !llvm.loop !98
 
-binarysort.exit.thread:                           ; preds = %._crit_edge6.i, %._crit_edge.us.i.a, %bb.ay, %count_run.exit.thread274
-  %.1 = phi i64 [ %.068.i276, %count_run.exit.thread274 ], [ %i.hv, %bb.ay ], [ %i.hv, %._crit_edge.us.i.a ], [ %i.hv, %._crit_edge6.i ] ; 5 uses
+binarysort.exit.thread:                           ; preds = %._crit_edge6.i, %.lr.ph.us.i, %bb.ay, %count_run.exit.thread274
+  %.1 = phi i64 [ %.068.i276, %count_run.exit.thread274 ], [ %i.hv, %bb.ay ], [ %i.hv, %.lr.ph.us.i ], [ %i.hv, %._crit_edge6.i ] ; 5 uses
   %i.kt = load i32, ptr %i.cu, align 8, !tbaa !82 ; 2 uses
   %.not.i216 = icmp eq i32 %i.kt, 0
   br i1 %.not.i216, label %found_new_run.exit, label %bb.bd
@@ -825,8 +825,8 @@ attributes #14 = { nounwind willreturn memory(read) }
 !94 = distinct !{!94, !52}
 !95 = distinct !{null}
 !96 = distinct !{!96, !52}
-!97 = distinct !{!97, !52}
-!98 = distinct !{!98, !52, !54, !53}
+!97 = distinct !{!97, !52, !54, !53}
+!98 = distinct !{!98, !52}
 !99 = distinct !{!99, !52, !53, !54}
 !100 = distinct !{!100, !52, !53, !54}
 !101 = distinct !{!101, !52, !54, !53}

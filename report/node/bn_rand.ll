@@ -200,20 +200,6 @@ bb.e:                                             ; preds = %bb.c
   store i8 0, ptr %i.d, align 1, !tbaa !9
   br label %bb.f
 
-6:                                                ; preds = %._crit_edge.us
-  call void @BN_set_flags(ptr noundef %0, i32 noundef 4) #4
-  %7 = call i32 @BN_num_bits(ptr noundef %1) #4
-  %8 = call i32 @ossl_bn_mask_bits_fixed_top(ptr noundef %0, i32 noundef %7) #4 ; 0 uses
-  %9 = call i32 @BN_ucmp(ptr noundef %0, ptr noundef %1) #4
-  %10 = icmp slt i32 %9, 0
-  br i1 %10, label %.thread, label %11
-
-11:                                               ; preds = %6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
-  %12 = add nuw nsw i32 %.04869.us, 1             ; 2 uses
-  %exitcond74.not = icmp eq i32 %12, 64
-  br i1 %exitcond74.not, label %.split.us, label %.lr.ph.us, !llvm.loop !20
-
 bb.f:                                             ; preds = %.lr.ph.us, %bb.m
   %.04968.us = phi i32 [ 1, %.lr.ph.us ], [ %i.ae, %bb.m ] ; 3 uses
   %i.s = call i32 @RAND_priv_bytes_ex(ptr noundef %i.j, ptr noundef nonnull %i.a, i64 noundef 64, i32 noundef 0) #4
@@ -262,7 +248,21 @@ bb.m:                                             ; preds = %bb.l
   %i.ag = add i8 %i.af, 1
   store i8 %i.ag, ptr %i.d, align 1, !tbaa !9
   %i.ah = icmp ult i32 %i.ae, %i.i
-  br i1 %i.ah, label %bb.f, label %._crit_edge.us, !llvm.loop !21
+  br i1 %i.ah, label %bb.f, label %._crit_edge.us, !llvm.loop !20
+
+6:                                                ; preds = %._crit_edge.us
+  call void @BN_set_flags(ptr noundef %0, i32 noundef 4) #4
+  %7 = call i32 @BN_num_bits(ptr noundef %1) #4
+  %8 = call i32 @ossl_bn_mask_bits_fixed_top(ptr noundef %0, i32 noundef %7) #4 ; 0 uses
+  %9 = call i32 @BN_ucmp(ptr noundef %0, ptr noundef %1) #4
+  %10 = icmp slt i32 %9, 0
+  br i1 %10, label %.thread, label %11
+
+11:                                               ; preds = %6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
+  %12 = add nuw nsw i32 %.04869.us, 1             ; 2 uses
+  %exitcond74.not = icmp eq i32 %12, 64
+  br i1 %exitcond74.not, label %.split.us, label %.lr.ph.us, !llvm.loop !21
 
 ._crit_edge.us:                                   ; preds = %bb.m
   %i.ai = call ptr @BN_bin2bn(ptr noundef nonnull %i.l, i32 noundef %i.i, ptr noundef %0) #4
@@ -299,7 +299,7 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
   %i.ao = add nuw nsw i32 %.04869, 1              ; 2 uses
   %exitcond.not = icmp eq i32 %i.ao, 64
-  br i1 %exitcond.not, label %.split.us, label %.preheader.split, !llvm.loop !20
+  br i1 %exitcond.not, label %.split.us, label %.preheader.split, !llvm.loop !21
 
 .split.us:                                        ; preds = %bb.p, %11
   call void @ERR_new() #4

@@ -201,13 +201,6 @@ middle.block:                                     ; preds = %vector.body
   %i.cb = icmp ugt i64 %i.ca, -4
   br i1 %i.cb, label %._crit_edge.us210, label %.lr.ph206.us
 
-._crit_edge.us210:                                ; preds = %.lr.ph206.us.prol.loopexit, %.lr.ph206.us, %.lr.ph209.split.us
-  %.0166.lcssa.us = phi double [ %i.bk, %.lr.ph209.split.us ], [ %.lcssa374.unr, %.lr.ph206.us.prol.loopexit ], [ %i.dh, %.lr.ph206.us ]
-  store double %.0166.lcssa.us, ptr %i.bj, align 8, !tbaa !25
-  %indvars.iv.next265 = add nuw nsw i64 %indvars.iv264, 1 ; 2 uses
-  %exitcond268.not = icmp eq i64 %indvars.iv.next265, %wide.trip.count267
-  br i1 %exitcond268.not, label %.loopexit187, label %.lr.ph209.split.us, !llvm.loop !36
-
 .lr.ph206.us:                                     ; preds = %.lr.ph206.us.prol.loopexit, %.lr.ph206.us
   %indvars.iv259 = phi i64 [ %indvars.iv.next260.3, %.lr.ph206.us ], [ %indvars.iv259.unr, %.lr.ph206.us.prol.loopexit ] ; 6 uses
   %.0166205.us = phi double [ %i.dh, %.lr.ph206.us ], [ %.0166205.us.unr, %.lr.ph206.us.prol.loopexit ]
@@ -248,7 +241,14 @@ middle.block:                                     ; preds = %vector.body
   %i.dh = tail call double @llvm.fmuladd.f64(double %i.db, double %i.dg, double %i.cz) ; 2 uses
   %indvars.iv.next260.3 = add nsw i64 %indvars.iv259, 4 ; 2 uses
   %exitcond263.not.3 = icmp eq i64 %indvars.iv.next260.3, %wide.trip.count262
-  br i1 %exitcond263.not.3, label %._crit_edge.us210, label %.lr.ph206.us, !llvm.loop !37
+  br i1 %exitcond263.not.3, label %._crit_edge.us210, label %.lr.ph206.us, !llvm.loop !36
+
+._crit_edge.us210:                                ; preds = %.lr.ph206.us.prol.loopexit, %.lr.ph206.us, %.lr.ph209.split.us
+  %.0166.lcssa.us = phi double [ %i.bk, %.lr.ph209.split.us ], [ %.lcssa374.unr, %.lr.ph206.us.prol.loopexit ], [ %i.dh, %.lr.ph206.us ]
+  store double %.0166.lcssa.us, ptr %i.bj, align 8, !tbaa !25
+  %indvars.iv.next265 = add nuw nsw i64 %indvars.iv264, 1 ; 2 uses
+  %exitcond268.not = icmp eq i64 %indvars.iv.next265, %wide.trip.count267
+  br i1 %exitcond268.not, label %.loopexit187, label %.lr.ph209.split.us, !llvm.loop !37
 
 .lr.ph209.split:                                  ; preds = %.lr.ph209
   %i.di = icmp sgt i32 %i.u, 0
@@ -321,13 +321,6 @@ middle.block:                                     ; preds = %vector.body
   %i.ej = icmp ugt i64 %i.ei, -4
   br i1 %i.ej, label %._crit_edge.us224, label %.lr.ph221.us
 
-._crit_edge.us224:                                ; preds = %.lr.ph221.us.prol.loopexit, %.lr.ph221.us, %.lr.ph223.split.us
-  %.0175.lcssa.us = phi double [ %i.ds, %.lr.ph223.split.us ], [ %.lcssa.unr, %.lr.ph221.us.prol.loopexit ], [ %i.fp, %.lr.ph221.us ]
-  store double %.0175.lcssa.us, ptr %i.dr, align 8, !tbaa !25
-  %indvars.iv.next290 = add nuw nsw i64 %indvars.iv289, 1 ; 2 uses
-  %exitcond293.not = icmp eq i64 %indvars.iv.next290, %wide.trip.count292
-  br i1 %exitcond293.not, label %.loopexit187, label %.lr.ph223.split.us, !llvm.loop !39
-
 .lr.ph221.us:                                     ; preds = %.lr.ph221.us.prol.loopexit, %.lr.ph221.us
   %indvars.iv284 = phi i64 [ %indvars.iv.next285.3, %.lr.ph221.us ], [ %indvars.iv284.unr, %.lr.ph221.us.prol.loopexit ] ; 6 uses
   %.0175219.us = phi double [ %i.fp, %.lr.ph221.us ], [ %.0175219.us.unr, %.lr.ph221.us.prol.loopexit ]
@@ -368,7 +361,14 @@ middle.block:                                     ; preds = %vector.body
   %i.fp = tail call double @llvm.fmuladd.f64(double %i.fj, double %i.fo, double %i.fh) ; 2 uses
   %indvars.iv.next285.3 = add nsw i64 %indvars.iv284, 4 ; 2 uses
   %exitcond288.not.3 = icmp eq i64 %indvars.iv.next285.3, %wide.trip.count287
-  br i1 %exitcond288.not.3, label %._crit_edge.us224, label %.lr.ph221.us, !llvm.loop !40
+  br i1 %exitcond288.not.3, label %._crit_edge.us224, label %.lr.ph221.us, !llvm.loop !39
+
+._crit_edge.us224:                                ; preds = %.lr.ph221.us.prol.loopexit, %.lr.ph221.us, %.lr.ph223.split.us
+  %.0175.lcssa.us = phi double [ %i.ds, %.lr.ph223.split.us ], [ %.lcssa.unr, %.lr.ph221.us.prol.loopexit ], [ %i.fp, %.lr.ph221.us ]
+  store double %.0175.lcssa.us, ptr %i.dr, align 8, !tbaa !25
+  %indvars.iv.next290 = add nuw nsw i64 %indvars.iv289, 1 ; 2 uses
+  %exitcond293.not = icmp eq i64 %indvars.iv.next290, %wide.trip.count292
+  br i1 %exitcond293.not, label %.loopexit187, label %.lr.ph223.split.us, !llvm.loop !40
 
 .lr.ph223.split:                                  ; preds = %.lr.ph223
   %i.fq = icmp sgt i32 %i.u, 0
@@ -470,7 +470,7 @@ middle.block:                                     ; preds = %vector.body
 ..loopexit185_crit_edge:                          ; preds = %._crit_edge.us217, %.preheader184
   %indvars.iv.next280 = add nuw nsw i64 %indvars.iv279, 1 ; 2 uses
   %exitcond283.not = icmp eq i64 %indvars.iv.next280, %wide.trip.count282
-  br i1 %exitcond283.not, label %.loopexit187, label %.preheader184, !llvm.loop !39
+  br i1 %exitcond283.not, label %.loopexit187, label %.preheader184, !llvm.loop !40
 
 .preheader188:                                    ; preds = %.preheader188.preheader, %..loopexit189_crit_edge
   %indvars.iv254 = phi i64 [ 0, %.preheader188.preheader ], [ %indvars.iv.next255, %..loopexit189_crit_edge ] ; 3 uses
@@ -557,7 +557,7 @@ middle.block:                                     ; preds = %vector.body
 ..loopexit189_crit_edge:                          ; preds = %._crit_edge.us, %.preheader188
   %indvars.iv.next255 = add nuw nsw i64 %indvars.iv254, 1 ; 2 uses
   %exitcond258.not = icmp eq i64 %indvars.iv.next255, %wide.trip.count257
-  br i1 %exitcond258.not, label %.loopexit187, label %.preheader188, !llvm.loop !36
+  br i1 %exitcond258.not, label %.loopexit187, label %.preheader188, !llvm.loop !37
 
 .loopexit187:                                     ; preds = %..loopexit189_crit_edge, %._crit_edge.us210, %..loopexit185_crit_edge, %._crit_edge.us224, %.preheader190, %.lr.ph209.split, %.preheader186, %.lr.ph223.split
   %i.jb = fcmp une double %0, 1.000000e+00

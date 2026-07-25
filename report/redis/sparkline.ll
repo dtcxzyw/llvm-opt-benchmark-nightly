@@ -199,12 +199,6 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.split
   %.not84.us = icmp eq i32 %i.af, 0
   br i1 %.not84.us, label %bb.h, label %._crit_edge.us.thread
 
-._crit_edge.us.thread:                            ; preds = %bb.g, %bb.p, %._crit_edge.us
-  %6 = add i32 %.071108.us, 1
-  %7 = tail call ptr @sdscatlen(ptr noundef %.0109.us, ptr noundef %i.h, i64 noundef %i.g) #9
-  %8 = tail call ptr @sdscatlen(ptr noundef %7, ptr noundef nonnull @.str, i64 noundef 1) #9
-  br label %.lr.ph.us, !llvm.loop !29
-
 bb.h:                                             ; preds = %bb.g
   %i.ag = getelementptr inbounds nuw i8, ptr %gep, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !25 ; 3 uses
@@ -228,7 +222,13 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   %.4.ph.us = phi i32 [ %.174101.us, %bb.i ], [ 1, %bb.j ], [ %.174101.us, %bb.h ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.us, label %.lr.ph.split.split.us114, !llvm.loop !30
+  br i1 %exitcond.not, label %._crit_edge.us, label %.lr.ph.split.split.us114, !llvm.loop !29
+
+._crit_edge.us.thread:                            ; preds = %bb.g, %bb.p, %._crit_edge.us
+  %6 = add i32 %.071108.us, 1
+  %7 = tail call ptr @sdscatlen(ptr noundef %.0109.us, ptr noundef %i.h, i64 noundef %i.g) #9
+  %8 = tail call ptr @sdscatlen(ptr noundef %7, ptr noundef nonnull @.str, i64 noundef 1) #9
+  br label %.lr.ph.us, !llvm.loop !30
 
 .lr.ph.split.us113:                               ; preds = %.lr.ph.us
   %.not85.us = icmp sgt i32 %.071108.us, %2
@@ -285,7 +285,7 @@ bb.o:                                             ; preds = %bb.m
 bb.p:                                             ; preds = %.sink.split, %bb.n
   %indvars.iv.next128 = add nuw nsw i64 %indvars.iv127, 1 ; 2 uses
   %exitcond131.not = icmp eq i64 %indvars.iv.next128, %wide.trip.count130
-  br i1 %exitcond131.not, label %._crit_edge.us.thread, label %.lr.ph.split.us.us, !llvm.loop !30
+  br i1 %exitcond131.not, label %._crit_edge.us.thread, label %.lr.ph.split.us.us, !llvm.loop !29
 
 .lr.ph.split.split.us.us:                         ; preds = %.lr.ph.split.us113, %bb.u
   %indvars.iv122 = phi i64 [ %indvars.iv.next123, %bb.u ], [ 0, %.lr.ph.split.us113 ] ; 3 uses
@@ -323,7 +323,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
   %.4.ph.us105.us = phi i32 [ %.174101.us104.us, %bb.s ], [ 1, %bb.t ], [ %.174101.us104.us, %bb.r ] ; 2 uses
   %indvars.iv.next123 = add nuw nsw i64 %indvars.iv122, 1 ; 2 uses
   %exitcond126.not = icmp eq i64 %indvars.iv.next123, %wide.trip.count125
-  br i1 %exitcond126.not, label %._crit_edge.us, label %.lr.ph.split.split.us.us, !llvm.loop !30
+  br i1 %exitcond126.not, label %._crit_edge.us, label %.lr.ph.split.split.us.us, !llvm.loop !29
 
 .split:                                           ; preds = %bb.e
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.h, i8 32, i64 %i.g, i1 false)

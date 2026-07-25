@@ -149,6 +149,11 @@ bb.j:                                             ; preds = %4, %.preheader.us
   call void @_ZN6icu_787Package7addItemEPKc(ptr noundef nonnull align 8 dereferenceable(201237) %.055, ptr noundef nonnull %.0.us.us) #13
   br label %.backedge.us
 
+4:                                                ; preds = %bb.j
+  %5 = getelementptr inbounds nuw i8, ptr %.1.us.us, i64 1 ; 2 uses
+  %.pre86 = load i8, ptr %5, align 1
+  br label %bb.j, !llvm.loop !8
+
 bb.k:                                             ; preds = %bb.j, %bb.j
   store i8 0, ptr %.1.us.us, align 1
   call void @_ZN6icu_787Package7addItemEPKc(ptr noundef nonnull align 8 dereferenceable(201237) %.055, ptr noundef nonnull %.0.us.us) #13
@@ -156,12 +161,7 @@ bb.k:                                             ; preds = %bb.j, %bb.j
   %i.al = call ptr @u_skipWhitespace(ptr noundef nonnull %i.ak) #13 ; 2 uses
   %i.am = load i8, ptr %i.al, align 1             ; 2 uses
   %i.an = icmp eq i8 %i.am, 0
-  br i1 %i.an, label %.backedge.us, label %.preheader.us, !llvm.loop !8
-
-4:                                                ; preds = %bb.j
-  %5 = getelementptr inbounds nuw i8, ptr %.1.us.us, i64 1 ; 2 uses
-  %.pre86 = load i8, ptr %5, align 1
-  br label %bb.j, !llvm.loop !9
+  br i1 %i.an, label %.backedge.us, label %.preheader.us, !llvm.loop !9
 
 bb.l:                                             ; preds = %_ZL14isListTextFilePKc.exit.thread
   %i.ao = load ptr, ptr @stderr, align 8
@@ -241,7 +241,7 @@ bb.p:                                             ; preds = %bb.q, %.preheader
 bb.q:                                             ; preds = %bb.p
   %i.bc = getelementptr inbounds nuw i8, ptr %.1, i64 1 ; 2 uses
   %.pre = load i8, ptr %i.bc, align 1
-  br label %bb.p, !llvm.loop !9
+  br label %bb.p, !llvm.loop !8
 
 bb.r:                                             ; preds = %bb.p, %bb.p
   store i8 0, ptr %.1, align 1
@@ -250,7 +250,7 @@ bb.r:                                             ; preds = %bb.p, %bb.p
   %i.be = call ptr @u_skipWhitespace(ptr noundef nonnull %i.bd) #13 ; 2 uses
   %i.bf = load i8, ptr %i.be, align 1             ; 2 uses
   %i.bg = icmp eq i8 %i.bf, 0
-  br i1 %i.bg, label %.backedge, label %.preheader, !llvm.loop !8
+  br i1 %i.bg, label %.backedge, label %.preheader, !llvm.loop !9
 
 ._crit_edge:                                      ; preds = %.backedge, %.backedge.us, %.preheader77
   %i.bh = call i32 @fclose(ptr noundef nonnull %i.v) ; 0 uses

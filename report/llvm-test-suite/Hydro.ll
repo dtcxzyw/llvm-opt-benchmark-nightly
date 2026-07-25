@@ -203,11 +203,6 @@ middle.block209:                                  ; preds = %vector.body203
   %i.fe = icmp eq i64 %indvars.iv115.ph, %i.fd
   br i1 %i.fe, label %._crit_edge.us, label %.lr.ph94.us
 
-._crit_edge.us:                                   ; preds = %.lr.ph94.us.prol.loopexit, %.lr.ph94.us, %middle.block209, %_ZSt4fillIPddEvT_S1_RKT0_.exit85.us
-  %indvars.iv.next121 = add nuw nsw i64 %indvars.iv120, 1 ; 2 uses
-  %exitcond124.not = icmp eq i64 %indvars.iv.next121, %wide.trip.count123
-  br i1 %exitcond124.not, label %.preheader, label %.lr.ph97.split.us, !llvm.loop !105
-
 .lr.ph94.us:                                      ; preds = %.lr.ph94.us.prol.loopexit, %.lr.ph94.us
   %indvars.iv115 = phi i64 [ %indvars.iv.next116.1, %.lr.ph94.us ], [ %indvars.iv115.unr, %.lr.ph94.us.prol.loopexit ] ; 7 uses
   %i.ff = getelementptr inbounds [8 x i8], ptr %i.am, i64 %indvars.iv115
@@ -237,7 +232,12 @@ middle.block209:                                  ; preds = %vector.body203
   store double %i.fx, ptr %i.fy, align 8, !tbaa !50
   %indvars.iv.next116.1 = add nsw i64 %indvars.iv115, 2 ; 2 uses
   %exitcond119.not.1 = icmp eq i64 %indvars.iv.next116.1, %i.de
-  br i1 %exitcond119.not.1, label %._crit_edge.us, label %.lr.ph94.us, !llvm.loop !106
+  br i1 %exitcond119.not.1, label %._crit_edge.us, label %.lr.ph94.us, !llvm.loop !105
+
+._crit_edge.us:                                   ; preds = %.lr.ph94.us.prol.loopexit, %.lr.ph94.us, %middle.block209, %_ZSt4fillIPddEvT_S1_RKT0_.exit85.us
+  %indvars.iv.next121 = add nuw nsw i64 %indvars.iv120, 1 ; 2 uses
+  %exitcond124.not = icmp eq i64 %indvars.iv.next121, %wide.trip.count123
+  br i1 %exitcond124.not, label %.preheader, label %.lr.ph97.split.us, !llvm.loop !106
 
 .preheader:                                       ; preds = %._crit_edge, %._crit_edge.us, %bb.a
   %i.fz = icmp sgt i32 %i.c, 0
@@ -523,7 +523,7 @@ middle.block:                                     ; preds = %vector.body
 ._crit_edge:                                      ; preds = %.lr.ph94.prol.loopexit, %.lr.ph94, %middle.block, %_ZSt4fillIPddEvT_S1_RKT0_.exit85
   %indvars.iv.next111 = add nuw nsw i64 %indvars.iv110, 1 ; 2 uses
   %exitcond114.not = icmp eq i64 %indvars.iv.next111, %wide.trip.count123
-  br i1 %exitcond114.not, label %.preheader, label %.lr.ph97.split, !llvm.loop !105
+  br i1 %exitcond114.not, label %.preheader, label %.lr.ph97.split, !llvm.loop !106
 
 .lr.ph94:                                         ; preds = %.lr.ph94.prol.loopexit, %.lr.ph94
   %indvars.iv105 = phi i64 [ %indvars.iv.next106.1, %.lr.ph94 ], [ %indvars.iv105.unr, %.lr.ph94.prol.loopexit ] ; 7 uses
@@ -926,8 +926,8 @@ attributes #25 = { nounwind allocsize(0) }
 !102 = distinct !{!102, !61, !99, !100}
 !103 = distinct !{!103, !61, !100, !99}
 !104 = distinct !{!104, !61, !99, !100}
-!105 = distinct !{!105, !61}
-!106 = distinct !{!106, !61, !99}
+!105 = distinct !{!105, !61, !99}
+!106 = distinct !{!106, !61}
 !107 = distinct !{!107, !61}
 !108 = distinct !{!108, !61, !99, !100}
 !109 = distinct !{!109, !61, !100, !99}

@@ -204,47 +204,47 @@ bb.e:                                             ; preds = %bb.c
   %i.bv = load float, ptr %.058379.us.us.us.us, align 4, !tbaa !69
   %.sroa.0455.0.vec.insert = insertelement <4 x float> %.sroa.0455.1, float %i.bv, i64 0 ; 2 uses
   %i.bw = getelementptr inbounds i8, ptr %.058379.us.us.us.us, i64 %5 ; 3 uses
-  br i1 %exitcond414.not, label %._crit_edge.us.us.us.us, label %bb.i
+  br i1 %exitcond414.not, label %._crit_edge.us.us.us.us, label %bb.f
 
-bb.f:                                             ; preds = %._crit_edge.us.us.us.us
-  %8 = getelementptr inbounds i8, ptr %.lcssa, i64 %5 ; 2 uses
-  %.sroa.0.4.vec.extract = extractelement <4 x float> %i.cl, i64 1
-  store float %.sroa.0.4.vec.extract, ptr %8, align 4, !tbaa !69
-  br i1 %exitcond419.not.1, label %._crit_edge378.us.us.us.us, label %bb.g
+bb.f:                                             ; preds = %.lr.ph.us.us.us.us
+  %8 = load float, ptr %i.bw, align 4, !tbaa !69
+  %.sroa.0455.4.vec.insert = insertelement <4 x float> %.sroa.0455.0.vec.insert, float %8, i64 1 ; 2 uses
+  %9 = getelementptr inbounds i8, ptr %i.bw, i64 %5 ; 3 uses
+  br i1 %exitcond414.not.1, label %._crit_edge.us.us.us.us, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %9 = getelementptr inbounds i8, ptr %8, i64 %5  ; 2 uses
-  %.sroa.0.8.vec.extract = extractelement <4 x float> %i.cl, i64 2
-  store float %.sroa.0.8.vec.extract, ptr %9, align 4, !tbaa !69
-  br i1 %exitcond419.not.2, label %._crit_edge378.us.us.us.us, label %bb.h
+  %10 = load float, ptr %9, align 4, !tbaa !69
+  %.sroa.0455.8.vec.insert = insertelement <4 x float> %.sroa.0455.4.vec.insert, float %10, i64 2 ; 2 uses
+  %11 = getelementptr inbounds i8, ptr %9, i64 %5 ; 3 uses
+  br i1 %exitcond414.not.2, label %._crit_edge.us.us.us.us, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %10 = getelementptr inbounds i8, ptr %9, i64 %5
-  %.sroa.0.12.vec.extract = extractelement <4 x float> %i.cl, i64 3
-  store float %.sroa.0.12.vec.extract, ptr %10, align 4, !tbaa !69
-  br label %._crit_edge378.us.us.us.us
-
-bb.i:                                             ; preds = %.lr.ph.us.us.us.us
-  %11 = load float, ptr %i.bw, align 4, !tbaa !69
-  %.sroa.0455.4.vec.insert = insertelement <4 x float> %.sroa.0455.0.vec.insert, float %11, i64 1 ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %i.bw, i64 %5 ; 3 uses
-  br i1 %exitcond414.not.1, label %._crit_edge.us.us.us.us, label %bb.j
-
-bb.j:                                             ; preds = %bb.i
-  %13 = load float, ptr %12, align 4, !tbaa !69
-  %.sroa.0455.8.vec.insert = insertelement <4 x float> %.sroa.0455.4.vec.insert, float %13, i64 2 ; 2 uses
-  %14 = getelementptr inbounds i8, ptr %12, i64 %5 ; 3 uses
-  br i1 %exitcond414.not.2, label %._crit_edge.us.us.us.us, label %bb.k
-
-bb.k:                                             ; preds = %bb.j
-  %15 = load float, ptr %14, align 4, !tbaa !69
-  %.sroa.0455.12.vec.insert = insertelement <4 x float> %.sroa.0455.8.vec.insert, float %15, i64 3
-  %16 = getelementptr inbounds i8, ptr %14, i64 %5
+  %12 = load float, ptr %11, align 4, !tbaa !69
+  %.sroa.0455.12.vec.insert = insertelement <4 x float> %.sroa.0455.8.vec.insert, float %12, i64 3
+  %13 = getelementptr inbounds i8, ptr %11, i64 %5
   br label %._crit_edge.us.us.us.us
 
-._crit_edge.us.us.us.us:                          ; preds = %bb.k, %bb.j, %bb.i, %.lr.ph.us.us.us.us
-  %.sroa.0455.2 = phi <4 x float> [ %.sroa.0455.0.vec.insert, %.lr.ph.us.us.us.us ], [ %.sroa.0455.4.vec.insert, %bb.i ], [ %.sroa.0455.8.vec.insert, %bb.j ], [ %.sroa.0455.12.vec.insert, %bb.k ] ; 6 uses
-  %.lcssa = phi ptr [ %i.bw, %.lr.ph.us.us.us.us ], [ %12, %bb.i ], [ %14, %bb.j ], [ %16, %bb.k ] ; 2 uses
+bb.i:                                             ; preds = %._crit_edge.us.us.us.us
+  %14 = getelementptr inbounds i8, ptr %.lcssa, i64 %5 ; 2 uses
+  %.sroa.0.4.vec.extract = extractelement <4 x float> %i.cl, i64 1
+  store float %.sroa.0.4.vec.extract, ptr %14, align 4, !tbaa !69
+  br i1 %exitcond419.not.1, label %._crit_edge378.us.us.us.us, label %bb.j
+
+bb.j:                                             ; preds = %bb.i
+  %15 = getelementptr inbounds i8, ptr %14, i64 %5 ; 2 uses
+  %.sroa.0.8.vec.extract = extractelement <4 x float> %i.cl, i64 2
+  store float %.sroa.0.8.vec.extract, ptr %15, align 4, !tbaa !69
+  br i1 %exitcond419.not.2, label %._crit_edge378.us.us.us.us, label %bb.k
+
+bb.k:                                             ; preds = %bb.j
+  %16 = getelementptr inbounds i8, ptr %15, i64 %5
+  %.sroa.0.12.vec.extract = extractelement <4 x float> %i.cl, i64 3
+  store float %.sroa.0.12.vec.extract, ptr %16, align 4, !tbaa !69
+  br label %._crit_edge378.us.us.us.us
+
+._crit_edge.us.us.us.us:                          ; preds = %bb.h, %bb.g, %bb.f, %.lr.ph.us.us.us.us
+  %.sroa.0455.2 = phi <4 x float> [ %.sroa.0455.0.vec.insert, %.lr.ph.us.us.us.us ], [ %.sroa.0455.4.vec.insert, %bb.f ], [ %.sroa.0455.8.vec.insert, %bb.g ], [ %.sroa.0455.12.vec.insert, %bb.h ] ; 6 uses
+  %.lcssa = phi ptr [ %i.bw, %.lr.ph.us.us.us.us ], [ %9, %bb.f ], [ %11, %bb.g ], [ %13, %bb.h ] ; 2 uses
   %i.bx = shufflevector <4 x float> %.sroa.0455.2, <4 x float> poison, <4 x i32> zeroinitializer
   %i.by = load <4 x float>, ptr %i.bo, align 16, !tbaa !22
   %i.bz = fmul <4 x float> %i.by, %i.bx
@@ -262,9 +262,9 @@ bb.k:                                             ; preds = %bb.j
   %i.cl = fadd <4 x float> %i.ch, %i.ck           ; 4 uses
   %.sroa.0.0.vec.extract = extractelement <4 x float> %i.cl, i64 0
   store float %.sroa.0.0.vec.extract, ptr %.lcssa, align 4, !tbaa !69
-  br i1 %exitcond419.not, label %._crit_edge378.us.us.us.us, label %bb.f
+  br i1 %exitcond419.not, label %._crit_edge378.us.us.us.us, label %bb.i
 
-._crit_edge378.us.us.us.us:                       ; preds = %bb.h, %bb.g, %bb.f, %._crit_edge.us.us.us.us
+._crit_edge378.us.us.us.us:                       ; preds = %bb.k, %bb.j, %bb.i, %._crit_edge.us.us.us.us
   %i.cm = add nuw nsw i32 %.057380.us.us.us.us, 1 ; 2 uses
   %i.cn = getelementptr inbounds i8, ptr %.058379.us.us.us.us, i64 %6
   %exitcond420.not = icmp eq i32 %i.cm, %2

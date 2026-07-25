@@ -204,11 +204,6 @@ _ZN6duckdb10FlatVector7GetDataImEEPT_RNS_6VectorE.exit.us: ; preds = %bb.bk
   %.not1077 = icmp eq i64 %i.gc, 0
   br i1 %.not1077, label %._crit_edge964.us, label %.lr.ph963.us
 
-._crit_edge964.us:                                ; preds = %bb.bm, %_ZN6duckdb10FlatVector7GetDataImEEPT_RNS_6VectorE.exit.us
-  %43 = add nuw i64 %.0170966.us, 1               ; 2 uses
-  %exitcond1160.not = icmp eq i64 %43, %umax1159
-  br i1 %exitcond1160.not, label %._crit_edge968.us, label %bb.bj, !llvm.loop !417
-
 .lr.ph963.split.us:                               ; preds = %.lr.ph963.split.us.preheader, %bb.bm
   %i.gd = phi i64 [ %i.gi, %bb.bm ], [ %i.gc, %.lr.ph963.split.us.preheader ]
   %i.ge = phi i64 [ %i.gj, %bb.bm ], [ %.pre1166, %.lr.ph963.split.us.preheader ] ; 2 uses
@@ -228,7 +223,12 @@ bb.bm:                                            ; preds = %bb.bl, %.lr.ph963.s
   %i.gj = phi i64 [ %i.gg, %bb.bl ], [ %i.ge, %.lr.ph963.split.us ]
   %i.gk = add nuw i64 %.0173962.us, 1             ; 2 uses
   %i.gl = icmp ult i64 %i.gk, %i.gi
-  br i1 %i.gl, label %.lr.ph963.split.us, label %._crit_edge964.us, !llvm.loop !418
+  br i1 %i.gl, label %.lr.ph963.split.us, label %._crit_edge964.us, !llvm.loop !417
+
+._crit_edge964.us:                                ; preds = %bb.bm, %_ZN6duckdb10FlatVector7GetDataImEEPT_RNS_6VectorE.exit.us
+  %43 = add nuw i64 %.0170966.us, 1               ; 2 uses
+  %exitcond1160.not = icmp eq i64 %43, %umax1159
+  br i1 %exitcond1160.not, label %._crit_edge968.us, label %bb.bj, !llvm.loop !418
 
 .preheader824.us:                                 ; preds = %bb.bi
   %i.gm = getelementptr inbounds nuw i8, ptr %i.fv, i64 8

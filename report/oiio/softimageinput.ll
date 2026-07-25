@@ -204,13 +204,6 @@ bb.e:                                             ; preds = %bb.d
   %.not48.us = icmp eq i64 %i.an, %i.ak
   br i1 %.not48.us, label %.preheader52.us, label %.critedge
 
-._crit_edge60.split.us:                           ; preds = %._crit_edge58.us, %.preheader51.lr.ph.us, %.preheader52.us
-  call void @_ZdaPv(ptr noundef nonnull %i.al) #33
-  %4 = load i16, ptr %i.f, align 4, !tbaa !96
-  %5 = zext i16 %4 to i64
-  %.not91 = icmp samesign ult i64 %i.bv, %5
-  br i1 %.not91, label %.lr.ph.split.split.us, label %.critedge, !llvm.loop !162
-
 .preheader.us.new:                                ; preds = %.preheader.us, %.preheader.us.new
   %.03956.us = phi i64 [ %i.bo, %.preheader.us.new ], [ 0, %.preheader.us ] ; 3 uses
   %niter = phi i64 [ %niter.next.1, %.preheader.us.new ], [ 0, %.preheader.us ]
@@ -246,6 +239,13 @@ bb.e:                                             ; preds = %bb.d
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.us.unr-lcssa, label %.preheader.us.new, !llvm.loop !163
+
+._crit_edge60.split.us:                           ; preds = %._crit_edge58.us, %.preheader51.lr.ph.us, %.preheader52.us
+  call void @_ZdaPv(ptr noundef nonnull %i.al) #33
+  %4 = load i16, ptr %i.f, align 4, !tbaa !96
+  %5 = zext i16 %4 to i64
+  %.not91 = icmp samesign ult i64 %i.bv, %5
+  br i1 %.not91, label %.lr.ph.split.split.us, label %.critedge, !llvm.loop !162
 
 .preheader.us:                                    ; preds = %._crit_edge.us, %.preheader51.us
   %.04057.us = phi i64 [ 0, %.preheader51.us ], [ %i.cj, %._crit_edge.us ] ; 3 uses

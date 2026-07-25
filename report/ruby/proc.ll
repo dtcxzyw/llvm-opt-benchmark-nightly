@@ -203,8 +203,8 @@ bb.a:
   %i.b = load ptr, ptr %0, align 8, !tbaa !160    ; 4 uses
   br i1 %2, label %.split.us, label %.split
 
-.split.us:                                        ; preds = %bb.a, %._crit_edge.us.a
-  %.037.us = phi ptr [ %3, %._crit_edge.us.a ], [ %i.b, %bb.a ] ; 4 uses
+.split.us:                                        ; preds = %bb.a, %bb.e
+  %.037.us = phi ptr [ %5, %bb.e ], [ %i.b, %bb.a ] ; 4 uses
   %i.c = getelementptr i8, ptr %.037.us, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !133  ; 2 uses
   %.val48.us = load i64, ptr %i.d, align 8, !tbaa !38 ; 3 uses
@@ -225,30 +225,30 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr i8, ptr %i.j, i64 240
   %i.l = load i32, ptr %i.k, align 8, !tbaa !163  ; 3 uses
   %.not4568.us.not = icmp eq i32 %i.l, 0
-  br i1 %.not4568.us.not, label %._crit_edge.us.a, label %.lr.ph.us
+  br i1 %.not4568.us.not, label %bb.e, label %.lr.ph.us
 
-._crit_edge.us.a:                                 ; preds = %bb.e, %bb.c
-  %3 = tail call ptr @rb_vm_env_prev_env(ptr noundef %.037.us) #18 ; 2 uses
-  %.not46.us.a = icmp eq ptr %3, null
-  br i1 %.not46.us.a, label %.critedge, label %.split.us, !llvm.loop !164
+._crit_edge.us.a:                                 ; preds = %.lr.ph.us, %bb.d
+  %indvars.iv105 = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next106, %bb.d ] ; 3 uses
+  %3 = getelementptr [8 x i8], ptr %i.o, i64 %indvars.iv105
+  %4 = load i64, ptr %3, align 8, !tbaa !38
+  %.not46.us.a = icmp eq i64 %4, %1
+  br i1 %.not46.us.a, label %.split73.us, label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph.us, %bb.e
-  %indvars.iv105 = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next106, %bb.e ] ; 3 uses
-  %4 = getelementptr [8 x i8], ptr %i.o, i64 %indvars.iv105
-  %5 = load i64, ptr %4, align 8, !tbaa !38
-  %i.m = icmp eq i64 %5, %1
-  br i1 %i.m, label %.split73.us, label %bb.e
-
-bb.e:                                             ; preds = %bb.d
+bb.d:                                             ; preds = %._crit_edge.us.a
   %indvars.iv.next106 = add nuw nsw i64 %indvars.iv105, 1 ; 2 uses
-  %exitcond109.not = icmp eq i64 %indvars.iv.next106, %wide.trip.count108
-  br i1 %exitcond109.not, label %._crit_edge.us.a, label %bb.d, !llvm.loop !165
+  %i.m = icmp eq i64 %indvars.iv.next106, %wide.trip.count108
+  br i1 %i.m, label %bb.e, label %._crit_edge.us.a, !llvm.loop !164
+
+bb.e:                                             ; preds = %bb.d, %bb.c
+  %5 = tail call ptr @rb_vm_env_prev_env(ptr noundef %.037.us) #18 ; 2 uses
+  %exitcond109.not = icmp eq ptr %5, null
+  br i1 %exitcond109.not, label %.critedge, label %.split.us, !llvm.loop !165
 
 .lr.ph.us:                                        ; preds = %bb.c
   %i.n = getelementptr i8, ptr %i.j, i64 144
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !166
   %wide.trip.count108 = zext i32 %i.l to i64
-  br label %bb.d
+  br label %._crit_edge.us.a
 
 .split:                                           ; preds = %bb.a
   %i.p = getelementptr i8, ptr %i.b, i64 16
@@ -286,14 +286,14 @@ bb.h:                                             ; preds = %.lr.ph, %bb.n
   %i.ad = icmp eq i64 %i.ac, %1
   br i1 %i.ad, label %.split73.us, label %bb.n
 
-.split73.us:                                      ; preds = %bb.h, %bb.d
-  %.us-phi = phi ptr [ %i.h, %bb.d ], [ %i.u, %bb.h ]
-  %.us-phi74 = phi ptr [ %i.j, %bb.d ], [ %i.w, %bb.h ] ; 3 uses
-  %.us-phi75 = phi i32 [ %i.l, %bb.d ], [ %i.y, %bb.h ]
-  %.us-phi76 = phi ptr [ %.037.us, %bb.d ], [ %i.b, %bb.h ] ; 5 uses
-  %.us-phi77 = phi ptr [ %i.d, %bb.d ], [ %i.q, %bb.h ] ; 3 uses
-  %.us-phi78 = phi i64 [ %.val48.us, %bb.d ], [ %.val48, %bb.h ] ; 2 uses
-  %.us-phi79 = phi i64 [ %indvars.iv105, %bb.d ], [ %indvars.iv, %bb.h ] ; 2 uses
+.split73.us:                                      ; preds = %bb.h, %._crit_edge.us.a
+  %.us-phi = phi ptr [ %i.h, %._crit_edge.us.a ], [ %i.u, %bb.h ]
+  %.us-phi74 = phi ptr [ %i.j, %._crit_edge.us.a ], [ %i.w, %bb.h ] ; 3 uses
+  %.us-phi75 = phi i32 [ %i.l, %._crit_edge.us.a ], [ %i.y, %bb.h ]
+  %.us-phi76 = phi ptr [ %.037.us, %._crit_edge.us.a ], [ %i.b, %bb.h ] ; 5 uses
+  %.us-phi77 = phi ptr [ %i.d, %._crit_edge.us.a ], [ %i.q, %bb.h ] ; 3 uses
+  %.us-phi78 = phi i64 [ %.val48.us, %._crit_edge.us.a ], [ %.val48, %bb.h ] ; 2 uses
+  %.us-phi79 = phi i64 [ %indvars.iv105, %._crit_edge.us.a ], [ %indvars.iv, %bb.h ] ; 2 uses
   %.us-phi80 = trunc i64 %.us-phi79 to i32        ; 2 uses
   %i.ae = getelementptr i8, ptr %.us-phi74, i64 176
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !167
@@ -374,13 +374,13 @@ rb_obj_write.exit:                                ; preds = %VM_ENV_BLOCK_HANDLE
 bb.n:                                             ; preds = %bb.h
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.critedge, label %bb.h, !llvm.loop !165
+  br i1 %exitcond.not, label %.critedge, label %bb.h, !llvm.loop !164
 
 .split71.us:                                      ; preds = %.split.us, %.split
   store ptr null, ptr %0, align 8, !tbaa !160
   br label %.loopexit
 
-.critedge:                                        ; preds = %bb.n, %._crit_edge.us.a, %bb.g
+.critedge:                                        ; preds = %bb.n, %bb.e, %bb.g
   store ptr null, ptr %0, align 8, !tbaa !160
   br label %.loopexit
 

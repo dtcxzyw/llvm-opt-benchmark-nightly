@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !69
   br label %.lr.ph.i.i.i.us
 
-bb.d:                                             ; preds = %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a
+bb.d:                                             ; preds = %.critedge2.i7.i.i9.i.i.i.us
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.021.043.us, i64 8 ; 2 uses
   %.not58 = icmp eq ptr %i.aj, %i.ab
   br i1 %.not58, label %.critedge, label %.lr.ph.i.i.i.preheader.us
@@ -224,20 +224,20 @@ _ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us: ; preds = %.lr.ph.i.i.i
   %.not3.i4.i.i6.i.i.i.us = icmp eq ptr %.01319.i.i.i.us, %i.ag
   br i1 %.not3.i4.i.i6.i.i.i.us, label %.critedge, label %.lr.ph.i5.i.i7.i.i.i.us
 
-.lr.ph.i5.i.i7.i.i.i.us:                          ; preds = %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us, %.critedge2.i7.i.i9.i.i.i.us
-  %.sroa.0.3.i.i.i.us = phi ptr [ %3, %.critedge2.i7.i.i9.i.i.i.us ], [ %.01319.i.i.i.us, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us ] ; 3 uses
+.lr.ph.i5.i.i7.i.i.i.us:                          ; preds = %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a
+  %.sroa.0.3.i.i.i.us = phi ptr [ %3, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a ], [ %.01319.i.i.i.us, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us ] ; 3 uses
   %i.an = load ptr, ptr %.sroa.0.3.i.i.i.us, align 8, !tbaa !27
   %switch.i6.i.i8.i.i.i.us = icmp ugt ptr %i.an, inttoptr (i64 -3 to ptr)
-  br i1 %switch.i6.i.i8.i.i.i.us, label %.critedge2.i7.i.i9.i.i.i.us, label %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a
+  br i1 %switch.i6.i.i8.i.i.i.us, label %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a, label %.critedge2.i7.i.i9.i.i.i.us
 
 _ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a: ; preds = %.lr.ph.i5.i.i7.i.i.i.us
-  %.not35.us.a = icmp eq ptr %.sroa.0.3.i.i.i.us, %i.ag
-  br i1 %.not35.us.a, label %.critedge, label %bb.d
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.3.i.i.i.us, i64 8 ; 2 uses
+  %.not35.us.a = icmp eq ptr %3, %i.ag
+  br i1 %.not35.us.a, label %.critedge, label %.lr.ph.i5.i.i7.i.i.i.us, !llvm.loop !71
 
 .critedge2.i7.i.i9.i.i.i.us:                      ; preds = %.lr.ph.i5.i.i7.i.i.i.us
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.3.i.i.i.us, i64 8 ; 2 uses
-  %.not.i8.i.i10.i.i.i.us = icmp eq ptr %3, %i.ag
-  br i1 %.not.i8.i.i10.i.i.i.us, label %.critedge, label %.lr.ph.i5.i.i7.i.i.i.us, !llvm.loop !71
+  %.not.i8.i.i10.i.i.i.us = icmp eq ptr %.sroa.0.3.i.i.i.us, %i.ag
+  br i1 %.not.i8.i.i10.i.i.i.us, label %.critedge, label %bb.d
 
 .lr.ph:                                           ; preds = %bb.c, %_ZN4llvh19SmallPtrSetImplBase10insert_impEPKv.exit.i
   %i.ao = phi i32 [ %i.bi, %_ZN4llvh19SmallPtrSetImplBase10insert_impEPKv.exit.i ], [ 4, %bb.c ]
@@ -393,10 +393,10 @@ _ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit: ; preds = %.
   %.not35 = icmp eq ptr %.sroa.0.3.i.i.i, %i.ck
   br i1 %.not35, label %.critedge, label %bb.k
 
-.critedge:                                        ; preds = %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit, %bb.k, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i, %.critedge2.i7.i.i9.i.i.i, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a, %bb.d, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us, %bb.e, %.critedge2.i7.i.i9.i.i.i.us, %.lr.ph45.split.us, %._crit_edge
-  %i.cn = phi ptr [ %i.ch, %.critedge2.i7.i.i9.i.i.i ], [ %i.z, %bb.e ], [ %i.z, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a ], [ %i.z, %._crit_edge ], [ %i.z, %.lr.ph45.split.us ], [ %i.z, %.critedge2.i7.i.i9.i.i.i.us ], [ %i.z, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us ], [ %i.z, %bb.d ], [ %i.ch, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i ], [ %i.ch, %bb.k ], [ %i.ch, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit ]
-  %i.co = phi ptr [ %i.ci, %.critedge2.i7.i.i9.i.i.i ], [ %i.aa, %bb.e ], [ %i.aa, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a ], [ %i.aa, %._crit_edge ], [ %i.aa, %.lr.ph45.split.us ], [ %i.aa, %.critedge2.i7.i.i9.i.i.i.us ], [ %i.aa, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us ], [ %i.aa, %bb.d ], [ %i.ci, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i ], [ %i.ci, %bb.k ], [ %i.ci, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit ] ; 2 uses
-  %i.cp = phi i1 [ true, %.critedge2.i7.i.i9.i.i.i ], [ true, %bb.e ], [ true, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a ], [ false, %._crit_edge ], [ true, %.lr.ph45.split.us ], [ true, %.critedge2.i7.i.i9.i.i.i.us ], [ false, %bb.d ], [ true, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us ], [ false, %bb.k ], [ true, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit ], [ true, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i ]
+.critedge:                                        ; preds = %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit, %bb.k, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i, %.critedge2.i7.i.i9.i.i.i, %.critedge2.i7.i.i9.i.i.i.us, %bb.d, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us, %bb.e, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a, %.lr.ph45.split.us, %._crit_edge
+  %i.cn = phi ptr [ %i.ch, %.critedge2.i7.i.i9.i.i.i ], [ %i.z, %bb.e ], [ %i.z, %.critedge2.i7.i.i9.i.i.i.us ], [ %i.z, %._crit_edge ], [ %i.z, %.lr.ph45.split.us ], [ %i.z, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a ], [ %i.z, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us ], [ %i.z, %bb.d ], [ %i.ch, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i ], [ %i.ch, %bb.k ], [ %i.ch, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit ]
+  %i.co = phi ptr [ %i.ci, %.critedge2.i7.i.i9.i.i.i ], [ %i.aa, %bb.e ], [ %i.aa, %.critedge2.i7.i.i9.i.i.i.us ], [ %i.aa, %._crit_edge ], [ %i.aa, %.lr.ph45.split.us ], [ %i.aa, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a ], [ %i.aa, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us ], [ %i.aa, %bb.d ], [ %i.ci, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i ], [ %i.ci, %bb.k ], [ %i.ci, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit ] ; 2 uses
+  %i.cp = phi i1 [ true, %.critedge2.i7.i.i9.i.i.i ], [ true, %bb.e ], [ true, %.critedge2.i7.i.i9.i.i.i.us ], [ false, %._crit_edge ], [ true, %.lr.ph45.split.us ], [ true, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit.us.a ], [ false, %bb.d ], [ true, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i.us ], [ false, %bb.k ], [ true, %_ZNK4llvh15SmallPtrSetImplIPKN6hermes10BasicBlockEE5countES4_.exit ], [ true, %_ZNK4llvh19SmallPtrSetImplBase8find_impEPKv.exit.i.i ]
   %i.cq = icmp eq ptr %i.co, %i.cn
   br i1 %i.cq, label %_ZN4llvh19SmallPtrSetImplBaseD2Ev.exit, label %bb.p
 

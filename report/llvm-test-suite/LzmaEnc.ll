@@ -204,6 +204,11 @@ bb.z:                                             ; preds = %.split.us.preheader
   %i.ig = icmp eq i8 %i.id, %i.if
   br i1 %i.ig, label %4, label %.critedge.us.split.loop.exit.i
 
+4:                                                ; preds = %.preheader.us.i
+  %indvars.iv.next.i228 = add nuw nsw i64 %indvars.iv.i227, 1 ; 2 uses
+  %exitcond.not.i229 = icmp eq i64 %indvars.iv.next.i228, %wide.trip.count.i
+  br i1 %exitcond.not.i229, label %.critedge.us.i, label %.preheader.us.i, !llvm.loop !144
+
 .critedge.us.split.loop.exit.i:                   ; preds = %.preheader.us.i
   %i.ih = trunc nuw nsw i64 %indvars.iv.i227 to i32
   br label %.critedge.us.i
@@ -371,11 +376,6 @@ bb.ai:                                            ; preds = %.critedge.us.3.i
   %spec.select.us.3.i = tail call i32 @llvm.umax.i32(i32 %.0141.lcssa.us.3.i, i32 %.2152.ph.us.2.i)
   %spec.select165.us.3.i = select i1 %i.kh, i32 3, i32 %.2147.ph.us.2.i
   br label %.split235.us.i
-
-4:                                                ; preds = %.preheader.us.i
-  %indvars.iv.next.i228 = add nuw nsw i64 %indvars.iv.i227, 1 ; 2 uses
-  %exitcond.not.i229 = icmp eq i64 %indvars.iv.next.i228, %wide.trip.count.i
-  br i1 %exitcond.not.i229, label %.critedge.us.i, label %.preheader.us.i, !llvm.loop !144
 
 bb.aj:                                            ; preds = %.split.preheader.i
   %i.ki = load i8, ptr %i.hk, align 1, !tbaa !21

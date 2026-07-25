@@ -114,35 +114,35 @@ bb.a:
   %.not26.us.not = icmp eq i32 %i.d, 0
   br i1 %.not26.us.not, label %._crit_edge.us, label %.lr.ph.us
 
-._crit_edge.us:                                   ; preds = %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us, %.split39.us
-  br i1 %.03.us, label %.split.us.us.a, label %bb.b
+bb.b:                                             ; preds = %.split.us.us.a
+  %5 = add nsw i32 %9, -1
+  %6 = cmpxchg weak ptr %i.a, i32 %9, i32 %5 acquire monotonic, align 4 ; 2 uses
+  %7 = extractvalue { i32, i1 } %6, 1
+  br i1 %7, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %.split.us.us.a
 
-bb.b:                                             ; preds = %._crit_edge.us
+.split.us.us.a:                                   ; preds = %.lr.ph.us, %bb.b
+  %8 = phi { i32, i1 } [ %6, %bb.b ], [ %i.g, %.lr.ph.us ]
+  %9 = extractvalue { i32, i1 } %8, 0             ; 3 uses
+  %i.e = icmp eq i32 %9, 0
+  br i1 %i.e, label %._crit_edge.us, label %bb.b
+
+._crit_edge.us:                                   ; preds = %.split.us.us.a, %.split39.us
+  br i1 %.03.us, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us, label %bb.c
+
+bb.c:                                             ; preds = %._crit_edge.us
   tail call void @_ZN4absl12lts_2025051224synchronization_internal10WaiterBase15MaybeBecomeIdleEv()
-  br label %.split.us.us.a
+  br label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us
 
-.split.us.us.a:                                   ; preds = %bb.b, %._crit_edge.us
-  %5 = tail call i32 @sem_wait(ptr noundef nonnull %0)
-  %i.e = icmp eq i32 %5, 0
-  br i1 %i.e, label %.split30.us.us, label %.backedge.us.lr.ph.us
-
-bb.c:                                             ; preds = %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us
-  %6 = add nsw i32 %10, -1
-  %7 = cmpxchg weak ptr %i.a, i32 %10, i32 %6 acquire monotonic, align 4 ; 2 uses
-  %8 = extractvalue { i32, i1 } %7, 1
-  br i1 %8, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us
-
-_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us: ; preds = %.lr.ph.us, %bb.c
-  %9 = phi { i32, i1 } [ %7, %bb.c ], [ %i.g, %.lr.ph.us ]
-  %10 = extractvalue { i32, i1 } %9, 0            ; 3 uses
+_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us: ; preds = %bb.c, %._crit_edge.us
+  %10 = tail call i32 @sem_wait(ptr noundef nonnull %0)
   %.not.us.not = icmp eq i32 %10, 0
-  br i1 %.not.us.not, label %._crit_edge.us, label %bb.c
+  br i1 %.not.us.not, label %.split30.us.us, label %.backedge.us.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.split39.us
   %i.f = add nsw i32 %i.d, -1
   %i.g = cmpxchg weak ptr %i.a, i32 %i.d, i32 %i.f acquire monotonic, align 4 ; 2 uses
   %i.h = extractvalue { i32, i1 } %i.g, 1
-  br i1 %i.h, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us
+  br i1 %i.h, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %.split.us.us.a
 
 bb.d:                                             ; preds = %.backedge.us.us
   %i.i = tail call i32 @sem_wait(ptr noundef nonnull %0)
@@ -154,10 +154,10 @@ bb.d:                                             ; preds = %.backedge.us.us
   %i.l = icmp eq i32 %i.k, 4
   br i1 %i.l, label %bb.d, label %.split32.us
 
-.split30.us.us:                                   ; preds = %bb.d, %.split.us.us.a
+.split30.us.us:                                   ; preds = %bb.d, %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us
   br label %.split39.us, !llvm.loop !11
 
-.backedge.us.lr.ph.us:                            ; preds = %.split.us.us.a
+.backedge.us.lr.ph.us:                            ; preds = %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us
   %i.m = tail call ptr @__errno_location() #6
   br label %.backedge.us.us
 
@@ -171,7 +171,19 @@ bb.d:                                             ; preds = %.backedge.us.us
   %.not26.us43.not = icmp eq i32 %i.o, 0
   br i1 %.not26.us43.not, label %._crit_edge.us50, label %.lr.ph.us49
 
-._crit_edge.us50:                                 ; preds = %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us47, %.split39.split.us
+11:                                               ; preds = %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us46
+  %12 = add nsw i32 %16, -1
+  %13 = cmpxchg weak ptr %i.a, i32 %16, i32 %12 acquire monotonic, align 4 ; 2 uses
+  %14 = extractvalue { i32, i1 } %13, 1
+  br i1 %14, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us46
+
+_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us46: ; preds = %.lr.ph.us49, %11
+  %15 = phi { i32, i1 } [ %13, %11 ], [ %i.v, %.lr.ph.us49 ]
+  %16 = extractvalue { i32, i1 } %15, 0           ; 3 uses
+  %.not.us47.not = icmp eq i32 %16, 0
+  br i1 %.not.us47.not, label %._crit_edge.us50, label %11
+
+._crit_edge.us50:                                 ; preds = %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us46, %.split39.split.us
   br i1 %.03.us42, label %.split.us, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge.us50
@@ -193,23 +205,11 @@ bb.e:                                             ; preds = %._crit_edge.us50
   %i.t = icmp eq i32 %i.s, 0
   br i1 %i.t, label %.split30.split.us.us, label %.lr.ph38.us
 
-11:                                               ; preds = %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us47
-  %12 = add nsw i32 %16, -1
-  %13 = cmpxchg weak ptr %i.a, i32 %16, i32 %12 acquire monotonic, align 4 ; 2 uses
-  %14 = extractvalue { i32, i1 } %13, 1
-  br i1 %14, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us47
-
-_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us47: ; preds = %.lr.ph.us49, %11
-  %15 = phi { i32, i1 } [ %13, %11 ], [ %i.v, %.lr.ph.us49 ]
-  %16 = extractvalue { i32, i1 } %15, 0           ; 3 uses
-  %.not.us48.not = icmp eq i32 %16, 0
-  br i1 %.not.us48.not, label %._crit_edge.us50, label %11
-
 .lr.ph.us49:                                      ; preds = %.split39.split.us
   %i.u = add nsw i32 %i.o, -1
   %i.v = cmpxchg weak ptr %i.a, i32 %i.o, i32 %i.u acquire monotonic, align 4 ; 2 uses
   %i.w = extractvalue { i32, i1 } %i.v, 1
-  br i1 %i.w, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us47
+  br i1 %i.w, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us46
 
 bb.f:                                             ; preds = %.lr.ph38.us, %.backedge.us33.us
   %i.x = load i32, ptr %i.ad, align 4, !tbaa !3   ; 2 uses
@@ -318,8 +318,8 @@ bb.h:                                             ; preds = %.lr.ph37, %.backedg
 .split30.split:                                   ; preds = %.backedge, %.split
   br label %.split39.split, !llvm.loop !11
 
-_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread: ; preds = %.lr.ph, %bb.h, %.lr.ph.us49, %11, %bb.f, %.lr.ph.us, %bb.c
-  %.not21 = phi i1 [ true, %11 ], [ true, %bb.c ], [ true, %.lr.ph.us49 ], [ false, %bb.h ], [ true, %.lr.ph.us ], [ false, %bb.f ], [ true, %.lr.ph ]
+_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread: ; preds = %.lr.ph, %bb.h, %.lr.ph.us49, %11, %bb.f, %.lr.ph.us, %bb.b
+  %.not21 = phi i1 [ true, %11 ], [ true, %bb.b ], [ true, %.lr.ph.us49 ], [ false, %bb.h ], [ true, %.lr.ph.us ], [ false, %bb.f ], [ true, %.lr.ph ]
   ret i1 %.not21
 }
 

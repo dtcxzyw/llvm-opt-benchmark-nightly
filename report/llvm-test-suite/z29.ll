@@ -201,16 +201,16 @@ bb.e:                                             ; preds = %bb.f, %bb.d
   %i.an = icmp eq i8 %i.al, %i.am
   br i1 %i.an, label %bb.f, label %.critedge.us.us
 
-.critedge.us.us:                                  ; preds = %bb.e
-  %2 = icmp eq i32 %.2.us.us, 0
-  br i1 %2, label %.critedge.thread.us.us, label %.loopexit76.us.us
-
 bb.f:                                             ; preds = %bb.e
   %i.ao = getelementptr inbounds nuw i8, ptr %.054.us.us, i64 1
   %i.ap = getelementptr inbounds nuw i8, ptr %.1.us.us, i64 1
   %i.aq = add nsw i32 %.2.us.us, -1               ; 2 uses
   %.not65.us.us = icmp eq i32 %i.aq, 0
   br i1 %.not65.us.us, label %.critedge.thread.us.us, label %bb.e, !llvm.loop !46
+
+.critedge.us.us:                                  ; preds = %bb.e
+  %2 = icmp eq i32 %.2.us.us, 0
+  br i1 %2, label %.critedge.thread.us.us, label %.loopexit76.us.us
 
 .critedge.thread.us.us:                           ; preds = %bb.f, %.critedge.us.us
   %.051.in83.us.us = getelementptr inbounds nuw i8, ptr %.053.us.us, i64 8
@@ -311,16 +311,16 @@ bb.p:                                             ; preds = %bb.q, %bb.o
   %i.bq = icmp eq i8 %i.bo, %i.bp
   br i1 %i.bq, label %bb.q, label %.critedge.us
 
-.critedge.us:                                     ; preds = %bb.p
-  %3 = icmp eq i32 %.2.us, 0
-  br i1 %3, label %.critedge.thread.us, label %.loopexit76.us
-
 bb.q:                                             ; preds = %bb.p
   %i.br = getelementptr inbounds nuw i8, ptr %.054.us, i64 1
   %i.bs = getelementptr inbounds nuw i8, ptr %.1.us, i64 1
   %i.bt = add nsw i32 %.2.us, -1                  ; 2 uses
   %.not65.us = icmp eq i32 %i.bt, 0
   br i1 %.not65.us, label %.critedge.thread.us, label %bb.p, !llvm.loop !46
+
+.critedge.us:                                     ; preds = %bb.p
+  %3 = icmp eq i32 %.2.us, 0
+  br i1 %3, label %.critedge.thread.us, label %.loopexit76.us
 
 .critedge.thread.us:                              ; preds = %bb.q, %.critedge.us
   %.051.in83.us = getelementptr inbounds nuw i8, ptr %.053.us, i64 8

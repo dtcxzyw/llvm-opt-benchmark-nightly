@@ -203,7 +203,7 @@ bb.r:                                             ; preds = %bb.q
 .split.us.i.preheader:                            ; preds = %bb.r
   br i1 %exitcond58.not.i232, label %_ZL13mpi_write_hlpP11mbedtls_mpiiPPcm.exit.thread, label %.lr.ph235
 
-.split.us.i:                                      ; preds = %mbedtls_mpi_cmp_int.exit.us.i.a
+.split.us.i:                                      ; preds = %bb.v
   %exitcond58.not.i = icmp eq i64 %i.gd, %.050
   br i1 %exitcond58.not.i, label %_ZL13mpi_write_hlpP11mbedtls_mpiiPPcm.exit.thread, label %.lr.ph235, !llvm.loop !26
 
@@ -249,23 +249,23 @@ bb.t:                                             ; preds = %mbedtls_mpi_mod_int
   %i.gg = load ptr, ptr %6, align 8, !tbaa !15
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.v, %.lr.ph.i.i.us.i
-  %.03545.i.i.us.i = phi i64 [ %i.gf, %.lr.ph.i.i.us.i ], [ %8, %bb.v ] ; 2 uses
+bb.u:                                             ; preds = %mbedtls_mpi_cmp_int.exit.us.i.a, %.lr.ph.i.i.us.i
+  %.03545.i.i.us.i = phi i64 [ %i.gf, %.lr.ph.i.i.us.i ], [ %7, %mbedtls_mpi_cmp_int.exit.us.i.a ] ; 2 uses
   %i.gh = getelementptr [8 x i8], ptr %i.gg, i64 %.03545.i.i.us.i
   %i.gi = getelementptr i8, ptr %i.gh, i64 -8
   %i.gj = load i64, ptr %i.gi, align 8, !tbaa !13
   %.not39.i.i.us.i = icmp eq i64 %i.gj, 0
-  br i1 %.not39.i.i.us.i, label %bb.v, label %mbedtls_mpi_cmp_int.exit.us.i.a
+  br i1 %.not39.i.i.us.i, label %mbedtls_mpi_cmp_int.exit.us.i.a, label %bb.v
 
 mbedtls_mpi_cmp_int.exit.us.i.a:                  ; preds = %bb.u
-  %7 = load i16, ptr %i.p, align 8, !tbaa !12
-  %.not29.us.i.a = icmp eq i16 %7, 0
-  br i1 %.not29.us.i.a, label %_ZL13mpi_write_hlpP11mbedtls_mpiiPPcm.exit, label %.split.us.i, !llvm.loop !26
+  %7 = add nsw i64 %.03545.i.i.us.i, -1           ; 2 uses
+  %.not29.us.i.a = icmp eq i64 %7, 0
+  br i1 %.not29.us.i.a, label %_ZL13mpi_write_hlpP11mbedtls_mpiiPPcm.exit, label %bb.u, !llvm.loop !27
 
 bb.v:                                             ; preds = %bb.u
-  %8 = add nsw i64 %.03545.i.i.us.i, -1           ; 2 uses
-  %.not.i.i.us.i = icmp eq i64 %8, 0
-  br i1 %.not.i.i.us.i, label %_ZL13mpi_write_hlpP11mbedtls_mpiiPPcm.exit, label %bb.u, !llvm.loop !27
+  %8 = load i16, ptr %i.p, align 8, !tbaa !12
+  %.not.i.i.us.i = icmp eq i16 %8, 0
+  br i1 %.not.i.i.us.i, label %_ZL13mpi_write_hlpP11mbedtls_mpiiPPcm.exit, label %.split.us.i, !llvm.loop !26
 
 .split.i:                                         ; preds = %mbedtls_mpi_cmp_int.exit.i
   %exitcond.not.i = icmp eq i64 %i.hi, %.050
@@ -359,9 +359,9 @@ mbedtls_mpi_cmp_int.exit.i:                       ; preds = %bb.aa
   %.not29.i = icmp eq i16 %i.hq, 0
   br i1 %.not29.i, label %_ZL13mpi_write_hlpP11mbedtls_mpiiPPcm.exit, label %.split.i, !llvm.loop !26
 
-_ZL13mpi_write_hlpP11mbedtls_mpiiPPcm.exit:       ; preds = %bb.z, %mbedtls_mpi_cmp_int.exit.i, %bb.ab, %bb.t, %mbedtls_mpi_cmp_int.exit.us.i.a, %bb.v
-  %.139.i = phi ptr [ %i.gc, %bb.v ], [ %i.hf, %bb.ab ], [ %i.gc, %bb.t ], [ %i.gc, %mbedtls_mpi_cmp_int.exit.us.i.a ], [ %i.hf, %mbedtls_mpi_cmp_int.exit.i ], [ %i.hf, %bb.z ]
-  %i.hr = phi i64 [ %i.gd, %bb.v ], [ %i.hi, %bb.ab ], [ %i.gd, %bb.t ], [ %i.gd, %mbedtls_mpi_cmp_int.exit.us.i.a ], [ %i.hi, %mbedtls_mpi_cmp_int.exit.i ], [ %i.hi, %bb.z ] ; 2 uses
+_ZL13mpi_write_hlpP11mbedtls_mpiiPPcm.exit:       ; preds = %bb.z, %mbedtls_mpi_cmp_int.exit.i, %bb.ab, %bb.t, %bb.v, %mbedtls_mpi_cmp_int.exit.us.i.a
+  %.139.i = phi ptr [ %i.gc, %mbedtls_mpi_cmp_int.exit.us.i.a ], [ %i.hf, %bb.ab ], [ %i.gc, %bb.t ], [ %i.gc, %bb.v ], [ %i.hf, %mbedtls_mpi_cmp_int.exit.i ], [ %i.hf, %bb.z ]
+  %i.hr = phi i64 [ %i.gd, %mbedtls_mpi_cmp_int.exit.us.i.a ], [ %i.hi, %bb.ab ], [ %i.gd, %bb.t ], [ %i.gd, %bb.v ], [ %i.hi, %mbedtls_mpi_cmp_int.exit.i ], [ %i.hi, %bb.z ] ; 2 uses
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.069, ptr noundef nonnull align 1 dereferenceable(1) %.139.i, i64 %i.hr, i1 false)
   %i.hs = getelementptr inbounds nuw i8, ptr %.069, i64 %i.hr
   br label %.loopexit

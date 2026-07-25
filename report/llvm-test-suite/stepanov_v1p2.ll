@@ -203,18 +203,6 @@ bb.a:
   %.01014.us = phi i32 [ %6, %_Z5checkd.exit.us ], [ 0, %.preheader.us.preheader ]
   br i1 %i.i, label %.epil.preheader, label %.preheader.us.new
 
-2:                                                ; preds = %._crit_edge.us
-  %3 = load i32, ptr @current_test, align 4, !tbaa !4
-  %4 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.27, i32 noundef %3) ; 0 uses
-  %.pre = load i32, ptr @iterations, align 4, !tbaa !4
-  br label %_Z5checkd.exit.us
-
-_Z5checkd.exit.us:                                ; preds = %2, %._crit_edge.us
-  %5 = phi i32 [ %.pre, %2 ], [ %i.j, %._crit_edge.us ] ; 2 uses
-  %6 = add nuw nsw i32 %.01014.us, 1              ; 2 uses
-  %7 = icmp slt i32 %6, %5
-  br i1 %7, label %.preheader.us, label %._crit_edge15, !llvm.loop !15
-
 .preheader.us.new:                                ; preds = %.preheader.us, %.preheader.us.new
   %indvars.iv = phi i64 [ %indvars.iv.next.7, %.preheader.us.new ], [ 0, %.preheader.us ] ; 9 uses
   %.0912.us = phi double [ %i.ao, %.preheader.us.new ], [ 0.000000e+00, %.preheader.us ]
@@ -253,7 +241,19 @@ _Z5checkd.exit.us:                                ; preds = %2, %._crit_edge.us
   %indvars.iv.next.7 = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
   %niter.next.7 = add nuw nsw i64 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %._crit_edge.us.unr-lcssa, label %.preheader.us.new, !llvm.loop !16
+  br i1 %niter.ncmp.7, label %._crit_edge.us.unr-lcssa, label %.preheader.us.new, !llvm.loop !15
+
+2:                                                ; preds = %._crit_edge.us
+  %3 = load i32, ptr @current_test, align 4, !tbaa !4
+  %4 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.27, i32 noundef %3) ; 0 uses
+  %.pre = load i32, ptr @iterations, align 4, !tbaa !4
+  br label %_Z5checkd.exit.us
+
+_Z5checkd.exit.us:                                ; preds = %2, %._crit_edge.us
+  %5 = phi i32 [ %.pre, %2 ], [ %i.j, %._crit_edge.us ] ; 2 uses
+  %6 = add nuw nsw i32 %.01014.us, 1              ; 2 uses
+  %7 = icmp slt i32 %6, %5
+  br i1 %7, label %.preheader.us, label %._crit_edge15, !llvm.loop !16
 
 ._crit_edge.us.unr-lcssa:                         ; preds = %.preheader.us.new
   br i1 %lcmp.mod.not, label %._crit_edge.us, label %.epil.preheader
@@ -288,7 +288,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.av = add nuw nsw i32 %.01014, 1              ; 2 uses
   %i.aw = load i32, ptr @iterations, align 4, !tbaa !4
   %i.ax = icmp slt i32 %i.av, %i.aw
-  br i1 %i.ax, label %.preheader, label %._crit_edge15, !llvm.loop !15
+  br i1 %i.ax, label %.preheader, label %._crit_edge15, !llvm.loop !16
 
 ._crit_edge15:                                    ; preds = %.preheader, %_Z5checkd.exit.us, %bb.a
   %i.ay = tail call i64 @clock() #9               ; 2 uses

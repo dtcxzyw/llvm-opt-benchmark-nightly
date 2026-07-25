@@ -204,10 +204,6 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit206.us.us: ; preds = %_ZNK6duckdb15
   %.not.us.us = icmp eq i64 %i.ls, 0
   br i1 %.not.us.us, label %bb.au, label %.preheader.us.us
 
-.loopexit392:                                     ; preds = %scalar.ph350, %middle.block358
-  %9 = add i64 %i.ls, %.0149259.us.us
-  br label %bb.au
-
 scalar.ph350:                                     ; preds = %scalar.ph350.preheader, %scalar.ph350
   %.0142258.us.us = phi i64 [ %i.lw, %scalar.ph350 ], [ %.0142258.us.us.ph, %scalar.ph350.preheader ] ; 3 uses
   %i.lt = add i64 %i.ly, %.0142258.us.us
@@ -217,6 +213,10 @@ scalar.ph350:                                     ; preds = %scalar.ph350.prehea
   %i.lw = add nuw i64 %.0142258.us.us, 1          ; 2 uses
   %exitcond289.not = icmp eq i64 %i.lw, %i.ls
   br i1 %exitcond289.not, label %.loopexit392, label %scalar.ph350, !llvm.loop !1063
+
+.loopexit392:                                     ; preds = %scalar.ph350, %middle.block358
+  %9 = add i64 %i.ls, %.0149259.us.us
+  br label %bb.au
 
 bb.au:                                            ; preds = %.loopexit392, %_ZNK6duckdb15SelectionVector9get_indexEm.exit206.us.us
   %.3152.us.us = phi i64 [ %.0149259.us.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit206.us.us ], [ %9, %.loopexit392 ] ; 2 uses
@@ -273,10 +273,6 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit206.us: ; preds = %_ZNK6duckdb15Sel
   %.not.us = icmp eq i64 %i.ml, 0
   br i1 %.not.us, label %bb.av, label %.preheader.us
 
-.loopexit393:                                     ; preds = %scalar.ph360, %middle.block373
-  %10 = add i64 %i.ml, %.0149259.us
-  br label %bb.av
-
 scalar.ph360:                                     ; preds = %scalar.ph360.preheader, %scalar.ph360
   %.0142258.us = phi i64 [ %i.mp, %scalar.ph360 ], [ %.0142258.us.ph, %scalar.ph360.preheader ] ; 3 uses
   %i.mm = add i64 %i.mr, %.0142258.us
@@ -286,6 +282,10 @@ scalar.ph360:                                     ; preds = %scalar.ph360.prehea
   %i.mp = add nuw i64 %.0142258.us, 1             ; 2 uses
   %exitcond287.not = icmp eq i64 %i.mp, %i.ml
   br i1 %exitcond287.not, label %.loopexit393, label %scalar.ph360, !llvm.loop !1066
+
+.loopexit393:                                     ; preds = %scalar.ph360, %middle.block373
+  %10 = add i64 %i.ml, %.0149259.us
+  br label %bb.av
 
 bb.av:                                            ; preds = %.loopexit393, %_ZNK6duckdb15SelectionVector9get_indexEm.exit206.us
   %.3152.us = phi i64 [ %.0149259.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit206.us ], [ %10, %.loopexit393 ] ; 2 uses

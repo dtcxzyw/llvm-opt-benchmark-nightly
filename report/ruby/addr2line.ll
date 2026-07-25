@@ -204,8 +204,8 @@ bb.dr:                                            ; preds = %bb.dq
   %wide.trip.count571 = sext i32 %0 to i64
   br label %.lr.ph481.split.us
 
-.lr.ph481.split.us:                               ; preds = %.lr.ph481.split.us.preheader, %..loopexit_crit_edge.us
-  %indvars.iv573 = phi i64 [ 0, %.lr.ph481.split.us.preheader ], [ %indvars.iv.next574, %..loopexit_crit_edge.us ] ; 2 uses
+.lr.ph481.split.us:                               ; preds = %.lr.ph481.split.us.preheader, %bb.dx
+  %indvars.iv573 = phi i64 [ 0, %.lr.ph481.split.us.preheader ], [ %indvars.iv.next569.a, %bb.dx ] ; 2 uses
   %i.aaw = getelementptr [24 x i8], ptr %i.aam, i64 %indvars.iv573 ; 4 uses
   %i.aax = getelementptr i8, ptr %i.aaw, i64 8
   %i.aay = load i64, ptr %i.aax, align 8, !tbaa !122
@@ -214,20 +214,15 @@ bb.dr:                                            ; preds = %bb.dq
   %i.abb = load i8, ptr %i.aba, align 4, !tbaa !70
   %i.abc = and i8 %i.abb, 15
   %.not250.us = icmp eq i8 %i.abc, 2
-  br i1 %.not250.us, label %.preheader.us, label %..loopexit_crit_edge.us
+  br i1 %.not250.us, label %.preheader.us, label %bb.dx
 
-..loopexit_crit_edge.us:                          ; preds = %bb.dx, %.lr.ph481.split.us
-  %indvars.iv.next574 = add nuw nsw i64 %indvars.iv573, 1 ; 2 uses
-  %exitcond577.not = icmp eq i64 %indvars.iv.next574, %wide.trip.count576
-  br i1 %exitcond577.not, label %.loopexit359, label %.lr.ph481.split.us, !llvm.loop !123
-
-bb.ds:                                            ; preds = %.preheader.us, %bb.dx
-  %indvars.iv568 = phi i64 [ %i.aav, %.preheader.us ], [ %indvars.iv.next569.a, %bb.dx ] ; 3 uses
+bb.ds:                                            ; preds = %.preheader.us, %20
+  %indvars.iv568 = phi i64 [ %i.aav, %.preheader.us ], [ %indvars.iv.next569, %20 ] ; 3 uses
   %i.abd = getelementptr [64 x i8], ptr %4, i64 %indvars.iv568 ; 5 uses
   %i.abe = getelementptr i8, ptr %i.abd, i64 24
   %i.abf = load i32, ptr %i.abe, align 8, !tbaa !21
   %i.abg = icmp sgt i32 %i.abf, 0
-  br i1 %i.abg, label %bb.dx, label %bb.dt
+  br i1 %i.abg, label %20, label %bb.dt
 
 bb.dt:                                            ; preds = %bb.ds
   %i.abh = getelementptr [8 x i8], ptr %1, i64 %indvars.iv568
@@ -236,7 +231,7 @@ bb.dt:                                            ; preds = %bb.ds
   %i.abk = sub i64 %i.abj, %i.aaz
   %i.abl = load i64, ptr %i.abw, align 8, !tbaa !72
   %i.abm = icmp ugt i64 %i.abk, %i.abl
-  br i1 %i.abm, label %bb.dx, label %bb.du
+  br i1 %i.abm, label %20, label %bb.du
 
 bb.du:                                            ; preds = %bb.dt
   %i.abn = getelementptr i8, ptr %i.abd, i64 48   ; 2 uses
@@ -259,18 +254,23 @@ bb.dw:                                            ; preds = %bb.dv, %bb.du
   store ptr %i.abt, ptr %i.abu, align 8, !tbaa !27
   %i.abv = getelementptr i8, ptr %i.abd, i64 32
   store i64 %i.aat, ptr %i.abv, align 8, !tbaa !40
-  br label %bb.dx
+  br label %20
 
-bb.dx:                                            ; preds = %bb.dw, %bb.dt, %bb.ds
-  %indvars.iv.next569.a = add nsw i64 %indvars.iv568, 1 ; 2 uses
-  %exitcond572.not.a = icmp eq i64 %indvars.iv.next569.a, %wide.trip.count571
-  br i1 %exitcond572.not.a, label %..loopexit_crit_edge.us, label %bb.ds, !llvm.loop !124
+20:                                               ; preds = %bb.dw, %bb.dt, %bb.ds
+  %indvars.iv.next569 = add nsw i64 %indvars.iv568, 1 ; 2 uses
+  %exitcond572.not = icmp eq i64 %indvars.iv.next569, %wide.trip.count571
+  br i1 %exitcond572.not, label %bb.dx, label %bb.ds, !llvm.loop !123
+
+bb.dx:                                            ; preds = %20, %.lr.ph481.split.us
+  %indvars.iv.next569.a = add nuw nsw i64 %indvars.iv573, 1 ; 2 uses
+  %exitcond572.not.a = icmp eq i64 %indvars.iv.next569.a, %wide.trip.count576
+  br i1 %exitcond572.not.a, label %.loopexit359, label %.lr.ph481.split.us, !llvm.loop !124
 
 .preheader.us:                                    ; preds = %.lr.ph481.split.us
   %i.abw = getelementptr i8, ptr %i.aaw, i64 16
   br label %bb.ds
 
-.loopexit359:                                     ; preds = %..loopexit_crit_edge.us, %.lr.ph481, %bb.dr, %._crit_edge476, %bb.dq
+.loopexit359:                                     ; preds = %bb.dx, %.lr.ph481, %bb.dr, %._crit_edge476, %bb.dq
   %i.abx = getelementptr i8, ptr %i.c, i64 96
   %i.aby = load ptr, ptr %i.abx, align 8, !tbaa !84 ; 2 uses
   %.not252 = icmp eq ptr %i.aby, null

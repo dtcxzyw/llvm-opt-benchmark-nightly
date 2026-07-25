@@ -201,10 +201,6 @@ bb.aj:                                            ; preds = %bb.ai
   %i.dl = icmp ult i64 %i.cs, %i.dm
   br i1 %i.dl, label %.lr.ph382, label %.preheader197.us.preheader._crit_edge
 
-.preheader197.us.preheader._crit_edge:            ; preds = %.preheader197.us.preheader, %.preheader197.us
-  %2 = add i64 %i.cu, %.sroa.036.sroa.15.0.copyload ; 2 uses
-  br label %.sink.split.i.us
-
 .lr.ph382:                                        ; preds = %.preheader197.us.preheader, %.preheader197.us
   %.sroa.2.0.i.us381 = phi i64 [ %i.dm, %.preheader197.us ], [ %.sroa.036.sroa.4.0.copyload, %.preheader197.us.preheader ]
   %i.dm = add i64 %.sroa.2.0.i.us381, -1          ; 6 uses
@@ -239,6 +235,10 @@ bb.an:                                            ; preds = %.lr.ph.i.us
   %i.dx = icmp ult i64 %i.dw, %.sroa.036.sroa.13.0.copyload
   br i1 %i.dx, label %.lr.ph.i.us, label %.sink.split.i.us
 
+.preheader197.us.preheader._crit_edge:            ; preds = %.preheader197.us.preheader, %.preheader197.us
+  %2 = add i64 %i.cu, %.sroa.036.sroa.15.0.copyload ; 2 uses
+  br label %.sink.split.i.us
+
 bb.ao:                                            ; preds = %bb.ae
   call void @llvm.experimental.noalias.scope.decl(metadata !34)
   call void @llvm.experimental.noalias.scope.decl(metadata !37)
@@ -265,7 +265,7 @@ bb.ao:                                            ; preds = %bb.ae
   br i1 %exitcond.not.i100.us, label %.preheader.us.preheader, label %.lr.ph386
 
 .preheader.us.preheader:                          ; preds = %.preheader, %.preheader.preheader
-  br i1 %.not196.us387, label %.preheader.us.preheader._crit_edge.a, label %.lr.ph389
+  br i1 %.not196.us387, label %.preheader.us.preheader._crit_edge, label %.lr.ph389
 
 .lr.ph386:                                        ; preds = %.preheader.preheader, %.preheader
   %.sroa.02.0.i99.us385 = phi i64 [ %i.eh, %.preheader ], [ %.sroa.036.sroa.4.0.copyload, %.preheader.preheader ] ; 4 uses
@@ -288,7 +288,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 .preheader.us:                                    ; preds = %bb.as
   %.not196.us = icmp eq i64 %i.ep, 0
-  br i1 %.not196.us, label %.preheader.us.preheader._crit_edge.a, label %.lr.ph389
+  br i1 %.not196.us, label %.preheader.us.preheader._crit_edge, label %.lr.ph389
 
 .lr.ph389:                                        ; preds = %.preheader.us.preheader, %.preheader.us
   %.sroa.2.0.i103.us388 = phi i64 [ %i.ep, %.preheader.us ], [ %.sroa.036.sroa.4.0.copyload, %.preheader.us.preheader ]
@@ -306,32 +306,32 @@ bb.as:                                            ; preds = %bb.ar
   %i.eu = getelementptr inbounds nuw i8, ptr %.sroa.036.sroa.12.0.copyload, i64 %i.eq
   %i.ev = load i8, ptr %i.eu, align 1, !alias.scope !34, !noalias !39, !noundef !3
   %.not.i104.us = icmp eq i8 %i.et, %i.ev
-  br i1 %.not.i104.us, label %.preheader.us, label %3
+  br i1 %.not.i104.us, label %.preheader.us, label %.preheader.us.preheader._crit_edge.a
 
-3:                                                ; preds = %bb.as
-  %4 = add i64 %.sroa.036.sroa.6.0.copyload, %i.dz
+.preheader.us.preheader._crit_edge.a:             ; preds = %bb.as
+  %i.ew = add i64 %.sroa.036.sroa.6.0.copyload, %i.dz
   br label %bb.au
-
-.preheader.us.preheader._crit_edge.a:             ; preds = %.preheader.us.preheader, %.preheader.us
-  %i.ew = add i64 %i.dz, %.sroa.036.sroa.15.0.copyload ; 2 uses
-  br label %.sink.split.i.us
 
 bb.at:                                            ; preds = %.lr.ph.i95.us
   %i.ex = add i64 %i.dz, %.sroa.036.sroa.15.0.copyload
   br label %bb.au
 
-bb.au:                                            ; preds = %bb.at, %3, %bb.aq
-  %i.ey = phi i64 [ %i.eo, %bb.aq ], [ %i.ex, %bb.at ], [ %4, %3 ] ; 2 uses
+bb.au:                                            ; preds = %bb.at, %.preheader.us.preheader._crit_edge.a, %bb.aq
+  %i.ey = phi i64 [ %i.eo, %bb.aq ], [ %i.ex, %bb.at ], [ %i.ew, %.preheader.us.preheader._crit_edge.a ] ; 2 uses
   %i.ez = add i64 %i.ey, %i.s                     ; 2 uses
   %i.fa = icmp ult i64 %i.ez, %.sroa.036.sroa.13.0.copyload
   br i1 %i.fa, label %.lr.ph.i95.us, label %.sink.split.i.us
 
-.sink.split.i.us:                                 ; preds = %.sink.split.i87.us, %bb.au, %.preheader.us.preheader._crit_edge.a, %bb.ao, %.preheader197.us.preheader._crit_edge, %bb.af
-  %.sroa.51.2.us = phi i1 [ false, %.preheader197.us.preheader._crit_edge ], [ false, %.preheader.us.preheader._crit_edge.a ], [ true, %bb.au ], [ true, %bb.af ], [ true, %bb.ao ], [ true, %.sink.split.i87.us ]
-  %.sroa.41.2.us = phi i64 [ %2, %.preheader197.us.preheader._crit_edge ], [ %i.ew, %.preheader.us.preheader._crit_edge.a ], [ %.sroa.41.0240.us, %bb.au ], [ %.sroa.41.0240.us, %bb.af ], [ %.sroa.41.0240.us, %bb.ao ], [ %.sroa.41.0240.us, %.sink.split.i87.us ]
-  %.sroa.31114.2.us = phi i64 [ 0, %.preheader197.us.preheader._crit_edge ], [ -1, %.preheader.us.preheader._crit_edge.a ], [ -1, %bb.au ], [ %.sroa.31114.0241.us, %bb.af ], [ -1, %bb.ao ], [ %.sink.i.us, %.sink.split.i87.us ]
-  %.sroa.19.2.us = phi i64 [ %2, %.preheader197.us.preheader._crit_edge ], [ %i.ew, %.preheader.us.preheader._crit_edge.a ], [ %.sroa.036.sroa.13.0.copyload, %bb.au ], [ %.sroa.036.sroa.13.0.copyload, %bb.af ], [ %.sroa.036.sroa.13.0.copyload, %bb.ao ], [ %.sroa.036.sroa.13.0.copyload, %.sink.split.i87.us ]
-  %spec.select.pn.us = phi i64 [ %i.cu, %.preheader197.us.preheader._crit_edge ], [ %i.dz, %.preheader.us.preheader._crit_edge.a ], [ %spec.select, %bb.au ], [ %spec.select, %bb.af ], [ %spec.select, %bb.ao ], [ %spec.select, %.sink.split.i87.us ] ; 2 uses
+.preheader.us.preheader._crit_edge:               ; preds = %.preheader.us.preheader, %.preheader.us
+  %3 = add i64 %i.dz, %.sroa.036.sroa.15.0.copyload ; 2 uses
+  br label %.sink.split.i.us
+
+.sink.split.i.us:                                 ; preds = %.sink.split.i87.us, %bb.au, %.preheader.us.preheader._crit_edge, %bb.ao, %.preheader197.us.preheader._crit_edge, %bb.af
+  %.sroa.51.2.us = phi i1 [ false, %.preheader197.us.preheader._crit_edge ], [ false, %.preheader.us.preheader._crit_edge ], [ true, %bb.au ], [ true, %bb.af ], [ true, %bb.ao ], [ true, %.sink.split.i87.us ]
+  %.sroa.41.2.us = phi i64 [ %2, %.preheader197.us.preheader._crit_edge ], [ %3, %.preheader.us.preheader._crit_edge ], [ %.sroa.41.0240.us, %bb.au ], [ %.sroa.41.0240.us, %bb.af ], [ %.sroa.41.0240.us, %bb.ao ], [ %.sroa.41.0240.us, %.sink.split.i87.us ]
+  %.sroa.31114.2.us = phi i64 [ 0, %.preheader197.us.preheader._crit_edge ], [ -1, %.preheader.us.preheader._crit_edge ], [ -1, %bb.au ], [ %.sroa.31114.0241.us, %bb.af ], [ -1, %bb.ao ], [ %.sink.i.us, %.sink.split.i87.us ]
+  %.sroa.19.2.us = phi i64 [ %2, %.preheader197.us.preheader._crit_edge ], [ %3, %.preheader.us.preheader._crit_edge ], [ %.sroa.036.sroa.13.0.copyload, %bb.au ], [ %.sroa.036.sroa.13.0.copyload, %bb.af ], [ %.sroa.036.sroa.13.0.copyload, %bb.ao ], [ %.sroa.036.sroa.13.0.copyload, %.sink.split.i87.us ]
+  %spec.select.pn.us = phi i64 [ %i.cu, %.preheader197.us.preheader._crit_edge ], [ %i.dz, %.preheader.us.preheader._crit_edge ], [ %spec.select, %bb.au ], [ %spec.select, %bb.af ], [ %spec.select, %bb.ao ], [ %spec.select, %.sink.split.i87.us ] ; 2 uses
   %i.fb = icmp eq i64 %spec.select.pn.us, %.sroa.41.0240.us
   br i1 %i.fb, label %.split265.us, label %bb.av
 

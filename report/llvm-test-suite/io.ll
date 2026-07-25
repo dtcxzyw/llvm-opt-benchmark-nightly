@@ -204,18 +204,6 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %fputc.us = tail call i32 @fputc(i32 10, ptr %0) ; 0 uses
   br label %bb.e
 
-8:                                                ; preds = %._crit_edge.us
-  %9 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.83, ptr noundef nonnull @.str.85) #32 ; 0 uses
-  %10 = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv44
-  %11 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.84, ptr noundef nonnull %10) #32 ; 0 uses
-  br label %12
-
-12:                                               ; preds = %8, %._crit_edge.us
-  %indvars.iv.next45 = add nuw nsw i64 %indvars.iv44, 60 ; 2 uses
-  %13 = trunc nuw i64 %indvars.iv.next45 to i32
-  %14 = icmp sgt i32 %2, %13
-  br i1 %14, label %.lr.ph.us, label %._crit_edge33, !llvm.loop !238
-
 bb.e:                                             ; preds = %.lr.ph.us, %extractfirstword.exit.us
   %indvars.iv41 = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next42, %extractfirstword.exit.us ] ; 2 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %indvars.iv41 ; 2 uses
@@ -233,7 +221,7 @@ bb.e:                                             ; preds = %.lr.ph.us, %extract
   store i8 32, ptr %i.m, align 1, !tbaa !19
   %i.n = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.k, i32 noundef 9) #33 ; 2 uses
   %.not.i.i.us = icmp eq ptr %i.n, null
-  br i1 %.not.i.i.us, label %tabtospace.exit.i.us, label %.lr.ph.i.i.us, !llvm.loop !239
+  br i1 %.not.i.i.us, label %tabtospace.exit.i.us, label %.lr.ph.i.i.us, !llvm.loop !238
 
 tabtospace.exit.i.us:                             ; preds = %.lr.ph.i.i.us, %bb.e
   %i.o = load i8, ptr %i.k, align 1, !tbaa !19    ; 2 uses
@@ -256,10 +244,6 @@ bb.g:                                             ; preds = %bb.f
   %i.s = getelementptr inbounds nuw i8, ptr %.01318.i.us, i64 1
   br label %bb.i
 
-.thread.i.us:                                     ; preds = %bb.f
-  store i8 0, ptr %.01318.i.us, align 1, !tbaa !19
-  br label %extractfirstword.exit.us
-
 bb.h:                                             ; preds = %.lr.ph.i.us
   %i.t = getelementptr inbounds nuw i8, ptr %.019.i.us, i64 1 ; 2 uses
   br label %bb.i
@@ -269,7 +253,11 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.1.ph.i.us = phi ptr [ %.019.i.us, %bb.g ], [ %i.t, %bb.h ] ; 2 uses
   %.pr.i.us = load i8, ptr %.114.ph.i.us, align 1, !tbaa !19 ; 2 uses
   %.not.i.us = icmp eq i8 %.pr.i.us, 0
-  br i1 %.not.i.us, label %extractfirstword.exit.us, label %.lr.ph.i.us, !llvm.loop !240
+  br i1 %.not.i.us, label %extractfirstword.exit.us, label %.lr.ph.i.us, !llvm.loop !239
+
+.thread.i.us:                                     ; preds = %bb.f
+  store i8 0, ptr %.01318.i.us, align 1, !tbaa !19
+  br label %extractfirstword.exit.us
 
 extractfirstword.exit.us:                         ; preds = %bb.i, %.thread.i.us, %tabtospace.exit.i.us
   %.0.lcssa.i.us = phi ptr [ %i.k, %tabtospace.exit.i.us ], [ %.019.i.us, %.thread.i.us ], [ %.1.ph.i.us, %bb.i ]
@@ -282,7 +270,19 @@ extractfirstword.exit.us:                         ; preds = %bb.i, %.thread.i.us
   %i.aa = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.84, ptr noundef %i.z) #32 ; 0 uses
   %indvars.iv.next42 = add nuw nsw i64 %indvars.iv41, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next42, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.us, label %bb.e, !llvm.loop !241
+  br i1 %exitcond.not, label %._crit_edge.us, label %bb.e, !llvm.loop !240
+
+8:                                                ; preds = %._crit_edge.us
+  %9 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.83, ptr noundef nonnull @.str.85) #32 ; 0 uses
+  %10 = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv44
+  %11 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.84, ptr noundef nonnull %10) #32 ; 0 uses
+  br label %12
+
+12:                                               ; preds = %8, %._crit_edge.us
+  %indvars.iv.next45 = add nuw nsw i64 %indvars.iv44, 60 ; 2 uses
+  %13 = trunc nuw i64 %indvars.iv.next45 to i32
+  %14 = icmp sgt i32 %2, %13
+  br i1 %14, label %.lr.ph.us, label %._crit_edge33, !llvm.loop !241
 
 ._crit_edge.us:                                   ; preds = %extractfirstword.exit.us
   br i1 %.not, label %12, label %8
@@ -295,7 +295,7 @@ extractfirstword.exit.us:                         ; preds = %bb.i, %.thread.i.us
   %fputc.us35 = tail call i32 @fputc(i32 10, ptr %0) ; 0 uses
   %i.ab = add nuw nsw i32 %.02430.us34, 60        ; 2 uses
   %i.ac = icmp slt i32 %i.ab, %2
-  br i1 %i.ac, label %.lr.ph32.split.split.us, label %._crit_edge33, !llvm.loop !238
+  br i1 %i.ac, label %.lr.ph32.split.split.us, label %._crit_edge33, !llvm.loop !241
 
 .lr.ph32.split.split:                             ; preds = %.lr.ph32.split, %.lr.ph32.split.split
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph32.split.split ], [ 0, %.lr.ph32.split ] ; 2 uses
@@ -306,7 +306,7 @@ extractfirstword.exit.us:                         ; preds = %bb.i, %.thread.i.us
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 60 ; 2 uses
   %i.ag = trunc nuw i64 %indvars.iv.next to i32
   %i.ah = icmp sgt i32 %2, %i.ag
-  br i1 %i.ah, label %.lr.ph32.split.split, label %._crit_edge33, !llvm.loop !238
+  br i1 %i.ah, label %.lr.ph32.split.split, label %._crit_edge33, !llvm.loop !241
 
 ._crit_edge33:                                    ; preds = %.lr.ph32.split.split, %.lr.ph32.split.split.us, %12, %bb.d
   ret void

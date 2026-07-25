@@ -204,11 +204,6 @@ CopyTileWithColorTransform.exit.us:               ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %10)
   br i1 %i.y, label %.lr.ph170.us, label %._crit_edge171.us
 
-._crit_edge171.us:                                ; preds = %._crit_edge.us, %CopyTileWithColorTransform.exit.us
-  %indvars.iv.next204 = add nuw nsw i64 %indvars.iv203, 1 ; 2 uses
-  %exitcond205.not = icmp eq i64 %indvars.iv.next204, %wide.trip.count
-  br i1 %exitcond205.not, label %._crit_edge180.us, label %bb.b, !llvm.loop !45
-
 bb.e:                                             ; preds = %.lr.ph170.us, %._crit_edge.us
   %indvars.iv199 = phi i32 [ %i.cu, %.lr.ph170.us ], [ %indvars.iv.next200, %._crit_edge.us ] ; 2 uses
   %indvars.iv = phi i32 [ %i.ct, %.lr.ph170.us ], [ %indvars.iv.next, %._crit_edge.us ] ; 2 uses
@@ -222,13 +217,6 @@ bb.e:                                             ; preds = %.lr.ph170.us, %._cr
 .lr.ph.us.preheader:                              ; preds = %bb.e
   %i.bk = sext i32 %indvars.iv to i64
   br label %.lr.ph.us
-
-._crit_edge.us:                                   ; preds = %bb.m, %bb.e
-  %11 = add nsw i32 %.0103169.us, 1               ; 2 uses
-  %indvars.iv.next = add i32 %indvars.iv, %0
-  %indvars.iv.next200 = add i32 %indvars.iv199, %0
-  %exitcond202.not = icmp eq i32 %11, %i.s
-  br i1 %exitcond202.not, label %._crit_edge171.us, label %bb.e, !llvm.loop !46
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %bb.m
   %indvars.iv196 = phi i64 [ %i.bk, %.lr.ph.us.preheader ], [ %indvars.iv.next197, %bb.m ] ; 5 uses
@@ -296,7 +284,19 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.g
   %indvars.iv.next197 = add nsw i64 %indvars.iv196, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next197 to i32
   %exitcond201.not = icmp eq i32 %indvars.iv199, %lftr.wideiv
-  br i1 %exitcond201.not, label %._crit_edge.us, label %.lr.ph.us, !llvm.loop !47
+  br i1 %exitcond201.not, label %._crit_edge.us, label %.lr.ph.us, !llvm.loop !45
+
+._crit_edge.us:                                   ; preds = %bb.m, %bb.e
+  %11 = add nsw i32 %.0103169.us, 1               ; 2 uses
+  %indvars.iv.next = add i32 %indvars.iv, %0
+  %indvars.iv.next200 = add i32 %indvars.iv199, %0
+  %exitcond202.not = icmp eq i32 %11, %i.s
+  br i1 %exitcond202.not, label %._crit_edge171.us, label %bb.e, !llvm.loop !46
+
+._crit_edge171.us:                                ; preds = %._crit_edge.us, %CopyTileWithColorTransform.exit.us
+  %indvars.iv.next204 = add nuw nsw i64 %indvars.iv203, 1 ; 2 uses
+  %exitcond205.not = icmp eq i64 %indvars.iv.next204, %wide.trip.count
+  br i1 %exitcond205.not, label %._crit_edge180.us, label %bb.b, !llvm.loop !47
 
 bb.n:                                             ; preds = %._crit_edge180.us
   %indvars.iv.next207 = add nuw nsw i64 %indvars.iv206, 1 ; 2 uses

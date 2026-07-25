@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %.lr.ph.split.us
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.057.i.i.i10.i.us
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !90
   %.not.i.i.i11.i.us = icmp eq i8 %i.aj, -1
-  br i1 %.not.i.i.i11.i.us, label %bb.e, label %_ZNK4geos9geomgraph5Label6isNullEv.exit.i12.i.us.a
+  br i1 %.not.i.i.i11.i.us, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph.i.i.i9.i.us
   %i.ak = add nuw nsw i64 %.057.i.i.i10.i.us, 1   ; 2 uses
@@ -216,24 +216,24 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i9.i.us
   %i.ap = icmp eq i8 %i.an, 0
   br i1 %i.ap, label %.loopexit.i19.i.us, label %.lr.ph.i1.i.i15.i.us
 
-.lr.ph.i1.i.i15.i.us:                             ; preds = %.loopexit.i.i14.i.us, %bb.f
-  %.057.i2.i.i16.i.us = phi i64 [ %3, %bb.f ], [ 0, %.loopexit.i.i14.i.us ] ; 2 uses
+.lr.ph.i1.i.i15.i.us:                             ; preds = %.loopexit.i.i14.i.us, %_ZNK4geos9geomgraph5Label6isNullEv.exit.i12.i.us.a
+  %.057.i2.i.i16.i.us = phi i64 [ %2, %_ZNK4geos9geomgraph5Label6isNullEv.exit.i12.i.us.a ], [ 0, %.loopexit.i.i14.i.us ] ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.al, i64 %.057.i2.i.i16.i.us
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !90
   %.not.i3.i.i17.i.us = icmp eq i8 %i.ar, -1
-  br i1 %.not.i3.i.i17.i.us, label %bb.f, label %_ZNK4geos9geomgraph5Label6isNullEv.exit.i12.i.us.a
+  br i1 %.not.i3.i.i17.i.us, label %_ZNK4geos9geomgraph5Label6isNullEv.exit.i12.i.us.a, label %bb.f
 
-_ZNK4geos9geomgraph5Label6isNullEv.exit.i12.i.us.a: ; preds = %.lr.ph.i.i.i9.i.us, %.lr.ph.i1.i.i15.i.us
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %i.f
-  store i8 1, ptr %2, align 1, !tbaa !90
-  br label %_ZN4geos9geomgraph13GeometryGraph23addSelfIntersectionNodeEhRKNS_4geom10CoordinateENS2_8LocationE.exit.us
-
-bb.f:                                             ; preds = %.lr.ph.i1.i.i15.i.us
-  %3 = add nuw nsw i64 %.057.i2.i.i16.i.us, 1     ; 2 uses
-  %exitcond.not.i5.i.i18.i.us = icmp eq i64 %3, %i.ao
+_ZNK4geos9geomgraph5Label6isNullEv.exit.i12.i.us.a: ; preds = %.lr.ph.i1.i.i15.i.us
+  %2 = add nuw nsw i64 %.057.i2.i.i16.i.us, 1     ; 2 uses
+  %exitcond.not.i5.i.i18.i.us = icmp eq i64 %2, %i.ao
   br i1 %exitcond.not.i5.i.i18.i.us, label %.loopexit.i19.i.us, label %.lr.ph.i1.i.i15.i.us, !llvm.loop !89
 
-.loopexit.i19.i.us:                               ; preds = %bb.f, %.loopexit.i.i14.i.us
+bb.f:                                             ; preds = %.lr.ph.i.i.i9.i.us, %.lr.ph.i1.i.i15.i.us
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %i.f
+  store i8 1, ptr %3, align 1, !tbaa !90
+  br label %_ZN4geos9geomgraph13GeometryGraph23addSelfIntersectionNodeEhRKNS_4geom10CoordinateENS2_8LocationE.exit.us
+
+.loopexit.i19.i.us:                               ; preds = %_ZNK4geos9geomgraph5Label6isNullEv.exit.i12.i.us.a, %.loopexit.i.i14.i.us
   %i.as = load ptr, ptr %i.ac, align 8, !tbaa !27
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 136
   %i.au = load ptr, ptr %i.at, align 8
@@ -265,7 +265,7 @@ _ZN4geos9geomgraph13GeometryGraph19insertBoundaryPointEhRKNS_4geom10CoordinateE.
   store i8 %i.bg, ptr %i.av, align 1, !tbaa !90
   br label %_ZN4geos9geomgraph13GeometryGraph23addSelfIntersectionNodeEhRKNS_4geom10CoordinateENS2_8LocationE.exit.us
 
-_ZN4geos9geomgraph13GeometryGraph23addSelfIntersectionNodeEhRKNS_4geom10CoordinateENS2_8LocationE.exit.us: ; preds = %_ZN4geos9geomgraph13GeometryGraph19insertBoundaryPointEhRKNS_4geom10CoordinateE.exit.i.us, %.loopexit.i19.i.us, %_ZNK4geos9geomgraph5Label6isNullEv.exit.i12.i.us.a, %.lr.ph.split.us
+_ZN4geos9geomgraph13GeometryGraph23addSelfIntersectionNodeEhRKNS_4geom10CoordinateENS2_8LocationE.exit.us: ; preds = %_ZN4geos9geomgraph13GeometryGraph19insertBoundaryPointEhRKNS_4geom10CoordinateE.exit.i.us, %.loopexit.i19.i.us, %bb.f, %.lr.ph.split.us
   tail call void @_ZN4geos4util9Interrupt7processEv()
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.011.022.us, i64 40 ; 2 uses
   %.not18.us = icmp eq ptr %i.bh, %i.t

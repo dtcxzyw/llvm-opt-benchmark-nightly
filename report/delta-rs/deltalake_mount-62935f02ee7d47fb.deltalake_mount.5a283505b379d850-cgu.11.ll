@@ -201,10 +201,6 @@ bb.cr:                                            ; preds = %bb.cq
   %i.jc = icmp ult i64 %i.ij, %i.jd
   br i1 %i.jc, label %.lr.ph190, label %.preheader197.us.i.i.i.preheader._crit_edge
 
-.preheader197.us.i.i.i.preheader._crit_edge:      ; preds = %.preheader197.us.i.i.i.preheader, %.preheader197.us.i.i.i
-  %2 = add i64 %i.il, %.sroa.036.sroa.15.0.copyload.i.i.i ; 2 uses
-  br label %.sink.split.i.us.i.i.i
-
 .lr.ph190:                                        ; preds = %.preheader197.us.i.i.i.preheader, %.preheader197.us.i.i.i
   %.sroa.2.0.i.us.i.i.i189 = phi i64 [ %i.jd, %.preheader197.us.i.i.i ], [ %.sroa.036.sroa.4.0.copyload.i.i.i, %.preheader197.us.i.i.i.preheader ]
   %i.jd = add i64 %.sroa.2.0.i.us.i.i.i189, -1    ; 6 uses
@@ -238,6 +234,10 @@ bb.cv:                                            ; preds = %.lr.ph.i.us.i.i.i
   %i.jn = add i64 %.ph71.i.us.i.i.i, %i.ct        ; 2 uses
   %i.jo = icmp ult i64 %i.jn, %.sroa.036.sroa.13.0.copyload.i.i.i
   br i1 %i.jo, label %.lr.ph.i.us.i.i.i, label %.sink.split.i.us.i.i.i
+
+.preheader197.us.i.i.i.preheader._crit_edge:      ; preds = %.preheader197.us.i.i.i.preheader, %.preheader197.us.i.i.i
+  %2 = add i64 %i.il, %.sroa.036.sroa.15.0.copyload.i.i.i ; 2 uses
+  br label %.sink.split.i.us.i.i.i
 
 bb.cw:                                            ; preds = %bb.cm
   call void @llvm.experimental.noalias.scope.decl(metadata !92)
@@ -315,10 +315,6 @@ bb.cz:                                            ; preds = %bb.cy
   %i.kn = add i64 %.reass354.i.reass.i.reass.i.reass.reass, %.sroa.02.0.i99.us.i.i.i193
   br label %bb.db
 
-.split.us.i.i:                                    ; preds = %.preheader.us.i.us.i.i.preheader, %.preheader.us.i.us.i.i, %.preheader.us.i.preheader.split.i.i
-  %3 = add i64 %i.jq, %.sroa.036.sroa.15.0.copyload.i.i.i ; 2 uses
-  br label %.sink.split.i.us.i.i.i
-
 bb.da:                                            ; preds = %.lr.ph.i95.us.i.i.i
   %i.ko = add i64 %i.jq, %.sroa.036.sroa.15.0.copyload.i.i.i
   br label %bb.db
@@ -328,6 +324,10 @@ bb.db:                                            ; preds = %bb.da, %bb.cz, %.sp
   %i.kq = add i64 %i.kp, %i.ct                    ; 2 uses
   %i.kr = icmp ult i64 %i.kq, %.sroa.036.sroa.13.0.copyload.i.i.i
   br i1 %i.kr, label %.lr.ph.i95.us.i.i.i, label %.sink.split.i.us.i.i.i
+
+.split.us.i.i:                                    ; preds = %.preheader.us.i.us.i.i.preheader, %.preheader.us.i.us.i.i, %.preheader.us.i.preheader.split.i.i
+  %3 = add i64 %i.jq, %.sroa.036.sroa.15.0.copyload.i.i.i ; 2 uses
+  br label %.sink.split.i.us.i.i.i
 
 .sink.split.i.us.i.i.i:                           ; preds = %.sink.split.i87.us.i.i.i, %bb.db, %.split.us.i.i, %bb.cw, %.preheader197.us.i.i.i.preheader._crit_edge, %bb.cn
   %.sroa.51.2.us.i.i.i = phi i1 [ false, %.preheader197.us.i.i.i.preheader._crit_edge ], [ false, %.split.us.i.i ], [ true, %bb.db ], [ true, %bb.cn ], [ true, %bb.cw ], [ true, %.sink.split.i87.us.i.i.i ]

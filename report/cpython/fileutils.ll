@@ -203,23 +203,6 @@ bb.j:                                             ; preds = %bb.i, %.thread69.us
   %.046.us = phi i64 [ %7, %12 ], [ 0, %.thread ]
   br label %bb.k
 
-6:                                                ; preds = %._crit_edge.split.us102
-  %7 = add i64 %.2.us101, 1                       ; 3 uses
-  br i1 %.not56166, label %10, label %8
-
-8:                                                ; preds = %6
-  %9 = call ptr @PyMem_RawMalloc(i64 noundef %7) #17
-  br label %12
-
-10:                                               ; preds = %6
-  %11 = call ptr @PyMem_Malloc(i64 noundef %7) #17
-  br label %12
-
-12:                                               ; preds = %10, %8
-  %.152.us = phi ptr [ %9, %8 ], [ %11, %10 ]     ; 2 uses
-  %13 = icmp eq ptr %.152.us, null
-  br i1 %13, label %get_surrogateescape.exit, label %.lr.ph.us
-
 bb.k:                                             ; preds = %.lr.ph.us, %bb.r
   %.180.us93 = phi i64 [ %.046.us, %.lr.ph.us ], [ %.2.us101, %bb.r ] ; 5 uses
   %.04779.us94 = phi i64 [ 0, %.lr.ph.us ], [ %i.ah, %bb.r ] ; 4 uses
@@ -275,6 +258,23 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.n,
   %i.ah = add nuw i64 %.04779.us94, 1             ; 2 uses
   %exitcond.not = icmp eq i64 %i.ah, %i.b
   br i1 %exitcond.not, label %._crit_edge.split.us102, label %bb.k, !llvm.loop !214
+
+6:                                                ; preds = %._crit_edge.split.us102
+  %7 = add i64 %.2.us101, 1                       ; 3 uses
+  br i1 %.not56166, label %10, label %8
+
+8:                                                ; preds = %6
+  %9 = call ptr @PyMem_RawMalloc(i64 noundef %7) #17
+  br label %12
+
+10:                                               ; preds = %6
+  %11 = call ptr @PyMem_Malloc(i64 noundef %7) #17
+  br label %12
+
+12:                                               ; preds = %10, %8
+  %.152.us = phi ptr [ %9, %8 ], [ %11, %10 ]     ; 2 uses
+  %13 = icmp eq ptr %.152.us, null
+  br i1 %13, label %get_surrogateescape.exit, label %.lr.ph.us
 
 ._crit_edge.split.us102:                          ; preds = %bb.r
   %.not.us = icmp eq ptr %.048.us, null

@@ -204,6 +204,17 @@ middle.block285:                                  ; preds = %vector.body278
   %.0101167.us.i.ph = phi i32 [ 0, %.lr.ph.us.i.preheader ], [ %i.di, %middle.block285 ]
   br label %.lr.ph.us.i
 
+.lr.ph.us.i:                                      ; preds = %.lr.ph.us.i.preheader293, %.lr.ph.us.i
+  %indvars.iv208.i = phi i64 [ %indvars.iv.next209.i, %.lr.ph.us.i ], [ %indvars.iv208.i.ph, %.lr.ph.us.i.preheader293 ] ; 2 uses
+  %.0101167.us.i = phi i32 [ %12, %.lr.ph.us.i ], [ %.0101167.us.i.ph, %.lr.ph.us.i.preheader293 ]
+  %9 = getelementptr inbounds nuw i8, ptr %i.cu, i64 %indvars.iv208.i
+  %10 = load i8, ptr %9, align 1
+  %11 = zext i8 %10 to i32
+  %12 = or i32 %.0101167.us.i, %11                ; 2 uses
+  %indvars.iv.next209.i = add nuw nsw i64 %indvars.iv208.i, 1 ; 2 uses
+  %exitcond212.not.i = icmp eq i64 %indvars.iv.next209.i, %i.cx
+  br i1 %exitcond212.not.i, label %._crit_edge.us.i, label %.lr.ph.us.i, !llvm.loop !205
+
 ._crit_edge.us.i:                                 ; preds = %.lr.ph.us.i, %middle.block285
   %.lcssa263 = phi i32 [ %i.di, %middle.block285 ], [ %12, %.lr.ph.us.i ]
   %i.dj = and i32 %.lcssa263, 128
@@ -263,23 +274,12 @@ _ZN7unibrow4Utf813EncodeOneByteEPch.exit.us.i.1:  ; preds = %bb.z, %_ZN7unibrow4
   %indvars.iv.next214.i.1 = add nuw nsw i64 %indvars.iv213.i, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit.i.loopexit.unr-lcssa, label %.lr.ph171.us.i, !llvm.loop !205
+  br i1 %niter.ncmp.1, label %.loopexit.i.loopexit.unr-lcssa, label %.lr.ph171.us.i, !llvm.loop !206
 
 ._crit_edge.us.thread.i:                          ; preds = %._crit_edge.us.i
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %2, ptr nonnull readonly align 1 %i.cu, i64 %i.cx, i1 false)
   %i.ed = getelementptr inbounds nuw i8, ptr %2, i64 %i.cx
   br label %.loopexit.i
-
-.lr.ph.us.i:                                      ; preds = %.lr.ph.us.i.preheader293, %.lr.ph.us.i
-  %indvars.iv208.i = phi i64 [ %indvars.iv.next209.i, %.lr.ph.us.i ], [ %indvars.iv208.i.ph, %.lr.ph.us.i.preheader293 ] ; 2 uses
-  %.0101167.us.i = phi i32 [ %12, %.lr.ph.us.i ], [ %.0101167.us.i.ph, %.lr.ph.us.i.preheader293 ]
-  %9 = getelementptr inbounds nuw i8, ptr %i.cu, i64 %indvars.iv208.i
-  %10 = load i8, ptr %9, align 1
-  %11 = zext i8 %10 to i32
-  %12 = or i32 %.0101167.us.i, %11                ; 2 uses
-  %indvars.iv.next209.i = add nuw nsw i64 %indvars.iv208.i, 1 ; 2 uses
-  %exitcond212.not.i = icmp eq i64 %indvars.iv.next209.i, %i.cx
-  br i1 %exitcond212.not.i, label %._crit_edge.us.i, label %.lr.ph.us.i, !llvm.loop !206
 
 .lr.ph176.split.i:                                ; preds = %.lr.ph176.i, %.loopexit164.i
   %.094175.i = phi ptr [ %.397.i, %.loopexit164.i ], [ %2, %.lr.ph176.i ] ; 8 uses
@@ -441,7 +441,7 @@ _ZN7unibrow4Utf813EncodeOneByteEPch.exit.i.1:     ; preds = %bb.ac, %_ZN7unibrow
   %i.gf = getelementptr inbounds nuw i8, ptr %i.fw, i64 %.0.i.i20.1 ; 2 uses
   %indvars.iv.next204.i.1 = add nsw i64 %indvars.iv203.i, 2 ; 2 uses
   %exitcond207.not.i.1 = icmp eq i64 %indvars.iv.next204.i.1, %wide.trip.count.i
-  br i1 %exitcond207.not.i.1, label %.loopexit164.i, label %.lr.ph171.i, !llvm.loop !205
+  br i1 %exitcond207.not.i.1, label %.loopexit164.i, label %.lr.ph171.i, !llvm.loop !206
 
 .loopexit164.i:                                   ; preds = %.lr.ph171.i.prol.loopexit, %_ZN7unibrow4Utf813EncodeOneByteEPch.exit.i.1, %._crit_edge.thread.i
   %.397.i = phi ptr [ %i.fo, %._crit_edge.thread.i ], [ %.lcssa300.unr, %.lr.ph171.i.prol.loopexit ], [ %i.gf, %_ZN7unibrow4Utf813EncodeOneByteEPch.exit.i.1 ] ; 2 uses
@@ -844,8 +844,8 @@ begin_hunk_1_@llvm.vector.reduce.or.v16i64
 !202 = distinct !{!202, !"_ZZN2v88internal6String33TryGetFlatContentFromDirectStringERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS3_2EEEENS0_6TaggedIS1_EEjjRKNS0_31SharedStringAccessGuardIfNeededEENKUlNS7_INS0_21ExternalTwoByteStringEEEE_clESD_"}
 !203 = !{!198, !190}
 !204 = distinct !{!204, !10, !37, !38}
-!205 = distinct !{!205, !10}
-!206 = distinct !{!206, !10, !38, !37}
+!205 = distinct !{!205, !10, !38, !37}
+!206 = distinct !{!206, !10}
 !207 = distinct !{!207, !10, !37, !38}
 !208 = distinct !{!208, !10, !38, !37}
 !209 = distinct !{!209, !10}

@@ -204,12 +204,6 @@ _ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE18ListIncr
   %.not133 = icmp eq i64 %i.eu, 0
   br i1 %.not133, label %._crit_edge108.us, label %.lr.ph107.us
 
-._crit_edge108.us:                                ; preds = %.lr.ph107.us, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE18ListIncrementValueEm.exit.us
-  %.1.lcssa.us = phi i64 [ %.056110.us, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE18ListIncrementValueEm.exit.us ], [ %i.ew, %.lr.ph107.us ]
-  %6 = add nuw i64 %.055111.us, 1                 ; 2 uses
-  %exitcond141.not = icmp eq i64 %6, %.053
-  br i1 %exitcond141.not, label %._crit_edge114, label %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE18ListIncrementValueEm.exit.us, !llvm.loop !197
-
 .lr.ph107.us:                                     ; preds = %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE18ListIncrementValueEm.exit.us, %.lr.ph107.us
   %.0106.us = phi i64 [ %i.ey, %.lr.ph107.us ], [ 0, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE18ListIncrementValueEm.exit.us ] ; 2 uses
   %.1105.us = phi i64 [ %i.ew, %.lr.ph107.us ], [ %.056110.us, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE18ListIncrementValueEm.exit.us ] ; 2 uses
@@ -223,7 +217,13 @@ _ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE18ListIncr
   %i.ey = add nuw i64 %.0106.us, 1                ; 2 uses
   %i.ez = load i64, ptr %i.et, align 8, !tbaa !83
   %i.fa = icmp ult i64 %i.ey, %i.ez
-  br i1 %i.fa, label %.lr.ph107.us, label %._crit_edge108.us, !llvm.loop !198
+  br i1 %i.fa, label %.lr.ph107.us, label %._crit_edge108.us, !llvm.loop !197
+
+._crit_edge108.us:                                ; preds = %.lr.ph107.us, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE18ListIncrementValueEm.exit.us
+  %.1.lcssa.us = phi i64 [ %.056110.us, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE18ListIncrementValueEm.exit.us ], [ %i.ew, %.lr.ph107.us ]
+  %6 = add nuw i64 %.055111.us, 1                 ; 2 uses
+  %exitcond141.not = icmp eq i64 %6, %.053
+  br i1 %exitcond141.not, label %._crit_edge114, label %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE18ListIncrementValueEm.exit.us, !llvm.loop !198
 
 .lr.ph113.split:                                  ; preds = %.lr.ph113
   %i.fb = sdiv exact i64 %i.el, 104
@@ -235,7 +235,7 @@ _ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE18ListIncr
 
 .lr.ph113.split.split.us:                         ; preds = %.lr.ph113.split, %._crit_edge108.us126
   %.055111.us115 = phi i64 [ %7, %._crit_edge108.us126 ], [ 0, %.lr.ph113.split ] ; 4 uses
-  %.056110.us116 = phi i64 [ %.1.lcssa.us119, %._crit_edge108.us126 ], [ 0, %.lr.ph113.split ] ; 2 uses
+  %.056110.us116 = phi i64 [ %.1.lcssa.us124, %._crit_edge108.us126 ], [ 0, %.lr.ph113.split ] ; 2 uses
   br i1 %.not.i.i82, label %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE14StartListValueEm.exit.us, label %bb.an
 
 bb.an:                                            ; preds = %.lr.ph113.split.split.us
@@ -257,12 +257,6 @@ _ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE14StartLis
   %i.fn = load i64, ptr %i.fm, align 8, !tbaa !77
   br label %.lr.ph107.us125
 
-._crit_edge108.us126:                             ; preds = %.lr.ph107.us125, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE14StartListValueEm.exit.us
-  %.1.lcssa.us119 = phi i64 [ %.056110.us116, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE14StartListValueEm.exit.us ], [ %i.fp, %.lr.ph107.us125 ]
-  %7 = add nuw i64 %.055111.us115, 1              ; 2 uses
-  %exitcond140.not = icmp eq i64 %7, %.053
-  br i1 %exitcond140.not, label %._crit_edge114, label %.lr.ph113.split.split.us, !llvm.loop !197
-
 .lr.ph107.us125:                                  ; preds = %.lr.ph107.us125.preheader, %.lr.ph107.us125
   %.0106.us120 = phi i64 [ %i.fr, %.lr.ph107.us125 ], [ 0, %.lr.ph107.us125.preheader ] ; 2 uses
   %.1105.us121 = phi i64 [ %i.fp, %.lr.ph107.us125 ], [ %.056110.us116, %.lr.ph107.us125.preheader ] ; 2 uses
@@ -276,7 +270,13 @@ _ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE14StartLis
   %i.fr = add nuw i64 %.0106.us120, 1             ; 2 uses
   %i.fs = load i64, ptr %i.fk, align 8, !tbaa !83
   %i.ft = icmp ult i64 %i.fr, %i.fs
-  br i1 %i.ft, label %.lr.ph107.us125, label %._crit_edge108.us126, !llvm.loop !198
+  br i1 %i.ft, label %.lr.ph107.us125, label %._crit_edge108.us126, !llvm.loop !197
+
+._crit_edge108.us126:                             ; preds = %.lr.ph107.us125, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE14StartListValueEm.exit.us
+  %.1.lcssa.us124 = phi i64 [ %.056110.us116, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb0EE14StartListValueEm.exit.us ], [ %i.fp, %.lr.ph107.us125 ]
+  %7 = add nuw i64 %.055111.us115, 1              ; 2 uses
+  %exitcond140.not = icmp eq i64 %7, %.053
+  br i1 %exitcond140.not, label %._crit_edge114, label %.lr.ph113.split.split.us, !llvm.loop !198
 
 .lr.ph113.split.split:                            ; preds = %.lr.ph113.split
   %i.fu = load ptr, ptr %i.er, align 8, !tbaa !75 ; 2 uses
@@ -342,7 +342,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.i86: ; preds = %bb.as, %_ZN6duckdb
   %.1.lcssa = phi i64 [ %.056110, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i86 ], [ %i.gm, %.lr.ph107.preheader ], [ %i.gr, %.lr.ph107 ]
   %i.gq = add nuw i64 %.055111, 1                 ; 2 uses
   %exitcond139.not = icmp eq i64 %i.gq, %.053
-  br i1 %exitcond139.not, label %._crit_edge114, label %bb.aq, !llvm.loop !197
+  br i1 %exitcond139.not, label %._crit_edge114, label %bb.aq, !llvm.loop !198
 
 .lr.ph107:                                        ; preds = %.lr.ph107.preheader, %.lr.ph107
   %.0106 = phi i64 [ %i.gt, %.lr.ph107 ], [ 1, %.lr.ph107.preheader ]
@@ -745,12 +745,6 @@ _ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE18ListIncr
   %.not133 = icmp eq i64 %i.eu, 0
   br i1 %.not133, label %._crit_edge108.us, label %.lr.ph107.us
 
-._crit_edge108.us:                                ; preds = %.lr.ph107.us, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE18ListIncrementValueEm.exit.us
-  %.1.lcssa.us = phi i64 [ %.056110.us, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE18ListIncrementValueEm.exit.us ], [ %i.ew, %.lr.ph107.us ]
-  %6 = add nuw i64 %.055111.us, 1                 ; 2 uses
-  %exitcond141.not = icmp eq i64 %6, %.053
-  br i1 %exitcond141.not, label %._crit_edge114, label %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE18ListIncrementValueEm.exit.us, !llvm.loop !216
-
 .lr.ph107.us:                                     ; preds = %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE18ListIncrementValueEm.exit.us, %.lr.ph107.us
   %.0106.us = phi i64 [ %i.ey, %.lr.ph107.us ], [ 0, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE18ListIncrementValueEm.exit.us ] ; 2 uses
   %.1105.us = phi i64 [ %i.ew, %.lr.ph107.us ], [ %.056110.us, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE18ListIncrementValueEm.exit.us ] ; 2 uses
@@ -764,7 +758,13 @@ _ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE18ListIncr
   %i.ey = add nuw i64 %.0106.us, 1                ; 2 uses
   %i.ez = load i64, ptr %i.et, align 8, !tbaa !83
   %i.fa = icmp ult i64 %i.ey, %i.ez
-  br i1 %i.fa, label %.lr.ph107.us, label %._crit_edge108.us, !llvm.loop !217
+  br i1 %i.fa, label %.lr.ph107.us, label %._crit_edge108.us, !llvm.loop !216
+
+._crit_edge108.us:                                ; preds = %.lr.ph107.us, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE18ListIncrementValueEm.exit.us
+  %.1.lcssa.us = phi i64 [ %.056110.us, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE18ListIncrementValueEm.exit.us ], [ %i.ew, %.lr.ph107.us ]
+  %6 = add nuw i64 %.055111.us, 1                 ; 2 uses
+  %exitcond141.not = icmp eq i64 %6, %.053
+  br i1 %exitcond141.not, label %._crit_edge114, label %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE18ListIncrementValueEm.exit.us, !llvm.loop !217
 
 .lr.ph113.split:                                  ; preds = %.lr.ph113
   %i.fb = sdiv exact i64 %i.el, 104
@@ -776,7 +776,7 @@ _ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE18ListIncr
 
 .lr.ph113.split.split.us:                         ; preds = %.lr.ph113.split, %._crit_edge108.us126
   %.055111.us115 = phi i64 [ %7, %._crit_edge108.us126 ], [ 0, %.lr.ph113.split ] ; 4 uses
-  %.056110.us116 = phi i64 [ %.1.lcssa.us119, %._crit_edge108.us126 ], [ 0, %.lr.ph113.split ] ; 2 uses
+  %.056110.us116 = phi i64 [ %.1.lcssa.us124, %._crit_edge108.us126 ], [ 0, %.lr.ph113.split ] ; 2 uses
   br i1 %.not.i.i82, label %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE14StartListValueEm.exit.us, label %bb.an
 
 bb.an:                                            ; preds = %.lr.ph113.split.split.us
@@ -798,12 +798,6 @@ _ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE14StartLis
   %i.fn = load i64, ptr %i.fm, align 8, !tbaa !77
   br label %.lr.ph107.us125
 
-._crit_edge108.us126:                             ; preds = %.lr.ph107.us125, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE14StartListValueEm.exit.us
-  %.1.lcssa.us119 = phi i64 [ %.056110.us116, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE14StartListValueEm.exit.us ], [ %i.fp, %.lr.ph107.us125 ]
-  %7 = add nuw i64 %.055111.us115, 1              ; 2 uses
-  %exitcond140.not = icmp eq i64 %7, %.053
-  br i1 %exitcond140.not, label %._crit_edge114, label %.lr.ph113.split.split.us, !llvm.loop !216
-
 .lr.ph107.us125:                                  ; preds = %.lr.ph107.us125.preheader, %.lr.ph107.us125
   %.0106.us120 = phi i64 [ %i.fr, %.lr.ph107.us125 ], [ 0, %.lr.ph107.us125.preheader ] ; 2 uses
   %.1105.us121 = phi i64 [ %i.fp, %.lr.ph107.us125 ], [ %.056110.us116, %.lr.ph107.us125.preheader ] ; 2 uses
@@ -817,7 +811,13 @@ _ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE14StartLis
   %i.fr = add nuw i64 %.0106.us120, 1             ; 2 uses
   %i.fs = load i64, ptr %i.fk, align 8, !tbaa !83
   %i.ft = icmp ult i64 %i.fr, %i.fs
-  br i1 %i.ft, label %.lr.ph107.us125, label %._crit_edge108.us126, !llvm.loop !217
+  br i1 %i.ft, label %.lr.ph107.us125, label %._crit_edge108.us126, !llvm.loop !216
+
+._crit_edge108.us126:                             ; preds = %.lr.ph107.us125, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE14StartListValueEm.exit.us
+  %.1.lcssa.us124 = phi i64 [ %.056110.us116, %_ZN6duckdb12_GLOBAL__N_115RangeInfoStructINS0_16NumericRangeInfoELb1EE14StartListValueEm.exit.us ], [ %i.fp, %.lr.ph107.us125 ]
+  %7 = add nuw i64 %.055111.us115, 1              ; 2 uses
+  %exitcond140.not = icmp eq i64 %7, %.053
+  br i1 %exitcond140.not, label %._crit_edge114, label %.lr.ph113.split.split.us, !llvm.loop !217
 
 .lr.ph113.split.split:                            ; preds = %.lr.ph113.split
   %i.fu = load ptr, ptr %i.er, align 8, !tbaa !75 ; 2 uses
@@ -883,7 +883,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.i86: ; preds = %bb.as, %_ZN6duckdb
   %.1.lcssa = phi i64 [ %.056110, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i86 ], [ %i.gm, %.lr.ph107.preheader ], [ %i.gr, %.lr.ph107 ]
   %i.gq = add nuw i64 %.055111, 1                 ; 2 uses
   %exitcond139.not = icmp eq i64 %i.gq, %.053
-  br i1 %exitcond139.not, label %._crit_edge114, label %bb.aq, !llvm.loop !216
+  br i1 %exitcond139.not, label %._crit_edge114, label %bb.aq, !llvm.loop !217
 
 .lr.ph107:                                        ; preds = %.lr.ph107.preheader, %.lr.ph107
   %.0106 = phi i64 [ %i.gt, %.lr.ph107 ], [ 1, %.lr.ph107.preheader ]

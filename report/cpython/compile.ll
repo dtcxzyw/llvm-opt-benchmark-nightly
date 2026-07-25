@@ -201,6 +201,12 @@ bb.q:                                             ; preds = %.preheader.us, %1
   %.not86.us = icmp eq i8 %i.aw, 32
   br i1 %.not86.us, label %1, label %._crit_edge103.us
 
+1:                                                ; preds = %bb.q
+  %2 = add nuw nsw i64 %.066102.us, 1             ; 2 uses
+  %3 = getelementptr i8, ptr %.10101.us, i64 1
+  %exitcond.not = icmp eq i64 %2, %spec.store.select
+  br i1 %exitcond.not, label %._crit_edge103.us, label %bb.q, !llvm.loop !123
+
 ._crit_edge103.us:                                ; preds = %1, %bb.q
   %.10.lcssa.us = phi ptr [ %.10101.us, %bb.q ], [ %scevgep, %1 ] ; 3 uses
   %i.ax = icmp ult ptr %.10.lcssa.us, %i.j
@@ -222,13 +228,7 @@ bb.q:                                             ; preds = %.preheader.us, %1
   %.12.us = phi ptr [ %.10.lcssa.us, %._crit_edge103.us ], [ %i.ay, %.lr.ph151 ] ; 2 uses
   %.4.us = phi ptr [ %.271108.us, %._crit_edge103.us ], [ %i.ba, %.lr.ph151 ] ; 2 uses
   %i.bd = icmp ult ptr %.12.us, %i.j
-  br i1 %i.bd, label %.preheader.us, label %._crit_edge109, !llvm.loop !123
-
-1:                                                ; preds = %bb.q
-  %2 = add nuw nsw i64 %.066102.us, 1             ; 2 uses
-  %3 = getelementptr i8, ptr %.10101.us, i64 1
-  %exitcond.not = icmp eq i64 %2, %spec.store.select
-  br i1 %exitcond.not, label %._crit_edge103.us, label %bb.q, !llvm.loop !124
+  br i1 %i.bd, label %.preheader.us, label %._crit_edge109, !llvm.loop !124
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge143
   %.271108 = phi ptr [ %.4, %._crit_edge143 ], [ %.170, %.preheader.lr.ph ] ; 2 uses
@@ -252,7 +252,7 @@ bb.q:                                             ; preds = %.preheader.us, %1
   %.12 = phi ptr [ %.9107, %.preheader ], [ %i.bf, %.lr.ph142 ] ; 2 uses
   %.4 = phi ptr [ %.271108, %.preheader ], [ %i.bh, %.lr.ph142 ] ; 2 uses
   %i.bk = icmp ult ptr %.12, %i.j
-  br i1 %i.bk, label %.preheader, label %._crit_edge109, !llvm.loop !123
+  br i1 %i.bk, label %.preheader, label %._crit_edge109, !llvm.loop !124
 
 ._crit_edge109:                                   ; preds = %._crit_edge143, %._crit_edge152, %._crit_edge135
   %.271.lcssa = phi ptr [ %.170, %._crit_edge135 ], [ %.4.us, %._crit_edge152 ], [ %.4, %._crit_edge143 ]

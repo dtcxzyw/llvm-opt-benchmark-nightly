@@ -203,9 +203,6 @@ bb.ae:                                            ; preds = %bb.ad
   %.val32.pre.i118.us.pre = load i8, ptr %i.p, align 1, !tbaa !22 ; 2 uses
   br label %._crit_edge.i117.us
 
-.loopexit.split.loop.exit40.i.us:                 ; preds = %bb.ae
-  br i1 %i.dx, label %.split.us, label %.split195.us, !prof !50
-
 bb.af:                                            ; preds = %get_bin.exit.i114.us
   %i.dy = icmp eq i64 %i.dk, 0
   br i1 %i.dy, label %update_range_for_deleted.exit, label %._crit_edge.i117.us
@@ -218,6 +215,9 @@ bb.af:                                            ; preds = %get_bin.exit.i114.u
   %i.eb = add nuw nsw i64 %i.dz, 1
   %i.ec = add i64 %i.eb, %i.ea
   br label %bb.x
+
+.loopexit.split.loop.exit40.i.us:                 ; preds = %bb.ae
+  br i1 %i.dx, label %.split.us, label %.split195.us, !prof !50
 
 .split195.us:                                     ; preds = %.loopexit.split.loop.exit40.i.us, %bb.ad
   %i.ed = load ptr, ptr %i.c, align 8, !tbaa !26  ; 4 uses
@@ -621,9 +621,6 @@ bb.ag:                                            ; preds = %bb.af
   %.val32.pre.i120.us.pre = load i8, ptr %i.m, align 1, !tbaa !96 ; 2 uses
   br label %._crit_edge.i119.us
 
-.loopexit.split.loop.exit40.i.us:                 ; preds = %bb.ag
-  br i1 %i.dy, label %.split.us, label %.split200.us, !prof !50
-
 bb.ah:                                            ; preds = %get_bin.exit.i116.us
   %i.dz = icmp eq i64 %i.dl, 0
   br i1 %i.dz, label %set_update_range_for_deleted.exit, label %._crit_edge.i119.us
@@ -636,6 +633,9 @@ bb.ah:                                            ; preds = %get_bin.exit.i116.u
   %i.ec = add nuw nsw i64 %i.ea, 1
   %i.ed = add i64 %i.ec, %i.eb
   br label %bb.y
+
+.loopexit.split.loop.exit40.i.us:                 ; preds = %bb.ag
+  br i1 %i.dy, label %.split.us, label %.split200.us, !prof !50
 
 .split200.us:                                     ; preds = %.loopexit.split.loop.exit40.i.us, %bb.af
   %.val.i126 = load i8, ptr %0, align 8, !tbaa !95 ; 3 uses

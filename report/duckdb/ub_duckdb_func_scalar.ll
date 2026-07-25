@@ -204,8 +204,8 @@ bb.i:                                             ; preds = %bb.e, %bb.d
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   br i1 %i.f, label %.lr.ph33.split.us.i.i, label %.lr.ph33.split.i.i
 
-.lr.ph33.split.us.i.i:                            ; preds = %.lr.ph33.i.i, %.loopexit.us.i.i.a
-  %.02932.us.i.i = phi i64 [ %i.bt, %.loopexit.us.i.i.a ], [ %.sroa.0896.0.copyload, %.lr.ph33.i.i ] ; 3 uses
+.lr.ph33.split.us.i.i:                            ; preds = %.lr.ph33.i.i, %.lr.ph.us.i.i
+  %.02932.us.i.i = phi i64 [ %i.bv, %.lr.ph.us.i.i ], [ %.sroa.0896.0.copyload, %.lr.ph33.i.i ] ; 3 uses
   %i.ax = load ptr, ptr %i.c, align 8, !tbaa !699
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !158 ; 2 uses
   %.not.i.us.i.i = icmp eq ptr %i.ay, null
@@ -238,31 +238,31 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i: ; preds = %bb.j, %.lr.ph33
   %i.bq = load i8, ptr %i.aw, align 8, !tbaa !108, !range !187, !noundef !188
   %i.br = trunc nuw i8 %i.bq to i1
   %.pre37.i.i = load i64, ptr %i.be, align 8, !tbaa !14 ; 3 uses
-  br i1 %i.br, label %bb.k, label %.loopexit.us.i.i.a
+  br i1 %i.br, label %bb.k, label %.lr.ph.us.i.i
 
 bb.k:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i
   %.not34.i.i = icmp eq i64 %.pre37.i.i, -1
-  br i1 %.not34.i.i, label %.loopexit.us.i.i.a, label %.lr.ph.us.i.i
+  br i1 %.not34.i.i, label %.lr.ph.us.i.i, label %.loopexit.us.i.i.a
 
-.loopexit.us.i.i.a:                               ; preds = %.lr.ph.us.i.i, %bb.k, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i
-  %17 = phi i64 [ %.pre37.i.i, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i ], [ -1, %bb.k ], [ %21, %.lr.ph.us.i.i ]
-  %i.bs = add i64 %17, 1
-  store i64 %i.bs, ptr %i.be, align 8, !tbaa !14
-  %i.bt = add nuw i64 %.02932.us.i.i, 1           ; 2 uses
-  %exitcond36.not.i.i = icmp eq i64 %i.bt, %.sroa.2.0.copyload
-  br i1 %exitcond36.not.i.i, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.us.i.i, !llvm.loop !741
+.loopexit.us.i.i.a:                               ; preds = %bb.k, %.loopexit.us.i.i.a
+  %.031.us.i.i = phi i64 [ %i.bs, %.loopexit.us.i.i.a ], [ %.pre37.i.i, %bb.k ] ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %i.bh, i64 %.031.us.i.i ; 2 uses
+  %18 = load i8, ptr %17, align 1, !tbaa !18
+  %19 = xor i8 %18, -1
+  store i8 %19, ptr %17, align 1, !tbaa !18
+  %i.bs = add nuw i64 %.031.us.i.i, 1             ; 2 uses
+  %20 = load i64, ptr %i.be, align 8, !tbaa !14   ; 2 uses
+  %i.bt = add i64 %20, 1
+  %21 = icmp ult i64 %i.bs, %i.bt
+  br i1 %21, label %.loopexit.us.i.i.a, label %.lr.ph.us.i.i, !llvm.loop !741
 
-.lr.ph.us.i.i:                                    ; preds = %bb.k, %.lr.ph.us.i.i
-  %.031.us.i.i = phi i64 [ %i.bu, %.lr.ph.us.i.i ], [ %.pre37.i.i, %bb.k ] ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.bh, i64 %.031.us.i.i ; 2 uses
-  %19 = load i8, ptr %18, align 1, !tbaa !18
-  %20 = xor i8 %19, -1
-  store i8 %20, ptr %18, align 1, !tbaa !18
-  %i.bu = add nuw i64 %.031.us.i.i, 1             ; 2 uses
-  %21 = load i64, ptr %i.be, align 8, !tbaa !14   ; 2 uses
-  %i.bv = add i64 %21, 1
-  %22 = icmp ult i64 %i.bu, %i.bv
-  br i1 %22, label %.lr.ph.us.i.i, label %.loopexit.us.i.i.a, !llvm.loop !742
+.lr.ph.us.i.i:                                    ; preds = %.loopexit.us.i.i.a, %bb.k, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i
+  %22 = phi i64 [ %.pre37.i.i, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i ], [ -1, %bb.k ], [ %20, %.loopexit.us.i.i.a ]
+  %i.bu = add i64 %22, 1
+  store i64 %i.bu, ptr %i.be, align 8, !tbaa !14
+  %i.bv = add nuw i64 %.02932.us.i.i, 1           ; 2 uses
+  %exitcond36.not.i.i = icmp eq i64 %i.bv, %.sroa.2.0.copyload
+  br i1 %exitcond36.not.i.i, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.us.i.i, !llvm.loop !742
 
 .lr.ph33.split.i.i:                               ; preds = %.lr.ph33.i.i, %.loopexit.i16.i
   %.02932.i.i = phi i64 [ %i.da, %.loopexit.i16.i ], [ %.sroa.0896.0.copyload, %.lr.ph33.i.i ] ; 5 uses
@@ -314,7 +314,7 @@ bb.m:                                             ; preds = %_ZNK6duckdb15Select
   %i.cv = load i64, ptr %i.cd, align 8, !tbaa !14 ; 2 uses
   %i.cw = add i64 %i.cv, 1
   %i.cx = icmp ult i64 %i.cu, %i.cw
-  br i1 %i.cx, label %.lr.ph.i19.i, label %.loopexit.i16.i, !llvm.loop !742
+  br i1 %i.cx, label %.lr.ph.i19.i, label %.loopexit.i16.i, !llvm.loop !741
 
 .loopexit.i16.i:                                  ; preds = %.lr.ph.i19.i, %bb.m, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i.i
   %i.cy = phi i64 [ %.pre.i15.i, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i.i ], [ -1, %bb.m ], [ %i.cv, %.lr.ph.i19.i ]
@@ -322,7 +322,7 @@ bb.m:                                             ; preds = %_ZNK6duckdb15Select
   store i64 %i.cz, ptr %i.cd, align 8, !tbaa !14
   %i.da = add nuw i64 %.02932.i.i, 1              ; 2 uses
   %exitcond.not.i17.i = icmp eq i64 %i.da, %.sroa.2.0.copyload
-  br i1 %exitcond.not.i17.i, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.i.i, !llvm.loop !741
+  br i1 %exitcond.not.i17.i, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.i.i, !llvm.loop !742
 
 bb.n:                                             ; preds = %bb.c
   br i1 %i.f, label %bb.u, label %bb.o
@@ -632,8 +632,8 @@ bb.ah:                                            ; preds = %bb.ad, %bb.ac
   %i.ir = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   br i1 %i.ha, label %.lr.ph33.split.us.i.i90, label %.lr.ph33.split.i.i80
 
-.lr.ph33.split.us.i.i90:                          ; preds = %.lr.ph33.i.i79, %.loopexit.us.i.i95.a
-  %.02932.us.i.i91 = phi i64 [ %i.jo, %.loopexit.us.i.i95.a ], [ %.sroa.0904.0.copyload, %.lr.ph33.i.i79 ] ; 3 uses
+.lr.ph33.split.us.i.i90:                          ; preds = %.lr.ph33.i.i79, %.lr.ph.us.i.i98
+  %.02932.us.i.i91 = phi i64 [ %i.jq, %.lr.ph.us.i.i98 ], [ %.sroa.0904.0.copyload, %.lr.ph33.i.i79 ] ; 3 uses
   %i.is = load ptr, ptr %i.gx, align 8, !tbaa !699
   %i.it = load ptr, ptr %i.is, align 8, !tbaa !158 ; 2 uses
   %.not.i.us.i.i92 = icmp eq ptr %i.it, null
@@ -666,31 +666,31 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i93: ; preds = %bb.ai, %.lr.p
   %i.jl = load i8, ptr %i.ir, align 8, !tbaa !108, !range !187, !noundef !188
   %i.jm = trunc nuw i8 %i.jl to i1
   %.pre37.i.i94 = load i64, ptr %i.iz, align 8, !tbaa !14 ; 3 uses
-  br i1 %i.jm, label %bb.aj, label %.loopexit.us.i.i95.a
+  br i1 %i.jm, label %bb.aj, label %.lr.ph.us.i.i98
 
 bb.aj:                                            ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i93
   %.not34.i.i97 = icmp eq i64 %.pre37.i.i94, -1
-  br i1 %.not34.i.i97, label %.loopexit.us.i.i95.a, label %.lr.ph.us.i.i98
+  br i1 %.not34.i.i97, label %.lr.ph.us.i.i98, label %.loopexit.us.i.i95.a
 
-.loopexit.us.i.i95.a:                             ; preds = %.lr.ph.us.i.i98, %bb.aj, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i93
-  %23 = phi i64 [ %.pre37.i.i94, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i93 ], [ -1, %bb.aj ], [ %27, %.lr.ph.us.i.i98 ]
-  %i.jn = add i64 %23, 1
-  store i64 %i.jn, ptr %i.iz, align 8, !tbaa !14
-  %i.jo = add nuw i64 %.02932.us.i.i91, 1         ; 2 uses
-  %exitcond36.not.i.i96 = icmp eq i64 %i.jo, %.sroa.2905.0.copyload
-  br i1 %exitcond36.not.i.i96, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.us.i.i90, !llvm.loop !750
+.loopexit.us.i.i95.a:                             ; preds = %bb.aj, %.loopexit.us.i.i95.a
+  %.031.us.i.i99 = phi i64 [ %i.jn, %.loopexit.us.i.i95.a ], [ %.pre37.i.i94, %bb.aj ] ; 2 uses
+  %23 = getelementptr inbounds nuw i8, ptr %i.jc, i64 %.031.us.i.i99 ; 2 uses
+  %24 = load i8, ptr %23, align 1, !tbaa !18
+  %25 = xor i8 %24, -1
+  store i8 %25, ptr %23, align 1, !tbaa !18
+  %i.jn = add nuw i64 %.031.us.i.i99, 1           ; 2 uses
+  %26 = load i64, ptr %i.iz, align 8, !tbaa !14   ; 2 uses
+  %i.jo = add i64 %26, 1
+  %27 = icmp ult i64 %i.jn, %i.jo
+  br i1 %27, label %.loopexit.us.i.i95.a, label %.lr.ph.us.i.i98, !llvm.loop !750
 
-.lr.ph.us.i.i98:                                  ; preds = %bb.aj, %.lr.ph.us.i.i98
-  %.031.us.i.i99 = phi i64 [ %i.jp, %.lr.ph.us.i.i98 ], [ %.pre37.i.i94, %bb.aj ] ; 2 uses
-  %24 = getelementptr inbounds nuw i8, ptr %i.jc, i64 %.031.us.i.i99 ; 2 uses
-  %25 = load i8, ptr %24, align 1, !tbaa !18
-  %26 = xor i8 %25, -1
-  store i8 %26, ptr %24, align 1, !tbaa !18
-  %i.jp = add nuw i64 %.031.us.i.i99, 1           ; 2 uses
-  %27 = load i64, ptr %i.iz, align 8, !tbaa !14   ; 2 uses
-  %i.jq = add i64 %27, 1
-  %28 = icmp ult i64 %i.jp, %i.jq
-  br i1 %28, label %.lr.ph.us.i.i98, label %.loopexit.us.i.i95.a, !llvm.loop !751
+.lr.ph.us.i.i98:                                  ; preds = %.loopexit.us.i.i95.a, %bb.aj, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i93
+  %28 = phi i64 [ %.pre37.i.i94, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i93 ], [ -1, %bb.aj ], [ %26, %.loopexit.us.i.i95.a ]
+  %i.jp = add i64 %28, 1
+  store i64 %i.jp, ptr %i.iz, align 8, !tbaa !14
+  %i.jq = add nuw i64 %.02932.us.i.i91, 1         ; 2 uses
+  %exitcond36.not.i.i96 = icmp eq i64 %i.jq, %.sroa.2905.0.copyload
+  br i1 %exitcond36.not.i.i96, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.us.i.i90, !llvm.loop !751
 
 .lr.ph33.split.i.i80:                             ; preds = %.lr.ph33.i.i79, %.loopexit.i16.i85
   %.02932.i.i81 = phi i64 [ %i.kv, %.loopexit.i16.i85 ], [ %.sroa.0904.0.copyload, %.lr.ph33.i.i79 ] ; 5 uses
@@ -742,7 +742,7 @@ bb.al:                                            ; preds = %_ZNK6duckdb15Select
   %i.kq = load i64, ptr %i.jy, align 8, !tbaa !14 ; 2 uses
   %i.kr = add i64 %i.kq, 1
   %i.ks = icmp ult i64 %i.kp, %i.kr
-  br i1 %i.ks, label %.lr.ph.i19.i88, label %.loopexit.i16.i85, !llvm.loop !751
+  br i1 %i.ks, label %.lr.ph.i19.i88, label %.loopexit.i16.i85, !llvm.loop !750
 
 .loopexit.i16.i85:                                ; preds = %.lr.ph.i19.i88, %bb.al, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i.i83
   %i.kt = phi i64 [ %.pre.i15.i84, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i.i83 ], [ -1, %bb.al ], [ %i.kq, %.lr.ph.i19.i88 ]
@@ -750,7 +750,7 @@ bb.al:                                            ; preds = %_ZNK6duckdb15Select
   store i64 %i.ku, ptr %i.jy, align 8, !tbaa !14
   %i.kv = add nuw i64 %.02932.i.i81, 1            ; 2 uses
   %exitcond.not.i17.i86 = icmp eq i64 %i.kv, %.sroa.2905.0.copyload
-  br i1 %exitcond.not.i17.i86, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.i.i80, !llvm.loop !750
+  br i1 %exitcond.not.i17.i86, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.i.i80, !llvm.loop !751
 
 bb.am:                                            ; preds = %bb.ab
   br i1 %i.ha, label %bb.at, label %bb.an
@@ -1061,8 +1061,8 @@ bb.bg:                                            ; preds = %bb.bc, %bb.bb
   %i.qn = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   br i1 %i.ov, label %.lr.ph33.split.us.i.i152, label %.lr.ph33.split.i.i142
 
-.lr.ph33.split.us.i.i152:                         ; preds = %.lr.ph33.i.i141, %.loopexit.us.i.i157.a
-  %.02932.us.i.i153 = phi i64 [ %i.rl, %.loopexit.us.i.i157.a ], [ %.sroa.0914.0.copyload, %.lr.ph33.i.i141 ] ; 3 uses
+.lr.ph33.split.us.i.i152:                         ; preds = %.lr.ph33.i.i141, %.lr.ph.us.i.i160
+  %.02932.us.i.i153 = phi i64 [ %i.rn, %.lr.ph.us.i.i160 ], [ %.sroa.0914.0.copyload, %.lr.ph33.i.i141 ] ; 3 uses
   %i.qo = load ptr, ptr %i.os, align 8, !tbaa !699
   %i.qp = load ptr, ptr %i.qo, align 8, !tbaa !158 ; 2 uses
   %.not.i.us.i.i154 = icmp eq ptr %i.qp, null
@@ -1096,31 +1096,31 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i155: ; preds = %bb.bh, %.lr.
   %i.ri = load i8, ptr %i.qn, align 8, !tbaa !108, !range !187, !noundef !188
   %i.rj = trunc nuw i8 %i.ri to i1
   %.pre37.i.i156 = load i64, ptr %i.qv, align 8, !tbaa !14 ; 3 uses
-  br i1 %i.rj, label %bb.bi, label %.loopexit.us.i.i157.a
+  br i1 %i.rj, label %bb.bi, label %.lr.ph.us.i.i160
 
 bb.bi:                                            ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i155
   %.not34.i.i159 = icmp eq i64 %.pre37.i.i156, -1
-  br i1 %.not34.i.i159, label %.loopexit.us.i.i157.a, label %.lr.ph.us.i.i160
+  br i1 %.not34.i.i159, label %.lr.ph.us.i.i160, label %.loopexit.us.i.i157.a
 
-.loopexit.us.i.i157.a:                            ; preds = %.lr.ph.us.i.i160, %bb.bi, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i155
-  %29 = phi i64 [ %.pre37.i.i156, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i155 ], [ -1, %bb.bi ], [ %33, %.lr.ph.us.i.i160 ]
-  %i.rk = add i64 %29, 1
-  store i64 %i.rk, ptr %i.qv, align 8, !tbaa !14
-  %i.rl = add nuw i64 %.02932.us.i.i153, 1        ; 2 uses
-  %exitcond36.not.i.i158 = icmp eq i64 %i.rl, %.sroa.2915.0.copyload
-  br i1 %exitcond36.not.i.i158, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.us.i.i152, !llvm.loop !758
+.loopexit.us.i.i157.a:                            ; preds = %bb.bi, %.loopexit.us.i.i157.a
+  %.031.us.i.i161 = phi i64 [ %i.rk, %.loopexit.us.i.i157.a ], [ %.pre37.i.i156, %bb.bi ] ; 2 uses
+  %29 = getelementptr inbounds nuw i8, ptr %i.qy, i64 %.031.us.i.i161 ; 2 uses
+  %30 = load i8, ptr %29, align 1, !tbaa !18
+  %31 = xor i8 %30, -1
+  store i8 %31, ptr %29, align 1, !tbaa !18
+  %i.rk = add nuw i64 %.031.us.i.i161, 1          ; 2 uses
+  %32 = load i64, ptr %i.qv, align 8, !tbaa !14   ; 2 uses
+  %i.rl = add i64 %32, 1
+  %33 = icmp ult i64 %i.rk, %i.rl
+  br i1 %33, label %.loopexit.us.i.i157.a, label %.lr.ph.us.i.i160, !llvm.loop !758
 
-.lr.ph.us.i.i160:                                 ; preds = %bb.bi, %.lr.ph.us.i.i160
-  %.031.us.i.i161 = phi i64 [ %i.rm, %.lr.ph.us.i.i160 ], [ %.pre37.i.i156, %bb.bi ] ; 2 uses
-  %30 = getelementptr inbounds nuw i8, ptr %i.qy, i64 %.031.us.i.i161 ; 2 uses
-  %31 = load i8, ptr %30, align 1, !tbaa !18
-  %32 = xor i8 %31, -1
-  store i8 %32, ptr %30, align 1, !tbaa !18
-  %i.rm = add nuw i64 %.031.us.i.i161, 1          ; 2 uses
-  %33 = load i64, ptr %i.qv, align 8, !tbaa !14   ; 2 uses
-  %i.rn = add i64 %33, 1
-  %34 = icmp ult i64 %i.rm, %i.rn
-  br i1 %34, label %.lr.ph.us.i.i160, label %.loopexit.us.i.i157.a, !llvm.loop !759
+.lr.ph.us.i.i160:                                 ; preds = %.loopexit.us.i.i157.a, %bb.bi, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i155
+  %34 = phi i64 [ %.pre37.i.i156, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i155 ], [ -1, %bb.bi ], [ %32, %.loopexit.us.i.i157.a ]
+  %i.rm = add i64 %34, 1
+  store i64 %i.rm, ptr %i.qv, align 8, !tbaa !14
+  %i.rn = add nuw i64 %.02932.us.i.i153, 1        ; 2 uses
+  %exitcond36.not.i.i158 = icmp eq i64 %i.rn, %.sroa.2915.0.copyload
+  br i1 %exitcond36.not.i.i158, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.us.i.i152, !llvm.loop !759
 
 .lr.ph33.split.i.i142:                            ; preds = %.lr.ph33.i.i141, %.loopexit.i16.i147
   %.02932.i.i143 = phi i64 [ %i.st, %.loopexit.i16.i147 ], [ %.sroa.0914.0.copyload, %.lr.ph33.i.i141 ] ; 5 uses
@@ -1173,7 +1173,7 @@ bb.bk:                                            ; preds = %_ZNK6duckdb15Select
   %i.so = load i64, ptr %i.rv, align 8, !tbaa !14 ; 2 uses
   %i.sp = add i64 %i.so, 1
   %i.sq = icmp ult i64 %i.sn, %i.sp
-  br i1 %i.sq, label %.lr.ph.i19.i150, label %.loopexit.i16.i147, !llvm.loop !759
+  br i1 %i.sq, label %.lr.ph.i19.i150, label %.loopexit.i16.i147, !llvm.loop !758
 
 .loopexit.i16.i147:                               ; preds = %.lr.ph.i19.i150, %bb.bk, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i.i145
   %i.sr = phi i64 [ %.pre.i15.i146, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i.i145 ], [ -1, %bb.bk ], [ %i.so, %.lr.ph.i19.i150 ]
@@ -1181,7 +1181,7 @@ bb.bk:                                            ; preds = %_ZNK6duckdb15Select
   store i64 %i.ss, ptr %i.rv, align 8, !tbaa !14
   %i.st = add nuw i64 %.02932.i.i143, 1           ; 2 uses
   %exitcond.not.i17.i148 = icmp eq i64 %i.st, %.sroa.2915.0.copyload
-  br i1 %exitcond.not.i17.i148, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.i.i142, !llvm.loop !758
+  br i1 %exitcond.not.i17.i148, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.i.i142, !llvm.loop !759
 
 bb.bl:                                            ; preds = %bb.ba
   br i1 %i.ov, label %bb.bs, label %bb.bm
@@ -1538,13 +1538,6 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i: ;
   %.pre.i = add i64 %.pre36.i.i, 2
   br label %.loopexit.us.i.i200
 
-.loopexit.us.i.i200:                              ; preds = %.lr.ph.us.i.i201, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i
-  %.pre-phi.i = phi i64 [ %.pre.i, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i ], [ %i.zp, %.lr.ph.us.i.i201 ]
-  store i64 %.pre-phi.i, ptr %i.yu, align 8, !tbaa !14
-  %35 = add nuw i64 %.02932.us.i.i197, 1          ; 2 uses
-  %exitcond35.not.i.i = icmp eq i64 %35, %.sroa.2925.0.copyload
-  br i1 %exitcond35.not.i.i, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.us.i.i196, !llvm.loop !766
-
 .lr.ph.us.i.i201:                                 ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i199, %.lr.ph.us.i.i201
   %.031.us.i.i202 = phi i64 [ %i.zn, %.lr.ph.us.i.i201 ], [ %.pre36.i.i, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i199 ] ; 2 uses
   %i.zk = getelementptr inbounds nuw i8, ptr %i.yx, i64 %.031.us.i.i202 ; 2 uses
@@ -1555,7 +1548,14 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i: ;
   %i.zo = load i64, ptr %i.yu, align 8, !tbaa !14
   %i.zp = add i64 %i.zo, 2                        ; 2 uses
   %i.zq = icmp ult i64 %i.zn, %i.zp
-  br i1 %i.zq, label %.lr.ph.us.i.i201, label %.loopexit.us.i.i200, !llvm.loop !767
+  br i1 %i.zq, label %.lr.ph.us.i.i201, label %.loopexit.us.i.i200, !llvm.loop !766
+
+.loopexit.us.i.i200:                              ; preds = %.lr.ph.us.i.i201, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i
+  %.pre-phi.i = phi i64 [ %.pre.i, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i ], [ %i.zp, %.lr.ph.us.i.i201 ]
+  store i64 %.pre-phi.i, ptr %i.yu, align 8, !tbaa !14
+  %35 = add nuw i64 %.02932.us.i.i197, 1          ; 2 uses
+  %exitcond35.not.i.i = icmp eq i64 %35, %.sroa.2925.0.copyload
+  br i1 %exitcond35.not.i.i, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.us.i.i196, !llvm.loop !767
 
 .lr.ph33.split.i.i191:                            ; preds = %.lr.ph33.i.i190, %.loopexit.i15.i
   %.02932.i.i192 = phi i64 [ %i.aav, %.loopexit.i15.i ], [ %.sroa.0924.0.copyload, %.lr.ph33.i.i190 ] ; 5 uses
@@ -1610,14 +1610,14 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.i..loopexit.i15_crit_edge.i: ; pre
   %i.aas = load i64, ptr %i.zy, align 8, !tbaa !14
   %i.aat = add i64 %i.aas, 2                      ; 2 uses
   %i.aau = icmp ult i64 %i.aar, %i.aat
-  br i1 %i.aau, label %.lr.ph.i17.i, label %.loopexit.i15.i, !llvm.loop !767
+  br i1 %i.aau, label %.lr.ph.i17.i, label %.loopexit.i15.i, !llvm.loop !766
 
 .loopexit.i15.i:                                  ; preds = %.lr.ph.i17.i, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i..loopexit.i15_crit_edge.i
   %.pre-phi74.i = phi i64 [ %.pre73.i, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i..loopexit.i15_crit_edge.i ], [ %i.aat, %.lr.ph.i17.i ]
   store i64 %.pre-phi74.i, ptr %i.zy, align 8, !tbaa !14
   %i.aav = add nuw i64 %.02932.i.i192, 1          ; 2 uses
   %exitcond.not.i16.i = icmp eq i64 %i.aav, %.sroa.2925.0.copyload
-  br i1 %exitcond.not.i16.i, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.i.i191, !llvm.loop !766
+  br i1 %exitcond.not.i16.i, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.i.i191, !llvm.loop !767
 
 bb.ch:                                            ; preds = %bb.bz
   br i1 %i.wv, label %bb.cn, label %bb.ci
@@ -2020,13 +2020,6 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i325
   %.pre.i326 = add i64 %.pre36.i.i323, 4
   br label %.loopexit.us.i.i327
 
-.loopexit.us.i.i327:                              ; preds = %.lr.ph.us.i.i330, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i325
-  %.pre-phi.i328 = phi i64 [ %.pre.i326, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i325 ], [ %i.aou, %.lr.ph.us.i.i330 ]
-  store i64 %.pre-phi.i328, ptr %i.anz, align 8, !tbaa !14
-  %36 = add nuw i64 %.02932.us.i.i320, 1          ; 2 uses
-  %exitcond35.not.i.i329 = icmp eq i64 %36, %.sroa.2945.0.copyload
-  br i1 %exitcond35.not.i.i329, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.us.i.i319, !llvm.loop !782
-
 .lr.ph.us.i.i330:                                 ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i322, %.lr.ph.us.i.i330
   %.031.us.i.i331 = phi i64 [ %i.aos, %.lr.ph.us.i.i330 ], [ %.pre36.i.i323, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i322 ] ; 2 uses
   %i.aop = getelementptr inbounds nuw i8, ptr %i.aoc, i64 %.031.us.i.i331 ; 2 uses
@@ -2037,7 +2030,14 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i325
   %i.aot = load i64, ptr %i.anz, align 8, !tbaa !14
   %i.aou = add i64 %i.aot, 4                      ; 2 uses
   %i.aov = icmp ult i64 %i.aos, %i.aou
-  br i1 %i.aov, label %.lr.ph.us.i.i330, label %.loopexit.us.i.i327, !llvm.loop !783
+  br i1 %i.aov, label %.lr.ph.us.i.i330, label %.loopexit.us.i.i327, !llvm.loop !782
+
+.loopexit.us.i.i327:                              ; preds = %.lr.ph.us.i.i330, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i325
+  %.pre-phi.i328 = phi i64 [ %.pre.i326, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i325 ], [ %i.aou, %.lr.ph.us.i.i330 ]
+  store i64 %.pre-phi.i328, ptr %i.anz, align 8, !tbaa !14
+  %36 = add nuw i64 %.02932.us.i.i320, 1          ; 2 uses
+  %exitcond35.not.i.i329 = icmp eq i64 %36, %.sroa.2945.0.copyload
+  br i1 %exitcond35.not.i.i329, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.us.i.i319, !llvm.loop !783
 
 .lr.ph33.split.i.i306:                            ; preds = %.lr.ph33.i.i305, %.loopexit.i15.i314
   %.02932.i.i307 = phi i64 [ %i.aqa, %.loopexit.i15.i314 ], [ %.sroa.0944.0.copyload, %.lr.ph33.i.i305 ] ; 5 uses
@@ -2092,14 +2092,14 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.i..loopexit.i15_crit_edge.i312: ; 
   %i.apx = load i64, ptr %i.apd, align 8, !tbaa !14
   %i.apy = add i64 %i.apx, 4                      ; 2 uses
   %i.apz = icmp ult i64 %i.apw, %i.apy
-  br i1 %i.apz, label %.lr.ph.i17.i317, label %.loopexit.i15.i314, !llvm.loop !783
+  br i1 %i.apz, label %.lr.ph.i17.i317, label %.loopexit.i15.i314, !llvm.loop !782
 
 .loopexit.i15.i314:                               ; preds = %.lr.ph.i17.i317, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i..loopexit.i15_crit_edge.i312
   %.pre-phi74.i315 = phi i64 [ %.pre73.i313, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i..loopexit.i15_crit_edge.i312 ], [ %i.apy, %.lr.ph.i17.i317 ]
   store i64 %.pre-phi74.i315, ptr %i.apd, align 8, !tbaa !14
   %i.aqa = add nuw i64 %.02932.i.i307, 1          ; 2 uses
   %exitcond.not.i16.i316 = icmp eq i64 %i.aqa, %.sroa.2945.0.copyload
-  br i1 %exitcond.not.i16.i316, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.i.i306, !llvm.loop !782
+  br i1 %exitcond.not.i16.i316, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.i.i306, !llvm.loop !783
 
 bb.dv:                                            ; preds = %bb.dn
   br i1 %i.ama, label %bb.eb, label %bb.dw
@@ -2502,13 +2502,6 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i465
   %.pre.i466 = add i64 %.pre36.i.i463, 8
   br label %.loopexit.us.i.i467
 
-.loopexit.us.i.i467:                              ; preds = %.lr.ph.us.i.i470, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i465
-  %.pre-phi.i468 = phi i64 [ %.pre.i466, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i465 ], [ %i.bdz, %.lr.ph.us.i.i470 ]
-  store i64 %.pre-phi.i468, ptr %i.bde, align 8, !tbaa !14
-  %37 = add nuw i64 %.02932.us.i.i460, 1          ; 2 uses
-  %exitcond35.not.i.i469 = icmp eq i64 %37, %.sroa.2965.0.copyload
-  br i1 %exitcond35.not.i.i469, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.us.i.i459, !llvm.loop !798
-
 .lr.ph.us.i.i470:                                 ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i462, %.lr.ph.us.i.i470
   %.031.us.i.i471 = phi i64 [ %i.bdx, %.lr.ph.us.i.i470 ], [ %.pre36.i.i463, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i.i462 ] ; 2 uses
   %i.bdu = getelementptr inbounds nuw i8, ptr %i.bdh, i64 %.031.us.i.i471 ; 2 uses
@@ -2519,7 +2512,14 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i465
   %i.bdy = load i64, ptr %i.bde, align 8, !tbaa !14
   %i.bdz = add i64 %i.bdy, 8                      ; 2 uses
   %i.bea = icmp ult i64 %i.bdx, %i.bdz
-  br i1 %i.bea, label %.lr.ph.us.i.i470, label %.loopexit.us.i.i467, !llvm.loop !799
+  br i1 %i.bea, label %.lr.ph.us.i.i470, label %.loopexit.us.i.i467, !llvm.loop !798
+
+.loopexit.us.i.i467:                              ; preds = %.lr.ph.us.i.i470, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i465
+  %.pre-phi.i468 = phi i64 [ %.pre.i466, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i..loopexit.us.i_crit_edge.i465 ], [ %i.bdz, %.lr.ph.us.i.i470 ]
+  store i64 %.pre-phi.i468, ptr %i.bde, align 8, !tbaa !14
+  %37 = add nuw i64 %.02932.us.i.i460, 1          ; 2 uses
+  %exitcond35.not.i.i469 = icmp eq i64 %37, %.sroa.2965.0.copyload
+  br i1 %exitcond35.not.i.i469, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.us.i.i459, !llvm.loop !799
 
 .lr.ph33.split.i.i446:                            ; preds = %.lr.ph33.i.i445, %.loopexit.i15.i454
   %.02932.i.i447 = phi i64 [ %i.bff, %.loopexit.i15.i454 ], [ %.sroa.0964.0.copyload, %.lr.ph33.i.i445 ] ; 5 uses
@@ -2574,14 +2574,14 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.i..loopexit.i15_crit_edge.i452: ; 
   %i.bfc = load i64, ptr %i.bei, align 8, !tbaa !14
   %i.bfd = add i64 %i.bfc, 8                      ; 2 uses
   %i.bfe = icmp ult i64 %i.bfb, %i.bfd
-  br i1 %i.bfe, label %.lr.ph.i17.i457, label %.loopexit.i15.i454, !llvm.loop !799
+  br i1 %i.bfe, label %.lr.ph.i17.i457, label %.loopexit.i15.i454, !llvm.loop !798
 
 .loopexit.i15.i454:                               ; preds = %.lr.ph.i17.i457, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i..loopexit.i15_crit_edge.i452
   %.pre-phi74.i455 = phi i64 [ %.pre73.i453, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i..loopexit.i15_crit_edge.i452 ], [ %i.bfd, %.lr.ph.i17.i457 ]
   store i64 %.pre-phi74.i455, ptr %i.bei, align 8, !tbaa !14
   %i.bff = add nuw i64 %.02932.i.i447, 1          ; 2 uses
   %exitcond.not.i16.i456 = icmp eq i64 %i.bff, %.sroa.2965.0.copyload
-  br i1 %exitcond.not.i16.i456, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.i.i446, !llvm.loop !798
+  br i1 %exitcond.not.i16.i456, label %_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, label %.lr.ph33.split.i.i446, !llvm.loop !799
 
 bb.fj:                                            ; preds = %bb.fb
   br i1 %i.bbf, label %bb.fp, label %bb.fk
@@ -2984,7 +2984,7 @@ bb.oq:                                            ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.egy) #29
   br label %bb.or
 
-_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit: ; preds = %bb.ni, %bb.nq, %.loopexit.i.i865, %.loopexit.i27.i, %bb.mf, %bb.mk, %.loopexit.i.i828, %.loopexit.i24.i, %bb.lk, %bb.lp, %.loopexit.i.i805, %.loopexit.i19.i791, %bb.kq, %bb.kv, %.loopexit.i.i730, %.loopexit.i19.i716, %bb.jw, %bb.kb, %.loopexit.i.i665, %.loopexit.i22.i, %bb.iy, %bb.jh, %.loopexit.i.i637, %.loopexit.i19.i625, %bb.ho, %bb.hx, %.loopexit.i.i571, %.loopexit.i19.i, %bb.gi, %bb.gn, %.loopexit.i.i541, %.loopexit.i16.i530, %bb.fo, %bb.ft, %.loopexit.i.i478, %.loopexit.i15.i454, %.loopexit.us.i.i467, %bb.eu, %bb.ez, %.loopexit.i.i401, %.loopexit.i16.i390, %bb.ea, %bb.ef, %.loopexit.i.i338, %.loopexit.i15.i314, %.loopexit.us.i.i327, %bb.dg, %bb.dl, %.loopexit.i.i262, %.loopexit.i16.i253, %bb.cm, %bb.cr, %.loopexit.i.i206, %.loopexit.i15.i, %.loopexit.us.i.i200, %bb.br, %bb.bx, %.loopexit.i.i165, %.loopexit.i16.i147, %.loopexit.us.i.i157.a, %bb.as, %bb.ay, %.loopexit.i.i103, %.loopexit.i16.i85, %.loopexit.us.i.i95.a, %bb.t, %bb.z, %.loopexit.i.i, %.loopexit.i16.i, %.loopexit.us.i.i.a, %bb.nj, %bb.nc, %bb.mu, %bb.mp, %bb.ml, %bb.mg, %bb.mc, %bb.lx, %bb.lv, %bb.lr, %bb.ll, %bb.lh, %bb.lc, %bb.la, %bb.kw, %bb.kr, %bb.kn, %bb.ki, %bb.kg, %bb.kc, %bb.jx, %bb.jt, %bb.jo, %bb.jm, %bb.ji, %bb.iz, %bb.ir, %bb.ii, %bb.ic, %bb.hy, %bb.hp, %bb.hh, %bb.gy, %bb.gs, %bb.go, %bb.gj, %bb.gf, %bb.ga, %bb.fy, %bb.fu, %bb.fp, %bb.fl, %bb.fg, %bb.fe, %bb.fa, %bb.ev, %bb.er, %bb.em, %bb.ek, %bb.eg, %bb.eb, %bb.dx, %bb.ds, %bb.dq, %bb.dm, %bb.dh, %bb.dd, %bb.cy, %bb.cw, %bb.cs, %bb.cn, %bb.cj, %bb.ce, %bb.cc, %bb.by, %bb.bs, %bb.bn, %bb.bg, %bb.bd, %bb.az, %bb.at, %bb.ao, %bb.ah, %bb.ae, %bb.aa, %bb.u, %bb.p, %bb.i, %bb.f, %bb.b, %_ZN6duckdb12_GLOBAL__N_120ConstructSortKeyListINS0_17SortKeyArrayEntryEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, %_ZN6duckdb12_GLOBAL__N_120ConstructSortKeyListINS0_16SortKeyListEntryEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, %_ZN6duckdb12_GLOBAL__N_122ConstructSortKeyStructERNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit
+_ZN6duckdb12_GLOBAL__N_125TemplatedConstructSortKeyINS0_23SortKeyConstantOperatorIbEEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit: ; preds = %bb.ni, %bb.nq, %.loopexit.i.i865, %.loopexit.i27.i, %bb.mf, %bb.mk, %.loopexit.i.i828, %.loopexit.i24.i, %bb.lk, %bb.lp, %.loopexit.i.i805, %.loopexit.i19.i791, %bb.kq, %bb.kv, %.loopexit.i.i730, %.loopexit.i19.i716, %bb.jw, %bb.kb, %.loopexit.i.i665, %.loopexit.i22.i, %bb.iy, %bb.jh, %.loopexit.i.i637, %.loopexit.i19.i625, %bb.ho, %bb.hx, %.loopexit.i.i571, %.loopexit.i19.i, %bb.gi, %bb.gn, %.loopexit.i.i541, %.loopexit.i16.i530, %bb.fo, %bb.ft, %.loopexit.i.i478, %.loopexit.i15.i454, %.loopexit.us.i.i467, %bb.eu, %bb.ez, %.loopexit.i.i401, %.loopexit.i16.i390, %bb.ea, %bb.ef, %.loopexit.i.i338, %.loopexit.i15.i314, %.loopexit.us.i.i327, %bb.dg, %bb.dl, %.loopexit.i.i262, %.loopexit.i16.i253, %bb.cm, %bb.cr, %.loopexit.i.i206, %.loopexit.i15.i, %.loopexit.us.i.i200, %bb.br, %bb.bx, %.loopexit.i.i165, %.loopexit.i16.i147, %.lr.ph.us.i.i160, %bb.as, %bb.ay, %.loopexit.i.i103, %.loopexit.i16.i85, %.lr.ph.us.i.i98, %bb.t, %bb.z, %.loopexit.i.i, %.loopexit.i16.i, %.lr.ph.us.i.i, %bb.nj, %bb.nc, %bb.mu, %bb.mp, %bb.ml, %bb.mg, %bb.mc, %bb.lx, %bb.lv, %bb.lr, %bb.ll, %bb.lh, %bb.lc, %bb.la, %bb.kw, %bb.kr, %bb.kn, %bb.ki, %bb.kg, %bb.kc, %bb.jx, %bb.jt, %bb.jo, %bb.jm, %bb.ji, %bb.iz, %bb.ir, %bb.ii, %bb.ic, %bb.hy, %bb.hp, %bb.hh, %bb.gy, %bb.gs, %bb.go, %bb.gj, %bb.gf, %bb.ga, %bb.fy, %bb.fu, %bb.fp, %bb.fl, %bb.fg, %bb.fe, %bb.fa, %bb.ev, %bb.er, %bb.em, %bb.ek, %bb.eg, %bb.eb, %bb.dx, %bb.ds, %bb.dq, %bb.dm, %bb.dh, %bb.dd, %bb.cy, %bb.cw, %bb.cs, %bb.cn, %bb.cj, %bb.ce, %bb.cc, %bb.by, %bb.bs, %bb.bn, %bb.bg, %bb.bd, %bb.az, %bb.at, %bb.ao, %bb.ah, %bb.ae, %bb.aa, %bb.u, %bb.p, %bb.i, %bb.f, %bb.b, %_ZN6duckdb12_GLOBAL__N_120ConstructSortKeyListINS0_17SortKeyArrayEntryEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, %_ZN6duckdb12_GLOBAL__N_120ConstructSortKeyListINS0_16SortKeyListEntryEEEvRNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit, %_ZN6duckdb12_GLOBAL__N_122ConstructSortKeyStructERNS0_17SortKeyVectorDataENS0_12SortKeyChunkERNS0_20SortKeyConstructInfoE.exit
   ret void
 
 bb.or:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.oq

@@ -204,10 +204,15 @@ bb.l:                                             ; preds = %.preheader.us.us.i,
   %.not29.us.us.i = icmp eq i32 %i.af, 0
   br i1 %.not29.us.us.i, label %3, label %cliOutputCommandHelp.exit31.us.us.i
 
+3:                                                ; preds = %bb.l
+  %indvars.iv.next43.i = add nuw nsw i64 %indvars.iv42.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next43.i, %wide.trip.count.i
+  br i1 %exitcond.not.i, label %._crit_edge.us.us.thread.i.loopexit, label %bb.l, !llvm.loop !573
+
 ._crit_edge.us.us.thread.i.loopexit:              ; preds = %3
   %i.ag = load ptr, ptr %i.y, align 8, !tbaa !52
   %i.ah = getelementptr inbounds nuw i8, ptr %i.w, i64 80
-  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !573
+  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !574
   %i.aj = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.922, ptr noundef %i.ag, ptr noundef %i.ai) ; 0 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.w, i64 32
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !57
@@ -228,11 +233,6 @@ cliOutputCommandHelp.exit.us.us.i:                ; preds = %bb.m, %._crit_edge.
   %.pre.i = load ptr, ptr @helpEntries, align 8, !tbaa !28
   %.pre49.i = load i32, ptr @helpEntriesLen, align 4, !tbaa !9
   br label %cliOutputCommandHelp.exit31.us.us.i
-
-3:                                                ; preds = %bb.l
-  %indvars.iv.next43.i = add nuw nsw i64 %indvars.iv42.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next43.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %._crit_edge.us.us.thread.i.loopexit, label %bb.l, !llvm.loop !574
 
 cliOutputCommandHelp.exit31.us.us.i:              ; preds = %bb.l, %cliOutputCommandHelp.exit.us.us.i, %bb.k, %.lr.ph37.split.us.split.us.i
   %i.at = phi i32 [ %.pre49.i, %cliOutputCommandHelp.exit.us.us.i ], [ %i.u, %.lr.ph37.split.us.split.us.i ], [ %i.u, %bb.k ], [ %i.u, %bb.l ] ; 2 uses
@@ -270,7 +270,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ba, i64 24
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !52
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ba, i64 80
-  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !573
+  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !574
   %i.bk = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.922, ptr noundef %i.bh, ptr noundef %i.bj) ; 0 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ba, i64 32
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !57
@@ -673,8 +673,8 @@ begin_hunk_1_@llvm.vector.reduce.add.v4i32
 !570 = distinct !{!570, !17}
 !571 = distinct !{!571, !17}
 !572 = distinct !{!572, !17}
-!573 = !{!23, !22, i64 56}
-!574 = distinct !{!574, !17}
+!573 = distinct !{!573, !17}
+!574 = !{!23, !22, i64 56}
 !575 = distinct !{!575, !17}
 !576 = distinct !{!576, !17}
 !577 = distinct !{!577, !17}

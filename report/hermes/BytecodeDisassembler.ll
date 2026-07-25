@@ -203,8 +203,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 3 ; 2 uses
   br i1 %3, label %.lr.ph33.split, label %"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us"
 
-"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us": ; preds = %.lr.ph33, %._crit_edge.us.a
-  %.031.us = phi ptr [ %i.r, %._crit_edge.us.a ], [ %1, %.lr.ph33 ] ; 6 uses
+"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us": ; preds = %.lr.ph33, %.lr.ph.us
+  %.031.us = phi ptr [ %i.v, %.lr.ph.us ], [ %1, %.lr.ph33 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   %i.c = load i8, ptr %.031.us, align 1, !tbaa !7
   %i.d = tail call { i64, i8 } @_ZN6hermes4inst15getInstMetaDataENS0_6OpCodeE(i8 noundef zeroext %i.c) #18 ; 2 uses
@@ -222,41 +222,41 @@ bb.a:
   tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(28) %0, i8 noundef zeroext %i.e, ptr noundef nonnull %.031.us, i32 noundef %i.h) #18
   %i.l = and i64 %.fca.0.extract.us, 16711680
   %.not = icmp eq i64 %i.l, 0
-  br i1 %.not, label %._crit_edge.us.a, label %.lr.ph.us.preheader
+  br i1 %.not, label %.lr.ph.us, label %.lr.ph.us.preheader
 
 .lr.ph.us.preheader:                              ; preds = %"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us"
   %i.m = lshr i64 %.fca.0.extract.us, 16
   %wide.trip.count = and i64 %i.m, 255
   %i.n = getelementptr inbounds nuw i8, ptr %.031.us, i64 1
-  br label %.lr.ph.us
+  br label %._crit_edge.us.a
 
-._crit_edge.us.a:                                 ; preds = %.lr.ph.us, %"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us"
+._crit_edge.us.a:                                 ; preds = %.lr.ph.us.preheader, %._crit_edge.us.a
+  %indvars.iv = phi i64 [ 0, %.lr.ph.us.preheader ], [ %indvars.iv.next, %._crit_edge.us.a ] ; 3 uses
+  %.02829.us = phi ptr [ %i.n, %.lr.ph.us.preheader ], [ %i.r, %._crit_edge.us.a ] ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv
+  %6 = load i8, ptr %5, align 1, !tbaa !202       ; 2 uses
   %i.o = load ptr, ptr %0, align 8, !tbaa !19
-  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 24
+  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 40
   %i.q = load ptr, ptr %i.p, align 8
-  tail call void %i.q(ptr noundef nonnull align 8 dereferenceable(28) %0, i8 noundef zeroext %i.e, ptr noundef nonnull %.031.us, i32 noundef %i.h) #18
-  %5 = and i64 %i.f, 255
-  %i.r = getelementptr inbounds nuw i8, ptr %.031.us, i64 %5 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  %6 = icmp ult ptr %i.r, %2
-  br i1 %6, label %"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us", label %._crit_edge34, !llvm.loop !202
-
-.lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %.lr.ph.us
-  %indvars.iv = phi i64 [ 0, %.lr.ph.us.preheader ], [ %indvars.iv.next, %.lr.ph.us ] ; 3 uses
-  %.02829.us = phi ptr [ %i.n, %.lr.ph.us.preheader ], [ %i.v, %.lr.ph.us ] ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv
-  %8 = load i8, ptr %7, align 1, !tbaa !203       ; 2 uses
-  %i.s = load ptr, ptr %0, align 8, !tbaa !19
-  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 40
-  %i.u = load ptr, ptr %i.t, align 8
-  %9 = trunc nuw nsw i64 %indvars.iv to i32
-  tail call void %i.u(ptr noundef nonnull align 8 dereferenceable(28) %0, ptr noundef nonnull %.031.us, i8 noundef zeroext %8, ptr noundef %.02829.us, i32 noundef %9) #18
-  %10 = tail call noundef zeroext i8 @_ZN6hermes4inst14getOperandSizeENS0_11OperandTypeE(i8 noundef zeroext %8) #18
-  %11 = zext i8 %10 to i64
-  %i.v = getelementptr inbounds nuw i8, ptr %.02829.us, i64 %11
+  %7 = trunc nuw nsw i64 %indvars.iv to i32
+  tail call void %i.q(ptr noundef nonnull align 8 dereferenceable(28) %0, ptr noundef nonnull %.031.us, i8 noundef zeroext %6, ptr noundef %.02829.us, i32 noundef %7) #18
+  %8 = tail call noundef zeroext i8 @_ZN6hermes4inst14getOperandSizeENS0_11OperandTypeE(i8 noundef zeroext %6) #18
+  %9 = zext i8 %8 to i64
+  %i.r = getelementptr inbounds nuw i8, ptr %.02829.us, i64 %9
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.us.a, label %.lr.ph.us, !llvm.loop !205
+  br i1 %exitcond.not, label %.lr.ph.us, label %._crit_edge.us.a, !llvm.loop !204
+
+.lr.ph.us:                                        ; preds = %._crit_edge.us.a, %"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us"
+  %i.s = load ptr, ptr %0, align 8, !tbaa !19
+  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 24
+  %i.u = load ptr, ptr %i.t, align 8
+  tail call void %i.u(ptr noundef nonnull align 8 dereferenceable(28) %0, i8 noundef zeroext %i.e, ptr noundef nonnull %.031.us, i32 noundef %i.h) #18
+  %10 = and i64 %i.f, 255
+  %i.v = getelementptr inbounds nuw i8, ptr %.031.us, i64 %10 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
+  %11 = icmp ult ptr %i.v, %2
+  br i1 %11, label %"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us", label %._crit_edge34, !llvm.loop !205
 
 .lr.ph33.split:                                   ; preds = %.lr.ph33, %._crit_edge
   %.031 = phi ptr [ %i.bk, %._crit_edge ], [ %1, %.lr.ph33 ] ; 11 uses
@@ -330,13 +330,13 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.bk = getelementptr inbounds nuw i8, ptr %.031, i64 %i.bj ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   %i.bl = icmp ult ptr %i.bk, %2
-  br i1 %i.bl, label %.lr.ph33.split, label %._crit_edge34, !llvm.loop !202
+  br i1 %i.bl, label %.lr.ph33.split, label %._crit_edge34, !llvm.loop !205
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv38 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next39, %.lr.ph ] ; 3 uses
   %.02829 = phi ptr [ %i.bf, %.lr.ph.preheader ], [ %i.bu, %.lr.ph ] ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv38
-  %i.bn = load i8, ptr %i.bm, align 1, !tbaa !203 ; 2 uses
+  %i.bn = load i8, ptr %i.bm, align 1, !tbaa !202 ; 2 uses
   %i.bo = load ptr, ptr %0, align 8, !tbaa !19
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 40
   %i.bq = load ptr, ptr %i.bp, align 8
@@ -347,9 +347,9 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.bu = getelementptr inbounds nuw i8, ptr %.02829, i64 %i.bt
   %indvars.iv.next39 = add nuw nsw i64 %indvars.iv38, 1 ; 2 uses
   %exitcond42.not = icmp eq i64 %indvars.iv.next39, %wide.trip.count41
-  br i1 %exitcond42.not, label %._crit_edge, label %.lr.ph, !llvm.loop !205
+  br i1 %exitcond42.not, label %._crit_edge, label %.lr.ph, !llvm.loop !204
 
-._crit_edge34:                                    ; preds = %._crit_edge.us.a, %._crit_edge, %bb.a
+._crit_edge34:                                    ; preds = %.lr.ph.us, %._crit_edge, %bb.a
   ret void
 }
 
@@ -752,8 +752,8 @@ bb.h:                                             ; preds = %_ZNSt6vectorIhSaIhE
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 3
   br label %"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us.i"
 
-"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us.i": ; preds = %._crit_edge.us.i.a, %.lr.ph33.i
-  %.031.us.i = phi ptr [ %i.bg, %._crit_edge.us.i.a ], [ %.sroa.0.2, %.lr.ph33.i ] ; 6 uses
+"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us.i": ; preds = %.lr.ph.us.i, %.lr.ph33.i
+  %.031.us.i = phi ptr [ %i.bk, %.lr.ph.us.i ], [ %.sroa.0.2, %.lr.ph33.i ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #18
   %i.ar = load i8, ptr %.031.us.i, align 1, !tbaa !7
   %i.as = call { i64, i8 } @_ZN6hermes4inst15getInstMetaDataENS0_6OpCodeE(i8 noundef zeroext %i.ar) #18 ; 2 uses
@@ -771,43 +771,43 @@ bb.h:                                             ; preds = %_ZNSt6vectorIhSaIhE
   call void %i.az(ptr noundef nonnull align 8 dereferenceable(28) %0, i8 noundef zeroext %i.at, ptr noundef nonnull %.031.us.i, i32 noundef %i.aw) #18, !inline_history !424
   %i.ba = and i64 %.fca.0.extract.us.i, 16711680
   %.not.i = icmp eq i64 %i.ba, 0
-  br i1 %.not.i, label %._crit_edge.us.i.a, label %.lr.ph.us.preheader.i
+  br i1 %.not.i, label %.lr.ph.us.i, label %.lr.ph.us.preheader.i
 
 .lr.ph.us.preheader.i:                            ; preds = %"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us.i"
   %i.bb = lshr i64 %.fca.0.extract.us.i, 16
   %wide.trip.count.i = and i64 %i.bb, 255
   %i.bc = getelementptr inbounds nuw i8, ptr %.031.us.i, i64 1
-  br label %.lr.ph.us.i
+  br label %._crit_edge.us.i.a
 
-._crit_edge.us.i.a:                               ; preds = %.lr.ph.us.i, %"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us.i"
+._crit_edge.us.i.a:                               ; preds = %._crit_edge.us.i.a, %.lr.ph.us.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.us.preheader.i ], [ %indvars.iv.next.i, %._crit_edge.us.i.a ] ; 3 uses
+  %.02829.us.i = phi ptr [ %i.bc, %.lr.ph.us.preheader.i ], [ %i.bg, %._crit_edge.us.i.a ] ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.aq, i64 %indvars.iv.i
+  %4 = load i8, ptr %3, align 1, !tbaa !202       ; 2 uses
   %i.bd = load ptr, ptr %0, align 8, !tbaa !19
-  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 24
+  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 40
   %i.bf = load ptr, ptr %i.be, align 8
-  call void %i.bf(ptr noundef nonnull align 8 dereferenceable(28) %0, i8 noundef zeroext %i.at, ptr noundef nonnull %.031.us.i, i32 noundef %i.aw) #18, !inline_history !424
-  %3 = and i64 %i.au, 255
-  %i.bg = getelementptr inbounds nuw i8, ptr %.031.us.i, i64 %3 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #18
-  %4 = icmp ult ptr %i.bg, %.sroa.13.2
-  br i1 %4, label %"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us.i", label %_ZN6hermes3hbc15BytecodeVisitor23visitInstructionsInBodyEPKhS3_b.exit, !llvm.loop !202
-
-.lr.ph.us.i:                                      ; preds = %.lr.ph.us.i, %.lr.ph.us.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.us.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.us.i ] ; 3 uses
-  %.02829.us.i = phi ptr [ %i.bc, %.lr.ph.us.preheader.i ], [ %i.bk, %.lr.ph.us.i ] ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.aq, i64 %indvars.iv.i
-  %6 = load i8, ptr %5, align 1, !tbaa !203       ; 2 uses
-  %i.bh = load ptr, ptr %0, align 8, !tbaa !19
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 40
-  %i.bj = load ptr, ptr %i.bi, align 8
-  %7 = trunc nuw nsw i64 %indvars.iv.i to i32
-  call void %i.bj(ptr noundef nonnull align 8 dereferenceable(28) %0, ptr noundef nonnull %.031.us.i, i8 noundef zeroext %6, ptr noundef %.02829.us.i, i32 noundef %7) #18, !inline_history !424
-  %8 = call noundef zeroext i8 @_ZN6hermes4inst14getOperandSizeENS0_11OperandTypeE(i8 noundef zeroext %6) #18
-  %9 = zext i8 %8 to i64
-  %i.bk = getelementptr inbounds nuw i8, ptr %.02829.us.i, i64 %9
+  %5 = trunc nuw nsw i64 %indvars.iv.i to i32
+  call void %i.bf(ptr noundef nonnull align 8 dereferenceable(28) %0, ptr noundef nonnull %.031.us.i, i8 noundef zeroext %4, ptr noundef %.02829.us.i, i32 noundef %5) #18, !inline_history !424
+  %6 = call noundef zeroext i8 @_ZN6hermes4inst14getOperandSizeENS0_11OperandTypeE(i8 noundef zeroext %4) #18
+  %7 = zext i8 %6 to i64
+  %i.bg = getelementptr inbounds nuw i8, ptr %.02829.us.i, i64 %7
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %._crit_edge.us.i.a, label %.lr.ph.us.i, !llvm.loop !205
+  br i1 %exitcond.not.i, label %.lr.ph.us.i, label %._crit_edge.us.i.a, !llvm.loop !204
 
-_ZN6hermes3hbc15BytecodeVisitor23visitInstructionsInBodyEPKhS3_b.exit: ; preds = %._crit_edge.us.i.a, %bb.h
+.lr.ph.us.i:                                      ; preds = %._crit_edge.us.i.a, %"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us.i"
+  %i.bh = load ptr, ptr %0, align 8, !tbaa !19
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 24
+  %i.bj = load ptr, ptr %i.bi, align 8
+  call void %i.bj(ptr noundef nonnull align 8 dereferenceable(28) %0, i8 noundef zeroext %i.at, ptr noundef nonnull %.031.us.i, i32 noundef %i.aw) #18, !inline_history !424
+  %8 = and i64 %i.au, 255
+  %i.bk = getelementptr inbounds nuw i8, ptr %.031.us.i, i64 %8 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #18
+  %9 = icmp ult ptr %i.bk, %.sroa.13.2
+  br i1 %9, label %"_ZN6hermes3hbc12_GLOBAL__N_122switchJumpTableForEachIZNS0_15BytecodeVisitor23visitInstructionsInBodyEPKhS5_bE3$_0EEvPKNS_4inst4InstET_.exit.us.i", label %_ZN6hermes3hbc15BytecodeVisitor23visitInstructionsInBodyEPKhS3_b.exit, !llvm.loop !205
+
+_ZN6hermes3hbc15BytecodeVisitor23visitInstructionsInBodyEPKhS3_b.exit: ; preds = %.lr.ph.us.i, %bb.h
   %.not.i.i.i = icmp eq ptr %.sroa.0.2, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIhSaIhEED2Ev.exit, label %bb.i
 
@@ -1210,9 +1210,9 @@ begin_hunk_2_@llvm.umax.i64
 !199 = !{!"_ZTSSt10shared_ptrIN6hermes3hbc14BCProviderBaseEE", !9, i64 0}
 !200 = !{!201, !4, i64 8}
 !201 = !{!"_ZTSN6hermes3hbc14FunctionHeaderE", !4, i64 0, !4, i64 4, !4, i64 8, !4, i64 12, !4, i64 16, !4, i64 20, !4, i64 24, !5, i64 28, !5, i64 29, !5, i64 30}
-!202 = distinct !{!202, !62}
-!203 = !{!204, !204, i64 0}
-!204 = !{!"_ZTSN6hermes4inst11OperandTypeE", !5, i64 0}
+!202 = !{!203, !203, i64 0}
+!203 = !{!"_ZTSN6hermes4inst11OperandTypeE", !5, i64 0}
+!204 = distinct !{!204, !62}
 !205 = distinct !{!205, !62}
 !206 = distinct !{null, null}
 !207 = distinct !{!207, !62}

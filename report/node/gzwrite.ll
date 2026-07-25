@@ -199,6 +199,29 @@ bb.k:                                             ; preds = %.split.us
   %i.aq = icmp ugt ptr %i.ao, %i.ap
   br i1 %i.aq, label %.lr.ph77.us, label %._crit_edge.us.thread
 
+.lr.ph77.us:                                      ; preds = %bb.k, %bb.l
+  %i.ar = phi ptr [ %i.bd, %bb.l ], [ %i.ap, %bb.k ] ; 2 uses
+  %i.as = phi ptr [ %i.be, %bb.l ], [ %i.ao, %bb.k ]
+  %i.at = ptrtoint ptr %i.as to i64
+  %i.au = ptrtoint ptr %i.ar to i64
+  %i.av = sub i64 %i.at, %i.au
+  %i.aw = tail call i64 @llvm.smin.i64(i64 %i.av, i64 1073741824)
+  %i.ax = and i64 %i.aw, 4294967295
+  %i.ay = load i32, ptr %i.ak, align 4, !tbaa !40
+  %i.az = tail call i64 @write(i32 noundef %i.ay, ptr noundef %i.ar, i64 noundef %i.ax) #13 ; 2 uses
+  %i.ba = and i64 %i.az, 2147483648
+  %.not71.us = icmp eq i64 %i.ba, 0
+  br i1 %.not71.us, label %bb.l, label %.split83.us.a
+
+bb.l:                                             ; preds = %.lr.ph77.us
+  %i.bb = load ptr, ptr %i.aj, align 8, !tbaa !39
+  %i.bc = and i64 %i.az, 2147483647
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bc ; 3 uses
+  store ptr %i.bd, ptr %i.aj, align 8, !tbaa !39
+  %i.be = load ptr, ptr %i.ai, align 8, !tbaa !38 ; 2 uses
+  %i.bf = icmp ugt ptr %i.be, %i.bd
+  br i1 %i.bf, label %.lr.ph77.us, label %._crit_edge.us, !llvm.loop !43
+
 ._crit_edge.us:                                   ; preds = %bb.l
   %.pre91 = load i32, ptr %i.ag, align 8, !tbaa !37 ; 2 uses
   %2 = icmp eq i32 %.pre91, 0
@@ -221,30 +244,7 @@ bb.k:                                             ; preds = %.split.us
 9:                                                ; preds = %5
   %10 = load i32, ptr %i.ag, align 8, !tbaa !37   ; 2 uses
   %.not70.us = icmp eq i32 %6, %10
-  br i1 %.not70.us, label %.split81.us, label %.split.us, !llvm.loop !43
-
-.lr.ph77.us:                                      ; preds = %bb.k, %bb.l
-  %i.ar = phi ptr [ %i.bd, %bb.l ], [ %i.ap, %bb.k ] ; 2 uses
-  %i.as = phi ptr [ %i.be, %bb.l ], [ %i.ao, %bb.k ]
-  %i.at = ptrtoint ptr %i.as to i64
-  %i.au = ptrtoint ptr %i.ar to i64
-  %i.av = sub i64 %i.at, %i.au
-  %i.aw = tail call i64 @llvm.smin.i64(i64 %i.av, i64 1073741824)
-  %i.ax = and i64 %i.aw, 4294967295
-  %i.ay = load i32, ptr %i.ak, align 4, !tbaa !40
-  %i.az = tail call i64 @write(i32 noundef %i.ay, ptr noundef %i.ar, i64 noundef %i.ax) #13 ; 2 uses
-  %i.ba = and i64 %i.az, 2147483648
-  %.not71.us = icmp eq i64 %i.ba, 0
-  br i1 %.not71.us, label %bb.l, label %.split83.us.a
-
-bb.l:                                             ; preds = %.lr.ph77.us
-  %i.bb = load ptr, ptr %i.aj, align 8, !tbaa !39
-  %i.bc = and i64 %i.az, 2147483647
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bc ; 3 uses
-  store ptr %i.bd, ptr %i.aj, align 8, !tbaa !39
-  %i.be = load ptr, ptr %i.ai, align 8, !tbaa !38 ; 2 uses
-  %i.bf = icmp ugt ptr %i.be, %i.bd
-  br i1 %i.bf, label %.lr.ph77.us, label %._crit_edge.us, !llvm.loop !44
+  br i1 %.not70.us, label %.split81.us, label %.split.us, !llvm.loop !44
 
 .split:                                           ; preds = %bb.j, %bb.q
   %i.bg = phi i32 [ %i.cl, %bb.q ], [ %.pre90, %bb.j ] ; 3 uses
@@ -289,7 +289,7 @@ bb.n:                                             ; preds = %.lr.ph77
   store ptr %i.cb, ptr %i.aj, align 8, !tbaa !39
   %i.cc = load ptr, ptr %i.ai, align 8, !tbaa !38 ; 2 uses
   %i.cd = icmp ugt ptr %i.cc, %i.cb
-  br i1 %i.cd, label %.lr.ph77, label %._crit_edge.loopexit, !llvm.loop !44
+  br i1 %i.cd, label %.lr.ph77, label %._crit_edge.loopexit, !llvm.loop !43
 
 ._crit_edge.loopexit:                             ; preds = %bb.n
   %.pre89 = load i32, ptr %i.ag, align 8, !tbaa !37
@@ -321,7 +321,7 @@ bb.p:                                             ; preds = %.split, %._crit_edg
 bb.q:                                             ; preds = %bb.p
   %i.cl = load i32, ptr %i.ag, align 8, !tbaa !37 ; 2 uses
   %.not70 = icmp eq i32 %i.ci, %i.cl
-  br i1 %.not70, label %.split81.us, label %.split, !llvm.loop !43
+  br i1 %.not70, label %.split81.us, label %.split, !llvm.loop !44
 
 .split81.us:                                      ; preds = %bb.q, %9
   %i.cm = icmp eq i32 %1, 4

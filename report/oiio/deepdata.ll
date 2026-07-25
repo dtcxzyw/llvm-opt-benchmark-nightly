@@ -203,18 +203,18 @@ bb.i:                                             ; preds = %.critedge.us, %bb.i
   %exitcond.not = icmp eq i32 %i.be, %i.o
   br i1 %exitcond.not, label %.loopexit.us, label %bb.i, !llvm.loop !126
 
-.loopexit.us:                                     ; preds = %bb.i, %.lr.ph83.us
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond100.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond100.not, label %.loopexit79, label %.lr.ph86.split.us, !llvm.loop !127
-
 .lr.ph83.us:                                      ; preds = %.lr.ph83.us.preheader, %.lr.ph83.us
   %.04582.us = phi i32 [ %i.bg, %.lr.ph83.us ], [ 0, %.lr.ph83.us.preheader ] ; 3 uses
   %i.bf = tail call noundef i32 @_ZNK11OpenImageIO4v3_18DeepData15deep_value_uintElii(ptr noundef nonnull align 8 dereferenceable(20) %2, i64 noundef %3, i32 noundef %i.bh, i32 noundef %.04582.us)
   tail call void @_ZN11OpenImageIO4v3_18DeepData14set_deep_valueEliij(ptr noundef nonnull align 8 dereferenceable(20) %0, i64 noundef %1, i32 noundef %i.bh, i32 noundef %.04582.us, i32 noundef %i.bf)
   %i.bg = add nuw nsw i32 %.04582.us, 1           ; 2 uses
   %exitcond98.not = icmp eq i32 %i.bg, %i.o
-  br i1 %exitcond98.not, label %.loopexit.us, label %.lr.ph83.us, !llvm.loop !128
+  br i1 %exitcond98.not, label %.loopexit.us, label %.lr.ph83.us, !llvm.loop !127
+
+.loopexit.us:                                     ; preds = %bb.i, %.lr.ph83.us
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond100.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond100.not, label %.loopexit79, label %.lr.ph86.split.us, !llvm.loop !128
 
 .lr.ph83.us.preheader:                            ; preds = %_ZNK11OpenImageIO4v3_18DeepData11channeltypeEi.exit60.us
   %i.bh = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses

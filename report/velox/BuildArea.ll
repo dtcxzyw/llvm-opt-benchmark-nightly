@@ -201,8 +201,8 @@ bb.v:                                             ; preds = %.noexc47
   %.not6063.i.us.i = icmp ugt i64 %i.cn, 1
   br i1 %.not6063.i.us.i, label %.lr.ph.i.us.i, label %_ZN4geos9operation10polygonizeL22ringsEqualAnyDirectionEPKNS_4geom10LinearRingES5_.exit.us.i
 
-.lr.ph.i.us.i:                                    ; preds = %.preheader61.i.us.i, %bb.w
-  %.05364.i.us.i = phi i64 [ %i.dy, %bb.w ], [ 1, %.preheader61.i.us.i ] ; 3 uses
+.lr.ph.i.us.i:                                    ; preds = %.preheader61.i.us.i, %13
+  %.05364.i.us.i = phi i64 [ %14, %13 ], [ 1, %.preheader61.i.us.i ] ; 3 uses
   %i.cu = load ptr, ptr %i.bt, align 8, !tbaa !18
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 24
   %i.cw = load ptr, ptr %i.cv, align 8
@@ -225,10 +225,15 @@ bb.v:                                             ; preds = %.noexc47
   %i.dh = extractelement <2 x i1> %i.dg, i64 0
   %i.di = extractelement <2 x i1> %i.dg, i64 1
   %.0.i.i.i.us.i = select i1 %i.dh, i1 %i.di, i1 false
-  br i1 %.0.i.i.i.us.i, label %bb.w, label %.lr.ph66.i.us.i
+  br i1 %.0.i.i.i.us.i, label %13, label %.lr.ph66.i.us.i
 
-.lr.ph66.i.us.i:                                  ; preds = %.noexc51, %13
-  %.04765.i.us.i = phi i64 [ %14, %13 ], [ 1, %.noexc51 ] ; 4 uses
+13:                                               ; preds = %.noexc51
+  %14 = add nuw i64 %.05364.i.us.i, 1             ; 2 uses
+  %exitcond.not.i.us.i = icmp eq i64 %14, %i.cn
+  br i1 %exitcond.not.i.us.i, label %_ZN4geos9operation10polygonizeL22ringsEqualAnyDirectionEPKNS_4geom10LinearRingES5_.exit.us.i, label %.lr.ph.i.us.i, !llvm.loop !40
+
+.lr.ph66.i.us.i:                                  ; preds = %.noexc51, %bb.w
+  %.04765.i.us.i = phi i64 [ %i.dy, %bb.w ], [ 1, %.noexc51 ] ; 4 uses
   %i.dj = load ptr, ptr %i.bt, align 8, !tbaa !18
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 24
   %i.dl = load ptr, ptr %i.dk, align 8
@@ -253,24 +258,19 @@ bb.v:                                             ; preds = %.noexc47
   %i.dw = extractelement <2 x i1> %i.dv, i64 0
   %i.dx = extractelement <2 x i1> %i.dv, i64 1
   %.0.i.i59.i.us.i = select i1 %i.dw, i1 %i.dx, i1 false
-  br i1 %.0.i.i59.i.us.i, label %13, label %.loopexit.us.i
+  br i1 %.0.i.i59.i.us.i, label %bb.w, label %.loopexit.us.i
 
-13:                                               ; preds = %.noexc53
-  %14 = add nuw i64 %.04765.i.us.i, 1             ; 2 uses
-  %exitcond71.not.i.us.i = icmp eq i64 %14, %i.cn
-  br i1 %exitcond71.not.i.us.i, label %_ZN4geos9operation10polygonizeL22ringsEqualAnyDirectionEPKNS_4geom10LinearRingES5_.exit.us.i, label %.lr.ph66.i.us.i, !llvm.loop !40
-
-bb.w:                                             ; preds = %.noexc51
-  %i.dy = add nuw i64 %.05364.i.us.i, 1           ; 2 uses
+bb.w:                                             ; preds = %.noexc53
+  %i.dy = add nuw i64 %.04765.i.us.i, 1           ; 2 uses
   %exitcond.not.i.us.i.a = icmp eq i64 %i.dy, %i.cn
-  br i1 %exitcond.not.i.us.i.a, label %_ZN4geos9operation10polygonizeL22ringsEqualAnyDirectionEPKNS_4geom10LinearRingES5_.exit.us.i, label %.lr.ph.i.us.i, !llvm.loop !42
+  br i1 %exitcond.not.i.us.i.a, label %_ZN4geos9operation10polygonizeL22ringsEqualAnyDirectionEPKNS_4geom10LinearRingES5_.exit.us.i, label %.lr.ph66.i.us.i, !llvm.loop !42
 
 .loopexit.us.i:                                   ; preds = %.noexc53, %.noexc49, %.noexc47, %.noexc44, %.noexc39
   %.028.us.i = add i64 %.02846.us.i, 1            ; 2 uses
   %i.dz = icmp ult i64 %.028.us.i, %i.be
   br i1 %i.dz, label %.noexc39, label %..loopexit36_crit_edge.us.i, !llvm.loop !43
 
-_ZN4geos9operation10polygonizeL22ringsEqualAnyDirectionEPKNS_4geom10LinearRingES5_.exit.us.i: ; preds = %bb.t, %.preheader61.i.us.i, %bb.w, %13
+_ZN4geos9operation10polygonizeL22ringsEqualAnyDirectionEPKNS_4geom10LinearRingES5_.exit.us.i: ; preds = %bb.t, %.preheader61.i.us.i, %13, %bb.w
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr %.pre62.i, i64 %.02846.us.i
   %i.eb = load ptr, ptr %i.bf, align 8, !tbaa !28
   %i.ec = load ptr, ptr %i.ea, align 8, !tbaa !28

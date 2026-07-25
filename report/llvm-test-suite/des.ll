@@ -202,8 +202,8 @@ begin_hunk_0_@main:bb.a
   %i.mj = getelementptr inbounds nuw [8 x i8], ptr @DES3_enc_test, i64 %indvars.iv
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.g, %.lr.ph.us.us
-  %.02545.us.us = phi i32 [ 0, %.lr.ph.us.us ], [ %4, %bb.g ]
+bb.c:                                             ; preds = %.critedge39.us.us, %.lr.ph.us.us
+  %.02545.us.us = phi i32 [ 0, %.lr.ph.us.us ], [ %i.rf, %.critedge39.us.us ]
   store i64 8367815003007840078, ptr %i.a, align 8
   switch i32 %indvars73, label %default.unreachable [
     i32 0, label %bb.f
@@ -456,35 +456,35 @@ bb.f:                                             ; preds = %bb.c
 des3_set_2keys.exit.us.us:                        ; preds = %bb.e, %des3_set_2keys.exit.us.us.loopexit89, %bb.f
   br i1 %i.mh, label %des3_set_2keys.exit.split.us.us.us, label %des3_set_2keys.exit.split.us50.us
 
-.loopexit.a:                                      ; preds = %des3_set_2keys.exit.split.split.us.us.us, %des3_set_2keys.exit.split.us.split.us.us.us
-  %lhsv84 = load i64, ptr %i.a, align 8
-  %rhsv85 = load i64, ptr %i.mj, align 8
-  %.not86.a = icmp eq i64 %lhsv84, %rhsv85
-  br i1 %.not86.a, label %bb.g, label %.split59.us
-
-.critedge41.us.us.a:                              ; preds = %.critedge39.us.us, %.critedge.us.us.us
-  %lhsv.a = load i64, ptr %i.a, align 8
-  %rhsv.a = load i64, ptr %i.mi, align 8
-  %.not.a = icmp eq i64 %lhsv.a, %rhsv.a
-  br i1 %.not.a, label %bb.g, label %.split59.us
-
-bb.g:                                             ; preds = %.loopexit.a, %.critedge41.us.us.a
-  %4 = add nuw nsw i32 %.02545.us.us, 1           ; 2 uses
-  %exitcond72.not.a = icmp eq i32 %4, %.077
-  br i1 %exitcond72.not.a, label %._crit_edge.us.us, label %bb.c, !llvm.loop !20
-
-.critedge39.us.us:                                ; preds = %des3_set_2keys.exit.split.us50.us, %.critedge39.us.us
-  %.02643.us49.us = phi i32 [ %i.rf, %.critedge39.us.us ], [ 0, %des3_set_2keys.exit.split.us50.us ]
+.loopexit.a:                                      ; preds = %des3_set_2keys.exit.split.us50.us, %.loopexit.a
+  %.02643.us48.us = phi i32 [ %4, %.loopexit.a ], [ 0, %des3_set_2keys.exit.split.us50.us ]
   call void @des3_crypt(ptr noundef nonnull %i.gw, ptr noundef nonnull readonly %i.a, ptr noundef nonnull %i.a)
-  %i.rf = add nuw nsw i32 %.02643.us49.us, 1      ; 2 uses
-  %exitcond70.not = icmp eq i32 %i.rf, 10000
-  br i1 %exitcond70.not, label %.critedge41.us.us.a, label %.critedge39.us.us, !llvm.loop !21
+  %4 = add nuw nsw i32 %.02643.us48.us, 1         ; 2 uses
+  %.not86.a = icmp eq i32 %4, 10000
+  br i1 %.not86.a, label %bb.g, label %.loopexit.a, !llvm.loop !20
+
+.critedge41.us.us.a:                              ; preds = %des3_set_2keys.exit.split.split.us.us.us, %des3_set_2keys.exit.split.us.split.us.us.us
+  %lhsv.a = load i64, ptr %i.a, align 8
+  %rhsv.a = load i64, ptr %i.mj, align 8
+  %.not.a = icmp eq i64 %lhsv.a, %rhsv.a
+  br i1 %.not.a, label %.critedge39.us.us, label %.split59.us
+
+bb.g:                                             ; preds = %.loopexit.a, %.critedge.us.us.us
+  %lhsv = load i64, ptr %i.a, align 8
+  %rhsv = load i64, ptr %i.mi, align 8
+  %exitcond72.not.a = icmp eq i64 %lhsv, %rhsv
+  br i1 %exitcond72.not.a, label %.critedge39.us.us, label %.split59.us
+
+.critedge39.us.us:                                ; preds = %.critedge41.us.us.a, %bb.g
+  %i.rf = add nuw nsw i32 %.02545.us.us, 1        ; 2 uses
+  %exitcond70.not = icmp eq i32 %i.rf, %.077
+  br i1 %exitcond70.not, label %._crit_edge.us.us, label %bb.c, !llvm.loop !21
 
 default.unreachable:                              ; preds = %bb.c
   unreachable
 
 des3_set_2keys.exit.split.us50.us:                ; preds = %des3_set_2keys.exit.us.us
-  br i1 %.not37.us, label %des3_set_2keys.exit.split.split.us.us.us, label %.critedge39.us.us
+  br i1 %.not37.us, label %des3_set_2keys.exit.split.split.us.us.us, label %.loopexit.a
 
 des3_set_2keys.exit.split.us.us.us:               ; preds = %des3_set_2keys.exit.us.us
   br i1 %.not37.us, label %des3_set_2keys.exit.split.us.split.us.us.us, label %.critedge.us.us.us
@@ -494,23 +494,23 @@ des3_set_2keys.exit.split.us.us.us:               ; preds = %des3_set_2keys.exit
   call void @des_crypt(ptr noundef nonnull readonly %i.gt, ptr noundef nonnull readonly %i.a, ptr noundef nonnull %i.a)
   %i.rg = add nuw nsw i32 %.02643.us.us51.us, 1   ; 2 uses
   %exitcond.not = icmp eq i32 %i.rg, 10000
-  br i1 %exitcond.not, label %.critedge41.us.us.a, label %.critedge.us.us.us, !llvm.loop !21
+  br i1 %exitcond.not, label %bb.g, label %.critedge.us.us.us, !llvm.loop !20
 
 des3_set_2keys.exit.split.split.us.us.us:         ; preds = %des3_set_2keys.exit.split.us50.us, %des3_set_2keys.exit.split.split.us.us.us
   %.02643.us44.us.us = phi i32 [ %i.rh, %des3_set_2keys.exit.split.split.us.us.us ], [ 0, %des3_set_2keys.exit.split.us50.us ]
   call void @des3_crypt(ptr noundef nonnull %3, ptr noundef nonnull readonly %i.a, ptr noundef nonnull %i.a)
   %i.rh = add nuw nsw i32 %.02643.us44.us.us, 1   ; 2 uses
   %exitcond71.not = icmp eq i32 %i.rh, 10000
-  br i1 %exitcond71.not, label %.loopexit.a, label %des3_set_2keys.exit.split.split.us.us.us, !llvm.loop !21
+  br i1 %exitcond71.not, label %.critedge41.us.us.a, label %des3_set_2keys.exit.split.split.us.us.us, !llvm.loop !20
 
 des3_set_2keys.exit.split.us.split.us.us.us:      ; preds = %des3_set_2keys.exit.split.us.us.us, %des3_set_2keys.exit.split.us.split.us.us.us
   %.02643.us.us.us.us = phi i32 [ %i.ri, %des3_set_2keys.exit.split.us.split.us.us.us ], [ 0, %des3_set_2keys.exit.split.us.us.us ]
   call void @des_crypt(ptr noundef nonnull readonly %2, ptr noundef nonnull readonly %i.a, ptr noundef nonnull %i.a)
   %i.ri = add nuw nsw i32 %.02643.us.us.us.us, 1  ; 2 uses
   %exitcond69.not = icmp eq i32 %i.ri, 10000
-  br i1 %exitcond69.not, label %.loopexit.a, label %des3_set_2keys.exit.split.us.split.us.us.us, !llvm.loop !21
+  br i1 %exitcond69.not, label %.critedge41.us.us.a, label %des3_set_2keys.exit.split.us.split.us.us.us, !llvm.loop !20
 
-._crit_edge.us.us:                                ; preds = %bb.g
+._crit_edge.us.us:                                ; preds = %.critedge39.us.us
   %puts31.us.us = call i32 @puts(ptr nonnull dereferenceable(1) @str.2) ; 0 uses
   %exitcond74.not = icmp eq i64 %indvars.iv.next, 3
   br i1 %exitcond74.not, label %.split57.us.us, label %.lr.ph.us.us, !llvm.loop !22
@@ -549,7 +549,7 @@ des3_set_2keys.exit.split.us.split.us.us.us:      ; preds = %des3_set_2keys.exit
   %puts31.2.1 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.2) ; 0 uses
   br label %.split62.us
 
-.split59.us:                                      ; preds = %.critedge41.us.us.a, %.loopexit.a
+.split59.us:                                      ; preds = %bb.g, %.critedge41.us.us.a
   %puts34 = call i32 @puts(ptr nonnull dereferenceable(1) @str.3) ; 0 uses
   br label %bb.h
 

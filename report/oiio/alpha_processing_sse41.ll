@@ -41,47 +41,25 @@ bb.a:
   br label %.preheader59.us
 
 .preheader59.us:                                  ; preds = %.preheader59.us.preheader, %._crit_edge.us
-  %.072.us = phi ptr [ %6, %._crit_edge.us ], [ %0, %.preheader59.us.preheader ] ; 11 uses
-  %.05171.us = phi ptr [ %7, %._crit_edge.us ], [ %4, %.preheader59.us.preheader ] ; 4 uses
+  %.072.us = phi ptr [ %13, %._crit_edge.us ], [ %0, %.preheader59.us.preheader ] ; 11 uses
+  %.05171.us = phi ptr [ %14, %._crit_edge.us ], [ %4, %.preheader59.us.preheader ] ; 4 uses
   %.05270.us = phi i32 [ %.1.lcssa.us, %._crit_edge.us ], [ 255, %.preheader59.us.preheader ] ; 3 uses
-  %.05569.us = phi i32 [ %8, %._crit_edge.us ], [ 0, %.preheader59.us.preheader ]
+  %.05569.us = phi i32 [ %15, %._crit_edge.us ], [ 0, %.preheader59.us.preheader ]
   %.05668.us = phi <2 x i64> [ %i.af, %._crit_edge.us ], [ splat (i64 -1), %.preheader59.us.preheader ]
   br label %bb.b
-
-._crit_edge.us:                                   ; preds = %.lr.ph66.us, %..preheader_crit_edge.us
-  %.1.lcssa.us = phi i32 [ %.05270.us, %..preheader_crit_edge.us ], [ %14, %.lr.ph66.us ] ; 2 uses
-  %6 = getelementptr inbounds i8, ptr %.072.us, i64 %i.e
-  %7 = getelementptr inbounds i8, ptr %.05171.us, i64 %i.f
-  %8 = add nuw nsw i32 %.05569.us, 1              ; 2 uses
-  %exitcond107.not = icmp eq i32 %8, %3
-  br i1 %exitcond107.not, label %._crit_edge73.loopexit, label %.preheader59.us, !llvm.loop !9
-
-.lr.ph66.us:                                      ; preds = %.lr.ph66.us.preheader130, %.lr.ph66.us
-  %indvars.iv104 = phi i64 [ %indvars.iv.next105, %.lr.ph66.us ], [ %indvars.iv104.ph, %.lr.ph66.us.preheader130 ] ; 3 uses
-  %.165.us = phi i32 [ %14, %.lr.ph66.us ], [ %.165.us.ph, %.lr.ph66.us.preheader130 ]
-  %9 = shl nuw nsw i64 %indvars.iv104, 2
-  %10 = getelementptr inbounds nuw i8, ptr %.072.us, i64 %9
-  %11 = load i8, ptr %10, align 1, !tbaa !11      ; 2 uses
-  %12 = zext i8 %11 to i32
-  %13 = getelementptr inbounds nuw i8, ptr %.05171.us, i64 %indvars.iv104
-  store i8 %11, ptr %13, align 1, !tbaa !11
-  %14 = and i32 %.165.us, %12                     ; 2 uses
-  %indvars.iv.next105 = add nuw nsw i64 %indvars.iv104, 1 ; 2 uses
-  %15 = icmp samesign ult i64 %indvars.iv.next105, %i.h
-  br i1 %15, label %.lr.ph66.us, label %._crit_edge.us, !llvm.loop !12
 
 bb.b:                                             ; preds = %.preheader59.us, %bb.b
   %indvars.iv102 = phi i64 [ 16, %.preheader59.us ], [ %indvars.iv.next103, %bb.b ] ; 4 uses
   %indvars.iv99 = phi i64 [ 0, %.preheader59.us ], [ %indvars.iv.next100, %bb.b ] ; 2 uses
   %.15761.us = phi <2 x i64> [ %.05668.us, %.preheader59.us ], [ %i.af, %bb.b ]
   %.05860.us = phi ptr [ %.072.us, %.preheader59.us ], [ %i.ag, %bb.b ] ; 5 uses
-  %i.p = load <16 x i8>, ptr %.05860.us, align 1, !tbaa !11
+  %i.p = load <16 x i8>, ptr %.05860.us, align 1, !tbaa !9
   %i.q = getelementptr inbounds nuw i8, ptr %.05860.us, i64 16
-  %i.r = load <16 x i8>, ptr %i.q, align 1, !tbaa !11
+  %i.r = load <16 x i8>, ptr %i.q, align 1, !tbaa !9
   %i.s = getelementptr inbounds nuw i8, ptr %.05860.us, i64 32
-  %i.t = load <16 x i8>, ptr %i.s, align 1, !tbaa !11
+  %i.t = load <16 x i8>, ptr %i.s, align 1, !tbaa !9
   %i.u = getelementptr inbounds nuw i8, ptr %.05860.us, i64 48
-  %i.v = load <16 x i8>, ptr %i.u, align 1, !tbaa !11
+  %i.v = load <16 x i8>, ptr %i.u, align 1, !tbaa !9
   %i.w = shufflevector <16 x i8> %i.p, <16 x i8> <i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16>
   %i.x = shufflevector <16 x i8> %i.r, <16 x i8> <i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 16, i32 16, i32 16, i32 16, i32 0, i32 4, i32 8, i32 12, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16>
   %i.y = shufflevector <16 x i8> %i.t, <16 x i8> <i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 0, i32 4, i32 8, i32 12, i32 16, i32 16, i32 16, i32 16>
@@ -91,13 +69,35 @@ bb.b:                                             ; preds = %.preheader59.us, %b
   %i.ac = or <16 x i8> %i.ab, %i.z                ; 2 uses
   %i.ad = bitcast <16 x i8> %i.ac to <2 x i64>
   %i.ae = getelementptr inbounds nuw i8, ptr %.05171.us, i64 %indvars.iv99
-  store <16 x i8> %i.ac, ptr %i.ae, align 1, !tbaa !11
+  store <16 x i8> %i.ac, ptr %i.ae, align 1, !tbaa !9
   %i.af = and <2 x i64> %.15761.us, %i.ad         ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.05860.us, i64 64
   %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 16 ; 3 uses
   %i.ah = icmp slt i64 %indvars.iv.next100, %i.g
   %indvars.iv.next103 = add nuw nsw i64 %indvars.iv102, 16
-  br i1 %i.ah, label %bb.b, label %..preheader_crit_edge.us, !llvm.loop !15
+  br i1 %i.ah, label %bb.b, label %..preheader_crit_edge.us, !llvm.loop !10
+
+.lr.ph66.us:                                      ; preds = %.lr.ph66.us.preheader130, %.lr.ph66.us
+  %indvars.iv104 = phi i64 [ %indvars.iv.next105, %.lr.ph66.us ], [ %indvars.iv104.ph, %.lr.ph66.us.preheader130 ] ; 3 uses
+  %.165.us = phi i32 [ %11, %.lr.ph66.us ], [ %.165.us.ph, %.lr.ph66.us.preheader130 ]
+  %6 = shl nuw nsw i64 %indvars.iv104, 2
+  %7 = getelementptr inbounds nuw i8, ptr %.072.us, i64 %6
+  %8 = load i8, ptr %7, align 1, !tbaa !9         ; 2 uses
+  %9 = zext i8 %8 to i32
+  %10 = getelementptr inbounds nuw i8, ptr %.05171.us, i64 %indvars.iv104
+  store i8 %8, ptr %10, align 1, !tbaa !9
+  %11 = and i32 %.165.us, %9                      ; 2 uses
+  %indvars.iv.next105 = add nuw nsw i64 %indvars.iv104, 1 ; 2 uses
+  %12 = icmp samesign ult i64 %indvars.iv.next105, %i.h
+  br i1 %12, label %.lr.ph66.us, label %._crit_edge.us, !llvm.loop !12
+
+._crit_edge.us:                                   ; preds = %.lr.ph66.us, %..preheader_crit_edge.us
+  %.1.lcssa.us = phi i32 [ %.05270.us, %..preheader_crit_edge.us ], [ %11, %.lr.ph66.us ] ; 2 uses
+  %13 = getelementptr inbounds i8, ptr %.072.us, i64 %i.e
+  %14 = getelementptr inbounds i8, ptr %.05171.us, i64 %i.f
+  %15 = add nuw nsw i32 %.05569.us, 1             ; 2 uses
+  %exitcond107.not = icmp eq i32 %15, %3
+  br i1 %exitcond107.not, label %._crit_edge73.loopexit, label %.preheader59.us, !llvm.loop !15
 
 ..preheader_crit_edge.us:                         ; preds = %bb.b
   %i.ai = trunc nuw nsw i64 %indvars.iv.next100 to i32
@@ -140,18 +140,18 @@ vector.body122:                                   ; preds = %vector.body122, %ve
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 24
   %i.bi = getelementptr inbounds nuw i8, ptr %.072.us, i64 %i.au
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 28
-  %i.bk = load i8, ptr %i.av, align 1, !tbaa !11
-  %i.bl = load i8, ptr %i.ax, align 1, !tbaa !11
-  %i.bm = load i8, ptr %i.az, align 1, !tbaa !11
-  %i.bn = load i8, ptr %i.bb, align 1, !tbaa !11
+  %i.bk = load i8, ptr %i.av, align 1, !tbaa !9
+  %i.bl = load i8, ptr %i.ax, align 1, !tbaa !9
+  %i.bm = load i8, ptr %i.az, align 1, !tbaa !9
+  %i.bn = load i8, ptr %i.bb, align 1, !tbaa !9
   %i.bo = insertelement <4 x i8> poison, i8 %i.bk, i64 0
   %i.bp = insertelement <4 x i8> %i.bo, i8 %i.bl, i64 1
   %i.bq = insertelement <4 x i8> %i.bp, i8 %i.bm, i64 2
   %i.br = insertelement <4 x i8> %i.bq, i8 %i.bn, i64 3 ; 2 uses
-  %i.bs = load i8, ptr %i.bd, align 1, !tbaa !11
-  %i.bt = load i8, ptr %i.bf, align 1, !tbaa !11
-  %i.bu = load i8, ptr %i.bh, align 1, !tbaa !11
-  %i.bv = load i8, ptr %i.bj, align 1, !tbaa !11
+  %i.bs = load i8, ptr %i.bd, align 1, !tbaa !9
+  %i.bt = load i8, ptr %i.bf, align 1, !tbaa !9
+  %i.bu = load i8, ptr %i.bh, align 1, !tbaa !9
+  %i.bv = load i8, ptr %i.bj, align 1, !tbaa !9
   %i.bw = insertelement <4 x i8> poison, i8 %i.bs, i64 0
   %i.bx = insertelement <4 x i8> %i.bw, i8 %i.bt, i64 1
   %i.by = insertelement <4 x i8> %i.bx, i8 %i.bu, i64 2
@@ -160,8 +160,8 @@ vector.body122:                                   ; preds = %vector.body122, %ve
   %i.cb = zext <4 x i8> %i.bz to <4 x i32>
   %i.cc = getelementptr inbounds nuw i8, ptr %.05171.us, i64 %i.am ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 4
-  store <4 x i8> %i.br, ptr %i.cc, align 1, !tbaa !11
-  store <4 x i8> %i.bz, ptr %i.cd, align 1, !tbaa !11
+  store <4 x i8> %i.br, ptr %i.cc, align 1, !tbaa !9
+  store <4 x i8> %i.bz, ptr %i.cd, align 1, !tbaa !9
   %i.ce = and <4 x i32> %vec.phi124, %i.ca        ; 2 uses
   %i.cf = and <4 x i32> %vec.phi125, %i.cb        ; 2 uses
   %index.next126 = add nuw i64 %index123, 8       ; 2 uses
@@ -216,17 +216,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   %i.cv = getelementptr inbounds nuw i8, ptr %.072.us78, i64 %i.cp
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 12
-  %i.cx = load i8, ptr %i.cq, align 1, !tbaa !11
-  %i.cy = load i8, ptr %i.cs, align 1, !tbaa !11
-  %i.cz = load i8, ptr %i.cu, align 1, !tbaa !11
-  %i.da = load i8, ptr %i.cw, align 1, !tbaa !11
+  %i.cx = load i8, ptr %i.cq, align 1, !tbaa !9
+  %i.cy = load i8, ptr %i.cs, align 1, !tbaa !9
+  %i.cz = load i8, ptr %i.cu, align 1, !tbaa !9
+  %i.da = load i8, ptr %i.cw, align 1, !tbaa !9
   %i.db = insertelement <4 x i8> poison, i8 %i.cx, i64 0
   %i.dc = insertelement <4 x i8> %i.db, i8 %i.cy, i64 1
   %i.dd = insertelement <4 x i8> %i.dc, i8 %i.cz, i64 2
   %i.de = insertelement <4 x i8> %i.dd, i8 %i.da, i64 3 ; 2 uses
   %i.df = zext <4 x i8> %i.de to <4 x i32>
   %i.dg = getelementptr inbounds nuw i8, ptr %.05171.us79, i64 %index
-  store <4 x i8> %i.de, ptr %i.dg, align 1, !tbaa !11
+  store <4 x i8> %i.de, ptr %i.dg, align 1, !tbaa !9
   %i.dh = and <4 x i32> %vec.phi, %i.df           ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.di = icmp eq i64 %index.next, %n.vec
@@ -246,10 +246,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.165.us83 = phi i32 [ %i.dp, %scalar.ph ], [ %.165.us83.ph, %scalar.ph.preheader ]
   %i.dk = shl nuw nsw i64 %indvars.iv, 2
   %i.dl = getelementptr inbounds nuw i8, ptr %.072.us78, i64 %i.dk
-  %i.dm = load i8, ptr %i.dl, align 1, !tbaa !11  ; 2 uses
+  %i.dm = load i8, ptr %i.dl, align 1, !tbaa !9   ; 2 uses
   %i.dn = zext i8 %i.dm to i32
   %i.do = getelementptr inbounds nuw i8, ptr %.05171.us79, i64 %indvars.iv
-  store i8 %i.dm, ptr %i.do, align 1, !tbaa !11
+  store i8 %i.dm, ptr %i.do, align 1, !tbaa !9
   %i.dp = and i32 %.165.us83, %i.dn               ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -260,7 +260,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.dr = getelementptr inbounds i8, ptr %.05171.us79, i64 %i.f
   %i.ds = add nuw nsw i32 %.05569.us81, 1         ; 2 uses
   %exitcond98.not = icmp eq i32 %i.ds, %3
-  br i1 %exitcond98.not, label %._crit_edge73, label %.preheader59.us77, !llvm.loop !9
+  br i1 %exitcond98.not, label %._crit_edge73, label %.preheader59.us77, !llvm.loop !15
 
 ._crit_edge73.loopexit:                           ; preds = %._crit_edge.us
   %i.dt = bitcast <2 x i64> %i.af to <16 x i8>
@@ -302,14 +302,14 @@ attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !6 = !{!"Simple C/C++ TBAA"}
 !7 = !{!8, !8, i64 0}
 !8 = !{!"any pointer", !5, i64 0}
-!9 = distinct !{!9, !10}
-!10 = !{!"llvm.loop.mustprogress"}
-!11 = !{!5, !5, i64 0}
-!12 = distinct !{!12, !10, !13, !14}
+!9 = !{!5, !5, i64 0}
+!10 = distinct !{!10, !11}
+!11 = !{!"llvm.loop.mustprogress"}
+!12 = distinct !{!12, !11, !13, !14}
 !13 = !{!"llvm.loop.unroll.runtime.disable"}
 !14 = !{!"llvm.loop.isvectorized", i32 1}
-!15 = distinct !{!15, !10}
-!16 = distinct !{!16, !10, !14, !13}
-!17 = distinct !{!17, !10, !14, !13}
-!18 = distinct !{!18, !10, !13, !14}
+!15 = distinct !{!15, !11}
+!16 = distinct !{!16, !11, !14, !13}
+!17 = distinct !{!17, !11, !14, !13}
+!18 = distinct !{!18, !11, !13, !14}
 end_hunk_0

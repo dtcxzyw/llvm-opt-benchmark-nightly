@@ -204,34 +204,34 @@ bb.c:                                             ; preds = %bb.b, %bb.b
   %.not.us = icmp eq i64 %.sroa.0.0.us, 0
   br i1 %.not.us, label %.thread.us, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.us
 
-_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.us:  ; preds = %.lr.ph.i.i.us, %bb.e
-  %.0111420.i.i.us = phi i64 [ %i.m, %bb.e ], [ 0, %.lr.ph.i.i.us ] ; 6 uses
+_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.us:  ; preds = %.lr.ph.i.i.us, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a
+  %.0111420.i.i.us = phi i64 [ %6, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a ], [ 0, %.lr.ph.i.i.us ] ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.11.0.us, i64 %.0111420.i.i.us
   %i.h = load i8, ptr %i.g, align 1
   %i.i = sext i8 %i.h to i32
   %i.j = tail call ptr @memchr(ptr noundef nonnull dereferenceable(1) @.str.50, i32 noundef %i.i, i64 noundef 4) #14
   %.not13.not.i.i.us = icmp eq ptr %i.j, null
-  br i1 %.not13.not.i.i.us, label %bb.e, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a
+  br i1 %.not13.not.i.i.us, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a, label %bb.d
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.us
-  %i.k = icmp eq i64 %.0111420.i.i.us, -1
-  br i1 %i.k, label %.thread.us, label %bb.d
+  %6 = add nuw i64 %.0111420.i.i.us, 1            ; 2 uses
+  %i.k = icmp eq i64 %6, %.sroa.0.0.us
+  br i1 %i.k, label %.thread.us, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.us
 
-bb.d:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a
-  %6 = add nuw i64 %.0111420.i.i.us, 1
-  %i.l = icmp eq i64 %6, %.sroa.0.0.us            ; 2 uses
-  %spec.select125.us = select i1 %i.l, i64 %.sroa.0.0.us, i64 %.0111420.i.i.us
+bb.d:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.us
+  %i.l = icmp eq i64 %.0111420.i.i.us, -1
+  br i1 %i.l, label %.thread.us, label %bb.e
+
+bb.e:                                             ; preds = %bb.d
+  %i.m = add nuw i64 %.0111420.i.i.us, 1
+  %exitcond.not.i.i.us = icmp eq i64 %i.m, %.sroa.0.0.us ; 2 uses
+  %spec.select125.us = select i1 %exitcond.not.i.i.us, i64 %.sroa.0.0.us, i64 %.0111420.i.i.us
   br label %.thread.us
 
-bb.e:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.us
-  %i.m = add nuw i64 %.0111420.i.i.us, 1          ; 2 uses
-  %exitcond.not.i.i.us = icmp eq i64 %i.m, %.sroa.0.0.us
-  br i1 %exitcond.not.i.i.us, label %.thread.us, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.us
-
-.thread.us:                                       ; preds = %bb.e, %bb.d, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a, %.lr.ph.i.i.us
-  %i.n = phi i1 [ %i.l, %bb.d ], [ true, %.lr.ph.i.i.us ], [ true, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a ], [ true, %bb.e ]
-  %.2.i.i102104.us = phi i64 [ %.0111420.i.i.us, %bb.d ], [ -1, %.lr.ph.i.i.us ], [ -1, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a ], [ -1, %bb.e ] ; 2 uses
-  %i.o = phi i64 [ %spec.select125.us, %bb.d ], [ 0, %.lr.ph.i.i.us ], [ %.sroa.0.0.us, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a ], [ %.sroa.0.0.us, %bb.e ]
+.thread.us:                                       ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a, %bb.e, %bb.d, %.lr.ph.i.i.us
+  %i.n = phi i1 [ %exitcond.not.i.i.us, %bb.e ], [ true, %.lr.ph.i.i.us ], [ true, %bb.d ], [ true, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a ]
+  %.2.i.i102104.us = phi i64 [ %.0111420.i.i.us, %bb.e ], [ -1, %.lr.ph.i.i.us ], [ -1, %bb.d ], [ -1, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a ] ; 2 uses
+  %i.o = phi i64 [ %spec.select125.us, %bb.e ], [ 0, %.lr.ph.i.i.us ], [ %.sroa.0.0.us, %bb.d ], [ %.sroa.0.0.us, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.us.a ]
   %i.p = add i64 %i.o, %.062.us                   ; 6 uses
   %i.q = icmp ugt i64 %i.p, 179
   br i1 %i.q, label %.split133.us, label %bb.f

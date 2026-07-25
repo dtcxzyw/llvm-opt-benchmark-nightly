@@ -204,15 +204,6 @@ rb_array_len.exit.i.i.us:                         ; preds = %bb.i
   %i.bg = icmp slt i64 %.0.i.i49.us, %i.bf
   br i1 %i.bg, label %bb.j, label %ary_make_hash.exit.us
 
-ary_make_hash.exit.us:                            ; preds = %rb_array_len.exit.i.i.us, %rb_array_len.exit.thread.i.i.us
-  store i64 %i.av, ptr %i.ae, align 8, !tbaa !15
-  br label %3
-
-3:                                                ; preds = %ary_make_hash.exit.us, %rb_array_len.exit48.us, %rb_array_len.exit48.thread.us
-  %4 = add nuw nsw i64 %.077.us, 1                ; 2 uses
-  %exitcond87.not = icmp eq i64 %4, %i.d
-  br i1 %exitcond87.not, label %.preheader, label %.lr.ph.split.us, !llvm.loop !95
-
 bb.j:                                             ; preds = %rb_array_len.exit.i.i.us
   %i.bh = load ptr, ptr %i.az, align 8, !tbaa !14
   br label %RARRAY_AREF.exit.i.i.us
@@ -224,6 +215,15 @@ RARRAY_AREF.exit.i.i.us:                          ; preds = %bb.j, %rb_array_len
   %i.bk = call i32 @rb_hash_add_new_element(i64 noundef %i.av, i64 noundef %i.bj, i64 noundef %i.bj) #24 ; 0 uses
   %i.bl = add nuw nsw i64 %.0.i.i49.us, 1
   br label %bb.i, !llvm.loop !81
+
+ary_make_hash.exit.us:                            ; preds = %rb_array_len.exit.i.i.us, %rb_array_len.exit.thread.i.i.us
+  store i64 %i.av, ptr %i.ae, align 8, !tbaa !15
+  br label %3
+
+3:                                                ; preds = %ary_make_hash.exit.us, %rb_array_len.exit48.us, %rb_array_len.exit48.thread.us
+  %4 = add nuw nsw i64 %.077.us, 1                ; 2 uses
+  %exitcond87.not = icmp eq i64 %4, %i.d
+  br i1 %exitcond87.not, label %.preheader, label %.lr.ph.split.us, !llvm.loop !95
 
 .preheader:                                       ; preds = %.critedge, %3, %rb_array_len.exit
   %i.bm = getelementptr i8, ptr %i.v, i64 16      ; 2 uses
@@ -627,25 +627,11 @@ ary_make_shared_copy.exit:                        ; preds = %bb.s, %bb.t
 bb.u:                                             ; preds = %yield_indexed_values.exit.us.i
   %i.cc = add nuw nsw i64 %.01924.us28.i, 1       ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.cc, %.0.i
-  br i1 %exitcond.not.i, label %..preheader_crit_edge.us.i.preheader, label %.preheader23.us.i, !llvm.loop !164
+  br i1 %exitcond.not.i, label %.lr.ph49.a, label %.preheader23.us.i, !llvm.loop !164
 
-..preheader_crit_edge.us.i.preheader:             ; preds = %bb.u
-  %2 = icmp slt i64 %.0.us.i, 0
-  br i1 %2, label %rpermute0.exit, label %.lr.ph49.a
-
-..preheader_crit_edge.us.i:                       ; preds = %.lr.ph49.a
-  %3 = icmp slt i64 %.1.us.i48, 2
-  br i1 %3, label %rpermute0.exit, label %.lr.ph49.a, !llvm.loop !165
-
-.lr.ph49.a:                                       ; preds = %..preheader_crit_edge.us.i.preheader, %..preheader_crit_edge.us.i
-  %.1.us.i48 = phi i64 [ %4, %..preheader_crit_edge.us.i ], [ %i.bz, %..preheader_crit_edge.us.i.preheader ] ; 2 uses
-  %4 = add nsw i64 %.1.us.i48, -1                 ; 3 uses
-  %5 = getelementptr [8 x i8], ptr %i.bc, i64 %4  ; 2 uses
-  %6 = load i64, ptr %5, align 8, !tbaa !15
-  %7 = add i64 %6, 1                              ; 2 uses
-  store i64 %7, ptr %5, align 8, !tbaa !15
-  %.not.us.i.a = icmp slt i64 %7, %.0.i
-  br i1 %.not.us.i.a, label %.split.us27.split.i.backedge, label %..preheader_crit_edge.us.i, !llvm.loop !165
+.lr.ph49.a:                                       ; preds = %bb.u
+  %.not.us.i.a = icmp slt i64 %.0.us.i, 0
+  br i1 %.not.us.i.a, label %rpermute0.exit, label %.lr.ph49
 
 .preheader23.us.i:                                ; preds = %.split.us27.split.i, %bb.u
   %.01924.us28.i = phi i64 [ %i.cc, %bb.u ], [ 0, %.split.us27.split.i ] ; 2 uses
@@ -756,12 +742,26 @@ yield_indexed_values.exit.us.i:                   ; preds = %bb.ad, %bb.ac
   %.not.i.not.us.i = icmp eq i64 %i.dl, 0
   br i1 %.not.i.not.us.i, label %bb.u, label %.split33.us.i
 
+..preheader_crit_edge.us.i:                       ; preds = %.lr.ph49
+  %2 = icmp slt i64 %.1.us.i48, 2
+  br i1 %2, label %rpermute0.exit, label %.lr.ph49, !llvm.loop !165
+
+.lr.ph49:                                         ; preds = %.lr.ph49.a, %..preheader_crit_edge.us.i
+  %.1.us.i48 = phi i64 [ %3, %..preheader_crit_edge.us.i ], [ %i.bz, %.lr.ph49.a ] ; 2 uses
+  %3 = add nsw i64 %.1.us.i48, -1                 ; 3 uses
+  %4 = getelementptr [8 x i8], ptr %i.bc, i64 %3  ; 2 uses
+  %5 = load i64, ptr %4, align 8, !tbaa !15
+  %6 = add i64 %5, 1                              ; 2 uses
+  store i64 %6, ptr %4, align 8, !tbaa !15
+  %.not.us.i = icmp slt i64 %6, %.0.i
+  br i1 %.not.us.i, label %.split.us27.split.i.backedge, label %..preheader_crit_edge.us.i, !llvm.loop !165
+
 bb.ae:                                            ; preds = %.split.us27.split.i
   store i64 0, ptr %i.cb, align 8, !tbaa !15
   br label %.split.us27.split.i.backedge
 
-.split.us27.split.i.backedge:                     ; preds = %.lr.ph49.a, %bb.ae
-  %.0.us.i.be = phi i64 [ %i.bz, %bb.ae ], [ %4, %.lr.ph49.a ]
+.split.us27.split.i.backedge:                     ; preds = %.lr.ph49, %bb.ae
+  %.0.us.i.be = phi i64 [ %i.bz, %bb.ae ], [ %3, %.lr.ph49 ]
   br label %.split.us27.split.i
 
 .split.i:                                         ; preds = %ary_make_shared_copy.exit, %.split.i.backedge
@@ -802,7 +802,7 @@ bb.af:                                            ; preds = %.split.i
   %.not.i30 = icmp slt i64 %i.dv, %.0.i
   br i1 %.not.i30, label %.split.i.backedge, label %.preheader23.i, !llvm.loop !165
 
-rpermute0.exit:                                   ; preds = %.preheader23.i.preheader, %.preheader23.i, %..preheader_crit_edge.us.i.preheader, %..preheader_crit_edge.us.i
+rpermute0.exit:                                   ; preds = %.preheader23.i.preheader, %.preheader23.i, %.lr.ph49.a, %..preheader_crit_edge.us.i
   call void @rb_free_tmp_buffer(ptr noundef nonnull %i.f) #24
   %i.dw = load i64, ptr @rb_cArray, align 8, !tbaa !15
   store i64 %i.dw, ptr %i.bm, align 8, !tbaa !15

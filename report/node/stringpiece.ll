@@ -134,6 +134,12 @@ bb.b:                                             ; preds = %.preheader.us, %4
   %.not.us = icmp eq i8 %i.m, %i.o
   br i1 %.not.us, label %4, label %bb.c
 
+4:                                                ; preds = %bb.b
+  %indvars.iv.next45 = add nsw i64 %indvars.iv44, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.preheader._crit_edge.loopexit, label %bb.b, !llvm.loop !5
+
 bb.c:                                             ; preds = %bb.b
   %i.p = trunc nsw i64 %indvars.iv44 to i32
   %i.q = trunc nuw nsw i64 %indvars.iv to i32
@@ -141,13 +147,7 @@ bb.c:                                             ; preds = %bb.b
   %i.s = sub i32 %i.r, %i.q
   %i.t = icmp slt i32 %i.s, %i.b
   %indvars.iv.next43 = add nsw i64 %indvars.iv42, 1
-  br i1 %i.t, label %.preheader.us, label %.loopexit, !llvm.loop !5
-
-4:                                                ; preds = %bb.b
-  %indvars.iv.next45 = add nsw i64 %indvars.iv44, 1
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.preheader._crit_edge.loopexit, label %bb.b, !llvm.loop !7
+  br i1 %i.t, label %.preheader.us, label %.loopexit, !llvm.loop !7
 
 .preheader._crit_edge.loopexit:                   ; preds = %4
   %i.u = trunc nsw i64 %indvars.iv46 to i32

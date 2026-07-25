@@ -204,16 +204,6 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   invoke void @_ZN6duckdb8Pipeline12GetOperatorsEv(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::vector.21") align 8 %3, ptr noundef nonnull align 8 dereferenceable(224) %i.m)
           to label %.preheader46.us unwind label %.split.us
 
-._crit_edge49.split.us.thread:                    ; preds = %._crit_edge.us, %._crit_edge49.split.us
-  tail call void @_ZdlPv(ptr noundef nonnull %i.x) #36
-  br label %_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit21.us
-
-_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit21.us: ; preds = %._crit_edge49.split.us.thread, %._crit_edge49.split.us
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.041.051.us, i64 16 ; 2 uses
-  %.not.us = icmp eq ptr %4, %i.d
-  br i1 %.not.us, label %._crit_edge53, label %.lr.ph.split.us
-
 bb.c:                                             ; preds = %.preheader.us, %bb.d
   %.01447.us = phi i64 [ 0, %.preheader.us ], [ %i.u, %bb.d ] ; 2 uses
   %i.n = load ptr, ptr %i.v, align 8, !tbaa !680  ; 2 uses
@@ -229,6 +219,16 @@ bb.d:                                             ; preds = %bb.c
   %i.u = add nuw i64 %.01447.us, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.u, %i.ab
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.c, !llvm.loop !685
+
+._crit_edge49.split.us.thread:                    ; preds = %._crit_edge.us, %._crit_edge49.split.us
+  tail call void @_ZdlPv(ptr noundef nonnull %i.x) #36
+  br label %_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit21.us
+
+_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit21.us: ; preds = %._crit_edge49.split.us.thread, %._crit_edge49.split.us
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.041.051.us, i64 16 ; 2 uses
+  %.not.us = icmp eq ptr %4, %i.d
+  br i1 %.not.us, label %._crit_edge53, label %.lr.ph.split.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
   %.01548.us = phi i64 [ %i.ac, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 2 uses

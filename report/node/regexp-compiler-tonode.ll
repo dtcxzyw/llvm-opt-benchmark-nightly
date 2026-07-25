@@ -204,30 +204,30 @@ _ZNK2v84base6VectorIKjE6lengthEv.exit12.i.us.i:   ; preds = %_ZNK2v84base6Vector
   %i.i = icmp samesign ugt i64 %.sroa.22.0.copyload.us.i, %.sroa.2.0.copyload.fr.i
   br i1 %i.i, label %bb.b, label %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.thread.us.i
 
-.lr.ph.i.us.i:                                    ; preds = %_ZNK2v84base6VectorIKjE6lengthEv.exit.i.us.i, %_ZNK2v84base6VectorIKjE6lengthEv.exit13.i.us.i
-  %indvars.iv.i.us.i = phi i64 [ %indvars.iv.next.i.us.i, %_ZNK2v84base6VectorIKjE6lengthEv.exit13.i.us.i ], [ 0, %_ZNK2v84base6VectorIKjE6lengthEv.exit.i.us.i ] ; 3 uses
+.lr.ph.i.us.i:                                    ; preds = %_ZNK2v84base6VectorIKjE6lengthEv.exit.i.us.i, %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.us.i.a
+  %indvars.iv.i.us.i = phi i64 [ %indvars.iv.next.i.us.i, %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.us.i.a ], [ 0, %_ZNK2v84base6VectorIKjE6lengthEv.exit.i.us.i ] ; 3 uses
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %.sroa.01.0.copyload.us.i, i64 %indvars.iv.i.us.i
   %i.k = load i32, ptr %i.j, align 4              ; 2 uses
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.copyload.i, i64 %indvars.iv.i.us.i
   %i.m = load i32, ptr %i.l, align 4              ; 2 uses
   %.not9.i.us.i = icmp eq i32 %i.k, %i.m
-  br i1 %.not9.i.us.i, label %_ZNK2v84base6VectorIKjE6lengthEv.exit13.i.us.i, label %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.us.i.a
+  br i1 %.not9.i.us.i, label %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.us.i.a, label %_ZNK2v84base6VectorIKjE6lengthEv.exit13.i.us.i
 
 _ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.us.i.a: ; preds = %.lr.ph.i.us.i
-  %2 = icmp ult i32 %i.k, %i.m
-  br i1 %2, label %bb.b, label %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.thread.us.i
-
-_ZNK2v84base6VectorIKjE6lengthEv.exit13.i.us.i:   ; preds = %.lr.ph.i.us.i
   %indvars.iv.next.i.us.i = add nuw nsw i64 %indvars.iv.i.us.i, 1 ; 2 uses
   %exitcond.not.i.us.i = icmp eq i64 %indvars.iv.next.i.us.i, %.sroa.2.0.copyload.fr.i
   br i1 %exitcond.not.i.us.i, label %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.thread.us.i, label %.lr.ph.i.us.i, !llvm.loop !27
 
-_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.thread.us.i: ; preds = %_ZNK2v84base6VectorIKjE6lengthEv.exit13.i.us.i, %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.us.i.a, %_ZNK2v84base6VectorIKjE6lengthEv.exit12.i.us.i
+_ZNK2v84base6VectorIKjE6lengthEv.exit13.i.us.i:   ; preds = %.lr.ph.i.us.i
+  %2 = icmp ult i32 %i.k, %i.m
+  br i1 %2, label %bb.b, label %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.thread.us.i
+
+_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.thread.us.i: ; preds = %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.us.i.a, %_ZNK2v84base6VectorIKjE6lengthEv.exit13.i.us.i, %_ZNK2v84base6VectorIKjE6lengthEv.exit12.i.us.i
   br label %bb.b
 
-bb.b:                                             ; preds = %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.thread.us.i, %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.us.i.a, %_ZNK2v84base6VectorIKjE6lengthEv.exit12.i.us.i
-  %.sink.i = phi i64 [ 16, %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.thread.us.i ], [ 24, %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.us.i.a ], [ 24, %_ZNK2v84base6VectorIKjE6lengthEv.exit12.i.us.i ]
-  %.111.us.i = phi ptr [ %.020.us.i, %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.thread.us.i ], [ %.01019.us.i, %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.us.i.a ], [ %.01019.us.i, %_ZNK2v84base6VectorIKjE6lengthEv.exit12.i.us.i ] ; 2 uses
+bb.b:                                             ; preds = %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.thread.us.i, %_ZNK2v84base6VectorIKjE6lengthEv.exit13.i.us.i, %_ZNK2v84base6VectorIKjE6lengthEv.exit12.i.us.i
+  %.sink.i = phi i64 [ 16, %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.thread.us.i ], [ 24, %_ZNK2v84base6VectorIKjE6lengthEv.exit13.i.us.i ], [ 24, %_ZNK2v84base6VectorIKjE6lengthEv.exit12.i.us.i ]
+  %.111.us.i = phi ptr [ %.020.us.i, %_ZNK2v88internal24CharacterClassStringLessclENS_4base6VectorIKjEES5_.exit.thread.us.i ], [ %.01019.us.i, %_ZNK2v84base6VectorIKjE6lengthEv.exit13.i.us.i ], [ %.01019.us.i, %_ZNK2v84base6VectorIKjE6lengthEv.exit12.i.us.i ] ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.020.us.i, i64 %.sink.i
   %.1.us.i = load ptr, ptr %i.n, align 8          ; 2 uses
   %.not.us.i = icmp eq ptr %.1.us.i, null

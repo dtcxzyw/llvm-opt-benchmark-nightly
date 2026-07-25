@@ -203,43 +203,55 @@ bb.a:
   %lcmp.mod11 = trunc i64 %invariant.umin.i to i1
   br label %.lr.ph.us.us.i
 
-.lr.ph.us.us.i:                                   ; preds = %.split.us.i, %..preheader_crit_edge.us.us.preheader.i.a
-  %storemerge54.us.us.i = phi i64 [ %4, %..preheader_crit_edge.us.us.preheader.i.a ], [ 0, %.split.us.i ] ; 3 uses
+.lr.ph.us.us.i:                                   ; preds = %.split.us.i, %.epil.preheader
+  %storemerge54.us.us.i = phi i64 [ %24, %.epil.preheader ], [ 0, %.split.us.i ] ; 3 uses
   %i.f = getelementptr inbounds nuw [256 x i8], ptr %0, i64 %storemerge54.us.us.i ; 9 uses
   %.sroa.speculated42.us.us.i = tail call i64 @llvm.umax.i64(i64 %storemerge54.us.us.i, i64 1) ; 3 uses
-  br i1 %i.e, label %.epil.preheader, label %.lr.ph.us.us.i.new
+  br i1 %i.e, label %..preheader_crit_edge.us.us.preheader.i.a, label %bb.b
 
-._crit_edge.us.us.i.unr-lcssa:                    ; preds = %bb.c
-  %lcmp.mod14.not = icmp eq i64 %xtraiter13, 0
-  br i1 %lcmp.mod14.not, label %._crit_edge.us.us.i.a, label %.epil.preheader12
-
-.epil.preheader12:                                ; preds = %._crit_edge.us.us.i.unr-lcssa, %.lr.ph51.us.us.i
-  %.02750.us.us.i.epil.init = phi i64 [ 0, %.lr.ph51.us.us.i ], [ %i.y, %._crit_edge.us.us.i.unr-lcssa ]
-  %lcmp.mod15 = icmp ne i64 %xtraiter13, 0
-  tail call void @llvm.assume(i1 %lcmp.mod15)
-  br label %bb.b
-
-bb.b:                                             ; preds = %bb.b, %.epil.preheader12
-  %.02750.us.us.i.epil.a = phi i64 [ %.02750.us.us.i.epil.init, %.epil.preheader12 ], [ %i.i, %bb.b ] ; 3 uses
-  %epil.iter.a = phi i64 [ 0, %.epil.preheader12 ], [ %epil.iter.next.a, %bb.b ]
-  %i.g = getelementptr i8, ptr %i.ad, i64 %.02750.us.us.i.epil.a
-  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %.02750.us.us.i.epil.a
-  %1 = load atomic i8, ptr %i.h monotonic, align 1
-  store atomic i8 %1, ptr %i.g monotonic, align 1
-  %i.i = add nuw i64 %.02750.us.us.i.epil.a, 1
-  %epil.iter.next.a = add i64 %epil.iter.a, 1     ; 2 uses
-  %epil.iter.cmp.not.a = icmp eq i64 %epil.iter.next.a, %xtraiter13
+bb.b:                                             ; preds = %.lr.ph.us.us.i, %bb.b
+  %.02750.us.us.i.epil.a = phi i64 [ %i.i, %bb.b ], [ 0, %.lr.ph.us.us.i ] ; 4 uses
+  %epil.iter.a = phi i64 [ %epil.iter.next.a, %bb.b ], [ 0, %.lr.ph.us.us.i ]
+  %1 = load ptr, ptr %i.d, align 8, !tbaa !55
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.02750.us.us.i.epil.a
+  %3 = load i64, ptr %2, align 8, !tbaa !59
+  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 %.02750.us.us.i.epil.a
+  %4 = mul i64 %3, %.sroa.speculated42.us.us.i
+  %5 = udiv i64 %4, %.fr.i
+  %6 = trunc i64 %5 to i8
+  store atomic i8 %6, ptr %i.g monotonic, align 2
+  %7 = or disjoint i64 %.02750.us.us.i.epil.a, 1  ; 2 uses
+  %8 = load ptr, ptr %i.d, align 8, !tbaa !55
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %7
+  %10 = load i64, ptr %9, align 8, !tbaa !59
+  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %7
+  %11 = mul i64 %10, %.sroa.speculated42.us.us.i
+  %12 = udiv i64 %11, %.fr.i
+  %13 = trunc i64 %12 to i8
+  store atomic i8 %13, ptr %i.h monotonic, align 1
+  %i.i = add nuw nsw i64 %.02750.us.us.i.epil.a, 2 ; 2 uses
+  %epil.iter.next.a = add i64 %epil.iter.a, 2     ; 2 uses
+  %epil.iter.cmp.not.a = icmp eq i64 %epil.iter.next.a, %unroll_iter
   br i1 %epil.iter.cmp.not.a, label %._crit_edge.us.us.i.a, label %bb.b, !llvm.loop !220
 
-._crit_edge.us.us.i.a:                            ; preds = %bb.b, %._crit_edge.us.us.i.unr-lcssa
-  %2 = add nuw nsw i64 %.sroa.speculated.us.us.i, %storemerge3252.us.us.i ; 2 uses
-  %3 = icmp ult i64 %2, 256
-  br i1 %3, label %.lr.ph51.us.us.i, label %..preheader_crit_edge.us.us.preheader.i.a, !llvm.loop !221
+._crit_edge.us.us.i.a:                            ; preds = %bb.b
+  br i1 %lcmp.mod.not, label %.lr.ph51.us.us.i.preheader, label %..preheader_crit_edge.us.us.preheader.i.a
 
-..preheader_crit_edge.us.us.preheader.i.a:        ; preds = %._crit_edge.us.us.i.a
-  %4 = add nuw nsw i64 %storemerge54.us.us.i, 1   ; 2 uses
-  %exitcond72.not.i = icmp eq i64 %4, 257
-  br i1 %exitcond72.not.i, label %_ZN5folly6detail18AccessSpreaderBase10initializeERNS1_11GlobalStateERFPFiPjS4_PvEvERFRKNS_13CacheLocalityEvE.exit, label %.lr.ph.us.us.i, !llvm.loop !222
+..preheader_crit_edge.us.us.preheader.i.a:        ; preds = %._crit_edge.us.us.i.a, %.lr.ph.us.us.i
+  %.02849.us.us.i.epil.init = phi i64 [ 0, %.lr.ph.us.us.i ], [ %i.i, %._crit_edge.us.us.i.a ] ; 2 uses
+  tail call void @llvm.assume(i1 %lcmp.mod11)
+  %14 = load ptr, ptr %i.d, align 8, !tbaa !55
+  %15 = getelementptr inbounds nuw [8 x i8], ptr %14, i64 %.02849.us.us.i.epil.init
+  %16 = load i64, ptr %15, align 8, !tbaa !59
+  %17 = getelementptr inbounds nuw i8, ptr %i.f, i64 %.02849.us.us.i.epil.init
+  %18 = mul i64 %16, %.sroa.speculated42.us.us.i
+  %19 = udiv i64 %18, %.fr.i
+  %20 = trunc i64 %19 to i8
+  store atomic i8 %20, ptr %17 monotonic, align 1
+  br label %.lr.ph51.us.us.i.preheader
+
+.lr.ph51.us.us.i.preheader:                       ; preds = %._crit_edge.us.us.i.a, %..preheader_crit_edge.us.us.preheader.i.a
+  br label %.lr.ph51.us.us.i
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph51.us.us.i.new
   %.02750.us.us.i = phi i64 [ 0, %.lr.ph51.us.us.i.new ], [ %i.y, %bb.c ] ; 6 uses
@@ -266,54 +278,42 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph51.us.
   %i.y = add nuw i64 %.02750.us.us.i, 4           ; 2 uses
   %niter17.next.3 = add i64 %niter17, 4           ; 2 uses
   %niter17.ncmp.3 = icmp eq i64 %niter17.next.3, %unroll_iter16
-  br i1 %niter17.ncmp.3, label %._crit_edge.us.us.i.unr-lcssa, label %bb.c, !llvm.loop !223
+  br i1 %niter17.ncmp.3, label %._crit_edge.us.us.i.unr-lcssa, label %bb.c, !llvm.loop !221
 
-.lr.ph.us.us.i.new:                               ; preds = %.lr.ph.us.us.i, %.lr.ph.us.us.i.new
-  %.02849.us.us.i = phi i64 [ %i.ab, %.lr.ph.us.us.i.new ], [ 0, %.lr.ph.us.us.i ] ; 4 uses
-  %niter = phi i64 [ %niter.next.1, %.lr.ph.us.us.i.new ], [ 0, %.lr.ph.us.us.i ]
-  %5 = load ptr, ptr %i.d, align 8, !tbaa !55
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %.02849.us.us.i
-  %7 = load i64, ptr %6, align 8, !tbaa !59
-  %i.z = getelementptr inbounds nuw i8, ptr %i.f, i64 %.02849.us.us.i
-  %8 = mul i64 %7, %.sroa.speculated42.us.us.i
-  %9 = udiv i64 %8, %.fr.i
-  %10 = trunc i64 %9 to i8
-  store atomic i8 %10, ptr %i.z monotonic, align 2
-  %11 = or disjoint i64 %.02849.us.us.i, 1        ; 2 uses
-  %12 = load ptr, ptr %i.d, align 8, !tbaa !55
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %11
-  %14 = load i64, ptr %13, align 8, !tbaa !59
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.f, i64 %11
-  %15 = mul i64 %14, %.sroa.speculated42.us.us.i
-  %16 = udiv i64 %15, %.fr.i
-  %17 = trunc i64 %16 to i8
-  store atomic i8 %17, ptr %i.aa monotonic, align 1
-  %i.ab = add nuw nsw i64 %.02849.us.us.i, 2      ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.lr.ph51.us.us.i.preheader.unr-lcssa, label %.lr.ph.us.us.i.new, !llvm.loop !224
+._crit_edge.us.us.i.unr-lcssa:                    ; preds = %bb.c
+  %lcmp.mod14.not = icmp eq i64 %xtraiter13, 0
+  br i1 %lcmp.mod14.not, label %.lr.ph51.us.us.i.preheader.unr-lcssa, label %.epil.preheader12
 
-.lr.ph51.us.us.i.preheader.unr-lcssa:             ; preds = %.lr.ph.us.us.i.new
-  br i1 %lcmp.mod.not, label %.lr.ph51.us.us.i.preheader, label %.epil.preheader
+.epil.preheader12:                                ; preds = %._crit_edge.us.us.i.unr-lcssa, %.lr.ph51.us.us.i
+  %.02750.us.us.i.epil.init = phi i64 [ 0, %.lr.ph51.us.us.i ], [ %i.y, %._crit_edge.us.us.i.unr-lcssa ]
+  %lcmp.mod15 = icmp ne i64 %xtraiter13, 0
+  tail call void @llvm.assume(i1 %lcmp.mod15)
+  br label %.lr.ph.us.us.i.new
 
-.epil.preheader:                                  ; preds = %.lr.ph51.us.us.i.preheader.unr-lcssa, %.lr.ph.us.us.i
-  %.02849.us.us.i.epil.init = phi i64 [ 0, %.lr.ph.us.us.i ], [ %i.ab, %.lr.ph51.us.us.i.preheader.unr-lcssa ] ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod11)
-  %18 = load ptr, ptr %i.d, align 8, !tbaa !55
-  %19 = getelementptr inbounds nuw [8 x i8], ptr %18, i64 %.02849.us.us.i.epil.init
-  %20 = load i64, ptr %19, align 8, !tbaa !59
-  %21 = getelementptr inbounds nuw i8, ptr %i.f, i64 %.02849.us.us.i.epil.init
-  %22 = mul i64 %20, %.sroa.speculated42.us.us.i
-  %23 = udiv i64 %22, %.fr.i
-  %24 = trunc i64 %23 to i8
-  store atomic i8 %24, ptr %21 monotonic, align 1
-  br label %.lr.ph51.us.us.i.preheader
+.lr.ph.us.us.i.new:                               ; preds = %.lr.ph.us.us.i.new, %.epil.preheader12
+  %.02849.us.us.i = phi i64 [ %.02750.us.us.i.epil.init, %.epil.preheader12 ], [ %i.ab, %.lr.ph.us.us.i.new ] ; 3 uses
+  %niter = phi i64 [ 0, %.epil.preheader12 ], [ %niter.next.1, %.lr.ph.us.us.i.new ]
+  %i.z = getelementptr i8, ptr %i.ad, i64 %.02849.us.us.i
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.f, i64 %.02849.us.us.i
+  %21 = load atomic i8, ptr %i.aa monotonic, align 1
+  store atomic i8 %21, ptr %i.z monotonic, align 1
+  %i.ab = add nuw i64 %.02849.us.us.i, 1
+  %niter.next.1 = add i64 %niter, 1               ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %xtraiter13
+  br i1 %niter.ncmp.1, label %.lr.ph51.us.us.i.preheader.unr-lcssa, label %.lr.ph.us.us.i.new, !llvm.loop !222
 
-.lr.ph51.us.us.i.preheader:                       ; preds = %.lr.ph51.us.us.i.preheader.unr-lcssa, %.epil.preheader
-  br label %.lr.ph51.us.us.i
+.lr.ph51.us.us.i.preheader.unr-lcssa:             ; preds = %.lr.ph.us.us.i.new, %._crit_edge.us.us.i.unr-lcssa
+  %22 = add nuw nsw i64 %.sroa.speculated.us.us.i, %storemerge3252.us.us.i ; 2 uses
+  %23 = icmp ult i64 %22, 256
+  br i1 %23, label %.lr.ph51.us.us.i, label %.epil.preheader, !llvm.loop !223
 
-.lr.ph51.us.us.i:                                 ; preds = %.lr.ph51.us.us.i.preheader, %._crit_edge.us.us.i.a
-  %storemerge3252.us.us.i = phi i64 [ %2, %._crit_edge.us.us.i.a ], [ %.fr.i, %.lr.ph51.us.us.i.preheader ] ; 4 uses
+.epil.preheader:                                  ; preds = %.lr.ph51.us.us.i.preheader.unr-lcssa
+  %24 = add nuw nsw i64 %storemerge54.us.us.i, 1  ; 2 uses
+  %exitcond72.not.i = icmp eq i64 %24, 257
+  br i1 %exitcond72.not.i, label %_ZN5folly6detail18AccessSpreaderBase10initializeERNS1_11GlobalStateERFPFiPjS4_PvEvERFRKNS_13CacheLocalityEvE.exit, label %.lr.ph.us.us.i, !llvm.loop !224
+
+.lr.ph51.us.us.i:                                 ; preds = %.lr.ph51.us.us.i.preheader, %.lr.ph51.us.us.i.preheader.unr-lcssa
+  %storemerge3252.us.us.i = phi i64 [ %22, %.lr.ph51.us.us.i.preheader.unr-lcssa ], [ %.fr.i, %.lr.ph51.us.us.i.preheader ] ; 4 uses
   %i.ac = sub nuw nsw i64 256, %storemerge3252.us.us.i
   %.sroa.speculated.us.us.i = tail call i64 @llvm.umin.i64(i64 %i.ac, i64 %storemerge3252.us.us.i) ; 4 uses
   %i.ad = getelementptr i8, ptr %i.f, i64 %storemerge3252.us.us.i ; 5 uses
@@ -353,14 +353,14 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.us62.
   store atomic i8 %i.av, ptr %i.as monotonic, align 1
   %i.aw = add nuw nsw i64 %.02849.us60.i, 2       ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.aw, %invariant.umin.i
-  br i1 %exitcond.not.i.1, label %..preheader48_crit_edge.us63.preheader.i, label %bb.d, !llvm.loop !224
+  br i1 %exitcond.not.i.1, label %..preheader48_crit_edge.us63.preheader.i, label %bb.d, !llvm.loop !220
 
 ..preheader48_crit_edge.us63.preheader.i:         ; preds = %bb.d
   %i.ax = add nuw nsw i64 %storemerge54.us57.i, 1 ; 2 uses
   %exitcond69.not.i = icmp eq i64 %i.ax, 257
-  br i1 %exitcond69.not.i, label %_ZN5folly6detail18AccessSpreaderBase10initializeERNS1_11GlobalStateERFPFiPjS4_PvEvERFRKNS_13CacheLocalityEvE.exit, label %.lr.ph.us62.i, !llvm.loop !222
+  br i1 %exitcond69.not.i, label %_ZN5folly6detail18AccessSpreaderBase10initializeERNS1_11GlobalStateERFPFiPjS4_PvEvERFRKNS_13CacheLocalityEvE.exit, label %.lr.ph.us62.i, !llvm.loop !224
 
-_ZN5folly6detail18AccessSpreaderBase10initializeERNS1_11GlobalStateERFPFiPjS4_PvEvERFRKNS_13CacheLocalityEvE.exit: ; preds = %..preheader48_crit_edge.us63.preheader.i, %..preheader_crit_edge.us.us.preheader.i.a
+_ZN5folly6detail18AccessSpreaderBase10initializeERNS1_11GlobalStateERFPFiPjS4_PvEvERFRKNS_13CacheLocalityEvE.exit: ; preds = %..preheader48_crit_edge.us63.preheader.i, %.epil.preheader
   %i.ay = tail call ptr @dlopen(ptr noundef nonnull @.str.34, i32 noundef 5) #35 ; 3 uses
   %i.az = icmp eq ptr %i.ay, null
   br i1 %i.az, label %_ZN5folly14AccessSpreaderISt6atomicE14pickGetcpuFuncEv.exit, label %bb.e
@@ -404,43 +404,55 @@ bb.a:
   %lcmp.mod82 = trunc i64 %invariant.umin to i1
   br label %.lr.ph.us.us
 
-.lr.ph.us.us:                                     ; preds = %.split.us, %..preheader_crit_edge.us.us.preheader.a
-  %storemerge54.us.us = phi i64 [ %6, %..preheader_crit_edge.us.us.preheader.a ], [ 0, %.split.us ] ; 3 uses
+.lr.ph.us.us:                                     ; preds = %.split.us, %.epil.preheader
+  %storemerge54.us.us = phi i64 [ %26, %.epil.preheader ], [ 0, %.split.us ] ; 3 uses
   %i.f = getelementptr inbounds nuw [256 x i8], ptr %0, i64 %storemerge54.us.us ; 9 uses
   %.sroa.speculated42.us.us = tail call i64 @llvm.umax.i64(i64 %storemerge54.us.us, i64 1) ; 3 uses
-  br i1 %i.e, label %.epil.preheader, label %.lr.ph.us.us.new
+  br i1 %i.e, label %..preheader_crit_edge.us.us.preheader.a, label %bb.b
 
-._crit_edge.us.us.unr-lcssa:                      ; preds = %bb.c
-  %lcmp.mod85.not = icmp eq i64 %xtraiter84, 0
-  br i1 %lcmp.mod85.not, label %._crit_edge.us.us.a, label %.epil.preheader83
+bb.b:                                             ; preds = %.lr.ph.us.us, %bb.b
+  %.02750.us.us.epil.a = phi i64 [ %i.i, %bb.b ], [ 0, %.lr.ph.us.us ] ; 4 uses
+  %epil.iter.a = phi i64 [ %epil.iter.next.a, %bb.b ], [ 0, %.lr.ph.us.us ]
+  %3 = load ptr, ptr %i.d, align 8, !tbaa !55
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.02750.us.us.epil.a
+  %5 = load i64, ptr %4, align 8, !tbaa !59
+  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 %.02750.us.us.epil.a
+  %6 = mul i64 %5, %.sroa.speculated42.us.us
+  %7 = udiv i64 %6, %.fr
+  %8 = trunc i64 %7 to i8
+  store atomic i8 %8, ptr %i.g monotonic, align 2
+  %9 = or disjoint i64 %.02750.us.us.epil.a, 1    ; 2 uses
+  %10 = load ptr, ptr %i.d, align 8, !tbaa !55
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %9
+  %12 = load i64, ptr %11, align 8, !tbaa !59
+  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %9
+  %13 = mul i64 %12, %.sroa.speculated42.us.us
+  %14 = udiv i64 %13, %.fr
+  %15 = trunc i64 %14 to i8
+  store atomic i8 %15, ptr %i.h monotonic, align 1
+  %i.i = add nuw nsw i64 %.02750.us.us.epil.a, 2  ; 2 uses
+  %epil.iter.next.a = add i64 %epil.iter.a, 2     ; 2 uses
+  %epil.iter.cmp.not.a = icmp eq i64 %epil.iter.next.a, %unroll_iter
+  br i1 %epil.iter.cmp.not.a, label %._crit_edge.us.us.a, label %bb.b, !llvm.loop !220
 
-.epil.preheader83:                                ; preds = %._crit_edge.us.us.unr-lcssa, %.lr.ph51.us.us
-  %.02750.us.us.epil.init = phi i64 [ 0, %.lr.ph51.us.us ], [ %i.y, %._crit_edge.us.us.unr-lcssa ]
-  %lcmp.mod86 = icmp ne i64 %xtraiter84, 0
-  tail call void @llvm.assume(i1 %lcmp.mod86)
-  br label %bb.b
+._crit_edge.us.us.a:                              ; preds = %bb.b
+  br i1 %lcmp.mod.not, label %.lr.ph51.us.us.preheader, label %..preheader_crit_edge.us.us.preheader.a
 
-bb.b:                                             ; preds = %bb.b, %.epil.preheader83
-  %.02750.us.us.epil.a = phi i64 [ %.02750.us.us.epil.init, %.epil.preheader83 ], [ %i.i, %bb.b ] ; 3 uses
-  %epil.iter.a = phi i64 [ 0, %.epil.preheader83 ], [ %epil.iter.next.a, %bb.b ]
-  %i.g = getelementptr i8, ptr %i.ad, i64 %.02750.us.us.epil.a
-  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %.02750.us.us.epil.a
-  %3 = load atomic i8, ptr %i.h monotonic, align 1
-  store atomic i8 %3, ptr %i.g monotonic, align 1
-  %i.i = add nuw i64 %.02750.us.us.epil.a, 1
-  %epil.iter.next.a = add i64 %epil.iter.a, 1     ; 2 uses
-  %epil.iter.cmp.not.a = icmp eq i64 %epil.iter.next.a, %xtraiter84
-  br i1 %epil.iter.cmp.not.a, label %._crit_edge.us.us.a, label %bb.b, !llvm.loop !225
+..preheader_crit_edge.us.us.preheader.a:          ; preds = %._crit_edge.us.us.a, %.lr.ph.us.us
+  %.02849.us.us.epil.init = phi i64 [ 0, %.lr.ph.us.us ], [ %i.i, %._crit_edge.us.us.a ] ; 2 uses
+  tail call void @llvm.assume(i1 %lcmp.mod82)
+  %16 = load ptr, ptr %i.d, align 8, !tbaa !55
+  %17 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %.02849.us.us.epil.init
+  %18 = load i64, ptr %17, align 8, !tbaa !59
+  %19 = getelementptr inbounds nuw i8, ptr %i.f, i64 %.02849.us.us.epil.init
+  %20 = mul i64 %18, %.sroa.speculated42.us.us
+  %21 = udiv i64 %20, %.fr
+  %22 = trunc i64 %21 to i8
+  store atomic i8 %22, ptr %19 monotonic, align 1
+  br label %.lr.ph51.us.us.preheader
 
-._crit_edge.us.us.a:                              ; preds = %bb.b, %._crit_edge.us.us.unr-lcssa
-  %4 = add nuw nsw i64 %.sroa.speculated.us.us, %storemerge3252.us.us ; 2 uses
-  %5 = icmp ult i64 %4, 256
-  br i1 %5, label %.lr.ph51.us.us, label %..preheader_crit_edge.us.us.preheader.a, !llvm.loop !221
-
-..preheader_crit_edge.us.us.preheader.a:          ; preds = %._crit_edge.us.us.a
-  %6 = add nuw nsw i64 %storemerge54.us.us, 1     ; 2 uses
-  %exitcond72.not = icmp eq i64 %6, 257
-  br i1 %exitcond72.not, label %.split56.us, label %.lr.ph.us.us, !llvm.loop !222
+.lr.ph51.us.us.preheader:                         ; preds = %._crit_edge.us.us.a, %..preheader_crit_edge.us.us.preheader.a
+  br label %.lr.ph51.us.us
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph51.us.us.new
   %.02750.us.us = phi i64 [ 0, %.lr.ph51.us.us.new ], [ %i.y, %bb.c ] ; 6 uses
@@ -467,54 +479,42 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph51.us.
   %i.y = add nuw i64 %.02750.us.us, 4             ; 2 uses
   %niter88.next.3 = add i64 %niter88, 4           ; 2 uses
   %niter88.ncmp.3 = icmp eq i64 %niter88.next.3, %unroll_iter87
-  br i1 %niter88.ncmp.3, label %._crit_edge.us.us.unr-lcssa, label %bb.c, !llvm.loop !223
+  br i1 %niter88.ncmp.3, label %._crit_edge.us.us.unr-lcssa, label %bb.c, !llvm.loop !221
 
-.lr.ph.us.us.new:                                 ; preds = %.lr.ph.us.us, %.lr.ph.us.us.new
-  %.02849.us.us = phi i64 [ %i.ab, %.lr.ph.us.us.new ], [ 0, %.lr.ph.us.us ] ; 4 uses
-  %niter = phi i64 [ %niter.next.1, %.lr.ph.us.us.new ], [ 0, %.lr.ph.us.us ]
-  %7 = load ptr, ptr %i.d, align 8, !tbaa !55
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %.02849.us.us
-  %9 = load i64, ptr %8, align 8, !tbaa !59
-  %i.z = getelementptr inbounds nuw i8, ptr %i.f, i64 %.02849.us.us
-  %10 = mul i64 %9, %.sroa.speculated42.us.us
-  %11 = udiv i64 %10, %.fr
-  %12 = trunc i64 %11 to i8
-  store atomic i8 %12, ptr %i.z monotonic, align 2
-  %13 = or disjoint i64 %.02849.us.us, 1          ; 2 uses
-  %14 = load ptr, ptr %i.d, align 8, !tbaa !55
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %14, i64 %13
-  %16 = load i64, ptr %15, align 8, !tbaa !59
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.f, i64 %13
-  %17 = mul i64 %16, %.sroa.speculated42.us.us
-  %18 = udiv i64 %17, %.fr
-  %19 = trunc i64 %18 to i8
-  store atomic i8 %19, ptr %i.aa monotonic, align 1
-  %i.ab = add nuw nsw i64 %.02849.us.us, 2        ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.lr.ph51.us.us.preheader.unr-lcssa, label %.lr.ph.us.us.new, !llvm.loop !224
+._crit_edge.us.us.unr-lcssa:                      ; preds = %bb.c
+  %lcmp.mod85.not = icmp eq i64 %xtraiter84, 0
+  br i1 %lcmp.mod85.not, label %.lr.ph51.us.us.preheader.unr-lcssa, label %.epil.preheader83
 
-.lr.ph51.us.us.preheader.unr-lcssa:               ; preds = %.lr.ph.us.us.new
-  br i1 %lcmp.mod.not, label %.lr.ph51.us.us.preheader, label %.epil.preheader
+.epil.preheader83:                                ; preds = %._crit_edge.us.us.unr-lcssa, %.lr.ph51.us.us
+  %.02750.us.us.epil.init = phi i64 [ 0, %.lr.ph51.us.us ], [ %i.y, %._crit_edge.us.us.unr-lcssa ]
+  %lcmp.mod86 = icmp ne i64 %xtraiter84, 0
+  tail call void @llvm.assume(i1 %lcmp.mod86)
+  br label %.lr.ph.us.us.new
 
-.epil.preheader:                                  ; preds = %.lr.ph51.us.us.preheader.unr-lcssa, %.lr.ph.us.us
-  %.02849.us.us.epil.init = phi i64 [ 0, %.lr.ph.us.us ], [ %i.ab, %.lr.ph51.us.us.preheader.unr-lcssa ] ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod82)
-  %20 = load ptr, ptr %i.d, align 8, !tbaa !55
-  %21 = getelementptr inbounds nuw [8 x i8], ptr %20, i64 %.02849.us.us.epil.init
-  %22 = load i64, ptr %21, align 8, !tbaa !59
-  %23 = getelementptr inbounds nuw i8, ptr %i.f, i64 %.02849.us.us.epil.init
-  %24 = mul i64 %22, %.sroa.speculated42.us.us
-  %25 = udiv i64 %24, %.fr
-  %26 = trunc i64 %25 to i8
-  store atomic i8 %26, ptr %23 monotonic, align 1
-  br label %.lr.ph51.us.us.preheader
+.lr.ph.us.us.new:                                 ; preds = %.lr.ph.us.us.new, %.epil.preheader83
+  %.02849.us.us = phi i64 [ %.02750.us.us.epil.init, %.epil.preheader83 ], [ %i.ab, %.lr.ph.us.us.new ] ; 3 uses
+  %niter = phi i64 [ 0, %.epil.preheader83 ], [ %niter.next.1, %.lr.ph.us.us.new ]
+  %i.z = getelementptr i8, ptr %i.ad, i64 %.02849.us.us
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.f, i64 %.02849.us.us
+  %23 = load atomic i8, ptr %i.aa monotonic, align 1
+  store atomic i8 %23, ptr %i.z monotonic, align 1
+  %i.ab = add nuw i64 %.02849.us.us, 1
+  %niter.next.1 = add i64 %niter, 1               ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %xtraiter84
+  br i1 %niter.ncmp.1, label %.lr.ph51.us.us.preheader.unr-lcssa, label %.lr.ph.us.us.new, !llvm.loop !225
 
-.lr.ph51.us.us.preheader:                         ; preds = %.lr.ph51.us.us.preheader.unr-lcssa, %.epil.preheader
-  br label %.lr.ph51.us.us
+.lr.ph51.us.us.preheader.unr-lcssa:               ; preds = %.lr.ph.us.us.new, %._crit_edge.us.us.unr-lcssa
+  %24 = add nuw nsw i64 %.sroa.speculated.us.us, %storemerge3252.us.us ; 2 uses
+  %25 = icmp ult i64 %24, 256
+  br i1 %25, label %.lr.ph51.us.us, label %.epil.preheader, !llvm.loop !223
 
-.lr.ph51.us.us:                                   ; preds = %.lr.ph51.us.us.preheader, %._crit_edge.us.us.a
-  %storemerge3252.us.us = phi i64 [ %4, %._crit_edge.us.us.a ], [ %.fr, %.lr.ph51.us.us.preheader ] ; 4 uses
+.epil.preheader:                                  ; preds = %.lr.ph51.us.us.preheader.unr-lcssa
+  %26 = add nuw nsw i64 %storemerge54.us.us, 1    ; 2 uses
+  %exitcond72.not = icmp eq i64 %26, 257
+  br i1 %exitcond72.not, label %.split56.us, label %.lr.ph.us.us, !llvm.loop !224
+
+.lr.ph51.us.us:                                   ; preds = %.lr.ph51.us.us.preheader, %.lr.ph51.us.us.preheader.unr-lcssa
+  %storemerge3252.us.us = phi i64 [ %24, %.lr.ph51.us.us.preheader.unr-lcssa ], [ %.fr, %.lr.ph51.us.us.preheader ] ; 4 uses
   %i.ac = sub nuw nsw i64 256, %storemerge3252.us.us
   %.sroa.speculated.us.us = tail call i64 @llvm.umin.i64(i64 %i.ac, i64 %storemerge3252.us.us) ; 4 uses
   %i.ad = getelementptr i8, ptr %i.f, i64 %storemerge3252.us.us ; 5 uses
@@ -554,14 +554,14 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.us62
   store atomic i8 %i.av, ptr %i.as monotonic, align 1
   %i.aw = add nuw nsw i64 %.02849.us60, 2         ; 2 uses
   %exitcond.not.1 = icmp eq i64 %i.aw, %invariant.umin
-  br i1 %exitcond.not.1, label %..preheader48_crit_edge.us63.preheader, label %bb.d, !llvm.loop !224
+  br i1 %exitcond.not.1, label %..preheader48_crit_edge.us63.preheader, label %bb.d, !llvm.loop !220
 
 ..preheader48_crit_edge.us63.preheader:           ; preds = %bb.d
   %i.ax = add nuw nsw i64 %storemerge54.us57, 1   ; 2 uses
   %exitcond69.not = icmp eq i64 %i.ax, 257
-  br i1 %exitcond69.not, label %.split56.us, label %.lr.ph.us62, !llvm.loop !222
+  br i1 %exitcond69.not, label %.split56.us, label %.lr.ph.us62, !llvm.loop !224
 
-.split56.us:                                      ; preds = %..preheader48_crit_edge.us63.preheader, %..preheader_crit_edge.us.us.preheader.a
+.split56.us:                                      ; preds = %..preheader48_crit_edge.us63.preheader, %.epil.preheader
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 65792
   %i.az = tail call noundef ptr %1()
   %i.ba = atomicrmw xchg ptr %i.ay, ptr %i.az acq_rel, align 8 ; 0 uses
@@ -964,9 +964,9 @@ begin_hunk_1_@llvm.umin.i64
 !217 = !{!213, !216}
 !218 = distinct !{!218, !53}
 !219 = !{ptr @_ZN5folly6detail18AccessSpreaderBase10initializeERNS1_11GlobalStateERFPFiPjS4_PvEvERFRKNS_13CacheLocalityEvE}
-!220 = distinct !{!220, !88}
+!220 = distinct !{!220, !53}
 !221 = distinct !{!221, !53}
-!222 = distinct !{!222, !53}
+!222 = distinct !{!222, !88}
 !223 = distinct !{!223, !53}
 !224 = distinct !{!224, !53}
 !225 = distinct !{!225, !88}

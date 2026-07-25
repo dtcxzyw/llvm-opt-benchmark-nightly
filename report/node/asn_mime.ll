@@ -203,18 +203,13 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not39.i.us, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  br i1 %.old4.not.i.us, label %bb.n, label %bb.m
+  br i1 %.old4.not.i.us, label %bb.n, label %3
 
 bb.l:                                             ; preds = %bb.j
-  br i1 %.old4.not.i.us, label %.thread88, label %.thread
+  br i1 %.old4.not.i.us, label %.thread88, label %bb.m
 
-.thread:                                          ; preds = %bb.l
-  %3 = call i32 @BIO_write(ptr noundef %i.g, ptr noundef nonnull %i.a, i32 noundef %.13647.i.us) #6 ; 0 uses
-  br label %strip_eol.exit.us.thread
-
-bb.m:                                             ; preds = %bb.k
+bb.m:                                             ; preds = %bb.l
   %i.z = call i32 @BIO_write(ptr noundef %i.g, ptr noundef nonnull %i.a, i32 noundef %.13647.i.us) #6 ; 0 uses
-  %4 = call i32 @BIO_write(ptr noundef %i.g, ptr noundef nonnull @.str.6, i32 noundef 2) #6 ; 0 uses
   br label %strip_eol.exit.us.thread
 
 bb.n:                                             ; preds = %bb.k, %bb.i
@@ -230,11 +225,16 @@ bb.n:                                             ; preds = %bb.k, %bb.i
   %i.ab = icmp samesign ugt i32 %.13647.i.us, 1
   br i1 %i.ab, label %.backedge, label %strip_eol.exit.us.thread
 
+3:                                                ; preds = %bb.k
+  %4 = call i32 @BIO_write(ptr noundef %i.g, ptr noundef nonnull %i.a, i32 noundef %.13647.i.us) #6 ; 0 uses
+  %5 = call i32 @BIO_write(ptr noundef %i.g, ptr noundef nonnull @.str.6, i32 noundef 2) #6 ; 0 uses
+  br label %strip_eol.exit.us.thread
+
 strip_eol.exit.us:                                ; preds = %bb.n
   %i.ac = call i32 @BIO_write(ptr noundef %i.g, ptr noundef nonnull @.str.6, i32 noundef 2) #6 ; 0 uses
   br label %strip_eol.exit.us.thread
 
-strip_eol.exit.us.thread:                         ; preds = %.thread88, %.thread, %strip_eol.exit.us, %bb.m
+strip_eol.exit.us.thread:                         ; preds = %.thread88, %bb.m, %strip_eol.exit.us, %3
   %i.ad = call i32 @BIO_gets(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i32 noundef 1024) #6 ; 2 uses
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %.lr.ph.i.us, label %.loopexit47, !llvm.loop !14
