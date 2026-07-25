@@ -200,6 +200,11 @@ bb.y:                                             ; preds = %.preheader.us, %13
   %i.bl = icmp slt i32 %i.bk, 0
   br i1 %i.bl, label %13, label %.critedge140.us
 
+13:                                               ; preds = %bb.y
+  %14 = call i32 @BIO_sock_should_retry(i32 noundef %i.bk) #9
+  %.not136.us = icmp eq i32 %14, 0
+  br i1 %.not136.us, label %.critedge, label %bb.y, !llvm.loop !22
+
 .critedge140.us:                                  ; preds = %bb.y
   %.not137.us = icmp eq i32 %.0109.us170, -1
   %i.bm = add nsw i32 %.0109.us170, -1
@@ -207,8 +212,8 @@ bb.y:                                             ; preds = %.preheader.us, %13
   %i.bn = call i32 @BIO_set_tcp_ndelay(i32 noundef %i.bk, i32 noundef 1) #9 ; 0 uses
   %i.bo = call i32 %6(i32 noundef %i.bk, i32 noundef 1, i32 noundef %5, ptr noundef %7) #9 ; 2 uses
   %i.bp = call i32 @shutdown(i32 noundef %i.bk, i32 noundef 1) #9 ; 0 uses
-  store i64 0, ptr %11, align 8, !tbaa !22
-  store i64 500000, ptr %i.bf, align 8, !tbaa !25
+  store i64 0, ptr %11, align 8, !tbaa !23
+  store i64 500000, ptr %i.bf, align 8, !tbaa !26
   %i.bq = and i32 %i.bk, 63
   %i.br = zext nneg i32 %i.bq to i64
   %i.bs = shl nuw i64 1, %i.br
@@ -219,10 +224,10 @@ bb.y:                                             ; preds = %.preheader.us, %13
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.aa, %.critedge140.us
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %12, i8 0, i64 128, i1 false), !tbaa !26
-  %i.bx = load i64, ptr %i.bv, align 8, !tbaa !26
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %12, i8 0, i64 128, i1 false), !tbaa !27
+  %i.bx = load i64, ptr %i.bv, align 8, !tbaa !27
   %i.by = or i64 %i.bx, %i.bs
-  store i64 %i.by, ptr %i.bv, align 8, !tbaa !26
+  store i64 %i.by, ptr %i.bv, align 8, !tbaa !27
   %i.bz = call i32 @select(i32 noundef %i.bw, ptr noundef nonnull %12, ptr noundef null, ptr noundef null, ptr noundef nonnull %11) #9
   %i.ca = icmp sgt i32 %i.bz, 0
   br i1 %i.ca, label %bb.aa, label %.critedge5.us
@@ -230,7 +235,7 @@ bb.z:                                             ; preds = %bb.aa, %.critedge14
 bb.aa:                                            ; preds = %bb.z
   %i.cb = call i64 @read(i32 noundef %i.bk, ptr noundef nonnull %i.b, i64 noundef 64) #9
   %i.cc = icmp sgt i64 %i.cb, 0
-  br i1 %i.cc, label %bb.z, label %.critedge5.us, !llvm.loop !27
+  br i1 %i.cc, label %bb.z, label %.critedge5.us, !llvm.loop !28
 
 .critedge5.us:                                    ; preds = %bb.aa, %bb.z
   %i.cd = call i32 @BIO_closesocket(i32 noundef %i.bk) #9 ; 0 uses
@@ -252,11 +257,6 @@ bb.ab:                                            ; preds = %.critedge5.us
   store ptr %i.ch, ptr @ourpeer, align 8, !tbaa !16
   %i.ci = icmp eq ptr %i.ch, null
   br i1 %i.ci, label %.split163.us, label %.preheader.us
-
-13:                                               ; preds = %bb.y
-  %14 = call i32 @BIO_sock_should_retry(i32 noundef %i.bk) #9
-  %.not136.us = icmp eq i32 %14, 0
-  br i1 %.not136.us, label %.critedge, label %bb.y, !llvm.loop !28
 
 .preheader.us:                                    ; preds = %.split.us, %bb.ab
   %.0109.us170 = phi i32 [ %spec.select141.us, %bb.ab ], [ %8, %.split.us ] ; 2 uses
@@ -434,12 +434,12 @@ attributes #11 = { nounwind willreturn memory(read) }
 !19 = !{!20, !20, i64 0}
 !20 = !{!"p1 omnipotent char", !11, i64 0}
 !21 = !{!7, !7, i64 0}
-!22 = !{!23, !24, i64 0}
-!23 = !{!"timeval", !24, i64 0, !24, i64 8}
-!24 = !{!"long", !7, i64 0}
-!25 = !{!23, !24, i64 8}
-!26 = !{!24, !24, i64 0}
-!27 = distinct !{!27, !15}
+!22 = distinct !{!22, !15}
+!23 = !{!24, !25, i64 0}
+!24 = !{!"timeval", !25, i64 0, !25, i64 8}
+!25 = !{!"long", !7, i64 0}
+!26 = !{!24, !25, i64 8}
+!27 = !{!25, !25, i64 0}
 !28 = distinct !{!28, !15}
 !29 = distinct !{!29, !15}
 end_hunk_0

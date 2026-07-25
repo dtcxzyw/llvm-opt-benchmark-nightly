@@ -204,17 +204,17 @@ switch.early.test.us:                             ; preds = %.preheader.split.us
     i8 45, label %.critedge.us
   ]
 
+.critedge.us:                                     ; preds = %switch.early.test.us, %switch.early.test.us, %switch.early.test.us, %switch.early.test.us, %.preheader.split.us
+  %i.k = getelementptr inbounds nuw i8, ptr %.3213.us, i64 1
+  %i.l = add nuw nsw i32 %.0198.us, 1
+  br label %.preheader.split.us, !llvm.loop !162
+
 5:                                                ; preds = %switch.early.test.us
   switch i32 %.0198.us, label %.thread.sink.split [
     i32 0, label %.split.us
     i32 8, label %bb.aj
     i32 10, label %bb.ak
   ]
-
-.critedge.us:                                     ; preds = %switch.early.test.us, %switch.early.test.us, %switch.early.test.us, %switch.early.test.us, %.preheader.split.us
-  %i.k = getelementptr inbounds nuw i8, ptr %.3213.us, i64 1
-  %i.l = add nuw nsw i32 %.0198.us, 1
-  br label %.preheader.split.us, !llvm.loop !162
 
 bb.f:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %.0210, i64 1

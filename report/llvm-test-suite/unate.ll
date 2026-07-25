@@ -203,22 +203,6 @@ bb.a:
   %i.y = icmp sgt i32 %i.v, 0
   br i1 %i.y, label %.lr.ph.us, label %._crit_edge.split.us118
 
-._crit_edge.split.us118.loopexit:                 ; preds = %.thread80.us114
-  %.pre129 = load i32, ptr %0, align 8, !tbaa !23
-  br label %._crit_edge.split.us118
-
-._crit_edge.split.us118:                          ; preds = %._crit_edge.split.us118.loopexit, %.lr.ph104.split.us
-  %3 = phi i32 [ %i.r, %.lr.ph104.split.us ], [ %.pre129, %._crit_edge.split.us118.loopexit ] ; 2 uses
-  %4 = phi i32 [ %i.s, %.lr.ph104.split.us ], [ %i.ax, %._crit_edge.split.us118.loopexit ]
-  %.162.lcssa.us = phi ptr [ %.06197.us, %.lr.ph104.split.us ], [ %.364.us115, %._crit_edge.split.us118.loopexit ]
-  %.159.lcssa.us = phi ptr [ %.05898.us, %.lr.ph104.split.us ], [ %.260.us116, %._crit_edge.split.us118.loopexit ] ; 2 uses
-  %.156.lcssa.us = phi ptr [ %.05599.us, %.lr.ph104.split.us ], [ %.4.us117, %._crit_edge.split.us118.loopexit ] ; 2 uses
-  %.1.lcssa.us = phi i32 [ %.053100.us, %.lr.ph104.split.us ], [ %.279.us, %._crit_edge.split.us118.loopexit ]
-  %5 = sext i32 %3 to i64
-  %6 = getelementptr inbounds [4 x i8], ptr %.0101.us, i64 %5 ; 2 uses
-  %7 = icmp ult ptr %6, %i.k
-  br i1 %7, label %.lr.ph104.split.us, label %._crit_edge105
-
 .lr.ph.us:                                        ; preds = %.lr.ph104.split.us, %.thread80.us114
   %.190.us = phi i32 [ %.279.us, %.thread80.us114 ], [ %.053100.us, %.lr.ph104.split.us ] ; 5 uses
   %.15689.us108 = phi ptr [ %.4.us117, %.thread80.us114 ], [ %.05599.us, %.lr.ph104.split.us ] ; 5 uses
@@ -300,6 +284,22 @@ bb.j:                                             ; preds = %.thread.us112
   %i.az = getelementptr inbounds [4 x i8], ptr %.06586.us111, i64 %i.ay ; 2 uses
   %i.ba = icmp ult ptr %i.az, %i.x
   br i1 %i.ba, label %.lr.ph.us, label %._crit_edge.split.us118.loopexit
+
+._crit_edge.split.us118.loopexit:                 ; preds = %.thread80.us114
+  %.pre129 = load i32, ptr %0, align 8, !tbaa !23
+  br label %._crit_edge.split.us118
+
+._crit_edge.split.us118:                          ; preds = %._crit_edge.split.us118.loopexit, %.lr.ph104.split.us
+  %3 = phi i32 [ %i.r, %.lr.ph104.split.us ], [ %.pre129, %._crit_edge.split.us118.loopexit ] ; 2 uses
+  %4 = phi i32 [ %i.s, %.lr.ph104.split.us ], [ %i.ax, %._crit_edge.split.us118.loopexit ]
+  %.162.lcssa.us = phi ptr [ %.06197.us, %.lr.ph104.split.us ], [ %.364.us115, %._crit_edge.split.us118.loopexit ]
+  %.159.lcssa.us = phi ptr [ %.05898.us, %.lr.ph104.split.us ], [ %.260.us116, %._crit_edge.split.us118.loopexit ] ; 2 uses
+  %.156.lcssa.us = phi ptr [ %.05599.us, %.lr.ph104.split.us ], [ %.4.us117, %._crit_edge.split.us118.loopexit ] ; 2 uses
+  %.1.lcssa.us = phi i32 [ %.053100.us, %.lr.ph104.split.us ], [ %.279.us, %._crit_edge.split.us118.loopexit ]
+  %5 = sext i32 %3 to i64
+  %6 = getelementptr inbounds [4 x i8], ptr %.0101.us, i64 %5 ; 2 uses
+  %7 = icmp ult ptr %6, %i.k
+  br i1 %7, label %.lr.ph104.split.us, label %._crit_edge105
 
 .lr.ph104.split:                                  ; preds = %.lr.ph104, %._crit_edge.split.us
   %i.bb = phi i32 [ %i.ce, %._crit_edge.split.us ], [ %i.h, %.lr.ph104 ]

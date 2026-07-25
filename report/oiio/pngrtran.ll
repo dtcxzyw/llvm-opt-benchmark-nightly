@@ -204,16 +204,6 @@ bb.aa:                                            ; preds = %.preheader456.us.us
   %i.hy = zext i8 %.440.us.us.us.us to i64
   br label %bb.ab
 
-6:                                                ; preds = %..loopexit_crit_edge.us.us.us.us, %bb.aa, %.preheader456.us.us
-  %.3385.us.us.us.us = phi i32 [ %i.hq, %..loopexit_crit_edge.us.us.us.us ], [ %.2384510.us.us.us.us, %bb.aa ], [ %.2384510.us.us.us.us, %.preheader456.us.us ] ; 4 uses
-  %.not425.us.us.us.us = icmp sgt i32 %.3385.us.us.us.us, %3
-  br i1 %.not425.us.us.us.us, label %7, label %.thread450
-
-7:                                                ; preds = %6
-  %8 = load ptr, ptr %.0395509.us.us.us.us, align 8, !tbaa !81 ; 2 uses
-  %.not423.us.us.us.us = icmp eq ptr %8, null
-  br i1 %.not423.us.us.us.us, label %.split.us.us.split.us.us.thread, label %.preheader456.us.us, !llvm.loop !87
-
 bb.ab:                                            ; preds = %bb.af, %.preheader.us.us.us.us
   %indvars.iv613 = phi i64 [ %indvars.iv.next614, %bb.af ], [ 0, %.preheader.us.us.us.us ] ; 4 uses
   %i.hz = load ptr, ptr %i.fm, align 8, !tbaa !56 ; 2 uses
@@ -252,7 +242,17 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ae, %bb.ad
   %indvars.iv.next614 = add nuw nsw i64 %indvars.iv613, 1 ; 2 uses
   %exitcond617.not = icmp eq i64 %indvars.iv.next614, %wide.trip.count616
-  br i1 %exitcond617.not, label %..loopexit_crit_edge.us.us.us.us, label %bb.ab, !llvm.loop !88
+  br i1 %exitcond617.not, label %..loopexit_crit_edge.us.us.us.us, label %bb.ab, !llvm.loop !87
+
+6:                                                ; preds = %..loopexit_crit_edge.us.us.us.us, %bb.aa, %.preheader456.us.us
+  %.3385.us.us.us.us = phi i32 [ %i.hq, %..loopexit_crit_edge.us.us.us.us ], [ %.2384510.us.us.us.us, %bb.aa ], [ %.2384510.us.us.us.us, %.preheader456.us.us ] ; 4 uses
+  %.not425.us.us.us.us = icmp sgt i32 %.3385.us.us.us.us, %3
+  br i1 %.not425.us.us.us.us, label %7, label %.thread450
+
+7:                                                ; preds = %6
+  %8 = load ptr, ptr %.0395509.us.us.us.us, align 8, !tbaa !81 ; 2 uses
+  %.not423.us.us.us.us = icmp eq ptr %8, null
+  br i1 %.not423.us.us.us.us, label %.split.us.us.split.us.us.thread, label %.preheader456.us.us, !llvm.loop !88
 
 ..loopexit_crit_edge.us.us.us.us:                 ; preds = %bb.af
   %i.iq = load ptr, ptr %i.er, align 8, !tbaa !76 ; 2 uses
@@ -365,7 +365,7 @@ bb.ah:                                            ; preds = %.preheader.us.us, %
 bb.ai:                                            ; preds = %bb.ah
   %i.le = load ptr, ptr %.0395509.us.us, align 8, !tbaa !81 ; 2 uses
   %.not423.us.us = icmp eq ptr %i.le, null
-  br i1 %.not423.us.us, label %.split.us.us.split.thread, label %.preheader456.us, !llvm.loop !87
+  br i1 %.not423.us.us, label %.split.us.us.split.thread, label %.preheader456.us, !llvm.loop !88
 
 .preheader457.split:                              ; preds = %.preheader457, %.split.thread
   %indvars.iv601 = phi i64 [ %indvars.iv.next602, %.split.thread ], [ 0, %.preheader457 ] ; 2 uses
@@ -444,7 +444,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj, %.pr
 bb.am:                                            ; preds = %bb.al
   %i.my = load ptr, ptr %.0395509, align 8, !tbaa !81 ; 2 uses
   %.not423 = icmp eq ptr %i.my, null
-  br i1 %.not423, label %.split.thread, label %.preheader456, !llvm.loop !87
+  br i1 %.not423, label %.split.thread, label %.preheader456, !llvm.loop !88
 
 .split.thread:                                    ; preds = %bb.am, %.preheader457.split
   %.5 = phi i32 [ %.1383511, %.preheader457.split ], [ %.3385, %bb.am ] ; 2 uses

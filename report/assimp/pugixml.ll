@@ -204,32 +204,32 @@ bb.g:                                             ; preds = %bb.i, %_ZNK4pugi10x
 .lr.ph.i:                                         ; preds = %.preheader27.i
   br i1 %4, label %.lr.ph.split.i, label %.lr.ph.split.us.i
 
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %.loopexit.us.i.a
-  %.135.us.i = phi ptr [ %.3.us.i, %.loopexit.us.i.a ], [ %i.k, %.lr.ph.i ] ; 2 uses
+.lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %bb.h
+  %.135.us.i = phi ptr [ %.3.us.i, %bb.h ], [ %i.k, %.lr.ph.i ] ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.135.us.i, i64 32
   %i.q = load ptr, ptr %i.p, align 8              ; 2 uses
   %.not21.us.i = icmp eq ptr %i.q, null
-  br i1 %.not21.us.i, label %.preheader.us.i, label %.loopexit.us.i.a
+  br i1 %.not21.us.i, label %.preheader.us.i, label %bb.h
 
-.preheader.us.i:                                  ; preds = %.lr.ph.split.us.i, %bb.h
-  %.2.us.i = phi ptr [ %i.t, %bb.h ], [ %.135.us.i, %.lr.ph.split.us.i ] ; 2 uses
+.preheader.us.i:                                  ; preds = %.lr.ph.split.us.i, %.loopexit.us.i.a
+  %.2.us.i = phi ptr [ %.val25.us.i.a, %.loopexit.us.i.a ], [ %.135.us.i, %.lr.ph.split.us.i ] ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.2.us.i, i64 48
   %i.s = load ptr, ptr %i.r, align 8              ; 2 uses
   %.not22.us.i = icmp eq ptr %i.s, null
-  br i1 %.not22.us.i, label %bb.h, label %.loopexit.us.i.a
+  br i1 %.not22.us.i, label %.loopexit.us.i.a, label %bb.h
 
-.loopexit.us.i.a:                                 ; preds = %.preheader.us.i, %.lr.ph.split.us.i
+.loopexit.us.i.a:                                 ; preds = %.preheader.us.i
+  %7 = getelementptr inbounds nuw i8, ptr %.2.us.i, i64 24
+  %.val25.us.i.a = load ptr, ptr %7, align 8      ; 2 uses
+  %.not23.us.i = icmp eq ptr %.val25.us.i.a, null
+  br i1 %.not23.us.i, label %_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_fillINS1_12axis_to_typeILNS1_6axis_tE6EEEEEvRNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorEbT_.exit, label %.preheader.us.i, !llvm.loop !495
+
+bb.h:                                             ; preds = %.preheader.us.i, %.lr.ph.split.us.i
   %.3.us.i = phi ptr [ %i.q, %.lr.ph.split.us.i ], [ %i.s, %.preheader.us.i ] ; 2 uses
   %.val.us.i = load i8, ptr %i.l, align 1
-  %.val25.us.i.a = load ptr, ptr %i.m, align 8
-  %7 = call fastcc noundef zeroext i1 @_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_pushERNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorE(i8 %.val.us.i, ptr %.val25.us.i.a, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %.3.us.i, ptr noundef %3) ; 0 uses
+  %i.t = load ptr, ptr %i.m, align 8
+  %8 = call fastcc noundef zeroext i1 @_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_pushERNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorE(i8 %.val.us.i, ptr %i.t, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %.3.us.i, ptr noundef %3) ; 0 uses
   br label %.lr.ph.split.us.i
-
-bb.h:                                             ; preds = %.preheader.us.i
-  %8 = getelementptr inbounds nuw i8, ptr %.2.us.i, i64 24
-  %i.t = load ptr, ptr %8, align 8                ; 2 uses
-  %.not23.us.i = icmp eq ptr %i.t, null
-  br i1 %.not23.us.i, label %_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_fillINS1_12axis_to_typeILNS1_6axis_tE6EEEEEvRNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorEbT_.exit, label %.preheader.us.i, !llvm.loop !495
 
 bb.i:                                             ; preds = %bb.g
   %i.u = getelementptr inbounds nuw i8, ptr %.017.i, i64 24
@@ -279,32 +279,32 @@ _ZNK4pugi10xpath_node6parentEv.exit28:            ; preds = %_ZNK4pugi10xpath_no
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   br i1 %4, label %.split.i.preheader, label %.lr.ph.i29
 
-.lr.ph.i29:                                       ; preds = %_ZNK4pugi10xpath_node6parentEv.exit28, %.loopexit.us.i30.a
-  %.013.us5.i = phi ptr [ %.2.us.i31, %.loopexit.us.i30.a ], [ %.sroa.0.0.copyload.i20, %_ZNK4pugi10xpath_node6parentEv.exit28 ] ; 2 uses
+.lr.ph.i29:                                       ; preds = %_ZNK4pugi10xpath_node6parentEv.exit28, %bb.l
+  %.013.us5.i = phi ptr [ %.2.us.i31, %bb.l ], [ %.sroa.0.0.copyload.i20, %_ZNK4pugi10xpath_node6parentEv.exit28 ] ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.013.us5.i, i64 32
   %i.ag = load ptr, ptr %i.af, align 8            ; 2 uses
   %.not16.us.i = icmp eq ptr %i.ag, null
-  br i1 %.not16.us.i, label %.preheader.us.i33, label %.loopexit.us.i30.a
+  br i1 %.not16.us.i, label %.preheader.us.i33, label %bb.l
 
-.preheader.us.i33:                                ; preds = %.lr.ph.i29, %bb.l
-  %.1.us.i = phi ptr [ %i.aj, %bb.l ], [ %.013.us5.i, %.lr.ph.i29 ] ; 2 uses
+.preheader.us.i33:                                ; preds = %.lr.ph.i29, %.loopexit.us.i30.a
+  %.1.us.i = phi ptr [ %.val19.us.i.a, %.loopexit.us.i30.a ], [ %.013.us5.i, %.lr.ph.i29 ] ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.1.us.i, i64 48
   %i.ai = load ptr, ptr %i.ah, align 8            ; 2 uses
   %.not17.us.i = icmp eq ptr %i.ai, null
-  br i1 %.not17.us.i, label %bb.l, label %.loopexit.us.i30.a
+  br i1 %.not17.us.i, label %.loopexit.us.i30.a, label %bb.l
 
-.loopexit.us.i30.a:                               ; preds = %.preheader.us.i33, %.lr.ph.i29
+.loopexit.us.i30.a:                               ; preds = %.preheader.us.i33
+  %9 = getelementptr inbounds nuw i8, ptr %.1.us.i, i64 24
+  %.val19.us.i.a = load ptr, ptr %9, align 8      ; 2 uses
+  %.not18.us.i = icmp eq ptr %.val19.us.i.a, null
+  br i1 %.not18.us.i, label %_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_fillINS1_12axis_to_typeILNS1_6axis_tE6EEEEEvRNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorEbT_.exit, label %.preheader.us.i33, !llvm.loop !498
+
+bb.l:                                             ; preds = %.preheader.us.i33, %.lr.ph.i29
   %.2.us.i31 = phi ptr [ %i.ag, %.lr.ph.i29 ], [ %i.ai, %.preheader.us.i33 ] ; 2 uses
   %.val.us.i32 = load i8, ptr %i.ad, align 1
-  %.val19.us.i.a = load ptr, ptr %i.ae, align 8
-  %9 = call fastcc noundef zeroext i1 @_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_pushERNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorE(i8 %.val.us.i32, ptr %.val19.us.i.a, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %.2.us.i31, ptr noundef %3) ; 0 uses
+  %i.aj = load ptr, ptr %i.ae, align 8
+  %10 = call fastcc noundef zeroext i1 @_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_pushERNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorE(i8 %.val.us.i32, ptr %i.aj, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %.2.us.i31, ptr noundef %3) ; 0 uses
   br label %.lr.ph.i29
-
-bb.l:                                             ; preds = %.preheader.us.i33
-  %10 = getelementptr inbounds nuw i8, ptr %.1.us.i, i64 24
-  %i.aj = load ptr, ptr %10, align 8              ; 2 uses
-  %.not18.us.i = icmp eq ptr %i.aj, null
-  br i1 %.not18.us.i, label %_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_fillINS1_12axis_to_typeILNS1_6axis_tE6EEEEEvRNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorEbT_.exit, label %.preheader.us.i33, !llvm.loop !498
 
 .split.i.preheader:                               ; preds = %_ZNK4pugi10xpath_node6parentEv.exit28, %.loopexit.i35
   %.013.i = phi ptr [ %.2.i36, %.loopexit.i35 ], [ %.sroa.0.0.copyload.i20, %_ZNK4pugi10xpath_node6parentEv.exit28 ] ; 2 uses
@@ -333,7 +333,7 @@ bb.m:                                             ; preds = %.preheader.i38
   %i.aq = call fastcc noundef zeroext i1 @_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_pushERNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorE(i8 %.val.i37, ptr %.val19.i, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %.2.i36, ptr noundef %3)
   br i1 %i.aq, label %_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_fillINS1_12axis_to_typeILNS1_6axis_tE6EEEEEvRNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorEbT_.exit, label %.split.i.preheader, !llvm.loop !499
 
-_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_fillINS1_12axis_to_typeILNS1_6axis_tE6EEEEEvRNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorEbT_.exit: ; preds = %bb.i, %bb.h, %.loopexit.i, %bb.j, %bb.l, %.loopexit.i35, %bb.m, %bb.k, %.preheader27.i, %_ZNK4pugi10xpath_node6parentEv.exit
+_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_fillINS1_12axis_to_typeILNS1_6axis_tE6EEEEEvRNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorEbT_.exit: ; preds = %bb.i, %.loopexit.us.i.a, %.loopexit.i, %bb.j, %.loopexit.us.i30.a, %.loopexit.i35, %bb.m, %bb.k, %.preheader27.i, %_ZNK4pugi10xpath_node6parentEv.exit
   ret void
 }
 
@@ -378,11 +378,6 @@ bb.d:                                             ; preds = %.lr.ph48.split.us.s
   %i.k = tail call fastcc noundef zeroext i1 @_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node9step_pushERNS1_18xpath_node_set_rawEPNS_15xml_node_structEPNS1_15xpath_allocatorE(i8 %.val33.us.us, ptr %.val34.us.us, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %.147.us.us, ptr noundef %3)
   br i1 %i.k, label %.loopexit35, label %.preheader.us.us
 
-.loopexit.us.us:                                  ; preds = %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us83.thread, %.preheader.us.us, %bb.c
-  %.3.us.us = phi ptr [ %i.j, %bb.c ], [ %i.z, %.preheader.us.us ], [ %i.v, %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us83.thread ] ; 2 uses
-  %.not27.us.us = icmp eq ptr %.3.us.us, null
-  br i1 %.not27.us.us, label %.loopexit35, label %.lr.ph48.split.us.split.us, !llvm.loop !500
-
 .lr.ph.us.us:                                     ; preds = %.preheader.us.us, %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us83.thread
   %.244.us50.us79 = phi ptr [ %i.m, %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us83.thread ], [ %.147.us.us, %.preheader.us.us ]
   %i.l = getelementptr inbounds nuw i8, ptr %.244.us50.us79, i64 24
@@ -401,7 +396,7 @@ bb.e:                                             ; preds = %.lr.ph.us.us
   %i.p = icmp ne ptr %i.o, null
   %i.q = icmp ne ptr %i.o, %i.m
   %i.r = and i1 %i.p, %i.q
-  br i1 %i.r, label %.lr.ph.i.us.us81, label %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us83, !llvm.loop !501
+  br i1 %i.r, label %.lr.ph.i.us.us81, label %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us83, !llvm.loop !500
 
 _ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us83: ; preds = %.lr.ph.i.us.us81
   %i.s = icmp eq ptr %i.o, %i.m
@@ -419,7 +414,12 @@ _ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us5
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 48
   %i.x = load ptr, ptr %i.w, align 8
   %.not29.us55.us87 = icmp eq ptr %i.x, null
-  br i1 %.not29.us55.us87, label %.lr.ph.us.us, label %.loopexit.us.us, !llvm.loop !502
+  br i1 %.not29.us55.us87, label %.lr.ph.us.us, label %.loopexit.us.us, !llvm.loop !501
+
+.loopexit.us.us:                                  ; preds = %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us83.thread, %.preheader.us.us, %bb.c
+  %.3.us.us = phi ptr [ %i.j, %bb.c ], [ %i.z, %.preheader.us.us ], [ %i.v, %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us83.thread ] ; 2 uses
+  %.not27.us.us = icmp eq ptr %.3.us.us, null
+  br i1 %.not27.us.us, label %.loopexit35, label %.lr.ph48.split.us.split.us, !llvm.loop !502
 
 .preheader.us.us:                                 ; preds = %bb.d
   %i.y = getelementptr inbounds nuw i8, ptr %.147.us.us, i64 40
@@ -455,7 +455,7 @@ bb.g:                                             ; preds = %.lr.ph48.split.us.s
 .loopexit.us:                                     ; preds = %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us.thread, %.preheader.us, %bb.g
   %.3.us = phi ptr [ %i.af, %bb.g ], [ %i.ai, %.preheader.us ], [ %i.av, %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us.thread ] ; 2 uses
   %.not27.us = icmp eq ptr %.3.us, null
-  br i1 %.not27.us, label %.loopexit35, label %.lr.ph48.split.us.split.split, !llvm.loop !500
+  br i1 %.not27.us, label %.loopexit35, label %.lr.ph48.split.us.split.split, !llvm.loop !502
 
 .lr.ph.us:                                        ; preds = %.preheader.us, %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us.thread
   %.244.us50.us = phi ptr [ %i.am, %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us.thread ], [ %.147.us, %.preheader.us ]
@@ -475,7 +475,7 @@ bb.h:                                             ; preds = %.lr.ph.us
   %i.ap = icmp ne ptr %i.ao, null
   %i.aq = icmp ne ptr %i.ao, %i.am
   %i.ar = and i1 %i.ap, %i.aq
-  br i1 %i.ar, label %.lr.ph.i.us.us, label %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us, !llvm.loop !501
+  br i1 %i.ar, label %.lr.ph.i.us.us, label %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us, !llvm.loop !500
 
 _ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us52.us: ; preds = %.lr.ph.i.us.us
   %i.as = icmp eq ptr %i.ao, %i.am
@@ -493,7 +493,7 @@ _ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us5
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 48
   %i.ax = load ptr, ptr %i.aw, align 8
   %.not29.us55.us = icmp eq ptr %i.ax, null
-  br i1 %.not29.us55.us, label %.lr.ph.us, label %.loopexit.us, !llvm.loop !502
+  br i1 %.not29.us55.us, label %.lr.ph.us, label %.loopexit.us, !llvm.loop !501
 
 .lr.ph48.split:                                   ; preds = %.lr.ph48
   br i1 %4, label %.lr.ph48.split.split.us, label %.lr.ph48.split.split.split
@@ -519,7 +519,7 @@ bb.k:                                             ; preds = %.lr.ph48.split.spli
 .loopexit.us67:                                   ; preds = %._crit_edge, %.preheader.us65, %bb.j
   %.3.us63 = phi ptr [ %i.bb, %bb.j ], [ %i.be, %.preheader.us65 ], [ %i.bl, %._crit_edge ] ; 2 uses
   %.not27.us64 = icmp eq ptr %.3.us63, null
-  br i1 %.not27.us64, label %.loopexit35, label %.lr.ph48.split.split.us, !llvm.loop !500
+  br i1 %.not27.us64, label %.loopexit35, label %.lr.ph48.split.split.us, !llvm.loop !502
 
 .preheader.us65:                                  ; preds = %bb.k
   %i.bd = getelementptr inbounds nuw i8, ptr %.147.us59, i64 40
@@ -548,7 +548,7 @@ _ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us.
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 48
   %i.bn = load ptr, ptr %i.bm, align 8
   %.not29.us.us75 = icmp eq ptr %i.bn, null
-  br i1 %.not29.us.us75, label %.lr.ph.us69, label %.loopexit.us67, !llvm.loop !502
+  br i1 %.not29.us.us75, label %.lr.ph.us69, label %.loopexit.us67, !llvm.loop !501
 
 bb.l:                                             ; preds = %bb.b
   %i.bo = getelementptr inbounds nuw i8, ptr %.023, i64 24
@@ -595,12 +595,12 @@ bb.n:                                             ; preds = %.lr.ph
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 48
   %i.cf = load ptr, ptr %i.ce, align 8
   %.not29.us.us = icmp eq ptr %i.cf, null
-  br i1 %.not29.us.us, label %.lr.ph, label %.loopexit, !llvm.loop !502
+  br i1 %.not29.us.us, label %.lr.ph, label %.loopexit, !llvm.loop !501
 
 .loopexit:                                        ; preds = %bb.n, %.preheader, %bb.m
   %.3 = phi ptr [ %i.bt, %bb.m ], [ %i.bw, %.preheader ], [ %i.cd, %bb.n ] ; 2 uses
   %.not27 = icmp eq ptr %.3, null
-  br i1 %.not27, label %.loopexit35, label %.lr.ph48.split.split.split, !llvm.loop !500
+  br i1 %.not27, label %.loopexit35, label %.lr.ph48.split.split.split, !llvm.loop !502
 
 .loopexit35:                                      ; preds = %bb.l, %.loopexit.us, %.lr.ph.us, %bb.d, %.loopexit.us.us, %.lr.ph.us.us, %bb.f, %.loopexit, %.lr.ph, %bb.k, %.loopexit.us67, %_ZN4pugi4impl12_GLOBAL__N_116node_is_ancestorEPNS_15xml_node_structES3_.exit.us.us72, %.lr.ph.us69
   ret void

@@ -204,20 +204,6 @@ bb.a:
   %i.k = ashr exact i64 %sext, 32                 ; 2 uses
   br i1 %i.j, label %.epil.preheader, label %.preheader.us.new
 
-2:                                                ; preds = %._crit_edge.us
-  %3 = add i64 %indvars.iv.lcssa, 2
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv.next.lcssa
-  %5 = load ptr, ptr %4, align 8, !tbaa !791
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  store i32 %.01722.us, ptr %6, align 4, !tbaa !4
-  br label %7
-
-7:                                                ; preds = %2, %._crit_edge.us
-  %.2.us = phi i64 [ %3, %2 ], [ %indvars.iv.next.lcssa, %._crit_edge.us ]
-  %8 = add nuw nsw i32 %.01722.us, 1              ; 2 uses
-  %exitcond27.not = icmp eq i32 %8, %i.a
-  br i1 %exitcond27.not, label %._crit_edge23, label %.preheader.us, !llvm.loop !793
-
 .preheader.us.new:                                ; preds = %.preheader.us, %.preheader.us.new
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %.preheader.us.new ], [ %i.k, %.preheader.us ] ; 5 uses
   %niter45 = phi i32 [ %niter45.next.3, %.preheader.us.new ], [ 0, %.preheader.us ]
@@ -243,7 +229,21 @@ bb.a:
   store i32 %.01722.us, ptr %i.y, align 4, !tbaa !4
   %niter45.next.3 = add nuw nsw i32 %niter45, 4   ; 2 uses
   %niter45.ncmp.3 = icmp eq i32 %niter45.next.3, %unroll_iter44
-  br i1 %niter45.ncmp.3, label %._crit_edge.us.unr-lcssa, label %.preheader.us.new, !llvm.loop !794
+  br i1 %niter45.ncmp.3, label %._crit_edge.us.unr-lcssa, label %.preheader.us.new, !llvm.loop !793
+
+2:                                                ; preds = %._crit_edge.us
+  %3 = add i64 %indvars.iv.lcssa, 2
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv.next.lcssa
+  %5 = load ptr, ptr %4, align 8, !tbaa !791
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 24
+  store i32 %.01722.us, ptr %6, align 4, !tbaa !4
+  br label %7
+
+7:                                                ; preds = %2, %._crit_edge.us
+  %.2.us = phi i64 [ %3, %2 ], [ %indvars.iv.next.lcssa, %._crit_edge.us ]
+  %8 = add nuw nsw i32 %.01722.us, 1              ; 2 uses
+  %exitcond27.not = icmp eq i32 %8, %i.a
+  br i1 %exitcond27.not, label %._crit_edge23, label %.preheader.us, !llvm.loop !794
 
 ._crit_edge.us.unr-lcssa:                         ; preds = %.preheader.us.new
   br i1 %lcmp.mod40.not, label %._crit_edge.us, label %.epil.preheader
@@ -389,7 +389,7 @@ bb.l:                                             ; preds = %bb.k, %.preheader.1
   %i.bs = add nuw nsw i32 %.01722, 2              ; 2 uses
   %niter.next.1 = add nuw nsw i32 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge23.loopexit37.unr-lcssa, label %.preheader, !llvm.loop !793
+  br i1 %niter.ncmp.1, label %._crit_edge23.loopexit37.unr-lcssa, label %.preheader, !llvm.loop !794
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

@@ -203,15 +203,15 @@ bb.c:                                             ; preds = %bb.b
   %wide.trip.count.i = zext nneg i32 %i.p to i64
   br label %.preheader.us.i
 
-.preheader.us.i:                                  ; preds = %.critedge.us.i.a, %.preheader.us.preheader.i
-  %indvars.iv35.i = phi i64 [ %i.t, %.preheader.us.preheader.i ], [ %indvars.iv.next36.i.a, %.critedge.us.i.a ] ; 3 uses
+.preheader.us.i:                                  ; preds = %.critedge.us.thread.i, %.preheader.us.preheader.i
+  %indvars.iv35.i = phi i64 [ %i.t, %.preheader.us.preheader.i ], [ %indvars.iv.next36.i, %.critedge.us.thread.i ] ; 3 uses
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.f, %.preheader.us.i
-  %indvars.iv.i = phi i64 [ 0, %.preheader.us.i ], [ %indvars.iv.next.i, %bb.f ] ; 3 uses
+bb.d:                                             ; preds = %.critedge.us.i.a, %.preheader.us.i
+  %indvars.iv.i = phi i64 [ 0, %.preheader.us.i ], [ %indvars.iv.next36.i.a, %.critedge.us.i.a ] ; 3 uses
   %i.u = add nsw i64 %indvars.iv.i, %indvars.iv35.i ; 2 uses
   %i.v = icmp slt i64 %i.u, %i.s
-  br i1 %i.v, label %bb.e, label %.critedge.us.i.a
+  br i1 %i.v, label %bb.e, label %.critedge.us.thread.i
 
 bb.e:                                             ; preds = %bb.d
   %i.w = load ptr, ptr %0, align 8, !tbaa !25
@@ -221,25 +221,25 @@ bb.e:                                             ; preds = %bb.d
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %indvars.iv.i
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !26
   %.not.us.i = icmp eq i32 %i.y, %i.ab
-  br i1 %.not.us.i, label %bb.f, label %.critedge.us.i.a
+  br i1 %.not.us.i, label %.critedge.us.i.a, label %.critedge.us.thread.i
 
-.critedge.us.i.a:                                 ; preds = %bb.d, %bb.e
-  %indvars.iv.next36.i.a = add nsw i64 %indvars.iv35.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next36.i.a to i32
-  %exitcond38.not.i.a = icmp eq i32 %i.o, %lftr.wideiv.i
-  br i1 %exitcond38.not.i.a, label %_ZNK11CStringBaseIwE4FindERKS0_i.exit.thread, label %.preheader.us.i, !llvm.loop !125
+.critedge.us.i.a:                                 ; preds = %bb.e
+  %indvars.iv.next36.i.a = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond38.not.i.a = icmp eq i64 %indvars.iv.next36.i.a, %wide.trip.count.i
+  br i1 %exitcond38.not.i.a, label %bb.f, label %bb.d, !llvm.loop !125
 
-bb.f:                                             ; preds = %bb.e
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.critedge.us.thread.i, label %bb.d, !llvm.loop !126
-
-.critedge.us.thread.i:                            ; preds = %bb.f
-  %i.ac = trunc nsw i64 %indvars.iv35.i to i32
+bb.f:                                             ; preds = %.critedge.us.i.a
+  %3 = trunc nsw i64 %indvars.iv35.i to i32
   br label %_ZNK11CStringBaseIwE4FindERKS0_i.exit
 
-_ZNK11CStringBaseIwE4FindERKS0_i.exit:            ; preds = %.lr.ph, %.critedge.us.thread.i
-  %.2.i = phi i32 [ %.032, %.lr.ph ], [ %i.ac, %.critedge.us.thread.i ] ; 7 uses
+.critedge.us.thread.i:                            ; preds = %bb.d, %bb.e
+  %indvars.iv.next36.i = add nsw i64 %indvars.iv35.i, 1 ; 2 uses
+  %i.ac = trunc i64 %indvars.iv.next36.i to i32
+  %exitcond38.not.i = icmp eq i32 %i.o, %i.ac
+  br i1 %exitcond38.not.i, label %_ZNK11CStringBaseIwE4FindERKS0_i.exit.thread, label %.preheader.us.i, !llvm.loop !126
+
+_ZNK11CStringBaseIwE4FindERKS0_i.exit:            ; preds = %.lr.ph, %bb.f
+  %.2.i = phi i32 [ %.032, %.lr.ph ], [ %3, %bb.f ] ; 7 uses
   %i.ad = icmp slt i32 %.2.i, 0
   br i1 %i.ad, label %_ZNK11CStringBaseIwE4FindERKS0_i.exit.thread, label %bb.g
 
@@ -386,8 +386,8 @@ _ZN11CStringBaseIwE6InsertEiRKS0_.exit:           ; preds = %_ZN11CStringBaseIwE
   %i.cc = icmp slt i32 %i.ca, %i.bz
   br i1 %i.cc, label %.lr.ph, label %_ZNK11CStringBaseIwE4FindERKS0_i.exit.thread, !llvm.loop !133
 
-_ZNK11CStringBaseIwE4FindERKS0_i.exit.thread:     ; preds = %_ZNK11CStringBaseIwE4FindERKS0_i.exit, %_ZN11CStringBaseIwE6InsertEiRKS0_.exit, %.preheader23.i, %.critedge.us.i.a, %bb.c, %bb.b, %bb.a
-  %.019 = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ %.01831, %.critedge.us.i.a ], [ 0, %bb.c ], [ %.01831, %_ZNK11CStringBaseIwE4FindERKS0_i.exit ], [ %i.cb, %_ZN11CStringBaseIwE6InsertEiRKS0_.exit ], [ %.01831, %.preheader23.i ]
+_ZNK11CStringBaseIwE4FindERKS0_i.exit.thread:     ; preds = %_ZNK11CStringBaseIwE4FindERKS0_i.exit, %_ZN11CStringBaseIwE6InsertEiRKS0_.exit, %.preheader23.i, %.critedge.us.thread.i, %bb.c, %bb.b, %bb.a
+  %.019 = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ %.01831, %.critedge.us.thread.i ], [ 0, %bb.c ], [ %.01831, %_ZNK11CStringBaseIwE4FindERKS0_i.exit ], [ %i.cb, %_ZN11CStringBaseIwE6InsertEiRKS0_.exit ], [ %.01831, %.preheader23.i ]
   ret i32 %.019
 }
 

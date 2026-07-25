@@ -201,20 +201,26 @@ _ZN2PP12Parser_utils9start_dexERSt6vectorIiSaIiEERKS3_.exit: ; preds = %.loopexi
   %.03464.us = phi i32 [ %i.bo, %_ZN2PP12Parser_utils9start_dexERSt6vectorIiSaIiEERKS3_.exit50.us ], [ 0, %.preheader.us.preheader ]
   br i1 %exitcond106.not121, label %._crit_edge124, label %.lr.ph123
 
-._crit_edge124:                                   ; preds = %7, %.preheader.us
-  %5 = load i32, ptr %i.ao, align 4, !tbaa !4
-  %6 = add nsw i32 %5, 1
-  store i32 %6, ptr %i.ao, align 4, !tbaa !4
-  br label %..loopexit_crit_edge.us
-
-.lr.ph123:                                        ; preds = %.preheader.us, %7
-  %indvars.iv102122 = phi i64 [ %indvars.iv.next103, %7 ], [ 0, %.preheader.us ] ; 3 uses
+.lr.ph123:                                        ; preds = %.preheader.us, %5
+  %indvars.iv102122 = phi i64 [ %indvars.iv.next103, %5 ], [ 0, %.preheader.us ] ; 3 uses
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv102122 ; 3 uses
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !4  ; 2 uses
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.ap, i64 %indvars.iv102122
   %i.au = load i32, ptr %i.at, align 4, !tbaa !4
   %i.av = icmp eq i32 %i.as, %i.au
-  br i1 %i.av, label %7, label %bb.c
+  br i1 %i.av, label %5, label %bb.c
+
+5:                                                ; preds = %.lr.ph123
+  store i32 %i.al, ptr %i.ar, align 4, !tbaa !4
+  %indvars.iv.next103 = add nuw nsw i64 %indvars.iv102122, 1 ; 2 uses
+  %exitcond106.not = icmp eq i64 %indvars.iv.next103, %wide.trip.count105
+  br i1 %exitcond106.not, label %._crit_edge124, label %.lr.ph123
+
+._crit_edge124:                                   ; preds = %5, %.preheader.us
+  %6 = load i32, ptr %i.ao, align 4, !tbaa !4
+  %7 = add nsw i32 %6, 1
+  store i32 %7, ptr %i.ao, align 4, !tbaa !4
+  br label %..loopexit_crit_edge.us
 
 bb.c:                                             ; preds = %.lr.ph123
   %i.aw = add nsw i32 %i.as, 1
@@ -289,12 +295,6 @@ _ZN2PP12Parser_utils9start_dexERSt6vectorIiSaIiEERKS3_.exit50.us: ; preds = %.lo
   %i.bp = icmp slt i32 %i.bo, %2
   %or.cond85 = select i1 %i.bn, i1 %i.bp, i1 false
   br i1 %or.cond85, label %.preheader.us, label %.loopexit52, !llvm.loop !24
-
-7:                                                ; preds = %.lr.ph123
-  store i32 %i.al, ptr %i.ar, align 4, !tbaa !4
-  %indvars.iv.next103 = add nuw nsw i64 %indvars.iv102122, 1 ; 2 uses
-  %exitcond106.not = icmp eq i64 %indvars.iv.next103, %wide.trip.count105
-  br i1 %exitcond106.not, label %._crit_edge124, label %.lr.ph123
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses

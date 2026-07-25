@@ -201,6 +201,16 @@ bb.ez:                                            ; preds = %bb.ey
   %i.oe = add i64 %.reass267.i.reass.i.reass.i.reass.reass, %.sroa.02.0.i50.us.i.i.i695
   br label %5
 
+3:                                                ; preds = %.lr.ph.i46.us.i.i.i
+  %4 = add i64 %i.nh, %.sroa.15.0.copyload.i.i.i
+  br label %5
+
+5:                                                ; preds = %3, %bb.ez, %.split.us.i.i
+  %6 = phi i64 [ %i.oe, %bb.ez ], [ %4, %3 ], [ %i.nx, %.split.us.i.i ] ; 2 uses
+  %7 = add i64 %6, %i.lu                          ; 2 uses
+  %8 = icmp ult i64 %7, %.sroa.1351.0.copyload.i.i.i
+  br i1 %8, label %.lr.ph.i46.us.i.i.i, label %.loopexit.i.i.i
+
 .loopexit.i.us.i.i.i:                             ; preds = %.preheader74.us.i.i.i.preheader, %.preheader.us.i.us.i.i.preheader, %.preheader74.us.i.i.i, %.preheader.us.i.us.i.i, %.preheader.us.i.preheader.split.i.i
   %.sroa.3013.3.us.i.i.i = phi i64 [ -1, %.preheader.us.i.us.i.i ], [ -1, %.preheader.us.i.preheader.split.i.i ], [ 0, %.preheader74.us.i.i.i ], [ -1, %.preheader.us.i.us.i.i.preheader ], [ 0, %.preheader74.us.i.i.i.preheader ]
   %.sroa.753.4.us.i.i.i = phi i64 [ %i.nh, %.preheader.us.i.us.i.i ], [ %i.nh, %.preheader.us.i.preheader.split.i.i ], [ %i.mc, %.preheader74.us.i.i.i ], [ %i.nh, %.preheader.us.i.us.i.i.preheader ], [ %i.mc, %.preheader74.us.i.i.i.preheader ] ; 3 uses
@@ -242,16 +252,6 @@ bb.fc:                                            ; preds = %bb.fb
   %i.oq = add i64 %.pre.i33.us.i.i.i, 2
   store i64 %i.oq, ptr %.sroa.512.0..sroa_idx.i.i.i, align 8, !alias.scope !1565, !noalias !1538
   br label %bb.em
-
-3:                                                ; preds = %.lr.ph.i46.us.i.i.i
-  %4 = add i64 %i.nh, %.sroa.15.0.copyload.i.i.i
-  br label %5
-
-5:                                                ; preds = %3, %bb.ez, %.split.us.i.i
-  %6 = phi i64 [ %i.oe, %bb.ez ], [ %4, %3 ], [ %i.nx, %.split.us.i.i ] ; 2 uses
-  %7 = add i64 %6, %i.lu                          ; 2 uses
-  %8 = icmp ult i64 %7, %.sroa.1351.0.copyload.i.i.i
-  br i1 %8, label %.lr.ph.i46.us.i.i.i, label %.loopexit.i.i.i
 
 .loopexit77.split.us.i.i.i:                       ; preds = %bb.fb, %.loopexit.i.us.i.i.i
   %lpad.loopexit.us.i.i.i = landingpad { ptr, i32 }

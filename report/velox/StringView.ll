@@ -189,31 +189,31 @@ bb.e:                                             ; preds = %bb.d
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 4
   br label %.lr.ph.i.us.us
 
-.lr.ph.i.us.us:                                   ; preds = %bb.f, %.lr.ph.i.preheader.us.us
-  %.01431.i.us.us = phi i32 [ %9, %bb.f ], [ %i.e, %.lr.ph.i.preheader.us.us ] ; 3 uses
-  %.01630.i.us.us = phi ptr [ %7, %bb.f ], [ %.sroa.gep133, %.lr.ph.i.preheader.us.us ] ; 2 uses
-  %.01829.i.us.us = phi ptr [ %8, %bb.f ], [ %i.cb, %.lr.ph.i.preheader.us.us ] ; 2 uses
+.lr.ph.i.us.us:                                   ; preds = %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.us.us.a, %.lr.ph.i.preheader.us.us
+  %.01431.i.us.us = phi i32 [ %7, %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.us.us.a ], [ %i.e, %.lr.ph.i.preheader.us.us ] ; 3 uses
+  %.01630.i.us.us = phi ptr [ %5, %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.us.us.a ], [ %.sroa.gep133, %.lr.ph.i.preheader.us.us ] ; 2 uses
+  %.01829.i.us.us = phi ptr [ %6, %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.us.us.a ], [ %i.cb, %.lr.ph.i.preheader.us.us ] ; 2 uses
   %i.cc = load <32 x i8>, ptr %.01630.i.us.us, align 1, !tbaa !20, !noalias !21
   %i.cd = load <32 x i8>, ptr %.01829.i.us.us, align 1, !tbaa !20, !noalias !26
   %i.ce = icmp eq <32 x i8> %i.cc, %i.cd
   %i.cf = bitcast <32 x i1> %i.ce to i32          ; 2 uses
   %i.cg = icmp eq i32 %i.cf, -1
-  br i1 %i.cg, label %bb.f, label %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.us.us.a
+  br i1 %i.cg, label %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.us.us.a, label %bb.f
 
 _ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.us.us.a: ; preds = %.lr.ph.i.us.us
-  %5 = xor i32 %i.cf, -1
-  %6 = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %5, i1 true)
-  %.not159.us.us = icmp samesign ult i32 %6, %.01431.i.us.us
-  br i1 %.not159.us.us, label %bb.g, label %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.thread.loopexit367
+  %5 = getelementptr inbounds nuw i8, ptr %.01630.i.us.us, i64 32
+  %6 = getelementptr inbounds nuw i8, ptr %.01829.i.us.us, i64 32
+  %7 = add nsw i32 %.01431.i.us.us, -32
+  %8 = icmp sgt i32 %.01431.i.us.us, 32
+  br i1 %8, label %.lr.ph.i.us.us, label %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.thread.loopexit366
 
 bb.f:                                             ; preds = %.lr.ph.i.us.us
-  %7 = getelementptr inbounds nuw i8, ptr %.01630.i.us.us, i64 32
-  %8 = getelementptr inbounds nuw i8, ptr %.01829.i.us.us, i64 32
-  %9 = add nsw i32 %.01431.i.us.us, -32
-  %10 = icmp sgt i32 %.01431.i.us.us, 32
-  br i1 %10, label %.lr.ph.i.us.us, label %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.thread.loopexit366
+  %9 = xor i32 %i.cf, -1
+  %10 = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %9, i1 true)
+  %.not159.us.us = icmp samesign ult i32 %10, %.01431.i.us.us
+  br i1 %.not159.us.us, label %bb.g, label %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.thread.loopexit367
 
-bb.g:                                             ; preds = %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.us.us.a
+bb.g:                                             ; preds = %bb.f
   %.not93.us202.us = icmp eq i16 %i.bp, 0
   br i1 %.not93.us202.us, label %.loopexit166.split.split.us.us, label %.lr.ph.i.preheader.us.us, !llvm.loop !17
 
@@ -259,11 +259,11 @@ _ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit
   %i.cx = zext nneg i16 %i.ap to i32
   br label %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.thread
 
-_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.thread.loopexit366: ; preds = %bb.f
+_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.thread.loopexit366: ; preds = %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.us.us.a
   %i.cy = zext nneg i16 %i.bn to i32
   br label %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.thread
 
-_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.thread.loopexit367: ; preds = %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.us.us.a
+_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.thread.loopexit367: ; preds = %bb.f
   %i.cz = zext nneg i16 %i.bn to i32
   br label %_ZN8facebook5velox4simd14memEqualUnsafeIN5xsimd4fma3INS3_4avx2EEEEEbPKvS8_i.exit.thread
 

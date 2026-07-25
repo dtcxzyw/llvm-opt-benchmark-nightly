@@ -201,9 +201,6 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph31.spl
   %i.l = sext i32 %i.g to i64
   br label %.lr.ph.us
 
-._crit_edge.us:                                   ; preds = %bb.f, %bb.c
-  br i1 %i.e, label %._crit_edge32, label %.lr.ph31.split.us, !llvm.loop !38
-
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %bb.f
   %indvars.iv36 = phi i64 [ %i.k, %.lr.ph.us.preheader ], [ %indvars.iv.next37, %bb.f ]
   %indvars.iv.next37 = add nsw i64 %indvars.iv36, -1 ; 3 uses
@@ -231,7 +228,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.sink = phi i32 [ %i.w, %bb.e ], [ %i.r, %bb.d ]
   %i.x = tail call i32 @VP8PutBit(ptr noundef %1, i32 noundef %i.p, i32 noundef %.sink) #6 ; 0 uses
   %i.y = icmp sgt i64 %indvars.iv.next37, %i.l
-  br i1 %i.y, label %.lr.ph.us, label %._crit_edge.us, !llvm.loop !39
+  br i1 %i.y, label %.lr.ph.us, label %._crit_edge.us, !llvm.loop !38
+
+._crit_edge.us:                                   ; preds = %bb.f, %bb.c
+  br i1 %i.e, label %._crit_edge32, label %.lr.ph31.split.us, !llvm.loop !39
 
 .lr.ph31.split:                                   ; preds = %.lr.ph31, %._crit_edge
   %.029 = phi ptr [ %i.z, %._crit_edge ], [ %i.a, %.lr.ph31 ] ; 3 uses
@@ -282,11 +282,11 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.sink46 = phi i32 [ %i.as, %bb.j ], [ %i.an, %bb.i ]
   %i.at = tail call i32 @VP8PutBit(ptr noundef %1, i32 noundef %i.al, i32 noundef %.sink46) #6 ; 0 uses
   %i.au = icmp sgt i64 %indvars.iv.next, %i.ah
-  br i1 %i.au, label %.lr.ph, label %._crit_edge, !llvm.loop !39
+  br i1 %i.au, label %.lr.ph, label %._crit_edge, !llvm.loop !38
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.h
   tail call void @WebPSafeFree(ptr noundef nonnull %.029) #6
-  br i1 %i.aa, label %._crit_edge32, label %.lr.ph31.split, !llvm.loop !38
+  br i1 %i.aa, label %._crit_edge32, label %.lr.ph31.split, !llvm.loop !39
 
 ._crit_edge32:                                    ; preds = %._crit_edge, %._crit_edge.us, %bb.a
   %.not25 = icmp eq i32 %3, 0

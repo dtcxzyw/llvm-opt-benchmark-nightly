@@ -203,12 +203,12 @@ bb.j:                                             ; preds = %bb.h
   %wide.trip.count = zext nneg i32 %.fr121 to i64
   br label %.lr.ph104.split.us
 
-.lr.ph104.split.us:                               ; preds = %.lr.ph104.split.us.preheader, %..loopexit_crit_edge.us.a
-  %i.ce = phi i32 [ %2, %..loopexit_crit_edge.us.a ], [ %i.bu, %.lr.ph104.split.us.preheader ]
-  %i.cf = phi i32 [ %i.cm, %..loopexit_crit_edge.us.a ], [ %i.ca, %.lr.ph104.split.us.preheader ]
-  %.1103.us = phi i32 [ %4, %..loopexit_crit_edge.us.a ], [ %.083112, %.lr.ph104.split.us.preheader ] ; 2 uses
-  %.084102.us = phi ptr [ %6, %..loopexit_crit_edge.us.a ], [ %i.cd, %.lr.ph104.split.us.preheader ] ; 2 uses
-  %.087101.us = phi i32 [ %i.cn, %..loopexit_crit_edge.us.a ], [ 0, %.lr.ph104.split.us.preheader ] ; 2 uses
+.lr.ph104.split.us:                               ; preds = %.lr.ph104.split.us.preheader, %bb.l
+  %i.ce = phi i32 [ %4, %bb.l ], [ %i.bu, %.lr.ph104.split.us.preheader ]
+  %i.cf = phi i32 [ %.082100.us, %bb.l ], [ %i.ca, %.lr.ph104.split.us.preheader ]
+  %.1103.us = phi i32 [ %6, %bb.l ], [ %.083112, %.lr.ph104.split.us.preheader ] ; 2 uses
+  %.084102.us = phi ptr [ %8, %bb.l ], [ %i.cd, %.lr.ph104.split.us.preheader ] ; 2 uses
+  %.087101.us = phi i32 [ %i.co, %bb.l ], [ 0, %.lr.ph104.split.us.preheader ] ; 2 uses
   %i.cg = load i32, ptr %i.r, align 8, !tbaa !68
   %i.ch = icmp ult i32 %i.cg, %i.h
   br i1 %i.ch, label %.lr.ph.us, label %bb.k
@@ -217,39 +217,39 @@ bb.k:                                             ; preds = %.lr.ph104.split.us
   %i.ci = add nsw i32 %.087101.us, %.086117
   %i.cj = load i32, ptr %i.bw, align 4, !tbaa !73
   %i.ck = icmp slt i32 %i.ci, %i.cj
-  br i1 %i.ck, label %.lr.ph.us, label %..loopexit_crit_edge.us.a
+  br i1 %i.ck, label %.lr.ph.us, label %bb.l
 
 .lr.ph.us:                                        ; preds = %bb.k, %.lr.ph104.split.us
   %i.cl = sext i32 %.1103.us to i64
   %invariant.gep = getelementptr [8 x i8], ptr %i.o, i64 %i.cl
-  br label %bb.l
-
-..loopexit_crit_edge.us.loopexit:                 ; preds = %bb.l
-  %.pre133 = load i32, ptr %i.bt, align 4, !tbaa !91
   br label %..loopexit_crit_edge.us.a
 
-..loopexit_crit_edge.us.a:                        ; preds = %..loopexit_crit_edge.us.loopexit, %bb.k
-  %2 = phi i32 [ %.pre133, %..loopexit_crit_edge.us.loopexit ], [ %i.ce, %bb.k ] ; 2 uses
-  %i.cm = phi i32 [ %9, %..loopexit_crit_edge.us.loopexit ], [ %i.cf, %bb.k ] ; 2 uses
-  %3 = load i32, ptr %i.bi, align 8, !tbaa !90
-  %4 = add nsw i32 %3, %.1103.us                  ; 2 uses
-  %5 = sext i32 %i.cm to i64
-  %6 = getelementptr inbounds [8 x i8], ptr %.084102.us, i64 %5
-  %i.cn = add nuw nsw i32 %.087101.us, 1          ; 2 uses
-  %7 = icmp slt i32 %i.cn, %2
-  br i1 %7, label %.lr.ph104.split.us, label %.loopexit95.loopexit, !llvm.loop !125
-
-bb.l:                                             ; preds = %.lr.ph.us, %bb.l
-  %indvars.iv = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next, %bb.l ] ; 2 uses
-  %.082100.us = phi i32 [ %i.bs, %.lr.ph.us ], [ %i.co, %bb.l ] ; 2 uses
+..loopexit_crit_edge.us.a:                        ; preds = %.lr.ph.us, %..loopexit_crit_edge.us.a
+  %indvars.iv = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next, %..loopexit_crit_edge.us.a ] ; 2 uses
+  %i.cm = phi i32 [ %i.bs, %.lr.ph.us ], [ %i.cn, %..loopexit_crit_edge.us.a ] ; 2 uses
   %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv
-  %8 = load ptr, ptr %gep, align 8, !tbaa !65
-  tail call void %i.bh(ptr noundef nonnull %0, ptr noundef nonnull %i.av, ptr noundef %8, ptr noundef %.084102.us, i32 noundef %.082100.us) #7
-  %9 = load i32, ptr %i.bl, align 4, !tbaa !115   ; 2 uses
-  %i.co = add i32 %9, %.082100.us
+  %2 = load ptr, ptr %gep, align 8, !tbaa !65
+  tail call void %i.bh(ptr noundef nonnull %0, ptr noundef nonnull %i.av, ptr noundef %2, ptr noundef %.084102.us, i32 noundef %i.cm) #7
+  %3 = load i32, ptr %i.bl, align 4, !tbaa !115   ; 2 uses
+  %i.cn = add i32 %3, %i.cm
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %..loopexit_crit_edge.us.loopexit, label %bb.l, !llvm.loop !126
+  br i1 %exitcond.not, label %..loopexit_crit_edge.us.loopexit, label %..loopexit_crit_edge.us.a, !llvm.loop !125
+
+..loopexit_crit_edge.us.loopexit:                 ; preds = %..loopexit_crit_edge.us.a
+  %.pre133 = load i32, ptr %i.bt, align 4, !tbaa !91
+  br label %bb.l
+
+bb.l:                                             ; preds = %..loopexit_crit_edge.us.loopexit, %bb.k
+  %4 = phi i32 [ %.pre133, %..loopexit_crit_edge.us.loopexit ], [ %i.ce, %bb.k ] ; 2 uses
+  %.082100.us = phi i32 [ %3, %..loopexit_crit_edge.us.loopexit ], [ %i.cf, %bb.k ] ; 2 uses
+  %5 = load i32, ptr %i.bi, align 8, !tbaa !90
+  %6 = add nsw i32 %5, %.1103.us                  ; 2 uses
+  %7 = sext i32 %.082100.us to i64
+  %8 = getelementptr inbounds [8 x i8], ptr %.084102.us, i64 %7
+  %i.co = add nuw nsw i32 %.087101.us, 1          ; 2 uses
+  %9 = icmp slt i32 %i.co, %4
+  br i1 %9, label %.lr.ph104.split.us, label %.loopexit95.loopexit, !llvm.loop !126
 
 .lr.ph104.split:                                  ; preds = %.lr.ph104
   %i.cp = load i32, ptr %i.bi, align 8, !tbaa !90
@@ -257,13 +257,13 @@ bb.l:                                             ; preds = %.lr.ph.us, %bb.l
   %i.cr = add i32 %.083112, %i.cq
   br label %.loopexit95
 
-.loopexit95.loopexit:                             ; preds = %..loopexit_crit_edge.us.a
+.loopexit95.loopexit:                             ; preds = %bb.l
   %.pre134 = load i32, ptr %i.t, align 8, !tbaa !69
   br label %.loopexit95
 
 .loopexit95:                                      ; preds = %.lr.ph104.split, %.loopexit95.loopexit, %bb.j, %bb.i
   %i.cs = phi i32 [ %i.at, %bb.i ], [ %i.at, %bb.j ], [ %i.at, %.lr.ph104.split ], [ %.pre134, %.loopexit95.loopexit ] ; 2 uses
-  %.2 = phi i32 [ %i.ba, %bb.i ], [ %.083112, %bb.j ], [ %i.cr, %.lr.ph104.split ], [ %4, %.loopexit95.loopexit ]
+  %.2 = phi i32 [ %i.ba, %bb.i ], [ %.083112, %bb.j ], [ %i.cr, %.lr.ph104.split ], [ %6, %.loopexit95.loopexit ]
   %indvars.iv.next131 = add nuw nsw i64 %indvars.iv130, 1 ; 2 uses
   %i.ct = sext i32 %i.cs to i64
   %i.cu = icmp slt i64 %indvars.iv.next131, %i.ct

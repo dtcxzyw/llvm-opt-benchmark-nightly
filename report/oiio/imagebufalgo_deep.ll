@@ -204,34 +204,34 @@ bb.r:                                             ; preds = %bb.q
 .lr.ph183.split.us:                               ; preds = %.lr.ph183
   br i1 %i.m, label %.lr.ph183.split.us.split.us, label %.lr.ph183.split.us.split
 
-.lr.ph183.split.us.split.us:                      ; preds = %.lr.ph183.split.us, %.thread165.us.us.a
-  %.0106180.us.us = phi i32 [ %8, %.thread165.us.us.a ], [ %i.co, %.lr.ph183.split.us ] ; 3 uses
+.lr.ph183.split.us.split.us:                      ; preds = %.lr.ph183.split.us, %bb.u
+  %.0106180.us.us = phi i32 [ %8, %bb.u ], [ %i.co, %.lr.ph183.split.us ] ; 3 uses
   invoke void @_ZNK11OpenImageIO4v3_18ImageBuf8getpixelEiiiNS0_4spanIfLm18446744073709551615EEENS1_8WrapModeE(ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %.0106180.us.us, i32 noundef %.0107186, i32 noundef %.0108192, ptr %i.bh, i64 %.pre-phi, i32 noundef 1)
           to label %.preheader170.us.us unwind label %.split.us.split.us
 
-bb.s:                                             ; preds = %.preheader170.us.us, %bb.u
-  %indvars.iv245 = phi i64 [ 0, %.preheader170.us.us ], [ %indvars.iv.next246, %bb.u ] ; 4 uses
+bb.s:                                             ; preds = %.preheader170.us.us, %.thread165.us.us.a
+  %indvars.iv245 = phi i64 [ 0, %.preheader170.us.us ], [ %indvars.iv.next246, %.thread165.us.us.a ] ; 4 uses
   %.not114.us.us = icmp eq i64 %indvars.iv245, %i.cu
   %.not115.us.us = icmp eq i64 %indvars.iv245, %.0110.lcssa
   %or.cond125.us.us = select i1 %.not114.us.us, i1 true, i1 %.not115.us.us
-  br i1 %or.cond125.us.us, label %bb.u, label %bb.t
+  br i1 %or.cond125.us.us, label %.thread165.us.us.a, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.cq = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %indvars.iv245
   %i.cr = load float, ptr %i.cq, align 4, !tbaa !119
   %i.cs = fcmp une float %i.cr, 0.000000e+00
-  br i1 %i.cs, label %.thread163.loopexit171.us.us, label %bb.u
+  br i1 %i.cs, label %.thread163.loopexit171.us.us, label %.thread165.us.us.a
 
-.thread165.us.us.a:                               ; preds = %bb.u, %.thread163.loopexit171.us.us
+.thread165.us.us.a:                               ; preds = %bb.t, %bb.s
+  %indvars.iv.next246 = add nuw nsw i64 %indvars.iv245, 1 ; 2 uses
+  %exitcond249.not = icmp eq i64 %indvars.iv.next246, %wide.trip.count248
+  br i1 %exitcond249.not, label %bb.u, label %bb.s, !llvm.loop !121
+
+bb.u:                                             ; preds = %.thread165.us.us.a, %.thread163.loopexit171.us.us
   %8 = add nsw i32 %.0106180.us.us, 1             ; 2 uses
   %9 = load i32, ptr %i.bp, align 4, !tbaa !116   ; 2 uses
   %10 = icmp slt i32 %8, %9
-  br i1 %10, label %.lr.ph183.split.us.split.us, label %._crit_edge184, !llvm.loop !121
-
-bb.u:                                             ; preds = %bb.t, %bb.s
-  %indvars.iv.next246 = add nuw nsw i64 %indvars.iv245, 1 ; 2 uses
-  %exitcond249.not = icmp eq i64 %indvars.iv.next246, %wide.trip.count248
-  br i1 %exitcond249.not, label %.thread165.us.us.a, label %bb.s, !llvm.loop !122
+  br i1 %10, label %.lr.ph183.split.us.split.us, label %._crit_edge184, !llvm.loop !122
 
 .preheader170.us.us:                              ; preds = %.lr.ph183.split.us.split.us
   %i.ct = load i32, ptr %i.r, align 4, !tbaa !108
@@ -240,7 +240,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 .thread163.loopexit171.us.us:                     ; preds = %bb.t
   invoke void @_ZN11OpenImageIO4v3_18ImageBuf16set_deep_samplesEiiii(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %.0106180.us.us, i32 noundef %.0107186, i32 noundef %.0108192, i32 noundef 1)
-          to label %.thread165.us.us.a unwind label %.split.us.split.us
+          to label %bb.u unwind label %.split.us.split.us
 
 .split.us.split.us:                               ; preds = %.thread163.loopexit171.us.us, %.lr.ph183.split.us.split.us
   %i.cv = landingpad { ptr, i32 }
@@ -256,15 +256,15 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.cw = add nsw i32 %.0106180.us, 1             ; 2 uses
   %i.cx = load i32, ptr %i.bp, align 4, !tbaa !116 ; 2 uses
   %i.cy = icmp slt i32 %i.cw, %i.cx
-  br i1 %i.cy, label %.lr.ph183.split.us.split, label %._crit_edge184, !llvm.loop !121
+  br i1 %i.cy, label %.lr.ph183.split.us.split, label %._crit_edge184, !llvm.loop !122
 
 .split.us.split:                                  ; preds = %.lr.ph183.split.us.split
   %i.cz = landingpad { ptr, i32 }
           cleanup
   br label %.split.us
 
-._crit_edge184:                                   ; preds = %.thread165, %.preheader170.us, %.thread165.us.us.a, %.lr.ph190.split
-  %i.da = phi i32 [ %i.cx, %.preheader170.us ], [ %9, %.thread165.us.us.a ], [ %i.cn, %.lr.ph190.split ], [ %i.du, %.thread165 ]
+._crit_edge184:                                   ; preds = %.thread165, %.preheader170.us, %bb.u, %.lr.ph190.split
+  %i.da = phi i32 [ %i.cx, %.preheader170.us ], [ %9, %bb.u ], [ %i.cn, %.lr.ph190.split ], [ %i.du, %.thread165 ]
   %i.db = add nsw i32 %.0107186, 1                ; 2 uses
   %i.dc = load i32, ptr %i.bo, align 4, !tbaa !114 ; 2 uses
   %i.dd = icmp slt i32 %i.db, %i.dc
@@ -304,7 +304,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.v, %bb.w
   %indvars.iv.next236 = add nuw nsw i64 %indvars.iv235, 1 ; 2 uses
   %exitcond239.not = icmp eq i64 %indvars.iv.next236, %wide.trip.count238
-  br i1 %exitcond239.not, label %.lr.ph179, label %bb.v, !llvm.loop !122
+  br i1 %exitcond239.not, label %.lr.ph179, label %bb.v, !llvm.loop !121
 
 .lr.ph179:                                        ; preds = %bb.x
   %i.dk = load i32, ptr %i.r, align 4, !tbaa !108
@@ -340,7 +340,7 @@ bb.aa:                                            ; preds = %bb.y, %bb.z
   %i.dt = add nsw i32 %.0106180, 1                ; 2 uses
   %i.du = load i32, ptr %i.bp, align 4, !tbaa !116 ; 2 uses
   %i.dv = icmp slt i32 %i.dt, %i.du
-  br i1 %i.dv, label %.lr.ph183.split, label %._crit_edge184, !llvm.loop !121
+  br i1 %i.dv, label %.lr.ph183.split, label %._crit_edge184, !llvm.loop !122
 
 .lr.ph223.split:                                  ; preds = %.lr.ph223, %._crit_edge219
   %i.dw = phi i32 [ %i.ed, %._crit_edge219 ], [ %i.bt, %.lr.ph223 ] ; 2 uses
@@ -386,10 +386,6 @@ bb.ab:                                            ; preds = %.lr.ph202.split.us
   %i.el = icmp eq i32 %i.ek, 0
   br i1 %i.el, label %bb.ae, label %.preheader.us
 
-11:                                               ; preds = %._crit_edge199.us
-  invoke void @_ZN11OpenImageIO4v3_18ImageBuf14set_deep_valueEiiiiif(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %.089200.us, i32 noundef %.090214, i32 noundef %.091220, i32 noundef %.fr224, i32 noundef 0, float noundef %2)
-          to label %bb.ae unwind label %.split205.us
-
 .preheader.us:                                    ; preds = %bb.ab, %bb.ad
   %.088197.us = phi i32 [ %i.en, %bb.ad ], [ 0, %bb.ab ] ; 3 uses
   %i.em = invoke noundef float @_ZNK11OpenImageIO4v3_18ImageBuf10getchannelEiiiiNS1_8WrapModeE(ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %.089200.us, i32 noundef %.090214, i32 noundef %.091220, i32 noundef %.088197.us, i32 noundef 1)
@@ -403,6 +399,10 @@ bb.ad:                                            ; preds = %bb.ac
   %i.en = add nuw nsw i32 %.088197.us, 1          ; 2 uses
   %exitcond250.not = icmp eq i32 %i.en, %.fr224
   br i1 %exitcond250.not, label %._crit_edge199.us, label %.preheader.us, !llvm.loop !126
+
+11:                                               ; preds = %._crit_edge199.us
+  invoke void @_ZN11OpenImageIO4v3_18ImageBuf14set_deep_valueEiiiiif(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %.089200.us, i32 noundef %.090214, i32 noundef %.091220, i32 noundef %.fr224, i32 noundef 0, float noundef %2)
+          to label %bb.ae unwind label %.split205.us
 
 bb.ae:                                            ; preds = %11, %._crit_edge199.us, %bb.ab
   %i.eo = add nsw i32 %.089200.us, 1              ; 2 uses

@@ -203,44 +203,6 @@ bb.c:                                             ; preds = %.thread, %bb.b
   %i.at = getelementptr inbounds nuw i8, ptr %i.aq, i64 1032 ; 2 uses
   br label %bb.d
 
-2:                                                ; preds = %._crit_edge.us
-  %3 = load i32, ptr %i.aq, align 4
-  %spec.select.i.us = tail call i32 @llvm.umin.i32(i32 %3, i32 1023) ; 2 uses
-  store i32 %spec.select.i.us, ptr %i.by, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.by, i64 4 ; 2 uses
-  %5 = zext nneg i32 %spec.select.i.us to i64     ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %4, ptr nonnull align 4 %i.ar, i64 %5, i1 false)
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 %5
-  store i8 0, ptr %6, align 1
-  br label %_ZN8aiStringaSERKS_.exit.us
-
-_ZN8aiStringaSERKS_.exit.us:                      ; preds = %2, %._crit_edge.us
-  %7 = getelementptr inbounds nuw i8, ptr %i.aq, i64 1036 ; 2 uses
-  %8 = load i32, ptr %7, align 4                  ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.by, i64 1036
-  store i32 %8, ptr %9, align 4
-  %10 = getelementptr inbounds nuw i8, ptr %i.aq, i64 1040
-  %11 = load i32, ptr %10, align 8
-  store i32 %11, ptr %i.bz, align 8
-  %12 = load i32, ptr %i.as, align 4
-  %13 = getelementptr inbounds nuw i8, ptr %i.by, i64 1028
-  store i32 %12, ptr %13, align 4
-  %14 = load i32, ptr %i.at, align 8
-  %15 = getelementptr inbounds nuw i8, ptr %i.by, i64 1032
-  store i32 %14, ptr %15, align 8
-  %16 = load i32, ptr %7, align 4
-  %17 = zext i32 %16 to i64
-  %18 = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %17) #28 ; 2 uses
-  store ptr %18, ptr %i.ca, align 8
-  %19 = getelementptr inbounds nuw i8, ptr %i.aq, i64 1048
-  %20 = load ptr, ptr %19, align 8
-  %21 = zext i32 %8 to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %18, ptr align 1 %20, i64 %21, i1 false)
-  %22 = add i32 %.2.us, 1                         ; 2 uses
-  %23 = load i32, ptr %i.a, align 8
-  %24 = icmp ult i32 %22, %23
-  br i1 %24, label %.lr.ph.us, label %._crit_edge77, !llvm.loop !28
-
 bb.d:                                             ; preds = %.lr.ph.us, %_ZNK8aiStringeqERKS_.exit.thread.us
   %indvars.iv80 = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next81, %_ZNK8aiStringeqERKS_.exit.thread.us ] ; 5 uses
   %.172.us = phi i32 [ %.06574.us, %.lr.ph.us ], [ %.2.us, %_ZNK8aiStringeqERKS_.exit.thread.us ] ; 7 uses
@@ -307,7 +269,45 @@ _ZNK8aiStringeqERKS_.exit.thread.us:              ; preds = %_ZN18aiMaterialProp
   %.2.us = phi i32 [ %i.bv, %_ZN18aiMaterialPropertyD2Ev.exit.us ], [ %.172.us, %bb.g ], [ %.172.us, %bb.f ], [ %.172.us, %_ZNK8aiStringeqERKS_.exit.us ], [ %.172.us, %bb.d ], [ %.172.us, %bb.e ] ; 3 uses
   %indvars.iv.next81 = add nuw nsw i64 %indvars.iv80, 1 ; 2 uses
   %exitcond84.not = icmp eq i64 %indvars.iv.next81, %wide.trip.count83
-  br i1 %exitcond84.not, label %._crit_edge.us, label %bb.d, !llvm.loop !29
+  br i1 %exitcond84.not, label %._crit_edge.us, label %bb.d, !llvm.loop !28
+
+2:                                                ; preds = %._crit_edge.us
+  %3 = load i32, ptr %i.aq, align 4
+  %spec.select.i.us = tail call i32 @llvm.umin.i32(i32 %3, i32 1023) ; 2 uses
+  store i32 %spec.select.i.us, ptr %i.by, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %i.by, i64 4 ; 2 uses
+  %5 = zext nneg i32 %spec.select.i.us to i64     ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %4, ptr nonnull align 4 %i.ar, i64 %5, i1 false)
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 %5
+  store i8 0, ptr %6, align 1
+  br label %_ZN8aiStringaSERKS_.exit.us
+
+_ZN8aiStringaSERKS_.exit.us:                      ; preds = %2, %._crit_edge.us
+  %7 = getelementptr inbounds nuw i8, ptr %i.aq, i64 1036 ; 2 uses
+  %8 = load i32, ptr %7, align 4                  ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.by, i64 1036
+  store i32 %8, ptr %9, align 4
+  %10 = getelementptr inbounds nuw i8, ptr %i.aq, i64 1040
+  %11 = load i32, ptr %10, align 8
+  store i32 %11, ptr %i.bz, align 8
+  %12 = load i32, ptr %i.as, align 4
+  %13 = getelementptr inbounds nuw i8, ptr %i.by, i64 1028
+  store i32 %12, ptr %13, align 4
+  %14 = load i32, ptr %i.at, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %i.by, i64 1032
+  store i32 %14, ptr %15, align 8
+  %16 = load i32, ptr %7, align 4
+  %17 = zext i32 %16 to i64
+  %18 = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %17) #28 ; 2 uses
+  store ptr %18, ptr %i.ca, align 8
+  %19 = getelementptr inbounds nuw i8, ptr %i.aq, i64 1048
+  %20 = load ptr, ptr %19, align 8
+  %21 = zext i32 %8 to i64
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %18, ptr align 1 %20, i64 %21, i1 false)
+  %22 = add i32 %.2.us, 1                         ; 2 uses
+  %23 = load i32, ptr %i.a, align 8
+  %24 = icmp ult i32 %22, %23
+  br i1 %24, label %.lr.ph.us, label %._crit_edge77, !llvm.loop !29
 
 ._crit_edge.us:                                   ; preds = %_ZNK8aiStringeqERKS_.exit.thread.us
   %i.by = tail call noalias noundef nonnull dereferenceable(1056) ptr @_Znwm(i64 noundef 1056) #28 ; 10 uses
@@ -383,7 +383,7 @@ _ZN8aiStringaSERKS_.exit:                         ; preds = %.lr.ph76.split, %bb
   %i.dk = load i32, ptr %i.a, align 8
   %i.dl = zext i32 %i.dk to i64
   %i.dm = icmp samesign ult i64 %indvars.iv.next86, %i.dl
-  br i1 %i.dm, label %.lr.ph76.split, label %._crit_edge77, !llvm.loop !28
+  br i1 %i.dm, label %.lr.ph76.split, label %._crit_edge77, !llvm.loop !29
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)

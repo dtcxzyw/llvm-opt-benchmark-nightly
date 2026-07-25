@@ -203,36 +203,36 @@ bb.q:                                             ; preds = %._crit_edge.i48.us
   %i.bw = add i64 %.02776.us, %i.az
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.s, %bb.q
-  %.01421.i.i.us = phi i64 [ %i.bw, %bb.q ], [ %12, %bb.s ] ; 3 uses
+bb.r:                                             ; preds = %_ZN10fast_float8stackvecILt62EE8try_pushEm.exit.thread.i.i.us.a, %bb.q
+  %.01421.i.i.us = phi i64 [ %i.bw, %bb.q ], [ %9, %_ZN10fast_float8stackvecILt62EE8try_pushEm.exit.thread.i.i.us.a ] ; 3 uses
   %i.bx = load i16, ptr %i.a, align 8             ; 2 uses
   %i.by = zext i16 %i.bx to i64                   ; 2 uses
   %i.bz = icmp ult i64 %.01421.i.i.us, %i.by
-  br i1 %i.bz, label %bb.s, label %.critedge.i.i.us
+  br i1 %i.bz, label %_ZN10fast_float8stackvecILt62EE8try_pushEm.exit.thread.i.i.us.a, label %.critedge.i.i.us
+
+_ZN10fast_float8stackvecILt62EE8try_pushEm.exit.thread.i.i.us.a: ; preds = %bb.r
+  %i.ca = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.01421.i.i.us ; 2 uses
+  %5 = load i64, ptr %i.ca, align 8
+  %6 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %5, i64 1) ; 2 uses
+  %7 = extractvalue { i64, i1 } %6, 1
+  %8 = extractvalue { i64, i1 } %6, 0
+  store i64 %8, ptr %i.ca, align 8
+  %9 = add nuw nsw i64 %.01421.i.i.us, 1
+  br i1 %7, label %bb.r, label %.critedge.us, !llvm.loop !186
 
 .critedge.i.i.us:                                 ; preds = %bb.r
-  %5 = icmp ult i16 %i.bx, 62
-  br i1 %5, label %_ZN10fast_float8stackvecILt62EE8try_pushEm.exit.thread.i.i.us.a, label %_ZN10fast_float8stackvecILt62EE10try_extendENS_4spanImEE.exit
+  %10 = icmp ult i16 %i.bx, 62
+  br i1 %10, label %bb.s, label %_ZN10fast_float8stackvecILt62EE10try_extendENS_4spanImEE.exit
 
-_ZN10fast_float8stackvecILt62EE8try_pushEm.exit.thread.i.i.us.a: ; preds = %.critedge.i.i.us
-  %i.ca = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.by
-  store i64 1, ptr %i.ca, align 8
-  %6 = load i16, ptr %i.a, align 8
-  %7 = add i16 %6, 1
-  store i16 %7, ptr %i.a, align 8
+bb.s:                                             ; preds = %.critedge.i.i.us
+  %i.cb = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.by
+  store i64 1, ptr %i.cb, align 8
+  %11 = load i16, ptr %i.a, align 8
+  %12 = add i16 %11, 1
+  store i16 %12, ptr %i.a, align 8
   br label %.critedge.us
 
-bb.s:                                             ; preds = %bb.r
-  %i.cb = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.01421.i.i.us ; 2 uses
-  %8 = load i64, ptr %i.cb, align 8
-  %9 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %8, i64 1) ; 2 uses
-  %10 = extractvalue { i64, i1 } %9, 1
-  %11 = extractvalue { i64, i1 } %9, 0
-  store i64 %11, ptr %i.cb, align 8
-  %12 = add nuw nsw i64 %.01421.i.i.us, 1
-  br i1 %10, label %bb.r, label %.critedge.us, !llvm.loop !186
-
-.critedge.us:                                     ; preds = %bb.s, %_ZN10fast_float8stackvecILt62EE8try_pushEm.exit.thread.i.i.us.a, %._crit_edge.i48.us, %bb.n, %.lr.ph.split.us
+.critedge.us:                                     ; preds = %_ZN10fast_float8stackvecILt62EE8try_pushEm.exit.thread.i.i.us.a, %bb.s, %._crit_edge.i48.us, %bb.n, %.lr.ph.split.us
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
   %i.cc = add nuw i64 %.02776.us, 1               ; 2 uses
   %exitcond90.not = icmp eq i64 %i.cc, %2

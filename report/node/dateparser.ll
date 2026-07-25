@@ -203,66 +203,66 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   br i1 %i.a, label %.preheader.us, label %.preheader
 
-.preheader.us:                                    ; preds = %bb.a, %.critedge.thread.us.1
-  %indvars.iv34 = phi i64 [ %indvars.iv.next35.1, %.critedge.thread.us.1 ], [ 0, %bb.a ] ; 5 uses
+.preheader.us:                                    ; preds = %bb.a, %.critedge.us.a
+  %indvars.iv34 = phi i64 [ %indvars.iv.next35.1, %.critedge.us.a ], [ 0, %bb.a ] ; 5 uses
   %i.d = getelementptr inbounds nuw [5 x i8], ptr @_ZN2v88internal10DateParser12KeywordTable5arrayE, i64 %indvars.iv34 ; 3 uses
   %i.e = load i8, ptr %i.d, align 2
   %i.f = sext i8 %i.e to i32
   %i.g = icmp eq i32 %.pre37, %i.f
-  br i1 %i.g, label %bb.d, label %.critedge.thread.us
+  br i1 %i.g, label %.preheader.us.1.a, label %.critedge.thread.us
 
-.critedge.thread.us:                              ; preds = %.preheader.us, %bb.d, %bb.e
-  %indvars.iv.next35 = or disjoint i64 %indvars.iv34, 1 ; 2 uses
-  %.not.us = icmp eq i64 %indvars.iv34, 26
-  br i1 %.not.us, label %.split24.us, label %.preheader.us.1.a
-
-.preheader.us.1.a:                                ; preds = %.critedge.thread.us
-  %2 = getelementptr inbounds nuw [5 x i8], ptr @_ZN2v88internal10DateParser12KeywordTable5arrayE, i64 %indvars.iv.next35 ; 3 uses
-  %i.h = load i8, ptr %2, align 1
+.preheader.us.1.a:                                ; preds = %.preheader.us
+  %2 = load i32, ptr %i.b, align 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
+  %i.h = load i8, ptr %3, align 1
   %i.i = sext i8 %i.h to i32
-  %i.j = icmp eq i32 %.pre37, %i.i
-  br i1 %i.j, label %bb.b, label %.critedge.thread.us.1
+  %i.j = icmp eq i32 %2, %i.i
+  br i1 %i.j, label %bb.b, label %.critedge.thread.us
 
 bb.b:                                             ; preds = %.preheader.us.1.a
-  %i.k = load i32, ptr %i.b, align 4
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %i.k = load i32, ptr %i.c, align 4
+  %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 2
   %i.m = load i8, ptr %i.l, align 2
   %i.n = sext i8 %i.m to i32
   %i.o = icmp eq i32 %i.k, %i.n
-  br i1 %i.o, label %bb.c, label %.critedge.thread.us.1
+  br i1 %i.o, label %.critedge.us, label %.critedge.thread.us
 
-bb.c:                                             ; preds = %bb.b
-  %3 = load i32, ptr %i.c, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  %i.p = load i8, ptr %4, align 1
+.critedge.us:                                     ; preds = %bb.e, %bb.b
+  %indvars.iv34.lcssa = phi i64 [ %indvars.iv34, %bb.b ], [ %indvars.iv.next35, %bb.e ]
+  %4 = trunc nuw nsw i64 %indvars.iv34.lcssa to i32
+  br label %.split24.us
+
+.critedge.thread.us:                              ; preds = %.preheader.us, %.preheader.us.1.a, %bb.b
+  %indvars.iv.next35 = or disjoint i64 %indvars.iv34, 1 ; 2 uses
+  %.not.us = icmp eq i64 %indvars.iv34, 26
+  br i1 %.not.us, label %.split24.us, label %bb.c
+
+bb.c:                                             ; preds = %.critedge.thread.us
+  %5 = getelementptr inbounds nuw [5 x i8], ptr @_ZN2v88internal10DateParser12KeywordTable5arrayE, i64 %indvars.iv.next35 ; 3 uses
+  %i.p = load i8, ptr %5, align 1
   %i.q = sext i8 %i.p to i32
-  %i.r = icmp eq i32 %3, %i.q
-  br i1 %i.r, label %.critedge.us.a, label %.critedge.thread.us.1
+  %i.r = icmp eq i32 %.pre37, %i.q
+  br i1 %i.r, label %bb.d, label %.critedge.us.a
 
-.critedge.thread.us.1:                            ; preds = %bb.c, %bb.b, %.preheader.us.1.a
-  %indvars.iv.next35.1 = add nuw nsw i64 %indvars.iv34, 2
-  br label %.preheader.us
-
-bb.d:                                             ; preds = %.preheader.us
+bb.d:                                             ; preds = %bb.c
   %i.s = load i32, ptr %i.b, align 4
-  %i.t = getelementptr inbounds nuw i8, ptr %i.d, i64 1
-  %i.u = load i8, ptr %i.t, align 1
+  %i.t = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %i.u = load i8, ptr %i.t, align 2
   %i.v = sext i8 %i.u to i32
   %i.w = icmp eq i32 %i.s, %i.v
-  br i1 %i.w, label %bb.e, label %.critedge.thread.us
+  br i1 %i.w, label %bb.e, label %.critedge.us.a
 
 bb.e:                                             ; preds = %bb.d
   %i.x = load i32, ptr %i.c, align 4
-  %i.y = getelementptr inbounds nuw i8, ptr %i.d, i64 2
-  %i.z = load i8, ptr %i.y, align 2
+  %i.y = getelementptr inbounds nuw i8, ptr %5, i64 2
+  %i.z = load i8, ptr %i.y, align 1
   %i.aa = sext i8 %i.z to i32
   %i.ab = icmp eq i32 %i.x, %i.aa
-  br i1 %i.ab, label %.critedge.us.a, label %.critedge.thread.us
+  br i1 %i.ab, label %.critedge.us, label %.critedge.us.a
 
-.critedge.us.a:                                   ; preds = %bb.c, %bb.e
-  %indvars.iv34.lcssa = phi i64 [ %indvars.iv34, %bb.e ], [ %indvars.iv.next35, %bb.c ]
-  %5 = trunc nuw nsw i64 %indvars.iv34.lcssa to i32
-  br label %.split24.us
+.critedge.us.a:                                   ; preds = %bb.e, %bb.d, %bb.c
+  %indvars.iv.next35.1 = add nuw nsw i64 %indvars.iv34, 2
+  br label %.preheader.us
 
 .preheader:                                       ; preds = %bb.a, %.critedge.thread
   %indvars.iv = phi i64 [ %indvars.iv.next, %.critedge.thread ], [ 0, %bb.a ] ; 4 uses
@@ -299,8 +299,8 @@ bb.g:                                             ; preds = %bb.f
   %i.ar = trunc nuw nsw i64 %indvars.iv to i32
   br label %.split24.us
 
-.split24.us:                                      ; preds = %.critedge.thread, %.critedge.thread.us, %.split24.us.loopexit38.split.loop.exit, %.critedge.us.a
-  %.us-phi = phi i32 [ 27, %.critedge.thread.us ], [ %5, %.critedge.us.a ], [ %i.ar, %.split24.us.loopexit38.split.loop.exit ], [ 27, %.critedge.thread ]
+.split24.us:                                      ; preds = %.critedge.thread, %.critedge.thread.us, %.split24.us.loopexit38.split.loop.exit, %.critedge.us
+  %.us-phi = phi i32 [ 27, %.critedge.thread.us ], [ %4, %.critedge.us ], [ %i.ar, %.split24.us.loopexit38.split.loop.exit ], [ 27, %.critedge.thread ]
   ret i32 %.us-phi
 }
 

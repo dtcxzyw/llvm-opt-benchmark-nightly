@@ -204,14 +204,14 @@ bb.cg:                                            ; preds = %_ZNK6duckdb15Select
   %.not.i.i.i.i.i66.i.us.i.i.i = icmp sgt i8 %i.qz, -1
   br i1 %.not.i.i.i.i.i66.i.us.i.i.i, label %bb.ch, label %.thread.i.i.i.i.i67.i.us.i.i.i
 
-.thread.i.i.i.i.i67.i.us.i.i.i:                   ; preds = %.lr.ph.i.i.i.i.i64.i.us.i.i.i
-  %17 = invoke noundef i64 @_ZN6duckdb8Utf8Proc13GraphemeCountEPKcm(ptr noundef nonnull %i.qw, i64 noundef %i.qx)
-          to label %_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i68.i.us.i.i.i unwind label %.loopexit.split.us.i.i.i
-
 bb.ch:                                            ; preds = %.lr.ph.i.i.i.i.i64.i.us.i.i.i
   %i.ra = add nuw nsw i64 %.0915.i.i.i.i.i65.i.us.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i.i71.i.us.i.i.i = icmp eq i64 %i.ra, %i.qx
   br i1 %exitcond.not.i.i.i.i.i71.i.us.i.i.i, label %_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i68.i.us.i.i.i, label %.lr.ph.i.i.i.i.i64.i.us.i.i.i, !llvm.loop !841
+
+.thread.i.i.i.i.i67.i.us.i.i.i:                   ; preds = %.lr.ph.i.i.i.i.i64.i.us.i.i.i
+  %17 = invoke noundef i64 @_ZN6duckdb8Utf8Proc13GraphemeCountEPKcm(ptr noundef nonnull %i.qw, i64 noundef %i.qx)
+          to label %_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i68.i.us.i.i.i unwind label %.loopexit.split.us.i.i.i
 
 _ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i68.i.us.i.i.i: ; preds = %bb.ch, %.thread.i.i.i.i.i67.i.us.i.i.i, %bb.cg
   %.1.i.i.i.i.i69.i.us.i.i.i = phi i64 [ %17, %.thread.i.i.i.i.i67.i.us.i.i.i ], [ %i.qx, %bb.cg ], [ %i.qx, %bb.ch ]
@@ -274,19 +274,19 @@ bb.ci:                                            ; preds = %_ZNK6duckdb15Select
   %i.rt = getelementptr inbounds nuw i8, ptr %i.rr, i64 %.0915.i.i.i.i.i65.i.us42.i.i.i
   %i.ru = load i8, ptr %i.rt, align 1, !tbaa !66, !noalias !901
   %.not.i.i.i.i.i66.i.us43.i.i.i = icmp sgt i8 %i.ru, -1
-  br i1 %.not.i.i.i.i.i66.i.us43.i.i.i, label %bb.cj, label %.thread.i.i.i.i.i67.i.us44.i.i.i
-
-.thread.i.i.i.i.i67.i.us44.i.i.i:                 ; preds = %.lr.ph.i.i.i.i.i64.i.us41.i.i.i
-  %18 = invoke noundef i64 @_ZN6duckdb8Utf8Proc13GraphemeCountEPKcm(ptr noundef nonnull %i.rr, i64 noundef %i.rs)
-          to label %_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i68.i.us46.i.i.i unwind label %.loopexit.split.split.us.i.i.i
+  br i1 %.not.i.i.i.i.i66.i.us43.i.i.i, label %bb.cj, label %.thread.i.i.i.i.i67.i.us45.i.i.i
 
 bb.cj:                                            ; preds = %.lr.ph.i.i.i.i.i64.i.us41.i.i.i
   %i.rv = add nuw nsw i64 %.0915.i.i.i.i.i65.i.us42.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i.i71.i.us45.i.i.i = icmp eq i64 %i.rv, %i.rs
   br i1 %exitcond.not.i.i.i.i.i71.i.us45.i.i.i, label %_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i68.i.us46.i.i.i, label %.lr.ph.i.i.i.i.i64.i.us41.i.i.i, !llvm.loop !841
 
-_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i68.i.us46.i.i.i: ; preds = %bb.cj, %.thread.i.i.i.i.i67.i.us44.i.i.i, %bb.ci
-  %.1.i.i.i.i.i69.i.us47.i.i.i = phi i64 [ %18, %.thread.i.i.i.i.i67.i.us44.i.i.i ], [ %i.rs, %bb.ci ], [ %i.rs, %bb.cj ]
+.thread.i.i.i.i.i67.i.us45.i.i.i:                 ; preds = %.lr.ph.i.i.i.i.i64.i.us41.i.i.i
+  %18 = invoke noundef i64 @_ZN6duckdb8Utf8Proc13GraphemeCountEPKcm(ptr noundef nonnull %i.rr, i64 noundef %i.rs)
+          to label %_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i68.i.us46.i.i.i unwind label %.loopexit.split.split.us.i.i.i
+
+_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i68.i.us46.i.i.i: ; preds = %bb.cj, %.thread.i.i.i.i.i67.i.us45.i.i.i, %bb.ci
+  %.1.i.i.i.i.i69.i.us47.i.i.i = phi i64 [ %18, %.thread.i.i.i.i.i67.i.us45.i.i.i ], [ %i.rs, %bb.ci ], [ %i.rs, %bb.cj ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3), !noalias !901
   %i.rw = add nsw i64 %.1.i.i.i.i.i69.i.us47.i.i.i, %i.rn
   %i.rx = call noundef i64 @llvm.smax.i64(i64 %i.rw, i64 0)
@@ -308,7 +308,7 @@ _ZN6duckdb19BinaryLambdaWrapper9OperationIZNS_L12LeftFunctionINS_17LeftRightGrap
   %exitcond84.not.i.us52.i.i.i = icmp eq i64 %i.sc, %i.d
   br i1 %exitcond84.not.i.us52.i.i.i, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopINS_8string_tElS2_NS_19BinaryLambdaWrapperEbZNS_L12LeftFunctionINS_17LeftRightGraphemeEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEUlS2_lE_EEvPKT_PKT0_PT1_PKNS_15SelectionVectorESN_mRNS_12ValidityMaskESP_SP_T4_.exit.i.i.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit60.i.us34.i.i.i, !llvm.loop !907
 
-.loopexit.split.split.us.i.i.i:                   ; preds = %_ZN6duckdb19BinaryLambdaWrapper9OperationIZNS_L12LeftFunctionINS_17LeftRightGraphemeEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEUlNS_8string_tElE_bSA_lSA_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit72.i.us48.i.i.i, %.thread.i.i.i.i.i67.i.us44.i.i.i
+.loopexit.split.split.us.i.i.i:                   ; preds = %_ZN6duckdb19BinaryLambdaWrapper9OperationIZNS_L12LeftFunctionINS_17LeftRightGraphemeEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEUlNS_8string_tElE_bSA_lSA_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit72.i.us48.i.i.i, %.thread.i.i.i.i.i67.i.us45.i.i.i
   %lpad.loopexit.us55.i.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.i.i.i
@@ -711,14 +711,14 @@ bb.u:                                             ; preds = %bb.t, %_ZN9__gnu_cx
   %.not.i.i.i.i.i87.us.i.i.i.i = icmp sgt i8 %i.cw, -1
   br i1 %.not.i.i.i.i.i87.us.i.i.i.i, label %bb.v, label %.thread.i.i.i.i.i88.us.i.i.i.i
 
-.thread.i.i.i.i.i88.us.i.i.i.i:                   ; preds = %.lr.ph.i.i.i.i.i85.us.i.i.i.i
-  %17 = call noundef i64 @_ZN6duckdb8Utf8Proc13GraphemeCountEPKcm(ptr noundef nonnull %i.ct, i64 noundef %i.cu), !noalias !1016
-  br label %_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i89.us.i.i.i.i
-
 bb.v:                                             ; preds = %.lr.ph.i.i.i.i.i85.us.i.i.i.i
   %i.cx = add nuw nsw i64 %.0915.i.i.i.i.i86.us.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i.i93.us.i.i.i.i = icmp eq i64 %i.cx, %i.cu
   br i1 %exitcond.not.i.i.i.i.i93.us.i.i.i.i, label %_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i89.us.i.i.i.i, label %.lr.ph.i.i.i.i.i85.us.i.i.i.i, !llvm.loop !841
+
+.thread.i.i.i.i.i88.us.i.i.i.i:                   ; preds = %.lr.ph.i.i.i.i.i85.us.i.i.i.i
+  %17 = call noundef i64 @_ZN6duckdb8Utf8Proc13GraphemeCountEPKcm(ptr noundef nonnull %i.ct, i64 noundef %i.cu), !noalias !1016
+  br label %_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i89.us.i.i.i.i
 
 _ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i89.us.i.i.i.i: ; preds = %bb.v, %.thread.i.i.i.i.i88.us.i.i.i.i, %.lr.ph111.split.us.i.i.i.i
   %.1.i.i.i.i.i90.us.i.i.i.i = phi i64 [ %17, %.thread.i.i.i.i.i88.us.i.i.i.i ], [ %i.cu, %.lr.ph111.split.us.i.i.i.i ], [ %i.cu, %bb.v ] ; 2 uses
@@ -762,19 +762,19 @@ _ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i89.us.i.
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dj, i64 %.0915.i.i.i.i.i86.us118.i.i.i.i
   %i.dm = load i8, ptr %i.dl, align 1, !tbaa !66, !noalias !1016
   %.not.i.i.i.i.i87.us119.i.i.i.i = icmp sgt i8 %i.dm, -1
-  br i1 %.not.i.i.i.i.i87.us119.i.i.i.i, label %bb.w, label %.thread.i.i.i.i.i88.us120.i.i.i.i
-
-.thread.i.i.i.i.i88.us120.i.i.i.i:                ; preds = %.lr.ph.i.i.i.i.i85.us117.i.i.i.i
-  %18 = call noundef i64 @_ZN6duckdb8Utf8Proc13GraphemeCountEPKcm(ptr noundef nonnull %i.dj, i64 noundef %i.dk), !noalias !1016
-  br label %_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i89.us122.i.i.i.i
+  br i1 %.not.i.i.i.i.i87.us119.i.i.i.i, label %bb.w, label %.thread.i.i.i.i.i88.us121.i.i.i.i
 
 bb.w:                                             ; preds = %.lr.ph.i.i.i.i.i85.us117.i.i.i.i
   %i.dn = add nuw nsw i64 %.0915.i.i.i.i.i86.us118.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i.i93.us121.i.i.i.i = icmp eq i64 %i.dn, %i.dk
   br i1 %exitcond.not.i.i.i.i.i93.us121.i.i.i.i, label %_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i89.us122.i.i.i.i, label %.lr.ph.i.i.i.i.i85.us117.i.i.i.i, !llvm.loop !841
 
-_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i89.us122.i.i.i.i: ; preds = %bb.w, %.thread.i.i.i.i.i88.us120.i.i.i.i, %.lr.ph111.split.split.us.i.i.i.i
-  %.1.i.i.i.i.i90.us123.i.i.i.i = phi i64 [ %18, %.thread.i.i.i.i.i88.us120.i.i.i.i ], [ %i.dk, %.lr.ph111.split.split.us.i.i.i.i ], [ %i.dk, %bb.w ]
+.thread.i.i.i.i.i88.us121.i.i.i.i:                ; preds = %.lr.ph.i.i.i.i.i85.us117.i.i.i.i
+  %18 = call noundef i64 @_ZN6duckdb8Utf8Proc13GraphemeCountEPKcm(ptr noundef nonnull %i.dj, i64 noundef %i.dk), !noalias !1016
+  br label %_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i89.us122.i.i.i.i
+
+_ZN6duckdb17LeftRightGrapheme9OperationINS_8string_tElEET0_T_.exit.i.i.i89.us122.i.i.i.i: ; preds = %bb.w, %.thread.i.i.i.i.i88.us121.i.i.i.i, %.lr.ph111.split.split.us.i.i.i.i
+  %.1.i.i.i.i.i90.us123.i.i.i.i = phi i64 [ %18, %.thread.i.i.i.i.i88.us121.i.i.i.i ], [ %i.dk, %.lr.ph111.split.split.us.i.i.i.i ], [ %i.dk, %bb.w ]
   call void @llvm.lifetime.end.p0(ptr nonnull %13), !noalias !1016
   %i.do = add i64 %.1.i.i.i.i.i90.us123.i.i.i.i, 1
   %i.dp = call { i64, ptr } @_ZN6duckdb17SubstringGraphemeERNS_6VectorENS_8string_tEll(ptr noundef nonnull align 8 dereferenceable(104) %2, i64 %.sroa.03.0.copyload.us113.i.i.i.i, ptr %.sroa.44.0.copyload.us115.i.i.i.i, i64 noundef %i.do, i64 noundef 0), !noalias !1016 ; 2 uses

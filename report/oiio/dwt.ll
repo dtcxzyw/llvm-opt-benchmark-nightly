@@ -204,11 +204,6 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %i.be = icmp ugt i64 %i.bd, -4
   br i1 %i.be, label %..preheader31_crit_edge.us.i, label %scalar.ph
 
-._crit_edge.us.i:                                 ; preds = %.lr.ph37.us.i, %..preheader31_crit_edge.us.i
-  %indvars.iv.next51.i = add nuw nsw i64 %indvars.iv50.i, 1 ; 2 uses
-  %exitcond54.not.i = icmp eq i64 %indvars.iv.next51.i, %wide.trip.count53.i
-  br i1 %exitcond54.not.i, label %opj_dwt_fetch_cols_vertical_pass.exit, label %.preheader32.us.i, !llvm.loop !58
-
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %scalar.ph ], [ %indvars.iv.i.unr, %scalar.ph.prol.loopexit ] ; 5 uses
   %i.bf = trunc nuw i64 %indvars.iv.i to i32      ; 2 uses
@@ -252,7 +247,12 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i32 %i.cj, ptr %i.cm, align 4, !tbaa !3
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
   %exitcond.not.i.3 = icmp eq i64 %indvars.iv.next.i.3, %wide.trip.count.i
-  br i1 %exitcond.not.i.3, label %..preheader31_crit_edge.us.i, label %scalar.ph, !llvm.loop !59
+  br i1 %exitcond.not.i.3, label %..preheader31_crit_edge.us.i, label %scalar.ph, !llvm.loop !58
+
+._crit_edge.us.i:                                 ; preds = %.lr.ph37.us.i, %..preheader31_crit_edge.us.i
+  %indvars.iv.next51.i = add nuw nsw i64 %indvars.iv50.i, 1 ; 2 uses
+  %exitcond54.not.i = icmp eq i64 %indvars.iv.next51.i, %wide.trip.count53.i
+  br i1 %exitcond54.not.i, label %opj_dwt_fetch_cols_vertical_pass.exit, label %.preheader32.us.i, !llvm.loop !59
 
 ..preheader31_crit_edge.us.i:                     ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.i.lcssa = phi i64 [ %ind.escape, %middle.block ], [ %indvars.iv.i.lcssa378.unr, %scalar.ph.prol.loopexit ], [ %indvars.iv.next.i.2, %scalar.ph ]
@@ -332,7 +332,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %indvars.iv.next60.i.3 = add nuw nsw i64 %indvars.iv59.i, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %opj_dwt_fetch_cols_vertical_pass.exit.loopexit375.unr-lcssa, label %.preheader32.i, !llvm.loop !58
+  br i1 %niter.ncmp.3, label %opj_dwt_fetch_cols_vertical_pass.exit.loopexit375.unr-lcssa, label %.preheader32.i, !llvm.loop !59
 
 opj_dwt_fetch_cols_vertical_pass.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
   %lcmp.mod384.not = icmp eq i64 %xtraiter382, 0
@@ -735,11 +735,6 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %i.bf = icmp ugt i64 %i.be, -4
   br i1 %i.bf, label %..preheader31_crit_edge.us.i, label %scalar.ph
 
-._crit_edge.us.i:                                 ; preds = %.lr.ph37.us.i, %..preheader31_crit_edge.us.i
-  %indvars.iv.next51.i = add nuw nsw i64 %indvars.iv50.i, 1 ; 2 uses
-  %exitcond54.not.i = icmp eq i64 %indvars.iv.next51.i, %wide.trip.count53.i
-  br i1 %exitcond54.not.i, label %opj_dwt_fetch_cols_vertical_pass.exit, label %.preheader32.us.i, !llvm.loop !58
-
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %scalar.ph ], [ %indvars.iv.i.unr, %scalar.ph.prol.loopexit ] ; 5 uses
   %i.bg = trunc nuw i64 %indvars.iv.i to i32      ; 2 uses
@@ -784,6 +779,11 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
   %exitcond.not.i.3 = icmp eq i64 %indvars.iv.next.i.3, %wide.trip.count.i
   br i1 %exitcond.not.i.3, label %..preheader31_crit_edge.us.i, label %scalar.ph, !llvm.loop !172
+
+._crit_edge.us.i:                                 ; preds = %.lr.ph37.us.i, %..preheader31_crit_edge.us.i
+  %indvars.iv.next51.i = add nuw nsw i64 %indvars.iv50.i, 1 ; 2 uses
+  %exitcond54.not.i = icmp eq i64 %indvars.iv.next51.i, %wide.trip.count53.i
+  br i1 %exitcond54.not.i, label %opj_dwt_fetch_cols_vertical_pass.exit, label %.preheader32.us.i, !llvm.loop !59
 
 ..preheader31_crit_edge.us.i:                     ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.i.lcssa = phi i64 [ %ind.escape, %middle.block ], [ %indvars.iv.i.lcssa176.unr, %scalar.ph.prol.loopexit ], [ %indvars.iv.next.i.2, %scalar.ph ]
@@ -859,7 +859,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %indvars.iv.next60.i.3 = add nuw nsw i64 %indvars.iv59.i, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %opj_dwt_fetch_cols_vertical_pass.exit.loopexit173.unr-lcssa, label %.preheader32.i, !llvm.loop !58
+  br i1 %niter.ncmp.3, label %opj_dwt_fetch_cols_vertical_pass.exit.loopexit173.unr-lcssa, label %.preheader32.i, !llvm.loop !59
 
 opj_dwt_fetch_cols_vertical_pass.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
   %lcmp.mod182.not = icmp eq i64 %xtraiter180, 0
@@ -1262,8 +1262,8 @@ attributes #15 = { nounwind }
 !55 = !{!"llvm.loop.unroll.runtime.disable"}
 !56 = distinct !{!56, !57}
 !57 = !{!"llvm.loop.unroll.disable"}
-!58 = distinct !{!58, !33}
-!59 = distinct !{!59, !33, !54}
+!58 = distinct !{!58, !33, !54}
+!59 = distinct !{!59, !33}
 !60 = distinct !{!60, !33}
 !61 = distinct !{!61, !57}
 !62 = !{!5, !5, i64 0}

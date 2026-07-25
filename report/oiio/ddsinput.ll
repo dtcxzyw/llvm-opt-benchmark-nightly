@@ -204,15 +204,6 @@ bb.z:                                             ; preds = %bb.y
   %.pre = sext i32 %i.dx to i64
   br label %._crit_edge154.us.us
 
-._crit_edge154.us.us:                             ; preds = %_ZN11OpenImageIO4v3_117bit_range_convertEjjj.exit.us.us, %.lr.ph158.split.us167.us.._crit_edge154.us.us_crit_edge
-  %.pre-phi = phi i64 [ %.pre, %.lr.ph158.split.us167.us.._crit_edge154.us.us_crit_edge ], [ %i.ew, %_ZN11OpenImageIO4v3_117bit_range_convertEjjj.exit.us.us ]
-  %7 = phi i32 [ %i.dx, %.lr.ph158.split.us167.us.._crit_edge154.us.us_crit_edge ], [ %i.ev, %_ZN11OpenImageIO4v3_117bit_range_convertEjjj.exit.us.us ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
-  %8 = add nuw nsw i32 %.082156.us164.us, 1       ; 2 uses
-  %9 = add i64 %.083155.us165.us, %.pre-phi
-  %exitcond197.not = icmp eq i32 %8, %2
-  br i1 %exitcond197.not, label %._crit_edge159.us.us, label %.lr.ph158.split.us167.us, !llvm.loop !172
-
 bb.aa:                                            ; preds = %.lr.ph153.us.us, %_ZN11OpenImageIO4v3_117bit_range_convertEjjj.exit.us.us
   %indvars.iv194 = phi i64 [ 0, %.lr.ph153.us.us ], [ %indvars.iv.next195, %_ZN11OpenImageIO4v3_117bit_range_convertEjjj.exit.us.us ] ; 5 uses
   %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.dj, i64 %indvars.iv194
@@ -238,7 +229,7 @@ bb.aa:                                            ; preds = %.lr.ph153.us.us, %_
   %i.eo = or i32 %i.en, %.01316.i.us.us           ; 2 uses
   %.0.i.us.us = sub i32 %.017.i.us.us, %i.el      ; 3 uses
   %i.ep = icmp sgt i32 %.0.i.us.us, 0
-  br i1 %i.ep, label %.lr.ph.i.us.us, label %._crit_edge.i.us.us, !llvm.loop !174
+  br i1 %i.ep, label %.lr.ph.i.us.us, label %._crit_edge.i.us.us, !llvm.loop !172
 
 ._crit_edge.i.us.us:                              ; preds = %.lr.ph.i.us.us, %.preheader.i.us.us
   %.013.lcssa.i.us.us = phi i32 [ 0, %.preheader.i.us.us ], [ %i.eo, %.lr.ph.i.us.us ]
@@ -257,7 +248,16 @@ _ZN11OpenImageIO4v3_117bit_range_convertEjjj.exit.us.us: ; preds = %._crit_edge.
   %i.ev = load i32, ptr %i.ci, align 4, !tbaa !170 ; 2 uses
   %i.ew = sext i32 %i.ev to i64                   ; 2 uses
   %i.ex = icmp slt i64 %indvars.iv.next195, %i.ew
-  br i1 %i.ex, label %bb.aa, label %._crit_edge154.us.us, !llvm.loop !175
+  br i1 %i.ex, label %bb.aa, label %._crit_edge154.us.us, !llvm.loop !173
+
+._crit_edge154.us.us:                             ; preds = %_ZN11OpenImageIO4v3_117bit_range_convertEjjj.exit.us.us, %.lr.ph158.split.us167.us.._crit_edge154.us.us_crit_edge
+  %.pre-phi = phi i64 [ %.pre, %.lr.ph158.split.us167.us.._crit_edge154.us.us_crit_edge ], [ %i.ew, %_ZN11OpenImageIO4v3_117bit_range_convertEjjj.exit.us.us ]
+  %7 = phi i32 [ %i.dx, %.lr.ph158.split.us167.us.._crit_edge154.us.us_crit_edge ], [ %i.ev, %_ZN11OpenImageIO4v3_117bit_range_convertEjjj.exit.us.us ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
+  %8 = add nuw nsw i32 %.082156.us164.us, 1       ; 2 uses
+  %9 = add i64 %.083155.us165.us, %.pre-phi
+  %exitcond197.not = icmp eq i32 %8, %2
+  br i1 %exitcond197.not, label %._crit_edge159.us.us, label %.lr.ph158.split.us167.us, !llvm.loop !174
 
 .lr.ph153.us.us:                                  ; preds = %.lr.ph158.split.us167.us
   %.0..0..0..0..us.us = load i32, ptr %i.i, align 4, !tbaa !3
@@ -660,10 +660,10 @@ attributes #40 = { nounwind allocsize(0) }
 !169 = distinct !{!169, !16}
 !170 = !{!45, !4, i64 68}
 !171 = distinct !{!171, !16}
-!172 = distinct !{!172, !16, !173}
-!173 = !{!"llvm.loop.unswitch.partial.disable"}
-!174 = distinct !{!174, !16}
-!175 = distinct !{!175, !16}
+!172 = distinct !{!172, !16}
+!173 = distinct !{!173, !16}
+!174 = distinct !{!174, !16, !175}
+!175 = !{!"llvm.loop.unswitch.partial.disable"}
 !176 = distinct !{!176, !16}
 !177 = distinct !{!177, !16}
 !178 = !{!45, !4, i64 24}
@@ -712,7 +712,7 @@ attributes #40 = { nounwind allocsize(0) }
 !221 = !{!209, !152, i64 56}
 !222 = !{!209, !150, i64 64}
 !223 = distinct !{!223, !16}
-!224 = distinct !{!224, !16, !173}
+!224 = distinct !{!224, !16, !175}
 !225 = !{!226, !226, i64 0}
 !226 = !{!"p1 _ZTSSt9type_info", !39, i64 0}
 !227 = !{i64 0, i64 8, !149, i64 8, i64 8, !151, i64 16, i64 8, !149, i64 24, i64 8, !154, i64 32, i64 8, !149, i64 40, i64 8, !156, i64 48, i64 8, !156, i64 56, i64 8, !151, i64 64, i64 8, !149}

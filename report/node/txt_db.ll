@@ -201,27 +201,40 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   br i1 %i.j, label %.lr.ph.us.us, label %.lr.ph71.split.split
 
-.lr.ph.us.us:                                     ; preds = %.lr.ph71, %bb.c
-  %.04369.us.us = phi i64 [ %i.o, %bb.c ], [ 0, %.lr.ph71 ] ; 2 uses
-  %.04568.us.us = phi i64 [ %3, %bb.c ], [ 0, %.lr.ph71 ]
+.lr.ph.us.us:                                     ; preds = %.lr.ph71, %bb.g
+  %.04369.us.us = phi i64 [ %i.y, %bb.g ], [ 0, %.lr.ph71 ] ; 2 uses
+  %.04568.us.us = phi i64 [ %8, %bb.g ], [ 0, %.lr.ph71 ]
   %i.l = load ptr, ptr %i.c, align 8, !tbaa !17
   %i.m = trunc i64 %.04369.us.us to i32
   %i.n = tail call ptr @OPENSSL_sk_value(ptr noundef %i.l, i32 noundef %i.m) #5 ; 2 uses
-  br label %4
+  br label %2
 
-.lr.ph65.us.us.a:                                 ; preds = %._crit_edge.us.us
-  %2 = load ptr, ptr %i.k, align 8, !tbaa !28
+2:                                                ; preds = %.lr.ph.us.us, %bb.c
+  %.04661.us.us = phi i64 [ 0, %.lr.ph.us.us ], [ %.147.us.us, %bb.c ] ; 2 uses
+  %.04860.us.us = phi i64 [ 0, %.lr.ph.us.us ], [ %i.o, %bb.c ] ; 2 uses
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.04860.us.us
+  %4 = load ptr, ptr %3, align 8, !tbaa !32       ; 2 uses
+  %.not58.us.us = icmp eq ptr %4, null
+  br i1 %.not58.us.us, label %bb.c, label %.lr.ph65.us.us.a
+
+.lr.ph65.us.us.a:                                 ; preds = %2
+  %5 = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %4) #6
+  %6 = add i64 %5, %.04661.us.us
+  br label %bb.c
+
+bb.c:                                             ; preds = %.lr.ph65.us.us.a, %2
+  %.147.us.us = phi i64 [ %6, %.lr.ph65.us.us.a ], [ %.04661.us.us, %2 ] ; 2 uses
+  %i.o = add nuw nsw i64 %.04860.us.us, 1         ; 2 uses
+  %exitcond117.not.a = icmp eq i64 %i.o, %i.h
+  br i1 %exitcond117.not.a, label %._crit_edge.us.us, label %2, !llvm.loop !37
+
+.lr.ph65.us.us:                                   ; preds = %._crit_edge.us.us
+  %7 = load ptr, ptr %i.k, align 8, !tbaa !28
   br label %bb.d
 
-bb.c:                                             ; preds = %._crit_edge66.us.us
-  %3 = add nsw i64 %i.ag, %.04568.us.us           ; 2 uses
-  %i.o = add nuw nsw i64 %.04369.us.us, 1         ; 2 uses
-  %exitcond117.not.a = icmp eq i64 %i.o, %i.f
-  br i1 %exitcond117.not.a, label %.loopexit59, label %.lr.ph.us.us, !llvm.loop !37
-
-bb.d:                                             ; preds = %.loopexit.us.us, %.lr.ph65.us.us.a
-  %.04463.us.us = phi ptr [ %2, %.lr.ph65.us.us.a ], [ %i.w, %.loopexit.us.us ] ; 2 uses
-  %.14962.us.us = phi i64 [ 0, %.lr.ph65.us.us.a ], [ %i.x, %.loopexit.us.us ] ; 2 uses
+bb.d:                                             ; preds = %.loopexit.us.us, %.lr.ph65.us.us
+  %.04463.us.us = phi ptr [ %7, %.lr.ph65.us.us ], [ %i.w, %.loopexit.us.us ] ; 2 uses
+  %.14962.us.us = phi i64 [ 0, %.lr.ph65.us.us ], [ %i.x, %.loopexit.us.us ] ; 2 uses
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.14962.us.us
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !32   ; 2 uses
   %.not57.us.us = icmp eq ptr %i.q, null
@@ -258,33 +271,20 @@ bb.f:                                             ; preds = %bb.e, %.preheader.u
   %exitcond116.not = icmp eq i64 %i.x, %i.h
   br i1 %exitcond116.not, label %._crit_edge66.us.us, label %bb.d, !llvm.loop !38
 
-4:                                                ; preds = %.lr.ph.us.us, %bb.g
-  %.04661.us.us = phi i64 [ 0, %.lr.ph.us.us ], [ %.147.us.us, %bb.g ] ; 2 uses
-  %.04860.us.us = phi i64 [ 0, %.lr.ph.us.us ], [ %i.y, %bb.g ] ; 2 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.04860.us.us
-  %6 = load ptr, ptr %5, align 8, !tbaa !32       ; 2 uses
-  %.not58.us.us = icmp eq ptr %6, null
-  br i1 %.not58.us.us, label %bb.g, label %7
+bb.g:                                             ; preds = %._crit_edge66.us.us
+  %8 = add nsw i64 %i.ag, %.04568.us.us           ; 2 uses
+  %i.y = add nuw nsw i64 %.04369.us.us, 1         ; 2 uses
+  %exitcond115.not = icmp eq i64 %i.y, %i.f
+  br i1 %exitcond115.not, label %.loopexit59, label %.lr.ph.us.us, !llvm.loop !39
 
-7:                                                ; preds = %4
-  %8 = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %6) #6
-  %9 = add i64 %8, %.04661.us.us
-  br label %bb.g
-
-bb.g:                                             ; preds = %7, %4
-  %.147.us.us = phi i64 [ %9, %7 ], [ %.04661.us.us, %4 ] ; 2 uses
-  %i.y = add nuw nsw i64 %.04860.us.us, 1         ; 2 uses
-  %exitcond115.not = icmp eq i64 %i.y, %i.h
-  br i1 %exitcond115.not, label %._crit_edge.us.us, label %4, !llvm.loop !39
-
-._crit_edge.us.us:                                ; preds = %bb.g
+._crit_edge.us.us:                                ; preds = %bb.c
   %.046.tr.us.us = trunc i64 %.147.us.us to i32
   %i.z = shl i32 %.046.tr.us.us, 1
   %i.aa = add i32 %i.z, %.fr103
   %i.ab = sext i32 %i.aa to i64
   %i.ac = tail call i64 @BUF_MEM_grow_clean(ptr noundef nonnull %i.a, i64 noundef %i.ab) #5
   %.not.us.us = icmp eq i64 %i.ac, 0
-  br i1 %.not.us.us, label %.loopexit59, label %.lr.ph65.us.us.a
+  br i1 %.not.us.us, label %.loopexit59, label %.lr.ph65.us.us
 
 ._crit_edge66.us.us:                              ; preds = %.loopexit.us.us
   store i8 10, ptr %.3.us.us, align 1, !tbaa !31
@@ -296,7 +296,7 @@ bb.g:                                             ; preds = %7, %4
   %i.ai = tail call i32 @BIO_write(ptr noundef %0, ptr noundef %i.ad, i32 noundef %i.ah) #5
   %i.aj = sext i32 %i.ai to i64
   %.not56.us.us = icmp eq i64 %i.ag, %i.aj
-  br i1 %.not56.us.us, label %bb.c, label %.loopexit59
+  br i1 %.not56.us.us, label %bb.g, label %.loopexit59
 
 .lr.ph71.split.split:                             ; preds = %.lr.ph71, %bb.i
   %.04369 = phi i64 [ %i.ay, %bb.i ], [ 0, %.lr.ph71 ] ; 2 uses
@@ -326,10 +326,10 @@ bb.i:                                             ; preds = %bb.h
   %i.ax = add nsw i64 %i.at, %.04568              ; 2 uses
   %i.ay = add nuw nsw i64 %.04369, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.ay, %i.f
-  br i1 %exitcond.not, label %.loopexit59, label %.lr.ph71.split.split, !llvm.loop !37
+  br i1 %exitcond.not, label %.loopexit59, label %.lr.ph71.split.split, !llvm.loop !39
 
-.loopexit59:                                      ; preds = %.lr.ph71.split.split, %bb.h, %bb.i, %._crit_edge.us.us, %._crit_edge66.us.us, %bb.c, %bb.b, %bb.a
-  %.0 = phi i64 [ -1, %bb.a ], [ -1, %._crit_edge.us.us ], [ 0, %bb.b ], [ -1, %._crit_edge66.us.us ], [ %3, %bb.c ], [ -1, %bb.h ], [ -1, %.lr.ph71.split.split ], [ %i.ax, %bb.i ]
+.loopexit59:                                      ; preds = %.lr.ph71.split.split, %bb.h, %bb.i, %._crit_edge.us.us, %._crit_edge66.us.us, %bb.g, %bb.b, %bb.a
+  %.0 = phi i64 [ -1, %bb.a ], [ -1, %._crit_edge.us.us ], [ 0, %bb.b ], [ -1, %._crit_edge66.us.us ], [ %8, %bb.g ], [ -1, %bb.h ], [ -1, %.lr.ph71.split.split ], [ %i.ax, %bb.i ]
   tail call void @BUF_MEM_free(ptr noundef %i.a) #5
   ret i64 %.0
 }

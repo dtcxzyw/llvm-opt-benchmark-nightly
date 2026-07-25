@@ -199,11 +199,6 @@ vec.epilog.middle.block353:                       ; preds = %vec.epilog.vector.b
   %.2100143.us.ph = phi ptr [ %i.as, %iter.check340 ], [ %i.ay, %vec.epilog.iter.check342 ], [ %i.be, %vec.epilog.middle.block353 ]
   br label %.lr.ph146.us
 
-._crit_edge.us.loopexit:                          ; preds = %.lr.ph146.us, %vec.epilog.middle.block353, %middle.block335
-  %.lcssa = phi ptr [ %i.be, %vec.epilog.middle.block353 ], [ %i.ay, %middle.block335 ], [ %i.bj, %.lr.ph146.us ]
-  %.pre199 = load ptr, ptr %i.a, align 8, !tbaa !34
-  br label %._crit_edge.us
-
 .lr.ph146.us:                                     ; preds = %.lr.ph146.us.preheader, %.lr.ph146.us
   %.088145.us = phi i64 [ %i.bg, %.lr.ph146.us ], [ %.088145.us.ph, %.lr.ph146.us.preheader ] ; 2 uses
   %.293144.us = phi ptr [ %i.bh, %.lr.ph146.us ], [ %.293144.us.ph, %.lr.ph146.us.preheader ] ; 2 uses
@@ -215,6 +210,11 @@ vec.epilog.middle.block353:                       ; preds = %vec.epilog.vector.b
   store i8 %i.bi, ptr %.2100143.us, align 1, !tbaa !36
   %i.bk = icmp samesign ugt i64 %.088145.us, 1
   br i1 %i.bk, label %.lr.ph146.us, label %._crit_edge.us.loopexit, !llvm.loop !48
+
+._crit_edge.us.loopexit:                          ; preds = %.lr.ph146.us, %vec.epilog.middle.block353, %middle.block335
+  %.lcssa = phi ptr [ %i.be, %vec.epilog.middle.block353 ], [ %i.ay, %middle.block335 ], [ %i.bj, %.lr.ph146.us ]
+  %.pre199 = load ptr, ptr %i.a, align 8, !tbaa !34
+  br label %._crit_edge.us
 
 ._crit_edge.us:                                   ; preds = %bb.k, %._crit_edge.us.loopexit, %bb.i, %.outer.split.us
   %.3101.us = phi ptr [ %.199.us, %.outer.split.us ], [ %i.aj, %bb.i ], [ %i.as, %bb.k ], [ %.lcssa, %._crit_edge.us.loopexit ] ; 6 uses

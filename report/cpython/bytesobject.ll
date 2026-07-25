@@ -204,6 +204,11 @@ bb.n:                                             ; preds = %bb.m
   %.not52.us.i.i.i = icmp eq i8 %i.av, %i.ax
   br i1 %.not52.us.i.i.i, label %5, label %.thread.us.i.i.i
 
+5:                                                ; preds = %.preheader.us.i80.i.i
+  %6 = add nsw i64 %.04862.us.i.i.i, -1
+  %7 = icmp sgt i64 %.04862.us.i.i.i, 1
+  br i1 %7, label %.preheader.us.i80.i.i, label %fastsearch.exit.i, !llvm.loop !74
+
 .thread.us.i.i.i:                                 ; preds = %.preheader.us.i80.i.i
   %.not53.us.i.i.i = icmp eq i64 %.15065.us.i.i.i, 0
   br i1 %.not53.us.i.i.i, label %bb.p, label %bb.o
@@ -226,12 +231,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   %i.be = sub nsw i64 %.15065.us.i.i.i, %spec.select.lcssa.sink.i.i.i ; 2 uses
   %i.bf = add nsw i64 %i.be, -1
   %i.bg = icmp sgt i64 %i.be, 0
-  br i1 %i.bg, label %.lr.ph66.split.us.i.i.i, label %stringlib_rfind.exit, !llvm.loop !74
-
-5:                                                ; preds = %.preheader.us.i80.i.i
-  %6 = add nsw i64 %.04862.us.i.i.i, -1
-  %7 = icmp sgt i64 %.04862.us.i.i.i, 1
-  br i1 %7, label %.preheader.us.i80.i.i, label %fastsearch.exit.i, !llvm.loop !75
+  br i1 %i.bg, label %.lr.ph66.split.us.i.i.i, label %stringlib_rfind.exit, !llvm.loop !75
 
 .lr.ph.i76.i.i:                                   ; preds = %.lr.ph.i76.i.i.prol.loopexit, %.lr.ph.i76.i.i
   %.04660.i.i.i = phi i64 [ %spec.select.i77.i.i.1, %.lr.ph.i76.i.i ], [ %.04660.i.i.i.unr, %.lr.ph.i76.i.i.prol.loopexit ]
@@ -634,6 +634,11 @@ bb.z:                                             ; preds = %.preheader.us.i, %6
   %.not90.us.i = icmp eq i8 %i.cp, %i.cr
   br i1 %.not90.us.i, label %6, label %._crit_edge104.us.i
 
+6:                                                ; preds = %bb.z
+  %7 = add nuw nsw i64 %.0102.us.i, 1             ; 2 uses
+  %exitcond179.not.i = icmp eq i64 %7, %i.bk
+  br i1 %exitcond179.not.i, label %._crit_edge104.us.thread.i.loopexit, label %bb.z, !llvm.loop !149
+
 ._crit_edge104.us.i:                              ; preds = %bb.z
   %i.cs = add i64 %.066110.us.i, 1                ; 2 uses
   %.not91.us.i = icmp sgt i64 %i.cs, %i.bx
@@ -674,12 +679,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ac, %bb.
   %.3.us.i = phi i64 [ %.066110.us.i, %bb.x ], [ %spec.select.us.i, %bb.y ], [ %.167.us.i, %bb.ac ], [ %i.db, %bb.ae ]
   %i.dc = add i64 %.3.us.i, 1                     ; 2 uses
   %.not.us.i = icmp sgt i64 %i.dc, %i.bx
-  br i1 %.not.us.i, label %.loopexit.i, label %.lr.ph113.split.us.i, !llvm.loop !149
-
-6:                                                ; preds = %bb.z
-  %7 = add nuw nsw i64 %.0102.us.i, 1             ; 2 uses
-  %exitcond179.not.i = icmp eq i64 %7, %i.bk
-  br i1 %exitcond179.not.i, label %._crit_edge104.us.thread.i.loopexit, label %bb.z, !llvm.loop !150
+  br i1 %.not.us.i, label %.loopexit.i, label %.lr.ph113.split.us.i, !llvm.loop !150
 
 .preheader.us.i:                                  ; preds = %.lr.ph113.split.us.i
   %i.dd = getelementptr i8, ptr %0, i64 %.066110.us.i
@@ -813,6 +813,11 @@ bb.an:                                            ; preds = %bb.am
   %.not52.us.i = icmp eq i8 %i.fi, %i.fk
   br i1 %.not52.us.i, label %8, label %.thread.us.i
 
+8:                                                ; preds = %.preheader.us.i80
+  %9 = add nsw i64 %.04862.us.i, -1
+  %10 = icmp sgt i64 %.04862.us.i, 1
+  br i1 %10, label %.preheader.us.i80, label %stringlib_find_char.exit, !llvm.loop !74
+
 .thread.us.i:                                     ; preds = %.preheader.us.i80
   %.not53.us.i = icmp eq i64 %.15065.us.i, 0
   br i1 %.not53.us.i, label %bb.ap, label %bb.ao
@@ -835,12 +840,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao, %bb.
   %i.fr = sub nsw i64 %.15065.us.i, %spec.select.lcssa.sink.i ; 2 uses
   %i.fs = add nsw i64 %i.fr, -1
   %i.ft = icmp sgt i64 %i.fr, 0
-  br i1 %i.ft, label %.lr.ph66.split.us.i, label %stringlib_find_char.exit, !llvm.loop !74
-
-8:                                                ; preds = %.preheader.us.i80
-  %9 = add nsw i64 %.04862.us.i, -1
-  %10 = icmp sgt i64 %.04862.us.i, 1
-  br i1 %10, label %.preheader.us.i80, label %stringlib_find_char.exit, !llvm.loop !75
+  br i1 %i.ft, label %.lr.ph66.split.us.i, label %stringlib_find_char.exit, !llvm.loop !75
 
 .lr.ph.i76:                                       ; preds = %.lr.ph.i76.prol.loopexit, %.lr.ph.i76
   %.04660.i = phi i64 [ %spec.select.i77.1, %.lr.ph.i76 ], [ %.04660.i.unr, %.lr.ph.i76.prol.loopexit ]
@@ -1028,6 +1028,11 @@ bb.c:                                             ; preds = %.preheader.us, %8
   %.not120.us = icmp eq i8 %i.aq, %i.as
   br i1 %.not120.us, label %8, label %._crit_edge141.us
 
+8:                                                ; preds = %bb.c
+  %9 = add nuw nsw i64 %.0139.us, 1               ; 2 uses
+  %exitcond225.not = icmp eq i64 %9, %i.b
+  br i1 %exitcond225.not, label %._crit_edge141.us.thread, label %bb.c, !llvm.loop !153
+
 ._crit_edge141.us:                                ; preds = %bb.c
   %i.at = icmp eq i64 %.0139.us, %i.b
   br i1 %i.at, label %._crit_edge141.us.thread, label %bb.d
@@ -1081,12 +1086,7 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %bb.b,
   %.3.us = phi i64 [ %.092148.us, %bb.a ], [ %spec.select.us, %bb.b ], [ %.193.us, %bb.h ], [ %i.bh, %bb.j ]
   %i.bi = add i64 %.3.us, 1                       ; 2 uses
   %.not.us = icmp sgt i64 %i.bi, %i.a
-  br i1 %.not.us, label %.loopexit, label %.lr.ph151.split.us, !llvm.loop !153
-
-8:                                                ; preds = %bb.c
-  %9 = add nuw nsw i64 %.0139.us, 1               ; 2 uses
-  %exitcond225.not = icmp eq i64 %9, %i.b
-  br i1 %exitcond225.not, label %._crit_edge141.us.thread, label %bb.c, !llvm.loop !154
+  br i1 %.not.us, label %.loopexit, label %.lr.ph151.split.us, !llvm.loop !154
 
 .preheader.us:                                    ; preds = %.lr.ph151.split.us
   %i.bj = getelementptr i8, ptr %0, i64 %.092148.us
@@ -1489,56 +1489,56 @@ bb.g:                                             ; preds = %bb.a
 .lr.ph207.us:                                     ; preds = %.preheader177.us
   %i.bv = getelementptr i8, ptr %i.bu, i64 %i.bm
   %i.bw = getelementptr i8, ptr %i.bv, i64 1      ; 4 uses
-  br label %bb.h
+  br label %.lr.ph210.us.a
 
-3:                                                ; preds = %.lr.ph210.us.a
-  %4 = add nuw nsw i64 %.0209.us.a, 1             ; 2 uses
-  %exitcond281.not = icmp eq i64 %4, %.fr239
-  br i1 %exitcond281.not, label %.thread170, label %.lr.ph210.us.a, !llvm.loop !168
-
-.lr.ph210.us.a:                                   ; preds = %..preheader_crit_edge.us, %3
-  %.0209.us.a = phi i64 [ %4, %3 ], [ 0, %..preheader_crit_edge.us ] ; 3 uses
+.lr.ph210.us.a:                                   ; preds = %.lr.ph207.us, %3
+  %.0209.us.a = phi i64 [ %.fr239, %.lr.ph207.us ], [ %4, %3 ] ; 5 uses
   %i.bx = getelementptr i8, ptr %i.g, i64 %.0209.us.a
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !14
   %i.bz = getelementptr i8, ptr %i.bw, i64 %.0209.us.a
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !14
   %.not151.us.a = icmp eq i8 %i.by, %i.ca
-  br i1 %.not151.us.a, label %3, label %.thread167.us.a
+  br i1 %.not151.us.a, label %3, label %bb.i
 
-.thread167.us.a:                                  ; preds = %.lr.ph210.us.a
-  %5 = getelementptr i8, ptr %i.bu, i64 %i.bk
-  br label %bb.j
+3:                                                ; preds = %.lr.ph210.us.a
+  %4 = add i64 %.0209.us.a, 1                     ; 2 uses
+  %exitcond280.not = icmp eq i64 %4, %.fr240
+  br i1 %exitcond280.not, label %..preheader_crit_edge.us, label %.lr.ph210.us.a, !llvm.loop !168
 
-bb.h:                                             ; preds = %.lr.ph207.us, %6
-  %.0124205.us = phi i64 [ %.fr239, %.lr.ph207.us ], [ %7, %6 ] ; 5 uses
+.thread167.us.a:                                  ; preds = %bb.h
+  %5 = add nuw nsw i64 %.0124205.us, 1            ; 2 uses
+  %exitcond281.not = icmp eq i64 %5, %.fr239
+  br i1 %exitcond281.not, label %.thread170, label %bb.h, !llvm.loop !169
+
+bb.h:                                             ; preds = %..preheader_crit_edge.us, %.thread167.us.a
+  %.0124205.us = phi i64 [ %5, %.thread167.us.a ], [ 0, %..preheader_crit_edge.us ] ; 3 uses
   %i.cb = getelementptr i8, ptr %i.g, i64 %.0124205.us
   %i.cc = load i8, ptr %i.cb, align 1, !tbaa !14
   %i.cd = getelementptr i8, ptr %i.bw, i64 %.0124205.us
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !14
   %.not153.us = icmp eq i8 %i.cc, %i.ce
-  br i1 %.not153.us, label %6, label %bb.i
+  br i1 %.not153.us, label %.thread167.us.a, label %.thread167.us
 
-bb.i:                                             ; preds = %bb.h
-  %i.cf = icmp slt i64 %.0124205.us, %i.o
+.thread167.us:                                    ; preds = %bb.h
+  %6 = getelementptr i8, ptr %i.bu, i64 %i.bk
+  br label %bb.j
+
+bb.i:                                             ; preds = %.lr.ph210.us.a
+  %i.cf = icmp slt i64 %.0209.us.a, %i.o
   %i.cg = getelementptr i8, ptr %i.bu, i64 %i.m
-  %i.ch = sub i64 %.0124205.us, %.fr239
+  %i.ch = sub i64 %.0209.us.a, %.fr239
   %i.ci = getelementptr i8, ptr %i.bu, i64 %i.ch
   %i.cj = getelementptr i8, ptr %i.ci, i64 1
   %.7133.us = select i1 %i.cf, ptr %i.cg, ptr %i.cj
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %.thread167.us.a
-  %.9.us = phi ptr [ %.7133.us, %bb.i ], [ %5, %.thread167.us.a ] ; 2 uses
+bb.j:                                             ; preds = %bb.i, %.thread167.us
+  %.9.us = phi ptr [ %.7133.us, %bb.i ], [ %6, %.thread167.us ] ; 2 uses
   %i.ck = icmp ult ptr %.9.us, %i.j
   br i1 %i.ck, label %.preheader177.us.backedge, label %.thread
 
-6:                                                ; preds = %bb.h
-  %7 = add i64 %.0124205.us, 1                    ; 2 uses
-  %exitcond280.not = icmp eq i64 %7, %.fr240
-  br i1 %exitcond280.not, label %..preheader_crit_edge.us, label %bb.h, !llvm.loop !169
-
-..preheader_crit_edge.us:                         ; preds = %6
-  br i1 %.not152208, label %.lr.ph210.us.a, label %.thread170
+..preheader_crit_edge.us:                         ; preds = %3
+  br i1 %.not152208, label %bb.h, label %.thread170
 
 .preheader177.lr.ph.split:                        ; preds = %.preheader177.lr.ph
   br i1 %.not152208, label %.preheader177.us217, label %.preheader177
@@ -1573,7 +1573,7 @@ bb.j:                                             ; preds = %bb.i, %.thread167.u
 bb.k:                                             ; preds = %bb.l
   %i.cu = add nuw nsw i64 %.0209.us231, 1         ; 2 uses
   %exitcond279.not = icmp eq i64 %i.cu, %.fr239
-  br i1 %exitcond279.not, label %.thread170, label %bb.l, !llvm.loop !168
+  br i1 %exitcond279.not, label %.thread170, label %bb.l, !llvm.loop !169
 
 bb.l:                                             ; preds = %.preheader.us227, %bb.k
   %.0209.us231 = phi i64 [ 0, %.preheader.us227 ], [ %i.cu, %bb.k ] ; 3 uses
@@ -1612,8 +1612,8 @@ bb.l:                                             ; preds = %.preheader.us227, %
   %i.dj = getelementptr i8, ptr %i.di, i64 1
   br label %.thread170
 
-.thread170:                                       ; preds = %bb.k, %..preheader_crit_edge.us, %3, %.preheader
-  %.lcssa = phi ptr [ %i.bw, %..preheader_crit_edge.us ], [ %i.dj, %.preheader ], [ %i.bw, %3 ], [ %i.ct, %bb.k ]
+.thread170:                                       ; preds = %bb.k, %..preheader_crit_edge.us, %.thread167.us.a, %.preheader
+  %.lcssa = phi ptr [ %i.bw, %..preheader_crit_edge.us ], [ %i.dj, %.preheader ], [ %i.bw, %.thread167.us.a ], [ %i.ct, %bb.k ]
   %i.dk = ptrtoint ptr %.lcssa to i64
   %i.dl = ptrtoint ptr %0 to i64
   %i.dm = sub i64 %i.dk, %i.dl
@@ -2016,6 +2016,11 @@ bb.p:                                             ; preds = %bb.o
   %.not52.us.i.i.i.i = icmp eq i8 %i.be, %i.bg
   br i1 %.not52.us.i.i.i.i, label %3, label %.thread.us.i.i.i.i
 
+3:                                                ; preds = %.preheader.us.i80.i.i.i
+  %4 = add nsw i64 %.04862.us.i.i.i.i, -1
+  %5 = icmp sgt i64 %.04862.us.i.i.i.i, 1
+  br i1 %5, label %.preheader.us.i80.i.i.i, label %fastsearch.exit.i.i, !llvm.loop !74
+
 .thread.us.i.i.i.i:                               ; preds = %.preheader.us.i80.i.i.i
   %.not53.us.i.i.i.i = icmp eq i64 %.15065.us.i.i.i.i, 0
   br i1 %.not53.us.i.i.i.i, label %bb.r, label %bb.q
@@ -2038,12 +2043,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p
   %i.bn = sub nsw i64 %.15065.us.i.i.i.i, %spec.select.lcssa.sink.i.i.i.i ; 2 uses
   %i.bo = add nsw i64 %i.bn, -1
   %i.bp = icmp sgt i64 %i.bn, 0
-  br i1 %i.bp, label %.lr.ph66.split.us.i.i.i.i, label %fastsearch.exit.thread.i.i, !llvm.loop !74
-
-3:                                                ; preds = %.preheader.us.i80.i.i.i
-  %4 = add nsw i64 %.04862.us.i.i.i.i, -1
-  %5 = icmp sgt i64 %.04862.us.i.i.i.i, 1
-  br i1 %5, label %.preheader.us.i80.i.i.i, label %fastsearch.exit.i.i, !llvm.loop !75
+  br i1 %i.bp, label %.lr.ph66.split.us.i.i.i.i, label %fastsearch.exit.thread.i.i, !llvm.loop !75
 
 .lr.ph.i76.i.i.i:                                 ; preds = %.lr.ph.i76.i.i.i.prol.loopexit, %.lr.ph.i76.i.i.i
   %.04660.i.i.i.i = phi i64 [ %spec.select.i77.i.i.i.1, %.lr.ph.i76.i.i.i ], [ %.04660.i.i.i.i.unr, %.lr.ph.i76.i.i.i.prol.loopexit ]
@@ -2446,6 +2446,11 @@ bb.bo:                                            ; preds = %bb.bn
   %.not52.us.i.i.i.i = icmp eq i8 %i.gk, %i.gm
   br i1 %.not52.us.i.i.i.i, label %5, label %.thread.us.i.i.i.i
 
+5:                                                ; preds = %.preheader.us.i80.i.i.i
+  %6 = add nsw i64 %.04862.us.i.i.i.i, -1
+  %7 = icmp sgt i64 %.04862.us.i.i.i.i, 1
+  br i1 %7, label %.preheader.us.i80.i.i.i, label %fastsearch.exit.loopexit.i.i, !llvm.loop !74
+
 .thread.us.i.i.i.i:                               ; preds = %.preheader.us.i80.i.i.i
   %.not53.us.i.i.i.i = icmp eq i64 %.15065.us.i.i.i.i, 0
   br i1 %.not53.us.i.i.i.i, label %bb.bq, label %bb.bp
@@ -2468,12 +2473,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp, %bb.
   %i.gt = sub nsw i64 %.15065.us.i.i.i.i, %spec.select.lcssa.sink.i.i.i.i ; 2 uses
   %i.gu = add nsw i64 %i.gt, -1
   %i.gv = icmp sgt i64 %i.gt, 0
-  br i1 %i.gv, label %.lr.ph66.split.us.i.i.i.i, label %fastsearch.exit.thread.i.i, !llvm.loop !74
-
-5:                                                ; preds = %.preheader.us.i80.i.i.i
-  %6 = add nsw i64 %.04862.us.i.i.i.i, -1
-  %7 = icmp sgt i64 %.04862.us.i.i.i.i, 1
-  br i1 %7, label %.preheader.us.i80.i.i.i, label %fastsearch.exit.loopexit.i.i, !llvm.loop !75
+  br i1 %i.gv, label %.lr.ph66.split.us.i.i.i.i, label %fastsearch.exit.thread.i.i, !llvm.loop !75
 
 .lr.ph.i76.i.i.i:                                 ; preds = %.lr.ph.i76.i.i.i.prol.loopexit, %.lr.ph.i76.i.i.i
   %.04660.i.i.i.i = phi i64 [ %spec.select.i77.i.i.i.1, %.lr.ph.i76.i.i.i ], [ %.04660.i.i.i.i.unr, %.lr.ph.i76.i.i.i.prol.loopexit ]
@@ -2876,6 +2876,10 @@ bb.e:                                             ; preds = %bb.d, %.thread31
     i8 10, label %.critedge55.i.us.i
   ]
 
+4:                                                ; preds = %.preheader.i.us.i
+  %exitcond.not.i.us.i = icmp eq i64 %i.u, %.val.i
+  br i1 %exitcond.not.i.us.i, label %.critedge55.i.us.i, label %.preheader.i.us.i, !llvm.loop !242
+
 bb.f:                                             ; preds = %.preheader.i.us.i
   %i.v = icmp slt i64 %i.u, %.val.i
   br i1 %i.v, label %bb.g, label %.critedge55.i.us.i
@@ -2887,10 +2891,6 @@ bb.g:                                             ; preds = %bb.f
   %i.z = add nsw i64 %.174.i.us.i, 2
   %spec.select.i.us.i = select i1 %i.y, i64 %i.z, i64 %i.u
   br label %.critedge55.i.us.i
-
-4:                                                ; preds = %.preheader.i.us.i
-  %exitcond.not.i.us.i = icmp eq i64 %i.u, %.val.i
-  br i1 %exitcond.not.i.us.i, label %.critedge55.i.us.i, label %.preheader.i.us.i, !llvm.loop !242
 
 .critedge55.i.us.i:                               ; preds = %4, %.preheader.i.us.i, %bb.g, %bb.f
   %.3.i.us.i = phi i64 [ %spec.select.i.us.i, %bb.g ], [ %i.u, %bb.f ], [ %.val.i, %4 ], [ %i.u, %.preheader.i.us.i ]

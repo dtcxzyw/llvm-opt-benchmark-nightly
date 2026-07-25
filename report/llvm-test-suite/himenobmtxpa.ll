@@ -202,12 +202,6 @@ bb.a:
   %.0385415.us.us = phi i32 [ %8, %._crit_edge413.split.us.us ], [ 0, %.preheader391.us.us.preheader ]
   br i1 %i.l, label %.preheader389.lr.ph.split.us.split.us.us.us, label %._crit_edge413.split.us.us
 
-._crit_edge413.split.us.us:                       ; preds = %._crit_edge410.us.us, %.preheader391.us.us, %..preheader390_crit_edge.split.us.us.us
-  %.us-phi.us.us514 = phi float [ %i.ik, %..preheader390_crit_edge.split.us.us.us ], [ 0.000000e+00, %.preheader391.us.us ], [ %i.ik, %._crit_edge410.us.us ]
-  %8 = add nuw nsw i32 %.0385415.us.us, 1         ; 2 uses
-  %exitcond505.not = icmp eq i32 %8, %0
-  br i1 %exitcond505.not, label %._crit_edge416, label %.preheader391.us.us, !llvm.loop !53
-
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv490 = phi i64 [ %indvars.iv.next491.3, %scalar.ph ], [ %indvars.iv490.unr, %scalar.ph.prol.loopexit ] ; 6 uses
   %gep578 = getelementptr [4 x i8], ptr %invariant.gep577, i64 %indvars.iv490
@@ -231,7 +225,13 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store float %i.an, ptr %gep580.3, align 4, !tbaa !15
   %indvars.iv.next491.3 = add nuw nsw i64 %indvars.iv490, 4 ; 2 uses
   %exitcond494.not.3 = icmp eq i64 %indvars.iv.next491.3, %wide.trip.count493
-  br i1 %exitcond494.not.3, label %._crit_edge.us.us, label %scalar.ph, !llvm.loop !54
+  br i1 %exitcond494.not.3, label %._crit_edge.us.us, label %scalar.ph, !llvm.loop !53
+
+._crit_edge413.split.us.us:                       ; preds = %._crit_edge410.us.us, %.preheader391.us.us, %..preheader390_crit_edge.split.us.us.us
+  %.us-phi.us.us514 = phi float [ %i.ik, %..preheader390_crit_edge.split.us.us.us ], [ 0.000000e+00, %.preheader391.us.us ], [ %i.ik, %._crit_edge410.us.us ]
+  %8 = add nuw nsw i32 %.0385415.us.us, 1         ; 2 uses
+  %exitcond505.not = icmp eq i32 %8, %0
+  br i1 %exitcond505.not, label %._crit_edge416, label %.preheader391.us.us, !llvm.loop !54
 
 .preheader.us.us:                                 ; preds = %._crit_edge.us.us, %.preheader388.us.us
   %indvar581 = phi i32 [ %indvar.next582, %._crit_edge.us.us ], [ 0, %.preheader388.us.us ] ; 3 uses
@@ -634,8 +634,8 @@ attributes #18 = { cold noreturn nounwind }
 !50 = distinct !{!50, !18, !20, !19}
 !51 = distinct !{!51, !18, !19, !20}
 !52 = distinct !{!52, !18, !20, !19}
-!53 = distinct !{!53, !18}
-!54 = distinct !{!54, !18, !19}
+!53 = distinct !{!53, !18, !19}
+!54 = distinct !{!54, !18}
 !55 = distinct !{!55, !18, !19, !20}
 !56 = distinct !{!56, !29}
 !57 = distinct !{!57, !18}

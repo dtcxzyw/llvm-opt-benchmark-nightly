@@ -133,6 +133,23 @@ bb.a:
   store double %i.l, ptr %i.i, align 8, !tbaa !14
   br i1 %exitcond55.not, label %..preheader_crit_edge.us.us.preheader, label %4
 
+4:                                                ; preds = %.lr.ph.us.us
+  %5 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %6 = load double, ptr %5, align 8, !tbaa !14
+  %7 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  store double %6, ptr %7, align 8, !tbaa !14
+  br i1 %exitcond55.not.1, label %..preheader_crit_edge.us.us.preheader, label %8
+
+8:                                                ; preds = %4
+  %9 = getelementptr inbounds nuw i8, ptr %i.k, i64 16
+  %10 = load double, ptr %9, align 8, !tbaa !14
+  %11 = getelementptr inbounds nuw i8, ptr %i.i, i64 16
+  store double %10, ptr %11, align 8, !tbaa !14
+  br label %..preheader_crit_edge.us.us.preheader
+
+..preheader_crit_edge.us.us.preheader:            ; preds = %8, %4, %.lr.ph.us.us
+  br label %..preheader_crit_edge.us.us
+
 ..preheader_crit_edge.us.us:                      ; preds = %..preheader_crit_edge.us.us.preheader, %..preheader_crit_edge.us.us
   %indvars.iv56 = phi i64 [ %indvars.iv.next57, %..preheader_crit_edge.us.us ], [ %i.e, %..preheader_crit_edge.us.us.preheader ] ; 6 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv56
@@ -157,23 +174,6 @@ bb.a:
   %indvars.iv.next57 = add nuw nsw i64 %indvars.iv56, 4 ; 2 uses
   %i.ab = icmp samesign ult i64 %indvars.iv.next57, %i.f
   br i1 %i.ab, label %..preheader_crit_edge.us.us, label %._crit_edge.us.us, !llvm.loop !16
-
-4:                                                ; preds = %.lr.ph.us.us
-  %5 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %6 = load double, ptr %5, align 8, !tbaa !14
-  %7 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  store double %6, ptr %7, align 8, !tbaa !14
-  br i1 %exitcond55.not.1, label %..preheader_crit_edge.us.us.preheader, label %8
-
-8:                                                ; preds = %4
-  %9 = getelementptr inbounds nuw i8, ptr %i.k, i64 16
-  %10 = load double, ptr %9, align 8, !tbaa !14
-  %11 = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  store double %10, ptr %11, align 8, !tbaa !14
-  br label %..preheader_crit_edge.us.us.preheader
-
-..preheader_crit_edge.us.us.preheader:            ; preds = %8, %4, %.lr.ph.us.us
-  br label %..preheader_crit_edge.us.us
 
 ._crit_edge.us.us:                                ; preds = %..preheader_crit_edge.us.us
   %indvars.iv.next60 = add nuw nsw i64 %indvars.iv59, 1 ; 2 uses

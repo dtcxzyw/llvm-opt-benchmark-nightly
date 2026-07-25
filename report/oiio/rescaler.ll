@@ -57,12 +57,6 @@ bb.a:
   %.not50.us = icmp sgt i32 %i.e, %i.x
   br i1 %.not50.us, label %.lr.ph.us, label %._crit_edge.us
 
-._crit_edge.us:                                   ; preds = %bb.d, %.lr.ph57.split.us
-  %indvars.iv.next72 = add nuw nsw i64 %indvars.iv71, 1 ; 2 uses
-  %indvars.iv.next67 = add nuw nsw i64 %indvars.iv66, 1
-  %exitcond75.not = icmp eq i64 %indvars.iv.next72, %i.o
-  br i1 %exitcond75.not, label %._crit_edge58, label %.lr.ph57.split.us, !llvm.loop !17
-
 bb.b:                                             ; preds = %.lr.ph.us, %bb.d
   %indvars.iv68 = phi i64 [ %indvars.iv66, %.lr.ph.us ], [ %indvars.iv.next69, %bb.d ] ; 2 uses
   %.054.us = phi i32 [ %i.am, %.lr.ph.us ], [ %.1.us, %bb.d ] ; 2 uses
@@ -97,6 +91,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.al = trunc nuw i64 %indvars.iv.next69 to i32
   %.not.us = icmp sgt i32 %i.e, %i.al
   br i1 %.not.us, label %bb.b, label %._crit_edge.us
+
+._crit_edge.us:                                   ; preds = %bb.d, %.lr.ph57.split.us
+  %indvars.iv.next72 = add nuw nsw i64 %indvars.iv71, 1 ; 2 uses
+  %indvars.iv.next67 = add nuw nsw i64 %indvars.iv66, 1
+  %exitcond75.not = icmp eq i64 %indvars.iv.next72, %i.o
+  br i1 %exitcond75.not, label %._crit_edge58, label %.lr.ph57.split.us, !llvm.loop !17
 
 .lr.ph.us:                                        ; preds = %.lr.ph57.split.us
   %i.am = zext i8 %i.u to i32

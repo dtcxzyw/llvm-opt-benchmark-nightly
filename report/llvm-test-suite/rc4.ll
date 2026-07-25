@@ -202,11 +202,6 @@ bb.b:                                             ; preds = %bb.a
   %i.cl = zext i8 %i.ck to i32
   br label %vector.ph
 
-3:                                                ; preds = %._crit_edge.us
-  %puts18.us = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.1) ; 0 uses
-  %exitcond48.not = icmp eq i64 %indvars.iv.next, 6
-  br i1 %exitcond48.not, label %.split38.us, label %.lr.ph.us, !llvm.loop !19
-
 vector.ph:                                        ; preds = %.lr.ph.us, %rc4_crypt.exit.us
   %.01526.us = phi i32 [ 0, %.lr.ph.us ], [ %i.ds, %rc4_crypt.exit.us ]
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull align 2 %i.ce, i64 %i.ch, i1 false)
@@ -334,7 +329,12 @@ vector.ph:                                        ; preds = %.lr.ph.us, %rc4_cry
 rc4_crypt.exit.us:                                ; preds = %.lr.ph.i.us
   %i.ds = add nuw nsw i32 %.01526.us, 1           ; 2 uses
   %exitcond.not = icmp eq i32 %i.ds, %.055
-  br i1 %exitcond.not, label %._crit_edge.us, label %vector.ph, !llvm.loop !20
+  br i1 %exitcond.not, label %._crit_edge.us, label %vector.ph, !llvm.loop !19
+
+3:                                                ; preds = %._crit_edge.us
+  %puts18.us = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.1) ; 0 uses
+  %exitcond48.not = icmp eq i64 %indvars.iv.next, 6
+  br i1 %exitcond48.not, label %.split38.us, label %.lr.ph.us, !llvm.loop !20
 
 ._crit_edge.us:                                   ; preds = %rc4_crypt.exit.us
   %i.dt = getelementptr inbounds nuw [30 x i8], ptr @output, i64 %indvars.iv

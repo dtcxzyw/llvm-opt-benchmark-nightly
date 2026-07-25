@@ -204,10 +204,6 @@ bb.v:                                             ; preds = %bb.x
   %exitcond81.not.i.i = icmp eq i64 %indvars.iv.next78.i.i, %wide.trip.count80.i.i
   br i1 %exitcond81.not.i.i, label %._crit_edge.us.i.i, label %bb.w, !llvm.loop !206
 
-._crit_edge.us.i.i:                               ; preds = %bb.v, %.preheader.us.i.i
-  store ptr %i.fg, ptr %i.et, align 8, !tbaa !205
-  br label %.loopexit.us.i.i
-
 bb.w:                                             ; preds = %.lr.ph61.us.i.i, %bb.v
   %indvars.iv77.i.i = phi i64 [ 0, %.lr.ph61.us.i.i ], [ %indvars.iv.next78.i.i, %bb.v ] ; 2 uses
   %i.ex = getelementptr inbounds nuw [8 x i8], ptr %i.fk, i64 %indvars.iv77.i.i
@@ -223,6 +219,10 @@ bb.x:                                             ; preds = %bb.w
   %i.fd = load ptr, ptr %i.fc, align 8, !tbaa !205
   %.not46.us.i.i = icmp eq ptr %i.fd, null
   br i1 %.not46.us.i.i, label %.loopexit.us.i.i, label %bb.v
+
+._crit_edge.us.i.i:                               ; preds = %bb.v, %.preheader.us.i.i
+  store ptr %i.fg, ptr %i.et, align 8, !tbaa !205
+  br label %.loopexit.us.i.i
 
 .loopexit.us.i.i:                                 ; preds = %bb.x, %bb.w, %._crit_edge.us.i.i, %bb.u, %.preheader48.us.i.i
   %.2.us.i.i = phi i32 [ %.14063.us.i.i, %.preheader48.us.i.i ], [ 1, %._crit_edge.us.i.i ], [ %.14063.us.i.i, %bb.u ], [ %.14063.us.i.i, %bb.w ], [ %.14063.us.i.i, %bb.x ] ; 2 uses

@@ -202,6 +202,14 @@ bb.h:                                             ; preds = %bb.g
   %i.at = icmp slt i32 %i.f, %i.as
   br i1 %i.at, label %._crit_edge.us.us, label %2
 
+2:                                                ; preds = %bb.h, %bb.e, %bb.d, %bb.c
+  %.156.us.us = phi i32 [ %.05559.us.us, %bb.e ], [ %i.ap, %bb.h ], [ %i.q, %bb.d ], [ %i.q, %bb.c ] ; 2 uses
+  %.3.us.us = phi i32 [ %.05260.us.us, %bb.e ], [ %i.as, %bb.h ], [ %i.ae, %bb.d ], [ %.05260.us.us, %bb.c ]
+  %.1.us.us = phi i32 [ %.04961.us.us, %bb.e ], [ %i.ar, %bb.h ], [ %i.ad, %bb.d ], [ %i.y, %bb.c ] ; 2 uses
+  %3 = add nsw i32 %.3.us.us, 1                   ; 2 uses
+  %4 = icmp slt i32 %3, %i.c
+  br i1 %4, label %bb.b, label %._crit_edge.us.us, !llvm.loop !22
+
 ._crit_edge.us.us:                                ; preds = %2, %bb.h, %bb.d
   %.257.us.us = phi i32 [ %i.q, %bb.d ], [ %i.ap, %bb.h ], [ %.156.us.us, %2 ]
   %.2.us.us = phi i32 [ %i.ad, %bb.d ], [ %i.ar, %bb.h ], [ %.1.us.us, %2 ]
@@ -213,15 +221,7 @@ bb.h:                                             ; preds = %bb.g
   %i.az = fptrunc double %i.ay to float           ; 3 uses
   %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, 1 ; 2 uses
   %exitcond89.not = icmp eq i64 %indvars.iv.next87, %wide.trip.count
-  br i1 %exitcond89.not, label %.loopexit.us, label %.lr.ph.us.us, !llvm.loop !22
-
-2:                                                ; preds = %bb.h, %bb.e, %bb.d, %bb.c
-  %.156.us.us = phi i32 [ %.05559.us.us, %bb.e ], [ %i.ap, %bb.h ], [ %i.q, %bb.d ], [ %i.q, %bb.c ] ; 2 uses
-  %.3.us.us = phi i32 [ %.05260.us.us, %bb.e ], [ %i.as, %bb.h ], [ %i.ae, %bb.d ], [ %.05260.us.us, %bb.c ]
-  %.1.us.us = phi i32 [ %.04961.us.us, %bb.e ], [ %i.ar, %bb.h ], [ %i.ad, %bb.d ], [ %i.y, %bb.c ] ; 2 uses
-  %3 = add nsw i32 %.3.us.us, 1                   ; 2 uses
-  %4 = icmp slt i32 %3, %i.c
-  br i1 %4, label %bb.b, label %._crit_edge.us.us, !llvm.loop !23
+  br i1 %exitcond89.not, label %.loopexit.us, label %.lr.ph.us.us, !llvm.loop !23
 
 ._crit_edge.loopexit:                             ; preds = %.loopexit.us
   %i.ba = fpext float %i.az to double

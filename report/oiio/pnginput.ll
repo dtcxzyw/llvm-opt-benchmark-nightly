@@ -204,12 +204,6 @@ bb.a:
   %i.m = fcmp une float %i.l, 1.000000e+00
   br i1 %i.m, label %.preheader.us, label %..loopexit_crit_edge.us
 
-..loopexit_crit_edge.us:                          ; preds = %bb.g, %.lr.ph117.split.us
-  %7 = add nuw nsw i32 %.057114.us, 1             ; 2 uses
-  %8 = getelementptr inbounds nuw [2 x i8], ptr %.054115.us, i64 %i.g
-  %exitcond136.not = icmp eq i32 %7, %2
-  br i1 %exitcond136.not, label %.loopexit95, label %.lr.ph117.split.us, !llvm.loop !157
-
 .preheader.us:                                    ; preds = %.lr.ph117.split.us, %bb.g
   %indvars.iv131 = phi i64 [ %indvars.iv.next132, %bb.g ], [ 0, %.lr.ph117.split.us ] ; 3 uses
   %.not65.us = icmp eq i64 %indvars.iv131, %i.h
@@ -265,7 +259,13 @@ _ZN11OpenImageIO4v3_114linear_to_sRGBEf.exit.us:  ; preds = %bb.f, %bb.e
 bb.g:                                             ; preds = %_ZN11OpenImageIO4v3_114linear_to_sRGBEf.exit.us, %.preheader.us
   %indvars.iv.next132 = add nuw nsw i64 %indvars.iv131, 1 ; 2 uses
   %exitcond135.not = icmp eq i64 %indvars.iv.next132, %wide.trip.count134
-  br i1 %exitcond135.not, label %..loopexit_crit_edge.us, label %.preheader.us, !llvm.loop !158
+  br i1 %exitcond135.not, label %..loopexit_crit_edge.us, label %.preheader.us, !llvm.loop !157
+
+..loopexit_crit_edge.us:                          ; preds = %bb.g, %.lr.ph117.split.us
+  %7 = add nuw nsw i32 %.057114.us, 1             ; 2 uses
+  %8 = getelementptr inbounds nuw [2 x i8], ptr %.054115.us, i64 %i.g
+  %exitcond136.not = icmp eq i32 %7, %2
+  br i1 %exitcond136.not, label %.loopexit95, label %.lr.ph117.split.us, !llvm.loop !158
 
 bb.h:                                             ; preds = %bb.a
   %i.aj = fcmp une float %6, 1.000000e+00
@@ -297,12 +297,6 @@ bb.h:                                             ; preds = %bb.a
   %i.at = fcmp une float %i.as, 1.000000e+00
   br i1 %i.at, label %.preheader99.us, label %..loopexit100_crit_edge.us
 
-..loopexit100_crit_edge.us:                       ; preds = %bb.j, %.lr.ph107.split.us
-  %9 = add nuw nsw i32 %.055104.us, 1             ; 2 uses
-  %10 = getelementptr inbounds nuw [2 x i8], ptr %.2105.us, i64 %i.an
-  %exitcond124.not = icmp eq i32 %9, %2
-  br i1 %exitcond124.not, label %.loopexit95, label %.lr.ph107.split.us, !llvm.loop !159
-
 .preheader99.us:                                  ; preds = %.lr.ph107.split.us, %bb.j
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %.lr.ph107.split.us ] ; 3 uses
   %.not.us = icmp eq i64 %indvars.iv, %i.ao
@@ -325,7 +319,13 @@ bb.i:                                             ; preds = %.preheader99.us
 bb.j:                                             ; preds = %bb.i, %.preheader99.us
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %..loopexit100_crit_edge.us, label %.preheader99.us, !llvm.loop !160
+  br i1 %exitcond.not, label %..loopexit100_crit_edge.us, label %.preheader99.us, !llvm.loop !159
+
+..loopexit100_crit_edge.us:                       ; preds = %bb.j, %.lr.ph107.split.us
+  %9 = add nuw nsw i32 %.055104.us, 1             ; 2 uses
+  %10 = getelementptr inbounds nuw [2 x i8], ptr %.2105.us, i64 %i.an
+  %exitcond124.not = icmp eq i32 %9, %2
+  br i1 %exitcond124.not, label %.loopexit95, label %.lr.ph107.split.us, !llvm.loop !160
 
 bb.k:                                             ; preds = %bb.h
   %i.bd = fdiv float 1.000000e+00, %6
@@ -352,12 +352,6 @@ bb.k:                                             ; preds = %bb.h
   %i.bm = fmul nnan float %i.bl, f0x37800080      ; 2 uses
   %i.bn = fcmp une float %i.bm, 1.000000e+00
   br i1 %i.bn, label %.preheader96.us, label %..loopexit97_crit_edge.us
-
-..loopexit97_crit_edge.us:                        ; preds = %bb.m, %.lr.ph112.split.us
-  %11 = add nuw nsw i32 %.058109.us, 1            ; 2 uses
-  %12 = getelementptr inbounds nuw [2 x i8], ptr %.1110.us, i64 %i.bh
-  %exitcond130.not = icmp eq i32 %11, %2
-  br i1 %exitcond130.not, label %.loopexit95, label %.lr.ph112.split.us, !llvm.loop !161
 
 .preheader96.us:                                  ; preds = %.lr.ph112.split.us, %bb.m
   %indvars.iv125 = phi i64 [ %indvars.iv.next126, %bb.m ], [ 0, %.lr.ph112.split.us ] ; 3 uses
@@ -387,7 +381,13 @@ bb.l:                                             ; preds = %.preheader96.us
 bb.m:                                             ; preds = %bb.l, %.preheader96.us
   %indvars.iv.next126 = add nuw nsw i64 %indvars.iv125, 1 ; 2 uses
   %exitcond129.not = icmp eq i64 %indvars.iv.next126, %wide.trip.count128
-  br i1 %exitcond129.not, label %..loopexit97_crit_edge.us, label %.preheader96.us, !llvm.loop !162
+  br i1 %exitcond129.not, label %..loopexit97_crit_edge.us, label %.preheader96.us, !llvm.loop !161
+
+..loopexit97_crit_edge.us:                        ; preds = %bb.m, %.lr.ph112.split.us
+  %11 = add nuw nsw i32 %.058109.us, 1            ; 2 uses
+  %12 = getelementptr inbounds nuw [2 x i8], ptr %.1110.us, i64 %i.bh
+  %exitcond130.not = icmp eq i32 %11, %2
+  br i1 %exitcond130.not, label %.loopexit95, label %.lr.ph112.split.us, !llvm.loop !162
 
 .loopexit95:                                      ; preds = %..loopexit100_crit_edge.us, %..loopexit97_crit_edge.us, %..loopexit_crit_edge.us, %.lr.ph112, %.lr.ph107, %.lr.ph117, %.preheader101, %bb.k, %.preheader94
   ret void
@@ -426,12 +426,6 @@ bb.a:
   %i.l = fmul nnan float %i.k, f0x3B808081        ; 2 uses
   %i.m = fcmp une float %i.l, 1.000000e+00
   br i1 %i.m, label %.preheader.us, label %..loopexit_crit_edge.us
-
-..loopexit_crit_edge.us:                          ; preds = %bb.g, %.lr.ph117.split.us
-  %7 = add nuw nsw i32 %.057114.us, 1             ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %.054115.us, i64 %i.g
-  %exitcond136.not = icmp eq i32 %7, %2
-  br i1 %exitcond136.not, label %.loopexit95, label %.lr.ph117.split.us, !llvm.loop !163
 
 .preheader.us:                                    ; preds = %.lr.ph117.split.us, %bb.g
   %indvars.iv131 = phi i64 [ %indvars.iv.next132, %bb.g ], [ 0, %.lr.ph117.split.us ] ; 3 uses
@@ -488,7 +482,13 @@ _ZN11OpenImageIO4v3_114linear_to_sRGBEf.exit.us:  ; preds = %bb.f, %bb.e
 bb.g:                                             ; preds = %_ZN11OpenImageIO4v3_114linear_to_sRGBEf.exit.us, %.preheader.us
   %indvars.iv.next132 = add nuw nsw i64 %indvars.iv131, 1 ; 2 uses
   %exitcond135.not = icmp eq i64 %indvars.iv.next132, %wide.trip.count134
-  br i1 %exitcond135.not, label %..loopexit_crit_edge.us, label %.preheader.us, !llvm.loop !164
+  br i1 %exitcond135.not, label %..loopexit_crit_edge.us, label %.preheader.us, !llvm.loop !163
+
+..loopexit_crit_edge.us:                          ; preds = %bb.g, %.lr.ph117.split.us
+  %7 = add nuw nsw i32 %.057114.us, 1             ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.054115.us, i64 %i.g
+  %exitcond136.not = icmp eq i32 %7, %2
+  br i1 %exitcond136.not, label %.loopexit95, label %.lr.ph117.split.us, !llvm.loop !164
 
 bb.h:                                             ; preds = %bb.a
   %i.aj = fcmp une float %6, 1.000000e+00
@@ -520,12 +520,6 @@ bb.h:                                             ; preds = %bb.a
   %i.at = fcmp une float %i.as, 1.000000e+00
   br i1 %i.at, label %.preheader99.us, label %..loopexit100_crit_edge.us
 
-..loopexit100_crit_edge.us:                       ; preds = %bb.j, %.lr.ph107.split.us
-  %9 = add nuw nsw i32 %.055104.us, 1             ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %.2105.us, i64 %i.an
-  %exitcond124.not = icmp eq i32 %9, %2
-  br i1 %exitcond124.not, label %.loopexit95, label %.lr.ph107.split.us, !llvm.loop !165
-
 .preheader99.us:                                  ; preds = %.lr.ph107.split.us, %bb.j
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %.lr.ph107.split.us ] ; 3 uses
   %.not.us = icmp eq i64 %indvars.iv, %i.ao
@@ -548,7 +542,13 @@ bb.i:                                             ; preds = %.preheader99.us
 bb.j:                                             ; preds = %bb.i, %.preheader99.us
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %..loopexit100_crit_edge.us, label %.preheader99.us, !llvm.loop !166
+  br i1 %exitcond.not, label %..loopexit100_crit_edge.us, label %.preheader99.us, !llvm.loop !165
+
+..loopexit100_crit_edge.us:                       ; preds = %bb.j, %.lr.ph107.split.us
+  %9 = add nuw nsw i32 %.055104.us, 1             ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %.2105.us, i64 %i.an
+  %exitcond124.not = icmp eq i32 %9, %2
+  br i1 %exitcond124.not, label %.loopexit95, label %.lr.ph107.split.us, !llvm.loop !166
 
 bb.k:                                             ; preds = %bb.h
   %i.bd = fdiv float 1.000000e+00, %6
@@ -575,12 +575,6 @@ bb.k:                                             ; preds = %bb.h
   %i.bm = fmul nnan float %i.bl, f0x3B808081      ; 2 uses
   %i.bn = fcmp une float %i.bm, 1.000000e+00
   br i1 %i.bn, label %.preheader96.us, label %..loopexit97_crit_edge.us
-
-..loopexit97_crit_edge.us:                        ; preds = %bb.m, %.lr.ph112.split.us
-  %11 = add nuw nsw i32 %.058109.us, 1            ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %.1110.us, i64 %i.bh
-  %exitcond130.not = icmp eq i32 %11, %2
-  br i1 %exitcond130.not, label %.loopexit95, label %.lr.ph112.split.us, !llvm.loop !167
 
 .preheader96.us:                                  ; preds = %.lr.ph112.split.us, %bb.m
   %indvars.iv125 = phi i64 [ %indvars.iv.next126, %bb.m ], [ 0, %.lr.ph112.split.us ] ; 3 uses
@@ -610,7 +604,13 @@ bb.l:                                             ; preds = %.preheader96.us
 bb.m:                                             ; preds = %bb.l, %.preheader96.us
   %indvars.iv.next126 = add nuw nsw i64 %indvars.iv125, 1 ; 2 uses
   %exitcond129.not = icmp eq i64 %indvars.iv.next126, %wide.trip.count128
-  br i1 %exitcond129.not, label %..loopexit97_crit_edge.us, label %.preheader96.us, !llvm.loop !168
+  br i1 %exitcond129.not, label %..loopexit97_crit_edge.us, label %.preheader96.us, !llvm.loop !167
+
+..loopexit97_crit_edge.us:                        ; preds = %bb.m, %.lr.ph112.split.us
+  %11 = add nuw nsw i32 %.058109.us, 1            ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %.1110.us, i64 %i.bh
+  %exitcond130.not = icmp eq i32 %11, %2
+  br i1 %exitcond130.not, label %.loopexit95, label %.lr.ph112.split.us, !llvm.loop !168
 
 .loopexit95:                                      ; preds = %..loopexit100_crit_edge.us, %..loopexit97_crit_edge.us, %..loopexit_crit_edge.us, %.lr.ph112, %.lr.ph107, %.lr.ph117, %.preheader101, %bb.k, %.preheader94
   ret void

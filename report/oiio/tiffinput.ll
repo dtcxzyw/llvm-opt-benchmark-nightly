@@ -204,35 +204,6 @@ bb.b:                                             ; preds = %.preheader.us
   %i.o = icmp slt i32 %i.e, %3
   br i1 %i.o, label %.preheader.us.peel.newph, label %._crit_edge.us
 
-6:                                                ; preds = %._crit_edge.us
-  %7 = mul nsw i64 %.152.us87, 65535
-  %8 = sdiv i64 %7, %i.d
-  %9 = trunc i64 %8 to i16
-  %10 = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv
-  store i16 %9, ptr %10, align 2, !tbaa !93
-  br label %21
-
-11:                                               ; preds = %._crit_edge.us
-  %12 = mul nsw i64 %.152.us87, 255
-  %13 = sdiv i64 %12, %i.d
-  %14 = trunc i64 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
-  store i8 %14, ptr %15, align 1, !tbaa !16
-  br label %21
-
-16:                                               ; preds = %._crit_edge.us
-  %17 = mul nsw i64 %.152.us87, 4294967295
-  %18 = sdiv i64 %17, %i.d
-  %19 = trunc i64 %18 to i32
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv
-  store i32 %19, ptr %20, align 4, !tbaa !3
-  br label %21
-
-21:                                               ; preds = %16, %11, %6
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge67, label %.preheader.us, !llvm.loop !231
-
 .preheader.us.peel.newph:                         ; preds = %bb.b, %bb.c
   %.161.us = phi i32 [ %i.ak, %bb.c ], [ %i.n, %bb.b ] ; 3 uses
   %.04959.us = phi i32 [ %i.al, %bb.c ], [ %i.e, %bb.b ] ; 2 uses
@@ -273,7 +244,36 @@ bb.c:                                             ; preds = %.preheader.us.peel.
   %i.ak = add nsw i32 %.161.us, 1                 ; 2 uses
   %i.al = add nsw i32 %.04959.us, 8               ; 2 uses
   %i.am = icmp slt i32 %i.al, %3
-  br i1 %i.am, label %.preheader.us.peel.newph, label %._crit_edge.us, !llvm.loop !232
+  br i1 %i.am, label %.preheader.us.peel.newph, label %._crit_edge.us, !llvm.loop !231
+
+6:                                                ; preds = %._crit_edge.us
+  %7 = mul nsw i64 %.152.us87, 65535
+  %8 = sdiv i64 %7, %i.d
+  %9 = trunc i64 %8 to i16
+  %10 = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv
+  store i16 %9, ptr %10, align 2, !tbaa !93
+  br label %21
+
+11:                                               ; preds = %._crit_edge.us
+  %12 = mul nsw i64 %.152.us87, 255
+  %13 = sdiv i64 %12, %i.d
+  %14 = trunc i64 %13 to i8
+  %15 = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
+  store i8 %14, ptr %15, align 1, !tbaa !16
+  br label %21
+
+16:                                               ; preds = %._crit_edge.us
+  %17 = mul nsw i64 %.152.us87, 4294967295
+  %18 = sdiv i64 %17, %i.d
+  %19 = trunc i64 %18 to i32
+  %20 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv
+  store i32 %19, ptr %20, align 4, !tbaa !3
+  br label %21
+
+21:                                               ; preds = %16, %11, %6
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge67, label %.preheader.us, !llvm.loop !233
 
 ._crit_edge.us:                                   ; preds = %bb.b, %bb.c, %.thread
   %.2.us89 = phi i32 [ %.161.us.lcssa, %.thread ], [ %i.n, %bb.b ], [ %i.ak, %bb.c ]
@@ -676,7 +676,7 @@ bb.bb:                                            ; preds = %.peel.next373
   store i8 %i.mv, ptr %i.mw, align 1, !tbaa !16
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i151 = icmp eq i64 %indvars.iv.next.i, %i.lp
-  br i1 %exitcond.not.i151, label %_ZN11OpenImageIO4v3_19TIFFInput11bit_convertEiPKhiPvi.exit, label %.preheader.us.i, !llvm.loop !231
+  br i1 %exitcond.not.i151, label %_ZN11OpenImageIO4v3_19TIFFInput11bit_convertEiPKhiPvi.exit, label %.preheader.us.i, !llvm.loop !233
 
 .preheader.lr.ph.split.i:                         ; preds = %.preheader.lr.ph.i
   call void @llvm.memset.p0.i64(ptr align 1 %i.lk, i8 0, i64 %i.lp, i1 false), !tbaa !16
@@ -832,7 +832,7 @@ bb.bi:                                            ; preds = %.peel.next362
   store i16 %i.pe, ptr %i.pf, align 2, !tbaa !93
   %indvars.iv.next.i170 = add nuw nsw i64 %indvars.iv.i158, 1 ; 2 uses
   %exitcond.not.i171 = icmp eq i64 %indvars.iv.next.i170, %wide.trip.count.i156
-  br i1 %exitcond.not.i171, label %_ZN11OpenImageIO4v3_19TIFFInput11bit_convertEiPKhiPvi.exit173, label %.preheader.us.i157, !llvm.loop !231
+  br i1 %exitcond.not.i171, label %_ZN11OpenImageIO4v3_19TIFFInput11bit_convertEiPKhiPvi.exit173, label %.preheader.us.i157, !llvm.loop !233
 
 .preheader.lr.ph.split.i154:                      ; preds = %.preheader.lr.ph.i152
   %i.pg = shl nuw i32 %i.nt, 1
@@ -986,7 +986,7 @@ bb.bp:                                            ; preds = %.peel.next
   store i32 %i.rq, ptr %i.rr, align 4, !tbaa !3
   %indvars.iv.next.i192 = add nuw nsw i64 %indvars.iv.i180, 1 ; 2 uses
   %exitcond.not.i193 = icmp eq i64 %indvars.iv.next.i192, %i.qk
-  br i1 %exitcond.not.i193, label %_ZN11OpenImageIO4v3_19TIFFInput11bit_convertEiPKhiPvi.exit195, label %.preheader.us.i179, !llvm.loop !231
+  br i1 %exitcond.not.i193, label %_ZN11OpenImageIO4v3_19TIFFInput11bit_convertEiPKhiPvi.exit195, label %.preheader.us.i179, !llvm.loop !233
 
 .preheader.lr.ph.split.i176:                      ; preds = %.preheader.lr.ph.i174
   %i.rs = shl nuw nsw i64 %i.qk, 2
@@ -1389,7 +1389,7 @@ bb.ag:                                            ; preds = %.peel.next234
   store i8 %i.jb, ptr %i.jc, align 1, !tbaa !16
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i113 = icmp eq i64 %indvars.iv.next.i, %i.hv
-  br i1 %exitcond.not.i113, label %_ZN11OpenImageIO4v3_19TIFFInput11bit_convertEiPKhiPvi.exit, label %.preheader.us.i, !llvm.loop !231
+  br i1 %exitcond.not.i113, label %_ZN11OpenImageIO4v3_19TIFFInput11bit_convertEiPKhiPvi.exit, label %.preheader.us.i, !llvm.loop !233
 
 .preheader.lr.ph.split.i:                         ; preds = %.preheader.lr.ph.i
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.hr, i8 0, i64 %i.hv, i1 false), !tbaa !16
@@ -1525,7 +1525,7 @@ bb.ak:                                            ; preds = %.peel.next
   store i16 %i.la, ptr %i.lb, align 2, !tbaa !93
   %indvars.iv.next.i132 = add nuw nsw i64 %indvars.iv.i120, 1 ; 2 uses
   %exitcond.not.i133 = icmp eq i64 %indvars.iv.next.i132, %wide.trip.count.i118
-  br i1 %exitcond.not.i133, label %_ZN11OpenImageIO4v3_19TIFFInput11bit_convertEiPKhiPvi.exit135, label %.preheader.us.i119, !llvm.loop !231
+  br i1 %exitcond.not.i133, label %_ZN11OpenImageIO4v3_19TIFFInput11bit_convertEiPKhiPvi.exit135, label %.preheader.us.i119, !llvm.loop !233
 
 .preheader.lr.ph.split.i116:                      ; preds = %.preheader.lr.ph.i114
   %i.lc = shl i64 %i.jl, 1
@@ -1928,20 +1928,20 @@ begin_hunk_3_@llvm.umin.i32
 !228 = distinct !{!228, !111, !220}
 !229 = distinct !{!229, !111}
 !230 = distinct !{!230, !111}
-!231 = distinct !{!231, !111}
-!232 = distinct !{!232, !111, !233}
-!233 = !{!"llvm.loop.peeled.count", i32 1}
+!231 = distinct !{!231, !111, !232}
+!232 = !{!"llvm.loop.peeled.count", i32 1}
+!233 = distinct !{!233, !111}
 !234 = !{!22, !5, i64 72}
 !235 = distinct !{!235, !111, !220, !221}
 !236 = distinct !{!236, !111, !220, !221}
 !237 = distinct !{!237, !111, !221, !220}
 !238 = distinct !{!238, !111}
 !239 = distinct !{!239, !111}
-!240 = distinct !{!240, !111, !233}
+!240 = distinct !{!240, !111, !232}
 !241 = distinct !{!241, !111}
-!242 = distinct !{!242, !111, !233}
+!242 = distinct !{!242, !111, !232}
 !243 = distinct !{!243, !111}
-!244 = distinct !{!244, !111, !233}
+!244 = distinct !{!244, !111, !232}
 !245 = distinct !{!245, !111}
 !246 = !{!247}
 !247 = distinct !{!247, !248}
@@ -2078,9 +2078,9 @@ begin_hunk_3_@llvm.umin.i32
 !378 = distinct !{null, null, null, null, ptr @_ZNSt14__basic_futureIvED2Ev, ptr @_ZNSt12__shared_ptrINSt13__future_base13_State_baseV2ELN9__gnu_cxx12_Lock_policyE2EED2Ev, null, null}
 !379 = distinct !{!379, !111}
 !380 = distinct !{!380, !111}
-!381 = distinct !{!381, !111, !233}
+!381 = distinct !{!381, !111, !232}
 !382 = distinct !{!382, !111}
-!383 = distinct !{!383, !111, !233}
+!383 = distinct !{!383, !111, !232}
 !384 = distinct !{!384, !111}
 !385 = !{!386}
 !386 = distinct !{!386, !387}

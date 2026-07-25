@@ -201,12 +201,6 @@ _ZSt6fill_nIPhiiET_S1_T0_RKT1_.exit.i:            ; preds = %.lr.ph.i.i.i.i.i, %
   %.sroa.26.0357.us.i = phi ptr [ %.sroa.26.2.us.i, %28 ], [ %i.gj, %.preheader.us.preheader.i ]
   br label %bb.ba
 
-28:                                               ; preds = %._crit_edge.us.i
-  %29 = add nuw nsw i64 %.0108360.us.i, 1         ; 2 uses
-  %.0101.us.i = getelementptr inbounds i8, ptr %.0101364.us.i, i64 %i.cv
-  %exitcond406.not.i = icmp eq i64 %29, %i.bj
-  br i1 %exitcond406.not.i, label %._crit_edge365.i, label %.preheader.us.i, !llvm.loop !96
-
 bb.ba:                                            ; preds = %.thread.us.i, %.preheader.us.i
   %.199349.us.i = phi ptr [ %.098363.us.i, %.preheader.us.i ], [ %.2100.us.i, %.thread.us.i ] ; 6 uses
   %.1103347.us.i = phi ptr [ %.0102362.us.i, %.preheader.us.i ], [ %.2104.us.i, %.thread.us.i ] ; 5 uses
@@ -274,7 +268,7 @@ _ZSt22__uninitialized_copy_aIPKlPllET0_T_S4_S3_RSaIT1_E.exit.i262.us.i: ; preds 
 
 bb.bi:                                            ; preds = %bb.bb
   %i.hi = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #20
-          to label %_ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i265.us.i unwind label %.split373.us.i ; 3 uses
+          to label %_ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i265.us.i unwind label %.split.us.i ; 3 uses
 
 _ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i265.us.i: ; preds = %bb.bi
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hi, ptr noundef nonnull align 8 dereferenceable(16) %i.b, i64 16, i1 false)
@@ -340,7 +334,7 @@ _ZSt22__uninitialized_copy_aIPKlPllET0_T_S4_S3_RSaIT1_E.exit.i.us.i: ; preds = %
 
 bb.bq:                                            ; preds = %bb.bj
   %i.hr = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #20
-          to label %_ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i.us.i unwind label %.split378.us.i ; 3 uses
+          to label %_ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i.us.i unwind label %.split373.us.i ; 3 uses
 
 _ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit.i.us.i: ; preds = %bb.bq
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hr, ptr noundef nonnull align 8 dereferenceable(16) %i.a, i64 16, i1 false)
@@ -395,7 +389,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ii = add <2 x i64> %i.ig, %vec.phi174        ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ij = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ij, label %middle.block, label %vector.body, !llvm.loop !98
+  br i1 %i.ij, label %middle.block, label %vector.body, !llvm.loop !96
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <2 x i64> %i.ii, %i.ih
@@ -419,7 +413,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.iq = add nsw i64 %i.ip, %.0910.i.i.us.i      ; 2 uses
   %i.ir = add nuw nsw i64 %.011.i.i.us.i, 1       ; 2 uses
   %exitcond.not.i.i.us.i = icmp eq i64 %i.ir, %i.hw
-  br i1 %exitcond.not.i.i.us.i, label %_ZNK5arrow6Tensor20CalculateValueOffsetERKSt6vectorIlSaIlEE.exit.us.i, label %scalar.ph, !llvm.loop !101
+  br i1 %exitcond.not.i.i.us.i, label %_ZNK5arrow6Tensor20CalculateValueOffsetERKSt6vectorIlSaIlEE.exit.us.i, label %scalar.ph, !llvm.loop !100
 
 _ZNK5arrow6Tensor20CalculateValueOffsetERKSt6vectorIlSaIlEE.exit.us.i: ; preds = %scalar.ph, %middle.block, %bb.br
   %.09.lcssa.i.i.us.i = phi i64 [ 0, %bb.br ], [ %i.ik, %middle.block ], [ %i.iq, %scalar.ph ] ; 2 uses
@@ -461,7 +455,7 @@ bb.bv:                                            ; preds = %bb.bu
   %i.jc = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i.i.us.i, i64 4
   %i.jd = add nsw i64 %.047.i.i.i.i.i.us.i, -1
   %i.je = icmp sgt i64 %.047.i.i.i.i.i.us.i, 1
-  br i1 %i.je, label %.lr.ph.i.i.i.i.i.us.i, label %._crit_edge.i.i.i.i.i.us.i, !llvm.loop !102
+  br i1 %i.je, label %.lr.ph.i.i.i.i.i.us.i, label %._crit_edge.i.i.i.i.i.us.i, !llvm.loop !101
 
 ._crit_edge.i.i.i.i.i.us.i:                       ; preds = %bb.bv, %_ZNK5arrow6Tensor20CalculateValueOffsetERKSt6vectorIlSaIlEE.exit.us.i
   %.029.lcssa.i.i.i.i.i.us.i = phi ptr [ %i.is, %_ZNK5arrow6Tensor20CalculateValueOffsetERKSt6vectorIlSaIlEE.exit.us.i ], [ %scevgep404.i, %bb.bv ] ; 6 uses
@@ -532,7 +526,7 @@ bb.ce:                                            ; preds = %bb.cc
 
 _ZSt6copy_nIPKhiPhET1_T_T0_S3_.exit.us.i:         ; preds = %bb.ce, %bb.cd, %bb.cb
   invoke void @_ZN5arrow8internal26SparseTensorConverterMixin11AssignIndexEPhli(ptr noundef %.1103347.us.i, i64 noundef %.0109342.us.i, i32 noundef %i.n)
-          to label %bb.cf unwind label %.split383.us.i
+          to label %bb.cf unwind label %.split378.us.i
 
 bb.cf:                                            ; preds = %_ZSt6copy_nIPKhiPhET1_T_T0_S3_.exit.us.i
   %i.jp = getelementptr inbounds i8, ptr %.199349.us.i, i64 %i.bs
@@ -546,30 +540,36 @@ bb.cf:                                            ; preds = %_ZSt6copy_nIPKhiPhE
   %.2100.us.i = phi ptr [ %i.jp, %bb.cf ], [ %.199349.us.i, %.loopexit.us.i ], [ %.199349.us.i, %._crit_edge.i.i.i.i.i.us.i ], [ %.199349.us.i, %bb.ca ] ; 2 uses
   %i.js = add nuw nsw i64 %.0109342.us.i, 1       ; 2 uses
   %exitcond405.not.i = icmp eq i64 %i.js, %i.bm
-  br i1 %exitcond405.not.i, label %._crit_edge.us.i, label %bb.ba, !llvm.loop !103
+  br i1 %exitcond405.not.i, label %._crit_edge.us.i, label %bb.ba, !llvm.loop !102
+
+28:                                               ; preds = %._crit_edge.us.i
+  %29 = add nuw nsw i64 %.0108360.us.i, 1         ; 2 uses
+  %.0101.us.i = getelementptr inbounds i8, ptr %.0101364.us.i, i64 %i.cv
+  %exitcond406.not.i = icmp eq i64 %29, %i.bj
+  br i1 %exitcond406.not.i, label %._crit_edge365.i, label %.preheader.us.i, !llvm.loop !103
 
 ._crit_edge.us.i:                                 ; preds = %.thread.us.i
   invoke void @_ZN5arrow8internal26SparseTensorConverterMixin11AssignIndexEPhli(ptr noundef %.0101364.us.i, i64 noundef %.2107.us.i, i32 noundef %i.n)
-          to label %28 unwind label %.split.us.i
+          to label %28 unwind label %.split383.us.i
 
-.split.us.i:                                      ; preds = %._crit_edge.us.i
+.split.us.i:                                      ; preds = %bb.bi
   %i.jt = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread285.i
-
-.split373.us.i:                                   ; preds = %bb.bi
-  %i.ju = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19, !noalias !25
   br label %.thread285.i
 
-.split378.us.i:                                   ; preds = %bb.bq
-  %i.jv = landingpad { ptr, i32 }
+.split373.us.i:                                   ; preds = %bb.bq
+  %i.ju = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19, !noalias !25
   br label %.thread285.i
 
-.split383.us.i:                                   ; preds = %_ZSt6copy_nIPKhiPhET1_T_T0_S3_.exit.us.i
+.split378.us.i:                                   ; preds = %_ZSt6copy_nIPKhiPhET1_T_T0_S3_.exit.us.i
+  %i.jv = landingpad { ptr, i32 }
+          cleanup
+  br label %.thread285.i
+
+.split383.us.i:                                   ; preds = %._crit_edge.us.i
   %i.jw = landingpad { ptr, i32 }
           cleanup
   br label %.thread285.i
@@ -616,7 +616,7 @@ bb.ci:                                            ; preds = %.preheader.i
   %i.kg = add nuw nsw i64 %.0108360.i, 1          ; 2 uses
   %.0101.i = getelementptr inbounds i8, ptr %.0101364.i, i64 %i.cv
   %exitcond.not.i = icmp eq i64 %i.kg, %i.bj
-  br i1 %exitcond.not.i, label %._crit_edge365.i, label %.preheader.i, !llvm.loop !96
+  br i1 %exitcond.not.i, label %._crit_edge365.i, label %.preheader.i, !llvm.loop !103
 
 .split.i:                                         ; preds = %.preheader.i
   %i.kh = landingpad { ptr, i32 }
@@ -691,9 +691,9 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit182
   br i1 %i.eq, label %bb.co, label %_ZN5arrow6Status14NotImplementedIJRA19_KcEEES0_DpOT_.exit.i
 
 .thread285.i:                                     ; preds = %.split.i, %.split383.us.i, %.split378.us.i, %.split373.us.i, %.split.us.i
-  %.pre-phi = phi i64 [ %.pre, %.split.i ], [ %i.hu, %.split383.us.i ], [ %i.gy, %.split378.us.i ], [ %i.gy, %.split373.us.i ], [ %i.hu, %.split.us.i ]
-  %.sroa.26.3.i = phi ptr [ %i.gj, %.split.i ], [ %.sroa.26.2.us.i, %.split383.us.i ], [ %.sroa.26.1339.us.i, %.split378.us.i ], [ %.sroa.26.1339.us.i, %.split373.us.i ], [ %.sroa.26.2.us.i, %.split.us.i ]
-  %.sroa.0274.3.i = phi ptr [ %i.gi, %.split.i ], [ %.sroa.0274.2.us.i, %.split383.us.i ], [ %.sroa.0274.1341.us.i, %.split378.us.i ], [ %.sroa.0274.1341.us.i, %.split373.us.i ], [ %.sroa.0274.2.us.i, %.split.us.i ]
+  %.pre-phi = phi i64 [ %.pre, %.split.i ], [ %i.hu, %.split383.us.i ], [ %i.hu, %.split378.us.i ], [ %i.gy, %.split373.us.i ], [ %i.gy, %.split.us.i ]
+  %.sroa.26.3.i = phi ptr [ %i.gj, %.split.i ], [ %.sroa.26.2.us.i, %.split383.us.i ], [ %.sroa.26.2.us.i, %.split378.us.i ], [ %.sroa.26.1339.us.i, %.split373.us.i ], [ %.sroa.26.1339.us.i, %.split.us.i ]
+  %.sroa.0274.3.i = phi ptr [ %i.gi, %.split.i ], [ %.sroa.0274.2.us.i, %.split383.us.i ], [ %.sroa.0274.2.us.i, %.split378.us.i ], [ %.sroa.0274.1341.us.i, %.split373.us.i ], [ %.sroa.0274.1341.us.i, %.split.us.i ]
   %.pn115.pn.pn.i = phi { ptr, i32 } [ %i.kh, %.split.i ], [ %i.jw, %.split383.us.i ], [ %i.jv, %.split378.us.i ], [ %i.ju, %.split373.us.i ], [ %i.jt, %.split.us.i ]
   %i.ld = ptrtoint ptr %.sroa.26.3.i to i64
   %i.le = sub i64 %i.ld, %.pre-phi
@@ -1096,12 +1096,12 @@ attributes #24 = { cold }
 !93 = distinct !{!93, !"_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE15MoveValueUnsafeEv"}
 !94 = !{!92, !89, !26}
 !95 = !{!92, !89}
-!96 = distinct !{!96, !97}
+!96 = distinct !{!96, !97, !98, !99}
 !97 = !{!"llvm.loop.mustprogress"}
-!98 = distinct !{!98, !97, !99, !100}
-!99 = !{!"llvm.loop.isvectorized", i32 1}
-!100 = !{!"llvm.loop.unroll.runtime.disable"}
-!101 = distinct !{!101, !97, !100, !99}
+!98 = !{!"llvm.loop.isvectorized", i32 1}
+!99 = !{!"llvm.loop.unroll.runtime.disable"}
+!100 = distinct !{!100, !97, !99, !98}
+!101 = distinct !{!101, !97}
 !102 = distinct !{!102, !97}
 !103 = distinct !{!103, !97}
 !104 = distinct !{null, ptr @_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev, null, null, null, null}

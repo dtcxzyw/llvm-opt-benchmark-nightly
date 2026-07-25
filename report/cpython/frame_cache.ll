@@ -203,6 +203,13 @@ bb.d:                                             ; preds = %.preheader.us
   %exitcond87.not = icmp eq i64 %indvars.iv.next85, %wide.trip.count
   br i1 %exitcond87.not, label %..critedge_crit_edge.us, label %.preheader.us, !llvm.loop !63
 
+.preheader.us:                                    ; preds = %.preheader70.split.us, %bb.d
+  %indvars.iv84 = phi i64 [ %indvars.iv.next85, %bb.d ], [ 0, %.preheader70.split.us ] ; 2 uses
+  %2 = getelementptr [8 x i8], ptr %i.a, i64 %indvars.iv84
+  %3 = load i64, ptr %2, align 8, !tbaa !64
+  %4 = icmp eq i64 %i.t, %3
+  br i1 %4, label %.loopexit.us, label %bb.d
+
 bb.e:                                             ; preds = %..critedge_crit_edge.us
   store ptr null, ptr %i.af, align 8, !tbaa !46
   %i.v = load i32, ptr %i.ag, align 8, !tbaa !48  ; 2 uses
@@ -224,23 +231,16 @@ Py_DECREF.exit.us:                                ; preds = %bb.g, %bb.f, %bb.e,
   %i.z = getelementptr [8216 x i8], ptr %i.y, i64 %indvars.iv88 ; 2 uses
   store i64 0, ptr %i.z, align 8, !tbaa !51
   %i.aa = getelementptr i8, ptr %i.z, i64 8200
-  store i64 0, ptr %i.aa, align 8, !tbaa !64
-  %i.ab = load i32, ptr %i.n, align 8, !tbaa !65
+  store i64 0, ptr %i.aa, align 8, !tbaa !65
+  %i.ab = load i32, ptr %i.n, align 8, !tbaa !66
   %.not60.us = icmp eq i32 %i.ab, 0
   br i1 %.not60.us, label %.loopexit.us, label %bb.h
 
 bb.h:                                             ; preds = %Py_DECREF.exit.us
-  %i.ac = load i64, ptr %i.o, align 8, !tbaa !66
+  %i.ac = load i64, ptr %i.o, align 8, !tbaa !67
   %i.ad = add i64 %i.ac, 1
-  store i64 %i.ad, ptr %i.o, align 8, !tbaa !66
+  store i64 %i.ad, ptr %i.o, align 8, !tbaa !67
   br label %.loopexit.us
-
-.preheader.us:                                    ; preds = %.preheader70.split.us, %bb.d
-  %indvars.iv84 = phi i64 [ %indvars.iv.next85, %bb.d ], [ 0, %.preheader70.split.us ] ; 2 uses
-  %2 = getelementptr [8 x i8], ptr %i.a, i64 %indvars.iv84
-  %3 = load i64, ptr %2, align 8, !tbaa !67
-  %4 = icmp eq i64 %i.t, %3
-  br i1 %4, label %.loopexit.us, label %bb.d
 
 .loopexit.us:                                     ; preds = %.preheader.us, %bb.h, %Py_DECREF.exit.us, %.preheader70.split.us
   %i.ae = phi ptr [ %i.r, %.preheader70.split.us ], [ %i.y, %bb.h ], [ %i.y, %Py_DECREF.exit.us ], [ %i.r, %.preheader.us ]
@@ -303,7 +303,7 @@ bb.n:                                             ; preds = %bb.m
   %i.ax = add nsw i32 %.173, 1
   %i.ay = sext i32 %.173 to i64
   %i.az = getelementptr [8 x i8], ptr %i.a, i64 %i.ay
-  store i64 %i.av, ptr %i.az, align 8, !tbaa !67
+  store i64 %i.av, ptr %i.az, align 8, !tbaa !64
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.m
@@ -366,15 +366,15 @@ Py_DECREF.exit:                                   ; preds = %bb.s, %bb.r, %bb.q,
   %i.bt = getelementptr [8216 x i8], ptr %i.bs, i64 %indvars.iv ; 2 uses
   store i64 0, ptr %i.bt, align 8, !tbaa !51
   %i.bu = getelementptr i8, ptr %i.bt, i64 8200
-  store i64 0, ptr %i.bu, align 8, !tbaa !64
-  %i.bv = load i32, ptr %i.q, align 8, !tbaa !65
+  store i64 0, ptr %i.bu, align 8, !tbaa !65
+  %i.bv = load i32, ptr %i.q, align 8, !tbaa !66
   %.not60 = icmp eq i32 %i.bv, 0
   br i1 %.not60, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %Py_DECREF.exit
-  %i.bw = load i64, ptr %i.p, align 8, !tbaa !66
+  %i.bw = load i64, ptr %i.p, align 8, !tbaa !67
   %i.bx = add i64 %i.bw, 1
-  store i64 %i.bx, ptr %i.p, align 8, !tbaa !66
+  store i64 %i.bx, ptr %i.p, align 8, !tbaa !67
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %Py_DECREF.exit, %.preheader70.split
@@ -418,7 +418,7 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader57:                                     ; preds = %bb.c
   %i.h = getelementptr i8, ptr %i.e, i64 8200     ; 3 uses
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !64   ; 2 uses
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !65   ; 2 uses
   %i.j = icmp sgt i64 %i.i, 0
   br i1 %i.j, label %.lr.ph, label %.critedge
 
@@ -429,7 +429,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.lr.ph, %bb.e
   %.04361 = phi i64 [ 0, %.lr.ph ], [ %i.o, %bb.e ] ; 3 uses
   %i.l = getelementptr [8 x i8], ptr %i.k, i64 %.04361
-  %i.m = load i64, ptr %i.l, align 8, !tbaa !67
+  %i.m = load i64, ptr %i.l, align 8, !tbaa !64
   %i.n = icmp eq i64 %i.m, %2
   br i1 %i.n, label %bb.f, label %bb.e
 
@@ -477,25 +477,25 @@ bb.k:                                             ; preds = %Py_DECREF.exit
   br i1 %.not54, label %.critedge, label %.preheader
 
 .preheader:                                       ; preds = %bb.k
-  %i.y = load i64, ptr %i.h, align 8, !tbaa !64
+  %i.y = load i64, ptr %i.h, align 8, !tbaa !65
   %i.z = icmp slt i64 %i.q, %i.y
   br i1 %i.z, label %.lr.ph63, label %.critedge
 
 .lr.ph63:                                         ; preds = %.preheader, %bb.l
   %.062 = phi i64 [ %i.ag, %bb.l ], [ %i.q, %.preheader ] ; 2 uses
-  %i.aa = load i64, ptr %5, align 8, !tbaa !67    ; 3 uses
+  %i.aa = load i64, ptr %5, align 8, !tbaa !64    ; 3 uses
   %i.ab = icmp slt i64 %i.aa, %6
   br i1 %i.ab, label %bb.l, label %.critedge
 
 bb.l:                                             ; preds = %.lr.ph63
   %i.ac = getelementptr [8 x i8], ptr %i.k, i64 %.062
-  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !67
+  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !64
   %i.ae = add nsw i64 %i.aa, 1
-  store i64 %i.ae, ptr %5, align 8, !tbaa !67
+  store i64 %i.ae, ptr %5, align 8, !tbaa !64
   %i.af = getelementptr [8 x i8], ptr %4, i64 %i.aa
-  store i64 %i.ad, ptr %i.af, align 8, !tbaa !67
+  store i64 %i.ad, ptr %i.af, align 8, !tbaa !64
   %i.ag = add nuw nsw i64 %.062, 1                ; 2 uses
-  %i.ah = load i64, ptr %i.h, align 8, !tbaa !64
+  %i.ah = load i64, ptr %i.h, align 8, !tbaa !65
   %i.ai = icmp slt i64 %i.ag, %i.ah
   br i1 %i.ai, label %.lr.ph63, label %.critedge, !llvm.loop !77
 
@@ -881,7 +881,7 @@ bb.f:                                             ; preds = %Py_DECREF.exit
   %i.ej = shl i64 %spec.store.select, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.ei, ptr align 8 %3, i64 %i.ej, i1 false)
   %i.ek = getelementptr i8, ptr %.2.i39, i64 8200
-  store i64 %spec.store.select, ptr %i.ek, align 8, !tbaa !64
+  store i64 %spec.store.select, ptr %i.ek, align 8, !tbaa !65
   br label %frame_cache_alloc_slot.exit.thread40
 
 frame_cache_alloc_slot.exit.thread40:             ; preds = %.preheader.31.i, %Py_DECREF.exit, %bb.f, %bb.b, %bb.a
@@ -972,10 +972,10 @@ attributes #5 = { nounwind }
 !61 = !{!"short", !8, i64 0}
 !62 = !{!56, !16, i64 16}
 !63 = distinct !{!63, !50}
-!64 = !{!52, !16, i64 8200}
-!65 = !{!11, !7, i64 33808}
-!66 = !{!11, !16, i64 33912}
-!67 = !{!16, !16, i64 0}
+!64 = !{!16, !16, i64 0}
+!65 = !{!52, !16, i64 8200}
+!66 = !{!11, !7, i64 33808}
+!67 = !{!11, !16, i64 33912}
 !68 = distinct !{!68, !50}
 !69 = !{!70, !71, i64 24}
 !70 = !{!"", !56, i64 0, !71, i64 24, !16, i64 32}

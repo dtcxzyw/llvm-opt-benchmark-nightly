@@ -204,46 +204,46 @@ _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i: ; p
   %i.ac = sext i32 %i.i to i64
   br label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.i
 
-_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.i: ; preds = %._crit_edge.us.us.i.a, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i
-  %i.ad = phi i32 [ %i.m, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i ], [ %i.ak, %._crit_edge.us.us.i.a ]
-  %indvars.iv54.i = phi i64 [ %i.ac, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i ], [ %indvars.iv.next55.i, %._crit_edge.us.us.i.a ] ; 3 uses
-  %.012.us.us.i = phi i32 [ 0, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i ], [ %3, %._crit_edge.us.us.i.a ]
-  %.069.us.us.i = phi i32 [ 0, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i ], [ %i.al, %._crit_edge.us.us.i.a ]
+_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.i: ; preds = %bb.b, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i
+  %i.ad = phi i32 [ %i.m, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i ], [ %.0318.us.us.i, %bb.b ]
+  %indvars.iv54.i = phi i64 [ %i.ac, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i ], [ %indvars.iv.next55.i, %bb.b ] ; 3 uses
+  %.012.us.us.i = phi i32 [ 0, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i ], [ %7, %bb.b ]
+  %.069.us.us.i = phi i32 [ 0, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i ], [ %i.an, %bb.b ]
   %i.ae = getelementptr inbounds [4 x i8], ptr %.val.i, i64 %indvars.iv54.i
   %i.af = getelementptr inbounds [4 x i8], ptr %.val32.us.i, i64 %indvars.iv54.i
   %i.ag = load i32, ptr %i.ae, align 4, !tbaa !3  ; 2 uses
   %i.ah = load i32, ptr %i.af, align 4, !tbaa !3  ; 3 uses
   %i.ai = add nsw i32 %i.ah, %i.ag
   %i.aj = icmp sgt i32 %i.ah, 0
-  br i1 %i.aj, label %.lr.ph.us.us.i, label %._crit_edge.us.us.i.a
+  br i1 %i.aj, label %.lr.ph.us.us.i, label %bb.b
 
-._crit_edge.us.us.loopexit.i:                     ; preds = %bb.b
+._crit_edge.us.us.i.a:                            ; preds = %.lr.ph.us.us.i, %._crit_edge.us.us.i.a
+  %i.ak = phi i32 [ %i.ag, %.lr.ph.us.us.i ], [ %6, %._crit_edge.us.us.i.a ] ; 2 uses
+  %3 = load i32, ptr %.16.val, align 4, !tbaa !3  ; 2 uses
+  %i.al = add nsw i32 %3, 1
+  store i32 %i.al, ptr %.16.val, align 4, !tbaa !3
+  %4 = sext i32 %3 to i64
+  %5 = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %4
+  store i32 %i.ak, ptr %5, align 4, !tbaa !3
+  %6 = add nsw i32 %i.ak, 1                       ; 2 uses
+  %i.am = icmp slt i32 %6, %i.ai
+  br i1 %i.am, label %._crit_edge.us.us.i.a, label %._crit_edge.us.us.loopexit.i, !llvm.loop !696
+
+._crit_edge.us.us.loopexit.i:                     ; preds = %._crit_edge.us.us.i.a
   %.pre60.i = load i32, ptr %i.l, align 4, !tbaa !3
-  br label %._crit_edge.us.us.i.a
+  br label %bb.b
 
-._crit_edge.us.us.i.a:                            ; preds = %._crit_edge.us.us.loopexit.i, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.i
-  %i.ak = phi i32 [ %.pre60.i, %._crit_edge.us.us.loopexit.i ], [ %i.ad, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.i ] ; 2 uses
-  %i.al = add nsw i32 %i.ah, %.069.us.us.i        ; 2 uses
-  %3 = add nuw nsw i32 %.012.us.us.i, 1           ; 2 uses
+bb.b:                                             ; preds = %._crit_edge.us.us.loopexit.i, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.i
+  %.0318.us.us.i = phi i32 [ %.pre60.i, %._crit_edge.us.us.loopexit.i ], [ %i.ad, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.i ] ; 2 uses
+  %i.an = add nsw i32 %i.ah, %.069.us.us.i        ; 2 uses
+  %7 = add nuw nsw i32 %.012.us.us.i, 1           ; 2 uses
   %indvars.iv.next55.i = add nsw i64 %indvars.iv54.i, 1
-  %i.am = icmp slt i32 %3, %i.ak
-  br i1 %i.am, label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.i, label %._crit_edge15.i, !llvm.loop !696
-
-bb.b:                                             ; preds = %.lr.ph.us.us.i, %bb.b
-  %.0318.us.us.i = phi i32 [ %i.ag, %.lr.ph.us.us.i ], [ %7, %bb.b ] ; 2 uses
-  %4 = load i32, ptr %.16.val, align 4, !tbaa !3  ; 2 uses
-  %i.an = add nsw i32 %4, 1
-  store i32 %i.an, ptr %.16.val, align 4, !tbaa !3
-  %5 = sext i32 %4 to i64
-  %6 = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %5
-  store i32 %.0318.us.us.i, ptr %6, align 4, !tbaa !3
-  %7 = add nsw i32 %.0318.us.us.i, 1              ; 2 uses
-  %i.ao = icmp slt i32 %7, %i.ai
-  br i1 %i.ao, label %bb.b, label %._crit_edge.us.us.loopexit.i, !llvm.loop !697
+  %i.ao = icmp slt i32 %7, %.0318.us.us.i
+  br i1 %i.ao, label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.i, label %._crit_edge15.i, !llvm.loop !697
 
 .lr.ph.us.us.i:                                   ; preds = %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.i
   %i.ap = load ptr, ptr %i.z, align 8, !tbaa !335
-  br label %bb.b
+  br label %._crit_edge.us.us.i.a
 
 .lr.ph14.split.us.split.i:                        ; preds = %.lr.ph14.split.us.i
   %i.aq = load i8, ptr %i.t, align 1, !tbaa !656, !range !69, !noundef !70
@@ -264,17 +264,6 @@ _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us30.i: ; preds = %
   %i.ba = icmp sgt i32 %i.ay, 0
   br i1 %i.ba, label %.lr.ph.us.us37.i, label %._crit_edge.us.us38.i
 
-._crit_edge.us.us38.loopexit.i:                   ; preds = %bb.c
-  %.pre59.i = load i32, ptr %i.l, align 4, !tbaa !3
-  br label %._crit_edge.us.us38.i
-
-._crit_edge.us.us38.i:                            ; preds = %._crit_edge.us.us38.loopexit.i, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us30.i
-  %8 = phi i32 [ %.pre59.i, %._crit_edge.us.us38.loopexit.i ], [ %i.as, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us30.i ] ; 2 uses
-  %9 = add nsw i32 %i.ay, %.069.us.us33.i         ; 2 uses
-  %10 = add nuw nsw i32 %.012.us.us31.i, 1        ; 2 uses
-  %11 = icmp slt i32 %10, %8
-  br i1 %11, label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us30.i, label %._crit_edge15.i, !llvm.loop !696
-
 bb.c:                                             ; preds = %.lr.ph.us.us37.i, %bb.c
   %.0318.us.us36.i = phi i32 [ %i.ax, %.lr.ph.us.us37.i ], [ %i.bf, %bb.c ] ; 2 uses
   %i.bb = load i32, ptr %.16.val, align 4, !tbaa !3 ; 2 uses
@@ -285,7 +274,18 @@ bb.c:                                             ; preds = %.lr.ph.us.us37.i, %
   store i32 %.0318.us.us36.i, ptr %i.be, align 4, !tbaa !3
   %i.bf = add nsw i32 %.0318.us.us36.i, 1         ; 2 uses
   %i.bg = icmp slt i32 %i.bf, %i.az
-  br i1 %i.bg, label %bb.c, label %._crit_edge.us.us38.loopexit.i, !llvm.loop !697
+  br i1 %i.bg, label %bb.c, label %._crit_edge.us.us38.loopexit.i, !llvm.loop !696
+
+._crit_edge.us.us38.loopexit.i:                   ; preds = %bb.c
+  %.pre59.i = load i32, ptr %i.l, align 4, !tbaa !3
+  br label %._crit_edge.us.us38.i
+
+._crit_edge.us.us38.i:                            ; preds = %._crit_edge.us.us38.loopexit.i, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us30.i
+  %8 = phi i32 [ %.pre59.i, %._crit_edge.us.us38.loopexit.i ], [ %i.as, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us30.i ] ; 2 uses
+  %9 = add nsw i32 %i.ay, %.069.us.us33.i         ; 2 uses
+  %10 = add nuw nsw i32 %.012.us.us31.i, 1        ; 2 uses
+  %11 = icmp slt i32 %10, %8
+  br i1 %11, label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us30.i, label %._crit_edge15.i, !llvm.loop !697
 
 .lr.ph.us.us37.i:                                 ; preds = %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us30.i
   %i.bh = load ptr, ptr %i.z, align 8, !tbaa !335
@@ -296,11 +296,11 @@ bb.c:                                             ; preds = %.lr.ph.us.us37.i, %
   %i.bj = sext i32 %i.i to i64
   br label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i
 
-_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i: ; preds = %._crit_edge.us.i.a, %.lr.ph14.split.us.split.split.i
-  %i.bk = phi i32 [ %i.bu, %._crit_edge.us.i.a ], [ %i.m, %.lr.ph14.split.us.split.split.i ]
-  %indvars.iv51.i = phi i64 [ %indvars.iv.next52.i, %._crit_edge.us.i.a ], [ %i.bj, %.lr.ph14.split.us.split.split.i ] ; 2 uses
-  %.012.us.i = phi i32 [ %12, %._crit_edge.us.i.a ], [ 0, %.lr.ph14.split.us.split.split.i ]
-  %.069.us.i = phi i32 [ %i.bv, %._crit_edge.us.i.a ], [ 0, %.lr.ph14.split.us.split.split.i ]
+_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i: ; preds = %bb.d, %.lr.ph14.split.us.split.split.i
+  %i.bk = phi i32 [ %.0318.us.i, %bb.d ], [ %i.m, %.lr.ph14.split.us.split.split.i ]
+  %indvars.iv51.i = phi i64 [ %indvars.iv.next52.i, %bb.d ], [ %i.bj, %.lr.ph14.split.us.split.split.i ] ; 2 uses
+  %.012.us.i = phi i32 [ %16, %bb.d ], [ 0, %.lr.ph14.split.us.split.split.i ]
+  %.069.us.i = phi i32 [ %i.bx, %bb.d ], [ 0, %.lr.ph14.split.us.split.split.i ]
   %i.bl = getelementptr inbounds [4 x i8], ptr %i.bi, i64 %indvars.iv51.i
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !3
   %i.bn = sext i32 %i.bm to i64                   ; 2 uses
@@ -310,35 +310,35 @@ _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i: ; preds = %._cri
   %i.br = load i32, ptr %i.bp, align 4, !tbaa !3  ; 3 uses
   %i.bs = add nsw i32 %i.br, %i.bq
   %i.bt = icmp sgt i32 %i.br, 0
-  br i1 %i.bt, label %.lr.ph.us.i, label %._crit_edge.us.i.a
+  br i1 %i.bt, label %.lr.ph.us.i, label %bb.d
 
-._crit_edge.us.loopexit.i:                        ; preds = %bb.d
+._crit_edge.us.i.a:                               ; preds = %.lr.ph.us.i, %._crit_edge.us.i.a
+  %i.bu = phi i32 [ %i.bq, %.lr.ph.us.i ], [ %15, %._crit_edge.us.i.a ] ; 2 uses
+  %12 = load i32, ptr %.16.val, align 4, !tbaa !3 ; 2 uses
+  %i.bv = add nsw i32 %12, 1
+  store i32 %i.bv, ptr %.16.val, align 4, !tbaa !3
+  %13 = sext i32 %12 to i64
+  %14 = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %13
+  store i32 %i.bu, ptr %14, align 4, !tbaa !3
+  %15 = add nsw i32 %i.bu, 1                      ; 2 uses
+  %i.bw = icmp slt i32 %15, %i.bs
+  br i1 %i.bw, label %._crit_edge.us.i.a, label %._crit_edge.us.loopexit.i, !llvm.loop !696
+
+._crit_edge.us.loopexit.i:                        ; preds = %._crit_edge.us.i.a
   %.pre58.i = load i32, ptr %i.l, align 4, !tbaa !3
-  br label %._crit_edge.us.i.a
+  br label %bb.d
 
-._crit_edge.us.i.a:                               ; preds = %._crit_edge.us.loopexit.i, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i
-  %i.bu = phi i32 [ %.pre58.i, %._crit_edge.us.loopexit.i ], [ %i.bk, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i ] ; 2 uses
-  %i.bv = add nsw i32 %i.br, %.069.us.i           ; 2 uses
-  %12 = add nuw nsw i32 %.012.us.i, 1             ; 2 uses
+bb.d:                                             ; preds = %._crit_edge.us.loopexit.i, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i
+  %.0318.us.i = phi i32 [ %.pre58.i, %._crit_edge.us.loopexit.i ], [ %i.bk, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i ] ; 2 uses
+  %i.bx = add nsw i32 %i.br, %.069.us.i           ; 2 uses
+  %16 = add nuw nsw i32 %.012.us.i, 1             ; 2 uses
   %indvars.iv.next52.i = add nsw i64 %indvars.iv51.i, 1
-  %i.bw = icmp slt i32 %12, %i.bu
-  br i1 %i.bw, label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i, label %._crit_edge15.i, !llvm.loop !696
-
-bb.d:                                             ; preds = %.lr.ph.us.i, %bb.d
-  %.0318.us.i = phi i32 [ %i.bq, %.lr.ph.us.i ], [ %16, %bb.d ] ; 2 uses
-  %13 = load i32, ptr %.16.val, align 4, !tbaa !3 ; 2 uses
-  %i.bx = add nsw i32 %13, 1
-  store i32 %i.bx, ptr %.16.val, align 4, !tbaa !3
-  %14 = sext i32 %13 to i64
-  %15 = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %14
-  store i32 %.0318.us.i, ptr %15, align 4, !tbaa !3
-  %16 = add nsw i32 %.0318.us.i, 1                ; 2 uses
-  %i.by = icmp slt i32 %16, %i.bs
-  br i1 %i.by, label %bb.d, label %._crit_edge.us.loopexit.i, !llvm.loop !697
+  %i.by = icmp slt i32 %16, %.0318.us.i
+  br i1 %i.by, label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i, label %._crit_edge15.i, !llvm.loop !697
 
 .lr.ph.us.i:                                      ; preds = %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i
   %i.bz = load ptr, ptr %i.z, align 8, !tbaa !335
-  br label %bb.d
+  br label %._crit_edge.us.i.a
 
 .lr.ph14.split.i:                                 ; preds = %.lr.ph14.i
   %i.ca = sext i32 %i.i to i64                    ; 2 uses
@@ -370,6 +370,18 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit.us20.i: ; preds = %.lr.ph14.spli
   %i.co = icmp sgt i32 %i.cm, 0
   br i1 %i.co, label %.lr.ph.us25.i, label %._crit_edge.us26.i
 
+17:                                               ; preds = %.lr.ph.us25.i, %17
+  %.0318.us23.i = phi i32 [ %i.cl, %.lr.ph.us25.i ], [ %22, %17 ] ; 2 uses
+  %18 = load i32, ptr %.16.val, align 4, !tbaa !3 ; 2 uses
+  %19 = add nsw i32 %18, 1
+  store i32 %19, ptr %.16.val, align 4, !tbaa !3
+  %20 = sext i32 %18 to i64
+  %21 = getelementptr inbounds [4 x i8], ptr %i.ct, i64 %20
+  store i32 %.0318.us23.i, ptr %21, align 4, !tbaa !3
+  %22 = add nsw i32 %.0318.us23.i, 1              ; 2 uses
+  %23 = icmp slt i32 %22, %i.cn
+  br i1 %23, label %17, label %._crit_edge.us26.loopexit.i, !llvm.loop !696
+
 ._crit_edge.us26.loopexit.i:                      ; preds = %17
   %.pre57.pre.i = load i32, ptr %i.l, align 4, !tbaa !3
   br label %._crit_edge.us26.i
@@ -386,26 +398,14 @@ bb.e:                                             ; preds = %._crit_edge.us26.i,
   %i.cr = add nuw nsw i32 %.012.us16.i, 1         ; 2 uses
   %indvars.iv.next49.i = add nsw i64 %indvars.iv48.i, 1
   %i.cs = icmp slt i32 %i.cr, %i.cq
-  br i1 %i.cs, label %.lr.ph14.split.split.us.i, label %._crit_edge15.i, !llvm.loop !696
-
-17:                                               ; preds = %.lr.ph.us25.i, %17
-  %.0318.us24.i = phi i32 [ %i.cl, %.lr.ph.us25.i ], [ %22, %17 ] ; 2 uses
-  %18 = load i32, ptr %.16.val, align 4, !tbaa !3 ; 2 uses
-  %19 = add nsw i32 %18, 1
-  store i32 %19, ptr %.16.val, align 4, !tbaa !3
-  %20 = sext i32 %18 to i64
-  %21 = getelementptr inbounds [4 x i8], ptr %i.ct, i64 %20
-  store i32 %.0318.us24.i, ptr %21, align 4, !tbaa !3
-  %22 = add nsw i32 %.0318.us24.i, 1              ; 2 uses
-  %23 = icmp slt i32 %22, %i.cn
-  br i1 %23, label %17, label %._crit_edge.us26.loopexit.i, !llvm.loop !697
+  br i1 %i.cs, label %.lr.ph14.split.split.us.i, label %._crit_edge15.i, !llvm.loop !697
 
 .lr.ph.us25.i:                                    ; preds = %_ZNK8facebook5velox13DecodedVector5indexEi.exit.us20.i
   %i.ct = load ptr, ptr %i.z, align 8, !tbaa !335
   br label %17
 
-._crit_edge15.i:                                  ; preds = %bb.j, %bb.e, %._crit_edge.us.i.a, %._crit_edge.us.us38.i, %._crit_edge.us.us.i.a, %bb.a
-  %.06.lcssa.i = phi i32 [ 0, %bb.a ], [ %i.al, %._crit_edge.us.us.i.a ], [ %i.bv, %._crit_edge.us.i.a ], [ %.1.us23.i, %bb.e ], [ %9, %._crit_edge.us.us38.i ], [ %.1.i, %bb.j ] ; 2 uses
+._crit_edge15.i:                                  ; preds = %bb.j, %bb.e, %bb.d, %._crit_edge.us.us38.i, %bb.b, %bb.a
+  %.06.lcssa.i = phi i32 [ 0, %bb.a ], [ %i.an, %bb.b ], [ %i.bx, %bb.d ], [ %.1.us23.i, %bb.e ], [ %9, %._crit_edge.us.us38.i ], [ %.1.i, %bb.j ] ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %.8.val, i64 120
   %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !309
   %i.cw = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %i.d
@@ -505,7 +505,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i
   store i32 %.0318.i, ptr %i.el, align 4, !tbaa !3
   %i.em = add nsw i32 %.0318.i, 1                 ; 2 uses
   %i.en = icmp slt i32 %i.em, %i.ee
-  br i1 %i.en, label %bb.i, label %._crit_edge.loopexit.i, !llvm.loop !697
+  br i1 %i.en, label %bb.i, label %._crit_edge.loopexit.i, !llvm.loop !696
 
 bb.j:                                             ; preds = %._crit_edge.i, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.i, %bb.h, %bb.f
   %.pre62.i = phi i32 [ %.pre61.i, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.i ], [ %.pre.i, %._crit_edge.i ], [ %.pre61.i, %bb.f ], [ %.pre61.i, %bb.h ]
@@ -514,7 +514,7 @@ bb.j:                                             ; preds = %._crit_edge.i, %_ZN
   %i.ep = add nuw nsw i32 %.012.i, 1              ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1
   %i.eq = icmp slt i32 %i.ep, %i.eo
-  br i1 %i.eq, label %.lr.ph14.split.split.i, label %._crit_edge15.i, !llvm.loop !696
+  br i1 %i.eq, label %.lr.ph14.split.split.i, label %._crit_edge15.i, !llvm.loop !697
 
 bb.k:                                             ; preds = %._crit_edge15.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24

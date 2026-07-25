@@ -117,7 +117,7 @@ bb.j:                                             ; preds = %bb.i
   %.not136.us = icmp eq i32 %.val143.us, %5
   br i1 %.not136.us, label %.split.us, label %.lr.ph.us
 
-bb.k:                                             ; preds = %.loopexit.us
+bb.k:                                             ; preds = %bb.o
   %indvars.iv.next198 = add nuw nsw i64 %indvars.iv197, 1 ; 2 uses
   %indvars.iv.next196 = add nuw nsw i64 %indvars.iv195, 8
   %exitcond202 = icmp eq i64 %indvars.iv.next198, 20
@@ -130,29 +130,34 @@ bb.k:                                             ; preds = %.loopexit.us
   %i.ag = add i32 %i.ad, %i.ab                    ; 2 uses
   br i1 %i.af, label %.split176.us, label %.lr.ph.split.us172
 
-.lr.ph.split.us172:                               ; preds = %.lr.ph.us, %bb.o
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.o ], [ 0, %.lr.ph.us ] ; 3 uses
+.lr.ph.split.us172:                               ; preds = %.lr.ph.us, %8
+  %indvars.iv = phi i64 [ %indvars.iv.next, %8 ], [ 0, %.lr.ph.us ] ; 3 uses
   %i.ah = getelementptr inbounds nuw [36 x i8], ptr %2, i64 %indvars.iv ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 12
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !8  ; 2 uses
   %.not137.us = icmp ugt i32 %i.ad, %i.aj
-  br i1 %.not137.us, label %bb.o, label %bb.l
+  br i1 %.not137.us, label %8, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph.split.us172
   %i.ak = load i32, ptr %i.ah, align 4, !tbaa !10 ; 4 uses
   %.not138.us = icmp ult i32 %i.ab, %i.ak
-  br i1 %.not138.us, label %bb.o, label %bb.m
+  br i1 %.not138.us, label %8, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.al = add i32 %i.ak, %i.aj
   %.not139.us = icmp ule i32 %i.ag, %i.al
   %i.am = icmp ugt i32 %i.ag, %i.ak
   %or.cond140.us = and i1 %i.am, %.not139.us
-  br i1 %or.cond140.us, label %bb.n, label %bb.o
+  br i1 %or.cond140.us, label %bb.n, label %8
+
+8:                                                ; preds = %bb.m, %bb.l, %.lr.ph.split.us172
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.split176.us, label %.lr.ph.split.us172, !llvm.loop !11
 
 bb.n:                                             ; preds = %bb.m
   %i.an = icmp ugt i32 %i.ad, 3
-  br i1 %i.an, label %.lr.ph167.us.preheader, label %.loopexit.us
+  br i1 %i.an, label %.lr.ph167.us.preheader, label %bb.o
 
 .lr.ph167.us.preheader:                           ; preds = %bb.n
   %i.ao = zext i32 %i.ak to i64
@@ -161,7 +166,7 @@ bb.n:                                             ; preds = %bb.m
   %i.ar = sub nsw i64 0, %i.aq
   %i.as = getelementptr inbounds i8, ptr %i.ap, i64 %i.ar
   %i.at = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
-  %i.au = load i32, ptr %i.at, align 4, !tbaa !11
+  %i.au = load i32, ptr %i.at, align 4, !tbaa !13
   %i.av = zext i32 %i.au to i64
   %i.aw = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.av ; 3 uses
   %i.ax = add i32 %i.ad, -4                       ; 2 uses
@@ -193,20 +198,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %i.bi, ptr %i.bg, align 1
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.bj = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bj, label %middle.block, label %vector.body, !llvm.loop !12
+  br i1 %i.bj, label %middle.block, label %vector.body, !llvm.loop !14
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.az
-  br i1 %cmp.n, label %.loopexit.us, label %.lr.ph167.us.preheader223
+  br i1 %cmp.n, label %bb.o, label %.lr.ph167.us.preheader223
 
 .lr.ph167.us.preheader223:                        ; preds = %.lr.ph167.us.preheader, %middle.block
   %.1116166.us.ph = phi i32 [ %i.ad, %.lr.ph167.us.preheader ], [ %i.bc, %middle.block ]
   %.0118165.us.ph = phi ptr [ %i.aw, %.lr.ph167.us.preheader ], [ %i.be, %middle.block ]
   br label %.lr.ph167.us
-
-.loopexit.us:                                     ; preds = %.lr.ph167.us, %middle.block, %bb.n
-  %8 = icmp eq i64 %indvars.iv, %i.z
-  br i1 %8, label %.split176.us, label %bb.k
 
 .lr.ph167.us:                                     ; preds = %.lr.ph167.us.preheader223, %.lr.ph167.us
   %.1116166.us = phi i32 [ %i.bm, %.lr.ph167.us ], [ %.1116166.us.ph, %.lr.ph167.us.preheader223 ]
@@ -217,12 +218,11 @@ middle.block:                                     ; preds = %vector.body
   %i.bl = getelementptr inbounds nuw i8, ptr %.0118165.us, i64 4
   %i.bm = add i32 %.1116166.us, -4                ; 2 uses
   %i.bn = icmp ugt i32 %i.bm, 3
-  br i1 %i.bn, label %.lr.ph167.us, label %.loopexit.us, !llvm.loop !16
+  br i1 %i.bn, label %.lr.ph167.us, label %bb.o, !llvm.loop !17
 
-bb.o:                                             ; preds = %bb.m, %bb.l, %.lr.ph.split.us172
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not.a = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not.a, label %.split176.us, label %.lr.ph.split.us172, !llvm.loop !17
+bb.o:                                             ; preds = %.lr.ph167.us, %middle.block, %bb.n
+  %exitcond.not.a = icmp eq i64 %indvars.iv, %i.z
+  br i1 %exitcond.not.a, label %.split176.us, label %bb.k
 
 .thread.split.split.us:                           ; preds = %.thread
   %.val143.us179 = load i32, ptr %i.x, align 1    ; 2 uses
@@ -240,7 +240,7 @@ bb.o:                                             ; preds = %bb.m, %bb.l, %.lr.p
   tail call void @free(ptr noundef %i.a) #6
   br label %bb.p
 
-.split176.us:                                     ; preds = %.lr.ph.us, %.loopexit.us, %bb.o, %.loopexit150.us182
+.split176.us:                                     ; preds = %.lr.ph.us, %bb.o, %8, %.loopexit150.us182
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.6) #6
   tail call void @free(ptr noundef %i.a) #6
   br label %bb.p
@@ -314,11 +314,11 @@ attributes #6 = { nounwind }
 !8 = !{!9, !5, i64 12}
 !9 = !{!"cli_exe_section", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !5, i64 16, !5, i64 20, !5, i64 24, !5, i64 28, !5, i64 32}
 !10 = !{!9, !5, i64 0}
-!11 = !{!9, !5, i64 8}
-!12 = distinct !{!12, !13, !14, !15}
-!13 = !{!"llvm.loop.mustprogress"}
-!14 = !{!"llvm.loop.isvectorized", i32 1}
-!15 = !{!"llvm.loop.unroll.runtime.disable"}
-!16 = distinct !{!16, !13, !15, !14}
-!17 = distinct !{!17, !13}
+!11 = distinct !{!11, !12}
+!12 = !{!"llvm.loop.mustprogress"}
+!13 = !{!9, !5, i64 8}
+!14 = distinct !{!14, !12, !15, !16}
+!15 = !{!"llvm.loop.isvectorized", i32 1}
+!16 = !{!"llvm.loop.unroll.runtime.disable"}
+!17 = distinct !{!17, !12, !16, !15}
 end_hunk_0

@@ -204,14 +204,14 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit34.us.i.i.i: ; preds = %.lr.ph5.i.i
   %.not.i.i.i38.us.i.i.i = icmp sgt i8 %i.eg, -1
   br i1 %.not.i.i.i38.us.i.i.i, label %bb.ad, label %.thread.i.i.i39.us.i.i.i
 
-.thread.i.i.i39.us.i.i.i:                         ; preds = %.lr.ph.i.i.i36.us.i.i.i
-  %10 = invoke noundef i64 @_ZN6duckdb8Utf8Proc13GraphemeCountEPKcm(ptr noundef nonnull %i.ed, i64 noundef %i.ee)
-          to label %_ZN6duckdb20UnaryOperatorWrapper9OperationINS_12_GLOBAL__N_121GraphemeCountOperatorENS_8string_tElEET1_T0_RNS_12ValidityMaskEmPv.exit42.us.i.i.i unwind label %.loopexit.i.i
-
 bb.ad:                                            ; preds = %.lr.ph.i.i.i36.us.i.i.i
   %i.eh = add nuw nsw i64 %.0915.i.i.i37.us.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i41.us.i.i.i = icmp eq i64 %i.eh, %i.ee
   br i1 %exitcond.not.i.i.i41.us.i.i.i, label %_ZN6duckdb20UnaryOperatorWrapper9OperationINS_12_GLOBAL__N_121GraphemeCountOperatorENS_8string_tElEET1_T0_RNS_12ValidityMaskEmPv.exit42.us.i.i.i, label %.lr.ph.i.i.i36.us.i.i.i, !llvm.loop !414
+
+.thread.i.i.i39.us.i.i.i:                         ; preds = %.lr.ph.i.i.i36.us.i.i.i
+  %10 = invoke noundef i64 @_ZN6duckdb8Utf8Proc13GraphemeCountEPKcm(ptr noundef nonnull %i.ed, i64 noundef %i.ee)
+          to label %_ZN6duckdb20UnaryOperatorWrapper9OperationINS_12_GLOBAL__N_121GraphemeCountOperatorENS_8string_tElEET1_T0_RNS_12ValidityMaskEmPv.exit42.us.i.i.i unwind label %.loopexit.i.i
 
 _ZN6duckdb20UnaryOperatorWrapper9OperationINS_12_GLOBAL__N_121GraphemeCountOperatorENS_8string_tElEET1_T0_RNS_12ValidityMaskEmPv.exit42.us.i.i.i: ; preds = %bb.ad, %.thread.i.i.i39.us.i.i.i, %_ZNK6duckdb15SelectionVector9get_indexEm.exit34.us.i.i.i
   %.1.i.i.i40.us.i.i.i = phi i64 [ %10, %.thread.i.i.i39.us.i.i.i ], [ %i.ee, %_ZNK6duckdb15SelectionVector9get_indexEm.exit34.us.i.i.i ], [ %i.ee, %bb.ad ]
@@ -615,6 +615,11 @@ bb.ah:                                            ; preds = %.lr.ph118
   %.not12.i.i.i.i48.us.i.i.i.i = icmp sgt i8 %i.ge, -1
   br i1 %.not12.i.i.i.i48.us.i.i.i.i, label %10, label %_ZN6duckdb7IsAsciiEPKcm.exit.i.i.i42.us.i.i.i.i
 
+10:                                               ; preds = %.lr.ph.i.i.i.i46.us.i.i.i.i
+  %11 = add i64 %.116.i.i.i.i47.us.i.i.i.i, 1     ; 2 uses
+  %exitcond.not.i.i.i.i49.us.i.i.i.i = icmp eq i64 %11, %i.fw
+  br i1 %exitcond.not.i.i.i.i49.us.i.i.i.i, label %.loopexit.i.i.i45.us.i.i.i.i, label %.lr.ph.i.i.i.i46.us.i.i.i.i, !llvm.loop !1030
+
 _ZN6duckdb7IsAsciiEPKcm.exit.i.i.i42.us.i.i.i.i:  ; preds = %.lr.ph118, %.lr.ph.i.i.i.i46.us.i.i.i.i
   %i.gf = invoke noundef ptr @_ZN6duckdb8Utf8Proc9NormalizeEPKcm(ptr noundef nonnull %i.fv, i64 noundef %i.fw)
           to label %.noexc.i.i.i unwind label %.loopexit.i.i.i ; 2 uses
@@ -626,11 +631,6 @@ _ZN6duckdb7IsAsciiEPKcm.exit.i.i.i42.us.i.i.i.i:  ; preds = %.lr.ph118, %.lr.ph.
 .noexc83.i.i.i:                                   ; preds = %.noexc.i.i.i
   call void @free(ptr noundef %i.gf) #28, !noalias !1049
   br label %_ZN6duckdb19GenericUnaryWrapper9OperationINS_19UnaryStringOperatorINS_12_GLOBAL__N_120NFCNormalizeOperatorEEENS_8string_tES6_EET1_T0_RNS_12ValidityMaskEmPv.exit50.us.i.i.i.i
-
-10:                                               ; preds = %.lr.ph.i.i.i.i46.us.i.i.i.i
-  %11 = add i64 %.116.i.i.i.i47.us.i.i.i.i, 1     ; 2 uses
-  %exitcond.not.i.i.i.i49.us.i.i.i.i = icmp eq i64 %11, %i.fw
-  br i1 %exitcond.not.i.i.i.i49.us.i.i.i.i, label %.loopexit.i.i.i45.us.i.i.i.i, label %.lr.ph.i.i.i.i46.us.i.i.i.i, !llvm.loop !1030
 
 .loopexit.i.i.i45.us.i.i.i.i:                     ; preds = %10, %.preheader.i.i.i.i44.us.i.i.i.i
   %i.gh = insertvalue { i64, ptr } poison, i64 %.sroa.0.0.copyload.us.i.i.i.i, 0
@@ -1034,6 +1034,11 @@ bb.ah:                                            ; preds = %.lr.ph118
   %.not12.i.i.i.i48.us.i.i.i.i = icmp sgt i8 %i.ge, -1
   br i1 %.not12.i.i.i.i48.us.i.i.i.i, label %10, label %_ZN6duckdb7IsAsciiEPKcm.exit.i.i.i42.us.i.i.i.i
 
+10:                                               ; preds = %.lr.ph.i.i.i.i46.us.i.i.i.i
+  %11 = add i64 %.116.i.i.i.i47.us.i.i.i.i, 1     ; 2 uses
+  %exitcond.not.i.i.i.i49.us.i.i.i.i = icmp eq i64 %11, %i.fw
+  br i1 %exitcond.not.i.i.i.i49.us.i.i.i.i, label %.loopexit.i.i.i45.us.i.i.i.i, label %.lr.ph.i.i.i.i46.us.i.i.i.i, !llvm.loop !1030
+
 _ZN6duckdb7IsAsciiEPKcm.exit.i.i.i42.us.i.i.i.i:  ; preds = %.lr.ph118, %.lr.ph.i.i.i.i46.us.i.i.i.i
   %i.gf = invoke noundef ptr @_ZN6duckdb23utf8proc_remove_accentsEPKhl(ptr noundef nonnull %i.fv, i64 noundef %i.fw)
           to label %.noexc.i.i.i unwind label %.loopexit.i.i.i ; 2 uses
@@ -1045,11 +1050,6 @@ _ZN6duckdb7IsAsciiEPKcm.exit.i.i.i42.us.i.i.i.i:  ; preds = %.lr.ph118, %.lr.ph.
 .noexc83.i.i.i:                                   ; preds = %.noexc.i.i.i
   call void @free(ptr noundef %i.gf) #28, !noalias !1925
   br label %_ZN6duckdb19GenericUnaryWrapper9OperationINS_19UnaryStringOperatorINS_12_GLOBAL__N_120StripAccentsOperatorEEENS_8string_tES6_EET1_T0_RNS_12ValidityMaskEmPv.exit50.us.i.i.i.i
-
-10:                                               ; preds = %.lr.ph.i.i.i.i46.us.i.i.i.i
-  %11 = add i64 %.116.i.i.i.i47.us.i.i.i.i, 1     ; 2 uses
-  %exitcond.not.i.i.i.i49.us.i.i.i.i = icmp eq i64 %11, %i.fw
-  br i1 %exitcond.not.i.i.i.i49.us.i.i.i.i, label %.loopexit.i.i.i45.us.i.i.i.i, label %.lr.ph.i.i.i.i46.us.i.i.i.i, !llvm.loop !1030
 
 .loopexit.i.i.i45.us.i.i.i.i:                     ; preds = %10, %.preheader.i.i.i.i44.us.i.i.i.i
   %i.gh = insertvalue { i64, ptr } poison, i64 %.sroa.0.0.copyload.us.i.i.i.i, 0

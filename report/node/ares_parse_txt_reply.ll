@@ -117,15 +117,6 @@ bb.j:                                             ; preds = %bb.i
   %exitcond.peel.not = icmp eq i64 %i.p, 1
   br i1 %exitcond.peel.not, label %.loopexit.us, label %.lr.ph.us
 
-.loopexit.us:                                     ; preds = %bb.l, %bb.j, %bb.f, %bb.e, %bb.d
-  %.355.ph.us = phi ptr [ %.052103.us, %bb.d ], [ %.052103.us, %bb.e ], [ %.052103.us, %bb.f ], [ %i.q, %bb.j ], [ %i.af, %bb.l ]
-  %.450.ph.us = phi ptr [ %.046105.us, %bb.d ], [ %.046105.us, %bb.e ], [ %.046105.us, %bb.f ], [ %.248.us112.peel, %bb.j ], [ %.248.us112.peel, %bb.l ] ; 2 uses
-  %4 = add nuw i64 %.051104.us, 1                 ; 2 uses
-  %5 = load ptr, ptr %i.a, align 8, !tbaa !12
-  %6 = call i64 @ares_dns_record_rr_cnt(ptr noundef %5, i32 noundef 1) #3
-  %7 = icmp ult i64 %4, %6
-  br i1 %7, label %.lr.ph106.split.us, label %._crit_edge, !llvm.loop !26
-
 .lr.ph.us:                                        ; preds = %bb.j, %bb.l
   %.04599.us108 = phi i64 [ %i.at, %bb.l ], [ 1, %bb.j ] ; 2 uses
   %.15397.us110 = phi ptr [ %i.af, %bb.l ], [ %i.q, %bb.j ]
@@ -158,7 +149,16 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #3
   %i.at = add nuw i64 %.04599.us108, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.at, %i.p
-  br i1 %exitcond.not, label %.loopexit.us, label %.lr.ph.us, !llvm.loop !28
+  br i1 %exitcond.not, label %.loopexit.us, label %.lr.ph.us, !llvm.loop !26
+
+.loopexit.us:                                     ; preds = %bb.l, %bb.j, %bb.f, %bb.e, %bb.d
+  %.355.ph.us = phi ptr [ %.052103.us, %bb.d ], [ %.052103.us, %bb.e ], [ %.052103.us, %bb.f ], [ %i.q, %bb.j ], [ %i.af, %bb.l ]
+  %.450.ph.us = phi ptr [ %.046105.us, %bb.d ], [ %.046105.us, %bb.e ], [ %.046105.us, %bb.f ], [ %.248.us112.peel, %bb.j ], [ %.248.us112.peel, %bb.l ] ; 2 uses
+  %4 = add nuw i64 %.051104.us, 1                 ; 2 uses
+  %5 = load ptr, ptr %i.a, align 8, !tbaa !12
+  %6 = call i64 @ares_dns_record_rr_cnt(ptr noundef %5, i32 noundef 1) #3
+  %7 = icmp ult i64 %4, %6
+  br i1 %7, label %.lr.ph106.split.us, label %._crit_edge, !llvm.loop !29
 
 .lr.ph106.split:                                  ; preds = %.lr.ph106, %.loopexit
   %.046105 = phi ptr [ %.450.ph, %.loopexit ], [ null, %.lr.ph106 ] ; 5 uses
@@ -244,7 +244,7 @@ bb.t:                                             ; preds = %bb.s
   %i.br = load ptr, ptr %i.a, align 8, !tbaa !12
   %i.bs = call i64 @ares_dns_record_rr_cnt(ptr noundef %i.br, i32 noundef 1) #3
   %i.bt = icmp ult i64 %i.bq, %i.bs
-  br i1 %i.bt, label %.lr.ph106.split, label %._crit_edge, !llvm.loop !26
+  br i1 %i.bt, label %.lr.ph106.split, label %._crit_edge, !llvm.loop !29
 
 .thread83:                                        ; preds = %.lr.ph106.split.us, %.lr.ph106.split, %.thread
   %.489 = phi i32 [ 15, %.thread ], [ 10, %.lr.ph106.split ], [ 10, %.lr.ph106.split.us ] ; 2 uses
@@ -351,9 +351,9 @@ attributes #3 = { nounwind }
 !23 = !{!17, !19, i64 8}
 !24 = !{!10, !10, i64 0}
 !25 = !{!17, !20, i64 16}
-!26 = distinct !{!26, !27}
+!26 = distinct !{!26, !27, !28}
 !27 = !{!"llvm.loop.mustprogress"}
-!28 = distinct !{!28, !27, !29}
-!29 = !{!"llvm.loop.peeled.count", i32 1}
+!28 = !{!"llvm.loop.peeled.count", i32 1}
+!29 = distinct !{!29, !27}
 !30 = distinct !{!30, !27}
 end_hunk_0

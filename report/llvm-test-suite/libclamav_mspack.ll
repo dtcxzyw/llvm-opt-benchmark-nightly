@@ -204,13 +204,6 @@ vec.epilog.middle.block214:                       ; preds = %vec.epilog.vector.b
   %i.cy = lshr i32 %.480133.us, 16
   br label %bb.e
 
-4:                                                ; preds = %._crit_edge130.us, %.preheader104.split.us
-  %.5.us = phi i32 [ %.480133.us, %.preheader104.split.us ], [ %i.du, %._crit_edge130.us ] ; 3 uses
-  %.4.us = phi i32 [ %.1134.us, %.preheader104.split.us ], [ %.3.us, %._crit_edge130.us ] ; 2 uses
-  %5 = add nuw nsw i16 %.290132.us, 1             ; 2 uses
-  %6 = icmp samesign ult i16 %5, %i.ct
-  br i1 %6, label %.preheader104.split.us, label %.split136.us, !llvm.loop !166
-
 bb.e:                                             ; preds = %.lr.ph129.us, %bb.g
   %.2127.us = phi i32 [ %.1134.us, %.lr.ph129.us ], [ %.3.us, %bb.g ] ; 4 uses
   %.184126.us = phi i32 [ 0, %.lr.ph129.us ], [ %i.dr, %bb.g ] ; 2 uses
@@ -246,7 +239,14 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %spec.select.us = or disjoint i32 %i.dn, %i.dq  ; 2 uses
   %i.dr = add nuw nsw i32 %.184126.us, 1          ; 2 uses
   %exitcond.not = icmp eq i32 %i.dr, %indvars.iv
-  br i1 %exitcond.not, label %._crit_edge130.us, label %bb.e, !llvm.loop !167
+  br i1 %exitcond.not, label %._crit_edge130.us, label %bb.e, !llvm.loop !166
+
+4:                                                ; preds = %._crit_edge130.us, %.preheader104.split.us
+  %.5.us = phi i32 [ %.480133.us, %.preheader104.split.us ], [ %i.du, %._crit_edge130.us ] ; 3 uses
+  %.4.us = phi i32 [ %.1134.us, %.preheader104.split.us ], [ %.3.us, %._crit_edge130.us ] ; 2 uses
+  %5 = add nuw nsw i16 %.290132.us, 1             ; 2 uses
+  %6 = icmp samesign ult i16 %5, %i.ct
+  br i1 %6, label %.preheader104.split.us, label %.split136.us, !llvm.loop !167
 
 ._crit_edge130.us:                                ; preds = %bb.g
   %i.ds = zext nneg i32 %spec.select.us to i64
@@ -649,13 +649,6 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
   %.lcssa = phi i32 [ %i.de, %.preheader.us.preheader.unr-lcssa ], [ %i.di, %bb.k ]
   br label %.preheader.us
 
-4:                                                ; preds = %._crit_edge159.us, %.preheader138.split.us
-  %.4104.us = phi i16 [ %.1101162.us, %.preheader138.split.us ], [ %.3103.us, %._crit_edge159.us ] ; 2 uses
-  %.5.us = phi i32 [ %.4163.us, %.preheader138.split.us ], [ %i.ec, %._crit_edge159.us ] ; 3 uses
-  %5 = add nuw nsw i16 %.2107161.us, 1            ; 2 uses
-  %6 = icmp samesign ult i16 %5, %i.d
-  br i1 %6, label %.preheader138.split.us, label %.split.us, !llvm.loop !279
-
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %bb.m
   %.2102158.us = phi i16 [ %.3103.us, %bb.m ], [ %.1101162.us, %.preheader.us.preheader ] ; 5 uses
   %.4112157.us = phi i32 [ %i.dz, %bb.m ], [ 0, %.preheader.us.preheader ] ; 2 uses
@@ -688,7 +681,14 @@ bb.m:                                             ; preds = %bb.l, %.preheader.u
   %i.dy = or disjoint i32 %i.du, %i.dx            ; 2 uses
   %i.dz = add nuw nsw i32 %.4112157.us, 1         ; 2 uses
   %exitcond.not = icmp eq i32 %i.dz, %indvars.iv
-  br i1 %exitcond.not, label %._crit_edge159.us, label %.preheader.us, !llvm.loop !280
+  br i1 %exitcond.not, label %._crit_edge159.us, label %.preheader.us, !llvm.loop !279
+
+4:                                                ; preds = %._crit_edge159.us, %.preheader138.split.us
+  %.4104.us = phi i16 [ %.1101162.us, %.preheader138.split.us ], [ %.3103.us, %._crit_edge159.us ] ; 2 uses
+  %.5.us = phi i32 [ %.4163.us, %.preheader138.split.us ], [ %i.ec, %._crit_edge159.us ] ; 3 uses
+  %5 = add nuw nsw i16 %.2107161.us, 1            ; 2 uses
+  %6 = icmp samesign ult i16 %5, %i.d
+  br i1 %6, label %.preheader138.split.us, label %.split.us, !llvm.loop !280
 
 ._crit_edge159.us:                                ; preds = %bb.m
   %i.ea = zext nneg i32 %i.dy to i64

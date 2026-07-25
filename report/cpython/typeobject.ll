@@ -204,8 +204,8 @@ bb.af:                                            ; preds = %.lr.ph99.i
   %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !115 ; 5 uses
   br label %bb.ag
 
-bb.ag:                                            ; preds = %._crit_edge162.a, %.lr.ph94.us.i
-  %.05893.us.i = phi i64 [ 0, %.lr.ph94.us.i ], [ %1, %._crit_edge162.a ] ; 4 uses
+bb.ag:                                            ; preds = %.lr.ph161, %.lr.ph94.us.i
+  %.05893.us.i = phi i64 [ 0, %.lr.ph94.us.i ], [ %3, %.lr.ph161 ] ; 4 uses
   %i.ey = getelementptr [8 x i8], ptr %i.co, i64 %.05893.us.i
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !115 ; 2 uses
   %i.fa = getelementptr [8 x i8], ptr %i.dz, i64 %.05893.us.i
@@ -215,27 +215,27 @@ bb.ag:                                            ; preds = %._crit_edge162.a, %
   %i.fd = getelementptr i8, ptr %i.ez, i64 32
   %.08.i.us.i158 = add i64 %i.fb, 1               ; 2 uses
   %i.fe = icmp slt i64 %.08.i.us.i158, %.val.i.us.i
-  br i1 %i.fe, label %.lr.ph161, label %._crit_edge162.a
+  br i1 %i.fe, label %._crit_edge162.a, label %.lr.ph161
 
-bb.ah:                                            ; preds = %.lr.ph161
+bb.ah:                                            ; preds = %._crit_edge162.a
   %.08.i.us.i = add i64 %.08.i.us.i159, 1         ; 2 uses
   %i.ff = icmp slt i64 %.08.i.us.i, %.val.i.us.i
-  br i1 %i.ff, label %.lr.ph161, label %._crit_edge162.a, !llvm.loop !426
+  br i1 %i.ff, label %._crit_edge162.a, label %.lr.ph161, !llvm.loop !426
 
-._crit_edge162.a:                                 ; preds = %bb.ah, %bb.ag
-  %1 = add nuw nsw i64 %.05893.us.i, 1
-  %exitcond.not.i89.a = icmp eq i64 %.05893.us.i, %.val78
-  br i1 %exitcond.not.i89.a, label %._crit_edge95.split.us.i, label %bb.ag, !llvm.loop !427
-
-.lr.ph161:                                        ; preds = %bb.ag, %bb.ah
+._crit_edge162.a:                                 ; preds = %bb.ag, %bb.ah
   %.08.i.us.i159 = phi i64 [ %.08.i.us.i, %bb.ah ], [ %.08.i.us.i158, %bb.ag ] ; 2 uses
-  %2 = getelementptr [8 x i8], ptr %i.fd, i64 %.08.i.us.i159
-  %3 = load ptr, ptr %2, align 8, !tbaa !115
-  %i.fg = icmp eq ptr %3, %i.ex
-  br i1 %i.fg, label %.loopexit.us.i, label %bb.ah, !llvm.loop !426
+  %1 = getelementptr [8 x i8], ptr %i.fd, i64 %.08.i.us.i159
+  %2 = load ptr, ptr %1, align 8, !tbaa !115
+  %exitcond.not.i89.a = icmp eq ptr %2, %i.ex
+  br i1 %exitcond.not.i89.a, label %.loopexit.us.i, label %bb.ah, !llvm.loop !426
 
-.loopexit.us.i:                                   ; preds = %.lr.ph161, %bb.af
-  %.163.ph.us.i = phi i64 [ %i.eu, %bb.af ], [ %.06297.us.i, %.lr.ph161 ] ; 2 uses
+.lr.ph161:                                        ; preds = %bb.ah, %bb.ag
+  %3 = add nuw nsw i64 %.05893.us.i, 1
+  %i.fg = icmp eq i64 %.05893.us.i, %.val78
+  br i1 %i.fg, label %._crit_edge95.split.us.i, label %bb.ag, !llvm.loop !427
+
+.loopexit.us.i:                                   ; preds = %._crit_edge162.a, %bb.af
+  %.163.ph.us.i = phi i64 [ %i.eu, %bb.af ], [ %.06297.us.i, %._crit_edge162.a ] ; 2 uses
   %i.fh = add nuw nsw i64 %.15798.us.i, 1
   %exitcond124.not.i = icmp eq i64 %.15798.us.i, %.val78
   br i1 %exitcond124.not.i, label %tail_contains.exit._crit_edge.i, label %.lr.ph99.i.backedge
@@ -245,7 +245,7 @@ bb.ah:                                            ; preds = %.lr.ph161
   %.06297.us.i.be = phi i64 [ %.163.ph.us.i, %.loopexit.us.i ], [ 0, %.lr.ph112.i.epil.preheader ], [ 0, %bb.ad ], [ 0, %bb.ae ], [ 0, %.lr.ph99.i.loopexit.unr-lcssa ]
   br label %.lr.ph99.i, !llvm.loop !428
 
-._crit_edge95.split.us.i:                         ; preds = %._crit_edge162.a
+._crit_edge95.split.us.i:                         ; preds = %.lr.ph161
   %i.fi = tail call i32 @PyList_Append(ptr noundef nonnull %i.cz, ptr noundef %i.ex) #21
   %i.fj = icmp slt i32 %i.fi, 0
   br i1 %i.fj, label %pmerge.exit.thread94, label %.lr.ph112.i.preheader

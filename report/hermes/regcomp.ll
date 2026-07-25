@@ -204,8 +204,8 @@ nch.exit.thread.thread:                           ; preds = %nch.exit
   %or.cond.us.i = or i1 %.not.us.i, %i.zb
   br i1 %or.cond.us.i, label %bb.el, label %.preheader.us.i
 
-bb.ej:                                            ; preds = %.preheader.us.i, %bb.ek
-  %.03034.us.i = phi i64 [ 0, %.preheader.us.i ], [ %1, %bb.ek ] ; 3 uses
+bb.ej:                                            ; preds = %.preheader.us.i, %._crit_edge.us.i.a
+  %.03034.us.i = phi i64 [ 0, %.preheader.us.i ], [ %1, %._crit_edge.us.i.a ] ; 3 uses
   %i.zc = and i64 %.03034.us.i, 255               ; 2 uses
   %i.zd = getelementptr inbounds nuw i8, ptr %i.zo, i64 %i.zc
   %i.ze = load i8, ptr %i.zd, align 1, !tbaa !33
@@ -216,18 +216,18 @@ bb.ej:                                            ; preds = %.preheader.us.i, %b
   %i.zj = and i8 %i.zi, %i.zs
   %i.zk = icmp eq i8 %i.zj, 0
   %.not32.us.i = xor i1 %i.zg, %i.zk
-  br i1 %.not32.us.i, label %bb.ek, label %._crit_edge.us.i.a
+  br i1 %.not32.us.i, label %._crit_edge.us.i.a, label %bb.ek
 
 ._crit_edge.us.i.a:                               ; preds = %bb.ej
-  %i.zl = icmp eq i64 %.03034.us.i, %i.sx
-  br i1 %i.zl, label %.split.us.i, label %bb.el
+  %1 = add nuw i64 %.03034.us.i, 1                ; 2 uses
+  %i.zl = icmp eq i64 %1, %i.sx
+  br i1 %i.zl, label %.split.us.i, label %bb.ej, !llvm.loop !102
 
 bb.ek:                                            ; preds = %bb.ej
-  %1 = add nuw i64 %.03034.us.i, 1                ; 2 uses
-  %exitcond.not.i175 = icmp eq i64 %1, %i.sx
-  br i1 %exitcond.not.i175, label %.split.us.i, label %bb.ej, !llvm.loop !102
+  %exitcond.not.i175 = icmp eq i64 %.03034.us.i, %i.sx
+  br i1 %exitcond.not.i175, label %.split.us.i, label %bb.el
 
-bb.el:                                            ; preds = %._crit_edge.us.i.a, %.lr.ph39.split.us.i
+bb.el:                                            ; preds = %bb.ek, %.lr.ph39.split.us.i
   %i.zm = getelementptr inbounds nuw i8, ptr %.02937.us.i, i64 32 ; 2 uses
   %i.zn = icmp ult ptr %i.zm, %i.yx
   br i1 %i.zn, label %.lr.ph39.split.us.i, label %freezeset.exit, !llvm.loop !103
@@ -254,9 +254,9 @@ bb.em:                                            ; preds = %.lr.ph39.split.spli
   %i.zx = icmp ult ptr %i.zw, %i.yp
   br i1 %i.zx, label %.lr.ph39.split.split.us.i, label %freezeset.exit, !llvm.loop !103
 
-.split.us.i:                                      ; preds = %._crit_edge.us.i.a, %bb.ek, %.lr.ph39.split.split.us.i
-  %i.zy = phi ptr [ %i.yp, %.lr.ph39.split.split.us.i ], [ %i.yx, %bb.ek ], [ %i.yx, %._crit_edge.us.i.a ]
-  %.us-phi.i = phi ptr [ %.02937.us40.i, %.lr.ph39.split.split.us.i ], [ %.02937.us.i, %bb.ek ], [ %.02937.us.i, %._crit_edge.us.i.a ] ; 2 uses
+.split.us.i:                                      ; preds = %bb.ek, %._crit_edge.us.i.a, %.lr.ph39.split.split.us.i
+  %i.zy = phi ptr [ %i.yx, %._crit_edge.us.i.a ], [ %i.yp, %.lr.ph39.split.split.us.i ], [ %i.yx, %bb.ek ]
+  %.us-phi.i = phi ptr [ %.02937.us.i, %._crit_edge.us.i.a ], [ %.02937.us40.i, %.lr.ph39.split.split.us.i ], [ %.02937.us.i, %bb.ek ] ; 2 uses
   br i1 %.not3.i, label %._crit_edge.i.i173, label %.lr.ph.i.i171.preheader
 
 .lr.ph.i.i171.preheader:                          ; preds = %.split.us.i

@@ -204,6 +204,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.not10.i.not.us = icmp eq i16 %i.ah, 0
   br i1 %.not10.i.not.us, label %5, label %string_scan_simd_sse2.exit.us
 
+5:                                                ; preds = %.lr.ph.us
+  store ptr %i.aa, ptr %i.e, align 8, !tbaa !64
+  %6 = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 2 uses
+  %.not.i16.us = icmp ugt ptr %6, %i.x
+  br i1 %.not.i16.us, label %string_scan_simd_sse2.exit.thread27.loopexit.us, label %.lr.ph.us
+
 string_scan_simd_sse2.exit.us:                    ; preds = %.lr.ph.us
   %i.ai = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %i.ah, i1 true)
   %i.aj = zext nneg i16 %i.ai to i64
@@ -214,12 +220,6 @@ string_scan_simd_sse2.exit.us:                    ; preds = %.lr.ph.us
 .split.us.backedge:                               ; preds = %.lr.ph39.us, %.split.us.loopexit.loopexit.split.loop.exit207, %.split.us.loopexit.loopexit.split.loop.exit205, %.split.us.loopexit.loopexit.split.loop.exit, %.lr.ph39.us.prol, %string_scan_simd_sse2.exit.us
   %.promoted3743.us.be = phi ptr [ %i.ak, %string_scan_simd_sse2.exit.us ], [ %i.al, %.lr.ph39.us ], [ %i.l, %.split.us.loopexit.loopexit.split.loop.exit207 ], [ %i.k, %.split.us.loopexit.loopexit.split.loop.exit205 ], [ %i.j, %.split.us.loopexit.loopexit.split.loop.exit ], [ %i.bn, %.lr.ph39.us.prol ]
   br label %.split.us
-
-5:                                                ; preds = %.lr.ph.us
-  store ptr %i.aa, ptr %i.e, align 8, !tbaa !64
-  %6 = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 2 uses
-  %.not.i16.us = icmp ugt ptr %6, %i.x
-  br i1 %.not.i16.us, label %string_scan_simd_sse2.exit.thread27.loopexit.us, label %.lr.ph.us
 
 .lr.ph39.us:                                      ; preds = %.lr.ph39.us.prol.loopexit, %bb.h
   %i.al = phi ptr [ %i.bj, %bb.h ], [ %.unr169, %.lr.ph39.us.prol.loopexit ] ; 9 uses

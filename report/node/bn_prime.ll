@@ -131,21 +131,16 @@ calc_trial_divisions.exit.i:                      ; preds = %.backedge
   %i.ac = xor i64 %i.ab, -1                       ; 4 uses
   %i.ad = tail call i32 @BN_priv_rand_ex(ptr noundef %0, i32 noundef range(i32 2, -2147483648) %1, i32 noundef 1, i32 noundef 1, i32 noundef 0, ptr noundef %6) #5
   %.not83.i = icmp eq i32 %i.ad, 0
-  br i1 %.not83.i, label %probable_prime.exit.thread.loopexit288, label %.lr.ph.i
+  br i1 %.not83.i, label %probable_prime.exit.thread.loopexit288, label %.lr.ph.split.us.split.i.a
 
-.lr.ph.i:                                         ; preds = %calc_trial_divisions.exit.i
-  br i1 %.not81.i, label %.lr.ph.split.us.split.i.a, label %.lr.ph.split.i
+.lr.ph.split.us.split.i.a:                        ; preds = %calc_trial_divisions.exit.i
+  br i1 %.not81.i, label %bb.g, label %.lr.ph.split.i
 
-.lr.ph.split.us.split.i.a:                        ; preds = %.lr.ph.i
+bb.g:                                             ; preds = %.lr.ph.split.us.split.i.a
   br i1 %i.t, label %.lr.ph.split.us.split.split.us.i, label %.lr.ph.split.us.split.split.i
 
-bb.g:                                             ; preds = %.split61.us.us.us.i
-  %7 = tail call i32 @BN_num_bits(ptr noundef %0) #5
-  %.not54.us.us.i = icmp eq i32 %7, %1
-  br i1 %.not54.us.us.i, label %probable_prime.exit, label %.backedge.us.us.i
-
-.lr.ph.split.us.split.split.us.i:                 ; preds = %.lr.ph.split.us.split.i.a, %.lr.ph.split.us.split.split.us.i.backedge
-  %indvars.iv144.i = phi i64 [ %indvars.iv144.i.be, %.lr.ph.split.us.split.split.us.i.backedge ], [ 1, %.lr.ph.split.us.split.i.a ] ; 3 uses
+.lr.ph.split.us.split.split.us.i:                 ; preds = %bb.g, %.lr.ph.split.us.split.split.us.i.backedge
+  %indvars.iv144.i = phi i64 [ %indvars.iv144.i.be, %.lr.ph.split.us.split.split.us.i.backedge ], [ 1, %bb.g ] ; 3 uses
   %i.ae = getelementptr inbounds nuw [2 x i8], ptr @primes, i64 %indvars.iv144.i
   %i.af = load i16, ptr %i.ae, align 2, !tbaa !14
   %i.ag = zext i16 %i.af to i64
@@ -165,7 +160,12 @@ bb.h:                                             ; preds = %.lr.ph.split.us.spl
   %indvars.iv144.i.be = phi i64 [ %indvars.iv.next145.i, %bb.h ], [ 1, %.backedge.us.us.i ]
   br label %.lr.ph.split.us.split.split.us.i, !llvm.loop !16
 
-.backedge.us.us.i:                                ; preds = %.split63.us.us.us.us.i, %bb.g
+7:                                                ; preds = %.split61.us.us.us.i
+  %8 = tail call i32 @BN_num_bits(ptr noundef %0) #5
+  %.not54.us.us.i = icmp eq i32 %8, %1
+  br i1 %.not54.us.us.i, label %probable_prime.exit, label %.backedge.us.us.i
+
+.backedge.us.us.i:                                ; preds = %.split63.us.us.us.us.i, %7
   %i.ak = tail call i32 @BN_priv_rand_ex(ptr noundef %0, i32 noundef range(i32 2, -2147483648) %1, i32 noundef 1, i32 noundef 1, i32 noundef 0, ptr noundef %6) #5
   %.not.us.us.i = icmp eq i32 %i.ak, 0
   br i1 %.not.us.us.i, label %probable_prime.exit.thread, label %.lr.ph.split.us.split.split.us.i.backedge
@@ -173,7 +173,7 @@ bb.h:                                             ; preds = %.lr.ph.split.us.spl
 .split61.us.us.us.i:                              ; preds = %bb.i, %bb.k, %.split.us.split.us.us.us.us.i
   %i.al = tail call i32 @BN_add_word(ptr noundef %0, i64 noundef %.047.us.us.us95.i) #5
   %.not53.us.us.i = icmp eq i32 %i.al, 0
-  br i1 %.not53.us.us.i, label %probable_prime.exit.thread, label %bb.g
+  br i1 %.not53.us.us.i, label %probable_prime.exit.thread, label %7
 
 .split.us.us.us.us94.i:                           ; preds = %bb.h, %.split63.us.us.us.us.i
   %.047.us.us.us95.i = phi i64 [ %i.aw, %.split63.us.us.us.us.i ], [ 0, %bb.h ] ; 6 uses
@@ -228,13 +228,8 @@ bb.k:                                             ; preds = %bb.j
   %exitcond158.not.i = icmp eq i64 %indvars.iv.next155.i, %.0.i.i
   br i1 %exitcond158.not.i, label %.split61.us.us.us.i, label %.split.us.split.us.us.us.us.i, !llvm.loop !18
 
-8:                                                ; preds = %.split61.us.split.split.us.us.split.us.i
-  %9 = tail call i32 @BN_num_bits(ptr noundef %0) #5
-  %.not54.us.i = icmp eq i32 %9, %1
-  br i1 %.not54.us.i, label %probable_prime.exit, label %.backedge.us.i
-
-.lr.ph.split.us.split.split.i:                    ; preds = %.lr.ph.split.us.split.i.a, %.lr.ph.split.us.split.split.i.backedge
-  %indvars.iv134.i = phi i64 [ %indvars.iv134.i.be, %.lr.ph.split.us.split.split.i.backedge ], [ 1, %.lr.ph.split.us.split.i.a ] ; 3 uses
+.lr.ph.split.us.split.split.i:                    ; preds = %bb.g, %.lr.ph.split.us.split.split.i.backedge
+  %indvars.iv134.i = phi i64 [ %indvars.iv134.i.be, %.lr.ph.split.us.split.split.i.backedge ], [ 1, %bb.g ] ; 3 uses
   %i.bl = getelementptr inbounds nuw [2 x i8], ptr @primes, i64 %indvars.iv134.i
   %i.bm = load i16, ptr %i.bl, align 2, !tbaa !14
   %i.bn = zext i16 %i.bm to i64
@@ -254,7 +249,12 @@ bb.l:                                             ; preds = %.lr.ph.split.us.spl
   %indvars.iv134.i.be = phi i64 [ %indvars.iv.next135.i, %bb.l ], [ 1, %.backedge.us.i ]
   br label %.lr.ph.split.us.split.split.i, !llvm.loop !16
 
-.backedge.us.i:                                   ; preds = %.split63.us.split.us79.us.us.i, %8
+9:                                                ; preds = %.split61.us.split.split.us.us.split.us.i
+  %10 = tail call i32 @BN_num_bits(ptr noundef %0) #5
+  %.not54.us.i = icmp eq i32 %10, %1
+  br i1 %.not54.us.i, label %probable_prime.exit, label %.backedge.us.i
+
+.backedge.us.i:                                   ; preds = %.split63.us.split.us79.us.us.i, %9
   %i.br = tail call i32 @BN_priv_rand_ex(ptr noundef %0, i32 noundef range(i32 2, -2147483648) %1, i32 noundef 1, i32 noundef 1, i32 noundef 0, ptr noundef %6) #5
   %.not.us.i = icmp eq i32 %i.br, 0
   br i1 %.not.us.i, label %probable_prime.exit.thread, label %.lr.ph.split.us.split.split.i.backedge
@@ -289,9 +289,9 @@ bb.n:                                             ; preds = %bb.m
 .split61.us.split.split.us.us.split.us.i:         ; preds = %bb.n
   %i.cd = tail call i32 @BN_add_word(ptr noundef %0, i64 noundef %.047.us.us.us.i) #5
   %.not53.us.i = icmp eq i32 %i.cd, 0
-  br i1 %.not53.us.i, label %probable_prime.exit.thread, label %8
+  br i1 %.not53.us.i, label %probable_prime.exit.thread, label %9
 
-.lr.ph.split.i:                                   ; preds = %.lr.ph.i, %.backedge.i
+.lr.ph.split.i:                                   ; preds = %.lr.ph.split.us.split.i.a, %.backedge.i
   %i.ce = tail call i32 @BN_set_bit(ptr noundef %0, i32 noundef 1) #5
   %.not52.i = icmp eq i32 %i.ce, 0
   br i1 %.not52.i, label %probable_prime.exit.thread, label %.preheader.i
@@ -623,7 +623,7 @@ probable_prime_dh.exit:                           ; preds = %bb.al, %.split.spli
   tail call void @BN_CTX_end(ptr noundef %6) #5
   br i1 %.not86.i.not, label %probable_prime.exit.thread.loopexit288, label %probable_prime.exit
 
-probable_prime.exit:                              ; preds = %bb.t, %8, %bb.g, %probable_prime_dh.exit
+probable_prime.exit:                              ; preds = %bb.t, %9, %7, %probable_prime_dh.exit
   %i.gy = add nuw nsw i32 %.057, 1
   br i1 %.not.i83, label %BN_GENCB_call.exit.thread, label %bb.am
 

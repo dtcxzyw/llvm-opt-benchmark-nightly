@@ -204,6 +204,11 @@ bb.e:                                             ; preds = %.lr.ph.us, %4
   %i.ai = icmp eq i8 %i.ag, %i.ah
   br i1 %i.ai, label %4, label %.critedge.us
 
+4:                                                ; preds = %bb.e
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %5 = icmp sgt i64 %indvars.iv, 0
+  br i1 %5, label %bb.e, label %.thread, !llvm.loop !241
+
 .critedge.us:                                     ; preds = %bb.e
   %i.aj = trunc nsw i64 %indvars.iv to i32
   %i.ak = add nsw i32 %.154.us, %i.o              ; 2 uses
@@ -211,12 +216,7 @@ bb.e:                                             ; preds = %.lr.ph.us, %4
   %i.am = add i32 %i.o, %i.aj
   %i.an = sub i32 %i.al, %i.am                    ; 2 uses
   %i.ao = icmp sgt i32 %i.an, 0
-  br i1 %i.ao, label %.split.us, label %_ZNK2v84base6VectorIKhE6lengthEv.exit62.split.us, !llvm.loop !241
-
-4:                                                ; preds = %bb.e
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %5 = icmp sgt i64 %indvars.iv, 0
-  br i1 %5, label %bb.e, label %.thread, !llvm.loop !242
+  br i1 %i.ao, label %.split.us, label %_ZNK2v84base6VectorIKhE6lengthEv.exit62.split.us, !llvm.loop !242
 
 _ZNK2v84base6VectorIKhE6lengthEv.exit62.split:    ; preds = %_ZNK2v84base6VectorIKhE6lengthEv.exit62
   %.not = icmp sgt i32 %3, %i.p
@@ -611,6 +611,11 @@ bb.e:                                             ; preds = %.preheader.us, %4
   %i.af = icmp eq i8 %i.ad, %i.ae
   br i1 %i.af, label %4, label %.critedge.us
 
+4:                                                ; preds = %bb.e
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %5 = icmp sgt i64 %indvars.iv, 0
+  br i1 %5, label %bb.e, label %.thread, !llvm.loop !250
+
 .critedge.us:                                     ; preds = %bb.e
   %i.ag = trunc nsw i64 %indvars.iv to i32        ; 2 uses
   %i.ah = icmp sgt i32 %i.g, %i.ag
@@ -638,11 +643,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.251.us = add nsw i32 %.pn.us, %.150.us        ; 2 uses
   %.not.us = icmp sgt i32 %.251.us, %i.q
   br i1 %.not.us, label %.thread, label %.preheader74.us.backedge
-
-4:                                                ; preds = %bb.e
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %5 = icmp sgt i64 %indvars.iv, 0
-  br i1 %5, label %bb.e, label %.thread, !llvm.loop !250
 
 .preheader.us:                                    ; preds = %.preheader74.us
   %i.as = sext i32 %.150.us to i64
@@ -1046,6 +1046,11 @@ bb.f:                                             ; preds = %.lr.ph.us, %4
   %i.al = icmp eq i16 %i.aj, %i.ak
   br i1 %i.al, label %4, label %.critedge.us
 
+4:                                                ; preds = %bb.f
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %5 = icmp sgt i64 %indvars.iv, 0
+  br i1 %5, label %bb.f, label %.thread, !llvm.loop !260
+
 .critedge.us:                                     ; preds = %bb.f
   %i.am = trunc nsw i64 %indvars.iv to i32
   %i.an = add nsw i32 %.154.us, %i.p              ; 2 uses
@@ -1053,12 +1058,7 @@ bb.f:                                             ; preds = %.lr.ph.us, %4
   %i.ap = add i32 %i.p, %i.am
   %i.aq = sub i32 %i.ao, %i.ap                    ; 2 uses
   %i.ar = icmp sgt i32 %i.aq, 0
-  br i1 %i.ar, label %.split.us, label %_ZNK2v84base6VectorIKhE6lengthEv.exit.split.us, !llvm.loop !260
-
-4:                                                ; preds = %bb.f
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %5 = icmp sgt i64 %indvars.iv, 0
-  br i1 %5, label %bb.f, label %.thread, !llvm.loop !261
+  br i1 %i.ar, label %.split.us, label %_ZNK2v84base6VectorIKhE6lengthEv.exit.split.us, !llvm.loop !261
 
 _ZNK2v84base6VectorIKhE6lengthEv.exit.split:      ; preds = %_ZNK2v84base6VectorIKhE6lengthEv.exit
   %.not = icmp sgt i32 %3, %i.q
@@ -1461,6 +1461,11 @@ bb.f:                                             ; preds = %.preheader.us, %4
   %i.ai = icmp eq i16 %i.ag, %i.ah
   br i1 %i.ai, label %4, label %.critedge.us
 
+4:                                                ; preds = %bb.f
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %5 = icmp sgt i64 %indvars.iv, 0
+  br i1 %5, label %bb.f, label %.thread, !llvm.loop !269
+
 .critedge.us:                                     ; preds = %bb.f
   %i.aj = trunc nsw i64 %indvars.iv to i32        ; 2 uses
   %i.ak = icmp sgt i32 %i.g, %i.aj
@@ -1496,11 +1501,6 @@ bb.j:                                             ; preds = %bb.i, %_ZN2v88inter
   %.251.us = add nsw i32 %.pn.us, %.150.us        ; 2 uses
   %.not.us = icmp sgt i32 %.251.us, %i.n
   br i1 %.not.us, label %.thread, label %.preheader76.us.backedge
-
-4:                                                ; preds = %bb.f
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %5 = icmp sgt i64 %indvars.iv, 0
-  br i1 %5, label %bb.f, label %.thread, !llvm.loop !269
 
 .preheader.us:                                    ; preds = %.preheader76.us
   %i.aw = sext i32 %.150.us to i64
@@ -1904,6 +1904,11 @@ bb.e:                                             ; preds = %.lr.ph.us, %4
   %i.al = icmp eq i16 %i.ai, %i.ak
   br i1 %i.al, label %4, label %.critedge.us
 
+4:                                                ; preds = %bb.e
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %5 = icmp sgt i64 %indvars.iv, 0
+  br i1 %5, label %bb.e, label %.thread, !llvm.loop !287
+
 .critedge.us:                                     ; preds = %bb.e
   %i.am = trunc nsw i64 %indvars.iv to i32
   %i.an = add nsw i32 %.154.us, %i.p              ; 2 uses
@@ -1911,12 +1916,7 @@ bb.e:                                             ; preds = %.lr.ph.us, %4
   %i.ap = add i32 %i.p, %i.am
   %i.aq = sub i32 %i.ao, %i.ap                    ; 2 uses
   %i.ar = icmp sgt i32 %i.aq, 0
-  br i1 %i.ar, label %.split.us, label %_ZNK2v84base6VectorIKtE6lengthEv.exit.split.us, !llvm.loop !287
-
-4:                                                ; preds = %bb.e
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %5 = icmp sgt i64 %indvars.iv, 0
-  br i1 %5, label %bb.e, label %.thread, !llvm.loop !288
+  br i1 %i.ar, label %.split.us, label %_ZNK2v84base6VectorIKtE6lengthEv.exit.split.us, !llvm.loop !288
 
 _ZNK2v84base6VectorIKtE6lengthEv.exit.split:      ; preds = %_ZNK2v84base6VectorIKtE6lengthEv.exit
   %.not = icmp sgt i32 %3, %i.q
@@ -2315,6 +2315,11 @@ bb.e:                                             ; preds = %.preheader.us, %4
   %i.ai = icmp eq i16 %i.af, %i.ah
   br i1 %i.ai, label %4, label %.critedge.us
 
+4:                                                ; preds = %bb.e
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %5 = icmp sgt i64 %indvars.iv, 0
+  br i1 %5, label %bb.e, label %.thread, !llvm.loop !296
+
 .critedge.us:                                     ; preds = %bb.e
   %i.aj = trunc nsw i64 %indvars.iv to i32        ; 2 uses
   %i.ak = icmp sgt i32 %i.g, %i.aj
@@ -2342,11 +2347,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.251.us = add nsw i32 %.pn.us, %.150.us        ; 2 uses
   %.not.us = icmp sgt i32 %.251.us, %i.q
   br i1 %.not.us, label %.thread, label %.preheader73.us.backedge
-
-4:                                                ; preds = %bb.e
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %5 = icmp sgt i64 %indvars.iv, 0
-  br i1 %5, label %bb.e, label %.thread, !llvm.loop !296
 
 .preheader.us:                                    ; preds = %.preheader73.us
   %i.av = sext i32 %.150.us to i64
@@ -2750,6 +2750,11 @@ bb.e:                                             ; preds = %.lr.ph.us, %4
   %i.ak = icmp eq i16 %i.ai, %i.aj
   br i1 %i.ak, label %4, label %.critedge.us
 
+4:                                                ; preds = %bb.e
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %5 = icmp sgt i64 %indvars.iv, 0
+  br i1 %5, label %bb.e, label %.thread, !llvm.loop !306
+
 .critedge.us:                                     ; preds = %bb.e
   %i.al = trunc nsw i64 %indvars.iv to i32
   %i.am = add nsw i32 %.154.us, %i.p              ; 2 uses
@@ -2757,12 +2762,7 @@ bb.e:                                             ; preds = %.lr.ph.us, %4
   %i.ao = add i32 %i.p, %i.al
   %i.ap = sub i32 %i.an, %i.ao                    ; 2 uses
   %i.aq = icmp sgt i32 %i.ap, 0
-  br i1 %i.aq, label %.split.us, label %_ZNK2v84base6VectorIKtE6lengthEv.exit62.split.us, !llvm.loop !306
-
-4:                                                ; preds = %bb.e
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %5 = icmp sgt i64 %indvars.iv, 0
-  br i1 %5, label %bb.e, label %.thread, !llvm.loop !307
+  br i1 %i.aq, label %.split.us, label %_ZNK2v84base6VectorIKtE6lengthEv.exit62.split.us, !llvm.loop !307
 
 _ZNK2v84base6VectorIKtE6lengthEv.exit62.split:    ; preds = %_ZNK2v84base6VectorIKtE6lengthEv.exit62
   %.not = icmp sgt i32 %3, %i.q
@@ -3160,6 +3160,11 @@ bb.e:                                             ; preds = %.preheader.us, %4
   %i.ah = icmp eq i16 %i.af, %i.ag
   br i1 %i.ah, label %4, label %.critedge.us
 
+4:                                                ; preds = %bb.e
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %5 = icmp sgt i64 %indvars.iv, 0
+  br i1 %5, label %bb.e, label %.thread, !llvm.loop !315
+
 .critedge.us:                                     ; preds = %bb.e
   %i.ai = trunc nsw i64 %indvars.iv to i32        ; 2 uses
   %i.aj = icmp sgt i32 %i.g, %i.ai
@@ -3188,11 +3193,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.251.us = add nsw i32 %.pn.us, %.150.us        ; 2 uses
   %.not.us = icmp sgt i32 %.251.us, %i.q
   br i1 %.not.us, label %.thread, label %.preheader74.us.backedge
-
-4:                                                ; preds = %bb.e
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %5 = icmp sgt i64 %indvars.iv, 0
-  br i1 %5, label %bb.e, label %.thread, !llvm.loop !315
 
 .preheader.us:                                    ; preds = %.preheader74.us
   %i.av = sext i32 %.150.us to i64

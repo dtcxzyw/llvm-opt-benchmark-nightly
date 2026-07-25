@@ -204,11 +204,11 @@ bb.a:
   %lcmp.mod233 = icmp ne i32 %xtraiter229, 0
   br label %.split.us
 
-.split.us:                                        ; preds = %.split.us.preheader, %._crit_edge.us67.a
-  %.049.us = phi i64 [ %.150.us, %._crit_edge.us67.a ], [ %i.t, %.split.us.preheader ] ; 2 uses
-  %.044.us = phi i64 [ %2, %._crit_edge.us67.a ], [ 0, %.split.us.preheader ] ; 4 uses
-  %.041.us = phi double [ %.3.lcssa.us, %._crit_edge.us67.a ], [ 1.000000e+00, %.split.us.preheader ] ; 2 uses
-  %.040.us = phi double [ %.1.lcssa.us, %._crit_edge.us67.a ], [ 0.000000e+00, %.split.us.preheader ] ; 3 uses
+.split.us:                                        ; preds = %.split.us.preheader, %_PyMutex_Unlock.exit.us64
+  %.049.us = phi i64 [ %.150.us, %_PyMutex_Unlock.exit.us64 ], [ %i.t, %.split.us.preheader ] ; 2 uses
+  %.044.us = phi i64 [ %8, %_PyMutex_Unlock.exit.us64 ], [ 0, %.split.us.preheader ] ; 4 uses
+  %.041.us = phi double [ %.3.lcssa.us, %_PyMutex_Unlock.exit.us64 ], [ 1.000000e+00, %.split.us.preheader ] ; 2 uses
+  %.040.us = phi double [ %.1.lcssa.us, %_PyMutex_Unlock.exit.us64 ], [ 0.000000e+00, %.split.us.preheader ] ; 3 uses
   br i1 %i.j, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.split.us
@@ -250,31 +250,31 @@ bb.e:                                             ; preds = %bb.d
   %.043.us = phi ptr [ %i.x, %bb.d ], [ %i.ao, %bb.e ] ; 2 uses
   %i.ap = getelementptr i8, ptr %.043.us, i64 200 ; 8 uses
   %i.aq = getelementptr i8, ptr %.043.us, i64 208 ; 2 uses
-  br i1 %i.p, label %.lr.ph56.split.us.us, label %.lr.ph56.split.us66
+  br i1 %i.p, label %.lr.ph56.split.us.us, label %._crit_edge.us67.loopexit.unr-lcssa.a
 
-._crit_edge.us67.loopexit.unr-lcssa.a:            ; preds = %.lr.ph.us
-  br i1 %lcmp.mod231.not, label %._crit_edge.us67.a, label %.lr.ph.us.epil.preheader.a
+._crit_edge.us67.loopexit.unr-lcssa.a:            ; preds = %.lr.ph56.us, %._crit_edge.us67.a
+  %.03954.us62 = phi i32 [ %6, %._crit_edge.us67.a ], [ 0, %.lr.ph56.us ]
+  %1 = cmpxchg ptr %i.ap, i8 0, i8 1 seq_cst seq_cst, align 1
+  %2 = extractvalue { i8, i1 } %1, 1
+  br i1 %2, label %.lr.ph.us.epil.a, label %.lr.ph.us.epil.preheader.a
 
-.lr.ph.us.epil.preheader.a:                       ; preds = %._crit_edge.us67.loopexit.unr-lcssa.a, %.lr.ph.us.preheader
-  %.159.us.epil.init = phi double [ %.040.us, %.lr.ph.us.preheader ], [ %i.ay, %._crit_edge.us67.loopexit.unr-lcssa.a ]
-  %.358.us.epil.init = phi double [ %.us-phi.us, %.lr.ph.us.preheader ], [ %i.ay, %._crit_edge.us67.loopexit.unr-lcssa.a ]
-  tail call void @llvm.assume(i1 %lcmp.mod233)
+.lr.ph.us.epil.preheader.a:                       ; preds = %._crit_edge.us67.loopexit.unr-lcssa.a
+  tail call void @PyMutex_Lock(ptr noundef %i.ap) #6
   br label %.lr.ph.us.epil.a
 
-.lr.ph.us.epil.a:                                 ; preds = %.lr.ph.us.epil.a, %.lr.ph.us.epil.preheader.a
-  %.159.us.epil = phi double [ %1, %.lr.ph.us.epil.a ], [ %.159.us.epil.init, %.lr.ph.us.epil.preheader.a ]
-  %.358.us.epil = phi double [ %1, %.lr.ph.us.epil.a ], [ %.358.us.epil.init, %.lr.ph.us.epil.preheader.a ]
-  %epil.iter230 = phi i32 [ %epil.iter230.next, %.lr.ph.us.epil.a ], [ 0, %.lr.ph.us.epil.preheader.a ]
-  %1 = fadd double %.358.us.epil, %.159.us.epil   ; 4 uses
-  %epil.iter230.next = add i32 %epil.iter230, 1   ; 2 uses
-  %epil.iter230.cmp.not = icmp eq i32 %epil.iter230.next, %xtraiter229
-  br i1 %epil.iter230.cmp.not, label %._crit_edge.us67.a, label %.lr.ph.us.epil.a, !llvm.loop !73
+.lr.ph.us.epil.a:                                 ; preds = %.lr.ph.us.epil.preheader.a, %._crit_edge.us67.loopexit.unr-lcssa.a
+  %3 = cmpxchg ptr %i.ap, i8 1, i8 0 seq_cst seq_cst, align 1
+  %4 = extractvalue { i8, i1 } %3, 1
+  br i1 %4, label %._crit_edge.us67.a, label %5
 
-._crit_edge.us67.a:                               ; preds = %._crit_edge.us67.loopexit.unr-lcssa.a, %.lr.ph.us.epil.a, %..preheader_crit_edge.us
-  %.3.lcssa.us = phi double [ %.us-phi.us, %..preheader_crit_edge.us ], [ %i.ay, %._crit_edge.us67.loopexit.unr-lcssa.a ], [ %1, %.lr.ph.us.epil.a ]
-  %.1.lcssa.us = phi double [ %.040.us, %..preheader_crit_edge.us ], [ %i.ay, %._crit_edge.us67.loopexit.unr-lcssa.a ], [ %1, %.lr.ph.us.epil.a ]
-  %2 = add i64 %.044.us, %i.r
-  br label %.split.us
+5:                                                ; preds = %.lr.ph.us.epil.a
+  tail call void @PyMutex_Unlock(ptr noundef %i.ap) #6
+  br label %._crit_edge.us67.a
+
+._crit_edge.us67.a:                               ; preds = %5, %.lr.ph.us.epil.a
+  %6 = add nuw nsw i32 %.03954.us62, 1            ; 2 uses
+  %exitcond161.not = icmp eq i32 %6, %.fr
+  br i1 %exitcond161.not, label %..preheader_crit_edge.us, label %._crit_edge.us67.loopexit.unr-lcssa.a, !llvm.loop !73
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %.lr.ph.us
   %.159.us = phi double [ %i.ay, %.lr.ph.us ], [ %.040.us, %.lr.ph.us.preheader ]
@@ -290,38 +290,38 @@ bb.e:                                             ; preds = %bb.d
   %i.ay = fadd double %i.ax, %i.ax                ; 6 uses
   %niter235.next.7 = add nuw nsw i32 %niter235, 8 ; 2 uses
   %niter235.ncmp.7 = icmp eq i32 %niter235.next.7, %unroll_iter234
-  br i1 %niter235.ncmp.7, label %._crit_edge.us67.loopexit.unr-lcssa.a, label %.lr.ph.us, !llvm.loop !75
+  br i1 %niter235.ncmp.7, label %.lr.ph56.split.us66, label %.lr.ph.us, !llvm.loop !74
 
-.lr.ph56.split.us66:                              ; preds = %.lr.ph56.us, %_PyMutex_Unlock.exit.us64
-  %.03954.us62 = phi i32 [ %8, %_PyMutex_Unlock.exit.us64 ], [ 0, %.lr.ph56.us ]
-  %3 = cmpxchg ptr %i.ap, i8 0, i8 1 seq_cst seq_cst, align 1
-  %4 = extractvalue { i8, i1 } %3, 1
-  br i1 %4, label %_PyMutex_Lock.exit.us63, label %bb.f
+.lr.ph56.split.us66:                              ; preds = %.lr.ph.us
+  br i1 %lcmp.mod231.not, label %_PyMutex_Unlock.exit.us64, label %bb.f
 
-bb.f:                                             ; preds = %.lr.ph56.split.us66
-  tail call void @PyMutex_Lock(ptr noundef %i.ap) #6
+bb.f:                                             ; preds = %.lr.ph56.split.us66, %.lr.ph.us.preheader
+  %.159.us.epil.init = phi double [ %.040.us, %.lr.ph.us.preheader ], [ %i.ay, %.lr.ph56.split.us66 ]
+  %.358.us.epil.init = phi double [ %.us-phi.us, %.lr.ph.us.preheader ], [ %i.ay, %.lr.ph56.split.us66 ]
+  tail call void @llvm.assume(i1 %lcmp.mod233)
   br label %_PyMutex_Lock.exit.us63
 
-_PyMutex_Lock.exit.us63:                          ; preds = %bb.f, %.lr.ph56.split.us66
-  %5 = cmpxchg ptr %i.ap, i8 1, i8 0 seq_cst seq_cst, align 1
-  %6 = extractvalue { i8, i1 } %5, 1
-  br i1 %6, label %_PyMutex_Unlock.exit.us64, label %7
+_PyMutex_Lock.exit.us63:                          ; preds = %_PyMutex_Lock.exit.us63, %bb.f
+  %.159.us.epil = phi double [ %7, %_PyMutex_Lock.exit.us63 ], [ %.159.us.epil.init, %bb.f ]
+  %.358.us.epil = phi double [ %7, %_PyMutex_Lock.exit.us63 ], [ %.358.us.epil.init, %bb.f ]
+  %epil.iter230 = phi i32 [ %epil.iter230.next, %_PyMutex_Lock.exit.us63 ], [ 0, %bb.f ]
+  %7 = fadd double %.358.us.epil, %.159.us.epil   ; 4 uses
+  %epil.iter230.next = add i32 %epil.iter230, 1   ; 2 uses
+  %epil.iter230.cmp.not = icmp eq i32 %epil.iter230.next, %xtraiter229
+  br i1 %epil.iter230.cmp.not, label %_PyMutex_Unlock.exit.us64, label %_PyMutex_Lock.exit.us63, !llvm.loop !75
 
-7:                                                ; preds = %_PyMutex_Lock.exit.us63
-  tail call void @PyMutex_Unlock(ptr noundef %i.ap) #6
-  br label %_PyMutex_Unlock.exit.us64
+_PyMutex_Unlock.exit.us64:                        ; preds = %.lr.ph56.split.us66, %_PyMutex_Lock.exit.us63, %..preheader_crit_edge.us
+  %.3.lcssa.us = phi double [ %.us-phi.us, %..preheader_crit_edge.us ], [ %i.ay, %.lr.ph56.split.us66 ], [ %7, %_PyMutex_Lock.exit.us63 ]
+  %.1.lcssa.us = phi double [ %.040.us, %..preheader_crit_edge.us ], [ %i.ay, %.lr.ph56.split.us66 ], [ %7, %_PyMutex_Lock.exit.us63 ]
+  %8 = add i64 %.044.us, %i.r
+  br label %.split.us
 
-_PyMutex_Unlock.exit.us64:                        ; preds = %7, %_PyMutex_Lock.exit.us63
-  %8 = add nuw nsw i32 %.03954.us62, 1            ; 2 uses
-  %exitcond161.not = icmp eq i32 %8, %.fr
-  br i1 %exitcond161.not, label %..preheader_crit_edge.us, label %.lr.ph56.split.us66, !llvm.loop !76
-
-..preheader_crit_edge.us:                         ; preds = %_PyMutex_Unlock.exit.us64, %_PyMutex_Unlock.exit.us.us
-  %.us-phi.us = phi double [ %.lcssa, %_PyMutex_Unlock.exit.us.us ], [ %.041.us, %_PyMutex_Unlock.exit.us64 ] ; 3 uses
-  br i1 %i.q, label %.lr.ph.us.preheader, label %._crit_edge.us67.a
+..preheader_crit_edge.us:                         ; preds = %._crit_edge.us67.a, %_PyMutex_Unlock.exit.us.us
+  %.us-phi.us = phi double [ %.lcssa, %_PyMutex_Unlock.exit.us.us ], [ %.041.us, %._crit_edge.us67.a ] ; 3 uses
+  br i1 %i.q, label %.lr.ph.us.preheader, label %_PyMutex_Unlock.exit.us64
 
 .lr.ph.us.preheader:                              ; preds = %..preheader_crit_edge.us
-  br i1 %i.v, label %.lr.ph.us.epil.preheader.a, label %.lr.ph.us
+  br i1 %i.v, label %bb.f, label %.lr.ph.us
 
 .lr.ph56.split.us.us:                             ; preds = %.lr.ph56.us, %_PyMutex_Unlock.exit.us.us
   %.03954.us.us = phi i32 [ %10, %_PyMutex_Unlock.exit.us.us ], [ 0, %.lr.ph56.us ]
@@ -338,15 +338,6 @@ _PyMutex_Lock.exit.us.us:                         ; preds = %bb.g, %.lr.ph56.spl
   %.promoted.us.us = load double, ptr %i.aq, align 8, !tbaa !77 ; 2 uses
   br i1 %i.u, label %.epil.preheader, label %_PyMutex_Lock.exit.us.us.new
 
-9:                                                ; preds = %._crit_edge.us.us
-  tail call void @PyMutex_Unlock(ptr noundef %i.ap) #6
-  br label %_PyMutex_Unlock.exit.us.us
-
-_PyMutex_Unlock.exit.us.us:                       ; preds = %._crit_edge.us.us, %9
-  %10 = add nuw nsw i32 %.03954.us.us, 1          ; 2 uses
-  %exitcond163.not = icmp eq i32 %10, %.fr
-  br i1 %exitcond163.not, label %..preheader_crit_edge.us, label %.lr.ph56.split.us.us, !llvm.loop !76
-
 _PyMutex_Lock.exit.us.us.new:                     ; preds = %_PyMutex_Lock.exit.us.us, %_PyMutex_Lock.exit.us.us.new
   %i.bb = phi double [ %i.bj, %_PyMutex_Lock.exit.us.us.new ], [ %.promoted.us.us, %_PyMutex_Lock.exit.us.us ]
   %.251.us.us = phi double [ %i.bj, %_PyMutex_Lock.exit.us.us.new ], [ %.14253.us.us, %_PyMutex_Lock.exit.us.us ]
@@ -362,6 +353,15 @@ _PyMutex_Lock.exit.us.us.new:                     ; preds = %_PyMutex_Lock.exit.
   %niter.next.7 = add nuw nsw i32 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.us.us.unr-lcssa, label %_PyMutex_Lock.exit.us.us.new, !llvm.loop !80
+
+9:                                                ; preds = %._crit_edge.us.us
+  tail call void @PyMutex_Unlock(ptr noundef %i.ap) #6
+  br label %_PyMutex_Unlock.exit.us.us
+
+_PyMutex_Unlock.exit.us.us:                       ; preds = %._crit_edge.us.us, %9
+  %10 = add nuw nsw i32 %.03954.us.us, 1          ; 2 uses
+  %exitcond163.not = icmp eq i32 %10, %.fr
+  br i1 %exitcond163.not, label %..preheader_crit_edge.us, label %.lr.ph56.split.us.us, !llvm.loop !73
 
 ._crit_edge.us.us.unr-lcssa:                      ; preds = %_PyMutex_Lock.exit.us.us.new
   br i1 %lcmp.mod.not, label %._crit_edge.us.us, label %.epil.preheader
@@ -672,13 +672,13 @@ attributes #7 = { noreturn nounwind }
 !70 = !{!67, !68, i64 24}
 !71 = distinct !{!71, !16}
 !72 = !{!23, !23, i64 0}
-!73 = distinct !{!73, !74}
-!74 = !{!"llvm.loop.unroll.disable"}
-!75 = distinct !{!75, !16}
-!76 = distinct !{!76, !16}
+!73 = distinct !{!73, !16}
+!74 = distinct !{!74, !16}
+!75 = distinct !{!75, !76}
+!76 = !{!"llvm.loop.unroll.disable"}
 !77 = !{!78, !79, i64 208}
 !78 = !{!"bench_lock", !8, i64 0, !11, i64 200, !79, i64 208}
 !79 = !{!"double", !8, i64 0}
 !80 = distinct !{!80, !16}
-!81 = distinct !{!81, !74}
+!81 = distinct !{!81, !76}
 end_hunk_0

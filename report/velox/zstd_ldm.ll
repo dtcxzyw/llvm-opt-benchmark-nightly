@@ -203,6 +203,12 @@ bb.r:                                             ; preds = %bb.q
   %i.fk = icmp ult ptr %.045.i.i.us.i, %i.ff
   br i1 %i.fk, label %6, label %.loopexit.i.i.us.i
 
+6:                                                ; preds = %.preheader.i.i.us.i
+  %.049.val.i.i.us.i = load i64, ptr %.049.i.i.us.i, align 1, !tbaa !25 ; 2 uses
+  %.045.val.i.i.us.i = load i64, ptr %.045.i.i.us.i, align 1, !tbaa !25 ; 2 uses
+  %.not59.i.i.us.i = icmp eq i64 %.049.val.i.i.us.i, %.045.val.i.i.us.i
+  br i1 %.not59.i.i.us.i, label %.preheader.i.i.us.i, label %.thread63.i.i.us.i
+
 .loopexit.i.i.us.i:                               ; preds = %.preheader.i.i.us.i, %bb.p
   %.251.i.i.us.i = phi ptr [ %i.ey, %bb.p ], [ %.049.i.i.us.i, %.preheader.i.i.us.i ] ; 4 uses
   %.247.i.i.us.i = phi ptr [ %i.ee, %bb.p ], [ %.045.i.i.us.i, %.preheader.i.i.us.i ] ; 5 uses
@@ -259,12 +265,6 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   %i.ga = sub i64 %i.fz, %i.ej
   br label %ZSTD_count.exit.i.us.i
 
-6:                                                ; preds = %.preheader.i.i.us.i
-  %.049.val.i.i.us.i = load i64, ptr %.049.i.i.us.i, align 1, !tbaa !25 ; 2 uses
-  %.045.val.i.i.us.i = load i64, ptr %.045.i.i.us.i, align 1, !tbaa !25 ; 2 uses
-  %.not59.i.i.us.i = icmp eq i64 %.049.val.i.i.us.i, %.045.val.i.i.us.i
-  br i1 %.not59.i.i.us.i, label %.preheader.i.i.us.i, label %.thread63.i.i.us.i
-
 .thread63.i.i.us.i:                               ; preds = %6
   %i.gb = xor i64 %.045.val.i.i.us.i, %.049.val.i.i.us.i
   %i.gc = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %i.gb, i1 true)
@@ -304,6 +304,12 @@ bb.ac:                                            ; preds = %bb.ab
   %.049.i44.i.us.i = getelementptr inbounds nuw i8, ptr %.pn.i41.i.us.i, i64 8 ; 3 uses
   %i.gn = icmp ult ptr %.045.i43.i.us.i, %i.df
   br i1 %i.gn, label %7, label %.loopexit.i22.i.us.i
+
+7:                                                ; preds = %.preheader.i40.i.us.i
+  %.049.val.i45.i.us.i = load i64, ptr %.049.i44.i.us.i, align 1, !tbaa !25 ; 2 uses
+  %.045.val.i46.i.us.i = load i64, ptr %.045.i43.i.us.i, align 1, !tbaa !25 ; 2 uses
+  %.not59.i47.i.us.i = icmp eq i64 %.049.val.i45.i.us.i, %.045.val.i46.i.us.i
+  br i1 %.not59.i47.i.us.i, label %.preheader.i40.i.us.i, label %.thread63.i48.i.us.i
 
 .loopexit.i22.i.us.i:                             ; preds = %.preheader.i40.i.us.i, %bb.aa
   %.251.i23.i.us.i = phi ptr [ %i.co, %bb.aa ], [ %.049.i44.i.us.i, %.preheader.i40.i.us.i ] ; 4 uses
@@ -359,12 +365,6 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %i.hb = ptrtoint ptr %i.gi to i64
   %i.hc = sub i64 %i.ha, %i.hb
   br label %ZSTD_count.exit49.i.us.i
-
-7:                                                ; preds = %.preheader.i40.i.us.i
-  %.049.val.i45.i.us.i = load i64, ptr %.049.i44.i.us.i, align 1, !tbaa !25 ; 2 uses
-  %.045.val.i46.i.us.i = load i64, ptr %.045.i43.i.us.i, align 1, !tbaa !25 ; 2 uses
-  %.not59.i47.i.us.i = icmp eq i64 %.049.val.i45.i.us.i, %.045.val.i46.i.us.i
-  br i1 %.not59.i47.i.us.i, label %.preheader.i40.i.us.i, label %.thread63.i48.i.us.i
 
 .thread63.i48.i.us.i:                             ; preds = %7
   %i.hd = xor i64 %.045.val.i46.i.us.i, %.049.val.i45.i.us.i

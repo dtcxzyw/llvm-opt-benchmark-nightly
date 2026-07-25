@@ -204,6 +204,15 @@ bb.x:                                             ; preds = %bb.q
     i8 125, label %.split.us.i
   ]
 
+6:                                                ; preds = %.lr.ph.us.i
+  %7 = getelementptr i8, ptr %.175.us.i, i64 1    ; 3 uses
+  %8 = icmp ult ptr %7, %i.a
+  br i1 %8, label %.lr.ph.us.i.backedge, label %pm_named_capture_escape_hex.exit
+
+.lr.ph.us.i.backedge:                             ; preds = %6, %bb.aa
+  %.175.us.i.be = phi ptr [ %7, %6 ], [ %i.fe, %bb.aa ]
+  br label %.lr.ph.us.i, !llvm.loop !693
+
 bb.y:                                             ; preds = %.lr.ph.us.i
   %i.dh = ptrtoint ptr %.175.us.i to i64
   %i.di = sub i64 %i.f, %i.dh
@@ -300,15 +309,6 @@ bb.aa:                                            ; preds = %bb.z, %._crit_edge.
   %i.fe = getelementptr i8, ptr %.175.us.i, i64 %i.dj ; 3 uses
   %i.ff = icmp ult ptr %i.fe, %i.a
   br i1 %i.ff, label %.lr.ph.us.i.backedge, label %pm_named_capture_escape_hex.exit
-
-6:                                                ; preds = %.lr.ph.us.i
-  %7 = getelementptr i8, ptr %.175.us.i, i64 1    ; 3 uses
-  %8 = icmp ult ptr %7, %i.a
-  br i1 %8, label %.lr.ph.us.i.backedge, label %pm_named_capture_escape_hex.exit
-
-.lr.ph.us.i.backedge:                             ; preds = %6, %bb.aa
-  %.175.us.i.be = phi ptr [ %7, %6 ], [ %i.fe, %bb.aa ]
-  br label %.lr.ph.us.i, !llvm.loop !693
 
 .lr.ph.i:                                         ; preds = %.lr.ph.lr.ph.i, %.lr.ph.i.backedge
   %.175.i = phi ptr [ %.175.i.be, %.lr.ph.i.backedge ], [ %i.de, %.lr.ph.lr.ph.i ] ; 11 uses

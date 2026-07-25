@@ -201,53 +201,53 @@ _ZN2v88internal4Zone13AllocateArrayIPNS0_8compiler4NodeEA_S5_EEPT_m.exit: ; pred
   %i.ca = getelementptr inbounds nuw i8, ptr %i.be, i64 24
   br i1 %i.bz, label %.lr.ph65.split.us, label %.lr.ph65.split
 
-.lr.ph65.split.us:                                ; preds = %.lr.ph65, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a
-  %indvars.iv85 = phi i32 [ %indvars.iv.next86, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a ], [ %i.y, %.lr.ph65 ] ; 3 uses
-  %.164.us = phi i32 [ %10, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a ], [ %.0.lcssa, %.lr.ph65 ] ; 3 uses
-  %.03563.us = phi i32 [ %11, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a ], [ 0, %.lr.ph65 ] ; 3 uses
+.lr.ph65.split.us:                                ; preds = %.lr.ph65, %.lr.ph61.us
+  %indvars.iv85 = phi i32 [ %indvars.iv.next86, %.lr.ph61.us ], [ %i.y, %.lr.ph65 ] ; 3 uses
+  %.164.us = phi i32 [ %10, %.lr.ph61.us ], [ %.0.lcssa, %.lr.ph65 ] ; 3 uses
+  %.03563.us = phi i32 [ %11, %.lr.ph61.us ], [ 0, %.lr.ph65 ] ; 3 uses
   %i.cb = add nsw i32 %.03563.us, %i.y
   %i.cc = icmp slt i32 %.164.us, %i.cb
   %i.cd = sext i32 %.164.us to i64                ; 2 uses
-  br i1 %i.cc, label %.lr.ph61.us.preheader, label %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a
+  br i1 %i.cc, label %.lr.ph61.us.preheader, label %.lr.ph61.us
 
 .lr.ph61.us.preheader:                            ; preds = %.lr.ph65.split.us
   %wide.trip.count87 = sext i32 %indvars.iv85 to i64 ; 2 uses
-  br label %.lr.ph61.us
+  br label %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a
 
-_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a: ; preds = %.lr.ph61.us, %.lr.ph65.split.us
-  %.pre-phi.a = phi i64 [ %i.cd, %.lr.ph65.split.us ], [ %wide.trip.count87, %.lr.ph61.us ]
-  %.2.lcssa.us = phi i32 [ %.164.us, %.lr.ph65.split.us ], [ %indvars.iv85, %.lr.ph61.us ]
+_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a: ; preds = %.lr.ph61.us.preheader, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a
+  %.pre-phi.a = phi i64 [ %i.cd, %.lr.ph61.us.preheader ], [ %indvars.iv.next83, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a ] ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
+  %i.ce = load ptr, ptr %i.z, align 8
+  call void @_ZN2v88internal8compiler7JSGraph20OptimizedOutConstantEv(ptr dead_on_unwind nonnull writable sret(%"class.v8::internal::TNode.88") align 8 %2, ptr noundef nonnull align 8 dereferenceable(1144) %i.ce) #20
+  %.0.i46.us.a = load ptr, ptr %2, align 8
+  %indvars.iv.next83 = add nsw i64 %.pre-phi.a, 1 ; 2 uses
+  %i.cf = getelementptr [8 x i8], ptr %i.bt, i64 %.pre-phi.a
+  %i.cg = getelementptr i8, ptr %i.cf, i64 24
+  store ptr %.0.i46.us.a, ptr %i.cg, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
+  %exitcond89.not.a = icmp eq i64 %indvars.iv.next83, %wide.trip.count87
+  br i1 %exitcond89.not.a, label %.lr.ph61.us, label %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a, !llvm.loop !108
+
+.lr.ph61.us:                                      ; preds = %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a, %.lr.ph65.split.us
+  %indvars.iv82 = phi i64 [ %i.cd, %.lr.ph65.split.us ], [ %wide.trip.count87, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a ]
+  %.2.lcssa.us = phi i32 [ %.164.us, %.lr.ph65.split.us ], [ %indvars.iv85, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a ]
   %3 = load ptr, ptr %i.a, align 8                ; 2 uses
   %4 = getelementptr inbounds nuw i8, ptr %3, i64 88
   %5 = load i32, ptr %4, align 8
   %6 = add nsw i32 %5, %.03563.us
   %7 = sext i32 %6 to i64
   %8 = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %i.ce = load ptr, ptr %8, align 8
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.ce, i64 %7
-  %.0.i46.us.a = load ptr, ptr %9, align 8
+  %i.ch = load ptr, ptr %8, align 8
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.ch, i64 %7
+  %i.ci = load ptr, ptr %9, align 8
   %10 = add nsw i32 %.2.lcssa.us, 1               ; 2 uses
-  %i.cf = getelementptr [8 x i8], ptr %i.bt, i64 %.pre-phi.a
-  %i.cg = getelementptr i8, ptr %i.cf, i64 24
-  store ptr %.0.i46.us.a, ptr %i.cg, align 8
-  %11 = add nuw nsw i32 %.03563.us, 1             ; 2 uses
-  %indvars.iv.next86 = add i32 %indvars.iv85, 1
-  %exitcond89.not.a = icmp eq i32 %11, %i.u
-  br i1 %exitcond89.not.a, label %._crit_edge, label %.lr.ph65.split.us, !llvm.loop !108
-
-.lr.ph61.us:                                      ; preds = %.lr.ph61.us.preheader, %.lr.ph61.us
-  %indvars.iv82 = phi i64 [ %i.cd, %.lr.ph61.us.preheader ], [ %indvars.iv.next83, %.lr.ph61.us ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
-  %i.ch = load ptr, ptr %i.z, align 8
-  call void @_ZN2v88internal8compiler7JSGraph20OptimizedOutConstantEv(ptr dead_on_unwind nonnull writable sret(%"class.v8::internal::TNode.88") align 8 %2, ptr noundef nonnull align 8 dereferenceable(1144) %i.ch) #20
-  %i.ci = load ptr, ptr %2, align 8
-  %indvars.iv.next83 = add nsw i64 %indvars.iv82, 1 ; 2 uses
   %i.cj = getelementptr [8 x i8], ptr %i.bt, i64 %indvars.iv82
   %i.ck = getelementptr i8, ptr %i.cj, i64 24
   store ptr %i.ci, ptr %i.ck, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
-  %exitcond88.not = icmp eq i64 %indvars.iv.next83, %wide.trip.count87
-  br i1 %exitcond88.not, label %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a, label %.lr.ph61.us, !llvm.loop !109
+  %11 = add nuw nsw i32 %.03563.us, 1             ; 2 uses
+  %indvars.iv.next86 = add i32 %indvars.iv85, 1
+  %exitcond88.not = icmp eq i32 %11, %i.u
+  br i1 %exitcond88.not, label %._crit_edge, label %.lr.ph65.split.us, !llvm.loop !109
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit43
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit43 ] ; 3 uses
@@ -298,8 +298,8 @@ _ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.preheader, label %.lr.ph, !llvm.loop !110
 
-._crit_edge:                                      ; preds = %bb.p, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a, %.preheader
-  %.1.lcssa = phi i32 [ %.0.lcssa, %.preheader ], [ %10, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48.us.a ], [ %.3, %bb.p ] ; 2 uses
+._crit_edge:                                      ; preds = %bb.p, %.lr.ph61.us, %.preheader
+  %.1.lcssa = phi i32 [ %.0.lcssa, %.preheader ], [ %10, %.lr.ph61.us ], [ %.3, %bb.p ] ; 2 uses
   %i.dd = load ptr, ptr %i.z, align 8
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 808
   %i.df = load ptr, ptr %i.de, align 8
@@ -358,7 +358,7 @@ bb.o:                                             ; preds = %.lr.ph65.split
   store ptr %i.eh, ptr %i.ej, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   %exitcond80.not = icmp eq i64 %indvars.iv.next75, %wide.trip.count79
-  br i1 %exitcond80.not, label %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48, label %.lr.ph61, !llvm.loop !109
+  br i1 %exitcond80.not, label %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48, label %.lr.ph61, !llvm.loop !108
 
 _ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48: ; preds = %.lr.ph61, %bb.o
   %.pre-phi91 = phi i64 [ %i.ef, %bb.o ], [ %wide.trip.count79, %.lr.ph61 ]
@@ -382,7 +382,7 @@ bb.p:                                             ; preds = %.lr.ph65.split, %_Z
   %.3 = phi i32 [ %i.es, %_ZNK2v88internal8compiler20BytecodeGraphBuilder11Environment14LookupRegisterENS0_11interpreter8RegisterE.exit48 ], [ %.164, %.lr.ph65.split ] ; 2 uses
   %indvars.iv.next78 = add i32 %indvars.iv77, 1
   %exitcond81.not = icmp eq i32 %i.dt, %i.u
-  br i1 %exitcond81.not, label %._crit_edge, label %.lr.ph65.split, !llvm.loop !108
+  br i1 %exitcond81.not, label %._crit_edge, label %.lr.ph65.split, !llvm.loop !109
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

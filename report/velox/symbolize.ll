@@ -174,6 +174,12 @@ bb.j:                                             ; preds = %6, %.preheader.i.i4
   %i.au = icmp slt i64 %i.at, 0
   br i1 %i.au, label %6, label %.critedge27.i.i48.us
 
+6:                                                ; preds = %bb.j
+  %7 = tail call ptr @__errno_location() #21
+  %8 = load i32, ptr %7, align 4, !tbaa !3
+  %9 = icmp eq i32 %8, 4
+  br i1 %9, label %bb.j, label %_ZN6googleL19ReadFromOffsetExactEiPvmm.exit40.thread, !llvm.loop !9
+
 .critedge27.i.i48.us:                             ; preds = %bb.j
   %i.av = icmp eq i64 %i.at, 0
   %i.aw = add nuw i64 %i.at, %.021.i.i42.us       ; 2 uses
@@ -192,12 +198,6 @@ _ZN6googleL19ReadFromOffsetExactEiPvmm.exit49.us: ; preds = %.critedge.thread33.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   tail call void (i32, ptr, i32, ptr, ...) @_ZN6google8RawLog__EiPKciS1_z(i32 noundef 1, ptr noundef nonnull @.str, i32 noundef 252, ptr noundef nonnull @.str.1, ptr noundef %1, i64 noundef %2)
   br label %.thread57
-
-6:                                                ; preds = %bb.j
-  %7 = tail call ptr @__errno_location() #21
-  %8 = load i32, ptr %7, align 4, !tbaa !3
-  %9 = icmp eq i32 %8, 4
-  br i1 %9, label %bb.j, label %_ZN6googleL19ReadFromOffsetExactEiPvmm.exit40.thread, !llvm.loop !9
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.r
   %.02771 = phi i64 [ %i.cb, %bb.r ], [ 0, %.lr.ph ] ; 2 uses
@@ -601,10 +601,16 @@ bb.a:
   %i.r = add i64 %i.l, %.021.i.us
   br label %bb.b
 
-bb.b:                                             ; preds = %14, %.preheader.i.us
+bb.b:                                             ; preds = %7, %.preheader.i.us
   %i.s = call i64 @pread(i32 noundef %1, ptr noundef nonnull %i.p, i64 noundef %i.q, i64 noundef %i.r) ; 3 uses
   %i.t = icmp slt i64 %i.s, 0
-  br i1 %i.t, label %14, label %.critedge27.i.us
+  br i1 %i.t, label %7, label %.critedge27.i.us
+
+7:                                                ; preds = %bb.b
+  %8 = tail call ptr @__errno_location() #21
+  %9 = load i32, ptr %8, align 4, !tbaa !3
+  %10 = icmp eq i32 %9, 4
+  br i1 %10, label %bb.b, label %_ZN6googleL14ReadFromOffsetEiPvmm.exit.thread, !llvm.loop !9
 
 .critedge27.i.us:                                 ; preds = %bb.b
   %i.u = icmp eq i64 %i.s, 0
@@ -649,8 +655,14 @@ bb.d:                                             ; preds = %.lr.ph.us
   %or.cond69.us = select i1 %or.cond.not10.us, i1 %i.aj, i1 false
   br i1 %or.cond69.us, label %bb.e, label %11
 
+11:                                               ; preds = %bb.d, %.lr.ph.us
+  %12 = add nuw i32 %.05819.us, 1                 ; 3 uses
+  %13 = zext i32 %12 to i64
+  %.not67.not.us = icmp ult i32 %12, %i.ba
+  br i1 %.not67.not.us, label %.lr.ph.us, label %.loopexit.us, !llvm.loop !50
+
 bb.e:                                             ; preds = %bb.d
-  %i.ak = load i32, ptr %i.aa, align 8, !tbaa !50
+  %i.ak = load i32, ptr %i.aa, align 8, !tbaa !51
   %i.al = zext i32 %i.ak to i64
   %i.am = add i64 %.24.val, %i.al
   br i1 %.not.i71, label %.split28.us, label %.critedge.i72.us
@@ -666,10 +678,16 @@ bb.e:                                             ; preds = %bb.d
   %i.aq = add i64 %i.am, %.021.i73.us
   br label %bb.f
 
-bb.f:                                             ; preds = %7, %.preheader.i78.us
+bb.f:                                             ; preds = %14, %.preheader.i78.us
   %i.ar = tail call i64 @pread(i32 noundef %1, ptr noundef %i.ao, i64 noundef %i.ap, i64 noundef %i.aq) ; 3 uses
   %i.as = icmp slt i64 %i.ar, 0
-  br i1 %i.as, label %7, label %.critedge27.i79.us
+  br i1 %i.as, label %14, label %.critedge27.i79.us
+
+14:                                               ; preds = %bb.f
+  %15 = tail call ptr @__errno_location() #21
+  %16 = load i32, ptr %15, align 4, !tbaa !3
+  %17 = icmp eq i32 %16, 4
+  br i1 %17, label %bb.f, label %_ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us, !llvm.loop !9
 
 .critedge27.i79.us:                               ; preds = %bb.f
   %i.at = icmp eq i64 %i.ar, 0
@@ -690,13 +708,7 @@ bb.g:                                             ; preds = %_ZN6googleL14ReadFr
   %i.ax = icmp eq ptr %i.aw, null
   br i1 %i.ax, label %_ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us, label %.loopexit.us.thread
 
-7:                                                ; preds = %bb.f
-  %8 = tail call ptr @__errno_location() #21
-  %9 = load i32, ptr %8, align 4, !tbaa !3
-  %10 = icmp eq i32 %9, 4
-  br i1 %10, label %bb.f, label %_ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us, !llvm.loop !9
-
-_ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us: ; preds = %7, %bb.g, %_ZN6googleL14ReadFromOffsetEiPvmm.exit80.us
+_ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us: ; preds = %14, %bb.g, %_ZN6googleL14ReadFromOffsetEiPvmm.exit80.us
   tail call void @llvm.memset.p0.i64(ptr align 1 %2, i8 0, i64 %3, i1 false)
   br label %.loopexit.us.thread
 
@@ -710,19 +722,7 @@ _ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us: ; preds = %7, %bb.g, %_ZN6go
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   %i.az = zext i32 %i.ay to i64                   ; 2 uses
   %.not68.us = icmp ugt i64 %i.e, %i.az
-  br i1 %.not68.us, label %.critedge.i.preheader.us, label %.split22.us, !llvm.loop !51
-
-11:                                               ; preds = %bb.d, %.lr.ph.us
-  %12 = add nuw i32 %.05819.us, 1                 ; 3 uses
-  %13 = zext i32 %12 to i64
-  %.not67.not.us = icmp ult i32 %12, %i.ba
-  br i1 %.not67.not.us, label %.lr.ph.us, label %.loopexit.us, !llvm.loop !52
-
-14:                                               ; preds = %bb.b
-  %15 = tail call ptr @__errno_location() #21
-  %16 = load i32, ptr %15, align 4, !tbaa !3
-  %17 = icmp eq i32 %16, 4
-  br i1 %17, label %bb.b, label %_ZN6googleL14ReadFromOffsetEiPvmm.exit.thread, !llvm.loop !9
+  br i1 %.not68.us, label %.critedge.i.preheader.us, label %.split22.us, !llvm.loop !52
 
 .preheader.us:                                    ; preds = %bb.c
   %.not67.not18.us = icmp ugt i64 %.223.i.us, 23
@@ -741,7 +741,7 @@ bb.h:                                             ; preds = %.split
   tail call void @abort() #20
   unreachable
 
-_ZN6googleL14ReadFromOffsetEiPvmm.exit.thread:    ; preds = %_ZN6googleL14ReadFromOffsetEiPvmm.exit.us, %14
+_ZN6googleL14ReadFromOffsetEiPvmm.exit.thread:    ; preds = %_ZN6googleL14ReadFromOffsetEiPvmm.exit.us, %7
   tail call void @abort() #20
   unreachable
 
@@ -872,7 +872,7 @@ attributes #22 = { nounwind willreturn memory(read) }
 !47 = !{!"_ZTS9Elf64_Sym", !4, i64 0, !5, i64 4, !5, i64 5, !13, i64 6, !14, i64 8, !14, i64 16}
 !48 = !{!47, !14, i64 16}
 !49 = !{!47, !13, i64 6}
-!50 = !{!47, !4, i64 0}
-!51 = distinct !{!51, !10}
+!50 = distinct !{!50, !10}
+!51 = !{!47, !4, i64 0}
 !52 = distinct !{!52, !10}
 end_hunk_1

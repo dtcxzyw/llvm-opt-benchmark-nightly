@@ -204,12 +204,6 @@ bb.f:                                             ; preds = %.lr.ph134.split.us.
   %i.bf = icmp eq i64 %indvar, 1
   br i1 %i.bf, label %._crit_edge.us.i, label %.lr.ph.us.i
 
-._crit_edge.us.i:                                 ; preds = %.lr.ph.us.i.prol.loopexit, %.lr.ph.us.i, %.critedge.us.i
-  %indvars.iv.next143.i = add nuw nsw i64 %indvars.iv142.i, 1 ; 2 uses
-  %exitcond145.not.i = icmp eq i64 %indvars.iv.next143.i, 2500
-  %indvar.next = add i64 %indvar, 1
-  br i1 %exitcond145.not.i, label %._crit_edge135.i, label %.lr.ph134.split.us.i, !llvm.loop !19
-
 .lr.ph.us.i:                                      ; preds = %.lr.ph.us.i.prol.loopexit, %.lr.ph.us.i
   %indvars.iv139.i = phi i64 [ %indvars.iv.next140.i.1, %.lr.ph.us.i ], [ %indvars.iv139.i.unr, %.lr.ph.us.i.prol.loopexit ] ; 3 uses
   %.129131.us.i = phi i32 [ %.129.us.i.1, %.lr.ph.us.i ], [ %.129131.us.i.unr, %.lr.ph.us.i.prol.loopexit ]
@@ -230,7 +224,13 @@ bb.f:                                             ; preds = %.lr.ph134.split.us.
   %.129.us.i.1 = call i32 @llvm.smax.i32(i32 %.129.us.i, i32 %i.bn) ; 2 uses
   store i32 %.129.us.i.1, ptr %i.ai, align 4, !tbaa !4
   %exitcond.not.i26.1 = icmp eq i64 %indvars.iv.next140.i.1, %indvars.iv142.i
-  br i1 %exitcond.not.i26.1, label %._crit_edge.us.i, label %.lr.ph.us.i, !llvm.loop !20
+  br i1 %exitcond.not.i26.1, label %._crit_edge.us.i, label %.lr.ph.us.i, !llvm.loop !19
+
+._crit_edge.us.i:                                 ; preds = %.lr.ph.us.i.prol.loopexit, %.lr.ph.us.i, %.critedge.us.i
+  %indvars.iv.next143.i = add nuw nsw i64 %indvars.iv142.i, 1 ; 2 uses
+  %exitcond145.not.i = icmp eq i64 %indvars.iv.next143.i, 2500
+  %indvar.next = add i64 %indvar, 1
+  br i1 %exitcond145.not.i, label %._crit_edge135.i, label %.lr.ph134.split.us.i, !llvm.loop !20
 
 ._crit_edge135.i:                                 ; preds = %._crit_edge.us.i, %bb.e
   %indvars.iv.next147.i = add nsw i64 %indvars.iv146.i, -1
@@ -330,12 +330,6 @@ bb.h:                                             ; preds = %.lr.ph134.split.us.
   %i.cy = icmp eq i64 %indvar122, 1
   br i1 %i.cy, label %._crit_edge.us.i45, label %.lr.ph.us.i48
 
-._crit_edge.us.i45:                               ; preds = %.lr.ph.us.i48.prol.loopexit, %.lr.ph.us.i48, %.critedge.us.i41
-  %indvars.iv.next143.i46 = add nuw nsw i64 %indvars.iv142.i39, 1 ; 2 uses
-  %exitcond145.not.i47 = icmp eq i64 %indvars.iv.next143.i46, 2500
-  %indvar.next123 = add i64 %indvar122, 1
-  br i1 %exitcond145.not.i47, label %._crit_edge135.i33, label %.lr.ph134.split.us.i38, !llvm.loop !23
-
 .lr.ph.us.i48:                                    ; preds = %.lr.ph.us.i48.prol.loopexit, %.lr.ph.us.i48
   %indvars.iv139.i49 = phi i64 [ %indvars.iv.next140.i51.1, %.lr.ph.us.i48 ], [ %indvars.iv139.i49.unr, %.lr.ph.us.i48.prol.loopexit ] ; 3 uses
   %.129131.us.i50 = phi i32 [ %.129.us.i53.1, %.lr.ph.us.i48 ], [ %.129131.us.i50.unr, %.lr.ph.us.i48.prol.loopexit ]
@@ -356,7 +350,13 @@ bb.h:                                             ; preds = %.lr.ph134.split.us.
   %.129.us.i53.1 = call i32 @llvm.smax.i32(i32 %.129.us.i53, i32 %i.dg) ; 2 uses
   store i32 %.129.us.i53.1, ptr %i.cb, align 4, !tbaa !4
   %exitcond.not.i54.1 = icmp eq i64 %indvars.iv.next140.i51.1, %indvars.iv142.i39
-  br i1 %exitcond.not.i54.1, label %._crit_edge.us.i45, label %.lr.ph.us.i48, !llvm.loop !24
+  br i1 %exitcond.not.i54.1, label %._crit_edge.us.i45, label %.lr.ph.us.i48, !llvm.loop !23
+
+._crit_edge.us.i45:                               ; preds = %.lr.ph.us.i48.prol.loopexit, %.lr.ph.us.i48, %.critedge.us.i41
+  %indvars.iv.next143.i46 = add nuw nsw i64 %indvars.iv142.i39, 1 ; 2 uses
+  %exitcond145.not.i47 = icmp eq i64 %indvars.iv.next143.i46, 2500
+  %indvar.next123 = add i64 %indvar122, 1
+  br i1 %exitcond145.not.i47, label %._crit_edge135.i33, label %.lr.ph134.split.us.i38, !llvm.loop !24
 
 ._crit_edge135.i33:                               ; preds = %._crit_edge.us.i45, %bb.g
   %indvars.iv.next147.i34 = add nsw i64 %indvars.iv146.i31, -1

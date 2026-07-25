@@ -204,6 +204,13 @@ bb.ab:                                            ; preds = %4
   %exitcond495.not = icmp eq i64 %indvars.iv.next492, %wide.trip.count494
   br i1 %exitcond495.not, label %.critedge.us.us, label %4, !llvm.loop !171
 
+4:                                                ; preds = %.lr.ph408.us.us, %bb.ab
+  %indvars.iv491 = phi i64 [ 0, %.lr.ph408.us.us ], [ %indvars.iv.next492, %bb.ab ] ; 2 uses
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.kc, i64 %indvars.iv491
+  %6 = load ptr, ptr %5, align 8, !tbaa !26
+  %7 = icmp eq ptr %6, %i.ke
+  br i1 %7, label %bb.ac, label %bb.ab
+
 .critedge.us.us:                                  ; preds = %bb.ab, %.preheader377.us.us
   %i.je = add nuw nsw i64 %indvars.iv496, %i.iz   ; 2 uses
   %i.jf = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.je
@@ -228,13 +235,6 @@ bb.ab:                                            ; preds = %4
   %i.jw = getelementptr inbounds nuw [4 x i8], ptr %i.in, i64 %i.je
   store float %i.jv, ptr %i.jw, align 4, !tbaa !27
   br label %bb.ae
-
-4:                                                ; preds = %.lr.ph408.us.us, %bb.ab
-  %indvars.iv491 = phi i64 [ 0, %.lr.ph408.us.us ], [ %indvars.iv.next492, %bb.ab ] ; 2 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.kc, i64 %indvars.iv491
-  %6 = load ptr, ptr %5, align 8, !tbaa !26
-  %7 = icmp eq ptr %6, %i.ke
-  br i1 %7, label %bb.ac, label %bb.ab
 
 bb.ac:                                            ; preds = %4
   %gep584 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep583, i64 %indvars.iv496
@@ -404,21 +404,6 @@ bb.al:                                            ; preds = %.lr.ph431
   %.not340.us = icmp ult i32 %i.lx, %i.lz
   br i1 %.not340.us, label %.preheader.us, label %..loopexit_crit_edge.us
 
-..loopexit_crit_edge.us:                          ; preds = %bb.ar, %bb.al, %.lr.ph431
-  %.5307.us = phi float [ %.0302425.us, %.lr.ph431 ], [ %.0302425.us, %bb.al ], [ %.4306.us, %bb.ar ]
-  %.5301.us = phi i32 [ %.0296426.us, %.lr.ph431 ], [ %.0296426.us, %bb.al ], [ %.4300.us, %bb.ar ] ; 4 uses
-  %.5.us = phi i32 [ %.0293427.us, %.lr.ph431 ], [ %.0293427.us, %bb.al ], [ %.4.us, %bb.ar ] ; 3 uses
-  %indvars.iv.next513 = add nuw nsw i64 %indvars.iv512, 1 ; 2 uses
-  %exitcond516.not = icmp eq i64 %indvars.iv.next513, %wide.trip.count515
-  br i1 %exitcond516.not, label %._crit_edge432.split.us, label %.lr.ph431.backedge
-
-.lr.ph431.backedge:                               ; preds = %..loopexit_crit_edge.us, %hnsw_update_worst_neighbor_on_add.exit346
-  %indvars.iv512.be = phi i64 [ %indvars.iv.next513, %..loopexit_crit_edge.us ], [ 0, %hnsw_update_worst_neighbor_on_add.exit346 ]
-  %.0293427.us.be = phi i32 [ %.5.us, %..loopexit_crit_edge.us ], [ -1, %hnsw_update_worst_neighbor_on_add.exit346 ]
-  %.0296426.us.be = phi i32 [ %.5301.us, %..loopexit_crit_edge.us ], [ -1, %hnsw_update_worst_neighbor_on_add.exit346 ]
-  %.0302425.us.be = phi float [ %.5307.us, %..loopexit_crit_edge.us ], [ -1.000000e+00, %hnsw_update_worst_neighbor_on_add.exit346 ]
-  br label %.lr.ph431, !llvm.loop !174
-
 bb.am:                                            ; preds = %.preheader.us, %bb.ar
   %indvars.iv506 = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next507, %bb.ar ] ; 6 uses
   %.1294420.us = phi i32 [ %.0293427.us, %.preheader.us ], [ %.4.us, %bb.ar ] ; 4 uses
@@ -463,7 +448,22 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.
   %.4.us = phi i32 [ %.1294420.us, %bb.am ], [ %.1294420.us, %bb.an ], [ %.1294420.us, %bb.ao ], [ %i.mr, %bb.aq ], [ %.1294420.us, %bb.ap ] ; 2 uses
   %indvars.iv.next507 = add nuw nsw i64 %indvars.iv506, 1 ; 2 uses
   %exitcond511.not = icmp eq i64 %indvars.iv.next507, %wide.trip.count515
-  br i1 %exitcond511.not, label %..loopexit_crit_edge.us, label %bb.am, !llvm.loop !175
+  br i1 %exitcond511.not, label %..loopexit_crit_edge.us, label %bb.am, !llvm.loop !174
+
+..loopexit_crit_edge.us:                          ; preds = %bb.ar, %bb.al, %.lr.ph431
+  %.5307.us = phi float [ %.0302425.us, %.lr.ph431 ], [ %.0302425.us, %bb.al ], [ %.4306.us, %bb.ar ]
+  %.5301.us = phi i32 [ %.0296426.us, %.lr.ph431 ], [ %.0296426.us, %bb.al ], [ %.4300.us, %bb.ar ] ; 4 uses
+  %.5.us = phi i32 [ %.0293427.us, %.lr.ph431 ], [ %.0293427.us, %bb.al ], [ %.4.us, %bb.ar ] ; 3 uses
+  %indvars.iv.next513 = add nuw nsw i64 %indvars.iv512, 1 ; 2 uses
+  %exitcond516.not = icmp eq i64 %indvars.iv.next513, %wide.trip.count515
+  br i1 %exitcond516.not, label %._crit_edge432.split.us, label %.lr.ph431.backedge
+
+.lr.ph431.backedge:                               ; preds = %..loopexit_crit_edge.us, %hnsw_update_worst_neighbor_on_add.exit346
+  %indvars.iv512.be = phi i64 [ %indvars.iv.next513, %..loopexit_crit_edge.us ], [ 0, %hnsw_update_worst_neighbor_on_add.exit346 ]
+  %.0293427.us.be = phi i32 [ %.5.us, %..loopexit_crit_edge.us ], [ -1, %hnsw_update_worst_neighbor_on_add.exit346 ]
+  %.0296426.us.be = phi i32 [ %.5301.us, %..loopexit_crit_edge.us ], [ -1, %hnsw_update_worst_neighbor_on_add.exit346 ]
+  %.0302425.us.be = phi float [ %.5307.us, %..loopexit_crit_edge.us ], [ -1.000000e+00, %hnsw_update_worst_neighbor_on_add.exit346 ]
+  br label %.lr.ph431, !llvm.loop !175
 
 .preheader.us:                                    ; preds = %bb.al
   %i.mq = mul nuw nsw i64 %indvars.iv512, %i.c

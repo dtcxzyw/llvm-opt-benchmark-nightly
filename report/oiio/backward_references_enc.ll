@@ -204,39 +204,39 @@ VP8LDistanceToPlaneCode.exit.thread.6.i.i:        ; preds = %bb.dc, %VP8LDistanc
   %i.rb = zext nneg i32 %.1151.31443.i.i to i64   ; 2 uses
   br label %.preheader219.us.i.i
 
-.preheader219.us.i.i:                             ; preds = %bb.de, %.preheader219.us.preheader.i.i
-  %indvars.iv340.i.i = phi i64 [ 0, %.preheader219.us.preheader.i.i ], [ %indvars.iv.next341.i.i, %bb.de ] ; 2 uses
-  %.0166236.us.i.i = phi i32 [ 0, %.preheader219.us.preheader.i.i ], [ %.1167.us.i.i, %bb.de ] ; 3 uses
+.preheader219.us.i.i:                             ; preds = %bb.df, %.preheader219.us.preheader.i.i
+  %indvars.iv340.i.i = phi i64 [ 0, %.preheader219.us.preheader.i.i ], [ %indvars.iv.next338.i.i.a, %bb.df ] ; 2 uses
+  %.0166236.us.i.i = phi i32 [ 0, %.preheader219.us.preheader.i.i ], [ %.1167.us.i.i, %bb.df ] ; 3 uses
   %i.rc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv340.i.i
   %i.rd = load i32, ptr %i.rc, align 4, !tbaa !3  ; 2 uses
+  br label %bb.dd
+
+bb.dd:                                            ; preds = %bb.dd, %.preheader219.us.i.i
+  %indvars.iv337.i.i = phi i64 [ 0, %.preheader219.us.i.i ], [ %indvars.iv.next338.i.i, %bb.dd ] ; 2 uses
+  %i.re = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv337.i.i
+  %19 = load i32, ptr %i.re, align 4, !tbaa !3
+  %i.rf = add nsw i32 %19, 1
+  %20 = icmp ne i32 %i.rd, %i.rf                  ; 2 uses
+  %indvars.iv.next338.i.i = add nuw nsw i64 %indvars.iv337.i.i, 1 ; 2 uses
+  %21 = icmp samesign ult i64 %indvars.iv.next338.i.i, %i.rb
+  %or.cond.us.i.i = select i1 %21, i1 %20, i1 false
+  br i1 %or.cond.us.i.i, label %bb.dd, label %..critedge_crit_edge.us.i.i, !llvm.loop !57
+
+bb.de:                                            ; preds = %..critedge_crit_edge.us.i.i
+  %22 = sext i32 %.0166236.us.i.i to i64
+  %23 = getelementptr inbounds [4 x i8], ptr %i.d, i64 %22
+  store i32 %i.rd, ptr %23, align 4, !tbaa !3
+  %24 = add nsw i32 %.0166236.us.i.i, 1
   br label %bb.df
 
-bb.dd:                                            ; preds = %..critedge_crit_edge.us.i.i
-  %19 = sext i32 %.0166236.us.i.i to i64
-  %i.re = getelementptr inbounds [4 x i8], ptr %i.d, i64 %19
-  store i32 %i.rd, ptr %i.re, align 4, !tbaa !3
-  %i.rf = add nsw i32 %.0166236.us.i.i, 1
-  br label %bb.de
+bb.df:                                            ; preds = %..critedge_crit_edge.us.i.i, %bb.de
+  %.1167.us.i.i = phi i32 [ %.0166236.us.i.i, %..critedge_crit_edge.us.i.i ], [ %24, %bb.de ] ; 2 uses
+  %indvars.iv.next338.i.i.a = add nuw nsw i64 %indvars.iv340.i.i, 1 ; 2 uses
+  %exitcond343.not.i.i = icmp eq i64 %indvars.iv.next338.i.i.a, %i.rb
+  br i1 %exitcond343.not.i.i, label %._crit_edge.i.i, label %.preheader219.us.i.i, !llvm.loop !58
 
-bb.de:                                            ; preds = %..critedge_crit_edge.us.i.i, %bb.dd
-  %.1167.us.i.i = phi i32 [ %.0166236.us.i.i, %..critedge_crit_edge.us.i.i ], [ %i.rf, %bb.dd ] ; 2 uses
-  %indvars.iv.next341.i.i = add nuw nsw i64 %indvars.iv340.i.i, 1 ; 2 uses
-  %exitcond343.not.i.i = icmp eq i64 %indvars.iv.next341.i.i, %i.rb
-  br i1 %exitcond343.not.i.i, label %._crit_edge.i.i, label %.preheader219.us.i.i, !llvm.loop !57
-
-bb.df:                                            ; preds = %bb.df, %.preheader219.us.i.i
-  %indvars.iv337.i.i = phi i64 [ 0, %.preheader219.us.i.i ], [ %indvars.iv.next338.i.i.a, %bb.df ] ; 2 uses
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv337.i.i
-  %21 = load i32, ptr %20, align 4, !tbaa !3
-  %22 = add nsw i32 %21, 1
-  %23 = icmp ne i32 %i.rd, %22                    ; 2 uses
-  %indvars.iv.next338.i.i.a = add nuw nsw i64 %indvars.iv337.i.i, 1 ; 2 uses
-  %24 = icmp samesign ult i64 %indvars.iv.next338.i.i.a, %i.rb
-  %or.cond.us.i.i = select i1 %24, i1 %23, i1 false
-  br i1 %or.cond.us.i.i, label %bb.df, label %..critedge_crit_edge.us.i.i, !llvm.loop !58
-
-..critedge_crit_edge.us.i.i:                      ; preds = %bb.df
-  br i1 %23, label %bb.dd, label %bb.de
+..critedge_crit_edge.us.i.i:                      ; preds = %bb.dd
+  br i1 %20, label %bb.de, label %bb.df
 
 bb.dg:                                            ; preds = %.preheader221.preheader.i.i
   %i.rg = select i1 %i.qy, i32 2, i32 1
@@ -639,10 +639,10 @@ bb.ej:                                            ; preds = %.preheader221.30.i.
   %.not.i133.i = icmp eq i32 %.1151.30.i.i, 0
   br i1 %.not.i133.i, label %._crit_edge.i.i, label %.preheader219.us.preheader.i.i
 
-._crit_edge.i.i:                                  ; preds = %bb.de, %.preheader220.i.i
-  %i.xb = phi i1 [ false, %.preheader220.i.i ], [ true, %bb.de ]
-  %.1151.31442.i.i = phi i32 [ 0, %.preheader220.i.i ], [ %.1151.31443.i.i, %bb.de ] ; 2 uses
-  %.0166.lcssa.i.i = phi i32 [ 0, %.preheader220.i.i ], [ %.1167.us.i.i, %bb.de ]
+._crit_edge.i.i:                                  ; preds = %bb.df, %.preheader220.i.i
+  %i.xb = phi i1 [ false, %.preheader220.i.i ], [ true, %bb.df ]
+  %.1151.31442.i.i = phi i32 [ 0, %.preheader220.i.i ], [ %.1151.31443.i.i, %bb.df ] ; 2 uses
+  %.0166.lcssa.i.i = phi i32 [ 0, %.preheader220.i.i ], [ %.1167.us.i.i, %bb.df ]
   %i.xc = load ptr, ptr %18, align 8, !tbaa !30   ; 3 uses
   store i32 0, ptr %i.xc, align 4, !tbaa !3
   br i1 %i.bo, label %.lr.ph256.i.i, label %._crit_edge257.i.i
