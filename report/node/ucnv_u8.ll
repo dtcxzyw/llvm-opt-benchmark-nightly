@@ -152,8 +152,8 @@ bb.q:                                             ; preds = %bb.n, %bb.j
   %i.az = ptrtoint ptr %.392 to i64
   %i.ba = sub i64 %i.ay, %i.az
   %i.bb = icmp sgt i64 %i.ba, 3                   ; 3 uses
-  %i.bc = select i1 %i.bb, ptr %.392, ptr %i.a    ; 7 uses
-  %i.bd = ptrtoaddr ptr %i.bc to i64              ; 2 uses
+  %i.bc = select i1 %i.bb, ptr %.392, ptr %i.a    ; 8 uses
+  %i.bd = ptrtoaddr ptr %i.bc to i64
   %i.be = icmp slt i32 %.187, 65536
   br i1 %i.be, label %bb.r, label %bb.s
 
@@ -178,9 +178,9 @@ bb.s:                                             ; preds = %bb.q
 
 bb.t:                                             ; preds = %bb.s, %bb.r
   %.sink = phi i8 [ %i.bh, %bb.r ], [ %i.bk, %bb.s ]
-  %.085.sroa.phi = phi ptr [ %.085.sroa.gep, %bb.r ], [ %.085.sroa.gep110, %bb.s ] ; 3 uses
+  %.085.sroa.phi = phi ptr [ %.085.sroa.gep, %bb.r ], [ %.085.sroa.gep110, %bb.s ] ; 4 uses
   %.085 = phi i64 [ 2, %bb.r ], [ 3, %bb.s ]      ; 2 uses
-  %.085.sroa.phi123 = ptrtoaddr ptr %.085.sroa.phi to i64 ; 2 uses
+  %.085.sroa.phi123 = ptrtoaddr ptr %.085.sroa.phi to i64
   store i8 %.sink, ptr %i.bc, align 1
   %i.bp = lshr i32 %.187, 6
   %i.bq = trunc i32 %i.bp to i8
@@ -238,7 +238,7 @@ bb.v:                                             ; preds = %.prol.preheader
   %.594.lcssa.unr = phi ptr [ poison, %.lr.ph ], [ %.594.prol, %.prol.loopexit.unr-lcssa ]
   %.088113.unr = phi ptr [ %i.bc, %.lr.ph ], [ %.sroa.sel, %.prol.loopexit.unr-lcssa ]
   %.493112.unr = phi ptr [ %.392, %.lr.ph ], [ %.594.prol, %.prol.loopexit.unr-lcssa ]
-  %i.ck = icmp eq i64 %.085.sroa.phi123, %i.bd
+  %i.ck = icmp eq ptr %.085.sroa.phi, %i.bc
   br i1 %i.ck, label %.loopexit.loopexit, label %.lr.ph.new
 
 bb.w:                                             ; preds = %bb.t

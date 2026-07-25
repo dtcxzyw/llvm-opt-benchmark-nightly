@@ -204,10 +204,10 @@ bb.co:                                            ; preds = %bb.cn
   br label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co, %bb.cl
-  %i.kx = phi ptr [ %.pre945, %bb.co ], [ %i.kq, %bb.cl ] ; 6 uses
+  %i.kx = phi ptr [ %.pre945, %bb.co ], [ %i.kq, %bb.cl ] ; 9 uses
   %i.ky = phi ptr [ %.pre944, %bb.co ], [ %i.ks, %bb.cl ] ; 11 uses
   %i.kz = getelementptr inbounds nuw i8, ptr %i.ky, i64 1
-  %i.la = ptrtoaddr ptr %i.kx to i64              ; 6 uses
+  %i.la = ptrtoaddr ptr %i.kx to i64              ; 3 uses
   %i.lb = icmp ugt ptr %i.kz, %i.kx
   br i1 %i.lb, label %bb.bw, label %bb.cq
 
@@ -235,15 +235,14 @@ bb.cs:                                            ; preds = %bb.cq
   br label %bb.ct
 
 bb.ct:                                            ; preds = %.sink.split, %bb.cs
-  %i.lh = getelementptr inbounds nuw i8, ptr %i.ky, i64 2 ; 4 uses
+  %i.lh = getelementptr inbounds nuw i8, ptr %i.ky, i64 2 ; 5 uses
   store ptr %i.lh, ptr %i.ic, align 8
   %i.li = icmp ugt ptr %i.lh, %i.kx
   br i1 %i.li, label %bb.cu, label %_ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit386.preheader
 
 _ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit386.preheader: ; preds = %bb.ct
-  %.promoted863866932 = ptrtoaddr ptr %i.lh to i64 ; 2 uses
   %i.lj = getelementptr inbounds nuw i8, ptr %i.ky, i64 3 ; 2 uses
-  %exitcond = icmp eq i64 %i.la, %.promoted863866932
+  %exitcond = icmp eq ptr %i.kx, %i.lh
   br i1 %exitcond, label %bb.cy, label %bb.db
 
 bb.cu:                                            ; preds = %bb.ct
@@ -288,11 +287,12 @@ bb.da:                                            ; preds = %bb.cy
 
 bb.db:                                            ; preds = %_ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit386.preheader
   %i.lq = getelementptr inbounds nuw i8, ptr %.sroa.0744.0869, i64 8
+  %.promoted863866932 = ptrtoaddr ptr %i.lh to i64
   %i.lr = sub i64 %i.la, %.promoted863866932
   %i.ls = load i8, ptr %i.lh, align 1
   store ptr %i.lj, ptr %i.ic, align 8
   store i8 %i.ls, ptr %i.lq, align 2
-  %i.lt = getelementptr inbounds nuw i8, ptr %i.ky, i64 4 ; 3 uses
+  %i.lt = getelementptr inbounds nuw i8, ptr %i.ky, i64 4 ; 4 uses
   %exitcond.1 = icmp eq i64 %i.lr, 1
   br i1 %exitcond.1, label %bb.cy, label %_ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit386
 
@@ -301,18 +301,18 @@ _ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit386: ; preds = %bb.db
   store ptr %i.lt, ptr %i.ic, align 8
   %i.lv = getelementptr inbounds nuw i8, ptr %.sroa.0744.0869, i64 9
   store i8 %i.lu, ptr %i.lv, align 1
-  %.promoted863866932.1 = ptrtoaddr ptr %i.lt to i64 ; 2 uses
   %i.lw = getelementptr inbounds nuw i8, ptr %i.ky, i64 5 ; 2 uses
-  %exitcond.1935.not = icmp ugt i64 %i.la, %.promoted863866932.1
+  %exitcond.1935.not = icmp ugt ptr %i.kx, %i.lt
   br i1 %exitcond.1935.not, label %bb.dc, label %bb.cy
 
 bb.dc:                                            ; preds = %_ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit386
   %i.lx = getelementptr inbounds nuw i8, ptr %.sroa.0744.0869, i64 10
+  %.promoted863866932.1 = ptrtoaddr ptr %i.lt to i64
   %i.ly = sub nuw i64 %i.la, %.promoted863866932.1
   %i.lz = load i8, ptr %i.lt, align 1
   store ptr %i.lw, ptr %i.ic, align 8
   store i8 %i.lz, ptr %i.lx, align 2
-  %i.ma = getelementptr inbounds nuw i8, ptr %i.ky, i64 6 ; 3 uses
+  %i.ma = getelementptr inbounds nuw i8, ptr %i.ky, i64 6 ; 4 uses
   %exitcond.1.1 = icmp eq i64 %i.ly, 1
   br i1 %exitcond.1.1, label %bb.cy, label %_ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit386.1
 
@@ -321,13 +321,13 @@ _ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit386.1: ; preds = %bb.dc
   store ptr %i.ma, ptr %i.ic, align 8
   %i.mc = getelementptr inbounds nuw i8, ptr %.sroa.0744.0869, i64 11
   store i8 %i.mb, ptr %i.mc, align 1
-  %.promoted863866932.2 = ptrtoaddr ptr %i.ma to i64 ; 2 uses
   %i.md = getelementptr inbounds nuw i8, ptr %i.ky, i64 7 ; 2 uses
-  %exitcond.2.not = icmp ugt i64 %i.la, %.promoted863866932.2
+  %exitcond.2.not = icmp ugt ptr %i.kx, %i.ma
   br i1 %exitcond.2.not, label %bb.dd, label %bb.cy
 
 bb.dd:                                            ; preds = %_ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit386.1
   %i.me = getelementptr inbounds nuw i8, ptr %.sroa.0744.0869, i64 12
+  %.promoted863866932.2 = ptrtoaddr ptr %i.ma to i64
   %i.mf = sub nuw i64 %i.la, %.promoted863866932.2
   %i.mg = load i8, ptr %i.ma, align 1
   store ptr %i.md, ptr %i.ic, align 8
