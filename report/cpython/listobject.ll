@@ -203,6 +203,7 @@ bb.k:                                             ; preds = %bb.j
 .critedge.preheader:                              ; preds = %bb.k, %bb.j
   %i.ai = icmp eq ptr %.val196, @PyLong_Type
   %i.aj = icmp eq ptr %.val196, @PyUnicode_Type
+  %smax = tail call i64 @llvm.smax.i64(i64 %.val191, i64 1)
   br label %.critedge
 
 .lr.ph329.split.us.preheader:                     ; preds = %bb.k
@@ -212,6 +213,7 @@ bb.k:                                             ; preds = %bb.j
   %.val193 = load ptr, ptr %i.am, align 8, !tbaa !42 ; 4 uses
   %i.an = icmp eq ptr %.val193, @PyLong_Type
   %i.ao = icmp eq ptr %.val193, @PyUnicode_Type
+  %smax361 = tail call i64 @llvm.smax.i64(i64 %.val191, i64 1)
   br label %.lr.ph329.split.us
 
 .lr.ph329.split.us:                               ; preds = %.lr.ph329.split.us.preheader, %.thread251.us
@@ -271,7 +273,7 @@ bb.q:                                             ; preds = %bb.n
   %.2145.ph.us = phi i32 [ %.0143327.us, %bb.q ], [ %.0143327.us, %bb.m ], [ %.0143327.us, %bb.o ], [ %spec.select.us, %bb.p ] ; 2 uses
   %.2142.ph.us = phi i32 [ %spec.select289.us, %bb.q ], [ %.0140328.us, %bb.m ], [ %.0140328.us, %bb.o ], [ %.0140328.us, %bb.p ] ; 2 uses
   %i.bd = add nuw nsw i64 %.2159325.us, 1         ; 2 uses
-  %exitcond362.not = icmp eq i64 %i.bd, %.val191
+  %exitcond362.not = icmp eq i64 %i.bd, %smax361
   br i1 %exitcond362.not, label %._crit_edge330.loopexit, label %.lr.ph329.split.us, !llvm.loop !72
 
 .critedge:                                        ; preds = %.critedge.preheader, %.thread251
@@ -314,7 +316,7 @@ bb.u:                                             ; preds = %bb.t
   %.2145.ph = phi i32 [ %.0143327, %bb.s ], [ %spec.select, %bb.u ], [ %.0143327, %bb.t ] ; 2 uses
   %.2142.ph = phi i32 [ %spec.select289, %bb.s ], [ %.0140328, %bb.u ], [ %.0140328, %bb.t ] ; 2 uses
   %i.bo = add nuw nsw i64 %.2159325, 1            ; 2 uses
-  %exitcond360.not = icmp eq i64 %i.bo, %.val191
+  %exitcond360.not = icmp eq i64 %i.bo, %smax
   br i1 %exitcond360.not, label %._crit_edge330, label %.critedge, !llvm.loop !72
 
 ._crit_edge330.loopexit:                          ; preds = %.thread251.us

@@ -204,8 +204,8 @@ define linkonce_odr hidden void @_ZSt22__stable_sort_adaptiveIN9__gnu_cxx17__nor
 bb.a:
   %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %0 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 3 uses
-  %4 = sdiv exact i64 %i.c, 24                    ; 2 uses
+  %i.c = sub i64 %i.a, %i.b                       ; 4 uses
+  %4 = udiv exact i64 %i.c, 24
   %i.d = getelementptr inbounds i8, ptr %3, i64 %i.c
   tail call void @_ZSt22__chunk_insertion_sortIN9__gnu_cxx17__normal_iteratorIP11aiVectorKeySt6vectorIS2_SaIS2_EEEElNS0_5__ops15_Iter_less_iterEEvT_SA_T0_T1_(ptr %0, ptr %1, i64 noundef 7)
   %i.e = icmp sgt i64 %i.c, 168
@@ -222,8 +222,8 @@ bb.a:
 
 _ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIP11aiVectorKeySt6vectorIS2_SaIS2_EEEES3_NS0_5__ops15_Iter_less_iterEEvT_SA_T0_T1_.exit: ; preds = %.lr.ph.i, %bb.a
   %i.i = ptrtoint ptr %2 to i64
-  %i.j = sub i64 %i.i, %i.a                       ; 3 uses
-  %5 = sdiv exact i64 %i.j, 24                    ; 2 uses
+  %i.j = sub i64 %i.i, %i.a                       ; 4 uses
+  %5 = udiv exact i64 %i.j, 24
   %i.k = getelementptr inbounds i8, ptr %3, i64 %i.j
   tail call void @_ZSt22__chunk_insertion_sortIN9__gnu_cxx17__normal_iteratorIP11aiVectorKeySt6vectorIS2_SaIS2_EEEElNS0_5__ops15_Iter_less_iterEEvT_SA_T0_T1_(ptr %1, ptr %2, i64 noundef 7)
   %i.l = icmp sgt i64 %i.j, 168
@@ -239,7 +239,9 @@ _ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIP11aiVectorKeySt6v
   br i1 %i.o, label %.lr.ph.i9, label %_ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIP11aiVectorKeySt6vectorIS2_SaIS2_EEEES3_NS0_5__ops15_Iter_less_iterEEvT_SA_T0_T1_.exit11, !llvm.loop !173
 
 _ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIP11aiVectorKeySt6vectorIS2_SaIS2_EEEES3_NS0_5__ops15_Iter_less_iterEEvT_SA_T0_T1_.exit11: ; preds = %.lr.ph.i9, %_ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIP11aiVectorKeySt6vectorIS2_SaIS2_EEEES3_NS0_5__ops15_Iter_less_iterEEvT_SA_T0_T1_.exit
-  tail call void @_ZSt16__merge_adaptiveIN9__gnu_cxx17__normal_iteratorIP11aiVectorKeySt6vectorIS2_SaIS2_EEEElS3_NS0_5__ops15_Iter_less_iterEEvT_SA_SA_T0_SB_T1_T2_(ptr %0, ptr %1, ptr %2, i64 noundef %4, i64 noundef %5, ptr noundef %3)
+  %6 = sdiv exact i64 %i.c, 24
+  %7 = sdiv exact i64 %i.j, 24
+  tail call void @_ZSt16__merge_adaptiveIN9__gnu_cxx17__normal_iteratorIP11aiVectorKeySt6vectorIS2_SaIS2_EEEElS3_NS0_5__ops15_Iter_less_iterEEvT_SA_SA_T0_SB_T1_T2_(ptr %0, ptr %1, ptr %2, i64 noundef %6, i64 noundef %7, ptr noundef %3)
   ret void
 }
 

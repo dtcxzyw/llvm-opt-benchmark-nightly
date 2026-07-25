@@ -203,10 +203,14 @@ bb.m:                                             ; preds = %bb.l, %bb.j, %bb.i
 bb.n:                                             ; preds = %bb.m
   %i.aj = tail call ptr @OPENSSL_sk_new_reserve(ptr noundef null, i32 noundef range(i32 1, 0) %i.d) #10 ; 4 uses
   %i.ak = icmp eq ptr %i.aj, null
-  br i1 %i.ak, label %RSA_set0_factors.exit.thread, label %.lr.ph
+  br i1 %i.ak, label %RSA_set0_factors.exit.thread, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.n, %bb.p
-  %.06585 = phi i32 [ %i.ay, %bb.p ], [ 2, %bb.n ]
+.lr.ph.preheader:                                 ; preds = %bb.n
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.d, i32 3)
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.p
+  %.06585 = phi i32 [ %i.ay, %bb.p ], [ 2, %.lr.ph.preheader ]
   %i.al = tail call ptr @OPENSSL_sk_pop(ptr noundef nonnull %1) #10 ; 3 uses
   %i.am = tail call ptr @OPENSSL_sk_pop(ptr noundef nonnull %2) #10 ; 2 uses
   %i.an = tail call ptr @OPENSSL_sk_pop(ptr noundef nonnull %3) #10 ; 2 uses
@@ -235,7 +239,7 @@ bb.p:                                             ; preds = %bb.o
   tail call void @BN_set_flags(ptr noundef %i.aw, i32 noundef 4) #10
   %i.ax = tail call i32 @OPENSSL_sk_push(ptr noundef nonnull %i.aj, ptr noundef nonnull %i.ar) #10 ; 0 uses
   %i.ay = add nuw nsw i32 %.06585, 1              ; 2 uses
-  %exitcond.not = icmp eq i32 %i.ay, %i.d
+  %exitcond.not = icmp eq i32 %i.ay, %smax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !70
 
 ._crit_edge:                                      ; preds = %bb.p

@@ -204,12 +204,13 @@ _ZN6duckdb15SelectionVectorC2Em.exit:             ; preds = %bb.j
   br i1 %i.g, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader, label %_ZN6duckdb15SelectionVectorC2Em.exit.split
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader: ; preds = %_ZN6duckdb15SelectionVectorC2Em.exit
-  %xtraiter73 = and i64 %2, 1
-  %7 = icmp eq i64 %2, 1
+  %umax41 = call i64 @llvm.umax.i64(i64 %2, i64 1) ; 3 uses
+  %xtraiter73 = and i64 %umax41, 1
+  %7 = icmp ult i64 %2, 2
   br i1 %7, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.epil.preheader, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader.new
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader.new: ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader
-  %unroll_iter79 = and i64 %2, -2
+  %unroll_iter79 = and i64 %umax41, -2
   br label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.us: ; preds = %bb.n, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader.new
@@ -335,7 +336,7 @@ bb.q:                                             ; preds = %bb.p, %_ZNK6duckdb1
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.epil.preheader: ; preds = %.split.us.loopexit.unr-lcssa, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader
   %.epil.init75 = phi i64 [ 0, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader ], [ %i.ak, %.split.us.loopexit.unr-lcssa ] ; 3 uses
   %.02834.us.epil.init = phi i64 [ 0, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader ], [ %i.al, %.split.us.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod78 = trunc i64 %2 to i1
+  %lcmp.mod78 = trunc i64 %umax41 to i1
   call void @llvm.assume(i1 %lcmp.mod78)
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %.029, i64 %.02834.us.epil.init
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !3

@@ -203,7 +203,7 @@ bb.a:                                             ; preds = %.noexc
   store i32 0, ptr %i.y, align 8, !alias.scope !675
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.sroa.0.0.copyload) ]
   %i.z = icmp ugt i64 %.sroa.7.sroa.4.0.copyload, 4294967295
-  %i.aa = trunc nuw i64 %.sroa.7.sroa.4.0.copyload to i32
+  %i.aa = trunc nuw nsw i64 %.sroa.7.sroa.4.0.copyload to i32
   %i.ab = getelementptr inbounds nuw i8, ptr %i.k, i64 104 ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.k, i64 96 ; 6 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.k, i64 80 ; 2 uses
@@ -606,6 +606,7 @@ _RNvMs_NtNtCs1N9T06jgEdt_11arrow_array5array15primitive_arrayINtB4_14PrimitiveAr
 
 .lr.ph.i.i.i:                                     ; preds = %_RNvMs_NtNtCs1N9T06jgEdt_11arrow_array5array15primitive_arrayINtB4_14PrimitiveArrayNtNtB8_5types10UInt16TypeE5valueCs14kWLkQVSKO_14deltalake_core.exit.i.i.i
   %i.ke = getelementptr inbounds nuw i8, ptr %i.bl, i64 24
+  %umax.i.i.i = call i64 @llvm.umax.i64(i64 %i.ec, i64 2)
   br label %bb.bq
 
 .split104.i.i.i:                                  ; preds = %.noexc89.i.i
@@ -787,7 +788,7 @@ bb.cd:                                            ; preds = %bb.cc
 bb.ce:                                            ; preds = %bb.cl, %bb.cc
   %.sroa.024.1.i.i.i = phi i64 [ %.sroa.081.0212.i.i.i, %bb.cl ], [ %.sroa.024.0210.i.i.i, %bb.cc ] ; 2 uses
   %.sroa.023.1.i.i.i = phi i16 [ %i.lh, %bb.cl ], [ %.sroa.023.0211.i.i.i, %bb.cc ]
-  %exitcond.not.i.i.i = icmp eq i64 %i.kn, %i.ec
+  %exitcond.not.i.i.i = icmp eq i64 %i.kn, %umax.i.i.i
   br i1 %exitcond.not.i.i.i, label %._crit_edge.i.i.i, label %bb.bq
 
 bb.cf:                                            ; preds = %bb.cd

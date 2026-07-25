@@ -204,26 +204,27 @@ bb.q:                                             ; preds = %bb.l, %bb.k
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit111
 
 bb.r:                                             ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit, %.critedge
-  %.047154 = phi i64 [ 0, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit ], [ %10, %.critedge ]
-  %sext = shl i64 %.047154, 32                    ; 2 uses
-  %7 = ashr exact i64 %sext, 32                   ; 2 uses
+  %.047154 = phi i32 [ 0, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit ], [ %10, %.critedge ] ; 3 uses
+  %7 = sext i32 %.047154 to i64                   ; 3 uses
   %8 = getelementptr inbounds i8, ptr %i.az, i64 %7
   %9 = load i8, ptr %8, align 1, !tbaa !105       ; 3 uses
-  %exitcond.not201 = icmp eq i64 %sext, 1095216660480
-  br i1 %exitcond.not201, label %.critedge.thread, label %.lr.ph203
+  %smax163 = call i64 @llvm.smax.i64(i64 %7, i64 255)
+  %exitcond.not204 = icmp sgt i32 %.047154, 254
+  br i1 %exitcond.not204, label %.critedge.thread, label %.lr.ph203
 
 bb.s:                                             ; preds = %.lr.ph203
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 255
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %smax163
   br i1 %exitcond.not, label %.critedge.thread, label %.lr.ph203, !llvm.loop !241
 
 .critedge.thread:                                 ; preds = %bb.r, %bb.s
+  %smax.le = call i32 @llvm.smax.i32(i32 %.047154, i32 255)
   %i.bm = zext i8 %9 to i64
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0124.0, i64 %i.bm
-  store i32 255, ptr %i.bn, align 4, !tbaa !3
+  store i32 %smax.le, ptr %i.bn, align 4, !tbaa !3
   br label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i69
 
 .lr.ph203:                                        ; preds = %bb.r, %bb.s
-  %indvars.iv202 = phi i64 [ %indvars.iv.next, %bb.s ], [ %7, %bb.r ] ; 4 uses
+  %indvars.iv202 = phi i64 [ %indvars.iv.next, %bb.s ], [ %7, %bb.r ] ; 3 uses
   %indvars.iv.next = add nsw i64 %indvars.iv202, 1 ; 3 uses
   %i.bo = getelementptr inbounds i8, ptr %i.az, i64 %indvars.iv.next
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !105
@@ -231,11 +232,11 @@ bb.s:                                             ; preds = %.lr.ph203
   br i1 %i.bq, label %bb.s, label %.critedge, !llvm.loop !241
 
 .critedge:                                        ; preds = %.lr.ph203
-  %i.br = trunc nsw i64 %indvars.iv202 to i32
+  %i.br = trunc nsw i64 %indvars.iv202 to i32     ; 2 uses
   %i.bs = zext i8 %9 to i64
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0124.0, i64 %i.bs
   store i32 %i.br, ptr %i.bt, align 4, !tbaa !3
-  %10 = add i64 %indvars.iv202, 1
+  %10 = add nsw i32 %i.br, 1
   %i.bu = icmp slt i64 %indvars.iv202, 255
   br i1 %i.bu, label %bb.r, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i69, !llvm.loop !242
 
@@ -638,7 +639,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.l = sub i64 %i.k, %i.a                       ; 3 uses
   %i.m = ashr exact i64 %i.l, 2                   ; 3 uses
   %i.n = add nsw i64 %i.m, -1
-  %4 = sdiv i64 %i.n, 2
+  %4 = lshr i64 %i.n, 1
   %i.o = icmp sgt i64 %i.m, 2
   br i1 %i.o, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -678,7 +679,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ai
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !3
-  %i.al = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !3
   br label %.lr.ph.i.i.i.i.i.preheader
 
@@ -1080,6 +1081,12 @@ declare void @llvm.assume(i1 noundef) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #18
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

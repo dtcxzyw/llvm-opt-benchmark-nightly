@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.m = add nsw i32 %i.l, 1                      ; 5 uses
   %i.n = shl i32 %i.m, 3
   %i.o = add i32 %i.n, 16                         ; 3 uses
-  %i.p = zext i32 %2 to i64
+  %i.p = zext nneg i32 %2 to i64
   %i.q = shl i32 %2, 2                            ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.s = load i64, ptr %i.r, align 8, !tbaa !38   ; 2 uses
@@ -607,26 +607,27 @@ bb.r:                                             ; preds = %bb.m, %bb.l
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit111
 
 bb.s:                                             ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit, %.critedge
-  %.054215 = phi i64 [ 0, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit ], [ %9, %.critedge ]
-  %sext = shl i64 %.054215, 32                    ; 2 uses
-  %6 = ashr exact i64 %sext, 32                   ; 2 uses
+  %.054215 = phi i32 [ 0, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit ], [ %9, %.critedge ] ; 3 uses
+  %6 = sext i32 %.054215 to i64                   ; 3 uses
   %7 = getelementptr inbounds i8, ptr %i.ck, i64 %6
   %8 = load i8, ptr %7, align 1, !tbaa !101       ; 3 uses
-  %exitcond.not256 = icmp eq i64 %sext, 1095216660480
-  br i1 %exitcond.not256, label %.critedge.thread, label %.lr.ph258
+  %smax221 = call i64 @llvm.smax.i64(i64 %6, i64 255)
+  %exitcond.not259 = icmp sgt i32 %.054215, 254
+  br i1 %exitcond.not259, label %.critedge.thread, label %.lr.ph258
 
 bb.t:                                             ; preds = %.lr.ph258
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 255
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %smax221
   br i1 %exitcond.not, label %.critedge.thread, label %.lr.ph258, !llvm.loop !266
 
 .critedge.thread:                                 ; preds = %bb.s, %bb.t
+  %smax.le = call i32 @llvm.smax.i32(i32 %.054215, i32 255)
   %i.cy = zext i8 %8 to i64
   %i.cz = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0166.0, i64 %i.cy
-  store i32 255, ptr %i.cz, align 4, !tbaa !3
+  store i32 %smax.le, ptr %i.cz, align 4, !tbaa !3
   br label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i81
 
 .lr.ph258:                                        ; preds = %bb.s, %bb.t
-  %indvars.iv257 = phi i64 [ %indvars.iv.next, %bb.t ], [ %6, %bb.s ] ; 4 uses
+  %indvars.iv257 = phi i64 [ %indvars.iv.next, %bb.t ], [ %6, %bb.s ] ; 3 uses
   %indvars.iv.next = add nsw i64 %indvars.iv257, 1 ; 3 uses
   %i.da = getelementptr inbounds i8, ptr %i.ck, i64 %indvars.iv.next
   %i.db = load i8, ptr %i.da, align 1, !tbaa !101
@@ -634,11 +635,11 @@ bb.t:                                             ; preds = %.lr.ph258
   br i1 %i.dc, label %bb.t, label %.critedge, !llvm.loop !266
 
 .critedge:                                        ; preds = %.lr.ph258
-  %i.dd = trunc nsw i64 %indvars.iv257 to i32
+  %i.dd = trunc nsw i64 %indvars.iv257 to i32     ; 2 uses
   %i.de = zext i8 %8 to i64
   %i.df = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0166.0, i64 %i.de
   store i32 %i.dd, ptr %i.df, align 4, !tbaa !3
-  %9 = add i64 %indvars.iv257, 1
+  %9 = add nsw i32 %i.dd, 1
   %i.dg = icmp slt i64 %indvars.iv257, 255
   br i1 %i.dg, label %bb.s, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i81, !llvm.loop !267
 
@@ -1041,7 +1042,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.l = sub i64 %i.k, %i.a                       ; 3 uses
   %i.m = ashr exact i64 %i.l, 2                   ; 3 uses
   %i.n = add nsw i64 %i.m, -1
-  %4 = sdiv i64 %i.n, 2
+  %4 = lshr i64 %i.n, 1
   %i.o = icmp sgt i64 %i.m, 2
   br i1 %i.o, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -1081,7 +1082,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ai
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !3
-  %i.al = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !3
   br label %.lr.ph.i.i.i.i.i.preheader
 
@@ -1483,6 +1484,12 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #24
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }

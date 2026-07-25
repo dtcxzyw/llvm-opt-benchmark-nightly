@@ -204,12 +204,12 @@ _ZN2v88internal31SharedStringAccessGuardIfNeededD2Ev.exit: ; preds = %bb.t, %_ZN
   %i.cn = icmp eq i32 %i.cm, 1
   %i.co = load ptr, ptr %3, align 8               ; 4 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.cq = load i32, ptr %i.cp, align 8            ; 4 uses
-  %4 = zext i32 %i.cq to i64                      ; 2 uses
-  %5 = icmp eq i32 %i.cq, 0                       ; 2 uses
+  %i.cq = load i32, ptr %i.cp, align 8            ; 6 uses
   br i1 %i.cn, label %bb.u, label %bb.w
 
 bb.u:                                             ; preds = %_ZN2v88internal31SharedStringAccessGuardIfNeededD2Ev.exit
+  %4 = zext i32 %i.cq to i64
+  %5 = icmp eq i32 %i.cq, 0
   br i1 %5, label %_ZN2v88internal12_GLOBAL__N_118IsIdentifierVectorIKhEEbNS_4base6VectorIT_EE.exit, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
@@ -239,7 +239,8 @@ bb.v:                                             ; preds = %bb.u
   br i1 %or.cond.not, label %.lr.ph.i, label %_ZN2v88internal12_GLOBAL__N_118IsIdentifierVectorIKhEEbNS_4base6VectorIT_EE.exit, !llvm.loop !318
 
 bb.w:                                             ; preds = %_ZN2v88internal31SharedStringAccessGuardIfNeededD2Ev.exit
-  br i1 %5, label %_ZN2v88internal12_GLOBAL__N_118IsIdentifierVectorIKhEEbNS_4base6VectorIT_EE.exit, label %bb.x
+  %6 = icmp eq i32 %i.cq, 0
+  br i1 %6, label %_ZN2v88internal12_GLOBAL__N_118IsIdentifierVectorIKhEEbNS_4base6VectorIT_EE.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   %i.de = load i16, ptr %i.co, align 2            ; 3 uses
@@ -260,10 +261,14 @@ _ZN2v88internal17IsIdentifierStartEj.exit.i:      ; preds = %bb.x
 
 .preheader.i11:                                   ; preds = %_ZN2v88internal17IsIdentifierStartEj.exit.i, %bb.y
   %i.dm = icmp eq i32 %i.cq, 1
-  br i1 %i.dm, label %_ZN2v88internal12_GLOBAL__N_118IsIdentifierVectorIKhEEbNS_4base6VectorIT_EE.exit, label %.lr.ph.i12
+  br i1 %i.dm, label %_ZN2v88internal12_GLOBAL__N_118IsIdentifierVectorIKhEEbNS_4base6VectorIT_EE.exit, label %.lr.ph.preheader.i
 
-.lr.ph.i12:                                       ; preds = %.preheader.i11, %bb.aa
-  %.049.i = phi i64 [ %i.dw, %bb.aa ], [ 1, %.preheader.i11 ] ; 2 uses
+.lr.ph.preheader.i:                               ; preds = %.preheader.i11
+  %umax.i = zext i32 %i.cq to i64
+  br label %.lr.ph.i12
+
+.lr.ph.i12:                                       ; preds = %bb.aa, %.lr.ph.preheader.i
+  %.049.i = phi i64 [ %i.dw, %bb.aa ], [ 1, %.lr.ph.preheader.i ] ; 2 uses
   %i.dn = getelementptr inbounds nuw [2 x i8], ptr %i.co, i64 %.049.i
   %i.do = load i16, ptr %i.dn, align 2            ; 3 uses
   %i.dp = icmp ult i16 %i.do, 256
@@ -283,8 +288,8 @@ _ZN2v88internal16IsIdentifierPartEj.exit.i:       ; preds = %.lr.ph.i12
   br i1 %i.dv, label %bb.aa, label %_ZN2v88internal12_GLOBAL__N_118IsIdentifierVectorIKhEEbNS_4base6VectorIT_EE.exit
 
 bb.aa:                                            ; preds = %_ZN2v88internal16IsIdentifierPartEj.exit.i, %bb.z
-  %i.dw = add nuw i64 %.049.i, 1                  ; 2 uses
-  %exitcond.not.i13 = icmp eq i64 %i.dw, %4
+  %i.dw = add nuw nsw i64 %.049.i, 1              ; 2 uses
+  %exitcond.not.i13 = icmp eq i64 %i.dw, %umax.i
   br i1 %exitcond.not.i13, label %_ZN2v88internal12_GLOBAL__N_118IsIdentifierVectorIKhEEbNS_4base6VectorIT_EE.exit, label %.lr.ph.i12, !llvm.loop !319
 
 _ZN2v88internal12_GLOBAL__N_118IsIdentifierVectorIKhEEbNS_4base6VectorIT_EE.exit: ; preds = %bb.aa, %_ZN2v88internal16IsIdentifierPartEj.exit.i, %bb.z, %.lr.ph.i, %.preheader.i11, %_ZN2v88internal17IsIdentifierStartEj.exit.i, %bb.y, %bb.w, %.preheader.i, %bb.v, %bb.u

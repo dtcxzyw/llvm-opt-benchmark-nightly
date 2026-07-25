@@ -204,15 +204,16 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.loopexit.i, %.lr.ph23.i
   %.02422.i = phi i64 [ 0, %.lr.ph23.i ], [ %.4.i, %.loopexit.i ] ; 11 uses
-  %i.p = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %3) ; 3 uses
-  %.sroa.0.0.extract.trunc.i = trunc i32 %i.p to i16 ; 9 uses
+  %i.p = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %3) ; 4 uses
+  %.sroa.0.0.extract.trunc.i = trunc i32 %i.p to i16 ; 6 uses
   %.sroa.7.0.extract.shift.i = lshr i32 %i.p, 16  ; 2 uses
   %.sroa.7.0.extract.trunc.i = trunc nuw i32 %.sroa.7.0.extract.shift.i to i16
   %i.q = icmp eq i16 %.sroa.0.0.extract.trunc.i, %.sroa.7.0.extract.trunc.i
   br i1 %i.q, label %.preheader.i, label %bb.d
 
 .preheader.i:                                     ; preds = %bb.c
-  %4 = sext i16 %.sroa.0.0.extract.trunc.i to i64 ; 5 uses
+  %.sroa.0.0.extract.trunc.mask36.i = and i32 %i.p, 65535 ; 2 uses
+  %4 = zext nneg i32 %.sroa.0.0.extract.trunc.mask36.i to i64 ; 6 uses
   %i.r = icmp sgt i16 %.sroa.0.0.extract.trunc.i, 0
   br i1 %i.r, label %.lr.ph18.i, label %.loopexit.i
 
@@ -221,7 +222,7 @@ bb.c:                                             ; preds = %.loopexit.i, %.lr.p
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !891  ; 6 uses
   %i.u = load ptr, ptr %i.m, align 8, !tbaa !1079, !nonnull !263, !align !533 ; 2 uses
   %.promoted20.i = load i64, ptr %i.u, align 8, !tbaa !315 ; 5 uses
-  %min.iters.check = icmp ult i16 %.sroa.0.0.extract.trunc.i, 8
+  %min.iters.check = icmp samesign ult i32 %.sroa.0.0.extract.trunc.mask36.i, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph18.i
@@ -281,8 +282,8 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   %.ph = phi i64 [ %.promoted20.i, %vector.memcheck ], [ %.promoted20.i, %.lr.ph18.i ], [ %i.aa, %middle.block ] ; 3 uses
   %.02317.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph18.i ], [ %n.vec, %middle.block ] ; 3 uses
   %.116.i.ph = phi i64 [ %.02422.i, %vector.memcheck ], [ %.02422.i, %.lr.ph18.i ], [ %i.ab, %middle.block ] ; 3 uses
-  %5 = and i16 %.sroa.0.0.extract.trunc.i, 1
-  %lcmp.mod.not = icmp eq i16 %5, 0
+  %xtraiter = and i64 %4, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
@@ -631,15 +632,16 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph44.i:                                       ; preds = %bb.b, %.loopexit.i
   %.02443.i = phi i64 [ %.4.i, %.loopexit.i ], [ 0, %bb.b ] ; 7 uses
-  %i.p = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %3) ; 4 uses
-  %.sroa.0.0.extract.trunc.i = trunc i32 %i.p to i16 ; 8 uses
+  %i.p = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %3) ; 5 uses
+  %.sroa.0.0.extract.trunc.i = trunc i32 %i.p to i16 ; 7 uses
   %.sroa.7.0.extract.shift.i = lshr i32 %i.p, 16  ; 2 uses
   %.sroa.7.0.extract.trunc.i = trunc nuw i32 %.sroa.7.0.extract.shift.i to i16
   %i.q = icmp eq i16 %.sroa.0.0.extract.trunc.i, %.sroa.7.0.extract.trunc.i
   br i1 %i.q, label %.preheader.i, label %bb.c
 
 .preheader.i:                                     ; preds = %.lr.ph44.i
-  %4 = sext i16 %.sroa.0.0.extract.trunc.i to i64
+  %.sroa.0.0.extract.trunc.mask58.i = and i32 %i.p, 65535
+  %4 = zext nneg i32 %.sroa.0.0.extract.trunc.mask58.i to i64
   %i.r = icmp sgt i16 %.sroa.0.0.extract.trunc.i, 0
   br i1 %i.r, label %.lr.ph41.i, label %.loopexit.i
 
@@ -1042,15 +1044,16 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.loopexit.i, %.lr.ph21.i
   %.02420.i = phi i64 [ 0, %.lr.ph21.i ], [ %.4.i, %.loopexit.i ] ; 12 uses
-  %i.p = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %3) ; 3 uses
-  %.sroa.0.0.extract.trunc.i = trunc i32 %i.p to i16 ; 9 uses
+  %i.p = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %3) ; 4 uses
+  %.sroa.0.0.extract.trunc.i = trunc i32 %i.p to i16 ; 6 uses
   %.sroa.7.0.extract.shift.i = lshr i32 %i.p, 16  ; 2 uses
   %.sroa.7.0.extract.trunc.i = trunc nuw i32 %.sroa.7.0.extract.shift.i to i16
   %i.q = icmp eq i16 %.sroa.0.0.extract.trunc.i, %.sroa.7.0.extract.trunc.i
   br i1 %i.q, label %.preheader.i, label %bb.d
 
 .preheader.i:                                     ; preds = %bb.c
-  %4 = sext i16 %.sroa.0.0.extract.trunc.i to i64 ; 5 uses
+  %.sroa.0.0.extract.trunc.mask33.i = and i32 %i.p, 65535 ; 2 uses
+  %4 = zext nneg i32 %.sroa.0.0.extract.trunc.mask33.i to i64 ; 6 uses
   %i.r = icmp sgt i16 %.sroa.0.0.extract.trunc.i, 0
   br i1 %i.r, label %.lr.ph17.i, label %.loopexit.i
 
@@ -1059,7 +1062,7 @@ bb.c:                                             ; preds = %.loopexit.i, %.lr.p
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !891  ; 4 uses
   %i.u = load ptr, ptr %i.m, align 8, !tbaa !1142, !nonnull !263, !align !533 ; 7 uses
   %.promoted19.i = load i64, ptr %i.u, align 8, !tbaa !315 ; 5 uses
-  %min.iters.check = icmp ult i16 %.sroa.0.0.extract.trunc.i, 4
+  %min.iters.check = icmp samesign ult i32 %.sroa.0.0.extract.trunc.mask33.i, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph17.i
@@ -1112,8 +1115,8 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   %.ph = phi i64 [ %.promoted19.i, %vector.memcheck ], [ %.promoted19.i, %.lr.ph17.i ], [ %i.y, %middle.block ] ; 3 uses
   %.02316.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph17.i ], [ %n.vec, %middle.block ] ; 3 uses
   %.115.i.ph = phi i64 [ %.02420.i, %vector.memcheck ], [ %.02420.i, %.lr.ph17.i ], [ %i.z, %middle.block ] ; 3 uses
-  %5 = and i16 %.sroa.0.0.extract.trunc.i, 1
-  %lcmp.mod.not = icmp eq i16 %5, 0
+  %xtraiter = and i64 %4, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
@@ -1347,15 +1350,16 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph44.i:                                       ; preds = %bb.b, %.loopexit.i
   %.02443.i = phi i64 [ %.4.i, %.loopexit.i ], [ 0, %bb.b ] ; 7 uses
-  %i.p = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %3) ; 4 uses
-  %.sroa.0.0.extract.trunc.i = trunc i32 %i.p to i16 ; 8 uses
+  %i.p = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %3) ; 5 uses
+  %.sroa.0.0.extract.trunc.i = trunc i32 %i.p to i16 ; 7 uses
   %.sroa.7.0.extract.shift.i = lshr i32 %i.p, 16  ; 2 uses
   %.sroa.7.0.extract.trunc.i = trunc nuw i32 %.sroa.7.0.extract.shift.i to i16
   %i.q = icmp eq i16 %.sroa.0.0.extract.trunc.i, %.sroa.7.0.extract.trunc.i
   br i1 %i.q, label %.preheader.i, label %bb.c
 
 .preheader.i:                                     ; preds = %.lr.ph44.i
-  %4 = sext i16 %.sroa.0.0.extract.trunc.i to i64
+  %.sroa.0.0.extract.trunc.mask58.i = and i32 %i.p, 65535
+  %4 = zext nneg i32 %.sroa.0.0.extract.trunc.mask58.i to i64
   %i.r = icmp sgt i16 %.sroa.0.0.extract.trunc.i, 0
   br i1 %i.r, label %.lr.ph41.i, label %.loopexit.i
 
