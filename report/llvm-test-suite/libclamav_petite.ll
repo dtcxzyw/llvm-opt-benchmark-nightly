@@ -203,7 +203,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.fd = add nsw i32 %.07081267, 1               ; 4 uses
   %i.fe = sext i32 %i.fd to i64
   %i.ff = mul nsw i64 %i.fe, 36
-  %i.fg = tail call ptr @cli_realloc(ptr noundef %.06931270, i64 noundef %i.ff) #6 ; 21 uses
+  %i.fg = tail call ptr @cli_realloc(ptr noundef %.06931270, i64 noundef %i.ff) #6 ; 20 uses
   %.not800 = icmp eq ptr %i.fg, null
   br i1 %.not800, label %bb.at, label %bb.au
 
@@ -596,24 +596,18 @@ bb.cc:                                            ; preds = %bb.cb, %doubledl.ex
 
 bb.cd:                                            ; preds = %bb.cc
   %i.ka = zext nneg i32 %i.jx to i64              ; 7 uses
-  %i.kb = getelementptr inbounds nuw i8, ptr %.06901260, i64 %i.ka ; 2 uses
-  %.not834 = icmp ule ptr %i.kb, %i.o
-  %i.kc = icmp ugt ptr %i.kb, %0
-  %or.cond870 = and i1 %.not834, %i.kc
-  br i1 %or.cond870, label %11, label %.thread1057.sink.split
+  %i.kb = getelementptr inbounds nuw i8, ptr %.06901260, i64 %i.ka
+  %i.kc = icmp ugt ptr %i.kb, %i.o
+  br i1 %i.kc, label %.thread1057.sink.split, label %bb.ce
 
-11:                                               ; preds = %bb.cd
-  %12 = sext i32 %.1674 to i64                    ; 12 uses
-  %13 = getelementptr inbounds i8, ptr %.06901260, i64 %12 ; 2 uses
-  %.not835 = icmp ult ptr %13, %0
-  br i1 %.not835, label %.thread1057.sink.split, label %bb.ce
-
-bb.ce:                                            ; preds = %11
-  %i.kd = getelementptr inbounds nuw i8, ptr %13, i64 %i.ka ; 2 uses
-  %.not836 = icmp ule ptr %i.kd, %i.o
-  %14 = icmp ugt ptr %i.kd, %0
-  %or.cond871 = and i1 %.not836, %14
-  br i1 %or.cond871, label %iter.check, label %.thread1057.sink.split
+bb.ce:                                            ; preds = %bb.cd
+  %11 = sext i32 %.1674 to i64                    ; 12 uses
+  %i.kd = getelementptr inbounds i8, ptr %.06901260, i64 %11 ; 2 uses
+  %.not835 = icmp uge ptr %i.kd, %0
+  %12 = getelementptr inbounds nuw i8, ptr %i.kd, i64 %i.ka
+  %.not836 = icmp ule ptr %12, %i.o
+  %or.cond1354 = select i1 %.not835, i1 %.not836, i1 false
+  br i1 %or.cond1354, label %iter.check, label %.thread1057.sink.split
 
 iter.check:                                       ; preds = %bb.ce
   %min.iters.check = icmp ult i32 %i.jx, 4
@@ -636,7 +630,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %next.gep = getelementptr i8, ptr %.06901260, i64 %index ; 3 uses
-  %i.kh = getelementptr inbounds i8, ptr %next.gep, i64 %12 ; 2 uses
+  %i.kh = getelementptr inbounds i8, ptr %next.gep, i64 %11 ; 2 uses
   %i.ki = getelementptr inbounds nuw i8, ptr %i.kh, i64 16
   %wide.load = load <16 x i8>, ptr %i.kh, align 1, !tbaa !22
   %wide.load1792 = load <16 x i8>, ptr %i.ki, align 1, !tbaa !22
@@ -666,7 +660,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index1796 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next1799, %vec.epilog.vector.body ] ; 2 uses
   %next.gep1797 = getelementptr i8, ptr %.06901260, i64 %index1796 ; 2 uses
-  %i.ko = getelementptr inbounds i8, ptr %next.gep1797, i64 %12
+  %i.ko = getelementptr inbounds i8, ptr %next.gep1797, i64 %11
   %wide.load1798 = load <4 x i8>, ptr %i.ko, align 1, !tbaa !22
   store <4 x i8> %wide.load1798, ptr %next.gep1797, align 1, !tbaa !22
   %index.next1799 = add nuw i64 %index1796, 4     ; 2 uses
@@ -690,7 +684,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.16911254.prol = phi ptr [ %i.ku, %.lr.ph1256.prol ], [ %.16911254.ph, %.lr.ph1256.preheader ] ; 3 uses
   %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph1256.prol ], [ 0, %.lr.ph1256.preheader ]
   %i.kr = add nsw i32 %.46721255.prol, -1         ; 2 uses
-  %i.ks = getelementptr inbounds i8, ptr %.16911254.prol, i64 %12
+  %i.ks = getelementptr inbounds i8, ptr %.16911254.prol, i64 %11
   %i.kt = load i8, ptr %i.ks, align 1, !tbaa !22
   store i8 %i.kt, ptr %.16911254.prol, align 1, !tbaa !22
   %i.ku = getelementptr inbounds nuw i8, ptr %.16911254.prol, i64 1 ; 3 uses
@@ -708,36 +702,36 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph1256:                                       ; preds = %.lr.ph1256.prol.loopexit, %.lr.ph1256
   %.46721255 = phi i32 [ %i.lr, %.lr.ph1256 ], [ %.46721255.unr, %.lr.ph1256.prol.loopexit ]
   %.16911254 = phi ptr [ %i.lu, %.lr.ph1256 ], [ %.16911254.unr, %.lr.ph1256.prol.loopexit ] ; 10 uses
-  %i.kw = getelementptr inbounds i8, ptr %.16911254, i64 %12
+  %i.kw = getelementptr inbounds i8, ptr %.16911254, i64 %11
   %i.kx = load i8, ptr %i.kw, align 1, !tbaa !22
   store i8 %i.kx, ptr %.16911254, align 1, !tbaa !22
   %i.ky = getelementptr inbounds nuw i8, ptr %.16911254, i64 1 ; 2 uses
-  %i.kz = getelementptr inbounds i8, ptr %i.ky, i64 %12
+  %i.kz = getelementptr inbounds i8, ptr %i.ky, i64 %11
   %i.la = load i8, ptr %i.kz, align 1, !tbaa !22
   store i8 %i.la, ptr %i.ky, align 1, !tbaa !22
   %i.lb = getelementptr inbounds nuw i8, ptr %.16911254, i64 2 ; 2 uses
-  %i.lc = getelementptr inbounds i8, ptr %i.lb, i64 %12
+  %i.lc = getelementptr inbounds i8, ptr %i.lb, i64 %11
   %i.ld = load i8, ptr %i.lc, align 1, !tbaa !22
   store i8 %i.ld, ptr %i.lb, align 1, !tbaa !22
   %i.le = getelementptr inbounds nuw i8, ptr %.16911254, i64 3 ; 2 uses
-  %i.lf = getelementptr inbounds i8, ptr %i.le, i64 %12
+  %i.lf = getelementptr inbounds i8, ptr %i.le, i64 %11
   %i.lg = load i8, ptr %i.lf, align 1, !tbaa !22
   store i8 %i.lg, ptr %i.le, align 1, !tbaa !22
   %i.lh = getelementptr inbounds nuw i8, ptr %.16911254, i64 4 ; 2 uses
-  %i.li = getelementptr inbounds i8, ptr %i.lh, i64 %12
+  %i.li = getelementptr inbounds i8, ptr %i.lh, i64 %11
   %i.lj = load i8, ptr %i.li, align 1, !tbaa !22
   store i8 %i.lj, ptr %i.lh, align 1, !tbaa !22
   %i.lk = getelementptr inbounds nuw i8, ptr %.16911254, i64 5 ; 2 uses
-  %i.ll = getelementptr inbounds i8, ptr %i.lk, i64 %12
+  %i.ll = getelementptr inbounds i8, ptr %i.lk, i64 %11
   %i.lm = load i8, ptr %i.ll, align 1, !tbaa !22
   store i8 %i.lm, ptr %i.lk, align 1, !tbaa !22
   %i.ln = getelementptr inbounds nuw i8, ptr %.16911254, i64 6 ; 2 uses
-  %i.lo = getelementptr inbounds i8, ptr %i.ln, i64 %12
+  %i.lo = getelementptr inbounds i8, ptr %i.ln, i64 %11
   %i.lp = load i8, ptr %i.lo, align 1, !tbaa !22
   store i8 %i.lp, ptr %i.ln, align 1, !tbaa !22
   %i.lq = getelementptr inbounds nuw i8, ptr %.16911254, i64 7 ; 2 uses
   %i.lr = add nsw i32 %.46721255, -8              ; 2 uses
-  %i.ls = getelementptr inbounds i8, ptr %i.lq, i64 %12
+  %i.ls = getelementptr inbounds i8, ptr %i.lq, i64 %11
   %i.lt = load i8, ptr %i.ls, align 1, !tbaa !22
   store i8 %i.lt, ptr %i.lq, align 1, !tbaa !22
   %i.lu = getelementptr inbounds nuw i8, ptr %.16911254, i64 8 ; 2 uses
@@ -908,9 +902,9 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr, %bb.
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull %.str.4.sink) #6
   br label %.thread1057.sink.split
 
-.thread1057.sink.split:                           ; preds = %.loopexit1103, %bb.az, %bb.cc, %bb.cd, %11, %bb.ce, %bb.bv, %bb.bt, %bb.bd, %bb.be, %bb.bf, %bb.bb, %bb.bj, %bb.bh, %bb.bo, %bb.bz, %bb.bx, %.thread1057.sink.split.sink.split, %bb.at, %bb.aq, %bb.an, %bb.aj, %._crit_edge1352, %._crit_edge1278
-  %.06931270.lcssa1655.sink = phi ptr [ %.06931270, %bb.an ], [ %.06931270, %bb.at ], [ %.06931270, %bb.aq ], [ %.06931270, %bb.aj ], [ %i.fg, %bb.bj ], [ %i.fg, %bb.bz ], [ %.06931270, %._crit_edge1352 ], [ %.0693.lcssa, %._crit_edge1278 ], [ %i.fg, %bb.cc ], [ %.06931270, %.thread1057.sink.split.sink.split ], [ %i.fg, %bb.bo ], [ %i.fg, %bb.bx ], [ %i.fg, %bb.bh ], [ %i.fg, %bb.bb ], [ %i.fg, %bb.bf ], [ %i.fg, %bb.be ], [ %i.fg, %bb.bd ], [ %i.fg, %bb.bt ], [ %i.fg, %bb.bv ], [ %i.fg, %bb.ce ], [ %i.fg, %11 ], [ %i.fg, %bb.cd ], [ %i.fg, %bb.az ], [ %i.fg, %.loopexit1103 ]
-  %.41070.ph = phi i32 [ 1, %bb.an ], [ 1, %bb.at ], [ 1, %bb.aq ], [ 1, %bb.aj ], [ 1, %bb.bj ], [ 1, %bb.bz ], [ 0, %._crit_edge1352 ], [ 1, %._crit_edge1278 ], [ 1, %bb.cc ], [ 1, %.thread1057.sink.split.sink.split ], [ 1, %bb.bo ], [ 1, %bb.bx ], [ 1, %bb.bh ], [ 1, %bb.bb ], [ 1, %bb.bf ], [ 1, %bb.be ], [ 1, %bb.bd ], [ 1, %bb.bt ], [ 1, %bb.bv ], [ 1, %bb.ce ], [ 1, %11 ], [ 1, %bb.cd ], [ 1, %bb.az ], [ 1, %.loopexit1103 ]
+.thread1057.sink.split:                           ; preds = %.loopexit1103, %bb.az, %bb.cc, %bb.cd, %bb.ce, %bb.bv, %bb.bt, %bb.bd, %bb.be, %bb.bf, %bb.bb, %bb.bj, %bb.bh, %bb.bo, %bb.bz, %bb.bx, %.thread1057.sink.split.sink.split, %bb.at, %bb.aq, %bb.an, %bb.aj, %._crit_edge1352, %._crit_edge1278
+  %.06931270.lcssa1655.sink = phi ptr [ %.06931270, %bb.an ], [ %.06931270, %bb.at ], [ %.06931270, %bb.aq ], [ %.06931270, %bb.aj ], [ %i.fg, %bb.bj ], [ %i.fg, %bb.bz ], [ %.06931270, %._crit_edge1352 ], [ %.0693.lcssa, %._crit_edge1278 ], [ %i.fg, %bb.cc ], [ %.06931270, %.thread1057.sink.split.sink.split ], [ %i.fg, %bb.bo ], [ %i.fg, %bb.bx ], [ %i.fg, %bb.bh ], [ %i.fg, %bb.bb ], [ %i.fg, %bb.bf ], [ %i.fg, %bb.be ], [ %i.fg, %bb.bd ], [ %i.fg, %bb.bt ], [ %i.fg, %bb.bv ], [ %i.fg, %bb.ce ], [ %i.fg, %bb.cd ], [ %i.fg, %bb.az ], [ %i.fg, %.loopexit1103 ]
+  %.41070.ph = phi i32 [ 1, %bb.an ], [ 1, %bb.at ], [ 1, %bb.aq ], [ 1, %bb.aj ], [ 1, %bb.bj ], [ 1, %bb.bz ], [ 0, %._crit_edge1352 ], [ 1, %._crit_edge1278 ], [ 1, %bb.cc ], [ 1, %.thread1057.sink.split.sink.split ], [ 1, %bb.bo ], [ 1, %bb.bx ], [ 1, %bb.bh ], [ 1, %bb.bb ], [ 1, %bb.bf ], [ 1, %bb.be ], [ 1, %bb.bd ], [ 1, %bb.bt ], [ 1, %bb.bv ], [ 1, %bb.ce ], [ 1, %bb.cd ], [ 1, %bb.az ], [ 1, %.loopexit1103 ]
   tail call void @free(ptr noundef %.06931270.lcssa1655.sink) #6
   br label %.thread1057
 
