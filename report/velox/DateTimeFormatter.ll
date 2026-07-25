@@ -204,12 +204,8 @@ begin_hunk_0_@_ZNK8facebook5velox9functions17DateTimeFormatter6formatERKNS0_9Tim
   %i.gk = sub nsw i64 1, %i.az
   %i.gl = select i1 %i.ft, i64 %i.gk, i64 %i.az
   %i.gm = call i64 @llvm.abs.i64(i64 %i.az, i1 true) ; 2 uses
-  %.lhs.trunc444 = trunc i64 %i.gm to i32
-  %19 = urem i32 %.lhs.trunc444, 100
-  %.zext = zext nneg i32 %19 to i64
-  %.lhs.trunc445 = trunc i64 %i.gm to i32
-  %20 = udiv i32 %.lhs.trunc445, 100
-  %.zext446 = zext nneg i32 %20 to i64
+  %19 = urem i64 %i.gm, 100
+  %20 = udiv i64 %i.gm, 100
   %i.gn = icmp sgt i32 %i.ay, 0
   %i.go = select i1 %i.gn, i16 17473, i16 17218
   %.393 = select i1 %i.dh, i8 48, i8 %i.dk
@@ -283,7 +279,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #2
-  store i64 %.zext446, ptr %i.a, align 8, !tbaa !38
+  store i64 %20, ptr %i.a, align 8, !tbaa !38
   %i.hd = getelementptr inbounds nuw i8, ptr %.sroa.0292.0391, i64 16
   %i.he = load i64, ptr %i.hd, align 8, !tbaa !13
   %i.hf = call fastcc noundef i32 @_ZN8facebook5velox9functions12_GLOBAL__N_110padContentIlEEiRKT_cmPcS7_b(ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef %i.he, ptr noundef %i.bf, ptr noundef %.0392)
@@ -302,7 +298,7 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #2
-  store i64 %.zext, ptr %i.c, align 8, !tbaa !38
+  store i64 %19, ptr %i.c, align 8, !tbaa !38
   %i.hl = call fastcc noundef i32 @_ZN8facebook5velox9functions12_GLOBAL__N_110padContentIlEEiRKT_cmPcS7_b(ptr noundef nonnull align 8 dereferenceable(8) %i.c, i64 noundef 2, ptr noundef %i.bf, ptr noundef %.0392)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #2
   br label %bb.l

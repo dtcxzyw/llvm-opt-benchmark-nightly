@@ -201,7 +201,7 @@ bb.ah:                                            ; preds = %bb.aa
   %i.dm = sext i32 %i.l to i64                    ; 6 uses
   %i.dn = and i64 %i.bh, -4
   %scevgep.i = getelementptr i8, ptr %i.cy, i64 %i.dn
-  %i.do = call i64 @llvm.umax.i64(i64 %i.az, i64 1)
+  %i.do = call i64 @llvm.smax.i64(i64 %i.az, i64 1)
   %.pre577.i = load ptr, ptr %17, align 8, !tbaa !49, !noalias !23
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 64
   br label %bb.aj
@@ -602,9 +602,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #19
