@@ -204,11 +204,15 @@ bb.e:                                             ; preds = %bb.d
   %i.w = add nsw i64 %i.s, -1
   %i.x = icmp ult i64 %i.w, %i.t
   %or.cond144 = select i1 %i.x, i1 %i.v, i1 false
-  br i1 %or.cond144, label %.lr.ph, label %.loopexit
+  br i1 %or.cond144, label %.lr.ph.preheader, label %.loopexit
 
-.lr.ph:                                           ; preds = %bb.e, %bb.ac
-  %.0102142 = phi ptr [ %i.af, %bb.ac ], [ %i.o, %bb.e ] ; 8 uses
-  %.0103141 = phi i64 [ %i.hk, %bb.ac ], [ 0, %bb.e ]
+.lr.ph.preheader:                                 ; preds = %bb.e
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.s, i64 1)
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ac
+  %.0102142 = phi ptr [ %i.af, %bb.ac ], [ %i.o, %.lr.ph.preheader ] ; 8 uses
+  %.0103141 = phi i64 [ %i.hk, %bb.ac ], [ 0, %.lr.ph.preheader ]
   %i.y = load i8, ptr %.0102142, align 1, !tbaa !16
   %i.z = zext i8 %i.y to i32
   %i.aa = shl nuw nsw i32 %i.z, 8
@@ -538,7 +542,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
 
 bb.ac:                                            ; preds = %.lr.ph, %bb.f
   %i.hk = add nuw nsw i64 %.0103141, 1            ; 2 uses
-  %exitcond.not = icmp eq i64 %i.hk, %i.s
+  %exitcond.not = icmp eq i64 %i.hk, %umax
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !516
 
 .critedge:                                        ; preds = %bb.j

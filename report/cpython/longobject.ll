@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.k
 .preheader342:                                    ; preds = %.critedge.thread326
   %i.ax = getelementptr i8, ptr %0, i64 24
   %i.ay = add nuw nsw i32 %1, 255
-  %i.az = zext nneg i32 %i.ay to i64
+  %i.az = zext i32 %i.ay to i64
   %i.ba = zext nneg i8 %switch.load to i64
   %i.bb = add nsw i64 %i.f, -1
   br label %bb.o
@@ -353,7 +353,7 @@ _PyUnicode_DATA.exit286:                          ; preds = %bb.ad, %bb.ac, %_Py
 .preheader338:                                    ; preds = %_PyUnicode_DATA.exit286
   %i.cs = getelementptr i8, ptr %0, i64 24
   %i.ct = add nuw nsw i32 %1, 255
-  %i.cu = zext nneg i32 %i.ct to i64
+  %i.cu = zext i32 %i.ct to i64
   %i.cv = zext nneg i8 %switch.load to i64
   %i.cw = add nsw i64 %i.f, -1
   br label %bb.af
@@ -482,7 +482,7 @@ _PyUnicode_DATA.exit302:                          ; preds = %bb.ar, %bb.aq, %_Py
 .preheader340:                                    ; preds = %_PyUnicode_DATA.exit302
   %i.eg = getelementptr i8, ptr %0, i64 24
   %i.eh = add nuw nsw i32 %1, 255
-  %i.ei = zext nneg i32 %i.eh to i64
+  %i.ei = zext i32 %i.eh to i64
   %i.ej = zext nneg i8 %switch.load to i64
   %i.ek = add nsw i64 %i.f, -1
   br label %bb.at
@@ -612,7 +612,7 @@ _PyUnicode_DATA.exit318:                          ; preds = %bb.bf, %bb.be, %_Py
 .preheader:                                       ; preds = %_PyUnicode_DATA.exit318
   %i.fv = getelementptr i8, ptr %0, i64 24
   %i.fw = add nuw nsw i32 %1, 255
-  %i.fx = zext nneg i32 %i.fw to i64
+  %i.fx = zext i32 %i.fw to i64
   %i.fy = zext nneg i8 %switch.load to i64
   %i.fz = add nsw i64 %i.f, -1
   br label %bb.bh

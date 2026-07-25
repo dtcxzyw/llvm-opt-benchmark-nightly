@@ -145,74 +145,73 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 31 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %.old.i = icmp sgt i32 %2, 0                    ; 28 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %2, i32 1) ; 92 uses
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 22 uses
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 11 uses
   %i.d = sext i32 %1 to i64                       ; 37 uses
-  %5 = add i32 %2, -1                             ; 3 uses
-  %i.e = zext i32 %5 to i64
-  %6 = add nuw nsw i64 %i.e, 1                    ; 5 uses
-  %min.iters.check2253 = icmp ult i32 %5, 7
-  %min.iters.check2255 = icmp ult i32 %5, 15
-  %n.mod.vf2257 = and i64 %6, 8
-  %n.vec2258 = and i64 %6, 8589934576             ; 5 uses
-  %i.f = trunc i64 %n.vec2258 to i32
+  %i.e = zext nneg i32 %smax.i to i64             ; 5 uses
+  %min.iters.check2262 = icmp slt i32 %2, 8
+  %min.iters.check2264 = icmp slt i32 %2, 16
+  %n.mod.vf2257 = and i64 %i.e, 8
+  %n.vec2258 = and i64 %i.e, 2147483632           ; 5 uses
+  %i.f = trunc nuw nsw i64 %n.vec2258 to i32
   %broadcast.splatinsert2259 = insertelement <16 x i64> poison, i64 %i.d, i64 0
   %broadcast.splat2260 = shufflevector <16 x i64> %broadcast.splatinsert2259, <16 x i64> poison, <16 x i32> zeroinitializer
-  %cmp.n2302 = icmp eq i64 %6, %n.vec2258
+  %cmp.n2302 = icmp eq i64 %n.vec2258, %i.e
   %min.epilog.iters.check2309.not.not = icmp eq i64 %n.mod.vf2257, 0
-  %n.vec2312 = and i64 %6, 8589934584             ; 4 uses
-  %i.g = trunc i64 %n.vec2312 to i32
+  %n.vec2312 = and i64 %i.e, 2147483640           ; 4 uses
+  %i.g = trunc nuw nsw i64 %n.vec2312 to i32
   %broadcast.splatinsert2313 = insertelement <8 x i64> poison, i64 %i.d, i64 0
   %broadcast.splat2314 = shufflevector <8 x i64> %broadcast.splatinsert2313, <8 x i64> poison, <8 x i32> zeroinitializer
-  %cmp.n2340 = icmp eq i64 %6, %n.vec2312
-  %min.iters.check2172 = icmp ult i32 %2, 4
-  %min.iters.check2174 = icmp ult i32 %2, 16
-  %n.mod.vf2176 = and i32 %2, 12
-  %n.vec2177 = and i32 %2, -16                    ; 5 uses
+  %cmp.n2340 = icmp eq i64 %n.vec2312, %i.e
+  %min.iters.check2181 = icmp slt i32 %2, 4
+  %min.iters.check2183 = icmp slt i32 %2, 16
+  %n.mod.vf2176 = and i32 %smax.i, 12
+  %n.vec2177 = and i32 %smax.i, 2147483632        ; 5 uses
   %broadcast.splatinsert2178 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat2179 = shufflevector <16 x i32> %broadcast.splatinsert2178, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n2221 = icmp eq i32 %2, %n.vec2177
+  %cmp.n2221 = icmp eq i32 %smax.i, %n.vec2177
   %min.epilog.iters.check2227 = icmp eq i32 %n.mod.vf2176, 0
-  %n.vec2230 = and i32 %2, -4                     ; 4 uses
+  %n.vec2230 = and i32 %smax.i, 2147483644        ; 4 uses
   %broadcast.splatinsert2231 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat2232 = shufflevector <4 x i32> %broadcast.splatinsert2231, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n2250 = icmp eq i32 %2, %n.vec2230
-  %min.iters.check2091 = icmp ult i32 %2, 4
-  %min.iters.check2093 = icmp ult i32 %2, 16
-  %n.mod.vf2095 = and i32 %2, 12
-  %n.vec2096 = and i32 %2, 2147483632             ; 5 uses
+  %cmp.n2250 = icmp eq i32 %smax.i, %n.vec2230
+  %min.iters.check2100 = icmp slt i32 %2, 4
+  %min.iters.check2102 = icmp slt i32 %2, 16
+  %n.mod.vf2095 = and i32 %smax.i, 12
+  %n.vec2096 = and i32 %smax.i, 2147483632        ; 5 uses
   %broadcast.splatinsert2097 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat2098 = shufflevector <16 x i32> %broadcast.splatinsert2097, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n2140 = icmp eq i32 %2, %n.vec2096
+  %cmp.n2140 = icmp eq i32 %smax.i, %n.vec2096
   %min.epilog.iters.check2146 = icmp eq i32 %n.mod.vf2095, 0
-  %n.vec2149 = and i32 %2, 2147483644             ; 4 uses
+  %n.vec2149 = and i32 %smax.i, 2147483644        ; 4 uses
   %broadcast.splatinsert2150 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat2151 = shufflevector <4 x i32> %broadcast.splatinsert2150, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n2169 = icmp eq i32 %2, %n.vec2149
-  %min.iters.check2010 = icmp ult i32 %2, 4
-  %min.iters.check2012 = icmp ult i32 %2, 16
-  %n.mod.vf2014 = and i32 %2, 12
-  %n.vec2015 = and i32 %2, -16                    ; 5 uses
+  %cmp.n2169 = icmp eq i32 %smax.i, %n.vec2149
+  %min.iters.check2019 = icmp slt i32 %2, 4
+  %min.iters.check2021 = icmp slt i32 %2, 16
+  %n.mod.vf2014 = and i32 %smax.i, 12
+  %n.vec2015 = and i32 %smax.i, 2147483632        ; 5 uses
   %broadcast.splatinsert2016 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat2017 = shufflevector <16 x i32> %broadcast.splatinsert2016, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n2059 = icmp eq i32 %2, %n.vec2015
+  %cmp.n2059 = icmp eq i32 %smax.i, %n.vec2015
   %min.epilog.iters.check2065 = icmp eq i32 %n.mod.vf2014, 0
-  %n.vec2068 = and i32 %2, -4                     ; 4 uses
+  %n.vec2068 = and i32 %smax.i, 2147483644        ; 4 uses
   %broadcast.splatinsert2069 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat2070 = shufflevector <4 x i32> %broadcast.splatinsert2069, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n2088 = icmp eq i32 %2, %n.vec2068
-  %min.iters.check1929 = icmp ult i32 %2, 4
-  %min.iters.check1931 = icmp ult i32 %2, 16
-  %n.mod.vf1933 = and i32 %2, 12
-  %n.vec1934 = and i32 %2, -16                    ; 5 uses
+  %cmp.n2088 = icmp eq i32 %smax.i, %n.vec2068
+  %min.iters.check1938 = icmp slt i32 %2, 4
+  %min.iters.check1940 = icmp slt i32 %2, 16
+  %n.mod.vf1933 = and i32 %smax.i, 12
+  %n.vec1934 = and i32 %smax.i, 2147483632        ; 5 uses
   %broadcast.splatinsert1935 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat1936 = shufflevector <16 x i32> %broadcast.splatinsert1935, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n1978 = icmp eq i32 %2, %n.vec1934
+  %cmp.n1978 = icmp eq i32 %smax.i, %n.vec1934
   %min.epilog.iters.check1984 = icmp eq i32 %n.mod.vf1933, 0
-  %n.vec1987 = and i32 %2, -4                     ; 4 uses
+  %n.vec1987 = and i32 %smax.i, 2147483644        ; 4 uses
   %broadcast.splatinsert1988 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat1989 = shufflevector <4 x i32> %broadcast.splatinsert1988, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n2007 = icmp eq i32 %2, %n.vec1987
+  %cmp.n2007 = icmp eq i32 %smax.i, %n.vec1987
   %min.iters.check1848 = icmp ult i32 %2, 4
   %min.iters.check1850 = icmp ult i32 %2, 16
   %n.mod.vf1852 = and i32 %2, 12
@@ -225,102 +224,102 @@ bb.a:
   %broadcast.splatinsert1907 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat1908 = shufflevector <4 x i32> %broadcast.splatinsert1907, <4 x i32> poison, <4 x i32> zeroinitializer
   %cmp.n1926 = icmp eq i32 %2, %n.vec1906
-  %min.iters.check1767 = icmp ult i32 %2, 4
-  %min.iters.check1769 = icmp ult i32 %2, 16
-  %n.mod.vf1771 = and i32 %2, 12
-  %n.vec1772 = and i32 %2, 2147483632             ; 5 uses
+  %min.iters.check1776 = icmp slt i32 %2, 4
+  %min.iters.check1778 = icmp slt i32 %2, 16
+  %n.mod.vf1771 = and i32 %smax.i, 12
+  %n.vec1772 = and i32 %smax.i, 2147483632        ; 5 uses
   %broadcast.splatinsert1773 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat1774 = shufflevector <16 x i32> %broadcast.splatinsert1773, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n1816 = icmp eq i32 %2, %n.vec1772
+  %cmp.n1816 = icmp eq i32 %smax.i, %n.vec1772
   %min.epilog.iters.check1822 = icmp eq i32 %n.mod.vf1771, 0
-  %n.vec1825 = and i32 %2, 2147483644             ; 4 uses
+  %n.vec1825 = and i32 %smax.i, 2147483644        ; 4 uses
   %broadcast.splatinsert1826 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat1827 = shufflevector <4 x i32> %broadcast.splatinsert1826, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n1845 = icmp eq i32 %2, %n.vec1825
-  %min.iters.check1686 = icmp ult i32 %2, 4
-  %min.iters.check1688 = icmp ult i32 %2, 16
-  %n.mod.vf1690 = and i32 %2, 12
-  %n.vec1691 = and i32 %2, 2147483632             ; 5 uses
+  %cmp.n1845 = icmp eq i32 %smax.i, %n.vec1825
+  %min.iters.check1695 = icmp slt i32 %2, 4
+  %min.iters.check1697 = icmp slt i32 %2, 16
+  %n.mod.vf1690 = and i32 %smax.i, 12
+  %n.vec1691 = and i32 %smax.i, 2147483632        ; 5 uses
   %broadcast.splatinsert1692 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat1693 = shufflevector <16 x i32> %broadcast.splatinsert1692, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n1735 = icmp eq i32 %2, %n.vec1691
+  %cmp.n1735 = icmp eq i32 %smax.i, %n.vec1691
   %min.epilog.iters.check1741 = icmp eq i32 %n.mod.vf1690, 0
-  %n.vec1744 = and i32 %2, 2147483644             ; 4 uses
+  %n.vec1744 = and i32 %smax.i, 2147483644        ; 4 uses
   %broadcast.splatinsert1745 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat1746 = shufflevector <4 x i32> %broadcast.splatinsert1745, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n1764 = icmp eq i32 %2, %n.vec1744
-  %min.iters.check1605 = icmp ult i32 %2, 4
-  %min.iters.check1607 = icmp ult i32 %2, 16
-  %n.mod.vf1609 = and i32 %2, 12
-  %n.vec1610 = and i32 %2, 2147483632             ; 5 uses
+  %cmp.n1764 = icmp eq i32 %smax.i, %n.vec1744
+  %min.iters.check1614 = icmp slt i32 %2, 4
+  %min.iters.check1616 = icmp slt i32 %2, 16
+  %n.mod.vf1609 = and i32 %smax.i, 12
+  %n.vec1610 = and i32 %smax.i, 2147483632        ; 5 uses
   %broadcast.splatinsert1611 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat1612 = shufflevector <16 x i32> %broadcast.splatinsert1611, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n1654 = icmp eq i32 %2, %n.vec1610
+  %cmp.n1654 = icmp eq i32 %smax.i, %n.vec1610
   %min.epilog.iters.check1660 = icmp eq i32 %n.mod.vf1609, 0
-  %n.vec1663 = and i32 %2, 2147483644             ; 4 uses
+  %n.vec1663 = and i32 %smax.i, 2147483644        ; 4 uses
   %broadcast.splatinsert1664 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat1665 = shufflevector <4 x i32> %broadcast.splatinsert1664, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n1683 = icmp eq i32 %2, %n.vec1663
-  %min.iters.check1524 = icmp ult i32 %2, 4
-  %min.iters.check1526 = icmp ult i32 %2, 16
-  %n.mod.vf1528 = and i32 %2, 12
-  %n.vec1529 = and i32 %2, 2147483632             ; 5 uses
+  %cmp.n1683 = icmp eq i32 %smax.i, %n.vec1663
+  %min.iters.check1533 = icmp slt i32 %2, 4
+  %min.iters.check1535 = icmp slt i32 %2, 16
+  %n.mod.vf1528 = and i32 %smax.i, 12
+  %n.vec1529 = and i32 %smax.i, 2147483632        ; 5 uses
   %broadcast.splatinsert1530 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat1531 = shufflevector <16 x i32> %broadcast.splatinsert1530, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n1573 = icmp eq i32 %2, %n.vec1529
+  %cmp.n1573 = icmp eq i32 %smax.i, %n.vec1529
   %min.epilog.iters.check1579 = icmp eq i32 %n.mod.vf1528, 0
-  %n.vec1582 = and i32 %2, 2147483644             ; 4 uses
+  %n.vec1582 = and i32 %smax.i, 2147483644        ; 4 uses
   %broadcast.splatinsert1583 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat1584 = shufflevector <4 x i32> %broadcast.splatinsert1583, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n1602 = icmp eq i32 %2, %n.vec1582
-  %min.iters.check1443 = icmp ult i32 %2, 4
-  %min.iters.check1445 = icmp ult i32 %2, 16
-  %n.mod.vf1447 = and i32 %2, 12
-  %n.vec1448 = and i32 %2, 2147483632             ; 5 uses
+  %cmp.n1602 = icmp eq i32 %smax.i, %n.vec1582
+  %min.iters.check1452 = icmp slt i32 %2, 4
+  %min.iters.check1454 = icmp slt i32 %2, 16
+  %n.mod.vf1447 = and i32 %smax.i, 12
+  %n.vec1448 = and i32 %smax.i, 2147483632        ; 5 uses
   %broadcast.splatinsert1449 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat1450 = shufflevector <16 x i32> %broadcast.splatinsert1449, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n1492 = icmp eq i32 %2, %n.vec1448
+  %cmp.n1492 = icmp eq i32 %smax.i, %n.vec1448
   %min.epilog.iters.check1498 = icmp eq i32 %n.mod.vf1447, 0
-  %n.vec1501 = and i32 %2, 2147483644             ; 4 uses
+  %n.vec1501 = and i32 %smax.i, 2147483644        ; 4 uses
   %broadcast.splatinsert1502 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat1503 = shufflevector <4 x i32> %broadcast.splatinsert1502, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n1521 = icmp eq i32 %2, %n.vec1501
-  %min.iters.check1362 = icmp ult i32 %2, 4
-  %min.iters.check1364 = icmp ult i32 %2, 16
-  %n.mod.vf1366 = and i32 %2, 12
-  %n.vec1367 = and i32 %2, 2147483632             ; 5 uses
+  %cmp.n1521 = icmp eq i32 %smax.i, %n.vec1501
+  %min.iters.check1371 = icmp slt i32 %2, 4
+  %min.iters.check1373 = icmp slt i32 %2, 16
+  %n.mod.vf1366 = and i32 %smax.i, 12
+  %n.vec1367 = and i32 %smax.i, 2147483632        ; 5 uses
   %broadcast.splatinsert1368 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat1369 = shufflevector <16 x i32> %broadcast.splatinsert1368, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n1411 = icmp eq i32 %2, %n.vec1367
+  %cmp.n1411 = icmp eq i32 %smax.i, %n.vec1367
   %min.epilog.iters.check1417 = icmp eq i32 %n.mod.vf1366, 0
-  %n.vec1420 = and i32 %2, 2147483644             ; 4 uses
+  %n.vec1420 = and i32 %smax.i, 2147483644        ; 4 uses
   %broadcast.splatinsert1421 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat1422 = shufflevector <4 x i32> %broadcast.splatinsert1421, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n1440 = icmp eq i32 %2, %n.vec1420
-  %min.iters.check1281 = icmp ult i32 %2, 4
-  %min.iters.check1283 = icmp ult i32 %2, 16
-  %n.mod.vf1285 = and i32 %2, 12
-  %n.vec1286 = and i32 %2, 2147483632             ; 5 uses
+  %cmp.n1440 = icmp eq i32 %smax.i, %n.vec1420
+  %min.iters.check1290 = icmp slt i32 %2, 4
+  %min.iters.check1292 = icmp slt i32 %2, 16
+  %n.mod.vf1285 = and i32 %smax.i, 12
+  %n.vec1286 = and i32 %smax.i, 2147483632        ; 5 uses
   %broadcast.splatinsert1287 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat1288 = shufflevector <16 x i32> %broadcast.splatinsert1287, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n1330 = icmp eq i32 %2, %n.vec1286
+  %cmp.n1330 = icmp eq i32 %smax.i, %n.vec1286
   %min.epilog.iters.check1336 = icmp eq i32 %n.mod.vf1285, 0
-  %n.vec1339 = and i32 %2, 2147483644             ; 4 uses
+  %n.vec1339 = and i32 %smax.i, 2147483644        ; 4 uses
   %broadcast.splatinsert1340 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat1341 = shufflevector <4 x i32> %broadcast.splatinsert1340, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n1359 = icmp eq i32 %2, %n.vec1339
-  %min.iters.check1173 = icmp ult i32 %2, 4
-  %min.iters.check1175 = icmp ult i32 %2, 32
-  %n.mod.vf1177 = and i32 %2, 28
-  %n.vec1178 = and i32 %2, 2147483616             ; 5 uses
+  %cmp.n1359 = icmp eq i32 %smax.i, %n.vec1339
+  %min.iters.check1182 = icmp slt i32 %2, 4
+  %min.iters.check1184 = icmp slt i32 %2, 32
+  %n.mod.vf1177 = and i32 %smax.i, 28
+  %n.vec1178 = and i32 %smax.i, 2147483616        ; 5 uses
   %broadcast.splatinsert1179 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat1180 = shufflevector <16 x i32> %broadcast.splatinsert1179, <16 x i32> poison, <16 x i32> zeroinitializer ; 2 uses
-  %cmp.n1251 = icmp eq i32 %2, %n.vec1178
+  %cmp.n1251 = icmp eq i32 %smax.i, %n.vec1178
   %min.epilog.iters.check1256 = icmp eq i32 %n.mod.vf1177, 0
-  %n.vec1259 = and i32 %2, 2147483644             ; 4 uses
+  %n.vec1259 = and i32 %smax.i, 2147483644        ; 4 uses
   %broadcast.splatinsert1260 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat1261 = shufflevector <4 x i32> %broadcast.splatinsert1260, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n1279 = icmp eq i32 %2, %n.vec1259
+  %cmp.n1279 = icmp eq i32 %smax.i, %n.vec1259
   %min.iters.check1092 = icmp ult i32 %2, 4
   %min.iters.check1094 = icmp ult i32 %2, 16
   %n.mod.vf1096 = and i32 %2, 12
@@ -357,42 +356,42 @@ bb.a:
   %broadcast.splatinsert989 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat990 = shufflevector <4 x i32> %broadcast.splatinsert989, <4 x i32> poison, <4 x i32> zeroinitializer
   %cmp.n1008 = icmp eq i32 %2, %n.vec988
-  %min.iters.check849 = icmp ult i32 %2, 4
-  %min.iters.check851 = icmp ult i32 %2, 16
-  %n.mod.vf853 = and i32 %2, 12
-  %n.vec854 = and i32 %2, 2147483632              ; 5 uses
+  %min.iters.check858 = icmp slt i32 %2, 4
+  %min.iters.check860 = icmp slt i32 %2, 16
+  %n.mod.vf853 = and i32 %smax.i, 12
+  %n.vec854 = and i32 %smax.i, 2147483632         ; 5 uses
   %broadcast.splatinsert855 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat856 = shufflevector <16 x i32> %broadcast.splatinsert855, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n898 = icmp eq i32 %2, %n.vec854
+  %cmp.n898 = icmp eq i32 %smax.i, %n.vec854
   %min.epilog.iters.check904 = icmp eq i32 %n.mod.vf853, 0
-  %n.vec907 = and i32 %2, 2147483644              ; 4 uses
+  %n.vec907 = and i32 %smax.i, 2147483644         ; 4 uses
   %broadcast.splatinsert908 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat909 = shufflevector <4 x i32> %broadcast.splatinsert908, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n927 = icmp eq i32 %2, %n.vec907
-  %min.iters.check768 = icmp ult i32 %2, 4
-  %min.iters.check770 = icmp ult i32 %2, 16
-  %n.mod.vf772 = and i32 %2, 12
-  %n.vec773 = and i32 %2, -16                     ; 5 uses
+  %cmp.n927 = icmp eq i32 %smax.i, %n.vec907
+  %min.iters.check777 = icmp slt i32 %2, 4
+  %min.iters.check779 = icmp slt i32 %2, 16
+  %n.mod.vf772 = and i32 %smax.i, 12
+  %n.vec773 = and i32 %smax.i, 2147483632         ; 5 uses
   %broadcast.splatinsert774 = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat775 = shufflevector <16 x i32> %broadcast.splatinsert774, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n817 = icmp eq i32 %2, %n.vec773
+  %cmp.n817 = icmp eq i32 %smax.i, %n.vec773
   %min.epilog.iters.check823 = icmp eq i32 %n.mod.vf772, 0
-  %n.vec826 = and i32 %2, -4                      ; 4 uses
+  %n.vec826 = and i32 %smax.i, 2147483644         ; 4 uses
   %broadcast.splatinsert827 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat828 = shufflevector <4 x i32> %broadcast.splatinsert827, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n846 = icmp eq i32 %2, %n.vec826
-  %min.iters.check = icmp ult i32 %2, 4
-  %min.iters.check713 = icmp ult i32 %2, 16
-  %n.mod.vf = and i32 %2, 12
-  %n.vec = and i32 %2, -16                        ; 5 uses
+  %cmp.n846 = icmp eq i32 %smax.i, %n.vec826
+  %min.iters.check = icmp slt i32 %2, 4
+  %min.iters.check722 = icmp slt i32 %2, 16
+  %n.mod.vf = and i32 %smax.i, 12
+  %n.vec = and i32 %smax.i, 2147483632            ; 5 uses
   %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %1, i64 0
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer
-  %cmp.n = icmp eq i32 %2, %n.vec
+  %cmp.n = icmp eq i32 %smax.i, %n.vec
   %min.epilog.iters.check = icmp eq i32 %n.mod.vf, 0
-  %n.vec747 = and i32 %2, -4                      ; 4 uses
+  %n.vec747 = and i32 %smax.i, 2147483644         ; 4 uses
   %broadcast.splatinsert748 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat749 = shufflevector <4 x i32> %broadcast.splatinsert748, <4 x i32> poison, <4 x i32> zeroinitializer
-  %cmp.n765 = icmp eq i32 %2, %n.vec747
+  %cmp.n765 = icmp eq i32 %smax.i, %n.vec747
   br label %.outer
 
 .outer:                                           ; preds = %_ZL10outputCharcPcPiii.exit175, %bb.a
@@ -452,10 +451,10 @@ bb.g:                                             ; preds = %bb.d, %.lr.ph
 
 iter.check2306:                                   ; preds = %bb.g, %bb.f, %bb.e
   %i.v = sext i32 %.lcssa429431434 to i64         ; 7 uses
-  br i1 %min.iters.check2253, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check2254
+  br i1 %min.iters.check2262, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check2254
 
 vector.main.loop.iter.check2254:                  ; preds = %iter.check2306
-  br i1 %min.iters.check2255, label %vec.epilog.ph2310, label %vector.ph2256
+  br i1 %min.iters.check2264, label %vec.epilog.ph2310, label %vector.ph2256
 
 vector.ph2256:                                    ; preds = %vector.main.loop.iter.check2254
   %i.w = add nsw i64 %n.vec2258, %i.v             ; 3 uses
@@ -759,7 +758,7 @@ bb.h:                                             ; preds = %.lr.ph.i
 bb.i:                                             ; preds = %bb.h, %.lr.ph.i
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %i.cy = add nuw nsw i32 %.030.i, 1              ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.cy, %2
+  %exitcond.not.i = icmp eq i32 %i.cy, %smax.i
   br i1 %exitcond.not.i, label %.loopexit.i.loopexit, label %.lr.ph.i, !llvm.loop !11
 
 .loopexit.i.loopexit:                             ; preds = %bb.i, %vec.epilog.middle.block2339, %middle.block2301
@@ -877,10 +876,10 @@ bb.u:                                             ; preds = %bb.r, %bb.o
   br i1 %.old.i, label %iter.check820, label %.loopexit.i161
 
 iter.check820:                                    ; preds = %bb.u, %bb.t, %bb.s
-  br i1 %min.iters.check768, label %.lr.ph.i167.preheader, label %vector.main.loop.iter.check769
+  br i1 %min.iters.check777, label %.lr.ph.i167.preheader, label %vector.main.loop.iter.check769
 
 vector.main.loop.iter.check769:                   ; preds = %iter.check820
-  br i1 %min.iters.check770, label %vec.epilog.ph824, label %vector.ph771
+  br i1 %min.iters.check779, label %vec.epilog.ph824, label %vector.ph771
 
 vector.ph771:                                     ; preds = %vector.main.loop.iter.check769
   %i.ef = add i32 %.promoted514, %n.vec773        ; 3 uses
@@ -1165,7 +1164,7 @@ bb.v:                                             ; preds = %.lr.ph.i167
 bb.w:                                             ; preds = %bb.v, %.lr.ph.i167
   %i.hq = add nsw i32 %.pre.i170512, 1            ; 2 uses
   %i.hr = add nuw nsw i32 %.030.i168, 1           ; 2 uses
-  %exitcond.not.i169 = icmp eq i32 %i.hr, %2
+  %exitcond.not.i169 = icmp eq i32 %i.hr, %smax.i
   br i1 %exitcond.not.i169, label %.loopexit.i161.loopexit, label %.lr.ph.i167, !llvm.loop !16
 
 .loopexit.i161.loopexit:                          ; preds = %bb.w, %vec.epilog.middle.block845, %middle.block816
@@ -1277,10 +1276,10 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   br i1 %or.cond.not34.i.us27.i, label %iter.check901, label %.loopexit.i.us33.i
 
 iter.check901:                                    ; preds = %bb.aj, %bb.ai, %bb.ag, %.split.split.split.us.i
-  br i1 %min.iters.check849, label %.lr.ph.i.us29.i.preheader, label %vector.main.loop.iter.check850
+  br i1 %min.iters.check858, label %.lr.ph.i.us29.i.preheader, label %vector.main.loop.iter.check850
 
 vector.main.loop.iter.check850:                   ; preds = %iter.check901
-  br i1 %min.iters.check851, label %vec.epilog.ph905, label %vector.ph852
+  br i1 %min.iters.check860, label %vec.epilog.ph905, label %vector.ph852
 
 vector.ph852:                                     ; preds = %vector.main.loop.iter.check850
   %i.iz = add i32 %.lcssa507509, %n.vec854        ; 3 uses
@@ -1565,7 +1564,7 @@ bb.ak:                                            ; preds = %.lr.ph.i.us29.i
 bb.al:                                            ; preds = %bb.ak, %.lr.ph.i.us29.i
   %i.mk = add nsw i32 %.pre.i.us31.i506, 1        ; 2 uses
   %i.ml = add nuw nsw i32 %.030.i.us30.i, 1       ; 2 uses
-  %exitcond.not.i.us32.i = icmp eq i32 %i.ml, %2
+  %exitcond.not.i.us32.i = icmp eq i32 %i.ml, %smax.i
   br i1 %exitcond.not.i.us32.i, label %.loopexit.i.us33.i, label %.lr.ph.i.us29.i, !llvm.loop !20
 
 .loopexit.i.us33.i:                               ; preds = %bb.al, %middle.block897, %vec.epilog.middle.block926, %bb.aj, %bb.ag, %bb.af
@@ -1968,10 +1967,10 @@ bb.di:                                            ; preds = %bb.dh
   br i1 %i.acv, label %iter.check1819, label %.loopexit.i.us33.i221
 
 iter.check1819:                                   ; preds = %bb.di, %.split.split.split.us.i218.preheader
-  br i1 %min.iters.check1767, label %.lr.ph.i.us29.i226.preheader, label %vector.main.loop.iter.check1768
+  br i1 %min.iters.check1776, label %.lr.ph.i.us29.i226.preheader, label %vector.main.loop.iter.check1768
 
 vector.main.loop.iter.check1768:                  ; preds = %iter.check1819
-  br i1 %min.iters.check1769, label %vec.epilog.ph1823, label %vector.ph1770
+  br i1 %min.iters.check1778, label %vec.epilog.ph1823, label %vector.ph1770
 
 vector.ph1770:                                    ; preds = %vector.main.loop.iter.check1768
   %i.acw = add i32 %.promoted514, %n.vec1772      ; 3 uses
@@ -2256,7 +2255,7 @@ bb.dj:                                            ; preds = %.lr.ph.i.us29.i226
 bb.dk:                                            ; preds = %bb.dj, %.lr.ph.i.us29.i226
   %i.agh = add nsw i32 %.pre.i.us31.i229474, 1    ; 2 uses
   %i.agi = add nuw nsw i32 %.030.i.us30.i227, 1   ; 2 uses
-  %exitcond.not.i.us32.i228 = icmp eq i32 %i.agi, %2
+  %exitcond.not.i.us32.i228 = icmp eq i32 %i.agi, %smax.i
   br i1 %exitcond.not.i.us32.i228, label %.loopexit.i.us33.i221, label %.lr.ph.i.us29.i226, !llvm.loop !26
 
 .loopexit.i.us33.i221:                            ; preds = %bb.dk, %middle.block1815, %vec.epilog.middle.block1844, %bb.dh, %bb.di
@@ -2288,10 +2287,10 @@ bb.dn:                                            ; preds = %bb.dm
   br i1 %i.agt, label %iter.check1738, label %.loopexit.i.us33.i221.1
 
 iter.check1738:                                   ; preds = %bb.dn, %_ZL10outputCharcPcPiii.exit.us35.i223
-  br i1 %min.iters.check1686, label %.lr.ph.i.us29.i226.1.preheader, label %vector.main.loop.iter.check1687
+  br i1 %min.iters.check1695, label %.lr.ph.i.us29.i226.1.preheader, label %vector.main.loop.iter.check1687
 
 vector.main.loop.iter.check1687:                  ; preds = %iter.check1738
-  br i1 %min.iters.check1688, label %vec.epilog.ph1742, label %vector.ph1689
+  br i1 %min.iters.check1697, label %vec.epilog.ph1742, label %vector.ph1689
 
 vector.ph1689:                                    ; preds = %vector.main.loop.iter.check1687
   %i.agu = add i32 %i.agm, %n.vec1691             ; 3 uses
@@ -2576,7 +2575,7 @@ bb.do:                                            ; preds = %.lr.ph.i.us29.i226.
 bb.dp:                                            ; preds = %bb.do, %.lr.ph.i.us29.i226.1
   %i.akf = add nsw i32 %.pre.i.us31.i229474.1, 1  ; 2 uses
   %i.akg = add nuw nsw i32 %.030.i.us30.i227.1, 1 ; 2 uses
-  %exitcond.not.i.us32.i228.1 = icmp eq i32 %i.akg, %2
+  %exitcond.not.i.us32.i228.1 = icmp eq i32 %i.akg, %smax.i
   br i1 %exitcond.not.i.us32.i228.1, label %.loopexit.i.us33.i221.1, label %.lr.ph.i.us29.i226.1, !llvm.loop !29
 
 .loopexit.i.us33.i221.1:                          ; preds = %bb.dp, %middle.block1734, %vec.epilog.middle.block1763, %bb.dn, %bb.dm
@@ -2608,10 +2607,10 @@ bb.ds:                                            ; preds = %bb.dr
   br i1 %i.akr, label %iter.check1657, label %.loopexit.i.us33.i221.2
 
 iter.check1657:                                   ; preds = %bb.ds, %_ZL10outputCharcPcPiii.exit.us35.i223.1
-  br i1 %min.iters.check1605, label %.lr.ph.i.us29.i226.2.preheader, label %vector.main.loop.iter.check1606
+  br i1 %min.iters.check1614, label %.lr.ph.i.us29.i226.2.preheader, label %vector.main.loop.iter.check1606
 
 vector.main.loop.iter.check1606:                  ; preds = %iter.check1657
-  br i1 %min.iters.check1607, label %vec.epilog.ph1661, label %vector.ph1608
+  br i1 %min.iters.check1616, label %vec.epilog.ph1661, label %vector.ph1608
 
 vector.ph1608:                                    ; preds = %vector.main.loop.iter.check1606
   %i.aks = add i32 %i.akk, %n.vec1610             ; 3 uses
@@ -2896,7 +2895,7 @@ bb.dt:                                            ; preds = %.lr.ph.i.us29.i226.
 bb.du:                                            ; preds = %bb.dt, %.lr.ph.i.us29.i226.2
   %i.aod = add nsw i32 %.pre.i.us31.i229474.2, 1  ; 2 uses
   %i.aoe = add nuw nsw i32 %.030.i.us30.i227.2, 1 ; 2 uses
-  %exitcond.not.i.us32.i228.2 = icmp eq i32 %i.aoe, %2
+  %exitcond.not.i.us32.i228.2 = icmp eq i32 %i.aoe, %smax.i
   br i1 %exitcond.not.i.us32.i228.2, label %.loopexit.i.us33.i221.2, label %.lr.ph.i.us29.i226.2, !llvm.loop !32
 
 .loopexit.i.us33.i221.2:                          ; preds = %bb.du, %middle.block1653, %vec.epilog.middle.block1682, %bb.ds, %bb.dr
@@ -2928,10 +2927,10 @@ bb.dx:                                            ; preds = %bb.dw
   br i1 %i.aop, label %iter.check1576, label %.loopexit.i.us33.i221.3
 
 iter.check1576:                                   ; preds = %bb.dx, %_ZL10outputCharcPcPiii.exit.us35.i223.2
-  br i1 %min.iters.check1524, label %.lr.ph.i.us29.i226.3.preheader, label %vector.main.loop.iter.check1525
+  br i1 %min.iters.check1533, label %.lr.ph.i.us29.i226.3.preheader, label %vector.main.loop.iter.check1525
 
 vector.main.loop.iter.check1525:                  ; preds = %iter.check1576
-  br i1 %min.iters.check1526, label %vec.epilog.ph1580, label %vector.ph1527
+  br i1 %min.iters.check1535, label %vec.epilog.ph1580, label %vector.ph1527
 
 vector.ph1527:                                    ; preds = %vector.main.loop.iter.check1525
   %i.aoq = add i32 %i.aoi, %n.vec1529             ; 3 uses
@@ -3216,7 +3215,7 @@ bb.dy:                                            ; preds = %.lr.ph.i.us29.i226.
 bb.dz:                                            ; preds = %bb.dy, %.lr.ph.i.us29.i226.3
   %i.asb = add nsw i32 %.pre.i.us31.i229474.3, 1  ; 2 uses
   %i.asc = add nuw nsw i32 %.030.i.us30.i227.3, 1 ; 2 uses
-  %exitcond.not.i.us32.i228.3 = icmp eq i32 %i.asc, %2
+  %exitcond.not.i.us32.i228.3 = icmp eq i32 %i.asc, %smax.i
   br i1 %exitcond.not.i.us32.i228.3, label %.loopexit.i.us33.i221.3, label %.lr.ph.i.us29.i226.3, !llvm.loop !35
 
 .loopexit.i.us33.i221.3:                          ; preds = %bb.dz, %middle.block1572, %vec.epilog.middle.block1601, %bb.dx, %bb.dw
@@ -3248,10 +3247,10 @@ bb.ec:                                            ; preds = %bb.eb
   br i1 %i.asn, label %iter.check1495, label %.loopexit.i.us33.i221.4
 
 iter.check1495:                                   ; preds = %bb.ec, %_ZL10outputCharcPcPiii.exit.us35.i223.3
-  br i1 %min.iters.check1443, label %.lr.ph.i.us29.i226.4.preheader, label %vector.main.loop.iter.check1444
+  br i1 %min.iters.check1452, label %.lr.ph.i.us29.i226.4.preheader, label %vector.main.loop.iter.check1444
 
 vector.main.loop.iter.check1444:                  ; preds = %iter.check1495
-  br i1 %min.iters.check1445, label %vec.epilog.ph1499, label %vector.ph1446
+  br i1 %min.iters.check1454, label %vec.epilog.ph1499, label %vector.ph1446
 
 vector.ph1446:                                    ; preds = %vector.main.loop.iter.check1444
   %i.aso = add i32 %i.asg, %n.vec1448             ; 3 uses
@@ -3536,7 +3535,7 @@ bb.ed:                                            ; preds = %.lr.ph.i.us29.i226.
 bb.ee:                                            ; preds = %bb.ed, %.lr.ph.i.us29.i226.4
   %i.avz = add nsw i32 %.pre.i.us31.i229474.4, 1  ; 2 uses
   %i.awa = add nuw nsw i32 %.030.i.us30.i227.4, 1 ; 2 uses
-  %exitcond.not.i.us32.i228.4 = icmp eq i32 %i.awa, %2
+  %exitcond.not.i.us32.i228.4 = icmp eq i32 %i.awa, %smax.i
   br i1 %exitcond.not.i.us32.i228.4, label %.loopexit.i.us33.i221.4, label %.lr.ph.i.us29.i226.4, !llvm.loop !38
 
 .loopexit.i.us33.i221.4:                          ; preds = %bb.ee, %middle.block1491, %vec.epilog.middle.block1520, %bb.ec, %bb.eb
@@ -3568,10 +3567,10 @@ bb.eh:                                            ; preds = %bb.eg
   br i1 %i.awl, label %iter.check1414, label %.loopexit.i.us33.i221.5
 
 iter.check1414:                                   ; preds = %bb.eh, %_ZL10outputCharcPcPiii.exit.us35.i223.4
-  br i1 %min.iters.check1362, label %.lr.ph.i.us29.i226.5.preheader, label %vector.main.loop.iter.check1363
+  br i1 %min.iters.check1371, label %.lr.ph.i.us29.i226.5.preheader, label %vector.main.loop.iter.check1363
 
 vector.main.loop.iter.check1363:                  ; preds = %iter.check1414
-  br i1 %min.iters.check1364, label %vec.epilog.ph1418, label %vector.ph1365
+  br i1 %min.iters.check1373, label %vec.epilog.ph1418, label %vector.ph1365
 
 vector.ph1365:                                    ; preds = %vector.main.loop.iter.check1363
   %i.awm = add i32 %i.awe, %n.vec1367             ; 3 uses
@@ -3856,7 +3855,7 @@ bb.ei:                                            ; preds = %.lr.ph.i.us29.i226.
 bb.ej:                                            ; preds = %bb.ei, %.lr.ph.i.us29.i226.5
   %i.azx = add nsw i32 %.pre.i.us31.i229474.5, 1  ; 2 uses
   %i.azy = add nuw nsw i32 %.030.i.us30.i227.5, 1 ; 2 uses
-  %exitcond.not.i.us32.i228.5 = icmp eq i32 %i.azy, %2
+  %exitcond.not.i.us32.i228.5 = icmp eq i32 %i.azy, %smax.i
   br i1 %exitcond.not.i.us32.i228.5, label %.loopexit.i.us33.i221.5, label %.lr.ph.i.us29.i226.5, !llvm.loop !41
 
 .loopexit.i.us33.i221.5:                          ; preds = %bb.ej, %middle.block1410, %vec.epilog.middle.block1439, %bb.eh, %bb.eg
@@ -3888,10 +3887,10 @@ bb.em:                                            ; preds = %bb.el
   br i1 %i.baj, label %iter.check1333, label %.loopexit.i.us33.i221.6
 
 iter.check1333:                                   ; preds = %bb.em, %_ZL10outputCharcPcPiii.exit.us35.i223.5
-  br i1 %min.iters.check1281, label %.lr.ph.i.us29.i226.6.preheader, label %vector.main.loop.iter.check1282
+  br i1 %min.iters.check1290, label %.lr.ph.i.us29.i226.6.preheader, label %vector.main.loop.iter.check1282
 
 vector.main.loop.iter.check1282:                  ; preds = %iter.check1333
-  br i1 %min.iters.check1283, label %vec.epilog.ph1337, label %vector.ph1284
+  br i1 %min.iters.check1292, label %vec.epilog.ph1337, label %vector.ph1284
 
 vector.ph1284:                                    ; preds = %vector.main.loop.iter.check1282
   %i.bak = add i32 %i.bac, %n.vec1286             ; 3 uses
@@ -4176,7 +4175,7 @@ bb.en:                                            ; preds = %.lr.ph.i.us29.i226.
 bb.eo:                                            ; preds = %bb.en, %.lr.ph.i.us29.i226.6
   %i.bdv = add nsw i32 %.pre.i.us31.i229474.6, 1  ; 2 uses
   %i.bdw = add nuw nsw i32 %.030.i.us30.i227.6, 1 ; 2 uses
-  %exitcond.not.i.us32.i228.6 = icmp eq i32 %i.bdw, %2
+  %exitcond.not.i.us32.i228.6 = icmp eq i32 %i.bdw, %smax.i
   br i1 %exitcond.not.i.us32.i228.6, label %.loopexit.i.us33.i221.6, label %.lr.ph.i.us29.i226.6, !llvm.loop !44
 
 .loopexit.i.us33.i221.6:                          ; preds = %bb.eo, %middle.block1329, %vec.epilog.middle.block1358, %bb.em, %bb.el
@@ -4196,10 +4195,10 @@ _ZL10outputCharcPcPiii.exit.us35.i223.6:          ; preds = %bb.ep, %.loopexit.i
   br i1 %i.beb, label %iter.check1253, label %.loopexit.i.us33.i221.7
 
 iter.check1253:                                   ; preds = %_ZL10outputCharcPcPiii.exit.us35.i223.6
-  br i1 %min.iters.check1173, label %.lr.ph.i.us29.i226.7.preheader, label %vector.main.loop.iter.check1174
+  br i1 %min.iters.check1182, label %.lr.ph.i.us29.i226.7.preheader, label %vector.main.loop.iter.check1174
 
 vector.main.loop.iter.check1174:                  ; preds = %iter.check1253
-  br i1 %min.iters.check1175, label %vec.epilog.ph1257, label %vector.body1181
+  br i1 %min.iters.check1184, label %vec.epilog.ph1257, label %vector.body1181
 
 vector.body1181:                                  ; preds = %vector.main.loop.iter.check1174, %pred.store.continue1247
   %index1182 = phi i32 [ %index.next1248, %pred.store.continue1247 ], [ 0, %vector.main.loop.iter.check1174 ] ; 33 uses
@@ -4602,7 +4601,7 @@ bb.eq:                                            ; preds = %.lr.ph.i.us29.i226.
 bb.er:                                            ; preds = %bb.eq, %.lr.ph.i.us29.i226.7
   %i.bjw = add nuw nsw i32 %.pre.i.us31.i229474.7, 1 ; 2 uses
   %i.bjx = add nuw nsw i32 %.030.i.us30.i227.7, 1 ; 2 uses
-  %exitcond.not.i.us32.i228.7 = icmp eq i32 %i.bjx, %2
+  %exitcond.not.i.us32.i228.7 = icmp eq i32 %i.bjx, %smax.i
   br i1 %exitcond.not.i.us32.i228.7, label %.loopexit.i.us33.i221.7, label %.lr.ph.i.us29.i226.7, !llvm.loop !48
 
 .loopexit.i.us33.i221.7:                          ; preds = %bb.er, %middle.block1250, %vec.epilog.middle.block1278, %_ZL10outputCharcPcPiii.exit.us35.i223.6
@@ -4714,10 +4713,10 @@ bb.ff:                                            ; preds = %bb.fc, %bb.ez
   br i1 %.old.i, label %iter.check1981, label %.loopexit.i233
 
 iter.check1981:                                   ; preds = %bb.ff, %bb.fe, %bb.fd
-  br i1 %min.iters.check1929, label %.lr.ph.i239.preheader, label %vector.main.loop.iter.check1930
+  br i1 %min.iters.check1938, label %.lr.ph.i239.preheader, label %vector.main.loop.iter.check1930
 
 vector.main.loop.iter.check1930:                  ; preds = %iter.check1981
-  br i1 %min.iters.check1931, label %vec.epilog.ph1985, label %vector.ph1932
+  br i1 %min.iters.check1940, label %vec.epilog.ph1985, label %vector.ph1932
 
 vector.ph1932:                                    ; preds = %vector.main.loop.iter.check1930
   %i.ble = add i32 %i.bkv, %n.vec1934             ; 3 uses
@@ -5002,7 +5001,7 @@ bb.fg:                                            ; preds = %.lr.ph.i239
 bb.fh:                                            ; preds = %bb.fg, %.lr.ph.i239
   %i.bop = add nsw i32 %.pre.i242452, 1           ; 2 uses
   %i.boq = add nuw nsw i32 %.030.i240, 1          ; 2 uses
-  %exitcond.not.i241 = icmp eq i32 %i.boq, %2
+  %exitcond.not.i241 = icmp eq i32 %i.boq, %smax.i
   br i1 %exitcond.not.i241, label %.loopexit.i233.loopexit, label %.lr.ph.i239, !llvm.loop !52
 
 .loopexit.i233.loopexit:                          ; preds = %bb.fh, %vec.epilog.middle.block2006, %middle.block1977
@@ -5101,10 +5100,10 @@ bb.fr:                                            ; preds = %bb.fq, %bb.fp
   br i1 %or.cond.not34.i.us27.i269, label %iter.check2143, label %.loopexit.i.us33.i259
 
 iter.check2143:                                   ; preds = %bb.fr, %bb.fq, %bb.fo, %.split.split.split.us.i256
-  br i1 %min.iters.check2091, label %.lr.ph.i.us29.i264.preheader, label %vector.main.loop.iter.check2092
+  br i1 %min.iters.check2100, label %.lr.ph.i.us29.i264.preheader, label %vector.main.loop.iter.check2092
 
 vector.main.loop.iter.check2092:                  ; preds = %iter.check2143
-  br i1 %min.iters.check2093, label %vec.epilog.ph2147, label %vector.ph2094
+  br i1 %min.iters.check2102, label %vec.epilog.ph2147, label %vector.ph2094
 
 vector.ph2094:                                    ; preds = %vector.main.loop.iter.check2092
   %i.bps = add i32 %.lcssa444446, %n.vec2096      ; 3 uses
@@ -5389,7 +5388,7 @@ bb.fs:                                            ; preds = %.lr.ph.i.us29.i264
 bb.ft:                                            ; preds = %bb.fs, %.lr.ph.i.us29.i264
   %i.btd = add nsw i32 %.pre.i.us31.i267443, 1    ; 2 uses
   %i.bte = add nuw nsw i32 %.030.i.us30.i265, 1   ; 2 uses
-  %exitcond.not.i.us32.i266 = icmp eq i32 %i.bte, %2
+  %exitcond.not.i.us32.i266 = icmp eq i32 %i.bte, %smax.i
   br i1 %exitcond.not.i.us32.i266, label %.loopexit.i.us33.i259, label %.lr.ph.i.us29.i264, !llvm.loop !55
 
 .loopexit.i.us33.i259:                            ; preds = %bb.ft, %middle.block2139, %vec.epilog.middle.block2168, %bb.fr, %bb.fo, %bb.fn
@@ -5422,10 +5421,10 @@ bb.fw:                                            ; preds = %_ZL12outputStringPK
   br i1 %.old.i, label %iter.check2062, label %.loopexit.i274
 
 iter.check2062:                                   ; preds = %bb.fw, %bb.fv
-  br i1 %min.iters.check2010, label %.lr.ph.i276.preheader, label %vector.main.loop.iter.check2011
+  br i1 %min.iters.check2019, label %.lr.ph.i276.preheader, label %vector.main.loop.iter.check2011
 
 vector.main.loop.iter.check2011:                  ; preds = %iter.check2062
-  br i1 %min.iters.check2012, label %vec.epilog.ph2066, label %vector.ph2013
+  br i1 %min.iters.check2021, label %vec.epilog.ph2066, label %vector.ph2013
 
 vector.ph2013:                                    ; preds = %vector.main.loop.iter.check2011
   %i.btk = add i32 %.promoted448, %n.vec2015      ; 3 uses
@@ -5710,7 +5709,7 @@ bb.fx:                                            ; preds = %.lr.ph.i276
 bb.fy:                                            ; preds = %bb.fx, %.lr.ph.i276
   %i.bwv = add nsw i32 %.pre.i279449, 1           ; 2 uses
   %i.bww = add nuw nsw i32 %.030.i277, 1          ; 2 uses
-  %exitcond.not.i278 = icmp eq i32 %i.bww, %2
+  %exitcond.not.i278 = icmp eq i32 %i.bww, %smax.i
   br i1 %exitcond.not.i278, label %.loopexit.i274, label %.lr.ph.i276, !llvm.loop !58
 
 .loopexit.i274:                                   ; preds = %bb.fy, %middle.block2058, %vec.epilog.middle.block2087, %bb.fw, %bb.fv
@@ -5749,10 +5748,10 @@ bb.gc:                                            ; preds = %bb.ga
   br i1 %.old.i, label %iter.check2224, label %.loopexit.i285
 
 iter.check2224:                                   ; preds = %bb.gc, %bb.gb
-  br i1 %min.iters.check2172, label %.lr.ph.i287.preheader, label %vector.main.loop.iter.check2173
+  br i1 %min.iters.check2181, label %.lr.ph.i287.preheader, label %vector.main.loop.iter.check2173
 
 vector.main.loop.iter.check2173:                  ; preds = %iter.check2224
-  br i1 %min.iters.check2174, label %vec.epilog.ph2228, label %vector.ph2175
+  br i1 %min.iters.check2183, label %vec.epilog.ph2228, label %vector.ph2175
 
 vector.ph2175:                                    ; preds = %vector.main.loop.iter.check2173
   %i.bxj = add i32 %i.bxh, %n.vec2177             ; 3 uses
@@ -6037,7 +6036,7 @@ bb.gd:                                            ; preds = %.lr.ph.i287
 bb.ge:                                            ; preds = %bb.gd, %.lr.ph.i287
   %i.cau = add nsw i32 %.pre.i290438, 1           ; 2 uses
   %i.cav = add nuw nsw i32 %.030.i288, 1          ; 2 uses
-  %exitcond.not.i289 = icmp eq i32 %i.cav, %2
+  %exitcond.not.i289 = icmp eq i32 %i.cav, %smax.i
   br i1 %exitcond.not.i289, label %.loopexit.i285, label %.lr.ph.i287, !llvm.loop !61
 
 .loopexit.i285:                                   ; preds = %bb.ge, %middle.block2220, %vec.epilog.middle.block2249, %bb.gc, %bb.gb
@@ -6440,7 +6439,7 @@ iter.check:                                       ; preds = %bb.hn, %bb.hm, %bb.
   br i1 %min.iters.check, label %.lr.ph.i346.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  br i1 %min.iters.check713, label %vec.epilog.ph, label %vector.ph
+  br i1 %min.iters.check722, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.cpr = add i32 %.promoted514, %n.vec          ; 3 uses
@@ -6725,7 +6724,7 @@ bb.ho:                                            ; preds = %.lr.ph.i346
 bb.hp:                                            ; preds = %bb.ho, %.lr.ph.i346
   %i.ctc = add nsw i32 %.pre.i349515, 1           ; 2 uses
   %i.ctd = add nuw nsw i32 %.030.i347, 1          ; 2 uses
-  %exitcond.not.i348 = icmp eq i32 %i.ctd, %2
+  %exitcond.not.i348 = icmp eq i32 %i.ctd, %smax.i
   br i1 %exitcond.not.i348, label %.loopexit.i340.loopexit, label %.lr.ph.i346, !llvm.loop !74
 
 .loopexit.i340.loopexit:                          ; preds = %bb.hp, %vec.epilog.middle.block, %middle.block
@@ -7128,6 +7127,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %.pr.i = load i32, ptr %3, align 4              ; 10 uses
   %.old.i.i = icmp sgt i32 %5, 0
+  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %5, i32 1) ; 21 uses
   br i1 %.old.i.i, label %.split.split.split.us.i.preheader, label %.split.us.i.preheader
 
 .split.us.i.preheader:                            ; preds = %bb.b
@@ -7235,12 +7235,12 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.aq, label %.lr.ph.i.us29.i.preheader, label %.loopexit.i.us33.i
 
 .lr.ph.i.us29.i.preheader:                        ; preds = %bb.j, %.split.split.split.us.i.preheader
-  %xtraiter137 = and i32 %5, 1
+  %xtraiter137 = and i32 %smax.i.i, 1
   %i.ar = icmp eq i32 %5, 1
   br i1 %i.ar, label %.lr.ph.i.us29.i.epil.preheader, label %.lr.ph.i.us29.i.preheader.new
 
 .lr.ph.i.us29.i.preheader.new:                    ; preds = %.lr.ph.i.us29.i.preheader
-  %unroll_iter143 = and i32 %5, 2147483646
+  %unroll_iter143 = and i32 %smax.i.i, 2147483646
   br label %.lr.ph.i.us29.i
 
 .lr.ph.i.us29.i:                                  ; preds = %bb.m, %.lr.ph.i.us29.i.preheader.new
@@ -7284,7 +7284,7 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.i.us2
 
 .lr.ph.i.us29.i.epil.preheader:                   ; preds = %.loopexit.i.us33.i.loopexit.unr-lcssa, %.lr.ph.i.us29.i.preheader
   %.epil.init139 = phi i32 [ %.pr.i, %.lr.ph.i.us29.i.preheader ], [ %i.bc, %.loopexit.i.us33.i.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod142 = trunc i32 %5 to i1
+  %lcmp.mod142 = trunc i32 %smax.i.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod142)
   %i.bd = icmp slt i32 %.epil.init139, %4
   br i1 %i.bd, label %bb.n, label %.loopexit.i.us33.i.loopexit.epilog-lcssa
@@ -7334,12 +7334,12 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.bu, label %.lr.ph.i.us29.i.1.preheader, label %.loopexit.i.us33.i.1
 
 .lr.ph.i.us29.i.1.preheader:                      ; preds = %bb.q, %_ZL10outputCharcPcPiii.exit.us35.i
-  %xtraiter149 = and i32 %5, 1
+  %xtraiter149 = and i32 %smax.i.i, 1
   %i.bv = icmp eq i32 %5, 1
   br i1 %i.bv, label %.lr.ph.i.us29.i.1.epil.preheader, label %.lr.ph.i.us29.i.1.preheader.new
 
 .lr.ph.i.us29.i.1.preheader.new:                  ; preds = %.lr.ph.i.us29.i.1.preheader
-  %unroll_iter155 = and i32 %5, 2147483646
+  %unroll_iter155 = and i32 %smax.i.i, 2147483646
   br label %.lr.ph.i.us29.i.1
 
 .lr.ph.i.us29.i.1:                                ; preds = %bb.t, %.lr.ph.i.us29.i.1.preheader.new
@@ -7383,7 +7383,7 @@ bb.t:                                             ; preds = %bb.s, %.lr.ph.i.us2
 
 .lr.ph.i.us29.i.1.epil.preheader:                 ; preds = %.loopexit.i.us33.i.1.loopexit.unr-lcssa, %.lr.ph.i.us29.i.1.preheader
   %.epil.init151 = phi i32 [ %i.bn, %.lr.ph.i.us29.i.1.preheader ], [ %i.cg, %.loopexit.i.us33.i.1.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod154 = trunc i32 %5 to i1
+  %lcmp.mod154 = trunc i32 %smax.i.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod154)
   %i.ch = icmp slt i32 %.epil.init151, %4
   br i1 %i.ch, label %bb.u, label %.loopexit.i.us33.i.1.loopexit.epilog-lcssa
@@ -7433,12 +7433,12 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.cy, label %.lr.ph.i.us29.i.2.preheader, label %.loopexit.i.us33.i.2
 
 .lr.ph.i.us29.i.2.preheader:                      ; preds = %bb.x, %_ZL10outputCharcPcPiii.exit.us35.i.1
-  %xtraiter157 = and i32 %5, 1
+  %xtraiter157 = and i32 %smax.i.i, 1
   %i.cz = icmp eq i32 %5, 1
   br i1 %i.cz, label %.lr.ph.i.us29.i.2.epil.preheader, label %.lr.ph.i.us29.i.2.preheader.new
 
 .lr.ph.i.us29.i.2.preheader.new:                  ; preds = %.lr.ph.i.us29.i.2.preheader
-  %unroll_iter163 = and i32 %5, 2147483646
+  %unroll_iter163 = and i32 %smax.i.i, 2147483646
   br label %.lr.ph.i.us29.i.2
 
 .lr.ph.i.us29.i.2:                                ; preds = %bb.aa, %.lr.ph.i.us29.i.2.preheader.new
@@ -7482,7 +7482,7 @@ bb.aa:                                            ; preds = %bb.z, %.lr.ph.i.us2
 
 .lr.ph.i.us29.i.2.epil.preheader:                 ; preds = %.loopexit.i.us33.i.2.loopexit.unr-lcssa, %.lr.ph.i.us29.i.2.preheader
   %.epil.init159 = phi i32 [ %i.cr, %.lr.ph.i.us29.i.2.preheader ], [ %i.dk, %.loopexit.i.us33.i.2.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod162 = trunc i32 %5 to i1
+  %lcmp.mod162 = trunc i32 %smax.i.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod162)
   %i.dl = icmp slt i32 %.epil.init159, %4
   br i1 %i.dl, label %bb.ab, label %.loopexit.i.us33.i.2.loopexit.epilog-lcssa
@@ -7532,12 +7532,12 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.ec, label %.lr.ph.i.us29.i.3.preheader, label %.loopexit.i.us33.i.3
 
 .lr.ph.i.us29.i.3.preheader:                      ; preds = %bb.ae, %_ZL10outputCharcPcPiii.exit.us35.i.2
-  %xtraiter165 = and i32 %5, 1
+  %xtraiter165 = and i32 %smax.i.i, 1
   %i.ed = icmp eq i32 %5, 1
   br i1 %i.ed, label %.lr.ph.i.us29.i.3.epil.preheader, label %.lr.ph.i.us29.i.3.preheader.new
 
 .lr.ph.i.us29.i.3.preheader.new:                  ; preds = %.lr.ph.i.us29.i.3.preheader
-  %unroll_iter171 = and i32 %5, 2147483646
+  %unroll_iter171 = and i32 %smax.i.i, 2147483646
   br label %.lr.ph.i.us29.i.3
 
 .lr.ph.i.us29.i.3:                                ; preds = %bb.ah, %.lr.ph.i.us29.i.3.preheader.new
@@ -7581,7 +7581,7 @@ bb.ah:                                            ; preds = %bb.ag, %.lr.ph.i.us
 
 .lr.ph.i.us29.i.3.epil.preheader:                 ; preds = %.loopexit.i.us33.i.3.loopexit.unr-lcssa, %.lr.ph.i.us29.i.3.preheader
   %.epil.init167 = phi i32 [ %i.dv, %.lr.ph.i.us29.i.3.preheader ], [ %i.eo, %.loopexit.i.us33.i.3.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod170 = trunc i32 %5 to i1
+  %lcmp.mod170 = trunc i32 %smax.i.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod170)
   %i.ep = icmp slt i32 %.epil.init167, %4
   br i1 %i.ep, label %bb.ai, label %.loopexit.i.us33.i.3.loopexit.epilog-lcssa
@@ -7631,12 +7631,12 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.fg, label %.lr.ph.i.us29.i.4.preheader, label %.loopexit.i.us33.i.4
 
 .lr.ph.i.us29.i.4.preheader:                      ; preds = %bb.al, %_ZL10outputCharcPcPiii.exit.us35.i.3
-  %xtraiter173 = and i32 %5, 1
+  %xtraiter173 = and i32 %smax.i.i, 1
   %i.fh = icmp eq i32 %5, 1
   br i1 %i.fh, label %.lr.ph.i.us29.i.4.epil.preheader, label %.lr.ph.i.us29.i.4.preheader.new
 
 .lr.ph.i.us29.i.4.preheader.new:                  ; preds = %.lr.ph.i.us29.i.4.preheader
-  %unroll_iter179 = and i32 %5, 2147483646
+  %unroll_iter179 = and i32 %smax.i.i, 2147483646
   br label %.lr.ph.i.us29.i.4
 
 .lr.ph.i.us29.i.4:                                ; preds = %bb.ao, %.lr.ph.i.us29.i.4.preheader.new
@@ -7680,7 +7680,7 @@ bb.ao:                                            ; preds = %bb.an, %.lr.ph.i.us
 
 .lr.ph.i.us29.i.4.epil.preheader:                 ; preds = %.loopexit.i.us33.i.4.loopexit.unr-lcssa, %.lr.ph.i.us29.i.4.preheader
   %.epil.init175 = phi i32 [ %i.ez, %.lr.ph.i.us29.i.4.preheader ], [ %i.fs, %.loopexit.i.us33.i.4.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod178 = trunc i32 %5 to i1
+  %lcmp.mod178 = trunc i32 %smax.i.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod178)
   %i.ft = icmp slt i32 %.epil.init175, %4
   br i1 %i.ft, label %bb.ap, label %.loopexit.i.us33.i.4.loopexit.epilog-lcssa
@@ -7730,12 +7730,12 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.gk, label %.lr.ph.i.us29.i.5.preheader, label %.loopexit.i.us33.i.5
 
 .lr.ph.i.us29.i.5.preheader:                      ; preds = %bb.as, %_ZL10outputCharcPcPiii.exit.us35.i.4
-  %xtraiter181 = and i32 %5, 1
+  %xtraiter181 = and i32 %smax.i.i, 1
   %i.gl = icmp eq i32 %5, 1
   br i1 %i.gl, label %.lr.ph.i.us29.i.5.epil.preheader, label %.lr.ph.i.us29.i.5.preheader.new
 
 .lr.ph.i.us29.i.5.preheader.new:                  ; preds = %.lr.ph.i.us29.i.5.preheader
-  %unroll_iter187 = and i32 %5, 2147483646
+  %unroll_iter187 = and i32 %smax.i.i, 2147483646
   br label %.lr.ph.i.us29.i.5
 
 .lr.ph.i.us29.i.5:                                ; preds = %bb.av, %.lr.ph.i.us29.i.5.preheader.new
@@ -7779,7 +7779,7 @@ bb.av:                                            ; preds = %bb.au, %.lr.ph.i.us
 
 .lr.ph.i.us29.i.5.epil.preheader:                 ; preds = %.loopexit.i.us33.i.5.loopexit.unr-lcssa, %.lr.ph.i.us29.i.5.preheader
   %.epil.init183 = phi i32 [ %i.gd, %.lr.ph.i.us29.i.5.preheader ], [ %i.gw, %.loopexit.i.us33.i.5.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod186 = trunc i32 %5 to i1
+  %lcmp.mod186 = trunc i32 %smax.i.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod186)
   %i.gx = icmp slt i32 %.epil.init183, %4
   br i1 %i.gx, label %bb.aw, label %.loopexit.i.us33.i.5.loopexit.epilog-lcssa
@@ -7817,12 +7817,12 @@ _ZL10outputCharcPcPiii.exit.us35.i.5:             ; preds = %bb.ax, %.loopexit.i
   br i1 %i.hi, label %.lr.ph.i.us29.i.6.preheader, label %.loopexit.i.us33.i.6
 
 .lr.ph.i.us29.i.6.preheader:                      ; preds = %_ZL10outputCharcPcPiii.exit.us35.i.5
-  %xtraiter189 = and i32 %5, 1
+  %xtraiter189 = and i32 %smax.i.i, 1
   %i.hj = icmp eq i32 %5, 1
   br i1 %i.hj, label %.lr.ph.i.us29.i.6.epil.preheader, label %.lr.ph.i.us29.i.6.preheader.new
 
 .lr.ph.i.us29.i.6.preheader.new:                  ; preds = %.lr.ph.i.us29.i.6.preheader
-  %unroll_iter195 = and i32 %5, 2147483646
+  %unroll_iter195 = and i32 %smax.i.i, 2147483646
   br label %.lr.ph.i.us29.i.6
 
 .lr.ph.i.us29.i.6:                                ; preds = %bb.ba, %.lr.ph.i.us29.i.6.preheader.new
@@ -7866,7 +7866,7 @@ bb.ba:                                            ; preds = %bb.az, %.lr.ph.i.us
 
 .lr.ph.i.us29.i.6.epil.preheader:                 ; preds = %.loopexit.i.us33.i.6.loopexit.unr-lcssa, %.lr.ph.i.us29.i.6.preheader
   %.epil.init191 = phi i32 [ 0, %.lr.ph.i.us29.i.6.preheader ], [ %i.hu, %.loopexit.i.us33.i.6.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod194 = trunc i32 %5 to i1
+  %lcmp.mod194 = trunc i32 %smax.i.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod194)
   %i.hv = icmp slt i32 %.epil.init191, %4
   br i1 %i.hv, label %bb.bb, label %.loopexit.i.us33.i.6.loopexit.epilog-lcssa

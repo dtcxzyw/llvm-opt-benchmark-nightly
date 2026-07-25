@@ -204,7 +204,7 @@ _ZN8pystring5rfindERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.e
 .preheader:                                       ; preds = %_ZN8pystring5rfindERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit35
   %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.al = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.am = add nsw i32 %.0.i34, -1                 ; 2 uses
+  %i.am = add i32 %.0.i34, -1                     ; 2 uses
   %exitcond.not83 = icmp eq i32 %.0, %i.am
   br i1 %exitcond.not83, label %.critedge, label %.lr.ph
 

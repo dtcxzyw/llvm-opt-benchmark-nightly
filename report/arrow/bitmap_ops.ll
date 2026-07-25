@@ -204,7 +204,7 @@ bb.a:
   %.not32.i = icmp eq i64 %i.f, 0
   %i.h = sub nsw i64 128, %i.f
   %i.i = select i1 %.not32.i, i64 64, i64 %i.h
-  %i.j = tail call i64 @llvm.umax.i64(i64 %spec.select.i, i64 %i.i)
+  %i.j = tail call i64 @llvm.smax.i64(i64 %spec.select.i, i64 %i.i)
   %i.k = or i64 %i.f, %i.c
   %brmerge.not.i = icmp eq i64 %i.k, 0
   br label %bb.b
@@ -607,7 +607,7 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #20
 declare i64 @llvm.fshr.i64(i64, i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #8
+declare i64 @llvm.smax.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #8

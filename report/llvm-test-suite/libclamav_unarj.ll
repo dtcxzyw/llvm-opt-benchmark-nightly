@@ -204,8 +204,8 @@ bb.a:
   br i1 %i.e, label %.preheader, label %.preheader56
 
 .preheader56:                                     ; preds = %bb.a
-  %2 = tail call i16 @llvm.umin.i16(i16 %i.c, i16 19)
-  %3 = zext nneg i16 %2 to i32
+  %2 = zext nneg i16 %i.c to i32
+  %invariant.smin = tail call i32 @llvm.smin.i32(i32 %2, i32 19)
   %i.g = sext i32 %1 to i64
   %scevgep70 = getelementptr i8, ptr %i.f, i64 %i.g
   %indvars.iv.next = add nsw i32 %1, 1
@@ -364,7 +364,7 @@ bb.c:                                             ; preds = %.loopexit55.thread
 
 .loopexit53:                                      ; preds = %.lr.ph61.1, %.lr.ph61.preheader, %bb.c, %.loopexit55.thread
   %.4 = phi i32 [ %i.bh, %.loopexit55.thread ], [ %1, %bb.c ], [ %indvars.iv.next, %.lr.ph61.preheader ], [ %spec.select3, %.lr.ph61.1 ] ; 5 uses
-  %i.bt = icmp slt i32 %.4, %3
+  %i.bt = icmp slt i32 %.4, %invariant.smin
   br i1 %i.bt, label %bb.b, label %.preheader52, !llvm.loop !74
 
 ._crit_edge:                                      ; preds = %.lr.ph65, %.preheader52
@@ -767,10 +767,10 @@ declare i32 @llvm.umin.i32(i32, i32) #8
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #8
+declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.umin.i16(i16, i16) #8
+declare i64 @llvm.umin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #8

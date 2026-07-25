@@ -204,14 +204,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %.01225 = phi i32 [ 0, %bb.a ], [ %i.an, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 3 uses
-  %i.k = sext i32 %.01225 to i64                  ; 2 uses
+  %i.k = sext i32 %.01225 to i64                  ; 3 uses
   %i.l = getelementptr inbounds i8, ptr %i.c, i64 %i.k
   %i.m = load i8, ptr %i.l, align 1, !tbaa !9     ; 2 uses
-  %exitcond.not37 = icmp eq i32 %.01225, 255
+  %smax27 = call i64 @llvm.smax.i64(i64 %i.k, i64 255)
+  %exitcond.not37 = icmp sgt i32 %.01225, 254
   br i1 %exitcond.not37, label %.split.loop.exit34, label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 255
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %smax27
   br i1 %exitcond.not, label %.split.loop.exit34, label %.lr.ph, !llvm.loop !126
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
@@ -612,6 +613,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #20

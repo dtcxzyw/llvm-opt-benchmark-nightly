@@ -26,9 +26,9 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %.lr.ph68
   %i.h = add nsw i32 %1, -1
   %i.i = zext nneg i32 %1 to i64
-  %4 = zext nneg i32 %i.h to i64
+  %4 = sext i32 %i.h to i64
   %i.j = sext i32 %3 to i64
-  %5 = zext nneg i32 %i.b to i64
+  %5 = sext i32 %i.b to i64
   br label %.lr.ph
 
 .preheader63.loopexit:                            ; preds = %._crit_edge
@@ -201,12 +201,12 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.dy = add nuw nsw i32 %i.dx, %i.cn
   %i.dz = lshr i32 %i.dy, 2
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %6 = icmp samesign ult i64 %indvars.iv.next, %4
+  %6 = icmp slt i64 %indvars.iv.next, %4
   br i1 %6, label %bb.b, label %._crit_edge, !llvm.loop !8
 
 ._crit_edge:                                      ; preds = %bb.b
   %indvars.iv.next76 = add nuw nsw i64 %indvars.iv75, 2 ; 2 uses
-  %7 = icmp samesign ult i64 %indvars.iv.next76, %5
+  %7 = icmp slt i64 %indvars.iv.next76, %5
   br i1 %7, label %.lr.ph, label %.preheader63.loopexit, !llvm.loop !10
 }
 

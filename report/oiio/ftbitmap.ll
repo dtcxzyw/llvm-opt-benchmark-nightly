@@ -204,13 +204,13 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
 
 .preheader136.lr.ph:                              ; preds = %bb.am
   %.0108144 = add nsw i32 %.0107, -1
-  %.not218 = icmp eq i32 %.0107, 0
+  %5 = icmp sgt i32 %.0107, 0
   %.not128140 = icmp slt i32 %.0105201, 1
   %i.fs = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   %.not127152 = icmp slt i32 %.0104204, 1
-  %5 = icmp eq i32 %.0107, 0
+  %6 = icmp slt i32 %.0107, 1
   %i.ft = zext i32 %.0108144 to i64
-  %brmerge = select i1 %.not127152, i1 true, i1 %5
+  %brmerge = select i1 %.not127152, i1 true, i1 %6
   %wide.trip.count = zext nneg i32 %.0107 to i64  ; 9 uses
   %min.iters.check = icmp ult i32 %.0107, 4
   %min.iters.check226 = icmp ult i32 %.0107, 32
@@ -227,7 +227,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
 .preheader136:                                    ; preds = %.preheader136.lr.ph, %._crit_edge155.split
   %.0106158 = phi i32 [ 0, %.preheader136.lr.ph ], [ %i.ka, %._crit_edge155.split ]
   %.1113156 = phi ptr [ %.0112, %.preheader136.lr.ph ], [ %i.jz, %._crit_edge155.split ] ; 15 uses
-  br i1 %.not218, label %._crit_edge155.split, label %.lr.ph149
+  br i1 %5, label %.lr.ph149, label %._crit_edge155.split
 
 .lr.ph149:                                        ; preds = %.preheader136
   br i1 %.not128140, label %.preheader, label %.lr.ph

@@ -203,6 +203,7 @@ bb.bw:                                            ; preds = %bb.bv
   br i1 %i.fk, label %.lr.ph.split.us, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %umax = call i64 @llvm.umax.i64(i64 %6, i64 1)
   %.pre559 = load ptr, ptr %i.ff, align 8, !tbaa !64
   br label %.lr.ph.split
 
@@ -277,7 +278,7 @@ _ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i: ; preds = %.noexc376,
   %i.gp = and i64 %i.go, %i.gm
   store i64 %i.gp, ptr %i.gn, align 8, !tbaa !56
   %i.gq = add nuw i64 %.0310495, 1                ; 2 uses
-  %exitcond.not = icmp eq i64 %i.gq, %6
+  %exitcond.not = icmp eq i64 %i.gq, %umax
   br i1 %exitcond.not, label %.loopexit467, label %.lr.ph.split, !llvm.loop !65
 
 bb.bz:                                            ; preds = %bb.by

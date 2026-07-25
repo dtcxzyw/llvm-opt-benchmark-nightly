@@ -204,7 +204,11 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.de = load i64, ptr %i.dd, align 8
   store i64 %i.de, ptr %i.cy, align 8
   %.not79 = icmp eq i64 %4, 1
-  br i1 %.not79, label %._crit_edge, label %.lr.ph
+  br i1 %.not79, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit30
+  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 2)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit38, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit30
   %.sroa.7.0.lcssa = phi i64 [ %.05.i28, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit30 ], [ %.05.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit38 ]
@@ -216,10 +220,10 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   store i64 %.sroa.0.0.copyload, ptr %i.di, align 8
   br label %.loopexit
 
-.lr.ph:                                           ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit30, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit38
-  %.075 = phi i64 [ %i.fp, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit38 ], [ 1, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit30 ] ; 3 uses
-  %.sroa.13.074 = phi i64 [ %.0.i37, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit38 ], [ %.0.i29, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit30 ]
-  %.sroa.7.073 = phi i64 [ %.05.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit38 ], [ %.05.i28, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit30 ]
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit38
+  %.075 = phi i64 [ %i.fp, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit38 ], [ 1, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.13.074 = phi i64 [ %.0.i37, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit38 ], [ %.0.i29, %.lr.ph.preheader ]
+  %.sroa.7.073 = phi i64 [ %.05.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit38 ], [ %.05.i28, %.lr.ph.preheader ]
   %i.dj = getelementptr inbounds nuw i8, ptr %2, i64 %.075
   %i.dk = load i8, ptr %i.dj, align 1, !tbaa !525
   %i.dl = zext i8 %i.dk to i64
@@ -299,7 +303,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.fo = load i64, ptr %i.fj, align 8
   store i64 %i.fo, ptr %i.fn, align 8
   %i.fp = add nuw i64 %.075, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fp, %4
+  %exitcond.not = icmp eq i64 %i.fp, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !2050
 
 .loopexit:                                        ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEmiERKm.exit, %.preheader, %bb.e, %._crit_edge
@@ -702,7 +706,11 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.dc = getelementptr inbounds nuw [16 x i8], ptr %i.db, i64 %.0.i28
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cx, ptr noundef nonnull align 8 dereferenceable(16) %i.dc, i64 16, i1 false)
   %.not78 = icmp eq i64 %4, 1
-  br i1 %.not78, label %._crit_edge, label %.lr.ph
+  br i1 %.not78, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit29
+  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 2)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit37, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit29
   %.sroa.7.0.lcssa = phi i64 [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit29 ], [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit37 ]
@@ -714,10 +722,10 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   store <2 x i64> %.sroa.0.0.copyload, ptr %i.dg, align 8
   br label %.loopexit
 
-.lr.ph:                                           ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit29, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit37
-  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit37 ], [ 1, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit29 ] ; 3 uses
-  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit37 ], [ %.0.i28, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit29 ]
-  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit37 ], [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit29 ]
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit37
+  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit37 ], [ 1, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit37 ], [ %.0.i28, %.lr.ph.preheader ]
+  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit37 ], [ %.05.i27, %.lr.ph.preheader ]
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 %.074
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !525
   %i.dj = zext i8 %i.di to i64
@@ -795,7 +803,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.fk = getelementptr inbounds nuw [16 x i8], ptr %i.fj, i64 %.0.i32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fk, ptr noundef nonnull align 8 dereferenceable(16) %i.fg, i64 16, i1 false)
   %i.fl = add nuw i64 %.074, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fl, %4
+  %exitcond.not = icmp eq i64 %i.fl, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !3073
 
 .loopexit:                                        ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEmiERKm.exit, %.preheader, %bb.e, %._crit_edge
@@ -1198,7 +1206,11 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.dc = getelementptr inbounds nuw [24 x i8], ptr %i.db, i64 %.0.i28
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cx, ptr noundef nonnull align 8 dereferenceable(24) %i.dc, i64 24, i1 false)
   %.not78 = icmp eq i64 %4, 1
-  br i1 %.not78, label %._crit_edge, label %.lr.ph
+  br i1 %.not78, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit29
+  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 2)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit37, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit29
   %.sroa.7.0.lcssa = phi i64 [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit29 ], [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit37 ]
@@ -1210,10 +1222,10 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   store <3 x i64> %.sroa.0.0.copyload, ptr %i.dg, align 8
   br label %.loopexit
 
-.lr.ph:                                           ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit29, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit37
-  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit37 ], [ 1, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit29 ] ; 3 uses
-  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit37 ], [ %.0.i28, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit29 ]
-  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit37 ], [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit29 ]
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit37
+  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit37 ], [ 1, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit37 ], [ %.0.i28, %.lr.ph.preheader ]
+  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit37 ], [ %.05.i27, %.lr.ph.preheader ]
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 %.074
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !525
   %i.dj = zext i8 %i.di to i64
@@ -1291,7 +1303,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.fk = getelementptr inbounds nuw [24 x i8], ptr %i.fj, i64 %.0.i32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fk, ptr noundef nonnull align 8 dereferenceable(24) %i.fg, i64 24, i1 false)
   %i.fl = add nuw i64 %.074, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fl, %4
+  %exitcond.not = icmp eq i64 %i.fl, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !4089
 
 .loopexit:                                        ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEmiERKm.exit, %.preheader, %bb.e, %._crit_edge
@@ -1694,7 +1706,11 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.dc = getelementptr inbounds nuw [32 x i8], ptr %i.db, i64 %.0.i28
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cx, ptr noundef nonnull align 8 dereferenceable(32) %i.dc, i64 32, i1 false)
   %.not78 = icmp eq i64 %4, 1
-  br i1 %.not78, label %._crit_edge, label %.lr.ph
+  br i1 %.not78, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit29
+  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 2)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit37, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit29
   %.sroa.7.0.lcssa = phi i64 [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit29 ], [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit37 ]
@@ -1706,10 +1722,10 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   store <4 x i64> %.sroa.0.0.copyload, ptr %i.dg, align 8
   br label %.loopexit
 
-.lr.ph:                                           ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit29, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit37
-  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit37 ], [ 1, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit29 ] ; 3 uses
-  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit37 ], [ %.0.i28, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit29 ]
-  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit37 ], [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit29 ]
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit37
+  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit37 ], [ 1, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit37 ], [ %.0.i28, %.lr.ph.preheader ]
+  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit37 ], [ %.05.i27, %.lr.ph.preheader ]
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 %.074
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !525
   %i.dj = zext i8 %i.di to i64
@@ -1787,7 +1803,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.fk = getelementptr inbounds nuw [32 x i8], ptr %i.fj, i64 %.0.i32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.fk, ptr noundef nonnull align 8 dereferenceable(32) %i.fg, i64 32, i1 false)
   %i.fl = add nuw i64 %.074, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fl, %4
+  %exitcond.not = icmp eq i64 %i.fl, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !5105
 
 .loopexit:                                        ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEmiERKm.exit, %.preheader, %bb.e, %._crit_edge
@@ -2190,7 +2206,11 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.dc = getelementptr inbounds nuw [32 x i8], ptr %i.db, i64 %.0.i28
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cx, ptr noundef nonnull align 8 dereferenceable(32) %i.dc, i64 32, i1 false)
   %.not78 = icmp eq i64 %4, 1
-  br i1 %.not78, label %._crit_edge, label %.lr.ph
+  br i1 %.not78, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit29
+  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 2)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit37, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit29
   %.sroa.7.0.lcssa = phi i64 [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit29 ], [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit37 ]
@@ -2203,10 +2223,10 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   br label %.loopexit
 
-.lr.ph:                                           ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit29, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit37
-  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit37 ], [ 1, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit29 ] ; 3 uses
-  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit37 ], [ %.0.i28, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit29 ]
-  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit37 ], [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit29 ]
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit37
+  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit37 ], [ 1, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit37 ], [ %.0.i28, %.lr.ph.preheader ]
+  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit37 ], [ %.05.i27, %.lr.ph.preheader ]
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 %.074
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !525
   %i.dj = zext i8 %i.di to i64
@@ -2284,7 +2304,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.fk = getelementptr inbounds nuw [32 x i8], ptr %i.fj, i64 %.0.i32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.fk, ptr noundef nonnull align 8 dereferenceable(32) %i.fg, i64 32, i1 false)
   %i.fl = add nuw i64 %.074, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fl, %4
+  %exitcond.not = icmp eq i64 %i.fl, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !6121
 
 .loopexit:                                        ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEmiERKm.exit, %.preheader, %bb.e, %._crit_edge
@@ -2687,7 +2707,11 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.dc = getelementptr inbounds nuw [16 x i8], ptr %i.db, i64 %.0.i28
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cx, ptr noundef nonnull align 8 dereferenceable(16) %i.dc, i64 16, i1 false)
   %.not78 = icmp eq i64 %4, 1
-  br i1 %.not78, label %._crit_edge, label %.lr.ph
+  br i1 %.not78, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit29
+  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 2)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit37, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit29
   %.sroa.7.0.lcssa = phi i64 [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit29 ], [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit37 ]
@@ -2700,10 +2724,10 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   br label %.loopexit
 
-.lr.ph:                                           ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit29, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit37
-  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit37 ], [ 1, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit29 ] ; 3 uses
-  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit37 ], [ %.0.i28, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit29 ]
-  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit37 ], [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit29 ]
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit37
+  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit37 ], [ 1, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit37 ], [ %.0.i28, %.lr.ph.preheader ]
+  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit37 ], [ %.05.i27, %.lr.ph.preheader ]
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 %.074
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !525
   %i.dj = zext i8 %i.di to i64
@@ -2781,7 +2805,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.fk = getelementptr inbounds nuw [16 x i8], ptr %i.fj, i64 %.0.i32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fk, ptr noundef nonnull align 8 dereferenceable(16) %i.fg, i64 16, i1 false)
   %i.fl = add nuw i64 %.074, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fl, %4
+  %exitcond.not = icmp eq i64 %i.fl, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !7113
 
 .loopexit:                                        ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEmiERKm.exit, %.preheader, %bb.e, %._crit_edge
@@ -3184,7 +3208,11 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.dc = getelementptr inbounds nuw [24 x i8], ptr %i.db, i64 %.0.i28
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cx, ptr noundef nonnull align 8 dereferenceable(24) %i.dc, i64 24, i1 false)
   %.not78 = icmp eq i64 %4, 1
-  br i1 %.not78, label %._crit_edge, label %.lr.ph
+  br i1 %.not78, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit29
+  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 2)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit37, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit29
   %.sroa.7.0.lcssa = phi i64 [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit29 ], [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit37 ]
@@ -3197,10 +3225,10 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   br label %.loopexit
 
-.lr.ph:                                           ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit29, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit37
-  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit37 ], [ 1, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit29 ] ; 3 uses
-  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit37 ], [ %.0.i28, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit29 ]
-  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit37 ], [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit29 ]
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit37
+  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit37 ], [ 1, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit37 ], [ %.0.i28, %.lr.ph.preheader ]
+  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit37 ], [ %.05.i27, %.lr.ph.preheader ]
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 %.074
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !525
   %i.dj = zext i8 %i.di to i64
@@ -3278,7 +3306,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.fk = getelementptr inbounds nuw [24 x i8], ptr %i.fj, i64 %.0.i32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fk, ptr noundef nonnull align 8 dereferenceable(24) %i.fg, i64 24, i1 false)
   %i.fl = add nuw i64 %.074, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fl, %4
+  %exitcond.not = icmp eq i64 %i.fl, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !8129
 
 .loopexit:                                        ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEmiERKm.exit, %.preheader, %bb.e, %._crit_edge
@@ -3681,7 +3709,11 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.dc = getelementptr inbounds nuw [32 x i8], ptr %i.db, i64 %.0.i28
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cx, ptr noundef nonnull align 8 dereferenceable(32) %i.dc, i64 32, i1 false)
   %.not78 = icmp eq i64 %4, 1
-  br i1 %.not78, label %._crit_edge, label %.lr.ph
+  br i1 %.not78, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit29
+  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 2)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit37, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit29
   %.sroa.7.0.lcssa = phi i64 [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit29 ], [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit37 ]
@@ -3694,10 +3726,10 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   br label %.loopexit
 
-.lr.ph:                                           ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit29, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit37
-  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit37 ], [ 1, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit29 ] ; 3 uses
-  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit37 ], [ %.0.i28, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit29 ]
-  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit37 ], [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit29 ]
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit37
+  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit37 ], [ 1, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit37 ], [ %.0.i28, %.lr.ph.preheader ]
+  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit37 ], [ %.05.i27, %.lr.ph.preheader ]
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 %.074
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !525
   %i.dj = zext i8 %i.di to i64
@@ -3775,7 +3807,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.fk = getelementptr inbounds nuw [32 x i8], ptr %i.fj, i64 %.0.i32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.fk, ptr noundef nonnull align 8 dereferenceable(32) %i.fg, i64 32, i1 false)
   %i.fl = add nuw i64 %.074, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fl, %4
+  %exitcond.not = icmp eq i64 %i.fl, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !9145
 
 .loopexit:                                        ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEmiERKm.exit, %.preheader, %bb.e, %._crit_edge
@@ -4178,7 +4210,11 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.dc = getelementptr inbounds nuw [32 x i8], ptr %i.db, i64 %.0.i28
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cx, ptr noundef nonnull align 8 dereferenceable(32) %i.dc, i64 32, i1 false)
   %.not78 = icmp eq i64 %4, 1
-  br i1 %.not78, label %._crit_edge, label %.lr.ph
+  br i1 %.not78, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit29
+  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 2)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit37, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit29
   %.sroa.7.0.lcssa = phi i64 [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit29 ], [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit37 ]
@@ -4191,10 +4227,10 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   br label %.loopexit
 
-.lr.ph:                                           ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit29, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit37
-  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit37 ], [ 1, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit29 ] ; 3 uses
-  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit37 ], [ %.0.i28, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit29 ]
-  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit37 ], [ %.05.i27, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit29 ]
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit37
+  %.074 = phi i64 [ %i.fl, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit37 ], [ 1, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.13.073 = phi i64 [ %.0.i36, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit37 ], [ %.0.i28, %.lr.ph.preheader ]
+  %.sroa.7.072 = phi i64 [ %.05.i35, %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit37 ], [ %.05.i27, %.lr.ph.preheader ]
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 %.074
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !525
   %i.dj = zext i8 %i.di to i64
@@ -4272,7 +4308,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   %i.fk = getelementptr inbounds nuw [32 x i8], ptr %i.fj, i64 %.0.i32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.fk, ptr noundef nonnull align 8 dereferenceable(32) %i.fg, i64 32, i1 false)
   %i.fl = add nuw i64 %.074, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fl, %4
+  %exitcond.not = icmp eq i64 %i.fl, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !10161
 
 .loopexit:                                        ; preds = %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEmiERKm.exit, %.preheader, %bb.e, %._crit_edge

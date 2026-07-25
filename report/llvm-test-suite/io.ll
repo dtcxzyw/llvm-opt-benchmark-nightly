@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph30:                                         ; preds = %.preheader
   %i.j = add nsw i32 %1, -1
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %wide.trip.count39 = zext nneg i32 %i.j to i64
+  %wide.trip.count39 = zext i32 %i.j to i64
   %wide.trip.count = zext nneg i32 %1 to i64
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -342,7 +342,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph30:                                         ; preds = %.preheader
   %i.j = add nsw i32 %1, -1
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %wide.trip.count39 = zext nneg i32 %i.j to i64
+  %wide.trip.count39 = zext i32 %i.j to i64
   %wide.trip.count = zext nneg i32 %1 to i64
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -480,7 +480,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph29:                                         ; preds = %.preheader
   %i.j = add nsw i32 %1, -1
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %wide.trip.count38 = zext nneg i32 %i.j to i64
+  %wide.trip.count38 = zext i32 %i.j to i64
   %wide.trip.count = zext nneg i32 %1 to i64
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -617,7 +617,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph29:                                         ; preds = %.preheader
   %i.j = add nsw i32 %1, -1
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %wide.trip.count38 = zext nneg i32 %i.j to i64
+  %wide.trip.count38 = zext i32 %i.j to i64
   %wide.trip.count = zext nneg i32 %1 to i64
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -760,7 +760,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph29:                                         ; preds = %.preheader
   %i.j = add nsw i32 %1, -1
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %wide.trip.count38 = zext nneg i32 %i.j to i64
+  %wide.trip.count38 = zext i32 %i.j to i64
   %wide.trip.count = zext nneg i32 %1 to i64
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -876,7 +876,7 @@ bb.a:
 .preheader51.preheader:                           ; preds = %bb.a
   %i.b = add nsw i32 %1, -1
   %i.c = zext nneg i32 %1 to i64
-  %wide.trip.count72 = zext nneg i32 %i.b to i64
+  %wide.trip.count72 = zext i32 %i.b to i64
   %invariant.op = add nsw i64 %i.c, -1
   br label %.preheader51
 
@@ -1030,7 +1030,7 @@ bb.a:
 .preheader51.preheader:                           ; preds = %bb.a
   %i.b = add nsw i32 %1, -1
   %i.c = zext nneg i32 %1 to i64
-  %wide.trip.count72 = zext nneg i32 %i.b to i64
+  %wide.trip.count72 = zext i32 %i.b to i64
   %invariant.op = add nsw i64 %i.c, -1
   br label %.preheader51
 
@@ -1182,7 +1182,7 @@ bb.a:
   br i1 %i.b, label %.lr.ph55.preheader, label %._crit_edge
 
 .lr.ph55.preheader:                               ; preds = %bb.a
-  %wide.trip.count73 = zext nneg i32 %i.a to i64
+  %wide.trip.count73 = zext i32 %i.a to i64
   %wide.trip.count = zext nneg i32 %1 to i64      ; 3 uses
   %i.c = add nsw i64 %wide.trip.count, -2
   br label %.lr.ph
@@ -1320,7 +1320,7 @@ bb.a:
   br i1 %i.b, label %.lr.ph54.preheader, label %._crit_edge
 
 .lr.ph54.preheader:                               ; preds = %bb.a
-  %wide.trip.count72 = zext nneg i32 %i.a to i64
+  %wide.trip.count72 = zext i32 %i.a to i64
   %wide.trip.count = zext nneg i32 %1 to i64      ; 3 uses
   %i.c = add nsw i64 %wide.trip.count, -2
   br label %.lr.ph
@@ -1471,7 +1471,7 @@ bb.a:
 
 .lr.ph15.preheader:                               ; preds = %bb.a
   %i.b = add nsw i32 %1, -1
-  %wide.trip.count22 = zext nneg i32 %i.b to i64
+  %wide.trip.count22 = zext i32 %i.b to i64
   %wide.trip.count = zext nneg i32 %1 to i64
   br label %.lr.ph
 

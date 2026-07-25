@@ -204,8 +204,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -369,8 +369,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -477,8 +476,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -642,8 +641,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -750,8 +748,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -915,8 +913,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -1023,8 +1020,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -1188,8 +1185,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -1296,8 +1292,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -1461,8 +1457,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -1569,8 +1564,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -1734,8 +1729,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -1842,8 +1836,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -2007,8 +2001,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -2115,8 +2108,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -2280,8 +2273,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -2684,8 +2676,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -2849,8 +2841,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -2957,8 +2948,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -3122,8 +3113,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -3230,8 +3220,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -3395,8 +3385,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -3503,8 +3492,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -3668,8 +3657,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -3776,8 +3764,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -3941,8 +3929,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -4049,8 +4036,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -4214,8 +4201,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -4322,8 +4308,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -4487,8 +4473,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104
@@ -4595,8 +4580,8 @@ bb.a:
   %.074109 = phi ptr [ %i.dv, %.critedge ], [ %i.p, %.lr.ph115.preheader ] ; 8 uses
   %.076106 = phi i64 [ %i.dy, %.critedge ], [ %i.o, %.lr.ph115.preheader ] ; 5 uses
   %.078105 = phi i64 [ %i.dx, %.critedge ], [ 0, %.lr.ph115.preheader ]
-  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 7 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 3 uses
+  %i.r = call i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %4) ; 6 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.r to i16 ; 4 uses
   %i.s = ashr i32 %i.r, 16                        ; 2 uses
   %sext = shl i32 %i.r, 16
   %i.t = ashr exact i32 %sext, 16                 ; 2 uses
@@ -4760,8 +4745,7 @@ bb.b:                                             ; preds = %.lr.ph115
 bb.c:                                             ; preds = %.loopexit
   %i.cu = call noundef i64 @_ZNK5arrow9ArraySpan12GetNullCountEv(ptr noundef nonnull align 8 dereferenceable(128) %1)
   %i.cv = icmp sgt i64 %i.cu, 0
-  %.sroa.0.0.extract.trunc.mask140 = and i32 %i.r, 65535
-  %5 = zext nneg i32 %.sroa.0.0.extract.trunc.mask140 to i64 ; 2 uses
+  %5 = sext i16 %.sroa.0.0.extract.trunc to i64   ; 2 uses
   br i1 %i.cv, label %.lr.ph104, label %.lr.ph101
 
 bb.d:                                             ; preds = %.lr.ph104

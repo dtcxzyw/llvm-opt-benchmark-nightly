@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %bb.w
   br i1 %i.do, label %.lr.ph308, label %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge
 
 .lr.ph308:                                        ; preds = %.thread260
-  %3 = icmp samesign ult i32 %.1218, 3
+  %3 = icmp slt i32 %.1218, 3
   %i.dp = icmp eq i32 %.1218, 3
   %i.dq = icmp ult ptr %.1195, %i.g
   br i1 %i.dq, label %.lr.ph540, label %._crit_edge541
@@ -607,7 +607,7 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %i.nt, label %._crit_edge301, label %.lr.ph300
 
 .lr.ph300:                                        ; preds = %bb.ar
-  %i.nu = icmp samesign ult i8 %i.nl, 3
+  %i.nu = icmp ult i8 %i.nl, 3
   %i.nv = icmp eq i8 %i.nl, 3
   br label %bb.as
 
