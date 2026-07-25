@@ -204,12 +204,14 @@ bb.a:
   %.val38.i.i.i = load ptr, ptr %.val, align 8, !tbaa !220, !noalias !406
   %i.b = load <4 x i64>, ptr %3, align 8, !tbaa !28, !noalias !406 ; 2 uses
   %i.c = load <4 x i64>, ptr %.val38.i.i.i, align 8, !tbaa !28, !noalias !406 ; 2 uses
-  %12 = sub <4 x i64> %i.b, %i.c
-  %i.d = shufflevector <4 x i64> %12, <4 x i64> poison, <2 x i32> <i32 0, i32 2>
-  %i.e = mul <2 x i64> %i.d, splat (i64 1000000)
-  %13 = sub <4 x i64> %i.b, %i.c
-  %i.f = shufflevector <4 x i64> %13, <4 x i64> poison, <2 x i32> <i32 1, i32 3>
-  %i.g = add <2 x i64> %i.f, %i.e
+  %12 = shufflevector <4 x i64> %i.b, <4 x i64> poison, <2 x i32> <i32 0, i32 2>
+  %i.d = shufflevector <4 x i64> %i.c, <4 x i64> poison, <2 x i32> <i32 0, i32 2>
+  %13 = sub <2 x i64> %12, %i.d
+  %i.e = mul <2 x i64> %13, splat (i64 1000000)
+  %14 = shufflevector <4 x i64> %i.b, <4 x i64> poison, <2 x i32> <i32 1, i32 3>
+  %i.f = shufflevector <4 x i64> %i.c, <4 x i64> poison, <2 x i32> <i32 1, i32 3>
+  %15 = sub <2 x i64> %14, %i.f
+  %i.g = add <2 x i64> %15, %i.e
   %i.h = trunc <2 x i64> %i.g to <2 x i32>
   %i.i = sitofp <2 x i32> %i.h to <2 x float>
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19, !noalias !406
