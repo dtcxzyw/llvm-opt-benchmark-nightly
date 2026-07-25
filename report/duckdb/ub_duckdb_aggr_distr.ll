@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %bb.y
   %i.cc = add nsw i64 %.idx22.i.i, -4             ; 2 uses
   %i.cd = ashr exact i64 %i.cc, 2                 ; 3 uses
   %i.ce = add nsw i64 %i.cd, -1
-  %10 = sdiv i64 %i.ce, 2
+  %10 = lshr i64 %i.ce, 1
   %i.cf = icmp sgt i64 %i.cd, 2
   br i1 %i.cf, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
@@ -243,7 +243,7 @@ bb.aa:                                            ; preds = %._crit_edge.i.i.i.i
   %i.cy = shl nuw nsw i64 %.0.lcssa.i.i.i.i.i, 1
   %i.cz = or disjoint i64 %i.cy, 1                ; 2 uses
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %i.cz
-  %i.db = getelementptr inbounds [4 x i8], ptr %i.bi, i64 %.0.lcssa.i.i.i.i.i
+  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %.0.lcssa.i.i.i.i.i
   %i.dc = load i32, ptr %i.da, align 4, !tbaa !3
   store i32 %i.dc, ptr %i.db, align 4, !tbaa !3
   br label %.lr.ph.i.i.i.i.i.i.preheader
@@ -646,7 +646,7 @@ bb.aa:                                            ; preds = %bb.w
   %i.en = sub i64 %i.em, %i.ei                    ; 3 uses
   %i.eo = ashr exact i64 %i.en, 2                 ; 3 uses
   %i.ep = add nsw i64 %i.eo, -1
-  %10 = sdiv i64 %i.ep, 2
+  %10 = lshr i64 %i.ep, 1
   %i.eq = icmp sgt i64 %i.eo, 2
   br i1 %i.eq, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
@@ -685,7 +685,7 @@ bb.ab:                                            ; preds = %._crit_edge.i.i.i.i
   %i.fj = shl nuw nsw i64 %.0.lcssa.i.i.i.i.i, 1
   %i.fk = or disjoint i64 %i.fj, 1                ; 2 uses
   %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.eh, i64 %i.fk
-  %i.fm = getelementptr inbounds [4 x i8], ptr %i.eh, i64 %.0.lcssa.i.i.i.i.i
+  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.eh, i64 %.0.lcssa.i.i.i.i.i
   %i.fn = load i32, ptr %i.fl, align 4, !tbaa !3
   store i32 %i.fn, ptr %i.fm, align 4, !tbaa !3
   br label %.lr.ph.i.i.i.i.i.i.preheader
@@ -1088,7 +1088,7 @@ bb.f:                                             ; preds = %bb.e
   %i.v = add nsw i64 %.idx22, -4                  ; 2 uses
   %i.w = ashr exact i64 %i.v, 2                   ; 3 uses
   %i.x = add nsw i64 %i.w, -1
-  %3 = sdiv i64 %i.x, 2
+  %3 = lshr i64 %i.x, 1
   %i.y = icmp sgt i64 %i.w, 2
   br i1 %i.y, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
@@ -1127,7 +1127,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
   %i.ar = shl nuw nsw i64 %.0.lcssa.i.i.i, 1
   %i.as = or disjoint i64 %i.ar, 1                ; 2 uses
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.as
-  %i.au = getelementptr inbounds [4 x i8], ptr %i.f, i64 %.0.lcssa.i.i.i
+  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %.0.lcssa.i.i.i
   %i.av = load i32, ptr %i.at, align 4, !tbaa !3
   store i32 %i.av, ptr %i.au, align 4, !tbaa !3
   br label %.lr.ph.i.i.i.i.preheader
@@ -1502,7 +1502,7 @@ bb.z:                                             ; preds = %bb.y
   %i.cb = add nsw i64 %.idx.i.i, -8               ; 2 uses
   %i.cc = ashr exact i64 %i.cb, 3                 ; 3 uses
   %i.cd = add nsw i64 %i.cc, -1
-  %10 = sdiv i64 %i.cd, 2
+  %10 = lshr i64 %i.cd, 1
   %i.ce = icmp sgt i64 %i.cc, 2
   br i1 %i.ce, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
@@ -1541,7 +1541,7 @@ bb.aa:                                            ; preds = %._crit_edge.i.i.i.i
   %i.cx = shl nuw nsw i64 %.0.lcssa.i.i.i.i.i, 1
   %i.cy = or disjoint i64 %i.cx, 1                ; 2 uses
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %i.cy
-  %i.da = getelementptr inbounds [8 x i8], ptr %i.bh, i64 %.0.lcssa.i.i.i.i.i
+  %i.da = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %.0.lcssa.i.i.i.i.i
   %i.db = load i64, ptr %i.cz, align 8, !tbaa !51
   store i64 %i.db, ptr %i.da, align 8, !tbaa !51
   br label %.lr.ph.i.i.i.i.i.i.preheader
@@ -1944,7 +1944,7 @@ bb.aa:                                            ; preds = %bb.w
   %i.en = sub i64 %i.em, %i.ei                    ; 3 uses
   %i.eo = ashr exact i64 %i.en, 3                 ; 3 uses
   %i.ep = add nsw i64 %i.eo, -1
-  %10 = sdiv i64 %i.ep, 2
+  %10 = lshr i64 %i.ep, 1
   %i.eq = icmp sgt i64 %i.eo, 2
   br i1 %i.eq, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
@@ -1983,7 +1983,7 @@ bb.ab:                                            ; preds = %._crit_edge.i.i.i.i
   %i.fj = shl nuw nsw i64 %.0.lcssa.i.i.i.i.i, 1
   %i.fk = or disjoint i64 %i.fj, 1                ; 2 uses
   %i.fl = getelementptr inbounds nuw [8 x i8], ptr %i.eh, i64 %i.fk
-  %i.fm = getelementptr inbounds [8 x i8], ptr %i.eh, i64 %.0.lcssa.i.i.i.i.i
+  %i.fm = getelementptr inbounds nuw [8 x i8], ptr %i.eh, i64 %.0.lcssa.i.i.i.i.i
   %i.fn = load i64, ptr %i.fl, align 8, !tbaa !51
   store i64 %i.fn, ptr %i.fm, align 8, !tbaa !51
   br label %.lr.ph.i.i.i.i.i.i.preheader
@@ -2386,7 +2386,7 @@ bb.f:                                             ; preds = %bb.e
   %i.u = add nsw i64 %.idx, -8                    ; 2 uses
   %i.v = ashr exact i64 %i.u, 3                   ; 3 uses
   %i.w = add nsw i64 %i.v, -1
-  %3 = sdiv i64 %i.w, 2
+  %3 = lshr i64 %i.w, 1
   %i.x = icmp sgt i64 %i.v, 2
   br i1 %i.x, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
@@ -2425,7 +2425,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
   %i.aq = shl nuw nsw i64 %.0.lcssa.i.i.i, 1
   %i.ar = or disjoint i64 %i.aq, 1                ; 2 uses
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.ar
-  %i.at = getelementptr inbounds [8 x i8], ptr %i.f, i64 %.0.lcssa.i.i.i
+  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.0.lcssa.i.i.i
   %i.au = load i64, ptr %i.as, align 8, !tbaa !51
   store i64 %i.au, ptr %i.at, align 8, !tbaa !51
   br label %.lr.ph.i.i.i.i.preheader
@@ -2828,7 +2828,7 @@ bb.f:                                             ; preds = %bb.e
   %i.y = add nsw i64 %.idx, -4                    ; 2 uses
   %i.z = ashr exact i64 %i.y, 2                   ; 3 uses
   %i.aa = add nsw i64 %i.z, -1
-  %6 = sdiv i64 %i.aa, 2
+  %6 = lshr i64 %i.aa, 1
   %i.ab = icmp sgt i64 %i.z, 2
   br i1 %i.ab, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
@@ -2865,7 +2865,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
   %i.as = shl nuw nsw i64 %.0.lcssa.i.i.i, 1
   %i.at = or disjoint i64 %i.as, 1                ; 2 uses
   %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.at
-  %i.av = getelementptr inbounds [4 x i8], ptr %i.s, i64 %.0.lcssa.i.i.i
+  %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %.0.lcssa.i.i.i
   %i.aw = load i32, ptr %i.au, align 4, !tbaa !1173
   store i32 %i.aw, ptr %i.av, align 4, !tbaa !1173
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -2987,7 +2987,7 @@ bb.a:
   %i.k = sub i64 %i.j, %i.e                       ; 3 uses
   %i.l = ashr exact i64 %i.k, 2                   ; 3 uses
   %i.m = add nsw i64 %i.l, -1
-  %2 = sdiv i64 %i.m, 2
+  %2 = lshr i64 %i.m, 1
   %i.n = icmp sgt i64 %i.l, 2
   br i1 %i.n, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -3024,7 +3024,7 @@ bb.b:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ae = shl nuw nsw i64 %.0.lcssa.i.i.i.i, 1
   %i.af = or disjoint i64 %i.ae, 1                ; 2 uses
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.af
-  %i.ah = getelementptr inbounds [4 x i8], ptr %i.b, i64 %.0.lcssa.i.i.i.i
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0.lcssa.i.i.i.i
   %i.ai = load i32, ptr %i.ag, align 4, !tbaa !1173
   store i32 %i.ai, ptr %i.ah, align 4, !tbaa !1173
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
@@ -3427,7 +3427,7 @@ bb.f:                                             ; preds = %bb.e
   %i.y = add nsw i64 %.idx, -8                    ; 2 uses
   %i.z = ashr exact i64 %i.y, 3                   ; 3 uses
   %i.aa = add nsw i64 %i.z, -1
-  %6 = sdiv i64 %i.aa, 2
+  %6 = lshr i64 %i.aa, 1
   %i.ab = icmp sgt i64 %i.z, 2
   br i1 %i.ab, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
@@ -3464,7 +3464,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
   %i.as = shl nuw nsw i64 %.0.lcssa.i.i.i, 1
   %i.at = or disjoint i64 %i.as, 1                ; 2 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.at
-  %i.av = getelementptr inbounds [8 x i8], ptr %i.s, i64 %.0.lcssa.i.i.i
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %.0.lcssa.i.i.i
   %i.aw = load i64, ptr %i.au, align 8, !tbaa !1235
   store i64 %i.aw, ptr %i.av, align 8, !tbaa !1235
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -3586,7 +3586,7 @@ bb.a:
   %i.k = sub i64 %i.j, %i.e                       ; 3 uses
   %i.l = ashr exact i64 %i.k, 3                   ; 3 uses
   %i.m = add nsw i64 %i.l, -1
-  %2 = sdiv i64 %i.m, 2
+  %2 = lshr i64 %i.m, 1
   %i.n = icmp sgt i64 %i.l, 2
   br i1 %i.n, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -3623,7 +3623,7 @@ bb.b:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ae = shl nuw nsw i64 %.0.lcssa.i.i.i.i, 1
   %i.af = or disjoint i64 %i.ae, 1                ; 2 uses
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.af
-  %i.ah = getelementptr inbounds [8 x i8], ptr %i.b, i64 %.0.lcssa.i.i.i.i
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0.lcssa.i.i.i.i
   %i.ai = load i64, ptr %i.ag, align 8, !tbaa !1235
   store i64 %i.ai, ptr %i.ah, align 8, !tbaa !1235
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
@@ -4026,7 +4026,7 @@ bb.z:                                             ; preds = %bb.y
   %i.cc = add nsw i64 %.idx22.i.i, -4             ; 2 uses
   %i.cd = ashr exact i64 %i.cc, 2                 ; 3 uses
   %i.ce = add nsw i64 %i.cd, -1
-  %10 = sdiv i64 %i.ce, 2
+  %10 = lshr i64 %i.ce, 1
   %i.cf = icmp sgt i64 %i.cd, 2
   br i1 %i.cf, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
@@ -4065,7 +4065,7 @@ bb.aa:                                            ; preds = %._crit_edge.i.i.i.i
   %i.cy = shl nuw nsw i64 %.0.lcssa.i.i.i.i.i, 1
   %i.cz = or disjoint i64 %i.cy, 1                ; 2 uses
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %i.cz
-  %i.db = getelementptr inbounds [4 x i8], ptr %i.bi, i64 %.0.lcssa.i.i.i.i.i
+  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %.0.lcssa.i.i.i.i.i
   %i.dc = load i32, ptr %i.da, align 4, !tbaa !3
   store i32 %i.dc, ptr %i.db, align 4, !tbaa !3
   br label %.lr.ph.i.i.i.i.i.i.preheader
@@ -4468,7 +4468,7 @@ bb.aa:                                            ; preds = %bb.w
   %i.en = sub i64 %i.em, %i.ei                    ; 3 uses
   %i.eo = ashr exact i64 %i.en, 2                 ; 3 uses
   %i.ep = add nsw i64 %i.eo, -1
-  %10 = sdiv i64 %i.ep, 2
+  %10 = lshr i64 %i.ep, 1
   %i.eq = icmp sgt i64 %i.eo, 2
   br i1 %i.eq, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
@@ -4507,7 +4507,7 @@ bb.ab:                                            ; preds = %._crit_edge.i.i.i.i
   %i.fj = shl nuw nsw i64 %.0.lcssa.i.i.i.i.i, 1
   %i.fk = or disjoint i64 %i.fj, 1                ; 2 uses
   %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.eh, i64 %i.fk
-  %i.fm = getelementptr inbounds [4 x i8], ptr %i.eh, i64 %.0.lcssa.i.i.i.i.i
+  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.eh, i64 %.0.lcssa.i.i.i.i.i
   %i.fn = load i32, ptr %i.fl, align 4, !tbaa !3
   store i32 %i.fn, ptr %i.fm, align 4, !tbaa !3
   br label %.lr.ph.i.i.i.i.i.i.preheader
@@ -4910,7 +4910,7 @@ bb.f:                                             ; preds = %bb.e
   %i.v = add nsw i64 %.idx22, -4                  ; 2 uses
   %i.w = ashr exact i64 %i.v, 2                   ; 3 uses
   %i.x = add nsw i64 %i.w, -1
-  %3 = sdiv i64 %i.x, 2
+  %3 = lshr i64 %i.x, 1
   %i.y = icmp sgt i64 %i.w, 2
   br i1 %i.y, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
@@ -4949,7 +4949,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
   %i.ar = shl nuw nsw i64 %.0.lcssa.i.i.i, 1
   %i.as = or disjoint i64 %i.ar, 1                ; 2 uses
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.as
-  %i.au = getelementptr inbounds [4 x i8], ptr %i.f, i64 %.0.lcssa.i.i.i
+  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %.0.lcssa.i.i.i
   %i.av = load i32, ptr %i.at, align 4, !tbaa !3
   store i32 %i.av, ptr %i.au, align 4, !tbaa !3
   br label %.lr.ph.i.i.i.i.preheader
@@ -5324,7 +5324,7 @@ bb.z:                                             ; preds = %bb.y
   %i.cb = add nsw i64 %.idx.i.i, -8               ; 2 uses
   %i.cc = ashr exact i64 %i.cb, 3                 ; 3 uses
   %i.cd = add nsw i64 %i.cc, -1
-  %10 = sdiv i64 %i.cd, 2
+  %10 = lshr i64 %i.cd, 1
   %i.ce = icmp sgt i64 %i.cc, 2
   br i1 %i.ce, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
@@ -5363,7 +5363,7 @@ bb.aa:                                            ; preds = %._crit_edge.i.i.i.i
   %i.cx = shl nuw nsw i64 %.0.lcssa.i.i.i.i.i, 1
   %i.cy = or disjoint i64 %i.cx, 1                ; 2 uses
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %i.cy
-  %i.da = getelementptr inbounds [8 x i8], ptr %i.bh, i64 %.0.lcssa.i.i.i.i.i
+  %i.da = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %.0.lcssa.i.i.i.i.i
   %i.db = load i64, ptr %i.cz, align 8, !tbaa !51
   store i64 %i.db, ptr %i.da, align 8, !tbaa !51
   br label %.lr.ph.i.i.i.i.i.i.preheader
@@ -5766,7 +5766,7 @@ bb.aa:                                            ; preds = %bb.w
   %i.en = sub i64 %i.em, %i.ei                    ; 3 uses
   %i.eo = ashr exact i64 %i.en, 3                 ; 3 uses
   %i.ep = add nsw i64 %i.eo, -1
-  %10 = sdiv i64 %i.ep, 2
+  %10 = lshr i64 %i.ep, 1
   %i.eq = icmp sgt i64 %i.eo, 2
   br i1 %i.eq, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
@@ -5805,7 +5805,7 @@ bb.ab:                                            ; preds = %._crit_edge.i.i.i.i
   %i.fj = shl nuw nsw i64 %.0.lcssa.i.i.i.i.i, 1
   %i.fk = or disjoint i64 %i.fj, 1                ; 2 uses
   %i.fl = getelementptr inbounds nuw [8 x i8], ptr %i.eh, i64 %i.fk
-  %i.fm = getelementptr inbounds [8 x i8], ptr %i.eh, i64 %.0.lcssa.i.i.i.i.i
+  %i.fm = getelementptr inbounds nuw [8 x i8], ptr %i.eh, i64 %.0.lcssa.i.i.i.i.i
   %i.fn = load i64, ptr %i.fl, align 8, !tbaa !51
   store i64 %i.fn, ptr %i.fm, align 8, !tbaa !51
   br label %.lr.ph.i.i.i.i.i.i.preheader
@@ -6208,7 +6208,7 @@ bb.f:                                             ; preds = %bb.e
   %i.u = add nsw i64 %.idx, -8                    ; 2 uses
   %i.v = ashr exact i64 %i.u, 3                   ; 3 uses
   %i.w = add nsw i64 %i.v, -1
-  %3 = sdiv i64 %i.w, 2
+  %3 = lshr i64 %i.w, 1
   %i.x = icmp sgt i64 %i.v, 2
   br i1 %i.x, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
@@ -6247,7 +6247,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
   %i.aq = shl nuw nsw i64 %.0.lcssa.i.i.i, 1
   %i.ar = or disjoint i64 %i.aq, 1                ; 2 uses
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.ar
-  %i.at = getelementptr inbounds [8 x i8], ptr %i.f, i64 %.0.lcssa.i.i.i
+  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.0.lcssa.i.i.i
   %i.au = load i64, ptr %i.as, align 8, !tbaa !51
   store i64 %i.au, ptr %i.at, align 8, !tbaa !51
   br label %.lr.ph.i.i.i.i.preheader
@@ -6650,7 +6650,7 @@ bb.f:                                             ; preds = %bb.e
   %i.y = add nsw i64 %.idx, -4                    ; 2 uses
   %i.z = ashr exact i64 %i.y, 2                   ; 3 uses
   %i.aa = add nsw i64 %i.z, -1
-  %6 = sdiv i64 %i.aa, 2
+  %6 = lshr i64 %i.aa, 1
   %i.ab = icmp sgt i64 %i.z, 2
   br i1 %i.ab, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
@@ -6687,7 +6687,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
   %i.as = shl nuw nsw i64 %.0.lcssa.i.i.i, 1
   %i.at = or disjoint i64 %i.as, 1                ; 2 uses
   %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.at
-  %i.av = getelementptr inbounds [4 x i8], ptr %i.s, i64 %.0.lcssa.i.i.i
+  %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %.0.lcssa.i.i.i
   %i.aw = load i32, ptr %i.au, align 4, !tbaa !1173
   store i32 %i.aw, ptr %i.av, align 4, !tbaa !1173
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -6809,7 +6809,7 @@ bb.a:
   %i.k = sub i64 %i.j, %i.e                       ; 3 uses
   %i.l = ashr exact i64 %i.k, 2                   ; 3 uses
   %i.m = add nsw i64 %i.l, -1
-  %2 = sdiv i64 %i.m, 2
+  %2 = lshr i64 %i.m, 1
   %i.n = icmp sgt i64 %i.l, 2
   br i1 %i.n, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -6846,7 +6846,7 @@ bb.b:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ae = shl nuw nsw i64 %.0.lcssa.i.i.i.i, 1
   %i.af = or disjoint i64 %i.ae, 1                ; 2 uses
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.af
-  %i.ah = getelementptr inbounds [4 x i8], ptr %i.b, i64 %.0.lcssa.i.i.i.i
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0.lcssa.i.i.i.i
   %i.ai = load i32, ptr %i.ag, align 4, !tbaa !1173
   store i32 %i.ai, ptr %i.ah, align 4, !tbaa !1173
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
@@ -7249,7 +7249,7 @@ bb.f:                                             ; preds = %bb.e
   %i.y = add nsw i64 %.idx, -8                    ; 2 uses
   %i.z = ashr exact i64 %i.y, 3                   ; 3 uses
   %i.aa = add nsw i64 %i.z, -1
-  %6 = sdiv i64 %i.aa, 2
+  %6 = lshr i64 %i.aa, 1
   %i.ab = icmp sgt i64 %i.z, 2
   br i1 %i.ab, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
@@ -7286,7 +7286,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
   %i.as = shl nuw nsw i64 %.0.lcssa.i.i.i, 1
   %i.at = or disjoint i64 %i.as, 1                ; 2 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.at
-  %i.av = getelementptr inbounds [8 x i8], ptr %i.s, i64 %.0.lcssa.i.i.i
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %.0.lcssa.i.i.i
   %i.aw = load i64, ptr %i.au, align 8, !tbaa !1235
   store i64 %i.aw, ptr %i.av, align 8, !tbaa !1235
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -7408,7 +7408,7 @@ bb.a:
   %i.k = sub i64 %i.j, %i.e                       ; 3 uses
   %i.l = ashr exact i64 %i.k, 3                   ; 3 uses
   %i.m = add nsw i64 %i.l, -1
-  %2 = sdiv i64 %i.m, 2
+  %2 = lshr i64 %i.m, 1
   %i.n = icmp sgt i64 %i.l, 2
   br i1 %i.n, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -7445,7 +7445,7 @@ bb.b:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ae = shl nuw nsw i64 %.0.lcssa.i.i.i.i, 1
   %i.af = or disjoint i64 %i.ae, 1                ; 2 uses
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.af
-  %i.ah = getelementptr inbounds [8 x i8], ptr %i.b, i64 %.0.lcssa.i.i.i.i
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0.lcssa.i.i.i.i
   %i.ai = load i64, ptr %i.ag, align 8, !tbaa !1235
   store i64 %i.ai, ptr %i.ah, align 8, !tbaa !1235
   call void @llvm.lifetime.start.p0(ptr nonnull %1)

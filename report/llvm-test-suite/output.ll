@@ -203,7 +203,8 @@ bb.a:
   %i.e = load ptr, ptr @tally, align 8, !tbaa !23
   %i.f = sext i16 %i.d to i64                     ; 3 uses
   %i.g = getelementptr inbounds [2 x i8], ptr %i.e, i64 %i.f
-  %i.h = load i16, ptr %i.g, align 2, !tbaa !26   ; 7 uses
+  %i.h = load i16, ptr %i.g, align 2, !tbaa !26   ; 6 uses
+  %wide.trip.count = zext i16 %i.h to i64         ; 2 uses
   %i.i = icmp eq i16 %i.h, 0
   br i1 %i.i, label %bb.b, label %bb.c
 
@@ -329,17 +330,16 @@ bb.j:                                             ; preds = %._crit_edge.us67
 
 .lr.ph:                                           ; preds = %.preheader49
   %i.az = load ptr, ptr @check, align 8, !tbaa !23 ; 3 uses
+  %xtraiter = and i64 %wide.trip.count, 1
   %i.ba = icmp eq i16 %i.h, 1
   br i1 %i.ba, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %1 = and i16 %i.h, 32766
-  %unroll_iter = zext nneg i16 %1 to i64
+  %unroll_iter = and i64 %wide.trip.count, 32766
   br label %bb.k
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %bb.k
-  %2 = and i16 %i.h, 1
-  %lcmp.mod.not = icmp eq i16 %2, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.preheader, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph

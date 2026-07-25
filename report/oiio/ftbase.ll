@@ -204,15 +204,15 @@ bb.bh:                                            ; preds = %bb.bg
   %i.iv = getelementptr inbounds nuw i8, ptr %i.hm, i64 32
   %i.iw = load <2 x i64>, ptr %i.iv, align 8, !tbaa !39 ; 3 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %i.d, i64 202
-  %i.iy = load i16, ptr %i.ix, align 2, !tbaa !137 ; 3 uses
-  %3 = sext i16 %i.iy to i32                      ; 2 uses
+  %i.iy = load i16, ptr %i.ix, align 2, !tbaa !137 ; 4 uses
+  %3 = zext i16 %i.iy to i32
   %i.iz = icmp sgt i16 %i.iy, 0
   br i1 %i.iz, label %.lr.ph.preheader.i, label %FT_Outline_Translate.exit.thread
 
 .lr.ph.preheader.i:                               ; preds = %bb.bh
   %i.ja = getelementptr inbounds nuw i8, ptr %i.d, i64 208
   %i.jb = load ptr, ptr %i.ja, align 8, !tbaa !162 ; 4 uses
-  %i.jc = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.jc = zext nneg i16 %i.iy to i64              ; 2 uses
   %min.iters.check = icmp ult i16 %i.iy, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
@@ -615,15 +615,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %i.b = load i16, ptr %i.a, align 2, !tbaa !137  ; 3 uses
-  %3 = sext i16 %i.b to i32                       ; 2 uses
+  %i.b = load i16, ptr %i.a, align 2, !tbaa !137  ; 4 uses
+  %3 = zext i16 %i.b to i32
   %i.c = icmp sgt i16 %i.b, 0
   br i1 %i.c, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !162  ; 4 uses
-  %i.f = zext nneg i32 %3 to i64                  ; 2 uses
+  %i.f = zext nneg i16 %i.b to i64                ; 2 uses
   %min.iters.check = icmp ult i16 %i.b, 4
   br i1 %min.iters.check, label %.lr.ph.preheader19, label %vector.ph
 
@@ -1026,12 +1026,12 @@ bb.e:                                             ; preds = %bb.c
   %i.p = extractelement <2 x i64> %i.c, i64 0     ; 2 uses
   %sext.i130 = shl i64 %i.p, 32
   %i.q = ashr exact i64 %sext.i130, 32
-  %.023.i = tail call i64 @llvm.abs.i64(i64 %i.p, i1 true)
+  %.023.i = tail call i64 @llvm.abs.i64(i64 %i.p, i1 false)
   %i.r = icmp slt i64 %1, -1
   %i.s = extractelement <2 x i64> %i.c, i64 1     ; 2 uses
   %sext.i144 = shl i64 %i.s, 32
   %i.t = ashr exact i64 %sext.i144, 32
-  %.023.i150 = tail call i64 @llvm.abs.i64(i64 %i.s, i1 true)
+  %.023.i150 = tail call i64 @llvm.abs.i64(i64 %i.s, i1 false)
   %i.u = icmp slt i64 %2, -1
   br label %bb.f
 
@@ -1434,7 +1434,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w
 
 FT_Stream_Skip.exit:                              ; preds = %bb.w, %bb.x, %bb.y
   %i.ec = call zeroext i16 @FT_Stream_ReadUShort(ptr noundef nonnull %1, ptr noundef nonnull %i.a) ; 2 uses
-  %5 = sext i16 %i.ec to i64
+  %5 = zext nneg i16 %i.ec to i64
   %i.ed = load i32, ptr %i.a, align 4, !tbaa !3   ; 2 uses
   %.not90 = icmp eq i32 %i.ed, 0
   br i1 %.not90, label %bb.z, label %FT_Stream_Seek.exit.thread
@@ -1837,7 +1837,7 @@ bb.p:                                             ; preds = %bb.n
 bb.q:                                             ; preds = %bb.p, %bb.o
   store i64 %i.bb, ptr %i.az, align 8, !tbaa !281
   %i.bf = call i32 @FT_Stream_ReadULong(ptr noundef nonnull %1, ptr noundef nonnull %i.c), !inline_history !647 ; 3 uses
-  %i.bg = zext i32 %i.bf to i64
+  %i.bg = zext nneg i32 %i.bf to i64
   %i.bh = load i32, ptr %i.c, align 4, !tbaa !3
   %.not138.i = icmp ne i32 %i.bh, 0
   %i.bi = icmp slt i32 %i.bf, 0

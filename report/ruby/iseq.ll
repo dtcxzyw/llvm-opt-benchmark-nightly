@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.p
   %i.be = load i16, ptr %i.bd, align 2, !tbaa !296
   %i.bf = zext i16 %i.be to i64
   %i.bg = getelementptr i8, ptr @rb_vm_insn_op_base, i64 %i.bf
-  %i.bh = add nuw i32 %.151.i, 1
+  %i.bh = add i32 %.151.i, 1
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.v, %.lr.ph52.i
@@ -607,7 +607,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %.lr.p
   %i.ac = load i16, ptr %i.ab, align 2, !tbaa !296
   %i.ad = zext i16 %i.ac to i64
   %i.ae = getelementptr i8, ptr @rb_vm_insn_op_base, i64 %i.ad
-  %i.af = add nuw i32 %.151, 1
+  %i.af = add i32 %.151, 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.i, %.lr.ph52

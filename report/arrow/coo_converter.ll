@@ -203,7 +203,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr = freeze i64 %i.g
   %sext = shl i64 %.fr, 29
-  %i.h = ashr i64 %sext, 32                       ; 16 uses
+  %i.h = ashr i64 %sext, 32                       ; 14 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -246,15 +246,15 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc26, %_ZNSt6ve
   br i1 %i.u, label %.lr.ph.i.i.i.us.preheader, label %.lr.ph40.split
 
 .lr.ph.i.i.i.us.preheader:                        ; preds = %.lr.ph40
-  %i.x = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 5 uses
+  %i.x = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 7 uses
   %i.y = shl nuw nsw i64 %i.x, 3
   %scevgep9 = getelementptr i8, ptr %.sroa.029.0, i64 %i.y
   %min.iters.check29 = icmp ult i64 %i.t, 4
   %n.vec32 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n42 = icmp eq i64 %i.t, %n.vec32
-  %min.iters.check14 = icmp ult i64 %i.h, 4
+  %min.iters.check14 = icmp slt i64 %i.h, 4
   %n.vec17 = and i64 %i.x, 1152921504606846972    ; 4 uses
-  %cmp.n25 = icmp eq i64 %i.h, %n.vec17
+  %cmp.n25 = icmp eq i64 %i.x, %n.vec17
   br label %.lr.ph.i.i.i.us
 
 .lr.ph.i.i.i.us:                                  ; preds = %.lr.ph.i.i.i.us.preheader, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us
@@ -426,7 +426,7 @@ middle.block24:                                   ; preds = %vector.body18
   %i.ct = getelementptr inbounds nuw i8, ptr %.135.us, i64 8 ; 2 uses
   store i8 %i.cs, ptr %i.co, align 1, !tbaa !7
   %i.cu = add nuw nsw i64 %.01736.us, 8           ; 2 uses
-  %exitcond69.not.7 = icmp eq i64 %i.h, %i.cu
+  %exitcond69.not.7 = icmp eq i64 %i.cu, %i.x
   br i1 %exitcond69.not.7, label %.loopexit.us, label %.lr.ph.us, !llvm.loop !354
 
 .loopexit.us:                                     ; preds = %.lr.ph.us.prol.loopexit, %.lr.ph.us, %middle.block24, %bb.b, %.loopexit34.us
@@ -774,7 +774,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr = freeze i64 %i.g
   %sext = shl i64 %.fr, 29
-  %i.h = ashr i64 %sext, 32                       ; 16 uses
+  %i.h = ashr i64 %sext, 32                       ; 14 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -817,15 +817,15 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc26, %_ZNSt6ve
   br i1 %i.u, label %.lr.ph.i.i.i.us.preheader, label %.lr.ph40.split
 
 .lr.ph.i.i.i.us.preheader:                        ; preds = %.lr.ph40
-  %i.x = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 5 uses
+  %i.x = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 7 uses
   %i.y = shl nuw nsw i64 %i.x, 3
   %scevgep9 = getelementptr i8, ptr %.sroa.029.0, i64 %i.y
   %min.iters.check29 = icmp ult i64 %i.t, 4
   %n.vec32 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n42 = icmp eq i64 %i.t, %n.vec32
-  %min.iters.check14 = icmp ult i64 %i.h, 4
+  %min.iters.check14 = icmp slt i64 %i.h, 4
   %n.vec17 = and i64 %i.x, 1152921504606846972    ; 4 uses
-  %cmp.n25 = icmp eq i64 %i.h, %n.vec17
+  %cmp.n25 = icmp eq i64 %i.x, %n.vec17
   br label %.lr.ph.i.i.i.us
 
 .lr.ph.i.i.i.us:                                  ; preds = %.lr.ph.i.i.i.us.preheader, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us
@@ -997,7 +997,7 @@ middle.block24:                                   ; preds = %vector.body18
   %i.ct = getelementptr inbounds nuw i8, ptr %.135.us, i64 8 ; 2 uses
   store i8 %i.cs, ptr %i.co, align 1, !tbaa !7
   %i.cu = add nuw nsw i64 %.01736.us, 8           ; 2 uses
-  %exitcond69.not.7 = icmp eq i64 %i.h, %i.cu
+  %exitcond69.not.7 = icmp eq i64 %i.cu, %i.x
   br i1 %exitcond69.not.7, label %.loopexit.us, label %.lr.ph.us, !llvm.loop !373
 
 .loopexit.us:                                     ; preds = %.lr.ph.us.prol.loopexit, %.lr.ph.us, %middle.block24, %bb.b, %.loopexit34.us
@@ -1348,7 +1348,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr = freeze i64 %i.g
   %sext = shl i64 %.fr, 29
-  %i.h = ashr i64 %sext, 32                       ; 16 uses
+  %i.h = ashr i64 %sext, 32                       ; 14 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -1391,15 +1391,15 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc27, %_ZNSt6ve
   br i1 %i.u, label %.lr.ph.i.i.i.us.preheader, label %.lr.ph41.split
 
 .lr.ph.i.i.i.us.preheader:                        ; preds = %.lr.ph41
-  %i.x = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 5 uses
+  %i.x = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 7 uses
   %i.y = shl nuw nsw i64 %i.x, 3
   %scevgep9 = getelementptr i8, ptr %.sroa.030.0, i64 %i.y
   %min.iters.check29 = icmp ult i64 %i.t, 4
   %n.vec32 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n42 = icmp eq i64 %i.t, %n.vec32
-  %min.iters.check14 = icmp ult i64 %i.h, 4
+  %min.iters.check14 = icmp slt i64 %i.h, 4
   %n.vec17 = and i64 %i.x, 1152921504606846972    ; 4 uses
-  %cmp.n25 = icmp eq i64 %i.h, %n.vec17
+  %cmp.n25 = icmp eq i64 %i.x, %n.vec17
   br label %.lr.ph.i.i.i.us
 
 .lr.ph.i.i.i.us:                                  ; preds = %.lr.ph.i.i.i.us.preheader, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us
@@ -1571,7 +1571,7 @@ middle.block24:                                   ; preds = %vector.body18
   %i.ct = getelementptr inbounds nuw i8, ptr %.136.us, i64 8 ; 2 uses
   store i8 %i.cs, ptr %i.co, align 1, !tbaa !7
   %i.cu = add nuw nsw i64 %.01737.us, 8           ; 2 uses
-  %exitcond70.not.7 = icmp eq i64 %i.h, %i.cu
+  %exitcond70.not.7 = icmp eq i64 %i.cu, %i.x
   br i1 %exitcond70.not.7, label %.loopexit.us, label %.lr.ph.us, !llvm.loop !392
 
 .loopexit.us:                                     ; preds = %.lr.ph.us.prol.loopexit, %.lr.ph.us, %middle.block24, %bb.b, %.loopexit35.us
@@ -1922,7 +1922,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr = freeze i64 %i.g
   %sext = shl i64 %.fr, 29
-  %i.h = ashr i64 %sext, 32                       ; 16 uses
+  %i.h = ashr i64 %sext, 32                       ; 14 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -1965,15 +1965,15 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc27, %_ZNSt6ve
   br i1 %i.u, label %.lr.ph.i.i.i.us.preheader, label %.lr.ph41.split
 
 .lr.ph.i.i.i.us.preheader:                        ; preds = %.lr.ph41
-  %i.x = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 5 uses
+  %i.x = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 7 uses
   %i.y = shl nuw nsw i64 %i.x, 3
   %scevgep9 = getelementptr i8, ptr %.sroa.030.0, i64 %i.y
   %min.iters.check29 = icmp ult i64 %i.t, 4
   %n.vec32 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n42 = icmp eq i64 %i.t, %n.vec32
-  %min.iters.check14 = icmp ult i64 %i.h, 4
+  %min.iters.check14 = icmp slt i64 %i.h, 4
   %n.vec17 = and i64 %i.x, 1152921504606846972    ; 4 uses
-  %cmp.n25 = icmp eq i64 %i.h, %n.vec17
+  %cmp.n25 = icmp eq i64 %i.x, %n.vec17
   br label %.lr.ph.i.i.i.us
 
 .lr.ph.i.i.i.us:                                  ; preds = %.lr.ph.i.i.i.us.preheader, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us
@@ -2145,7 +2145,7 @@ middle.block24:                                   ; preds = %vector.body18
   %i.ct = getelementptr inbounds nuw i8, ptr %.136.us, i64 8 ; 2 uses
   store i8 %i.cs, ptr %i.co, align 1, !tbaa !7
   %i.cu = add nuw nsw i64 %.01737.us, 8           ; 2 uses
-  %exitcond70.not.7 = icmp eq i64 %i.h, %i.cu
+  %exitcond70.not.7 = icmp eq i64 %i.cu, %i.x
   br i1 %exitcond70.not.7, label %.loopexit.us, label %.lr.ph.us, !llvm.loop !411
 
 .loopexit.us:                                     ; preds = %.lr.ph.us.prol.loopexit, %.lr.ph.us, %middle.block24, %bb.b, %.loopexit35.us
@@ -2496,7 +2496,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr = freeze i64 %i.g
   %sext = shl i64 %.fr, 29
-  %i.h = ashr i64 %sext, 32                       ; 11 uses
+  %i.h = ashr i64 %sext, 32                       ; 10 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -2539,14 +2539,14 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc26, %_ZNSt6ve
   br i1 %i.u, label %.lr.ph.i.i.i.us.preheader, label %.lr.ph40.split
 
 .lr.ph.i.i.i.us.preheader:                        ; preds = %.lr.ph40
-  %i.x = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.x = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check22 = icmp ult i64 %i.t, 4
   %n.vec25 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n35 = icmp eq i64 %i.t, %n.vec25
-  %min.iters.check7 = icmp ult i64 %i.h, 4
+  %min.iters.check7 = icmp slt i64 %i.h, 4
   %n.vec10 = and i64 %i.x, 1152921504606846972    ; 4 uses
   %i.y = shl nuw nsw i64 %n.vec10, 1
-  %cmp.n18 = icmp eq i64 %i.h, %n.vec10
+  %cmp.n18 = icmp eq i64 %i.x, %n.vec10
   br label %.lr.ph.i.i.i.us
 
 .lr.ph.i.i.i.us:                                  ; preds = %.lr.ph.i.i.i.us.preheader, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us
@@ -2919,7 +2919,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr79 = freeze i64 %i.g
   %sext = shl i64 %.fr79, 29
-  %i.h = ashr i64 %sext, 32                       ; 17 uses
+  %i.h = ashr i64 %sext, 32                       ; 14 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -2979,14 +2979,14 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc26, %_ZNSt6ve
 
 .lr.ph40.split.us.split.us:                       ; preds = %.lr.ph40.split.us
   %i.ah = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.ai = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.ai = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check27 = icmp ult i64 %i.t, 4
   %n.vec30 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n40 = icmp eq i64 %i.t, %n.vec30
-  %min.iters.check12 = icmp ult i64 %i.h, 4
+  %min.iters.check12 = icmp slt i64 %i.h, 4
   %n.vec15 = and i64 %i.ai, 1152921504606846972   ; 4 uses
   %i.aj = shl nuw nsw i64 %n.vec15, 1
-  %cmp.n23 = icmp eq i64 %i.h, %n.vec15
+  %cmp.n23 = icmp eq i64 %i.ai, %n.vec15
   br label %.lr.ph.i.i.i.us.us
 
 .lr.ph.i.i.i.us.us:                               ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, %.lr.ph40.split.us.split.us
@@ -3255,23 +3255,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %i.u, label %.lr.ph40.split.split.us, label %.lr.ph40.split.split.preheader
 
 .lr.ph40.split.split.preheader:                   ; preds = %.lr.ph40.split
-  %i.dk = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
-  %min.iters.check43 = icmp ult i64 %i.h, 4
+  %i.dk = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
+  %min.iters.check43 = icmp slt i64 %i.h, 4
   %n.vec46 = and i64 %i.dk, 1152921504606846972   ; 4 uses
   %i.dl = shl nuw nsw i64 %n.vec46, 1
-  %cmp.n54 = icmp eq i64 %i.h, %n.vec46
+  %cmp.n54 = icmp eq i64 %i.dk, %n.vec46
   br label %.lr.ph40.split.split
 
 .lr.ph40.split.split.us:                          ; preds = %.lr.ph40.split
   %i.dm = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.dn = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.dn = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check73 = icmp ult i64 %i.t, 4
   %n.vec76 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n88 = icmp eq i64 %i.t, %n.vec76
-  %min.iters.check58 = icmp ult i64 %i.h, 4
+  %min.iters.check58 = icmp slt i64 %i.h, 4
   %n.vec61 = and i64 %i.dn, 1152921504606846972   ; 4 uses
   %i.do = shl nuw nsw i64 %n.vec61, 1
-  %cmp.n69 = icmp eq i64 %i.h, %n.vec61
+  %cmp.n69 = icmp eq i64 %i.dn, %n.vec61
   br label %.lr.ph.i.i.i.us44
 
 .lr.ph.i.i.i.us44:                                ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us54, %.lr.ph40.split.split.us
@@ -3547,7 +3547,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr80 = freeze i64 %i.g
   %sext = shl i64 %.fr80, 29
-  %i.h = ashr i64 %sext, 32                       ; 17 uses
+  %i.h = ashr i64 %sext, 32                       ; 14 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -3607,14 +3607,14 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc27, %_ZNSt6ve
 
 .lr.ph41.split.us.split.us:                       ; preds = %.lr.ph41.split.us
   %i.ah = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.ai = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.ai = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check27 = icmp ult i64 %i.t, 4
   %n.vec30 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n40 = icmp eq i64 %i.t, %n.vec30
-  %min.iters.check12 = icmp ult i64 %i.h, 4
+  %min.iters.check12 = icmp slt i64 %i.h, 4
   %n.vec15 = and i64 %i.ai, 1152921504606846972   ; 4 uses
   %i.aj = shl nuw nsw i64 %n.vec15, 1
-  %cmp.n23 = icmp eq i64 %i.h, %n.vec15
+  %cmp.n23 = icmp eq i64 %i.ai, %n.vec15
   br label %.lr.ph.i.i.i.us.us
 
 .lr.ph.i.i.i.us.us:                               ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, %.lr.ph41.split.us.split.us
@@ -3883,23 +3883,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %i.u, label %.lr.ph41.split.split.us, label %.lr.ph41.split.split.preheader
 
 .lr.ph41.split.split.preheader:                   ; preds = %.lr.ph41.split
-  %i.dk = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
-  %min.iters.check43 = icmp ult i64 %i.h, 4
+  %i.dk = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
+  %min.iters.check43 = icmp slt i64 %i.h, 4
   %n.vec46 = and i64 %i.dk, 1152921504606846972   ; 4 uses
   %i.dl = shl nuw nsw i64 %n.vec46, 1
-  %cmp.n54 = icmp eq i64 %i.h, %n.vec46
+  %cmp.n54 = icmp eq i64 %i.dk, %n.vec46
   br label %.lr.ph41.split.split
 
 .lr.ph41.split.split.us:                          ; preds = %.lr.ph41.split
   %i.dm = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.dn = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.dn = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check73 = icmp ult i64 %i.t, 4
   %n.vec76 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n88 = icmp eq i64 %i.t, %n.vec76
-  %min.iters.check58 = icmp ult i64 %i.h, 4
+  %min.iters.check58 = icmp slt i64 %i.h, 4
   %n.vec61 = and i64 %i.dn, 1152921504606846972   ; 4 uses
   %i.do = shl nuw nsw i64 %n.vec61, 1
-  %cmp.n69 = icmp eq i64 %i.h, %n.vec61
+  %cmp.n69 = icmp eq i64 %i.dn, %n.vec61
   br label %.lr.ph.i.i.i.us45
 
 .lr.ph.i.i.i.us45:                                ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us55, %.lr.ph41.split.split.us
@@ -4175,7 +4175,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr80 = freeze i64 %i.g
   %sext = shl i64 %.fr80, 29
-  %i.h = ashr i64 %sext, 32                       ; 17 uses
+  %i.h = ashr i64 %sext, 32                       ; 14 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -4235,14 +4235,14 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc27, %_ZNSt6ve
 
 .lr.ph41.split.us.split.us:                       ; preds = %.lr.ph41.split.us
   %i.ah = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.ai = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.ai = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check27 = icmp ult i64 %i.t, 4
   %n.vec30 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n40 = icmp eq i64 %i.t, %n.vec30
-  %min.iters.check12 = icmp ult i64 %i.h, 4
+  %min.iters.check12 = icmp slt i64 %i.h, 4
   %n.vec15 = and i64 %i.ai, 1152921504606846972   ; 4 uses
   %i.aj = shl nuw nsw i64 %n.vec15, 1
-  %cmp.n23 = icmp eq i64 %i.h, %n.vec15
+  %cmp.n23 = icmp eq i64 %i.ai, %n.vec15
   br label %.lr.ph.i.i.i.us.us
 
 .lr.ph.i.i.i.us.us:                               ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, %.lr.ph41.split.us.split.us
@@ -4511,23 +4511,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %i.u, label %.lr.ph41.split.split.us, label %.lr.ph41.split.split.preheader
 
 .lr.ph41.split.split.preheader:                   ; preds = %.lr.ph41.split
-  %i.dk = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
-  %min.iters.check43 = icmp ult i64 %i.h, 4
+  %i.dk = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
+  %min.iters.check43 = icmp slt i64 %i.h, 4
   %n.vec46 = and i64 %i.dk, 1152921504606846972   ; 4 uses
   %i.dl = shl nuw nsw i64 %n.vec46, 1
-  %cmp.n54 = icmp eq i64 %i.h, %n.vec46
+  %cmp.n54 = icmp eq i64 %i.dk, %n.vec46
   br label %.lr.ph41.split.split
 
 .lr.ph41.split.split.us:                          ; preds = %.lr.ph41.split
   %i.dm = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.dn = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.dn = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check73 = icmp ult i64 %i.t, 4
   %n.vec76 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n88 = icmp eq i64 %i.t, %n.vec76
-  %min.iters.check58 = icmp ult i64 %i.h, 4
+  %min.iters.check58 = icmp slt i64 %i.h, 4
   %n.vec61 = and i64 %i.dn, 1152921504606846972   ; 4 uses
   %i.do = shl nuw nsw i64 %n.vec61, 1
-  %cmp.n69 = icmp eq i64 %i.h, %n.vec61
+  %cmp.n69 = icmp eq i64 %i.dn, %n.vec61
   br label %.lr.ph.i.i.i.us45
 
 .lr.ph.i.i.i.us45:                                ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us55, %.lr.ph41.split.split.us
@@ -4803,7 +4803,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr = freeze i64 %i.g
   %sext = shl i64 %.fr, 29
-  %i.h = ashr i64 %sext, 32                       ; 11 uses
+  %i.h = ashr i64 %sext, 32                       ; 10 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -4846,14 +4846,14 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc26, %_ZNSt6ve
   br i1 %i.u, label %.lr.ph.i.i.i.us.preheader, label %.lr.ph40.split
 
 .lr.ph.i.i.i.us.preheader:                        ; preds = %.lr.ph40
-  %i.x = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.x = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check22 = icmp ult i64 %i.t, 4
   %n.vec25 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n35 = icmp eq i64 %i.t, %n.vec25
-  %min.iters.check7 = icmp ult i64 %i.h, 4
+  %min.iters.check7 = icmp slt i64 %i.h, 4
   %n.vec10 = and i64 %i.x, 1152921504606846972    ; 4 uses
   %i.y = shl nuw nsw i64 %n.vec10, 2
-  %cmp.n18 = icmp eq i64 %i.h, %n.vec10
+  %cmp.n18 = icmp eq i64 %i.x, %n.vec10
   br label %.lr.ph.i.i.i.us
 
 .lr.ph.i.i.i.us:                                  ; preds = %.lr.ph.i.i.i.us.preheader, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us
@@ -5226,7 +5226,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr79 = freeze i64 %i.g
   %sext = shl i64 %.fr79, 29
-  %i.h = ashr i64 %sext, 32                       ; 17 uses
+  %i.h = ashr i64 %sext, 32                       ; 14 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -5286,14 +5286,14 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc26, %_ZNSt6ve
 
 .lr.ph40.split.us.split.us:                       ; preds = %.lr.ph40.split.us
   %i.ah = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.ai = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.ai = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check27 = icmp ult i64 %i.t, 4
   %n.vec30 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n40 = icmp eq i64 %i.t, %n.vec30
-  %min.iters.check12 = icmp ult i64 %i.h, 4
+  %min.iters.check12 = icmp slt i64 %i.h, 4
   %n.vec15 = and i64 %i.ai, 1152921504606846972   ; 4 uses
   %i.aj = shl nuw nsw i64 %n.vec15, 2
-  %cmp.n23 = icmp eq i64 %i.h, %n.vec15
+  %cmp.n23 = icmp eq i64 %i.ai, %n.vec15
   br label %.lr.ph.i.i.i.us.us
 
 .lr.ph.i.i.i.us.us:                               ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, %.lr.ph40.split.us.split.us
@@ -5562,23 +5562,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %i.u, label %.lr.ph40.split.split.us, label %.lr.ph40.split.split.preheader
 
 .lr.ph40.split.split.preheader:                   ; preds = %.lr.ph40.split
-  %i.dk = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
-  %min.iters.check43 = icmp ult i64 %i.h, 4
+  %i.dk = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
+  %min.iters.check43 = icmp slt i64 %i.h, 4
   %n.vec46 = and i64 %i.dk, 1152921504606846972   ; 4 uses
   %i.dl = shl nuw nsw i64 %n.vec46, 2
-  %cmp.n54 = icmp eq i64 %i.h, %n.vec46
+  %cmp.n54 = icmp eq i64 %i.dk, %n.vec46
   br label %.lr.ph40.split.split
 
 .lr.ph40.split.split.us:                          ; preds = %.lr.ph40.split
   %i.dm = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.dn = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.dn = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check73 = icmp ult i64 %i.t, 4
   %n.vec76 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n88 = icmp eq i64 %i.t, %n.vec76
-  %min.iters.check58 = icmp ult i64 %i.h, 4
+  %min.iters.check58 = icmp slt i64 %i.h, 4
   %n.vec61 = and i64 %i.dn, 1152921504606846972   ; 4 uses
   %i.do = shl nuw nsw i64 %n.vec61, 2
-  %cmp.n69 = icmp eq i64 %i.h, %n.vec61
+  %cmp.n69 = icmp eq i64 %i.dn, %n.vec61
   br label %.lr.ph.i.i.i.us44
 
 .lr.ph.i.i.i.us44:                                ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us54, %.lr.ph40.split.split.us
@@ -5854,7 +5854,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr80 = freeze i64 %i.g
   %sext = shl i64 %.fr80, 29
-  %i.h = ashr i64 %sext, 32                       ; 17 uses
+  %i.h = ashr i64 %sext, 32                       ; 14 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -5914,14 +5914,14 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc27, %_ZNSt6ve
 
 .lr.ph41.split.us.split.us:                       ; preds = %.lr.ph41.split.us
   %i.ah = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.ai = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.ai = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check27 = icmp ult i64 %i.t, 4
   %n.vec30 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n40 = icmp eq i64 %i.t, %n.vec30
-  %min.iters.check12 = icmp ult i64 %i.h, 4
+  %min.iters.check12 = icmp slt i64 %i.h, 4
   %n.vec15 = and i64 %i.ai, 1152921504606846972   ; 4 uses
   %i.aj = shl nuw nsw i64 %n.vec15, 2
-  %cmp.n23 = icmp eq i64 %i.h, %n.vec15
+  %cmp.n23 = icmp eq i64 %i.ai, %n.vec15
   br label %.lr.ph.i.i.i.us.us
 
 .lr.ph.i.i.i.us.us:                               ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, %.lr.ph41.split.us.split.us
@@ -6190,23 +6190,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %i.u, label %.lr.ph41.split.split.us, label %.lr.ph41.split.split.preheader
 
 .lr.ph41.split.split.preheader:                   ; preds = %.lr.ph41.split
-  %i.dk = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
-  %min.iters.check43 = icmp ult i64 %i.h, 4
+  %i.dk = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
+  %min.iters.check43 = icmp slt i64 %i.h, 4
   %n.vec46 = and i64 %i.dk, 1152921504606846972   ; 4 uses
   %i.dl = shl nuw nsw i64 %n.vec46, 2
-  %cmp.n54 = icmp eq i64 %i.h, %n.vec46
+  %cmp.n54 = icmp eq i64 %i.dk, %n.vec46
   br label %.lr.ph41.split.split
 
 .lr.ph41.split.split.us:                          ; preds = %.lr.ph41.split
   %i.dm = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.dn = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.dn = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check73 = icmp ult i64 %i.t, 4
   %n.vec76 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n88 = icmp eq i64 %i.t, %n.vec76
-  %min.iters.check58 = icmp ult i64 %i.h, 4
+  %min.iters.check58 = icmp slt i64 %i.h, 4
   %n.vec61 = and i64 %i.dn, 1152921504606846972   ; 4 uses
   %i.do = shl nuw nsw i64 %n.vec61, 2
-  %cmp.n69 = icmp eq i64 %i.h, %n.vec61
+  %cmp.n69 = icmp eq i64 %i.dn, %n.vec61
   br label %.lr.ph.i.i.i.us45
 
 .lr.ph.i.i.i.us45:                                ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us55, %.lr.ph41.split.split.us
@@ -6482,7 +6482,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr80 = freeze i64 %i.g
   %sext = shl i64 %.fr80, 29
-  %i.h = ashr i64 %sext, 32                       ; 17 uses
+  %i.h = ashr i64 %sext, 32                       ; 14 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -6542,14 +6542,14 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc27, %_ZNSt6ve
 
 .lr.ph41.split.us.split.us:                       ; preds = %.lr.ph41.split.us
   %i.ah = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.ai = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.ai = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check27 = icmp ult i64 %i.t, 4
   %n.vec30 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n40 = icmp eq i64 %i.t, %n.vec30
-  %min.iters.check12 = icmp ult i64 %i.h, 4
+  %min.iters.check12 = icmp slt i64 %i.h, 4
   %n.vec15 = and i64 %i.ai, 1152921504606846972   ; 4 uses
   %i.aj = shl nuw nsw i64 %n.vec15, 2
-  %cmp.n23 = icmp eq i64 %i.h, %n.vec15
+  %cmp.n23 = icmp eq i64 %i.ai, %n.vec15
   br label %.lr.ph.i.i.i.us.us
 
 .lr.ph.i.i.i.us.us:                               ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, %.lr.ph41.split.us.split.us
@@ -6818,23 +6818,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %i.u, label %.lr.ph41.split.split.us, label %.lr.ph41.split.split.preheader
 
 .lr.ph41.split.split.preheader:                   ; preds = %.lr.ph41.split
-  %i.dk = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
-  %min.iters.check43 = icmp ult i64 %i.h, 4
+  %i.dk = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
+  %min.iters.check43 = icmp slt i64 %i.h, 4
   %n.vec46 = and i64 %i.dk, 1152921504606846972   ; 4 uses
   %i.dl = shl nuw nsw i64 %n.vec46, 2
-  %cmp.n54 = icmp eq i64 %i.h, %n.vec46
+  %cmp.n54 = icmp eq i64 %i.dk, %n.vec46
   br label %.lr.ph41.split.split
 
 .lr.ph41.split.split.us:                          ; preds = %.lr.ph41.split
   %i.dm = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.dn = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %i.dn = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 3 uses
   %min.iters.check73 = icmp ult i64 %i.t, 4
   %n.vec76 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n88 = icmp eq i64 %i.t, %n.vec76
-  %min.iters.check58 = icmp ult i64 %i.h, 4
+  %min.iters.check58 = icmp slt i64 %i.h, 4
   %n.vec61 = and i64 %i.dn, 1152921504606846972   ; 4 uses
   %i.do = shl nuw nsw i64 %n.vec61, 2
-  %cmp.n69 = icmp eq i64 %i.h, %n.vec61
+  %cmp.n69 = icmp eq i64 %i.dn, %n.vec61
   br label %.lr.ph.i.i.i.us45
 
 .lr.ph.i.i.i.us45:                                ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us55, %.lr.ph41.split.split.us
@@ -7110,7 +7110,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr = freeze i64 %i.g
   %sext = shl i64 %.fr, 29
-  %i.h = ashr i64 %sext, 32                       ; 14 uses
+  %i.h = ashr i64 %sext, 32                       ; 12 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -7153,14 +7153,14 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc26, %_ZNSt6ve
   br i1 %i.u, label %.lr.ph.i.i.i.us.preheader, label %.lr.ph40.split
 
 .lr.ph.i.i.i.us.preheader:                        ; preds = %.lr.ph40
-  %i.x = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
+  %i.x = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 5 uses
   %min.iters.check26 = icmp ult i64 %i.t, 4
   %n.vec29 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n39 = icmp eq i64 %i.t, %n.vec29
-  %min.iters.check11 = icmp ult i64 %i.h, 4
+  %min.iters.check11 = icmp slt i64 %i.h, 4
   %n.vec14 = and i64 %i.x, 1152921504606846972    ; 4 uses
   %i.y = shl nuw nsw i64 %n.vec14, 3
-  %cmp.n22 = icmp eq i64 %i.h, %n.vec14
+  %cmp.n22 = icmp eq i64 %i.x, %n.vec14
   br label %.lr.ph.i.i.i.us
 
 .lr.ph.i.i.i.us:                                  ; preds = %.lr.ph.i.i.i.us.preheader, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us
@@ -7319,7 +7319,7 @@ middle.block21:                                   ; preds = %vector.body15
   %i.ck = getelementptr inbounds nuw i8, ptr %.135.us, i64 64 ; 2 uses
   store i64 %i.cj, ptr %i.cg, align 8, !tbaa !10
   %i.cl = add nuw nsw i64 %.01736.us, 8           ; 2 uses
-  %exitcond69.not.7 = icmp eq i64 %i.h, %i.cl
+  %exitcond69.not.7 = icmp eq i64 %i.cl, %i.x
   br i1 %exitcond69.not.7, label %.loopexit.us, label %.lr.ph.us, !llvm.loop !517
 
 .loopexit.us:                                     ; preds = %.lr.ph.us.prol.loopexit, %.lr.ph.us, %middle.block21, %bb.b, %.loopexit34.us
@@ -7653,7 +7653,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr79 = freeze i64 %i.g
   %sext = shl i64 %.fr79, 29
-  %i.h = ashr i64 %sext, 32                       ; 22 uses
+  %i.h = ashr i64 %sext, 32                       ; 16 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -7713,14 +7713,14 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc26, %_ZNSt6ve
 
 .lr.ph40.split.us.split.us:                       ; preds = %.lr.ph40.split.us
   %i.ah = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.ai = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
+  %i.ai = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 5 uses
   %min.iters.check31 = icmp ult i64 %i.t, 4
   %n.vec34 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n44 = icmp eq i64 %i.t, %n.vec34
-  %min.iters.check16 = icmp ult i64 %i.h, 4
+  %min.iters.check16 = icmp slt i64 %i.h, 4
   %n.vec19 = and i64 %i.ai, 1152921504606846972   ; 4 uses
   %i.aj = shl nuw nsw i64 %n.vec19, 3
-  %cmp.n27 = icmp eq i64 %i.h, %n.vec19
+  %cmp.n27 = icmp eq i64 %i.ai, %n.vec19
   br label %.lr.ph.i.i.i.us.us
 
 .lr.ph.i.i.i.us.us:                               ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, %.lr.ph40.split.us.split.us
@@ -7878,7 +7878,7 @@ middle.block26:                                   ; preds = %vector.body20
   %i.cu = getelementptr inbounds nuw i8, ptr %.135.us.us, i64 64 ; 2 uses
   store i64 %i.ct, ptr %i.cq, align 8, !tbaa !10
   %i.cv = add nuw nsw i64 %.01736.us.us, 8        ; 2 uses
-  %exitcond91.not.7 = icmp eq i64 %i.h, %i.cv
+  %exitcond91.not.7 = icmp eq i64 %i.cv, %i.ai
   br i1 %exitcond91.not.7, label %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, label %.lr.ph.us.us, !llvm.loop !526
 
 _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us: ; preds = %.lr.ph.us.us.prol.loopexit, %.lr.ph.us.us, %middle.block26, %bb.b, %.loopexit34.us.us
@@ -8109,23 +8109,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %i.u, label %.lr.ph40.split.split.us, label %.lr.ph40.split.split.preheader
 
 .lr.ph40.split.split.preheader:                   ; preds = %.lr.ph40.split
-  %i.fy = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
-  %min.iters.check50 = icmp ult i64 %i.h, 4
+  %i.fy = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 5 uses
+  %min.iters.check50 = icmp slt i64 %i.h, 4
   %n.vec53 = and i64 %i.fy, 1152921504606846972   ; 4 uses
   %i.fz = shl nuw nsw i64 %n.vec53, 3
-  %cmp.n61 = icmp eq i64 %i.h, %n.vec53
+  %cmp.n61 = icmp eq i64 %i.fy, %n.vec53
   br label %.lr.ph40.split.split
 
 .lr.ph40.split.split.us:                          ; preds = %.lr.ph40.split
   %i.ga = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.gb = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
+  %i.gb = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 5 uses
   %min.iters.check83 = icmp ult i64 %i.t, 4
   %n.vec86 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n98 = icmp eq i64 %i.t, %n.vec86
-  %min.iters.check68 = icmp ult i64 %i.h, 4
+  %min.iters.check68 = icmp slt i64 %i.h, 4
   %n.vec71 = and i64 %i.gb, 1152921504606846972   ; 4 uses
   %i.gc = shl nuw nsw i64 %n.vec71, 3
-  %cmp.n79 = icmp eq i64 %i.h, %n.vec71
+  %cmp.n79 = icmp eq i64 %i.gb, %n.vec71
   br label %.lr.ph.i.i.i.us44
 
 .lr.ph.i.i.i.us44:                                ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us54, %.lr.ph40.split.split.us
@@ -8283,7 +8283,7 @@ middle.block78:                                   ; preds = %vector.body72
   %i.in = getelementptr inbounds nuw i8, ptr %.135.us51, i64 64 ; 2 uses
   store i64 %i.im, ptr %i.ij, align 8, !tbaa !10
   %i.io = add nuw nsw i64 %.01736.us50, 8         ; 2 uses
-  %exitcond95.not.7 = icmp eq i64 %i.h, %i.io
+  %exitcond95.not.7 = icmp eq i64 %i.io, %i.gb
   br i1 %exitcond95.not.7, label %.loopexit.us55, label %.lr.ph.us59, !llvm.loop !535
 
 .loopexit.us55:                                   ; preds = %.lr.ph.us59.prol.loopexit, %.lr.ph.us59, %middle.block78, %bb.c, %.loopexit34.us57
@@ -8468,7 +8468,7 @@ middle.block60:                                   ; preds = %vector.body54
   %i.li = getelementptr inbounds nuw i8, ptr %.135, i64 64 ; 2 uses
   store i64 %i.lh, ptr %i.le, align 8, !tbaa !10
   %i.lj = add nuw nsw i64 %.01736, 8              ; 2 uses
-  %exitcond93.not.7 = icmp eq i64 %i.h, %i.lj
+  %exitcond93.not.7 = icmp eq i64 %i.lj, %i.fy
   br i1 %exitcond93.not.7, label %.loopexit, label %.lr.ph, !llvm.loop !538
 
 .loopexit:                                        ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block60, %bb.g, %.lr.ph40.split.split
@@ -8521,7 +8521,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr80 = freeze i64 %i.g
   %sext = shl i64 %.fr80, 29
-  %i.h = ashr i64 %sext, 32                       ; 22 uses
+  %i.h = ashr i64 %sext, 32                       ; 16 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -8581,14 +8581,14 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc27, %_ZNSt6ve
 
 .lr.ph41.split.us.split.us:                       ; preds = %.lr.ph41.split.us
   %i.ah = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.ai = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
+  %i.ai = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 5 uses
   %min.iters.check31 = icmp ult i64 %i.t, 4
   %n.vec34 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n44 = icmp eq i64 %i.t, %n.vec34
-  %min.iters.check16 = icmp ult i64 %i.h, 4
+  %min.iters.check16 = icmp slt i64 %i.h, 4
   %n.vec19 = and i64 %i.ai, 1152921504606846972   ; 4 uses
   %i.aj = shl nuw nsw i64 %n.vec19, 3
-  %cmp.n27 = icmp eq i64 %i.h, %n.vec19
+  %cmp.n27 = icmp eq i64 %i.ai, %n.vec19
   br label %.lr.ph.i.i.i.us.us
 
 .lr.ph.i.i.i.us.us:                               ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, %.lr.ph41.split.us.split.us
@@ -8746,7 +8746,7 @@ middle.block26:                                   ; preds = %vector.body20
   %i.cu = getelementptr inbounds nuw i8, ptr %.136.us.us, i64 64 ; 2 uses
   store i64 %i.ct, ptr %i.cq, align 8, !tbaa !10
   %i.cv = add nuw nsw i64 %.01737.us.us, 8        ; 2 uses
-  %exitcond92.not.7 = icmp eq i64 %i.h, %i.cv
+  %exitcond92.not.7 = icmp eq i64 %i.cv, %i.ai
   br i1 %exitcond92.not.7, label %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, label %.lr.ph.us.us, !llvm.loop !543
 
 _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us: ; preds = %.lr.ph.us.us.prol.loopexit, %.lr.ph.us.us, %middle.block26, %bb.b, %.loopexit35.us.us
@@ -8977,23 +8977,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %i.u, label %.lr.ph41.split.split.us, label %.lr.ph41.split.split.preheader
 
 .lr.ph41.split.split.preheader:                   ; preds = %.lr.ph41.split
-  %i.fy = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
-  %min.iters.check50 = icmp ult i64 %i.h, 4
+  %i.fy = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 5 uses
+  %min.iters.check50 = icmp slt i64 %i.h, 4
   %n.vec53 = and i64 %i.fy, 1152921504606846972   ; 4 uses
   %i.fz = shl nuw nsw i64 %n.vec53, 3
-  %cmp.n61 = icmp eq i64 %i.h, %n.vec53
+  %cmp.n61 = icmp eq i64 %i.fy, %n.vec53
   br label %.lr.ph41.split.split
 
 .lr.ph41.split.split.us:                          ; preds = %.lr.ph41.split
   %i.ga = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.gb = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
+  %i.gb = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 5 uses
   %min.iters.check83 = icmp ult i64 %i.t, 4
   %n.vec86 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n98 = icmp eq i64 %i.t, %n.vec86
-  %min.iters.check68 = icmp ult i64 %i.h, 4
+  %min.iters.check68 = icmp slt i64 %i.h, 4
   %n.vec71 = and i64 %i.gb, 1152921504606846972   ; 4 uses
   %i.gc = shl nuw nsw i64 %n.vec71, 3
-  %cmp.n79 = icmp eq i64 %i.h, %n.vec71
+  %cmp.n79 = icmp eq i64 %i.gb, %n.vec71
   br label %.lr.ph.i.i.i.us45
 
 .lr.ph.i.i.i.us45:                                ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us55, %.lr.ph41.split.split.us
@@ -9151,7 +9151,7 @@ middle.block78:                                   ; preds = %vector.body72
   %i.in = getelementptr inbounds nuw i8, ptr %.136.us52, i64 64 ; 2 uses
   store i64 %i.im, ptr %i.ij, align 8, !tbaa !10
   %i.io = add nuw nsw i64 %.01737.us51, 8         ; 2 uses
-  %exitcond96.not.7 = icmp eq i64 %i.h, %i.io
+  %exitcond96.not.7 = icmp eq i64 %i.io, %i.gb
   br i1 %exitcond96.not.7, label %.loopexit.us56, label %.lr.ph.us60, !llvm.loop !552
 
 .loopexit.us56:                                   ; preds = %.lr.ph.us60.prol.loopexit, %.lr.ph.us60, %middle.block78, %bb.c, %.loopexit35.us58
@@ -9336,7 +9336,7 @@ middle.block60:                                   ; preds = %vector.body54
   %i.li = getelementptr inbounds nuw i8, ptr %.136, i64 64 ; 2 uses
   store i64 %i.lh, ptr %i.le, align 8, !tbaa !10
   %i.lj = add nuw nsw i64 %.01737, 8              ; 2 uses
-  %exitcond94.not.7 = icmp eq i64 %i.h, %i.lj
+  %exitcond94.not.7 = icmp eq i64 %i.lj, %i.fy
   br i1 %exitcond94.not.7, label %.loopexit, label %.lr.ph, !llvm.loop !555
 
 .loopexit:                                        ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block60, %bb.g, %.lr.ph41.split.split
@@ -9389,7 +9389,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %.fr80 = freeze i64 %i.g
   %sext = shl i64 %.fr80, 29
-  %i.h = ashr i64 %sext, 32                       ; 22 uses
+  %i.h = ashr i64 %sext, 32                       ; 16 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
   br i1 %i.i, label %.noexc, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -9449,14 +9449,14 @@ _ZNSt6vectorIlSaIlEEC2EmRKlRKS0_.exit:            ; preds = %.noexc27, %_ZNSt6ve
 
 .lr.ph41.split.us.split.us:                       ; preds = %.lr.ph41.split.us
   %i.ah = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.ai = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
+  %i.ai = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 5 uses
   %min.iters.check31 = icmp ult i64 %i.t, 4
   %n.vec34 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n44 = icmp eq i64 %i.t, %n.vec34
-  %min.iters.check16 = icmp ult i64 %i.h, 4
+  %min.iters.check16 = icmp slt i64 %i.h, 4
   %n.vec19 = and i64 %i.ai, 1152921504606846972   ; 4 uses
   %i.aj = shl nuw nsw i64 %n.vec19, 3
-  %cmp.n27 = icmp eq i64 %i.h, %n.vec19
+  %cmp.n27 = icmp eq i64 %i.ai, %n.vec19
   br label %.lr.ph.i.i.i.us.us
 
 .lr.ph.i.i.i.us.us:                               ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, %.lr.ph41.split.us.split.us
@@ -9614,7 +9614,7 @@ middle.block26:                                   ; preds = %vector.body20
   %i.cu = getelementptr inbounds nuw i8, ptr %.136.us.us, i64 64 ; 2 uses
   store i64 %i.ct, ptr %i.cq, align 8, !tbaa !10
   %i.cv = add nuw nsw i64 %.01737.us.us, 8        ; 2 uses
-  %exitcond92.not.7 = icmp eq i64 %i.h, %i.cv
+  %exitcond92.not.7 = icmp eq i64 %i.cv, %i.ai
   br i1 %exitcond92.not.7, label %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, label %.lr.ph.us.us, !llvm.loop !560
 
 _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us: ; preds = %.lr.ph.us.us.prol.loopexit, %.lr.ph.us.us, %middle.block26, %bb.b, %.loopexit35.us.us
@@ -9845,23 +9845,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %i.u, label %.lr.ph41.split.split.us, label %.lr.ph41.split.split.preheader
 
 .lr.ph41.split.split.preheader:                   ; preds = %.lr.ph41.split
-  %i.fy = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
-  %min.iters.check50 = icmp ult i64 %i.h, 4
+  %i.fy = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 5 uses
+  %min.iters.check50 = icmp slt i64 %i.h, 4
   %n.vec53 = and i64 %i.fy, 1152921504606846972   ; 4 uses
   %i.fz = shl nuw nsw i64 %n.vec53, 3
-  %cmp.n61 = icmp eq i64 %i.h, %n.vec53
+  %cmp.n61 = icmp eq i64 %i.fy, %n.vec53
   br label %.lr.ph41.split.split
 
 .lr.ph41.split.split.us:                          ; preds = %.lr.ph41.split
   %i.ga = load ptr, ptr %i.v, align 8, !tbaa !53  ; 2 uses
-  %i.gb = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
+  %i.gb = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 5 uses
   %min.iters.check83 = icmp ult i64 %i.t, 4
   %n.vec86 = and i64 %i.t, 9223372036854775804    ; 3 uses
   %cmp.n98 = icmp eq i64 %i.t, %n.vec86
-  %min.iters.check68 = icmp ult i64 %i.h, 4
+  %min.iters.check68 = icmp slt i64 %i.h, 4
   %n.vec71 = and i64 %i.gb, 1152921504606846972   ; 4 uses
   %i.gc = shl nuw nsw i64 %n.vec71, 3
-  %cmp.n79 = icmp eq i64 %i.h, %n.vec71
+  %cmp.n79 = icmp eq i64 %i.gb, %n.vec71
   br label %.lr.ph.i.i.i.us45
 
 .lr.ph.i.i.i.us45:                                ; preds = %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us55, %.lr.ph41.split.split.us
@@ -10019,7 +10019,7 @@ middle.block78:                                   ; preds = %vector.body72
   %i.in = getelementptr inbounds nuw i8, ptr %.136.us52, i64 64 ; 2 uses
   store i64 %i.im, ptr %i.ij, align 8, !tbaa !10
   %i.io = add nuw nsw i64 %.01737.us51, 8         ; 2 uses
-  %exitcond96.not.7 = icmp eq i64 %i.h, %i.io
+  %exitcond96.not.7 = icmp eq i64 %i.io, %i.gb
   br i1 %exitcond96.not.7, label %.loopexit.us56, label %.lr.ph.us60, !llvm.loop !569
 
 .loopexit.us56:                                   ; preds = %.lr.ph.us60.prol.loopexit, %.lr.ph.us60, %middle.block78, %bb.c, %.loopexit35.us58
@@ -10204,7 +10204,7 @@ middle.block60:                                   ; preds = %vector.body54
   %i.li = getelementptr inbounds nuw i8, ptr %.136, i64 64 ; 2 uses
   store i64 %i.lh, ptr %i.le, align 8, !tbaa !10
   %i.lj = add nuw nsw i64 %.01737, 8              ; 2 uses
-  %exitcond94.not.7 = icmp eq i64 %i.h, %i.lj
+  %exitcond94.not.7 = icmp eq i64 %i.lj, %i.fy
   br i1 %exitcond94.not.7, label %.loopexit, label %.lr.ph, !llvm.loop !572
 
 .loopexit:                                        ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block60, %bb.g, %.lr.ph41.split.split
@@ -10607,7 +10607,7 @@ declare void @llvm.assume(i1 noundef) #21
 declare void @llvm.experimental.noalias.scope.decl(metadata) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #20
+declare i64 @llvm.smax.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #20

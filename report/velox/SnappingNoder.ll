@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %._crit_edge.i, %.lr
   %i.l = load ptr, ptr %i.k, align 8
   %i.m = tail call noundef i64 %i.l(ptr noundef nonnull align 8 dereferenceable(8) %i.i), !inline_history !53
   %i.n = trunc i64 %i.m to i32                    ; 3 uses
-  %3 = sdiv i32 %i.n, 100
+  %3 = udiv i32 %i.n, 100
   %i.o = icmp sgt i32 %i.n, 99
   br i1 %i.o, label %.lr.ph.i, label %._crit_edge.i
 
@@ -429,7 +429,7 @@ bb.b:                                             ; preds = %.lr.ph29, %._crit_e
   %i.l = load ptr, ptr %i.k, align 8
   %i.m = tail call noundef i64 %i.l(ptr noundef nonnull align 8 dereferenceable(8) %i.i), !inline_history !68
   %i.n = trunc i64 %i.m to i32                    ; 3 uses
-  %2 = sdiv i32 %i.n, 100
+  %2 = udiv i32 %i.n, 100
   %i.o = icmp sgt i32 %i.n, 99
   br i1 %i.o, label %.lr.ph, label %._crit_edge
 

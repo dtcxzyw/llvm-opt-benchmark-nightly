@@ -204,10 +204,10 @@ bb.aa:                                            ; preds = %bb.x
   %i.gz = select i1 %.not.i.i.us, ptr %i.gy, ptr %i.gw ; 3 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 48
   %i.hb = load i32, ptr %i.ha, align 4, !tbaa !105 ; 2 uses
-  %29 = sext i32 %i.hb to i64
+  %29 = zext nneg i32 %i.hb to i64
   %i.hc = getelementptr inbounds nuw i8, ptr %i.gz, i64 52
   %i.hd = load i32, ptr %i.hc, align 4, !tbaa !104 ; 2 uses
-  %30 = sext i32 %i.hd to i64
+  %30 = zext nneg i32 %i.hd to i64
   %i.he = getelementptr inbounds nuw i8, ptr %i.gz, i64 56
   %i.hf = load i32, ptr %i.he, align 4, !tbaa !106
   %i.hg = load i32, ptr %i.gk, align 8, !tbaa !582
@@ -251,9 +251,9 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ae
   %i.ib = zext nneg i32 %i.hn to i64
-  %i.ic = mul nsw i64 %i.ib, %30
+  %i.ic = mul nuw nsw i64 %i.ib, %30
   %i.id = zext nneg i32 %i.hk to i64
-  %i.ie = add nsw i64 %i.ic, %i.id
+  %i.ie = add nuw nsw i64 %i.ic, %i.id
   %i.if = mul i64 %i.ie, %29
   %i.ig = zext nneg i32 %i.hh to i64
   %i.ih = add i64 %i.if, %i.ig
@@ -656,10 +656,10 @@ bb.a:
   %i.r = select i1 %.not.i, ptr %i.q, ptr %i.o    ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 48
   %i.t = load i32, ptr %i.s, align 4, !tbaa !105  ; 2 uses
-  %5 = sext i32 %i.t to i64
+  %5 = zext nneg i32 %i.t to i64
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 52
   %i.v = load i32, ptr %i.u, align 4, !tbaa !104  ; 2 uses
-  %6 = sext i32 %i.v to i64
+  %6 = zext nneg i32 %i.v to i64
   %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 56
   %i.x = load i32, ptr %i.w, align 4, !tbaa !106
   %i.y = load i32, ptr %i.c, align 8, !tbaa !582
@@ -701,9 +701,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.at = zext nneg i32 %i.af to i64
-  %i.au = mul nsw i64 %i.at, %6
+  %i.au = mul nuw nsw i64 %i.at, %6
   %i.av = zext nneg i32 %i.ac to i64
-  %i.aw = add nsw i64 %i.au, %i.av
+  %i.aw = add nuw nsw i64 %i.au, %i.av
   %i.ax = mul i64 %i.aw, %5
   %i.ay = zext nneg i32 %i.z to i64
   %i.az = add i64 %i.ax, %i.ay
@@ -1106,7 +1106,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.k = ptrtoint ptr %i.h to i64
   %i.l = sub i64 %i.k, %i.a                       ; 5 uses
   %i.m = add nsw i64 %i.l, -1
-  %4 = sdiv i64 %i.m, 2
+  %4 = lshr i64 %i.m, 1
   %i.n = icmp sgt i64 %i.l, 2
   br i1 %i.n, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -1145,7 +1145,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ag = or disjoint i64 %i.af, 1                ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 %i.ag
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !39
-  %i.aj = getelementptr inbounds i8, ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 %.0.lcssa.i.i.i.i
   store i8 %i.ai, ptr %i.aj, align 1, !tbaa !39
   br label %.lr.ph.i.i.i.i.i.preheader
 

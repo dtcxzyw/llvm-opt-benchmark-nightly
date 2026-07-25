@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.d
   br i1 %i.dg, label %bb.t, label %_ZNSt6vectorIhSaIhEE9push_backEOh.exit94
 
 bb.t:                                             ; preds = %bb.s
-  %i.ew = add i32 %.078179, -1
+  %i.ew = add nsw i32 %.078179, -1
   %i.ex = trunc i32 %.078179 to i8
   %i.ey = sub i8 1, %i.ex                         ; 2 uses
   %i.ez = load ptr, ptr %i.bz, align 8, !tbaa !162 ; 3 uses
@@ -272,7 +272,7 @@ _ZNSt6vectorIhSaIhEE9push_backEOh.exit102:        ; preds = %bb.u, %_ZNSt6vector
 
 .lr.ph171.preheader:                              ; preds = %_ZNSt6vectorIhSaIhEE9push_backEOh.exit102
   %i.ft = sext i32 %.075181 to i64
-  %wide.trip.count207 = zext nneg i32 %i.ew to i64
+  %wide.trip.count207 = zext i32 %i.ew to i64
   br label %.lr.ph171
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIhSaIhEE9push_backERKh.exit, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit102

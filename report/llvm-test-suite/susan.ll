@@ -203,7 +203,7 @@ bb.a:
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %1, i8 0, i64 %i.c, i1 false)
-  %i.d = add i32 %5, -3
+  %i.d = add nsw i32 %5, -3
   %i.e = icmp sgt i32 %5, 6
   br i1 %i.e, label %.preheader.lr.ph, label %._crit_edge153.split
 
@@ -219,7 +219,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.m = zext nneg i32 %4 to i64
-  %wide.trip.count158 = zext nneg i32 %i.d to i64
+  %wide.trip.count158 = zext i32 %i.d to i64
   %wide.trip.count = zext i32 %i.f to i64
   br label %.preheader
 
@@ -561,7 +561,7 @@ bb.a:
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %1, i8 0, i64 %i.c, i1 false)
-  %i.d = add i32 %5, -1
+  %i.d = add nsw i32 %5, -1
   %i.e = icmp sgt i32 %5, 2
   br i1 %i.e, label %.preheader.lr.ph, label %._crit_edge59.split
 
@@ -574,7 +574,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.i = add nsw i32 %4, -1
   %i.j = zext nneg i32 %4 to i64
-  %wide.trip.count64 = zext nneg i32 %i.d to i64
+  %wide.trip.count64 = zext i32 %i.d to i64
   %wide.trip.count = zext i32 %i.i to i64
   br label %.preheader
 
@@ -977,7 +977,7 @@ bb.a:
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %1, i8 0, i64 %i.c, i1 false)
-  %i.d = add i32 %6, -3
+  %i.d = add nsw i32 %6, -3
   %i.e = icmp sgt i32 %6, 6
   br i1 %i.e, label %.preheader872.lr.ph, label %._crit_edge878.split
 
@@ -993,7 +993,7 @@ bb.a:
 
 .preheader872.preheader:                          ; preds = %.preheader872.lr.ph
   %i.m = zext nneg i32 %5 to i64
-  %wide.trip.count883 = zext nneg i32 %i.d to i64
+  %wide.trip.count883 = zext i32 %i.d to i64
   %wide.trip.count = zext i32 %i.f to i64
   br label %.preheader872
 
@@ -1025,7 +1025,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.ac = add nsw i32 %5, -4
   %i.ad = zext nneg i32 %5 to i64
-  %wide.trip.count893 = zext nneg i32 %i.t to i64
+  %wide.trip.count893 = zext i32 %i.t to i64
   %wide.trip.count888 = zext i32 %i.ac to i64
   br label %.preheader
 
@@ -1428,7 +1428,7 @@ bb.a:
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %1, i8 0, i64 %i.c, i1 false)
-  %i.d = add i32 %6, -1
+  %i.d = add nsw i32 %6, -1
   %i.e = icmp sgt i32 %6, 2
   br i1 %i.e, label %.preheader276.lr.ph, label %._crit_edge282.split
 
@@ -1441,7 +1441,7 @@ bb.a:
 .preheader276.preheader:                          ; preds = %.preheader276.lr.ph
   %i.i = add nsw i32 %5, -1
   %i.j = zext nneg i32 %5 to i64
-  %wide.trip.count287 = zext nneg i32 %i.d to i64
+  %wide.trip.count287 = zext i32 %i.d to i64
   %wide.trip.count = zext i32 %i.i to i64
   br label %.preheader276
 
@@ -1468,7 +1468,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.v = zext nneg i32 %5 to i64
-  %wide.trip.count297 = zext nneg i32 %i.q to i64
+  %wide.trip.count297 = zext i32 %i.q to i64
   %wide.trip.count292 = zext i32 %i.s to i64
   br label %.preheader
 
@@ -1871,7 +1871,7 @@ bb.a:
 
 .preheader902.preheader:                          ; preds = %.preheader902.lr.ph
   %i.o = zext nneg i32 %5 to i64
-  %wide.trip.count921 = zext nneg i32 %i.f to i64
+  %wide.trip.count921 = zext i32 %i.f to i64
   %wide.trip.count = zext i32 %i.h to i64
   br label %.preheader902
 
@@ -1890,7 +1890,7 @@ bb.a:
 .preheader.us.preheader:                          ; preds = %._crit_edge
   %i.x = add nsw i32 %5, -5
   %i.y = zext nneg i32 %5 to i64                  ; 7 uses
-  %wide.trip.count931 = zext nneg i32 %i.f to i64
+  %wide.trip.count931 = zext i32 %i.f to i64
   %wide.trip.count926 = zext i32 %i.x to i64
   br label %.preheader.us
 
@@ -2293,7 +2293,7 @@ bb.a:
 .preheader805.preheader:                          ; preds = %.preheader805.lr.ph
   %i.m = add nsw i32 %5, -7
   %i.n = zext nneg i32 %5 to i64
-  %wide.trip.count823 = zext nneg i32 %i.d to i64
+  %wide.trip.count823 = zext i32 %i.d to i64
   %wide.trip.count = zext i32 %i.m to i64
   br label %.preheader805
 
@@ -2310,7 +2310,7 @@ bb.a:
 .preheader.us.preheader:                          ; preds = %._crit_edge
   %i.u = add nsw i32 %5, -7
   %i.v = zext nneg i32 %5 to i64                  ; 7 uses
-  %wide.trip.count833 = zext nneg i32 %i.d to i64
+  %wide.trip.count833 = zext i32 %i.d to i64
   %wide.trip.count828 = zext i32 %i.u to i64
   br label %.preheader.us
 
@@ -2713,7 +2713,7 @@ bb.x:                                             ; preds = %setup_brightness_lu
 
 bb.y:                                             ; preds = %bb.x
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.bg, i8 0, i64 %i.bf, i1 false)
-  %i.bx = add i32 %i.bc, -1
+  %i.bx = add nsw i32 %i.bc, -1
   %i.by = icmp sgt i32 %i.bc, 2
   br i1 %i.by, label %.preheader.lr.ph.i, label %susan_principle_small.exit
 
@@ -2726,7 +2726,7 @@ bb.y:                                             ; preds = %bb.x
 .preheader.preheader.i:                           ; preds = %.preheader.lr.ph.i
   %i.cc = add nsw i32 %i.bb, -1
   %i.cd = zext nneg i32 %i.bb to i64
-  %wide.trip.count64.i = zext nneg i32 %i.bx to i64
+  %wide.trip.count64.i = zext i32 %i.bx to i64
   %wide.trip.count.i = zext nneg i32 %i.cc to i64
   br label %.preheader.i
 

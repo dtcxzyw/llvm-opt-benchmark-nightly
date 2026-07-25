@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.m = sub i64 %i.l, %i.a                       ; 3 uses
   %i.n = ashr exact i64 %i.m, 2                   ; 3 uses
   %i.o = add nsw i64 %i.n, -1
-  %4 = sdiv i64 %i.o, 2
+  %4 = lshr i64 %i.o, 1
   %i.p = icmp sgt i64 %i.n, 2
   br i1 %i.p, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -243,7 +243,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ai
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !3
-  %i.al = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !3
   br label %.lr.ph.i.i.i.i.i.preheader
 
@@ -646,7 +646,7 @@ _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf15FieldDesc
   %i.ca = sub i64 %i.bz, %i.a                     ; 3 uses
   %i.cb = ashr exact i64 %i.ca, 3                 ; 3 uses
   %i.cc = add nsw i64 %i.cb, -1
-  %3 = sdiv i64 %i.cc, 2
+  %3 = lshr i64 %i.cc, 1
   %i.cd = icmp sgt i64 %i.cb, 2
   br i1 %i.cd, label %.lr.ph.i.i.i19.i, label %._crit_edge.i.i.i10.i
 
@@ -689,7 +689,7 @@ bb.i:                                             ; preds = %._crit_edge.i.i.i10
   %i.cy = or disjoint i64 %i.cx, 1                ; 2 uses
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %.fr29, i64 %i.cy
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !33
-  %i.db = getelementptr inbounds [8 x i8], ptr %.fr29, i64 %.0.lcssa.i.i.i11.i
+  %i.db = getelementptr inbounds nuw [8 x i8], ptr %.fr29, i64 %.0.lcssa.i.i.i11.i
   store ptr %i.da, ptr %i.db, align 8, !tbaa !33
   br label %.lr.ph.i.i.i.i13.i
 
