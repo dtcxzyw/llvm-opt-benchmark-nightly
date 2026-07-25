@@ -201,6 +201,7 @@ bb.aa:                                            ; preds = %bb.z
 
 .lr.ph339.preheader:                              ; preds = %bb.z, %bb.aa
   store ptr %i.bj, ptr %i.bl, align 8, !tbaa !46
+  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 3)
   br label %.lr.ph339
 
 .lr.ph339:                                        ; preds = %.lr.ph339.preheader, %bb.ab
@@ -212,7 +213,7 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %.lr.ph339
   %i.bp = tail call i32 @OPENSSL_sk_push(ptr noundef nonnull %i.bj, ptr noundef nonnull %i.bn) #4 ; 0 uses
   %i.bq = add nuw nsw i32 %.1240337, 1            ; 2 uses
-  %exitcond406.not = icmp eq i32 %i.bq, %2
+  %exitcond406.not = icmp eq i32 %i.bq, %smax
   br i1 %exitcond406.not, label %.loopexit309, label %.lr.ph339, !llvm.loop !47
 
 .loopexit309:                                     ; preds = %bb.ab, %bb.x

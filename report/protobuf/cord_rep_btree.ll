@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 14
   %i.h = load i8, ptr %i.g, align 2, !tbaa !7     ; 5 uses
-  %i.i = zext i8 %i.h to i64
+  %i.i = zext nneg i8 %i.h to i64
   %i.j = icmp ult i8 %i.h, 6
   br i1 %i.j, label %bb.i, label %bb.h
 

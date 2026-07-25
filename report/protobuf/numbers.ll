@@ -201,7 +201,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.at, label %_ZN4absl12lts_2025051212_GLOBAL__N_124safe_parse_sign_and_baseEPSt17basic_string_viewIcSt11char_traitsIcEEPiPb.exit.thread.sink.split.i, label %.lr.ph.i6.i
 
 .lr.ph.i6.i:                                      ; preds = %bb.s
-  %i.aw = trunc nuw nsw i32 %.0.i.i to i8
+  %i.aw = trunc nuw i32 %.0.i.i to i8
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.w, %.lr.ph.i6.i
@@ -238,7 +238,7 @@ bb.x:                                             ; preds = %bb.r
   br i1 %i.at, label %_ZN4absl12lts_2025051212_GLOBAL__N_124safe_parse_sign_and_baseEPSt17basic_string_viewIcSt11char_traitsIcEEPiPb.exit.thread.sink.split.i, label %.lr.ph.i9.i
 
 .lr.ph.i9.i:                                      ; preds = %bb.x
-  %i.bl = trunc nuw nsw i32 %.0.i.i to i8
+  %i.bl = trunc nuw i32 %.0.i.i to i8
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.ab, %.lr.ph.i9.i
@@ -436,7 +436,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.at, label %_ZN4absl12lts_2025051212_GLOBAL__N_124safe_parse_sign_and_baseEPSt17basic_string_viewIcSt11char_traitsIcEEPiPb.exit.thread.sink.split.i, label %.lr.ph.i6.i
 
 .lr.ph.i6.i:                                      ; preds = %bb.s
-  %i.aw = trunc nuw nsw i32 %.0.i.i to i16
+  %i.aw = trunc nuw i32 %.0.i.i to i16
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.w, %.lr.ph.i6.i
@@ -474,7 +474,7 @@ bb.x:                                             ; preds = %bb.r
   br i1 %i.at, label %_ZN4absl12lts_2025051212_GLOBAL__N_124safe_parse_sign_and_baseEPSt17basic_string_viewIcSt11char_traitsIcEEPiPb.exit.thread.sink.split.i, label %.lr.ph.i9.i
 
 .lr.ph.i9.i:                                      ; preds = %bb.x
-  %i.bm = trunc nuw nsw i32 %.0.i.i to i16
+  %i.bm = trunc nuw i32 %.0.i.i to i16
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.ab, %.lr.ph.i9.i
@@ -877,7 +877,7 @@ bb.r:                                             ; preds = %_ZN4absl12lts_20250
   br i1 %i.av, label %_ZN4absl12lts_2025051212_GLOBAL__N_123safe_parse_positive_intIhEEbSt17basic_string_viewIcSt11char_traitsIcEEiPT_.exit.i, label %.lr.ph.i4.i
 
 .lr.ph.i4.i:                                      ; preds = %bb.r
-  %i.aw = trunc nuw nsw i32 %.0.i.i to i8
+  %i.aw = trunc nuw i32 %.0.i.i to i8
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.v, %.lr.ph.i4.i
@@ -1075,7 +1075,7 @@ bb.r:                                             ; preds = %_ZN4absl12lts_20250
   br i1 %i.av, label %_ZN4absl12lts_2025051212_GLOBAL__N_123safe_parse_positive_intItEEbSt17basic_string_viewIcSt11char_traitsIcEEiPT_.exit.i, label %.lr.ph.i4.i
 
 .lr.ph.i4.i:                                      ; preds = %bb.r
-  %i.aw = trunc nuw nsw i32 %.0.i.i to i16
+  %i.aw = trunc nuw i32 %.0.i.i to i16
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.v, %.lr.ph.i4.i

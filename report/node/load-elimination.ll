@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.a
 
 _ZNK2v88internal8compiler4Node10InputCountEv.exit: ; preds = %bb.b, %bb.c
   %i.n = phi i32 [ %i.g, %bb.b ], [ %i.m, %bb.c ] ; 2 uses
-  %i.o = add i32 %i.n, -1
+  %i.o = add nsw i32 %i.n, -1
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.q = load ptr, ptr %2, align 8                ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 24
@@ -392,7 +392,7 @@ _ZNK2v88internal8compiler15LoadElimination13AbstractState10LookupMapsEPNS1_4Node
   %i.db = add nsw i64 %i.cy, -2
   %i.dc = inttoptr i64 %i.db to ptr               ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 8
-  %wide.trip.count = zext nneg i32 %i.o to i64
+  %wide.trip.count = zext i32 %i.o to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph, %.thread81
@@ -795,7 +795,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.l = sub i64 %i.k, %i.a                       ; 3 uses
   %i.m = ashr exact i64 %i.l, 3                   ; 3 uses
   %i.n = add nsw i64 %i.m, -1
-  %4 = sdiv i64 %i.n, 2
+  %4 = lshr i64 %i.n, 1
   %i.o = icmp sgt i64 %i.m, 2
   br i1 %i.o, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -835,7 +835,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ai
   %i.ak = load ptr, ptr %i.aj, align 8
-  %i.al = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.al = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   store ptr %i.ak, ptr %i.al, align 8
   br label %.lr.ph.i.i.i.i.i.preheader
 

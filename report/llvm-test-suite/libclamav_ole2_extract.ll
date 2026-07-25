@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.h = add nsw i32 %1, -2
-  %2 = zext nneg i32 %i.h to i64
+  %2 = sext i32 %i.h to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
@@ -274,7 +274,7 @@ bb.f:                                             ; preds = %bb.e, %.thread, %bb
   store i8 %.sink, ptr %i.aq, align 1, !tbaa !25
   %.2 = add nsw i32 %.05866.sink, 1               ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %3 = icmp samesign ult i64 %indvars.iv.next, %2
+  %3 = icmp slt i64 %indvars.iv.next, %2
   br i1 %3, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !57
 
 ._crit_edge.loopexit:                             ; preds = %bb.f

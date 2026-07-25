@@ -204,7 +204,7 @@ bb.ba:                                            ; preds = %.preheader474, %.cr
   %indvars.iv360 = phi i64 [ %indvars.iv.next361, %.critedge2 ], [ %indvars.iv360.ph, %.preheader474 ] ; 3 uses
   %i.cy = getelementptr inbounds i8, ptr %0, i64 %indvars.iv360
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !37  ; 3 uses
-  %i.da = zext i8 %i.cz to i64
+  %i.da = zext nneg i8 %i.cz to i64
   %.not237 = icmp sgt i8 %i.cz, -1
   br i1 %.not237, label %bb.bb, label %.critedge2
 
@@ -474,7 +474,7 @@ bb.ch:                                            ; preds = %.critedge13, %bb.cg
   %indvars.iv374 = phi i64 [ %indvars.iv.next375, %.critedge13 ], [ 1, %bb.cg ] ; 6 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv374
   %i.gk = load i8, ptr %i.gj, align 1, !tbaa !37  ; 3 uses
-  %i.gl = zext i8 %i.gk to i64
+  %i.gl = zext nneg i8 %i.gk to i64
   %.not250 = icmp sgt i8 %i.gk, -1
   br i1 %.not250, label %bb.ci, label %.critedge13
 
@@ -877,7 +877,7 @@ sqlite3ValueNew.exit59:                           ; preds = %bb.af, %bb.ah, %sql
   %.0.i7.i9.i55 = phi ptr [ %.0.i11.i.i56, %bb.ai ], [ null, %sqlite3DbMallocRaw.exit.i.i57 ], [ null, %bb.ah ], [ null, %bb.af ] ; 14 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.cv = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.cw = load i32, ptr %i.cv, align 8            ; 3 uses
+  %i.cw = load i32, ptr %i.cv, align 8            ; 4 uses
   %i.cx = lshr i32 %i.cw, 1                       ; 2 uses
   %i.cy = add nsw i32 %i.cx, -3
   %i.cz = load ptr, ptr %i.cu, align 8, !tbaa !1197 ; 2 uses
@@ -912,17 +912,18 @@ sqlite3DbMallocRaw.exit.i:                        ; preds = %sqlite3ValueNew.exi
   br i1 %i.dj, label %.lr.ph.preheader.i, label %bb.at
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
-  %i.dk = add nsw i32 %i.cx, -4                   ; 2 uses
-  %5 = zext i32 %i.dk to i64                      ; 3 uses
-  %i.dl = tail call i64 @llvm.umax.i64(i64 %5, i64 2)
+  %i.dk = add nsw i32 %i.cx, -4
+  %5 = sext i32 %i.dk to i64                      ; 3 uses
+  %i.dl = tail call i64 @llvm.smax.i64(i64 %5, i64 2)
   %i.dm = add nsw i64 %i.dl, -1
   %i.dn = lshr i64 %i.dm, 1
   %i.do = add nuw nsw i64 %i.dn, 1                ; 2 uses
-  %min.iters.check = icmp ult i32 %i.dk, 127
+  %min.iters.check = icmp ult i32 %i.cw, 262
   br i1 %min.iters.check, label %.lr.ph.i61.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
-  %i.dp = add nsw i64 %5, -1                      ; 2 uses
+  %smax = tail call i64 @llvm.smax.i64(i64 %5, i64 2)
+  %i.dp = add nsw i64 %smax, -1                   ; 2 uses
   %i.dq = lshr i64 %i.dp, 1
   %i.dr = getelementptr i8, ptr %.0.i32.i, i64 %i.dq
   %scevgep = getelementptr i8, ptr %i.dr, i64 1
@@ -1139,7 +1140,7 @@ hexToInt.exit20.i:                                ; preds = %bb.ar, %bb.aq, %hex
   %i.jk = getelementptr inbounds nuw i8, ptr %.0.i32.i, i64 %i.jj
   store i8 %i.ji, ptr %i.jk, align 1, !tbaa !37
   %indvars.iv.next.i64 = add nuw nsw i64 %indvars.iv.i62, 2 ; 3 uses
-  %6 = icmp samesign ult i64 %indvars.iv.next.i64, %5
+  %6 = icmp slt i64 %indvars.iv.next.i64, %5
   br i1 %6, label %.lr.ph.i61, label %._crit_edge.loopexit.i.loopexit, !llvm.loop !1644
 
 ._crit_edge.loopexit.i.loopexit:                  ; preds = %hexToInt.exit20.i
@@ -1542,7 +1543,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load i8, ptr %1, align 8, !tbaa !1311    ; 5 uses
-  %i.j = zext i8 %i.i to i32
+  %i.j = zext nneg i8 %i.i to i32
   switch i8 %i.i, label %sqlite3VdbeAddOp3.exitthread-pre-split [
     i8 -105, label %bb.d
     i8 -107, label %bb.h
@@ -1943,9 +1944,6 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #32
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #32
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #32
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.and.v2i64(<2 x i64>) #32

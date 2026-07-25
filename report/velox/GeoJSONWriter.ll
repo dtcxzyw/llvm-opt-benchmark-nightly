@@ -203,7 +203,7 @@ bb.u:                                             ; preds = %._crit_edge169
 
 _ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12count_digitsEm.exit.i: ; preds = %._crit_edge169
   %i.ig = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.ih = zext i8 %i.ib to i64
+  %i.ih = zext nneg i8 %i.ib to i64
   %i.ii = icmp ult i8 %i.ib, 10
   %i.ij = icmp ult i8 %i.ib, 100
   %i.ik = select i1 %i.ij, i64 2, i64 3
@@ -271,7 +271,7 @@ bb.z:                                             ; preds = %bb.y
   br label %_ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12dump_integerIhTnNSt9enable_ifIXoooosr3std7is_sameIT_mEE5valuesr3std7is_sameISI_lEE5valuesr3std7is_sameISI_hEE5valueEiE4typeELi0EEEvSI_.exit91
 
 _ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12count_digitsEm.exit.i85: ; preds = %bb.y
-  %i.jo = zext i8 %i.jj to i64
+  %i.jo = zext nneg i8 %i.jj to i64
   %i.jp = icmp ult i8 %i.jj, 10
   %i.jq = icmp ult i8 %i.jj, 100
   %i.jr = select i1 %i.jq, i64 2, i64 3
@@ -377,7 +377,7 @@ bb.ae:                                            ; preds = %bb.ad
 
 _ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12count_digitsEm.exit.i92: ; preds = %bb.ad
   %i.lw = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.lx = zext i8 %i.lr to i64
+  %i.lx = zext nneg i8 %i.lr to i64
   %i.ly = icmp ult i8 %i.lr, 10
   %i.lz = icmp ult i8 %i.lr, 100
   %i.ma = select i1 %i.lz, i64 2, i64 3
@@ -491,7 +491,7 @@ bb.ak:                                            ; preds = %._crit_edge
 
 _ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12count_digitsEm.exit.i99: ; preds = %._crit_edge
   %i.oc = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.od = zext i8 %i.nx to i64
+  %i.od = zext nneg i8 %i.nx to i64
   %i.oe = icmp ult i8 %i.nx, 10
   %i.of = icmp ult i8 %i.nx, 100
   %i.og = select i1 %i.of, i64 2, i64 3
@@ -559,7 +559,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %_ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12dump_integerIhTnNSt9enable_ifIXoooosr3std7is_sameIT_mEE5valuesr3std7is_sameISI_lEE5valuesr3std7is_sameISI_hEE5valueEiE4typeELi0EEEvSI_.exit112
 
 _ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12count_digitsEm.exit.i106: ; preds = %bb.ao
-  %i.pk = zext i8 %i.pf to i64
+  %i.pk = zext nneg i8 %i.pf to i64
   %i.pl = icmp ult i8 %i.pf, 10
   %i.pm = icmp ult i8 %i.pf, 100
   %i.pn = select i1 %i.pm, i64 2, i64 3
@@ -653,7 +653,7 @@ bb.au:                                            ; preds = %bb.at
 
 _ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12count_digitsEm.exit.i113: ; preds = %bb.at
   %i.ri = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.rj = zext i8 %i.rd to i64
+  %i.rj = zext nneg i8 %i.rd to i64
   %i.rk = icmp ult i8 %i.rd, 10
   %i.rl = icmp ult i8 %i.rd, 100
   %i.rm = select i1 %i.rl, i64 2, i64 3

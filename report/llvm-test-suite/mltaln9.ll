@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.ay, label %.lr.ph63, label %.preheader49.preheader
 
 .preheader49.preheader:                           ; preds = %.preheader50
-  %wide.trip.count80 = zext nneg i32 %i.ax to i64
+  %wide.trip.count80 = zext i32 %i.ax to i64
   %xtraiter137 = and i64 %wide.trip.count70, 1
   %i.az = icmp eq i32 %0, 0
   %unroll_iter140 = and i64 %wide.trip.count70, 4294967294
@@ -607,7 +607,7 @@ bb.a:
 
 .lr.ph78.preheader:                               ; preds = %.preheader
   %i.f = add nsw i32 %1, -1
-  %wide.trip.count111 = zext nneg i32 %i.f to i64
+  %wide.trip.count111 = zext i32 %i.f to i64
   %wide.trip.count = zext nneg i32 %1 to i64      ; 3 uses
   %i.g = add nsw i64 %wide.trip.count, -2
   br label %.lr.ph
@@ -723,7 +723,7 @@ bb.d:                                             ; preds = %bb.a
   %i.bk = load i32, ptr getelementptr inbounds nuw (i8, ptr @n_dis, i64 96), align 16
   %i.bl = sub nsw i32 %i.bj, %i.bk
   %i.bm = sext i32 %i.bl to i64                   ; 2 uses
-  %wide.trip.count141 = zext nneg i32 %i.be to i64 ; 2 uses
+  %wide.trip.count141 = zext i32 %i.be to i64     ; 2 uses
   %wide.trip.count136 = zext nneg i32 %1 to i64   ; 2 uses
   br i1 %i.bg, label %.lr.ph95.us, label %.lr.ph95
 
@@ -1066,7 +1066,7 @@ bb.i:                                             ; preds = %.lr.ph160.split.epi
   %i.cn = load i32, ptr @penalty, align 4
   %i.co = sitofp i32 %i.cn to double              ; 2 uses
   %i.cp = zext i32 %3 to i64                      ; 6 uses
-  %wide.trip.count254 = zext nneg i32 %i.ck to i64 ; 2 uses
+  %wide.trip.count254 = zext i32 %i.ck to i64     ; 2 uses
   %wide.trip.count249 = zext nneg i32 %1 to i64   ; 2 uses
   br i1 %i.cm, label %.lr.ph183.us, label %.lr.ph183.preheader
 
@@ -1371,7 +1371,7 @@ bb.a:
   br i1 %i.i, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %wide.trip.count130 = zext nneg i32 %i.d to i64
+  %wide.trip.count130 = zext i32 %i.d to i64
   %wide.trip.count125 = zext nneg i32 %1 to i64
   br label %.lr.ph76.us
 
@@ -1482,7 +1482,7 @@ bb.f:                                             ; preds = %bb.b, %bb.e, %bb.d,
   br i1 %i.g, label %._crit_edge, label %.lr.ph.split.split.preheader
 
 .lr.ph.split.split.preheader:                     ; preds = %.lr.ph.split
-  %wide.trip.count112 = zext nneg i32 %i.d to i64
+  %wide.trip.count112 = zext i32 %i.d to i64
   %wide.trip.count = zext nneg i32 %1 to i64      ; 3 uses
   %i.be = add nsw i64 %wide.trip.count, -2
   br label %.lr.ph76
@@ -1885,7 +1885,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 .lr.ph252:                                        ; preds = %._crit_edge226
   %i.dh = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 3 uses
-  %wide.trip.count276 = zext nneg i32 %i.ch to i64
+  %wide.trip.count276 = zext i32 %i.ch to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph252, %bb.ab
@@ -2288,7 +2288,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 .lr.ph271:                                        ; preds = %._crit_edge239
   %i.co = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 3 uses
-  %wide.trip.count293 = zext nneg i32 %i.bl to i64
+  %wide.trip.count293 = zext i32 %i.bl to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph271, %bb.ag
@@ -2691,7 +2691,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %.not468, label %._crit_edge389, label %.lr.ph388.preheader
 
 .lr.ph388.preheader:                              ; preds = %._crit_edge339
-  %wide.trip.count422 = zext nneg i32 %i.ci to i64
+  %wide.trip.count422 = zext i32 %i.ci to i64
   br label %.lr.ph388
 
 .lr.ph388:                                        ; preds = %.lr.ph388.preheader, %._crit_edge384
@@ -3094,7 +3094,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %.not421, label %._crit_edge353, label %.lr.ph352.preheader
 
 .lr.ph352.preheader:                              ; preds = %._crit_edge303
-  %wide.trip.count376 = zext nneg i32 %i.az to i64
+  %wide.trip.count376 = zext i32 %i.az to i64
   br label %.lr.ph352
 
 .lr.ph352:                                        ; preds = %.lr.ph352.preheader, %._crit_edge348
@@ -3497,7 +3497,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 .lr.ph240:                                        ; preds = %._crit_edge212
   %i.bd = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 3 uses
-  %wide.trip.count260 = zext nneg i32 %i.at to i64
+  %wide.trip.count260 = zext i32 %i.at to i64
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph240, %bb.ac
@@ -3900,7 +3900,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 .lr.ph229:                                        ; preds = %._crit_edge201
   %i.bd = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 4 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 3 uses
-  %wide.trip.count249 = zext nneg i32 %i.at to i64
+  %wide.trip.count249 = zext i32 %i.at to i64
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph229, %bb.ac
@@ -4303,7 +4303,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not337, label %._crit_edge282, label %.lr.ph281.preheader
 
 .lr.ph281.preheader:                              ; preds = %._crit_edge238
-  %wide.trip.count306 = zext nneg i32 %i.kb to i64
+  %wide.trip.count306 = zext i32 %i.kb to i64
   br label %.lr.ph281
 
 .lr.ph281:                                        ; preds = %.lr.ph281.preheader, %bb.x
@@ -4706,7 +4706,7 @@ scalar.ph324:                                     ; preds = %scalar.ph324.prehea
   br label %._crit_edge263
 
 .lr.ph262.preheader:                              ; preds = %._crit_edge218
-  %wide.trip.count287 = zext nneg i32 %i.ay to i64
+  %wide.trip.count287 = zext i32 %i.ay to i64
   br label %.lr.ph262
 
 .lr.ph262:                                        ; preds = %.lr.ph262.preheader, %bb.t
@@ -5109,7 +5109,7 @@ scalar.ph324:                                     ; preds = %scalar.ph324.prehea
   br label %._crit_edge263
 
 .lr.ph262.preheader:                              ; preds = %._crit_edge218
-  %wide.trip.count287 = zext nneg i32 %i.bh to i64
+  %wide.trip.count287 = zext i32 %i.bh to i64
   br label %.lr.ph262
 
 .lr.ph262:                                        ; preds = %.lr.ph262.preheader, %bb.t
@@ -5512,7 +5512,7 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   br i1 %.not298, label %._crit_edge225, label %.lr.ph224
 
 .lr.ph224:                                        ; preds = %._crit_edge187
-  %wide.trip.count278 = zext nneg i32 %i.as to i64
+  %wide.trip.count278 = zext i32 %i.as to i64
   %xtraiter324 = and i64 %wide.trip.count230, 3   ; 3 uses
   %i.cg = icmp ult i32 %0, 4
   %unroll_iter329 = and i64 %wide.trip.count230, 2147483644
@@ -5915,7 +5915,7 @@ bb.a:
   br i1 %i.g, label %.preheader101.preheader, label %.preheader97
 
 .preheader101.preheader:                          ; preds = %.preheader102
-  %wide.trip.count = zext nneg i32 %i.f to i64
+  %wide.trip.count = zext i32 %i.f to i64
   br label %.preheader101
 
 .preheader101:                                    ; preds = %.preheader101.preheader, %._crit_edge116
@@ -6064,7 +6064,7 @@ bb.b:                                             ; preds = %.lr.ph114, %bb.b
 
 .lr.ph126.preheader:                              ; preds = %.preheader
   %i.cd = add nsw i32 %0, -1
-  %wide.trip.count166 = zext nneg i32 %i.cd to i64
+  %wide.trip.count166 = zext i32 %i.cd to i64
   %wide.trip.count161 = zext nneg i32 %0 to i64   ; 3 uses
   %i.ce = add nsw i64 %wide.trip.count161, -2
   br label %.lr.ph124
@@ -6213,7 +6213,7 @@ middle.block:                                     ; preds = %vector.body
 
 .preheader50.preheader:                           ; preds = %.preheader51
   %i.g = add nsw i32 %0, -1
-  %wide.trip.count78 = zext nneg i32 %i.g to i64
+  %wide.trip.count78 = zext i32 %i.g to i64
   br label %.preheader50
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader126, %.lr.ph
@@ -6496,7 +6496,7 @@ middle.block:                                     ; preds = %vector.body
 
 .preheader50.preheader:                           ; preds = %.preheader51
   %i.g = add nsw i32 %0, -1
-  %wide.trip.count78 = zext nneg i32 %i.g to i64
+  %wide.trip.count78 = zext i32 %i.g to i64
   br label %.preheader50
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader126, %.lr.ph
@@ -6790,7 +6790,7 @@ bb.d:                                             ; preds = %bb.c, %bb.a
   br i1 %i.j, label %.preheader182.preheader, label %.preheader178
 
 .preheader182.preheader:                          ; preds = %.preheader183
-  %wide.trip.count = zext nneg i32 %i.i to i64
+  %wide.trip.count = zext i32 %i.i to i64
   br label %.preheader182
 
 .preheader182:                                    ; preds = %.preheader182.preheader, %._crit_edge201
@@ -6955,7 +6955,7 @@ bb.f:                                             ; preds = %.preheader179.us, %
 .lr.ph210:                                        ; preds = %.preheader176
   %i.cv = load float, ptr @geta2, align 4
   %i.cw = fpext float %i.cv to double
-  %wide.trip.count269 = zext nneg i32 %i.ct to i64
+  %wide.trip.count269 = zext i32 %i.ct to i64
   %wide.trip.count264 = zext nneg i32 %0 to i64   ; 3 uses
   br label %.lr.ph208
 
@@ -6965,7 +6965,7 @@ bb.f:                                             ; preds = %.preheader179.us, %
   br i1 %exitcond270.not, label %.lr.ph215.preheader, label %.lr.ph208, !llvm.loop !334
 
 .lr.ph215.preheader:                              ; preds = %.loopexit175
-  %wide.trip.count281 = zext nneg i32 %i.ct to i64
+  %wide.trip.count281 = zext i32 %i.ct to i64
   %wide.trip.count276 = zext nneg i32 %0 to i64
   %i.cx = add nsw i64 %wide.trip.count264, -2
   br label %.lr.ph213
@@ -7116,7 +7116,7 @@ middle.block:                                     ; preds = %vector.body
 
 .preheader169.preheader:                          ; preds = %.preheader170
   %i.et = add nsw i32 %0, -1
-  %wide.trip.count297 = zext nneg i32 %i.et to i64
+  %wide.trip.count297 = zext i32 %i.et to i64
   br label %.preheader169
 
 .lr.ph217:                                        ; preds = %.lr.ph217.preheader348, %.lr.ph217
@@ -7519,7 +7519,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph45.preheader:                               ; preds = %.preheader
   %i.g = add nsw i32 %1, -1
-  %wide.trip.count67 = zext nneg i32 %i.g to i64
+  %wide.trip.count67 = zext i32 %i.g to i64
   %wide.trip.count62 = zext nneg i32 %1 to i64
   br label %.lr.ph
 
@@ -7651,7 +7651,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %1, -1
+  %i.c = add nsw i32 %1, -1
   %i.d = icmp sgt i32 %1, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -7663,7 +7663,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph.split.us.preheader, label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %wide.trip.count106 = zext nneg i32 %i.c to i64
+  %wide.trip.count106 = zext i32 %i.c to i64
   %wide.trip.count101 = zext nneg i32 %1 to i64
   %wide.trip.count = and i64 %.fr, 2147483647
   br label %.lr.ph81.us
@@ -8066,7 +8066,7 @@ bb.a:
   br i1 %i.g, label %.lr.ph.split.us.preheader, label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %wide.trip.count94 = zext nneg i32 %i.d to i64
+  %wide.trip.count94 = zext i32 %i.d to i64
   %wide.trip.count = zext nneg i32 %0 to i64
   br label %.lr.ph73.us
 
@@ -8313,7 +8313,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %1, -1
+  %i.c = add nsw i32 %1, -1
   %i.d = icmp sgt i32 %1, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -8325,7 +8325,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph.split.us.preheader, label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %wide.trip.count122 = zext nneg i32 %i.c to i64
+  %wide.trip.count122 = zext i32 %i.c to i64
   %wide.trip.count117 = zext nneg i32 %1 to i64
   %wide.trip.count = and i64 %.fr, 2147483647
   br label %.lr.ph97.us
@@ -8444,7 +8444,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %1, -1
+  %i.c = add nsw i32 %1, -1
   %i.d = icmp sgt i32 %1, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -8456,7 +8456,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph.split.us.preheader, label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %wide.trip.count104 = zext nneg i32 %i.c to i64
+  %wide.trip.count104 = zext i32 %i.c to i64
   %wide.trip.count99 = zext nneg i32 %1 to i64
   %wide.trip.count = and i64 %.fr, 2147483647
   br label %.lr.ph79.us
@@ -8559,7 +8559,7 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %0, -1
+  %i.c = add nsw i32 %0, -1
   %i.d = icmp sgt i32 %0, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -8571,7 +8571,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph.split.us.preheader, label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %wide.trip.count97 = zext nneg i32 %i.c to i64
+  %wide.trip.count97 = zext i32 %i.c to i64
   %wide.trip.count92 = zext nneg i32 %0 to i64
   %wide.trip.count = and i64 %.fr, 2147483647
   br label %.preheader.lr.ph.us
@@ -8771,7 +8771,7 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %0, -1
+  %i.c = add nsw i32 %0, -1
   %i.d = icmp sgt i32 %0, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -8783,7 +8783,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph.split.us.preheader, label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %wide.trip.count94 = zext nneg i32 %i.c to i64
+  %wide.trip.count94 = zext i32 %i.c to i64
   %wide.trip.count89 = zext nneg i32 %0 to i64
   %wide.trip.count = and i64 %.fr, 2147483647
   br label %.preheader.lr.ph.us
@@ -8871,7 +8871,7 @@ bb.a:
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b
   %i.c = trunc i64 %.fr to i32                    ; 3 uses
-  %i.d = add i32 %0, -1
+  %i.d = add nsw i32 %0, -1
   %i.e = icmp sgt i32 %0, 1
   br i1 %i.e, label %.lr.ph, label %._crit_edge
 
@@ -8883,7 +8883,7 @@ bb.a:
   br i1 %i.g, label %.lr.ph.split.us.preheader, label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %wide.trip.count108 = zext nneg i32 %i.d to i64
+  %wide.trip.count108 = zext i32 %i.d to i64
   %wide.trip.count = zext nneg i32 %0 to i64
   br label %.lr.ph84.us
 
@@ -9286,7 +9286,7 @@ seqlen.exit:                                      ; preds = %.lr.ph.i, %bb.l
 
 .lr.ph179.preheader:                              ; preds = %.preheader
   %i.en = add nsw i32 %0, -1
-  %wide.trip.count225 = zext nneg i32 %i.en to i64
+  %wide.trip.count225 = zext i32 %i.en to i64
   %wide.trip.count220 = zext nneg i32 %0 to i64
   br label %.lr.ph177
 
@@ -9401,7 +9401,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 .lr.ph.split.us.preheader:                        ; preds = %bb.c
   %i.j = add nsw i32 %0, -1
-  %wide.trip.count291 = zext nneg i32 %i.j to i64
+  %wide.trip.count291 = zext i32 %i.j to i64
   %wide.trip.count286 = zext nneg i32 %0 to i64   ; 2 uses
   br label %.preheader201.lr.ph.us
 
@@ -9804,7 +9804,7 @@ bb.a:
 
 .lr.ph17.preheader:                               ; preds = %bb.a
   %i.b = add nsw i32 %0, -1
-  %wide.trip.count24 = zext nneg i32 %i.b to i64
+  %wide.trip.count24 = zext i32 %i.b to i64
   %wide.trip.count = zext nneg i32 %0 to i64      ; 3 uses
   %i.c = add nsw i64 %wide.trip.count, -2
   br label %.lr.ph

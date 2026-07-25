@@ -204,7 +204,7 @@ bb.a:
   %i.e = sext i32 %i.d to i64                     ; 4 uses
   %i.f = icmp slt i32 %i.d, 0
   %i.g = shl nuw nsw i64 %i.e, 3
-  %.not36173 = icmp sgt i32 %i.d, 0
+  %.not36173.not = icmp eq i32 %i.d, 0
   %i.h = ptrtoint ptr %i.c to i64
   %i.i = add i64 %i.h, 664
   %i.j = inttoptr i64 %i.i to ptr
@@ -403,7 +403,7 @@ _ZN2v811LocalVectorINS_4NameEE7reserveEm.exit:    ; preds = %bb.k, %_ZNSt12_Vect
   %.sroa.10.5 = phi ptr [ %i.bl, %_ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_4NameEEESaIS4_EE13_M_deallocateEPS4_m.exit.i.i ], [ %.sroa.10.0, %bb.k ] ; 2 uses
   %.sroa.17.6 = phi ptr [ %i.bm, %_ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_4NameEEESaIS4_EE13_M_deallocateEPS4_m.exit.i.i ], [ %.sroa.17.0, %bb.k ] ; 2 uses
   %.sroa.074.6 = phi ptr [ %i.bk, %_ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_4NameEEESaIS4_EE13_M_deallocateEPS4_m.exit.i.i ], [ %.sroa.074.0, %bb.k ] ; 2 uses
-  br i1 %.not36173, label %.lr.ph, label %.critedge
+  br i1 %.not36173.not, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN2v811LocalVectorINS_4NameEE7reserveEm.exit, %bb.r
   %.034177 = phi i32 [ %i.cx, %bb.r ], [ 0, %_ZN2v811LocalVectorINS_4NameEE7reserveEm.exit ] ; 3 uses

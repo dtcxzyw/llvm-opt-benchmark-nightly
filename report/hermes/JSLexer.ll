@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.i, %.lr.ph.i
   %i.o = phi i8 [ %i.k, %.lr.ph.i ], [ %i.y, %bb.i ] ; 4 uses
   %.084.us.i = phi i8 [ 0, %.lr.ph.i ], [ %.2.ph.us.i, %bb.i ]
   %.05683.us.i = phi i32 [ 0, %.lr.ph.i ], [ %.1.ph.us.i, %bb.i ] ; 2 uses
-  %1 = sext i8 %i.o to i32
+  %1 = zext nneg i8 %i.o to i32
   %i.p = add i8 %i.o, -48
   %or.cond.us.i = icmp ult i8 %i.p, 10
   br i1 %or.cond.us.i, label %bb.h, label %bb.e

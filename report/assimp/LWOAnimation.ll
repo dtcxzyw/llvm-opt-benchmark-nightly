@@ -203,7 +203,7 @@ _ZNSt6vectorIN6Assimp3LWO3KeyESaIS2_EE6resizeEm.exit: ; preds = %bb.s, %bb.t, %b
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN6Assimp3LWO3KeyESaIS2_EE6resizeEm.exit
   %i.cm = icmp sgt i64 %i.r, 40
   %i.cn = icmp eq i64 %i.r, 40
-  %3 = icmp slt i64 %i.r, 81
+  %3 = icmp samesign ult i64 %i.r, 81
   br label %bb.v
 
 ._crit_edge:                                      ; preds = %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN6Assimp3LWO3KeyESt6vectorIS4_SaIS4_EEEEEvT_SA_.exit, %_ZNSt6vectorIN6Assimp3LWO3KeyESaIS2_EE6resizeEm.exit

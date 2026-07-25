@@ -204,32 +204,25 @@ bb.kt:                                            ; preds = %bb.kr, %bb.ks
   %i.bfa = phi ptr [ %i.bez, %bb.ks ], [ %i.bex, %bb.kr ] ; 21 uses
   %i.bfb = ptrtoaddr ptr %i.bfa to i64
   %i.bfc = getelementptr inbounds nuw i8, ptr %.0254, i64 232
-  %i.bfd = load i32, ptr %i.bfc, align 8, !tbaa !107 ; 19 uses
+  %i.bfd = load i32, ptr %i.bfc, align 8, !tbaa !107 ; 20 uses
   %i.bfe = getelementptr inbounds nuw i8, ptr %.0254, i64 236
-  %i.bff = load i32, ptr %i.bfe, align 4, !tbaa !108 ; 8 uses
+  %i.bff = load i32, ptr %i.bfe, align 4, !tbaa !108 ; 9 uses
   %i.bfg = getelementptr inbounds nuw i8, ptr %i.ak, i64 808 ; 2 uses
   %i.bfh = load i32, ptr %i.bfg, align 4, !tbaa !87 ; 3 uses
   %.not276 = icmp eq i32 %i.bfh, 0
-  br i1 %.not276, label %.loopexit292, label %bb.ku
+  br i1 %.not276, label %.loopexit292, label %2
 
-bb.ku:                                            ; preds = %bb.kt
-  %2 = icmp sgt i32 %i.bfh, 30
+2:                                                ; preds = %bb.kt
+  %3 = icmp sgt i32 %i.bfh, 30
+  br i1 %3, label %bb.ku, label %4
+
+bb.ku:                                            ; preds = %2
   %i.bfi = icmp ne i32 %i.bff, 0
   %i.bfj = icmp ne i32 %i.bfd, 0
-  %or.cond394.a = select i1 %i.bfi, i1 %i.bfj, i1 false ; 2 uses
-  br i1 %2, label %.preheader291, label %.preheader294
-
-.preheader294:                                    ; preds = %bb.ku
-  br i1 %or.cond394.a, label %.preheader293.preheader, label %.loopexit292
-
-.preheader293.preheader:                          ; preds = %.preheader294
-  %wide.trip.count = zext i32 %i.bfd to i64
-  br label %.preheader293
-
-.preheader291:                                    ; preds = %bb.ku
+  %or.cond394.a = select i1 %i.bfi, i1 %i.bfj, i1 false
   br i1 %or.cond394.a, label %.preheader290.preheader, label %.loopexit292
 
-.preheader290.preheader:                          ; preds = %.preheader291
+.preheader290.preheader:                          ; preds = %bb.ku
   %wide.trip.count481 = zext i32 %i.bfd to i64    ; 6 uses
   %i.bfk = add nsw i64 %wide.trip.count481, -1    ; 2 uses
   %min.iters.check785 = icmp ult i32 %i.bfd, 12
@@ -329,6 +322,17 @@ scalar.ph784:                                     ; preds = %scalar.ph784, %scal
   %exitcond483.not.a = icmp eq i32 %i.bgr, %i.bff
   br i1 %exitcond483.not.a, label %.loopexit292, label %.preheader290, !llvm.loop !164
 
+4:                                                ; preds = %2
+  %5 = shl nuw i32 1, %i.bfh
+  %6 = icmp ne i32 %i.bff, 0
+  %7 = icmp ne i32 %i.bfd, 0
+  %or.cond393 = select i1 %6, i1 %7, i1 false
+  br i1 %or.cond393, label %.preheader293.preheader, label %.loopexit292
+
+.preheader293.preheader:                          ; preds = %4
+  %wide.trip.count = zext i32 %i.bfd to i64
+  br label %.preheader293
+
 .preheader293:                                    ; preds = %.preheader293.preheader, %._crit_edge
   %.1251365 = phi i32 [ %i.bhe, %._crit_edge ], [ 0, %.preheader293.preheader ] ; 2 uses
   %i.bgs = mul i32 %.1251365, %i.bfd
@@ -342,8 +346,7 @@ bb.kv:                                            ; preds = %.preheader293, %bb.
   %i.bgw = getelementptr inbounds nuw [4 x i8], ptr %i.bfa, i64 %i.bgv ; 2 uses
   %i.bgx = load i32, ptr %i.bgw, align 4, !tbaa !3 ; 2 uses
   %i.bgy = tail call i32 @llvm.abs.i32(i32 %i.bgx, i1 true) ; 2 uses
-  %.highbits = lshr i32 %i.bgy, %i.bfh
-  %.not277 = icmp eq i32 %.highbits, 0
+  %.not277 = icmp slt i32 %i.bgy, %5
   br i1 %.not277, label %bb.kx, label %bb.kw
 
 bb.kw:                                            ; preds = %bb.kv
@@ -365,7 +368,7 @@ bb.kx:                                            ; preds = %bb.kw, %bb.kv
   %exitcond477.not = icmp eq i32 %i.bhe, %i.bff
   br i1 %exitcond477.not, label %.loopexit292, label %.preheader293, !llvm.loop !166
 
-.loopexit292:                                     ; preds = %._crit_edge, %._crit_edge367, %.preheader294, %.preheader291, %bb.kt
+.loopexit292:                                     ; preds = %._crit_edge, %._crit_edge367, %4, %bb.ku, %bb.kt
   br i1 %.not275, label %bb.la, label %bb.ky
 
 bb.ky:                                            ; preds = %.loopexit292

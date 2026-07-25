@@ -204,7 +204,8 @@ bb.b:                                             ; preds = %_ZStlsISt11char_tra
 
 .preheader:                                       ; preds = %bb.b, %bb.i
   %.06169 = phi i8 [ 0, %bb.b ], [ %i.bc, %bb.i ]
-  %i.ai = zext nneg i8 %.06169 to i64
+  %i.ai = zext nneg i8 %.06169 to i64             ; 2 uses
+  %umax72 = call i64 @llvm.umax.i64(i64 %i.ai, i64 7)
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.i
@@ -222,7 +223,7 @@ bb.d:                                             ; preds = %.preheader, %bb.e
 bb.e:                                             ; preds = %bb.d
   %i.al = add nuw nsw i32 %.01468, 1              ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %exitcond.not = icmp eq i64 %indvars.iv, 7
+  %exitcond.not = icmp eq i64 %indvars.iv, %umax72
   br i1 %exitcond.not, label %.thread112, label %bb.d, !llvm.loop !96
 
 .thread112:                                       ; preds = %bb.e
@@ -623,6 +624,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #18

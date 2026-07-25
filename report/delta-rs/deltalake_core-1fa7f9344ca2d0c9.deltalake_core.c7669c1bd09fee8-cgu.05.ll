@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %bb.v, %bb.s
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBufferNtNtB8_6bigint4i256E3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 5
+  %i.b = shl nuw i64 %2, 5
   %i.c = icmp ugt i64 %2, 576460752303423487
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 
@@ -328,7 +328,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBufferNtNtB8_8interval15IntervalDayTimeE3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 3
+  %i.b = shl nuw i64 %2, 3
   %i.c = icmp ugt i64 %2, 2305843009213693951
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 
@@ -452,7 +452,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBufferNtNtB8_8interval20IntervalMonthDayNanoE3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 4
+  %i.b = shl nuw i64 %2, 4
   %i.c = icmp ugt i64 %2, 1152921504606846975
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 
@@ -576,7 +576,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBufferNtNtCs1t1quLay1hV_4half8binary163f16E3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 1
+  %i.b = shl nuw i64 %2, 1
   %i.c = icmp slt i64 %2, 0
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 
@@ -805,7 +805,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBufferdE3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 3
+  %i.b = shl nuw i64 %2, 3
   %i.c = icmp ugt i64 %2, 2305843009213693951
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 
@@ -929,7 +929,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBufferfE3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 2
+  %i.b = shl nuw i64 %2, 2
   %i.c = icmp ugt i64 %2, 4611686018427387903
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 
@@ -1158,7 +1158,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBufferlE3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 2
+  %i.b = shl nuw i64 %2, 2
   %i.c = icmp ugt i64 %2, 4611686018427387903
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 
@@ -1311,7 +1311,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBuffermE3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 2
+  %i.b = shl nuw i64 %2, 2
   %i.c = icmp ugt i64 %2, 4611686018427387903
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 
@@ -1435,7 +1435,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBuffernE3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 4
+  %i.b = shl nuw i64 %2, 4
   %i.c = icmp ugt i64 %2, 1152921504606846975
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 
@@ -1577,7 +1577,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.i, ptr %i.k, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20304)
-  %i.l = shl i64 %2, 4
+  %i.l = shl nuw i64 %2, 4
   %i.m = icmp ugt i64 %2, 1152921504606846975
   br i1 %i.m, label %.invoke.i, label %bb.c, !prof !10
 
@@ -1706,7 +1706,7 @@ bb.n:                                             ; preds = %bb.a
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBuffersE3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 1
+  %i.b = shl nuw i64 %2, 1
   %i.c = icmp slt i64 %2, 0
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 
@@ -1830,7 +1830,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBuffertE3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 1
+  %i.b = shl nuw i64 %2, 1
   %i.c = icmp slt i64 %2, 0
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 
@@ -1954,7 +1954,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBufferxE3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 3
+  %i.b = shl nuw i64 %2, 3
   %i.c = icmp ugt i64 %2, 2305843009213693951
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 
@@ -2107,7 +2107,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc void @_RNvMs_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB4_12ScalarBufferyE3newCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
-  %i.b = shl i64 %2, 3
+  %i.b = shl nuw i64 %2, 3
   %i.c = icmp ugt i64 %2, 2305843009213693951
   br i1 %i.c, label %.invoke, label %bb.b, !prof !10
 

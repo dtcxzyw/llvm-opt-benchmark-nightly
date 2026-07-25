@@ -204,14 +204,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %.01225 = phi i32 [ 0, %bb.a ], [ %i.an, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 3 uses
-  %i.k = sext i32 %.01225 to i64                  ; 2 uses
+  %i.k = sext i32 %.01225 to i64                  ; 3 uses
   %i.l = getelementptr inbounds i8, ptr %i.c, i64 %i.k
   %i.m = load i8, ptr %i.l, align 1, !tbaa !9     ; 2 uses
-  %exitcond.not37 = icmp eq i32 %.01225, 255
+  %smax27 = call i64 @llvm.smax.i64(i64 %i.k, i64 255)
+  %exitcond.not37 = icmp sgt i32 %.01225, 254
   br i1 %exitcond.not37, label %.split.loop.exit34, label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 255
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %smax27
   br i1 %exitcond.not, label %.split.loop.exit34, label %.lr.ph, !llvm.loop !126
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
@@ -614,7 +615,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.k = sub i64 %i.j, %i.a                       ; 3 uses
   %i.l = ashr exact i64 %i.k, 3                   ; 3 uses
   %i.m = add nsw i64 %i.l, -1
-  %6 = sdiv i64 %i.m, 2
+  %6 = lshr i64 %i.m, 1
   %i.n = icmp sgt i64 %i.l, 2
   br i1 %i.n, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -651,7 +652,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ae = shl nuw nsw i64 %.0.lcssa.i.i.i.i, 1
   %i.af = or disjoint i64 %i.ae, 1                ; 2 uses
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.af
-  %i.ah = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   %i.ai = load i64, ptr %i.ag, align 4
   store i64 %i.ai, ptr %i.ah, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
@@ -1014,7 +1015,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.k = ptrtoint ptr %i.h to i64
   %i.l = sub i64 %i.k, %i.a                       ; 5 uses
   %i.m = add nsw i64 %i.l, -1
-  %4 = sdiv i64 %i.m, 2
+  %4 = lshr i64 %i.m, 1
   %i.n = icmp sgt i64 %i.l, 2
   br i1 %i.n, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -1053,7 +1054,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ag = or disjoint i64 %i.af, 1                ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 %i.ag
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !9
-  %i.aj = getelementptr inbounds i8, ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 %.0.lcssa.i.i.i.i
   store i8 %i.ai, ptr %i.aj, align 1, !tbaa !9
   br label %.lr.ph.i.i.i.i.i.preheader
 
@@ -1454,6 +1455,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #20

@@ -99,7 +99,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.o = add i64 %3, -2                           ; 6 uses
-  %i.p = add nuw i64 %i.a, 1
+  %i.p = add i64 %i.a, 1
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.r = ptrtoint ptr %2 to i64
   %i.s = icmp ugt i64 %i.a, 100
@@ -200,7 +200,7 @@ bb.w:                                             ; preds = %bb.u, %bb.v, %bb.l
   br i1 %i.aw, label %bb.ab, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.499, ptr noundef nonnull align 1 dereferenceable(1) %0, i64 noundef %i.p, i1 noundef false) #10
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %.499, ptr noundef nonnull align 1 %0, i64 noundef %i.p, i1 noundef false) #10
   %i.ax = call i32 @stat(ptr noundef %2, ptr noundef nonnull %5) #10
   %i.ay = icmp eq i32 %i.ax, 0
   br i1 %i.ay, label %bb.y, label %bb.ac

@@ -204,7 +204,7 @@ define internal noundef nonnull ptr @bytearray_reverse(ptr nofree noundef readon
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %.val = load i64, ptr %i.a, align 8, !tbaa !25  ; 3 uses
-  %2 = sdiv i64 %.val, 2                          ; 3 uses
+  %2 = lshr i64 %.val, 1                          ; 3 uses
   %i.b = icmp sgt i64 %.val, 1
   br i1 %i.b, label %.lr.ph.preheader.i, label %bytearray_reverse_impl.exit
 

@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b, %bb.b, %bb.c
 .lr.ph:                                           ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %6, i64 68 ; 8 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0
-  %i.o = sub nsw i64 32767, %.0
+  %i.o = sub i64 32767, %.0
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 2 uses
@@ -607,7 +607,7 @@ bb.k:                                             ; preds = %tdefl_radix_sort_sy
   br label %.preheader.i81.preheader
 
 .lr.ph.preheader.i82:                             ; preds = %bb.k
-  %wide.trip.count.i83 = zext nneg i32 %i.fz to i64
+  %wide.trip.count.i83 = zext i32 %i.fz to i64
   br label %.lr.ph.i84
 
 .lr.ph.i84:                                       ; preds = %bb.s, %.lr.ph.preheader.i82

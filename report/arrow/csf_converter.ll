@@ -201,7 +201,7 @@ bb.ah:                                            ; preds = %bb.aa
   %i.dm = sext i32 %i.l to i64                    ; 6 uses
   %i.dn = and i64 %i.bh, -4
   %scevgep.i = getelementptr i8, ptr %i.cy, i64 %i.dn
-  %i.do = call i64 @llvm.umax.i64(i64 %i.az, i64 1)
+  %i.do = call i64 @llvm.smax.i64(i64 %i.az, i64 1)
   %.pre577.i = load ptr, ptr %17, align 8, !tbaa !49, !noalias !23
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 64
   br label %bb.aj
@@ -604,7 +604,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.n = sub i64 %i.m, %i.a                       ; 3 uses
   %i.o = ashr exact i64 %i.n, 3                   ; 3 uses
   %i.p = add nsw i64 %i.o, -1
-  %6 = sdiv i64 %i.p, 2
+  %6 = lshr i64 %i.p, 1
   %i.q = icmp sgt i64 %i.o, 2
   br i1 %i.q, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -651,7 +651,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ao = or disjoint i64 %i.an, 1                ; 2 uses
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ao
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !51
-  %i.ar = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   store i64 %i.aq, ptr %i.ar, align 8, !tbaa !51
   br label %.lr.ph.i.i.i.i.i
 
@@ -1052,9 +1052,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #19

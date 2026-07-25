@@ -203,14 +203,15 @@ bb.an:                                            ; preds = %bb.al, %bb.af
 bb.ao:                                            ; preds = %.lr.ph452, %bb.as
   %i.gf = phi i8 [ %i.fy, %.lr.ph452 ], [ %i.gs, %bb.as ]
   %.0185450 = phi i32 [ %i.fz, %.lr.ph452 ], [ %i.gt, %bb.as ] ; 2 uses
-  %i.gg = sext i32 %.0185450 to i64               ; 2 uses
+  %i.gg = sext i32 %.0185450 to i64               ; 3 uses
   %i.gh = getelementptr inbounds i8, ptr %i.ck, i64 %i.gg
   %i.gi = load i8, ptr %i.gh, align 1, !tbaa !54  ; 2 uses
-  %exitcond.not611 = icmp eq i32 %.0185450, 255
+  %smax477 = call i64 @llvm.smax.i64(i64 %i.gg, i64 255)
+  %exitcond.not611 = icmp sgt i32 %.0185450, 254
   br i1 %exitcond.not611, label %.critedge, label %.lr.ph614
 
 bb.ap:                                            ; preds = %.lr.ph614
-  %exitcond.not = icmp eq i64 %indvars.iv.next475, 255
+  %exitcond.not = icmp eq i64 %indvars.iv.next475, %smax477
   br i1 %exitcond.not, label %.critedge, label %.lr.ph614, !llvm.loop !115
 
 .lr.ph614:                                        ; preds = %bb.ao, %bb.ap

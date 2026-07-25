@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.j = tail call i64 @llvm.umin.i64(i64 range(i64 1, 0) %1, i64 4)
+  %i.j = tail call i64 @llvm.smin.i64(i64 range(i64 1, 0) %1, i64 4)
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.k, %bb.f
@@ -244,7 +244,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.ad = zext i8 %i.ac to i32
-  %i.ae = add nuw nsw i64 %.02737.i, 1            ; 2 uses
+  %i.ae = add nuw i64 %.02737.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ae, %i.j
   br i1 %exitcond.not.i, label %pm_utf_8_codepoint.exit.thread, label %bb.g, !llvm.loop !12
 
@@ -323,7 +323,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.j = tail call i64 @llvm.umin.i64(i64 range(i64 1, 0) %1, i64 4)
+  %i.j = tail call i64 @llvm.smin.i64(i64 range(i64 1, 0) %1, i64 4)
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.k, %bb.f
@@ -364,7 +364,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.ad = zext i8 %i.ac to i32
-  %i.ae = add nuw nsw i64 %.02737.i, 1            ; 2 uses
+  %i.ae = add nuw i64 %.02737.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ae, %i.j
   br i1 %exitcond.not.i, label %pm_utf_8_codepoint.exit.thread, label %bb.g, !llvm.loop !12
 
@@ -438,7 +438,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.f = tail call i64 @llvm.umin.i64(i64 range(i64 1, 0) %1, i64 4)
+  %i.f = tail call i64 @llvm.smin.i64(i64 range(i64 1, 0) %1, i64 4)
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.k, %bb.f
@@ -479,7 +479,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.z = zext i8 %i.y to i32
-  %i.aa = add nuw nsw i64 %.02737.i, 1            ; 2 uses
+  %i.aa = add nuw i64 %.02737.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.aa, %i.f
   br i1 %exitcond.not.i, label %pm_utf_8_codepoint.exit.thread, label %bb.g, !llvm.loop !12
 
@@ -882,7 +882,7 @@ bb.v:                                             ; preds = %.critedge, %bb.u, %
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #8
+declare i64 @llvm.smin.i64(i64, i64) #8
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

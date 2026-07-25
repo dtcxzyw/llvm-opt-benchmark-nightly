@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %_ZSt10__pop_heapIN9
   %i.n = sub i64 %i.m, %i.a                       ; 3 uses
   %i.o = ashr exact i64 %i.n, 1                   ; 3 uses
   %i.p = add nsw i64 %i.o, -1
-  %5 = sdiv i64 %i.p, 2
+  %5 = lshr i64 %i.p, 1
   %i.q = icmp sgt i64 %i.o, 2
   br i1 %i.q, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -253,7 +253,7 @@ bb.e:                                             ; preds = %._crit_edge.i.i.i.i
   %i.aq = or disjoint i64 %i.ap, 1                ; 2 uses
   %i.ar = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.aq
   %i.as = load i16, ptr %i.ar, align 2, !tbaa !951
-  %i.at = getelementptr inbounds [2 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.at = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   store i16 %i.as, ptr %i.at, align 2, !tbaa !951
   br label %.lr.ph.i.i.i.i.i
 
@@ -656,7 +656,7 @@ bb.q:                                             ; preds = %bb.m
   br i1 %.not160, label %.lr.ph.preheader, label %.thread148
 
 .lr.ph.preheader:                                 ; preds = %.preheader150
-  %wide.trip.count = zext nneg i32 %i.ba to i64
+  %wide.trip.count = zext i32 %i.ba to i64
   br label %.lr.ph
 
 bb.r:                                             ; preds = %bb.q

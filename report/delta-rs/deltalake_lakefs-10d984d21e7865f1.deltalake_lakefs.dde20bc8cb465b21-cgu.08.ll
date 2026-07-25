@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.a, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs6Po7BT7Nknu_5alloc11collections11binary_heap7PeekMutINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtB4_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorEEEECsj34PGqTgg0L_16deltalake_lakefs.exit, label %.thread
 
 .thread:                                          ; preds = %bb.a, %bb.b
-  %i.b = phi i64 [ %.pre, %bb.b ], [ %2, %bb.a ]  ; 4 uses
+  %i.b = phi i64 [ %.pre, %bb.b ], [ %2, %bb.a ]  ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.d = add nsw i64 %i.b, -1                     ; 9 uses
+  %i.d = add nsw i64 %i.b, -1                     ; 8 uses
   store i64 %i.d, ptr %i.c, align 8, !alias.scope !248, !noalias !251
   %i.e = load i64, ptr %1, align 8, !range !102, !alias.scope !248, !noalias !251, !noundef !8
   %i.f = icmp samesign ult i64 %i.d, %i.e
@@ -270,7 +270,7 @@ bb.c:                                             ; preds = %.thread
   store i64 %.sroa.4.sroa.11.0.copyload.i, ptr %i.t, align 1, !alias.scope !294, !noalias !296
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(80) %i.h, i64 80, i1 false), !noalias !298
-  %3 = tail call i64 @llvm.usub.sat.i64(i64 %i.d, i64 2)
+  %3 = add nsw i64 %i.b, -3
   %.not.not8.i.i.i = icmp samesign ult i64 %i.b, 4
   br i1 %.not.not8.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
@@ -408,9 +408,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.a, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs6Po7BT7Nknu_5alloc11collections11binary_heap7PeekMutINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtB4_6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB3g_5ErrorEEEECsj34PGqTgg0L_16deltalake_lakefs.exit, label %.thread
 
 .thread:                                          ; preds = %bb.a, %bb.b
-  %i.b = phi i64 [ %.pre, %bb.b ], [ %2, %bb.a ]  ; 4 uses
+  %i.b = phi i64 [ %.pre, %bb.b ], [ %2, %bb.a ]  ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.d = add nsw i64 %i.b, -1                     ; 9 uses
+  %i.d = add nsw i64 %i.b, -1                     ; 8 uses
   store i64 %i.d, ptr %i.c, align 8, !alias.scope !299, !noalias !302
   %i.e = load i64, ptr %1, align 8, !range !102, !alias.scope !299, !noalias !302, !noundef !8
   %i.f = icmp samesign ult i64 %i.d, %i.e
@@ -474,7 +474,7 @@ bb.c:                                             ; preds = %.thread
   store i64 %.sroa.4.sroa.11.0.copyload.i, ptr %i.t, align 1, !alias.scope !345, !noalias !347
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(80) %i.h, i64 80, i1 false), !noalias !349
-  %3 = tail call i64 @llvm.usub.sat.i64(i64 %i.d, i64 2)
+  %3 = add nsw i64 %i.b, -3
   %.not.not8.i.i.i = icmp samesign ult i64 %i.b, 4
   br i1 %.not.not8.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 

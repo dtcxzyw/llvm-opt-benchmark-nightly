@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %.not457 = icmp eq i32 %i.fy, 1
   %i.gv = add nsw i32 %i.gm, -1
   %i.gw = sext i32 %i.gv to i64
-  %i.gx = call i32 @llvm.umax.i32(i32 %i.gm, i32 1)
+  %i.gx = call i32 @llvm.smax.i32(i32 %i.gm, i32 1)
   %wide.trip.count470 = and i64 %i.fx, 2147483647
   %wide.trip.count = zext nneg i32 %i.gx to i64
   br label %bb.ad
@@ -605,9 +605,6 @@ declare i64 @llvm.smin.i64(i64, i64) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #27
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #27
