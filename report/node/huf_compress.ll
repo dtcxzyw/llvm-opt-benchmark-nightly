@@ -204,8 +204,9 @@ bb.v:                                             ; preds = %bb.w, %.lr.ph137.i
 
 .lr.ph137.i:                                      ; preds = %.outer.i, %.lr.ph137.lr.ph.i
   %i.nl = phi i32 [ %.promoted143.i, %.lr.ph137.lr.ph.i ], [ %i.nd, %.outer.i ]
-  %.2.ph142.i = phi i32 [ %.187.lcssa.i, %.lr.ph137.lr.ph.i ], [ %i.nj, %.outer.i ]
+  %.2.ph142.i = phi i32 [ %.187.lcssa.i, %.lr.ph137.lr.ph.i ], [ %i.nj, %.outer.i ] ; 2 uses
   %.290.ph141.i = phi i64 [ %indvars.iv152.i, %.lr.ph137.lr.ph.i ], [ %indvars.iv167.i, %.outer.i ]
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %.2.ph142.i, i32 -1)
   br label %bb.v
 
 bb.w:                                             ; preds = %bb.v
@@ -216,8 +217,8 @@ bb.w:                                             ; preds = %bb.v
   %i.nq = load i8, ptr %i.np, align 1, !tbaa !53
   %i.nr = add i8 %i.nq, -1
   store i8 %i.nr, ptr %i.np, align 1, !tbaa !53
-  %i.ns = add nuw nsw i32 %.2136.i, 1
-  %exitcond166.not.i = icmp eq i32 %.2136.i, -1
+  %i.ns = add i32 %.2136.i, 1
+  %exitcond166.not.i = icmp eq i32 %.2136.i, %smax.i
   br i1 %exitcond166.not.i, label %.outer._crit_edge.i, label %bb.v, !llvm.loop !64
 
 .outer._crit_edge.i:                              ; preds = %.outer.i, %bb.w, %.preheader111.i

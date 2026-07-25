@@ -204,6 +204,7 @@ int_param.exit.i:                                 ; preds = %.int_param.exit_cri
   %i.if = getelementptr i8, ptr %i.gy, i64 16
   %i.ig = getelementptr i8, ptr %i.gy, i64 32
   %i.ih = getelementptr inbounds nuw i8, ptr %i.hj, i64 4 ; 2 uses
+  %wide.trip.count.i = and i64 %.0.i.i.i, 4294967295
   br label %bb.ba
 
 bb.ba:                                            ; preds = %RB_SYMBOL_P.exit.thread.i, %.lr.ph.i133
@@ -247,7 +248,7 @@ RB_SYMBOL_P.exit.thread.i:                        ; preds = %RB_SYMBOL_P.exit.i,
   %i.ja = add i32 %i.iz, 1
   store i32 %i.ja, ptr %i.ih, align 4, !tbaa !226
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %.0.i.i.i
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %iseq_build_kw.exit, label %bb.ba, !llvm.loop !297
 
 .thread.loopexit.split.loop.exit.i:               ; preds = %bb.bc
@@ -650,6 +651,7 @@ RARRAY_LENINT.exit.i.i:                           ; preds = %rb_array_len.exit.i
   %i.agx = getelementptr i8, ptr %i.agj, i64 16
   %i.agy = getelementptr i8, ptr %i.agj, i64 32
   %i.agz = getelementptr i8, ptr %i.agu, i64 8
+  %wide.trip.count.i.i = and i64 %.0.i.i.i.i, 4294967295
   br label %bb.gt
 
 bb.gt:                                            ; preds = %RARRAY_AREF.exit.i.i, %.lr.ph.i.i
@@ -671,7 +673,7 @@ RARRAY_AREF.exit.i.i:                             ; preds = %bb.gu, %bb.gt
   %i.ahg = getelementptr [8 x i8], ptr %i.agz, i64 %indvars.iv.i196.i
   store i64 %i.ahe, ptr %i.ahg, align 8, !tbaa !36
   %indvars.iv.next.i197.i = add nuw nsw i64 %indvars.iv.i196.i, 1 ; 2 uses
-  %exitcond.not.i198.i = icmp eq i64 %indvars.iv.next.i197.i, %.0.i.i.i.i
+  %exitcond.not.i198.i = icmp eq i64 %indvars.iv.next.i197.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i198.i, label %._crit_edge.i.i, label %bb.gt, !llvm.loop !307
 
 ._crit_edge.i.i:                                  ; preds = %RARRAY_AREF.exit.i.i, %RARRAY_LENINT.exit.i.i
@@ -1074,6 +1076,7 @@ rb_long2int_inline.exit1774:                      ; preds = %bb.bh
   %i.bif = shl nsw i64 %i.bie, 1
   %i.big = or disjoint i64 %i.bif, 1
   %i.bih = add i32 %7, 1
+  %smax = call i32 @llvm.smax.i32(i32 %i.bhq, i32 1)
   br label %bb.bj
 
 bb.bj:                                            ; preds = %.lr.ph2259, %bb.br
@@ -1476,7 +1479,7 @@ bb.br:                                            ; preds = %new_label_body.exit
   %i.brx = getelementptr i8, ptr %i.brw, i64 48
   %i.bry = load ptr, ptr %i.brx, align 8, !tbaa !943
   %i.brz = add nuw nsw i32 %.011862258, 1         ; 2 uses
-  %exitcond.not = icmp eq i32 %i.brz, %i.bhq
+  %exitcond.not = icmp eq i32 %i.brz, %smax
   br i1 %exitcond.not, label %._crit_edge, label %bb.bj, !llvm.loop !1131
 
 ._crit_edge:                                      ; preds = %bb.br

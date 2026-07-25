@@ -203,7 +203,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.ae
-  %.0133202 = phi i32 [ 1, %bb.x ], [ %i.hq, %bb.ae ] ; 2 uses
+  %.0133202 = phi i32 [ 1, %bb.x ], [ %i.hq, %bb.ae ] ; 3 uses
   %i.fh = load ptr, ptr %i.ff, align 8, !tbaa !64
   %i.fi = mul i32 %.0133202, 3
   %i.fj = add i32 %i.fi, -3
@@ -211,11 +211,15 @@ bb.y:                                             ; preds = %bb.x, %bb.ae
   %i.fl = getelementptr inbounds i8, ptr %i.fh, i64 %i.fk ; 2 uses
   %i.fm = tail call fastcc i32 @arith_decode(ptr noundef %0, ptr noundef %i.fl)
   %.not161 = icmp eq i32 %i.fm, 0
-  br i1 %.not161, label %.preheader, label %bb.af
+  br i1 %.not161, label %.preheader.preheader, label %bb.af
 
-.preheader:                                       ; preds = %bb.y, %bb.z
-  %.2139 = phi ptr [ %i.fq, %bb.z ], [ %i.fl, %bb.y ] ; 3 uses
-  %.1134 = phi i32 [ %i.fr, %bb.z ], [ %.0133202, %bb.y ] ; 6 uses
+.preheader.preheader:                             ; preds = %bb.y
+  %smax = tail call i32 @llvm.smax.i32(i32 %.0133202, i32 63)
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %bb.z
+  %.2139 = phi ptr [ %i.fq, %bb.z ], [ %i.fl, %.preheader.preheader ] ; 3 uses
+  %.1134 = phi i32 [ %i.fr, %bb.z ], [ %.0133202, %.preheader.preheader ] ; 6 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %.2139, i64 1
   %i.fo = tail call fastcc i32 @arith_decode(ptr noundef %0, ptr noundef nonnull %i.fn)
   %i.fp = icmp eq i32 %i.fo, 0
@@ -224,7 +228,7 @@ bb.y:                                             ; preds = %bb.x, %bb.ae
 bb.z:                                             ; preds = %.preheader
   %i.fq = getelementptr inbounds nuw i8, ptr %.2139, i64 3
   %i.fr = add i32 %.1134, 1
-  %exitcond = icmp eq i32 %.1134, 63
+  %exitcond = icmp eq i32 %.1134, %smax
   br i1 %exitcond, label %.loopexit174.sink.split, label %.preheader, !llvm.loop !89
 
 bb.aa:                                            ; preds = %.preheader

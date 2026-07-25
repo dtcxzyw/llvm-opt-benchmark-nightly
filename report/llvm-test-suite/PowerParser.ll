@@ -204,8 +204,9 @@ bb.aa:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %.not457 = icmp eq i32 %i.fy, 1
   %i.gv = add nsw i32 %i.gm, -1
   %i.gw = sext i32 %i.gv to i64
+  %smax = call i32 @llvm.smax.i32(i32 %i.gm, i32 1)
   %wide.trip.count470 = and i64 %i.fx, 2147483647
-  %wide.trip.count = zext nneg i32 %i.gm to i64
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %bb.ad
 
 ._crit_edge451.loopexit:                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit165
