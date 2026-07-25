@@ -181,7 +181,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m, %bb.j
-  %.186 = phi i32 [ %i.w, %bb.m ], [ %i.w, %bb.l ], [ %i.t, %bb.k ], [ %i.t, %bb.j ] ; 6 uses
+  %.186 = phi i32 [ %i.w, %bb.m ], [ %i.w, %bb.l ], [ %i.t, %bb.k ], [ %i.t, %bb.j ] ; 4 uses
   %.082 = phi i32 [ %i.y, %bb.m ], [ %i.y, %bb.l ], [ %i.p, %bb.k ], [ %i.p, %bb.j ]
   %.076 = phi ptr [ %i.x, %bb.m ], [ %i.x, %bb.l ], [ %.0.i, %bb.k ], [ %.0.i, %bb.j ] ; 4 uses
   %i.z = icmp sgt i32 %2, %i.u
@@ -211,12 +211,12 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.o
   %i.ag = getelementptr i8, ptr %i.ac, i64 32     ; 6 uses
-  %4 = sext i32 %.186 to i64                      ; 2 uses
+  %4 = zext i32 %.186 to i64                      ; 2 uses
   %i.ah = icmp sgt i32 %.186, 0
   br i1 %i.ah, label %.lr.ph.preheader, label %.preheader136
 
 .lr.ph.preheader:                                 ; preds = %bb.s
-  %xtraiter = and i64 %4, 7
+  %xtraiter = and i64 %4, 7                       ; 3 uses
   %i.ai = icmp ult i32 %.186, 8
   br i1 %i.ai, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -225,15 +225,13 @@ bb.s:                                             ; preds = %bb.o
   br label %.lr.ph
 
 .preheader136.loopexit.unr-lcssa:                 ; preds = %.lr.ph
-  %5 = and i32 %.186, 7
-  %lcmp.mod.not = icmp eq i32 %5, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.preheader136, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %.preheader136.loopexit.unr-lcssa, %.lr.ph.preheader
   %.177139.epil.init = phi ptr [ %.076, %.lr.ph.preheader ], [ %i.bk, %.preheader136.loopexit.unr-lcssa ]
   %.088137.epil.init = phi ptr [ %i.ag, %.lr.ph.preheader ], [ %i.bm, %.preheader136.loopexit.unr-lcssa ]
-  %6 = and i32 %.186, 7
-  %lcmp.mod261 = icmp ne i32 %6, 0
+  %lcmp.mod261 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod261)
   br label %.lr.ph.epil
 
