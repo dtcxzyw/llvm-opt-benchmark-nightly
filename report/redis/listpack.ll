@@ -201,7 +201,7 @@ bb.a:
   br i1 %.not, label %lpCurrentEncodedSizeBytes.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 2 uses
   %i.c = icmp ult ptr %i.a, %i.b
   br i1 %i.c, label %lpCurrentEncodedSizeBytes.exit, label %bb.c
 
@@ -241,11 +241,9 @@ bb.g:                                             ; preds = %bb.f
 
 select.unfold:                                    ; preds = %bb.g, %bb.e, %bb.f
   %.0.i.ph = phi i64 [ 1, %bb.e ], [ 2, %bb.f ], [ 5, %bb.g ]
-  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.i.ph ; 2 uses
-  %3 = icmp ult ptr %i.s, %i.b
+  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.i.ph
   %i.t = icmp ugt ptr %i.s, %i.e
-  %or.cond = or i1 %3, %i.t
-  br i1 %or.cond, label %lpCurrentEncodedSizeBytes.exit, label %bb.h
+  br i1 %i.t, label %lpCurrentEncodedSizeBytes.exit, label %bb.h
 
 bb.h:                                             ; preds = %select.unfold
   br i1 %i.j, label %lpEncodeBacklenBytes.exit, label %bb.i
@@ -648,7 +646,7 @@ bb.e:                                             ; preds = %lpLength.exit
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader52
   tail call void @qsort(ptr noundef %i.f, i64 noundef %i.d, i64 noundef 8, ptr noundef nonnull @uintCompare) #21
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 6 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 5 uses
   %i.u = load i8, ptr %i.t, align 1, !tbaa !13
   %i.v = icmp eq i8 %i.u, -1
   br i1 %i.v, label %lpFirst.exit, label %bb.f
@@ -840,11 +838,9 @@ bb.y:                                             ; preds = %bb.x
 
 select.unfold.i:                                  ; preds = %bb.y, %bb.x, %bb.w
   %.0.i.ph.i = phi i64 [ 1, %bb.w ], [ 2, %bb.x ], [ 5, %bb.y ]
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.bk, i64 %.0.i.ph.i ; 2 uses
-  %3 = icmp ult ptr %i.cd, %i.t
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.bk, i64 %.0.i.ph.i
   %i.ce = icmp ugt ptr %i.cd, %i.br
-  %or.cond.i = or i1 %3, %i.ce
-  br i1 %or.cond.i, label %lpDecodeBacklen.exit.thread, label %bb.z
+  br i1 %i.ce, label %lpDecodeBacklen.exit.thread, label %bb.z
 
 bb.z:                                             ; preds = %select.unfold.i
   br i1 %i.bu, label %lpEncodeBacklenBytes.exit.i, label %bb.aa
@@ -1142,7 +1138,7 @@ bb.g:                                             ; preds = %lpLength.exit
 
 .lr.ph132:                                        ; preds = %._crit_edge
   %.not60 = icmp eq ptr %3, null
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 3 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 2 uses
   %i.aa = add nsw i32 %4, -2
   br label %bb.h
 
@@ -1545,11 +1541,9 @@ bb.bj:                                            ; preds = %bb.bi
 
 select.unfold.i:                                  ; preds = %bb.bj, %bb.bi, %bb.bh
   %.0.i.ph.i = phi i64 [ 1, %bb.bh ], [ 2, %bb.bi ], [ 5, %bb.bj ]
-  %i.hb = getelementptr inbounds nuw i8, ptr %i.gi, i64 %.0.i.ph.i ; 2 uses
-  %5 = icmp ult ptr %i.hb, %i.z
+  %i.hb = getelementptr inbounds nuw i8, ptr %i.gi, i64 %.0.i.ph.i
   %i.hc = icmp ugt ptr %i.hb, %i.gp
-  %or.cond.i = or i1 %5, %i.hc
-  br i1 %or.cond.i, label %lpDecodeBacklen.exit.thread, label %bb.bk
+  br i1 %i.hc, label %lpDecodeBacklen.exit.thread, label %bb.bk
 
 bb.bk:                                            ; preds = %select.unfold.i
   br i1 %i.gs, label %lpEncodeBacklenBytes.exit.i, label %bb.bl

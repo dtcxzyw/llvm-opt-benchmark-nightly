@@ -203,7 +203,7 @@ define dso_local void @monkey1(ptr nofree noundef readonly captures(address) %0,
 bb.a:
   %i.a = load i32, ptr @p_size, align 4, !tbaa !4 ; 4 uses
   %i.b = sext i32 %2 to i64                       ; 2 uses
-  %i.c = getelementptr inbounds i8, ptr %0, i64 %i.b ; 4 uses
+  %i.c = getelementptr inbounds i8, ptr %0, i64 %i.b ; 3 uses
   %i.d = add nsw i32 %i.a, -1                     ; 2 uses
   %i.e = sext i32 %1 to i64                       ; 2 uses
   %i.f = getelementptr inbounds i8, ptr %0, i64 %i.e ; 2 uses
@@ -230,7 +230,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph161, %.loopexit134
   %.067159 = phi ptr [ %i.g, %.lr.ph161 ], [ %.572, %.loopexit134 ] ; 9 uses
-  %.081158 = phi ptr [ %i.j, %.lr.ph161 ], [ %i.fc, %.loopexit134 ] ; 17 uses
+  %.081158 = phi ptr [ %i.j, %.lr.ph161 ], [ %i.fc, %.loopexit134 ] ; 16 uses
   %.081158178 = ptrtoaddr ptr %.081158 to i64
   %.067159179 = ptrtoaddr ptr %.067159 to i64
   %i.o = load i8, ptr %.081158, align 1, !tbaa !8
@@ -405,13 +405,9 @@ bb.f:                                             ; preds = %._crit_edge
   %i.dn = load i8, ptr %i.dm, align 1, !tbaa !8
   %i.do = zext i8 %i.dn to i32
   %.not104 = icmp samesign ult i32 %.091.lcssa, %i.do
-  br i1 %.not104, label %bb.t, label %3
+  br i1 %.not104, label %bb.t, label %bb.g
 
-3:                                                ; preds = %bb.f
-  %4 = icmp ugt ptr %.081158, %i.c
-  br i1 %4, label %.loopexit, label %bb.g
-
-bb.g:                                             ; preds = %3
+bb.g:                                             ; preds = %bb.f
   %i.dp = load i32, ptr @num_of_matched, align 4, !tbaa !4
   %i.dq = add nsw i32 %i.dp, 1
   store i32 %i.dq, ptr @num_of_matched, align 4, !tbaa !4
@@ -569,7 +565,7 @@ bb.t:                                             ; preds = %bb.f, %._crit_edge
   %.not100 = icmp ugt ptr %i.fh, %i.c
   br i1 %.not100, label %.loopexit, label %.lr.ph166, !llvm.loop !57
 
-.loopexit:                                        ; preds = %bb.g, %3, %.lr.ph166, %._crit_edge162
+.loopexit:                                        ; preds = %bb.g, %.lr.ph166, %._crit_edge162
   ret void
 }
 

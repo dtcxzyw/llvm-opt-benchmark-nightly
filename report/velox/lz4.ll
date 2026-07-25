@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %bb.e
 
 .preheader130:                                    ; preds = %bb.f
   %i.q = getelementptr inbounds i8, ptr %i.d, i64 -17
-  %i.r = getelementptr inbounds i8, ptr %i.d, i64 -15 ; 3 uses
+  %i.r = getelementptr inbounds i8, ptr %i.d, i64 -15 ; 2 uses
   %i.s = getelementptr inbounds i8, ptr %i.d, i64 -32
   %i.t = getelementptr inbounds i8, ptr %i.f, i64 -64 ; 2 uses
   %i.u = getelementptr inbounds i8, ptr %i.d, i64 -4 ; 2 uses
@@ -222,21 +222,17 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.backedge
   %.not22.i = icmp ult ptr %i.v, %i.r
-  br i1 %.not22.i, label %4, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i, label %bb.h, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-4:                                                ; preds = %bb.g
-  %5 = getelementptr inbounds nuw i8, ptr %.0, i64 2 ; 4 uses
-  %6 = icmp ugt ptr %5, %i.r
-  br i1 %6, label %LZ4_wildCopy32.exit.thread, label %bb.h, !prof !19
-
-bb.h:                                             ; preds = %4
+bb.h:                                             ; preds = %bb.g
+  %4 = getelementptr inbounds nuw i8, ptr %.0, i64 2 ; 2 uses
   %i.ab = load i8, ptr %i.v, align 1, !tbaa !7    ; 2 uses
   %i.ac = zext i8 %i.ab to i64
   %.not23.i = icmp eq i8 %i.ab, -1
   br i1 %.not23.i, label %.preheader128, label %read_variable_length.exit.thread62, !prof !19
 
 .preheader128:                                    ; preds = %bb.h, %bb.i
-  %.10 = phi ptr [ %i.ad, %bb.i ], [ %5, %bb.h ]  ; 2 uses
+  %.10 = phi ptr [ %i.ad, %bb.i ], [ %4, %bb.h ]  ; 2 uses
   %.0.i11 = phi i64 [ %i.ah, %bb.i ], [ 255, %bb.h ]
   %i.ad = getelementptr inbounds nuw i8, ptr %.10, i64 1 ; 5 uses
   %i.ae = icmp ugt ptr %i.ad, %i.r
@@ -255,7 +251,7 @@ read_variable_length.exit:                        ; preds = %bb.i
 
 read_variable_length.exit.thread62:               ; preds = %bb.h, %read_variable_length.exit
   %.019.i66 = phi i64 [ %i.ah, %read_variable_length.exit ], [ %i.ac, %bb.h ]
-  %.1165 = phi ptr [ %i.ad, %read_variable_length.exit ], [ %5, %bb.h ] ; 5 uses
+  %.1165 = phi ptr [ %i.ad, %read_variable_length.exit ], [ %4, %bb.h ] ; 5 uses
   %i.ak = add i64 %.019.i66, 15                   ; 5 uses
   %i.al = ptrtoint ptr %.0358.i to i64
   %i.am = xor i64 %i.al, -1
@@ -645,23 +641,19 @@ bb.ae:                                            ; preds = %bb.ad
   %.6.i.lcssa = phi ptr [ %.6.i.ph, %.preheader121 ], [ %i.fz, %bb.ae ] ; 2 uses
   %.lcssa144 = phi ptr [ %i.mu, %.preheader121 ], [ %i.ga, %bb.ae ] ; 3 uses
   %.lcssa141 = phi i32 [ %i.mw, %.preheader121 ], [ %i.gc, %bb.ae ]
-  %i.ge = getelementptr inbounds i8, ptr %i.d, i64 -15 ; 3 uses
+  %i.ge = getelementptr inbounds i8, ptr %i.d, i64 -15 ; 2 uses
   %.not22.i16 = icmp ult ptr %.lcssa144, %i.ge
-  br i1 %.not22.i16, label %7, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i16, label %bb.af, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-7:                                                ; preds = %._crit_edge
-  %8 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 4 uses
-  %9 = icmp ugt ptr %8, %i.ge
-  br i1 %9, label %LZ4_wildCopy32.exit.thread, label %bb.af, !prof !19
-
-bb.af:                                            ; preds = %7
+bb.af:                                            ; preds = %._crit_edge
+  %5 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 2 uses
   %i.gf = load i8, ptr %.lcssa144, align 1, !tbaa !7 ; 2 uses
   %i.gg = zext i8 %i.gf to i64
   %.not23.i18 = icmp eq i8 %i.gf, -1
   br i1 %.not23.i18, label %.preheader120, label %read_variable_length.exit20.thread94, !prof !19
 
 .preheader120:                                    ; preds = %bb.af, %bb.ag
-  %.14 = phi ptr [ %i.gh, %bb.ag ], [ %8, %bb.af ] ; 2 uses
+  %.14 = phi ptr [ %i.gh, %bb.ag ], [ %5, %bb.af ] ; 2 uses
   %.0.i19 = phi i64 [ %i.gl, %bb.ag ], [ 255, %bb.af ]
   %i.gh = getelementptr inbounds nuw i8, ptr %.14, i64 1 ; 5 uses
   %i.gi = icmp ugt ptr %i.gh, %i.ge
@@ -680,7 +672,7 @@ read_variable_length.exit20:                      ; preds = %bb.ag
 
 read_variable_length.exit20.thread94:             ; preds = %bb.af, %read_variable_length.exit20
   %.019.i1798 = phi i64 [ %i.gl, %read_variable_length.exit20 ], [ %i.gg, %bb.af ]
-  %.1597 = phi ptr [ %i.gh, %read_variable_length.exit20 ], [ %8, %bb.af ] ; 3 uses
+  %.1597 = phi ptr [ %i.gh, %read_variable_length.exit20 ], [ %5, %bb.af ] ; 3 uses
   %i.go = add i64 %.019.i1798, 15                 ; 3 uses
   %i.gp = ptrtoint ptr %.6.i.lcssa to i64
   %i.gq = xor i64 %i.gp, -1
@@ -1083,8 +1075,8 @@ scalar.ph458:                                     ; preds = %scalar.ph458.prehea
   %cond.i181 = icmp eq i32 %i.mx, 15
   br i1 %cond.i181, label %._crit_edge, label %.lr.ph183
 
-LZ4_wildCopy32.exit.thread:                       ; preds = %bb.m, %read_variable_length.exit15, %read_variable_length.exit15.thread79, %4, %bb.g, %read_variable_length.exit.thread62, %read_variable_length.exit, %.thread87, %.preheader128, %.preheader125, %.preheader120, %.preheader118, %bb.ak, %7, %._crit_edge, %read_variable_length.exit20, %read_variable_length.exit20.thread94, %bb.as, %.loopexit133, %read_variable_length.exit24, %bb.ai
-  %.7 = phi ptr [ %.4, %bb.ai ], [ %.2, %.loopexit133 ], [ %.2, %bb.as ], [ %.17, %read_variable_length.exit24 ], [ %i.il, %.preheader118 ], [ %i.gh, %read_variable_length.exit20 ], [ %i.ih, %bb.ak ], [ %i.ad, %.preheader128 ], [ %.lcssa144, %._crit_edge ], [ %8, %7 ], [ %.1597, %read_variable_length.exit20.thread94 ], [ %i.gh, %.preheader120 ], [ %i.bm, %.preheader125 ], [ %i.bm, %read_variable_length.exit15 ], [ %.1382, %read_variable_length.exit15.thread79 ], [ %i.v, %bb.g ], [ %.1165, %read_variable_length.exit.thread62 ], [ %i.ad, %read_variable_length.exit ], [ %5, %4 ], [ %.8, %.thread87 ], [ %i.bi, %bb.m ]
+LZ4_wildCopy32.exit.thread:                       ; preds = %bb.m, %read_variable_length.exit15, %read_variable_length.exit15.thread79, %bb.g, %read_variable_length.exit.thread62, %read_variable_length.exit, %.thread87, %.preheader128, %.preheader125, %.preheader120, %.preheader118, %bb.ak, %._crit_edge, %read_variable_length.exit20, %read_variable_length.exit20.thread94, %bb.as, %.loopexit133, %read_variable_length.exit24, %bb.ai
+  %.7 = phi ptr [ %.4, %bb.ai ], [ %.2, %.loopexit133 ], [ %.2, %bb.as ], [ %.17, %read_variable_length.exit24 ], [ %i.il, %.preheader118 ], [ %i.gh, %read_variable_length.exit20 ], [ %i.bm, %.preheader125 ], [ %.1597, %read_variable_length.exit20.thread94 ], [ %.lcssa144, %._crit_edge ], [ %i.ad, %.preheader128 ], [ %i.gh, %.preheader120 ], [ %i.ih, %bb.ak ], [ %i.bm, %read_variable_length.exit15 ], [ %.1382, %read_variable_length.exit15.thread79 ], [ %i.v, %bb.g ], [ %.1165, %read_variable_length.exit.thread62 ], [ %i.ad, %read_variable_length.exit ], [ %i.bi, %bb.m ], [ %.8, %.thread87 ]
   %i.my = ptrtoint ptr %.7 to i64
   %i.mz = ptrtoint ptr %0 to i64
   %.neg.i = sub i64 %i.mz, %i.my
@@ -1128,7 +1120,7 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader138:                                    ; preds = %bb.d
   %i.o = getelementptr inbounds i8, ptr %i.e, i64 -17
-  %i.p = getelementptr inbounds i8, ptr %i.e, i64 -15 ; 3 uses
+  %i.p = getelementptr inbounds i8, ptr %i.e, i64 -15 ; 2 uses
   %i.q = getelementptr inbounds i8, ptr %i.e, i64 -32
   %i.r = getelementptr inbounds i8, ptr %i.g, i64 -64 ; 2 uses
   %i.s = getelementptr inbounds i8, ptr %i.e, i64 -4 ; 2 uses
@@ -1147,21 +1139,17 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.backedge
   %.not22.i = icmp ult ptr %i.t, %i.p
-  br i1 %.not22.i, label %5, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i, label %bb.f, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-5:                                                ; preds = %bb.e
-  %6 = getelementptr inbounds nuw i8, ptr %.0, i64 2 ; 4 uses
-  %7 = icmp ugt ptr %6, %i.p
-  br i1 %7, label %LZ4_wildCopy32.exit.thread, label %bb.f, !prof !19
-
-bb.f:                                             ; preds = %5
+bb.f:                                             ; preds = %bb.e
+  %5 = getelementptr inbounds nuw i8, ptr %.0, i64 2 ; 2 uses
   %i.z = load i8, ptr %i.t, align 1, !tbaa !7     ; 2 uses
   %i.aa = zext i8 %i.z to i64
   %.not23.i = icmp eq i8 %i.z, -1
   br i1 %.not23.i, label %.preheader136, label %read_variable_length.exit.thread66, !prof !19
 
 .preheader136:                                    ; preds = %bb.f, %bb.g
-  %.11 = phi ptr [ %i.ab, %bb.g ], [ %6, %bb.f ]  ; 2 uses
+  %.11 = phi ptr [ %i.ab, %bb.g ], [ %5, %bb.f ]  ; 2 uses
   %.0.i15 = phi i64 [ %i.af, %bb.g ], [ 255, %bb.f ]
   %i.ab = getelementptr inbounds nuw i8, ptr %.11, i64 1 ; 5 uses
   %i.ac = icmp ugt ptr %i.ab, %i.p
@@ -1180,7 +1168,7 @@ read_variable_length.exit:                        ; preds = %bb.g
 
 read_variable_length.exit.thread66:               ; preds = %bb.f, %read_variable_length.exit
   %.019.i70 = phi i64 [ %i.af, %read_variable_length.exit ], [ %i.aa, %bb.f ]
-  %.1269 = phi ptr [ %i.ab, %read_variable_length.exit ], [ %6, %bb.f ] ; 5 uses
+  %.1269 = phi ptr [ %i.ab, %read_variable_length.exit ], [ %5, %bb.f ] ; 5 uses
   %i.ai = add i64 %.019.i70, 15                   ; 5 uses
   %i.aj = ptrtoint ptr %.0358.i to i64
   %i.ak = xor i64 %i.aj, -1
@@ -1570,23 +1558,19 @@ bb.ac:                                            ; preds = %bb.ab
   %.6.i.lcssa = phi ptr [ %.6.i.ph, %.preheader128 ], [ %i.fx, %bb.ac ] ; 2 uses
   %.lcssa152 = phi ptr [ %i.mb, %.preheader128 ], [ %i.fy, %bb.ac ] ; 3 uses
   %.lcssa149 = phi i32 [ %i.md, %.preheader128 ], [ %i.ga, %bb.ac ]
-  %i.gc = getelementptr inbounds i8, ptr %i.e, i64 -15 ; 3 uses
+  %i.gc = getelementptr inbounds i8, ptr %i.e, i64 -15 ; 2 uses
   %.not22.i20 = icmp ult ptr %.lcssa152, %i.gc
-  br i1 %.not22.i20, label %8, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i20, label %bb.ad, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-8:                                                ; preds = %._crit_edge
-  %9 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 4 uses
-  %10 = icmp ugt ptr %9, %i.gc
-  br i1 %10, label %LZ4_wildCopy32.exit.thread, label %bb.ad, !prof !19
-
-bb.ad:                                            ; preds = %8
+bb.ad:                                            ; preds = %._crit_edge
+  %6 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 2 uses
   %i.gd = load i8, ptr %.lcssa152, align 1, !tbaa !7 ; 2 uses
   %i.ge = zext i8 %i.gd to i64
   %.not23.i22 = icmp eq i8 %i.gd, -1
   br i1 %.not23.i22, label %.preheader127, label %read_variable_length.exit24.thread98, !prof !19
 
 .preheader127:                                    ; preds = %bb.ad, %bb.ae
-  %.15 = phi ptr [ %i.gf, %bb.ae ], [ %9, %bb.ad ] ; 2 uses
+  %.15 = phi ptr [ %i.gf, %bb.ae ], [ %6, %bb.ad ] ; 2 uses
   %.0.i23 = phi i64 [ %i.gj, %bb.ae ], [ 255, %bb.ad ]
   %i.gf = getelementptr inbounds nuw i8, ptr %.15, i64 1 ; 5 uses
   %i.gg = icmp ugt ptr %i.gf, %i.gc
@@ -1605,7 +1589,7 @@ read_variable_length.exit24:                      ; preds = %bb.ae
 
 read_variable_length.exit24.thread98:             ; preds = %bb.ad, %read_variable_length.exit24
   %.019.i21102 = phi i64 [ %i.gj, %read_variable_length.exit24 ], [ %i.ge, %bb.ad ]
-  %.16101 = phi ptr [ %i.gf, %read_variable_length.exit24 ], [ %9, %bb.ad ] ; 3 uses
+  %.16101 = phi ptr [ %i.gf, %read_variable_length.exit24 ], [ %6, %bb.ad ] ; 3 uses
   %i.gm = add i64 %.019.i21102, 15                ; 3 uses
   %i.gn = ptrtoint ptr %.6.i.lcssa to i64
   %i.go = xor i64 %i.gn, -1
@@ -2008,8 +1992,8 @@ bb.au:                                            ; preds = %.thread109, %.loope
   %i.mh = trunc i64 %i.mg to i32
   br label %LZ4_decompress_generic.exit
 
-LZ4_wildCopy32.exit.thread:                       ; preds = %bb.k, %read_variable_length.exit19, %read_variable_length.exit19.thread83, %5, %bb.e, %read_variable_length.exit.thread66, %read_variable_length.exit, %.thread91, %.preheader136, %.preheader133, %.preheader127, %.preheader125, %bb.ai, %8, %._crit_edge, %read_variable_length.exit24, %read_variable_length.exit24.thread98, %.loopexit141, %read_variable_length.exit28
-  %.8 = phi ptr [ %.2, %.loopexit141 ], [ %i.is, %.preheader125 ], [ %.18, %read_variable_length.exit28 ], [ %i.gf, %read_variable_length.exit24 ], [ %i.io, %bb.ai ], [ %i.ab, %.preheader136 ], [ %.lcssa152, %._crit_edge ], [ %9, %8 ], [ %.16101, %read_variable_length.exit24.thread98 ], [ %i.gf, %.preheader127 ], [ %i.bk, %.preheader133 ], [ %i.bk, %read_variable_length.exit19 ], [ %.1486, %read_variable_length.exit19.thread83 ], [ %i.t, %bb.e ], [ %.1269, %read_variable_length.exit.thread66 ], [ %i.ab, %read_variable_length.exit ], [ %.9, %.thread91 ], [ %i.bg, %bb.k ], [ %6, %5 ]
+LZ4_wildCopy32.exit.thread:                       ; preds = %bb.k, %read_variable_length.exit19, %read_variable_length.exit19.thread83, %bb.e, %read_variable_length.exit.thread66, %read_variable_length.exit, %.thread91, %.preheader136, %.preheader133, %.preheader127, %.preheader125, %bb.ai, %._crit_edge, %read_variable_length.exit24, %read_variable_length.exit24.thread98, %.loopexit141, %read_variable_length.exit28
+  %.8 = phi ptr [ %.2, %.loopexit141 ], [ %i.is, %.preheader125 ], [ %.18, %read_variable_length.exit28 ], [ %i.gf, %read_variable_length.exit24 ], [ %i.bk, %.preheader133 ], [ %.16101, %read_variable_length.exit24.thread98 ], [ %.lcssa152, %._crit_edge ], [ %i.ab, %.preheader136 ], [ %i.gf, %.preheader127 ], [ %i.io, %bb.ai ], [ %i.bk, %read_variable_length.exit19 ], [ %.1486, %read_variable_length.exit19.thread83 ], [ %i.t, %bb.e ], [ %.1269, %read_variable_length.exit.thread66 ], [ %i.ab, %read_variable_length.exit ], [ %.9, %.thread91 ], [ %i.bg, %bb.k ]
   %i.mi = ptrtoint ptr %.8 to i64
   %i.mj = ptrtoint ptr %0 to i64
   %.neg.i = sub i64 %i.mj, %i.mi
@@ -2280,7 +2264,7 @@ bb.f:                                             ; preds = %bb.e
 
 .preheader144:                                    ; preds = %bb.f
   %i.p = getelementptr inbounds i8, ptr %i.e, i64 -17
-  %i.q = getelementptr inbounds i8, ptr %i.e, i64 -15 ; 3 uses
+  %i.q = getelementptr inbounds i8, ptr %i.e, i64 -15 ; 2 uses
   %i.r = add nsw i64 %i.f, -32
   %i.s = getelementptr inbounds i8, ptr %i.e, i64 -32
   %i.t = add nsw i64 %i.f, -64                    ; 2 uses
@@ -2304,21 +2288,17 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.backedge
   %.not22.i = icmp ult ptr %i.w, %i.q
-  br i1 %.not22.i, label %4, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i, label %bb.h, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-4:                                                ; preds = %bb.g
-  %5 = getelementptr inbounds nuw i8, ptr %.0, i64 2 ; 4 uses
-  %6 = icmp ugt ptr %5, %i.q
-  br i1 %6, label %LZ4_wildCopy32.exit.thread, label %bb.h, !prof !19
-
-bb.h:                                             ; preds = %4
+bb.h:                                             ; preds = %bb.g
+  %4 = getelementptr inbounds nuw i8, ptr %.0, i64 2 ; 2 uses
   %i.ac = load i8, ptr %i.w, align 1, !tbaa !7    ; 2 uses
   %i.ad = zext i8 %i.ac to i64
   %.not23.i = icmp eq i8 %i.ac, -1
   br i1 %.not23.i, label %.preheader142, label %read_variable_length.exit.thread62, !prof !19
 
 .preheader142:                                    ; preds = %bb.h, %bb.i
-  %.10 = phi ptr [ %i.ae, %bb.i ], [ %5, %bb.h ]  ; 2 uses
+  %.10 = phi ptr [ %i.ae, %bb.i ], [ %4, %bb.h ]  ; 2 uses
   %.0.i11 = phi i64 [ %i.ai, %bb.i ], [ 255, %bb.h ]
   %i.ae = getelementptr inbounds nuw i8, ptr %.10, i64 1 ; 5 uses
   %i.af = icmp ugt ptr %i.ae, %i.q
@@ -2337,7 +2317,7 @@ read_variable_length.exit:                        ; preds = %bb.i
 
 read_variable_length.exit.thread62:               ; preds = %bb.h, %read_variable_length.exit
   %.019.i66 = phi i64 [ %i.ai, %read_variable_length.exit ], [ %i.ad, %bb.h ]
-  %.1165 = phi ptr [ %i.ae, %read_variable_length.exit ], [ %5, %bb.h ] ; 5 uses
+  %.1165 = phi ptr [ %i.ae, %read_variable_length.exit ], [ %4, %bb.h ] ; 5 uses
   %i.al = add i64 %.019.i66, 15                   ; 5 uses
   %i.am = ptrtoint ptr %.0358.i.ptr.ptr to i64
   %i.an = xor i64 %i.am, -1
@@ -2733,23 +2713,19 @@ bb.af:                                            ; preds = %bb.ae
   %.6.i.ptr.lcssa = phi ptr [ %.6.i.ptr194, %.preheader135 ], [ %.6.i.ptr, %bb.af ]
   %.lcssa158 = phi ptr [ %i.mo, %.preheader135 ], [ %i.fq, %bb.af ] ; 3 uses
   %.lcssa155 = phi i32 [ %i.mq, %.preheader135 ], [ %i.fs, %bb.af ]
-  %i.fu = getelementptr inbounds i8, ptr %i.e, i64 -15 ; 3 uses
+  %i.fu = getelementptr inbounds i8, ptr %i.e, i64 -15 ; 2 uses
   %.not22.i16 = icmp ult ptr %.lcssa158, %i.fu
-  br i1 %.not22.i16, label %7, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i16, label %bb.ag, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-7:                                                ; preds = %._crit_edge
-  %8 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 4 uses
-  %9 = icmp ugt ptr %8, %i.fu
-  br i1 %9, label %LZ4_wildCopy32.exit.thread, label %bb.ag, !prof !19
-
-bb.ag:                                            ; preds = %7
+bb.ag:                                            ; preds = %._crit_edge
+  %5 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 2 uses
   %i.fv = load i8, ptr %.lcssa158, align 1, !tbaa !7 ; 2 uses
   %i.fw = zext i8 %i.fv to i64
   %.not23.i18 = icmp eq i8 %i.fv, -1
   br i1 %.not23.i18, label %.preheader134, label %read_variable_length.exit20.thread94, !prof !19
 
 .preheader134:                                    ; preds = %bb.ag, %bb.ah
-  %.14 = phi ptr [ %i.fx, %bb.ah ], [ %8, %bb.ag ] ; 2 uses
+  %.14 = phi ptr [ %i.fx, %bb.ah ], [ %5, %bb.ag ] ; 2 uses
   %.0.i19 = phi i64 [ %i.gb, %bb.ah ], [ 255, %bb.ag ]
   %i.fx = getelementptr inbounds nuw i8, ptr %.14, i64 1 ; 5 uses
   %i.fy = icmp ugt ptr %i.fx, %i.fu
@@ -2768,7 +2744,7 @@ read_variable_length.exit20:                      ; preds = %bb.ah
 
 read_variable_length.exit20.thread94:             ; preds = %bb.ag, %read_variable_length.exit20
   %.019.i1798 = phi i64 [ %i.gb, %read_variable_length.exit20 ], [ %i.fw, %bb.ag ]
-  %.1597 = phi ptr [ %i.fx, %read_variable_length.exit20 ], [ %8, %bb.ag ] ; 3 uses
+  %.1597 = phi ptr [ %i.fx, %read_variable_length.exit20 ], [ %5, %bb.ag ] ; 3 uses
   %i.ge = add i64 %.019.i1798, 15                 ; 3 uses
   %i.gf = ptrtoint ptr %.6.i.ptr.lcssa to i64
   %i.gg = xor i64 %i.gf, -1
@@ -3171,8 +3147,8 @@ scalar.ph448:                                     ; preds = %scalar.ph448.prehea
   %i.ms = add nsw i64 %i.f, -32
   br label %bb.ad
 
-LZ4_wildCopy32.exit.thread:                       ; preds = %bb.m, %read_variable_length.exit15, %read_variable_length.exit15.thread79, %4, %bb.g, %read_variable_length.exit.thread62, %read_variable_length.exit, %.thread87, %.preheader142, %.preheader139, %.preheader134, %.preheader132, %bb.al, %7, %._crit_edge, %read_variable_length.exit20, %read_variable_length.exit20.thread94, %bb.at, %.loopexit147, %read_variable_length.exit24, %bb.aj
-  %.7 = phi ptr [ %.4, %bb.aj ], [ %.2, %.loopexit147 ], [ %.2, %bb.at ], [ %.17, %read_variable_length.exit24 ], [ %i.ia, %.preheader132 ], [ %i.fx, %read_variable_length.exit20 ], [ %i.hw, %bb.al ], [ %i.ae, %.preheader142 ], [ %.lcssa158, %._crit_edge ], [ %8, %7 ], [ %.1597, %read_variable_length.exit20.thread94 ], [ %i.fx, %.preheader134 ], [ %i.bj, %.preheader139 ], [ %i.bj, %read_variable_length.exit15 ], [ %.1382, %read_variable_length.exit15.thread79 ], [ %i.w, %bb.g ], [ %.1165, %read_variable_length.exit.thread62 ], [ %i.ae, %read_variable_length.exit ], [ %5, %4 ], [ %.8, %.thread87 ], [ %i.bf, %bb.m ]
+LZ4_wildCopy32.exit.thread:                       ; preds = %bb.m, %read_variable_length.exit15, %read_variable_length.exit15.thread79, %bb.g, %read_variable_length.exit.thread62, %read_variable_length.exit, %.thread87, %.preheader142, %.preheader139, %.preheader134, %.preheader132, %bb.al, %._crit_edge, %read_variable_length.exit20, %read_variable_length.exit20.thread94, %bb.at, %.loopexit147, %read_variable_length.exit24, %bb.aj
+  %.7 = phi ptr [ %.4, %bb.aj ], [ %.2, %.loopexit147 ], [ %.2, %bb.at ], [ %.17, %read_variable_length.exit24 ], [ %i.ia, %.preheader132 ], [ %i.fx, %read_variable_length.exit20 ], [ %i.bj, %.preheader139 ], [ %.1597, %read_variable_length.exit20.thread94 ], [ %.lcssa158, %._crit_edge ], [ %i.ae, %.preheader142 ], [ %i.fx, %.preheader134 ], [ %i.hw, %bb.al ], [ %i.bj, %read_variable_length.exit15 ], [ %.1382, %read_variable_length.exit15.thread79 ], [ %i.w, %bb.g ], [ %.1165, %read_variable_length.exit.thread62 ], [ %i.ae, %read_variable_length.exit ], [ %i.bf, %bb.m ], [ %.8, %.thread87 ]
   %i.mt = ptrtoint ptr %.7 to i64
   %i.mu = ptrtoint ptr %0 to i64
   %.neg.i = sub i64 %i.mu, %i.mt
@@ -3449,7 +3425,7 @@ bb.f:                                             ; preds = %bb.e
 
 .preheader136:                                    ; preds = %bb.f
   %i.u = getelementptr inbounds i8, ptr %i.d, i64 -17
-  %i.v = getelementptr inbounds i8, ptr %i.d, i64 -15 ; 3 uses
+  %i.v = getelementptr inbounds i8, ptr %i.d, i64 -15 ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %i.d, i64 -32
   %i.x = getelementptr inbounds i8, ptr %i.f, i64 -64 ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.d, i64 -4 ; 2 uses
@@ -3470,21 +3446,17 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.backedge
   %.not22.i = icmp ult ptr %i.ab, %i.v
-  br i1 %.not22.i, label %6, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i, label %bb.h, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-6:                                                ; preds = %bb.g
-  %7 = getelementptr inbounds nuw i8, ptr %.0, i64 2 ; 4 uses
-  %8 = icmp ugt ptr %7, %i.v
-  br i1 %8, label %LZ4_wildCopy32.exit.thread, label %bb.h, !prof !19
-
-bb.h:                                             ; preds = %6
+bb.h:                                             ; preds = %bb.g
+  %6 = getelementptr inbounds nuw i8, ptr %.0, i64 2 ; 2 uses
   %i.ah = load i8, ptr %i.ab, align 1, !tbaa !7   ; 2 uses
   %i.ai = zext i8 %i.ah to i64
   %.not23.i = icmp eq i8 %i.ah, -1
   br i1 %.not23.i, label %.preheader134, label %read_variable_length.exit.thread64, !prof !19
 
 .preheader134:                                    ; preds = %bb.h, %bb.i
-  %.10 = phi ptr [ %i.aj, %bb.i ], [ %7, %bb.h ]  ; 2 uses
+  %.10 = phi ptr [ %i.aj, %bb.i ], [ %6, %bb.h ]  ; 2 uses
   %.0.i13 = phi i64 [ %i.an, %bb.i ], [ 255, %bb.h ]
   %i.aj = getelementptr inbounds nuw i8, ptr %.10, i64 1 ; 5 uses
   %i.ak = icmp ugt ptr %i.aj, %i.v
@@ -3503,7 +3475,7 @@ read_variable_length.exit:                        ; preds = %bb.i
 
 read_variable_length.exit.thread64:               ; preds = %bb.h, %read_variable_length.exit
   %.019.i68 = phi i64 [ %i.an, %read_variable_length.exit ], [ %i.ai, %bb.h ]
-  %.1167 = phi ptr [ %i.aj, %read_variable_length.exit ], [ %7, %bb.h ] ; 5 uses
+  %.1167 = phi ptr [ %i.aj, %read_variable_length.exit ], [ %6, %bb.h ] ; 5 uses
   %i.aq = add i64 %.019.i68, 15                   ; 5 uses
   %i.ar = ptrtoint ptr %.0358.i to i64
   %i.as = xor i64 %i.ar, -1
@@ -3906,23 +3878,19 @@ bb.ak:                                            ; preds = %bb.aj
   %.6.i.lcssa = phi ptr [ %.6.i.ph, %.preheader124 ], [ %i.hk, %bb.ak ] ; 2 uses
   %.lcssa150 = phi ptr [ %i.po, %.preheader124 ], [ %i.hl, %bb.ak ] ; 3 uses
   %.lcssa147 = phi i32 [ %i.pq, %.preheader124 ], [ %i.hn, %bb.ak ]
-  %i.hp = getelementptr inbounds i8, ptr %i.d, i64 -15 ; 3 uses
+  %i.hp = getelementptr inbounds i8, ptr %i.d, i64 -15 ; 2 uses
   %.not22.i18 = icmp ult ptr %.lcssa150, %i.hp
-  br i1 %.not22.i18, label %9, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i18, label %bb.al, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-9:                                                ; preds = %._crit_edge
-  %10 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 4 uses
-  %11 = icmp ugt ptr %10, %i.hp
-  br i1 %11, label %LZ4_wildCopy32.exit.thread, label %bb.al, !prof !19
-
-bb.al:                                            ; preds = %9
+bb.al:                                            ; preds = %._crit_edge
+  %7 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 2 uses
   %i.hq = load i8, ptr %.lcssa150, align 1, !tbaa !7 ; 2 uses
   %i.hr = zext i8 %i.hq to i64
   %.not23.i20 = icmp eq i8 %i.hq, -1
   br i1 %.not23.i20, label %.preheader123, label %read_variable_length.exit22.thread96, !prof !19
 
 .preheader123:                                    ; preds = %bb.al, %bb.am
-  %.14 = phi ptr [ %i.hs, %bb.am ], [ %10, %bb.al ] ; 2 uses
+  %.14 = phi ptr [ %i.hs, %bb.am ], [ %7, %bb.al ] ; 2 uses
   %.0.i21 = phi i64 [ %i.hw, %bb.am ], [ 255, %bb.al ]
   %i.hs = getelementptr inbounds nuw i8, ptr %.14, i64 1 ; 5 uses
   %i.ht = icmp ugt ptr %i.hs, %i.hp
@@ -3941,7 +3909,7 @@ read_variable_length.exit22:                      ; preds = %bb.am
 
 read_variable_length.exit22.thread96:             ; preds = %bb.al, %read_variable_length.exit22
   %.019.i19100 = phi i64 [ %i.hw, %read_variable_length.exit22 ], [ %i.hr, %bb.al ]
-  %.1599 = phi ptr [ %i.hs, %read_variable_length.exit22 ], [ %10, %bb.al ] ; 3 uses
+  %.1599 = phi ptr [ %i.hs, %read_variable_length.exit22 ], [ %7, %bb.al ] ; 3 uses
   %i.hz = add i64 %.019.i19100, 15                ; 3 uses
   %i.ia = ptrtoint ptr %.6.i.lcssa to i64
   %i.ib = xor i64 %i.ia, -1
@@ -4344,8 +4312,8 @@ scalar.ph521:                                     ; preds = %scalar.ph521.prehea
   %cond.i190 = icmp eq i32 %i.pr, 15
   br i1 %cond.i190, label %._crit_edge, label %.lr.ph192
 
-LZ4_wildCopy32.exit.thread:                       ; preds = %bb.m, %read_variable_length.exit17, %read_variable_length.exit17.thread81, %6, %bb.g, %read_variable_length.exit.thread64, %read_variable_length.exit, %bb.u, %.thread89, %.preheader134, %.preheader131, %.preheader123, %.preheader121, %bb.aq, %9, %._crit_edge, %read_variable_length.exit22, %read_variable_length.exit22.thread96, %bb.be, %bb.av, %.loopexit139, %read_variable_length.exit26, %bb.ao
-  %.7 = phi ptr [ %.4, %bb.ao ], [ %.2, %.loopexit139 ], [ %.1599, %read_variable_length.exit22.thread96 ], [ %.2, %bb.av ], [ %.17, %read_variable_length.exit26 ], [ %i.jw, %.preheader121 ], [ %i.hs, %read_variable_length.exit22 ], [ %.2, %bb.be ], [ %i.bs, %.preheader131 ], [ %i.aj, %.preheader134 ], [ %.lcssa150, %._crit_edge ], [ %10, %9 ], [ %i.hs, %.preheader123 ], [ %i.js, %bb.aq ], [ %i.bs, %read_variable_length.exit17 ], [ %.1384, %read_variable_length.exit17.thread81 ], [ %i.ab, %bb.g ], [ %.1167, %read_variable_length.exit.thread64 ], [ %i.aj, %read_variable_length.exit ], [ %7, %6 ], [ %.8, %.thread89 ], [ %i.bo, %bb.m ], [ %.8, %bb.u ]
+LZ4_wildCopy32.exit.thread:                       ; preds = %bb.m, %read_variable_length.exit17, %read_variable_length.exit17.thread81, %bb.g, %read_variable_length.exit.thread64, %read_variable_length.exit, %bb.u, %.thread89, %.preheader134, %.preheader131, %.preheader123, %.preheader121, %bb.aq, %._crit_edge, %read_variable_length.exit22, %read_variable_length.exit22.thread96, %bb.be, %bb.av, %.loopexit139, %read_variable_length.exit26, %bb.ao
+  %.7 = phi ptr [ %.4, %bb.ao ], [ %.2, %.loopexit139 ], [ %.1599, %read_variable_length.exit22.thread96 ], [ %.2, %bb.av ], [ %.17, %read_variable_length.exit26 ], [ %i.jw, %.preheader121 ], [ %i.hs, %read_variable_length.exit22 ], [ %.2, %bb.be ], [ %i.js, %bb.aq ], [ %i.aj, %.preheader134 ], [ %.lcssa150, %._crit_edge ], [ %i.hs, %.preheader123 ], [ %i.bs, %.preheader131 ], [ %i.bs, %read_variable_length.exit17 ], [ %.1384, %read_variable_length.exit17.thread81 ], [ %i.ab, %bb.g ], [ %.1167, %read_variable_length.exit.thread64 ], [ %i.aj, %read_variable_length.exit ], [ %.8, %bb.u ], [ %.8, %.thread89 ], [ %i.bo, %bb.m ]
   %i.ps = ptrtoint ptr %.7 to i64
   %i.pt = ptrtoint ptr %0 to i64
   %.neg.i = sub i64 %i.pt, %i.ps
@@ -4393,7 +4361,7 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader142:                                    ; preds = %bb.d
   %i.s = getelementptr inbounds i8, ptr %i.e, i64 -17
-  %i.t = getelementptr inbounds i8, ptr %i.e, i64 -15 ; 3 uses
+  %i.t = getelementptr inbounds i8, ptr %i.e, i64 -15 ; 2 uses
   %i.u = getelementptr inbounds i8, ptr %i.e, i64 -32
   %i.v = getelementptr inbounds i8, ptr %i.g, i64 -64 ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %i.e, i64 -4 ; 2 uses
@@ -4414,21 +4382,17 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.backedge
   %.not22.i = icmp ult ptr %i.z, %i.t
-  br i1 %.not22.i, label %7, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i, label %bb.f, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-7:                                                ; preds = %bb.e
-  %8 = getelementptr inbounds nuw i8, ptr %.0, i64 2 ; 4 uses
-  %9 = icmp ugt ptr %8, %i.t
-  br i1 %9, label %LZ4_wildCopy32.exit.thread, label %bb.f, !prof !19
-
-bb.f:                                             ; preds = %7
+bb.f:                                             ; preds = %bb.e
+  %7 = getelementptr inbounds nuw i8, ptr %.0, i64 2 ; 2 uses
   %i.af = load i8, ptr %i.z, align 1, !tbaa !7    ; 2 uses
   %i.ag = zext i8 %i.af to i64
   %.not23.i = icmp eq i8 %i.af, -1
   br i1 %.not23.i, label %.preheader140, label %read_variable_length.exit.thread68, !prof !19
 
 .preheader140:                                    ; preds = %bb.f, %bb.g
-  %.11 = phi ptr [ %i.ah, %bb.g ], [ %8, %bb.f ]  ; 2 uses
+  %.11 = phi ptr [ %i.ah, %bb.g ], [ %7, %bb.f ]  ; 2 uses
   %.0.i17 = phi i64 [ %i.al, %bb.g ], [ 255, %bb.f ]
   %i.ah = getelementptr inbounds nuw i8, ptr %.11, i64 1 ; 5 uses
   %i.ai = icmp ugt ptr %i.ah, %i.t
@@ -4447,7 +4411,7 @@ read_variable_length.exit:                        ; preds = %bb.g
 
 read_variable_length.exit.thread68:               ; preds = %bb.f, %read_variable_length.exit
   %.019.i72 = phi i64 [ %i.al, %read_variable_length.exit ], [ %i.ag, %bb.f ]
-  %.1271 = phi ptr [ %i.ah, %read_variable_length.exit ], [ %8, %bb.f ] ; 5 uses
+  %.1271 = phi ptr [ %i.ah, %read_variable_length.exit ], [ %7, %bb.f ] ; 5 uses
   %i.ao = add i64 %.019.i72, 15                   ; 5 uses
   %i.ap = ptrtoint ptr %.0358.i to i64
   %i.aq = xor i64 %i.ap, -1
@@ -4850,23 +4814,19 @@ bb.aj:                                            ; preds = %bb.ai
   %.6.i.lcssa = phi ptr [ %.6.i.ph, %.preheader131 ], [ %i.ho, %bb.aj ] ; 2 uses
   %.lcssa156 = phi ptr [ %i.ph, %.preheader131 ], [ %i.hp, %bb.aj ] ; 3 uses
   %.lcssa153 = phi i32 [ %i.pj, %.preheader131 ], [ %i.hr, %bb.aj ]
-  %i.ht = getelementptr inbounds i8, ptr %i.e, i64 -15 ; 3 uses
+  %i.ht = getelementptr inbounds i8, ptr %i.e, i64 -15 ; 2 uses
   %.not22.i22 = icmp ult ptr %.lcssa156, %i.ht
-  br i1 %.not22.i22, label %10, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i22, label %bb.ak, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-10:                                               ; preds = %._crit_edge
-  %11 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 4 uses
-  %12 = icmp ugt ptr %11, %i.ht
-  br i1 %12, label %LZ4_wildCopy32.exit.thread, label %bb.ak, !prof !19
-
-bb.ak:                                            ; preds = %10
+bb.ak:                                            ; preds = %._crit_edge
+  %8 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 2 uses
   %i.hu = load i8, ptr %.lcssa156, align 1, !tbaa !7 ; 2 uses
   %i.hv = zext i8 %i.hu to i64
   %.not23.i24 = icmp eq i8 %i.hu, -1
   br i1 %.not23.i24, label %.preheader130, label %read_variable_length.exit26.thread100, !prof !19
 
 .preheader130:                                    ; preds = %bb.ak, %bb.al
-  %.15 = phi ptr [ %i.hw, %bb.al ], [ %11, %bb.ak ] ; 2 uses
+  %.15 = phi ptr [ %i.hw, %bb.al ], [ %8, %bb.ak ] ; 2 uses
   %.0.i25 = phi i64 [ %i.ia, %bb.al ], [ 255, %bb.ak ]
   %i.hw = getelementptr inbounds nuw i8, ptr %.15, i64 1 ; 5 uses
   %i.hx = icmp ugt ptr %i.hw, %i.ht
@@ -4885,7 +4845,7 @@ read_variable_length.exit26:                      ; preds = %bb.al
 
 read_variable_length.exit26.thread100:            ; preds = %bb.ak, %read_variable_length.exit26
   %.019.i23104 = phi i64 [ %i.ia, %read_variable_length.exit26 ], [ %i.hv, %bb.ak ]
-  %.16103 = phi ptr [ %i.hw, %read_variable_length.exit26 ], [ %11, %bb.ak ] ; 3 uses
+  %.16103 = phi ptr [ %i.hw, %read_variable_length.exit26 ], [ %8, %bb.ak ] ; 3 uses
   %i.id = add i64 %.019.i23104, 15                ; 3 uses
   %i.ie = ptrtoint ptr %.6.i.lcssa to i64
   %i.if = xor i64 %i.ie, -1
@@ -5288,8 +5248,8 @@ bb.bi:                                            ; preds = %.thread111, %.loope
   %i.pn = trunc i64 %i.pm to i32
   br label %LZ4_decompress_generic.exit
 
-LZ4_wildCopy32.exit.thread:                       ; preds = %bb.k, %read_variable_length.exit21, %read_variable_length.exit21.thread85, %7, %bb.e, %read_variable_length.exit.thread68, %read_variable_length.exit, %.thread93, %.preheader140, %.preheader137, %.preheader130, %.preheader128, %bb.ap, %10, %._crit_edge, %read_variable_length.exit26, %read_variable_length.exit26.thread100, %.loopexit145, %read_variable_length.exit30
-  %.8 = phi ptr [ %.2, %.loopexit145 ], [ %i.kj, %.preheader128 ], [ %.18, %read_variable_length.exit30 ], [ %i.hw, %read_variable_length.exit26 ], [ %i.kf, %bb.ap ], [ %i.ah, %.preheader140 ], [ %.lcssa156, %._crit_edge ], [ %11, %10 ], [ %.16103, %read_variable_length.exit26.thread100 ], [ %i.hw, %.preheader130 ], [ %i.bq, %.preheader137 ], [ %i.bq, %read_variable_length.exit21 ], [ %.1488, %read_variable_length.exit21.thread85 ], [ %i.z, %bb.e ], [ %.1271, %read_variable_length.exit.thread68 ], [ %i.ah, %read_variable_length.exit ], [ %.9, %.thread93 ], [ %i.bm, %bb.k ], [ %8, %7 ]
+LZ4_wildCopy32.exit.thread:                       ; preds = %bb.k, %read_variable_length.exit21, %read_variable_length.exit21.thread85, %bb.e, %read_variable_length.exit.thread68, %read_variable_length.exit, %.thread93, %.preheader140, %.preheader137, %.preheader130, %.preheader128, %bb.ap, %._crit_edge, %read_variable_length.exit26, %read_variable_length.exit26.thread100, %.loopexit145, %read_variable_length.exit30
+  %.8 = phi ptr [ %.2, %.loopexit145 ], [ %i.kj, %.preheader128 ], [ %.18, %read_variable_length.exit30 ], [ %i.hw, %read_variable_length.exit26 ], [ %i.bq, %.preheader137 ], [ %.16103, %read_variable_length.exit26.thread100 ], [ %.lcssa156, %._crit_edge ], [ %i.ah, %.preheader140 ], [ %i.hw, %.preheader130 ], [ %i.kf, %bb.ap ], [ %i.bq, %read_variable_length.exit21 ], [ %.1488, %read_variable_length.exit21.thread85 ], [ %i.z, %bb.e ], [ %.1271, %read_variable_length.exit.thread68 ], [ %i.ah, %read_variable_length.exit ], [ %.9, %.thread93 ], [ %i.bm, %bb.k ]
   %i.po = ptrtoint ptr %.8 to i64
   %i.pp = ptrtoint ptr %0 to i64
   %.neg.i = sub i64 %i.pp, %i.po
@@ -5440,7 +5400,7 @@ bb.n:                                             ; preds = %bb.m
 
 .preheader199:                                    ; preds = %bb.n
   %i.ao = getelementptr inbounds i8, ptr %i.x, i64 -17
-  %i.ap = getelementptr inbounds i8, ptr %i.x, i64 -15 ; 3 uses
+  %i.ap = getelementptr inbounds i8, ptr %i.x, i64 -15 ; 2 uses
   %i.aq = getelementptr inbounds i8, ptr %i.x, i64 -32
   %i.ar = getelementptr inbounds i8, ptr %i.z, i64 -64 ; 2 uses
   %i.as = getelementptr inbounds i8, ptr %i.x, i64 -4 ; 2 uses
@@ -5463,21 +5423,17 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %.backedge
   %.not22.i = icmp ult ptr %i.ax, %i.ap
-  br i1 %.not22.i, label %5, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i, label %bb.p, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-5:                                                ; preds = %bb.o
-  %6 = getelementptr inbounds nuw i8, ptr %.0123, i64 2 ; 4 uses
-  %7 = icmp ugt ptr %6, %i.ap
-  br i1 %7, label %LZ4_wildCopy32.exit.thread, label %bb.p, !prof !19
-
-bb.p:                                             ; preds = %5
+bb.p:                                             ; preds = %bb.o
+  %5 = getelementptr inbounds nuw i8, ptr %.0123, i64 2 ; 2 uses
   %i.bd = load i8, ptr %i.ax, align 1, !tbaa !7   ; 2 uses
   %i.be = zext i8 %i.bd to i64
   %.not23.i = icmp eq i8 %i.bd, -1
   br i1 %.not23.i, label %.preheader197, label %read_variable_length.exit.thread126, !prof !19
 
 .preheader197:                                    ; preds = %bb.p, %bb.q
-  %.10 = phi ptr [ %i.bf, %bb.q ], [ %6, %bb.p ]  ; 2 uses
+  %.10 = phi ptr [ %i.bf, %bb.q ], [ %5, %bb.p ]  ; 2 uses
   %.0.i73 = phi i64 [ %i.bj, %bb.q ], [ 255, %bb.p ]
   %i.bf = getelementptr inbounds nuw i8, ptr %.10, i64 1 ; 5 uses
   %i.bg = icmp ugt ptr %i.bf, %i.ap
@@ -5496,7 +5452,7 @@ read_variable_length.exit:                        ; preds = %bb.q
 
 read_variable_length.exit.thread126:              ; preds = %bb.p, %read_variable_length.exit
   %.019.i130 = phi i64 [ %i.bj, %read_variable_length.exit ], [ %i.be, %bb.p ]
-  %.11129 = phi ptr [ %i.bf, %read_variable_length.exit ], [ %6, %bb.p ] ; 5 uses
+  %.11129 = phi ptr [ %i.bf, %read_variable_length.exit ], [ %5, %bb.p ] ; 5 uses
   %i.bm = add i64 %.019.i130, 15                  ; 5 uses
   %i.bn = ptrtoint ptr %.0358.i.i to i64
   %i.bo = xor i64 %i.bn, -1
@@ -5899,23 +5855,19 @@ bb.as:                                            ; preds = %bb.ar
   %.6.i.i.lcssa = phi ptr [ %.6.i.i.ph, %.preheader187 ], [ %i.ih, %bb.as ] ; 2 uses
   %.lcssa213 = phi ptr [ %i.qo, %.preheader187 ], [ %i.ii, %bb.as ] ; 3 uses
   %.lcssa210 = phi i32 [ %i.qq, %.preheader187 ], [ %i.ik, %bb.as ]
-  %i.im = getelementptr inbounds i8, ptr %i.x, i64 -15 ; 3 uses
+  %i.im = getelementptr inbounds i8, ptr %i.x, i64 -15 ; 2 uses
   %.not22.i78 = icmp ult ptr %.lcssa213, %i.im
-  br i1 %.not22.i78, label %8, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i78, label %bb.at, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-8:                                                ; preds = %._crit_edge
-  %9 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 4 uses
-  %10 = icmp ugt ptr %9, %i.im
-  br i1 %10, label %LZ4_wildCopy32.exit.thread, label %bb.at, !prof !19
-
-bb.at:                                            ; preds = %8
+bb.at:                                            ; preds = %._crit_edge
+  %6 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 2 uses
   %i.in = load i8, ptr %.lcssa213, align 1, !tbaa !7 ; 2 uses
   %i.io = zext i8 %i.in to i64
   %.not23.i80 = icmp eq i8 %i.in, -1
   br i1 %.not23.i80, label %.preheader186, label %read_variable_length.exit82.thread158, !prof !19
 
 .preheader186:                                    ; preds = %bb.at, %bb.au
-  %.14 = phi ptr [ %i.ip, %bb.au ], [ %9, %bb.at ] ; 2 uses
+  %.14 = phi ptr [ %i.ip, %bb.au ], [ %6, %bb.at ] ; 2 uses
   %.0.i81 = phi i64 [ %i.it, %bb.au ], [ 255, %bb.at ]
   %i.ip = getelementptr inbounds nuw i8, ptr %.14, i64 1 ; 5 uses
   %i.iq = icmp ugt ptr %i.ip, %i.im
@@ -5934,7 +5886,7 @@ read_variable_length.exit82:                      ; preds = %bb.au
 
 read_variable_length.exit82.thread158:            ; preds = %bb.at, %read_variable_length.exit82
   %.019.i79162 = phi i64 [ %i.it, %read_variable_length.exit82 ], [ %i.io, %bb.at ]
-  %.15161 = phi ptr [ %i.ip, %read_variable_length.exit82 ], [ %9, %bb.at ] ; 3 uses
+  %.15161 = phi ptr [ %i.ip, %read_variable_length.exit82 ], [ %6, %bb.at ] ; 3 uses
   %i.iw = add i64 %.019.i79162, 15                ; 3 uses
   %i.ix = ptrtoint ptr %.6.i.i.lcssa to i64
   %i.iy = xor i64 %i.ix, -1
@@ -6337,8 +6289,8 @@ scalar.ph593:                                     ; preds = %scalar.ph593.prehea
   %cond.i.i253 = icmp eq i32 %i.qr, 15
   br i1 %cond.i.i253, label %._crit_edge, label %.lr.ph255
 
-LZ4_wildCopy32.exit.thread:                       ; preds = %bb.u, %read_variable_length.exit77, %read_variable_length.exit77.thread143, %5, %bb.o, %read_variable_length.exit.thread126, %read_variable_length.exit, %bb.ac, %.thread151, %.preheader197, %.preheader194, %.preheader186, %.preheader184, %bb.ay, %8, %._crit_edge, %read_variable_length.exit82, %read_variable_length.exit82.thread158, %bb.bm, %bb.bd, %.loopexit202, %read_variable_length.exit86, %bb.aw
-  %.7 = phi ptr [ %.4, %bb.aw ], [ %.2, %.loopexit202 ], [ %.15161, %read_variable_length.exit82.thread158 ], [ %.2, %bb.bd ], [ %.17, %read_variable_length.exit86 ], [ %i.kt, %.preheader184 ], [ %i.ip, %read_variable_length.exit82 ], [ %.2, %bb.bm ], [ %i.co, %.preheader194 ], [ %i.bf, %.preheader197 ], [ %.lcssa213, %._crit_edge ], [ %9, %8 ], [ %i.ip, %.preheader186 ], [ %i.kp, %bb.ay ], [ %i.co, %read_variable_length.exit77 ], [ %.13146, %read_variable_length.exit77.thread143 ], [ %i.ax, %bb.o ], [ %.11129, %read_variable_length.exit.thread126 ], [ %i.bf, %read_variable_length.exit ], [ %6, %5 ], [ %.8, %.thread151 ], [ %i.ck, %bb.u ], [ %.8, %bb.ac ]
+LZ4_wildCopy32.exit.thread:                       ; preds = %bb.u, %read_variable_length.exit77, %read_variable_length.exit77.thread143, %bb.o, %read_variable_length.exit.thread126, %read_variable_length.exit, %bb.ac, %.thread151, %.preheader197, %.preheader194, %.preheader186, %.preheader184, %bb.ay, %._crit_edge, %read_variable_length.exit82, %read_variable_length.exit82.thread158, %bb.bm, %bb.bd, %.loopexit202, %read_variable_length.exit86, %bb.aw
+  %.7 = phi ptr [ %.4, %bb.aw ], [ %.2, %.loopexit202 ], [ %.15161, %read_variable_length.exit82.thread158 ], [ %.2, %bb.bd ], [ %.17, %read_variable_length.exit86 ], [ %i.kt, %.preheader184 ], [ %i.ip, %read_variable_length.exit82 ], [ %.2, %bb.bm ], [ %i.kp, %bb.ay ], [ %i.bf, %.preheader197 ], [ %.lcssa213, %._crit_edge ], [ %i.ip, %.preheader186 ], [ %i.co, %.preheader194 ], [ %i.co, %read_variable_length.exit77 ], [ %.13146, %read_variable_length.exit77.thread143 ], [ %i.ax, %bb.o ], [ %.11129, %read_variable_length.exit.thread126 ], [ %i.bf, %read_variable_length.exit ], [ %.8, %bb.ac ], [ %.8, %.thread151 ], [ %i.ck, %bb.u ]
   %i.qs = ptrtoint ptr %.7 to i64
   %i.qt = ptrtoint ptr %1 to i64
   %.neg.i.i = sub i64 %i.qt, %i.qs
@@ -6424,7 +6376,7 @@ bb.f:                                             ; preds = %bb.e
 
 .preheader131:                                    ; preds = %bb.f
   %i.s = getelementptr inbounds i8, ptr %i.f, i64 -17
-  %i.t = getelementptr inbounds i8, ptr %i.f, i64 -15 ; 3 uses
+  %i.t = getelementptr inbounds i8, ptr %i.f, i64 -15 ; 2 uses
   %i.u = getelementptr inbounds i8, ptr %i.f, i64 -32
   %i.v = getelementptr inbounds i8, ptr %i.h, i64 -64 ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %i.f, i64 -4 ; 2 uses
@@ -6443,21 +6395,17 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.backedge
   %.not22.i = icmp ult ptr %i.x, %i.t
-  br i1 %.not22.i, label %5, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i, label %bb.h, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-5:                                                ; preds = %bb.g
-  %6 = getelementptr inbounds nuw i8, ptr %.0, i64 2 ; 4 uses
-  %7 = icmp ugt ptr %6, %i.t
-  br i1 %7, label %LZ4_wildCopy32.exit.thread, label %bb.h, !prof !19
-
-bb.h:                                             ; preds = %5
+bb.h:                                             ; preds = %bb.g
+  %5 = getelementptr inbounds nuw i8, ptr %.0, i64 2 ; 2 uses
   %i.ad = load i8, ptr %i.x, align 1, !tbaa !7    ; 2 uses
   %i.ae = zext i8 %i.ad to i64
   %.not23.i = icmp eq i8 %i.ad, -1
   br i1 %.not23.i, label %.preheader129, label %read_variable_length.exit.thread63, !prof !19
 
 .preheader129:                                    ; preds = %bb.h, %bb.i
-  %.10 = phi ptr [ %i.af, %bb.i ], [ %6, %bb.h ]  ; 2 uses
+  %.10 = phi ptr [ %i.af, %bb.i ], [ %5, %bb.h ]  ; 2 uses
   %.0.i12 = phi i64 [ %i.aj, %bb.i ], [ 255, %bb.h ]
   %i.af = getelementptr inbounds nuw i8, ptr %.10, i64 1 ; 5 uses
   %i.ag = icmp ugt ptr %i.af, %i.t
@@ -6476,7 +6424,7 @@ read_variable_length.exit:                        ; preds = %bb.i
 
 read_variable_length.exit.thread63:               ; preds = %bb.h, %read_variable_length.exit
   %.019.i67 = phi i64 [ %i.aj, %read_variable_length.exit ], [ %i.ae, %bb.h ]
-  %.1166 = phi ptr [ %i.af, %read_variable_length.exit ], [ %6, %bb.h ] ; 5 uses
+  %.1166 = phi ptr [ %i.af, %read_variable_length.exit ], [ %5, %bb.h ] ; 5 uses
   %i.am = add i64 %.019.i67, 15                   ; 5 uses
   %i.an = ptrtoint ptr %.0358.i to i64
   %i.ao = xor i64 %i.an, -1
@@ -6866,23 +6814,19 @@ bb.ae:                                            ; preds = %bb.ad
   %.6.i.lcssa = phi ptr [ %.6.i.ph, %.preheader122 ], [ %i.gb, %bb.ae ] ; 2 uses
   %.lcssa145 = phi ptr [ %i.mw, %.preheader122 ], [ %i.gc, %bb.ae ] ; 3 uses
   %.lcssa142 = phi i32 [ %i.my, %.preheader122 ], [ %i.ge, %bb.ae ]
-  %i.gg = getelementptr inbounds i8, ptr %i.f, i64 -15 ; 3 uses
+  %i.gg = getelementptr inbounds i8, ptr %i.f, i64 -15 ; 2 uses
   %.not22.i17 = icmp ult ptr %.lcssa145, %i.gg
-  br i1 %.not22.i17, label %8, label %LZ4_wildCopy32.exit.thread, !prof !28
+  br i1 %.not22.i17, label %bb.af, label %LZ4_wildCopy32.exit.thread, !prof !28
 
-8:                                                ; preds = %._crit_edge
-  %9 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 4 uses
-  %10 = icmp ugt ptr %9, %i.gg
-  br i1 %10, label %LZ4_wildCopy32.exit.thread, label %bb.af, !prof !19
-
-bb.af:                                            ; preds = %8
+bb.af:                                            ; preds = %._crit_edge
+  %6 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 2 ; 2 uses
   %i.gh = load i8, ptr %.lcssa145, align 1, !tbaa !7 ; 2 uses
   %i.gi = zext i8 %i.gh to i64
   %.not23.i19 = icmp eq i8 %i.gh, -1
   br i1 %.not23.i19, label %.preheader121, label %read_variable_length.exit21.thread95, !prof !19
 
 .preheader121:                                    ; preds = %bb.af, %bb.ag
-  %.14 = phi ptr [ %i.gj, %bb.ag ], [ %9, %bb.af ] ; 2 uses
+  %.14 = phi ptr [ %i.gj, %bb.ag ], [ %6, %bb.af ] ; 2 uses
   %.0.i20 = phi i64 [ %i.gn, %bb.ag ], [ 255, %bb.af ]
   %i.gj = getelementptr inbounds nuw i8, ptr %.14, i64 1 ; 5 uses
   %i.gk = icmp ugt ptr %i.gj, %i.gg
@@ -6901,7 +6845,7 @@ read_variable_length.exit21:                      ; preds = %bb.ag
 
 read_variable_length.exit21.thread95:             ; preds = %bb.af, %read_variable_length.exit21
   %.019.i1899 = phi i64 [ %i.gn, %read_variable_length.exit21 ], [ %i.gi, %bb.af ]
-  %.1598 = phi ptr [ %i.gj, %read_variable_length.exit21 ], [ %9, %bb.af ] ; 3 uses
+  %.1598 = phi ptr [ %i.gj, %read_variable_length.exit21 ], [ %6, %bb.af ] ; 3 uses
   %i.gq = add i64 %.019.i1899, 15                 ; 3 uses
   %i.gr = ptrtoint ptr %.6.i.lcssa to i64
   %i.gs = xor i64 %i.gr, -1
@@ -7304,8 +7248,8 @@ scalar.ph459:                                     ; preds = %scalar.ph459.prehea
   %cond.i182 = icmp eq i32 %i.mz, 15
   br i1 %cond.i182, label %._crit_edge, label %.lr.ph184
 
-LZ4_wildCopy32.exit.thread:                       ; preds = %bb.m, %read_variable_length.exit16, %read_variable_length.exit16.thread80, %5, %bb.g, %read_variable_length.exit.thread63, %read_variable_length.exit, %.thread88, %.preheader129, %.preheader126, %.preheader121, %.preheader119, %bb.ak, %8, %._crit_edge, %read_variable_length.exit21, %read_variable_length.exit21.thread95, %bb.as, %.loopexit134, %read_variable_length.exit25, %bb.ai
-  %.7 = phi ptr [ %.4, %bb.ai ], [ %.2, %.loopexit134 ], [ %.2, %bb.as ], [ %.17, %read_variable_length.exit25 ], [ %i.in, %.preheader119 ], [ %i.gj, %read_variable_length.exit21 ], [ %i.ij, %bb.ak ], [ %i.af, %.preheader129 ], [ %.lcssa145, %._crit_edge ], [ %9, %8 ], [ %.1598, %read_variable_length.exit21.thread95 ], [ %i.gj, %.preheader121 ], [ %i.bo, %.preheader126 ], [ %i.bo, %read_variable_length.exit16 ], [ %.1383, %read_variable_length.exit16.thread80 ], [ %i.x, %bb.g ], [ %.1166, %read_variable_length.exit.thread63 ], [ %i.af, %read_variable_length.exit ], [ %6, %5 ], [ %.8, %.thread88 ], [ %i.bk, %bb.m ]
+LZ4_wildCopy32.exit.thread:                       ; preds = %bb.m, %read_variable_length.exit16, %read_variable_length.exit16.thread80, %bb.g, %read_variable_length.exit.thread63, %read_variable_length.exit, %.thread88, %.preheader129, %.preheader126, %.preheader121, %.preheader119, %bb.ak, %._crit_edge, %read_variable_length.exit21, %read_variable_length.exit21.thread95, %bb.as, %.loopexit134, %read_variable_length.exit25, %bb.ai
+  %.7 = phi ptr [ %.4, %bb.ai ], [ %.2, %.loopexit134 ], [ %.2, %bb.as ], [ %.17, %read_variable_length.exit25 ], [ %i.in, %.preheader119 ], [ %i.gj, %read_variable_length.exit21 ], [ %i.bo, %.preheader126 ], [ %.1598, %read_variable_length.exit21.thread95 ], [ %.lcssa145, %._crit_edge ], [ %i.af, %.preheader129 ], [ %i.gj, %.preheader121 ], [ %i.ij, %bb.ak ], [ %i.bo, %read_variable_length.exit16 ], [ %.1383, %read_variable_length.exit16.thread80 ], [ %i.x, %bb.g ], [ %.1166, %read_variable_length.exit.thread63 ], [ %i.af, %read_variable_length.exit ], [ %i.bk, %bb.m ], [ %.8, %.thread88 ]
   %i.na = ptrtoint ptr %.7 to i64
   %i.nb = ptrtoint ptr %0 to i64
   %.neg.i = sub i64 %i.nb, %i.na
@@ -7708,7 +7652,7 @@ bb.h:                                             ; preds = %bb.g
 
 .preheader156.i:                                  ; preds = %bb.h
   %i.s = getelementptr inbounds i8, ptr %i.k, i64 -17
-  %i.t = getelementptr inbounds i8, ptr %i.k, i64 -15 ; 3 uses
+  %i.t = getelementptr inbounds i8, ptr %i.k, i64 -15 ; 2 uses
   %i.u = add nsw i64 %i.l, -32
   %i.v = getelementptr inbounds i8, ptr %i.k, i64 -32
   %i.w = add nsw i64 %i.l, -64                    ; 2 uses
@@ -7732,21 +7676,17 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.backedge.i
   %.not22.i.i = icmp ult ptr %i.z, %i.t
-  br i1 %.not22.i.i, label %7, label %LZ4_wildCopy32.exit.thread.i, !prof !28
+  br i1 %.not22.i.i, label %bb.j, label %LZ4_wildCopy32.exit.thread.i, !prof !28
 
-7:                                                ; preds = %bb.i
-  %8 = getelementptr inbounds nuw i8, ptr %.0.i, i64 2 ; 4 uses
-  %9 = icmp ugt ptr %8, %i.t
-  br i1 %9, label %LZ4_wildCopy32.exit.thread.i, label %bb.j, !prof !19
-
-bb.j:                                             ; preds = %7
+bb.j:                                             ; preds = %bb.i
+  %7 = getelementptr inbounds nuw i8, ptr %.0.i, i64 2 ; 2 uses
   %i.af = load i8, ptr %i.z, align 1, !tbaa !7    ; 2 uses
   %i.ag = zext i8 %i.af to i64
   %.not23.i.i = icmp eq i8 %i.af, -1
   br i1 %.not23.i.i, label %.preheader154.i, label %read_variable_length.exit.thread66.i, !prof !19
 
 .preheader154.i:                                  ; preds = %bb.j, %bb.k
-  %.11.i = phi ptr [ %i.ah, %bb.k ], [ %8, %bb.j ] ; 2 uses
+  %.11.i = phi ptr [ %i.ah, %bb.k ], [ %7, %bb.j ] ; 2 uses
   %.0.i15.i = phi i64 [ %i.al, %bb.k ], [ 255, %bb.j ]
   %i.ah = getelementptr inbounds nuw i8, ptr %.11.i, i64 1 ; 5 uses
   %i.ai = icmp ugt ptr %i.ah, %i.t
@@ -7765,7 +7705,7 @@ read_variable_length.exit.i:                      ; preds = %bb.k
 
 read_variable_length.exit.thread66.i:             ; preds = %read_variable_length.exit.i, %bb.j
   %.019.i70.i = phi i64 [ %i.al, %read_variable_length.exit.i ], [ %i.ag, %bb.j ]
-  %.1269.i = phi ptr [ %i.ah, %read_variable_length.exit.i ], [ %8, %bb.j ] ; 5 uses
+  %.1269.i = phi ptr [ %i.ah, %read_variable_length.exit.i ], [ %7, %bb.j ] ; 5 uses
   %i.ao = add i64 %.019.i70.i, 15                 ; 5 uses
   %i.ap = ptrtoint ptr %.0358.i.ptr.ptr.i to i64
   %i.aq = xor i64 %i.ap, -1
@@ -8161,23 +8101,19 @@ bb.ah:                                            ; preds = %bb.ag
   %.6.i.ptr.lcssa.i = phi ptr [ %.6.i.ptr206.i, %.preheader146.i ], [ %.6.i.ptr.i, %bb.ah ]
   %.lcssa170.i = phi ptr [ %i.lw, %.preheader146.i ], [ %i.ft, %bb.ah ] ; 3 uses
   %.lcssa167.i = phi i32 [ %i.ly, %.preheader146.i ], [ %i.fv, %bb.ah ]
-  %i.fx = getelementptr inbounds i8, ptr %i.k, i64 -15 ; 3 uses
+  %i.fx = getelementptr inbounds i8, ptr %i.k, i64 -15 ; 2 uses
   %.not22.i20.i = icmp ult ptr %.lcssa170.i, %i.fx
-  br i1 %.not22.i20.i, label %10, label %LZ4_wildCopy32.exit.thread.i, !prof !28
+  br i1 %.not22.i20.i, label %bb.ai, label %LZ4_wildCopy32.exit.thread.i, !prof !28
 
-10:                                               ; preds = %._crit_edge.i
-  %11 = getelementptr inbounds nuw i8, ptr %.3.lcssa.i, i64 2 ; 4 uses
-  %12 = icmp ugt ptr %11, %i.fx
-  br i1 %12, label %LZ4_wildCopy32.exit.thread.i, label %bb.ai, !prof !19
-
-bb.ai:                                            ; preds = %10
+bb.ai:                                            ; preds = %._crit_edge.i
+  %8 = getelementptr inbounds nuw i8, ptr %.3.lcssa.i, i64 2 ; 2 uses
   %i.fy = load i8, ptr %.lcssa170.i, align 1, !tbaa !7 ; 2 uses
   %i.fz = zext i8 %i.fy to i64
   %.not23.i22.i = icmp eq i8 %i.fy, -1
   br i1 %.not23.i22.i, label %.preheader145.i, label %read_variable_length.exit24.thread98.i, !prof !19
 
 .preheader145.i:                                  ; preds = %bb.ai, %bb.aj
-  %.15.i = phi ptr [ %i.ga, %bb.aj ], [ %11, %bb.ai ] ; 2 uses
+  %.15.i = phi ptr [ %i.ga, %bb.aj ], [ %8, %bb.ai ] ; 2 uses
   %.0.i23.i = phi i64 [ %i.ge, %bb.aj ], [ 255, %bb.ai ]
   %i.ga = getelementptr inbounds nuw i8, ptr %.15.i, i64 1 ; 5 uses
   %i.gb = icmp ugt ptr %i.ga, %i.fx
@@ -8196,7 +8132,7 @@ read_variable_length.exit24.i:                    ; preds = %bb.aj
 
 read_variable_length.exit24.thread98.i:           ; preds = %read_variable_length.exit24.i, %bb.ai
   %.019.i21102.i = phi i64 [ %i.ge, %read_variable_length.exit24.i ], [ %i.fz, %bb.ai ]
-  %.16101.i = phi ptr [ %i.ga, %read_variable_length.exit24.i ], [ %11, %bb.ai ] ; 3 uses
+  %.16101.i = phi ptr [ %i.ga, %read_variable_length.exit24.i ], [ %8, %bb.ai ] ; 3 uses
   %i.gh = add i64 %.019.i21102.i, 15              ; 3 uses
   %i.gi = ptrtoint ptr %.6.i.ptr.lcssa.i to i64
   %i.gj = xor i64 %i.gi, -1
@@ -8599,8 +8535,8 @@ bb.az:                                            ; preds = %.loopexit.i, %bb.am
   %i.md = trunc i64 %i.mc to i32
   br label %LZ4_decompress_safe_partial_withPrefix64k.exit
 
-LZ4_wildCopy32.exit.thread.i:                     ; preds = %.thread91.i, %read_variable_length.exit19.thread83.i, %read_variable_length.exit19.i, %bb.o, %read_variable_length.exit.thread66.i, %read_variable_length.exit.i, %7, %bb.i, %.preheader154.i, %.preheader151.i, %.preheader145.i, %.preheader143.i, %.loopexit159.i, %read_variable_length.exit28.i, %bb.an, %read_variable_length.exit24.thread98.i, %read_variable_length.exit24.i, %10, %._crit_edge.i
-  %.8.i = phi ptr [ %.2.i, %.loopexit159.i ], [ %i.bm, %.preheader151.i ], [ %.18.i, %read_variable_length.exit28.i ], [ %i.ga, %read_variable_length.exit24.i ], [ %i.ig, %bb.an ], [ %i.ga, %.preheader145.i ], [ %.lcssa170.i, %._crit_edge.i ], [ %11, %10 ], [ %.16101.i, %read_variable_length.exit24.thread98.i ], [ %i.ah, %.preheader154.i ], [ %i.ik, %.preheader143.i ], [ %i.bi, %bb.o ], [ %.9.i, %.thread91.i ], [ %i.ah, %read_variable_length.exit.i ], [ %.1269.i, %read_variable_length.exit.thread66.i ], [ %i.z, %bb.i ], [ %.1486.i, %read_variable_length.exit19.thread83.i ], [ %i.bm, %read_variable_length.exit19.i ], [ %8, %7 ]
+LZ4_wildCopy32.exit.thread.i:                     ; preds = %.thread91.i, %read_variable_length.exit19.thread83.i, %read_variable_length.exit19.i, %bb.o, %read_variable_length.exit.thread66.i, %read_variable_length.exit.i, %bb.i, %.preheader154.i, %.preheader151.i, %.preheader145.i, %.preheader143.i, %.loopexit159.i, %read_variable_length.exit28.i, %bb.an, %read_variable_length.exit24.thread98.i, %read_variable_length.exit24.i, %._crit_edge.i
+  %.8.i = phi ptr [ %.2.i, %.loopexit159.i ], [ %i.bm, %.preheader151.i ], [ %.18.i, %read_variable_length.exit28.i ], [ %i.ga, %read_variable_length.exit24.i ], [ %i.ik, %.preheader143.i ], [ %.16101.i, %read_variable_length.exit24.thread98.i ], [ %.lcssa170.i, %._crit_edge.i ], [ %i.ga, %.preheader145.i ], [ %i.ah, %.preheader154.i ], [ %i.ig, %bb.an ], [ %.9.i, %.thread91.i ], [ %i.ah, %read_variable_length.exit.i ], [ %.1269.i, %read_variable_length.exit.thread66.i ], [ %i.z, %bb.i ], [ %.1486.i, %read_variable_length.exit19.thread83.i ], [ %i.bm, %read_variable_length.exit19.i ], [ %i.bi, %bb.o ]
   %i.me = ptrtoint ptr %.8.i to i64
   %i.mf = ptrtoint ptr %0 to i64
   %.neg.i.i = sub i64 %i.mf, %i.me
@@ -8638,7 +8574,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 .preheader139.i:                                  ; preds = %bb.bd
   %i.mx = getelementptr inbounds i8, ptr %i.mn, i64 -17
-  %i.my = getelementptr inbounds i8, ptr %i.mn, i64 -15 ; 3 uses
+  %i.my = getelementptr inbounds i8, ptr %i.mn, i64 -15 ; 2 uses
   %i.mz = getelementptr inbounds i8, ptr %i.mn, i64 -32
   %i.na = getelementptr inbounds i8, ptr %i.mp, i64 -64 ; 2 uses
   %i.nb = getelementptr inbounds i8, ptr %i.mn, i64 -4 ; 2 uses
@@ -8657,21 +8593,17 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %.backedge.i75
   %.not22.i.i94 = icmp ult ptr %i.nc, %i.my
-  br i1 %.not22.i.i94, label %13, label %LZ4_wildCopy32.exit.thread.i55, !prof !28
+  br i1 %.not22.i.i94, label %bb.bf, label %LZ4_wildCopy32.exit.thread.i55, !prof !28
 
-13:                                               ; preds = %bb.be
-  %14 = getelementptr inbounds nuw i8, ptr %.0.i31, i64 2 ; 4 uses
-  %15 = icmp ugt ptr %14, %i.my
-  br i1 %15, label %LZ4_wildCopy32.exit.thread.i55, label %bb.bf, !prof !19
-
-bb.bf:                                            ; preds = %13
+bb.bf:                                            ; preds = %bb.be
+  %9 = getelementptr inbounds nuw i8, ptr %.0.i31, i64 2 ; 2 uses
   %i.ni = load i8, ptr %i.nc, align 1, !tbaa !7   ; 2 uses
   %i.nj = zext i8 %i.ni to i64
   %.not23.i.i95 = icmp eq i8 %i.ni, -1
   br i1 %.not23.i.i95, label %.preheader137.i, label %read_variable_length.exit.thread67.i, !prof !19
 
 .preheader137.i:                                  ; preds = %bb.bf, %bb.bg
-  %.11.i99 = phi ptr [ %i.nk, %bb.bg ], [ %14, %bb.bf ] ; 2 uses
+  %.11.i99 = phi ptr [ %i.nk, %bb.bg ], [ %9, %bb.bf ] ; 2 uses
   %.0.i16.i = phi i64 [ %i.no, %bb.bg ], [ 255, %bb.bf ]
   %i.nk = getelementptr inbounds nuw i8, ptr %.11.i99, i64 1 ; 5 uses
   %i.nl = icmp ugt ptr %i.nk, %i.my
@@ -8690,7 +8622,7 @@ read_variable_length.exit.i100:                   ; preds = %bb.bg
 
 read_variable_length.exit.thread67.i:             ; preds = %read_variable_length.exit.i100, %bb.bf
   %.019.i71.i = phi i64 [ %i.no, %read_variable_length.exit.i100 ], [ %i.nj, %bb.bf ]
-  %.1270.i = phi ptr [ %i.nk, %read_variable_length.exit.i100 ], [ %14, %bb.bf ] ; 5 uses
+  %.1270.i = phi ptr [ %i.nk, %read_variable_length.exit.i100 ], [ %9, %bb.bf ] ; 5 uses
   %i.nr = add i64 %.019.i71.i, 15                 ; 5 uses
   %i.ns = ptrtoint ptr %.0358.i.i to i64
   %i.nt = xor i64 %i.ns, -1
@@ -9080,23 +9012,19 @@ bb.cc:                                            ; preds = %bb.cb
   %.6.i.lcssa.i = phi ptr [ %.6.i.ph.i, %.preheader129.i ], [ %i.tg, %bb.cc ] ; 2 uses
   %.lcssa153.i = phi ptr [ %i.zk, %.preheader129.i ], [ %i.th, %bb.cc ] ; 3 uses
   %.lcssa150.i = phi i32 [ %i.zm, %.preheader129.i ], [ %i.tj, %bb.cc ]
-  %i.tl = getelementptr inbounds i8, ptr %i.mn, i64 -15 ; 3 uses
+  %i.tl = getelementptr inbounds i8, ptr %i.mn, i64 -15 ; 2 uses
   %.not22.i21.i = icmp ult ptr %.lcssa153.i, %i.tl
-  br i1 %.not22.i21.i, label %16, label %LZ4_wildCopy32.exit.thread.i55, !prof !28
+  br i1 %.not22.i21.i, label %bb.cd, label %LZ4_wildCopy32.exit.thread.i55, !prof !28
 
-16:                                               ; preds = %._crit_edge.i67
-  %17 = getelementptr inbounds nuw i8, ptr %.3.lcssa.i68, i64 2 ; 4 uses
-  %18 = icmp ugt ptr %17, %i.tl
-  br i1 %18, label %LZ4_wildCopy32.exit.thread.i55, label %bb.cd, !prof !19
-
-bb.cd:                                            ; preds = %16
+bb.cd:                                            ; preds = %._crit_edge.i67
+  %10 = getelementptr inbounds nuw i8, ptr %.3.lcssa.i68, i64 2 ; 2 uses
   %i.tm = load i8, ptr %.lcssa153.i, align 1, !tbaa !7 ; 2 uses
   %i.tn = zext i8 %i.tm to i64
   %.not23.i23.i = icmp eq i8 %i.tm, -1
   br i1 %.not23.i23.i, label %.preheader128.i, label %read_variable_length.exit25.thread99.i, !prof !19
 
 .preheader128.i:                                  ; preds = %bb.cd, %bb.ce
-  %.15.i69 = phi ptr [ %i.to, %bb.ce ], [ %17, %bb.cd ] ; 2 uses
+  %.15.i69 = phi ptr [ %i.to, %bb.ce ], [ %10, %bb.cd ] ; 2 uses
   %.0.i24.i = phi i64 [ %i.ts, %bb.ce ], [ 255, %bb.cd ]
   %i.to = getelementptr inbounds nuw i8, ptr %.15.i69, i64 1 ; 5 uses
   %i.tp = icmp ugt ptr %i.to, %i.tl
@@ -9115,7 +9043,7 @@ read_variable_length.exit25.i:                    ; preds = %bb.ce
 
 read_variable_length.exit25.thread99.i:           ; preds = %read_variable_length.exit25.i, %bb.cd
   %.019.i22103.i = phi i64 [ %i.ts, %read_variable_length.exit25.i ], [ %i.tn, %bb.cd ]
-  %.16102.i = phi ptr [ %i.to, %read_variable_length.exit25.i ], [ %17, %bb.cd ] ; 3 uses
+  %.16102.i = phi ptr [ %i.to, %read_variable_length.exit25.i ], [ %10, %bb.cd ] ; 3 uses
   %i.tv = add i64 %.019.i22103.i, 15              ; 3 uses
   %i.tw = ptrtoint ptr %.6.i.lcssa.i to i64
   %i.tx = xor i64 %i.tw, -1
@@ -9518,8 +9446,8 @@ bb.cu:                                            ; preds = %.loopexit.i71, %bb.
   %i.zq = trunc i64 %i.zp to i32
   br label %LZ4_decompress_safe_partial_withPrefix64k.exit
 
-LZ4_wildCopy32.exit.thread.i55:                   ; preds = %.thread92.i, %read_variable_length.exit20.thread84.i, %read_variable_length.exit20.i, %bb.bk, %read_variable_length.exit.thread67.i, %read_variable_length.exit.i100, %13, %bb.be, %.preheader137.i, %.preheader134.i, %.preheader128.i, %.preheader126.i, %.loopexit142.i, %read_variable_length.exit29.i, %bb.ci, %read_variable_length.exit25.thread99.i, %read_variable_length.exit25.i, %16, %._crit_edge.i67
-  %.8.i56 = phi ptr [ %.2.i36, %.loopexit142.i ], [ %i.ot, %.preheader134.i ], [ %.18.i53, %read_variable_length.exit29.i ], [ %i.to, %read_variable_length.exit25.i ], [ %i.vx, %bb.ci ], [ %i.to, %.preheader128.i ], [ %.lcssa153.i, %._crit_edge.i67 ], [ %17, %16 ], [ %.16102.i, %read_variable_length.exit25.thread99.i ], [ %i.nk, %.preheader137.i ], [ %i.wb, %.preheader126.i ], [ %i.op, %bb.bk ], [ %.9.i73, %.thread92.i ], [ %i.nk, %read_variable_length.exit.i100 ], [ %.1270.i, %read_variable_length.exit.thread67.i ], [ %i.nc, %bb.be ], [ %.1487.i, %read_variable_length.exit20.thread84.i ], [ %i.ot, %read_variable_length.exit20.i ], [ %14, %13 ]
+LZ4_wildCopy32.exit.thread.i55:                   ; preds = %.thread92.i, %read_variable_length.exit20.thread84.i, %read_variable_length.exit20.i, %bb.bk, %read_variable_length.exit.thread67.i, %read_variable_length.exit.i100, %bb.be, %.preheader137.i, %.preheader134.i, %.preheader128.i, %.preheader126.i, %.loopexit142.i, %read_variable_length.exit29.i, %bb.ci, %read_variable_length.exit25.thread99.i, %read_variable_length.exit25.i, %._crit_edge.i67
+  %.8.i56 = phi ptr [ %.2.i36, %.loopexit142.i ], [ %i.ot, %.preheader134.i ], [ %.18.i53, %read_variable_length.exit29.i ], [ %i.to, %read_variable_length.exit25.i ], [ %i.wb, %.preheader126.i ], [ %.16102.i, %read_variable_length.exit25.thread99.i ], [ %.lcssa153.i, %._crit_edge.i67 ], [ %i.to, %.preheader128.i ], [ %i.nk, %.preheader137.i ], [ %i.vx, %bb.ci ], [ %.9.i73, %.thread92.i ], [ %i.nk, %read_variable_length.exit.i100 ], [ %.1270.i, %read_variable_length.exit.thread67.i ], [ %i.nc, %bb.be ], [ %.1487.i, %read_variable_length.exit20.thread84.i ], [ %i.ot, %read_variable_length.exit20.i ], [ %i.op, %bb.bk ]
   %i.zr = ptrtoint ptr %.8.i56 to i64
   %i.zs = ptrtoint ptr %0 to i64
   %.neg.i.i57 = sub i64 %i.zs, %i.zr

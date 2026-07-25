@@ -204,29 +204,29 @@ ps_dimension_end_mask.exit:                       ; preds = %bb.a, %bb.b
   br label %bb.c
 
 bb.c:                                             ; preds = %ps_mask_table_merge.exit.thread.i, %.lr.ph43.i
-  %i.l = phi i32 [ %i.j, %.lr.ph43.i ], [ %17, %ps_mask_table_merge.exit.thread.i ] ; 4 uses
-  %.01742.i = phi i32 [ %.01740.i, %.lr.ph43.i ], [ %.017.i, %ps_mask_table_merge.exit.thread.i ] ; 7 uses
+  %i.l = phi i32 [ %i.j, %.lr.ph43.i ], [ %7, %ps_mask_table_merge.exit.thread.i ] ; 2 uses
+  %.01742.i = phi i32 [ %.01740.i, %.lr.ph43.i ], [ %.017.i, %ps_mask_table_merge.exit.thread.i ] ; 6 uses
   %.017.in41.i = phi i32 [ %i.j, %.lr.ph43.i ], [ %.01742.i, %ps_mask_table_merge.exit.thread.i ]
   %i.m = add i32 %.017.in41.i, -2                 ; 2 uses
   %i.n = icmp ult i32 %i.m, %.01742.i
   br i1 %i.n, label %.lr.ph.i, label %ps_mask_table_merge.exit.thread.i
 
 .lr.ph.i:                                         ; preds = %bb.c
-  %.val.i = load ptr, ptr %i.k, align 8, !tbaa !101 ; 4 uses
+  %.val.i = load ptr, ptr %i.k, align 8, !tbaa !101 ; 2 uses
   %i.o = zext i32 %.01742.i to i64
-  %i.p = getelementptr inbounds nuw [24 x i8], ptr %.val.i, i64 %i.o ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
+  %i.p = getelementptr inbounds nuw [24 x i8], ptr %.val.i, i64 %i.o ; 8 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !108  ; 3 uses
-  %i.s = load i32, ptr %i.p, align 8, !tbaa !107
+  %i.s = load i32, ptr %i.p, align 8, !tbaa !107  ; 6 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %ps_mask_table_test_intersect.exit.thread.i, %.lr.ph.i
-  %.01639.i = phi i32 [ %i.m, %.lr.ph.i ], [ %i.dk, %ps_mask_table_test_intersect.exit.thread.i ] ; 4 uses
+  %.01639.i = phi i32 [ %i.m, %.lr.ph.i ], [ %i.dk, %ps_mask_table_test_intersect.exit.thread.i ] ; 2 uses
   %i.t = zext i32 %.01639.i to i64
-  %i.u = getelementptr inbounds nuw [24 x i8], ptr %.val.i, i64 %i.t ; 2 uses
+  %i.u = getelementptr inbounds nuw [24 x i8], ptr %.val.i, i64 %i.t ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  %i.w = load ptr, ptr %i.v, align 8, !tbaa !108  ; 3 uses
-  %i.x = load i32, ptr %i.u, align 8, !tbaa !107
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !108  ; 6 uses
+  %i.x = load i32, ptr %i.u, align 8, !tbaa !107  ; 2 uses
   %i.y = call i32 @llvm.umin.i32(i32 %i.s, i32 %i.x) ; 4 uses
   %i.z = icmp ugt i32 %i.y, 7
   br i1 %i.z, label %.lr.ph.preheader.i.i, label %._crit_edge.i.i
@@ -248,7 +248,7 @@ bb.d:                                             ; preds = %ps_mask_table_test_
   %i.ae = load i8, ptr %.0244.i.i, align 1, !tbaa !51
   %i.af = and i8 %i.ae, %i.ad
   %.not.i.i = icmp eq i8 %i.af, 0
-  br i1 %.not.i.i, label %bb.e, label %ps_mask_table_test_intersect.exit.thread27.i
+  br i1 %.not.i.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph.i.i
   %i.ag = getelementptr inbounds nuw i8, ptr %.0235.i.i, i64 1
@@ -271,40 +271,27 @@ ps_mask_table_test_intersect.exit.i:              ; preds = %._crit_edge.i.i
   %i.ao = zext i8 %i.an to i32
   %i.ap = lshr i32 255, %.0.lcssa.i.i
   %.not.not.i = icmp samesign ult i32 %i.ap, %i.ao
-  br i1 %.not.not.i, label %ps_mask_table_test_intersect.exit.thread27.i, label %ps_mask_table_test_intersect.exit.thread.i
+  br i1 %.not.not.i, label %bb.f, label %ps_mask_table_test_intersect.exit.thread.i
 
-ps_mask_table_test_intersect.exit.thread27.i:     ; preds = %ps_mask_table_test_intersect.exit.i, %.lr.ph.i.i
-  %spec.select.i.i = call i32 @llvm.umax.i32(i32 %.01639.i, i32 %.01742.i) ; 4 uses
-  %spec.select68.i.i = call i32 @llvm.umin.i32(i32 %.01639.i, i32 %.01742.i) ; 2 uses
-  %4 = icmp ult i32 %spec.select68.i.i, %spec.select.i.i
-  %5 = icmp ult i32 %spec.select.i.i, %i.l
-  %or.cond.i = and i1 %4, %5
-  br i1 %or.cond.i, label %bb.f, label %ps_mask_table_merge.exit.thread.i
-
-bb.f:                                             ; preds = %ps_mask_table_test_intersect.exit.thread27.i
-  %6 = zext i32 %spec.select68.i.i to i64
-  %7 = getelementptr inbounds nuw [24 x i8], ptr %.val.i, i64 %6 ; 5 uses
-  %8 = zext i32 %spec.select.i.i to i64
-  %9 = getelementptr inbounds nuw [24 x i8], ptr %.val.i, i64 %8 ; 8 uses
-  %10 = load i32, ptr %9, align 8, !tbaa !107     ; 5 uses
-  %.not.i21.i = icmp eq i32 %10, 0
+bb.f:                                             ; preds = %ps_mask_table_test_intersect.exit.i, %.lr.ph.i.i
+  %4 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
+  %.not.i21.i = icmp eq i32 %i.s, 0
   br i1 %.not.i21.i, label %.thread.i.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %11 = load i32, ptr %7, align 8, !tbaa !107
-  %i.aq = icmp ugt i32 %10, %11
+  %i.aq = icmp ugt i32 %i.s, %i.x
   br i1 %i.aq, label %bb.h, label %._crit_edge.i22.i
 
 ._crit_edge.i22.i:                                ; preds = %bb.g
-  %.pre76.i.i = add i32 %10, 7
+  %.pre76.i.i = add i32 %i.s, 7
   %.pre77.i.i = lshr i32 %.pre76.i.i, 3
   br label %bb.l
 
 bb.h:                                             ; preds = %bb.g
-  %i.ar = getelementptr inbounds nuw i8, ptr %7, i64 4 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.u, i64 4 ; 2 uses
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !274
   %i.at = lshr i32 %i.as, 3                       ; 2 uses
-  %i.au = add i32 %10, 7
+  %i.au = add i32 %i.s, 7
   %i.av = lshr i32 %i.au, 3                       ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store i32 0, ptr %i.a, align 4, !tbaa !3
@@ -316,10 +303,8 @@ bb.i:                                             ; preds = %bb.h
   %i.ay = and i32 %i.ax, 1073741816               ; 2 uses
   %i.az = zext nneg i32 %i.at to i64
   %i.ba = zext nneg i32 %i.ay to i64
-  %12 = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
-  %13 = load ptr, ptr %12, align 8, !tbaa !108
-  %i.bb = call ptr @ft_mem_realloc(ptr noundef %2, i64 noundef 1, i64 noundef %i.az, i64 noundef %i.ba, ptr noundef %13, ptr noundef nonnull %i.a) #12
-  store ptr %i.bb, ptr %12, align 8, !tbaa !108
+  %i.bb = call ptr @ft_mem_realloc(ptr noundef %2, i64 noundef 1, i64 noundef %i.az, i64 noundef %i.ba, ptr noundef %i.w, ptr noundef nonnull %i.a) #12 ; 2 uses
+  store ptr %i.bb, ptr %4, align 8, !tbaa !108
   %i.bc = load i32, ptr %i.a, align 4, !tbaa !3   ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.bc, 0
   br i1 %.not.i.i.i, label %bb.j, label %ps_mask_table_merge.exit.i
@@ -330,32 +315,31 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.h
+  %5 = phi ptr [ %i.bb, %bb.j ], [ %i.w, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
-  store i32 %10, ptr %7, align 8, !tbaa !107
+  store i32 %i.s, ptr %i.u, align 8, !tbaa !107
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %._crit_edge.i22.i
+  %6 = phi ptr [ %i.w, %._crit_edge.i22.i ], [ %5, %bb.k ] ; 8 uses
   %.pre-phi78.i.i = phi i32 [ %.pre77.i.i, %._crit_edge.i22.i ], [ %i.av, %bb.k ] ; 9 uses
   %.not6672.i.i = icmp eq i32 %.pre-phi78.i.i, 0
   br i1 %.not6672.i.i, label %.thread.i.i, label %iter.check
 
 iter.check:                                       ; preds = %bb.l
-  %14 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %15 = load ptr, ptr %14, align 8, !tbaa !108    ; 8 uses
-  %16 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %i.be = load ptr, ptr %16, align 8, !tbaa !108  ; 8 uses
+  %i.be = load ptr, ptr %i.q, align 8, !tbaa !108 ; 8 uses
   %i.bf = zext nneg i32 %.pre-phi78.i.i to i64    ; 5 uses
   %min.iters.check = icmp samesign ult i32 %.pre-phi78.i.i, 4
   br i1 %min.iters.check, label %.lr.ph.i24.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %scevgep = getelementptr i8, ptr %15, i64 1
+  %scevgep = getelementptr i8, ptr %6, i64 1
   %i.bg = add nsw i32 %.pre-phi78.i.i, -1
   %i.bh = zext i32 %i.bg to i64                   ; 2 uses
   %scevgep36 = getelementptr i8, ptr %scevgep, i64 %i.bh
   %scevgep37 = getelementptr i8, ptr %i.be, i64 1
   %scevgep38 = getelementptr i8, ptr %scevgep37, i64 %i.bh
-  %bound0 = icmp ult ptr %15, %scevgep38
+  %bound0 = icmp ult ptr %6, %scevgep38
   %bound1 = icmp ult ptr %i.be, %scevgep36
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i24.i.preheader, label %vector.main.loop.iter.check
@@ -367,7 +351,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %n.mod.vf = and i64 %i.bf, 28
   %n.vec = and i64 %i.bf, 536870880               ; 6 uses
-  %i.bi = getelementptr i8, ptr %15, i64 %n.vec
+  %i.bi = getelementptr i8, ptr %6, i64 %n.vec
   %i.bj = getelementptr i8, ptr %i.be, i64 %n.vec
   %i.bk = trunc nuw nsw i64 %n.vec to i32
   %i.bl = sub nsw i32 %.pre-phi78.i.i, %i.bk
@@ -375,7 +359,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %next.gep = getelementptr i8, ptr %15, i64 %index ; 3 uses
+  %next.gep = getelementptr i8, ptr %6, i64 %index ; 3 uses
   %next.gep40 = getelementptr i8, ptr %i.be, i64 %index ; 2 uses
   %i.bm = getelementptr i8, ptr %next.gep, i64 16 ; 2 uses
   %wide.load = load <16 x i8>, ptr %next.gep, align 1, !tbaa !51, !alias.scope !277, !noalias !280
@@ -402,7 +386,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec47 = and i64 %i.bf, 536870908             ; 5 uses
-  %i.br = getelementptr i8, ptr %15, i64 %n.vec47
+  %i.br = getelementptr i8, ptr %6, i64 %n.vec47
   %i.bs = getelementptr i8, ptr %i.be, i64 %n.vec47
   %i.bt = trunc nuw nsw i64 %n.vec47 to i32
   %i.bu = sub nsw i32 %.pre-phi78.i.i, %i.bt
@@ -410,7 +394,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index48 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next53, %vec.epilog.vector.body ] ; 3 uses
-  %next.gep49 = getelementptr i8, ptr %15, i64 %index48 ; 2 uses
+  %next.gep49 = getelementptr i8, ptr %6, i64 %index48 ; 2 uses
   %next.gep50 = getelementptr i8, ptr %i.be, i64 %index48
   %wide.load51 = load <4 x i8>, ptr %next.gep49, align 1, !tbaa !51, !alias.scope !277, !noalias !280
   %wide.load52 = load <4 x i8>, ptr %next.gep50, align 1, !tbaa !51, !alias.scope !280
@@ -425,7 +409,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n54, label %.thread.i.i, label %.lr.ph.i24.i.preheader
 
 .lr.ph.i24.i.preheader:                           ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.04975.i.i.ph = phi ptr [ %15, %iter.check ], [ %15, %vector.memcheck ], [ %i.bi, %vec.epilog.iter.check ], [ %i.br, %vec.epilog.middle.block ] ; 2 uses
+  %.04975.i.i.ph = phi ptr [ %6, %iter.check ], [ %6, %vector.memcheck ], [ %i.bi, %vec.epilog.iter.check ], [ %i.br, %vec.epilog.middle.block ] ; 2 uses
   %.05074.i.i.ph = phi ptr [ %i.be, %iter.check ], [ %i.be, %vector.memcheck ], [ %i.bj, %vec.epilog.iter.check ], [ %i.bs, %vec.epilog.middle.block ] ; 2 uses
   %.05173.i.i.ph = phi i32 [ %.pre-phi78.i.i, %iter.check ], [ %.pre-phi78.i.i, %vector.memcheck ], [ %i.bl, %vec.epilog.iter.check ], [ %i.bu, %vec.epilog.middle.block ] ; 4 uses
   %i.bx = add nsw i32 %.05173.i.i.ph, -1
@@ -489,23 +473,23 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %.not66.i.i.3, label %.thread.i.i, label %.lr.ph.i24.i, !llvm.loop !286
 
 .thread.i.i:                                      ; preds = %.lr.ph.i24.i.prol.loopexit, %.lr.ph.i24.i, %middle.block, %vec.epilog.middle.block, %bb.l, %bb.f
-  store i32 0, ptr %9, align 8, !tbaa !107
-  %i.da = getelementptr inbounds nuw i8, ptr %9, i64 16
+  store i32 0, ptr %i.p, align 8, !tbaa !107
+  %i.da = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   store i32 0, ptr %i.da, align 8, !tbaa !105
   %i.db = load i32, ptr %i.i, align 8, !tbaa !104 ; 2 uses
-  %i.dc = xor i32 %spec.select.i.i, -1
+  %i.dc = xor i32 %.01742.i, -1
   %i.dd = add i32 %i.db, %i.dc                    ; 2 uses
   %.not67.i.i = icmp eq i32 %i.dd, 0
   br i1 %.not67.i.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %.thread.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %9, i64 24, i1 false), !tbaa.struct !287
-  %i.de = getelementptr inbounds nuw i8, ptr %9, i64 24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.p, i64 24, i1 false), !tbaa.struct !287
+  %i.de = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %i.df = zext i32 %i.dd to i64                   ; 2 uses
   %i.dg = mul nuw nsw i64 %i.df, 24
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %9, ptr nonnull align 8 %i.de, i64 %i.dg, i1 false)
-  %i.dh = getelementptr inbounds nuw [24 x i8], ptr %9, i64 %i.df
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.p, ptr nonnull align 8 %i.de, i64 %i.dg, i1 false)
+  %i.dh = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %i.df
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dh, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !287
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %.pre.i.i = load i32, ptr %i.i, align 8, !tbaa !104
@@ -526,10 +510,10 @@ ps_mask_table_test_intersect.exit.thread.i:       ; preds = %ps_mask_table_test_
   %i.dl = icmp ult i32 %i.dk, %.01742.i
   br i1 %i.dl, label %bb.d, label %ps_mask_table_merge.exit.thread.i, !llvm.loop !289
 
-ps_mask_table_merge.exit.thread.i:                ; preds = %ps_mask_table_test_intersect.exit.thread.i, %bb.n, %ps_mask_table_test_intersect.exit.thread27.i, %bb.c
-  %17 = phi i32 [ %i.l, %ps_mask_table_test_intersect.exit.thread27.i ], [ %i.l, %bb.c ], [ %i.dj, %bb.n ], [ %i.l, %ps_mask_table_test_intersect.exit.thread.i ] ; 2 uses
+ps_mask_table_merge.exit.thread.i:                ; preds = %ps_mask_table_test_intersect.exit.thread.i, %bb.n, %bb.c
+  %7 = phi i32 [ %i.dj, %bb.n ], [ %i.l, %bb.c ], [ %i.l, %ps_mask_table_test_intersect.exit.thread.i ] ; 2 uses
   %.017.i = add i32 %.01742.i, -1                 ; 2 uses
-  %i.dm = icmp ult i32 %.017.i, %17
+  %i.dm = icmp ult i32 %.017.i, %7
   br i1 %i.dm, label %bb.c, label %ps_mask_table_merge_all.exit, !llvm.loop !290
 
 ps_mask_table_merge_all.exit:                     ; preds = %ps_mask_table_merge.exit.thread.i, %ps_dimension_end_mask.exit, %ps_mask_table_merge.exit.i
@@ -931,9 +915,6 @@ declare i64 @llvm.smin.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.experimental.cttz.elts.i64.v16i1(<16 x i1>, i1 immarg) #11
