@@ -44,16 +44,16 @@ bb.a:
   %.02227 = phi i32 [ 0, %.lr.ph.preheader ], [ %i.j, %.lr.ph ]
   %i.f = shl nuw nsw i64 %indvars.iv, 2
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %i.f
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !3
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !8
   %i.i = tail call noundef i32 @_ZN8facebook5velox9functions17Murmur3Hash32Base5mixK1Ej(i32 noundef %i.h)
   %i.j = tail call noundef i32 @_ZN8facebook5velox9functions17Murmur3Hash32Base5mixH1Ejj(i32 noundef %.02227, i32 noundef %i.i) ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !7
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !9
 
 bb.b:                                             ; preds = %._crit_edge
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 2
-  %i.l = load i8, ptr %i.k, align 1, !tbaa !9
+  %i.l = load i8, ptr %i.k, align 1, !tbaa !11
   %i.m = zext i8 %i.l to i32
   %i.n = shl nuw nsw i32 %i.m, 16
   br label %bb.c
@@ -61,7 +61,7 @@ bb.b:                                             ; preds = %._crit_edge
 bb.c:                                             ; preds = %._crit_edge, %bb.b
   %.0 = phi i32 [ %i.n, %bb.b ], [ 0, %._crit_edge ]
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 1
-  %i.p = load i8, ptr %i.o, align 1, !tbaa !9
+  %i.p = load i8, ptr %i.o, align 1, !tbaa !11
   %i.q = zext i8 %i.p to i32
   %i.r = shl nuw nsw i32 %i.q, 8
   %i.s = or disjoint i32 %i.r, %.0
@@ -69,7 +69,7 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
 
 bb.d:                                             ; preds = %._crit_edge, %bb.c
   %.1 = phi i32 [ %i.s, %bb.c ], [ 0, %._crit_edge ]
-  %i.t = load i8, ptr %i.d, align 1, !tbaa !9
+  %i.t = load i8, ptr %i.d, align 1, !tbaa !11
   %i.u = zext i8 %i.t to i32
   %i.v = xor i32 %.1, %i.u
   %i.w = tail call noundef i32 @_ZN8facebook5velox9functions17Murmur3Hash32Base5mixK1Ej(i32 noundef %i.v)
@@ -106,12 +106,14 @@ attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = distinct !{!7, !8}
-!8 = !{!"llvm.loop.mustprogress"}
-!9 = !{!5, !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!5, !5, i64 0}
+!9 = distinct !{!9, !10}
+!10 = !{!"llvm.loop.mustprogress"}
+!11 = !{!6, !6, i64 0}
 end_hunk_0

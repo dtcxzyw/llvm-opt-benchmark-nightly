@@ -19,7 +19,7 @@ bb.a:
   br i1 %or.cond44, label %bb.b, label %bb.j
 
 bb.b:                                             ; preds = %bb.a
-  store i8 0, ptr %3, align 1, !tbaa !7
+  store i8 0, ptr %3, align 1, !tbaa !8
   %i.c = call fastcc ptr @uriParseDecOctetA(ptr noundef %3, ptr noundef %1, ptr noundef nonnull %2) ; 4 uses
   %i.d = icmp ne ptr %i.c, null
   %.not37 = icmp ult ptr %i.c, %2
@@ -27,7 +27,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond45, label %bb.c, label %bb.j
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = load i8, ptr %i.c, align 1, !tbaa !9
+  %i.e = load i8, ptr %i.c, align 1, !tbaa !10
   %.not38 = icmp eq i8 %i.e, 46
   br i1 %.not38, label %bb.d, label %bb.j
 
@@ -41,7 +41,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond46, label %bb.e, label %bb.j
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = load i8, ptr %i.g, align 1, !tbaa !9
+  %i.i = load i8, ptr %i.g, align 1, !tbaa !10
   %.not40 = icmp eq i8 %i.i, 46
   br i1 %.not40, label %bb.f, label %bb.j
 
@@ -56,7 +56,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %or.cond47, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
-  %i.n = load i8, ptr %i.l, align 1, !tbaa !9
+  %i.n = load i8, ptr %i.l, align 1, !tbaa !10
   %.not42 = icmp eq i8 %i.n, 46
   br i1 %.not42, label %bb.h, label %bb.j
 
@@ -89,7 +89,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %uriParseDecOctetOneA.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = load i8, ptr %1, align 1, !tbaa !9       ; 2 uses
+  %i.a = load i8, ptr %1, align 1, !tbaa !10      ; 2 uses
   switch i8 %i.a, label %uriParseDecOctetOneA.exit [
     i8 48, label %bb.c
     i8 49, label %bb.d
@@ -115,7 +115,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not.i, label %bb.e, label %uriParseDecOctetOneA.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.d = load i8, ptr %i.c, align 1, !tbaa !9
+  %i.d = load i8, ptr %i.c, align 1, !tbaa !10
   %.off.i = add i8 %i.d, -48                      ; 2 uses
   %switch.i = icmp ult i8 %.off.i, 10
   br i1 %switch.i, label %bb.f, label %uriParseDecOctetOneA.exit
@@ -127,7 +127,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i.i, label %bb.g, label %uriParseDecOctetOneA.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !9
+  %i.f = load i8, ptr %i.e, align 1, !tbaa !10
   %.off.i.i = add i8 %i.f, -48                    ; 2 uses
   %switch.i.i = icmp ult i8 %.off.i.i, 10
   br i1 %switch.i.i, label %bb.h, label %uriParseDecOctetOneA.exit
@@ -144,7 +144,7 @@ bb.i:                                             ; preds = %bb.b
   br i1 %.not.i21, label %bb.j, label %uriParseDecOctetOneA.exit
 
 bb.j:                                             ; preds = %bb.i
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !9     ; 3 uses
+  %i.i = load i8, ptr %i.h, align 1, !tbaa !10    ; 3 uses
   switch i8 %i.i, label %uriParseDecOctetOneA.exit [
     i8 48, label %bb.k
     i8 49, label %bb.k
@@ -166,7 +166,7 @@ bb.k:                                             ; preds = %bb.j, %bb.j, %bb.j,
   br i1 %.not.i.i23, label %bb.l, label %uriParseDecOctetOneA.exit
 
 bb.l:                                             ; preds = %bb.k
-  %i.l = load i8, ptr %i.k, align 1, !tbaa !9
+  %i.l = load i8, ptr %i.k, align 1, !tbaa !10
   %.off.i.i24 = add i8 %i.l, -48                  ; 2 uses
   %switch.i.i25 = icmp ult i8 %.off.i.i24, 10
   br i1 %switch.i.i25, label %uriParseDecOctetThreeA.exit.sink.split.i, label %uriParseDecOctetOneA.exit
@@ -178,7 +178,7 @@ bb.m:                                             ; preds = %bb.j
   br i1 %.not.i20.i, label %bb.n, label %uriParseDecOctetOneA.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !9
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !10
   %.off.i22.i = add i8 %i.n, -48                  ; 2 uses
   %switch.i23.i = icmp ult i8 %.off.i22.i, 6
   br i1 %switch.i23.i, label %uriParseDecOctetThreeA.exit.sink.split.i, label %uriParseDecOctetOneA.exit
@@ -202,7 +202,7 @@ bb.p:                                             ; preds = %bb.b, %bb.b, %bb.b,
   br i1 %.not.i26, label %bb.q, label %uriParseDecOctetOneA.exit
 
 bb.q:                                             ; preds = %bb.p
-  %i.s = load i8, ptr %i.r, align 1, !tbaa !9
+  %i.s = load i8, ptr %i.r, align 1, !tbaa !10
   %.off.i28 = add i8 %i.s, -48                    ; 2 uses
   %switch.i29 = icmp ult i8 %.off.i28, 10
   br i1 %switch.i29, label %bb.r, label %uriParseDecOctetOneA.exit
@@ -235,7 +235,7 @@ bb.a:
   br i1 %or.cond44, label %bb.b, label %bb.j
 
 bb.b:                                             ; preds = %bb.a
-  store i8 0, ptr %3, align 1, !tbaa !7
+  store i8 0, ptr %3, align 1, !tbaa !8
   %i.c = call fastcc ptr @uriParseDecOctetW(ptr noundef %3, ptr noundef %1, ptr noundef nonnull %2) ; 4 uses
   %i.d = icmp ne ptr %i.c, null
   %.not37 = icmp ult ptr %i.c, %2
@@ -243,7 +243,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond45, label %bb.c, label %bb.j
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = load i32, ptr %i.c, align 4, !tbaa !3
+  %i.e = load i32, ptr %i.c, align 4, !tbaa !11
   %.not38 = icmp eq i32 %i.e, 46
   br i1 %.not38, label %bb.d, label %bb.j
 
@@ -257,7 +257,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond46, label %bb.e, label %bb.j
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = load i32, ptr %i.g, align 4, !tbaa !3
+  %i.i = load i32, ptr %i.g, align 4, !tbaa !11
   %.not40 = icmp eq i32 %i.i, 46
   br i1 %.not40, label %bb.f, label %bb.j
 
@@ -272,7 +272,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %or.cond47, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
-  %i.n = load i32, ptr %i.l, align 4, !tbaa !3
+  %i.n = load i32, ptr %i.l, align 4, !tbaa !11
   %.not42 = icmp eq i32 %i.n, 46
   br i1 %.not42, label %bb.h, label %bb.j
 
@@ -302,7 +302,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %uriParseDecOctetOneW.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = load i32, ptr %1, align 4, !tbaa !3      ; 2 uses
+  %i.a = load i32, ptr %1, align 4, !tbaa !11     ; 2 uses
   switch i32 %i.a, label %uriParseDecOctetOneW.exit [
     i32 48, label %bb.c
     i32 49, label %bb.d
@@ -328,7 +328,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not.i, label %bb.e, label %uriParseDecOctetOneW.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !3    ; 2 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !11   ; 2 uses
   %.off.i = add i32 %i.d, -48
   %switch.i = icmp ult i32 %.off.i, 10
   br i1 %switch.i, label %bb.f, label %uriParseDecOctetOneW.exit
@@ -342,7 +342,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i.i, label %bb.g, label %uriParseDecOctetOneW.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !3    ; 2 uses
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !11   ; 2 uses
   %.off.i.i = add i32 %i.h, -48
   %switch.i.i = icmp ult i32 %.off.i.i, 10
   br i1 %switch.i.i, label %bb.h, label %uriParseDecOctetOneW.exit
@@ -361,7 +361,7 @@ bb.i:                                             ; preds = %bb.b
   br i1 %.not.i21, label %bb.j, label %uriParseDecOctetOneW.exit
 
 bb.j:                                             ; preds = %bb.i
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !3    ; 6 uses
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !11   ; 6 uses
   switch i32 %i.m, label %uriParseDecOctetOneW.exit [
     i32 48, label %bb.k
     i32 49, label %bb.k
@@ -384,7 +384,7 @@ bb.k:                                             ; preds = %bb.j, %bb.j, %bb.j,
   br i1 %.not.i.i23, label %bb.l, label %uriParseDecOctetOneW.exit
 
 bb.l:                                             ; preds = %bb.k
-  %i.q = load i32, ptr %i.p, align 4, !tbaa !3    ; 2 uses
+  %i.q = load i32, ptr %i.p, align 4, !tbaa !11   ; 2 uses
   %.off.i.i24 = add i32 %i.q, -48
   %switch.i.i25 = icmp ult i32 %.off.i.i24, 10
   br i1 %switch.i.i25, label %uriParseDecOctetThreeW.exit.sink.split.i, label %uriParseDecOctetOneW.exit
@@ -396,7 +396,7 @@ bb.m:                                             ; preds = %bb.j
   br i1 %.not.i20.i, label %bb.n, label %uriParseDecOctetOneW.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !3    ; 2 uses
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !11   ; 2 uses
   %.off.i22.i = add i32 %i.s, -48
   %switch.i23.i = icmp ult i32 %.off.i22.i, 6
   br i1 %switch.i23.i, label %uriParseDecOctetThreeW.exit.sink.split.i, label %uriParseDecOctetOneW.exit
@@ -419,7 +419,7 @@ bb.o:                                             ; preds = %bb.b, %bb.b, %bb.b,
   br i1 %.not.i26, label %bb.p, label %uriParseDecOctetOneW.exit
 
 bb.p:                                             ; preds = %bb.o
-  %i.z = load i32, ptr %i.y, align 4, !tbaa !3    ; 2 uses
+  %i.z = load i32, ptr %i.y, align 4, !tbaa !11   ; 2 uses
   %.off.i28 = add i32 %i.z, -48
   %switch.i29 = icmp ult i32 %.off.i28, 10
   br i1 %switch.i29, label %bb.q, label %uriParseDecOctetOneW.exit
@@ -450,12 +450,14 @@ attributes #4 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C/C++ TBAA"}
-!7 = !{!8, !5, i64 0}
-!8 = !{!"UriIp4ParserStruct", !5, i64 0, !5, i64 1, !5, i64 2, !5, i64 3}
-!9 = !{!5, !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C/C++ TBAA"}
+!8 = !{!9, !6, i64 0}
+!9 = !{!"UriIp4ParserStruct", !6, i64 0, !6, i64 1, !6, i64 2, !6, i64 3}
+!10 = !{!6, !6, i64 0}
+!11 = !{!5, !5, i64 0}
 end_hunk_0

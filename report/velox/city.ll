@@ -33,7 +33,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN4absl12lts_2024011613hash_internalL13Hash32Len0to4EPKcm.exit
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %i.g = load i8, ptr %0, align 1, !tbaa !7
+  %i.g = load i8, ptr %0, align 1, !tbaa !8
   %i.h = sext i8 %i.g to i32                      ; 3 uses
   %i.i = xor i32 %i.h, 9                          ; 2 uses
   %exitcond.not.i = icmp eq i64 %1, 1
@@ -41,7 +41,7 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.1:                                       ; preds = %.lr.ph.i
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.k = load i8, ptr %i.j, align 1, !tbaa !7
+  %i.k = load i8, ptr %i.j, align 1, !tbaa !8
   %i.l = mul i32 %i.h, -862048943
   %i.m = sext i8 %i.k to i32
   %i.n = add i32 %i.l, %i.m                       ; 3 uses
@@ -51,7 +51,7 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.2:                                       ; preds = %.lr.ph.i.1
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %i.q = load i8, ptr %i.p, align 1, !tbaa !7
+  %i.q = load i8, ptr %i.p, align 1, !tbaa !8
   %i.r = mul i32 %i.n, -862048943
   %i.s = sext i8 %i.q to i32
   %i.t = add i32 %i.r, %i.s                       ; 3 uses
@@ -61,7 +61,7 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.3:                                       ; preds = %.lr.ph.i.2
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %i.w = load i8, ptr %i.v, align 1, !tbaa !7
+  %i.w = load i8, ptr %i.v, align 1, !tbaa !8
   %i.x = mul i32 %i.t, -862048943
   %i.y = sext i8 %i.w to i32
   %i.z = add i32 %i.x, %i.y                       ; 2 uses
@@ -308,7 +308,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.hp = getelementptr inbounds nuw i8, ptr %.041, i64 20
   %i.hq = add nsw i64 %.042, -1                   ; 2 uses
   %.not = icmp eq i64 %i.hq, 0
-  br i1 %.not, label %bb.i, label %bb.h, !llvm.loop !8
+  br i1 %.not, label %bb.i, label %bb.h, !llvm.loop !9
 
 bb.i:                                             ; preds = %bb.h
   %i.hr = tail call i32 @llvm.fshl.i32(i32 %i.hn, i32 %i.hn, i32 21)
@@ -407,13 +407,13 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not.i, label %_ZN4absl12lts_2024011613hash_internalL12HashLen0to16EPKcm.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ap = load i8, ptr %0, align 1, !tbaa !7
+  %i.ap = load i8, ptr %0, align 1, !tbaa !8
   %i.aq = lshr i64 %1, 1
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 %i.aq
-  %i.as = load i8, ptr %i.ar, align 1, !tbaa !7
+  %i.as = load i8, ptr %i.ar, align 1, !tbaa !8
   %i.at = getelementptr i8, ptr %0, i64 %1
   %i.au = getelementptr i8, ptr %i.at, i64 -1
-  %i.av = load i8, ptr %i.au, align 1, !tbaa !7
+  %i.av = load i8, ptr %i.au, align 1, !tbaa !8
   %i.aw = zext i8 %i.ap to i64
   %i.ax = zext i8 %i.as to i64
   %i.ay = shl nuw nsw i64 %i.ax, 8
@@ -650,7 +650,7 @@ bb.m:                                             ; preds = %bb.m, %bb.l
   %i.hu = getelementptr inbounds nuw i8, ptr %.043, i64 64
   %i.hv = add i64 %.042, -64                      ; 2 uses
   %.not = icmp eq i64 %i.hv, 0
-  br i1 %.not, label %bb.n, label %bb.m, !llvm.loop !10
+  br i1 %.not, label %bb.n, label %bb.m, !llvm.loop !11
 
 bb.n:                                             ; preds = %bb.m
   %i.hw = xor i64 %i.hr, %i.hd
@@ -748,13 +748,14 @@ attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!5, !5, i64 0}
-!8 = distinct !{!8, !9}
-!9 = !{!"llvm.loop.mustprogress"}
-!10 = distinct !{!10, !9}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!6, !6, i64 0}
+!9 = distinct !{!9, !10}
+!10 = !{!"llvm.loop.mustprogress"}
+!11 = distinct !{!11, !10}
 end_hunk_0

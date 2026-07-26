@@ -30,7 +30,7 @@ bb.a:
   %i.i = add i64 %.012, -1024                     ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.0711, i64 1024 ; 2 uses
   %.not = icmp ult i64 %i.i, 1024
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !7
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !8
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.08.lcssa = phi i64 [ %0, %bb.a ], [ %i.h, %.lr.ph ] ; 2 uses
@@ -40,7 +40,7 @@ bb.a:
   br i1 %i.k, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge
-  %i.l = tail call noundef i32 @_ZN4absl12lts_2024011613hash_internal10CityHash32EPKcm(ptr noundef %.07.lcssa, i64 noundef %.0.lcssa), !inline_history !9
+  %i.l = tail call noundef i32 @_ZN4absl12lts_2024011613hash_internal10CityHash32EPKcm(ptr noundef %.07.lcssa, i64 noundef %.0.lcssa), !inline_history !10
   %i.m = zext i32 %i.l to i64
   br label %bb.g
 
@@ -66,13 +66,13 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i, label %_ZN4absl12lts_2024011613hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi4EE.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.w = load i8, ptr %.07.lcssa, align 1, !tbaa !10
+  %i.w = load i8, ptr %.07.lcssa, align 1, !tbaa !11
   %i.x = lshr i64 %.0.lcssa, 1                    ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.07.lcssa, i64 %i.x
-  %i.z = load i8, ptr %i.y, align 1, !tbaa !10
+  %i.z = load i8, ptr %i.y, align 1, !tbaa !11
   %i.aa = add nsw i64 %.0.lcssa, -1               ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.07.lcssa, i64 %i.aa
-  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !10
+  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !11
   %i.ad = zext i8 %i.w to i32
   %i.ae = zext i8 %i.z to i32
   %i.af = shl nuw nsw i64 %i.x, 3
@@ -124,7 +124,7 @@ bb.a:
   %i.h = add i64 %.012, -1024                     ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.0711, i64 1024 ; 2 uses
   %.not = icmp ult i64 %i.h, 1024
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !11
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !12
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.08.lcssa = phi i64 [ %0, %bb.a ], [ %i.g, %.lr.ph ]
@@ -142,7 +142,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = icmp ugt i64 %2, 1024
-  br i1 %i.b, label %bb.c, label %bb.d, !prof !12
+  br i1 %i.b, label %bb.c, label %bb.d, !prof !13
 
 bb.c:                                             ; preds = %bb.b
   %i.c = tail call noundef i64 @_ZN4absl12lts_2024011613hash_internal15MixingHashState28CombineLargeContiguousImpl64EmPKhm(i64 noundef %0, ptr noundef %1, i64 noundef %2)
@@ -195,13 +195,13 @@ bb.i:                                             ; preds = %bb.g
   br i1 %.not, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.aa = load i8, ptr %1, align 1, !tbaa !10
+  %i.aa = load i8, ptr %1, align 1, !tbaa !11
   %i.ab = lshr i64 %2, 1                          ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 %i.ab
-  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !10
+  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !11
   %i.ae = add nsw i64 %2, -1                      ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 %i.ae
-  %i.ag = load i8, ptr %i.af, align 1, !tbaa !10
+  %i.ag = load i8, ptr %i.af, align 1, !tbaa !11
   %i.ah = zext i8 %i.aa to i32
   %i.ai = zext i8 %i.ad to i32
   %i.aj = shl nuw nsw i64 %i.ab, 3
@@ -254,15 +254,16 @@ attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = distinct !{!7, !8}
-!8 = !{!"llvm.loop.mustprogress"}
-!9 = distinct !{null}
-!10 = !{!5, !5, i64 0}
-!11 = distinct !{!11, !8}
-!12 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = distinct !{!8, !9}
+!9 = !{!"llvm.loop.mustprogress"}
+!10 = distinct !{null}
+!11 = !{!6, !6, i64 0}
+!12 = distinct !{!12, !9}
+!13 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 end_hunk_0

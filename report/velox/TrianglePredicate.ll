@@ -6,25 +6,25 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_ZN4geos11triangulate8quadedge17TrianglePredicate19isInCircleNonRobustERKNS_4geom10CoordinateES6_S6_S6_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load double, ptr %0, align 8, !tbaa !7   ; 5 uses
+  %i.a = load double, ptr %0, align 8, !tbaa !8   ; 5 uses
   %i.b = fmul double %i.a, %i.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load double, ptr %i.c, align 8, !tbaa !10 ; 5 uses
+  %i.d = load double, ptr %i.c, align 8, !tbaa !11 ; 5 uses
   %i.e = fmul double %i.d, %i.d
   %i.f = fadd double %i.b, %i.e
-  %i.g = load double, ptr %2, align 8, !tbaa !7   ; 4 uses
-  %i.h = load double, ptr %1, align 8, !tbaa !7   ; 5 uses
+  %i.g = load double, ptr %2, align 8, !tbaa !8   ; 4 uses
+  %i.h = load double, ptr %1, align 8, !tbaa !8   ; 5 uses
   %i.i = fsub double %i.g, %i.h
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.k = load double, ptr %i.j, align 8, !tbaa !10 ; 4 uses
+  %i.k = load double, ptr %i.j, align 8, !tbaa !11 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.m = load double, ptr %i.l, align 8, !tbaa !10 ; 5 uses
+  %i.m = load double, ptr %i.l, align 8, !tbaa !11 ; 5 uses
   %i.n = fsub double %i.k, %i.m
   %i.o = fmul double %i.i, %i.n
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.q = load double, ptr %i.p, align 8, !tbaa !10 ; 4 uses
+  %i.q = load double, ptr %i.p, align 8, !tbaa !11 ; 4 uses
   %i.r = fsub double %i.q, %i.m
-  %i.s = load double, ptr %3, align 8, !tbaa !7   ; 4 uses
+  %i.s = load double, ptr %3, align 8, !tbaa !8   ; 4 uses
   %i.t = fsub double %i.s, %i.h
   %i.u = fmul double %i.r, %i.t
   %i.v = fsub double %i.o, %i.u
@@ -65,10 +65,10 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef double @_ZN4geos11triangulate8quadedge17TrianglePredicate7triAreaERKNS_4geom10CoordinateES6_S6_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load <2 x double>, ptr %0, align 8, !tbaa !11 ; 2 uses
-  %i.b = load <2 x double>, ptr %1, align 8, !tbaa !11
+  %i.a = load <2 x double>, ptr %0, align 8, !tbaa !12 ; 2 uses
+  %i.b = load <2 x double>, ptr %1, align 8, !tbaa !12
   %i.c = fsub <2 x double> %i.b, %i.a
-  %i.d = load <2 x double>, ptr %2, align 8, !tbaa !11
+  %i.d = load <2 x double>, ptr %2, align 8, !tbaa !12
   %i.e = fsub <2 x double> %i.d, %i.a
   %i.f = shufflevector <2 x double> %i.e, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.g = fmul <2 x double> %i.c, %i.f             ; 2 uses
@@ -81,30 +81,30 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_ZN4geos11triangulate8quadedge17TrianglePredicate20isInCircleNormalizedERKNS_4geom10CoordinateES6_S6_S6_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load double, ptr %0, align 8, !tbaa !7
+  %i.a = load double, ptr %0, align 8, !tbaa !8
   %i.b = fpext double %i.a to x86_fp80
-  %i.c = load double, ptr %3, align 8, !tbaa !7
+  %i.c = load double, ptr %3, align 8, !tbaa !8
   %i.d = fpext double %i.c to x86_fp80            ; 3 uses
   %i.e = fsub x86_fp80 %i.b, %i.d                 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.g = load double, ptr %i.f, align 8, !tbaa !10
+  %i.g = load double, ptr %i.f, align 8, !tbaa !11
   %i.h = fpext double %i.g to x86_fp80
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.j = load double, ptr %i.i, align 8, !tbaa !10
+  %i.j = load double, ptr %i.i, align 8, !tbaa !11
   %i.k = fpext double %i.j to x86_fp80            ; 3 uses
   %i.l = fsub x86_fp80 %i.h, %i.k                 ; 4 uses
-  %i.m = load double, ptr %1, align 8, !tbaa !7
+  %i.m = load double, ptr %1, align 8, !tbaa !8
   %i.n = fpext double %i.m to x86_fp80
   %i.o = fsub x86_fp80 %i.n, %i.d                 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.q = load double, ptr %i.p, align 8, !tbaa !10
+  %i.q = load double, ptr %i.p, align 8, !tbaa !11
   %i.r = fpext double %i.q to x86_fp80
   %i.s = fsub x86_fp80 %i.r, %i.k                 ; 4 uses
-  %i.t = load double, ptr %2, align 8, !tbaa !7
+  %i.t = load double, ptr %2, align 8, !tbaa !8
   %i.u = fpext double %i.t to x86_fp80
   %i.v = fsub x86_fp80 %i.u, %i.d                 ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.x = load double, ptr %i.w, align 8, !tbaa !10
+  %i.x = load double, ptr %i.w, align 8, !tbaa !11
   %i.y = fpext double %i.x to x86_fp80
   %i.z = fsub x86_fp80 %i.y, %i.k                 ; 4 uses
   %i.aa = fmul x86_fp80 %i.o, %i.z
@@ -139,30 +139,30 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_ZN4geos11triangulate8quadedge17TrianglePredicate16isInCircleRobustERKNS_4geom10CoordinateES6_S6_S6_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load double, ptr %0, align 8, !tbaa !7
+  %i.a = load double, ptr %0, align 8, !tbaa !8
   %i.b = fpext double %i.a to x86_fp80
-  %i.c = load double, ptr %3, align 8, !tbaa !7
+  %i.c = load double, ptr %3, align 8, !tbaa !8
   %i.d = fpext double %i.c to x86_fp80            ; 3 uses
   %i.e = fsub x86_fp80 %i.b, %i.d                 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.g = load double, ptr %i.f, align 8, !tbaa !10
+  %i.g = load double, ptr %i.f, align 8, !tbaa !11
   %i.h = fpext double %i.g to x86_fp80
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.j = load double, ptr %i.i, align 8, !tbaa !10
+  %i.j = load double, ptr %i.i, align 8, !tbaa !11
   %i.k = fpext double %i.j to x86_fp80            ; 3 uses
   %i.l = fsub x86_fp80 %i.h, %i.k                 ; 4 uses
-  %i.m = load double, ptr %1, align 8, !tbaa !7
+  %i.m = load double, ptr %1, align 8, !tbaa !8
   %i.n = fpext double %i.m to x86_fp80
   %i.o = fsub x86_fp80 %i.n, %i.d                 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.q = load double, ptr %i.p, align 8, !tbaa !10
+  %i.q = load double, ptr %i.p, align 8, !tbaa !11
   %i.r = fpext double %i.q to x86_fp80
   %i.s = fsub x86_fp80 %i.r, %i.k                 ; 4 uses
-  %i.t = load double, ptr %2, align 8, !tbaa !7
+  %i.t = load double, ptr %2, align 8, !tbaa !8
   %i.u = fpext double %i.t to x86_fp80
   %i.v = fsub x86_fp80 %i.u, %i.d                 ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.x = load double, ptr %i.w, align 8, !tbaa !10
+  %i.x = load double, ptr %i.w, align 8, !tbaa !11
   %i.y = fpext double %i.x to x86_fp80
   %i.z = fsub x86_fp80 %i.y, %i.k                 ; 4 uses
   %i.aa = fmul x86_fp80 %i.o, %i.z
@@ -202,14 +202,15 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSN4geos4geom10CoordinateE", !9, i64 0, !9, i64 8, !9, i64 16}
-!9 = !{!"double", !5, i64 0}
-!10 = !{!8, !9, i64 8}
-!11 = !{!9, !9, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSN4geos4geom10CoordinateE", !10, i64 0, !10, i64 8, !10, i64 16}
+!10 = !{!"double", !6, i64 0}
+!11 = !{!9, !10, i64 8}
+!12 = !{!10, !10, i64 0}
 end_hunk_0

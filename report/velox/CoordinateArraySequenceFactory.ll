@@ -27,7 +27,7 @@ $_ZTIN4geos4geom25CoordinateSequenceFactoryE = comdat any
 
 $_ZTSN4geos4geom25CoordinateSequenceFactoryE = comdat any
 
-@_ZTVN4geos4geom30CoordinateArraySequenceFactoryE = unnamed_addr constant { [9 x ptr] } { [9 x ptr] [ptr null, ptr @_ZTIN4geos4geom30CoordinateArraySequenceFactoryE, ptr @_ZNK4geos4geom30CoordinateArraySequenceFactory6createEv, ptr @_ZNK4geos4geom30CoordinateArraySequenceFactory6createEPSt6vectorINS0_10CoordinateESaIS3_EEm, ptr @_ZNK4geos4geom30CoordinateArraySequenceFactory6createEOSt6vectorINS0_10CoordinateESaIS3_EEm, ptr @_ZNK4geos4geom30CoordinateArraySequenceFactory6createEmm, ptr @_ZNK4geos4geom30CoordinateArraySequenceFactory6createERKNS0_18CoordinateSequenceE, ptr @_ZN4geos4geom25CoordinateSequenceFactoryD2Ev, ptr @_ZN4geos4geom30CoordinateArraySequenceFactoryD0Ev] }, align 8
+@_ZTVN4geos4geom30CoordinateArraySequenceFactoryE = constant { [9 x ptr] } { [9 x ptr] [ptr null, ptr @_ZTIN4geos4geom30CoordinateArraySequenceFactoryE, ptr @_ZNK4geos4geom30CoordinateArraySequenceFactory6createEv, ptr @_ZNK4geos4geom30CoordinateArraySequenceFactory6createEPSt6vectorINS0_10CoordinateESaIS3_EEm, ptr @_ZNK4geos4geom30CoordinateArraySequenceFactory6createEOSt6vectorINS0_10CoordinateESaIS3_EEm, ptr @_ZNK4geos4geom30CoordinateArraySequenceFactory6createEmm, ptr @_ZNK4geos4geom30CoordinateArraySequenceFactory6createERKNS0_18CoordinateSequenceE, ptr @_ZN4geos4geom25CoordinateSequenceFactoryD2Ev, ptr @_ZN4geos4geom30CoordinateArraySequenceFactoryD0Ev] }, align 8
 @_ZN4geos4geomL32defaultCoordinateSequenceFactoryE = internal global { ptr } { ptr getelementptr inbounds inrange(-16, 56) ({ [9 x ptr] }, ptr @_ZTVN4geos4geom30CoordinateArraySequenceFactoryE, i32 0, i32 0, i32 2) }, align 8
 @_ZTIN4geos4geom30CoordinateArraySequenceFactoryE = constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN4geos4geom30CoordinateArraySequenceFactoryE, ptr @_ZTIN4geos4geom25CoordinateSequenceFactoryE }, align 8
 @_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
@@ -51,7 +51,7 @@ bb.a:
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %i.a, ptr %0, align 8, !tbaa !7
+  store ptr %i.a, ptr %0, align 8, !tbaa !8
   ret void
 
 bb.c:                                             ; preds = %bb.a
@@ -85,7 +85,7 @@ bb.a:
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %i.a, ptr %0, align 8, !tbaa !7
+  store ptr %i.a, ptr %0, align 8, !tbaa !8
   ret void
 
 bb.c:                                             ; preds = %bb.a
@@ -103,7 +103,7 @@ bb.a:
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %i.a, ptr %0, align 8, !tbaa !7
+  store ptr %i.a, ptr %0, align 8, !tbaa !8
   ret void
 
 bb.c:                                             ; preds = %bb.a
@@ -121,7 +121,7 @@ bb.a:
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %i.a, ptr %0, align 8, !tbaa !7
+  store ptr %i.a, ptr %0, align 8, !tbaa !8
   ret void
 
 bb.c:                                             ; preds = %bb.a
@@ -139,7 +139,7 @@ bb.a:
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %i.a, ptr %0, align 8, !tbaa !7
+  store ptr %i.a, ptr %0, align 8, !tbaa !8
   ret void
 
 bb.c:                                             ; preds = %bb.a
@@ -179,12 +179,13 @@ attributes #9 = { builtin nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"p1 _ZTSN4geos4geom18CoordinateSequenceE", !9, i64 0}
-!9 = !{!"any pointer", !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"p1 _ZTSN4geos4geom18CoordinateSequenceE", !10, i64 0}
+!10 = !{!"any pointer", !6, i64 0}
 end_hunk_0

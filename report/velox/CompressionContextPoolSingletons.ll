@@ -51,10 +51,10 @@ bb.b:                                             ; preds = %bb.a
 
 __cxx_global_var_init.exit:                       ; preds = %bb.a, %bb.b
   %i.b = phi double [ %i.a, %bb.b ], [ 0.000000e+00, %bb.a ] ; 3 uses
-  store double %i.b, ptr @_ZN3fLDL53FLAGS_nonofolly_zstd_cctx_pool_stripes_cpu_multiplierE, align 8, !tbaa !11
+  store double %i.b, ptr @_ZN3fLDL53FLAGS_nonofolly_zstd_cctx_pool_stripes_cpu_multiplierE, align 8, !tbaa !12
   %i.c = tail call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN3fLDL53FLAGS_nonofolly_zstd_cctx_pool_stripes_cpu_multiplierE) ; 0 uses
-  store double %i.b, ptr @_ZN3fLD49FLAGS_folly_zstd_cctx_pool_stripes_cpu_multiplierE, align 8, !tbaa !11
-  store double %i.b, ptr @_ZN3fLDL51FLAGS_nofolly_zstd_cctx_pool_stripes_cpu_multiplierE, align 8, !tbaa !11
+  store double %i.b, ptr @_ZN3fLD49FLAGS_folly_zstd_cctx_pool_stripes_cpu_multiplierE, align 8, !tbaa !12
+  store double %i.b, ptr @_ZN3fLDL51FLAGS_nofolly_zstd_cctx_pool_stripes_cpu_multiplierE, align 8, !tbaa !12
   tail call void @_ZN6google14FlagRegistererC1IdEEPKcS3_S3_PT_S5_(ptr noundef nonnull align 1 dereferenceable(1) @_ZN3fLDL45o_folly_zstd_cctx_pool_stripes_cpu_multiplierE, ptr noundef nonnull @.str, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4, ptr noundef nonnull @_ZN3fLD49FLAGS_folly_zstd_cctx_pool_stripes_cpu_multiplierE, ptr noundef nonnull @_ZN3fLDL51FLAGS_nofolly_zstd_cctx_pool_stripes_cpu_multiplierE)
   %.not.i1 = icmp eq ptr @_Z51folly_zstd_dctx_pool_stripes_cpu_multiplier_defaultv, null
   br i1 %.not.i1, label %__cxx_global_var_init.6.exit, label %bb.c
@@ -65,10 +65,10 @@ bb.c:                                             ; preds = %__cxx_global_var_in
 
 __cxx_global_var_init.6.exit:                     ; preds = %__cxx_global_var_init.exit, %bb.c
   %i.e = phi double [ %i.d, %bb.c ], [ 0.000000e+00, %__cxx_global_var_init.exit ] ; 3 uses
-  store double %i.e, ptr @_ZN3fLDL53FLAGS_nonofolly_zstd_dctx_pool_stripes_cpu_multiplierE, align 8, !tbaa !11
+  store double %i.e, ptr @_ZN3fLDL53FLAGS_nonofolly_zstd_dctx_pool_stripes_cpu_multiplierE, align 8, !tbaa !12
   %i.f = tail call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN3fLDL53FLAGS_nonofolly_zstd_dctx_pool_stripes_cpu_multiplierE) ; 0 uses
-  store double %i.e, ptr @_ZN3fLD49FLAGS_folly_zstd_dctx_pool_stripes_cpu_multiplierE, align 8, !tbaa !11
-  store double %i.e, ptr @_ZN3fLDL51FLAGS_nofolly_zstd_dctx_pool_stripes_cpu_multiplierE, align 8, !tbaa !11
+  store double %i.e, ptr @_ZN3fLD49FLAGS_folly_zstd_dctx_pool_stripes_cpu_multiplierE, align 8, !tbaa !12
+  store double %i.e, ptr @_ZN3fLDL51FLAGS_nofolly_zstd_dctx_pool_stripes_cpu_multiplierE, align 8, !tbaa !12
   tail call void @_ZN6google14FlagRegistererC1IdEEPKcS3_S3_PT_S5_(ptr noundef nonnull align 1 dereferenceable(1) @_ZN3fLDL45o_folly_zstd_dctx_pool_stripes_cpu_multiplierE, ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, ptr noundef nonnull @.str.4, ptr noundef nonnull @_ZN3fLD49FLAGS_folly_zstd_dctx_pool_stripes_cpu_multiplierE, ptr noundef nonnull @_ZN3fLDL51FLAGS_nofolly_zstd_dctx_pool_stripes_cpu_multiplierE)
   ret void
 }
@@ -90,11 +90,12 @@ attributes #5 = { nounwind }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!12, !12, i64 0}
-!12 = !{!"double", !9, i64 0}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!13, !13, i64 0}
+!13 = !{!"double", !10, i64 0}
 end_hunk_0

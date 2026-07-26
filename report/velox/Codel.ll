@@ -29,43 +29,43 @@ declare void @_ZN6google14FlagRegistererC1IiEEPKcS3_S3_PT_S5_(ptr noundef nonnul
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5folly5CodelC2Ev(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(34) initializes((0, 34)) %0) unnamed_addr #1 align 2 {
 bb.a:
-  %i.a = load i32, ptr @_ZN3fLI20FLAGS_codel_intervalE, align 4, !tbaa !7
+  %i.a = load i32, ptr @_ZN3fLI20FLAGS_codel_intervalE, align 4, !tbaa !12
   %i.b = sext i32 %i.a to i64
-  %i.c = load i32, ptr @_ZN3fLI24FLAGS_codel_target_delayE, align 4, !tbaa !7
+  %i.c = load i32, ptr @_ZN3fLI24FLAGS_codel_target_delayE, align 4, !tbaa !12
   %i.d = sext i32 %i.c to i64
-  store i64 0, ptr %0, align 8, !tbaa !11
+  store i64 0, ptr %0, align 8, !tbaa !13
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = tail call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #10
-  store i64 %i.f, ptr %i.e, align 8, !tbaa !11
+  store i64 %i.f, ptr %i.e, align 8, !tbaa !13
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %i.d, ptr %i.g, align 8, !tbaa !14
+  store i64 %i.d, ptr %i.g, align 8, !tbaa !16
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %i.b, ptr %i.h, align 8, !tbaa !14
+  store i64 %i.b, ptr %i.h, align 8, !tbaa !16
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i8 1, ptr %i.i, align 8, !tbaa !15
+  store i8 1, ptr %i.i, align 8, !tbaa !17
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 33
-  store i8 0, ptr %i.j, align 1, !tbaa !15
+  store i8 0, ptr %i.j, align 1, !tbaa !17
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5folly5CodelC2ERKNS0_7OptionsE(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(34) initializes((0, 34)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) unnamed_addr #1 align 2 {
 bb.a:
-  store i64 0, ptr %0, align 8, !tbaa !11
+  store i64 0, ptr %0, align 8, !tbaa !13
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = tail call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #10
-  store i64 %i.b, ptr %i.a, align 8, !tbaa !11
+  store i64 %i.b, ptr %i.a, align 8, !tbaa !13
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.0.0.copyload.i5 = load i64, ptr %i.d, align 8, !tbaa !14
-  store i64 %.sroa.0.0.copyload.i5, ptr %i.c, align 8, !tbaa !14
+  %.sroa.0.0.copyload.i5 = load i64, ptr %i.d, align 8, !tbaa !16
+  store i64 %.sroa.0.0.copyload.i5, ptr %i.c, align 8, !tbaa !16
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.sroa.0.0.copyload.i6 = load i64, ptr %1, align 8, !tbaa !14
-  store i64 %.sroa.0.0.copyload.i6, ptr %i.e, align 8, !tbaa !14
+  %.sroa.0.0.copyload.i6 = load i64, ptr %1, align 8, !tbaa !16
+  store i64 %.sroa.0.0.copyload.i6, ptr %i.e, align 8, !tbaa !16
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i8 1, ptr %i.f, align 8, !tbaa !15
+  store i8 1, ptr %i.f, align 8, !tbaa !17
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 33
-  store i8 0, ptr %i.g, align 1, !tbaa !15
+  store i8 0, ptr %i.g, align 1, !tbaa !17
   ret void
 }
 
@@ -88,7 +88,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.j = load atomic i8, ptr %i.i acquire, align 8, !range !18, !noundef !19
+  %i.j = load atomic i8, ptr %i.i acquire, align 8, !range !20, !noundef !21
   %i.k = trunc nuw i8 %i.j to i1
   br i1 %i.k, label %.critedge, label %bb.c
 
@@ -110,7 +110,7 @@ bb.c:                                             ; preds = %bb.b
 
 .critedge:                                        ; preds = %.critedge.sink.split, %bb.a, %bb.b, %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.t = load atomic i8, ptr %i.s acquire, align 8, !range !18, !noundef !19
+  %i.t = load atomic i8, ptr %i.s acquire, align 8, !range !20, !noundef !21
   %i.u = trunc nuw i8 %i.t to i1
   br i1 %i.u, label %bb.d, label %bb.f
 
@@ -134,7 +134,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f, %bb.g
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 33
-  %i.aa = load atomic i8, ptr %i.z seq_cst, align 1, !range !18, !noundef !19
+  %i.aa = load atomic i8, ptr %i.z seq_cst, align 1, !range !20, !noundef !21
   %i.ab = trunc nuw i8 %i.aa to i1
   br i1 %i.ab, label %bb.i, label %bb.j
 
@@ -198,8 +198,8 @@ bb.a:
 define void @_ZN5folly5Codel10setOptionsERKNS0_7OptionsE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(34) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.0.0.copyload.i = load i64, ptr %i.a, align 8, !tbaa !14 ; 3 uses
-  %.sroa.0.0.copyload.i11 = load i64, ptr %1, align 8, !tbaa !14 ; 2 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %i.a, align 8, !tbaa !16 ; 3 uses
+  %.sroa.0.0.copyload.i11 = load i64, ptr %1, align 8, !tbaa !16 ; 2 uses
   %i.b = icmp sle i64 %.sroa.0.0.copyload.i11, %.sroa.0.0.copyload.i
   %i.c = icmp slt i64 %.sroa.0.0.copyload.i, 1
   %or.cond = or i1 %i.c, %i.b
@@ -235,7 +235,7 @@ declare void @_ZNSt16invalid_argumentC1EPKc(ptr noundef nonnull align 8 derefere
 declare void @__cxa_free_exception(ptr) local_unnamed_addr
 
 ; Function Attrs: nounwind
-declare void @_ZNSt16invalid_argumentD1Ev(ptr noundef nonnull align 8 dereferenceable(16)) unnamed_addr #2
+declare void @_ZNSt16invalid_argumentD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16)) unnamed_addr #2
 
 ; Function Attrs: cold noreturn
 declare void @__cxa_throw(ptr, ptr, ptr) local_unnamed_addr #7
@@ -285,18 +285,20 @@ attributes #11 = { noreturn }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!12, !13, i64 0}
-!12 = !{!"_ZTSSt13__atomic_baseImE", !13, i64 0}
-!13 = !{!"long", !9, i64 0}
-!14 = !{!13, !13, i64 0}
-!15 = !{!16, !17, i64 0}
-!16 = !{!"_ZTSSt13__atomic_baseIbE", !17, i64 0}
-!17 = !{!"bool", !9, i64 0}
-!18 = !{i8 0, i8 2}
-!19 = !{}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!9, !9, i64 0}
+!13 = !{!14, !15, i64 0}
+!14 = !{!"_ZTSSt13__atomic_baseImE", !15, i64 0}
+!15 = !{!"long", !10, i64 0}
+!16 = !{!15, !15, i64 0}
+!17 = !{!18, !19, i64 0}
+!18 = !{!"_ZTSSt13__atomic_baseIbE", !19, i64 0}
+!19 = !{!"bool", !10, i64 0}
+!20 = !{i8 0, i8 2}
+!21 = !{}
 end_hunk_0

@@ -9,19 +9,19 @@ define void @_ZN4geos5index9sweepline17SweepLineIntervalC2EddPv(ptr nofree nound
 bb.a:
   %i.a = fcmp olt double %1, %2                   ; 2 uses
   %i.b = select i1 %i.a, double %1, double %2
-  store double %i.b, ptr %0, align 8, !tbaa !7
+  store double %i.b, ptr %0, align 8, !tbaa !8
   %i.c = select i1 %i.a, double %2, double %1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store double %i.c, ptr %i.d, align 8, !tbaa !11
+  store double %i.c, ptr %i.d, align 8, !tbaa !12
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %3, ptr %i.e, align 8, !tbaa !12
+  store ptr %3, ptr %i.e, align 8, !tbaa !13
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef double @_ZN4geos5index9sweepline17SweepLineInterval6getMinEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0) local_unnamed_addr #1 align 2 {
 bb.a:
-  %i.a = load double, ptr %0, align 8, !tbaa !7
+  %i.a = load double, ptr %0, align 8, !tbaa !8
   ret double %i.a
 }
 
@@ -29,7 +29,7 @@ bb.a:
 define noundef double @_ZN4geos5index9sweepline17SweepLineInterval6getMaxEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load double, ptr %i.a, align 8, !tbaa !11
+  %i.b = load double, ptr %i.a, align 8, !tbaa !12
   ret double %i.b
 }
 
@@ -37,7 +37,7 @@ bb.a:
 define noundef ptr @_ZN4geos5index9sweepline17SweepLineInterval7getItemEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !12
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !13
   ret ptr %i.b
 }
 
@@ -50,15 +50,16 @@ attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSN4geos5index9sweepline17SweepLineIntervalE", !9, i64 0, !9, i64 8, !10, i64 16}
-!9 = !{!"double", !5, i64 0}
-!10 = !{!"any pointer", !5, i64 0}
-!11 = !{!8, !9, i64 8}
-!12 = !{!8, !10, i64 16}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSN4geos5index9sweepline17SweepLineIntervalE", !10, i64 0, !10, i64 8, !11, i64 16}
+!10 = !{!"double", !6, i64 0}
+!11 = !{!"any pointer", !6, i64 0}
+!12 = !{!9, !10, i64 8}
+!13 = !{!9, !11, i64 16}
 end_hunk_0

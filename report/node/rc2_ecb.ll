@@ -9,7 +9,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   %i.b = load <2 x i32>, ptr %0, align 1
   %i.c = zext <2 x i32> %i.b to <2 x i64>
-  store <2 x i64> %i.c, ptr %i.a, align 16, !tbaa !9
+  store <2 x i64> %i.c, ptr %i.a, align 16, !tbaa !10
   %.not = icmp eq i32 %3, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -22,7 +22,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.d = load <2 x i64>, ptr %i.a, align 16, !tbaa !9
+  %i.d = load <2 x i64>, ptr %i.a, align 16, !tbaa !10
   %i.e = trunc <2 x i64> %i.d to <2 x i32>
   store <2 x i32> %i.e, ptr %1, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
@@ -52,11 +52,12 @@ attributes #3 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
-!4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!5 = !{!6, !6, i64 0}
-!6 = !{!"int", !7, i64 0}
-!7 = !{!"omnipotent char", !8, i64 0}
-!8 = !{!"Simple C/C++ TBAA"}
-!9 = !{!10, !10, i64 0}
-!10 = !{!"long", !7, i64 0}
+!4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!5 = !{!6, !7, i64 0}
+!6 = !{!"__libc_errno", !7, i64 0}
+!7 = !{!"int", !8, i64 0}
+!8 = !{!"omnipotent char", !9, i64 0}
+!9 = !{!"Simple C/C++ TBAA"}
+!10 = !{!11, !11, i64 0}
+!11 = !{!"long", !8, i64 0}
 end_hunk_0

@@ -27,7 +27,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call ptr @__errno_location() #4
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !7
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !12
   switch i32 %i.e, label %bb.c [
     i32 22, label %bb.e
     i32 38, label %bb.e
@@ -68,9 +68,11 @@ attributes #4 = { nounwind willreturn memory(none) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!9, !9, i64 0}
 end_hunk_0

@@ -10,20 +10,20 @@ target triple = "x86_64-pc-linux-gnu"
 define noundef i64 @_ZN4absl12lts_2024011613hash_internal12LowLevelHashEPKvmmPKm(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #0 {
 bb.a:
   tail call void @llvm.prefetch.p0(ptr %0, i32 0, i32 3, i32 1)
-  %i.a = load i64, ptr %3, align 8, !tbaa !7
+  %i.a = load i64, ptr %3, align 8, !tbaa !8
   %i.b = xor i64 %i.a, %2                         ; 3 uses
   %i.c = icmp ugt i64 %1, 64
   br i1 %i.c, label %.preheader, label %bb.d
 
 .preheader:                                       ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !7
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !8
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !7
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !8
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !7
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !8
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !7
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !8
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %bb.b
@@ -80,7 +80,7 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.aw = trunc i128 %i.av to i64                 ; 2 uses
   %i.ax = add i64 %.0, -64                        ; 3 uses
   %i.ay = icmp ugt i64 %i.ax, 64
-  br i1 %i.ay, label %bb.b, label %bb.c, !llvm.loop !9
+  br i1 %i.ay, label %bb.b, label %bb.c, !llvm.loop !10
 
 bb.c:                                             ; preds = %bb.b
   %i.az = xor i64 %i.aw, %i.ah
@@ -95,7 +95,7 @@ bb.d:                                             ; preds = %bb.c, %bb.a
 
 .lr.ph:                                           ; preds = %bb.d
   %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.bc = load i64, ptr %i.bb, align 8, !tbaa !7  ; 3 uses
+  %i.bc = load i64, ptr %i.bb, align 8, !tbaa !8  ; 3 uses
   %i.bd = add nsw i64 %.1, -17                    ; 2 uses
   %i.be = and i64 %i.bd, 16
   %lcmp.mod.not.not = icmp eq i64 %i.be, 0
@@ -157,7 +157,7 @@ bb.d:                                             ; preds = %bb.c, %bb.a
   %i.ck = getelementptr inbounds nuw i8, ptr %.273100, i64 32 ; 2 uses
   %i.cl = add nsw i64 %.2101, -32                 ; 3 uses
   %i.cm = icmp ugt i64 %i.cl, 16
-  br i1 %i.cm, label %.lr.ph.new, label %._crit_edge, !llvm.loop !11
+  br i1 %i.cm, label %.lr.ph.new, label %._crit_edge, !llvm.loop !12
 
 ._crit_edge:                                      ; preds = %.prol.loopexit, %.lr.ph.new, %bb.d
   %.278.lcssa = phi i64 [ %.177, %bb.d ], [ %.lcssa127.unr, %.prol.loopexit ], [ %i.cj, %.lr.ph.new ]
@@ -191,18 +191,18 @@ bb.h:                                             ; preds = %bb.f
   br i1 %.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.cv = load i8, ptr %.273.lcssa, align 1, !tbaa !12
+  %i.cv = load i8, ptr %.273.lcssa, align 1, !tbaa !13
   %i.cw = zext i8 %i.cv to i64
   %i.cx = shl nuw nsw i64 %i.cw, 16
   %i.cy = lshr i64 %.2.lcssa, 1
   %i.cz = getelementptr inbounds nuw i8, ptr %.273.lcssa, i64 %i.cy
-  %i.da = load i8, ptr %i.cz, align 1, !tbaa !12
+  %i.da = load i8, ptr %i.cz, align 1, !tbaa !13
   %i.db = zext i8 %i.da to i64
   %i.dc = shl nuw nsw i64 %i.db, 8
   %i.dd = or disjoint i64 %i.dc, %i.cx
   %i.de = getelementptr i8, ptr %.273.lcssa, i64 %.2.lcssa
   %i.df = getelementptr i8, ptr %i.de, i64 -1
-  %i.dg = load i8, ptr %i.df, align 1, !tbaa !12
+  %i.dg = load i8, ptr %i.df, align 1, !tbaa !13
   %i.dh = zext i8 %i.dg to i64
   %i.di = or disjoint i64 %i.dd, %i.dh
   br label %bb.j
@@ -211,7 +211,7 @@ bb.j:                                             ; preds = %bb.h, %bb.g, %bb.i,
   %.075 = phi i64 [ %.0.copyload.i92, %bb.e ], [ %i.cr, %bb.g ], [ %i.di, %bb.i ], [ 0, %bb.h ]
   %.074 = phi i64 [ %.0.copyload.i93, %bb.e ], [ %i.cu, %bb.g ], [ 0, %bb.i ], [ 0, %bb.h ]
   %i.dj = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.dk = load i64, ptr %i.dj, align 8, !tbaa !7  ; 2 uses
+  %i.dk = load i64, ptr %i.dj, align 8, !tbaa !8  ; 2 uses
   %i.dl = xor i64 %i.dk, %.075
   %i.dm = xor i64 %.074, %.278.lcssa
   %i.dn = zext i64 %i.dl to i128
@@ -241,15 +241,16 @@ attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"long", !5, i64 0}
-!9 = distinct !{!9, !10}
-!10 = !{!"llvm.loop.mustprogress"}
-!11 = distinct !{!11, !10}
-!12 = !{!5, !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"long", !6, i64 0}
+!10 = distinct !{!10, !11}
+!11 = !{!"llvm.loop.mustprogress"}
+!12 = distinct !{!12, !11}
+!13 = !{!6, !6, i64 0}
 end_hunk_0

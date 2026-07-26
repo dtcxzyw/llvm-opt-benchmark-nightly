@@ -39,8 +39,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.r = icmp eq ptr %3, %2
   %i.s = icmp eq ptr %1, %0
-  %or.cond.i = select i1 %i.r, i1 true, i1 %i.s, !prof !11
-  br i1 %or.cond.i, label %_ZN5folly6detail26qfind_first_byte_of_nosimdENS0_15StringPieceLiteES1_.exit, label %bb.d, !prof !11
+  %or.cond.i = select i1 %i.r, i1 true, i1 %i.s, !prof !12
+  br i1 %or.cond.i, label %_ZN5folly6detail26qfind_first_byte_of_nosimdENS0_15StringPieceLiteES1_.exit, label %bb.d, !prof !12
 
 bb.d:                                             ; preds = %bb.c
   %i.t = icmp ugt i64 %i.c, 3
@@ -69,24 +69,24 @@ bb.h:                                             ; preds = %bb.g, %bb.e
 
 .preheader.i.i.i:                                 ; preds = %.preheader.i.i.i.preheader, %._crit_edge.i.i.i
   %.01425.i.i.i = phi ptr [ %i.ad, %._crit_edge.i.i.i ], [ %0, %.preheader.i.i.i.preheader ] ; 4 uses
-  %i.z = load i8, ptr %.01425.i.i.i, align 1, !tbaa !12
+  %i.z = load i8, ptr %.01425.i.i.i, align 1, !tbaa !13
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.j
   %i.aa = getelementptr inbounds nuw i8, ptr %.01223.i.i.i, i64 1 ; 2 uses
   %.not16.i.i.i = icmp eq ptr %i.aa, %3
-  br i1 %.not16.i.i.i, label %._crit_edge.i.i.i, label %bb.j, !llvm.loop !13
+  br i1 %.not16.i.i.i, label %._crit_edge.i.i.i, label %bb.j, !llvm.loop !14
 
 bb.j:                                             ; preds = %bb.i, %.preheader.i.i.i
   %.01223.i.i.i = phi ptr [ %2, %.preheader.i.i.i ], [ %i.aa, %bb.i ] ; 2 uses
-  %i.ab = load i8, ptr %.01223.i.i.i, align 1, !tbaa !12
+  %i.ab = load i8, ptr %.01223.i.i.i, align 1, !tbaa !13
   %i.ac = icmp eq i8 %i.z, %i.ab
   br i1 %i.ac, label %_ZSt13find_first_ofIPKcS1_ZN5folly6detail23qfind_first_byte_of_stdENS3_15StringPieceLiteES4_EUlccE_ET_S6_S6_T0_S7_T1_.exit.i.i, label %bb.i
 
 ._crit_edge.i.i.i:                                ; preds = %bb.i
   %i.ad = getelementptr inbounds nuw i8, ptr %.01425.i.i.i, i64 1 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.ad, %1
-  br i1 %.not.i.i.i, label %_ZN5folly6detail26qfind_first_byte_of_nosimdENS0_15StringPieceLiteES1_.exit, label %.preheader.i.i.i, !llvm.loop !15
+  br i1 %.not.i.i.i, label %_ZN5folly6detail26qfind_first_byte_of_nosimdENS0_15StringPieceLiteES1_.exit, label %.preheader.i.i.i, !llvm.loop !16
 
 _ZSt13find_first_ofIPKcS1_ZN5folly6detail23qfind_first_byte_of_stdENS3_15StringPieceLiteES4_EUlccE_ET_S6_S6_T0_S7_T1_.exit.i.i: ; preds = %bb.j
   %i.ae = icmp eq ptr %.01425.i.i.i, %1
@@ -98,8 +98,8 @@ bb.k:                                             ; preds = %_ZSt13find_first_of
   br label %_ZN5folly6detail26qfind_first_byte_of_nosimdENS0_15StringPieceLiteES1_.exit
 
 bb.l:                                             ; preds = %bb.b
-  %i.ah = load <16 x i8>, ptr %2, align 1, !tbaa !12 ; 2 uses
-  %i.ai = load <16 x i8>, ptr %0, align 1, !tbaa !12
+  %i.ah = load <16 x i8>, ptr %2, align 1, !tbaa !13 ; 2 uses
+  %i.ai = load <16 x i8>, ptr %0, align 1, !tbaa !13
   %i.aj = trunc i64 %i.c to i32                   ; 2 uses
   %i.ak = trunc i64 %i.g to i32
   %i.al = tail call i32 @llvm.x86.sse42.pcmpestri128(<16 x i8> %i.ah, i32 %i.aj, <16 x i8> %i.ai, i32 %i.ak, i8 0) ; 2 uses
@@ -119,7 +119,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n, %bb.p
   %.055 = phi i64 [ %i.az, %bb.p ], [ %i.ap, %bb.n ] ; 4 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 %.055
-  %i.as = load <16 x i8>, ptr %i.ar, align 16, !tbaa !12
+  %i.as = load <16 x i8>, ptr %i.ar, align 16, !tbaa !13
   %i.at = sub nuw i64 %i.g, %.055
   %i.au = trunc i64 %i.at to i32
   %i.av = tail call i32 @llvm.x86.sse42.pcmpestri128(<16 x i8> %i.ah, i32 %i.aj, <16 x i8> %i.as, i32 %i.au, i8 0) ; 2 uses
@@ -134,7 +134,7 @@ bb.o:                                             ; preds = %.lr.ph
 bb.p:                                             ; preds = %.lr.ph
   %i.az = add i64 %.055, 16                       ; 2 uses
   %i.ba = icmp ult i64 %i.az, %i.g
-  br i1 %i.ba, label %.lr.ph, label %_ZN5folly6detail26qfind_first_byte_of_nosimdENS0_15StringPieceLiteES1_.exit, !llvm.loop !16
+  br i1 %i.ba, label %.lr.ph, label %_ZN5folly6detail26qfind_first_byte_of_nosimdENS0_15StringPieceLiteES1_.exit, !llvm.loop !17
 
 _ZN5folly6detail26qfind_first_byte_of_nosimdENS0_15StringPieceLiteES1_.exit: ; preds = %bb.p, %._crit_edge.i.i.i, %bb.n, %bb.k, %_ZSt13find_first_ofIPKcS1_ZN5folly6detail23qfind_first_byte_of_stdENS3_15StringPieceLiteES4_EUlccE_ET_S6_S6_T0_S7_T1_.exit.i.i, %bb.h, %bb.c, %bb.m, %bb.o
   %.2 = phi i64 [ -1, %bb.n ], [ %i.an, %bb.m ], [ %i.ay, %bb.o ], [ -1, %bb.c ], [ %i.y, %bb.h ], [ -1, %_ZSt13find_first_ofIPKcS1_ZN5folly6detail23qfind_first_byte_of_stdENS3_15StringPieceLiteES4_EUlccE_ET_S6_S6_T0_S7_T1_.exit.i.i ], [ %i.ag, %bb.k ], [ -1, %._crit_edge.i.i.i ], [ -1, %bb.p ]
@@ -151,8 +151,8 @@ define noundef i64 @_ZN5folly6detail25qfind_first_byte_of_sse42ENS0_15StringPiec
 bb.a:
   %i.a = icmp eq ptr %3, %2
   %i.b = icmp eq ptr %1, %0
-  %or.cond = select i1 %i.a, i1 true, i1 %i.b, !prof !11
-  br i1 %or.cond, label %.critedge, label %bb.b, !prof !11
+  %or.cond = select i1 %i.a, i1 true, i1 %i.b, !prof !12
+  br i1 %or.cond, label %.critedge, label %bb.b, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.c = ptrtoint ptr %3 to i64
@@ -185,24 +185,24 @@ bb.e:                                             ; preds = %bb.d
 
 .preheader.i.i:                                   ; preds = %bb.e, %._crit_edge.i.i
   %.01425.i.i = phi ptr [ %i.u, %._crit_edge.i.i ], [ %0, %bb.e ] ; 4 uses
-  %i.q = load i8, ptr %.01425.i.i, align 1, !tbaa !12
+  %i.q = load i8, ptr %.01425.i.i, align 1, !tbaa !13
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.g
   %i.r = getelementptr inbounds nuw i8, ptr %.01223.i.i, i64 1 ; 2 uses
   %.not16.i.i = icmp eq ptr %i.r, %3
-  br i1 %.not16.i.i, label %._crit_edge.i.i, label %bb.g, !llvm.loop !13
+  br i1 %.not16.i.i, label %._crit_edge.i.i, label %bb.g, !llvm.loop !14
 
 bb.g:                                             ; preds = %bb.f, %.preheader.i.i
   %.01223.i.i = phi ptr [ %2, %.preheader.i.i ], [ %i.r, %bb.f ] ; 2 uses
-  %i.s = load i8, ptr %.01223.i.i, align 1, !tbaa !12
+  %i.s = load i8, ptr %.01223.i.i, align 1, !tbaa !13
   %i.t = icmp eq i8 %i.q, %i.s
   br i1 %i.t, label %_ZSt13find_first_ofIPKcS1_ZN5folly6detail23qfind_first_byte_of_stdENS3_15StringPieceLiteES4_EUlccE_ET_S6_S6_T0_S7_T1_.exit.i, label %bb.f
 
 ._crit_edge.i.i:                                  ; preds = %bb.f
   %i.u = getelementptr inbounds nuw i8, ptr %.01425.i.i, i64 1 ; 2 uses
   %.not.i.i = icmp eq ptr %i.u, %1
-  br i1 %.not.i.i, label %.critedge, label %.preheader.i.i, !llvm.loop !15
+  br i1 %.not.i.i, label %.critedge, label %.preheader.i.i, !llvm.loop !16
 
 _ZSt13find_first_ofIPKcS1_ZN5folly6detail23qfind_first_byte_of_stdENS3_15StringPieceLiteES4_EUlccE_ET_S6_S6_T0_S7_T1_.exit.i: ; preds = %bb.g
   %i.v = icmp eq ptr %.01425.i.i, %1
@@ -218,8 +218,8 @@ bb.i:                                             ; preds = %bb.e
   br label %.critedge
 
 bb.j:                                             ; preds = %bb.d
-  %i.z = load <16 x i8>, ptr %0, align 1, !tbaa !12 ; 2 uses
-  %i.aa = load <16 x i8>, ptr %2, align 1, !tbaa !12 ; 2 uses
+  %i.z = load <16 x i8>, ptr %0, align 1, !tbaa !13 ; 2 uses
+  %i.aa = load <16 x i8>, ptr %2, align 1, !tbaa !13 ; 2 uses
   %i.ab = trunc i64 %i.j to i32                   ; 2 uses
   %i.ac = tail call i32 @llvm.x86.sse42.pcmpestri128(<16 x i8> %i.aa, i32 16, <16 x i8> %i.z, i32 %i.ab, i8 0)
   %i.ad = and i64 %i.d, 15
@@ -230,14 +230,14 @@ bb.j:                                             ; preds = %bb.d
   %.032.i = phi i64 [ %i.ak, %.lr.ph.i ], [ %i.ae, %bb.j ] ; 3 uses
   %.02831.i = phi i32 [ %.sroa.speculated.i, %.lr.ph.i ], [ %i.ac, %bb.j ]
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 %.032.i
-  %i.ag = load <16 x i8>, ptr %i.af, align 16, !tbaa !12
+  %i.ag = load <16 x i8>, ptr %i.af, align 16, !tbaa !13
   %i.ah = sub nuw i64 %i.e, %.032.i
   %i.ai = trunc i64 %i.ah to i32
   %i.aj = tail call i32 @llvm.x86.sse42.pcmpestri128(<16 x i8> %i.ag, i32 %i.ai, <16 x i8> %i.z, i32 %i.ab, i8 0)
   %.sroa.speculated.i = tail call i32 @llvm.smin.i32(i32 %.02831.i, i32 %i.aj) ; 3 uses
   %i.ak = add i64 %.032.i, 16                     ; 2 uses
   %i.al = icmp ult i64 %i.ak, %i.e
-  br i1 %i.al, label %.lr.ph.i, label %_ZN5folly6detail17scanHaystackBlockILb0EEEmNS0_15StringPieceLiteES2_m.exit, !llvm.loop !17
+  br i1 %i.al, label %.lr.ph.i, label %_ZN5folly6detail17scanHaystackBlockILb0EEEmNS0_15StringPieceLiteES2_m.exit, !llvm.loop !18
 
 _ZN5folly6detail17scanHaystackBlockILb0EEEmNS0_15StringPieceLiteES2_m.exit: ; preds = %.lr.ph.i
   %i.am = icmp slt i32 %.sroa.speculated.i, 16
@@ -255,12 +255,12 @@ bb.k:                                             ; preds = %_ZN5folly6detail17s
 bb.l:                                             ; preds = %_ZN5folly6detail17scanHaystackBlockILb1EEEmNS0_15StringPieceLiteES2_m.exit
   %i.aq = add i64 %.02657, 16                     ; 2 uses
   %i.ar = icmp ult i64 %i.aq, %i.j
-  br i1 %i.ar, label %.lr.ph, label %.critedge, !llvm.loop !18
+  br i1 %i.ar, label %.lr.ph, label %.critedge, !llvm.loop !19
 
 .lr.ph:                                           ; preds = %bb.k, %bb.l
   %.02657 = phi i64 [ %i.aq, %bb.l ], [ %i.ao, %bb.k ] ; 4 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 %.02657
-  %i.at = load <16 x i8>, ptr %i.as, align 16, !tbaa !12 ; 2 uses
+  %i.at = load <16 x i8>, ptr %i.as, align 16, !tbaa !13 ; 2 uses
   %i.au = add i64 %.02657, %i.i
   %i.av = sub i64 %i.h, %i.au
   %i.aw = trunc i64 %i.av to i32                  ; 2 uses
@@ -271,14 +271,14 @@ bb.l:                                             ; preds = %_ZN5folly6detail17s
   %.032.i34 = phi i64 [ %i.bd, %.lr.ph.i33 ], [ %i.ae, %.lr.ph ] ; 3 uses
   %.02831.i35 = phi i32 [ %.sroa.speculated.i36, %.lr.ph.i33 ], [ %i.ax, %.lr.ph ]
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 %.032.i34
-  %i.az = load <16 x i8>, ptr %i.ay, align 16, !tbaa !12
+  %i.az = load <16 x i8>, ptr %i.ay, align 16, !tbaa !13
   %i.ba = sub nuw i64 %i.e, %.032.i34
   %i.bb = trunc i64 %i.ba to i32
   %i.bc = tail call i32 @llvm.x86.sse42.pcmpestri128(<16 x i8> %i.az, i32 %i.bb, <16 x i8> %i.at, i32 %i.aw, i8 0)
   %.sroa.speculated.i36 = tail call i32 @llvm.smin.i32(i32 %.02831.i35, i32 %i.bc) ; 3 uses
   %i.bd = add i64 %.032.i34, 16                   ; 2 uses
   %i.be = icmp ult i64 %i.bd, %i.e
-  br i1 %i.be, label %.lr.ph.i33, label %_ZN5folly6detail17scanHaystackBlockILb1EEEmNS0_15StringPieceLiteES2_m.exit, !llvm.loop !19
+  br i1 %i.be, label %.lr.ph.i33, label %_ZN5folly6detail17scanHaystackBlockILb1EEEmNS0_15StringPieceLiteES2_m.exit, !llvm.loop !20
 
 _ZN5folly6detail17scanHaystackBlockILb1EEEmNS0_15StringPieceLiteES2_m.exit: ; preds = %.lr.ph.i33
   %i.bf = icmp sgt i32 %.sroa.speculated.i36, 15
@@ -311,18 +311,19 @@ attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!"branch_weights", i32 4001, i32 4000000}
-!12 = !{!9, !9, i64 0}
-!13 = distinct !{!13, !14}
-!14 = !{!"llvm.loop.mustprogress"}
-!15 = distinct !{!15, !14}
-!16 = distinct !{!16, !14}
-!17 = distinct !{!17, !14}
-!18 = distinct !{!18, !14}
-!19 = distinct !{!19, !14}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!"branch_weights", i32 4001, i32 4000000}
+!13 = !{!10, !10, i64 0}
+!14 = distinct !{!14, !15}
+!15 = !{!"llvm.loop.mustprogress"}
+!16 = distinct !{!16, !15}
+!17 = distinct !{!17, !15}
+!18 = distinct !{!18, !15}
+!19 = distinct !{!19, !15}
+!20 = distinct !{!20, !15}
 end_hunk_0

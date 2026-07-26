@@ -13,49 +13,49 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  store i8 0, ptr %2, align 1, !tbaa !7
-  %i.a = load i8, ptr %0, align 1, !tbaa !7
+  store i8 0, ptr %2, align 1, !tbaa !8
+  %i.a = load i8, ptr %0, align 1, !tbaa !8
   br label %.sink.split
 
 bb.c:                                             ; preds = %bb.a
-  store i8 0, ptr %2, align 1, !tbaa !7
-  %i.b = load i8, ptr %0, align 1, !tbaa !7
+  store i8 0, ptr %2, align 1, !tbaa !8
+  %i.b = load i8, ptr %0, align 1, !tbaa !8
   %i.c = shl i8 %i.b, 4
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.e = load i8, ptr %i.d, align 1, !tbaa !7
+  %i.e = load i8, ptr %i.d, align 1, !tbaa !8
   %i.f = add i8 %i.c, %i.e
   br label %.sink.split
 
 bb.d:                                             ; preds = %bb.a
-  %i.g = load i8, ptr %0, align 1, !tbaa !7
-  store i8 %i.g, ptr %2, align 1, !tbaa !7
+  %i.g = load i8, ptr %0, align 1, !tbaa !8
+  store i8 %i.g, ptr %2, align 1, !tbaa !8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !7
+  %i.i = load i8, ptr %i.h, align 1, !tbaa !8
   %i.j = shl i8 %i.i, 4
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %i.l = load i8, ptr %i.k, align 1, !tbaa !7
+  %i.l = load i8, ptr %i.k, align 1, !tbaa !8
   %i.m = add i8 %i.j, %i.l
   br label %.sink.split
 
 bb.e:                                             ; preds = %bb.a
-  %i.n = load i8, ptr %0, align 1, !tbaa !7
+  %i.n = load i8, ptr %0, align 1, !tbaa !8
   %i.o = shl i8 %i.n, 4
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.q = load i8, ptr %i.p, align 1, !tbaa !7
+  %i.q = load i8, ptr %i.p, align 1, !tbaa !8
   %i.r = add i8 %i.o, %i.q
-  store i8 %i.r, ptr %2, align 1, !tbaa !7
+  store i8 %i.r, ptr %2, align 1, !tbaa !8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %i.t = load i8, ptr %i.s, align 1, !tbaa !7
+  %i.t = load i8, ptr %i.s, align 1, !tbaa !8
   %i.u = shl i8 %i.t, 4
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %i.w = load i8, ptr %i.v, align 1, !tbaa !7
+  %i.w = load i8, ptr %i.v, align 1, !tbaa !8
   %i.x = add i8 %i.u, %i.w
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.b, %bb.c, %bb.d, %bb.e
   %.sink = phi i8 [ %i.x, %bb.e ], [ %i.m, %bb.d ], [ %i.f, %bb.c ], [ %i.a, %bb.b ]
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 1
-  store i8 %.sink, ptr %i.y, align 1, !tbaa !7
+  store i8 %.sink, ptr %i.y, align 1, !tbaa !8
   br label %bb.f
 
 bb.f:                                             ; preds = %.sink.split, %bb.a
@@ -65,7 +65,7 @@ bb.f:                                             ; preds = %.sink.split, %bb.a
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define zeroext i8 @uriGetOctetValue(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #1 {
 bb.a:
-  %i.a = load i8, ptr %0, align 1, !tbaa !7       ; 3 uses
+  %i.a = load i8, ptr %0, align 1, !tbaa !8       ; 3 uses
   switch i32 %1, label %bb.c [
     i32 1, label %bb.d
     i32 2, label %bb.b
@@ -78,7 +78,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.c = mul i8 %i.a, 100
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.e = load i8, ptr %i.d, align 1, !tbaa !7
+  %i.e = load i8, ptr %i.d, align 1, !tbaa !8
   %i.f = mul i8 %i.e, 10
   %i.g = add i8 %i.f, %i.c
   br label %.sink.split
@@ -87,7 +87,7 @@ bb.c:                                             ; preds = %bb.a
   %.sink9 = phi i64 [ 2, %bb.c ], [ 1, %bb.b ]
   %.sink = phi i8 [ %i.g, %bb.c ], [ %i.b, %bb.b ]
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %.sink9
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !7
+  %i.i = load i8, ptr %i.h, align 1, !tbaa !8
   %i.j = add i8 %.sink, %i.i
   br label %bb.d
 
@@ -105,10 +105,11 @@ attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C/C++ TBAA"}
-!7 = !{!5, !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C/C++ TBAA"}
+!8 = !{!6, !6, i64 0}
 end_hunk_0

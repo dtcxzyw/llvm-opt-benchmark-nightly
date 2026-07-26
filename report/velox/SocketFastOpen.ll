@@ -39,7 +39,7 @@ declare noundef i64 @_ZN5folly6netops7sendmsgENS_13NetworkSocketEPK6msghdri(i32,
 define noundef i32 @_ZN5folly6detail10tfo_enableENS_13NetworkSocketEm(i32 %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 2 uses
-  store i64 %1, ptr %i.a, align 8, !tbaa !11
+  store i64 %1, ptr %i.a, align 8, !tbaa !12
   %i.b = call noundef i32 @_ZN5folly6netops10setsockoptENS_13NetworkSocketEiiPKvj(i32 %0, i32 noundef 6, i32 noundef 23, ptr noundef nonnull %i.a, i32 noundef 8)
   ret i32 %i.b
 }
@@ -53,9 +53,9 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  store i32 104, ptr %i.a, align 4, !tbaa !7
+  store i32 104, ptr %i.a, align 4, !tbaa !14
   %i.b = tail call ptr @__errno_location() #10
-  store i32 0, ptr %i.b, align 4, !tbaa !7
+  store i32 0, ptr %i.b, align 4, !tbaa !14
   %i.c = call noundef i32 @_ZN5folly6netops10getsockoptENS_13NetworkSocketEiiPvPj(i32 %0, i32 noundef 6, i32 noundef 11, ptr noundef nonnull %1, ptr noundef nonnull %i.a)
   %.not = icmp eq i32 %i.c, 0
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 5
@@ -84,7 +84,7 @@ define i64 @_ZN5folly6detail25tfo_platform_availabilityEv() local_unnamed_addr #
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5folly6detail25tfo_platform_availabilityEvE11TFOSettings acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %bb.e, !prof !13
+  br i1 %i.b, label %bb.b, label %bb.e, !prof !15
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly6detail25tfo_platform_availabilityEvE11TFOSettings) #9
@@ -120,7 +120,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %0 = alloca %"class.std::basic_ifstream", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  store i64 0, ptr %i.a, align 8, !tbaa !11
+  store i64 0, ptr %i.a, align 8, !tbaa !12
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #9
   invoke void @_ZNSt14basic_ifstreamIcSt11char_traitsIcEEC1EPKcSt13_Ios_Openmode(ptr noundef nonnull align 8 dereferenceable(256) %0, ptr noundef nonnull @.str, i32 noundef 8)
           to label %bb.b unwind label %bb.d
@@ -167,7 +167,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %_ZNSirsERm.exit
-  %i.j = load i64, ptr %i.a, align 8, !tbaa !11
+  %i.j = load i64, ptr %i.a, align 8, !tbaa !12
   %i.k = insertelement <2 x i64> poison, i64 %i.j, i64 0
   %i.l = shufflevector <2 x i64> %i.k, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.m = and <2 x i64> %i.l, <i64 2, i64 1>
@@ -236,12 +236,14 @@ attributes #11 = { nounwind willreturn memory(read) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!12, !12, i64 0}
-!12 = !{!"long", !9, i64 0}
-!13 = !{!"branch_weights", i32 1, i32 1048575}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!13, !13, i64 0}
+!13 = !{!"long", !10, i64 0}
+!14 = !{!9, !9, i64 0}
+!15 = !{!"branch_weights", i32 1, i32 1048575}
 end_hunk_0

@@ -6,14 +6,14 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define noundef range(i32 1, 5) i32 @_ZN3re210chartoruneEPiPKc(ptr nofree noundef writeonly captures(none) initializes((0, 4)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i8, ptr %1, align 1, !tbaa !7       ; 6 uses
+  %i.a = load i8, ptr %1, align 1, !tbaa !8       ; 6 uses
   %i.b = zext i8 %i.a to i32                      ; 4 uses
   %i.c = icmp sgt i8 %i.a, -1
   br i1 %i.c, label %bb.n, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %i.e = load i8, ptr %i.d, align 1, !tbaa !7
+  %i.e = load i8, ptr %i.d, align 1, !tbaa !8
   %i.f = xor i8 %i.e, -128                        ; 2 uses
   %i.g = zext i8 %i.f to i32                      ; 3 uses
   %.not = icmp ult i8 %i.f, 64
@@ -36,7 +36,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !7
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !8
   %i.o = xor i8 %i.n, -128                        ; 2 uses
   %i.p = zext i8 %i.o to i32                      ; 2 uses
   %.not38 = icmp ult i8 %i.o, 64
@@ -60,7 +60,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.g
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 3
-  %i.w = load i8, ptr %i.v, align 1, !tbaa !7
+  %i.w = load i8, ptr %i.v, align 1, !tbaa !8
   %i.x = xor i8 %i.w, -128                        ; 2 uses
   %i.y = icmp ult i8 %i.x, 64
   %i.z = icmp samesign ult i8 %i.a, -8
@@ -88,20 +88,20 @@ bb.m:                                             ; preds = %bb.k, %bb.j, %bb.h,
 bb.n:                                             ; preds = %bb.e, %bb.a, %bb.m, %bb.l, %bb.i
   %.sink = phi i32 [ 65533, %bb.m ], [ %i.ah, %bb.l ], [ %i.u, %bb.i ], [ %i.b, %bb.a ], [ %i.k, %bb.e ]
   %.0 = phi i32 [ 1, %bb.m ], [ 4, %bb.l ], [ 3, %bb.i ], [ 1, %bb.a ], [ 2, %bb.e ]
-  store i32 %.sink, ptr %0, align 4, !tbaa !3
+  store i32 %.sink, ptr %0, align 4, !tbaa !9
   ret i32 %.0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define noundef range(i32 1, 5) i32 @_ZN3re210runetocharEPcPKi(ptr nofree noundef writeonly captures(none) initializes((0, 1)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr %1, align 4, !tbaa !3      ; 7 uses
+  %i.a = load i32, ptr %1, align 4, !tbaa !9      ; 7 uses
   %i.b = icmp ult i32 %i.a, 128
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.c = trunc nuw nsw i32 %i.a to i8
-  store i8 %i.c, ptr %0, align 1, !tbaa !7
+  store i8 %i.c, ptr %0, align 1, !tbaa !8
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.a
@@ -112,12 +112,12 @@ bb.d:                                             ; preds = %bb.c
   %i.e = lshr i32 %i.a, 6
   %i.f = trunc nuw nsw i32 %i.e to i8
   %i.g = or disjoint i8 %i.f, -64
-  store i8 %i.g, ptr %0, align 1, !tbaa !7
+  store i8 %i.g, ptr %0, align 1, !tbaa !8
   %i.h = trunc i32 %i.a to i8
   %i.i = and i8 %i.h, 63
   %i.j = or disjoint i8 %i.i, -128
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %i.j, ptr %i.k, align 1, !tbaa !7
+  store i8 %i.j, ptr %i.k, align 1, !tbaa !8
   br label %bb.h
 
 bb.e:                                             ; preds = %bb.c
@@ -131,17 +131,17 @@ bb.f:                                             ; preds = %bb.e
   %i.o = lshr i32 %spec.store.select, 12
   %i.p = trunc nuw nsw i32 %i.o to i8
   %i.q = or disjoint i8 %i.p, -32
-  store i8 %i.q, ptr %0, align 1, !tbaa !7
+  store i8 %i.q, ptr %0, align 1, !tbaa !8
   %i.r = lshr i32 %spec.store.select, 6
   %i.s = trunc i32 %i.r to i8
   %i.t = and i8 %i.s, 63
   %i.u = or disjoint i8 %i.t, -128
-  store i8 %i.u, ptr %i.n, align 1, !tbaa !7
+  store i8 %i.u, ptr %i.n, align 1, !tbaa !8
   %i.v = trunc i32 %spec.store.select to i8
   %i.w = and i8 %i.v, 63
   %i.x = or disjoint i8 %i.w, -128
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %i.x, ptr %i.y, align 1, !tbaa !7
+  store i8 %i.x, ptr %i.y, align 1, !tbaa !8
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
@@ -151,7 +151,7 @@ bb.g:                                             ; preds = %bb.e
   %i.ac = trunc <4 x i32> %i.ab to <4 x i8>
   %i.ad = and <4 x i8> %i.ac, <i8 -1, i8 63, i8 63, i8 63>
   %i.ae = or <4 x i8> %i.ad, <i8 -16, i8 -128, i8 -128, i8 -128>
-  store <4 x i8> %i.ae, ptr %0, align 1, !tbaa !7
+  store <4 x i8> %i.ae, ptr %0, align 1, !tbaa !8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.d, %bb.b
@@ -187,7 +187,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load i8, ptr %0, align 1, !tbaa !7       ; 3 uses
+  %i.b = load i8, ptr %0, align 1, !tbaa !8       ; 3 uses
   %i.c = icmp sgt i8 %i.b, -1
   br i1 %i.c, label %.thread, label %bb.c
 
@@ -225,7 +225,7 @@ bb.a:
 bb.b:                                             ; preds = %_ZN3re210chartoruneEPiPKc.exit, %bb.a
   %.07 = phi ptr [ %0, %bb.a ], [ %i.aa, %_ZN3re210chartoruneEPiPKc.exit ] ; 5 uses
   %.0 = phi i32 [ 0, %bb.a ], [ %i.ab, %_ZN3re210chartoruneEPiPKc.exit ] ; 2 uses
-  %i.a = load i8, ptr %.07, align 1, !tbaa !7     ; 7 uses
+  %i.a = load i8, ptr %.07, align 1, !tbaa !8     ; 7 uses
   %i.b = icmp sgt i8 %i.a, -1
   br i1 %i.b, label %bb.c, label %bb.e
 
@@ -239,7 +239,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.b
   %i.d = zext i8 %i.a to i32                      ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.07, i64 1
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !7
+  %i.f = load i8, ptr %i.e, align 1, !tbaa !8
   %i.g = xor i8 %i.f, -128                        ; 2 uses
   %i.h = zext i8 %i.g to i32                      ; 3 uses
   %.not.i = icmp ult i8 %i.g, 64
@@ -262,7 +262,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.f
   %i.n = getelementptr inbounds nuw i8, ptr %.07, i64 2
-  %i.o = load i8, ptr %i.n, align 1, !tbaa !7
+  %i.o = load i8, ptr %i.n, align 1, !tbaa !8
   %.not38.i = icmp slt i8 %i.o, -64
   br i1 %.not38.i, label %bb.j, label %bb.n
 
@@ -280,7 +280,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.t = getelementptr inbounds nuw i8, ptr %.07, i64 3
-  %i.u = load i8, ptr %i.t, align 1, !tbaa !7
+  %i.u = load i8, ptr %i.t, align 1, !tbaa !8
   %i.v = icmp slt i8 %i.u, -64
   %i.w = icmp samesign ult i8 %i.a, -8
   %or.cond.i = and i1 %i.w, %i.v
@@ -301,7 +301,7 @@ _ZN3re210chartoruneEPiPKc.exit:                   ; preds = %bb.n, %bb.h, %bb.k,
   %.0.i.sink = phi i64 [ 1, %bb.c ], [ 1, %bb.n ], [ 3, %bb.k ], [ 2, %bb.h ], [ 4, %bb.m ]
   %i.aa = getelementptr inbounds nuw i8, ptr %.07, i64 %.0.i.sink
   %i.ab = add nuw nsw i32 %.0, 1
-  br label %bb.b, !llvm.loop !8
+  br label %bb.b, !llvm.loop !10
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
@@ -316,7 +316,7 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader:                                       ; preds = %bb.a, %.backedge
   %.015 = phi ptr [ %i.h, %.backedge ], [ %0, %bb.a ] ; 7 uses
-  %i.c = load i8, ptr %.015, align 1, !tbaa !7    ; 7 uses
+  %i.c = load i8, ptr %.015, align 1, !tbaa !8    ; 7 uses
   %i.d = zext i8 %i.c to i32                      ; 4 uses
   %i.e = icmp sgt i8 %i.c, -1
   br i1 %i.e, label %bb.c, label %bb.e
@@ -332,11 +332,11 @@ bb.d:                                             ; preds = %bb.c
 .backedge:                                        ; preds = %bb.d, %_ZN3re210chartoruneEPiPKc.exit
   %.sink = phi i64 [ %.0.i, %_ZN3re210chartoruneEPiPKc.exit ], [ 1, %bb.d ]
   %i.h = getelementptr inbounds nuw i8, ptr %.015, i64 %.sink
-  br label %.preheader, !llvm.loop !10
+  br label %.preheader, !llvm.loop !12
 
 bb.e:                                             ; preds = %.preheader
   %i.i = getelementptr inbounds nuw i8, ptr %.015, i64 1
-  %i.j = load i8, ptr %i.i, align 1, !tbaa !7
+  %i.j = load i8, ptr %i.i, align 1, !tbaa !8
   %i.k = xor i8 %i.j, -128                        ; 2 uses
   %i.l = zext i8 %i.k to i32                      ; 3 uses
   %.not.i = icmp ult i8 %i.k, 64
@@ -359,7 +359,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.f
   %i.r = getelementptr inbounds nuw i8, ptr %.015, i64 2
-  %i.s = load i8, ptr %i.r, align 1, !tbaa !7
+  %i.s = load i8, ptr %i.r, align 1, !tbaa !8
   %i.t = xor i8 %i.s, -128                        ; 2 uses
   %i.u = zext i8 %i.t to i32                      ; 2 uses
   %.not38.i = icmp ult i8 %i.t, 64
@@ -383,7 +383,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.j
   %i.aa = getelementptr inbounds nuw i8, ptr %.015, i64 3
-  %i.ab = load i8, ptr %i.aa, align 1, !tbaa !7
+  %i.ab = load i8, ptr %i.aa, align 1, !tbaa !8
   %i.ac = xor i8 %i.ab, -128                      ; 2 uses
   %i.ad = icmp ult i8 %i.ac, 64
   %i.ae = icmp samesign ult i8 %i.c, -8
@@ -434,13 +434,15 @@ attributes #4 = { nounwind willreturn memory(read) }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!5, !5, i64 0}
-!8 = distinct !{!8, !9}
-!9 = !{!"llvm.loop.mustprogress"}
-!10 = distinct !{!10, !9}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!6, !6, i64 0}
+!9 = !{!5, !5, i64 0}
+!10 = distinct !{!10, !11}
+!11 = !{!"llvm.loop.mustprogress"}
+!12 = distinct !{!12, !11}
 end_hunk_0

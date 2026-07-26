@@ -15,7 +15,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.b = tail call i32 @DES_is_weak_key(ptr noundef %0) #2
   %.not3 = icmp eq i32 %i.b, 0
-  br i1 %.not3, label %bb.d, label %bb.b, !llvm.loop !9
+  br i1 %.not3, label %bb.d, label %bb.b, !llvm.loop !10
 
 bb.d:                                             ; preds = %bb.c
   tail call void @DES_set_odd_parity(ptr noundef %0) #2
@@ -44,11 +44,12 @@ attributes #2 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
-!4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!5 = !{!6, !6, i64 0}
-!6 = !{!"int", !7, i64 0}
-!7 = !{!"omnipotent char", !8, i64 0}
-!8 = !{!"Simple C/C++ TBAA"}
-!9 = distinct !{!9, !10}
-!10 = !{!"llvm.loop.mustprogress"}
+!4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!5 = !{!6, !7, i64 0}
+!6 = !{!"__libc_errno", !7, i64 0}
+!7 = !{!"int", !8, i64 0}
+!8 = !{!"omnipotent char", !9, i64 0}
+!9 = !{!"Simple C/C++ TBAA"}
+!10 = distinct !{!10, !11}
+!11 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

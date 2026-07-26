@@ -22,17 +22,17 @@ $__clang_call_terminate = comdat any
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4absl12lts_2024011615BlockingCounterC2Ei(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(17) initializes((0, 17)) %0, i32 noundef %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store i64 0, ptr %0, align 8, !tbaa !7
+  store i64 0, ptr %0, align 8, !tbaa !8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %1, ptr %i.a, align 8, !tbaa !10
+  store i32 %1, ptr %i.a, align 8, !tbaa !11
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 0, ptr %i.b, align 4, !tbaa !12
+  store i32 0, ptr %i.b, align 4, !tbaa !13
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = icmp eq i32 %1, 0
   %i.e = zext i1 %i.d to i8
-  store i8 %i.e, ptr %i.c, align 8, !tbaa !18
+  store i8 %i.e, ptr %i.c, align 8, !tbaa !19
   %i.f = icmp slt i32 %1, 0
-  br i1 %i.f, label %bb.b, label %bb.c, !prof !19
+  br i1 %i.f, label %bb.b, label %bb.c, !prof !20
 
 bb.b:                                             ; preds = %bb.a
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 70), i32 noundef 35, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3)
@@ -58,7 +58,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = atomicrmw sub ptr %i.a, i32 1 acq_rel, align 4 ; 2 uses
   %i.c = icmp slt i32 %i.b, 1
-  br i1 %i.c, label %bb.b, label %bb.c, !prof !19
+  br i1 %i.c, label %bb.b, label %bb.c, !prof !20
 
 bb.b:                                             ; preds = %bb.a
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 70), i32 noundef 41, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.5)
@@ -71,7 +71,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZN4absl12lts_202401165Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(8) %0)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 1, ptr %i.e, align 8, !tbaa !18
+  store i8 1, ptr %i.e, align 8, !tbaa !19
   invoke void @_ZN4absl12lts_202401165Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %0)
           to label %_ZN4absl12lts_202401169MutexLockD2Ev.exit unwind label %bb.e
 
@@ -92,9 +92,9 @@ bb.a:
   %1 = alloca %"class.absl::lts_20240116::Condition", align 8 ; 5 uses
   tail call void @_ZN4absl12lts_202401165Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(8) %0)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !12
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !13
   %.not = icmp eq i32 %i.b, 0
-  br i1 %.not, label %bb.e, label %bb.b, !prof !20
+  br i1 %.not, label %bb.e, label %bb.b, !prof !21
 
 bb.b:                                             ; preds = %bb.a
   invoke void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 70), i32 noundef 55, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.6, ptr noundef nonnull @.str.7)
@@ -109,7 +109,7 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.a
-  store i32 1, ptr %i.a, align 4, !tbaa !12
+  store i32 1, ptr %i.a, align 4, !tbaa !13
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #7
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   invoke void @_ZN4absl12lts_202401169ConditionC1EPFbPvES2_(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @_ZN4absl12lts_2024011612_GLOBAL__N_16IsDoneEPv, ptr noundef nonnull %i.d)
@@ -159,7 +159,7 @@ _ZN4absl12lts_202401169MutexLockD2Ev.exit4:       ; preds = %bb.i
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define internal noundef zeroext i1 @_ZN4absl12lts_2024011612_GLOBAL__N_16IsDoneEPv(ptr nofree noundef readonly captures(none) %0) #3 {
 bb.a:
-  %i.a = load i8, ptr %0, align 1, !tbaa !21, !range !22, !noundef !23
+  %i.a = load i8, ptr %0, align 1, !tbaa !22, !range !23, !noundef !24
   %i.b = trunc nuw i8 %i.a to i1
   ret i1 %i.b
 }
@@ -200,26 +200,27 @@ attributes #7 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSSt13__atomic_baseIlE", !9, i64 0}
-!9 = !{!"long", !5, i64 0}
-!10 = !{!11, !4, i64 0}
-!11 = !{!"_ZTSSt13__atomic_baseIiE", !4, i64 0}
-!12 = !{!13, !4, i64 12}
-!13 = !{!"_ZTSN4absl12lts_2024011615BlockingCounterE", !14, i64 0, !16, i64 8, !4, i64 12, !17, i64 16}
-!14 = !{!"_ZTSN4absl12lts_202401165MutexE", !15, i64 0}
-!15 = !{!"_ZTSSt6atomicIlE", !8, i64 0}
-!16 = !{!"_ZTSSt6atomicIiE", !11, i64 0}
-!17 = !{!"bool", !5, i64 0}
-!18 = !{!13, !17, i64 16}
-!19 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!20 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!21 = !{!17, !17, i64 0}
-!22 = !{i8 0, i8 2}
-!23 = !{}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSSt13__atomic_baseIlE", !10, i64 0}
+!10 = !{!"long", !6, i64 0}
+!11 = !{!12, !5, i64 0}
+!12 = !{!"_ZTSSt13__atomic_baseIiE", !5, i64 0}
+!13 = !{!14, !5, i64 12}
+!14 = !{!"_ZTSN4absl12lts_2024011615BlockingCounterE", !15, i64 0, !17, i64 8, !5, i64 12, !18, i64 16}
+!15 = !{!"_ZTSN4absl12lts_202401165MutexE", !16, i64 0}
+!16 = !{!"_ZTSSt6atomicIlE", !9, i64 0}
+!17 = !{!"_ZTSSt6atomicIiE", !12, i64 0}
+!18 = !{!"bool", !6, i64 0}
+!19 = !{!14, !18, i64 16}
+!20 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!21 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!22 = !{!18, !18, i64 0}
+!23 = !{i8 0, i8 2}
+!24 = !{}
 end_hunk_0

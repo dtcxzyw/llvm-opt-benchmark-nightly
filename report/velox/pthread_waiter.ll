@@ -24,9 +24,9 @@ $__clang_call_terminate = comdat any
 define void @_ZN4absl12lts_2024011624synchronization_internal13PthreadWaiterC2Ev(ptr noundef nonnull align 8 dereferenceable(96) initializes((88, 96)) %0) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store i32 0, ptr %i.a, align 8, !tbaa !7
+  store i32 0, ptr %i.a, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 92
-  store i32 0, ptr %i.b, align 4, !tbaa !9
+  store i32 0, ptr %i.b, align 4, !tbaa !10
   %i.c = tail call i32 @pthread_mutex_init(ptr noundef nonnull %0, ptr noundef null) #7 ; 2 uses
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -128,11 +128,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN4absl12lts_2024011624synchronization_internal12_GLOBAL__N_118PthreadMutexHolderC2EP15pthread_mutex_t.exit: ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !7
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !8
   %i.d = add nsw i32 %i.c, 1
-  store i32 %i.d, ptr %i.b, align 8, !tbaa !7
+  store i32 %i.d, ptr %i.b, align 8, !tbaa !8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 8 uses
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !9    ; 2 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !10   ; 2 uses
   %.not = icmp eq i32 %i.f, 0
   br i1 %.not, label %.lr.ph, label %._crit_edge
 
@@ -152,7 +152,7 @@ bb.c:                                             ; preds = %.lr.ph.split.us.pre
   br i1 %.not.us.peel, label %bb.d, label %.split63.us
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = load i32, ptr %i.e, align 4, !tbaa !9    ; 2 uses
+  %i.k = load i32, ptr %i.e, align 4, !tbaa !10   ; 2 uses
   %.not83.peel = icmp eq i32 %i.k, 0
   br i1 %.not83.peel, label %.lr.ph.split.us.peel.next, label %._crit_edge
 
@@ -169,9 +169,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.us, label %bb.g, label %.split63.us
 
 bb.g:                                             ; preds = %bb.f
-  %i.m = load i32, ptr %i.e, align 4, !tbaa !9    ; 2 uses
+  %i.m = load i32, ptr %i.e, align 4, !tbaa !10   ; 2 uses
   %.not83 = icmp eq i32 %i.m, 0
-  br i1 %.not83, label %.lr.ph.split.us.peel.next, label %._crit_edge, !llvm.loop !10
+  br i1 %.not83, label %.lr.ph.split.us.peel.next, label %._crit_edge, !llvm.loop !11
 
 .split.us:                                        ; preds = %.lr.ph.split.us.peel.next
   %lpad.loopexit110 = landingpad { ptr, i32 }
@@ -216,7 +216,7 @@ bb.g:                                             ; preds = %bb.f
   ]
 
 bb.h:                                             ; preds = %.noexc30.peel
-  %i.s = load i32, ptr %i.e, align 4, !tbaa !9    ; 2 uses
+  %i.s = load i32, ptr %i.e, align 4, !tbaa !10   ; 2 uses
   %.not81.peel = icmp eq i32 %i.s, 0
   br i1 %.not81.peel, label %.lr.ph.split.split.peel.next, label %._crit_edge
 
@@ -242,7 +242,7 @@ bb.h:                                             ; preds = %.noexc30.peel
   ]
 
 bb.i:                                             ; preds = %.noexc28.us.peel
-  %i.x = load i32, ptr %i.e, align 4, !tbaa !9    ; 2 uses
+  %i.x = load i32, ptr %i.e, align 4, !tbaa !10   ; 2 uses
   %.not82.peel = icmp eq i32 %i.x, 0
   br i1 %.not82.peel, label %.lr.ph.split.split.us.peel.next, label %._crit_edge
 
@@ -274,9 +274,9 @@ bb.j:                                             ; preds = %.lr.ph.split.split.
   ]
 
 bb.k:                                             ; preds = %.noexc28.us
-  %i.ac = load i32, ptr %i.e, align 4, !tbaa !9   ; 2 uses
+  %i.ac = load i32, ptr %i.e, align 4, !tbaa !10  ; 2 uses
   %.not82 = icmp eq i32 %i.ac, 0
-  br i1 %.not82, label %.lr.ph.split.split.us.peel.next, label %._crit_edge, !llvm.loop !13
+  br i1 %.not82, label %.lr.ph.split.split.us.peel.next, label %._crit_edge, !llvm.loop !14
 
 .split.split.us:                                  ; preds = %.lr.ph.split.split.us.peel.next
   %lpad.loopexit103 = landingpad { ptr, i32 }
@@ -362,21 +362,21 @@ bb.p:                                             ; preds = %.split73.us
   br label %.split
 
 bb.q:                                             ; preds = %.noexc30
-  %i.aj = load i32, ptr %i.e, align 4, !tbaa !9   ; 2 uses
+  %i.aj = load i32, ptr %i.e, align 4, !tbaa !10  ; 2 uses
   %.not81 = icmp eq i32 %i.aj, 0
-  br i1 %.not81, label %.lr.ph.split.split.peel.next, label %._crit_edge, !llvm.loop !14
+  br i1 %.not81, label %.lr.ph.split.split.peel.next, label %._crit_edge, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %bb.q, %bb.k, %bb.g, %bb.h, %bb.i, %bb.d, %_ZN4absl12lts_2024011624synchronization_internal12_GLOBAL__N_118PthreadMutexHolderC2EP15pthread_mutex_t.exit
   %.lcssa42 = phi i32 [ %i.f, %_ZN4absl12lts_2024011624synchronization_internal12_GLOBAL__N_118PthreadMutexHolderC2EP15pthread_mutex_t.exit ], [ %i.m, %bb.g ], [ %i.ac, %bb.k ], [ %i.k, %bb.d ], [ %i.x, %bb.i ], [ %i.s, %bb.h ], [ %i.aj, %bb.q ]
   %i.ak = add nsw i32 %.lcssa42, -1
-  store i32 %i.ak, ptr %i.e, align 4, !tbaa !9
+  store i32 %i.ak, ptr %i.e, align 4, !tbaa !10
   br label %.thread
 
 .thread:                                          ; preds = %.noexc30, %.noexc28.us, %.noexc30.peel, %.noexc28.us.peel, %._crit_edge
   %i.al = phi i1 [ true, %._crit_edge ], [ false, %.noexc28.us.peel ], [ false, %.noexc30.peel ], [ false, %.noexc28.us ], [ false, %.noexc30 ]
-  %storemerge.in = load i32, ptr %i.b, align 8, !tbaa !7
+  %storemerge.in = load i32, ptr %i.b, align 8, !tbaa !8
   %storemerge = add nsw i32 %storemerge.in, -1
-  store i32 %storemerge, ptr %i.b, align 8, !tbaa !7
+  store i32 %storemerge, ptr %i.b, align 8, !tbaa !8
   %i.am = call i32 @pthread_mutex_unlock(ptr noundef nonnull %0) #7 ; 2 uses
   %.not.i31 = icmp eq i32 %i.am, 0
   br i1 %.not.i31, label %_ZN4absl12lts_2024011624synchronization_internal12_GLOBAL__N_118PthreadMutexHolderD2Ev.exit, label %bb.r
@@ -448,11 +448,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN4absl12lts_2024011624synchronization_internal12_GLOBAL__N_118PthreadMutexHolderC2EP15pthread_mutex_t.exit: ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 2 uses
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !9
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !10
   %i.d = add nsw i32 %i.c, 1
-  store i32 %i.d, ptr %i.b, align 4, !tbaa !9
+  store i32 %i.d, ptr %i.b, align 4, !tbaa !10
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !7
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !8
   %.not.i3 = icmp eq i32 %i.f, 0
   br i1 %.not.i3, label %_ZN4absl12lts_2024011624synchronization_internal13PthreadWaiter19InternalCondVarPokeEv.exit, label %bb.c
 
@@ -460,7 +460,7 @@ bb.c:                                             ; preds = %_ZN4absl12lts_20240
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.h = tail call i32 @pthread_cond_signal(ptr noundef nonnull %i.g) #7 ; 2 uses
   %.not2.i = icmp eq i32 %i.h, 0
-  br i1 %.not2.i, label %_ZN4absl12lts_2024011624synchronization_internal13PthreadWaiter19InternalCondVarPokeEv.exit, label %bb.d, !prof !15
+  br i1 %.not2.i, label %_ZN4absl12lts_2024011624synchronization_internal13PthreadWaiter19InternalCondVarPokeEv.exit, label %bb.d, !prof !16
 
 bb.d:                                             ; preds = %bb.c
   invoke void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 79), i32 noundef 158, ptr noundef nonnull @.str.5, i32 noundef %i.h)
@@ -502,7 +502,7 @@ bb.h:                                             ; preds = %bb.d
 define void @_ZN4absl12lts_2024011624synchronization_internal13PthreadWaiter19InternalCondVarPokeEv(ptr noundef nonnull align 8 dereferenceable(96) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !7
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !8
   %.not = icmp eq i32 %i.b, 0
   br i1 %.not, label %bb.d, label %bb.b
 
@@ -510,7 +510,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = tail call i32 @pthread_cond_signal(ptr noundef nonnull %i.c) #7 ; 2 uses
   %.not2 = icmp eq i32 %i.d, 0
-  br i1 %.not2, label %bb.d, label %bb.c, !prof !15
+  br i1 %.not2, label %bb.d, label %bb.c, !prof !16
 
 bb.c:                                             ; preds = %bb.b
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 79), i32 noundef 158, ptr noundef nonnull @.str.5, i32 noundef %i.d)
@@ -533,7 +533,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN4absl12lts_2024011624synchronization_internal12_GLOBAL__N_118PthreadMutexHolderC2EP15pthread_mutex_t.exit: ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !7
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !8
   %.not.i3 = icmp eq i32 %i.c, 0
   br i1 %.not.i3, label %_ZN4absl12lts_2024011624synchronization_internal13PthreadWaiter19InternalCondVarPokeEv.exit, label %bb.c
 
@@ -541,7 +541,7 @@ bb.c:                                             ; preds = %_ZN4absl12lts_20240
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.e = tail call i32 @pthread_cond_signal(ptr noundef nonnull %i.d) #7 ; 2 uses
   %.not2.i = icmp eq i32 %i.e, 0
-  br i1 %.not2.i, label %_ZN4absl12lts_2024011624synchronization_internal13PthreadWaiter19InternalCondVarPokeEv.exit, label %bb.d, !prof !15
+  br i1 %.not2.i, label %_ZN4absl12lts_2024011624synchronization_internal13PthreadWaiter19InternalCondVarPokeEv.exit, label %bb.d, !prof !16
 
 bb.d:                                             ; preds = %bb.c
   invoke void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 79), i32 noundef 158, ptr noundef nonnull @.str.5, i32 noundef %i.e)
@@ -617,18 +617,19 @@ attributes #8 = { noreturn nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !4, i64 88}
-!8 = !{!"_ZTSN4absl12lts_2024011624synchronization_internal13PthreadWaiterE", !5, i64 0, !5, i64 40, !4, i64 88, !4, i64 92}
-!9 = !{!8, !4, i64 92}
-!10 = distinct !{!10, !11, !12}
-!11 = !{!"llvm.loop.mustprogress"}
-!12 = !{!"llvm.loop.peeled.count", i32 1}
-!13 = distinct !{!13, !11, !12}
-!14 = distinct !{!14, !11, !12}
-!15 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !5, i64 88}
+!9 = !{!"_ZTSN4absl12lts_2024011624synchronization_internal13PthreadWaiterE", !6, i64 0, !6, i64 40, !5, i64 88, !5, i64 92}
+!10 = !{!9, !5, i64 92}
+!11 = distinct !{!11, !12, !13}
+!12 = !{!"llvm.loop.mustprogress"}
+!13 = !{!"llvm.loop.peeled.count", i32 1}
+!14 = distinct !{!14, !12, !13}
+!15 = distinct !{!15, !12, !13}
+!16 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 end_hunk_0

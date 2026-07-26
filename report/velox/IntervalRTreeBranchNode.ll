@@ -12,7 +12,7 @@ $_ZTIN4geos5index13intervalrtree17IntervalRTreeNodeE = comdat any
 
 $_ZTSN4geos5index13intervalrtree17IntervalRTreeNodeE = comdat any
 
-@_ZTVN4geos5index13intervalrtree23IntervalRTreeBranchNodeE = unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos5index13intervalrtree23IntervalRTreeBranchNodeE, ptr @_ZN4geos5index13intervalrtree17IntervalRTreeNodeD2Ev, ptr @_ZN4geos5index13intervalrtree23IntervalRTreeBranchNodeD0Ev, ptr @_ZNK4geos5index13intervalrtree23IntervalRTreeBranchNode5queryEddPNS0_11ItemVisitorE] }, align 8
+@_ZTVN4geos5index13intervalrtree23IntervalRTreeBranchNodeE = local_unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos5index13intervalrtree23IntervalRTreeBranchNodeE, ptr @_ZN4geos5index13intervalrtree17IntervalRTreeNodeD2Ev, ptr @_ZN4geos5index13intervalrtree23IntervalRTreeBranchNodeD0Ev, ptr @_ZNK4geos5index13intervalrtree23IntervalRTreeBranchNode5queryEddPNS0_11ItemVisitorE] }, align 8
 @_ZTIN4geos5index13intervalrtree23IntervalRTreeBranchNodeE = constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN4geos5index13intervalrtree23IntervalRTreeBranchNodeE, ptr @_ZTIN4geos5index13intervalrtree17IntervalRTreeNodeE }, align 8
 @_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
 @_ZTSN4geos5index13intervalrtree23IntervalRTreeBranchNodeE = constant [54 x i8] c"N4geos5index13intervalrtree23IntervalRTreeBranchNodeE\00", align 1
@@ -24,7 +24,7 @@ $_ZTSN4geos5index13intervalrtree17IntervalRTreeNodeE = comdat any
 define void @_ZNK4geos5index13intervalrtree23IntervalRTreeBranchNode5queryEddPNS0_11ItemVisitorE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0, double noundef %1, double noundef %2, ptr noundef %3) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load double, ptr %i.a, align 8, !tbaa !7
+  %i.b = load double, ptr %i.a, align 8, !tbaa !8
   %i.c = fcmp ule double %i.b, %2
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.e = load double, ptr %i.d, align 8
@@ -34,12 +34,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !10   ; 3 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !11   ; 3 uses
   %.not = icmp eq ptr %i.h, null
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !14
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !15
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8
   tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(24) %i.h, double noundef %1, double noundef %2, ptr noundef %3)
@@ -47,12 +47,12 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !16   ; 3 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !17   ; 3 uses
   %.not10 = icmp eq ptr %i.m, null
   br i1 %.not10, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !14
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !15
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.p = load ptr, ptr %i.o, align 8
   tail call void %i.p(ptr noundef nonnull align 8 dereferenceable(24) %i.m, double noundef %1, double noundef %2, ptr noundef %3)
@@ -90,19 +90,20 @@ attributes #4 = { builtin nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 8}
-!8 = !{!"_ZTSN4geos5index13intervalrtree17IntervalRTreeNodeE", !9, i64 8, !9, i64 16}
-!9 = !{!"double", !5, i64 0}
-!10 = !{!11, !12, i64 24}
-!11 = !{!"_ZTSN4geos5index13intervalrtree23IntervalRTreeBranchNodeE", !8, i64 0, !12, i64 24, !12, i64 32}
-!12 = !{!"p1 _ZTSN4geos5index13intervalrtree17IntervalRTreeNodeE", !13, i64 0}
-!13 = !{!"any pointer", !5, i64 0}
-!14 = !{!15, !15, i64 0}
-!15 = !{!"vtable pointer", !6, i64 0}
-!16 = !{!11, !12, i64 32}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 8}
+!9 = !{!"_ZTSN4geos5index13intervalrtree17IntervalRTreeNodeE", !10, i64 8, !10, i64 16}
+!10 = !{!"double", !6, i64 0}
+!11 = !{!12, !13, i64 24}
+!12 = !{!"_ZTSN4geos5index13intervalrtree23IntervalRTreeBranchNodeE", !9, i64 0, !13, i64 24, !13, i64 32}
+!13 = !{!"p1 _ZTSN4geos5index13intervalrtree17IntervalRTreeNodeE", !14, i64 0}
+!14 = !{!"any pointer", !6, i64 0}
+!15 = !{!16, !16, i64 0}
+!16 = !{!"vtable pointer", !7, i64 0}
+!17 = !{!12, !13, i64 32}
 end_hunk_0

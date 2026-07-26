@@ -40,7 +40,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.b, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  store i8 45, ptr %2, align 1, !tbaa !7
+  store i8 45, ptr %2, align 1, !tbaa !8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -130,9 +130,9 @@ bb.b:                                             ; preds = %bb.a
   %i.q = lshr i32 %i.p, 19
   %i.r = zext i32 %i.o to i64
   %i.s = getelementptr inbounds nuw [16 x i8], ptr @DOUBLE_POW5_INV_SPLIT, i64 %i.r ; 2 uses
-  %.val193 = load i64, ptr %i.s, align 16, !tbaa !8
+  %.val193 = load i64, ptr %i.s, align 16, !tbaa !9
   %i.t = getelementptr i8, ptr %i.s, i64 8
-  %.val194 = load i64, ptr %i.t, align 8, !tbaa !8
+  %.val194 = load i64, ptr %i.t, align 8, !tbaa !9
   %i.u = or disjoint i64 %i.f, 2                  ; 2 uses
   %i.v = zext nneg i64 %i.u to i128               ; 2 uses
   %i.w = zext i64 %.val193 to i128                ; 3 uses
@@ -247,9 +247,9 @@ bb.g:                                             ; preds = %bb.a
   %i.cg = lshr i32 %i.cf, 19
   %i.ch = sext i32 %i.ce to i64
   %i.ci = getelementptr inbounds [16 x i8], ptr @DOUBLE_POW5_SPLIT, i64 %i.ch ; 2 uses
-  %.val = load i64, ptr %i.ci, align 16, !tbaa !8
+  %.val = load i64, ptr %i.ci, align 16, !tbaa !9
   %i.cj = getelementptr i8, ptr %i.ci, i64 8
-  %.val192 = load i64, ptr %i.cj, align 8, !tbaa !8
+  %.val192 = load i64, ptr %i.cj, align 8, !tbaa !9
   %i.ck = or disjoint i64 %i.f, 2
   %i.cl = zext nneg i64 %i.ck to i128             ; 2 uses
   %i.cm = zext i64 %.val to i128                  ; 3 uses
@@ -570,7 +570,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r
   %i.v = zext nneg i32 %i.t to i64
   %i.w = getelementptr inbounds nuw [8 x i8], ptr @pow_10.POW_TABLE, i64 %i.v
-  %i.x = load i64, ptr %i.w, align 8, !tbaa !8    ; 4 uses
+  %i.x = load i64, ptr %i.w, align 8, !tbaa !9    ; 4 uses
   %i.y = lshr i64 %i.x, 1                         ; 2 uses
   %i.z = udiv i64 %0, %i.x                        ; 4 uses
   %i.aa = mul i64 %i.z, %i.x                      ; 0 uses
@@ -700,14 +700,14 @@ decimalLength17.exit137:                          ; preds = %bb.aj, %bb.ai, %bb.
 bb.al:                                            ; preds = %.critedge.thread165
   %i.bg = zext nneg i32 %.pre-phi209 to i64
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr @pow_10.POW_TABLE, i64 %i.bg
-  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !8  ; 2 uses
+  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !9  ; 2 uses
   %i.bj = udiv i64 %.395171, %i.bi                ; 2 uses
   %i.bk = urem i64 %.395171, %i.bi                ; 19 uses
   %i.bl = add nsw i32 %.2102169, %.399170         ; 2 uses
   %i.bm = xor i32 %.2102169, -1
   %i.bn = zext nneg i32 %i.bm to i64
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr @pow_10.POW_TABLE, i64 %i.bn
-  %i.bp = load i64, ptr %i.bo, align 8, !tbaa !8
+  %i.bp = load i64, ptr %i.bo, align 8, !tbaa !9
   %i.bq = icmp ult i64 %i.bk, %i.bp
   br i1 %i.bq, label %bb.am, label %.critedge.thread
 
@@ -798,7 +798,7 @@ bb.bc:                                            ; preds = %.critedge.thread165
   br i1 %or.cond134.not, label %bb.bd, label %bb.be
 
 bb.bd:                                            ; preds = %.critedge.thread
-  store i8 45, ptr %4, align 1, !tbaa !7
+  store i8 45, ptr %4, align 1, !tbaa !8
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %.critedge.thread
@@ -941,7 +941,7 @@ bb.bj:                                            ; preds = %bb.bi
 bb.bk:                                            ; preds = %bb.bi
   %i.fo = trunc nuw nsw i32 %.165.i to i8
   %i.fp = or disjoint i8 %i.fo, 48
-  store i8 %i.fp, ptr %i.cl, align 1, !tbaa !7
+  store i8 %i.fp, ptr %i.cl, align 1, !tbaa !8
   br label %to_chars_uint64.exit
 
 to_chars_uint64.exit:                             ; preds = %bb.bj, %bb.bk
@@ -955,7 +955,7 @@ to_chars_uint64.exit:                             ; preds = %bb.bj, %bb.bk
   %i.fs = sext i32 %i.fr to i64
   %scevgep = getelementptr i8, ptr %4, i64 %i.fs
   %i.ft = zext nneg i32 %.1116 to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 48, i64 %i.ft, i1 false), !tbaa !7
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 48, i64 %i.ft, i1 false), !tbaa !8
   %i.fu = add i32 %i.fr, %.1116
   br label %._crit_edge
 
@@ -967,7 +967,7 @@ to_chars_uint64.exit:                             ; preds = %bb.bj, %bb.bk
 bb.bl:                                            ; preds = %._crit_edge
   %i.fv = sext i32 %.1.lcssa to i64
   %i.fw = getelementptr inbounds i8, ptr %4, i64 %i.fv
-  store i8 46, ptr %i.fw, align 1, !tbaa !7
+  store i8 46, ptr %i.fw, align 1, !tbaa !8
   %.not194 = icmp eq i32 %.2114, 0
   br i1 %.not194, label %._crit_edge191, label %.lr.ph190.preheader
 
@@ -979,7 +979,7 @@ bb.bl:                                            ; preds = %._crit_edge
   %i.gb = sext i32 %i.ga to i64
   %scevgep204 = getelementptr i8, ptr %4, i64 %i.gb
   %i.gc = zext i32 %.2114 to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep204, i8 48, i64 %i.gc, i1 false), !tbaa !7
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep204, i8 48, i64 %i.gc, i1 false), !tbaa !8
   %i.gd = add i32 %i.fz, %.2114
   br label %._crit_edge191
 
@@ -1124,7 +1124,7 @@ bb.bq:                                            ; preds = %bb.bp
 bb.br:                                            ; preds = %bb.bp
   %i.ji = trunc nuw nsw i32 %.165.i152 to i8
   %i.jj = or disjoint i8 %i.ji, 48
-  store i8 %i.jj, ptr %i.gf, align 1, !tbaa !7
+  store i8 %i.jj, ptr %i.gf, align 1, !tbaa !8
   br label %to_chars_uint64.exit161
 
 to_chars_uint64.exit161:                          ; preds = %bb.bq, %bb.br
@@ -1168,7 +1168,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.b, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  store i8 45, ptr %2, align 1, !tbaa !7
+  store i8 45, ptr %2, align 1, !tbaa !8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -1294,14 +1294,14 @@ decimalLength17.exit:                             ; preds = %.thread67, %bb.l, %
   %i.at = add nsw i32 %i.as, 1                    ; 2 uses
   %i.au = sext i32 %i.as to i64
   %i.av = getelementptr inbounds i8, ptr %2, i64 %i.au ; 2 uses
-  store i8 101, ptr %i.av, align 1, !tbaa !7
+  store i8 101, ptr %i.av, align 1, !tbaa !8
   %i.aw = icmp slt i32 %i.aq, 1
   br i1 %i.aw, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %decimalLength17.exit
   %i.ax = sext i32 %i.at to i64
   %i.ay = getelementptr inbounds i8, ptr %2, i64 %i.ax
-  store i8 45, ptr %i.ay, align 1, !tbaa !7
+  store i8 45, ptr %i.ay, align 1, !tbaa !8
   %i.az = sub nsw i32 1, %i.aq
   br label %bb.ac
 
@@ -1309,7 +1309,7 @@ bb.ab:                                            ; preds = %decimalLength17.exi
   %i.ba = add nsw i32 %i.aq, -1
   %i.bb = sext i32 %i.at to i64
   %i.bc = getelementptr inbounds i8, ptr %2, i64 %i.bb
-  store i8 43, ptr %i.bc, align 1, !tbaa !7
+  store i8 43, ptr %i.bc, align 1, !tbaa !8
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
@@ -1331,7 +1331,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.bm = trunc nuw nsw i32 %i.be to i8
   %i.bn = or disjoint i8 %i.bm, 48
   %i.bo = getelementptr i8, ptr %i.av, i64 4
-  store i8 %i.bn, ptr %i.bo, align 1, !tbaa !7
+  store i8 %i.bn, ptr %i.bo, align 1, !tbaa !8
   %i.bp = add nsw i32 %i.as, 5
   br label %copy_special_str.exit
 
@@ -1356,7 +1356,7 @@ bb.ag:                                            ; preds = %bb.ae
   %i.ca = add nsw i32 %i.as, 3
   %i.cb = sext i32 %.054 to i64
   %i.cc = getelementptr inbounds i8, ptr %2, i64 %i.cb
-  store i8 %i.bz, ptr %i.cc, align 1, !tbaa !7
+  store i8 %i.bz, ptr %i.cc, align 1, !tbaa !8
   br label %copy_special_str.exit
 
 copy_special_str.exit:                            ; preds = %bb.ad, %bb.ag, %bb.af, %.thread64, %bb.g, %bb.d
@@ -1379,12 +1379,13 @@ attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C/C++ TBAA"}
-!7 = !{!5, !5, i64 0}
-!8 = !{!9, !9, i64 0}
-!9 = !{!"long", !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C/C++ TBAA"}
+!8 = !{!6, !6, i64 0}
+!9 = !{!10, !10, i64 0}
+!10 = !{!"long", !6, i64 0}
 end_hunk_0

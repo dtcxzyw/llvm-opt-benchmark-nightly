@@ -9,8 +9,8 @@ define noundef i64 @_ZN5folly6detail24qfind_first_byte_of_sve2ENS0_15StringPiece
 bb.a:
   %i.a = icmp eq ptr %3, %2
   %i.b = icmp eq ptr %1, %0
-  %or.cond.i = select i1 %i.a, i1 true, i1 %i.b, !prof !11
-  br i1 %or.cond.i, label %_ZN5folly6detail26qfind_first_byte_of_nosimdENS0_15StringPieceLiteES1_.exit, label %bb.b, !prof !11
+  %or.cond.i = select i1 %i.a, i1 true, i1 %i.b, !prof !12
+  br i1 %or.cond.i, label %_ZN5folly6detail26qfind_first_byte_of_nosimdENS0_15StringPieceLiteES1_.exit, label %bb.b, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.c = ptrtoint ptr %3 to i64
@@ -45,24 +45,24 @@ bb.f:                                             ; preds = %bb.e, %bb.c
 
 .preheader.i.i.i:                                 ; preds = %.preheader.i.i.i.preheader, %._crit_edge.i.i.i
   %.01425.i.i.i = phi ptr [ %i.s, %._crit_edge.i.i.i ], [ %0, %.preheader.i.i.i.preheader ] ; 4 uses
-  %i.o = load i8, ptr %.01425.i.i.i, align 1, !tbaa !12
+  %i.o = load i8, ptr %.01425.i.i.i, align 1, !tbaa !13
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.h
   %i.p = getelementptr inbounds nuw i8, ptr %.01223.i.i.i, i64 1 ; 2 uses
   %.not16.i.i.i = icmp eq ptr %i.p, %3
-  br i1 %.not16.i.i.i, label %._crit_edge.i.i.i, label %bb.h, !llvm.loop !13
+  br i1 %.not16.i.i.i, label %._crit_edge.i.i.i, label %bb.h, !llvm.loop !14
 
 bb.h:                                             ; preds = %bb.g, %.preheader.i.i.i
   %.01223.i.i.i = phi ptr [ %2, %.preheader.i.i.i ], [ %i.p, %bb.g ] ; 2 uses
-  %i.q = load i8, ptr %.01223.i.i.i, align 1, !tbaa !12
+  %i.q = load i8, ptr %.01223.i.i.i, align 1, !tbaa !13
   %i.r = icmp eq i8 %i.o, %i.q
   br i1 %i.r, label %_ZSt13find_first_ofIPKcS1_ZN5folly6detail23qfind_first_byte_of_stdENS3_15StringPieceLiteES4_EUlccE_ET_S6_S6_T0_S7_T1_.exit.i.i, label %bb.g
 
 ._crit_edge.i.i.i:                                ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %.01425.i.i.i, i64 1 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.s, %1
-  br i1 %.not.i.i.i, label %_ZN5folly6detail26qfind_first_byte_of_nosimdENS0_15StringPieceLiteES1_.exit, label %.preheader.i.i.i, !llvm.loop !15
+  br i1 %.not.i.i.i, label %_ZN5folly6detail26qfind_first_byte_of_nosimdENS0_15StringPieceLiteES1_.exit, label %.preheader.i.i.i, !llvm.loop !16
 
 _ZSt13find_first_ofIPKcS1_ZN5folly6detail23qfind_first_byte_of_stdENS3_15StringPieceLiteES4_EUlccE_ET_S6_S6_T0_S7_T1_.exit.i.i: ; preds = %bb.h
   %i.t = icmp eq ptr %.01425.i.i.i, %1
@@ -94,14 +94,15 @@ attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!"branch_weights", i32 4001, i32 4000000}
-!12 = !{!9, !9, i64 0}
-!13 = distinct !{!13, !14}
-!14 = !{!"llvm.loop.mustprogress"}
-!15 = distinct !{!15, !14}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!"branch_weights", i32 4001, i32 4000000}
+!13 = !{!10, !10, i64 0}
+!14 = distinct !{!14, !15}
+!15 = !{!"llvm.loop.mustprogress"}
+!16 = distinct !{!16, !15}
 end_hunk_0

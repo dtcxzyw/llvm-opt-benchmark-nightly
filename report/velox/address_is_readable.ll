@@ -22,10 +22,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = inttoptr i64 %i.b to ptr
   %i.e = tail call ptr @__errno_location() #4     ; 4 uses
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !3    ; 2 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !8    ; 2 uses
   %i.g = tail call i64 (i64, ...) @syscall(i64 noundef 14, i32 noundef -1, ptr noundef nonnull %i.d, ptr noundef null, i32 noundef 8) #5
   %.not = icmp eq i64 %i.g, -1
-  br i1 %.not, label %bb.f, label %bb.c, !prof !7
+  br i1 %.not, label %bb.f, label %bb.c, !prof !9
 
 bb.c:                                             ; preds = %bb.b
   invoke void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 73), i32 noundef 89, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3)
@@ -40,11 +40,11 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.k
 
 bb.f:                                             ; preds = %bb.b
-  %i.i = load i32, ptr %i.e, align 4, !tbaa !3    ; 2 uses
+  %i.i = load i32, ptr %i.e, align 4, !tbaa !8    ; 2 uses
   switch i32 %i.i, label %bb.g [
     i32 22, label %bb.j
     i32 14, label %bb.j
-  ], !prof !8
+  ], !prof !10
 
 bb.g:                                             ; preds = %bb.f
   invoke void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 73), i32 noundef 90, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.5)
@@ -60,12 +60,12 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.f, %bb.f
   %i.k = icmp ne i32 %i.i, 14
-  store i32 %i.f, ptr %i.e, align 4, !tbaa !3
+  store i32 %i.f, ptr %i.e, align 4, !tbaa !8
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.i, %bb.e
   %.pn = phi { ptr, i32 } [ %i.h, %bb.e ], [ %i.j, %bb.i ]
-  store i32 %i.f, ptr %i.e, align 4, !tbaa !3
+  store i32 %i.f, ptr %i.e, align 4, !tbaa !8
   resume { ptr, i32 } %.pn
 
 bb.l:                                             ; preds = %bb.a, %bb.j
@@ -96,11 +96,13 @@ attributes #5 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!8 = !{!"branch_weights", i32 1, i32 1000, i32 1000}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!5, !5, i64 0}
+!9 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!10 = !{!"branch_weights", i32 1, i32 1000, i32 1000}
 end_hunk_0

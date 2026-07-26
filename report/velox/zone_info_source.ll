@@ -15,7 +15,7 @@ target triple = "x86_64-pc-linux-gnu"
 %"struct.std::_Head_base.1" = type { ptr }
 
 @_ZN4absl12lts_2024011613time_internal14cctz_extension24zone_info_source_factoryB5cxx11E = weak local_unnamed_addr global ptr @_ZN4absl12lts_2024011613time_internal14cctz_extension12_GLOBAL__N_114DefaultFactoryERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt8functionIFSt10unique_ptrINS1_4cctz14ZoneInfoSourceESt14default_deleteISF_EESB_EE, align 8
-@_ZTVN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceE = unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceE, ptr @_ZN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceD1Ev, ptr @_ZN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceD0Ev, ptr @__cxa_pure_virtual, ptr @__cxa_pure_virtual, ptr @_ZNK4absl12lts_2024011613time_internal4cctz14ZoneInfoSource7VersionB5cxx11Ev] }, align 8
+@_ZTVN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceE = local_unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceE, ptr @_ZN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceD1Ev, ptr @_ZN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceD0Ev, ptr @__cxa_pure_virtual, ptr @__cxa_pure_virtual, ptr @_ZNK4absl12lts_2024011613time_internal4cctz14ZoneInfoSource7VersionB5cxx11Ev] }, align 8
 @_ZTIN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceE = constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceE }, align 8
 @_ZTVN10__cxxabiv117__class_type_infoE = external global [0 x ptr]
 @_ZTSN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceE = constant [58 x i8] c"N4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceE\00", align 1
@@ -29,7 +29,7 @@ bb.a:
 }
 
 ; Function Attrs: cold mustprogress noreturn nounwind memory(inaccessiblemem: write) uwtable
-define void @_ZN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceD0Ev(ptr nofree nonnull readnone align 8 captures(none) dead_on_return(8) %0) unnamed_addr #1 align 2 {
+define void @_ZN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceD0Ev(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #1 align 2 {
 bb.a:
   tail call void @llvm.trap() #6
   unreachable
@@ -42,10 +42,10 @@ declare void @llvm.trap() #2
 define void @_ZNK4absl12lts_2024011613time_internal4cctz14ZoneInfoSource7VersionB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree nonnull readnone align 8 captures(none) %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store ptr %i.a, ptr %0, align 8, !tbaa !7
+  store ptr %i.a, ptr %0, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %i.b, align 8, !tbaa !11
-  store i8 0, ptr %i.a, align 8, !tbaa !14
+  store i64 0, ptr %i.b, align 8, !tbaa !12
+  store i8 0, ptr %i.a, align 8, !tbaa !15
   ret void
 }
 
@@ -53,18 +53,18 @@ bb.a:
 define internal void @_ZN4absl12lts_2024011613time_internal14cctz_extension12_GLOBAL__N_114DefaultFactoryERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt8functionIFSt10unique_ptrINS1_4cctz14ZoneInfoSourceESt14default_deleteISF_EESB_EE(ptr dead_on_unwind noalias writable sret(%"class.std::unique_ptr") align 8 %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(32) %2) #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !15, !noalias !17
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !16, !noalias !18
   %.not.i.i = icmp eq ptr %i.b, null
   br i1 %.not.i.i, label %bb.b, label %_ZNKSt8functionIFSt10unique_ptrIN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceESt14default_deleteIS5_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclESG_.exit
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZSt25__throw_bad_function_callv() #7, !noalias !17
+  tail call void @_ZSt25__throw_bad_function_callv() #7, !noalias !18
   unreachable
 
 _ZNKSt8functionIFSt10unique_ptrIN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceESt14default_deleteIS5_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclESG_.exit: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !20, !noalias !17
-  tail call void %i.d(ptr dead_on_unwind writable sret(%"class.std::unique_ptr") align 8 %0, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %1), !inline_history !22
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !21, !noalias !18
+  tail call void %i.d(ptr dead_on_unwind writable sret(%"class.std::unique_ptr") align 8 %0, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %1), !inline_history !23
   ret void
 }
 
@@ -90,25 +90,26 @@ attributes #7 = { noreturn }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !9, i64 0}
-!9 = !{!"p1 omnipotent char", !10, i64 0}
-!10 = !{!"any pointer", !5, i64 0}
-!11 = !{!12, !13, i64 8}
-!12 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !8, i64 0, !13, i64 8, !5, i64 16}
-!13 = !{!"long", !5, i64 0}
-!14 = !{!5, !5, i64 0}
-!15 = !{!16, !10, i64 16}
-!16 = !{!"_ZTSSt14_Function_base", !5, i64 0, !10, i64 16}
-!17 = !{!18}
-!18 = distinct !{!18, !19, !"_ZNKSt8functionIFSt10unique_ptrIN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceESt14default_deleteIS5_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclESG_: argument 0"}
-!19 = distinct !{!19, !"_ZNKSt8functionIFSt10unique_ptrIN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceESt14default_deleteIS5_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclESG_"}
-!20 = !{!21, !10, i64 24}
-!21 = !{!"_ZTSSt8functionIFSt10unique_ptrIN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceESt14default_deleteIS5_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE", !16, i64 0, !10, i64 24}
-!22 = distinct !{null}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !10, i64 0}
+!10 = !{!"p1 omnipotent char", !11, i64 0}
+!11 = !{!"any pointer", !6, i64 0}
+!12 = !{!13, !14, i64 8}
+!13 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !9, i64 0, !14, i64 8, !6, i64 16}
+!14 = !{!"long", !6, i64 0}
+!15 = !{!6, !6, i64 0}
+!16 = !{!17, !11, i64 16}
+!17 = !{!"_ZTSSt14_Function_base", !6, i64 0, !11, i64 16}
+!18 = !{!19}
+!19 = distinct !{!19, !20, !"_ZNKSt8functionIFSt10unique_ptrIN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceESt14default_deleteIS5_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclESG_: argument 0"}
+!20 = distinct !{!20, !"_ZNKSt8functionIFSt10unique_ptrIN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceESt14default_deleteIS5_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclESG_"}
+!21 = !{!22, !11, i64 24}
+!22 = !{!"_ZTSSt8functionIFSt10unique_ptrIN4absl12lts_2024011613time_internal4cctz14ZoneInfoSourceESt14default_deleteIS5_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE", !17, i64 0, !11, i64 24}
+!23 = distinct !{null}
 end_hunk_0

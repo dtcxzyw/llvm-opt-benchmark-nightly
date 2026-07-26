@@ -17,7 +17,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = trunc nuw nsw i32 %1 to i8
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %i.c, ptr %i.a, align 1, !tbaa !7
+  store i8 %i.c, ptr %i.a, align 1, !tbaa !8
   br label %_ZN6snappy6Varint8Encode32EPcj.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -28,11 +28,11 @@ bb.d:                                             ; preds = %bb.c
   %i.f = trunc i32 %1 to i8
   %i.g = or i8 %i.f, -128
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %i.g, ptr %i.a, align 1, !tbaa !7
+  store i8 %i.g, ptr %i.a, align 1, !tbaa !8
   %i.i = lshr i32 %1, 7
   %i.j = trunc nuw nsw i32 %i.i to i8
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %i.j, ptr %i.h, align 1, !tbaa !7
+  store i8 %i.j, ptr %i.h, align 1, !tbaa !8
   br label %_ZN6snappy6Varint8Encode32EPcj.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -43,16 +43,16 @@ bb.f:                                             ; preds = %bb.e
   %i.m = trunc i32 %1 to i8
   %i.n = or i8 %i.m, -128
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %i.n, ptr %i.a, align 1, !tbaa !7
+  store i8 %i.n, ptr %i.a, align 1, !tbaa !8
   %i.p = lshr i32 %1, 7
   %i.q = trunc i32 %i.p to i8
   %i.r = or i8 %i.q, -128
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %i.r, ptr %i.o, align 1, !tbaa !7
+  store i8 %i.r, ptr %i.o, align 1, !tbaa !8
   %i.t = lshr i32 %1, 14
   %i.u = trunc nuw nsw i32 %i.t to i8
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %i.u, ptr %i.s, align 1, !tbaa !7
+  store i8 %i.u, ptr %i.s, align 1, !tbaa !8
   br label %_ZN6snappy6Varint8Encode32EPcj.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -60,34 +60,34 @@ bb.g:                                             ; preds = %bb.e
   %i.x = trunc i32 %1 to i8
   %i.y = or i8 %i.x, -128
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %i.y, ptr %i.a, align 1, !tbaa !7
+  store i8 %i.y, ptr %i.a, align 1, !tbaa !8
   %i.aa = lshr i32 %1, 7
   %i.ab = trunc i32 %i.aa to i8
   %i.ac = or i8 %i.ab, -128
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %i.ac, ptr %i.z, align 1, !tbaa !7
+  store i8 %i.ac, ptr %i.z, align 1, !tbaa !8
   %i.ae = lshr i32 %1, 14
   %i.af = trunc i32 %i.ae to i8
   %i.ag = or i8 %i.af, -128
   %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 3 ; 2 uses
-  store i8 %i.ag, ptr %i.ad, align 1, !tbaa !7
+  store i8 %i.ag, ptr %i.ad, align 1, !tbaa !8
   %i.ai = lshr i32 %1, 21
   %i.aj = trunc i32 %i.ai to i8                   ; 2 uses
   br i1 %i.w, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %i.aj, ptr %i.ah, align 1, !tbaa !7
+  store i8 %i.aj, ptr %i.ah, align 1, !tbaa !8
   br label %_ZN6snappy6Varint8Encode32EPcj.exit
 
 bb.i:                                             ; preds = %bb.g
   %i.al = or i8 %i.aj, -128
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %i.al, ptr %i.ah, align 1, !tbaa !7
+  store i8 %i.al, ptr %i.ah, align 1, !tbaa !8
   %i.an = lshr i32 %1, 28
   %i.ao = trunc nuw nsw i32 %i.an to i8
   %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %i.ao, ptr %i.am, align 1, !tbaa !7
+  store i8 %i.ao, ptr %i.am, align 1, !tbaa !8
   br label %_ZN6snappy6Varint8Encode32EPcj.exit
 
 _ZN6snappy6Varint8Encode32EPcj.exit:              ; preds = %bb.b, %bb.d, %bb.f, %bb.h, %bb.i
@@ -96,7 +96,7 @@ _ZN6snappy6Varint8Encode32EPcj.exit:              ; preds = %bb.b, %bb.d, %bb.f,
   %i.ar = ptrtoint ptr %i.a to i64
   %i.as = sub i64 %i.aq, %i.ar                    ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.au = load i64, ptr %i.at, align 8, !tbaa !8
+  %i.au = load i64, ptr %i.at, align 8, !tbaa !9
   %i.av = sub i64 4611686018427387903, %i.au
   %i.aw = icmp ult i64 %i.av, %i.as
   br i1 %i.aw, label %bb.j, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit
@@ -135,16 +135,17 @@ attributes #5 = { noreturn nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!5, !5, i64 0}
-!8 = !{!9, !13, i64 8}
-!9 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !10, i64 0, !13, i64 8, !5, i64 16}
-!10 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !11, i64 0}
-!11 = !{!"p1 omnipotent char", !12, i64 0}
-!12 = !{!"any pointer", !5, i64 0}
-!13 = !{!"long", !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!6, !6, i64 0}
+!9 = !{!10, !14, i64 8}
+!10 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !11, i64 0, !14, i64 8, !6, i64 16}
+!11 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !12, i64 0}
+!12 = !{!"p1 omnipotent char", !13, i64 0}
+!13 = !{!"any pointer", !6, i64 0}
+!14 = !{!"long", !6, i64 0}
 end_hunk_0

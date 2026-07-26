@@ -12,7 +12,7 @@ target triple = "x86_64-pc-linux-gnu"
 define noundef range(i32 0, 14) i32 @_ZN4absl12lts_2024011612crc_internal10GetCpuTypeEv() local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %0 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %i.a = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid \0A\09", "={ax},={bx},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 0, i32 0) #3, !srcloc !7 ; 3 uses
+  %i.a = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid \0A\09", "={ax},={bx},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 0, i32 0) #3, !srcloc !8 ; 3 uses
   %i.b = extractvalue { i32, i32, i32, i32 } %i.a, 1
   %i.c = extractvalue { i32, i32, i32, i32 } %i.a, 2
   %i.d = extractvalue { i32, i32, i32, i32 } %i.a, 3
@@ -52,7 +52,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #3
-  %i.ab = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid \0A\09", "={ax},={bx},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 1, i32 0) #3, !srcloc !7 ; 2 uses
+  %i.ab = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid \0A\09", "={ax},={bx},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 1, i32 0) #3, !srcloc !8 ; 2 uses
   %i.ac = extractvalue { i32, i32, i32, i32 } %i.ab, 0 ; 4 uses
   %i.ad = extractvalue { i32, i32, i32, i32 } %i.ab, 1
   %i.ae = and i32 %i.ad, 255
@@ -103,7 +103,7 @@ bb.i:                                             ; preds = %bb.c
   br label %_ZN4absl12lts_2024011612crc_internal12_GLOBAL__N_115GetIntelCpuTypeEv.exit
 
 bb.j:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20.i
-  %i.ao = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid \0A\09", "={ax},={bx},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 1, i32 0) #3, !srcloc !7
+  %i.ao = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid \0A\09", "={ax},={bx},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 1, i32 0) #3, !srcloc !8
   %i.ap = extractvalue { i32, i32, i32, i32 } %i.ao, 0 ; 4 uses
   %i.aq = lshr i32 %i.ap, 8
   %i.ar = and i32 %i.aq, 15                       ; 2 uses
@@ -188,10 +188,11 @@ attributes #3 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{i64 1319, i64 1328}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{i64 1319, i64 1328}
 end_hunk_0

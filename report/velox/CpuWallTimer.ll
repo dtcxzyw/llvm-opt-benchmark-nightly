@@ -16,12 +16,12 @@ bb.a:
   store i64 %i.a, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = tail call noundef i64 @_ZN8facebook5velox7process14threadCpuNanosEv()
-  store i64 %i.c, ptr %i.b, align 8, !tbaa !7
+  store i64 %i.c, ptr %i.b, align 8, !tbaa !8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %1, ptr %i.d, align 8, !tbaa !14
-  %i.e = load i64, ptr %1, align 8, !tbaa !15
+  store ptr %1, ptr %i.d, align 8, !tbaa !15
+  %i.e = load i64, ptr %1, align 8, !tbaa !16
   %i.f = add i64 %i.e, 1
-  store i64 %i.f, ptr %1, align 8, !tbaa !15
+  store i64 %i.f, ptr %1, align 8, !tbaa !16
   ret void
 }
 
@@ -38,22 +38,22 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !7
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !8
   %i.d = sub i64 %i.a, %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !17, !nonnull !18, !align !19
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !18, !nonnull !19, !align !20
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !20
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !21
   %i.i = add i64 %i.d, %i.h
-  store i64 %i.i, ptr %i.g, align 8, !tbaa !20
+  store i64 %i.i, ptr %i.g, align 8, !tbaa !21
   %i.j = tail call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #6
-  %.sroa.0.0.copyload.i2.i = load i64, ptr %0, align 8, !tbaa !21
+  %.sroa.0.0.copyload.i2.i = load i64, ptr %0, align 8, !tbaa !22
   %i.k = sub i64 %i.j, %.sroa.0.0.copyload.i2.i
-  %i.l = load ptr, ptr %i.e, align 8, !tbaa !17, !nonnull !18, !align !19
+  %i.l = load ptr, ptr %i.e, align 8, !tbaa !18, !nonnull !19, !align !20
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !22
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !23
   %i.o = add i64 %i.k, %i.n
-  store i64 %i.o, ptr %i.m, align 8, !tbaa !22
+  store i64 %i.o, ptr %i.m, align 8, !tbaa !23
   ret void
 
 bb.c:                                             ; preds = %bb.a
@@ -94,25 +94,26 @@ attributes #7 = { noreturn nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !11, i64 8}
-!8 = !{!"_ZTSN8facebook5velox12CpuWallTimerE", !9, i64 0, !11, i64 8, !12, i64 16}
-!9 = !{!"_ZTSNSt6chrono10time_pointINS_3_V212steady_clockENS_8durationIlSt5ratioILl1ELl1000000000EEEEEE", !10, i64 0}
-!10 = !{!"_ZTSNSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEE", !11, i64 0}
-!11 = !{!"long", !5, i64 0}
-!12 = !{!"p1 _ZTSN8facebook5velox13CpuWallTimingE", !13, i64 0}
-!13 = !{!"any pointer", !5, i64 0}
-!14 = !{!12, !12, i64 0}
-!15 = !{!16, !11, i64 0}
-!16 = !{!"_ZTSN8facebook5velox13CpuWallTimingE", !11, i64 0, !11, i64 8, !11, i64 16}
-!17 = !{!8, !12, i64 16}
-!18 = !{}
-!19 = !{i64 8}
-!20 = !{!16, !11, i64 16}
-!21 = !{!11, !11, i64 0}
-!22 = !{!16, !11, i64 8}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !12, i64 8}
+!9 = !{!"_ZTSN8facebook5velox12CpuWallTimerE", !10, i64 0, !12, i64 8, !13, i64 16}
+!10 = !{!"_ZTSNSt6chrono10time_pointINS_3_V212steady_clockENS_8durationIlSt5ratioILl1ELl1000000000EEEEEE", !11, i64 0}
+!11 = !{!"_ZTSNSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEE", !12, i64 0}
+!12 = !{!"long", !6, i64 0}
+!13 = !{!"p1 _ZTSN8facebook5velox13CpuWallTimingE", !14, i64 0}
+!14 = !{!"any pointer", !6, i64 0}
+!15 = !{!13, !13, i64 0}
+!16 = !{!17, !12, i64 0}
+!17 = !{!"_ZTSN8facebook5velox13CpuWallTimingE", !12, i64 0, !12, i64 8, !12, i64 16}
+!18 = !{!9, !13, i64 16}
+!19 = !{}
+!20 = !{i64 8}
+!21 = !{!17, !12, i64 16}
+!22 = !{!12, !12, i64 0}
+!23 = !{!17, !12, i64 8}
 end_hunk_0

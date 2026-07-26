@@ -4,7 +4,7 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-module asm
+module asm(target_features: "+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave", target_cpu: "x86-64")
     ".globl _ZSt21ios_base_library_initv"
 
 ; Function Attrs: mustprogress uwtable
@@ -14,7 +14,7 @@ bb.a:
   %i.b = alloca i8, align 1                       ; 4 uses
   %i.c = alloca i8, align 1                       ; 4 uses
   %i.d = alloca i8, align 1                       ; 4 uses
-  %i.e = load i8, ptr %1, align 1, !tbaa !7
+  %i.e = load i8, ptr %1, align 1, !tbaa !8
   switch i8 %i.e, label %bb.n [
     i8 2, label %bb.b
     i8 1, label %bb.e
@@ -24,13 +24,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  store i8 101, ptr %i.d, align 1, !tbaa !9
-  %i.f = load ptr, ptr %0, align 8, !tbaa !10
+  store i8 101, ptr %i.d, align 1, !tbaa !10
+  %i.f = load ptr, ptr %0, align 8, !tbaa !11
   %i.g = getelementptr i8, ptr %i.f, i64 -24
   %i.h = load i64, ptr %i.g, align 8
   %i.i = getelementptr inbounds i8, ptr %0, i64 %i.h
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !12
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !13
   %.not.i = icmp eq i64 %i.k, 0
   br i1 %.not.i, label %bb.d, label %bb.c
 
@@ -48,13 +48,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit: ; preds = %bb.c, %bb
 
 bb.e:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  store i8 98, ptr %i.c, align 1, !tbaa !9
-  %i.n = load ptr, ptr %0, align 8, !tbaa !10
+  store i8 98, ptr %i.c, align 1, !tbaa !10
+  %i.n = load ptr, ptr %0, align 8, !tbaa !11
   %i.o = getelementptr i8, ptr %i.n, i64 -24
   %i.p = load i64, ptr %i.o, align 8
   %i.q = getelementptr inbounds i8, ptr %0, i64 %i.p
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %i.s = load i64, ptr %i.r, align 8, !tbaa !12
+  %i.s = load i64, ptr %i.r, align 8, !tbaa !13
   %.not.i6 = icmp eq i64 %i.s, 0
   br i1 %.not.i6, label %bb.g, label %bb.f
 
@@ -72,13 +72,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit8: ; preds = %bb.f, %b
 
 bb.h:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store i8 105, ptr %i.b, align 1, !tbaa !9
-  %i.v = load ptr, ptr %0, align 8, !tbaa !10
+  store i8 105, ptr %i.b, align 1, !tbaa !10
+  %i.v = load ptr, ptr %0, align 8, !tbaa !11
   %i.w = getelementptr i8, ptr %i.v, i64 -24
   %i.x = load i64, ptr %i.w, align 8
   %i.y = getelementptr inbounds i8, ptr %0, i64 %i.x
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  %i.aa = load i64, ptr %i.z, align 8, !tbaa !12
+  %i.aa = load i64, ptr %i.z, align 8, !tbaa !13
   %.not.i9 = icmp eq i64 %i.aa, 0
   br i1 %.not.i9, label %bb.j, label %bb.i
 
@@ -96,13 +96,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit11: ; preds = %bb.i, %
 
 bb.k:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store i8 45, ptr %i.a, align 1, !tbaa !9
-  %i.ad = load ptr, ptr %0, align 8, !tbaa !10
+  store i8 45, ptr %i.a, align 1, !tbaa !10
+  %i.ad = load ptr, ptr %0, align 8, !tbaa !11
   %i.ae = getelementptr i8, ptr %i.ad, i64 -24
   %i.af = load i64, ptr %i.ae, align 8
   %i.ag = getelementptr inbounds i8, ptr %0, i64 %i.af
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !12
+  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !13
   %.not.i12 = icmp eq i64 %i.ai, 0
   br i1 %.not.i12, label %bb.m, label %bb.l
 
@@ -142,25 +142,26 @@ attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"_ZTSN4geos4geom8LocationE", !5, i64 0}
-!9 = !{!5, !5, i64 0}
-!10 = !{!11, !11, i64 0}
-!11 = !{!"vtable pointer", !6, i64 0}
-!12 = !{!13, !14, i64 16}
-!13 = !{!"_ZTSSt8ios_base", !14, i64 8, !14, i64 16, !15, i64 24, !16, i64 28, !16, i64 32, !17, i64 40, !19, i64 48, !5, i64 64, !4, i64 192, !20, i64 200, !21, i64 208}
-!14 = !{!"long", !5, i64 0}
-!15 = !{!"_ZTSSt13_Ios_Fmtflags", !5, i64 0}
-!16 = !{!"_ZTSSt12_Ios_Iostate", !5, i64 0}
-!17 = !{!"p1 _ZTSNSt8ios_base14_Callback_listE", !18, i64 0}
-!18 = !{!"any pointer", !5, i64 0}
-!19 = !{!"_ZTSNSt8ios_base6_WordsE", !18, i64 0, !14, i64 8}
-!20 = !{!"p1 _ZTSNSt8ios_base6_WordsE", !18, i64 0}
-!21 = !{!"_ZTSSt6locale", !22, i64 0}
-!22 = !{!"p1 _ZTSNSt6locale5_ImplE", !18, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"_ZTSN4geos4geom8LocationE", !6, i64 0}
+!10 = !{!6, !6, i64 0}
+!11 = !{!12, !12, i64 0}
+!12 = !{!"vtable pointer", !7, i64 0}
+!13 = !{!14, !15, i64 16}
+!14 = !{!"_ZTSSt8ios_base", !15, i64 8, !15, i64 16, !16, i64 24, !17, i64 28, !17, i64 32, !18, i64 40, !20, i64 48, !6, i64 64, !5, i64 192, !21, i64 200, !22, i64 208}
+!15 = !{!"long", !6, i64 0}
+!16 = !{!"_ZTSSt13_Ios_Fmtflags", !6, i64 0}
+!17 = !{!"_ZTSSt12_Ios_Iostate", !6, i64 0}
+!18 = !{!"p1 _ZTSNSt8ios_base14_Callback_listE", !19, i64 0}
+!19 = !{!"any pointer", !6, i64 0}
+!20 = !{!"_ZTSNSt8ios_base6_WordsE", !19, i64 0, !15, i64 8}
+!21 = !{!"p1 _ZTSNSt8ios_base6_WordsE", !19, i64 0}
+!22 = !{!"_ZTSSt6locale", !23, i64 0}
+!23 = !{!"p1 _ZTSNSt6locale5_ImplE", !19, i64 0}
 end_hunk_0

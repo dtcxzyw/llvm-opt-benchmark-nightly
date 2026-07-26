@@ -19,7 +19,7 @@ define noundef nonnull align 8 dereferenceable(104) ptr @_ZN8facebook5velox7file
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN8facebook5velox7fileIdsEvE3ids acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %bb.e, !prof !7
+  br i1 %i.b, label %bb.b, label %bb.e, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN8facebook5velox7fileIdsEvE3ids) #4
@@ -33,19 +33,19 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 48
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.d, i8 0, i64 48, i1 false)
-  store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.e, align 8, !tbaa !8
+  store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.e, align 8, !tbaa !9
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 56
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 72
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
-  store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.g, align 8, !tbaa !17
+  store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.g, align 8, !tbaa !18
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 80
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, i8 0, i64 24, i1 false)
-  store ptr %i.d, ptr @_ZZN8facebook5velox7fileIdsEvE3ids, align 8, !tbaa !21
+  store ptr %i.d, ptr @_ZZN8facebook5velox7fileIdsEvE3ids, align 8, !tbaa !22
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN8facebook5velox7fileIdsEvE3ids) #4
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.b, %bb.a
-  %i.i = load ptr, ptr @_ZZN8facebook5velox7fileIdsEvE3ids, align 8, !tbaa !21
+  %i.i = load ptr, ptr @_ZZN8facebook5velox7fileIdsEvE3ids, align 8, !tbaa !22
   ret ptr %i.i
 
 bb.f:                                             ; preds = %bb.c
@@ -91,25 +91,26 @@ attributes #5 = { builtin allocsize(0) }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!"branch_weights", i32 1, i32 1048575}
-!8 = !{!9, !13, i64 8}
-!9 = !{!"_ZTSN5folly3f146detail8F14TableINS1_21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmvvvSt17integral_constantIbLb1EEEEEE", !10, i64 0, !13, i64 8, !14, i64 16}
-!10 = !{!"_ZTSN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmvvvSt17integral_constantIbLb1EEEE", !11, i64 0}
-!11 = !{!"p1 _ZTSSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmE", !12, i64 0}
-!12 = !{!"any pointer", !5, i64 0}
-!13 = !{!"p1 _ZTSN5folly3f146detail8F14ChunkIjEE", !12, i64 0}
-!14 = !{!"_ZTSN5folly3f146detail31SizeAndChunkShiftAndPackedBeginINS1_11F14ItemIterIPNS1_8F14ChunkIjEEEELb0EEE", !15, i64 0}
-!15 = !{!"_ZTSN5folly3f146detail23PackedSizeAndChunkShiftE", !16, i64 0}
-!16 = !{!"long", !5, i64 0}
-!17 = !{!18, !13, i64 8}
-!18 = !{!"_ZTSN5folly3f146detail8F14TableINS1_21VectorContainerPolicyImN8facebook5velox11StringIdMap5EntryEvvvSt17integral_constantIbLb1EEEEEE", !19, i64 0, !13, i64 8, !14, i64 16}
-!19 = !{!"_ZTSN5folly3f146detail21VectorContainerPolicyImN8facebook5velox11StringIdMap5EntryEvvvSt17integral_constantIbLb1EEEE", !20, i64 0}
-!20 = !{!"p1 _ZTSSt4pairIKmN8facebook5velox11StringIdMap5EntryEE", !12, i64 0}
-!21 = !{!22, !22, i64 0}
-!22 = !{!"p1 _ZTSN8facebook5velox11StringIdMapE", !12, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!"branch_weights", i32 1, i32 1048575}
+!9 = !{!10, !14, i64 8}
+!10 = !{!"_ZTSN5folly3f146detail8F14TableINS1_21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmvvvSt17integral_constantIbLb1EEEEEE", !11, i64 0, !14, i64 8, !15, i64 16}
+!11 = !{!"_ZTSN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmvvvSt17integral_constantIbLb1EEEE", !12, i64 0}
+!12 = !{!"p1 _ZTSSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmE", !13, i64 0}
+!13 = !{!"any pointer", !6, i64 0}
+!14 = !{!"p1 _ZTSN5folly3f146detail8F14ChunkIjEE", !13, i64 0}
+!15 = !{!"_ZTSN5folly3f146detail31SizeAndChunkShiftAndPackedBeginINS1_11F14ItemIterIPNS1_8F14ChunkIjEEEELb0EEE", !16, i64 0}
+!16 = !{!"_ZTSN5folly3f146detail23PackedSizeAndChunkShiftE", !17, i64 0}
+!17 = !{!"long", !6, i64 0}
+!18 = !{!19, !14, i64 8}
+!19 = !{!"_ZTSN5folly3f146detail8F14TableINS1_21VectorContainerPolicyImN8facebook5velox11StringIdMap5EntryEvvvSt17integral_constantIbLb1EEEEEE", !20, i64 0, !14, i64 8, !15, i64 16}
+!20 = !{!"_ZTSN5folly3f146detail21VectorContainerPolicyImN8facebook5velox11StringIdMap5EntryEvvvSt17integral_constantIbLb1EEEE", !21, i64 0}
+!21 = !{!"p1 _ZTSSt4pairIKmN8facebook5velox11StringIdMap5EntryEE", !13, i64 0}
+!22 = !{!23, !23, i64 0}
+!23 = !{!"p1 _ZTSN8facebook5velox11StringIdMapE", !13, i64 0}
 end_hunk_0

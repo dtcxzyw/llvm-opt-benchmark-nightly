@@ -90,7 +90,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load <8 x i8>, ptr %0, align 1, !tbaa !7
+  %i.b = load <8 x i8>, ptr %0, align 1, !tbaa !8
   %i.c = zext <8 x i8> %i.b to <8 x i64>
   %i.d = shl nuw <8 x i64> %i.c, <i64 56, i64 48, i64 40, i64 32, i64 24, i64 16, i64 8, i64 0>
   %i.e = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %i.d)
@@ -114,34 +114,34 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = lshr i64 %0, 56
   %i.c = trunc nuw i64 %i.b to i8
-  store i8 %i.c, ptr %1, align 1, !tbaa !7
+  store i8 %i.c, ptr %1, align 1, !tbaa !8
   %i.d = lshr i64 %0, 48
   %i.e = trunc i64 %i.d to i8
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %i.e, ptr %i.f, align 1, !tbaa !7
+  store i8 %i.e, ptr %i.f, align 1, !tbaa !8
   %i.g = lshr i64 %0, 40
   %i.h = trunc i64 %i.g to i8
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %i.h, ptr %i.i, align 1, !tbaa !7
+  store i8 %i.h, ptr %i.i, align 1, !tbaa !8
   %i.j = lshr i64 %0, 32
   %i.k = trunc i64 %i.j to i8
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %i.k, ptr %i.l, align 1, !tbaa !7
+  store i8 %i.k, ptr %i.l, align 1, !tbaa !8
   %i.m = lshr i64 %0, 24
   %i.n = trunc i64 %i.m to i8
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i8 %i.n, ptr %i.o, align 1, !tbaa !7
+  store i8 %i.n, ptr %i.o, align 1, !tbaa !8
   %i.p = lshr i64 %0, 16
   %i.q = trunc i64 %i.p to i8
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 5
-  store i8 %i.q, ptr %i.r, align 1, !tbaa !7
+  store i8 %i.q, ptr %i.r, align 1, !tbaa !8
   %i.s = lshr i64 %0, 8
   %i.t = trunc i64 %i.s to i8
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 6
-  store i8 %i.t, ptr %i.u, align 1, !tbaa !7
+  store i8 %i.t, ptr %i.u, align 1, !tbaa !8
   %i.v = trunc i64 %0 to i8
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 7
-  store i8 %i.v, ptr %i.w, align 1, !tbaa !7
+  store i8 %i.v, ptr %i.w, align 1, !tbaa !8
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -159,7 +159,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load <8 x i8>, ptr %0, align 1, !tbaa !7
+  %i.b = load <8 x i8>, ptr %0, align 1, !tbaa !8
   %i.c = zext <8 x i8> %i.b to <8 x i64>
   %i.d = shl nuw <8 x i64> %i.c, <i64 56, i64 48, i64 40, i64 32, i64 24, i64 16, i64 8, i64 0>
   %i.e = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %i.d)
@@ -185,34 +185,34 @@ bb.b:                                             ; preds = %bb.a
   %i.b = bitcast double %0 to i64                 ; 8 uses
   %i.c = lshr i64 %i.b, 56
   %i.d = trunc nuw i64 %i.c to i8
-  store i8 %i.d, ptr %1, align 1, !tbaa !7
+  store i8 %i.d, ptr %1, align 1, !tbaa !8
   %i.e = lshr i64 %i.b, 48
   %i.f = trunc i64 %i.e to i8
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %i.f, ptr %i.g, align 1, !tbaa !7
+  store i8 %i.f, ptr %i.g, align 1, !tbaa !8
   %i.h = lshr i64 %i.b, 40
   %i.i = trunc i64 %i.h to i8
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %i.i, ptr %i.j, align 1, !tbaa !7
+  store i8 %i.i, ptr %i.j, align 1, !tbaa !8
   %i.k = lshr i64 %i.b, 32
   %i.l = trunc i64 %i.k to i8
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %i.l, ptr %i.m, align 1, !tbaa !7
+  store i8 %i.l, ptr %i.m, align 1, !tbaa !8
   %i.n = lshr i64 %i.b, 24
   %i.o = trunc i64 %i.n to i8
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i8 %i.o, ptr %i.p, align 1, !tbaa !7
+  store i8 %i.o, ptr %i.p, align 1, !tbaa !8
   %i.q = lshr i64 %i.b, 16
   %i.r = trunc i64 %i.q to i8
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 5
-  store i8 %i.r, ptr %i.s, align 1, !tbaa !7
+  store i8 %i.r, ptr %i.s, align 1, !tbaa !8
   %i.t = lshr i64 %i.b, 8
   %i.u = trunc i64 %i.t to i8
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 6
-  store i8 %i.u, ptr %i.v, align 1, !tbaa !7
+  store i8 %i.u, ptr %i.v, align 1, !tbaa !8
   %i.w = trunc i64 %i.b to i8
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 7
-  store i8 %i.w, ptr %i.x, align 1, !tbaa !7
+  store i8 %i.w, ptr %i.x, align 1, !tbaa !8
   br label %_ZN4geos2io15ByteOrderValues7putLongElPhi.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -239,10 +239,11 @@ attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!5, !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!6, !6, i64 0}
 end_hunk_0

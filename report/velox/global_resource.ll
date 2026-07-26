@@ -62,7 +62,7 @@ $_ZTSN5boost9container3pmr24null_memory_resource_impE = comdat any
 @_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE13create_objectE = linkonce_odr global %"struct.boost::container::dtl::singleton_default<boost::container::pmr::null_memory_resource_imp>::object_creator" zeroinitializer, comdat, align 1
 @_ZGVN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE13create_objectE = linkonce_odr local_unnamed_addr global i64 0, comdat($_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE13create_objectE), align 8
 @_ZZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj = linkonce_odr global { ptr } { ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5boost9container3pmr23new_delete_resource_impE, i32 0, i32 0, i32 2) }, comdat, align 8
-@_ZTVN5boost9container3pmr23new_delete_resource_impE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN5boost9container3pmr23new_delete_resource_impE, ptr @_ZN5boost9container3pmr15memory_resourceD2Ev, ptr @_ZN5boost9container3pmr23new_delete_resource_impD0Ev, ptr @_ZN5boost9container3pmr23new_delete_resource_imp11do_allocateEmm, ptr @_ZN5boost9container3pmr23new_delete_resource_imp13do_deallocateEPvmm, ptr @_ZNK5boost9container3pmr23new_delete_resource_imp11do_is_equalERKNS1_15memory_resourceE] }, comdat, align 8
+@_ZTVN5boost9container3pmr23new_delete_resource_impE = linkonce_odr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN5boost9container3pmr23new_delete_resource_impE, ptr @_ZN5boost9container3pmr15memory_resourceD2Ev, ptr @_ZN5boost9container3pmr23new_delete_resource_impD0Ev, ptr @_ZN5boost9container3pmr23new_delete_resource_imp11do_allocateEmm, ptr @_ZN5boost9container3pmr23new_delete_resource_imp13do_deallocateEPvmm, ptr @_ZNK5boost9container3pmr23new_delete_resource_imp11do_is_equalERKNS1_15memory_resourceE] }, comdat, align 8
 @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj = linkonce_odr global i64 0, comdat, align 8
 @_ZTIN5boost9container3pmr23new_delete_resource_impE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN5boost9container3pmr23new_delete_resource_impE, ptr @_ZTIN5boost9container3pmr15memory_resourceE }, comdat, align 8
 @_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
@@ -71,12 +71,12 @@ $_ZTSN5boost9container3pmr24null_memory_resource_impE = comdat any
 @_ZTVN10__cxxabiv117__class_type_infoE = external global [0 x ptr]
 @_ZTSN5boost9container3pmr15memory_resourceE = linkonce_odr constant [40 x i8] c"N5boost9container3pmr15memory_resourceE\00", comdat, align 1
 @_ZZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj = linkonce_odr global { ptr } { ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5boost9container3pmr24null_memory_resource_impE, i32 0, i32 0, i32 2) }, comdat, align 8
-@_ZTVN5boost9container3pmr24null_memory_resource_impE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN5boost9container3pmr24null_memory_resource_impE, ptr @_ZN5boost9container3pmr15memory_resourceD2Ev, ptr @_ZN5boost9container3pmr24null_memory_resource_impD0Ev, ptr @_ZN5boost9container3pmr24null_memory_resource_imp11do_allocateEmm, ptr @_ZN5boost9container3pmr24null_memory_resource_imp13do_deallocateEPvmm, ptr @_ZNK5boost9container3pmr24null_memory_resource_imp11do_is_equalERKNS1_15memory_resourceE] }, comdat, align 8
+@_ZTVN5boost9container3pmr24null_memory_resource_impE = linkonce_odr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN5boost9container3pmr24null_memory_resource_impE, ptr @_ZN5boost9container3pmr15memory_resourceD2Ev, ptr @_ZN5boost9container3pmr24null_memory_resource_impD0Ev, ptr @_ZN5boost9container3pmr24null_memory_resource_imp11do_allocateEmm, ptr @_ZN5boost9container3pmr24null_memory_resource_imp13do_deallocateEPvmm, ptr @_ZNK5boost9container3pmr24null_memory_resource_imp11do_is_equalERKNS1_15memory_resourceE] }, comdat, align 8
 @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj = linkonce_odr global i64 0, comdat, align 8
 @_ZTIN5boost9container3pmr24null_memory_resource_impE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN5boost9container3pmr24null_memory_resource_impE, ptr @_ZTIN5boost9container3pmr15memory_resourceE }, comdat, align 8
 @_ZTSN5boost9container3pmr24null_memory_resource_impE = linkonce_odr constant [49 x i8] c"N5boost9container3pmr24null_memory_resource_impE\00", comdat, align 1
 @_ZTISt9bad_alloc = external constant ptr
-@_ZTVSt9bad_alloc = external unnamed_addr constant { [5 x ptr] }, align 8
+@_ZTVSt9bad_alloc = external constant { [5 x ptr] }, align 8
 @llvm.global_ctors = appending global [2 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE13create_objectE }, { i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init.1, ptr @_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE13create_objectE }]
 @llvm.used = appending global [2 x ptr] [ptr @_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE13create_objectE, ptr @_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE13create_objectE], section "llvm.metadata"
 
@@ -85,7 +85,7 @@ define noundef nonnull ptr @_ZN5boost9container3pmr19new_delete_resourceEv() loc
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEv.exit, !prof !7
+  br i1 %i.b, label %bb.b, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEv.exit, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #8
@@ -107,7 +107,7 @@ define noundef nonnull ptr @_ZN5boost9container3pmr20null_memory_resourceEv() lo
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEv.exit, !prof !7
+  br i1 %i.b, label %bb.b, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEv.exit, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj) #8
@@ -127,7 +127,7 @@ define noundef nonnull align 8 dereferenceable(8) ptr @_ZN5boost9container3pmr32
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %bb.d, !prof !7
+  br i1 %i.b, label %bb.b, label %bb.d, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #8
@@ -136,7 +136,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = tail call noundef ptr @_ZN5boost9container3pmr19new_delete_resourceEv() #8
-  store ptr %i.d, ptr @_ZZN5boost9container3pmr32default_memory_resource_instanceEvE8instance, align 8, !tbaa !8
+  store ptr %i.d, ptr @_ZZN5boost9container3pmr32default_memory_resource_instanceEvE8instance, align 8, !tbaa !9
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #8
   br label %bb.d
 
@@ -159,7 +159,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = load atomic i8, ptr @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.c, label %_ZN5boost9container3pmr19new_delete_resourceEv.exit, !prof !7
+  br i1 %i.b, label %bb.c, label %_ZN5boost9container3pmr19new_delete_resourceEv.exit, !prof !8
 
 bb.c:                                             ; preds = %bb.b
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #8
@@ -174,7 +174,7 @@ _ZN5boost9container3pmr19new_delete_resourceEv.exit: ; preds = %bb.d, %bb.c, %bb
   %i.d = phi ptr [ %0, %bb.a ], [ @_ZZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj, %bb.b ], [ @_ZZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj, %bb.c ], [ @_ZZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj, %bb.d ]
   %i.e = load atomic i8, ptr @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance acquire, align 8
   %i.f = icmp eq i8 %i.e, 0
-  br i1 %i.f, label %bb.e, label %_ZN5boost9container3pmr32default_memory_resource_instanceEv.exit, !prof !7
+  br i1 %i.f, label %bb.e, label %_ZN5boost9container3pmr32default_memory_resource_instanceEv.exit, !prof !8
 
 bb.e:                                             ; preds = %_ZN5boost9container3pmr19new_delete_resourceEv.exit
   %i.g = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #8
@@ -183,7 +183,7 @@ bb.e:                                             ; preds = %_ZN5boost9container
 
 bb.f:                                             ; preds = %bb.e
   %i.h = tail call noundef ptr @_ZN5boost9container3pmr19new_delete_resourceEv() #8
-  store ptr %i.h, ptr @_ZZN5boost9container3pmr32default_memory_resource_instanceEvE8instance, align 8, !tbaa !8
+  store ptr %i.h, ptr @_ZZN5boost9container3pmr32default_memory_resource_instanceEvE8instance, align 8, !tbaa !9
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #8
   br label %_ZN5boost9container3pmr32default_memory_resource_instanceEv.exit
 
@@ -197,7 +197,7 @@ define noundef ptr @_ZN5boost9container3pmr20get_default_resourceEv() local_unna
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %_ZN5boost9container3pmr32default_memory_resource_instanceEv.exit, !prof !7
+  br i1 %i.b, label %bb.b, label %_ZN5boost9container3pmr32default_memory_resource_instanceEv.exit, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #8
@@ -206,7 +206,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = tail call noundef ptr @_ZN5boost9container3pmr19new_delete_resourceEv() #8
-  store ptr %i.d, ptr @_ZZN5boost9container3pmr32default_memory_resource_instanceEvE8instance, align 8, !tbaa !8
+  store ptr %i.d, ptr @_ZZN5boost9container3pmr32default_memory_resource_instanceEvE8instance, align 8, !tbaa !9
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #8
   br label %_ZN5boost9container3pmr32default_memory_resource_instanceEv.exit
 
@@ -226,7 +226,7 @@ bb.b:                                             ; preds = %bb.a
   store i8 1, ptr @_ZGVN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE13create_objectE, align 8
   %i.c = load atomic i8, ptr @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj acquire, align 8
   %i.d = icmp eq i8 %i.c, 0
-  br i1 %i.d, label %bb.c, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE14object_creatorC2Ev.exit, !prof !7
+  br i1 %i.d, label %bb.c, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE14object_creatorC2Ev.exit, !prof !8
 
 bb.c:                                             ; preds = %bb.b
   %i.e = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #8
@@ -252,7 +252,7 @@ bb.b:                                             ; preds = %bb.a
   store i8 1, ptr @_ZGVN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE13create_objectE, align 8
   %i.c = load atomic i8, ptr @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj acquire, align 8
   %i.d = icmp eq i8 %i.c, 0
-  br i1 %i.d, label %bb.c, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE14object_creatorC2Ev.exit, !prof !7
+  br i1 %i.d, label %bb.c, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE14object_creatorC2Ev.exit, !prof !8
 
 bb.c:                                             ; preds = %bb.b
   %i.e = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj) #8
@@ -328,7 +328,7 @@ bb.a:
 define linkonce_odr noundef ptr @_ZN5boost9container3pmr24null_memory_resource_imp11do_allocateEmm(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #3 comdat align 2 {
 bb.a:
   %i.a = tail call ptr @__cxa_allocate_exception(i64 8) #8 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.a, align 8, !tbaa !12
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.a, align 8, !tbaa !13
   tail call void @__cxa_throw(ptr nonnull %i.a, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #11
   unreachable
 }
@@ -349,7 +349,7 @@ bb.a:
 declare ptr @__cxa_allocate_exception(i64) local_unnamed_addr
 
 ; Function Attrs: nounwind
-declare void @_ZNSt9bad_allocD1Ev(ptr noundef nonnull align 8 dereferenceable(8)) unnamed_addr #6
+declare void @_ZNSt9bad_allocD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8)) unnamed_addr #6
 
 ; Function Attrs: cold noreturn
 declare void @__cxa_throw(ptr, ptr, ptr) local_unnamed_addr #7
@@ -373,16 +373,17 @@ attributes #11 = { noreturn }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!"branch_weights", i32 1, i32 1048575}
-!8 = !{!9, !10, i64 0}
-!9 = !{!"_ZTSSt13__atomic_baseIPN5boost9container3pmr15memory_resourceEE", !10, i64 0}
-!10 = !{!"p1 _ZTSN5boost9container3pmr15memory_resourceE", !11, i64 0}
-!11 = !{!"any pointer", !5, i64 0}
-!12 = !{!13, !13, i64 0}
-!13 = !{!"vtable pointer", !6, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!"branch_weights", i32 1, i32 1048575}
+!9 = !{!10, !11, i64 0}
+!10 = !{!"_ZTSSt13__atomic_baseIPN5boost9container3pmr15memory_resourceEE", !11, i64 0}
+!11 = !{!"p1 _ZTSN5boost9container3pmr15memory_resourceE", !12, i64 0}
+!12 = !{!"any pointer", !6, i64 0}
+!13 = !{!14, !14, i64 0}
+!14 = !{!"vtable pointer", !7, i64 0}
 end_hunk_0

@@ -11,9 +11,9 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %.thread
   %.03647 = phi i64 [ %i.n, %.thread ], [ 0, %bb.a ] ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.03647
-  %i.b = load i8, ptr %i.a, align 1, !tbaa !7     ; 4 uses
+  %i.b = load i8, ptr %i.a, align 1, !tbaa !8     ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %.03647
-  %i.d = load i8, ptr %i.c, align 1, !tbaa !7     ; 4 uses
+  %i.d = load i8, ptr %i.c, align 1, !tbaa !8     ; 4 uses
   %.not = icmp eq i8 %i.b, %i.d
   br i1 %.not, label %.thread, label %bb.b
 
@@ -35,7 +35,7 @@ bb.b:                                             ; preds = %.lr.ph
 .thread:                                          ; preds = %.lr.ph, %bb.b
   %i.n = add nuw i64 %.03647, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.n, %2
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !8
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !9
 
 ._crit_edge:                                      ; preds = %bb.b, %.thread, %bb.a
   %spec.select = phi i32 [ 0, %bb.a ], [ 0, %.thread ], [ %i.m, %bb.b ]
@@ -50,12 +50,13 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!5, !5, i64 0}
-!8 = distinct !{!8, !9}
-!9 = !{!"llvm.loop.mustprogress"}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!6, !6, i64 0}
+!9 = distinct !{!9, !10}
+!10 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

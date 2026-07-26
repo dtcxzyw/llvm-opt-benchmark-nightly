@@ -14,14 +14,14 @@ bb.a:
   %i.b = load atomic i64, ptr %i.a seq_cst, align 8 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #3
   %i.c = call i32 @clock_gettime(i32 noundef 6, ptr noundef nonnull %1) #3 ; 0 uses
-  %i.d = load i64, ptr %1, align 8, !tbaa !11
+  %i.d = load i64, ptr %1, align 8, !tbaa !12
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !11
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !12
   %i.g = mul nsw i64 %i.d, 1000000000
   %i.h = add nsw i64 %i.g, %i.f                   ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #3
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.j = load i64, ptr %i.i, align 8, !tbaa !13
+  %i.j = load i64, ptr %i.i, align 8, !tbaa !14
   %i.k = add nsw i64 %i.j, %i.b
   %i.l = icmp slt i64 %i.h, %i.k
   br i1 %i.l, label %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit, label %bb.b
@@ -38,7 +38,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.q = atomicrmw add ptr %i.p, i64 1 acq_rel, align 8
-  %i.r = load i64, ptr %0, align 8, !tbaa !15
+  %i.r = load i64, ptr %0, align 8, !tbaa !16
   %i.s = icmp ult i64 %i.q, %i.r
   br label %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit
 
@@ -77,19 +77,20 @@ attributes #3 = { nounwind }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!12, !12, i64 0}
-!12 = !{!"long", !9, i64 0}
-!13 = !{!14, !12, i64 0}
-!14 = !{!"_ZTSNSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEE", !12, i64 0}
-!15 = !{!16, !12, i64 0}
-!16 = !{!"_ZTSN5folly7logging19IntervalRateLimiterE", !12, i64 0, !14, i64 8, !17, i64 16, !19, i64 24}
-!17 = !{!"_ZTSSt6atomicImE", !18, i64 0}
-!18 = !{!"_ZTSSt13__atomic_baseImE", !12, i64 0}
-!19 = !{!"_ZTSSt6atomicIlE", !20, i64 0}
-!20 = !{!"_ZTSSt13__atomic_baseIlE", !12, i64 0}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!13, !13, i64 0}
+!13 = !{!"long", !10, i64 0}
+!14 = !{!15, !13, i64 0}
+!15 = !{!"_ZTSNSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEE", !13, i64 0}
+!16 = !{!17, !13, i64 0}
+!17 = !{!"_ZTSN5folly7logging19IntervalRateLimiterE", !13, i64 0, !15, i64 8, !18, i64 16, !20, i64 24}
+!18 = !{!"_ZTSSt6atomicImE", !19, i64 0}
+!19 = !{!"_ZTSSt13__atomic_baseImE", !13, i64 0}
+!20 = !{!"_ZTSSt6atomicIlE", !21, i64 0}
+!21 = !{!"_ZTSSt13__atomic_baseIlE", !13, i64 0}
 end_hunk_0

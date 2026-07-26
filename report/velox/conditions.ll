@@ -68,7 +68,7 @@ bb.a:
   br i1 %i.d, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = tail call { i64, i64 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #4, !srcloc !7 ; 2 uses
+  %i.e = tail call { i64, i64 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #4, !srcloc !8 ; 2 uses
   %i.f = extractvalue { i64, i64 } %i.e, 0
   %i.g = extractvalue { i64, i64 } %i.e, 1
   %i.h = shl i64 %i.g, 32
@@ -76,7 +76,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN4absl12lts_2024011613base_internal10CycleClock3NowEv.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.j = tail call noundef i64 %i.c(), !inline_history !8
+  %i.j = tail call noundef i64 %i.c(), !inline_history !9
   br label %_ZN4absl12lts_2024011613base_internal10CycleClock3NowEv.exit
 
 _ZN4absl12lts_2024011613base_internal10CycleClock3NowEv.exit: ; preds = %bb.b, %bb.c
@@ -128,11 +128,12 @@ attributes #4 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{i64 1258395}
-!8 = distinct !{null}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{i64 1258309}
+!9 = distinct !{null}
 end_hunk_0

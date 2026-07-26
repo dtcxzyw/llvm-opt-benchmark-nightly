@@ -33,14 +33,14 @@ bb.a:
 .lr.ph.i:                                         ; preds = %.lr.ph, %bb.b
   %.06.i = phi i64 [ %i.h, %bb.b ], [ 0, %.lr.ph ] ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.12.076, i64 %.06.i
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !7
+  %i.f = load i8, ptr %i.e, align 1, !tbaa !8
   %i.g = icmp eq i8 %i.f, 42
   br i1 %i.g, label %bb.b, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit
 
 bb.b:                                             ; preds = %.lr.ph.i
   %i.h = add i64 %.06.i, 1                        ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.h, %.sroa.035.077
-  br i1 %exitcond.not.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit, label %.lr.ph.i, !llvm.loop !8
+  br i1 %exitcond.not.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit, label %.lr.ph.i, !llvm.loop !9
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit: ; preds = %.lr.ph.i, %bb.b
   %.05.i = phi i64 [ %.06.i, %.lr.ph.i ], [ -1, %bb.b ]
@@ -48,7 +48,7 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit: ; pre
   br label %.critedge
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.j = load i8, ptr %.sroa.12.076, align 1, !tbaa !7 ; 3 uses
+  %i.j = load i8, ptr %.sroa.12.076, align 1, !tbaa !8 ; 3 uses
   switch i8 %i.j, label %bb.f [
     i8 42, label %bb.d
     i8 63, label %bb.e
@@ -73,7 +73,7 @@ bb.f:                                             ; preds = %bb.c
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.f, %bb.g
   %.0111420.i.i = phi i64 [ %i.t, %bb.g ], [ 0, %bb.f ] ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.12.076, i64 %.0111420.i.i
-  %i.s = load i8, ptr %i.r, align 1, !tbaa !7
+  %i.s = load i8, ptr %i.r, align 1, !tbaa !8
   switch i8 %i.s, label %bb.g [
     i8 63, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit
     i8 42, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit
@@ -127,7 +127,7 @@ bb.i:                                             ; preds = %_ZNSt11char_traitsI
   %i.ac = ptrtoint ptr %i.ab to i64
   %i.ad = sub i64 %i.x, %i.ac                     ; 2 uses
   %.not25.i.i = icmp ult i64 %i.ad, %.sroa.0.0
-  br i1 %.not25.i.i, label %.critedge, label %bb.h, !llvm.loop !10
+  br i1 %.not25.i.i, label %.critedge, label %bb.h, !llvm.loop !11
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
   %i.ae = ptrtoint ptr %i.z to i64
@@ -146,7 +146,7 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread52: ; preds 
   br label %bb.l
 
 bb.j:                                             ; preds = %bb.f
-  %i.am = load i8, ptr %.sroa.1030.078, align 1, !tbaa !7
+  %i.am = load i8, ptr %.sroa.1030.078, align 1, !tbaa !8
   %.not = icmp eq i8 %i.j, %i.am
   br i1 %.not, label %bb.k, label %.critedge
 
@@ -164,7 +164,7 @@ bb.l:                                             ; preds = %_ZNKSt17basic_strin
   %.sroa.024.1 = phi i64 [ %i.al, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread52 ], [ %i.aq, %bb.k ], [ %.sroa.024.079, %bb.d ], [ %i.p, %bb.e ] ; 2 uses
   %.210 = phi i8 [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread52 ], [ 0, %bb.k ], [ 1, %bb.d ], [ %.0880, %bb.e ] ; 2 uses
   %i.ar = icmp eq i64 %.sroa.035.1, 0
-  br i1 %i.ar, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !11
+  br i1 %i.ar, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !12
 
 .critedge:                                        ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread.thread, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit, %bb.j, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i18, %bb.i, %bb.h, %._crit_edge, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit
   %.3 = phi i1 [ %spec.select, %._crit_edge ], [ %i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit ], [ false, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i18 ], [ false, %bb.h ], [ false, %bb.i ], [ false, %bb.j ], [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread.thread ]
@@ -190,14 +190,15 @@ attributes #3 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!5, !5, i64 0}
-!8 = distinct !{!8, !9}
-!9 = !{!"llvm.loop.mustprogress"}
-!10 = distinct !{!10, !9}
-!11 = distinct !{!11, !9}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!6, !6, i64 0}
+!9 = distinct !{!9, !10}
+!10 = !{!"llvm.loop.mustprogress"}
+!11 = distinct !{!11, !10}
+!12 = distinct !{!12, !10}
 end_hunk_0

@@ -26,7 +26,7 @@ _ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE4loadERVKjNS_1
 .preheader19:                                     ; preds = %_ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE4loadERVKjNS_12memory_orderE.exit, %.preheader19
   %i.b = tail call i32 @pthread_mutex_lock(ptr noundef nonnull @_ZN5boost13thread_detailL10once_mutexE) #5
   %i.c = icmp eq i32 %i.b, 4
-  br i1 %i.c, label %.preheader19, label %_ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE4loadERVKjNS_12memory_orderE.exit11, !llvm.loop !7
+  br i1 %i.c, label %.preheader19, label %_ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE4loadERVKjNS_12memory_orderE.exit11, !llvm.loop !8
 
 _ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE4loadERVKjNS_12memory_orderE.exit11: ; preds = %.preheader19
   %i.d = load atomic volatile i32, ptr %0 acquire, align 4
@@ -50,12 +50,12 @@ _ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE4loadERVKjNS_1
 
 .noexc:                                           ; preds = %.preheader
   %i.j = icmp eq i32 %i.i, 4
-  br i1 %i.j, label %.preheader, label %_ZN5boost5posix17pthread_cond_waitEP14pthread_cond_tP15pthread_mutex_t.exit, !llvm.loop !9
+  br i1 %i.j, label %.preheader, label %_ZN5boost5posix17pthread_cond_waitEP14pthread_cond_tP15pthread_mutex_t.exit, !llvm.loop !10
 
 _ZN5boost5posix17pthread_cond_waitEP14pthread_cond_tP15pthread_mutex_t.exit: ; preds = %.noexc
   %i.k = cmpxchg volatile ptr %0, i32 0, i32 1 acq_rel acquire, align 4 ; 2 uses
   %i.l = extractvalue { i32, i1 } %i.k, 1
-  br i1 %i.l, label %_ZN5boost5posix17pthread_cond_waitEP14pthread_cond_tP15pthread_mutex_t.exit.thread, label %.lr.ph, !llvm.loop !10
+  br i1 %i.l, label %_ZN5boost5posix17pthread_cond_waitEP14pthread_cond_tP15pthread_mutex_t.exit.thread, label %.lr.ph, !llvm.loop !11
 
 _ZN5boost5posix17pthread_cond_waitEP14pthread_cond_tP15pthread_mutex_t.exit.thread: ; preds = %.lr.ph, %_ZN5boost5posix17pthread_cond_waitEP14pthread_cond_tP15pthread_mutex_t.exit, %.preheader18, %_ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE4loadERVKjNS_12memory_orderE.exit11
   %.2 = phi i1 [ undef, %_ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE4loadERVKjNS_12memory_orderE.exit11 ], [ true, %.preheader18 ], [ %.not22.not, %_ZN5boost5posix17pthread_cond_waitEP14pthread_cond_tP15pthread_mutex_t.exit ], [ %.not22.not, %.lr.ph ]
@@ -64,7 +64,7 @@ _ZN5boost5posix17pthread_cond_waitEP14pthread_cond_tP15pthread_mutex_t.exit.thre
 bb.a:                                             ; preds = %bb.a, %_ZN5boost5posix17pthread_cond_waitEP14pthread_cond_tP15pthread_mutex_t.exit.thread
   %i.m = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull @_ZN5boost13thread_detailL10once_mutexE) #5
   %i.n = icmp eq i32 %i.m, 4
-  br i1 %i.n, label %bb.a, label %_ZN5boost7pthread25pthread_mutex_scoped_lockD2Ev.exit, !llvm.loop !11
+  br i1 %i.n, label %bb.a, label %_ZN5boost7pthread25pthread_mutex_scoped_lockD2Ev.exit, !llvm.loop !12
 
 _ZN5boost7pthread25pthread_mutex_scoped_lockD2Ev.exit: ; preds = %bb.a
   br i1 %.not9, label %bb.b, label %bb.c
@@ -107,7 +107,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %bb.a
   %i.a = tail call i32 @pthread_mutex_lock(ptr noundef nonnull @_ZN5boost13thread_detailL10once_mutexE) #5
   %i.b = icmp eq i32 %i.a, 4
-  br i1 %i.b, label %bb.b, label %bb.c, !llvm.loop !7
+  br i1 %i.b, label %bb.b, label %bb.c, !llvm.loop !8
 
 bb.c:                                             ; preds = %bb.b
   store atomic volatile i32 2, ptr %0 release, align 4
@@ -116,7 +116,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.d, %bb.c
   %i.c = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull @_ZN5boost13thread_detailL10once_mutexE) #5
   %i.d = icmp eq i32 %i.c, 4
-  br i1 %i.d, label %bb.d, label %_ZN5boost7pthread25pthread_mutex_scoped_lockD2Ev.exit, !llvm.loop !11
+  br i1 %i.d, label %bb.d, label %_ZN5boost7pthread25pthread_mutex_scoped_lockD2Ev.exit, !llvm.loop !12
 
 _ZN5boost7pthread25pthread_mutex_scoped_lockD2Ev.exit: ; preds = %bb.d
   %i.e = tail call noundef i32 @pthread_cond_broadcast(ptr noundef nonnull @_ZN5boost13thread_detailL7once_cvE) #5 ; 0 uses
@@ -131,7 +131,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %bb.a
   %i.a = tail call i32 @pthread_mutex_lock(ptr noundef nonnull @_ZN5boost13thread_detailL10once_mutexE) #5
   %i.b = icmp eq i32 %i.a, 4
-  br i1 %i.b, label %bb.b, label %bb.c, !llvm.loop !7
+  br i1 %i.b, label %bb.b, label %bb.c, !llvm.loop !8
 
 bb.c:                                             ; preds = %bb.b
   store atomic volatile i32 0, ptr %0 release, align 4
@@ -140,7 +140,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.d, %bb.c
   %i.c = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull @_ZN5boost13thread_detailL10once_mutexE) #5
   %i.d = icmp eq i32 %i.c, 4
-  br i1 %i.d, label %bb.d, label %_ZN5boost7pthread25pthread_mutex_scoped_lockD2Ev.exit, !llvm.loop !11
+  br i1 %i.d, label %bb.d, label %_ZN5boost7pthread25pthread_mutex_scoped_lockD2Ev.exit, !llvm.loop !12
 
 _ZN5boost7pthread25pthread_mutex_scoped_lockD2Ev.exit: ; preds = %bb.d
   %i.e = tail call noundef i32 @pthread_cond_broadcast(ptr noundef nonnull @_ZN5boost13thread_detailL7once_cvE) #5 ; 0 uses
@@ -172,14 +172,15 @@ attributes #6 = { noreturn nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = distinct !{!7, !8}
-!8 = !{!"llvm.loop.mustprogress"}
-!9 = distinct !{!9, !8}
-!10 = distinct !{!10, !8}
-!11 = distinct !{!11, !8}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = distinct !{!8, !9}
+!9 = !{!"llvm.loop.mustprogress"}
+!10 = distinct !{!10, !9}
+!11 = distinct !{!11, !9}
+!12 = distinct !{!12, !9}
 end_hunk_0

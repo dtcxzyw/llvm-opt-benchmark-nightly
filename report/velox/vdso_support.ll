@@ -35,7 +35,7 @@ bb.a:
   %i.a = tail call noundef ptr @_ZN4absl12lts_2024011618debugging_internal11VDSOSupport4InitEv() ; 0 uses
   %i.b = load atomic ptr, ptr @_ZN4absl12lts_2024011618debugging_internal11VDSOSupport10getcpu_fn_E monotonic, align 8 ; 2 uses
   %.not = icmp eq ptr %i.b, @_ZN4absl12lts_2024011618debugging_internal11VDSOSupport13InitAndGetCPUEPjPvS4_
-  br i1 %.not, label %bb.b, label %bb.c, !prof !7
+  br i1 %.not, label %bb.b, label %bb.c, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.3, i64 73), i32 noundef 186, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.8)
@@ -79,9 +79,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call ptr @__errno_location() #7     ; 2 uses
-  store i32 0, ptr %i.c, align 4, !tbaa !3
+  store i32 0, ptr %i.c, align 4, !tbaa !9
   %i.d = tail call i64 @getauxval(i64 noundef 33) #8
-  %i.e = load i32, ptr %i.c, align 4, !tbaa !3
+  %i.e = load i32, ptr %i.c, align 4, !tbaa !9
   %i.f = icmp eq i32 %i.e, 0
   br i1 %i.f, label %bb.c, label %bb.d
 
@@ -115,13 +115,13 @@ bb.g:                                             ; preds = %bb.h, %bb.f
   br i1 %i.l, label %bb.h, label %.loopexit
 
 bb.h:                                             ; preds = %bb.g
-  %i.m = load i64, ptr %0, align 8, !tbaa !8
+  %i.m = load i64, ptr %0, align 8, !tbaa !10
   %i.n = icmp eq i64 %i.m, 33
-  br i1 %i.n, label %bb.i, label %bb.g, !llvm.loop !11
+  br i1 %i.n, label %bb.i, label %bb.g, !llvm.loop !13
 
 bb.i:                                             ; preds = %bb.h
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.p = load i64, ptr %i.o, align 8, !tbaa !13
+  %i.p = load i64, ptr %i.o, align 8, !tbaa !15
   %i.q = inttoptr i64 %i.p to ptr
   store atomic ptr %i.q, ptr @_ZN4absl12lts_2024011618debugging_internal11VDSOSupport10vdso_base_E monotonic, align 8
   br label %.loopexit
@@ -208,7 +208,7 @@ bb.a:
 define noundef ptr @_ZN4absl12lts_2024011618debugging_internal11VDSOSupport7SetBaseEPKv(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.not = icmp eq ptr %1, @_ZN4absl12lts_2024011618debugging_internal11ElfMemImage20kInvalidBaseSentinelE
-  br i1 %.not, label %bb.b, label %bb.c, !prof !7
+  br i1 %.not, label %bb.b, label %bb.c, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.3, i64 73), i32 noundef 147, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.5, ptr noundef nonnull @.str.6)
@@ -273,16 +273,18 @@ attributes #8 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!8 = !{!9, !10, i64 0}
-!9 = !{!"_ZTS12Elf64_auxv_t", !10, i64 0, !5, i64 8}
-!10 = !{!"long", !5, i64 0}
-!11 = distinct !{!11, !12}
-!12 = !{!"llvm.loop.mustprogress"}
-!13 = !{!5, !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!9 = !{!5, !5, i64 0}
+!10 = !{!11, !12, i64 0}
+!11 = !{!"_ZTS12Elf64_auxv_t", !12, i64 0, !6, i64 8}
+!12 = !{!"long", !6, i64 0}
+!13 = distinct !{!13, !14}
+!14 = !{!"llvm.loop.mustprogress"}
+!15 = !{!6, !6, i64 0}
 end_hunk_0

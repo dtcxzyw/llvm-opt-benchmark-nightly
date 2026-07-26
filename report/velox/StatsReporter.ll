@@ -102,7 +102,7 @@ define linkonce_odr void @_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_19shared_m
 bb.a:
   %i.a = and i32 %2, 12
   %i.b = icmp eq i32 %i.a, 12
-  %.pre13 = load i32, ptr %1, align 4, !tbaa !3   ; 2 uses
+  %.pre13 = load i32, ptr %1, align 4, !tbaa !8   ; 2 uses
   %i.c = and i32 %.pre13, %2
   %i.d = icmp eq i32 %i.c, 12
   %or.cond = select i1 %i.b, i1 %i.d, i1 false
@@ -114,7 +114,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.g, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.b
-  %.pre = load i32, ptr %1, align 4, !tbaa !3
+  %.pre = load i32, ptr %1, align 4, !tbaa !8
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.a
@@ -136,7 +136,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.m = and i32 %i.j, %i.i
-  store i32 %i.m, ptr %1, align 4, !tbaa !3
+  store i32 %i.m, ptr %1, align 4, !tbaa !8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.b, %bb.f, %bb.c
@@ -158,9 +158,11 @@ attributes #7 = { builtin allocsize(0) }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!5, !5, i64 0}
 end_hunk_0

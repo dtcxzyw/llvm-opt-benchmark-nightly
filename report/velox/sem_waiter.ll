@@ -19,14 +19,14 @@ target triple = "x86_64-pc-linux-gnu"
 define void @_ZN4absl12lts_2024011624synchronization_internal9SemWaiterC2Ev(ptr noundef nonnull align 8 dereferenceable(36) initializes((32, 36)) %0) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 0, ptr %i.a, align 8, !tbaa !7
+  store i32 0, ptr %i.a, align 8, !tbaa !8
   %i.b = tail call i32 @sem_init(ptr noundef nonnull %0, i32 noundef 0, i32 noundef 0) #5
   %.not = icmp eq i32 %i.b, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call ptr @__errno_location() #6
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !3
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !10
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 79), i32 noundef 42, ptr noundef nonnull @.str.1, i32 noundef %i.d)
   unreachable
 
@@ -147,15 +147,15 @@ bb.c:                                             ; preds = %._crit_edge.us
 bb.d:                                             ; preds = %.backedge.us.us
   %i.o = tail call i32 @sem_wait(ptr noundef nonnull %0)
   %i.p = icmp eq i32 %i.o, 0
-  br i1 %i.p, label %.split30.us.us, label %.backedge.us.us, !llvm.loop !9
+  br i1 %i.p, label %.split30.us.us, label %.backedge.us.us, !llvm.loop !11
 
 .backedge.us.us:                                  ; preds = %.backedge.us.lr.ph.us, %bb.d
-  %i.q = load i32, ptr %i.s, align 4, !tbaa !3    ; 2 uses
+  %i.q = load i32, ptr %i.s, align 4, !tbaa !10   ; 2 uses
   %i.r = icmp eq i32 %i.q, 4
   br i1 %i.r, label %bb.d, label %.split32.us
 
 .split30.us.us:                                   ; preds = %bb.d, %.split.us.us
-  br label %.split39.us, !llvm.loop !11
+  br label %.split39.us, !llvm.loop !13
 
 .backedge.us.lr.ph.us:                            ; preds = %.split.us.us
   %i.s = tail call ptr @__errno_location() #6
@@ -212,7 +212,7 @@ bb.f:                                             ; preds = %._crit_edge.us50
   br i1 %i.ah, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us46
 
 bb.g:                                             ; preds = %.lr.ph38.us, %.backedge.us33.us
-  %i.ai = load i32, ptr %i.ao, align 4, !tbaa !3  ; 2 uses
+  %i.ai = load i32, ptr %i.ao, align 4, !tbaa !10 ; 2 uses
   switch i32 %i.ai, label %.split35.us [
     i32 4, label %.backedge.us33.us
     i32 110, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread
@@ -231,10 +231,10 @@ bb.g:                                             ; preds = %.lr.ph38.us, %.back
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.an = icmp eq i32 %i.am, 0
-  br i1 %i.an, label %.split30.split.us.us, label %bb.g, !llvm.loop !9
+  br i1 %i.an, label %.split30.split.us.us, label %bb.g, !llvm.loop !11
 
 .split30.split.us.us:                             ; preds = %.backedge.us33.us, %.split.us
-  br label %.split39.split.us, !llvm.loop !11
+  br label %.split39.split.us, !llvm.loop !13
 
 .lr.ph38.us:                                      ; preds = %.split.us
   %i.ao = tail call ptr @__errno_location() #6
@@ -297,14 +297,14 @@ bb.h:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.be = icmp eq i32 %i.bd, 0
-  br i1 %i.be, label %.split30.split, label %bb.i, !llvm.loop !9
+  br i1 %i.be, label %.split30.split, label %bb.i, !llvm.loop !11
 
 .split32.us:                                      ; preds = %.backedge.us.us
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 79), i32 noundef 92, ptr noundef nonnull @.str.2, i32 noundef %i.q)
   unreachable
 
 bb.i:                                             ; preds = %.lr.ph37, %.backedge
-  %i.bf = load i32, ptr %i.az, align 4, !tbaa !3  ; 2 uses
+  %i.bf = load i32, ptr %i.az, align 4, !tbaa !10 ; 2 uses
   switch i32 %i.bf, label %.split35.us [
     i32 4, label %.backedge
     i32 110, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread
@@ -316,7 +316,7 @@ bb.i:                                             ; preds = %.lr.ph37, %.backedg
   unreachable
 
 .split30.split:                                   ; preds = %.backedge, %.split
-  br label %.split39.split, !llvm.loop !11
+  br label %.split39.split, !llvm.loop !13
 
 _ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread: ; preds = %.lr.ph, %bb.i, %.lr.ph.us49, %bb.e, %bb.g, %.lr.ph.us, %bb.b
   %.not21 = phi i1 [ true, %bb.e ], [ true, %bb.b ], [ true, %.lr.ph.us49 ], [ false, %bb.i ], [ true, %.lr.ph.us ], [ false, %bb.g ], [ true, %.lr.ph ]
@@ -342,7 +342,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = tail call ptr @__errno_location() #6
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !3
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !10
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 79), i32 noundef 114, ptr noundef nonnull @.str.4, i32 noundef %i.f)
   unreachable
 
@@ -359,7 +359,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call ptr @__errno_location() #6
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !3
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !10
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 79), i32 noundef 114, ptr noundef nonnull @.str.4, i32 noundef %i.c)
   unreachable
 
@@ -386,14 +386,16 @@ attributes #6 = { nounwind willreturn memory(none) }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !4, i64 0}
-!8 = !{!"_ZTSSt13__atomic_baseIiE", !4, i64 0}
-!9 = distinct !{!9, !10}
-!10 = !{!"llvm.loop.mustprogress"}
-!11 = distinct !{!11, !10}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !5, i64 0}
+!9 = !{!"_ZTSSt13__atomic_baseIiE", !5, i64 0}
+!10 = !{!5, !5, i64 0}
+!11 = distinct !{!11, !12}
+!12 = !{!"llvm.loop.mustprogress"}
+!13 = distinct !{!13, !12}
 end_hunk_0

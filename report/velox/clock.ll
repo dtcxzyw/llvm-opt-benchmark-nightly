@@ -20,17 +20,17 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #5
   %i.a = call i32 @clock_gettime(i32 noundef 0, ptr noundef nonnull %0) #5
   %.not.i.i = icmp eq i32 %i.a, 0
-  br i1 %.not.i.i, label %_ZN4absl12lts_2024011619GetCurrentTimeNanosEv.exit, label %bb.b, !prof !7
+  br i1 %.not.i.i, label %_ZN4absl12lts_2024011619GetCurrentTimeNanosEv.exit, label %bb.b, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 68), i32 noundef 17, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3)
   unreachable
 
 _ZN4absl12lts_2024011619GetCurrentTimeNanosEv.exit: ; preds = %bb.a
-  %i.b = load i64, ptr %0, align 8, !tbaa !8
+  %i.b = load i64, ptr %0, align 8, !tbaa !9
   %i.c = mul nsw i64 %i.b, 1000000000
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !11
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !12
   %i.f = add nsw i64 %i.c, %i.e                   ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #5
   %i.g = icmp sgt i64 %i.f, -1
@@ -75,17 +75,17 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #5
   %i.a = call i32 @clock_gettime(i32 noundef 0, ptr noundef nonnull %0) #5
   %.not.i = icmp eq i32 %i.a, 0
-  br i1 %.not.i, label %_ZN4absl12lts_2024011613time_internalL29GetCurrentTimeNanosFromSystemEv.exit, label %bb.b, !prof !7
+  br i1 %.not.i, label %_ZN4absl12lts_2024011613time_internalL29GetCurrentTimeNanosFromSystemEv.exit, label %bb.b, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 68), i32 noundef 17, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3)
   unreachable
 
 _ZN4absl12lts_2024011613time_internalL29GetCurrentTimeNanosFromSystemEv.exit: ; preds = %bb.a
-  %i.b = load i64, ptr %0, align 8, !tbaa !8
+  %i.b = load i64, ptr %0, align 8, !tbaa !9
   %i.c = mul nsw i64 %i.b, 1000000000
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !11
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !12
   %i.f = add nsw i64 %i.c, %i.e
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #5
   ret i64 %i.f
@@ -138,16 +138,16 @@ bb.d:                                             ; preds = %bb.e, %.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.h = tail call ptr @__errno_location() #6
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !3
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !13
   %i.j = icmp eq i32 %i.i, 4
-  br i1 %i.j, label %bb.d, label %_ZN4absl12lts_2024011612_GLOBAL__N_19SleepOnceENS0_8DurationE.exit, !llvm.loop !12
+  br i1 %i.j, label %bb.d, label %_ZN4absl12lts_2024011612_GLOBAL__N_19SleepOnceENS0_8DurationE.exit, !llvm.loop !14
 
 _ZN4absl12lts_2024011612_GLOBAL__N_19SleepOnceENS0_8DurationE.exit: ; preds = %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #5
   %i.k = call noundef nonnull align 4 dereferenceable(12) ptr @_ZN4absl12lts_202401168DurationmIES1_(ptr noundef nonnull align 4 dereferenceable(12) %3, i64 %.val, i32 %i.c) ; 0 uses
   %.sroa.021.0.copyload.pre = load i64, ptr %3, align 8
-  %.sroa.222.0.copyload.pre = load i32, ptr %.sroa.224.0..sroa_idx, align 8, !tbaa !3
-  br label %bb.b, !llvm.loop !14
+  %.sroa.222.0.copyload.pre = load i32, ptr %.sroa.224.0..sroa_idx, align 8, !tbaa !13
+  br label %bb.b, !llvm.loop !16
 
 bb.f:                                             ; preds = %bb.c, %_ZN4absl12lts_20240116gtENS0_8DurationES1_.exit
   ret void
@@ -182,17 +182,19 @@ attributes #6 = { nounwind willreturn memory(none) }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!8 = !{!9, !10, i64 0}
-!9 = !{!"_ZTS8timespec", !10, i64 0, !10, i64 8}
-!10 = !{!"long", !5, i64 0}
-!11 = !{!9, !10, i64 8}
-!12 = distinct !{!12, !13}
-!13 = !{!"llvm.loop.mustprogress"}
-!14 = distinct !{!14, !13}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!9 = !{!10, !11, i64 0}
+!10 = !{!"_ZTS8timespec", !11, i64 0, !11, i64 8}
+!11 = !{!"long", !6, i64 0}
+!12 = !{!10, !11, i64 8}
+!13 = !{!5, !5, i64 0}
+!14 = distinct !{!14, !15}
+!15 = !{!"llvm.loop.mustprogress"}
+!16 = distinct !{!16, !15}
 end_hunk_0

@@ -21,17 +21,17 @@ bb.a:
   %i.h = sext i32 %i.g to i64
   %i.i = getelementptr [16 x i8], ptr @_ZN14arrow_vendored17double_conversion16PowersOfTenCacheL13kCachedPowersE, i64 %i.h ; 3 uses
   %i.j = getelementptr i8, ptr %i.i, i64 16
-  %.sroa.0.0.copyload = load i64, ptr %i.j, align 16, !tbaa !7
+  %.sroa.0.0.copyload = load i64, ptr %i.j, align 16, !tbaa !8
   %.sroa.4.0..sroa_idx = getelementptr i8, ptr %i.i, i64 24
-  %.sroa.4.0.copyload = load i16, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !9
+  %.sroa.4.0.copyload = load i16, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !10
   %.sroa.5.0..sroa_idx = getelementptr i8, ptr %i.i, i64 26
-  %.sroa.5.0.copyload = load i16, ptr %.sroa.5.0..sroa_idx, align 2, !tbaa !9
+  %.sroa.5.0.copyload = load i16, ptr %.sroa.5.0..sroa_idx, align 2, !tbaa !10
   %i.k = sext i16 %.sroa.5.0.copyload to i32
-  store i32 %i.k, ptr %3, align 4, !tbaa !3
+  store i32 %i.k, ptr %3, align 4, !tbaa !12
   %i.l = sext i16 %.sroa.4.0.copyload to i32
-  store i64 %.sroa.0.0.copyload, ptr %2, align 8, !tbaa !7
+  store i64 %.sroa.0.0.copyload, ptr %2, align 8, !tbaa !8
   %.sroa.4.0..sroa_idx7 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 %i.l, ptr %.sroa.4.0..sroa_idx7, align 8, !tbaa !3
+  store i32 %i.l, ptr %.sroa.4.0..sroa_idx7, align 8, !tbaa !12
   ret void
 }
 
@@ -45,17 +45,17 @@ bb.a:
   %i.b = sdiv i32 %i.a, 8
   %i.c = sext i32 %i.b to i64
   %i.d = getelementptr inbounds [16 x i8], ptr @_ZN14arrow_vendored17double_conversion16PowersOfTenCacheL13kCachedPowersE, i64 %i.c ; 3 uses
-  %.sroa.0.0.copyload = load i64, ptr %i.d, align 16, !tbaa !7
+  %.sroa.0.0.copyload = load i64, ptr %i.d, align 16, !tbaa !8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %.sroa.4.0.copyload = load i16, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !9
+  %.sroa.4.0.copyload = load i16, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !10
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 10
-  %.sroa.5.0.copyload = load i16, ptr %.sroa.5.0..sroa_idx, align 2, !tbaa !9
+  %.sroa.5.0.copyload = load i16, ptr %.sroa.5.0..sroa_idx, align 2, !tbaa !10
   %i.e = sext i16 %.sroa.4.0.copyload to i32
-  store i64 %.sroa.0.0.copyload, ptr %1, align 8, !tbaa !7
+  store i64 %.sroa.0.0.copyload, ptr %1, align 8, !tbaa !8
   %.sroa.4.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 %i.e, ptr %.sroa.4.0..sroa_idx4, align 8, !tbaa !3
+  store i32 %i.e, ptr %.sroa.4.0..sroa_idx4, align 8, !tbaa !12
   %i.f = sext i16 %.sroa.5.0.copyload to i32
-  store i32 %i.f, ptr %2, align 4, !tbaa !3
+  store i32 %i.f, ptr %2, align 4, !tbaa !12
   ret void
 }
 
@@ -68,13 +68,15 @@ attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"long", !5, i64 0}
-!9 = !{!10, !10, i64 0}
-!10 = !{!"short", !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"long", !6, i64 0}
+!10 = !{!11, !11, i64 0}
+!11 = !{!"short", !6, i64 0}
+!12 = !{!5, !5, i64 0}
 end_hunk_0

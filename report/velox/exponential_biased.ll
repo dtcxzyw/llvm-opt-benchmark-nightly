@@ -12,12 +12,12 @@ target triple = "x86_64-pc-linux-gnu"
 define noundef i64 @_ZN4absl12lts_2024011618profiling_internal17ExponentialBiased12GetSkipCountEl(ptr noundef nonnull align 8 dereferenceable(17) %0, i64 noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !7, !range !12, !noundef !13
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !8, !range !13, !noundef !14
   %i.c = trunc nuw i8 %i.b to i1
-  br i1 %i.c, label %._crit_edge, label %bb.b, !prof !14
+  br i1 %i.c, label %._crit_edge, label %bb.b, !prof !15
 
 ._crit_edge:                                      ; preds = %bb.a
-  %.pre = load i64, ptr %0, align 8, !tbaa !15
+  %.pre = load i64, ptr %0, align 8, !tbaa !16
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -28,7 +28,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = mul i64 %i.g, 193905135338833
   %i.i = add i64 %i.h, 83935042429844
   %i.j = and i64 %i.i, 281474976710655
-  store i8 1, ptr %i.a, align 8, !tbaa !7
+  store i8 1, ptr %i.a, align 8, !tbaa !8
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.b
@@ -36,14 +36,14 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   %i.l = mul i64 %i.k, 25214903917
   %i.m = add i64 %i.l, 11
   %i.n = and i64 %i.m, 281474976710655            ; 2 uses
-  store i64 %i.n, ptr %0, align 8, !tbaa !15
+  store i64 %i.n, ptr %0, align 8, !tbaa !16
   %i.o = lshr i64 %i.n, 22
   %i.p = trunc nuw nsw i64 %i.o to i32
   %i.q = add nuw nsw i32 %i.p, 1
   %i.r = uitofp nneg i32 %i.q to double
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.t = load double, ptr %i.s, align 8, !tbaa !16
-  %i.u = tail call double @llvm.log2.f64(double %i.r), !tbaa !3
+  %i.t = load double, ptr %i.s, align 8, !tbaa !17
+  %i.u = tail call double @llvm.log2.f64(double %i.r)
   %i.v = fadd double %i.u, -2.600000e+01
   %i.w = sitofp i64 %1 to double
   %i.x = fmul nnan double %i.w, f0xBFE62E42FEFA39EF
@@ -54,7 +54,7 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.aa = tail call double @llvm.rint.f64(double %i.y) ; 2 uses
   %i.ab = fsub double %i.y, %i.aa
-  store double %i.ab, ptr %i.s, align 8, !tbaa !16
+  store double %i.ab, ptr %i.s, align 8, !tbaa !17
   %i.ac = fptosi double %i.aa to i64
   br label %bb.e
 
@@ -73,9 +73,9 @@ bb.a:
   %i.e = mul i64 %i.d, 193905135338833
   %i.f = add i64 %i.e, 83935042429844
   %i.g = and i64 %i.f, 281474976710655
-  store i64 %i.g, ptr %0, align 8, !tbaa !15
+  store i64 %i.g, ptr %0, align 8, !tbaa !16
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 1, ptr %i.h, align 8, !tbaa !7
+  store i8 1, ptr %i.h, align 8, !tbaa !8
   ret void
 }
 
@@ -90,12 +90,12 @@ define noundef range(i64 -9223372036854775807, -9223372036854775808) i64 @_ZN4ab
 bb.a:
   %i.a = add nsw i64 %1, -1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.c = load i8, ptr %i.b, align 8, !tbaa !7, !range !12, !noundef !13
+  %i.c = load i8, ptr %i.b, align 8, !tbaa !8, !range !13, !noundef !14
   %i.d = trunc nuw i8 %i.c to i1
-  br i1 %i.d, label %._crit_edge.i, label %bb.b, !prof !14
+  br i1 %i.d, label %._crit_edge.i, label %bb.b, !prof !15
 
 ._crit_edge.i:                                    ; preds = %bb.a
-  %.pre.i = load i64, ptr %0, align 8, !tbaa !15
+  %.pre.i = load i64, ptr %0, align 8, !tbaa !16
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -105,7 +105,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = add i64 %i.g, %i.e
   %i.i = mul i64 %i.h, 193905135338833
   %i.j = add i64 %i.i, 83935042429844
-  store i8 1, ptr %i.b, align 8, !tbaa !7
+  store i8 1, ptr %i.b, align 8, !tbaa !8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %._crit_edge.i
@@ -113,14 +113,14 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge.
   %i.l = mul i64 %i.k, 25214903917
   %i.m = add i64 %i.l, 11
   %i.n = and i64 %i.m, 281474976710655            ; 2 uses
-  store i64 %i.n, ptr %0, align 8, !tbaa !15
+  store i64 %i.n, ptr %0, align 8, !tbaa !16
   %i.o = lshr i64 %i.n, 22
   %i.p = trunc nuw nsw i64 %i.o to i32
   %i.q = add nuw nsw i32 %i.p, 1
   %i.r = uitofp nneg i32 %i.q to double
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.t = load double, ptr %i.s, align 8, !tbaa !16
-  %i.u = tail call double @llvm.log2.f64(double %i.r), !tbaa !3
+  %i.t = load double, ptr %i.s, align 8, !tbaa !17
+  %i.u = tail call double @llvm.log2.f64(double %i.r)
   %i.v = fadd double %i.u, -2.600000e+01
   %i.w = sitofp i64 %i.a to double
   %i.x = fmul nnan double %i.w, f0xBFE62E42FEFA39EF
@@ -131,7 +131,7 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge.
 bb.d:                                             ; preds = %bb.c
   %i.aa = tail call double @llvm.rint.f64(double %i.y) ; 2 uses
   %i.ab = fsub double %i.y, %i.aa
-  store double %i.ab, ptr %i.s, align 8, !tbaa !16
+  store double %i.ab, ptr %i.s, align 8, !tbaa !17
   %i.ac = fptosi double %i.aa to i64
   %i.ad = add nsw i64 %i.ac, 1
   br label %_ZN4absl12lts_2024011618profiling_internal17ExponentialBiased12GetSkipCountEl.exit
@@ -154,19 +154,20 @@ attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !11, i64 16}
-!8 = !{!"_ZTSN4absl12lts_2024011618profiling_internal17ExponentialBiasedE", !9, i64 0, !10, i64 8, !11, i64 16}
-!9 = !{!"long", !5, i64 0}
-!10 = !{!"double", !5, i64 0}
-!11 = !{!"bool", !5, i64 0}
-!12 = !{i8 0, i8 2}
-!13 = !{}
-!14 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!15 = !{!8, !9, i64 0}
-!16 = !{!8, !10, i64 8}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !12, i64 16}
+!9 = !{!"_ZTSN4absl12lts_2024011618profiling_internal17ExponentialBiasedE", !10, i64 0, !11, i64 8, !12, i64 16}
+!10 = !{!"long", !6, i64 0}
+!11 = !{!"double", !6, i64 0}
+!12 = !{!"bool", !6, i64 0}
+!13 = !{i8 0, i8 2}
+!14 = !{}
+!15 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!16 = !{!9, !10, i64 0}
+!17 = !{!9, !11, i64 8}
 end_hunk_0

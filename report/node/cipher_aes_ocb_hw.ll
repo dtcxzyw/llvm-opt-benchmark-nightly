@@ -11,7 +11,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local nonnull ptr @ossl_prov_cipher_hw_aes_ocb(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @OPENSSL_ia32cap_P, i64 4), align 4, !tbaa !5
+  %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @OPENSSL_ia32cap_P, i64 4), align 4, !tbaa !10
   %i.b = and i32 %i.a, 33554432
   %.not = icmp eq i32 %i.b, 0
   %aes_generic_ocb.aesni_ocb = select i1 %.not, ptr @aes_generic_ocb, ptr @aesni_ocb
@@ -69,7 +69,7 @@ declare void @aesni_ocb_decrypt(ptr noundef, ptr noundef, i64 noundef, ptr nound
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @cipher_hw_aes_ocb_generic_initkey(ptr noundef %0, ptr noundef %1, i64 noundef %2) #1 {
 bb.a:
-  %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @OPENSSL_ia32cap_P, i64 4), align 4, !tbaa !5
+  %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @OPENSSL_ia32cap_P, i64 4), align 4, !tbaa !10
   %i.b = and i32 %i.a, 512
   %.not = icmp eq i32 %i.b, 0
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 688 ; 3 uses
@@ -135,9 +135,11 @@ attributes #3 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
-!4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!5 = !{!6, !6, i64 0}
-!6 = !{!"int", !7, i64 0}
-!7 = !{!"omnipotent char", !8, i64 0}
-!8 = !{!"Simple C/C++ TBAA"}
+!4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!5 = !{!6, !7, i64 0}
+!6 = !{!"__libc_errno", !7, i64 0}
+!7 = !{!"int", !8, i64 0}
+!8 = !{!"omnipotent char", !9, i64 0}
+!9 = !{!"Simple C/C++ TBAA"}
+!10 = !{!7, !7, i64 0}
 end_hunk_0

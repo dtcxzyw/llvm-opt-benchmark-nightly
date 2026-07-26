@@ -67,7 +67,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.c
   %i.g = load atomic i8, ptr @_ZGVZN5folly12_GLOBAL__N_118mprotectMembarrierEvE13mprotectMutex acquire, align 8
   %i.h = icmp eq i8 %i.g, 0
-  br i1 %i.h, label %bb.h, label %bb.j, !prof !11
+  br i1 %i.h, label %bb.h, label %bb.j, !prof !12
 
 bb.h:                                             ; preds = %bb.g
   %i.i = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly12_GLOBAL__N_118mprotectMembarrierEvE13mprotectMutex) #10
@@ -92,13 +92,13 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 _ZNSt10lock_guardISt5mutexEC2ERS0_.exit.i:        ; preds = %bb.j
-  %i.k = load ptr, ptr @_ZZN5folly12_GLOBAL__N_118mprotectMembarrierEvE9dummyPage, align 8, !tbaa !12 ; 2 uses
+  %i.k = load ptr, ptr @_ZZN5folly12_GLOBAL__N_118mprotectMembarrierEvE9dummyPage, align 8, !tbaa !13 ; 2 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.i
   %i.m = tail call ptr @mmap(ptr noundef null, i64 noundef 1, i32 noundef 1, i32 noundef 34, i32 noundef -1, i64 noundef 0) #10 ; 3 uses
-  store ptr %i.m, ptr @_ZZN5folly12_GLOBAL__N_118mprotectMembarrierEvE9dummyPage, align 8, !tbaa !12
+  store ptr %i.m, ptr @_ZZN5folly12_GLOBAL__N_118mprotectMembarrierEvE9dummyPage, align 8, !tbaa !13
   %.not1.i = icmp eq ptr %i.m, inttoptr (i64 -1 to ptr)
   br i1 %.not1.i, label %bb.m, label %bb.n
 
@@ -117,8 +117,8 @@ bb.o:                                             ; preds = %bb.n
   unreachable
 
 bb.p:                                             ; preds = %bb.n
-  %i.p = load ptr, ptr @_ZZN5folly12_GLOBAL__N_118mprotectMembarrierEvE9dummyPage, align 8, !tbaa !12 ; 2 uses
-  store volatile i8 0, ptr %i.p, align 1, !tbaa !14
+  %i.p = load ptr, ptr @_ZZN5folly12_GLOBAL__N_118mprotectMembarrierEvE9dummyPage, align 8, !tbaa !13 ; 2 uses
+  store volatile i8 0, ptr %i.p, align 1, !tbaa !15
   %i.q = tail call i32 @mprotect(ptr noundef nonnull %i.p, i64 noundef 1, i32 noundef 1) #10
   %.not3.i = icmp eq i32 %i.q, -1
   br i1 %.not3.i, label %bb.q, label %_ZN5folly12_GLOBAL__N_118mprotectMembarrierEv.exit
@@ -212,13 +212,14 @@ attributes #12 = { noreturn nounwind }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!"branch_weights", i32 1, i32 1048575}
-!12 = !{!13, !13, i64 0}
-!13 = !{!"any pointer", !9, i64 0}
-!14 = !{!9, !9, i64 0}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!"branch_weights", i32 1, i32 1048575}
+!13 = !{!14, !14, i64 0}
+!14 = !{!"any pointer", !10, i64 0}
+!15 = !{!10, !10, i64 0}
 end_hunk_0

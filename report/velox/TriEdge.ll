@@ -4,7 +4,7 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-module asm
+module asm(target_features: "+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave", target_cpu: "x86-64")
     ".globl _ZSt21ios_base_library_initv"
 
 $__clang_call_terminate = comdat any
@@ -17,8 +17,8 @@ $__clang_call_terminate = comdat any
 define void @_ZN4geos11triangulate3tri7TriEdge9normalizeEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(48) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.b = load double, ptr %0, align 8, !tbaa !7   ; 2 uses
-  %i.c = load double, ptr %i.a, align 8, !tbaa !7 ; 2 uses
+  %i.b = load double, ptr %0, align 8, !tbaa !8   ; 2 uses
+  %i.c = load double, ptr %i.a, align 8, !tbaa !8 ; 2 uses
   %i.d = fcmp olt double %i.b, %i.c
   br i1 %i.d, label %bb.d, label %bb.b
 
@@ -28,15 +28,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.g = load double, ptr %i.f, align 8, !tbaa !10
+  %i.g = load double, ptr %i.f, align 8, !tbaa !11
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.i = load double, ptr %i.h, align 8, !tbaa !10
+  %i.i = load double, ptr %i.h, align 8, !tbaa !11
   %i.j = fcmp olt double %i.g, %i.i
   br i1 %i.j, label %bb.d, label %_ZNK4geos4geom10Coordinate9compareToERKS1_.exit
 
 bb.d:                                             ; preds = %bb.c, %bb.a
   %.sroa.0.0.copyload = load <3 x double>, ptr %0, align 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !tbaa.struct !11
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !tbaa.struct !12
   store <3 x double> %.sroa.0.0.copyload, ptr %i.a, align 8
   br label %_ZNK4geos4geom10Coordinate9compareToERKS1_.exit
 
@@ -60,9 +60,9 @@ bb.a:
   %i.b = alloca double, align 8                   ; 4 uses
   %i.c = alloca double, align 8                   ; 4 uses
   %i.d = alloca double, align 8                   ; 4 uses
-  %i.e = load double, ptr %1, align 8, !tbaa !7   ; 2 uses
+  %i.e = load double, ptr %1, align 8, !tbaa !8   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  store double %i.e, ptr %i.d, align 8, !tbaa !12
+  store double %i.e, ptr %i.d, align 8, !tbaa !13
   %i.f = fcmp une double %i.e, 0.000000e+00
   br i1 %i.f, label %bb.b, label %_ZNKSt4hashIdEclEd.exit.i
 
@@ -81,9 +81,9 @@ _ZNKSt4hashIdEclEd.exit.i:                        ; preds = %bb.b, %bb.a
   %i.j = phi i64 [ 0, %bb.a ], [ %i.g, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.l = load double, ptr %i.k, align 8, !tbaa !10 ; 2 uses
+  %i.l = load double, ptr %i.k, align 8, !tbaa !11 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  store double %i.l, ptr %i.c, align 8, !tbaa !12
+  store double %i.l, ptr %i.c, align 8, !tbaa !13
   %i.m = fcmp une double %i.l, 0.000000e+00
   br i1 %i.m, label %bb.d, label %_ZNK4geos4geom10Coordinate8HashCodeclERKS1_.exit
 
@@ -102,9 +102,9 @@ _ZNK4geos4geom10Coordinate8HashCodeclERKS1_.exit: ; preds = %_ZNKSt4hashIdEclEd.
   %i.q = phi i64 [ 0, %_ZNKSt4hashIdEclEd.exit.i ], [ %i.n, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.s = load double, ptr %i.r, align 8, !tbaa !7 ; 2 uses
+  %i.s = load double, ptr %i.r, align 8, !tbaa !8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store double %i.s, ptr %i.b, align 8, !tbaa !12
+  store double %i.s, ptr %i.b, align 8, !tbaa !13
   %i.t = fcmp une double %i.s, 0.000000e+00
   br i1 %i.t, label %bb.f, label %_ZNKSt4hashIdEclEd.exit.i4
 
@@ -123,9 +123,9 @@ _ZNKSt4hashIdEclEd.exit.i4:                       ; preds = %bb.f, %_ZNK4geos4ge
   %i.x = phi i64 [ 0, %_ZNK4geos4geom10Coordinate8HashCodeclERKS1_.exit ], [ %i.u, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.z = load double, ptr %i.y, align 8, !tbaa !10 ; 2 uses
+  %i.z = load double, ptr %i.y, align 8, !tbaa !11 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store double %i.z, ptr %i.a, align 8, !tbaa !12
+  store double %i.z, ptr %i.a, align 8, !tbaa !13
   %i.aa = fcmp une double %i.z, 0.000000e+00
   br i1 %i.aa, label %bb.h, label %_ZNK4geos4geom10Coordinate8HashCodeclERKS1_.exit5
 
@@ -229,15 +229,16 @@ attributes #9 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSN4geos4geom10CoordinateE", !9, i64 0, !9, i64 8, !9, i64 16}
-!9 = !{!"double", !5, i64 0}
-!10 = !{!8, !9, i64 8}
-!11 = !{i64 0, i64 8, !12, i64 8, i64 8, !12, i64 16, i64 8, !12}
-!12 = !{!9, !9, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSN4geos4geom10CoordinateE", !10, i64 0, !10, i64 8, !10, i64 16}
+!10 = !{!"double", !6, i64 0}
+!11 = !{!9, !10, i64 8}
+!12 = !{i64 0, i64 8, !13, i64 8, i64 8, !13, i64 16, i64 8, !13}
+!13 = !{!10, !10, i64 0}
 end_hunk_0

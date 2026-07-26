@@ -19,14 +19,14 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define void @_ZN4absl12lts_2024011618debugging_internal27RegisterDebugStackTraceHookEPFvPKPviPFvPKcS2_ES2_E(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  store ptr %0, ptr @_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_122debug_stack_trace_hookE, align 8, !tbaa !7
+  store ptr %0, ptr @_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_122debug_stack_trace_hookE, align 8, !tbaa !8
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define noundef ptr @_ZN4absl12lts_2024011618debugging_internal22GetDebugStackTraceHookEv() local_unnamed_addr #1 {
 bb.a:
-  %i.a = load ptr, ptr @_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_122debug_stack_trace_hookE, align 8, !tbaa !7
+  %i.a = load ptr, ptr @_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_122debug_stack_trace_hookE, align 8, !tbaa !8
   ret ptr %i.a
 }
 
@@ -38,7 +38,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !9
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !10
   %i.c = inttoptr i64 %i.b to ptr
   br label %bb.c
 
@@ -79,7 +79,7 @@ bb.c:                                             ; preds = %bb.a
   %spec.select.i = select i1 %i.i, ptr %i.e, ptr @.str.3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #9
   %i.j = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.f, i64 noundef 1024, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str, i32 noundef 18, ptr noundef nonnull %0, ptr noundef nonnull %spec.select.i) #9 ; 0 uses
-  call void %6(ptr noundef nonnull %i.f, ptr noundef %7), !inline_history !11
+  call void %6(ptr noundef nonnull %i.f, ptr noundef %7), !inline_history !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #9
   %i.k = icmp sgt i32 %3, 0
@@ -88,7 +88,7 @@ bb.c:                                             ; preds = %bb.a
 .thread:                                          ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
   %i.l = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.d, i64 noundef 100, ptr noundef nonnull @.str.6, ptr noundef nonnull @.str, i32 noundef 18, ptr noundef nonnull %0) #9 ; 0 uses
-  call void %6(ptr noundef nonnull %i.d, ptr noundef %7), !inline_history !12
+  call void %6(ptr noundef nonnull %i.d, ptr noundef %7), !inline_history !13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
   %i.m = icmp sgt i32 %3, 0
   br i1 %i.m, label %.lr.ph.split.preheader, label %._crit_edge
@@ -107,10 +107,10 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_127DumpPCAndFrameSizeAndSymbolEPFvPKcPvES5_S5_S5_iS4_.exit.us
   %indvars.iv36 = phi i64 [ 0, %.lr.ph.split.us.preheader ], [ %indvars.iv.next37, %_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_127DumpPCAndFrameSizeAndSymbolEPFvPKcPvES5_S5_S5_iS4_.exit.us ] ; 3 uses
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv36
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !7    ; 3 uses
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !8    ; 3 uses
   %i.p = getelementptr inbounds i8, ptr %i.o, i64 -1
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv36
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !3    ; 2 uses
+  %i.r = load i32, ptr %i.q, align 4, !tbaa !14   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   %i.s = call noundef zeroext i1 @_ZN4absl12lts_202401169SymbolizeEPKvPci(ptr noundef nonnull %i.p, ptr noundef nonnull %i.b, i32 noundef 1024)
   %spec.select.i32.us = select i1 %i.s, ptr %i.b, ptr @.str.3 ; 2 uses
@@ -127,12 +127,12 @@ bb.e:                                             ; preds = %.lr.ph.split.us
   br label %_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_127DumpPCAndFrameSizeAndSymbolEPFvPKcPvES5_S5_S5_iS4_.exit.us
 
 _ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_127DumpPCAndFrameSizeAndSymbolEPFvPKcPvES5_S5_S5_iS4_.exit.us: ; preds = %bb.e, %bb.d
-  call void %6(ptr noundef nonnull %i.c, ptr noundef %7), !inline_history !11
+  call void %6(ptr noundef nonnull %i.c, ptr noundef %7), !inline_history !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   %indvars.iv.next37 = add nuw nsw i64 %indvars.iv36, 1 ; 2 uses
   %exitcond40.not = icmp eq i64 %indvars.iv.next37, %wide.trip.count39
-  br i1 %exitcond40.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !13
+  br i1 %exitcond40.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_118DumpPCAndFrameSizeEPFvPKcPvES5_S5_iS4_.exit, %_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_127DumpPCAndFrameSizeAndSymbolEPFvPKcPvES5_S5_S5_iS4_.exit.us, %.thread45, %.thread, %bb.c
   %i.w = icmp sgt i32 %4, 0
@@ -141,9 +141,9 @@ _ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_127DumpPCAndFrameSizeAndS
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_118DumpPCAndFrameSizeEPFvPKcPvES5_S5_iS4_.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph.split.preheader ], [ %indvars.iv.next, %_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_118DumpPCAndFrameSizeEPFvPKcPvES5_S5_iS4_.exit ] ; 3 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
-  %i.y = load ptr, ptr %i.x, align 8, !tbaa !7    ; 2 uses
+  %i.y = load ptr, ptr %i.x, align 8, !tbaa !8    ; 2 uses
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
-  %i.aa = load i32, ptr %i.z, align 4, !tbaa !3   ; 2 uses
+  %i.aa = load i32, ptr %i.z, align 4, !tbaa !14  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.ab = icmp slt i32 %i.aa, 1
   br i1 %i.ab, label %bb.f, label %bb.g
@@ -157,11 +157,11 @@ bb.g:                                             ; preds = %.lr.ph.split
   br label %_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_118DumpPCAndFrameSizeEPFvPKcPvES5_S5_iS4_.exit
 
 _ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_118DumpPCAndFrameSizeEPFvPKcPvES5_S5_iS4_.exit: ; preds = %bb.f, %bb.g
-  call void %6(ptr noundef nonnull %i.a, ptr noundef %7), !inline_history !12
+  call void %6(ptr noundef nonnull %i.a, ptr noundef %7), !inline_history !13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !13
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !15
 
 bb.h:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #9
@@ -216,7 +216,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_115DumpPCAndSymbolEPFvPKcPvES5_S5_S4_.exit.us
   %indvars.iv47 = phi i64 [ %indvars.iv.next48, %_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_115DumpPCAndSymbolEPFvPKcPvES5_S5_S4_.exit.us ], [ 0, %.lr.ph ] ; 2 uses
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %.1, i64 %indvars.iv47
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !7    ; 3 uses
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !8    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   %i.p = ptrtoint ptr %i.o to i64
   %i.q = add i64 %i.p, -1
@@ -235,29 +235,29 @@ _ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_115DumpPCAndSymbolEPFvPKc
   %.0.i.us = phi ptr [ %i.b, %bb.e ], [ @.str.3, %bb.d ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
   %i.u = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.c, i64 noundef 1024, ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.1, i32 noundef 18, ptr noundef %i.o, ptr noundef nonnull %.0.i.us) #9 ; 0 uses
-  call void %3(ptr noundef nonnull %i.c, ptr noundef %4), !inline_history !15
+  call void %3(ptr noundef nonnull %i.c, ptr noundef %4), !inline_history !17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   %indvars.iv.next48 = add nuw nsw i64 %indvars.iv47, 1 ; 2 uses
   %exitcond51.not = icmp eq i64 %indvars.iv.next48, %wide.trip.count50
-  br i1 %exitcond51.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !16
+  br i1 %exitcond51.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %.lr.ph.split, %_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_115DumpPCAndSymbolEPFvPKcPvES5_S5_S4_.exit.us, %bb.c
-  %i.v = load ptr, ptr @_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_122debug_stack_trace_hookE, align 8, !tbaa !7 ; 2 uses
+  %i.v = load ptr, ptr @_ZN4absl12lts_2024011618debugging_internal12_GLOBAL__N_122debug_stack_trace_hookE, align 8, !tbaa !8 ; 2 uses
   %.not42 = icmp eq ptr %i.v, null
   br i1 %.not42, label %bb.g, label %bb.f
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.split
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.split ], [ 0, %.lr.ph ] ; 2 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %.1, i64 %indvars.iv
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !7
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.y = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 100, ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.1, i32 noundef 18, ptr noundef %i.x) #9 ; 0 uses
-  call void %3(ptr noundef nonnull %i.a, ptr noundef %4), !inline_history !17
+  call void %3(ptr noundef nonnull %i.a, ptr noundef %4), !inline_history !19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count50
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !16
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !18
 
 bb.f:                                             ; preds = %._crit_edge
   call void %i.v(ptr noundef %.1, i32 noundef %i.l, ptr noundef %3, ptr noundef %4)
@@ -303,20 +303,22 @@ attributes #9 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"any pointer", !5, i64 0}
-!9 = !{!10, !10, i64 0}
-!10 = !{!"long long", !5, i64 0}
-!11 = distinct !{null}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"any pointer", !6, i64 0}
+!10 = !{!11, !11, i64 0}
+!11 = !{!"long long", !6, i64 0}
 !12 = distinct !{null}
-!13 = distinct !{!13, !14}
-!14 = !{!"llvm.loop.mustprogress"}
-!15 = distinct !{null}
-!16 = distinct !{!16, !14}
+!13 = distinct !{null}
+!14 = !{!5, !5, i64 0}
+!15 = distinct !{!15, !16}
+!16 = !{!"llvm.loop.mustprogress"}
 !17 = distinct !{null}
+!18 = distinct !{!18, !16}
+!19 = distinct !{null}
 end_hunk_0

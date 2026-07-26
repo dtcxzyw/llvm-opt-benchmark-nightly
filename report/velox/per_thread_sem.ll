@@ -9,7 +9,7 @@ define void @_ZN4absl12lts_2024011624synchronization_internal12PerThreadSem23Set
 bb.a:
   %i.a = tail call noundef ptr @_ZN4absl12lts_2024011613base_internal30CurrentThreadIdentityIfPresentEv() ; 2 uses
   %i.b = icmp eq ptr %i.a, null
-  br i1 %i.b, label %bb.b, label %_ZN4absl12lts_2024011624synchronization_internal32GetOrCreateCurrentThreadIdentityEv.exit, !prof !7
+  br i1 %i.b, label %bb.b, label %_ZN4absl12lts_2024011624synchronization_internal32GetOrCreateCurrentThreadIdentityEv.exit, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noundef ptr @_ZN4absl12lts_2024011624synchronization_internal20CreateThreadIdentityEv()
@@ -18,7 +18,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN4absl12lts_2024011624synchronization_internal32GetOrCreateCurrentThreadIdentityEv.exit: ; preds = %bb.a, %bb.b
   %.0.i = phi ptr [ %i.c, %bb.b ], [ %i.a, %bb.a ]
   %i.d = getelementptr inbounds nuw i8, ptr %.0.i, i64 320
-  store ptr %0, ptr %i.d, align 8, !tbaa !8
+  store ptr %0, ptr %i.d, align 8, !tbaa !9
   ret void
 }
 
@@ -27,7 +27,7 @@ define noundef ptr @_ZN4absl12lts_2024011624synchronization_internal12PerThreadS
 bb.a:
   %i.a = tail call noundef ptr @_ZN4absl12lts_2024011613base_internal30CurrentThreadIdentityIfPresentEv() ; 2 uses
   %i.b = icmp eq ptr %i.a, null
-  br i1 %i.b, label %bb.b, label %_ZN4absl12lts_2024011624synchronization_internal32GetOrCreateCurrentThreadIdentityEv.exit, !prof !7
+  br i1 %i.b, label %bb.b, label %_ZN4absl12lts_2024011624synchronization_internal32GetOrCreateCurrentThreadIdentityEv.exit, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noundef ptr @_ZN4absl12lts_2024011624synchronization_internal20CreateThreadIdentityEv()
@@ -36,7 +36,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN4absl12lts_2024011624synchronization_internal32GetOrCreateCurrentThreadIdentityEv.exit: ; preds = %bb.a, %bb.b
   %.0.i = phi ptr [ %i.c, %bb.b ], [ %i.a, %bb.a ]
   %i.d = getelementptr inbounds nuw i8, ptr %.0.i, i64 320
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !8
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !9
   ret ptr %i.e
 }
 
@@ -48,7 +48,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 332
   %i.d = load atomic i32, ptr %i.c monotonic, align 4 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 336
-  %i.f = load atomic i8, ptr %i.e monotonic, align 4, !range !26, !noundef !27
+  %i.f = load atomic i8, ptr %i.e monotonic, align 4, !range !27, !noundef !28
   %.not = icmp eq i32 %i.d, 0
   br i1 %.not, label %bb.d, label %bb.b
 
@@ -80,7 +80,7 @@ bb.a:
 define weak void @AbslInternalPerThreadSemInit_lts_20240116(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i32 0, ptr %i.a, align 4, !tbaa !28
+  store i32 0, ptr %i.a, align 4, !tbaa !29
   ret void
 }
 
@@ -101,7 +101,7 @@ define weak zeroext i1 @AbslInternalPerThreadSemWait_lts_20240116(i64 %0) local_
 bb.a:
   %i.a = tail call noundef ptr @_ZN4absl12lts_2024011613base_internal30CurrentThreadIdentityIfPresentEv() ; 2 uses
   %i.b = icmp eq ptr %i.a, null
-  br i1 %i.b, label %bb.b, label %_ZN4absl12lts_2024011624synchronization_internal32GetOrCreateCurrentThreadIdentityEv.exit, !prof !7
+  br i1 %i.b, label %bb.b, label %_ZN4absl12lts_2024011624synchronization_internal32GetOrCreateCurrentThreadIdentityEv.exit, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noundef ptr @_ZN4absl12lts_2024011624synchronization_internal20CreateThreadIdentityEv()
@@ -117,7 +117,7 @@ _ZN4absl12lts_2024011624synchronization_internal32GetOrCreateCurrentThreadIdenti
   %i.h = getelementptr inbounds nuw i8, ptr %.0.i, i64 336 ; 2 uses
   store atomic i8 0, ptr %i.h monotonic, align 4
   %i.i = getelementptr inbounds nuw i8, ptr %.0.i, i64 320 ; 2 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !8    ; 2 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !9    ; 2 uses
   %.not = icmp eq ptr %i.j, null
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -128,7 +128,7 @@ bb.c:                                             ; preds = %_ZN4absl12lts_20240
 bb.d:                                             ; preds = %bb.c, %_ZN4absl12lts_2024011624synchronization_internal32GetOrCreateCurrentThreadIdentityEv.exit
   %i.l = getelementptr inbounds nuw i8, ptr %.0.i, i64 64
   %i.m = tail call noundef zeroext i1 @_ZN4absl12lts_2024011624synchronization_internal11FutexWaiter4WaitENS1_13KernelTimeoutE(ptr noundef nonnull align 4 dereferenceable(4) %i.l, i64 %0)
-  %i.n = load ptr, ptr %i.i, align 8, !tbaa !8    ; 2 uses
+  %i.n = load ptr, ptr %i.i, align 8, !tbaa !9    ; 2 uses
   %.not14 = icmp eq ptr %i.n, null
   br i1 %.not14, label %bb.f, label %bb.e
 
@@ -163,31 +163,32 @@ attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!8 = !{!9, !20, i64 320}
-!9 = !{!"_ZTSN4absl12lts_2024011613base_internal14ThreadIdentityE", !10, i64 0, !19, i64 64, !20, i64 320, !21, i64 328, !21, i64 332, !23, i64 336, !25, i64 344}
-!10 = !{!"_ZTSN4absl12lts_2024011613base_internal14PerThreadSynchE", !11, i64 0, !11, i64 8, !13, i64 16, !13, i64 17, !13, i64 18, !13, i64 19, !13, i64 20, !4, i64 24, !14, i64 28, !16, i64 32, !17, i64 40, !17, i64 48, !18, i64 56}
-!11 = !{!"p1 _ZTSN4absl12lts_2024011613base_internal14PerThreadSynchE", !12, i64 0}
-!12 = !{!"any pointer", !5, i64 0}
-!13 = !{!"bool", !5, i64 0}
-!14 = !{!"_ZTSSt6atomicIN4absl12lts_2024011613base_internal14PerThreadSynch5StateEE", !15, i64 0}
-!15 = !{!"_ZTSN4absl12lts_2024011613base_internal14PerThreadSynch5StateE", !5, i64 0}
-!16 = !{!"p1 _ZTSN4absl12lts_2024011615SynchWaitParamsE", !12, i64 0}
-!17 = !{!"long", !5, i64 0}
-!18 = !{!"p1 _ZTSN4absl12lts_2024011614SynchLocksHeldE", !12, i64 0}
-!19 = !{!"_ZTSN4absl12lts_2024011613base_internal14ThreadIdentity11WaiterStateE", !5, i64 0}
-!20 = !{!"p1 _ZTSSt6atomicIiE", !12, i64 0}
-!21 = !{!"_ZTSSt6atomicIiE", !22, i64 0}
-!22 = !{!"_ZTSSt13__atomic_baseIiE", !4, i64 0}
-!23 = !{!"_ZTSSt6atomicIbE", !24, i64 0}
-!24 = !{!"_ZTSSt13__atomic_baseIbE", !13, i64 0}
-!25 = !{!"p1 _ZTSN4absl12lts_2024011613base_internal14ThreadIdentityE", !12, i64 0}
-!26 = !{i8 0, i8 2}
-!27 = !{}
-!28 = !{!22, !4, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!9 = !{!10, !21, i64 320}
+!10 = !{!"_ZTSN4absl12lts_2024011613base_internal14ThreadIdentityE", !11, i64 0, !20, i64 64, !21, i64 320, !22, i64 328, !22, i64 332, !24, i64 336, !26, i64 344}
+!11 = !{!"_ZTSN4absl12lts_2024011613base_internal14PerThreadSynchE", !12, i64 0, !12, i64 8, !14, i64 16, !14, i64 17, !14, i64 18, !14, i64 19, !14, i64 20, !5, i64 24, !15, i64 28, !17, i64 32, !18, i64 40, !18, i64 48, !19, i64 56}
+!12 = !{!"p1 _ZTSN4absl12lts_2024011613base_internal14PerThreadSynchE", !13, i64 0}
+!13 = !{!"any pointer", !6, i64 0}
+!14 = !{!"bool", !6, i64 0}
+!15 = !{!"_ZTSSt6atomicIN4absl12lts_2024011613base_internal14PerThreadSynch5StateEE", !16, i64 0}
+!16 = !{!"_ZTSN4absl12lts_2024011613base_internal14PerThreadSynch5StateE", !6, i64 0}
+!17 = !{!"p1 _ZTSN4absl12lts_2024011615SynchWaitParamsE", !13, i64 0}
+!18 = !{!"long", !6, i64 0}
+!19 = !{!"p1 _ZTSN4absl12lts_2024011614SynchLocksHeldE", !13, i64 0}
+!20 = !{!"_ZTSN4absl12lts_2024011613base_internal14ThreadIdentity11WaiterStateE", !6, i64 0}
+!21 = !{!"p1 _ZTSSt6atomicIiE", !13, i64 0}
+!22 = !{!"_ZTSSt6atomicIiE", !23, i64 0}
+!23 = !{!"_ZTSSt13__atomic_baseIiE", !5, i64 0}
+!24 = !{!"_ZTSSt6atomicIbE", !25, i64 0}
+!25 = !{!"_ZTSSt13__atomic_baseIbE", !14, i64 0}
+!26 = !{!"p1 _ZTSN4absl12lts_2024011613base_internal14ThreadIdentityE", !13, i64 0}
+!27 = !{i8 0, i8 2}
+!28 = !{}
+!29 = !{!23, !5, i64 0}
 end_hunk_0

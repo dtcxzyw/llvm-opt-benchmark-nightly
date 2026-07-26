@@ -37,8 +37,8 @@ bb.f:                                             ; preds = %bb.a
 bb.g:                                             ; preds = %bb.d, %bb.a, %bb.f, %bb.e, %bb.c, %bb.b
   %.sink24 = phi i64 [ %., %bb.d ], [ 148898303, %bb.a ], [ 0, %bb.f ], [ 1073741823, %bb.e ], [ 941621322, %bb.c ], [ 264240792, %bb.b ]
   %.sink = phi i64 [ %.28, %bb.d ], [ 0, %bb.a ], [ 0, %bb.f ], [ 1073741823, %bb.e ], [ 1073741823, %bb.c ], [ 268435455, %bb.b ]
-  store i64 %.sink24, ptr %3, align 8, !tbaa !9
-  store i64 %.sink, ptr %4, align 8, !tbaa !9
+  store i64 %.sink24, ptr %3, align 8, !tbaa !10
+  store i64 %.sink, ptr %4, align 8, !tbaa !10
   %i.c = and i32 %1, 3
   switch i32 %i.c, label %bb.i [
     i32 0, label %.sink.split
@@ -50,9 +50,9 @@ bb.h:                                             ; preds = %bb.g
 
 .sink.split:                                      ; preds = %bb.g, %bb.h
   %.sink27 = phi i64 [ -3, %bb.h ], [ -65, %bb.g ]
-  %i.d = load i64, ptr %3, align 8, !tbaa !9
+  %i.d = load i64, ptr %3, align 8, !tbaa !10
   %i.e = and i64 %i.d, %.sink27
-  store i64 %i.e, ptr %3, align 8, !tbaa !9
+  store i64 %i.e, ptr %3, align 8, !tbaa !10
   br label %bb.i
 
 bb.i:                                             ; preds = %.sink.split, %bb.g, %bb.a
@@ -74,11 +74,12 @@ attributes #2 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
-!4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!5 = !{!6, !6, i64 0}
-!6 = !{!"int", !7, i64 0}
-!7 = !{!"omnipotent char", !8, i64 0}
-!8 = !{!"Simple C/C++ TBAA"}
-!9 = !{!10, !10, i64 0}
-!10 = !{!"long", !7, i64 0}
+!4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!5 = !{!6, !7, i64 0}
+!6 = !{!"__libc_errno", !7, i64 0}
+!7 = !{!"int", !8, i64 0}
+!8 = !{!"omnipotent char", !9, i64 0}
+!9 = !{!"Simple C/C++ TBAA"}
+!10 = !{!11, !11, i64 0}
+!11 = !{!"long", !8, i64 0}
 end_hunk_0

@@ -35,20 +35,20 @@ bb.a:
   store ptr @.str.1, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.c = load i8, ptr %i.b, align 4, !tbaa !7
+  %i.c = load i8, ptr %i.b, align 4, !tbaa !8
   %i.d = zext i8 %i.c to i32
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.f = call noundef ptr @_ZN4absl12lts_2024011616numbers_internal15FastIntToBufferEiPc(i32 noundef %i.d, ptr noundef nonnull %i.e)
   %i.g = ptrtoint ptr %i.f to i64
   %i.h = ptrtoint ptr %i.e to i64
   %i.i = sub i64 %i.g, %i.h
-  store i64 %i.i, ptr %3, align 8, !tbaa !13
+  store i64 %i.i, ptr %3, align 8, !tbaa !14
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr %i.e, ptr %i.j, align 8, !tbaa !17
+  store ptr %i.e, ptr %i.j, align 8, !tbaa !18
   call void @_ZN4absl12lts_202401166StrCatB5cxx11ERKNS0_8AlphaNumES3_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %1, ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(48) %3)
   %i.k = load atomic ptr, ptr @_ZN4absl12lts_2024011616raw_log_internal21internal_log_functionB5cxx11E acquire, align 8
   invoke void %i.k(i32 noundef 3, ptr noundef nonnull @.str, i32 noundef 36, ptr noundef nonnull align 8 dereferenceable(32) %1)
-          to label %_ZNK4absl12lts_2024011613base_internal10AtomicHookIPFvNS0_11LogSeverityEPKciRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclIJS3_RKS5_iSB_EEEvDpOT_.exit unwind label %bb.b, !inline_history !18
+          to label %_ZNK4absl12lts_2024011613base_internal10AtomicHookIPFvNS0_11LogSeverityEPKciRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclIJS3_RKS5_iSB_EEEvDpOT_.exit unwind label %bb.b, !inline_history !19
 
 _ZNK4absl12lts_2024011613base_internal10AtomicHookIPFvNS0_11LogSeverityEPKciRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEclIJS3_RKS5_iSB_EEEvDpOT_.exit: ; preds = %bb.a
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %1) #6
@@ -57,13 +57,13 @@ _ZNK4absl12lts_2024011613base_internal10AtomicHookIPFvNS0_11LogSeverityEPKciRKNS
 bb.b:                                             ; preds = %bb.a
   %i.l = landingpad { ptr, i32 }
           cleanup
-  %i.m = load ptr, ptr %1, align 8, !tbaa !19     ; 2 uses
+  %i.m = load ptr, ptr %1, align 8, !tbaa !20     ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.o = icmp eq ptr %i.m, %i.n
   br i1 %i.o, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.b
-  %i.p = load i64, ptr %i.n, align 8, !tbaa !22
+  %i.p = load i64, ptr %i.n, align 8, !tbaa !23
   %i.q = add i64 %i.p, 1
   call void @_ZdlPvm(ptr noundef %i.m, i64 noundef %i.q) #7
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -85,13 +85,13 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !19     ; 2 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !20     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = icmp eq ptr %i.a, %i.b
   br i1 %i.c, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i: ; preds = %bb.a
-  %i.d = load i64, ptr %i.b, align 8, !tbaa !22
+  %i.d = load i64, ptr %i.b, align 8, !tbaa !23
   %i.e = add i64 %i.d, 1
   tail call void @_ZdlPvm(ptr noundef %i.a, i64 noundef %i.e) #7
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv.exit
@@ -111,7 +111,7 @@ bb.a:
 .critedge:                                        ; preds = %.critedge.backedge, %bb.a
   %.012 = phi ptr [ %0, %bb.a ], [ %i.f, %.critedge.backedge ] ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.012, i64 12
-  %i.b = load i8, ptr %i.a, align 4, !tbaa !7     ; 4 uses
+  %i.b = load i8, ptr %i.a, align 4, !tbaa !8     ; 4 uses
   switch i8 %i.b, label %bb.f [
     i8 3, label %bb.b
     i8 5, label %bb.c
@@ -125,13 +125,13 @@ bb.b:                                             ; preds = %.critedge
 
 bb.c:                                             ; preds = %.critedge
   %i.c = getelementptr inbounds nuw i8, ptr %.012, i64 24
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !23
-  tail call void %i.d(ptr noundef nonnull %.012), !inline_history !25
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !24
+  tail call void %i.d(ptr noundef nonnull %.012), !inline_history !26
   br label %.loopexit
 
 bb.d:                                             ; preds = %.critedge
   %i.e = getelementptr inbounds nuw i8, ptr %.012, i64 24
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !26   ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !27   ; 2 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %.012, i64 noundef 32) #7
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   %i.h = load atomic i32, ptr %i.g acquire, align 4
@@ -192,31 +192,32 @@ attributes #7 = { builtin nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !5, i64 12}
-!8 = !{!"_ZTSN4absl12lts_2024011613cord_internal7CordRepE", !9, i64 0, !10, i64 8, !5, i64 12, !5, i64 13}
-!9 = !{!"long", !5, i64 0}
-!10 = !{!"_ZTSN4absl12lts_2024011613cord_internal16RefcountAndFlagsE", !11, i64 0}
-!11 = !{!"_ZTSSt6atomicIiE", !12, i64 0}
-!12 = !{!"_ZTSSt13__atomic_baseIiE", !4, i64 0}
-!13 = !{!14, !9, i64 0}
-!14 = !{!"_ZTSSt17basic_string_viewIcSt11char_traitsIcEE", !9, i64 0, !15, i64 8}
-!15 = !{!"p1 omnipotent char", !16, i64 0}
-!16 = !{!"any pointer", !5, i64 0}
-!17 = !{!14, !15, i64 8}
-!18 = distinct !{null}
-!19 = !{!20, !15, i64 0}
-!20 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !21, i64 0, !9, i64 8, !5, i64 16}
-!21 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !15, i64 0}
-!22 = !{!5, !5, i64 0}
-!23 = !{!24, !16, i64 24}
-!24 = !{!"_ZTSN4absl12lts_2024011613cord_internal15CordRepExternalE", !8, i64 0, !15, i64 16, !16, i64 24}
-!25 = distinct !{null}
-!26 = !{!27, !28, i64 24}
-!27 = !{!"_ZTSN4absl12lts_2024011613cord_internal16CordRepSubstringE", !8, i64 0, !9, i64 16, !28, i64 24}
-!28 = !{!"p1 _ZTSN4absl12lts_2024011613cord_internal7CordRepE", !16, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !6, i64 12}
+!9 = !{!"_ZTSN4absl12lts_2024011613cord_internal7CordRepE", !10, i64 0, !11, i64 8, !6, i64 12, !6, i64 13}
+!10 = !{!"long", !6, i64 0}
+!11 = !{!"_ZTSN4absl12lts_2024011613cord_internal16RefcountAndFlagsE", !12, i64 0}
+!12 = !{!"_ZTSSt6atomicIiE", !13, i64 0}
+!13 = !{!"_ZTSSt13__atomic_baseIiE", !5, i64 0}
+!14 = !{!15, !10, i64 0}
+!15 = !{!"_ZTSSt17basic_string_viewIcSt11char_traitsIcEE", !10, i64 0, !16, i64 8}
+!16 = !{!"p1 omnipotent char", !17, i64 0}
+!17 = !{!"any pointer", !6, i64 0}
+!18 = !{!15, !16, i64 8}
+!19 = distinct !{null}
+!20 = !{!21, !16, i64 0}
+!21 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !22, i64 0, !10, i64 8, !6, i64 16}
+!22 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !16, i64 0}
+!23 = !{!6, !6, i64 0}
+!24 = !{!25, !17, i64 24}
+!25 = !{!"_ZTSN4absl12lts_2024011613cord_internal15CordRepExternalE", !9, i64 0, !16, i64 16, !17, i64 24}
+!26 = distinct !{null}
+!27 = !{!28, !29, i64 24}
+!28 = !{!"_ZTSN4absl12lts_2024011613cord_internal16CordRepSubstringE", !9, i64 0, !10, i64 16, !29, i64 24}
+!29 = !{!"p1 _ZTSN4absl12lts_2024011613cord_internal7CordRepE", !17, i64 0}
 end_hunk_0

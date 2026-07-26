@@ -27,7 +27,7 @@ bb.b:                                             ; preds = %tailrecurse
   br i1 %i.e, label %_ZN4absl12lts_2024011613cord_internal20cordz_should_profileEv.exit.sink.split, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = load i64, ptr %i.a, align 8, !tbaa !7    ; 3 uses
+  %i.f = load i64, ptr %i.a, align 8, !tbaa !8    ; 3 uses
   %i.g = icmp slt i64 %i.f, 1
   br i1 %i.g, label %bb.d, label %bb.g
 
@@ -35,12 +35,12 @@ bb.d:                                             ; preds = %bb.c
   %.not = icmp eq i64 %i.f, -1
   %i.h = zext nneg i32 %i.c to i64
   %i.i = tail call noundef i64 @_ZN4absl12lts_2024011618profiling_internal17ExponentialBiased9GetStrideEl(ptr noundef nonnull align 8 dereferenceable(17) %i.b, i64 noundef %i.h) ; 3 uses
-  store i64 %i.i, ptr %i.a, align 8, !tbaa !7
+  store i64 %i.i, ptr %i.a, align 8, !tbaa !8
   br i1 %.not, label %bb.e, label %_ZN4absl12lts_2024011613cord_internal20cordz_should_profileEv.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.j = icmp sgt i64 %i.i, 1
-  br i1 %i.j, label %bb.f, label %tailrecurse, !prof !9
+  br i1 %i.j, label %bb.f, label %tailrecurse, !prof !10
 
 bb.f:                                             ; preds = %bb.e
   %i.k = add nsw i64 %i.i, -1
@@ -53,7 +53,7 @@ bb.g:                                             ; preds = %bb.c
 _ZN4absl12lts_2024011613cord_internal20cordz_should_profileEv.exit.sink.split: ; preds = %bb.b, %tailrecurse, %bb.g, %bb.f
   %.sink = phi i64 [ %i.k, %bb.f ], [ %i.l, %bb.g ], [ 65536, %tailrecurse ], [ 1, %bb.b ]
   %.0.ph = phi i1 [ false, %bb.f ], [ false, %bb.g ], [ %i.d, %tailrecurse ], [ %i.d, %bb.b ]
-  store i64 %.sink, ptr %i.a, align 8, !tbaa !7
+  store i64 %.sink, ptr %i.a, align 8, !tbaa !8
   br label %_ZN4absl12lts_2024011613cord_internal20cordz_should_profileEv.exit
 
 _ZN4absl12lts_2024011613cord_internal20cordz_should_profileEv.exit: ; preds = %bb.d, %_ZN4absl12lts_2024011613cord_internal20cordz_should_profileEv.exit.sink.split
@@ -77,7 +77,7 @@ declare noundef i64 @_ZN4absl12lts_2024011618profiling_internal17ExponentialBias
 define void @_ZN4absl12lts_2024011613cord_internal33cordz_set_next_sample_for_testingEl(i64 noundef %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4absl12lts_2024011613cord_internal17cordz_next_sampleE)
-  store i64 %0, ptr %i.a, align 8, !tbaa !7
+  store i64 %0, ptr %i.a, align 8, !tbaa !8
   ret void
 }
 
@@ -110,12 +110,13 @@ attributes #5 = { uwtable "no-trapping-math"="true" "stack-protector-buffer-size
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"long", !5, i64 0}
-!9 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"long", !6, i64 0}
+!10 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 end_hunk_0

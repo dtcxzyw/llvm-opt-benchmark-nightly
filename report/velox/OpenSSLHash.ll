@@ -24,15 +24,15 @@ define void @_ZN5folly3ssl11OpenSSLHash20check_out_size_throwEmNS_5RangeIPhEE(i6
   %i.b = ptrtoint ptr %2 to i64
   %i.c = ptrtoint ptr %1 to i64
   %i.d = sub i64 %i.b, %i.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #6, !noalias !11
-  store i64 %0, ptr %3, align 16, !tbaa !14
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #6, !noalias !12
+  store i64 %0, ptr %3, align 16, !tbaa !15
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store i64 %i.d, ptr %i.e, align 16, !tbaa !14
+  store i64 %i.d, ptr %i.e, align 16, !tbaa !15
   invoke void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %4, ptr nonnull @.str, i64 42, i64 68, ptr nonnull %3)
           to label %bb.a unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread
 
 bb.a:                                             ; preds = %.noexc5
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #6, !noalias !11
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #6, !noalias !12
   invoke void @_ZNSt16invalid_argumentC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %4)
           to label %bb.b unwind label %bb.c
 
@@ -50,13 +50,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.0 = phi i1 [ false, %bb.b ], [ true, %bb.a ]  ; 2 uses
   %i.g = landingpad { ptr, i32 }
           cleanup                                 ; 4 uses
-  %i.h = load ptr, ptr %4, align 8, !tbaa !15     ; 2 uses
+  %i.h = load ptr, ptr %4, align 8, !tbaa !16     ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.j = icmp eq ptr %i.h, %i.i
   br i1 %i.j, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.c
-  %i.k = load i64, ptr %i.i, align 8, !tbaa !14
+  %i.k = load i64, ptr %i.i, align 8, !tbaa !15
   %i.l = add i64 %i.k, 1
   call void @_ZdlPvm(ptr noundef %i.h, i64 noundef %i.l) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
@@ -89,7 +89,7 @@ declare i32 @__gxx_personality_v0(...)
 declare void @_ZNSt16invalid_argumentC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 8 dereferenceable(32)) unnamed_addr #2
 
 ; Function Attrs: nounwind
-declare void @_ZNSt16invalid_argumentD1Ev(ptr noundef nonnull align 8 dereferenceable(16)) unnamed_addr #3
+declare void @_ZNSt16invalid_argumentD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16)) unnamed_addr #3
 
 ; Function Attrs: cold noreturn
 declare void @__cxa_throw(ptr, ptr, ptr) local_unnamed_addr #4
@@ -124,19 +124,20 @@ attributes #8 = { builtin nounwind }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!12}
-!12 = distinct !{!12, !13, !"_ZN3fmt3v116formatIJRmmEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_7fstringIJDpT_EE1tEDpOSA_: argument 0"}
-!13 = distinct !{!13, !"_ZN3fmt3v116formatIJRmmEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_7fstringIJDpT_EE1tEDpOSA_"}
-!14 = !{!9, !9, i64 0}
-!15 = !{!16, !18, i64 0}
-!16 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !17, i64 0, !20, i64 8, !9, i64 16}
-!17 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !18, i64 0}
-!18 = !{!"p1 omnipotent char", !19, i64 0}
-!19 = !{!"any pointer", !9, i64 0}
-!20 = !{!"long", !9, i64 0}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!13}
+!13 = distinct !{!13, !14, !"_ZN3fmt3v116formatIJRmmEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_7fstringIJDpT_EE1tEDpOSA_: argument 0"}
+!14 = distinct !{!14, !"_ZN3fmt3v116formatIJRmmEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_7fstringIJDpT_EE1tEDpOSA_"}
+!15 = !{!10, !10, i64 0}
+!16 = !{!17, !19, i64 0}
+!17 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !18, i64 0, !21, i64 8, !10, i64 16}
+!18 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !19, i64 0}
+!19 = !{!"p1 omnipotent char", !20, i64 0}
+!20 = !{!"any pointer", !10, i64 0}
+!21 = !{!"long", !10, i64 0}
 end_hunk_0

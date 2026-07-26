@@ -29,21 +29,21 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %.lr.ph, %bb.e
   %.0154193 = phi i64 [ 0, %.lr.ph ], [ %i.ca, %bb.e ] ; 3 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.0154193 ; 8 uses
-  %i.k = load <4 x i32>, ptr %i.j, align 16, !tbaa !7
+  %i.k = load <4 x i32>, ptr %i.j, align 16, !tbaa !8
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %i.m = load <4 x i32>, ptr %i.l, align 16, !tbaa !7
+  %i.m = load <4 x i32>, ptr %i.l, align 16, !tbaa !8
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 32
-  %i.o = load <4 x i32>, ptr %i.n, align 16, !tbaa !7
+  %i.o = load <4 x i32>, ptr %i.n, align 16, !tbaa !8
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 48
-  %i.q = load <4 x i32>, ptr %i.p, align 16, !tbaa !7
+  %i.q = load <4 x i32>, ptr %i.p, align 16, !tbaa !8
   %i.r = getelementptr inbounds nuw i8, ptr %i.j, i64 64
-  %i.s = load <4 x i32>, ptr %i.r, align 16, !tbaa !7
+  %i.s = load <4 x i32>, ptr %i.r, align 16, !tbaa !8
   %i.t = getelementptr inbounds nuw i8, ptr %i.j, i64 80
-  %i.u = load <4 x i32>, ptr %i.t, align 16, !tbaa !7
+  %i.u = load <4 x i32>, ptr %i.t, align 16, !tbaa !8
   %i.v = getelementptr inbounds nuw i8, ptr %i.j, i64 96
-  %i.w = load <4 x i32>, ptr %i.v, align 16, !tbaa !7
+  %i.w = load <4 x i32>, ptr %i.v, align 16, !tbaa !8
   %i.x = getelementptr inbounds nuw i8, ptr %i.j, i64 112
-  %i.y = load <4 x i32>, ptr %i.x, align 16, !tbaa !7
+  %i.y = load <4 x i32>, ptr %i.x, align 16, !tbaa !8
   %i.z = icmp eq <4 x i32> %i.k, %i.i
   %i.aa = sext <4 x i1> %i.z to <4 x i32>
   %i.ab = icmp eq <4 x i32> %i.m, %i.i
@@ -84,10 +84,10 @@ bb.d:                                             ; preds = %.lr.ph, %bb.e
   %i.bk = bitcast <4 x float> %i.bj to <2 x i64>
   %i.bl = shufflevector <4 x float> %i.bh, <4 x float> %i.bi, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
   %i.bm = bitcast <4 x float> %i.bl to <2 x i64>
-  %i.bn = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.au, <2 x i64> %i.as) #4, !srcloc !8
-  %i.bo = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.ba, <2 x i64> %i.ay) #4, !srcloc !8
-  %i.bp = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.bg, <2 x i64> %i.be) #4, !srcloc !8
-  %i.bq = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.bm, <2 x i64> %i.bk) #4, !srcloc !8
+  %i.bn = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.au, <2 x i64> %i.as) #4, !srcloc !9
+  %i.bo = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.ba, <2 x i64> %i.ay) #4, !srcloc !9
+  %i.bp = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.bg, <2 x i64> %i.be) #4, !srcloc !9
+  %i.bq = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.bm, <2 x i64> %i.bk) #4, !srcloc !9
   %i.br = bitcast <2 x i64> %i.bn to <4 x i32>
   %i.bs = bitcast <2 x i64> %i.bo to <4 x i32>
   %i.bt = tail call <8 x i16> @llvm.x86.sse2.packssdw.128(<4 x i32> %i.br, <4 x i32> %i.bs)
@@ -103,7 +103,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.e
 bb.e:                                             ; preds = %bb.d
   %i.ca = add nuw i64 %.0154193, 16               ; 3 uses
   %i.cb = icmp ult i64 %i.ca, %i.h
-  br i1 %i.cb, label %bb.d, label %._crit_edge, !llvm.loop !9
+  br i1 %i.cb, label %bb.d, label %._crit_edge, !llvm.loop !10
 
 bb.f:                                             ; preds = %bb.d
   %i.cc = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %i.bz, i1 true)
@@ -119,13 +119,13 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %._crit_edge
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.0154.lcssa ; 4 uses
-  %i.ci = load <4 x i32>, ptr %i.ch, align 16, !tbaa !7
+  %i.ci = load <4 x i32>, ptr %i.ch, align 16, !tbaa !8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  %i.ck = load <4 x i32>, ptr %i.cj, align 16, !tbaa !7
+  %i.ck = load <4 x i32>, ptr %i.cj, align 16, !tbaa !8
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ch, i64 32
-  %i.cm = load <4 x i32>, ptr %i.cl, align 16, !tbaa !7
+  %i.cm = load <4 x i32>, ptr %i.cl, align 16, !tbaa !8
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ch, i64 48
-  %i.co = load <4 x i32>, ptr %i.cn, align 16, !tbaa !7
+  %i.co = load <4 x i32>, ptr %i.cn, align 16, !tbaa !8
   %i.cp = bitcast <2 x i64> %i.e to <4 x i32>     ; 4 uses
   %i.cq = icmp eq <4 x i32> %i.ci, %i.cp
   %i.cr = sext <4 x i1> %i.cq to <4 x i32>
@@ -147,8 +147,8 @@ bb.g:                                             ; preds = %._crit_edge
   %i.dh = bitcast <4 x float> %i.dg to <2 x i64>
   %i.di = shufflevector <4 x float> %i.de, <4 x float> %i.df, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
   %i.dj = bitcast <4 x float> %i.di to <2 x i64>
-  %i.dk = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.dd, <2 x i64> %i.db) #4, !srcloc !8
-  %i.dl = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.dj, <2 x i64> %i.dh) #4, !srcloc !8
+  %i.dk = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.dd, <2 x i64> %i.db) #4, !srcloc !9
+  %i.dl = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.dj, <2 x i64> %i.dh) #4, !srcloc !9
   %i.dm = bitcast <2 x i64> %i.dk to <4 x i32>
   %i.dn = bitcast <2 x i64> %i.dl to <4 x i32>
   %i.do = tail call <8 x i16> @llvm.x86.sse2.packssdw.128(<4 x i32> %i.dm, <4 x i32> %i.dn)
@@ -177,9 +177,9 @@ bb.i:                                             ; preds = %.thread184, %._crit
 
 bb.j:                                             ; preds = %bb.i
   %i.dx = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.4 ; 2 uses
-  %i.dy = load <4 x i32>, ptr %i.dx, align 16, !tbaa !7
+  %i.dy = load <4 x i32>, ptr %i.dx, align 16, !tbaa !8
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dx, i64 16
-  %i.ea = load <4 x i32>, ptr %i.dz, align 16, !tbaa !7
+  %i.ea = load <4 x i32>, ptr %i.dz, align 16, !tbaa !8
   %i.eb = bitcast <2 x i64> %i.e to <4 x i32>     ; 2 uses
   %i.ec = icmp eq <4 x i32> %i.dy, %i.eb
   %i.ed = sext <4 x i1> %i.ec to <4 x i32>
@@ -191,7 +191,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ej = bitcast <4 x float> %i.ei to <2 x i64>
   %i.ek = shufflevector <4 x float> %i.eg, <4 x float> %i.eh, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
   %i.el = bitcast <4 x float> %i.ek to <2 x i64>
-  %i.em = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.el, <2 x i64> %i.ej) #4, !srcloc !8
+  %i.em = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.el, <2 x i64> %i.ej) #4, !srcloc !9
   %i.en = bitcast <2 x i64> %i.em to <4 x i32>
   %i.eo = icmp slt <4 x i32> %i.en, zeroinitializer
   %i.ep = bitcast <4 x i1> %i.eo to i4            ; 2 uses
@@ -215,14 +215,14 @@ bb.l:                                             ; preds = %.thread188, %bb.i
 
 bb.m:                                             ; preds = %bb.l
   %i.et = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.6
-  %i.eu = load <4 x i32>, ptr %i.et, align 16, !tbaa !7
+  %i.eu = load <4 x i32>, ptr %i.et, align 16, !tbaa !8
   %i.ev = bitcast <2 x i64> %i.e to <4 x i32>
   %i.ew = icmp eq <4 x i32> %i.eu, %i.ev
   %i.ex = sext <4 x i1> %i.ew to <4 x i32>        ; 2 uses
   %i.ey = bitcast <4 x i32> %i.ex to <2 x i64>
   %i.ez = shufflevector <4 x i32> %i.ex, <4 x i32> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
   %i.fa = bitcast <4 x i32> %i.ez to <2 x i64>
-  %i.fb = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.ey, <2 x i64> %i.fa) #4, !srcloc !8
+  %i.fb = tail call noundef <2 x i64> asm "vpand $1, $0, $0\0A\09", "=x,x,0,~{dirflag},~{fpsr},~{flags}"(<2 x i64> %i.ey, <2 x i64> %i.fa) #4, !srcloc !9
   %i.fc = icmp slt <2 x i64> %i.fb, zeroinitializer
   %i.fd = bitcast <2 x i1> %i.fc to i2
   %i.fe = tail call range(i2 0, -1) i2 @llvm.cttz.i2(i2 %i.fd, i1 false)
@@ -264,13 +264,14 @@ attributes #4 = { nounwind memory(none) }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!5, !5, i64 0}
-!8 = !{i64 2425, i64 2444}
-!9 = distinct !{!9, !10}
-!10 = !{!"llvm.loop.mustprogress"}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!6, !6, i64 0}
+!9 = !{i64 2425, i64 2444}
+!10 = distinct !{!10, !11}
+!11 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

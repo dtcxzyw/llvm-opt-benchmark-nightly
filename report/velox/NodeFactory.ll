@@ -4,7 +4,7 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-module asm
+module asm(target_features: "+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave", target_cpu: "x86-64")
     ".globl _ZSt21ios_base_library_initv"
 
 %"class.geos::geomgraph::NodeFactory" = type { ptr }
@@ -15,7 +15,7 @@ $_ZN4geos9geomgraph11NodeFactoryD0Ev = comdat any
 
 @_ZZN4geos9geomgraph11NodeFactory8instanceEvE2nf = internal global %"class.geos::geomgraph::NodeFactory" zeroinitializer, align 8
 @_ZGVZN4geos9geomgraph11NodeFactory8instanceEvE2nf = internal global i64 0, align 8
-@_ZTVN4geos9geomgraph11NodeFactoryE = unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9geomgraph11NodeFactoryE, ptr @_ZNK4geos9geomgraph11NodeFactory10createNodeERKNS_4geom10CoordinateE, ptr @_ZN4geos9geomgraph11NodeFactoryD2Ev, ptr @_ZN4geos9geomgraph11NodeFactoryD0Ev] }, align 8
+@_ZTVN4geos9geomgraph11NodeFactoryE = constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9geomgraph11NodeFactoryE, ptr @_ZNK4geos9geomgraph11NodeFactory10createNodeERKNS_4geom10CoordinateE, ptr @_ZN4geos9geomgraph11NodeFactoryD2Ev, ptr @_ZN4geos9geomgraph11NodeFactoryD0Ev] }, align 8
 @_ZTIN4geos9geomgraph11NodeFactoryE = constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSN4geos9geomgraph11NodeFactoryE }, align 8
 @_ZTVN10__cxxabiv117__class_type_infoE = external global [0 x ptr]
 @_ZTSN4geos9geomgraph11NodeFactoryE = constant [31 x i8] c"N4geos9geomgraph11NodeFactoryE\00", align 1
@@ -52,7 +52,7 @@ define noundef nonnull align 8 dereferenceable(8) ptr @_ZN4geos9geomgraph11NodeF
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN4geos9geomgraph11NodeFactory8instanceEvE2nf acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %bb.d, !prof !7
+  br i1 %i.b, label %bb.b, label %bb.d, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4geos9geomgraph11NodeFactory8instanceEvE2nf) #8
@@ -60,7 +60,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4geos9geomgraph11NodeFactoryE, i64 16), ptr @_ZZN4geos9geomgraph11NodeFactory8instanceEvE2nf, align 8, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4geos9geomgraph11NodeFactoryE, i64 16), ptr @_ZZN4geos9geomgraph11NodeFactory8instanceEvE2nf, align 8, !tbaa !9
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4geos9geomgraph11NodeFactory8instanceEvE2nf) #8
   br label %bb.d
 
@@ -81,7 +81,7 @@ bb.a:
 declare void @__cxa_guard_release(ptr) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZN4geos9geomgraph11NodeFactoryD0Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) unnamed_addr #4 comdat align 2 {
+define linkonce_odr void @_ZN4geos9geomgraph11NodeFactoryD0Ev(ptr noundef nonnull align 8 dereferenceable(8) %0) unnamed_addr #4 comdat align 2 {
 bb.a:
   tail call void @_ZdlPv(ptr noundef nonnull %0) #7
   ret void
@@ -103,12 +103,13 @@ attributes #8 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!"branch_weights", i32 1, i32 1048575}
-!8 = !{!9, !9, i64 0}
-!9 = !{!"vtable pointer", !6, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!"branch_weights", i32 1, i32 1048575}
+!9 = !{!10, !10, i64 0}
+!10 = !{!"vtable pointer", !7, i64 0}
 end_hunk_0

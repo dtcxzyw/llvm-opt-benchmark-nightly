@@ -23,7 +23,7 @@ bb.a:
   %.0152.i = phi i64 [ %i.w, %_ZN5follyL14gf_multiply_swEjjj.exit.i ], [ %i.a, %bb.a ] ; 2 uses
   %i.b = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0152.i, i1 true) ; 2 uses
   %i.c = getelementptr inbounds nuw [4 x i8], ptr %.0143.i, i64 %i.b ; 2 uses
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !7
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !12
   br label %tailrecurse.i.i.i
 
 tailrecurse.i.i.i:                                ; preds = %tailrecurse.i.i.i, %.lr.ph.i
@@ -58,7 +58,7 @@ _ZN5follyL14gf_multiply_swEjjj.exit.i:            ; preds = %tailrecurse.i.i.i
   %i.w = lshr i64 %i.v, 1                         ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %.not.i = icmp eq i64 %i.w, 0
-  br i1 %.not.i, label %_ZN5follyL19crc32_append_zeroesIPFjjjjEEEjT_jmjRKSt5arrayIjLm62EE.exit, label %.lr.ph.i, !llvm.loop !11
+  br i1 %.not.i, label %_ZN5follyL19crc32_append_zeroesIPFjjjjEEEjT_jmjRKSt5arrayIjLm62EE.exit, label %.lr.ph.i, !llvm.loop !13
 
 _ZN5follyL19crc32_append_zeroesIPFjjjjEEEjT_jmjRKSt5arrayIjLm62EE.exit: ; preds = %_ZN5follyL14gf_multiply_swEjjj.exit.i, %bb.a
   %.0.lcssa.i = phi i32 [ %0, %bb.a ], [ %i.n, %_ZN5follyL14gf_multiply_swEjjj.exit.i ]
@@ -84,7 +84,7 @@ bb.a:
   %i.c = lshr exact i64 %.01517.i, %i.b
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %.01418.i, i64 %i.b ; 2 uses
   %i.e = zext i32 %.019.i to i64
-  %i.f = load i32, ptr %i.d, align 4, !tbaa !7
+  %i.f = load i32, ptr %i.d, align 4, !tbaa !12
   %i.g = zext i32 %i.f to i64
   %i.h = insertelement <2 x i64> poison, i64 %i.e, i64 0
   %i.i = insertelement <2 x i64> poison, i64 %i.g, i64 0
@@ -100,7 +100,7 @@ bb.a:
   %i.s = lshr i64 %i.c, 1                         ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %.not.i = icmp eq i64 %i.s, 0
-  br i1 %.not.i, label %_ZN5follyL19crc32_append_zeroesIPFjmmjEEEjT_jmjRKSt5arrayIjLm62EE.exit, label %.lr.ph.i, !llvm.loop !13
+  br i1 %.not.i, label %_ZN5follyL19crc32_append_zeroesIPFjmmjEEEjT_jmjRKSt5arrayIjLm62EE.exit, label %.lr.ph.i, !llvm.loop !15
 
 _ZN5follyL19crc32_append_zeroesIPFjmmjEEEjT_jmjRKSt5arrayIjLm62EE.exit: ; preds = %.lr.ph.i, %bb.a
   %.0.lcssa.i = phi i32 [ %0, %bb.a ], [ %i.r, %.lr.ph.i ]
@@ -124,7 +124,7 @@ bb.a:
   %.0152.i = phi i64 [ %i.w, %_ZN5follyL14gf_multiply_swEjjj.exit.i ], [ %i.a, %bb.a ] ; 2 uses
   %i.b = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0152.i, i1 true) ; 2 uses
   %i.c = getelementptr inbounds nuw [4 x i8], ptr %.0143.i, i64 %i.b ; 2 uses
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !7
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !12
   br label %tailrecurse.i.i.i
 
 tailrecurse.i.i.i:                                ; preds = %tailrecurse.i.i.i, %.lr.ph.i
@@ -159,7 +159,7 @@ _ZN5follyL14gf_multiply_swEjjj.exit.i:            ; preds = %tailrecurse.i.i.i
   %i.w = lshr i64 %i.v, 1                         ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %.not.i = icmp eq i64 %i.w, 0
-  br i1 %.not.i, label %_ZN5follyL19crc32_append_zeroesIPFjjjjEEEjT_jmjRKSt5arrayIjLm62EE.exit, label %.lr.ph.i, !llvm.loop !11
+  br i1 %.not.i, label %_ZN5follyL19crc32_append_zeroesIPFjjjjEEEjT_jmjRKSt5arrayIjLm62EE.exit, label %.lr.ph.i, !llvm.loop !13
 
 _ZN5follyL19crc32_append_zeroesIPFjjjjEEEjT_jmjRKSt5arrayIjLm62EE.exit: ; preds = %_ZN5follyL14gf_multiply_swEjjj.exit.i, %bb.a
   %.0.lcssa.i = phi i32 [ %0, %bb.a ], [ %i.n, %_ZN5follyL14gf_multiply_swEjjj.exit.i ]
@@ -182,7 +182,7 @@ bb.a:
   %i.c = lshr exact i64 %.01517.i, %i.b
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %.01418.i, i64 %i.b ; 2 uses
   %i.e = zext i32 %.019.i to i64
-  %i.f = load i32, ptr %i.d, align 4, !tbaa !7
+  %i.f = load i32, ptr %i.d, align 4, !tbaa !12
   %i.g = zext i32 %i.f to i64
   %i.h = insertelement <2 x i64> poison, i64 %i.e, i64 0
   %i.i = insertelement <2 x i64> poison, i64 %i.g, i64 0
@@ -196,7 +196,7 @@ bb.a:
   %i.q = lshr i64 %i.c, 1                         ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %.not.i = icmp eq i64 %i.q, 0
-  br i1 %.not.i, label %_ZN5follyL19crc32_append_zeroesIPFjmmjEEEjT_jmjRKSt5arrayIjLm62EE.exit, label %.lr.ph.i, !llvm.loop !13
+  br i1 %.not.i, label %_ZN5follyL19crc32_append_zeroesIPFjmmjEEEjT_jmjRKSt5arrayIjLm62EE.exit, label %.lr.ph.i, !llvm.loop !15
 
 _ZN5follyL19crc32_append_zeroesIPFjmmjEEEjT_jmjRKSt5arrayIjLm62EE.exit: ; preds = %.lr.ph.i, %bb.a
   %.0.lcssa.i = phi i32 [ %0, %bb.a ], [ %i.p, %.lr.ph.i ]
@@ -222,12 +222,14 @@ attributes #3 = { nocallback nofree nosync nounwind willreturn memory(none) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = distinct !{!11, !12}
-!12 = !{!"llvm.loop.mustprogress"}
-!13 = distinct !{!13, !12}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!9, !9, i64 0}
+!13 = distinct !{!13, !14}
+!14 = !{!"llvm.loop.mustprogress"}
+!15 = distinct !{!15, !14}
 end_hunk_0

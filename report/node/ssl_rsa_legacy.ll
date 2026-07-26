@@ -189,7 +189,7 @@ define dso_local i32 @SSL_use_RSAPrivateKey_ASN1(ptr noundef %0, ptr noundef %1,
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
-  store ptr %1, ptr %i.a, align 8, !tbaa !9
+  store ptr %1, ptr %i.a, align 8, !tbaa !10
   %i.b = call ptr @d2i_RSAPrivateKey(ptr noundef null, ptr noundef nonnull %i.a, i64 noundef %2) #3 ; 3 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.b, label %bb.c
@@ -358,7 +358,7 @@ define dso_local i32 @SSL_CTX_use_RSAPrivateKey_ASN1(ptr noundef %0, ptr noundef
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
-  store ptr %1, ptr %i.a, align 8, !tbaa !9
+  store ptr %1, ptr %i.a, align 8, !tbaa !10
   %i.b = call ptr @d2i_RSAPrivateKey(ptr noundef null, ptr noundef nonnull %i.a, i64 noundef %2) #3 ; 3 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.b, label %bb.c
@@ -393,12 +393,13 @@ attributes #3 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
-!4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!5 = !{!6, !6, i64 0}
-!6 = !{!"int", !7, i64 0}
-!7 = !{!"omnipotent char", !8, i64 0}
-!8 = !{!"Simple C/C++ TBAA"}
-!9 = !{!10, !10, i64 0}
-!10 = !{!"p1 omnipotent char", !11, i64 0}
-!11 = !{!"any pointer", !7, i64 0}
+!4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!5 = !{!6, !7, i64 0}
+!6 = !{!"__libc_errno", !7, i64 0}
+!7 = !{!"int", !8, i64 0}
+!8 = !{!"omnipotent char", !9, i64 0}
+!9 = !{!"Simple C/C++ TBAA"}
+!10 = !{!11, !11, i64 0}
+!11 = !{!"p1 omnipotent char", !12, i64 0}
+!12 = !{!"any pointer", !8, i64 0}
 end_hunk_0

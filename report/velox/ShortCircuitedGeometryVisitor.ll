@@ -2,7 +2,7 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-module asm
+module asm(target_features: "+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave", target_cpu: "x86-64")
     ".globl _ZSt21ios_base_library_initv"
 
 @_ZTIN4geos4geom8GeometryE = external constant ptr
@@ -11,7 +11,7 @@ module asm
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos4geom4util29ShortCircuitedGeometryVisitor7applyToERKNS0_8GeometryE(ptr noundef nonnull align 8 dereferenceable(9) %0, ptr noundef nonnull align 8 dereferenceable(40) %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %1, align 8, !tbaa !7
+  %i.a = load ptr, ptr %1, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call noundef i64 %i.c(ptr noundef nonnull align 8 dereferenceable(40) %1) ; 3 uses
@@ -24,7 +24,7 @@ bb.a:
 
 .backedge:                                        ; preds = %.backedge.backedge, %.lr.ph
   %.014 = phi i64 [ 0, %.lr.ph ], [ %.014.be, %.backedge.backedge ] ; 3 uses
-  %i.f = load ptr, ptr %1, align 8, !tbaa !7
+  %i.f = load ptr, ptr %1, align 8, !tbaa !8
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 88
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = tail call noundef ptr %i.h(ptr noundef nonnull align 8 dereferenceable(40) %1, i64 noundef %.014) ; 4 uses
@@ -41,21 +41,21 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
-  %i.l = load ptr, ptr %0, align 8, !tbaa !7
+  %i.l = load ptr, ptr %0, align 8, !tbaa !8
   %i.m = load ptr, ptr %i.l, align 8
   tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(9) %0, ptr noundef nonnull align 8 dereferenceable(40) %i.i)
-  %i.n = load ptr, ptr %0, align 8, !tbaa !7
+  %i.n = load ptr, ptr %0, align 8, !tbaa !8
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.p = load ptr, ptr %i.o, align 8
   %i.q = tail call noundef zeroext i1 %i.p(ptr noundef nonnull align 8 dereferenceable(9) %0)
   br i1 %i.q, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  store i8 1, ptr %i.e, align 8, !tbaa !9
+  store i8 1, ptr %i.e, align 8, !tbaa !10
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
-  %i.r = load i8, ptr %i.e, align 8, !tbaa !9, !range !12, !noundef !13
+  %i.r = load i8, ptr %i.e, align 8, !tbaa !10, !range !13, !noundef !14
   %i.s = trunc nuw i8 %i.r to i1
   %i.t = add nuw i64 %.014, 1                     ; 2 uses
   %i.u = icmp uge i64 %i.t, %i.d
@@ -69,7 +69,7 @@ bb.g:                                             ; preds = %.backedge
 
 .backedge.backedge:                               ; preds = %bb.g, %bb.f
   %.014.be = phi i64 [ %.old, %bb.g ], [ %i.t, %bb.f ]
-  br label %.backedge, !llvm.loop !14
+  br label %.backedge, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.f, %bb.a
   ret void
@@ -88,18 +88,19 @@ attributes #2 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"vtable pointer", !6, i64 0}
-!9 = !{!10, !11, i64 8}
-!10 = !{!"_ZTSN4geos4geom4util29ShortCircuitedGeometryVisitorE", !11, i64 8}
-!11 = !{!"bool", !5, i64 0}
-!12 = !{i8 0, i8 2}
-!13 = !{}
-!14 = distinct !{!14, !15}
-!15 = !{!"llvm.loop.mustprogress"}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"vtable pointer", !7, i64 0}
+!10 = !{!11, !12, i64 8}
+!11 = !{!"_ZTSN4geos4geom4util29ShortCircuitedGeometryVisitorE", !12, i64 8}
+!12 = !{!"bool", !6, i64 0}
+!13 = !{i8 0, i8 2}
+!14 = !{}
+!15 = distinct !{!15, !16}
+!16 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

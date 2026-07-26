@@ -94,15 +94,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = tail call ptr @DSA_new() #2              ; 2 uses
-  store ptr %i.a, ptr %1, align 8, !tbaa !9
+  store ptr %i.a, ptr %1, align 8, !tbaa !10
   %.not = icmp eq ptr %i.a, null
   %. = select i1 %.not, i32 0, i32 2
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.b = load ptr, ptr %1, align 8, !tbaa !9
+  %i.b = load ptr, ptr %1, align 8, !tbaa !10
   tail call void @DSA_free(ptr noundef %i.b) #2
-  store ptr null, ptr %1, align 8, !tbaa !9
+  store ptr null, ptr %1, align 8, !tbaa !10
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
@@ -126,12 +126,13 @@ attributes #2 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
-!4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!5 = !{!6, !6, i64 0}
-!6 = !{!"int", !7, i64 0}
-!7 = !{!"omnipotent char", !8, i64 0}
-!8 = !{!"Simple C/C++ TBAA"}
-!9 = !{!10, !10, i64 0}
-!10 = !{!"p1 _ZTS13ASN1_VALUE_st", !11, i64 0}
-!11 = !{!"any pointer", !7, i64 0}
+!4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!5 = !{!6, !7, i64 0}
+!6 = !{!"__libc_errno", !7, i64 0}
+!7 = !{!"int", !8, i64 0}
+!8 = !{!"omnipotent char", !9, i64 0}
+!9 = !{!"Simple C/C++ TBAA"}
+!10 = !{!11, !11, i64 0}
+!11 = !{!"p1 _ZTS13ASN1_VALUE_st", !12, i64 0}
+!12 = !{!"any pointer", !8, i64 0}
 end_hunk_0

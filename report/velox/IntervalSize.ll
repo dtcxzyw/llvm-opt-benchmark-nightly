@@ -20,7 +20,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = fdiv double %i.b, %.sroa.speculated
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   %i.h = call double @frexp(double noundef %i.g, ptr noundef nonnull %i.a) #4 ; 0 uses
-  %i.i = load i32, ptr %i.a, align 4, !tbaa !3
+  %i.i = load i32, ptr %i.a, align 4, !tbaa !8
   %i.j = icmp slt i32 %i.i, -48
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   br label %bb.c
@@ -54,9 +54,11 @@ attributes #4 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!5, !5, i64 0}
 end_hunk_0

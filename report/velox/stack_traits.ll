@@ -17,7 +17,7 @@ bb.a:
   %0 = alloca %struct.rlimit, align 8             ; 4 uses
   %i.a = load atomic i8, ptr @_ZGVZN12_GLOBAL__N_115stacksize_limitEvE5limit acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %_ZN12_GLOBAL__N_115stacksize_limitEv.exit, !prof !7
+  br i1 %i.b, label %bb.b, label %_ZN12_GLOBAL__N_115stacksize_limitEv.exit, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN12_GLOBAL__N_115stacksize_limitEvE5limit) #5
@@ -28,14 +28,14 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #5
   %i.d = call i32 @getrlimit(i32 noundef 3, ptr noundef nonnull %0) #5 ; 0 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !8
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !9
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #5
-  store i64 %i.f, ptr @_ZZN12_GLOBAL__N_115stacksize_limitEvE5limit, align 8, !tbaa !11
+  store i64 %i.f, ptr @_ZZN12_GLOBAL__N_115stacksize_limitEvE5limit, align 8, !tbaa !12
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN12_GLOBAL__N_115stacksize_limitEvE5limit) #5
   br label %_ZN12_GLOBAL__N_115stacksize_limitEv.exit
 
 _ZN12_GLOBAL__N_115stacksize_limitEv.exit:        ; preds = %bb.a, %bb.b, %bb.c
-  %i.g = load i64, ptr @_ZZN12_GLOBAL__N_115stacksize_limitEvE5limit, align 8, !tbaa !11
+  %i.g = load i64, ptr @_ZZN12_GLOBAL__N_115stacksize_limitEvE5limit, align 8, !tbaa !12
   %i.h = icmp eq i64 %i.g, -1
   ret i1 %i.h
 }
@@ -45,7 +45,7 @@ define noundef i64 @_ZN5boost7context12stack_traits9page_sizeEv() local_unnamed_
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5boost7context12stack_traits9page_sizeEvE4size acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %bb.d, !prof !7
+  br i1 %i.b, label %bb.b, label %bb.d, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost7context12stack_traits9page_sizeEvE4size) #5
@@ -54,12 +54,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = tail call noundef i64 @sysconf(i32 noundef 30) #5
-  store i64 %i.d, ptr @_ZZN5boost7context12stack_traits9page_sizeEvE4size, align 8, !tbaa !11
+  store i64 %i.d, ptr @_ZZN5boost7context12stack_traits9page_sizeEvE4size, align 8, !tbaa !12
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost7context12stack_traits9page_sizeEvE4size) #5
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %i.e = load i64, ptr @_ZZN5boost7context12stack_traits9page_sizeEvE4size, align 8, !tbaa !11
+  %i.e = load i64, ptr @_ZZN5boost7context12stack_traits9page_sizeEvE4size, align 8, !tbaa !12
   ret i64 %i.e
 }
 
@@ -91,7 +91,7 @@ bb.a:
   %0 = alloca %struct.rlimit, align 8             ; 4 uses
   %i.a = load atomic i8, ptr @_ZGVZN12_GLOBAL__N_115stacksize_limitEvE5limit acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %_ZN12_GLOBAL__N_115stacksize_limitEv.exit, !prof !7
+  br i1 %i.b, label %bb.b, label %_ZN12_GLOBAL__N_115stacksize_limitEv.exit, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN12_GLOBAL__N_115stacksize_limitEvE5limit) #5
@@ -102,14 +102,14 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #5
   %i.d = call i32 @getrlimit(i32 noundef 3, ptr noundef nonnull %0) #5 ; 0 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !8
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !9
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #5
-  store i64 %i.f, ptr @_ZZN12_GLOBAL__N_115stacksize_limitEvE5limit, align 8, !tbaa !11
+  store i64 %i.f, ptr @_ZZN12_GLOBAL__N_115stacksize_limitEvE5limit, align 8, !tbaa !12
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN12_GLOBAL__N_115stacksize_limitEvE5limit) #5
   br label %_ZN12_GLOBAL__N_115stacksize_limitEv.exit
 
 _ZN12_GLOBAL__N_115stacksize_limitEv.exit:        ; preds = %bb.a, %bb.b, %bb.c
-  %i.g = load i64, ptr @_ZZN12_GLOBAL__N_115stacksize_limitEvE5limit, align 8, !tbaa !11
+  %i.g = load i64, ptr @_ZZN12_GLOBAL__N_115stacksize_limitEvE5limit, align 8, !tbaa !12
   ret i64 %i.g
 }
 
@@ -135,14 +135,15 @@ attributes #5 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!"branch_weights", i32 1, i32 1048575}
-!8 = !{!9, !10, i64 8}
-!9 = !{!"_ZTS6rlimit", !10, i64 0, !10, i64 8}
-!10 = !{!"long", !5, i64 0}
-!11 = !{!10, !10, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!"branch_weights", i32 1, i32 1048575}
+!9 = !{!10, !11, i64 8}
+!10 = !{!"_ZTS6rlimit", !11, i64 0, !11, i64 8}
+!11 = !{!"long", !6, i64 0}
+!12 = !{!11, !11, i64 0}
 end_hunk_0

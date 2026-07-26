@@ -12,7 +12,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @_ZN4absl12lts_2024011614flags_internal21PrivateHandleAccessor6TypeIdERKNS0_15CommandLineFlagE(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !7
+  %i.a = load ptr, ptr %0, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call noundef ptr %i.c(ptr noundef nonnull align 8 dereferenceable(8) %0)
@@ -22,7 +22,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4absl12lts_2024011614flags_internal21PrivateHandleAccessor9SaveStateERNS0_15CommandLineFlagE(ptr dead_on_unwind noalias writable sret(%"class.std::unique_ptr") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %1, align 8, !tbaa !7
+  %i.a = load ptr, ptr %1, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.c = load ptr, ptr %i.b, align 8
   tail call void %i.c(ptr dead_on_unwind writable sret(%"class.std::unique_ptr") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %1)
@@ -32,7 +32,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZN4absl12lts_2024011614flags_internal21PrivateHandleAccessor24IsSpecifiedOnCommandLineERKNS0_15CommandLineFlagE(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !7
+  %i.a = load ptr, ptr %0, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(8) %0)
@@ -42,7 +42,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZN4absl12lts_2024011614flags_internal21PrivateHandleAccessor18ValidateInputValueERKNS0_15CommandLineFlagESt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 %1, ptr %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !7
+  %i.a = load ptr, ptr %0, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 %1, ptr %2)
@@ -52,7 +52,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4absl12lts_2024011614flags_internal21PrivateHandleAccessor33CheckDefaultValueParsingRoundtripERKNS0_15CommandLineFlagE(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !7
+  %i.a = load ptr, ptr %0, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   %i.c = load ptr, ptr %i.b, align 8
   tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(8) %0)
@@ -62,7 +62,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZN4absl12lts_2024011614flags_internal21PrivateHandleAccessor9ParseFromERNS0_15CommandLineFlagESt17basic_string_viewIcSt11char_traitsIcEENS1_15FlagSettingModeENS1_11ValueSourceERNSt7__cxx1112basic_stringIcS7_SaIcEEE(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 %1, ptr %2, i32 noundef %3, i32 noundef %4, ptr noundef nonnull align 8 dereferenceable(32) %5) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !7
+  %i.a = load ptr, ptr %0, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 %1, ptr %2, i32 noundef %3, i32 noundef %4, ptr noundef nonnull align 8 dereferenceable(32) %5)
@@ -77,11 +77,12 @@ attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"vtable pointer", !6, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"vtable pointer", !7, i64 0}
 end_hunk_0

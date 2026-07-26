@@ -27,7 +27,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.b = tail call ptr @__errno_location() #6
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !3
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !8
   %i.d = sub nsw i32 0, %i.c
   br label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WaitEPSt6atomicIiEi.exit
 
@@ -40,16 +40,16 @@ bb.e:                                             ; preds = %bb.d
   %i.g = extractvalue { i64, i64 } %i.f, 0
   %i.h = extractvalue { i64, i64 } %i.f, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #5
-  store i64 %i.g, ptr %4, align 8, !tbaa !7
+  store i64 %i.g, ptr %4, align 8, !tbaa !9
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i64 %i.h, ptr %i.i, align 8, !tbaa !10
+  store i64 %i.h, ptr %i.i, align 8, !tbaa !12
   %i.j = call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef %0, i32 noundef 128, i32 noundef %1, ptr noundef nonnull %4) #5
   %.not.i = icmp eq i64 %i.j, 0
   br i1 %.not.i, label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl19WaitRelativeTimeoutEPSt6atomicIiEiPK8timespec.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.k = tail call ptr @__errno_location() #6
-  %i.l = load i32, ptr %i.k, align 4, !tbaa !3
+  %i.l = load i32, ptr %i.k, align 4, !tbaa !8
   %i.m = sub nsw i32 0, %i.l
   br label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl19WaitRelativeTimeoutEPSt6atomicIiEiPK8timespec.exit
 
@@ -63,16 +63,16 @@ bb.g:                                             ; preds = %bb.d
   %i.o = extractvalue { i64, i64 } %i.n, 0
   %i.p = extractvalue { i64, i64 } %i.n, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
-  store i64 %i.o, ptr %3, align 8, !tbaa !7
+  store i64 %i.o, ptr %3, align 8, !tbaa !9
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i64 %i.p, ptr %i.q, align 8, !tbaa !10
+  store i64 %i.p, ptr %i.q, align 8, !tbaa !12
   %i.r = call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef %0, i32 noundef 393, i32 noundef %1, ptr noundef nonnull %3, ptr noundef null, i32 noundef -1) #5
   %.not.i8 = icmp eq i64 %i.r, 0
   br i1 %.not.i8, label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl19WaitAbsoluteTimeoutEPSt6atomicIiEiPK8timespec.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.s = tail call ptr @__errno_location() #6
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !3
+  %i.t = load i32, ptr %i.s, align 4, !tbaa !8
   %i.u = sub nsw i32 0, %i.t
   br label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl19WaitAbsoluteTimeoutEPSt6atomicIiEiPK8timespec.exit
 
@@ -136,7 +136,7 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge
   ]
 
 .backedge:                                        ; preds = %bb.d, %bb.d, %bb.d
-  br label %bb.b, !llvm.loop !11
+  br label %bb.b, !llvm.loop !13
 
 bb.e:                                             ; preds = %bb.d
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 79), i32 noundef 85, ptr noundef nonnull @.str.1, i32 noundef %i.f)
@@ -161,13 +161,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull align 4 dereferenceable(4) %0, i32 noundef 129, i32 noundef 1) #5
   %i.d = icmp slt i64 %i.c, 0
-  br i1 %i.d, label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WakeEPSt6atomicIiEi.exit.i, label %_ZN4absl12lts_2024011624synchronization_internal11FutexWaiter4PokeEv.exit, !prof !13
+  br i1 %i.d, label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WakeEPSt6atomicIiEi.exit.i, label %_ZN4absl12lts_2024011624synchronization_internal11FutexWaiter4PokeEv.exit, !prof !15
 
 _ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WakeEPSt6atomicIiEi.exit.i: ; preds = %bb.b
   %i.e = tail call ptr @__errno_location() #6
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !3    ; 2 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !8    ; 2 uses
   %i.g = icmp sgt i32 %i.f, 0
-  br i1 %i.g, label %bb.c, label %_ZN4absl12lts_2024011624synchronization_internal11FutexWaiter4PokeEv.exit, !prof !14
+  br i1 %i.g, label %bb.c, label %_ZN4absl12lts_2024011624synchronization_internal11FutexWaiter4PokeEv.exit, !prof !16
 
 bb.c:                                             ; preds = %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WakeEPSt6atomicIiEi.exit.i
   %i.h = sub nsw i32 0, %i.f
@@ -183,13 +183,13 @@ define void @_ZN4absl12lts_2024011624synchronization_internal11FutexWaiter4PokeE
 bb.a:
   %i.a = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull %0, i32 noundef 129, i32 noundef 1) #5
   %i.b = icmp slt i64 %i.a, 0
-  br i1 %i.b, label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WakeEPSt6atomicIiEi.exit, label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WakeEPSt6atomicIiEi.exit.thread, !prof !13
+  br i1 %i.b, label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WakeEPSt6atomicIiEi.exit, label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WakeEPSt6atomicIiEi.exit.thread, !prof !15
 
 _ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WakeEPSt6atomicIiEi.exit: ; preds = %bb.a
   %i.c = tail call ptr @__errno_location() #6
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !3    ; 2 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !8    ; 2 uses
   %i.e = icmp sgt i32 %i.d, 0
-  br i1 %i.e, label %bb.b, label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WakeEPSt6atomicIiEi.exit.thread, !prof !14
+  br i1 %i.e, label %bb.b, label %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WakeEPSt6atomicIiEi.exit.thread, !prof !16
 
 bb.b:                                             ; preds = %_ZN4absl12lts_2024011624synchronization_internal9FutexImpl4WakeEPSt6atomicIiEi.exit
   %i.f = sub nsw i32 0, %i.d
@@ -222,17 +222,19 @@ attributes #6 = { nounwind willreturn memory(none) }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSN4absl12lts_2024011624synchronization_internal13FutexTimespecE", !9, i64 0, !9, i64 8}
-!9 = !{!"long", !5, i64 0}
-!10 = !{!8, !9, i64 8}
-!11 = distinct !{!11, !12}
-!12 = !{!"llvm.loop.mustprogress"}
-!13 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!14 = !{!"branch_weights", !"expected", i32 2001, i32 2147481647}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!5, !5, i64 0}
+!9 = !{!10, !11, i64 0}
+!10 = !{!"_ZTSN4absl12lts_2024011624synchronization_internal13FutexTimespecE", !11, i64 0, !11, i64 8}
+!11 = !{!"long", !6, i64 0}
+!12 = !{!10, !11, i64 8}
+!13 = distinct !{!13, !14}
+!14 = !{!"llvm.loop.mustprogress"}
+!15 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!16 = !{!"branch_weights", !"expected", i32 2001, i32 2147481647}
 end_hunk_0

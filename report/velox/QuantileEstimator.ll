@@ -39,18 +39,18 @@ _ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = shl nuw nsw i64 %i.d, 1
   %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #10 ; 4 uses
-  store ptr %i.j, ptr %i.a, align 8, !tbaa !11
-  store ptr %i.j, ptr %i.h, align 8, !tbaa !15
+  store ptr %i.j, ptr %i.a, align 8, !tbaa !12
+  store ptr %i.j, ptr %i.h, align 8, !tbaa !16
   %i.k = getelementptr inbounds nuw [16 x i8], ptr %i.j, i64 %i.e ; 2 uses
-  store ptr %i.k, ptr %i.g, align 8, !tbaa !16
+  store ptr %i.k, ptr %i.g, align 8, !tbaa !17
   br label %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit
 
 _ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit:  ; preds = %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i, %bb.b
   %.promoted26 = phi ptr [ %i.j, %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i ], [ null, %bb.b ] ; 3 uses
   %.promoted = phi ptr [ %i.k, %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i ], [ null, %bb.b ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.m = load <2 x double>, ptr %i.l, align 8, !tbaa !17
-  store <2 x double> %i.m, ptr %0, align 8, !tbaa !17
+  %i.m = load <2 x double>, ptr %i.l, align 8, !tbaa !18
+  store <2 x double> %i.m, ptr %0, align 8, !tbaa !18
   %.not30 = icmp eq ptr %2, %3
   br i1 %.not30, label %._crit_edge, label %.lr.ph
 
@@ -63,7 +63,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %.01331 = phi ptr [ %2, %.lr.ph ], [ %i.ar, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 4 uses
   %i.p = phi ptr [ %.promoted, %.lr.ph ], [ %i.aq, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 5 uses
   %i.q = phi ptr [ %.promoted26, %.lr.ph ], [ %i.ap, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 11 uses
-  %i.r = load double, ptr %.01331, align 8, !tbaa !17
+  %i.r = load double, ptr %.01331, align 8, !tbaa !18
   %i.s = invoke noundef double @_ZNK5folly7TDigest16estimateQuantileEd(ptr noundef nonnull align 8 dereferenceable(64) %1, double noundef %i.r)
           to label %bb.d unwind label %.loopexit  ; 2 uses
 
@@ -72,12 +72,12 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.t = load double, ptr %.01331, align 8, !tbaa !17
-  store double %i.t, ptr %i.o, align 8, !tbaa !19
+  %i.t = load double, ptr %.01331, align 8, !tbaa !18
+  store double %i.t, ptr %i.o, align 8, !tbaa !20
   %i.u = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  store double %i.s, ptr %i.u, align 8, !tbaa !21
+  store double %i.s, ptr %i.u, align 8, !tbaa !22
   %i.v = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
-  store ptr %i.v, ptr %i.n, align 8, !tbaa !15
+  store ptr %i.v, ptr %i.n, align 8, !tbaa !16
   br label %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -111,21 +111,21 @@ _ZNKSt6vectorISt4pairIddESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.f
 
 .noexc18:                                         ; preds = %_ZNKSt6vectorISt4pairIddESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.y ; 2 uses
-  %i.ai = load double, ptr %.01331, align 8, !tbaa !17
-  store double %i.ai, ptr %i.ah, align 8, !tbaa !19
+  %i.ai = load double, ptr %.01331, align 8, !tbaa !18
+  store double %i.ai, ptr %i.ah, align 8, !tbaa !20
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
-  store double %i.s, ptr %i.aj, align 8, !tbaa !21
+  store double %i.s, ptr %i.aj, align 8, !tbaa !22
   %.not10.i.i.i.i.i = icmp eq ptr %i.q, %i.o
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt4pairIddESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit23.i.i, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.noexc18, %.lr.ph.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.al, %.lr.ph.i.i.i.i.i ], [ %i.ag, %.noexc18 ] ; 2 uses
   %.0911.i.i.i.i.i = phi ptr [ %i.ak, %.lr.ph.i.i.i.i.i ], [ %i.q, %.noexc18 ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i, i64 16, i1 false), !alias.scope !22
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i, i64 16, i1 false), !alias.scope !23
   %i.ak = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i, i64 16 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 16 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.ak, %i.o
-  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorISt4pairIddESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit23.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !26
+  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorISt4pairIddESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit23.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !27
 
 _ZNSt6vectorISt4pairIddESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit23.i.i: ; preds = %.lr.ph.i.i.i.i.i, %.noexc18
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.ag, %.noexc18 ], [ %i.al, %.lr.ph.i.i.i.i.i ]
@@ -138,7 +138,7 @@ bb.h:                                             ; preds = %_ZNSt6vectorISt4pai
   br label %_ZNSt6vectorISt4pairIddESaIS1_EE17_M_realloc_insertIJRKddEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
 
 _ZNSt6vectorISt4pairIddESaIS1_EE17_M_realloc_insertIJRKddEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.h, %_ZNSt6vectorISt4pairIddESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit23.i.i
-  store ptr %i.am, ptr %i.n, align 8, !tbaa !15
+  store ptr %i.am, ptr %i.n, align 8, !tbaa !16
   %i.an = getelementptr inbounds nuw [16 x i8], ptr %i.ag, i64 %i.ae
   br label %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit
 
@@ -243,26 +243,27 @@ attributes #11 = { builtin nounwind }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!12, !13, i64 0}
-!12 = !{!"_ZTSNSt12_Vector_baseISt4pairIddESaIS1_EE17_Vector_impl_dataE", !13, i64 0, !13, i64 8, !13, i64 16}
-!13 = !{!"p1 _ZTSSt4pairIddE", !14, i64 0}
-!14 = !{!"any pointer", !9, i64 0}
-!15 = !{!12, !13, i64 8}
-!16 = !{!12, !13, i64 16}
-!17 = !{!18, !18, i64 0}
-!18 = !{!"double", !9, i64 0}
-!19 = !{!20, !18, i64 0}
-!20 = !{!"_ZTSSt4pairIddE", !18, i64 0, !18, i64 8}
-!21 = !{!20, !18, i64 8}
-!22 = !{!23, !25}
-!23 = distinct !{!23, !24, !"_ZSt19__relocate_object_aISt4pairIddES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
-!24 = distinct !{!24, !"_ZSt19__relocate_object_aISt4pairIddES1_SaIS1_EEvPT_PT0_RT1_"}
-!25 = distinct !{!25, !24, !"_ZSt19__relocate_object_aISt4pairIddES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
-!26 = distinct !{!26, !27}
-!27 = !{!"llvm.loop.mustprogress"}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!13, !14, i64 0}
+!13 = !{!"_ZTSNSt12_Vector_baseISt4pairIddESaIS1_EE17_Vector_impl_dataE", !14, i64 0, !14, i64 8, !14, i64 16}
+!14 = !{!"p1 _ZTSSt4pairIddE", !15, i64 0}
+!15 = !{!"any pointer", !10, i64 0}
+!16 = !{!13, !14, i64 8}
+!17 = !{!13, !14, i64 16}
+!18 = !{!19, !19, i64 0}
+!19 = !{!"double", !10, i64 0}
+!20 = !{!21, !19, i64 0}
+!21 = !{!"_ZTSSt4pairIddE", !19, i64 0, !19, i64 8}
+!22 = !{!21, !19, i64 8}
+!23 = !{!24, !26}
+!24 = distinct !{!24, !25, !"_ZSt19__relocate_object_aISt4pairIddES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
+!25 = distinct !{!25, !"_ZSt19__relocate_object_aISt4pairIddES1_SaIS1_EEvPT_PT0_RT1_"}
+!26 = distinct !{!26, !25, !"_ZSt19__relocate_object_aISt4pairIddES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
+!27 = distinct !{!27, !28}
+!28 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

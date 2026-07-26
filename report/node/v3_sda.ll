@@ -131,7 +131,7 @@ bb.j:                                             ; preds = %bb.k
   %i.u = add nuw nsw i32 %.03646, 1               ; 2 uses
   %i.v = tail call i32 @X509_ATTRIBUTE_count(ptr noundef %i.e) #3
   %i.w = icmp slt i32 %i.u, %i.v
-  br i1 %i.w, label %.lr.ph, label %.loopexit, !llvm.loop !9
+  br i1 %i.w, label %.lr.ph, label %.loopexit, !llvm.loop !10
 
 .lr.ph:                                           ; preds = %.preheader, %bb.j
   %.03646 = phi i32 [ %i.u, %bb.j ], [ 0, %.preheader ] ; 2 uses
@@ -154,7 +154,7 @@ bb.l:                                             ; preds = %bb.i
   %i.ae = add nuw nsw i32 %.03547, 1              ; 2 uses
   %i.af = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #3
   %i.ag = icmp slt i32 %i.ae, %i.af
-  br i1 %i.ag, label %bb.c, label %.critedge, !llvm.loop !11
+  br i1 %i.ag, label %bb.c, label %.critedge, !llvm.loop !12
 
 .critedge.sink.split:                             ; preds = %bb.b, %bb.a
   %.str.3.sink = phi ptr [ @.str.2, %bb.a ], [ @.str.3, %bb.b ]
@@ -205,12 +205,13 @@ attributes #3 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
-!4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!5 = !{!6, !6, i64 0}
-!6 = !{!"int", !7, i64 0}
-!7 = !{!"omnipotent char", !8, i64 0}
-!8 = !{!"Simple C/C++ TBAA"}
-!9 = distinct !{!9, !10}
-!10 = !{!"llvm.loop.mustprogress"}
-!11 = distinct !{!11, !10}
+!4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!5 = !{!6, !7, i64 0}
+!6 = !{!"__libc_errno", !7, i64 0}
+!7 = !{!"int", !8, i64 0}
+!8 = !{!"omnipotent char", !9, i64 0}
+!9 = !{!"Simple C/C++ TBAA"}
+!10 = distinct !{!10, !11}
+!11 = !{!"llvm.loop.mustprogress"}
+!12 = distinct !{!12, !11}
 end_hunk_0

@@ -40,8 +40,8 @@ declare void @_ZN8facebook5velox6detail14veloxCheckFailINS0_17VeloxRuntimeErrorE
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define void @_ZN8facebook5velox6common8testutil14ScopedTestTimeD2Ev(ptr nofree nonnull readnone align 1 captures(none) %0) unnamed_addr #2 align 2 {
 bb.a:
-  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime11testTimeNs_E, i64 8), align 8, !tbaa !7
-  store i8 0, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime8enabled_E, align 1, !tbaa !10
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime11testTimeNs_E, i64 8), align 8, !tbaa !8
+  store i8 0, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime8enabled_E, align 1, !tbaa !11
   ret void
 }
 
@@ -83,7 +83,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define { i64, i8 } @_ZN8facebook5velox6common8testutil14ScopedTestTime21getCurrentTestTimeSecEv() local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime11testTimeNs_E, i64 8), align 8, !tbaa !7, !range !11, !noundef !12 ; 2 uses
+  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime11testTimeNs_E, i64 8), align 8, !tbaa !8, !range !12, !noundef !13 ; 2 uses
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = load i64, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime11testTimeNs_E, align 8 ; 2 uses
   %i.d = udiv i64 %i.c, 1000000000
@@ -96,7 +96,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define { i64, i8 } @_ZN8facebook5velox6common8testutil14ScopedTestTime20getCurrentTestTimeMsEv() local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime11testTimeNs_E, i64 8), align 8, !tbaa !7, !range !11, !noundef !12 ; 2 uses
+  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime11testTimeNs_E, i64 8), align 8, !tbaa !8, !range !12, !noundef !13 ; 2 uses
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = load i64, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime11testTimeNs_E, align 8 ; 2 uses
   %i.d = udiv i64 %i.c, 1000000
@@ -109,7 +109,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define { i64, i8 } @_ZN8facebook5velox6common8testutil14ScopedTestTime23getCurrentTestTimeMicroEv() local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime11testTimeNs_E, i64 8), align 8, !tbaa !7, !range !11, !noundef !12 ; 2 uses
+  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime11testTimeNs_E, i64 8), align 8, !tbaa !8, !range !12, !noundef !13 ; 2 uses
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = load i64, ptr @_ZN8facebook5velox6common8testutil14ScopedTestTime11testTimeNs_E, align 8 ; 2 uses
   %i.d = udiv i64 %i.c, 1000
@@ -150,15 +150,16 @@ attributes #5 = { noreturn }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 8}
-!8 = !{!"_ZTSSt22_Optional_payload_baseImE", !5, i64 0, !9, i64 8}
-!9 = !{!"bool", !5, i64 0}
-!10 = !{!9, !9, i64 0}
-!11 = !{i8 0, i8 2}
-!12 = !{}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 8}
+!9 = !{!"_ZTSSt22_Optional_payload_baseImE", !6, i64 0, !10, i64 8}
+!10 = !{!"bool", !6, i64 0}
+!11 = !{!10, !10, i64 0}
+!12 = !{i8 0, i8 2}
+!13 = !{}
 end_hunk_0

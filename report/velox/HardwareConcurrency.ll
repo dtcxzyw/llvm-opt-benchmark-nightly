@@ -58,7 +58,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %.lr.ph
   %i.k = tail call ptr @__errno_location() #7
-  %i.l = load i32, ptr %i.k, align 4, !tbaa !7
+  %i.l = load i32, ptr %i.k, align 4, !tbaa !12
   %i.m = icmp eq i32 %i.l, 22
   br i1 %i.m, label %bb.f, label %bb.e
 
@@ -86,16 +86,16 @@ _ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit: ; 
   %i.u = extractvalue { i64, i1 } %i.s, 0
   %spec.select = select i1 %i.t, i64 %.02252, i64 %i.u ; 2 uses
   %i.v = icmp ugt i64 %.02252, %spec.select
-  br i1 %i.v, label %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit, label %._crit_edge, !llvm.loop !11
+  br i1 %i.v, label %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit, label %._crit_edge, !llvm.loop !13
 
 ._crit_edge:                                      ; preds = %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit, %.preheader
   %i.w = icmp ne ptr %.02351, %1
   %i.x = zext i1 %i.w to i8
-  store ptr %.02351, ptr %0, align 8, !tbaa !13
+  store ptr %.02351, ptr %0, align 8, !tbaa !15
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.02252, ptr %i.y, align 8, !tbaa !18
+  store i64 %.02252, ptr %i.y, align 8, !tbaa !20
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %i.x, ptr %i.z, align 8, !tbaa !19
+  store i8 %i.x, ptr %i.z, align 8, !tbaa !21
   ret void
 }
 
@@ -129,7 +129,7 @@ declare void @_ZN5folly6detail21safe_assert_terminateILb1EEEvPKNS0_15safe_assert
 define void @_ZN5folly13cpu_set_stateD2Ev(ptr nofree noundef nonnull readonly align 8 captures(none) dead_on_return(17) dereferenceable(17) %0) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !19, !range !20, !noundef !21
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !21, !range !22, !noundef !23
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = load ptr, ptr %0, align 8
   %spec.select = select i1 %i.c, ptr %i.d, ptr null
@@ -145,13 +145,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #5
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #5
   call void @_ZN5folly13cpu_set_state3askEP9cpu_set_t(ptr dead_on_unwind nonnull writable sret(%"class.folly::cpu_set_state") align 8 %1, ptr noundef nonnull %0) #5
-  %i.a = load ptr, ptr %1, align 8, !tbaa !13     ; 2 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !15     ; 2 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %_ZNK5folly13cpu_set_state9cpu_countEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !18
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !20
   %i.d = add i64 %i.c, 63
   %i.e = lshr i64 %i.d, 3
   %i.f = and i64 %i.e, 2305843009213693944
@@ -188,20 +188,22 @@ attributes #7 = { nounwind willreturn memory(none) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = distinct !{!11, !12}
-!12 = !{!"llvm.loop.mustprogress"}
-!13 = !{!14, !15, i64 0}
-!14 = !{!"_ZTSN5folly13cpu_set_stateE", !15, i64 0, !16, i64 8, !17, i64 16}
-!15 = !{!"any pointer", !9, i64 0}
-!16 = !{!"long", !9, i64 0}
-!17 = !{!"bool", !9, i64 0}
-!18 = !{!14, !16, i64 8}
-!19 = !{!14, !17, i64 16}
-!20 = !{i8 0, i8 2}
-!21 = !{}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!9, !9, i64 0}
+!13 = distinct !{!13, !14}
+!14 = !{!"llvm.loop.mustprogress"}
+!15 = !{!16, !17, i64 0}
+!16 = !{!"_ZTSN5folly13cpu_set_stateE", !17, i64 0, !18, i64 8, !19, i64 16}
+!17 = !{!"any pointer", !10, i64 0}
+!18 = !{!"long", !10, i64 0}
+!19 = !{!"bool", !10, i64 0}
+!20 = !{!16, !18, i64 8}
+!21 = !{!16, !19, i64 16}
+!22 = !{i8 0, i8 2}
+!23 = !{}
 end_hunk_0

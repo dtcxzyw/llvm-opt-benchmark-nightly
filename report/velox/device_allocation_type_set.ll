@@ -50,16 +50,16 @@ bb.b:                                             ; preds = %bb.a, %switch.looku
 define void @_ZNK5arrow23DeviceAllocationTypeSet8ToStringB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  store ptr %i.a, ptr %0, align 8, !tbaa !7
-  store i8 123, ptr %i.a, align 8, !tbaa !11
+  store ptr %i.a, ptr %0, align 8, !tbaa !8
+  store i8 123, ptr %i.a, align 8, !tbaa !12
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  store i64 1, ptr %i.b, align 8, !tbaa !12
+  store i64 1, ptr %i.b, align 8, !tbaa !13
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 17
-  store i8 0, ptr %i.c, align 1, !tbaa !11
+  store i8 0, ptr %i.c, align 1, !tbaa !12
   br label %bb.c
 
 bb.a:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit23
-  %i.d = load i64, ptr %i.b, align 8, !tbaa !12
+  %i.d = load i64, ptr %i.b, align 8, !tbaa !13
   %i.e = icmp eq i64 %i.d, 4611686018427387903
   br i1 %i.e, label %bb.b, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
 
@@ -76,7 +76,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds
 
 bb.c:                                             ; preds = %._crit_edge.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit23
   %indvars.iv = phi i64 [ 1, %._crit_edge.i.i ], [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit23 ] ; 4 uses
-  %i.g = load i64, ptr %1, align 8, !tbaa !15
+  %i.g = load i64, ptr %1, align 8, !tbaa !16
   %i.h = shl nuw nsw i64 1, %indvars.iv
   %i.i = and i64 %i.g, %i.h
   %.not = icmp eq i64 %i.i, 0
@@ -101,7 +101,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  %i.k = load i64, ptr %i.b, align 8, !tbaa !12   ; 2 uses
+  %i.k = load i64, ptr %i.b, align 8, !tbaa !13   ; 2 uses
   %i.l = icmp ugt i64 %i.k, 1
   br i1 %i.l, label %bb.f, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit19
 
@@ -136,7 +136,7 @@ switch.lookup:                                    ; preds = %_ZNSt7__cxx1112basi
 _ZN5arrow26DeviceAllocationTypeToCStrENS_20DeviceAllocationTypeE.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit19, %switch.lookup
   %.0.i = phi ptr [ %switch.load, %switch.lookup ], [ @.str.14, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit19 ] ; 2 uses
   %i.s = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i) #7 ; 2 uses
-  %i.t = load i64, ptr %i.b, align 8, !tbaa !12
+  %i.t = load i64, ptr %i.b, align 8, !tbaa !13
   %i.u = sub i64 4611686018427387903, %i.t
   %i.v = icmp ult i64 %i.u, %i.s
   br i1 %i.v, label %.invoke, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i20
@@ -148,7 +148,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i20: ; pre
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit23: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i20, %bb.c, %bb.d, %bb.d, %bb.d
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 17
-  br i1 %exitcond.not, label %bb.a, label %bb.c, !llvm.loop !17
+  br i1 %exitcond.not, label %bb.a, label %bb.c, !llvm.loop !18
 
 bb.g:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i, %bb.b
   %i.x = landingpad { ptr, i32 }
@@ -160,12 +160,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit: ; preds = %_ZN
 
 bb.h:                                             ; preds = %.loopexit, %.loopexit.split-lp, %bb.g
   %.pn = phi { ptr, i32 } [ %i.x, %bb.g ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  %i.y = load ptr, ptr %0, align 8, !tbaa !19     ; 2 uses
+  %i.y = load ptr, ptr %0, align 8, !tbaa !20     ; 2 uses
   %i.z = icmp eq ptr %i.y, %i.a
   br i1 %i.z, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.h
-  %i.aa = load i64, ptr %i.a, align 8, !tbaa !11
+  %i.aa = load i64, ptr %i.a, align 8, !tbaa !12
   %i.ab = add i64 %i.aa, 1
   tail call void @_ZdlPvm(ptr noundef %i.y, i64 noundef %i.ab) #8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -203,22 +203,23 @@ attributes #8 = { builtin nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !9, i64 0}
-!9 = !{!"p1 omnipotent char", !10, i64 0}
-!10 = !{!"any pointer", !5, i64 0}
-!11 = !{!5, !5, i64 0}
-!12 = !{!13, !14, i64 8}
-!13 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !8, i64 0, !14, i64 8, !5, i64 16}
-!14 = !{!"long", !5, i64 0}
-!15 = !{!16, !14, i64 0}
-!16 = !{!"_ZTSSt12_Base_bitsetILm1EE", !14, i64 0}
-!17 = distinct !{!17, !18}
-!18 = !{!"llvm.loop.mustprogress"}
-!19 = !{!13, !9, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !10, i64 0}
+!10 = !{!"p1 omnipotent char", !11, i64 0}
+!11 = !{!"any pointer", !6, i64 0}
+!12 = !{!6, !6, i64 0}
+!13 = !{!14, !15, i64 8}
+!14 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !9, i64 0, !15, i64 8, !6, i64 16}
+!15 = !{!"long", !6, i64 0}
+!16 = !{!17, !15, i64 0}
+!17 = !{!"_ZTSSt12_Base_bitsetILm1EE", !15, i64 0}
+!18 = distinct !{!18, !19}
+!19 = !{!"llvm.loop.mustprogress"}
+!20 = !{!14, !10, i64 0}
 end_hunk_0
