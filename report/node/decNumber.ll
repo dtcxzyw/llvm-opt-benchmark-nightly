@@ -204,10 +204,10 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.am, %bb.an
-  %i.ee = phi i32 [ %i.ed, %bb.an ], [ %spec.select, %bb.am ] ; 4 uses
+  %i.ee = phi i32 [ %i.ed, %bb.an ], [ %spec.select, %bb.am ] ; 3 uses
   %i.ef = add nuw nsw i32 %i.ee, 2                ; 2 uses
   %.not521 = icmp sgt i8 %4, -1                   ; 6 uses
-  %i.eg = add nuw nsw i32 %i.ee, 3                ; 8 uses
+  %i.eg = add nuw nsw i32 %i.ee, 3                ; 7 uses
   %spec.select563 = select i1 %.not521, i32 %i.eg, i32 %i.ef ; 7 uses
   %i.eh = icmp samesign ugt i32 %spec.select563, 72
   br i1 %i.eh, label %bb.ap, label %bb.ar
@@ -232,10 +232,10 @@ bb.aq:                                            ; preds = %bb.ap
 bb.ar:                                            ; preds = %._crit_edge736, %bb.ao
   %i.eo = phi i32 [ %i.du, %bb.ao ], [ %.pre737, %._crit_edge736 ] ; 6 uses
   %.0420 = phi ptr [ null, %bb.ao ], [ %i.ek, %._crit_edge736 ] ; 2 uses
-  %.0417 = phi ptr [ %i.b, %bb.ao ], [ %i.ek, %._crit_edge736 ] ; 44 uses
+  %.0417 = phi ptr [ %i.b, %bb.ao ], [ %i.ek, %._crit_edge736 ] ; 43 uses
   %.0417728 = ptrtoaddr ptr %.0417 to i64         ; 4 uses
-  %i.ep = zext nneg i32 %spec.select563 to i64    ; 4 uses
-  %i.eq = getelementptr inbounds nuw i8, ptr %.0417, i64 %i.ep
+  %i.ep = zext nneg i32 %spec.select563 to i64    ; 5 uses
+  %i.eq = getelementptr inbounds nuw i8, ptr %.0417, i64 %i.ep ; 2 uses
   %i.er = getelementptr inbounds i8, ptr %i.eq, i64 -1 ; 3 uses
   %i.es = icmp slt i32 %i.eo, 50                  ; 2 uses
   br i1 %i.es, label %bb.as, label %.lr.ph.preheader
@@ -396,20 +396,16 @@ bb.bc:                                            ; preds = %bb.bb
 
 .thread71.i:                                      ; preds = %bb.bc, %bb.bb
   %i.hb = phi i32 [ %i.gm, %bb.bb ], [ %i.gx, %bb.bc ] ; 2 uses
-  %6 = zext nneg i32 %i.eg to i64
-  %7 = getelementptr inbounds nuw i8, ptr %.0417, i64 %6
   %i.hc = icmp slt i32 %i.hb, %i.eg
   br i1 %i.hc, label %iter.check, label %_ZL15decShiftToLeastPhii.exit
 
 iter.check:                                       ; preds = %.thread71.i
   %i.hd = zext i32 %i.hb to i64                   ; 3 uses
   %i.he = getelementptr inbounds nuw i8, ptr %.0417, i64 %i.hd ; 5 uses
-  %8 = zext nneg i32 %i.ee to i64
-  %9 = add i64 %.0417728, %8
-  %i.hf = add i64 %9, 3
-  %i.hg = add i64 %.0417728, %i.hd
-  %i.hh = add i64 %i.hg, 1
-  %umax = call i64 @llvm.umax.i64(i64 %i.hf, i64 %i.hh)
+  %i.hf = add i64 %.0417728, %i.hd
+  %i.hg = add i64 %i.hf, 1
+  %i.hh = add i64 %.0417728, %i.ep
+  %umax = call i64 @llvm.umax.i64(i64 %i.hg, i64 %i.hh)
   %i.hi = add i64 %.0417728, %i.hd
   %i.hj = sub i64 %umax, %i.hi                    ; 7 uses
   %min.iters.check = icmp ult i64 %i.hj, 4
@@ -481,7 +477,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i8 %i.hs, ptr %.06178.i, align 1
   %i.ht = getelementptr inbounds nuw i8, ptr %.06178.i, i64 1
   %i.hu = getelementptr inbounds nuw i8, ptr %.06277.i, i64 1 ; 2 uses
-  %i.hv = icmp ult ptr %i.hu, %7
+  %i.hv = icmp ult ptr %i.hu, %i.eq
   br i1 %i.hv, label %.lr.ph79.i, label %_ZL15decShiftToLeastPhii.exit, !llvm.loop !56
 
 bb.bd:                                            ; preds = %bb.bc
@@ -884,8 +880,8 @@ bb.e:                                             ; preds = %bb.d
 
 .thread71:                                        ; preds = %bb.e, %bb.d
   %i.l = phi i32 [ %2, %bb.d ], [ %i.h, %bb.e ]   ; 2 uses
-  %3 = sext i32 %1 to i64                         ; 2 uses
-  %i.m = getelementptr inbounds i8, ptr %0, i64 %3
+  %3 = zext i32 %1 to i64                         ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %3
   %i.n = icmp slt i32 %i.l, %1
   br i1 %i.n, label %iter.check, label %._crit_edge80
 

@@ -201,8 +201,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.d = load i32, ptr %i.c, align 8              ; 2 uses
-  %3 = sdiv i32 %i.d, 4
-  %4 = shl nsw i32 %3, 2
+  %3 = and i32 %i.d, -4
   %i.e = icmp sgt i32 %i.d, 3
   br i1 %i.e, label %.lr.ph.preheader, label %.thread77
 
@@ -237,7 +236,7 @@ bb.a:
   %i.r = zext i1 %not.or.cond45 to i32
   %.1 = add nuw nsw i32 %.052, %i.r               ; 4 uses
   %i.s = add nuw nsw i32 %.03951, 4               ; 2 uses
-  %i.t = icmp slt i32 %i.s, %4
+  %i.t = icmp slt i32 %i.s, %3
   br i1 %i.t, label %.lr.ph, label %._crit_edge, !llvm.loop !9
 
 bb.b:                                             ; preds = %._crit_edge

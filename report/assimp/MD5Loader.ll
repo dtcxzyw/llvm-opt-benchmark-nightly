@@ -204,7 +204,6 @@ bb.z:                                             ; preds = %bb.y
   %i.ed = ptrtoint ptr %i.eb to i64
   %i.ee = ptrtoint ptr %i.ec to i64
   %i.ef = sub i64 %i.ed, %i.ee                    ; 3 uses
-  %7 = ashr exact i64 %i.ef, 2
   %.not78 = icmp eq ptr %i.eb, %i.ec
   br i1 %.not78, label %bb.aa, label %bb.ao
 
@@ -223,7 +222,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZNSt6vectorIjSaIjEE9push_backEOj.exit
 
 _ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.aa
-  %i.ek = add nuw nsw i64 %7, 1                   ; 2 uses
+  %i.ek = add nuw nsw i64 %i.ef, 1                ; 2 uses
   %i.el = shl nuw nsw i64 %i.ek, 2
   %i.em = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.el) #27
           to label %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i.i unwind label %bb.am ; 3 uses
