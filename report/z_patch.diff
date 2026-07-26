@@ -1,0 +1,274 @@
+diff --git a/llvm/lib/Analysis/LazyValueInfo.cpp b/llvm/lib/Analysis/LazyValueInfo.cpp
+index c8f76ccd4b0e9..a62d195036258 100644
+--- a/llvm/lib/Analysis/LazyValueInfo.cpp
++++ b/llvm/lib/Analysis/LazyValueInfo.cpp
+@@ -1876,6 +1876,7 @@ ValueLatticeElement LazyValueInfoImpl::getValueAtUse(const Use &U) {
+   Value *V = U.get();
+   auto *CxtI = cast<Instruction>(U.getUser());
+   ValueLatticeElement VL = getValueInBlock(V, CxtI->getParent(), CxtI);
++  BasicBlock *LastQueriedBB = CxtI->getParent();
+ 
+   // Check whether the only (possibly transitive) use of the value is in a
+   // position where V can be constrained by a select or branch condition.
+@@ -1885,6 +1886,17 @@ ValueLatticeElement LazyValueInfoImpl::getValueAtUse(const Use &U) {
+   for (unsigned I = 0; I < MaxUsesToInspect; ++I) {
+     std::optional<ValueLatticeElement> CondVal;
+     auto *CurrI = cast<Instruction>(CurrU->getUser());
++
++    // All instructions on the one-use chain between the original use and CurrI
++    // are speculatable and have a single user each, so they could be sunk to
++    // CurrI. This means information that holds at CurrI also holds for the
++    // original use and can be used to refine it. Skip phis, as V may not
++    // dominate their block.
++    if (I != 0 && !isa<PHINode>(CurrI) && CurrI->getParent() != LastQueriedBB) {
++      LastQueriedBB = CurrI->getParent();
++      VL = VL.intersect(getValueInBlock(V, LastQueriedBB, CurrI));
++    }
++
+     if (auto *SI = dyn_cast<SelectInst>(CurrI)) {
+       // If the value is undef, a different value may be chosen in
+       // the select condition and at use.
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/range-single-user.ll b/llvm/test/Transforms/CorrelatedValuePropagation/range-single-user.ll
+index 9cefb707b9369..73f7847b75fe9 100644
+--- a/llvm/test/Transforms/CorrelatedValuePropagation/range-single-user.ll
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/range-single-user.ll
+@@ -8,7 +8,7 @@ define i8 @refine_add_single_cross_block_user(i8 %a) {
+ ; CHECK-LABEL: define i8 @refine_add_single_cross_block_user(
+ ; CHECK-SAME: i8 [[A:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[C:%.*]] = add i8 [[A]], 3
++; CHECK-NEXT:    [[C:%.*]] = add nuw nsw i8 [[A]], 3
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[A]], 93
+@@ -324,3 +324,163 @@ exit:
+ }
+ 
+ declare void @foo(i32)
++
++; %a == 93 is known at %e. %c and %d are speculatable with a single user each,
++; so they could be sunk to %e and %c can be refined.
++define i8 @refine_add_transitive_single_user(i8 %a) {
++; CHECK-LABEL: define i8 @refine_add_transitive_single_user(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = add nuw nsw i8 [[A]], 3
++; CHECK-NEXT:    [[D:%.*]] = xor i8 [[C]], 1
++; CHECK-NEXT:    br label %[[DISPATCH:.*]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[A]], 93
++; CHECK-NEXT:    br i1 [[CMP]], label %[[EXIT:.*]], label %[[DISPATCH]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[E:%.*]] = add nuw nsw i8 [[D]], 1
++; CHECK-NEXT:    ret i8 98
++;
++entry:
++  %c = add i8 %a, 3
++  %d = xor i8 %c, 1
++  br label %dispatch
++
++dispatch:
++  %cmp = icmp eq i8 %a, 93
++  br i1 %cmp, label %exit, label %dispatch
++
++exit:
++  %e = add i8 %d, 1
++  ret i8 %e
++}
++
++; Same as above, but with the intermediate in a block of its own.
++define i8 @refine_add_transitive_single_user_three_blocks(i8 %a) {
++; CHECK-LABEL: define i8 @refine_add_transitive_single_user_three_blocks(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = add nuw nsw i8 [[A]], 3
++; CHECK-NEXT:    br label %[[NEXT:.*]]
++; CHECK:       [[NEXT]]:
++; CHECK-NEXT:    [[D:%.*]] = xor i8 [[C]], 1
++; CHECK-NEXT:    br label %[[DISPATCH:.*]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[A]], 93
++; CHECK-NEXT:    br i1 [[CMP]], label %[[EXIT:.*]], label %[[DISPATCH]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[E:%.*]] = add nuw nsw i8 [[D]], 1
++; CHECK-NEXT:    ret i8 98
++;
++entry:
++  %c = add i8 %a, 3
++  br label %next
++
++next:
++  %d = xor i8 %c, 1
++  br label %dispatch
++
++dispatch:
++  %cmp = icmp eq i8 %a, 93
++  br i1 %cmp, label %exit, label %dispatch
++
++exit:
++  %e = add i8 %d, 1
++  ret i8 %e
++}
++
++; The intermediate may divide by zero, so it cannot be sunk and the chain must
++; not be followed.
++define i8 @no_refine_transitive_unsafe_intermediate(i8 %a, i8 %x) {
++; CHECK-LABEL: define i8 @no_refine_transitive_unsafe_intermediate(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = add i8 [[A]], 3
++; CHECK-NEXT:    [[D:%.*]] = udiv i8 [[C]], [[X]]
++; CHECK-NEXT:    br label %[[DISPATCH:.*]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[A]], 93
++; CHECK-NEXT:    br i1 [[CMP]], label %[[EXIT:.*]], label %[[DISPATCH]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[E:%.*]] = add i8 [[D]], 1
++; CHECK-NEXT:    ret i8 [[E]]
++;
++entry:
++  %c = add i8 %a, 3
++  %d = udiv i8 %c, %x
++  br label %dispatch
++
++dispatch:
++  %cmp = icmp eq i8 %a, 93
++  br i1 %cmp, label %exit, label %dispatch
++
++exit:
++  %e = add i8 %d, 1
++  ret i8 %e
++}
++
++; The intermediate has multiple users, so the chain must not be followed.
++define i8 @no_refine_transitive_multi_use_intermediate(i8 %a) {
++; CHECK-LABEL: define i8 @no_refine_transitive_multi_use_intermediate(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = add i8 [[A]], 3
++; CHECK-NEXT:    [[D:%.*]] = xor i8 [[C]], 1
++; CHECK-NEXT:    call void @use.i8(i8 [[D]])
++; CHECK-NEXT:    br label %[[DISPATCH:.*]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[A]], 93
++; CHECK-NEXT:    br i1 [[CMP]], label %[[EXIT:.*]], label %[[DISPATCH]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[E:%.*]] = add nuw nsw i8 [[D]], 1
++; CHECK-NEXT:    ret i8 98
++;
++entry:
++  %c = add i8 %a, 3
++  %d = xor i8 %c, 1
++  call void @use.i8(i8 %d)
++  br label %dispatch
++
++dispatch:
++  %cmp = icmp eq i8 %a, 93
++  br i1 %cmp, label %exit, label %dispatch
++
++exit:
++  %e = add i8 %d, 1
++  ret i8 %e
++}
++
++; The transitive user is a phi, which must not be used as context.
++define i8 @no_refine_transitive_phi_user(i8 %a, i1 %g) {
++; CHECK-LABEL: define i8 @no_refine_transitive_phi_user(
++; CHECK-SAME: i8 [[A:%.*]], i1 [[G:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[C:%.*]] = add i8 [[A]], 3
++; CHECK-NEXT:    [[D:%.*]] = xor i8 [[C]], 1
++; CHECK-NEXT:    br i1 [[G]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[P:%.*]] = phi i8 [ [[D]], %[[ENTRY]] ], [ 0, %[[THEN]] ]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[A]], 93
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    [[E:%.*]] = add i8 [[P]], 1
++; CHECK-NEXT:    ret i8 [[E]]
++;
++entry:
++  %c = add i8 %a, 3
++  %d = xor i8 %c, 1
++  br i1 %g, label %then, label %exit
++
++then:
++  br label %exit
++
++exit:
++  %p = phi i8 [ %d, %entry ], [ 0, %then ]
++  %cmp = icmp eq i8 %a, 93
++  call void @llvm.assume(i1 %cmp)
++  %e = add i8 %p, 1
++  ret i8 %e
++}
++
++declare void @use.i8(i8)
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/range.ll b/llvm/test/Transforms/CorrelatedValuePropagation/range.ll
+index 860caf2624d42..4b88f5b33d707 100644
+--- a/llvm/test/Transforms/CorrelatedValuePropagation/range.ll
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/range.ll
+@@ -702,7 +702,7 @@ define i32 @test16(i8 %a) {
+ ; CHECK-LABEL: define i32 @test16(
+ ; CHECK-SAME: i8 [[A:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[B:%.*]] = zext i8 [[A]] to i32
++; CHECK-NEXT:    [[B:%.*]] = zext nneg i8 [[A]] to i32
+ ; CHECK-NEXT:    br label %[[DISPATCH:.*]]
+ ; CHECK:       [[DISPATCH]]:
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[A]], 93
+@@ -748,7 +748,7 @@ define i8 @test17(i8 %a) {
+ ; CHECK-LABEL: define i8 @test17(
+ ; CHECK-SAME: i8 [[A:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[C:%.*]] = add i8 [[A]], 3
++; CHECK-NEXT:    [[C:%.*]] = add nuw nsw i8 [[A]], 3
+ ; CHECK-NEXT:    br label %[[DISPATCH:.*]]
+ ; CHECK:       [[DISPATCH]]:
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[A]], 93
+@@ -772,7 +772,7 @@ define i8 @test17_2(i8 %a) {
+ ; CHECK-LABEL: define i8 @test17_2(
+ ; CHECK-SAME: i8 [[A:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[C:%.*]] = add i8 [[A]], [[A]]
++; CHECK-NEXT:    [[C:%.*]] = add nuw i8 [[A]], [[A]]
+ ; CHECK-NEXT:    br label %[[DISPATCH:.*]]
+ ; CHECK:       [[DISPATCH]]:
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[A]], 93
+@@ -817,7 +817,7 @@ define i32 @test18(i8 %a) {
+ ; CHECK-LABEL: define i32 @test18(
+ ; CHECK-SAME: i8 [[A:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[B:%.*]] = zext i8 [[A]] to i32
++; CHECK-NEXT:    [[B:%.*]] = zext nneg i8 [[A]] to i32
+ ; CHECK-NEXT:    br label %[[DISPATCH:.*]]
+ ; CHECK:       [[DISPATCH]]:
+ ; CHECK-NEXT:    switch i8 [[A]], label %[[DISPATCH]] [
+@@ -845,7 +845,7 @@ define i8 @test19(i8 %a) {
+ ; CHECK-LABEL: define i8 @test19(
+ ; CHECK-SAME: i8 [[A:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[C:%.*]] = add i8 [[A]], 3
++; CHECK-NEXT:    [[C:%.*]] = add nuw nsw i8 [[A]], 3
+ ; CHECK-NEXT:    br label %[[DISPATCH:.*]]
+ ; CHECK:       [[DISPATCH]]:
+ ; CHECK-NEXT:    switch i8 [[A]], label %[[DISPATCH]] [
+@@ -1239,7 +1239,7 @@ define i16 @return_range_for_edge_value_zext(i8 %a) {
+ ; CHECK-LABEL: define range(i16 0, 98) i16 @return_range_for_edge_value_zext(
+ ; CHECK-SAME: i8 [[A:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[B:%.*]] = zext i8 [[A]] to i16
++; CHECK-NEXT:    [[B:%.*]] = zext nneg i8 [[A]] to i16
+ ; CHECK-NEXT:    br label %[[DISPATCH:.*]]
+ ; CHECK:       [[DISPATCH]]:
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i8 [[A]], 98
+@@ -1287,7 +1287,7 @@ define i8 @return_range_for_edge_value_trunc(i16 %a) {
+ ; CHECK-LABEL: define range(i8 0, 98) i8 @return_range_for_edge_value_trunc(
+ ; CHECK-SAME: i16 [[A:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[B:%.*]] = trunc i16 [[A]] to i8
++; CHECK-NEXT:    [[B:%.*]] = trunc nuw nsw i16 [[A]] to i8
+ ; CHECK-NEXT:    br label %[[DISPATCH:.*]]
+ ; CHECK:       [[DISPATCH]]:
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i16 [[A]], 98
