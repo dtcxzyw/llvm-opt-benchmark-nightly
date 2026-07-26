@@ -8,9 +8,9 @@ $_ZTIN6icu_787UMemoryE = comdat any
 
 $_ZTSN6icu_787UMemoryE = comdat any
 
-@_ZTVN6icu_7824FieldPositionOnlyHandlerE = dso_local unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN6icu_7824FieldPositionOnlyHandlerE, ptr @_ZN6icu_7820FieldPositionHandlerD2Ev, ptr @_ZN6icu_7824FieldPositionOnlyHandlerD0Ev, ptr @_ZN6icu_7824FieldPositionOnlyHandler12addAttributeEiii, ptr @_ZN6icu_7824FieldPositionOnlyHandler9shiftLastEi, ptr @_ZNK6icu_7824FieldPositionOnlyHandler11isRecordingEv] }, align 8
-@_ZTVN6icu_7828FieldPositionIteratorHandlerE = dso_local unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN6icu_7828FieldPositionIteratorHandlerE, ptr @_ZN6icu_7828FieldPositionIteratorHandlerD2Ev, ptr @_ZN6icu_7828FieldPositionIteratorHandlerD0Ev, ptr @_ZN6icu_7828FieldPositionIteratorHandler12addAttributeEiii, ptr @_ZN6icu_7828FieldPositionIteratorHandler9shiftLastEi, ptr @_ZNK6icu_7828FieldPositionIteratorHandler11isRecordingEv] }, align 8
-@_ZTVN6icu_7820FieldPositionHandlerE = dso_local unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN6icu_7820FieldPositionHandlerE, ptr @_ZN6icu_7820FieldPositionHandlerD2Ev, ptr @_ZN6icu_7820FieldPositionHandlerD0Ev, ptr @__cxa_pure_virtual, ptr @__cxa_pure_virtual, ptr @__cxa_pure_virtual] }, align 8
+@_ZTVN6icu_7824FieldPositionOnlyHandlerE = dso_local constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN6icu_7824FieldPositionOnlyHandlerE, ptr @_ZN6icu_7820FieldPositionHandlerD2Ev, ptr @_ZN6icu_7824FieldPositionOnlyHandlerD0Ev, ptr @_ZN6icu_7824FieldPositionOnlyHandler12addAttributeEiii, ptr @_ZN6icu_7824FieldPositionOnlyHandler9shiftLastEi, ptr @_ZNK6icu_7824FieldPositionOnlyHandler11isRecordingEv] }, align 8
+@_ZTVN6icu_7828FieldPositionIteratorHandlerE = dso_local constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN6icu_7828FieldPositionIteratorHandlerE, ptr @_ZN6icu_7828FieldPositionIteratorHandlerD2Ev, ptr @_ZN6icu_7828FieldPositionIteratorHandlerD0Ev, ptr @_ZN6icu_7828FieldPositionIteratorHandler12addAttributeEiii, ptr @_ZN6icu_7828FieldPositionIteratorHandler9shiftLastEi, ptr @_ZNK6icu_7828FieldPositionIteratorHandler11isRecordingEv] }, align 8
+@_ZTVN6icu_7820FieldPositionHandlerE = dso_local local_unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN6icu_7820FieldPositionHandlerE, ptr @_ZN6icu_7820FieldPositionHandlerD2Ev, ptr @_ZN6icu_7820FieldPositionHandlerD0Ev, ptr @__cxa_pure_virtual, ptr @__cxa_pure_virtual, ptr @__cxa_pure_virtual] }, align 8
 @_ZTIN6icu_7820FieldPositionHandlerE = dso_local constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN6icu_7820FieldPositionHandlerE, ptr @_ZTIN6icu_787UMemoryE }, align 8
 @_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
 @_ZTSN6icu_7820FieldPositionHandlerE = dso_local constant [32 x i8] c"N6icu_7820FieldPositionHandlerE\00", align 1
@@ -31,7 +31,7 @@ $_ZTSN6icu_787UMemoryE = comdat any
 @_ZN6icu_7828FieldPositionIteratorHandlerD1Ev = dso_local unnamed_addr alias void (ptr), ptr @_ZN6icu_7828FieldPositionIteratorHandlerD2Ev
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local void @_ZN6icu_7820FieldPositionHandlerD2Ev(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #0 align 2 {
+define dso_local void @_ZN6icu_7820FieldPositionHandlerD2Ev(ptr nofree nonnull readnone align 8 captures(none) dead_on_return(12) %0) unnamed_addr #0 align 2 {
 bb.a:
   ret void
 }
@@ -232,7 +232,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local void @_ZN6icu_7828FieldPositionIteratorHandlerD2Ev(ptr noundef nonnull align 8 dereferenceable(40) initializes((0, 8)) %0) unnamed_addr #4 align 2 {
+define dso_local void @_ZN6icu_7828FieldPositionIteratorHandlerD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) initializes((0, 8)) %0) unnamed_addr #4 align 2 {
 bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN6icu_7828FieldPositionIteratorHandlerE, i64 16), ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -248,8 +248,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr null, ptr %1, align 8
   ret void
 }
 
@@ -272,8 +270,6 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN6icu_7828FieldPositionIteratorHandlerD2Ev.exit
 
 _ZN6icu_7828FieldPositionIteratorHandlerD2Ev.exit: ; preds = %bb.a, %bb.b
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr null, ptr %1, align 8
   tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %0) #12
   ret void
 }
@@ -539,7 +535,7 @@ attributes #12 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
-!4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
+!4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
 !5 = !{}
 !6 = !{i64 8}
 !7 = !{ptr @_ZN6icu_7828FieldPositionIteratorHandlerD2Ev}
