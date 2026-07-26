@@ -293,6 +293,12 @@ def normalize_patch_url(patch_url: str) -> Tuple[str, str]:
     return f"https://github.com/{patch_path}", patch_path
 
 
+LIST_DATASET_BC_TASKS_IGNORE = {
+    ("velox", "EventBase.bc"),
+    ("velox", "ThreadPoolExecutor.bc"),
+    ("node", "ada.bc"),
+}
+
 def list_dataset_bc_tasks() -> List[Tuple[str, str]]:
     tasks = []
     for proj in os.listdir(DATA_DIR):
@@ -300,7 +306,7 @@ def list_dataset_bc_tasks() -> List[Tuple[str, str]]:
         if not os.path.exists(original_dir):
             continue
         for file in os.listdir(original_dir):
-            if file.endswith(".bc"):
+            if file.endswith(".bc") and (proj, file) not in LIST_DATASET_BC_TASKS_IGNORE:
                 tasks.append((proj, file))
     return tasks
 
