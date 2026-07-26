@@ -1,7 +1,7 @@
 inline.NumInlined: 243
 inline.NumDeleted: 22
-loop-unroll.NumCompletelyUnrolled: 82
-loop-unroll.NumRuntimeUnrolled: 17
+loop-unroll.NumCompletelyUnrolled: 78
+loop-unroll.NumRuntimeUnrolled: 21
 loop-unroll.NumUnrolled: 99
 begin_hunk_0_@CreateBackwardReferencesDH58:bb.a
 
@@ -204,12 +204,14 @@ LookupCompoundDictionaryMatch.exit214:            ; preds = %FindCompoundDiction
   %.not988 = icmp eq i32 %i.zm, 0
   %i.zo = load i32, ptr %i.bd, align 4, !tbaa !312, !alias.scope !331, !noalias !334 ; 3 uses
   %i.zp = load i64, ptr %i.be, align 8, !tbaa !313, !alias.scope !331, !noalias !334 ; 2 uses
-  %i.zq = lshr i64 %i.zp, 4                       ; 5 uses
-  %.not989 = icmp eq i64 %i.zq, 0
+  %i.zq = lshr i64 %i.zp, 4                       ; 4 uses
   %12 = zext i32 %i.zo to i64
-  %exitcond1073.not = icmp eq i64 %i.zq, 1
-  %exitcond1073.not.1 = icmp eq i64 %i.zq, 2
-  %exitcond1073.not.2 = icmp eq i64 %i.zq, 3
+  %umax1072 = tail call i64 @llvm.umin.i64(i64 %i.zq, i64 4) ; 3 uses
+  %xtraiter1700 = and i64 %umax1072, 1
+  %exitcond1073.not = icmp eq i64 %i.zq, 1        ; 0 uses
+  %unroll_iter1704 = and i64 %umax1072, 6
+  %exitcond1073.not.1 = icmp eq i64 %xtraiter1700, 0
+  %lcmp.mod1703 = trunc i64 %umax1072 to i1
   br label %bb.cv
 
 bb.cv:                                            ; preds = %.preheader598, %bb.gl
@@ -273,7 +275,7 @@ bb.cx:                                            ; preds = %bb.cw, %bb.cv
   %i.aay = shl i32 %i.aax, %i.zk
   %i.aaz = zext i32 %i.aay to i64                 ; 2 uses
   %i.aba = getelementptr inbounds nuw [4 x i8], ptr %i.zh, i64 %i.aaz ; 4 uses
-  %i.abb = getelementptr inbounds nuw i8, ptr %i.zi, i64 %i.aaz ; 6 uses
+  %i.abb = getelementptr inbounds nuw i8, ptr %i.zi, i64 %i.aaz ; 5 uses
   tail call void @llvm.prefetch.p0(ptr %i.aba, i32 0, i32 3, i32 1), !noalias !340
   tail call void @llvm.prefetch.p0(ptr %i.abb, i32 0, i32 3, i32 1), !noalias !340
   br i1 %i.zl, label %bb.cy, label %bb.cz
@@ -454,48 +456,57 @@ bb.do:                                            ; preds = %bb.dc, %bb.da, %bb.
   %i.adh = and i32 %i.adg, %i.zo                  ; 3 uses
   %i.adi = zext nneg i32 %i.adh to i64            ; 2 uses
   %i.adj = insertelement <16 x i8> poison, i8 %i.adb, i64 0
-  %i.adk = shufflevector <16 x i8> %i.adj, <16 x i8> poison, <16 x i32> zeroinitializer ; 4 uses
-  br i1 %.not989, label %._crit_edge845.thread, label %.lr.ph844
+  %i.adk = shufflevector <16 x i8> %i.adj, <16 x i8> poison, <16 x i32> zeroinitializer ; 3 uses
+  switch i64 %i.zq, label %.lr.ph844.1 [
+    i64 0, label %._crit_edge845.thread
+    i64 1, label %.lr.ph844.3
+  ]
 
-.lr.ph844:                                        ; preds = %._crit_edge827
-  %13 = load <16 x i8>, ptr %i.abb, align 1, !tbaa !55, !noalias !340
-  %14 = icmp eq <16 x i8> %13, %i.adk
-  %15 = bitcast <16 x i1> %14 to i16
-  %16 = zext i16 %15 to i64                       ; 2 uses
-  br i1 %exitcond1073.not, label %._crit_edge845, label %.lr.ph844.1
-
-.lr.ph844.1:                                      ; preds = %.lr.ph844
-  %i.adl = getelementptr inbounds nuw i8, ptr %i.abb, i64 16
+.lr.ph844.1:                                      ; preds = %._crit_edge827, %.lr.ph844.1
+  %.020.i393842 = phi i64 [ %i.adr, %.lr.ph844.1 ], [ 0, %._crit_edge827 ]
+  %.021.i392841 = phi i64 [ %23, %.lr.ph844.1 ], [ 0, %._crit_edge827 ] ; 3 uses
+  %niter1705 = phi i64 [ %niter1705.next.1, %.lr.ph844.1 ], [ 0, %._crit_edge827 ]
+  %13 = shl nuw nsw i64 %.021.i392841, 4          ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %i.abb, i64 %13
+  %15 = load <16 x i8>, ptr %14, align 1, !tbaa !55, !noalias !340
+  %16 = icmp eq <16 x i8> %15, %i.adk
+  %17 = bitcast <16 x i1> %16 to i16
+  %18 = zext i16 %17 to i64
+  %19 = shl nuw i64 %18, %13
+  %20 = or i64 %19, %.020.i393842
+  %21 = shl i64 %.021.i392841, 4
+  %22 = or disjoint i64 %21, 16                   ; 2 uses
+  %i.adl = getelementptr inbounds nuw i8, ptr %i.abb, i64 %22
   %i.adm = load <16 x i8>, ptr %i.adl, align 1, !tbaa !55, !noalias !340
   %i.adn = icmp eq <16 x i8> %i.adm, %i.adk
   %i.ado = bitcast <16 x i1> %i.adn to i16
   %i.adp = zext i16 %i.ado to i64
-  %i.adq = shl nuw nsw i64 %i.adp, 16
-  %i.adr = or disjoint i64 %i.adq, %16            ; 2 uses
-  br i1 %exitcond1073.not.1, label %._crit_edge845, label %.lr.ph844.2
+  %i.adq = shl nuw i64 %i.adp, %22
+  %i.adr = or i64 %i.adq, %20                     ; 3 uses
+  %23 = add nuw nsw i64 %.021.i392841, 2          ; 2 uses
+  %niter1705.next.1 = add i64 %niter1705, 2       ; 2 uses
+  %niter1705.ncmp.1 = icmp eq i64 %niter1705.next.1, %unroll_iter1704
+  br i1 %niter1705.ncmp.1, label %.lr.ph844.2, label %.lr.ph844.1, !llvm.loop !314
 
 .lr.ph844.2:                                      ; preds = %.lr.ph844.1
-  %17 = getelementptr inbounds nuw i8, ptr %i.abb, i64 32
-  %18 = load <16 x i8>, ptr %17, align 1, !tbaa !55, !noalias !340
-  %19 = icmp eq <16 x i8> %18, %i.adk
-  %20 = bitcast <16 x i1> %19 to i16
-  %21 = zext i16 %20 to i64
-  %22 = shl nuw nsw i64 %21, 32
-  %23 = or disjoint i64 %22, %i.adr               ; 2 uses
-  br i1 %exitcond1073.not.2, label %._crit_edge845, label %.lr.ph844.3
+  br i1 %exitcond1073.not.1, label %._crit_edge845, label %.lr.ph844.3
 
-.lr.ph844.3:                                      ; preds = %.lr.ph844.2
-  %i.ads = getelementptr inbounds nuw i8, ptr %i.abb, i64 48
+.lr.ph844.3:                                      ; preds = %._crit_edge827, %.lr.ph844.2
+  %.020.i393842.epil.init = phi i64 [ 0, %._crit_edge827 ], [ %i.adr, %.lr.ph844.2 ]
+  %.021.i392841.epil.init = phi i64 [ 0, %._crit_edge827 ], [ %23, %.lr.ph844.2 ]
+  tail call void @llvm.assume(i1 %lcmp.mod1703)
+  %24 = shl nuw nsw i64 %.021.i392841.epil.init, 4 ; 2 uses
+  %i.ads = getelementptr inbounds nuw i8, ptr %i.abb, i64 %24
   %i.adt = load <16 x i8>, ptr %i.ads, align 1, !tbaa !55, !noalias !340
   %i.adu = icmp eq <16 x i8> %i.adt, %i.adk
   %i.adv = bitcast <16 x i1> %i.adu to i16
   %i.adw = zext i16 %i.adv to i64
-  %i.adx = shl nuw i64 %i.adw, 48
-  %i.ady = or disjoint i64 %i.adx, %23
+  %i.adx = shl nuw i64 %i.adw, %24
+  %i.ady = or i64 %i.adx, %.020.i393842.epil.init
   br label %._crit_edge845
 
-._crit_edge845:                                   ; preds = %.lr.ph844.3, %.lr.ph844.2, %.lr.ph844.1, %.lr.ph844
-  %.lcssa1636 = phi i64 [ %16, %.lr.ph844 ], [ %i.adr, %.lr.ph844.1 ], [ %23, %.lr.ph844.2 ], [ %i.ady, %.lr.ph844.3 ] ; 3 uses
+._crit_edge845:                                   ; preds = %.lr.ph844.2, %.lr.ph844.3
+  %.lcssa1636 = phi i64 [ %i.adr, %.lr.ph844.2 ], [ %i.ady, %.lr.ph844.3 ] ; 3 uses
   switch i64 %i.zq, label %._crit_edge845.thread [
     i64 1, label %bb.dp
     i64 2, label %bb.dq
@@ -898,12 +909,14 @@ LookupCompoundDictionaryMatch.exit214:            ; preds = %FindCompoundDiction
   %.not990 = icmp eq i32 %i.zp, 0
   %i.zr = load i32, ptr %i.bd, align 8, !tbaa !413, !alias.scope !431, !noalias !434 ; 3 uses
   %i.zs = load i64, ptr %i.be, align 8, !tbaa !414, !alias.scope !431, !noalias !434 ; 2 uses
-  %i.zt = lshr i64 %i.zs, 4                       ; 5 uses
-  %.not991 = icmp eq i64 %i.zt, 0
+  %i.zt = lshr i64 %i.zs, 4                       ; 4 uses
   %12 = zext i32 %i.zr to i64
-  %exitcond1075.not = icmp eq i64 %i.zt, 1
-  %exitcond1075.not.1 = icmp eq i64 %i.zt, 2
-  %exitcond1075.not.2 = icmp eq i64 %i.zt, 3
+  %umax1074 = tail call i64 @llvm.umin.i64(i64 %i.zt, i64 4) ; 3 uses
+  %xtraiter1704 = and i64 %umax1074, 1
+  %exitcond1075.not = icmp eq i64 %i.zt, 1        ; 0 uses
+  %unroll_iter1708 = and i64 %umax1074, 6
+  %exitcond1075.not.1 = icmp eq i64 %xtraiter1704, 0
+  %lcmp.mod1707 = trunc i64 %umax1074 to i1
   br label %bb.cv
 
 bb.cv:                                            ; preds = %.preheader600, %bb.gl
@@ -966,7 +979,7 @@ bb.cx:                                            ; preds = %bb.cw, %bb.cv
   %i.aba = lshr i64 %i.aay, 49                    ; 2 uses
   %i.abb = shl i64 %i.aba, %i.zn                  ; 2 uses
   %i.abc = getelementptr inbounds nuw [4 x i8], ptr %i.zj, i64 %i.abb ; 4 uses
-  %i.abd = getelementptr inbounds nuw i8, ptr %i.zk, i64 %i.abb ; 6 uses
+  %i.abd = getelementptr inbounds nuw i8, ptr %i.zk, i64 %i.abb ; 5 uses
   tail call void @llvm.prefetch.p0(ptr %i.abc, i32 0, i32 3, i32 1), !noalias !443
   tail call void @llvm.prefetch.p0(ptr %i.abd, i32 0, i32 3, i32 1), !noalias !443
   %i.abe = trunc i64 %.0.copyload.i.i401 to i32
@@ -1148,48 +1161,57 @@ bb.do:                                            ; preds = %bb.dc, %bb.da, %bb.
   %i.adk = and i32 %i.adj, %i.zr                  ; 3 uses
   %i.adl = zext nneg i32 %i.adk to i64            ; 2 uses
   %i.adm = insertelement <16 x i8> poison, i8 %i.ade, i64 0
-  %i.adn = shufflevector <16 x i8> %i.adm, <16 x i8> poison, <16 x i32> zeroinitializer ; 4 uses
-  br i1 %.not991, label %._crit_edge847.thread, label %.lr.ph846
+  %i.adn = shufflevector <16 x i8> %i.adm, <16 x i8> poison, <16 x i32> zeroinitializer ; 3 uses
+  switch i64 %i.zt, label %.lr.ph846.1 [
+    i64 0, label %._crit_edge847.thread
+    i64 1, label %.lr.ph846.3
+  ]
 
-.lr.ph846:                                        ; preds = %._crit_edge829
-  %13 = load <16 x i8>, ptr %i.abd, align 1, !tbaa !55, !noalias !443
-  %14 = icmp eq <16 x i8> %13, %i.adn
-  %15 = bitcast <16 x i1> %14 to i16
-  %16 = zext i16 %15 to i64                       ; 2 uses
-  br i1 %exitcond1075.not, label %._crit_edge847, label %.lr.ph846.1
-
-.lr.ph846.1:                                      ; preds = %.lr.ph846
-  %i.ado = getelementptr inbounds nuw i8, ptr %i.abd, i64 16
+.lr.ph846.1:                                      ; preds = %._crit_edge829, %.lr.ph846.1
+  %.020.i.i844 = phi i64 [ %i.adu, %.lr.ph846.1 ], [ 0, %._crit_edge829 ]
+  %.021.i220.i843 = phi i64 [ %23, %.lr.ph846.1 ], [ 0, %._crit_edge829 ] ; 3 uses
+  %niter1709 = phi i64 [ %niter1709.next.1, %.lr.ph846.1 ], [ 0, %._crit_edge829 ]
+  %13 = shl nuw nsw i64 %.021.i220.i843, 4        ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %i.abd, i64 %13
+  %15 = load <16 x i8>, ptr %14, align 1, !tbaa !55, !noalias !443
+  %16 = icmp eq <16 x i8> %15, %i.adn
+  %17 = bitcast <16 x i1> %16 to i16
+  %18 = zext i16 %17 to i64
+  %19 = shl nuw i64 %18, %13
+  %20 = or i64 %19, %.020.i.i844
+  %21 = shl i64 %.021.i220.i843, 4
+  %22 = or disjoint i64 %21, 16                   ; 2 uses
+  %i.ado = getelementptr inbounds nuw i8, ptr %i.abd, i64 %22
   %i.adp = load <16 x i8>, ptr %i.ado, align 1, !tbaa !55, !noalias !443
   %i.adq = icmp eq <16 x i8> %i.adp, %i.adn
   %i.adr = bitcast <16 x i1> %i.adq to i16
   %i.ads = zext i16 %i.adr to i64
-  %i.adt = shl nuw nsw i64 %i.ads, 16
-  %i.adu = or disjoint i64 %i.adt, %16            ; 2 uses
-  br i1 %exitcond1075.not.1, label %._crit_edge847, label %.lr.ph846.2
+  %i.adt = shl nuw i64 %i.ads, %22
+  %i.adu = or i64 %i.adt, %20                     ; 3 uses
+  %23 = add nuw nsw i64 %.021.i220.i843, 2        ; 2 uses
+  %niter1709.next.1 = add i64 %niter1709, 2       ; 2 uses
+  %niter1709.ncmp.1 = icmp eq i64 %niter1709.next.1, %unroll_iter1708
+  br i1 %niter1709.ncmp.1, label %.lr.ph846.2, label %.lr.ph846.1, !llvm.loop !314
 
 .lr.ph846.2:                                      ; preds = %.lr.ph846.1
-  %17 = getelementptr inbounds nuw i8, ptr %i.abd, i64 32
-  %18 = load <16 x i8>, ptr %17, align 1, !tbaa !55, !noalias !443
-  %19 = icmp eq <16 x i8> %18, %i.adn
-  %20 = bitcast <16 x i1> %19 to i16
-  %21 = zext i16 %20 to i64
-  %22 = shl nuw nsw i64 %21, 32
-  %23 = or disjoint i64 %22, %i.adu               ; 2 uses
-  br i1 %exitcond1075.not.2, label %._crit_edge847, label %.lr.ph846.3
+  br i1 %exitcond1075.not.1, label %._crit_edge847, label %.lr.ph846.3
 
-.lr.ph846.3:                                      ; preds = %.lr.ph846.2
-  %i.adv = getelementptr inbounds nuw i8, ptr %i.abd, i64 48
+.lr.ph846.3:                                      ; preds = %._crit_edge829, %.lr.ph846.2
+  %.020.i.i844.epil.init = phi i64 [ 0, %._crit_edge829 ], [ %i.adu, %.lr.ph846.2 ]
+  %.021.i220.i843.epil.init = phi i64 [ 0, %._crit_edge829 ], [ %23, %.lr.ph846.2 ]
+  tail call void @llvm.assume(i1 %lcmp.mod1707)
+  %24 = shl nuw nsw i64 %.021.i220.i843.epil.init, 4 ; 2 uses
+  %i.adv = getelementptr inbounds nuw i8, ptr %i.abd, i64 %24
   %i.adw = load <16 x i8>, ptr %i.adv, align 1, !tbaa !55, !noalias !443
   %i.adx = icmp eq <16 x i8> %i.adw, %i.adn
   %i.ady = bitcast <16 x i1> %i.adx to i16
   %i.adz = zext i16 %i.ady to i64
-  %i.aea = shl nuw i64 %i.adz, 48
-  %i.aeb = or disjoint i64 %i.aea, %23
+  %i.aea = shl nuw i64 %i.adz, %24
+  %i.aeb = or i64 %i.aea, %.020.i.i844.epil.init
   br label %._crit_edge847
 
-._crit_edge847:                                   ; preds = %.lr.ph846.3, %.lr.ph846.2, %.lr.ph846.1, %.lr.ph846
-  %.lcssa1640 = phi i64 [ %16, %.lr.ph846 ], [ %i.adu, %.lr.ph846.1 ], [ %23, %.lr.ph846.2 ], [ %i.aeb, %.lr.ph846.3 ] ; 3 uses
+._crit_edge847:                                   ; preds = %.lr.ph846.2, %.lr.ph846.3
+  %.lcssa1640 = phi i64 [ %i.adu, %.lr.ph846.2 ], [ %i.aeb, %.lr.ph846.3 ] ; 3 uses
   switch i64 %i.zt, label %._crit_edge847.thread [
     i64 1, label %bb.dp
     i64 2, label %bb.dq
@@ -1592,12 +1614,14 @@ FindLongestMatchH58.exit287:                      ; preds = %TestStaticDictionar
   %.not712 = icmp eq i32 %i.qi, 0
   %i.qk = load i32, ptr %i.bc, align 4, !tbaa !312, !alias.scope !1643, !noalias !1646 ; 3 uses
   %i.ql = load i64, ptr %i.bd, align 8, !tbaa !313, !alias.scope !1643, !noalias !1646 ; 2 uses
-  %i.qm = lshr i64 %i.ql, 4                       ; 5 uses
-  %.not713 = icmp eq i64 %i.qm, 0
+  %i.qm = lshr i64 %i.ql, 4                       ; 4 uses
   %12 = zext i32 %i.qk to i64
-  %exitcond765.not = icmp eq i64 %i.qm, 1
-  %exitcond765.not.1 = icmp eq i64 %i.qm, 2
-  %exitcond765.not.2 = icmp eq i64 %i.qm, 3
+  %umax764 = tail call i64 @llvm.umin.i64(i64 %i.qm, i64 4) ; 3 uses
+  %xtraiter1102 = and i64 %umax764, 1
+  %exitcond765.not = icmp eq i64 %i.qm, 1         ; 0 uses
+  %unroll_iter1106 = and i64 %umax764, 6
+  %exitcond765.not.1 = icmp eq i64 %xtraiter1102, 0
+  %lcmp.mod1105 = trunc i64 %umax764 to i1
   br label %bb.be
 
 bb.be:                                            ; preds = %.preheader466, %bb.dd
@@ -1661,7 +1685,7 @@ bb.bg:                                            ; preds = %bb.bf, %bb.be
   %i.ru = shl i32 %i.rt, %i.qg
   %i.rv = zext i32 %i.ru to i64                   ; 2 uses
   %i.rw = getelementptr inbounds nuw [4 x i8], ptr %i.qd, i64 %i.rv ; 4 uses
-  %i.rx = getelementptr inbounds nuw i8, ptr %i.qe, i64 %i.rv ; 6 uses
+  %i.rx = getelementptr inbounds nuw i8, ptr %i.qe, i64 %i.rv ; 5 uses
   tail call void @llvm.prefetch.p0(ptr %i.rw, i32 0, i32 3, i32 1), !noalias !1652
   tail call void @llvm.prefetch.p0(ptr %i.rx, i32 0, i32 3, i32 1), !noalias !1652
   br i1 %i.qh, label %bb.bh, label %bb.bi
@@ -1842,48 +1866,57 @@ bb.bx:                                            ; preds = %bb.bl, %bb.bj, %bb.
   %i.ud = and i32 %i.uc, %i.qk                    ; 3 uses
   %i.ue = zext nneg i32 %i.ud to i64              ; 2 uses
   %i.uf = insertelement <16 x i8> poison, i8 %i.tx, i64 0
-  %i.ug = shufflevector <16 x i8> %i.uf, <16 x i8> poison, <16 x i32> zeroinitializer ; 4 uses
-  br i1 %.not713, label %._crit_edge624.thread, label %.lr.ph623
+  %i.ug = shufflevector <16 x i8> %i.uf, <16 x i8> poison, <16 x i32> zeroinitializer ; 3 uses
+  switch i64 %i.qm, label %.lr.ph623.1 [
+    i64 0, label %._crit_edge624.thread
+    i64 1, label %.lr.ph623.3
+  ]
 
-.lr.ph623:                                        ; preds = %._crit_edge606
-  %13 = load <16 x i8>, ptr %i.rx, align 1, !tbaa !55, !noalias !1652
-  %14 = icmp eq <16 x i8> %13, %i.ug
-  %15 = bitcast <16 x i1> %14 to i16
-  %16 = zext i16 %15 to i64                       ; 2 uses
-  br i1 %exitcond765.not, label %._crit_edge624, label %.lr.ph623.1
-
-.lr.ph623.1:                                      ; preds = %.lr.ph623
-  %i.uh = getelementptr inbounds nuw i8, ptr %i.rx, i64 16
+.lr.ph623.1:                                      ; preds = %._crit_edge606, %.lr.ph623.1
+  %.020.i292621 = phi i64 [ %i.un, %.lr.ph623.1 ], [ 0, %._crit_edge606 ]
+  %.021.i291620 = phi i64 [ %23, %.lr.ph623.1 ], [ 0, %._crit_edge606 ] ; 3 uses
+  %niter1107 = phi i64 [ %niter1107.next.1, %.lr.ph623.1 ], [ 0, %._crit_edge606 ]
+  %13 = shl nuw nsw i64 %.021.i291620, 4          ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %i.rx, i64 %13
+  %15 = load <16 x i8>, ptr %14, align 1, !tbaa !55, !noalias !1652
+  %16 = icmp eq <16 x i8> %15, %i.ug
+  %17 = bitcast <16 x i1> %16 to i16
+  %18 = zext i16 %17 to i64
+  %19 = shl nuw i64 %18, %13
+  %20 = or i64 %19, %.020.i292621
+  %21 = shl i64 %.021.i291620, 4
+  %22 = or disjoint i64 %21, 16                   ; 2 uses
+  %i.uh = getelementptr inbounds nuw i8, ptr %i.rx, i64 %22
   %i.ui = load <16 x i8>, ptr %i.uh, align 1, !tbaa !55, !noalias !1652
   %i.uj = icmp eq <16 x i8> %i.ui, %i.ug
   %i.uk = bitcast <16 x i1> %i.uj to i16
   %i.ul = zext i16 %i.uk to i64
-  %i.um = shl nuw nsw i64 %i.ul, 16
-  %i.un = or disjoint i64 %i.um, %16              ; 2 uses
-  br i1 %exitcond765.not.1, label %._crit_edge624, label %.lr.ph623.2
+  %i.um = shl nuw i64 %i.ul, %22
+  %i.un = or i64 %i.um, %20                       ; 3 uses
+  %23 = add nuw nsw i64 %.021.i291620, 2          ; 2 uses
+  %niter1107.next.1 = add i64 %niter1107, 2       ; 2 uses
+  %niter1107.ncmp.1 = icmp eq i64 %niter1107.next.1, %unroll_iter1106
+  br i1 %niter1107.ncmp.1, label %.lr.ph623.2, label %.lr.ph623.1, !llvm.loop !314
 
 .lr.ph623.2:                                      ; preds = %.lr.ph623.1
-  %17 = getelementptr inbounds nuw i8, ptr %i.rx, i64 32
-  %18 = load <16 x i8>, ptr %17, align 1, !tbaa !55, !noalias !1652
-  %19 = icmp eq <16 x i8> %18, %i.ug
-  %20 = bitcast <16 x i1> %19 to i16
-  %21 = zext i16 %20 to i64
-  %22 = shl nuw nsw i64 %21, 32
-  %23 = or disjoint i64 %22, %i.un                ; 2 uses
-  br i1 %exitcond765.not.2, label %._crit_edge624, label %.lr.ph623.3
+  br i1 %exitcond765.not.1, label %._crit_edge624, label %.lr.ph623.3
 
-.lr.ph623.3:                                      ; preds = %.lr.ph623.2
-  %i.uo = getelementptr inbounds nuw i8, ptr %i.rx, i64 48
+.lr.ph623.3:                                      ; preds = %._crit_edge606, %.lr.ph623.2
+  %.020.i292621.epil.init = phi i64 [ 0, %._crit_edge606 ], [ %i.un, %.lr.ph623.2 ]
+  %.021.i291620.epil.init = phi i64 [ 0, %._crit_edge606 ], [ %23, %.lr.ph623.2 ]
+  tail call void @llvm.assume(i1 %lcmp.mod1105)
+  %24 = shl nuw nsw i64 %.021.i291620.epil.init, 4 ; 2 uses
+  %i.uo = getelementptr inbounds nuw i8, ptr %i.rx, i64 %24
   %i.up = load <16 x i8>, ptr %i.uo, align 1, !tbaa !55, !noalias !1652
   %i.uq = icmp eq <16 x i8> %i.up, %i.ug
   %i.ur = bitcast <16 x i1> %i.uq to i16
   %i.us = zext i16 %i.ur to i64
-  %i.ut = shl nuw i64 %i.us, 48
-  %i.uu = or disjoint i64 %i.ut, %23
+  %i.ut = shl nuw i64 %i.us, %24
+  %i.uu = or i64 %i.ut, %.020.i292621.epil.init
   br label %._crit_edge624
 
-._crit_edge624:                                   ; preds = %.lr.ph623.3, %.lr.ph623.2, %.lr.ph623.1, %.lr.ph623
-  %.lcssa1064 = phi i64 [ %16, %.lr.ph623 ], [ %i.un, %.lr.ph623.1 ], [ %23, %.lr.ph623.2 ], [ %i.uu, %.lr.ph623.3 ] ; 3 uses
+._crit_edge624:                                   ; preds = %.lr.ph623.2, %.lr.ph623.3
+  %.lcssa1064 = phi i64 [ %i.un, %.lr.ph623.2 ], [ %i.uu, %.lr.ph623.3 ] ; 3 uses
   switch i64 %i.qm, label %._crit_edge624.thread [
     i64 1, label %bb.by
     i64 2, label %bb.bz
@@ -2286,12 +2319,14 @@ FindLongestMatchH68.exit294:                      ; preds = %TestStaticDictionar
   %.not714 = icmp eq i32 %i.ql, 0
   %i.qn = load i32, ptr %i.bc, align 8, !tbaa !413, !alias.scope !1704, !noalias !1707 ; 3 uses
   %i.qo = load i64, ptr %i.bd, align 8, !tbaa !414, !alias.scope !1704, !noalias !1707 ; 2 uses
-  %i.qp = lshr i64 %i.qo, 4                       ; 5 uses
-  %.not715 = icmp eq i64 %i.qp, 0
+  %i.qp = lshr i64 %i.qo, 4                       ; 4 uses
   %12 = zext i32 %i.qn to i64
-  %exitcond767.not = icmp eq i64 %i.qp, 1
-  %exitcond767.not.1 = icmp eq i64 %i.qp, 2
-  %exitcond767.not.2 = icmp eq i64 %i.qp, 3
+  %umax766 = tail call i64 @llvm.umin.i64(i64 %i.qp, i64 4) ; 3 uses
+  %xtraiter1106 = and i64 %umax766, 1
+  %exitcond767.not = icmp eq i64 %i.qp, 1         ; 0 uses
+  %unroll_iter1110 = and i64 %umax766, 6
+  %exitcond767.not.1 = icmp eq i64 %xtraiter1106, 0
+  %lcmp.mod1109 = trunc i64 %umax766 to i1
   br label %bb.be
 
 bb.be:                                            ; preds = %.preheader468, %bb.dd
@@ -2354,7 +2389,7 @@ bb.bg:                                            ; preds = %bb.bf, %bb.be
   %i.rw = lshr i64 %i.ru, 49                      ; 2 uses
   %i.rx = shl i64 %i.rw, %i.qj                    ; 2 uses
   %i.ry = getelementptr inbounds nuw [4 x i8], ptr %i.qf, i64 %i.rx ; 4 uses
-  %i.rz = getelementptr inbounds nuw i8, ptr %i.qg, i64 %i.rx ; 6 uses
+  %i.rz = getelementptr inbounds nuw i8, ptr %i.qg, i64 %i.rx ; 5 uses
   tail call void @llvm.prefetch.p0(ptr %i.ry, i32 0, i32 3, i32 1), !noalias !1716
   tail call void @llvm.prefetch.p0(ptr %i.rz, i32 0, i32 3, i32 1), !noalias !1716
   %i.sa = trunc i64 %.0.copyload.i.i300 to i32
@@ -2536,48 +2571,57 @@ bb.bx:                                            ; preds = %bb.bl, %bb.bj, %bb.
   %i.ug = and i32 %i.uf, %i.qn                    ; 3 uses
   %i.uh = zext nneg i32 %i.ug to i64              ; 2 uses
   %i.ui = insertelement <16 x i8> poison, i8 %i.ua, i64 0
-  %i.uj = shufflevector <16 x i8> %i.ui, <16 x i8> poison, <16 x i32> zeroinitializer ; 4 uses
-  br i1 %.not715, label %._crit_edge626.thread, label %.lr.ph625
+  %i.uj = shufflevector <16 x i8> %i.ui, <16 x i8> poison, <16 x i32> zeroinitializer ; 3 uses
+  switch i64 %i.qp, label %.lr.ph625.1 [
+    i64 0, label %._crit_edge626.thread
+    i64 1, label %.lr.ph625.3
+  ]
 
-.lr.ph625:                                        ; preds = %._crit_edge608
-  %13 = load <16 x i8>, ptr %i.rz, align 1, !tbaa !55, !noalias !1716
-  %14 = icmp eq <16 x i8> %13, %i.uj
-  %15 = bitcast <16 x i1> %14 to i16
-  %16 = zext i16 %15 to i64                       ; 2 uses
-  br i1 %exitcond767.not, label %._crit_edge626, label %.lr.ph625.1
-
-.lr.ph625.1:                                      ; preds = %.lr.ph625
-  %i.uk = getelementptr inbounds nuw i8, ptr %i.rz, i64 16
+.lr.ph625.1:                                      ; preds = %._crit_edge608, %.lr.ph625.1
+  %.020.i.i623 = phi i64 [ %i.uq, %.lr.ph625.1 ], [ 0, %._crit_edge608 ]
+  %.021.i220.i622 = phi i64 [ %23, %.lr.ph625.1 ], [ 0, %._crit_edge608 ] ; 3 uses
+  %niter1111 = phi i64 [ %niter1111.next.1, %.lr.ph625.1 ], [ 0, %._crit_edge608 ]
+  %13 = shl nuw nsw i64 %.021.i220.i622, 4        ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %i.rz, i64 %13
+  %15 = load <16 x i8>, ptr %14, align 1, !tbaa !55, !noalias !1716
+  %16 = icmp eq <16 x i8> %15, %i.uj
+  %17 = bitcast <16 x i1> %16 to i16
+  %18 = zext i16 %17 to i64
+  %19 = shl nuw i64 %18, %13
+  %20 = or i64 %19, %.020.i.i623
+  %21 = shl i64 %.021.i220.i622, 4
+  %22 = or disjoint i64 %21, 16                   ; 2 uses
+  %i.uk = getelementptr inbounds nuw i8, ptr %i.rz, i64 %22
   %i.ul = load <16 x i8>, ptr %i.uk, align 1, !tbaa !55, !noalias !1716
   %i.um = icmp eq <16 x i8> %i.ul, %i.uj
   %i.un = bitcast <16 x i1> %i.um to i16
   %i.uo = zext i16 %i.un to i64
-  %i.up = shl nuw nsw i64 %i.uo, 16
-  %i.uq = or disjoint i64 %i.up, %16              ; 2 uses
-  br i1 %exitcond767.not.1, label %._crit_edge626, label %.lr.ph625.2
+  %i.up = shl nuw i64 %i.uo, %22
+  %i.uq = or i64 %i.up, %20                       ; 3 uses
+  %23 = add nuw nsw i64 %.021.i220.i622, 2        ; 2 uses
+  %niter1111.next.1 = add i64 %niter1111, 2       ; 2 uses
+  %niter1111.ncmp.1 = icmp eq i64 %niter1111.next.1, %unroll_iter1110
+  br i1 %niter1111.ncmp.1, label %.lr.ph625.2, label %.lr.ph625.1, !llvm.loop !314
 
 .lr.ph625.2:                                      ; preds = %.lr.ph625.1
-  %17 = getelementptr inbounds nuw i8, ptr %i.rz, i64 32
-  %18 = load <16 x i8>, ptr %17, align 1, !tbaa !55, !noalias !1716
-  %19 = icmp eq <16 x i8> %18, %i.uj
-  %20 = bitcast <16 x i1> %19 to i16
-  %21 = zext i16 %20 to i64
-  %22 = shl nuw nsw i64 %21, 32
-  %23 = or disjoint i64 %22, %i.uq                ; 2 uses
-  br i1 %exitcond767.not.2, label %._crit_edge626, label %.lr.ph625.3
+  br i1 %exitcond767.not.1, label %._crit_edge626, label %.lr.ph625.3
 
-.lr.ph625.3:                                      ; preds = %.lr.ph625.2
-  %i.ur = getelementptr inbounds nuw i8, ptr %i.rz, i64 48
+.lr.ph625.3:                                      ; preds = %._crit_edge608, %.lr.ph625.2
+  %.020.i.i623.epil.init = phi i64 [ 0, %._crit_edge608 ], [ %i.uq, %.lr.ph625.2 ]
+  %.021.i220.i622.epil.init = phi i64 [ 0, %._crit_edge608 ], [ %23, %.lr.ph625.2 ]
+  tail call void @llvm.assume(i1 %lcmp.mod1109)
+  %24 = shl nuw nsw i64 %.021.i220.i622.epil.init, 4 ; 2 uses
+  %i.ur = getelementptr inbounds nuw i8, ptr %i.rz, i64 %24
   %i.us = load <16 x i8>, ptr %i.ur, align 1, !tbaa !55, !noalias !1716
   %i.ut = icmp eq <16 x i8> %i.us, %i.uj
   %i.uu = bitcast <16 x i1> %i.ut to i16
   %i.uv = zext i16 %i.uu to i64
-  %i.uw = shl nuw i64 %i.uv, 48
-  %i.ux = or disjoint i64 %i.uw, %23
+  %i.uw = shl nuw i64 %i.uv, %24
+  %i.ux = or i64 %i.uw, %.020.i.i623.epil.init
   br label %._crit_edge626
 
-._crit_edge626:                                   ; preds = %.lr.ph625.3, %.lr.ph625.2, %.lr.ph625.1, %.lr.ph625
-  %.lcssa1068 = phi i64 [ %16, %.lr.ph625 ], [ %i.uq, %.lr.ph625.1 ], [ %23, %.lr.ph625.2 ], [ %i.ux, %.lr.ph625.3 ] ; 3 uses
+._crit_edge626:                                   ; preds = %.lr.ph625.2, %.lr.ph625.3
+  %.lcssa1068 = phi i64 [ %i.uq, %.lr.ph625.2 ], [ %i.ux, %.lr.ph625.3 ] ; 3 uses
   switch i64 %i.qp, label %._crit_edge626.thread [
     i64 1, label %bb.by
     i64 2, label %bb.bz
