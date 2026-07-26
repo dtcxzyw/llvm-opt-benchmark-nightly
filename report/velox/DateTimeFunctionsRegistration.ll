@@ -204,7 +204,7 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
 
 bb.g:                                             ; preds = %bb.f
   %i.dc = shl nsw i32 %i.cp, 6                    ; 2 uses
-  %i.dd = add i32 %i.dc, 64
+  %i.dd = add nuw i32 %i.dc, 64
   %i.de = sext i32 %i.dd to i64
   %.0.off = add i32 %.056, 127
   %.not74.i = icmp ult i32 %.0.off, 64
@@ -607,7 +607,7 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 bb.i:                                             ; preds = %bb.h
   %i.dj = shl nsw i32 %i.cz, 6                    ; 2 uses
-  %i.dk = add i32 %i.dj, 64
+  %i.dk = add nuw i32 %i.dj, 64
   %i.dl = sext i32 %i.dk to i64
   %.0.off = add i32 %.051, 127
   %.not22.i = icmp ult i32 %.0.off, 64
@@ -1010,7 +1010,7 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
 
 bb.g:                                             ; preds = %bb.f
   %i.de = shl nsw i32 %i.cr, 6                    ; 2 uses
-  %i.df = add i32 %i.de, 64
+  %i.df = add nuw i32 %i.de, 64
   %i.dg = sext i32 %i.df to i64
   %.0.off = add i32 %.062, 127
   %.not76.i = icmp ult i32 %.0.off, 64
@@ -1413,7 +1413,7 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
 
 bb.g:                                             ; preds = %bb.f
   %i.de = shl nsw i32 %i.cr, 6                    ; 2 uses
-  %i.df = add i32 %i.de, 64
+  %i.df = add nuw i32 %i.de, 64
   %i.dg = sext i32 %i.df to i64
   %.0.off = add i32 %.062, 127
   %.not76.i = icmp ult i32 %.0.off, 64
@@ -1816,7 +1816,7 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
 
 bb.g:                                             ; preds = %bb.f
   %i.de = shl nsw i32 %i.cr, 6                    ; 2 uses
-  %i.df = add i32 %i.de, 64
+  %i.df = add nuw i32 %i.de, 64
   %i.dg = sext i32 %i.df to i64
   %.0.off = add i32 %.062, 127
   %.not76.i = icmp ult i32 %.0.off, 64
@@ -2219,7 +2219,7 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
 
 bb.g:                                             ; preds = %bb.f
   %i.dc = shl nsw i32 %i.cp, 6                    ; 2 uses
-  %i.dd = add i32 %i.dc, 64
+  %i.dd = add nuw i32 %i.dc, 64
   %i.de = sext i32 %i.dd to i64
   %.0.off = add i32 %.056, 127
   %.not74.i = icmp ult i32 %.0.off, 64

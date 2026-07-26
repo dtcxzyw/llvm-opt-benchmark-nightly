@@ -204,7 +204,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %1, -1
+  %i.c = add nsw i32 %1, -1
   %i.d = icmp sgt i32 %1, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -607,7 +607,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %1, -1
+  %i.c = add nsw i32 %1, -1
   %i.d = icmp sgt i32 %1, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -738,7 +738,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %1, -1
+  %i.c = add nsw i32 %1, -1
   %i.d = icmp sgt i32 %1, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -853,7 +853,7 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %0, -1
+  %i.c = add nsw i32 %0, -1
   %i.d = icmp sgt i32 %0, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -1065,7 +1065,7 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %0, -1
+  %i.c = add nsw i32 %0, -1
   %i.d = icmp sgt i32 %0, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -1165,7 +1165,7 @@ bb.a:
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b
   %i.c = trunc i64 %.fr to i32                    ; 3 uses
-  %i.d = add i32 %0, -1
+  %i.d = add nsw i32 %0, -1
   %i.e = icmp sgt i32 %0, 1
   br i1 %i.e, label %.lr.ph, label %._crit_edge
 
@@ -1568,7 +1568,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.h = load i32, ptr @nlenmax, align 4, !tbaa !4 ; 2 uses
   %i.i = icmp sgt i32 %i.h, 0
   %i.j = load ptr, ptr @calcimportance.importance, align 8 ; 18 uses
-  %i.k = zext i32 %i.h to i64
+  %i.k = zext nneg i32 %i.h to i64
   %i.l = shl nuw nsw i64 %i.k, 3
   %wide.trip.count213 = zext nneg i32 %0 to i64   ; 3 uses
   %scevgep249 = getelementptr i8, ptr %i.j, i64 8

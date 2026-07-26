@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %._crit_edge.i
   %i.ai = ptrtoaddr ptr %i.ah to i64              ; 4 uses
   %i.aj = sext i32 %.1.i to i64
   %.idx.i = shl nsw i64 %i.aj, 1                  ; 2 uses
-  %i.ak = getelementptr inbounds i8, ptr %i.ah, i64 %.idx.i
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.idx.i
   %i.al = icmp sgt i32 %.1.i, 0
   br i1 %i.al, label %iter.check205, label %._crit_edge33.i
 
@@ -605,7 +605,7 @@ bb.s:                                             ; preds = %append_states.exit
   %i.jy = ptrtoaddr ptr %i.jx to i64              ; 4 uses
   %i.jz = sext i32 %i.ju to i64
   %.idx.i7 = shl nsw i64 %i.jz, 1                 ; 2 uses
-  %i.ka = getelementptr inbounds i8, ptr %i.jx, i64 %.idx.i7
+  %i.ka = getelementptr inbounds nuw i8, ptr %i.jx, i64 %.idx.i7
   %i.kb = icmp sgt i32 %i.ju, 0
   br i1 %i.kb, label %iter.check, label %save_shifts.exit
 
@@ -795,7 +795,7 @@ bb.e:                                             ; preds = %._crit_edge
   %i.ab = ptrtoaddr ptr %i.aa to i64              ; 4 uses
   %i.ac = sext i32 %.1 to i64
   %.idx = shl nsw i64 %i.ac, 1                    ; 2 uses
-  %i.ad = getelementptr inbounds i8, ptr %i.aa, i64 %.idx
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.idx
   %i.ae = icmp sgt i32 %.1, 0
   br i1 %i.ae, label %iter.check, label %._crit_edge33
 
@@ -1071,7 +1071,7 @@ bb.a:
   %i.n = ptrtoaddr ptr %i.m to i64                ; 4 uses
   %i.o = sext i32 %i.j to i64
   %.idx = shl nsw i64 %i.o, 1                     ; 2 uses
-  %i.p = getelementptr inbounds i8, ptr %i.m, i64 %.idx
+  %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 %.idx
   %i.q = icmp sgt i32 %i.j, 0
   br i1 %i.q, label %iter.check, label %._crit_edge
 

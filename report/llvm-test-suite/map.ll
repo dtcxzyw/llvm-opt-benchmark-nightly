@@ -90,8 +90,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.z = load i32, ptr %0, align 8, !tbaa !24
   %i.aa = mul nsw i32 %i.z, %i.y                  ; 2 uses
   %i.ab = sext i32 %i.aa to i64
-  %.idx = shl nsw i64 %i.ab, 2
-  %i.ac = getelementptr inbounds i8, ptr %i.w, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.ab, 2
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.w, i64 %.idx
   %i.ad = icmp sgt i32 %i.aa, 0
   br i1 %i.ad, label %.lr.ph15, label %._crit_edge16
 
@@ -277,8 +277,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.z = load i32, ptr %0, align 8, !tbaa !24
   %i.aa = mul nsw i32 %i.z, %i.y                  ; 2 uses
   %i.ab = sext i32 %i.aa to i64
-  %.idx.i = shl nsw i64 %i.ab, 2
-  %i.ac = getelementptr inbounds i8, ptr %i.w, i64 %.idx.i
+  %.idx.i = shl nuw nsw i64 %i.ab, 2
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.w, i64 %.idx.i
   %i.ad = icmp sgt i32 %i.aa, 0
   br i1 %i.ad, label %.lr.ph15.i, label %minterms.exit
 

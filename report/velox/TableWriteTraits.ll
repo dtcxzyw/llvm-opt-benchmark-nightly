@@ -204,7 +204,7 @@ _ZN5boost13intrusive_ptrIN8facebook5velox6BufferEED2Ev.exit.i._crit_edge: ; pred
   %i.af = getelementptr inbounds nuw i8, ptr %.pre17, i64 16
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !253
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 %i.ae ; 3 uses
-  %i.ai = zext i32 %i.u to i64
+  %i.ai = zext nneg i32 %i.u to i64
   %i.aj = icmp slt i32 %i.u, 0
   br i1 %i.aj, label %bb.i, label %bb.l, !prof !49
 
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.0.0.copyload.i = load ptr, ptr %2, align 8, !tbaa !639 ; 6 uses
   %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !640 ; 2 uses
   %i.k = add nsw i64 %i.j, -1
-  %3 = sdiv i64 %i.k, 2
+  %3 = lshr i64 %i.k, 1
   %i.l = icmp sgt i64 %i.j, 2
   br i1 %i.l, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -652,7 +652,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ai
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !3
-  %i.al = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !3
   br label %.lr.ph.i.i.i.preheader
 
@@ -1055,7 +1055,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.0.sroa.2.0.copyload.i = load ptr, ptr %.sroa.0.sroa.2.0..sroa_idx.i, align 8, !tbaa !657 ; 2 uses
   %.sroa.0.sroa.3.0.copyload.i = load ptr, ptr %.sroa.0.sroa.3.0..sroa_idx.i, align 8, !tbaa !640 ; 2 uses
   %i.k = add nsw i64 %i.j, -1
-  %3 = sdiv i64 %i.k, 2
+  %3 = lshr i64 %i.k, 1
   %i.l = icmp sgt i64 %i.j, 2
   br i1 %i.l, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -1107,7 +1107,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   %i.ap = or disjoint i64 %i.ao, 1                ; 2 uses
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ap
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !3
-  %i.as = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.as = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.ar, ptr %i.as, align 4, !tbaa !3
   br label %.lr.ph.i.i.i
 

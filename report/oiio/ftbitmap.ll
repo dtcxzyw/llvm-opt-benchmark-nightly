@@ -204,8 +204,8 @@ bb.z:                                             ; preds = %bb.y
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !19 ; 2 uses
   %i.cz = load i32, ptr %4, align 8, !tbaa !25    ; 2 uses
   %i.da = mul nsw i32 %i.cz, %spec.select         ; 2 uses
-  %8 = sext i32 %i.da to i64
-  %i.db = getelementptr inbounds i8, ptr %i.cy, i64 %8
+  %8 = zext nneg i32 %i.da to i64
+  %i.db = getelementptr inbounds nuw i8, ptr %i.cy, i64 %8
   %i.dc = icmp sgt i32 %i.da, 0
   br i1 %i.dc, label %.lr.ph, label %.thread286
 

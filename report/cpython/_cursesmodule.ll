@@ -201,7 +201,7 @@ color_allow_default_converter.exit.thread.i:      ; preds = %bb.d, %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %i.o = icmp ne i32 %i.h, 0
-  %i.p = trunc i64 %i.e to i32
+  %i.p = trunc nuw nsw i64 %i.e to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
   %i.q = and i64 %i.e, -9223372034707292160
   %i.r = icmp ne i64 %i.q, 0
@@ -604,7 +604,7 @@ color_allow_default_converter.exit.thread.i:      ; preds = %bb.f, %bb.d
 
 bb.g:                                             ; preds = %bb.e
   %i.q = icmp ne i32 %i.j, 0
-  %i.r = trunc i64 %i.g to i32
+  %i.r = trunc nuw nsw i64 %i.g to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
   %i.s = and i64 %i.g, -9223372034707292160
   %i.t = icmp ne i64 %i.s, 0

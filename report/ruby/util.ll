@@ -203,7 +203,7 @@ bb.bs:                                            ; preds = %._crit_edge1122
   %sum.shift = lshr i64 %i.jm, 52
   %i.jn = trunc nuw nsw i64 %sum.shift to i32
   %i.jo = and i32 %i.jn, 2047                     ; 5 uses
-  %i.jp = sub nsw i32 107, %i.jo
+  %i.jp = sub nuw nsw i32 107, %i.jo
   %i.jq = icmp samesign ult i32 %i.jo, 107
   br i1 %i.jq, label %bb.bt, label %bb.bx
 
@@ -248,7 +248,7 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bv, %bb.
   %.1567 = phi i32 [ 0, %bb.bk ], [ 0, %bb.bj ], [ 0, %bb.bd ], [ %spec.select710, %bb.bx ], [ 0, %bb.bn ], [ 0, %bb.bi ], [ 106, %bb.bu ] ; 4 uses
   %.sroa.067.9 = phi double [ %.sroa.067.0818, %bb.bk ], [ %i.iv, %bb.bj ], [ %.sroa.067.1, %bb.bd ], [ %.sroa.067.8, %bb.bx ], [ %.sroa.067.5, %bb.bn ], [ f0x7FEFFFFFFFFFFFFF, %bb.bi ], [ f0x0370000000000000, %bb.bu ] ; 5 uses
   %i.kc = add i32 %.6565, 8                       ; 2 uses
-  %2 = sdiv i32 %i.kc, 9
+  %2 = udiv i32 %i.kc, 9
   %i.kd = icmp sgt i32 %i.kc, 17
   br i1 %i.kd, label %.lr.ph.i, label %._crit_edge.i
 

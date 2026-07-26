@@ -202,8 +202,8 @@ bb.i:                                             ; preds = %bb.h, %._crit_edge
   %i.bv = load i32, ptr %0, align 8, !tbaa !40    ; 2 uses
   %i.bw = mul nsw i32 %i.bv, %i.d                 ; 2 uses
   %i.bx = sext i32 %i.bw to i64
-  %.idx = shl nsw i64 %i.bx, 2
-  %i.by = getelementptr inbounds i8, ptr %i.bu, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.bx, 2
+  %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 %.idx
   %i.bz = icmp sgt i32 %i.bw, 0
   br i1 %i.bz, label %.lr.ph60, label %._crit_edge61
 

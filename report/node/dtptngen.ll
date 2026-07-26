@@ -203,7 +203,7 @@ bb.l:                                             ; preds = %bb.k
   %i.dr = sext i8 %i.dq to i16
   %i.ds = getelementptr inbounds nuw i8, ptr %i.do, i64 110
   %i.dt = load i8, ptr %i.ds, align 1             ; 2 uses
-  %9 = sext i8 %i.dt to i32
+  %9 = zext nneg i8 %i.dt to i32
   %i.du = icmp sgt i8 %i.dt, 0
   br i1 %i.du, label %.lr.ph.i, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit
 
@@ -606,7 +606,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = getelementptr inbounds i8, ptr %i.f, i64 %i.b
   %i.h = load i8, ptr %i.g, align 1               ; 2 uses
-  %3 = sext i8 %i.h to i32
+  %3 = zext nneg i8 %i.h to i32
   %i.i = icmp sgt i8 %i.h, 0
   br i1 %i.i, label %.lr.ph, label %._crit_edge
 
@@ -1009,7 +1009,7 @@ bb.a:
   %i.c = load i8, ptr %0, align 1
   %i.d = sext i8 %i.c to i16
   %i.e = load i8, ptr %i.b, align 1               ; 2 uses
-  %2 = sext i8 %i.e to i32
+  %2 = zext nneg i8 %i.e to i32
   %i.f = icmp sgt i8 %i.e, 0
   br i1 %i.f, label %.lr.ph.i, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit
 
@@ -1029,7 +1029,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit: ; preds =
   %i.k = sext i8 %i.j to i16
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 17
   %i.m = load i8, ptr %i.l, align 1               ; 2 uses
-  %3 = sext i8 %i.m to i32
+  %3 = zext nneg i8 %i.m to i32
   %i.n = icmp sgt i8 %i.m, 0
   br i1 %i.n, label %.lr.ph.i.1, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.1
 
@@ -1049,7 +1049,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.1: ; preds
   %i.s = sext i8 %i.r to i16
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 18
   %i.u = load i8, ptr %i.t, align 1               ; 2 uses
-  %4 = sext i8 %i.u to i32
+  %4 = zext nneg i8 %i.u to i32
   %i.v = icmp sgt i8 %i.u, 0
   br i1 %i.v, label %.lr.ph.i.2, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.2
 
@@ -1069,7 +1069,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.2: ; preds
   %i.aa = sext i8 %i.z to i16
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 19
   %i.ac = load i8, ptr %i.ab, align 1             ; 2 uses
-  %5 = sext i8 %i.ac to i32
+  %5 = zext nneg i8 %i.ac to i32
   %i.ad = icmp sgt i8 %i.ac, 0
   br i1 %i.ad, label %.lr.ph.i.3, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.3
 
@@ -1089,7 +1089,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.3: ; preds
   %i.ai = sext i8 %i.ah to i16
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.ak = load i8, ptr %i.aj, align 1             ; 2 uses
-  %6 = sext i8 %i.ak to i32
+  %6 = zext nneg i8 %i.ak to i32
   %i.al = icmp sgt i8 %i.ak, 0
   br i1 %i.al, label %.lr.ph.i.4, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.4
 
@@ -1109,7 +1109,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.4: ; preds
   %i.aq = sext i8 %i.ap to i16
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 21
   %i.as = load i8, ptr %i.ar, align 1             ; 2 uses
-  %7 = sext i8 %i.as to i32
+  %7 = zext nneg i8 %i.as to i32
   %i.at = icmp sgt i8 %i.as, 0
   br i1 %i.at, label %.lr.ph.i.5, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.5
 
@@ -1129,7 +1129,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.5: ; preds
   %i.ay = sext i8 %i.ax to i16
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 22
   %i.ba = load i8, ptr %i.az, align 1             ; 2 uses
-  %8 = sext i8 %i.ba to i32
+  %8 = zext nneg i8 %i.ba to i32
   %i.bb = icmp sgt i8 %i.ba, 0
   br i1 %i.bb, label %.lr.ph.i.6, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.6
 
@@ -1149,7 +1149,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.6: ; preds
   %i.bg = sext i8 %i.bf to i16
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 23
   %i.bi = load i8, ptr %i.bh, align 1             ; 2 uses
-  %9 = sext i8 %i.bi to i32
+  %9 = zext nneg i8 %i.bi to i32
   %i.bj = icmp sgt i8 %i.bi, 0
   br i1 %i.bj, label %.lr.ph.i.7, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.7
 
@@ -1169,7 +1169,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.7: ; preds
   %i.bo = sext i8 %i.bn to i16
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bq = load i8, ptr %i.bp, align 1             ; 2 uses
-  %10 = sext i8 %i.bq to i32
+  %10 = zext nneg i8 %i.bq to i32
   %i.br = icmp sgt i8 %i.bq, 0
   br i1 %i.br, label %.lr.ph.i.8, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.8
 
@@ -1189,7 +1189,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.8: ; preds
   %i.bw = sext i8 %i.bv to i16
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 25
   %i.by = load i8, ptr %i.bx, align 1             ; 2 uses
-  %11 = sext i8 %i.by to i32
+  %11 = zext nneg i8 %i.by to i32
   %i.bz = icmp sgt i8 %i.by, 0
   br i1 %i.bz, label %.lr.ph.i.9, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.9
 
@@ -1209,7 +1209,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.9: ; preds
   %i.ce = sext i8 %i.cd to i16
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 26
   %i.cg = load i8, ptr %i.cf, align 1             ; 2 uses
-  %12 = sext i8 %i.cg to i32
+  %12 = zext nneg i8 %i.cg to i32
   %i.ch = icmp sgt i8 %i.cg, 0
   br i1 %i.ch, label %.lr.ph.i.10, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.10
 
@@ -1229,7 +1229,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.10: ; pred
   %i.cm = sext i8 %i.cl to i16
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 27
   %i.co = load i8, ptr %i.cn, align 1             ; 2 uses
-  %13 = sext i8 %i.co to i32
+  %13 = zext nneg i8 %i.co to i32
   %i.cp = icmp sgt i8 %i.co, 0
   br i1 %i.cp, label %.lr.ph.i.11, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.11
 
@@ -1249,7 +1249,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.11: ; pred
   %i.cu = sext i8 %i.ct to i16
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.cw = load i8, ptr %i.cv, align 1             ; 2 uses
-  %14 = sext i8 %i.cw to i32
+  %14 = zext nneg i8 %i.cw to i32
   %i.cx = icmp sgt i8 %i.cw, 0
   br i1 %i.cx, label %.lr.ph.i.12, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.12
 
@@ -1269,7 +1269,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.12: ; pred
   %i.dc = sext i8 %i.db to i16
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 29
   %i.de = load i8, ptr %i.dd, align 1             ; 2 uses
-  %15 = sext i8 %i.de to i32
+  %15 = zext nneg i8 %i.de to i32
   %i.df = icmp sgt i8 %i.de, 0
   br i1 %i.df, label %.lr.ph.i.13, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.13
 
@@ -1289,7 +1289,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.13: ; pred
   %i.dk = sext i8 %i.dj to i16
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 30
   %i.dm = load i8, ptr %i.dl, align 1             ; 2 uses
-  %16 = sext i8 %i.dm to i32
+  %16 = zext nneg i8 %i.dm to i32
   %i.dn = icmp sgt i8 %i.dm, 0
   br i1 %i.dn, label %.lr.ph.i.14, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.14
 
@@ -1309,7 +1309,7 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.14: ; pred
   %i.ds = sext i8 %i.dr to i16
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 31
   %i.du = load i8, ptr %i.dt, align 1             ; 2 uses
-  %17 = sext i8 %i.du to i32
+  %17 = zext nneg i8 %i.du to i32
   %i.dv = icmp sgt i8 %i.du, 0
   br i1 %i.dv, label %.lr.ph.i.15, label %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit.15
 

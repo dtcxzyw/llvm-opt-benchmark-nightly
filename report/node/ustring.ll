@@ -203,8 +203,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = sext i32 %1 to i64
-  %.idx = shl nsw i64 %i.a, 1
-  %i.b = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.a, 1
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.c = icmp sgt i32 %1, 0
   br i1 %i.c, label %.lr.ph, label %.loopexit
 
@@ -238,8 +238,8 @@ bb.a:
   br i1 %.not, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sext i32 %1 to i64
-  %i.a = getelementptr inbounds i8, ptr %0, i64 %2
+  %2 = zext nneg i32 %1 to i64
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %2
   %i.b = icmp sgt i32 %1, 0
   br i1 %i.b, label %.lr.ph, label %.loopexit
 
@@ -273,8 +273,8 @@ bb.a:
   br i1 %.not, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sext i32 %1 to i64
-  %i.a = getelementptr inbounds i8, ptr %0, i64 %2
+  %2 = zext nneg i32 %1 to i64
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %2
   %i.b = icmp sgt i32 %1, 0
   br i1 %i.b, label %.lr.ph, label %.loopexit
 

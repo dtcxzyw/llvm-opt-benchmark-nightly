@@ -205,7 +205,7 @@ _ZN2v88internal10ZoneVectorIPNS0_15SparseBitVectorEEC2EmS3_PNS0_4ZoneE.exit26: ;
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.bt = getelementptr inbounds nuw i8, ptr %4, i64 232 ; 4 uses
   %i.bu = load i32, ptr %i.bt, align 8            ; 3 uses
-  %i.bv = zext i32 %i.bu to i64
+  %i.bv = zext nneg i32 %i.bu to i64
   store ptr %i.br, ptr %i.bs, align 8
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
@@ -266,8 +266,8 @@ _ZN2v88internal10ZoneVectorIPNS0_8compiler17TopLevelLiveRangeEEC2EmS4_PNS0_4Zone
   %i.cq = load ptr, ptr %i.d, align 8             ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 8
   %i.cs = load i32, ptr %i.cr, align 8            ; 3 uses
-  %i.ct = shl nsw i32 %i.cs, 1
-  %i.cu = zext i32 %i.ct to i64
+  %i.ct = shl nuw nsw i32 %i.cs, 1
+  %i.cu = zext nneg i32 %i.ct to i64
   store ptr %i.co, ptr %i.cp, align 8
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
@@ -333,8 +333,8 @@ _ZN2v88internal10ZoneVectorIPNS0_8compiler17TopLevelLiveRangeEEC2EmS4_PNS0_4Zone
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dn, i64 16
   %i.dt = load i32, ptr %i.ds, align 8            ; 3 uses
-  %i.du = shl nsw i32 %i.dt, 1
-  %i.dv = zext i32 %i.du to i64
+  %i.du = shl nuw nsw i32 %i.dt, 1
+  %i.dv = zext nneg i32 %i.du to i64
   store ptr %i.do, ptr %i.dr, align 8
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
@@ -737,7 +737,7 @@ _ZN2v88internal8compiler17RegisterAllocatorC2EPNS1_22RegisterAllocationDataENS1_
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ah, i8 0, i64 24, i1 false)
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.aj = zext i32 %i.w to i64
+  %i.aj = zext nneg i32 %i.w to i64
   store ptr %3, ptr %i.ai, align 8
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
@@ -1140,7 +1140,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.l = sub i64 %i.k, %i.a                       ; 3 uses
   %i.m = ashr exact i64 %i.l, 3                   ; 3 uses
   %i.n = add nsw i64 %i.m, -1
-  %4 = sdiv i64 %i.n, 2
+  %4 = lshr i64 %i.n, 1
   %i.o = icmp sgt i64 %i.m, 2
   br i1 %i.o, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -1184,7 +1184,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ak = or disjoint i64 %i.aj, 1                ; 2 uses
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ak
   %i.am = load ptr, ptr %i.al, align 8
-  %i.an = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   store ptr %i.am, ptr %i.an, align 8
   br label %.lr.ph.i.i.i.i.i
 
@@ -1587,7 +1587,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.l = sub i64 %i.k, %i.a                       ; 3 uses
   %i.m = ashr exact i64 %i.l, 3                   ; 3 uses
   %i.n = add nsw i64 %i.m, -1
-  %4 = sdiv i64 %i.n, 2
+  %4 = lshr i64 %i.n, 1
   %i.o = icmp sgt i64 %i.m, 2
   br i1 %i.o, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -1631,7 +1631,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ak = or disjoint i64 %i.aj, 1                ; 2 uses
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ak
   %i.am = load ptr, ptr %i.al, align 8
-  %i.an = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   store ptr %i.am, ptr %i.an, align 8
   br label %.lr.ph.i.i.i.i.i
 

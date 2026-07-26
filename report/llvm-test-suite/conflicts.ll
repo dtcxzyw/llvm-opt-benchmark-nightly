@@ -203,7 +203,7 @@ bb.o:                                             ; preds = %.loopexit210
   %i.cl = ptrtoaddr ptr %i.ck to i64              ; 5 uses
   %i.cm = sext i32 %i.cj to i64
   %.idx = shl nsw i64 %i.cm, 2                    ; 2 uses
-  %i.cn = getelementptr inbounds i8, ptr %i.ck, i64 %.idx
+  %i.cn = getelementptr inbounds nuw i8, ptr %i.ck, i64 %.idx
   %i.co = icmp sgt i32 %i.cj, 0
   br i1 %i.co, label %.lr.ph226.preheader, label %.preheader209
 

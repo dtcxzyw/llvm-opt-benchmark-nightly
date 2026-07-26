@@ -203,7 +203,7 @@ bb.a:                                             ; preds = %.noexc
   store i32 0, ptr %i.y, align 8, !alias.scope !675
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.sroa.0.0.copyload) ]
   %i.z = icmp ugt i64 %.sroa.7.sroa.4.0.copyload, 4294967295
-  %i.aa = trunc nuw i64 %.sroa.7.sroa.4.0.copyload to i32
+  %i.aa = trunc nuw nsw i64 %.sroa.7.sroa.4.0.copyload to i32
   %i.ab = getelementptr inbounds nuw i8, ptr %i.k, i64 104 ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.k, i64 96 ; 6 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.k, i64 80 ; 2 uses

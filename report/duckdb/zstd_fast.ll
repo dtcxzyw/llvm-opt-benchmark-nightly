@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.av = zext nneg i32 %i.ar to i64
-  %i.aw = shl i64 4, %i.av
+  %i.aw = shl nuw i64 4, %i.av
   %.not.i = icmp ugt i32 %i.ar, 61
   br i1 %.not.i, label %.loopexit.i, label %.lr.ph.i
 
@@ -212,7 +212,7 @@ bb.c:                                             ; preds = %bb.b
   %.0292.i183.i = phi i64 [ %i.ay, %.lr.ph.i ], [ 0, %bb.c ] ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.y, i64 %.0292.i183.i
   tail call void @llvm.prefetch.p0(ptr %i.ax, i32 0, i32 2, i32 1)
-  %i.ay = add i64 %.0292.i183.i, 64               ; 2 uses
+  %i.ay = add nuw i64 %.0292.i183.i, 64           ; 2 uses
   %i.az = icmp ult i64 %i.ay, %i.aw
   br i1 %i.az, label %.lr.ph.i, label %.loopexit.i, !llvm.loop !91
 
@@ -615,7 +615,7 @@ bb.ck:                                            ; preds = %bb.a
 
 bb.cl:                                            ; preds = %bb.ck
   %i.ts = zext nneg i32 %i.ar to i64
-  %i.tt = shl i64 4, %i.ts
+  %i.tt = shl nuw i64 4, %i.ts
   %.not.i25 = icmp ugt i32 %i.ar, 61
   br i1 %.not.i25, label %.loopexit.i28, label %.lr.ph.i26
 
@@ -623,7 +623,7 @@ bb.cl:                                            ; preds = %bb.ck
   %.0292.i183.i27 = phi i64 [ %i.tv, %.lr.ph.i26 ], [ 0, %bb.cl ] ; 2 uses
   %i.tu = getelementptr inbounds nuw i8, ptr %i.y, i64 %.0292.i183.i27
   tail call void @llvm.prefetch.p0(ptr %i.tu, i32 0, i32 2, i32 1)
-  %i.tv = add i64 %.0292.i183.i27, 64             ; 2 uses
+  %i.tv = add nuw i64 %.0292.i183.i27, 64         ; 2 uses
   %i.tw = icmp ult i64 %i.tv, %i.tt
   br i1 %i.tw, label %.lr.ph.i26, label %.loopexit.i28, !llvm.loop !91
 
@@ -1026,7 +1026,7 @@ bb.ft:                                            ; preds = %bb.a
 
 bb.fu:                                            ; preds = %bb.ft
   %i.amo = zext nneg i32 %i.ar to i64
-  %i.amp = shl i64 4, %i.amo
+  %i.amp = shl nuw i64 4, %i.amo
   %.not.i299 = icmp ugt i32 %i.ar, 61
   br i1 %.not.i299, label %.loopexit.i302, label %.lr.ph.i300
 
@@ -1034,7 +1034,7 @@ bb.fu:                                            ; preds = %bb.ft
   %.0292.i183.i301 = phi i64 [ %i.amr, %.lr.ph.i300 ], [ 0, %bb.fu ] ; 2 uses
   %i.amq = getelementptr inbounds nuw i8, ptr %i.y, i64 %.0292.i183.i301
   tail call void @llvm.prefetch.p0(ptr %i.amq, i32 0, i32 2, i32 1)
-  %i.amr = add i64 %.0292.i183.i301, 64           ; 2 uses
+  %i.amr = add nuw i64 %.0292.i183.i301, 64       ; 2 uses
   %i.ams = icmp ult i64 %i.amr, %i.amp
   br i1 %i.ams, label %.lr.ph.i300, label %.loopexit.i302, !llvm.loop !91
 
@@ -1437,7 +1437,7 @@ bb.jc:                                            ; preds = %bb.a
 
 bb.jd:                                            ; preds = %bb.jc
   %i.bfk = zext nneg i32 %i.ar to i64
-  %i.bfl = shl i64 4, %i.bfk
+  %i.bfl = shl nuw i64 4, %i.bfk
   %.not.i574 = icmp ugt i32 %i.ar, 61
   br i1 %.not.i574, label %.loopexit.i577, label %.lr.ph.i575
 
@@ -1445,7 +1445,7 @@ bb.jd:                                            ; preds = %bb.jc
   %.0292.i183.i576 = phi i64 [ %i.bfn, %.lr.ph.i575 ], [ 0, %bb.jd ] ; 2 uses
   %i.bfm = getelementptr inbounds nuw i8, ptr %i.y, i64 %.0292.i183.i576
   tail call void @llvm.prefetch.p0(ptr %i.bfm, i32 0, i32 2, i32 1)
-  %i.bfn = add i64 %.0292.i183.i576, 64           ; 2 uses
+  %i.bfn = add nuw i64 %.0292.i183.i576, 64       ; 2 uses
   %i.bfo = icmp ult i64 %i.bfn, %i.bfl
   br i1 %i.bfo, label %.lr.ph.i575, label %.loopexit.i577, !llvm.loop !91
 

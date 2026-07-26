@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.d
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !119  ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.o = load i32, ptr %i.n, align 8, !tbaa !123  ; 2 uses
-  %2 = sext i32 %i.o to i64
-  %i.p = getelementptr inbounds i8, ptr %i.m, i64 %2
+  %2 = zext nneg i32 %i.o to i64
+  %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 %2
   %i.q = icmp sgt i32 %i.o, 0
   br i1 %i.q, label %.lr.ph260.i, label %._crit_edge.i
 
@@ -608,7 +608,7 @@ bb.ba:                                            ; preds = %.preheader474, %.cr
   %indvars.iv360 = phi i64 [ %indvars.iv.next361, %.critedge2 ], [ %indvars.iv360.ph, %.preheader474 ] ; 3 uses
   %i.cy = getelementptr inbounds i8, ptr %0, i64 %indvars.iv360
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !37  ; 3 uses
-  %i.da = zext i8 %i.cz to i64
+  %i.da = zext nneg i8 %i.cz to i64
   %.not237 = icmp sgt i8 %i.cz, -1
   br i1 %.not237, label %bb.bb, label %.critedge2
 
@@ -878,7 +878,7 @@ bb.ch:                                            ; preds = %.critedge13, %bb.cg
   %indvars.iv374 = phi i64 [ %indvars.iv.next375, %.critedge13 ], [ 1, %bb.cg ] ; 6 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv374
   %i.gk = load i8, ptr %i.gj, align 1, !tbaa !37  ; 3 uses
-  %i.gl = zext i8 %i.gk to i64
+  %i.gl = zext nneg i8 %i.gk to i64
   %.not250 = icmp sgt i8 %i.gk, -1
   br i1 %.not250, label %bb.ci, label %.critedge13
 
@@ -1281,7 +1281,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load i8, ptr %1, align 8, !tbaa !1311    ; 5 uses
-  %i.j = zext i8 %i.i to i32
+  %i.j = zext nneg i8 %i.i to i32
   switch i8 %i.i, label %sqlite3VdbeAddOp3.exitthread-pre-split [
     i8 -105, label %bb.d
     i8 -107, label %bb.h

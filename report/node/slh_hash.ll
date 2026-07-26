@@ -201,9 +201,9 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 192
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !29
   %i.m = tail call i32 @EVP_MD_get_size(ptr noundef %i.l) #5 ; 2 uses
-  %8 = sext i32 %i.m to i64
+  %8 = zext nneg i32 %i.m to i64
   %i.n = shl nuw nsw i64 %i.j, 1                  ; 2 uses
-  %i.o = add nsw i64 %i.n, %8
+  %i.o = add nuw nsw i64 %i.n, %8
   %i.p = icmp slt i32 %i.m, 1
   br i1 %i.p, label %digest_4.exit.thread, label %bb.b
 

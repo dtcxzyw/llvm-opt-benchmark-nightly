@@ -204,7 +204,7 @@ bb.a:
   %i.c = select i1 %3, float 2.000000e+00, float -2.000000e+00
   %i.d = tail call noundef float @llvm.acos.f32(float -1.000000e+00)
   %i.e = fmul nnan float %i.d, %i.c
-  %6 = sitofp i32 %2 to float
+  %6 = uitofp nneg i32 %2 to float
   %i.f = fdiv float %i.e, %6
   %i.g = icmp sgt i32 %2, 0
   br i1 %i.g, label %.lr.ph.preheader.i, label %_ZN13kissfft_utils6traitsIfE13fill_twiddlesEPSt7complexIfEib.exit
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.l = sub i64 %i.k, %i.a                       ; 3 uses
   %i.m = ashr exact i64 %i.l, 2                   ; 3 uses
   %i.n = add nsw i64 %i.m, -1
-  %4 = sdiv i64 %i.n, 2
+  %4 = lshr i64 %i.n, 1
   %i.o = icmp sgt i64 %i.m, 2
   br i1 %i.o, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -647,7 +647,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ai
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !254
-  %i.al = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   store float %i.ak, ptr %i.al, align 4, !tbaa !254
   br label %.lr.ph.i.i.i.i.i.preheader
 

@@ -204,7 +204,7 @@ bb.bs:                                            ; preds = %bb.br
   %i.ku = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
   %i.kv = lshr i32 %i.kr, 20
   %i.kw = and i32 %i.kv, 2047                     ; 6 uses
-  %i.kx = sub nsw i32 107, %i.kw
+  %i.kx = sub nuw nsw i32 107, %i.kw
   %i.ky = icmp samesign ult i32 %i.kw, 107
   br i1 %i.ky, label %bb.bt, label %thread-pre-split
 
@@ -444,7 +444,7 @@ bb.ce:                                            ; preds = %bb.cd
   %.2511.i = phi i32 [ %i.em, %bb.cb ], [ %i.ls, %bb.ce ] ; 4 uses
   %.6490.i = phi i32 [ %.5489.i, %bb.cb ], [ %.1500.i, %bb.ce ] ; 6 uses
   %.2483.i = phi i32 [ %spec.select597.i, %bb.cb ], [ %spec.select599.i, %bb.ce ] ; 4 uses
-  %i.or = add nsw i32 %.6490.i, 8
+  %i.or = add nuw nsw i32 %.6490.i, 8
   %i.os = sdiv i32 %i.or, 9
   %i.ot = icmp sgt i32 %.6490.i, 9
   br i1 %i.ot, label %.lr.ph.i.i, label %._crit_edge.thread.i.i.thread
