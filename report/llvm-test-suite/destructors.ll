@@ -199,12 +199,12 @@ entry:
   %f9.v3.extent_realized.s.s = load i32, ptr %i.m, align 4
   %i.n = getelementptr inbounds nuw i8, ptr %closure, i64 8
   %f10.v3.extent_realized.s = load i32, ptr %i.n, align 8 ; 4 uses
-  %0 = sext i32 %f10.v3.extent_realized.s to i64
+  %0 = zext nneg i32 %f10.v3.extent_realized.s to i64
   %i.o = getelementptr inbounds nuw i8, ptr %closure, i64 4
   %f10.stride.2 = load i32, ptr %i.o, align 4
   %i.p = sext i32 %f10.stride.2 to i64
   %i.q = add i32 %f10.v3.extent_realized.s, 1     ; 5 uses
-  %i.r = add nsw i64 %0, 1
+  %i.r = add nuw nsw i64 %0, 1
   %i.s = sext i32 %i.f to i64                     ; 2 uses
   %i.t = sext i32 %f10.s0.v6 to i64
   %i.u = tail call i32 @llvm.smax.i32(i32 %a744, i32 0) ; 2 uses
@@ -282,7 +282,7 @@ entry:
   %lsr.iv5 = phi i32 [ %i.bb, %"for f10.s0.v4.preheader4" ], [ %lsr.iv.next6, %"end for f10.s0.v3.loopexit" ] ; 5 uses
   %lsr.iv1 = phi i64 [ %i.s, %"for f10.s0.v4.preheader4" ], [ %lsr.iv.next2, %"end for f10.s0.v3.loopexit" ] ; 2 uses
   %i.bw = sub nsw i64 %lsr.iv1, %i.s
-  %i.bx = mul i64 %i.bw, %i.r
+  %i.bx = mul nuw nsw i64 %i.bw, %i.r
   %i.by = sub i64 %i.bx, %i.ac
   %invariant.gep = getelementptr [4 x i8], ptr %f10.host, i64 %i.by ; 2 uses
   br i1 %min.iters.check, label %"for f10.s0.v3.preheader", label %vector.scevcheck

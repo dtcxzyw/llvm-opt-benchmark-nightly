@@ -204,7 +204,7 @@ switch.lookup:                                    ; preds = %bb.au
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm, i64 %i.ma
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i32       ; 2 uses
-  %i.mb = shl i64 %i.lo, 1
+  %i.mb = shl nuw nsw i64 %i.lo, 1
   %i.mc = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %switch.ext, i1 true)
   %i.md = zext nneg i32 %i.mc to i64
   %i.me = lshr i64 %i.mb, %i.md
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.n = sub i64 %i.m, %i.a                       ; 3 uses
   %i.o = ashr exact i64 %i.n, 3                   ; 3 uses
   %i.p = add nsw i64 %i.o, -1
-  %5 = sdiv i64 %i.p, 2
+  %5 = lshr i64 %i.p, 1
   %i.q = icmp sgt i64 %i.o, 2
   br i1 %i.q, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -647,7 +647,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ak = shl nuw nsw i64 %.0.lcssa.i.i.i.i, 1
   %i.al = or disjoint i64 %i.ak, 1                ; 2 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.al
-  %i.an = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   %i.ao = load i64, ptr %i.am, align 4
   store i64 %i.ao, ptr %i.an, align 4
   br label %.lr.ph.i.i.preheader.i.i.i

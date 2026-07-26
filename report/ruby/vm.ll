@@ -204,7 +204,7 @@ bb.en:                                            ; preds = %.backedge, %bb.agw
   store ptr %i.anh, ptr %.02257, align 8, !tbaa !146
   %i.ani = getelementptr i8, ptr %.02257, i64 8   ; 3 uses
   %i.anj = load ptr, ptr %i.ani, align 8, !tbaa !73 ; 3 uses
-  %i.ank = sub i64 0, %i.ang
+  %i.ank = sub nsw i64 0, %i.ang
   %i.anl = getelementptr [8 x i8], ptr %i.anj, i64 %i.ank
   %i.anm = icmp ugt i64 %i.ang, 2305843009213693951
   br i1 %i.anm, label %bb.eo, label %rbimpl_size_mul_or_raise.exit, !prof !177

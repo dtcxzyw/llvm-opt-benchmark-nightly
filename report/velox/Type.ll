@@ -204,7 +204,7 @@ bb.a:
   %.lhs.trunc86 = trunc nsw i64 %i.d to i32       ; 2 uses
   %i.e = srem i32 %.lhs.trunc86, 1000000          ; 4 uses
   %i.f = sdiv i32 %.lhs.trunc86, 1000000
-  %.sext87 = sext i32 %i.e to i64
+  %.sext87 = zext nneg i32 %i.e to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16, !noalias !1025
   store i64 %i.a, ptr %5, align 16, !tbaa !9, !noalias !1025
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -607,7 +607,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.be = sub i64 %i.bd, %i.a                     ; 3 uses
   %i.bf = ashr exact i64 %i.be, 4                 ; 3 uses
   %i.bg = add nsw i64 %i.bf, -1
-  %3 = sdiv i64 %i.bg, 2
+  %3 = lshr i64 %i.bg, 1
   %i.bh = icmp sgt i64 %i.bf, 2
   br i1 %i.bh, label %.lr.ph.i.i.i21.i, label %._crit_edge.i.i.i13.i
 
@@ -649,7 +649,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i13
   %i.ca = shl nuw nsw i64 %.0.lcssa.i.i.i14.i, 1
   %i.cb = or disjoint i64 %i.ca, 1                ; 2 uses
   %i.cc = getelementptr inbounds nuw [16 x i8], ptr %.fr26, i64 %i.cb ; 2 uses
-  %i.cd = getelementptr inbounds [16 x i8], ptr %.fr26, i64 %.0.lcssa.i.i.i14.i ; 2 uses
+  %i.cd = getelementptr inbounds nuw [16 x i8], ptr %.fr26, i64 %.0.lcssa.i.i.i14.i ; 2 uses
   %i.ce = load i32, ptr %i.cc, align 4, !tbaa !3
   store i32 %i.ce, ptr %i.cd, align 8, !tbaa !515
   %i.cf = getelementptr inbounds nuw i8, ptr %i.cc, i64 8

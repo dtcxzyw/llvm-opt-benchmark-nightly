@@ -15,7 +15,7 @@ define dso_local i32 @UI_UTIL_read_pw_string(ptr noundef %0, i32 noundef %1, ptr
 bb.a:
   %i.a = alloca [8192 x i8], align 16             ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  %i.b = tail call i32 @llvm.smin.i32(i32 %1, i32 8192)
+  %i.b = tail call i32 @llvm.umin.i32(i32 %1, i32 8192)
   %i.c = icmp slt i32 %1, 1
   br i1 %i.c, label %UI_UTIL_read_pw.exit, label %bb.b
 
@@ -328,6 +328,9 @@ declare ptr @CRYPTO_memdup(ptr noundef, i64 noundef, ptr noundef, i32 noundef) l
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #4
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -204,7 +204,7 @@ _ZN11duckdb_zstdL23ZSTD_allocateChainTableENS_13ZSTD_strategyENS_18ZSTD_paramSwi
   br i1 %i.bk, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %_ZN11duckdb_zstdL23ZSTD_allocateChainTableENS_13ZSTD_strategyENS_18ZSTD_paramSwitch_eEj.exit.thread21.i
-  %5 = sdiv i32 %i.bj, 16
+  %5 = lshr i32 %i.bj, 4
   %i.bn = icmp sgt i32 %i.bj, 15
   br i1 %i.bn, label %.preheader.i.i.preheader, label %_ZN11duckdb_zstdL24ZSTD_reduceTable_btlazy2EPjjj.exit.i
 
@@ -394,7 +394,7 @@ bb.m:                                             ; preds = %.thread66
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @_ZN11duckdb_zstdL16ZSTD_reduceTableEPjjj(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2) unnamed_addr #13 {
 bb.a:
-  %3 = sdiv i32 %1, 16
+  %3 = lshr i32 %1, 4
   %i.a = add i32 %2, 2
   %i.b = icmp sgt i32 %1, 15
   br i1 %i.b, label %.preheader.preheader, label %_ZN11duckdb_zstdL25ZSTD_reduceTable_internalEPjjji.exit

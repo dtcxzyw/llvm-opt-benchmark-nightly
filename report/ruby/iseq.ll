@@ -204,7 +204,7 @@ bb.a:
   %i.h = add nsw i32 %i.d, 8
   %i.i = sdiv i32 %i.h, 9
   %i.j = select i1 %i.g, i32 6, i32 %i.i          ; 2 uses
-  %i.k = add i32 %i.d, 457
+  %i.k = add nuw nsw i32 %i.d, 457
   %i.l = sdiv i32 %i.k, 512
   %i.m = sext i32 %i.b to i64
   %i.n = tail call noalias nonnull ptr @ruby_xmalloc2(i64 noundef %i.m, i64 noundef 4) #21 ; 3 uses

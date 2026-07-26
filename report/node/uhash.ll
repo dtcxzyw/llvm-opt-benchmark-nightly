@@ -203,7 +203,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %_ZL11_uhash_initP10UHashtablePFi8UElementEPFaS1_S1_ES5_iP10UErrorCode.exit.thread.i
 
 .lr.ph.i.i.preheader.i:                           ; preds = %bb.af
-  %i.ax = getelementptr inbounds i8, ptr %i.av, i64 %i.au
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.au
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.preheader.i
@@ -292,8 +292,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.o = load i32, ptr %i.l, align 4              ; 3 uses
   %i.p = sext i32 %i.o to i64
-  %.idx.i.i = mul nsw i64 %i.p, 24
-  %i.q = getelementptr inbounds i8, ptr %i.m, i64 %.idx.i.i
+  %.idx.i.i = mul nuw nsw i64 %i.p, 24
+  %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 %.idx.i.i
   %i.r = icmp sgt i32 %i.o, 0
   br i1 %i.r, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -488,8 +488,8 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ad
   %i.aw = load i32, ptr %i.ar, align 4            ; 3 uses
   %i.ax = sext i32 %i.aw to i64
-  %.idx.i.i = mul nsw i64 %i.ax, 24
-  %i.ay = getelementptr inbounds i8, ptr %i.au, i64 %.idx.i.i
+  %.idx.i.i = mul nuw nsw i64 %i.ax, 24
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.au, i64 %.idx.i.i
   %i.az = icmp sgt i32 %i.aw, 0
   br i1 %i.az, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -812,8 +812,8 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.ac = load i32, ptr %i.b, align 4             ; 3 uses
   %i.ad = sext i32 %i.ac to i64
-  %.idx.i = mul nsw i64 %i.ad, 24
-  %i.ae = getelementptr inbounds i8, ptr %i.aa, i64 %.idx.i
+  %.idx.i = mul nuw nsw i64 %i.ad, 24
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.idx.i
   %i.af = icmp sgt i32 %i.ac, 0
   br i1 %i.af, label %.lr.ph.i, label %_ZL15_uhash_allocateP10UHashtableiP10UErrorCode.exit
 

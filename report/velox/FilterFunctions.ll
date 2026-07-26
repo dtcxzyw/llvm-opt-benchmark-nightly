@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 bb.i:                                             ; preds = %bb.h
   %i.ch = shl nsw i32 %i.bo, 6                    ; 2 uses
-  %i.ci = add i32 %i.ch, 64
+  %i.ci = add nuw i32 %i.ch, 64
   %i.cj = sext i32 %i.ci to i64
   %.0.off = add i32 %.052, 127
   %.not22.i = icmp ult i32 %.0.off, 64
@@ -607,7 +607,7 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 bb.i:                                             ; preds = %bb.h
   %i.cc = shl nsw i32 %i.br, 6                    ; 2 uses
-  %i.cd = add i32 %i.cc, 64
+  %i.cd = add nuw i32 %i.cc, 64
   %i.ce = sext i32 %i.cd to i64
   %.0.off = add i32 %.071, 127
   %.not22.i = icmp ult i32 %.0.off, 64
@@ -1010,7 +1010,7 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 bb.i:                                             ; preds = %bb.h
   %i.ch = shl nsw i32 %i.bo, 6                    ; 2 uses
-  %i.ci = add i32 %i.ch, 64
+  %i.ci = add nuw i32 %i.ch, 64
   %i.cj = sext i32 %i.ci to i64
   %.0.off = add i32 %.052, 127
   %.not22.i = icmp ult i32 %.0.off, 64
@@ -1413,7 +1413,7 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 bb.i:                                             ; preds = %bb.h
   %i.cc = shl nsw i32 %i.br, 6                    ; 2 uses
-  %i.cd = add i32 %i.cc, 64
+  %i.cd = add nuw i32 %i.cc, 64
   %i.ce = sext i32 %i.cd to i64
   %.0.off = add i32 %.071, 127
   %.not22.i = icmp ult i32 %.0.off, 64

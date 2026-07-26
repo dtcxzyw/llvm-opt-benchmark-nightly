@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
 
 _ZN8NArchive3N7z10CInArchive13WaitAttributeEy.exit: ; preds = %bb.e, %bb.a
   %i.s = load ptr, ptr %i.a, align 8, !tbaa !45
-  %i.t = tail call noundef i64 @_ZN8NArchive3N7z8CInByte210ReadNumberEv(ptr noundef nonnull align 8 dereferenceable(24) %i.s) ; 4 uses
+  %i.t = tail call noundef i64 @_ZN8NArchive3N7z8CInByte210ReadNumberEv(ptr noundef nonnull align 8 dereferenceable(24) %i.s) ; 5 uses
   %i.u = icmp ugt i64 %i.t, 2147483647
   br i1 %i.u, label %bb.f, label %_ZN8NArchive3N7z10CInArchive7ReadNumEv.exit
 
@@ -213,7 +213,7 @@ bb.f:                                             ; preds = %_ZN8NArchive3N7z10C
   unreachable
 
 _ZN8NArchive3N7z10CInArchive7ReadNumEv.exit:      ; preds = %_ZN8NArchive3N7z10CInArchive13WaitAttributeEy.exit
-  %i.v = trunc nuw i64 %i.t to i32                ; 5 uses
+  %i.v = trunc nuw i64 %i.t to i32                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store i8 0, ptr %i.w, align 8, !tbaa !41
@@ -440,12 +440,11 @@ bb.y:                                             ; preds = %bb.v
   %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.cw = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.cx = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %umax99 = call i32 @llvm.umax.i32(i32 %i.v, i32 1) ; 3 uses
-  %xtraiter138 = and i32 %umax99, 1
+  %xtraiter138 = and i32 %i.v, 1
   %i.cy = icmp eq i64 %i.t, 1
-  %unroll_iter142 = and i32 %umax99, 2147483646
+  %unroll_iter142 = and i32 %i.v, 2147483646
   %lcmp.mod140.not = icmp eq i32 %xtraiter138, 0
-  %lcmp.mod141 = trunc i32 %umax99 to i1
+  %lcmp.mod141 = trunc i64 %i.t to i1
   br label %bb.ax
 
 bb.z:                                             ; preds = %.lr.ph83, %._crit_edge81

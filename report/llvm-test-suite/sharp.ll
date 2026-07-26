@@ -200,8 +200,8 @@ bb.a:
   %i.g = load i32, ptr %0, align 8, !tbaa !18
   %i.h = mul nsw i32 %i.g, %i.f                   ; 2 uses
   %i.i = sext i32 %i.h to i64
-  %.idx = shl nsw i64 %i.i, 2
-  %i.j = getelementptr inbounds i8, ptr %i.d, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.i, 2
+  %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx
   %i.k = icmp sgt i32 %i.h, 0
   br i1 %i.k, label %.lr.ph, label %._crit_edge
 
@@ -235,8 +235,8 @@ bb.a:
   %i.g = load i32, ptr %0, align 8, !tbaa !18
   %i.h = mul nsw i32 %i.g, %i.f                   ; 2 uses
   %i.i = sext i32 %i.h to i64
-  %.idx = shl nsw i64 %i.i, 2
-  %i.j = getelementptr inbounds i8, ptr %i.d, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.i, 2
+  %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx
   %i.k = icmp sgt i32 %i.h, 0
   br i1 %i.k, label %.lr.ph, label %._crit_edge
 
@@ -269,8 +269,8 @@ bb.a:
   %i.h = load i32, ptr %0, align 8, !tbaa !18
   %i.i = mul nsw i32 %i.h, %i.g                   ; 2 uses
   %i.j = sext i32 %i.i to i64
-  %.idx = shl nsw i64 %i.j, 2
-  %i.k = getelementptr inbounds i8, ptr %i.f, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.j, 2
+  %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx
   %i.l = icmp sgt i32 %i.i, 0
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
@@ -341,8 +341,8 @@ bb.c:                                             ; preds = %bb.a
   %i.ag = load i32, ptr %.02022, align 8, !tbaa !18
   %i.ah = mul nsw i32 %i.ag, %i.af                ; 2 uses
   %i.ai = sext i32 %i.ah to i64
-  %.idx.i = shl nsw i64 %i.ai, 2
-  %i.aj = getelementptr inbounds i8, ptr %i.ae, i64 %.idx.i
+  %.idx.i = shl nuw nsw i64 %i.ai, 2
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx.i
   %i.ak = icmp sgt i32 %i.ah, 0
   br i1 %i.ak, label %.lr.ph.i, label %cb1_dsharp.exit
 

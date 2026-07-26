@@ -204,8 +204,7 @@ define internal fastcc noundef range(i64 -20, 2) i64 @_ZN11duckdb_zstdL27HUF_Dec
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 4
   %.val = load i32, ptr %5, align 4
-  %.idx.i = tail call i64 @llvm.smax.i64(i64 %2, i64 0)
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %2
   %i.c = icmp eq i64 %2, 0
   br i1 %i.c, label %bb.g, label %bb.b
 

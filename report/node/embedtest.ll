@@ -169,9 +169,9 @@ bb.a:
   %i.e = tail call i32 @setvbuf(ptr noundef %i.d, ptr noundef null, i32 noundef 2, i64 noundef 0) #16 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #16
   %i.f = sext i32 %0 to i64                       ; 3 uses
-  %.idx23 = shl nsw i64 %i.f, 3
-  %i.g = getelementptr inbounds i8, ptr %i.a, i64 %.idx23
-  %.idx = shl nsw i64 %i.f, 5
+  %.idx23 = shl nuw nsw i64 %i.f, 3
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx23
+  %.idx = shl nuw nsw i64 %i.f, 5
   %i.h = icmp slt i32 %0, 0
   br i1 %i.h, label %bb.b, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i.i
 

@@ -203,8 +203,8 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br i1 %i.bw, label %bb.g, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.f
-  %i.bx = load i32, ptr %i.c, align 4, !tbaa !37  ; 4 uses
-  %2 = sext i32 %i.bx to i64                      ; 5 uses
+  %i.bx = load i32, ptr %i.c, align 4, !tbaa !37  ; 3 uses
+  %2 = zext i32 %i.bx to i64                      ; 5 uses
   %i.by = icmp sgt i32 %i.bx, 0
   br i1 %i.by, label %.lr.ph.i, label %init_suboffsets.exit
 
@@ -241,9 +241,8 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.i, %middle.block
   %.08.i.ph = phi i64 [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 3 uses
-  %xtraiter = and i64 %2, 3
-  %3 = and i32 %i.bx, 3
-  %lcmp.mod.not = icmp eq i32 %3, 0
+  %xtraiter = and i64 %2, 3                       ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
@@ -646,18 +645,18 @@ bb.u:                                             ; preds = %._crit_edge.i
 bb.v:                                             ; preds = %._crit_edge.i
   store i64 %i.ce, ptr %i.ch, align 8, !tbaa !52
   %i.ea = getelementptr i8, ptr %i.aq, i64 92
-  %i.eb = load i32, ptr %i.ea, align 4, !tbaa !37 ; 5 uses
+  %i.eb = load i32, ptr %i.ea, align 4, !tbaa !37 ; 6 uses
   %i.ec = icmp sgt i32 %i.eb, 1
   br i1 %i.ec, label %.lr.ph.i49.i, label %init_strides_from_shape.exit.i
 
 .lr.ph.i49.i:                                     ; preds = %bb.v
-  %3 = sext i32 %i.eb to i64                      ; 2 uses
+  %3 = zext nneg i32 %i.eb to i64
   %i.ed = getelementptr i8, ptr %i.aq, i64 104
   %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !64 ; 5 uses
   %i.ef = add nsw i64 %3, -1                      ; 2 uses
-  %4 = add nsw i64 %3, -2
   %xtraiter49 = and i64 %i.ef, 3                  ; 3 uses
-  %i.eg = icmp ult i64 %4, 3
+  %4 = add nsw i32 %i.eb, -2
+  %i.eg = icmp ult i32 %4, 3
   br i1 %i.eg, label %.epil.preheader, label %.lr.ph.i49.i.new
 
 .lr.ph.i49.i.new:                                 ; preds = %.lr.ph.i49.i
@@ -892,8 +891,8 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.an, label %bb.h, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.g
-  %i.ao = load i32, ptr %i.f, align 4, !tbaa !37  ; 4 uses
-  %4 = sext i32 %i.ao to i64                      ; 5 uses
+  %i.ao = load i32, ptr %i.f, align 4, !tbaa !37  ; 3 uses
+  %4 = zext i32 %i.ao to i64                      ; 5 uses
   %i.ap = icmp sgt i32 %i.ao, 0
   br i1 %i.ap, label %.lr.ph.i, label %init_suboffsets.exit
 
@@ -930,9 +929,8 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.i, %middle.block
   %.08.i.ph = phi i64 [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 3 uses
-  %xtraiter = and i64 %4, 3
-  %5 = and i32 %i.ao, 3
-  %lcmp.mod.not = icmp eq i32 %5, 0
+  %xtraiter = and i64 %4, 3                       ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
@@ -1335,18 +1333,18 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   store i64 %i.k, ptr %i.e, align 8, !tbaa !52
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 36
-  %i.be = load i32, ptr %i.bd, align 4, !tbaa !37 ; 2 uses
+  %i.be = load i32, ptr %i.bd, align 4, !tbaa !37 ; 3 uses
   %i.bf = icmp sgt i32 %i.be, 1
   br i1 %i.bf, label %.lr.ph.i13, label %init_strides_from_shape.exit
 
 .lr.ph.i13:                                       ; preds = %bb.e
-  %4 = sext i32 %i.be to i64                      ; 2 uses
+  %4 = zext nneg i32 %i.be to i64
   %i.bg = getelementptr inbounds nuw i8, ptr %3, i64 48
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !64 ; 5 uses
   %i.bi = add nsw i64 %4, -1                      ; 2 uses
-  %5 = add nsw i64 %4, -2
   %xtraiter = and i64 %i.bi, 3                    ; 3 uses
-  %i.bj = icmp ult i64 %5, 3
+  %5 = add nsw i32 %i.be, -2
+  %i.bj = icmp ult i32 %5, 3
   br i1 %i.bj, label %.epil.preheader, label %.lr.ph.i13.new
 
 .lr.ph.i13.new:                                   ; preds = %.lr.ph.i13
@@ -1749,15 +1747,15 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.s
   %i.bc = getelementptr i8, ptr %i.au, i64 92
-  %i.bd = load i32, ptr %i.bc, align 4, !tbaa !37 ; 5 uses
-  %2 = sext i32 %i.bd to i64                      ; 2 uses
+  %i.bd = load i32, ptr %i.bc, align 4, !tbaa !37 ; 3 uses
+  %2 = zext i32 %i.bd to i64                      ; 2 uses
   %i.be = icmp sgt i32 %i.bd, 0
   br i1 %i.be, label %.lr.ph.i, label %init_len.exit
 
 .lr.ph.i:                                         ; preds = %bb.w
   %i.bf = getelementptr i8, ptr %i.au, i64 104
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !64 ; 9 uses
-  %xtraiter = and i64 %2, 7
+  %xtraiter = and i64 %2, 7                       ; 3 uses
   %i.bh = icmp ult i32 %i.bd, 8
   br i1 %i.bh, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -1806,15 +1804,13 @@ bb.x:                                             ; preds = %bb.x, %.lr.ph.i.new
   br i1 %niter.ncmp.7, label %init_len.exit.loopexit.unr-lcssa, label %bb.x, !llvm.loop !124
 
 init_len.exit.loopexit.unr-lcssa:                 ; preds = %bb.x
-  %3 = and i32 %i.bd, 7
-  %lcmp.mod.not = icmp eq i32 %3, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %init_len.exit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %init_len.exit.loopexit.unr-lcssa, %.lr.ph.i
   %.011.i.epil.init = phi i64 [ 1, %.lr.ph.i ], [ %i.cm, %init_len.exit.loopexit.unr-lcssa ]
   %.0910.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.cn, %init_len.exit.loopexit.unr-lcssa ]
-  %4 = and i32 %i.bd, 7
-  %lcmp.mod67 = icmp ne i32 %4, 0
+  %lcmp.mod67 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod67)
   br label %bb.y
 

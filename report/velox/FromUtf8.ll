@@ -204,7 +204,7 @@ _ZN5boost13intrusive_ptrIN8facebook5velox6BufferEED2Ev.exit.i._crit_edge: ; pred
   %i.af = getelementptr inbounds nuw i8, ptr %.pre17, i64 16
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !263
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 %i.ae ; 3 uses
-  %i.ai = zext i32 %i.u to i64
+  %i.ai = zext nneg i32 %i.u to i64
   %i.aj = icmp slt i32 %i.u, 0
   br i1 %i.aj, label %bb.i, label %bb.l, !prof !48
 
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.0.0.copyload.i = load ptr, ptr %2, align 8, !tbaa !321 ; 6 uses
   %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !872 ; 2 uses
   %i.k = add nsw i64 %i.j, -1
-  %3 = sdiv i64 %i.k, 2
+  %3 = lshr i64 %i.k, 1
   %i.l = icmp sgt i64 %i.j, 2
   br i1 %i.l, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -652,7 +652,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ai
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !3
-  %i.al = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !3
   br label %.lr.ph.i.i.i.preheader
 
@@ -1055,7 +1055,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.0.sroa.2.0.copyload.i = load ptr, ptr %.sroa.0.sroa.2.0..sroa_idx.i, align 8, !tbaa !889 ; 2 uses
   %.sroa.0.sroa.3.0.copyload.i = load ptr, ptr %.sroa.0.sroa.3.0..sroa_idx.i, align 8, !tbaa !872 ; 2 uses
   %i.k = add nsw i64 %i.j, -1
-  %3 = sdiv i64 %i.k, 2
+  %3 = lshr i64 %i.k, 1
   %i.l = icmp sgt i64 %i.j, 2
   br i1 %i.l, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -1107,7 +1107,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   %i.ap = or disjoint i64 %i.ao, 1                ; 2 uses
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ap
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !3
-  %i.as = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.as = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.ar, ptr %i.as, align 4, !tbaa !3
   br label %.lr.ph.i.i.i
 
@@ -1510,7 +1510,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 6 uses
   %i.u = add nsw i64 %i.t, -1
-  %9 = sdiv i64 %i.u, 2
+  %9 = lshr i64 %i.u, 1
   %i.v = icmp sgt i64 %i.t, 2
   br i1 %i.v, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
 
@@ -1669,7 +1669,7 @@ bb.k:                                             ; preds = %._crit_edge.i.i
   %i.cf = or disjoint i64 %i.ce, 1                ; 2 uses
   %i.cg = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.cf
   %i.ch = load i32, ptr %i.cg, align 4, !tbaa !3
-  %i.ci = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.ci = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.ch, ptr %i.ci, align 4, !tbaa !3
   br label %.lr.ph.i.i.preheader.i
 
@@ -2072,7 +2072,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 4 uses
   %i.s = add nsw i64 %i.r, -1
-  %7 = sdiv i64 %i.s, 2
+  %7 = lshr i64 %i.s, 1
   %i.t = icmp sgt i64 %i.r, 2
   br i1 %i.t, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
 
@@ -2303,7 +2303,7 @@ bb.u:                                             ; preds = %._crit_edge.i.i
   %i.db = or disjoint i64 %i.da, 1                ; 2 uses
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.db
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !3
-  %i.de = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.de = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.dd, ptr %i.de, align 4, !tbaa !3
   br label %.lr.ph.i.i.preheader.i
 
@@ -2706,7 +2706,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %i.r = sub i64 %i.q, %i.a                       ; 3 uses
   %i.s = ashr exact i64 %i.r, 2                   ; 3 uses
   %i.t = add nsw i64 %i.s, -1
-  %7 = sdiv i64 %i.t, 2
+  %7 = lshr i64 %i.t, 1
   %i.u = icmp sgt i64 %i.s, 2
   br i1 %i.u, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
 
@@ -2859,7 +2859,7 @@ bb.m:                                             ; preds = %._crit_edge.i.i
   %i.cc = or disjoint i64 %i.cb, 1                ; 2 uses
   %i.cd = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.cc
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !3
-  %i.cf = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.cf = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.ce, ptr %i.cf, align 4, !tbaa !3
   br label %.lr.ph.i.i.preheader.i
 
@@ -3262,7 +3262,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 6 uses
   %i.u = add nsw i64 %i.t, -1
-  %9 = sdiv i64 %i.u, 2
+  %9 = lshr i64 %i.u, 1
   %i.v = icmp sgt i64 %i.t, 2
   br i1 %i.v, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
 
@@ -3439,7 +3439,7 @@ bb.k:                                             ; preds = %._crit_edge.i.i
   %i.cx = or disjoint i64 %i.cw, 1                ; 2 uses
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.cx
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !3
-  %i.da = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.da = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.cz, ptr %i.da, align 4, !tbaa !3
   br label %.lr.ph.i.i.preheader.i
 
@@ -3842,7 +3842,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 4 uses
   %i.s = add nsw i64 %i.r, -1
-  %7 = sdiv i64 %i.s, 2
+  %7 = lshr i64 %i.s, 1
   %i.t = icmp sgt i64 %i.r, 2
   br i1 %i.t, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
 
@@ -4091,7 +4091,7 @@ bb.u:                                             ; preds = %._crit_edge.i.i
   %i.dt = or disjoint i64 %i.ds, 1                ; 2 uses
   %i.du = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.dt
   %i.dv = load i32, ptr %i.du, align 4, !tbaa !3
-  %i.dw = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.dw = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.dv, ptr %i.dw, align 4, !tbaa !3
   br label %.lr.ph.i.i.preheader.i
 
@@ -4494,7 +4494,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %i.s = sub i64 %i.r, %i.a                       ; 3 uses
   %i.t = ashr exact i64 %i.s, 2                   ; 3 uses
   %i.u = add nsw i64 %i.t, -1
-  %7 = sdiv i64 %i.u, 2
+  %7 = lshr i64 %i.u, 1
   %i.v = icmp sgt i64 %i.t, 2
   br i1 %i.v, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
 
@@ -4655,7 +4655,7 @@ bb.m:                                             ; preds = %._crit_edge.i.i
   %i.cl = or disjoint i64 %i.ck, 1                ; 2 uses
   %i.cm = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.cl
   %i.cn = load i32, ptr %i.cm, align 4, !tbaa !3
-  %i.co = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.co = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.cn, ptr %i.co, align 4, !tbaa !3
   br label %.lr.ph.i.i.preheader.i
 
@@ -5058,7 +5058,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 6 uses
   %i.u = add nsw i64 %i.t, -1
-  %5 = sdiv i64 %i.u, 2
+  %5 = lshr i64 %i.u, 1
   %i.v = icmp sgt i64 %i.t, 2
   br i1 %i.v, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
 
@@ -5211,7 +5211,7 @@ bb.k:                                             ; preds = %._crit_edge.i.i
   %i.ch = or disjoint i64 %i.cg, 1                ; 2 uses
   %i.ci = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ch
   %i.cj = load i32, ptr %i.ci, align 4, !tbaa !3
-  %i.ck = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.ck = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.cj, ptr %i.ck, align 4, !tbaa !3
   br label %.lr.ph.i.i.preheader.i
 
@@ -5614,7 +5614,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 4 uses
   %i.k = add nsw i64 %i.j, -1
-  %3 = sdiv i64 %i.k, 2
+  %3 = lshr i64 %i.k, 1
   %i.l = icmp sgt i64 %i.j, 2
   br i1 %i.l, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
 
@@ -5748,7 +5748,7 @@ bb.k:                                             ; preds = %._crit_edge.i.i
   %i.bs = or disjoint i64 %i.br, 1                ; 2 uses
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.bs
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !3
-  %i.bv = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.bu, ptr %i.bv, align 4, !tbaa !3
   br label %.lr.ph.i.i.preheader.i
 
@@ -6151,7 +6151,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 6 uses
   %i.u = add nsw i64 %i.t, -1
-  %5 = sdiv i64 %i.u, 2
+  %5 = lshr i64 %i.u, 1
   %i.v = icmp sgt i64 %i.t, 2
   br i1 %i.v, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
 
@@ -6322,7 +6322,7 @@ bb.k:                                             ; preds = %._crit_edge.i.i
   %i.cz = or disjoint i64 %i.cy, 1                ; 2 uses
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.cz
   %i.db = load i32, ptr %i.da, align 4, !tbaa !3
-  %i.dc = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.dc = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.db, ptr %i.dc, align 4, !tbaa !3
   br label %.lr.ph.i.i.preheader.i
 
@@ -6725,7 +6725,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 4 uses
   %i.k = add nsw i64 %i.j, -1
-  %3 = sdiv i64 %i.k, 2
+  %3 = lshr i64 %i.k, 1
   %i.l = icmp sgt i64 %i.j, 2
   br i1 %i.l, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
 
@@ -6877,7 +6877,7 @@ bb.k:                                             ; preds = %._crit_edge.i.i
   %i.ck = or disjoint i64 %i.cj, 1                ; 2 uses
   %i.cl = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ck
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !3
-  %i.cn = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.cn = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.cm, ptr %i.cn, align 4, !tbaa !3
   br label %.lr.ph.i.i.preheader.i
 
@@ -7280,7 +7280,7 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 bb.i:                                             ; preds = %bb.h
   %i.dj = shl nsw i32 %i.cz, 6                    ; 2 uses
-  %i.dk = add i32 %i.dj, 64
+  %i.dk = add nuw i32 %i.dj, 64
   %i.dl = sext i32 %i.dk to i64
   %.0.off = add i32 %.051, 127
   %.not22.i = icmp ult i32 %.0.off, 64
@@ -7683,7 +7683,7 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 bb.i:                                             ; preds = %bb.h
   %i.cq = shl nsw i32 %i.cj, 6                    ; 2 uses
-  %i.cr = add i32 %i.cq, 64
+  %i.cr = add nuw i32 %i.cq, 64
   %i.cs = sext i32 %i.cr to i64
   %.0.off = add i32 %.051, 127
   %.not22.i = icmp ult i32 %.0.off, 64

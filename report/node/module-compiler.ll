@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   %i.cc = sub i64 %i.cb, %i.bw                    ; 2 uses
   %i.cd = ashr exact i64 %i.cc, 4                 ; 3 uses
   %i.ce = add nsw i64 %i.cd, -1
-  %3 = sdiv i64 %i.ce, 2
+  %3 = lshr i64 %i.ce, 1
   %i.cf = icmp sgt i64 %i.cd, 2
   br i1 %i.cf, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i
 
@@ -238,20 +238,23 @@ bb.k:                                             ; preds = %._crit_edge.i.i.i.i
   br i1 %i.ct, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %i.cu = shl nsw i64 %.0.lcssa.i.i.i.i.i.i, 1
+  %i.cu = shl nuw nsw i64 %.0.lcssa.i.i.i.i.i.i, 1
   %i.cv = or disjoint i64 %i.cu, 1                ; 2 uses
-  %i.cw = getelementptr inbounds [16 x i8], ptr %.val7.i.i, i64 %i.cv
-  %i.cx = getelementptr inbounds [16 x i8], ptr %.val7.i.i, i64 %.0.lcssa.i.i.i.i.i.i
+  %i.cw = getelementptr inbounds nuw [16 x i8], ptr %.val7.i.i, i64 %i.cv
+  %i.cx = getelementptr inbounds nuw [16 x i8], ptr %.val7.i.i, i64 %.0.lcssa.i.i.i.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cx, ptr noundef nonnull align 8 dereferenceable(16) %i.cw, i64 16, i1 false)
-  br label %bb.m
+  br label %.lr.ph.i.i.i.i.i.i.i.preheader
 
-bb.m:                                             ; preds = %bb.l, %bb.k, %._crit_edge.i.i.i.i.i.i
-  %.1.i.i.i.i.i.i = phi i64 [ %i.cv, %bb.l ], [ %.0.lcssa.i.i.i.i.i.i, %bb.k ], [ %.0.lcssa.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 3 uses
-  %4 = icmp sgt i64 %.1.i.i.i.i.i.i, 0
-  br i1 %4, label %.lr.ph.i.i.i.i.i.i.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm12_GLOBAL__N_121CompilationUnitQueues7BigUnitESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterISt4lessIS7_EEEEvT_SI_SI_RT0_.exit.i.i.i.i
+bb.m:                                             ; preds = %bb.k, %._crit_edge.i.i.i.i.i.i
+  %.not.i.i.i.i.i = icmp eq i64 %.0.lcssa.i.i.i.i.i.i, 0
+  br i1 %.not.i.i.i.i.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm12_GLOBAL__N_121CompilationUnitQueues7BigUnitESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterISt4lessIS7_EEEEvT_SI_SI_RT0_.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i.i.i.i:                             ; preds = %bb.m, %bb.n
-  %.07.i.i.i.i.i.i.i = phi i64 [ %.098.i.i.i.i.i.i.i, %bb.n ], [ %.1.i.i.i.i.i.i, %bb.m ] ; 4 uses
+.lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %bb.m, %bb.l
+  %.07.i.i.i.i.i.i.i.ph = phi i64 [ %.0.lcssa.i.i.i.i.i.i, %bb.m ], [ %i.cv, %bb.l ]
+  br label %.lr.ph.i.i.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader, %bb.n
+  %.07.i.i.i.i.i.i.i = phi i64 [ %.098.i.i.i.i.i.i.i, %bb.n ], [ %.07.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.preheader ] ; 4 uses
   %.098.in.i.i.i.i.i.i.i = add nsw i64 %.07.i.i.i.i.i.i.i, -1
   %.098.i.i.i.i.i.i.i = sdiv i64 %.098.in.i.i.i.i.i.i.i, 2 ; 3 uses
   %i.cy = getelementptr inbounds nuw [16 x i8], ptr %.val7.i.i, i64 %.098.i.i.i.i.i.i.i ; 2 uses
@@ -266,8 +269,8 @@ bb.n:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %i.db, label %.lr.ph.i.i.i.i.i.i.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm12_GLOBAL__N_121CompilationUnitQueues7BigUnitESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterISt4lessIS7_EEEEvT_SI_SI_RT0_.exit.i.i.i.i, !llvm.loop !374
 
 _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm12_GLOBAL__N_121CompilationUnitQueues7BigUnitESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterISt4lessIS7_EEEEvT_SI_SI_RT0_.exit.i.i.i.i: ; preds = %bb.n, %.lr.ph.i.i.i.i.i.i.i, %bb.m
-  %.0.lcssa.i.i.i.i.i.i.i = phi i64 [ %.1.i.i.i.i.i.i, %bb.m ], [ %.07.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i ], [ %.098.i.i.i.i.i.i.i, %bb.n ]
-  %i.dc = getelementptr inbounds [16 x i8], ptr %.val7.i.i, i64 %.0.lcssa.i.i.i.i.i.i.i
+  %.0.lcssa.i.i.i.i.i.i.i = phi i64 [ 0, %bb.m ], [ %.07.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i ], [ %.098.i.i.i.i.i.i.i, %bb.n ]
+  %i.dc = getelementptr inbounds nuw [16 x i8], ptr %.val7.i.i, i64 %.0.lcssa.i.i.i.i.i.i.i
   store <2 x i64> %i.ca, ptr %i.dc, align 8
   %.pre.i.i.i = load ptr, ptr %i.br, align 8
   %.val.pre.i.i = load ptr, ptr %i.bq, align 8
@@ -670,7 +673,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = sub i64 %i.h, %i.c                       ; 2 uses
   %i.j = ashr exact i64 %i.i, 4                   ; 3 uses
   %i.k = add nsw i64 %i.j, -1
-  %1 = sdiv i64 %i.k, 2
+  %1 = lshr i64 %i.k, 1
   %i.l = icmp sgt i64 %i.j, 2
   br i1 %i.l, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
@@ -704,20 +707,23 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i
   br i1 %i.z, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.aa = shl nsw i64 %.0.lcssa.i.i.i, 1
+  %i.aa = shl nuw nsw i64 %.0.lcssa.i.i.i, 1
   %i.ab = or disjoint i64 %i.aa, 1                ; 2 uses
-  %i.ac = getelementptr inbounds [16 x i8], ptr %.val, i64 %i.ab
-  %i.ad = getelementptr inbounds [16 x i8], ptr %.val, i64 %.0.lcssa.i.i.i
+  %i.ac = getelementptr inbounds nuw [16 x i8], ptr %.val, i64 %i.ab
+  %i.ad = getelementptr inbounds nuw [16 x i8], ptr %.val, i64 %.0.lcssa.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ad, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false)
-  br label %bb.e
+  br label %.lr.ph.i.i.i.i.preheader
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %i.ab, %bb.d ], [ %.0.lcssa.i.i.i, %bb.c ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
-  %2 = icmp sgt i64 %.1.i.i.i, 0
-  br i1 %2, label %.lr.ph.i.i.i.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm12_GLOBAL__N_121CompilationUnitQueues19TopTierPriorityUnitESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterISt4lessIS7_EEEEvT_SI_SI_RT0_.exit.i
+bb.e:                                             ; preds = %bb.c, %._crit_edge.i.i.i
+  %.not.i.i = icmp eq i64 %.0.lcssa.i.i.i, 0
+  br i1 %.not.i.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm12_GLOBAL__N_121CompilationUnitQueues19TopTierPriorityUnitESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterISt4lessIS7_EEEEvT_SI_SI_RT0_.exit.i, label %.lr.ph.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i:                                   ; preds = %bb.e, %bb.f
-  %.07.i.i.i.i = phi i64 [ %.098.i.i.i.i, %bb.f ], [ %.1.i.i.i, %bb.e ] ; 4 uses
+.lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e, %bb.d
+  %.07.i.i.i.i.ph = phi i64 [ %.0.lcssa.i.i.i, %bb.e ], [ %i.ab, %bb.d ]
+  br label %.lr.ph.i.i.i.i
+
+.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.preheader, %bb.f
+  %.07.i.i.i.i = phi i64 [ %.098.i.i.i.i, %bb.f ], [ %.07.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader ] ; 4 uses
   %.098.in.i.i.i.i = add nsw i64 %.07.i.i.i.i, -1
   %.098.i.i.i.i = sdiv i64 %.098.in.i.i.i.i, 2    ; 3 uses
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %.val, i64 %.098.i.i.i.i ; 2 uses
@@ -732,8 +738,8 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i
   br i1 %i.ah, label %.lr.ph.i.i.i.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm12_GLOBAL__N_121CompilationUnitQueues19TopTierPriorityUnitESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterISt4lessIS7_EEEEvT_SI_SI_RT0_.exit.i, !llvm.loop !162
 
 _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm12_GLOBAL__N_121CompilationUnitQueues19TopTierPriorityUnitESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterISt4lessIS7_EEEEvT_SI_SI_RT0_.exit.i: ; preds = %bb.f, %.lr.ph.i.i.i.i, %bb.e
-  %.0.lcssa.i.i.i.i = phi i64 [ %.1.i.i.i, %bb.e ], [ %.098.i.i.i.i, %bb.f ], [ %.07.i.i.i.i, %.lr.ph.i.i.i.i ]
-  %i.ai = getelementptr inbounds [16 x i8], ptr %.val, i64 %.0.lcssa.i.i.i.i
+  %.0.lcssa.i.i.i.i = phi i64 [ 0, %bb.e ], [ %.098.i.i.i.i, %bb.f ], [ %.07.i.i.i.i, %.lr.ph.i.i.i.i ]
+  %i.ai = getelementptr inbounds nuw [16 x i8], ptr %.val, i64 %.0.lcssa.i.i.i.i
   store <2 x i64> %i.g, ptr %i.ai, align 8
   %.pre = load ptr, ptr %i.a, align 8
   br label %_ZSt8pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm12_GLOBAL__N_121CompilationUnitQueues19TopTierPriorityUnitESt6vectorIS7_SaIS7_EEEESt4lessIS7_EEvT_SF_T0_.exit

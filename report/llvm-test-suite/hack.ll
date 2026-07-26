@@ -203,8 +203,8 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load i32, ptr %i.c, align 8, !tbaa !29
   %i.i = mul nsw i32 %i.h, %i.g                   ; 2 uses
   %i.j = sext i32 %i.i to i64
-  %.idx = shl nsw i64 %i.j, 2
-  %i.k = getelementptr inbounds i8, ptr %i.e, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.j, 2
+  %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 %.idx
   %i.l = icmp sgt i32 %i.i, 0
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
@@ -600,8 +600,8 @@ middle.block:                                     ; preds = %vector.body
   %i.er = load i32, ptr %i.el, align 8, !tbaa !29
   %i.es = mul nsw i32 %i.er, %i.eq                ; 2 uses
   %i.et = sext i32 %i.es to i64
-  %.idx.i = shl nsw i64 %i.et, 2
-  %i.eu = getelementptr inbounds i8, ptr %i.eo, i64 %.idx.i
+  %.idx.i = shl nuw nsw i64 %i.et, 2
+  %i.eu = getelementptr inbounds nuw i8, ptr %i.eo, i64 %.idx.i
   %i.ev = icmp sgt i32 %i.es, 0
   br i1 %i.ev, label %.lr.ph.i, label %map_symbolic_cover.exit
 
@@ -629,8 +629,8 @@ map_symbolic_cover.exit:                          ; preds = %map_symbolic_cover.
   %i.fh = load i32, ptr %i.fc, align 8, !tbaa !29
   %i.fi = mul nsw i32 %i.fh, %i.fg                ; 2 uses
   %i.fj = sext i32 %i.fi to i64
-  %.idx.i120 = shl nsw i64 %i.fj, 2
-  %i.fk = getelementptr inbounds i8, ptr %i.fe, i64 %.idx.i120
+  %.idx.i120 = shl nuw nsw i64 %i.fj, 2
+  %i.fk = getelementptr inbounds nuw i8, ptr %i.fe, i64 %.idx.i120
   %i.fl = icmp sgt i32 %i.fi, 0
   br i1 %i.fl, label %.lr.ph.i121, label %map_symbolic_cover.exit123
 
@@ -658,8 +658,8 @@ map_symbolic_cover.exit123:                       ; preds = %map_symbolic_cover.
   %i.fx = load i32, ptr %i.fs, align 8, !tbaa !29
   %i.fy = mul nsw i32 %i.fx, %i.fw                ; 2 uses
   %i.fz = sext i32 %i.fy to i64
-  %.idx.i124 = shl nsw i64 %i.fz, 2
-  %i.ga = getelementptr inbounds i8, ptr %i.fu, i64 %.idx.i124
+  %.idx.i124 = shl nuw nsw i64 %i.fz, 2
+  %i.ga = getelementptr inbounds nuw i8, ptr %i.fu, i64 %.idx.i124
   %i.gb = icmp sgt i32 %i.fy, 0
   br i1 %i.gb, label %.lr.ph.i125, label %map_symbolic_cover.exit127
 
@@ -734,8 +734,8 @@ bb.a:
   %i.e = load i32, ptr %0, align 8, !tbaa !29
   %i.f = mul nsw i32 %i.e, %i.d                   ; 2 uses
   %i.g = sext i32 %i.f to i64
-  %.idx = shl nsw i64 %i.g, 2
-  %i.h = getelementptr inbounds i8, ptr %i.b, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.g, 2
+  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 %.idx
   %i.i = icmp sgt i32 %i.f, 0
   br i1 %i.i, label %.lr.ph, label %._crit_edge
 
@@ -1138,8 +1138,8 @@ bb.k:                                             ; preds = %._crit_edge233
   %i.fj = load i32, ptr %i.fe, align 8, !tbaa !29
   %i.fk = mul nsw i32 %i.fj, %i.fi                ; 2 uses
   %i.fl = sext i32 %i.fk to i64
-  %.idx273 = shl nsw i64 %i.fl, 2
-  %i.fm = getelementptr inbounds i8, ptr %i.fg, i64 %.idx273
+  %.idx273 = shl nuw nsw i64 %i.fl, 2
+  %i.fm = getelementptr inbounds nuw i8, ptr %i.fg, i64 %.idx273
   %i.fn = icmp sgt i32 %i.fk, 0
   br i1 %i.fn, label %.lr.ph236, label %._crit_edge237
 
@@ -1345,8 +1345,8 @@ bb.y:                                             ; preds = %._crit_edge254.us
   %i.jo = load i32, ptr %i.jj, align 8, !tbaa !29
   %i.jp = mul nsw i32 %i.jo, %i.jn                ; 2 uses
   %i.jq = sext i32 %i.jp to i64
-  %.idx276 = shl nsw i64 %i.jq, 2
-  %i.jr = getelementptr inbounds i8, ptr %i.jl, i64 %.idx276
+  %.idx276 = shl nuw nsw i64 %i.jq, 2
+  %i.jr = getelementptr inbounds nuw i8, ptr %i.jl, i64 %.idx276
   %i.js = icmp sgt i32 %i.jp, 0
   br i1 %i.js, label %.lr.ph258.us, label %._crit_edge259.us
 
@@ -1474,8 +1474,8 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %i.lm = load i32, ptr %i.lh, align 8, !tbaa !29
   %i.ln = mul nsw i32 %i.lm, %i.ll                ; 2 uses
   %i.lo = sext i32 %i.ln to i64
-  %.idx277 = shl nsw i64 %i.lo, 2
-  %i.lp = getelementptr inbounds i8, ptr %i.lj, i64 %.idx277
+  %.idx277 = shl nuw nsw i64 %i.lo, 2
+  %i.lp = getelementptr inbounds nuw i8, ptr %i.lj, i64 %.idx277
   %i.lq = icmp sgt i32 %i.ln, 0
   br i1 %i.lq, label %.lr.ph271, label %._crit_edge272
 

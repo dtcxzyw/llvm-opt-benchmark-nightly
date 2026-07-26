@@ -127,8 +127,8 @@ bb.j:                                             ; preds = %bb.i
   %i.an = load i32, ptr %i.ai, align 8, !tbaa !15
   %i.ao = mul nsw i32 %i.an, %i.am                ; 2 uses
   %i.ap = sext i32 %i.ao to i64
-  %.idx = shl nsw i64 %i.ap, 2
-  %i.aq = getelementptr inbounds i8, ptr %i.ak, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.ap, 2
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.ak, i64 %.idx
   %i.ar = icmp sgt i32 %i.ao, 0
   br i1 %i.ar, label %.lr.ph, label %.loopexit
 
@@ -243,8 +243,8 @@ bb.w:                                             ; preds = %bb.v, %bb.q
   %i.cq = load i32, ptr %i.bl, align 8, !tbaa !15
   %i.cr = mul nsw i32 %i.cq, %i.cp                ; 2 uses
   %i.cs = sext i32 %i.cr to i64
-  %.idx.i = shl nsw i64 %i.cs, 2
-  %i.ct = getelementptr inbounds i8, ptr %i.cn, i64 %.idx.i
+  %.idx.i = shl nuw nsw i64 %i.cs, 2
+  %i.ct = getelementptr inbounds nuw i8, ptr %i.cn, i64 %.idx.i
   %i.cu = icmp sgt i32 %i.cr, 0
   br i1 %i.cu, label %.lr.ph.i, label %._crit_edge.i
 
@@ -267,8 +267,8 @@ bb.w:                                             ; preds = %bb.v, %bb.q
   %i.dg = load i32, ptr %i.bm, align 8, !tbaa !15
   %i.dh = mul nsw i32 %i.dg, %i.df                ; 2 uses
   %i.di = sext i32 %i.dh to i64
-  %.idx69.i = shl nsw i64 %i.di, 2
-  %i.dj = getelementptr inbounds i8, ptr %i.dd, i64 %.idx69.i
+  %.idx69.i = shl nuw nsw i64 %i.di, 2
+  %i.dj = getelementptr inbounds nuw i8, ptr %i.dd, i64 %.idx69.i
   %i.dk = icmp sgt i32 %i.dh, 0
   br i1 %i.dk, label %.lr.ph63.i, label %._crit_edge64.i
 
@@ -291,8 +291,8 @@ bb.w:                                             ; preds = %bb.v, %bb.q
   %i.dw = load i32, ptr %i.bn, align 8, !tbaa !15
   %i.dx = mul nsw i32 %i.dw, %i.dv                ; 2 uses
   %i.dy = sext i32 %i.dx to i64
-  %.idx70.i = shl nsw i64 %i.dy, 2
-  %i.dz = getelementptr inbounds i8, ptr %i.dt, i64 %.idx70.i
+  %.idx70.i = shl nuw nsw i64 %i.dy, 2
+  %i.dz = getelementptr inbounds nuw i8, ptr %i.dt, i64 %.idx70.i
   %i.ea = icmp sgt i32 %i.dx, 0
   br i1 %i.ea, label %.lr.ph67.i, label %._crit_edge68.i
 
@@ -336,8 +336,8 @@ dump_irredundant.exit:                            ; preds = %bb.z, %bb.y, %bb.n
   %i.es = load i32, ptr %i.en, align 8, !tbaa !15
   %i.et = mul nsw i32 %i.es, %i.er                ; 2 uses
   %i.eu = sext i32 %i.et to i64
-  %.idx80 = shl nsw i64 %i.eu, 2
-  %i.ev = getelementptr inbounds i8, ptr %i.ep, i64 %.idx80
+  %.idx80 = shl nuw nsw i64 %i.eu, 2
+  %i.ev = getelementptr inbounds nuw i8, ptr %i.ep, i64 %.idx80
   %i.ew = icmp sgt i32 %i.et, 0
   br i1 %i.ew, label %.lr.ph71, label %._crit_edge
 

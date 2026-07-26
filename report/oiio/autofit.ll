@@ -204,8 +204,8 @@ bb.n:                                             ; preds = %af_cjk_align_edge_p
   %i.cs = getelementptr i8, ptr %1, i64 48
   %.val46 = load ptr, ptr %i.cs, align 8, !tbaa !110 ; 2 uses
   %i.ct = sext i32 %.val to i64
-  %.idx.i = mul nsw i64 %i.ct, 80
-  %i.cu = getelementptr inbounds i8, ptr %.val46, i64 %.idx.i
+  %.idx.i = mul nuw nsw i64 %i.ct, 80
+  %i.cu = getelementptr inbounds nuw i8, ptr %.val46, i64 %.idx.i
   %i.cv = icmp sgt i32 %.val, 0
   br i1 %i.cv, label %.lr.ph.i56.preheader, label %af_glyph_hints_save.exit
 
@@ -281,8 +281,8 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %1, i64 48
   %.val7 = load ptr, ptr %i.c, align 8, !tbaa !110 ; 2 uses
   %i.d = sext i32 %.val to i64
-  %.idx.i = mul nsw i64 %i.d, 80
-  %i.e = getelementptr inbounds i8, ptr %.val7, i64 %.idx.i
+  %.idx.i = mul nuw nsw i64 %i.d, 80
+  %i.e = getelementptr inbounds nuw i8, ptr %.val7, i64 %.idx.i
   %i.f = icmp sgt i32 %.val, 0
   br i1 %i.f, label %.lr.ph.i.preheader, label %af_glyph_hints_save.exit
 
@@ -685,8 +685,8 @@ bb.y:                                             ; preds = %af_glyph_hints_alig
   %i.ei = getelementptr i8, ptr %1, i64 48
   %.val51 = load ptr, ptr %i.ei, align 8, !tbaa !110 ; 2 uses
   %i.ej = sext i32 %.val to i64
-  %.idx.i60 = mul nsw i64 %i.ej, 80
-  %i.ek = getelementptr inbounds i8, ptr %.val51, i64 %.idx.i60
+  %.idx.i60 = mul nuw nsw i64 %i.ej, 80
+  %i.ek = getelementptr inbounds nuw i8, ptr %.val51, i64 %.idx.i60
   %i.el = icmp sgt i32 %.val, 0
   br i1 %i.el, label %.lr.ph.i61.preheader, label %af_glyph_hints_save.exit
 
@@ -1089,8 +1089,8 @@ bb.a:
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.y = load i32, ptr %i.x, align 4, !tbaa !109  ; 2 uses
   %i.z = sext i32 %i.y to i64
-  %.idx563 = mul nsw i64 %i.z, 80
-  %i.aa = getelementptr inbounds i8, ptr %i.w, i64 %.idx563 ; 2 uses
+  %.idx563 = mul nuw nsw i64 %i.z, 80
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 %.idx563 ; 2 uses
   %i.ab = icmp sgt i32 %i.y, 0                    ; 2 uses
   br i1 %i.u, label %bb.b, label %bb.c
 

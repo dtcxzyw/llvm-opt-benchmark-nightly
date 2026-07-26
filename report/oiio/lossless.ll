@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %bb.a
   %i.hg = getelementptr inbounds nuw i8, ptr %5, i64 2 ; 2 uses
   %i.hh = sext i32 %i.gp to i64                   ; 2 uses
   %i.hi = sext i32 %i.gt to i64                   ; 2 uses
-  %.idx.i = shl nsw i64 %i.hd, 2
+  %.idx.i = shl nuw nsw i64 %i.hd, 2
   %i.hj = icmp sgt i32 %i.gs, 0
   br label %bb.g
 
@@ -214,7 +214,7 @@ bb.g:                                             ; preds = %bb.i, %.lr.ph62.i
   %.05157.i = phi i32 [ %1, %.lr.ph62.i ], [ %i.ih, %bb.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %5, i8 0, i64 3, i1 false)
-  %i.hk = getelementptr inbounds i8, ptr %.060.i53, i64 %.idx.i
+  %i.hk = getelementptr inbounds nuw i8, ptr %.060.i53, i64 %.idx.i
   %i.hl = getelementptr inbounds [4 x i8], ptr %.060.i53, i64 %i.he
   br i1 %i.hj, label %.lr.ph.i, label %._crit_edge.i
 
@@ -569,8 +569,8 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 define hidden void @VP8LConvertBGRAToRGB_C(ptr noalias nofree noundef readonly captures(address) %0, i32 noundef %1, ptr noalias nofree noundef writeonly captures(none) %2) #2 {
 bb.a:
   %i.a = sext i32 %1 to i64
-  %.idx = shl nsw i64 %i.a, 2
-  %i.b = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.a, 2
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.c = icmp sgt i32 %1, 0
   br i1 %i.c, label %.lr.ph, label %._crit_edge
 
@@ -601,8 +601,8 @@ bb.a:
 define hidden void @VP8LConvertBGRAToRGBA_C(ptr noalias nofree noundef readonly captures(address) %0, i32 noundef %1, ptr noalias nofree noundef writeonly captures(none) %2) #2 {
 bb.a:
   %i.a = sext i32 %1 to i64
-  %.idx = shl nsw i64 %i.a, 2
-  %i.b = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.a, 2
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.c = icmp sgt i32 %1, 0
   br i1 %i.c, label %.lr.ph, label %._crit_edge
 
@@ -638,7 +638,7 @@ define hidden void @VP8LConvertBGRAToRGBA4444_C(ptr noalias nofree noundef reado
 bb.a:
   %i.a = sext i32 %1 to i64
   %.idx = shl nsw i64 %i.a, 2                     ; 2 uses
-  %i.b = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.c = icmp sgt i32 %1, 0
   br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
 
@@ -724,7 +724,7 @@ define hidden void @VP8LConvertBGRAToRGB565_C(ptr noalias nofree noundef readonl
 bb.a:
   %i.a = sext i32 %1 to i64
   %.idx = shl nsw i64 %i.a, 2                     ; 2 uses
-  %i.b = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.c = icmp sgt i32 %1, 0
   br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
 
@@ -813,8 +813,8 @@ middle.block:                                     ; preds = %vector.body
 define hidden void @VP8LConvertBGRAToBGR_C(ptr noalias nofree noundef readonly captures(address) %0, i32 noundef %1, ptr noalias nofree noundef writeonly captures(none) %2) #2 {
 bb.a:
   %i.a = sext i32 %1 to i64
-  %.idx = shl nsw i64 %i.a, 2
-  %i.b = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.a, 2
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.c = icmp sgt i32 %1, 0
   br i1 %i.c, label %.lr.ph, label %._crit_edge
 
@@ -899,7 +899,7 @@ bb.h:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !71)
   %i.i = sext i32 %1 to i64
   %.idx.i42 = shl nsw i64 %i.i, 2                 ; 2 uses
-  %i.j = getelementptr inbounds i8, ptr %0, i64 %.idx.i42
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i42
   %i.k = icmp sgt i32 %1, 0
   br i1 %i.k, label %.lr.ph.i.preheader, label %CopyOrSwap.exit
 
@@ -964,7 +964,7 @@ bb.i:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !78)
   %i.ah = sext i32 %1 to i64
   %.idx.i43 = shl nsw i64 %i.ah, 2                ; 2 uses
-  %i.ai = getelementptr inbounds i8, ptr %0, i64 %.idx.i43
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i43
   %i.aj = icmp sgt i32 %1, 0
   br i1 %i.aj, label %.lr.ph.i44.preheader, label %CopyOrSwap.exit47
 
