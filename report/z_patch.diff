@@ -1,0 +1,153 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 6c4f8d08031dd..9b3ec370876d1 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -6537,6 +6537,7 @@ Instruction *InstCombinerImpl::foldICmpWithCastOp(ICmpInst &ICmp) {
+                         SimplifiedOp1 ? SimplifiedOp1 : ICmp.getOperand(1));
+ 
+   auto *CastOp0 = dyn_cast<CastInst>(ICmp.getOperand(0));
++  Value *Op1 = ICmp.getOperand(1);
+   if (!CastOp0)
+     return nullptr;
+   if (!isa<Constant>(ICmp.getOperand(1)) && !isa<CastInst>(ICmp.getOperand(1)))
+@@ -6548,33 +6549,32 @@ Instruction *InstCombinerImpl::foldICmpWithCastOp(ICmpInst &ICmp) {
+ 
+   // Turn icmp (ptrtoint x), (ptrtoint/c) into a compare of the input if the
+   // integer type is the same size as the pointer type.
+-  // TODO: for icmp (ptrtoaddr), (ptrtoaddr), we don't need this check;
+-  // currently it is always false if the pointer has non-address bits.
+   auto CompatibleSizes = [&](Type *PtrTy, Type *IntTy) {
+-    if (isa<VectorType>(PtrTy)) {
+-      PtrTy = cast<VectorType>(PtrTy)->getElementType();
+-      IntTy = cast<VectorType>(IntTy)->getElementType();
+-    }
+-    return DL.getPointerTypeSizeInBits(PtrTy) == IntTy->getIntegerBitWidth();
++    unsigned IntWidth = IntTy->getScalarType()->getIntegerBitWidth();
++    PtrTy = PtrTy->getScalarType();
++    unsigned IndexWidth = DL.getAddressSizeInBits(PtrTy);
++    unsigned PtrWidth = DL.getPointerTypeSizeInBits(PtrTy);
++    // For ptrtoint/inttoptr, we must check that IntWidth == IndexWidth and also
++    // IndexWidth == PtrWidth to (not) handle non-integral pointers.
++    return IntWidth == IndexWidth && IndexWidth == PtrWidth;
+   };
+-  if (isa<PtrToIntInst, PtrToAddrInst>(CastOp0) &&
+-      CompatibleSizes(SrcTy, DestTy)) {
++  if (isa<PtrToIntInst, PtrToAddrInst>(CastOp0)) {
++    bool HasPtrToInt = isa<PtrToIntInst>(CastOp0);
+     Value *NewOp1 = nullptr;
+-    if (auto *PtrToIntOp1 = dyn_cast<PtrToIntOperator>(ICmp.getOperand(1))) {
+-      Value *PtrSrc = PtrToIntOp1->getOperand(0);
+-      if (PtrSrc->getType() == Op0Src->getType())
+-        NewOp1 = PtrToIntOp1->getOperand(0);
+-    } else if (auto *PtrToAddrOp1 =
+-                   dyn_cast<PtrToAddrOperator>(ICmp.getOperand(1))) {
+-      Value *PtrSrc = PtrToAddrOp1->getOperand(0);
+-      if (PtrSrc->getType() == Op0Src->getType())
+-        NewOp1 = PtrToAddrOp1->getOperand(0);
++    if (auto *PtrToIntOp1 = dyn_cast<PtrToIntOperator>(Op1)) {
++      NewOp1 = PtrToIntOp1->getOperand(0);
++      HasPtrToInt = true;
++    } else if (auto *PtrToAddrOp1 = dyn_cast<PtrToAddrOperator>(Op1)) {
++      NewOp1 = PtrToAddrOp1->getOperand(0);
+     } else if (auto *RHSC = dyn_cast<Constant>(ICmp.getOperand(1))) {
+       NewOp1 = ConstantExpr::getIntToPtr(RHSC, SrcTy);
+     }
+ 
+-    if (NewOp1)
+-      return new ICmpInst(ICmp.getPredicate(), Op0Src, NewOp1);
++    // For ptrtoaddr, IntWidth == IndexWidth is implied and we don't need to
++    // check PtrWidth.
++    if (!HasPtrToInt || CompatibleSizes(SrcTy, DestTy))
++      if (NewOp1 && NewOp1->getType() == Op0Src->getType())
++        return new ICmpInst(ICmp.getPredicate(), Op0Src, NewOp1);
+   }
+ 
+   // Do the same in the other direction for icmp (inttoptr x), (inttoptr/c).
+diff --git a/llvm/test/Transforms/InstCombine/cast_ptr.ll b/llvm/test/Transforms/InstCombine/cast_ptr.ll
+index c80a32868640f..5319f1352b368 100644
+--- a/llvm/test/Transforms/InstCombine/cast_ptr.ll
++++ b/llvm/test/Transforms/InstCombine/cast_ptr.ll
+@@ -106,6 +106,61 @@ define i1 @test2_as2_larger(ptr addrspace(2) %a, ptr addrspace(2) %b) {
+   ret i1 %r
+ }
+ 
++; These casts on a non-integral ptr type should not be folded away for ptrtoint.
++
++define i1 @test3_as3_same_int(ptr addrspace(3) %a, ptr addrspace(3) %b) {
++; CHECK-LABEL: @test3_as3_same_int(
++; CHECK-NEXT:    [[TA:%.*]] = ptrtoint ptr addrspace(3) [[A:%.*]] to i32
++; CHECK-NEXT:    [[TB:%.*]] = ptrtoint ptr addrspace(3) [[B:%.*]] to i32
++; CHECK-NEXT:    [[R:%.*]] = icmp eq i32 [[TA]], [[TB]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %ta = ptrtoint ptr addrspace(3) %a to i32
++  %tb = ptrtoint ptr addrspace(3) %b to i32
++  %r = icmp eq i32 %ta, %tb
++  ret i1 %r
++}
++
++define i1 @test3_as3_same_int_ptrtoaddr(ptr addrspace(3) %a, ptr addrspace(3) %b) {
++; CHECK-LABEL: @test3_as3_same_int_ptrtoaddr(
++; CHECK-NEXT:    [[R:%.*]] = icmp eq ptr addrspace(3) [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %ta = ptrtoaddr ptr addrspace(3) %a to i16
++  %tb = ptrtoaddr ptr addrspace(3) %b to i16
++  %r = icmp eq i16 %ta, %tb
++  ret i1 %r
++}
++
++define i1 @test3_as3_same_int_ptrtoint(ptr addrspace(3) %a, ptr addrspace(3) %b) {
++; CHECK-LABEL: @test3_as3_same_int_ptrtoint(
++; CHECK-NEXT:    [[TA:%.*]] = ptrtoaddr ptr addrspace(3) [[A:%.*]] to i16
++; CHECK-NEXT:    [[TMP1:%.*]] = ptrtoint ptr addrspace(3) [[B:%.*]] to i32
++; CHECK-NEXT:    [[TB:%.*]] = trunc i32 [[TMP1]] to i16
++; CHECK-NEXT:    [[R:%.*]] = icmp eq i16 [[TA]], [[TB]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %ta = ptrtoaddr ptr addrspace(3) %a to i16
++  %tb = ptrtoint ptr addrspace(3) %b to i16
++  %r = icmp eq i16 %ta, %tb
++  ret i1 %r
++}
++
++; These casts should not be folded away.
++
++define i1 @test3_as3_larger(ptr addrspace(3) %a, ptr addrspace(3) %b) {
++; CHECK-LABEL: @test3_as3_larger(
++; CHECK-NEXT:    [[TMP1:%.*]] = ptrtoint ptr addrspace(3) [[A:%.*]] to i32
++; CHECK-NEXT:    [[TMP2:%.*]] = ptrtoint ptr addrspace(3) [[B:%.*]] to i32
++; CHECK-NEXT:    [[R:%.*]] = icmp eq i32 [[TMP1]], [[TMP2]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %ta = ptrtoint ptr addrspace(3) %a to i33
++  %tb = ptrtoint ptr addrspace(3) %b to i33
++  %r = icmp eq i33 %ta, %tb
++  ret i1 %r
++}
++
+ ; These casts should not be folded away.
+ 
+ define i1 @test2_diff_as(ptr %p, ptr addrspace(1) %q) {
+diff --git a/llvm/test/Transforms/PhaseOrdering/scev-custom-dl.ll b/llvm/test/Transforms/PhaseOrdering/scev-custom-dl.ll
+index 978ecd2bd32ac..bdcaaca9390c5 100644
+--- a/llvm/test/Transforms/PhaseOrdering/scev-custom-dl.ll
++++ b/llvm/test/Transforms/PhaseOrdering/scev-custom-dl.ll
+@@ -198,13 +198,13 @@ define void @test_range_ref1(i8 %t) {
+ ; CHECK-NEXT:    %t.ptr = inttoptr i40 %0 to ptr
+ ; CHECK-NEXT:    --> %t.ptr U: [0,256) S: [0,256)
+ ; CHECK-NEXT:    %idx = phi ptr [ %t.ptr, %entry ], [ %snext, %loop ]
+-; CHECK-NEXT:    --> {%t.ptr,+,1}<nuw><nsw><%loop> U: [0,297) S: [0,297) Exits: (-1 + (-1 * (ptrtoaddr ptr %t.ptr to i32))<nsw> + ((1 + (ptrtoaddr ptr %t.ptr to i32))<nuw><nsw> umax (ptrtoaddr ptr inttoptr (i8 42 to ptr) to i32)) + %t.ptr) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {%t.ptr,+,1}<nuw><nsw><%loop> U: [0,297) S: [0,297) Exits: (-1 + (-1 * (ptrtoaddr ptr %t.ptr to i32))<nsw> + (ptrtoaddr ptr inttoptr (i8 42 to ptr) to i32) + %t.ptr) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %snext = getelementptr inbounds nuw i8, ptr %idx, i32 1
+-; CHECK-NEXT:    --> {(1 + %t.ptr)<nuw><nsw>,+,1}<nuw><nsw><%loop> U: [1,298) S: [1,298) Exits: ((-1 * (ptrtoaddr ptr %t.ptr to i32))<nsw> + ((1 + (ptrtoaddr ptr %t.ptr to i32))<nuw><nsw> umax (ptrtoaddr ptr inttoptr (i8 42 to ptr) to i32)) + %t.ptr) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(1 + %t.ptr)<nuw><nsw>,+,1}<nuw><nsw><%loop> U: [1,298) S: [1,298) Exits: ((-1 * (ptrtoaddr ptr %t.ptr to i32))<nsw> + (ptrtoaddr ptr inttoptr (i8 42 to ptr) to i32) + %t.ptr) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_range_ref1
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (-1 * (ptrtoaddr ptr %t.ptr to i32))<nsw> + ((1 + (ptrtoaddr ptr %t.ptr to i32))<nuw><nsw> umax (ptrtoaddr ptr inttoptr (i8 42 to ptr) to i32)))
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (-1 * (ptrtoaddr ptr %t.ptr to i32))<nsw> + (ptrtoaddr ptr inttoptr (i8 42 to ptr) to i32))
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 41
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (-1 * (ptrtoaddr ptr %t.ptr to i32))<nsw> + ((1 + (ptrtoaddr ptr %t.ptr to i32))<nuw><nsw> umax (ptrtoaddr ptr inttoptr (i8 42 to ptr) to i32)))
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (-1 * (ptrtoaddr ptr %t.ptr to i32))<nsw> + (ptrtoaddr ptr inttoptr (i8 42 to ptr) to i32))
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+  entry:
