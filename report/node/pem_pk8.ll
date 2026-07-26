@@ -201,9 +201,9 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not30, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.j = load ptr, ptr %1, align 8, !tbaa !9
+  %i.j = load ptr, ptr %1, align 8, !tbaa !10
   call void @EVP_PKEY_free(ptr noundef %i.j) #4
-  store ptr %i.i, ptr %1, align 8, !tbaa !9
+  store ptr %i.i, ptr %1, align 8, !tbaa !10
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.j, %bb.h, %bb.g, %bb.a, %bb.f
@@ -473,12 +473,13 @@ attributes #5 = { nounwind willreturn memory(read) }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
-!4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!5 = !{!6, !6, i64 0}
-!6 = !{!"int", !7, i64 0}
-!7 = !{!"omnipotent char", !8, i64 0}
-!8 = !{!"Simple C/C++ TBAA"}
-!9 = !{!10, !10, i64 0}
-!10 = !{!"p1 _ZTS11evp_pkey_st", !11, i64 0}
-!11 = !{!"any pointer", !7, i64 0}
+!4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!5 = !{!6, !7, i64 0}
+!6 = !{!"__libc_errno", !7, i64 0}
+!7 = !{!"int", !8, i64 0}
+!8 = !{!"omnipotent char", !9, i64 0}
+!9 = !{!"Simple C/C++ TBAA"}
+!10 = !{!11, !11, i64 0}
+!11 = !{!"p1 _ZTS11evp_pkey_st", !12, i64 0}
+!12 = !{!"any pointer", !8, i64 0}
 end_hunk_0

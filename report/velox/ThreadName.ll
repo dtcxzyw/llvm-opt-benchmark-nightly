@@ -38,7 +38,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i8 0, ptr %i.b, align 8, !tbaa !11
+  store i8 0, ptr %i.b, align 8, !tbaa !12
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -61,7 +61,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 6 uses
-  store ptr %i.c, ptr %3, align 8, !tbaa !14
+  store ptr %i.c, ptr %3, align 8, !tbaa !15
   %i.d = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #12 ; 8 uses
   %i.e = icmp ugt i64 %i.d, 15
   br i1 %i.e, label %bb.c, label %._crit_edge.i.i
@@ -77,7 +77,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.g = add nuw i64 %i.d, 1                      ; 2 uses
   %i.h = icmp slt i64 %i.g, 0
-  br i1 %i.h, label %.noexc11.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i, !prof !18
+  br i1 %i.h, label %.noexc11.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i, !prof !19
 
 .noexc11.i:                                       ; preds = %bb.d
   call void @_ZSt17__throw_bad_allocv() #13
@@ -85,8 +85,8 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i: ; preds = %bb.d
   %i.i = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #14 ; 2 uses
-  store ptr %i.i, ptr %3, align 8, !tbaa !19
-  store i64 %i.d, ptr %i.c, align 8, !tbaa !22
+  store ptr %i.i, ptr %3, align 8, !tbaa !20
+  store i64 %i.d, ptr %i.c, align 8, !tbaa !23
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i, %bb.b
@@ -97,8 +97,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i: ; 
   ]
 
 bb.e:                                             ; preds = %._crit_edge.i.i
-  %i.k = load i8, ptr %2, align 1, !tbaa !22
-  store i8 %i.k, ptr %i.j, align 1, !tbaa !22
+  %i.k = load i8, ptr %2, align 1, !tbaa !23
+  store i8 %i.k, ptr %i.j, align 1, !tbaa !23
   br label %bb.g
 
 bb.f:                                             ; preds = %._crit_edge.i.i
@@ -107,18 +107,18 @@ bb.f:                                             ; preds = %._crit_edge.i.i
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %._crit_edge.i.i
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  store i64 %i.d, ptr %i.l, align 8, !tbaa !23
+  store i64 %i.d, ptr %i.l, align 8, !tbaa !24
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.d
-  store i8 0, ptr %i.m, align 1, !tbaa !22
+  store i8 0, ptr %i.m, align 1, !tbaa !23
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  store ptr %i.o, ptr %0, align 8, !tbaa !14
-  %i.p = load ptr, ptr %3, align 8, !tbaa !19     ; 2 uses
+  store ptr %i.o, ptr %0, align 8, !tbaa !15
+  %i.p = load ptr, ptr %3, align 8, !tbaa !20     ; 2 uses
   %i.q = icmp eq ptr %i.p, %i.c
   br i1 %i.q, label %bb.h, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.r = load i64, ptr %i.l, align 8, !tbaa !23   ; 3 uses
+  %i.r = load i64, ptr %i.l, align 8, !tbaa !24   ; 3 uses
   %i.s = icmp ult i64 %i.r, 16
   call void @llvm.assume(i1 %i.s)
   %i.t = add nuw nsw i64 %i.r, 1
@@ -126,23 +126,23 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.g
-  store ptr %i.p, ptr %0, align 8, !tbaa !19
-  %i.u = load i64, ptr %i.c, align 8, !tbaa !22
-  store i64 %i.u, ptr %i.o, align 8, !tbaa !22
-  %.pre = load i64, ptr %i.l, align 8, !tbaa !23
+  store ptr %i.p, ptr %0, align 8, !tbaa !20
+  %i.u = load i64, ptr %i.c, align 8, !tbaa !23
+  store i64 %i.u, ptr %i.o, align 8, !tbaa !23
+  %.pre = load i64, ptr %i.l, align 8, !tbaa !24
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.h, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %i.v = phi i64 [ %i.r, %bb.h ], [ %.pre, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ]
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.v, ptr %i.w, align 8, !tbaa !23
-  store i8 1, ptr %i.n, align 8, !tbaa !24
+  store i64 %i.v, ptr %i.w, align 8, !tbaa !24
+  store i8 1, ptr %i.n, align 8, !tbaa !25
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.a
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i8 0, ptr %i.x, align 8, !tbaa !11
+  store i8 0, ptr %i.x, align 8, !tbaa !12
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -275,24 +275,25 @@ attributes #15 = { nounwind willreturn memory(none) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!12, !13, i64 32}
-!12 = !{!"_ZTSN5folly8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE31StorageNonTriviallyDestructibleE", !9, i64 0, !13, i64 32}
-!13 = !{!"bool", !9, i64 0}
-!14 = !{!15, !16, i64 0}
-!15 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !16, i64 0}
-!16 = !{!"p1 omnipotent char", !17, i64 0}
-!17 = !{!"any pointer", !9, i64 0}
-!18 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!19 = !{!20, !16, i64 0}
-!20 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !15, i64 0, !21, i64 8, !9, i64 16}
-!21 = !{!"long", !9, i64 0}
-!22 = !{!9, !9, i64 0}
-!23 = !{!20, !21, i64 8}
-!24 = !{!25, !13, i64 32}
-!25 = !{!"_ZTSN5folly8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE", !12, i64 0}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!13, !14, i64 32}
+!13 = !{!"_ZTSN5folly8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE31StorageNonTriviallyDestructibleE", !10, i64 0, !14, i64 32}
+!14 = !{!"bool", !10, i64 0}
+!15 = !{!16, !17, i64 0}
+!16 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !17, i64 0}
+!17 = !{!"p1 omnipotent char", !18, i64 0}
+!18 = !{!"any pointer", !10, i64 0}
+!19 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!20 = !{!21, !17, i64 0}
+!21 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !16, i64 0, !22, i64 8, !10, i64 16}
+!22 = !{!"long", !10, i64 0}
+!23 = !{!10, !10, i64 0}
+!24 = !{!21, !22, i64 8}
+!25 = !{!26, !14, i64 32}
+!26 = !{!"_ZTSN5folly8OptionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE", !13, i64 0}
 end_hunk_0

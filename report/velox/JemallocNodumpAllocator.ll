@@ -11,9 +11,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @_ZN5folly23JemallocNodumpAllocatorC2ENS0_5StateE(ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(8) initializes((0, 8)) %0, i32 %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store i32 0, ptr %0, align 4, !tbaa !11
+  store i32 0, ptr %0, align 4, !tbaa !12
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 0, ptr %i.a, align 4, !tbaa !13
+  store i32 0, ptr %i.a, align 4, !tbaa !14
   ret void
 }
 
@@ -33,7 +33,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !13
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !14
   %i.c = tail call ptr @mallocx(i64 noundef %1, i32 noundef %i.b) #11
   br label %bb.d
 
@@ -60,7 +60,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !13
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !14
   %i.c = tail call ptr @rallocx(ptr noundef %1, i64 noundef %2, i32 noundef %i.b) #11
   br label %bb.d
 
@@ -87,7 +87,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !13
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !14
   tail call void @dallocx(ptr noundef %1, i32 noundef %i.b) #11
   br label %bb.d
 
@@ -130,7 +130,7 @@ define noundef nonnull align 4 dereferenceable(8) ptr @_ZN5folly29globalJemalloc
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5folly29globalJemallocNodumpAllocatorEvE8instance acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %bb.f, !prof !14
+  br i1 %i.b, label %bb.b, label %bb.f, !prof !15
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly29globalJemallocNodumpAllocatorEvE8instance) #11
@@ -146,12 +146,12 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  store ptr %i.d, ptr @_ZZN5folly29globalJemallocNodumpAllocatorEvE8instance, align 8, !tbaa !15
+  store ptr %i.d, ptr @_ZZN5folly29globalJemallocNodumpAllocatorEvE8instance, align 8, !tbaa !16
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5folly29globalJemallocNodumpAllocatorEvE8instance) #11
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.b, %bb.a
-  %i.e = load ptr, ptr @_ZZN5folly29globalJemallocNodumpAllocatorEvE8instance, align 8, !tbaa !15
+  %i.e = load ptr, ptr @_ZZN5folly29globalJemallocNodumpAllocatorEvE8instance, align 8, !tbaa !16
   ret ptr %i.e
 
 bb.g:                                             ; preds = %bb.c
@@ -213,16 +213,17 @@ attributes #15 = { builtin nounwind }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!12, !8, i64 0}
-!12 = !{!"_ZTSN5folly23JemallocNodumpAllocatorE", !8, i64 0, !8, i64 4}
-!13 = !{!12, !8, i64 4}
-!14 = !{!"branch_weights", i32 1, i32 1048575}
-!15 = !{!16, !16, i64 0}
-!16 = !{!"p1 _ZTSN5folly23JemallocNodumpAllocatorE", !17, i64 0}
-!17 = !{!"any pointer", !9, i64 0}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!13, !9, i64 0}
+!13 = !{!"_ZTSN5folly23JemallocNodumpAllocatorE", !9, i64 0, !9, i64 4}
+!14 = !{!13, !9, i64 4}
+!15 = !{!"branch_weights", i32 1, i32 1048575}
+!16 = !{!17, !17, i64 0}
+!17 = !{!"p1 _ZTSN5folly23JemallocNodumpAllocatorE", !18, i64 0}
+!18 = !{!"any pointer", !10, i64 0}
 end_hunk_0

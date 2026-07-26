@@ -45,7 +45,7 @@ define void @_ZN5folly6LoggerC2ENS_5RangeIPKcEE(ptr nofree noundef nonnull write
 bb.a:
   %i.a = load atomic ptr, ptr @_ZZN5folly6detail30StaticSingletonManagerWithRtti6globalIZNS_8LoggerDB3getEvE9SingletonvNS1_9ArgCreateILb0EEEEERT1_vE3arg acquire, align 8 ; 2 uses
   %.not.i = icmp eq ptr %i.a, null
-  br i1 %.not.i, label %bb.b, label %_ZN5folly6detail30StaticSingletonManagerWithRtti6createIZNS_8LoggerDB3getEvE9SingletonJELb0EEERT_RNS1_9ArgCreateIXT1_EEE.exit, !prof !11
+  br i1 %.not.i, label %bb.b, label %_ZN5folly6detail30StaticSingletonManagerWithRtti6createIZNS_8LoggerDB3getEvE9SingletonJELb0EEERT_RNS1_9ArgCreateIXT1_EEE.exit, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call noundef ptr @_ZN5folly6detail30StaticSingletonManagerWithRtti7create_ILb0EEEPvRNS1_3ArgE(ptr noundef nonnull align 8 dereferenceable(32) @_ZZN5folly6detail30StaticSingletonManagerWithRtti6globalIZNS_8LoggerDB3getEvE9SingletonvNS1_9ArgCreateILb0EEEEERT1_vE3arg)
@@ -54,7 +54,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN5folly6detail30StaticSingletonManagerWithRtti6createIZNS_8LoggerDB3getEvE9SingletonJELb0EEERT_RNS1_9ArgCreateIXT1_EEE.exit: ; preds = %bb.a, %bb.b
   %i.c = phi ptr [ %i.b, %bb.b ], [ %i.a, %bb.a ]
   %i.d = tail call noundef ptr @_ZN5folly8LoggerDB11getCategoryENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(232) %i.c, ptr %1, ptr %2)
-  store ptr %i.d, ptr %0, align 8, !tbaa !12
+  store ptr %i.d, ptr %0, align 8, !tbaa !13
   ret void
 }
 
@@ -63,7 +63,7 @@ declare noundef ptr @_ZN5folly8LoggerDB11getCategoryENS_5RangeIPKcEE(ptr noundef
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @_ZN5folly6LoggerC2EPNS_11LogCategoryE(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0, ptr noundef %1) unnamed_addr #2 align 2 {
 bb.a:
-  store ptr %1, ptr %0, align 8, !tbaa !12
+  store ptr %1, ptr %0, align 8, !tbaa !13
   ret void
 }
 
@@ -87,7 +87,7 @@ bb.a:
 bb.b:                                             ; preds = %.noexc
   %i.b = load atomic i8, ptr @_ZGVZZN5folly8LoggerDB3getEvEN9SingletonC1EvE5guard acquire, align 8
   %i.c = icmp eq i8 %i.b, 0
-  br i1 %i.c, label %bb.c, label %_ZZN5folly8LoggerDB3getEvEN9SingletonC2Ev.exit, !prof !16
+  br i1 %i.c, label %bb.c, label %_ZZN5folly8LoggerDB3getEvEN9SingletonC2Ev.exit, !prof !17
 
 bb.c:                                             ; preds = %bb.b
   %i.d = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZZN5folly8LoggerDB3getEvEN9SingletonC1EvE5guard) #10
@@ -95,9 +95,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %_ZZN5folly8LoggerDB3getEvEN9SingletonC2Ev.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store i8 0, ptr @_ZZZN5folly8LoggerDB3getEvEN9SingletonC1EvE5guard, align 8, !tbaa !17, !alias.scope !20
+  store i8 0, ptr @_ZZZN5folly8LoggerDB3getEvEN9SingletonC1EvE5guard, align 8, !tbaa !18, !alias.scope !21
   %i.e = ptrtoint ptr %i.a to i64
-  store i64 %i.e, ptr getelementptr inbounds nuw (i8, ptr @_ZZZN5folly8LoggerDB3getEvEN9SingletonC1EvE5guard, i64 8), align 8, !tbaa !23, !alias.scope !20
+  store i64 %i.e, ptr getelementptr inbounds nuw (i8, ptr @_ZZZN5folly8LoggerDB3getEvEN9SingletonC1EvE5guard, i64 8), align 8, !tbaa !24, !alias.scope !21
   %i.f = tail call i32 @__cxa_atexit(ptr nonnull @_ZN5folly6detail14ScopeGuardImplIZZNS_8LoggerDB3getEvEN9SingletonC1EvEUlvE_Lb1EED2Ev, ptr nonnull @_ZZZN5folly8LoggerDB3getEvEN9SingletonC1EvE5guard, ptr nonnull @__dso_handle) #10 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZZN5folly8LoggerDB3getEvEN9SingletonC1EvE5guard) #10
   br label %_ZZN5folly8LoggerDB3getEvEN9SingletonC2Ev.exit
@@ -136,15 +136,15 @@ declare void @_ZN5folly18initializeLoggerDBERNS_8LoggerDBE(ptr noundef nonnull a
 declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZN5folly6detail14ScopeGuardImplIZZNS_8LoggerDB3getEvEN9SingletonC1EvEUlvE_Lb1EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 {
+define linkonce_odr void @_ZN5folly6detail14ScopeGuardImplIZZNS_8LoggerDB3getEvEN9SingletonC1EvEUlvE_Lb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i8, ptr %0, align 8, !tbaa !17, !range !25, !noundef !26
+  %i.a = load i8, ptr %0, align 8, !tbaa !18, !range !26, !noundef !27
   %i.b = trunc nuw i8 %i.a to i1
   br i1 %i.b, label %_ZN5folly6detail14ScopeGuardImplIZZNS_8LoggerDB3getEvEN9SingletonC1EvEUlvE_Lb1EE7executeEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !27
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !28
   invoke void @_ZN5folly8LoggerDB15cleanupHandlersEv(ptr noundef nonnull align 8 dereferenceable(232) %i.d)
           to label %_ZN5folly6detail14ScopeGuardImplIZZNS_8LoggerDB3getEvEN9SingletonC1EvEUlvE_Lb1EE7executeEv.exit unwind label %bb.c
 
@@ -153,7 +153,7 @@ bb.c:                                             ; preds = %bb.b
           catch ptr null
   %i.f = extractvalue { ptr, i32 } %i.e, 0
   %i.g = tail call ptr @__cxa_begin_catch(ptr %i.f) #10 ; 0 uses
-  tail call void @_ZN5folly6detail18ScopeGuardImplBase9terminateEv() #10, !inline_history !29
+  tail call void @_ZN5folly6detail18ScopeGuardImplBase9terminateEv() #10, !inline_history !30
   unreachable
 
 _ZN5folly6detail14ScopeGuardImplIZZNS_8LoggerDB3getEvEN9SingletonC1EvEUlvE_Lb1EE7executeEv.exit: ; preds = %bb.b, %bb.a
@@ -178,7 +178,7 @@ declare void @_ZN5folly8LoggerDB15cleanupHandlersEv(ptr noundef nonnull align 8 
 define void @_ZN5folly6LoggerC2EPNS_8LoggerDBENS_5RangeIPKcEE(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0, ptr noundef nonnull %1, ptr %2, ptr %3) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef ptr @_ZN5folly8LoggerDB11getCategoryENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(232) %1, ptr %2, ptr %3)
-  store ptr %i.a, ptr %0, align 8, !tbaa !12
+  store ptr %i.a, ptr %0, align 8, !tbaa !13
   ret void
 }
 
@@ -211,28 +211,29 @@ attributes #11 = { builtin nounwind }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!12 = !{!13, !14, i64 0}
-!13 = !{!"_ZTSN5folly6LoggerE", !14, i64 0}
-!14 = !{!"p1 _ZTSN5folly11LogCategoryE", !15, i64 0}
-!15 = !{!"any pointer", !9, i64 0}
-!16 = !{!"branch_weights", i32 1, i32 1048575}
-!17 = !{!18, !19, i64 0}
-!18 = !{!"_ZTSN5folly6detail18ScopeGuardImplBaseE", !19, i64 0}
-!19 = !{!"bool", !9, i64 0}
-!20 = !{!21}
-!21 = distinct !{!21, !22, !"_ZN5folly9makeGuardIZZNS_8LoggerDB3getEvEN9SingletonC1EvEUlvE_EENS_6detail14ScopeGuardImplINSt5decayIT_E4typeELb1EEEOS7_: argument 0"}
-!22 = distinct !{!22, !"_ZN5folly9makeGuardIZZNS_8LoggerDB3getEvEN9SingletonC1EvEUlvE_EENS_6detail14ScopeGuardImplINSt5decayIT_E4typeELb1EEEOS7_"}
-!23 = !{!24, !24, i64 0}
-!24 = !{!"p1 _ZTSZN5folly8LoggerDB3getEvE9Singleton", !15, i64 0}
-!25 = !{i8 0, i8 2}
-!26 = !{}
-!27 = !{!28, !24, i64 0}
-!28 = !{!"_ZTSZZN5folly8LoggerDB3getEvEN9SingletonC1EvEUlvE_", !24, i64 0}
-!29 = distinct !{null}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!13 = !{!14, !15, i64 0}
+!14 = !{!"_ZTSN5folly6LoggerE", !15, i64 0}
+!15 = !{!"p1 _ZTSN5folly11LogCategoryE", !16, i64 0}
+!16 = !{!"any pointer", !10, i64 0}
+!17 = !{!"branch_weights", i32 1, i32 1048575}
+!18 = !{!19, !20, i64 0}
+!19 = !{!"_ZTSN5folly6detail18ScopeGuardImplBaseE", !20, i64 0}
+!20 = !{!"bool", !10, i64 0}
+!21 = !{!22}
+!22 = distinct !{!22, !23, !"_ZN5folly9makeGuardIZZNS_8LoggerDB3getEvEN9SingletonC1EvEUlvE_EENS_6detail14ScopeGuardImplINSt5decayIT_E4typeELb1EEEOS7_: argument 0"}
+!23 = distinct !{!23, !"_ZN5folly9makeGuardIZZNS_8LoggerDB3getEvEN9SingletonC1EvEUlvE_EENS_6detail14ScopeGuardImplINSt5decayIT_E4typeELb1EEEOS7_"}
+!24 = !{!25, !25, i64 0}
+!25 = !{!"p1 _ZTSZN5folly8LoggerDB3getEvE9Singleton", !16, i64 0}
+!26 = !{i8 0, i8 2}
+!27 = !{}
+!28 = !{!29, !25, i64 0}
+!29 = !{!"_ZTSZZN5folly8LoggerDB3getEvEN9SingletonC1EvEUlvE_", !25, i64 0}
+!30 = distinct !{null}
 end_hunk_0

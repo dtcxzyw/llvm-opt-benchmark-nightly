@@ -9,7 +9,7 @@ $_ZN5folly6netops10DispatcherD2Ev = comdat any
 
 $_ZN5folly6netops10DispatcherD0Ev = comdat any
 
-@_ZTVN5folly6netops10DispatcherE = unnamed_addr constant { [28 x ptr] } { [28 x ptr] [ptr null, ptr @_ZTIN5folly6netops10DispatcherE, ptr @_ZN5folly6netops10Dispatcher6acceptENS_13NetworkSocketEP8sockaddrPj, ptr @_ZN5folly6netops10Dispatcher4bindENS_13NetworkSocketEPK8sockaddrj, ptr @_ZN5folly6netops10Dispatcher5closeENS_13NetworkSocketE, ptr @_ZN5folly6netops10Dispatcher7connectENS_13NetworkSocketEPK8sockaddrj, ptr @_ZN5folly6netops10Dispatcher11getpeernameENS_13NetworkSocketEP8sockaddrPj, ptr @_ZN5folly6netops10Dispatcher11getsocknameENS_13NetworkSocketEP8sockaddrPj, ptr @_ZN5folly6netops10Dispatcher10getsockoptENS_13NetworkSocketEiiPvPj, ptr @_ZN5folly6netops10Dispatcher9inet_atonEPKcP7in_addr, ptr @_ZN5folly6netops10Dispatcher6listenENS_13NetworkSocketEi, ptr @_ZN5folly6netops10Dispatcher4pollEPNS0_14PollDescriptorEmi, ptr @_ZN5folly6netops10Dispatcher4recvENS_13NetworkSocketEPvmi, ptr @_ZN5folly6netops10Dispatcher8recvfromENS_13NetworkSocketEPvmiP8sockaddrPj, ptr @_ZN5folly6netops10Dispatcher7recvmsgENS_13NetworkSocketEP6msghdri, ptr @_ZN5folly6netops10Dispatcher8recvmmsgENS_13NetworkSocketEP7mmsghdrjjP8timespec, ptr @_ZN5folly6netops10Dispatcher4sendENS_13NetworkSocketEPKvmi, ptr @_ZN5folly6netops10Dispatcher6sendtoENS_13NetworkSocketEPKvmiPK8sockaddrj, ptr @_ZN5folly6netops10Dispatcher7sendmsgENS_13NetworkSocketEPK6msghdri, ptr @_ZN5folly6netops10Dispatcher8sendmmsgENS_13NetworkSocketEP7mmsghdrji, ptr @_ZN5folly6netops10Dispatcher10setsockoptENS_13NetworkSocketEiiPKvj, ptr @_ZN5folly6netops10Dispatcher8shutdownENS_13NetworkSocketEi, ptr @_ZN5folly6netops10Dispatcher6socketEiii, ptr @_ZN5folly6netops10Dispatcher10socketpairEiiiPNS_13NetworkSocketE, ptr @_ZN5folly6netops10Dispatcher23set_socket_non_blockingENS_13NetworkSocketE, ptr @_ZN5folly6netops10Dispatcher24set_socket_close_on_execENS_13NetworkSocketE, ptr @_ZN5folly6netops10DispatcherD2Ev, ptr @_ZN5folly6netops10DispatcherD0Ev] }, align 8
+@_ZTVN5folly6netops10DispatcherE = constant { [28 x ptr] } { [28 x ptr] [ptr null, ptr @_ZTIN5folly6netops10DispatcherE, ptr @_ZN5folly6netops10Dispatcher6acceptENS_13NetworkSocketEP8sockaddrPj, ptr @_ZN5folly6netops10Dispatcher4bindENS_13NetworkSocketEPK8sockaddrj, ptr @_ZN5folly6netops10Dispatcher5closeENS_13NetworkSocketE, ptr @_ZN5folly6netops10Dispatcher7connectENS_13NetworkSocketEPK8sockaddrj, ptr @_ZN5folly6netops10Dispatcher11getpeernameENS_13NetworkSocketEP8sockaddrPj, ptr @_ZN5folly6netops10Dispatcher11getsocknameENS_13NetworkSocketEP8sockaddrPj, ptr @_ZN5folly6netops10Dispatcher10getsockoptENS_13NetworkSocketEiiPvPj, ptr @_ZN5folly6netops10Dispatcher9inet_atonEPKcP7in_addr, ptr @_ZN5folly6netops10Dispatcher6listenENS_13NetworkSocketEi, ptr @_ZN5folly6netops10Dispatcher4pollEPNS0_14PollDescriptorEmi, ptr @_ZN5folly6netops10Dispatcher4recvENS_13NetworkSocketEPvmi, ptr @_ZN5folly6netops10Dispatcher8recvfromENS_13NetworkSocketEPvmiP8sockaddrPj, ptr @_ZN5folly6netops10Dispatcher7recvmsgENS_13NetworkSocketEP6msghdri, ptr @_ZN5folly6netops10Dispatcher8recvmmsgENS_13NetworkSocketEP7mmsghdrjjP8timespec, ptr @_ZN5folly6netops10Dispatcher4sendENS_13NetworkSocketEPKvmi, ptr @_ZN5folly6netops10Dispatcher6sendtoENS_13NetworkSocketEPKvmiPK8sockaddrj, ptr @_ZN5folly6netops10Dispatcher7sendmsgENS_13NetworkSocketEPK6msghdri, ptr @_ZN5folly6netops10Dispatcher8sendmmsgENS_13NetworkSocketEP7mmsghdrji, ptr @_ZN5folly6netops10Dispatcher10setsockoptENS_13NetworkSocketEiiPKvj, ptr @_ZN5folly6netops10Dispatcher8shutdownENS_13NetworkSocketEi, ptr @_ZN5folly6netops10Dispatcher6socketEiii, ptr @_ZN5folly6netops10Dispatcher10socketpairEiiiPNS_13NetworkSocketE, ptr @_ZN5folly6netops10Dispatcher23set_socket_non_blockingENS_13NetworkSocketE, ptr @_ZN5folly6netops10Dispatcher24set_socket_close_on_execENS_13NetworkSocketE, ptr @_ZN5folly6netops10DispatcherD2Ev, ptr @_ZN5folly6netops10DispatcherD0Ev] }, align 8
 @_ZTIN5folly6netops10DispatcherE = constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSN5folly6netops10DispatcherE }, align 8
 @_ZTVN10__cxxabiv117__class_type_infoE = external global [0 x ptr]
 @_ZTSN5folly6netops10DispatcherE = constant [28 x i8] c"N5folly6netops10DispatcherE\00", align 1
@@ -190,7 +190,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZN5folly6netops10DispatcherD0Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) unnamed_addr #1 comdat align 2 {
+define linkonce_odr void @_ZN5folly6netops10DispatcherD0Ev(ptr noundef nonnull align 8 dereferenceable(8) %0) unnamed_addr #1 comdat align 2 {
 bb.a:
   tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 8) #5
   ret void
@@ -270,9 +270,10 @@ attributes #5 = { builtin nounwind }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
 end_hunk_0

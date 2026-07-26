@@ -19,7 +19,7 @@ $_ZTIN4absl12lts_2024011612crc_internal15CrcMemcpyEngineE = comdat any
 
 $_ZTSN4absl12lts_2024011612crc_internal15CrcMemcpyEngineE = comdat any
 
-@_ZTVN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE = unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE, ptr @_ZN4absl12lts_2024011612crc_internal15CrcMemcpyEngineD2Ev, ptr @_ZN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineD0Ev, ptr @_ZNK4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngine7ComputeEPvPKvmNS0_8crc32c_tE] }, align 8
+@_ZTVN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE = constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE, ptr @_ZN4absl12lts_2024011612crc_internal15CrcMemcpyEngineD2Ev, ptr @_ZN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineD0Ev, ptr @_ZNK4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngine7ComputeEPvPKvmNS0_8crc32c_tE] }, align 8
 @_ZTIN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE = constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE, ptr @_ZTIN4absl12lts_2024011612crc_internal15CrcMemcpyEngineE }, align 8
 @_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
 @_ZTSN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE = constant [61 x i8] c"N4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE\00", align 1
@@ -43,7 +43,7 @@ bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(8192) %i.e, ptr noundef nonnull align 1 dereferenceable(8192) %i.c, i64 8192, i1 false)
   %i.f = add i64 %i.b, 8192                       ; 2 uses
   %i.g = icmp ult i64 %i.f, %3
-  br i1 %i.g, label %.lr.ph, label %._crit_edge, !llvm.loop !7
+  br i1 %i.g, label %.lr.ph, label %._crit_edge, !llvm.loop !8
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi i64 [ 0, %bb.a ], [ %i.b, %.lr.ph ] ; 4 uses
@@ -71,9 +71,9 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define { ptr, ptr } @_ZN4absl12lts_2024011612crc_internal9CrcMemcpy22GetArchSpecificEnginesEv() local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #7 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE, i64 16), ptr %i.a, align 8, !tbaa !9
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE, i64 16), ptr %i.a, align 8, !tbaa !10
   %i.b = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #7 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE, i64 16), ptr %i.b, align 8, !tbaa !9
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE, i64 16), ptr %i.b, align 8, !tbaa !10
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %i.a, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %i.b, 1
   ret { ptr, ptr } %.fca.1.insert
@@ -85,9 +85,9 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #2
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4absl12lts_2024011612crc_internal9CrcMemcpy13GetTestEngineEii(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) initializes((0, 8)) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 _ZNSt10unique_ptrIN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineESt14default_deleteIS3_EED2Ev.exit:
-  %i.a = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #7, !noalias !11 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE, i64 16), ptr %i.a, align 8, !tbaa !9, !noalias !11
-  store ptr %i.a, ptr %0, align 8, !tbaa !14
+  %i.a = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #7, !noalias !12 ; 2 uses
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineE, i64 16), ptr %i.a, align 8, !tbaa !10, !noalias !12
+  store ptr %i.a, ptr %0, align 8, !tbaa !15
   ret void
 }
 
@@ -127,20 +127,21 @@ attributes #8 = { builtin nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = distinct !{!7, !8}
-!8 = !{!"llvm.loop.mustprogress"}
-!9 = !{!10, !10, i64 0}
-!10 = !{!"vtable pointer", !6, i64 0}
-!11 = !{!12}
-!12 = distinct !{!12, !13, !"_ZSt11make_uniqueIN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!13 = distinct !{!13, !"_ZSt11make_uniqueIN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
-!14 = !{!15, !16, i64 0}
-!15 = !{!"_ZTSSt10_Head_baseILm0EPN4absl12lts_2024011612crc_internal15CrcMemcpyEngineELb0EE", !16, i64 0}
-!16 = !{!"p1 _ZTSN4absl12lts_2024011612crc_internal15CrcMemcpyEngineE", !17, i64 0}
-!17 = !{!"any pointer", !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = distinct !{!8, !9}
+!9 = !{!"llvm.loop.mustprogress"}
+!10 = !{!11, !11, i64 0}
+!11 = !{!"vtable pointer", !7, i64 0}
+!12 = !{!13}
+!13 = distinct !{!13, !14, !"_ZSt11make_uniqueIN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
+!14 = distinct !{!14, !"_ZSt11make_uniqueIN4absl12lts_2024011612crc_internal23FallbackCrcMemcpyEngineEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!15 = !{!16, !17, i64 0}
+!16 = !{!"_ZTSSt10_Head_baseILm0EPN4absl12lts_2024011612crc_internal15CrcMemcpyEngineELb0EE", !17, i64 0}
+!17 = !{!"p1 _ZTSN4absl12lts_2024011612crc_internal15CrcMemcpyEngineE", !18, i64 0}
+!18 = !{!"any pointer", !6, i64 0}
 end_hunk_0

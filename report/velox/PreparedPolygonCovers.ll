@@ -3,7 +3,7 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-module asm
+module asm(target_features: "+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave", target_cpu: "x86-64")
     ".globl _ZSt21ios_base_library_initv"
 
 $_ZN4geos4geom4prep24PreparedPolygonPredicateD2Ev = comdat any
@@ -18,7 +18,7 @@ $_ZTIN4geos4geom4prep24PreparedPolygonPredicateE = comdat any
 
 $_ZTSN4geos4geom4prep24PreparedPolygonPredicateE = comdat any
 
-@_ZTVN4geos4geom4prep21PreparedPolygonCoversE = unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos4geom4prep21PreparedPolygonCoversE, ptr @_ZN4geos4geom4prep24PreparedPolygonPredicateD2Ev, ptr @_ZN4geos4geom4prep21PreparedPolygonCoversD0Ev, ptr @_ZN4geos4geom4prep21PreparedPolygonCovers24fullTopologicalPredicateEPKNS0_8GeometryE] }, align 8
+@_ZTVN4geos4geom4prep21PreparedPolygonCoversE = local_unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos4geom4prep21PreparedPolygonCoversE, ptr @_ZN4geos4geom4prep24PreparedPolygonPredicateD2Ev, ptr @_ZN4geos4geom4prep21PreparedPolygonCoversD0Ev, ptr @_ZN4geos4geom4prep21PreparedPolygonCovers24fullTopologicalPredicateEPKNS0_8GeometryE] }, align 8
 @_ZTIN4geos4geom4prep21PreparedPolygonCoversE = constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN4geos4geom4prep21PreparedPolygonCoversE, ptr @_ZTIN4geos4geom4prep31AbstractPreparedPolygonContainsE }, align 8
 @_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
 @_ZTSN4geos4geom4prep21PreparedPolygonCoversE = constant [41 x i8] c"N4geos4geom4prep21PreparedPolygonCoversE\00", align 1
@@ -32,8 +32,8 @@ $_ZTSN4geos4geom4prep24PreparedPolygonPredicateE = comdat any
 define noundef zeroext i1 @_ZN4geos4geom4prep21PreparedPolygonCovers24fullTopologicalPredicateEPKNS0_8GeometryE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(20) %0, ptr noundef %1) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !7    ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !11
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !8    ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !12
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = tail call noundef nonnull align 8 dereferenceable(40) ptr %i.e(ptr noundef nonnull align 8 dereferenceable(40) %i.b)
@@ -72,15 +72,16 @@ attributes #5 = { builtin nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 8}
-!8 = !{!"_ZTSN4geos4geom4prep24PreparedPolygonPredicateE", !9, i64 8}
-!9 = !{!"p1 _ZTSN4geos4geom4prep15PreparedPolygonE", !10, i64 0}
-!10 = !{!"any pointer", !5, i64 0}
-!11 = !{!12, !12, i64 0}
-!12 = !{!"vtable pointer", !6, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 8}
+!9 = !{!"_ZTSN4geos4geom4prep24PreparedPolygonPredicateE", !10, i64 8}
+!10 = !{!"p1 _ZTSN4geos4geom4prep15PreparedPolygonE", !11, i64 0}
+!11 = !{!"any pointer", !6, i64 0}
+!12 = !{!13, !13, i64 0}
+!13 = !{!"vtable pointer", !7, i64 0}
 end_hunk_0

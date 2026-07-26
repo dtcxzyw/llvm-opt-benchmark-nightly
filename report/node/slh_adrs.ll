@@ -100,7 +100,7 @@ bb.a:
 define internal void @slh_adrsc_set_layer_address(ptr nofree noundef writeonly captures(none) initializes((0, 1)) %0, i32 noundef %1) #1 {
 bb.a:
   %i.a = trunc i32 %1 to i8
-  store i8 %i.a, ptr %0, align 1, !tbaa !9
+  store i8 %i.a, ptr %0, align 1, !tbaa !10
   ret void
 }
 
@@ -118,7 +118,7 @@ define internal void @slh_adrsc_set_type_and_clear(ptr nofree noundef writeonly 
 bb.a:
   %i.a = trunc i32 %1 to i8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %i.a, ptr %i.b, align 1, !tbaa !9
+  store i8 %i.a, ptr %i.b, align 1, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.c, i8 0, i64 12, i1 false)
   ret void
@@ -202,10 +202,11 @@ attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
-!4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!5 = !{!6, !6, i64 0}
-!6 = !{!"int", !7, i64 0}
-!7 = !{!"omnipotent char", !8, i64 0}
-!8 = !{!"Simple C/C++ TBAA"}
-!9 = !{!7, !7, i64 0}
+!4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!5 = !{!6, !7, i64 0}
+!6 = !{!"__libc_errno", !7, i64 0}
+!7 = !{!"int", !8, i64 0}
+!8 = !{!"omnipotent char", !9, i64 0}
+!9 = !{!"Simple C/C++ TBAA"}
+!10 = !{!8, !8, i64 0}
 end_hunk_0

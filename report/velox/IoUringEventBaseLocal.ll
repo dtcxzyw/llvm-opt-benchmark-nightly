@@ -101,7 +101,7 @@ define linkonce_odr void @_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_19shared_m
 bb.a:
   %i.a = and i32 %2, 12
   %i.b = icmp eq i32 %i.a, 12
-  %.pre13 = load i32, ptr %1, align 4, !tbaa !7   ; 2 uses
+  %.pre13 = load i32, ptr %1, align 4, !tbaa !12  ; 2 uses
   %i.c = and i32 %.pre13, %2
   %i.d = icmp eq i32 %i.c, 12
   %or.cond = select i1 %i.b, i1 %i.d, i1 false
@@ -113,7 +113,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.g, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.b
-  %.pre = load i32, ptr %1, align 4, !tbaa !7
+  %.pre = load i32, ptr %1, align 4, !tbaa !12
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.a
@@ -135,7 +135,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.m = and i32 %i.j, %i.i
-  store i32 %i.m, ptr %1, align 4, !tbaa !7
+  store i32 %i.m, ptr %1, align 4, !tbaa !12
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.b, %bb.f, %bb.c
@@ -161,9 +161,11 @@ attributes #7 = { builtin allocsize(0) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!9, !9, i64 0}
 end_hunk_0

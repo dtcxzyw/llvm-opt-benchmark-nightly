@@ -22,7 +22,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.j, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = load <32 x i8>, ptr %i.e, align 32, !tbaa !11 ; 2 uses
+  %i.i = load <32 x i8>, ptr %i.e, align 32, !tbaa !12 ; 2 uses
   %i.j = icmp ult <32 x i8> %i.i, splat (i8 33)
   %i.k = icmp eq <32 x i8> %i.i, splat (i8 127)
   %i.l = or <32 x i1> %i.j, %i.k
@@ -45,7 +45,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN5folly4simd6detail19SimdForEachMainLoop16SmallStepsLambdaIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS4_NS_6detail25SimpleSimdStringUtilsImplIS7_E28HasSpaceOrCntrlSymbolsLambdaEEEEclILm0EEEbSt17integral_constantImXT_EE.exit: ; preds = %bb.d, %.loopexit
   %.1211 = phi ptr [ %.2.lcssa, %.loopexit ], [ %i.q, %bb.d ] ; 5 uses
-  %i.t = load <32 x i8>, ptr %.1211, align 1, !tbaa !11 ; 2 uses
+  %i.t = load <32 x i8>, ptr %.1211, align 1, !tbaa !12 ; 2 uses
   %i.u = icmp ult <32 x i8> %i.t, splat (i8 33)
   %i.v = icmp eq <32 x i8> %i.t, splat (i8 127)
   %i.w = or <32 x i1> %i.u, %i.v
@@ -59,7 +59,7 @@ bb.e:                                             ; preds = %_ZN5folly4simd6deta
   br i1 %i.z, label %_ZNK5folly4simd6detail19SimdForEachMainLoopclIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS4_NS_6detail25SimpleSimdStringUtilsImplIS7_E28HasSpaceOrCntrlSymbolsLambdaEEELm4EEEbiRPT_SF_RT0_St17integral_constantImXT1_EE.exit, label %_ZN5folly4simd6detail19SimdForEachMainLoop16SmallStepsLambdaIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS4_NS_6detail25SimpleSimdStringUtilsImplIS7_E28HasSpaceOrCntrlSymbolsLambdaEEEEclILm1EEEbSt17integral_constantImXT_EE.exit
 
 _ZN5folly4simd6detail19SimdForEachMainLoop16SmallStepsLambdaIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS4_NS_6detail25SimpleSimdStringUtilsImplIS7_E28HasSpaceOrCntrlSymbolsLambdaEEEEclILm1EEEbSt17integral_constantImXT_EE.exit: ; preds = %bb.e
-  %i.aa = load <32 x i8>, ptr %i.y, align 1, !tbaa !11 ; 2 uses
+  %i.aa = load <32 x i8>, ptr %i.y, align 1, !tbaa !12 ; 2 uses
   %i.ab = icmp ult <32 x i8> %i.aa, splat (i8 33)
   %i.ac = icmp eq <32 x i8> %i.aa, splat (i8 127)
   %i.ad = or <32 x i1> %i.ab, %i.ac
@@ -73,7 +73,7 @@ bb.f:                                             ; preds = %_ZN5folly4simd6deta
   br i1 %i.ag, label %_ZNK5folly4simd6detail19SimdForEachMainLoopclIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS4_NS_6detail25SimpleSimdStringUtilsImplIS7_E28HasSpaceOrCntrlSymbolsLambdaEEELm4EEEbiRPT_SF_RT0_St17integral_constantImXT1_EE.exit, label %_ZN5folly4simd6detail19SimdForEachMainLoop16SmallStepsLambdaIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS4_NS_6detail25SimpleSimdStringUtilsImplIS7_E28HasSpaceOrCntrlSymbolsLambdaEEEEclILm2EEEbSt17integral_constantImXT_EE.exit
 
 _ZN5folly4simd6detail19SimdForEachMainLoop16SmallStepsLambdaIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS4_NS_6detail25SimpleSimdStringUtilsImplIS7_E28HasSpaceOrCntrlSymbolsLambdaEEEEclILm2EEEbSt17integral_constantImXT_EE.exit: ; preds = %bb.f
-  %i.ah = load <32 x i8>, ptr %i.af, align 1, !tbaa !11 ; 2 uses
+  %i.ah = load <32 x i8>, ptr %i.af, align 1, !tbaa !12 ; 2 uses
   %i.ai = icmp ult <32 x i8> %i.ah, splat (i8 33)
   %i.aj = icmp eq <32 x i8> %i.ah, splat (i8 127)
   %i.ak = or <32 x i1> %i.ai, %i.aj
@@ -87,7 +87,7 @@ bb.g:                                             ; preds = %_ZN5folly4simd6deta
   br i1 %i.an, label %_ZNK5folly4simd6detail19SimdForEachMainLoopclIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS4_NS_6detail25SimpleSimdStringUtilsImplIS7_E28HasSpaceOrCntrlSymbolsLambdaEEELm4EEEbiRPT_SF_RT0_St17integral_constantImXT1_EE.exit, label %_ZN5folly4simd6detail11UnrollUtils15unrollUntilImplINS1_19SimdForEachMainLoop16SmallStepsLambdaIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS6_NS_6detail25SimpleSimdStringUtilsImplIS9_E28HasSpaceOrCntrlSymbolsLambdaEEEEEJLm0ELm1ELm2ELm3EEEEbT_St16integer_sequenceImJXspT0_EEE.exit
 
 _ZN5folly4simd6detail11UnrollUtils15unrollUntilImplINS1_19SimdForEachMainLoop16SmallStepsLambdaIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS6_NS_6detail25SimpleSimdStringUtilsImplIS9_E28HasSpaceOrCntrlSymbolsLambdaEEEEEJLm0ELm1ELm2ELm3EEEEbT_St16integer_sequenceImJXspT0_EEE.exit: ; preds = %bb.g
-  %i.ao = load <32 x i8>, ptr %i.am, align 1, !tbaa !11 ; 2 uses
+  %i.ao = load <32 x i8>, ptr %i.am, align 1, !tbaa !12 ; 2 uses
   %i.ap = icmp ult <32 x i8> %i.ao, splat (i8 33)
   %i.aq = icmp eq <32 x i8> %i.ao, splat (i8 127)
   %i.ar = or <32 x i1> %i.ap, %i.aq
@@ -112,7 +112,7 @@ bb.i:                                             ; preds = %_ZN5folly4simd6deta
   %i.ay = getelementptr inbounds nuw i8, ptr %.2209, i64 128
   %i.az = add nsw i64 %.0.i210, -1                ; 2 uses
   %.not.i3 = icmp eq i64 %i.az, 0
-  br i1 %.not.i3, label %.loopexit, label %_ZN5folly4simd6detail11UnrollUtils15unrollUntilImplIZNKS1_19SimdForEachMainLoopclIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS6_NS_6detail25SimpleSimdStringUtilsImplIS9_E28HasSpaceOrCntrlSymbolsLambdaEEELm4EEEbiRPT_SH_RT0_St17integral_constantImXT1_EEEUlSG_E_JLm0ELm1ELm2ELm3EEEEbSG_St16integer_sequenceImJXspT0_EEE.exit, !llvm.loop !12
+  br i1 %.not.i3, label %.loopexit, label %_ZN5folly4simd6detail11UnrollUtils15unrollUntilImplIZNKS1_19SimdForEachMainLoopclIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS6_NS_6detail25SimpleSimdStringUtilsImplIS9_E28HasSpaceOrCntrlSymbolsLambdaEEELm4EEEbiRPT_SH_RT0_St17integral_constantImXT1_EEEUlSG_E_JLm0ELm1ELm2ELm3EEEEbSG_St16integer_sequenceImJXspT0_EEE.exit, !llvm.loop !13
 
 _ZN5folly4simd6detail11UnrollUtils15unrollUntilImplIZNKS1_19SimdForEachMainLoopclIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS6_NS_6detail25SimpleSimdStringUtilsImplIS9_E28HasSpaceOrCntrlSymbolsLambdaEEELm4EEEbiRPT_SH_RT0_St17integral_constantImXT1_EEEUlSG_E_JLm0ELm1ELm2ELm3EEEEbSG_St16integer_sequenceImJXspT0_EEE.exit: ; preds = %_ZN5folly4simd6detail11UnrollUtils15unrollUntilImplIZNKS1_19SimdForEachMainLoopclIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS6_NS_6detail25SimpleSimdStringUtilsImplIS9_E28HasSpaceOrCntrlSymbolsLambdaEEELm4EEEbiRPT_SH_RT0_St17integral_constantImXT1_EEEUlSG_E_JLm0ELm1ELm2ELm3EEEEbSG_St16integer_sequenceImJXspT0_EEE.exit.preheader, %bb.i
   %.0.i210 = phi i64 [ %i.az, %bb.i ], [ %i.aw, %_ZN5folly4simd6detail11UnrollUtils15unrollUntilImplIZNKS1_19SimdForEachMainLoopclIKhNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEEPS6_NS_6detail25SimpleSimdStringUtilsImplIS9_E28HasSpaceOrCntrlSymbolsLambdaEEELm4EEEbiRPT_SH_RT0_St17integral_constantImXT1_EEEUlSG_E_JLm0ELm1ELm2ELm3EEEEbSG_St16integer_sequenceImJXspT0_EEE.exit.preheader ]
@@ -120,10 +120,10 @@ _ZN5folly4simd6detail11UnrollUtils15unrollUntilImplIZNKS1_19SimdForEachMainLoopc
   %i.ba = getelementptr inbounds nuw i8, ptr %.2209, i64 32
   %i.bb = getelementptr inbounds nuw i8, ptr %.2209, i64 64
   %i.bc = getelementptr inbounds nuw i8, ptr %.2209, i64 96
-  %i.bd = load <32 x i8>, ptr %.2209, align 1, !tbaa !11, !noalias !14 ; 2 uses
-  %i.be = load <32 x i8>, ptr %i.ba, align 1, !tbaa !11, !noalias !14 ; 2 uses
-  %i.bf = load <32 x i8>, ptr %i.bb, align 1, !tbaa !11, !noalias !14 ; 2 uses
-  %i.bg = load <32 x i8>, ptr %i.bc, align 1, !tbaa !11, !noalias !14 ; 2 uses
+  %i.bd = load <32 x i8>, ptr %.2209, align 1, !tbaa !12, !noalias !15 ; 2 uses
+  %i.be = load <32 x i8>, ptr %i.ba, align 1, !tbaa !12, !noalias !15 ; 2 uses
+  %i.bf = load <32 x i8>, ptr %i.bb, align 1, !tbaa !12, !noalias !15 ; 2 uses
+  %i.bg = load <32 x i8>, ptr %i.bc, align 1, !tbaa !12, !noalias !15 ; 2 uses
   %i.bh = icmp ult <32 x i8> %i.bd, splat (i8 33)
   %i.bi = icmp eq <32 x i8> %i.bd, splat (i8 127)
   %i.bj = or <32 x i1> %i.bh, %i.bi
@@ -154,7 +154,7 @@ bb.j:                                             ; preds = %_ZNK5folly4simd6det
   %i.by = getelementptr inbounds nuw i8, ptr %.0, i64 32
   %i.bz = ptrtoint ptr %i.by to i64
   %i.ca = sub i64 %i.bz, %i.a
-  %i.cb = load <32 x i8>, ptr %.0, align 1, !tbaa !11 ; 2 uses
+  %i.cb = load <32 x i8>, ptr %.0, align 1, !tbaa !12 ; 2 uses
   %i.cc = icmp ult <32 x i8> %i.cb, splat (i8 33)
   %i.cd = icmp eq <32 x i8> %i.cb, splat (i8 127)
   %i.ce = or <32 x i1> %i.cc, %i.cd
@@ -195,15 +195,16 @@ attributes #2 = { nocallback nofree nosync nounwind willreturn memory(none) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!9, !9, i64 0}
-!12 = distinct !{!12, !13}
-!13 = !{!"llvm.loop.mustprogress"}
-!14 = !{!15}
-!15 = distinct !{!15, !16, !"_ZN5folly4simd6detail11UnrollUtils12arrayMapImplIPKhLm4EZNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEES5_NS_6detail25SimpleSimdStringUtilsImplIS8_E28HasSpaceOrCntrlSymbolsLambdaEE12unrolledStepILm4EEEbSt5arrayIS5_XT_EEEUlS5_E_JLm0ELm1ELm2ELm3EEEEDaRKSF_IT_XT0_EET1_St16integer_sequenceImJXspT2_EEE: argument 0"}
-!16 = distinct !{!16, !"_ZN5folly4simd6detail11UnrollUtils12arrayMapImplIPKhLm4EZNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEES5_NS_6detail25SimpleSimdStringUtilsImplIS8_E28HasSpaceOrCntrlSymbolsLambdaEE12unrolledStepILm4EEEbSt5arrayIS5_XT_EEEUlS5_E_JLm0ELm1ELm2ELm3EEEEDaRKSF_IT_XT0_EET1_St16integer_sequenceImJXspT2_EEE"}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!10, !10, i64 0}
+!13 = distinct !{!13, !14}
+!14 = !{!"llvm.loop.mustprogress"}
+!15 = !{!16}
+!16 = distinct !{!16, !17, !"_ZN5folly4simd6detail11UnrollUtils12arrayMapImplIPKhLm4EZNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEES5_NS_6detail25SimpleSimdStringUtilsImplIS8_E28HasSpaceOrCntrlSymbolsLambdaEE12unrolledStepILm4EEEbSt5arrayIS5_XT_EEEUlS5_E_JLm0ELm1ELm2ELm3EEEEDaRKSF_IT_XT0_EET1_St16integer_sequenceImJXspT2_EEE: argument 0"}
+!17 = distinct !{!17, !"_ZN5folly4simd6detail11UnrollUtils12arrayMapImplIPKhLm4EZNS1_13AnyOfDelegateINS1_16SimdAvx2PlatformIhEES5_NS_6detail25SimpleSimdStringUtilsImplIS8_E28HasSpaceOrCntrlSymbolsLambdaEE12unrolledStepILm4EEEbSt5arrayIS5_XT_EEEUlS5_E_JLm0ELm1ELm2ELm3EEEEDaRKSF_IT_XT0_EET1_St16integer_sequenceImJXspT2_EEE"}
 end_hunk_0

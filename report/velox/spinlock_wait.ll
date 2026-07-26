@@ -10,9 +10,9 @@ target triple = "x86_64-pc-linux-gnu"
 define weak void @AbslInternalSpinLockDelay_lts_20240116(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @__errno_location() #5     ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !3
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !8
   %i.c = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef %0, i32 noundef 128, i32 noundef %1, ptr noundef null) #6 ; 0 uses
-  store i32 %i.b, ptr %i.a, align 4, !tbaa !3
+  store i32 %i.b, ptr %i.a, align 4, !tbaa !8
   ret void
 }
 
@@ -42,7 +42,7 @@ bb.a:
   %i.b = load atomic i32, ptr %0 acquire, align 4
   %i.c = add nuw nsw i32 %.020.ph33.us, 1         ; 2 uses
   tail call void @AbslInternalSpinLockDelay_lts_20240116(ptr noundef nonnull %0, i32 noundef %i.b, i32 noundef %i.c, i32 noundef %3)
-  br label %.outer32.us, !llvm.loop !7
+  br label %.outer32.us, !llvm.loop !9
 
 .outer32:                                         ; preds = %.outer32.outer, %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread
   br label %.lr.ph
@@ -54,19 +54,19 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.c
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.c ] ; 2 uses
   %i.e = getelementptr inbounds nuw [12 x i8], ptr %2, i64 %indvars.iv ; 3 uses
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !9
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !11
   %.not24 = icmp eq i32 %i.d, %i.f
   br i1 %.not24, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.not = icmp eq i64 %indvars.iv.next, %i.a
-  br i1 %.not, label %._crit_edge39, label %bb.b, !llvm.loop !12
+  br i1 %.not, label %._crit_edge39, label %bb.b, !llvm.loop !14
 
 ._crit_edge39:                                    ; preds = %bb.c
   %i.g = add nuw nsw i32 %.020.ph33.ph, 1         ; 2 uses
   tail call void @AbslInternalSpinLockDelay_lts_20240116(ptr noundef nonnull %0, i32 noundef %i.d, i32 noundef %i.g, i32 noundef %3)
-  br label %.outer32.outer, !llvm.loop !7
+  br label %.outer32.outer, !llvm.loop !9
 
 .outer32.outer:                                   ; preds = %.outer.preheader, %._crit_edge39
   %.020.ph33.ph = phi i32 [ 0, %.outer.preheader ], [ %i.g, %._crit_edge39 ]
@@ -74,20 +74,20 @@ bb.c:                                             ; preds = %bb.b
 
 .critedge:                                        ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 4
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !13   ; 2 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !15   ; 2 uses
   %i.j = icmp eq i32 %i.i, %i.d
   br i1 %i.j, label %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
   %i.k = cmpxchg ptr %0, i32 %i.d, i32 %i.i acquire monotonic, align 4
   %i.l = extractvalue { i32, i1 } %i.k, 1
-  br i1 %i.l, label %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread, label %.lr.ph, !llvm.loop !7
+  br i1 %i.l, label %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread, label %.lr.ph, !llvm.loop !9
 
 _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread: ; preds = %bb.d, %.critedge
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %i.n = load i8, ptr %i.m, align 4, !tbaa !14, !range !15, !noundef !16
+  %i.n = load i8, ptr %i.m, align 4, !tbaa !16, !range !17, !noundef !18
   %i.o = trunc nuw i8 %i.n to i1
-  br i1 %i.o, label %bb.e, label %.outer32, !llvm.loop !7
+  br i1 %i.o, label %bb.e, label %.outer32, !llvm.loop !9
 
 bb.e:                                             ; preds = %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread
   ret i32 %i.d
@@ -132,19 +132,21 @@ attributes #6 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = distinct !{!7, !8}
-!8 = !{!"llvm.loop.mustprogress"}
-!9 = !{!10, !4, i64 0}
-!10 = !{!"_ZTSN4absl12lts_2024011613base_internal22SpinLockWaitTransitionE", !4, i64 0, !4, i64 4, !11, i64 8}
-!11 = !{!"bool", !5, i64 0}
-!12 = distinct !{!12, !8}
-!13 = !{!10, !4, i64 4}
-!14 = !{!10, !11, i64 8}
-!15 = !{i8 0, i8 2}
-!16 = !{}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!5, !5, i64 0}
+!9 = distinct !{!9, !10}
+!10 = !{!"llvm.loop.mustprogress"}
+!11 = !{!12, !5, i64 0}
+!12 = !{!"_ZTSN4absl12lts_2024011613base_internal22SpinLockWaitTransitionE", !5, i64 0, !5, i64 4, !13, i64 8}
+!13 = !{!"bool", !6, i64 0}
+!14 = distinct !{!14, !10}
+!15 = !{!12, !5, i64 4}
+!16 = !{!12, !13, i64 8}
+!17 = !{i8 0, i8 2}
+!18 = !{}
 end_hunk_0

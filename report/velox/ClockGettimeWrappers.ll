@@ -24,15 +24,15 @@ define internal noundef i64 @_ZN5folly6chronoL25clock_gettime_ns_fallbackEi(i32 
 bb.a:
   %1 = alloca %struct.timespec, align 8           ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
-  %i.a = load ptr, ptr @_ZN5folly6chrono13clock_gettimeE, align 8, !tbaa !11
+  %i.a = load ptr, ptr @_ZN5folly6chrono13clock_gettimeE, align 8, !tbaa !12
   %i.b = call noundef i32 %i.a(i32 noundef %0, ptr noundef nonnull %1)
   %.not = icmp eq i32 %i.b, 0
-  br i1 %.not, label %bb.b, label %bb.c, !prof !13
+  br i1 %.not, label %bb.b, label %bb.c, !prof !14
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load i64, ptr %1, align 8, !tbaa !14
+  %i.c = load i64, ptr %1, align 8, !tbaa !15
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !14
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !15
   %i.f = mul nsw i64 %i.c, 1000000000
   %i.g = add nsw i64 %i.f, %i.e
   br label %bb.c
@@ -52,14 +52,14 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: mustprogress nounwind uwtable
 define internal void @_ZN5folly6chrono12_GLOBAL__N_115VdsoInitializerD2Ev(ptr nofree noundef nonnull readonly align 8 captures(none) dead_on_return(8) dereferenceable(8) %0) unnamed_addr #3 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !16
+  %i.a = load ptr, ptr %0, align 8, !tbaa !17
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store ptr @clock_gettime, ptr @_ZN5folly6chrono13clock_gettimeE, align 8, !tbaa !11
-  store ptr @_ZN5folly6chronoL25clock_gettime_ns_fallbackEi, ptr @_ZN5folly6chrono16clock_gettime_nsE, align 8, !tbaa !11
-  %i.b = load ptr, ptr %0, align 8, !tbaa !16
+  store ptr @clock_gettime, ptr @_ZN5folly6chrono13clock_gettimeE, align 8, !tbaa !12
+  store ptr @_ZN5folly6chronoL25clock_gettime_ns_fallbackEi, ptr @_ZN5folly6chrono16clock_gettime_nsE, align 8, !tbaa !12
+  %i.b = load ptr, ptr %0, align 8, !tbaa !17
   %i.c = tail call i32 @dlclose(ptr noundef %i.b) #6 ; 0 uses
   br label %bb.c
 
@@ -83,7 +83,7 @@ declare i32 @dlclose(ptr noundef) local_unnamed_addr #0
 define internal void @_GLOBAL__sub_I_ClockGettimeWrappers.cpp() #5 section ".text.startup" {
 bb.a:
   %i.a = tail call ptr @dlopen(ptr noundef nonnull @.str, i32 noundef 5) #6 ; 3 uses
-  store ptr %i.a, ptr @_ZN5folly6chrono12_GLOBAL__N_116vdso_initializerE, align 8, !tbaa !16
+  store ptr %i.a, ptr @_ZN5folly6chrono12_GLOBAL__N_116vdso_initializerE, align 8, !tbaa !17
   %.not.i.i = icmp eq ptr %i.a, null
   br i1 %.not.i.i, label %__cxx_global_var_init.exit, label %bb.b
 
@@ -93,17 +93,17 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not7.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store ptr %i.b, ptr @_ZN5folly6chrono13clock_gettimeE, align 8, !tbaa !11
+  store ptr %i.b, ptr @_ZN5folly6chrono13clock_gettimeE, align 8, !tbaa !12
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.c = load ptr, ptr @_ZN5folly6chrono12_GLOBAL__N_116vdso_initializerE, align 8, !tbaa !16
+  %i.c = load ptr, ptr @_ZN5folly6chrono12_GLOBAL__N_116vdso_initializerE, align 8, !tbaa !17
   %i.d = tail call ptr @dlsym(ptr noundef %i.c, ptr noundef nonnull @.str.2) #6 ; 2 uses
   %.not8.i.i = icmp eq ptr %i.d, null
   br i1 %.not8.i.i, label %__cxx_global_var_init.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  store ptr %i.d, ptr @_ZN5folly6chrono16clock_gettime_nsE, align 8, !tbaa !11
+  store ptr %i.d, ptr @_ZN5folly6chrono16clock_gettime_nsE, align 8, !tbaa !12
   br label %__cxx_global_var_init.exit
 
 __cxx_global_var_init.exit:                       ; preds = %bb.a, %bb.d, %bb.e
@@ -129,16 +129,17 @@ attributes #6 = { nounwind }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!12, !12, i64 0}
-!12 = !{!"any pointer", !9, i64 0}
-!13 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!14 = !{!15, !15, i64 0}
-!15 = !{!"long", !9, i64 0}
-!16 = !{!17, !12, i64 0}
-!17 = !{!"_ZTSN5folly6chrono12_GLOBAL__N_115VdsoInitializerE", !12, i64 0}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!13, !13, i64 0}
+!13 = !{!"any pointer", !10, i64 0}
+!14 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!15 = !{!16, !16, i64 0}
+!16 = !{!"long", !10, i64 0}
+!17 = !{!18, !13, i64 0}
+!18 = !{!"_ZTSN5folly6chrono12_GLOBAL__N_115VdsoInitializerE", !13, i64 0}
 end_hunk_0

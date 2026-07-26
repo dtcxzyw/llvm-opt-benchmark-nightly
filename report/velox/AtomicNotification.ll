@@ -16,7 +16,7 @@ target triple = "x86_64-pc-linux-gnu"
 define internal void @_GLOBAL__sub_I_AtomicNotification.cpp() #0 section ".text.startup" {
 bb.a:
   %i.a = atomicrmw add ptr @_ZN5folly18parking_lot_detail11idallocatorE, i64 1 seq_cst, align 8
-  store i64 %i.a, ptr @_ZN5folly6detail19atomic_notification10parkingLotE, align 8, !tbaa !11
+  store i64 %i.a, ptr @_ZN5folly6detail19atomic_notification10parkingLotE, align 8, !tbaa !12
   ret void
 }
 
@@ -32,12 +32,13 @@ attributes #0 = { mustprogress norecurse nounwind willreturn uwtable "min-legal-
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!12, !13, i64 0}
-!12 = !{!"_ZTSN5folly10ParkingLotIjEE", !13, i64 0}
-!13 = !{!"long", !9, i64 0}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!13, !14, i64 0}
+!13 = !{!"_ZTSN5folly10ParkingLotIjEE", !14, i64 0}
+!14 = !{!"long", !10, i64 0}
 end_hunk_0

@@ -18,7 +18,7 @@ define noundef nonnull align 8 dereferenceable(64) ptr @_ZN5folly18parking_lot_d
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5folly18parking_lot_detail6Bucket9bucketForEmE8gBuckets acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %bb.e, !prof !11
+  br i1 %i.b, label %bb.b, label %bb.e, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly18parking_lot_detail6Bucket9bucketForEmE8gBuckets) #3
@@ -34,42 +34,42 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.ptr.i.i.i = getelementptr inbounds nuw i8, ptr @_ZZN5folly18parking_lot_detail6Bucket9bucketForEmE8gBuckets, i64 %.idx.i.i.i ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.ptr.i.i.i, i8 0, i64 40, i1 false)
   %i.d = getelementptr inbounds nuw i8, ptr %.ptr.i.i.i, i64 56
-  store i64 0, ptr %i.d, align 8, !tbaa !12
+  store i64 0, ptr %i.d, align 8, !tbaa !13
   %i.e = getelementptr inbounds nuw i8, ptr @_ZZN5folly18parking_lot_detail6Bucket9bucketForEmE8gBuckets, i64 %.idx.i.i.i ; 2 uses
   %.ptr.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.ptr.i.i.i.1, i8 0, i64 40, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 120
-  store i64 0, ptr %i.f, align 8, !tbaa !12
+  store i64 0, ptr %i.f, align 8, !tbaa !13
   %i.g = getelementptr inbounds nuw i8, ptr @_ZZN5folly18parking_lot_detail6Bucket9bucketForEmE8gBuckets, i64 %.idx.i.i.i ; 2 uses
   %.ptr.i.i.i.2 = getelementptr inbounds nuw i8, ptr %i.g, i64 128
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.ptr.i.i.i.2, i8 0, i64 40, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 184
-  store i64 0, ptr %i.h, align 8, !tbaa !12
+  store i64 0, ptr %i.h, align 8, !tbaa !13
   %i.i = getelementptr inbounds nuw i8, ptr @_ZZN5folly18parking_lot_detail6Bucket9bucketForEmE8gBuckets, i64 %.idx.i.i.i ; 2 uses
   %.ptr.i.i.i.3 = getelementptr inbounds nuw i8, ptr %i.i, i64 192
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.ptr.i.i.i.3, i8 0, i64 40, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 248
-  store i64 0, ptr %i.j, align 8, !tbaa !12
+  store i64 0, ptr %i.j, align 8, !tbaa !13
   %i.k = getelementptr inbounds nuw i8, ptr @_ZZN5folly18parking_lot_detail6Bucket9bucketForEmE8gBuckets, i64 %.idx.i.i.i ; 2 uses
   %.ptr.i.i.i.4 = getelementptr inbounds nuw i8, ptr %i.k, i64 256
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.ptr.i.i.i.4, i8 0, i64 40, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 312
-  store i64 0, ptr %i.l, align 8, !tbaa !12
+  store i64 0, ptr %i.l, align 8, !tbaa !13
   %i.m = getelementptr inbounds nuw i8, ptr @_ZZN5folly18parking_lot_detail6Bucket9bucketForEmE8gBuckets, i64 %.idx.i.i.i ; 2 uses
   %.ptr.i.i.i.5 = getelementptr inbounds nuw i8, ptr %i.m, i64 320
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.ptr.i.i.i.5, i8 0, i64 40, i1 false)
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 376
-  store i64 0, ptr %i.n, align 8, !tbaa !12
+  store i64 0, ptr %i.n, align 8, !tbaa !13
   %i.o = getelementptr inbounds nuw i8, ptr @_ZZN5folly18parking_lot_detail6Bucket9bucketForEmE8gBuckets, i64 %.idx.i.i.i ; 2 uses
   %.ptr.i.i.i.6 = getelementptr inbounds nuw i8, ptr %i.o, i64 384
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.ptr.i.i.i.6, i8 0, i64 40, i1 false)
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 440
-  store i64 0, ptr %i.p, align 8, !tbaa !12
+  store i64 0, ptr %i.p, align 8, !tbaa !13
   %i.q = getelementptr inbounds nuw i8, ptr @_ZZN5folly18parking_lot_detail6Bucket9bucketForEmE8gBuckets, i64 %.idx.i.i.i ; 2 uses
   %.ptr.i.i.i.7 = getelementptr inbounds nuw i8, ptr %i.q, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.ptr.i.i.i.7, i8 0, i64 40, i1 false)
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 504
-  store i64 0, ptr %i.r, align 8, !tbaa !12
+  store i64 0, ptr %i.r, align 8, !tbaa !13
   %.add.i.i.i.7 = add nuw nsw i64 %.idx.i.i.i, 512 ; 2 uses
   %i.s = icmp eq i64 %.add.i.i.i.7, 262144
   br i1 %i.s, label %_ZN5folly14IndestructibleISt5arrayINS_18parking_lot_detail6BucketELm4096EEEC2IS4_S4_EEv.exit, label %bb.d
@@ -108,13 +108,14 @@ attributes #3 = { nounwind }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!"branch_weights", i32 1, i32 1048575}
-!12 = !{!13, !14, i64 0}
-!13 = !{!"_ZTSSt13__atomic_baseImE", !14, i64 0}
-!14 = !{!"long", !9, i64 0}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!"branch_weights", i32 1, i32 1048575}
+!13 = !{!14, !15, i64 0}
+!14 = !{!"_ZTSSt13__atomic_baseImE", !15, i64 0}
+!15 = !{!"long", !10, i64 0}
 end_hunk_0

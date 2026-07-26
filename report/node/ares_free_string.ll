@@ -26,9 +26,10 @@ attributes #2 = { nounwind }
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"frame-pointer", i32 2}
 !6 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!7 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!8 = !{!9, !9, i64 0}
-!9 = !{!"int", !10, i64 0}
-!10 = !{!"omnipotent char", !11, i64 0}
-!11 = !{!"Simple C/C++ TBAA"}
+!7 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"__libc_errno", !10, i64 0}
+!10 = !{!"int", !11, i64 0}
+!11 = !{!"omnipotent char", !12, i64 0}
+!12 = !{!"Simple C/C++ TBAA"}
 end_hunk_0

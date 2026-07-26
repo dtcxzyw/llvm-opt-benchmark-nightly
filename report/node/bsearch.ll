@@ -36,7 +36,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.c
   %.140 = phi i32 [ %i.j, %bb.c ], [ %.03962, %.lr.ph ] ; 2 uses
   %.138 = phi i32 [ %.03763, %bb.c ], [ %i.d, %.lr.ph ] ; 2 uses
   %i.k = icmp slt i32 %.140, %.138
-  br i1 %i.k, label %.lr.ph, label %._crit_edge, !llvm.loop !9
+  br i1 %i.k, label %.lr.ph, label %._crit_edge, !llvm.loop !10
 
 ._crit_edge:                                      ; preds = %bb.d
   %i.l = and i32 %5, 1
@@ -63,7 +63,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.c
 
 .preheader:                                       ; preds = %bb.e
   %i.p = icmp sgt i64 %indvars.iv87, 1
-  br i1 %i.p, label %bb.e, label %.critedge, !llvm.loop !11
+  br i1 %i.p, label %bb.e, label %.critedge, !llvm.loop !12
 
 bb.e:                                             ; preds = %.lr.ph88, %.preheader
   %indvars.iv87 = phi i64 [ %i.o, %.lr.ph88 ], [ %indvars.iv.next, %.preheader ] ; 3 uses
@@ -72,7 +72,7 @@ bb.e:                                             ; preds = %.lr.ph88, %.prehead
   %i.r = getelementptr inbounds i8, ptr %1, i64 %i.q
   %i.s = tail call i32 %4(ptr noundef %0, ptr noundef %i.r) #1
   %i.t = icmp eq i32 %i.s, 0
-  br i1 %i.t, label %.preheader, label %.critedge.split.loop.exit81, !llvm.loop !11
+  br i1 %i.t, label %.preheader, label %.critedge.split.loop.exit81, !llvm.loop !12
 
 .critedge.split.loop.exit81:                      ; preds = %bb.e
   %i.u = trunc nuw nsw i64 %indvars.iv87 to i32
@@ -101,12 +101,13 @@ attributes #1 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
-!4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!5 = !{!6, !6, i64 0}
-!6 = !{!"int", !7, i64 0}
-!7 = !{!"omnipotent char", !8, i64 0}
-!8 = !{!"Simple C/C++ TBAA"}
-!9 = distinct !{!9, !10}
-!10 = !{!"llvm.loop.mustprogress"}
-!11 = distinct !{!11, !10}
+!4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!5 = !{!6, !7, i64 0}
+!6 = !{!"__libc_errno", !7, i64 0}
+!7 = !{!"int", !8, i64 0}
+!8 = !{!"omnipotent char", !9, i64 0}
+!9 = !{!"Simple C/C++ TBAA"}
+!10 = distinct !{!10, !11}
+!11 = !{!"llvm.loop.mustprogress"}
+!12 = distinct !{!12, !11}
 end_hunk_0

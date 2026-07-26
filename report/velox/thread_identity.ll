@@ -22,10 +22,10 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 2 uses
   %2 = alloca %struct.__sigset_t, align 8         ; 4 uses
   %3 = alloca %struct.__sigset_t, align 8         ; 4 uses
-  store ptr %1, ptr %i.a, align 8, !tbaa !7
+  store ptr %1, ptr %i.a, align 8, !tbaa !8
   %i.b = load atomic i32, ptr @_ZN4absl12lts_2024011613base_internal12_GLOBAL__N_129init_thread_identity_key_onceE acquire, align 4
   %.not.i = icmp eq i32 %i.b, 221
-  br i1 %.not.i, label %_ZN4absl12lts_202401169call_onceIRFvPFvPvEEJRS4_EEEvRNS0_9once_flagEOT_DpOT0_.exit, label %bb.b, !prof !9
+  br i1 %.not.i, label %_ZN4absl12lts_202401169call_onceIRFvPFvPvEEJRS4_EEEvRNS0_9once_flagEOT_DpOT0_.exit, label %bb.b, !prof !10
 
 bb.b:                                             ; preds = %bb.a
   call void @_ZN4absl12lts_2024011613base_internal12CallOnceImplIRFvPFvPvEEJRS5_EEEvPSt6atomicIjENS1_14SchedulingModeEOT_DpOT0_(ptr noundef nonnull @_ZN4absl12lts_2024011613base_internal12_GLOBAL__N_129init_thread_identity_key_onceE, i32 noundef 1, ptr noundef nonnull @_ZN4absl12lts_2024011613base_internal12_GLOBAL__N_125AllocateThreadIdentityKeyEPFvPvE, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
@@ -36,7 +36,7 @@ _ZN4absl12lts_202401169call_onceIRFvPFvPvEEJRS4_EEEvRNS0_9once_flagEOT_DpOT0_.ex
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   %i.c = call i32 @sigfillset(ptr noundef nonnull %2) #7 ; 0 uses
   %i.d = call i32 @pthread_sigmask(i32 noundef 2, ptr noundef nonnull %2, ptr noundef nonnull %3) #7 ; 0 uses
-  %i.e = load i32, ptr @_ZN4absl12lts_2024011613base_internal12_GLOBAL__N_127thread_identity_pthread_keyE, align 4, !tbaa !3
+  %i.e = load i32, ptr @_ZN4absl12lts_2024011613base_internal12_GLOBAL__N_127thread_identity_pthread_keyE, align 4, !tbaa !11
   %i.f = call i32 @pthread_setspecific(i32 noundef %i.e, ptr noundef %0) #7 ; 0 uses
   %i.g = call i32 @pthread_sigmask(i32 noundef 2, ptr noundef nonnull %3, ptr noundef null) #7 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
@@ -76,12 +76,12 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define noundef ptr @_ZN4absl12lts_2024011613base_internal30CurrentThreadIdentityIfPresentEv() local_unnamed_addr #1 {
 bb.a:
-  %i.a = load atomic i8, ptr @_ZN4absl12lts_2024011613base_internal12_GLOBAL__N_123pthread_key_initializedE.0 acquire, align 1, !range !10, !noundef !11
+  %i.a = load atomic i8, ptr @_ZN4absl12lts_2024011613base_internal12_GLOBAL__N_123pthread_key_initializedE.0 acquire, align 1, !range !12, !noundef !13
   %i.b = trunc nuw i8 %i.a to i1
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load i32, ptr @_ZN4absl12lts_2024011613base_internal12_GLOBAL__N_127thread_identity_pthread_keyE, align 4, !tbaa !3
+  %i.c = load i32, ptr @_ZN4absl12lts_2024011613base_internal12_GLOBAL__N_127thread_identity_pthread_keyE, align 4, !tbaa !11
   %i.d = tail call ptr @pthread_getspecific(i32 noundef %i.c) #7
   br label %bb.c
 
@@ -111,8 +111,8 @@ _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit: ; 
   br i1 %i.d, label %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread, label %_ZN4absl12lts_2024011613base_internal12SpinLockWakeEPSt6atomicIjEb.exit
 
 _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread: ; preds = %bb.a, %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit
-  %i.e = load ptr, ptr %3, align 8, !tbaa !7
-  tail call void %2(ptr noundef %i.e), !inline_history !12
+  %i.e = load ptr, ptr %3, align 8, !tbaa !8
+  tail call void %2(ptr noundef %i.e), !inline_history !14
   %i.f = atomicrmw xchg ptr %0, i32 221 release, align 4
   %i.g = icmp eq i32 %i.f, 94570706
   br i1 %i.g, label %bb.b, label %_ZN4absl12lts_2024011613base_internal12SpinLockWakeEPSt6atomicIjEb.exit
@@ -144,15 +144,17 @@ attributes #7 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"any pointer", !5, i64 0}
-!9 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!10 = !{i8 0, i8 2}
-!11 = !{}
-!12 = distinct !{null}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"any pointer", !6, i64 0}
+!10 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!11 = !{!5, !5, i64 0}
+!12 = !{i8 0, i8 2}
+!13 = !{}
+!14 = distinct !{null}
 end_hunk_0

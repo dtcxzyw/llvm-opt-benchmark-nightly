@@ -77,7 +77,7 @@ _ZN4absl12lts_2024011620StartsWithIgnoreCaseESt17basic_string_viewIcSt11char_tra
   %i.f = add i64 %.sroa.04.09, -1                 ; 2 uses
   %.not.not = icmp ult i64 %i.f, %2
   %or.cond = select i1 %i.d, i1 true, i1 %.not.not
-  br i1 %or.cond, label %._crit_edge, label %.lr.ph, !llvm.loop !7
+  br i1 %or.cond, label %._crit_edge, label %.lr.ph, !llvm.loop !8
 
 ._crit_edge:                                      ; preds = %_ZN4absl12lts_2024011620StartsWithIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEES4_.exit, %bb.a
   %.not.lcssa = phi i1 [ false, %bb.a ], [ %i.d, %_ZN4absl12lts_2024011620StartsWithIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEES4_.exit ]
@@ -116,9 +116,9 @@ bb.a:
   %i.a = alloca [3 x i8], align 1                 ; 7 uses
   %i.b = zext i8 %2 to i64                        ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2024011614ascii_internal8kToUpperE, i64 %i.b
-  %i.d = load i8, ptr %i.c, align 1, !tbaa !9     ; 2 uses
+  %i.d = load i8, ptr %i.c, align 1, !tbaa !10    ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2024011614ascii_internal8kToLowerE, i64 %i.b
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !9     ; 2 uses
+  %i.f = load i8, ptr %i.e, align 1, !tbaa !10    ; 2 uses
   %i.g = icmp eq i8 %i.d, %i.f
   br i1 %i.g, label %bb.b, label %bb.d
 
@@ -141,11 +141,11 @@ bb.c:                                             ; preds = %_ZNSt11char_traitsI
 
 bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  store i8 %i.f, ptr %i.a, align 1, !tbaa !9
+  store i8 %i.f, ptr %i.a, align 1, !tbaa !10
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %i.d, ptr %i.n, align 1, !tbaa !9
+  store i8 %i.d, ptr %i.n, align 1, !tbaa !10
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 0, ptr %i.o, align 1, !tbaa !9
+  store i8 0, ptr %i.o, align 1, !tbaa !10
   %i.p = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #10 ; 2 uses
   %.not.i.i7 = icmp ne i64 %i.p, 0
   %i.q = icmp ne i64 %0, 0
@@ -155,7 +155,7 @@ bb.d:                                             ; preds = %bb.a
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8:    ; preds = %bb.d, %bb.e
   %.0111420.i.i = phi i64 [ %i.v, %bb.e ], [ 0, %bb.d ] ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %.0111420.i.i
-  %i.s = load i8, ptr %i.r, align 1, !tbaa !9
+  %i.s = load i8, ptr %i.r, align 1, !tbaa !10
   %i.t = sext i8 %i.s to i32
   %i.u = call ptr @memchr(ptr noundef nonnull %i.a, i32 noundef %i.t, i64 noundef %i.p) #10
   %.not13.not.i.i = icmp eq ptr %i.u, null
@@ -220,13 +220,13 @@ define { i64, ptr } @_ZN4absl12lts_2024011623FindLongestCommonPrefixESt17basic_s
 bb.a:
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %2, i64 %0) ; 7 uses
   %i.a = icmp ult i64 %.sroa.speculated, 8
-  br i1 %i.a, label %.preheader, label %.preheader82, !prof !10
+  br i1 %i.a, label %.preheader, label %.preheader82, !prof !11
 
 .preheader:                                       ; preds = %bb.a, %bb.b
   %.0 = phi i64 [ %i.b, %bb.b ], [ 0, %bb.a ]     ; 8 uses
   %i.b = add i64 %.0, 2                           ; 2 uses
   %.not57 = icmp ugt i64 %i.b, %.sroa.speculated
-  br i1 %.not57, label %bb.c, label %bb.b, !prof !10
+  br i1 %.not57, label %bb.c, label %bb.b, !prof !11
 
 bb.b:                                             ; preds = %.preheader
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %.0
@@ -234,7 +234,7 @@ bb.b:                                             ; preds = %.preheader
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 %.0
   %.0.copyload.i.i61 = load i16, ptr %i.d, align 1 ; 2 uses
   %.not59 = icmp eq i16 %.0.copyload.i.i, %.0.copyload.i.i61
-  br i1 %.not59, label %.preheader, label %.thread, !prof !11
+  br i1 %.not59, label %.preheader, label %.thread, !prof !12
 
 .thread:                                          ; preds = %bb.b
   %i.e = xor i16 %.0.copyload.i.i61, %.0.copyload.i.i
@@ -246,13 +246,13 @@ bb.b:                                             ; preds = %.preheader
 
 bb.c:                                             ; preds = %.preheader
   %.not58 = icmp eq i64 %.0, %.sroa.speculated
-  br i1 %.not58, label %bb.i, label %bb.d, !prof !10
+  br i1 %.not58, label %bb.i, label %bb.d, !prof !11
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %.0
-  %i.j = load i8, ptr %i.i, align 1, !tbaa !9
+  %i.j = load i8, ptr %i.i, align 1, !tbaa !10
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 %.0
-  %i.l = load i8, ptr %i.k, align 1, !tbaa !9
+  %i.l = load i8, ptr %i.k, align 1, !tbaa !10
   %i.m = icmp eq i8 %i.j, %i.l
   %i.n = zext i1 %i.m to i64
   %spec.select60 = or disjoint i64 %.0, %i.n
@@ -265,7 +265,7 @@ bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 %.4
   %.0.copyload.i.i63 = load i64, ptr %i.p, align 1 ; 2 uses
   %.not = icmp eq i64 %.0.copyload.i.i62, %.0.copyload.i.i63
-  br i1 %.not, label %bb.f, label %bb.e, !prof !11
+  br i1 %.not, label %bb.f, label %bb.e, !prof !12
 
 bb.e:                                             ; preds = %.preheader82
   %i.q = xor i64 %.0.copyload.i.i63, %.0.copyload.i.i62
@@ -278,7 +278,7 @@ bb.f:                                             ; preds = %.preheader82
   %i.u = add i64 %.4, 8
   %i.v = add i64 %.4, 16
   %i.w = icmp ult i64 %i.v, %.sroa.speculated
-  br i1 %i.w, label %.preheader82, label %bb.g, !prof !11, !llvm.loop !12
+  br i1 %i.w, label %.preheader82, label %bb.g, !prof !12, !llvm.loop !13
 
 bb.g:                                             ; preds = %bb.f
   %i.x = add i64 %.sroa.speculated, -8            ; 3 uses
@@ -287,7 +287,7 @@ bb.g:                                             ; preds = %bb.f
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 %i.x
   %.0.copyload.i.i65 = load i64, ptr %i.z, align 1 ; 2 uses
   %.not56 = icmp eq i64 %.0.copyload.i.i64, %.0.copyload.i.i65
-  br i1 %.not56, label %bb.i, label %bb.h, !prof !10
+  br i1 %.not56, label %bb.i, label %bb.h, !prof !11
 
 bb.h:                                             ; preds = %bb.g
   %i.aa = xor i64 %.0.copyload.i.i65, %.0.copyload.i.i64
@@ -323,15 +323,15 @@ bb.c:                                             ; preds = %bb.b, %bb.d
   %.pn24 = phi ptr [ %i.b, %bb.b ], [ %.01027, %bb.d ] ; 2 uses
   %.0926 = getelementptr inbounds i8, ptr %.pn, i64 -1 ; 2 uses
   %.01027 = getelementptr inbounds i8, ptr %.pn24, i64 -1 ; 2 uses
-  %i.e = load i8, ptr %.01027, align 1, !tbaa !9
-  %i.f = load i8, ptr %.0926, align 1, !tbaa !9
+  %i.e = load i8, ptr %.01027, align 1, !tbaa !10
+  %i.f = load i8, ptr %.0926, align 1, !tbaa !10
   %i.g = icmp eq i8 %i.e, %i.f
   br i1 %i.g, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
   %i.h = add nuw i64 %.025, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.h, %.sroa.speculated
-  br i1 %exitcond.not, label %.critedge, label %bb.c, !llvm.loop !13
+  br i1 %exitcond.not, label %.critedge, label %bb.c, !llvm.loop !14
 
 .critedge:                                        ; preds = %bb.c, %bb.d, %bb.a
   %.sroa.321.0 = phi ptr [ null, %bb.a ], [ %scevgep, %bb.d ], [ %.pn24, %bb.c ]
@@ -371,16 +371,17 @@ attributes #10 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = distinct !{!7, !8}
-!8 = !{!"llvm.loop.mustprogress"}
-!9 = !{!5, !5, i64 0}
-!10 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!11 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!12 = distinct !{!12, !8}
-!13 = distinct !{!13, !8}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = distinct !{!8, !9}
+!9 = !{!"llvm.loop.mustprogress"}
+!10 = !{!6, !6, i64 0}
+!11 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!12 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!13 = distinct !{!13, !9}
+!14 = distinct !{!14, !9}
 end_hunk_0

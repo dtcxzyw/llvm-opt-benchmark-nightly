@@ -10,7 +10,7 @@ bb.a:
   %i.a = sdiv i32 %1, 64                          ; 3 uses
   %i.b = sext i32 %i.a to i64
   %i.c = getelementptr inbounds [8 x i8], ptr %0, i64 %i.b
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !7
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !8
   %i.e = srem i32 %1, 64
   %i.f = zext nneg i32 %i.e to i64
   %i.g = shl nsw i64 -1, %i.f
@@ -34,7 +34,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !7    ; 2 uses
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !8    ; 2 uses
   %.not13 = icmp eq i64 %i.n, 0
   br i1 %.not13, label %bb.f, label %bb.e
 
@@ -46,7 +46,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d, %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.s = load i64, ptr %i.r, align 8, !tbaa !7    ; 2 uses
+  %i.s = load i64, ptr %i.r, align 8, !tbaa !8    ; 2 uses
   %.not14 = icmp eq i64 %i.s, 0
   br i1 %.not14, label %bb.h, label %bb.g
 
@@ -58,7 +58,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f, %bb.c
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.x = load i64, ptr %i.w, align 8, !tbaa !7    ; 2 uses
+  %i.x = load i64, ptr %i.w, align 8, !tbaa !8    ; 2 uses
   %.not15 = icmp eq i64 %i.x, 0
   br i1 %.not15, label %bb.j, label %bb.i
 
@@ -85,11 +85,12 @@ attributes #1 = { nocallback nofree nosync nounwind speculatable willreturn memo
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"long", !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"long", !6, i64 0}
 end_hunk_0

@@ -20,15 +20,15 @@ bb.a:
   %1 = alloca %"class.absl::lts_20240116::Condition", align 8 ; 5 uses
   tail call void @_ZN4absl12lts_202401165Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(8) %0)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !7    ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !8    ; 2 uses
   %i.c = add nsw i32 %i.b, -1                     ; 2 uses
-  store i32 %i.c, ptr %i.a, align 8, !tbaa !7
+  store i32 %i.c, ptr %i.a, align 8, !tbaa !8
   %i.d = icmp slt i32 %i.b, 1
   br i1 %i.d, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !13
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !14
   invoke void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 70), i32 noundef 36, ptr noundef nonnull @.str.1, i32 noundef %i.c, i32 noundef %i.f)
           to label %bb.c unwind label %bb.d
 
@@ -52,11 +52,11 @@ bb.f:                                             ; preds = %bb.e
 _ZN4absl12lts_202401165Mutex5AwaitERKNS0_9ConditionE.exit: ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #6
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !13   ; 2 uses
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !14   ; 2 uses
   %i.k = add nsw i32 %i.j, -1                     ; 2 uses
-  store i32 %i.k, ptr %i.i, align 4, !tbaa !13
+  store i32 %i.k, ptr %i.i, align 4, !tbaa !14
   %i.l = icmp slt i32 %i.j, 1
-  br i1 %i.l, label %bb.g, label %bb.k, !prof !14
+  br i1 %i.l, label %bb.g, label %bb.k, !prof !15
 
 bb.g:                                             ; preds = %_ZN4absl12lts_202401165Mutex5AwaitERKNS0_9ConditionE.exit
   invoke void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 70), i32 noundef 43, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4)
@@ -120,7 +120,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define internal noundef zeroext i1 @_ZN4absl12lts_20240116L6IsZeroEPv(ptr nofree noundef readonly captures(none) %0) #3 {
 bb.a:
-  %i.a = load i32, ptr %0, align 4, !tbaa !3
+  %i.a = load i32, ptr %0, align 4, !tbaa !16
   %i.b = icmp eq i32 %i.a, 0
   ret i1 %i.b
 }
@@ -161,17 +161,19 @@ attributes #7 = { noreturn nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !4, i64 8}
-!8 = !{!"_ZTSN4absl12lts_202401167BarrierE", !9, i64 0, !4, i64 8, !4, i64 12}
-!9 = !{!"_ZTSN4absl12lts_202401165MutexE", !10, i64 0}
-!10 = !{!"_ZTSSt6atomicIlE", !11, i64 0}
-!11 = !{!"_ZTSSt13__atomic_baseIlE", !12, i64 0}
-!12 = !{!"long", !5, i64 0}
-!13 = !{!8, !4, i64 12}
-!14 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !5, i64 8}
+!9 = !{!"_ZTSN4absl12lts_202401167BarrierE", !10, i64 0, !5, i64 8, !5, i64 12}
+!10 = !{!"_ZTSN4absl12lts_202401165MutexE", !11, i64 0}
+!11 = !{!"_ZTSSt6atomicIlE", !12, i64 0}
+!12 = !{!"_ZTSSt13__atomic_baseIlE", !13, i64 0}
+!13 = !{!"long", !6, i64 0}
+!14 = !{!9, !5, i64 12}
+!15 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!16 = !{!5, !5, i64 0}
 end_hunk_0

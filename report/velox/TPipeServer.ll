@@ -27,10 +27,10 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nofree nounwind uwtable
 define internal void @_GLOBAL__sub_I_TPipeServer.cpp() #3 section ".text.startup" personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw (i8, ptr @_ZL21DEFAULT_PIPE_SECURITYB5cxx11, i64 16), ptr @_ZL21DEFAULT_PIPE_SECURITYB5cxx11, align 8, !tbaa !7
+  store ptr getelementptr inbounds nuw (i8, ptr @_ZL21DEFAULT_PIPE_SECURITYB5cxx11, i64 16), ptr @_ZL21DEFAULT_PIPE_SECURITYB5cxx11, align 8, !tbaa !8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) getelementptr inbounds nuw (i8, ptr @_ZL21DEFAULT_PIPE_SECURITYB5cxx11, i64 16), ptr noundef nonnull align 1 dereferenceable(14) @.str, i64 14, i1 false)
-  store i64 14, ptr getelementptr inbounds nuw (i8, ptr @_ZL21DEFAULT_PIPE_SECURITYB5cxx11, i64 8), align 8, !tbaa !11
-  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL21DEFAULT_PIPE_SECURITYB5cxx11, i64 30), align 2, !tbaa !14
+  store i64 14, ptr getelementptr inbounds nuw (i8, ptr @_ZL21DEFAULT_PIPE_SECURITYB5cxx11, i64 8), align 8, !tbaa !12
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL21DEFAULT_PIPE_SECURITYB5cxx11, i64 30), align 2, !tbaa !15
   %i.a = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev, ptr nonnull @_ZL21DEFAULT_PIPE_SECURITYB5cxx11, ptr nonnull @__dso_handle) #4 ; 0 uses
   ret void
 }
@@ -47,17 +47,18 @@ attributes #4 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !9, i64 0}
-!9 = !{!"p1 omnipotent char", !10, i64 0}
-!10 = !{!"any pointer", !5, i64 0}
-!11 = !{!12, !13, i64 8}
-!12 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !8, i64 0, !13, i64 8, !5, i64 16}
-!13 = !{!"long", !5, i64 0}
-!14 = !{!5, !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !10, i64 0}
+!10 = !{!"p1 omnipotent char", !11, i64 0}
+!11 = !{!"any pointer", !6, i64 0}
+!12 = !{!13, !14, i64 8}
+!13 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !9, i64 0, !14, i64 8, !6, i64 16}
+!14 = !{!"long", !6, i64 0}
+!15 = !{!6, !6, i64 0}
 end_hunk_0

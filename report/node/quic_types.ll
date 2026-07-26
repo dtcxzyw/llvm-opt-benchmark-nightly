@@ -13,7 +13,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = trunc nuw nsw i64 %1 to i8
-  store i8 %i.b, ptr %2, align 1, !tbaa !9
+  store i8 %i.b, ptr %2, align 1, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 1
   %.tr = trunc nuw nsw i64 %1 to i32
   %i.d = shl nuw nsw i32 %.tr, 3
@@ -25,7 +25,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @ERR_new() #2
   tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 23, ptr noundef nonnull @__func__.ossl_quic_gen_rand_conn_id) #2
   tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 20, i32 noundef 524324, ptr noundef null) #2
-  store i8 0, ptr %2, align 1, !tbaa !9
+  store i8 0, ptr %2, align 1, !tbaa !10
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
@@ -53,11 +53,12 @@ attributes #2 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
-!4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!5 = !{!6, !6, i64 0}
-!6 = !{!"int", !7, i64 0}
-!7 = !{!"omnipotent char", !8, i64 0}
-!8 = !{!"Simple C/C++ TBAA"}
-!9 = !{!10, !7, i64 0}
-!10 = !{!"quic_conn_id_st", !7, i64 0, !7, i64 1}
+!4 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!5 = !{!6, !7, i64 0}
+!6 = !{!"__libc_errno", !7, i64 0}
+!7 = !{!"int", !8, i64 0}
+!8 = !{!"omnipotent char", !9, i64 0}
+!9 = !{!"Simple C/C++ TBAA"}
+!10 = !{!11, !8, i64 0}
+!11 = !{!"quic_conn_id_st", !8, i64 0, !8, i64 1}
 end_hunk_0

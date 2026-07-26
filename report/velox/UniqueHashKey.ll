@@ -32,7 +32,7 @@ bb.a:
   %i.a = alloca [32 x i8], align 16               ; 4 uses
   %i.b = load atomic i8, ptr @_ZGVZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEvE6object acquire, align 8
   %i.c = icmp eq i8 %i.b, 0
-  br i1 %i.c, label %bb.b, label %_ZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEv.exit, !prof !11
+  br i1 %i.c, label %bb.b, label %_ZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEv.exit, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEvE6object) #10
@@ -71,9 +71,9 @@ bb.f:                                             ; preds = %_ZN5folly6detailL39
 
 bb.g:                                             ; preds = %.lr.ph, %bb.j
   %.sroa.05.010 = phi ptr [ %1, %.lr.ph ], [ %i.p, %bb.j ] ; 3 uses
-  %.sroa.03.0.copyload = load ptr, ptr %.sroa.05.010, align 8, !tbaa !12
+  %.sroa.03.0.copyload = load ptr, ptr %.sroa.05.010, align 8, !tbaa !13
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.05.010, i64 8
-  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !15 ; 3 uses
+  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
   %i.j = and i64 %.sroa.4.0.copyload, 9223372036854775807 ; 2 uses
   %.lobit.i = lshr i64 %.sroa.4.0.copyload, 63
@@ -88,7 +88,7 @@ bb.h:                                             ; preds = %bb.g
           to label %._crit_edge unwind label %bb.k ; 0 uses
 
 ._crit_edge:                                      ; preds = %bb.h
-  %.pre = load i64, ptr %3, align 8, !tbaa !15
+  %.pre = load i64, ptr %3, align 8, !tbaa !16
   br label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge, %bb.g
@@ -177,10 +177,10 @@ define internal fastcc void @_ZN5folly6detailL44unique_hash_key_algo_strong_sha2
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %0 = alloca %struct.SHA256state_st, align 4     ; 8 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) @_ZZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEvE6object, i8 0, i64 32, i1 false), !tbaa !17
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) @_ZZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEvE6object, i8 0, i64 32, i1 false), !tbaa !18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.b = tail call i32 @getpid() #10
-  store i32 %i.b, ptr %i.a, align 4, !tbaa !7
+  store i32 %i.b, ptr %i.a, align 4, !tbaa !19
   %i.c = tail call i64 @getauxval(i64 noundef 25) #10
   %i.d = inttoptr i64 %i.c to ptr
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #10
@@ -211,7 +211,7 @@ bb.a:
   %2 = alloca %struct.SHA256state_st, align 4     ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.b = tail call i32 @getpid() #10
-  store i32 %i.b, ptr %i.a, align 4, !tbaa !7
+  store i32 %i.b, ptr %i.a, align 4, !tbaa !19
   %i.c = tail call i64 @getauxval(i64 noundef 25) #10
   %i.d = inttoptr i64 %i.c to ptr
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
@@ -235,7 +235,7 @@ bb.a:
   %i.a = alloca [32 x i8], align 16               ; 5 uses
   %i.b = load atomic i8, ptr @_ZGVZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEvE6object acquire, align 8
   %i.c = icmp eq i8 %i.b, 0
-  br i1 %i.c, label %bb.b, label %_ZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEv.exit, !prof !11
+  br i1 %i.c, label %bb.b, label %_ZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEv.exit, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEvE6object) #10
@@ -274,9 +274,9 @@ bb.f:                                             ; preds = %_ZN5folly6detailL39
 
 bb.g:                                             ; preds = %.lr.ph, %bb.j
   %.sroa.05.010 = phi ptr [ %1, %.lr.ph ], [ %i.p, %bb.j ] ; 3 uses
-  %.sroa.03.0.copyload = load ptr, ptr %.sroa.05.010, align 8, !tbaa !12
+  %.sroa.03.0.copyload = load ptr, ptr %.sroa.05.010, align 8, !tbaa !13
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.05.010, i64 8
-  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !15 ; 3 uses
+  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
   %i.j = and i64 %.sroa.4.0.copyload, 9223372036854775807 ; 2 uses
   %.lobit.i = lshr i64 %.sroa.4.0.copyload, 63
@@ -291,7 +291,7 @@ bb.h:                                             ; preds = %bb.g
           to label %._crit_edge unwind label %bb.k ; 0 uses
 
 ._crit_edge:                                      ; preds = %bb.h
-  %.pre = load i64, ptr %3, align 8, !tbaa !15
+  %.pre = load i64, ptr %3, align 8, !tbaa !16
   br label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge, %bb.g
@@ -351,7 +351,7 @@ bb.a:
   %i.a = alloca [32 x i8], align 16               ; 4 uses
   %i.b = load atomic i8, ptr @_ZGVZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEvE6object acquire, align 8
   %i.c = icmp eq i8 %i.b, 0
-  br i1 %i.c, label %bb.b, label %_ZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEv.exit, !prof !11
+  br i1 %i.c, label %bb.b, label %_ZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEv.exit, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEvE6object) #10
@@ -390,9 +390,9 @@ bb.f:                                             ; preds = %_ZN5folly6detailL39
 
 bb.g:                                             ; preds = %.lr.ph, %bb.j
   %.sroa.04.09 = phi ptr [ %2, %.lr.ph ], [ %i.p, %bb.j ] ; 3 uses
-  %.sroa.0.0.copyload = load ptr, ptr %.sroa.04.09, align 8, !tbaa !12
+  %.sroa.0.0.copyload = load ptr, ptr %.sroa.04.09, align 8, !tbaa !13
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.04.09, i64 8
-  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !15 ; 3 uses
+  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   %i.j = and i64 %.sroa.4.0.copyload, 9223372036854775807 ; 2 uses
   %.lobit.i = lshr i64 %.sroa.4.0.copyload, 63
@@ -407,7 +407,7 @@ bb.h:                                             ; preds = %bb.g
           to label %._crit_edge unwind label %bb.k ; 0 uses
 
 ._crit_edge:                                      ; preds = %bb.h
-  %.pre = load i64, ptr %4, align 8, !tbaa !15
+  %.pre = load i64, ptr %4, align 8, !tbaa !16
   br label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge, %bb.g
@@ -463,7 +463,7 @@ bb.a:
   %i.a = alloca [32 x i8], align 16               ; 4 uses
   %i.b = load atomic i8, ptr @_ZGVZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEvE6object acquire, align 8
   %i.c = icmp eq i8 %i.b, 0
-  br i1 %i.c, label %bb.b, label %_ZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEv.exit, !prof !11
+  br i1 %i.c, label %bb.b, label %_ZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEv.exit, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly6detailL39unique_hash_key_algo_strong_sha256_initEvE6object) #10
@@ -502,9 +502,9 @@ bb.f:                                             ; preds = %_ZN5folly6detailL39
 
 bb.g:                                             ; preds = %.lr.ph, %bb.j
   %.sroa.04.09 = phi ptr [ %2, %.lr.ph ], [ %i.p, %bb.j ] ; 3 uses
-  %.sroa.0.0.copyload = load ptr, ptr %.sroa.04.09, align 8, !tbaa !12
+  %.sroa.0.0.copyload = load ptr, ptr %.sroa.04.09, align 8, !tbaa !13
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.04.09, i64 8
-  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !15 ; 3 uses
+  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   %i.j = and i64 %.sroa.4.0.copyload, 9223372036854775807 ; 2 uses
   %.lobit.i = lshr i64 %.sroa.4.0.copyload, 63
@@ -519,7 +519,7 @@ bb.h:                                             ; preds = %bb.g
           to label %._crit_edge unwind label %bb.k ; 0 uses
 
 ._crit_edge:                                      ; preds = %bb.h
-  %.pre = load i64, ptr %4, align 8, !tbaa !15
+  %.pre = load i64, ptr %4, align 8, !tbaa !16
   br label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge, %bb.g
@@ -600,16 +600,18 @@ attributes #12 = { nounwind willreturn memory(read) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!"branch_weights", i32 1, i32 1048575}
-!12 = !{!13, !13, i64 0}
-!13 = !{!"p1 omnipotent char", !14, i64 0}
-!14 = !{!"any pointer", !9, i64 0}
-!15 = !{!16, !16, i64 0}
-!16 = !{!"long", !9, i64 0}
-!17 = !{!9, !9, i64 0}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!"branch_weights", i32 1, i32 1048575}
+!13 = !{!14, !14, i64 0}
+!14 = !{!"p1 omnipotent char", !15, i64 0}
+!15 = !{!"any pointer", !10, i64 0}
+!16 = !{!17, !17, i64 0}
+!17 = !{!"long", !10, i64 0}
+!18 = !{!10, !10, i64 0}
+!19 = !{!9, !9, i64 0}
 end_hunk_0

@@ -18,9 +18,9 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   br i1 %.not.i, label %_ZN5folly6detail16memrchr_fallbackEPKvim.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = load i8, ptr %.010.i, align 1, !tbaa !11
+  %i.c = load i8, ptr %.010.i, align 1, !tbaa !12
   %i.d = icmp eq i8 %i.c, %i.b
-  br i1 %i.d, label %_ZN5folly6detail16memrchr_fallbackEPKvim.exit, label %bb.b, !llvm.loop !12
+  br i1 %i.d, label %_ZN5folly6detail16memrchr_fallbackEPKvim.exit, label %bb.b, !llvm.loop !13
 
 _ZN5folly6detail16memrchr_fallbackEPKvim.exit:    ; preds = %bb.b, %bb.c
   %spec.select.i = phi ptr [ %.010.i, %bb.c ], [ null, %bb.b ]
@@ -41,9 +41,9 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = load i8, ptr %.010, align 1, !tbaa !11
+  %i.c = load i8, ptr %.010, align 1, !tbaa !12
   %i.d = icmp eq i8 %i.c, %i.b
-  br i1 %i.d, label %bb.d, label %bb.b, !llvm.loop !12
+  br i1 %i.d, label %bb.d, label %bb.b, !llvm.loop !13
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %spec.select = phi ptr [ %.010, %bb.c ], [ null, %bb.b ]
@@ -79,7 +79,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.b, i64 %i.a) ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %0, ptr nonnull align 1 %1, i64 %.sroa.speculated, i1 false)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.speculated
-  store i8 0, ptr %i.c, align 1, !tbaa !11
+  store i8 0, ptr %i.c, align 1, !tbaa !12
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -112,12 +112,13 @@ attributes #5 = { nounwind willreturn memory(read) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!9, !9, i64 0}
-!12 = distinct !{!12, !13}
-!13 = !{!"llvm.loop.mustprogress"}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!10, !10, i64 0}
+!13 = distinct !{!13, !14}
+!14 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

@@ -4,7 +4,7 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-module asm
+module asm(target_features: "+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave", target_cpu: "x86-64")
     ".globl _ZSt21ios_base_library_initv"
 
 %"class.geos::algorithm::PointLocator" = type { i8, i32 }
@@ -17,7 +17,7 @@ $_ZTIN4geos9algorithm6locate22PointOnGeometryLocatorE = comdat any
 
 $_ZTSN4geos9algorithm6locate22PointOnGeometryLocatorE = comdat any
 
-@_ZTVN4geos9operation9overlayng25IndexedPointOnLineLocatorE = unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9operation9overlayng25IndexedPointOnLineLocatorE, ptr @_ZN4geos9algorithm6locate22PointOnGeometryLocatorD2Ev, ptr @_ZN4geos9operation9overlayng25IndexedPointOnLineLocatorD0Ev, ptr @_ZN4geos9operation9overlayng25IndexedPointOnLineLocator6locateEPKNS_4geom10CoordinateE] }, align 8
+@_ZTVN4geos9operation9overlayng25IndexedPointOnLineLocatorE = local_unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9operation9overlayng25IndexedPointOnLineLocatorE, ptr @_ZN4geos9algorithm6locate22PointOnGeometryLocatorD2Ev, ptr @_ZN4geos9operation9overlayng25IndexedPointOnLineLocatorD0Ev, ptr @_ZN4geos9operation9overlayng25IndexedPointOnLineLocator6locateEPKNS_4geom10CoordinateE] }, align 8
 @_ZTIN4geos9operation9overlayng25IndexedPointOnLineLocatorE = constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN4geos9operation9overlayng25IndexedPointOnLineLocatorE, ptr @_ZTIN4geos9algorithm6locate22PointOnGeometryLocatorE }, align 8
 @_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
 @_ZTSN4geos9operation9overlayng25IndexedPointOnLineLocatorE = constant [55 x i8] c"N4geos9operation9overlayng25IndexedPointOnLineLocatorE\00", align 1
@@ -31,7 +31,7 @@ bb.a:
   %2 = alloca %"class.geos::algorithm::PointLocator", align 4 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !7, !nonnull !12, !align !13
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !8, !nonnull !13, !align !14
   %i.c = call noundef signext i8 @_ZN4geos9algorithm12PointLocator6locateERKNS_4geom10CoordinateEPKNS2_8GeometryE(ptr noundef nonnull align 4 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
   ret i8 %i.c
@@ -78,16 +78,17 @@ attributes #7 = { builtin nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !10, i64 8}
-!8 = !{!"_ZTSN4geos9operation9overlayng25IndexedPointOnLineLocatorE", !9, i64 0, !10, i64 8}
-!9 = !{!"_ZTSN4geos9algorithm6locate22PointOnGeometryLocatorE"}
-!10 = !{!"p1 _ZTSN4geos4geom8GeometryE", !11, i64 0}
-!11 = !{!"any pointer", !5, i64 0}
-!12 = !{}
-!13 = !{i64 8}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !11, i64 8}
+!9 = !{!"_ZTSN4geos9operation9overlayng25IndexedPointOnLineLocatorE", !10, i64 0, !11, i64 8}
+!10 = !{!"_ZTSN4geos9algorithm6locate22PointOnGeometryLocatorE"}
+!11 = !{!"p1 _ZTSN4geos4geom8GeometryE", !12, i64 0}
+!12 = !{!"any pointer", !6, i64 0}
+!13 = !{}
+!14 = !{i64 8}
 end_hunk_0

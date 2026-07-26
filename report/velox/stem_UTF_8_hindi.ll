@@ -140,37 +140,37 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define range(i32 -2147483648, 2) i32 @hindi_UTF_8_stem(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !7
+  %i.a = load ptr, ptr %0, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !14
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !15
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !15
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !16
   %i.f = tail call i32 @skip_utf8(ptr noundef %i.a, i32 noundef %i.c, i32 noundef %i.e, i32 noundef 1) #2 ; 2 uses
   %i.g = icmp slt i32 %i.f, 0
   br i1 %i.g, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store i32 %i.f, ptr %i.h, align 8, !tbaa !16
-  %i.i = load i32, ptr %i.d, align 4, !tbaa !15   ; 2 uses
-  store i32 %i.i, ptr %i.b, align 8, !tbaa !14
+  store i32 %i.f, ptr %i.h, align 8, !tbaa !17
+  %i.i = load i32, ptr %i.d, align 4, !tbaa !16   ; 2 uses
+  store i32 %i.i, ptr %i.b, align 8, !tbaa !15
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i32 %i.i, ptr %i.j, align 8, !tbaa !17
+  store i32 %i.i, ptr %i.j, align 8, !tbaa !18
   %i.k = tail call i32 @find_among_b(ptr noundef nonnull %0, ptr noundef nonnull @a_0, i32 noundef 132) #2
   %.not = icmp eq i32 %i.k, 0
   br i1 %.not, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = load i32, ptr %i.b, align 8, !tbaa !14
+  %i.l = load i32, ptr %i.b, align 8, !tbaa !15
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i32 %i.l, ptr %i.m, align 4, !tbaa !18
+  store i32 %i.l, ptr %i.m, align 4, !tbaa !19
   %i.n = tail call i32 @slice_del(ptr noundef nonnull %0) #2 ; 2 uses
   %i.o = icmp sgt i32 %i.n, -1
   br i1 %i.o, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.p = load i32, ptr %i.h, align 8, !tbaa !16
-  store i32 %i.p, ptr %i.b, align 8, !tbaa !14
+  %i.p = load i32, ptr %i.h, align 8, !tbaa !17
+  store i32 %i.p, ptr %i.b, align 8, !tbaa !15
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %bb.c, %bb.b, %bb.d
@@ -223,21 +223,22 @@ attributes #2 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C/C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"SN_env", !9, i64 0, !4, i64 8, !4, i64 12, !4, i64 16, !4, i64 20, !4, i64 24, !11, i64 32, !13, i64 40}
-!9 = !{!"p1 omnipotent char", !10, i64 0}
-!10 = !{!"any pointer", !5, i64 0}
-!11 = !{!"p2 omnipotent char", !12, i64 0}
-!12 = !{!"any p2 pointer", !10, i64 0}
-!13 = !{!"p1 int", !10, i64 0}
-!14 = !{!8, !4, i64 8}
-!15 = !{!8, !4, i64 12}
-!16 = !{!8, !4, i64 16}
-!17 = !{!8, !4, i64 24}
-!18 = !{!8, !4, i64 20}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C/C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"SN_env", !10, i64 0, !5, i64 8, !5, i64 12, !5, i64 16, !5, i64 20, !5, i64 24, !12, i64 32, !14, i64 40}
+!10 = !{!"p1 omnipotent char", !11, i64 0}
+!11 = !{!"any pointer", !6, i64 0}
+!12 = !{!"p2 omnipotent char", !13, i64 0}
+!13 = !{!"any p2 pointer", !11, i64 0}
+!14 = !{!"p1 int", !11, i64 0}
+!15 = !{!9, !5, i64 8}
+!16 = !{!9, !5, i64 12}
+!17 = !{!9, !5, i64 16}
+!18 = !{!9, !5, i64 24}
+!19 = !{!9, !5, i64 20}
 end_hunk_0

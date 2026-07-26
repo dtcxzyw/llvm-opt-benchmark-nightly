@@ -34,14 +34,14 @@ bb.b:                                             ; preds = %bb.a
   %i.h = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #2
   %i.i = getelementptr i8, ptr %0, i64 %i.h
   %i.j = getelementptr i8, ptr %i.i, i64 -1       ; 2 uses
-  %i.k = load i8, ptr %i.j, align 1, !tbaa !11
+  %i.k = load i8, ptr %i.j, align 1, !tbaa !12
   switch i8 %i.k, label %bb.d [
     i8 47, label %bb.c
     i8 92, label %bb.c
   ]
 
 bb.c:                                             ; preds = %.tail29.thread, %.tail29.thread
-  store i8 0, ptr %i.j, align 1, !tbaa !11
+  store i8 0, ptr %i.j, align 1, !tbaa !12
   br label %bb.d
 
 bb.d:                                             ; preds = %.tail29.thread, %bb.c
@@ -58,11 +58,11 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %spec.select, i64 1
-  store i8 0, ptr %i.q, align 1, !tbaa !11
+  store i8 0, ptr %i.q, align 1, !tbaa !12
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  store i8 0, ptr %spec.select, align 1, !tbaa !11
+  store i8 0, ptr %spec.select, align 1, !tbaa !12
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.b, %bb.d, %bb.g, %bb.f, %.tail, %.tail29, %bb.a
@@ -90,10 +90,11 @@ attributes #2 = { nounwind willreturn memory(read) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!9, !9, i64 0}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!10, !10, i64 0}
 end_hunk_0

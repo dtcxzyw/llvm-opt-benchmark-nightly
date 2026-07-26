@@ -98,11 +98,11 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @_ZN4geos9precision10CommonBitsC2Ev(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 1), (4, 16)) %0) unnamed_addr #1 align 2 {
 bb.a:
-  store i8 1, ptr %0, align 8, !tbaa !7
+  store i8 1, ptr %0, align 8, !tbaa !8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 53, ptr %i.a, align 4, !tbaa !11
+  store i32 53, ptr %i.a, align 4, !tbaa !12
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %i.b, align 8, !tbaa !12
+  store i64 0, ptr %i.b, align 8, !tbaa !13
   ret void
 }
 
@@ -110,33 +110,33 @@ bb.a:
 define void @_ZN4geos9precision10CommonBits3addEd(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %0, double noundef %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = fptosi double %1 to i64                  ; 4 uses
-  %i.b = load i8, ptr %0, align 8, !tbaa !7, !range !13, !noundef !14
+  %i.b = load i8, ptr %0, align 8, !tbaa !8, !range !14, !noundef !15
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.a, ptr %i.d, align 8, !tbaa !12
+  store i64 %i.a, ptr %i.d, align 8, !tbaa !13
   %i.e = ashr i64 %i.a, 52
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %i.e, ptr %i.f, align 8, !tbaa !15
-  store i8 0, ptr %0, align 8, !tbaa !7
+  store i64 %i.e, ptr %i.f, align 8, !tbaa !16
+  store i8 0, ptr %0, align 8, !tbaa !8
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a
   %i.g = ashr i64 %i.a, 52
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !15
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !16
   %.not = icmp eq i64 %i.g, %i.i
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   br i1 %.not, label %vector.ph, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store i64 0, ptr %i.j, align 8, !tbaa !12
+  store i64 0, ptr %i.j, align 8, !tbaa !13
   br label %bb.e
 
 vector.ph:                                        ; preds = %bb.c
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !12   ; 2 uses
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !13   ; 2 uses
   %i.l = xor i64 %i.k, %i.a                       ; 5 uses
   %broadcast.splatinsert = insertelement <16 x i64> poison, i64 %i.l, i64 0
   %broadcast.splat = shufflevector <16 x i64> %broadcast.splatinsert, <16 x i64> poison, <16 x i32> zeroinitializer
@@ -193,14 +193,14 @@ scalar.ph.3:                                      ; preds = %scalar.ph.2
 _ZN4geos9precision10CommonBits28numCommonMostSigMantissaBitsEll.exit: ; preds = %scalar.ph.3, %scalar.ph, %scalar.ph.1, %scalar.ph.2, %vector.early.exit
   %.01113.i.lcssa = phi i32 [ %i.x, %vector.early.exit ], [ %spec.select, %scalar.ph.3 ], [ 48, %scalar.ph ], [ 49, %scalar.ph.1 ], [ 50, %scalar.ph.2 ] ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.01113.i.lcssa, ptr %i.ac, align 4, !tbaa !11
+  store i32 %.01113.i.lcssa, ptr %i.ac, align 4, !tbaa !12
   %i.ad = sub nsw i32 52, %.01113.i.lcssa         ; 2 uses
   %or.cond.i = icmp ugt i32 %i.ad, 63
   %i.ae = zext nneg i32 %i.ad to i64
   %notmask.i = shl nsw i64 -1, %i.ae
   %i.af = and i64 %notmask.i, %i.k
   %.0.i = select i1 %or.cond.i, i64 0, i64 %i.af
-  store i64 %.0.i, ptr %i.j, align 8, !tbaa !12
+  store i64 %.0.i, ptr %i.j, align 8, !tbaa !13
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZN4geos9precision10CommonBits28numCommonMostSigMantissaBitsEll.exit, %bb.b
@@ -211,7 +211,7 @@ bb.e:                                             ; preds = %bb.d, %_ZN4geos9pre
 define noundef double @_ZN4geos9precision10CommonBits9getCommonEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !12
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !13
   %i.c = sitofp i64 %i.b to double
   ret double %i.c
 }
@@ -231,18 +231,19 @@ attributes #4 = { nocallback nofree nosync nounwind speculatable willreturn memo
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSN4geos9precision10CommonBitsE", !9, i64 0, !4, i64 4, !10, i64 8, !10, i64 16}
-!9 = !{!"bool", !5, i64 0}
-!10 = !{!"long", !5, i64 0}
-!11 = !{!8, !4, i64 4}
-!12 = !{!8, !10, i64 8}
-!13 = !{i8 0, i8 2}
-!14 = !{}
-!15 = !{!8, !10, i64 16}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSN4geos9precision10CommonBitsE", !10, i64 0, !5, i64 4, !11, i64 8, !11, i64 16}
+!10 = !{!"bool", !6, i64 0}
+!11 = !{!"long", !6, i64 0}
+!12 = !{!9, !5, i64 4}
+!13 = !{!9, !11, i64 8}
+!14 = !{i8 0, i8 2}
+!15 = !{}
+!16 = !{!9, !11, i64 16}
 end_hunk_0

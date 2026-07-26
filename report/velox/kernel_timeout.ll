@@ -50,7 +50,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %storemerge20 = phi i64 [ %storemerge, %bb.b ], [ -1, %bb.a ]
-  store i64 %storemerge20, ptr %0, align 8, !tbaa !7
+  store i64 %storemerge20, ptr %0, align 8, !tbaa !8
   ret void
 }
 
@@ -81,7 +81,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %storemerge23 = phi i64 [ -1, %bb.a ], [ %i.i, %bb.c ], [ -1, %bb.b ]
-  store i64 %storemerge23, ptr %0, align 8, !tbaa !7
+  store i64 %storemerge23, ptr %0, align 8, !tbaa !8
   ret void
 }
 
@@ -91,7 +91,7 @@ declare noundef i64 @_ZN4absl12lts_2024011618ToInt64NanosecondsENS0_8DurationE(i
 ; Function Attrs: mustprogress uwtable
 define noundef i64 @_ZNK4absl12lts_2024011624synchronization_internal13KernelTimeout12MakeAbsNanosEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #5 align 2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !7      ; 3 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !8      ; 3 uses
   %.not = icmp eq i64 %i.a, -1
   br i1 %.not, label %bb.e, label %bb.b
 
@@ -125,7 +125,7 @@ declare noundef i64 @_ZN4absl12lts_2024011619GetCurrentTimeNanosEv() local_unnam
 ; Function Attrs: mustprogress uwtable
 define noundef range(i64 0, -9223372036854775808) i64 @_ZNK4absl12lts_2024011624synchronization_internal13KernelTimeout20InNanosecondsFromNowEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #5 align 2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !7      ; 3 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !8      ; 3 uses
   %.not = icmp eq i64 %i.a, -1
   br i1 %.not, label %bb.e, label %bb.b
 
@@ -155,7 +155,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.a
 ; Function Attrs: mustprogress uwtable
 define { i64, i64 } @_ZNK4absl12lts_2024011624synchronization_internal13KernelTimeout15MakeAbsTimespecEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #5 align 2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !7      ; 3 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !8      ; 3 uses
   %.not.i = icmp eq i64 %i.a, -1
   br i1 %.not.i, label %_ZNK4absl12lts_2024011624synchronization_internal13KernelTimeout12MakeAbsNanosEv.exit, label %bb.b
 
@@ -200,7 +200,7 @@ declare { i64, i64 } @_ZN4absl12lts_2024011610ToTimespecENS0_8DurationE(i64, i32
 ; Function Attrs: mustprogress uwtable
 define { i64, i64 } @_ZNK4absl12lts_2024011624synchronization_internal13KernelTimeout20MakeRelativeTimespecEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #5 align 2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !7      ; 3 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !8      ; 3 uses
   %.not.i = icmp eq i64 %i.a, -1
   br i1 %.not.i, label %_ZNK4absl12lts_2024011624synchronization_internal13KernelTimeout20InNanosecondsFromNowEv.exit, label %bb.b
 
@@ -237,7 +237,7 @@ define { i64, i64 } @_ZNK4absl12lts_2024011624synchronization_internal13KernelTi
 bb.a:
   %2 = alloca %"class.absl::lts_20240116::Duration", align 8 ; 5 uses
   %3 = alloca %struct.timespec, align 8           ; 5 uses
-  %i.a = load i64, ptr %0, align 8, !tbaa !7      ; 3 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !8      ; 3 uses
   %.not61 = icmp eq i64 %i.a, -1
   br i1 %.not61, label %bb.b, label %bb.c
 
@@ -264,7 +264,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
   %i.h = call i32 @clock_gettime(i32 noundef %1, ptr noundef nonnull %3) #8
   %.not = icmp eq i32 %i.h, 0
-  br i1 %.not, label %_ZN4absl12lts_20240116leENS0_8DurationES1_.exit, label %bb.g, !prof !10
+  br i1 %.not, label %_ZN4absl12lts_20240116leENS0_8DurationES1_.exit, label %bb.g, !prof !11
 
 bb.g:                                             ; preds = %bb.f
   call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2024011616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 79), i32 noundef 165, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3)
@@ -272,9 +272,9 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN4absl12lts_20240116leENS0_8DurationES1_.exit:  ; preds = %bb.f
   %.0 = sub nsw i64 %i.c, %.pn                    ; 2 uses
-  %.sroa.039.0.copyload = load i64, ptr %3, align 8, !tbaa !11
+  %.sroa.039.0.copyload = load i64, ptr %3, align 8, !tbaa !12
   %.sroa.240.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.sroa.240.0.copyload = load i64, ptr %.sroa.240.0..sroa_idx, align 8, !tbaa !11
+  %.sroa.240.0.copyload = load i64, ptr %.sroa.240.0..sroa_idx, align 8, !tbaa !12
   %i.i = call { i64, i32 } @_ZN4absl12lts_2024011620DurationFromTimespecE8timespec(i64 %.sroa.039.0.copyload, i64 %.sroa.240.0.copyload) #9 ; 2 uses
   %.fca.0.extract35 = extractvalue { i64, i32 } %i.i, 0
   %.fca.1.extract36 = extractvalue { i64, i32 } %i.i, 1
@@ -294,7 +294,7 @@ _ZN4absl12lts_20240116leENS0_8DurationES1_.exit:  ; preds = %bb.f
   %i.o = call noundef nonnull align 4 dereferenceable(12) ptr @_ZN4absl12lts_202401168DurationpLES1_(ptr noundef nonnull align 4 dereferenceable(12) %2, i64 %.pn17.i.i.i, i32 %.pn15.i.i.i) #8 ; 2 uses
   %.sroa.011.0.copyload.i = load i64, ptr %i.o, align 4 ; 3 uses
   %.sroa.212.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  %.sroa.212.0.copyload.i = load i32, ptr %.sroa.212.0..sroa_idx.i, align 4, !tbaa !3 ; 2 uses
+  %.sroa.212.0.copyload.i = load i32, ptr %.sroa.212.0..sroa_idx.i, align 4, !tbaa !13 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %.not.i.i = icmp eq i64 %.sroa.011.0.copyload.i, 0
   %i.p = icmp slt i64 %.sroa.011.0.copyload.i, 1
@@ -331,7 +331,7 @@ declare { i64, i32 } @_ZN4absl12lts_2024011620DurationFromTimespecE8timespec(i64
 ; Function Attrs: mustprogress uwtable
 define noundef range(i64 -1, 9223372036855) i64 @_ZNK4absl12lts_2024011624synchronization_internal13KernelTimeout21InMillisecondsFromNowEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #5 align 2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !7      ; 3 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !8      ; 3 uses
   %.not = icmp eq i64 %i.a, -1
   br i1 %.not, label %bb.f, label %bb.b
 
@@ -369,7 +369,7 @@ bb.f:                                             ; preds = %bb.e, %_ZNK4absl12l
 ; Function Attrs: mustprogress uwtable
 define range(i64 -9223372036854775000, -9223372036854775808) i64 @_ZNK4absl12lts_2024011624synchronization_internal13KernelTimeout17ToChronoTimePointEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !7      ; 3 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !8      ; 3 uses
   %.not = icmp eq i64 %i.a, -1
   br i1 %.not, label %bb.e, label %bb.b
 
@@ -408,7 +408,7 @@ bb.e:                                             ; preds = %bb.a, %_ZNK4absl12l
 ; Function Attrs: mustprogress uwtable
 define range(i64 0, -9223372036854775808) i64 @_ZNK4absl12lts_2024011624synchronization_internal13KernelTimeout16ToChronoDurationEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !7      ; 3 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !8      ; 3 uses
   %.not = icmp eq i64 %i.a, -1
   br i1 %.not, label %_ZNK4absl12lts_2024011624synchronization_internal13KernelTimeout20InNanosecondsFromNowEv.exit, label %bb.b
 
@@ -462,14 +462,16 @@ attributes #9 = { nounwind willreturn memory(none) }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSN4absl12lts_2024011624synchronization_internal13KernelTimeoutE", !9, i64 0}
-!9 = !{!"long", !5, i64 0}
-!10 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!11 = !{!9, !9, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSN4absl12lts_2024011624synchronization_internal13KernelTimeoutE", !10, i64 0}
+!10 = !{!"long", !6, i64 0}
+!11 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!12 = !{!10, !10, i64 0}
+!13 = !{!5, !5, i64 0}
 end_hunk_0

@@ -24,7 +24,7 @@ $_ZN4absl12lts_2024011613base_internal10AtomicHookIPFvPKvlEE13DummyFunctionES4_l
 ; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define void @_ZN4absl12lts_2024011613base_internal24RegisterSpinLockProfilerEPFvPKvlE(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2024011613base_internalL19submit_profile_dataE, i64 8), align 8, !tbaa !7
+  %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2024011613base_internalL19submit_profile_dataE, i64 8), align 8, !tbaa !8
   %i.b = cmpxchg ptr @_ZN4absl12lts_2024011613base_internalL19submit_profile_dataE, ptr %i.a, ptr %0 acq_rel acquire, align 8 ; 0 uses
   ret void
 }
@@ -34,7 +34,7 @@ define void @_ZN4absl12lts_2024011613base_internal8SpinLockC2ENS1_14SchedulingMo
 bb.a:
   %i.a = icmp eq i32 %1, 1
   %i.b = select i1 %i.a, i32 2, i32 0
-  store i32 %i.b, ptr %0, align 4, !tbaa !12
+  store i32 %i.b, ptr %0, align 4, !tbaa !13
   ret void
 }
 
@@ -43,14 +43,14 @@ define noundef i32 @_ZN4absl12lts_2024011613base_internal8SpinLock8SpinLoopEv(pt
 bb.a:
   %i.a = load atomic i32, ptr @_ZZN4absl12lts_2024011613base_internal8SpinLock8SpinLoopEvE24init_adaptive_spin_count acquire, align 4
   %.not.i = icmp eq i32 %i.a, 221
-  br i1 %.not.i, label %"_ZN4absl12lts_2024011613base_internal16LowLevelCallOnceIZNS1_8SpinLock8SpinLoopEvE3$_0JEEEvPNS0_9once_flagEOT_DpOT0_.exit", label %bb.b, !prof !14
+  br i1 %.not.i, label %"_ZN4absl12lts_2024011613base_internal16LowLevelCallOnceIZNS1_8SpinLock8SpinLoopEvE3$_0JEEEvPNS0_9once_flagEOT_DpOT0_.exit", label %bb.b, !prof !15
 
 bb.b:                                             ; preds = %bb.a
   tail call fastcc void @"_ZN4absl12lts_2024011613base_internal12CallOnceImplIZNS1_8SpinLock8SpinLoopEvE3$_0JEEEvPSt6atomicIjENS1_14SchedulingModeEOT_DpOT0_"(ptr noundef nonnull @_ZZN4absl12lts_2024011613base_internal8SpinLock8SpinLoopEvE24init_adaptive_spin_count)
   br label %"_ZN4absl12lts_2024011613base_internal16LowLevelCallOnceIZNS1_8SpinLock8SpinLoopEvE3$_0JEEEvPNS0_9once_flagEOT_DpOT0_.exit"
 
 "_ZN4absl12lts_2024011613base_internal16LowLevelCallOnceIZNS1_8SpinLock8SpinLoopEvE3$_0JEEEvPNS0_9once_flagEOT_DpOT0_.exit": ; preds = %bb.a, %bb.b
-  %i.b = load i32, ptr @_ZZN4absl12lts_2024011613base_internal8SpinLock8SpinLoopEvE19adaptive_spin_count, align 4, !tbaa !3
+  %i.b = load i32, ptr @_ZZN4absl12lts_2024011613base_internal8SpinLock8SpinLoopEvE19adaptive_spin_count, align 4, !tbaa !16
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %"_ZN4absl12lts_2024011613base_internal16LowLevelCallOnceIZNS1_8SpinLock8SpinLoopEvE3$_0JEEEvPNS0_9once_flagEOT_DpOT0_.exit"
@@ -60,7 +60,7 @@ bb.c:                                             ; preds = %bb.c, %"_ZN4absl12l
   %i.d = add nsw i32 %.0, -1
   %i.e = icmp sgt i32 %.0, 1
   %or.cond = select i1 %.not, i1 %i.e, i1 false
-  br i1 %or.cond, label %bb.c, label %.critedge, !llvm.loop !15
+  br i1 %or.cond, label %bb.c, label %.critedge, !llvm.loop !17
 
 .critedge:                                        ; preds = %bb.c
   ret i32 %i.c
@@ -91,7 +91,7 @@ _ZN4absl12lts_2024011613base_internal8SpinLock15TryLockInternalEjj.exit.thread: 
   br i1 %i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %_ZN4absl12lts_2024011613base_internal8SpinLock15TryLockInternalEjj.exit.thread
-  %i.j = tail call { i64, i64 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !17 ; 2 uses
+  %i.j = tail call { i64, i64 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !19 ; 2 uses
   %i.k = extractvalue { i64, i64 } %i.j, 0
   %i.l = extractvalue { i64, i64 } %i.j, 1
   %i.m = shl i64 %i.l, 32
@@ -99,7 +99,7 @@ bb.b:                                             ; preds = %_ZN4absl12lts_20240
   br label %.lr.ph.preheader
 
 bb.c:                                             ; preds = %_ZN4absl12lts_2024011613base_internal8SpinLock15TryLockInternalEjj.exit.thread
-  %i.o = tail call noundef i64 %i.h(), !inline_history !18
+  %i.o = tail call noundef i64 %i.h(), !inline_history !20
   br label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.c, %bb.b
@@ -141,7 +141,7 @@ _ZN4absl12lts_2024011613base_internal8SpinLock15TryLockInternalEjj.exit10: ; pre
   %.022.be = phi i32 [ %i.x, %_ZN4absl12lts_2024011613base_internal8SpinLock15TryLockInternalEjj.exit10 ], [ %i.t, %bb.g ] ; 2 uses
   %i.y = and i32 %.022.be, 1
   %.not7 = icmp eq i32 %i.y, 0
-  br i1 %.not7, label %.loopexit, label %bb.d, !llvm.loop !19
+  br i1 %.not7, label %.loopexit, label %bb.d, !llvm.loop !21
 
 bb.g:                                             ; preds = %bb.f
   %i.z = icmp ult i32 %i.t, 8
@@ -157,7 +157,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ad, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.loopexit25
-  %i.ae = tail call { i64, i64 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !17 ; 2 uses
+  %i.ae = tail call { i64, i64 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !19 ; 2 uses
   %i.af = extractvalue { i64, i64 } %i.ae, 0
   %i.ag = extractvalue { i64, i64 } %i.ae, 1
   %i.ah = shl i64 %i.ag, 32
@@ -165,7 +165,7 @@ bb.h:                                             ; preds = %.loopexit25
   br label %_ZN4absl12lts_2024011613base_internal10CycleClock3NowEv.exit13
 
 bb.i:                                             ; preds = %.loopexit25
-  %i.aj = tail call noundef i64 %i.ac(), !inline_history !18
+  %i.aj = tail call noundef i64 %i.ac(), !inline_history !20
   br label %_ZN4absl12lts_2024011613base_internal10CycleClock3NowEv.exit13
 
 _ZN4absl12lts_2024011613base_internal10CycleClock3NowEv.exit13: ; preds = %bb.h, %bb.i
@@ -204,7 +204,7 @@ _ZN4absl12lts_2024011613base_internal8SpinLock15TryLockInternalEjj.exit16: ; pre
   %.04.i15 = phi i32 [ %i.ab, %_ZN4absl12lts_2024011613base_internal8SpinLock16EncodeWaitCyclesEll.exit ], [ %i.ar, %bb.l ] ; 2 uses
   %i.as = and i32 %.04.i15, 1
   %.not728 = icmp eq i32 %i.as, 0
-  br i1 %.not728, label %.loopexit, label %.lr.ph, !llvm.loop !19
+  br i1 %.not728, label %.loopexit, label %.lr.ph, !llvm.loop !21
 
 .loopexit:                                        ; preds = %_ZN4absl12lts_2024011613base_internal8SpinLock15TryLockInternalEjj.exit16, %.backedge, %_ZN4absl12lts_2024011613base_internal8SpinLock15TryLockInternalEjj.exit
   ret void
@@ -246,7 +246,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = zext i32 %i.a to i64
   %i.c = shl nuw nsw i64 %i.b, 4
   %i.d = load atomic ptr, ptr @_ZN4absl12lts_2024011613base_internalL19submit_profile_dataE acquire, align 8
-  tail call void %i.d(ptr noundef nonnull %0, i64 noundef %i.c), !inline_history !20
+  tail call void %i.d(ptr noundef nonnull %0, i64 noundef %i.c), !inline_history !22
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -290,7 +290,7 @@ _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_order.exit.thread
   %i.e = tail call noundef i32 @_ZN4absl12lts_2024011613base_internal7NumCPUsEv()
   %i.f = icmp sgt i32 %i.e, 1
   %i.g = select i1 %i.f, i32 1000, i32 1
-  store i32 %i.g, ptr @_ZZN4absl12lts_2024011613base_internal8SpinLock8SpinLoopEvE19adaptive_spin_count, align 4, !tbaa !3
+  store i32 %i.g, ptr @_ZZN4absl12lts_2024011613base_internal8SpinLock8SpinLoopEvE19adaptive_spin_count, align 4, !tbaa !16
   %i.h = atomicrmw xchg ptr %0, i32 221 release, align 4
   %i.i = icmp eq i32 %i.h, 94570706
   br i1 %i.i, label %bb.b, label %_ZN4absl12lts_2024011613base_internal12SpinLockWakeEPSt6atomicIjEb.exit
@@ -327,23 +327,25 @@ attributes #9 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !11, i64 8}
-!8 = !{!"_ZTSN4absl12lts_2024011613base_internal10AtomicHookIPFvPKvlEEE", !9, i64 0, !11, i64 8}
-!9 = !{!"_ZTSSt6atomicIPFvPKvlEE", !10, i64 0}
-!10 = !{!"_ZTSSt13__atomic_baseIPFvPKvlEE", !11, i64 0}
-!11 = !{!"any pointer", !5, i64 0}
-!12 = !{!13, !4, i64 0}
-!13 = !{!"_ZTSSt13__atomic_baseIjE", !4, i64 0}
-!14 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!15 = distinct !{!15, !16}
-!16 = !{!"llvm.loop.mustprogress"}
-!17 = !{i64 3752815}
-!18 = distinct !{null}
-!19 = distinct !{!19, !16}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !12, i64 8}
+!9 = !{!"_ZTSN4absl12lts_2024011613base_internal10AtomicHookIPFvPKvlEEE", !10, i64 0, !12, i64 8}
+!10 = !{!"_ZTSSt6atomicIPFvPKvlEE", !11, i64 0}
+!11 = !{!"_ZTSSt13__atomic_baseIPFvPKvlEE", !12, i64 0}
+!12 = !{!"any pointer", !6, i64 0}
+!13 = !{!14, !5, i64 0}
+!14 = !{!"_ZTSSt13__atomic_baseIjE", !5, i64 0}
+!15 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!16 = !{!5, !5, i64 0}
+!17 = distinct !{!17, !18}
+!18 = !{!"llvm.loop.mustprogress"}
+!19 = !{i64 3749978}
 !20 = distinct !{null}
+!21 = distinct !{!21, !18}
+!22 = distinct !{null}
 end_hunk_0

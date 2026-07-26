@@ -28,15 +28,15 @@ bb.a:
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %i.d = load i8, ptr %2, align 1, !tbaa !11
+  %i.d = load i8, ptr %2, align 1, !tbaa !12
   %i.e = zext i8 %i.d to i64                      ; 2 uses
   %i.f = lshr i64 %i.e, 6
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.f ; 2 uses
   %i.h = and i64 %i.e, 63
   %i.i = shl nuw i64 1, %i.h
-  %i.j = load i64, ptr %i.g, align 8, !tbaa !12
+  %i.j = load i64, ptr %i.g, align 8, !tbaa !13
   %i.k = or i64 %i.i, %i.j
-  store i64 %i.k, ptr %i.g, align 8, !tbaa !12
+  store i64 %i.k, ptr %i.g, align 8, !tbaa !13
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 1
   br label %.lr.ph.prol.loopexit
 
@@ -55,25 +55,25 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %.01423 = phi ptr [ %i.ai, %.lr.ph ], [ %.01423.unr, %.lr.ph.prol.loopexit ] ; 3 uses
-  %i.r = load i8, ptr %.01423, align 1, !tbaa !11
+  %i.r = load i8, ptr %.01423, align 1, !tbaa !12
   %i.s = zext i8 %i.r to i64                      ; 2 uses
   %i.t = lshr i64 %i.s, 6
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.t ; 2 uses
   %i.v = and i64 %i.s, 63
   %i.w = shl nuw i64 1, %i.v
-  %i.x = load i64, ptr %i.u, align 8, !tbaa !12
+  %i.x = load i64, ptr %i.u, align 8, !tbaa !13
   %i.y = or i64 %i.w, %i.x
-  store i64 %i.y, ptr %i.u, align 8, !tbaa !12
+  store i64 %i.y, ptr %i.u, align 8, !tbaa !13
   %i.z = getelementptr inbounds nuw i8, ptr %.01423, i64 1
-  %i.aa = load i8, ptr %i.z, align 1, !tbaa !11
+  %i.aa = load i8, ptr %i.z, align 1, !tbaa !12
   %i.ab = zext i8 %i.aa to i64                    ; 2 uses
   %i.ac = lshr i64 %i.ab, 6
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ac ; 2 uses
   %i.ae = and i64 %i.ab, 63
   %i.af = shl nuw i64 1, %i.ae
-  %i.ag = load i64, ptr %i.ad, align 8, !tbaa !12
+  %i.ag = load i64, ptr %i.ad, align 8, !tbaa !13
   %i.ah = or i64 %i.af, %i.ag
-  store i64 %i.ah, ptr %i.ad, align 8, !tbaa !12
+  store i64 %i.ah, ptr %i.ad, align 8, !tbaa !13
   %i.ai = getelementptr inbounds nuw i8, ptr %.01423, i64 2 ; 2 uses
   %.not.1 = icmp eq ptr %i.ai, %3
   br i1 %.not.1, label %.preheader, label %.lr.ph
@@ -81,12 +81,12 @@ bb.a:
 .lr.ph26:                                         ; preds = %.preheader, %bb.b
   %.01225 = phi i64 [ %i.as, %bb.b ], [ 0, %.preheader ] ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 %.01225
-  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !11
+  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !12
   %i.al = zext i8 %i.ak to i64                    ; 2 uses
   %i.am = lshr i64 %i.al, 6
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.am
   %i.ao = and i64 %i.al, 63
-  %i.ap = load i64, ptr %i.an, align 8, !tbaa !12
+  %i.ap = load i64, ptr %i.an, align 8, !tbaa !13
   %i.aq = shl nuw i64 1, %i.ao
   %i.ar = and i64 %i.aq, %i.ap
   %.not21 = icmp eq i64 %i.ar, 0
@@ -95,7 +95,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph26
   %i.as = add nuw i64 %.01225, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.as, %i.q
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph26, !llvm.loop !14
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph26, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph26, %.preheader
   %spec.select = phi i64 [ -1, %.preheader ], [ %.01225, %.lr.ph26 ], [ -1, %bb.b ]
@@ -141,10 +141,10 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN5folly13SparseByteSet3addEh.exit
   %.01419 = phi ptr [ %2, %.lr.ph ], [ %i.y, %_ZN5folly13SparseByteSet3addEh.exit ] ; 2 uses
   %i.i = phi i16 [ 0, %.lr.ph ], [ %i.x, %_ZN5folly13SparseByteSet3addEh.exit ] ; 5 uses
-  %i.j = load i8, ptr %.01419, align 1, !tbaa !11 ; 3 uses
+  %i.j = load i8, ptr %.01419, align 1, !tbaa !12 ; 3 uses
   %i.k = zext i8 %i.j to i64
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.k ; 2 uses
-  %i.m = load i8, ptr %i.l, align 1, !tbaa !11    ; 2 uses
+  %i.m = load i8, ptr %i.l, align 1, !tbaa !12    ; 2 uses
   %i.n = zext i8 %i.m to i16
   %i.o = icmp ugt i16 %i.i, %i.n
   br i1 %i.o, label %_ZNK5folly13SparseByteSet8containsEh.exit.i, label %_ZNK5folly13SparseByteSet8containsEh.exit.thread.i
@@ -152,16 +152,16 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN5folly1
 _ZNK5folly13SparseByteSet8containsEh.exit.i:      ; preds = %bb.b
   %i.p = zext i8 %i.m to i64
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.p
-  %i.r = load i8, ptr %i.q, align 1, !tbaa !11
+  %i.r = load i8, ptr %i.q, align 1, !tbaa !12
   %i.s = icmp eq i8 %i.r, %i.j
   br i1 %i.s, label %_ZN5folly13SparseByteSet3addEh.exit, label %_ZNK5folly13SparseByteSet8containsEh.exit.thread.i
 
 _ZNK5folly13SparseByteSet8containsEh.exit.thread.i: ; preds = %_ZNK5folly13SparseByteSet8containsEh.exit.i, %bb.b
   %i.t = zext i16 %i.i to i64
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.t
-  store i8 %i.j, ptr %i.u, align 1, !tbaa !11
+  store i8 %i.j, ptr %i.u, align 1, !tbaa !12
   %i.v = trunc i16 %i.i to i8
-  store i8 %i.v, ptr %i.l, align 1, !tbaa !11
+  store i8 %i.v, ptr %i.l, align 1, !tbaa !12
   %i.w = add i16 %i.i, 1
   br label %_ZN5folly13SparseByteSet3addEh.exit
 
@@ -174,10 +174,10 @@ _ZN5folly13SparseByteSet3addEh.exit:              ; preds = %_ZNK5folly13SparseB
 bb.c:                                             ; preds = %.lr.ph22, %_ZNK5folly13SparseByteSet8containsEh.exit.thread
   %.01221 = phi i64 [ 0, %.lr.ph22 ], [ %i.ak, %_ZNK5folly13SparseByteSet8containsEh.exit.thread ] ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 %.01221
-  %i.aa = load i8, ptr %i.z, align 1, !tbaa !11   ; 2 uses
+  %i.aa = load i8, ptr %i.z, align 1, !tbaa !12   ; 2 uses
   %i.ab = zext i8 %i.aa to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ab
-  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !11  ; 2 uses
+  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !12  ; 2 uses
   %i.ae = zext i8 %i.ad to i16
   %i.af = icmp ugt i16 %i.c, %i.ae
   br i1 %i.af, label %_ZNK5folly13SparseByteSet8containsEh.exit, label %_ZNK5folly13SparseByteSet8containsEh.exit.thread
@@ -185,14 +185,14 @@ bb.c:                                             ; preds = %.lr.ph22, %_ZNK5fol
 _ZNK5folly13SparseByteSet8containsEh.exit:        ; preds = %bb.c
   %i.ag = zext i8 %i.ad to i64
   %i.ah = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.ag
-  %i.ai = load i8, ptr %i.ah, align 1, !tbaa !11
+  %i.ai = load i8, ptr %i.ah, align 1, !tbaa !12
   %i.aj = icmp eq i8 %i.ai, %i.aa
   br i1 %i.aj, label %_ZNK5folly13SparseByteSet8containsEh.exit._crit_edge, label %_ZNK5folly13SparseByteSet8containsEh.exit.thread
 
 _ZNK5folly13SparseByteSet8containsEh.exit.thread: ; preds = %bb.c, %_ZNK5folly13SparseByteSet8containsEh.exit
   %i.ak = add nuw i64 %.01221, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.ak, %i.g
-  br i1 %exitcond.not, label %_ZNK5folly13SparseByteSet8containsEh.exit._crit_edge, label %bb.c, !llvm.loop !16
+  br i1 %exitcond.not, label %_ZNK5folly13SparseByteSet8containsEh.exit._crit_edge, label %bb.c, !llvm.loop !17
 
 _ZNK5folly13SparseByteSet8containsEh.exit._crit_edge: ; preds = %_ZNK5folly13SparseByteSet8containsEh.exit.thread, %_ZNK5folly13SparseByteSet8containsEh.exit, %.preheader
   %spec.select = phi i64 [ -1, %.preheader ], [ %.01221, %_ZNK5folly13SparseByteSet8containsEh.exit ], [ -1, %_ZNK5folly13SparseByteSet8containsEh.exit.thread ]
@@ -215,15 +215,16 @@ attributes #3 = { nounwind }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!9, !9, i64 0}
-!12 = !{!13, !13, i64 0}
-!13 = !{!"long", !9, i64 0}
-!14 = distinct !{!14, !15}
-!15 = !{!"llvm.loop.mustprogress"}
-!16 = distinct !{!16, !15}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!10, !10, i64 0}
+!13 = !{!14, !14, i64 0}
+!14 = !{!"long", !10, i64 0}
+!15 = distinct !{!15, !16}
+!16 = !{!"llvm.loop.mustprogress"}
+!17 = distinct !{!17, !16}
 end_hunk_0

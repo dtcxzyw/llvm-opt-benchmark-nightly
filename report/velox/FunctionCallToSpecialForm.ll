@@ -25,7 +25,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %i.b, align 8, !tbaa !7
+  %i.d = load ptr, ptr %i.b, align 8, !tbaa !8
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr dead_on_unwind writable sret(%"class.std::shared_ptr") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %2)
@@ -52,7 +52,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %i.b, align 8, !tbaa !7
+  %i.d = load ptr, ptr %i.b, align 8, !tbaa !8
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr dead_on_unwind writable sret(%"class.std::shared_ptr") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3)
@@ -75,7 +75,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %i.b, align 8, !tbaa !7
+  %i.d = load ptr, ptr %i.b, align 8, !tbaa !8
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr dead_on_unwind writable sret(%"class.std::shared_ptr.9") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, i1 noundef zeroext %4, ptr noundef nonnull align 8 dereferenceable(16) %5)
@@ -104,11 +104,12 @@ attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"vtable pointer", !6, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"vtable pointer", !7, i64 0}
 end_hunk_0

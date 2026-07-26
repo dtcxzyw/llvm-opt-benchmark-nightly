@@ -14,7 +14,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef ptr @_ZNK4geos9operation5valid16PolygonRingTouch7getRingEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) local_unnamed_addr #1 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !7
+  %i.a = load ptr, ptr %0, align 8, !tbaa !8
   ret ptr %i.a
 }
 
@@ -40,15 +40,16 @@ attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSN4geos9operation5valid16PolygonRingTouchE", !9, i64 0, !11, i64 8}
-!9 = !{!"p1 _ZTSN4geos9operation5valid11PolygonRingE", !10, i64 0}
-!10 = !{!"any pointer", !5, i64 0}
-!11 = !{!"_ZTSN4geos4geom10CoordinateE", !12, i64 0, !12, i64 8, !12, i64 16}
-!12 = !{!"double", !5, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSN4geos9operation5valid16PolygonRingTouchE", !10, i64 0, !12, i64 8}
+!10 = !{!"p1 _ZTSN4geos9operation5valid11PolygonRingE", !11, i64 0}
+!11 = !{!"any pointer", !6, i64 0}
+!12 = !{!"_ZTSN4geos4geom10CoordinateE", !13, i64 0, !13, i64 8, !13, i64 16}
+!13 = !{!"double", !6, i64 0}
 end_hunk_0

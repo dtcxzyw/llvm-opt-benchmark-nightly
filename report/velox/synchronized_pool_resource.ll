@@ -8,7 +8,7 @@ $_ZTIN5boost9container3pmr15memory_resourceE = comdat any
 
 $_ZTSN5boost9container3pmr15memory_resourceE = comdat any
 
-@_ZTVN5boost9container3pmr26synchronized_pool_resourceE = unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN5boost9container3pmr26synchronized_pool_resourceE, ptr @_ZN5boost9container3pmr26synchronized_pool_resourceD1Ev, ptr @_ZN5boost9container3pmr26synchronized_pool_resourceD0Ev, ptr @_ZN5boost9container3pmr26synchronized_pool_resource11do_allocateEmm, ptr @_ZN5boost9container3pmr26synchronized_pool_resource13do_deallocateEPvmm, ptr @_ZNK5boost9container3pmr26synchronized_pool_resource11do_is_equalERKNS1_15memory_resourceE] }, align 8
+@_ZTVN5boost9container3pmr26synchronized_pool_resourceE = constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTIN5boost9container3pmr26synchronized_pool_resourceE, ptr @_ZN5boost9container3pmr26synchronized_pool_resourceD1Ev, ptr @_ZN5boost9container3pmr26synchronized_pool_resourceD0Ev, ptr @_ZN5boost9container3pmr26synchronized_pool_resource11do_allocateEmm, ptr @_ZN5boost9container3pmr26synchronized_pool_resource13do_deallocateEPvmm, ptr @_ZNK5boost9container3pmr26synchronized_pool_resource11do_is_equalERKNS1_15memory_resourceE] }, align 8
 @_ZTIN5boost9container3pmr26synchronized_pool_resourceE = constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN5boost9container3pmr26synchronized_pool_resourceE, ptr @_ZTIN5boost9container3pmr15memory_resourceE }, align 8
 @_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
 @_ZTSN5boost9container3pmr26synchronized_pool_resourceE = constant [51 x i8] c"N5boost9container3pmr26synchronized_pool_resourceE\00", align 1
@@ -25,7 +25,7 @@ $_ZTSN5boost9container3pmr15memory_resourceE = comdat any
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5boost9container3pmr26synchronized_pool_resourceC2ERKNS1_12pool_optionsEPNS1_15memory_resourceE(ptr noundef nonnull align 8 dereferenceable(104) initializes((0, 8)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %2) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5boost9container3pmr26synchronized_pool_resourceE, i64 16), ptr %0, align 8, !tbaa !7
+  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5boost9container3pmr26synchronized_pool_resourceE, i64 16), ptr %0, align 8, !tbaa !8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = tail call i32 @pthread_mutex_init(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef null) #6 ; 0 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -41,7 +41,7 @@ declare void @_ZN5boost9container3pmr13pool_resourceC1ERKNS1_12pool_optionsEPNS1
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5boost9container3pmr26synchronized_pool_resourceC2Ev(ptr noundef nonnull align 8 dereferenceable(104) initializes((0, 8)) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5boost9container3pmr26synchronized_pool_resourceE, i64 16), ptr %0, align 8, !tbaa !7
+  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5boost9container3pmr26synchronized_pool_resourceE, i64 16), ptr %0, align 8, !tbaa !8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = tail call i32 @pthread_mutex_init(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef null) #6 ; 0 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -55,7 +55,7 @@ declare void @_ZN5boost9container3pmr13pool_resourceC1Ev(ptr noundef nonnull ali
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5boost9container3pmr26synchronized_pool_resourceC2EPNS1_15memory_resourceE(ptr noundef nonnull align 8 dereferenceable(104) initializes((0, 8)) %0, ptr noundef %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5boost9container3pmr26synchronized_pool_resourceE, i64 16), ptr %0, align 8, !tbaa !7
+  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5boost9container3pmr26synchronized_pool_resourceE, i64 16), ptr %0, align 8, !tbaa !8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = tail call i32 @pthread_mutex_init(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef null) #6 ; 0 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -69,7 +69,7 @@ declare void @_ZN5boost9container3pmr13pool_resourceC1EPNS1_15memory_resourceE(p
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5boost9container3pmr26synchronized_pool_resourceC2ERKNS1_12pool_optionsE(ptr noundef nonnull align 8 dereferenceable(104) initializes((0, 8)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5boost9container3pmr26synchronized_pool_resourceE, i64 16), ptr %0, align 8, !tbaa !7
+  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5boost9container3pmr26synchronized_pool_resourceE, i64 16), ptr %0, align 8, !tbaa !8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = tail call i32 @pthread_mutex_init(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef null) #6 ; 0 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -81,9 +81,9 @@ bb.a:
 declare void @_ZN5boost9container3pmr13pool_resourceC1ERKNS1_12pool_optionsE(ptr noundef nonnull align 8 dereferenceable(56), ptr noundef nonnull align 8 dereferenceable(16)) unnamed_addr #1
 
 ; Function Attrs: mustprogress nounwind uwtable
-define void @_ZN5boost9container3pmr26synchronized_pool_resourceD2Ev(ptr noundef nonnull align 8 dereferenceable(104) initializes((0, 8)) %0) unnamed_addr #0 align 2 {
+define void @_ZN5boost9container3pmr26synchronized_pool_resourceD2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) initializes((0, 8)) %0) unnamed_addr #0 align 2 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5boost9container3pmr26synchronized_pool_resourceE, i64 16), ptr %0, align 8, !tbaa !7
+  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5boost9container3pmr26synchronized_pool_resourceE, i64 16), ptr %0, align 8, !tbaa !8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   tail call void @_ZN5boost9container3pmr13pool_resourceD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %i.a) #6
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -97,7 +97,7 @@ declare void @_ZN5boost9container3pmr13pool_resourceD1Ev(ptr noundef nonnull ali
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5boost9container3pmr26synchronized_pool_resourceD0Ev(ptr noundef nonnull align 8 dereferenceable(104) %0) unnamed_addr #0 align 2 {
 bb.a:
-  tail call void @_ZN5boost9container3pmr26synchronized_pool_resourceD1Ev(ptr noundef nonnull align 8 dereferenceable(104) %0) #6
+  tail call void @_ZN5boost9container3pmr26synchronized_pool_resourceD1Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %0) #6
   tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 104) #7
   ret void
 }
@@ -275,11 +275,12 @@ attributes #7 = { builtin nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"vtable pointer", !6, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"vtable pointer", !7, i64 0}
 end_hunk_0

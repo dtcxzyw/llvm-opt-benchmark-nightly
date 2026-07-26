@@ -36,7 +36,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 _ZN5folly25JemallocHugePageAllocator4initEii.exit: ; preds = %bb.b
   call void @_ZN6google10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %0) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #12
-  %i.d = load i32, ptr @_ZN5folly25JemallocHugePageAllocator6flags_E, align 4, !tbaa !7
+  %i.d = load i32, ptr @_ZN5folly25JemallocHugePageAllocator6flags_E, align 4, !tbaa !12
   %i.e = icmp ne i32 %i.d, 0
   ret i1 %i.e
 }
@@ -57,7 +57,7 @@ bb.b:                                             ; preds = %bb.a
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.b
   call void @_ZN6google10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %2) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
-  %i.c = load i32, ptr @_ZN5folly25JemallocHugePageAllocator6flags_E, align 4, !tbaa !7
+  %i.c = load i32, ptr @_ZN5folly25JemallocHugePageAllocator6flags_E, align 4, !tbaa !12
   %i.d = icmp ne i32 %i.c, 0
   ret i1 %i.d
 
@@ -125,7 +125,7 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #10
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define noundef zeroext i1 @_ZN5folly25JemallocHugePageAllocator11initializedEv() local_unnamed_addr #11 align 2 {
 bb.a:
-  %i.a = load i32, ptr @_ZN5folly25JemallocHugePageAllocator6flags_E, align 4, !tbaa !7
+  %i.a = load i32, ptr @_ZN5folly25JemallocHugePageAllocator6flags_E, align 4, !tbaa !12
   %i.b = icmp ne i32 %i.a, 0
   ret i1 %i.b
 }
@@ -174,9 +174,11 @@ attributes #14 = { nounwind allocsize(1) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!9, !9, i64 0}
 end_hunk_0

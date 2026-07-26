@@ -7,7 +7,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef float @_ZNK5arrow4util7Float167ToFloatEv(ptr nofree noundef nonnull readonly align 2 captures(none) dereferenceable(2) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load i16, ptr %0, align 2, !tbaa !7      ; 5 uses
+  %i.a = load i16, ptr %0, align 2, !tbaa !8      ; 5 uses
   %.signext.i = sext i16 %i.a to i32
   %i.b = and i32 %.signext.i, -2147483648         ; 4 uses
   %i.c = and i16 %i.a, 31744
@@ -41,7 +41,7 @@ bb.d:                                             ; preds = %bb.c
   %i.n = shl i32 %.024.i, 1                       ; 2 uses
   %i.o = and i32 %.024.i, 512
   %i.p = icmp eq i32 %i.o, 0
-  br i1 %i.p, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !10
+  br i1 %i.p, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !11
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
   %i.q = shl i32 %i.m, 23
@@ -147,7 +147,7 @@ _ZN5arrow4util12_GLOBAL__N_115BinaryConverterIjE10ToBinary16Ej.exit: ; preds = %
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef double @_ZNK5arrow4util7Float168ToDoubleEv(ptr nofree noundef nonnull readonly align 2 captures(none) dereferenceable(2) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load i16, ptr %0, align 2, !tbaa !7      ; 4 uses
+  %i.a = load i16, ptr %0, align 2, !tbaa !8      ; 4 uses
   %i.b = zext i16 %i.a to i32                     ; 2 uses
   %i.c = and i32 %i.b, 32768
   %i.d = zext nneg i32 %i.c to i64
@@ -183,7 +183,7 @@ bb.d:                                             ; preds = %bb.c
   %i.q = shl i64 %.023.i, 1                       ; 2 uses
   %i.r = and i64 %.023.i, 512
   %i.s = icmp eq i64 %i.r, 0
-  br i1 %i.s, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !12
+  br i1 %i.s, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !13
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
   %i.t = shl i64 %i.p, 52
@@ -322,7 +322,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = shl i32 %.024.i.i, 1                     ; 2 uses
   %i.n = and i32 %.024.i.i, 512
   %i.o = icmp eq i32 %i.n, 0
-  br i1 %i.o, label %.lr.ph.i.i, label %._crit_edge.loopexit.i.i, !llvm.loop !10
+  br i1 %i.o, label %.lr.ph.i.i, label %._crit_edge.loopexit.i.i, !llvm.loop !11
 
 ._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i
   %i.p = shl i32 %i.l, 23
@@ -370,15 +370,16 @@ attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSN5arrow4util7Float16E", !9, i64 0}
-!9 = !{!"short", !5, i64 0}
-!10 = distinct !{!10, !11}
-!11 = !{!"llvm.loop.mustprogress"}
-!12 = distinct !{!12, !11}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSN5arrow4util7Float16E", !10, i64 0}
+!10 = !{!"short", !6, i64 0}
+!11 = distinct !{!11, !12}
+!12 = !{!"llvm.loop.mustprogress"}
+!13 = distinct !{!13, !12}
 end_hunk_0

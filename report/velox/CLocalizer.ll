@@ -13,16 +13,16 @@ target triple = "x86_64-pc-linux-gnu"
 define void @_ZN4geos2io10CLocalizerC2Ev(ptr noundef nonnull align 8 dereferenceable(32) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  store ptr %i.a, ptr %0, align 8, !tbaa !7
+  store ptr %i.a, ptr %0, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store i64 0, ptr %i.b, align 8, !tbaa !11
-  store i8 0, ptr %i.a, align 8, !tbaa !14
+  store i64 0, ptr %i.b, align 8, !tbaa !12
+  store i8 0, ptr %i.a, align 8, !tbaa !15
   %i.c = tail call ptr @setlocale(i32 noundef 1, ptr noundef null) #6 ; 3 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load i64, ptr %i.b, align 8, !tbaa !11
+  %i.d = load i64, ptr %i.b, align 8, !tbaa !12
   %i.e = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.c) #6
   %i.f = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef 0, i64 noundef %i.d, ptr noundef nonnull %i.c, i64 noundef %i.e)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit unwind label %bb.c ; 0 uses
@@ -30,7 +30,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = landingpad { ptr, i32 }
           cleanup
-  %i.h = load ptr, ptr %0, align 8, !tbaa !15     ; 2 uses
+  %i.h = load ptr, ptr %0, align 8, !tbaa !16     ; 2 uses
   %i.i = icmp eq ptr %i.h, %i.a
   br i1 %i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
@@ -54,9 +54,9 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN4geos2io10CLocalizerD2Ev(ptr nofree noundef nonnull readonly align 8 captures(address) dead_on_return(32) dereferenceable(32) %0) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !15
+  %i.a = load ptr, ptr %0, align 8, !tbaa !16
   %i.b = tail call ptr @setlocale(i32 noundef 1, ptr noundef %i.a) #6 ; 0 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !15     ; 2 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !16     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.e = icmp eq ptr %i.c, %i.d
   br i1 %i.e, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -92,18 +92,19 @@ attributes #7 = { builtin nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !9, i64 0}
-!9 = !{!"p1 omnipotent char", !10, i64 0}
-!10 = !{!"any pointer", !5, i64 0}
-!11 = !{!12, !13, i64 8}
-!12 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !8, i64 0, !13, i64 8, !5, i64 16}
-!13 = !{!"long", !5, i64 0}
-!14 = !{!5, !5, i64 0}
-!15 = !{!12, !9, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !10, i64 0}
+!10 = !{!"p1 omnipotent char", !11, i64 0}
+!11 = !{!"any pointer", !6, i64 0}
+!12 = !{!13, !14, i64 8}
+!13 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !9, i64 0, !14, i64 8, !6, i64 16}
+!14 = !{!"long", !6, i64 0}
+!15 = !{!6, !6, i64 0}
+!16 = !{!13, !10, i64 0}
 end_hunk_0

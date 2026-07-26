@@ -12,10 +12,10 @@ target triple = "x86_64-pc-linux-gnu"
 define void @_ZN4geos2io6WriterC2Ev(ptr noundef nonnull align 8 dereferenceable(32) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store ptr %i.a, ptr %0, align 8, !tbaa !7
+  store ptr %i.a, ptr %0, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %i.b, align 8, !tbaa !11
-  store i8 0, ptr %i.a, align 8, !tbaa !14
+  store i64 0, ptr %i.b, align 8, !tbaa !12
+  store i8 0, ptr %i.a, align 8, !tbaa !15
   ret void
 }
 
@@ -32,9 +32,9 @@ declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm(pt
 define void @_ZN4geos2io6Writer5writeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !11   ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !12   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !11
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !12
   %i.e = sub i64 4611686018427387903, %i.d
   %i.f = icmp ult i64 %i.e, %i.b
   br i1 %i.f, label %bb.b, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit
@@ -44,7 +44,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit: ; preds = %bb.a
-  %i.g = load ptr, ptr %1, align 8, !tbaa !15
+  %i.g = load ptr, ptr %1, align 8, !tbaa !16
   %i.h = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %i.g, i64 noundef %i.b) ; 0 uses
   ret void
 }
@@ -75,18 +75,19 @@ attributes #5 = { noreturn }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !9, i64 0}
-!9 = !{!"p1 omnipotent char", !10, i64 0}
-!10 = !{!"any pointer", !5, i64 0}
-!11 = !{!12, !13, i64 8}
-!12 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !8, i64 0, !13, i64 8, !5, i64 16}
-!13 = !{!"long", !5, i64 0}
-!14 = !{!5, !5, i64 0}
-!15 = !{!12, !9, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !10, i64 0}
+!10 = !{!"p1 omnipotent char", !11, i64 0}
+!11 = !{!"any pointer", !6, i64 0}
+!12 = !{!13, !14, i64 8}
+!13 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !9, i64 0, !14, i64 8, !6, i64 16}
+!14 = !{!"long", !6, i64 0}
+!15 = !{!6, !6, i64 0}
+!16 = !{!13, !10, i64 0}
 end_hunk_0

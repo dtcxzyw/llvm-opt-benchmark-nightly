@@ -33,7 +33,7 @@ $__clang_call_terminate = comdat any
 ; Function Attrs: mustprogress uwtable
 define void @_ZN8facebook5velox9functions20createEmptySfmSketchB5cxx11EPNS0_19HashStringAllocatorEdSt8optionalIlES5_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef %1, double noundef %2, i64 %3, i8 %4, i64 %5, i8 %6) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 _ZNRSt8optionalIlE5valueEv.exit:
-  %7 = alloca %"class.facebook::velox::functions::sfm::SfmSketch", align 8 ; 13 uses
+  %7 = alloca %"class.facebook::velox::functions::sfm::SfmSketch", align 8 ; 12 uses
   %i.a = trunc nuw i8 %4 to i1
   %i.b = trunc i64 %3 to i32
   %spec.select = select i1 %i.a, i32 %i.b, i32 4096
@@ -56,7 +56,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = sext i32 %i.f to i64                     ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 8 uses
-  store ptr %i.h, ptr %0, align 8, !tbaa !7
+  store ptr %i.h, ptr %0, align 8, !tbaa !8
   %i.i = icmp ugt i32 %i.f, 15
   br i1 %i.i, label %bb.d, label %bb.e
 
@@ -77,8 +77,8 @@ bb.d:                                             ; preds = %bb.c
           to label %.noexc13 unwind label %bb.k   ; 2 uses
 
 .noexc13:                                         ; preds = %.thread7.i.i
-  store ptr %i.l, ptr %0, align 8, !tbaa !11
-  store i64 %i.g, ptr %i.h, align 8, !tbaa !14
+  store ptr %i.l, ptr %0, align 8, !tbaa !12
+  store i64 %i.g, ptr %i.h, align 8, !tbaa !15
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.c
@@ -88,7 +88,7 @@ bb.e:                                             ; preds = %bb.c
   ]
 
 bb.f:                                             ; preds = %bb.e
-  store i8 0, ptr %i.h, align 8, !tbaa !14
+  store i8 0, ptr %i.h, align 8, !tbaa !15
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e, %.noexc13
@@ -99,10 +99,10 @@ bb.g:                                             ; preds = %bb.e, %.noexc13
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.n = phi ptr [ %i.h, %bb.e ], [ %i.m, %bb.g ], [ %i.h, %bb.f ]
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.g, ptr %i.o, align 8, !tbaa !15
+  store i64 %i.g, ptr %i.o, align 8, !tbaa !16
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.g
-  store i8 0, ptr %i.p, align 1, !tbaa !14
-  %i.q = load ptr, ptr %0, align 8, !tbaa !11
+  store i8 0, ptr %i.p, align 1, !tbaa !15
+  %i.q = load ptr, ptr %0, align 8, !tbaa !12
   invoke void @_ZNK8facebook5velox9functions3sfm9SfmSketch9serializeEPc(ptr noundef nonnull align 8 dereferenceable(2584) %7, ptr noundef %i.q)
           to label %bb.m unwind label %bb.l
 
@@ -124,23 +124,21 @@ bb.k:                                             ; preds = %.thread7.i.i, %.noe
 bb.l:                                             ; preds = %bb.h
   %i.u = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.v = load ptr, ptr %0, align 8, !tbaa !11     ; 2 uses
+  %i.v = load ptr, ptr %0, align 8, !tbaa !12     ; 2 uses
   %i.w = icmp eq ptr %i.v, %i.h
   br i1 %i.w, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.l
-  %i.x = load i64, ptr %i.h, align 8, !tbaa !14
+  %i.x = load i64, ptr %i.h, align 8, !tbaa !15
   %i.y = add i64 %i.x, 1
   call void @_ZdlPvm(ptr noundef %i.v, i64 noundef %i.y) #13
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 bb.m:                                             ; preds = %bb.h
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 2576
-  store i8 0, ptr %8, align 8, !tbaa !16
   %i.z = getelementptr inbounds nuw i8, ptr %7, i64 32
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !19  ; 4 uses
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !17  ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %7, i64 48
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !21
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !19
   %i.ad = ptrtoint ptr %i.ac to i64
   %i.ae = ptrtoint ptr %i.aa to i64
   %i.af = sub i64 %i.ad, %i.ae                    ; 2 uses
@@ -150,7 +148,7 @@ bb.m:                                             ; preds = %bb.h
 bb.n:                                             ; preds = %bb.m
   %i.ag = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.ah = icmp ugt i64 %i.af, 3072
-  %i.ai = load ptr, ptr %i.ag, align 8, !tbaa !22 ; 2 uses
+  %i.ai = load ptr, ptr %i.ag, align 8, !tbaa !20 ; 2 uses
   br i1 %i.ah, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
@@ -201,12 +199,10 @@ declare void @_ZNK8facebook5velox9functions3sfm9SfmSketch9serializeEPc(ptr nound
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN8facebook5velox9functions3sfm9SfmSketchD2Ev(ptr noundef nonnull align 8 dead_on_return(2584) dereferenceable(2584) %0) unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 2576
-  store i8 0, ptr %1, align 8, !tbaa !16
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !19   ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !17   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !21
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !19
   %i.e = ptrtoint ptr %i.d to i64
   %i.f = ptrtoint ptr %i.b to i64
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
@@ -216,7 +212,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = icmp ugt i64 %i.g, 3072
-  %i.j = load ptr, ptr %i.h, align 8, !tbaa !22   ; 2 uses
+  %i.j = load ptr, ptr %i.h, align 8, !tbaa !20   ; 2 uses
   br i1 %i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -296,27 +292,25 @@ attributes #14 = { noreturn nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !9, i64 0}
-!9 = !{!"p1 omnipotent char", !10, i64 0}
-!10 = !{!"any pointer", !5, i64 0}
-!11 = !{!12, !9, i64 0}
-!12 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !8, i64 0, !13, i64 8, !5, i64 16}
-!13 = !{!"long", !5, i64 0}
-!14 = !{!5, !5, i64 0}
-!15 = !{!12, !13, i64 8}
-!16 = !{!17, !18, i64 2512}
-!17 = !{!"_ZTSSt22_Optional_payload_baseIN8facebook5velox9functions3sfm36MersenneTwisterRandomizationStrategyEE", !5, i64 0, !18, i64 2512}
-!18 = !{!"bool", !5, i64 0}
-!19 = !{!20, !9, i64 0}
-!20 = !{!"_ZTSNSt12_Vector_baseIaN8facebook5velox12StlAllocatorIaEEE17_Vector_impl_dataE", !9, i64 0, !9, i64 8, !9, i64 16}
-!21 = !{!20, !9, i64 16}
-!22 = !{!23, !24, i64 0}
-!23 = !{!"_ZTSN8facebook5velox12StlAllocatorIaEE", !24, i64 0}
-!24 = !{!"p1 _ZTSN8facebook5velox19HashStringAllocatorE", !10, i64 0}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !10, i64 0}
+!10 = !{!"p1 omnipotent char", !11, i64 0}
+!11 = !{!"any pointer", !6, i64 0}
+!12 = !{!13, !10, i64 0}
+!13 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !9, i64 0, !14, i64 8, !6, i64 16}
+!14 = !{!"long", !6, i64 0}
+!15 = !{!6, !6, i64 0}
+!16 = !{!13, !14, i64 8}
+!17 = !{!18, !10, i64 0}
+!18 = !{!"_ZTSNSt12_Vector_baseIaN8facebook5velox12StlAllocatorIaEEE17_Vector_impl_dataE", !10, i64 0, !10, i64 8, !10, i64 16}
+!19 = !{!18, !10, i64 16}
+!20 = !{!21, !22, i64 0}
+!21 = !{!"_ZTSN8facebook5velox12StlAllocatorIaEE", !22, i64 0}
+!22 = !{!"p1 _ZTSN8facebook5velox19HashStringAllocatorE", !11, i64 0}
 end_hunk_0

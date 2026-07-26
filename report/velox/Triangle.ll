@@ -13,11 +13,11 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.e = load <2 x double>, ptr %i.a, align 8, !tbaa !7 ; 4 uses
-  %i.f = load <2 x double>, ptr %i.b, align 8, !tbaa !7 ; 3 uses
-  %i.g = load double, ptr %i.c, align 8, !tbaa !9
-  %i.h = load <2 x double>, ptr %0, align 8, !tbaa !7 ; 3 uses
-  %i.i = load double, ptr %i.d, align 8, !tbaa !9
+  %i.e = load <2 x double>, ptr %i.a, align 8, !tbaa !8 ; 4 uses
+  %i.f = load <2 x double>, ptr %i.b, align 8, !tbaa !8 ; 3 uses
+  %i.g = load double, ptr %i.c, align 8, !tbaa !10
+  %i.h = load <2 x double>, ptr %0, align 8, !tbaa !8 ; 3 uses
+  %i.i = load double, ptr %i.d, align 8, !tbaa !10
   %foldExtExtBinop = fsub <2 x double> %i.h, %i.f ; 2 uses
   %i.j = fsub double %i.i, %i.g                   ; 2 uses
   %foldExtExtBinop15 = fmul <2 x double> %foldExtExtBinop, %foldExtExtBinop
@@ -58,9 +58,9 @@ define void @_ZN4geos4geom8Triangle8inCentreERNS0_10CoordinateE(ptr nofree nound
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.c = load <2 x double>, ptr %i.a, align 8, !tbaa !7 ; 4 uses
-  %i.d = load <2 x double>, ptr %i.b, align 8, !tbaa !7 ; 3 uses
-  %i.e = load <2 x double>, ptr %0, align 8, !tbaa !7 ; 4 uses
+  %i.c = load <2 x double>, ptr %i.a, align 8, !tbaa !8 ; 4 uses
+  %i.d = load <2 x double>, ptr %i.b, align 8, !tbaa !8 ; 3 uses
+  %i.e = load <2 x double>, ptr %0, align 8, !tbaa !8 ; 4 uses
   %i.f = shufflevector <2 x double> %i.c, <2 x double> %i.e, <2 x i32> <i32 0, i32 2>
   %i.g = shufflevector <2 x double> %i.d, <2 x double> poison, <2 x i32> zeroinitializer
   %i.h = fsub <2 x double> %i.f, %i.g             ; 2 uses
@@ -93,9 +93,9 @@ bb.a:
   %i.ad = insertelement <2 x double> poison, double %i.t, i64 0
   %i.ae = shufflevector <2 x double> %i.ad, <2 x double> poison, <2 x i32> zeroinitializer
   %i.af = fdiv <2 x double> %i.ac, %i.ae
-  store <2 x double> %i.af, ptr %1, align 8, !tbaa !7
+  store <2 x double> %i.af, ptr %1, align 8, !tbaa !8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store double +qnan, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !7
+  store double +qnan, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !8
   ret void
 }
 
@@ -107,10 +107,10 @@ define void @_ZN4geos4geom8Triangle12circumcentreERNS0_10CoordinateE(ptr nofree 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.c = load <2 x double>, ptr %i.a, align 8, !tbaa !7 ; 4 uses
-  %i.d = load <2 x double>, ptr %0, align 8, !tbaa !7
+  %i.c = load <2 x double>, ptr %i.a, align 8, !tbaa !8 ; 4 uses
+  %i.d = load <2 x double>, ptr %0, align 8, !tbaa !8
   %i.e = fsub <2 x double> %i.d, %i.c             ; 5 uses
-  %i.f = load <2 x double>, ptr %i.b, align 8, !tbaa !7
+  %i.f = load <2 x double>, ptr %i.b, align 8, !tbaa !8
   %i.g = fsub <2 x double> %i.f, %i.c             ; 5 uses
   %i.h = extractelement <2 x double> %i.e, i64 0
   %i.i = extractelement <2 x double> %i.g, i64 1  ; 3 uses
@@ -142,9 +142,9 @@ bb.a:
   %i.ag = fsub <2 x double> %i.c, %i.af
   %i.ah = fadd <2 x double> %i.c, %i.af
   %i.ai = shufflevector <2 x double> %i.ag, <2 x double> %i.ah, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %i.ai, ptr %1, align 8, !tbaa !7
+  store <2 x double> %i.ai, ptr %1, align 8, !tbaa !8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store double +qnan, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !7
+  store double +qnan, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !8
   ret void
 }
 
@@ -165,7 +165,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
   call void @_ZN4geos9algorithm14CGAlgorithmsDD14circumcentreDDERKNS_4geom10CoordinateES5_S5_(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %2, ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.b)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !11
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !12
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
   ret void
 }
@@ -176,9 +176,9 @@ declare void @_ZN4geos9algorithm14CGAlgorithmsDD14circumcentreDDERKNS_4geom10Coo
 define void @_ZN4geos4geom8Triangle12circumcentreERKNS0_10CoordinateES4_S4_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.geos::geom::Coordinate") align 8 captures(none) initializes((0, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load <2 x double>, ptr %1, align 8, !tbaa !7
-  %i.c = load <2 x double>, ptr %2, align 8, !tbaa !7
-  %i.d = load <2 x double>, ptr %3, align 8, !tbaa !7 ; 4 uses
+  %i.b = load <2 x double>, ptr %1, align 8, !tbaa !8
+  %i.c = load <2 x double>, ptr %2, align 8, !tbaa !8
+  %i.d = load <2 x double>, ptr %3, align 8, !tbaa !8 ; 4 uses
   %i.e = fsub <2 x double> %i.b, %i.d             ; 5 uses
   %i.f = fsub <2 x double> %i.c, %i.d             ; 5 uses
   %i.g = extractelement <2 x double> %i.e, i64 0
@@ -211,8 +211,8 @@ bb.a:
   %i.af = fsub <2 x double> %i.d, %i.ae
   %i.ag = fadd <2 x double> %i.d, %i.ae
   %i.ah = shufflevector <2 x double> %i.af, <2 x double> %i.ag, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %i.ah, ptr %0, align 8, !tbaa !7
-  store double +qnan, ptr %i.a, align 8, !tbaa !7
+  store <2 x double> %i.ah, ptr %0, align 8, !tbaa !8
+  store double +qnan, ptr %i.a, align 8, !tbaa !8
   ret void
 }
 
@@ -293,14 +293,15 @@ attributes #7 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"double", !5, i64 0}
-!9 = !{!10, !8, i64 8}
-!10 = !{!"_ZTSN4geos4geom10CoordinateE", !8, i64 0, !8, i64 8, !8, i64 16}
-!11 = !{i64 0, i64 8, !7, i64 8, i64 8, !7, i64 16, i64 8, !7}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"double", !6, i64 0}
+!10 = !{!11, !9, i64 8}
+!11 = !{!"_ZTSN4geos4geom10CoordinateE", !9, i64 0, !9, i64 8, !9, i64 16}
+!12 = !{i64 0, i64 8, !8, i64 8, i64 8, !8, i64 16, i64 8, !8}
 end_hunk_0

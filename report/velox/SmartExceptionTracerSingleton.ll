@@ -21,7 +21,7 @@ define noundef nonnull align 8 dereferenceable(28) ptr @_ZN5folly16exception_tra
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5folly16exception_tracer6detail10getMetaMapEvE4meta acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %bb.e, !prof !11
+  br i1 %i.b, label %bb.b, label %bb.e, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly16exception_tracer6detail10getMetaMapEvE4meta) #7
@@ -29,21 +29,21 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !12)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !13)
   %i.d = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #8
           to label %bb.d unwind label %bb.f       ; 4 uses
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.d, i8 0, i64 32, i1 false), !noalias !12
-  store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.e, align 8, !tbaa !15, !noalias !12
-  store ptr %i.d, ptr @_ZZN5folly16exception_tracer6detail10getMetaMapEvE4meta.0, align 8, !tbaa !24, !alias.scope !12
-  store ptr %i.d, ptr @__folly_smart_exception_store, align 8, !tbaa !26
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.d, i8 0, i64 32, i1 false), !noalias !13
+  store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.e, align 8, !tbaa !16, !noalias !13
+  store ptr %i.d, ptr @_ZZN5folly16exception_tracer6detail10getMetaMapEvE4meta.0, align 8, !tbaa !25, !alias.scope !13
+  store ptr %i.d, ptr @__folly_smart_exception_store, align 8, !tbaa !27
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5folly16exception_tracer6detail10getMetaMapEvE4meta) #7
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.b, %bb.a
-  %i.f = load ptr, ptr @_ZZN5folly16exception_tracer6detail10getMetaMapEvE4meta.0, align 8, !tbaa !24
+  %i.f = load ptr, ptr @_ZZN5folly16exception_tracer6detail10getMetaMapEvE4meta.0, align 8, !tbaa !25
   ret ptr %i.f
 
 bb.f:                                             ; preds = %bb.c
@@ -73,7 +73,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define noundef zeroext i1 @_ZN5folly16exception_tracer6detail33isSmartExceptionTracerHookEnabledEv() local_unnamed_addr #4 {
 bb.a:
-  %i.a = load atomic i8, ptr @_ZN5folly16exception_tracer6detailL11hookEnabledE.0 monotonic, align 1, !range !28, !noundef !29
+  %i.a = load atomic i8, ptr @_ZN5folly16exception_tracer6detailL11hookEnabledE.0 monotonic, align 1, !range !29, !noundef !30
   %i.b = trunc nuw i8 %i.a to i1
   ret i1 %i.b
 }
@@ -115,28 +115,29 @@ attributes #8 = { builtin allocsize(0) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
-!6 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!7 = !{!8, !8, i64 0}
-!8 = !{!"int", !9, i64 0}
-!9 = !{!"omnipotent char", !10, i64 0}
-!10 = !{!"Simple C++ TBAA"}
-!11 = !{!"branch_weights", i32 1, i32 1048575}
-!12 = !{!13}
-!13 = distinct !{!13, !14, !"_ZSt11make_uniqueIN5folly12SynchronizedINS0_12F14VectorMapIPKvSt10shared_ptrIKNS0_16exception_tracer6detail13ExceptionMetaEENS0_23HeterogeneousAccessHashIS4_vEENS0_26HeterogeneousAccessEqualToIS4_vEESaISt4pairIKS4_SA_EEEENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!14 = distinct !{!14, !"_ZSt11make_uniqueIN5folly12SynchronizedINS0_12F14VectorMapIPKvSt10shared_ptrIKNS0_16exception_tracer6detail13ExceptionMetaEENS0_23HeterogeneousAccessHashIS4_vEENS0_26HeterogeneousAccessEqualToIS4_vEESaISt4pairIKS4_SA_EEEENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
-!15 = !{!16, !20, i64 8}
-!16 = !{!"_ZTSN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIPKvSt10shared_ptrIKNS_16exception_tracer6detail13ExceptionMetaEEvvvSt17integral_constantIbLb0EEEEEE", !17, i64 0, !20, i64 8, !21, i64 16}
-!17 = !{!"_ZTSN5folly3f146detail21VectorContainerPolicyIPKvSt10shared_ptrIKNS_16exception_tracer6detail13ExceptionMetaEEvvvSt17integral_constantIbLb0EEEE", !18, i64 0}
-!18 = !{!"p1 _ZTSSt4pairIKPKvSt10shared_ptrIKN5folly16exception_tracer6detail13ExceptionMetaEEE", !19, i64 0}
-!19 = !{!"any pointer", !9, i64 0}
-!20 = !{!"p1 _ZTSN5folly3f146detail8F14ChunkIjEE", !19, i64 0}
-!21 = !{!"_ZTSN5folly3f146detail31SizeAndChunkShiftAndPackedBeginINS1_11F14ItemIterIPNS1_8F14ChunkIjEEEELb0EEE", !22, i64 0}
-!22 = !{!"_ZTSN5folly3f146detail23PackedSizeAndChunkShiftE", !23, i64 0}
-!23 = !{!"long", !9, i64 0}
-!24 = !{!25, !25, i64 0}
-!25 = !{!"p1 _ZTSN5folly12SynchronizedINS_12F14VectorMapIPKvSt10shared_ptrIKNS_16exception_tracer6detail13ExceptionMetaEENS_23HeterogeneousAccessHashIS3_vEENS_26HeterogeneousAccessEqualToIS3_vEESaISt4pairIKS3_S9_EEEENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEE", !19, i64 0}
-!26 = !{!27, !27, i64 0}
-!27 = !{!"p1 _ZTSN5folly12F14VectorMapIPKvSt10shared_ptrIKNS_16exception_tracer6detail13ExceptionMetaEENS_23HeterogeneousAccessHashIS2_vEENS_26HeterogeneousAccessEqualToIS2_vEESaISt4pairIKS2_S8_EEEE", !19, i64 0}
-!28 = !{i8 0, i8 2}
-!29 = !{}
+!6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!7 = !{!8, !9, i64 0}
+!8 = !{!"__libc_errno", !9, i64 0}
+!9 = !{!"int", !10, i64 0}
+!10 = !{!"omnipotent char", !11, i64 0}
+!11 = !{!"Simple C++ TBAA"}
+!12 = !{!"branch_weights", i32 1, i32 1048575}
+!13 = !{!14}
+!14 = distinct !{!14, !15, !"_ZSt11make_uniqueIN5folly12SynchronizedINS0_12F14VectorMapIPKvSt10shared_ptrIKNS0_16exception_tracer6detail13ExceptionMetaEENS0_23HeterogeneousAccessHashIS4_vEENS0_26HeterogeneousAccessEqualToIS4_vEESaISt4pairIKS4_SA_EEEENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
+!15 = distinct !{!15, !"_ZSt11make_uniqueIN5folly12SynchronizedINS0_12F14VectorMapIPKvSt10shared_ptrIKNS0_16exception_tracer6detail13ExceptionMetaEENS0_23HeterogeneousAccessHashIS4_vEENS0_26HeterogeneousAccessEqualToIS4_vEESaISt4pairIKS4_SA_EEEENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!16 = !{!17, !21, i64 8}
+!17 = !{!"_ZTSN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIPKvSt10shared_ptrIKNS_16exception_tracer6detail13ExceptionMetaEEvvvSt17integral_constantIbLb0EEEEEE", !18, i64 0, !21, i64 8, !22, i64 16}
+!18 = !{!"_ZTSN5folly3f146detail21VectorContainerPolicyIPKvSt10shared_ptrIKNS_16exception_tracer6detail13ExceptionMetaEEvvvSt17integral_constantIbLb0EEEE", !19, i64 0}
+!19 = !{!"p1 _ZTSSt4pairIKPKvSt10shared_ptrIKN5folly16exception_tracer6detail13ExceptionMetaEEE", !20, i64 0}
+!20 = !{!"any pointer", !10, i64 0}
+!21 = !{!"p1 _ZTSN5folly3f146detail8F14ChunkIjEE", !20, i64 0}
+!22 = !{!"_ZTSN5folly3f146detail31SizeAndChunkShiftAndPackedBeginINS1_11F14ItemIterIPNS1_8F14ChunkIjEEEELb0EEE", !23, i64 0}
+!23 = !{!"_ZTSN5folly3f146detail23PackedSizeAndChunkShiftE", !24, i64 0}
+!24 = !{!"long", !10, i64 0}
+!25 = !{!26, !26, i64 0}
+!26 = !{!"p1 _ZTSN5folly12SynchronizedINS_12F14VectorMapIPKvSt10shared_ptrIKNS_16exception_tracer6detail13ExceptionMetaEENS_23HeterogeneousAccessHashIS3_vEENS_26HeterogeneousAccessEqualToIS3_vEESaISt4pairIKS3_S9_EEEENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEE", !20, i64 0}
+!27 = !{!28, !28, i64 0}
+!28 = !{!"p1 _ZTSN5folly12F14VectorMapIPKvSt10shared_ptrIKNS_16exception_tracer6detail13ExceptionMetaEENS_23HeterogeneousAccessHashIS2_vEENS_26HeterogeneousAccessEqualToIS2_vEESaISt4pairIKS2_S8_EEEE", !20, i64 0}
+!29 = !{i8 0, i8 2}
+!30 = !{}
 end_hunk_0

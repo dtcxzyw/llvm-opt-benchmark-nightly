@@ -89,7 +89,7 @@ define void @_ZNK4absl12lts_2024011612Notification19WaitForNotificationEv(ptr no
 bb.a:
   %1 = alloca %"class.absl::lts_20240116::Condition", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load atomic i8, ptr %i.a acquire, align 8, !range !7, !noundef !8
+  %i.b = load atomic i8, ptr %i.a acquire, align 8, !range !8, !noundef !9
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.c, label %bb.b
 
@@ -98,9 +98,9 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 0, ptr %i.e, align 8
-  store ptr @_ZN4absl12lts_202401169Condition19CastAndCallFunctionIKSt6atomicIbEEEbPKS1_, ptr %i.d, align 8, !tbaa !9
+  store ptr @_ZN4absl12lts_202401169Condition19CastAndCallFunctionIKSt6atomicIbEEEbPKS1_, ptr %i.d, align 8, !tbaa !10
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24
-  store ptr %i.a, ptr %i.f, align 8, !tbaa !12
+  store ptr %i.a, ptr %i.f, align 8, !tbaa !13
   store ptr @_ZN4absl12lts_2024011612Notification23HasBeenNotifiedInternalEPKSt6atomicIbE, ptr %1, align 8
   %i.g = call noundef zeroext i1 @_ZN4absl12lts_202401165Mutex14LockWhenCommonERKNS0_9ConditionENS0_24synchronization_internal13KernelTimeoutEb(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 -1, i1 noundef zeroext true) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #8
@@ -114,7 +114,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr noundef zeroext i1 @_ZN4absl12lts_2024011612Notification23HasBeenNotifiedInternalEPKSt6atomicIbE(ptr noundef %0) #5 comdat align 2 {
 bb.a:
-  %i.a = load atomic i8, ptr %0 acquire, align 1, !range !7, !noundef !8
+  %i.a = load atomic i8, ptr %0 acquire, align 1, !range !8, !noundef !9
   %i.b = trunc nuw i8 %i.a to i1
   ret i1 %i.b
 }
@@ -127,7 +127,7 @@ bb.a:
   %3 = alloca %"class.absl::lts_20240116::synchronization_internal::KernelTimeout", align 8 ; 4 uses
   %4 = alloca %"class.absl::lts_20240116::Condition", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load atomic i8, ptr %i.a acquire, align 8, !range !7, !noundef !8
+  %i.b = load atomic i8, ptr %i.a acquire, align 8, !range !8, !noundef !9
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.c, label %bb.b
 
@@ -136,9 +136,9 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 0, ptr %i.e, align 8
-  store ptr @_ZN4absl12lts_202401169Condition19CastAndCallFunctionIKSt6atomicIbEEEbPKS1_, ptr %i.d, align 8, !tbaa !9
+  store ptr @_ZN4absl12lts_202401169Condition19CastAndCallFunctionIKSt6atomicIbEEEbPKS1_, ptr %i.d, align 8, !tbaa !10
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store ptr %i.a, ptr %i.f, align 8, !tbaa !12
+  store ptr %i.a, ptr %i.f, align 8, !tbaa !13
   store ptr @_ZN4absl12lts_2024011612Notification23HasBeenNotifiedInternalEPKSt6atomicIbE, ptr %4, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @_ZN4absl12lts_2024011624synchronization_internal13KernelTimeoutC1ENS0_8DurationE(ptr noundef nonnull align 8 dereferenceable(8) %3, i64 %1, i32 %2)
@@ -160,7 +160,7 @@ bb.a:
   %3 = alloca %"class.absl::lts_20240116::synchronization_internal::KernelTimeout", align 8 ; 4 uses
   %4 = alloca %"class.absl::lts_20240116::Condition", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load atomic i8, ptr %i.a acquire, align 8, !range !7, !noundef !8
+  %i.b = load atomic i8, ptr %i.a acquire, align 8, !range !8, !noundef !9
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.c, label %bb.b
 
@@ -169,9 +169,9 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 0, ptr %i.e, align 8
-  store ptr @_ZN4absl12lts_202401169Condition19CastAndCallFunctionIKSt6atomicIbEEEbPKS1_, ptr %i.d, align 8, !tbaa !9
+  store ptr @_ZN4absl12lts_202401169Condition19CastAndCallFunctionIKSt6atomicIbEEEbPKS1_, ptr %i.d, align 8, !tbaa !10
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store ptr %i.a, ptr %i.f, align 8, !tbaa !12
+  store ptr %i.a, ptr %i.f, align 8, !tbaa !13
   store ptr @_ZN4absl12lts_2024011612Notification23HasBeenNotifiedInternalEPKSt6atomicIbE, ptr %4, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @_ZN4absl12lts_2024011624synchronization_internal13KernelTimeoutC1ENS0_4TimeE(ptr noundef nonnull align 8 dereferenceable(8) %3, i64 %1, i32 %2)
@@ -201,7 +201,7 @@ bb.a:
   %i.a = load i64, ptr %0, align 8
   %i.b = inttoptr i64 %i.a to ptr
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !12
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !13
   %i.e = tail call noundef zeroext i1 %i.b(ptr noundef %i.d)
   ret i1 %i.e
 }
@@ -222,15 +222,16 @@ attributes #8 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{i8 0, i8 2}
-!8 = !{}
-!9 = !{!10, !11, i64 16}
-!10 = !{!"_ZTSN4absl12lts_202401169ConditionE", !5, i64 0, !11, i64 16, !11, i64 24}
-!11 = !{!"any pointer", !5, i64 0}
-!12 = !{!10, !11, i64 24}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{i8 0, i8 2}
+!9 = !{}
+!10 = !{!11, !12, i64 16}
+!11 = !{!"_ZTSN4absl12lts_202401169ConditionE", !6, i64 0, !12, i64 16, !12, i64 24}
+!12 = !{!"any pointer", !6, i64 0}
+!13 = !{!11, !12, i64 24}
 end_hunk_0

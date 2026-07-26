@@ -9,13 +9,13 @@ $_ZTIN4geos9algorithm16BoundaryNodeRuleE = comdat any
 
 $_ZTSN4geos9algorithm16BoundaryNodeRuleE = comdat any
 
-@_ZTVN4geos9algorithm12_GLOBAL__N_120Mod2BoundaryNodeRuleE = internal unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9algorithm12_GLOBAL__N_120Mod2BoundaryNodeRuleE, ptr @_ZN4geos9algorithm16BoundaryNodeRuleD2Ev, ptr @_ZN4geos9algorithm12_GLOBAL__N_120Mod2BoundaryNodeRuleD0Ev, ptr @_ZNK4geos9algorithm12_GLOBAL__N_120Mod2BoundaryNodeRule12isInBoundaryEi] }, align 8
+@_ZTVN4geos9algorithm12_GLOBAL__N_120Mod2BoundaryNodeRuleE = internal constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9algorithm12_GLOBAL__N_120Mod2BoundaryNodeRuleE, ptr @_ZN4geos9algorithm16BoundaryNodeRuleD2Ev, ptr @_ZN4geos9algorithm12_GLOBAL__N_120Mod2BoundaryNodeRuleD0Ev, ptr @_ZNK4geos9algorithm12_GLOBAL__N_120Mod2BoundaryNodeRule12isInBoundaryEi] }, align 8
 @_ZN4geos9algorithm12_GLOBAL__N_18mod2RuleE = internal global { ptr } { ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN4geos9algorithm12_GLOBAL__N_120Mod2BoundaryNodeRuleE, i32 0, i32 0, i32 2) }, align 8
-@_ZTVN4geos9algorithm12_GLOBAL__N_124EndPointBoundaryNodeRuleE = internal unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9algorithm12_GLOBAL__N_124EndPointBoundaryNodeRuleE, ptr @_ZN4geos9algorithm16BoundaryNodeRuleD2Ev, ptr @_ZN4geos9algorithm12_GLOBAL__N_124EndPointBoundaryNodeRuleD0Ev, ptr @_ZNK4geos9algorithm12_GLOBAL__N_124EndPointBoundaryNodeRule12isInBoundaryEi] }, align 8
+@_ZTVN4geos9algorithm12_GLOBAL__N_124EndPointBoundaryNodeRuleE = internal constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9algorithm12_GLOBAL__N_124EndPointBoundaryNodeRuleE, ptr @_ZN4geos9algorithm16BoundaryNodeRuleD2Ev, ptr @_ZN4geos9algorithm12_GLOBAL__N_124EndPointBoundaryNodeRuleD0Ev, ptr @_ZNK4geos9algorithm12_GLOBAL__N_124EndPointBoundaryNodeRule12isInBoundaryEi] }, align 8
 @_ZN4geos9algorithm12_GLOBAL__N_112endPointRuleE = internal global { ptr } { ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN4geos9algorithm12_GLOBAL__N_124EndPointBoundaryNodeRuleE, i32 0, i32 0, i32 2) }, align 8
-@_ZTVN4geos9algorithm12_GLOBAL__N_135MultiValentEndPointBoundaryNodeRuleE = internal unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9algorithm12_GLOBAL__N_135MultiValentEndPointBoundaryNodeRuleE, ptr @_ZN4geos9algorithm16BoundaryNodeRuleD2Ev, ptr @_ZN4geos9algorithm12_GLOBAL__N_135MultiValentEndPointBoundaryNodeRuleD0Ev, ptr @_ZNK4geos9algorithm12_GLOBAL__N_135MultiValentEndPointBoundaryNodeRule12isInBoundaryEi] }, align 8
+@_ZTVN4geos9algorithm12_GLOBAL__N_135MultiValentEndPointBoundaryNodeRuleE = internal constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9algorithm12_GLOBAL__N_135MultiValentEndPointBoundaryNodeRuleE, ptr @_ZN4geos9algorithm16BoundaryNodeRuleD2Ev, ptr @_ZN4geos9algorithm12_GLOBAL__N_135MultiValentEndPointBoundaryNodeRuleD0Ev, ptr @_ZNK4geos9algorithm12_GLOBAL__N_135MultiValentEndPointBoundaryNodeRule12isInBoundaryEi] }, align 8
 @_ZN4geos9algorithm12_GLOBAL__N_115multiValentRuleE = internal global { ptr } { ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN4geos9algorithm12_GLOBAL__N_135MultiValentEndPointBoundaryNodeRuleE, i32 0, i32 0, i32 2) }, align 8
-@_ZTVN4geos9algorithm12_GLOBAL__N_134MonoValentEndPointBoundaryNodeRuleE = internal unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9algorithm12_GLOBAL__N_134MonoValentEndPointBoundaryNodeRuleE, ptr @_ZN4geos9algorithm16BoundaryNodeRuleD2Ev, ptr @_ZN4geos9algorithm12_GLOBAL__N_134MonoValentEndPointBoundaryNodeRuleD0Ev, ptr @_ZNK4geos9algorithm12_GLOBAL__N_134MonoValentEndPointBoundaryNodeRule12isInBoundaryEi] }, align 8
+@_ZTVN4geos9algorithm12_GLOBAL__N_134MonoValentEndPointBoundaryNodeRuleE = internal constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9algorithm12_GLOBAL__N_134MonoValentEndPointBoundaryNodeRuleE, ptr @_ZN4geos9algorithm16BoundaryNodeRuleD2Ev, ptr @_ZN4geos9algorithm12_GLOBAL__N_134MonoValentEndPointBoundaryNodeRuleD0Ev, ptr @_ZNK4geos9algorithm12_GLOBAL__N_134MonoValentEndPointBoundaryNodeRule12isInBoundaryEi] }, align 8
 @_ZN4geos9algorithm12_GLOBAL__N_114monoValentRuleE = internal global { ptr } { ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN4geos9algorithm12_GLOBAL__N_134MonoValentEndPointBoundaryNodeRuleE, i32 0, i32 0, i32 2) }, align 8
 @_ZTIN4geos9algorithm12_GLOBAL__N_120Mod2BoundaryNodeRuleE = internal constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN4geos9algorithm12_GLOBAL__N_120Mod2BoundaryNodeRuleE, ptr @_ZTIN4geos9algorithm16BoundaryNodeRuleE }, align 8
 @_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
@@ -139,9 +139,10 @@ attributes #4 = { builtin nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
 end_hunk_0

@@ -10,9 +10,9 @@ bb.a:
   %1 = alloca %struct.rlimit, align 8             ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #3
   %i.a = sext i32 %0 to i64                       ; 2 uses
-  store i64 %i.a, ptr %1, align 8, !tbaa !7
+  store i64 %i.a, ptr %1, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  store i64 %i.a, ptr %i.b, align 8, !tbaa !10
+  store i64 %i.a, ptr %i.b, align 8, !tbaa !11
   %.not6 = icmp eq i32 %0, 0
   br i1 %.not6, label %.critedge, label %.lr.ph
 
@@ -23,18 +23,18 @@ bb.a:
   br i1 %i.d, label %bb.b, label %.lr.ph..critedge.loopexit_crit_edge
 
 .lr.ph..critedge.loopexit_crit_edge:              ; preds = %.lr.ph
-  %.pre.pre = load i64, ptr %1, align 8, !tbaa !7
+  %.pre.pre = load i64, ptr %1, align 8, !tbaa !8
   %i.e = trunc i64 %.pre.pre to i32
   br label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph
   %i.f = sdiv i32 %.07, 2                         ; 3 uses
   %i.g = sext i32 %i.f to i64                     ; 2 uses
-  store i64 %i.g, ptr %1, align 8, !tbaa !7
-  store i64 %i.g, ptr %i.b, align 8, !tbaa !10
+  store i64 %i.g, ptr %1, align 8, !tbaa !8
+  store i64 %i.g, ptr %i.b, align 8, !tbaa !11
   %.07.off = add i32 %.07, 1
   %.not = icmp ult i32 %.07.off, 3
-  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !11
+  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !12
 
 .critedge:                                        ; preds = %bb.b, %.lr.ph..critedge.loopexit_crit_edge, %bb.a
   %i.h = phi i32 [ 0, %bb.a ], [ %i.e, %.lr.ph..critedge.loopexit_crit_edge ], [ %i.f, %bb.b ]
@@ -62,15 +62,16 @@ attributes #3 = { nounwind }
 
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
-!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!4, !4, i64 0}
-!4 = !{!"int", !5, i64 0}
-!5 = !{!"omnipotent char", !6, i64 0}
-!6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTS6rlimit", !9, i64 0, !9, i64 8}
-!9 = !{!"long", !5, i64 0}
-!10 = !{!8, !9, i64 8}
-!11 = distinct !{!11, !12}
-!12 = !{!"llvm.loop.mustprogress"}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !10, i64 0}
+!9 = !{!"_ZTS6rlimit", !10, i64 0, !10, i64 8}
+!10 = !{!"long", !6, i64 0}
+!11 = !{!9, !10, i64 8}
+!12 = distinct !{!12, !13}
+!13 = !{!"llvm.loop.mustprogress"}
 end_hunk_0
