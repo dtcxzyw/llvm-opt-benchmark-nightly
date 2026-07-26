@@ -1,0 +1,93 @@
+inline.NumInlined: 4
+inline.NumDeleted: 2
+begin_hunk_0
+target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-pc-linux-gnu"
+
+module asm
+    ".globl _ZSt21ios_base_library_initv"
+
+%"class.geos::algorithm::PointLocator" = type { i8, i32 }
+
+$_ZN4geos9algorithm6locate22PointOnGeometryLocatorD2Ev = comdat any
+
+$_ZN4geos9operation9overlayng25IndexedPointOnLineLocatorD0Ev = comdat any
+
+$_ZTIN4geos9algorithm6locate22PointOnGeometryLocatorE = comdat any
+
+$_ZTSN4geos9algorithm6locate22PointOnGeometryLocatorE = comdat any
+
+@_ZTVN4geos9operation9overlayng25IndexedPointOnLineLocatorE = unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos9operation9overlayng25IndexedPointOnLineLocatorE, ptr @_ZN4geos9algorithm6locate22PointOnGeometryLocatorD2Ev, ptr @_ZN4geos9operation9overlayng25IndexedPointOnLineLocatorD0Ev, ptr @_ZN4geos9operation9overlayng25IndexedPointOnLineLocator6locateEPKNS_4geom10CoordinateE] }, align 8
+@_ZTIN4geos9operation9overlayng25IndexedPointOnLineLocatorE = constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN4geos9operation9overlayng25IndexedPointOnLineLocatorE, ptr @_ZTIN4geos9algorithm6locate22PointOnGeometryLocatorE }, align 8
+@_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
+@_ZTSN4geos9operation9overlayng25IndexedPointOnLineLocatorE = constant [55 x i8] c"N4geos9operation9overlayng25IndexedPointOnLineLocatorE\00", align 1
+@_ZTIN4geos9algorithm6locate22PointOnGeometryLocatorE = linkonce_odr constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSN4geos9algorithm6locate22PointOnGeometryLocatorE }, comdat, align 8
+@_ZTVN10__cxxabiv117__class_type_infoE = external global [0 x ptr]
+@_ZTSN4geos9algorithm6locate22PointOnGeometryLocatorE = linkonce_odr constant [49 x i8] c"N4geos9algorithm6locate22PointOnGeometryLocatorE\00", comdat, align 1
+
+; Function Attrs: mustprogress uwtable
+define noundef signext i8 @_ZN4geos9operation9overlayng25IndexedPointOnLineLocator6locateEPKNS_4geom10CoordinateE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+bb.a:
+  %2 = alloca %"class.geos::algorithm::PointLocator", align 4 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !7, !nonnull !12, !align !13
+  %i.c = call noundef signext i8 @_ZN4geos9algorithm12PointLocator6locateERKNS_4geom10CoordinateEPKNS2_8GeometryE(ptr noundef nonnull align 4 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull %i.b)
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
+  ret i8 %i.c
+}
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
+
+declare noundef signext i8 @_ZN4geos9algorithm12PointLocator6locateERKNS_4geom10CoordinateEPKNS2_8GeometryE(ptr noundef nonnull align 4 dereferenceable(8), ptr noundef nonnull align 8 dereferenceable(24), ptr noundef) local_unnamed_addr #2
+
+declare i32 @__gxx_personality_v0(...)
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr void @_ZN4geos9algorithm6locate22PointOnGeometryLocatorD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) unnamed_addr #3 comdat align 2 {
+bb.a:
+  ret void
+}
+
+; Function Attrs: inlinehint mustprogress nounwind uwtable
+define linkonce_odr void @_ZN4geos9operation9overlayng25IndexedPointOnLineLocatorD0Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #4 comdat align 2 {
+bb.a:
+  tail call void @_ZdlPv(ptr noundef nonnull %0) #7
+  ret void
+}
+
+; Function Attrs: nobuiltin nounwind
+declare void @_ZdlPv(ptr noundef) local_unnamed_addr #5
+
+attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #4 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #5 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #6 = { nounwind }
+attributes #7 = { builtin nounwind }
+
+!llvm.module.flags = !{!0, !1}
+!llvm.ident = !{!2}
+!llvm.errno.tbaa = !{!3}
+
+!0 = !{i32 8, !"PIC Level", i32 2}
+!1 = !{i32 7, !"uwtable", i32 2}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
+!3 = !{!4, !4, i64 0}
+!4 = !{!"int", !5, i64 0}
+!5 = !{!"omnipotent char", !6, i64 0}
+!6 = !{!"Simple C++ TBAA"}
+!7 = !{!8, !10, i64 8}
+!8 = !{!"_ZTSN4geos9operation9overlayng25IndexedPointOnLineLocatorE", !9, i64 0, !10, i64 8}
+!9 = !{!"_ZTSN4geos9algorithm6locate22PointOnGeometryLocatorE"}
+!10 = !{!"p1 _ZTSN4geos4geom8GeometryE", !11, i64 0}
+!11 = !{!"any pointer", !5, i64 0}
+!12 = !{}
+!13 = !{i64 8}
+end_hunk_0

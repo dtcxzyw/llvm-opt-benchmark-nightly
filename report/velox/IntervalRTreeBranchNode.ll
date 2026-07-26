@@ -1,0 +1,108 @@
+inline.NumInlined: 2
+inline.NumDeleted: 1
+begin_hunk_0
+target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-pc-linux-gnu"
+
+$_ZN4geos5index13intervalrtree17IntervalRTreeNodeD2Ev = comdat any
+
+$_ZN4geos5index13intervalrtree23IntervalRTreeBranchNodeD0Ev = comdat any
+
+$_ZTIN4geos5index13intervalrtree17IntervalRTreeNodeE = comdat any
+
+$_ZTSN4geos5index13intervalrtree17IntervalRTreeNodeE = comdat any
+
+@_ZTVN4geos5index13intervalrtree23IntervalRTreeBranchNodeE = unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos5index13intervalrtree23IntervalRTreeBranchNodeE, ptr @_ZN4geos5index13intervalrtree17IntervalRTreeNodeD2Ev, ptr @_ZN4geos5index13intervalrtree23IntervalRTreeBranchNodeD0Ev, ptr @_ZNK4geos5index13intervalrtree23IntervalRTreeBranchNode5queryEddPNS0_11ItemVisitorE] }, align 8
+@_ZTIN4geos5index13intervalrtree23IntervalRTreeBranchNodeE = constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN4geos5index13intervalrtree23IntervalRTreeBranchNodeE, ptr @_ZTIN4geos5index13intervalrtree17IntervalRTreeNodeE }, align 8
+@_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
+@_ZTSN4geos5index13intervalrtree23IntervalRTreeBranchNodeE = constant [54 x i8] c"N4geos5index13intervalrtree23IntervalRTreeBranchNodeE\00", align 1
+@_ZTIN4geos5index13intervalrtree17IntervalRTreeNodeE = linkonce_odr constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSN4geos5index13intervalrtree17IntervalRTreeNodeE }, comdat, align 8
+@_ZTVN10__cxxabiv117__class_type_infoE = external global [0 x ptr]
+@_ZTSN4geos5index13intervalrtree17IntervalRTreeNodeE = linkonce_odr constant [48 x i8] c"N4geos5index13intervalrtree17IntervalRTreeNodeE\00", comdat, align 1
+
+; Function Attrs: mustprogress uwtable
+define void @_ZNK4geos5index13intervalrtree23IntervalRTreeBranchNode5queryEddPNS0_11ItemVisitorE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0, double noundef %1, double noundef %2, ptr noundef %3) unnamed_addr #0 align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.b = load double, ptr %i.a, align 8, !tbaa !7
+  %i.c = fcmp ule double %i.b, %2
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.e = load double, ptr %i.d, align 8
+  %i.f = fcmp uge double %i.e, %1
+  %or.cond.not.i = select i1 %i.c, i1 %i.f, i1 false
+  br i1 %or.cond.not.i, label %bb.b, label %bb.f
+
+bb.b:                                             ; preds = %bb.a
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !10   ; 3 uses
+  %.not = icmp eq ptr %i.h, null
+  br i1 %.not, label %bb.d, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !14
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
+  %i.k = load ptr, ptr %i.j, align 8
+  tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(24) %i.h, double noundef %1, double noundef %2, ptr noundef %3)
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !16   ; 3 uses
+  %.not10 = icmp eq ptr %i.m, null
+  br i1 %.not10, label %bb.f, label %bb.e
+
+bb.e:                                             ; preds = %bb.d
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !14
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16
+  %i.p = load ptr, ptr %i.o, align 8
+  tail call void %i.p(ptr noundef nonnull align 8 dereferenceable(24) %i.m, double noundef %1, double noundef %2, ptr noundef %3)
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.a, %bb.e, %bb.d
+  ret void
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr void @_ZN4geos5index13intervalrtree17IntervalRTreeNodeD2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) unnamed_addr #1 comdat align 2 {
+bb.a:
+  ret void
+}
+
+; Function Attrs: inlinehint mustprogress nounwind uwtable
+define linkonce_odr void @_ZN4geos5index13intervalrtree23IntervalRTreeBranchNodeD0Ev(ptr noundef nonnull align 8 dereferenceable(40) %0) unnamed_addr #2 comdat align 2 {
+bb.a:
+  tail call void @_ZdlPv(ptr noundef nonnull %0) #4
+  ret void
+}
+
+; Function Attrs: nobuiltin nounwind
+declare void @_ZdlPv(ptr noundef) local_unnamed_addr #3
+
+attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #2 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #3 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #4 = { builtin nounwind }
+
+!llvm.module.flags = !{!0, !1}
+!llvm.ident = !{!2}
+!llvm.errno.tbaa = !{!3}
+
+!0 = !{i32 8, !"PIC Level", i32 2}
+!1 = !{i32 7, !"uwtable", i32 2}
+!2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
+!3 = !{!4, !4, i64 0}
+!4 = !{!"int", !5, i64 0}
+!5 = !{!"omnipotent char", !6, i64 0}
+!6 = !{!"Simple C++ TBAA"}
+!7 = !{!8, !9, i64 8}
+!8 = !{!"_ZTSN4geos5index13intervalrtree17IntervalRTreeNodeE", !9, i64 8, !9, i64 16}
+!9 = !{!"double", !5, i64 0}
+!10 = !{!11, !12, i64 24}
+!11 = !{!"_ZTSN4geos5index13intervalrtree23IntervalRTreeBranchNodeE", !8, i64 0, !12, i64 24, !12, i64 32}
+!12 = !{!"p1 _ZTSN4geos5index13intervalrtree17IntervalRTreeNodeE", !13, i64 0}
+!13 = !{!"any pointer", !5, i64 0}
+!14 = !{!15, !15, i64 0}
+!15 = !{!"vtable pointer", !6, i64 0}
+!16 = !{!11, !12, i64 32}
+end_hunk_0
