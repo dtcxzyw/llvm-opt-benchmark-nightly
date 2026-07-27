@@ -23,7 +23,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %i.l = load i32, ptr %i.k, align 8, !tbaa !29
   %.fr66 = freeze i32 %i.l                        ; 7 uses
-  %i.m = shl nuw i32 1, %.fr66                    ; 2 uses
+  %i.m = shl nuw i32 1, %.fr66
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #3
   %i.n = zext i32 %i.j to i64                     ; 3 uses
   %notmask.i = shl nsw i32 -1, %.fr66
@@ -172,7 +172,7 @@ bb.e:                                             ; preds = %.lr.ph58.split
   br i1 %.not47, label %.critedge, label %.preheader
 
 .preheader:                                       ; preds = %bb.e
-  %i.bz = add i32 %.04157, %i.m
+  %i.bz = add i32 %.04157, 1
   %indvars.iv.next76 = add nuw nsw i64 %indvars.iv75, 1 ; 2 uses
   %exitcond79.not = icmp eq i64 %indvars.iv.next76, %i.n
   br i1 %exitcond79.not, label %.critedge, label %.lr.ph58.split, !llvm.loop !46
@@ -306,7 +306,7 @@ bb.a:
   %i.l = load i32, ptr %i.k, align 4, !tbaa !28   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.n = load i32, ptr %i.m, align 8, !tbaa !25
-  %i.o = shl nuw i32 1, %.fr131                   ; 2 uses
+  %i.o = shl nuw i32 1, %.fr131
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #3
   store i64 0, ptr %i.c, align 8, !tbaa !50
@@ -487,7 +487,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not95, label %.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ce = add i32 %.090126, %i.o
+  %i.ce = add i32 %.090126, 1
   %indvars.iv.next141 = add nuw nsw i64 %indvars.iv140, 1 ; 2 uses
   %exitcond144.not = icmp eq i64 %indvars.iv.next141, %i.ac
   br i1 %exitcond144.not, label %._crit_edge129, label %.lr.ph128.split, !llvm.loop !56

@@ -201,7 +201,7 @@ define noundef i64 @_ZNK5arrow7compute9InputType4HashEv(ptr nofree noundef nonnu
 bb.a:
   %i.a = load i32, ptr %0, align 8, !tbaa !239    ; 2 uses
   %i.b = sext i32 %i.a to i64
-  %i.c = add nsw i64 %i.b, 2654435769             ; 2 uses
+  %i.c = add nsw i64 %i.b, 2654435769
   %cond = icmp eq i32 %i.a, 1
   br i1 %cond, label %bb.b, label %bb.c
 
@@ -210,7 +210,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !246
   %i.f = tail call noundef i64 @_ZNK5arrow8DataType4HashEv(ptr noundef nonnull align 8 dereferenceable(72) %i.e)
   %i.g = add i64 %i.f, 173201933991
-  %i.h = xor i64 %i.g, %i.c
+  %i.h = xor i64 %i.g, 2654435770
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -613,7 +613,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.05.011 = phi ptr [ %i.u, %_ZNK5arrow7compute9InputType4HashEv.exit ], [ %i.c, %bb.b ] ; 3 uses
   %i.g = load i32, ptr %.sroa.05.011, align 8, !tbaa !239 ; 2 uses
   %i.h = sext i32 %i.g to i64
-  %i.i = add nsw i64 %i.h, 2654435769             ; 2 uses
+  %i.i = add nsw i64 %i.h, 2654435769
   %cond.i = icmp eq i32 %i.g, 1
   br i1 %cond.i, label %bb.c, label %_ZNK5arrow7compute9InputType4HashEv.exit
 
@@ -622,7 +622,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !246
   %i.l = tail call noundef i64 @_ZNK5arrow8DataType4HashEv(ptr noundef nonnull align 8 dereferenceable(72) %i.k)
   %i.m = add i64 %i.l, 173201933991
-  %i.n = xor i64 %i.m, %i.i
+  %i.n = xor i64 %i.m, 2654435770
   br label %_ZNK5arrow7compute9InputType4HashEv.exit
 
 _ZNK5arrow7compute9InputType4HashEv.exit:         ; preds = %.lr.ph, %bb.c

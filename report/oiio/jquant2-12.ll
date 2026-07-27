@@ -204,7 +204,7 @@ bb.a:
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 7 uses
   %i.y = mul i32 %i.f, 3
   %i.z = add i32 %i.y, 3
-  %i.aa = zext i32 %i.z to i64                    ; 6 uses
+  %i.aa = zext i32 %i.z to i64
   %.not128129 = icmp eq i32 %i.f, 0
   br i1 %.not128129, label %.lr.ph148.split.us, label %.lr.ph148.split.preheader
 
@@ -221,25 +221,25 @@ bb.a:
 .lr.ph148.split.us.new:                           ; preds = %.lr.ph148.split.us
   %unroll_iter = and i32 %3, 2147483644
   %i.ac = icmp ne i32 %.promoted, 0               ; 5 uses
-  %.0126.us.idx = select i1 %i.ac, i64 %i.aa, i64 0
-  %.0126.us.idx.1 = select i1 %i.ac, i64 0, i64 %i.aa
-  %.0126.us.idx.2 = select i1 %i.ac, i64 %i.aa, i64 0
-  %.0126.us.idx.3 = select i1 %i.ac, i64 0, i64 %i.aa
+  %.0126.us.idx = select i1 %i.ac, i64 24, i64 0
+  %.0126.us.idx.1 = select i1 %i.ac, i64 0, i64 24
+  %.0126.us.idx.2 = select i1 %i.ac, i64 24, i64 0
+  %.0126.us.idx.3 = select i1 %i.ac, i64 0, i64 24
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph148.split.us.new
   %niter = phi i32 [ 0, %.lr.ph148.split.us.new ], [ %niter.next.3, %bb.b ]
   %i.ad = load ptr, ptr %i.x, align 8, !tbaa !48
-  %.0126.us = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %.0126.us.idx
+  %.0126.us = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.0126.us.idx
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.0126.us, i8 0, i64 24, i1 false)
   %i.ae = load ptr, ptr %i.x, align 8, !tbaa !48
-  %.0126.us.1 = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %.0126.us.idx.1
+  %.0126.us.1 = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.0126.us.idx.1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.0126.us.1, i8 0, i64 24, i1 false)
   %i.af = load ptr, ptr %i.x, align 8, !tbaa !48
-  %.0126.us.2 = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %.0126.us.idx.2
+  %.0126.us.2 = getelementptr inbounds nuw i8, ptr %i.af, i64 %.0126.us.idx.2
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.0126.us.2, i8 0, i64 24, i1 false)
   %i.ag = load ptr, ptr %i.x, align 8, !tbaa !48
-  %.0126.us.3 = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %.0126.us.idx.3
+  %.0126.us.3 = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.0126.us.idx.3
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.0126.us.3, i8 0, i64 24, i1 false)
   %niter.next.3 = add nuw nsw i32 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
@@ -262,8 +262,8 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %.not.us.epil = icmp eq i32 %storemerge.us150.epil, 0 ; 2 uses
   %i.ah = load ptr, ptr %i.x, align 8, !tbaa !48
   %storemerge.us.epil = zext i1 %.not.us.epil to i32 ; 2 uses
-  %.0126.us.idx.epil = select i1 %.not.us.epil, i64 0, i64 %i.aa
-  %.0126.us.epil = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %.0126.us.idx.epil
+  %.0126.us.idx.epil = select i1 %.not.us.epil, i64 0, i64 24
+  %.0126.us.epil = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.0126.us.idx.epil
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.0126.us.epil, i8 0, i64 24, i1 false)
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter

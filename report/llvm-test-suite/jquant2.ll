@@ -204,7 +204,7 @@ bb.a:
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 4 uses
   %i.y = mul i32 %i.f, 3
   %i.z = add i32 %i.y, 3
-  %i.aa = zext i32 %i.z to i64                    ; 4 uses
+  %i.aa = zext i32 %i.z to i64
   %.not146147 = icmp eq i32 %i.f, 0
   br i1 %.not146147, label %.lr.ph166.split.us, label %.lr.ph166.split.preheader
 
@@ -222,12 +222,12 @@ bb.a:
   %unroll_iter = and i32 %3, 2147483646
   %i.ac = icmp ne i32 %.promoted, 0               ; 3 uses
   %i.ad = load ptr, ptr %i.x, align 8, !tbaa !42  ; 2 uses
-  %.0141.us.idx = select i1 %i.ac, i64 %i.aa, i64 0
-  %.0141.us = getelementptr inbounds nuw [2 x i8], ptr %i.ad, i64 %.0141.us.idx ; 3 uses
+  %.0141.us.idx = select i1 %i.ac, i64 6, i64 0
+  %.0141.us = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.0141.us.idx ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.0141.us, i64 2
   %i.af = getelementptr inbounds nuw i8, ptr %.0141.us, i64 4
-  %.0141.us.idx.1 = select i1 %i.ac, i64 0, i64 %i.aa
-  %.0141.us.1 = getelementptr inbounds nuw [2 x i8], ptr %i.ad, i64 %.0141.us.idx.1 ; 3 uses
+  %.0141.us.idx.1 = select i1 %i.ac, i64 0, i64 6
+  %.0141.us.1 = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.0141.us.idx.1 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.0141.us.1, i64 2
   %i.ah = getelementptr inbounds nuw i8, ptr %.0141.us.1, i64 4
   br label %bb.b
@@ -256,8 +256,8 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph166.sp
   %.not.us.epil = icmp eq i32 %storemerge.us168.epil.init, 0 ; 2 uses
   %i.ai = load ptr, ptr %i.x, align 8, !tbaa !42
   %storemerge.us.epil = zext i1 %.not.us.epil to i32
-  %.0141.us.idx.epil = select i1 %.not.us.epil, i64 0, i64 %i.aa
-  %.0141.us.epil = getelementptr inbounds nuw [2 x i8], ptr %i.ai, i64 %.0141.us.idx.epil ; 3 uses
+  %.0141.us.idx.epil = select i1 %.not.us.epil, i64 0, i64 6
+  %.0141.us.epil = getelementptr inbounds nuw i8, ptr %i.ai, i64 %.0141.us.idx.epil ; 3 uses
   store i16 0, ptr %.0141.us.epil, align 2, !tbaa !68
   %i.aj = getelementptr inbounds nuw i8, ptr %.0141.us.epil, i64 2
   store i16 0, ptr %i.aj, align 2, !tbaa !68

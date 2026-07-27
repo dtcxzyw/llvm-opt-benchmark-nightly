@@ -203,7 +203,7 @@ define dso_local noundef range(i32 28, 31) i32 @_ZNK6icu_7820IslamicCivilCalenda
 bb.a:
   %i.a = add nsw i32 %2, 1
   %i.b = srem i32 %i.a, 2
-  %i.c = add nsw i32 %i.b, 29                     ; 2 uses
+  %i.c = add nsw i32 %i.b, 29
   %i.d = icmp eq i32 %2, 11
   br i1 %i.d, label %bb.b, label %bb.c
 
@@ -212,7 +212,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = add nsw i32 %i.e, 14
   %i.g = srem i32 %i.f, 30
   %i.h = icmp slt i32 %i.g, 11
-  %spec.select = select i1 %i.h, i32 30, i32 %i.c
+  %spec.select = select i1 %i.h, i32 30, i32 29
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -521,7 +521,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = add nsw i32 %2, 1
   %i.c = srem i32 %i.b, 2
-  %i.d = add nsw i32 %i.c, 29                     ; 2 uses
+  %i.d = add nsw i32 %i.c, 29
   %i.e = icmp eq i32 %2, 11
   br i1 %i.e, label %bb.c, label %_ZNK6icu_7820IslamicCivilCalendar20handleGetMonthLengthEiiR10UErrorCode.exit
 
@@ -530,7 +530,7 @@ bb.c:                                             ; preds = %bb.b
   %i.g = add nsw i32 %i.f, 14
   %i.h = srem i32 %i.g, 30
   %i.i = icmp slt i32 %i.h, 11
-  %spec.select.i = select i1 %i.i, i32 30, i32 %i.d
+  %spec.select.i = select i1 %i.i, i32 30, i32 29
   br label %_ZNK6icu_7820IslamicCivilCalendar20handleGetMonthLengthEiiR10UErrorCode.exit
 
 bb.d:                                             ; preds = %bb.a

@@ -204,8 +204,8 @@ bb.k:                                             ; preds = %bb.j
   store ptr %i.dd, ptr %i.du, align 8
   %i.dv = zext i1 %i.cw to i32
   %i.dw = zext i32 %.fr72 to i64                  ; 3 uses
-  %i.dx = shl nuw nsw i64 %i.dw, 2                ; 2 uses
-  %i.dy = shl nuw nsw i64 %i.dw, 3                ; 2 uses
+  %i.dx = shl nuw nsw i64 %i.dw, 2
+  %i.dy = shl nuw nsw i64 %i.dw, 3
   %.not73 = icmp eq i32 %.fr72, 0
   br i1 %.not73, label %.lr.ph69.split.preheader, label %.lr.ph69.split.us.preheader
 
@@ -314,13 +314,13 @@ bb.q:                                             ; preds = %bb.j
   store double %i.fo, ptr %i.fp, align 8
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 24
   store i32 0, ptr %i.fq, align 8
-  %i.fr = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.dx) #37
+  %i.fr = invoke noalias noundef nonnull ptr @_Znam(i64 noundef 0) #37
           to label %bb.r unwind label %.split
 
 bb.r:                                             ; preds = %.lr.ph69.split
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fp, i64 8
   store ptr %i.fr, ptr %i.fs, align 8
-  %i.ft = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.dy) #37
+  %i.ft = invoke noalias noundef nonnull ptr @_Znam(i64 noundef 0) #37
           to label %bb.s unwind label %.split
 
 bb.s:                                             ; preds = %bb.r

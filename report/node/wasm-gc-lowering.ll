@@ -203,7 +203,7 @@ _ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit: ; pre
   %i.bl = load i64, ptr %i.bk, align 4            ; 2 uses
   %.sroa.036.0.extract.trunc = trunc i64 %i.bl to i32 ; 8 uses
   %.sroa.7.0.extract.shift = lshr i64 %i.bl, 32   ; 2 uses
-  %.sroa.7.0.extract.trunc = trunc nuw i64 %.sroa.7.0.extract.shift to i32 ; 2 uses
+  %.sroa.7.0.extract.trunc = trunc nuw i64 %.sroa.7.0.extract.shift to i32
   %i.bm = icmp eq i64 %.sroa.7.0.extract.shift, 1382
   br i1 %i.bm, label %bb.k, label %bb.t
 
@@ -268,7 +268,7 @@ _ZN2v88internal8compiler14WasmGCLowering6IsNullEPNS1_4NodeENS0_4wasm9ValueTypeE.
   %i.cj = load ptr, ptr %i.ci, align 8
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
   %i.cl = load ptr, ptr %i.ck, align 8
-  %i.cm = tail call noundef ptr @_ZN2v88internal8compiler21CommonOperatorBuilder6TrapIfENS1_6TrapIdEb(ptr noundef nonnull align 8 dereferenceable(16) %i.cl, i32 noundef %.sroa.7.0.extract.trunc, i1 noundef zeroext false) #9
+  %i.cm = tail call noundef ptr @_ZN2v88internal8compiler21CommonOperatorBuilder6TrapIfENS1_6TrapIdEb(ptr noundef nonnull align 8 dereferenceable(16) %i.cl, i32 noundef 1382, i1 noundef zeroext false) #9
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
   store ptr %i.cg, ptr %3, align 8

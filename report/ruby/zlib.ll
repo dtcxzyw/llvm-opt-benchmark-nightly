@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %RSTRING_PTR.exit.i
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 16
   %i.bb = load i64, ptr %i.ba, align 8, !tbaa !17
   %i.bc = load i32, ptr %i.av, align 8, !tbaa !68 ; 3 uses
-  %i.bd = zext i32 %i.bc to i64                   ; 6 uses
+  %i.bd = zext i32 %i.bc to i64                   ; 5 uses
   %i.be = sub nsw i64 %i.bb, %i.bd                ; 2 uses
   %i.bf = icmp eq i64 %i.ay, 4
   br i1 %i.bf, label %zstream_discard_input.exit.i, label %bb.j
@@ -231,7 +231,7 @@ RSTRING_PTR.exit.i.i:                             ; preds = %bb.l, %bb.k
   br i1 %.not38.i, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %RSTRING_PTR.exit.i.i
-  %i.bo = call i64 @rb_str_resize(i64 noundef %i.ay, i64 noundef %i.bd) #17 ; 0 uses
+  %i.bo = call i64 @rb_str_resize(i64 noundef %i.ay, i64 noundef 0) #17 ; 0 uses
   store i64 4, ptr %i.ai, align 8, !tbaa !43
   br label %zstream_discard_input.exit.i
 

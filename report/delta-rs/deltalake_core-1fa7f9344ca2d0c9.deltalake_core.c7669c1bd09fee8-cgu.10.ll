@@ -204,7 +204,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.re = xor i128 %i.rd, %i.rc
   %i.rf = trunc i128 %i.re to i64
   store i64 %i.rf, ptr %i.b, align 8, !alias.scope !7882, !noalias !7807
-  %i.rg = zext i1 %i.qm to i128                   ; 2 uses
+  %i.rg = zext i1 %i.qm to i128
   store i128 %i.rg, ptr %1, align 16, !alias.scope !7882, !noalias !7807
   store i8 64, ptr %i.a, align 16, !alias.scope !7882, !noalias !7807
   br i1 %i.qm, label %.thread, label %common.ret
@@ -212,7 +212,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
 .thread:                                          ; preds = %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i29.thread
   %i.rh = zext nneg i8 %i.ql to i128
   %i.ri = shl nuw nsw i128 %i.rh, 64
-  %i.rj = or disjoint i128 %i.ri, %i.rg
+  %i.rj = or disjoint i128 %i.ri, 1
   br label %_RINvXsS_NtCs8VI8w5SIoU4_15datafusion_expr4exprNtB6_13NullTreatmentNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtCs2HSpDNxY7OE_9hashbrown6hasher13DefaultHasherECs14kWLkQVSKO_14deltalake_core.exit.i
 
 bb.aq:                                            ; preds = %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i29
