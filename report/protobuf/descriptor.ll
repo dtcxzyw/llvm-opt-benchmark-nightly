@@ -204,15 +204,9 @@ _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.i, %bb.h,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #40
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, i8 0, i64 24, i1 false)
-  %.idx = shl nuw nsw i64 %.8.val, 2              ; 4 uses
+  %.idx = shl nuw nsw i64 %.8.val, 2              ; 3 uses
   %.not.i.i.i = icmp eq i64 %.8.val, 0
-  br i1 %.not.i.i.i, label %.thread.i.i, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i
-
-.thread.i.i:                                      ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
-  %7 = getelementptr inbounds nuw i8, ptr null, i64 %.idx ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store ptr %7, ptr %8, align 8, !tbaa !730
-  br label %bb.l
+  br i1 %.not.i.i.i, label %bb.l, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i
 
 _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i: ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
   %i.ac = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx) #45
@@ -235,8 +229,8 @@ bb.k:                                             ; preds = %.noexc4.i
   store i32 %i.af, ptr %i.ac, align 4, !tbaa !3
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %bb.j, %.thread.i.i
-  %i.ag = phi ptr [ %i.ad, %bb.j ], [ %7, %.thread.i.i ], [ %i.ad, %bb.k ]
+bb.l:                                             ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i, %bb.k, %bb.j
+  %i.ag = phi ptr [ %i.ad, %bb.j ], [ %i.ad, %bb.k ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ]
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 72
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !951
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 88

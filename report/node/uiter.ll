@@ -201,7 +201,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 136
   %i.d = load ptr, ptr %i.c, align 8
   %i.e = tail call noundef zeroext i16 %i.d(ptr noundef nonnull align 8 dereferenceable(24) %i.a) #12 ; 2 uses
-  %i.f = zext i16 %i.e to i32                     ; 2 uses
+  %i.f = zext i16 %i.e to i32
   %.not = icmp eq i16 %i.e, -1
   br i1 %.not, label %bb.b, label %bb.c
 
@@ -212,7 +212,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %i.i, align 8
   %i.k = tail call noundef signext i8 %i.j(ptr noundef nonnull align 8 dereferenceable(8) %i.g) #12
   %.not4 = icmp eq i8 %i.k, 0
-  %spec.select = select i1 %.not4, i32 -1, i32 %i.f
+  %spec.select = select i1 %.not4, i32 -1, i32 65535
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a

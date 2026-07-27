@@ -204,14 +204,14 @@ png_build_8bit_table.exit99:                      ; preds = %png_gamma_8bit_corr
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @png_build_16bit_table(ptr noalias noundef %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1, i32 noundef range(i32 0, 16) %2, i32 noundef %3) unnamed_addr #0 {
 bb.a:
-  %i.a = sub nsw i32 8, %2                        ; 6 uses
+  %i.a = sub nsw i32 8, %2                        ; 5 uses
   %i.b = shl nuw nsw i32 1, %i.a
   %i.c = lshr exact i32 65536, %2
   %i.d = add nsw i32 %i.c, -1                     ; 3 uses
   %i.e = uitofp nneg i32 %i.d to double
   %i.f = fdiv nnan double 1.000000e+00, %i.e      ; 2 uses
   %i.g = lshr exact i32 32768, %2                 ; 2 uses
-  %i.h = zext nneg i32 %i.b to i64                ; 4 uses
+  %i.h = zext nneg i32 %i.b to i64                ; 3 uses
   %i.i = shl nuw nsw i64 %i.h, 3
   %i.j = tail call noalias ptr @png_calloc(ptr noundef %0, i64 noundef %i.i) #28 ; 4 uses
   store ptr %i.j, ptr %1, align 8, !tbaa !49
@@ -223,182 +223,113 @@ bb.a:
 
 .split.us:                                        ; preds = %bb.a
   %.not39 = icmp eq i32 %2, 0
-  br i1 %.not39, label %.preheader.us.us.preheader, label %.preheader.us
+  br i1 %.not39, label %.preheader.us.us, label %.preheader.us
 
-.preheader.us.us.preheader:                       ; preds = %.split.us
-  %broadcast.splatinsert80 = insertelement <8 x i32> poison, i32 %i.a, i64 0
-  %broadcast.splat81 = shufflevector <8 x i32> %broadcast.splatinsert80, <8 x i32> poison, <8 x i32> zeroinitializer ; 32 uses
-  %4 = shl nuw nsw <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %broadcast.splat81
-  %5 = shl nuw nsw <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>, %broadcast.splat81
-  %6 = shl nuw nsw <8 x i32> <i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>, %broadcast.splat81
-  %7 = shl nuw nsw <8 x i32> <i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>, %broadcast.splat81
-  %8 = shl nuw nsw <8 x i32> <i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39>, %broadcast.splat81
-  %9 = shl nuw nsw <8 x i32> <i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47>, %broadcast.splat81
-  %10 = shl nuw nsw <8 x i32> <i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55>, %broadcast.splat81
-  %11 = shl nuw nsw <8 x i32> <i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>, %broadcast.splat81
-  %12 = shl nuw nsw <8 x i32> <i32 64, i32 65, i32 66, i32 67, i32 68, i32 69, i32 70, i32 71>, %broadcast.splat81
-  %13 = shl nuw nsw <8 x i32> <i32 72, i32 73, i32 74, i32 75, i32 76, i32 77, i32 78, i32 79>, %broadcast.splat81
-  %14 = shl nuw nsw <8 x i32> <i32 80, i32 81, i32 82, i32 83, i32 84, i32 85, i32 86, i32 87>, %broadcast.splat81
-  %15 = shl nuw nsw <8 x i32> <i32 88, i32 89, i32 90, i32 91, i32 92, i32 93, i32 94, i32 95>, %broadcast.splat81
-  %16 = shl nuw nsw <8 x i32> <i32 96, i32 97, i32 98, i32 99, i32 100, i32 101, i32 102, i32 103>, %broadcast.splat81
-  %17 = shl nuw nsw <8 x i32> <i32 104, i32 105, i32 106, i32 107, i32 108, i32 109, i32 110, i32 111>, %broadcast.splat81
-  %18 = shl nuw nsw <8 x i32> <i32 112, i32 113, i32 114, i32 115, i32 116, i32 117, i32 118, i32 119>, %broadcast.splat81
-  %19 = shl nuw nsw <8 x i32> <i32 120, i32 121, i32 122, i32 123, i32 124, i32 125, i32 126, i32 127>, %broadcast.splat81
-  %20 = shl nuw nsw <8 x i32> <i32 128, i32 129, i32 130, i32 131, i32 132, i32 133, i32 134, i32 135>, %broadcast.splat81
-  %21 = shl nuw nsw <8 x i32> <i32 136, i32 137, i32 138, i32 139, i32 140, i32 141, i32 142, i32 143>, %broadcast.splat81
-  %22 = shl nuw nsw <8 x i32> <i32 144, i32 145, i32 146, i32 147, i32 148, i32 149, i32 150, i32 151>, %broadcast.splat81
-  %23 = shl nuw nsw <8 x i32> <i32 152, i32 153, i32 154, i32 155, i32 156, i32 157, i32 158, i32 159>, %broadcast.splat81
-  %24 = shl nuw nsw <8 x i32> <i32 160, i32 161, i32 162, i32 163, i32 164, i32 165, i32 166, i32 167>, %broadcast.splat81
-  %25 = shl nuw nsw <8 x i32> <i32 168, i32 169, i32 170, i32 171, i32 172, i32 173, i32 174, i32 175>, %broadcast.splat81
-  %26 = shl nuw nsw <8 x i32> <i32 176, i32 177, i32 178, i32 179, i32 180, i32 181, i32 182, i32 183>, %broadcast.splat81
-  %27 = shl nuw nsw <8 x i32> <i32 184, i32 185, i32 186, i32 187, i32 188, i32 189, i32 190, i32 191>, %broadcast.splat81
-  %28 = shl nuw nsw <8 x i32> <i32 192, i32 193, i32 194, i32 195, i32 196, i32 197, i32 198, i32 199>, %broadcast.splat81
-  %29 = shl nuw nsw <8 x i32> <i32 200, i32 201, i32 202, i32 203, i32 204, i32 205, i32 206, i32 207>, %broadcast.splat81
-  %30 = shl nuw nsw <8 x i32> <i32 208, i32 209, i32 210, i32 211, i32 212, i32 213, i32 214, i32 215>, %broadcast.splat81
-  %31 = shl nuw nsw <8 x i32> <i32 216, i32 217, i32 218, i32 219, i32 220, i32 221, i32 222, i32 223>, %broadcast.splat81
-  %32 = shl nuw nsw <8 x i32> <i32 224, i32 225, i32 226, i32 227, i32 228, i32 229, i32 230, i32 231>, %broadcast.splat81
-  %33 = shl nuw nsw <8 x i32> <i32 232, i32 233, i32 234, i32 235, i32 236, i32 237, i32 238, i32 239>, %broadcast.splat81
-  %34 = shl nuw nsw <8 x i32> <i32 240, i32 241, i32 242, i32 243, i32 244, i32 245, i32 246, i32 247>, %broadcast.splat81
-  %35 = shl nuw nsw <8 x i32> <i32 248, i32 249, i32 250, i32 251, i32 252, i32 253, i32 254, i32 255>, %broadcast.splat81
-  br label %.preheader.us.us
-
-.preheader.us.us:                                 ; preds = %.preheader.us.us.preheader, %.preheader.us.us
-  %indvars.iv71 = phi i64 [ %indvars.iv.next72, %.preheader.us.us ], [ 0, %.preheader.us.us.preheader ] ; 3 uses
+.preheader.us.us:                                 ; preds = %.split.us, %.preheader.us.us
+  %indvars.iv71 = phi i64 [ %indvars.iv.next72, %.preheader.us.us ], [ 0, %.split.us ] ; 3 uses
   %i.o = tail call noalias ptr @png_malloc(ptr noundef %0, i64 noundef 512) #28 ; 33 uses
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv71
   store ptr %i.o, ptr %i.p, align 8, !tbaa !176
-  %36 = trunc nuw nsw i64 %indvars.iv71 to i32
-  %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %36, i64 0
-  %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer ; 32 uses
-  %37 = add <8 x i32> %4, %broadcast.splat
-  %38 = add <8 x i32> %5, %broadcast.splat
-  %39 = trunc <8 x i32> %37 to <8 x i16>
-  %40 = trunc <8 x i32> %38 to <8 x i16>
+  %4 = trunc i64 %indvars.iv71 to i16
+  %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %4, i64 0
+  %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 32 uses
+  %5 = add <8 x i16> %broadcast.splat, <i16 0, i16 256, i16 512, i16 768, i16 1024, i16 1280, i16 1536, i16 1792>
+  %6 = add <8 x i16> %broadcast.splat, <i16 2048, i16 2304, i16 2560, i16 2816, i16 3072, i16 3328, i16 3584, i16 3840>
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  store <8 x i16> %39, ptr %i.o, align 2, !tbaa !48
-  store <8 x i16> %40, ptr %i.q, align 2, !tbaa !48
-  %41 = add <8 x i32> %6, %broadcast.splat
-  %42 = add <8 x i32> %7, %broadcast.splat
-  %43 = trunc <8 x i32> %41 to <8 x i16>
-  %44 = trunc <8 x i32> %42 to <8 x i16>
+  store <8 x i16> %5, ptr %i.o, align 2, !tbaa !48
+  store <8 x i16> %6, ptr %i.q, align 2, !tbaa !48
+  %7 = add <8 x i16> %broadcast.splat, <i16 4096, i16 4352, i16 4608, i16 4864, i16 5120, i16 5376, i16 5632, i16 5888>
+  %8 = add <8 x i16> %broadcast.splat, <i16 6144, i16 6400, i16 6656, i16 6912, i16 7168, i16 7424, i16 7680, i16 7936>
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 48
-  store <8 x i16> %43, ptr %i.r, align 2, !tbaa !48
-  store <8 x i16> %44, ptr %i.s, align 2, !tbaa !48
-  %45 = add <8 x i32> %8, %broadcast.splat
-  %46 = add <8 x i32> %9, %broadcast.splat
-  %47 = trunc <8 x i32> %45 to <8 x i16>
-  %48 = trunc <8 x i32> %46 to <8 x i16>
+  store <8 x i16> %7, ptr %i.r, align 2, !tbaa !48
+  store <8 x i16> %8, ptr %i.s, align 2, !tbaa !48
+  %9 = add <8 x i16> %broadcast.splat, <i16 8192, i16 8448, i16 8704, i16 8960, i16 9216, i16 9472, i16 9728, i16 9984>
+  %10 = add <8 x i16> %broadcast.splat, <i16 10240, i16 10496, i16 10752, i16 11008, i16 11264, i16 11520, i16 11776, i16 12032>
   %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 64
   %i.u = getelementptr inbounds nuw i8, ptr %i.o, i64 80
-  store <8 x i16> %47, ptr %i.t, align 2, !tbaa !48
-  store <8 x i16> %48, ptr %i.u, align 2, !tbaa !48
-  %49 = add <8 x i32> %10, %broadcast.splat
-  %50 = add <8 x i32> %11, %broadcast.splat
-  %51 = trunc <8 x i32> %49 to <8 x i16>
-  %52 = trunc <8 x i32> %50 to <8 x i16>
+  store <8 x i16> %9, ptr %i.t, align 2, !tbaa !48
+  store <8 x i16> %10, ptr %i.u, align 2, !tbaa !48
+  %11 = add <8 x i16> %broadcast.splat, <i16 12288, i16 12544, i16 12800, i16 13056, i16 13312, i16 13568, i16 13824, i16 14080>
+  %12 = add <8 x i16> %broadcast.splat, <i16 14336, i16 14592, i16 14848, i16 15104, i16 15360, i16 15616, i16 15872, i16 16128>
   %i.v = getelementptr inbounds nuw i8, ptr %i.o, i64 96
   %i.w = getelementptr inbounds nuw i8, ptr %i.o, i64 112
-  store <8 x i16> %51, ptr %i.v, align 2, !tbaa !48
-  store <8 x i16> %52, ptr %i.w, align 2, !tbaa !48
-  %53 = add <8 x i32> %12, %broadcast.splat
-  %54 = add <8 x i32> %13, %broadcast.splat
-  %55 = trunc <8 x i32> %53 to <8 x i16>
-  %56 = trunc <8 x i32> %54 to <8 x i16>
+  store <8 x i16> %11, ptr %i.v, align 2, !tbaa !48
+  store <8 x i16> %12, ptr %i.w, align 2, !tbaa !48
+  %13 = add <8 x i16> %broadcast.splat, <i16 16384, i16 16640, i16 16896, i16 17152, i16 17408, i16 17664, i16 17920, i16 18176>
+  %14 = add <8 x i16> %broadcast.splat, <i16 18432, i16 18688, i16 18944, i16 19200, i16 19456, i16 19712, i16 19968, i16 20224>
   %i.x = getelementptr inbounds nuw i8, ptr %i.o, i64 128
   %i.y = getelementptr inbounds nuw i8, ptr %i.o, i64 144
-  store <8 x i16> %55, ptr %i.x, align 2, !tbaa !48
-  store <8 x i16> %56, ptr %i.y, align 2, !tbaa !48
-  %57 = add <8 x i32> %14, %broadcast.splat
-  %58 = add <8 x i32> %15, %broadcast.splat
-  %59 = trunc <8 x i32> %57 to <8 x i16>
-  %60 = trunc <8 x i32> %58 to <8 x i16>
+  store <8 x i16> %13, ptr %i.x, align 2, !tbaa !48
+  store <8 x i16> %14, ptr %i.y, align 2, !tbaa !48
+  %15 = add <8 x i16> %broadcast.splat, <i16 20480, i16 20736, i16 20992, i16 21248, i16 21504, i16 21760, i16 22016, i16 22272>
+  %16 = add <8 x i16> %broadcast.splat, <i16 22528, i16 22784, i16 23040, i16 23296, i16 23552, i16 23808, i16 24064, i16 24320>
   %i.z = getelementptr inbounds nuw i8, ptr %i.o, i64 160
   %i.aa = getelementptr inbounds nuw i8, ptr %i.o, i64 176
-  store <8 x i16> %59, ptr %i.z, align 2, !tbaa !48
-  store <8 x i16> %60, ptr %i.aa, align 2, !tbaa !48
-  %61 = add <8 x i32> %16, %broadcast.splat
-  %62 = add <8 x i32> %17, %broadcast.splat
-  %63 = trunc <8 x i32> %61 to <8 x i16>
-  %64 = trunc <8 x i32> %62 to <8 x i16>
+  store <8 x i16> %15, ptr %i.z, align 2, !tbaa !48
+  store <8 x i16> %16, ptr %i.aa, align 2, !tbaa !48
+  %17 = add <8 x i16> %broadcast.splat, <i16 24576, i16 24832, i16 25088, i16 25344, i16 25600, i16 25856, i16 26112, i16 26368>
+  %18 = add <8 x i16> %broadcast.splat, <i16 26624, i16 26880, i16 27136, i16 27392, i16 27648, i16 27904, i16 28160, i16 28416>
   %i.ab = getelementptr inbounds nuw i8, ptr %i.o, i64 192
   %i.ac = getelementptr inbounds nuw i8, ptr %i.o, i64 208
-  store <8 x i16> %63, ptr %i.ab, align 2, !tbaa !48
-  store <8 x i16> %64, ptr %i.ac, align 2, !tbaa !48
-  %65 = add <8 x i32> %18, %broadcast.splat
-  %66 = add <8 x i32> %19, %broadcast.splat
-  %67 = trunc <8 x i32> %65 to <8 x i16>
-  %68 = trunc <8 x i32> %66 to <8 x i16>
+  store <8 x i16> %17, ptr %i.ab, align 2, !tbaa !48
+  store <8 x i16> %18, ptr %i.ac, align 2, !tbaa !48
+  %19 = add <8 x i16> %broadcast.splat, <i16 28672, i16 28928, i16 29184, i16 29440, i16 29696, i16 29952, i16 30208, i16 30464>
+  %20 = add <8 x i16> %broadcast.splat, <i16 30720, i16 30976, i16 31232, i16 31488, i16 31744, i16 32000, i16 32256, i16 32512>
   %i.ad = getelementptr inbounds nuw i8, ptr %i.o, i64 224
   %i.ae = getelementptr inbounds nuw i8, ptr %i.o, i64 240
-  store <8 x i16> %67, ptr %i.ad, align 2, !tbaa !48
-  store <8 x i16> %68, ptr %i.ae, align 2, !tbaa !48
-  %69 = add <8 x i32> %20, %broadcast.splat
-  %70 = add <8 x i32> %21, %broadcast.splat
-  %71 = trunc <8 x i32> %69 to <8 x i16>
-  %72 = trunc <8 x i32> %70 to <8 x i16>
+  store <8 x i16> %19, ptr %i.ad, align 2, !tbaa !48
+  store <8 x i16> %20, ptr %i.ae, align 2, !tbaa !48
+  %21 = add <8 x i16> %broadcast.splat, <i16 -32768, i16 -32512, i16 -32256, i16 -32000, i16 -31744, i16 -31488, i16 -31232, i16 -30976>
+  %22 = add <8 x i16> %broadcast.splat, <i16 -30720, i16 -30464, i16 -30208, i16 -29952, i16 -29696, i16 -29440, i16 -29184, i16 -28928>
   %i.af = getelementptr inbounds nuw i8, ptr %i.o, i64 256
   %i.ag = getelementptr inbounds nuw i8, ptr %i.o, i64 272
-  store <8 x i16> %71, ptr %i.af, align 2, !tbaa !48
-  store <8 x i16> %72, ptr %i.ag, align 2, !tbaa !48
-  %73 = add <8 x i32> %22, %broadcast.splat
-  %74 = add <8 x i32> %23, %broadcast.splat
-  %75 = trunc <8 x i32> %73 to <8 x i16>
-  %76 = trunc <8 x i32> %74 to <8 x i16>
+  store <8 x i16> %21, ptr %i.af, align 2, !tbaa !48
+  store <8 x i16> %22, ptr %i.ag, align 2, !tbaa !48
+  %23 = add <8 x i16> %broadcast.splat, <i16 -28672, i16 -28416, i16 -28160, i16 -27904, i16 -27648, i16 -27392, i16 -27136, i16 -26880>
+  %24 = add <8 x i16> %broadcast.splat, <i16 -26624, i16 -26368, i16 -26112, i16 -25856, i16 -25600, i16 -25344, i16 -25088, i16 -24832>
   %i.ah = getelementptr inbounds nuw i8, ptr %i.o, i64 288
   %i.ai = getelementptr inbounds nuw i8, ptr %i.o, i64 304
-  store <8 x i16> %75, ptr %i.ah, align 2, !tbaa !48
-  store <8 x i16> %76, ptr %i.ai, align 2, !tbaa !48
-  %77 = add <8 x i32> %24, %broadcast.splat
-  %78 = add <8 x i32> %25, %broadcast.splat
-  %79 = trunc <8 x i32> %77 to <8 x i16>
-  %80 = trunc <8 x i32> %78 to <8 x i16>
+  store <8 x i16> %23, ptr %i.ah, align 2, !tbaa !48
+  store <8 x i16> %24, ptr %i.ai, align 2, !tbaa !48
+  %25 = add <8 x i16> %broadcast.splat, <i16 -24576, i16 -24320, i16 -24064, i16 -23808, i16 -23552, i16 -23296, i16 -23040, i16 -22784>
+  %26 = add <8 x i16> %broadcast.splat, <i16 -22528, i16 -22272, i16 -22016, i16 -21760, i16 -21504, i16 -21248, i16 -20992, i16 -20736>
   %i.aj = getelementptr inbounds nuw i8, ptr %i.o, i64 320
   %i.ak = getelementptr inbounds nuw i8, ptr %i.o, i64 336
-  store <8 x i16> %79, ptr %i.aj, align 2, !tbaa !48
-  store <8 x i16> %80, ptr %i.ak, align 2, !tbaa !48
-  %81 = add <8 x i32> %26, %broadcast.splat
-  %82 = add <8 x i32> %27, %broadcast.splat
-  %83 = trunc <8 x i32> %81 to <8 x i16>
-  %84 = trunc <8 x i32> %82 to <8 x i16>
+  store <8 x i16> %25, ptr %i.aj, align 2, !tbaa !48
+  store <8 x i16> %26, ptr %i.ak, align 2, !tbaa !48
+  %27 = add <8 x i16> %broadcast.splat, <i16 -20480, i16 -20224, i16 -19968, i16 -19712, i16 -19456, i16 -19200, i16 -18944, i16 -18688>
+  %28 = add <8 x i16> %broadcast.splat, <i16 -18432, i16 -18176, i16 -17920, i16 -17664, i16 -17408, i16 -17152, i16 -16896, i16 -16640>
   %i.al = getelementptr inbounds nuw i8, ptr %i.o, i64 352
   %i.am = getelementptr inbounds nuw i8, ptr %i.o, i64 368
-  store <8 x i16> %83, ptr %i.al, align 2, !tbaa !48
-  store <8 x i16> %84, ptr %i.am, align 2, !tbaa !48
-  %85 = add <8 x i32> %28, %broadcast.splat
-  %86 = add <8 x i32> %29, %broadcast.splat
-  %87 = trunc <8 x i32> %85 to <8 x i16>
-  %88 = trunc <8 x i32> %86 to <8 x i16>
+  store <8 x i16> %27, ptr %i.al, align 2, !tbaa !48
+  store <8 x i16> %28, ptr %i.am, align 2, !tbaa !48
+  %29 = add <8 x i16> %broadcast.splat, <i16 -16384, i16 -16128, i16 -15872, i16 -15616, i16 -15360, i16 -15104, i16 -14848, i16 -14592>
+  %30 = add <8 x i16> %broadcast.splat, <i16 -14336, i16 -14080, i16 -13824, i16 -13568, i16 -13312, i16 -13056, i16 -12800, i16 -12544>
   %i.an = getelementptr inbounds nuw i8, ptr %i.o, i64 384
   %i.ao = getelementptr inbounds nuw i8, ptr %i.o, i64 400
-  store <8 x i16> %87, ptr %i.an, align 2, !tbaa !48
-  store <8 x i16> %88, ptr %i.ao, align 2, !tbaa !48
-  %89 = add <8 x i32> %30, %broadcast.splat
-  %90 = add <8 x i32> %31, %broadcast.splat
-  %91 = trunc <8 x i32> %89 to <8 x i16>
-  %92 = trunc <8 x i32> %90 to <8 x i16>
+  store <8 x i16> %29, ptr %i.an, align 2, !tbaa !48
+  store <8 x i16> %30, ptr %i.ao, align 2, !tbaa !48
+  %31 = add <8 x i16> %broadcast.splat, <i16 -12288, i16 -12032, i16 -11776, i16 -11520, i16 -11264, i16 -11008, i16 -10752, i16 -10496>
+  %32 = add <8 x i16> %broadcast.splat, <i16 -10240, i16 -9984, i16 -9728, i16 -9472, i16 -9216, i16 -8960, i16 -8704, i16 -8448>
   %i.ap = getelementptr inbounds nuw i8, ptr %i.o, i64 416
   %i.aq = getelementptr inbounds nuw i8, ptr %i.o, i64 432
-  store <8 x i16> %91, ptr %i.ap, align 2, !tbaa !48
-  store <8 x i16> %92, ptr %i.aq, align 2, !tbaa !48
-  %93 = add <8 x i32> %32, %broadcast.splat
-  %94 = add <8 x i32> %33, %broadcast.splat
-  %95 = trunc <8 x i32> %93 to <8 x i16>
-  %96 = trunc <8 x i32> %94 to <8 x i16>
+  store <8 x i16> %31, ptr %i.ap, align 2, !tbaa !48
+  store <8 x i16> %32, ptr %i.aq, align 2, !tbaa !48
+  %33 = add <8 x i16> %broadcast.splat, <i16 -8192, i16 -7936, i16 -7680, i16 -7424, i16 -7168, i16 -6912, i16 -6656, i16 -6400>
+  %34 = add <8 x i16> %broadcast.splat, <i16 -6144, i16 -5888, i16 -5632, i16 -5376, i16 -5120, i16 -4864, i16 -4608, i16 -4352>
   %i.ar = getelementptr inbounds nuw i8, ptr %i.o, i64 448
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 464
-  store <8 x i16> %95, ptr %i.ar, align 2, !tbaa !48
-  store <8 x i16> %96, ptr %i.as, align 2, !tbaa !48
-  %97 = add <8 x i32> %34, %broadcast.splat
-  %98 = add <8 x i32> %35, %broadcast.splat
-  %99 = trunc <8 x i32> %97 to <8 x i16>
-  %100 = trunc <8 x i32> %98 to <8 x i16>
+  store <8 x i16> %33, ptr %i.ar, align 2, !tbaa !48
+  store <8 x i16> %34, ptr %i.as, align 2, !tbaa !48
+  %35 = add <8 x i16> %broadcast.splat, <i16 -4096, i16 -3840, i16 -3584, i16 -3328, i16 -3072, i16 -2816, i16 -2560, i16 -2304>
+  %36 = add <8 x i16> %broadcast.splat, <i16 -2048, i16 -1792, i16 -1536, i16 -1280, i16 -1024, i16 -768, i16 -512, i16 -256>
   %i.at = getelementptr inbounds nuw i8, ptr %i.o, i64 480
   %i.au = getelementptr inbounds nuw i8, ptr %i.o, i64 496
-  store <8 x i16> %99, ptr %i.at, align 2, !tbaa !48
-  store <8 x i16> %100, ptr %i.au, align 2, !tbaa !48
+  store <8 x i16> %35, ptr %i.at, align 2, !tbaa !48
+  store <8 x i16> %36, ptr %i.au, align 2, !tbaa !48
   %indvars.iv.next72 = add nuw nsw i64 %indvars.iv71, 1 ; 2 uses
-  %exitcond75.not = icmp eq i64 %indvars.iv.next72, %i.h
+  %exitcond75.not = icmp eq i64 %indvars.iv.next72, 256
   br i1 %exitcond75.not, label %.split50.us, label %.preheader.us.us, !llvm.loop !211
 
 .preheader.us:                                    ; preds = %.split.us, %.loopexit.split.us47

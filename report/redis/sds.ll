@@ -203,13 +203,13 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.preheader
   %i.i = icmp eq i32 %3, 1
-  %i.j = zext nneg i32 %3 to i64                  ; 4 uses
+  %i.j = zext nneg i32 %3 to i64                  ; 2 uses
   br i1 %i.i, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.h
   %.06081.us = phi ptr [ %.2.us, %bb.h ], [ %i.c, %.lr.ph ] ; 3 uses
-  %.06180.us = phi i64 [ %6, %bb.h ], [ 0, %.lr.ph ] ; 4 uses
-  %.06379.us = phi i64 [ %.164.us.a, %bb.h ], [ 0, %.lr.ph ] ; 3 uses
+  %.06180.us = phi i64 [ %.164.us.a, %bb.h ], [ 0, %.lr.ph ] ; 4 uses
+  %.06379.us = phi i64 [ %.164.us, %bb.h ], [ 0, %.lr.ph ] ; 3 uses
   %.06578.us = phi i32 [ %.166.us, %bb.h ], [ 5, %.lr.ph ] ; 3 uses
   %.06777.us = phi i32 [ %.168.us, %bb.h ], [ 0, %.lr.ph ] ; 6 uses
   %i.k = add nsw i32 %.06777.us, 2
@@ -234,9 +234,14 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.split
   br i1 %i.u, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %bcmp.us = tail call i32 @bcmp(ptr nonnull %i.r, ptr nonnull %2, i64 %i.j)
-  %i.v = icmp eq i32 %bcmp.us, 0
-  br i1 %i.v, label %bb.f, label %bb.h
+  %lhsc = load i8, ptr %i.r, align 1
+  %rhsc = load i8, ptr %2, align 1
+  %i.v = icmp eq i8 %lhsc, %rhsc
+  br i1 %i.v, label %bb.f, label %._crit_edge98
+
+._crit_edge98:                                    ; preds = %bb.e
+  %.pre = add nsw i64 %.06180.us, 1
+  br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.w = getelementptr inbounds i8, ptr %0, i64 %.06379.us
@@ -250,16 +255,14 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.ac = add nsw i32 %.06777.us, 1
-  %5 = add nsw i64 %.06180.us, %i.j               ; 2 uses
-  %i.ad = add nsw i64 %5, -1
+  %i.ad = add nsw i64 %.06180.us, 1               ; 2 uses
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %bb.e
-  %.168.us = phi i32 [ %i.ac, %bb.g ], [ %.06777.us, %bb.e ] ; 2 uses
-  %.164.us.a = phi i64 [ %5, %bb.g ], [ %.06379.us, %bb.e ] ; 2 uses
-  %.162.us = phi i64 [ %i.ad, %bb.g ], [ %.06180.us, %bb.e ]
-  %6 = add nsw i64 %.162.us, 1                    ; 2 uses
-  %i.ae = icmp slt i64 %6, %i.g
+bb.h:                                             ; preds = %._crit_edge98, %bb.g
+  %.164.us.a = phi i64 [ %.pre, %._crit_edge98 ], [ %i.ad, %bb.g ] ; 2 uses
+  %.168.us = phi i32 [ %.06777.us, %._crit_edge98 ], [ %i.ac, %bb.g ] ; 2 uses
+  %.164.us = phi i64 [ %.06379.us, %._crit_edge98 ], [ %i.ad, %bb.g ] ; 2 uses
+  %i.ae = icmp slt i64 %.164.us.a, %i.g
   br i1 %i.ae, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !38
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.m
@@ -314,7 +317,7 @@ bb.m:                                             ; preds = %bb.j, %bb.l
 
 ._crit_edge:                                      ; preds = %bb.m, %bb.h, %.preheader
   %.067.lcssa = phi i32 [ 0, %.preheader ], [ %.168.us, %bb.h ], [ %.168, %bb.m ] ; 3 uses
-  %.063.lcssa = phi i64 [ 0, %.preheader ], [ %.164.us.a, %bb.h ], [ %.164, %bb.m ] ; 2 uses
+  %.063.lcssa = phi i64 [ 0, %.preheader ], [ %.164.us, %bb.h ], [ %.164, %bb.m ] ; 2 uses
   %.060.lcssa = phi ptr [ %i.c, %.preheader ], [ %.2.us, %bb.h ], [ %.2, %bb.m ] ; 3 uses
   %i.az = getelementptr inbounds i8, ptr %0, i64 %.063.lcssa
   %i.ba = sub nsw i64 %1, %.063.lcssa

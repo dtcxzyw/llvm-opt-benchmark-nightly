@@ -204,7 +204,7 @@ bb.a:
   %i.c = load i8, ptr %i.b, align 1, !tbaa !95
   %.fr = freeze i8 %i.c
   %i.d = lshr i8 %.fr, 3                          ; 4 uses
-  %i.e = zext nneg i8 %i.d to i64                 ; 13 uses
+  %i.e = zext nneg i8 %i.d to i64                 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
   call void @_ZNK11OpenImageIO4v3_113softimage_pvt13ChannelPacket8channelsEv(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.25") align 8 %3, ptr noundef nonnull align 1 dereferenceable(4) %1)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 284 ; 4 uses
@@ -215,7 +215,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 6 uses
   %.not46 = icmp eq ptr %2, null
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 3 uses
   br i1 %.not46, label %.lr.ph.split.us, label %.lr.ph.split
 
@@ -404,20 +404,14 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not, label %bb.f, label %.critedge
 
 bb.f:                                             ; preds = %.lr.ph.split.split
-  %4 = load ptr, ptr %i.j, align 8, !tbaa !82
   %i.cx = load ptr, ptr %3, align 8, !tbaa !85    ; 2 uses
-  %5 = ptrtoint ptr %4 to i64
-  %6 = ptrtoint ptr %i.cx to i64                  ; 2 uses
-  %7 = sub i64 %5, %6
-  %8 = ashr exact i64 %7, 2
-  %9 = mul nuw nsw i64 %8, %i.e                   ; 3 uses
-  %i.cy = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %9) #32
+  %i.cy = invoke noalias noundef nonnull ptr @_Znam(i64 noundef 0) #32
           to label %bb.g unwind label %.split     ; 2 uses
 
 bb.g:                                             ; preds = %bb.f
   %i.cz = load ptr, ptr %i.i, align 8, !tbaa !13
-  %i.da = call i64 @fread(ptr noundef nonnull %i.cy, i64 noundef %9, i64 noundef 1, ptr noundef %i.cz)
-  %.not48 = icmp eq i64 %i.da, %9
+  %i.da = call i64 @fread(ptr noundef nonnull %i.cy, i64 noundef 0, i64 noundef 1, ptr noundef %i.cz)
+  %.not48 = icmp eq i64 %i.da, 0
   br i1 %.not48, label %.preheader52, label %.critedge
 
 .preheader52:                                     ; preds = %bb.g
@@ -433,11 +427,12 @@ bb.g:                                             ; preds = %bb.f
 .split:                                           ; preds = %bb.f
   %i.dg = landingpad { ptr, i32 }
           cleanup
+  %4 = ptrtoint ptr %i.cx to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %.split.us, %.split
   %.us-phi79 = phi ptr [ %i.cx, %.split ], [ %i.af, %.split.us ] ; 2 uses
-  %.us-phi80 = phi i64 [ %6, %.split ], [ %i.ah, %.split.us ]
+  %.us-phi80 = phi i64 [ %4, %.split ], [ %i.ah, %.split.us ]
   %.us-phi81 = phi { ptr, i32 } [ %i.dg, %.split ], [ %i.cu, %.split.us ]
   %.not.i.i.i = icmp eq ptr %.us-phi79, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.i

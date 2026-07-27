@@ -204,23 +204,36 @@ bb.bq:                                            ; preds = %bb.bp
   %i.mx = load i8, ptr %i.mw, align 8, !tbaa !318
   %i.my = and i8 %i.mx, 4
   %.not269 = icmp eq i8 %i.my, 0
-  br i1 %.not269, label %bb.bt, label %bb.br
+  br i1 %.not269, label %bb.bt, label %10
 
-bb.br:                                            ; preds = %bb.bq
-  %10 = icmp eq i8 %i.mp, 0
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 128
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.mt
-  %13 = load i64, ptr %12, align 8, !tbaa !25
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %15 = load i64, ptr %14, align 8, !tbaa !25
-  %16 = and i64 %15, %13                          ; 2 uses
-  %17 = shl i64 %16, 8
-  %18 = lshr i64 %16, 8
-  %19 = select i1 %10, i64 %17, i64 %18
+10:                                               ; preds = %bb.bq
+  %11 = icmp eq i8 %i.mp, 0
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 2 uses
+  br i1 %11, label %13, label %19
+
+13:                                               ; preds = %10
+  %14 = load i64, ptr %12, align 8, !tbaa !25
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %16 = load i64, ptr %15, align 8, !tbaa !25
+  %17 = and i64 %16, %14
+  %18 = shl i64 %17, 8
+  br label %bb.br
+
+19:                                               ; preds = %10
+  %20 = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %i.mt
+  %21 = load i64, ptr %20, align 8, !tbaa !25
+  %22 = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %23 = load i64, ptr %22, align 8, !tbaa !25
+  %24 = and i64 %23, %21
+  %25 = lshr i64 %24, 8
+  br label %bb.br
+
+bb.br:                                            ; preds = %19, %13
+  %26 = phi i64 [ %18, %13 ], [ %25, %19 ]
   %i.mz = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.na = load i64, ptr %i.mz, align 8, !tbaa !25
   %i.nb = xor i64 %i.na, -1
-  %i.nc = and i64 %19, %i.nb
+  %i.nc = and i64 %26, %i.nb
   %.not160 = icmp eq i64 %i.nc, 0
   br i1 %.not160, label %bb.bs, label %bb.bt
 
@@ -623,23 +636,36 @@ bb.bo:                                            ; preds = %bb.bn
   %i.mz = load i8, ptr %i.my, align 8, !tbaa !318
   %i.na = and i8 %i.mz, 4
   %.not269 = icmp eq i8 %i.na, 0
-  br i1 %.not269, label %bb.br, label %bb.bp
+  br i1 %.not269, label %bb.br, label %9
 
-bb.bp:                                            ; preds = %bb.bo
-  %9 = icmp eq i8 %i.mr, 0
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 128
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.mv
-  %12 = load i64, ptr %11, align 8, !tbaa !25
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %14 = load i64, ptr %13, align 8, !tbaa !25
-  %15 = and i64 %14, %12                          ; 2 uses
-  %16 = shl i64 %15, 8
-  %17 = lshr i64 %15, 8
-  %18 = select i1 %9, i64 %16, i64 %17
+9:                                                ; preds = %bb.bo
+  %10 = icmp eq i8 %i.mr, 0
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 2 uses
+  br i1 %10, label %12, label %18
+
+12:                                               ; preds = %9
+  %13 = load i64, ptr %11, align 8, !tbaa !25
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %15 = load i64, ptr %14, align 8, !tbaa !25
+  %16 = and i64 %15, %13
+  %17 = shl i64 %16, 8
+  br label %bb.bp
+
+18:                                               ; preds = %9
+  %19 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.mv
+  %20 = load i64, ptr %19, align 8, !tbaa !25
+  %21 = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %22 = load i64, ptr %21, align 8, !tbaa !25
+  %23 = and i64 %22, %20
+  %24 = lshr i64 %23, 8
+  br label %bb.bp
+
+bb.bp:                                            ; preds = %18, %12
+  %25 = phi i64 [ %17, %12 ], [ %24, %18 ]
   %i.nb = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.nc = load i64, ptr %i.nb, align 8, !tbaa !25
   %i.nd = xor i64 %i.nc, -1
-  %i.ne = and i64 %18, %i.nd
+  %i.ne = and i64 %25, %i.nd
   %.not158 = icmp eq i64 %i.ne, 0
   br i1 %.not158, label %bb.bq, label %bb.br
 

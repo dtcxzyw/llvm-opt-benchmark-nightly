@@ -204,7 +204,7 @@ _ZNK5boost9container8flat_mapIiiSt4lessIiEvE3endEv.exit:
   %i.b = ptrtoaddr ptr %i.a to i64
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !66, !noalias !1341 ; 2 uses
-  %.idx34 = shl nsw i64 %i.d, 3                   ; 6 uses
+  %.idx34 = shl nsw i64 %i.d, 3                   ; 5 uses
   %i.e = getelementptr inbounds i8, ptr %i.a, i64 %.idx34
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.f = icmp ugt i64 %.idx34, 9223372036854775800
@@ -219,13 +219,7 @@ bb.a:                                             ; preds = %_ZNK5boost9containe
 
 _ZNSt6vectorISt4pairIiiESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i: ; preds = %_ZNK5boost9container8flat_mapIiiSt4lessIiEvE3endEv.exit
   %.not.i.i.i = icmp eq i64 %i.d, 0
-  br i1 %.not.i.i.i, label %_ZNSt12_Vector_baseISt4pairIiiESaIS1_EE11_M_allocateEm.exit.i.thread.i, label %_ZNSt15__new_allocatorISt4pairIiiEE8allocateEmPKv.exit.i.i.i
-
-_ZNSt12_Vector_baseISt4pairIiiESaIS1_EE11_M_allocateEm.exit.i.thread.i: ; preds = %_ZNSt6vectorISt4pairIiiESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i
-  %3 = getelementptr inbounds nuw i8, ptr null, i64 %.idx34
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %3, ptr %4, align 8, !tbaa !1320
-  br label %.loopexit35
+  br i1 %.not.i.i.i, label %.loopexit35, label %_ZNSt15__new_allocatorISt4pairIiiEE8allocateEmPKv.exit.i.i.i
 
 _ZNSt15__new_allocatorISt4pairIiiEE8allocateEmPKv.exit.i.i.i: ; preds = %_ZNSt6vectorISt4pairIiiESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i
   %i.g = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx34) #52
@@ -343,8 +337,8 @@ bb.c:                                             ; preds = %bb.b
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ai, i64 noundef %i.an) #50
   br label %.body
 
-.loopexit35:                                      ; preds = %.lr.ph.i.i.i.i.i.i, %middle.block, %vec.epilog.middle.block, %_ZNSt12_Vector_baseISt4pairIiiESaIS1_EE11_M_allocateEm.exit.i.thread.i
-  %.0.lcssa.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseISt4pairIiiESaIS1_EE11_M_allocateEm.exit.i.thread.i ], [ %i.ab, %vec.epilog.middle.block ], [ %i.q, %middle.block ], [ %i.ag, %.lr.ph.i.i.i.i.i.i ]
+.loopexit35:                                      ; preds = %.lr.ph.i.i.i.i.i.i, %middle.block, %vec.epilog.middle.block, %_ZNSt6vectorISt4pairIiiESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i
+  %.0.lcssa.i.i.i.i.i.i = phi ptr [ null, %_ZNSt6vectorISt4pairIiiESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i ], [ %i.ab, %vec.epilog.middle.block ], [ %i.q, %middle.block ], [ %i.ag, %.lr.ph.i.i.i.i.i.i ]
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store ptr %.0.lcssa.i.i.i.i.i.i, ptr %i.ao, align 8, !tbaa !1291
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses

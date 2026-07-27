@@ -204,18 +204,16 @@ int_neg_p.exit.thread:                            ; preds = %rbimpl_RB_TYPE_P_fa
   br i1 %.not.i.i.not, label %.thread51, label %rb_int_minus.exit
 
 bb.g:                                             ; preds = %int_neg_p.exit
-  %2 = ashr i64 %0, 1                             ; 2 uses
-  %3 = sub nsw i64 0, %2                          ; 2 uses
-  %.not.i.i33 = icmp eq i64 %2, -4611686018427387904
+  %.not.i.i33 = icmp samesign ult i64 %0, -9223372036854775806
   br i1 %.not.i.i33, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %4 = shl nuw nsw i64 %3, 1
-  %5 = or disjoint i64 %4, 1
+  %2 = and i64 %0, -2
+  %3 = sub nsw i64 1, %2
   br label %rb_int_uminus.exit
 
 bb.i:                                             ; preds = %bb.g
-  %i.af = tail call i64 @rb_int2big(i64 noundef %3) #25
+  %i.af = tail call i64 @rb_int2big(i64 noundef 4611686018427387904) #25
   br label %rb_int_uminus.exit
 
 .thread51:                                        ; preds = %int_neg_p.exit.thread
@@ -223,7 +221,7 @@ bb.i:                                             ; preds = %bb.g
   br label %rb_int_uminus.exit
 
 rb_int_uminus.exit:                               ; preds = %bb.h, %bb.i, %.thread51
-  %.0.i32 = phi i64 [ %i.ag, %.thread51 ], [ %5, %bb.h ], [ %i.af, %bb.i ] ; 7 uses
+  %.0.i32 = phi i64 [ %i.ag, %.thread51 ], [ %3, %bb.h ], [ %i.af, %bb.i ] ; 7 uses
   %i.ah = trunc i64 %.0.i32 to i1
   br i1 %i.ah, label %bb.j, label %bb.k
 
@@ -340,7 +338,7 @@ bb.s:                                             ; preds = %rbimpl_RB_TYPE_P_fa
 
 rb_int_div.exit:                                  ; preds = %bb.r, %bb.q, %rbimpl_RB_TYPE_P_fastpath.exit.i40, %bb.s
   %.0.i41 = phi i64 [ %i.bp, %bb.q ], [ %i.by, %bb.s ], [ 4, %rbimpl_RB_TYPE_P_fastpath.exit.i40 ], [ 4, %bb.r ]
-  %i.bz = call i64 @rb_int_mul(i64 noundef %.0.i41, i64 noundef %.fr) ; 4 uses
+  %i.bz = call i64 @rb_int_mul(i64 noundef %.0.i41, i64 noundef %.fr) ; 5 uses
   br i1 %.not50, label %rb_long2num_inline.exit, label %bb.t
 
 bb.t:                                             ; preds = %rb_int_div.exit
@@ -348,18 +346,16 @@ bb.t:                                             ; preds = %rb_int_div.exit
   br i1 %i.ca, label %bb.u, label %bb.x
 
 bb.u:                                             ; preds = %bb.t
-  %6 = ashr i64 %i.bz, 1                          ; 2 uses
-  %7 = sub nsw i64 0, %6                          ; 2 uses
-  %.not.i.i43 = icmp eq i64 %6, -4611686018427387904
+  %.not.i.i43 = icmp slt i64 %i.bz, -9223372036854775806
   br i1 %.not.i.i43, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %8 = shl nsw i64 %7, 1
-  %9 = or disjoint i64 %8, 1
+  %4 = and i64 %i.bz, -2
+  %5 = sub i64 1, %4
   br label %rb_long2num_inline.exit
 
 bb.w:                                             ; preds = %bb.u
-  %i.cb = call i64 @rb_int2big(i64 noundef %7) #25
+  %i.cb = call i64 @rb_int2big(i64 noundef 4611686018427387904) #25
   br label %rb_long2num_inline.exit
 
 bb.x:                                             ; preds = %bb.t
@@ -367,7 +363,7 @@ bb.x:                                             ; preds = %bb.t
   br label %rb_long2num_inline.exit
 
 rb_long2num_inline.exit:                          ; preds = %bb.x, %bb.w, %bb.v, %bb.e, %bb.d, %rb_int_div.exit
-  %.0 = phi i64 [ %i.bz, %rb_int_div.exit ], [ %i.u, %bb.e ], [ %i.t, %bb.d ], [ %i.cc, %bb.x ], [ %9, %bb.v ], [ %i.cb, %bb.w ]
+  %.0 = phi i64 [ %i.bz, %rb_int_div.exit ], [ %i.u, %bb.e ], [ %i.t, %bb.d ], [ %i.cc, %bb.x ], [ %5, %bb.v ], [ %i.cb, %bb.w ]
   ret i64 %.0
 }
 
@@ -651,18 +647,16 @@ int_neg_p.exit.thread:                            ; preds = %rbimpl_RB_TYPE_P_fa
   br i1 %.not.i.i.not, label %.thread55, label %bb.j
 
 bb.g:                                             ; preds = %int_neg_p.exit
-  %2 = ashr i64 %0, 1                             ; 2 uses
-  %3 = sub nsw i64 0, %2                          ; 2 uses
-  %.not.i.i35 = icmp eq i64 %2, -4611686018427387904
+  %.not.i.i35 = icmp samesign ult i64 %0, -9223372036854775806
   br i1 %.not.i.i35, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %4 = shl nuw nsw i64 %3, 1
-  %5 = or disjoint i64 %4, 1
+  %2 = and i64 %0, -2
+  %3 = sub nsw i64 1, %2
   br label %rb_int_uminus.exit
 
 bb.i:                                             ; preds = %bb.g
-  %i.ag = tail call i64 @rb_int2big(i64 noundef %3) #25
+  %i.ag = tail call i64 @rb_int2big(i64 noundef 4611686018427387904) #25
   br label %rb_int_uminus.exit
 
 .thread55:                                        ; preds = %int_neg_p.exit.thread
@@ -756,7 +750,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.thread.i40:        ; preds = %rbimpl_RB_TYPE_P_fa
 
 rb_int_uminus.exit:                               ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.thread.i40, %bb.o, %bb.n, %.thread55, %bb.i, %bb.h
   %.not52 = phi i1 [ false, %bb.i ], [ false, %.thread55 ], [ false, %bb.h ], [ true, %bb.n ], [ true, %bb.o ], [ true, %rbimpl_RB_TYPE_P_fastpath.exit.thread.i40 ]
-  %.028 = phi i64 [ %i.ag, %bb.i ], [ %i.ah, %.thread55 ], [ %5, %bb.h ], [ %i.ba, %bb.n ], [ %i.bg, %bb.o ], [ %i.bj, %rbimpl_RB_TYPE_P_fastpath.exit.thread.i40 ] ; 6 uses
+  %.028 = phi i64 [ %i.ag, %bb.i ], [ %i.ah, %.thread55 ], [ %3, %bb.h ], [ %i.ba, %bb.n ], [ %i.bg, %bb.o ], [ %i.bj, %rbimpl_RB_TYPE_P_fastpath.exit.thread.i40 ] ; 6 uses
   %i.bk = trunc i64 %.028 to i1
   br i1 %i.bk, label %bb.p, label %bb.q
 
@@ -784,7 +778,7 @@ bb.r:                                             ; preds = %rbimpl_RB_TYPE_P_fa
 
 rb_int_div.exit:                                  ; preds = %bb.p, %bb.q, %rbimpl_RB_TYPE_P_fastpath.exit.i42, %bb.r
   %.0.i44 = phi i64 [ %i.bl, %bb.p ], [ %i.bu, %bb.r ], [ 4, %rbimpl_RB_TYPE_P_fastpath.exit.i42 ], [ 4, %bb.q ]
-  %i.bv = call i64 @rb_int_mul(i64 noundef %.0.i44, i64 noundef %i.g) ; 4 uses
+  %i.bv = call i64 @rb_int_mul(i64 noundef %.0.i44, i64 noundef %i.g) ; 5 uses
   br i1 %.not52, label %rb_long2num_inline.exit, label %bb.s
 
 bb.s:                                             ; preds = %rb_int_div.exit
@@ -792,18 +786,16 @@ bb.s:                                             ; preds = %rb_int_div.exit
   br i1 %i.bw, label %bb.t, label %bb.w
 
 bb.t:                                             ; preds = %bb.s
-  %6 = ashr i64 %i.bv, 1                          ; 2 uses
-  %7 = sub nsw i64 0, %6                          ; 2 uses
-  %.not.i.i46 = icmp eq i64 %6, -4611686018427387904
+  %.not.i.i46 = icmp slt i64 %i.bv, -9223372036854775806
   br i1 %.not.i.i46, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %8 = shl nsw i64 %7, 1
-  %9 = or disjoint i64 %8, 1
+  %4 = and i64 %i.bv, -2
+  %5 = sub i64 1, %4
   br label %rb_long2num_inline.exit
 
 bb.v:                                             ; preds = %bb.t
-  %i.bx = call i64 @rb_int2big(i64 noundef %7) #25
+  %i.bx = call i64 @rb_int2big(i64 noundef 4611686018427387904) #25
   br label %rb_long2num_inline.exit
 
 bb.w:                                             ; preds = %bb.s
@@ -811,7 +803,7 @@ bb.w:                                             ; preds = %bb.s
   br label %rb_long2num_inline.exit
 
 rb_long2num_inline.exit:                          ; preds = %bb.w, %bb.v, %bb.u, %bb.e, %bb.d, %rb_int_div.exit
-  %.0 = phi i64 [ %i.bv, %rb_int_div.exit ], [ %i.v, %bb.e ], [ %i.u, %bb.d ], [ %i.by, %bb.w ], [ %9, %bb.u ], [ %i.bx, %bb.v ]
+  %.0 = phi i64 [ %i.bv, %rb_int_div.exit ], [ %i.v, %bb.e ], [ %i.u, %bb.d ], [ %i.by, %bb.w ], [ %5, %bb.u ], [ %i.bx, %bb.v ]
   ret i64 %.0
 }
 
@@ -1214,18 +1206,17 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %1 = ashr i64 %0, 1                             ; 2 uses
-  %2 = sub nsw i64 0, %1                          ; 2 uses
-  %.not.i = icmp eq i64 %1, -4611686018427387904
+  %.not.i = icmp slt i64 %0, -9223372036854775806
   br i1 %.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = shl nsw i64 %2, 1
-  %i.b = or disjoint i64 %3, 1
+  %1 = and i64 %0, -2
+  %2 = sub i64 0, %1
+  %i.b = or disjoint i64 %2, 1
   br label %fix_uminus.exit
 
 bb.d:                                             ; preds = %bb.b
-  %i.c = tail call i64 @rb_int2big(i64 noundef %2) #25
+  %i.c = tail call i64 @rb_int2big(i64 noundef 4611686018427387904) #25
   br label %fix_uminus.exit
 
 bb.e:                                             ; preds = %bb.a
@@ -1628,7 +1619,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %bb.m
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = ashr i64 %1, 1                           ; 5 uses
+  %i.f = ashr i64 %1, 1                           ; 4 uses
   switch i64 %i.d, label %bb.e [
     i64 1, label %fix_pow.exit
     i64 -1, label %bb.d
@@ -1645,17 +1636,17 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.j, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %bb.e
-  %2 = sub nsw i64 0, %i.f                        ; 2 uses
   %.not.i13 = icmp eq i64 %i.f, -4611686018427387904
   br i1 %.not.i13, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %3 = shl nuw nsw i64 %2, 1
+  %2 = and i64 %1, -2
+  %3 = sub i64 0, %2
   %i.k = or disjoint i64 %3, 1
   br label %fix_uminus.exit
 
 bb.h:                                             ; preds = %bb.f
-  %i.l = tail call i64 @rb_int2big(i64 noundef %2) #25
+  %i.l = tail call i64 @rb_int2big(i64 noundef 4611686018427387904) #25
   br label %fix_uminus.exit
 
 fix_uminus.exit:                                  ; preds = %bb.g, %bb.h
@@ -2058,18 +2049,16 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %2 = ashr i64 %1, 1                             ; 2 uses
-  %3 = sub nsw i64 0, %2                          ; 2 uses
-  %.not.i.i = icmp eq i64 %2, -4611686018427387904
+  %.not.i.i = icmp slt i64 %1, -9223372036854775806
   br i1 %.not.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = shl nsw i64 %3, 1
-  %5 = or disjoint i64 %4, 1
+  %2 = and i64 %1, -2
+  %3 = sub i64 1, %2
   br label %rb_int_uminus.exit
 
 bb.d:                                             ; preds = %bb.b
-  %i.b = tail call i64 @rb_int2big(i64 noundef %3) #25
+  %i.b = tail call i64 @rb_int2big(i64 noundef 4611686018427387904) #25
   br label %rb_int_uminus.exit
 
 bb.e:                                             ; preds = %bb.a
@@ -2077,7 +2066,7 @@ bb.e:                                             ; preds = %bb.a
   br label %rb_int_uminus.exit
 
 rb_int_uminus.exit:                               ; preds = %bb.c, %bb.d, %bb.e
-  %.0.i = phi i64 [ %i.c, %bb.e ], [ %5, %bb.c ], [ %i.b, %bb.d ]
+  %.0.i = phi i64 [ %i.c, %bb.e ], [ %3, %bb.c ], [ %i.b, %bb.d ]
   ret i64 %.0.i
 }
 

@@ -204,7 +204,7 @@ bb.a:
   %19 = alloca %"struct.duckdb::LogicalType", align 8 ; 7 uses
   %20 = alloca %"struct.duckdb::LogicalType", align 8 ; 7 uses
   %21 = alloca %"struct.duckdb::LogicalType", align 8 ; 7 uses
-  %i.a = zext i1 %4 to i8                         ; 7 uses
+  %i.a = zext i1 %4 to i8                         ; 4 uses
   %i.b = load ptr, ptr %3, align 8, !tbaa !644    ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !644  ; 2 uses
@@ -607,7 +607,7 @@ bb.cq:                                            ; preds = %bb.cp
 
 _ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_118ConcatFunctionDataESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.cq
   %i.go = getelementptr inbounds nuw i8, ptr %i.gl, i64 32
-  store i8 %i.a, ptr %i.go, align 8, !tbaa !186, !noalias !2156
+  store i8 1, ptr %i.go, align 8, !tbaa !186, !noalias !2156
   store ptr %i.gl, ptr %0, align 8, !tbaa !333
   br label %bb.dc
 
@@ -651,7 +651,7 @@ bb.cu:                                            ; preds = %bb.ct
 
 _ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_118ConcatFunctionDataESt14default_deleteIS2_EED2Ev.exit43: ; preds = %bb.cu
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gt, i64 32
-  store i8 %i.a, ptr %i.gw, align 8, !tbaa !186, !noalias !2159
+  store i8 0, ptr %i.gw, align 8, !tbaa !186, !noalias !2159
   store ptr %i.gt, ptr %0, align 8, !tbaa !333
   br label %bb.dc
 
@@ -687,7 +687,7 @@ bb.cx:                                            ; preds = %bb.cw
 
 _ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_118ConcatFunctionDataESt14default_deleteIS2_EED2Ev.exit48: ; preds = %bb.cx
   %i.hc = getelementptr inbounds nuw i8, ptr %i.gz, i64 32
-  store i8 %i.a, ptr %i.hc, align 8, !tbaa !186, !noalias !2162
+  store i8 0, ptr %i.hc, align 8, !tbaa !186, !noalias !2162
   store ptr %i.gz, ptr %0, align 8, !tbaa !333
   br label %bb.dc
 

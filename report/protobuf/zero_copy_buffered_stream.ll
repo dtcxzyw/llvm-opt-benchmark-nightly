@@ -201,7 +201,7 @@ _ZNSt6vectorIcSaIcEE5clearEv.exit.i.i47:          ; preds = %_ZSt8_DestroyIPccEv
 
 bb.al:                                            ; preds = %bb.e
   %i.ef = load i32, ptr %i.g, align 4, !tbaa !34  ; 4 uses
-  %i.eg = add nsw i32 %i.ef, 1                    ; 4 uses
+  %i.eg = add nsw i32 %i.ef, 1                    ; 3 uses
   store i32 %i.eg, ptr %i.g, align 4, !tbaa !34
   %i.eh = icmp eq i32 %i.ef, 0
   br i1 %i.eh, label %.thread74, label %bb.am
@@ -211,7 +211,7 @@ bb.al:                                            ; preds = %bb.e
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %1, ptr %i.ei, align 8, !tbaa !43
   store i64 1, ptr %0, align 8, !tbaa !27
-  store i32 %i.eg, ptr %i.g, align 4, !tbaa !34
+  store i32 1, ptr %i.g, align 4, !tbaa !34
   br label %_ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit60
 
 bb.am:                                            ; preds = %bb.al

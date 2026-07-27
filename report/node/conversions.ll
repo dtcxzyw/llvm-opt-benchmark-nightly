@@ -203,21 +203,19 @@ _ZN10fast_float6bigint9shl_limbsEm.exit.thread.i.i.i: ; preds = %bb.h, %bb.g
 _ZN10fast_float6bigint5pow10Ej.exit:              ; preds = %bb.e, %_ZN10fast_float6bigint8shl_bitsEm.exit.thread.i.i.i, %_ZN10fast_float6bigint9shl_limbsEm.exit.thread.i.i.i, %bb.a, %_ZN10fast_float6bigint8shl_bitsEm.exit.i.i.i
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 496
   %i.aj = load i16, ptr %i.ai, align 8            ; 4 uses
-  %2 = zext i16 %i.aj to i64                      ; 5 uses
   switch i16 %i.aj, label %bb.j [
     i16 0, label %_ZNK10fast_float6bigint10bit_lengthEv.exit
     i16 1, label %bb.i
   ]
 
 bb.i:                                             ; preds = %_ZN10fast_float6bigint5pow10Ej.exit
-  %3 = getelementptr i8, ptr %0, i64 -8
-  %4 = getelementptr [8 x i8], ptr %3, i64 %2
-  %i.ak = load i64, ptr %4, align 8               ; 2 uses
+  %i.ak = load i64, ptr %0, align 8               ; 2 uses
   %i.al = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.ak, i1 true) ; 2 uses
   %i.am = shl i64 %i.ak, %i.al
   br label %_ZNK10fast_float6bigint4hi64ERb.exit.thread
 
 bb.j:                                             ; preds = %_ZN10fast_float6bigint5pow10Ej.exit
+  %2 = zext i16 %i.aj to i64                      ; 4 uses
   %i.an = getelementptr i8, ptr %0, i64 -8
   %i.ao = getelementptr [8 x i8], ptr %i.an, i64 %2
   %i.ap = load i64, ptr %i.ao, align 8            ; 3 uses

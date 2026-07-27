@@ -205,7 +205,7 @@ bb.cq:                                            ; preds = %bb.co, %bb.cm, %.th
   %i.mt = load i16, ptr %i.ms, align 4, !tbaa !1094
   %i.mu = and i32 %2, 2                           ; 2 uses
   %.not202 = icmp eq i32 %i.mu, 0
-  %.lobit = lshr exact i32 %i.mu, 1               ; 2 uses
+  %.lobit = lshr exact i32 %i.mu, 1
   br i1 %.not, label %bb.cs, label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq
@@ -240,13 +240,12 @@ bb.cw:                                            ; preds = %bb.cv
   %i.nc = load ptr, ptr %i.nb, align 8, !tbaa !229
   %i.nd = getelementptr inbounds nuw i8, ptr %i.nc, i64 4
   %i.ne = load i32, ptr %i.nd, align 4, !tbaa !390
-  %7 = and i32 %i.ne, 32
-  %.not205 = icmp eq i32 %7, 0
-  %spec.select207 = select i1 %.not205, i32 %.lobit, i32 1
+  %7 = lshr i32 %i.ne, 5
+  %.lobit387 = and i32 %7, 1
   br label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw, %bb.cv, %bb.cu
-  %.0164 = phi i32 [ %.lobit, %bb.cu ], [ 0, %bb.cv ], [ %spec.select207, %bb.cw ]
+  %.0164 = phi i32 [ %.lobit, %bb.cu ], [ 0, %bb.cv ], [ %.lobit387, %bb.cw ]
   call fastcc void @sqlite3CodeRhsOfIN(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %i.p, i32 noundef %.0164)
   %.not206 = icmp eq i32 %.0165, 0
   br i1 %.not206, label %bb.cz, label %bb.cy
@@ -649,8 +648,6 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.l
 
 bb.b:                                             ; preds = %bb.a
-  %4 = getelementptr inbounds nuw [8 x i8], ptr @__const.fts3SqlStmt.azSql, i64 %i.c
-  %5 = load ptr, ptr %4, align 8, !tbaa !253      ; 3 uses
   switch i32 %1, label %bb.e [
     i32 18, label %bb.c
     i32 7, label %bb.d
@@ -663,16 +660,18 @@ bb.c:                                             ; preds = %bb.b
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !5306
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 448
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !5400
-  %i.l = tail call ptr (ptr, ...) @sqlite3_mprintf(ptr noundef %5, ptr noundef %i.g, ptr noundef %i.i, ptr noundef %i.k)
+  %i.l = tail call ptr (ptr, ...) @sqlite3_mprintf(ptr noundef nonnull @.str.1433, ptr noundef %i.g, ptr noundef %i.i, ptr noundef %i.k)
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 440
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !5401
-  %i.o = tail call ptr (ptr, ...) @sqlite3_mprintf(ptr noundef %5, ptr noundef %i.n)
+  %i.o = tail call ptr (ptr, ...) @sqlite3_mprintf(ptr noundef nonnull @.str.1422, ptr noundef %i.n)
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.b
+  %4 = getelementptr inbounds nuw [8 x i8], ptr @__const.fts3SqlStmt.azSql, i64 %i.c
+  %5 = load ptr, ptr %4, align 8, !tbaa !253
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !5303
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 40

@@ -203,13 +203,13 @@ bb.a:
   %.0.copyload.i.fr = freeze i64 %.0.copyload.i   ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i.fr) #7, !srcloc !20
   %i.d = lshr i64 %.0.copyload.i.fr, 32           ; 2 uses
-  %i.e = trunc nuw i64 %i.d to i32                ; 3 uses
+  %i.e = trunc nuw i64 %i.d to i32                ; 2 uses
   %i.f = trunc i64 %.0.copyload.i.fr to i32
   %.not53 = icmp eq i64 %i.d, 0
   br i1 %.not53, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.a, %bb.d
-  %indvars.iv64 = phi i64 [ %indvars.iv.next65, %bb.d ], [ 0, %bb.a ] ; 3 uses
+  %indvars.iv64 = phi i64 [ %indvars.iv.next65, %bb.d ], [ 0, %bb.a ] ; 4 uses
   %i.g = shl nuw nsw i64 %indvars.iv64, 2
   %.val.us = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.h = getelementptr inbounds nuw i8, ptr %.val.us, i64 %i.g
@@ -217,15 +217,15 @@ bb.a:
   %.0.copyload.i57.us = load i32, ptr %i.i, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i57.us) #7, !srcloc !19
   %.not.us = icmp eq i32 %.0.copyload.i57.us, 0
-  br i1 %.not.us, label %bb.c, label %bb.b
+  br i1 %.not.us, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.split.us
-  %2 = tail call i32 @w2c_hermes_strlen(ptr noundef nonnull %0, i32 noundef %.0.copyload.i57.us) #7
-  br label %bb.c
+  %2 = trunc nuw nsw i64 %indvars.iv64 to i32
+  br label %.split59.us
 
-bb.c:                                             ; preds = %bb.b, %.split.us
-  %.048.us = phi i32 [ %2, %bb.b ], [ 0, %.split.us ]
-  %.not52.us = icmp eq i32 %.048.us, %i.e
+bb.c:                                             ; preds = %.split.us
+  %3 = tail call i32 @w2c_hermes_strlen(ptr noundef nonnull %0, i32 noundef %.0.copyload.i57.us) #7
+  %.not52.us = icmp eq i32 %3, 0
   br i1 %.not52.us, label %.split59.us.loopexit.split.loop.exit72, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -267,8 +267,8 @@ bb.f:                                             ; preds = %bb.e
   %i.q = trunc nuw nsw i64 %indvars.iv to i32
   br label %.split59.us
 
-.split59.us:                                      ; preds = %.thread, %bb.d, %.split59.us.loopexit68.split.loop.exit70, %.split59.us.loopexit.split.loop.exit72
-  %.us-phi = phi i32 [ 26, %bb.d ], [ %i.p, %.split59.us.loopexit.split.loop.exit72 ], [ %i.q, %.split59.us.loopexit68.split.loop.exit70 ], [ 26, %.thread ]
+.split59.us:                                      ; preds = %.thread, %bb.d, %.split59.us.loopexit68.split.loop.exit70, %.split59.us.loopexit.split.loop.exit72, %bb.b
+  %.us-phi = phi i32 [ %2, %bb.b ], [ 26, %bb.d ], [ %i.p, %.split59.us.loopexit.split.loop.exit72 ], [ %i.q, %.split59.us.loopexit68.split.loop.exit70 ], [ 26, %.thread ]
   ret i32 %.us-phi
 }
 

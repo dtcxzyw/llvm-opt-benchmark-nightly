@@ -204,7 +204,7 @@ bb.a:
   %i.h = getelementptr i8, ptr %0, i64 32         ; 2 uses
   %i.i = getelementptr [4 x i8], ptr %i.e, i64 %.fr
   %i.j = getelementptr i8, ptr %i.i, i64 -4       ; 2 uses
-  %i.k = xor i64 %.fr, -1                         ; 2 uses
+  %i.k = xor i64 %.fr, -1
   %umax.i = tail call i64 @llvm.umax.i64(i64 %.fr, i64 1)
   %.not.i.i = icmp eq i64 %.fr, 0
   br i1 %.not.i.i, label %.split.us, label %.split.preheader
@@ -224,16 +224,16 @@ bb.a:
   br i1 %.not.us, label %bb.b, label %.split64.us
 
 bb.b:                                             ; preds = %.split.us
-  %i.n = getelementptr [4 x i8], ptr %i.g, i64 %.047.us ; 3 uses
+  %i.n = getelementptr [4 x i8], ptr %i.g, i64 %.047.us ; 2 uses
   %i.o = getelementptr i8, ptr %i.n, i64 -4       ; 2 uses
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !7    ; 3 uses
+  %i.p = load i32, ptr %i.o, align 4, !tbaa !7    ; 2 uses
   %i.q = load i32, ptr %i.j, align 4, !tbaa !7    ; 2 uses
   %i.r = icmp eq i32 %i.p, %i.q
+  %.pre77 = zext i32 %i.p to i64                  ; 3 uses
   br i1 %i.r, label %.thread.us, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %1 = zext i32 %i.p to i64
-  %i.s = shl nuw i64 %1, 32
+  %i.s = shl nuw i64 %.pre77, 32
   %i.t = getelementptr i8, ptr %i.n, i64 -8
   %i.u = load i32, ptr %i.t, align 4, !tbaa !7
   %i.v = zext i32 %i.u to i64
@@ -244,33 +244,29 @@ bb.c:                                             ; preds = %bb.b
   %.not51.us = icmp eq i32 %i.z, 0
   br i1 %.not51.us, label %.loopexit.us, label %.thread.us
 
-.thread.us:                                       ; preds = %bb.c, %bb.b
+.thread.us:                                       ; preds = %bb.b, %bb.c
   %.055.us = phi i32 [ %i.z, %bb.c ], [ -1, %bb.b ] ; 2 uses
-  %2 = getelementptr [4 x i8], ptr %i.n, i64 %i.k ; 2 uses
   %i.aa = zext i32 %.055.us to i64
   %i.ab = load i32, ptr %i.e, align 4, !tbaa !7
   %i.ac = zext i32 %i.ab to i64
   %i.ad = mul nuw i64 %i.ac, %i.aa                ; 2 uses
   %i.ae = and i64 %i.ad, 4294967295               ; 2 uses
-  %3 = load i32, ptr %2, align 4, !tbaa !7
-  %4 = zext i32 %3 to i64
-  %i.af = sub nsw i64 %4, %i.ae                   ; 2 uses
+  %i.af = sub nsw i64 %.pre77, %i.ae              ; 3 uses
   %.not.i.us = icmp eq i64 %i.ae, 0
   br i1 %.not.i.us, label %bigdivrem_mulsub.exit.us, label %bb.d
 
 bb.d:                                             ; preds = %.thread.us
   %i.ag = trunc i64 %i.af to i32
-  store i32 %i.ag, ptr %2, align 4, !tbaa !7
-  %.pre = load i32, ptr %i.o, align 4, !tbaa !7
+  store i32 %i.ag, ptr %i.o, align 4, !tbaa !7
+  %.pre = and i64 %i.af, 4294967295
   br label %bigdivrem_mulsub.exit.us
 
 bigdivrem_mulsub.exit.us:                         ; preds = %bb.d, %.thread.us
-  %5 = phi i32 [ %.pre, %bb.d ], [ %i.p, %.thread.us ]
+  %.pre-phi = phi i64 [ %.pre, %bb.d ], [ %.pre77, %.thread.us ]
   %i.ah = ashr i64 %i.af, 32
   %i.ai = lshr i64 %i.ad, 32
   %i.aj = sub nsw i64 %i.ah, %i.ai
-  %6 = zext i32 %5 to i64
-  %i.ak = sub nsw i64 0, %6
+  %i.ak = sub nsw i64 0, %.pre-phi
   %.not5261.us = icmp eq i64 %i.aj, %i.ak
   br i1 %.not5261.us, label %.loopexit.us, label %bary_add.exit.us
 

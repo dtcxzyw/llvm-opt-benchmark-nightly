@@ -25,6 +25,7 @@ target triple = "x86_64-pc-linux-gnu"
 @clear_opt_map_info.clean_info = internal constant { %struct.MinMaxLen, %struct.OptAncInfo, i32, [256 x i8], [4 x i8] } zeroinitializer, align 8
 @distance_value.dist_vals = internal unnamed_addr constant [100 x i16] [i16 1000, i16 500, i16 333, i16 250, i16 200, i16 167, i16 143, i16 125, i16 111, i16 100, i16 91, i16 83, i16 77, i16 71, i16 67, i16 63, i16 59, i16 56, i16 53, i16 50, i16 48, i16 45, i16 43, i16 42, i16 40, i16 38, i16 37, i16 36, i16 34, i16 33, i16 32, i16 31, i16 30, i16 29, i16 29, i16 28, i16 27, i16 26, i16 26, i16 25, i16 24, i16 24, i16 23, i16 23, i16 22, i16 22, i16 21, i16 21, i16 20, i16 20, i16 20, i16 19, i16 19, i16 19, i16 18, i16 18, i16 18, i16 17, i16 17, i16 17, i16 16, i16 16, i16 16, i16 16, i16 15, i16 15, i16 15, i16 15, i16 14, i16 14, i16 14, i16 14, i16 14, i16 14, i16 13, i16 13, i16 13, i16 13, i16 13, i16 13, i16 12, i16 12, i16 12, i16 12, i16 12, i16 12, i16 11, i16 11, i16 11, i16 11, i16 11, i16 11, i16 11, i16 11, i16 11, i16 10, i16 10, i16 10, i16 10, i16 10], align 16
 @map_position_value.ByteValTable = internal unnamed_addr constant [128 x i16] [i16 5, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 10, i16 10, i16 1, i16 1, i16 10, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 12, i16 4, i16 7, i16 4, i16 4, i16 4, i16 4, i16 4, i16 4, i16 5, i16 5, i16 5, i16 5, i16 5, i16 5, i16 5, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 5, i16 5, i16 5, i16 5, i16 5, i16 5, i16 5, i16 6, i16 6, i16 6, i16 6, i16 7, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 5, i16 6, i16 5, i16 5, i16 5, i16 5, i16 6, i16 6, i16 6, i16 6, i16 7, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 6, i16 5, i16 5, i16 5, i16 5, i16 1], align 16
+@switch.table.compile_length_tree = private unnamed_addr constant [3 x i8] c"\02\08\0C", align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local i32 @onig_get_default_case_fold_flag() local_unnamed_addr #0 {
@@ -427,7 +428,7 @@ bb.ad:                                            ; preds = %bb.aa
 bb.ae:                                            ; preds = %bb.ad
   %i.dd = and i32 %.fr.i, 2                       ; 2 uses
   %.not75.i = icmp eq i32 %i.dd, 0
-  %.lobit.i = lshr exact i32 %i.dd, 1             ; 2 uses
+  %.lobit.i = lshr exact i32 %i.dd, 1
   %i.de = getelementptr i8, ptr %i.da, i64 16     ; 4 uses
   %i.df = load i32, ptr %i.de, align 8, !tbaa !155 ; 2 uses
   %i.dg = getelementptr i8, ptr %i.da, i64 20     ; 4 uses
@@ -512,7 +513,7 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.al
   %i.el = sext i32 %.05563.i to i64
-  tail call fastcc void @add_compile_string(ptr noundef %.05265.i, i32 noundef %.05166.i, i64 noundef %i.el, ptr noundef %1, i32 noundef %.lobit.i)
+  tail call fastcc void @add_compile_string(ptr noundef %.05265.i, i32 noundef %.05166.i, i64 noundef %i.el, ptr noundef %1, i32 noundef 0)
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
@@ -915,7 +916,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ap = phi ptr [ %.pre.i, %bb.i ], [ %i.w, %bb.h ] ; 6 uses
   %i.aq = phi i32 [ %i.ao, %bb.i ], [ %i.ak, %bb.h ] ; 12 uses
-  %i.ar = sext i32 %i.aq to i64                   ; 7 uses
+  %i.ar = sext i32 %i.aq to i64                   ; 5 uses
   %i.as = getelementptr i8, ptr %i.ah, i64 %i.ar  ; 5 uses
   %i.at = icmp ult ptr %i.as, %i.ap
   br i1 %i.at, label %.lr.ph.i, label %._crit_edge.i
@@ -977,51 +978,30 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.split
 .lr.ph.split.split.us.i:                          ; preds = %.lr.ph.split.i
   %i.bq = sext i32 %i.au to i64                   ; 4 uses
   %i.br = icmp eq i32 %i.au, %i.aq
-  br i1 %i.br, label %bb.o, label %2
+  br i1 %i.br, label %bb.o, label %bb.n
 
-2:                                                ; preds = %.lr.ph.split.split.us.i
-  %reass.add = shl nsw i64 %i.ar, 1
-  %3 = add nsw i64 %reass.add, -1
-  %4 = udiv i64 %3, %i.ar                         ; 2 uses
-  switch i32 %i.aq, label %add_compile_string_length.exit.us.i.peel [
-    i32 1, label %bb.n
-    i32 2, label %5
-    i32 3, label %select_str_opcode.exit.thread.i.us.i.peel
-  ]
-
-select_str_opcode.exit.thread.i.us.i.peel:        ; preds = %2
-  br label %add_compile_string_length.exit.us.i.peel
-
-5:                                                ; preds = %2
-  %switch.tableidx9.i.i.us.i.peel = add i64 %4, -1 ; 2 uses
-  %6 = icmp ult i64 %switch.tableidx9.i.i.us.i.peel, 3
-  br i1 %6, label %switch.lookup10.i.i.us.i.peel, label %add_compile_string_length.exit.us.i.peel
-
-switch.lookup10.i.i.us.i.peel:                    ; preds = %5
-  %switch.idx.cast11.i.i.us.i.peel = trunc nuw nsw i64 %switch.tableidx9.i.i.us.i.peel to i32
-  %switch.offset12.i.i.us.i.peel = or disjoint i32 %switch.idx.cast11.i.i.us.i.peel, 8
-  br label %add_compile_string_length.exit.us.i.peel
-
-bb.n:                                             ; preds = %2
-  %switch.tableidx.i.i.us.i.peel = add i64 %4, -1 ; 2 uses
-  %i.bs = icmp ult i64 %switch.tableidx.i.i.us.i.peel, 5
+bb.n:                                             ; preds = %.lr.ph.split.split.us.i
+  %switch.tableidx = add i32 %i.aq, -1            ; 2 uses
+  %i.bs = icmp ult i32 %switch.tableidx, 3
   br i1 %i.bs, label %switch.lookup.i.i.us.i.peel, label %add_compile_string_length.exit.us.i.peel
 
 switch.lookup.i.i.us.i.peel:                      ; preds = %bb.n
-  %switch.idx.cast.i.i.us.i.peel = trunc nuw nsw i64 %switch.tableidx.i.i.us.i.peel to i32
-  %switch.offset.i.i.us.i.peel = add nuw nsw i32 %switch.idx.cast.i.i.us.i.peel, 2
+  %2 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.compile_length_tree, i64 %2
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %add_compile_string_length.exit.us.i.peel
 
-add_compile_string_length.exit.us.i.peel:         ; preds = %switch.lookup.i.i.us.i.peel, %bb.n, %switch.lookup10.i.i.us.i.peel, %5, %select_str_opcode.exit.thread.i.us.i.peel, %2
-  %.0.i3.i.us.i.peel = phi i32 [ 13, %2 ], [ 11, %5 ], [ %switch.offset.i.i.us.i.peel, %switch.lookup.i.i.us.i.peel ], [ 7, %bb.n ], [ %switch.offset12.i.i.us.i.peel, %switch.lookup10.i.i.us.i.peel ], [ 12, %select_str_opcode.exit.thread.i.us.i.peel ] ; 2 uses
-  %7 = phi i32 [ 5, %2 ], [ 1, %5 ], [ 1, %switch.lookup.i.i.us.i.peel ], [ 1, %bb.n ], [ 1, %switch.lookup10.i.i.us.i.peel ], [ 1, %select_str_opcode.exit.thread.i.us.i.peel ] ; 2 uses
+add_compile_string_length.exit.us.i.peel:         ; preds = %switch.lookup.i.i.us.i.peel, %bb.n
+  %.0.i3.i.us.i.peel = phi i32 [ 13, %bb.n ], [ %switch.ext, %switch.lookup.i.i.us.i.peel ] ; 2 uses
+  %3 = phi i32 [ 5, %bb.n ], [ 1, %switch.lookup.i.i.us.i.peel ] ; 2 uses
   %i.bt = add nsw i32 %.0.i3.i.us.i.peel, -11
   %i.bu = icmp ult i32 %i.bt, 3
   %i.bv = and i32 %.0.i3.i.us.i.peel, 7
   %i.bw = icmp eq i32 %i.bv, 7
   %or.cond7.i.us.i.peel = or i1 %i.bw, %i.bu
-  %i.bx = add nuw nsw i32 %7, 4
-  %.1.i.us.i.peel = select i1 %or.cond7.i.us.i.peel, i32 %i.bx, i32 %7
+  %i.bx = add nuw nsw i32 %3, 4
+  %.1.i.us.i.peel = select i1 %or.cond7.i.us.i.peel, i32 %i.bx, i32 %3
   %i.by = add i32 %i.aq, %.1.i.us.i.peel
   br label %bb.p
 

@@ -67,28 +67,25 @@ target triple = "x86_64-unknown-linux-gnu"
 @59 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @58, [16 x i8] c"\\\00\00\00\00\00\00\00D\02\00\00,\00\00\00" }>, align 8
 @60 = private unnamed_addr constant [9 x i8] c"mid > len", align 1
 @61 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00", ptr @_RNvXsK_NtCsbvkFyIu7lgC_4core3fmtNtB5_5ErrorNtB5_5Debug3fmt }>, align 8
-@62 = private unnamed_addr constant [7 x i8] c"socks4a", align 1
-@63 = private unnamed_addr constant [6 x i8] c"socks5", align 1
-@64 = private unnamed_addr constant [7 x i8] c"socks5h", align 1
-@65 = private unnamed_addr constant [10 x i8] c"\07http://\C0\00", align 1
-@66 = private unnamed_addr constant [117 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/http-body-util-0.1.3/src/combinators/collect.rs\00", align 1
-@67 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @66, [16 x i8] c"t\00\00\00\00\00\00\00)\00\00\00#\00\00\00" }>, align 8
-@68 = private unnamed_addr constant [21 x i8] c"polled after complete", align 1
-@69 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @66, [16 x i8] c"t\00\00\00\00\00\00\00&\00\00\00;\00\00\00" }>, align 8
-@70 = private unnamed_addr constant <{ ptr, [16 x i8], ptr, ptr, ptr }> <{ ptr @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsgO8S5jLFugx_23deltalake_catalog_unity, [16 x i8] c"\18\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXsZ_NtCs6Po7BT7Nknu_5alloc6stringNtB5_6StringNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_str, ptr @_RNvXsZ_NtCs6Po7BT7Nknu_5alloc6stringNtB5_6StringNtNtCsbvkFyIu7lgC_4core3fmt5Write10write_char, ptr @_RNvYNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtCsgO8S5jLFugx_23deltalake_catalog_unity }>, align 8
-@71 = private unnamed_addr constant [55 x i8] c"a Display implementation returned an error unexpectedly", align 1
-@72 = private unnamed_addr constant [76 x i8] c"/rustc/1d8897a4e88051480b36c501e66809425c6e08ad/library/alloc/src/string.rs\00", align 1
-@73 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @72, [16 x i8] c"K\00\00\00\00\00\00\00d\0B\00\00\0E\00\00\00" }>, align 8
-@74 = private unnamed_addr constant [5 x i8] c"Error", align 1
-@75 = private unnamed_addr constant [2 x i8] c"..", align 1
-@76 = private unnamed_addr constant [90 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.8/src/lib.rs\00", align 1
-@77 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @76, [16 x i8] c"Y\00\00\00\00\00\00\00O\0B\00\00\0B\00\00\00" }>, align 8
-@78 = private unnamed_addr constant [2 x i8] c"()", align 1
-@79 = private unnamed_addr constant [20 x i8] c"\0Fmissing field `\C0\01`\00", align 1
-@80 = private unnamed_addr constant [31 x i8] c"\0Finvalid length \C0\0B, expected \C0\00", align 1
-@81 = private unnamed_addr constant [22 x i8] c"\11duplicate field `\C0\01`\00", align 1
-@82 = private unnamed_addr constant [45 x i8] c"\11unknown variant `\C0\18`, there are no variants\00", align 1
-@83 = private unnamed_addr constant [34 x i8] c"\11unknown variant `\C0\0C`, expected \C0\00", align 1
+@62 = private unnamed_addr constant [10 x i8] c"\07http://\C0\00", align 1
+@63 = private unnamed_addr constant [117 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/http-body-util-0.1.3/src/combinators/collect.rs\00", align 1
+@64 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @63, [16 x i8] c"t\00\00\00\00\00\00\00)\00\00\00#\00\00\00" }>, align 8
+@65 = private unnamed_addr constant [21 x i8] c"polled after complete", align 1
+@66 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @63, [16 x i8] c"t\00\00\00\00\00\00\00&\00\00\00;\00\00\00" }>, align 8
+@67 = private unnamed_addr constant <{ ptr, [16 x i8], ptr, ptr, ptr }> <{ ptr @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsgO8S5jLFugx_23deltalake_catalog_unity, [16 x i8] c"\18\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXsZ_NtCs6Po7BT7Nknu_5alloc6stringNtB5_6StringNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_str, ptr @_RNvXsZ_NtCs6Po7BT7Nknu_5alloc6stringNtB5_6StringNtNtCsbvkFyIu7lgC_4core3fmt5Write10write_char, ptr @_RNvYNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtCsgO8S5jLFugx_23deltalake_catalog_unity }>, align 8
+@68 = private unnamed_addr constant [55 x i8] c"a Display implementation returned an error unexpectedly", align 1
+@69 = private unnamed_addr constant [76 x i8] c"/rustc/1d8897a4e88051480b36c501e66809425c6e08ad/library/alloc/src/string.rs\00", align 1
+@70 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @69, [16 x i8] c"K\00\00\00\00\00\00\00d\0B\00\00\0E\00\00\00" }>, align 8
+@71 = private unnamed_addr constant [5 x i8] c"Error", align 1
+@72 = private unnamed_addr constant [2 x i8] c"..", align 1
+@73 = private unnamed_addr constant [90 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/url-2.5.8/src/lib.rs\00", align 1
+@74 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @73, [16 x i8] c"Y\00\00\00\00\00\00\00O\0B\00\00\0B\00\00\00" }>, align 8
+@75 = private unnamed_addr constant [2 x i8] c"()", align 1
+@76 = private unnamed_addr constant [20 x i8] c"\0Fmissing field `\C0\01`\00", align 1
+@77 = private unnamed_addr constant [31 x i8] c"\0Finvalid length \C0\0B, expected \C0\00", align 1
+@78 = private unnamed_addr constant [22 x i8] c"\11duplicate field `\C0\01`\00", align 1
+@79 = private unnamed_addr constant [45 x i8] c"\11unknown variant `\C0\18`, there are no variants\00", align 1
+@80 = private unnamed_addr constant [34 x i8] c"\11unknown variant `\C0\0C`, expected \C0\00", align 1
 
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMNtNtNtCskQDtHcQtBkN_5tokio7runtime9scheduler14current_threadNtB3_13CurrentThread8block_onINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNCNvMs4_CsgO8S5jLFugx_23deltalake_catalog_unityNtB2H_19UnityCatalogBuilder25get_uc_location_and_token0EEEB2H_(ptr dead_on_unwind noalias noundef writable sret([80 x i8]) align 8 captures(address) dereferenceable(80) %0, ptr noundef nonnull align 8 %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %2, ptr noundef nonnull align 8 %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -491,7 +488,7 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.cc, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.val112.i, i64 noundef %.val113.i, i64 noundef 0, i64 noundef range(i64 0, 4294967296) %i.bx, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @77) #24
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.val112.i, i64 noundef %.val113.i, i64 noundef 0, i64 noundef range(i64 0, 4294967296) %i.bx, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @74) #24
           to label %.noexc120.i unwind label %.thread196.i, !noalias !712
 
 .noexc120.i:                                      ; preds = %bb.m
@@ -667,7 +664,7 @@ bb.ag:                                            ; preds = %bb.ae
   %i.dv = phi ptr [ %.val.i.i, %bb.af ], [ %.val.i.i, %bb.ag ], [ %.val110.i, %bb.v ], [ %.val110.i, %bb.u ]
   %i.dw = phi i64 [ %i.dn, %bb.af ], [ %i.dn, %bb.ag ], [ %.val111.i, %bb.v ], [ %.val111.i, %bb.u ]
   %i.dx = phi i64 [ %i.dp, %bb.af ], [ %i.dp, %bb.ag ], [ %i.cm, %bb.v ], [ %i.cm, %bb.u ]
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.dv, i64 noundef %i.dw, i64 noundef 0, i64 noundef range(i64 0, 4294967296) %i.dx, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @77) #24
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.dv, i64 noundef %i.dw, i64 noundef 0, i64 noundef range(i64 0, 4294967296) %i.dx, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @74) #24
           to label %.cont.i unwind label %bb.x, !noalias !712
 
 .cont.i:                                          ; preds = %.invoke.i
@@ -1070,7 +1067,7 @@ bb.a:
   store i16 0, ptr %.sroa.5.0..sroa_idx.i.i, align 2, !noalias !830
   store ptr %i.c, ptr %i.b, align 8, !noalias !830
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr @70, ptr %i.g, align 8, !noalias !830
+  store ptr @67, ptr %i.g, align 8, !noalias !830
   %i.h = invoke noundef zeroext i1 @_RNvXNtCshmPyUV8PP35_6chrono5serdeINtB2_10SerdeErrorxENtNtCsbvkFyIu7lgC_4core3fmt7Display3fmtCsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.e, ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b)
           to label %bb.c unwind label %bb.b, !noalias !837
 
@@ -1084,7 +1081,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.d, label %_RNvXsB_NtCs6Po7BT7Nknu_5alloc6stringINtNtCshmPyUV8PP35_6chrono5serde10SerdeErrorxENtB5_8ToString9to_stringCsgO8S5jLFugx_23deltalake_catalog_unity.exit, !prof !30
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @71, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @61, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @73) #23
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @68, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @61, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @70) #23
           to label %.noexc.i.i unwind label %bb.b, !noalias !837
 
 .noexc.i.i:                                       ; preds = %bb.d
@@ -1133,7 +1130,7 @@ bb.a:
   store i16 0, ptr %.sroa.5.0..sroa_idx.i.i, align 2, !noalias !839
   store ptr %i.c, ptr %i.b, align 8, !noalias !839
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr @70, ptr %i.g, align 8, !noalias !839
+  store ptr @67, ptr %i.g, align 8, !noalias !839
   %i.h = invoke noundef zeroext i1 @_RNvXNtCshmPyUV8PP35_6chrono5serdeINtB2_10SerdeErroryENtNtCsbvkFyIu7lgC_4core3fmt7Display3fmtCsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.e, ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b)
           to label %bb.c unwind label %bb.b, !noalias !846
 
@@ -1147,7 +1144,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.d, label %_RNvXsB_NtCs6Po7BT7Nknu_5alloc6stringINtNtCshmPyUV8PP35_6chrono5serde10SerdeErroryENtB5_8ToString9to_stringCsgO8S5jLFugx_23deltalake_catalog_unity.exit, !prof !30
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @71, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @61, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @73) #23
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @68, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @61, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @70) #23
           to label %.noexc.i.i unwind label %bb.b, !noalias !846
 
 .noexc.i.i:                                       ; preds = %bb.d
@@ -1259,7 +1256,7 @@ bb.a:
   store i16 0, ptr %.sroa.5.0..sroa_idx.i.i, align 2, !noalias !877
   store ptr %i.c, ptr %i.b, align 8, !noalias !877
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr @70, ptr %i.g, align 8, !noalias !877
+  store ptr @67, ptr %i.g, align 8, !noalias !877
   %i.h = invoke noundef zeroext i1 @_RNvXs1_NtCshmPyUV8PP35_6chrono6formatNtB5_10ParseErrorNtNtCsbvkFyIu7lgC_4core3fmt7Display3fmt(ptr noalias noundef nonnull readonly captures(address, read_provenance) dereferenceable(1) %i.e, ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b)
           to label %bb.c unwind label %bb.b, !noalias !884
 
@@ -1273,7 +1270,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.d, label %_RNvXsB_NtCs6Po7BT7Nknu_5alloc6stringNtNtCshmPyUV8PP35_6chrono6format10ParseErrorNtB5_8ToString9to_stringCsgO8S5jLFugx_23deltalake_catalog_unity.exit, !prof !30
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @71, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @61, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @73) #23
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @68, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @61, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @70) #23
           to label %.noexc.i.i unwind label %bb.b, !noalias !884
 
 .noexc.i.i:                                       ; preds = %bb.d
@@ -1322,7 +1319,7 @@ bb.a:
   store i16 0, ptr %.sroa.5.0..sroa_idx.i.i, align 2, !noalias !886
   store ptr %i.c, ptr %i.b, align 8, !noalias !886
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr @70, ptr %i.g, align 8, !noalias !886
+  store ptr @67, ptr %i.g, align 8, !noalias !886
   %i.h = invoke noundef zeroext i1 @_RNvXs3_NtNtCsbvkFyIu7lgC_4core3num5errorNtB5_13ParseIntErrorNtNtB9_3fmt7Display3fmt(ptr noalias noundef nonnull readonly captures(address, read_provenance) dereferenceable(1) %i.e, ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b)
           to label %bb.c unwind label %bb.b, !noalias !893
 
@@ -1336,7 +1333,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.d, label %_RNvXsB_NtCs6Po7BT7Nknu_5alloc6stringNtNtNtCsbvkFyIu7lgC_4core3num5error13ParseIntErrorNtB5_8ToString9to_stringCsgO8S5jLFugx_23deltalake_catalog_unity.exit, !prof !30
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @71, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @61, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @73) #23
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @68, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @61, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @70) #23
           to label %.noexc.i.i unwind label %bb.b, !noalias !893
 
 .noexc.i.i:                                       ; preds = %bb.d
@@ -1739,10 +1736,10 @@ bb.d:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %i.h, i64 44
   %i.w = load i32, ptr %i.v, align 4, !noundef !3 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %.val22 = load ptr, ptr %i.x, align 8, !nonnull !3, !noundef !3 ; 7 uses
+  %.val22 = load ptr, ptr %i.x, align 8, !nonnull !3, !noundef !3 ; 10 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %.val23 = load i64, ptr %i.y, align 8, !noundef !3 ; 3 uses
-  %i.z = zext i32 %i.w to i64                     ; 7 uses
+  %i.z = zext i32 %i.w to i64                     ; 4 uses
   %i.aa = icmp eq i32 %i.w, 0
   br i1 %i.aa, label %.thread, label %bb.e
 
@@ -1761,7 +1758,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.val22, i64 noundef %.val23, i64 noundef 0, i64 noundef range(i64 0, 4294967296) %i.z, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @77) #24
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.val22, i64 noundef %.val23, i64 noundef 0, i64 noundef range(i64 0, 4294967296) %i.z, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @74) #24
           to label %.noexc unwind label %bb.i
 
 .noexc:                                           ; preds = %bb.h
@@ -1798,18 +1795,40 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ap, label %bb.o, label %bb.m
 
 bb.l:                                             ; preds = %bb.j
-  %bcmp = call i32 @bcmp(ptr nonnull %.val22, ptr nonnull @62, i64 %i.z)
-  %i.aq = icmp eq i32 %bcmp, 0
+  %2 = load i32, ptr %.val22, align 1
+  %3 = xor i32 %2, 1801678707
+  %4 = getelementptr i8, ptr %.val22, i64 3
+  %5 = load i32, ptr %4, align 1
+  %6 = xor i32 %5, 1630827371
+  %7 = or i32 %3, %6
+  %8 = icmp ne i32 %7, 0
+  %9 = zext i1 %8 to i32
+  %i.aq = icmp eq i32 %9, 0
   br i1 %i.aq, label %bb.o, label %bb.n
 
 bb.m:                                             ; preds = %bb.k
-  %bcmp17 = call i32 @bcmp(ptr nonnull %.val22, ptr nonnull @63, i64 %i.z)
-  %i.ar = icmp eq i32 %bcmp17, 0
+  %10 = load i32, ptr %.val22, align 1
+  %11 = xor i32 %10, 1801678707
+  %12 = getelementptr i8, ptr %.val22, i64 4
+  %13 = load i16, ptr %12, align 1
+  %14 = zext i16 %13 to i32
+  %15 = xor i32 %14, 13683
+  %16 = or i32 %11, %15
+  %17 = icmp ne i32 %16, 0
+  %18 = zext i1 %17 to i32
+  %i.ar = icmp eq i32 %18, 0
   br i1 %i.ar, label %bb.o, label %.thread
 
 bb.n:                                             ; preds = %bb.l
-  %bcmp18 = call i32 @bcmp(ptr nonnull %.val22, ptr nonnull @64, i64 %i.z)
-  %i.as = icmp eq i32 %bcmp18, 0
+  %19 = load i32, ptr %.val22, align 1
+  %20 = xor i32 %19, 1801678707
+  %21 = getelementptr i8, ptr %.val22, i64 3
+  %22 = load i32, ptr %21, align 1
+  %23 = xor i32 %22, 1748333419
+  %24 = or i32 %20, %23
+  %25 = icmp ne i32 %24, 0
+  %26 = zext i1 %25 to i32
+  %i.as = icmp eq i32 %26, 0
   br i1 %i.as, label %bb.o, label %.thread
 
 bb.o:                                             ; preds = %bb.k, %bb.l, %bb.m, %bb.n
@@ -1890,7 +1909,7 @@ bb.w:                                             ; preds = %bb.t, %bb.s
   store ptr %i.f, ptr %i.e, align 8
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr @_RNvXs1i_NtCsbvkFyIu7lgC_4core3fmtReNtB6_7Display3fmtCsgO8S5jLFugx_23deltalake_catalog_unity, ptr %.sroa.48.0..sroa_idx, align 8
-  invoke void @_RNvNvNtCs6Po7BT7Nknu_5alloc3fmt6format12format_inner(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.g, ptr noundef nonnull @65, ptr noundef nonnull %i.e)
+  invoke void @_RNvNvNtCs6Po7BT7Nknu_5alloc3fmt6format12format_inner(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.g, ptr noundef nonnull @62, ptr noundef nonnull %i.e)
           to label %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs6Po7BT7Nknu_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsgO8S5jLFugx_23deltalake_catalog_unity.exit unwind label %.loopexit.split-lp
 
 _RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs6Po7BT7Nknu_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsgO8S5jLFugx_23deltalake_catalog_unity.exit: ; preds = %bb.w
@@ -2028,7 +2047,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.h, label %._crit_edge, label %bb.b
 
 bb.g:                                             ; preds = %bb.e
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @67) #23
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @64) #23
           to label %bb.h unwind label %bb.i
 
 bb.h:                                             ; preds = %bb.g
@@ -2058,7 +2077,7 @@ bb.l:                                             ; preds = %bb.c
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.c
-  call void @_RNvNtCsbvkFyIu7lgC_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @68, i64 noundef 21, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @69) #23
+  call void @_RNvNtCsbvkFyIu7lgC_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @65, i64 noundef 21, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66) #23
   unreachable
 
 .thread44:                                        ; preds = %bb.i
@@ -2461,7 +2480,7 @@ bb.e:                                             ; preds = %_RNvXsX_NtNtCsbvkFy
   %i.m = load ptr, ptr %i.l, align 8, !alias.scope !1250, !noalias !1251, !nonnull !3, !align !15, !noundef !3
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 24
   %i.o = load ptr, ptr %i.n, align 8, !invariant.load !3, !nonnull !3
-  %i.p = tail call noundef zeroext i1 %i.o(ptr noundef nonnull %i.k, ptr noalias noundef nonnull readonly captures(address, read_provenance) @75, i64 noundef 2) #26, !inline_history !1252
+  %i.p = tail call noundef zeroext i1 %i.o(ptr noundef nonnull %i.k, ptr noalias noundef nonnull readonly captures(address, read_provenance) @72, i64 noundef 2) #26, !inline_history !1252
   br i1 %i.p, label %_RNvXs_NtNtCsbvkFyIu7lgC_4core3ops5rangeINtB4_5RangeyENtNtB8_3fmt5Debug3fmtCsgO8S5jLFugx_23deltalake_catalog_unity.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -2529,7 +2548,7 @@ bb.a:
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal noundef zeroext i1 @_RNvXsK_NtCsbvkFyIu7lgC_4core3fmtNtB5_5ErrorNtB5_5Debug3fmt(ptr noalias nonnull readonly captures(none) %0, ptr noalias noundef align 8 dereferenceable(24) %1) unnamed_addr #2 {
 bb.a:
-  %i.a = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @74, i64 noundef 5)
+  %i.a = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @71, i64 noundef 5)
   ret i1 %i.a
 }
 
@@ -2858,7 +2877,7 @@ bb.a:
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal noundef zeroext i1 @_RNvXss_NtCsbvkFyIu7lgC_4core3fmtuNtB5_5Debug3fmt(ptr noalias nonnull readonly captures(none) %0, ptr noalias noundef align 8 dereferenceable(24) %1) unnamed_addr #2 {
 bb.a:
-  %i.a = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter3pad(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @78, i64 noundef 2)
+  %i.a = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter3pad(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @75, i64 noundef 2)
   ret i1 %i.a
 }
 
@@ -2967,7 +2986,7 @@ _RNvXs_NvNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtQINtNvNtCs2pqxYH9ZEk8_3std2i
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef zeroext i1 @_RNvYNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtCsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef align 8 dereferenceable(24) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #0 {
 _RNvXs_NvNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtQNtNtCs6Po7BT7Nknu_5alloc6string6StringNtB4_12SpecWriteFmt14spec_write_fmtCsgO8S5jLFugx_23deltalake_catalog_unity.exit:
-  %i.a = tail call noundef zeroext i1 @_RNvNtCsbvkFyIu7lgC_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @70, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !1288
+  %i.a = tail call noundef zeroext i1 @_RNvNtCsbvkFyIu7lgC_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @67, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !1288
   ret i1 %i.a
 }
 
@@ -2983,7 +3002,7 @@ bb.a:
   store ptr %i.b, ptr %i.a, align 8
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr @_RNvXs1i_NtCsbvkFyIu7lgC_4core3fmtReNtB6_7Display3fmtCsgO8S5jLFugx_23deltalake_catalog_unity, ptr %.sroa.42.0..sroa_idx, align 8
-  %i.d = call fastcc noundef nonnull align 8 ptr @_RINvXs6_NtCseqDwI8vvjGQ_10serde_json5errorNtB6_5ErrorNtNtCs1gOyXocuPRE_10serde_core2de5Error6customNtNtCsbvkFyIu7lgC_4core3fmt9ArgumentsECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull @79, ptr noundef nonnull %i.a)
+  %i.d = call fastcc noundef nonnull align 8 ptr @_RINvXs6_NtCseqDwI8vvjGQ_10serde_json5errorNtB6_5ErrorNtNtCs1gOyXocuPRE_10serde_core2de5Error6customNtNtCsbvkFyIu7lgC_4core3fmt9ArgumentsECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull @76, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.d
 }
@@ -3006,7 +3025,7 @@ bb.a:
   store ptr %i.b, ptr %i.e, align 8
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr @_RNvXs1i_NtCsbvkFyIu7lgC_4core3fmtRDNtNtCs1gOyXocuPRE_10serde_core2de8ExpectedEL_NtB6_7Display3fmtCsgO8S5jLFugx_23deltalake_catalog_unity, ptr %.sroa.46.0..sroa_idx, align 8
-  %i.f = call fastcc noundef nonnull align 8 ptr @_RINvXs6_NtCseqDwI8vvjGQ_10serde_json5errorNtB6_5ErrorNtNtCs1gOyXocuPRE_10serde_core2de5Error6customNtNtCsbvkFyIu7lgC_4core3fmt9ArgumentsECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull @80, ptr noundef nonnull %i.a)
+  %i.f = call fastcc noundef nonnull align 8 ptr @_RINvXs6_NtCseqDwI8vvjGQ_10serde_json5errorNtB6_5ErrorNtNtCs1gOyXocuPRE_10serde_core2de5Error6customNtNtCsbvkFyIu7lgC_4core3fmt9ArgumentsECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull @77, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.f
 }
@@ -3023,7 +3042,7 @@ bb.a:
   store ptr %i.b, ptr %i.a, align 8
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr @_RNvXs1i_NtCsbvkFyIu7lgC_4core3fmtReNtB6_7Display3fmtCsgO8S5jLFugx_23deltalake_catalog_unity, ptr %.sroa.42.0..sroa_idx, align 8
-  %i.d = call fastcc noundef nonnull align 8 ptr @_RINvXs6_NtCseqDwI8vvjGQ_10serde_json5errorNtB6_5ErrorNtNtCs1gOyXocuPRE_10serde_core2de5Error6customNtNtCsbvkFyIu7lgC_4core3fmt9ArgumentsECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull @81, ptr noundef nonnull %i.a)
+  %i.d = call fastcc noundef nonnull align 8 ptr @_RINvXs6_NtCseqDwI8vvjGQ_10serde_json5errorNtB6_5ErrorNtNtCs1gOyXocuPRE_10serde_core2de5Error6customNtNtCsbvkFyIu7lgC_4core3fmt9ArgumentsECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull @78, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.d
 }
@@ -3046,7 +3065,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.d, ptr %i.c, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr @_RNvXs1i_NtCsbvkFyIu7lgC_4core3fmtReNtB6_7Display3fmtCsgO8S5jLFugx_23deltalake_catalog_unity, ptr %.sroa.43.0..sroa_idx, align 8
-  %i.g = call fastcc noundef nonnull align 8 ptr @_RINvXs6_NtCseqDwI8vvjGQ_10serde_json5errorNtB6_5ErrorNtNtCs1gOyXocuPRE_10serde_core2de5Error6customNtNtCsbvkFyIu7lgC_4core3fmt9ArgumentsECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull @82, ptr noundef nonnull %i.c)
+  %i.g = call fastcc noundef nonnull align 8 ptr @_RINvXs6_NtCseqDwI8vvjGQ_10serde_json5errorNtB6_5ErrorNtNtCs1gOyXocuPRE_10serde_core2de5Error6customNtNtCsbvkFyIu7lgC_4core3fmt9ArgumentsECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull @79, ptr noundef nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.d
 
@@ -3063,7 +3082,7 @@ bb.c:                                             ; preds = %bb.a
   store ptr %i.b, ptr %i.i, align 8
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr @_RNvXs6_NtCs1gOyXocuPRE_10serde_core2deNtB5_5OneOfNtNtCsbvkFyIu7lgC_4core3fmt7Display3fmt, ptr %.sroa.411.0..sroa_idx, align 8
-  %i.j = call fastcc noundef nonnull align 8 ptr @_RINvXs6_NtCseqDwI8vvjGQ_10serde_json5errorNtB6_5ErrorNtNtCs1gOyXocuPRE_10serde_core2de5Error6customNtNtCsbvkFyIu7lgC_4core3fmt9ArgumentsECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull @83, ptr noundef nonnull %i.a)
+  %i.j = call fastcc noundef nonnull align 8 ptr @_RINvXs6_NtCseqDwI8vvjGQ_10serde_json5errorNtB6_5ErrorNtNtCs1gOyXocuPRE_10serde_core2de5Error6customNtNtCsbvkFyIu7lgC_4core3fmt9ArgumentsECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull @80, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.d

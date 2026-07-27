@@ -38,8 +38,7 @@ bb.a:
   store i32 %1, ptr %i.d, align 8, !tbaa !37
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 460
   %i.f = load i32, ptr %i.e, align 4, !tbaa !38
-  %i.g = icmp eq i32 %i.f, 0                      ; 5 uses
-  %2 = zext i1 %i.g to i32                        ; 2 uses
+  %i.g = icmp eq i32 %i.f, 0                      ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 468 ; 3 uses
   %i.i = load i32, ptr %i.h, align 4, !tbaa !39
   %i.j = icmp eq i32 %i.i, 0
@@ -118,7 +117,7 @@ bb.i:                                             ; preds = %.lr.ph.split.us.spl
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !46 ; 2 uses
   %i.al = sext i32 %i.ak to i64
   %i.am = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %i.al
-  tail call void @jpeg_make_c_derived_tbl(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %i.ak, ptr noundef nonnull %i.am) #7
+  tail call void @jpeg_make_c_derived_tbl(ptr noundef nonnull %0, i32 noundef 1, i32 noundef %i.ak, ptr noundef nonnull %i.am) #7
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph.split.us.split.us
@@ -139,7 +138,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.split
   store i32 %i.au, ptr %i.ad, align 8, !tbaa !51
   %i.av = sext i32 %i.au to i64
   %i.aw = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %i.av
-  tail call void @jpeg_make_c_derived_tbl(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %i.au, ptr noundef nonnull %i.aw) #7
+  tail call void @jpeg_make_c_derived_tbl(ptr noundef nonnull %0, i32 noundef 0, i32 noundef %i.au, ptr noundef nonnull %i.aw) #7
   %indvars.iv.next76 = add nuw nsw i64 %indvars.iv75, 1 ; 2 uses
   %i.ax = load i32, ptr %i.w, align 8, !tbaa !44
   %i.ay = sext i32 %i.ax to i64

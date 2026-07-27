@@ -204,11 +204,10 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m, %bb.n
   %i.bc = tail call ptr @mmap(ptr noundef null, i64 noundef %i.av, i32 noundef 3, i32 noundef 34, i32 noundef -1, i64 noundef 0) #16 ; 9 uses
-  %.not152 = icmp ne ptr %i.bc, inttoptr (i64 -1 to ptr) ; 4 uses
-  %.0126 = zext i1 %.not152 to i32
-  %.0124 = select i1 %.not152, i64 %i.av, i64 0   ; 6 uses
-  %.0122 = select i1 %.not152, ptr %i.bc, ptr inttoptr (i64 -1 to ptr) ; 11 uses
-  br i1 %.not152, label %bb.p, label %bb.bd
+  %.not152.not = icmp eq ptr %i.bc, inttoptr (i64 -1 to ptr) ; 3 uses
+  %.0124 = select i1 %.not152.not, i64 0, i64 %i.av ; 6 uses
+  %.0122 = select i1 %.not152.not, ptr inttoptr (i64 -1 to ptr), ptr %i.bc ; 11 uses
+  br i1 %.not152.not, label %bb.bd, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 856 ; 2 uses
@@ -585,7 +584,7 @@ segment_holding.exit.i:                           ; preds = %bb.af
   %i.il = getelementptr inbounds nuw i8, ptr %0, i64 896
   store i64 %.0124, ptr %i.il, align 8, !tbaa !58
   %i.im = getelementptr inbounds nuw i8, ptr %0, i64 912
-  store i32 %.0126, ptr %i.im, align 8, !tbaa !59
+  store i32 1, ptr %i.im, align 8, !tbaa !59
   %i.in = getelementptr inbounds nuw i8, ptr %0, i64 904
   store ptr %i.hu, ptr %i.in, align 8, !tbaa !73
   br label %bb.ah

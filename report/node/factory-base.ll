@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
   %i.f = add nsw i64 %i.e, -48                    ; 5 uses
   %i.g = icmp ugt i64 %i.f, 9
   %i.h = lshr i16 %i.d, 8
-  %i.i = zext nneg i16 %i.h to i64
+  %i.i = zext nneg i16 %i.h to i64                ; 2 uses
   br i1 %i.g, label %.lr.ph167.preheader, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -324,7 +324,7 @@ bb.k:                                             ; preds = %bb.i
 
 _ZN2v88internal6detail10IsOnly8BitEPKtj.exit41:   ; preds = %bb.j
   %i.bh = shl nuw nsw i32 %1, 1
-  %i.bi = zext nneg i32 %i.bh to i64              ; 7 uses
+  %i.bi = zext nneg i32 %i.bh to i64              ; 6 uses
   %i.bj = load i64, ptr %i.bc, align 8            ; 2 uses
   %i.bk = xor i64 %i.bj, %i.bb
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -373,11 +373,7 @@ bb.n:                                             ; preds = %bb.l
   %i.co = shl nuw i64 %i.cn, 56
   %i.cp = shl nuw nsw i64 %i.i, 32
   %i.cq = or disjoint i64 %i.cp, %i.co
-  %3 = getelementptr i8, ptr %0, i64 %i.bi
-  %4 = getelementptr i8, ptr %3, i64 -1
-  %5 = load i8, ptr %4, align 1
-  %6 = zext i8 %5 to i64
-  %i.cr = or disjoint i64 %i.cq, %6
+  %i.cr = or disjoint i64 %i.cq, %i.i
   br label %_Z9rapidhashI15PlainHashReaderEmPKhmmPKm.exit.i
 
 .thread:                                          ; preds = %_ZN2v88internal6detail10IsOnly8BitEPKtj.exit41

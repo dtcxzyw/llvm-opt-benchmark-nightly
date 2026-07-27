@@ -204,7 +204,7 @@ _ZNK2v84base6VectorIKhE6lengthEv.exit66:          ; preds = %_ZNK2v84base6Vector
   %i.j = sext i32 %i.g to i64
   %i.k = sub nsw i64 0, %i.j
   %i.l = getelementptr [4 x i8], ptr %i.h, i64 %i.k
-  %i.m = add nsw i32 %i.e, -1                     ; 6 uses
+  %i.m = add nsw i32 %i.e, -1                     ; 4 uses
   %i.n = sext i32 %i.m to i64                     ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 %i.n
   %i.p = load i8, ptr %i.o, align 1               ; 3 uses
@@ -289,9 +289,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 .preheader74:                                     ; preds = %.preheader74.lr.ph, %bb.j
   %.150 = phi i32 [ %i.az, %bb.j ], [ %3, %.preheader74.lr.ph ] ; 3 uses
-  %4 = add nsw i32 %.150, %i.m
-  %5 = sext i32 %4 to i64
-  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 %5
+  %4 = sext i32 %.150 to i64
+  %5 = getelementptr i8, ptr %1, i64 %4
+  %i.au = getelementptr i8, ptr %5, i64 -1
   %i.av = load i8, ptr %i.au, align 1             ; 2 uses
   %.not64 = icmp eq i8 %i.p, %i.av
   br i1 %.not64, label %.thread, label %bb.j
@@ -300,8 +300,8 @@ bb.j:                                             ; preds = %.preheader74
   %i.aw = zext i8 %i.av to i64
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.aw
   %i.ay = load i32, ptr %i.ax, align 4
-  %6 = sub nuw nsw i32 %i.m, %i.ay
-  %i.az = add nsw i32 %6, %.150                   ; 2 uses
+  %6 = xor i32 %i.ay, -1
+  %i.az = add nsw i32 %.150, %6                   ; 2 uses
   %.not65 = icmp sgt i32 %i.az, %i.q
   br i1 %.not65, label %.thread, label %.preheader74, !llvm.loop !430
 
@@ -704,7 +704,7 @@ _ZNK2v84base6VectorIKhE6lengthEv.exit:            ; preds = %_ZNK2v84base6Vector
   %i.j = sext i32 %i.g to i64
   %i.k = sub nsw i64 0, %i.j
   %i.l = getelementptr [4 x i8], ptr %i.h, i64 %i.k
-  %i.m = add nsw i32 %i.e, -1                     ; 6 uses
+  %i.m = add nsw i32 %i.e, -1                     ; 4 uses
   %i.n = sub nsw i32 %i.d, %i.e                   ; 4 uses
   %.not83 = icmp sgt i32 %3, %i.n
   br i1 %.not83, label %.thread, label %.preheader76.lr.ph
@@ -807,9 +807,9 @@ bb.k:                                             ; preds = %bb.j, %_ZN2v88inter
 
 .preheader76:                                     ; preds = %.preheader76.lr.ph, %_ZN2v88internal12StringSearchIhtE14CharOccurrenceEPit.exit
   %.150 = phi i32 [ %i.bd, %_ZN2v88internal12StringSearchIhtE14CharOccurrenceEPit.exit ], [ %3, %.preheader76.lr.ph ] ; 3 uses
-  %4 = add nsw i32 %.150, %i.m
-  %5 = sext i32 %4 to i64
-  %6 = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %5
+  %4 = sext i32 %.150 to i64
+  %5 = getelementptr [2 x i8], ptr %1, i64 %4
+  %6 = getelementptr i8, ptr %5, i64 -2
   %i.ay = load i16, ptr %6, align 2               ; 3 uses
   %.not64 = icmp eq i16 %i.ay, %i.r
   br i1 %.not64, label %.thread, label %bb.l
@@ -822,12 +822,12 @@ bb.m:                                             ; preds = %bb.l
   %i.ba = zext nneg i16 %i.ay to i64
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.ba
   %i.bc = load i32, ptr %i.bb, align 4
+  %7 = xor i32 %i.bc, -1
   br label %_ZN2v88internal12StringSearchIhtE14CharOccurrenceEPit.exit
 
 _ZN2v88internal12StringSearchIhtE14CharOccurrenceEPit.exit: ; preds = %bb.l, %bb.m
-  %.0.i = phi i32 [ %i.bc, %bb.m ], [ -1, %bb.l ]
-  %7 = sub nuw nsw i32 %i.m, %.0.i
-  %i.bd = add nsw i32 %7, %.150                   ; 2 uses
+  %.0.i = phi i32 [ %7, %bb.m ], [ 0, %bb.l ]
+  %i.bd = add nsw i32 %.0.i, %.150                ; 2 uses
   %.not65 = icmp sgt i32 %i.bd, %i.n
   br i1 %.not65, label %.thread, label %.preheader76, !llvm.loop !450
 
@@ -1230,7 +1230,7 @@ _ZNK2v84base6VectorIKtE6lengthEv.exit:            ; preds = %_ZNK2v84base6Vector
   %i.j = sext i32 %i.g to i64
   %i.k = sub nsw i64 0, %i.j
   %i.l = getelementptr [4 x i8], ptr %i.h, i64 %i.k
-  %i.m = add nsw i32 %i.e, -1                     ; 6 uses
+  %i.m = add nsw i32 %i.e, -1                     ; 4 uses
   %i.n = sext i32 %i.m to i64                     ; 2 uses
   %i.o = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload, i64 %i.n
   %i.p = load i16, ptr %i.o, align 2              ; 3 uses
@@ -1318,9 +1318,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 .preheader73:                                     ; preds = %.preheader73.lr.ph, %bb.j
   %.150 = phi i32 [ %i.bd, %bb.j ], [ %3, %.preheader73.lr.ph ] ; 3 uses
-  %4 = add nsw i32 %.150, %i.m
-  %5 = sext i32 %4 to i64
-  %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 %5
+  %4 = sext i32 %.150 to i64
+  %5 = getelementptr i8, ptr %1, i64 %4
+  %i.ax = getelementptr i8, ptr %5, i64 -1
   %i.ay = load i8, ptr %i.ax, align 1             ; 2 uses
   %i.az = zext i8 %i.ay to i16
   %.not64 = icmp eq i16 %i.p, %i.az
@@ -1330,8 +1330,8 @@ bb.j:                                             ; preds = %.preheader73
   %i.ba = zext i8 %i.ay to i64
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.ba
   %i.bc = load i32, ptr %i.bb, align 4
-  %6 = sub nuw nsw i32 %i.m, %i.bc
-  %i.bd = add nsw i32 %6, %.150                   ; 2 uses
+  %6 = xor i32 %i.bc, -1
+  %i.bd = add nsw i32 %.150, %6                   ; 2 uses
   %.not65 = icmp sgt i32 %i.bd, %i.q
   br i1 %.not65, label %.thread, label %.preheader73, !llvm.loop !472
 
@@ -1734,7 +1734,7 @@ _ZNK2v84base6VectorIKtE6lengthEv.exit66:          ; preds = %_ZNK2v84base6Vector
   %i.j = sext i32 %i.g to i64
   %i.k = sub nsw i64 0, %i.j
   %i.l = getelementptr [4 x i8], ptr %i.h, i64 %i.k
-  %i.m = add nsw i32 %i.e, -1                     ; 6 uses
+  %i.m = add nsw i32 %i.e, -1                     ; 4 uses
   %i.n = sext i32 %i.m to i64                     ; 2 uses
   %i.o = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload, i64 %i.n
   %i.p = load i16, ptr %i.o, align 2              ; 3 uses
@@ -1822,9 +1822,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 .preheader74:                                     ; preds = %.preheader74.lr.ph, %bb.j
   %.150 = phi i32 [ %i.bc, %bb.j ], [ %3, %.preheader74.lr.ph ] ; 3 uses
-  %4 = add nsw i32 %.150, %i.m
-  %5 = sext i32 %4 to i64
-  %6 = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %5
+  %4 = sext i32 %.150 to i64
+  %5 = getelementptr [2 x i8], ptr %1, i64 %4
+  %6 = getelementptr i8, ptr %5, i64 -2
   %i.ax = load i16, ptr %6, align 2               ; 2 uses
   %.not64 = icmp eq i16 %i.p, %i.ax
   br i1 %.not64, label %.thread, label %bb.j
@@ -1834,8 +1834,8 @@ bb.j:                                             ; preds = %.preheader74
   %i.az = zext nneg i16 %i.ay to i64
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.az
   %i.bb = load i32, ptr %i.ba, align 4
-  %7 = sub nuw nsw i32 %i.m, %i.bb
-  %i.bc = add nsw i32 %7, %.150                   ; 2 uses
+  %7 = xor i32 %i.bb, -1
+  %i.bc = add nsw i32 %.150, %7                   ; 2 uses
   %.not65 = icmp sgt i32 %i.bc, %i.q
   br i1 %.not65, label %.thread, label %.preheader74, !llvm.loop !491
 
@@ -2238,7 +2238,7 @@ bb.c:                                             ; preds = %bb.b
   %i.f = add nsw i64 %i.e, -48                    ; 5 uses
   %i.g = icmp ugt i64 %i.f, 9
   %i.h = lshr i16 %i.d, 8
-  %i.i = zext nneg i16 %i.h to i64
+  %i.i = zext nneg i16 %i.h to i64                ; 2 uses
   br i1 %i.g, label %.lr.ph167.preheader, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -2359,7 +2359,7 @@ bb.k:                                             ; preds = %bb.i
 
 _ZN2v88internal6detail10IsOnly8BitEPKtj.exit41:   ; preds = %bb.j
   %i.bh = shl nuw nsw i32 %1, 1
-  %i.bi = zext nneg i32 %i.bh to i64              ; 7 uses
+  %i.bi = zext nneg i32 %i.bh to i64              ; 6 uses
   %i.bj = load i64, ptr %i.bc, align 8            ; 2 uses
   %i.bk = xor i64 %i.bj, %i.bb
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -2408,11 +2408,7 @@ bb.n:                                             ; preds = %bb.l
   %i.co = shl nuw i64 %i.cn, 56
   %i.cp = shl nuw nsw i64 %i.i, 32
   %i.cq = or disjoint i64 %i.cp, %i.co
-  %3 = getelementptr i8, ptr %0, i64 %i.bi
-  %4 = getelementptr i8, ptr %3, i64 -1
-  %5 = load i8, ptr %4, align 1
-  %6 = zext i8 %5 to i64
-  %i.cr = or disjoint i64 %i.cq, %6
+  %i.cr = or disjoint i64 %i.cq, %i.i
   br label %_Z9rapidhashI15PlainHashReaderEmPKhmmPKm.exit.i
 
 .thread:                                          ; preds = %_ZN2v88internal6detail10IsOnly8BitEPKtj.exit41

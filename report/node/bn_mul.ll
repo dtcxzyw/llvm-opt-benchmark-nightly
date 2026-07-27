@@ -199,7 +199,7 @@ declare i64 @bn_add_words(ptr noundef, ptr noundef, ptr noundef, i32 noundef) lo
 ; Function Attrs: nounwind uwtable
 define dso_local void @bn_mul_part_recursive(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, ptr noundef %6) local_unnamed_addr #0 {
 bb.a:
-  %i.a = shl nsw i32 %3, 1                        ; 11 uses
+  %i.a = shl nsw i32 %3, 1                        ; 9 uses
   %i.b = icmp slt i32 %3, 8
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -210,7 +210,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = zext nneg i32 %3 to i64                  ; 9 uses
+  %i.e = zext nneg i32 %3 to i64                  ; 8 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.e ; 11 uses
   %i.g = sub nsw i32 %3, %4                       ; 3 uses
   %i.h = tail call i32 @bn_cmp_part_words(ptr noundef %1, ptr noundef nonnull %i.f, i32 noundef %4, i32 noundef %i.g) #4
@@ -265,15 +265,14 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
   br i1 %i.ad, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %7 = zext nneg i32 %i.a to i64                  ; 2 uses
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %7
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.e
-  tail call void @bn_mul_comba8(ptr noundef nonnull %8, ptr noundef %6, ptr noundef nonnull %9) #4
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 128
+  %8 = getelementptr inbounds nuw i8, ptr %6, i64 64
+  tail call void @bn_mul_comba8(ptr noundef nonnull %7, ptr noundef %6, ptr noundef nonnull %8) #4
   tail call void @bn_mul_comba8(ptr noundef %0, ptr noundef nonnull %1, ptr noundef nonnull %2) #4
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %7
-  tail call void @bn_mul_normal(ptr noundef nonnull %10, ptr noundef nonnull %i.f, i32 noundef %4, ptr noundef nonnull %i.i, i32 noundef %5)
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 128
+  tail call void @bn_mul_normal(ptr noundef nonnull %9, ptr noundef nonnull %i.f, i32 noundef %4, ptr noundef nonnull %i.i, i32 noundef %5)
   %i.ae = add i32 %5, %4                          ; 2 uses
-  %i.af = add i32 %i.ae, %i.a
+  %i.af = add i32 %i.ae, 16
   %i.ag = sext i32 %i.af to i64
   %i.ah = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ag
   %i.ai = sub i32 16, %i.ae

@@ -203,7 +203,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.ava = xor i128 %i.auz, %i.auy
   %i.avb = trunc i128 %i.ava to i64               ; 2 uses
   store i64 %i.avb, ptr %i.b, align 8, !alias.scope !8272, !noalias !8230
-  %i.avc = zext i1 %i.aue to i128                 ; 2 uses
+  %i.avc = zext i1 %i.aue to i128
   store i128 %i.avc, ptr %1, align 16, !alias.scope !8272, !noalias !8230
   store i8 64, ptr %i.a, align 16, !alias.scope !8272, !noalias !8230
   br i1 %i.aue, label %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i.i, label %_RINvXs4H_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB7_17ExcludeSelectItemNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtCs2HSpDNxY7OE_9hashbrown6hasher13DefaultHasherECs14kWLkQVSKO_14deltalake_core.exit.thread27.i
@@ -217,9 +217,8 @@ _RINvXs4H_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB7_17ExcludeSelectItemNtNtCsbv
 
 _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i.i: ; preds = %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit6.thread.i
   %i.avh = icmp eq i64 %i.aud, -9223372036854775808 ; 2 uses
-  %i.avi = select i1 %i.avh, i128 18446744073709551616, i128 0
-  %2 = or disjoint i128 %i.avi, %i.avc
-  store i128 %2, ptr %1, align 16, !alias.scope !8274, !noalias !8281
+  %i.avi = select i1 %i.avh, i128 18446744073709551617, i128 1
+  store i128 %i.avi, ptr %1, align 16, !alias.scope !8274, !noalias !8281
   store i8 -128, ptr %i.a, align 16, !alias.scope !8274, !noalias !8281
   br i1 %i.avh, label %bb.dq, label %bb.dr
 
@@ -602,16 +601,15 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.bdt = xor i128 %i.bds, %i.bdr
   %i.bdu = trunc i128 %i.bdt to i64               ; 2 uses
   store i64 %i.bdu, ptr %i.b, align 8, !alias.scope !8367, !noalias !8230
-  %i.bdv = zext i1 %i.bcw to i128                 ; 2 uses
+  %i.bdv = zext i1 %i.bcw to i128
   store i128 %i.bdv, ptr %1, align 16, !alias.scope !8367, !noalias !8230
   store i8 64, ptr %i.a, align 16, !alias.scope !8367, !noalias !8230
   br i1 %i.bcw, label %.thread37.i, label %common.ret509
 
 .thread37.i:                                      ; preds = %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i19
   %i.bdw = icmp eq i64 %i.bcv, -9223372036854775808 ; 2 uses
-  %i.bdx = select i1 %i.bdw, i128 18446744073709551616, i128 0
-  %3 = or disjoint i128 %i.bdx, %i.bdv            ; 2 uses
-  store i128 %3, ptr %1, align 16, !alias.scope !8375, !noalias !8382
+  %i.bdx = select i1 %i.bdw, i128 18446744073709551617, i128 1
+  store i128 %i.bdx, ptr %1, align 16, !alias.scope !8375, !noalias !8382
   store i8 -128, ptr %i.a, align 16, !alias.scope !8375, !noalias !8382
   br i1 %i.bdw, label %bb.eg, label %bb.eh
 
@@ -635,6 +633,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %extract.t.i = trunc i128 %i.bdg to i64
   %.pre215 = load i64, ptr %i.b, align 8, !alias.scope !8388, !noalias !8382
   %.pre216 = load ptr, ptr %i.c, align 16, !alias.scope !8388, !noalias !8382
+  %2 = lshr i128 %i.bea, 64
   br label %bb.eg
 
 _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.thread.i21.i: ; preds = %bb.ee
@@ -670,7 +669,7 @@ bb.ef:                                            ; preds = %_RNvXs_NtCs2HSpDNxY
 bb.eg:                                            ; preds = %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i16.i._crit_edge, %.thread37.i
   %i.bew = phi ptr [ %i.bdm, %.thread37.i ], [ %.pre216, %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i16.i._crit_edge ]
   %i.bex = phi i64 [ %i.bdu, %.thread37.i ], [ %.pre215, %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i16.i._crit_edge ]
-  %i.bey = phi i128 [ %3, %.thread37.i ], [ %i.bea, %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i16.i._crit_edge ]
+  %i.bey = phi i128 [ 1, %.thread37.i ], [ %2, %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i16.i._crit_edge ]
   %i.bez = phi ptr [ %i.bcu, %.thread37.i ], [ %i.bdb, %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i16.i._crit_edge ] ; 2 uses
   %.off0.i = phi i64 [ 1, %.thread37.i ], [ %extract.t.i, %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i16.i._crit_edge ]
   %i.bfa = getelementptr inbounds nuw i8, ptr %i.bez, i64 16
@@ -680,12 +679,11 @@ bb.eg:                                            ; preds = %_RNvXs_NtCs2HSpDNxY
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8397)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8398)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8399)
-  %4 = lshr i128 %i.bey, 64
   %i.bfe = xor i64 %i.bex, %.off0.i
   %i.bff = load i64, ptr %i.bew, align 8, !noalias !8400, !noundef !27
   %i.bfg = zext i64 %i.bfe to i128
   %i.bfh = zext i64 %i.bff to i128
-  %i.bfi = xor i128 %4, %i.bfh
+  %i.bfi = xor i128 %i.bey, %i.bfh
   %i.bfj = mul nuw i128 %i.bfi, %i.bfg            ; 2 uses
   %i.bfk = lshr i128 %i.bfj, 64
   %i.bfl = xor i128 %i.bfk, %i.bfj
@@ -1088,28 +1086,28 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !23967)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !alias.scope !23970, !noalias !23971, !noundef !27 ; 2 uses
-  %2 = icmp ne i64 %i.c, 0                        ; 2 uses
-  %.sroa.0.0.i.i.i.i = zext i1 %2 to i64          ; 3 uses
-  %i.d = load ptr, ptr %1, align 8, !alias.scope !23970, !noalias !23971, !nonnull !27, !noundef !27 ; 3 uses
-  br i1 %2, label %bb.c, label %bb.b, !prof !23973
+  %.not.i.i = icmp eq i64 %i.c, 0
+  %i.d = load ptr, ptr %1, align 8, !alias.scope !23970, !noalias !23971, !nonnull !27, !noundef !27 ; 4 uses
+  br i1 %.not.i.i, label %bb.b, label %bb.c, !prof !23973
 
 bb.b:                                             ; preds = %bb.a
-  call void @_RINvNtCsbvkFyIu7lgC_4core5slice20copy_from_slice_implhECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull %i.a, i64 noundef 0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.d, i64 noundef %.sroa.0.0.i.i.i.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @752), !noalias !23974
+  call void @_RINvNtCsbvkFyIu7lgC_4core5slice20copy_from_slice_implhECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull %i.a, i64 noundef 0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.d, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @752), !noalias !23974
   br label %_RNvXsk_NtCs2pqxYH9ZEk8_3std2ioRShNtB5_12SpecReadByte14spec_read_byteCs14kWLkQVSKO_14deltalake_core.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.e = load i8, ptr %i.d, align 1, !noalias !23975, !noundef !27
-  %3 = sub nuw nsw i64 %i.c, %.sroa.0.0.i.i.i.i
+  %2 = add nsw i64 %i.c, -1
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %i.e, ptr %.sroa.4.0..sroa_idx.i.i, align 1, !alias.scope !23976, !noalias !23977
   br label %_RNvXsk_NtCs2pqxYH9ZEk8_3std2ioRShNtB5_12SpecReadByte14spec_read_byteCs14kWLkQVSKO_14deltalake_core.exit
 
 _RNvXsk_NtCs2pqxYH9ZEk8_3std2ioRShNtB5_12SpecReadByte14spec_read_byteCs14kWLkQVSKO_14deltalake_core.exit: ; preds = %bb.b, %bb.c
-  %.sink7.i.i = phi i64 [ %3, %bb.c ], [ 0, %bb.b ]
-  %.sink.i.i = phi i8 [ 0, %bb.c ], [ 2, %bb.b ]
-  %.sink8.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 %.sroa.0.0.i.i.i.i
-  store ptr %.sink8.i.i, ptr %1, align 8, !alias.scope !23970, !noalias !23971
-  store i64 %.sink7.i.i, ptr %i.b, align 8, !alias.scope !23970, !noalias !23971
+  %.sink9.i.i = phi ptr [ %i.d, %bb.b ], [ %3, %bb.c ]
+  %.sink8.i.i = phi i64 [ 0, %bb.b ], [ %2, %bb.c ]
+  %.sink.i.i = phi i8 [ 2, %bb.b ], [ 0, %bb.c ]
+  store ptr %.sink9.i.i, ptr %1, align 8, !alias.scope !23970, !noalias !23971
+  store i64 %.sink8.i.i, ptr %i.b, align 8, !alias.scope !23970, !noalias !23971
   store i8 %.sink.i.i, ptr %0, align 8, !alias.scope !23976, !noalias !23977
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !23966
   ret void

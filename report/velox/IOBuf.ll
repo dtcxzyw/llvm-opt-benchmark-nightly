@@ -201,7 +201,7 @@ _ZN5folly13checkedMallocEm.exit.i:                ; preds = %bb.f, %bb.d
   %.0.i = phi i64 [ 80, %bb.f ], [ 64, %bb.d ]    ; 2 uses
   %storemerge.i.i = phi ptr [ %i.k, %bb.f ], [ %i.f, %bb.d ] ; 8 uses
   %.0.i.i = trunc nuw nsw i64 %.0.i to i32
-  %i.m = zext i1 %i.e to i8                       ; 5 uses
+  %i.m = zext i1 %i.e to i8
   store i16 -23131, ptr %storemerge.i.i, align 4, !tbaa !3785, !noalias !3880
   %i.n = getelementptr inbounds nuw i8, ptr %storemerge.i.i, i64 2
   store i8 1, ptr %i.n, align 2, !tbaa !3786, !noalias !3880
@@ -267,7 +267,7 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.split
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 18
   store i8 1, ptr %i.ak, align 2, !tbaa !3786, !noalias !3887
   %i.al = getelementptr inbounds nuw i8, ptr %i.ah, i64 19
-  store i8 %i.m, ptr %i.al, align 1, !tbaa !3787, !noalias !3887
+  store i8 1, ptr %i.al, align 1, !tbaa !3787, !noalias !3887
   %i.am = getelementptr inbounds nuw i8, ptr %i.ah, i64 20
   store i32 80, ptr %i.am, align 4, !tbaa !3788, !noalias !3887
   %i.an = getelementptr inbounds nuw i8, ptr %i.ah, i64 24 ; 2 uses
@@ -326,7 +326,7 @@ bb.k:                                             ; preds = %bb.j, %.lr.ph.split
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bi, i64 18
   store i8 1, ptr %i.bl, align 2, !tbaa !3786, !noalias !3887
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bi, i64 19
-  store i8 %i.m, ptr %i.bm, align 1, !tbaa !3787, !noalias !3887
+  store i8 1, ptr %i.bm, align 1, !tbaa !3787, !noalias !3887
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bi, i64 20
   store i32 80, ptr %i.bn, align 4, !tbaa !3788, !noalias !3887
   tail call void @_Z15io_buf_alloc_cbPvm(ptr noundef nonnull %i.bj, i64 noundef 80) #35, !noalias !3887
@@ -384,7 +384,7 @@ _ZN5folly13checkedMallocEm.exit.i10.us28:         ; preds = %bb.m
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 2
   store i8 1, ptr %i.ch, align 2, !tbaa !3786, !noalias !3887
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cg, i64 3
-  store i8 %i.m, ptr %i.ci, align 1, !tbaa !3787, !noalias !3887
+  store i8 0, ptr %i.ci, align 1, !tbaa !3787, !noalias !3887
   %i.cj = getelementptr inbounds nuw i8, ptr %i.cg, i64 4
   store i32 64, ptr %i.cj, align 4, !tbaa !3788, !noalias !3887
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cg, i64 8 ; 2 uses
@@ -440,7 +440,7 @@ _ZN5folly13checkedMallocEm.exit.i10:              ; preds = %bb.o
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 2
   store i8 1, ptr %i.dd, align 2, !tbaa !3786, !noalias !3887
   %i.de = getelementptr inbounds nuw i8, ptr %i.dc, i64 3
-  store i8 %i.m, ptr %i.de, align 1, !tbaa !3787, !noalias !3887
+  store i8 0, ptr %i.de, align 1, !tbaa !3787, !noalias !3887
   %i.df = getelementptr inbounds nuw i8, ptr %i.dc, i64 4
   store i32 64, ptr %i.df, align 4, !tbaa !3788, !noalias !3887
   tail call void @_Z15io_buf_alloc_cbPvm(ptr noundef nonnull %i.dc, i64 noundef 64) #35, !noalias !3887

@@ -203,8 +203,8 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v
   %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.ar ; 8 uses
-  %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %i.aw ; 5 uses
-  %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %i.aw ; 4 uses
+  %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %i.aw ; 4 uses
+  %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %i.aw ; 5 uses
   %i.bj = trunc i64 %i.u to i32                   ; 2 uses
   %i.bk = trunc i64 %i.w to i32
   %i.bl = trunc nuw nsw i64 %i.ar to i32          ; 2 uses
@@ -230,7 +230,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.x, %.preheader69.i.us.i
   %.16574.i.us.i = phi i64 [ 1, %.preheader69.i.us.i ], [ %i.bw, %bb.x ]
-  tail call fastcc void @scryptBlockMix(ptr noundef %i.bi, ptr noundef %i.bh, i64 noundef range(i64 1, 0) %i.aa)
+  tail call fastcc void @scryptBlockMix(ptr noundef %i.bi, ptr noundef %i.bi, i64 noundef range(i64 1, 0) %i.aa)
   %i.bw = add nuw i64 %.16574.i.us.i, 1           ; 2 uses
   %exitcond86.not.i.us.i = icmp eq i64 %i.bw, %i.y
   br i1 %exitcond86.not.i.us.i, label %.split.i.preheader.us.i, label %bb.x, !llvm.loop !28

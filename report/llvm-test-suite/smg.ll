@@ -119,7 +119,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   %.0.lcssa = phi i32 [ 0, %.preheader ], [ %i.aj, %._crit_edge.loopexit ] ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 3 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !24
-  %i.am = zext nneg i32 %.0.lcssa to i64          ; 2 uses
+  %i.am = zext nneg i32 %.0.lcssa to i64
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.am
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !25
   %i.ap = tail call i32 @hypre_SMGRelaxDestroy(ptr noundef %i.ao) #9 ; 0 uses
@@ -129,8 +129,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
 bb.f:                                             ; preds = %._crit_edge
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !26
-  %1 = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %i.am
-  %i.at = load ptr, ptr %1, align 8, !tbaa !25
+  %i.at = load ptr, ptr %i.as, align 8, !tbaa !25
   %i.au = tail call i32 @hypre_SMGResidualDestroy(ptr noundef %i.at) #9 ; 0 uses
   br label %bb.g
 

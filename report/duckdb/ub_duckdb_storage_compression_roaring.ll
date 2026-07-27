@@ -203,13 +203,11 @@ bb.e:                                             ; preds = %.loopexit, %bb.b, %
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN6duckdb7roaring13AppendToArrayILb0EEEvRNS0_25ContainerCompressionStateEbt(ptr noundef nonnull align 8 dereferenceable(936) %0, i1 noundef zeroext %1, i16 noundef zeroext %2) #7 comdat {
 bb.a:
-  %3 = zext i1 %1 to i64                          ; 4 uses
   br i1 %1, label %bb.e, label %bb.b, !prof !296
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 114
-  %4 = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %3 ; 3 uses
-  %i.b = load i16, ptr %4, align 2, !tbaa !325    ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 114 ; 3 uses
+  %i.b = load i16, ptr %i.a, align 2, !tbaa !325  ; 2 uses
   %i.c = zext i16 %i.b to i32                     ; 2 uses
   %i.d = zext i16 %2 to i32
   %i.e = add nuw nsw i32 %i.c, %i.d               ; 2 uses
@@ -220,11 +218,9 @@ bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.h = load i16, ptr %i.g, align 4, !tbaa !331  ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %3
-  %i.j = load ptr, ptr %5, align 8, !tbaa !229
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !229
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %3
-  %i.l = load ptr, ptr %6, align 8, !tbaa !229
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !229
   %.not66 = icmp eq i16 %2, 0
   br i1 %.not66, label %.loopexit, label %.lr.ph61
 
@@ -399,8 +395,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 iter.check112:                                    ; preds = %._crit_edge62
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.bw, i64 %3
-  %i.bx = load ptr, ptr %7, align 8, !tbaa !326
+  %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !326
   %i.by = zext i16 %i.b to i64
   %wide.trip.count75 = zext i16 %2 to i64         ; 6 uses
   %invariant.gep80 = getelementptr inbounds nuw [2 x i8], ptr %i.bx, i64 %i.by ; 3 uses
@@ -482,9 +477,9 @@ vec.epilog.scalar.ph113:                          ; preds = %vec.epilog.scalar.p
   br i1 %exitcond76.not, label %.loopexit, label %vec.epilog.scalar.ph113, !llvm.loop !349
 
 .loopexit:                                        ; preds = %vec.epilog.scalar.ph113, %middle.block109, %vec.epilog.middle.block129, %._crit_edge62, %bb.c
-  %i.cj = load i16, ptr %4, align 2, !tbaa !325
+  %i.cj = load i16, ptr %i.a, align 2, !tbaa !325
   %i.ck = add i16 %i.cj, %2
-  store i16 %i.ck, ptr %4, align 2, !tbaa !325
+  store i16 %i.ck, ptr %i.a, align 2, !tbaa !325
   br label %bb.e
 
 bb.e:                                             ; preds = %.loopexit, %bb.b, %bb.a

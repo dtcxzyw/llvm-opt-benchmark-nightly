@@ -203,7 +203,7 @@ bb.a:
   %i.a = ptrtoint ptr %5 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %4 to i64                   ; 7 uses
   %i.c = sub i64 %i.a, %i.b                       ; 3 uses
-  %i.d = sext i32 %3 to i64                       ; 29 uses
+  %i.d = sext i32 %3 to i64                       ; 21 uses
   %i.e = sdiv i64 %i.c, %i.d                      ; 6 uses
   %.not = icmp eq i32 %0, 0
   br i1 %.not, label %bb.i, label %bb.b
@@ -231,12 +231,12 @@ bb.c:                                             ; preds = %PyUnicode_READ.exit
   br i1 %i.j, label %find_control_char.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = getelementptr i8, ptr %.1.lcssa.us28.us.i, i64 %i.d
+  %i.k = getelementptr i8, ptr %.1.lcssa.us28.us.i, i64 2
   br label %.split.us24.us.i
 
 PyUnicode_READ.exit.us26.us.i:                    ; preds = %.split.us24.us.i, %PyUnicode_READ.exit.us26.us.i
   %.1.us2534.us.i = phi ptr [ %i.l, %PyUnicode_READ.exit.us26.us.i ], [ %.018.us40.i, %.split.us24.us.i ]
-  %i.l = getelementptr i8, ptr %.1.us2534.us.i, i64 %i.d ; 3 uses
+  %i.l = getelementptr i8, ptr %.1.us2534.us.i, i64 2 ; 3 uses
   %i.m = load i16, ptr %i.l, align 2              ; 2 uses
   %i.n = icmp ugt i16 %i.m, 10
   br i1 %i.n, label %PyUnicode_READ.exit.us26.us.i, label %PyUnicode_READ.exit21.us41.i, !llvm.loop !39
@@ -473,12 +473,12 @@ bb.x:                                             ; preds = %PyUnicode_READ.exit
   br i1 %i.cb, label %find_control_char.exit144.thread, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.cc = getelementptr i8, ptr %.1.lcssa.us28.us.i141, i64 %i.d
+  %i.cc = getelementptr i8, ptr %.1.lcssa.us28.us.i141, i64 2
   br label %.split.us24.us.i138
 
 PyUnicode_READ.exit.us26.us.i142:                 ; preds = %.split.us24.us.i138, %PyUnicode_READ.exit.us26.us.i142
   %.1.us2534.us.i143 = phi ptr [ %i.cd, %PyUnicode_READ.exit.us26.us.i142 ], [ %.018.us40.i139, %.split.us24.us.i138 ]
-  %i.cd = getelementptr i8, ptr %.1.us2534.us.i143, i64 %i.d ; 3 uses
+  %i.cd = getelementptr i8, ptr %.1.us2534.us.i143, i64 2 ; 3 uses
   %i.ce = load i16, ptr %i.cd, align 2            ; 2 uses
   %i.cf = icmp ugt i16 %i.ce, %i.bw
   br i1 %i.cf, label %PyUnicode_READ.exit.us26.us.i142, label %PyUnicode_READ.exit21.us41.i140, !llvm.loop !39
@@ -572,12 +572,12 @@ bb.af:                                            ; preds = %PyUnicode_READ.exit
   br i1 %i.dg, label %.thread194, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %i.dh = getelementptr i8, ptr %.1.lcssa.us28.us.i158, i64 %i.d
+  %i.dh = getelementptr i8, ptr %.1.lcssa.us28.us.i158, i64 2
   br label %.split.us24.us.i155
 
 PyUnicode_READ.exit.us26.us.i159:                 ; preds = %.split.us24.us.i155, %PyUnicode_READ.exit.us26.us.i159
   %.1.us2534.us.i160 = phi ptr [ %i.di, %PyUnicode_READ.exit.us26.us.i159 ], [ %.018.us40.i156, %.split.us24.us.i155 ]
-  %i.di = getelementptr i8, ptr %.1.us2534.us.i160, i64 %i.d ; 3 uses
+  %i.di = getelementptr i8, ptr %.1.us2534.us.i160, i64 2 ; 3 uses
   %i.dj = load i16, ptr %i.di, align 2            ; 2 uses
   %i.dk = icmp ugt i16 %i.dj, %i.cz
   br i1 %i.dk, label %PyUnicode_READ.exit.us26.us.i159, label %PyUnicode_READ.exit21.us41.i157, !llvm.loop !39
@@ -719,12 +719,12 @@ bb.ao:                                            ; preds = %PyUnicode_READ.exit
   br i1 %i.fb, label %find_control_char.exit182.thread, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.fc = getelementptr i8, ptr %.1.lcssa.us28.us.i178, i64 %i.d
+  %i.fc = getelementptr i8, ptr %.1.lcssa.us28.us.i178, i64 2
   br label %.split.us24.us.i175
 
 PyUnicode_READ.exit.us26.us.i179:                 ; preds = %.split.us24.us.i175, %PyUnicode_READ.exit.us26.us.i179
   %.1.us2534.us.i180 = phi ptr [ %i.fd, %PyUnicode_READ.exit.us26.us.i179 ], [ %.018.us40.i176, %.split.us24.us.i175 ]
-  %i.fd = getelementptr i8, ptr %.1.us2534.us.i180, i64 %i.d ; 3 uses
+  %i.fd = getelementptr i8, ptr %.1.us2534.us.i180, i64 2 ; 3 uses
   %i.fe = load i16, ptr %i.fd, align 2            ; 2 uses
   %i.ff = icmp ugt i16 %i.fe, %i.ew
   br i1 %i.ff, label %PyUnicode_READ.exit.us26.us.i179, label %PyUnicode_READ.exit21.us41.i177, !llvm.loop !39

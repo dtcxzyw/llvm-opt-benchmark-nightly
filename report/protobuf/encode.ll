@@ -201,7 +201,7 @@ bb.a:
   %i.b = mul i64 %2, %.8.val                      ; 6 uses
   %i.c = and i64 %.0.val, -8
   %i.d = inttoptr i64 %i.c to ptr                 ; 6 uses
-  %i.e = sub nsw i64 0, %2                        ; 6 uses
+  %i.e = sub nsw i64 0, %2                        ; 4 uses
   %.not = icmp eq i32 %3, 0
   br i1 %.not, label %bb.b, label %bb.f
 
@@ -247,7 +247,7 @@ bb.f:                                             ; preds = %bb.a
 .split.us.split.us:                               ; preds = %.split.us, %encode_varint.exit.us.us
   %.030.us.us = phi ptr [ %.0.i.us.us, %encode_varint.exit.us.us ], [ %0, %.split.us ] ; 3 uses
   %.pn.us.us = phi ptr [ %.0.us.us, %encode_varint.exit.us.us ], [ %i.p, %.split.us ]
-  %.0.us.us = getelementptr inbounds i8, ptr %.pn.us.us, i64 %i.e ; 3 uses
+  %.0.us.us = getelementptr inbounds i8, ptr %.pn.us.us, i64 -4 ; 3 uses
   %i.v = load i32, ptr %.0.us.us, align 1
   %i.w = load ptr, ptr %i.r, align 8, !tbaa !14
   %i.x = ptrtoint ptr %.030.us.us to i64
@@ -288,7 +288,7 @@ encode_varint.exit.us.us:                         ; preds = %bb.j, %bb.i
 .split.us.split:                                  ; preds = %.split.us, %encode_bytes.exit39.us
   %.030.us = phi ptr [ %i.ap, %encode_bytes.exit39.us ], [ %0, %.split.us ] ; 3 uses
   %.pn.us = phi ptr [ %.0.us, %encode_bytes.exit39.us ], [ %i.p, %.split.us ]
-  %.0.us = getelementptr inbounds i8, ptr %.pn.us, i64 %i.e ; 3 uses
+  %.0.us = getelementptr inbounds i8, ptr %.pn.us, i64 -4 ; 3 uses
   %i.ah = load i32, ptr %.0.us, align 1
   %i.ai = load ptr, ptr %i.r, align 8, !tbaa !14
   %i.aj = ptrtoint ptr %.030.us to i64

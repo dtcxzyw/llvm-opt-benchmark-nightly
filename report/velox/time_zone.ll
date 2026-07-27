@@ -204,7 +204,7 @@ _ZN3fmt3v116detail21format_duration_valueIclNS0_14basic_appenderIcEETnNSt9enable
 
 bb.f:                                             ; preds = %._crit_edge.i.i.i.i, %_ZN3fmt3v116detail21format_duration_valueIclNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std11is_integralIT0_EE5valueEiE4typeELi0EEET1_S9_S6_i.exit
   %i.ac = phi i64 [ %.pre, %_ZN3fmt3v116detail21format_duration_valueIclNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std11is_integralIT0_EE5valueEiE4typeELi0EEET1_S9_S6_i.exit ], [ %i.ah, %._crit_edge.i.i.i.i ] ; 2 uses
-  %i.ad = phi i64 [ %.pre.i.i.i.i, %_ZN3fmt3v116detail21format_duration_valueIclNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std11is_integralIT0_EE5valueEiE4typeELi0EEET1_S9_S6_i.exit ], [ %7, %._crit_edge.i.i.i.i ] ; 2 uses
+  %i.ad = phi i64 [ %.pre.i.i.i.i, %_ZN3fmt3v116detail21format_duration_valueIclNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std11is_integralIT0_EE5valueEiE4typeELi0EEET1_S9_S6_i.exit ], [ %i.ah, %._crit_edge.i.i.i.i ] ; 2 uses
   %i.ae = add i64 %i.ad, 1                        ; 2 uses
   %i.af = icmp ugt i64 %i.ae, %i.ac
   br i1 %i.af, label %bb.g, label %_ZN3fmt3v116detail6bufferIcE11try_reserveEm.exit.i.i.i.i
@@ -220,15 +220,13 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN3fmt3v116detail6bufferIcE11try_reserveEm.exit.i.i.i.i
 
 _ZN3fmt3v116detail6bufferIcE11try_reserveEm.exit.i.i.i.i: ; preds = %.noexc27, %bb.f
-  %i.ah = phi i64 [ %i.ac, %bb.f ], [ %.pre30.i.i.i.i, %.noexc27 ] ; 3 uses
+  %i.ah = phi i64 [ %i.ac, %bb.f ], [ %.pre30.i.i.i.i, %.noexc27 ] ; 4 uses
   %i.ai = phi i64 [ %i.ad, %bb.f ], [ %.pre31.i.i.i.i, %.noexc27 ] ; 2 uses
-  %6 = icmp ne i64 %i.ah, %i.ai                   ; 2 uses
-  %spec.select.i.i.i.i = zext i1 %6 to i64        ; 2 uses
-  br i1 %6, label %_ZN3fmt3v116detail20format_duration_unitIcSt5ratioILl3600ELl1EENS0_14basic_appenderIcEEEET1_S7_.exit, label %._crit_edge.i.i.i.i
+  %.not = icmp eq i64 %i.ah, %i.ai
+  br i1 %.not, label %._crit_edge.i.i.i.i, label %_ZN3fmt3v116detail20format_duration_unitIcSt5ratioILl3600ELl1EENS0_14basic_appenderIcEEEET1_S7_.exit
 
 ._crit_edge.i.i.i.i:                              ; preds = %_ZN3fmt3v116detail6bufferIcE11try_reserveEm.exit.i.i.i.i
-  %7 = add nuw nsw i64 %i.ah, %spec.select.i.i.i.i ; 2 uses
-  store i64 %7, ptr %i.z, align 8, !tbaa !220
+  store i64 %i.ah, ptr %i.z, align 8, !tbaa !220
   br label %bb.f
 
 _ZN3fmt3v116detail20format_duration_unitIcSt5ratioILl3600ELl1EENS0_14basic_appenderIcEEEET1_S7_.exit: ; preds = %_ZN3fmt3v116detail6bufferIcE11try_reserveEm.exit.i.i.i.i
@@ -236,7 +234,7 @@ _ZN3fmt3v116detail20format_duration_unitIcSt5ratioILl3600ELl1EENS0_14basic_appen
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ai
   store i8 104, ptr %i.ak, align 1, !tbaa !26
   %.pre32.i.i.i.i = load i64, ptr %i.z, align 8, !tbaa !220
-  %i.al = add i64 %.pre32.i.i.i.i, %spec.select.i.i.i.i
+  %i.al = add i64 %.pre32.i.i.i.i, 1
   store i64 %i.al, ptr %i.z, align 8, !tbaa !220
   br label %bb.o
 
@@ -639,7 +637,7 @@ bb.ar:                                            ; preds = %bb.u
 
 bb.as:                                            ; preds = %._crit_edge.i.i.i.i.i, %bb.ar
   %i.gh = phi i64 [ %.pre.i, %bb.ar ], [ %i.gm, %._crit_edge.i.i.i.i.i ] ; 2 uses
-  %i.gi = phi i64 [ %.pre.i.i.i.i.i, %bb.ar ], [ %7, %._crit_edge.i.i.i.i.i ] ; 2 uses
+  %i.gi = phi i64 [ %.pre.i.i.i.i.i, %bb.ar ], [ %i.gm, %._crit_edge.i.i.i.i.i ] ; 2 uses
   %i.gj = add i64 %i.gi, 1                        ; 2 uses
   %i.gk = icmp ugt i64 %i.gj, %i.gh
   br i1 %i.gk, label %bb.at, label %_ZN3fmt3v116detail6bufferIcE11try_reserveEm.exit.i.i.i.i.i
@@ -652,15 +650,13 @@ bb.at:                                            ; preds = %bb.as
   br label %_ZN3fmt3v116detail6bufferIcE11try_reserveEm.exit.i.i.i.i.i
 
 _ZN3fmt3v116detail6bufferIcE11try_reserveEm.exit.i.i.i.i.i: ; preds = %bb.at, %bb.as
-  %i.gm = phi i64 [ %i.gh, %bb.as ], [ %.pre30.i.i.i.i.i, %bb.at ] ; 3 uses
+  %i.gm = phi i64 [ %i.gh, %bb.as ], [ %.pre30.i.i.i.i.i, %bb.at ] ; 4 uses
   %i.gn = phi i64 [ %i.gi, %bb.as ], [ %.pre31.i.i.i.i.i, %bb.at ] ; 2 uses
-  %6 = icmp ne i64 %i.gm, %i.gn                   ; 2 uses
-  %spec.select.i.i.i.i.i = zext i1 %6 to i64      ; 2 uses
-  br i1 %6, label %_ZN3fmt3v116detail18duration_formatterIclSt5ratioILl3600ELl1EEE16on_duration_unitEv.exit, label %._crit_edge.i.i.i.i.i
+  %.not.i = icmp eq i64 %i.gm, %i.gn
+  br i1 %.not.i, label %._crit_edge.i.i.i.i.i, label %_ZN3fmt3v116detail18duration_formatterIclSt5ratioILl3600ELl1EEE16on_duration_unitEv.exit
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %_ZN3fmt3v116detail6bufferIcE11try_reserveEm.exit.i.i.i.i.i
-  %7 = add nuw nsw i64 %i.gm, %spec.select.i.i.i.i.i ; 2 uses
-  store i64 %7, ptr %i.ge, align 8, !tbaa !220
+  store i64 %i.gm, ptr %i.ge, align 8, !tbaa !220
   br label %bb.as
 
 _ZN3fmt3v116detail18duration_formatterIclSt5ratioILl3600ELl1EEE16on_duration_unitEv.exit: ; preds = %_ZN3fmt3v116detail6bufferIcE11try_reserveEm.exit.i.i.i.i.i
@@ -668,7 +664,7 @@ _ZN3fmt3v116detail18duration_formatterIclSt5ratioILl3600ELl1EEE16on_duration_uni
   %i.gp = getelementptr inbounds nuw i8, ptr %i.go, i64 %i.gn
   store i8 104, ptr %i.gp, align 1, !tbaa !26
   %.pre32.i.i.i.i.i = load i64, ptr %i.ge, align 8, !tbaa !220
-  %i.gq = add i64 %.pre32.i.i.i.i.i, %spec.select.i.i.i.i.i
+  %i.gq = add i64 %.pre32.i.i.i.i.i, 1
   store i64 %i.gq, ptr %i.ge, align 8, !tbaa !220
   store ptr %.sroa.0.0.copyload.i206, ptr %2, align 8, !tbaa !297
   br label %_ZN3fmt3v116detail18duration_formatterIclSt5ratioILl3600ELl1EEE7on_textEPKcS7_.exit169

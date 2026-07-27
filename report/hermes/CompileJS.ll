@@ -203,30 +203,25 @@ _ZNK4llvh9StringRefcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv.exit
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !183  ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !184 ; 2 uses
-  %3 = ptrtoint ptr %i.ab to i64
-  %4 = ptrtoint ptr %i.z to i64
-  %5 = sub i64 %3, %4                             ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !185)
   store i64 0, ptr %i.x, align 8, !alias.scope !185
   %.not.i.i.i.i = icmp eq ptr %i.ab, %i.z
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.thread.i.i.i, label %.lr.ph.i.i.i.i.preheader.i.i.i
-
-_ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.thread.i.i.i: ; preds = %_ZNK4llvh9StringRefcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv.exit
-  %6 = getelementptr inbounds nuw i8, ptr null, i64 %5
-  br label %_ZNK4llvh8ArrayRefISt4pairIjjEEcvSt6vectorIS2_SaIS2_EEEv.exit
+  br i1 %.not.i.i.i.i, label %_ZNK4llvh8ArrayRefISt4pairIjjEEcvSt6vectorIS2_SaIS2_EEEv.exit, label %.lr.ph.i.i.i.i.preheader.i.i.i
 
 .lr.ph.i.i.i.i.preheader.i.i.i:                   ; preds = %_ZNK4llvh9StringRefcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv.exit
+  %3 = ptrtoint ptr %i.z to i64
+  %4 = ptrtoint ptr %i.ab to i64
+  %5 = sub i64 %4, %3                             ; 3 uses
   %i.ac = call noalias noundef nonnull ptr @_Znwm(i64 noundef %5) #13, !noalias !185 ; 3 uses
   store ptr %i.ac, ptr %i.x, align 8, !tbaa !183, !alias.scope !185
-  %i.ad = getelementptr i8, ptr %i.ac, i64 %5     ; 2 uses
+  %i.ad = getelementptr i8, ptr %i.ac, i64 %5
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ac, ptr align 4 %i.z, i64 %5, i1 false), !noalias !185
   br label %_ZNK4llvh8ArrayRefISt4pairIjjEEcvSt6vectorIS2_SaIS2_EEEv.exit
 
-_ZNK4llvh8ArrayRefISt4pairIjjEEcvSt6vectorIS2_SaIS2_EEEv.exit: ; preds = %_ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.thread.i.i.i, %.lr.ph.i.i.i.i.preheader.i.i.i
-  %.sink.i = phi ptr [ %6, %_ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.thread.i.i.i ], [ %i.ad, %.lr.ph.i.i.i.i.preheader.i.i.i ]
-  %.0.lcssa.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.thread.i.i.i ], [ %i.ad, %.lr.ph.i.i.i.i.preheader.i.i.i ]
+_ZNK4llvh8ArrayRefISt4pairIjjEEcvSt6vectorIS2_SaIS2_EEEv.exit: ; preds = %_ZNK4llvh9StringRefcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv.exit, %.lr.ph.i.i.i.i.preheader.i.i.i
+  %.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %i.ad, %.lr.ph.i.i.i.i.preheader.i.i.i ], [ null, %_ZNK4llvh9StringRefcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv.exit ] ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
-  store ptr %.sink.i, ptr %i.ae, align 8, !tbaa !188, !alias.scope !185
+  store ptr %.0.lcssa.i.i.i.i.i.i.i, ptr %i.ae, align 8, !tbaa !188, !alias.scope !185
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 56
   store ptr %.0.lcssa.i.i.i.i.i.i.i, ptr %i.af, align 8, !tbaa !184, !alias.scope !185
   %i.ag = load ptr, ptr %1, align 8, !tbaa !49

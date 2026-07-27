@@ -204,21 +204,15 @@ declare void @_ZN5arrow8FieldRefC1ENS_9FieldPathE(ptr noundef nonnull align 8 de
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow7compute18StructFieldOptionsC2ESt16initializer_listIiE(ptr noundef nonnull align 8 dereferenceable(56) initializes((0, 16)) %0, ptr nofree readonly captures(none) %1, i64 %2) unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.arrow::FieldPath", align 8  ; 10 uses
+  %3 = alloca %"class.arrow::FieldPath", align 8  ; 9 uses
   %i.a = load ptr, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_123kStructFieldOptionsTypeE, align 8, !tbaa !38
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.a, ptr %i.b, align 8, !tbaa !41
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5arrow7compute18StructFieldOptionsE, i64 16), ptr %0, align 8, !tbaa !43
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
-  %.idx.i.i = shl nuw nsw i64 %2, 2               ; 4 uses
+  %.idx.i.i = shl nuw nsw i64 %2, 2               ; 3 uses
   %.not.i.i.i.i = icmp eq i64 %2, 0
-  br i1 %.not.i.i.i.i, label %.thread.i.i.i, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i
-
-.thread.i.i.i:                                    ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr null, i64 %.idx.i.i ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store ptr %4, ptr %5, align 8, !tbaa !177
-  br label %bb.d
+  br i1 %.not.i.i.i.i, label %bb.d, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i
 
 _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i: ; preds = %bb.a
   %i.c = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx.i.i) #29 ; 4 uses
@@ -238,8 +232,8 @@ bb.c:                                             ; preds = %_ZNSt12_Vector_base
   store i32 %i.f, ptr %i.c, align 4, !tbaa !3
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b, %.thread.i.i.i
-  %i.g = phi ptr [ %i.d, %bb.b ], [ %4, %.thread.i.i.i ], [ %i.d, %bb.c ]
+bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
+  %i.g = phi ptr [ %i.d, %bb.b ], [ %i.d, %bb.c ], [ null, %bb.a ]
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.g, ptr %i.h, align 8, !tbaa !183
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16

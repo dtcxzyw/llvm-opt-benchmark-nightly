@@ -204,7 +204,7 @@ _ZN2v88internal31SharedStringAccessGuardIfNeededD2Ev.exit.i: ; preds = %bb.ab, %
   %i.eq = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.er = load i32, ptr %i.eq, align 8
   %.fr133 = freeze i32 %i.er                      ; 2 uses
-  %i.es = zext i32 %.fr133 to i64                 ; 12 uses
+  %i.es = zext i32 %.fr133 to i64                 ; 10 uses
   br i1 %i.eo, label %.lr.ph267.i.preheader, label %.lr.ph.preheader.i
 
 .lr.ph267.i.preheader:                            ; preds = %_ZN2v88internal31SharedStringAccessGuardIfNeededD2Ev.exit.i
@@ -248,26 +248,27 @@ bb.ae:                                            ; preds = %.lr.ph267.i.2
   %.idx.i.i.i = shl nuw nsw i64 %i.es, 1
   %i.fj = getelementptr inbounds nuw i8, ptr %i.ep, i64 %.idx.i.i.i ; 3 uses
   %i.fk = icmp eq i32 %.fr133, 0
-  %i.fl = load i64, ptr %.sroa.4.0..sroa_idx.i41, align 8
-  %10 = icmp eq i64 %i.fl, %i.es                  ; 2 uses
+  %i.fl = load i64, ptr %.sroa.4.0..sroa_idx.i41, align 8 ; 2 uses
   br i1 %i.fk, label %.lr.ph.i.us.preheader, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i
+  %10 = icmp eq i64 %i.fl, %i.es
   br i1 %10, label %.lr.ph.i.i.preheader.i, label %.loopexit.i
 
 .lr.ph.i.us.preheader:                            ; preds = %.lr.ph.preheader.i
-  br i1 %10, label %_ZNSt6vectorISt5tupleIJPKcmN7simdutf27last_chunk_handling_optionsEEESaIS5_EED2Ev.exit.thread, label %.loopexit.i.us
+  %11 = icmp eq i64 %i.fl, 0
+  br i1 %11, label %_ZNSt6vectorISt5tupleIJPKcmN7simdutf27last_chunk_handling_optionsEEESaIS5_EED2Ev.exit.thread, label %.loopexit.i.us
 
 .loopexit.i.us:                                   ; preds = %.lr.ph.i.us.preheader
   %i.fm = getelementptr inbounds nuw i8, ptr %i.aw, i64 32
   %i.fn = load i64, ptr %i.fm, align 8
-  %i.fo = icmp eq i64 %i.fn, %i.es
+  %i.fo = icmp eq i64 %i.fn, 0
   br i1 %i.fo, label %_ZNSt6vectorISt5tupleIJPKcmN7simdutf27last_chunk_handling_optionsEEESaIS5_EED2Ev.exit.thread, label %.loopexit.i.us.1
 
 .loopexit.i.us.1:                                 ; preds = %.loopexit.i.us
   %i.fp = getelementptr inbounds nuw i8, ptr %i.aw, i64 56
   %i.fq = load i64, ptr %i.fp, align 8
-  %i.fr = icmp eq i64 %i.fq, %i.es
+  %i.fr = icmp eq i64 %i.fq, 0
   br i1 %i.fr, label %_ZNSt6vectorISt5tupleIJPKcmN7simdutf27last_chunk_handling_optionsEEESaIS5_EED2Ev.exit.thread, label %.loopexit
 
 .lr.ph.i.i.preheader.i:                           ; preds = %.lr.ph.i.preheader

@@ -204,7 +204,7 @@ _ZN4llvh11raw_ostreamlsEPKc.exit.i196:            ; preds = %bb.cd, %bb.cc
   %i.ph = load i8, ptr %i.pg, align 1, !tbaa !126, !range !124, !noundef !125
   %i.pi = trunc nuw i8 %i.ph to i1                ; 3 uses
   %not..i = xor i1 %i.pi, true
-  %i.pj = zext i1 %not..i to i64                  ; 4 uses
+  %i.pj = zext i1 %not..i to i64                  ; 2 uses
   %i.pk = getelementptr inbounds nuw i8, ptr %.0.i.i.i197, i64 16
   %i.pl = load ptr, ptr %i.pk, align 8, !tbaa !25
   %i.pm = getelementptr inbounds nuw i8, ptr %.0.i.i.i197, i64 24 ; 2 uses
@@ -225,9 +225,9 @@ bb.cf:                                            ; preds = %_ZN4llvh11raw_ostre
   br i1 %i.pi, label %_ZN4llvh11raw_ostreamlsEPKc.exit9.i, label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.pf, ptr nonnull align 1 @.str.62, i64 %i.pj, i1 false)
+  store i8 60, ptr %i.pf, align 1
   %i.pt = load ptr, ptr %i.pm, align 8, !tbaa !28
-  %i.pu = getelementptr inbounds nuw i8, ptr %i.pt, i64 %i.pj ; 2 uses
+  %i.pu = getelementptr inbounds nuw i8, ptr %i.pt, i64 1 ; 2 uses
   store ptr %i.pu, ptr %i.pm, align 8, !tbaa !28
   br label %_ZN4llvh11raw_ostreamlsEPKc.exit9.i
 

@@ -203,7 +203,7 @@ bb.kg:                                            ; preds = %.thread958, %bb.ke
   %i.alu = phi i32 [ 1, %.thread958 ], [ %.sink, %bb.ke ]
   %i.alv = getelementptr inbounds nuw i8, ptr %.2562, i64 8 ; 4 uses
   %i.alw = sext i32 %i.alu to i64
-  %i.alx = sext i32 %i.aia to i64                 ; 14 uses
+  %i.alx = sext i32 %i.aia to i64                 ; 13 uses
   %i.aly = tail call ptr @_TIFFCheckMalloc(ptr noundef nonnull %0, i64 noundef %i.alw, i64 noundef %i.alx, ptr noundef nonnull @.str.24) #10 ; 16 uses
   %i.alz = getelementptr inbounds nuw i8, ptr %.2562, i64 16 ; 4 uses
   store ptr %i.aly, ptr %i.alz, align 8, !tbaa !40
@@ -606,7 +606,7 @@ bb.mo:                                            ; preds = %bb.mn, %bb.mm
   %i.aua = phi ptr [ %i.atv, %bb.mm ], [ %i.aty, %bb.mn ]
   %i.aub = load double, ptr %i.aua, align 8, !tbaa !94
   store double %i.aub, ptr %i.l, align 8, !tbaa !94
-  call void @_TIFFmemcpy(ptr noundef nonnull %i.aly, ptr noundef nonnull %i.l, i64 noundef %i.alx) #10
+  call void @_TIFFmemcpy(ptr noundef nonnull %i.aly, ptr noundef nonnull %i.l, i64 noundef 8) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #10
   br label %.thread756
 

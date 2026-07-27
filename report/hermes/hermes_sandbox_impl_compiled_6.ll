@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.d, %bb.a
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i313) #8, !srcloc !33
   %i.o = trunc i64 %.0.copyload.i313 to i32       ; 6 uses
   %i.p = lshr i64 %.0.copyload.i313, 32           ; 2 uses
-  %i.q = trunc nuw i64 %i.p to i32                ; 7 uses
+  %i.q = trunc nuw i64 %i.p to i32                ; 6 uses
   %.not285 = icmp eq i64 %i.p, 0                  ; 2 uses
   br i1 %.not285, label %.loopexit, label %bb.f
 
@@ -368,7 +368,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ck = getelementptr inbounds nuw i8, ptr %.val301.us, i64 %i.cj
   %.0.copyload.i327.us = load i32, ptr %i.ck, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i327.us) #8, !srcloc !14
-  %.not291.us = icmp eq i32 %.0.copyload.i327.us, %i.q
+  %.not291.us = icmp eq i32 %.0.copyload.i327.us, 0
   br i1 %.not291.us, label %w2c_hermes_memcmp.exit.thread, label %w2c_hermes_memcmp.exit.us
 
 w2c_hermes_memcmp.exit.us:                        ; preds = %bb.k, %bb.j, %bb.i

@@ -204,7 +204,6 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !104)
-  %3 = zext i1 %1 to i8                           ; 2 uses
   br i1 %1, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
@@ -232,7 +231,7 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecbE7reserveCs14kWLkQVSKO_14deltalake_c
 
 ._crit_edge.thread.i.i:                           ; preds = %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecbE7reserveCs14kWLkQVSKO_14deltalake_core.exit.i.i
   %i.l = add i64 %2, -1
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.i, i8 %3, i64 %i.l, i1 false), !noalias !104
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.i, i8 1, i64 %i.l, i1 false), !noalias !104
   %i.m = getelementptr i8, ptr %i.i, i64 %2
   %scevgep.i.i = getelementptr i8, ptr %i.m, i64 -1
   br label %bb.d
@@ -243,7 +242,7 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecbE7reserveCs14kWLkQVSKO_14deltalake_c
 
 bb.d:                                             ; preds = %._crit_edge.i.i, %._crit_edge.thread.i.i
   %.sroa.0.0.lcssa28.i.i = phi ptr [ %scevgep.i.i, %._crit_edge.thread.i.i ], [ %i.i, %._crit_edge.i.i ]
-  store i8 %3, ptr %.sroa.0.0.lcssa28.i.i, align 1, !noalias !104
+  store i8 1, ptr %.sroa.0.0.lcssa28.i.i, align 1, !noalias !104
   br label %_RINvXs_NtNtCs6Po7BT7Nknu_5alloc3vec14spec_from_elembNtB5_12SpecFromElem9from_elemNtNtB9_5alloc6GlobalECs14kWLkQVSKO_14deltalake_core.exit
 
 bb.e:                                             ; preds = %bb.a

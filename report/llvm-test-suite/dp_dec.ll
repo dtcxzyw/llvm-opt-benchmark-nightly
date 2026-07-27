@@ -34,7 +34,7 @@ bb.a:
 
 .preheader518:                                    ; preds = %bb.a
   %.not523 = icmp slt i32 %4, 1
-  %.pre = add i32 %4, 1                           ; 6 uses
+  %.pre = add i32 %4, 1                           ; 4 uses
   br i1 %.not523, label %._crit_edge, label %.lr.ph525.preheader
 
 .lr.ph525.preheader:                              ; preds = %.preheader518
@@ -164,7 +164,6 @@ bb.d:                                             ; preds = %._crit_edge
   br i1 %i.bg, label %.lr.ph551.preheader, label %._crit_edge552
 
 .lr.ph551.preheader:                              ; preds = %bb.d
-  %7 = sext i32 %.pre to i64
   %wide.trip.count581 = zext nneg i32 %2 to i64
   %scevgep = getelementptr i8, ptr %1, i64 16
   %load_initial = load i32, ptr %scevgep, align 4
@@ -177,9 +176,9 @@ bb.d:                                             ; preds = %._crit_edge
   %.0432547 = phi i16 [ %i.bd, %.lr.ph551.preheader ], [ %.1433, %bb.n ] ; 6 uses
   %.0434546 = phi i16 [ %i.bb, %.lr.ph551.preheader ], [ %.1435, %bb.n ] ; 8 uses
   %.0436545 = phi i16 [ %i.az, %.lr.ph551.preheader ], [ %.1437, %bb.n ] ; 10 uses
-  %8 = sub nsw i64 %indvars.iv579, %7
-  %9 = getelementptr inbounds [4 x i8], ptr %1, i64 %8
-  %i.bh = load i32, ptr %9, align 4, !tbaa !4     ; 13 uses
+  %7 = getelementptr [4 x i8], ptr %1, i64 %indvars.iv579
+  %8 = getelementptr i8, ptr %7, i64 -20
+  %i.bh = load i32, ptr %8, align 4, !tbaa !4     ; 13 uses
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv579 ; 4 uses
   %.neg566 = sub i32 %store_forwarded, %i.bh
   %i.bj = getelementptr inbounds i8, ptr %i.bi, i64 -8
@@ -335,7 +334,6 @@ bb.o:                                             ; preds = %._crit_edge
   br i1 %i.ew, label %.lr.ph536.preheader, label %._crit_edge537
 
 .lr.ph536.preheader:                              ; preds = %bb.o
-  %10 = sext i32 %.pre to i64
   %wide.trip.count577 = zext nneg i32 %2 to i64
   %scevgep645 = getelementptr i8, ptr %1, i64 32
   %load_initial646 = load i32, ptr %scevgep645, align 4
@@ -352,9 +350,9 @@ bb.o:                                             ; preds = %._crit_edge
   %.0418529 = phi i16 [ %i.et, %.lr.ph536.preheader ], [ %.1419, %bb.ag ] ; 6 uses
   %.0420528 = phi i16 [ %i.er, %.lr.ph536.preheader ], [ %.1421, %bb.ag ] ; 8 uses
   %.0422527 = phi i16 [ %i.ep, %.lr.ph536.preheader ], [ %.1423, %bb.ag ] ; 10 uses
-  %11 = sub nsw i64 %indvars.iv575, %10
-  %12 = getelementptr inbounds [4 x i8], ptr %1, i64 %11
-  %i.ex = load i32, ptr %12, align 4, !tbaa !4    ; 25 uses
+  %9 = getelementptr [4 x i8], ptr %1, i64 %indvars.iv575
+  %10 = getelementptr i8, ptr %9, i64 -36
+  %i.ex = load i32, ptr %10, align 4, !tbaa !4    ; 25 uses
   %i.ey = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv575 ; 8 uses
   %i.ez = getelementptr inbounds i8, ptr %i.ey, i64 -8
   %.neg565 = sub i32 %store_forwarded647, %i.ex

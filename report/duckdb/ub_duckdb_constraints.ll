@@ -201,9 +201,9 @@ bb.b:                                             ; preds = %bb.a
   %i.d = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #24 ; 3 uses
   store ptr %i.d, ptr %0, align 8, !tbaa !80
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
-  store i64 %i.c, ptr %i.d, align 8, !tbaa !36
   %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.e, ptr %3, align 8, !tbaa !83
+  store i64 %i.c, ptr %i.d, align 8, !tbaa !36
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.e, ptr %i.f, align 8, !tbaa !84
   br label %bb.n

@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.f
 _ZN4absl18container_internal12_GLOBAL__N_117AllocBackingArrayERNS0_12CommonFieldsERKNS0_15PolicyFunctionsEmbPv.exit: ; preds = %bb.f
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.i = load i32, ptr %i.h, align 8              ; 2 uses
-  %i.j = zext i32 %i.i to i64                     ; 2 uses
+  %i.j = zext i32 %i.i to i64
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.l = load ptr, ptr %i.k, align 8
   %i.m = tail call noundef ptr %i.l(ptr noundef nonnull align 8 dereferenceable(32) %0) #16
@@ -350,7 +350,7 @@ bb.n:                                             ; preds = %_ZN4absl18container
   unreachable
 
 bb.o:                                             ; preds = %_ZN4absl18container_internal12_GLOBAL__N_135InitializeThreeElementsControlBytesEhhmPNS0_6ctrl_tE.exit
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.j
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.z, i64 1
   %i.ca = load i8, ptr %i.ba, align 8
   store i8 %i.ca, ptr %i.bz, align 1
   store ptr %i.y, ptr %i.ba, align 8

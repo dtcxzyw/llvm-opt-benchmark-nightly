@@ -204,7 +204,7 @@ bb.v:                                             ; preds = %bb.u
   %i.vv = load i32, ptr %i.vu, align 8, !tbaa !46 ; 2 uses
   %i.vw = and i32 %i.vv, %i.vt                    ; 2 uses
   %i.vx = icmp eq i32 %spec.store.select7, 2      ; 3 uses
-  %i.vy = zext i1 %i.vx to i32                    ; 2 uses
+  %i.vy = zext i1 %i.vx to i32
   %i.vz = getelementptr inbounds nuw i8, ptr %0, i64 2852
   %i.wa = load i32, ptr %i.vz, align 4, !tbaa !92
   %i.wb = add i32 %i.wa, %i.vv
@@ -305,7 +305,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 
 bb.aa:                                            ; preds = %bb.z
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.wd, i8 0, i64 16, i1 false)
-  store i32 %i.vy, ptr %i.a, align 4, !tbaa !150
+  store i32 1, ptr %i.a, align 4, !tbaa !150
   br i1 %i.xr, label %.thread99.i, label %.thread.i
 
 bb.ab:                                            ; preds = %bb.z

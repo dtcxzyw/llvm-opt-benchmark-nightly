@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %psa_aead_unpadded_locate_tag.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = sub nuw i64 %9, %i.d                     ; 5 uses
+  %i.f = sub nuw i64 %9, %i.d                     ; 4 uses
   %i.g = icmp ugt i64 %i.f, %11
   br i1 %i.g, label %psa_aead_unpadded_locate_tag.exit.thread, label %bb.d
 
@@ -230,7 +230,8 @@ bb.g:                                             ; preds = %bb.d
 
 bb.h:                                             ; preds = %bb.g
   %i.n = getelementptr inbounds nuw i8, ptr %13, i64 8
-  %i.o = call i32 @mbedtls_chachapoly_auth_decrypt(ptr noundef nonnull %i.n, i64 noundef %i.f, ptr noundef %4, ptr noundef %6, i64 noundef %7, ptr noundef %i.h, ptr noundef %8, ptr noundef %10) #4
+  %14 = add i64 %9, -16
+  %i.o = call i32 @mbedtls_chachapoly_auth_decrypt(ptr noundef nonnull %i.n, i64 noundef %14, ptr noundef %4, ptr noundef %6, i64 noundef %7, ptr noundef %i.h, ptr noundef %8, ptr noundef %10) #4
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.f, %bb.h, %bb.e

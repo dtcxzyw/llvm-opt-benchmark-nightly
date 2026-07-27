@@ -204,7 +204,7 @@ bb.a:
   %.sroa.20.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.20.0.copyload = load i32, ptr %.sroa.20.0..sroa_idx, align 8 ; 2 uses
   %.sroa.2225.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %.sroa.2225.0.copyload = load ptr, ptr %.sroa.2225.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.2225.0.copyload = load ptr, ptr %.sroa.2225.0..sroa_idx, align 8 ; 3 uses
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
   %.sroa.24.0.copyload = load i32, ptr %.sroa.24.0..sroa_idx, align 8 ; 3 uses
   %i.a = load i32, ptr %1, align 8
@@ -250,7 +250,7 @@ bb.f:                                             ; preds = %bb.a
 
 bb.g:                                             ; preds = %bb.f
   %i.l = sext i32 %.sroa.24.0.copyload to i64
-  %.idx = shl nsw i64 %i.l, 4                     ; 6 uses
+  %.idx = shl nsw i64 %i.l, 4                     ; 5 uses
   %i.m = icmp ugt i64 %.idx, 9223372036854775792
   br i1 %i.m, label %bb.h, label %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i
 
@@ -260,33 +260,26 @@ bb.h:                                             ; preds = %bb.g
 
 _ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i: ; preds = %bb.g
   %.not.i.i.i = icmp eq i32 %.sroa.24.0.copyload, 0
-  br i1 %.not.i.i.i, label %.thread.i.i, label %_ZNSt12_Vector_baseIN2v820CpuProfileDeoptFrameESaIS1_EE11_M_allocateEm.exit.i.i
-
-.thread.i.i:                                      ; preds = %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i
-  %3 = getelementptr inbounds nuw i8, ptr null, i64 %.idx
-  br label %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit
+  br i1 %.not.i.i.i, label %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit, label %_ZNSt12_Vector_baseIN2v820CpuProfileDeoptFrameESaIS1_EE11_M_allocateEm.exit.i.i
 
 _ZNSt12_Vector_baseIN2v820CpuProfileDeoptFrameESaIS1_EE11_M_allocateEm.exit.i.i: ; preds = %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i
-  %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx) #22 ; 6 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %.idx ; 3 uses
+  %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx) #22 ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %.idx ; 2 uses
   %i.p = icmp samesign ugt i64 %.idx, 16
-  br i1 %i.p, label %4, label %bb.i, !prof !18
-
-4:                                                ; preds = %_ZNSt12_Vector_baseIN2v820CpuProfileDeoptFrameESaIS1_EE11_M_allocateEm.exit.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr align 8 %.sroa.2225.0.copyload, i64 %.idx, i1 false)
-  br label %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit
+  br i1 %i.p, label %bb.j, label %bb.i, !prof !18
 
 bb.i:                                             ; preds = %_ZNSt12_Vector_baseIN2v820CpuProfileDeoptFrameESaIS1_EE11_M_allocateEm.exit.i.i
   %i.q = icmp eq i32 %.sroa.24.0.copyload, 1
   br i1 %i.q, label %bb.j, label %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit
 
-bb.j:                                             ; preds = %bb.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.2225.0.copyload, i64 16, i1 false)
+bb.j:                                             ; preds = %bb.i, %_ZNSt12_Vector_baseIN2v820CpuProfileDeoptFrameESaIS1_EE11_M_allocateEm.exit.i.i
+  %.idx.sink = phi i64 [ %.idx, %_ZNSt12_Vector_baseIN2v820CpuProfileDeoptFrameESaIS1_EE11_M_allocateEm.exit.i.i ], [ 16, %bb.i ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.n, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.2225.0.copyload, i64 %.idx.sink, i1 false)
   br label %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit
 
-_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit: ; preds = %.thread.i.i, %4, %bb.i, %bb.j
-  %.sroa.9.0 = phi ptr [ %3, %.thread.i.i ], [ %i.o, %4 ], [ %i.o, %bb.j ], [ %i.o, %bb.i ] ; 2 uses
-  %.sroa.049.0 = phi ptr [ null, %.thread.i.i ], [ %i.n, %4 ], [ %i.n, %bb.j ], [ %i.n, %bb.i ]
+_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit: ; preds = %bb.j, %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i, %bb.i
+  %.sroa.9.0 = phi ptr [ %i.o, %bb.i ], [ null, %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i ], [ %i.o, %bb.j ] ; 2 uses
+  %.sroa.049.0 = phi ptr [ %i.n, %bb.i ], [ null, %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i ], [ %i.n, %bb.j ]
   %i.r = inttoptr i64 %.sroa.11.0.copyload to ptr
   store ptr %.sroa.049.0, ptr %2, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8

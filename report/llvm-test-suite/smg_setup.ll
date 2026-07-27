@@ -199,7 +199,7 @@ bb.b:                                             ; preds = %.lr.ph501, %bb.b
   %i.jm = getelementptr inbounds nuw i8, ptr %0, i64 160
   store ptr %i.dc, ptr %i.jm, align 8, !tbaa !66
   %i.jn = call ptr @hypre_MAlloc(i32 noundef %i.cu) #5 ; 3 uses
-  %i.jo = call ptr @hypre_MAlloc(i32 noundef %i.cu) #5 ; 3 uses
+  %i.jo = call ptr @hypre_MAlloc(i32 noundef %i.cu) #5 ; 4 uses
   %i.jp = call ptr @hypre_MAlloc(i32 noundef %i.cu) #5 ; 2 uses
   %i.jq = call ptr @hypre_MAlloc(i32 noundef %i.cu) #5 ; 2 uses
   %i.jr = load ptr, ptr %i.cz, align 8, !tbaa !44 ; 3 uses
@@ -390,7 +390,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge511, %._crit_edge511.thread
-  %.3.lcssa558 = phi i64 [ 0, %._crit_edge511.thread ], [ %i.oh, %._crit_edge511 ] ; 7 uses
+  %.3.lcssa558 = phi i64 [ 0, %._crit_edge511.thread ], [ %i.oh, %._crit_edge511 ] ; 5 uses
   %.sink539 = phi i32 [ %i.oj, %._crit_edge511.thread ], [ 0, %._crit_edge511 ]
   %.sink = phi i32 [ %i.ol, %._crit_edge511.thread ], [ 1, %._crit_edge511 ]
   %i.om = phi <2 x i32> [ %i.oi, %._crit_edge511.thread ], [ zeroinitializer, %._crit_edge511 ]
@@ -429,15 +429,13 @@ bb.g:                                             ; preds = %._crit_edge511, %._
 
 bb.h:                                             ; preds = %bb.g
   %i.pn = call ptr @hypre_SMGResidualCreate() #5  ; 2 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.jo, i64 %.3.lcssa558 ; 2 uses
-  store ptr %i.pn, ptr %4, align 8, !tbaa !68
+  store ptr %i.pn, ptr %i.jo, align 8, !tbaa !68
   %i.po = call i32 @hypre_SMGResidualSetBase(ptr noundef %i.pn, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5 ; 0 uses
-  %i.pp = load ptr, ptr %4, align 8, !tbaa !68
+  %i.pp = load ptr, ptr %i.jo, align 8, !tbaa !68
   %i.pq = load ptr, ptr %i.pg, align 8, !tbaa !42
   %i.pr = load ptr, ptr %i.pk, align 8, !tbaa !44
   %i.ps = load ptr, ptr %i.pi, align 8, !tbaa !44
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.dc, i64 %.3.lcssa558
-  %i.pt = load ptr, ptr %5, align 8, !tbaa !44
+  %i.pt = load ptr, ptr %i.dc, align 8, !tbaa !44
   %i.pu = call i32 @hypre_SMGResidualSetup(ptr noundef %i.pp, ptr noundef %i.pq, ptr noundef %i.pr, ptr noundef %i.ps, ptr noundef %i.pt) #5 ; 0 uses
   br label %bb.i
 

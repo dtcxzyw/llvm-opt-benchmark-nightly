@@ -204,28 +204,18 @@ _ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPF
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZSt17__merge_sort_loopIPN9Stockfish6SquareES2_lN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_T1_T2_(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, ptr %4) local_unnamed_addr #4 comdat {
 bb.a:
-  %i.a = shl nsw i64 %3, 1                        ; 5 uses
-  %i.b = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = shl nsw i64 %3, 1                        ; 3 uses
+  %i.b = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.c = ptrtoint ptr %0 to i64
   %i.d = sub i64 %i.b, %i.c                       ; 2 uses
   %.not47 = icmp slt i64 %i.d, %i.a
-  br i1 %.not47, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %bb.a
   %.not43 = icmp eq i64 %3, 0
-  br i1 %.not43, label %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit.us, label %.lr.ph.i.preheader
+  %or.cond = or i1 %.not47, %.not43
+  br i1 %or.cond, label %._crit_edge, label %.lr.ph.i.preheader
 
-_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit.us: ; preds = %.lr.ph, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit.us
-  %.049.us = phi ptr [ %5, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit.us ], [ %0, %.lr.ph ]
-  %5 = getelementptr inbounds nuw i8, ptr %.049.us, i64 %i.a ; 3 uses
-  %6 = ptrtoint ptr %5 to i64
-  %7 = sub i64 %i.b, %6                           ; 2 uses
-  %.not.us = icmp slt i64 %7, %i.a
-  br i1 %.not.us, label %._crit_edge, label %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit.us, !llvm.loop !524
-
-.lr.ph.i.preheader:                               ; preds = %.lr.ph, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit
-  %.049 = phi ptr [ %i.f, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit ], [ %0, %.lr.ph ] ; 3 uses
-  %.01948 = phi ptr [ %i.aa, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit ], [ %2, %.lr.ph ]
+.lr.ph.i.preheader:                               ; preds = %bb.a, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit
+  %.049 = phi ptr [ %i.f, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit ], [ %0, %bb.a ] ; 3 uses
+  %.01948 = phi ptr [ %i.aa, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit ], [ %2, %bb.a ]
   %i.e = getelementptr inbounds i8, ptr %.049, i64 %3 ; 3 uses
   %i.f = getelementptr inbounds i8, ptr %.049, i64 %i.a ; 4 uses
   br label %.lr.ph.i
@@ -236,7 +226,7 @@ _ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFb
   %.01922.i = phi ptr [ %.120.i, %.lr.ph.i ], [ %i.e, %.lr.ph.i.preheader ] ; 3 uses
   %i.g = load i8, ptr %.01922.i, align 1, !tbaa !95
   %i.h = load i8, ptr %.01823.i, align 1, !tbaa !95
-  %i.i = tail call noundef zeroext i1 %4(i8 noundef zeroext %i.g, i8 noundef zeroext %i.h) #26, !inline_history !525 ; 3 uses
+  %i.i = tail call noundef zeroext i1 %4(i8 noundef zeroext %i.g, i8 noundef zeroext %i.h) #26, !inline_history !524 ; 3 uses
   %.sink.in.i = select i1 %i.i, ptr %.01922.i, ptr %.01823.i
   %.120.idx.i = zext i1 %i.i to i64
   %.120.i = getelementptr inbounds nuw i8, ptr %.01922.i, i64 %.120.idx.i ; 5 uses
@@ -249,7 +239,7 @@ _ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFb
   %i.k = icmp ne ptr %.1.i, %i.e
   %i.l = icmp ne ptr %.120.i, %i.f
   %i.m = select i1 %i.k, i1 %i.l, i1 false
-  br i1 %i.m, label %.lr.ph.i, label %._crit_edge.i.loopexit, !llvm.loop !526
+  br i1 %i.m, label %.lr.ph.i, label %._crit_edge.i.loopexit, !llvm.loop !525
 
 ._crit_edge.i.loopexit:                           ; preds = %.lr.ph.i
   %i.n = ptrtoint ptr %i.e to i64
@@ -296,12 +286,12 @@ _ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFb
   %i.aa = getelementptr inbounds i8, ptr %i.t, i64 %i.w ; 2 uses
   %i.ab = sub i64 %i.b, %i.u                      ; 2 uses
   %.not = icmp slt i64 %i.ab, %i.a
-  br i1 %.not, label %._crit_edge, label %.lr.ph.i.preheader, !llvm.loop !524
+  br i1 %.not, label %._crit_edge, label %.lr.ph.i.preheader, !llvm.loop !526
 
-._crit_edge:                                      ; preds = %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit.us, %bb.a
-  %.019.lcssa = phi ptr [ %2, %bb.a ], [ %2, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit.us ], [ %i.aa, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit ] ; 2 uses
-  %.0.lcssa = phi ptr [ %0, %bb.a ], [ %5, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit.us ], [ %i.f, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit ] ; 3 uses
-  %.lcssa45 = phi i64 [ %i.d, %bb.a ], [ %7, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit.us ], [ %i.ab, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit ]
+._crit_edge:                                      ; preds = %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit, %bb.a
+  %.019.lcssa = phi ptr [ %2, %bb.a ], [ %i.aa, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit ] ; 2 uses
+  %.0.lcssa = phi ptr [ %0, %bb.a ], [ %i.f, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit ] ; 3 uses
+  %.lcssa45 = phi i64 [ %i.d, %bb.a ], [ %i.ab, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEET0_T_SA_SA_SA_S9_T1_.exit ]
   %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %3, i64 %.lcssa45) ; 2 uses
   %i.ac = getelementptr inbounds i8, ptr %.0.lcssa, i64 %.sroa.speculated ; 5 uses
   %i.ad = icmp ne i64 %.sroa.speculated, 0
@@ -315,7 +305,7 @@ _ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFb
   %.01922.i30 = phi ptr [ %.120.i33, %.lr.ph.i27 ], [ %i.ac, %._crit_edge ] ; 3 uses
   %i.ag = load i8, ptr %.01922.i30, align 1, !tbaa !95
   %i.ah = load i8, ptr %.01823.i29, align 1, !tbaa !95
-  %i.ai = tail call noundef zeroext i1 %4(i8 noundef zeroext %i.ag, i8 noundef zeroext %i.ah) #26, !inline_history !525 ; 3 uses
+  %i.ai = tail call noundef zeroext i1 %4(i8 noundef zeroext %i.ag, i8 noundef zeroext %i.ah) #26, !inline_history !524 ; 3 uses
   %.sink.in.i31 = select i1 %i.ai, ptr %.01922.i30, ptr %.01823.i29
   %.120.idx.i32 = zext i1 %i.ai to i64
   %.120.i33 = getelementptr inbounds nuw i8, ptr %.01922.i30, i64 %.120.idx.i32 ; 3 uses
@@ -328,7 +318,7 @@ _ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFb
   %i.ak = icmp ne ptr %.1.i36, %i.ac
   %i.al = icmp ne ptr %.120.i33, %1
   %i.am = select i1 %i.ak, i1 %i.al, i1 false
-  br i1 %i.am, label %.lr.ph.i27, label %._crit_edge.i22, !llvm.loop !526
+  br i1 %i.am, label %.lr.ph.i27, label %._crit_edge.i22, !llvm.loop !525
 
 ._crit_edge.i22:                                  ; preds = %.lr.ph.i27, %._crit_edge
   %.019.lcssa.i23 = phi ptr [ %i.ac, %._crit_edge ], [ %.120.i33, %.lr.ph.i27 ] ; 3 uses
@@ -731,28 +721,18 @@ _ZSt21__move_merge_adaptiveIPN9Stockfish6SquareES2_S2_N9__gnu_cxx5__ops15_Iter_l
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZSt17__merge_sort_loopIPN9Stockfish6SquareES2_lN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_T1_T2_(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #4 comdat {
 bb.a:
-  %i.a = shl nsw i64 %3, 1                        ; 5 uses
-  %i.b = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = shl nsw i64 %3, 1                        ; 3 uses
+  %i.b = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.c = ptrtoint ptr %0 to i64
   %i.d = sub i64 %i.b, %i.c                       ; 2 uses
   %.not44 = icmp slt i64 %i.d, %i.a
-  br i1 %.not44, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %bb.a
   %.not40 = icmp eq i64 %3, 0
-  br i1 %.not40, label %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit.us, label %.lr.ph.i.preheader
+  %or.cond = or i1 %.not44, %.not40
+  br i1 %or.cond, label %._crit_edge, label %.lr.ph.i.preheader
 
-_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit.us: ; preds = %.lr.ph, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit.us
-  %.046.us = phi ptr [ %4, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit.us ], [ %0, %.lr.ph ]
-  %4 = getelementptr inbounds nuw i8, ptr %.046.us, i64 %i.a ; 3 uses
-  %5 = ptrtoint ptr %4 to i64
-  %6 = sub i64 %i.b, %5                           ; 2 uses
-  %.not.us = icmp slt i64 %6, %i.a
-  br i1 %.not.us, label %._crit_edge, label %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit.us, !llvm.loop !570
-
-.lr.ph.i.preheader:                               ; preds = %.lr.ph, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit
-  %.046 = phi ptr [ %i.f, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit ], [ %0, %.lr.ph ] ; 3 uses
-  %.01745 = phi ptr [ %i.aa, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit ], [ %2, %.lr.ph ]
+.lr.ph.i.preheader:                               ; preds = %bb.a, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit
+  %.046 = phi ptr [ %i.f, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit ], [ %0, %bb.a ] ; 3 uses
+  %.01745 = phi ptr [ %i.aa, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit ], [ %2, %bb.a ]
   %i.e = getelementptr inbounds i8, ptr %.046, i64 %3 ; 3 uses
   %i.f = getelementptr inbounds i8, ptr %.046, i64 %i.a ; 4 uses
   br label %.lr.ph.i
@@ -775,7 +755,7 @@ _ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0
   %i.k = icmp ne ptr %.1.i, %i.e
   %i.l = icmp ne ptr %.120.i, %i.f
   %i.m = select i1 %i.k, i1 %i.l, i1 false
-  br i1 %i.m, label %.lr.ph.i, label %._crit_edge.i.loopexit, !llvm.loop !571
+  br i1 %i.m, label %.lr.ph.i, label %._crit_edge.i.loopexit, !llvm.loop !570
 
 ._crit_edge.i.loopexit:                           ; preds = %.lr.ph.i
   %i.n = ptrtoint ptr %i.e to i64
@@ -822,12 +802,12 @@ _ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0
   %i.aa = getelementptr inbounds i8, ptr %i.t, i64 %i.w ; 2 uses
   %i.ab = sub i64 %i.b, %i.u                      ; 2 uses
   %.not = icmp slt i64 %i.ab, %i.a
-  br i1 %.not, label %._crit_edge, label %.lr.ph.i.preheader, !llvm.loop !570
+  br i1 %.not, label %._crit_edge, label %.lr.ph.i.preheader, !llvm.loop !571
 
-._crit_edge:                                      ; preds = %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit.us, %bb.a
-  %.017.lcssa = phi ptr [ %2, %bb.a ], [ %2, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit.us ], [ %i.aa, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit ] ; 2 uses
-  %.0.lcssa = phi ptr [ %0, %bb.a ], [ %4, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit.us ], [ %i.f, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit ] ; 3 uses
-  %.lcssa42 = phi i64 [ %i.d, %bb.a ], [ %6, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit.us ], [ %i.ab, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit ]
+._crit_edge:                                      ; preds = %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit, %bb.a
+  %.017.lcssa = phi ptr [ %2, %bb.a ], [ %i.aa, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit ] ; 2 uses
+  %.0.lcssa = phi ptr [ %0, %bb.a ], [ %i.f, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit ] ; 3 uses
+  %.lcssa42 = phi i64 [ %i.d, %bb.a ], [ %i.ab, %_ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0_T_S7_S7_S7_S6_T1_.exit ]
   %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %3, i64 %.lcssa42) ; 2 uses
   %i.ac = getelementptr inbounds i8, ptr %.0.lcssa, i64 %.sroa.speculated ; 5 uses
   %i.ad = icmp ne i64 %.sroa.speculated, 0
@@ -853,7 +833,7 @@ _ZSt12__move_mergeIPN9Stockfish6SquareES2_N9__gnu_cxx5__ops15_Iter_less_iterEET0
   %i.ak = icmp ne ptr %.1.i34, %i.ac
   %i.al = icmp ne ptr %.120.i31, %1
   %i.am = select i1 %i.ak, i1 %i.al, i1 false
-  br i1 %i.am, label %.lr.ph.i25, label %._crit_edge.i20, !llvm.loop !571
+  br i1 %i.am, label %.lr.ph.i25, label %._crit_edge.i20, !llvm.loop !570
 
 ._crit_edge.i20:                                  ; preds = %.lr.ph.i25, %._crit_edge
   %.019.lcssa.i21 = phi ptr [ %i.ac, %._crit_edge ], [ %.120.i31, %.lr.ph.i25 ] ; 3 uses
@@ -1256,8 +1236,8 @@ begin_hunk_2_@llvm.vector.reduce.or.v8i64
 !521 = distinct !{!521, !31, !98, !99}
 !522 = distinct !{!522, !31, !99, !98}
 !523 = distinct !{!523, !31}
-!524 = distinct !{!524, !31}
-!525 = distinct !{null, null}
+!524 = distinct !{null, null}
+!525 = distinct !{!525, !31}
 !526 = distinct !{!526, !31}
 !527 = distinct !{null}
 !528 = distinct !{null, null}

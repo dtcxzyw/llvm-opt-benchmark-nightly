@@ -201,12 +201,12 @@ _ZN2v88internal10ZoneVectorINS1_IbEEE21EnsureOneMoreCapacityEv.exit: ; preds = %
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   store ptr %i.n, ptr %i.a, align 8
   %i.o = load i32, ptr %1, align 4                ; 2 uses
-  %i.p = sext i32 %i.o to i64                     ; 3 uses
+  %i.p = sext i32 %i.o to i64                     ; 2 uses
   %i.q = load ptr, ptr %2, align 8                ; 4 uses
   store ptr %i.q, ptr %i.m, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 3 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 24 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, i8 0, i64 24, i1 false)
   switch i32 %i.o, label %bb.d [
     i32 0, label %.thread.i
@@ -214,9 +214,7 @@ _ZN2v88internal10ZoneVectorINS1_IbEEE21EnsureOneMoreCapacityEv.exit: ; preds = %
   ], !prof !69
 
 .thread.i:                                        ; preds = %_ZN2v88internal10ZoneVectorINS1_IbEEE21EnsureOneMoreCapacityEv.exit
-  %3 = getelementptr inbounds nuw i8, ptr null, i64 %i.p ; 2 uses
-  store ptr %3, ptr %i.t, align 8
-  store ptr %3, ptr %i.s, align 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, i8 0, i64 16, i1 false)
   br label %_ZN2v88internal10ZoneVectorIbEC2EmPNS0_4ZoneE.exit
 
 bb.c:                                             ; preds = %_ZN2v88internal10ZoneVectorINS1_IbEEE21EnsureOneMoreCapacityEv.exit

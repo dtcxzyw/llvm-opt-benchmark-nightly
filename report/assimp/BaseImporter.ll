@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #26
-  %i.r = zext i32 %5 to i64                       ; 6 uses
+  %i.r = zext i32 %5 to i64                       ; 4 uses
   %i.s = load ptr, ptr %i.h, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   %i.u = load ptr, ptr %i.t, align 8
@@ -233,7 +233,7 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.0.0.insert.insert.i.i.us = call i16 @llvm.bswap.i16(i16 %.0.copyload5.us)
   %i.z = icmp eq i16 %.sroa.0.0.insert.insert.i.i.us, %i.x
   %or.cond.us = or i1 %i.y, %i.z                  ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %.03292.us, i64 %i.r
+  %i.aa = getelementptr inbounds nuw i8, ptr %.03292.us, i64 2
   %i.ab = add i32 %.03391.us, 1                   ; 2 uses
   %i.ac = zext i32 %i.ab to i64
   %.not61.not.us = icmp ule i64 %3, %i.ac
@@ -248,7 +248,7 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.0.0.insert.insert.i.i72.us = call i32 @llvm.bswap.i32(i32 %.0.copyload.us)
   %i.ae = icmp eq i32 %i.w, %.sroa.0.0.insert.insert.i.i72.us
   %or.cond88.us = or i1 %i.ad, %i.ae              ; 2 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %.03292.us94, i64 %i.r
+  %i.af = getelementptr inbounds nuw i8, ptr %.03292.us94, i64 4
   %i.ag = add i32 %.03391.us95, 1                 ; 2 uses
   %i.ah = zext i32 %i.ag to i64
   %.not61.not.us97 = icmp ule i64 %3, %i.ah
