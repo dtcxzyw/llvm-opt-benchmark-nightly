@@ -204,7 +204,8 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.01.sroa.3.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false)
   %.sroa.01.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 2, ptr %.sroa.01.sroa.2.0..sroa_idx, align 8
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 2 uses
+  store i64 0, ptr %.sroa.2.0..sroa_idx, align 8
   %i.d = load ptr, ptr %.sroa.01.sroa.3.0..sroa_idx, align 8, !alias.scope !5507, !nonnull !4, !noundef !4
   %i.e = tail call noundef i32 @PyTuple_SetItem(ptr noundef nonnull %i.b, i64 noundef 0, ptr noundef nonnull %i.d) #41 ; 0 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -257,7 +258,8 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.01.sroa.3.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false)
   %.sroa.01.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 4, ptr %.sroa.01.sroa.2.0..sroa_idx, align 8
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
+  store i64 0, ptr %.sroa.2.0..sroa_idx, align 8
   %i.d = load ptr, ptr %.sroa.01.sroa.3.0..sroa_idx, align 8, !alias.scope !5514, !nonnull !4, !noundef !4
   %i.e = tail call noundef i32 @PyTuple_SetItem(ptr noundef nonnull %i.b, i64 noundef 0, ptr noundef nonnull %i.d) #41 ; 0 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24
