@@ -204,9 +204,8 @@ bb.o:                                             ; preds = %bb.n
 
 .lr.ph238:                                        ; preds = %.preheader
   %i.cz = getelementptr i8, ptr %i.cx, i64 24
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.ct, i64 1)
-  %i.da = shl nuw nsw i64 %umax, 2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.cz, i8 0, i64 %i.da, i1 false), !tbaa !7
+  %i.da = shl nuw nsw i64 %i.ct, 2
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.cz, i8 0, i64 %i.da, i1 false), !tbaa !7
   br label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.preheader, %.lr.ph238
