@@ -203,15 +203,15 @@ bb.fz:                                            ; preds = %bb.fp
 bb.ga:                                            ; preds = %bb.fy, %bb.fl
   %.val3752 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ajs = getelementptr inbounds nuw i8, ptr %.val3752, i64 %i.wu
-  %.0.copyload.i4177 = load i32, ptr %i.ajs, align 1 ; 6 uses
+  %.0.copyload.i4177 = load i32, ptr %i.ajs, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i4177) #7, !srcloc !19
   %.val3973 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ajt = getelementptr inbounds nuw i8, ptr %.val3973, i64 %i.ww
-  %.0.copyload.i4178 = load i8, ptr %i.ajt, align 1 ; 7 uses
+  %.0.copyload.i4178 = load i8, ptr %i.ajt, align 1 ; 6 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i4178) #7, !srcloc !21
   %i.aju = zext i8 %.0.copyload.i4178 to i32
   %i.ajv = icmp slt i8 %.0.copyload.i4178, 0      ; 2 uses
-  %i.ajw = select i1 %i.ajv, i32 %.0.copyload.i4177, i32 %i.aju ; 7 uses
+  %i.ajw = select i1 %i.ajv, i32 %.0.copyload.i4177, i32 %i.aju ; 6 uses
   %i.ajx = add nsw i32 %i.acx, %.103499           ; 3 uses
   %.not3649 = icmp ugt i32 %i.ajw, %i.ajx
   br i1 %.not3649, label %bb.gb, label %.thread4307
@@ -222,19 +222,15 @@ bb.gb:                                            ; preds = %bb.ga
   %.0.copyload.i4179 = load i32, ptr %i.ajy, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i4179) #7, !srcloc !19
   %i.ajz = select i1 %i.ajv, i32 %.0.copyload.i4179, i32 %i.ach ; 2 uses
-  %i.aka = sub nuw i32 %i.ajw, %i.ajx             ; 2 uses
-  %.not3650 = icmp eq i32 %i.aka, 0
-  br i1 %.not3650, label %.thread4307, label %3
-
-3:                                                ; preds = %bb.gb
-  %4 = shl i32 %i.ajx, 2
-  %5 = add i32 %i.ajz, %4
-  %.fr4324 = freeze i32 %5
+  %i.aka = sub nuw i32 %i.ajw, %i.ajx
+  %3 = shl i32 %i.ajx, 2
+  %4 = add i32 %i.ajz, %3
+  %.fr4324 = freeze i32 %4
   br label %bb.gc
 
-bb.gc:                                            ; preds = %bb.gd, %3
-  %.113500 = phi i32 [ %.fr4324, %3 ], [ %i.ake, %bb.gd ] ; 4 uses
-  %.11 = phi i32 [ %i.aka, %3 ], [ %i.akf, %bb.gd ]
+bb.gc:                                            ; preds = %bb.gd, %bb.gb
+  %.113500 = phi i32 [ %.fr4324, %bb.gb ], [ %i.ake, %bb.gd ] ; 4 uses
+  %.11 = phi i32 [ %i.aka, %bb.gb ], [ %i.akf, %bb.gd ]
   %i.akb = zext i32 %.113500 to i64
   %.val3750 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.akc = getelementptr inbounds nuw i8, ptr %.val3750, i64 %i.akb
@@ -257,10 +253,10 @@ bb.ge:                                            ; preds = %bb.gc
   %or.cond4319 = select i1 %.not3652, i1 %i.aki, i1 false
   br i1 %or.cond4319, label %bb.er, label %.thread4307
 
-.thread4307:                                      ; preds = %bb.ep, %bb.gb, %bb.ge, %bb.ga, %bb.gd, %bb.eq, %bb.em
-  %.73477 = phi i32 [ %i.ajw, %bb.gd ], [ %i.acf, %bb.eq ], [ %i.ajw, %bb.gb ], [ 0, %bb.em ], [ %i.ajw, %bb.ga ], [ %i.ajw, %bb.ge ], [ %i.acf, %bb.ep ]
-  %.63464 = phi i32 [ %.0.copyload.i4177, %bb.gd ], [ %.0.copyload.i4147, %bb.eq ], [ %.0.copyload.i4177, %bb.gb ], [ %.0.copyload.i4147, %bb.em ], [ %.0.copyload.i4177, %bb.ga ], [ %.0.copyload.i4177, %bb.ge ], [ %.0.copyload.i4147, %bb.ep ]
-  %.53427.in = phi i8 [ %.0.copyload.i4178, %bb.gd ], [ %.0.copyload.i4148, %bb.eq ], [ %.0.copyload.i4178, %bb.gb ], [ %.0.copyload.i4148, %bb.em ], [ %.0.copyload.i4178, %bb.ga ], [ %.0.copyload.i4178, %bb.ge ], [ %.0.copyload.i4148, %bb.ep ]
+.thread4307:                                      ; preds = %bb.ep, %bb.ge, %bb.ga, %bb.gd, %bb.eq, %bb.em
+  %.73477 = phi i32 [ %i.ajw, %bb.gd ], [ %i.acf, %bb.eq ], [ %i.ajw, %bb.ge ], [ 0, %bb.em ], [ %i.ajw, %bb.ga ], [ %i.acf, %bb.ep ]
+  %.63464 = phi i32 [ %.0.copyload.i4177, %bb.gd ], [ %.0.copyload.i4147, %bb.eq ], [ %.0.copyload.i4177, %bb.ge ], [ %.0.copyload.i4147, %bb.em ], [ %.0.copyload.i4177, %bb.ga ], [ %.0.copyload.i4147, %bb.ep ]
+  %.53427.in = phi i8 [ %.0.copyload.i4178, %bb.gd ], [ %.0.copyload.i4148, %bb.eq ], [ %.0.copyload.i4178, %bb.ge ], [ %.0.copyload.i4148, %bb.em ], [ %.0.copyload.i4178, %bb.ga ], [ %.0.copyload.i4148, %bb.ep ]
   br i1 %.not3617, label %.loopexit4330, label %.preheader
 
 .preheader:                                       ; preds = %.thread4307, %bb.gh

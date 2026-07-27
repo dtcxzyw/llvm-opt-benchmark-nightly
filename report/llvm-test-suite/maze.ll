@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %bb.e
   br label %.lr.ph24.i.i
 
 .lr.ph24.i.i:                                     ; preds = %bb.d, %._crit_edge.loopexit.i.i
-  %.0.lcssa.i.i = phi i64 [ %i.al, %._crit_edge.loopexit.i.i ], [ 1, %bb.d ] ; 3 uses
+  %.0.lcssa.i.i = phi i64 [ %i.al, %._crit_edge.loopexit.i.i ], [ 1, %bb.d ] ; 2 uses
   %i.am = getelementptr i8, ptr %i.c, i64 %.pre273
   br label %bb.g
 
@@ -221,7 +221,7 @@ bb.h:                                             ; preds = %bb.g
 
 FindFreeHorzSeg.exit.i:                           ; preds = %bb.h, %bb.g
   %.1.lcssa.i.i = phi i64 [ %.122.i.i, %bb.g ], [ %i.ap, %bb.h ]
-  %i.aq = add i64 %.1.lcssa.i.i, -1               ; 3 uses
+  %i.aq = add i64 %.1.lcssa.i.i, -1               ; 2 uses
   %.not.i = icmp ugt i64 %i.aq, %.0.lcssa.i.i
   br i1 %.not.i, label %bb.i, label %.loopexit354.i
 
@@ -231,7 +231,6 @@ bb.i:                                             ; preds = %FindFreeHorzSeg.exi
   br i1 %i.as, label %.lr.ph.i, label %.loopexit354.i
 
 .lr.ph.i:                                         ; preds = %bb.i
-  %.not112368.i = icmp ugt i64 %.0.lcssa.i.i, %i.aq
   %i.at = tail call i64 @llvm.umin.i64(i64 %.0107377.i, i64 %i.x) ; 2 uses
   %i.au = mul i64 %i.at, %i.f
   %i.av = tail call i64 @llvm.umax.i64(i64 %.0107377.i, i64 %i.x)
@@ -283,9 +282,8 @@ bb.n:                                             ; preds = %bb.m
 FindFreeHorzSeg.exit145.i:                        ; preds = %bb.n, %bb.m
   %.1.lcssa.i142.i = phi i64 [ %.122.i140.i, %bb.m ], [ %i.be, %bb.n ]
   %i.bf = add i64 %.1.lcssa.i142.i, -1            ; 2 uses
-  %.not111.i = icmp ule i64 %i.bf, %.0.lcssa.i137.i
-  %brmerge.i = or i1 %.not112368.i, %.not111.i
-  br i1 %brmerge.i, label %.loopexit353.i, label %.preheader351.lr.ph.i
+  %.not111.i.not = icmp ugt i64 %i.bf, %.0.lcssa.i137.i
+  br i1 %.not111.i.not, label %.preheader351.lr.ph.i, label %.loopexit353.i
 
 .preheader351.lr.ph.i:                            ; preds = %FindFreeHorzSeg.exit145.i
   %.not116.i = icmp eq i64 %.0107377.i, %.0105371.i
