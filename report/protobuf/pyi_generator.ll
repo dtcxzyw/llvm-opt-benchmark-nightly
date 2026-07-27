@@ -204,17 +204,24 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !61   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 2
   %.0.copyload.i.i.i = load i16, ptr %i.e, align 1 ; 2 uses
-  %i.f = zext i16 %.0.copyload.i.i.i to i64       ; 3 uses
+  %i.f = zext i16 %.0.copyload.i.i.i to i64
   %i.g = xor i64 %i.f, -1
-  %i.h = getelementptr inbounds i8, ptr %i.d, i64 %i.g ; 2 uses
+  %i.h = getelementptr inbounds i8, ptr %i.d, i64 %i.g ; 4 uses
   switch i16 %.0.copyload.i.i.i, label %._crit_edge.i.i18 [
     i16 25, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
     i16 24, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i10
   ]
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %bb.a
-  %bcmp.i = tail call i32 @bcmp(ptr nonnull %i.h, ptr nonnull @.str.7, i64 %i.f)
-  %i.i = icmp eq i32 %bcmp.i, 0
+  %3 = load i128, ptr %i.h, align 1
+  %4 = xor i128 %3, 61676482926453833993966453837850963815
+  %5 = getelementptr i8, ptr %i.h, i64 9
+  %6 = load i128, ptr %5, align 1
+  %7 = xor i128 %6, 149441472505402674161586917969046238319
+  %8 = or i128 %4, %7
+  %9 = icmp ne i128 %8, 0
+  %10 = zext i1 %9 to i32
+  %i.i = icmp eq i32 %10, 0
   br i1 %i.i, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit, label %._crit_edge.i.i18
 
 _ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
@@ -236,8 +243,16 @@ _ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_
   br label %bb.b
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i10: ; preds = %bb.a
-  %bcmp.i11 = tail call i32 @bcmp(ptr nonnull %i.h, ptr nonnull @.str.3, i64 %i.f)
-  %i.p = icmp eq i32 %bcmp.i11, 0
+  %11 = load i128, ptr %i.h, align 1
+  %12 = xor i128 %11, 61676482926453833993966453837850963815
+  %13 = getelementptr i8, ptr %i.h, i64 16
+  %14 = load i64, ptr %13, align 1
+  %15 = zext i64 %14 to i128
+  %16 = xor i128 %15, 7957695015158969668
+  %17 = or i128 %12, %16
+  %18 = icmp ne i128 %17, 0
+  %19 = zext i1 %18 to i32
+  %i.p = icmp eq i32 %19, 0
   br i1 %i.p, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit13, label %._crit_edge.i.i18
 
 _ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit13: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i10

@@ -203,7 +203,7 @@ bb.a:
   %i.g = mul nuw i128 %i.f, 11376068507788127593  ; 2 uses
   %i.h = lshr i128 %i.g, 64
   %i.i = xor i128 %i.h, %i.g
-  %i.j = trunc i128 %i.i to i64                   ; 3 uses
+  %i.j = trunc i128 %i.i to i64                   ; 2 uses
   switch i32 %i.c, label %_ZNK3re213PrefilterTree13PrefilterHashclEPKNS_9PrefilterE.exit [
     i32 2, label %bb.b
     i32 3, label %bb.c
@@ -215,7 +215,12 @@ bb.b:                                             ; preds = %bb.a
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !66
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.n = load i64, ptr %i.m, align 8, !tbaa !54   ; 2 uses
-  %i.o = tail call i64 @_ZN4absl12lts_2024011613hash_internal15MixingHashState18combine_contiguousES2_PKhm(i64 %i.j, ptr noundef %i.l, i64 noundef %i.n)
+  %2 = zext i64 add (i64 ptrtoint (ptr @_ZN4absl12lts_2024011613hash_internal15MixingHashState5kSeedE to i64), i64 2) to i128
+  %3 = mul nuw i128 %2, 11376068507788127593      ; 2 uses
+  %4 = lshr i128 %3, 64
+  %5 = xor i128 %4, %3
+  %6 = trunc i128 %5 to i64
+  %i.o = tail call i64 @_ZN4absl12lts_2024011613hash_internal15MixingHashState18combine_contiguousES2_PKhm(i64 %6, ptr noundef %i.l, i64 noundef %i.n)
   %i.p = add i64 %i.o, %i.n
   %i.q = zext i64 %i.p to i128
   %i.r = mul nuw i128 %i.q, 11376068507788127593  ; 2 uses
@@ -618,7 +623,7 @@ bb.a:
   %i.g = mul nuw i128 %i.f, 11376068507788127593  ; 2 uses
   %i.h = lshr i128 %i.g, 64
   %i.i = xor i128 %i.h, %i.g
-  %i.j = trunc i128 %i.i to i64                   ; 3 uses
+  %i.j = trunc i128 %i.i to i64                   ; 2 uses
   switch i32 %i.c, label %_ZNK3re213PrefilterTree13PrefilterHashclEPKNS_9PrefilterE.exit [
     i32 2, label %bb.b
     i32 3, label %bb.c
@@ -630,7 +635,12 @@ bb.b:                                             ; preds = %bb.a
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !66
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.n = load i64, ptr %i.m, align 8, !tbaa !54   ; 2 uses
-  %i.o = tail call i64 @_ZN4absl12lts_2024011613hash_internal15MixingHashState18combine_contiguousES2_PKhm(i64 %i.j, ptr noundef %i.l, i64 noundef %i.n)
+  %2 = zext i64 add (i64 ptrtoint (ptr @_ZN4absl12lts_2024011613hash_internal15MixingHashState5kSeedE to i64), i64 2) to i128
+  %3 = mul nuw i128 %2, 11376068507788127593      ; 2 uses
+  %4 = lshr i128 %3, 64
+  %5 = xor i128 %4, %3
+  %6 = trunc i128 %5 to i64
+  %i.o = tail call i64 @_ZN4absl12lts_2024011613hash_internal15MixingHashState18combine_contiguousES2_PKhm(i64 %6, ptr noundef %i.l, i64 noundef %i.n)
   %i.p = add i64 %i.o, %i.n
   %i.q = zext i64 %i.p to i128
   %i.r = mul nuw i128 %i.q, 11376068507788127593  ; 2 uses
@@ -985,13 +995,18 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.o = load ptr, ptr %i.j, align 8, !tbaa !75
+  %4 = zext i64 add (i64 ptrtoint (ptr @_ZN4absl12lts_2024011613hash_internal15MixingHashState5kSeedE to i64), i64 2) to i128
+  %5 = mul nuw i128 %4, 11376068507788127593      ; 2 uses
+  %6 = lshr i128 %5, 64
+  %7 = xor i128 %6, %5
+  %8 = trunc i128 %7 to i64
   %.pre36 = load ptr, ptr %2, align 8, !tbaa !204
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
-  %i.p = phi i64 [ %i.ds, %bb.e ], [ %i.m, %.lr.ph.preheader ]
-  %i.q = phi ptr [ %i.dt, %bb.e ], [ %.pre36, %.lr.ph.preheader ] ; 2 uses
-  %.02230 = phi i64 [ %i.du, %bb.e ], [ 0, %.lr.ph.preheader ] ; 3 uses
+  %i.p = phi i64 [ %i.m, %.lr.ph.preheader ], [ %i.ds, %bb.e ]
+  %i.q = phi ptr [ %.pre36, %.lr.ph.preheader ], [ %i.dt, %bb.e ] ; 2 uses
+  %.02230 = phi i64 [ 0, %.lr.ph.preheader ], [ %i.du, %bb.e ] ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %.02230
   %i.s = load i8, ptr %i.r, align 1, !tbaa !157
   %i.t = icmp sgt i8 %i.s, -1
@@ -1007,7 +1022,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.aa = mul nuw i128 %i.z, 11376068507788127593 ; 2 uses
   %i.ab = lshr i128 %i.aa, 64
   %i.ac = xor i128 %i.ab, %i.aa
-  %i.ad = trunc i128 %i.ac to i64                 ; 3 uses
+  %i.ad = trunc i128 %i.ac to i64                 ; 2 uses
   switch i32 %i.w, label %_ZN4absl12lts_2024011618container_internal18hash_policy_traitsINS1_17FlatHashSetPolicyIPN3re29PrefilterEEEvE5applyINS1_12raw_hash_setIS7_NS4_13PrefilterTree13PrefilterHashENSB_14PrefilterEqualESaIS6_EE11HashElementEJRS6_ES7_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSJ_DpOSK_.exit [
     i32 2, label %bb.c
     i32 3, label %bb.d
@@ -1019,7 +1034,7 @@ bb.c:                                             ; preds = %bb.b
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !66
   %i.ag = getelementptr inbounds nuw i8, ptr %i.v, i64 24
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !54 ; 2 uses
-  %i.ai = call i64 @_ZN4absl12lts_2024011613hash_internal15MixingHashState18combine_contiguousES2_PKhm(i64 %i.ad, ptr noundef %i.af, i64 noundef %i.ah)
+  %i.ai = call i64 @_ZN4absl12lts_2024011613hash_internal15MixingHashState18combine_contiguousES2_PKhm(i64 %8, ptr noundef %i.af, i64 noundef %i.ah)
   %i.aj = add i64 %i.ai, %i.ah
   %i.ak = zext i64 %i.aj to i128
   %i.al = mul nuw i128 %i.ak, 11376068507788127593 ; 2 uses
@@ -1374,7 +1389,7 @@ bb.a:
   %i.f = mul nuw i128 %i.e, 11376068507788127593  ; 2 uses
   %i.g = lshr i128 %i.f, 64
   %i.h = xor i128 %i.g, %i.f
-  %i.i = trunc i128 %i.h to i64                   ; 3 uses
+  %i.i = trunc i128 %i.h to i64                   ; 2 uses
   switch i32 %i.b, label %_ZN4absl12lts_2024011618container_internal18hash_policy_traitsINS1_17FlatHashSetPolicyIPN3re29PrefilterEEEvE5applyINS1_12raw_hash_setIS7_NS4_13PrefilterTree13PrefilterHashENSB_14PrefilterEqualESaIS6_EE11HashElementEJRS6_ES7_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSJ_DpOSK_.exit [
     i32 2, label %bb.b
     i32 3, label %bb.c
@@ -1386,7 +1401,12 @@ bb.b:                                             ; preds = %bb.a
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !66
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.m = load i64, ptr %i.l, align 8, !tbaa !54   ; 2 uses
-  %i.n = tail call i64 @_ZN4absl12lts_2024011613hash_internal15MixingHashState18combine_contiguousES2_PKhm(i64 %i.i, ptr noundef %i.k, i64 noundef %i.m)
+  %2 = zext i64 add (i64 ptrtoint (ptr @_ZN4absl12lts_2024011613hash_internal15MixingHashState5kSeedE to i64), i64 2) to i128
+  %3 = mul nuw i128 %2, 11376068507788127593      ; 2 uses
+  %4 = lshr i128 %3, 64
+  %5 = xor i128 %4, %3
+  %6 = trunc i128 %5 to i64
+  %i.n = tail call i64 @_ZN4absl12lts_2024011613hash_internal15MixingHashState18combine_contiguousES2_PKhm(i64 %6, ptr noundef %i.k, i64 noundef %i.m)
   %i.o = add i64 %i.n, %i.m
   %i.p = zext i64 %i.o to i128
   %i.q = mul nuw i128 %i.p, 11376068507788127593  ; 2 uses

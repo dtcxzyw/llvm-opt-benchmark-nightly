@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.g = load i32, ptr %i.f, align 8, !tbaa !2463 ; 3 uses
   %i.h = sext i32 %i.g to i64
-  %i.i = load ptr, ptr %i.d, align 8, !tbaa !55   ; 4 uses
+  %i.i = load ptr, ptr %i.d, align 8, !tbaa !55   ; 5 uses
   %i.j = icmp eq i32 %i.g, 0
-  %i.k = getelementptr [24 x i8], ptr %i.i, i64 %i.h ; 3 uses
+  %i.k = getelementptr [24 x i8], ptr %i.i, i64 %i.h ; 2 uses
   %i.l = getelementptr i8, ptr %i.k, i64 48
   store ptr %.sroa.01.0.copyload, ptr %i.l, align 8, !tbaa !57
   br i1 %i.j, label %bb.c, label %.thread.i
@@ -236,11 +236,12 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN5boost13match_resultsIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISB_EEEE10set_secondESB_mbb.exit.sink.split
 
 _ZN5boost13match_resultsIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISB_EEEE10set_secondESB_mbb.exit.sink.split: ; preds = %bb.c, %.thread.i
+  %.sink21 = phi ptr [ %i.k, %.thread.i ], [ %i.i, %bb.c ] ; 2 uses
   %.sroa.0.0.copyload.sink = phi ptr [ %.sroa.0.0.copyload, %.thread.i ], [ %.sroa.0.0.copyload11, %bb.c ]
   %.sink = phi i8 [ %i.o, %.thread.i ], [ %i.y, %bb.c ]
-  %i.z = getelementptr i8, ptr %i.k, i64 56
+  %i.z = getelementptr i8, ptr %.sink21, i64 56
   store ptr %.sroa.0.0.copyload.sink, ptr %i.z, align 8, !tbaa !57
-  %i.aa = getelementptr i8, ptr %i.k, i64 64
+  %i.aa = getelementptr i8, ptr %.sink21, i64 64
   store i8 %.sink, ptr %i.aa, align 8, !tbaa !56
   br label %_ZN5boost13match_resultsIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISB_EEEE10set_secondESB_mbb.exit
 
@@ -643,9 +644,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.h = load i32, ptr %i.g, align 8, !tbaa !2708 ; 3 uses
   %i.i = sext i32 %i.h to i64
-  %i.j = load ptr, ptr %i.d, align 8, !tbaa !226  ; 4 uses
+  %i.j = load ptr, ptr %i.d, align 8, !tbaa !226  ; 5 uses
   %i.k = icmp eq i32 %i.h, 0
-  %i.l = getelementptr [24 x i8], ptr %i.j, i64 %i.i ; 3 uses
+  %i.l = getelementptr [24 x i8], ptr %i.j, i64 %i.i ; 2 uses
   %i.m = getelementptr i8, ptr %i.l, i64 48
   store ptr %i.f, ptr %i.m, align 8, !tbaa !2598
   br i1 %i.k, label %bb.c, label %.thread.i
@@ -675,11 +676,12 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE10set_secondES2_mbb.exit.sink.split
 
 _ZN5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE10set_secondES2_mbb.exit.sink.split: ; preds = %bb.c, %.thread.i
+  %.sink16 = phi ptr [ %i.l, %.thread.i ], [ %i.j, %bb.c ] ; 2 uses
   %.sink13 = phi ptr [ %i.o, %.thread.i ], [ %i.z, %bb.c ]
   %.sink = phi i8 [ %i.q, %.thread.i ], [ %i.ab, %bb.c ]
-  %i.ac = getelementptr i8, ptr %i.l, i64 56
+  %i.ac = getelementptr i8, ptr %.sink16, i64 56
   store ptr %.sink13, ptr %i.ac, align 8, !tbaa !2665
-  %i.ad = getelementptr i8, ptr %i.l, i64 64
+  %i.ad = getelementptr i8, ptr %.sink16, i64 64
   store i8 %.sink, ptr %i.ad, align 8, !tbaa !2596
   br label %_ZN5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE10set_secondES2_mbb.exit
 
