@@ -203,7 +203,7 @@ bb.yl:                                            ; preds = %bb.yj
   br label %bb.cld
 
 bb.ym:                                            ; preds = %_ZN2v88internal8compiler42ShouldClearOutputRegisterBeforeInstructionEPNS1_13CodeGeneratorEPNS1_11InstructionE.exit
-  %i.gav = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
+  %i.gav = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 4 uses
   %i.gaw = load i64, ptr %i.gav, align 8
   %i.gax = lshr i64 %i.gaw, 32
   %i.gay = trunc i64 %i.gax to i8                 ; 9 uses
@@ -212,28 +212,25 @@ bb.ym:                                            ; preds = %_ZN2v88internal8com
   %i.gba = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.gbb = load i32, ptr %i.gba, align 4
   %i.gbc = and i32 %i.gbb, 255                    ; 2 uses
-  %69 = zext nneg i32 %i.gbc to i64               ; 2 uses
-  %70 = icmp eq i32 %i.gbc, 1
-  br i1 %70, label %bb.yn, label %bb.yq
+  %69 = icmp eq i32 %i.gbc, 1
+  %70 = getelementptr i8, ptr %1, i64 48
+  %71 = load i64, ptr %70, align 8                ; 5 uses
+  br i1 %69, label %bb.yn, label %bb.yq
 
 bb.yn:                                            ; preds = %bb.ym
-  %71 = getelementptr [8 x i8], ptr %i.gav, i64 %69
-  %72 = load i64, ptr %71, align 8                ; 3 uses
-  %i.gbd = and i64 %72, 7
+  %i.gbd = and i64 %71, 7
   %i.gbe = icmp samesign ugt i64 %i.gbd, 4
-  %i.gbf = and i64 %72, 8
+  %i.gbf = and i64 %71, 8
   %i.gbg = icmp eq i64 %i.gbf, 0
   %i.gbh = and i1 %i.gbe, %i.gbg
-  %i.gbi = and i64 %72, 3840
+  %i.gbi = and i64 %71, 3840
   %i.gbj = icmp ne i64 %i.gbi, 0
   %i.gbk = and i1 %i.gbj, %i.gbh
   %i.gbl = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
   br i1 %i.gbk, label %bb.yo, label %bb.yp
 
 bb.yo:                                            ; preds = %bb.yn
-  %73 = getelementptr i8, ptr %1, i64 48
-  %74 = load i64, ptr %73, align 8
-  %i.gbm = lshr i64 %74, 32
+  %i.gbm = lshr i64 %71, 32
   %i.gbn = trunc i64 %i.gbm to i8                 ; 2 uses
   %i.gbo = icmp samesign ult i8 %i.gbn, 16
   tail call void @llvm.assume(i1 %i.gbo)
@@ -248,16 +245,15 @@ bb.yp:                                            ; preds = %bb.yn
   br label %bb.cld
 
 bb.yq:                                            ; preds = %bb.ym
-  %75 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %76 = load i64, ptr %75, align 8
-  %i.gbs = lshr i64 %76, 32
+  %72 = zext nneg i32 %i.gbc to i64
+  %i.gbs = lshr i64 %71, 32
   %i.gbt = trunc i64 %i.gbs to i8                 ; 6 uses
   %i.gbu = icmp samesign ult i8 %i.gbt, 16
   tail call void @llvm.assume(i1 %i.gbu)
   %i.gbv = load i32, ptr @_ZN2v88internal11CpuFeatures10supported_E, align 4
   %i.gbw = and i32 %i.gbv, 34
   %or.cond.not = icmp eq i32 %i.gbw, 0
-  %i.gbx = getelementptr [8 x i8], ptr %i.gav, i64 %69
+  %i.gbx = getelementptr [8 x i8], ptr %i.gav, i64 %72
   %i.gby = load i64, ptr %i.gbx, align 8          ; 5 uses
   %i.gbz = and i64 %i.gby, 7
   %i.gca = icmp samesign ugt i64 %i.gbz, 4
@@ -490,7 +486,7 @@ bb.zj:                                            ; preds = %bb.zi, %bb.zh
   br label %bb.cld
 
 bb.zk:                                            ; preds = %_ZN2v88internal8compiler42ShouldClearOutputRegisterBeforeInstructionEPNS1_13CodeGeneratorEPNS1_11InstructionE.exit
-  %i.ggp = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
+  %i.ggp = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 4 uses
   %i.ggq = load i64, ptr %i.ggp, align 8
   %i.ggr = lshr i64 %i.ggq, 32
   %i.ggs = trunc i64 %i.ggr to i8                 ; 9 uses
@@ -499,28 +495,25 @@ bb.zk:                                            ; preds = %_ZN2v88internal8com
   %i.ggu = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.ggv = load i32, ptr %i.ggu, align 4
   %i.ggw = and i32 %i.ggv, 255                    ; 2 uses
-  %77 = zext nneg i32 %i.ggw to i64               ; 2 uses
-  %78 = icmp eq i32 %i.ggw, 1
-  br i1 %78, label %bb.zl, label %bb.zo
+  %73 = icmp eq i32 %i.ggw, 1
+  %74 = getelementptr i8, ptr %1, i64 48
+  %75 = load i64, ptr %74, align 8                ; 5 uses
+  br i1 %73, label %bb.zl, label %bb.zo
 
 bb.zl:                                            ; preds = %bb.zk
-  %79 = getelementptr [8 x i8], ptr %i.ggp, i64 %77
-  %80 = load i64, ptr %79, align 8                ; 3 uses
-  %i.ggx = and i64 %80, 7
+  %i.ggx = and i64 %75, 7
   %i.ggy = icmp samesign ugt i64 %i.ggx, 4
-  %i.ggz = and i64 %80, 8
+  %i.ggz = and i64 %75, 8
   %i.gha = icmp eq i64 %i.ggz, 0
   %i.ghb = and i1 %i.ggy, %i.gha
-  %i.ghc = and i64 %80, 3840
+  %i.ghc = and i64 %75, 3840
   %i.ghd = icmp ne i64 %i.ghc, 0
   %i.ghe = and i1 %i.ghd, %i.ghb
   %i.ghf = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
   br i1 %i.ghe, label %bb.zm, label %bb.zn
 
 bb.zm:                                            ; preds = %bb.zl
-  %81 = getelementptr i8, ptr %1, i64 48
-  %82 = load i64, ptr %81, align 8
-  %i.ghg = lshr i64 %82, 32
+  %i.ghg = lshr i64 %75, 32
   %i.ghh = trunc i64 %i.ghg to i8                 ; 2 uses
   %i.ghi = icmp samesign ult i8 %i.ghh, 16
   tail call void @llvm.assume(i1 %i.ghi)
@@ -535,16 +528,15 @@ bb.zn:                                            ; preds = %bb.zl
   br label %bb.cld
 
 bb.zo:                                            ; preds = %bb.zk
-  %83 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %84 = load i64, ptr %83, align 8
-  %i.ghm = lshr i64 %84, 32
+  %76 = zext nneg i32 %i.ggw to i64
+  %i.ghm = lshr i64 %75, 32
   %i.ghn = trunc i64 %i.ghm to i8                 ; 6 uses
   %i.gho = icmp samesign ult i8 %i.ghn, 16
   tail call void @llvm.assume(i1 %i.gho)
   %i.ghp = load i32, ptr @_ZN2v88internal11CpuFeatures10supported_E, align 4
   %i.ghq = and i32 %i.ghp, 34
   %or.cond8833.not = icmp eq i32 %i.ghq, 0
-  %i.ghr = getelementptr [8 x i8], ptr %i.ggp, i64 %77
+  %i.ghr = getelementptr [8 x i8], ptr %i.ggp, i64 %76
   %i.ghs = load i64, ptr %i.ghr, align 8          ; 5 uses
   %i.ght = and i64 %i.ghs, 7
   %i.ghu = icmp samesign ugt i64 %i.ght, 4
@@ -692,7 +684,7 @@ bb.zz:                                            ; preds = %bb.zy, %bb.zx
   br label %bb.cld
 
 bb.aaa:                                           ; preds = %_ZN2v88internal8compiler42ShouldClearOutputRegisterBeforeInstructionEPNS1_13CodeGeneratorEPNS1_11InstructionE.exit
-  %i.gkq = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
+  %i.gkq = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 4 uses
   %i.gkr = load i64, ptr %i.gkq, align 8
   %i.gks = lshr i64 %i.gkr, 32
   %i.gkt = trunc i64 %i.gks to i8                 ; 9 uses
@@ -701,28 +693,25 @@ bb.aaa:                                           ; preds = %_ZN2v88internal8com
   %i.gkv = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.gkw = load i32, ptr %i.gkv, align 4
   %i.gkx = and i32 %i.gkw, 255                    ; 2 uses
-  %85 = zext nneg i32 %i.gkx to i64               ; 2 uses
-  %86 = icmp eq i32 %i.gkx, 1
-  br i1 %86, label %bb.aab, label %bb.aae
+  %77 = icmp eq i32 %i.gkx, 1
+  %78 = getelementptr i8, ptr %1, i64 48
+  %79 = load i64, ptr %78, align 8                ; 5 uses
+  br i1 %77, label %bb.aab, label %bb.aae
 
 bb.aab:                                           ; preds = %bb.aaa
-  %87 = getelementptr [8 x i8], ptr %i.gkq, i64 %85
-  %88 = load i64, ptr %87, align 8                ; 3 uses
-  %i.gky = and i64 %88, 7
+  %i.gky = and i64 %79, 7
   %i.gkz = icmp samesign ugt i64 %i.gky, 4
-  %i.gla = and i64 %88, 8
+  %i.gla = and i64 %79, 8
   %i.glb = icmp eq i64 %i.gla, 0
   %i.glc = and i1 %i.gkz, %i.glb
-  %i.gld = and i64 %88, 3840
+  %i.gld = and i64 %79, 3840
   %i.gle = icmp ne i64 %i.gld, 0
   %i.glf = and i1 %i.gle, %i.glc
   %i.glg = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
   br i1 %i.glf, label %bb.aac, label %bb.aad
 
 bb.aac:                                           ; preds = %bb.aab
-  %89 = getelementptr i8, ptr %1, i64 48
-  %90 = load i64, ptr %89, align 8
-  %i.glh = lshr i64 %90, 32
+  %i.glh = lshr i64 %79, 32
   %i.gli = trunc i64 %i.glh to i8                 ; 2 uses
   %i.glj = icmp samesign ult i8 %i.gli, 16
   tail call void @llvm.assume(i1 %i.glj)
@@ -737,16 +726,15 @@ bb.aad:                                           ; preds = %bb.aab
   br label %bb.cld
 
 bb.aae:                                           ; preds = %bb.aaa
-  %91 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %92 = load i64, ptr %91, align 8
-  %i.gln = lshr i64 %92, 32
+  %80 = zext nneg i32 %i.gkx to i64
+  %i.gln = lshr i64 %79, 32
   %i.glo = trunc i64 %i.gln to i8                 ; 6 uses
   %i.glp = icmp samesign ult i8 %i.glo, 16
   tail call void @llvm.assume(i1 %i.glp)
   %i.glq = load i32, ptr @_ZN2v88internal11CpuFeatures10supported_E, align 4
   %i.glr = and i32 %i.glq, 34
   %or.cond8835.not = icmp eq i32 %i.glr, 0
-  %i.gls = getelementptr [8 x i8], ptr %i.gkq, i64 %85
+  %i.gls = getelementptr [8 x i8], ptr %i.gkq, i64 %80
   %i.glt = load i64, ptr %i.gls, align 8          ; 5 uses
   %i.glu = and i64 %i.glt, 7
   %i.glv = icmp samesign ugt i64 %i.glu, 4

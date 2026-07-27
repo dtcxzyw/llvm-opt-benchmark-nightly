@@ -204,8 +204,7 @@ _ZN5folly5splitIcNS_5RangeIPKcEESt6vectorIS4_SaIS4_EEEENSt9enable_ifIXaaaasr6det
   %i.ac = load ptr, ptr %5, align 8, !tbaa !88    ; 2 uses
   %i.ad = ptrtoint ptr %i.ab to i64
   %i.ae = ptrtoint ptr %i.ac to i64
-  %i.af = sub i64 %i.ad, %i.ae                    ; 2 uses
-  %8 = ashr exact i64 %i.af, 4
+  %i.af = sub i64 %i.ad, %i.ae
   %.not = icmp eq i64 %i.af, 512
   br i1 %.not, label %bb.l, label %.noexc41
 
@@ -274,7 +273,7 @@ bb.m:                                             ; preds = %bb.l, %bb.p
   %.071 = phi i64 [ 1, %bb.l ], [ %i.bc, %bb.p ]  ; 2 uses
   %.01670 = phi i32 [ 0, %bb.l ], [ %.1, %bb.p ]
   %.01769 = phi i64 [ 0, %bb.l ], [ %.118, %bb.p ] ; 3 uses
-  %i.ar = sub nuw i64 %8, %.071
+  %i.ar = sub nuw i64 32, %.071
   %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.ac, i64 %i.ar
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !92
   %i.au = load i8, ptr %i.at, align 1, !tbaa !20

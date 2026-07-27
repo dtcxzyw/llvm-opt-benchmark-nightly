@@ -204,22 +204,14 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 .peel.next.i.i.preheader:                         ; preds = %bb.m
   %.not = icmp eq i64 %i.bo, 64
-  %8 = add nsw i64 %i.bx, -1                      ; 2 uses
-  br i1 %.not, label %._crit_edge.thread.i.i.loopexit.peel.begin, label %.peel.next.i.i.preheader15.split
+  br i1 %.not, label %._crit_edge.thread.i.i.loopexit.peel.next, label %.peel.next.i.i.preheader15.split
 
 .peel.next.i.i.preheader15.split:                 ; preds = %.peel.next.i.i.preheader
   %i.bz = add nsw i64 %i.bx, -2
   br label %bb.o
 
-._crit_edge.thread.i.i.loopexit.peel.begin:       ; preds = %.peel.next.i.i.preheader
-  %9 = icmp eq i64 %8, 1
-  br i1 %9, label %10, label %._crit_edge.thread.i.i.loopexit.peel.next
-
-10:                                               ; preds = %._crit_edge.thread.i.i.loopexit.peel.begin
-  %11 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bl, ptr noundef nonnull @.str.357, i64 noundef 4) #44, !noalias !254 ; 0 uses
-  br label %._crit_edge.thread.i.i.loopexit.peel.next
-
-._crit_edge.thread.i.i.loopexit.peel.next:        ; preds = %10, %._crit_edge.thread.i.i.loopexit.peel.begin
+._crit_edge.thread.i.i.loopexit.peel.next:        ; preds = %.peel.next.i.i.preheader
+  %8 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bl, ptr noundef nonnull @.str.357, i64 noundef 4) #44, !noalias !254 ; 0 uses
   %i.ca = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bl, ptr noundef nonnull @.str.58, i64 noundef 1) #44, !noalias !254 ; 0 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 32
   %i.cc = load ptr, ptr %i.cb, align 8, !noalias !254
@@ -230,7 +222,8 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 ._crit_edge.thread.i.i.loopexit16.peel.begin:     ; preds = %bb.o
   %i.cg = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bl, ptr noundef nonnull @.str.313, i64 noundef 2) #44, !noalias !254 ; 0 uses
-  %i.ch = icmp eq i64 %i.db, %8
+  %9 = add nsw i64 %i.bx, -2
+  %i.ch = icmp eq i64 %.08.i.i, %9
   br i1 %i.ch, label %bb.n, label %._crit_edge.thread.i.i.loopexit16.peel.next
 
 bb.n:                                             ; preds = %._crit_edge.thread.i.i.loopexit16.peel.begin
@@ -267,7 +260,7 @@ _ZNKSt14default_deleteINSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE
   br label %_ZN7testingL14FormatWordListERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EE.exit.i
 
 bb.o:                                             ; preds = %bb.o, %.peel.next.i.i.preheader15.split
-  %.08.i.i = phi i64 [ %i.db, %bb.o ], [ 1, %.peel.next.i.i.preheader15.split ] ; 3 uses
+  %.08.i.i = phi i64 [ %i.db, %bb.o ], [ 1, %.peel.next.i.i.preheader15.split ] ; 4 uses
   %i.ct = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bl, ptr noundef nonnull @.str.313, i64 noundef 2) #44, !noalias !254 ; 0 uses
   %i.cu = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bl, ptr noundef nonnull @.str.58, i64 noundef 1) #44, !noalias !254 ; 0 uses
   %i.cv = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.0, i64 %.08.i.i ; 2 uses
@@ -276,7 +269,7 @@ bb.o:                                             ; preds = %bb.o, %.peel.next.i
   %i.cy = load i64, ptr %i.cx, align 8, !noalias !254
   %i.cz = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bl, ptr noundef %i.cw, i64 noundef %i.cy) #44, !noalias !254 ; 0 uses
   %i.da = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bl, ptr noundef nonnull @.str.58, i64 noundef 1) #44, !noalias !254 ; 0 uses
-  %i.db = add nuw i64 %.08.i.i, 1                 ; 3 uses
+  %i.db = add nuw i64 %.08.i.i, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %.08.i.i, %i.bz
   br i1 %exitcond.not, label %._crit_edge.thread.i.i.loopexit16.peel.begin, label %bb.o, !llvm.loop !258
 

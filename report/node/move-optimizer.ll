@@ -203,18 +203,12 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = getelementptr i8, ptr %i.aa, i64 -8
   %i.ac = load ptr, ptr %i.ab, align 8            ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 4
-  %i.ae = load i32, ptr %i.ad, align 4            ; 3 uses
-  %i.af = and i32 %i.ae, 2130706432
+  %i.ae = load i32, ptr %i.ad, align 4            ; 2 uses
+  %i.af = and i32 %i.ae, 2130706687
   %or.cond329 = icmp eq i32 %i.af, 0
-  br i1 %or.cond329, label %4, label %.loopexit335
+  br i1 %or.cond329, label %.preheader334, label %.loopexit335
 
-4:                                                ; preds = %bb.c
-  %5 = and i32 %i.ae, 255                         ; 2 uses
-  %6 = zext nneg i32 %5 to i64
-  %.not131 = icmp eq i32 %5, 0
-  br i1 %.not131, label %.preheader334, label %.loopexit335
-
-.preheader334:                                    ; preds = %4
+.preheader334:                                    ; preds = %bb.c
   %i.ag = lshr exact i32 %i.ae, 8
   %i.ah = and i32 %i.ag, 65535                    ; 2 uses
   %i.ai = zext nneg i32 %i.ah to i64
@@ -223,7 +217,6 @@ bb.c:                                             ; preds = %bb.b
 
 .critedge.lr.ph:                                  ; preds = %.preheader334
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
-  %7 = getelementptr [8 x i8], ptr %i.aj, i64 %6
   br label %.critedge
 
 bb.d:                                             ; preds = %.critedge
@@ -233,7 +226,7 @@ bb.d:                                             ; preds = %.critedge
 
 .critedge:                                        ; preds = %.critedge.lr.ph, %bb.d
   %.0116349 = phi i64 [ 0, %.critedge.lr.ph ], [ %i.ak, %bb.d ] ; 2 uses
-  %i.al = getelementptr [8 x i8], ptr %7, i64 %.0116349
+  %i.al = getelementptr [8 x i8], ptr %i.aj, i64 %.0116349
   %i.am = load i64, ptr %i.al, align 8
   %i.an = and i64 %i.am, 6
   %switch = icmp eq i64 %i.an, 2
@@ -636,7 +629,7 @@ _ZN2v88internal8compiler13MoveOptimizer13CompressBlockEPNS1_16InstructionBlockE.
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   br label %.loopexit335
 
-.loopexit335:                                     ; preds = %bb.c, %4, %bb.b, %.critedge, %_ZN2v88internal8compiler13MoveOptimizer13CompressBlockEPNS1_16InstructionBlockE.exit
+.loopexit335:                                     ; preds = %bb.c, %bb.b, %.critedge, %_ZN2v88internal8compiler13MoveOptimizer13CompressBlockEPNS1_16InstructionBlockE.exit
   ret void
 }
 

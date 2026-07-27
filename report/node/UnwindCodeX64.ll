@@ -204,8 +204,7 @@ _ZNK4LIEF12BinaryStream4readINS_2PE7details13unwind_code_tEEENS_6resultIT_EEv.ex
   %.sroa.0148.0.extract.trunc.mask = and i16 %i.o, 255 ; 12 uses
   %.sroa.0148.1.extract.shift = lshr i16 %i.o, 8
   %.sroa.0148.1.extract.trunc = trunc nuw i16 %.sroa.0148.1.extract.shift to i8 ; 10 uses
-  %i.q = and i8 %.sroa.0148.1.extract.trunc, 15   ; 2 uses
-  %4 = zext nneg i8 %i.q to i32                   ; 8 uses
+  %i.q = and i8 %.sroa.0148.1.extract.trunc, 15
   switch i8 %i.q, label %bb.y [
     i8 0, label %_ZNSt10unique_ptrIN4LIEF2PE10unwind_x6410PushNonVolESt14default_deleteIS3_EED2Ev.exit
     i8 1, label %bb.b
@@ -253,7 +252,7 @@ _ZNSt10unique_ptrIN4LIEF2PE10unwind_x645AllocESt14default_deleteIS3_EED2Ev.exit:
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   store i32 %i.ae, ptr %i.af, align 8, !noalias !8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 12
-  store i32 %4, ptr %i.ag, align 4, !noalias !8
+  store i32 1, ptr %i.ag, align 4, !noalias !8
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4LIEF2PE10unwind_x645AllocE, i64 16), ptr %i.ad, align 8, !noalias !8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   store i32 %i.ac, ptr %i.ah, align 8, !noalias !8
@@ -297,7 +296,7 @@ _ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit: ; preds = %bb.e, %bb.f
   %i.av = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   store i32 %i.au, ptr %i.av, align 8, !noalias !14
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 12
-  store i32 %4, ptr %i.aw, align 4, !noalias !14
+  store i32 1, ptr %i.aw, align 4, !noalias !14
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4LIEF2PE10unwind_x645AllocE, i64 16), ptr %i.at, align 8, !noalias !14
   %i.ax = getelementptr inbounds nuw i8, ptr %i.at, i64 16
   store i32 %i.ar, ptr %i.ax, align 8, !noalias !14
@@ -313,7 +312,7 @@ _ZNSt10unique_ptrIN4LIEF2PE10unwind_x645AllocESt14default_deleteIS3_EED2Ev.exit1
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
   store i32 %i.bc, ptr %i.bd, align 8, !noalias !17
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 12
-  store i32 %4, ptr %i.be, align 4, !noalias !17
+  store i32 2, ptr %i.be, align 4, !noalias !17
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4LIEF2PE10unwind_x645AllocE, i64 16), ptr %i.bb, align 8, !noalias !17
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   store i32 %i.ba, ptr %i.bf, align 8, !noalias !17
@@ -376,7 +375,7 @@ _ZNK4LIEF12BinaryStream4readItEENS_6resultIT_EEv.exit: ; preds = %bb.h, %bb.i
   %i.cf = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
   store i32 %i.ce, ptr %i.cf, align 8, !noalias !24
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cd, i64 12
-  store i32 %4, ptr %i.cg, align 4, !noalias !24
+  store i32 4, ptr %i.cg, align 4, !noalias !24
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4LIEF2PE10unwind_x6415SaveNonVolatileE, i64 16), ptr %i.cd, align 8, !noalias !24
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cd, i64 16
   store i32 %i.ca, ptr %i.ch, align 8, !noalias !24
@@ -424,7 +423,7 @@ _ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit30: ; preds = %bb.k, %bb.l
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
   store i32 %i.cx, ptr %i.cy, align 8, !noalias !27
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cw, i64 12
-  store i32 %4, ptr %i.cz, align 4, !noalias !27
+  store i32 5, ptr %i.cz, align 4, !noalias !27
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4LIEF2PE10unwind_x6415SaveNonVolatileE, i64 16), ptr %i.cw, align 8, !noalias !27
   %i.da = getelementptr inbounds nuw i8, ptr %i.cw, i64 16
   store i32 %i.cv, ptr %i.da, align 8, !noalias !27
@@ -473,7 +472,7 @@ _ZNK4LIEF12BinaryStream4readItEENS_6resultIT_EEv.exit39: ; preds = %bb.n, %bb.o
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dq, i64 8
   store i32 %i.dr, ptr %i.ds, align 8, !noalias !30
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dq, i64 12
-  store i32 %4, ptr %i.dt, align 4, !noalias !30
+  store i32 8, ptr %i.dt, align 4, !noalias !30
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4LIEF2PE10unwind_x6410SaveXMM128E, i64 16), ptr %i.dq, align 8, !noalias !30
   %i.du = getelementptr inbounds nuw i8, ptr %i.dq, i64 16
   store i8 %i.dn, ptr %i.du, align 8, !noalias !30
@@ -520,7 +519,7 @@ _ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit46: ; preds = %bb.q, %bb.r
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ei, i64 8
   store i32 %i.ej, ptr %i.ek, align 8, !noalias !33
   %i.el = getelementptr inbounds nuw i8, ptr %i.ei, i64 12
-  store i32 %4, ptr %i.el, align 4, !noalias !33
+  store i32 9, ptr %i.el, align 4, !noalias !33
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4LIEF2PE10unwind_x6410SaveXMM128E, i64 16), ptr %i.ei, align 8, !noalias !33
   %i.em = getelementptr inbounds nuw i8, ptr %i.ei, i64 16
   store i8 %i.eh, ptr %i.em, align 8, !noalias !33
@@ -652,7 +651,7 @@ _ZNSt10unique_ptrIN4LIEF2PE10unwind_x6410SaveXMM128ESt14default_deleteIS3_EED2Ev
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gj, i64 8
   store i32 %i.gk, ptr %i.gl, align 8, !noalias !45
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gj, i64 12
-  store i32 %4, ptr %i.gm, align 4, !noalias !45
+  store i32 7, ptr %i.gm, align 4, !noalias !45
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4LIEF2PE10unwind_x6410SaveXMM128E, i64 16), ptr %i.gj, align 8, !noalias !45
   %i.gn = getelementptr inbounds nuw i8, ptr %i.gj, i64 16
   store i8 %i.gi, ptr %i.gn, align 8, !noalias !45

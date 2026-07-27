@@ -201,11 +201,11 @@ _ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = load i32, ptr %3, align 4                ; 3 uses
-  %i.i = zext i32 %i.h to i64                     ; 5 uses
+  %i.i = zext i32 %i.h to i64                     ; 4 uses
   %i.j = sub nsw i64 0, %i.i
   %i.k = getelementptr inbounds i8, ptr %i.g, i64 %i.j ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.h, 0
-  br i1 %.not.i.i.i, label %8, label %_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i.i
+  br i1 %.not.i.i.i, label %_ZNSt6vectorIcSaIcEEC2IN9__gnu_cxx17__normal_iteratorIPcS1_EEvEET_S7_RKS0_.exit, label %_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i.i
 
 _ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i.i: ; preds = %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i
   %i.l = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #30
@@ -220,10 +220,6 @@ bb.d:                                             ; preds = %.noexc5.i
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.l, ptr nonnull align 1 %i.k, i64 %i.i, i1 false)
   br label %_ZNSt6vectorIcSaIcEEC2IN9__gnu_cxx17__normal_iteratorIPcS1_EEvEET_S7_RKS0_.exit
 
-8:                                                ; preds = %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i
-  %9 = getelementptr inbounds nuw i8, ptr null, i64 %i.i
-  br label %_ZNSt6vectorIcSaIcEEC2IN9__gnu_cxx17__normal_iteratorIPcS1_EEvEET_S7_RKS0_.exit
-
 bb.e:                                             ; preds = %.noexc5.i
   %i.n = load i8, ptr %i.k, align 1
   store i8 %i.n, ptr %i.l, align 1
@@ -234,9 +230,9 @@ _ZNSt12_Vector_baseIcSaIcEED2Ev.exit.i:           ; preds = %_ZNSt12_Vector_base
           cleanup
   br label %.body
 
-_ZNSt6vectorIcSaIcEEC2IN9__gnu_cxx17__normal_iteratorIPcS1_EEvEET_S7_RKS0_.exit: ; preds = %bb.e, %8, %bb.d
-  %.sroa.11.0 = phi ptr [ %9, %8 ], [ %i.m, %bb.d ], [ %i.m, %bb.e ] ; 3 uses
-  %.sroa.0115.0 = phi ptr [ null, %8 ], [ %i.l, %bb.d ], [ %i.l, %bb.e ] ; 2 uses
+_ZNSt6vectorIcSaIcEEC2IN9__gnu_cxx17__normal_iteratorIPcS1_EEvEET_S7_RKS0_.exit: ; preds = %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i, %bb.e, %bb.d
+  %.sroa.11.0 = phi ptr [ %i.m, %bb.e ], [ %i.m, %bb.d ], [ null, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i ] ; 3 uses
+  %.sroa.0115.0 = phi ptr [ %i.l, %bb.e ], [ %i.l, %bb.d ], [ null, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i ] ; 2 uses
   %i.p = load ptr, ptr %1, align 8                ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8

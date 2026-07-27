@@ -203,7 +203,7 @@ bb.a:
   %i.u = alloca [16 x i8], align 8                ; 4 uses
   %i.v = alloca [24 x i8], align 8                ; 6 uses
   %i.w = alloca [80 x i8], align 8                ; 8 uses
-  %i.x = alloca [1784 x i8], align 8              ; 19 uses
+  %i.x = alloca [1784 x i8], align 8              ; 18 uses
   %i.y = alloca [1784 x i8], align 8              ; 20 uses
   %.sroa.559.sroa.0.i = alloca [39 x i8], align 1 ; 6 uses
   %i.z = alloca [64 x i8], align 8                ; 8 uses
@@ -606,7 +606,7 @@ _RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtNtCsbG4i8A5DnWX_18tracing_s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !103
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !103
   %.sink11.i.i = select i1 %i.gt, i64 %.sroa.4.0.copyload240.i, i64 %.sroa.6242.0.copyload.i
-  %4 = icmp ne i64 %.sink11.i.i, 0                ; 2 uses
+  %.not342.i = icmp eq i64 %.sink11.i.i, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8255.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9.i.sroa.6)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10.i)
@@ -667,12 +667,11 @@ bb.bn:                                            ; preds = %bb.bl
   %.sroa.9.0..sroa_idx268.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 464
   %i.hf = load i64, ptr %.sroa.9.0..sroa_idx268.i, align 8, !noalias !86 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(664) %.sroa.9.i.sroa.6, ptr noundef nonnull align 16 dereferenceable(664) %i.aa, i64 664, i1 false), !noalias !86
-  %5 = zext i1 %4 to i8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.10.i, ptr noundef nonnull align 8 dereferenceable(64) %i.z, i64 64, i1 false), !noalias !86
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !86
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !86
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !86
-  br i1 %4, label %bb.bo, label %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i
+  br i1 %.not342.i, label %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i, label %bb.bo
 
 _RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i: ; preds = %bb.bn
   %i.hg = icmp ugt i64 %.sroa.8259.0.copyload265.i, 8
@@ -684,17 +683,17 @@ _RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_sub
   br i1 %or.cond.i, label %bb.bo, label %bb.br
 
 bb.bo:                                            ; preds = %bb.cc, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i, %bb.bn
-  %.sroa.9.i.sroa.0.0 = phi i64 [ %i.hf, %bb.bn ], [ %i.hf, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.9.i.sroa.0.0.copyload25, %bb.cc ]
-  %.sroa.7248.0.i = phi i64 [ %.sroa.7248.0.copyload254.i, %bb.bn ], [ %.sroa.7248.0.copyload254.i, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.7248.0.copyload252.i, %bb.cc ]
-  %.sroa.0244.0.i = phi i64 [ %.sroa.0244.0.copyload247.i, %bb.bn ], [ %.sroa.0244.0.copyload247.i, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.0244.0.copyload246.i, %bb.cc ]
-  %.sroa.8259.0.i = phi i64 [ %.sroa.8259.0.copyload265.i, %bb.bn ], [ %.sroa.8259.0.copyload265.i, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.8259.0.copyload263.i, %bb.cc ]
-  %.sroa.11.0.i = phi i64 [ 0, %bb.bn ], [ 0, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.11.0.copyload274.i, %bb.cc ]
-  %.sroa.12.0.i = phi i8 [ 0, %bb.bn ], [ 0, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.12.0.copyload278.i, %bb.cc ]
-  %.sroa.14.0.i = phi i64 [ %i.hc, %bb.bn ], [ %i.hc, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.14.0.copyload284.i, %bb.cc ]
-  %.sroa.15.0.i = phi i64 [ %i.hd, %bb.bn ], [ %i.hd, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.15.0.copyload288.i, %bb.cc ]
-  %.sroa.17.0.i = phi i64 [ 0, %bb.bn ], [ 0, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.17.0.copyload294.i, %bb.cc ]
-  %.sroa.18.0.i = phi i8 [ 1, %bb.bn ], [ 0, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.18.0.copyload298.i, %bb.cc ]
-  %.sroa.19.0.i = phi i8 [ %i.bc, %bb.bn ], [ %i.bc, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.19.0.copyload302.i, %bb.cc ]
+  %.sroa.9.i.sroa.0.0 = phi i64 [ %i.hf, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.9.i.sroa.0.0.copyload25, %bb.cc ], [ %i.hf, %bb.bn ]
+  %.sroa.7248.0.i = phi i64 [ %.sroa.7248.0.copyload254.i, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.7248.0.copyload252.i, %bb.cc ], [ %.sroa.7248.0.copyload254.i, %bb.bn ]
+  %.sroa.0244.0.i = phi i64 [ %.sroa.0244.0.copyload247.i, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.0244.0.copyload246.i, %bb.cc ], [ %.sroa.0244.0.copyload247.i, %bb.bn ]
+  %.sroa.8259.0.i = phi i64 [ %.sroa.8259.0.copyload265.i, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.8259.0.copyload263.i, %bb.cc ], [ %.sroa.8259.0.copyload265.i, %bb.bn ]
+  %.sroa.11.0.i = phi i64 [ 0, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.11.0.copyload274.i, %bb.cc ], [ 0, %bb.bn ]
+  %.sroa.12.0.i = phi i8 [ 0, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.12.0.copyload278.i, %bb.cc ], [ 0, %bb.bn ]
+  %.sroa.14.0.i = phi i64 [ %i.hc, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.14.0.copyload284.i, %bb.cc ], [ %i.hc, %bb.bn ]
+  %.sroa.15.0.i = phi i64 [ %i.hd, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.15.0.copyload288.i, %bb.cc ], [ %i.hd, %bb.bn ]
+  %.sroa.17.0.i = phi i64 [ 0, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.17.0.copyload294.i, %bb.cc ], [ 0, %bb.bn ]
+  %.sroa.18.0.i = phi i8 [ 0, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.18.0.copyload298.i, %bb.cc ], [ 1, %bb.bn ]
+  %.sroa.19.0.i = phi i8 [ %i.bc, %_RNvMsd_Cs3fLsjMQPbhe_8smallvecINtB5_8SmallVecANtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.19.0.copyload302.i, %bb.cc ], [ %i.bc, %bb.bn ]
   store i64 %.sroa.0244.0.i, ptr %0, align 8, !alias.scope !81, !noalias !266
   %.sroa.7248.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.7248.0.i, ptr %.sroa.7248.0..sroa_idx.i, align 8, !alias.scope !81, !noalias !266
@@ -776,11 +775,9 @@ bb.br:                                            ; preds = %_RNvMsd_Cs3fLsjMQPb
   %.sroa.15.0..sroa_idx285.i = getelementptr inbounds nuw i8, ptr %i.x, i64 1256
   store i64 %i.hd, ptr %.sroa.15.0..sroa_idx285.i, align 8, !noalias !86
   %.sroa.16.0..sroa_idx289.i = getelementptr inbounds nuw i8, ptr %i.x, i64 1264
-  %.sroa.18.0..sroa_idx295.i = getelementptr inbounds nuw i8, ptr %i.x, i64 1776
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(512) %.sroa.16.0..sroa_idx289.i, i8 0, i64 512, i1 false), !noalias !86
-  store i8 %5, ptr %.sroa.18.0..sroa_idx295.i, align 8, !noalias !86
-  %.sroa.19.0..sroa_idx299.i = getelementptr inbounds nuw i8, ptr %i.x, i64 1777
-  store i8 %i.bc, ptr %.sroa.19.0..sroa_idx299.i, align 1, !noalias !86
+  %.sroa.18.0..sroa_idx295.i = getelementptr inbounds nuw i8, ptr %i.x, i64 1777
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(513) %.sroa.16.0..sroa_idx289.i, i8 0, i64 513, i1 false), !noalias !86
+  store i8 %i.bc, ptr %.sroa.18.0..sroa_idx295.i, align 1, !noalias !86
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !86
   call void @llvm.experimental.noalias.scope.decl(metadata !267)
   call void @llvm.experimental.noalias.scope.decl(metadata !270)

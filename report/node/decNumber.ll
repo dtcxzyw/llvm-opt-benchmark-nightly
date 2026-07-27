@@ -204,15 +204,11 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.bo, label %bb.h, label %.thread101.i
 
 bb.h:                                             ; preds = %._crit_edge.i
-  %4 = add nsw i32 %i.n, -2
-  %i.bp = zext nneg i32 %4 to i64                 ; 2 uses
-  %5 = getelementptr i8, ptr %2, i64 %i.bp
-  %scevgep.a = getelementptr i8, ptr %5, i64 10
-  %6 = getelementptr [4 x i8], ptr @_ZL9DECPOWERS, i64 %i.bp
-  %i.bq = getelementptr i8, ptr %6, i64 4
-  %7 = load i32, ptr %i.bq, align 4
-  %i.br = sdiv i32 %.lcssa, %7
-  %i.bs = load i8, ptr %scevgep.a, align 1
+  %i.bp = zext nneg i32 %i.n to i64
+  %scevgep.a = getelementptr i8, ptr %2, i64 %i.bp
+  %i.bq = getelementptr i8, ptr %scevgep.a, i64 8
+  %i.br = sdiv i32 %.lcssa, 1000000000
+  %i.bs = load i8, ptr %i.bq, align 1
   %i.bt = zext i8 %i.bs to i32
   %.not83.i = icmp ne i32 %i.br, %i.bt
   %i.bu = icmp sgt i32 %.lcssa, 1999999997
@@ -453,15 +449,11 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.bm, label %bb.g, label %.thread101.i
 
 bb.g:                                             ; preds = %._crit_edge.i
-  %4 = add nsw i32 %i.l, -2
-  %i.bn = zext nneg i32 %4 to i64                 ; 2 uses
-  %5 = getelementptr i8, ptr %2, i64 %i.bn
-  %scevgep.a = getelementptr i8, ptr %5, i64 10
-  %6 = getelementptr [4 x i8], ptr @_ZL9DECPOWERS, i64 %i.bn
-  %i.bo = getelementptr i8, ptr %6, i64 4
-  %7 = load i32, ptr %i.bo, align 4
-  %i.bp = sdiv i32 %.lcssa, %7
-  %i.bq = load i8, ptr %scevgep.a, align 1
+  %i.bn = zext nneg i32 %i.l to i64
+  %scevgep.a = getelementptr i8, ptr %2, i64 %i.bn
+  %i.bo = getelementptr i8, ptr %scevgep.a, i64 8
+  %i.bp = sdiv i32 %.lcssa, 1000000000
+  %i.bq = load i8, ptr %i.bo, align 1
   %i.br = zext i8 %i.bq to i32
   %.not83.i = icmp ne i32 %i.bp, %i.br
   %i.bs = icmp sgt i32 %.lcssa, 1999999997

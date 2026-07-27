@@ -203,22 +203,16 @@ _ZNSt6vectorIPN5folly11AsyncSocket23LegacyLifecycleObserverESaIS3_EE17_S_check_i
   %i.e = select i1 %.not1.i.i, ptr %i.d, ptr %i.c ; 2 uses
   %i.f = and i64 %i.b, 4611686018427387903        ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
-  %.idx = shl nuw nsw i64 %i.f, 3                 ; 4 uses
+  %.idx = shl nuw nsw i64 %i.f, 3                 ; 3 uses
   %.not.i.i.i = icmp eq i64 %i.f, 0
-  br i1 %.not.i.i.i, label %.thread.i.i, label %_ZNSt12_Vector_baseIPN5folly11AsyncSocket23LegacyLifecycleObserverESaIS3_EE11_M_allocateEm.exit.i.i
-
-.thread.i.i:                                      ; preds = %_ZNSt6vectorIPN5folly11AsyncSocket23LegacyLifecycleObserverESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i
-  %2 = getelementptr inbounds nuw i8, ptr null, i64 %.idx ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %2, ptr %3, align 8, !tbaa !14374
-  br label %bb.c
+  br i1 %.not.i.i.i, label %bb.c, label %_ZNSt12_Vector_baseIPN5folly11AsyncSocket23LegacyLifecycleObserverESaIS3_EE11_M_allocateEm.exit.i.i
 
 _ZNSt12_Vector_baseIPN5folly11AsyncSocket23LegacyLifecycleObserverESaIS3_EE11_M_allocateEm.exit.i.i: ; preds = %_ZNSt6vectorIPN5folly11AsyncSocket23LegacyLifecycleObserverESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i
   %i.g = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx) #42 ; 4 uses
-  store ptr %i.g, ptr %0, align 8, !tbaa !14376
+  store ptr %i.g, ptr %0, align 8, !tbaa !14374
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %i.h, ptr %i.i, align 8, !tbaa !14374
+  store ptr %i.h, ptr %i.i, align 8, !tbaa !14376
   %.not = icmp eq i64 %i.f, 1
   br i1 %.not, label %bb.b, label %bb.a, !prof !14377
 
@@ -231,8 +225,8 @@ bb.b:                                             ; preds = %_ZNSt12_Vector_base
   store ptr %i.j, ptr %i.g, align 8, !tbaa !14210
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a, %.thread.i.i
-  %i.k = phi ptr [ %i.h, %bb.a ], [ %2, %.thread.i.i ], [ %i.h, %bb.b ]
+bb.c:                                             ; preds = %_ZNSt6vectorIPN5folly11AsyncSocket23LegacyLifecycleObserverESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i, %bb.b, %bb.a
+  %i.k = phi ptr [ %i.h, %bb.a ], [ %i.h, %bb.b ], [ null, %_ZNSt6vectorIPN5folly11AsyncSocket23LegacyLifecycleObserverESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i ]
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.k, ptr %i.l, align 8, !tbaa !14378
   ret void
@@ -635,9 +629,9 @@ begin_hunk_1_@llvm.vector.reduce.add.v4i64
 !14371 = !{!"_ZTSN5folly8OptionalINS_11AsyncSocket15ByteEventHelper14TimestampStateEE28StorageTriviallyDestructibleE", !10, i64 0, !13967, i64 48}
 !14372 = !DISubprogram(name: "byteEventsEnabled", linkageName: "_ZN5folly28AsyncSocketObserverInterface17byteEventsEnabledEPNS_11AsyncSocketE", scope: !8306, file: !8305, line: 310, type: !14302, scopeLine: 310, containingType: !8306, virtualIndex: 9, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
 !14373 = !DISubprogram(name: "observerDetach", linkageName: "_ZN5folly11AsyncSocket23LegacyLifecycleObserver14observerDetachEPS0_", scope: !1251, file: !15, line: 1427, type: !14356, scopeLine: 1427, containingType: !1251, virtualIndex: 16, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
-!14374 = !{!14375, !14354, i64 16}
+!14374 = !{!14375, !14354, i64 0}
 !14375 = !{!"_ZTSNSt12_Vector_baseIPN5folly11AsyncSocket23LegacyLifecycleObserverESaIS3_EE17_Vector_impl_dataE", !14354, i64 0, !14354, i64 8, !14354, i64 16}
-!14376 = !{!14375, !14354, i64 0}
+!14376 = !{!14375, !14354, i64 16}
 !14377 = !{!"branch_weights", !"expected", i32 0, i32 -2147483648}
 !14378 = !{!14375, !14354, i64 8}
 !14379 = !{!14380, !14381, i64 0}

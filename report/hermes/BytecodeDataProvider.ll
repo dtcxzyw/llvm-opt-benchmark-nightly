@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN6hermes3hbc12_GLOBAL__N_112castArrayRefINS_16StringTableEntryEEEN4llvh8ArrayRefIT_EERPKhmS9_.exit: ; preds = %bb.a
-  %i.s = shl nuw nsw i64 %i.i, 3                  ; 5 uses
+  %i.s = shl nuw nsw i64 %i.i, 3                  ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.s ; 5 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.f, i64 4
   %i.v = load i32, ptr %i.u, align 1, !tbaa !201  ; 3 uses
@@ -240,11 +240,7 @@ _ZN6hermes3hbc12_GLOBAL__N_112castArrayRefIhEEN4llvh8ArrayRefIT_EERPKhmS8_.exit:
   %.037.lcssa = phi ptr [ %i.ac, %_ZN6hermes3hbc12_GLOBAL__N_112castArrayRefIhEEN4llvh8ArrayRefIT_EERPKhmS8_.exit ], [ %i.bp, %._crit_edge.loopexit ]
   %i.aj = call noalias noundef nonnull dereferenceable(136) ptr @_Znwm(i64 noundef 136) #23 ; 16 uses
   %.not.i.i.i.i = icmp eq i32 %i.h, 0
-  br i1 %.not.i.i.i.i, label %.thread.i.i.i, label %_ZNSt12_Vector_baseIN6hermes16StringTableEntryESaIS1_EE11_M_allocateEm.exit.i.i.i
-
-.thread.i.i.i:                                    ; preds = %._crit_edge
-  %2 = getelementptr inbounds nuw i8, ptr null, i64 %i.s
-  br label %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i.i
+  br i1 %.not.i.i.i.i, label %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i.i, label %_ZNSt12_Vector_baseIN6hermes16StringTableEntryESaIS1_EE11_M_allocateEm.exit.i.i.i
 
 _ZNSt12_Vector_baseIN6hermes16StringTableEntryESaIS1_EE11_M_allocateEm.exit.i.i.i: ; preds = %._crit_edge
   %i.ak = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #23, !noalias !207 ; 5 uses
@@ -261,9 +257,9 @@ bb.e:                                             ; preds = %_ZNSt12_Vector_base
   store i64 %i.am, ptr %i.ak, align 4, !noalias !207
   br label %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i.i
 
-_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i.i: ; preds = %bb.e, %bb.d, %.thread.i.i.i
-  %.sroa.928.0 = phi ptr [ %2, %.thread.i.i.i ], [ %i.al, %bb.e ], [ %i.al, %bb.d ] ; 2 uses
-  %.sroa.025.0 = phi ptr [ null, %.thread.i.i.i ], [ %i.ak, %bb.e ], [ %i.ak, %bb.d ]
+_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i.i: ; preds = %bb.e, %bb.d, %._crit_edge
+  %.sroa.928.0 = phi ptr [ null, %._crit_edge ], [ %i.al, %bb.e ], [ %i.al, %bb.d ] ; 2 uses
+  %.sroa.025.0 = phi ptr [ null, %._crit_edge ], [ %i.ak, %bb.e ], [ %i.ak, %bb.d ]
   %.not.i.i.i.i12 = icmp eq i32 %i.v, 0
   br i1 %.not.i.i.i.i12, label %_ZNK4llvh8ArrayRefIhEcvSt6vectorIhSaIhEEEv.exit, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
 

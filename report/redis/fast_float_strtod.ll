@@ -204,16 +204,14 @@ _ZN10fast_float6bigint9shl_limbsEm.exit.thread.i.i.i: ; preds = %bb.i, %bb.h
 _ZN10fast_float6bigint5pow10Ej.exit:              ; preds = %bb.f, %_ZN10fast_float6bigint8shl_bitsEm.exit.thread.i.i.i, %_ZN10fast_float6bigint9shl_limbsEm.exit.thread.i.i.i, %bb.a, %bb.d
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 496
   %i.as = load i16, ptr %i.ar, align 8, !tbaa !48 ; 4 uses
-  %i.at = zext i16 %i.as to i64                   ; 5 uses
+  %i.at = zext i16 %i.as to i64                   ; 4 uses
   switch i16 %i.as, label %bb.l [
     i16 0, label %_ZNK10fast_float6bigint10bit_lengthEv.exit
     i16 1, label %bb.j
   ]
 
 bb.j:                                             ; preds = %_ZN10fast_float6bigint5pow10Ej.exit
-  %2 = getelementptr i8, ptr %0, i64 -8
-  %3 = getelementptr [8 x i8], ptr %2, i64 %i.at
-  %i.au = load i64, ptr %3, align 8, !tbaa !25    ; 4 uses
+  %i.au = load i64, ptr %0, align 8, !tbaa !25    ; 4 uses
   %.not.i.i.i4 = icmp eq i64 %i.au, 0
   br i1 %.not.i.i.i4, label %bb.k, label %_ZN10fast_float11uint64_hi64EmRb.exit.i
 

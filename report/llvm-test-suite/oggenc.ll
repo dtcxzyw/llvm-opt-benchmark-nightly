@@ -204,9 +204,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.n, label %.lr.ph, label %ov_halfrate.exit
 
 .lr.ph:                                           ; preds = %bb.e
-  %2 = icmp ne i32 %1, 0                          ; 2 uses
-  %3 = zext i1 %2 to i32                          ; 2 uses
-  br i1 %2, label %.lr.ph.split.preheader, label %.lr.ph.split.us
+  %.not30 = icmp eq i32 %1, 0
+  br i1 %.not30, label %.lr.ph.split.us, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   %i.o = load ptr, ptr %i.a, align 8
@@ -223,7 +222,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 48
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 5808
-  store i32 %3, ptr %i.x, align 8
+  store i32 0, ptr %i.x, align 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.y = load i32, ptr %i.l, align 8
   %i.z = sext i32 %i.y to i64
@@ -282,15 +281,15 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ax = phi ptr [ %i.ae, %.lr.ph.split ], [ %i.q, %.lr.ph.split.preheader ]
   %indvars.iv2436 = phi i64 [ %indvars.iv.next25, %.lr.ph.split ], [ 0, %.lr.ph.split.preheader ]
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 5808
-  store i32 %3, ptr %i.ay, align 8
+  store i32 1, ptr %i.ay, align 8
   %indvars.iv.next25 = add nuw nsw i64 %indvars.iv2436, 1 ; 3 uses
   %i.az = load i32, ptr %i.l, align 8             ; 2 uses
   %i.ba = sext i32 %i.az to i64
   %i.bb = icmp slt i64 %indvars.iv.next25, %i.ba
   br i1 %i.bb, label %.lr.ph.split, label %ov_halfrate.exit, !llvm.loop !197
 
-ov_halfrate.exit:                                 ; preds = %.lr.ph.split.us, %.lr.ph37, %.lr.ph20, %bb.e, %bb.h, %vorbis_synthesis_halfrate.exit, %bb.b, %bb.a
-  %.011 = phi i32 [ -131, %bb.a ], [ -131, %bb.h ], [ -131, %bb.b ], [ 0, %.lr.ph37 ], [ -131, %vorbis_synthesis_halfrate.exit ], [ 0, %bb.e ], [ -131, %.lr.ph20 ], [ 0, %.lr.ph.split.us ]
+ov_halfrate.exit:                                 ; preds = %.lr.ph37, %.lr.ph20, %.lr.ph.split.us, %bb.e, %bb.h, %vorbis_synthesis_halfrate.exit, %bb.b, %bb.a
+  %.011 = phi i32 [ -131, %bb.a ], [ -131, %bb.h ], [ -131, %bb.b ], [ 0, %.lr.ph.split.us ], [ -131, %vorbis_synthesis_halfrate.exit ], [ 0, %bb.e ], [ -131, %.lr.ph20 ], [ 0, %.lr.ph37 ]
   ret i32 %.011
 }
 
@@ -693,9 +692,9 @@ oggpack_look.exit68:                              ; preds = %bb.k, %bb.q
   %i.ed = shl nsw i64 %i.k, 3                     ; 2 uses
   %i.ee = shl nsw i64 %i.n, 3                     ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
-  %i.eg = sub nsw i32 8, %.fr                     ; 3 uses
-  %i.eh = sub nsw i32 16, %.fr                    ; 3 uses
-  %i.ei = sub nsw i32 24, %.fr                    ; 3 uses
+  %i.eg = sub nsw i32 8, %.fr                     ; 2 uses
+  %i.eh = sub nsw i32 16, %.fr                    ; 2 uses
+  %i.ei = sub nsw i32 24, %.fr                    ; 2 uses
   %.not33.i72 = icmp eq i32 %.fr, 0
   %i.ej = sub nsw i32 32, %.fr                    ; 2 uses
   br i1 %.not33.i72, label %.lr.ph.split.us, label %.lr.ph.split
@@ -720,20 +719,18 @@ bb.r:                                             ; preds = %.lr.ph.split.us
 bb.s:                                             ; preds = %bb.r
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 1
   %i.et = load i8, ptr %i.es, align 1
-  %2 = zext i8 %i.et to i32
-  %3 = shl nuw nsw i32 %2, %i.eg
-  %4 = zext nneg i32 %3 to i64
-  %i.eu = or disjoint i64 %4, %i.eq               ; 2 uses
+  %2 = zext i8 %i.et to i64
+  %3 = shl nuw nsw i64 %2, 8
+  %i.eu = or disjoint i64 %3, %i.eq               ; 2 uses
   %i.ev = icmp samesign ugt i64 %indvars.iv116, 17
   br i1 %i.ev, label %bb.t, label %bb.v
 
 bb.t:                                             ; preds = %bb.s
   %i.ew = getelementptr inbounds nuw i8, ptr %i.eo, i64 2
   %i.ex = load i8, ptr %i.ew, align 1
-  %5 = zext i8 %i.ex to i32
-  %6 = shl nuw nsw i32 %5, %i.eh
-  %7 = zext nneg i32 %6 to i64
-  %i.ey = or disjoint i64 %i.eu, %7               ; 2 uses
+  %4 = zext i8 %i.ex to i64
+  %5 = shl nuw nsw i64 %4, 16
+  %i.ey = or disjoint i64 %i.eu, %5               ; 2 uses
   %i.ez = icmp samesign ugt i64 %indvars.iv116, 25
   br i1 %i.ez, label %bb.u, label %bb.v
 
@@ -741,9 +738,9 @@ bb.u:                                             ; preds = %bb.t
   %i.fa = getelementptr inbounds nuw i8, ptr %i.eo, i64 3
   %i.fb = load i8, ptr %i.fa, align 1
   %i.fc = zext i8 %i.fb to i32
-  %i.fd = shl nuw i32 %i.fc, %i.ei
+  %i.fd = shl nuw i32 %i.fc, 24
   %i.fe = sext i32 %i.fd to i64
-  %i.ff = or i64 %i.ey, %i.fe
+  %i.ff = or disjoint i64 %i.ey, %i.fe
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s, %bb.r

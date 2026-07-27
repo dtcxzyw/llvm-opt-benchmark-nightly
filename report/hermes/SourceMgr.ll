@@ -203,26 +203,21 @@ _ZNK4llvh9StringRefcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv.exit
   %i.bc = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.bd = load i64, ptr %i.bc, align 8, !tbaa !141, !noalias !195 ; 2 uses
   store i64 0, ptr %i.ba, align 8, !alias.scope !195
-  %.idx.i = shl nuw nsw i64 %i.bd, 3              ; 4 uses
   %.not.i.i.i.i = icmp eq i64 %i.bd, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.thread.i.i.i, label %.lr.ph.i.i.i.i.preheader.i.i.i
-
-_ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.thread.i.i.i: ; preds = %_ZNK4llvh9StringRefcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv.exit11
-  %12 = getelementptr inbounds nuw i8, ptr null, i64 %.idx.i
-  br label %_ZNK4llvh8ArrayRefISt4pairIjjEE3vecEv.exit
+  br i1 %.not.i.i.i.i, label %_ZNK4llvh8ArrayRefISt4pairIjjEE3vecEv.exit, label %.lr.ph.i.i.i.i.preheader.i.i.i
 
 .lr.ph.i.i.i.i.preheader.i.i.i:                   ; preds = %_ZNK4llvh9StringRefcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv.exit11
+  %.idx.i = shl nuw nsw i64 %i.bd, 3              ; 3 uses
   %i.be = call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx.i) #23, !noalias !195 ; 3 uses
   store ptr %i.be, ptr %i.ba, align 8, !tbaa !162, !alias.scope !195
-  %i.bf = getelementptr i8, ptr %i.be, i64 %.idx.i ; 2 uses
+  %i.bf = getelementptr i8, ptr %i.be, i64 %.idx.i
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.be, ptr align 4 %i.bb, i64 %.idx.i, i1 false), !noalias !195
   br label %_ZNK4llvh8ArrayRefISt4pairIjjEE3vecEv.exit
 
-_ZNK4llvh8ArrayRefISt4pairIjjEE3vecEv.exit:       ; preds = %_ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.thread.i.i.i, %.lr.ph.i.i.i.i.preheader.i.i.i
-  %.sink.i = phi ptr [ %12, %_ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.thread.i.i.i ], [ %i.bf, %.lr.ph.i.i.i.i.preheader.i.i.i ]
-  %.0.lcssa.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.thread.i.i.i ], [ %i.bf, %.lr.ph.i.i.i.i.preheader.i.i.i ]
+_ZNK4llvh8ArrayRefISt4pairIjjEE3vecEv.exit:       ; preds = %_ZNK4llvh9StringRefcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv.exit11, %.lr.ph.i.i.i.i.preheader.i.i.i
+  %.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %i.bf, %.lr.ph.i.i.i.i.preheader.i.i.i ], [ null, %_ZNK4llvh9StringRefcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv.exit11 ] ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 144
-  store ptr %.sink.i, ptr %i.bg, align 8, !tbaa !171, !alias.scope !195
+  store ptr %.0.lcssa.i.i.i.i.i.i.i, ptr %i.bg, align 8, !tbaa !171, !alias.scope !195
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 136
   store ptr %.0.lcssa.i.i.i.i.i.i.i, ptr %i.bh, align 8, !tbaa !161, !alias.scope !195
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 4 uses

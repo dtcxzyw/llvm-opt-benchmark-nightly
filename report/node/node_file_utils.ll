@@ -64,36 +64,15 @@ bb.a:
   br i1 %i.b, label %_ZNSt6vectorI8uv_buf_tSaIS0_EED2Ev.exit, label %_ZNSt6vectorI8uv_buf_tSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i
 
 _ZNSt6vectorI8uv_buf_tSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i: ; preds = %bb.a
-  %.idx = shl nuw nsw i64 %2, 4                   ; 4 uses
   %.not.i.i.i = icmp eq i64 %2, 0
-  br i1 %.not.i.i.i, label %.thread.i.i, label %_ZNSt12_Vector_baseI8uv_buf_tSaIS0_EE11_M_allocateEm.exit.i.i
+  br i1 %.not.i.i.i, label %.critedge._crit_edge, label %_ZNSt6vectorI8uv_buf_tSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit
 
-.thread.i.i:                                      ; preds = %_ZNSt6vectorI8uv_buf_tSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i
-  %4 = getelementptr inbounds nuw i8, ptr null, i64 %.idx
-  br label %_ZNSt6vectorI8uv_buf_tSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit
-
-_ZNSt12_Vector_baseI8uv_buf_tSaIS0_EE11_M_allocateEm.exit.i.i: ; preds = %_ZNSt6vectorI8uv_buf_tSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i
-  %5 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx) #13 ; 5 uses
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 %.idx ; 2 uses
-  %.not55 = icmp eq i64 %2, 1
-  br i1 %.not55, label %8, label %7, !prof !5
-
-7:                                                ; preds = %_ZNSt12_Vector_baseI8uv_buf_tSaIS0_EE11_M_allocateEm.exit.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %5, ptr align 8 %1, i64 %.idx, i1 false)
-  br label %_ZNSt6vectorI8uv_buf_tSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit
-
-8:                                                ; preds = %_ZNSt12_Vector_baseI8uv_buf_tSaIS0_EE11_M_allocateEm.exit.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
-  br label %_ZNSt6vectorI8uv_buf_tSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit
-
-_ZNSt6vectorI8uv_buf_tSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit: ; preds = %.thread.i.i, %7, %8
-  %.sroa.18.0 = phi ptr [ %4, %.thread.i.i ], [ %6, %7 ], [ %6, %8 ] ; 2 uses
-  %.sroa.038.0 = phi ptr [ null, %.thread.i.i ], [ %5, %7 ], [ %5, %8 ] ; 6 uses
-  %9 = ptrtoint ptr %.sroa.18.0 to i64
-  %10 = ptrtoint ptr %.sroa.038.0 to i64
-  %11 = sub i64 %9, %10                           ; 2 uses
-  %i.c = ashr exact i64 %11, 4                    ; 4 uses
-  %.not63 = icmp eq ptr %.sroa.18.0, %.sroa.038.0
+_ZNSt6vectorI8uv_buf_tSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit: ; preds = %_ZNSt6vectorI8uv_buf_tSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i
+  %.idx = shl i64 %2, 4                           ; 6 uses
+  %4 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx) #13 ; 6 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %4, ptr align 8 %1, i64 %.idx, i1 false)
+  %i.c = ashr exact i64 %.idx, 4                  ; 3 uses
+  %.not63 = icmp samesign eq i64 %.idx, 0
   br i1 %.not63, label %.critedge._crit_edge, label %.lr.ph61
 
 .lr.ph61:                                         ; preds = %_ZNSt6vectorI8uv_buf_tSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit
@@ -102,11 +81,11 @@ _ZNSt6vectorI8uv_buf_tSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit: ; preds = %.thread.i.i,
 
 ..critedge.loopexit_crit_edge:                    ; preds = %bb.g, %.thread71
   %.276 = phi i64 [ %.13058, %.thread71 ], [ %i.ab, %bb.g ]
-  br label %.critedge.backedge, !llvm.loop !6
+  br label %.critedge.backedge, !llvm.loop !5
 
 bb.b:                                             ; preds = %.lr.ph61, %.critedge.backedge
   %.02960 = phi i64 [ 0, %.lr.ph61 ], [ %.029.be, %.critedge.backedge ] ; 6 uses
-  %i.e = getelementptr inbounds nuw [16 x i8], ptr %.sroa.038.0, i64 %.02960 ; 2 uses
+  %i.e = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %.02960 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.g = load i64, ptr %i.f, align 8
   %i.h = icmp eq i64 %i.g, 0
@@ -119,10 +98,10 @@ bb.c:                                             ; preds = %bb.b
 .critedge.backedge:                               ; preds = %bb.e, %..critedge.loopexit_crit_edge, %bb.c
   %.029.be = phi i64 [ %i.i, %bb.c ], [ %.276, %..critedge.loopexit_crit_edge ], [ %.02960, %bb.e ] ; 2 uses
   %i.j = icmp ult i64 %.029.be, %i.c
-  br i1 %i.j, label %bb.b, label %.critedge._crit_edge, !llvm.loop !6
+  br i1 %i.j, label %bb.b, label %.critedge._crit_edge, !llvm.loop !5
 
 bb.d:                                             ; preds = %bb.b
-  %i.k = sub i64 %i.c, %.02960
+  %i.k = sub i64 %2, %.02960
   %i.l = trunc i64 %i.k to i32
   %i.m = call i32 @uv_fs_write(ptr noundef null, ptr noundef nonnull %3, i32 noundef %i.a, ptr noundef nonnull %i.e, i32 noundef %i.l, i64 noundef -1, ptr noundef null) #12 ; 0 uses
   %i.n = load i64, ptr %i.d, align 8              ; 4 uses
@@ -141,15 +120,15 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   call void @uv_fs_req_cleanup(ptr noundef nonnull %3) #12
   %i.s = icmp ult i64 %.02960, %i.c
-  br i1 %i.s, label %.lr.ph, label %.critedge.backedge, !llvm.loop !6
+  br i1 %i.s, label %.lr.ph, label %.critedge.backedge, !llvm.loop !5
 
 .lr.ph:                                           ; preds = %bb.e
-  br label %bb.f, !llvm.loop !6
+  br label %bb.f, !llvm.loop !5
 
 bb.f:                                             ; preds = %.lr.ph, %bb.g
   %.02759 = phi i64 [ %i.n, %.lr.ph ], [ %i.aa, %bb.g ] ; 4 uses
   %.13058 = phi i64 [ %.02960, %.lr.ph ], [ %i.ab, %bb.g ] ; 3 uses
-  %i.t = getelementptr inbounds nuw [16 x i8], ptr %.sroa.038.0, i64 %.13058 ; 4 uses
+  %i.t = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %.13058 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.v = load i64, ptr %i.u, align 8              ; 3 uses
   %.not35 = icmp ult i64 %.02759, %i.v
@@ -170,17 +149,21 @@ bb.g:                                             ; preds = %bb.f
   %.not = icmp ne i64 %i.aa, 0
   %i.ac = icmp ult i64 %i.ab, %i.c
   %or.cond = select i1 %.not, i1 %i.ac, i1 false
-  br i1 %or.cond, label %bb.f, label %..critedge.loopexit_crit_edge, !llvm.loop !8
+  br i1 %or.cond, label %bb.f, label %..critedge.loopexit_crit_edge, !llvm.loop !7
 
-.critedge._crit_edge:                             ; preds = %.critedge.backedge, %_ZNSt6vectorI8uv_buf_tSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit
+.critedge._crit_edge:                             ; preds = %.critedge.backedge, %_ZNSt6vectorI8uv_buf_tSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i, %_ZNSt6vectorI8uv_buf_tSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit
+  %5 = phi i64 [ 0, %_ZNSt6vectorI8uv_buf_tSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i ], [ 0, %_ZNSt6vectorI8uv_buf_tSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit ], [ %.idx, %.critedge.backedge ]
+  %.sroa.038.075 = phi ptr [ null, %_ZNSt6vectorI8uv_buf_tSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i ], [ %4, %_ZNSt6vectorI8uv_buf_tSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit ], [ %4, %.critedge.backedge ] ; 2 uses
   %i.ad = call i32 @uv_fs_close(ptr noundef null, ptr noundef nonnull %3, i32 noundef %i.a, ptr noundef null) #12 ; 2 uses
   call void @uv_fs_req_cleanup(ptr noundef nonnull %3) #12
-  %.not.i.i.i37 = icmp eq ptr %.sroa.038.0, null
+  %.not.i.i.i37 = icmp eq ptr %.sroa.038.075, null
   br i1 %.not.i.i.i37, label %_ZNSt6vectorI8uv_buf_tSaIS0_EED2Ev.exit, label %bb.h
 
 bb.h:                                             ; preds = %.thread, %.critedge._crit_edge
+  %6 = phi i64 [ %.idx, %.thread ], [ %5, %.critedge._crit_edge ]
+  %.sroa.038.074 = phi ptr [ %4, %.thread ], [ %.sroa.038.075, %.critedge._crit_edge ]
   %.052 = phi i32 [ %i.q, %.thread ], [ %i.ad, %.critedge._crit_edge ]
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.038.0, i64 noundef %11) #14
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.038.074, i64 noundef %6) #14
   br label %_ZNSt6vectorI8uv_buf_tSaIS0_EED2Ev.exit
 
 _ZNSt6vectorI8uv_buf_tSaIS0_EED2Ev.exit:          ; preds = %bb.h, %.critedge._crit_edge, %bb.a
@@ -583,7 +566,7 @@ define dso_local void @_ZN4node12ReadFileSyncEP8_IO_FILE(ptr dead_on_unwind noal
 bb.a:
   %i.a = tail call i64 @ftell(ptr noundef %1)
   %i.b = icmp eq i64 %i.a, 0
-  br i1 %i.b, label %bb.c, label %bb.b, !prof !9
+  br i1 %i.b, label %bb.c, label %bb.b, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node12ReadFileSyncEP8_IO_FILEE20error_and_abort_args) #12
@@ -593,7 +576,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.c = tail call i32 @fseek(ptr noundef %1, i64 noundef 0, i32 noundef 2)
   %i.d = icmp eq i32 %i.c, 0
-  br i1 %i.d, label %bb.e, label %bb.d, !prof !9
+  br i1 %i.d, label %bb.e, label %bb.d, !prof !8
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node12ReadFileSyncEP8_IO_FILEE20error_and_abort_args_0) #12
@@ -603,7 +586,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.e = tail call i64 @ftell(ptr noundef %1)     ; 7 uses
   %.not = icmp eq i64 %i.e, -1
-  br i1 %.not, label %bb.f, label %bb.g, !prof !10
+  br i1 %.not, label %bb.f, label %bb.g, !prof !9
 
 bb.f:                                             ; preds = %bb.e
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node12ReadFileSyncEP8_IO_FILEE20error_and_abort_args_1) #12
@@ -613,7 +596,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.f = tail call i32 @fseek(ptr noundef %1, i64 noundef 0, i32 noundef 0)
   %i.g = icmp eq i32 %i.f, 0
-  br i1 %i.g, label %bb.i, label %bb.h, !prof !9
+  br i1 %i.g, label %bb.i, label %bb.h, !prof !8
 
 bb.h:                                             ; preds = %bb.g
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node12ReadFileSyncEP8_IO_FILEE20error_and_abort_args_2) #12
@@ -659,7 +642,7 @@ _ZNSt6vectorIcSaIcEEC2EmRKS0_.exit:               ; preds = %_ZNSt12_Vector_base
   store ptr %.0.i.i.i.i.i, ptr %i.i, align 8
   %i.q = tail call i64 @fread(ptr noundef %i.p, i64 noundef %i.e, i64 noundef 1, ptr noundef %1)
   %i.r = icmp eq i64 %i.q, 1
-  br i1 %i.r, label %bb.n, label %bb.m, !prof !9
+  br i1 %i.r, label %bb.n, label %bb.m, !prof !8
 
 bb.m:                                             ; preds = %_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node12ReadFileSyncEP8_IO_FILEE20error_and_abort_args_3) #12
@@ -758,7 +741,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %.0 = phi i64 [ %spec.store.select.i, %bb.e ], [ %i.f, %bb.d ], [ %i.f, %bb.c ] ; 2 uses
   %i.q = add nuw i64 %.0, 1                       ; 2 uses
   %i.r = icmp slt i64 %i.q, 0
-  br i1 %i.r, label %bb.g, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, !prof !10
+  br i1 %i.r, label %bb.g, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, !prof !9
 
 bb.g:                                             ; preds = %bb.f
   tail call void @_ZSt17__throw_bad_allocv() #15
@@ -984,10 +967,9 @@ attributes #15 = { noreturn nounwind }
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
 !4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!5 = !{!"branch_weights", !"expected", i32 0, i32 -2147483648}
-!6 = distinct !{!6, !7}
-!7 = !{!"llvm.loop.mustprogress"}
-!8 = distinct !{!8, !7}
-!9 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!10 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!5 = distinct !{!5, !6}
+!6 = !{!"llvm.loop.mustprogress"}
+!7 = distinct !{!7, !6}
+!8 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!9 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 end_hunk_1

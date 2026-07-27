@@ -205,7 +205,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 96
   %i.g = load i32, ptr %i.f, align 8              ; 3 uses
   %i.h = zext i32 %i.g to i64
-  %.idx35 = shl nuw nsw i64 %i.h, 3               ; 5 uses
+  %.idx35 = shl nuw nsw i64 %i.h, 3               ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx35
   %.not37 = icmp eq i32 %i.g, 0                   ; 2 uses
   br i1 %.not37, label %._crit_edge, label %.lr.ph
@@ -360,11 +360,7 @@ _ZNSt6vectorIPN2v88internal4wasm8WasmCodeESaIS4_EE17_S_check_init_lenEmRKS5_.exi
   %.0.i.i.i.i.i59 = phi ptr [ null, %._crit_edge ], [ %.0.i.i.i.i.i.ph, %bb.k ], [ %.0.i.i.i.i.i.ph, %_ZNSt6vectorIPN2v88internal4wasm8WasmCodeESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i.i.loopexit.unr-lcssa ]
   %.sroa.028.057 = phi ptr [ null, %._crit_edge ], [ %i.o, %bb.k ], [ %i.o, %_ZNSt6vectorIPN2v88internal4wasm8WasmCodeESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i.i.loopexit.unr-lcssa ]
   %.sroa.11.055 = phi ptr [ null, %._crit_edge ], [ %i.p, %bb.k ], [ %i.p, %_ZNSt6vectorIPN2v88internal4wasm8WasmCodeESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i.i.loopexit.unr-lcssa ]
-  br i1 %.not37, label %.thread.i.i, label %_ZNSt12_Vector_baseIPN2v88internal4wasm8WasmCodeESaIS4_EE11_M_allocateEm.exit.i.i
-
-.thread.i.i:                                      ; preds = %_ZNSt6vectorIPN2v88internal4wasm8WasmCodeESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i.i
-  %2 = getelementptr inbounds nuw i8, ptr null, i64 %.idx35
-  br label %_ZN2v84base9LockGuardINS0_14RecursiveMutexEED2Ev.exit
+  br i1 %.not37, label %_ZN2v84base9LockGuardINS0_14RecursiveMutexEED2Ev.exit, label %_ZNSt12_Vector_baseIPN2v88internal4wasm8WasmCodeESaIS4_EE11_M_allocateEm.exit.i.i
 
 _ZNSt12_Vector_baseIPN2v88internal4wasm8WasmCodeESaIS4_EE11_M_allocateEm.exit.i.i: ; preds = %_ZNSt6vectorIPN2v88internal4wasm8WasmCodeESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i.i
   %i.bd = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx35) #33 ; 5 uses
@@ -381,9 +377,9 @@ bb.m:                                             ; preds = %_ZNSt12_Vector_base
   store ptr %i.bf, ptr %i.bd, align 8
   br label %_ZN2v84base9LockGuardINS0_14RecursiveMutexEED2Ev.exit
 
-_ZN2v84base9LockGuardINS0_14RecursiveMutexEED2Ev.exit: ; preds = %.thread.i.i, %bb.l, %bb.m
-  %.sroa.024.0 = phi ptr [ null, %.thread.i.i ], [ %i.bd, %bb.l ], [ %i.bd, %bb.m ]
-  %.sroa.9.0 = phi ptr [ %2, %.thread.i.i ], [ %i.be, %bb.l ], [ %i.be, %bb.m ] ; 2 uses
+_ZN2v84base9LockGuardINS0_14RecursiveMutexEED2Ev.exit: ; preds = %_ZNSt6vectorIPN2v88internal4wasm8WasmCodeESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i.i, %bb.l, %bb.m
+  %.sroa.024.0 = phi ptr [ %i.bd, %bb.m ], [ %i.bd, %bb.l ], [ null, %_ZNSt6vectorIPN2v88internal4wasm8WasmCodeESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i.i ]
+  %.sroa.9.0 = phi ptr [ %i.be, %bb.m ], [ %i.be, %bb.l ], [ null, %_ZNSt6vectorIPN2v88internal4wasm8WasmCodeESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i.i ] ; 2 uses
   store ptr %.sroa.024.0, ptr %0, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.9.0, ptr %i.bg, align 8

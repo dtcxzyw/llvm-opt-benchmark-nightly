@@ -204,7 +204,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.bq = xor i128 %i.bp, %i.bo
   %i.br = trunc i128 %i.bq to i64
   store i64 %i.br, ptr %i.bk, align 8, !alias.scope !3845
-  %i.bs = zext i1 %i.bg to i128                   ; 2 uses
+  %i.bs = zext i1 %i.bg to i128
   store i128 %i.bs, ptr %1, align 16, !alias.scope !3845
   store i8 64, ptr %i.c, align 16, !alias.scope !3845
   br i1 %i.bg, label %bb.e, label %bb.b
@@ -212,7 +212,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
 bb.e:                                             ; preds = %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit2
   %i.bt = zext nneg i8 %i.bf to i128
   %i.bu = shl nuw nsw i128 %i.bt, 64
-  %i.bv = or disjoint i128 %i.bu, %i.bs
+  %i.bv = or disjoint i128 %i.bu, 1
   br label %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -615,7 +615,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.avy = xor i128 %i.avx, %i.avw
   %i.avz = trunc i128 %i.avy to i64
   store i64 %i.avz, ptr %i.avn, align 8, !alias.scope !4540
-  %i.awa = zext i1 %i.aux to i128                 ; 2 uses
+  %i.awa = zext i1 %i.aux to i128
   store i128 %i.awa, ptr %1, align 16, !alias.scope !4540
   store i8 64, ptr %i.d, align 16, !alias.scope !4540
   br i1 %i.aux, label %bb.co, label %_RINvYNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7SettingNtNtCsbvkFyIu7lgC_4core4hash4Hash10hash_sliceNtNtCs2HSpDNxY7OE_9hashbrown6hasher13DefaultHasherECs14kWLkQVSKO_14deltalake_core.exit.thread105
@@ -637,7 +637,7 @@ bb.co:                                            ; preds = %_RNvXs_NtCs2HSpDNxY
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4547)
   %i.awj = zext i64 %i.awi to i128
   %i.awk = shl nuw i128 %i.awj, 64
-  %i.awl = or disjoint i128 %i.awk, %i.awa
+  %i.awl = or disjoint i128 %i.awk, 1
   br label %_RNvYNtNtCs2HSpDNxY7OE_9hashbrown6hasher13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher19write_length_prefixCs14kWLkQVSKO_14deltalake_core.exit24
 
 bb.cp:                                            ; preds = %bb.cn
@@ -1040,7 +1040,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.ape = xor i128 %i.apd, %i.apc
   %i.apf = trunc i128 %i.ape to i64               ; 3 uses
   store i64 %i.apf, ptr %i.aot, align 8, !alias.scope !5395
-  %i.apg = zext i1 %i.aoh to i128                 ; 2 uses
+  %i.apg = zext i1 %i.aoh to i128
   store i128 %i.apg, ptr %1, align 16, !alias.scope !5395
   store i8 64, ptr %i.d, align 16, !alias.scope !5395
   br i1 %i.aoh, label %.thread138, label %.thread137
@@ -1051,7 +1051,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5407)
   %i.aph = zext nneg i8 %i.aog to i128
   %i.api = shl nuw nsw i128 %i.aph, 64
-  %i.apj = or disjoint i128 %i.api, %i.apg        ; 2 uses
+  %i.apj = or disjoint i128 %i.api, 1             ; 2 uses
   store i128 %i.apj, ptr %1, align 16, !alias.scope !5410
   store i8 -128, ptr %i.d, align 16, !alias.scope !5410
   br label %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit
@@ -1454,7 +1454,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.dn = xor i128 %i.dm, %i.dl
   %i.do = trunc i128 %i.dn to i64                 ; 2 uses
   store i64 %i.do, ptr %i.dc, align 8, !alias.scope !6462
-  %i.dp = zext i1 %i.cp to i128                   ; 2 uses
+  %i.dp = zext i1 %i.cp to i128
   store i128 %i.dp, ptr %1, align 16, !alias.scope !6462
   store i8 64, ptr %i.c, align 16, !alias.scope !6462
   br i1 %i.cp, label %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i, label %_RINvXs4H_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB7_17ExcludeSelectItemNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtCs2HSpDNxY7OE_9hashbrown6hasher13DefaultHasherECs14kWLkQVSKO_14deltalake_core.exit.thread28
@@ -1468,9 +1468,8 @@ _RINvXs4H_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB7_17ExcludeSelectItemNtNtCsbv
 
 _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i: ; preds = %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit6.thread
   %i.du = icmp eq i64 %i.co, -9223372036854775808 ; 2 uses
-  %i.dv = select i1 %i.du, i128 18446744073709551616, i128 0
-  %2 = or disjoint i128 %i.dv, %i.dp
-  store i128 %2, ptr %1, align 16, !alias.scope !6463, !noalias !6470
+  %i.dv = select i1 %i.du, i128 18446744073709551617, i128 1
+  store i128 %i.dv, ptr %1, align 16, !alias.scope !6463, !noalias !6470
   store i8 -128, ptr %i.c, align 16, !alias.scope !6463, !noalias !6470
   br i1 %i.du, label %bb.n, label %bb.o
 
@@ -1873,7 +1872,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.acn = xor i128 %i.acm, %i.acl
   %i.aco = trunc i128 %i.acn to i64
   store i64 %i.aco, ptr %i.acc, align 8, !alias.scope !8775
-  %i.acp = zext i1 %i.abr to i128                 ; 2 uses
+  %i.acp = zext i1 %i.abr to i128
   store i128 %i.acp, ptr %1, align 16, !alias.scope !8775
   store i8 64, ptr %i.c, align 16, !alias.scope !8775
   br i1 %i.abr, label %.thread207, label %.thread210
@@ -1883,8 +1882,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.acr = load i64, ptr %i.acq, align 8, !range !777, !noundef !3
   %.not351 = icmp eq i64 %i.acr, -9223372036854775808 ; 2 uses
   %i.acs = select i1 %.not351, i128 0, i128 18446744073709551616
-  %2 = or disjoint i128 %i.acs, %i.acp
-  store i128 %2, ptr %1, align 16, !alias.scope !8782
+  store i128 %i.acs, ptr %1, align 16, !alias.scope !8782
   store i8 -128, ptr %i.c, align 16, !alias.scope !8782
   br i1 %.not351, label %bb.ep, label %bb.fu
 
@@ -2287,7 +2285,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.bwi = xor i128 %i.bwh, %i.bwg
   %i.bwj = trunc i128 %i.bwi to i64
   store i64 %i.bwj, ptr %i.bvx, align 8, !alias.scope !9185
-  %i.bwk = zext i1 %i.bvs to i128                 ; 2 uses
+  %i.bwk = zext i1 %i.bvs to i128
   store i128 %i.bwk, ptr %1, align 16, !alias.scope !9185
   store i8 64, ptr %i.c, align 16, !alias.scope !9185
   br i1 %i.bvs, label %bb.fz, label %_RINvXs9d_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB7_14AfterMatchSkipNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtCs2HSpDNxY7OE_9hashbrown6hasher13DefaultHasherECs14kWLkQVSKO_14deltalake_core.exit
@@ -2298,7 +2296,7 @@ bb.fz:                                            ; preds = %_RNvXs_NtCs2HSpDNxY
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9203)
   %i.bwl = zext nneg i64 %i.bvt to i128
   %i.bwm = shl nuw nsw i128 %i.bwl, 64
-  %i.bwn = or disjoint i128 %i.bwm, %i.bwk
+  %i.bwn = or disjoint i128 %i.bwm, 1
   br label %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i142
 
 bb.ga:                                            ; preds = %._crit_edge, %_RINvXs93_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB7_12RowsPerMatchNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtCs2HSpDNxY7OE_9hashbrown6hasher13DefaultHasherECs14kWLkQVSKO_14deltalake_core.exit.thread
@@ -2701,7 +2699,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.aey = xor i128 %i.aex, %i.aew
   %i.aez = trunc i128 %i.aey to i64
   store i64 %i.aez, ptr %i.aeq, align 8, !alias.scope !10885
-  %i.afa = zext i1 %i.aen to i128                 ; 2 uses
+  %i.afa = zext i1 %i.aen to i128
   store i128 %i.afa, ptr %1, align 16, !alias.scope !10885
   store i8 64, ptr %i.d, align 16, !alias.scope !10885
   br i1 %i.aen, label %bb.ar, label %_RINvXsdX_NtCs4lawaffTVVK_9sqlparser3astNtB7_13InsertAliasesNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtCs2HSpDNxY7OE_9hashbrown6hasher13DefaultHasherECs14kWLkQVSKO_14deltalake_core.exit.thread
@@ -2720,7 +2718,7 @@ bb.ar:                                            ; preds = %_RNvXs_NtCs2HSpDNxY
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10919)
   %i.afd = zext i64 %.val1.i50 to i128
   %i.afe = shl nuw i128 %i.afd, 64
-  %i.aff = or disjoint i128 %i.afe, %i.afa
+  %i.aff = or disjoint i128 %i.afe, 1
   br label %_RINvXs43_NtCs4lawaffTVVK_9sqlparser3astNtB7_10ObjectNameNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtCs2HSpDNxY7OE_9hashbrown6hasher13DefaultHasherECs14kWLkQVSKO_14deltalake_core.exit.i
 
 bb.as:                                            ; preds = %.thread128
@@ -3123,7 +3121,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.rt = xor i128 %i.rs, %i.rr
   %i.ru = trunc i128 %i.rt to i64                 ; 3 uses
   store i64 %i.ru, ptr %i.rl, align 8, !alias.scope !14081
-  %i.rv = zext i1 %i.ri to i128                   ; 2 uses
+  %i.rv = zext i1 %i.ri to i128
   store i128 %i.rv, ptr %1, align 16, !alias.scope !14081
   store i8 64, ptr %i.c, align 16, !alias.scope !14081
   br i1 %i.ri, label %bb.ae, label %.thread107
@@ -3135,7 +3133,7 @@ bb.ae:                                            ; preds = %_RNvXs_NtCs2HSpDNxY
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14090)
   %i.rw = zext nneg i64 %i.rh to i128
   %i.rx = shl nuw nsw i128 %i.rw, 64
-  %i.ry = or disjoint i128 %i.rx, %i.rv
+  %i.ry = or disjoint i128 %i.rx, 1
   br label %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i45
 
 bb.af:                                            ; preds = %.thread99
@@ -3538,7 +3536,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.acd = xor i128 %i.acc, %i.acb
   %i.ace = trunc i128 %i.acd to i64
   store i64 %i.ace, ptr %i.abs, align 8, !alias.scope !14173
-  %i.acf = zext i1 %i.abh to i128                 ; 2 uses
+  %i.acf = zext i1 %i.abh to i128
   store i128 %i.acf, ptr %1, align 16, !alias.scope !14173
   store i8 64, ptr %i.c, align 16, !alias.scope !14173
   br i1 %i.abh, label %bb.be, label %.thread124
@@ -3560,7 +3558,7 @@ bb.be:                                            ; preds = %_RNvXs_NtCs2HSpDNxY
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14196)
   %i.aco = zext i64 %i.acn to i128
   %i.acp = shl nuw i128 %i.aco, 64
-  %i.acq = or disjoint i128 %i.acp, %i.acf
+  %i.acq = or disjoint i128 %i.acp, 1
   br label %bb.bg
 
 bb.bf:                                            ; preds = %.thread118, %bb.bd
@@ -3963,7 +3961,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.abm = xor i128 %i.abl, %i.abk
   %i.abn = trunc i128 %i.abm to i64
   store i64 %i.abn, ptr %i.abg, align 8, !alias.scope !15353, !noalias !15309
-  %i.abo = zext i1 %i.abd to i128                 ; 2 uses
+  %i.abo = zext i1 %i.abd to i128
   store i128 %i.abo, ptr %1, align 16, !alias.scope !15353, !noalias !15309
   store i8 64, ptr %i.c, align 16, !alias.scope !15353, !noalias !15309
   br i1 %i.abd, label %bb.z, label %_RINvXs6U_NtNtCs4lawaffTVVK_9sqlparser3ast3ddlNtB7_25ConstraintCharacteristicsNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtCs2HSpDNxY7OE_9hashbrown6hasher13DefaultHasherECs14kWLkQVSKO_14deltalake_core.exit
@@ -3971,7 +3969,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
 bb.z:                                             ; preds = %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit.i
   %i.abp = zext nneg i8 %i.abc to i128
   %i.abq = shl nuw nsw i128 %i.abp, 64
-  %i.abr = or disjoint i128 %i.abq, %i.abo
+  %i.abr = or disjoint i128 %i.abq, 1
   br label %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher8write_u8.exit.i
 
 bb.aa:                                            ; preds = %.thread19.i
@@ -4374,7 +4372,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.oh = xor i128 %i.og, %i.of
   %i.oi = trunc i128 %i.oh to i64                 ; 2 uses
   store i64 %i.oi, ptr %i.nw, align 8, !alias.scope !18091
-  %i.oj = zext i1 %i.nq to i128                   ; 2 uses
+  %i.oj = zext i1 %i.nq to i128
   store i128 %i.oj, ptr %1, align 16, !alias.scope !18091
   store i8 64, ptr %i.f, align 16, !alias.scope !18091
   br i1 %i.nq, label %.thread67, label %.thread66
@@ -4720,7 +4718,7 @@ _RNvYNtNtCs2HSpDNxY7OE_9hashbrown6hasher13DefaultHasherNtNtCsbvkFyIu7lgC_4core4h
 .thread67:                                        ; preds = %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit6.thread
   %i.vx = zext nneg i8 %i.np to i128
   %i.vy = shl nuw nsw i128 %i.vx, 64
-  %i.vz = or disjoint i128 %i.vy, %i.oj           ; 2 uses
+  %i.vz = or disjoint i128 %i.vy, 1               ; 2 uses
   store i128 %i.vz, ptr %1, align 16, !alias.scope !18166
   store i8 -128, ptr %i.f, align 16, !alias.scope !18166
   br label %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit
@@ -5123,7 +5121,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.hp = xor i128 %i.ho, %i.hn
   %i.hq = trunc i128 %i.hp to i64
   store i64 %i.hq, ptr %i.he, align 8, !alias.scope !25491
-  %i.hr = zext i1 %i.gy to i128                   ; 2 uses
+  %i.hr = zext i1 %i.gy to i128
   store i128 %i.hr, ptr %1, align 16, !alias.scope !25491
   store i8 64, ptr %i.c, align 16, !alias.scope !25491
   br i1 %i.gy, label %bb.v, label %_RINvXs7F_NtCs4lawaffTVVK_9sqlparser3astNtB7_10WindowTypeNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtCs2HSpDNxY7OE_9hashbrown6hasher13DefaultHasherECs14kWLkQVSKO_14deltalake_core.exit
@@ -5133,9 +5131,8 @@ bb.v:                                             ; preds = %_RNvXs_NtCs2HSpDNxY
   %i.hs = icmp eq i64 %i.gx, 4                    ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25511)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25514)
-  %i.ht = select i1 %i.hs, i128 18446744073709551616, i128 0
-  %2 = or disjoint i128 %i.ht, %i.hr
-  store i128 %2, ptr %1, align 16, !alias.scope !25517, !noalias !25518
+  %i.ht = select i1 %i.hs, i128 18446744073709551617, i128 1
+  store i128 %i.ht, ptr %1, align 16, !alias.scope !25517, !noalias !25518
   store i8 -128, ptr %i.c, align 16, !alias.scope !25517, !noalias !25518
   br i1 %i.hs, label %bb.w, label %bb.x
 
