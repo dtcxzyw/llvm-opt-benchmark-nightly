@@ -1,4 +1,4 @@
-inline.NumInlined: 10428
+inline.NumInlined: 10429
 inline.NumDeleted: 4079
 loop-unroll.NumCompletelyUnrolled: 22
 loop-unroll.NumRuntimeUnrolled: 12
@@ -204,7 +204,6 @@ begin_hunk_0
 @.str.109 = private unnamed_addr constant [6 x i8] c"nanos\00", align 1
 @_ZN5folly7dynamic8TypeInfoISt6vectorIS0_SaIS0_EEE4nameE = external local_unnamed_addr constant ptr, align 8
 @.str.110 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
-@.str.111 = private unnamed_addr constant [80 x i8] c"vector<bool>::_M_range_check: __n (which is %zu) >= this->size() (which is %zu)\00", align 1
 @__libc_single_threaded = external local_unnamed_addr global i8, align 1
 @_ZN5folly6detail18pretty_name_zarrayIdNS0_14pretty_tag_gccEE6zarrayE = linkonce_odr constant %"struct.folly::c_array.508" { [7 x i8] c"double\00" }, comdat, align 1
 @.str.112 = private unnamed_addr constant [16 x i8] c"vector::reserve\00", align 1
@@ -607,8 +606,8 @@ bb.d:                                             ; preds = %_ZNKSt14default_del
   ret void
 }
 
-; Function Attrs: mustprogress uwtable
-define noundef zeroext i1 @_ZNK8facebook5velox6common24BigintValuesUsingBitmask13testingEqualsERKNS1_6FilterE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(72) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+define noundef zeroext i1 @_ZNK8facebook5velox6common24BigintValuesUsingBitmask13testingEqualsERKNS1_6FilterE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(72) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) unnamed_addr #9 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.b = load i8, ptr %i.a, align 1, !tbaa !73, !range !55, !noundef !59
@@ -661,7 +660,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ah = sub i64 %i.af, %i.ag
   %i.ai = shl nsw i64 %i.ah, 3
   %i.aj = zext i32 %i.ad to i64
-  %i.ak = add nsw i64 %i.ai, %i.aj                ; 6 uses
+  %i.ak = add nsw i64 %i.ai, %i.aj                ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !387
@@ -675,30 +674,22 @@ bb.e:                                             ; preds = %bb.d
   %i.av = zext i32 %i.ap to i64
   %i.aw = add nsw i64 %i.au, %i.av
   %i.ax = icmp eq i64 %i.ak, %i.aw
-  br i1 %i.ax, label %.preheader, label %.critedge
+  br i1 %i.ax, label %_ZNKSt6vectorIbSaIbEE2atEm.exit.a, label %.critedge
 
-.preheader:                                       ; preds = %bb.e
-  %.not2033 = icmp eq i64 %i.ak, 0
-  br i1 %.not2033, label %.critedge, label %_ZNKSt6vectorIbSaIbEE2atEm.exit.a
+_ZNKSt6vectorIbSaIbEE2atEm.exit.a:                ; preds = %bb.e
+  %exitcond.not = icmp eq i64 %i.ak, 0
+  br i1 %exitcond.not, label %.critedge, label %_ZNKSt6vectorIbSaIbEE2atEm.exit25
 
-_ZNKSt6vectorIbSaIbEE2atEm.exit.a:                ; preds = %.preheader, %_ZNKSt6vectorIbSaIbEE2atEm.exit25
-  %.034 = phi i64 [ %i.bj, %_ZNKSt6vectorIbSaIbEE2atEm.exit25 ], [ 0, %.preheader ] ; 5 uses
-  %exitcond.not = icmp eq i64 %.034, %i.ak
-  br i1 %exitcond.not, label %2, label %_ZNKSt6vectorIbSaIbEE2atEm.exit25
-
-2:                                                ; preds = %_ZNKSt6vectorIbSaIbEE2atEm.exit.a
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.111, i64 noundef %i.ak, i64 noundef %i.ak) #45
-  unreachable
-
-_ZNKSt6vectorIbSaIbEE2atEm.exit25:                ; preds = %_ZNKSt6vectorIbSaIbEE2atEm.exit.a
-  %i.ay = sdiv i64 %.034, 64                      ; 2 uses
+_ZNKSt6vectorIbSaIbEE2atEm.exit25:                ; preds = %_ZNKSt6vectorIbSaIbEE2atEm.exit.a, %_ZNKSt6vectorIbSaIbEE2atEm.exit25
+  %.033 = phi i64 [ %i.bj, %_ZNKSt6vectorIbSaIbEE2atEm.exit25 ], [ 0, %_ZNKSt6vectorIbSaIbEE2atEm.exit.a ] ; 4 uses
+  %i.ay = sdiv i64 %.033, 64                      ; 2 uses
   %i.az = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %i.ay
-  %i.ba = and i64 %.034, -9223372036854775745
+  %i.ba = and i64 %.033, -9223372036854775745
   %i.bb = icmp ugt i64 %i.ba, -9223372036854775808
   %storemerge.idx.i.i.i.i.i.i = select i1 %i.bb, i64 -8, i64 0 ; 2 uses
   %storemerge.i.i.i.i.i.i = getelementptr inbounds i8, ptr %i.az, i64 %storemerge.idx.i.i.i.i.i.i
   %i.bc = load i64, ptr %storemerge.i.i.i.i.i.i, align 8, !tbaa !35
-  %i.bd = and i64 %.034, 63
+  %i.bd = and i64 %.033, 63
   %i.be = shl nuw i64 1, %i.bd
   %i.bf = getelementptr inbounds [8 x i8], ptr %i.aq, i64 %i.ay
   %storemerge.i.i.i.i.i.i24 = getelementptr inbounds i8, ptr %i.bf, i64 %storemerge.idx.i.i.i.i.i.i
@@ -706,13 +697,13 @@ _ZNKSt6vectorIbSaIbEE2atEm.exit25:                ; preds = %_ZNKSt6vectorIbSaIb
   %i.bh = xor i64 %i.bg, %i.bc
   %i.bi = and i64 %i.bh, %i.be
   %.not = icmp eq i64 %i.bi, 0                    ; 2 uses
-  %i.bj = add nuw i64 %.034, 1                    ; 2 uses
+  %i.bj = add nuw i64 %.033, 1                    ; 2 uses
   %.not20.not = icmp ult i64 %i.bj, %i.ak
   %or.cond = select i1 %.not, i1 %.not20.not, i1 false
-  br i1 %or.cond, label %_ZNKSt6vectorIbSaIbEE2atEm.exit.a, label %.critedge, !llvm.loop !392
+  br i1 %or.cond, label %_ZNKSt6vectorIbSaIbEE2atEm.exit25, label %.critedge, !llvm.loop !392
 
-.critedge:                                        ; preds = %_ZNKSt6vectorIbSaIbEE2atEm.exit25, %.preheader, %_ZNK8facebook5velox6common6Filter17testingBaseEqualsINS1_24BigintValuesUsingBitmaskEEEPKT_RKS2_.exit, %bb.e, %bb.d, %bb.a, %bb.c, %bb.b
-  %i.bk = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ], [ false, %_ZNK8facebook5velox6common6Filter17testingBaseEqualsINS1_24BigintValuesUsingBitmaskEEEPKT_RKS2_.exit ], [ false, %bb.d ], [ false, %bb.e ], [ true, %.preheader ], [ %.not, %_ZNKSt6vectorIbSaIbEE2atEm.exit25 ]
+.critedge:                                        ; preds = %_ZNKSt6vectorIbSaIbEE2atEm.exit25, %_ZNKSt6vectorIbSaIbEE2atEm.exit.a, %_ZNK8facebook5velox6common6Filter17testingBaseEqualsINS1_24BigintValuesUsingBitmaskEEEPKT_RKS2_.exit, %bb.e, %bb.d, %bb.a, %bb.c, %bb.b
+  %i.bk = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ], [ false, %_ZNK8facebook5velox6common6Filter17testingBaseEqualsINS1_24BigintValuesUsingBitmaskEEEPKT_RKS2_.exit ], [ false, %bb.d ], [ false, %bb.e ], [ true, %_ZNKSt6vectorIbSaIbEE2atEm.exit.a ], [ %.not, %_ZNKSt6vectorIbSaIbEE2atEm.exit25 ]
   ret i1 %i.bk
 }
 
@@ -1115,8 +1106,8 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.a, 
   ret void
 }
 
-; Function Attrs: mustprogress uwtable
-define noundef zeroext i1 @_ZNK8facebook5velox6common31NegatedBigintValuesUsingBitmask13testingEqualsERKNS1_6FilterE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) unnamed_addr #2 align 2 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+define noundef zeroext i1 @_ZNK8facebook5velox6common31NegatedBigintValuesUsingBitmask13testingEqualsERKNS1_6FilterE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) unnamed_addr #9 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.b = load i8, ptr %i.a, align 1, !tbaa !73, !range !55, !noundef !59
@@ -1143,15 +1134,105 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !390
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !390  ; 8 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !390
-  %2 = tail call noundef zeroext i1 @_ZNK8facebook5velox6common24BigintValuesUsingBitmask13testingEqualsERKNS1_6FilterE(ptr noundef nonnull align 8 dereferenceable(72) %i.q, ptr noundef nonnull align 8 dereferenceable(16) %i.s)
-  br label %bb.e
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !390  ; 8 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.q, i64 9
+  %3 = load i8, ptr %2, align 1, !tbaa !73, !range !55, !noundef !59
+  %4 = getelementptr inbounds nuw i8, ptr %i.s, i64 9
+  %5 = load i8, ptr %4, align 1, !tbaa !73, !range !55, !noundef !59
+  %6 = icmp eq i8 %3, %5
+  br i1 %6, label %7, label %bb.e
 
-bb.e:                                             ; preds = %bb.b, %bb.c, %bb.a, %bb.d
-  %3 = phi i1 [ %2, %bb.d ], [ false, %bb.a ], [ false, %bb.c ], [ false, %bb.b ]
-  ret i1 %3
+7:                                                ; preds = %bb.d
+  %8 = getelementptr inbounds nuw i8, ptr %i.q, i64 8
+  %9 = load i8, ptr %8, align 8, !tbaa !74, !range !55, !noundef !59
+  %10 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
+  %11 = load i8, ptr %10, align 8, !tbaa !74, !range !55, !noundef !59
+  %12 = icmp eq i8 %9, %11
+  br i1 %12, label %13, label %bb.e
+
+13:                                               ; preds = %7
+  %14 = getelementptr inbounds nuw i8, ptr %i.q, i64 12
+  %15 = load i32, ptr %14, align 4, !tbaa !70
+  %16 = getelementptr inbounds nuw i8, ptr %i.s, i64 12
+  %17 = load i32, ptr %16, align 4, !tbaa !70
+  %18 = icmp eq i32 %15, %17
+  br i1 %18, label %_ZNK8facebook5velox6common6Filter17testingBaseEqualsINS1_24BigintValuesUsingBitmaskEEEPKT_RKS2_.exit.i, label %bb.e
+
+_ZNK8facebook5velox6common6Filter17testingBaseEqualsINS1_24BigintValuesUsingBitmaskEEEPKT_RKS2_.exit.i: ; preds = %13
+  %19 = getelementptr inbounds nuw i8, ptr %i.q, i64 56
+  %20 = load i64, ptr %19, align 8, !tbaa !378
+  %21 = getelementptr inbounds nuw i8, ptr %i.s, i64 56
+  %22 = load i64, ptr %21, align 8, !tbaa !378
+  %23 = icmp eq i64 %20, %22
+  br i1 %23, label %24, label %bb.e
+
+24:                                               ; preds = %_ZNK8facebook5velox6common6Filter17testingBaseEqualsINS1_24BigintValuesUsingBitmaskEEEPKT_RKS2_.exit.i
+  %25 = getelementptr inbounds nuw i8, ptr %i.q, i64 64
+  %26 = load i64, ptr %25, align 8, !tbaa !386
+  %27 = getelementptr inbounds nuw i8, ptr %i.s, i64 64
+  %28 = load i64, ptr %27, align 8, !tbaa !386
+  %29 = icmp eq i64 %26, %28
+  br i1 %29, label %30, label %bb.e
+
+30:                                               ; preds = %24
+  %31 = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  %32 = getelementptr inbounds nuw i8, ptr %i.q, i64 32
+  %33 = load ptr, ptr %32, align 8, !tbaa !387
+  %34 = getelementptr inbounds nuw i8, ptr %i.q, i64 40
+  %35 = load i32, ptr %34, align 8, !tbaa !388
+  %36 = load ptr, ptr %31, align 8, !tbaa !387    ; 2 uses
+  %37 = ptrtoint ptr %33 to i64
+  %38 = ptrtoint ptr %36 to i64
+  %39 = sub i64 %37, %38
+  %40 = shl nsw i64 %39, 3
+  %41 = zext i32 %35 to i64
+  %42 = add nsw i64 %40, %41                      ; 3 uses
+  %43 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
+  %44 = getelementptr inbounds nuw i8, ptr %i.s, i64 32
+  %45 = load ptr, ptr %44, align 8, !tbaa !387
+  %46 = getelementptr inbounds nuw i8, ptr %i.s, i64 40
+  %47 = load i32, ptr %46, align 8, !tbaa !388
+  %48 = load ptr, ptr %43, align 8, !tbaa !387    ; 2 uses
+  %49 = ptrtoint ptr %45 to i64
+  %50 = ptrtoint ptr %48 to i64
+  %51 = sub i64 %49, %50
+  %52 = shl nsw i64 %51, 3
+  %53 = zext i32 %47 to i64
+  %54 = add nsw i64 %52, %53
+  %55 = icmp eq i64 %42, %54
+  br i1 %55, label %.preheader.split.i, label %bb.e
+
+.preheader.split.i:                               ; preds = %30
+  %.not2032.i = icmp eq i64 %42, 0
+  br i1 %.not2032.i, label %bb.e, label %_ZNKSt6vectorIbSaIbEE2atEm.exit.i
+
+_ZNKSt6vectorIbSaIbEE2atEm.exit.i:                ; preds = %.preheader.split.i, %_ZNKSt6vectorIbSaIbEE2atEm.exit.i
+  %.033.i = phi i64 [ %67, %_ZNKSt6vectorIbSaIbEE2atEm.exit.i ], [ 0, %.preheader.split.i ] ; 4 uses
+  %56 = sdiv i64 %.033.i, 64                      ; 2 uses
+  %57 = getelementptr inbounds [8 x i8], ptr %36, i64 %56
+  %58 = and i64 %.033.i, -9223372036854775745
+  %59 = icmp ugt i64 %58, -9223372036854775808
+  %storemerge.idx.i.i.i.i.i.i.i = select i1 %59, i64 -8, i64 0 ; 2 uses
+  %storemerge.i.i.i.i.i.i.i = getelementptr inbounds i8, ptr %57, i64 %storemerge.idx.i.i.i.i.i.i.i
+  %60 = load i64, ptr %storemerge.i.i.i.i.i.i.i, align 8, !tbaa !35
+  %61 = and i64 %.033.i, 63
+  %62 = shl nuw i64 1, %61
+  %63 = getelementptr inbounds [8 x i8], ptr %48, i64 %56
+  %storemerge.i.i.i.i.i.i24.i = getelementptr inbounds i8, ptr %63, i64 %storemerge.idx.i.i.i.i.i.i.i
+  %64 = load i64, ptr %storemerge.i.i.i.i.i.i24.i, align 8, !tbaa !35
+  %65 = xor i64 %64, %60
+  %66 = and i64 %65, %62
+  %.not.i = icmp eq i64 %66, 0                    ; 2 uses
+  %67 = add nuw i64 %.033.i, 1                    ; 2 uses
+  %.not20.not.i = icmp ult i64 %67, %42
+  %or.cond = select i1 %.not.i, i1 %.not20.not.i, i1 false
+  br i1 %or.cond, label %_ZNKSt6vectorIbSaIbEE2atEm.exit.i, label %bb.e, !llvm.loop !392
+
+bb.e:                                             ; preds = %_ZNKSt6vectorIbSaIbEE2atEm.exit.i, %.preheader.split.i, %30, %24, %_ZNK8facebook5velox6common6Filter17testingBaseEqualsINS1_24BigintValuesUsingBitmaskEEEPKT_RKS2_.exit.i, %13, %7, %bb.d, %bb.a, %bb.c, %bb.b
+  %68 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ], [ false, %7 ], [ false, %bb.d ], [ true, %.preheader.split.i ], [ false, %30 ], [ false, %24 ], [ false, %_ZNK8facebook5velox6common6Filter17testingBaseEqualsINS1_24BigintValuesUsingBitmaskEEEPKT_RKS2_.exit.i ], [ false, %13 ], [ %.not.i, %_ZNKSt6vectorIbSaIbEE2atEm.exit.i ]
+  ret i1 %68
 }
 
 ; Function Attrs: mustprogress uwtable
