@@ -204,15 +204,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.t = getelementptr inbounds nuw [32 x i8], ptr %i.f, i64 %i.s
   %i.u = getelementptr [32 x i8], ptr %i.f, i64 %i.s
   %i.v = getelementptr i8, ptr %i.u, i64 128
-  %5 = load <14 x ptr>, ptr %i.t, align 8, !tbaa !1168
-  %6 = load <14 x ptr>, ptr %i.v, align 8, !tbaa !1168
+  %wide.vec = load <16 x ptr>, ptr %i.t, align 8, !tbaa !1168
+  %wide.vec44 = load <16 x ptr>, ptr %i.v, align 8, !tbaa !1168
   %i.w = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %index
   %i.x = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %index
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 64
-  %i.z = shufflevector <14 x ptr> %5, <14 x ptr> poison, <8 x i32> <i32 0, i32 1, i32 4, i32 5, i32 8, i32 9, i32 12, i32 13>
+  %i.z = shufflevector <16 x ptr> %wide.vec, <16 x ptr> poison, <8 x i32> <i32 0, i32 1, i32 4, i32 5, i32 8, i32 9, i32 12, i32 13>
   %interleaved.vec = ptrtoint <8 x ptr> %i.z to <8 x i64>
   store <8 x i64> %interleaved.vec, ptr %i.w, align 8, !tbaa !1168
-  %i.aa = shufflevector <14 x ptr> %6, <14 x ptr> poison, <8 x i32> <i32 0, i32 1, i32 4, i32 5, i32 8, i32 9, i32 12, i32 13>
+  %i.aa = shufflevector <16 x ptr> %wide.vec44, <16 x ptr> poison, <8 x i32> <i32 0, i32 1, i32 4, i32 5, i32 8, i32 9, i32 12, i32 13>
   %interleaved.vec47 = ptrtoint <8 x ptr> %i.aa to <8 x i64>
   store <8 x i64> %interleaved.vec47, ptr %i.y, align 8, !tbaa !1168
   %index.next = add nuw i64 %index, 8             ; 2 uses
