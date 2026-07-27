@@ -203,9 +203,6 @@ begin_hunk_0
 @.str.448 = private unnamed_addr constant [28 x i8] c"../../src/node_file.cc:2375\00", align 1
 @_ZZN4node2fsL11WriteBufferERKN2v820FunctionCallbackInfoINS1_5ValueEEEE20error_and_abort_args_5 = internal constant %"struct.node::AssertionInfo" { ptr @.str.449, ptr @.str.301, ptr @.str.442 }, align 8
 @.str.449 = private unnamed_addr constant [28 x i8] c"../../src/node_file.cc:2377\00", align 1
-@_ZZN4node2fsL11WriteBufferERKN2v820FunctionCallbackInfoINS1_5ValueEEEE20error_and_abort_args_6 = internal constant %"struct.node::AssertionInfo" { ptr @.str.450, ptr @.str.451, ptr @.str.442 }, align 8
-@.str.450 = private unnamed_addr constant [28 x i8] c"../../src/node_file.cc:2378\00", align 1
-@.str.451 = private unnamed_addr constant [25 x i8] c"(len) <= (buffer_length)\00", align 1
 @_ZZN4node2fsL11WriteBufferERKN2v820FunctionCallbackInfoINS1_5ValueEEEE20error_and_abort_args_7 = internal constant %"struct.node::AssertionInfo" { ptr @.str.452, ptr @.str.453, ptr @.str.442 }, align 8
 @.str.452 = private unnamed_addr constant [28 x i8] c"../../src/node_file.cc:2379\00", align 1
 @.str.453 = private unnamed_addr constant [21 x i8] c"(off + len) >= (off)\00", align 1
@@ -608,7 +605,7 @@ bb.k:                                             ; preds = %bb.i
 _ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit101: ; preds = %bb.j, %bb.k
   %.sroa.0186.0 = phi ptr [ %i.bc, %bb.k ], [ %i.ba, %bb.j ] ; 2 uses
   %i.bd = tail call noundef ptr @_ZN4node6Buffer4DataEN2v85LocalINS1_6ObjectEEE(ptr %.sroa.0186.0) #36
-  %i.be = tail call noundef i64 @_ZN4node6Buffer6LengthEN2v85LocalINS1_6ObjectEEE(ptr %.sroa.0186.0) #36 ; 3 uses
+  %i.be = tail call noundef i64 @_ZN4node6Buffer6LengthEN2v85LocalINS1_6ObjectEEE(ptr %.sroa.0186.0) #36 ; 2 uses
   %i.bf = load i64, ptr %i.aa, align 8
   %i.bg = trunc i64 %i.bf to i32
   %.not.i98 = icmp sgt i32 %i.bg, 2
@@ -746,26 +743,17 @@ bb.aa:                                            ; preds = %bb.y
 _ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit93: ; preds = %bb.z, %bb.aa
   %.sroa.0182.0 = phi ptr [ %i.dd, %bb.aa ], [ %i.db, %bb.z ]
   %i.de = tail call noundef i32 @_ZNK2v85Int325ValueEv(ptr noundef nonnull align 1 dereferenceable(1) %.sroa.0182.0) #36 ; 2 uses
-  %i.df = sext i32 %i.de to i64                   ; 3 uses
+  %i.df = sext i32 %i.de to i64                   ; 2 uses
   %i.dg = sub nuw i64 %i.be, %i.ch
   %.not278 = icmp ult i64 %i.dg, %i.df
-  br i1 %.not278, label %bb.ab, label %7, !prof !5
+  br i1 %.not278, label %bb.ab, label %bb.ac, !prof !5
 
 bb.ab:                                            ; preds = %_ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit93
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node2fsL11WriteBufferERKN2v820FunctionCallbackInfoINS1_5ValueEEEE20error_and_abort_args_5) #36
   tail call void @abort() #37
   unreachable
 
-7:                                                ; preds = %_ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit93
-  %.not76 = icmp ult i64 %i.be, %i.df
-  br i1 %.not76, label %8, label %bb.ac, !prof !5
-
-8:                                                ; preds = %7
-  tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node2fsL11WriteBufferERKN2v820FunctionCallbackInfoINS1_5ValueEEEE20error_and_abort_args_6) #36
-  tail call void @abort() #37
-  unreachable
-
-bb.ac:                                            ; preds = %7
+bb.ac:                                            ; preds = %_ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit93
   %i.dh = xor i64 %i.ch, -1
   %.not77 = icmp ult i64 %i.dh, %i.df
   br i1 %.not77, label %bb.ad, label %bb.ae, !prof !5

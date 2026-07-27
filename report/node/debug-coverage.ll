@@ -203,14 +203,10 @@ bb.cn:                                            ; preds = %bb.cm
   %i.abl = sub i64 %i.abj, %i.abk                 ; 2 uses
   %i.abm = sdiv exact i64 %i.abl, 12              ; 9 uses
   %i.abn = icmp ult i64 %i.abm, %i.abf
-  br i1 %i.abn, label %33, label %bb.cs
+  br i1 %i.abn, label %bb.co, label %bb.cs
 
-33:                                               ; preds = %bb.cn
-  %34 = sub nuw nsw i64 %i.abf, %i.abm            ; 10 uses
-  %.not.i126 = icmp eq i64 %34, 0
-  br i1 %.not.i126, label %_ZN2v88internal12_GLOBAL__N_121CoverageBlockIterator8FinalizeEv.exit.i.i22.i.i, label %bb.co
-
-bb.co:                                            ; preds = %33
+bb.co:                                            ; preds = %bb.cn
+  %33 = sub nuw nsw i64 %i.abf, %i.abm            ; 9 uses
   %i.abo = getelementptr inbounds nuw i8, ptr %i.abc, i64 40 ; 2 uses
   %i.abp = load ptr, ptr %i.abo, align 8
   %i.abq = ptrtoint ptr %i.abp to i64             ; 2 uses
@@ -221,17 +217,17 @@ bb.co:                                            ; preds = %33
   %i.abu = sub nuw nsw i64 768614336404564650, %i.abm
   %i.abv = icmp ule i64 %i.abs, %i.abu
   call void @llvm.assume(i1 %i.abv)
-  %.not23.i = icmp ult i64 %i.abs, %34
+  %.not23.i = icmp ult i64 %i.abs, %33
   br i1 %.not23.i, label %bb.cp, label %.lr.ph.i.i.i.i127.preheader
 
 .lr.ph.i.i.i.i127.preheader:                      ; preds = %bb.co
-  %xtraiter = and i64 %34, 3                      ; 2 uses
+  %xtraiter = and i64 %33, 3                      ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i127.prol.loopexit, label %.lr.ph.i.i.i.i127.prol
 
 .lr.ph.i.i.i.i127.prol:                           ; preds = %.lr.ph.i.i.i.i127.preheader, %.lr.ph.i.i.i.i127.prol
   %.08.i.i.i.i.prol = phi ptr [ %i.abz, %.lr.ph.i.i.i.i127.prol ], [ %i.abh, %.lr.ph.i.i.i.i127.preheader ] ; 4 uses
-  %.057.i.i.i.i.prol = phi i64 [ %i.aby, %.lr.ph.i.i.i.i127.prol ], [ %34, %.lr.ph.i.i.i.i127.preheader ]
+  %.057.i.i.i.i.prol = phi i64 [ %i.aby, %.lr.ph.i.i.i.i127.prol ], [ %33, %.lr.ph.i.i.i.i127.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i127.prol ], [ 0, %.lr.ph.i.i.i.i127.preheader ]
   store i32 -1, ptr %.08.i.i.i.i.prol, align 4
   %i.abw = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.prol, i64 4
@@ -247,7 +243,7 @@ bb.co:                                            ; preds = %33
 .lr.ph.i.i.i.i127.prol.loopexit:                  ; preds = %.lr.ph.i.i.i.i127.prol, %.lr.ph.i.i.i.i127.preheader
   %.lcssa536.unr = phi ptr [ poison, %.lr.ph.i.i.i.i127.preheader ], [ %i.abz, %.lr.ph.i.i.i.i127.prol ]
   %.08.i.i.i.i.unr = phi ptr [ %i.abh, %.lr.ph.i.i.i.i127.preheader ], [ %i.abz, %.lr.ph.i.i.i.i127.prol ]
-  %.057.i.i.i.i.unr = phi i64 [ %34, %.lr.ph.i.i.i.i127.preheader ], [ %i.aby, %.lr.ph.i.i.i.i127.prol ]
+  %.057.i.i.i.i.unr = phi i64 [ %33, %.lr.ph.i.i.i.i127.preheader ], [ %i.aby, %.lr.ph.i.i.i.i127.prol ]
   %i.aca = sub nsw i64 %i.abm, %i.abf
   %i.acb = icmp ugt i64 %i.aca, -4
   br i1 %i.acb, label %_ZSt27__uninitialized_default_n_aIPN2v88internal13CoverageBlockEmS2_ET_S4_T0_RSaIT1_E.exit.i, label %.lr.ph.i.i.i.i127
@@ -297,19 +293,19 @@ bb.cq:                                            ; preds = %bb.cp
   unreachable
 
 _ZNKSt6vectorIN2v88internal13CoverageBlockESaIS2_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.cp
-  %.sroa.speculated.i.i = call i64 @llvm.umax.i64(i64 %i.abm, i64 %34)
+  %.sroa.speculated.i.i = call i64 @llvm.umax.i64(i64 %i.abm, i64 %33)
   %i.acq = add nuw nsw i64 %.sroa.speculated.i.i, %i.abm
   %i.acr = call i64 @llvm.umin.i64(i64 %i.acq, i64 768614336404564650) ; 2 uses
   %i.acs = mul nuw nsw i64 %i.acr, 12
   %i.act = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.acs) #22 ; 4 uses
   %i.acu = getelementptr inbounds nuw i8, ptr %i.act, i64 %i.abl ; 3 uses
-  %xtraiter558 = and i64 %34, 3                   ; 2 uses
+  %xtraiter558 = and i64 %33, 3                   ; 2 uses
   %lcmp.mod559.not = icmp eq i64 %xtraiter558, 0
   br i1 %lcmp.mod559.not, label %.lr.ph.i.i.i25.i.prol.loopexit, label %.lr.ph.i.i.i25.i.prol
 
 .lr.ph.i.i.i25.i.prol:                            ; preds = %_ZNKSt6vectorIN2v88internal13CoverageBlockESaIS2_EE12_M_check_lenEmPKc.exit.i, %.lr.ph.i.i.i25.i.prol
   %.08.i.i.i26.i.prol = phi ptr [ %i.acy, %.lr.ph.i.i.i25.i.prol ], [ %i.acu, %_ZNKSt6vectorIN2v88internal13CoverageBlockESaIS2_EE12_M_check_lenEmPKc.exit.i ] ; 4 uses
-  %.057.i.i.i27.i.prol = phi i64 [ %i.acx, %.lr.ph.i.i.i25.i.prol ], [ %34, %_ZNKSt6vectorIN2v88internal13CoverageBlockESaIS2_EE12_M_check_lenEmPKc.exit.i ]
+  %.057.i.i.i27.i.prol = phi i64 [ %i.acx, %.lr.ph.i.i.i25.i.prol ], [ %33, %_ZNKSt6vectorIN2v88internal13CoverageBlockESaIS2_EE12_M_check_lenEmPKc.exit.i ]
   %prol.iter560 = phi i64 [ %prol.iter560.next, %.lr.ph.i.i.i25.i.prol ], [ 0, %_ZNKSt6vectorIN2v88internal13CoverageBlockESaIS2_EE12_M_check_lenEmPKc.exit.i ]
   store i32 -1, ptr %.08.i.i.i26.i.prol, align 4
   %i.acv = getelementptr inbounds nuw i8, ptr %.08.i.i.i26.i.prol, i64 4
@@ -324,7 +320,7 @@ _ZNKSt6vectorIN2v88internal13CoverageBlockESaIS2_EE12_M_check_lenEmPKc.exit.i: ;
 
 .lr.ph.i.i.i25.i.prol.loopexit:                   ; preds = %.lr.ph.i.i.i25.i.prol, %_ZNKSt6vectorIN2v88internal13CoverageBlockESaIS2_EE12_M_check_lenEmPKc.exit.i
   %.08.i.i.i26.i.unr = phi ptr [ %i.acu, %_ZNKSt6vectorIN2v88internal13CoverageBlockESaIS2_EE12_M_check_lenEmPKc.exit.i ], [ %i.acy, %.lr.ph.i.i.i25.i.prol ]
-  %.057.i.i.i27.i.unr = phi i64 [ %34, %_ZNKSt6vectorIN2v88internal13CoverageBlockESaIS2_EE12_M_check_lenEmPKc.exit.i ], [ %i.acx, %.lr.ph.i.i.i25.i.prol ]
+  %.057.i.i.i27.i.unr = phi i64 [ %33, %_ZNKSt6vectorIN2v88internal13CoverageBlockESaIS2_EE12_M_check_lenEmPKc.exit.i ], [ %i.acx, %.lr.ph.i.i.i25.i.prol ]
   %i.acz = sub nsw i64 %i.abm, %i.abf
   %i.ada = icmp ugt i64 %i.acz, -4
   br i1 %i.ada, label %_ZSt27__uninitialized_default_n_aIPN2v88internal13CoverageBlockEmS2_ET_S4_T0_RSaIT1_E.exit30.i, label %.lr.ph.i.i.i25.i
@@ -384,7 +380,7 @@ bb.cr:                                            ; preds = %_ZNSt6vectorIN2v88i
 
 _ZNSt12_Vector_baseIN2v88internal13CoverageBlockESaIS2_EE13_M_deallocateEPS2_m.exit.i: ; preds = %bb.cr, %_ZNSt6vectorIN2v88internal13CoverageBlockESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit.i
   store ptr %i.act, ptr %i.abd, align 8
-  %i.adr = getelementptr inbounds nuw [12 x i8], ptr %i.acu, i64 %34
+  %i.adr = getelementptr inbounds nuw [12 x i8], ptr %i.acu, i64 %33
   store ptr %i.adr, ptr %i.abg, align 8
   %i.ads = getelementptr inbounds nuw [12 x i8], ptr %i.act, i64 %i.acr
   store ptr %i.ads, ptr %i.abo, align 8
@@ -403,7 +399,7 @@ bb.cu:                                            ; preds = %bb.ct
   store ptr %i.adu, ptr %i.abg, align 8
   br label %_ZN2v88internal12_GLOBAL__N_121CoverageBlockIterator8FinalizeEv.exit.i.i22.i.i
 
-_ZN2v88internal12_GLOBAL__N_121CoverageBlockIterator8FinalizeEv.exit.i.i22.i.i: ; preds = %_ZNSt12_Vector_baseIN2v88internal13CoverageBlockESaIS2_EE13_M_deallocateEPS2_m.exit.i, %_ZSt27__uninitialized_default_n_aIPN2v88internal13CoverageBlockEmS2_ET_S4_T0_RSaIT1_E.exit.i, %33, %bb.cu, %bb.ct, %bb.cs
+_ZN2v88internal12_GLOBAL__N_121CoverageBlockIterator8FinalizeEv.exit.i.i22.i.i: ; preds = %_ZNSt12_Vector_baseIN2v88internal13CoverageBlockESaIS2_EE13_M_deallocateEPS2_m.exit.i, %_ZSt27__uninitialized_default_n_aIPN2v88internal13CoverageBlockEmS2_ET_S4_T0_RSaIT1_E.exit.i, %bb.cu, %bb.ct, %bb.cs
   %i.adv = load ptr, ptr %i.nn, align 8           ; 3 uses
   %.not.i.i.i1.i.i23.i.i = icmp eq ptr %i.adv, null
   br i1 %.not.i.i.i1.i.i23.i.i, label %_ZN2v88internal12_GLOBAL__N_127RewriteFunctionScopeCounterEPNS0_16CoverageFunctionE.exit.i.i, label %bb.cv

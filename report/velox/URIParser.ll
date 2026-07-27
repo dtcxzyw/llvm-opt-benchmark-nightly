@@ -196,7 +196,7 @@ _ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit.thread
 
 _ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit.thread.thread130: ; preds = %_ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit.3, %_ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit.thread
   %.048.lcssa132 = phi i32 [ %.048.lcssa, %_ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit.thread ], [ %i.o, %_ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit.3 ] ; 4 uses
-  %i.bi = sext i32 %.048.lcssa132 to i64          ; 4 uses
+  %i.bi = sext i32 %.048.lcssa132 to i64          ; 3 uses
   %i.bj = icmp ugt i64 %1, %i.bi
   br i1 %i.bj, label %bb.k, label %.thread72.sink.split
 
@@ -216,13 +216,13 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.bn = icmp ugt i64 %i.d, %i.bi
-  br i1 %i.bn, label %_ZN8facebook5velox9functions12_GLOBAL__N_115isAtCompressionEPKcmi.exit65, label %_ZN8facebook5velox9functions12_GLOBAL__N_115isAtCompressionEPKcmi.exit65.thread
+  br i1 %i.bn, label %_ZN8facebook5velox9functions12_GLOBAL__N_115isAtCompressionEPKcmi.exit65, label %bb.p
 
 _ZN8facebook5velox9functions12_GLOBAL__N_115isAtCompressionEPKcmi.exit65: ; preds = %bb.m
   %i.bo = getelementptr i8, ptr %i.bk, i64 1
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !9
   %i.bq = icmp eq i8 %i.bp, 58
-  br i1 %i.bq, label %bb.n, label %_ZN8facebook5velox9functions12_GLOBAL__N_115isAtCompressionEPKcmi.exit65.thread
+  br i1 %i.bq, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %_ZN8facebook5velox9functions12_GLOBAL__N_115isAtCompressionEPKcmi.exit65
   %i.br = trunc nuw i8 %.15193 to i1
@@ -233,11 +233,7 @@ bb.o:                                             ; preds = %bb.n
   %.pre118 = sext i32 %i.bs to i64
   br label %bb.r, !llvm.loop !12
 
-_ZN8facebook5velox9functions12_GLOBAL__N_115isAtCompressionEPKcmi.exit65.thread: ; preds = %bb.m, %_ZN8facebook5velox9functions12_GLOBAL__N_115isAtCompressionEPKcmi.exit65
-  %3 = icmp eq i64 %1, %i.bi
-  br i1 %3, label %.thread, label %bb.p
-
-bb.p:                                             ; preds = %_ZN8facebook5velox9functions12_GLOBAL__N_115isAtCompressionEPKcmi.exit65.thread
+bb.p:                                             ; preds = %bb.m, %_ZN8facebook5velox9functions12_GLOBAL__N_115isAtCompressionEPKcmi.exit65
   %i.bt = add nsw i32 %.048.lcssa132, 1           ; 2 uses
   %i.bu = sext i32 %i.bt to i64                   ; 2 uses
   %i.bv = getelementptr inbounds i8, ptr %0, i64 %i.bu
@@ -298,8 +294,8 @@ bb.t:                                             ; preds = %bb.s, %.thread72
   store i32 %i.cp, ptr %2, align 4, !tbaa !8
   br label %.thread
 
-.thread:                                          ; preds = %bb.p, %_ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit67, %bb.n, %_ZN8facebook5velox9functions12_GLOBAL__N_115isAtCompressionEPKcmi.exit65.thread, %bb.l, %bb.s, %bb.t
-  %.255 = phi i1 [ false, %bb.s ], [ true, %bb.t ], [ false, %bb.l ], [ false, %_ZN8facebook5velox9functions12_GLOBAL__N_115isAtCompressionEPKcmi.exit65.thread ], [ false, %bb.n ], [ false, %_ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit67 ], [ false, %bb.p ]
+.thread:                                          ; preds = %bb.p, %_ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit67, %bb.n, %bb.l, %bb.s, %bb.t
+  %.255 = phi i1 [ false, %bb.s ], [ true, %bb.t ], [ false, %bb.l ], [ false, %bb.n ], [ false, %_ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit67 ], [ false, %bb.p ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i1 %.255
 }
