@@ -204,7 +204,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %bb.ao, %bb.aq, %bb.
   br i1 %i.mk, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
-  %i.ml = add i64 %.2218357, 9
+  %i.ml = add nuw i64 %.2218357, 9
   %i.mm = sub i64 %i.ml, %i.kr
   %i.mn = shl i64 %i.mm, 25
   %i.mo = or i64 %i.mn, %.2218357
