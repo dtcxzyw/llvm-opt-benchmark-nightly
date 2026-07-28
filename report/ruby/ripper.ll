@@ -204,13 +204,13 @@ bb.akt:                                           ; preds = %bb.akz, %bb.aks
 bb.aku:                                           ; preds = %bb.akt
   %i.ich = sext i16 %i.ice to i64
   %i.ici = add nsw i64 %i.ich, 1                  ; 2 uses
-  %i.icj = getelementptr inbounds nuw [2 x i8], ptr @yycheck, i64 %i.ici
+  %i.icj = getelementptr inbounds [2 x i8], ptr @yycheck, i64 %i.ici
   %i.ick = load i16, ptr %i.icj, align 2, !tbaa !14
   %i.icl = icmp eq i16 %i.ick, 1
   br i1 %i.icl, label %bb.akv, label %bb.akw
 
 bb.akv:                                           ; preds = %bb.aku
-  %i.icm = getelementptr inbounds nuw [2 x i8], ptr @yytable, i64 %i.ici
+  %i.icm = getelementptr inbounds [2 x i8], ptr @yytable, i64 %i.ici
   %i.icn = load i16, ptr %i.icm, align 2, !tbaa !14 ; 3 uses
   %i.ico = icmp sgt i16 %i.icn, 0
   br i1 %i.ico, label %bb.ala, label %bb.akw

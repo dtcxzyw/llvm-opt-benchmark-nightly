@@ -203,8 +203,7 @@ bb.ba:                                            ; preds = %bb.az
 _ZN11ALACDecoder11FillElementEP9BitBuffer.exit:   ; preds = %bb.az, %bb.ba
   %.0.i = phi i32 [ %i.lk, %bb.ba ], [ %i.lg, %bb.az ]
   %i.ll = shl nuw nsw i32 %.0.i, 3
-  %8 = and i32 %i.ll, 524280
-  call void @BitBufferAdvance(ptr noundef nonnull %1, i32 noundef %8)
+  call void @BitBufferAdvance(ptr noundef nonnull %1, i32 noundef %i.ll)
   %i.lm = load ptr, ptr %1, align 8, !tbaa !30
   %i.ln = load ptr, ptr %i.i, align 8, !tbaa !33
   %.not.i = icmp ugt ptr %i.lm, %i.ln
@@ -458,8 +457,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.i = shl nuw nsw i32 %.0, 3
-  %2 = and i32 %i.i, 524280
-  tail call void @BitBufferAdvance(ptr noundef %1, i32 noundef %2)
+  tail call void @BitBufferAdvance(ptr noundef %1, i32 noundef %i.i)
   %i.j = load ptr, ptr %1, align 8, !tbaa !30
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !33
@@ -485,8 +483,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.0 = phi i32 [ %i.f, %bb.b ], [ %i.b, %bb.a ]
   %i.g = shl nuw nsw i32 %.0, 3
-  %2 = and i32 %i.g, 524280
-  tail call void @BitBufferAdvance(ptr noundef %1, i32 noundef %2)
+  tail call void @BitBufferAdvance(ptr noundef %1, i32 noundef %i.g)
   %i.h = load ptr, ptr %1, align 8, !tbaa !30
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !33

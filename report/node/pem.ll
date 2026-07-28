@@ -201,8 +201,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond30, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.sink = phi i64 [ 4294967248, %bb.b ], [ 4294967241, %bb.c ], [ 4294967209, %bb.d ]
-  %i.g = add nuw nsw i64 %.sink, %i.c
+  %.sink = phi i64 [ -48, %bb.b ], [ -55, %bb.c ], [ -87, %bb.d ]
+  %i.g = add nsw i64 %.sink, %i.c
   %i.h = shl nuw nsw i64 %.02432, 2
   %i.i = and i64 %i.h, 4
   %i.j = xor i64 %i.i, 4

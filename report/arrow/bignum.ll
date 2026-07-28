@@ -2,7 +2,7 @@ inline.NumInlined: 136
 inline.NumDeleted: 16
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 11
-loop-unroll.NumUnrolled: 15
+loop-unroll.NumUnrolled: 14
 begin_hunk_0_@_ZN14arrow_vendored17double_conversion6Bignum19AssignDecimalStringENS0_6VectorIKcEE:bb.a
   %i.ag = add nsw i64 %i.af, -48
   %i.ah = add nsw i64 %i.ag, %i.ae
@@ -204,18 +204,12 @@ _ZN14arrow_vendored17double_conversion6Bignum12AssignUInt64Em.exit.i23: ; preds 
 _ZN14arrow_vendored17double_conversion6Bignum9AddUInt64Em.exit25: ; preds = %_ZN14arrow_vendored17double_conversionL10ReadUInt64ENS0_6VectorIKcEEii.exit17.thread, %_ZN14arrow_vendored17double_conversionL10ReadUInt64ENS0_6VectorIKcEEii.exit17, %_ZN14arrow_vendored17double_conversion6Bignum12AssignUInt64Em.exit.i23
   %.pr.i = load i16, ptr %0, align 4, !tbaa !7    ; 3 uses
   %i.fb = icmp sgt i16 %.pr.i, 0
-  br i1 %i.fb, label %.lr.ph.i26, label %.critedge.i
+  br i1 %i.fb, label %bb.d, label %.critedge.i
 
-.lr.ph.i26:                                       ; preds = %_ZN14arrow_vendored17double_conversion6Bignum9AddUInt64Em.exit25
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.e, %.lr.ph.i26
-  %i.fc = phi i16 [ %.pr.i, %.lr.ph.i26 ], [ %i.fh, %bb.e ] ; 3 uses
+bb.d:                                             ; preds = %_ZN14arrow_vendored17double_conversion6Bignum9AddUInt64Em.exit25, %bb.e
+  %i.fc = phi i16 [ %i.fh, %bb.e ], [ %.pr.i, %_ZN14arrow_vendored17double_conversion6Bignum9AddUInt64Em.exit25 ] ; 3 uses
   %i.fd = zext nneg i16 %i.fc to i64
-  %6 = add nuw nsw i64 %i.fd, 4294967295
-  %7 = and i64 %6, 4294967295
-  %i.fe = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %7
+  %i.fe = getelementptr [4 x i8], ptr %0, i64 %i.fd
   %i.ff = load i32, ptr %i.fe, align 4, !tbaa !3
   %i.fg = icmp eq i32 %i.ff, 0
   br i1 %i.fg, label %bb.e, label %_ZN14arrow_vendored17double_conversion6Bignum5ClampEv.exit
@@ -618,18 +612,12 @@ define void @_ZN14arrow_vendored17double_conversion6Bignum5ClampEv(ptr nofree no
 bb.a:
   %.pr = load i16, ptr %0, align 4, !tbaa !7      ; 3 uses
   %i.a = icmp sgt i16 %.pr, 0
-  br i1 %i.a, label %.lr.ph, label %.critedge
+  br i1 %i.a, label %bb.b, label %.critedge
 
-.lr.ph:                                           ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  br label %bb.b
-
-bb.b:                                             ; preds = %.lr.ph, %bb.c
-  %i.b = phi i16 [ %.pr, %.lr.ph ], [ %i.g, %bb.c ] ; 3 uses
+bb.b:                                             ; preds = %bb.a, %bb.c
+  %i.b = phi i16 [ %i.g, %bb.c ], [ %.pr, %bb.a ] ; 3 uses
   %i.c = zext nneg i16 %i.b to i64
-  %2 = add nuw nsw i64 %i.c, 4294967295
-  %3 = and i64 %2, 4294967295
-  %i.d = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %3
+  %i.d = getelementptr [4 x i8], ptr %0, i64 %i.c
   %i.e = load i32, ptr %i.d, align 4, !tbaa !3
   %i.f = icmp eq i32 %i.e, 0
   br i1 %i.f, label %bb.c, label %.critedge.thread
@@ -754,18 +742,12 @@ bb.i:                                             ; preds = %_ZN14arrow_vendored
 bb.j:                                             ; preds = %bb.i, %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit._crit_edge
   %.pr.i = phi i16 [ %i.ah, %bb.i ], [ %i.ad, %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit._crit_edge ] ; 3 uses
   %i.al = icmp sgt i16 %.pr.i, 0
-  br i1 %i.al, label %.lr.ph.i, label %.critedge.i
+  br i1 %i.al, label %bb.k, label %.critedge.i
 
-.lr.ph.i:                                         ; preds = %bb.j
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  br label %bb.k
-
-bb.k:                                             ; preds = %bb.l, %.lr.ph.i
-  %i.am = phi i16 [ %.pr.i, %.lr.ph.i ], [ %i.ar, %bb.l ] ; 3 uses
+bb.k:                                             ; preds = %bb.j, %bb.l
+  %i.am = phi i16 [ %i.ar, %bb.l ], [ %.pr.i, %bb.j ] ; 3 uses
   %i.an = zext nneg i16 %i.am to i64
-  %4 = add nuw nsw i64 %i.an, 4294967295
-  %5 = and i64 %4, 4294967295
-  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %5
+  %i.ao = getelementptr [4 x i8], ptr %0, i64 %i.an
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !3
   %i.aq = icmp eq i32 %i.ap, 0
   br i1 %i.aq, label %bb.l, label %_ZN14arrow_vendored17double_conversion6Bignum5ClampEv.exit
@@ -1168,18 +1150,12 @@ bb.e:                                             ; preds = %.lr.ph32, %bb.e
 ._crit_edge:                                      ; preds = %bb.e, %_ZN14arrow_vendored17double_conversion6Bignum5AlignERKS1_.exit, %.preheader
   %.pr.i = load i16, ptr %0, align 4, !tbaa !7    ; 3 uses
   %i.bz = icmp sgt i16 %.pr.i, 0
-  br i1 %i.bz, label %.lr.ph.i25, label %.critedge.i
+  br i1 %i.bz, label %bb.f, label %.critedge.i
 
-.lr.ph.i25:                                       ; preds = %._crit_edge
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  br label %bb.f
-
-bb.f:                                             ; preds = %bb.g, %.lr.ph.i25
-  %i.ca = phi i16 [ %.pr.i, %.lr.ph.i25 ], [ %i.cf, %bb.g ] ; 3 uses
+bb.f:                                             ; preds = %._crit_edge, %bb.g
+  %i.ca = phi i16 [ %i.cf, %bb.g ], [ %.pr.i, %._crit_edge ] ; 3 uses
   %i.cb = zext nneg i16 %i.ca to i64
-  %3 = add nuw nsw i64 %i.cb, 4294967295
-  %4 = and i64 %3, 4294967295
-  %i.cc = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %4
+  %i.cc = getelementptr [4 x i8], ptr %0, i64 %i.cb
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !3
   %i.ce = icmp eq i32 %i.cd, 0
   br i1 %i.ce, label %bb.g, label %_ZN14arrow_vendored17double_conversion6Bignum5ClampEv.exit
@@ -1582,37 +1558,20 @@ scalar.ph124:                                     ; preds = %scalar.ph124.prehea
   %i.cg = shl i16 %i.cf, 1
   store i16 %i.cg, ptr %i.ce, align 2, !tbaa !10
   %i.ch = icmp sgt i16 %i.cd, 0
-  br i1 %i.ch, label %.lr.ph.i, label %.critedge.i
+  br i1 %i.ch, label %bb.c, label %.critedge.i
 
-.lr.ph.i:                                         ; preds = %._crit_edge67
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  br label %bb.c
-
-bb.c:                                             ; preds = %bb.d, %.lr.ph.i
-  %i.ci = phi i16 [ %i.cd, %.lr.ph.i ], [ %i.cn, %bb.d ] ; 5 uses
+bb.c:                                             ; preds = %._crit_edge67, %bb.d
+  %i.ci = phi i16 [ %i.cn, %bb.d ], [ %i.cd, %._crit_edge67 ] ; 3 uses
   %i.cj = zext nneg i16 %i.ci to i64
-  %2 = add nuw nsw i64 %i.cj, 4294967295
-  %3 = and i64 %2, 4294967295
-  %i.ck = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %3
+  %i.ck = getelementptr [4 x i8], ptr %0, i64 %i.cj
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !3
   %i.cm = icmp eq i32 %i.cl, 0
-  br i1 %i.cm, label %4, label %_ZN14arrow_vendored17double_conversion6Bignum5ClampEv.exit
+  br i1 %i.cm, label %bb.d, label %_ZN14arrow_vendored17double_conversion6Bignum5ClampEv.exit
 
-4:                                                ; preds = %bb.c
-  %5 = add nsw i16 %i.ci, -1
-  store i16 %5, ptr %0, align 4, !tbaa !7
-  %6 = sext i16 %i.ci to i64
-  %7 = add nsw i64 %6, 4294967294
-  %8 = and i64 %7, 4294967294
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %8
-  %10 = load i32, ptr %9, align 4, !tbaa !3
-  %11 = icmp eq i32 %10, 0
-  br i1 %11, label %bb.d, label %_ZN14arrow_vendored17double_conversion6Bignum5ClampEv.exit
-
-bb.d:                                             ; preds = %4
-  %i.cn = add nsw i16 %i.ci, -2                   ; 2 uses
+bb.d:                                             ; preds = %bb.c
+  %i.cn = add nsw i16 %i.ci, -1                   ; 2 uses
   store i16 %i.cn, ptr %0, align 4, !tbaa !7
-  %i.co = icmp sgt i16 %i.ci, 2
+  %i.co = icmp sgt i16 %i.ci, 1
   br i1 %i.co, label %bb.c, label %.critedge.thread3.i, !llvm.loop !22
 
 .critedge.i:                                      ; preds = %._crit_edge67
@@ -1623,7 +1582,7 @@ bb.d:                                             ; preds = %4
   store i16 0, ptr %i.ce, align 2, !tbaa !10
   br label %_ZN14arrow_vendored17double_conversion6Bignum5ClampEv.exit
 
-_ZN14arrow_vendored17double_conversion6Bignum5ClampEv.exit: ; preds = %bb.c, %4, %.critedge.i, %.critedge.thread3.i
+_ZN14arrow_vendored17double_conversion6Bignum5ClampEv.exit: ; preds = %bb.c, %.critedge.i, %.critedge.thread3.i
   ret void
 
 bb.e:                                             ; preds = %.lr.ph66, %._crit_edge
@@ -2026,7 +1985,7 @@ _ZN14arrow_vendored17double_conversion6Bignum5AlignERKS1_.exit: ; preds = %bb.b,
   %.031.lcssa = phi i16 [ 0, %_ZN14arrow_vendored17double_conversion6Bignum5AlignERKS1_.exit ], [ %i.az, %.lr.ph ] ; 2 uses
   %.lcssa40 = phi i16 [ %i.as, %_ZN14arrow_vendored17double_conversion6Bignum5AlignERKS1_.exit ], [ %i.ba, %.lr.ph ] ; 4 uses
   %.lcssa = phi i16 [ %i.ar, %_ZN14arrow_vendored17double_conversion6Bignum5AlignERKS1_.exit ], [ %i.bf, %.lr.ph ] ; 2 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.bm = sext i16 %.lcssa40 to i64
   %i.bn = getelementptr [4 x i8], ptr %i.bl, i64 %i.bm
   %i.bo = getelementptr i8, ptr %i.bn, i64 -4     ; 2 uses
@@ -2052,9 +2011,7 @@ bb.e:                                             ; preds = %._crit_edge
 .lr.ph.i33:                                       ; preds = %bb.e, %bb.f
   %i.cb = phi i16 [ %i.cg, %bb.f ], [ %.lcssa40, %bb.e ] ; 3 uses
   %i.cc = zext nneg i16 %i.cb to i64
-  %2 = add nuw nsw i64 %i.cc, 4294967295
-  %3 = and i64 %2, 4294967295
-  %i.cd = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %3
+  %i.cd = getelementptr [4 x i8], ptr %0, i64 %i.cc
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !3
   %i.cf = icmp eq i32 %i.ce, 0
   br i1 %i.cf, label %bb.f, label %_ZN14arrow_vendored17double_conversion6Bignum5ClampEv.exit
@@ -2316,18 +2273,12 @@ bb.e:                                             ; preds = %bb.d
 
 .critedge:                                        ; preds = %bb.e, %._crit_edge
   %i.bx = icmp sgt i16 %i.ai, 0
-  br i1 %i.bx, label %.lr.ph.i, label %.critedge.i
+  br i1 %i.bx, label %bb.f, label %.critedge.i
 
-.lr.ph.i:                                         ; preds = %.critedge
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  br label %bb.f
-
-bb.f:                                             ; preds = %bb.g, %.lr.ph.i
-  %i.by = phi i16 [ %i.ai, %.lr.ph.i ], [ %i.cd, %bb.g ] ; 3 uses
+bb.f:                                             ; preds = %.critedge, %bb.g
+  %i.by = phi i16 [ %i.cd, %bb.g ], [ %i.ai, %.critedge ] ; 3 uses
   %i.bz = zext nneg i16 %i.by to i64
-  %4 = add nuw nsw i64 %i.bz, 4294967295
-  %5 = and i64 %4, 4294967295
-  %i.ca = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %5
+  %i.ca = getelementptr [4 x i8], ptr %0, i64 %i.bz
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !3
   %i.cc = icmp eq i32 %i.cb, 0
   br i1 %i.cc, label %bb.g, label %_ZN14arrow_vendored17double_conversion6Bignum5ClampEv.exit

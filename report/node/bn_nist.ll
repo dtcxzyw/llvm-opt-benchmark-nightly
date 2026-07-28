@@ -204,10 +204,9 @@ nist_cp_bn.exit:                                  ; preds = %nist_cp_bn.exit.loo
   br i1 %.not114, label %nist_cp_bn.exit122, label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge
-  %5 = add nuw nsw i64 %i.cp, 4294967295
-  %6 = and i64 %5, 4294967295
-  %7 = getelementptr inbounds nuw [24 x i8], ptr @_nist_p_192, i64 %6
-  %i.cq = tail call i64 @bn_sub_words(ptr noundef nonnull %.0105, ptr noundef nonnull %.0105, ptr noundef nonnull %7, i32 noundef 3) #6
+  %5 = getelementptr [24 x i8], ptr @_nist_p_192, i64 %i.cp
+  %6 = getelementptr i8, ptr %5, i64 -24
+  %i.cq = tail call i64 @bn_sub_words(ptr noundef nonnull %.0105, ptr noundef nonnull %.0105, ptr noundef %6, i32 noundef 3) #6
   %i.cr = and i64 %i.cq, 4294967295
   %i.cs = icmp ne i64 %i.cr, 0
   br label %nist_cp_bn.exit122
@@ -509,7 +508,8 @@ bb.l:                                             ; preds = %._crit_edge
   br i1 %i.cz, label %bb.m, label %nist_cp_bn.exit98
 
 bb.m:                                             ; preds = %bb.l
-  %i.da = xor i64 %i.cn, 4294967295
+  %4 = and i64 %i.cn, 2147483647
+  %i.da = xor i64 %4, 2147483647
   %i.db = getelementptr inbounds nuw [32 x i8], ptr @_nist_p_224, i64 %i.da
   %i.dc = call i64 @bn_add_words(ptr noundef nonnull %.085, ptr noundef nonnull %.085, ptr noundef nonnull %i.db, i32 noundef 4) #6
   %i.dd = trunc i64 %i.dc to i32                  ; 2 uses
@@ -786,7 +786,8 @@ bb.l:                                             ; preds = %._crit_edge
   br i1 %i.en, label %bb.m, label %nist_cp_bn.exit228
 
 bb.m:                                             ; preds = %bb.l
-  %i.eo = xor i64 %i.ef, 4294967295
+  %5 = and i64 %i.ef, 2147483647
+  %i.eo = xor i64 %5, 2147483647
   %i.ep = getelementptr inbounds nuw [32 x i8], ptr @_nist_p_256, i64 %i.eo
   %i.eq = tail call i64 @bn_add_words(ptr noundef nonnull %.0203, ptr noundef nonnull %.0203, ptr noundef nonnull %i.ep, i32 noundef 4) #6
   %i.er = trunc i64 %i.eq to i32                  ; 2 uses
@@ -1130,7 +1131,8 @@ bb.l:                                             ; preds = %._crit_edge
   br i1 %i.gs, label %bb.m, label %nist_cp_bn.exit273
 
 bb.m:                                             ; preds = %bb.l
-  %i.gt = xor i64 %i.gk, 4294967295
+  %5 = and i64 %i.gk, 2147483647
+  %i.gt = xor i64 %5, 2147483647
   %i.gu = getelementptr inbounds nuw [48 x i8], ptr @_nist_p_384, i64 %i.gt
   %i.gv = tail call i64 @bn_add_words(ptr noundef nonnull %.0245, ptr noundef nonnull %.0245, ptr noundef nonnull %i.gu, i32 noundef 6) #6
   %i.gw = trunc i64 %i.gv to i32                  ; 2 uses

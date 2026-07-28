@@ -204,7 +204,11 @@ bb.d:                                             ; preds = %bb.c, %bb.c
   %i.m = load i8, ptr %i.l, align 1, !tbaa !65    ; 5 uses
   %i.n = add i8 %i.m, -48                         ; 2 uses
   %or.cond.i = icmp ult i8 %i.n, 10
-  br i1 %or.cond.i, label %bb.i, label %bb.e
+  br i1 %or.cond.i, label %5, label %bb.e
+
+5:                                                ; preds = %.lr.ph.i
+  %6 = zext nneg i8 %i.n to i64
+  br label %bb.i
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.o = add i8 %i.m, -65
@@ -212,8 +216,8 @@ bb.e:                                             ; preds = %.lr.ph.i
   br i1 %or.cond42.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %narrow40.i = add nuw nsw i8 %i.m, 9
-  %5 = and i8 %narrow40.i, 31
+  %7 = zext nneg i8 %i.m to i64
+  %8 = add nsw i64 %7, -55
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
@@ -222,14 +226,13 @@ bb.g:                                             ; preds = %bb.e
   br i1 %or.cond43.i, label %bb.h, label %_ZN5arrow8internal8ParseHexImEEbPKcmPT_.exit.thread, !prof !2676
 
 bb.h:                                             ; preds = %bb.g
-  %narrow.i = add nuw nsw i8 %i.m, 9
-  %6 = and i8 %narrow.i, 31
+  %9 = zext nneg i8 %i.m to i64
+  %10 = add nsw i64 %9, -87
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.f, %.lr.ph.i
-  %.pn.in.i = phi i8 [ %6, %bb.h ], [ %5, %bb.f ], [ %i.n, %.lr.ph.i ]
-  %.pn.i = zext nneg i8 %.pn.in.i to i64
-  %.1.i = or i64 %i.k, %.pn.i                     ; 2 uses
+bb.i:                                             ; preds = %bb.h, %bb.f, %5
+  %.pn.i = phi i64 [ %6, %5 ], [ %8, %bb.f ], [ %10, %bb.h ]
+  %.1.i = or i64 %.pn.i, %i.k                     ; 2 uses
   %i.q = add nuw nsw i64 %.03049.i, 1
   %exitcond.not.i = icmp eq i64 %.03049.i, %i.i
   br i1 %exitcond.not.i, label %_ZN5arrow8internal8ParseHexImEEbPKcmPT_.exit.thread.sink.split, label %.lr.ph.i, !llvm.loop !3364
@@ -632,7 +635,11 @@ bb.k:                                             ; preds = %bb.j, %bb.j
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !65  ; 5 uses
   %i.bk = add i8 %i.bj, -48                       ; 2 uses
   %or.cond.i.i.i.i.i.i.i = icmp ult i8 %i.bk, 10
-  br i1 %or.cond.i.i.i.i.i.i.i, label %bb.p, label %bb.l
+  br i1 %or.cond.i.i.i.i.i.i.i, label %16, label %bb.l
+
+16:                                               ; preds = %.lr.ph.i.i.i.i.i.i.i
+  %17 = zext nneg i8 %i.bk to i64
+  br label %bb.p
 
 bb.l:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i
   %i.bl = add i8 %i.bj, -65
@@ -640,8 +647,8 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %or.cond42.i.i.i.i.i.i.i, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %narrow40.i.i.i.i.i.i.i = add nuw nsw i8 %i.bj, 9
-  %16 = and i8 %narrow40.i.i.i.i.i.i.i, 31
+  %18 = zext nneg i8 %i.bj to i64
+  %19 = add nsw i64 %18, -55
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.l
@@ -650,14 +657,13 @@ bb.n:                                             ; preds = %bb.l
   br i1 %or.cond43.i.i.i.i.i.i.i, label %bb.o, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEbE4typeEPKcmPNS0_15StringConverterIS4_vE10value_typeE.exit.thread.i.i.i.i, !prof !2676
 
 bb.o:                                             ; preds = %bb.n
-  %narrow.i.i.i.i.i.i.i = add nuw nsw i8 %i.bj, 9
-  %17 = and i8 %narrow.i.i.i.i.i.i.i, 31
+  %20 = zext nneg i8 %i.bj to i64
+  %21 = add nsw i64 %20, -87
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.o, %bb.m, %.lr.ph.i.i.i.i.i.i.i
-  %.pn.in.i.i.i.i.i.i.i = phi i8 [ %17, %bb.o ], [ %16, %bb.m ], [ %i.bk, %.lr.ph.i.i.i.i.i.i.i ]
-  %.pn.i.i.i.i.i.i.i = zext nneg i8 %.pn.in.i.i.i.i.i.i.i to i64
-  %.1.i.i.i.i.i.i.i = or i64 %i.bh, %.pn.i.i.i.i.i.i.i ; 2 uses
+bb.p:                                             ; preds = %bb.o, %bb.m, %16
+  %.pn.i.i.i.i.i.i.i = phi i64 [ %17, %16 ], [ %19, %bb.m ], [ %21, %bb.o ]
+  %.1.i.i.i.i.i.i.i = or i64 %.pn.i.i.i.i.i.i.i, %i.bh ; 2 uses
   %i.bn = add nuw nsw i64 %.03049.i.i.i.i.i.i.i, 1
   %exitcond.not.i.i.i.i.i.i.i = icmp eq i64 %.03049.i.i.i.i.i.i.i, %i.bf
   br i1 %exitcond.not.i.i.i.i.i.i.i, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEbE4typeEPKcmPNS0_15StringConverterIS4_vE10value_typeE.exit.thread83.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !3364
@@ -999,7 +1005,11 @@ bb.ar:                                            ; preds = %bb.aq, %bb.aq
   %i.fj = load i8, ptr %i.fi, align 1, !tbaa !65  ; 5 uses
   %i.fk = add i8 %i.fj, -48                       ; 2 uses
   %or.cond.i.i.i66.i.i.i.i = icmp ult i8 %i.fk, 10
-  br i1 %or.cond.i.i.i66.i.i.i.i, label %bb.aw, label %bb.as
+  br i1 %or.cond.i.i.i66.i.i.i.i, label %22, label %bb.as
+
+22:                                               ; preds = %.lr.ph.i.i.i63.i.i.i.i
+  %23 = zext nneg i8 %i.fk to i64
+  br label %bb.aw
 
 bb.as:                                            ; preds = %.lr.ph.i.i.i63.i.i.i.i
   %i.fl = add i8 %i.fj, -65
@@ -1007,8 +1017,8 @@ bb.as:                                            ; preds = %.lr.ph.i.i.i63.i.i.
   br i1 %or.cond42.i.i.i67.i.i.i.i, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as
-  %narrow40.i.i.i75.i.i.i.i = add nuw nsw i8 %i.fj, 9
-  %18 = and i8 %narrow40.i.i.i75.i.i.i.i, 31
+  %24 = zext nneg i8 %i.fj to i64
+  %25 = add nsw i64 %24, -55
   br label %bb.aw
 
 bb.au:                                            ; preds = %bb.as
@@ -1017,14 +1027,13 @@ bb.au:                                            ; preds = %bb.as
   br i1 %or.cond43.i.i.i68.i.i.i.i, label %bb.av, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEbE4typeEPKcmPNS0_15StringConverterIS4_vE10value_typeE.exit77.thread.i.i.i.i, !prof !2676
 
 bb.av:                                            ; preds = %bb.au
-  %narrow.i.i.i69.i.i.i.i = add nuw nsw i8 %i.fj, 9
-  %19 = and i8 %narrow.i.i.i69.i.i.i.i, 31
+  %26 = zext nneg i8 %i.fj to i64
+  %27 = add nsw i64 %26, -87
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.av, %bb.at, %.lr.ph.i.i.i63.i.i.i.i
-  %.pn.in.i.i.i70.i.i.i.i = phi i8 [ %19, %bb.av ], [ %18, %bb.at ], [ %i.fk, %.lr.ph.i.i.i63.i.i.i.i ]
-  %.pn.i.i.i71.i.i.i.i = zext nneg i8 %.pn.in.i.i.i70.i.i.i.i to i64
-  %.1.i.i.i72.i.i.i.i = or i64 %i.fh, %.pn.i.i.i71.i.i.i.i ; 2 uses
+bb.aw:                                            ; preds = %bb.av, %bb.at, %22
+  %.pn.i.i.i69.i.i.i.i = phi i64 [ %23, %22 ], [ %25, %bb.at ], [ %27, %bb.av ]
+  %.1.i.i.i72.i.i.i.i = or i64 %.pn.i.i.i69.i.i.i.i, %i.fh ; 2 uses
   %i.fn = add nuw nsw i64 %.03049.i.i.i64.i.i.i.i, 1
   %exitcond.not.i.i.i73.i.i.i.i = icmp eq i64 %.03049.i.i.i64.i.i.i.i, %i.ff
   br i1 %exitcond.not.i.i.i73.i.i.i.i, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEbE4typeEPKcmPNS0_15StringConverterIS4_vE10value_typeE.exit77.thread86.i.i.i.i, label %.lr.ph.i.i.i63.i.i.i.i, !llvm.loop !3364
@@ -1427,7 +1436,11 @@ bb.k:                                             ; preds = %bb.j, %bb.j
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !65  ; 5 uses
   %i.bi = add i8 %i.bh, -48                       ; 2 uses
   %or.cond.i.i.i.i.i.i.i = icmp ult i8 %i.bi, 10
-  br i1 %or.cond.i.i.i.i.i.i.i, label %bb.p, label %bb.l
+  br i1 %or.cond.i.i.i.i.i.i.i, label %16, label %bb.l
+
+16:                                               ; preds = %.lr.ph.i.i.i.i.i.i.i
+  %17 = zext nneg i8 %i.bi to i64
+  br label %bb.p
 
 bb.l:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i
   %i.bj = add i8 %i.bh, -65
@@ -1435,8 +1448,8 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %or.cond42.i.i.i.i.i.i.i, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %narrow40.i.i.i.i.i.i.i = add nuw nsw i8 %i.bh, 9
-  %16 = and i8 %narrow40.i.i.i.i.i.i.i, 31
+  %18 = zext nneg i8 %i.bh to i64
+  %19 = add nsw i64 %18, -55
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.l
@@ -1445,14 +1458,13 @@ bb.n:                                             ; preds = %bb.l
   br i1 %or.cond43.i.i.i.i.i.i.i, label %bb.o, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEbE4typeEPKcmPNS0_15StringConverterIS4_vE10value_typeE.exit.thread.i.i.i.i, !prof !2676
 
 bb.o:                                             ; preds = %bb.n
-  %narrow.i.i.i.i.i.i.i = add nuw nsw i8 %i.bh, 9
-  %17 = and i8 %narrow.i.i.i.i.i.i.i, 31
+  %20 = zext nneg i8 %i.bh to i64
+  %21 = add nsw i64 %20, -87
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.o, %bb.m, %.lr.ph.i.i.i.i.i.i.i
-  %.pn.in.i.i.i.i.i.i.i = phi i8 [ %17, %bb.o ], [ %16, %bb.m ], [ %i.bi, %.lr.ph.i.i.i.i.i.i.i ]
-  %.pn.i.i.i.i.i.i.i = zext nneg i8 %.pn.in.i.i.i.i.i.i.i to i64
-  %.1.i.i.i.i.i.i.i = or i64 %i.bf, %.pn.i.i.i.i.i.i.i ; 2 uses
+bb.p:                                             ; preds = %bb.o, %bb.m, %16
+  %.pn.i.i.i.i.i.i.i = phi i64 [ %17, %16 ], [ %19, %bb.m ], [ %21, %bb.o ]
+  %.1.i.i.i.i.i.i.i = or i64 %.pn.i.i.i.i.i.i.i, %i.bf ; 2 uses
   %i.bl = add nuw nsw i64 %.03049.i.i.i.i.i.i.i, 1
   %exitcond.not.i.i.i.i.i.i.i = icmp eq i64 %.03049.i.i.i.i.i.i.i, %i.bd
   br i1 %exitcond.not.i.i.i.i.i.i.i, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEbE4typeEPKcmPNS0_15StringConverterIS4_vE10value_typeE.exit.thread83.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !3364
@@ -1792,7 +1804,11 @@ bb.ar:                                            ; preds = %bb.aq, %bb.aq
   %i.ff = load i8, ptr %i.fe, align 1, !tbaa !65  ; 5 uses
   %i.fg = add i8 %i.ff, -48                       ; 2 uses
   %or.cond.i.i.i66.i.i.i.i = icmp ult i8 %i.fg, 10
-  br i1 %or.cond.i.i.i66.i.i.i.i, label %bb.aw, label %bb.as
+  br i1 %or.cond.i.i.i66.i.i.i.i, label %22, label %bb.as
+
+22:                                               ; preds = %.lr.ph.i.i.i63.i.i.i.i
+  %23 = zext nneg i8 %i.fg to i64
+  br label %bb.aw
 
 bb.as:                                            ; preds = %.lr.ph.i.i.i63.i.i.i.i
   %i.fh = add i8 %i.ff, -65
@@ -1800,8 +1816,8 @@ bb.as:                                            ; preds = %.lr.ph.i.i.i63.i.i.
   br i1 %or.cond42.i.i.i67.i.i.i.i, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as
-  %narrow40.i.i.i75.i.i.i.i = add nuw nsw i8 %i.ff, 9
-  %18 = and i8 %narrow40.i.i.i75.i.i.i.i, 31
+  %24 = zext nneg i8 %i.ff to i64
+  %25 = add nsw i64 %24, -55
   br label %bb.aw
 
 bb.au:                                            ; preds = %bb.as
@@ -1810,14 +1826,13 @@ bb.au:                                            ; preds = %bb.as
   br i1 %or.cond43.i.i.i68.i.i.i.i, label %bb.av, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEbE4typeEPKcmPNS0_15StringConverterIS4_vE10value_typeE.exit77.thread.i.i.i.i, !prof !2676
 
 bb.av:                                            ; preds = %bb.au
-  %narrow.i.i.i69.i.i.i.i = add nuw nsw i8 %i.ff, 9
-  %19 = and i8 %narrow.i.i.i69.i.i.i.i, 31
+  %26 = zext nneg i8 %i.ff to i64
+  %27 = add nsw i64 %26, -87
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.av, %bb.at, %.lr.ph.i.i.i63.i.i.i.i
-  %.pn.in.i.i.i70.i.i.i.i = phi i8 [ %19, %bb.av ], [ %18, %bb.at ], [ %i.fg, %.lr.ph.i.i.i63.i.i.i.i ]
-  %.pn.i.i.i71.i.i.i.i = zext nneg i8 %.pn.in.i.i.i70.i.i.i.i to i64
-  %.1.i.i.i72.i.i.i.i = or i64 %i.fd, %.pn.i.i.i71.i.i.i.i ; 2 uses
+bb.aw:                                            ; preds = %bb.av, %bb.at, %22
+  %.pn.i.i.i69.i.i.i.i = phi i64 [ %23, %22 ], [ %25, %bb.at ], [ %27, %bb.av ]
+  %.1.i.i.i72.i.i.i.i = or i64 %.pn.i.i.i69.i.i.i.i, %i.fd ; 2 uses
   %i.fj = add nuw nsw i64 %.03049.i.i.i64.i.i.i.i, 1
   %exitcond.not.i.i.i73.i.i.i.i = icmp eq i64 %.03049.i.i.i64.i.i.i.i, %i.fb
   br i1 %exitcond.not.i.i.i73.i.i.i.i, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEbE4typeEPKcmPNS0_15StringConverterIS4_vE10value_typeE.exit77.thread86.i.i.i.i, label %.lr.ph.i.i.i63.i.i.i.i, !llvm.loop !3364
@@ -2220,7 +2235,11 @@ bb.m:                                             ; preds = %bb.l, %bb.l
   %i.bw = load i8, ptr %i.bv, align 1, !tbaa !65  ; 5 uses
   %i.bx = add i8 %i.bw, -48                       ; 2 uses
   %or.cond.i.i.i.i.i.i.i = icmp ult i8 %i.bx, 10
-  br i1 %or.cond.i.i.i.i.i.i.i, label %bb.r, label %bb.n
+  br i1 %or.cond.i.i.i.i.i.i.i, label %16, label %bb.n
+
+16:                                               ; preds = %.lr.ph.i.i.i.i.i.i.i
+  %17 = zext nneg i8 %i.bx to i64
+  br label %bb.r
 
 bb.n:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i
   %i.by = add i8 %i.bw, -65
@@ -2228,8 +2247,8 @@ bb.n:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %or.cond42.i.i.i.i.i.i.i, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %narrow40.i.i.i.i.i.i.i = add nuw nsw i8 %i.bw, 9
-  %16 = and i8 %narrow40.i.i.i.i.i.i.i, 31
+  %18 = zext nneg i8 %i.bw to i64
+  %19 = add nsw i64 %18, -55
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
@@ -2238,14 +2257,13 @@ bb.p:                                             ; preds = %bb.n
   br i1 %or.cond43.i.i.i.i.i.i.i, label %bb.q, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEbE4typeEPKcmPNS0_15StringConverterIS4_vE10value_typeE.exit.thread.i.i.i.i, !prof !2676
 
 bb.q:                                             ; preds = %bb.p
-  %narrow.i.i.i.i.i.i.i = add nuw nsw i8 %i.bw, 9
-  %17 = and i8 %narrow.i.i.i.i.i.i.i, 31
+  %20 = zext nneg i8 %i.bw to i64
+  %21 = add nsw i64 %20, -87
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.q, %bb.o, %.lr.ph.i.i.i.i.i.i.i
-  %.pn.in.i.i.i.i.i.i.i = phi i8 [ %17, %bb.q ], [ %16, %bb.o ], [ %i.bx, %.lr.ph.i.i.i.i.i.i.i ]
-  %.pn.i.i.i.i.i.i.i = zext nneg i8 %.pn.in.i.i.i.i.i.i.i to i64
-  %.1.i.i.i.i.i.i.i = or i64 %i.bu, %.pn.i.i.i.i.i.i.i ; 2 uses
+bb.r:                                             ; preds = %bb.q, %bb.o, %16
+  %.pn.i.i.i.i.i.i.i = phi i64 [ %17, %16 ], [ %19, %bb.o ], [ %21, %bb.q ]
+  %.1.i.i.i.i.i.i.i = or i64 %.pn.i.i.i.i.i.i.i, %i.bu ; 2 uses
   %i.ca = add nuw nsw i64 %.03049.i.i.i.i.i.i.i, 1
   %exitcond.not.i.i.i.i.i.i.i = icmp eq i64 %.03049.i.i.i.i.i.i.i, %i.bs
   br i1 %exitcond.not.i.i.i.i.i.i.i, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEbE4typeEPKcmPNS0_15StringConverterIS4_vE10value_typeE.exit.thread84.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !3364
@@ -2609,7 +2627,11 @@ bb.av:                                            ; preds = %bb.au, %bb.au
   %i.gj = load i8, ptr %i.gi, align 1, !tbaa !65  ; 5 uses
   %i.gk = add i8 %i.gj, -48                       ; 2 uses
   %or.cond.i.i.i67.i.i.i.i = icmp ult i8 %i.gk, 10
-  br i1 %or.cond.i.i.i67.i.i.i.i, label %bb.ba, label %bb.aw
+  br i1 %or.cond.i.i.i67.i.i.i.i, label %22, label %bb.aw
+
+22:                                               ; preds = %.lr.ph.i.i.i64.i.i.i.i
+  %23 = zext nneg i8 %i.gk to i64
+  br label %bb.ba
 
 bb.aw:                                            ; preds = %.lr.ph.i.i.i64.i.i.i.i
   %i.gl = add i8 %i.gj, -65
@@ -2617,8 +2639,8 @@ bb.aw:                                            ; preds = %.lr.ph.i.i.i64.i.i.
   br i1 %or.cond42.i.i.i68.i.i.i.i, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %bb.aw
-  %narrow40.i.i.i76.i.i.i.i = add nuw nsw i8 %i.gj, 9
-  %18 = and i8 %narrow40.i.i.i76.i.i.i.i, 31
+  %24 = zext nneg i8 %i.gj to i64
+  %25 = add nsw i64 %24, -55
   br label %bb.ba
 
 bb.ay:                                            ; preds = %bb.aw
@@ -2627,14 +2649,13 @@ bb.ay:                                            ; preds = %bb.aw
   br i1 %or.cond43.i.i.i69.i.i.i.i, label %bb.az, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEbE4typeEPKcmPNS0_15StringConverterIS4_vE10value_typeE.exit78.thread.i.i.i.i, !prof !2676
 
 bb.az:                                            ; preds = %bb.ay
-  %narrow.i.i.i70.i.i.i.i = add nuw nsw i8 %i.gj, 9
-  %19 = and i8 %narrow.i.i.i70.i.i.i.i, 31
+  %26 = zext nneg i8 %i.gj to i64
+  %27 = add nsw i64 %26, -87
   br label %bb.ba
 
-bb.ba:                                            ; preds = %bb.az, %bb.ax, %.lr.ph.i.i.i64.i.i.i.i
-  %.pn.in.i.i.i71.i.i.i.i = phi i8 [ %19, %bb.az ], [ %18, %bb.ax ], [ %i.gk, %.lr.ph.i.i.i64.i.i.i.i ]
-  %.pn.i.i.i72.i.i.i.i = zext nneg i8 %.pn.in.i.i.i71.i.i.i.i to i64
-  %.1.i.i.i73.i.i.i.i = or i64 %i.gh, %.pn.i.i.i72.i.i.i.i ; 2 uses
+bb.ba:                                            ; preds = %bb.az, %bb.ax, %22
+  %.pn.i.i.i70.i.i.i.i = phi i64 [ %23, %22 ], [ %25, %bb.ax ], [ %27, %bb.az ]
+  %.1.i.i.i73.i.i.i.i = or i64 %.pn.i.i.i70.i.i.i.i, %i.gh ; 2 uses
   %i.gn = add nuw nsw i64 %.03049.i.i.i65.i.i.i.i, 1
   %exitcond.not.i.i.i74.i.i.i.i = icmp eq i64 %.03049.i.i.i65.i.i.i.i, %i.gf
   br i1 %exitcond.not.i.i.i74.i.i.i.i, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEbE4typeEPKcmPNS0_15StringConverterIS4_vE10value_typeE.exit78.thread87.i.i.i.i, label %.lr.ph.i.i.i64.i.i.i.i, !llvm.loop !3364

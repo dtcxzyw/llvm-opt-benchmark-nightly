@@ -204,10 +204,9 @@ bb.e:                                             ; preds = %.thread
   %i.w = add i16 %i.v, -1
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !161
-  %1 = add nuw nsw i64 %i.t, 4294967295
-  %2 = and i64 %1, 4294967295
-  %3 = getelementptr inbounds nuw [2 x i8], ptr %i.y, i64 %2
-  store i16 %i.w, ptr %3, align 2, !tbaa !44
+  %1 = getelementptr [2 x i8], ptr %i.y, i64 %i.t
+  %2 = getelementptr i8, ptr %1, i64 -2
+  store i16 %i.w, ptr %2, align 2, !tbaa !44
   br label %.sink.split.sink.split
 
 .sink.split.sink.split:                           ; preds = %bb.b, %bb.e
@@ -279,10 +278,9 @@ bb.f:                                             ; preds = %.thread.i
   %i.z = add i16 %i.y, -1
   %i.aa = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !161
-  %3 = add nuw nsw i64 %i.w, 4294967295
-  %4 = and i64 %3, 4294967295
-  %5 = getelementptr inbounds nuw [2 x i8], ptr %i.ab, i64 %4
-  store i16 %i.z, ptr %5, align 2, !tbaa !44
+  %3 = getelementptr [2 x i8], ptr %i.ab, i64 %i.w
+  %4 = getelementptr i8, ptr %3, i64 -2
+  store i16 %i.z, ptr %4, align 2, !tbaa !44
   br label %.sink.split.sink.split.i
 
 .sink.split.sink.split.i:                         ; preds = %bb.f, %bb.c
@@ -368,10 +366,9 @@ bb.b:                                             ; preds = %bb.a
   %i.e = zext nneg i16 %i.c to i64
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !161
-  %1 = add nuw nsw i64 %i.e, 4294967294
-  %2 = and i64 %1, 4294967295
-  %3 = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %2
-  %i.h = load i16, ptr %3, align 2, !tbaa !44
+  %1 = getelementptr [2 x i8], ptr %i.g, i64 %i.e
+  %2 = getelementptr i8, ptr %1, i64 -4
+  %i.h = load i16, ptr %2, align 2, !tbaa !44
   %i.i = sext i16 %i.h to i32
   %i.j = add nsw i32 %i.i, 1
   br label %bb.d
@@ -774,10 +771,9 @@ bb.bx:                                            ; preds = %.loopexit29.i
   %i.rt = zext nneg i16 %i.rr to i64
   %i.ru = getelementptr inbounds nuw i8, ptr %.val.i21.i, i64 24
   %i.rv = load ptr, ptr %i.ru, align 8, !tbaa !161
-  %6 = add nuw nsw i64 %i.rt, 4294967294
-  %7 = and i64 %6, 4294967295
-  %8 = getelementptr inbounds nuw [2 x i8], ptr %i.rv, i64 %7
-  %i.rw = load i16, ptr %8, align 2, !tbaa !44
+  %6 = getelementptr [2 x i8], ptr %i.rv, i64 %i.rt
+  %7 = getelementptr i8, ptr %6, i64 -4
+  %i.rw = load i16, ptr %7, align 2, !tbaa !44
   %i.rx = sext i16 %i.rw to i32
   %i.ry = add nsw i32 %i.rx, 1
   br label %bb.bz
@@ -1180,10 +1176,9 @@ bb.d:                                             ; preds = %.thread
   %i.w = add i16 %i.v, -1
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !161
-  %1 = add nuw nsw i64 %i.t, 4294967295
-  %2 = and i64 %1, 4294967295
-  %3 = getelementptr inbounds nuw [2 x i8], ptr %i.y, i64 %2
-  store i16 %i.w, ptr %3, align 2, !tbaa !44
+  %1 = getelementptr [2 x i8], ptr %i.y, i64 %i.t
+  %2 = getelementptr i8, ptr %1, i64 -2
+  store i16 %i.w, ptr %2, align 2, !tbaa !44
   br label %.sink.split.sink.split
 
 .sink.split.sink.split:                           ; preds = %bb.a, %bb.d
@@ -1251,10 +1246,9 @@ bb.e:                                             ; preds = %.thread.i
   %i.y = add i16 %i.x, -1
   %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !161
-  %3 = add nuw nsw i64 %i.v, 4294967295
-  %4 = and i64 %3, 4294967295
-  %5 = getelementptr inbounds nuw [2 x i8], ptr %i.aa, i64 %4
-  store i16 %i.y, ptr %5, align 2, !tbaa !44
+  %3 = getelementptr [2 x i8], ptr %i.aa, i64 %i.v
+  %4 = getelementptr i8, ptr %3, i64 -2
+  store i16 %i.y, ptr %4, align 2, !tbaa !44
   br label %.sink.split.sink.split.i
 
 .sink.split.sink.split.i:                         ; preds = %bb.e, %bb.b
@@ -1338,10 +1332,9 @@ bb.b:                                             ; preds = %bb.a
   %i.e = zext nneg i16 %i.c to i64
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !161
-  %1 = add nuw nsw i64 %i.e, 4294967294
-  %2 = and i64 %1, 4294967295
-  %3 = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %2
-  %i.h = load i16, ptr %3, align 2, !tbaa !44
+  %1 = getelementptr [2 x i8], ptr %i.g, i64 %i.e
+  %2 = getelementptr i8, ptr %1, i64 -4
+  %i.h = load i16, ptr %2, align 2, !tbaa !44
   %i.i = sext i16 %i.h to i32
   %i.j = add nsw i32 %i.i, 1
   br label %bb.d
@@ -1744,10 +1737,9 @@ bb.b:                                             ; preds = %bb.a
   %i.f = zext nneg i16 %i.d to i64
   %i.g = getelementptr inbounds nuw i8, ptr %.val, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !161
-  %2 = add nuw nsw i64 %i.f, 4294967294
-  %3 = and i64 %2, 4294967295
-  %4 = getelementptr inbounds nuw [2 x i8], ptr %i.h, i64 %3
-  %i.i = load i16, ptr %4, align 2, !tbaa !44
+  %2 = getelementptr [2 x i8], ptr %i.h, i64 %i.f
+  %3 = getelementptr i8, ptr %2, i64 -4
+  %i.i = load i16, ptr %3, align 2, !tbaa !44
   %i.j = sext i16 %i.i to i32
   %i.k = add nsw i32 %i.j, 1
   br label %bb.d
@@ -2150,10 +2142,9 @@ bb.f:                                             ; preds = %.thread.i
   %i.y = add i16 %i.x, -1
   %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !161
-  %3 = add nuw nsw i64 %i.v, 4294967295
-  %4 = and i64 %3, 4294967295
-  %5 = getelementptr inbounds nuw [2 x i8], ptr %i.aa, i64 %4
-  store i16 %i.y, ptr %5, align 2, !tbaa !44
+  %3 = getelementptr [2 x i8], ptr %i.aa, i64 %i.v
+  %4 = getelementptr i8, ptr %3, i64 -2
+  store i16 %i.y, ptr %4, align 2, !tbaa !44
   br label %.sink.split.sink.split.i
 
 .sink.split.sink.split.i:                         ; preds = %bb.f, %bb.c

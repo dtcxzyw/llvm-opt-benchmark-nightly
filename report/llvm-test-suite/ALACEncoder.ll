@@ -203,9 +203,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %.mask = and i32 %i.h, 255
-  %3 = add nsw i32 %.mask, -1
-  %4 = zext i32 %3 to i64
-  %5 = getelementptr inbounds nuw [4 x i8], ptr @_ZL21ALACChannelLayoutTags, i64 %4
+  %3 = zext nneg i32 %.mask to i64
+  %4 = getelementptr [4 x i8], ptr @_ZL21ALACChannelLayoutTags, i64 %3
+  %5 = getelementptr i8, ptr %4, i64 -4
   %i.u = load i32, ptr %5, align 4, !tbaa !4
   br label %bb.c
 

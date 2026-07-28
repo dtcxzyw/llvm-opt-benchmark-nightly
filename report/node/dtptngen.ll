@@ -203,10 +203,8 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit:         ; preds = %bb.a
 
 bb.b:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit
   %i.p = zext nneg i16 %i.n to i64
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = add nuw nsw i64 %i.p, 4294967231
-  %4 = and i64 %3, 4294967295
-  %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %4
+  %i.q = getelementptr i8, ptr %0, i64 -512
+  %i.r = getelementptr [8 x i8], ptr %i.q, i64 %i.p
   br label %_ZNK6icu_7810PatternMap9getHeaderEDs.exit
 
 bb.c:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit
@@ -405,10 +403,8 @@ _ZNK6icu_7811PtnSkeleton12getFirstCharEv.exit:    ; preds = %bb.c, %bb.d, %bb.e,
 
 bb.s:                                             ; preds = %_ZNK6icu_7811PtnSkeleton12getFirstCharEv.exit
   %i.al = zext nneg i16 %i.aj to i64
-  %i.am = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = add nuw nsw i64 %i.al, 4294967231
-  %4 = and i64 %3, 4294967295
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %4
+  %i.am = getelementptr i8, ptr %0, i64 -512
+  %i.an = getelementptr [8 x i8], ptr %i.am, i64 %i.al
   br label %_ZNK6icu_7810PatternMap9getHeaderEDs.exit
 
 bb.t:                                             ; preds = %_ZNK6icu_7811PtnSkeleton12getFirstCharEv.exit
@@ -652,10 +648,8 @@ bb.n:                                             ; preds = %_ZN6icu_7812LocalPo
   br i1 %i.bc, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = add nuw nsw i64 %i.o, 4294967225
-  %7 = and i64 %6, 4294967295
-  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %7
+  %i.bd = getelementptr i8, ptr %0, i64 -560
+  %i.be = getelementptr [8 x i8], ptr %i.bd, i64 %i.o
   store ptr %i.t, ptr %i.be, align 8
   br label %_ZN6icu_7812LocalPointerINS_7PtnElemEED2Ev.exit70
 
@@ -1058,10 +1052,8 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit:         ; preds = %bb.a
 
 bb.c:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit
   %i.t = zext nneg i16 %i.r to i64
-  %i.u = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %3 = add nuw nsw i64 %i.t, 4294967231
-  %4 = and i64 %3, 4294967295
-  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %4
+  %i.u = getelementptr i8, ptr %i.l, i64 -512
+  %i.v = getelementptr [8 x i8], ptr %i.u, i64 %i.t
   br label %_ZNK6icu_7810PatternMap9getHeaderEDs.exit
 
 bb.d:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit
@@ -1192,10 +1184,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = zext nneg i16 %1 to i64
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %2 = add nuw nsw i64 %i.b, 4294967231
-  %3 = and i64 %2, 4294967295
-  %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %3
+  %i.c = getelementptr i8, ptr %0, i64 -512
+  %i.d = getelementptr [8 x i8], ptr %i.c, i64 %i.b
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a

@@ -203,8 +203,7 @@ bb.x:                                             ; preds = %bb.i, %bb.w, %bb.v,
   %i.l = load i32, ptr %i.k, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %invariant.gep.i.i = getelementptr [384 x i8], ptr %i.m, i64 %.040
-  %5 = and i64 %.239, 4294967295
-  %invariant.gep14.i.i = getelementptr [64 x i8], ptr %invariant.gep.i.i, i64 %5
+  %invariant.gep14.i.i = getelementptr [64 x i8], ptr %invariant.gep.i.i, i64 %.239
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 23128
   br label %bb.y
 

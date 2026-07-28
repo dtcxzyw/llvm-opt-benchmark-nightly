@@ -204,9 +204,8 @@ bb.k:                                             ; preds = %._crit_edge
   %i.aw = getelementptr i8, ptr %1, i64 8         ; 2 uses
   %i.ax = load i8, ptr %i.aw, align 8, !tbaa !60  ; 2 uses
   %i.ay = zext i8 %i.ax to i64
-  %i.az = add nuw nsw i64 %i.ay, 4294967295
-  %4 = and i64 %i.az, 4294967295
-  %i.ba = lshr i64 %i.av, %4
+  %i.az = add nsw i64 %i.ay, -1
+  %i.ba = lshr i64 %i.av, %i.az
   %.not158 = icmp eq i64 %i.ba, 0
   br i1 %.not158, label %keyeq.exit, label %bb.l
 

@@ -204,8 +204,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ag = getelementptr [8 x i8], ptr @reserved_word.wordlist, i64 %i.ad
   %i.ah = load i16, ptr %i.ag, align 8, !tbaa !493
   %i.ai = sext i16 %i.ah to i64
-  %7 = and i64 %i.ai, 4294967295
-  %i.aj = getelementptr i8, ptr @stringpool_contents, i64 %7 ; 2 uses
+  %i.aj = getelementptr i8, ptr @stringpool_contents, i64 %i.ai ; 2 uses
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !15
   %i.al = icmp eq i8 %i.o, %i.ak
   br i1 %i.al, label %bb.i, label %reserved_word.exit.thread
@@ -608,8 +607,7 @@ bb.d:                                             ; preds = %hash.exit.i
 bb.e:                                             ; preds = %bb.d
   %i.ac = load i16, ptr %i.z, align 8, !tbaa !493
   %i.ad = sext i16 %i.ac to i64
-  %2 = and i64 %i.ad, 4294967295
-  %i.ae = getelementptr i8, ptr @stringpool_contents, i64 %2 ; 2 uses
+  %i.ae = getelementptr i8, ptr @stringpool_contents, i64 %i.ad ; 2 uses
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !15
   %i.ag = icmp eq i8 %i.j, %i.af
   br i1 %i.ag, label %bb.f, label %.critedge26.thread.i
@@ -1012,8 +1010,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.gi = getelementptr [8 x i8], ptr @reserved_word.wordlist, i64 %i.gf
   %i.gj = load i16, ptr %i.gi, align 8, !tbaa !493
   %i.gk = sext i16 %i.gj to i64
-  %3 = and i64 %i.gk, 4294967295
-  %i.gl = getelementptr i8, ptr @stringpool_contents, i64 %3 ; 2 uses
+  %i.gl = getelementptr i8, ptr @stringpool_contents, i64 %i.gk ; 2 uses
   %i.gm = load i8, ptr %i.gl, align 1, !tbaa !15
   %i.gn = icmp eq i8 %i.fq, %i.gm
   br i1 %i.gn, label %bb.at, label %reserved_word.exit.thread
@@ -1101,8 +1098,7 @@ bb.ba:                                            ; preds = %hash.exit.i208
 bb.bb:                                            ; preds = %bb.ba
   %i.ia = load i16, ptr %i.hx, align 8, !tbaa !493
   %i.ib = sext i16 %i.ia to i64
-  %4 = and i64 %i.ib, 4294967295
-  %i.ic = getelementptr i8, ptr @stringpool_contents, i64 %4 ; 2 uses
+  %i.ic = getelementptr i8, ptr @stringpool_contents, i64 %i.ib ; 2 uses
   %i.id = load i8, ptr %i.ic, align 1, !tbaa !15
   %i.ie = icmp eq i8 %i.hh, %i.id
   br i1 %i.ie, label %bb.bc, label %thread-pre-split

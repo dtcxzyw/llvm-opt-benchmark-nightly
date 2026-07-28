@@ -195,10 +195,9 @@ bb.a:
   %i.b = add i32 %1, -1                           ; 2 uses
   %i.c = zext i32 %i.b to i64
   %i.d = getelementptr inbounds nuw i8, ptr @_upb_CType_SizeLg2_dont_copy_me__upb_internal_use_only.size, i64 %i.c
-  %i.e = load i8, ptr %i.d, align 1, !tbaa !21
-  %4 = sext i8 %i.e to i64                        ; 2 uses
-  %5 = and i64 %4, 4294967295
-  %i.f = shl i64 %.val, %5
+  %i.e = load i8, ptr %i.d, align 1, !tbaa !21    ; 2 uses
+  %4 = zext nneg i8 %i.e to i64
+  %i.f = shl i64 %.val, %4
   %i.g = add i64 %i.f, 31
   %i.h = and i64 %i.g, -8                         ; 3 uses
   %.val.i.i.i = load ptr, ptr %3, align 8, !tbaa !24 ; 4 uses
@@ -224,9 +223,10 @@ upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.a
 _upb_Array_ResizeUninitialized_dont_copy_me__upb_internal_use_only.exit: ; preds = %upb_Arena_Malloc.exit.i.i, %upb_Arena_Malloc.exit.thread.i.i
   %.0.i19.i.i = phi ptr [ %.val.i.i.i, %upb_Arena_Malloc.exit.thread.i.i ], [ %i.o, %upb_Arena_Malloc.exit.i.i ] ; 11 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.0.i19.i.i, i64 24
+  %5 = sext i8 %i.e to i64
   %i.q = icmp ne i32 %i.b, 0
   %.neg.i.i.i = sext i1 %i.q to i64
-  %i.r = add nsw i64 %4, %.neg.i.i.i
+  %i.r = add nsw i64 %5, %.neg.i.i.i
   %i.s = ptrtoint ptr %i.p to i64
   %i.t = or i64 %i.r, %i.s
   store i64 %i.t, ptr %.0.i19.i.i, align 8, !tbaa !35

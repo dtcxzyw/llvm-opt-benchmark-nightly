@@ -204,9 +204,8 @@ _ZN10duckdb_fmt2v68internal2fp6assignIdTnNSt9enable_ifIXeqstT_Lm8EEiE4typeELi0EE
   %i.hb = trunc nuw nsw i64 %i.gz to i32
   %i.hc = add nsw i32 %i.hb, -1075
   %i.hd = icmp samesign ult i64 %i.gz, 897
-  %i.he = sub nsw i64 897, %i.gz
-  %4 = and i64 %i.he, 4294967295
-  %i.hf = shl i64 268435456, %4
+  %i.he = sub nuw nsw i64 897, %i.gz
+  %i.hf = shl i64 268435456, %i.he
   %spec.select.i = select i1 %i.hd, i64 %i.hf, i64 268435456
   br label %_ZN10duckdb_fmt2v68internal2fp6assignIdTnNSt9enable_ifIXeqstT_Lm8EEiE4typeELi0EEEbS5_.exit.thread.i
 

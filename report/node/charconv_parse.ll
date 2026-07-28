@@ -201,9 +201,9 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %5 = and i8 %i.s, 15
-  %6 = zext nneg i8 %5 to i64
-  %i.w = add i64 %i.v, %6                         ; 3 uses
+  %5 = zext nneg i8 %i.s to i64
+  %6 = add i64 %i.v, -48
+  %i.w = add i64 %6, %5                           ; 3 uses
   %.not52 = icmp ult i64 %i.w, %i.v
   br i1 %.not52, label %bb.g, label %bb.h
 

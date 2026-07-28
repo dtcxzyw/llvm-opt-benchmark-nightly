@@ -201,6 +201,7 @@ _ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_
   %.1137 = phi ptr [ %i.ab, %bb.d ], [ %.0136211, %.lr.ph.i.preheader ] ; 5 uses
   %.0134 = phi i64 [ %i.aa, %bb.d ], [ 0, %.lr.ph.i.preheader ] ; 5 uses
   %i.v = load i8, ptr %.1137, align 1, !tbaa !17  ; 3 uses
+  %6 = sext i8 %i.v to i64                        ; 2 uses
   %i.w = add i8 %i.v, -58
   %or.cond.i = icmp ult i8 %i.w, -10
   br i1 %or.cond.i, label %bb.e, label %bb.b
@@ -211,14 +212,13 @@ bb.b:                                             ; preds = %.lr.ph.i
 
 bb.c:                                             ; preds = %bb.b
   %i.y = mul nsw i64 %.0134, 10                   ; 2 uses
-  %6 = and i8 %i.v, 15
-  %7 = zext nneg i8 %6 to i64                     ; 2 uses
-  %8 = xor i64 %7, 9223372036854775807
-  %i.z = icmp sgt i64 %i.y, %8
+  %7 = sub nuw i64 -9223372036854775761, %6
+  %i.z = icmp sgt i64 %i.y, %7
   br i1 %i.z, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.aa = add nsw i64 %i.y, %7                    ; 2 uses
+  %8 = add i64 %i.y, -48
+  %i.aa = add i64 %8, %6                          ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.1137, i64 1 ; 2 uses
   %.not.i = icmp eq ptr %i.ab, %i.q
   br i1 %.not.i, label %_ZN4absl12lts_2025051212_GLOBAL__N_121ConsumeDurationNumberEPPKcS3_PlS5_S5_.exit.thread, label %.lr.ph.i, !llvm.loop !28
@@ -238,6 +238,7 @@ bb.e:                                             ; preds = %.lr.ph.i
   %.0130 = phi i64 [ %.1131, %bb.h ], [ 0, %.preheader.i ] ; 3 uses
   %.0 = phi i64 [ %.1, %bb.h ], [ 1, %.preheader.i ] ; 4 uses
   %i.ad = load i8, ptr %.2138, align 1, !tbaa !17 ; 2 uses
+  %9 = sext i8 %i.ad to i64
   %i.ae = add i8 %i.ad, -58
   %or.cond3.i = icmp ult i8 %i.ae, -10
   br i1 %or.cond3.i, label %._crit_edge.i, label %bb.f
@@ -248,9 +249,8 @@ bb.f:                                             ; preds = %.lr.ph66.i
 
 bb.g:                                             ; preds = %bb.f
   %i.ag = mul nsw i64 %.0130, 10
-  %9 = and i8 %i.ad, 15
-  %10 = zext nneg i8 %9 to i64
-  %i.ah = add nsw i64 %i.ag, %10
+  %10 = add i64 %i.ag, -48
+  %i.ah = add i64 %10, %9
   %i.ai = mul nsw i64 %.0, 10
   br label %bb.h
 

@@ -204,9 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond9, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = add nuw nsw i64 %i.a, 4294967295
-  %2 = and i64 %0, 4294967295
-  %i.g = and i64 %2, %i.f
+  %i.f = add nsw i64 %i.a, -1
+  %i.g = and i64 %i.f, %0
   %i.h = icmp eq i64 %i.g, 0
   br label %bb.d
 
@@ -233,9 +232,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond9.i, label %_ZN8facebook5velox6memory15MemoryAllocator16isAlignmentValidEmt.exit, label %_ZN8facebook5velox6memory15MemoryAllocator16isAlignmentValidEmt.exit.thread3, !prof !74
 
 _ZN8facebook5velox6memory15MemoryAllocator16isAlignmentValidEmt.exit: ; preds = %bb.b
-  %i.f = add nuw nsw i64 %i.a, 4294967295
-  %4 = and i64 %0, 4294967295
-  %i.g = and i64 %4, %i.f
+  %i.f = add nsw i64 %i.a, -1
+  %i.g = and i64 %i.f, %0
   %i.h = icmp eq i64 %i.g, 0
   br i1 %i.h, label %_ZN8facebook5velox6memory15MemoryAllocator16isAlignmentValidEmt.exit.thread, label %_ZN8facebook5velox6memory15MemoryAllocator16isAlignmentValidEmt.exit.thread3, !prof !75
 

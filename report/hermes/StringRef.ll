@@ -203,8 +203,8 @@ bb.r:                                             ; preds = %bb.q
   %i.bf = zext i32 %i.ba to i64
   %i.bg = add nuw nsw i64 %i.bf, 63
   %sh.diff.i = lshr i64 %i.bg, 3
-  %9 = add nuw nsw i64 %sh.diff.i, 4294967288
-  %10 = and i64 %9, 4294967288
+  %9 = and i64 %sh.diff.i, 1073741816
+  %10 = add nsw i64 %9, -8
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.be, i8 0, i64 %10, i1 false)
   br label %.lr.ph
 
@@ -350,8 +350,8 @@ bb.af:                                            ; preds = %bb.ae
   %i.dp = zext i32 %i.df to i64
   %i.dq = add nuw nsw i64 %i.dp, 63
   %sh.diff.i62 = lshr i64 %i.dq, 3
-  %11 = add nuw nsw i64 %sh.diff.i62, 4294967288
-  %12 = and i64 %11, 4294967288
+  %11 = and i64 %sh.diff.i62, 1073741816
+  %12 = add nsw i64 %11, -8
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.do, i8 0, i64 %12, i1 false)
   br label %_ZN4llvh5APIntaSEm.exit64
 

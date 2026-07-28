@@ -1,8 +1,8 @@
 inline.NumInlined: 12
 inline.NumDeleted: 7
 loop-unroll.NumCompletelyUnrolled: 9
-loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 19
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 18
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -115,7 +115,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -4, 5) i32 @nsis_BZ2_bzDecompress(ptr nofree noundef readonly captures(address) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [6 x i8], align 16                ; 44 uses
+  %i.a = alloca [6 x i8], align 16                ; 31 uses
   %i.b = icmp eq ptr %0, null
   br i1 %i.b, label %unRLE_obuf_to_output_SMALL.exit.thread, label %bb.b
 
@@ -518,34 +518,18 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 bb.di:                                            ; preds = %._crit_edge1525.i, %.lr.ph1527.i
   %indvars.iv1736.i = phi i64 [ 0, %.lr.ph1527.i ], [ %indvars.iv.next1737.i, %._crit_edge1525.i ] ; 3 uses
   %i.aja = getelementptr inbounds nuw i8, ptr %i.aa, i64 %indvars.iv1736.i
-  %i.ajb = load i8, ptr %i.aja, align 1, !tbaa !34 ; 7 uses
-  %i.ajc = zext i8 %i.ajb to i64                  ; 27 uses
+  %i.ajb = load i8, ptr %i.aja, align 1, !tbaa !34 ; 4 uses
+  %i.ajc = zext i8 %i.ajb to i64                  ; 17 uses
   %i.ajd = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ajc
   %i.aje = load i8, ptr %i.ajd, align 1, !tbaa !34 ; 2 uses
   %.not13481521.i = icmp eq i8 %i.ajb, 0
-  br i1 %.not13481521.i, label %._crit_edge1525.i, label %iter.check501
+  br i1 %.not13481521.i, label %._crit_edge1525.i, label %vector.scevcheck485
 
-iter.check501:                                    ; preds = %bb.di
-  %min.iters.check487 = icmp ult i8 %i.ajb, 4
-  br i1 %min.iters.check487, label %.lr.ph1524.i.preheader.a, label %vector.scevcheck485
+vector.scevcheck485:                              ; preds = %bb.di
+  %i.ajf = icmp ult i8 %i.ajb, 4
+  br i1 %i.ajf, label %.lr.ph1524.i.prol, label %vector.main.loop.iter.check488
 
-vector.scevcheck485:                              ; preds = %iter.check501
-  %1 = add i8 %i.ajb, -1
-  %2 = zext i8 %i.ajb to i32
-  %3 = add nsw i32 %2, -1
-  %4 = zext i8 %1 to i32
-  %i.ajf = icmp ult i32 %3, %4
-  br i1 %i.ajf, label %.lr.ph1524.i.preheader.a, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck485
-  %5 = zext i8 %i.ajb to i64
-  %6 = add nuw nsw i64 %5, 4294967295
-  %7 = and i64 %6, 4294967295
-  %8 = sub nsw i64 %i.ajc, %7
-  %diff.check = icmp ugt i64 %8, -32
-  br i1 %diff.check, label %.lr.ph1524.i.preheader.a, label %vector.main.loop.iter.check488
-
-vector.main.loop.iter.check488:                   ; preds = %vector.memcheck
+vector.main.loop.iter.check488:                   ; preds = %vector.scevcheck485
   %min.iters.check489 = icmp ult i8 %i.ajb, 32
   br i1 %min.iters.check489, label %vec.epilog.ph505, label %vector.ph490
 
@@ -553,112 +537,91 @@ vector.ph490:                                     ; preds = %vector.main.loop.it
   %n.mod.vf491 = and i64 %i.ajc, 28
   %n.vec492 = and i64 %i.ajc, 224                 ; 8 uses
   %i.ajg = and i64 %i.ajc, 31
-  %9 = add nuw nsw i64 %i.ajc, 4294967295
-  %10 = and i64 %9, 4294967295
-  %i.ajh = getelementptr inbounds nuw i8, ptr %i.a, i64 %10 ; 2 uses
-  %i.aji = getelementptr inbounds i8, ptr %i.ajh, i64 -15
-  %i.ajj = getelementptr inbounds i8, ptr %i.ajh, i64 -31
+  %i.ajh = getelementptr i8, ptr %i.a, i64 %i.ajc ; 4 uses
+  %i.aji = getelementptr i8, ptr %i.ajh, i64 -16
+  %i.ajj = getelementptr i8, ptr %i.ajh, i64 -32
   %wide.load = load <16 x i8>, ptr %i.aji, align 1, !tbaa !34
   %wide.load495 = load <16 x i8>, ptr %i.ajj, align 1, !tbaa !34
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ajc ; 2 uses
-  %i.ajk = getelementptr inbounds i8, ptr %11, i64 -15
-  %i.ajl = getelementptr inbounds i8, ptr %11, i64 -31
+  %i.ajk = getelementptr i8, ptr %i.ajh, i64 -15
+  %i.ajl = getelementptr i8, ptr %i.ajh, i64 -31
   store <16 x i8> %wide.load, ptr %i.ajk, align 1, !tbaa !34
   store <16 x i8> %wide.load495, ptr %i.ajl, align 1, !tbaa !34
   %i.ajm = icmp eq i64 %n.vec492, 32
   br i1 %i.ajm, label %middle.block497, label %vector.body493.1
 
 vector.body493.1:                                 ; preds = %vector.ph490
-  %12 = add nuw nsw i64 %i.ajc, 4294967263
-  %13 = and i64 %12, 4294967295
-  %i.ajn = getelementptr inbounds nuw i8, ptr %i.a, i64 %13 ; 2 uses
-  %i.ajo = getelementptr inbounds i8, ptr %i.ajn, i64 -15
-  %i.ajp = getelementptr inbounds i8, ptr %i.ajn, i64 -31
+  %i.ajn = getelementptr i8, ptr %i.a, i64 %i.ajc ; 4 uses
+  %i.ajo = getelementptr i8, ptr %i.ajn, i64 -48
+  %i.ajp = getelementptr i8, ptr %i.ajn, i64 -64
   %wide.load.1 = load <16 x i8>, ptr %i.ajo, align 1, !tbaa !34
   %wide.load495.1 = load <16 x i8>, ptr %i.ajp, align 1, !tbaa !34
-  %14 = getelementptr i8, ptr %i.a, i64 %i.ajc    ; 2 uses
-  %i.ajq = getelementptr i8, ptr %14, i64 -47
-  %i.ajr = getelementptr i8, ptr %14, i64 -63
+  %i.ajq = getelementptr i8, ptr %i.ajn, i64 -47
+  %i.ajr = getelementptr i8, ptr %i.ajn, i64 -63
   store <16 x i8> %wide.load.1, ptr %i.ajq, align 1, !tbaa !34
   store <16 x i8> %wide.load495.1, ptr %i.ajr, align 1, !tbaa !34
   %i.ajs = icmp eq i64 %n.vec492, 64
   br i1 %i.ajs, label %middle.block497, label %vector.body493.2
 
 vector.body493.2:                                 ; preds = %vector.body493.1
-  %15 = add nuw nsw i64 %i.ajc, 4294967231
-  %16 = and i64 %15, 4294967295
-  %i.ajt = getelementptr inbounds nuw i8, ptr %i.a, i64 %16 ; 2 uses
-  %i.aju = getelementptr inbounds i8, ptr %i.ajt, i64 -15
-  %i.ajv = getelementptr inbounds i8, ptr %i.ajt, i64 -31
+  %i.ajt = getelementptr i8, ptr %i.a, i64 %i.ajc ; 4 uses
+  %i.aju = getelementptr i8, ptr %i.ajt, i64 -80
+  %i.ajv = getelementptr i8, ptr %i.ajt, i64 -96
   %wide.load.2 = load <16 x i8>, ptr %i.aju, align 1, !tbaa !34
   %wide.load495.2 = load <16 x i8>, ptr %i.ajv, align 1, !tbaa !34
-  %17 = getelementptr i8, ptr %i.a, i64 %i.ajc    ; 2 uses
-  %i.ajw = getelementptr i8, ptr %17, i64 -79
-  %i.ajx = getelementptr i8, ptr %17, i64 -95
+  %i.ajw = getelementptr i8, ptr %i.ajt, i64 -79
+  %i.ajx = getelementptr i8, ptr %i.ajt, i64 -95
   store <16 x i8> %wide.load.2, ptr %i.ajw, align 1, !tbaa !34
   store <16 x i8> %wide.load495.2, ptr %i.ajx, align 1, !tbaa !34
   %i.ajy = icmp eq i64 %n.vec492, 96
   br i1 %i.ajy, label %middle.block497, label %vector.body493.3
 
 vector.body493.3:                                 ; preds = %vector.body493.2
-  %18 = add nuw nsw i64 %i.ajc, 4294967199
-  %19 = and i64 %18, 4294967295
-  %i.ajz = getelementptr inbounds nuw i8, ptr %i.a, i64 %19 ; 2 uses
-  %i.aka = getelementptr inbounds i8, ptr %i.ajz, i64 -15
-  %i.akb = getelementptr inbounds i8, ptr %i.ajz, i64 -31
+  %i.ajz = getelementptr i8, ptr %i.a, i64 %i.ajc ; 4 uses
+  %i.aka = getelementptr i8, ptr %i.ajz, i64 -112
+  %i.akb = getelementptr i8, ptr %i.ajz, i64 -128
   %wide.load.3 = load <16 x i8>, ptr %i.aka, align 1, !tbaa !34
   %wide.load495.3 = load <16 x i8>, ptr %i.akb, align 1, !tbaa !34
-  %20 = getelementptr i8, ptr %i.a, i64 %i.ajc    ; 2 uses
-  %i.akc = getelementptr i8, ptr %20, i64 -111
-  %i.akd = getelementptr i8, ptr %20, i64 -127
+  %i.akc = getelementptr i8, ptr %i.ajz, i64 -111
+  %i.akd = getelementptr i8, ptr %i.ajz, i64 -127
   store <16 x i8> %wide.load.3, ptr %i.akc, align 1, !tbaa !34
   store <16 x i8> %wide.load495.3, ptr %i.akd, align 1, !tbaa !34
   %i.ake = icmp eq i64 %n.vec492, 128
   br i1 %i.ake, label %middle.block497, label %vector.body493.4
 
 vector.body493.4:                                 ; preds = %vector.body493.3
-  %21 = add nuw nsw i64 %i.ajc, 4294967167
-  %22 = and i64 %21, 4294967295
-  %i.akf = getelementptr inbounds nuw i8, ptr %i.a, i64 %22 ; 2 uses
-  %i.akg = getelementptr inbounds i8, ptr %i.akf, i64 -15
-  %i.akh = getelementptr inbounds i8, ptr %i.akf, i64 -31
+  %i.akf = getelementptr i8, ptr %i.a, i64 %i.ajc ; 4 uses
+  %i.akg = getelementptr i8, ptr %i.akf, i64 -144
+  %i.akh = getelementptr i8, ptr %i.akf, i64 -160
   %wide.load.4 = load <16 x i8>, ptr %i.akg, align 1, !tbaa !34
   %wide.load495.4 = load <16 x i8>, ptr %i.akh, align 1, !tbaa !34
-  %23 = getelementptr i8, ptr %i.a, i64 %i.ajc    ; 2 uses
-  %i.aki = getelementptr i8, ptr %23, i64 -143
-  %i.akj = getelementptr i8, ptr %23, i64 -159
+  %i.aki = getelementptr i8, ptr %i.akf, i64 -143
+  %i.akj = getelementptr i8, ptr %i.akf, i64 -159
   store <16 x i8> %wide.load.4, ptr %i.aki, align 1, !tbaa !34
   store <16 x i8> %wide.load495.4, ptr %i.akj, align 1, !tbaa !34
   %i.akk = icmp eq i64 %n.vec492, 160
   br i1 %i.akk, label %middle.block497, label %vector.body493.5
 
 vector.body493.5:                                 ; preds = %vector.body493.4
-  %24 = add nuw nsw i64 %i.ajc, 4294967135
-  %25 = and i64 %24, 4294967295
-  %i.akl = getelementptr inbounds nuw i8, ptr %i.a, i64 %25 ; 2 uses
-  %i.akm = getelementptr inbounds i8, ptr %i.akl, i64 -15
-  %i.akn = getelementptr inbounds i8, ptr %i.akl, i64 -31
+  %i.akl = getelementptr i8, ptr %i.a, i64 %i.ajc ; 4 uses
+  %i.akm = getelementptr i8, ptr %i.akl, i64 -176
+  %i.akn = getelementptr i8, ptr %i.akl, i64 -192
   %wide.load.5 = load <16 x i8>, ptr %i.akm, align 1, !tbaa !34
   %wide.load495.5 = load <16 x i8>, ptr %i.akn, align 1, !tbaa !34
-  %26 = getelementptr i8, ptr %i.a, i64 %i.ajc    ; 2 uses
-  %i.ako = getelementptr i8, ptr %26, i64 -175
-  %i.akp = getelementptr i8, ptr %26, i64 -191
+  %i.ako = getelementptr i8, ptr %i.akl, i64 -175
+  %i.akp = getelementptr i8, ptr %i.akl, i64 -191
   store <16 x i8> %wide.load.5, ptr %i.ako, align 1, !tbaa !34
   store <16 x i8> %wide.load495.5, ptr %i.akp, align 1, !tbaa !34
   %i.akq = icmp eq i64 %n.vec492, 192
   br i1 %i.akq, label %middle.block497, label %vector.body493.6
 
 vector.body493.6:                                 ; preds = %vector.body493.5
-  %27 = add nuw nsw i64 %i.ajc, 4294967103
-  %28 = and i64 %27, 4294967295
-  %i.akr = getelementptr inbounds nuw i8, ptr %i.a, i64 %28 ; 2 uses
-  %i.aks = getelementptr inbounds i8, ptr %i.akr, i64 -15
-  %i.akt = getelementptr inbounds i8, ptr %i.akr, i64 -31
+  %i.akr = getelementptr i8, ptr %i.a, i64 %i.ajc ; 4 uses
+  %i.aks = getelementptr i8, ptr %i.akr, i64 -208
+  %i.akt = getelementptr i8, ptr %i.akr, i64 -224
   %wide.load.6 = load <16 x i8>, ptr %i.aks, align 1, !tbaa !34
   %wide.load495.6 = load <16 x i8>, ptr %i.akt, align 1, !tbaa !34
-  %29 = getelementptr i8, ptr %i.a, i64 %i.ajc    ; 2 uses
-  %i.aku = getelementptr i8, ptr %29, i64 -207
-  %i.akv = getelementptr i8, ptr %29, i64 -223
+  %i.aku = getelementptr i8, ptr %i.akr, i64 -207
+  %i.akv = getelementptr i8, ptr %i.akr, i64 -223
   store <16 x i8> %wide.load.6, ptr %i.aku, align 1, !tbaa !34
   store <16 x i8> %wide.load495.6, ptr %i.akv, align 1, !tbaa !34
   br label %middle.block497
@@ -669,7 +632,7 @@ middle.block497:                                  ; preds = %vector.body493.6, %
 
 vec.epilog.iter.check503:                         ; preds = %middle.block497
   %min.epilog.iters.check504 = icmp eq i64 %n.mod.vf491, 0
-  br i1 %min.epilog.iters.check504, label %.lr.ph1524.i.preheader.a, label %vec.epilog.ph505, !prof !85
+  br i1 %min.epilog.iters.check504, label %.lr.ph1524.i.prol, label %vec.epilog.ph505, !prof !85
 
 vec.epilog.ph505:                                 ; preds = %vector.main.loop.iter.check488, %vec.epilog.iter.check503
   %vec.epilog.resume.val499 = phi i64 [ %n.vec492, %vec.epilog.iter.check503 ], [ 0, %vector.main.loop.iter.check488 ]
@@ -679,66 +642,36 @@ vec.epilog.ph505:                                 ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body508:                        ; preds = %vec.epilog.vector.body508, %vec.epilog.ph505
   %index509 = phi i64 [ %vec.epilog.resume.val499, %vec.epilog.ph505 ], [ %index.next511, %vec.epilog.vector.body508 ] ; 2 uses
-  %i.akx = sub i64 %i.ajc, %index509              ; 2 uses
-  %30 = add nuw nsw i64 %i.akx, 4294967295
-  %31 = and i64 %30, 4294967295
-  %i.aky = getelementptr inbounds nuw i8, ptr %i.a, i64 %31
-  %i.akz = getelementptr inbounds i8, ptr %i.aky, i64 -3
+  %i.akx = sub i64 %i.ajc, %index509
+  %i.aky = getelementptr i8, ptr %i.a, i64 %i.akx ; 2 uses
+  %i.akz = getelementptr i8, ptr %i.aky, i64 -4
   %wide.load510 = load <4 x i8>, ptr %i.akz, align 1, !tbaa !34
-  %32 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.akx
-  %i.ala = getelementptr inbounds i8, ptr %32, i64 -3
+  %i.ala = getelementptr i8, ptr %i.aky, i64 -3
   store <4 x i8> %wide.load510, ptr %i.ala, align 1, !tbaa !34
   %index.next511 = add nuw i64 %index509, 4       ; 2 uses
   %i.alb = icmp eq i64 %index.next511, %n.vec507
-  br i1 %i.alb, label %vec.epilog.middle.block512, label %vec.epilog.vector.body508, !llvm.loop !88
+  br i1 %i.alb, label %.lr.ph1524.i.preheader.a, label %vec.epilog.vector.body508, !llvm.loop !88
 
-vec.epilog.middle.block512:                       ; preds = %vec.epilog.vector.body508
-  %cmp.n513 = icmp eq i64 %n.vec507, %i.ajc
-  br i1 %cmp.n513, label %._crit_edge1525.i, label %.lr.ph1524.i.preheader.a
+.lr.ph1524.i.preheader.a:                         ; preds = %vec.epilog.vector.body508
+  %lcmp.mod.not.a = icmp eq i64 %n.vec507, %i.ajc
+  br i1 %lcmp.mod.not.a, label %._crit_edge1525.i, label %.lr.ph1524.i.prol
 
-.lr.ph1524.i.preheader.a:                         ; preds = %vector.memcheck, %vector.scevcheck485, %iter.check501, %vec.epilog.iter.check503, %vec.epilog.middle.block512
-  %indvars.iv.i.ph = phi i64 [ %i.ajc, %iter.check501 ], [ %i.ajc, %vector.scevcheck485 ], [ %i.ajc, %vector.memcheck ], [ %i.ajg, %vec.epilog.iter.check503 ], [ %i.akw, %vec.epilog.middle.block512 ] ; 6 uses
-  %33 = trunc nuw i64 %indvars.iv.i.ph to i8
-  %xtraiter = and i8 %33, 1
-  %lcmp.mod.not.a = icmp eq i8 %xtraiter, 0
-  br i1 %lcmp.mod.not.a, label %.lr.ph1524.i.prol.loopexit, label %.lr.ph1524.i.prol
+.lr.ph1524.i.prol:                                ; preds = %vector.scevcheck485, %vec.epilog.iter.check503, %.lr.ph1524.i.preheader.a
+  %indvars.iv.i.ph = phi i64 [ %i.ajc, %vector.scevcheck485 ], [ %i.ajg, %vec.epilog.iter.check503 ], [ %i.akw, %.lr.ph1524.i.preheader.a ]
+  br label %.lr.ph1524.i
 
-.lr.ph1524.i.prol:                                ; preds = %.lr.ph1524.i.preheader.a
-  %34 = add nuw nsw i64 %indvars.iv.i.ph, 4294967295
-  %35 = and i64 %34, 4294967295
-  %36 = getelementptr inbounds nuw i8, ptr %i.a, i64 %35
-  %37 = load i8, ptr %36, align 1, !tbaa !34
-  %38 = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.ph
-  store i8 %37, ptr %38, align 1, !tbaa !34
-  %indvars.iv.next.i.prol = add nsw i64 %indvars.iv.i.ph, -1
-  br label %.lr.ph1524.i.prol.loopexit
-
-.lr.ph1524.i.prol.loopexit:                       ; preds = %.lr.ph1524.i.prol, %.lr.ph1524.i.preheader.a
-  %indvars.iv.i.unr = phi i64 [ %indvars.iv.i.ph, %.lr.ph1524.i.preheader.a ], [ %indvars.iv.next.i.prol, %.lr.ph1524.i.prol ]
-  %39 = icmp eq i64 %indvars.iv.i.ph, 1
-  br i1 %39, label %._crit_edge1525.i, label %.lr.ph1524.i
-
-.lr.ph1524.i:                                     ; preds = %.lr.ph1524.i.prol.loopexit, %.lr.ph1524.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %.lr.ph1524.i ], [ %indvars.iv.i.unr, %.lr.ph1524.i.prol.loopexit ] ; 5 uses
-  %40 = add nuw nsw i64 %indvars.iv.i, 4294967295
-  %41 = and i64 %40, 4294967295
-  %42 = getelementptr inbounds nuw i8, ptr %i.a, i64 %41
-  %43 = load i8, ptr %42, align 1, !tbaa !34
-  %i.alc = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i
-  store i8 %43, ptr %i.alc, align 1, !tbaa !34
-  %44 = add nsw i64 %indvars.iv.i, 4294967294
-  %45 = and i64 %44, 4294967295
-  %i.ald = getelementptr inbounds nuw i8, ptr %i.a, i64 %45
+.lr.ph1524.i:                                     ; preds = %.lr.ph1524.i.prol, %.lr.ph1524.i
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %.lr.ph1524.i ], [ %indvars.iv.i.ph, %.lr.ph1524.i.prol ] ; 2 uses
+  %i.alc = getelementptr i8, ptr %i.a, i64 %indvars.iv.i ; 2 uses
+  %i.ald = getelementptr i8, ptr %i.alc, i64 -1
   %i.ale = load i8, ptr %i.ald, align 1, !tbaa !34
-  %46 = getelementptr i8, ptr %i.a, i64 %indvars.iv.i
-  %47 = getelementptr i8, ptr %46, i64 -1
-  store i8 %i.ale, ptr %47, align 1, !tbaa !34
-  %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -2 ; 2 uses
+  store i8 %i.ale, ptr %i.alc, align 1, !tbaa !34
+  %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -1 ; 2 uses
   %i.alf = and i64 %indvars.iv.next.i.1, 255
   %.not1348.i.1 = icmp eq i64 %i.alf, 0
   br i1 %.not1348.i.1, label %._crit_edge1525.i, label %.lr.ph1524.i, !llvm.loop !89
 
-._crit_edge1525.i:                                ; preds = %.lr.ph1524.i.prol.loopexit, %.lr.ph1524.i, %middle.block497, %vec.epilog.middle.block512, %bb.di
+._crit_edge1525.i:                                ; preds = %.lr.ph1524.i, %middle.block497, %.lr.ph1524.i.preheader.a, %bb.di
   store i8 %i.aje, ptr %i.a, align 16, !tbaa !34
   %i.alg = getelementptr inbounds nuw i8, ptr %i.ab, i64 %indvars.iv1736.i
   store i8 %i.aje, ptr %i.alg, align 1, !tbaa !34
@@ -1141,7 +1074,7 @@ attributes #8 = { nounwind }
 !86 = distinct !{!86, !40, !48, !49}
 !87 = distinct !{!87, !40, !48}
 !88 = distinct !{!88, !40, !48, !49}
-!89 = distinct !{!89, !40, !48}
+!89 = distinct !{!89, !40, !49, !48}
 !90 = distinct !{!90, !40}
 !91 = distinct !{!91, !40}
 !92 = distinct !{!92, !40}

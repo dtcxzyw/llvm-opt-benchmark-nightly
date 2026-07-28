@@ -203,10 +203,10 @@ _Py_NewRef.exit.i:                                ; preds = %bb.k, %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %Py_DECREF.exit50.i, %_Py_NewRef.exit.i
-  %.02465.i = phi i64 [ %i.v, %_Py_NewRef.exit.i ], [ %i.as, %Py_DECREF.exit50.i ] ; 3 uses
-  %.02564.i = phi i64 [ 3, %_Py_NewRef.exit.i ], [ %.1.i, %Py_DECREF.exit50.i ] ; 2 uses
-  %.03663.i = phi ptr [ %i.p, %_Py_NewRef.exit.i ], [ %.137.i, %Py_DECREF.exit50.i ] ; 7 uses
-  %.03862.i = phi ptr [ %i.p, %_Py_NewRef.exit.i ], [ %.139.i, %Py_DECREF.exit50.i ] ; 8 uses
+  %.02465.i = phi i64 [ %i.as, %Py_DECREF.exit50.i ], [ %i.v, %_Py_NewRef.exit.i ] ; 3 uses
+  %.02564.i = phi i64 [ %.1.i, %Py_DECREF.exit50.i ], [ 3, %_Py_NewRef.exit.i ] ; 2 uses
+  %.03663.i = phi ptr [ %.137.i, %Py_DECREF.exit50.i ], [ %i.p, %_Py_NewRef.exit.i ] ; 7 uses
+  %.03862.i = phi ptr [ %.139.i, %Py_DECREF.exit50.i ], [ %i.p, %_Py_NewRef.exit.i ] ; 8 uses
   %i.w = lshr i64 %i.b, %.02465.i                 ; 2 uses
   %i.x = icmp samesign ult i64 %i.w, 3
   br i1 %i.x, label %Py_DECREF.exit50.i, label %bb.m

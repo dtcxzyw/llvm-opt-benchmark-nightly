@@ -203,9 +203,8 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.db, label %bb.ap, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  %i.dc = add nuw nsw i64 %i.cz, 4294967116
-  %5 = and i64 %i.dc, 4294967295
-  %i.dd = shl nuw nsw i64 1, %5
+  %i.dc = add nsw i64 %i.cz, -180
+  %i.dd = shl nuw nsw i64 1, %i.dc
   %i.de = and i64 %i.dd, 3221224823
   %.not37.i = icmp eq i64 %i.de, 0
   br i1 %.not37.i, label %bb.aq, label %bb.ap

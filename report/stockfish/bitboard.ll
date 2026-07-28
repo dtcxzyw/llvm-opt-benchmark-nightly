@@ -203,9 +203,7 @@ bb.i:                                             ; preds = %._crit_edge, %_ZN9S
 define internal fastcc void @_ZN9Stockfish12_GLOBAL__N_111init_magicsENS_9PieceTypeEPmPA2_NS_5MagicE(i8 noundef zeroext range(i8 3, 5) %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = zext nneg i8 %0 to i64
-  %2 = add nuw nsw i64 %i.a, 4294967293
-  %3 = and i64 %2, 4294967295
-  %invariant.gep = getelementptr inbounds nuw [16 x i8], ptr @_ZN9Stockfish6MagicsE, i64 %3 ; 2 uses
+  %invariant.gep = getelementptr [16 x i8], ptr @_ZN9Stockfish6MagicsE, i64 %i.a
   %i.b = icmp eq i8 %0, 4                         ; 4 uses
   %.sroa.speculated36.i = select i1 %i.b, i64 8, i64 9 ; 7 uses
   %.sroa.speculated33.i = select i1 %i.b, i8 -8, i8 -7
@@ -217,28 +215,26 @@ bb.b:                                             ; preds = %bb.p
   ret void
 
 bb.c:                                             ; preds = %bb.a, %bb.p
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.p ] ; 9 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.p ] ; 8 uses
   %.02110 = phi i32 [ 0, %bb.a ], [ %i.dx, %bb.p ]
   %i.c = trunc nuw nsw i64 %indvars.iv to i8      ; 4 uses
   %i.d = and i64 %indvars.iv, 56
   %i.e = shl nuw i64 255, %i.d
   %i.f = and i64 %indvars.iv, 7
   %i.g = shl nuw i64 72340172838076673, %i.f
-  %gep = getelementptr inbounds nuw [32 x i8], ptr %invariant.gep, i64 %indvars.iv ; 3 uses
+  %gep = getelementptr [32 x i8], ptr %invariant.gep, i64 %indvars.iv ; 3 uses
+  %2 = getelementptr i8, ptr %gep, i64 -48        ; 2 uses
   %i.h = tail call noundef i64 @_ZN9Stockfish9Bitboards14sliding_attackENS_9PieceTypeENS_6SquareEm(i8 noundef zeroext %0, i8 noundef zeroext %i.c, i64 noundef 0)
   %i.i = or i64 %i.e, 72057594037927680
   %i.j = or i64 %i.g, 9114861777597660798
   %i.k = and i64 %i.i, %i.j
   %i.l = and i64 %i.k, %i.h                       ; 2 uses
-  store i64 %i.l, ptr %gep, align 16, !tbaa !39
+  store i64 %i.l, ptr %2, align 16, !tbaa !39
   %i.m = icmp eq i64 %indvars.iv, 0
   br i1 %i.m, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %4 = add nuw nsw i64 %indvars.iv, 4294967295
-  %5 = and i64 %4, 4294967295
-  %gep8 = getelementptr inbounds nuw [32 x i8], ptr %invariant.gep, i64 %5
-  %i.n = getelementptr inbounds nuw i8, ptr %gep8, i64 8
+  %i.n = getelementptr i8, ptr %gep, i64 -72
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !36
   %i.p = sext i32 %.02110 to i64
   %i.q = getelementptr inbounds [8 x i8], ptr %i.o, i64 %i.p
@@ -246,7 +242,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %i.r = phi ptr [ %i.q, %bb.d ], [ %1, %bb.c ]   ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %gep, i64 8
+  %i.s = getelementptr i8, ptr %gep, i64 -40
   store ptr %i.r, ptr %i.s, align 8, !tbaa !36
   %indvars.iv.next1219 = add nuw nsw i64 %indvars.iv, %.sroa.speculated36.i ; 5 uses
   %i.t = icmp samesign ult i64 %indvars.iv.next1219, 64
@@ -503,7 +499,7 @@ _ZN9Stockfish9Bitboards14sliding_attackENS_9PieceTypeENS_6SquareEm.exit: ; preds
   %i.dw = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.dv
   store i64 %.2.3.i, ptr %i.dw, align 8, !tbaa !15
   %i.dx = add nuw nsw i32 %.1, 1                  ; 2 uses
-  %i.dy = load i64, ptr %gep, align 16, !tbaa !39 ; 3 uses
+  %i.dy = load i64, ptr %2, align 16, !tbaa !39   ; 3 uses
   %i.dz = sub i64 %.0, %i.dy
   %i.ea = and i64 %i.dz, %i.dy                    ; 2 uses
   %.not = icmp eq i64 %i.ea, 0

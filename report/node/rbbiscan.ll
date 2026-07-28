@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 4 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 1152
+  %i.n = getelementptr i8, ptr %0, i64 -24448
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -265,6 +265,7 @@ bb.k:                                             ; preds = %bb.g
   br i1 %i.ag, label %bb.p, label %.thread41
 
 bb.l:                                             ; preds = %bb.g
+  %1 = zext i8 %i.v to i64
   %or.cond34 = icmp slt i8 %i.v, -16
   br i1 %or.cond34, label %bb.m, label %.thread41
 
@@ -279,9 +280,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not28, label %.thread41, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %1 = and i8 %i.v, 127
-  %2 = zext nneg i8 %1 to i64
-  %i.ak = getelementptr inbounds nuw [200 x i8], ptr %i.n, i64 %2
+  %i.ak = getelementptr [200 x i8], ptr %i.n, i64 %1
   %i.al = tail call noundef signext i8 @_ZNK6icu_7810UnicodeSet8containsEi(ptr noundef nonnull align 8 dereferenceable(200) %i.ak, i32 noundef %i.aj) #10
   %.not29 = icmp eq i8 %i.al, 0
   br i1 %.not29, label %.thread41, label %bb.p

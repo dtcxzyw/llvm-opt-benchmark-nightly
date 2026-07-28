@@ -203,6 +203,7 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.an, label %bb.q, label %.thread46
 
 bb.m:                                             ; preds = %bb.j
+  %4 = zext i8 %i.ae to i64
   %or.cond = icmp slt i8 %i.ae, -16
   br i1 %or.cond, label %bb.n, label %.thread46
 
@@ -218,10 +219,8 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.ar = load ptr, ptr @_ZN6icu_7815RegexStaticSets11gStaticSetsE, align 8
-  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 3024
-  %4 = and i8 %i.ae, 127
-  %5 = zext nneg i8 %4 to i64
-  %i.at = getelementptr inbounds nuw [200 x i8], ptr %i.as, i64 %5
+  %i.as = getelementptr i8, ptr %i.ar, i64 -22576
+  %i.at = getelementptr [200 x i8], ptr %i.as, i64 %4
   %i.au = tail call noundef signext i8 @_ZNK6icu_7810UnicodeSet8containsEi(ptr noundef nonnull align 8 dereferenceable(200) %i.at, i32 noundef %i.aq) #9
   %.not41 = icmp eq i8 %i.au, 0
   br i1 %.not41, label %.thread46, label %bb.q

@@ -203,10 +203,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond.i.i, label %_ZN6hermes12toArrayIndexEN4llvh9StringRefE.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %.preheader.i.i
-  %4 = mul nuw nsw i64 %.024.i.i, 10
-  %5 = and i8 %i.i, 15
-  %6 = zext nneg i8 %5 to i64
-  %i.k = add nuw nsw i64 %4, %6
+  %4 = zext nneg i8 %i.i to i64
+  %5 = mul nuw nsw i64 %.024.i.i, 10
+  %6 = add nsw i64 %5, -48
+  %i.k = add nsw i64 %6, %4
   %.fr.i.i = freeze i64 %i.k                      ; 4 uses
   %i.l = icmp samesign ult i64 %.fr.i.i, 4294967296
   br i1 %i.l, label %bb.f, label %_ZN6hermes12toArrayIndexEN4llvh9StringRefE.exit.thread
@@ -361,10 +361,10 @@ bb.f:                                             ; preds = %bb.e
   br i1 %or.cond.i.i.i, label %_ZN6hermes22LowerNumericProperties23stringToNumericPropertyERNS_9IRBuilderERNS_11InstructionEj.exit, label %bb.g
 
 bb.g:                                             ; preds = %.preheader.i.i.i
-  %4 = mul nuw nsw i64 %.024.i.i.i, 10
-  %5 = and i8 %i.ae, 15
-  %6 = zext nneg i8 %5 to i64
-  %i.ag = add nuw nsw i64 %4, %6
+  %4 = zext nneg i8 %i.ae to i64
+  %5 = mul nuw nsw i64 %.024.i.i.i, 10
+  %6 = add nsw i64 %5, -48
+  %i.ag = add nsw i64 %6, %4
   %.fr.i.i.i = freeze i64 %i.ag                   ; 4 uses
   %i.ah = icmp samesign ult i64 %.fr.i.i.i, 4294967296
   br i1 %i.ah, label %bb.h, label %_ZN6hermes22LowerNumericProperties23stringToNumericPropertyERNS_9IRBuilderERNS_11InstructionEj.exit
@@ -422,10 +422,10 @@ bb.m:                                             ; preds = %bb.l
   br i1 %or.cond.i.i.i33, label %_ZN6hermes22LowerNumericProperties23stringToNumericPropertyERNS_9IRBuilderERNS_11InstructionEj.exit, label %bb.n
 
 bb.n:                                             ; preds = %.preheader.i.i.i30
-  %7 = mul nuw nsw i64 %.024.i.i.i31, 10
-  %8 = and i8 %i.au, 15
-  %9 = zext nneg i8 %8 to i64
-  %i.aw = add nuw nsw i64 %7, %9
+  %7 = zext nneg i8 %i.au to i64
+  %8 = mul nuw nsw i64 %.024.i.i.i31, 10
+  %9 = add nsw i64 %8, -48
+  %i.aw = add nsw i64 %9, %7
   %.fr.i.i.i34 = freeze i64 %i.aw                 ; 4 uses
   %i.ax = icmp samesign ult i64 %.fr.i.i.i34, 4294967296
   br i1 %i.ax, label %bb.o, label %_ZN6hermes22LowerNumericProperties23stringToNumericPropertyERNS_9IRBuilderERNS_11InstructionEj.exit
@@ -483,10 +483,10 @@ bb.t:                                             ; preds = %bb.s
   br i1 %or.cond.i.i.i52, label %_ZN6hermes22LowerNumericProperties23stringToNumericPropertyERNS_9IRBuilderERNS_11InstructionEj.exit, label %bb.u
 
 bb.u:                                             ; preds = %.preheader.i.i.i49
-  %10 = mul nuw nsw i64 %.024.i.i.i50, 10
-  %11 = and i8 %i.bk, 15
-  %12 = zext nneg i8 %11 to i64
-  %i.bm = add nuw nsw i64 %10, %12
+  %10 = zext nneg i8 %i.bk to i64
+  %11 = mul nuw nsw i64 %.024.i.i.i50, 10
+  %12 = add nsw i64 %11, -48
+  %i.bm = add nsw i64 %12, %10
   %.fr.i.i.i53 = freeze i64 %i.bm                 ; 4 uses
   %i.bn = icmp samesign ult i64 %.fr.i.i.i53, 4294967296
   br i1 %i.bn, label %bb.v, label %_ZN6hermes22LowerNumericProperties23stringToNumericPropertyERNS_9IRBuilderERNS_11InstructionEj.exit
@@ -545,10 +545,10 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %or.cond.i.i.i71, label %_ZN6hermes22LowerNumericProperties23stringToNumericPropertyERNS_9IRBuilderERNS_11InstructionEj.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %.preheader.i.i.i68
-  %13 = mul nuw nsw i64 %.024.i.i.i69, 10
-  %14 = and i8 %i.by, 15
-  %15 = zext nneg i8 %14 to i64
-  %i.ca = add nuw nsw i64 %13, %15
+  %13 = zext nneg i8 %i.by to i64
+  %14 = mul nuw nsw i64 %.024.i.i.i69, 10
+  %15 = add nsw i64 %14, -48
+  %i.ca = add nsw i64 %15, %13
   %.fr.i.i.i72 = freeze i64 %i.ca                 ; 4 uses
   %i.cb = icmp samesign ult i64 %.fr.i.i.i72, 4294967296
   br i1 %i.cb, label %bb.ac, label %_ZN6hermes22LowerNumericProperties23stringToNumericPropertyERNS_9IRBuilderERNS_11InstructionEj.exit
@@ -601,10 +601,10 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %or.cond.i.i.i90, label %_ZN6hermes22LowerNumericProperties23stringToNumericPropertyERNS_9IRBuilderERNS_11InstructionEj.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %.preheader.i.i.i87
-  %16 = mul nuw nsw i64 %.024.i.i.i88, 10
-  %17 = and i8 %i.cm, 15
-  %18 = zext nneg i8 %17 to i64
-  %i.co = add nuw nsw i64 %16, %18
+  %16 = zext nneg i8 %i.cm to i64
+  %17 = mul nuw nsw i64 %.024.i.i.i88, 10
+  %18 = add nsw i64 %17, -48
+  %i.co = add nsw i64 %18, %16
   %.fr.i.i.i91 = freeze i64 %i.co                 ; 4 uses
   %i.cp = icmp samesign ult i64 %.fr.i.i.i91, 4294967296
   br i1 %i.cp, label %bb.ai, label %_ZN6hermes22LowerNumericProperties23stringToNumericPropertyERNS_9IRBuilderERNS_11InstructionEj.exit

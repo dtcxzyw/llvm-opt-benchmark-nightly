@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.e = icmp ugt i64 %2, %i.d
   %.neg.i.i.i.i = sext i1 %i.e to i64
   %i.f = add nsw i64 %i.c, %.neg.i.i.i.i
-  %7 = and i64 %i.f, 4294967295
-  %i.g = lshr i64 -1, %7
+  %i.g = lshr i64 -1, %i.f
   br label %bb.d
 
 _ZN4absl12lts_2025051218container_internal29SelectBucketCountForIterRangeIPKPKcEEmT_S7_m.exit.i.i: ; preds = %bb.b
@@ -608,8 +607,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = icmp ugt i64 %i.f, %i.h
   %.neg.i.i = sext i1 %i.i to i64
   %i.j = add nsw i64 %i.g, %.neg.i.i
-  %8 = and i64 %i.j, 4294967295
-  %i.k = lshr i64 -1, %8
+  %i.k = lshr i64 -1, %i.j
   br label %bb.d
 
 _ZN4absl12lts_2025051218container_internal29SelectBucketCountForIterRangeIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorISA_SaISA_EEEEEEmT_SH_m.exit: ; preds = %bb.b

@@ -204,9 +204,8 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   %i.g = shl i64 %spec.select35.i, 1              ; 2 uses
   %i.h = add nsw i64 %indvars.iv.i, -1            ; 3 uses
   %i.i = icmp ult i64 %indvars.iv.i, 65           ; 2 uses
-  %i.j = add nsw i64 %indvars.iv.i, 4294967231
-  %3 = and i64 %i.j, 4294967295
-  %.sink6.i.i = select i1 %i.i, i64 %i.h, i64 %3
+  %i.j = add nsw i64 %indvars.iv.i, -65
+  %.sink6.i.i = select i1 %i.i, i64 %i.h, i64 %i.j
   %.sink5.i.i = select i1 %i.i, i64 %.sroa.09.034, i64 %.sroa.411.035
   %i.k = lshr i64 %.sink5.i.i, %.sink6.i.i
   %i.l = and i64 %i.k, 1
@@ -515,9 +514,8 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph.i
   %i.al = shl i64 %spec.select35.i, 1             ; 2 uses
   %i.am = add nsw i64 %indvars.iv.i, -1           ; 3 uses
   %i.an = icmp ult i64 %indvars.iv.i, 65          ; 2 uses
-  %i.ao = add nsw i64 %indvars.iv.i, 4294967231
-  %8 = and i64 %i.ao, 4294967295
-  %.sink6.i.i = select i1 %i.an, i64 %i.am, i64 %8
+  %i.ao = add nsw i64 %indvars.iv.i, -65
+  %.sink6.i.i = select i1 %i.an, i64 %i.am, i64 %i.ao
   %.sink5.i.i = select i1 %i.an, i64 %.sroa.042.155, i64 %.sroa.6.156
   %i.ap = lshr i64 %.sink5.i.i, %.sink6.i.i
   %i.aq = and i64 %i.ap, 1
@@ -920,9 +918,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.f = shl i64 %spec.select35, 1
   %i.g = add nsw i64 %indvars.iv, -1              ; 3 uses
   %i.h = icmp ult i64 %indvars.iv, 65             ; 2 uses
-  %i.i = add nsw i64 %indvars.iv, 4294967231
-  %4 = and i64 %i.i, 4294967295
-  %.sink6.i = select i1 %i.h, i64 %i.g, i64 %4
+  %i.i = add nsw i64 %indvars.iv, -65
+  %.sink6.i = select i1 %i.h, i64 %i.g, i64 %i.i
   %.sink5.i = select i1 %i.h, i64 %0, i64 %1
   %i.j = lshr i64 %.sink5.i, %.sink6.i
   %i.k = and i64 %i.j, 1
@@ -1174,9 +1171,8 @@ bb.k:                                             ; preds = %.lr.ph, %bb.o
   store i64 %i.ct, ptr %i.ci, align 8, !tbaa !108
   %i.cu = add nsw i64 %indvars.iv, -1             ; 3 uses
   %i.cv = icmp ult i64 %indvars.iv, 65            ; 2 uses
-  %i.cw = add nsw i64 %indvars.iv, 4294967231
-  %18 = and i64 %i.cw, 4294967295
-  %.sink6.i = select i1 %i.cv, i64 %i.cu, i64 %18
+  %i.cw = add nsw i64 %indvars.iv, -65
+  %.sink6.i = select i1 %i.cv, i64 %i.cu, i64 %i.cw
   %.sink5.i = select i1 %i.cv, i64 %.sroa.059.0, i64 %.sroa.861.0
   %i.cx = shl nuw i64 1, %.sink6.i
   %i.cy = and i64 %i.cx, %.sink5.i
@@ -1579,7 +1575,7 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph, %bb.aj
-  %indvars.iv = phi i64 [ %i.ad, %.lr.ph ], [ %indvars.iv.next, %bb.aj ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.ad, %.lr.ph ], [ %i.bg, %bb.aj ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #46
   call void @_ZN6duckdb10uhugeint_tC1Em(ptr noundef nonnull align 8 dereferenceable(16) %13, i64 noundef 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
@@ -1693,9 +1689,8 @@ _ZN6duckdb10uhugeint_tlSERKS0_.exit39:            ; preds = %bb.s, %bb.u, %bb.v,
   store <2 x i64> %i.bf, ptr %4, align 8, !tbaa !108
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #46
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #46
-  %i.bg = add nuw nsw i64 %indvars.iv, 4294967295
-  %20 = and i64 %i.bg, 4294967295
-  call void @_ZN6duckdb10uhugeint_tC1Em(ptr noundef nonnull align 8 dereferenceable(16) %15, i64 noundef %20)
+  %i.bg = add nsw i64 %indvars.iv, -1             ; 3 uses
+  call void @_ZN6duckdb10uhugeint_tC1Em(ptr noundef nonnull align 8 dereferenceable(16) %15, i64 noundef %i.bg)
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.bh = load i64, ptr %15, align 8, !tbaa !304  ; 6 uses
   %i.bi = load i64, ptr %i.y, align 8, !tbaa !833
@@ -1819,8 +1814,7 @@ bb.ai:                                            ; preds = %bb.ah
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ah, %bb.ai
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.cx = and i64 %indvars.iv.next, 255
+  %i.cx = and i64 %i.bg, 255
   %.not = icmp eq i64 %i.cx, 0
   br i1 %.not, label %.loopexit, label %bb.k, !llvm.loop !836
 
