@@ -203,8 +203,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o
   %i.aw = sub nsw i64 11, %i.af
-  %2 = and i64 %i.aw, 4294967295
-  %i.ax = shl i64 %i.ao, %2
+  %i.ax = shl nuw i64 %i.ao, %i.aw
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
@@ -607,7 +606,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ab = shl i64 %.0.copyload.i.i.i.i, %i.aa
   %i.ac = lshr i64 %i.ab, 12
   %i.ad = select i1 %i.z, i64 0, i64 %i.ac        ; 5 uses
-  %i.ae = add nuw nsw i64 %i.o, 4294967285
+  %i.ae = add nsw i64 %i.o, -11
   %i.af = icmp ult i64 %.0.copyload.i.i.i.i, 4503599627370496 ; 2 uses
   %i.ag = icmp ne i32 %i.k, 0
   %or.cond3 = and i1 %i.af, %i.ag
@@ -621,7 +620,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ak = sub nuw nsw i64 75, %i.o
   %i.al = lshr i64 %.0.copyload.i.i.i.i71, %i.ak
   %i.am = or i64 %i.al, %i.ad
-  %i.an = add nuw nsw i64 %i.o, 4294967221
+  %i.an = add nuw nsw i64 %i.o, -75
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.d
@@ -636,8 +635,7 @@ bb.g:                                             ; preds = %.thread105, %bb.f
   %.154101113 = phi i64 [ %.0.copyload.i.i.i.i71, %.thread105 ], [ %.0.copyload.i.i.i.i, %bb.f ]
   %.151102112 = phi i64 [ %i.am, %.thread105 ], [ %i.ad, %bb.f ]
   %.149104110 = phi i64 [ %i.an, %.thread105 ], [ %i.ae, %bb.f ]
-  %1 = and i64 %.149104110, 4294967295
-  %i.ap = xor i64 %1, 4294967295
+  %i.ap = xor i64 %.149104110, -1
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.f

@@ -203,10 +203,9 @@ bb.ag:                                            ; preds = %_ZNK6icu_7813Unicod
   %i.gf = load i32, ptr %i.at, align 8
   %i.gg = add nsw i32 %i.gf, -1
   %i.gh = call noundef ptr @_ZNK6icu_787UVector9elementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.q, i32 noundef %i.gg) #13
-  %7 = add nuw nsw i64 %i.ge, 4294967231
-  %8 = and i64 %7, 4294967295
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %8
-  store ptr %i.gh, ptr %9, align 8
+  %7 = getelementptr [8 x i8], ptr %i.f, i64 %i.ge
+  %8 = getelementptr i8, ptr %7, i64 -520
+  store ptr %i.gh, ptr %8, align 8
   br label %.thread298
 
 bb.ah:                                            ; preds = %bb.af

@@ -203,10 +203,8 @@ bb.cw:                                            ; preds = %bb.co
 
 bb.cx:                                            ; preds = %bb.cw
   %i.ro = zext i16 %i.rn to i64
-  %i.rp = getelementptr inbounds nuw i8, ptr %0, i64 20528
-  %3 = add nuw nsw i64 %i.ro, 4294967295
-  %4 = and i64 %3, 4294967295
-  %i.rq = getelementptr inbounds nuw i8, ptr %i.rp, i64 %4
+  %i.rp = getelementptr inbounds nuw i8, ptr %0, i64 20527
+  %i.rq = getelementptr i8, ptr %i.rp, i64 %i.ro
   %i.rr = load i8, ptr %i.rq, align 1
   %i.rs = icmp eq i8 %i.rr, 123
   %.not.i137 = icmp eq ptr %.lcssa227, null

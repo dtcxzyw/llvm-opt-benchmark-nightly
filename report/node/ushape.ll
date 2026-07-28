@@ -17,6 +17,8 @@ target triple = "x86_64-pc-linux-gnu"
 @_ZL13IrrelevantPos = internal unnamed_addr constant [8 x i8] c"\00\02\04\06\08\0A\0C\0E", align 1
 @_ZL14convertLamAlef = internal unnamed_addr constant [8 x i16] [i16 1570, i16 1570, i16 1571, i16 1571, i16 1573, i16 1573, i16 1575, i16 1575], align 16
 @_ZL13yehHamzaToYeh = internal unnamed_addr constant [2 x i16] [i16 -273, i16 -272], align 2
+@_ZL23tailFamilyIsolatedFinal = internal unnamed_addr constant [14 x i8] c"\01\01\00\00\01\01\00\00\01\01\00\00\01\01", align 1
+@_ZL14tashkeelMedial = internal unnamed_addr constant [16 x i8] c"\00\01\00\00\00\00\00\01\00\01\00\01\00\01\00\01", align 16
 @switch.table._ZL12shapeUnicodePDsiijP10UErrorCodei15uShapeVariables = private unnamed_addr constant [6 x i16] [i16 1628, i16 1629, i16 poison, i16 1630, i16 poison, i16 1631], align 2
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -419,10 +421,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = zext nneg i16 %0 to i64
-  %1 = add nuw nsw i64 %i.b, 4294965726
-  %2 = and i64 %1, 4294967295
-  %3 = getelementptr inbounds nuw [2 x i8], ptr @_ZL7araLink, i64 %2
-  %i.c = load i16, ptr %3, align 2
+  %1 = getelementptr [2 x i8], ptr @_ZL7araLink, i64 %i.b
+  %2 = getelementptr i8, ptr %1, i64 -3140
+  %i.c = load i16, ptr %2, align 2
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
@@ -825,10 +826,9 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.g = zext i16 %i.e to i64
-  %6 = add nuw nsw i64 %i.g, 4294902960
-  %7 = and i64 %6, 4294967295
-  %8 = getelementptr inbounds nuw [2 x i8], ptr @_ZL13convertFBto06, i64 %7
-  %i.h = load i16, ptr %8, align 2                ; 2 uses
+  %6 = getelementptr [2 x i8], ptr @_ZL13convertFBto06, i64 %i.g
+  %7 = getelementptr i8, ptr %6, i64 -128672
+  %i.h = load i16, ptr %7, align 2                ; 2 uses
   %.not209 = icmp eq i16 %i.h, 0
   br i1 %.not209, label %bb.e, label %.sink.split
 
@@ -865,10 +865,9 @@ bb.e:                                             ; preds = %.sink.split, %bb.c,
 
 bb.f:                                             ; preds = %.loopexit
   %i.s = zext nneg i16 %i.q to i64
-  %9 = add nuw nsw i64 %i.s, 4294965726
-  %10 = and i64 %9, 4294967295
-  %11 = getelementptr inbounds nuw [2 x i8], ptr @_ZL7araLink, i64 %10
-  %i.t = load i16, ptr %11, align 2
+  %8 = getelementptr [2 x i8], ptr @_ZL7araLink, i64 %i.s
+  %9 = getelementptr i8, ptr %8, i64 -3140
+  %i.t = load i16, ptr %9, align 2
   br label %_ZL7getLinkDs.exit
 
 bb.g:                                             ; preds = %.loopexit
@@ -942,10 +941,9 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.ap = zext nneg i16 %i.an to i64
-  %12 = add nuw nsw i64 %i.ap, 4294965726
-  %13 = and i64 %12, 4294967295
-  %14 = getelementptr inbounds nuw [2 x i8], ptr @_ZL7araLink, i64 %13
-  %i.aq = load i16, ptr %14, align 2
+  %10 = getelementptr [2 x i8], ptr @_ZL7araLink, i64 %i.ap
+  %11 = getelementptr i8, ptr %10, i64 -3140
+  %i.aq = load i16, ptr %11, align 2
   br label %_ZL7getLinkDs.exit225
 
 bb.p:                                             ; preds = %bb.n
@@ -1013,10 +1011,9 @@ bb.v:                                             ; preds = %.lr.ph280
 
 bb.w:                                             ; preds = %bb.v
   %i.bn = zext nneg i16 %i.bl to i64
-  %15 = add nuw nsw i64 %i.bn, 4294965726
-  %16 = and i64 %15, 4294967295
-  %17 = getelementptr inbounds nuw [2 x i8], ptr @_ZL7araLink, i64 %16
-  %i.bo = load i16, ptr %17, align 2
+  %12 = getelementptr [2 x i8], ptr @_ZL7araLink, i64 %i.bn
+  %13 = getelementptr i8, ptr %12, i64 -3140
+  %i.bo = load i16, ptr %13, align 2
   br label %_ZL7getLinkDs.exit231
 
 bb.x:                                             ; preds = %bb.v
@@ -1104,11 +1101,10 @@ switch.lookup:                                    ; preds = %bb.ad
   %i.co = sext i32 %.0151294 to i64
   %i.cp = getelementptr inbounds [2 x i8], ptr %0, i64 %i.co
   store i16 %switch.load, ptr %i.cp, align 2
-  %narrow = add nuw nsw i16 %switch.load, 30
-  %18 = and i16 %narrow, 63
-  %19 = zext nneg i16 %18 to i64
-  %20 = getelementptr inbounds nuw [2 x i8], ptr @_ZL7araLink, i64 %19
-  %i.cq = load i16, ptr %20, align 2
+  %14 = zext nneg i16 %switch.load to i64
+  %15 = getelementptr [2 x i8], ptr @_ZL7araLink, i64 %14
+  %16 = getelementptr i8, ptr %15, i64 -3140
+  %i.cq = load i16, ptr %16, align 2
   br label %_ZL7getLinkDs.exit238
 
 _ZL7getLinkDs.exit238:                            ; preds = %bb.ad, %switch.lookup, %._crit_edge
@@ -1317,10 +1313,9 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.az
   %i.fo = zext nneg i16 %i.fm to i64
-  %21 = add nuw nsw i64 %i.fo, 4294965726
-  %22 = and i64 %21, 4294967295
-  %23 = getelementptr inbounds nuw [2 x i8], ptr @_ZL7araLink, i64 %22
-  %i.fp = load i16, ptr %23, align 2
+  %17 = getelementptr [2 x i8], ptr @_ZL7araLink, i64 %i.fo
+  %18 = getelementptr i8, ptr %17, i64 -3140
+  %i.fp = load i16, ptr %18, align 2
   br label %_ZL7getLinkDs.exit247
 
 bb.bb:                                            ; preds = %bb.az
@@ -1723,7 +1718,7 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 2 uses
   %i.b = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %indvars.iv ; 2 uses
-  %i.c = load i16, ptr %i.b, align 2              ; 9 uses
+  %i.c = load i16, ptr %i.b, align 2              ; 10 uses
   %i.d = and i16 %i.c, -16
   %or.cond.i = icmp eq i16 %i.d, -400
   br i1 %or.cond.i, label %switch.early.test.i, label %bb.b
@@ -1741,23 +1736,28 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.f, label %.sink.split, label %bb.c
 
 _ZL23isTashkeelOnTatweelCharDs.exit:              ; preds = %switch.early.test.i
-  %2 = and i16 %i.c, 15                           ; 2 uses
-  %3 = zext nneg i16 %2 to i64
-  %4 = shl nuw nsw i64 1, %3
-  %5 = and i64 %4, 43650
-  %.not15 = icmp eq i64 %5, 0
-  br i1 %.not15, label %switch.early.test.i23, label %.sink.split
+  %2 = zext i16 %i.c to i64
+  %3 = getelementptr i8, ptr @_ZL14tashkeelMedial, i64 %2
+  %4 = getelementptr i8, ptr %3, i64 -65136
+  %5 = load i8, ptr %4, align 1                   ; 2 uses
+  %.not15 = icmp eq i8 %5, 1
+  br i1 %.not15, label %.sink.split, label %switch.early.test.i23
 
 switch.early.test.i23:                            ; preds = %_ZL23isTashkeelOnTatweelCharDs.exit
-  switch i16 %i.c, label %switch.early.test.i27 [
+  switch i16 %i.c, label %_ZL23isTashkeelOnTatweelCharDs.exit24 [
     i16 -387, label %.sink.split
     i16 -395, label %bb.c
     i16 -397, label %bb.c
   ]
 
-switch.early.test.i27:                            ; preds = %switch.early.test.i23
-  %6 = lshr i16 -21886, %2
-  %7 = trunc i16 %6 to i1
+_ZL23isTashkeelOnTatweelCharDs.exit24:            ; preds = %switch.early.test.i23
+  %6 = icmp eq i8 %5, 2
+  br i1 %6, label %.sink.split, label %switch.early.test.i27
+
+switch.early.test.i27:                            ; preds = %_ZL23isTashkeelOnTatweelCharDs.exit24
+  %7 = add nsw i16 %i.c, 397
+  %switch.and = and i16 %7, -3
+  %switch.selectcmp = icmp eq i16 %switch.and, 0
   br label %_ZL22isIsolatedTashkeelCharDs.exit
 
 bb.c:                                             ; preds = %bb.b, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i23, %switch.early.test.i23
@@ -1766,13 +1766,13 @@ bb.c:                                             ; preds = %bb.b, %switch.early
   br label %_ZL22isIsolatedTashkeelCharDs.exit
 
 _ZL22isIsolatedTashkeelCharDs.exit:               ; preds = %switch.early.test.i27, %bb.c
-  %.0.i26 = phi i1 [ %7, %switch.early.test.i27 ], [ %or.cond11.i, %bb.c ]
+  %.0.i26 = phi i1 [ %or.cond11.i, %bb.c ], [ %switch.selectcmp, %switch.early.test.i27 ]
   %.not18 = icmp eq i16 %i.c, -388
   %or.cond14 = or i1 %.not18, %.0.i26
   br i1 %or.cond14, label %bb.d, label %.sink.split
 
-.sink.split:                                      ; preds = %_ZL22isIsolatedTashkeelCharDs.exit, %switch.early.test.i23, %switch.early.test.i, %bb.b, %_ZL23isTashkeelOnTatweelCharDs.exit
-  %.sink = phi i16 [ 1600, %_ZL23isTashkeelOnTatweelCharDs.exit ], [ %i.c, %switch.early.test.i23 ], [ -387, %bb.b ], [ %i.c, %switch.early.test.i ], [ 32, %_ZL22isIsolatedTashkeelCharDs.exit ]
+.sink.split:                                      ; preds = %_ZL22isIsolatedTashkeelCharDs.exit, %_ZL23isTashkeelOnTatweelCharDs.exit24, %switch.early.test.i23, %switch.early.test.i, %bb.b, %_ZL23isTashkeelOnTatweelCharDs.exit
+  %.sink = phi i16 [ 1600, %_ZL23isTashkeelOnTatweelCharDs.exit ], [ -387, %_ZL23isTashkeelOnTatweelCharDs.exit24 ], [ -387, %bb.b ], [ %i.c, %switch.early.test.i ], [ %i.c, %switch.early.test.i23 ], [ 32, %_ZL22isIsolatedTashkeelCharDs.exit ]
   store i16 %.sink, ptr %i.b, align 2
   br label %bb.d
 
@@ -1854,12 +1854,15 @@ bb.g:                                             ; preds = %bb.f
 
 _ZL20isSeenTailFamilyCharDs.exit.us.us:           ; preds = %bb.g
   %i.r = zext i16 %i.p to i64
-  %5 = add nuw nsw i64 %i.r, 4294902095
-  %6 = and i64 %5, 4294967295
-  %7 = shl nuw nsw i64 1, %6
-  %8 = and i64 %7, 3276
-  %.not65.not.us.us = icmp eq i64 %8, 0
-  br i1 %.not65.not.us.us, label %9, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us.us
+  %5 = getelementptr i8, ptr @_ZL23tailFamilyIsolatedFinal, i64 %i.r
+  %6 = getelementptr i8, ptr %5, i64 -65201
+  %7 = load i8, ptr %6, align 1
+  %.not65.not.us.us = icmp eq i8 %7, 0
+  br i1 %.not65.not.us.us, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us.us, label %8
+
+8:                                                ; preds = %_ZL20isSeenTailFamilyCharDs.exit.us.us
+  store i16 32, ptr %i.h, align 2
+  br label %bb.k
 
 _ZL20isSeenTailFamilyCharDs.exit.thread.us.us:    ; preds = %_ZL20isSeenTailFamilyCharDs.exit.us.us, %bb.g, %bb.f
   %i.s = add i16 %i.i, 400
@@ -1874,16 +1877,11 @@ bb.h:                                             ; preds = %_ZL20isSeenTailFami
   store i16 %i.w, ptr %i.h, align 2
   br label %bb.k
 
-9:                                                ; preds = %_ZL20isSeenTailFamilyCharDs.exit.us.us
-  store i16 32, ptr %i.h, align 2
-  br label %bb.k
-
 bb.i:                                             ; preds = %.lr.ph.split.us.split.us
   %i.x = zext i16 %i.i to i64
-  %10 = add nuw nsw i64 %i.x, 4294902960
-  %11 = and i64 %10, 4294967295
-  %12 = getelementptr inbounds nuw [2 x i8], ptr @_ZL13convertFBto06, i64 %11
-  %i.y = load i16, ptr %12, align 2               ; 3 uses
+  %9 = getelementptr [2 x i8], ptr @_ZL13convertFBto06, i64 %i.x
+  %10 = getelementptr i8, ptr %9, i64 -128672
+  %i.y = load i16, ptr %10, align 2               ; 3 uses
   %.not66.us.us = icmp eq i16 %i.y, 0
   br i1 %.not66.us.us, label %bb.k, label %bb.j
 
@@ -1891,8 +1889,8 @@ bb.j:                                             ; preds = %bb.i
   store i16 %i.y, ptr %i.h, align 2
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %bb.i, %9, %bb.h, %_ZL20isSeenTailFamilyCharDs.exit.thread.us.us, %bb.e
-  %i.z = phi i16 [ %i.y, %bb.j ], [ %i.i, %bb.i ], [ 32, %9 ], [ %i.w, %bb.h ], [ %i.i, %_ZL20isSeenTailFamilyCharDs.exit.thread.us.us ], [ 32, %bb.e ]
+bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %_ZL20isSeenTailFamilyCharDs.exit.thread.us.us, %8, %bb.e
+  %i.z = phi i16 [ %i.y, %bb.j ], [ %i.i, %bb.i ], [ %i.w, %bb.h ], [ %i.i, %_ZL20isSeenTailFamilyCharDs.exit.thread.us.us ], [ 32, %8 ], [ 32, %bb.e ]
   %i.aa = add i16 %i.z, 259
   %i.ab = icmp ult i16 %i.aa, -8
   %spec.select.us.us = select i1 %i.ab, i32 %.05974.us.us, i32 1 ; 2 uses
@@ -1926,12 +1924,11 @@ bb.m:                                             ; preds = %bb.l
 
 _ZL20isSeenTailFamilyCharDs.exit.us:              ; preds = %bb.m
   %i.aj = zext i16 %i.ah to i64
-  %13 = add nuw nsw i64 %i.aj, 4294902095
-  %14 = and i64 %13, 4294967295
-  %15 = shl nuw nsw i64 1, %14
-  %16 = and i64 %15, 3276
-  %.not65.not.us = icmp eq i64 %16, 0
-  br i1 %.not65.not.us, label %.sink.split, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us
+  %11 = getelementptr i8, ptr @_ZL23tailFamilyIsolatedFinal, i64 %i.aj
+  %12 = getelementptr i8, ptr %11, i64 -65201
+  %13 = load i8, ptr %12, align 1
+  %.not65.not.us = icmp eq i8 %13, 0
+  br i1 %.not65.not.us, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us, label %.sink.split
 
 _ZL20isSeenTailFamilyCharDs.exit.thread.us:       ; preds = %_ZL20isSeenTailFamilyCharDs.exit.us, %bb.m, %bb.l
   %i.ak = add i16 %i.ad, 400
@@ -1947,10 +1944,9 @@ bb.n:                                             ; preds = %_ZL20isSeenTailFami
 
 bb.o:                                             ; preds = %.lr.ph.split.us.split
   %i.ap = zext i16 %i.ad to i64
-  %17 = add nuw nsw i64 %i.ap, 4294902960
-  %18 = and i64 %17, 4294967295
-  %19 = getelementptr inbounds nuw [2 x i8], ptr @_ZL13convertFBto06, i64 %18
-  %i.aq = load i16, ptr %19, align 2              ; 2 uses
+  %14 = getelementptr [2 x i8], ptr @_ZL13convertFBto06, i64 %i.ap
+  %15 = getelementptr i8, ptr %14, i64 -128672
+  %i.aq = load i16, ptr %15, align 2              ; 2 uses
   %.not66.us = icmp eq i16 %i.aq, 0
   br i1 %.not66.us, label %bb.p, label %.sink.split
 
@@ -2028,10 +2024,9 @@ bb.u:                                             ; preds = %_ZL20isSeenTailFami
 
 bb.v:                                             ; preds = %.lr.ph.split.split.us
   %i.bg = zext i16 %i.aw to i64
-  %20 = add nuw nsw i64 %i.bg, 4294902960
-  %21 = and i64 %20, 4294967295
-  %22 = getelementptr inbounds nuw [2 x i8], ptr @_ZL13convertFBto06, i64 %21
-  %i.bh = load i16, ptr %22, align 2              ; 3 uses
+  %16 = getelementptr [2 x i8], ptr @_ZL13convertFBto06, i64 %i.bg
+  %17 = getelementptr i8, ptr %16, i64 -128672
+  %i.bh = load i16, ptr %17, align 2              ; 3 uses
   %.not66.us82 = icmp eq i16 %i.bh, 0
   br i1 %.not66.us82, label %bb.x, label %bb.w
 
@@ -2059,10 +2054,9 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u,
 
 bb.y:                                             ; preds = %.lr.ph.split.split
   %i.bo = zext i16 %i.bm to i64
-  %23 = add nuw nsw i64 %i.bo, 4294902960
-  %24 = and i64 %23, 4294967295
-  %25 = getelementptr inbounds nuw [2 x i8], ptr @_ZL13convertFBto06, i64 %24
-  %i.bp = load i16, ptr %25, align 2              ; 2 uses
+  %18 = getelementptr [2 x i8], ptr @_ZL13convertFBto06, i64 %i.bo
+  %19 = getelementptr i8, ptr %18, i64 -128672
+  %i.bp = load i16, ptr %19, align 2              ; 2 uses
   %.not66 = icmp eq i16 %i.bp, 0
   br i1 %.not66, label %bb.aa, label %.sink.split116
 
@@ -2465,12 +2459,15 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.
 
 _ZL20isSeenTailFamilyCharDs.exit.us.peel.i:       ; preds = %.lr.ph.split.split.us.split.preheader.i
   %i.cg = zext i16 %i.ce to i64
-  %7 = add nuw nsw i64 %i.cg, 4294902095
-  %8 = and i64 %7, 4294967295
-  %9 = shl nuw nsw i64 1, %8
-  %10 = and i64 %9, 3276
-  %.not40.not.us.peel.i = icmp eq i64 %10, 0
-  br i1 %.not40.not.us.peel.i, label %11, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us6.peel.i
+  %7 = getelementptr i8, ptr @_ZL23tailFamilyIsolatedFinal, i64 %i.cg
+  %8 = getelementptr i8, ptr %7, i64 -65201
+  %9 = load i8, ptr %8, align 1
+  %.not40.not.us.peel.i = icmp eq i8 %9, 0
+  br i1 %.not40.not.us.peel.i, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us6.peel.i, label %10
+
+10:                                               ; preds = %_ZL20isSeenTailFamilyCharDs.exit.us.peel.i
+  store i32 20, ptr %4, align 4
+  br label %bb.ao
 
 _ZL20isSeenTailFamilyCharDs.exit.thread.us6.peel.i: ; preds = %_ZL20isSeenTailFamilyCharDs.exit.us.peel.i, %.lr.ph.split.split.us.split.preheader.i
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
@@ -2496,11 +2493,7 @@ bb.an:                                            ; preds = %bb.al
   store i16 %i.cp, ptr %0, align 2
   br label %bb.ao
 
-11:                                               ; preds = %_ZL20isSeenTailFamilyCharDs.exit.us.peel.i
-  store i32 20, ptr %4, align 4
-  br label %bb.ao
-
-bb.ao:                                            ; preds = %11, %bb.an, %bb.am, %_ZL20isSeenTailFamilyCharDs.exit.thread.us6.peel.i
+bb.ao:                                            ; preds = %bb.an, %bb.am, %_ZL20isSeenTailFamilyCharDs.exit.thread.us6.peel.i, %10
   %exitcond34.peel.not.i = icmp eq i32 %1, 1
   br i1 %exitcond34.peel.not.i, label %.thread148, label %.lr.ph.split.split.us.split.i
 
@@ -2509,12 +2502,11 @@ bb.ao:                                            ; preds = %11, %bb.an, %bb.am,
 
 _ZL20isSeenTailFamilyCharDs.exit.us.us.peel.i:    ; preds = %.lr.ph.split.split.us.split.us.preheader.i
   %i.cq = zext i16 %i.ce to i64
-  %12 = add nuw nsw i64 %i.cq, 4294902095
-  %13 = and i64 %12, 4294967295
-  %14 = shl nuw nsw i64 1, %13
-  %15 = and i64 %14, 3276
-  %.not40.not.us.us.peel.i = icmp eq i64 %15, 0
-  br i1 %.not40.not.us.us.peel.i, label %bb.ap, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us6.us.peel.i
+  %11 = getelementptr i8, ptr @_ZL23tailFamilyIsolatedFinal, i64 %i.cq
+  %12 = getelementptr i8, ptr %11, i64 -65201
+  %13 = load i8, ptr %12, align 1
+  %.not40.not.us.us.peel.i = icmp eq i8 %13, 0
+  br i1 %.not40.not.us.us.peel.i, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us6.us.peel.i, label %bb.ap
 
 bb.ap:                                            ; preds = %_ZL20isSeenTailFamilyCharDs.exit.us.us.peel.i
   store i32 20, ptr %4, align 4
@@ -2534,12 +2526,11 @@ _ZL20isSeenTailFamilyCharDs.exit.thread.us6.us.peel.i: ; preds = %bb.ap, %_ZL20i
 
 _ZL20isSeenTailFamilyCharDs.exit.us.us.i:         ; preds = %.lr.ph.split.split.us.split.us.i
   %i.cu = zext i16 %i.cs to i64
-  %16 = add nuw nsw i64 %i.cu, 4294902095
-  %17 = and i64 %16, 4294967295
-  %18 = shl nuw nsw i64 1, %17
-  %19 = and i64 %18, 3276
-  %.not40.not.us.us.i = icmp eq i64 %19, 0
-  br i1 %.not40.not.us.us.i, label %bb.aq, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us6.us.i
+  %14 = getelementptr i8, ptr @_ZL23tailFamilyIsolatedFinal, i64 %i.cu
+  %15 = getelementptr i8, ptr %14, i64 -65201
+  %16 = load i8, ptr %15, align 1
+  %.not40.not.us.us.i = icmp eq i8 %16, 0
+  br i1 %.not40.not.us.us.i, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us6.us.i, label %bb.aq
 
 bb.aq:                                            ; preds = %_ZL20isSeenTailFamilyCharDs.exit.us.us.i
   %i.cv = getelementptr i8, ptr %i.cr, i64 -2     ; 2 uses
@@ -2570,12 +2561,11 @@ _ZL20isSeenTailFamilyCharDs.exit.thread.us6.us.i: ; preds = %bb.as, %bb.ar, %_ZL
 
 _ZL20isSeenTailFamilyCharDs.exit.us.i:            ; preds = %.lr.ph.split.split.us.split.i
   %i.db = zext i16 %i.cz to i64
-  %20 = add nuw nsw i64 %i.db, 4294902095
-  %21 = and i64 %20, 4294967295
-  %22 = shl nuw nsw i64 1, %21
-  %23 = and i64 %22, 3276
-  %.not40.not.us.i = icmp eq i64 %23, 0
-  br i1 %.not40.not.us.i, label %bb.at, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us6.i
+  %17 = getelementptr i8, ptr @_ZL23tailFamilyIsolatedFinal, i64 %i.db
+  %18 = getelementptr i8, ptr %17, i64 -65201
+  %19 = load i8, ptr %18, align 1
+  %.not40.not.us.i = icmp eq i8 %19, 0
+  br i1 %.not40.not.us.i, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us6.i, label %bb.at
 
 bb.at:                                            ; preds = %_ZL20isSeenTailFamilyCharDs.exit.us.i
   %i.dc = getelementptr i8, ptr %i.cy, i64 -2     ; 2 uses
@@ -2628,12 +2618,15 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax, %_ZL
 
 _ZL20isSeenTailFamilyCharDs.exit.peel.i:          ; preds = %.lr.ph.split.split.split.preheader.i
   %i.do = zext i16 %i.ce to i64
-  %24 = add nuw nsw i64 %i.do, 4294902095
-  %25 = and i64 %24, 4294967295
-  %26 = shl nuw nsw i64 1, %25
-  %27 = and i64 %26, 3276
-  %.not40.not.peel.i = icmp eq i64 %27, 0
-  br i1 %.not40.not.peel.i, label %28, label %_ZL20isSeenTailFamilyCharDs.exit.thread.peel.thread.i
+  %20 = getelementptr i8, ptr @_ZL23tailFamilyIsolatedFinal, i64 %i.do
+  %21 = getelementptr i8, ptr %20, i64 -65201
+  %22 = load i8, ptr %21, align 1
+  %.not40.not.peel.i = icmp eq i8 %22, 0
+  br i1 %.not40.not.peel.i, label %_ZL20isSeenTailFamilyCharDs.exit.thread.peel.thread.i, label %23
+
+23:                                               ; preds = %_ZL20isSeenTailFamilyCharDs.exit.peel.i
+  store i32 20, ptr %4, align 4
+  br label %bb.be
 
 _ZL20isSeenTailFamilyCharDs.exit.thread.peel.i:   ; preds = %.lr.ph.split.split.split.preheader.i
   %i.dp = add i16 %i.ce, 373
@@ -2668,11 +2661,7 @@ bb.bd:                                            ; preds = %bb.bb
   store i16 %i.dy, ptr %0, align 2
   br label %bb.be
 
-28:                                               ; preds = %_ZL20isSeenTailFamilyCharDs.exit.peel.i
-  store i32 20, ptr %4, align 4
-  br label %bb.be
-
-bb.be:                                            ; preds = %28, %bb.bd, %bb.bc, %_ZL20isSeenTailFamilyCharDs.exit.thread.peel.thread.i, %bb.ba
+bb.be:                                            ; preds = %bb.bd, %bb.bc, %_ZL20isSeenTailFamilyCharDs.exit.thread.peel.thread.i, %bb.ba, %23
   %exitcond.peel.not.i = icmp eq i32 %1, 1
   br i1 %exitcond.peel.not.i, label %.thread148, label %.lr.ph.split.split.split.i
 
@@ -2681,12 +2670,11 @@ bb.be:                                            ; preds = %28, %bb.bd, %bb.bc,
 
 _ZL20isSeenTailFamilyCharDs.exit.us10.peel.i:     ; preds = %.lr.ph.split.split.split.us.preheader.i
   %i.dz = zext i16 %i.ce to i64
-  %29 = add nuw nsw i64 %i.dz, 4294902095
-  %30 = and i64 %29, 4294967295
-  %31 = shl nuw nsw i64 1, %30
-  %32 = and i64 %31, 3276
-  %.not40.not.us11.peel.i = icmp eq i64 %32, 0
-  br i1 %.not40.not.us11.peel.i, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us13.peel.thread.sink.split.i, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us13.peel.thread.i
+  %24 = getelementptr i8, ptr @_ZL23tailFamilyIsolatedFinal, i64 %i.dz
+  %25 = getelementptr i8, ptr %24, i64 -65201
+  %26 = load i8, ptr %25, align 1
+  %.not40.not.us11.peel.i = icmp eq i8 %26, 0
+  br i1 %.not40.not.us11.peel.i, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us13.peel.thread.i, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us13.peel.thread.sink.split.i
 
 _ZL20isSeenTailFamilyCharDs.exit.thread.us13.peel.i: ; preds = %.lr.ph.split.split.split.us.preheader.i
   %i.ea = add i16 %i.ce, 373
@@ -2711,12 +2699,11 @@ _ZL20isSeenTailFamilyCharDs.exit.thread.us13.peel.thread.i: ; preds = %_ZL20isSe
 
 _ZL20isSeenTailFamilyCharDs.exit.us10.i:          ; preds = %.lr.ph.split.split.split.us.i
   %i.ee = zext i16 %i.ec to i64
-  %33 = add nuw nsw i64 %i.ee, 4294902095
-  %34 = and i64 %33, 4294967295
-  %35 = shl nuw nsw i64 1, %34
-  %36 = and i64 %35, 3276
-  %.not40.not.us11.i = icmp eq i64 %36, 0
-  br i1 %.not40.not.us11.i, label %bb.bf, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us13.thread.i
+  %27 = getelementptr i8, ptr @_ZL23tailFamilyIsolatedFinal, i64 %i.ee
+  %28 = getelementptr i8, ptr %27, i64 -65201
+  %29 = load i8, ptr %28, align 1
+  %.not40.not.us11.i = icmp eq i8 %29, 0
+  br i1 %.not40.not.us11.i, label %_ZL20isSeenTailFamilyCharDs.exit.thread.us13.thread.i, label %bb.bf
 
 bb.bf:                                            ; preds = %_ZL20isSeenTailFamilyCharDs.exit.us10.i
   %i.ef = getelementptr i8, ptr %i.eb, i64 -2     ; 2 uses
@@ -2771,12 +2758,11 @@ _ZL20isSeenTailFamilyCharDs.exit.thread.us13.thread.i: ; preds = %bb.bk, %bb.bj,
 
 _ZL20isSeenTailFamilyCharDs.exit.i:               ; preds = %.lr.ph.split.split.split.i
   %i.et = zext i16 %i.er to i64
-  %37 = add nuw nsw i64 %i.et, 4294902095
-  %38 = and i64 %37, 4294967295
-  %39 = shl nuw nsw i64 1, %38
-  %40 = and i64 %39, 3276
-  %.not40.not.i = icmp eq i64 %40, 0
-  br i1 %.not40.not.i, label %bb.bl, label %_ZL20isSeenTailFamilyCharDs.exit.thread.thread.i
+  %30 = getelementptr i8, ptr @_ZL23tailFamilyIsolatedFinal, i64 %i.et
+  %31 = getelementptr i8, ptr %30, i64 -65201
+  %32 = load i8, ptr %31, align 1
+  %.not40.not.i = icmp eq i8 %32, 0
+  br i1 %.not40.not.i, label %_ZL20isSeenTailFamilyCharDs.exit.thread.thread.i, label %bb.bl
 
 bb.bl:                                            ; preds = %_ZL20isSeenTailFamilyCharDs.exit.i
   %i.eu = getelementptr i8, ptr %i.eq, i64 -2     ; 2 uses

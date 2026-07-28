@@ -148,8 +148,7 @@ bb.g:                                             ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 2
   %i.n = icmp samesign ult i8 %i.e, 50
   %i.o = mul nuw nsw i64 %i.g, 40
-  %i.p = add nuw nsw i64 %i.o, 4294965376
-  %4 = and i64 %i.p, 4294967288                   ; 2 uses
+  %i.p = add nsw i64 %i.o, -1920                  ; 2 uses
   %.not151 = icmp eq ptr %0, null
   %i.q = getelementptr i8, ptr %0, i64 -1
   br label %bb.h
@@ -259,12 +258,12 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not145, label %.thread324, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.an = call i32 @BN_add_word(ptr noundef %.197.lcssa.ph, i64 noundef %4) #5
+  %i.an = call i32 @BN_add_word(ptr noundef %.197.lcssa.ph, i64 noundef %i.p) #5
   %.not146 = icmp eq i32 %i.an, 0
   br i1 %.not146, label %.thread170, label %.thread164
 
 .thread324:                                       ; preds = %bb.r
-  %i.ao = add i64 %.098.lcssa.ph, %4
+  %i.ao = add i64 %.098.lcssa.ph, %i.p
   br label %.preheader186.preheader
 
 bb.t:                                             ; preds = %._crit_edge

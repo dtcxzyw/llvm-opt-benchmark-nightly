@@ -204,9 +204,8 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.bb, label %_fits_in_n_bits.exit.thread, label %_fits_in_n_bits.exit
 
 _fits_in_n_bits.exit:                             ; preds = %.loopexit
-  %i.bc = add nuw nsw i64 %i.ba, 4294967295
-  %4 = and i64 %i.bc, 4294967295
-  %i.bd = ashr i64 %i.z, %4
+  %i.bc = add nsw i64 %i.ba, -1
+  %i.bd = ashr i64 %i.z, %i.bc
   %i.be = add nsw i64 %i.bd, -1
   %i.bf = icmp ult i64 %i.be, -2
   br i1 %i.bf, label %bb.w, label %_fits_in_n_bits.exit.thread
@@ -609,8 +608,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = mul nsw i64 %i.h, %i.i
   %.off = add i64 %1, 29
   %i.k = icmp ult i64 %.off, 59
-  %2 = and i64 %i.e, 4294967295
-  %i.l = select i1 %i.k, i64 %2, i64 30
+  %i.l = select i1 %i.k, i64 %i.e, i64 30
   %i.m = ashr i64 %i.j, %i.l
   %i.n = tail call fastcc ptr @_PyLong_FromSTwoDigits(i64 noundef %i.m), !inline_history !219
   br label %long_rshift1.exit
@@ -896,7 +894,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = sdiv i64 %1, 30                          ; 3 uses
-  %i.e = srem i64 %1, 30                          ; 3 uses
+  %i.e = srem i64 %1, 30                          ; 5 uses
   %i.f = add i64 %1, -30
   %i.g = icmp ult i64 %i.f, -59
   %i.h = icmp ugt i64 %.val, 15
@@ -909,8 +907,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = sub nsw i64 1, %i.b
   %i.k = zext i32 %.val51.i to i64
   %i.l = mul nsw i64 %i.j, %i.k
-  %.pn.i = and i64 %i.e, 4294967295
-  %i.m = shl i64 %i.l, %.pn.i
+  %i.m = shl nsw i64 %i.l, %i.e
   %i.n = tail call fastcc ptr @_PyLong_FromSTwoDigits(i64 noundef %i.m), !inline_history !224
   br label %long_lshift1.exit
 
@@ -958,7 +955,6 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .lr.ph58.i:                                       ; preds = %.preheader.i
   %i.af = getelementptr i8, ptr %0, i64 24        ; 3 uses
-  %2 = and i64 %i.e, 4294967295                   ; 3 uses
   %i.ag = getelementptr i8, ptr %i.r, i64 24      ; 3 uses
   %i.ah = icmp eq i64 %i.o, 1
   br i1 %i.ah, label %.epil.preheader, label %.lr.ph58.i.new
@@ -975,7 +971,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph58.i.n
   %i.ai = getelementptr [4 x i8], ptr %i.af, i64 %.04256.i
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !7
   %i.ak = zext i32 %i.aj to i64
-  %i.al = shl i64 %i.ak, %2
+  %i.al = shl nuw nsw i64 %i.ak, %i.e
   %i.am = or i64 %i.al, %.04157.i                 ; 2 uses
   %i.an = trunc i64 %i.am to i32
   %i.ao = and i32 %i.an, 1073741823
@@ -986,7 +982,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph58.i.n
   %i.as = getelementptr i8, ptr %i.ar, i64 4
   %i.at = load i32, ptr %i.as, align 4, !tbaa !7
   %i.au = zext i32 %i.at to i64
-  %i.av = shl i64 %i.au, %2
+  %i.av = shl nuw nsw i64 %i.au, %i.e
   %i.aw = or i64 %i.av, %i.aq                     ; 2 uses
   %i.ax = trunc i64 %i.aw to i32
   %i.ay = and i32 %i.ax, 1073741823
@@ -1014,7 +1010,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph58.i.n
   %i.bf = getelementptr [4 x i8], ptr %i.af, i64 %.04256.i.epil.init
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !7
   %i.bh = zext i32 %i.bg to i64
-  %i.bi = shl i64 %i.bh, %2
+  %i.bi = shl nuw nsw i64 %i.bh, %i.e
   %i.bj = or i64 %i.bi, %.04157.i.epil.init       ; 2 uses
   %i.bk = trunc i64 %i.bj to i32
   %i.bl = and i32 %i.bk, 1073741823

@@ -205,10 +205,9 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.aa
   %i.dm = zext nneg i8 %i.dl to i64
-  %9 = add nuw nsw i64 %i.dm, 4294967295
-  %10 = and i64 %9, 4294967295
-  %11 = getelementptr inbounds nuw [8 x i8], ptr @sqlite3StdType, i64 %10
-  %i.dn = load ptr, ptr %11, align 8, !tbaa !253
+  %9 = getelementptr [8 x i8], ptr @sqlite3StdType, i64 %i.dm
+  %10 = getelementptr i8, ptr %9, i64 -8
+  %i.dn = load ptr, ptr %10, align 8, !tbaa !253
   br label %sqlite3ColumnType.exit
 
 sqlite3ColumnType.exit:                           ; preds = %bb.z, %bb.aa, %bb.ab
@@ -611,10 +610,9 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.k = zext nneg i8 %i.j to i64
-  %2 = add nuw nsw i64 %i.k, 4294967295
-  %3 = and i64 %2, 4294967295
-  %4 = getelementptr inbounds nuw [8 x i8], ptr @sqlite3StdType, i64 %3
-  %i.l = load ptr, ptr %4, align 8, !tbaa !253
+  %2 = getelementptr [8 x i8], ptr @sqlite3StdType, i64 %i.k
+  %3 = getelementptr i8, ptr %2, i64 -8
+  %i.l = load ptr, ptr %3, align 8, !tbaa !253
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
@@ -1017,9 +1015,9 @@ bb.c:                                             ; preds = %bb.b
   %.073109 = phi i64 [ %i.m, %.loopexit100 ], [ 0, %bb.c ]
   %.281108 = phi ptr [ %i.n, %.loopexit100 ], [ %.180, %bb.c ]
   %i.l = mul nuw nsw i64 %.073109, 10
-  %2 = and i8 %i.k, 15
-  %3 = zext nneg i8 %2 to i64
-  %i.m = add nuw nsw i64 %i.l, %3                 ; 5 uses
+  %2 = zext nneg i8 %i.k to i64
+  %3 = add nsw i64 %i.l, -48
+  %i.m = add nsw i64 %3, %2                       ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.281108, i64 1 ; 5 uses
   %i.o = add nuw nsw i32 %.066111, 1              ; 4 uses
   %i.p = icmp samesign ugt i64 %i.m, 922337203685477578
@@ -1071,9 +1069,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.lr.ph124
   %i.ab = mul nuw nsw i64 %.174120, 10
-  %4 = and i8 %i.z, 15
-  %5 = zext nneg i8 %4 to i64
-  %i.ac = add nuw nsw i64 %i.ab, %5
+  %4 = zext nneg i8 %i.z to i64
+  %5 = add nsw i64 %i.ab, -48
+  %i.ac = add nsw i64 %5, %4
   %i.ad = add nsw i32 %.372121, -1
   %i.ae = add nsw i32 %.167122, 1
   br label %bb.e
@@ -1476,10 +1474,9 @@ bb.y:                                             ; preds = %bb.w, %bb.v
 
 bb.z:                                             ; preds = %bb.y
   %i.mk = zext i16 %i.mj to i64
-  %20 = add nuw nsw i64 %i.mk, 4294967295
-  %21 = and i64 %20, 4294967295
-  %22 = getelementptr inbounds nuw [8 x i8], ptr @sqlite3VdbeExec.azType, i64 %21
-  %i.ml = load ptr, ptr %22, align 8, !tbaa !253
+  %20 = getelementptr [8 x i8], ptr @sqlite3VdbeExec.azType, i64 %i.mk
+  %21 = getelementptr i8, ptr %20, i64 -8
+  %i.ml = load ptr, ptr %21, align 8, !tbaa !253
   call void (ptr, ptr, ...) @sqlite3VdbeError(ptr noundef nonnull %0, ptr noundef nonnull @.str.352, ptr noundef %i.ml)
   %i.mm = getelementptr inbounds nuw i8, ptr %.02963, i64 16
   %i.mn = load ptr, ptr %i.mm, align 8, !tbaa !229 ; 2 uses
@@ -1882,12 +1879,10 @@ sqlite3OomFault.exit:                             ; preds = %.lr.ph.i4628, %bb.b
 
 bb.bgn:                                           ; preds = %sqlite3OomFault.exit
   %i.ixf = zext i8 %.42992 to i64
-  %23 = add nuw nsw i64 %i.ixf, 4294967295
   %i.ixg = getelementptr inbounds nuw i8, ptr %i.an, i64 32 ; 2 uses
   %i.ixh = load ptr, ptr %i.ixg, align 8, !tbaa !63 ; 2 uses
-  %24 = and i64 %23, 4294967295
-  %i.ixi = getelementptr inbounds nuw [32 x i8], ptr %i.ixh, i64 %24
-  %i.ixj = getelementptr inbounds nuw i8, ptr %i.ixi, i64 24
+  %i.ixi = getelementptr [32 x i8], ptr %i.ixh, i64 %i.ixf
+  %i.ixj = getelementptr i8, ptr %i.ixi, i64 -8
   %i.ixk = load ptr, ptr %i.ixj, align 8, !tbaa !103
   %i.ixl = getelementptr inbounds nuw i8, ptr %i.ixk, i64 114 ; 2 uses
   %i.ixm = load i16, ptr %i.ixl, align 2, !tbaa !695
@@ -2290,8 +2285,8 @@ bb.n:                                             ; preds = %thread-pre-split, %
   br i1 %i.dx, label %.lr.ph, label %.preheader, !llvm.loop !3250
 
 bb.o:                                             ; preds = %.preheader
-  %2 = and i8 %i.du, 15
-  %3 = zext nneg i8 %2 to i64                     ; 2 uses
+  %2 = zext nneg i8 %i.du to i64
+  %3 = add nsw i64 %2, -48                        ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %.2.lcssa, i64 1
   %i.dz = load i8, ptr %i.dy, align 1, !tbaa !229 ; 2 uses
   %i.ea = add i8 %i.dz, -48
@@ -2299,10 +2294,10 @@ bb.o:                                             ; preds = %.preheader
   br i1 %or.cond.1, label %bb.p, label %.critedge2
 
 bb.p:                                             ; preds = %bb.o
-  %4 = mul nuw nsw i64 %3, 10
-  %5 = and i8 %i.dz, 15
-  %6 = zext nneg i8 %5 to i64
-  %i.eb = add nuw nsw i64 %4, %6                  ; 2 uses
+  %4 = zext nneg i8 %i.dz to i64
+  %5 = mul nuw nsw i64 %3, 10
+  %6 = add nsw i64 %5, -48
+  %i.eb = add nsw i64 %6, %4                      ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %.2.lcssa, i64 2
   %i.ed = load i8, ptr %i.ec, align 1, !tbaa !229 ; 2 uses
   %i.ee = add i8 %i.ed, -48
@@ -2310,10 +2305,10 @@ bb.p:                                             ; preds = %bb.o
   br i1 %or.cond.2, label %bb.q, label %.critedge2
 
 bb.q:                                             ; preds = %bb.p
-  %7 = mul nuw nsw i64 %i.eb, 10
-  %8 = and i8 %i.ed, 15
-  %9 = zext nneg i8 %8 to i64
-  %i.ef = add nuw nsw i64 %7, %9                  ; 2 uses
+  %7 = zext nneg i8 %i.ed to i64
+  %8 = mul nuw nsw i64 %i.eb, 10
+  %9 = add nsw i64 %8, -48
+  %i.ef = add nuw nsw i64 %9, %7                  ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %.2.lcssa, i64 3
   %i.eh = load i8, ptr %i.eg, align 1, !tbaa !229 ; 2 uses
   %i.ei = add i8 %i.eh, -48
@@ -2321,10 +2316,10 @@ bb.q:                                             ; preds = %bb.p
   br i1 %or.cond.3, label %bb.r, label %.critedge2
 
 bb.r:                                             ; preds = %bb.q
-  %10 = mul nuw nsw i64 %i.ef, 10
-  %11 = and i8 %i.eh, 15
-  %12 = zext nneg i8 %11 to i64
-  %i.ej = add nuw nsw i64 %10, %12                ; 2 uses
+  %10 = zext nneg i8 %i.eh to i64
+  %11 = mul nuw nsw i64 %i.ef, 10
+  %12 = add nsw i64 %11, -48
+  %i.ej = add nuw nsw i64 %12, %10                ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %.2.lcssa, i64 4
   %i.el = load i8, ptr %i.ek, align 1, !tbaa !229 ; 2 uses
   %i.em = add i8 %i.el, -48
@@ -2332,10 +2327,10 @@ bb.r:                                             ; preds = %bb.q
   br i1 %or.cond.4, label %bb.s, label %.critedge2
 
 bb.s:                                             ; preds = %bb.r
-  %13 = mul nuw nsw i64 %i.ej, 10
-  %14 = and i8 %i.el, 15
-  %15 = zext nneg i8 %14 to i64
-  %i.en = add nuw nsw i64 %13, %15                ; 2 uses
+  %13 = zext nneg i8 %i.el to i64
+  %14 = mul nuw nsw i64 %i.ej, 10
+  %15 = add nsw i64 %14, -48
+  %i.en = add nuw nsw i64 %15, %13                ; 2 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %.2.lcssa, i64 5
   %i.ep = load i8, ptr %i.eo, align 1, !tbaa !229 ; 2 uses
   %i.eq = add i8 %i.ep, -48
@@ -2343,10 +2338,10 @@ bb.s:                                             ; preds = %bb.r
   br i1 %or.cond.5, label %bb.t, label %.critedge2
 
 bb.t:                                             ; preds = %bb.s
-  %16 = mul nuw nsw i64 %i.en, 10
-  %17 = and i8 %i.ep, 15
-  %18 = zext nneg i8 %17 to i64
-  %i.er = add nuw nsw i64 %16, %18                ; 2 uses
+  %16 = zext nneg i8 %i.ep to i64
+  %17 = mul nuw nsw i64 %i.en, 10
+  %18 = add nsw i64 %17, -48
+  %i.er = add nuw nsw i64 %18, %16                ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %.2.lcssa, i64 6
   %i.et = load i8, ptr %i.es, align 1, !tbaa !229 ; 2 uses
   %i.eu = add i8 %i.et, -48
@@ -2354,10 +2349,10 @@ bb.t:                                             ; preds = %bb.s
   br i1 %or.cond.6, label %bb.u, label %.critedge2
 
 bb.u:                                             ; preds = %bb.t
-  %19 = mul nuw nsw i64 %i.er, 10
-  %20 = and i8 %i.et, 15
-  %21 = zext nneg i8 %20 to i64
-  %i.ev = add nuw nsw i64 %19, %21                ; 2 uses
+  %19 = zext nneg i8 %i.et to i64
+  %20 = mul nuw nsw i64 %i.er, 10
+  %21 = add nsw i64 %20, -48
+  %i.ev = add nuw nsw i64 %21, %19                ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %.2.lcssa, i64 7
   %i.ex = load i8, ptr %i.ew, align 1, !tbaa !229 ; 2 uses
   %i.ey = add i8 %i.ex, -48
@@ -2365,10 +2360,10 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond.7, label %bb.v, label %.critedge2
 
 bb.v:                                             ; preds = %bb.u
-  %22 = mul nuw nsw i64 %i.ev, 10
-  %23 = and i8 %i.ex, 15
-  %24 = zext nneg i8 %23 to i64
-  %i.ez = add nuw nsw i64 %22, %24                ; 2 uses
+  %22 = zext nneg i8 %i.ex to i64
+  %23 = mul nuw nsw i64 %i.ev, 10
+  %24 = add nsw i64 %23, -48
+  %i.ez = add nuw nsw i64 %24, %22                ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %.2.lcssa, i64 8
   %i.fb = load i8, ptr %i.fa, align 1, !tbaa !229 ; 2 uses
   %i.fc = add i8 %i.fb, -48
@@ -2376,10 +2371,10 @@ bb.v:                                             ; preds = %bb.u
   br i1 %or.cond.8, label %bb.w, label %.critedge2
 
 bb.w:                                             ; preds = %bb.v
-  %25 = mul nuw nsw i64 %i.ez, 10
-  %26 = and i8 %i.fb, 15
-  %27 = zext nneg i8 %26 to i64
-  %i.fd = add nuw nsw i64 %25, %27                ; 2 uses
+  %25 = zext nneg i8 %i.fb to i64
+  %26 = mul nuw nsw i64 %i.ez, 10
+  %27 = add nsw i64 %26, -48
+  %i.fd = add nuw nsw i64 %27, %25                ; 2 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %.2.lcssa, i64 9
   %i.ff = load i8, ptr %i.fe, align 1, !tbaa !229 ; 2 uses
   %i.fg = add i8 %i.ff, -48
@@ -2387,10 +2382,10 @@ bb.w:                                             ; preds = %bb.v
   br i1 %or.cond.9, label %bb.x, label %.critedge2
 
 bb.x:                                             ; preds = %bb.w
-  %28 = mul nuw nsw i64 %i.fd, 10
-  %29 = and i8 %i.ff, 15
-  %30 = zext nneg i8 %29 to i64
-  %i.fh = add nuw nsw i64 %28, %30
+  %28 = zext nneg i8 %i.ff to i64
+  %29 = mul nuw nsw i64 %i.fd, 10
+  %30 = add nsw i64 %29, -48
+  %i.fh = add nuw nsw i64 %30, %28
   %i.fi = getelementptr inbounds nuw i8, ptr %.2.lcssa, i64 10
   %i.fj = load i8, ptr %i.fi, align 1, !tbaa !229
   %i.fk = add i8 %i.fj, -48
@@ -2793,10 +2788,9 @@ bb.aj:                                            ; preds = %bb.ah
 
 sqlite3ColumnType.exit:                           ; preds = %bb.aj
   %i.eo = zext nneg i8 %i.en to i64
-  %6 = add nuw nsw i64 %i.eo, 4294967295
-  %7 = and i64 %6, 4294967295
-  %8 = getelementptr inbounds nuw [8 x i8], ptr @sqlite3StdType, i64 %7
-  %i.ep = load ptr, ptr %8, align 8, !tbaa !253   ; 2 uses
+  %6 = getelementptr [8 x i8], ptr @sqlite3StdType, i64 %i.eo
+  %7 = getelementptr i8, ptr %6, i64 -8
+  %i.ep = load ptr, ptr %7, align 8, !tbaa !253   ; 2 uses
   %i.eq = icmp eq ptr %i.ep, null
   br i1 %i.eq, label %.critedge, label %sqlite3Strlen30.exit
 
@@ -3199,11 +3193,9 @@ bb.c:                                             ; preds = %bb.b
   %i.e = zext nneg i16 %i.c to i64
   %i.f = getelementptr inbounds nuw i8, ptr %.344.val, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !884
-  %1 = add nuw nsw i64 %i.e, 4294967295
-  %2 = and i64 %1, 4294967295
-  %i.h = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %2 ; 2 uses
+  %i.h = getelementptr [16 x i8], ptr %i.g, i64 %i.e ; 2 uses
   %i.i = trunc i32 %0 to i8
-  %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
+  %i.j = getelementptr i8, ptr %i.h, i64 -8       ; 2 uses
   %i.k = load i8, ptr %i.j, align 8
   %i.l = and i8 %i.i, 15
   %i.m = and i8 %i.k, -16
@@ -3213,7 +3205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.p = load i32, ptr %i.o, align 8, !tbaa !790
   %i.q = or i32 %i.p, 2048
   store i32 %i.q, ptr %i.o, align 8, !tbaa !790
-  %i.r = getelementptr inbounds nuw i8, ptr %i.h, i64 14
+  %i.r = getelementptr i8, ptr %i.h, i64 -2
   %i.s = load i16, ptr %i.r, align 2, !tbaa !885
   %i.t = and i16 %i.s, 8
   %.not = icmp eq i16 %i.t, 0
@@ -3616,8 +3608,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 54
   %i.j = load i16, ptr %i.i, align 2, !tbaa !883  ; 2 uses
-  %5 = zext i16 %i.j to i64
-  %6 = add nuw nsw i64 %5, 4294967295
+  %5 = sext i16 %i.j to i64
   %i.k = icmp slt i16 %i.j, 1
   br i1 %i.k, label %sqlite3ExprListDelete.exit, label %bb.e
 
@@ -3633,9 +3624,9 @@ bb.f:                                             ; preds = %bb.e
 sqlite3ExprListDelete.exit.thread:                ; preds = %bb.f
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !884
-  %7 = and i64 %6, 4294967295
-  %8 = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %7
-  %i.o = load ptr, ptr %8, align 8, !tbaa !931
+  %6 = getelementptr [16 x i8], ptr %i.n, i64 %5
+  %7 = getelementptr i8, ptr %6, i64 -16
+  %i.o = load ptr, ptr %7, align 8, !tbaa !931
   tail call void (ptr, ptr, ...) @sqlite3ErrorMsg(ptr noundef nonnull %0, ptr noundef nonnull @.str.835, ptr noundef %i.o, ptr noundef %2)
   br label %bb.as
 
@@ -4038,10 +4029,8 @@ bb.qw:                                            ; preds = %bb.qv, %bb.qu
 
 bb.qx:                                            ; preds = %bb.qw
   %i.bsw = load ptr, ptr %i.axo, align 8, !tbaa !3037
-  %i.bsx = getelementptr inbounds nuw i8, ptr %i.bsw, i64 8
-  %20 = add nuw nsw i64 %i.bsq, 4294967295
-  %21 = and i64 %20, 4294967295
-  %i.bsy = getelementptr inbounds nuw [24 x i8], ptr %i.bsx, i64 %21
+  %i.bsx = getelementptr i8, ptr %i.bsw, i64 -16
+  %i.bsy = getelementptr [24 x i8], ptr %i.bsx, i64 %i.bsq
   %i.bsz = load ptr, ptr %i.bsy, align 8, !tbaa !904 ; 2 uses
   %i.bta = call fastcc ptr @sqlite3ExprSkipCollateAndLikely(ptr noundef %i.bsz) ; 2 uses
   %.not9891225 = icmp eq ptr %i.bta, null
@@ -4444,10 +4433,9 @@ sqlite3TableColumnAffinity.exit.thread:           ; preds = %bb.p, %bb.q, %sqlit
   %.0.i723 = phi i8 [ %i.cn, %sqlite3TableColumnAffinity.exit ], [ 68, %bb.q ], [ 68, %bb.p ]
   %i.cp = shl nuw i8 %.0.i723, 1
   %i.cq = zext i8 %i.cp to i64
-  %7 = add nuw nsw i64 %i.cq, 4294967164
-  %8 = and i64 %7, 4294967294
-  %i.cr = getelementptr inbounds nuw i8, ptr @sqlite3ExprCodeTarget.zAff, i64 %8
-  %i.cs = tail call fastcc i32 @sqlite3VdbeAddOp4(ptr noundef %i.h, i32 noundef 97, i32 noundef %i.ca, i32 noundef 1, i32 noundef 0, ptr noundef nonnull %i.cr, i32 noundef -1) ; 0 uses
+  %7 = getelementptr i8, ptr @sqlite3ExprCodeTarget.zAff, i64 %i.cq
+  %i.cr = getelementptr i8, ptr %7, i64 -132
+  %i.cs = tail call fastcc i32 @sqlite3VdbeAddOp4(ptr noundef %i.h, i32 noundef 97, i32 noundef %i.ca, i32 noundef 1, i32 noundef 0, ptr noundef %i.cr, i32 noundef -1) ; 0 uses
   br label %.critedge
 
 bb.r:                                             ; preds = %.thread719
@@ -4850,10 +4838,9 @@ bb.z:                                             ; preds = %bb.a
 
 bb.aa:                                            ; preds = %bb.z
   %i.ey = zext nneg i8 %i.ew to i64
-  %5 = add nuw nsw i64 %i.ey, 4294967231
-  %6 = and i64 %5, 4294967295
-  %7 = getelementptr inbounds nuw [8 x i8], ptr @__const.exprCodeInlineFunction.azAff, i64 %6
-  %i.ez = load ptr, ptr %7, align 8, !tbaa !253
+  %5 = getelementptr [8 x i8], ptr @__const.exprCodeInlineFunction.azAff, i64 %i.ey
+  %6 = getelementptr i8, ptr %5, i64 -520
+  %i.ez = load ptr, ptr %6, align 8, !tbaa !253
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.z, %bb.aa
@@ -5256,10 +5243,9 @@ bb.p:                                             ; preds = %.thread
 
 bb.q:                                             ; preds = %bb.p
   %i.bk = zext nneg i8 %i.bj to i64
-  %7 = add nuw nsw i64 %i.bk, 4294967295
-  %8 = and i64 %7, 4294967295
-  %9 = getelementptr inbounds nuw [8 x i8], ptr @sqlite3StdType, i64 %8
-  %i.bl = load ptr, ptr %9, align 8, !tbaa !253
+  %7 = getelementptr [8 x i8], ptr @sqlite3StdType, i64 %i.bk
+  %8 = getelementptr i8, ptr %7, i64 -8
+  %i.bl = load ptr, ptr %8, align 8, !tbaa !253
   br label %sqlite3ColumnType.exit
 
 sqlite3ColumnType.exit:                           ; preds = %bb.q, %bb.p, %bb.o, %bb.n
@@ -5662,10 +5648,8 @@ bb.w:                                             ; preds = %.lr.ph
   %i.cv = sub i32 %i.cu, %i.ct
   %i.cw = trunc i32 %i.cv to i16
   %i.cx = load ptr, ptr %i.ag, align 8, !tbaa !3037
-  %9 = add nuw nsw i64 %i.cr, 4294967295
-  %10 = and i64 %9, 4294967295
-  %i.cy = getelementptr inbounds nuw [24 x i8], ptr %i.cx, i64 %10
-  %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 28
+  %i.cy = getelementptr [24 x i8], ptr %i.cx, i64 %i.cr
+  %i.cz = getelementptr i8, ptr %i.cy, i64 4
   store i16 %i.cw, ptr %i.cz, align 4, !tbaa !229
   %.pre435 = load ptr, ptr %.0, align 8, !tbaa !3653 ; 2 uses
   %.pre436 = load i32, ptr %.pre435, align 8, !tbaa !24
@@ -6068,16 +6052,15 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 60 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.f, i64 32
-  %1 = add nuw nsw i64 %i.j, 4294967295
-  %2 = and i64 %1, 4294967295
   %i.t = zext i8 %i.i to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph439, %bb.cz
   %indvars.iv462 = phi i64 [ %i.t, %.lr.ph439 ], [ %indvars.iv.next463, %bb.cz ] ; 6 uses
-  %indvars.iv460.a = phi i64 [ %2, %.lr.ph439 ], [ %indvars.iv.next461, %bb.cz ] ; 3 uses
+  %indvars.iv460.a = phi i64 [ %i.j, %.lr.ph439 ], [ %indvars.iv460, %bb.cz ]
   %.0265435 = phi i8 [ 0, %.lr.ph439 ], [ %.1266, %bb.cz ] ; 2 uses
   %.0269434 = phi i32 [ 0, %.lr.ph439 ], [ %.3, %bb.cz ] ; 7 uses
+  %indvars.iv460 = add nsw i64 %indvars.iv460.a, -1 ; 3 uses
   %indvars.iv.next463 = add nsw i64 %indvars.iv462, -1 ; 2 uses
   %i.u = getelementptr inbounds nuw [120 x i8], ptr %i.k, i64 %indvars.iv.next463 ; 34 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 64 ; 2 uses
@@ -6378,11 +6361,11 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 
 bb.aa:                                            ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond459.not = icmp eq i64 %indvars.iv.next, %indvars.iv460.a
+  %exitcond459.not = icmp eq i64 %indvars.iv.next, %indvars.iv460
   br i1 %exitcond459.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !4368
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph, %bb.aa
-  %.0272.lcssa.ph.in = phi i64 [ %indvars.iv460.a, %bb.aa ], [ %indvars.iv, %.lr.ph ]
+  %.0272.lcssa.ph.in = phi i64 [ %indvars.iv460, %bb.aa ], [ %indvars.iv, %.lr.ph ]
   %.neg = mul i64 %.0272.lcssa.ph.in, -4294967296
   %i.fm = ashr exact i64 %.neg, 32
   br label %._crit_edge
@@ -6785,7 +6768,6 @@ sqlite3VdbeJumpHere.exit396:                      ; preds = %sqlite3VdbeAddOp2.e
 
 bb.cz:                                            ; preds = %sqlite3VdbeJumpHere.exit396, %sqlite3VdbeAddOp2.exit370
   %i.wz = icmp sgt i64 %indvars.iv462, 1
-  %indvars.iv.next461 = add nsw i64 %indvars.iv460.a, -1
   br i1 %i.wz, label %bb.b, label %._crit_edge440, !llvm.loop !4387
 
 ._crit_edge440:                                   ; preds = %bb.cz
@@ -7188,8 +7170,7 @@ bb.k:                                             ; preds = %bb.j
   %i.cm = icmp slt i16 %i.bq, 12
   %narrow = sub nsw i16 43, %i.bq
   %i.cn = sext i16 %narrow to i64
-  %5 = and i64 %i.cn, 4294967295
-  %i.co = getelementptr inbounds nuw i8, ptr @sqlite3LogEstAdd.x, i64 %5
+  %i.co = getelementptr inbounds i8, ptr @sqlite3LogEstAdd.x, i64 %i.cn
   %i.cp = getelementptr inbounds nuw i8, ptr %i.e, i64 20
   %i.cq = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   %i.cr = zext i1 %i.cg to i16
@@ -7592,10 +7573,10 @@ bb.m:                                             ; preds = %.critedge.i
   %indvars.iv55.i = phi i64 [ %indvars.iv.next56.i, %.lr.ph47.i ], [ %.pre-phi.i, %.loopexit.i ]
   %i.ay = phi i8 [ %i.bb, %.lr.ph47.i ], [ %i.aw, %.loopexit.i ]
   %.146.i = phi i64 [ %i.az, %.lr.ph47.i ], [ 0, %.loopexit.i ]
-  %3 = mul i64 %.146.i, 10
-  %4 = and i8 %i.ay, 15
-  %5 = zext nneg i8 %4 to i64
-  %i.az = add i64 %3, %5                          ; 2 uses
+  %3 = zext nneg i8 %i.ay to i64
+  %4 = mul i64 %.146.i, 10
+  %5 = add nsw i64 %3, -48
+  %i.az = add i64 %5, %4                          ; 2 uses
   %indvars.iv.next56.i = add nsw i64 %indvars.iv55.i, 1 ; 2 uses
   %i.ba = getelementptr inbounds i8, ptr %i.an, i64 %indvars.iv.next56.i
   %i.bb = load i8, ptr %i.ba, align 1, !tbaa !229 ; 2 uses
@@ -7998,10 +7979,10 @@ bb.cj:                                            ; preds = %sqlite3_bind_int.ex
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.lr.ph.i.i ], [ 0, %.preheader.i.i ]
   %i.nx = phi i8 [ %i.oa, %.lr.ph.i.i ], [ %i.nv, %.preheader.i.i ]
   %.042.i.i = phi i64 [ %i.ny, %.lr.ph.i.i ], [ 0, %.preheader.i.i ]
-  %6 = mul i64 %.042.i.i, 10
-  %7 = and i8 %i.nx, 15
-  %8 = zext nneg i8 %7 to i64
-  %i.ny = add i64 %6, %8                          ; 2 uses
+  %6 = zext nneg i8 %i.nx to i64
+  %7 = mul i64 %.042.i.i, 10
+  %8 = add nsw i64 %6, -48
+  %i.ny = add i64 %8, %7                          ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 3 uses
   %i.nz = getelementptr inbounds nuw i8, ptr %i.nu, i64 %indvars.iv.next.i.i
   %i.oa = load i8, ptr %i.nz, align 1, !tbaa !229 ; 2 uses
@@ -8047,10 +8028,10 @@ bb.cm:                                            ; preds = %bb.ck
   %indvars.iv55.i.i = phi i64 [ %indvars.iv.next56.i.i, %.lr.ph47.i.i ], [ %.pre-phi.i.i153, %.loopexit.i.i ]
   %i.oh = phi i8 [ %i.ok, %.lr.ph47.i.i ], [ %i.of, %.loopexit.i.i ]
   %.146.i.i = phi i64 [ %i.oi, %.lr.ph47.i.i ], [ 0, %.loopexit.i.i ]
-  %9 = mul i64 %.146.i.i, 10
-  %10 = and i8 %i.oh, 15
-  %11 = zext nneg i8 %10 to i64
-  %i.oi = add i64 %9, %11                         ; 2 uses
+  %9 = zext nneg i8 %i.oh to i64
+  %10 = mul i64 %.146.i.i, 10
+  %11 = add nsw i64 %9, -48
+  %i.oi = add i64 %11, %10                        ; 2 uses
   %indvars.iv.next56.i.i = add nsw i64 %indvars.iv55.i.i, 1 ; 2 uses
   %i.oj = getelementptr inbounds i8, ptr %i.nu, i64 %indvars.iv.next56.i.i
   %i.ok = load i8, ptr %i.oj, align 1, !tbaa !229 ; 2 uses

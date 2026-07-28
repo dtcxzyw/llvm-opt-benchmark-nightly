@@ -203,9 +203,8 @@ _ZN2v88internal4Zone3NewINS0_15SparseBitVector7SegmentEJEEEPT_DpOT0_.exit: ; pre
   %.lhs.trunc = trunc nsw i32 %i.l to i16         ; 2 uses
   %i.n = sdiv i16 %.lhs.trunc, 64
   %i.o = srem i16 %.lhs.trunc, 64
-  %.sext7 = sext i16 %i.o to i64
-  %.sroa.2.0.insert.ext.i.i = and i64 %.sext7, 4294967295
-  %i.p = shl nuw i64 1, %.sroa.2.0.insert.ext.i.i
+  %.sext78 = zext nneg i16 %i.o to i64
+  %i.p = shl nuw i64 1, %.sext78
   %i.q = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.r = sext i16 %i.n to i64
   %i.s = getelementptr inbounds [8 x i8], ptr %i.q, i64 %i.r ; 2 uses

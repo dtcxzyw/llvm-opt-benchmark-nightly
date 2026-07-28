@@ -203,9 +203,8 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.w = zext i8 %i.u to i64
-  %5 = add nuw nsw i64 %i.w, 4294967135
-  %6 = and i64 %5, 4294967295
-  %i.x = getelementptr i8, ptr @cgk2u_choseong, i64 %6
+  %5 = getelementptr i8, ptr @cgk2u_choseong, i64 %i.w
+  %i.x = getelementptr i8, ptr %5, i64 -161
   %i.y = load i8, ptr %i.x, align 1, !tbaa !38
   %i.z = zext i8 %i.y to i32
   br label %bb.l
@@ -230,9 +229,8 @@ bb.m:                                             ; preds = %bb.l
   br i1 %or.cond8, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %7 = add nuw nsw i64 %i.ah, 4294967135
-  %8 = and i64 %7, 4294967295
-  %i.ak = getelementptr i8, ptr @cgk2u_jongseong, i64 %8
+  %6 = getelementptr i8, ptr @cgk2u_jongseong, i64 %i.ah
+  %i.ak = getelementptr i8, ptr %6, i64 -161
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !38
   %i.am = zext i8 %i.al to i32
   br label %bb.o

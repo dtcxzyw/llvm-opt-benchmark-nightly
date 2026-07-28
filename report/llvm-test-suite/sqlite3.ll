@@ -204,9 +204,8 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.q, label %bb.n, label %.loopexit
 
 bb.n:                                             ; preds = %bb.m
-  %1 = add nuw nsw i64 %i.p, 4294967264
-  %2 = and i64 %1, 4294967295
-  %i.r = getelementptr inbounds nuw i8, ptr @sqlite3IsAsciiIdChar, i64 %2
+  %1 = getelementptr i8, ptr @sqlite3IsAsciiIdChar, i64 %i.p
+  %i.r = getelementptr i8, ptr %1, i64 -32
   %i.s = load i8, ptr %i.r, align 1, !tbaa !37
   %.not101 = icmp eq i8 %i.s, 0
   br i1 %.not101, label %.loopexit, label %.preheader329
@@ -609,9 +608,8 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %i.db, label %bb.bc, label %.critedge4.loopexit
 
 bb.bc:                                            ; preds = %bb.bb
-  %2 = add nuw nsw i64 %i.da, 4294967264
-  %3 = and i64 %2, 4294967295
-  %i.dc = getelementptr inbounds nuw i8, ptr @sqlite3IsAsciiIdChar, i64 %3
+  %2 = getelementptr i8, ptr @sqlite3IsAsciiIdChar, i64 %i.da
+  %i.dc = getelementptr i8, ptr %2, i64 -32
   %i.dd = load i8, ptr %i.dc, align 1, !tbaa !37
   %.not238 = icmp eq i8 %i.dd, 0
   br i1 %.not238, label %.critedge4.loopexit, label %.critedge2
@@ -855,9 +853,8 @@ bb.ce:                                            ; preds = %bb.cd
 
 bb.cf:                                            ; preds = %.thread260, %bb.ce
   %i.gb = phi i64 [ %i.fl, %.thread260 ], [ %i.fz, %bb.ce ] ; 2 uses
-  %4 = add nuw nsw i64 %i.gb, 4294967264
-  %5 = and i64 %4, 4294967295
-  %i.gc = getelementptr inbounds nuw i8, ptr @sqlite3IsAsciiIdChar, i64 %5
+  %3 = getelementptr i8, ptr @sqlite3IsAsciiIdChar, i64 %i.gb
+  %i.gc = getelementptr i8, ptr %3, i64 -32
   %i.gd = load i8, ptr %i.gc, align 1, !tbaa !37
   %.not249 = icmp eq i8 %i.gd, 0
   br i1 %.not249, label %bb.cp, label %bb.cg
@@ -879,9 +876,8 @@ bb.ci:                                            ; preds = %bb.ch
   br i1 %i.gi, label %bb.cj, label %.critedge15
 
 bb.cj:                                            ; preds = %bb.ci
-  %6 = add nuw nsw i64 %i.gh, 4294967264
-  %7 = and i64 %6, 4294967295
-  %i.gj = getelementptr inbounds nuw i8, ptr @sqlite3IsAsciiIdChar, i64 %7
+  %4 = getelementptr i8, ptr @sqlite3IsAsciiIdChar, i64 %i.gh
+  %i.gj = getelementptr i8, ptr %4, i64 -32
   %i.gk = load i8, ptr %i.gj, align 1, !tbaa !37
   %.not251 = icmp eq i8 %i.gk, 0
   br i1 %.not251, label %.critedge15, label %.critedge13
@@ -920,16 +916,15 @@ bb.ck:                                            ; preds = %.critedge15
 .lr.ph.i:                                         ; preds = %bb.ck, %bb.co
   %.0.in.in25.i = phi i8 [ %.0.in.in.i, %bb.co ], [ %.0.in.in23.i, %bb.ck ]
   %.0.in.i = zext i8 %.0.in.in25.i to i64
-  %.0.i = add nuw nsw i64 %.0.in.i, 4294967295
-  %8 = and i64 %.0.i, 4294967295                  ; 4 uses
-  %i.he = getelementptr inbounds nuw i8, ptr @keywordCode.aLen, i64 %8
+  %.0.i = add nsw i64 %.0.in.i, -1                ; 4 uses
+  %i.he = getelementptr inbounds nuw i8, ptr @keywordCode.aLen, i64 %.0.i
   %i.hf = load i8, ptr %i.he, align 1, !tbaa !37
   %i.hg = zext i8 %i.hf to i64
   %i.hh = icmp eq i64 %indvars.iv374, %i.hg
   br i1 %i.hh, label %bb.cl, label %bb.co
 
 bb.cl:                                            ; preds = %.lr.ph.i
-  %i.hi = getelementptr inbounds nuw [2 x i8], ptr @keywordCode.aOffset, i64 %8
+  %i.hi = getelementptr inbounds nuw [2 x i8], ptr @keywordCode.aOffset, i64 %.0.i
   %i.hj = load i16, ptr %i.hi, align 2, !tbaa !170
   %i.hk = zext i16 %i.hj to i64
   %i.hl = getelementptr inbounds nuw i8, ptr @keywordCode.zText, i64 %i.hk
@@ -980,13 +975,13 @@ sqlite3StrNICmp.exit.i:                           ; preds = %sqlite3StrNICmp.exi
   br i1 %i.id, label %sqlite3StrNICmp.exit.thread.i, label %bb.co
 
 sqlite3StrNICmp.exit.thread.i:                    ; preds = %sqlite3StrNICmp.exit.i, %bb.cn
-  %i.ie = getelementptr inbounds nuw i8, ptr @keywordCode.aCode, i64 %8
+  %i.ie = getelementptr inbounds nuw i8, ptr @keywordCode.aCode, i64 %.0.i
   %i.if = load i8, ptr %i.ie, align 1, !tbaa !37
   %i.ig = zext i8 %i.if to i32
   br label %keywordCode.exit
 
 bb.co:                                            ; preds = %sqlite3StrNICmp.exit.i, %.lr.ph.i
-  %i.ih = getelementptr inbounds nuw i8, ptr @keywordCode.aNext, i64 %8
+  %i.ih = getelementptr inbounds nuw i8, ptr @keywordCode.aNext, i64 %.0.i
   %.0.in.in.i = load i8, ptr %i.ih, align 1, !tbaa !37 ; 2 uses
   %.not.i = icmp eq i8 %.0.in.in.i, 0
   br i1 %.not.i, label %keywordCode.exit, label %.lr.ph.i, !llvm.loop !1278
@@ -1389,10 +1384,8 @@ bb.ji:                                            ; preds = %bb.jh
   %i.aqy = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.aqz = load i32, ptr %i.aqy, align 8, !tbaa !37
   %i.ara = trunc i32 %i.aqz to i8
-  %12 = add nuw nsw i64 %i.aqx, 4294967295
-  %13 = and i64 %12, 4294967295
-  %i.arb = getelementptr inbounds nuw [72 x i8], ptr %i.aqu, i64 %13
-  %i.arc = getelementptr inbounds nuw i8, ptr %i.arb, i64 49
+  %i.arb = getelementptr [72 x i8], ptr %i.aqu, i64 %i.aqx
+  %i.arc = getelementptr i8, ptr %i.arb, i64 -23
   store i8 %i.ara, ptr %i.arc, align 1, !tbaa !1327
   br label %sqlite3CommitTransaction.exit
 
@@ -1795,18 +1788,18 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   br i1 %or.cond, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %.preheader
-  %2 = and i8 %i.d, 15
-  %3 = zext nneg i8 %2 to i64                     ; 2 uses
+  %2 = zext nneg i8 %i.d to i64
+  %3 = add nsw i64 %2, -48                        ; 2 uses
   %i.h = load i8, ptr %i.f, align 1, !tbaa !37    ; 2 uses
   %i.i = add i8 %i.h, -48
   %or.cond.1 = icmp ult i8 %i.i, 10
   br i1 %or.cond.1, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
-  %4 = mul nuw nsw i64 %3, 10
-  %5 = and i8 %i.h, 15
-  %6 = zext nneg i8 %5 to i64
-  %i.j = add nuw nsw i64 %4, %6                   ; 2 uses
+  %4 = zext nneg i8 %i.h to i64
+  %5 = mul nuw nsw i64 %3, 10
+  %6 = add nsw i64 %5, -48
+  %i.j = add nsw i64 %6, %4                       ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.125, i64 2
   %i.l = load i8, ptr %i.k, align 1, !tbaa !37    ; 2 uses
   %i.m = add i8 %i.l, -48
@@ -1814,10 +1807,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond.2, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
-  %7 = mul nuw nsw i64 %i.j, 10
-  %8 = and i8 %i.l, 15
-  %9 = zext nneg i8 %8 to i64
-  %i.n = add nuw nsw i64 %7, %9                   ; 2 uses
+  %7 = zext nneg i8 %i.l to i64
+  %8 = mul nuw nsw i64 %i.j, 10
+  %9 = add nsw i64 %8, -48
+  %i.n = add nuw nsw i64 %9, %7                   ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.125, i64 3
   %i.p = load i8, ptr %i.o, align 1, !tbaa !37    ; 2 uses
   %i.q = add i8 %i.p, -48
@@ -1825,10 +1818,10 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond.3, label %bb.f, label %.critedge
 
 bb.f:                                             ; preds = %bb.e
-  %10 = mul nuw nsw i64 %i.n, 10
-  %11 = and i8 %i.p, 15
-  %12 = zext nneg i8 %11 to i64
-  %i.r = add nuw nsw i64 %10, %12                 ; 2 uses
+  %10 = zext nneg i8 %i.p to i64
+  %11 = mul nuw nsw i64 %i.n, 10
+  %12 = add nsw i64 %11, -48
+  %i.r = add nuw nsw i64 %12, %10                 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.125, i64 4
   %i.t = load i8, ptr %i.s, align 1, !tbaa !37    ; 2 uses
   %i.u = add i8 %i.t, -48
@@ -1836,10 +1829,10 @@ bb.f:                                             ; preds = %bb.e
   br i1 %or.cond.4, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %bb.f
-  %13 = mul nuw nsw i64 %i.r, 10
-  %14 = and i8 %i.t, 15
-  %15 = zext nneg i8 %14 to i64
-  %i.v = add nuw nsw i64 %13, %15                 ; 2 uses
+  %13 = zext nneg i8 %i.t to i64
+  %14 = mul nuw nsw i64 %i.r, 10
+  %15 = add nsw i64 %14, -48
+  %i.v = add nuw nsw i64 %15, %13                 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.125, i64 5
   %i.x = load i8, ptr %i.w, align 1, !tbaa !37    ; 2 uses
   %i.y = add i8 %i.x, -48
@@ -1847,10 +1840,10 @@ bb.g:                                             ; preds = %bb.f
   br i1 %or.cond.5, label %bb.h, label %.critedge
 
 bb.h:                                             ; preds = %bb.g
-  %16 = mul nuw nsw i64 %i.v, 10
-  %17 = and i8 %i.x, 15
-  %18 = zext nneg i8 %17 to i64
-  %i.z = add nuw nsw i64 %16, %18                 ; 2 uses
+  %16 = zext nneg i8 %i.x to i64
+  %17 = mul nuw nsw i64 %i.v, 10
+  %18 = add nsw i64 %17, -48
+  %i.z = add nuw nsw i64 %18, %16                 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.125, i64 6
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !37  ; 2 uses
   %i.ac = add i8 %i.ab, -48
@@ -1858,10 +1851,10 @@ bb.h:                                             ; preds = %bb.g
   br i1 %or.cond.6, label %bb.i, label %.critedge
 
 bb.i:                                             ; preds = %bb.h
-  %19 = mul nuw nsw i64 %i.z, 10
-  %20 = and i8 %i.ab, 15
-  %21 = zext nneg i8 %20 to i64
-  %i.ad = add nuw nsw i64 %19, %21                ; 2 uses
+  %19 = zext nneg i8 %i.ab to i64
+  %20 = mul nuw nsw i64 %i.z, 10
+  %21 = add nsw i64 %20, -48
+  %i.ad = add nuw nsw i64 %21, %19                ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.125, i64 7
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !37  ; 2 uses
   %i.ag = add i8 %i.af, -48
@@ -1869,10 +1862,10 @@ bb.i:                                             ; preds = %bb.h
   br i1 %or.cond.7, label %bb.j, label %.critedge
 
 bb.j:                                             ; preds = %bb.i
-  %22 = mul nuw nsw i64 %i.ad, 10
-  %23 = and i8 %i.af, 15
-  %24 = zext nneg i8 %23 to i64
-  %i.ah = add nuw nsw i64 %22, %24                ; 2 uses
+  %22 = zext nneg i8 %i.af to i64
+  %23 = mul nuw nsw i64 %i.ad, 10
+  %24 = add nsw i64 %23, -48
+  %i.ah = add nuw nsw i64 %24, %22                ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.125, i64 8
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !37  ; 2 uses
   %i.ak = add i8 %i.aj, -48
@@ -1880,10 +1873,10 @@ bb.j:                                             ; preds = %bb.i
   br i1 %or.cond.8, label %bb.k, label %.critedge
 
 bb.k:                                             ; preds = %bb.j
-  %25 = mul nuw nsw i64 %i.ah, 10
-  %26 = and i8 %i.aj, 15
-  %27 = zext nneg i8 %26 to i64
-  %i.al = add nuw nsw i64 %25, %27                ; 2 uses
+  %25 = zext nneg i8 %i.aj to i64
+  %26 = mul nuw nsw i64 %i.ah, 10
+  %27 = add nsw i64 %26, -48
+  %i.al = add nuw nsw i64 %27, %25                ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.125, i64 9
   %i.an = load i8, ptr %i.am, align 1, !tbaa !37  ; 2 uses
   %i.ao = add i8 %i.an, -48
@@ -1891,10 +1884,10 @@ bb.k:                                             ; preds = %bb.j
   br i1 %or.cond.9, label %bb.l, label %.critedge
 
 bb.l:                                             ; preds = %bb.k
-  %28 = mul nuw nsw i64 %i.al, 10
-  %29 = and i8 %i.an, 15
-  %30 = zext nneg i8 %29 to i64
-  %i.ap = add nuw nsw i64 %28, %30
+  %28 = zext nneg i8 %i.an to i64
+  %29 = mul nuw nsw i64 %i.al, 10
+  %30 = add nsw i64 %29, -48
+  %i.ap = add nuw nsw i64 %30, %28
   %i.aq = getelementptr inbounds nuw i8, ptr %.125, i64 10
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !37
   %i.as = add i8 %i.ar, -48
@@ -2297,16 +2290,15 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.i.i:                                       ; preds = %bb.d, %bb.h
   %.0.in.in25.i.i = phi i8 [ %.0.in.in.i.i, %bb.h ], [ %.0.in.in23.i.i, %bb.d ]
   %.0.in.i.i = zext i8 %.0.in.in25.i.i to i64
-  %.0.i.i = add nuw nsw i64 %.0.in.i.i, 4294967295
-  %3 = and i64 %.0.i.i, 4294967295                ; 3 uses
-  %i.al = getelementptr inbounds nuw i8, ptr @keywordCode.aLen, i64 %3
+  %.0.i.i = add nsw i64 %.0.in.i.i, -1            ; 3 uses
+  %i.al = getelementptr inbounds nuw i8, ptr @keywordCode.aLen, i64 %.0.i.i
   %i.am = load i8, ptr %i.al, align 1, !tbaa !37
   %i.an = zext i8 %i.am to i64
   %i.ao = icmp eq i64 %indvars.iv.next, %i.an
   br i1 %i.ao, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %.lr.ph.i.i
-  %i.ap = getelementptr inbounds nuw [2 x i8], ptr @keywordCode.aOffset, i64 %3
+  %i.ap = getelementptr inbounds nuw [2 x i8], ptr @keywordCode.aOffset, i64 %.0.i.i
   %i.aq = load i16, ptr %i.ap, align 2, !tbaa !170
   %i.ar = zext i16 %i.aq to i64
   %i.as = getelementptr inbounds nuw i8, ptr @keywordCode.zText, i64 %i.ar
@@ -2357,7 +2349,7 @@ sqlite3StrNICmp.exit.i.i:                         ; preds = %sqlite3StrNICmp.exi
   br i1 %i.bk, label %.thread43, label %bb.h
 
 bb.h:                                             ; preds = %sqlite3StrNICmp.exit.i.i, %.lr.ph.i.i
-  %i.bl = getelementptr inbounds nuw i8, ptr @keywordCode.aNext, i64 %3
+  %i.bl = getelementptr inbounds nuw i8, ptr @keywordCode.aNext, i64 %.0.i.i
   %.0.in.in.i.i = load i8, ptr %i.bl, align 1, !tbaa !37 ; 2 uses
   %.not.i.i = icmp eq i8 %.0.in.in.i.i, 0
   br i1 %.not.i.i, label %.thread45, label %.lr.ph.i.i, !llvm.loop !1278

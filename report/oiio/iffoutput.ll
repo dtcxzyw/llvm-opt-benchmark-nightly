@@ -204,7 +204,6 @@ _ZNSt6vectorIhSaIhEE6resizeEm.exit820:            ; preds = %_ZNSt12_Vector_base
 
 .lr.ph2113:                                       ; preds = %_ZNSt6vectorIhSaIhEE6resizeEm.exit820
   %i.aom = zext nneg i8 %i.ant to i64
-  %.03962110 = add nuw nsw i64 %i.aom, 4294967295
   %.not.i.i.i.i823 = icmp eq i32 %i.anp, 0
   %i.aon = add nsw i64 %i.anq, -1                 ; 2 uses
   %i.aoo = icmp eq i64 %i.aon, 0
@@ -213,7 +212,6 @@ _ZNSt6vectorIhSaIhEE6resizeEm.exit820:            ; preds = %_ZNSt12_Vector_base
   %i.aop = ptrtoint ptr %.sroa.01242.1 to i64
   %i.aoq = sext i32 %i.anp to i64
   %i.aor = icmp sgt i32 %i.anp, 0
-  %30 = and i64 %.03962110, 4294967295
   %brmerge = select i1 %.not5322105, i1 true, i1 %.not5332098
   br label %bb.fi
 
@@ -233,8 +231,9 @@ bb.fh:                                            ; preds = %bb.ff
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit898
 
 bb.fi:                                            ; preds = %.lr.ph2113, %_ZNSt6vectorIhSaIhEED2Ev.exit872
-  %indvars.iv2409.a = phi i64 [ %30, %.lr.ph2113 ], [ %indvars.iv.next2410, %_ZNSt6vectorIhSaIhEED2Ev.exit872 ] ; 3 uses
+  %indvars.iv2409.a = phi i64 [ %i.aom, %.lr.ph2113 ], [ %indvars.iv2409, %_ZNSt6vectorIhSaIhEED2Ev.exit872 ] ; 2 uses
   %.03972111 = phi i32 [ 0, %.lr.ph2113 ], [ %i.aso, %_ZNSt6vectorIhSaIhEED2Ev.exit872 ] ; 2 uses
+  %indvars.iv2409 = add nsw i64 %indvars.iv2409.a, -1 ; 2 uses
   br i1 %.not.i.i.i.i823, label %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit827, label %bb.fj
 
 bb.fj:                                            ; preds = %bb.fi
@@ -451,7 +450,7 @@ bb.fx:                                            ; preds = %.lr.ph2102, %bb.fx
   %i.ase = mul nuw nsw i64 %i.asc, %i.asd
   %i.asf = getelementptr inbounds nuw i8, ptr %i.arq, i64 %i.ase
   %i.asg = getelementptr inbounds nuw i8, ptr %i.asf, i64 %i.arx
-  %i.ash = getelementptr inbounds nuw i8, ptr %i.asg, i64 %indvars.iv2409.a
+  %i.ash = getelementptr inbounds nuw i8, ptr %i.asg, i64 %indvars.iv2409
   %.0.copyload = load i8, ptr %i.ash, align 1
   %i.asi = getelementptr inbounds nuw i8, ptr %.13952099, i64 1 ; 2 uses
   store i8 %.0.copyload, ptr %.13952099, align 1, !tbaa !16
@@ -476,8 +475,7 @@ bb.fy:                                            ; preds = %.loopexit
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit872
 
 _ZNSt6vectorIhSaIhEED2Ev.exit872:                 ; preds = %.loopexit, %bb.fy
-  %indvars.iv.next2410 = add nsw i64 %indvars.iv2409.a, -1
-  %i.asr = icmp sgt i64 %indvars.iv2409.a, 0
+  %i.asr = icmp sgt i64 %indvars.iv2409.a, 1
   br i1 %i.asr, label %bb.fi, label %._crit_edge2114, !llvm.loop !213
 
 bb.fz:                                            ; preds = %._crit_edge2114
@@ -880,10 +878,9 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.ak = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.ad, i1 true) ; 2 uses
   %i.al = trunc nuw nsw i64 %i.ak to i32
-  %i.am = add nuw nsw i64 %i.ak, 4294967286
+  %i.am = add nsw i64 %i.ak, -10
   %i.an = sub nuw nsw i32 -1063, %i.al
-  %6 = and i64 %i.am, 4294967295
-  %i.ao = shl i64 %i.ad, %6
+  %i.ao = shl i64 %i.ad, %i.am
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h

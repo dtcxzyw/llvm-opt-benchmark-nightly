@@ -203,9 +203,8 @@ bb.r:                                             ; preds = %bb.q
 
 .thread.i.i.i:                                    ; preds = %bb.r, %bb.q
   %i.bu = zext nneg i8 %i.be to i64
-  %12 = add nuw nsw i64 %i.bu, 4294967295
-  %13 = and i64 %12, 4294967295
-  %i.bv = getelementptr inbounds nuw i8, ptr @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d, i64 %13
+  %12 = getelementptr i8, ptr @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d, i64 %i.bu
+  %i.bv = getelementptr i8, ptr %12, i64 -1
   %i.bw = load i8, ptr %i.bv, align 1, !tbaa !56
   br label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.i
 
@@ -608,9 +607,8 @@ bb.r:                                             ; preds = %bb.q
 
 .thread.i.i.i:                                    ; preds = %bb.r, %bb.q
   %i.bu = zext nneg i8 %i.be to i64
-  %12 = add nuw nsw i64 %i.bu, 4294967295
-  %13 = and i64 %12, 4294967295
-  %i.bv = getelementptr inbounds nuw i8, ptr @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d, i64 %13
+  %12 = getelementptr i8, ptr @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d, i64 %i.bu
+  %i.bv = getelementptr i8, ptr %12, i64 -1
   %i.bw = load i8, ptr %i.bv, align 1, !tbaa !56
   br label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.i
 
@@ -1013,9 +1011,8 @@ bb.k:                                             ; preds = %bb.j
 
 .thread.i.i.i.i:                                  ; preds = %bb.k, %bb.j
   %i.bf = zext nneg i8 %i.ap to i64
-  %15 = add nuw nsw i64 %i.bf, 4294967295
-  %16 = and i64 %15, 4294967295
-  %i.bg = getelementptr inbounds nuw i8, ptr @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d, i64 %16
+  %15 = getelementptr i8, ptr @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d, i64 %i.bf
+  %i.bg = getelementptr i8, ptr %15, i64 -1
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !56
   br label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.i.i
 

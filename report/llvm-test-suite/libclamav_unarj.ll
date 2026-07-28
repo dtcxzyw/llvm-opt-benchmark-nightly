@@ -149,9 +149,8 @@ bb.l:                                             ; preds = %bb.j
   br i1 %.not32.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ap = add nuw nsw i64 %i.an, 4294967266
-  %3 = and i64 %i.ap, 4294967295
-  %i.aq = call i64 @lseek(i32 noundef %0, i64 noundef %3, i32 noundef 1) #11
+  %i.ap = add nsw i64 %i.an, -30
+  %i.aq = call i64 @lseek(i32 noundef %0, i64 noundef %i.ap, i32 noundef 1) #11
   %i.ar = icmp eq i64 %i.aq, -1
   br i1 %i.ar, label %.loopexit, label %bb.n
 
@@ -428,9 +427,8 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not39.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.ax = add nuw nsw i64 %i.av, 4294967266
-  %4 = and i64 %i.ax, 4294967295
-  %i.ay = call i64 @lseek(i32 noundef range(i32 0, -2147483648) %0, i64 noundef %4, i32 noundef 1) #11
+  %i.ax = add nsw i64 %i.av, -30
+  %i.ay = call i64 @lseek(i32 noundef range(i32 0, -2147483648) %0, i64 noundef %i.ax, i32 noundef 1) #11
   %i.az = icmp eq i64 %i.ay, -1
   br i1 %i.az, label %arj_read_file_header.exit, label %bb.o
 

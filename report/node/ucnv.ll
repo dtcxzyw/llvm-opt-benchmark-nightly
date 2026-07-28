@@ -203,9 +203,8 @@ bb.d:                                             ; preds = %bb.c
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
   %i.aa = load i8, ptr %i.z, align 2
   %i.ab = getelementptr inbounds nuw i8, ptr %i.c, i64 212
-  %.neg = mul nsw i64 %i.w, 4294967294
-  %2 = and i64 %.neg, 4294967294
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull align 4 %i.ab, i64 %2, i1 false)
+  %.neg = mul nsw i64 %i.w, -2
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull align 4 %i.ab, i64 %.neg, i1 false)
   store ptr %i.a, ptr %i.d, align 8
   %i.ac = load i8, ptr %i.t, align 1
   %i.ad = sext i8 %i.ac to i64
@@ -500,9 +499,8 @@ bb.u:                                             ; preds = %bb.t
   %i.dz = load ptr, ptr %i.d, align 8
   %i.ea = load ptr, ptr %i.ah, align 8
   %i.eb = load i8, ptr %i.ag, align 2
-  %.neg168 = mul nsw i64 %i.dw, 4294967294
-  %3 = and i64 %.neg168, 4294967294
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull align 4 %i.aj, i64 %3, i1 false)
+  %.neg168 = mul nsw i64 %i.dw, -2
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull align 4 %i.aj, i64 %.neg168, i1 false)
   store ptr %i.a, ptr %i.d, align 8
   %i.ec = load i8, ptr %i.t, align 1
   %i.ed = sext i8 %i.ec to i64

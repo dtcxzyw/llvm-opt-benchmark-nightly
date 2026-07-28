@@ -191,10 +191,9 @@ _ZN6Assimp17HexOctetToDecimalEPKc.exit:           ; preds = %_ZN6Assimp17HexDigi
 
 .lr.ph.i:                                         ; preds = %_ZN6Assimp17HexOctetToDecimalEPKc.exit
   %i.bd = zext i8 %i.bb to i64
-  %1 = add nuw nsw i64 %i.bd, 4294967264
-  %2 = and i64 %1, 4294967295
-  %3 = getelementptr inbounds nuw [2 x i8], ptr @_ZL13mac_codetable, i64 %2
-  %i.be = load i16, ptr %3, align 2
+  %1 = getelementptr [2 x i8], ptr @_ZL13mac_codetable, i64 %i.bd
+  %2 = getelementptr i8, ptr %1, i64 -64
+  %i.be = load i16, ptr %2, align 2
   %i.bf = zext i16 %i.be to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.bg = call noundef ptr @_ZN4utf86appendIPhEET_jS2_(i32 noundef %i.bf, ptr noundef nonnull %i.a) ; 0 uses

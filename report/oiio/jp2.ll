@@ -204,16 +204,15 @@ bb.an:                                            ; preds = %bb.ak
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph.i26
   %i.et = zext i8 %i.el to i64
-  %i.eu = add nuw nsw i64 %i.et, 65535
-  %wide.trip.count = and i64 %i.eu, 65535         ; 2 uses
-  %exitcond.not148 = icmp eq i64 %wide.trip.count, 0
+  %i.eu = add nsw i64 %i.et, -1                   ; 2 uses
+  %exitcond.not148 = icmp eq i64 %i.eu, 0
   br i1 %exitcond.not148, label %._crit_edge.i27, label %.lr.ph150, !llvm.loop !60
 
 .lr.ph150:                                        ; preds = %.lr.ph.preheader
   br label %bb.ao, !llvm.loop !60
 
 .lr.ph:                                           ; preds = %bb.ao
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.eu
   br i1 %exitcond.not, label %.lr.ph.._crit_edge.i27_crit_edge, label %bb.ao, !llvm.loop !60
 
 bb.ao:                                            ; preds = %.lr.ph150, %.lr.ph

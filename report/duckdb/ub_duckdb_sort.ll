@@ -204,10 +204,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %7, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -610,10 +608,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -1016,10 +1012,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -1422,10 +1416,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -1828,10 +1820,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -2234,10 +2224,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -2640,10 +2628,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -3046,10 +3032,8 @@ bb.j:                                             ; preds = %.lr.ph89, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %9, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge96
 
@@ -3452,10 +3436,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %7, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -3858,10 +3840,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -4264,10 +4244,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -4670,10 +4648,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -5076,10 +5052,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -5482,10 +5456,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -5888,10 +5860,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -6294,10 +6264,8 @@ bb.j:                                             ; preds = %.lr.ph89, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %9, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge96
 
@@ -6700,10 +6668,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %7, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -7106,10 +7072,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -7512,10 +7476,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -7918,10 +7880,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -8324,10 +8284,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -8730,10 +8688,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -9136,10 +9092,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -9542,10 +9496,8 @@ bb.j:                                             ; preds = %.lr.ph89, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %9, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge96
 
@@ -9948,10 +9900,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %7, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -10354,10 +10304,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -10760,10 +10708,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -11166,10 +11112,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -11572,10 +11516,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -11978,10 +11920,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -12384,10 +12324,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -12790,10 +12728,8 @@ bb.j:                                             ; preds = %.lr.ph89, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %9, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge96
 
@@ -13196,10 +13132,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %7, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -13602,10 +13536,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -14008,10 +13940,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -14414,10 +14344,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -14820,10 +14748,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -15226,10 +15152,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -15632,10 +15556,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -16038,10 +15960,8 @@ bb.j:                                             ; preds = %.lr.ph89, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %9, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge96
 
@@ -16444,10 +16364,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %7, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -16850,10 +16768,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -17256,10 +17172,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -17662,10 +17576,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -18068,10 +17980,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -18474,10 +18384,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -18880,10 +18788,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -19286,10 +19192,8 @@ bb.j:                                             ; preds = %.lr.ph89, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %9, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge96
 
@@ -19692,10 +19596,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %7, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -20098,10 +20000,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -20504,10 +20404,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -20910,10 +20808,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -21316,10 +21212,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -21722,10 +21616,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -22128,10 +22020,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -22534,10 +22424,8 @@ bb.j:                                             ; preds = %.lr.ph89, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %9, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge96
 
@@ -22940,10 +22828,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %7, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -23346,10 +23232,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -23752,10 +23636,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -24158,10 +24040,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -24564,10 +24444,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -24970,10 +24848,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -25376,10 +25252,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -25782,10 +25656,8 @@ bb.j:                                             ; preds = %.lr.ph89, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %9, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge96
 
@@ -26188,10 +26060,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %7, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -26594,10 +26464,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -27000,10 +26868,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -27406,10 +27272,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -27812,10 +27676,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -28218,10 +28080,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -28624,10 +28484,8 @@ bb.j:                                             ; preds = %.lr.ph83, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = zext i8 %i.br to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bt, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bu = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %i.bu = getelementptr [16 x i8], ptr %7, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !2235
   br label %._crit_edge90
 
@@ -29030,10 +28888,8 @@ bb.j:                                             ; preds = %.lr.ph89, %_ZN15duc
 
 bb.k:                                             ; preds = %bb.j
   %i.bs = zext i8 %i.bq to i64                    ; 2 uses
-  %11 = add nuw nsw i64 %i.bs, 4294967295
-  %12 = and i64 %11, 4294967295
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %12
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
+  %i.bt = getelementptr [16 x i8], ptr %9, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !2235
   br label %._crit_edge96
 

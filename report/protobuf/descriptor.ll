@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.e = icmp ugt i64 %2, %i.d
   %.neg.i.i.i.i = sext i1 %i.e to i64
   %i.f = add nsw i64 %i.c, %.neg.i.i.i.i
-  %7 = and i64 %i.f, 4294967295
-  %i.g = lshr i64 -1, %7
+  %i.g = lshr i64 -1, %i.f
   br label %bb.d
 
 _ZN4absl12lts_2025051218container_internal29SelectBucketCountForIterRangeIPKPKcEEmT_S7_m.exit.i.i: ; preds = %bb.b
@@ -608,16 +607,15 @@ bb.t:                                             ; preds = %bb.s
   %i.eg = lshr i64 -2305843009213693952, %i.ef
   %i.eh = icmp ult i64 %i.eg, %i.ec
   %.neg.i.i.i.i = sext i1 %i.eh to i64
-  %i.ei = add nsw i64 %i.ef, %.neg.i.i.i.i
-  %30 = and i64 %i.ei, 4294967295                 ; 2 uses
+  %i.ei = add nsw i64 %i.ef, %.neg.i.i.i.i        ; 2 uses
   store i64 1, ptr %23, align 8
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %23, i64 8
   store i64 0, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8
-  %.not453 = icmp eq i64 %30, 63
+  %.not453 = icmp eq i64 %i.ei, 63
   br i1 %.not453, label %.lr.ph.i.i.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.ej = lshr i64 -1, %30
+  %i.ej = lshr i64 -1, %i.ei
   invoke void @_ZN4absl12lts_2025051218container_internal45ReserveEmptyNonAllocatedTableToFitBucketCountERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEm(ptr noundef nonnull align 8 dereferenceable(32) %23, ptr noundef nonnull align 8 dereferenceable(72) @_ZZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEENS0_13hash_internal4HashIiEESt8equal_toIiESaIiEE18GetPolicyFunctionsEvE5value, i64 noundef %i.ej)
           to label %.lr.ph.i.i.i unwind label %bb.ag
 
@@ -683,16 +681,15 @@ bb.y:                                             ; preds = %_ZN4absl12lts_20250
   %i.ey = lshr i64 -2305843009213693952, %i.ex
   %i.ez = icmp ult i64 %i.ey, %i.eu
   %.neg.i.i.i.i153 = sext i1 %i.ez to i64
-  %i.fa = add nsw i64 %i.ex, %.neg.i.i.i.i153
-  %31 = and i64 %i.fa, 4294967295                 ; 2 uses
+  %i.fa = add nsw i64 %i.ex, %.neg.i.i.i.i153     ; 2 uses
   store i64 1, ptr %24, align 8
   %.sroa.4.0..sroa_idx.i.i.i154 = getelementptr inbounds nuw i8, ptr %24, i64 8
   store i64 0, ptr %.sroa.4.0..sroa_idx.i.i.i154, align 8
-  %.not455 = icmp eq i64 %31, 63
+  %.not455 = icmp eq i64 %i.fa, 63
   br i1 %.not455, label %.lr.ph.i.i.i157, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.fb = lshr i64 -1, %31
+  %i.fb = lshr i64 -1, %i.fa
   invoke void @_ZN4absl12lts_2025051218container_internal45ReserveEmptyNonAllocatedTableToFitBucketCountERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEm(ptr noundef nonnull align 8 dereferenceable(32) %24, ptr noundef nonnull align 8 dereferenceable(72) @_ZZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEENS0_13hash_internal4HashIiEESt8equal_toIiESaIiEE18GetPolicyFunctionsEvE5value, i64 noundef %i.fb)
           to label %.lr.ph.i.i.i157 unwind label %bb.ah
 
@@ -1095,8 +1092,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = icmp ugt i64 %i.e, %i.g
   %.neg.i.i = sext i1 %i.h to i64
   %i.i = add nsw i64 %i.f, %.neg.i.i
-  %8 = and i64 %i.i, 4294967295
-  %i.j = lshr i64 -1, %8
+  %i.j = lshr i64 -1, %i.i
   br label %_ZN4absl12lts_2025051218container_internal29SelectBucketCountForIterRangeIPKPKcEEmT_S7_m.exit
 
 _ZN4absl12lts_2025051218container_internal29SelectBucketCountForIterRangeIPKPKcEEmT_S7_m.exit: ; preds = %bb.a, %bb.c

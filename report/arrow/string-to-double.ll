@@ -203,14 +203,13 @@ bb.i:                                             ; preds = %.lr.ph.i
   br i1 %.not.not.i, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S4_.exit.thread, label %.lr.ph.i, !llvm.loop !42
 
 bb.j:                                             ; preds = %bb.f, %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit, %bb.d
-  %.sink532 = phi i64 [ 4294967209, %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit ], [ 4294967248, %bb.d ], [ 4294967241, %bb.f ]
-  %i.ak = add nuw nsw i64 %.sink532, %i.z
+  %.sink532 = phi i64 [ -87, %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit ], [ -48, %bb.d ], [ -55, %bb.f ]
+  %i.ak = add nsw i64 %.sink532, %i.z
   %i.al = trunc nuw i8 %.0129 to i1
   %i.am = add nsw i32 %.0122, -4
   %spec.select150 = select i1 %i.al, i32 %i.am, i32 %.0122 ; 22 uses
   %i.an = shl nsw i64 %.0116, 4
-  %9 = and i64 %i.ak, 4294967295
-  %i.ao = add nsw i64 %i.an, %9                   ; 24 uses
+  %i.ao = add nsw i64 %i.an, %i.ak                ; 24 uses
   %i.ap = ashr i64 %i.ao, %i.k
   %i.aq = trunc i64 %i.ap to i32                  ; 3 uses
   %.not = icmp eq i32 %i.aq, 0
