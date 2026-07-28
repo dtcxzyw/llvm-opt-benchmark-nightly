@@ -204,7 +204,7 @@ _ZN10COutBuffer9WriteByteEh.exit.i60:             ; preds = %bb.y, %.lr.ph240
   br i1 %.not.i61, label %_ZN12CBitlEncoder9WriteBitsEjj.exit63, label %bb.x, !llvm.loop !128
 
 _ZN12CBitlEncoder9WriteBitsEjj.exit63:            ; preds = %_ZN10COutBuffer9WriteByteEh.exit.i60, %_ZN10COutBuffer9WriteByteEh.exit.i60.peel, %_ZN9NCompress8NDeflate8NEncoder10GetPosSlotEj.exit, %.loopexit130
-  %.not13.i64 = icmp samesign ult i64 %.0.i, 4
+  %.not13.i64 = icmp ult i64 %.0.i, 4
   br i1 %.not13.i64, label %_ZN12CBitlEncoder9WriteBitsEjj.exit36, label %.lr.ph.i65
 
 .lr.ph.i65:                                       ; preds = %_ZN12CBitlEncoder9WriteBitsEjj.exit63

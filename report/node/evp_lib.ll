@@ -201,11 +201,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %bb.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %spec.select = sext i1 %or.cond.not to i64
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !30
   store ptr %i.r, ptr %i.a, align 8, !tbaa !43
-  %6 = select i1 %or.cond.not, i64 4294967295, i64 0
-  %i.s = select i1 %or.cond7.not, i64 %6, i64 1
+  %i.s = select i1 %or.cond7.not, i64 %spec.select, i64 1
   %i.t = getelementptr inbounds nuw [40 x i8], ptr %2, i64 %i.s ; 4 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !46
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 32

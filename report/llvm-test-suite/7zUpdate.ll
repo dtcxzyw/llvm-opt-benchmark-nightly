@@ -204,9 +204,9 @@ _ZN8NArchive3N7zL9IsExeFileERKNS0_11CUpdateItemE.exit: ; preds = %bb.dc, %bb.dd,
   %i.xb = load i8, ptr %i.vs, align 4, !tbaa !168, !range !48, !noundef !49
   %i.xc = shl nuw nsw i8 %i.xb, 1
   %i.xd = zext nneg i8 %i.xc to i64
-  %45 = load ptr, ptr %i.vt, align 8, !tbaa !42
-  %46 = or i64 %.0557, %i.xd
-  %i.xe = getelementptr inbounds nuw [8 x i8], ptr %45, i64 %46
+  %45 = or i64 %.0557, %i.xd
+  %46 = load ptr, ptr %i.vt, align 8, !tbaa !42
+  %i.xe = getelementptr inbounds nuw [8 x i8], ptr %46, i64 %45
   %i.xf = load ptr, ptr %i.xe, align 8, !tbaa !43 ; 3 uses
   invoke void @_ZN17CBaseRecordVector18ReserveOnePositionEv(ptr noundef nonnull align 8 dereferenceable(32) %i.xf)
           to label %_ZN13CRecordVectorIjE3AddEj.exit unwind label %bb.dm

@@ -204,8 +204,8 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.ak, label %mi_out_alignright.exit.thread360, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %4 = and i8 %.2230, 15
-  %5 = zext nneg i8 %4 to i64
+  %4 = zext nneg i8 %.2230 to i64
+  %5 = add nsw i64 %4, -48
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.v, %bb.t
@@ -218,10 +218,10 @@ bb.u:                                             ; preds = %bb.v, %bb.t
   br i1 %i.am, label %bb.v, label %.loopexit
 
 bb.v:                                             ; preds = %bb.u
-  %6 = mul i64 %.0216, 10
-  %7 = and i8 %.3231, 15
-  %8 = zext nneg i8 %7 to i64
-  %i.an = add i64 %6, %8
+  %6 = zext nneg i8 %.3231 to i64
+  %7 = mul i64 %.0216, 10
+  %8 = add nsw i64 %6, -48
+  %i.an = add i64 %8, %7
   %i.ao = load i8, ptr %.4, align 1, !tbaa !7     ; 2 uses
   %i.ap = icmp eq i8 %i.ao, 0
   br i1 %i.ap, label %mi_out_alignright.exit.thread360, label %bb.u, !llvm.loop !13

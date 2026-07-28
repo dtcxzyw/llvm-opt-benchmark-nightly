@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %_ZN2v88internal4was
   ]
 
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit:  ; preds = %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d
-  %10 = and i8 %.0.i.i, 31
-  %11 = zext nneg i8 %10 to i64
-  %12 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %11
+  %10 = zext nneg i8 %.0.i.i to i64
+  %11 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %10
+  %12 = getelementptr i8, ptr %11, i64 -384
   %i.i = load i32, ptr %12, align 4
   %i.j = or i32 %i.i, 4
   br label %bb.w
@@ -219,9 +219,9 @@ bb.e:                                             ; preds = %bb.d, %bb.d
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit34: ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %13 = and i8 %.0.i.i, 31
-  %14 = zext nneg i8 %13 to i64
-  %15 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %14
+  %13 = zext nneg i8 %.0.i.i to i64
+  %14 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %13
+  %15 = getelementptr i8, ptr %14, i64 -384
   %i.l = load i32, ptr %15, align 4
   %i.m = or i32 %i.l, 4
   store i32 %i.m, ptr %5, align 4
@@ -272,9 +272,9 @@ bb.h:                                             ; preds = %bb.d, %bb.d, %bb.d,
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit37: ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
-  %16 = and i8 %.0.i.i, 31
-  %17 = zext nneg i8 %16 to i64
-  %18 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %17
+  %16 = zext nneg i8 %.0.i.i to i64
+  %17 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %16
+  %18 = getelementptr i8, ptr %17, i64 -384
   %i.ab = load i32, ptr %18, align 4
   %i.ac = or i32 %i.ab, 4
   store i32 %i.ac, ptr %7, align 4
@@ -302,9 +302,9 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.aj, label %bb.w, label %_ZN2v88internal4wasm8HeapType9from_codeEhb.exit43
 
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit43: ; preds = %bb.i
-  %19 = and i8 %.0.i.i, 31
-  %20 = zext nneg i8 %19 to i64
-  %21 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %20
+  %19 = zext nneg i8 %.0.i.i to i64
+  %20 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %19
+  %21 = getelementptr i8, ptr %20, i64 -384
   %i.ak = load i32, ptr %21, align 4
   %i.al = and i32 %i.ak, -5
   br label %bb.w
@@ -317,9 +317,9 @@ bb.j:                                             ; preds = %bb.d, %bb.d
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit46: ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
-  %22 = and i8 %.0.i.i, 31
-  %23 = zext nneg i8 %22 to i64
-  %24 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %23
+  %22 = zext nneg i8 %.0.i.i to i64
+  %23 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %22
+  %24 = getelementptr i8, ptr %23, i64 -384
   %i.an = load i32, ptr %24, align 4
   %i.ao = or i32 %i.an, 4
   store i32 %i.ao, ptr %9, align 4
@@ -722,9 +722,9 @@ bb.m:                                             ; preds = %bb.l, %bb.l
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit:  ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %16 = and i8 %.085, 31
-  %17 = zext nneg i8 %16 to i64
-  %18 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %17
+  %16 = zext nneg i8 %.085 to i64
+  %17 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %16
+  %18 = getelementptr i8, ptr %17, i64 -384
   %i.y = load i32, ptr %18, align 4
   %i.z = or i32 %i.y, 20
   store i32 %i.z, ptr %5, align 4
@@ -748,9 +748,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN2v
   br label %.critedge90
 
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit93: ; preds = %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.l, %bb.m
-  %19 = and i8 %.085, 31
-  %20 = zext nneg i8 %19 to i64
-  %21 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %20
+  %19 = zext nneg i8 %.085 to i64
+  %20 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %19
+  %21 = getelementptr i8, ptr %20, i64 -384
   %i.ag = load i32, ptr %21, align 4
   %i.ah = select i1 %i.o, i32 20, i32 4
   %i.ai = or i32 %i.ag, %i.ah
@@ -764,9 +764,9 @@ bb.n:                                             ; preds = %bb.l, %bb.l
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit96: ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
-  %22 = and i8 %.085, 31
-  %23 = zext nneg i8 %22 to i64
-  %24 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %23
+  %22 = zext nneg i8 %.085 to i64
+  %23 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %22
+  %24 = getelementptr i8, ptr %23, i64 -384
   %i.ak = load i32, ptr %24, align 4
   %i.al = select i1 %i.o, i32 20, i32 4
   %i.am = or i32 %i.ak, %i.al
@@ -804,9 +804,9 @@ bb.p:                                             ; preds = %bb.o
   br label %.critedge90
 
 .critedge:                                        ; preds = %bb.o
-  %25 = and i8 %.085, 31
-  %26 = zext nneg i8 %25 to i64
-  %27 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %26 ; 2 uses
+  %25 = zext nneg i8 %.085 to i64
+  %26 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %25
+  %27 = getelementptr i8, ptr %26, i64 -384       ; 2 uses
   br i1 %i.o, label %_ZN2v88internal4wasm8HeapType9from_codeEhb.exit102, label %_ZN2v88internal4wasm8HeapType9from_codeEhb.exit108, !prof !22
 
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit102: ; preds = %.critedge
@@ -849,9 +849,9 @@ bb.q:                                             ; preds = %bb.l, %bb.l, %bb.l,
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit111: ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #25
-  %28 = and i8 %.085, 31
-  %29 = zext nneg i8 %28 to i64
-  %30 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %29
+  %28 = zext nneg i8 %.085 to i64
+  %29 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %28
+  %30 = getelementptr i8, ptr %29, i64 -384
   %i.bk = load i32, ptr %30, align 4
   %i.bl = select i1 %i.o, i32 20, i32 4
   %i.bm = or i32 %i.bk, %i.bl
@@ -876,9 +876,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit114: ; preds = %_Z
   br label %.critedge90
 
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit117: ; preds = %bb.q
-  %31 = and i8 %.085, 31
-  %32 = zext nneg i8 %31 to i64
-  %33 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %32
+  %31 = zext nneg i8 %.085 to i64
+  %32 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %31
+  %33 = getelementptr i8, ptr %32, i64 -384
   %i.bt = load i32, ptr %33, align 4
   %i.bu = select i1 %i.o, i32 20, i32 4
   %i.bv = or i32 %i.bt, %i.bu
@@ -892,9 +892,9 @@ bb.r:                                             ; preds = %bb.l, %bb.l
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit120: ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #25
-  %34 = and i8 %.085, 31
-  %35 = zext nneg i8 %34 to i64
-  %36 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %35
+  %34 = zext nneg i8 %.085 to i64
+  %35 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %34
+  %36 = getelementptr i8, ptr %35, i64 -384
   %i.bx = load i32, ptr %36, align 4
   %i.by = select i1 %i.o, i32 20, i32 4
   %i.bz = or i32 %i.bx, %i.by
@@ -924,9 +924,9 @@ bb.s:                                             ; preds = %bb.r
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit126: ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #25
-  %37 = and i8 %.085, 31
-  %38 = zext nneg i8 %37 to i64
-  %39 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %38
+  %37 = zext nneg i8 %.085 to i64
+  %38 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %37
+  %39 = getelementptr i8, ptr %38, i64 -384
   %i.cg = load i32, ptr %39, align 4
   %i.ch = or i32 %i.cg, 20
   store i32 %i.ch, ptr %15, align 4
@@ -950,9 +950,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit129: ; preds = %_Z
   br label %.critedge90
 
 _ZN2v88internal4wasm8HeapType9from_codeEhb.exit132: ; preds = %bb.s
-  %40 = and i8 %.085, 31
-  %41 = zext nneg i8 %40 to i64
-  %42 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %41
+  %40 = zext nneg i8 %.085 to i64
+  %41 = getelementptr [4 x i8], ptr @__const._ZN2v88internal4wasm8HeapType9from_codeEhb.kLookupTable, i64 %40
+  %42 = getelementptr i8, ptr %41, i64 -384
   %i.co = load i32, ptr %42, align 4
   %i.cp = or i32 %i.co, 4
   br label %.critedge90

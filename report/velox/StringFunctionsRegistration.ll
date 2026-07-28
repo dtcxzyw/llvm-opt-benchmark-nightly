@@ -204,7 +204,7 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %_ZNSt6vectorIiSaIiE
   %i.ci = phi ptr [ %i.cg, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %i.bs, %bb.p ]
   %i.cj = phi ptr [ %i.cd, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %i.m, %bb.p ] ; 2 uses
   %i.ck = phi ptr [ %i.ch, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %i.l, %bb.p ] ; 2 uses
-  %i.cl = add nuw nsw i64 %.147, %.063            ; 2 uses
+  %i.cl = add nsw i64 %.147, %.063                ; 2 uses
   %i.cm = icmp samesign ult i64 %i.cl, %i.b
   br i1 %i.cm, label %bb.b, label %._crit_edge, !llvm.loop !3997
 
