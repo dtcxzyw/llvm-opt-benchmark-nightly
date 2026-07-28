@@ -204,20 +204,16 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.bx, label %bb.k, label %FSE_decompress.exit.thread
 
 bb.k:                                             ; preds = %bb.j
-  %i.by = sub nsw i64 %i.f, %i.bs                 ; 13 uses
+  %i.by = sub nsw i64 %i.f, %i.bs                 ; 11 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bs ; 42 uses
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   %.sroa.3.0.copyload.i.i = load i16, ptr %.sroa.3.0..sroa_idx.i.i, align 2
   %.not.i.i = icmp eq i16 %.sroa.3.0.copyload.i.i, 0
-  %6 = icmp eq i64 %i.by, 0                       ; 2 uses
-  br i1 %.not.i.i, label %9, label %7
+  %6 = icmp ugt i64 %i.by, 7                      ; 2 uses
+  br i1 %.not.i.i, label %bb.aq, label %bb.l
 
-7:                                                ; preds = %bb.k
-  br i1 %6, label %FSE_decompress.exit.thread, label %bb.l
-
-bb.l:                                             ; preds = %7
-  %8 = icmp ugt i64 %i.by, 7
-  br i1 %8, label %bb.m, label %bb.n
+bb.l:                                             ; preds = %bb.k
+  br i1 %6, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   %.ptr.i.i = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.f
@@ -620,12 +616,8 @@ BIT_endOfDStream.exit106.thread.i.i:              ; preds = %BIT_reloadDStream.e
   %..i23.i.i = select i1 %i.jy, i64 -70, i64 -20
   br label %FSE_decompress.exit.thread
 
-9:                                                ; preds = %bb.k
-  br i1 %6, label %FSE_decompress.exit.thread, label %bb.aq
-
-bb.aq:                                            ; preds = %9
-  %10 = icmp ugt i64 %i.by, 7
-  br i1 %10, label %bb.ar, label %bb.as
+bb.aq:                                            ; preds = %bb.k
+  br i1 %6, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
   %.ptr401.i.i = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.f
@@ -1028,8 +1020,8 @@ BIT_endOfDStream.exit201.thread.i.i:              ; preds = %BIT_reloadDStream.e
   %..i.i.i = select i1 %i.sd, i64 -70, i64 -20
   br label %FSE_decompress.exit.thread
 
-FSE_decompress.exit.thread:                       ; preds = %bb.j, %bb.g, %bb.h, %bb.i, %bb.u, %BIT_initDStream.exit.i.i, %BIT_endOfDStream.exit106.thread.i.i, %BIT_initDStream.exit111.i.i, %BIT_endOfDStream.exit201.thread.i.i, %7, %bb.m, %9, %bb.ar, %bb.az
-  %.0.i.ph = phi i64 [ -1, %bb.az ], [ -1, %bb.ar ], [ -72, %9 ], [ -1, %bb.m ], [ -72, %7 ], [ %..i.i.i, %BIT_endOfDStream.exit201.thread.i.i ], [ %i.by, %BIT_initDStream.exit111.i.i ], [ %..i23.i.i, %BIT_endOfDStream.exit106.thread.i.i ], [ %i.by, %BIT_initDStream.exit.i.i ], [ -1, %bb.u ], [ -72, %bb.i ], [ %i.bs, %bb.h ], [ -72, %bb.g ], [ %i.bw, %bb.j ]
+FSE_decompress.exit.thread:                       ; preds = %bb.j, %bb.g, %bb.h, %bb.i, %bb.u, %BIT_initDStream.exit.i.i, %BIT_endOfDStream.exit106.thread.i.i, %BIT_initDStream.exit111.i.i, %BIT_endOfDStream.exit201.thread.i.i, %bb.az, %bb.m, %bb.ar
+  %.0.i.ph = phi i64 [ -1, %bb.ar ], [ -1, %bb.m ], [ -1, %bb.az ], [ %..i.i.i, %BIT_endOfDStream.exit201.thread.i.i ], [ %i.by, %BIT_initDStream.exit111.i.i ], [ %..i23.i.i, %BIT_endOfDStream.exit106.thread.i.i ], [ %i.by, %BIT_initDStream.exit.i.i ], [ -1, %bb.u ], [ -72, %bb.i ], [ %i.bs, %bb.h ], [ -72, %bb.g ], [ %i.bw, %bb.j ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22

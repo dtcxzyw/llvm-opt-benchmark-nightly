@@ -204,7 +204,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i14
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i14
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #53
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.aa = load i64, ptr %i.z, align 8, !tbaa !16  ; 8 uses
+  %i.aa = load i64, ptr %i.z, align 8, !tbaa !16  ; 7 uses
   %i.ab = load i64, ptr %i.u, align 8, !tbaa !16  ; 3 uses
   %.not.i = icmp ult i64 %i.aa, %i.ab
   %.pre = load ptr, ptr %1, align 8, !tbaa !7     ; 6 uses
@@ -231,14 +231,13 @@ _ZN7testing8internal6String23EndsWithCaseInsensitiveERKNSt7__cxx1112basic_string
 
 bb.f:                                             ; preds = %bb.e, %_ZN7testing8internal6String23EndsWithCaseInsensitiveERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #53
-  %i.ak = sub i64 %i.aa, %i.ab
+  %i.ak = sub i64 %i.aa, %i.ab                    ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1598)
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.al, ptr %5, align 8, !tbaa !14, !alias.scope !1598
-  %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.ak, i64 %i.aa) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #53, !noalias !1598
-  store i64 %spec.select.i.i.i, ptr %i.c, align 8, !tbaa !15, !noalias !1598
-  %i.am = icmp ugt i64 %spec.select.i.i.i, 15
+  store i64 %i.ak, ptr %i.c, align 8, !tbaa !15, !noalias !1598
+  %i.am = icmp ugt i64 %i.ak, 15
   br i1 %i.am, label %.noexc10.i.i, label %._crit_edge.i.i.i
 
 .noexc10.i.i:                                     ; preds = %bb.f
@@ -253,7 +252,7 @@ bb.f:                                             ; preds = %bb.e, %_ZN7testing8
 
 ._crit_edge.i.i.i:                                ; preds = %.noexc15, %bb.f
   %i.ap = phi ptr [ %i.an, %.noexc15 ], [ %i.al, %bb.f ] ; 2 uses
-  switch i64 %spec.select.i.i.i, label %bb.h [
+  switch i64 %i.ak, label %bb.h [
     i64 1, label %bb.g
     i64 0, label %bb.i
   ]
@@ -264,7 +263,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.i
 
 bb.h:                                             ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ap, ptr align 1 %.pre, i64 %spec.select.i.i.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ap, ptr align 1 %.pre, i64 %i.ak, i1 false)
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %._crit_edge.i.i.i

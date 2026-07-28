@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %i.q = icmp eq i8 %i.p, 0
   %spec.select = select i1 %i.q, i8 32, i8 %i.p
   %i.r = trunc nuw nsw i64 %.pre76 to i32
-  %i.s = sub nsw i32 %i.c, %i.r                   ; 9 uses
+  %i.s = sub nsw i32 %i.c, %i.r                   ; 8 uses
   %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %i.s, i32 128)
   %i.t = sext i32 %.sroa.speculated to i64
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.a, i8 %spec.select, i64 %i.t, i1 false)
@@ -214,9 +214,12 @@ bb.f:                                             ; preds = %bb.e
     i8 0, label %_ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit37
     i8 1, label %_ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit37
     i8 4, label %bb.g
-    i8 2, label %4
-    i8 3, label %4
+    i8 2, label %.lr.ph.i25.preheader
+    i8 3, label %.lr.ph.i25.preheader
   ]
+
+.lr.ph.i25.preheader:                             ; preds = %bb.f, %bb.f
+  br label %.lr.ph.i25
 
 bb.g:                                             ; preds = %bb.f
   %.off = add i32 %i.s, 1
@@ -295,12 +298,8 @@ _ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringIN
   %i.ap = add i32 %.neg, %i.s
   br label %_ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit37
 
-4:                                                ; preds = %bb.f, %bb.f
-  %.not5.i24 = icmp eq i32 %i.s, 0
-  br i1 %.not5.i24, label %_ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit37, label %.lr.ph.i25
-
-.lr.ph.i25:                                       ; preds = %4, %_ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclENS_5RangeIPKcEE.exit.i34
-  %storemerge6.i26 = phi i32 [ %i.bh, %_ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclENS_5RangeIPKcEE.exit.i34 ], [ %i.s, %4 ] ; 3 uses
+.lr.ph.i25:                                       ; preds = %.lr.ph.i25.preheader, %_ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclENS_5RangeIPKcEE.exit.i34
+  %storemerge6.i26 = phi i32 [ %i.bh, %_ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclENS_5RangeIPKcEE.exit.i34 ], [ %i.s, %.lr.ph.i25.preheader ] ; 3 uses
   %.sroa.speculated.i27 = call i32 @llvm.smin.i32(i32 %storemerge6.i26, i32 128) ; 2 uses
   %i.aq = sext i32 %.sroa.speculated.i27 to i64   ; 4 uses
   %i.ar = load ptr, ptr %3, align 8, !tbaa !48, !nonnull !39, !align !40 ; 5 uses
@@ -366,8 +365,8 @@ bb.r:                                             ; preds = %bb.f
   tail call void @abort() #26
   unreachable
 
-_ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit37: ; preds = %_ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclENS_5RangeIPKcEE.exit.i34, %bb.e, %_ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit, %bb.f, %bb.f, %4
-  %.1 = phi i32 [ 0, %4 ], [ 0, %bb.e ], [ %i.ap, %_ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit ], [ %i.s, %bb.f ], [ %i.s, %bb.f ], [ 0, %_ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclENS_5RangeIPKcEE.exit.i34 ] ; 2 uses
+_ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit37: ; preds = %_ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclENS_5RangeIPKcEE.exit.i34, %bb.e, %_ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit, %bb.f, %bb.f
+  %.1 = phi i32 [ %i.s, %bb.f ], [ 0, %bb.e ], [ %i.ap, %_ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit ], [ %i.s, %bb.f ], [ 0, %_ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclENS_5RangeIPKcEE.exit.i34 ] ; 2 uses
   %i.bi = load ptr, ptr %3, align 8, !tbaa !48, !nonnull !39, !align !40 ; 5 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 8 ; 2 uses
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !27 ; 5 uses

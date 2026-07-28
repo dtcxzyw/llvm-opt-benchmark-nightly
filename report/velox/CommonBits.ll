@@ -194,13 +194,11 @@ _ZN4geos9precision10CommonBits28numCommonMostSigMantissaBitsEll.exit: ; preds = 
   %.01113.i.lcssa = phi i32 [ %i.x, %vector.early.exit ], [ %spec.select, %scalar.ph.3 ], [ 48, %scalar.ph ], [ 49, %scalar.ph.1 ], [ 50, %scalar.ph.2 ] ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %.01113.i.lcssa, ptr %i.ac, align 4, !tbaa !12
-  %i.ad = sub nsw i32 52, %.01113.i.lcssa         ; 2 uses
-  %or.cond.i = icmp ugt i32 %i.ad, 63
+  %i.ad = sub nsw i32 52, %.01113.i.lcssa
   %i.ae = zext nneg i32 %i.ad to i64
   %notmask.i = shl nsw i64 -1, %i.ae
   %i.af = and i64 %notmask.i, %i.k
-  %.0.i = select i1 %or.cond.i, i64 0, i64 %i.af
-  store i64 %.0.i, ptr %i.j, align 8, !tbaa !13
+  store i64 %i.af, ptr %i.j, align 8, !tbaa !13
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZN4geos9precision10CommonBits28numCommonMostSigMantissaBitsEll.exit, %bb.b
