@@ -201,22 +201,18 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.t = icmp ugt i64 %i.r, %i.q
-  br i1 %i.t, label %.critedge60, label %3
+  br i1 %i.t, label %.critedge60, label %.lr.ph.i
 
-3:                                                ; preds = %bb.e
-  %4 = add i64 %i.r, -1                           ; 2 uses
-  %5 = sub i64 %i.q, %4                           ; 2 uses
-  %.not27.i = icmp eq i64 %5, 0
-  br i1 %.not27.i, label %.critedge60, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %3
+.lr.ph.i:                                         ; preds = %bb.e
+  %3 = add i64 %i.r, -1                           ; 2 uses
+  %4 = sub i64 %i.q, %3
   %i.u = load i8, ptr %i.d, align 1, !tbaa !10
   %i.v = sext i8 %i.u to i32
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.h, %.lr.ph.i
-  %.02029.i = phi i64 [ %5, %.lr.ph.i ], [ %i.ac, %bb.h ] ; 2 uses
+  %.02029.i = phi i64 [ %4, %.lr.ph.i ], [ %i.ac, %bb.h ] ; 2 uses
   %.02128.i = phi ptr [ %i.o, %.lr.ph.i ], [ %i.y, %bb.h ] ; 2 uses
   %i.x = call ptr @memchr(ptr noundef %.02128.i, i32 noundef %i.v, i64 noundef %.02029.i) #12 ; 3 uses
   %.not25.i = icmp eq ptr %i.x, null
@@ -224,7 +220,7 @@ bb.f:                                             ; preds = %bb.h, %.lr.ph.i
 
 bb.g:                                             ; preds = %bb.f
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 1 ; 3 uses
-  %bcmp.i = call i32 @bcmp(ptr nonnull %i.y, ptr nonnull readonly %i.w, i64 %4)
+  %bcmp.i = call i32 @bcmp(ptr nonnull %i.y, ptr nonnull readonly %i.w, i64 %3)
   %i.z = icmp eq i32 %bcmp.i, 0
   br i1 %i.z, label %lmemfind.exit.thread70, label %bb.h
 
@@ -345,7 +341,7 @@ bb.l:                                             ; preds = %push_captures.exit6
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
   br label %.critedge60
 
-.critedge60:                                      ; preds = %bb.h, %bb.f, %3, %bb.e, %.critedge, %lmemfind.exit
+.critedge60:                                      ; preds = %bb.h, %bb.f, %bb.e, %.critedge, %lmemfind.exit
   call void @lua_pushnil(ptr noundef %0) #10
   br label %bb.m
 
