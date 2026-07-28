@@ -201,11 +201,15 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader:                                       ; preds = %bb.d
   %.not5159 = icmp eq i64 %spec.select, 0
-  br i1 %.not5159, label %.loopexit, label %.lr.ph
+  br i1 %.not5159, label %.loopexit, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %.preheader, %bb.j
-  %.04561 = phi i64 [ %i.y, %bb.j ], [ 0, %.preheader ] ; 3 uses
-  %.04660 = phi i32 [ %i.z, %bb.j ], [ 1, %.preheader ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %7 = trunc nuw nsw i64 %spec.select to i32
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.j
+  %.04561 = phi i64 [ %i.y, %bb.j ], [ 0, %.lr.ph.preheader ] ; 3 uses
+  %.04660 = phi i32 [ %i.z, %bb.j ], [ 1, %.lr.ph.preheader ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   %i.o = trunc i32 %.04660 to i8
   store i8 %i.o, ptr %i.b, align 1, !tbaa !33
@@ -249,8 +253,7 @@ bb.j:                                             ; preds = %bb.i
   %i.y = add i64 %i.w, %.04561
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   %i.z = add i32 %.04660, 1                       ; 2 uses
-  %7 = zext i32 %i.z to i64
-  %.not51 = icmp ult i64 %spec.select, %7
+  %.not51 = icmp ugt i32 %i.z, %7
   br i1 %.not51, label %.loopexit, label %.lr.ph, !llvm.loop !34
 
 .loopexit:                                        ; preds = %bb.j, %.preheader, %.thread, %bb.d

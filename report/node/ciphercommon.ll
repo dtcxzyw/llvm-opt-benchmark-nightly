@@ -1,5 +1,7 @@
 inline.NumInlined: 3
 inline.NumDeleted: 1
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@cipher_generic_init_internal:bb.a
 
 ossl_cipher_generic_initiv.exit:                  ; preds = %bb.d
@@ -201,30 +203,86 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %n.mod.vf = and i64 %i.o, 24
-  %n.vec = and i64 %i.o, 480                      ; 4 uses
+  %n.vec = and i64 %i.o, 480                      ; 10 uses
   %i.w = add i64 %5, %n.vec
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.t, i64 0
-  %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 %5
-  br label %vector.body
+  %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 16 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 %5 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.x, i64 16
+  store <16 x i8> %broadcast.splat, ptr %i.x, align 1, !tbaa !36
+  store <16 x i8> %broadcast.splat, ptr %6, align 1, !tbaa !36
+  %7 = icmp eq i64 %n.vec, 32
+  br i1 %7, label %middle.block, label %vector.body.1
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %index ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 16
+vector.body.1:                                    ; preds = %vector.ph
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %5 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 48
+  store <16 x i8> %broadcast.splat, ptr %9, align 1, !tbaa !36
+  store <16 x i8> %broadcast.splat, ptr %10, align 1, !tbaa !36
+  %11 = icmp eq i64 %n.vec, 64
+  br i1 %11, label %middle.block, label %vector.body.2
+
+vector.body.2:                                    ; preds = %vector.body.1
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 %5 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 64
+  %14 = getelementptr inbounds nuw i8, ptr %12, i64 80
+  store <16 x i8> %broadcast.splat, ptr %13, align 1, !tbaa !36
+  store <16 x i8> %broadcast.splat, ptr %14, align 1, !tbaa !36
+  %15 = icmp eq i64 %n.vec, 96
+  br i1 %15, label %middle.block, label %vector.body.3
+
+vector.body.3:                                    ; preds = %vector.body.2
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 %5 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 96
+  %18 = getelementptr inbounds nuw i8, ptr %16, i64 112
+  store <16 x i8> %broadcast.splat, ptr %17, align 1, !tbaa !36
+  store <16 x i8> %broadcast.splat, ptr %18, align 1, !tbaa !36
+  %19 = icmp eq i64 %n.vec, 128
+  br i1 %19, label %middle.block, label %vector.body.4
+
+vector.body.4:                                    ; preds = %vector.body.3
+  %20 = getelementptr inbounds nuw i8, ptr %1, i64 %5 ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %20, i64 128
+  %22 = getelementptr inbounds nuw i8, ptr %20, i64 144
+  store <16 x i8> %broadcast.splat, ptr %21, align 1, !tbaa !36
+  store <16 x i8> %broadcast.splat, ptr %22, align 1, !tbaa !36
+  %23 = icmp eq i64 %n.vec, 160
+  br i1 %23, label %middle.block, label %vector.body.5
+
+vector.body.5:                                    ; preds = %vector.body.4
+  %24 = getelementptr inbounds nuw i8, ptr %1, i64 %5 ; 2 uses
+  %25 = getelementptr inbounds nuw i8, ptr %24, i64 160
+  %26 = getelementptr inbounds nuw i8, ptr %24, i64 176
+  store <16 x i8> %broadcast.splat, ptr %25, align 1, !tbaa !36
+  store <16 x i8> %broadcast.splat, ptr %26, align 1, !tbaa !36
+  %27 = icmp eq i64 %n.vec, 192
+  br i1 %27, label %middle.block, label %vector.body
+
+vector.body:                                      ; preds = %vector.body.5
+  %28 = getelementptr inbounds nuw i8, ptr %1, i64 %5 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %28, i64 192
+  %i.z = getelementptr inbounds nuw i8, ptr %28, i64 208
   store <16 x i8> %broadcast.splat, ptr %i.y, align 1, !tbaa !36
   store <16 x i8> %broadcast.splat, ptr %i.z, align 1, !tbaa !36
-  %index.next = add nuw i64 %index, 32            ; 2 uses
-  %i.aa = icmp eq i64 %index.next, %n.vec
-  br i1 %i.aa, label %middle.block, label %vector.body, !llvm.loop !37
+  %i.aa = icmp eq i64 %n.vec, 224
+  br i1 %i.aa, label %middle.block, label %vector.body.7
 
-middle.block:                                     ; preds = %vector.body
+vector.body.7:                                    ; preds = %vector.body
+  %29 = getelementptr inbounds nuw i8, ptr %1, i64 %5 ; 2 uses
+  %30 = getelementptr inbounds nuw i8, ptr %29, i64 224
+  %31 = getelementptr inbounds nuw i8, ptr %29, i64 240
+  store <16 x i8> %broadcast.splat, ptr %30, align 1, !tbaa !36
+  store <16 x i8> %broadcast.splat, ptr %31, align 1, !tbaa !36
+  br label %middle.block
+
+middle.block:                                     ; preds = %vector.body.7, %vector.body, %vector.body.5, %vector.body.4, %vector.body.3, %vector.body.2, %vector.body.1, %vector.ph
   %cmp.n = icmp eq i64 %i.o, %n.vec
   br i1 %cmp.n, label %.loopexit, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %n.mod.vf, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph.preheader, label %vec.epilog.ph, !prof !41
+  br i1 %min.epilog.iters.check, label %.lr.ph.preheader, label %vec.epilog.ph, !prof !37
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -241,7 +299,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <8 x i8> %broadcast.splat154, ptr %i.ad, align 1, !tbaa !36
   %index.next156 = add nuw i64 %index155, 8       ; 2 uses
   %i.ae = icmp eq i64 %index.next156, %n.vec152
-  br i1 %i.ae, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !42
+  br i1 %i.ae, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !38
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n157 = icmp eq i64 %i.o, %n.vec152
@@ -273,7 +331,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   store i8 %i.t, ptr %i.ak, align 1, !tbaa !36
   %i.al = add nuw i64 %.0139, 1                   ; 2 uses
   %i.am = icmp ult i64 %i.al, %i.p
-  br i1 %i.am, label %.lr.ph, label %.loopexit, !llvm.loop !43
+  br i1 %i.am, label %.lr.ph, label %.loopexit, !llvm.loop !42
 
 .loopexit:                                        ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.n, %.preheader, %bb.f
   %i.an = phi i64 [ %5, %bb.f ], [ %i.p, %bb.n ], [ %i.p, %.preheader ], [ %i.p, %middle.block ], [ %i.p, %vec.epilog.middle.block ], [ %i.p, %.lr.ph ] ; 3 uses
@@ -291,7 +349,7 @@ bb.p:                                             ; preds = %.loopexit
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !27
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
-  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !44
+  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !43
   %i.at = tail call i32 %i.as(ptr noundef nonnull %0, ptr noundef %1, ptr noundef nonnull %4, i64 noundef %i.an) #5
   %.not124 = icmp eq i32 %i.at, 0
   br i1 %.not124, label %bb.q, label %bb.r
@@ -325,11 +383,11 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 
 bb.u:                                             ; preds = %bb.t
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !45
+  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !44
   %i.bc = load i32, ptr %i.h, align 8, !tbaa !35
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.bf = load i64, ptr %i.be, align 8, !tbaa !46
+  %i.bf = load i64, ptr %i.be, align 8, !tbaa !45
   %i.bg = tail call i32 @ossl_cipher_tlsunpadblock(ptr noundef %i.bb, i32 noundef %i.bc, ptr noundef %1, ptr noundef nonnull %2, i64 noundef %i.d, ptr noundef nonnull %i.bd, ptr noundef nonnull %i.au, i64 noundef %i.bf, i32 noundef 0) #5
   %.not127 = icmp eq i32 %i.bg, 0
   br i1 %.not127, label %bb.v, label %.critedge
@@ -386,7 +444,7 @@ bb.ad:                                            ; preds = %bb.ab
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !27
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
-  %i.by = load ptr, ptr %i.bx, align 8, !tbaa !44
+  %i.by = load ptr, ptr %i.bx, align 8, !tbaa !43
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ca = call i32 %i.by(ptr noundef nonnull %0, ptr noundef %1, ptr noundef nonnull %i.bz, i64 noundef %i.d) #5
   %.not111 = icmp eq i32 %i.ca, 0
@@ -420,7 +478,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah
   %.not115 = icmp ult i64 %.094, %i.d
-  br i1 %.not115, label %bb.aj, label %bb.ak, !prof !47
+  br i1 %.not115, label %bb.aj, label %bb.ak, !prof !46
 
 bb.aj:                                            ; preds = %bb.ai
   call void @ERR_new() #5
@@ -452,7 +510,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !27
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 8
-  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !44
+  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !43
   %i.cn = load ptr, ptr %i.a, align 8, !tbaa !33
   %i.co = call i32 %i.cm(ptr noundef nonnull %0, ptr noundef %.092, ptr noundef %i.cn, i64 noundef %.195) #5
   %.not117 = icmp eq i32 %i.co, 0
@@ -599,7 +657,7 @@ bb.o:                                             ; preds = %bb.m
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !27
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !44
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !43
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.v = tail call i32 %i.t(ptr noundef nonnull %0, ptr noundef %1, ptr noundef nonnull %i.u, i64 noundef %i.b) #5
   %.not59 = icmp eq i32 %i.v, 0
@@ -644,7 +702,7 @@ bb.v:                                             ; preds = %bb.r
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !27
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
-  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !44
+  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !43
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.ag = tail call i32 %i.ae(ptr noundef nonnull %0, ptr noundef nonnull %i.af, ptr noundef nonnull %i.af, i64 noundef %i.b) #5
   %.not53 = icmp eq i32 %i.ag, 0
@@ -736,7 +794,7 @@ bb.g:                                             ; preds = %bb.e
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !27
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !44
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !43
   %i.j = tail call i32 %i.i(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %4, i64 noundef %5) #5
   %.not41 = icmp eq i32 %i.j, 0
   br i1 %.not41, label %bb.h, label %bb.i
@@ -762,7 +820,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %i.p = load i32, ptr %i.o, align 8, !tbaa !48
+  %i.p = load i32, ptr %i.o, align 8, !tbaa !47
   %.not44 = icmp eq i32 %i.p, 0
   br i1 %.not44, label %bb.n, label %bb.l
 
@@ -772,7 +830,7 @@ bb.l:                                             ; preds = %bb.k
   %i.s = load i8, ptr %i.r, align 1, !tbaa !36
   %i.t = zext i8 %i.s to i64                      ; 2 uses
   %.not45.not = icmp ugt i64 %5, %i.t
-  br i1 %.not45.not, label %bb.m, label %bb.r, !prof !49
+  br i1 %.not45.not, label %bb.m, label %bb.r, !prof !48
 
 bb.m:                                             ; preds = %bb.l
   %.neg = xor i64 %i.t, -1
@@ -783,15 +841,15 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m, %bb.k
   %i.v = phi i64 [ %i.u, %bb.m ], [ %5, %bb.k ]   ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %i.x = load i64, ptr %i.w, align 8, !tbaa !50   ; 2 uses
+  %i.x = load i64, ptr %i.w, align 8, !tbaa !49   ; 2 uses
   %.not46 = icmp ult i64 %i.v, %i.x
-  br i1 %.not46, label %bb.r, label %bb.o, !prof !47
+  br i1 %.not46, label %bb.r, label %bb.o, !prof !46
 
 bb.o:                                             ; preds = %bb.n
   %i.y = sub nuw i64 %i.v, %i.x                   ; 4 uses
   store i64 %i.y, ptr %2, align 8, !tbaa !19
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.aa = load i64, ptr %i.z, align 8, !tbaa !46  ; 4 uses
+  %i.aa = load i64, ptr %i.z, align 8, !tbaa !45  ; 4 uses
   %.not47 = icmp eq i64 %i.aa, 0
   br i1 %.not47, label %bb.r, label %bb.p
 
@@ -877,7 +935,7 @@ bb.f:                                             ; preds = %bb.d
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !27
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !44
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !43
   %i.j = tail call i32 %i.i(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %4, i64 noundef %5) #5
   %.not13 = icmp eq i32 %i.j, 0
   br i1 %.not13, label %bb.g, label %bb.h
@@ -995,7 +1053,7 @@ bb.p:                                             ; preds = %bb.o
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !23
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.aj = load i64, ptr %i.ai, align 8, !tbaa !46
+  %i.aj = load i64, ptr %i.ai, align 8, !tbaa !45
   %i.ak = tail call i32 @OSSL_PARAM_set_octet_ptr(ptr noundef nonnull %i.af, ptr noundef %i.ah, i64 noundef %i.aj) #5
   %.not59 = icmp eq i32 %i.ak, 0
   br i1 %.not59, label %.sink.split, label %bb.q
@@ -1092,7 +1150,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %._crit_edge
   %i.s = tail call ptr @ossl_prov_ctx_get0_libctx(ptr noundef nonnull %7) #5
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 184
-  store ptr %i.s, ptr %i.t, align 8, !tbaa !45
+  store ptr %i.s, ptr %i.t, align 8, !tbaa !44
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %._crit_edge
@@ -1149,18 +1207,17 @@ attributes #5 = { nounwind }
 !34 = !{!16, !14, i64 88}
 !35 = !{!16, !7, i64 112}
 !36 = !{!8, !8, i64 0}
-!37 = distinct !{!37, !38, !39, !40}
-!38 = !{!"llvm.loop.mustprogress"}
-!39 = !{!"llvm.loop.isvectorized", i32 1}
-!40 = !{!"llvm.loop.unroll.runtime.disable"}
-!41 = !{!"branch_weights", i32 8, i32 24}
-!42 = distinct !{!42, !38, !39, !40}
-!43 = distinct !{!43, !38, !40, !39}
-!44 = !{!29, !13, i64 8}
-!45 = !{!16, !18, i64 184}
-!46 = !{!16, !14, i64 136}
-!47 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!48 = !{!16, !7, i64 144}
-!49 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!50 = !{!16, !14, i64 152}
+!37 = !{!"branch_weights", i32 8, i32 24}
+!38 = distinct !{!38, !39, !40, !41}
+!39 = !{!"llvm.loop.mustprogress"}
+!40 = !{!"llvm.loop.isvectorized", i32 1}
+!41 = !{!"llvm.loop.unroll.runtime.disable"}
+!42 = distinct !{!42, !39, !41, !40}
+!43 = !{!29, !13, i64 8}
+!44 = !{!16, !18, i64 184}
+!45 = !{!16, !14, i64 136}
+!46 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!47 = !{!16, !7, i64 144}
+!48 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!49 = !{!16, !14, i64 152}
 end_hunk_0
