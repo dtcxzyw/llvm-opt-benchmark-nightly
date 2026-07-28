@@ -1,0 +1,379 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+index 2db6396b9d661..fb40c656dc4ae 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+@@ -318,8 +318,10 @@ class TypeEvaluationHelper {
+ 
+   /// Return true if we can take the specified value and return it as type Ty
+   /// without inserting any new casts and without changing the value of the
+-  /// common low bits.
+-  [[nodiscard]] static bool canEvaluateSExtd(Value *V, Type *Ty);
++  /// common low bits. If NoSignedWrap is true then the calculation of V must
++  /// not involve arithmetic that could performed signed wrapping.
++  [[nodiscard]] static bool canEvaluateSExtd(Value *V, Type *Ty,
++                                             bool NoSignedWrap = false);
+ 
+ private:
+   /// Constants and extensions/truncates from the destination type are always
+@@ -458,8 +460,10 @@ class TypeEvaluationHelper {
+                                           unsigned &BitsToClear,
+                                           InstCombinerImpl &IC,
+                                           Instruction *CxtI);
+-  [[nodiscard]] bool canEvaluateSExtdImpl(Value *V, Type *Ty);
+-  [[nodiscard]] bool canEvaluateSExtdPred(Value *V, Type *Ty);
++  [[nodiscard]] bool canEvaluateSExtdImpl(Value *V, Type *Ty,
++                                          bool NoSignedWrap);
++  [[nodiscard]] bool canEvaluateSExtdPred(Value *V, Type *Ty,
++                                          bool NoSignedWrap);
+ 
+   /// A bookkeeping map to memorize an already made decision for a traversed
+   /// value.
+@@ -1615,7 +1619,18 @@ Instruction *InstCombinerImpl::visitZExt(ZExtInst &Zext) {
+         dbgs() << "ICE: EvaluateInDifferentType converting expression type"
+                   " to avoid zero extend: "
+                << Zext << '\n');
+-    Value *Res = EvaluateInDifferentType(Src, DestTy, false);
++
++    // zext nneg means Src is non-negative and we can treat this as an sext, and
++    // if no signed wrapping occurs we know that Src evaluated as a signed
++    // DestTy will also be non-negative. Evaluating as a signed type means that
++    // any constant operands will be sign-extended instead of zero-extended,
++    // meaning they remain in the range of a signed SrcTy so we won't need to
++    // clear any high bits.
++    bool EvaluateAsSigned =
++        Zext.hasNonNeg() &&
++        TypeEvaluationHelper::canEvaluateSExtd(Src, DestTy, true);
++
++    Value *Res = EvaluateInDifferentType(Src, DestTy, EvaluateAsSigned);
+     assert(Res->getType() == DestTy);
+ 
+     // Preserve debug values referring to Src if the zext is its last use.
+@@ -1627,10 +1642,14 @@ Instruction *InstCombinerImpl::visitZExt(ZExtInst &Zext) {
+     uint32_t DestBitSize = DestTy->getScalarSizeInBits();
+ 
+     // If the high bits are already filled with zeros, just replace this
+-    // cast with the result.
+-    if (MaskedValueIsZero(
+-            Res, APInt::getHighBitsSet(DestBitSize, DestBitSize - SrcBitsKept),
+-            &Zext))
++    // cast with the result. If we've evaluated as a signed expressions then
++    // instead check that the high bits are the sign bit, which we know is zero.
++    if (EvaluateAsSigned
++            ? (ComputeNumSignBits(Res, &Zext) > DestBitSize - SrcBitsKept)
++            : MaskedValueIsZero(
++                  Res,
++                  APInt::getHighBitsSet(DestBitSize, DestBitSize - SrcBitsKept),
++                  &Zext))
+       return replaceInstUsesWith(Zext, Res);
+ 
+     // We need to emit an AND to clear the high bits.
+@@ -1834,22 +1853,35 @@ Instruction *InstCombinerImpl::transformSExtICmp(ICmpInst *Cmp,
+ ///
+ /// This function works on both vectors and scalars.
+ ///
+-bool TypeEvaluationHelper::canEvaluateSExtd(Value *V, Type *Ty) {
++bool TypeEvaluationHelper::canEvaluateSExtd(Value *V, Type *Ty,
++                                            bool NoSignedWrap) {
+   TypeEvaluationHelper TYH;
+-  return TYH.canEvaluateSExtdImpl(V, Ty) && TYH.allPendingVisited();
++  return TYH.canEvaluateSExtdImpl(V, Ty, NoSignedWrap) &&
++         TYH.allPendingVisited();
+ }
+ 
+-bool TypeEvaluationHelper::canEvaluateSExtdImpl(Value *V, Type *Ty) {
+-  return canEvaluate(V, Ty, [this](Value *V, Type *Ty) {
+-    return canEvaluateSExtdPred(V, Ty);
++bool TypeEvaluationHelper::canEvaluateSExtdImpl(Value *V, Type *Ty,
++                                                bool NoSignedWrap) {
++  return canEvaluate(V, Ty, [this, NoSignedWrap](Value *V, Type *Ty) {
++    return canEvaluateSExtdPred(V, Ty, NoSignedWrap);
+   });
+ }
+ 
+-bool TypeEvaluationHelper::canEvaluateSExtdPred(Value *V, Type *Ty) {
++bool TypeEvaluationHelper::canEvaluateSExtdPred(Value *V, Type *Ty,
++                                                bool NoSignedWrap) {
+   assert(V->getType()->getScalarSizeInBits() < Ty->getScalarSizeInBits() &&
+          "Can't sign extend type to a smaller type");
+ 
+   auto *I = cast<Instruction>(V);
++
++  // If signed wrapping is forbidden then check that all instructions that could
++  // potentially wrap have the nsw flag.
++  if (NoSignedWrap &&
++      (isa<OverflowingBinaryOperator>(I) ||
++       I->getOpcode() == Instruction::Trunc) &&
++      !I->hasNoSignedWrap())
++    return false;
++
+   switch (I->getOpcode()) {
+   case Instruction::SExt:  // sext(sext(x)) -> sext(x)
+   case Instruction::ZExt:  // sext(zext(x)) -> zext(x)
+@@ -1862,15 +1894,15 @@ bool TypeEvaluationHelper::canEvaluateSExtdPred(Value *V, Type *Ty) {
+   case Instruction::Sub:
+   case Instruction::Mul:
+     // These operators can all arbitrarily be extended if their inputs can.
+-    return canEvaluateSExtdImpl(I->getOperand(0), Ty) &&
+-           canEvaluateSExtdImpl(I->getOperand(1), Ty);
++    return canEvaluateSExtdImpl(I->getOperand(0), Ty, NoSignedWrap) &&
++           canEvaluateSExtdImpl(I->getOperand(1), Ty, NoSignedWrap);
+ 
+     // case Instruction::Shl:   TODO
+     // case Instruction::LShr:  TODO
+ 
+   case Instruction::Select:
+-    return canEvaluateSExtdImpl(I->getOperand(1), Ty) &&
+-           canEvaluateSExtdImpl(I->getOperand(2), Ty);
++    return canEvaluateSExtdImpl(I->getOperand(1), Ty, NoSignedWrap) &&
++           canEvaluateSExtdImpl(I->getOperand(2), Ty, NoSignedWrap);
+ 
+   case Instruction::PHI: {
+     // We can change a phi if we can change all operands.  Note that we never
+@@ -1878,7 +1910,7 @@ bool TypeEvaluationHelper::canEvaluateSExtdPred(Value *V, Type *Ty) {
+     // chain loops.
+     PHINode *PN = cast<PHINode>(I);
+     for (Value *IncValue : PN->incoming_values())
+-      if (!canEvaluateSExtdImpl(IncValue, Ty))
++      if (!canEvaluateSExtdImpl(IncValue, Ty, NoSignedWrap))
+         return false;
+     return true;
+   }
+diff --git a/llvm/test/Transforms/InstCombine/zext-nneg.ll b/llvm/test/Transforms/InstCombine/zext-nneg.ll
+new file mode 100644
+index 0000000000000..bb75d37a7824f
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/zext-nneg.ll
+@@ -0,0 +1,233 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -passes=instcombine -S | FileCheck %s
++
++target datalayout = "n64"
++
++; When evaluated as i64 we need to restrict the range of the output to that of
++; i32 using an and, as negative values of the i32 add become positive values
++; when zero-extended.
++define i64 @zext_of_sext_nsw(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_of_sext_nsw(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = sext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[SEXT]], 4294967295
++; CHECK-NEXT:    [[ZEXT:%.*]] = and i64 [[ADD]], 4294967295
++; CHECK-NEXT:    ret i64 [[ZEXT]]
++;
++entry:
++  %sext = sext i16 %arg to i32
++  %add = add nsw i32 %sext, -1
++  %zext = zext i32 %add to i64
++  ret i64 %zext
++}
++
++define i64 @zext_of_zext_nsw(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_of_zext_nsw(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = zext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i64 [[SEXT]], 4294967295
++; CHECK-NEXT:    [[ZEXT:%.*]] = and i64 [[ADD]], 4294967295
++; CHECK-NEXT:    ret i64 [[ZEXT]]
++;
++entry:
++  %sext = zext i16 %arg to i32
++  %add = add nsw i32 %sext, -1
++  %zext = zext i32 %add to i64
++  ret i64 %zext
++}
++
++; When the zext is nneg we know the add result can never be negative, and nsw on
++; the add means evaluating the add at a wider width can't result in the sign of
++; the result changing, so we don't need to restrict to the range of an i32.
++define i64 @zext_nneg_of_sext_nsw(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_nneg_of_sext_nsw(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = sext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[SEXT]], -1
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++entry:
++  %sext = sext i16 %arg to i32
++  %add = add nsw i32 %sext, -1
++  %zext = zext nneg i32 %add to i64
++  ret i64 %zext
++}
++
++define i64 @zext_nneg_of_zext_nsw(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_nneg_of_zext_nsw(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = zext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[SEXT]], -1
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++entry:
++  %sext = zext i16 %arg to i32
++  %add = add nsw i32 %sext, -1
++  %zext = zext nneg i32 %add to i64
++  ret i64 %zext
++}
++
++; We can still avoid an and even without nsw on the add as -1 is small enough
++; that we know there are no sign or zero extended values that could result in
++; the output wrapping.
++define i64 @zext_nneg_of_sext(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_nneg_of_sext(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = sext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[SEXT]], -1
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++entry:
++  %sext = sext i16 %arg to i32
++  %add = add i32 %sext, -1
++  %zext = zext nneg i32 %add to i64
++  ret i64 %zext
++}
++
++define i64 @zext_nneg_of_zext(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_nneg_of_zext(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = zext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[SEXT]], -1
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++entry:
++  %sext = zext i16 %arg to i32
++  %add = add i32 %sext, -1
++  %zext = zext nneg i32 %add to i64
++  ret i64 %zext
++}
++
++; -2147450881 is (INT32_MIN - INT16_MIN - 1), so if %arg is INT16_MIN the result
++; is INT32_MIN-1, so when done in i32 precision will wrap around to INT32_MAX.
++; We therefore need to use an and to restrict the result to the range of an i32.
++; Theoretically we could optimize this to just return INT32_MIN-1, as all other
++; %add values are negative and thus result in poison when used as an argument to
++; zext nneg.
++define i64 @zext_nneg_of_sext_large_negative(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_nneg_of_sext_large_negative(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = sext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[SEXT]], 2147516415
++; CHECK-NEXT:    [[ZEXT:%.*]] = and i64 [[ADD]], 4294967295
++; CHECK-NEXT:    ret i64 [[ZEXT]]
++;
++entry:
++  %sext = sext i16 %arg to i32
++  %add = add i32 %sext, -2147450881
++  %zext = zext nneg i32 %add to i64
++  ret i64 %zext
++}
++
++; We don't need to worry about wrapping, and so never need to restrict the range
++; of the output, for zext of zext, as the result of the zext is, when
++; interpreted as a signed integer, always positive.
++; Theoretically here we could optimize this to return poison, as the result of
++; the %add is always negative ans thus gives poison when passed to zext nneg.
++define i64 @zext_nneg_of_zext_large_negative(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_nneg_of_zext_large_negative(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = zext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i64 [[SEXT]], 2147516415
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++entry:
++  %sext = zext i16 %arg to i32
++  %add = add i32 %sext, -2147450881
++  %zext = zext nneg i32 %add to i64
++  ret i64 %zext
++}
++
++; 4294934529 is (UINT32_MAX - INT16_MAX + 1), so if %arg is INT16_MAX the result
++; is UINT32_MAX+1, causing the result to wrap around to zero. However 4294934529
++; interpreted as a signed i32 is -32767, so adding that at i64 width will give
++; the same result without needing to care about unsigned wrapping.
++define i64 @zext_nneg_of_sext_large_positive(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_nneg_of_sext_large_positive(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = sext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[SEXT]], -32767
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++entry:
++  %sext = sext i16 %arg to i32
++  %add = add i32 %sext, 4294934529
++  %zext = zext nneg i32 %add to i64
++  ret i64 %zext
++}
++
++define i64 @zext_nneg_of_zext_large_positive(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_nneg_of_zext_large_positive(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = zext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[SEXT]], -32767
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++entry:
++  %sext = zext i16 %arg to i32
++  %add = add i32 %sext, 4294934529
++  %zext = zext nneg i32 %add to i64
++  ret i64 %zext
++}
++
++; 2271560481 is 0x87654321. Sign-extending it would be a problem if the zext
++; weren't nneg, but because it is we know that the sign-extended bits of arg
++; must have the same value and cancel out to zero.
++define i64 @zext_of_sext_xor(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_of_sext_xor(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = sext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[XOR:%.*]] = xor i64 [[SEXT]], -2023406815
++; CHECK-NEXT:    ret i64 [[XOR]]
++;
++entry:
++  %sext = sext i16 %arg to i32
++  %xor = xor i32 %sext, 2271560481
++  %zext = zext nneg i32 %xor to i64
++  ret i64 %zext
++}
++
++; Theoretically this can be replaced with ret poison, as the or means that it's
++; guaranteed that the sign bit is set which isn't permitted by the zext nneg.
++define i64 @zext_of_sext_or(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_of_sext_or(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = sext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[OR:%.*]] = or i64 [[SEXT]], -2023406815
++; CHECK-NEXT:    ret i64 [[OR]]
++;
++entry:
++  %sext = sext i16 %arg to i32
++  %or = or i32 %sext, 2271560481
++  %zext = zext nneg i32 %or to i64
++  ret i64 %zext
++}
++
++; The and preserves the sign bit of the sext'd arg, so we know it must be zero
++; from the nneg, so it's safe to sign-extend the and immediate.
++define i64 @zext_of_sext_and(i16 %arg) {
++; CHECK-LABEL: define i64 @zext_of_sext_and(
++; CHECK-SAME: i16 [[ARG:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SEXT:%.*]] = sext i16 [[ARG]] to i64
++; CHECK-NEXT:    [[AND:%.*]] = and i64 [[SEXT]], -2023406815
++; CHECK-NEXT:    ret i64 [[AND]]
++;
++entry:
++  %sext = sext i16 %arg to i32
++  %and = and i32 %sext, 2271560481
++  %zext = zext nneg i32 %and to i64
++  ret i64 %zext
++}
