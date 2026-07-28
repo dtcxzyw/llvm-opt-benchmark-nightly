@@ -204,14 +204,15 @@ bb.d:                                             ; preds = %_ZNK6google8protobu
   %i.br = sext i32 %i.bp to i64                   ; 2 uses
   %i.bs = tail call range(i64 1, 65) i64 @llvm.ctpop.i64(i64 %i.br)
   %or.cond.i.i = icmp eq i64 %i.bs, 1
-  %i.bt = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.br, i1 true)
-  %..i.i = select i1 %or.cond.i.i, i64 63, i64 64
-  %i.bu = sub nuw nsw i64 %..i.i, %i.bt           ; 2 uses
+  %i.bt = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.br, i1 true) ; 2 uses
+  %6 = lshr exact i64 -9223372036854775808, %i.bt
+  %i.bu = sub nuw nsw i64 64, %i.bt
   %i.bv = shl nuw i64 1, %i.bu
-  %i.bw = trunc i64 %i.bv to i16
+  %7 = select i1 %or.cond.i.i, i64 %6, i64 %i.bv  ; 2 uses
+  %i.bw = trunc i64 %7 to i16
   store i16 %i.bw, ptr %0, align 8, !tbaa !99
   %i.bx = icmp eq ptr %1, null
-  %i.by = shl i64 32, %i.bu
+  %i.by = shl i64 %7, 5
   %i.bz = and i64 %i.by, 2097120                  ; 2 uses
   br i1 %i.bx, label %bb.e, label %bb.f, !prof !35
 
@@ -551,17 +552,27 @@ declare void @llvm.assume(i1 noundef) #16
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6google8protobuf8internal12ExtensionSet37InternalReserveSmallCapacityFromEmptyEPNS0_5ArenaEm(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(16) initializes((0, 2), (8, 16)) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
-bb.a:
-  %3 = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %2)
-  %or.cond.i = icmp eq i64 %3, 1
-  %4 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %2, i1 false)
-  %..i = select i1 %or.cond.i, i64 63, i64 64
-  %5 = sub nuw nsw i64 %..i, %4                   ; 2 uses
-  %6 = shl nuw i64 1, %5
-  %i.a = trunc i64 %6 to i16
+  %4 = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %2)
+  %or.cond.i = icmp eq i64 %4, 1
+  br i1 %or.cond.i, label %5, label %_ZN4absl12lts_2025051214has_single_bitImEENSt9enable_ifIXsr3std11is_unsignedIT_EE5valueEbE4typeES3_.exit.thread.i
+
+5:                                                ; preds = %3
+  %6 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %2, i1 true)
+  %7 = lshr exact i64 -9223372036854775808, %6
+  br label %bb.a
+
+_ZN4absl12lts_2025051214has_single_bitImEENSt9enable_ifIXsr3std11is_unsignedIT_EE5valueEbE4typeES3_.exit.thread.i: ; preds = %3
+  %8 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %2, i1 false)
+  %9 = sub nuw nsw i64 64, %8
+  %10 = shl nuw i64 1, %9
+  br label %bb.a
+
+bb.a:                                             ; preds = %5, %_ZN4absl12lts_2025051214has_single_bitImEENSt9enable_ifIXsr3std11is_unsignedIT_EE5valueEbE4typeES3_.exit.thread.i
+  %11 = phi i64 [ %7, %5 ], [ %10, %_ZN4absl12lts_2025051214has_single_bitImEENSt9enable_ifIXsr3std11is_unsignedIT_EE5valueEbE4typeES3_.exit.thread.i ] ; 2 uses
+  %i.a = trunc i64 %11 to i16
   store i16 %i.a, ptr %0, align 8, !tbaa !99
   %i.b = icmp eq ptr %1, null
-  %i.c = shl i64 32, %5
+  %i.c = shl i64 %11, 5
   %i.d = and i64 %i.c, 2097120                    ; 2 uses
   br i1 %i.b, label %bb.b, label %bb.c, !prof !35
 

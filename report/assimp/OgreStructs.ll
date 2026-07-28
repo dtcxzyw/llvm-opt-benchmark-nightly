@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
-  %2 = zext i16 %i.d to i32
-  %3 = add nsw i32 %2, -1
+  %2 = zext i16 %i.d to i64
+  %3 = add nsw i64 %2, -1
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
@@ -230,7 +230,8 @@ bb.e:                                             ; preds = %.lr.ph.i
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.0711.i
   %i.q = load ptr, ptr %i.p, align 8              ; 2 uses
   %i.r = load i32, ptr %i.q, align 8
-  %i.s = icmp eq i32 %i.r, %3
+  %4 = zext i32 %i.r to i64
+  %i.s = icmp eq i64 %3, %4
   br i1 %i.s, label %_ZNK6Assimp4Ogre4Mesh10GetSubMeshEm.exit, label %bb.e
 
 _ZNK6Assimp4Ogre4Mesh10GetSubMeshEm.exit:         ; preds = %bb.e, %.lr.ph.i, %bb.d

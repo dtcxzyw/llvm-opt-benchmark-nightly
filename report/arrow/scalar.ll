@@ -203,9 +203,8 @@ bb.k:                                             ; preds = %bb.j
 
 .thread.i.i.i:                                    ; preds = %bb.k, %bb.j
   %i.bb = zext nneg i8 %i.al to i64
-  %5 = add nuw nsw i64 %i.bb, 4294967295
-  %6 = and i64 %5, 4294967295
-  %i.bc = getelementptr inbounds nuw i8, ptr @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d, i64 %6
+  %5 = getelementptr i8, ptr @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d, i64 %i.bb
+  %i.bc = getelementptr i8, ptr %5, i64 -1
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !66
   br label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.i
 
@@ -608,7 +607,11 @@ bb.e:                                             ; preds = %bb.d, %bb.d
   %i.q = load i8, ptr %i.p, align 1, !tbaa !66    ; 5 uses
   %i.r = add i8 %i.q, -48                         ; 2 uses
   %or.cond.i.i.i = icmp ult i8 %i.r, 10
-  br i1 %or.cond.i.i.i, label %bb.j, label %bb.f
+  br i1 %or.cond.i.i.i, label %4, label %bb.f
+
+4:                                                ; preds = %.lr.ph.i.i.i
+  %5 = zext nneg i8 %i.r to i64
+  br label %bb.j
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
   %i.s = add i8 %i.q, -65
@@ -616,8 +619,8 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i
   br i1 %or.cond42.i.i.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %narrow40.i.i.i = add nuw nsw i8 %i.q, 9
-  %4 = and i8 %narrow40.i.i.i, 31
+  %6 = zext nneg i8 %i.q to i64
+  %7 = add nsw i64 %6, -55
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.f
@@ -626,14 +629,13 @@ bb.h:                                             ; preds = %bb.f
   br i1 %or.cond43.i.i.i, label %bb.i, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEEbRKT_PKcmPNS0_15StringConverterIS3_vE10value_typeE.exit.thread
 
 bb.i:                                             ; preds = %bb.h
-  %narrow.i.i.i = add nuw nsw i8 %i.q, 9
-  %5 = and i8 %narrow.i.i.i, 31
+  %8 = zext nneg i8 %i.q to i64
+  %9 = add nsw i64 %8, -87
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %bb.g, %.lr.ph.i.i.i
-  %.pn.in.i.i.i = phi i8 [ %5, %bb.i ], [ %4, %bb.g ], [ %i.r, %.lr.ph.i.i.i ]
-  %.pn.i.i.i = zext nneg i8 %.pn.in.i.i.i to i64
-  %.1.i.i.i = or i64 %i.o, %.pn.i.i.i             ; 2 uses
+bb.j:                                             ; preds = %bb.i, %bb.g, %4
+  %.pn.i.i.i = phi i64 [ %5, %4 ], [ %7, %bb.g ], [ %9, %bb.i ]
+  %.1.i.i.i = or i64 %.pn.i.i.i, %i.o             ; 2 uses
   %i.u = add nuw nsw i64 %.03049.i.i.i, 1
   %exitcond.not.i.i.i = icmp eq i64 %.03049.i.i.i, %i.m
   br i1 %exitcond.not.i.i.i, label %_ZN5arrow8internal10ParseValueINS_10UInt64TypeEEEbRKT_PKcmPNS0_15StringConverterIS3_vE10value_typeE.exit.thread4, label %.lr.ph.i.i.i, !llvm.loop !2080
@@ -1036,7 +1038,11 @@ bb.d:                                             ; preds = %bb.c, %bb.c
   %i.m = load i8, ptr %i.l, align 1, !tbaa !66    ; 5 uses
   %i.n = add i8 %i.m, -48                         ; 2 uses
   %or.cond.i = icmp ult i8 %i.n, 10
-  br i1 %or.cond.i, label %bb.i, label %bb.e
+  br i1 %or.cond.i, label %5, label %bb.e
+
+5:                                                ; preds = %.lr.ph.i
+  %6 = zext nneg i8 %i.n to i64
+  br label %bb.i
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.o = add i8 %i.m, -65
@@ -1044,8 +1050,8 @@ bb.e:                                             ; preds = %.lr.ph.i
   br i1 %or.cond42.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %narrow40.i = add nuw nsw i8 %i.m, 9
-  %5 = and i8 %narrow40.i, 31
+  %7 = zext nneg i8 %i.m to i64
+  %8 = add nsw i64 %7, -55
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
@@ -1054,14 +1060,13 @@ bb.g:                                             ; preds = %bb.e
   br i1 %or.cond43.i, label %bb.h, label %_ZN5arrow8internal8ParseHexImEEbPKcmPT_.exit.thread, !prof !358
 
 bb.h:                                             ; preds = %bb.g
-  %narrow.i = add nuw nsw i8 %i.m, 9
-  %6 = and i8 %narrow.i, 31
+  %9 = zext nneg i8 %i.m to i64
+  %10 = add nsw i64 %9, -87
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.f, %.lr.ph.i
-  %.pn.in.i = phi i8 [ %6, %bb.h ], [ %5, %bb.f ], [ %i.n, %.lr.ph.i ]
-  %.pn.i = zext nneg i8 %.pn.in.i to i64
-  %.1.i = or i64 %i.k, %.pn.i                     ; 2 uses
+bb.i:                                             ; preds = %bb.h, %bb.f, %5
+  %.pn.i = phi i64 [ %6, %5 ], [ %8, %bb.f ], [ %10, %bb.h ]
+  %.1.i = or i64 %.pn.i, %i.k                     ; 2 uses
   %i.q = add nuw nsw i64 %.03049.i, 1
   %exitcond.not.i = icmp eq i64 %.03049.i, %i.i
   br i1 %exitcond.not.i, label %_ZN5arrow8internal8ParseHexImEEbPKcmPT_.exit.thread.sink.split, label %.lr.ph.i, !llvm.loop !2080
@@ -1464,7 +1469,11 @@ bb.d:                                             ; preds = %bb.c, %bb.c
   %i.m = load i8, ptr %i.l, align 1, !tbaa !66    ; 5 uses
   %i.n = add i8 %i.m, -48                         ; 2 uses
   %or.cond.i = icmp ult i8 %i.n, 10
-  br i1 %or.cond.i, label %bb.i, label %bb.e
+  br i1 %or.cond.i, label %5, label %bb.e
+
+5:                                                ; preds = %.lr.ph.i
+  %6 = zext nneg i8 %i.n to i64
+  br label %bb.i
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.o = add i8 %i.m, -65
@@ -1472,8 +1481,8 @@ bb.e:                                             ; preds = %.lr.ph.i
   br i1 %or.cond42.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %narrow40.i = add nuw nsw i8 %i.m, 9
-  %5 = and i8 %narrow40.i, 31
+  %7 = zext nneg i8 %i.m to i64
+  %8 = add nsw i64 %7, -55
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
@@ -1482,14 +1491,13 @@ bb.g:                                             ; preds = %bb.e
   br i1 %or.cond43.i, label %bb.h, label %_ZN5arrow8internal8ParseHexImEEbPKcmPT_.exit.thread, !prof !358
 
 bb.h:                                             ; preds = %bb.g
-  %narrow.i = add nuw nsw i8 %i.m, 9
-  %6 = and i8 %narrow.i, 31
+  %9 = zext nneg i8 %i.m to i64
+  %10 = add nsw i64 %9, -87
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.f, %.lr.ph.i
-  %.pn.in.i = phi i8 [ %6, %bb.h ], [ %5, %bb.f ], [ %i.n, %.lr.ph.i ]
-  %.pn.i = zext nneg i8 %.pn.in.i to i64
-  %.1.i = or i64 %i.k, %.pn.i                     ; 2 uses
+bb.i:                                             ; preds = %bb.h, %bb.f, %5
+  %.pn.i = phi i64 [ %6, %5 ], [ %8, %bb.f ], [ %10, %bb.h ]
+  %.1.i = or i64 %.pn.i, %i.k                     ; 2 uses
   %i.q = add nuw nsw i64 %.03049.i, 1
   %exitcond.not.i = icmp eq i64 %.03049.i, %i.i
   br i1 %exitcond.not.i, label %_ZN5arrow8internal8ParseHexImEEbPKcmPT_.exit.thread.sink.split, label %.lr.ph.i, !llvm.loop !2080
@@ -1737,9 +1745,8 @@ bb.k:                                             ; preds = %bb.j
 
 .thread.i.i.i:                                    ; preds = %bb.k, %bb.j
   %i.ay = zext nneg i8 %i.ai to i64
-  %5 = add nuw nsw i64 %i.ay, 4294967295
-  %6 = and i64 %5, 4294967295
-  %i.az = getelementptr inbounds nuw i8, ptr @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d, i64 %6
+  %5 = getelementptr i8, ptr @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d, i64 %i.ay
+  %i.az = getelementptr i8, ptr %5, i64 -1
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !66
   br label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.i
 
@@ -1967,9 +1974,8 @@ bb.k:                                             ; preds = %bb.j
 
 .thread.i.i.i:                                    ; preds = %bb.k, %bb.j
   %i.ay = zext nneg i8 %i.ai to i64
-  %5 = add nuw nsw i64 %i.ay, 4294967295
-  %6 = and i64 %5, 4294967295
-  %i.az = getelementptr inbounds nuw i8, ptr @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d, i64 %6
+  %5 = getelementptr i8, ptr @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d, i64 %i.ay
+  %i.az = getelementptr i8, ptr %5, i64 -1
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !66
   br label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.i
 

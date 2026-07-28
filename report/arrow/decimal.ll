@@ -204,7 +204,11 @@ bb.h:                                             ; preds = %bb.g, %bb.g
   %i.p = load i8, ptr %i.o, align 1, !tbaa !54    ; 5 uses
   %i.q = add i8 %i.p, -48                         ; 2 uses
   %or.cond.i.i = icmp ult i8 %i.q, 10
-  br i1 %or.cond.i.i, label %bb.m, label %bb.i
+  br i1 %or.cond.i.i, label %3, label %bb.i
+
+3:                                                ; preds = %.lr.ph.i.i
+  %4 = zext nneg i8 %i.q to i64
+  br label %bb.m
 
 bb.i:                                             ; preds = %.lr.ph.i.i
   %i.r = add i8 %i.p, -65
@@ -212,8 +216,8 @@ bb.i:                                             ; preds = %.lr.ph.i.i
   br i1 %or.cond42.i.i, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %narrow40.i.i = add nuw nsw i8 %i.p, 9
-  %3 = and i8 %narrow40.i.i, 31
+  %5 = zext nneg i8 %i.p to i64
+  %6 = add nsw i64 %5, -55
   br label %bb.m
 
 bb.k:                                             ; preds = %bb.i
@@ -222,14 +226,13 @@ bb.k:                                             ; preds = %bb.i
   br i1 %or.cond43.i.i, label %bb.l, label %_ZN5arrow8internal33StringToUnsignedIntConverterMixinINS_10UInt64TypeEE7ConvertERKS2_PKcmPm.exit
 
 bb.l:                                             ; preds = %bb.k
-  %narrow.i.i = add nuw nsw i8 %i.p, 9
-  %4 = and i8 %narrow.i.i, 31
+  %7 = zext nneg i8 %i.p to i64
+  %8 = add nsw i64 %7, -87
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %bb.j, %.lr.ph.i.i
-  %.pn.in.i.i = phi i8 [ %4, %bb.l ], [ %3, %bb.j ], [ %i.q, %.lr.ph.i.i ]
-  %.pn.i.i = zext nneg i8 %.pn.in.i.i to i64
-  %.1.i.i = or i64 %i.n, %.pn.i.i                 ; 2 uses
+bb.m:                                             ; preds = %bb.l, %bb.j, %3
+  %.pn.i.i = phi i64 [ %4, %3 ], [ %6, %bb.j ], [ %8, %bb.l ]
+  %.1.i.i = or i64 %.pn.i.i, %i.n                 ; 2 uses
   %i.t = add nuw nsw i64 %.03049.i.i, 1
   %exitcond.not.i.i = icmp eq i64 %.03049.i.i, %i.l
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !420

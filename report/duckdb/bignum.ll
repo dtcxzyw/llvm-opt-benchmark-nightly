@@ -203,47 +203,60 @@ bb.d:                                             ; preds = %bb.c
   br label %mbedtls_mpi_grow.exit
 
 bb.e:                                             ; preds = %bb.b
-  %i.k = zext i16 %i.c to i64
-  %i.l = add nuw nsw i64 %i.k, 4294967295
-  %2 = and i64 %i.l, 4294967295                   ; 2 uses
-  %.not44 = icmp eq i64 %2, 0
+  %i.k = zext i16 %i.c to i64                     ; 3 uses
+  %i.l = add nsw i64 %i.k, -1                     ; 2 uses
+  %.not44 = icmp eq i64 %i.l, 0
   br i1 %.not44, label %._crit_edge, label %.lr.ph.a
 
 .lr.ph.a:                                         ; preds = %bb.e
   %i.m = load ptr, ptr %1, align 8, !tbaa !15
   br label %bb.f
 
-bb.f:                                             ; preds = %.lr.ph.a, %bb.g
-  %.045 = phi i64 [ %2, %.lr.ph.a ], [ %3, %bb.g ] ; 3 uses
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.045
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !13
-  %.not37 = icmp eq i64 %i.o, 0
-  br i1 %.not37, label %bb.g, label %._crit_edge
-
-bb.g:                                             ; preds = %bb.f
-  %3 = add nsw i64 %.045, -1                      ; 2 uses
-  %.not = icmp eq i64 %3, 0
+2:                                                ; preds = %bb.f
+  %.0 = add nsw i64 %.069, -1                     ; 2 uses
+  %.not = icmp eq i64 %.0, 0
   br i1 %.not, label %._crit_edge, label %bb.f, !llvm.loop !19
 
-._crit_edge:                                      ; preds = %bb.g, %bb.f, %bb.e
-  %.0.lcssa = phi i64 [ 0, %bb.e ], [ %.045, %bb.f ], [ 0, %bb.g ] ; 3 uses
-  %4 = add nuw nsw i64 %.0.lcssa, 1               ; 5 uses
+bb.f:                                             ; preds = %.lr.ph.a, %2
+  %.069 = phi i64 [ %.0, %2 ], [ %i.l, %.lr.ph.a ] ; 4 uses
+  %.045 = phi i64 [ %.069, %2 ], [ %i.k, %.lr.ph.a ] ; 4 uses
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.069
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !13
+  %.not37 = icmp eq i64 %i.o, 0
+  br i1 %.not37, label %2, label %bb.g, !llvm.loop !19
+
+bb.g:                                             ; preds = %bb.f
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %4 = load i16, ptr %3, align 8, !tbaa !12
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i16 %4, ptr %5, align 8, !tbaa !12
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
+  %7 = load i16, ptr %6, align 2, !tbaa !7
+  %8 = zext i16 %7 to i64                         ; 3 uses
+  %9 = icmp ugt i64 %.045, %8
+  br i1 %9, label %bb.h, label %bb.m
+
+._crit_edge:                                      ; preds = %2, %bb.e
+  %.0.in.lcssa = phi i64 [ %i.k, %bb.e ], [ %.069, %2 ] ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.q = load i16, ptr %i.p, align 8, !tbaa !12
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i16 %i.q, ptr %i.r, align 8, !tbaa !12
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
-  %i.t = load i16, ptr %i.s, align 2, !tbaa !7
-  %i.u = zext i16 %i.t to i64                     ; 3 uses
-  %.not38 = icmp ult i64 %.0.lcssa, %i.u
-  br i1 %.not38, label %bb.m, label %bb.h
+  %i.t = load i16, ptr %i.s, align 2, !tbaa !7    ; 2 uses
+  %i.u = zext i16 %i.t to i64
+  %10 = icmp eq i16 %i.t, 0
+  br i1 %10, label %bb.i, label %bb.m
 
-bb.h:                                             ; preds = %._crit_edge
-  %i.v = icmp ugt i64 %.0.lcssa, 9999
+bb.h:                                             ; preds = %bb.g
+  %i.v = icmp ugt i64 %.045, 10000
   br i1 %i.v, label %mbedtls_mpi_grow.exit, label %bb.i
 
-bb.i:                                             ; preds = %bb.h
-  %i.w = tail call noalias ptr @calloc(i64 noundef %4, i64 noundef 8) #13 ; 4 uses
+bb.i:                                             ; preds = %._crit_edge, %bb.h
+  %.0.in65 = phi i64 [ %.045, %bb.h ], [ %.0.in.lcssa, %._crit_edge ] ; 3 uses
+  %11 = phi ptr [ %6, %bb.h ], [ %i.s, %._crit_edge ]
+  %12 = phi i64 [ %8, %bb.h ], [ 0, %._crit_edge ]
+  %i.w = tail call noalias ptr @calloc(i64 noundef %.0.in65, i64 noundef 8) #13 ; 4 uses
   %i.x = icmp eq ptr %i.w, null
   br i1 %i.x, label %mbedtls_mpi_grow.exit, label %bb.j
 
@@ -253,34 +266,37 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not.i, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.z = shl nuw nsw i64 %i.u, 3                  ; 2 uses
+  %i.z = shl nuw nsw i64 %12, 3                   ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.w, ptr nonnull align 8 %i.y, i64 %i.z, i1 false)
   tail call void @_Z24mbedtls_zeroize_and_freePvm(ptr noundef nonnull %i.y, i64 noundef %i.z)
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %bb.j
-  %i.aa = trunc nuw nsw i64 %4 to i16
-  store i16 %i.aa, ptr %i.s, align 2, !tbaa !7
+bb.l:                                             ; preds = %bb.j, %bb.k
+  %i.aa = trunc nuw nsw i64 %.0.in65 to i16
+  store i16 %i.aa, ptr %11, align 2, !tbaa !7
   store ptr %i.w, ptr %0, align 8, !tbaa !15
   br label %mbedtls_mpi_grow.exit.thread.a
 
-bb.m:                                             ; preds = %._crit_edge
+bb.m:                                             ; preds = %._crit_edge, %bb.g
+  %.0.in64 = phi i64 [ %.0.in.lcssa, %._crit_edge ], [ %.045, %bb.g ] ; 3 uses
+  %13 = phi i64 [ %i.u, %._crit_edge ], [ %8, %bb.g ]
   %i.ab = load ptr, ptr %0, align 8, !tbaa !15
-  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %4
-  %i.ad = sub nsw i64 %i.u, %4
-  %i.ae = shl nsw i64 %i.ad, 3
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ac, i8 0, i64 %i.ae, i1 false)
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %.0.in64
+  %i.ad = sub nuw nsw i64 %13, %.0.in64
+  %i.ae = shl nuw nsw i64 %i.ad, 3
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ac, i8 0, i64 %i.ae, i1 false)
   %.pre = load ptr, ptr %0, align 8, !tbaa !15
   br label %mbedtls_mpi_grow.exit.thread.a
 
 mbedtls_mpi_grow.exit.thread.a:                   ; preds = %bb.l, %bb.m
+  %.0.in63 = phi i64 [ %.0.in65, %bb.l ], [ %.0.in64, %bb.m ]
   %i.af = phi ptr [ %i.w, %bb.l ], [ %.pre, %bb.m ]
   %i.ag = load ptr, ptr %1, align 8, !tbaa !15
-  %i.ah = shl nuw nsw i64 %4, 3
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, ptr noundef nonnull align 8 dereferenceable(1) %i.ag, i64 %i.ah, i1 false)
+  %i.ah = shl nuw nsw i64 %.0.in63, 3
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.af, ptr align 8 %i.ag, i64 %i.ah, i1 false)
   br label %mbedtls_mpi_grow.exit
 
-mbedtls_mpi_grow.exit:                            ; preds = %bb.i, %bb.h, %mbedtls_mpi_grow.exit.thread.a, %bb.c, %bb.d, %bb.a
+mbedtls_mpi_grow.exit:                            ; preds = %bb.h, %bb.i, %mbedtls_mpi_grow.exit.thread.a, %bb.c, %bb.d, %bb.a
   %.028 = phi i32 [ 0, %bb.c ], [ 0, %bb.a ], [ 0, %bb.d ], [ 0, %mbedtls_mpi_grow.exit.thread.a ], [ -16, %bb.i ], [ -16, %bb.h ]
   ret i32 %.028
 }
