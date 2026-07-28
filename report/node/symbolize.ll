@@ -1,8 +1,7 @@
 inline.NumInlined: 121
 inline.NumDeleted: 64
 loop-unroll.NumCompletelyUnrolled: 9
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZN4absl18debugging_internal22GetSectionHeaderByNameEiPKcmP10Elf64_Shdr:bb.a
   %i.bc = icmp slt i64 %i.bb, 0
   br i1 %i.bc, label %bb.n, label %bb.l
@@ -204,16 +203,19 @@ _ZN4absl13base_internal8SpinLock8try_lockEv.exit: ; preds = %bb.a
   br i1 %i.f, label %.preheader12, label %_ZN4absl13base_internal8SpinLock6unlockEv.exit
 
 .preheader12:                                     ; preds = %_ZN4absl13base_internal8SpinLock8try_lockEv.exit
-  %i.g = load i32, ptr @_ZN4absl18debugging_internal12_GLOBAL__N_116g_num_decoratorsE, align 4 ; 3 uses
+  %i.g = load i32, ptr @_ZN4absl18debugging_internal12_GLOBAL__N_116g_num_decoratorsE, align 4 ; 4 uses
   %i.h = icmp sgt i32 %i.g, 0
   br i1 %i.h, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.preheader12
   %wide.trip.count = zext nneg i32 %i.g to i64
+  %1 = add nsw i32 %i.g, -2                       ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 8 uses
+  %indvars.iv29 = phi i32 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next30, %bb.b ] ; 2 uses
+  %indvars.iv26 = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next27, %bb.b ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 5 uses
   %i.i = getelementptr inbounds nuw [24 x i8], ptr @_ZN4absl18debugging_internal12_GLOBAL__N_112g_decoratorsE, i64 %indvars.iv
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = load i32, ptr %i.j, align 8
@@ -222,52 +224,36 @@ _ZN4absl13base_internal8SpinLock8try_lockEv.exit: ; preds = %bb.a
 
 .preheader:                                       ; preds = %.lr.ph
   %i.m = trunc nuw nsw i64 %indvars.iv to i32     ; 2 uses
-  %i.n = add nsw i32 %i.g, -1                     ; 4 uses
+  %i.n = add nsw i32 %i.g, -1
   %i.o = icmp sgt i32 %i.n, %i.m
-  br i1 %i.o, label %.lr.ph17.preheader, label %._crit_edge
+  br i1 %i.o, label %.lr.ph17, label %._crit_edge
 
-.lr.ph17.preheader:                               ; preds = %.preheader
-  %wide.trip.count26 = zext nneg i32 %i.n to i64  ; 3 uses
-  %1 = sub nsw i64 %wide.trip.count26, %indvars.iv
-  %xtraiter = and i64 %1, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph17.prol.loopexit, label %.lr.ph17.prol
+.lr.ph17:                                         ; preds = %.preheader
+  %2 = mul nuw nsw i64 %indvars.iv, 24            ; 2 uses
+  %scevgep = getelementptr nuw i8, ptr @_ZN4absl18debugging_internal12_GLOBAL__N_112g_decoratorsE, i64 %2
+  %3 = getelementptr i8, ptr @_ZN4absl18debugging_internal12_GLOBAL__N_112g_decoratorsE, i64 %2
+  %scevgep21 = getelementptr i8, ptr %3, i64 24
+  %4 = trunc i64 %indvars.iv to i32
+  %5 = sub i32 %1, %4
+  %6 = zext i32 %5 to i64
+  %7 = mul nuw nsw i64 %6, 24
+  %8 = add nuw nsw i64 %7, 24
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep21, i64 %8, i1 false)
+  %9 = trunc i64 %indvars.iv26 to i32
+  %10 = add i32 %indvars.iv29, %9
+  br label %._crit_edge
 
-.lr.ph17.prol:                                    ; preds = %.lr.ph17.preheader
-  %indvars.iv.next24.prol = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %2 = getelementptr inbounds nuw [24 x i8], ptr @_ZN4absl18debugging_internal12_GLOBAL__N_112g_decoratorsE, i64 %indvars.iv.next24.prol
-  %3 = getelementptr inbounds nuw [24 x i8], ptr @_ZN4absl18debugging_internal12_GLOBAL__N_112g_decoratorsE, i64 %indvars.iv
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
-  br label %.lr.ph17.prol.loopexit
-
-.lr.ph17.prol.loopexit:                           ; preds = %.lr.ph17.prol, %.lr.ph17.preheader
-  %indvars.iv23.unr = phi i64 [ %indvars.iv, %.lr.ph17.preheader ], [ %indvars.iv.next24.prol, %.lr.ph17.prol ]
-  %4 = add nsw i64 %wide.trip.count26, -1
-  %5 = icmp eq i64 %indvars.iv, %4
-  br i1 %5, label %._crit_edge, label %.lr.ph17
-
-.lr.ph17:                                         ; preds = %.lr.ph17.prol.loopexit, %.lr.ph17
-  %indvars.iv23 = phi i64 [ %indvars.iv.next24.1, %.lr.ph17 ], [ %indvars.iv23.unr, %.lr.ph17.prol.loopexit ] ; 3 uses
-  %indvars.iv.next24 = add nuw nsw i64 %indvars.iv23, 1 ; 2 uses
-  %6 = getelementptr inbounds nuw [24 x i8], ptr @_ZN4absl18debugging_internal12_GLOBAL__N_112g_decoratorsE, i64 %indvars.iv.next24
-  %7 = getelementptr inbounds nuw [24 x i8], ptr @_ZN4absl18debugging_internal12_GLOBAL__N_112g_decoratorsE, i64 %indvars.iv23
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %6, i64 24, i1 false)
-  %indvars.iv.next24.1 = add nuw nsw i64 %indvars.iv23, 2 ; 3 uses
-  %8 = getelementptr inbounds nuw [24 x i8], ptr @_ZN4absl18debugging_internal12_GLOBAL__N_112g_decoratorsE, i64 %indvars.iv.next24.1
-  %9 = getelementptr inbounds nuw [24 x i8], ptr @_ZN4absl18debugging_internal12_GLOBAL__N_112g_decoratorsE, i64 %indvars.iv.next24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, ptr noundef nonnull align 8 dereferenceable(24) %8, i64 24, i1 false)
-  %exitcond27.not.1 = icmp eq i64 %indvars.iv.next24.1, %wide.trip.count26
-  br i1 %exitcond27.not.1, label %._crit_edge, label %.lr.ph17, !llvm.loop !10
-
-._crit_edge:                                      ; preds = %.lr.ph17.prol.loopexit, %.lr.ph17, %.preheader
-  %.1.lcssa = phi i32 [ %i.m, %.preheader ], [ %i.n, %.lr.ph17 ], [ %i.n, %.lr.ph17.prol.loopexit ]
+._crit_edge:                                      ; preds = %.lr.ph17, %.preheader
+  %.1.lcssa = phi i32 [ %i.m, %.preheader ], [ %10, %.lr.ph17 ]
   store i32 %.1.lcssa, ptr @_ZN4absl18debugging_internal12_GLOBAL__N_116g_num_decoratorsE, align 4
   br label %.loopexit
 
 bb.b:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !11
+  %indvars.iv.next27 = add nuw nsw i64 %indvars.iv26, 1
+  %indvars.iv.next30 = add i32 %indvars.iv29, -1
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !10
 
 .loopexit:                                        ; preds = %bb.b, %.preheader12, %._crit_edge
   %i.p = load atomic i32, ptr @_ZN4absl18debugging_internal12_GLOBAL__N_115g_decorators_muE monotonic, align 4
@@ -382,7 +368,7 @@ bb.g:                                             ; preds = %bb.f
   %i.k = tail call noundef ptr @_ZN4absl13base_internal12SigSafeArenaEv() #21
   %i.l = tail call noundef ptr @_ZN4absl13base_internal13LowLevelAlloc14AllocWithArenaEmPNS1_5ArenaE(i64 noundef %i.j, ptr noundef %i.k) #21 ; 3 uses
   %.not23 = icmp eq ptr %i.l, null
-  br i1 %.not23, label %bb.h, label %bb.i, !prof !12
+  br i1 %.not23, label %bb.h, label %bb.i, !prof !11
 
 bb.h:                                             ; preds = %bb.g
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 52), i32 noundef 1674, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4) #21
@@ -490,7 +476,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.b, %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.b, !llvm.loop !13
+  br i1 %exitcond.not, label %.loopexit, label %bb.b, !llvm.loop !12
 
 .loopexit:                                        ; preds = %bb.e, %.preheader, %bb.d
   %i.s = phi i1 [ true, %bb.d ], [ false, %.preheader ], [ false, %bb.e ] ; 2 uses
@@ -893,7 +879,7 @@ bb.an:                                            ; preds = %bb.am, %bb.ak, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
   %i.ey = add nuw nsw i32 %.050163.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i = icmp eq i32 %i.ey, %i.dq
-  br i1 %exitcond.not.i.i.i, label %._crit_edge.i.i.i, label %bb.af, !llvm.loop !14
+  br i1 %exitcond.not.i.i.i, label %._crit_edge.i.i.i, label %bb.af, !llvm.loop !13
 
 .loopexit.i.i.i:                                  ; preds = %_ZN4absl18debugging_internal12_GLOBAL__N_111CachingFile19ReadFromOffsetExactEPvml.exit67.i.i.i, %_ZN4absl18debugging_internal12_GLOBAL__N_111CachingFile19ReadFromOffsetExactEPvml.exit67.thread.i.i.i
   %i.ez = load ptr, ptr %i.aq, align 8
@@ -940,7 +926,7 @@ bb.ar:                                            ; preds = %bb.aq
   switch i32 %i.fm, label %bb.ay [
     i32 1, label %bb.az
     i32 0, label %.thread.thread.i.i
-  ], !prof !15
+  ], !prof !14
 
 bb.as:                                            ; preds = %bb.az
   %i.fn = getelementptr inbounds nuw i8, ptr %i.aq, i64 160 ; 2 uses
@@ -948,7 +934,7 @@ bb.as:                                            ; preds = %bb.az
   switch i32 %i.fo, label %bb.ay [
     i32 1, label %bb.at
     i32 0, label %.thread.thread.i.i
-  ], !prof !15
+  ], !prof !14
 
 bb.at:                                            ; preds = %bb.as
   %i.fp = getelementptr inbounds nuw i8, ptr %i.aq, i64 176
@@ -967,7 +953,7 @@ bb.au:                                            ; preds = %bb.at
   switch i32 %i.fx, label %bb.ay [
     i32 1, label %bb.av
     i32 0, label %.thread.thread.i.i
-  ], !prof !15
+  ], !prof !14
 
 bb.av:                                            ; preds = %bb.au
   %i.fy = getelementptr inbounds nuw i8, ptr %i.aq, i64 232
@@ -986,7 +972,7 @@ bb.aw:                                            ; preds = %bb.av
   switch i32 %i.gg, label %bb.ay [
     i32 1, label %bb.ax
     i32 0, label %.thread.thread.i.i
-  ], !prof !15
+  ], !prof !14
 
 bb.ax:                                            ; preds = %bb.aw
   %i.gh = getelementptr inbounds nuw i8, ptr %i.aq, i64 288
@@ -1254,7 +1240,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.ka = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jz) #23
   %i.kb = add i64 %i.ka, 1                        ; 2 uses
   %i.kc = icmp ugt i64 %i.kb, 3071
-  br i1 %i.kc, label %bb.bn, label %bb.bo, !prof !12
+  br i1 %i.kc, label %bb.bn, label %bb.bo, !prof !11
 
 bb.bn:                                            ; preds = %bb.bm
   call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 52), i32 noundef 1545, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.13) #21
@@ -1324,12 +1310,12 @@ bb.br:                                            ; preds = %_ZN4absl13base_inte
   %i.kv = load ptr, ptr %i.ku, align 8
   store ptr %i.kv, ptr %i.ks, align 8
   %i.kw = load ptr, ptr %i.kt, align 8
-  call void %i.kw(ptr noundef nonnull %10) #21, !inline_history !16
+  call void %i.kw(ptr noundef nonnull %10) #21, !inline_history !15
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %i.kx = load i32, ptr @_ZN4absl18debugging_internal12_GLOBAL__N_116g_num_decoratorsE, align 4
   %i.ky = sext i32 %i.kx to i64
   %i.kz = icmp slt i64 %indvars.iv.next.i.i, %i.ky
-  br i1 %i.kz, label %.lr.ph121.i.i, label %._crit_edge.i.i, !llvm.loop !17
+  br i1 %i.kz, label %.lr.ph121.i.i, label %._crit_edge.i.i, !llvm.loop !16
 
 bb.bs:                                            ; preds = %._crit_edge.i.i, %bb.br
   %i.la = load atomic i32, ptr @_ZN4absl18debugging_internal12_GLOBAL__N_115g_decorators_muE monotonic, align 4
@@ -1393,7 +1379,7 @@ bb.bx:                                            ; preds = %bb.cb, %bb.ca, %bb.
   %i.mc = call noundef ptr @_ZN4absl13base_internal12SigSafeArenaEv() #21
   %i.md = call noundef ptr @_ZN4absl13base_internal13LowLevelAlloc14AllocWithArenaEmPNS1_5ArenaE(i64 noundef %i.mb, ptr noundef %i.mc) #21 ; 4 uses
   %.not.i.i74.i.i = icmp eq ptr %i.md, null
-  br i1 %.not.i.i74.i.i, label %bb.by, label %bb.cc, !prof !12
+  br i1 %.not.i.i74.i.i, label %bb.by, label %bb.cc, !prof !11
 
 bb.by:                                            ; preds = %bb.bx
   call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 52), i32 noundef 318, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4) #21
@@ -1459,7 +1445,7 @@ bb.cd:                                            ; preds = %bb.cb
   %i.nf = call noundef ptr @_ZN4absl13base_internal12SigSafeArenaEv() #21
   %i.ng = call noundef ptr @_ZN4absl13base_internal13LowLevelAlloc14AllocWithArenaEmPNS1_5ArenaE(i64 noundef %i.ne, ptr noundef %i.nf) #21 ; 4 uses
   %.not.i54.i.i.i = icmp eq ptr %i.ng, null
-  br i1 %.not.i54.i.i.i, label %bb.ce, label %_ZN4absl18debugging_internal12_GLOBAL__N_110Symbolizer10CopyStringEPKc.exit55.i.i.i, !prof !12
+  br i1 %.not.i54.i.i.i, label %bb.ce, label %_ZN4absl18debugging_internal12_GLOBAL__N_110Symbolizer10CopyStringEPKc.exit55.i.i.i, !prof !11
 
 bb.ce:                                            ; preds = %bb.cd
   call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 52), i32 noundef 318, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4) #21
@@ -1555,7 +1541,7 @@ bb.ck:                                            ; preds = %bb.cj, %bb.ci
   %i.of = add i64 %.010.i.i.i, 1                  ; 2 uses
   %.val.i.i.i25 = load i64, ptr %.0.i, align 8
   %.not.i.i.i26 = icmp eq i64 %i.of, %.val.i.i.i25
-  br i1 %.not.i.i.i26, label %_ZN4absl18debugging_internal12_GLOBAL__N_110SymbolizerD2Ev.exit.i, label %bb.ci, !llvm.loop !18
+  br i1 %.not.i.i.i26, label %_ZN4absl18debugging_internal12_GLOBAL__N_110SymbolizerD2Ev.exit.i, label %bb.ci, !llvm.loop !17
 
 _ZN4absl18debugging_internal12_GLOBAL__N_110SymbolizerD2Ev.exit.i: ; preds = %bb.ck, %bb.ch
   store i64 0, ptr %.0.i, align 8
@@ -1628,7 +1614,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c, %bb.b
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.loopexit.i, label %bb.b, !llvm.loop !13
+  br i1 %exitcond.not.i, label %.loopexit.i, label %bb.b, !llvm.loop !12
 
 .loopexit.i:                                      ; preds = %bb.e, %bb.d, %.preheader.i
   %i.s = phi i1 [ true, %bb.d ], [ false, %.preheader.i ], [ false, %bb.e ] ; 2 uses
@@ -1665,12 +1651,12 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 25 ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 11296 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
-  %i.e = load i8, ptr %i.a, align 8, !range !19, !noundef !20
+  %i.e = load i8, ptr %i.a, align 8, !range !18, !noundef !19
   %i.f = trunc nuw i8 %i.e to i1
   br i1 %i.f, label %bb.b, label %.thread43
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = load i8, ptr %i.b, align 1, !range !19, !noundef !20
+  %i.g = load i8, ptr %i.b, align 1, !range !18, !noundef !19
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %bb.e, label %bb.c
 
@@ -1705,7 +1691,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %.129 = select i1 %i.o, i64 %.02847, i64 %i.p   ; 3 uses
   %.127 = select i1 %i.o, i64 %i.k, i64 %.02648   ; 2 uses
   %i.q = icmp ult i64 %.129, %.127
-  br i1 %i.q, label %bb.f, label %._crit_edge, !llvm.loop !21
+  br i1 %i.q, label %bb.f, label %._crit_edge, !llvm.loop !20
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.e
   %.028.lcssa = phi i64 [ 0, %bb.e ], [ %.129, %bb.f ] ; 2 uses
@@ -1752,12 +1738,12 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.i
   %i.ad = add i64 %.010.i, 1                      ; 2 uses
   %.val.i = load i64, ptr %0, align 16
   %.not.i = icmp eq i64 %i.ad, %.val.i
-  br i1 %.not.i, label %.loopexit, label %.lr.ph.i, !llvm.loop !18
+  br i1 %.not.i, label %.loopexit, label %.lr.ph.i, !llvm.loop !17
 
 .loopexit:                                        ; preds = %bb.l, %bb.j
   store i64 0, ptr %0, align 16
   store i8 0, ptr %i.b, align 1
-  %i.ae = load i8, ptr %i.a, align 8, !range !19, !noundef !20
+  %i.ae = load i8, ptr %i.a, align 8, !range !18, !noundef !19
   %i.af = trunc nuw i8 %i.ae to i1
   br i1 %i.af, label %bb.m, label %.thread43
 
@@ -1788,7 +1774,7 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph.1
   %.129.1 = select i1 %i.am, i64 %.02847.1, i64 %i.an ; 3 uses
   %.127.1 = select i1 %i.am, i64 %i.ai, i64 %.02648.1 ; 2 uses
   %i.ao = icmp ult i64 %.129.1, %.127.1
-  br i1 %i.ao, label %bb.o, label %._crit_edge.1, !llvm.loop !21
+  br i1 %i.ao, label %bb.o, label %._crit_edge.1, !llvm.loop !20
 
 ._crit_edge.1:                                    ; preds = %bb.o, %bb.n
   %.028.lcssa.1 = phi i64 [ 0, %bb.n ], [ %.129.1, %bb.o ] ; 2 uses
@@ -1831,7 +1817,7 @@ bb.t:                                             ; preds = %bb.s, %.lr.ph.i.1
   %i.bb = add i64 %.010.i.1, 1                    ; 2 uses
   %.val.i.1 = load i64, ptr %0, align 16
   %.not.i.1 = icmp eq i64 %i.bb, %.val.i.1
-  br i1 %.not.i.1, label %.loopexit.1, label %.lr.ph.i.1, !llvm.loop !18
+  br i1 %.not.i.1, label %.loopexit.1, label %.lr.ph.i.1, !llvm.loop !17
 
 .loopexit.1:                                      ; preds = %bb.t, %bb.r
   store i64 0, ptr %0, align 16
@@ -1893,7 +1879,7 @@ bb.c:                                             ; preds = %bb.b
   %i.f = tail call ptr @__errno_location() #22
   %i.g = load i32, ptr %i.f, align 4              ; 2 uses
   %i.h = icmp eq i32 %i.g, 4
-  br i1 %i.h, label %bb.b, label %.thread72, !llvm.loop !22
+  br i1 %i.h, label %bb.b, label %.thread72, !llvm.loop !21
 
 .thread72:                                        ; preds = %bb.c
   call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 1, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 52), i32 noundef 1097, ptr noundef nonnull @.str.15, ptr noundef nonnull %i.a, i32 noundef %i.g) #21
@@ -2000,7 +1986,7 @@ bb.j:                                             ; preds = %switch.early.test.i
   %i.an = or i64 %i.am, %i.ah                     ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.02635.i.i, i64 1 ; 2 uses
   %exitcond.not.i.i = icmp eq ptr %i.ao, %i.z
-  br i1 %exitcond.not.i.i, label %switch.early.test._crit_edge.i.loopexit.i, label %.lr.ph.i.i, !llvm.loop !23
+  br i1 %exitcond.not.i.i, label %switch.early.test._crit_edge.i.loopexit.i, label %.lr.ph.i.i, !llvm.loop !22
 
 switch.early.test._crit_edge.i.loopexit.i:        ; preds = %bb.j, %switch.early.test.i.i
   %.026.lcssa.i.ph.i = phi ptr [ %.02635.i.i, %switch.early.test.i.i ], [ %scevgep.i.i, %bb.j ]
@@ -2078,7 +2064,7 @@ bb.o:                                             ; preds = %switch.early.test.i
   %i.bf = or i64 %i.be, %i.az                     ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.02635.i.i43, i64 1 ; 2 uses
   %exitcond.not.i.i47 = icmp eq ptr %i.bg, %i.z
-  br i1 %exitcond.not.i.i47, label %switch.early.test._crit_edge.i.loopexit.i48, label %.lr.ph.i.i41, !llvm.loop !23
+  br i1 %exitcond.not.i.i47, label %switch.early.test._crit_edge.i.loopexit.i48, label %.lr.ph.i.i41, !llvm.loop !22
 
 switch.early.test._crit_edge.i.loopexit.i48:      ; preds = %bb.o, %switch.early.test.i.i46
   %.026.lcssa.i.ph.i49 = phi ptr [ %.02635.i.i43, %switch.early.test.i.i46 ], [ %scevgep.i.i40, %bb.o ]
@@ -2131,7 +2117,7 @@ bb.t:                                             ; preds = %.lr.ph
   %storemerge.add = add nuw i64 %storemerge.idx88, 1 ; 3 uses
   %storemerge.ptr = getelementptr inbounds nuw i8, ptr %.026.lcssa.i.i36, i64 %storemerge.add
   %exitcond.not = icmp eq i64 %storemerge.add, %i.bl
-  br i1 %exitcond.not, label %.critedge2, label %.lr.ph, !llvm.loop !24
+  br i1 %exitcond.not, label %.critedge2, label %.lr.ph, !llvm.loop !23
 
 .critedge2:                                       ; preds = %.lr.ph, %bb.t
   %storemerge.idx.lcssa.ph = phi i64 [ %storemerge.idx88, %.lr.ph ], [ %i.bl, %bb.t ]
@@ -2203,7 +2189,7 @@ bb.w:                                             ; preds = %switch.early.test.i
   %i.ch = or i64 %i.cg, %i.cb                     ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %.02635.i, i64 1 ; 2 uses
   %exitcond.not.i = icmp eq ptr %i.ci, %i.z
-  br i1 %exitcond.not.i, label %switch.early.test._crit_edge.i, label %.lr.ph.i, !llvm.loop !23
+  br i1 %exitcond.not.i, label %switch.early.test._crit_edge.i, label %.lr.ph.i, !llvm.loop !22
 
 switch.early.test._crit_edge.i:                   ; preds = %bb.w, %switch.early.test.i, %bb.v
   %.026.lcssa.i = phi ptr [ %i.bu, %bb.v ], [ %scevgep.i, %bb.w ], [ %.02635.i, %switch.early.test.i ] ; 4 uses
@@ -2245,7 +2231,7 @@ _ZN4absl18debugging_internalL6GetHexEPKcS2_Pm.exit: ; preds = %bb.z, %bb.y
   %.117 = phi i32 [ %i.cn, %bb.y ], [ %.01695, %bb.z ]
   %storemerge31 = getelementptr inbounds nuw i8, ptr %storemerge3196, i64 1 ; 2 uses
   %exitcond114.not = icmp eq ptr %storemerge31, %i.z
-  br i1 %exitcond114.not, label %._crit_edge, label %.lr.ph97, !llvm.loop !25
+  br i1 %exitcond114.not, label %._crit_edge, label %.lr.ph97, !llvm.loop !24
 
 ._crit_edge:                                      ; preds = %_ZN4absl18debugging_internalL6GetHexEPKcS2_Pm.exit, %bb.z, %_ZN4absl18debugging_internalL6GetHexEPKcS2_Pm.exit.preheader
   %storemerge31.lcssa = phi ptr [ %storemerge3194, %_ZN4absl18debugging_internalL6GetHexEPKcS2_Pm.exit.preheader ], [ %storemerge3196, %bb.z ], [ %scevgep113, %_ZN4absl18debugging_internalL6GetHexEPKcS2_Pm.exit ] ; 3 uses
@@ -2287,7 +2273,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i55 = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i55, label %.loopexit.i, label %bb.aa, !llvm.loop !13
+  br i1 %exitcond.not.i55, label %.loopexit.i, label %bb.aa, !llvm.loop !12
 
 .loopexit.i:                                      ; preds = %bb.ac, %.preheader.i
   %i.db = load atomic i32, ptr @_ZN4absl18debugging_internal12_GLOBAL__N_117g_file_mapping_muE monotonic, align 4
@@ -2333,7 +2319,7 @@ _ZN4absl18debugging_internal18GetFileMappingHintEPPKvS3_PmPPKc.exit.thread150: ;
   br i1 %i.do, label %.critedge.backedge, label %_ZN4absl18debugging_internal12_GLOBAL__N_110LineReader8ReadLineEPPKcS5_.exit.thread
 
 .critedge.backedge:                               ; preds = %_ZN4absl18debugging_internal18GetFileMappingHintEPPKvS3_PmPPKc.exit.thread150, %bb.u, %bb.ae, %_ZN4absl18debugging_internal18GetFileMappingHintEPPKvS3_PmPPKc.exit.thread, %_ZN4absl18debugging_internalL16ShouldUseMappingEPKc.exit
-  br label %.critedge, !llvm.loop !26
+  br label %.critedge, !llvm.loop !25
 
 _ZN4absl18debugging_internal12_GLOBAL__N_110LineReader8ReadLineEPPKcS5_.exit.thread: ; preds = %_ZN4absl18debugging_internal18GetFileMappingHintEPPKvS3_PmPPKc.exit.thread150, %bb.d, %bb.h, %bb.g, %bb.m, %bb.r, %.critedge2.thread
   %.6 = phi i1 [ false, %.critedge2.thread ], [ false, %bb.m ], [ false, %bb.r ], [ true, %bb.g ], [ true, %bb.h ], [ true, %bb.d ], [ true, %_ZN4absl18debugging_internal18GetFileMappingHintEPPKvS3_PmPPKc.exit.thread150 ]
@@ -2471,7 +2457,7 @@ _ZN4absl18debugging_internal12_GLOBAL__N_17AddrMap3AddEv.exit: ; preds = %._crit
   %i.ax = tail call noundef ptr @_ZN4absl13base_internal12SigSafeArenaEv() #21
   %i.ay = tail call noundef ptr @_ZN4absl13base_internal13LowLevelAlloc14AllocWithArenaEmPNS1_5ArenaE(i64 noundef %i.aw, ptr noundef %i.ax) #21 ; 3 uses
   %.not.i52 = icmp eq ptr %i.ay, null
-  br i1 %.not.i52, label %bb.p, label %_ZN4absl18debugging_internal12_GLOBAL__N_110Symbolizer10CopyStringEPKc.exit, !prof !12
+  br i1 %.not.i52, label %bb.p, label %_ZN4absl18debugging_internal12_GLOBAL__N_110Symbolizer10CopyStringEPKc.exit, !prof !11
 
 bb.p:                                             ; preds = %_ZN4absl18debugging_internal12_GLOBAL__N_17AddrMap3AddEv.exit
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 52), i32 noundef 318, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4) #21
@@ -2506,7 +2492,7 @@ define internal fastcc noundef i32 @_ZN4absl18debugging_internal12_GLOBAL__N_122
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN4absl18debugging_internal12_GLOBAL__N_122OpenReadOnlyWithHighFDEPKcE7high_fd acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %bb.d, !prof !27
+  br i1 %i.b, label %bb.b, label %bb.d, !prof !26
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl18debugging_internal12_GLOBAL__N_122OpenReadOnlyWithHighFDEPKcE7high_fd) #21
@@ -2640,7 +2626,7 @@ bb.f:                                             ; preds = %bb.e
   %i.h = tail call ptr @__errno_location() #22
   %i.i = load i32, ptr %i.h, align 4              ; 2 uses
   %i.j = icmp eq i32 %i.i, 4
-  br i1 %i.j, label %bb.e, label %.thread, !llvm.loop !28
+  br i1 %i.j, label %bb.e, label %.thread, !llvm.loop !27
 
 .thread:                                          ; preds = %bb.f
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 1, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 52), i32 noundef 480, ptr noundef nonnull @.str.6, i32 noundef %i.i) #21
@@ -2797,7 +2783,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %.preheader
   %i.al = add nuw nsw i64 %.087, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.al, %i.aj
-  br i1 %exitcond.not, label %bb.m, label %.preheader, !llvm.loop !29
+  br i1 %exitcond.not, label %bb.m, label %.preheader, !llvm.loop !28
 
 .preheader:                                       ; preds = %bb.j, %bb.l
   %.087 = phi i64 [ %i.al, %bb.l ], [ 0, %bb.j ]  ; 2 uses
@@ -2958,7 +2944,7 @@ bb.i:                                             ; preds = %.thread
   %.166.lcssa = phi i8 [ %.06547, %.preheader ], [ %.267, %bb.q ] ; 2 uses
   %i.ar = add i64 %i.ap, %.06846                  ; 2 uses
   %i.as = icmp ult i64 %i.ar, %i.e
-  br i1 %i.as, label %.lr.ph.lr.ph.i, label %._crit_edge48, !llvm.loop !30
+  br i1 %i.as, label %.lr.ph.lr.ph.i, label %._crit_edge48, !llvm.loop !29
 
 .lr.ph:                                           ; preds = %.preheader, %bb.q
   %.16641 = phi i8 [ %.267, %bb.q ], [ %.06547, %.preheader ] ; 5 uses
@@ -3022,7 +3008,7 @@ bb.q:                                             ; preds = %bb.o, %bb.p, %bb.m,
   %.267 = phi i8 [ %.16641, %.lr.ph ], [ %.16641, %bb.j ], [ %.16641, %bb.k ], [ 1, %bb.p ], [ 1, %bb.o ], [ %.16641, %bb.m ] ; 2 uses
   %i.bm = add nuw nsw i64 %.06940, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.bm, %i.ap
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !31
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !30
 
 bb.r:                                             ; preds = %._crit_edge48
   %i.bn = zext i32 %.sroa.0.1.lcssa to i64
@@ -3108,7 +3094,7 @@ bb.x:                                             ; preds = %_ZN4absl18debugging
 
 bb.y:                                             ; preds = %_ZN4absl18debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit96
   %i.cq = icmp samesign ugt i64 %.2.i92, 3072
-  br i1 %i.cq, label %bb.z, label %bb.aa, !prof !12
+  br i1 %i.cq, label %bb.z, label %bb.aa, !prof !11
 
 bb.z:                                             ; preds = %bb.y
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 52), i32 noundef 867, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.33, ptr noundef nonnull @.str.34) #21
@@ -3189,25 +3175,24 @@ attributes #25 = { cold nounwind }
 !8 = distinct !{!8, !6}
 !9 = distinct !{!9, !6}
 !10 = distinct !{!10, !6}
-!11 = distinct !{!11, !6}
-!12 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!11 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!12 = distinct !{!12, !6}
 !13 = distinct !{!13, !6}
-!14 = distinct !{!14, !6}
-!15 = !{!"branch_weights", i32 1, i32 2001, i32 2000}
-!16 = distinct !{null, null}
+!14 = !{!"branch_weights", i32 1, i32 2001, i32 2000}
+!15 = distinct !{null, null}
+!16 = distinct !{!16, !6}
 !17 = distinct !{!17, !6}
-!18 = distinct !{!18, !6}
-!19 = !{i8 0, i8 2}
-!20 = !{}
+!18 = !{i8 0, i8 2}
+!19 = !{}
+!20 = distinct !{!20, !6}
 !21 = distinct !{!21, !6}
 !22 = distinct !{!22, !6}
 !23 = distinct !{!23, !6}
 !24 = distinct !{!24, !6}
 !25 = distinct !{!25, !6}
-!26 = distinct !{!26, !6}
-!27 = !{!"branch_weights", i32 1, i32 1048575}
+!26 = !{!"branch_weights", i32 1, i32 1048575}
+!27 = distinct !{!27, !6}
 !28 = distinct !{!28, !6}
 !29 = distinct !{!29, !6}
 !30 = distinct !{!30, !6}
-!31 = distinct !{!31, !6}
 end_hunk_1
