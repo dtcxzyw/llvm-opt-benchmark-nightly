@@ -204,18 +204,14 @@ bb.ac:                                            ; preds = %.preheader.i.i
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 2
   store i16 %.269.i.i.lcssa, ptr %.sroa.4.0..sroa_idx.i.i, align 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
-  %i.ey = sub nsw i64 %i.g, %i.bt                 ; 13 uses
+  %i.ey = sub nsw i64 %i.g, %i.bt                 ; 11 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.bt ; 44 uses
   %.not.i.i = icmp eq i16 %.269.i.i.lcssa, 0
-  %6 = icmp eq i64 %i.ey, 0                       ; 2 uses
-  br i1 %.not.i.i, label %9, label %7
+  %6 = icmp ugt i64 %i.ey, 7                      ; 2 uses
+  br i1 %.not.i.i, label %bb.bg, label %bb.ad
 
-7:                                                ; preds = %bb.ac
-  br i1 %6, label %FSE_decompress.exit.thread, label %bb.ad
-
-bb.ad:                                            ; preds = %7
-  %8 = icmp ugt i64 %i.ey, 7
-  br i1 %8, label %bb.ae, label %bb.af
+bb.ad:                                            ; preds = %bb.ac
+  br i1 %6, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
   %.ptr.i.i = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.g
@@ -618,12 +614,8 @@ BIT_endOfDStream.exit105.thread.i.i:              ; preds = %BIT_reloadDStream.e
   %..i22.i.i = select i1 %i.mv, i64 -70, i64 -20
   br label %FSE_decompress.exit.thread
 
-9:                                                ; preds = %bb.ac
-  br i1 %6, label %FSE_decompress.exit.thread, label %bb.bg
-
-bb.bg:                                            ; preds = %9
-  %10 = icmp ugt i64 %i.ey, 7
-  br i1 %10, label %bb.bh, label %bb.bi
+bb.bg:                                            ; preds = %bb.ac
+  br i1 %6, label %bb.bh, label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bg
   %.ptr400.i.i = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.g
@@ -1026,8 +1018,8 @@ BIT_endOfDStream.exit200.thread.i.i:              ; preds = %BIT_reloadDStream.e
   %..i.i.i = select i1 %i.ux, i64 -70, i64 -20
   br label %FSE_decompress.exit.thread
 
-FSE_decompress.exit.thread:                       ; preds = %FSE_buildDTable.exit.thread.i, %bb.g, %bb.h, %bb.i, %bb.am, %BIT_initDStream.exit.i.i, %BIT_endOfDStream.exit105.thread.i.i, %BIT_initDStream.exit110.i.i, %BIT_endOfDStream.exit200.thread.i.i, %7, %bb.ae, %9, %bb.bh, %bb.bp
-  %.0.i.ph = phi i64 [ -1, %bb.bp ], [ -1, %bb.bh ], [ -72, %9 ], [ -1, %bb.ae ], [ -72, %7 ], [ %..i.i.i, %BIT_endOfDStream.exit200.thread.i.i ], [ %i.ey, %BIT_initDStream.exit110.i.i ], [ %..i22.i.i, %BIT_endOfDStream.exit105.thread.i.i ], [ %i.ey, %BIT_initDStream.exit.i.i ], [ -1, %bb.am ], [ -72, %bb.i ], [ %i.bt, %bb.h ], [ -72, %bb.g ], [ %.0.i.ph.i, %FSE_buildDTable.exit.thread.i ]
+FSE_decompress.exit.thread:                       ; preds = %FSE_buildDTable.exit.thread.i, %bb.g, %bb.h, %bb.i, %bb.am, %BIT_initDStream.exit.i.i, %BIT_endOfDStream.exit105.thread.i.i, %BIT_initDStream.exit110.i.i, %BIT_endOfDStream.exit200.thread.i.i, %bb.bp, %bb.ae, %bb.bh
+  %.0.i.ph = phi i64 [ -1, %bb.bh ], [ -1, %bb.ae ], [ -1, %bb.bp ], [ %..i.i.i, %BIT_endOfDStream.exit200.thread.i.i ], [ %i.ey, %BIT_initDStream.exit110.i.i ], [ %..i22.i.i, %BIT_endOfDStream.exit105.thread.i.i ], [ %i.ey, %BIT_initDStream.exit.i.i ], [ -1, %bb.am ], [ -72, %bb.i ], [ %i.bt, %bb.h ], [ -72, %bb.g ], [ %.0.i.ph.i, %FSE_buildDTable.exit.thread.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #18

@@ -204,7 +204,7 @@ _ZN4absl13cord_internal12CordRepBtree8AlignEndEv.exit: ; preds = %bb.g, %bb.e, %
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %_ZN4absl13cord_internal12CordRepBtree8AlignEndEv.exit
-  %.sroa.0.0 = phi i64 [ %1, %_ZN4absl13cord_internal12CordRepBtree8AlignEndEv.exit ], [ %.sroa.speculated.i.i, %bb.h ] ; 4 uses
+  %.sroa.0.0 = phi i64 [ %1, %_ZN4absl13cord_internal12CordRepBtree8AlignEndEv.exit ], [ %i.as, %bb.h ] ; 3 uses
   %i.s = add i64 %.sroa.0.0, %3                   ; 2 uses
   %i.t = icmp ult i64 %i.s, 20
   %spec.store.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.s, i64 4083)
@@ -245,17 +245,16 @@ bb.h:                                             ; preds = %bb.h, %_ZN4absl13co
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.ap
   store ptr %i.aa, ptr %i.aq, align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aa, i64 13
-  %i.as = sub i64 %.sroa.0.0, %.sroa.speculated   ; 2 uses
+  %i.as = sub i64 %.sroa.0.0, %.sroa.speculated   ; 4 uses
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 %i.as
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ar, ptr align 1 %i.at, i64 %.sroa.speculated, i1 false)
-  %.sroa.speculated.i.i = tail call i64 @llvm.umin.i64(i64 %.sroa.0.0, i64 %i.as) ; 3 uses
-  %i.au = icmp eq i64 %.sroa.speculated.i.i, 0
+  %i.au = icmp eq i64 %i.as, 0
   %.not = icmp eq i8 %i.ao, 0
   %or.cond = or i1 %.not, %i.au
   br i1 %or.cond, label %.critedge, label %bb.h, !llvm.loop !26
 
 .critedge:                                        ; preds = %bb.h
-  %.fca.0.insert.i.i = insertvalue { i64, ptr } poison, i64 %.sroa.speculated.i.i, 0
+  %.fca.0.insert.i.i = insertvalue { i64, ptr } poison, i64 %i.as, 0
   %.fca.1.insert.i.i = insertvalue { i64, ptr } %.fca.0.insert.i.i, ptr %2, 1
   ret { i64, ptr } %.fca.1.insert.i.i
 }

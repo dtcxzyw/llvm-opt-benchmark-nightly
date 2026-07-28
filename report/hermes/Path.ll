@@ -204,7 +204,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit.i:       ; preds = %bb.d
 
 _ZNK4llvh9StringRef10startswithES0_.exit.thread140.i: ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit.i
   %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 1 ; 4 uses
-  %i.q = add nsw i64 %i.m, -1                     ; 8 uses
+  %i.q = add nsw i64 %i.m, -1                     ; 7 uses
   %i.r = icmp eq i64 %i.q, 0
   br i1 %i.r, label %_ZNK4llvh9StringRef7find_ifENS_12function_refIFbcEEEm.exit.i, label %.lr.ph.i
 
@@ -217,7 +217,6 @@ _ZNK4llvh9StringRef10startswithES0_.exit.thread140.i: ; preds = %_ZNK4llvh9Strin
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.u = sub i64 %i.q, %.pn147.i
-  %12 = call i64 @llvm.umin.i64(i64 %i.q, i64 %i.u)
   br label %_ZNK4llvh9StringRef7find_ifENS_12function_refIFbcEEEm.exit.i
 
 bb.f:                                             ; preds = %.lr.ph.i
@@ -227,7 +226,7 @@ bb.f:                                             ; preds = %.lr.ph.i
   br i1 %i.x, label %_ZNK4llvh9StringRef7find_ifENS_12function_refIFbcEEEm.exit.i, label %.lr.ph.i, !llvm.loop !226
 
 _ZNK4llvh9StringRef7find_ifENS_12function_refIFbcEEEm.exit.i: ; preds = %bb.f, %bb.e, %_ZNK4llvh9StringRef10startswithES0_.exit.thread140.i
-  %.0.i20.i = phi i64 [ %12, %bb.e ], [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit.thread140.i ], [ %i.q, %bb.f ] ; 6 uses
+  %.0.i20.i = phi i64 [ %i.u, %bb.e ], [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit.thread140.i ], [ %i.q, %bb.f ] ; 6 uses
   %i.y = add i64 %.0.i20.i, 1                     ; 2 uses
   %.sroa.speculated63.i = call i64 @llvm.umin.i64(i64 %i.q, i64 %i.y) ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.p, i64 %.sroa.speculated63.i

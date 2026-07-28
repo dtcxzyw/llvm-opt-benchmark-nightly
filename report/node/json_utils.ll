@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.t,
   br i1 %exitcond.not, label %._crit_edge, label %bb.a, !llvm.loop !5
 
 ._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %.split
-  %.0.lcssa = phi i64 [ 0, %.split ], [ %.1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 4 uses
+  %.0.lcssa = phi i64 [ 0, %.split ], [ %.1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 3 uses
   %i.ax = icmp ult i64 %.0.lcssa, %1
   br i1 %i.ax, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit34, label %bb.z
 
@@ -235,13 +235,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.i40: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i39, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i44
   %i.bh = phi i64 [ %i.bg, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i39 ], [ 15, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i44 ]
   %.not.i.i.i.i41 = icmp ugt i64 %i.bc, %i.bh
-  br i1 %.not.i.i.i.i41, label %bb.y, label %4
+  br i1 %.not.i.i.i.i41, label %bb.y, label %bb.v
 
-4:                                                ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.i40
-  %.not8.i.i.i.i42 = icmp eq i64 %1, %.0.lcssa
-  br i1 %.not8.i.i.i.i42, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit45, label %bb.v
-
-bb.v:                                             ; preds = %4
+bb.v:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.i40
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.az ; 2 uses
   %cond.i.i.i.i43 = icmp eq i64 %.sroa.speculated.i31, 1
   br i1 %cond.i.i.i.i43, label %bb.w, label %bb.x
@@ -259,7 +255,7 @@ bb.y:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %i.az, i64 noundef 0, ptr noundef %i.ay, i64 noundef %.sroa.speculated.i31)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit45
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit45: ; preds = %4, %bb.w, %bb.x, %bb.y
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit45: ; preds = %bb.w, %bb.x, %bb.y
   store i64 %i.bc, ptr %i.b, align 8
   %i.bk = load ptr, ptr %0, align 8
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.bc

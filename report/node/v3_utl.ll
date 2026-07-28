@@ -201,27 +201,23 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %i.a
   %i.c = load i8, ptr %i.b, align 1, !tbaa !18
   %i.d = icmp eq i8 %i.c, 64
-  br i1 %i.d, label %5, label %bb.b
+  br i1 %i.d, label %.lr.ph.i.preheader, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 %i.a
   %i.f = load i8, ptr %i.e, align 1, !tbaa !18
   %i.g = icmp eq i8 %i.f, 64
-  br i1 %i.g, label %5, label %.preheader, !llvm.loop !65
+  br i1 %i.g, label %.lr.ph.i.preheader, label %.preheader, !llvm.loop !65
 
-5:                                                ; preds = %bb.b, %.lr.ph
-  %6 = sub i64 %1, %i.a                           ; 2 uses
-  %.not2954.i = icmp eq i64 %6, 0
-  br i1 %.not2954.i, label %equal_nocase.exit, label %.lr.ph.i.preheader
-
-.lr.ph.i.preheader:                               ; preds = %5
+.lr.ph.i.preheader:                               ; preds = %bb.b, %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %i.a
+  %5 = sub i64 %1, %i.a
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 %i.a
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.e
   %.02557.i = phi ptr [ %i.r, %bb.e ], [ %i.i, %.lr.ph.i.preheader ] ; 2 uses
-  %.03756.i = phi i64 [ %i.s, %bb.e ], [ %6, %.lr.ph.i.preheader ]
+  %.03756.i = phi i64 [ %i.s, %bb.e ], [ %5, %.lr.ph.i.preheader ]
   %.03955.i = phi ptr [ %i.q, %bb.e ], [ %i.h, %.lr.ph.i.preheader ] ; 2 uses
   %i.j = load i8, ptr %.03955.i, align 1, !tbaa !18 ; 5 uses
   %i.k = load i8, ptr %.02557.i, align 1, !tbaa !18 ; 4 uses
@@ -251,7 +247,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.not29.i = icmp eq i64 %i.s, 0
   br i1 %.not29.i, label %equal_nocase.exit, label %.lr.ph.i
 
-equal_nocase.exit:                                ; preds = %bb.e, %5
+equal_nocase.exit:                                ; preds = %bb.e
   %i.t = icmp eq i64 %i.a, 0
   br i1 %i.t, label %equal_nocase.exit.thread29, label %bb.f
 
