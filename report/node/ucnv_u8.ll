@@ -1,8 +1,8 @@
 inline.NumInlined: 14
 inline.NumDeleted: 3
-loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZL17ucnv_UTF8FromUTF8P25UConverterFromUnicodeArgsP23UConverterToUnicodeArgsP10UErrorCode:bb.a
   %i.hw = sub nsw i64 %indvars.iv390.ph, %wide.trip.count393
   %i.hx = icmp ugt i64 %i.hw, -8
@@ -204,13 +204,13 @@ vec.epilog.scalar.ph611:                          ; preds = %vec.epilog.scalar.p
   br i1 %exitcond394.not.7, label %._crit_edge331, label %vec.epilog.scalar.ph611, !llvm.loop !35
 
 ._crit_edge331:                                   ; preds = %vec.epilog.scalar.ph611.prol.loopexit, %vec.epilog.scalar.ph611, %middle.block607, %vec.epilog.middle.block622, %.preheader
-  %.2198.lcssa = phi ptr [ %.1197, %.preheader ], [ %i.hp, %vec.epilog.middle.block622 ], [ %i.go, %middle.block607 ], [ %.lcssa675.unr, %vec.epilog.scalar.ph611.prol.loopexit ], [ %i.kr, %vec.epilog.scalar.ph611 ] ; 8 uses
+  %.2198.lcssa = phi ptr [ %.1197, %.preheader ], [ %i.hp, %vec.epilog.middle.block622 ], [ %i.go, %middle.block607 ], [ %.lcssa675.unr, %vec.epilog.scalar.ph611.prol.loopexit ], [ %i.kr, %vec.epilog.scalar.ph611 ] ; 23 uses
   %.0.lcssa = phi i8 [ 0, %.preheader ], [ %.1209, %vec.epilog.middle.block622 ], [ %.1209, %middle.block607 ], [ %.1209, %vec.epilog.scalar.ph611 ], [ %.1209, %vec.epilog.scalar.ph611.prol.loopexit ] ; 5 uses
   %.2198.lcssa627 = ptrtoaddr ptr %.2198.lcssa to i64
   %i.ks = zext nneg i8 %.1209 to i32
   %.neg249 = sub nsw i32 %i.ks, %.1218
   %i.kt = sext i32 %.neg249 to i64
-  %i.ku = getelementptr inbounds i8, ptr %.2.lcssa, i64 %i.kt ; 7 uses
+  %i.ku = getelementptr inbounds i8, ptr %.2.lcssa, i64 %i.kt ; 22 uses
   %i.kv = icmp slt i8 %.0.lcssa, %.2221.lcssa
   br i1 %i.kv, label %iter.check648, label %._crit_edge339
 
@@ -237,28 +237,104 @@ vector.main.loop.iter.check631:                   ; preds = %vector.memcheck626
 
 vector.ph633:                                     ; preds = %vector.main.loop.iter.check631
   %n.mod.vf634 = and i64 %i.kz, 28
-  %n.vec635 = and i64 %i.kz, 480                  ; 6 uses
+  %n.vec635 = and i64 %i.kz, 480                  ; 12 uses
   %i.lf = trunc i64 %n.vec635 to i8
   %i.lg = add i8 %.0.lcssa, %i.lf
-  %i.lh = getelementptr i8, ptr %i.ku, i64 %n.vec635 ; 2 uses
-  %i.li = getelementptr i8, ptr %.2198.lcssa, i64 %n.vec635 ; 2 uses
-  br label %vector.body636
+  %3 = getelementptr i8, ptr %i.ku, i64 %n.vec635 ; 2 uses
+  %4 = getelementptr i8, ptr %.2198.lcssa, i64 %n.vec635 ; 2 uses
+  %i.lh = getelementptr i8, ptr %i.ku, i64 16
+  %wide.load640 = load <16 x i8>, ptr %i.ku, align 1
+  %wide.load641 = load <16 x i8>, ptr %i.lh, align 1
+  %i.li = getelementptr i8, ptr %.2198.lcssa, i64 16
+  store <16 x i8> %wide.load640, ptr %.2198.lcssa, align 1
+  store <16 x i8> %wide.load641, ptr %i.li, align 1
+  %5 = icmp eq i64 %n.vec635, 32
+  br i1 %5, label %middle.block643, label %vector.body636.1
 
-vector.body636:                                   ; preds = %vector.body636, %vector.ph633
-  %index637 = phi i64 [ 0, %vector.ph633 ], [ %index.next642, %vector.body636 ] ; 3 uses
-  %next.gep638 = getelementptr i8, ptr %i.ku, i64 %index637 ; 2 uses
-  %next.gep639 = getelementptr i8, ptr %.2198.lcssa, i64 %index637 ; 2 uses
-  %i.lj = getelementptr i8, ptr %next.gep638, i64 16
+vector.body636.1:                                 ; preds = %vector.ph633
+  %next.gep638.1 = getelementptr i8, ptr %i.ku, i64 32
+  %next.gep639.1 = getelementptr i8, ptr %.2198.lcssa, i64 32
+  %6 = getelementptr i8, ptr %i.ku, i64 48
+  %wide.load640.1 = load <16 x i8>, ptr %next.gep638.1, align 1
+  %wide.load641.1 = load <16 x i8>, ptr %6, align 1
+  %7 = getelementptr i8, ptr %.2198.lcssa, i64 48
+  store <16 x i8> %wide.load640.1, ptr %next.gep639.1, align 1
+  store <16 x i8> %wide.load641.1, ptr %7, align 1
+  %8 = icmp eq i64 %n.vec635, 64
+  br i1 %8, label %middle.block643, label %vector.body636.2
+
+vector.body636.2:                                 ; preds = %vector.body636.1
+  %next.gep638.2 = getelementptr i8, ptr %i.ku, i64 64
+  %next.gep639.2 = getelementptr i8, ptr %.2198.lcssa, i64 64
+  %9 = getelementptr i8, ptr %i.ku, i64 80
+  %wide.load640.2 = load <16 x i8>, ptr %next.gep638.2, align 1
+  %wide.load641.2 = load <16 x i8>, ptr %9, align 1
+  %10 = getelementptr i8, ptr %.2198.lcssa, i64 80
+  store <16 x i8> %wide.load640.2, ptr %next.gep639.2, align 1
+  store <16 x i8> %wide.load641.2, ptr %10, align 1
+  %11 = icmp eq i64 %n.vec635, 96
+  br i1 %11, label %middle.block643, label %vector.body636.3
+
+vector.body636.3:                                 ; preds = %vector.body636.2
+  %next.gep638.3 = getelementptr i8, ptr %i.ku, i64 96
+  %next.gep639.3 = getelementptr i8, ptr %.2198.lcssa, i64 96
+  %12 = getelementptr i8, ptr %i.ku, i64 112
+  %wide.load640.3 = load <16 x i8>, ptr %next.gep638.3, align 1
+  %wide.load641.3 = load <16 x i8>, ptr %12, align 1
+  %13 = getelementptr i8, ptr %.2198.lcssa, i64 112
+  store <16 x i8> %wide.load640.3, ptr %next.gep639.3, align 1
+  store <16 x i8> %wide.load641.3, ptr %13, align 1
+  %14 = icmp eq i64 %n.vec635, 128
+  br i1 %14, label %middle.block643, label %vector.body636.4
+
+vector.body636.4:                                 ; preds = %vector.body636.3
+  %next.gep638.4 = getelementptr i8, ptr %i.ku, i64 128
+  %next.gep639.4 = getelementptr i8, ptr %.2198.lcssa, i64 128
+  %15 = getelementptr i8, ptr %i.ku, i64 144
+  %wide.load640.4 = load <16 x i8>, ptr %next.gep638.4, align 1
+  %wide.load641.4 = load <16 x i8>, ptr %15, align 1
+  %16 = getelementptr i8, ptr %.2198.lcssa, i64 144
+  store <16 x i8> %wide.load640.4, ptr %next.gep639.4, align 1
+  store <16 x i8> %wide.load641.4, ptr %16, align 1
+  %17 = icmp eq i64 %n.vec635, 160
+  br i1 %17, label %middle.block643, label %vector.body636.5
+
+vector.body636.5:                                 ; preds = %vector.body636.4
+  %next.gep638.5 = getelementptr i8, ptr %i.ku, i64 160
+  %next.gep639.5 = getelementptr i8, ptr %.2198.lcssa, i64 160
+  %18 = getelementptr i8, ptr %i.ku, i64 176
+  %wide.load640.5 = load <16 x i8>, ptr %next.gep638.5, align 1
+  %wide.load641.5 = load <16 x i8>, ptr %18, align 1
+  %19 = getelementptr i8, ptr %.2198.lcssa, i64 176
+  store <16 x i8> %wide.load640.5, ptr %next.gep639.5, align 1
+  store <16 x i8> %wide.load641.5, ptr %19, align 1
+  %20 = icmp eq i64 %n.vec635, 192
+  br i1 %20, label %middle.block643, label %vector.body636
+
+vector.body636:                                   ; preds = %vector.body636.5
+  %next.gep638 = getelementptr i8, ptr %i.ku, i64 192
+  %next.gep639 = getelementptr i8, ptr %.2198.lcssa, i64 192
+  %i.lj = getelementptr i8, ptr %i.ku, i64 208
   %wide.load640.a = load <16 x i8>, ptr %next.gep638, align 1
   %wide.load641.a = load <16 x i8>, ptr %i.lj, align 1
-  %i.lk = getelementptr i8, ptr %next.gep639, i64 16
+  %i.lk = getelementptr i8, ptr %.2198.lcssa, i64 208
   store <16 x i8> %wide.load640.a, ptr %next.gep639, align 1
   store <16 x i8> %wide.load641.a, ptr %i.lk, align 1
-  %index.next642 = add nuw i64 %index637, 32      ; 2 uses
-  %i.ll = icmp eq i64 %index.next642, %n.vec635
-  br i1 %i.ll, label %middle.block643, label %vector.body636, !llvm.loop !36
+  %i.ll = icmp eq i64 %n.vec635, 224
+  br i1 %i.ll, label %middle.block643, label %vector.body636.7
 
-middle.block643:                                  ; preds = %vector.body636
+vector.body636.7:                                 ; preds = %vector.body636
+  %next.gep638.7 = getelementptr i8, ptr %i.ku, i64 224
+  %next.gep639.7 = getelementptr i8, ptr %.2198.lcssa, i64 224
+  %21 = getelementptr i8, ptr %i.ku, i64 240
+  %wide.load640.7 = load <16 x i8>, ptr %next.gep638.7, align 1
+  %wide.load641.7 = load <16 x i8>, ptr %21, align 1
+  %22 = getelementptr i8, ptr %.2198.lcssa, i64 240
+  store <16 x i8> %wide.load640.7, ptr %next.gep639.7, align 1
+  store <16 x i8> %wide.load641.7, ptr %22, align 1
+  br label %middle.block643
+
+middle.block643:                                  ; preds = %vector.body636.7, %vector.body636, %vector.body636.5, %vector.body636.4, %vector.body636.3, %vector.body636.2, %vector.body636.1, %vector.ph633
   %cmp.n644 = icmp eq i64 %i.kz, %n.vec635
   br i1 %cmp.n644, label %._crit_edge339, label %vec.epilog.iter.check650
 
@@ -283,7 +359,7 @@ vec.epilog.vector.body655:                        ; preds = %vec.epilog.vector.b
   store <4 x i8> %wide.load659, ptr %next.gep658, align 1
   %index.next660 = add nuw i64 %index656, 4       ; 2 uses
   %i.lq = icmp eq i64 %index.next660, %n.vec654
-  br i1 %i.lq, label %vec.epilog.middle.block661, label %vec.epilog.vector.body655, !llvm.loop !37
+  br i1 %i.lq, label %vec.epilog.middle.block661, label %vec.epilog.vector.body655, !llvm.loop !36
 
 vec.epilog.middle.block661:                       ; preds = %vec.epilog.vector.body655
   %cmp.n662 = icmp eq i64 %i.kz, %n.vec654
@@ -291,8 +367,8 @@ vec.epilog.middle.block661:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph338.preheader:                              ; preds = %vector.memcheck626, %iter.check648, %vec.epilog.iter.check650, %vec.epilog.middle.block661
   %.1336.ph = phi i8 [ %.0.lcssa, %iter.check648 ], [ %.0.lcssa, %vector.memcheck626 ], [ %i.lg, %vec.epilog.iter.check650 ], [ %i.ln, %vec.epilog.middle.block661 ] ; 4 uses
-  %.5335.ph = phi ptr [ %i.ku, %iter.check648 ], [ %i.ku, %vector.memcheck626 ], [ %i.lh, %vec.epilog.iter.check650 ], [ %i.lo, %vec.epilog.middle.block661 ] ; 2 uses
-  %.3199334.ph = phi ptr [ %.2198.lcssa, %iter.check648 ], [ %.2198.lcssa, %vector.memcheck626 ], [ %i.li, %vec.epilog.iter.check650 ], [ %i.lp, %vec.epilog.middle.block661 ] ; 2 uses
+  %.5335.ph = phi ptr [ %i.ku, %iter.check648 ], [ %i.ku, %vector.memcheck626 ], [ %3, %vec.epilog.iter.check650 ], [ %i.lo, %vec.epilog.middle.block661 ] ; 2 uses
+  %.3199334.ph = phi ptr [ %.2198.lcssa, %iter.check648 ], [ %.2198.lcssa, %vector.memcheck626 ], [ %4, %vec.epilog.iter.check650 ], [ %i.lp, %vec.epilog.middle.block661 ] ; 2 uses
   %i.lr = sub i8 %.2221.lcssa, %.1336.ph
   %xtraiter713 = and i8 %i.lr, 7                  ; 2 uses
   %lcmp.mod714.not = icmp eq i8 %xtraiter713, 0
@@ -310,7 +386,7 @@ vec.epilog.middle.block661:                       ; preds = %vec.epilog.vector.b
   %i.lv = add nuw nsw i8 %.1336.prol, 1           ; 2 uses
   %prol.iter715.next = add i8 %prol.iter715, 1    ; 2 uses
   %prol.iter715.cmp.not = icmp eq i8 %prol.iter715.next, %xtraiter713
-  br i1 %prol.iter715.cmp.not, label %.lr.ph338.prol.loopexit, label %.lr.ph338.prol, !llvm.loop !38
+  br i1 %prol.iter715.cmp.not, label %.lr.ph338.prol.loopexit, label %.lr.ph338.prol, !llvm.loop !37
 
 .lr.ph338.prol.loopexit:                          ; preds = %.lr.ph338.prol, %.lr.ph338.preheader
   %.lcssa674.unr = phi ptr [ poison, %.lr.ph338.preheader ], [ %i.ls, %.lr.ph338.prol ]
@@ -360,11 +436,11 @@ vec.epilog.middle.block661:                       ; preds = %vec.epilog.vector.b
   store i8 %i.mu, ptr %i.ms, align 1
   %i.mw = add nuw nsw i8 %.1336, 8                ; 2 uses
   %exitcond395.not.7 = icmp eq i8 %i.mw, %.2221.lcssa
-  br i1 %exitcond395.not.7, label %._crit_edge339, label %.lr.ph338, !llvm.loop !39
+  br i1 %exitcond395.not.7, label %._crit_edge339, label %.lr.ph338, !llvm.loop !38
 
 ._crit_edge339:                                   ; preds = %.lr.ph338.prol.loopexit, %.lr.ph338, %middle.block643, %vec.epilog.middle.block661, %._crit_edge331
-  %.3199.lcssa = phi ptr [ %.2198.lcssa, %._crit_edge331 ], [ %i.lp, %vec.epilog.middle.block661 ], [ %i.li, %middle.block643 ], [ %.lcssa673.unr, %.lr.ph338.prol.loopexit ], [ %i.mv, %.lr.ph338 ]
-  %.5.lcssa = phi ptr [ %i.ku, %._crit_edge331 ], [ %i.lo, %vec.epilog.middle.block661 ], [ %i.lh, %middle.block643 ], [ %.lcssa674.unr, %.lr.ph338.prol.loopexit ], [ %i.mt, %.lr.ph338 ]
+  %.3199.lcssa = phi ptr [ %.2198.lcssa, %._crit_edge331 ], [ %i.lp, %vec.epilog.middle.block661 ], [ %4, %middle.block643 ], [ %.lcssa673.unr, %.lr.ph338.prol.loopexit ], [ %i.mv, %.lr.ph338 ]
+  %.5.lcssa = phi ptr [ %i.ku, %._crit_edge331 ], [ %i.lo, %vec.epilog.middle.block661 ], [ %3, %middle.block643 ], [ %.lcssa674.unr, %.lr.ph338.prol.loopexit ], [ %i.mt, %.lr.ph338 ]
   %i.mx = sub nsw i32 %.3203, %.1218
   br label %.preheader261, !llvm.loop !20
 
@@ -495,7 +571,7 @@ bb.ay:                                            ; preds = %_ZN6icu_784UTF812is
   store i8 %i.oc, ptr %i.pa, align 1
   %i.pb = getelementptr inbounds nuw i8, ptr %i.oa, i64 1 ; 3 uses
   %i.pc = icmp eq ptr %i.pb, %i.g
-  br i1 %i.pc, label %._crit_edge301, label %bb.as, !llvm.loop !40
+  br i1 %i.pc, label %._crit_edge301, label %bb.as, !llvm.loop !39
 
 bb.az:                                            ; preds = %bb.aq
   store i32 -127, ptr %2, align 4
@@ -565,8 +641,7 @@ attributes #4 = { nounwind }
 !34 = distinct !{!34, !6, !15}
 !35 = distinct !{!35, !6, !15}
 !36 = distinct !{!36, !6, !15, !16}
-!37 = distinct !{!37, !6, !15, !16}
-!38 = distinct !{!38, !26}
-!39 = distinct !{!39, !6, !15}
-!40 = distinct !{!40, !6}
+!37 = distinct !{!37, !26}
+!38 = distinct !{!38, !6, !15}
+!39 = distinct !{!39, !6}
 end_hunk_0
