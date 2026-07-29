@@ -201,29 +201,25 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 88
   %i.l = load ptr, ptr %i.k, align 8
   %i.m = tail call noundef float %i.l(ptr noundef nonnull align 8 dereferenceable(68) %0), !inline_history !25
-  %3 = shufflevector <2 x float> %.sroa.03.0.copyload.i, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %.sroa.67.8.vec.extract.i = extractelement <2 x float> %.sroa.67.0.copyload.i, i64 0
-  %4 = fadd float %.sroa.67.8.vec.extract.i, %i.m
-  %5 = fmul float %4, 2.000000e+00                ; 2 uses
-  %6 = fmul float %5, %5
-  %7 = insertelement <2 x float> poison, float %i.i, i64 0
-  %8 = insertelement <2 x float> %7, float %i.e, i64 1
-  %9 = fadd <2 x float> %3, %8
-  %10 = fmul <2 x float> %9, splat (float 2.000000e+00) ; 5 uses
-  %11 = fdiv float %1, 1.200000e+01
-  %12 = insertelement <2 x float> poison, float %6, i64 0
-  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
-  %14 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> %10, <2 x float> %13)
-  %foldExtExtBinop = fmul <2 x float> %10, %10
-  %15 = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %16 = extractelement <2 x float> %10, i64 1     ; 2 uses
-  %17 = tail call float @llvm.fmuladd.f32(float %16, float %16, float %15)
-  %i.n = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %11, i64 0
+  %3 = shufflevector <2 x float> %.sroa.03.0.copyload.i, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 0, i32 poison>
+  %4 = insertelement <4 x float> %3, float 1.000000e+00, i64 3
+  %5 = insertelement <4 x float> <float poison, float poison, float poison, float -0.000000e+00>, float %i.i, i64 0
+  %6 = insertelement <4 x float> %5, float %i.e, i64 1
+  %7 = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
+  %8 = fadd <4 x float> %4, %7                    ; 3 uses
+  %9 = fadd float %.sroa.67.8.vec.extract.i, %i.m
+  %10 = fmul <4 x float> %8, <float 2.000000e+00, float 2.000000e+00, float 2.000000e+00, float 0.000000e+00>
+  %11 = fmul <4 x float> %8, <float 2.000000e+00, float 2.000000e+00, float 2.000000e+00, float -0.000000e+00>
+  %12 = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %9, i64 0
+  %13 = shufflevector <4 x float> %12, <4 x float> %8, <4 x i32> <i32 0, i32 0, i32 4, i32 3>
+  %14 = fmul <4 x float> %13, <float 2.000000e+00, float 2.000000e+00, float 2.000000e+00, float 1.000000e+00> ; 2 uses
+  %15 = fdiv float %1, 1.200000e+01
+  %16 = fmul <4 x float> %14, %14
+  %17 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %10, <4 x float> %11, <4 x float> %16)
+  %i.n = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %15, i64 0
   %i.o = shufflevector <4 x float> %i.n, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %18 = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %17, i64 2
-  %19 = shufflevector <2 x float> %14, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %20 = shufflevector <4 x float> %19, <4 x float> %18, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.p = fmul <4 x float> %i.o, %20
+  %i.p = fmul <4 x float> %i.o, %17
   store <4 x float> %i.p, ptr %2, align 4, !tbaa !19
   ret void
 }
@@ -625,6 +621,9 @@ declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #4
 
 attributes #0 = { uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
