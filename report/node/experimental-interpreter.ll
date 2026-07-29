@@ -201,7 +201,7 @@ _ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterItE17InterpreterThrea
 bb.o:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_114NfaInterpreterItE15MarkPcProcessedEiNS3_17InterpreterThread17ConsumedCharacterE.exit.i
   %.sroa.0.0.copyload.i = load ptr, ptr %i.af, align 8 ; 5 uses
   %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8 ; 7 uses
-  %i.cj = load i32, ptr %i.i, align 8             ; 10 uses
+  %i.cj = load i32, ptr %i.i, align 8             ; 9 uses
   switch i32 %.sroa.4258.0.extract.trunc.i, label %bb.ac [
     i32 1, label %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.i
     i32 3, label %bb.p
@@ -221,8 +221,7 @@ bb.q:                                             ; preds = %bb.p
 
 _ZNK2v84base6VectorIKtE6lengthEv.exit.i.i:        ; preds = %bb.p
   %i.cl = trunc nuw nsw i64 %.sroa.2.0.copyload.i to i32
-  %2 = icmp eq i32 %i.cj, %i.cl
-  br i1 %2, label %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.thread.i, label %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.thread290.i
+  br label %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.i
 
 bb.r:                                             ; preds = %bb.o
   %i.cm = icmp eq i32 %i.cj, 0
@@ -340,8 +339,9 @@ bb.ab:                                            ; preds = %_ZNK2v84base6Vector
 bb.ac:                                            ; preds = %bb.o
   unreachable
 
-_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.i: ; preds = %bb.o
-  %i.ek = icmp eq i32 %i.cj, 0
+_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.i: ; preds = %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i, %bb.o
+  %.pn.i = phi i32 [ %i.cl, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i ], [ 0, %bb.o ]
+  %i.ek = icmp eq i32 %i.cj, %.pn.i
   br i1 %i.ek, label %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.thread.i, label %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.thread290.i
 
 _ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.i: ; preds = %bb.ab, %bb.aa, %bb.z
@@ -349,11 +349,11 @@ _ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4Type
   %accumulator.ret.tr.i.i = xor i1 %accumulator.tr.lcssa40.i.i, %.0.i91.i
   br i1 %accumulator.ret.tr.i.i, label %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.thread.i, label %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.thread290.i
 
-_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.thread290.i: ; preds = %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.i, %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.i, %_ZNK2v84base6VectorIKtE6lengthEv.exit17.i._ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit_crit_edge.i, %bb.v, %bb.s, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i
+_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.thread290.i: ; preds = %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.i, %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.i, %_ZNK2v84base6VectorIKtE6lengthEv.exit17.i._ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit_crit_edge.i, %bb.v, %bb.s
   tail call fastcc void @_ZN2v88internal12_GLOBAL__N_114NfaInterpreterItE13DestroyThreadENS3_17InterpreterThreadE(ptr noundef nonnull align 8 dereferenceable(424) %0, ptr noundef nonnull byval(%"class.v8::internal::(anonymous namespace)::NfaInterpreter<unsigned short>::InterpreterThread") align 8 %1)
   br label %bb.ef
 
-_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.thread.i: ; preds = %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.i, %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.i, %_ZNK2v84base6VectorIKtE6lengthEv.exit17.i._ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit_crit_edge.i, %bb.v, %bb.v, %bb.v, %bb.v, %_ZNK2v84base6VectorIKtE6lengthEv.exit16.i.i, %bb.s, %bb.s, %bb.s, %bb.s, %bb.r, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.i
+_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.thread.i: ; preds = %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.i, %_ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit.thr_comm.i, %_ZNK2v84base6VectorIKtE6lengthEv.exit17.i._ZN2v88internal12_GLOBAL__N_118SatisfiesAssertionItEEbNS0_15RegExpAssertion4TypeENS_4base6VectorIKT_EEi.exit_crit_edge.i, %bb.v, %bb.v, %bb.v, %bb.v, %_ZNK2v84base6VectorIKtE6lengthEv.exit16.i.i, %bb.s, %bb.s, %bb.s, %bb.s, %bb.r
   %i.el = add nuw nsw i32 %i.ar, 1
   br label %_ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterItE17InterpreterThreadEE3AddERKS5_PNS0_4ZoneE.exit.sink.split.i
 
