@@ -201,21 +201,25 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.s
   %i.ak = tail call double @tanh(double noundef %0) #7, !tbaa !6 ; 2 uses
   %i.al = tail call double @tan(double noundef %1) #7, !tbaa !6 ; 4 uses
-  %i.am = tail call double @cosh(double noundef %0) #7, !tbaa !6
-  %i.an = fdiv double 1.000000e+00, %i.am         ; 2 uses
   %2 = fmul double %i.ak, %i.al                   ; 2 uses
-  %3 = tail call double @llvm.fmuladd.f64(double %2, double %2, double 1.000000e+00) ; 2 uses
-  %4 = tail call double @llvm.fmuladd.f64(double %i.al, double %i.al, double 1.000000e+00)
-  %5 = fmul double %i.ak, %4
-  %6 = fdiv double %5, %3
-  %7 = fdiv double %i.al, %3
-  %8 = fmul double %i.an, %7
-  %9 = fmul double %i.an, %8
+  %3 = tail call double @llvm.fmuladd.f64(double %i.al, double %i.al, double 1.000000e+00)
+  %4 = fmul double %i.ak, %3
+  %i.am = tail call double @cosh(double noundef %0) #7, !tbaa !6
+  %5 = tail call double @llvm.fmuladd.f64(double %2, double %2, double 1.000000e+00) ; 2 uses
+  %i.an = fdiv double %4, %5
+  %6 = insertelement <2 x double> <double 1.000000e+00, double poison>, double %i.al, i64 1
+  %7 = insertelement <2 x double> poison, double %i.am, i64 0
+  %8 = insertelement <2 x double> %7, double %5, i64 1
+  %9 = fdiv <2 x double> %6, %8                   ; 3 uses
+  %shift = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fmul <2 x double> %9, %shift
+  %foldExtExtBinop4 = fmul <2 x double> %9, %foldExtExtBinop
+  %10 = extractelement <2 x double> %foldExtExtBinop4, i64 0
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %.sroa.034.1 = phi double [ %i.ac, %bb.t ], [ %6, %bb.u ]
-  %.sroa.6.1 = phi double [ %i.aj, %bb.t ], [ %9, %bb.u ]
+  %.sroa.034.1 = phi double [ %i.ac, %bb.t ], [ %i.an, %bb.u ]
+  %.sroa.6.1 = phi double [ %i.aj, %bb.t ], [ %10, %bb.u ]
   %i.ao = tail call ptr @__errno_location() #8
   store i32 0, ptr %i.ao, align 4, !tbaa !6
   br label %bb.w

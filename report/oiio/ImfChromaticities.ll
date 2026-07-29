@@ -203,21 +203,17 @@ bb.g:                                             ; preds = %.preheader
   %i.cs = fdiv <2 x float> %i.af, %i.cr           ; 2 uses
   %.sroa.14.0 = fdiv float %i.ak, %i.bn           ; 2 uses
   %i.ct = fdiv <2 x float> %i.aw, %i.cr           ; 2 uses
-  %i.cu = fdiv <2 x float> %i.bi, %i.cr           ; 2 uses
+  %i.cu = fdiv <2 x float> %i.bi, %i.cr           ; 3 uses
   %i.cv = fdiv <2 x float> %i.ba, %i.cr           ; 2 uses
   %i.cw = load float, ptr %i.l, align 4, !tbaa !7
-  %i.cx = fneg float %i.cw                        ; 2 uses
+  %i.cx = fneg float %i.cw
   %i.cy = getelementptr inbounds nuw i8, ptr %1, i64 52
-  %i.cz = load float, ptr %i.cy, align 4, !tbaa !7 ; 2 uses
+  %i.cz = load float, ptr %i.cy, align 4, !tbaa !7
   %i.da = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.db = load float, ptr %i.da, align 4, !tbaa !7
-  %i.dc = fneg float %i.db                        ; 2 uses
+  %i.dc = fneg float %i.db
   %i.dd = extractelement <2 x float> %i.cu, i64 1 ; 2 uses
   %i.de = fneg float %i.dd
-  %2 = fmul float %i.cz, %i.de
-  %3 = tail call float @llvm.fmuladd.f32(float %i.cx, float %.sroa.14.0, float %2)
-  %4 = extractelement <2 x float> %i.cu, i64 0    ; 2 uses
-  %5 = tail call float @llvm.fmuladd.f32(float %i.dc, float %4, float %3)
   store <2 x float> %i.cs, ptr %0, align 4, !tbaa !7
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 8
   store float %.sroa.14.0, ptr %i.df, align 4, !tbaa !7
@@ -232,25 +228,32 @@ bb.g:                                             ; preds = %.preheader
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 32
   store <2 x float> %i.cv, ptr %i.dk, align 4, !tbaa !7
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store float %4, ptr %i.dl, align 4, !tbaa !7
+  %2 = extractelement <2 x float> %i.cu, i64 0
+  store float %2, ptr %i.dl, align 4, !tbaa !7
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 44
   store float 0.000000e+00, ptr %i.dm, align 4, !tbaa !7
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.do = fneg <2 x float> %i.ct
-  %6 = insertelement <2 x float> poison, float %i.cz, i64 0
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
-  %8 = fmul <2 x float> %7, %i.do
-  %9 = insertelement <2 x float> poison, float %i.cx, i64 0
-  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
-  %11 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> %i.cs, <2 x float> %8)
-  %12 = insertelement <2 x float> poison, float %i.dc, i64 0
-  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
-  %14 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %13, <2 x float> %i.cv, <2 x float> %11)
-  store <2 x float> %14, ptr %i.dn, align 4, !tbaa !7
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store float %5, ptr %15, align 4, !tbaa !7
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 60
-  store float 1.000000e+00, ptr %16, align 4, !tbaa !7
+  %3 = insertelement <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, float %i.cz, i64 0
+  %4 = shufflevector <4 x float> %3, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %5 = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.de, i64 2
+  %6 = shufflevector <2 x float> %i.do, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x float> %6, <4 x float> %5, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %8 = fmul <4 x float> %4, %7
+  %9 = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %i.cx, i64 0
+  %10 = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %11 = shufflevector <2 x float> %i.cs, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %12 = insertelement <4 x float> %11, float -0.000000e+00, i64 3
+  %13 = insertelement <4 x float> %12, float %.sroa.14.0, i64 2
+  %14 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %10, <4 x float> %13, <4 x float> %8)
+  %15 = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %i.dc, i64 0
+  %16 = shufflevector <4 x float> %15, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %17 = shufflevector <2 x float> %i.cv, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %18 = insertelement <4 x float> %17, float -0.000000e+00, i64 3
+  %19 = shufflevector <2 x float> %i.cu, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %20 = shufflevector <4 x float> %18, <4 x float> %19, <4 x i32> <i32 0, i32 1, i32 4, i32 3>
+  %21 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %16, <4 x float> %20, <4 x float> %14)
+  store <4 x float> %21, ptr %i.dn, align 4, !tbaa !7
   br label %bb.h
 
 bb.h:                                             ; preds = %.critedge29, %bb.g, %bb.e
@@ -653,10 +656,10 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #7
+declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #7
+declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #7
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
