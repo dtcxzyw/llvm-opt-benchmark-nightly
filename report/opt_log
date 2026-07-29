@@ -1,0 +1,4 @@
+duckdb/is_distinct_from.bc: timeout
+duckdb/ub_duckdb_core_functions_date.bc: timeout
+velox/TimeZoneNames.bc: timeout
+velox/TimeZoneDatabase.bc: timeout
