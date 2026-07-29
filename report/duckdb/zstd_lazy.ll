@@ -1,8 +1,8 @@
 inline.NumInlined: 1254
 inline.NumDeleted: 36
-loop-unroll.NumCompletelyUnrolled: 44
+loop-unroll.NumCompletelyUnrolled: 43
 loop-unroll.NumRuntimeUnrolled: 126
-loop-unroll.NumUnrolled: 170
+loop-unroll.NumUnrolled: 169
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -17,7 +17,7 @@ bb.a:
   %i.e = sub i64 %i.c, %i.d                       ; 3 uses
   %i.f = trunc i64 %i.e to i32                    ; 7 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !20   ; 15 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !20   ; 16 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !21
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 260
@@ -301,6 +301,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ej = sub i32 66, %i.z
   %i.ek = zext nneg i32 %i.ej to i64              ; 4 uses
   %i.el = sub i32 34, %i.z
+  %scevgep215 = getelementptr nuw i8, ptr %i.h, i64 4
   %i.em = zext i32 %i.eg to i64
   %i.en = and i64 %i.e, 4294967295
   br label %bb.m
@@ -348,16 +349,18 @@ bb.r:                                             ; preds = %bb.m
   br label %_ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit
 
 _ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit:       ; preds = %bb.n, %bb.o, %bb.p, %bb.q, %bb.r
-  %.0.i = phi i64 [ %i.es, %bb.n ], [ %i.fa, %bb.r ], [ %i.eu, %bb.o ], [ %i.ew, %bb.p ], [ %i.ey, %bb.q ]
-  %i.fb = shl i64 %.0.i, 2
-  %i.fc = and i64 %i.fb, 4294967292               ; 2 uses
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.fc ; 2 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.fc
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %5 = load <2 x i32>, ptr %2, align 4, !tbaa !3
-  store <2 x i32> %5, ptr %4, align 4, !tbaa !3
+  %.0.i = phi i64 [ %i.es, %bb.n ], [ %i.fa, %bb.r ], [ %i.eu, %bb.o ], [ %i.ew, %bb.p ], [ %i.ey, %bb.q ] ; 2 uses
+  %i.fb = shl i64 %.0.i, 4
+  %i.fc = and i64 %i.fb, 17179869168              ; 2 uses
+  %scevgep216 = getelementptr nuw i8, ptr %scevgep215, i64 %i.fc
+  %scevgep217 = getelementptr nuw i8, ptr %i.h, i64 %i.fc
+  %2 = load i64, ptr %scevgep217, align 4, !tbaa !3
+  store i64 %2, ptr %scevgep216, align 4, !tbaa !3
+  %3 = shl i64 %.0.i, 2
+  %4 = and i64 %3, 4294967292
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %4
   %i.fd = trunc nuw i64 %indvars.iv221 to i32
-  store i32 %i.fd, ptr %2, align 4, !tbaa !3
+  store i32 %i.fd, ptr %5, align 4, !tbaa !3
   %indvars.iv.next222 = add nuw nsw i64 %indvars.iv221, 1 ; 2 uses
   %i.fe = icmp samesign ult i64 %indvars.iv.next222, %i.en
   br i1 %i.fe, label %bb.m, label %._crit_edge196, !llvm.loop !33

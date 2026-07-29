@@ -52,7 +52,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -2147483647, -2147483648) i32 @search_for_move(i8 noundef signext %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef writeonly captures(none) %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = alloca [256 x %struct.Move], align 16      ; 15 uses
+  %4 = alloca [256 x %struct.Move], align 16      ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   %i.a = tail call ptr @__ctype_toupper_loc() #11
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !8
@@ -236,6 +236,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   call void @score_and_get_first(ptr noundef nonnull %4, i32 noundef %i.bk, i32 noundef %.0257, i64 4294967295, i32 undef) #10
   call void @sort_moves(ptr noundef nonnull %4, i32 noundef 1, i32 noundef %i.bk) #10
   %i.bm = getelementptr inbounds nuw [49152 x i8], ptr @g_keyinfo, i64 %i.az ; 2 uses
+  %scevgep336 = getelementptr i8, ptr %4, i64 -12
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %._crit_edge311
@@ -638,35 +639,33 @@ bb.r:                                             ; preds = %._crit_edge298
   br i1 %exitcond335.not.1, label %._crit_edge305, label %.lr.ph304, !llvm.loop !37
 
 ._crit_edge305:                                   ; preds = %.lr.ph304.prol.loopexit, %.lr.ph304, %.lr.ph310
-  %.0236.lcssa = phi i32 [ %i.kk, %.lr.ph310 ], [ %spec.select270.lcssa.unr, %.lr.ph304.prol.loopexit ], [ %spec.select270.1, %.lr.ph304 ] ; 2 uses
+  %.0236.lcssa = phi i32 [ %i.kk, %.lr.ph310 ], [ %spec.select270.lcssa.unr, %.lr.ph304.prol.loopexit ], [ %spec.select270.1, %.lr.ph304 ] ; 3 uses
   %i.lf = zext i32 %.0236.lcssa to i64
   %.not266 = icmp eq i64 %indvars.iv341, %i.lf
-  br i1 %.not266, label %bb.t, label %5
+  br i1 %.not266, label %bb.t, label %bb.s
 
-5:                                                ; preds = %._crit_edge305
-  %6 = sext i32 %.0236.lcssa to i64               ; 2 uses
-  %7 = getelementptr inbounds [12 x i8], ptr %4, i64 %6
-  %.sroa.0.0.copyload373 = load <3 x i32>, ptr %7, align 4
-  br label %bb.s
-
-bb.s:                                             ; preds = %5, %bb.s
-  %indvars.iv338 = phi i64 [ %6, %5 ], [ %indvars.iv.next339, %bb.s ] ; 2 uses
-  %i.lg = getelementptr inbounds [12 x i8], ptr %4, i64 %indvars.iv338 ; 2 uses
-  %i.lh = getelementptr i8, ptr %i.lg, i64 -12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.lg, ptr noundef nonnull align 4 dereferenceable(12) %i.lh, i64 12, i1 false), !tbaa.struct !35
-  %indvars.iv.next339 = add nsw i64 %indvars.iv338, -1 ; 2 uses
-  %8 = and i64 %indvars.iv.next339, 4294967295
-  %.not267 = icmp eq i64 %8, %indvars.iv341
-  br i1 %.not267, label %9, label %bb.s, !llvm.loop !38
-
-9:                                                ; preds = %bb.s
+bb.s:                                             ; preds = %._crit_edge305
+  %5 = sext i32 %.0236.lcssa to i64               ; 2 uses
+  %i.lg = getelementptr inbounds [12 x i8], ptr %4, i64 %5
+  %.sroa.0.0.copyload373 = load <3 x i32>, ptr %i.lg, align 4
+  %6 = trunc i64 %indvars.iv341 to i32
+  %7 = xor i32 %6, -1
+  %8 = add i32 %.0236.lcssa, %7
+  %9 = zext i32 %8 to i64                         ; 2 uses
+  %10 = mul nuw nsw i64 %9, 12
+  %11 = sub nsw i64 %5, %9
+  %12 = mul nsw i64 %11, 12                       ; 2 uses
+  %i.lh = getelementptr i8, ptr %4, i64 %12
+  %scevgep337 = getelementptr i8, ptr %scevgep336, i64 %12
+  %indvars.iv.next339 = add nuw nsw i64 %10, 12
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.lh, ptr noundef nonnull align 4 dereferenceable(1) %scevgep337, i64 %indvars.iv.next339, i1 false)
   store <3 x i32> %.sroa.0.0.copyload373, ptr %i.ki, align 4
   br label %bb.t
 
-bb.t:                                             ; preds = %._crit_edge305, %9
+bb.t:                                             ; preds = %._crit_edge305, %bb.s
   %indvars.iv.next330 = add nuw nsw i64 %indvars.iv329, 1
   %exitcond345.not = icmp eq i64 %indvars.iv.next342, %wide.trip.count344
-  br i1 %exitcond345.not, label %._crit_edge311, label %.lr.ph310, !llvm.loop !39
+  br i1 %exitcond345.not, label %._crit_edge311, label %.lr.ph310, !llvm.loop !38
 
 ._crit_edge311:                                   ; preds = %bb.t, %bb.r
   %i.li = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.7, i32 noundef %.2251352354, i32 noundef %.0244314) ; 0 uses
@@ -675,7 +674,7 @@ bb.t:                                             ; preds = %._crit_edge305, %9
   %i.ll = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.8, i32 noundef %i.lk) ; 0 uses
   %i.lm = add nuw nsw i32 %.0244314, 44
   %i.ln = icmp samesign ult i32 %.0244314, 6
-  br i1 %i.ln, label %bb.k, label %bb.u, !llvm.loop !40
+  br i1 %i.ln, label %bb.k, label %bb.u, !llvm.loop !39
 
 bb.u:                                             ; preds = %._crit_edge298, %._crit_edge311
   store i32 -1, ptr %1, align 4, !tbaa !4
@@ -1078,7 +1077,7 @@ bb.aa:                                            ; preds = %bb.y, %bb.z
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp eq i32 %.1187222, %lftr.wideiv
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !41
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !40
 
 .loopexit:                                        ; preds = %bb.aa, %..loopexit_crit_edge, %bb.w, %bb.x
   %.1182225 = phi i32 [ %.199, %..loopexit_crit_edge ], [ %.1182224, %bb.x ], [ %.1182224, %bb.w ], [ %.1182224, %bb.aa ]
@@ -1089,13 +1088,13 @@ bb.aa:                                            ; preds = %bb.y, %bb.z
   %.1185201 = phi i32 [ %.0184, %..loopexit_crit_edge ], [ %i.bg, %bb.x ], [ %i.bg, %bb.w ], [ %.1187222, %bb.aa ]
   %i.js = icmp slt i32 %i.jr, %i.jq
   %or.cond = and i1 %i.jp, %i.js
-  br i1 %or.cond, label %bb.r, label %.loopexit.jt3, !llvm.loop !42
+  br i1 %or.cond, label %bb.r, label %.loopexit.jt3, !llvm.loop !41
 
 .loopexit.jt1:                                    ; preds = %bb.t
   %.pre.jt1 = load i32, ptr %i.c, align 4, !tbaa !4
   %.pre213.jt1 = load i32, ptr %i.b, align 4, !tbaa !4
   %i.jt = icmp slt i32 %.pre.jt1, %.pre213.jt1
-  br i1 %i.jt, label %bb.s, label %.loopexit.jt3, !llvm.loop !42
+  br i1 %i.jt, label %bb.s, label %.loopexit.jt3, !llvm.loop !41
 
 .loopexit.jt3:                                    ; preds = %.loopexit.jt1, %.loopexit, %bb.u
   %i.ju = load i32, ptr %i.a, align 4, !tbaa !4
@@ -1169,7 +1168,7 @@ bb.b:                                             ; preds = %bb.a, %bb.c
 bb.c:                                             ; preds = %bb.b, %._crit_edge
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 40
-  br i1 %exitcond.not, label %bb.d, label %bb.b, !llvm.loop !43
+  br i1 %exitcond.not, label %bb.d, label %bb.b, !llvm.loop !42
 
 bb.d:                                             ; preds = %bb.c
   ret void
@@ -1192,6 +1191,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #8
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9
@@ -1257,5 +1259,4 @@ attributes #12 = { cold noreturn nounwind }
 !40 = distinct !{!40, !12}
 !41 = distinct !{!41, !12}
 !42 = distinct !{!42, !12}
-!43 = distinct !{!43, !12}
 end_hunk_2
