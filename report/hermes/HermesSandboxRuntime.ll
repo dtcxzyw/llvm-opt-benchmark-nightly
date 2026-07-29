@@ -203,7 +203,7 @@ bb.a:
   %2 = alloca %"class.facebook::jsi::Value", align 8 ; 5 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
-  %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 5 uses
+  %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   switch i32 %1, label %bb.ab [
     i32 1, label %bb.b
     i32 0, label %bb.u
@@ -447,7 +447,8 @@ _ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl18GrowableBufferImpl6createERS0_.exit
 
 _ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl18GrowableBufferImpl7releaseEP10w2c_hermesNS_2sb3PtrIS1_EE.exit: ; preds = %.noexc43
   %i.bu = call ptr @__cxa_allocate_exception(i64 40) #31 ; 6 uses
-  %i.bv = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 8 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 9 uses
+  store ptr %i.bv, ptr %5, align 8, !tbaa !20
   %i.bw = load ptr, ptr %4, align 8, !tbaa !25    ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
   %i.by = icmp eq ptr %i.bw, %i.bx

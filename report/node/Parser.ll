@@ -203,7 +203,7 @@ bb.a:
   %2 = alloca %"class.LIEF::SpanStream", align 8  ; 11 uses
   %3 = alloca %"class.LIEF::result.373", align 8  ; 10 uses
   %4 = alloca %"class.LIEF::COFF::String", align 8 ; 10 uses
-  %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 4 uses
+  %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 192 ; 2 uses
@@ -300,10 +300,10 @@ bb.f:                                             ; preds = %bb.e
   %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 32
   store i64 %i.av, ptr %i.ba, align 8
   %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 9 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 10 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 9 uses
   %i.be = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.bg = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 11 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
@@ -331,17 +331,17 @@ bb.i:                                             ; preds = %bb.h
   %i.bt = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.101) #19 ; 0 uses
   %i.bu = trunc i64 %i.bq to i32
   %i.bv = add i32 %i.bu, 4                        ; 2 uses
+  store ptr %i.bc, ptr %5, align 8
   %i.bw = load ptr, ptr %3, align 8               ; 3 uses
   %i.bx = icmp eq ptr %i.bw, %i.bd
   br i1 %i.bx, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread: ; preds = %bb.i
-  %i.by = load i64, ptr %i.be, align 8            ; 4 uses
+  %i.by = load i64, ptr %i.be, align 8            ; 3 uses
   %i.bz = icmp ult i64 %i.by, 16
   call void @llvm.assume(i1 %i.bz)
   %i.ca = add nuw nsw i64 %i.by, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.bc, ptr noundef nonnull align 8 dereferenceable(1) %i.bd, i64 %i.ca, i1 false)
-  store i64 %i.by, ptr %i.bf, align 8
   store ptr %i.bd, ptr %3, align 8
   store i64 0, ptr %i.be, align 8
   store i8 0, ptr %i.bd, align 8
