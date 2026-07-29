@@ -1,8 +1,8 @@
 inline.NumInlined: 186
 inline.NumDeleted: 64
-loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 16
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@_ZN9NCompress6NBZip28CDecoder10DecodeFileERbP21ICompressProgressInfo:bb.a
   %i.gi = add i32 %i.gh, %.01720.i                ; 2 uses
   store i32 %.01720.i, ptr %i.gg, align 4, !tbaa !4
@@ -204,7 +204,7 @@ define internal fastcc noundef range(i32 0, 2) i32 @_ZN9NCompress6NBZip2L9ReadBl
 bb.a:
   %8 = alloca %"struct.NCompress::CMtf8Decoder", align 8 ; 6 uses
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  %i.b = alloca [6 x i8], align 1                 ; 18 uses
+  %i.b = alloca [6 x i8], align 1                 ; 14 uses
   %i.c = alloca [258 x i8], align 16              ; 6 uses
   %.not = icmp eq ptr %7, null
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
@@ -607,7 +607,7 @@ bb.af:                                            ; preds = %.preheader256, %._c
 bb.ag:                                            ; preds = %bb.aj, %bb.af
   %i.ff = phi i32 [ %i.fw, %bb.aj ], [ %.pre330, %bb.af ] ; 2 uses
   %i.fg = phi i32 [ %i.fx, %bb.aj ], [ %.pre329, %bb.af ] ; 3 uses
-  %indvars.iv297 = phi i64 [ %indvars.iv.next298, %bb.aj ], [ 0, %bb.af ] ; 12 uses
+  %indvars.iv297 = phi i64 [ %indvars.iv.next298, %bb.aj ], [ 0, %bb.af ] ; 4 uses
   %.0157 = phi i32 [ %i.gb, %bb.aj ], [ 0, %bb.af ] ; 3 uses
   %i.fh = add i32 %i.ff, 1                        ; 4 uses
   store i32 %i.fh, ptr %0, align 8, !tbaa !27
@@ -657,7 +657,7 @@ _ZN9NCompress6NBZip2L7ReadBitEPN5NBitm8CDecoderI9CInBufferEE.exit222: ; preds = 
 bb.aj:                                            ; preds = %_ZN9NCompress6NBZip2L7ReadBitEPN5NBitm8CDecoderI9CInBufferEE.exit222
   %i.gb = add nuw nsw i32 %.0157, 1               ; 2 uses
   %exitcond292.not = icmp eq i32 %i.gb, %umax
-  %indvars.iv.next298 = add nuw nsw i64 %indvars.iv297, 1
+  %indvars.iv.next298 = add i64 %indvars.iv297, 1
   br i1 %exitcond292.not, label %.critedge, label %bb.ag, !llvm.loop !89
 
 bb.ak:                                            ; preds = %_ZN9NCompress6NBZip2L7ReadBitEPN5NBitm8CDecoderI9CInBufferEE.exit222
@@ -665,61 +665,20 @@ bb.ak:                                            ; preds = %_ZN9NCompress6NBZip
   %i.gd = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.gc
   %i.ge = load i8, ptr %i.gd, align 1, !tbaa !30  ; 2 uses
   %.not275 = icmp eq i32 %.0157, 0
-  br i1 %.not275, label %._crit_edge, label %.lr.ph
+  br i1 %.not275, label %._crit_edge, label %.lr.ph.5
 
-.lr.ph:                                           ; preds = %bb.ak
-  %9 = getelementptr i8, ptr %i.b, i64 %indvars.iv297 ; 2 uses
-  %10 = getelementptr i8, ptr %9, i64 -1
-  %11 = load i8, ptr %10, align 1, !tbaa !30
-  store i8 %11, ptr %9, align 1, !tbaa !30
-  %12 = icmp samesign ugt i64 %indvars.iv297, 1
-  br i1 %12, label %.lr.ph.1, label %._crit_edge
-
-.lr.ph.1:                                         ; preds = %.lr.ph
-  %13 = getelementptr i8, ptr %i.b, i64 %indvars.iv297 ; 2 uses
-  %14 = getelementptr i8, ptr %13, i64 -1
-  %15 = getelementptr i8, ptr %13, i64 -2
-  %16 = load i8, ptr %15, align 1, !tbaa !30
-  store i8 %16, ptr %14, align 1, !tbaa !30
-  %.not459 = icmp eq i64 %indvars.iv297, 2
-  br i1 %.not459, label %._crit_edge, label %.lr.ph.2
-
-.lr.ph.2:                                         ; preds = %.lr.ph.1
-  %17 = getelementptr i8, ptr %i.b, i64 %indvars.iv297 ; 2 uses
-  %18 = getelementptr i8, ptr %17, i64 -2
-  %19 = getelementptr i8, ptr %17, i64 -3
-  %20 = load i8, ptr %19, align 1, !tbaa !30
-  store i8 %20, ptr %18, align 1, !tbaa !30
-  %21 = icmp samesign ugt i64 %indvars.iv297, 3
-  br i1 %21, label %.lr.ph.3, label %._crit_edge
-
-.lr.ph.3:                                         ; preds = %.lr.ph.2
-  %22 = getelementptr i8, ptr %i.b, i64 %indvars.iv297 ; 2 uses
-  %23 = getelementptr i8, ptr %22, i64 -3
-  %24 = getelementptr i8, ptr %22, i64 -4
-  %25 = load i8, ptr %24, align 1, !tbaa !30
-  store i8 %25, ptr %23, align 1, !tbaa !30
-  %.not460 = icmp eq i64 %indvars.iv297, 4
-  br i1 %.not460, label %._crit_edge, label %.lr.ph.4
-
-.lr.ph.4:                                         ; preds = %.lr.ph.3
-  %26 = getelementptr i8, ptr %i.b, i64 %indvars.iv297 ; 2 uses
-  %27 = getelementptr i8, ptr %26, i64 -4
-  %28 = getelementptr i8, ptr %26, i64 -5
-  %29 = load i8, ptr %28, align 1, !tbaa !30
-  store i8 %29, ptr %27, align 1, !tbaa !30
-  %30 = icmp samesign ugt i64 %indvars.iv297, 5
-  br i1 %30, label %.lr.ph.5, label %._crit_edge
-
-.lr.ph.5:                                         ; preds = %.lr.ph.4
-  %i.gf = getelementptr i8, ptr %i.b, i64 %indvars.iv297 ; 2 uses
-  %i.gg = getelementptr i8, ptr %i.gf, i64 -5
-  %i.gh = getelementptr i8, ptr %i.gf, i64 -6
-  %31 = load i8, ptr %i.gh, align 1, !tbaa !30
-  store i8 %31, ptr %i.gg, align 1, !tbaa !30
+.lr.ph.5:                                         ; preds = %bb.ak
+  %i.gf = getelementptr nuw i8, ptr %i.b, i64 %indvars.iv297
+  %9 = add i64 %indvars.iv297, -1                 ; 2 uses
+  %10 = and i64 %9, 4294967295
+  %11 = sub nsw i64 0, %10                        ; 2 uses
+  %i.gg = getelementptr i8, ptr %i.gf, i64 %11
+  %i.gh = getelementptr i8, ptr %i.b, i64 %9
+  %scevgep296 = getelementptr i8, ptr %i.gh, i64 %11
+  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.gg, ptr align 1 %scevgep296, i64 %indvars.iv297, i1 false), !tbaa !30
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %bb.ak
+._crit_edge:                                      ; preds = %.lr.ph.5, %bb.ak
   store i8 %i.ge, ptr %i.b, align 1, !tbaa !30
   %i.gi = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv303
   store i8 %i.ge, ptr %i.gi, align 1, !tbaa !30
@@ -1121,6 +1080,9 @@ declare i32 @llvm.umax.i32(i32, i32) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #17
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #18
