@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 344 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
-  %i.m = load i64, ptr %i.h, align 8              ; 3 uses
+  %i.m = load i64, ptr %i.h, align 8              ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   %.idx = shl nsw i64 %i.m, 3                     ; 6 uses
   %i.n = icmp ugt i64 %.idx, 9223372036854775800
@@ -230,21 +230,17 @@ _ZNSt12_Vector_baseIPKN2v88internal6torque4TypeESaIS5_EE11_M_allocateEm.exit.i.i
 
 .noexc5.i:                                        ; preds = %_ZNSt12_Vector_baseIPKN2v88internal6torque4TypeESaIS5_EE11_M_allocateEm.exit.i.i
   store ptr %i.q, ptr %3, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %.idx ; 4 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %.idx ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 16
   store ptr %i.r, ptr %i.s, align 8
   %i.t = icmp samesign ugt i64 %.idx, 8
-  br i1 %i.t, label %bb.d, label %5, !prof !15
+  br i1 %i.t, label %bb.d, label %bb.e, !prof !15
 
 bb.d:                                             ; preds = %.noexc5.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.q, ptr align 8 %i.l, i64 %.idx, i1 false)
   br label %bb.h
 
-5:                                                ; preds = %.noexc5.i
-  %6 = icmp eq i64 %i.m, 1
-  br i1 %6, label %bb.e, label %bb.h
-
-bb.e:                                             ; preds = %5
+bb.e:                                             ; preds = %.noexc5.i
   %i.u = load ptr, ptr %i.l, align 8
   store ptr %i.u, ptr %i.q, align 8
   br label %bb.h
@@ -265,10 +261,10 @@ bb.g:                                             ; preds = %bb.f
   tail call void @_ZdlPvm(ptr noundef nonnull %i.w, i64 noundef %i.ab) #26
   br label %.body
 
-bb.h:                                             ; preds = %bb.e, %5, %bb.d, %.thread.i.i
-  %7 = phi ptr [ %i.r, %bb.d ], [ %i.r, %5 ], [ %i.r, %bb.e ], [ %i.o, %.thread.i.i ]
+bb.h:                                             ; preds = %bb.e, %bb.d, %.thread.i.i
+  %5 = phi ptr [ %i.r, %bb.d ], [ %i.o, %.thread.i.i ], [ %i.r, %bb.e ]
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr %7, ptr %i.ac, align 8
+  store ptr %5, ptr %i.ac, align 8
   %i.ad = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN2v88internal6torquelsERSoRKSt6vectorIPKNS1_4TypeESaIS6_EE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(24) %3)
           to label %bb.i unwind label %bb.s
 

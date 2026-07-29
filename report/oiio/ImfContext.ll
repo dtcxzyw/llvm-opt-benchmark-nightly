@@ -203,7 +203,7 @@ bb.eh:                                            ; preds = %bb.ae
   %i.hv = load ptr, ptr %i.hu, align 8, !tbaa !25 ; 2 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 8
   %i.hx = load ptr, ptr %i.hw, align 8, !tbaa !91 ; 2 uses
-  %i.hy = load i32, ptr %i.hv, align 8, !tbaa !94 ; 3 uses
+  %i.hy = load i32, ptr %i.hv, align 8, !tbaa !94 ; 2 uses
   %i.hz = sext i32 %i.hy to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %34, i8 0, i64 24, i1 false)
   %.idx = shl nsw i64 %i.hz, 2                    ; 6 uses
@@ -232,20 +232,16 @@ _ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm.exit.i.i: ; preds = %_ZNSt6vectorIfSa
 
 .noexc4.i:                                        ; preds = %_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm.exit.i.i
   store ptr %i.ic, ptr %34, align 8, !tbaa !97
-  %i.id = getelementptr inbounds nuw i8, ptr %i.ic, i64 %.idx ; 4 uses
+  %i.id = getelementptr inbounds nuw i8, ptr %i.ic, i64 %.idx ; 3 uses
   store ptr %i.id, ptr %i.ak, align 8, !tbaa !95
   %i.ie = icmp samesign ugt i64 %.idx, 4
-  br i1 %i.ie, label %bb.ej, label %64, !prof !98
+  br i1 %i.ie, label %bb.ej, label %bb.ek, !prof !98
 
 bb.ej:                                            ; preds = %.noexc4.i
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ic, ptr align 4 %i.hx, i64 %.idx, i1 false)
   br label %bb.en
 
-64:                                               ; preds = %.noexc4.i
-  %65 = icmp eq i32 %i.hy, 1
-  br i1 %65, label %bb.ek, label %bb.en
-
-bb.ek:                                            ; preds = %64
+bb.ek:                                            ; preds = %.noexc4.i
   %i.if = load float, ptr %i.hx, align 4, !tbaa !44
   store float %i.if, ptr %i.ic, align 4, !tbaa !44
   br label %bb.en
@@ -270,9 +266,9 @@ bb.em:                                            ; preds = %bb.el
   call void @_ZdlPvm(ptr noundef nonnull %.pre406, i64 noundef %i.ij) #28
   br label %.body
 
-bb.en:                                            ; preds = %bb.ek, %64, %bb.ej, %.thread.i.i
-  %66 = phi ptr [ %i.id, %bb.ej ], [ %i.id, %64 ], [ %i.id, %bb.ek ], [ %i.ib, %.thread.i.i ]
-  store ptr %66, ptr %i.al, align 8, !tbaa !99
+bb.en:                                            ; preds = %bb.ek, %bb.ej, %.thread.i.i
+  %64 = phi ptr [ %i.id, %bb.ej ], [ %i.ib, %.thread.i.i ], [ %i.id, %bb.ek ]
+  store ptr %64, ptr %i.al, align 8, !tbaa !99
   invoke void @_ZN27OpenImageIO_v3_1_Imf__3_3_514TypedAttributeISt6vectorIfSaIfEEEC1ERKS3_(ptr noundef nonnull align 8 dereferenceable(32) %33, ptr noundef nonnull align 8 dereferenceable(24) %34)
           to label %bb.eo unwind label %bb.er
 
