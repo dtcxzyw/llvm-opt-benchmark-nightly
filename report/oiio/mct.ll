@@ -204,19 +204,19 @@ bb.a:
   br i1 %.not87, label %._crit_edge86, label %.lr.ph85
 
 .lr.ph85:                                         ; preds = %._crit_edge
-  %4 = load float, ptr %.0.lcssa, align 4, !tbaa !20 ; 3 uses
   %i.af = load float, ptr %.074.lcssa, align 4, !tbaa !20 ; 2 uses
   %i.ag = load float, ptr %.075.lcssa, align 4, !tbaa !20 ; 2 uses
-  %5 = tail call float @llvm.fmuladd.f32(float %i.ag, float 1.402000e+00, float %4)
-  %i.ah = fneg float %i.af
-  %i.ai = tail call float @llvm.fmuladd.f32(float %i.ah, float 3.441300e-01, float %4)
-  %6 = fneg float %i.ag
-  %i.aj = insertelement <2 x float> poison, float %6, i64 0
+  %4 = fneg float %i.af
+  %i.ah = fneg float %i.ag
+  %5 = load float, ptr %.0.lcssa, align 4, !tbaa !20 ; 3 uses
+  %i.ai = tail call float @llvm.fmuladd.f32(float %i.ag, float 1.402000e+00, float %5)
+  %6 = tail call float @llvm.fmuladd.f32(float %4, float 3.441300e-01, float %5)
+  %i.aj = insertelement <2 x float> poison, float %i.ah, i64 0
   %i.ak = insertelement <2 x float> %i.aj, float %i.af, i64 1
-  %i.al = insertelement <2 x float> poison, float %i.ai, i64 0
-  %i.am = insertelement <2 x float> %i.al, float %4, i64 1
+  %i.al = insertelement <2 x float> poison, float %6, i64 0
+  %i.am = insertelement <2 x float> %i.al, float %5, i64 1
   %i.an = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ak, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %i.am) ; 2 uses
-  store float %5, ptr %.0.lcssa, align 4, !tbaa !20
+  store float %i.ai, ptr %.0.lcssa, align 4, !tbaa !20
   %i.ao = extractelement <2 x float> %i.an, i64 0
   store float %i.ao, ptr %.074.lcssa, align 4, !tbaa !20
   %i.ap = extractelement <2 x float> %i.an, i64 1
@@ -226,21 +226,21 @@ bb.a:
 
 .lr.ph85.1:                                       ; preds = %.lr.ph85
   %i.aq = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 4 ; 2 uses
-  %7 = load float, ptr %i.aq, align 4, !tbaa !20  ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.074.lcssa, i64 4 ; 2 uses
   %i.as = load float, ptr %i.ar, align 4, !tbaa !20 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 4 ; 2 uses
   %i.au = load float, ptr %i.at, align 4, !tbaa !20 ; 2 uses
-  %8 = tail call float @llvm.fmuladd.f32(float %i.au, float 1.402000e+00, float %7)
-  %i.av = fneg float %i.as
-  %i.aw = tail call float @llvm.fmuladd.f32(float %i.av, float 3.441300e-01, float %7)
-  %9 = fneg float %i.au
-  %i.ax = insertelement <2 x float> poison, float %9, i64 0
+  %7 = fneg float %i.as
+  %i.av = fneg float %i.au
+  %8 = load float, ptr %i.aq, align 4, !tbaa !20  ; 3 uses
+  %i.aw = tail call float @llvm.fmuladd.f32(float %i.au, float 1.402000e+00, float %8)
+  %9 = tail call float @llvm.fmuladd.f32(float %7, float 3.441300e-01, float %8)
+  %i.ax = insertelement <2 x float> poison, float %i.av, i64 0
   %i.ay = insertelement <2 x float> %i.ax, float %i.as, i64 1
-  %i.az = insertelement <2 x float> poison, float %i.aw, i64 0
-  %i.ba = insertelement <2 x float> %i.az, float %7, i64 1
+  %i.az = insertelement <2 x float> poison, float %9, i64 0
+  %i.ba = insertelement <2 x float> %i.az, float %8, i64 1
   %i.bb = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ay, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %i.ba) ; 2 uses
-  store float %8, ptr %i.aq, align 4, !tbaa !20
+  store float %i.aw, ptr %i.aq, align 4, !tbaa !20
   %i.bc = extractelement <2 x float> %i.bb, i64 0
   store float %i.bc, ptr %i.ar, align 4, !tbaa !20
   %i.bd = extractelement <2 x float> %i.bb, i64 1
@@ -250,21 +250,21 @@ bb.a:
 
 .lr.ph85.2:                                       ; preds = %.lr.ph85.1
   %i.be = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 8 ; 2 uses
-  %10 = load float, ptr %i.be, align 4, !tbaa !20 ; 3 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.074.lcssa, i64 8 ; 2 uses
   %i.bg = load float, ptr %i.bf, align 4, !tbaa !20 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 8 ; 2 uses
   %i.bi = load float, ptr %i.bh, align 4, !tbaa !20 ; 2 uses
-  %11 = tail call float @llvm.fmuladd.f32(float %i.bi, float 1.402000e+00, float %10)
-  %i.bj = fneg float %i.bg
-  %i.bk = tail call float @llvm.fmuladd.f32(float %i.bj, float 3.441300e-01, float %10)
-  %12 = fneg float %i.bi
-  %i.bl = insertelement <2 x float> poison, float %12, i64 0
+  %10 = fneg float %i.bg
+  %i.bj = fneg float %i.bi
+  %11 = load float, ptr %i.be, align 4, !tbaa !20 ; 3 uses
+  %i.bk = tail call float @llvm.fmuladd.f32(float %i.bi, float 1.402000e+00, float %11)
+  %12 = tail call float @llvm.fmuladd.f32(float %10, float 3.441300e-01, float %11)
+  %i.bl = insertelement <2 x float> poison, float %i.bj, i64 0
   %i.bm = insertelement <2 x float> %i.bl, float %i.bg, i64 1
-  %i.bn = insertelement <2 x float> poison, float %i.bk, i64 0
-  %i.bo = insertelement <2 x float> %i.bn, float %10, i64 1
+  %i.bn = insertelement <2 x float> poison, float %12, i64 0
+  %i.bo = insertelement <2 x float> %i.bn, float %11, i64 1
   %i.bp = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bm, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %i.bo) ; 2 uses
-  store float %11, ptr %i.be, align 4, !tbaa !20
+  store float %i.bk, ptr %i.be, align 4, !tbaa !20
   %i.bq = extractelement <2 x float> %i.bp, i64 0
   store float %i.bq, ptr %i.bf, align 4, !tbaa !20
   %i.br = extractelement <2 x float> %i.bp, i64 1
@@ -274,21 +274,21 @@ bb.a:
 
 .lr.ph85.3:                                       ; preds = %.lr.ph85.2
   %i.bs = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 12 ; 2 uses
-  %13 = load float, ptr %i.bs, align 4, !tbaa !20 ; 3 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.074.lcssa, i64 12 ; 2 uses
   %i.bu = load float, ptr %i.bt, align 4, !tbaa !20 ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 12 ; 2 uses
   %i.bw = load float, ptr %i.bv, align 4, !tbaa !20 ; 2 uses
-  %14 = tail call float @llvm.fmuladd.f32(float %i.bw, float 1.402000e+00, float %13)
-  %i.bx = fneg float %i.bu
-  %i.by = tail call float @llvm.fmuladd.f32(float %i.bx, float 3.441300e-01, float %13)
-  %15 = fneg float %i.bw
-  %i.bz = insertelement <2 x float> poison, float %15, i64 0
+  %13 = fneg float %i.bu
+  %i.bx = fneg float %i.bw
+  %14 = load float, ptr %i.bs, align 4, !tbaa !20 ; 3 uses
+  %i.by = tail call float @llvm.fmuladd.f32(float %i.bw, float 1.402000e+00, float %14)
+  %15 = tail call float @llvm.fmuladd.f32(float %13, float 3.441300e-01, float %14)
+  %i.bz = insertelement <2 x float> poison, float %i.bx, i64 0
   %i.ca = insertelement <2 x float> %i.bz, float %i.bu, i64 1
-  %i.cb = insertelement <2 x float> poison, float %i.by, i64 0
-  %i.cc = insertelement <2 x float> %i.cb, float %13, i64 1
+  %i.cb = insertelement <2 x float> poison, float %15, i64 0
+  %i.cc = insertelement <2 x float> %i.cb, float %14, i64 1
   %i.cd = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ca, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %i.cc) ; 2 uses
-  store float %14, ptr %i.bs, align 4, !tbaa !20
+  store float %i.by, ptr %i.bs, align 4, !tbaa !20
   %i.ce = extractelement <2 x float> %i.cd, i64 0
   store float %i.ce, ptr %i.bt, align 4, !tbaa !20
   %i.cf = extractelement <2 x float> %i.cd, i64 1
@@ -298,21 +298,21 @@ bb.a:
 
 .lr.ph85.4:                                       ; preds = %.lr.ph85.3
   %i.cg = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 16 ; 2 uses
-  %16 = load float, ptr %i.cg, align 4, !tbaa !20 ; 3 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %.074.lcssa, i64 16 ; 2 uses
   %i.ci = load float, ptr %i.ch, align 4, !tbaa !20 ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 16 ; 2 uses
   %i.ck = load float, ptr %i.cj, align 4, !tbaa !20 ; 2 uses
-  %17 = tail call float @llvm.fmuladd.f32(float %i.ck, float 1.402000e+00, float %16)
-  %i.cl = fneg float %i.ci
-  %i.cm = tail call float @llvm.fmuladd.f32(float %i.cl, float 3.441300e-01, float %16)
-  %18 = fneg float %i.ck
-  %i.cn = insertelement <2 x float> poison, float %18, i64 0
+  %16 = fneg float %i.ci
+  %i.cl = fneg float %i.ck
+  %17 = load float, ptr %i.cg, align 4, !tbaa !20 ; 3 uses
+  %i.cm = tail call float @llvm.fmuladd.f32(float %i.ck, float 1.402000e+00, float %17)
+  %18 = tail call float @llvm.fmuladd.f32(float %16, float 3.441300e-01, float %17)
+  %i.cn = insertelement <2 x float> poison, float %i.cl, i64 0
   %i.co = insertelement <2 x float> %i.cn, float %i.ci, i64 1
-  %i.cp = insertelement <2 x float> poison, float %i.cm, i64 0
-  %i.cq = insertelement <2 x float> %i.cp, float %16, i64 1
+  %i.cp = insertelement <2 x float> poison, float %18, i64 0
+  %i.cq = insertelement <2 x float> %i.cp, float %17, i64 1
   %i.cr = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.co, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %i.cq) ; 2 uses
-  store float %17, ptr %i.cg, align 4, !tbaa !20
+  store float %i.cm, ptr %i.cg, align 4, !tbaa !20
   %i.cs = extractelement <2 x float> %i.cr, i64 0
   store float %i.cs, ptr %i.ch, align 4, !tbaa !20
   %i.ct = extractelement <2 x float> %i.cr, i64 1
@@ -322,21 +322,21 @@ bb.a:
 
 .lr.ph85.5:                                       ; preds = %.lr.ph85.4
   %i.cu = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 20 ; 2 uses
-  %19 = load float, ptr %i.cu, align 4, !tbaa !20 ; 3 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %.074.lcssa, i64 20 ; 2 uses
   %i.cw = load float, ptr %i.cv, align 4, !tbaa !20 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 20 ; 2 uses
   %i.cy = load float, ptr %i.cx, align 4, !tbaa !20 ; 2 uses
-  %20 = tail call float @llvm.fmuladd.f32(float %i.cy, float 1.402000e+00, float %19)
-  %i.cz = fneg float %i.cw
-  %i.da = tail call float @llvm.fmuladd.f32(float %i.cz, float 3.441300e-01, float %19)
-  %21 = fneg float %i.cy
-  %i.db = insertelement <2 x float> poison, float %21, i64 0
+  %19 = fneg float %i.cw
+  %i.cz = fneg float %i.cy
+  %20 = load float, ptr %i.cu, align 4, !tbaa !20 ; 3 uses
+  %i.da = tail call float @llvm.fmuladd.f32(float %i.cy, float 1.402000e+00, float %20)
+  %21 = tail call float @llvm.fmuladd.f32(float %19, float 3.441300e-01, float %20)
+  %i.db = insertelement <2 x float> poison, float %i.cz, i64 0
   %i.dc = insertelement <2 x float> %i.db, float %i.cw, i64 1
-  %i.dd = insertelement <2 x float> poison, float %i.da, i64 0
-  %i.de = insertelement <2 x float> %i.dd, float %19, i64 1
+  %i.dd = insertelement <2 x float> poison, float %21, i64 0
+  %i.de = insertelement <2 x float> %i.dd, float %20, i64 1
   %i.df = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dc, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %i.de) ; 2 uses
-  store float %20, ptr %i.cu, align 4, !tbaa !20
+  store float %i.da, ptr %i.cu, align 4, !tbaa !20
   %i.dg = extractelement <2 x float> %i.df, i64 0
   store float %i.dg, ptr %i.cv, align 4, !tbaa !20
   %i.dh = extractelement <2 x float> %i.df, i64 1
@@ -346,21 +346,21 @@ bb.a:
 
 .lr.ph85.6:                                       ; preds = %.lr.ph85.5
   %i.di = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 24 ; 2 uses
-  %22 = load float, ptr %i.di, align 4, !tbaa !20 ; 3 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %.074.lcssa, i64 24 ; 2 uses
   %i.dk = load float, ptr %i.dj, align 4, !tbaa !20 ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 24 ; 2 uses
   %i.dm = load float, ptr %i.dl, align 4, !tbaa !20 ; 2 uses
-  %23 = tail call float @llvm.fmuladd.f32(float %i.dm, float 1.402000e+00, float %22)
-  %i.dn = fneg float %i.dk
-  %i.do = tail call float @llvm.fmuladd.f32(float %i.dn, float 3.441300e-01, float %22)
-  %24 = fneg float %i.dm
-  %i.dp = insertelement <2 x float> poison, float %24, i64 0
+  %22 = fneg float %i.dk
+  %i.dn = fneg float %i.dm
+  %23 = load float, ptr %i.di, align 4, !tbaa !20 ; 3 uses
+  %i.do = tail call float @llvm.fmuladd.f32(float %i.dm, float 1.402000e+00, float %23)
+  %24 = tail call float @llvm.fmuladd.f32(float %22, float 3.441300e-01, float %23)
+  %i.dp = insertelement <2 x float> poison, float %i.dn, i64 0
   %i.dq = insertelement <2 x float> %i.dp, float %i.dk, i64 1
-  %i.dr = insertelement <2 x float> poison, float %i.do, i64 0
-  %i.ds = insertelement <2 x float> %i.dr, float %22, i64 1
+  %i.dr = insertelement <2 x float> poison, float %24, i64 0
+  %i.ds = insertelement <2 x float> %i.dr, float %23, i64 1
   %i.dt = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dq, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %i.ds) ; 2 uses
-  store float %23, ptr %i.di, align 4, !tbaa !20
+  store float %i.do, ptr %i.di, align 4, !tbaa !20
   %i.du = extractelement <2 x float> %i.dt, i64 0
   store float %i.du, ptr %i.dj, align 4, !tbaa !20
   %i.dv = extractelement <2 x float> %i.dt, i64 1

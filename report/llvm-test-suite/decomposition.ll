@@ -33,18 +33,18 @@ define dso_local noalias noundef ptr @initDecomposition(i32 noundef %0, i32 noun
   %i.o = insertelement <2 x i32> poison, i32 %0, i64 0
   %i.p = insertelement <2 x i32> %i.o, i32 %1, i64 1
   %i.q = sitofp <2 x i32> %i.p to <2 x double>
-  %4 = load <2 x double>, ptr %i.l, align 8, !tbaa !8
-  %5 = fdiv <2 x double> %4, %i.q                 ; 3 uses
-  store <2 x double> %5, ptr %i.m, align 8, !tbaa !8
-  %6 = srem i32 %i.f, %1                          ; 3 uses
-  %7 = srem i32 %i.d, %0                          ; 3 uses
-  store i32 %7, ptr %i.e, align 4, !tbaa !4
-  store i32 %6, ptr %i.g, align 8, !tbaa !4
-  %8 = add nsw i32 %7, 1
-  %i.r = insertelement <2 x i32> poison, i32 %7, i64 0
-  %i.s = insertelement <2 x i32> %i.r, i32 %6, i64 1
+  %4 = srem i32 %i.f, %1                          ; 3 uses
+  %5 = srem i32 %i.d, %0                          ; 3 uses
+  store i32 %5, ptr %i.e, align 4, !tbaa !4
+  store i32 %4, ptr %i.g, align 8, !tbaa !4
+  %6 = load <2 x double>, ptr %i.l, align 8, !tbaa !8
+  %7 = fdiv <2 x double> %6, %i.q                 ; 3 uses
+  %8 = add nsw i32 %5, 1
+  store <2 x double> %7, ptr %i.m, align 8, !tbaa !8
+  %i.r = insertelement <2 x i32> poison, i32 %5, i64 0
+  %i.s = insertelement <2 x i32> %i.r, i32 %4, i64 1
   %i.t = sitofp <2 x i32> %i.s to <2 x double>
-  %i.u = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.t, <2 x double> %5, <2 x double> zeroinitializer)
+  %i.u = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.t, <2 x double> %7, <2 x double> zeroinitializer)
   store <2 x double> %i.u, ptr %i.n, align 8, !tbaa !8
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 88
@@ -57,11 +57,11 @@ define dso_local noalias noundef ptr @initDecomposition(i32 noundef %0, i32 noun
   %i.ac = insertelement <2 x i32> poison, i32 %i.h, i64 0
   %i.ad = insertelement <2 x i32> %i.ac, i32 %8, i64 1
   %i.ae = sitofp <2 x i32> %i.ad to <2 x double>
-  %i.af = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %i.af = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.ag = insertelement <2 x double> %i.af, double %i.z, i64 0
   %i.ah = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ae, <2 x double> %i.ag, <2 x double> zeroinitializer)
   store <2 x double> %i.ah, ptr %i.ab, align 8, !tbaa !8
-  %i.ai = insertelement <2 x i32> poison, i32 %6, i64 0
+  %i.ai = insertelement <2 x i32> poison, i32 %4, i64 0
   %i.aj = insertelement <2 x i32> %i.ai, i32 %i.h, i64 1
   %i.ak = add nsw <2 x i32> %i.aj, splat (i32 1)
   %i.al = sitofp <2 x i32> %i.ak to <2 x double>

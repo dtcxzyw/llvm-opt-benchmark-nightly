@@ -204,26 +204,26 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 .loopexit.us.us.loopexit:                         ; preds = %bb.g
   %i.di = fdiv double 1.000000e+00, %i.dg         ; 4 uses
-  %1 = fmul double %i.di, %i.di
-  %i.dj = fmul double %i.di, %1
-  %i.dk = fmul double %i.ae, %i.dj                ; 4 uses
-  %2 = fadd double %i.dk, -1.000000e+00
-  %3 = call double @llvm.fmuladd.f64(double %i.dk, double %2, double %i.ao) ; 4 uses
+  %i.dj = fmul double %i.di, %i.di
+  %i.dk = fmul double %i.di, %i.dj
   %i.dl = load ptr, ptr %i.ch, align 8, !tbaa !38 ; 2 uses
   %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %indvars.iv177 ; 2 uses
   %i.dn = load double, ptr %i.dm, align 8, !tbaa !16
-  %4 = call double @llvm.fmuladd.f64(double %3, double 5.000000e-01, double %i.dn)
-  store double %4, ptr %i.dm, align 8, !tbaa !16
-  %5 = getelementptr inbounds [8 x i8], ptr %i.dl, i64 %indvars.iv171 ; 2 uses
-  %6 = load double, ptr %5, align 8, !tbaa !16
-  %7 = fmul double %i.ap, %i.dk
-  %8 = fmul double %i.di, %7
-  %i.do = insertelement <2 x double> poison, double %3, i64 0
-  %i.dp = insertelement <2 x double> %i.do, double %i.dk, i64 1
+  %1 = getelementptr inbounds [8 x i8], ptr %i.dl, i64 %indvars.iv171 ; 2 uses
+  %2 = fmul double %i.ae, %i.dk                   ; 4 uses
+  %3 = fadd double %2, -1.000000e+00
+  %4 = call double @llvm.fmuladd.f64(double %2, double %3, double %i.ao) ; 4 uses
+  %5 = call double @llvm.fmuladd.f64(double %4, double 5.000000e-01, double %i.dn)
+  store double %5, ptr %i.dm, align 8, !tbaa !16
+  %6 = load double, ptr %1, align 8, !tbaa !16
+  %i.do = insertelement <2 x double> poison, double %4, i64 0
+  %i.dp = insertelement <2 x double> %i.do, double %2, i64 1
   %i.dq = insertelement <2 x double> <double poison, double -6.000000e+00>, double %6, i64 0
   %i.dr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dp, <2 x double> <double 5.000000e-01, double 1.200000e+01>, <2 x double> %i.dq) ; 2 uses
   %i.ds = extractelement <2 x double> %i.dr, i64 0
-  store double %i.ds, ptr %5, align 8, !tbaa !16
+  store double %i.ds, ptr %1, align 8, !tbaa !16
+  %7 = fmul double %i.ap, %2
+  %8 = fmul double %i.di, %7
   %i.dt = extractelement <2 x double> %i.dr, i64 1
   %i.du = fmul double %i.dt, %8                   ; 3 uses
   %i.dv = load ptr, ptr %i.ci, align 8, !tbaa !35 ; 2 uses
@@ -247,8 +247,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ek = load double, ptr %i.ej, align 8, !tbaa !16
   %i.el = call double @llvm.fmuladd.f64(double %i.df, double %i.du, double %i.ek)
   store double %i.el, ptr %i.ej, align 8, !tbaa !16
-  %i.em = fadd double %.3133.us.us, %3
-  %i.en = call double @llvm.fmuladd.f64(double %3, double 5.000000e-01, double %.3133.us.us)
+  %i.em = fadd double %.3133.us.us, %4
+  %i.en = call double @llvm.fmuladd.f64(double %4, double 5.000000e-01, double %.3133.us.us)
   %.4.us.us = select i1 %i.cl, double %i.em, double %i.en
   br label %.loopexit.us.us
 

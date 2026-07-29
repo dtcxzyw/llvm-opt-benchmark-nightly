@@ -203,24 +203,24 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 88
   store float f0xDD5E0B6B, ptr %i.e, align 8, !tbaa !31
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 92
-  %5 = load float, ptr %1, align 4, !tbaa !19     ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = load float, ptr %i.g, align 4, !tbaa !19 ; 2 uses
-  %6 = fmul float %i.h, 0.000000e+00              ; 2 uses
-  %7 = fadd float %5, %6
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %9 = load float, ptr %8, align 4, !tbaa !19     ; 2 uses
-  %10 = load float, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !19
-  %i.i = tail call float @llvm.fmuladd.f32(float %10, float %5, float %i.h)
-  %i.j = insertelement <2 x float> poison, float %9, i64 0
+  %6 = load float, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !19
+  %7 = load float, ptr %5, align 4, !tbaa !19     ; 2 uses
+  %8 = load float, ptr %1, align 4, !tbaa !19     ; 3 uses
+  %9 = fmul float %7, 0.000000e+00                ; 2 uses
+  %10 = fadd float %8, %9
+  %i.i = tail call float @llvm.fmuladd.f32(float %6, float %8, float %7)
+  %i.j = insertelement <2 x float> poison, float %i.h, i64 0
   %i.k = shufflevector <2 x float> %i.j, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.l = insertelement <2 x float> poison, float %7, i64 0
+  %i.l = insertelement <2 x float> poison, float %10, i64 0
   %i.m = insertelement <2 x float> %i.l, float %i.i, i64 1
   %i.n = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.k, <2 x float> zeroinitializer, <2 x float> %i.m)
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.p = load float, ptr %i.o, align 8, !tbaa !19
-  %i.q = tail call float @llvm.fmuladd.f32(float %i.p, float %5, float %6)
-  %i.r = fadd float %9, %i.q
+  %i.q = tail call float @llvm.fmuladd.f32(float %i.p, float %8, float %9)
+  %i.r = fadd float %i.h, %i.q
   %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.r, i64 0
   store <2 x float> %i.n, ptr %i.f, align 4
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 100

@@ -203,7 +203,6 @@ bb.c:                                             ; preds = %bb.a
   br i1 %or.cond, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %4 = tail call double @llvm.fmuladd.f64(double %i.m, double %i.m, double -3.000000e+00)
   %i.p = insertelement <2 x double> poison, double %1, i64 0
   %i.q = insertelement <2 x double> %i.p, double %0, i64 1 ; 2 uses
   %i.r = fadd <2 x double> %i.q, %i.q
@@ -212,6 +211,7 @@ bb.d:                                             ; preds = %bb.c
   %shift = shufflevector <2 x double> %i.t, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fsub <2 x double> %i.t, %shift
   %i.u = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %4 = tail call double @llvm.fmuladd.f64(double %i.m, double %i.m, double -3.000000e+00)
   %i.v = insertelement <2 x double> <double poison, double 2.000000e+00>, double %4, i64 0
   %i.w = insertelement <2 x double> %i.t, double 6.000000e+00, i64 0
   %i.x = fdiv <2 x double> %i.v, %i.w             ; 2 uses

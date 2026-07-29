@@ -190,10 +190,8 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.f = load float, ptr %i.e, align 4, !tbaa !11
   %i.g = fmul float %2, %i.f
-  %7 = tail call float @llvm.fmuladd.f32(float %i.d, float %1, float %i.g)
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 60
   %i.i = load float, ptr %i.h, align 4, !tbaa !11
-  %8 = tail call float @llvm.fmuladd.f32(float %i.i, float %3, float %7) ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.k = load <4 x float>, ptr %i.a, align 4, !tbaa !11 ; 3 uses
   %i.l = load <2 x float>, ptr %i.b, align 4, !tbaa !11 ; 2 uses
@@ -218,11 +216,9 @@ bb.a:
   %i.ae = extractelement <2 x float> %i.aa, i64 0 ; 2 uses
   %. = select i1 %i.ac, float %i.ad, float %i.ae  ; 2 uses
   %i.af = extractelement <2 x i1> %i.ab, i64 1
-  %9 = extractelement <2 x float> %i.z, i64 1
   %i.ag = extractelement <2 x float> %i.aa, i64 1
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ai = load float, ptr %i.ah, align 4, !tbaa !14 ; 3 uses
-  %10 = fcmp ogt float %8, %i.ai
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !15 ; 2 uses
   %i.al = fcmp olt float %., %i.ak
@@ -249,8 +245,12 @@ bb.a:
   %i.be = load i32, ptr %0, align 4, !tbaa !17
   %i.bf = sext i32 %i.be to i64
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 6116
-  %i.bh = select i1 %10, float %8, float %i.ai
-  %i.bi = select i1 %i.af, float %9, float %i.ag
+  %7 = extractelement <2 x float> %i.z, i64 1
+  %8 = tail call float @llvm.fmuladd.f32(float %i.d, float %1, float %i.g)
+  %9 = tail call float @llvm.fmuladd.f32(float %i.i, float %3, float %8) ; 2 uses
+  %10 = fcmp ogt float %9, %i.ai
+  %i.bh = select i1 %10, float %9, float %i.ai
+  %i.bi = select i1 %i.af, float %7, float %i.ag
   %i.bj = load <2 x float>, ptr %i.an, align 4, !tbaa !11 ; 2 uses
   %i.bk = insertelement <2 x float> poison, float %i.bi, i64 0
   %i.bl = insertelement <2 x float> %i.bk, float %i.bh, i64 1 ; 2 uses
