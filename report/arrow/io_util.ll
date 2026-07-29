@@ -203,7 +203,7 @@ bb.a:
   %5 = alloca %"class.arrow::Status", align 8     ; 7 uses
   %6 = alloca %"class.arrow::Status", align 8     ; 5 uses
   %7 = alloca %"class.arrow::Result.10", align 8  ; 18 uses
-  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
+  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %9 = alloca %"class.arrow::internal::PlatformFilename", align 8 ; 7 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #36
@@ -316,7 +316,8 @@ bb.j:                                             ; preds = %bb.h
   call void @llvm.experimental.noalias.scope.decl(metadata !127)
   call void @llvm.experimental.noalias.scope.decl(metadata !130)
   %i.w = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 10 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 11 uses
+  store ptr %i.x, ptr %8, align 8, !tbaa !7, !alias.scope !133
   %i.y = load ptr, ptr %i.w, align 8, !tbaa !12, !noalias !133 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 6 uses
   %i.aa = icmp eq ptr %i.y, %i.z
@@ -602,7 +603,7 @@ bb.a:
   %5 = alloca %"struct.arrow::internal::PlatformFilename::Impl", align 8 ; 8 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %7 = alloca %"struct.arrow::internal::PlatformFilename::Impl", align 8 ; 9 uses
-  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
+  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !47     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -784,7 +785,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i: ; pre
   %i.bi = load ptr, ptr %9, align 8, !tbaa !12, !noalias !147
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.az
   store i8 0, ptr %i.bj, align 1, !tbaa !15, !noalias !147
-  %i.bk = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 10 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 11 uses
+  store ptr %i.bk, ptr %8, align 8, !tbaa !7, !alias.scope !147
   %i.bl = load ptr, ptr %9, align 8, !tbaa !12, !noalias !147 ; 3 uses
   %i.bm = icmp eq ptr %i.bl, %i.bb
   br i1 %i.bm, label %.thread, label %bb.n

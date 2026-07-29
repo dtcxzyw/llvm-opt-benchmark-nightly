@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE17_M_realloc_insertIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERiEEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 4 dereferenceable(4) %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
+  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !137  ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !136    ; 5 uses
@@ -238,7 +238,8 @@ _ZNSt12_Vector_baseIN6google8protobuf2io7Printer3SubESaIS4_EE11_M_allocateEm.exi
   %i.q = phi ptr [ %i.p, %bb.c ], [ null, %_ZNKSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE12_M_check_lenEmPKc.exit ] ; 6 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.n ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 10 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 11 uses
+  store ptr %i.s, ptr %4, align 8, !tbaa !42
   %i.t = load ptr, ptr %2, align 8, !tbaa !45     ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
   %i.v = icmp eq ptr %i.t, %i.u
@@ -248,7 +249,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread: ; pred
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.x = load i64, ptr %i.w, align 8, !tbaa !48   ; 4 uses
   %i.y = icmp ult i64 %i.x, 16
-  tail call void @llvm.assume(i1 %i.y)
+  call void @llvm.assume(i1 %i.y)
   %i.z = add nuw nsw i64 %i.x, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.s, ptr noundef nonnull align 8 dereferenceable(1) %i.u, i64 %i.z, i1 false)
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -651,7 +652,7 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE17_M_realloc_insertIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiEEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 4 dereferenceable(4) %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
+  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !137  ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !136    ; 5 uses
@@ -686,7 +687,8 @@ _ZNSt12_Vector_baseIN6google8protobuf2io7Printer3SubESaIS4_EE11_M_allocateEm.exi
   %i.q = phi ptr [ %i.p, %bb.c ], [ null, %_ZNKSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE12_M_check_lenEmPKc.exit ] ; 6 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.n ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 10 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 11 uses
+  store ptr %i.s, ptr %4, align 8, !tbaa !42
   %i.t = load ptr, ptr %2, align 8, !tbaa !45     ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
   %i.v = icmp eq ptr %i.t, %i.u
@@ -696,7 +698,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread: ; pred
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.x = load i64, ptr %i.w, align 8, !tbaa !48   ; 4 uses
   %i.y = icmp ult i64 %i.x, 16
-  tail call void @llvm.assume(i1 %i.y)
+  call void @llvm.assume(i1 %i.y)
   %i.z = add nuw nsw i64 %i.x, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.s, ptr noundef nonnull align 8 dereferenceable(1) %i.u, i64 %i.z, i1 false)
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
