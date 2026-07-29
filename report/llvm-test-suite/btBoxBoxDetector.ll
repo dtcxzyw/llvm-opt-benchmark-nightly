@@ -77,26 +77,27 @@ bb.b:                                             ; preds = %bb.a
   %i.ae = tail call float @llvm.fmuladd.f32(float %i.b, float %i.x, float %i.ad)
   %i.af = tail call noundef float @llvm.fmuladd.f32(float %i.l, float %i.u, float %i.ae)
   %i.ag = fmul float %i.d, %i.ac
-  %6 = tail call float @llvm.fmuladd.f32(float %i.a, float %i.x, float %i.ag)
-  %7 = tail call noundef float @llvm.fmuladd.f32(float %i.j, float %i.u, float %6)
-  %8 = fneg float %i.af
-  %9 = fdiv float 1.000000e+00, %i.o
+  %6 = fdiv float 1.000000e+00, %i.o
+  %7 = fneg float %i.af                           ; 2 uses
+  %8 = tail call float @llvm.fmuladd.f32(float %i.a, float %i.x, float %i.ag)
+  %9 = tail call noundef float @llvm.fmuladd.f32(float %i.j, float %i.u, float %8) ; 2 uses
   %i.ah = insertelement <2 x float> poison, float %i.m, i64 0
   %i.ai = shufflevector <2 x float> %i.ah, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.aj = insertelement <2 x float> poison, float %8, i64 0
-  %i.ak = insertelement <2 x float> %i.aj, float %7, i64 1 ; 2 uses
-  %10 = shufflevector <2 x float> %i.ak, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.al = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ai, <2 x float> %i.ak, <2 x float> %10)
-  %i.am = insertelement <2 x float> poison, float %9, i64 0
+  %10 = insertelement <2 x float> poison, float %9, i64 0
+  %i.aj = insertelement <2 x float> %10, float %7, i64 1
+  %i.ak = insertelement <2 x float> poison, float %7, i64 0
+  %11 = insertelement <2 x float> %i.ak, float %9, i64 1
+  %i.al = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ai, <2 x float> %i.aj, <2 x float> %11)
+  %i.am = insertelement <2 x float> poison, float %6, i64 0
   %i.an = shufflevector <2 x float> %i.am, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ao = fmul <2 x float> %i.an, %i.al
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ap = phi <2 x float> [ %i.ao, %bb.b ], [ zeroinitializer, %bb.a ] ; 2 uses
-  %i.aq = extractelement <2 x float> %i.ap, i64 0
+  %i.aq = extractelement <2 x float> %i.ap, i64 1
   store float %i.aq, ptr %4, align 4, !tbaa !16
-  %i.ar = extractelement <2 x float> %i.ap, i64 1
+  %i.ar = extractelement <2 x float> %i.ap, i64 0
   store float %i.ar, ptr %5, align 4, !tbaa !16
   ret void
 }

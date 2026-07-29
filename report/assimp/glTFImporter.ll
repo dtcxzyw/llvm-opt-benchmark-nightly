@@ -204,21 +204,22 @@ bb.k:                                             ; preds = %bb.j
   %i.fe = getelementptr inbounds nuw i8, ptr %i.g, i64 216
   %i.ff = load <4 x float>, ptr %i.fb, align 4    ; 7 uses
   %i.fg = load float, ptr %i.fe, align 8          ; 2 uses
+  %4 = shufflevector <4 x float> %i.ff, <4 x float> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
+  %5 = insertelement <2 x float> %4, float 0.000000e+00, i64 1
+  %6 = insertelement <2 x float> %4, float -0.000000e+00, i64 1
   %i.fh = fneg float %i.fg                        ; 2 uses
   %i.fi = shufflevector <4 x float> %i.ff, <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, <4 x i32> <i32 4, i32 2, i32 1, i32 2>
   %i.fj = shufflevector <4 x float> %i.ff, <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, <4 x i32> <i32 4, i32 poison, i32 3, i32 3>
   %i.fk = insertelement <4 x float> %i.fj, float %i.fh, i64 1
   %i.fl = fmul <4 x float> %i.fi, %i.fk
-  %4 = shufflevector <4 x float> %i.ff, <4 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.fm = shufflevector <4 x float> %i.ff, <4 x float> <float -2.000000e+00, float poison, float poison, float poison>, <4 x i32> <i32 4, i32 1, i32 2, i32 1>
   %i.fn = extractelement <4 x float> %i.ff, i64 0 ; 4 uses
-  %i.fo = load <2 x float>, ptr %i.fc, align 8    ; 5 uses
+  %i.fo = load <2 x float>, ptr %i.fc, align 8    ; 4 uses
   %i.fp = load float, ptr %i.fd, align 4          ; 2 uses
   %i.fq = fmul float %i.fp, %i.fp                 ; 2 uses
-  %5 = extractelement <2 x float> %i.fo, i64 0    ; 2 uses
-  %6 = tail call float @llvm.fmuladd.f32(float %5, float %5, float %i.fq)
-  %7 = insertelement <2 x float> %4, float %6, i64 0
-  %i.fr = shufflevector <2 x float> %7, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %7 = insertelement <2 x float> %4, float %i.fq, i64 0
+  %8 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %5, <2 x float> %6, <2 x float> %7)
+  %i.fr = shufflevector <2 x float> %8, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
   %i.fs = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.fr, <4 x float> %i.fm, <4 x float> %i.fl) ; 4 uses
   %i.ft = extractelement <4 x float> %i.fs, i64 1
   %i.fu = fmul float %i.ft, 2.000000e+00
@@ -620,6 +621,9 @@ declare i32 @llvm.umin.i32(i32, i32) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #21
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

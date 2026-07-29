@@ -203,35 +203,32 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 define dso_local void @_ZNK18btMultiSphereShape21calculateLocalInertiaEfR9btVector3(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(168) %0, float noundef %1, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(16) initializes((0, 16)) %2) unnamed_addr #6 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %.sroa.531.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %.sroa.531.0.copyload = load float, ptr %.sroa.531.0..sroa_idx, align 8
+  %.sroa.531.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %.sroa.528.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %.sroa.528.0.copyload = load float, ptr %.sroa.528.0..sroa_idx, align 8
-  %3 = fsub float %.sroa.528.0.copyload, %.sroa.531.0.copyload
-  %4 = fmul float %3, 5.000000e-01
-  %5 = fmul float %4, 2.000000e+00                ; 2 uses
-  %6 = fmul float %5, %5
-  %i.c = load <2 x float>, ptr %i.a, align 8
-  %i.d = load <2 x float>, ptr %i.b, align 8
-  %i.e = fsub <2 x float> %i.d, %i.c
-  %7 = fmul <2 x float> %i.e, splat (float 5.000000e-01)
-  %8 = fmul <2 x float> %7, splat (float 2.000000e+00) ; 4 uses
-  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %10 = fdiv float %1, 1.200000e+01
-  %11 = insertelement <2 x float> poison, float %6, i64 0
-  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
-  %13 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> %9, <2 x float> %12)
-  %14 = fmul <2 x float> %8, %8
-  %15 = extractelement <2 x float> %14, i64 1
-  %16 = extractelement <2 x float> %8, i64 0      ; 2 uses
-  %17 = tail call float @llvm.fmuladd.f32(float %16, float %16, float %15)
-  %18 = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %10, i64 0
+  %.sroa.528.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 84
+  %.sroa.528.0.copyload = load float, ptr %i.a, align 8
+  %.sroa.027.0.copyload = load float, ptr %i.b, align 8
+  %3 = fsub float %.sroa.027.0.copyload, %.sroa.528.0.copyload
+  %i.c = load <2 x float>, ptr %.sroa.531.0..sroa_idx, align 4
+  %i.d = load <2 x float>, ptr %.sroa.528.0..sroa_idx, align 4
+  %i.e = fsub <2 x float> %i.d, %i.c              ; 2 uses
+  %4 = shufflevector <2 x float> %i.e, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %5 = insertelement <4 x float> %4, float 1.000000e+00, i64 3
+  %6 = insertelement <4 x float> %5, float %3, i64 1
+  %7 = fmul <4 x float> %6, <float 5.000000e-01, float 5.000000e-01, float poison, float 1.000000e+00>
+  %8 = shufflevector <4 x float> %7, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3> ; 2 uses
+  %9 = shufflevector <2 x float> %i.e, <2 x float> poison, <4 x i32> <i32 1, i32 poison, i32 0, i32 poison>
+  %10 = shufflevector <4 x float> %9, <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, <4 x i32> <i32 0, i32 0, i32 2, i32 7>
+  %11 = fmul <4 x float> %10, <float 5.000000e-01, float 5.000000e-01, float 5.000000e-01, float 1.000000e+00>
+  %12 = fmul <4 x float> %8, <float 2.000000e+00, float 2.000000e+00, float 2.000000e+00, float 0.000000e+00>
+  %13 = fmul <4 x float> %8, <float 2.000000e+00, float 2.000000e+00, float 2.000000e+00, float -0.000000e+00>
+  %14 = fmul <4 x float> %11, <float 2.000000e+00, float 2.000000e+00, float 2.000000e+00, float 1.000000e+00> ; 2 uses
+  %15 = fdiv float %1, 1.200000e+01
+  %16 = fmul <4 x float> %14, %14
+  %17 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %12, <4 x float> %13, <4 x float> %16)
+  %18 = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %15, i64 0
   %19 = shufflevector <4 x float> %18, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %20 = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %17, i64 2
-  %21 = shufflevector <2 x float> %13, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %22 = shufflevector <4 x float> %21, <4 x float> %20, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.f = fmul <4 x float> %19, %22
+  %i.f = fmul <4 x float> %19, %17
   store <4 x float> %i.f, ptr %2, align 4, !tbaa !32
   ret void
 }
@@ -473,7 +470,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare void @llvm.assume(i1 noundef) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #7
+declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #7
 
 attributes #0 = { uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

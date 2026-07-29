@@ -204,8 +204,6 @@ define internal void @_ZZNK25btConvexTriangleMeshShape31calculatePrincipalAxisTr
   %i.br = fmul float %i.bq, 5.000000e-02
   %i.bs = tail call float @llvm.fmuladd.f32(float %i.bk, float 1.000000e-01, float %i.br)
   %i.bt = fmul float %i.at, %i.av
-  %4 = tail call float @llvm.fmuladd.f32(float %i.az, float %i.bb, float %i.bt)
-  %5 = tail call float @llvm.fmuladd.f32(float %i.aq, float %i.ax, float %4)
   %i.bu = fmul float %i.bb, %i.at
   %i.bv = tail call float @llvm.fmuladd.f32(float %i.az, float %i.av, float %i.bu)
   %i.bw = tail call float @llvm.fmuladd.f32(float %i.az, float %i.ax, float %i.bv)
@@ -213,7 +211,6 @@ define internal void @_ZZNK25btConvexTriangleMeshShape31calculatePrincipalAxisTr
   %i.by = tail call float @llvm.fmuladd.f32(float %i.at, float %i.ax, float %i.bx)
   %i.bz = tail call float @llvm.fmuladd.f32(float %i.av, float %i.aq, float %i.by)
   %i.ca = fmul float %i.bz, 5.000000e-02
-  %6 = tail call float @llvm.fmuladd.f32(float %5, float 1.000000e-01, float %i.ca)
   %i.cb = fmul float %i.at, %i.at
   %i.cc = tail call float @llvm.fmuladd.f32(float %i.az, float %i.az, float %i.cb)
   %i.cd = tail call float @llvm.fmuladd.f32(float %i.aq, float %i.aq, float %i.cc)
@@ -244,6 +241,8 @@ define internal void @_ZZNK25btConvexTriangleMeshShape31calculatePrincipalAxisTr
   %i.dc = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cu, <2 x float> splat (float 1.000000e-01), <2 x float> %i.db)
   %i.dd = fmul float %i.bh, f0xBE2AAAAB           ; 5 uses
   %i.de = fmul float %i.dd, %i.bs                 ; 2 uses
+  %4 = tail call float @llvm.fmuladd.f32(float %i.az, float %i.bb, float %i.bt)
+  %5 = tail call float @llvm.fmuladd.f32(float %i.aq, float %i.ax, float %4)
   %i.df = fmul float %i.dd, %i.cl                 ; 2 uses
   %i.dg = insertelement <2 x float> poison, float %i.dd, i64 0
   %i.dh = shufflevector <2 x float> %i.dg, <2 x float> poison, <2 x i32> zeroinitializer
@@ -252,6 +251,7 @@ define internal void @_ZZNK25btConvexTriangleMeshShape31calculatePrincipalAxisTr
   %i.dk = fneg float %i.de
   %i.dl = fneg float %i.df
   %i.dm = fneg float %i.dj
+  %6 = tail call float @llvm.fmuladd.f32(float %5, float 1.000000e-01, float %i.ca)
   %i.dn = fsub float %i.dm, %i.df
   %i.do = fsub float %i.dk, %i.dj
   %i.dp = fmul float %i.dd, %6                    ; 2 uses
