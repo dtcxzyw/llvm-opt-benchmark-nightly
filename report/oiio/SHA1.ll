@@ -203,13 +203,13 @@ bb.a:
 define hidden void @_ZN11OpenImageIO4v3_15CSHA19TransformEPjPKh(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(200) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #9 align 2 {
 bb.a:
   %i.a = load i32, ptr %1, align 4, !tbaa !3      ; 5 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !3    ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load i32, ptr %i.d, align 4, !tbaa !3    ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.g = load i32, ptr %i.f, align 4, !tbaa !3    ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.i = load i32, ptr %i.h, align 4, !tbaa !3
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 81 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !7
@@ -612,10 +612,8 @@ begin_hunk_1_@_ZN11OpenImageIO4v3_15CSHA19TransformEPjPKh:bb.a
   %i.bdx = tail call i32 @llvm.fshl.i32(i32 %i.bdw, i32 %i.bdw, i32 1) ; 2 uses
   store i32 %i.bdx, ptr %i.bdu, align 4, !tbaa !23
   %i.bdy = tail call i32 @llvm.fshl.i32(i32 %i.bdh, i32 %i.bdh, i32 5)
-  %3 = add i32 %i.bbt, -899497514
-  %4 = add i32 %3, %i.bdk
-  %i.bdz = add i32 %4, %i.bdy
-  %i.bea = add i32 %i.bdz, %i.bdx                 ; 5 uses
+  %i.bdz = add i32 %i.bbt, -899497514
+  %i.bea = add i32 %i.bdz, %i.bdk
   %i.beb = tail call i32 @llvm.fshl.i32(i32 %i.bcm, i32 %i.bcm, i32 30) ; 3 uses
   %i.bec = xor i32 %i.beb, %i.bdi
   %i.bed = xor i32 %i.bec, %i.bdh
@@ -633,79 +631,81 @@ begin_hunk_1_@_ZN11OpenImageIO4v3_15CSHA19TransformEPjPKh:bb.a
   %i.bep = xor i32 %i.bem, %i.beo                 ; 2 uses
   %i.beq = tail call i32 @llvm.fshl.i32(i32 %i.bep, i32 %i.bep, i32 1) ; 2 uses
   store i32 %i.beq, ptr %i.ben, align 4, !tbaa !23
-  %5 = tail call i32 @llvm.fshl.i32(i32 %i.bea, i32 %i.bea, i32 5)
-  %i.ber = add i32 %i.bcn, -899497514
-  %6 = add i32 %i.ber, %i.bed
-  %7 = add i32 %6, %5
-  %8 = add i32 %7, %i.beq                         ; 5 uses
-  %9 = tail call i32 @llvm.fshl.i32(i32 %i.bdh, i32 %i.bdh, i32 30) ; 3 uses
-  %10 = xor i32 %9, %i.beb
-  %11 = xor i32 %10, %i.bea
-  %12 = load ptr, ptr %i.j, align 8, !tbaa !7     ; 4 uses
-  %i.bes = getelementptr inbounds nuw i8, ptr %12, i64 36
+  %3 = add i32 %i.bcn, -899497514
+  %i.ber = add i32 %3, %i.bed
+  %4 = tail call i32 @llvm.fshl.i32(i32 %i.bdh, i32 %i.bdh, i32 30) ; 3 uses
+  %5 = load ptr, ptr %i.j, align 8, !tbaa !7      ; 4 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 36
+  %7 = load i32, ptr %6, align 4, !tbaa !23
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %9 = load i32, ptr %8, align 4, !tbaa !23
+  %10 = xor i32 %9, %7
+  %i.bes = getelementptr inbounds nuw i8, ptr %5, i64 56
   %i.bet = load i32, ptr %i.bes, align 4, !tbaa !23
-  %i.beu = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %11 = xor i32 %10, %i.bet
+  %i.beu = getelementptr inbounds nuw i8, ptr %5, i64 48 ; 2 uses
   %i.bev = load i32, ptr %i.beu, align 4, !tbaa !23
-  %i.bew = xor i32 %i.bev, %i.bet
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 56
-  %14 = load i32, ptr %13, align 4, !tbaa !23
-  %15 = xor i32 %i.bew, %14
-  %i.bex = getelementptr inbounds nuw i8, ptr %12, i64 48 ; 2 uses
+  %i.bew = xor i32 %11, %i.bev                    ; 2 uses
+  %12 = tail call i32 @llvm.fshl.i32(i32 %i.bew, i32 %i.bew, i32 1) ; 2 uses
+  store i32 %12, ptr %i.beu, align 4, !tbaa !23
+  %13 = load ptr, ptr %i.j, align 8, !tbaa !7     ; 4 uses
+  %i.bex = getelementptr inbounds nuw i8, ptr %13, i64 40
   %i.bey = load i32, ptr %i.bex, align 4, !tbaa !23
-  %16 = xor i32 %15, %i.bey                       ; 2 uses
-  %17 = tail call i32 @llvm.fshl.i32(i32 %16, i32 %16, i32 1) ; 2 uses
-  store i32 %17, ptr %i.bex, align 4, !tbaa !23
-  %18 = tail call i32 @llvm.fshl.i32(i32 %8, i32 %8, i32 5)
-  %19 = add i32 %i.bdi, -899497514
-  %20 = add i32 %19, %11
-  %21 = add i32 %20, %18
-  %22 = add i32 %21, %17                          ; 5 uses
-  %i.bez = tail call i32 @llvm.fshl.i32(i32 %i.bea, i32 %i.bea, i32 30) ; 3 uses
-  %23 = xor i32 %i.bez, %9
-  %24 = xor i32 %23, %8
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 20
+  %15 = load i32, ptr %14, align 4, !tbaa !23
+  %16 = xor i32 %15, %i.bey
+  %17 = getelementptr inbounds nuw i8, ptr %13, i64 60
+  %18 = load i32, ptr %17, align 4, !tbaa !23
+  %19 = xor i32 %16, %18
+  %20 = getelementptr inbounds nuw i8, ptr %13, i64 52 ; 2 uses
+  %21 = load i32, ptr %20, align 4, !tbaa !23
+  %22 = xor i32 %19, %21                          ; 2 uses
+  %i.bez = tail call i32 @llvm.fshl.i32(i32 %22, i32 %22, i32 1) ; 2 uses
+  store i32 %i.bez, ptr %20, align 4, !tbaa !23
+  %23 = add i32 %i.beb, -899497514
   %i.bfa = load ptr, ptr %i.j, align 8, !tbaa !7  ; 4 uses
-  %i.bfb = getelementptr inbounds nuw i8, ptr %i.bfa, i64 40
+  %i.bfb = getelementptr inbounds nuw i8, ptr %i.bfa, i64 44
   %i.bfc = load i32, ptr %i.bfb, align 4, !tbaa !23
-  %i.bfd = getelementptr inbounds nuw i8, ptr %i.bfa, i64 20
+  %i.bfd = getelementptr inbounds nuw i8, ptr %i.bfa, i64 24
   %i.bfe = load i32, ptr %i.bfd, align 4, !tbaa !23
   %i.bff = xor i32 %i.bfe, %i.bfc
-  %25 = getelementptr inbounds nuw i8, ptr %i.bfa, i64 60
-  %i.bfg = load i32, ptr %25, align 4, !tbaa !23
+  %i.bfg = load i32, ptr %i.bfa, align 4, !tbaa !23
   %i.bfh = xor i32 %i.bff, %i.bfg
-  %i.bfi = getelementptr inbounds nuw i8, ptr %i.bfa, i64 52 ; 2 uses
+  %i.bfi = getelementptr inbounds nuw i8, ptr %i.bfa, i64 56 ; 2 uses
   %i.bfj = load i32, ptr %i.bfi, align 4, !tbaa !23
-  %26 = xor i32 %i.bfh, %i.bfj                    ; 2 uses
-  %i.bfk = tail call i32 @llvm.fshl.i32(i32 %26, i32 %26, i32 1) ; 2 uses
-  store i32 %i.bfk, ptr %i.bfi, align 4, !tbaa !23
-  %i.bfl = tail call i32 @llvm.fshl.i32(i32 %22, i32 %22, i32 5)
-  %i.bfm = add i32 %i.beb, -899497514
-  %i.bfn = add i32 %i.bfm, %24
+  %24 = add i32 %i.bea, %i.bdy
+  %25 = add i32 %24, %i.bdx                       ; 5 uses
+  %i.bfk = tail call i32 @llvm.fshl.i32(i32 %25, i32 %25, i32 5)
+  %26 = add i32 %i.ber, %i.bfk
+  %27 = add i32 %26, %i.beq                       ; 5 uses
+  %28 = xor i32 %4, %i.beb
+  %29 = xor i32 %28, %25
+  %i.bfl = tail call i32 @llvm.fshl.i32(i32 %27, i32 %27, i32 5)
+  %i.bfm = add i32 %i.bdi, -899497514
+  %i.bfn = add i32 %i.bfm, %29
   %i.bfo = add i32 %i.bfn, %i.bfl
-  %i.bfp = add i32 %i.bfo, %i.bfk                 ; 5 uses
-  %i.bfq = tail call i32 @llvm.fshl.i32(i32 %8, i32 %8, i32 30) ; 3 uses
-  %i.bfr = xor i32 %i.bfq, %i.bez
-  %i.bfs = xor i32 %i.bfr, %22
-  %27 = load ptr, ptr %i.j, align 8, !tbaa !7     ; 4 uses
-  %28 = getelementptr inbounds nuw i8, ptr %27, i64 44
-  %29 = load i32, ptr %28, align 4, !tbaa !23
-  %30 = getelementptr inbounds nuw i8, ptr %27, i64 24
-  %31 = load i32, ptr %30, align 4, !tbaa !23
-  %i.bft = xor i32 %31, %29
-  %32 = load i32, ptr %27, align 4, !tbaa !23
-  %33 = xor i32 %i.bft, %32
-  %34 = getelementptr inbounds nuw i8, ptr %27, i64 56 ; 2 uses
-  %35 = load i32, ptr %34, align 4, !tbaa !23
-  %i.bfu = xor i32 %33, %35                       ; 2 uses
-  %36 = tail call i32 @llvm.fshl.i32(i32 %i.bfu, i32 %i.bfu, i32 1) ; 2 uses
-  store i32 %36, ptr %34, align 4, !tbaa !23
-  %i.bfv = tail call i32 @llvm.fshl.i32(i32 %i.bfp, i32 %i.bfp, i32 5)
-  %37 = add i32 %9, -899497514
-  %i.bfw = add i32 %37, %i.bfs
-  %i.bfx = add i32 %i.bfw, %i.bfv
-  %i.bfy = add i32 %i.bfx, %36                    ; 3 uses
-  %38 = tail call i32 @llvm.fshl.i32(i32 %22, i32 %22, i32 30) ; 2 uses
-  %i.bfz = xor i32 %38, %i.bfq
-  %i.bga = xor i32 %i.bfz, %i.bfp
+  %i.bfp = add i32 %i.bfo, %12                    ; 5 uses
+  %i.bfq = tail call i32 @llvm.fshl.i32(i32 %25, i32 %25, i32 30) ; 3 uses
+  %i.bfr = xor i32 %i.bfq, %4
+  %i.bfs = xor i32 %i.bfr, %27
+  %30 = tail call i32 @llvm.fshl.i32(i32 %i.bfp, i32 %i.bfp, i32 5)
+  %31 = add i32 %23, %i.bfs
+  %32 = add i32 %31, %30
+  %33 = add i32 %32, %i.bez                       ; 5 uses
+  %i.bft = xor i32 %i.bfh, %i.bfj                 ; 2 uses
+  %34 = tail call i32 @llvm.fshl.i32(i32 %27, i32 %27, i32 30) ; 3 uses
+  %35 = tail call i32 @llvm.fshl.i32(i32 %i.bfp, i32 %i.bfp, i32 30) ; 2 uses
+  %36 = tail call i32 @llvm.fshl.i32(i32 %33, i32 %33, i32 30)
+  %37 = tail call i32 @llvm.fshl.i32(i32 %i.bft, i32 %i.bft, i32 1) ; 2 uses
+  %i.bfu = xor i32 %34, %i.bfq
+  %38 = xor i32 %i.bfu, %i.bfp
+  store i32 %37, ptr %i.bfi, align 4, !tbaa !23
+  %i.bfv = tail call i32 @llvm.fshl.i32(i32 %33, i32 %33, i32 5)
+  %i.bfw = add i32 %4, -899497514
+  %i.bfx = add i32 %i.bfw, %38
+  %i.bfy = add i32 %i.bfx, %i.bfv
+  %i.bfz = xor i32 %35, %34
+  %i.bga = xor i32 %i.bfz, %33
   %i.bgb = load ptr, ptr %i.j, align 8, !tbaa !7  ; 4 uses
   %i.bgc = getelementptr inbounds nuw i8, ptr %i.bgb, i64 48
   %i.bgd = load i32, ptr %i.bgc, align 4, !tbaa !23
@@ -720,22 +720,22 @@ begin_hunk_1_@_ZN11OpenImageIO4v3_15CSHA19TransformEPjPKh:bb.a
   %i.bgm = xor i32 %i.bgj, %i.bgl                 ; 2 uses
   %i.bgn = tail call i32 @llvm.fshl.i32(i32 %i.bgm, i32 %i.bgm, i32 1) ; 2 uses
   store i32 %i.bgn, ptr %i.bgk, align 4, !tbaa !23
-  %39 = tail call i32 @llvm.fshl.i32(i32 %i.bfy, i32 %i.bfy, i32 5)
-  %i.bgo = tail call i32 @llvm.fshl.i32(i32 %i.bfp, i32 %i.bfp, i32 30)
-  %40 = add i32 %i.bez, -899497514
-  %i.bgp = add i32 %40, %i.bga
-  %i.bgq = add i32 %i.bgp, %39
-  %i.bgr = add i32 %i.bgq, %i.bgn
-  %41 = load <4 x i32>, ptr %1, align 4, !tbaa !3
-  %42 = insertelement <4 x i32> poison, i32 %i.bgr, i64 0
-  %43 = insertelement <4 x i32> %42, i32 %i.bfy, i64 1
-  %44 = insertelement <4 x i32> %43, i32 %i.bgo, i64 2
-  %i.bgs = insertelement <4 x i32> %44, i32 %38, i64 3
-  %45 = add <4 x i32> %i.bgs, %41
-  store <4 x i32> %45, ptr %1, align 4, !tbaa !3
-  %46 = load i32, ptr %i.h, align 4, !tbaa !3
-  %47 = add i32 %46, %i.bfq
-  store i32 %47, ptr %i.h, align 4, !tbaa !3
+  %39 = add i32 %i.bfy, %37                       ; 3 uses
+  %i.bgo = tail call i32 @llvm.fshl.i32(i32 %39, i32 %39, i32 5)
+  %40 = load i32, ptr %1, align 4, !tbaa !3
+  %i.bgp = add i32 %i.bfq, -899497514
+  %i.bgq = add i32 %i.bgp, %i.bga
+  %i.bgr = add i32 %i.bgq, %i.bgo
+  %41 = add i32 %i.bgr, %i.bgn
+  %42 = add i32 %41, %40
+  store i32 %42, ptr %1, align 4, !tbaa !3
+  %43 = load <4 x i32>, ptr %i.b, align 4, !tbaa !3
+  %i.bgs = insertelement <4 x i32> poison, i32 %39, i64 0
+  %44 = insertelement <4 x i32> %i.bgs, i32 %36, i64 1
+  %45 = insertelement <4 x i32> %44, i32 %35, i64 2
+  %46 = insertelement <4 x i32> %45, i32 %34, i64 3
+  %47 = add <4 x i32> %43, %46
+  store <4 x i32> %47, ptr %i.b, align 4, !tbaa !3
   ret void
 }
 
