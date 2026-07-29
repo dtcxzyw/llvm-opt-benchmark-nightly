@@ -204,7 +204,6 @@ _ZSt13move_backwardIPjS0_ET0_T_S2_S1_.exit.i27.i.i.i.i: ; preds = %.lr.ph.i.i31.
 .lr.ph68.i:                                       ; preds = %_ZSt13move_backwardIPjS0_ET0_T_S2_S1_.exit.i27.i.i.i.i, %"_ZSt25__unguarded_linear_insertIPjN9__gnu_cxx5__ops14_Val_comp_iterIZN6duckdbL19SortSelectionVectorERNS4_15SelectionVectorEmPlE3$_0EEEvT_T0_.exit.i.i.i.i.i"
   %i.dm = load ptr, ptr %13, align 8, !tbaa !152  ; 4 uses
   %.not.i55.i = icmp eq ptr %i.dm, null
-  %umax.i = call i64 @llvm.umax.i64(i64 range(i64 1, 0) %i.h, i64 2)
   br label %bb.al
 
 _ZN6duckdb15SelectionVectorC2Em.exit.i:           ; preds = %_ZN6duckdb15SelectionVectorC2Em.exit.i.prol.loopexit, %_ZN6duckdb15SelectionVectorC2Em.exit.i
@@ -398,7 +397,7 @@ bb.an:                                            ; preds = %_ZNK6duckdb15Select
 bb.ao:                                            ; preds = %bb.an, %_ZNK6duckdb15SelectionVector9get_indexEm.exit58.i
   %.136.i = phi i64 [ %i.gh, %bb.an ], [ %.03566.i, %_ZNK6duckdb15SelectionVector9get_indexEm.exit58.i ] ; 2 uses
   %i.gk = add nuw i64 %.03467.i, 1                ; 2 uses
-  %exitcond77.not.i = icmp eq i64 %i.gk, %umax.i
+  %exitcond77.not.i = icmp eq i64 %i.gk, %i.h
   br i1 %exitcond77.not.i, label %._crit_edge.i, label %bb.al, !llvm.loop !1146
 
 .loopexit295:                                     ; preds = %_ZN6duckdb15SelectionVectorD2Ev.exit.i, %bb.j

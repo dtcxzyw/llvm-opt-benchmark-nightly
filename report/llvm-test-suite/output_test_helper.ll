@@ -204,27 +204,23 @@ _ZNSt6vectorIPcSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i: ; preds = %bb.a
   br label %_ZNSt6vectorIPcSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit
 
 _ZNSt12_Vector_baseIPcSaIS0_EE11_M_allocateEm.exit.i.i: ; preds = %_ZNSt6vectorIPcSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i
-  %i.g = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx) #36 ; 6 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx ; 3 uses
+  %i.g = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx) #36 ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx ; 2 uses
   %i.i = icmp samesign ugt i64 %.idx, 8
-  br i1 %i.i, label %bb.b, label %8, !prof !228
+  br i1 %i.i, label %bb.b, label %bb.c, !prof !228
 
 bb.b:                                             ; preds = %_ZNSt12_Vector_baseIPcSaIS0_EE11_M_allocateEm.exit.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.g, ptr align 8 %2, i64 %.idx, i1 false)
   br label %_ZNSt6vectorIPcSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit
 
-8:                                                ; preds = %_ZNSt12_Vector_baseIPcSaIS0_EE11_M_allocateEm.exit.i.i
-  %9 = icmp eq i32 %1, 1
-  br i1 %9, label %bb.c, label %_ZNSt6vectorIPcSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit
-
-bb.c:                                             ; preds = %8
+bb.c:                                             ; preds = %_ZNSt12_Vector_baseIPcSaIS0_EE11_M_allocateEm.exit.i.i
   %i.j = load ptr, ptr %2, align 8, !tbaa !229
   store ptr %i.j, ptr %i.g, align 8, !tbaa !229
   br label %_ZNSt6vectorIPcSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit
 
-_ZNSt6vectorIPcSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit: ; preds = %bb.c, %8, %bb.b, %.thread.i.i
-  %.sroa.19.5 = phi ptr [ %i.f, %.thread.i.i ], [ %i.h, %bb.b ], [ %i.h, %bb.c ], [ %i.h, %8 ] ; 11 uses
-  %.sroa.055.5 = phi ptr [ null, %.thread.i.i ], [ %i.g, %bb.b ], [ %i.g, %bb.c ], [ %i.g, %8 ] ; 14 uses
+_ZNSt6vectorIPcSaIS0_EEC2IPS0_vEET_S5_RKS1_.exit: ; preds = %bb.c, %bb.b, %.thread.i.i
+  %.sroa.19.5 = phi ptr [ %i.f, %.thread.i.i ], [ %i.h, %bb.b ], [ %i.h, %bb.c ] ; 11 uses
+  %.sroa.055.5 = phi ptr [ null, %.thread.i.i ], [ %i.g, %bb.b ], [ %i.g, %bb.c ] ; 14 uses
   %i.k = ptrtoint ptr %.sroa.19.5 to i64
   %i.l = ptrtoint ptr %.sroa.055.5 to i64
   %i.m = sub i64 %i.k, %i.l                       ; 7 uses
