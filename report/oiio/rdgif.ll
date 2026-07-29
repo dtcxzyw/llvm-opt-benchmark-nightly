@@ -188,7 +188,7 @@ bb.o:                                             ; preds = %bb.n
   store i32 1023, ptr %i.bo, align 8, !tbaa !28
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !51
-  tail call void %i.bq(ptr noundef %0, i32 noundef 1) #4
+  tail call void %i.bq(ptr noundef nonnull %0, i32 noundef 1) #4
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.n, %bb.n, %bb.o

@@ -1,0 +1,148 @@
+diff --git a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+index 33b08a648d45f..3ab021684a4ce 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+@@ -103,7 +103,8 @@ cl::opt<bool> RequireAndPreserveDomTree(
+ 
+     cl::desc(
+         "Temporary development switch used to gradually uplift SimplifyCFG "
+-        "into preserving DomTree,"));
++        "into preserving DomTree,"),
++    cl::init(true));
+ 
+ // Chosen as 2 so as to be cheap, but still to have enough power to fold
+ // a select, so the "clamp" idiom (of a min followed by a max) will be caught.
+diff --git a/llvm/test/CodeGen/AArch64/O3-pipeline.ll b/llvm/test/CodeGen/AArch64/O3-pipeline.ll
+index 9635d8bcee02c..f3d67ad1511c7 100644
+--- a/llvm/test/CodeGen/AArch64/O3-pipeline.ll
++++ b/llvm/test/CodeGen/AArch64/O3-pipeline.ll
+@@ -28,8 +28,8 @@
+ ; CHECK-NEXT:     FunctionPass Manager
+ ; CHECK-NEXT:       Expand IR instructions
+ ; CHECK-NEXT:       Expand Atomic instructions
+-; CHECK-NEXT:       Simplify the CFG
+ ; CHECK-NEXT:       Dominator Tree Construction
++; CHECK-NEXT:       Simplify the CFG
+ ; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Canonicalize natural loops
+ ; CHECK-NEXT:       Cycle Info Analysis
+diff --git a/llvm/test/CodeGen/AMDGPU/llc-pipeline.ll b/llvm/test/CodeGen/AMDGPU/llc-pipeline.ll
+index 4d68b98d6d590..824ecb352b8db 100644
+--- a/llvm/test/CodeGen/AMDGPU/llc-pipeline.ll
++++ b/llvm/test/CodeGen/AMDGPU/llc-pipeline.ll
+@@ -66,12 +66,11 @@
+ ; GCN-O0-NEXT:      Lower SwitchInst's to branches
+ ; GCN-O0-NEXT:      Lower invoke and unwind, for unwindless code generators
+ ; GCN-O0-NEXT:      Remove unreachable blocks from the CFG
+-; GCN-O0-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O0-NEXT:      Dominator Tree Construction
++; GCN-O0-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O0-NEXT:      Cycle Info Analysis
+ ; GCN-O0-NEXT:      Uniformity Analysis
+ ; GCN-O0-NEXT:      Unify divergent function exit nodes
+-; GCN-O0-NEXT:      Dominator Tree Construction
+ ; GCN-O0-NEXT:      Cycle Info Analysis
+ ; GCN-O0-NEXT:      Convert irreducible control-flow into natural loops
+ ; GCN-O0-NEXT:      Natural Loop Information
+@@ -282,7 +281,6 @@
+ ; GCN-O1-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O1-NEXT:      Uniformity Analysis
+ ; GCN-O1-NEXT:      Unify divergent function exit nodes
+-; GCN-O1-NEXT:      Dominator Tree Construction
+ ; GCN-O1-NEXT:      Cycle Info Analysis
+ ; GCN-O1-NEXT:      Convert irreducible control-flow into natural loops
+ ; GCN-O1-NEXT:      Natural Loop Information
+@@ -602,7 +600,6 @@
+ ; GCN-O1-OPTS-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O1-OPTS-NEXT:      Uniformity Analysis
+ ; GCN-O1-OPTS-NEXT:      Unify divergent function exit nodes
+-; GCN-O1-OPTS-NEXT:      Dominator Tree Construction
+ ; GCN-O1-OPTS-NEXT:      Cycle Info Analysis
+ ; GCN-O1-OPTS-NEXT:      Convert irreducible control-flow into natural loops
+ ; GCN-O1-OPTS-NEXT:      Natural Loop Information
+@@ -932,7 +929,6 @@
+ ; GCN-O2-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O2-NEXT:      Uniformity Analysis
+ ; GCN-O2-NEXT:      Unify divergent function exit nodes
+-; GCN-O2-NEXT:      Dominator Tree Construction
+ ; GCN-O2-NEXT:      Cycle Info Analysis
+ ; GCN-O2-NEXT:      Convert irreducible control-flow into natural loops
+ ; GCN-O2-NEXT:      Natural Loop Information
+@@ -1279,7 +1275,6 @@
+ ; GCN-O3-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O3-NEXT:      Uniformity Analysis
+ ; GCN-O3-NEXT:      Unify divergent function exit nodes
+-; GCN-O3-NEXT:      Dominator Tree Construction
+ ; GCN-O3-NEXT:      Cycle Info Analysis
+ ; GCN-O3-NEXT:      Convert irreducible control-flow into natural loops
+ ; GCN-O3-NEXT:      Natural Loop Information
+diff --git a/llvm/test/CodeGen/ARM/O3-pipeline.ll b/llvm/test/CodeGen/ARM/O3-pipeline.ll
+index ccb0349bff19b..5582d5a2398b8 100644
+--- a/llvm/test/CodeGen/ARM/O3-pipeline.ll
++++ b/llvm/test/CodeGen/ARM/O3-pipeline.ll
+@@ -12,8 +12,8 @@
+ ; CHECK-NEXT:    FunctionPass Manager
+ ; CHECK-NEXT:      Expand IR instructions
+ ; CHECK-NEXT:      Expand Atomic instructions
+-; CHECK-NEXT:      Simplify the CFG
+ ; CHECK-NEXT:      Dominator Tree Construction
++; CHECK-NEXT:      Simplify the CFG
+ ; CHECK-NEXT:      Natural Loop Information
+ ; CHECK-NEXT:      MVE gather/scatter lowering
+ ; CHECK-NEXT:      MVE lane interleaving
+diff --git a/llvm/test/Other/new-pm-defaults.ll b/llvm/test/Other/new-pm-defaults.ll
+index 3d6b2b4b702c6..c5f714a2b2787 100644
+--- a/llvm/test/Other/new-pm-defaults.ll
++++ b/llvm/test/Other/new-pm-defaults.ll
+@@ -97,8 +97,8 @@
+ ; CHECK-O-NEXT: Running pass: SimplifyCFGPass
+ ; CHECK-O-NEXT: Running analysis: TargetIRAnalysis
+ ; CHECK-O-NEXT: Running analysis: AssumptionAnalysis
+-; CHECK-O-NEXT: Running pass: SROAPass
+ ; CHECK-O-NEXT: Running analysis: DominatorTreeAnalysis
++; CHECK-O-NEXT: Running pass: SROAPass
+ ; CHECK-O-NEXT: Running pass: EarlyCSEPass
+ ; CHECK-O-NEXT: Running analysis: TargetLibraryAnalysis
+ ; CHECK-O3-NEXT: Running pass: CallSiteSplittingPass
+diff --git a/llvm/test/Other/new-pm-thinlto-prelink-defaults.ll b/llvm/test/Other/new-pm-thinlto-prelink-defaults.ll
+index 30f49dffaeeac..a5cf5ed52740f 100644
+--- a/llvm/test/Other/new-pm-thinlto-prelink-defaults.ll
++++ b/llvm/test/Other/new-pm-thinlto-prelink-defaults.ll
+@@ -63,8 +63,8 @@
+ ; CHECK-O-NEXT: Running pass: SimplifyCFGPass
+ ; CHECK-O-NEXT: Running analysis: TargetIRAnalysis
+ ; CHECK-O-NEXT: Running analysis: AssumptionAnalysis
+-; CHECK-O-NEXT: Running pass: SROAPass
+ ; CHECK-O-NEXT: Running analysis: DominatorTreeAnalysis
++; CHECK-O-NEXT: Running pass: SROAPass
+ ; CHECK-O-NEXT: Running pass: EarlyCSEPass
+ ; CHECK-O-NEXT: Running analysis: TargetLibraryAnalysis
+ ; CHECK-O3-NEXT: Running pass: CallSiteSplittingPass
+diff --git a/llvm/test/Other/new-pm-thinlto-prelink-pgo-defaults.ll b/llvm/test/Other/new-pm-thinlto-prelink-pgo-defaults.ll
+index 54adc37e41079..afc1563c934fd 100644
+--- a/llvm/test/Other/new-pm-thinlto-prelink-pgo-defaults.ll
++++ b/llvm/test/Other/new-pm-thinlto-prelink-pgo-defaults.ll
+@@ -31,8 +31,8 @@
+ ; CHECK-O-NEXT: Running pass: SimplifyCFGPass
+ ; CHECK-O-NEXT: Running analysis: TargetIRAnalysis
+ ; CHECK-O-NEXT: Running analysis: AssumptionAnalysis
+-; CHECK-O-NEXT: Running pass: SROAPass
+ ; CHECK-O-NEXT: Running analysis: DominatorTreeAnalysis
++; CHECK-O-NEXT: Running pass: SROAPass
+ ; CHECK-O-NEXT: Running pass: EarlyCSEPass
+ ; CHECK-O-NEXT: Running analysis: TargetLibraryAnalysis
+ ; CHECK-O3-NEXT: Running pass: CallSiteSplittingPass
+diff --git a/llvm/test/Other/new-pm-thinlto-prelink-samplepgo-defaults.ll b/llvm/test/Other/new-pm-thinlto-prelink-samplepgo-defaults.ll
+index 9540093a4bf22..8130462b3f1cd 100644
+--- a/llvm/test/Other/new-pm-thinlto-prelink-samplepgo-defaults.ll
++++ b/llvm/test/Other/new-pm-thinlto-prelink-samplepgo-defaults.ll
+@@ -30,8 +30,8 @@
+ ; CHECK-O-NEXT: Running pass: SimplifyCFGPass
+ ; CHECK-O-NEXT: Running analysis: TargetIRAnalysis
+ ; CHECK-O-NEXT: Running analysis: AssumptionAnalysis
+-; CHECK-O-NEXT: Running pass: SROAPass
+ ; CHECK-O-NEXT: Running analysis: DominatorTreeAnalysis
++; CHECK-O-NEXT: Running pass: SROAPass
+ ; CHECK-O-NEXT: Running pass: EarlyCSEPass
+ ; CHECK-O-NEXT: Running analysis: TargetLibraryAnalysis
+ ; CHECK-O3-NEXT: Running pass: CallSiteSplittingPass
