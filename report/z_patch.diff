@@ -1,0 +1,158 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index bc79bd7068f14..fb457d27b18a5 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -324,6 +324,11 @@ class ConstraintInfo {
+   void addFactImpl(CmpInst::Predicate Pred, Value *A, Value *B, unsigned NumIn,
+                    unsigned NumOut, SmallVectorImpl<StackEntry> &DFSInStack,
+                    bool ForceSignedSystem);
++
++  /// Try to use the inequality \p A != \p B to tighten a non-strict bound the
++  /// system already implies to the corresponding strict bound.
++  void tightenBoundsUsingNotEqual(Value *A, Value *B, unsigned NumIn, unsigned NumOut,
++                           SmallVectorImpl<StackEntry> &DFSInStack);
+ };
+ 
+ /// Represents a (Coefficient * Variable) entry after IR decomposition.
+@@ -1781,6 +1786,47 @@ void ConstraintInfo::addFact(CmpInst::Predicate Pred, Value *A, Value *B,
+   // If the Pred is eq/ne, also add the fact to signed system.
+   if (CmpInst::isEquality(Pred))
+     addFactImpl(Pred, A, B, NumIn, NumOut, DFSInStack, true);
++  if (Pred == CmpInst::ICMP_NE)
++    tightenBoundsUsingNotEqual(A, B, NumIn, NumOut, DFSInStack);
++}
++
++void ConstraintInfo::tightenBoundsUsingNotEqual(
++    Value *A, Value *B, unsigned NumIn, unsigned NumOut,
++    SmallVectorImpl<StackEntry> &DFSInStack) {
++  if (!A->getType()->isIntegerTy())
++    return;
++
++  for (bool IsSigned : {false, true}) {
++    // In the unsigned system `A u>= 0` holds for every A, so getConstraint
++    // already turned `A != 0` into `A u> 0`.
++    if (!IsSigned && match(B, m_Zero()))
++      continue;
++
++    // Skip if there are any unknown variables.
++    const auto &Value2Index = getValue2Index(IsSigned);
++    if (any_of(decompose(A, *this, IsSigned, DL).Vars,
++               [&Value2Index](const DecompEntry &E) {
++                 return !Value2Index.contains(E.Variable);
++               }))
++      continue;
++
++    // If the system implies `A >= B` then together with `A != B` we get the
++    // strict `A > B`; symmetrically `A <= B` becomes `A < B`.
++    for (CmpInst::Predicate NonStrict :
++         {IsSigned ? CmpInst::ICMP_SGE : CmpInst::ICMP_UGE,
++          IsSigned ? CmpInst::ICMP_SLE : CmpInst::ICMP_ULE}) {
++      if (!doesHold(NonStrict, A, B))
++        continue;
++      CmpInst::Predicate Strict = CmpInst::getStrictPredicate(NonStrict);
++      LLVM_DEBUG(dbgs() << "Tightening '";
++                 dumpUnpackedICmp(dbgs(), NonStrict, A, B); dbgs() << "' to '";
++                 dumpUnpackedICmp(dbgs(), Strict, A, B);
++                 dbgs() << "' using inequality\n");
++      addFactImpl(Strict, A, B, NumIn, NumOut, DFSInStack,
++                  /*ForceSignedSystem=*/false);
++      break;
++    }
++  }
+ }
+ 
+ void ConstraintInfo::addFactImpl(CmpInst::Predicate Pred, Value *A, Value *B,
+diff --git a/llvm/test/Transforms/ConstraintElimination/ne-tightening.ll b/llvm/test/Transforms/ConstraintElimination/ne-tightening.ll
+index a7967e9b09051..af2b5b2b9deec 100644
+--- a/llvm/test/Transforms/ConstraintElimination/ne-tightening.ll
++++ b/llvm/test/Transforms/ConstraintElimination/ne-tightening.ll
+@@ -10,8 +10,7 @@ define i1 @sge_zero_and_ne_zero_implies_sgt_zero(i64 %n) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[A]])
+ ; CHECK-NEXT:    [[B:%.*]] = icmp ne i64 [[N]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
+-; CHECK-NEXT:    [[C:%.*]] = icmp sgt i64 [[N]], 0
+-; CHECK-NEXT:    ret i1 [[C]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %a = icmp sge i64 %n, 0
+   call void @llvm.assume(i1 %a)
+@@ -30,8 +29,7 @@ define i1 @sge_zero_and_ne_zero_from_branch(i64 %n) {
+ ; CHECK-NEXT:    [[Z:%.*]] = icmp eq i64 [[N]], 0
+ ; CHECK-NEXT:    br i1 [[Z]], label %[[ELSE:.*]], label %[[CONT:.*]]
+ ; CHECK:       [[CONT]]:
+-; CHECK-NEXT:    [[C:%.*]] = icmp sgt i64 [[N]], 0
+-; CHECK-NEXT:    ret i1 [[C]]
++; CHECK-NEXT:    ret i1 true
+ ; CHECK:       [[ELSE]]:
+ ; CHECK-NEXT:    ret i1 false
+ ;
+@@ -56,8 +54,7 @@ define i1 @sle_zero_and_ne_zero_implies_slt_zero(i64 %n) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[A]])
+ ; CHECK-NEXT:    [[B:%.*]] = icmp ne i64 [[N]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
+-; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[N]], 0
+-; CHECK-NEXT:    ret i1 [[C]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %a = icmp sle i64 %n, 0
+   call void @llvm.assume(i1 %a)
+@@ -74,8 +71,7 @@ define i1 @sge_const_and_ne_const_implies_sge_const_plus_one(i64 %n) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[A]])
+ ; CHECK-NEXT:    [[B:%.*]] = icmp ne i64 [[N]], 10
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
+-; CHECK-NEXT:    [[C:%.*]] = icmp sge i64 [[N]], 11
+-; CHECK-NEXT:    ret i1 [[C]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %a = icmp sge i64 %n, 10
+   call void @llvm.assume(i1 %a)
+@@ -92,8 +88,7 @@ define i1 @sle_const_and_ne_const_implies_sle_const_minus_one(i64 %n) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[A]])
+ ; CHECK-NEXT:    [[B:%.*]] = icmp ne i64 [[N]], 10
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
+-; CHECK-NEXT:    [[C:%.*]] = icmp sle i64 [[N]], 9
+-; CHECK-NEXT:    ret i1 [[C]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %a = icmp sle i64 %n, 10
+   call void @llvm.assume(i1 %a)
+@@ -110,8 +105,7 @@ define i1 @uge_const_and_ne_const_implies_ugt_const(i64 %n) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[A]])
+ ; CHECK-NEXT:    [[B:%.*]] = icmp ne i64 [[N]], 10
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
+-; CHECK-NEXT:    [[C:%.*]] = icmp ugt i64 [[N]], 10
+-; CHECK-NEXT:    ret i1 [[C]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %a = icmp uge i64 %n, 10
+   call void @llvm.assume(i1 %a)
+@@ -129,8 +123,7 @@ define i1 @ule_const_and_ne_const_implies_ult_const(i64 %n) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[A]])
+ ; CHECK-NEXT:    [[B:%.*]] = icmp ne i64 [[N]], 10
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
+-; CHECK-NEXT:    [[C:%.*]] = icmp ult i64 [[N]], 10
+-; CHECK-NEXT:    ret i1 [[C]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %a = icmp ule i64 %n, 10
+   call void @llvm.assume(i1 %a)
+@@ -148,8 +141,7 @@ define i1 @sge_and_ne_on_add(i64 %n) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[A]])
+ ; CHECK-NEXT:    [[B:%.*]] = icmp ne i64 [[ADD]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
+-; CHECK-NEXT:    [[C:%.*]] = icmp sge i64 [[N]], 0
+-; CHECK-NEXT:    ret i1 [[C]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %add = add nsw i64 %n, 1
+   %a = icmp sge i64 %add, 0
+@@ -250,8 +242,7 @@ define i1 @neg_ne_non_constant(i64 %n, i64 %m) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[A]])
+ ; CHECK-NEXT:    [[B:%.*]] = icmp ne i64 [[N]], [[M]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
+-; CHECK-NEXT:    [[C:%.*]] = icmp sgt i64 [[N]], [[M]]
+-; CHECK-NEXT:    ret i1 [[C]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %a = icmp sge i64 %n, %m
+   call void @llvm.assume(i1 %a)
