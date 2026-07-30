@@ -204,28 +204,29 @@ bb.h:                                             ; preds = %bb.f
   %i.av = zext i8 %i.au to i32                    ; 3 uses
   %i.aw = and i32 %i.av, 3                        ; 2 uses
   %i.ax = lshr i32 %i.ad, %i.aw                   ; 2 uses
-  %i.ay = lshr i32 %i.av, 2
-  %i.az = lshr i32 %i.ab, 2
-  %3 = and i32 %i.ay, 7                           ; 2 uses
-  %4 = and i32 %i.az, 7                           ; 3 uses
-  %5 = lshr i32 %i.ax, %4
-  %i.ba = add nuw nsw i32 %4, %i.ac
-  %i.bb = add nuw nsw i32 %i.ba, %i.aw
-  %6 = add nuw nsw i32 %i.bb, %3
-  %7 = insertelement <2 x i32> poison, i32 %i.ab, i64 0
-  %8 = insertelement <2 x i32> %7, i32 %i.av, i64 1
-  %9 = lshr <2 x i32> %8, splat (i32 5)
-  %notmask97 = shl nsw i32 -1, %3
-  %notmask96 = shl nsw i32 -1, %4
-  %10 = xor i32 %notmask97, -1
-  %11 = xor i32 %notmask96, -1
-  %12 = and i32 %5, %10
-  %13 = and i32 %i.ax, %11
-  %14 = add nuw nsw <2 x i32> %9, splat (i32 1)
-  %15 = insertelement <2 x i32> poison, i32 %13, i64 0
-  %16 = insertelement <2 x i32> %15, i32 %12, i64 1
-  %17 = add nuw nsw <2 x i32> %14, %16
-  store <2 x i32> %17, ptr %2, align 4, !tbaa !3
+  %i.ay = lshr i32 %i.ab, 2
+  %3 = and i32 %i.ay, 7                           ; 3 uses
+  %i.az = lshr i32 %i.ab, 5
+  %notmask96 = shl nsw i32 -1, %3
+  %4 = xor i32 %notmask96, -1
+  %5 = and i32 %i.ax, %4
+  %i.ba = add nuw nsw i32 %i.az, 1
+  %i.bb = add nuw nsw i32 %i.ba, %5
+  store i32 %i.bb, ptr %2, align 4, !tbaa !3
+  %6 = lshr i32 %i.ax, %3
+  %7 = lshr i32 %i.av, 2
+  %8 = and i32 %7, 7                              ; 2 uses
+  %9 = add nuw nsw i32 %3, %i.ac
+  %10 = add nuw nsw i32 %9, %i.aw
+  %11 = add nuw nsw i32 %10, %8
+  %12 = lshr i32 %i.av, 5
+  %notmask97 = shl nsw i32 -1, %8
+  %13 = xor i32 %notmask97, -1
+  %14 = and i32 %6, %13
+  %15 = add nuw nsw i32 %12, 1
+  %16 = add nuw nsw i32 %15, %14
+  %17 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  store i32 %16, ptr %17, align 4, !tbaa !3
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.e
@@ -235,33 +236,34 @@ bb.i:                                             ; preds = %bb.e
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !46
   %i.bg = zext i8 %i.bf to i32                    ; 3 uses
   %i.bh = and i32 %i.bg, 3                        ; 2 uses
+  %18 = lshr i32 %i.ad, %i.bh                     ; 2 uses
   %i.bi = add nuw nsw i32 %i.bh, %i.ac
-  %i.bj = lshr i32 %i.ad, %i.bh                   ; 2 uses
-  %18 = lshr i32 %i.bg, 2
-  %19 = lshr i32 %i.ab, 2
-  %20 = and i32 %18, 7                            ; 2 uses
-  %21 = and i32 %19, 7                            ; 3 uses
-  %22 = add nuw nsw i32 %i.bi, %21
-  %23 = lshr i32 %i.bj, %21
-  %i.bk = add nuw nsw i32 %22, %20
-  %24 = insertelement <2 x i32> poison, i32 %i.ab, i64 0
-  %25 = insertelement <2 x i32> %24, i32 %i.bg, i64 1
-  %26 = lshr <2 x i32> %25, splat (i32 5)
-  %notmask95 = shl nsw i32 -1, %20
-  %notmask = shl nsw i32 -1, %21
-  %27 = xor i32 %notmask95, -1
-  %28 = xor i32 %notmask, -1
-  %29 = and i32 %23, %27
-  %30 = and i32 %i.bj, %28
-  %31 = add nuw nsw <2 x i32> %26, splat (i32 3)
-  %32 = insertelement <2 x i32> poison, i32 %30, i64 0
-  %33 = insertelement <2 x i32> %32, i32 %29, i64 1
-  %34 = add nuw nsw <2 x i32> %31, %33
-  store <2 x i32> %34, ptr %2, align 4, !tbaa !3
+  %i.bj = lshr i32 %i.ab, 2
+  %19 = and i32 %i.bj, 7                          ; 3 uses
+  %20 = add nuw nsw i32 %i.bi, %19
+  %21 = lshr i32 %i.ab, 5
+  %notmask = shl nsw i32 -1, %19
+  %22 = xor i32 %notmask, -1
+  %23 = and i32 %18, %22
+  %i.bk = add nuw nsw i32 %21, 3
+  %24 = add nuw nsw i32 %i.bk, %23
+  store i32 %24, ptr %2, align 4, !tbaa !3
+  %25 = lshr i32 %18, %19
+  %26 = lshr i32 %i.bg, 2
+  %27 = and i32 %26, 7                            ; 2 uses
+  %28 = add nuw nsw i32 %20, %27
+  %29 = lshr i32 %i.bg, 5
+  %notmask95 = shl nsw i32 -1, %27
+  %30 = xor i32 %notmask95, -1
+  %31 = and i32 %25, %30
+  %32 = add nuw nsw i32 %29, 3
+  %33 = add nuw nsw i32 %32, %31
+  %34 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  store i32 %33, ptr %34, align 4, !tbaa !3
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.g, %bb.h, %bb.d, %bb.i, %bb.b
-  %.1 = phi i32 [ 0, %bb.b ], [ %i.m, %bb.d ], [ %i.bk, %bb.i ], [ %i.al, %bb.g ], [ %6, %bb.h ]
+  %.1 = phi i32 [ 0, %bb.b ], [ %i.m, %bb.d ], [ %28, %bb.i ], [ %i.al, %bb.g ], [ %11, %bb.h ]
   ret i32 %.1
 }
 

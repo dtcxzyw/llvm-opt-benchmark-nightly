@@ -204,9 +204,9 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %7 = load i64, ptr %6, align 8, !tbaa !131      ; 3 uses
-  %i.as = load i64, ptr %i.ar, align 8, !tbaa !132 ; 3 uses
+  %6 = load i64, ptr %i.ar, align 8, !tbaa !131   ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.as = load i64, ptr %7, align 8, !tbaa !132   ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.l, i64 880 ; 2 uses
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !91
   %i.av = getelementptr inbounds nuw i8, ptr %i.l, i64 192
@@ -261,7 +261,7 @@ bb.o:                                             ; preds = %bb.n
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bo, i8 0, i64 16, i1 false)
   %i.bp = load i16, ptr %i.c, align 2, !tbaa !135
   %i.bq = sext i16 %i.bp to i64
-  %sext203.i = shl i64 %i.as, 32
+  %sext203.i = shl i64 %6, 32
   %i.br = ashr exact i64 %sext203.i, 32           ; 2 uses
   %i.bs = mul nsw i64 %i.br, %i.bq                ; 2 uses
   %i.bt = ashr i64 %i.bs, 63
@@ -285,7 +285,7 @@ bb.o:                                             ; preds = %bb.n
   store i64 0, ptr %i.ch, align 8, !tbaa !144
   %i.ci = load i16, ptr %i.d, align 2, !tbaa !135
   %i.cj = sext i16 %i.ci to i64
-  %sext206.i = shl i64 %7, 32
+  %sext206.i = shl i64 %i.as, 32
   %i.ck = ashr exact i64 %sext206.i, 32           ; 2 uses
   %i.cl = mul nsw i64 %i.ck, %i.cj                ; 2 uses
   %i.cm = ashr i64 %i.cl, 63
@@ -381,7 +381,7 @@ bb.r:                                             ; preds = %bb.l
   %i.et = and i32 %.2, 16
   %.not27.i.i = icmp eq i32 %i.et, 0              ; 4 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 196
+  %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 196 ; 3 uses
   %..i.i = select i1 %.not27.i.i, i16 %i.dp, i16 %i.ee
   %.3.i.i = select i1 %.not27.i.i, i16 %i.du, i16 %i.ej
   %i.ew = sext i16 %..i.i to i32
@@ -448,27 +448,34 @@ bb.t:                                             ; preds = %bb.s
   %i.gk = getelementptr inbounds nuw i8, ptr %5, i64 72
   %i.gl = load i64, ptr %i.gk, align 8
   %i.gm = trunc i64 %i.gl to i32
-  %sext209.i = shl i64 %i.as, 32
-  %sext210.i = shl i64 %7, 32
-  %.0141.i = select i1 %.not27.i.i, i32 %i.gm, i32 %i.gh
   %.0142.i = select i1 %.not27.i.i, i32 %i.gj, i32 %i.gf
-  %8 = sext i32 %.0141.i to i64
-  %9 = sext i32 %.0142.i to i64
-  %10 = ashr exact i64 %sext210.i, 32
-  %11 = ashr exact i64 %sext209.i, 32
-  %12 = mul nsw i64 %10, %8
-  %13 = mul nsw i64 %11, %9
-  %14 = insertelement <2 x i64> poison, i64 %13, i64 0
-  %15 = insertelement <2 x i64> %14, i64 %12, i64 1 ; 2 uses
-  %16 = ashr <2 x i64> %15, splat (i64 63)
-  %17 = add nsw <2 x i64> %15, splat (i64 32768)
-  %18 = add nsw <2 x i64> %17, %16
-  %19 = lshr <2 x i64> %18, splat (i64 16)
-  %20 = trunc <2 x i64> %19 to <2 x i32>
-  %21 = ashr <2 x i32> %20, splat (i32 6)
-  %22 = load <2 x i32>, ptr %i.eu, align 8, !tbaa !3
-  %23 = add nsw <2 x i32> %21, %22
-  store <2 x i32> %23, ptr %i.eu, align 8, !tbaa !3
+  %.0141.i = select i1 %.not27.i.i, i32 %i.gm, i32 %i.gh
+  %8 = sext i32 %.0142.i to i64
+  %sext209.i = shl i64 %6, 32
+  %9 = ashr exact i64 %sext209.i, 32
+  %10 = mul nsw i64 %9, %8                        ; 2 uses
+  %11 = ashr i64 %10, 63
+  %12 = add nsw i64 %10, 32768
+  %13 = add nsw i64 %12, %11
+  %14 = lshr i64 %13, 16
+  %15 = trunc i64 %14 to i32
+  %16 = ashr i32 %15, 6
+  %17 = load i32, ptr %i.eu, align 8, !tbaa !149
+  %18 = add nsw i32 %16, %17
+  store i32 %18, ptr %i.eu, align 8, !tbaa !149
+  %19 = sext i32 %.0141.i to i64
+  %sext210.i = shl i64 %i.as, 32
+  %20 = ashr exact i64 %sext210.i, 32
+  %21 = mul nsw i64 %20, %19                      ; 2 uses
+  %22 = ashr i64 %21, 63
+  %23 = add nsw i64 %21, 32768
+  %24 = add nsw i64 %23, %22
+  %25 = lshr i64 %24, 16
+  %26 = trunc i64 %25 to i32
+  %27 = ashr i32 %26, 6
+  %28 = load i32, ptr %i.ev, align 4, !tbaa !150
+  %29 = add nsw i32 %27, %28
+  store i32 %29, ptr %i.ev, align 4, !tbaa !150
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
@@ -479,7 +486,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %or.cond197.i, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %sext211.i = shl i64 %i.as, 32
+  %sext211.i = shl i64 %6, 32
   %i.go = ashr exact i64 %sext211.i, 32
   %i.gp = mul nsw i64 %i.go, %i.fr                ; 2 uses
   %i.gq = ashr i64 %i.gp, 63
@@ -498,7 +505,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br i1 %or.cond198.i, label %TT_Load_Glyph.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %sext213.i = shl i64 %7, 32
+  %sext213.i = shl i64 %i.as, 32
   %i.gw = ashr exact i64 %sext213.i, 32
   %i.gx = mul nsw i64 %i.gw, %i.fv                ; 2 uses
   %i.gy = ashr i64 %i.gx, 63
@@ -547,9 +554,9 @@ bb.ad:                                            ; preds = %bb.ac
 
 .thread186.i:                                     ; preds = %bb.ad
   %i.hp = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.hq = load i64, ptr %i.hp, align 8, !tbaa !132
+  %i.hq = load i64, ptr %i.hp, align 8, !tbaa !131
   %i.hr = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.hs = load i64, ptr %i.hr, align 8, !tbaa !131
+  %i.hs = load i64, ptr %i.hr, align 8, !tbaa !132
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #22
@@ -952,8 +959,8 @@ attributes #23 = { nounwind willreturn memory(read) }
 !128 = !{!32, !28, i64 32}
 !129 = !{!104, !109, i64 88}
 !130 = !{!32, !28, i64 8}
-!131 = !{!104, !28, i64 40}
-!132 = !{!104, !28, i64 32}
+!131 = !{!104, !28, i64 32}
+!132 = !{!104, !28, i64 40}
 !133 = !{!30, !12, i64 144}
 !134 = distinct !{null, null}
 !135 = !{!20, !20, i64 0}

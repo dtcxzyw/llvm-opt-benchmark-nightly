@@ -199,7 +199,7 @@ begin_hunk_0_@des_encrypt:bb.a
 define dso_local void @des_encrypt2(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !8      ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !8    ; 2 uses
   %i.d = lshr i64 %i.a, 29
   %i.e = shl i64 %i.a, 3
@@ -214,7 +214,7 @@ bb.a:
 
 .preheader158:                                    ; preds = %bb.a, %.preheader158
   %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader158 ], [ 0, %bb.a ] ; 3 uses
-  %.0162 = phi i64 [ %i.fd, %.preheader158 ], [ %i.k, %bb.a ]
+  %.0162 = phi i64 [ %3, %.preheader158 ], [ %i.k, %bb.a ]
   %.0155160 = phi i64 [ %i.gv, %.preheader158 ], [ %i.g, %bb.a ] ; 3 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 8 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !8
@@ -362,29 +362,29 @@ bb.a:
   %i.ey = xor i64 %i.ex, %i.el
   %i.ez = xor i64 %i.ey, %i.ep
   %i.fa = xor i64 %i.ez, %i.et
-  %3 = getelementptr inbounds nuw i8, ptr %i.l, i64 48
-  %4 = load i64, ptr %3, align 8, !tbaa !8
-  %i.fb = getelementptr inbounds nuw i8, ptr %i.l, i64 56
+  %3 = xor i64 %i.fa, %i.bh                       ; 4 uses
+  %i.fb = getelementptr inbounds nuw i8, ptr %i.l, i64 48
   %i.fc = load i64, ptr %i.fb, align 8, !tbaa !8
-  %i.fd = xor i64 %i.fa, %i.bh                    ; 4 uses
-  %5 = xor i64 %i.fd, %4                          ; 4 uses
-  %i.fe = xor i64 %i.fd, %i.fc                    ; 5 uses
+  %i.fd = xor i64 %3, %i.fc                       ; 4 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 56
+  %5 = load i64, ptr %4, align 8, !tbaa !8
+  %i.fe = xor i64 %3, %5                          ; 5 uses
   %i.ff = lshr i64 %i.fe, 4
   %i.fg = shl i64 %i.fe, 28
   %i.fh = add i64 %i.ff, %i.fg
-  %i.fi = lshr i64 %5, 2
+  %i.fi = lshr i64 %i.fd, 2
   %i.fj = and i64 %i.fi, 63
   %i.fk = getelementptr inbounds nuw [8 x i8], ptr @des_SPtrans, i64 %i.fj
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !8
-  %i.fm = lshr i64 %5, 10
+  %i.fm = lshr i64 %i.fd, 10
   %i.fn = and i64 %i.fm, 63
   %i.fo = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @des_SPtrans, i64 1024), i64 %i.fn
   %i.fp = load i64, ptr %i.fo, align 8, !tbaa !8
-  %i.fq = lshr i64 %5, 18
+  %i.fq = lshr i64 %i.fd, 18
   %i.fr = and i64 %i.fq, 63
   %i.fs = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @des_SPtrans, i64 2048), i64 %i.fr
   %i.ft = load i64, ptr %i.fs, align 8, !tbaa !8
-  %i.fu = lshr i64 %5, 26
+  %i.fu = lshr i64 %i.fd, 26
   %i.fv = and i64 %i.fu, 63
   %i.fw = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @des_SPtrans, i64 3072), i64 %i.fv
   %i.fx = load i64, ptr %i.fw, align 8, !tbaa !8
@@ -418,7 +418,7 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a, %.preheader
   %indvars.iv171 = phi i64 [ %indvars.iv.next172, %.preheader ], [ 30, %bb.a ] ; 3 uses
-  %.1165 = phi i64 [ %i.mp, %.preheader ], [ %i.k, %bb.a ]
+  %.1165 = phi i64 [ %6, %.preheader ], [ %i.k, %bb.a ]
   %.1156163 = phi i64 [ %i.oh, %.preheader ], [ %i.g, %bb.a ] ; 3 uses
   %i.gx = getelementptr [8 x i8], ptr %1, i64 %indvars.iv171 ; 8 uses
   %i.gy = load i64, ptr %i.gx, align 8, !tbaa !8
@@ -566,29 +566,29 @@ bb.a:
   %i.mk = xor i64 %i.mj, %i.lx
   %i.ml = xor i64 %i.mk, %i.mb
   %i.mm = xor i64 %i.ml, %i.mf
-  %6 = getelementptr i8, ptr %i.gx, i64 -48
-  %7 = load i64, ptr %6, align 8, !tbaa !8
-  %i.mn = getelementptr i8, ptr %i.gx, i64 -40
+  %6 = xor i64 %i.mm, %i.it                       ; 4 uses
+  %i.mn = getelementptr i8, ptr %i.gx, i64 -48
   %i.mo = load i64, ptr %i.mn, align 8, !tbaa !8
-  %i.mp = xor i64 %i.mm, %i.it                    ; 4 uses
-  %8 = xor i64 %i.mp, %7                          ; 4 uses
-  %i.mq = xor i64 %i.mp, %i.mo                    ; 5 uses
+  %i.mp = xor i64 %6, %i.mo                       ; 4 uses
+  %7 = getelementptr i8, ptr %i.gx, i64 -40
+  %8 = load i64, ptr %7, align 8, !tbaa !8
+  %i.mq = xor i64 %6, %8                          ; 5 uses
   %i.mr = lshr i64 %i.mq, 4
   %i.ms = shl i64 %i.mq, 28
   %i.mt = add i64 %i.mr, %i.ms
-  %i.mu = lshr i64 %8, 2
+  %i.mu = lshr i64 %i.mp, 2
   %i.mv = and i64 %i.mu, 63
   %i.mw = getelementptr inbounds nuw [8 x i8], ptr @des_SPtrans, i64 %i.mv
   %i.mx = load i64, ptr %i.mw, align 8, !tbaa !8
-  %i.my = lshr i64 %8, 10
+  %i.my = lshr i64 %i.mp, 10
   %i.mz = and i64 %i.my, 63
   %i.na = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @des_SPtrans, i64 1024), i64 %i.mz
   %i.nb = load i64, ptr %i.na, align 8, !tbaa !8
-  %i.nc = lshr i64 %8, 18
+  %i.nc = lshr i64 %i.mp, 18
   %i.nd = and i64 %i.nc, 63
   %i.ne = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @des_SPtrans, i64 2048), i64 %i.nd
   %i.nf = load i64, ptr %i.ne, align 8, !tbaa !8
-  %i.ng = lshr i64 %8, 26
+  %i.ng = lshr i64 %i.mp, 26
   %i.nh = and i64 %i.ng, 63
   %i.ni = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @des_SPtrans, i64 3072), i64 %i.nh
   %i.nj = load i64, ptr %i.ni, align 8, !tbaa !8
@@ -621,15 +621,18 @@ bb.a:
   br i1 %i.oi, label %.preheader, label %.loopexit, !llvm.loop !14
 
 .loopexit:                                        ; preds = %.preheader158, %.preheader
-  %.2157 = phi i64 [ %i.oh, %.preheader ], [ %i.gv, %.preheader158 ]
-  %.2 = phi i64 [ %i.mp, %.preheader ], [ %i.fd, %.preheader158 ]
-  %9 = insertelement <2 x i64> poison, i64 %.2, i64 0
-  %10 = insertelement <2 x i64> %9, i64 %.2157, i64 1 ; 2 uses
-  %11 = lshr <2 x i64> %10, splat (i64 3)
-  %12 = shl <2 x i64> %10, splat (i64 29)
-  %13 = add <2 x i64> %11, %12
-  %14 = and <2 x i64> %13, splat (i64 4294967295)
-  store <2 x i64> %14, ptr %0, align 8, !tbaa !8
+  %.2157 = phi i64 [ %i.oh, %.preheader ], [ %i.gv, %.preheader158 ] ; 2 uses
+  %.2 = phi i64 [ %6, %.preheader ], [ %3, %.preheader158 ] ; 2 uses
+  %9 = lshr i64 %.2, 3
+  %10 = shl i64 %.2, 29
+  %11 = add i64 %9, %10
+  %12 = and i64 %11, 4294967295
+  store i64 %12, ptr %0, align 8, !tbaa !8
+  %13 = lshr i64 %.2157, 3
+  %14 = shl i64 %.2157, 29
+  %15 = add i64 %13, %14
+  %16 = and i64 %15, 4294967295
+  store i64 %16, ptr %i.b, align 8, !tbaa !8
   ret void
 }
 

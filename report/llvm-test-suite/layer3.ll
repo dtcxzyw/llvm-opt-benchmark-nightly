@@ -204,14 +204,12 @@ begin_hunk_0_@init_layer3:bb.a
 .preheader331.preheader:                          ; preds = %.preheader333
   %i.agr = insertelement <4 x i32> poison, i32 %0, i64 0
   %i.ags = shufflevector <4 x i32> %i.agr, <4 x i32> poison, <4 x i32> zeroinitializer ; 16 uses
-  %1 = insertelement <2 x i32> poison, i32 %0, i64 0
-  %2 = shufflevector <2 x i32> %1, <2 x i32> poison, <2 x i32> zeroinitializer ; 4 uses
   br label %.preheader331
 
 .preheader331:                                    ; preds = %.preheader331.preheader, %.preheader331
   %indvars.iv508 = phi i64 [ %indvars.iv.next509, %.preheader331 ], [ 0, %.preheader331.preheader ] ; 4 uses
   %i.agt = getelementptr inbounds nuw [144 x i8], ptr @bandInfo, i64 %indvars.iv508 ; 13 uses
-  %i.agu = getelementptr inbounds nuw [92 x i8], ptr @longLimit, i64 %indvars.iv508 ; 7 uses
+  %i.agu = getelementptr inbounds nuw [92 x i8], ptr @longLimit, i64 %indvars.iv508 ; 8 uses
   %i.agv = load <4 x i16>, ptr %i.agt, align 16, !tbaa !18
   %i.agw = sext <4 x i16> %i.agv to <4 x i32>
   %i.agx = add nsw <4 x i32> %i.agw, splat (i32 7)
@@ -261,22 +259,25 @@ begin_hunk_0_@init_layer3:bb.a
   %i.ail = select <4 x i1> %i.aik, <4 x i32> %i.aij, <4 x i32> %i.ags
   store <4 x i32> %i.ail, ptr %i.aie, align 4, !tbaa !4
   %i.aim = getelementptr inbounds nuw i8, ptr %i.agt, i64 40
-  %3 = getelementptr inbounds nuw i8, ptr %i.agu, i64 80
-  %4 = getelementptr inbounds nuw i8, ptr %i.agt, i64 42
-  %5 = load i16, ptr %4, align 2, !tbaa !18
-  %6 = load i16, ptr %i.aim, align 8, !tbaa !18
-  %7 = sext i16 %5 to i32
-  %8 = sext i16 %6 to i32
-  %9 = add nsw i32 %7, 7
-  %10 = add nsw i32 %8, 7
-  %11 = sdiv i32 %9, 18
-  %12 = sdiv i32 %10, 18
-  %13 = insertelement <2 x i32> poison, i32 %12, i64 0
-  %14 = insertelement <2 x i32> %13, i32 %11, i64 1 ; 2 uses
-  %15 = add nsw <2 x i32> %14, splat (i32 1)
-  %16 = icmp slt <2 x i32> %14, %2
-  %17 = select <2 x i1> %16, <2 x i32> %15, <2 x i32> %2
-  store <2 x i32> %17, ptr %3, align 4, !tbaa !4
+  %1 = load i16, ptr %i.aim, align 8, !tbaa !18
+  %2 = sext i16 %1 to i32
+  %3 = add nsw i32 %2, 7
+  %4 = sdiv i32 %3, 18                            ; 2 uses
+  %5 = add nsw i32 %4, 1
+  %6 = getelementptr inbounds nuw i8, ptr %i.agu, i64 80
+  %.not310.20 = icmp slt i32 %4, %0
+  %spec.select.20 = select i1 %.not310.20, i32 %5, i32 %0
+  store i32 %spec.select.20, ptr %6, align 4, !tbaa !4
+  %7 = getelementptr inbounds nuw i8, ptr %i.agt, i64 42
+  %8 = load i16, ptr %7, align 2, !tbaa !18
+  %9 = sext i16 %8 to i32
+  %10 = add nsw i32 %9, 7
+  %11 = sdiv i32 %10, 18                          ; 2 uses
+  %12 = add nsw i32 %11, 1
+  %13 = getelementptr inbounds nuw i8, ptr %i.agu, i64 84
+  %.not310.21 = icmp slt i32 %11, %0
+  %spec.select.21 = select i1 %.not310.21, i32 %12, i32 %0
+  store i32 %spec.select.21, ptr %13, align 4, !tbaa !4
   %i.ain = getelementptr inbounds nuw i8, ptr %i.agt, i64 44
   %i.aio = load i16, ptr %i.ain, align 4, !tbaa !18
   %i.aip = sext i16 %i.aio to i32
@@ -288,7 +289,7 @@ begin_hunk_0_@init_layer3:bb.a
   %spec.select.22 = select i1 %.not310.22, i32 %i.ais, i32 %0
   store i32 %spec.select.22, ptr %i.ait, align 4, !tbaa !4
   %i.aiu = getelementptr inbounds nuw i8, ptr %i.agt, i64 90
-  %i.aiv = getelementptr inbounds nuw [56 x i8], ptr @shortLimit, i64 %indvars.iv508 ; 4 uses
+  %i.aiv = getelementptr inbounds nuw [56 x i8], ptr @shortLimit, i64 %indvars.iv508 ; 5 uses
   %i.aiw = load <4 x i16>, ptr %i.aiu, align 2, !tbaa !18
   %i.aix = sext <4 x i16> %i.aiw to <4 x i32>
   %i.aiy = add nsw <4 x i32> %i.aix, splat (i32 -1)
@@ -318,22 +319,25 @@ begin_hunk_0_@init_layer3:bb.a
   %i.aju = select <4 x i1> %i.ajt, <4 x i32> %i.ajs, <4 x i32> %i.ags
   store <4 x i32> %i.aju, ptr %i.ajn, align 8, !tbaa !4
   %i.ajv = getelementptr inbounds nuw i8, ptr %i.agt, i64 114
-  %18 = getelementptr inbounds nuw i8, ptr %i.aiv, i64 48
-  %19 = getelementptr inbounds nuw i8, ptr %i.agt, i64 116
-  %20 = load i16, ptr %19, align 4, !tbaa !18
-  %21 = load i16, ptr %i.ajv, align 2, !tbaa !18
-  %22 = sext i16 %20 to i32
-  %23 = sext i16 %21 to i32
-  %24 = add nsw i32 %22, -1
-  %25 = add nsw i32 %23, -1
-  %26 = sdiv i32 %24, 18
-  %27 = sdiv i32 %25, 18
-  %28 = insertelement <2 x i32> poison, i32 %27, i64 0
-  %29 = insertelement <2 x i32> %28, i32 %26, i64 1 ; 2 uses
-  %30 = add nsw <2 x i32> %29, splat (i32 1)
-  %31 = icmp slt <2 x i32> %29, %2
-  %32 = select <2 x i1> %31, <2 x i32> %30, <2 x i32> %2
-  store <2 x i32> %32, ptr %18, align 8, !tbaa !4
+  %14 = load i16, ptr %i.ajv, align 2, !tbaa !18
+  %15 = sext i16 %14 to i32
+  %16 = add nsw i32 %15, -1
+  %17 = sdiv i32 %16, 18                          ; 2 uses
+  %18 = add nsw i32 %17, 1
+  %19 = getelementptr inbounds nuw i8, ptr %i.aiv, i64 48
+  %.not.12 = icmp slt i32 %17, %0
+  %spec.select315.12 = select i1 %.not.12, i32 %18, i32 %0
+  store i32 %spec.select315.12, ptr %19, align 8, !tbaa !4
+  %20 = getelementptr inbounds nuw i8, ptr %i.agt, i64 116
+  %21 = load i16, ptr %20, align 4, !tbaa !18
+  %22 = sext i16 %21 to i32
+  %23 = add nsw i32 %22, -1
+  %24 = sdiv i32 %23, 18                          ; 2 uses
+  %25 = add nsw i32 %24, 1
+  %26 = getelementptr inbounds nuw i8, ptr %i.aiv, i64 52
+  %.not.13 = icmp slt i32 %24, %0
+  %spec.select315.13 = select i1 %.not.13, i32 %25, i32 %0
+  store i32 %spec.select315.13, ptr %26, align 4, !tbaa !4
   %indvars.iv.next509 = add nuw nsw i64 %indvars.iv508, 1 ; 2 uses
   %exitcond511.not = icmp eq i64 %indvars.iv.next509, 9
   br i1 %exitcond511.not, label %.preheader328.preheader, label %.preheader331, !llvm.loop !21

@@ -203,17 +203,16 @@ declare void @_ZdlPv(ptr noundef) local_unnamed_addr #4
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZL19BM_MULADDSUB_LAMBDARN9benchmark5StateE(ptr noundef nonnull align 64 dereferenceable(184) %0) #3 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(1616) ptr @_Z11getLoopDatav() ; 5 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(1616) ptr @_Z11getLoopDatav() ; 4 uses
   tail call void @_Z8loopInitj(i32 noundef 10)
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %2 = load <4 x ptr>, ptr %1, align 8, !tbaa !8  ; 3 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !8    ; 3 uses
-  %3 = load ptr, ptr %i.c, align 8, !tbaa !8      ; 4 uses
-  %4 = load ptr, ptr %i.b, align 8, !tbaa !8      ; 3 uses
-  %5 = load ptr, ptr %1, align 8, !tbaa !8        ; 3 uses
+  %1 = load ptr, ptr %i.d, align 8, !tbaa !8      ; 5 uses
+  %i.e = load ptr, ptr %i.c, align 8, !tbaa !8    ; 6 uses
+  %2 = load <2 x ptr>, ptr %i.b, align 8, !tbaa !8 ; 3 uses
+  %3 = extractelement <2 x ptr> %2, i64 1         ; 4 uses
+  %4 = extractelement <2 x ptr> %2, i64 0         ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !8    ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 28
@@ -243,13 +242,17 @@ _ZN9benchmark5State13StateIteratorC2EPS0_.exit:   ; preds = %bb.a
 .lr.ph.preheader:                                 ; preds = %.lr.ph41
   %wide.trip.count = and i64 %i.n, 2147483647     ; 4 uses
   %i.q = shl nuw nsw i64 %wide.trip.count, 3      ; 5 uses
-  %scevgep = getelementptr i8, ptr %5, i64 %i.q   ; 3 uses
-  %scevgep46 = getelementptr i8, ptr %4, i64 %i.q ; 2 uses
-  %scevgep47 = getelementptr i8, ptr %3, i64 %i.q ; 3 uses
-  %scevgep48 = getelementptr i8, ptr %i.e, i64 %i.q ; 2 uses
+  %scevgep = getelementptr i8, ptr %4, i64 %i.q   ; 3 uses
+  %scevgep46 = getelementptr i8, ptr %3, i64 %i.q ; 2 uses
+  %scevgep47 = getelementptr i8, ptr %i.e, i64 %i.q ; 3 uses
+  %scevgep48 = getelementptr i8, ptr %1, i64 %i.q ; 2 uses
   %scevgep49 = getelementptr i8, ptr %i.g, i64 %i.q ; 2 uses
-  %6 = shufflevector <4 x ptr> %2, <4 x ptr> poison, <8 x i32> <i32 poison, i32 poison, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 3>
-  %i.r = insertelement <8 x ptr> %6, ptr %i.g, i64 3
+  %5 = insertelement <8 x ptr> poison, ptr %4, i64 0
+  %6 = insertelement <8 x ptr> %5, ptr %i.e, i64 1
+  %7 = insertelement <8 x ptr> %6, ptr %i.g, i64 3
+  %8 = insertelement <8 x ptr> %7, ptr %3, i64 5
+  %i.r = insertelement <8 x ptr> %8, ptr %1, i64 7
+  %9 = shufflevector <8 x ptr> %i.r, <8 x ptr> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 3, i32 1, i32 5, i32 3, i32 7>
   %i.s = insertelement <8 x ptr> poison, ptr %scevgep46, i64 0
   %i.t = insertelement <8 x ptr> %i.s, ptr %scevgep, i64 1
   %i.u = insertelement <8 x ptr> %i.t, ptr %scevgep48, i64 2
@@ -262,14 +265,15 @@ _ZN9benchmark5State13StateIteratorC2EPS0_.exit:   ; preds = %bb.a
   %i.ab = insertelement <8 x ptr> %i.aa, ptr %scevgep46, i64 5
   %i.ac = insertelement <8 x ptr> %i.ab, ptr %scevgep48, i64 7
   %i.ad = shufflevector <8 x ptr> %i.ac, <8 x ptr> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 1, i32 5, i32 3, i32 7>
-  %7 = shufflevector <4 x ptr> %2, <4 x ptr> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %10 = shufflevector <2 x ptr> %2, <2 x ptr> poison, <8 x i32> <i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %min.iters.check = icmp samesign ult i64 %wide.trip.count, 2
-  %8 = shufflevector <8 x ptr> %7, <8 x ptr> %i.r, <8 x i32> <i32 0, i32 2, i32 10, i32 11, i32 2, i32 1, i32 11, i32 15>
-  %9 = icmp ult <8 x ptr> %8, %i.w
-  %10 = shufflevector <4 x ptr> %2, <4 x ptr> poison, <8 x i32> <i32 1, i32 0, i32 3, i32 0, i32 1, i32 3, i32 1, i32 2>
-  %i.ae = icmp ult <8 x ptr> %10, %i.ad
-  %i.af = and <8 x i1> %i.ae, %9
-  %bound077 = icmp ult ptr %3, %scevgep49
+  %11 = icmp ult <8 x ptr> %9, %i.w
+  %12 = insertelement <8 x ptr> %10, ptr %1, i64 2
+  %13 = insertelement <8 x ptr> %12, ptr %i.e, i64 7
+  %14 = shufflevector <8 x ptr> %13, <8 x ptr> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 1, i32 0, i32 2, i32 0, i32 7>
+  %i.ae = icmp ult <8 x ptr> %14, %i.ad
+  %i.af = and <8 x i1> %i.ae, %11
+  %bound077 = icmp ult ptr %i.e, %scevgep49
   %bound178 = icmp ult ptr %i.g, %scevgep47
   %found.conflict79 = and i1 %bound077, %bound178
   %i.ag = bitcast <8 x i1> %i.af to i8
@@ -290,20 +294,20 @@ _ZN9benchmark5State13StateIteratorC2EPS0_.exit:   ; preds = %bb.a
 
 vector.body:                                      ; preds = %.lr.ph, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph ] ; 6 uses
-  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %index ; 2 uses
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %index ; 2 uses
   %wide.load = load <2 x double>, ptr %i.ai, align 8, !tbaa !41, !alias.scope !49 ; 2 uses
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %index ; 2 uses
   %wide.load81 = load <2 x double>, ptr %i.aj, align 8, !tbaa !41, !alias.scope !52 ; 2 uses
   %i.ak = fmul <2 x double> %wide.load, %wide.load81
-  %i.al = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %index
+  %i.al = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %index
   store <2 x double> %i.ak, ptr %i.al, align 8, !tbaa !41, !alias.scope !54, !noalias !56
   %i.am = fadd <2 x double> %wide.load, %wide.load81
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %index
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %index
   store <2 x double> %i.am, ptr %i.an, align 8, !tbaa !41, !alias.scope !59, !noalias !60
   %wide.load84 = load <2 x double>, ptr %i.ai, align 8, !tbaa !41, !alias.scope !49
   %wide.load85 = load <2 x double>, ptr %i.aj, align 8, !tbaa !41, !alias.scope !52
   %i.ao = fsub <2 x double> %wide.load84, %wide.load85
-  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %index
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %index
   store <2 x double> %i.ao, ptr %i.ap, align 8, !tbaa !41, !alias.scope !61, !noalias !62
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.aq = icmp eq i64 %index.next, %n.vec
@@ -318,22 +322,22 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 6 uses
-  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv ; 3 uses
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 3 uses
   %i.as = load double, ptr %i.ar, align 8, !tbaa !41
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv ; 3 uses
   %i.au = load double, ptr %i.at, align 8, !tbaa !41
   %i.av = fmul double %i.as, %i.au
-  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv
+  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv
   store double %i.av, ptr %i.aw, align 8, !tbaa !41
   %i.ax = load double, ptr %i.ar, align 8, !tbaa !41
   %i.ay = load double, ptr %i.at, align 8, !tbaa !41
   %i.az = fadd double %i.ax, %i.ay
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv
   store double %i.az, ptr %i.ba, align 8, !tbaa !41
   %i.bb = load double, ptr %i.ar, align 8, !tbaa !41
   %i.bc = load double, ptr %i.at, align 8, !tbaa !41
   %i.bd = fsub double %i.bb, %i.bc
-  %i.be = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv
+  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv
   store double %i.bd, ptr %i.be, align 8, !tbaa !41
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
