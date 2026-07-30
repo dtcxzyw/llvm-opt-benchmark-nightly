@@ -203,19 +203,18 @@ _ZN10aiVector3tIfEdVEf.exit.i.i371:               ; preds = %_ZNK10aiVector3tIfE
   br label %bb.cy
 
 bb.cy:                                            ; preds = %_ZNK10aiVector3tIfE5EqualERKS0_f.exit137.thread.i, %_ZN10aiVector3tIfEdVEf.exit.i.i371
-  %.sroa.015.3.i = phi <2 x float> [ %i.xr, %_ZNK10aiVector3tIfE5EqualERKS0_f.exit137.thread.i ], [ %i.ya, %_ZN10aiVector3tIfEdVEf.exit.i.i371 ] ; 4 uses
+  %.sroa.015.3.i = phi <2 x float> [ %i.xr, %_ZNK10aiVector3tIfE5EqualERKS0_f.exit137.thread.i ], [ %i.ya, %_ZN10aiVector3tIfEdVEf.exit.i.i371 ] ; 5 uses
   %.sroa.31.3.i = phi float [ %.sroa.31.2.i, %_ZNK10aiVector3tIfE5EqualERKS0_f.exit137.thread.i ], [ %i.yb, %_ZN10aiVector3tIfEdVEf.exit.i.i371 ] ; 6 uses
   %.sroa.0796.4.vec.extract = extractelement <2 x float> %.sroa.0.1.i, i64 1 ; 4 uses
-  %.sroa.0790.4.vec.extract = extractelement <2 x float> %.sroa.015.3.i, i64 1 ; 5 uses
+  %.sroa.0790.4.vec.extract = extractelement <2 x float> %.sroa.015.3.i, i64 1 ; 4 uses
   %.sroa.0790.0.vec.extract = extractelement <2 x float> %.sroa.015.3.i, i64 0 ; 4 uses
   %.sroa.0796.0.vec.extract = extractelement <2 x float> %.sroa.0.1.i, i64 0 ; 4 uses
-  %20 = fneg float %.sroa.31.3.i
-  %21 = fneg float %.sroa.0790.4.vec.extract
-  %22 = shufflevector <2 x float> %.sroa.0.1.i, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %23 = insertelement <2 x float> %22, float %.sroa.13.1.i, i64 0
-  %24 = insertelement <2 x float> poison, float %21, i64 0
-  %i.yc = insertelement <2 x float> %24, float %20, i64 1
-  %i.yd = fmul <2 x float> %23, %i.yc
+  %20 = shufflevector <2 x float> %.sroa.015.3.i, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %21 = insertelement <2 x float> %20, float %.sroa.31.3.i, i64 1
+  %22 = fneg <2 x float> %21
+  %23 = shufflevector <2 x float> %.sroa.0.1.i, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %i.yc = insertelement <2 x float> %23, float %.sroa.13.1.i, i64 0
+  %i.yd = fmul <2 x float> %i.yc, %22
   %i.ye = shufflevector <2 x float> %.sroa.0.1.i, <2 x float> %.sroa.015.3.i, <2 x i32> <i32 1, i32 2>
   %i.yf = insertelement <2 x float> poison, float %.sroa.31.3.i, i64 0
   %i.yg = insertelement <2 x float> %i.yf, float %.sroa.13.1.i, i64 1

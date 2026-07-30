@@ -204,14 +204,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !54 ; 17 uses
   %i.am = load ptr, ptr %i.af, align 8, !tbaa !67 ; 3 uses
   %i.an = load ptr, ptr %i.ae, align 8, !tbaa !67 ; 3 uses
-  %i.ao = fmul double %1, 5.000000e-01            ; 7 uses
+  %i.ao = fmul double %1, 5.000000e-01            ; 6 uses
   %i.ap = load ptr, ptr @_ZZN5State22calc_finite_differenceEdE5H_new, align 8, !tbaa !92
   %i.aq = load ptr, ptr @_ZZN5State22calc_finite_differenceEdE5U_new, align 8, !tbaa !92
   %i.ar = load ptr, ptr @_ZZN5State22calc_finite_differenceEdE5V_new, align 8, !tbaa !92
   %i.as = sext i32 %i.ab to i64
   %wide.trip.count = sext i32 %i.ac to i64
   %i.at = insertelement <2 x double> poison, double %i.ao, i64 0
-  %i.au = shufflevector <2 x double> %i.at, <2 x double> poison, <2 x i32> zeroinitializer ; 9 uses
+  %i.au = shufflevector <2 x double> %i.at, <2 x double> poison, <2 x i32> zeroinitializer ; 10 uses
   br label %bb.d
 
 ._crit_edge:                                      ; preds = %bb.bh, %bb.c
@@ -614,7 +614,7 @@ begin_hunk_1_@_ZN5State22calc_finite_differenceEd:bb.a
   %i.qo = insertelement <2 x double> poison, double %i.qn, i64 0
   %i.qp = insertelement <2 x double> %i.qo, double %i.qm, i64 1
   %i.qq = insertelement <2 x double> %i.ps, double %i.bw, i64 0
-  %i.qr = fdiv <2 x double> %i.qp, %i.qq          ; 2 uses
+  %i.qr = fdiv <2 x double> %i.qp, %i.qq          ; 3 uses
   %i.qs = extractelement <2 x double> %i.qr, i64 0
   %i.qt = fadd double %i.jy, %i.qs                ; 3 uses
   %i.qu = fmul double %i.qt, %i.er                ; 2 uses
@@ -658,7 +658,7 @@ begin_hunk_1_@_ZN5State22calc_finite_differenceEd:bb.a
   %i.sc = insertelement <2 x double> %i.qx, double %i.rw, i64 1 ; 2 uses
   %i.sd = fadd <2 x double> %i.sb, %i.sc          ; 4 uses
   %i.se = shufflevector <2 x double> %i.pk, <2 x double> %i.sd, <2 x i32> <i32 1, i32 2>
-  %i.sf = fdiv <2 x double> %i.ri, %i.se          ; 2 uses
+  %i.sf = fdiv <2 x double> %i.ri, %i.se          ; 3 uses
   %i.sg = extractelement <2 x double> %i.sf, i64 1
   %i.sh = shufflevector <2 x double> %i.sd, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.si = insertelement <2 x double> %i.sh, double %i.cx, i64 1
@@ -679,8 +679,6 @@ begin_hunk_1_@_ZN5State22calc_finite_differenceEd:bb.a
   %i.sx = fsub <2 x double> %i.ss, %i.sv
   %i.sy = shufflevector <2 x double> %i.sw, <2 x double> %i.sx, <2 x i32> <i32 0, i32 3>
   %i.sz = fdiv <2 x double> %i.sy, %i.sd          ; 2 uses
-  %3 = extractelement <2 x double> %i.sz, i64 1
-  %4 = extractelement <2 x double> %i.sz, i64 0
   %i.ta = fmul double %i.cx, %i.cx
   %i.tb = fmul double %i.ta, 4.900000e+00
   %i.tc = fmul double %i.db, %i.er
@@ -731,17 +729,18 @@ begin_hunk_1_@_ZN5State22calc_finite_differenceEd:bb.a
   %i.ut = extractelement <2 x double> %i.uh, i64 1 ; 4 uses
   %i.uu = fmul double %i.ut, %i.ut
   %i.uv = fmul double %i.uu, 4.900000e+00
-  %5 = fmul double %i.ao, %3
+  %3 = shufflevector <2 x double> %i.sf, <2 x double> %i.sz, <2 x i32> <i32 0, i32 3>
+  %4 = fmul <2 x double> %i.au, %3
   %i.uw = shufflevector <2 x double> %i.sf, <2 x double> %i.tt, <2 x i32> <i32 0, i32 2>
   %i.ux = fmul <2 x double> %i.au, %i.uw
-  %6 = fsub double %4, %5
+  %5 = shufflevector <2 x double> %i.qr, <2 x double> %i.sz, <2 x i32> <i32 1, i32 2>
+  %6 = fsub <2 x double> %5, %4
   %i.uy = shufflevector <2 x double> %i.qr, <2 x double> %i.tj, <2 x i32> <i32 1, i32 3>
-  %i.uz = fsub <2 x double> %i.uy, %i.ux          ; 6 uses
+  %i.uz = fsub <2 x double> %i.uy, %i.ux          ; 5 uses
   %i.va = shufflevector <2 x double> %i.ub, <2 x double> %i.uz, <2 x i32> <i32 1, i32 2>
   %i.vb = fmul <2 x double> %i.va, %i.ul
   %i.vc = fdiv <2 x double> %i.vb, %i.uh          ; 3 uses
-  %7 = insertelement <2 x double> %i.uz, double %6, i64 1
-  %i.vd = fmul <2 x double> %i.uz, %7
+  %i.vd = fmul <2 x double> %i.uz, %6
   %i.ve = shufflevector <2 x double> %i.uh, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.vf = insertelement <2 x double> %i.ve, double %i.sm, i64 1
   %i.vg = fdiv <2 x double> %i.vd, %i.vf          ; 2 uses

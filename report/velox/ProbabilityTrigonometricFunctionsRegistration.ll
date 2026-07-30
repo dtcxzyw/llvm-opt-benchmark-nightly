@@ -204,19 +204,20 @@ _ZNK5boost4math6detail20gamma_p_inverse_funcIdNS0_8policies6policyINS3_14default
   br label %_ZN5boost4math5tools6detail22handle_zero_derivativeINS0_6detail20gamma_p_inverse_funcIdNS0_8policies6policyINS6_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEEdEEvT_RT0_RKSC_SD_SD_SD_SF_SF_.exit
 
 _ZN5boost4math5tools6detail22handle_zero_derivativeINS0_6detail20gamma_p_inverse_funcIdNS0_8policies6policyINS6_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEEdEEvT_RT0_RKSC_SD_SD_SD_SF_SF_.exit: ; preds = %.thread146, %_ZNK5boost4math6detail20gamma_p_inverse_funcIdNS0_8policies6policyINS3_14default_policyES5_S5_S5_S5_S5_S5_S5_S5_S5_S5_S5_S5_EEEclERKd.exit.i
-  %i.bu = phi double [ %.pre197, %_ZNK5boost4math6detail20gamma_p_inverse_funcIdNS0_8policies6policyINS3_14default_policyES5_S5_S5_S5_S5_S5_S5_S5_S5_S5_S5_S5_EEEclERKd.exit.i ], [ %i.bk, %.thread146 ]
+  %i.bu = phi double [ %.pre197, %_ZNK5boost4math6detail20gamma_p_inverse_funcIdNS0_8policies6policyINS3_14default_policyES5_S5_S5_S5_S5_S5_S5_S5_S5_S5_S5_S5_EEEclERKd.exit.i ], [ %i.bk, %.thread146 ] ; 2 uses
   %.8140 = phi double [ %i.bt, %_ZNK5boost4math6detail20gamma_p_inverse_funcIdNS0_8policies6policyINS3_14default_policyES5_S5_S5_S5_S5_S5_S5_S5_S5_S5_S5_S5_EEEclERKd.exit.i ], [ %.0132, %.thread146 ]
-  %i.bv = phi double [ %i.bs, %_ZNK5boost4math6detail20gamma_p_inverse_funcIdNS0_8policies6policyINS3_14default_policyES5_S5_S5_S5_S5_S5_S5_S5_S5_S5_S5_S5_EEEclERKd.exit.i ], [ %i.ab, %.thread146 ]
-  %20 = insertelement <2 x double> poison, double %i.bu, i64 0
-  %21 = insertelement <2 x double> %20, double %i.bv, i64 1 ; 2 uses
-  %22 = fcmp oeq <2 x double> %21, zeroinitializer
-  %23 = bitcast <2 x double> %21 to <2 x i64>
-  %24 = icmp sgt <2 x i64> %23, splat (i64 -1)
-  %25 = select <2 x i1> %24, <2 x i32> splat (i32 1), <2 x i32> splat (i32 -1)
-  %26 = select <2 x i1> %22, <2 x i32> zeroinitializer, <2 x i32> %25 ; 2 uses
-  %27 = extractelement <2 x i32> %26, i64 0
-  %28 = extractelement <2 x i32> %26, i64 1
-  %i.bw = mul nsw i32 %27, %28
+  %i.bv = phi double [ %i.bs, %_ZNK5boost4math6detail20gamma_p_inverse_funcIdNS0_8policies6policyINS3_14default_policyES5_S5_S5_S5_S5_S5_S5_S5_S5_S5_S5_S5_EEEclERKd.exit.i ], [ %i.ab, %.thread146 ] ; 2 uses
+  %20 = fcmp oeq double %i.bv, 0.000000e+00
+  %21 = bitcast double %i.bv to i64
+  %.not.i.i = icmp sgt i64 %21, -1
+  %22 = select i1 %.not.i.i, i32 1, i32 -1
+  %23 = select i1 %20, i32 0, i32 %22
+  %24 = fcmp oeq double %i.bu, 0.000000e+00
+  %25 = bitcast double %i.bu to i64
+  %.not.i28.i = icmp sgt i64 %25, -1
+  %26 = select i1 %.not.i28.i, i32 1, i32 -1
+  %27 = select i1 %24, i32 0, i32 %26
+  %i.bw = mul nsw i32 %27, %23
   %i.bx = icmp slt i32 %i.bw, 0
   %i.by = fcmp olt double %.8140, 0.000000e+00
   %i.bz = xor i1 %i.by, %i.bx

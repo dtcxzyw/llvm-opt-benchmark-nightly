@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.c
   %i.co = shufflevector <4 x float> %i.be, <4 x float> poison, <2 x i32> <i32 poison, i32 3>
   %i.cp = insertelement <2 x float> %i.co, float %i.cb, i64 0
   %i.cq = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cn, <2 x float> zeroinitializer, <2 x float> %i.cp) ; 3 uses
-  %i.cr = fadd <2 x float> %i.cq, <float -0.000000e+00, float 0.000000e+00>
-  %i.cs = shufflevector <2 x float> %i.cr, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1> ; 2 uses
+  %i.cr = fadd <2 x float> %i.cq, <float -0.000000e+00, float 0.000000e+00> ; 2 uses
+  %i.cs = shufflevector <2 x float> %i.cr, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
   %i.ct = insertelement <2 x float> %.fca.0.extract, float 0.000000e+00, i64 0 ; 2 uses
   %i.cu = insertelement <2 x float> poison, float %i.au, i64 0
   %i.cv = shufflevector <2 x float> %i.cu, <2 x float> poison, <2 x i32> zeroinitializer
@@ -246,7 +246,8 @@ bb.d:                                             ; preds = %bb.c
   %i.ee = shufflevector <2 x float> %.fca.0.extract, <2 x float> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison> ; 2 uses
   %i.ef = shufflevector <4 x float> <float 0.000000e+00, float 0.000000e+00, float poison, float 0.000000e+00>, <4 x float> %i.ee, <4 x i32> <i32 0, i32 1, i32 6, i32 3>
   %i.eg = fmul <4 x float> %i.ef, %i.cm           ; 2 uses
-  %i.eh = extractelement <2 x float> %i.cq, i64 0
+  %5 = extractelement <2 x float> %i.cq, i64 0
+  %i.eh = extractelement <4 x float> %i.cd, i64 0
   %shift = shufflevector <2 x float> %.fca.0.extract, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop515 = fmul <2 x float> %shift, %i.ck
   %i.ei = insertelement <2 x float> poison, float %i.bz, i64 0
@@ -264,15 +265,14 @@ bb.d:                                             ; preds = %bb.c
   %i.eu = shufflevector <4 x float> %i.et, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
   %i.ev = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.es, <4 x float> %i.eu, <4 x float> %i.eg) ; 3 uses
   %i.ew = extractelement <4 x float> %i.ev, i64 0
-  %5 = insertelement <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float poison>, float %.fca.1.extract, i64 3
-  %6 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %5, <4 x float> %i.cs, <4 x float> %i.ev)
-  %7 = fadd <4 x float> %i.cd, %6
-  %8 = call float @llvm.fmuladd.f32(float %.fca.1.extract, float %i.eh, float %i.ew)
-  %9 = shufflevector <4 x float> %i.cd, <4 x float> %i.cs, <2 x i32> <i32 0, i32 5>
-  %10 = shufflevector <4 x float> %i.ev, <4 x float> poison, <2 x i32> <i32 poison, i32 3>
-  %11 = insertelement <2 x float> %10, float %8, i64 0
-  %12 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> zeroinitializer, <2 x float> %11) ; 2 uses
-  %13 = extractelement <2 x float> %12, i64 1
+  %6 = call float @llvm.fmuladd.f32(float %.fca.1.extract, float %5, float %i.ew)
+  %7 = call float @llvm.fmuladd.f32(float %i.eh, float 0.000000e+00, float %6)
+  %8 = insertelement <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float poison>, float %.fca.1.extract, i64 3
+  %9 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %8, <4 x float> %i.cs, <4 x float> %i.ev)
+  %10 = fadd <4 x float> %i.cd, %9
+  %11 = extractelement <2 x float> %i.cr, i64 1
+  %12 = extractelement <4 x float> %i.ev, i64 3
+  %13 = call float @llvm.fmuladd.f32(float %11, float 0.000000e+00, float %12)
   %i.ex = fadd float %13, 1.000000e+00
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 3 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 5 uses
@@ -376,10 +376,9 @@ _ZNSt6vectorIP6aiNodeSaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6vectorIP6ai
   %.sroa.28.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fh, i64 1060
   store <2 x float> %i.eq, ptr %.sroa.28.0..sroa_idx, align 4
   %.sroa.34.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fh, i64 1068
-  %14 = extractelement <2 x float> %12, i64 0
-  store float %14, ptr %.sroa.34.0..sroa_idx, align 4
+  store float %7, ptr %.sroa.34.0..sroa_idx, align 4
   %.sroa.37.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fh, i64 1072
-  store <4 x float> %7, ptr %.sroa.37.0..sroa_idx, align 8
+  store <4 x float> %10, ptr %.sroa.37.0..sroa_idx, align 8
   %.sroa.49.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fh, i64 1088
   store float %i.ex, ptr %.sroa.49.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
