@@ -205,9 +205,13 @@ bb.e:                                             ; preds = %bb.c
     i16 0, label %bb.f
     i16 2, label %bb.g
     i16 10, label %bb.p
-    i16 1, label %3
+    i16 1, label %.preheader.preheader
     i16 17, label %bb.ae
   ]
+
+.preheader.preheader:                             ; preds = %bb.e
+  %3 = icmp ugt i32 %1, 2
+  br i1 %3, label %.lr.ph242, label %unixsocket_len.exit.a
 
 bb.f:                                             ; preds = %bb.e
   %i.k = tail call i64 @rb_str_cat(i64 noundef %2, ptr noundef nonnull @.str.14, i64 noundef 6) #17 ; 0 uses
@@ -334,30 +338,26 @@ bb.y:                                             ; preds = %bb.w, %bb.x, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   br label %.loopexit
 
-3:                                                ; preds = %bb.e
-  %4 = icmp ugt i32 %1, 2
-  br i1 %4, label %.lr.ph242, label %unixsocket_len.exit.a
-
 bb.z:                                             ; preds = %.lr.ph242
   %i.ax = icmp sgt i64 %.0.idx.i240, 3
   %indvar.next = add i64 %indvar, 1
   br i1 %i.ax, label %.lr.ph242, label %unixsocket_len.exit.a, !llvm.loop !80
 
-.lr.ph242:                                        ; preds = %3, %bb.z
-  %indvar = phi i64 [ %indvar.next, %bb.z ], [ 0, %3 ] ; 3 uses
-  %.0.idx.i240 = phi i64 [ %.0.add.i, %bb.z ], [ %i.e, %3 ] ; 3 uses
+.lr.ph242:                                        ; preds = %.preheader.preheader, %bb.z
+  %indvar = phi i64 [ %indvar.next, %bb.z ], [ 0, %.preheader.preheader ] ; 3 uses
+  %.0.idx.i240 = phi i64 [ %.0.add.i, %bb.z ], [ %i.e, %.preheader.preheader ] ; 6 uses
   %.0.add.i = add nsw i64 %.0.idx.i240, -1        ; 2 uses
   %.ptr.i = getelementptr inbounds nuw i8, ptr %0, i64 %.0.add.i
   %i.ay = load i8, ptr %.ptr.i, align 1, !tbaa !46
   %i.az = icmp eq i8 %i.ay, 0
   br i1 %i.az, label %bb.z, label %.thread232, !llvm.loop !80
 
-unixsocket_len.exit.a:                            ; preds = %bb.z, %3
+unixsocket_len.exit.a:                            ; preds = %bb.z, %.preheader.preheader
   %i.ba = tail call i64 @rb_str_cat(i64 noundef %2, ptr noundef nonnull @.str.26, i64 noundef 27) #17 ; 0 uses
   br label %.loopexit
 
 .thread232:                                       ; preds = %.lr.ph242
-  %i.bb = getelementptr i8, ptr %0, i64 %.0.idx.i240 ; 3 uses
+  %i.bb = getelementptr i8, ptr %0, i64 %.0.idx.i240
   %i.bc = icmp ult ptr %i.f, %i.bb
   br i1 %i.bc, label %.lr.ph211.preheader, label %._crit_edge.thread
 
@@ -414,7 +414,7 @@ bb.aa:                                            ; preds = %.lr.ph211.1
   %.0165209.epil.init = phi i1 [ false, %.lr.ph211.preheader ], [ %i.bs, %._crit_edge.unr-lcssa ]
   %lcmp.mod247 = trunc i64 %i.be to i1
   tail call void @llvm.assume(i1 %lcmp.mod247)
-  br i1 %.0165209.epil.init, label %.critedge252, label %bb.ab
+  br i1 %.0165209.epil.init, label %.lr.ph215.preheader.critedge, label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph211.epil.preheader
   %i.bu = load i8, ptr %.0210.epil.init, align 1, !tbaa !46 ; 2 uses
@@ -427,10 +427,12 @@ bb.ab:                                            ; preds = %.lr.ph211.epil.preh
 
 ._crit_edge:                                      ; preds = %bb.ab, %._crit_edge.unr-lcssa
   %.lcssa = phi i1 [ %i.bs, %._crit_edge.unr-lcssa ], [ %spec.select243.epil, %bb.ab ]
+  %smax = tail call i64 @llvm.smax.i64(i64 %.0.idx.i240, i64 2)
+  %scevgep = getelementptr i8, ptr %0, i64 %smax
   br i1 %.lcssa, label %.critedge252, label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %.thread232, %._crit_edge
-  %.0.lcssa237 = phi ptr [ %i.bb, %._crit_edge ], [ %i.f, %.thread232 ]
+  %.0.lcssa237 = phi ptr [ %scevgep, %._crit_edge ], [ %i.f, %.thread232 ]
   %i.bz = load i8, ptr %i.f, align 2, !tbaa !46
   %.not176 = icmp eq i8 %i.bz, 47
   br i1 %.not176, label %bb.ad, label %bb.ac
@@ -445,8 +447,15 @@ bb.ad:                                            ; preds = %bb.ac, %._crit_edge
   %i.cd = tail call i64 @rb_str_cat(i64 noundef %2, ptr noundef nonnull %i.f, i64 noundef %i.cc) #17 ; 0 uses
   br label %.loopexit
 
-.critedge252:                                     ; preds = %.lr.ph211.epil.preheader, %._crit_edge
+.lr.ph215.preheader.critedge:                     ; preds = %.lr.ph211.epil.preheader
+  %smax.c = tail call i64 @llvm.smax.i64(i64 %.0.idx.i240, i64 2)
+  %scevgep.c = getelementptr i8, ptr %0, i64 %smax.c ; 0 uses
+  br label %.critedge252
+
+.critedge252:                                     ; preds = %.lr.ph215.preheader.critedge, %._crit_edge
   %i.ce = tail call i64 @rb_str_cat(i64 noundef %2, ptr noundef nonnull @.str.28, i64 noundef 4) #17 ; 0 uses
+  %smax221 = tail call i64 @llvm.smax.i64(i64 %.0.idx.i240, i64 2)
+  %scevgep222 = getelementptr i8, ptr %0, i64 %smax221
   br label %.lr.ph215
 
 .lr.ph215:                                        ; preds = %.critedge252, %.lr.ph215
@@ -455,7 +464,7 @@ bb.ad:                                            ; preds = %bb.ac, %._crit_edge
   %i.cg = load i8, ptr %.0164213, align 1, !tbaa !46
   %i.ch = zext i8 %i.cg to i32
   %i.ci = tail call i64 (i64, ptr, ...) @rb_str_catf(i64 noundef %2, ptr noundef nonnull @.str.29, i32 noundef %i.ch) #17 ; 0 uses
-  %exitcond220.not = icmp eq ptr %i.cf, %i.bb
+  %exitcond220.not = icmp eq ptr %i.cf, %scevgep222
   br i1 %exitcond220.not, label %.loopexit, label %.lr.ph215, !llvm.loop !102
 
 bb.ae:                                            ; preds = %bb.e
@@ -857,6 +866,9 @@ declare i16 @llvm.bswap.i16(i16) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #16
