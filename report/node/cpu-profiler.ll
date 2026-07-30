@@ -204,7 +204,7 @@ bb.a:
   %.sroa.2225.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.2225.0.copyload = load ptr, ptr %.sroa.2225.0..sroa_idx, align 8 ; 4 uses
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %.sroa.24.0.copyload = load i32, ptr %.sroa.24.0..sroa_idx, align 8 ; 3 uses
+  %.sroa.24.0.copyload = load i32, ptr %.sroa.24.0..sroa_idx, align 8 ; 2 uses
   %i.a = load i32, ptr %1, align 8
   switch i32 %i.a, label %_ZN2v88internal25CodeDisableOptEventRecord13UpdateCodeMapEPNS0_20InstructionStreamMapE.exit [
     i32 1, label %bb.b
@@ -265,26 +265,22 @@ _ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EE17_S_check_init_lenEmRKS2_.exit.
   br label %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit
 
 _ZNSt12_Vector_baseIN2v820CpuProfileDeoptFrameESaIS1_EE11_M_allocateEm.exit.i.i: ; preds = %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i
-  %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx) #22 ; 6 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %.idx ; 3 uses
+  %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx) #22 ; 5 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %.idx ; 2 uses
   %i.q = icmp samesign ugt i64 %.idx, 16
-  br i1 %i.q, label %bb.i, label %3, !prof !18
+  br i1 %i.q, label %bb.i, label %bb.j, !prof !18
 
 bb.i:                                             ; preds = %_ZNSt12_Vector_baseIN2v820CpuProfileDeoptFrameESaIS1_EE11_M_allocateEm.exit.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr align 8 %.sroa.2225.0.copyload, i64 %.idx, i1 false)
   br label %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit
 
-3:                                                ; preds = %_ZNSt12_Vector_baseIN2v820CpuProfileDeoptFrameESaIS1_EE11_M_allocateEm.exit.i.i
-  %4 = icmp eq i32 %.sroa.24.0.copyload, 1
-  br i1 %4, label %bb.j, label %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit
-
-bb.j:                                             ; preds = %3
+bb.j:                                             ; preds = %_ZNSt12_Vector_baseIN2v820CpuProfileDeoptFrameESaIS1_EE11_M_allocateEm.exit.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.o, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.2225.0.copyload, i64 16, i1 false)
   br label %_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit
 
-_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit: ; preds = %.thread.i.i, %bb.i, %3, %bb.j
-  %.sroa.9.0 = phi ptr [ %i.n, %.thread.i.i ], [ %i.p, %bb.i ], [ %i.p, %bb.j ], [ %i.p, %3 ] ; 2 uses
-  %.sroa.049.0 = phi ptr [ null, %.thread.i.i ], [ %i.o, %bb.i ], [ %i.o, %bb.j ], [ %i.o, %3 ]
+_ZNSt6vectorIN2v820CpuProfileDeoptFrameESaIS1_EEC2IPS1_vEET_S6_RKS2_.exit: ; preds = %.thread.i.i, %bb.i, %bb.j
+  %.sroa.9.0 = phi ptr [ %i.n, %.thread.i.i ], [ %i.p, %bb.i ], [ %i.p, %bb.j ] ; 2 uses
+  %.sroa.049.0 = phi ptr [ null, %.thread.i.i ], [ %i.o, %bb.i ], [ %i.o, %bb.j ]
   %i.r = inttoptr i64 %.sroa.11.0.copyload to ptr
   store ptr %.sroa.049.0, ptr %2, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8
