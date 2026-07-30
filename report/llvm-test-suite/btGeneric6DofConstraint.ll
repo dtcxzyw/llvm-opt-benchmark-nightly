@@ -203,9 +203,9 @@ _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread.sink.split: ; 
 
 _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread: ; preds = %_ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread.sink.split, %_ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit
   %i.ck = getelementptr inbounds nuw [16 x i8], ptr %i.bo, i64 %indvars.iv ; 2 uses
-  %.sroa.0.0.copyload.i = load <2 x float>, ptr %i.ck, align 8 ; 5 uses
+  %.sroa.0.0.copyload.i = load <2 x float>, ptr %i.ck, align 8 ; 4 uses
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ck, i64 8
-  %.sroa.2.0.copyload.i = load <2 x float>, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !33 ; 3 uses
+  %.sroa.2.0.copyload.i = load <2 x float>, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !33 ; 2 uses
   %i.cl = getelementptr inbounds nuw [84 x i8], ptr %i.bp, i64 %indvars.iv ; 10 uses
   %i.cm = load ptr, ptr %i.i, align 8, !tbaa !61, !nonnull !62, !align !63 ; 8 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 8
@@ -233,9 +233,9 @@ _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread: ; preds = %_Z
   %i.dj = getelementptr inbounds nuw i8, ptr %i.cl, i64 32
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cl, i64 48
   %i.dl = getelementptr inbounds nuw i8, ptr %i.cl, i64 64
-  %i.dm = extractelement <2 x float> %.sroa.0.0.copyload.i, i64 0
+  %i.dm = extractelement <2 x float> %.sroa.0.0.copyload.i, i64 0 ; 2 uses
   %i.dn = extractelement <2 x float> %.sroa.0.0.copyload.i, i64 1 ; 2 uses
-  %i.do = extractelement <2 x float> %.sroa.2.0.copyload.i, i64 0
+  %i.do = extractelement <2 x float> %.sroa.2.0.copyload.i, i64 0 ; 2 uses
   %i.dp = load <2 x float>, ptr %i.cn, align 8, !tbaa !10, !noalias !95
   %i.dq = load <2 x float>, ptr %i.co, align 8, !tbaa !10, !noalias !95
   %i.dr = load <2 x float>, ptr %i.cp, align 8, !tbaa !10, !noalias !95
@@ -245,6 +245,10 @@ _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread: ; preds = %_Z
   %i.dv = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dp, <2 x float> %i.du, <2 x float> %i.dt)
   %i.dw = shufflevector <2 x float> %.sroa.2.0.copyload.i, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dx = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dr, <2 x float> %i.dw, <2 x float> %i.dv) ; 4 uses
+  %4 = fmul float %i.cu, %i.dn
+  %5 = tail call float @llvm.fmuladd.f32(float %i.ct, float %i.dm, float %4)
+  %6 = tail call noundef float @llvm.fmuladd.f32(float %i.cv, float %i.do, float %5) ; 3 uses
+  %.sroa.3.12.vec.insert.i.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %6, i64 0
   %.sroa.46.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.cl, i64 24
   %i.dy = fneg float %i.dm                        ; 2 uses
   %i.dz = fneg float %i.dn                        ; 2 uses
@@ -254,6 +258,7 @@ _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread: ; preds = %_Z
   %i.ed = load <2 x float>, ptr %i.cz, align 8, !tbaa !10, !noalias !98
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(84) %i.cl, i8 0, i64 16, i1 false)
   store <2 x float> %i.dx, ptr %i.di, align 4
+  store <2 x float> %.sroa.3.12.vec.insert.i.i.i, ptr %.sroa.46.0..sroa_idx.i.i, align 4, !tbaa !33
   %i.ee = insertelement <2 x float> poison, float %i.dz, i64 0
   %i.ef = shufflevector <2 x float> %i.ee, <2 x float> poison, <2 x i32> zeroinitializer
   %i.eg = fmul <2 x float> %i.ec, %i.ef
@@ -263,58 +268,46 @@ _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread: ; preds = %_Z
   %i.ek = insertelement <2 x float> poison, float %i.ea, i64 0
   %i.el = shufflevector <2 x float> %i.ek, <2 x float> poison, <2 x i32> zeroinitializer
   %i.em = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ed, <2 x float> %i.el, <2 x float> %i.ej) ; 4 uses
+  %7 = fmul float %i.de, %i.dz
+  %8 = tail call float @llvm.fmuladd.f32(float %i.dd, float %i.dy, float %7)
+  %9 = tail call noundef float @llvm.fmuladd.f32(float %i.df, float %i.ea, float %8) ; 3 uses
+  %.sroa.3.12.vec.insert.i20.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %9, i64 0
   store <2 x float> %i.em, ptr %i.dj, align 4
-  %.sroa.44.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.cl, i64 40
-  %4 = getelementptr inbounds nuw i8, ptr %i.cm, i64 436
+  %.sroa.4.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %i.cl, i64 40
+  store <2 x float> %.sroa.3.12.vec.insert.i20.i.i, ptr %.sroa.4.0..sroa_idx.i.i.a, align 4, !tbaa !33
+  %10 = extractelement <2 x float> %i.dx, i64 0
+  %11 = load <2 x float>, ptr %i.dg, align 4, !tbaa !10
+  %12 = fmul <2 x float> %i.dx, %11               ; 3 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.cm, i64 436
+  %14 = load float, ptr %13, align 4, !tbaa !10
+  %15 = fmul float %6, %14                        ; 2 uses
+  %i.en = insertelement <2 x float> <float poison, float 0.000000e+00>, float %15, i64 0
+  store <2 x float> %12, ptr %i.dk, align 4
   %.sroa.42.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.cl, i64 56
-  %5 = getelementptr inbounds nuw i8, ptr %i.cw, i64 436
-  %.sroa.4.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %i.cl, i64 72
-  %6 = fmul float %i.de, %i.dz
-  %7 = fmul float %i.cu, %i.dn
-  %8 = insertelement <2 x float> poison, float %i.ct, i64 0
-  %9 = insertelement <2 x float> %8, float %i.dd, i64 1
-  %10 = insertelement <2 x float> %.sroa.0.0.copyload.i, float %i.dy, i64 1
-  %11 = insertelement <2 x float> poison, float %7, i64 0
-  %12 = insertelement <2 x float> %11, float %6, i64 1
-  %13 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> %10, <2 x float> %12)
-  %14 = insertelement <2 x float> poison, float %i.cv, i64 0
-  %15 = insertelement <2 x float> %14, float %i.df, i64 1
-  %i.en = insertelement <2 x float> %.sroa.2.0.copyload.i, float %i.ea, i64 1
-  %16 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %15, <2 x float> %i.en, <2 x float> %13) ; 5 uses
-  %17 = insertelement <2 x float> %16, float 0.000000e+00, i64 1
-  store <2 x float> %17, ptr %.sroa.46.0..sroa_idx.i.i, align 4, !tbaa !33
-  %18 = shufflevector <2 x float> <float poison, float 0.000000e+00>, <2 x float> %16, <2 x i32> <i32 3, i32 1>
-  store <2 x float> %18, ptr %.sroa.44.0..sroa_idx.i.i, align 4, !tbaa !33
-  %i.eo = load <2 x float>, ptr %i.dg, align 4, !tbaa !10
-  %i.ep = fmul <2 x float> %i.dx, %i.eo           ; 3 uses
-  %19 = load float, ptr %4, align 4, !tbaa !10
-  %20 = extractelement <2 x float> %16, i64 0
-  %i.eq = fmul float %20, %19                     ; 2 uses
+  store <2 x float> %i.en, ptr %.sroa.42.0..sroa_idx.i.i, align 4, !tbaa !33
+  %16 = extractelement <2 x float> %i.em, i64 0
+  %i.eo = load <2 x float>, ptr %i.dh, align 4, !tbaa !10
+  %i.ep = fmul <2 x float> %i.em, %i.eo           ; 3 uses
+  %17 = getelementptr inbounds nuw i8, ptr %i.cw, i64 436
+  %18 = load float, ptr %17, align 4, !tbaa !10
+  %i.eq = fmul float %9, %18                      ; 2 uses
   %.sroa.3.12.vec.insert.i25.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.eq, i64 0
-  store <2 x float> %i.ep, ptr %i.dk, align 4
-  store <2 x float> %.sroa.3.12.vec.insert.i25.i.i, ptr %.sroa.42.0..sroa_idx.i.i, align 4, !tbaa !33
-  %21 = load <2 x float>, ptr %i.dh, align 4, !tbaa !10
-  %i.er = fmul <2 x float> %i.em, %21             ; 3 uses
-  %22 = load float, ptr %5, align 4, !tbaa !10
-  %i.es = extractelement <2 x float> %16, i64 1
-  %23 = fmul float %i.es, %22                     ; 2 uses
-  %.sroa.3.12.vec.insert.i30.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %23, i64 0
-  store <2 x float> %i.er, ptr %i.dl, align 4
-  store <2 x float> %.sroa.3.12.vec.insert.i30.i.i, ptr %.sroa.4.0..sroa_idx.i.i.a, align 4, !tbaa !33
-  %24 = shufflevector <2 x float> %i.dx, <2 x float> %i.em, <2 x i32> <i32 1, i32 3>
-  %25 = shufflevector <2 x float> %i.ep, <2 x float> %i.er, <2 x i32> <i32 1, i32 3>
-  %i.et = fmul <2 x float> %24, %25
-  %26 = shufflevector <2 x float> %i.ep, <2 x float> %i.er, <2 x i32> <i32 0, i32 2>
-  %27 = shufflevector <2 x float> %i.dx, <2 x float> %i.em, <2 x i32> <i32 0, i32 2>
-  %28 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %26, <2 x float> %27, <2 x float> %i.et)
-  %29 = insertelement <2 x float> poison, float %i.eq, i64 0
-  %30 = insertelement <2 x float> %29, float %23, i64 1
-  %31 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %30, <2 x float> %16, <2 x float> %28) ; 2 uses
-  %shift = shufflevector <2 x float> %31, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %31, %shift
-  %32 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  store <2 x float> %i.ep, ptr %i.dl, align 4
+  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.cl, i64 72
+  store <2 x float> %.sroa.3.12.vec.insert.i25.i.i, ptr %.sroa.4.0..sroa_idx.i.i, align 4, !tbaa !33
+  %i.er = fmul <2 x float> %i.dx, %12
+  %i.es = extractelement <2 x float> %i.er, i64 1
+  %19 = extractelement <2 x float> %12, i64 0
+  %20 = tail call float @llvm.fmuladd.f32(float %19, float %10, float %i.es)
+  %21 = tail call noundef float @llvm.fmuladd.f32(float %15, float %6, float %20)
+  %i.et = fmul <2 x float> %i.em, %i.ep
+  %22 = extractelement <2 x float> %i.et, i64 1
+  %23 = extractelement <2 x float> %i.ep, i64 0
+  %24 = tail call float @llvm.fmuladd.f32(float %23, float %16, float %22)
+  %25 = tail call noundef float @llvm.fmuladd.f32(float %i.eq, float %9, float %24)
+  %26 = fadd float %21, %25
   %i.eu = getelementptr inbounds nuw i8, ptr %i.cl, i64 80
-  store float %32, ptr %i.eu, align 4, !tbaa !86
+  store float %26, ptr %i.eu, align 4, !tbaa !86
   br label %bb.r
 
 bb.r:                                             ; preds = %_ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit, %_ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread

@@ -203,78 +203,76 @@ _ZN13geos_nlohmann6detail9dtoa_impl18compute_boundariesIdEENS1_10boundariesET_.e
   %.sroa.418.8.extract.trunc.i = trunc i64 %.sroa.2.0.copyload.i.i to i32
   %i.ai = and i64 %i.n, 4294967294                ; 2 uses
   %i.aj = lshr i64 %.sroa.0.04.i33.i, 31          ; 2 uses
-  %6 = and i64 %.sroa.0.0.copyload.i.i, 4294967295 ; 6 uses
-  %7 = lshr i64 %.sroa.0.0.copyload.i.i, 32       ; 6 uses
-  %8 = add i32 %.sroa.418.8.extract.trunc.i, 64   ; 2 uses
-  %9 = add i32 %8, %i.o
-  %i.ak = and i64 %i.x, 4294967295                ; 2 uses
-  %i.al = lshr i64 %i.x, 32                       ; 2 uses
-  %i.am = mul nuw i64 %6, %i.ak
-  %i.an = mul nuw i64 %7, %i.ak                   ; 2 uses
-  %i.ao = mul nuw i64 %6, %i.al                   ; 2 uses
-  %i.ap = mul nuw i64 %7, %i.al
+  %i.ak = and i64 %.sroa.0.0.copyload.i.i, 4294967295 ; 6 uses
+  %i.al = lshr i64 %.sroa.0.0.copyload.i.i, 32    ; 6 uses
+  %i.am = mul nuw i64 %i.ak, %i.ai
+  %i.an = mul nuw i64 %i.al, %i.ai                ; 2 uses
+  %i.ao = mul nuw i64 %i.ak, %i.aj                ; 2 uses
+  %i.ap = mul nuw i64 %i.al, %i.aj
   %i.aq = lshr i64 %i.am, 32
-  %i.ar = and i64 %i.an, 4294967295
+  %i.ar = and i64 %i.an, 4294967294
   %i.as = lshr i64 %i.an, 32
   %i.at = and i64 %i.ao, 4294967295
   %i.au = lshr i64 %i.ao, 32
   %i.av = add nuw nsw i64 %i.ar, 2147483648
   %i.aw = add nuw nsw i64 %i.av, %i.aq
   %i.ax = add nuw nsw i64 %i.aw, %i.at
-  %10 = lshr i64 %i.ax, 32
-  %11 = add i32 %8, %i.l                          ; 2 uses
-  %12 = and i64 %i.k, 4294967294                  ; 2 uses
-  %13 = lshr i64 %.sroa.0.04.i.i, 31              ; 2 uses
-  %14 = add nuw i64 %i.ap, 1
-  %15 = add nuw i64 %14, %i.au
-  %16 = add nuw i64 %15, %i.as
-  %17 = add i64 %16, %10
-  %i.ay = mul nuw i64 %6, %12
-  %i.az = mul nuw i64 %6, %i.ai
-  %i.ba = mul nuw i64 %7, %12                     ; 2 uses
-  %i.bb = mul nuw i64 %7, %i.ai                   ; 2 uses
-  %18 = mul nuw i64 %6, %13                       ; 2 uses
-  %19 = mul nuw i64 %6, %i.aj                     ; 2 uses
-  %20 = mul nuw i64 %7, %13
-  %21 = mul nuw i64 %7, %i.aj
-  %22 = insertelement <2 x i64> poison, i64 %i.az, i64 0
-  %23 = insertelement <2 x i64> %22, i64 %i.ay, i64 1
-  %24 = lshr <2 x i64> %23, splat (i64 32)
-  %25 = insertelement <2 x i64> poison, i64 %i.bb, i64 0
-  %26 = insertelement <2 x i64> %25, i64 %i.ba, i64 1
-  %27 = and <2 x i64> %26, splat (i64 4294967294)
-  %i.bc = lshr i64 %i.ba, 32
-  %28 = lshr i64 %i.bb, 32
-  %29 = insertelement <2 x i64> poison, i64 %19, i64 0
-  %30 = insertelement <2 x i64> %29, i64 %18, i64 1
-  %31 = and <2 x i64> %30, splat (i64 4294967295)
-  %i.bd = lshr i64 %18, 32
-  %i.be = lshr i64 %19, 32
-  %32 = add nuw nsw <2 x i64> %27, splat (i64 2147483648)
-  %33 = add nuw nsw <2 x i64> %32, %24
-  %34 = add nuw nsw <2 x i64> %33, %31
-  %35 = lshr <2 x i64> %34, splat (i64 32)
-  %i.bf = add i64 %20, -1
-  %i.bg = add i64 %i.bf, %i.bd
-  %i.bh = add nuw i64 %i.be, %21
-  %i.bi = add i64 %i.bg, %i.bc
-  %i.bj = add nuw i64 %i.bh, %28
-  %36 = insertelement <2 x i64> poison, i64 %i.bj, i64 0
-  %37 = insertelement <2 x i64> %36, i64 %i.bi, i64 1
-  %38 = add <2 x i64> %37, %35                    ; 2 uses
+  %6 = add nuw i64 %i.au, %i.ap
+  %7 = add nuw i64 %6, %i.as
+  %8 = lshr i64 %i.ax, 32
+  %9 = add nuw i64 %7, %8
+  %10 = add i32 %.sroa.418.8.extract.trunc.i, 64  ; 2 uses
+  %11 = add i32 %10, %i.o
+  %12 = and i64 %i.x, 4294967295                  ; 2 uses
+  %13 = lshr i64 %i.x, 32                         ; 2 uses
+  %i.ay = mul nuw i64 %i.ak, %12
+  %i.az = mul nuw i64 %i.al, %12                  ; 2 uses
+  %i.ba = mul nuw i64 %i.ak, %13                  ; 2 uses
+  %i.bb = mul nuw i64 %i.al, %13
+  %14 = lshr i64 %i.ay, 32
+  %15 = and i64 %i.az, 4294967295
+  %16 = lshr i64 %i.az, 32
+  %17 = and i64 %i.ba, 4294967295
+  %18 = lshr i64 %i.ba, 32
+  %19 = add nuw nsw i64 %15, 2147483648
+  %20 = add nuw nsw i64 %19, %14
+  %21 = add nuw nsw i64 %20, %17
+  %22 = lshr i64 %21, 32
+  %23 = add i32 %10, %i.l                         ; 2 uses
+  %24 = and i64 %i.k, 4294967294                  ; 2 uses
+  %i.bc = lshr i64 %.sroa.0.04.i.i, 31            ; 2 uses
+  %25 = mul nuw i64 %i.ak, %24
+  %26 = mul nuw i64 %i.al, %24                    ; 2 uses
+  %27 = mul nuw i64 %i.ak, %i.bc                  ; 2 uses
+  %28 = mul nuw i64 %i.al, %i.bc
+  %29 = lshr i64 %25, 32
+  %30 = and i64 %26, 4294967294
+  %i.bd = lshr i64 %26, 32
+  %31 = and i64 %27, 4294967295
+  %i.be = lshr i64 %27, 32
+  %32 = add nuw nsw i64 %30, 2147483648
+  %33 = add nuw nsw i64 %32, %29
+  %34 = add nuw nsw i64 %33, %31
+  %35 = lshr i64 %34, 32
+  %i.bf = add nuw i64 %i.bb, 1
+  %i.bg = add nuw i64 %i.bf, %18
+  %i.bh = add nuw i64 %i.bg, %16
+  %i.bi = add i64 %i.bh, %22
+  %i.bj = add i64 %28, -1
+  %36 = add i64 %i.bj, %i.be
+  %37 = add i64 %36, %i.bd
+  %38 = add i64 %37, %35
   %.sroa.418.12.extract.shift.i = lshr i64 %.sroa.2.0.copyload.i.i, 32
   %.sroa.418.12.extract.trunc.i = trunc nuw i64 %.sroa.418.12.extract.shift.i to i32
   %i.bk = sub nsw i32 0, %.sroa.418.12.extract.trunc.i
   store i32 %i.bk, ptr %2, align 4, !tbaa !39
-  %39 = extractelement <2 x i64> %38, i64 0
-  store i64 %39, ptr %4, align 8, !tbaa !64
+  store i64 %9, ptr %4, align 8, !tbaa !64
   %.sroa.416.0..sroa_idx.i4 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %9, ptr %.sroa.416.0..sroa_idx.i4, align 8, !tbaa !39
-  %40 = extractelement <2 x i64> %38, i64 1
-  store i64 %40, ptr %5, align 8, !tbaa !64
+  store i32 %11, ptr %.sroa.416.0..sroa_idx.i4, align 8, !tbaa !39
+  store i64 %38, ptr %5, align 8, !tbaa !64
   %.sroa.4.0..sroa_idx.i5 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i32 %11, ptr %.sroa.4.0..sroa_idx.i5, align 8, !tbaa !39
-  tail call void @_ZN13geos_nlohmann6detail9dtoa_impl16grisu2_digit_genEPcRiS3_NS1_5diyfpES4_S4_(ptr noundef nonnull %0, ptr noundef nonnull align 4 dereferenceable(4) %1, ptr noundef nonnull align 4 dereferenceable(4) %2, i64 %17, i32 %11, ptr noundef nonnull byval(%"struct.geos_nlohmann::detail::dtoa_impl::diyfp") align 8 %4, ptr noundef nonnull byval(%"struct.geos_nlohmann::detail::dtoa_impl::diyfp") align 8 %5)
+  store i32 %23, ptr %.sroa.4.0..sroa_idx.i5, align 8, !tbaa !39
+  tail call void @_ZN13geos_nlohmann6detail9dtoa_impl16grisu2_digit_genEPcRiS3_NS1_5diyfpES4_S4_(ptr noundef nonnull %0, ptr noundef nonnull align 4 dereferenceable(4) %1, ptr noundef nonnull align 4 dereferenceable(4) %2, i64 %i.bi, i32 %23, ptr noundef nonnull byval(%"struct.geos_nlohmann::detail::dtoa_impl::diyfp") align 8 %4, ptr noundef nonnull byval(%"struct.geos_nlohmann::detail::dtoa_impl::diyfp") align 8 %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   ret void

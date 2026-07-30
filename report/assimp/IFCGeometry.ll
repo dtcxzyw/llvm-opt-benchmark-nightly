@@ -203,7 +203,7 @@ bb.a:
   %i.k = sdiv exact i64 %i.j, 24                  ; 2 uses
   %i.l = add nsw i64 %i.k, -1                     ; 3 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.g, i64 %i.l ; 2 uses
-  %.sroa.065.0.copyload = load double, ptr %i.m, align 8 ; 3 uses
+  %.sroa.065.0.copyload = load double, ptr %i.m, align 8 ; 2 uses
   %.sroa.668.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.n = load <2 x double>, ptr %.sroa.668.0..sroa_idx, align 8 ; 4 uses
   %i.o = add nsw i64 %i.k, -2                     ; 3 uses
@@ -212,7 +212,7 @@ bb.a:
 
 .lr.ph88.preheader:                               ; preds = %bb.a
   %i.q = shufflevector <2 x double> %i.n, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %i.r = insertelement <2 x double> %i.q, double %.sroa.065.0.copyload, i64 1
+  %i.r = insertelement <2 x double> %i.q, double %.sroa.065.0.copyload, i64 1 ; 2 uses
   br label %.lr.ph88
 
 .lr.ph88:                                         ; preds = %.lr.ph88.backedge, %.lr.ph88.preheader
@@ -224,12 +224,12 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph88
   %i.u = getelementptr inbounds nuw [24 x i8], ptr %i.g, i64 %.02386 ; 2 uses
   %i.v = load double, ptr %i.u, align 8, !noalias !113
-  %4 = fsub double %i.v, %.sroa.065.0.copyload    ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  %6 = load <2 x double>, ptr %5, align 8, !noalias !113
-  %7 = fsub <2 x double> %6, %i.n                 ; 3 uses
-  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %9 = insertelement <2 x double> %8, double %4, i64 1
+  %4 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
+  %5 = load <2 x double>, ptr %4, align 8, !noalias !113 ; 2 uses
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %7 = insertelement <2 x double> %6, double %i.v, i64 1
+  %8 = fsub <2 x double> %5, %i.n                 ; 2 uses
+  %9 = fsub <2 x double> %7, %i.r                 ; 2 uses
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.c
@@ -249,15 +249,14 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.ae = fsub <2 x double> %i.aa, %i.n           ; 2 uses
   %i.af = fneg <2 x double> %i.ae
   %i.ag = fmul <2 x double> %9, %i.af
-  %i.ah = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %i.ad, <2 x double> %i.ag) ; 8 uses
-  %i.ai = shufflevector <2 x double> %7, <2 x double> %i.ah, <2 x i32> <i32 0, i32 3>
+  %i.ah = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %i.ad, <2 x double> %i.ag) ; 8 uses
+  %i.ai = shufflevector <2 x double> %8, <2 x double> %i.ah, <2 x i32> <i32 0, i32 3>
   %i.aj = fneg <2 x double> %i.ad
   %i.ak = shufflevector <2 x double> %i.ah, <2 x double> %i.aj, <2 x i32> <i32 3, i32 1>
   %i.al = fmul <2 x double> %i.ai, %i.ak
-  %10 = shufflevector <2 x double> %i.ah, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %11 = insertelement <2 x double> %10, double %4, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> %i.ah, <2 x i32> <i32 1, i32 2>
   %i.am = shufflevector <2 x double> %i.ae, <2 x double> %i.ah, <2 x i32> <i32 0, i32 2>
-  %i.an = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %11, <2 x double> %i.am, <2 x double> %i.al) ; 2 uses
+  %i.an = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %10, <2 x double> %i.am, <2 x double> %i.al) ; 2 uses
   %i.ao = extractelement <2 x double> %i.an, i64 0 ; 5 uses
   %i.ap = extractelement <2 x double> %i.an, i64 1
   %i.aq = tail call double @llvm.fmuladd.f64(double %i.ao, double %i.ao, double %i.ap)
