@@ -164,8 +164,8 @@ ossl_blake2s_update.exit.rtvec:                   ; preds = %ossl_blake2s_update
   %i.h = zext i8 %i.g to i64
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 120
   store i64 %i.h, ptr %i.i, align 8, !tbaa !15
-  %3 = load <4 x i32>, ptr %1, align 1
   %.val.i = load i32, ptr %1, align 1
+  %3 = load <4 x i32>, ptr %1, align 1
   %i.j = xor <4 x i32> %3, <i32 1779033703, i32 -1150833019, i32 1013904242, i32 -1521486534>
   store <4 x i32> %i.j, ptr %0, align 8, !tbaa !14
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16

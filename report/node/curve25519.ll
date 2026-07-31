@@ -203,10 +203,10 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.h = load <4 x i32>, ptr %i.e, align 4, !tbaa !11
   %i.i = load <4 x i32>, ptr %1, align 4, !tbaa !11
   %i.j = add nsw <4 x i32> %i.i, %i.h
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 12
   store <4 x i32> %i.j, ptr %0, align 4, !tbaa !11
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
@@ -609,10 +609,10 @@ begin_hunk_1_@ge_p2_dbl:bb.a
   %i.iu = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.iv = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.iw = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.ix = load <4 x i32>, ptr %1, align 4, !tbaa !11
   %i.iy = load <4 x i32>, ptr %i.g, align 4, !tbaa !11
   %i.iz = add nsw <4 x i32> %i.iy, %i.ix
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 52
   store <4 x i32> %i.iz, ptr %i.iu, align 4, !tbaa !11
   %i.ja = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.jb = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -1015,10 +1015,10 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.h = load <4 x i32>, ptr %i.e, align 4, !tbaa !11
   %i.i = load <4 x i32>, ptr %1, align 4, !tbaa !11
   %i.j = add nsw <4 x i32> %i.i, %i.h
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 12
   store <4 x i32> %i.j, ptr %0, align 4, !tbaa !11
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
