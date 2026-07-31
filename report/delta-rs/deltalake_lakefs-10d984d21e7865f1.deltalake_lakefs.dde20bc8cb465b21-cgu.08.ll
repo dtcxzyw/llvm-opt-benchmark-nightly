@@ -204,7 +204,7 @@ _RINvNtNtCsbvkFyIu7lgC_4core5slice6rotate18ptr_rotate_memmovehECsj34PGqTgg0L_16d
 .preheader.i:                                     ; preds = %bb.d, %.loopexit.i.i
   %.sroa.016.0.i.i = phi i64 [ %.sroa.016.2.i.i, %.loopexit.i.i ], [ %i.b, %bb.d ] ; 28 uses
   %.sroa.010.0.i.i = phi ptr [ %.sroa.010.2.i.i, %.loopexit.i.i ], [ %i.c, %bb.d ] ; 13 uses
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.0.1.i.i, %.loopexit.i.i ], [ %2, %bb.d ] ; 20 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.0.1.i.i, %.loopexit.i.i ], [ %2, %bb.d ] ; 19 uses
   %.not.i2.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.016.0.i.i
   br i1 %.not.i2.i, label %.preheader.i.i, label %.preheader56.split.i.i
 
@@ -351,16 +351,15 @@ _RINvNvNtCsbvkFyIu7lgC_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping
   %i.aw = and i64 %.sroa.0.0.i.i, 7               ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.av, 0
   %.not4.i.i.i = icmp eq i64 %i.aw, 0
-  %i.ax = and i64 %.sroa.0.0.i.i, -8              ; 2 uses
+  %i.ax = and i64 %.sroa.0.0.i.i, -8              ; 4 uses
   %i.ay = icmp samesign ult i64 %i.aw, 4
   %i.az = and i64 %.sroa.0.0.i.i, 2
   %i.ba = icmp eq i64 %i.az, 0
   %i.bb = and i64 %.sroa.0.0.i.i, 1
   %i.bc = icmp eq i64 %i.bb, 0
-  %3 = and i64 %.sroa.0.0.i.i, -8                 ; 2 uses
-  %i.bd = sub i64 %3, %.sroa.0.0.i.i
+  %i.bd = sub i64 %i.ax, %.sroa.0.0.i.i
   %i.be = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %i.bd
-  %i.bf = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %3
+  %i.bf = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %i.ax
   %min.iters.check = icmp ult i64 %.sroa.0.0.i.i, 32
   %n.vec = and i64 %i.av, 2305843009213693948     ; 3 uses
   %cmp.n = icmp eq i64 %i.av, %n.vec
