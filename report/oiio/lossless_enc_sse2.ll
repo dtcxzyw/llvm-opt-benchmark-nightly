@@ -91,11 +91,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !10
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.j = and i32 %1, 2147483644
+  %2 = add nuw i32 %1, 2147483644
+  %i.j = and i32 %2, 2147483644
+  %narrow = add nuw i32 %i.j, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.j, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not20 = icmp eq i32 %.0.lcssa, %1
   br i1 %.not20, label %bb.c, label %bb.b
 
@@ -173,11 +175,13 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br i1 %.not, label %._crit_edge.loopexit, label %bb.b, !llvm.loop !16
 
 ._crit_edge.loopexit:                             ; preds = %bb.b
-  %i.as = and i32 %2, 2147483644
+  %3 = add nuw i32 %2, 2147483644
+  %i.as = and i32 %3, 2147483644
+  %narrow = add nuw i32 %i.as, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.as, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not35 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not35, label %bb.d, label %bb.c
 
@@ -580,23 +584,31 @@ bb.a:
   br i1 %.not93, label %.loopexit.loopexit, label %.lr.ph120, !llvm.loop !33
 
 .loopexit.loopexit:                               ; preds = %.lr.ph120
-  %i.ay = and i32 %1, 2147483632
+  %4 = add nuw i32 %1, 2147483632
+  %i.ay = and i32 %4, 2147483632
+  %narrow162 = add nuw i32 %i.ay, 16
   br label %.loopexit
 
 .loopexit.loopexit123:                            ; preds = %.lr.ph114
-  %i.az = and i32 %1, 2147483632
+  %5 = add nuw i32 %1, 2147483632
+  %i.az = and i32 %5, 2147483632
+  %narrow161 = add nuw i32 %i.az, 16
   br label %.loopexit
 
 .loopexit.loopexit124:                            ; preds = %.lr.ph108
-  %i.ba = and i32 %1, 2147483632
+  %6 = add nuw i32 %1, 2147483632
+  %i.ba = and i32 %6, 2147483632
+  %narrow160 = add nuw i32 %i.ba, 16
   br label %.loopexit
 
 .loopexit.loopexit125:                            ; preds = %.lr.ph
-  %i.bb = and i32 %1, 2147483632
+  %7 = add nuw i32 %1, 2147483632
+  %i.bb = and i32 %7, 2147483632
+  %narrow = add nuw i32 %i.bb, 16
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit125, %.loopexit.loopexit124, %.loopexit.loopexit123, %.loopexit.loopexit, %.preheader99, %.preheader97, %.preheader95, %.preheader
-  %.485 = phi i32 [ %i.ay, %.loopexit.loopexit ], [ %i.ba, %.loopexit.loopexit124 ], [ %i.az, %.loopexit.loopexit123 ], [ 0, %.preheader ], [ 0, %.preheader95 ], [ 0, %.preheader97 ], [ 0, %.preheader99 ], [ %i.bb, %.loopexit.loopexit125 ] ; 3 uses
+  %.485 = phi i32 [ %narrow162, %.loopexit.loopexit ], [ %narrow160, %.loopexit.loopexit124 ], [ %narrow161, %.loopexit.loopexit123 ], [ 0, %.preheader ], [ 0, %.preheader95 ], [ 0, %.preheader97 ], [ 0, %.preheader99 ], [ %narrow, %.loopexit.loopexit125 ] ; 3 uses
   %.4 = phi ptr [ %i.ax, %.loopexit.loopexit ], [ %i.z, %.loopexit.loopexit124 ], [ %i.r, %.loopexit.loopexit123 ], [ %3, %.preheader ], [ %3, %.preheader95 ], [ %3, %.preheader97 ], [ %3, %.preheader99 ], [ %i.aj, %.loopexit.loopexit125 ]
   %.not94 = icmp eq i32 %.485, %1
   br i1 %.not94, label %bb.c, label %bb.b
@@ -636,11 +648,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !34
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.f = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.f = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.f, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.f, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not19 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not19, label %bb.c, label %bb.b
 
@@ -683,11 +697,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !35
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.h = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.h = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.h, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.h, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not24 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not24, label %bb.c, label %bb.b
 
@@ -733,11 +749,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !36
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.h = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.h = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.h, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.h, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not24 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not24, label %bb.c, label %bb.b
 
@@ -784,11 +802,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !37
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.i = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.i = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.i, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.i, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not24 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not24, label %bb.c, label %bb.b
 
@@ -835,11 +855,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !38
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.i = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.i = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.i, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.i, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not24 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not24, label %bb.c, label %bb.b
 
@@ -900,11 +922,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !39
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.v = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.v = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.v, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.v, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not26 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not26, label %bb.c, label %bb.b
 
@@ -958,11 +982,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !40
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.q = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.q = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.q, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.q, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not24 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not24, label %bb.c, label %bb.b
 
@@ -1015,11 +1041,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !41
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.p = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.p = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.p, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.p, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not24 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not24, label %bb.c, label %bb.b
 
@@ -1072,11 +1100,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !42
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.p = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.p = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.p, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.p, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not24 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not24, label %bb.c, label %bb.b
 
@@ -1129,11 +1159,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !43
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.p = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.p = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.p, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.p, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not24 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not24, label %bb.c, label %bb.b
 
@@ -1202,11 +1234,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !44
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.af = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.af = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.af, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.af, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not28 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not28, label %bb.c, label %bb.b
 
@@ -1286,11 +1320,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !45
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.ar = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.ar = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.ar, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.ar, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not31 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not31, label %bb.c, label %bb.b
 
@@ -1356,11 +1392,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !46
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.ad = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.ad = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.ad, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.ad, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not49 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not49, label %bb.c, label %bb.b
 
@@ -1438,11 +1476,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !47
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.an = and i32 %2, 2147483644
+  %4 = add nuw i32 %2, 2147483644
+  %i.an = and i32 %4, 2147483644
+  %narrow = add nuw i32 %i.an, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.an, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not65 = icmp eq i32 %.0.lcssa, %2
   br i1 %.not65, label %bb.c, label %bb.b
 

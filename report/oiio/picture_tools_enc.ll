@@ -62,7 +62,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !16   ; 21 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !16   ; 20 uses
   %i.d = sdiv i32 %i.c, 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.f = load i32, ptr %i.e, align 4, !tbaa !13   ; 8 uses
@@ -465,19 +465,21 @@ SmoothenBlock.exit219:                            ; preds = %._crit_edge.i217, %
   br i1 %.not140, label %._crit_edge293.loopexit, label %.preheader54.lr.ph.i, !llvm.loop !61
 
 ._crit_edge293.loopexit:                          ; preds = %SmoothenBlock.exit219
-  %i.bxs = and i32 %i.c, 2147483640
+  %1 = add nuw i32 %i.c, 2147483640
+  %i.bxs = and i32 %1, 2147483640
+  %narrow = add nuw i32 %i.bxs, 8
   br label %._crit_edge293
 
 ._crit_edge293:                                   ; preds = %._crit_edge293.loopexit, %bb.jr
-  %.2.lcssa = phi i32 [ 0, %bb.jr ], [ %i.bxs, %._crit_edge293.loopexit ] ; 3 uses
+  %.2.lcssa = phi i32 [ 0, %bb.jr ], [ %narrow, %._crit_edge293.loopexit ] ; 3 uses
   %i.bxt = icmp slt i32 %.2.lcssa, %i.c
   br i1 %i.bxt, label %.preheader54.lr.ph.i221, label %.critedge
 
 .preheader54.lr.ph.i221:                          ; preds = %._crit_edge293
-  %i.bxu = zext nneg i32 %.2.lcssa to i64         ; 4 uses
+  %i.bxu = zext i32 %.2.lcssa to i64              ; 4 uses
   %i.bxv = getelementptr i8, ptr %.0115.lcssa, i64 %i.bxu ; 3 uses
   %i.bxw = getelementptr i8, ptr %.0118.lcssa, i64 %i.bxu ; 3 uses
-  %i.bxx = sub i32 %i.c, %.2.lcssa                ; 5 uses
+  %i.bxx = sub i32 %i.c, %.2.lcssa                ; 6 uses
   %i.bxy = sext i32 %i.fa to i64                  ; 3 uses
   %i.bxz = sext i32 %i.ew to i64                  ; 3 uses
   %wide.trip.count.i223 = zext i32 %i.bxx to i64  ; 12 uses
@@ -485,7 +487,7 @@ SmoothenBlock.exit219:                            ; preds = %._crit_edge.i217, %
   %i.bya = icmp eq i32 %i.bxx, 1
   %unroll_iter1406 = and i64 %wide.trip.count.i223, 4294967294
   %lcmp.mod1402.not = icmp eq i64 %xtraiter1401, 0
-  %lcmp.mod1405 = trunc i32 %i.c to i1
+  %lcmp.mod1405 = trunc i32 %i.bxx to i1
   br label %.preheader54.us.i224
 
 .preheader54.us.i224:                             ; preds = %._crit_edge.us.i238, %.preheader54.lr.ph.i221

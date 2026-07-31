@@ -97,11 +97,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !12
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.f = and i32 %1, 2147483644
+  %2 = add nuw i32 %1, 2147483644
+  %i.f = and i32 %2, 2147483644
+  %narrow = add nuw i32 %i.f, 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.f, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %.not19 = icmp eq i32 %.0.lcssa, %1
   br i1 %.not19, label %bb.c, label %bb.b
 

@@ -204,11 +204,13 @@ bb.a:
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !1371
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.f = and i32 %1, 2147483640
+  %4 = add nuw i32 %1, 2147483640
+  %i.f = and i32 %4, 2147483640
+  %narrow = add nuw i32 %i.f, 8
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.f, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
   %i.g = icmp slt i32 %.0.lcssa, %1
   br i1 %i.g, label %bb.b, label %bb.c
 
@@ -611,11 +613,13 @@ _ZNK8facebook5velox6Buffer9asMutableIiEEPT_v.exit: ; preds = %bb.n
   br i1 %.not.i33, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !1371
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
-  %i.bw = and i32 %0, 2147483640
+  %10 = add nuw i32 %0, 2147483640
+  %i.bw = and i32 %10, 2147483640
+  %narrow.i = add nuw i32 %i.bw, 8
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %_ZNK8facebook5velox6Buffer9asMutableIiEEPT_v.exit
-  %.0.lcssa.i = phi i32 [ 0, %_ZNK8facebook5velox6Buffer9asMutableIiEEPT_v.exit ], [ %i.bw, %._crit_edge.loopexit.i ] ; 3 uses
+  %.0.lcssa.i = phi i32 [ 0, %_ZNK8facebook5velox6Buffer9asMutableIiEEPT_v.exit ], [ %narrow.i, %._crit_edge.loopexit.i ] ; 3 uses
   %i.bx = icmp slt i32 %.0.lcssa.i, %0
   br i1 %i.bx, label %bb.p, label %_ZN8facebook5velox10BaseVector16transposeIndicesEPKiiS3_Pi.exit
 
@@ -1018,7 +1022,7 @@ _ZNSt6vectorISt10shared_ptrIN8facebook5velox10BaseVectorEESaIS4_EE11_S_relocateE
   %i.an = add i64 %i.am, -16                      ; 2 uses
   %i.ao = lshr i64 %i.an, 4
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check61 = icmp ult i64 %i.an, 368
+  %min.iters.check61 = icmp ult i64 %i.an, 304
   br i1 %min.iters.check61, label %.lr.ph.i.i.i17.preheader78, label %vector.memcheck46
 
 vector.memcheck46:                                ; preds = %.lr.ph.i.i.i17.preheader

@@ -204,11 +204,13 @@ _ZN5arrow8internal12unpack_exactILi8ELb1EmEEiPKhPT1_ii.exit: ; preds = %.lr.ph.i
   br i1 %min.iters.check, label %.lr.ph.i28.preheader42, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i28.preheader
-  %i.ao = tail call i64 @llvm.usub.sat.i64(i64 %i.ak, i64 8) ; 2 uses
-  %4 = lshr exact i64 %i.ao, 3
-  %i.ap = getelementptr i8, ptr %.026.lcssa, i64 %i.ao
+  %i.ao = tail call i64 @llvm.umax.i64(i64 %i.ak, i64 8)
+  %4 = add nsw i64 %i.ao, -1                      ; 2 uses
+  %5 = and i64 %4, -8
+  %i.ap = getelementptr i8, ptr %.026.lcssa, i64 %5
   %scevgep = getelementptr i8, ptr %i.ap, i64 8
-  %i.aq = getelementptr i8, ptr %.025.lcssa, i64 %4
+  %6 = lshr i64 %4, 3
+  %i.aq = getelementptr i8, ptr %.025.lcssa, i64 %6
   %scevgep39 = getelementptr i8, ptr %i.aq, i64 1
   %bound0 = icmp ult ptr %.026.lcssa, %scevgep39
   %bound1 = icmp ult ptr %.025.lcssa, %scevgep
@@ -609,6 +611,9 @@ declare i64 @llvm.fshl.i64(i64, i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #5
