@@ -201,7 +201,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_delete
   %i.be = add i64 %i.bd, -8                       ; 2 uses
   %i.bf = lshr i64 %i.be, 3
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.be, 152
+  %min.iters.check = icmp ult i64 %i.be, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader380, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -527,7 +527,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO10RelocationESt14default_deleteIS3_EESa
   %i.gd = add i64 %i.gc, -8                       ; 2 uses
   %i.ge = lshr i64 %i.gd, 3
   %i.gf = add nuw nsw i64 %i.ge, 1                ; 2 uses
-  %min.iters.check312 = icmp ult i64 %i.gd, 152
+  %min.iters.check312 = icmp ult i64 %i.gd, 136
   br i1 %min.iters.check312, label %.lr.ph.i.i.i.i135.preheader378, label %vector.memcheck305
 
 vector.memcheck305:                               ; preds = %.lr.ph.i.i.i.i135.preheader
@@ -710,7 +710,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_delete
   %i.it = add i64 %i.is, -8                       ; 2 uses
   %i.iu = lshr i64 %i.it, 3
   %i.iv = add nuw nsw i64 %i.iu, 1                ; 2 uses
-  %min.iters.check334 = icmp ult i64 %i.it, 152
+  %min.iters.check334 = icmp ult i64 %i.it, 136
   br i1 %min.iters.check334, label %.lr.ph.i.i.i.i151.preheader376, label %vector.memcheck327
 
 vector.memcheck327:                               ; preds = %.lr.ph.i.i.i.i151.preheader
@@ -1037,7 +1037,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO10RelocationESt14default_deleteIS3_EESa
   %i.nt = add i64 %i.ns, -8                       ; 2 uses
   %i.nu = lshr i64 %i.nt, 3
   %i.nv = add nuw nsw i64 %i.nu, 1                ; 2 uses
-  %min.iters.check356 = icmp ult i64 %i.nt, 152
+  %min.iters.check356 = icmp ult i64 %i.nt, 136
   br i1 %min.iters.check356, label %.lr.ph.i.i.i.i170.preheader375, label %vector.memcheck349
 
 vector.memcheck349:                               ; preds = %.lr.ph.i.i.i.i170.preheader
@@ -1259,7 +1259,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_delete
   %i.be = add i64 %i.bd, -8                       ; 2 uses
   %i.bf = lshr i64 %i.be, 3
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.be, 152
+  %min.iters.check = icmp ult i64 %i.be, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader141, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -1586,7 +1586,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO10RelocationESt14default_deleteIS3_EESa
   %i.ge = add i64 %i.gd, -8                       ; 2 uses
   %i.gf = lshr i64 %i.ge, 3
   %i.gg = add nuw nsw i64 %i.gf, 1                ; 2 uses
-  %min.iters.check125 = icmp ult i64 %i.ge, 152
+  %min.iters.check125 = icmp ult i64 %i.ge, 136
   br i1 %min.iters.check125, label %.lr.ph.i.i.i.i50.preheader140, label %vector.memcheck118
 
 vector.memcheck118:                               ; preds = %.lr.ph.i.i.i.i50.preheader
@@ -1786,7 +1786,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_delete
   %i.bf = add i64 %i.be, -8                       ; 2 uses
   %i.bg = lshr i64 %i.bf, 3
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bf, 152
+  %min.iters.check = icmp ult i64 %i.bf, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader172, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -2137,7 +2137,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO10RelocationESt14default_deleteIS3_EESa
   %i.go = add i64 %i.gn, -8                       ; 2 uses
   %i.gp = lshr i64 %i.go, 3
   %i.gq = add nuw nsw i64 %i.gp, 1                ; 2 uses
-  %min.iters.check156 = icmp ult i64 %i.go, 152
+  %min.iters.check156 = icmp ult i64 %i.go, 136
   br i1 %min.iters.check156, label %.lr.ph.i.i.i.i70.preheader171, label %vector.memcheck149
 
 vector.memcheck149:                               ; preds = %.lr.ph.i.i.i.i70.preheader
@@ -2540,7 +2540,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6BinaryESt14default_deleteIS3_EESaIS6_E
   %i.t = add i64 %i.s, -8                         ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 152
+  %min.iters.check = icmp ult i64 %i.t, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
@@ -2615,7 +2615,7 @@ _ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6BinaryESt14default_deleteIS3_EESaIS6_EE
   %i.an = add i64 %i.am, -8                       ; 2 uses
   %i.ao = lshr i64 %i.an, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check46 = icmp ult i64 %i.an, 184
+  %min.iters.check46 = icmp ult i64 %i.an, 152
   br i1 %min.iters.check46, label %.lr.ph.i.i.i17.preheader61, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader
@@ -3018,7 +3018,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_E
   %i.df = add i64 %i.de, -8                       ; 2 uses
   %i.dg = lshr i64 %i.df, 3
   %i.dh = add nuw nsw i64 %i.dg, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.df, 152
+  %min.iters.check = icmp ult i64 %i.df, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader130, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -3160,7 +3160,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO15DyldBindingInfoESt14default_deleteIS3
   %i.fd = add i64 %i.fc, -8                       ; 2 uses
   %i.fe = lshr i64 %i.fd, 3
   %i.ff = add nuw nsw i64 %i.fe, 1                ; 2 uses
-  %min.iters.check114 = icmp ult i64 %i.fd, 152
+  %min.iters.check114 = icmp ult i64 %i.fd, 136
   br i1 %min.iters.check114, label %.lr.ph.i.i.i.i30.preheader129, label %vector.memcheck107
 
 vector.memcheck107:                               ; preds = %.lr.ph.i.i.i.i30.preheader
@@ -3563,7 +3563,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO10RelocationESt14default_deleteIS3_EESa
   %i.cs = add i64 %i.cr, -8                       ; 2 uses
   %i.ct = lshr i64 %i.cs, 3
   %i.cu = add nuw nsw i64 %i.ct, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cs, 152
+  %min.iters.check = icmp ult i64 %i.cs, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader69, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -3966,7 +3966,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_E
   %i.cs = add i64 %i.cr, -8                       ; 2 uses
   %i.ct = lshr i64 %i.cs, 3
   %i.cu = add nuw nsw i64 %i.ct, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cs, 152
+  %min.iters.check = icmp ult i64 %i.cs, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader106, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -4103,7 +4103,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO22ChainedBindingInfoListESt14default_de
   %i.eo = add i64 %i.en, -8                       ; 2 uses
   %i.ep = lshr i64 %i.eo, 3
   %i.eq = add nuw nsw i64 %i.ep, 1                ; 2 uses
-  %min.iters.check90 = icmp ult i64 %i.eo, 152
+  %min.iters.check90 = icmp ult i64 %i.eo, 136
   br i1 %min.iters.check90, label %.lr.ph.i.i.i.i19.preheader105, label %vector.memcheck83
 
 vector.memcheck83:                                ; preds = %.lr.ph.i.i.i.i19.preheader
@@ -4506,7 +4506,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_E
   %i.df = add i64 %i.de, -8                       ; 2 uses
   %i.dg = lshr i64 %i.df, 3
   %i.dh = add nuw nsw i64 %i.dg, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.df, 152
+  %min.iters.check = icmp ult i64 %i.df, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader130, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -4648,7 +4648,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO15DyldBindingInfoESt14default_deleteIS3
   %i.fd = add i64 %i.fc, -8                       ; 2 uses
   %i.fe = lshr i64 %i.fd, 3
   %i.ff = add nuw nsw i64 %i.fe, 1                ; 2 uses
-  %min.iters.check114 = icmp ult i64 %i.fd, 152
+  %min.iters.check114 = icmp ult i64 %i.fd, 136
   br i1 %min.iters.check114, label %.lr.ph.i.i.i.i30.preheader129, label %vector.memcheck107
 
 vector.memcheck107:                               ; preds = %.lr.ph.i.i.i.i30.preheader
@@ -4986,7 +4986,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO10RelocationESt14default_deleteIS3_EESa
   %i.cs = add i64 %i.cr, -8                       ; 2 uses
   %i.ct = lshr i64 %i.cs, 3
   %i.cu = add nuw nsw i64 %i.ct, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cs, 152
+  %min.iters.check = icmp ult i64 %i.cs, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader69, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -5389,7 +5389,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_E
   %i.cs = add i64 %i.cr, -8                       ; 2 uses
   %i.ct = lshr i64 %i.cs, 3
   %i.cu = add nuw nsw i64 %i.ct, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cs, 152
+  %min.iters.check = icmp ult i64 %i.cs, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader106, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -5526,7 +5526,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO22ChainedBindingInfoListESt14default_de
   %i.eo = add i64 %i.en, -8                       ; 2 uses
   %i.ep = lshr i64 %i.eo, 3
   %i.eq = add nuw nsw i64 %i.ep, 1                ; 2 uses
-  %min.iters.check90 = icmp ult i64 %i.eo, 152
+  %min.iters.check90 = icmp ult i64 %i.eo, 136
   br i1 %min.iters.check90, label %.lr.ph.i.i.i.i19.preheader105, label %vector.memcheck83
 
 vector.memcheck83:                                ; preds = %.lr.ph.i.i.i.i19.preheader
@@ -5929,7 +5929,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_E
   %i.t = add i64 %i.s, -8                         ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 152
+  %min.iters.check = icmp ult i64 %i.t, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
@@ -6004,7 +6004,7 @@ _ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_EE
   %i.an = add i64 %i.am, -8                       ; 2 uses
   %i.ao = lshr i64 %i.an, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check46 = icmp ult i64 %i.an, 184
+  %min.iters.check46 = icmp ult i64 %i.an, 152
   br i1 %min.iters.check46, label %.lr.ph.i.i.i17.preheader61, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader
@@ -6131,7 +6131,7 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESa
   %i.t = add i64 %i.s, -8                         ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 152
+  %min.iters.check = icmp ult i64 %i.t, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
@@ -6206,7 +6206,7 @@ _ZNSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaI
   %i.an = add i64 %i.am, -8                       ; 2 uses
   %i.ao = lshr i64 %i.an, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check46 = icmp ult i64 %i.an, 184
+  %min.iters.check46 = icmp ult i64 %i.an, 152
   br i1 %min.iters.check46, label %.lr.ph.i.i.i17.preheader61, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader

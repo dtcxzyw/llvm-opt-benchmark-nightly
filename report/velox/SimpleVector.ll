@@ -204,8 +204,8 @@ bb.aa:                                            ; preds = %.lr.ph133
   %i.cw = load i8, ptr %i.cv, align 1, !tbaa !61
   %.not15.i.i.i = icmp sgt i8 %i.cw, -1           ; 2 uses
   %i.cx = add nuw nsw i64 %.1.i5.i.i, 1           ; 2 uses
-  %exitcond.not.i.i = icmp ne i64 %i.cx, %i.co
-  %or.cond.not = select i1 %.not15.i.i.i, i1 %exitcond.not.i.i, i1 false
+  %12 = icmp samesign ult i64 %i.cx, %i.co
+  %or.cond.not = select i1 %.not15.i.i.i, i1 %12, i1 false
   br i1 %or.cond.not, label %.lr.ph.i.i, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit.i.i, !llvm.loop !90
 
 _ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit.i.i: ; preds = %.lr.ph133, %.lr.ph.i.i, %.preheader.i.i
@@ -317,8 +317,8 @@ bb.ag:                                            ; preds = %.lr.ph130
   %i.fa = load i8, ptr %i.ez, align 1, !tbaa !61
   %.not15.i.i.i.i.i.i.i = icmp sgt i8 %i.fa, -1   ; 2 uses
   %i.fb = add nuw nsw i64 %.1.i5.i.i.i.i.i.i, 1   ; 2 uses
-  %exitcond.not.i.i.i.i.i.i = icmp ne i64 %i.fb, %i.es
-  %or.cond134.not = select i1 %.not15.i.i.i.i.i.i.i, i1 %exitcond.not.i.i.i.i.i.i, i1 false
+  %13 = icmp samesign ult i64 %i.fb, %i.es
+  %or.cond134.not = select i1 %.not15.i.i.i.i.i.i.i, i1 %13, i1 false
   br i1 %or.cond134.not, label %.lr.ph.i.i.i.i.i.i, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit.i.i.i.i.i.i, !llvm.loop !90
 
 _ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit.i.i.i.i.i.i: ; preds = %.lr.ph130, %.lr.ph.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i
@@ -414,8 +414,8 @@ bb.al:                                            ; preds = %.lr.ph118
   %i.gs = load i8, ptr %i.gr, align 1, !tbaa !61
   %.not15.i.i.i50.i.i.i.i = icmp sgt i8 %i.gs, -1 ; 2 uses
   %i.gt = add nuw nsw i64 %.1.i5.i.i49.i.i.i.i, 1 ; 2 uses
-  %exitcond.not.i.i51.i.i.i.i = icmp ne i64 %i.gt, %i.gk
-  %or.cond135.not = select i1 %.not15.i.i.i50.i.i.i.i, i1 %exitcond.not.i.i51.i.i.i.i, i1 false
+  %14 = icmp samesign ult i64 %i.gt, %i.gk
+  %or.cond135.not = select i1 %.not15.i.i.i50.i.i.i.i, i1 %14, i1 false
   br i1 %or.cond135.not, label %.lr.ph.i.i48.i.i.i.i, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit.i.i42.i.i.i.i, !llvm.loop !90
 
 _ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit.i.i42.i.i.i.i: ; preds = %.lr.ph118, %.lr.ph.i.i48.i.i.i.i, %.preheader.i.i46.i.i.i.i
@@ -530,8 +530,8 @@ bb.aq:                                            ; preds = %.lr.ph121
   %i.ij = load i8, ptr %i.ii, align 1, !tbaa !61
   %.not15.i.i.i62.i.i.i.i = icmp sgt i8 %i.ij, -1 ; 2 uses
   %i.ik = add nuw nsw i64 %.1.i5.i.i61.i.i.i.i, 1 ; 2 uses
-  %exitcond.not.i.i63.i.i.i.i = icmp ne i64 %i.ik, %i.ib
-  %or.cond136.not = select i1 %.not15.i.i.i62.i.i.i.i, i1 %exitcond.not.i.i63.i.i.i.i, i1 false
+  %15 = icmp samesign ult i64 %i.ik, %i.ib
+  %or.cond136.not = select i1 %.not15.i.i.i62.i.i.i.i, i1 %15, i1 false
   br i1 %or.cond136.not, label %.lr.ph.i.i60.i.i.i.i, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit.i.i56.i.i.i.i, !llvm.loop !90
 
 _ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit.i.i56.i.i.i.i: ; preds = %.lr.ph121, %.lr.ph.i.i60.i.i.i.i, %.preheader.i.i58.i.i.i.i
@@ -600,8 +600,8 @@ bb.at:                                            ; preds = %.lr.ph124
   %i.jn = load i8, ptr %i.jm, align 1, !tbaa !61
   %.not15.i.i26.i.i.i.i.i = icmp sgt i8 %i.jn, -1 ; 2 uses
   %i.jo = add nuw nsw i64 %.1.i5.i25.i.i.i.i.i, 1 ; 2 uses
-  %exitcond.not.i27.i.i.i.i.i = icmp ne i64 %i.jo, %i.jf
-  %or.cond137.not = select i1 %.not15.i.i26.i.i.i.i.i, i1 %exitcond.not.i27.i.i.i.i.i, i1 false
+  %16 = icmp samesign ult i64 %i.jo, %i.jf
+  %or.cond137.not = select i1 %.not15.i.i26.i.i.i.i.i, i1 %16, i1 false
   br i1 %or.cond137.not, label %.lr.ph.i24.i.i.i.i.i, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit.i20.i.i.i.i.i, !llvm.loop !90
 
 _ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit.i20.i.i.i.i.i: ; preds = %.lr.ph124, %.lr.ph.i24.i.i.i.i.i, %.preheader.i22.i.i.i.i.i
@@ -695,8 +695,8 @@ bb.ax:                                            ; preds = %.lr.ph127
   %i.lc = load i8, ptr %i.lb, align 1, !tbaa !61
   %.not15.i.i.i81.i.i.i.i = icmp sgt i8 %i.lc, -1 ; 2 uses
   %i.ld = add nuw nsw i64 %.1.i5.i.i80.i.i.i.i, 1 ; 2 uses
-  %exitcond.not.i.i82.i.i.i.i = icmp ne i64 %i.ld, %i.ku
-  %or.cond138.not = select i1 %.not15.i.i.i81.i.i.i.i, i1 %exitcond.not.i.i82.i.i.i.i, i1 false
+  %17 = icmp samesign ult i64 %i.ld, %i.ku
+  %or.cond138.not = select i1 %.not15.i.i.i81.i.i.i.i, i1 %17, i1 false
   br i1 %or.cond138.not, label %.lr.ph.i.i79.i.i.i.i, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit.i.i73.i.i.i.i, !llvm.loop !90
 
 _ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit.i.i73.i.i.i.i: ; preds = %.lr.ph127, %.lr.ph.i.i79.i.i.i.i, %.preheader.i.i77.i.i.i.i

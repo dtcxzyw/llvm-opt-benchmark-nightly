@@ -204,10 +204,10 @@ iter.check:                                       ; preds = %bb.e
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.p = add nsw i64 %i.b, -128
-  %6 = lshr i64 %i.p, 1
   %i.q = and i64 %i.b, 126
   %i.r = getelementptr i8, ptr %0, i64 %i.q
   %scevgep = getelementptr i8, ptr %i.r, i64 2
+  %6 = lshr i64 %i.p, 1
   %i.s = getelementptr i8, ptr %4, i64 %6
   %scevgep1 = getelementptr i8, ptr %i.s, i64 2
   %bound0 = icmp ult ptr %0, %scevgep1

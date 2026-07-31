@@ -201,12 +201,12 @@ bb.b:                                             ; preds = %bb.a
   %i.x = add nsw i32 %.promoted, -8
   %i.y = tail call i32 @llvm.usub.sat.i32(i32 %.promoted, i32 15)
   %i.z = add nuw i32 %i.y, 7                      ; 2 uses
-  %1 = lshr i32 %i.z, 3
-  %2 = and i32 %i.z, -8
-  %3 = sub nsw i32 %i.x, %2
-  %i.aa = add i32 %.promoted70, %1
+  %1 = and i32 %i.z, -8
+  %2 = sub nsw i32 %i.x, %1
+  %3 = lshr i32 %i.z, 3
+  %i.aa = add i32 %.promoted70, %3
   %i.ab = add i32 %i.aa, 1
-  store i32 %3, ptr %i.u, align 8, !tbaa !15
+  store i32 %2, ptr %i.u, align 8, !tbaa !15
   store i32 %i.ab, ptr %i.w, align 4, !tbaa !16
   br label %.loopexit69
 
@@ -262,10 +262,10 @@ bb.d:                                             ; preds = %bb.c
   %i.bc = add nsw i32 %.promoted72, -8
   %i.bd = tail call i32 @llvm.usub.sat.i32(i32 %.promoted72, i32 15)
   %i.be = add nuw i32 %i.bd, 7                    ; 2 uses
-  %4 = lshr i32 %i.be, 3
   %i.bf = and i32 %i.be, -8
   %i.bg = sub nsw i32 %i.bc, %i.bf
   %i.bh = add i32 %.promoted75, 1
+  %4 = lshr i32 %i.be, 3
   %i.bi = add i32 %i.bh, %4
   store i32 %i.bg, ptr %i.ah, align 8, !tbaa !15
   store i32 %i.bi, ptr %i.ai, align 4, !tbaa !16
@@ -314,12 +314,12 @@ bb.e:                                             ; preds = %._crit_edge
   %i.cg = add nsw i32 %.promoted79, -8
   %i.ch = tail call i32 @llvm.usub.sat.i32(i32 %.promoted79, i32 15)
   %i.ci = add nuw i32 %i.ch, 7                    ; 2 uses
-  %5 = lshr i32 %i.ci, 3
-  %6 = and i32 %i.ci, -8
-  %7 = sub nsw i32 %i.cg, %6
-  %i.cj = add i32 %.promoted83, %5
+  %5 = and i32 %i.ci, -8
+  %6 = sub nsw i32 %i.cg, %5
+  %7 = lshr i32 %i.ci, 3
+  %i.cj = add i32 %.promoted83, %7
   %i.ck = add i32 %i.cj, 1
-  store i32 %7, ptr %i.cd, align 8, !tbaa !15
+  store i32 %6, ptr %i.cd, align 8, !tbaa !15
   store i32 %i.ck, ptr %i.cf, align 4, !tbaa !16
   br label %.loopexit67
 
@@ -358,12 +358,12 @@ bb.f:                                             ; preds = %.loopexit67
   %i.dd = add nsw i32 %.promoted85, -8
   %i.de = tail call i32 @llvm.usub.sat.i32(i32 %.promoted85, i32 15)
   %i.df = add nuw i32 %i.de, 7                    ; 2 uses
-  %8 = lshr i32 %i.df, 3
-  %9 = and i32 %i.df, -8
-  %10 = sub nsw i32 %i.dd, %9
-  %i.dg = add i32 %.promoted89, %8
+  %8 = and i32 %i.df, -8
+  %9 = sub nsw i32 %i.dd, %8
+  %10 = lshr i32 %i.df, 3
+  %i.dg = add i32 %.promoted89, %10
   %i.dh = add i32 %i.dg, 1
-  store i32 %10, ptr %i.da, align 8, !tbaa !15
+  store i32 %9, ptr %i.da, align 8, !tbaa !15
   store i32 %i.dh, ptr %i.dc, align 4, !tbaa !16
   br label %.loopexit66
 
@@ -424,10 +424,10 @@ bb.h:                                             ; preds = %bb.g
   %i.ek = add nsw i32 %.promoted91, -8
   %i.el = tail call i32 @llvm.usub.sat.i32(i32 %.promoted91, i32 15)
   %i.em = add nuw i32 %i.el, 7                    ; 2 uses
-  %11 = lshr i32 %i.em, 3
   %i.en = and i32 %i.em, -8
   %i.eo = sub nsw i32 %i.ek, %i.en
   %i.ep = add i32 %.promoted95, 1
+  %11 = lshr i32 %i.em, 3
   %i.eq = add i32 %i.ep, %11
   store i32 %i.eo, ptr %i.dw, align 8, !tbaa !15
   store i32 %i.eq, ptr %i.dx, align 4, !tbaa !16
@@ -552,10 +552,10 @@ bb.g:                                             ; preds = %bb.f
   %i.ax = add nsw i32 %.promoted101, -8
   %i.ay = tail call i32 @llvm.usub.sat.i32(i32 %.promoted101, i32 15)
   %i.az = add nuw i32 %i.ay, 7                    ; 2 uses
-  %3 = lshr i32 %i.az, 3
   %i.ba = and i32 %i.az, -8
   %i.bb = sub nsw i32 %i.ax, %i.ba
   %i.bc = add i32 %.promoted104, 1
+  %3 = lshr i32 %i.az, 3
   %i.bd = add i32 %i.bc, %3
   store i32 %i.bb, ptr %i.ag, align 8, !tbaa !15
   store i32 %i.bd, ptr %i.ah, align 4, !tbaa !16
@@ -600,10 +600,10 @@ bb.h:                                             ; preds = %.lr.ph112
   %i.bv = add nsw i32 %.promoted106, -8
   %i.bw = tail call i32 @llvm.usub.sat.i32(i32 %.promoted106, i32 15)
   %i.bx = add nuw i32 %i.bw, 7                    ; 2 uses
-  %4 = lshr i32 %i.bx, 3
   %i.by = and i32 %i.bx, -8
   %i.bz = sub nsw i32 %i.bv, %i.by
   %i.ca = add i32 %.promoted109, 1
+  %4 = lshr i32 %i.bx, 3
   %i.cb = add i32 %i.ca, %4
   store i32 %i.bz, ptr %i.ag, align 8, !tbaa !15
   store i32 %i.cb, ptr %i.ah, align 4, !tbaa !16
@@ -653,10 +653,10 @@ bb.k:                                             ; preds = %bb.j
   %i.ct = add nsw i32 %.promoted, -8
   %i.cu = tail call i32 @llvm.usub.sat.i32(i32 %.promoted, i32 15)
   %i.cv = add nuw i32 %i.cu, 7                    ; 2 uses
-  %5 = lshr i32 %i.cv, 3
   %i.cw = and i32 %i.cv, -8
   %i.cx = sub nsw i32 %i.ct, %i.cw
   %i.cy = add i32 %.promoted92, 1
+  %5 = lshr i32 %i.cv, 3
   %i.cz = add i32 %i.cy, %5
   store i32 %i.cx, ptr %i.ag, align 8, !tbaa !15
   store i32 %i.cz, ptr %i.ah, align 4, !tbaa !16
@@ -702,10 +702,10 @@ bb.l:                                             ; preds = %.lr.ph100
   %i.ds = add nsw i32 %.promoted94, -8
   %i.dt = tail call i32 @llvm.usub.sat.i32(i32 %.promoted94, i32 15)
   %i.du = add nuw i32 %i.dt, 7                    ; 2 uses
-  %6 = lshr i32 %i.du, 3
   %i.dv = and i32 %i.du, -8
   %i.dw = sub nsw i32 %i.ds, %i.dv
   %i.dx = add i32 %.promoted97, 1
+  %6 = lshr i32 %i.du, 3
   %i.dy = add i32 %i.dx, %6
   store i32 %i.dw, ptr %i.ag, align 8, !tbaa !15
   store i32 %i.dy, ptr %i.ah, align 4, !tbaa !16
@@ -799,12 +799,12 @@ bb.e:                                             ; preds = %bb.d
   %i.aa = add nsw i32 %.promoted76, -8
   %i.ab = tail call i32 @llvm.usub.sat.i32(i32 %.promoted76, i32 15)
   %i.ac = add nuw i32 %i.ab, 7                    ; 2 uses
-  %2 = lshr i32 %i.ac, 3
-  %3 = and i32 %i.ac, -8
-  %4 = sub nsw i32 %i.aa, %3
-  %i.ad = add i32 %.promoted79, %2
+  %2 = and i32 %i.ac, -8
+  %3 = sub nsw i32 %i.aa, %2
+  %4 = lshr i32 %i.ac, 3
+  %i.ad = add i32 %.promoted79, %4
   %i.ae = add i32 %i.ad, 1
-  store i32 %4, ptr %i.x, align 8, !tbaa !15
+  store i32 %3, ptr %i.x, align 8, !tbaa !15
   store i32 %i.ae, ptr %i.z, align 4, !tbaa !16
   br label %.loopexit63
 
@@ -855,10 +855,10 @@ bb.g:                                             ; preds = %bb.f
   %i.bb = add nsw i32 %.promoted81, -8
   %i.bc = tail call i32 @llvm.usub.sat.i32(i32 %.promoted81, i32 15)
   %i.bd = add nuw i32 %i.bc, 7                    ; 2 uses
-  %5 = lshr i32 %i.bd, 3
   %i.be = and i32 %i.bd, -8
   %i.bf = sub nsw i32 %i.bb, %i.be
   %i.bg = add i32 %.promoted84, 1
+  %5 = lshr i32 %i.bd, 3
   %i.bh = add i32 %i.bg, %5
   store i32 %i.bf, ptr %i.ak, align 8, !tbaa !15
   store i32 %i.bh, ptr %i.al, align 4, !tbaa !16
@@ -914,12 +914,12 @@ bb.j:                                             ; preds = %bb.i
   %i.cf = add nsw i32 %.promoted, -8
   %i.cg = tail call i32 @llvm.usub.sat.i32(i32 %.promoted, i32 15)
   %i.ch = add nuw i32 %i.cg, 7                    ; 2 uses
-  %6 = lshr i32 %i.ch, 3
-  %7 = and i32 %i.ch, -8
-  %8 = sub nsw i32 %i.cf, %7
-  %i.ci = add i32 %.promoted67, %6
+  %6 = and i32 %i.ch, -8
+  %7 = sub nsw i32 %i.cf, %6
+  %8 = lshr i32 %i.ch, 3
+  %i.ci = add i32 %.promoted67, %8
   %i.cj = add i32 %i.ci, 1
-  store i32 %8, ptr %i.cc, align 8, !tbaa !15
+  store i32 %7, ptr %i.cc, align 8, !tbaa !15
   store i32 %i.cj, ptr %i.ce, align 4, !tbaa !16
   br label %.loopexit66
 
@@ -971,10 +971,10 @@ bb.l:                                             ; preds = %bb.k
   %i.dh = add nsw i32 %.promoted69, -8
   %i.di = tail call i32 @llvm.usub.sat.i32(i32 %.promoted69, i32 15)
   %i.dj = add nuw i32 %i.di, 7                    ; 2 uses
-  %9 = lshr i32 %i.dj, 3
   %i.dk = and i32 %i.dj, -8
   %i.dl = sub nsw i32 %i.dh, %i.dk
   %i.dm = add i32 %.promoted72, 1
+  %9 = lshr i32 %i.dj, 3
   %i.dn = add i32 %i.dm, %9
   store i32 %i.dl, ptr %i.cp, align 8, !tbaa !15
   store i32 %i.dn, ptr %i.cq, align 4, !tbaa !16
@@ -1065,10 +1065,10 @@ bb.d:                                             ; preds = %bb.c
   %i.ac = add nsw i32 %.promoted86, -8
   %i.ad = tail call i32 @llvm.usub.sat.i32(i32 %.promoted86, i32 15)
   %i.ae = add nuw i32 %i.ad, 7                    ; 2 uses
-  %2 = lshr i32 %i.ae, 3
   %i.af = and i32 %i.ae, -8
   %i.ag = sub nsw i32 %i.ac, %i.af
   %i.ah = add i32 %.promoted89, 1
+  %2 = lshr i32 %i.ae, 3
   %i.ai = add i32 %i.ah, %2
   store i32 %i.ag, ptr %i.l, align 8, !tbaa !15
   store i32 %i.ai, ptr %i.m, align 4, !tbaa !16
@@ -1113,10 +1113,10 @@ bb.e:                                             ; preds = %.lr.ph97
   %i.ba = add nsw i32 %.promoted91, -8
   %i.bb = tail call i32 @llvm.usub.sat.i32(i32 %.promoted91, i32 15)
   %i.bc = add nuw i32 %i.bb, 7                    ; 2 uses
-  %3 = lshr i32 %i.bc, 3
   %i.bd = and i32 %i.bc, -8
   %i.be = sub nsw i32 %i.ba, %i.bd
   %i.bf = add i32 %.promoted94, 1
+  %3 = lshr i32 %i.bc, 3
   %i.bg = add i32 %i.bf, %3
   store i32 %i.be, ptr %i.l, align 8, !tbaa !15
   store i32 %i.bg, ptr %i.m, align 4, !tbaa !16
@@ -1166,10 +1166,10 @@ bb.h:                                             ; preds = %bb.g
   %i.by = add nsw i32 %.promoted, -8
   %i.bz = tail call i32 @llvm.usub.sat.i32(i32 %.promoted, i32 15)
   %i.ca = add nuw i32 %i.bz, 7                    ; 2 uses
-  %4 = lshr i32 %i.ca, 3
   %i.cb = and i32 %i.ca, -8
   %i.cc = sub nsw i32 %i.by, %i.cb
   %i.cd = add i32 %.promoted77, 1
+  %4 = lshr i32 %i.ca, 3
   %i.ce = add i32 %i.cd, %4
   store i32 %i.cc, ptr %i.l, align 8, !tbaa !15
   store i32 %i.ce, ptr %i.m, align 4, !tbaa !16
@@ -1215,10 +1215,10 @@ bb.i:                                             ; preds = %.lr.ph85
   %i.cx = add nsw i32 %.promoted79, -8
   %i.cy = tail call i32 @llvm.usub.sat.i32(i32 %.promoted79, i32 15)
   %i.cz = add nuw i32 %i.cy, 7                    ; 2 uses
-  %5 = lshr i32 %i.cz, 3
   %i.da = and i32 %i.cz, -8
   %i.db = sub nsw i32 %i.cx, %i.da
   %i.dc = add i32 %.promoted82, 1
+  %5 = lshr i32 %i.cz, 3
   %i.dd = add i32 %i.dc, %5
   store i32 %i.db, ptr %i.l, align 8, !tbaa !15
   store i32 %i.dd, ptr %i.m, align 4, !tbaa !16

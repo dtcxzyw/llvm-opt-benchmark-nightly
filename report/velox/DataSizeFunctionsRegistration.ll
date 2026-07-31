@@ -204,7 +204,7 @@ _ZNSt6vectorISt10shared_ptrIKN8facebook5velox4TypeEESaIS5_EE11_S_relocateEPS5_S8
   %i.at = add i64 %i.as, -16                      ; 2 uses
   %i.au = lshr i64 %i.at, 4
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
-  %min.iters.check62 = icmp ult i64 %i.at, 368
+  %min.iters.check62 = icmp ult i64 %i.at, 304
   br i1 %min.iters.check62, label %.lr.ph.i.i.i17.preheader79, label %vector.memcheck47
 
 vector.memcheck47:                                ; preds = %.lr.ph.i.i.i17.preheader
@@ -607,8 +607,8 @@ bb.i:                                             ; preds = %.lr.ph87
 
 bb.j:                                             ; preds = %.lr.ph
   %i.be = add nuw nsw i64 %.1.i51, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.be, %i.aw
-  br i1 %exitcond.not, label %.noexc11, label %.lr.ph, !llvm.loop !986
+  %7 = icmp samesign ult i64 %i.be, %i.aw
+  br i1 %7, label %.lr.ph, label %.noexc11, !llvm.loop !986
 
 .lr.ph:                                           ; preds = %.preheader, %bb.j
   %.1.i51 = phi i64 [ %i.be, %bb.j ], [ %i.ax, %.preheader ] ; 2 uses
@@ -1011,8 +1011,8 @@ bb.b:                                             ; preds = %.lr.ph85
 
 bb.c:                                             ; preds = %.lr.ph
   %i.ak = add nuw nsw i64 %.1.i58, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ak, %i.ac
-  br i1 %exitcond.not, label %.noexc18, label %.lr.ph, !llvm.loop !986
+  %8 = icmp samesign ult i64 %i.ak, %i.ac
+  br i1 %8, label %.lr.ph, label %.noexc18, !llvm.loop !986
 
 .lr.ph:                                           ; preds = %.preheader, %bb.c
   %.1.i58 = phi i64 [ %i.ak, %bb.c ], [ %i.ad, %.preheader ] ; 2 uses
@@ -1332,8 +1332,8 @@ bb.c:                                             ; preds = %.lr.ph197
 
 bb.d:                                             ; preds = %.lr.ph136
   %i.aq = add nuw nsw i64 %.1.i.i135, 1           ; 2 uses
-  %exitcond.not = icmp eq i64 %i.aq, %i.ai
-  br i1 %exitcond.not, label %.noexc40, label %.lr.ph136, !llvm.loop !986
+  %12 = icmp samesign ult i64 %i.aq, %i.ai
+  br i1 %12, label %.lr.ph136, label %.noexc40, !llvm.loop !986
 
 .lr.ph136:                                        ; preds = %.preheader, %bb.d
   %.1.i.i135 = phi i64 [ %i.aq, %bb.d ], [ %i.aj, %.preheader ] ; 2 uses
@@ -1595,8 +1595,8 @@ bb.w:                                             ; preds = %.lr.ph200
 
 bb.x:                                             ; preds = %.lr.ph
   %i.dh = add nuw nsw i64 %.1.i132, 1             ; 2 uses
-  %exitcond158.not = icmp eq i64 %i.dh, %i.cz
-  br i1 %exitcond158.not, label %.noexc24, label %.lr.ph, !llvm.loop !986
+  %13 = icmp samesign ult i64 %i.dh, %i.cz
+  br i1 %13, label %.lr.ph, label %.noexc24, !llvm.loop !986
 
 .lr.ph:                                           ; preds = %.preheader116, %bb.x
   %.1.i132 = phi i64 [ %i.dh, %bb.x ], [ %i.da, %.preheader116 ] ; 2 uses
@@ -1999,8 +1999,8 @@ bb.i:                                             ; preds = %.lr.ph79
 
 bb.j:                                             ; preds = %.lr.ph
   %i.bg = add nuw nsw i64 %.1.i.i46, 1            ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bg, %i.ay
-  br i1 %exitcond.not, label %.noexc11, label %.lr.ph, !llvm.loop !986
+  %7 = icmp samesign ult i64 %i.bg, %i.ay
+  br i1 %7, label %.lr.ph, label %.noexc11, !llvm.loop !986
 
 .lr.ph:                                           ; preds = %.preheader, %bb.j
   %.1.i.i46 = phi i64 [ %i.bg, %bb.j ], [ %i.az, %.preheader ] ; 2 uses
@@ -2403,8 +2403,8 @@ bb.b:                                             ; preds = %.lr.ph80
 
 bb.c:                                             ; preds = %.lr.ph
   %i.an = add nuw nsw i64 %.1.i.i53, 1            ; 2 uses
-  %exitcond.not = icmp eq i64 %i.an, %i.af
-  br i1 %exitcond.not, label %.noexc18, label %.lr.ph, !llvm.loop !986
+  %8 = icmp samesign ult i64 %i.an, %i.af
+  br i1 %8, label %.lr.ph, label %.noexc18, !llvm.loop !986
 
 .lr.ph:                                           ; preds = %.preheader, %bb.c
   %.1.i.i53 = phi i64 [ %i.an, %bb.c ], [ %i.ag, %.preheader ] ; 2 uses
@@ -2728,8 +2728,8 @@ bb.c:                                             ; preds = %.lr.ph193
 
 bb.d:                                             ; preds = %.lr.ph131
   %i.au = add nuw nsw i64 %.1.i.i.i130, 1         ; 2 uses
-  %exitcond.not = icmp eq i64 %i.au, %i.am
-  br i1 %exitcond.not, label %.noexc36, label %.lr.ph131, !llvm.loop !986
+  %12 = icmp samesign ult i64 %i.au, %i.am
+  br i1 %12, label %.lr.ph131, label %.noexc36, !llvm.loop !986
 
 .lr.ph131:                                        ; preds = %.preheader, %bb.d
   %.1.i.i.i130 = phi i64 [ %i.au, %bb.d ], [ %i.an, %.preheader ] ; 2 uses
@@ -2992,8 +2992,8 @@ bb.w:                                             ; preds = %.lr.ph196
 
 bb.x:                                             ; preds = %.lr.ph
   %i.dm = add nuw nsw i64 %.1.i.i127, 1           ; 2 uses
-  %exitcond153.not = icmp eq i64 %i.dm, %i.de
-  br i1 %exitcond153.not, label %.noexc24, label %.lr.ph, !llvm.loop !986
+  %13 = icmp samesign ult i64 %i.dm, %i.de
+  br i1 %13, label %.lr.ph, label %.noexc24, !llvm.loop !986
 
 .lr.ph:                                           ; preds = %.preheader111, %bb.x
   %.1.i.i127 = phi i64 [ %i.dm, %bb.x ], [ %i.df, %.preheader111 ] ; 2 uses
@@ -3396,8 +3396,8 @@ bb.m:                                             ; preds = %.lr.ph79
 
 bb.n:                                             ; preds = %.lr.ph
   %i.bx = add nuw nsw i64 %.1.i.i45, 1            ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bx, %i.bp
-  br i1 %exitcond.not, label %.noexc12, label %.lr.ph, !llvm.loop !986
+  %7 = icmp samesign ult i64 %i.bx, %i.bp
+  br i1 %7, label %.lr.ph, label %.noexc12, !llvm.loop !986
 
 .lr.ph:                                           ; preds = %.preheader, %bb.n
   %.1.i.i45 = phi i64 [ %i.bx, %bb.n ], [ %i.bq, %.preheader ] ; 2 uses
@@ -3800,8 +3800,8 @@ bb.f:                                             ; preds = %.lr.ph79
 
 bb.g:                                             ; preds = %.lr.ph
   %i.bd = add nuw nsw i64 %.1.i.i52, 1            ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bd, %i.av
-  br i1 %exitcond.not, label %.noexc19, label %.lr.ph, !llvm.loop !986
+  %8 = icmp samesign ult i64 %i.bd, %i.av
+  br i1 %8, label %.lr.ph, label %.noexc19, !llvm.loop !986
 
 .lr.ph:                                           ; preds = %.preheader, %bb.g
   %.1.i.i52 = phi i64 [ %i.bd, %bb.g ], [ %i.aw, %.preheader ] ; 2 uses
@@ -4153,8 +4153,8 @@ bb.g:                                             ; preds = %.lr.ph197
 
 bb.h:                                             ; preds = %.lr.ph135
   %i.bj = add nuw nsw i64 %.1.i.i.i134, 1         ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bj, %i.bb
-  br i1 %exitcond.not, label %.noexc38, label %.lr.ph135, !llvm.loop !986
+  %12 = icmp samesign ult i64 %i.bj, %i.bb
+  br i1 %12, label %.lr.ph135, label %.noexc38, !llvm.loop !986
 
 .lr.ph135:                                        ; preds = %.preheader, %bb.h
   %.1.i.i.i134 = phi i64 [ %i.bj, %bb.h ], [ %i.bc, %.preheader ] ; 2 uses
@@ -4446,8 +4446,8 @@ bb.ae:                                            ; preds = %.lr.ph200
 
 bb.af:                                            ; preds = %.lr.ph
   %i.er = add nuw nsw i64 %.1.i.i130, 1           ; 2 uses
-  %exitcond158.not = icmp eq i64 %i.er, %i.ej
-  br i1 %exitcond158.not, label %.noexc25, label %.lr.ph, !llvm.loop !986
+  %13 = icmp samesign ult i64 %i.er, %i.ej
+  br i1 %13, label %.lr.ph, label %.noexc25, !llvm.loop !986
 
 .lr.ph:                                           ; preds = %.preheader114, %bb.af
   %.1.i.i130 = phi i64 [ %i.er, %bb.af ], [ %i.ek, %.preheader114 ] ; 2 uses

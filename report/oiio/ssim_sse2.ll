@@ -77,9 +77,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !10
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.aj = add nsw i32 %2, -48
-  %i.ak = and i32 %i.aj, -32
-  %i.al = add nuw nsw i32 %i.ak, 48
+  %i.aj = add nuw i32 %2, 2147483600
+  %i.ak = and i32 %i.aj, 2147483616
+  %i.al = add nuw i32 %i.ak, 48
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b

@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %.lr.ph, %_ZN8facebo
   %i.af = getelementptr inbounds nuw [24 x i8], ptr %i.ac, i64 %indvars.iv25 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %.in = select i1 %i.ae, ptr %i.s, ptr %i.ag
-  %i.ah = load i64, ptr %.in, align 8, !tbaa !15  ; 6 uses
+  %i.ah = load i64, ptr %.in, align 8, !tbaa !15  ; 4 uses
   %i.ai = load i8, ptr %i.t, align 8, !tbaa !125, !range !126, !noundef !127
   %i.aj = trunc nuw i8 %i.ai to i1
   br i1 %i.aj, label %bb.f, label %_ZN8facebook5velox4bits6negateEPmi.exit
@@ -220,7 +220,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.aq = load ptr, ptr %i.af, align 8, !tbaa !77 ; 8 uses
-  %i.ar = trunc i64 %i.ah to i32                  ; 4 uses
+  %i.ar = trunc i64 %i.ah to i32                  ; 8 uses
   %.not27.i = icmp slt i32 %i.ar, 64
   br i1 %.not27.i, label %.preheader26.i, label %iter.check97
 
@@ -303,46 +303,51 @@ vec.epilog.middle.block108:                       ; preds = %vec.epilog.vector.b
   br label %.lr.ph.i
 
 .preheader26.loopexit.i:                          ; preds = %.lr.ph.i, %vec.epilog.middle.block108, %middle.block92
-  %i.bp = and i32 %i.ar, 2147483584
+  %2 = add nuw i32 %i.ar, 2147483584
+  %i.bp = and i32 %2, 2147483584
+  %narrow.i = add nuw i32 %i.bp, 64
   br label %.preheader26.i
 
 .preheader26.i:                                   ; preds = %.preheader26.loopexit.i, %bb.h
-  %.0.lcssa.i = phi i32 [ 0, %bb.h ], [ %i.bp, %.preheader26.loopexit.i ] ; 3 uses
-  %i.bq = or disjoint i32 %.0.lcssa.i, 8
+  %.0.lcssa.i = phi i32 [ 0, %bb.h ], [ %narrow.i, %.preheader26.loopexit.i ] ; 11 uses
+  %i.bq = or disjoint i32 %.0.lcssa.i, 8          ; 5 uses
   %.not2429.i = icmp sgt i32 %i.bq, %i.ar
   br i1 %.not2429.i, label %.preheader.i, label %iter.check62
 
 iter.check62:                                     ; preds = %.preheader26.i
-  %2 = zext nneg i32 %.0.lcssa.i to i64           ; 8 uses
-  %3 = or disjoint i64 %2, 8                      ; 3 uses
-  %4 = and i64 %i.ah, 4294967295                  ; 2 uses
-  %5 = or disjoint i64 %2, 16
-  %6 = add nuw nsw i64 %4, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %5, i64 %6)
-  %7 = add nsw i64 %umax, -9
-  %8 = sub nsw i64 %7, %2                         ; 3 uses
-  %9 = lshr i64 %8, 3
-  %10 = add nuw nsw i64 %9, 1                     ; 5 uses
-  %min.iters.check44 = icmp ult i64 %8, 120
-  br i1 %min.iters.check44, label %.lr.ph31.i.preheader, label %vector.main.loop.iter.check45
+  %3 = add i32 %i.ar, -8
+  %4 = sub i32 %3, %.0.lcssa.i                    ; 3 uses
+  %5 = lshr i32 %4, 3
+  %6 = add nuw nsw i32 %5, 1                      ; 5 uses
+  %min.iters.check44 = icmp ult i32 %4, 120
+  br i1 %min.iters.check44, label %.lr.ph31.i.preheader, label %vector.scevcheck
 
-vector.main.loop.iter.check45:                    ; preds = %iter.check62
-  %min.iters.check46 = icmp ult i64 %8, 1016
+vector.scevcheck:                                 ; preds = %iter.check62
+  %reass.sub = sub i32 %.0.lcssa.i, %i.ar
+  %7 = add i32 %reass.sub, 7
+  %8 = or i32 %7, 7
+  %9 = icmp ult i32 %8, %.0.lcssa.i
+  br i1 %9, label %.lr.ph31.i.preheader, label %vector.main.loop.iter.check45
+
+vector.main.loop.iter.check45:                    ; preds = %vector.scevcheck
+  %min.iters.check46 = icmp ult i32 %4, 1016
   br i1 %min.iters.check46, label %vec.epilog.ph66, label %vector.ph47
 
 vector.ph47:                                      ; preds = %vector.main.loop.iter.check45
-  %n.mod.vf48 = and i64 %10, 112
-  %n.vec49 = and i64 %10, 4611686018427387776     ; 4 uses
-  %11 = shl i64 %n.vec49, 3                       ; 2 uses
-  %12 = add i64 %11, %2
-  %13 = add i64 %3, %11                           ; 2 uses
-  %14 = lshr exact i64 %2, 3
-  %15 = getelementptr inbounds nuw i8, ptr %i.aq, i64 %14
+  %n.mod.vf42 = and i32 %6, 112
+  %n.vec43 = and i32 %6, 1073741696               ; 4 uses
+  %10 = shl i32 %n.vec43, 3                       ; 2 uses
+  %11 = add i32 %i.bq, %10
+  %12 = add i32 %.0.lcssa.i, %10                  ; 2 uses
+  %13 = lshr i32 %.0.lcssa.i, 3
   br label %vector.body50
 
 vector.body50:                                    ; preds = %vector.body50, %vector.ph47
-  %index51 = phi i64 [ 0, %vector.ph47 ], [ %index.next56, %vector.body50 ] ; 2 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %15, i64 %index51 ; 5 uses
+  %index45 = phi i32 [ 0, %vector.ph47 ], [ %index.next50, %vector.body50 ] ; 2 uses
+  %14 = add i32 %13, %index45
+  %15 = and i32 %14, 536870911
+  %16 = zext nneg i32 %15 to i64
+  %i.br = getelementptr inbounds nuw i8, ptr %i.aq, i64 %16 ; 5 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 32 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.br, i64 64 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.br, i64 96 ; 2 uses
@@ -358,47 +363,47 @@ vector.body50:                                    ; preds = %vector.body50, %vec
   store <32 x i8> %i.bw, ptr %i.bs, align 1, !tbaa !35
   store <32 x i8> %i.bx, ptr %i.bt, align 1, !tbaa !35
   store <32 x i8> %i.by, ptr %i.bu, align 1, !tbaa !35
-  %index.next56 = add nuw i64 %index51, 128       ; 2 uses
-  %i.bz = icmp eq i64 %index.next56, %n.vec49
+  %index.next50 = add nuw i32 %index45, 128       ; 2 uses
+  %i.bz = icmp eq i32 %index.next50, %n.vec43
   br i1 %i.bz, label %middle.block57, label %vector.body50, !llvm.loop !136
 
 middle.block57:                                   ; preds = %vector.body50
-  %ind.escape = add nsw i64 %13, -8
-  %cmp.n58 = icmp eq i64 %10, %n.vec49
-  br i1 %cmp.n58, label %.preheader.i.loopexit, label %vec.epilog.iter.check64
+  %cmp.n58 = icmp eq i32 %6, %n.vec43
+  br i1 %cmp.n58, label %.preheader.i, label %vec.epilog.iter.check64
 
 vec.epilog.iter.check64:                          ; preds = %middle.block57
-  %min.epilog.iters.check65 = icmp eq i64 %n.mod.vf48, 0
+  %min.epilog.iters.check65 = icmp eq i32 %n.mod.vf42, 0
   br i1 %min.epilog.iters.check65, label %.lr.ph31.i.preheader, label %vec.epilog.ph66, !prof !137
 
 vec.epilog.ph66:                                  ; preds = %vector.main.loop.iter.check45, %vec.epilog.iter.check64
-  %vec.epilog.resume.val59 = phi i64 [ %n.vec49, %vec.epilog.iter.check64 ], [ 0, %vector.main.loop.iter.check45 ]
-  %n.vec68 = and i64 %10, 4611686018427387888     ; 3 uses
-  %16 = shl i64 %n.vec68, 3                       ; 2 uses
-  %17 = add i64 %16, %2
-  %18 = add i64 %3, %16                           ; 2 uses
-  %19 = lshr exact i64 %2, 3
-  %20 = getelementptr inbounds nuw i8, ptr %i.aq, i64 %19
+  %vec.epilog.resume.val53 = phi i32 [ %n.vec43, %vec.epilog.iter.check64 ], [ 0, %vector.main.loop.iter.check45 ]
+  %n.vec62 = and i32 %6, 1073741808               ; 3 uses
+  %17 = shl i32 %n.vec62, 3                       ; 2 uses
+  %18 = add i32 %i.bq, %17
+  %19 = add i32 %.0.lcssa.i, %17                  ; 2 uses
+  %20 = lshr i32 %.0.lcssa.i, 3
   br label %vec.epilog.vector.body69
 
 vec.epilog.vector.body69:                         ; preds = %vec.epilog.vector.body69, %vec.epilog.ph66
-  %index70 = phi i64 [ %vec.epilog.resume.val59, %vec.epilog.ph66 ], [ %index.next72, %vec.epilog.vector.body69 ] ; 2 uses
-  %i.ca = getelementptr inbounds nuw i8, ptr %20, i64 %index70 ; 2 uses
+  %index64 = phi i32 [ %vec.epilog.resume.val53, %vec.epilog.ph66 ], [ %index.next66, %vec.epilog.vector.body69 ] ; 2 uses
+  %21 = add i32 %20, %index64
+  %22 = and i32 %21, 536870911
+  %23 = zext nneg i32 %22 to i64
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.aq, i64 %23 ; 2 uses
   %wide.load71 = load <16 x i8>, ptr %i.ca, align 1, !tbaa !35
   %i.cb = xor <16 x i8> %wide.load71, splat (i8 -1)
   store <16 x i8> %i.cb, ptr %i.ca, align 1, !tbaa !35
-  %index.next72 = add nuw i64 %index70, 16        ; 2 uses
-  %i.cc = icmp eq i64 %index.next72, %n.vec68
+  %index.next66 = add nuw i32 %index64, 16        ; 2 uses
+  %i.cc = icmp eq i32 %index.next66, %n.vec62
   br i1 %i.cc, label %vec.epilog.middle.block73, label %vec.epilog.vector.body69, !llvm.loop !138
 
 vec.epilog.middle.block73:                        ; preds = %vec.epilog.vector.body69
-  %ind.escape74 = add nsw i64 %18, -8
-  %cmp.n75 = icmp eq i64 %10, %n.vec68
-  br i1 %cmp.n75, label %.preheader.i.loopexit, label %.lr.ph31.i.preheader
+  %cmp.n75 = icmp eq i32 %6, %n.vec62
+  br i1 %cmp.n75, label %.preheader.i, label %.lr.ph31.i.preheader
 
-.lr.ph31.i.preheader:                             ; preds = %iter.check62, %vec.epilog.iter.check64, %vec.epilog.middle.block73
-  %indvars.iv20.ph = phi i64 [ %2, %iter.check62 ], [ %12, %vec.epilog.iter.check64 ], [ %17, %vec.epilog.middle.block73 ]
-  %indvars.iv.ph = phi i64 [ %3, %iter.check62 ], [ %13, %vec.epilog.iter.check64 ], [ %18, %vec.epilog.middle.block73 ]
+.lr.ph31.i.preheader:                             ; preds = %vector.scevcheck, %iter.check62, %vec.epilog.iter.check64, %vec.epilog.middle.block73
+  %.ph = phi i32 [ %i.bq, %iter.check62 ], [ %i.bq, %vector.scevcheck ], [ %11, %vec.epilog.iter.check64 ], [ %18, %vec.epilog.middle.block73 ]
+  %.130.i.ph = phi i32 [ %.0.lcssa.i, %iter.check62 ], [ %.0.lcssa.i, %vector.scevcheck ], [ %12, %vec.epilog.iter.check64 ], [ %19, %vec.epilog.middle.block73 ]
   br label %.lr.ph31.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
@@ -414,33 +419,27 @@ vec.epilog.middle.block73:                        ; preds = %vec.epilog.vector.b
   %indvars.iv.next37.i = add nuw nsw i64 %indvars.iv36.i, 64
   br i1 %.not.i, label %.preheader26.loopexit.i, label %.lr.ph.i, !llvm.loop !139
 
-.preheader.i.loopexit:                            ; preds = %.lr.ph31.i, %vec.epilog.middle.block73, %middle.block57
-  %indvars.iv.lcssa = phi i64 [ %ind.escape74, %vec.epilog.middle.block73 ], [ %ind.escape, %middle.block57 ], [ %indvars.iv, %.lr.ph31.i ]
-  %21 = trunc nuw nsw i64 %indvars.iv.lcssa to i32
-  br label %.preheader.i
-
-.preheader.i:                                     ; preds = %.preheader.i.loopexit, %.preheader26.i
-  %.1.lcssa.i = phi i32 [ %.0.lcssa.i, %.preheader26.i ], [ %21, %.preheader.i.loopexit ] ; 2 uses
+.preheader.i:                                     ; preds = %.lr.ph31.i, %middle.block57, %vec.epilog.middle.block73, %.preheader26.i
+  %.1.lcssa.i = phi i32 [ %.0.lcssa.i, %.preheader26.i ], [ %19, %vec.epilog.middle.block73 ], [ %12, %middle.block57 ], [ %24, %.lr.ph31.i ] ; 2 uses
   %i.ch = icmp slt i32 %.1.lcssa.i, %i.ar
   br i1 %i.ch, label %.lr.ph34.preheader.i, label %_ZN8facebook5velox4bits6negateEPmi.exit
 
 .lr.ph34.preheader.i:                             ; preds = %.preheader.i
   %i.ci = zext nneg i32 %.1.lcssa.i to i64
-  %wide.trip.count = and i64 %i.ah, 4294967295
   br label %.lr.ph34.i
 
 .lr.ph31.i:                                       ; preds = %.lr.ph31.i.preheader, %.lr.ph31.i
-  %indvars.iv20 = phi i64 [ %indvars.iv.next21, %.lr.ph31.i ], [ %indvars.iv20.ph, %.lr.ph31.i.preheader ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph31.i ], [ %indvars.iv.ph, %.lr.ph31.i.preheader ] ; 2 uses
-  %22 = lshr exact i64 %indvars.iv20, 3
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.aq, i64 %22 ; 2 uses
+  %24 = phi i32 [ %27, %.lr.ph31.i ], [ %.ph, %.lr.ph31.i.preheader ] ; 3 uses
+  %.130.i = phi i32 [ %24, %.lr.ph31.i ], [ %.130.i.ph, %.lr.ph31.i.preheader ]
+  %25 = lshr exact i32 %.130.i, 3
+  %26 = zext nneg i32 %25 to i64
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.aq, i64 %26 ; 2 uses
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !35
   %i.cl = xor i8 %i.ck, -1
   store i8 %i.cl, ptr %i.cj, align 1, !tbaa !35
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
-  %.not24.i = icmp samesign ugt i64 %indvars.iv.next, %4
-  %indvars.iv.next21 = add nuw nsw i64 %indvars.iv20, 8
-  br i1 %.not24.i, label %.preheader.i.loopexit, label %.lr.ph31.i, !llvm.loop !140
+  %27 = add nuw nsw i32 %24, 8                    ; 2 uses
+  %.not24.i = icmp sgt i32 %27, %i.ar
+  br i1 %.not24.i, label %.preheader.i, label %.lr.ph31.i, !llvm.loop !140
 
 .lr.ph34.i:                                       ; preds = %_ZN8facebook5velox4bits6setBitIhEEvPT_mb.exit.i, %.lr.ph34.preheader.i
   %indvars.iv41.i = phi i64 [ %i.ci, %.lr.ph34.preheader.i ], [ %indvars.iv.next42.i, %_ZN8facebook5velox4bits6setBitIhEEvPT_mb.exit.i ] ; 6 uses
@@ -474,8 +473,9 @@ _ZN8facebook5velox4bits6setBitIhEEvPT_mb.exit.i:  ; preds = %bb.j, %bb.i
   %.sink.i.i = phi i8 [ %i.dc, %bb.j ], [ %i.cy, %bb.i ]
   store i8 %.sink.i.i, ptr %i.ct, align 1, !tbaa !35
   %indvars.iv.next42.i = add nuw nsw i64 %indvars.iv41.i, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next42.i, %wide.trip.count
-  br i1 %exitcond.not, label %_ZN8facebook5velox4bits6negateEPmi.exit, label %.lr.ph34.i, !llvm.loop !141
+  %28 = trunc nuw i64 %indvars.iv.next42.i to i32
+  %29 = icmp sgt i32 %i.ar, %28
+  br i1 %29, label %.lr.ph34.i, label %_ZN8facebook5velox4bits6negateEPmi.exit, !llvm.loop !141
 
 _ZN8facebook5velox4bits6negateEPmi.exit:          ; preds = %_ZN8facebook5velox4bits6setBitIhEEvPT_mb.exit.i, %.preheader.i, %bb.e, %bb.g, %bb.f
   %i.dd = phi i64 [ %i.ah, %bb.e ], [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %i.al, %.preheader.i ], [ %i.al, %_ZN8facebook5velox4bits6setBitIhEEvPT_mb.exit.i ] ; 6 uses
@@ -878,7 +878,7 @@ attributes #27 = { cold }
 !137 = !{!"branch_weights", i32 16, i32 112}
 !138 = distinct !{!138, !24, !62, !63}
 !139 = distinct !{!139, !24, !63, !62}
-!140 = distinct !{!140, !24, !63, !62}
+!140 = distinct !{!140, !24, !62}
 !141 = distinct !{!141, !24}
 !142 = !{!106, !108, i64 9}
 !143 = !{!106, !108, i64 11}

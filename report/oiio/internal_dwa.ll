@@ -204,14 +204,14 @@ iter.check247:                                    ; preds = %._crit_edge141
   br i1 %min.iters.check229, label %.lr.ph144.preheader, label %vector.memcheck215
 
 vector.memcheck215:                               ; preds = %iter.check247
-  %4 = lshr i32 %i.du, 4
-  %5 = zext nneg i32 %4 to i64                    ; 2 uses
-  %6 = shl nuw nsw i64 %5, 5
+  %4 = zext i32 %i.du to i64                      ; 2 uses
+  %5 = shl nuw nsw i64 %4, 1
+  %6 = and i64 %5, 8589934560
   %i.ef = getelementptr i8, ptr %0, i64 %6
   %scevgep216 = getelementptr i8, ptr %i.ef, i64 16 ; 2 uses
   %i.eg = shl nuw nsw i64 %wide.trip.count172, 1
   %scevgep217 = getelementptr i8, ptr %0, i64 %i.eg ; 2 uses
-  %7 = shl nuw nsw i64 %5, 4
+  %7 = and i64 %4, 4294967280
   %i.eh = or disjoint i64 %7, 8                   ; 2 uses
   %scevgep218 = getelementptr i8, ptr %1, i64 %i.eh
   %scevgep219 = getelementptr i8, ptr %1, i64 %wide.trip.count172
