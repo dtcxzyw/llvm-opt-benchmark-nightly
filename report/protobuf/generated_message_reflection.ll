@@ -204,7 +204,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_8internal11MicroStringEEEPT_PNS
   %.pre18.i110 = phi i8 [ %.pre18.i110.pre, %bb.y ], [ %i.cb, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i108 = phi ptr [ %.pre.i108.pre, %bb.y ], [ %i.bz, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.eu = phi i32 [ %.pre, %bb.y ], [ %i.dm, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i105 = phi ptr [ %i.ec, %bb.y ], [ %i.et, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 21 uses
+  %.0.i105 = phi ptr [ %i.ec, %bb.y ], [ %i.et, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 17 uses
   %.0.i105159 = ptrtoaddr ptr %.0.i105 to i64     ; 2 uses
   %.not.i.i106 = icmp eq i32 %i.eu, -1
   %.pre148 = and i8 %.pre18.i110, 8               ; 2 uses
@@ -295,7 +295,7 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStrin
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_8internal11MicroStringEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit131
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_8internal11MicroStringEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit131: ; preds = %bb.ae, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i125
-  %.0.i130 = phi ptr [ %i.fk, %bb.ae ], [ %i.gb, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i125 ] ; 21 uses
+  %.0.i130 = phi ptr [ %i.fk, %bb.ae ], [ %i.gb, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i125 ] ; 17 uses
   %.0.i130160 = ptrtoaddr ptr %.0.i130 to i64     ; 2 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.gd = load i64, ptr %i.gc, align 8, !tbaa !36 ; 3 uses
@@ -408,26 +408,10 @@ _ZN6google8protobuf8internal11MicroString12InternalSwapEPS2_m.exit: ; preds = %.
   ret void
 
 .lr.ph.i.i.preheader.rtvec:                       ; preds = %.lr.ph.i.i.preheader
-  %5 = load <4 x i8>, ptr %.0.i105, align 1, !tbaa !31
-  store <4 x i8> %5, ptr %.0.i130, align 1, !tbaa !31
-  %6 = getelementptr inbounds nuw i8, ptr %.0.i130, i64 4
-  %.079.i.i.ptr.4 = getelementptr inbounds nuw i8, ptr %.0.i105, i64 4
-  %7 = load i8, ptr %.079.i.i.ptr.4, align 1, !tbaa !31
-  store i8 %7, ptr %6, align 1, !tbaa !31
-  %8 = getelementptr inbounds nuw i8, ptr %.0.i130, i64 5
-  %.079.i.i.ptr.5 = getelementptr inbounds nuw i8, ptr %.0.i105, i64 5
-  %9 = load i8, ptr %.079.i.i.ptr.5, align 1, !tbaa !31
-  store i8 %9, ptr %8, align 1, !tbaa !31
-  %10 = getelementptr inbounds nuw i8, ptr %.0.i130, i64 6
-  %.079.i.i.ptr.6 = getelementptr inbounds nuw i8, ptr %.0.i105, i64 6
-  %11 = load i8, ptr %.079.i.i.ptr.6, align 1, !tbaa !31
-  store i8 %11, ptr %10, align 1, !tbaa !31
-  %12 = getelementptr inbounds nuw i8, ptr %.0.i130, i64 7
-  %.079.i.i.ptr.7 = getelementptr inbounds nuw i8, ptr %.0.i105, i64 7
-  %13 = load i8, ptr %.079.i.i.ptr.7, align 1, !tbaa !31
-  %i.hi = load <8 x i8>, ptr %.0.i130, align 1, !tbaa !31
-  store <8 x i8> %i.hi, ptr %.0.i105, align 1, !tbaa !31
-  store i8 %13, ptr %12, align 1, !tbaa !31
+  %5 = load <8 x i8>, ptr %.0.i130, align 1, !tbaa !31
+  %i.hi = load <8 x i8>, ptr %.0.i105, align 1, !tbaa !31
+  store <8 x i8> %5, ptr %.0.i105, align 1, !tbaa !31
+  store <8 x i8> %i.hi, ptr %.0.i130, align 1, !tbaa !31
   br label %_ZN6google8protobuf8internal11MicroString12InternalSwapEPS2_m.exit
 
 .lr.ph.i.i.preheader.rtscalar:                    ; preds = %.lr.ph.i.i.preheader
