@@ -203,7 +203,7 @@ _ZNKSt6vectorISt10unique_ptrIN6Assimp7OpenGEX15OpenGEXImporter7RefInfoESt14defau
   %i.bj = add i64 %i.bi, -8                       ; 2 uses
   %i.bk = lshr i64 %i.bj, 3
   %i.bl = add nuw nsw i64 %i.bk, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bj, 152
+  %min.iters.check = icmp ult i64 %i.bj, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader42, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -531,7 +531,7 @@ _ZNKSt6vectorISt10unique_ptrIN6Assimp7OpenGEX15OpenGEXImporter7RefInfoESt14defau
   %i.ay = add i64 %i.ax, -8                       ; 2 uses
   %i.az = lshr i64 %i.ay, 3
   %i.ba = add nuw nsw i64 %i.az, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ay, 152
+  %min.iters.check = icmp ult i64 %i.ay, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader44, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -934,7 +934,7 @@ _ZNKSt6vectorISt10unique_ptrI6aiMeshSt14default_deleteIS1_EESaIS4_EE12_M_check_l
   %i.ad = add i64 %i.ac, -8                       ; 2 uses
   %i.ae = lshr i64 %i.ad, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ad, 152
+  %min.iters.check = icmp ult i64 %i.ad, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader56, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader

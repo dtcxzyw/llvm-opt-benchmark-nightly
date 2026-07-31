@@ -52,14 +52,14 @@ bb.d:                                             ; preds = %bb.c
   br label %.lr.ph
 
 .preheader.loopexit:                              ; preds = %.lr.ph
-  %i.k = add nsw i32 %3, -9
-  %i.l = and i32 %i.k, -8
-  %i.m = add nuw nsw i32 %i.l, 9
+  %i.k = add nuw i32 %3, 2147483639
+  %i.l = and i32 %i.k, 2147483640
+  %i.m = add nuw i32 %i.l, 9
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.d
   %.0.lcssa = phi i32 [ 1, %bb.d ], [ %i.m, %.preheader.loopexit ] ; 4 uses
-  %4 = icmp samesign ult i32 %.0.lcssa, %3
+  %4 = icmp slt i32 %.0.lcssa, %3
   br i1 %4, label %.lr.ph42.preheader, label %.loopexit
 
 .lr.ph42.preheader:                               ; preds = %.preheader
@@ -67,7 +67,7 @@ bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr i8, ptr %2, i64 %i.n
   %scevgep = getelementptr i8, ptr %i.o, i64 -1
   %load_initial = load i8, ptr %scevgep, align 1  ; 2 uses
-  %i.p = sub nuw i32 %3, %.0.lcssa
+  %i.p = sub i32 %3, %.0.lcssa
   %xtraiter = and i32 %i.p, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph42.prol.loopexit, label %.lr.ph42.prol
@@ -181,14 +181,14 @@ bb.c:                                             ; preds = %bb.b
   br label %.lr.ph.i
 
 .preheader.loopexit.i:                            ; preds = %.lr.ph.i
-  %i.k = add nsw i32 %3, -9
-  %i.l = and i32 %i.k, -8
-  %i.m = add nuw nsw i32 %i.l, 9
+  %i.k = add nuw i32 %3, 2147483639
+  %i.l = and i32 %i.k, 2147483640
+  %i.m = add nuw i32 %i.l, 9
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.loopexit.i, %bb.c
   %.0.lcssa.i = phi i32 [ 1, %bb.c ], [ %i.m, %.preheader.loopexit.i ] ; 4 uses
-  %4 = icmp samesign ult i32 %.0.lcssa.i, %3
+  %4 = icmp slt i32 %.0.lcssa.i, %3
   br i1 %4, label %.lr.ph42.preheader.i, label %HorizontalUnfilter_SSE2.exit
 
 .lr.ph42.preheader.i:                             ; preds = %.preheader.i
@@ -196,7 +196,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr i8, ptr %2, i64 %i.n
   %scevgep = getelementptr i8, ptr %i.o, i64 -1
   %load_initial = load i8, ptr %scevgep, align 1  ; 2 uses
-  %i.p = sub nuw i32 %3, %.0.lcssa.i
+  %i.p = sub i32 %3, %.0.lcssa.i
   %xtraiter65 = and i32 %i.p, 3                   ; 2 uses
   %lcmp.mod66.not = icmp eq i32 %xtraiter65, 0
   br i1 %lcmp.mod66.not, label %.lr.ph42.i.prol.loopexit, label %.lr.ph42.i.prol
@@ -542,14 +542,14 @@ bb.c:                                             ; preds = %bb.b
   br label %.lr.ph.i
 
 .preheader.loopexit.i:                            ; preds = %.lr.ph.i
-  %i.h = add nsw i32 %3, -9
-  %i.i = and i32 %i.h, -8
-  %i.j = add nuw nsw i32 %i.i, 9
+  %i.h = add nuw i32 %3, 2147483639
+  %i.i = and i32 %i.h, 2147483640
+  %i.j = add nuw i32 %i.i, 9
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.loopexit.i, %bb.c
   %.0.lcssa.i = phi i32 [ 1, %bb.c ], [ %i.j, %.preheader.loopexit.i ] ; 4 uses
-  %4 = icmp samesign ult i32 %.0.lcssa.i, %3
+  %4 = icmp slt i32 %.0.lcssa.i, %3
   br i1 %4, label %.lr.ph42.preheader.i, label %HorizontalUnfilter_SSE2.exit
 
 .lr.ph42.preheader.i:                             ; preds = %.preheader.i
@@ -557,7 +557,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr i8, ptr %2, i64 %i.k
   %scevgep = getelementptr i8, ptr %i.l, i64 -1
   %load_initial = load i8, ptr %scevgep, align 1  ; 2 uses
-  %i.m = sub nuw i32 %3, %.0.lcssa.i
+  %i.m = sub i32 %3, %.0.lcssa.i
   %xtraiter = and i32 %i.m, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph42.i.prol.loopexit, label %.lr.ph42.i.prol

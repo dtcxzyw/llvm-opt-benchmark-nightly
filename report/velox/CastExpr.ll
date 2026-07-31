@@ -204,7 +204,7 @@ _ZNSt6vectorISt10shared_ptrIN8facebook5velox10BaseVectorEESaIS4_EE11_S_relocateE
   %i.an = add i64 %i.am, -16                      ; 2 uses
   %i.ao = lshr i64 %i.an, 4
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check61 = icmp ult i64 %i.an, 368
+  %min.iters.check61 = icmp ult i64 %i.an, 304
   br i1 %min.iters.check61, label %.lr.ph.i.i.i17.preheader78, label %vector.memcheck46
 
 vector.memcheck46:                                ; preds = %.lr.ph.i.i.i17.preheader
@@ -607,8 +607,8 @@ bb.w:                                             ; preds = %.lr.ph281
 
 bb.x:                                             ; preds = %.lr.ph
   %i.ck = add nuw nsw i64 %.1.i245, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ck, %i.n
-  br i1 %exitcond.not, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, label %.lr.ph, !llvm.loop !6878
+  %23 = icmp samesign ult i64 %i.ck, %i.n
+  br i1 %23, label %.lr.ph, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, !llvm.loop !6878
 
 .lr.ph:                                           ; preds = %.preheader, %bb.x
   %.1.i245 = phi i64 [ %i.ck, %bb.x ], [ %i.cd, %.preheader ] ; 2 uses
@@ -1011,8 +1011,8 @@ bb.w:                                             ; preds = %.lr.ph281
 
 bb.x:                                             ; preds = %.lr.ph
   %i.ck = add nuw nsw i64 %.1.i245, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ck, %i.n
-  br i1 %exitcond.not, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, label %.lr.ph, !llvm.loop !6878
+  %23 = icmp samesign ult i64 %i.ck, %i.n
+  br i1 %23, label %.lr.ph, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, !llvm.loop !6878
 
 .lr.ph:                                           ; preds = %.preheader, %bb.x
   %.1.i245 = phi i64 [ %i.ck, %bb.x ], [ %i.cd, %.preheader ] ; 2 uses
@@ -1415,8 +1415,8 @@ bb.w:                                             ; preds = %.lr.ph281
 
 bb.x:                                             ; preds = %.lr.ph
   %i.ck = add nuw nsw i64 %.1.i245, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ck, %i.n
-  br i1 %exitcond.not, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, label %.lr.ph, !llvm.loop !6878
+  %23 = icmp samesign ult i64 %i.ck, %i.n
+  br i1 %23, label %.lr.ph, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, !llvm.loop !6878
 
 .lr.ph:                                           ; preds = %.preheader, %bb.x
   %.1.i245 = phi i64 [ %i.ck, %bb.x ], [ %i.cd, %.preheader ] ; 2 uses
@@ -1819,8 +1819,8 @@ bb.w:                                             ; preds = %.lr.ph281
 
 bb.x:                                             ; preds = %.lr.ph
   %i.ck = add nuw nsw i64 %.1.i245, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ck, %i.n
-  br i1 %exitcond.not, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, label %.lr.ph, !llvm.loop !6878
+  %23 = icmp samesign ult i64 %i.ck, %i.n
+  br i1 %23, label %.lr.ph, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, !llvm.loop !6878
 
 .lr.ph:                                           ; preds = %.preheader, %bb.x
   %.1.i245 = phi i64 [ %i.ck, %bb.x ], [ %i.cd, %.preheader ] ; 2 uses
@@ -2223,8 +2223,8 @@ bb.w:                                             ; preds = %.lr.ph281
 
 bb.x:                                             ; preds = %.lr.ph
   %i.ck = add nuw nsw i64 %.1.i245, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ck, %i.n
-  br i1 %exitcond.not, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, label %.lr.ph, !llvm.loop !6878
+  %23 = icmp samesign ult i64 %i.ck, %i.n
+  br i1 %23, label %.lr.ph, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, !llvm.loop !6878
 
 .lr.ph:                                           ; preds = %.preheader, %bb.x
   %.1.i245 = phi i64 [ %i.ck, %bb.x ], [ %i.cd, %.preheader ] ; 2 uses
@@ -2627,8 +2627,8 @@ bb.w:                                             ; preds = %.lr.ph281
 
 bb.x:                                             ; preds = %.lr.ph
   %i.ck = add nuw nsw i64 %.1.i245, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ck, %i.n
-  br i1 %exitcond.not, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, label %.lr.ph, !llvm.loop !6878
+  %23 = icmp samesign ult i64 %i.ck, %i.n
+  br i1 %23, label %.lr.ph, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, !llvm.loop !6878
 
 .lr.ph:                                           ; preds = %.preheader, %bb.x
   %.1.i245 = phi i64 [ %i.ck, %bb.x ], [ %i.cd, %.preheader ] ; 2 uses
@@ -3031,8 +3031,8 @@ bb.w:                                             ; preds = %.lr.ph281
 
 bb.x:                                             ; preds = %.lr.ph
   %i.ck = add nuw nsw i64 %.1.i245, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ck, %i.n
-  br i1 %exitcond.not, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, label %.lr.ph, !llvm.loop !6878
+  %23 = icmp samesign ult i64 %i.ck, %i.n
+  br i1 %23, label %.lr.ph, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, !llvm.loop !6878
 
 .lr.ph:                                           ; preds = %.preheader, %bb.x
   %.1.i245 = phi i64 [ %i.ck, %bb.x ], [ %i.cd, %.preheader ] ; 2 uses
@@ -3435,8 +3435,8 @@ bb.w:                                             ; preds = %.lr.ph281
 
 bb.x:                                             ; preds = %.lr.ph
   %i.ck = add nuw nsw i64 %.1.i245, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ck, %i.n
-  br i1 %exitcond.not, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, label %.lr.ph, !llvm.loop !6878
+  %23 = icmp samesign ult i64 %i.ck, %i.n
+  br i1 %23, label %.lr.ph, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, !llvm.loop !6878
 
 .lr.ph:                                           ; preds = %.preheader, %bb.x
   %.1.i245 = phi i64 [ %i.ck, %bb.x ], [ %i.cd, %.preheader ] ; 2 uses
@@ -3839,8 +3839,8 @@ bb.w:                                             ; preds = %.lr.ph281
 
 bb.x:                                             ; preds = %.lr.ph
   %i.ck = add nuw nsw i64 %.1.i245, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ck, %i.n
-  br i1 %exitcond.not, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, label %.lr.ph, !llvm.loop !6878
+  %23 = icmp samesign ult i64 %i.ck, %i.n
+  br i1 %23, label %.lr.ph, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, !llvm.loop !6878
 
 .lr.ph:                                           ; preds = %.preheader, %bb.x
   %.1.i245 = phi i64 [ %i.ck, %bb.x ], [ %i.cd, %.preheader ] ; 2 uses
@@ -4243,8 +4243,8 @@ bb.w:                                             ; preds = %.lr.ph281
 
 bb.x:                                             ; preds = %.lr.ph
   %i.ck = add nuw nsw i64 %.1.i245, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ck, %i.n
-  br i1 %exitcond.not, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, label %.lr.ph, !llvm.loop !6878
+  %23 = icmp samesign ult i64 %i.ck, %i.n
+  br i1 %23, label %.lr.ph, label %_ZN8facebook5velox9functions10stringCoreL7isAsciiEPKcm.exit, !llvm.loop !6878
 
 .lr.ph:                                           ; preds = %.preheader, %bb.x
   %.1.i245 = phi i64 [ %i.ck, %bb.x ], [ %i.cd, %.preheader ] ; 2 uses

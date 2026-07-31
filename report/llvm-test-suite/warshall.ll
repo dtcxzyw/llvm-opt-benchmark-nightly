@@ -50,7 +50,7 @@ bb.b:                                             ; preds = %.preheader.us, %.lo
   %i.s = add i64 %i.q, %i.r                       ; 2 uses
   %i.t = lshr i64 %i.s, 2
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.s, 44
+  %min.iters.check = icmp ult i64 %i.s, 28
   br i1 %min.iters.check, label %.lr.ph.us.preheader59, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.us.preheader
@@ -181,7 +181,7 @@ bb.b:                                             ; preds = %.loopexit.us.i, %.p
   %i.s = add i64 %i.q, %i.r                       ; 2 uses
   %i.t = lshr i64 %i.s, 2
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.s, 44
+  %min.iters.check = icmp ult i64 %i.s, 28
   br i1 %min.iters.check, label %.lr.ph.us.i.preheader34, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.us.i.preheader

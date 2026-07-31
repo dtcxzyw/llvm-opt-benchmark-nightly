@@ -204,7 +204,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_11ComplexJSONESt14default_deleteIS2_ELb1E
   %i.x = add i64 %i.w, -8                         ; 2 uses
   %i.y = lshr i64 %i.x, 3
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.x, 152
+  %min.iters.check = icmp ult i64 %i.x, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader7, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
@@ -607,7 +607,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_21ColumnDataAppendStateESt14default_delet
   %i.aa = add i64 %i.z, -8                        ; 2 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aa, 152
+  %min.iters.check = icmp ult i64 %i.aa, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader20, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
@@ -779,7 +779,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_9DataChunkESt14default_deleteIS2_ELb1EEES
   %i.aa = add i64 %i.z, -8                        ; 2 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aa, 152
+  %min.iters.check = icmp ult i64 %i.aa, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader20, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
@@ -952,7 +952,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_20ColumnDataCollectionESt14default_delete
   %i.aa = add i64 %i.z, -8                        ; 2 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aa, 152
+  %min.iters.check = icmp ult i64 %i.aa, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader20, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
@@ -1355,7 +1355,7 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_21ColumnDataAppendStateESt14default
   %i.u = add i64 %i.t, -8                         ; 2 uses
   %i.v = lshr i64 %i.u, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.u, 152
+  %min.iters.check = icmp ult i64 %i.u, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader187, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
@@ -1462,7 +1462,7 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_9DataChunkESt14default_deleteIS2_EL
   %i.be = add i64 %i.bd, -8                       ; 2 uses
   %i.bf = lshr i64 %i.be, 3
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
-  %min.iters.check113 = icmp ult i64 %i.be, 152
+  %min.iters.check113 = icmp ult i64 %i.be, 136
   br i1 %min.iters.check113, label %.lr.ph.i.i.i.i.i19.preheader186, label %vector.memcheck106
 
 vector.memcheck106:                               ; preds = %.lr.ph.i.i.i.i.i19.preheader
@@ -1865,7 +1865,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_10FileSystemESt14default_deleteIS2_ELb1EE
   %i.ab = add i64 %i.aa, -8                       ; 2 uses
   %i.ac = lshr i64 %i.ab, 3
   %i.ad = add nuw nsw i64 %i.ac, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ab, 152
+  %min.iters.check = icmp ult i64 %i.ab, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader21, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader

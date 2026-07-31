@@ -204,7 +204,7 @@ _ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ImageSpecESt14default_deleteIS3
   %i.aj = add i64 %i.ai, -8                       ; 2 uses
   %i.ak = lshr i64 %i.aj, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aj, 152
+  %min.iters.check = icmp ult i64 %i.aj, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader39, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -555,7 +555,7 @@ _ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_114ImageCacheFile9ImageDimsESt14d
   %i.z = add i64 %i.y, -8                         ; 2 uses
   %i.aa = lshr i64 %i.z, 3
   %i.ab = add nuw nsw i64 %i.aa, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.z, 152
+  %min.iters.check = icmp ult i64 %i.z, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader29, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -958,7 +958,7 @@ _ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_123ImageCachePerThreadInfoESt14de
   %i.bb = add i64 %i.ba, -8                       ; 2 uses
   %i.bc = lshr i64 %i.bb, 3
   %i.bd = add nuw nsw i64 %i.bc, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bb, 152
+  %min.iters.check = icmp ult i64 %i.bb, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader61, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
@@ -1361,7 +1361,7 @@ _ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_123ImageCachePerThreadInfoESt14de
   %i.au = add i64 %i.at, -8                       ; 2 uses
   %i.av = lshr i64 %i.au, 3
   %i.aw = add nuw nsw i64 %i.av, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.au, 152
+  %min.iters.check = icmp ult i64 %i.au, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader15, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
@@ -1764,7 +1764,7 @@ _ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ImageSpecESt14default_deleteIS3_
   %i.m = add i64 %i.l, -8                         ; 2 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.m, 152
+  %min.iters.check = icmp ult i64 %i.m, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader30, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
@@ -1920,7 +1920,7 @@ _ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_114ImageCacheFile9ImageDimsESt14de
   %i.m = add i64 %i.l, -8                         ; 2 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.m, 152
+  %min.iters.check = icmp ult i64 %i.m, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader30, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader

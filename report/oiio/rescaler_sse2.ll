@@ -201,16 +201,18 @@ bb.a:
   br label %.lr.ph122
 
 .preheader.loopexit:                              ; preds = %.lr.ph122
-  %i.u = and i32 %i.i, 2147483640
+  %1 = add nuw i32 %i.i, 2147483640
+  %i.u = and i32 %1, 2147483640
+  %narrow147 = add nuw i32 %i.u, 8
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %.preheader113
-  %.0.lcssa = phi i32 [ 0, %.preheader113 ], [ %i.u, %.preheader.loopexit ] ; 4 uses
+  %.0.lcssa = phi i32 [ 0, %.preheader113 ], [ %narrow147, %.preheader.loopexit ] ; 4 uses
   %i.v = icmp slt i32 %.0.lcssa, %i.i
   br i1 %i.v, label %.lr.ph125.preheader, label %.loopexit
 
 .lr.ph125.preheader:                              ; preds = %.preheader
-  %i.w = zext nneg i32 %.0.lcssa to i64           ; 8 uses
+  %i.w = zext i32 %.0.lcssa to i64                ; 8 uses
   %i.x = xor i32 %.0.lcssa, -1
   %i.y = add i32 %i.i, %i.x                       ; 2 uses
   %i.z = zext i32 %i.y to i64
@@ -362,18 +364,20 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph
 
 .preheader114.loopexit:                           ; preds = %.lr.ph
-  %i.dg = and i32 %i.i, 2147483640
+  %2 = add nuw i32 %i.i, 2147483640
+  %i.dg = and i32 %2, 2147483640
+  %narrow = add nuw i32 %i.dg, 8
   br label %.preheader114
 
 .preheader114:                                    ; preds = %.preheader114.loopexit, %bb.b
-  %.2.lcssa = phi i32 [ 0, %bb.b ], [ %i.dg, %.preheader114.loopexit ] ; 4 uses
+  %.2.lcssa = phi i32 [ 0, %bb.b ], [ %narrow, %.preheader114.loopexit ] ; 4 uses
   %i.dh = icmp slt i32 %.2.lcssa, %i.i
   br i1 %i.dh, label %.lr.ph119, label %.loopexit
 
 .lr.ph119:                                        ; preds = %.preheader114
   %i.di = sub i64 0, %i.cv
   %i.dj = and i64 %i.di, 4294967295               ; 2 uses
-  %i.dk = zext nneg i32 %.2.lcssa to i64          ; 8 uses
+  %i.dk = zext i32 %.2.lcssa to i64               ; 8 uses
   %i.dl = xor i32 %.2.lcssa, -1
   %i.dm = add i32 %i.i, %i.dl                     ; 2 uses
   %i.dn = zext i32 %i.dm to i64
@@ -598,17 +602,19 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph
 
 .preheader123.loopexit:                           ; preds = %.lr.ph
-  %i.aa = and i32 %i.i, 2147483640
+  %1 = add nuw i32 %i.i, 2147483640
+  %i.aa = and i32 %1, 2147483640
+  %narrow = add nuw i32 %i.aa, 8
   br label %.preheader123
 
 .preheader123:                                    ; preds = %.preheader123.loopexit, %bb.b
-  %.0.lcssa = phi i32 [ 0, %bb.b ], [ %i.aa, %.preheader123.loopexit ] ; 4 uses
+  %.0.lcssa = phi i32 [ 0, %bb.b ], [ %narrow, %.preheader123.loopexit ] ; 4 uses
   %i.ab = icmp slt i32 %.0.lcssa, %i.i
   br i1 %i.ab, label %.lr.ph128, label %.loopexit
 
 .lr.ph128:                                        ; preds = %.preheader123
   %i.ac = zext i32 %i.q to i64                    ; 2 uses
-  %i.ad = zext nneg i32 %.0.lcssa to i64          ; 8 uses
+  %i.ad = zext i32 %.0.lcssa to i64               ; 8 uses
   %i.ae = xor i32 %.0.lcssa, -1
   %i.af = add i32 %i.i, %i.ae                     ; 2 uses
   %i.ag = zext i32 %i.af to i64
@@ -804,17 +810,19 @@ bb.c:                                             ; preds = %bb.a
   br label %.lr.ph131
 
 .preheader.loopexit:                              ; preds = %.lr.ph131
-  %i.ei = and i32 %i.i, 2147483640
+  %2 = add nuw i32 %i.i, 2147483640
+  %i.ei = and i32 %2, 2147483640
+  %narrow155 = add nuw i32 %i.ei, 8
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.c
-  %.2.lcssa = phi i32 [ 0, %bb.c ], [ %i.ei, %.preheader.loopexit ] ; 4 uses
+  %.2.lcssa = phi i32 [ 0, %bb.c ], [ %narrow155, %.preheader.loopexit ] ; 4 uses
   %i.ej = icmp slt i32 %.2.lcssa, %i.i
   br i1 %i.ej, label %.lr.ph134, label %.loopexit
 
 .lr.ph134:                                        ; preds = %.preheader
   %i.ek = zext i32 %i.s to i64                    ; 2 uses
-  %i.el = zext nneg i32 %.2.lcssa to i64          ; 8 uses
+  %i.el = zext i32 %.2.lcssa to i64               ; 8 uses
   %i.em = xor i32 %.2.lcssa, -1
   %i.en = add i32 %i.i, %i.em                     ; 2 uses
   %i.eo = zext i32 %i.en to i64

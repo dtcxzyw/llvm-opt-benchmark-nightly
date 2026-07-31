@@ -204,7 +204,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_12NeighborInfoESt14default_deleteIS2_ELb1
   %i.dw = add i64 %i.dv, -8                       ; 2 uses
   %i.dx = lshr i64 %i.dw, 3
   %i.dy = add nuw nsw i64 %i.dx, 1                ; 2 uses
-  %min.iters.check93 = icmp ult i64 %i.dw, 152
+  %min.iters.check93 = icmp ult i64 %i.dw, 136
   br i1 %min.iters.check93, label %.lr.ph.i.i.i.i.i.i.i.preheader109, label %vector.memcheck90
 
 vector.memcheck90:                                ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
@@ -607,7 +607,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_18SingleJoinRelationESt14default_deleteIS
   %i.bn = add i64 %i.bm, -8                       ; 2 uses
   %i.bo = lshr i64 %i.bn, 3
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bn, 152
+  %min.iters.check = icmp ult i64 %i.bn, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader102, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
@@ -1010,7 +1010,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_18SingleJoinRelationESt14default_deleteIS
   %i.fs = add i64 %i.fr, -8                       ; 2 uses
   %i.ft = lshr i64 %i.fs, 3
   %i.fu = add nuw nsw i64 %i.ft, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.fs, 152
+  %min.iters.check = icmp ult i64 %i.fs, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader189, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
@@ -1413,7 +1413,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bj = add i64 %i.bi, -8                       ; 2 uses
   %i.bk = lshr i64 %i.bj, 3
   %i.bl = add nuw nsw i64 %i.bk, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bj, 152
+  %min.iters.check = icmp ult i64 %i.bj, 136
   br i1 %min.iters.check, label %.lr.ph95.preheader142, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph95.preheader
@@ -1816,7 +1816,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_15LogicalOperatorESt14default_deleteIS2_E
   %i.gb = add i64 %i.ga, -8                       ; 2 uses
   %i.gc = lshr i64 %i.gb, 3
   %i.gd = add nuw nsw i64 %i.gc, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.gb, 152
+  %min.iters.check = icmp ult i64 %i.gb, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader1021, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
@@ -1960,7 +1960,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_15LogicalOperatorESt14default_deleteIS2_E
   %i.ht = add i64 %i.hs, -8                       ; 2 uses
   %i.hu = lshr i64 %i.ht, 3
   %i.hv = add nuw nsw i64 %i.hu, 1                ; 2 uses
-  %min.iters.check913 = icmp ult i64 %i.ht, 152
+  %min.iters.check913 = icmp ult i64 %i.ht, 136
   br i1 %min.iters.check913, label %.lr.ph.i.i.i.i.i.i.i182.preheader1019, label %vector.memcheck906
 
 vector.memcheck906:                               ; preds = %.lr.ph.i.i.i.i.i.i.i182.preheader
@@ -2363,7 +2363,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_15LogicalOperatorESt14default_deleteIS2_E
   %i.ad = add i64 %i.ac, -8                       ; 2 uses
   %i.ae = lshr i64 %i.ad, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ad, 152
+  %min.iters.check = icmp ult i64 %i.ad, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader60, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
@@ -2541,7 +2541,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EE
   %i.ch = add i64 %i.cg, -8                       ; 2 uses
   %i.ci = lshr i64 %i.ch, 3
   %i.cj = add nuw nsw i64 %i.ci, 1                ; 2 uses
-  %min.iters.check44 = icmp ult i64 %i.ch, 152
+  %min.iters.check44 = icmp ult i64 %i.ch, 136
   br i1 %min.iters.check44, label %.lr.ph.i.i.i.i.i.i.i11.preheader59, label %vector.memcheck37
 
 vector.memcheck37:                                ; preds = %.lr.ph.i.i.i.i.i.i.i11.preheader

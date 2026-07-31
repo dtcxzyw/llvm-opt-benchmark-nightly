@@ -203,7 +203,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_
   %i.ca = add i64 %i.bz, -8                       ; 2 uses
   %i.cb = lshr i64 %i.ca, 3
   %i.cc = add nuw nsw i64 %i.cb, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ca, 152
+  %min.iters.check = icmp ult i64 %i.ca, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i10.preheader69, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i10.preheader

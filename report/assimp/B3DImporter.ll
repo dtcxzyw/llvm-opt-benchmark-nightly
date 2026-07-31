@@ -204,7 +204,7 @@ _ZNKSt6vectorISt10unique_ptrI6aiMeshSt14default_deleteIS1_EESaIS4_EE12_M_check_l
   %i.de = add i64 %i.dd, -8                       ; 2 uses
   %i.df = lshr i64 %i.de, 3
   %i.dg = add nuw nsw i64 %i.df, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.de, 152
+  %min.iters.check = icmp ult i64 %i.de, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader120, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -607,7 +607,7 @@ _ZNKSt6vectorISt10unique_ptrI11aiAnimationSt14default_deleteIS1_EESaIS4_EE12_M_c
   %i.bq = add i64 %i.bp, -8                       ; 2 uses
   %i.br = lshr i64 %i.bq, 3
   %i.bs = add nuw nsw i64 %i.br, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bq, 152
+  %min.iters.check = icmp ult i64 %i.bq, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader33, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -1010,7 +1010,7 @@ _ZNKSt6vectorISt10unique_ptrI10aiNodeAnimSt14default_deleteIS1_EESaIS4_EE12_M_ch
   %i.mh = add i64 %i.mg, -8                       ; 2 uses
   %i.mi = lshr i64 %i.mh, 3
   %i.mj = add nuw nsw i64 %i.mi, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.mh, 152
+  %min.iters.check = icmp ult i64 %i.mh, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader517, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -1413,7 +1413,7 @@ _ZNKSt6vectorISt10unique_ptrI10aiMaterialSt14default_deleteIS1_EESaIS4_EE12_M_ch
   %i.t = add i64 %i.s, -8                         ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 152
+  %min.iters.check = icmp ult i64 %i.t, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
@@ -1488,7 +1488,7 @@ _ZNSt6vectorISt10unique_ptrI10aiMaterialSt14default_deleteIS1_EESaIS4_EE11_S_rel
   %i.an = add i64 %i.am, -8                       ; 2 uses
   %i.ao = lshr i64 %i.an, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check46 = icmp ult i64 %i.an, 184
+  %min.iters.check46 = icmp ult i64 %i.an, 152
   br i1 %min.iters.check46, label %.lr.ph.i.i.i17.preheader61, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader

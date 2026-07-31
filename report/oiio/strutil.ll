@@ -204,7 +204,7 @@ bb.de:                                            ; preds = %bb.dd, %bb.dc
 .lr.ph1653.preheader:                             ; preds = %.preheader1474
   %i.va = call i32 @llvm.usub.sat.i32(i32 %.0962.lcssa, i32 7)
   %i.vb = add nuw i32 %i.va, 3                    ; 2 uses
-  %i.vc = and i32 %i.vb, -4
+  %i.vc = and i32 %i.vb, 2147483644
   %i.vd = zext nneg i32 %i.vc to i64              ; 2 uses
   %i.ve = add nuw nsw i64 %i.vd, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.5883.lcssa, i8 48, i64 %i.ve, i1 false), !tbaa !3
@@ -607,7 +607,7 @@ bb.gk:                                            ; preds = %bb.gj
 .lr.ph1709.preheader:                             ; preds = %.preheader1453
   %i.ahp = call i32 @llvm.usub.sat.i32(i32 %.2969.lcssa, i32 7)
   %i.ahq = add nuw i32 %i.ahp, 3                  ; 2 uses
-  %i.ahr = and i32 %i.ahq, -4
+  %i.ahr = and i32 %i.ahq, 2147483644
   %i.ahs = zext nneg i32 %i.ahr to i64            ; 2 uses
   %i.aht = add nuw nsw i64 %i.ahs, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.10689.lcssa, i8 32, i64 %i.aht, i1 false), !tbaa !3
@@ -847,7 +847,7 @@ bb.gq:                                            ; preds = %._crit_edge1731, %b
 .lr.ph1744.preheader:                             ; preds = %.preheader1450
   %i.aks = call i32 @llvm.usub.sat.i32(i32 %.10977.lcssa, i32 7)
   %i.akt = add nuw i32 %i.aks, 3                  ; 2 uses
-  %i.aku = and i32 %i.akt, -4
+  %i.aku = and i32 %i.akt, 2147483644
   %i.akv = zext nneg i32 %i.aku to i64            ; 2 uses
   %i.akw = add nuw nsw i64 %i.akv, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.23702.lcssa, i8 48, i64 %i.akw, i1 false), !tbaa !3
@@ -1250,7 +1250,7 @@ bb.gy:                                            ; preds = %bb.gx, %bb.gw, %._c
 .lr.ph1822.preheader:                             ; preds = %.preheader1448
   %i.arn = call i32 @llvm.usub.sat.i32(i32 %.2828.lcssa, i32 7)
   %i.aro = add nuw i32 %i.arn, 3                  ; 2 uses
-  %i.arp = and i32 %i.aro, -4
+  %i.arp = and i32 %i.aro, 2147483644
   %i.arq = zext nneg i32 %i.arp to i64            ; 2 uses
   %i.arr = add nuw nsw i64 %i.arq, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.47726.lcssa, i8 48, i64 %i.arr, i1 false), !tbaa !3
@@ -1471,7 +1471,7 @@ bb.hf:                                            ; preds = %bb.hh, %._crit_edge
 .lr.ph1868.preheader:                             ; preds = %.preheader1446
   %i.auj = call i32 @llvm.usub.sat.i32(i32 %.2731.lcssa, i32 7)
   %i.auk = add nuw i32 %i.auj, 3                  ; 2 uses
-  %i.aul = and i32 %i.auk, -4
+  %i.aul = and i32 %i.auk, 2147483644
   %i.aum = zext nneg i32 %i.aul to i64            ; 2 uses
   %i.aun = add nuw nsw i64 %i.aum, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.61.lcssa, i8 32, i64 %i.aun, i1 false), !tbaa !3
