@@ -1,0 +1,111 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index efe1920486df6..2e294f06153e4 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1893,16 +1893,21 @@ void ConstraintInfo::addFactImpl(CmpInst::Predicate Pred, Value *A, Value *B,
+   }
+ }
+ 
+-static bool replaceSubOverflowUses(IntrinsicInst *II, Value *A, Value *B,
+-                                   SmallVectorImpl<Instruction *> &ToRemove) {
++/// Replace the uses of \p WO, which has been proven not to overflow, by a plain
++/// binary operator and \p false for the overflow flag.
++static bool replaceOverflowUses(WithOverflowInst *WO, Value *A, Value *B,
++                                SmallVectorImpl<Instruction *> &ToRemove) {
+   bool Changed = false;
+-  IRBuilder<> Builder(II->getParent(), II->getIterator());
+-  Value *Sub = nullptr;
+-  for (User *U : make_early_inc_range(II->users())) {
++  IRBuilder<> Builder(WO->getParent(), WO->getIterator());
++  Value *Res = nullptr;
++  for (User *U : make_early_inc_range(WO->users())) {
+     if (match(U, m_ExtractValue<0>(m_Value()))) {
+-      if (!Sub)
+-        Sub = Builder.CreateSub(A, B);
+-      U->replaceAllUsesWith(Sub);
++      if (!Res) {
++        Res = Builder.CreateNoWrapBinOp(WO->getBinaryOp(), A, B,
++                                        /*IsNUW=*/!WO->isSigned(),
++                                        /*IsNSW=*/WO->isSigned());
++      }
++      U->replaceAllUsesWith(Res);
+       Changed = true;
+     } else if (match(U, m_ExtractValue<1>(m_Value()))) {
+       U->replaceAllUsesWith(Builder.getFalse());
+@@ -1913,20 +1918,20 @@ static bool replaceSubOverflowUses(IntrinsicInst *II, Value *A, Value *B,
+     if (U->use_empty()) {
+       auto *I = cast<Instruction>(U);
+       ToRemove.push_back(I);
+-      I->setOperand(0, PoisonValue::get(II->getType()));
++      I->setOperand(0, PoisonValue::get(WO->getType()));
+       Changed = true;
+     }
+   }
+ 
+-  if (II->use_empty()) {
+-    II->eraseFromParent();
++  if (WO->use_empty()) {
++    WO->eraseFromParent();
+     Changed = true;
+   }
+   return Changed;
+ }
+ 
+ static bool
+-tryToSimplifyOverflowMath(IntrinsicInst *II, ConstraintInfo &Info,
++tryToSimplifyOverflowMath(WithOverflowInst *WO, ConstraintInfo &Info,
+                           SmallVectorImpl<Instruction *> &ToRemove) {
+   auto DoesConditionHold = [](CmpInst::Predicate Pred, Value *A, Value *B,
+                               ConstraintInfo &Info) {
+@@ -1939,16 +1944,16 @@ tryToSimplifyOverflowMath(IntrinsicInst *II, ConstraintInfo &Info,
+   };
+ 
+   bool Changed = false;
+-  if (II->getIntrinsicID() == Intrinsic::ssub_with_overflow) {
++  if (WO->getIntrinsicID() == Intrinsic::ssub_with_overflow) {
+     // If A s>= B && B s>= 0, ssub.with.overflow(a, b) should not overflow and
+     // can be simplified to a regular sub.
+-    Value *A = II->getArgOperand(0);
+-    Value *B = II->getArgOperand(1);
++    Value *A = WO->getLHS();
++    Value *B = WO->getRHS();
+     if (!DoesConditionHold(CmpInst::ICMP_SGE, A, B, Info) ||
+         !DoesConditionHold(CmpInst::ICMP_SGE, B,
+                            ConstantInt::get(A->getType(), 0), Info))
+       return false;
+-    Changed = replaceSubOverflowUses(II, A, B, ToRemove);
++    Changed = replaceOverflowUses(WO, A, B, ToRemove);
+   }
+   return Changed;
+ }
+diff --git a/llvm/test/Transforms/ConstraintElimination/ssub-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/ssub-with-overflow.ll
+index 254a6a662025e..4a270881bebf8 100644
+--- a/llvm/test/Transforms/ConstraintElimination/ssub-with-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/ssub-with-overflow.ll
+@@ -11,7 +11,7 @@ define i8 @ssub_no_overflow_due_to_or_conds(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    [[OR_COND:%.*]] = or i1 [[C_2]], [[C_1]]
+ ; CHECK-NEXT:    br i1 [[OR_COND]], label [[EXIT_FAIL:%.*]], label [[MATH:%.*]]
+ ; CHECK:       math:
+-; CHECK-NEXT:    [[TMP0:%.*]] = sub i8 [[B]], [[A]]
++; CHECK-NEXT:    [[TMP0:%.*]] = sub nsw i8 [[B]], [[A]]
+ ; CHECK-NEXT:    br i1 false, label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
+ ; CHECK:       exit.ok:
+ ; CHECK-NEXT:    ret i8 [[TMP0]]
+@@ -47,7 +47,7 @@ define i8 @ssub_no_overflow_due_to_or_conds_result_used(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    [[OR_COND:%.*]] = or i1 [[C_2]], [[C_1]]
+ ; CHECK-NEXT:    br i1 [[OR_COND]], label [[EXIT_FAIL:%.*]], label [[MATH:%.*]]
+ ; CHECK:       math:
+-; CHECK-NEXT:    [[TMP0:%.*]] = sub i8 [[B]], [[A]]
++; CHECK-NEXT:    [[TMP0:%.*]] = sub nsw i8 [[B]], [[A]]
+ ; CHECK-NEXT:    [[OP:%.*]] = tail call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 [[B]], i8 [[A]])
+ ; CHECK-NEXT:    call void @use_res({ i8, i1 } [[OP]])
+ ; CHECK-NEXT:    br i1 false, label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
+@@ -84,7 +84,7 @@ define i8 @ssub_no_overflow_due_to_and_conds(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    [[AND:%.*]] = and i1 [[C_2]], [[C_1]]
+ ; CHECK-NEXT:    br i1 [[AND]], label [[MATH:%.*]], label [[EXIT_FAIL:%.*]]
+ ; CHECK:       math:
+-; CHECK-NEXT:    [[TMP0:%.*]] = sub i8 [[B]], [[A]]
++; CHECK-NEXT:    [[TMP0:%.*]] = sub nsw i8 [[B]], [[A]]
+ ; CHECK-NEXT:    br i1 false, label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
+ ; CHECK:       exit.ok:
+ ; CHECK-NEXT:    ret i8 [[TMP0]]
