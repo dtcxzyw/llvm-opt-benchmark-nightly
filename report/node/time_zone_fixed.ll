@@ -201,13 +201,11 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i9: ; preds = %bb.k
-  %i.as = add i64 %i.aq, -5                       ; 2 uses
+  %i.as = add i64 %i.aq, -5
   %spec.select.i.i10 = tail call noundef i64 @llvm.umin.i64(i64 %i.as, i64 2) ; 3 uses
   %i.at = add nuw nsw i64 %spec.select.i.i10, 5   ; 2 uses
-  %2 = icmp ne i64 %i.aq, %i.at
-  %3 = icmp ne i64 %i.as, 0
-  %or.cond.i.i11 = and i1 %3, %2
-  br i1 %or.cond.i.i11, label %bb.m, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit12
+  %.not = icmp eq i64 %i.aq, %i.at
+  br i1 %.not, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit12, label %bb.m
 
 bb.m:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i9
   %i.au = sub i64 %i.aq, %i.at                    ; 2 uses
@@ -255,13 +253,11 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i13: ; preds = %bb.q
-  %i.bk = add i64 %i.bi, -3                       ; 2 uses
+  %i.bk = add i64 %i.bi, -3
   %spec.select.i.i14 = tail call noundef i64 @llvm.umin.i64(i64 %i.bk, i64 2) ; 3 uses
   %i.bl = add nuw nsw i64 %spec.select.i.i14, 3   ; 2 uses
-  %4 = icmp ne i64 %i.bi, %i.bl
-  %5 = icmp ne i64 %i.bk, 0
-  %or.cond.i.i15 = and i1 %5, %4
-  br i1 %or.cond.i.i15, label %bb.s, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit16
+  %.not20 = icmp eq i64 %i.bi, %i.bl
+  br i1 %.not20, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit16, label %bb.s
 
 bb.s:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i13
   %i.bm = sub i64 %i.bi, %i.bl                    ; 2 uses
