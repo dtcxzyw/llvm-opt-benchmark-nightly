@@ -204,28 +204,20 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.d = icmp eq i64 %4, 1
-  br i1 %i.d, label %bb.f, label %8
+  br i1 %i.d, label %bb.f, label %_ZN11duckdb_zstd17HUF_selectDecoderEmm.exit
 
 bb.f:                                             ; preds = %bb.e
   %i.e = load i8, ptr %3, align 1, !tbaa !7
   tail call void @llvm.memset.p0.i64(ptr align 1 %1, i8 %i.e, i64 %2, i1 false)
   br label %_ZN11duckdb_zstd27HUF_decompress1X2_DCtx_wkspEPjPvmPKvmS1_mi.exit
 
-8:                                                ; preds = %bb.e
-  %.not.i = icmp ult i64 %4, %2
-  br i1 %.not.i, label %9, label %_ZN11duckdb_zstd17HUF_selectDecoderEmm.exit
-
-9:                                                ; preds = %8
-  %10 = shl i64 %4, 4
-  %11 = udiv i64 %10, %2
-  %12 = and i64 %11, 4294967295
-  br label %_ZN11duckdb_zstd17HUF_selectDecoderEmm.exit
-
-_ZN11duckdb_zstd17HUF_selectDecoderEmm.exit:      ; preds = %8, %9
-  %13 = phi i64 [ %12, %9 ], [ 15, %8 ]
+_ZN11duckdb_zstd17HUF_selectDecoderEmm.exit:      ; preds = %bb.e
+  %8 = shl i64 %4, 4
+  %9 = udiv i64 %8, %2
+  %10 = and i64 %9, 4294967295
   %i.f = lshr i64 %2, 8
   %i.g = trunc i64 %i.f to i32                    ; 2 uses
-  %i.h = getelementptr inbounds nuw [16 x i8], ptr @_ZN11duckdb_zstdL8algoTimeE, i64 %13 ; 4 uses
+  %i.h = getelementptr inbounds nuw [16 x i8], ptr @_ZN11duckdb_zstdL8algoTimeE, i64 %10 ; 4 uses
   %i.i = load i32, ptr %i.h, align 16, !tbaa !107
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 4
   %i.k = load i32, ptr %i.j, align 4, !tbaa !109
