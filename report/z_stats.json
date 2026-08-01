@@ -168,7 +168,7 @@
   "function-attrs.NumWillReturn": 227147,
   "function-attrs.NumWriteOnlyArg": 149816,
   "function-specialization.NumSpecsCreated": 4,
-  "globaldce.NumFunctions": 36668,
+  "globaldce.NumFunctions": 36664,
   "globaldce.NumVFuncs": 8724,
   "globaldce.NumVariables": 18749,
   "globalopt.NumAliasesRemoved": 13,
