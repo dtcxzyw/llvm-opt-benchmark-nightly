@@ -35,37 +35,46 @@ declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #1
 ; Function Attrs: nofree nounwind memory(readwrite, target_mem: none) uwtable
 define dso_local noundef zeroext i1 @HistogramElement_updateList(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #2 {
 bb.a:
-  %.02235 = load ptr, ptr %0, align 8, !tbaa !14  ; 2 uses
+  %.02235 = load ptr, ptr %0, align 8, !tbaa !14  ; 4 uses
   %.not.not36 = icmp eq ptr %.02235, null
-  br i1 %.not.not36, label %.critedge, label %.lr.ph.a
+  br i1 %.not.not36, label %.critedge, label %.lr.ph.preheader
 
-.lr.ph.a:                                         ; preds = %bb.a, %bb.g
-  %.02238 = phi ptr [ %.022, %bb.g ], [ %.02235, %bb.a ] ; 5 uses
-  %.02337 = phi ptr [ %.1, %bb.g ], [ %0, %bb.a ] ; 2 uses
-  %2 = load i32, ptr %.02238, align 8, !tbaa !8   ; 3 uses
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %2 = load i32, ptr %.02235, align 8, !tbaa !8   ; 2 uses
   %3 = icmp slt i32 %2, %1
-  br i1 %3, label %bb.b, label %bb.c
+  br i1 %3, label %.lr.ph.a, label %bb.c
 
-bb.b:                                             ; preds = %.lr.ph.a
+.lr.ph:                                           ; preds = %.lr.ph.a
+  %4 = load i32, ptr %.022, align 8, !tbaa !8     ; 2 uses
+  %5 = icmp slt i32 %4, %1
+  br i1 %5, label %.lr.ph.a, label %bb.b, !llvm.loop !15
+
+.lr.ph.a:                                         ; preds = %.lr.ph.preheader, %.lr.ph
+  %.02238 = phi ptr [ %.022, %.lr.ph ], [ %.02235, %.lr.ph.preheader ] ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.02238, i64 8
+  %.022 = load ptr, ptr %6, align 8, !tbaa !14    ; 4 uses
+  %.not.not = icmp eq ptr %.022, null
+  br i1 %.not.not, label %bb.g, label %.lr.ph, !llvm.loop !15
+
+bb.b:                                             ; preds = %.lr.ph
   %i.a = getelementptr inbounds nuw i8, ptr %.02238, i64 8
-  br label %bb.g
+  br label %bb.c
 
-bb.c:                                             ; preds = %.lr.ph.a
-  %i.b = icmp eq i32 %2, %1
-  br i1 %i.b, label %bb.d, label %4
+bb.c:                                             ; preds = %bb.b, %.lr.ph.preheader
+  %.02238.lcssa = phi ptr [ %.02235, %.lr.ph.preheader ], [ %.022, %bb.b ] ; 2 uses
+  %.02337.lcssa = phi ptr [ %0, %.lr.ph.preheader ], [ %i.a, %bb.b ]
+  %.lcssa = phi i32 [ %2, %.lr.ph.preheader ], [ %4, %bb.b ]
+  %i.b = icmp eq i32 %.lcssa, %1
+  br i1 %i.b, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.c = getelementptr inbounds nuw i8, ptr %.02238, i64 4 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %.02238.lcssa, i64 4 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !12
   %i.e = add nsw i32 %i.d, 1
   store i32 %i.e, ptr %i.c, align 4, !tbaa !12
   br label %HistogramElement_new.exit.thread
 
-4:                                                ; preds = %bb.c
-  %5 = icmp sgt i32 %2, %1
-  br i1 %5, label %bb.e, label %bb.g
-
-bb.e:                                             ; preds = %4
+bb.e:                                             ; preds = %bb.c
   %i.f = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #14 ; 5 uses
   %.not.i = icmp eq ptr %i.f, null
   br i1 %.not.i, label %HistogramElement_new.exit.thread, label %bb.f
@@ -75,19 +84,16 @@ bb.f:                                             ; preds = %bb.e
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 4
   store i32 1, ptr %i.g, align 4, !tbaa !12
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store ptr %.02238, ptr %i.h, align 8, !tbaa !13
-  store ptr %i.f, ptr %.02337, align 8, !tbaa !14
+  store ptr %.02238.lcssa, ptr %i.h, align 8, !tbaa !13
+  store ptr %i.f, ptr %.02337.lcssa, align 8, !tbaa !14
   br label %HistogramElement_new.exit.thread
 
-bb.g:                                             ; preds = %4, %bb.b
-  %.1 = phi ptr [ %i.a, %bb.b ], [ %.02337, %4 ]  ; 2 uses
+bb.g:                                             ; preds = %.lr.ph.a
   %i.i = getelementptr inbounds nuw i8, ptr %.02238, i64 8
-  %.022 = load ptr, ptr %i.i, align 8, !tbaa !14  ; 2 uses
-  %.not.not = icmp eq ptr %.022, null
-  br i1 %.not.not, label %.critedge, label %.lr.ph.a, !llvm.loop !15
+  br label %.critedge
 
 .critedge:                                        ; preds = %bb.g, %bb.a
-  %.023.lcssa = phi ptr [ %0, %bb.a ], [ %.1, %bb.g ] ; 2 uses
+  %.023.lcssa = phi ptr [ %0, %bb.a ], [ %i.i, %bb.g ] ; 2 uses
   %i.j = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #14 ; 5 uses
   %.not.i29 = icmp eq ptr %i.j, null
   br i1 %.not.i29, label %HistogramElement_new.exit30.thread, label %HistogramElement_new.exit30
