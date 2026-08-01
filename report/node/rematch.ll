@@ -201,7 +201,7 @@ _ZNK6icu_7813UnicodeString9getBufferEv.exit:      ; preds = %bb.b, %bb.d, %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.s = load ptr, ptr %i.r, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 48
-  %i.u = load ptr, ptr %i.t, align 8              ; 65 uses
+  %i.u = load ptr, ptr %i.t, align 8              ; 64 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 128
   %i.w = load i32, ptr %i.v, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 71 uses
@@ -604,9 +604,9 @@ bb.aj:                                            ; preds = %bb.h
   br label %.critedge1077
 
 bb.ak:                                            ; preds = %bb.h
-  %i.iz = load i64, ptr %.0809, align 8           ; 8 uses
+  %i.iz = load i64, ptr %.0809, align 8           ; 6 uses
   %i.ja = load i64, ptr %i.cc, align 8            ; 3 uses
-  %i.jb = add nsw i64 %i.ja, -2                   ; 2 uses
+  %i.jb = add nsw i64 %i.ja, -2
   %i.jc = icmp slt i64 %i.iz, %i.jb
   br i1 %i.jc, label %bb.al, label %bb.am
 
@@ -639,11 +639,11 @@ bb.an:                                            ; preds = %bb.am
 bb.ao:                                            ; preds = %bb.am
   %i.jp = add nsw i64 %i.ja, -1
   %i.jq = icmp eq i64 %i.iz, %i.jp
-  br i1 %i.jq, label %bb.ap, label %9
+  %7 = getelementptr inbounds [2 x i8], ptr %i.u, i64 %i.iz ; 4 uses
+  %8 = load i16, ptr %7, align 2                  ; 2 uses
+  br i1 %i.jq, label %bb.ap, label %bb.ay
 
 bb.ap:                                            ; preds = %bb.ao
-  %7 = getelementptr inbounds [2 x i8], ptr %i.u, i64 %i.iz ; 3 uses
-  %8 = load i16, ptr %7, align 2
   %i.jr = zext i16 %8 to i32                      ; 5 uses
   %i.js = and i32 %i.jr, 64512
   %or.cond1461.not = icmp eq i32 %i.js, 56320
@@ -694,18 +694,12 @@ bb.ax:                                            ; preds = %bb.au, %bb.av, %bb.
   store i8 1, ptr %i.cd, align 1
   br label %.critedge1077
 
-9:                                                ; preds = %bb.ao
-  %10 = icmp eq i64 %i.iz, %i.jb
-  br i1 %10, label %bb.ay, label %.thread1329
-
-bb.ay:                                            ; preds = %9
-  %11 = getelementptr inbounds [2 x i8], ptr %i.u, i64 %i.iz ; 2 uses
-  %12 = load i16, ptr %11, align 2
-  %i.kk = icmp eq i16 %12, 13
+bb.ay:                                            ; preds = %bb.ao
+  %i.kk = icmp eq i16 %8, 13
   br i1 %i.kk, label %bb.az, label %.thread1329
 
 bb.az:                                            ; preds = %bb.ay
-  %i.kl = getelementptr i8, ptr %11, i64 2
+  %i.kl = getelementptr i8, ptr %7, i64 2
   %i.km = load i16, ptr %i.kl, align 2
   %i.kn = icmp eq i16 %i.km, 10
   br i1 %i.kn, label %bb.ba, label %.thread1329
@@ -715,7 +709,7 @@ bb.ba:                                            ; preds = %bb.az
   store i8 1, ptr %i.cd, align 1
   br label %.critedge1077
 
-.thread1329:                                      ; preds = %bb.at, %bb.aw, %9, %bb.ay, %bb.az
+.thread1329:                                      ; preds = %bb.at, %bb.aw, %bb.ay, %bb.az
   %i.ko = load ptr, ptr %i.y, align 8             ; 2 uses
   %i.kp = load i32, ptr %i.x, align 8             ; 2 uses
   %i.kq = getelementptr inbounds nuw i8, ptr %i.ko, i64 8 ; 2 uses
