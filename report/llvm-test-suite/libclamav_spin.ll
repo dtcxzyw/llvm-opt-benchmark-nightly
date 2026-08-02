@@ -204,10 +204,8 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ad
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.13, i32 noundef 417) #7
   %i.ft = getelementptr inbounds nuw i8, ptr %i.di, i64 10476
-  %7 = icmp ult i32 %1, 417
   %.not561 = icmp slt i64 %i.dh, -1748
-  %or.cond602 = select i1 %7, i1 true, i1 %.not561
-  br i1 %or.cond602, label %bb.ag, label %.preheader640.preheader
+  br i1 %.not561, label %bb.ag, label %.preheader640.preheader
 
 .preheader640.preheader:                          ; preds = %bb.af
   %i.fu = getelementptr inbounds nuw i8, ptr %i.di, i64 1748

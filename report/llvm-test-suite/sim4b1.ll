@@ -204,7 +204,7 @@ bb.cu:                                            ; preds = %extend_fw.exit
   %i.abh = getelementptr inbounds nuw i8, ptr %i.abb, i64 12 ; 2 uses
   %i.abi = load i32, ptr %i.abh, align 4, !tbaa !51 ; 9 uses
   %i.abj = xor i32 %i.abi, -1
-  %i.abk = add i32 %i.abg, %i.abj                 ; 15 uses
+  %i.abk = add i32 %i.abg, %i.abj                 ; 14 uses
   %i.abl = icmp sgt i32 %i.abk, 0
   br i1 %i.abl, label %bb.cv, label %bb.fh
 
@@ -230,7 +230,7 @@ bb.cx:                                            ; preds = %bb.cw
   %i.abv = zext i32 %i.abp to i64
   %i.abw = getelementptr inbounds nuw i8, ptr %.pre763, i64 %i.abv ; 4 uses
   %i.abx = xor i32 %i.abp, -1
-  %i.aby = add i32 %i.abm, %i.abx                 ; 9 uses
+  %i.aby = add i32 %i.abm, %i.abx                 ; 8 uses
   %i.abz = icmp ugt i32 %i.aby, 999999
   br i1 %i.abz, label %greedy.exitthread-pre-split, label %bb.cy
 
@@ -462,8 +462,7 @@ scalar.ph1045:                                    ; preds = %scalar.ph1045.prol.
   store i32 %.0438530.i, ptr %i.afr, align 4, !tbaa !4
   %i.afs = add i32 %..i, -1
   %i.aft = add i32 %..i, 1                        ; 4 uses
-  %invariant.umin.i = call i32 @llvm.umin.i32(i32 %i.aby, i32 range(i32 1, 501) %i.abk) ; 2 uses
-  %wide.trip.count.i413 = zext nneg i32 %invariant.umin.i to i64
+  %wide.trip.count.i413 = zext nneg i32 %i.abk to i64 ; 2 uses
   br label %.lr.ph536.i
 
 .lr.ph536.i:                                      ; preds = %bb.dg, %.lr.ph536.preheader.i
@@ -473,23 +472,19 @@ scalar.ph1045:                                    ; preds = %scalar.ph1045.prol.
   %i.afw = getelementptr inbounds nuw i8, ptr %i.abw, i64 %indvars.iv612.i
   %i.afx = load i8, ptr %i.afw, align 1, !tbaa !20
   %i.afy = icmp eq i8 %i.afv, %i.afx
-  br i1 %i.afy, label %bb.dg, label %.critedge3.split.loop.exit.i
+  br i1 %i.afy, label %bb.dg, label %.critedge3.i
 
 bb.dg:                                            ; preds = %.lr.ph536.i
   %indvars.iv.next613.i = add nuw nsw i64 %indvars.iv612.i, 1 ; 2 uses
   %exitcond.not.i425 = icmp eq i64 %indvars.iv.next613.i, %wide.trip.count.i413
-  br i1 %exitcond.not.i425, label %.critedge3.i, label %.lr.ph536.i, !llvm.loop !91
+  br i1 %exitcond.not.i425, label %bb.dh, label %.lr.ph536.i, !llvm.loop !91
 
-.critedge3.split.loop.exit.i:                     ; preds = %.lr.ph536.i
-  %11 = trunc nuw nsw i64 %indvars.iv612.i to i32
-  br label %.critedge3.i
-
-.critedge3.i:                                     ; preds = %bb.dg, %.critedge3.split.loop.exit.i
-  %.1439.lcssa.i = phi i32 [ %11, %.critedge3.split.loop.exit.i ], [ %invariant.umin.i, %bb.dg ] ; 2 uses
-  %i.afz = icmp eq i32 %.1439.lcssa.i, %i.abk
+.critedge3.i:                                     ; preds = %.lr.ph536.i
+  %11 = trunc nuw nsw i64 %indvars.iv612.i to i32 ; 2 uses
+  %i.afz = icmp eq i32 %i.abk, %11
   br i1 %i.afz, label %bb.dh, label %.critedge3.thread.i
 
-bb.dh:                                            ; preds = %.critedge3.i
+bb.dh:                                            ; preds = %bb.dg, %.critedge3.i
   %i.aga = add i32 %i.abp, 1
   %i.agb = add i32 %i.abi, 1
   %i.agc = add i32 %i.abp, %i.abk
@@ -536,7 +531,7 @@ add_col_elt.exit512.i:                            ; preds = %bb.di, %bb.dh
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ags, i8 -1, i64 %i.agu, i1 false), !tbaa !4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.agt, i8 -1, i64 %i.agu, i1 false), !tbaa !4
   %i.agv = getelementptr inbounds [4 x i8], ptr %i.ags, i64 %i.afq ; 3 uses
-  store i32 %.1439.lcssa.i, ptr %i.agv, align 4, !tbaa !4
+  store i32 %11, ptr %i.agv, align 4, !tbaa !4
   %i.agw = zext i32 %i.aft to i64
   %i.agx = shl nuw nsw i64 %i.agw, 2              ; 4 uses
   %i.agy = call ptr @xmalloc(i64 noundef %i.agx) #18 ; 15 uses
@@ -655,7 +650,6 @@ scalar.ph1032:                                    ; preds = %scalar.ph1032.prol.
   %i.aig = sext i32 %i.afs to i64
   %i.aih = add i32 %..i, 2
   %i.aii = zext nneg i32 %i.aby to i64
-  %12 = zext nneg i32 %i.abk to i64
   br label %.preheader528.i
 
 .preheader528.i:                                  ; preds = %bb.el, %.preheader528.lr.ph.i
@@ -952,7 +946,7 @@ bb.ee:                                            ; preds = %bb.ed, %bb.ec, %bb.
 bb.ef:                                            ; preds = %.lr.ph577.i
   %indvars.iv.next651.i = add nuw nsw i64 %indvars.iv650.i, 1 ; 3 uses
   %indvars.iv.next649.i = add nuw nsw i64 %indvars.iv648.i, 1 ; 2 uses
-  %i.ami = icmp samesign ult i64 %indvars.iv.next651.i, %12
+  %i.ami = icmp samesign ult i64 %indvars.iv.next651.i, %wide.trip.count.i413
   %i.amj = icmp samesign ult i64 %indvars.iv.next649.i, %i.aii
   %or.cond504.i = select i1 %i.ami, i1 %i.amj, i1 false
   br i1 %or.cond504.i, label %.lr.ph577.i, label %.critedge11.loopexit.i, !llvm.loop !99
