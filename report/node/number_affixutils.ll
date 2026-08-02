@@ -201,7 +201,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.k
-  %.sroa.027.0.extract.trunc44 = phi i32 [ 0, %bb.a ], [ %.sroa.027.0.extract.trunc, %bb.k ] ; 4 uses
+  %.sroa.027.0.extract.trunc44 = phi i32 [ 0, %bb.a ], [ %.sroa.027.0.extract.trunc, %bb.k ] ; 3 uses
   %.02643 = phi i32 [ 0, %bb.a ], [ %.1, %bb.k ]  ; 7 uses
   %.sroa.7.042 = phi i64 [ 0, %bb.a ], [ %i.ak, %bb.k ] ; 2 uses
   %.sroa.027.041 = phi i64 [ 0, %bb.a ], [ %i.aj, %bb.k ] ; 2 uses
@@ -221,12 +221,10 @@ bb.d:                                             ; preds = %bb.c
   %i.h = ashr i16 %i.f, 5
   %i.i = sext i16 %i.h to i32
   %i.j = load i32, ptr %i.b, align 4
-  %i.k = select i1 %i.g, i32 %i.j, i32 %i.i       ; 2 uses
+  %i.k = select i1 %i.g, i32 %i.j, i32 %i.i
   %i.l = add nsw i32 %i.k, -1
   %i.m = icmp eq i32 %i.l, %.sroa.027.0.extract.trunc44
-  %7 = icmp ugt i32 %i.k, %.sroa.027.0.extract.trunc44
-  %or.cond.i = and i1 %7, %i.m
-  br i1 %or.cond.i, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
+  br i1 %i.m, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit.i:       ; preds = %bb.d
   %i.n = and i16 %i.f, 2
@@ -327,7 +325,7 @@ _ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef zeroext i1 @_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(64) %1) local_unnamed_addr #9 align 2 {
 bb.a:
-  %i.a = load i32, ptr %0, align 4                ; 6 uses
+  %i.a = load i32, ptr %0, align 4                ; 5 uses
   %i.b = icmp slt i32 %i.a, 0
   br i1 %i.b, label %bb.g, label %bb.b
 
@@ -363,12 +361,10 @@ bb.e:                                             ; preds = %bb.d
   %i.s = sext i16 %i.r to i32
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.u = load i32, ptr %i.t, align 4
-  %i.v = select i1 %i.q, i32 %i.u, i32 %i.s       ; 2 uses
+  %i.v = select i1 %i.q, i32 %i.u, i32 %i.s
   %i.w = add nsw i32 %i.v, -1
   %i.x = icmp eq i32 %i.a, %i.w
-  %2 = icmp ult i32 %i.a, %i.v
-  %or.cond = and i1 %2, %i.x
-  br i1 %or.cond, label %_ZNK6icu_7813UnicodeString6charAtEi.exit, label %.thread
+  br i1 %i.x, label %_ZNK6icu_7813UnicodeString6charAtEi.exit, label %.thread
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit:         ; preds = %bb.e
   %i.y = and i16 %i.p, 2
@@ -653,7 +649,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.j
-  %.sroa.0.0.extract.trunc24 = phi i32 [ 0, %bb.a ], [ %.sroa.0.0.extract.trunc, %bb.j ] ; 4 uses
+  %.sroa.0.0.extract.trunc24 = phi i32 [ 0, %bb.a ], [ %.sroa.0.0.extract.trunc, %bb.j ] ; 3 uses
   %.01123 = phi i32 [ 0, %bb.a ], [ %.1, %bb.j ]  ; 7 uses
   %.sroa.0.022 = phi i64 [ 0, %bb.a ], [ %i.al, %bb.j ] ; 2 uses
   %.sroa.7.021 = phi i64 [ 0, %bb.a ], [ %i.am, %bb.j ] ; 2 uses
@@ -673,12 +669,10 @@ bb.d:                                             ; preds = %bb.c
   %i.j = ashr i16 %i.h, 5
   %i.k = sext i16 %i.j to i32
   %i.l = load i32, ptr %i.b, align 4
-  %i.m = select i1 %i.i, i32 %i.l, i32 %i.k       ; 2 uses
+  %i.m = select i1 %i.i, i32 %i.l, i32 %i.k
   %i.n = add nsw i32 %i.m, -1
   %i.o = icmp eq i32 %i.n, %.sroa.0.0.extract.trunc24
-  %4 = icmp ugt i32 %i.m, %.sroa.0.0.extract.trunc24
-  %or.cond.i = and i1 %4, %i.o
-  br i1 %or.cond.i, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
+  br i1 %i.o, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit.i:       ; preds = %bb.d
   %i.p = and i16 %i.h, 2
@@ -789,7 +783,7 @@ bb.a:
 bb.b:                                             ; preds = %.preheader, %bb.f
   %.sroa.6.0 = phi i64 [ %i.at, %bb.f ], [ 0, %.preheader ] ; 2 uses
   %.sroa.0.0 = phi i64 [ %i.au, %bb.f ], [ 0, %.preheader ] ; 3 uses
-  %.sroa.0.0.extract.trunc = trunc i64 %.sroa.0.0 to i32 ; 5 uses
+  %.sroa.0.0.extract.trunc = trunc i64 %.sroa.0.0 to i32 ; 4 uses
   %i.l = icmp slt i32 %.sroa.0.0.extract.trunc, 0
   br i1 %i.l, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread11, label %bb.c
 
@@ -810,12 +804,10 @@ bb.e:                                             ; preds = %bb.d
   %i.p = ashr i16 %i.n, 5
   %i.q = sext i16 %i.p to i32
   %i.r = load i32, ptr %i.f, align 4
-  %i.s = select i1 %i.o, i32 %i.r, i32 %i.q       ; 2 uses
+  %i.s = select i1 %i.o, i32 %i.r, i32 %i.q
   %i.t = add nsw i32 %i.s, -1
   %i.u = icmp eq i32 %i.t, %.sroa.0.0.extract.trunc
-  %3 = icmp ugt i32 %i.s, %.sroa.0.0.extract.trunc
-  %or.cond.i = and i1 %3, %i.u
-  br i1 %or.cond.i, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
+  br i1 %i.u, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit.i:       ; preds = %bb.e
   %i.v = and i16 %i.n, 2
@@ -887,7 +879,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %.critedge
-  %.sroa.08.0.extract.trunc21 = phi i32 [ 0, %.preheader ], [ %.sroa.08.0.extract.trunc, %.critedge ] ; 4 uses
+  %.sroa.08.0.extract.trunc21 = phi i32 [ 0, %.preheader ], [ %.sroa.08.0.extract.trunc, %.critedge ] ; 3 uses
   %.sroa.6.020 = phi i64 [ 0, %.preheader ], [ %i.ar, %.critedge ] ; 2 uses
   %.sroa.08.019 = phi i64 [ 0, %.preheader ], [ %i.aq, %.critedge ] ; 2 uses
   %i.l = icmp eq i32 %.sroa.08.0.extract.trunc21, 0
@@ -906,12 +898,10 @@ bb.d:                                             ; preds = %bb.c
   %i.o = ashr i16 %i.m, 5
   %i.p = sext i16 %i.o to i32
   %i.q = load i32, ptr %i.f, align 4
-  %i.r = select i1 %i.n, i32 %i.q, i32 %i.p       ; 2 uses
+  %i.r = select i1 %i.n, i32 %i.q, i32 %i.p
   %i.s = add nsw i32 %i.r, -1
   %i.t = icmp eq i32 %i.s, %.sroa.08.0.extract.trunc21
-  %2 = icmp ugt i32 %i.r, %.sroa.08.0.extract.trunc21
-  %or.cond.i = and i1 %2, %i.t
-  br i1 %or.cond.i, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
+  br i1 %i.t, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit.i:       ; preds = %bb.d
   %i.u = and i16 %i.m, 2
@@ -1009,7 +999,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %._crit_edge
-  %.sroa.0.0.extract.trunc1119 = phi i32 [ 0, %.preheader ], [ %.sroa.0.0.extract.trunc, %._crit_edge ] ; 4 uses
+  %.sroa.0.0.extract.trunc1119 = phi i32 [ 0, %.preheader ], [ %.sroa.0.0.extract.trunc, %._crit_edge ] ; 3 uses
   %.sroa.0.018 = phi i64 [ 0, %.preheader ], [ %i.ar, %._crit_edge ] ; 2 uses
   %.sroa.7.017 = phi i64 [ 0, %.preheader ], [ %i.as, %._crit_edge ] ; 2 uses
   %i.m = icmp eq i32 %.sroa.0.0.extract.trunc1119, 0
@@ -1028,12 +1018,10 @@ bb.d:                                             ; preds = %bb.c
   %i.p = ashr i16 %i.n, 5
   %i.q = sext i16 %i.p to i32
   %i.r = load i32, ptr %i.g, align 4
-  %i.s = select i1 %i.o, i32 %i.r, i32 %i.q       ; 2 uses
+  %i.s = select i1 %i.o, i32 %i.r, i32 %i.q
   %i.t = add nsw i32 %i.s, -1
   %i.u = icmp eq i32 %i.t, %.sroa.0.0.extract.trunc1119
-  %5 = icmp ugt i32 %i.s, %.sroa.0.0.extract.trunc1119
-  %or.cond.i = and i1 %5, %i.u
-  br i1 %or.cond.i, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
+  br i1 %i.u, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit.i:       ; preds = %bb.d
   %i.v = and i16 %i.n, 2
@@ -1119,7 +1107,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %bb.g
-  %.sroa.0.0.extract.trunc19 = phi i32 [ 0, %.preheader ], [ %.sroa.0.0.extract.trunc, %bb.g ] ; 4 uses
+  %.sroa.0.0.extract.trunc19 = phi i32 [ 0, %.preheader ], [ %.sroa.0.0.extract.trunc, %bb.g ] ; 3 uses
   %.sroa.0.018 = phi i64 [ 0, %.preheader ], [ %i.aq, %bb.g ] ; 2 uses
   %.sroa.7.017 = phi i64 [ 0, %.preheader ], [ %i.ar, %bb.g ] ; 2 uses
   %i.l = icmp eq i32 %.sroa.0.0.extract.trunc19, 0
@@ -1138,12 +1126,10 @@ bb.d:                                             ; preds = %bb.c
   %i.o = ashr i16 %i.m, 5
   %i.p = sext i16 %i.o to i32
   %i.q = load i32, ptr %i.f, align 4
-  %i.r = select i1 %i.n, i32 %i.q, i32 %i.p       ; 2 uses
+  %i.r = select i1 %i.n, i32 %i.q, i32 %i.p
   %i.s = add nsw i32 %i.r, -1
   %i.t = icmp eq i32 %i.s, %.sroa.0.0.extract.trunc19
-  %3 = icmp ugt i32 %i.r, %.sroa.0.0.extract.trunc19
-  %or.cond.i = and i1 %3, %i.t
-  br i1 %or.cond.i, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
+  br i1 %i.t, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit.i:       ; preds = %bb.d
   %i.u = and i16 %i.m, 2
@@ -1229,7 +1215,7 @@ bb.a:
 bb.b:                                             ; preds = %.preheader, %bb.f
   %.sroa.7.0 = phi i64 [ %i.at, %bb.f ], [ 0, %.preheader ] ; 2 uses
   %.sroa.0.0 = phi i64 [ %i.au, %bb.f ], [ 0, %.preheader ] ; 3 uses
-  %.sroa.0.0.extract.trunc = trunc i64 %.sroa.0.0 to i32 ; 5 uses
+  %.sroa.0.0.extract.trunc = trunc i64 %.sroa.0.0 to i32 ; 4 uses
   %i.l = icmp slt i32 %.sroa.0.0.extract.trunc, 0
   br i1 %i.l, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread14, label %bb.c
 
@@ -1250,12 +1236,10 @@ bb.e:                                             ; preds = %bb.d
   %i.p = ashr i16 %i.n, 5
   %i.q = sext i16 %i.p to i32
   %i.r = load i32, ptr %i.f, align 4
-  %i.s = select i1 %i.o, i32 %i.r, i32 %i.q       ; 2 uses
+  %i.s = select i1 %i.o, i32 %i.r, i32 %i.q
   %i.t = add nsw i32 %i.s, -1
   %i.u = icmp eq i32 %i.t, %.sroa.0.0.extract.trunc
-  %3 = icmp ugt i32 %i.s, %.sroa.0.0.extract.trunc
-  %or.cond.i = and i1 %3, %i.u
-  br i1 %or.cond.i, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
+  br i1 %i.u, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.i, label %_ZN6icu_786number4impl10AffixUtils7hasNextERKNS1_8AffixTagERKNS_13UnicodeStringE.exit.thread
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit.i:       ; preds = %bb.e
   %i.v = and i16 %i.n, 2

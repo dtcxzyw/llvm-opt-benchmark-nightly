@@ -201,7 +201,7 @@ bb.da:                                            ; preds = %bb.cz
   %i.jm = sext i16 %i.jl to i32
   %i.jn = getelementptr inbounds nuw i8, ptr %9, i64 12
   %i.jo = load i32, ptr %i.jn, align 4
-  %i.jp = select i1 %i.jk, i32 %i.jo, i32 %i.jm   ; 3 uses
+  %i.jp = select i1 %i.jk, i32 %i.jo, i32 %i.jm   ; 2 uses
   %i.jq = add nsw i32 %i.jp, %.5                  ; 2 uses
   %i.jr = icmp sgt i32 %i.jq, 253
   br i1 %i.jr, label %bb.db, label %_ZN6icu_78L13isASCIIStringERKNS_13UnicodeStringE.exit.thread
@@ -248,27 +248,23 @@ _ZN6icu_78L13isASCIIStringERKNS_13UnicodeStringE.exit: ; preds = %bb.df
 
 bb.dh:                                            ; preds = %_ZN6icu_78L13isASCIIStringERKNS_13UnicodeStringE.exit
   %i.kd = icmp slt i32 %.5, 254
-  br i1 %i.kd, label %14, label %_ZN6icu_78L13isASCIIStringERKNS_13UnicodeStringE.exit.thread
+  br i1 %i.kd, label %_ZNK6icu_7813UnicodeStringixEi.exit, label %_ZN6icu_78L13isASCIIStringERKNS_13UnicodeStringE.exit.thread
 
-14:                                               ; preds = %bb.dh
-  %15 = sub nsw i32 253, %.5                      ; 2 uses
-  %16 = icmp ult i32 %15, %i.jp
-  br i1 %16, label %_ZNK6icu_7813UnicodeStringixEi.exit, label %_ZNK6icu_7813UnicodeStringixEi.exit.thread
-
-_ZNK6icu_7813UnicodeStringixEi.exit:              ; preds = %14
+_ZNK6icu_7813UnicodeStringixEi.exit:              ; preds = %bb.dh
+  %14 = sub nsw i32 253, %.5
   %i.ke = and i16 %i.jj, 2
   %.not.i.i.i = icmp eq i16 %i.ke, 0
   %i.kf = getelementptr inbounds nuw i8, ptr %9, i64 10
   %i.kg = getelementptr inbounds nuw i8, ptr %9, i64 24
   %i.kh = load ptr, ptr %i.kg, align 8
   %i.ki = select i1 %.not.i.i.i, ptr %i.kh, ptr %i.kf
-  %i.kj = zext nneg i32 %15 to i64
+  %i.kj = zext nneg i32 %14 to i64
   %i.kk = getelementptr inbounds nuw [2 x i8], ptr %i.ki, i64 %i.kj
   %i.kl = load i16, ptr %i.kk, align 2
   %.not131 = icmp eq i16 %i.kl, 46
   br i1 %.not131, label %_ZN6icu_78L13isASCIIStringERKNS_13UnicodeStringE.exit.thread, label %_ZNK6icu_7813UnicodeStringixEi.exit.thread
 
-_ZNK6icu_7813UnicodeStringixEi.exit.thread:       ; preds = %14, %_ZNK6icu_7813UnicodeStringixEi.exit, %_ZN6icu_78L13isASCIIStringERKNS_13UnicodeStringE.exit
+_ZNK6icu_7813UnicodeStringixEi.exit.thread:       ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit, %_ZN6icu_78L13isASCIIStringERKNS_13UnicodeStringE.exit
   %i.km = load i32, ptr %6, align 4
   %i.kn = or i32 %i.km, 4
   store i32 %i.kn, ptr %6, align 4
