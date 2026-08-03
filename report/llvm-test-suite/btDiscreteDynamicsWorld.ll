@@ -204,21 +204,21 @@ bb.y:                                             ; preds = %.critedge164
   %i.aqt = call noundef float @sinf(float noundef %i.aqp) #20, !tbaa !4 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #20
   %i.aqu = fmul float %i.aqq, %i.aqs
-  %34 = load float, ptr %18, align 8, !tbaa !8    ; 3 uses
   %i.aqv = fmul float %i.aqq, %i.aqt
   %i.aqw = getelementptr inbounds nuw i8, ptr %18, i64 4
   %i.aqx = load float, ptr %i.aqw, align 4, !tbaa !8 ; 3 uses
-  %i.aqy = fmul float %i.aqv, %i.aqx
-  %35 = call float @llvm.fmuladd.f32(float %i.aqu, float %34, float %i.aqy)
+  %i.aqy = fmul float %i.aqs, %i.aqx
+  %34 = load float, ptr %18, align 8, !tbaa !8    ; 3 uses
+  %35 = fmul float %i.aqv, %i.aqx
   %36 = load float, ptr %i.apu, align 8, !tbaa !8 ; 2 uses
-  %37 = fmul float %i.aqs, %i.aqx
   %i.aqz = insertelement <2 x float> poison, float %i.aqr, i64 0
   %i.ara = insertelement <2 x float> %i.aqz, float %i.aqt, i64 1
   %i.arb = fneg <2 x float> %i.ara
+  %37 = call float @llvm.fmuladd.f32(float %i.aqu, float %34, float %35)
   %i.arc = insertelement <2 x float> poison, float %36, i64 0
   %i.ard = insertelement <2 x float> %i.arc, float %34, i64 1
-  %i.are = insertelement <2 x float> poison, float %35, i64 0
-  %i.arf = insertelement <2 x float> %i.are, float %37, i64 1
+  %i.are = insertelement <2 x float> poison, float %37, i64 0
+  %i.arf = insertelement <2 x float> %i.are, float %i.aqy, i64 1
   %i.arg = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.arb, <2 x float> %i.ard, <2 x float> %i.arf)
   store <2 x float> %i.arg, ptr %20, align 8, !tbaa !8
   %i.arh = fmul float %i.aqr, %i.aqs

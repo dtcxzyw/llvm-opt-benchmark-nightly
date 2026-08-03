@@ -203,7 +203,9 @@ bb.a:
 ; Function Attrs: nofree nounwind uwtable
 define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #3 {
 .loopexit.i.4:
-  %i.a = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 96), align 16, !tbaa !15 ; 2 uses
+  %2 = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 96), align 16, !tbaa !15 ; 2 uses
+  %3 = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 160), align 16, !tbaa !14 ; 5 uses
+  %i.a = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 152), align 8, !tbaa !15 ; 3 uses
   %i.b = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 208), align 16, !tbaa !15 ; 3 uses
   %i.c = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 24), align 8, !tbaa !10
   %i.d = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 80), align 16, !tbaa !10 ; 4 uses
@@ -226,7 +228,6 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone c
   %foldExtExtBinop46 = fmul <2 x double> %i.d, %i.d
   %i.r = extractelement <2 x double> %foldExtExtBinop46, i64 1
   %i.s = extractelement <2 x double> %i.d, i64 0  ; 2 uses
-  %2 = tail call double @llvm.fmuladd.f64(double %i.s, double %i.s, double %i.r)
   %i.t = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 16), align 16
   %i.u = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 72), align 8, !tbaa !12
   %i.v = load <2 x double>, ptr @bodies, align 16
@@ -252,6 +253,7 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone c
   %i.ap = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.ao)
   %i.aq = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 184), align 8
   %i.ar = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 240), align 16, !tbaa !12
+  %4 = fmul double %i.y, %3
   %i.as = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 72), align 8 ; 2 uses
   %i.at = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 128), align 16
   %i.au = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 56), align 8, !tbaa !21 ; 2 uses
@@ -261,9 +263,10 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone c
   %i.ay = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 120), align 8, !tbaa !22
   %i.az = fsub double %i.ax, %i.ay                ; 2 uses
   %i.ba = fmul double %i.az, %i.az
-  %i.bb = insertelement <2 x double> poison, double %i.a, i64 0
+  %5 = tail call double @llvm.fmuladd.f64(double %i.s, double %i.s, double %i.r)
+  %i.bb = insertelement <2 x double> poison, double %2, i64 0
   %i.bc = insertelement <2 x double> %i.bb, double %i.aw, i64 1 ; 2 uses
-  %i.bd = insertelement <2 x double> poison, double %2, i64 0
+  %i.bd = insertelement <2 x double> poison, double %5, i64 0
   %i.be = insertelement <2 x double> %i.bd, double %i.ba, i64 1
   %i.bf = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bc, <2 x double> %i.bc, <2 x double> %i.be) ; 2 uses
   %i.bg = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 184), align 8
@@ -275,31 +278,28 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone c
   %i.bm = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 216), align 8, !tbaa !10 ; 4 uses
   %i.bn = extractelement <2 x double> %i.bm, i64 0 ; 3 uses
   %i.bo = shufflevector <2 x double> %i.bm, <2 x double> poison, <2 x i32> zeroinitializer
-  %3 = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 48), align 16, !tbaa !14 ; 3 uses
-  %i.bp = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 40), align 8, !tbaa !15
-  %i.bq = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 160), align 16, !tbaa !14 ; 5 uses
-  %4 = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 152), align 8, !tbaa !15 ; 3 uses
+  %i.bp = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 48), align 16, !tbaa !14 ; 3 uses
+  %i.bq = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 40), align 8, !tbaa !15
+  %6 = tail call double @llvm.fmuladd.f64(double %i.bq, double %i.bp, double 0.000000e+00)
   %i.br = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 272), align 16, !tbaa !14 ; 5 uses
   %i.bs = load double, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 264), align 8, !tbaa !15 ; 3 uses
-  %i.bt = insertelement <2 x double> poison, double %3, i64 0
+  %i.bt = insertelement <2 x double> poison, double %i.bp, i64 0
   %i.bu = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.bv = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.c, <2 x double> %i.bu, <2 x double> zeroinitializer)
-  %i.bw = insertelement <2 x double> poison, double %i.bq, i64 0
+  %i.bw = insertelement <2 x double> poison, double %3, i64 0
   %i.bx = shufflevector <2 x double> %i.bw, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.by = insertelement <2 x double> poison, double %i.br, i64 0
   %i.bz = shufflevector <2 x double> %i.by, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ca = fmul double %i.br, 5.000000e-01
   %i.cb = tail call double @llvm.fmuladd.f64(double %i.bs, double %i.bs, double %i.j)
-  %i.cc = fmul double %i.bq, 5.000000e-01
-  %i.cd = tail call double @llvm.fmuladd.f64(double %4, double %4, double %i.q)
-  %5 = fmul double %3, 5.000000e-01
-  %i.ce = fmul double %i.y, %i.bq
-  %6 = tail call double @llvm.fmuladd.f64(double %i.bp, double %3, double 0.000000e+00)
-  %i.cf = tail call double @llvm.fmuladd.f64(double %i.a, double %i.y, double %6)
-  %i.cg = tail call double @llvm.fmuladd.f64(double %4, double %i.bq, double %i.cf)
+  %i.cc = fmul double %3, 5.000000e-01
+  %i.cd = tail call double @llvm.fmuladd.f64(double %i.a, double %i.a, double %i.q)
+  %i.ce = fmul double %i.bp, 5.000000e-01
+  %i.cf = tail call double @llvm.fmuladd.f64(double %2, double %i.y, double %6)
+  %i.cg = tail call double @llvm.fmuladd.f64(double %i.a, double %3, double %i.cf)
   %i.ch = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.d, <2 x double> %i.z, <2 x double> %i.bv)
   %i.ci = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.e, <2 x double> %i.bx, <2 x double> %i.ch)
-  %i.cj = insertelement <2 x double> %i.x, double %i.bq, i64 1
+  %i.cj = insertelement <2 x double> %i.x, double %3, i64 1
   %i.ck = fmul <2 x double> %i.bu, %i.cj
   %i.cl = fdiv <2 x double> %i.ck, %i.ap          ; 2 uses
   %i.cm = tail call double @llvm.fmuladd.f64(double %i.b, double %i.bn, double %i.cg)
@@ -308,7 +308,7 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone c
   %i.cp = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.g, <2 x double> %i.bz, <2 x double> %i.co)
   %i.cq = fdiv <2 x double> %i.cp, splat (double f0xC043BD3CC9BE45DE) ; 4 uses
   store <2 x double> %i.cq, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 24), align 8, !tbaa !10
-  %i.cr = insertelement <2 x double> poison, double %i.ce, i64 0
+  %i.cr = insertelement <2 x double> poison, double %4, i64 0
   %i.cs = insertelement <2 x double> %i.cr, double %i.cn, i64 1
   %i.ct = fmul double %i.bn, 5.000000e-01
   %foldExtExtBinop48 = fmul <2 x double> %i.cq, %i.cq
@@ -398,7 +398,7 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone c
   %i.fz = extractelement <2 x double> %i.fy, i64 1 ; 3 uses
   store double %i.fz, ptr getelementptr inbounds nuw (i8, ptr @bodies, i64 40), align 8, !tbaa !15
   %i.ga = tail call double @llvm.fmuladd.f64(double %i.fz, double %i.fz, double %i.cw)
-  %i.gb = tail call double @llvm.fmuladd.f64(double %5, double %i.ga, double 0.000000e+00)
+  %i.gb = tail call double @llvm.fmuladd.f64(double %i.ce, double %i.ga, double 0.000000e+00)
   %i.gc = fsub double %i.gb, %i.cx
   %i.gd = fsub double %i.gc, %i.cy
   %i.ge = fsub double %i.gd, %i.do

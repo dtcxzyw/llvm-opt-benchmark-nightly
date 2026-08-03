@@ -203,9 +203,9 @@ _ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split: ; preds = %_ZN10aiV
 .lr.ph.preheader:                                 ; preds = %.loopexit397
   %i.ns = insertelement <2 x double> poison, double %.sroa.0347.0474, i64 0
   %i.nt = extractelement <2 x double> %i.ni, i64 0
+  %4 = extractelement <2 x double> %i.ni, i64 1
   %i.nu = shufflevector <2 x double> %i.nd, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.nv = insertelement <2 x double> %i.nu, double %i.nr, i64 1
-  %4 = extractelement <2 x double> %i.ni, i64 1
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit, %.loopexit397
@@ -312,12 +312,12 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit: ; preds = %_ZNSt6vecto
   %i.pb = shufflevector <2 x double> %i.pa, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
   %i.pc = insertelement <2 x double> %i.pb, double %i.oy, i64 0
   %i.pd = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nd, <2 x double> %i.nz, <2 x double> %i.pc)
-  %5 = shufflevector <2 x double> %i.nz, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %6 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nv, <2 x double> %5, <2 x double> %i.pa)
-  %7 = extractelement <2 x double> %i.pd, i64 0
-  %8 = call double @llvm.fmuladd.f64(double %4, double %i.od, double %7)
-  %i.pe = fadd double %8, 0.000000e+00
-  %i.pf = fadd <2 x double> %6, zeroinitializer
+  %5 = extractelement <2 x double> %i.pd, i64 0
+  %6 = call double @llvm.fmuladd.f64(double %4, double %i.od, double %5)
+  %7 = shufflevector <2 x double> %i.nz, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %8 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nv, <2 x double> %7, <2 x double> %i.pa)
+  %i.pe = fadd double %6, 0.000000e+00
+  %i.pf = fadd <2 x double> %8, zeroinitializer
   %exitcond.not = icmp eq i32 %i.ou, %i.m
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !112
 
