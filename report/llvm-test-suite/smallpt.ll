@@ -41,28 +41,27 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
-  %i.f = load double, ptr %1, align 8, !tbaa !8, !noalias !11 ; 10 uses
+  %i.f = load double, ptr %i.b, align 8, !tbaa !8, !noalias !11 ; 10 uses
   %i.g = load double, ptr %i.a, align 8, !tbaa !14, !noalias !11 ; 10 uses
-  %16 = load <2 x double>, ptr %i.b, align 8, !tbaa !15 ; 3 uses
-  %i.h = load double, ptr %i.c, align 8, !tbaa !8 ; 10 uses
-  %i.i = load double, ptr %i.d, align 8, !tbaa !14 ; 11 uses
-  %i.j = load double, ptr %i.e, align 8, !tbaa !16 ; 11 uses
-  %i.k = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 712), align 8, !tbaa !8, !noalias !11
-  %i.l = fsub double %i.k, %i.f                   ; 3 uses
+  %16 = load double, ptr %1, align 8, !tbaa !15, !noalias !11 ; 10 uses
+  %i.h = load double, ptr %i.d, align 8, !tbaa !14 ; 11 uses
+  %i.i = load double, ptr %i.c, align 8, !tbaa !15 ; 11 uses
+  %i.j = load double, ptr %i.e, align 8, !tbaa !8 ; 11 uses
+  %i.k = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 712), align 8, !tbaa !15, !noalias !11
+  %i.l = fsub double %i.k, %16                    ; 3 uses
   %i.m = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 720), align 16, !tbaa !14, !noalias !11
   %i.n = fsub double %i.m, %i.g                   ; 3 uses
-  %i.o = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 728), align 8, !tbaa !16, !noalias !11
-  %17 = extractelement <2 x double> %16, i64 0    ; 9 uses
-  %i.p = fsub double %i.o, %17                    ; 3 uses
-  %i.q = fmul double %i.n, %i.i
-  %i.r = tail call double @llvm.fmuladd.f64(double %i.l, double %i.h, double %i.q)
+  %i.o = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 728), align 8, !tbaa !8, !noalias !11
+  %i.p = fsub double %i.o, %i.f                   ; 3 uses
+  %i.q = fmul double %i.n, %i.h
+  %i.r = tail call double @llvm.fmuladd.f64(double %i.l, double %i.i, double %i.q)
   %i.s = tail call noundef double @llvm.fmuladd.f64(double %i.p, double %i.j, double %i.r) ; 4 uses
   %i.t = fmul double %i.n, %i.n
   %i.u = tail call double @llvm.fmuladd.f64(double %i.l, double %i.l, double %i.t)
   %i.v = tail call noundef double @llvm.fmuladd.f64(double %i.p, double %i.p, double %i.u)
   %i.w = fneg double %i.v
   %i.x = tail call double @llvm.fmuladd.f64(double %i.s, double %i.s, double %i.w)
-  %i.y = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 704), align 16, !tbaa !17 ; 2 uses
+  %i.y = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 704), align 16, !tbaa !16 ; 2 uses
   %i.z = tail call double @llvm.fmuladd.f64(double %i.y, double %i.y, double %i.x) ; 2 uses
   %i.aa = fcmp olt double %i.z, 0.000000e+00
   br i1 %i.aa, label %_ZNK6Sphere9intersectERK3Ray.exit.thread.i, label %bb.b
@@ -91,21 +90,21 @@ bb.d:                                             ; preds = %_ZNK6Sphere9interse
 _ZNK6Sphere9intersectERK3Ray.exit.thread.i:       ; preds = %bb.d, %_ZNK6Sphere9intersectERK3Ray.exit.i, %bb.c, %bb.a
   %.1330 = phi i32 [ 0, %bb.a ], [ 8, %bb.d ], [ 0, %_ZNK6Sphere9intersectERK3Ray.exit.i ], [ 0, %bb.c ] ; 3 uses
   %.1 = phi double [ 1.000000e+20, %bb.a ], [ %.0.i.i, %bb.d ], [ 1.000000e+20, %_ZNK6Sphere9intersectERK3Ray.exit.i ], [ 1.000000e+20, %bb.c ] ; 4 uses
-  %i.ai = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 624), align 16, !tbaa !8, !noalias !11
-  %i.aj = fsub double %i.ai, %i.f                 ; 3 uses
+  %i.ai = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 624), align 16, !tbaa !15, !noalias !11
+  %i.aj = fsub double %i.ai, %16                  ; 3 uses
   %i.ak = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 632), align 8, !tbaa !14, !noalias !11
   %i.al = fsub double %i.ak, %i.g                 ; 3 uses
-  %i.am = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 640), align 16, !tbaa !16, !noalias !11
-  %i.an = fsub double %i.am, %17                  ; 3 uses
-  %i.ao = fmul double %i.al, %i.i
-  %i.ap = tail call double @llvm.fmuladd.f64(double %i.aj, double %i.h, double %i.ao)
+  %i.am = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 640), align 16, !tbaa !8, !noalias !11
+  %i.an = fsub double %i.am, %i.f                 ; 3 uses
+  %i.ao = fmul double %i.al, %i.h
+  %i.ap = tail call double @llvm.fmuladd.f64(double %i.aj, double %i.i, double %i.ao)
   %i.aq = tail call noundef double @llvm.fmuladd.f64(double %i.an, double %i.j, double %i.ap) ; 4 uses
   %i.ar = fmul double %i.al, %i.al
   %i.as = tail call double @llvm.fmuladd.f64(double %i.aj, double %i.aj, double %i.ar)
   %i.at = tail call noundef double @llvm.fmuladd.f64(double %i.an, double %i.an, double %i.as)
   %i.au = fneg double %i.at
   %i.av = tail call double @llvm.fmuladd.f64(double %i.aq, double %i.aq, double %i.au)
-  %i.aw = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 616), align 8, !tbaa !17 ; 2 uses
+  %i.aw = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 616), align 8, !tbaa !16 ; 2 uses
   %i.ax = tail call double @llvm.fmuladd.f64(double %i.aw, double %i.aw, double %i.av) ; 2 uses
   %i.ay = fcmp olt double %i.ax, 0.000000e+00
   br i1 %i.ay, label %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.1, label %bb.e
@@ -134,21 +133,21 @@ bb.g:                                             ; preds = %_ZNK6Sphere9interse
 _ZNK6Sphere9intersectERK3Ray.exit.thread.i.1:     ; preds = %bb.g, %_ZNK6Sphere9intersectERK3Ray.exit.i.1, %bb.f, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i
   %.1330.1 = phi i32 [ %.1330, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i ], [ 7, %bb.g ], [ %.1330, %_ZNK6Sphere9intersectERK3Ray.exit.i.1 ], [ %.1330, %bb.f ] ; 3 uses
   %.1.1 = phi double [ %.1, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i ], [ %.0.i.i.1, %bb.g ], [ %.1, %_ZNK6Sphere9intersectERK3Ray.exit.i.1 ], [ %.1, %bb.f ] ; 4 uses
-  %i.bg = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 536), align 8, !tbaa !8, !noalias !11
-  %i.bh = fsub double %i.bg, %i.f                 ; 3 uses
+  %i.bg = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 536), align 8, !tbaa !15, !noalias !11
+  %i.bh = fsub double %i.bg, %16                  ; 3 uses
   %i.bi = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 544), align 16, !tbaa !14, !noalias !11
   %i.bj = fsub double %i.bi, %i.g                 ; 3 uses
-  %i.bk = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 552), align 8, !tbaa !16, !noalias !11
-  %i.bl = fsub double %i.bk, %17                  ; 3 uses
-  %i.bm = fmul double %i.bj, %i.i
-  %i.bn = tail call double @llvm.fmuladd.f64(double %i.bh, double %i.h, double %i.bm)
+  %i.bk = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 552), align 8, !tbaa !8, !noalias !11
+  %i.bl = fsub double %i.bk, %i.f                 ; 3 uses
+  %i.bm = fmul double %i.bj, %i.h
+  %i.bn = tail call double @llvm.fmuladd.f64(double %i.bh, double %i.i, double %i.bm)
   %i.bo = tail call noundef double @llvm.fmuladd.f64(double %i.bl, double %i.j, double %i.bn) ; 4 uses
   %i.bp = fmul double %i.bj, %i.bj
   %i.bq = tail call double @llvm.fmuladd.f64(double %i.bh, double %i.bh, double %i.bp)
   %i.br = tail call noundef double @llvm.fmuladd.f64(double %i.bl, double %i.bl, double %i.bq)
   %i.bs = fneg double %i.br
   %i.bt = tail call double @llvm.fmuladd.f64(double %i.bo, double %i.bo, double %i.bs)
-  %i.bu = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 528), align 16, !tbaa !17 ; 2 uses
+  %i.bu = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 528), align 16, !tbaa !16 ; 2 uses
   %i.bv = tail call double @llvm.fmuladd.f64(double %i.bu, double %i.bu, double %i.bt) ; 2 uses
   %i.bw = fcmp olt double %i.bv, 0.000000e+00
   br i1 %i.bw, label %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.2, label %bb.h
@@ -177,21 +176,21 @@ bb.j:                                             ; preds = %_ZNK6Sphere9interse
 _ZNK6Sphere9intersectERK3Ray.exit.thread.i.2:     ; preds = %bb.j, %_ZNK6Sphere9intersectERK3Ray.exit.i.2, %bb.i, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.1
   %.1330.2 = phi i32 [ %.1330.1, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.1 ], [ 6, %bb.j ], [ %.1330.1, %_ZNK6Sphere9intersectERK3Ray.exit.i.2 ], [ %.1330.1, %bb.i ] ; 3 uses
   %.1.2 = phi double [ %.1.1, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.1 ], [ %.0.i.i.2, %bb.j ], [ %.1.1, %_ZNK6Sphere9intersectERK3Ray.exit.i.2 ], [ %.1.1, %bb.i ] ; 4 uses
-  %i.ce = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 448), align 16, !tbaa !8, !noalias !11
-  %i.cf = fsub double %i.ce, %i.f                 ; 3 uses
+  %i.ce = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 448), align 16, !tbaa !15, !noalias !11
+  %i.cf = fsub double %i.ce, %16                  ; 3 uses
   %i.cg = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 456), align 8, !tbaa !14, !noalias !11
   %i.ch = fsub double %i.cg, %i.g                 ; 3 uses
-  %i.ci = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 464), align 16, !tbaa !16, !noalias !11
-  %i.cj = fsub double %i.ci, %17                  ; 3 uses
-  %i.ck = fmul double %i.ch, %i.i
-  %i.cl = tail call double @llvm.fmuladd.f64(double %i.cf, double %i.h, double %i.ck)
+  %i.ci = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 464), align 16, !tbaa !8, !noalias !11
+  %i.cj = fsub double %i.ci, %i.f                 ; 3 uses
+  %i.ck = fmul double %i.ch, %i.h
+  %i.cl = tail call double @llvm.fmuladd.f64(double %i.cf, double %i.i, double %i.ck)
   %i.cm = tail call noundef double @llvm.fmuladd.f64(double %i.cj, double %i.j, double %i.cl) ; 4 uses
   %i.cn = fmul double %i.ch, %i.ch
   %i.co = tail call double @llvm.fmuladd.f64(double %i.cf, double %i.cf, double %i.cn)
   %i.cp = tail call noundef double @llvm.fmuladd.f64(double %i.cj, double %i.cj, double %i.co)
   %i.cq = fneg double %i.cp
   %i.cr = tail call double @llvm.fmuladd.f64(double %i.cm, double %i.cm, double %i.cq)
-  %i.cs = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 440), align 8, !tbaa !17 ; 2 uses
+  %i.cs = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 440), align 8, !tbaa !16 ; 2 uses
   %i.ct = tail call double @llvm.fmuladd.f64(double %i.cs, double %i.cs, double %i.cr) ; 2 uses
   %i.cu = fcmp olt double %i.ct, 0.000000e+00
   br i1 %i.cu, label %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.3, label %bb.k
@@ -220,21 +219,21 @@ bb.m:                                             ; preds = %_ZNK6Sphere9interse
 _ZNK6Sphere9intersectERK3Ray.exit.thread.i.3:     ; preds = %bb.m, %_ZNK6Sphere9intersectERK3Ray.exit.i.3, %bb.l, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.2
   %.1330.3 = phi i32 [ %.1330.2, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.2 ], [ 5, %bb.m ], [ %.1330.2, %_ZNK6Sphere9intersectERK3Ray.exit.i.3 ], [ %.1330.2, %bb.l ] ; 3 uses
   %.1.3 = phi double [ %.1.2, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.2 ], [ %.0.i.i.3, %bb.m ], [ %.1.2, %_ZNK6Sphere9intersectERK3Ray.exit.i.3 ], [ %.1.2, %bb.l ] ; 4 uses
-  %i.dc = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 360), align 8, !tbaa !8, !noalias !11
-  %i.dd = fsub double %i.dc, %i.f                 ; 3 uses
+  %i.dc = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 360), align 8, !tbaa !15, !noalias !11
+  %i.dd = fsub double %i.dc, %16                  ; 3 uses
   %i.de = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 368), align 16, !tbaa !14, !noalias !11
   %i.df = fsub double %i.de, %i.g                 ; 3 uses
-  %i.dg = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 376), align 8, !tbaa !16, !noalias !11
-  %i.dh = fsub double %i.dg, %17                  ; 3 uses
-  %i.di = fmul double %i.df, %i.i
-  %i.dj = tail call double @llvm.fmuladd.f64(double %i.dd, double %i.h, double %i.di)
+  %i.dg = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 376), align 8, !tbaa !8, !noalias !11
+  %i.dh = fsub double %i.dg, %i.f                 ; 3 uses
+  %i.di = fmul double %i.df, %i.h
+  %i.dj = tail call double @llvm.fmuladd.f64(double %i.dd, double %i.i, double %i.di)
   %i.dk = tail call noundef double @llvm.fmuladd.f64(double %i.dh, double %i.j, double %i.dj) ; 4 uses
   %i.dl = fmul double %i.df, %i.df
   %i.dm = tail call double @llvm.fmuladd.f64(double %i.dd, double %i.dd, double %i.dl)
   %i.dn = tail call noundef double @llvm.fmuladd.f64(double %i.dh, double %i.dh, double %i.dm)
   %i.do = fneg double %i.dn
   %i.dp = tail call double @llvm.fmuladd.f64(double %i.dk, double %i.dk, double %i.do)
-  %i.dq = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 352), align 16, !tbaa !17 ; 2 uses
+  %i.dq = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 352), align 16, !tbaa !16 ; 2 uses
   %i.dr = tail call double @llvm.fmuladd.f64(double %i.dq, double %i.dq, double %i.dp) ; 2 uses
   %i.ds = fcmp olt double %i.dr, 0.000000e+00
   br i1 %i.ds, label %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.4, label %bb.n
@@ -263,21 +262,21 @@ bb.p:                                             ; preds = %_ZNK6Sphere9interse
 _ZNK6Sphere9intersectERK3Ray.exit.thread.i.4:     ; preds = %bb.p, %_ZNK6Sphere9intersectERK3Ray.exit.i.4, %bb.o, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.3
   %.1330.4 = phi i32 [ %.1330.3, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.3 ], [ 4, %bb.p ], [ %.1330.3, %_ZNK6Sphere9intersectERK3Ray.exit.i.4 ], [ %.1330.3, %bb.o ] ; 3 uses
   %.1.4 = phi double [ %.1.3, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.3 ], [ %.0.i.i.4, %bb.p ], [ %.1.3, %_ZNK6Sphere9intersectERK3Ray.exit.i.4 ], [ %.1.3, %bb.o ] ; 4 uses
-  %i.ea = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 272), align 16, !tbaa !8, !noalias !11
-  %i.eb = fsub double %i.ea, %i.f                 ; 3 uses
+  %i.ea = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 272), align 16, !tbaa !15, !noalias !11
+  %i.eb = fsub double %i.ea, %16                  ; 3 uses
   %i.ec = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 280), align 8, !tbaa !14, !noalias !11
   %i.ed = fsub double %i.ec, %i.g                 ; 3 uses
-  %i.ee = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 288), align 16, !tbaa !16, !noalias !11
-  %i.ef = fsub double %i.ee, %17                  ; 3 uses
-  %i.eg = fmul double %i.ed, %i.i
-  %i.eh = tail call double @llvm.fmuladd.f64(double %i.eb, double %i.h, double %i.eg)
+  %i.ee = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 288), align 16, !tbaa !8, !noalias !11
+  %i.ef = fsub double %i.ee, %i.f                 ; 3 uses
+  %i.eg = fmul double %i.ed, %i.h
+  %i.eh = tail call double @llvm.fmuladd.f64(double %i.eb, double %i.i, double %i.eg)
   %i.ei = tail call noundef double @llvm.fmuladd.f64(double %i.ef, double %i.j, double %i.eh) ; 4 uses
   %i.ej = fmul double %i.ed, %i.ed
   %i.ek = tail call double @llvm.fmuladd.f64(double %i.eb, double %i.eb, double %i.ej)
   %i.el = tail call noundef double @llvm.fmuladd.f64(double %i.ef, double %i.ef, double %i.ek)
   %i.em = fneg double %i.el
   %i.en = tail call double @llvm.fmuladd.f64(double %i.ei, double %i.ei, double %i.em)
-  %i.eo = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 264), align 8, !tbaa !17 ; 2 uses
+  %i.eo = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 264), align 8, !tbaa !16 ; 2 uses
   %i.ep = tail call double @llvm.fmuladd.f64(double %i.eo, double %i.eo, double %i.en) ; 2 uses
   %i.eq = fcmp olt double %i.ep, 0.000000e+00
   br i1 %i.eq, label %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.5, label %bb.q
@@ -306,21 +305,21 @@ bb.s:                                             ; preds = %_ZNK6Sphere9interse
 _ZNK6Sphere9intersectERK3Ray.exit.thread.i.5:     ; preds = %bb.s, %_ZNK6Sphere9intersectERK3Ray.exit.i.5, %bb.r, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.4
   %.1330.5 = phi i32 [ %.1330.4, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.4 ], [ 3, %bb.s ], [ %.1330.4, %_ZNK6Sphere9intersectERK3Ray.exit.i.5 ], [ %.1330.4, %bb.r ] ; 3 uses
   %.1.5 = phi double [ %.1.4, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.4 ], [ %.0.i.i.5, %bb.s ], [ %.1.4, %_ZNK6Sphere9intersectERK3Ray.exit.i.5 ], [ %.1.4, %bb.r ] ; 4 uses
-  %i.ey = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 184), align 8, !tbaa !8, !noalias !11
-  %i.ez = fsub double %i.ey, %i.f                 ; 3 uses
+  %i.ey = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 184), align 8, !tbaa !15, !noalias !11
+  %i.ez = fsub double %i.ey, %16                  ; 3 uses
   %i.fa = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 192), align 16, !tbaa !14, !noalias !11
   %i.fb = fsub double %i.fa, %i.g                 ; 3 uses
-  %i.fc = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 200), align 8, !tbaa !16, !noalias !11
-  %i.fd = fsub double %i.fc, %17                  ; 3 uses
-  %i.fe = fmul double %i.fb, %i.i
-  %i.ff = tail call double @llvm.fmuladd.f64(double %i.ez, double %i.h, double %i.fe)
+  %i.fc = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 200), align 8, !tbaa !8, !noalias !11
+  %i.fd = fsub double %i.fc, %i.f                 ; 3 uses
+  %i.fe = fmul double %i.fb, %i.h
+  %i.ff = tail call double @llvm.fmuladd.f64(double %i.ez, double %i.i, double %i.fe)
   %i.fg = tail call noundef double @llvm.fmuladd.f64(double %i.fd, double %i.j, double %i.ff) ; 4 uses
   %i.fh = fmul double %i.fb, %i.fb
   %i.fi = tail call double @llvm.fmuladd.f64(double %i.ez, double %i.ez, double %i.fh)
   %i.fj = tail call noundef double @llvm.fmuladd.f64(double %i.fd, double %i.fd, double %i.fi)
   %i.fk = fneg double %i.fj
   %i.fl = tail call double @llvm.fmuladd.f64(double %i.fg, double %i.fg, double %i.fk)
-  %i.fm = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 176), align 16, !tbaa !17 ; 2 uses
+  %i.fm = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 176), align 16, !tbaa !16 ; 2 uses
   %i.fn = tail call double @llvm.fmuladd.f64(double %i.fm, double %i.fm, double %i.fl) ; 2 uses
   %i.fo = fcmp olt double %i.fn, 0.000000e+00
   br i1 %i.fo, label %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.6, label %bb.t
@@ -349,21 +348,21 @@ bb.v:                                             ; preds = %_ZNK6Sphere9interse
 _ZNK6Sphere9intersectERK3Ray.exit.thread.i.6:     ; preds = %bb.v, %_ZNK6Sphere9intersectERK3Ray.exit.i.6, %bb.u, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.5
   %.1330.6 = phi i32 [ %.1330.5, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.5 ], [ 2, %bb.v ], [ %.1330.5, %_ZNK6Sphere9intersectERK3Ray.exit.i.6 ], [ %.1330.5, %bb.u ] ; 3 uses
   %.1.6 = phi double [ %.1.5, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.5 ], [ %.0.i.i.6, %bb.v ], [ %.1.5, %_ZNK6Sphere9intersectERK3Ray.exit.i.6 ], [ %.1.5, %bb.u ] ; 4 uses
-  %i.fw = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 96), align 16, !tbaa !8, !noalias !11
-  %i.fx = fsub double %i.fw, %i.f                 ; 3 uses
+  %i.fw = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 96), align 16, !tbaa !15, !noalias !11
+  %i.fx = fsub double %i.fw, %16                  ; 3 uses
   %i.fy = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 104), align 8, !tbaa !14, !noalias !11
   %i.fz = fsub double %i.fy, %i.g                 ; 3 uses
-  %i.ga = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 112), align 16, !tbaa !16, !noalias !11
-  %i.gb = fsub double %i.ga, %17                  ; 3 uses
-  %i.gc = fmul double %i.fz, %i.i
-  %i.gd = tail call double @llvm.fmuladd.f64(double %i.fx, double %i.h, double %i.gc)
+  %i.ga = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 112), align 16, !tbaa !8, !noalias !11
+  %i.gb = fsub double %i.ga, %i.f                 ; 3 uses
+  %i.gc = fmul double %i.fz, %i.h
+  %i.gd = tail call double @llvm.fmuladd.f64(double %i.fx, double %i.i, double %i.gc)
   %i.ge = tail call noundef double @llvm.fmuladd.f64(double %i.gb, double %i.j, double %i.gd) ; 4 uses
   %i.gf = fmul double %i.fz, %i.fz
   %i.gg = tail call double @llvm.fmuladd.f64(double %i.fx, double %i.fx, double %i.gf)
   %i.gh = tail call noundef double @llvm.fmuladd.f64(double %i.gb, double %i.gb, double %i.gg)
   %i.gi = fneg double %i.gh
   %i.gj = tail call double @llvm.fmuladd.f64(double %i.ge, double %i.ge, double %i.gi)
-  %i.gk = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 88), align 8, !tbaa !17 ; 2 uses
+  %i.gk = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 88), align 8, !tbaa !16 ; 2 uses
   %i.gl = tail call double @llvm.fmuladd.f64(double %i.gk, double %i.gk, double %i.gj) ; 2 uses
   %i.gm = fcmp olt double %i.gl, 0.000000e+00
   br i1 %i.gm, label %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.7, label %bb.w
@@ -392,21 +391,21 @@ bb.y:                                             ; preds = %_ZNK6Sphere9interse
 _ZNK6Sphere9intersectERK3Ray.exit.thread.i.7:     ; preds = %bb.y, %_ZNK6Sphere9intersectERK3Ray.exit.i.7, %bb.x, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.6
   %.1330.7 = phi i32 [ %.1330.6, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.6 ], [ 1, %bb.y ], [ %.1330.6, %_ZNK6Sphere9intersectERK3Ray.exit.i.7 ], [ %.1330.6, %bb.x ] ; 3 uses
   %.1.7 = phi double [ %.1.6, %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.6 ], [ %.0.i.i.7, %bb.y ], [ %.1.6, %_ZNK6Sphere9intersectERK3Ray.exit.i.7 ], [ %.1.6, %bb.x ] ; 4 uses
-  %i.gu = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 8), align 8, !tbaa !8, !noalias !11
-  %i.gv = fsub double %i.gu, %i.f                 ; 3 uses
+  %i.gu = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 8), align 8, !tbaa !15, !noalias !11
+  %i.gv = fsub double %i.gu, %16                  ; 3 uses
   %i.gw = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 16), align 16, !tbaa !14, !noalias !11
   %i.gx = fsub double %i.gw, %i.g                 ; 3 uses
-  %i.gy = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 24), align 8, !tbaa !16, !noalias !11
-  %i.gz = fsub double %i.gy, %17                  ; 3 uses
-  %i.ha = fmul double %i.gx, %i.i
-  %i.hb = tail call double @llvm.fmuladd.f64(double %i.gv, double %i.h, double %i.ha)
+  %i.gy = load double, ptr getelementptr inbounds nuw (i8, ptr @spheres, i64 24), align 8, !tbaa !8, !noalias !11
+  %i.gz = fsub double %i.gy, %i.f                 ; 3 uses
+  %i.ha = fmul double %i.gx, %i.h
+  %i.hb = tail call double @llvm.fmuladd.f64(double %i.gv, double %i.i, double %i.ha)
   %i.hc = tail call noundef double @llvm.fmuladd.f64(double %i.gz, double %i.j, double %i.hb) ; 4 uses
   %i.hd = fmul double %i.gx, %i.gx
   %i.he = tail call double @llvm.fmuladd.f64(double %i.gv, double %i.gv, double %i.hd)
   %i.hf = tail call noundef double @llvm.fmuladd.f64(double %i.gz, double %i.gz, double %i.he)
   %i.hg = fneg double %i.hf
   %i.hh = tail call double @llvm.fmuladd.f64(double %i.hc, double %i.hc, double %i.hg)
-  %i.hi = load double, ptr @spheres, align 16, !tbaa !17 ; 2 uses
+  %i.hi = load double, ptr @spheres, align 16, !tbaa !16 ; 2 uses
   %i.hj = tail call double @llvm.fmuladd.f64(double %i.hi, double %i.hi, double %i.hh) ; 2 uses
   %i.hk = fcmp olt double %i.hj, 0.000000e+00
   br i1 %i.hk, label %_ZNK6Sphere9intersectERK3Ray.exit.thread.i.8, label %bb.z
@@ -447,36 +446,38 @@ bb.ad:                                            ; preds = %_ZNK6Sphere9interse
   %i.hu = getelementptr inbounds nuw [88 x i8], ptr @spheres, i64 %i.ht ; 16 uses
   %i.hv = insertelement <2 x double> poison, double %.1.8, i64 0
   %i.hw = shufflevector <2 x double> %i.hv, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.hx = insertelement <2 x double> %16, double %i.j, i64 0
+  %17 = insertelement <2 x double> poison, double %i.j, i64 0
+  %i.hx = insertelement <2 x double> %17, double %i.i, i64 1
   %i.hy = fmul <2 x double> %i.hw, %i.hx
-  %i.hz = fmul double %.1.8, %i.i
-  %18 = fadd double %i.g, %i.hz                   ; 6 uses
-  %i.ia = getelementptr inbounds nuw i8, ptr %i.hu, i64 8
-  %i.ib = load double, ptr %i.ia, align 8, !tbaa !8, !noalias !20
+  %i.hz = fmul double %.1.8, %i.h
+  %18 = getelementptr inbounds nuw i8, ptr %i.hu, i64 8
   %19 = getelementptr inbounds nuw i8, ptr %i.hu, i64 16
-  %20 = load double, ptr %19, align 8, !tbaa !14, !noalias !20
-  %21 = fsub double %18, %20                      ; 3 uses
-  %22 = getelementptr inbounds nuw i8, ptr %i.hu, i64 24
-  %i.ic = load double, ptr %22, align 8, !tbaa !16, !noalias !20
-  %23 = fmul double %21, %21
-  %24 = insertelement <2 x double> %16, double %i.f, i64 1
-  %25 = fadd <2 x double> %24, %i.hy              ; 7 uses
-  %i.id = insertelement <2 x double> poison, double %i.ic, i64 0
-  %26 = insertelement <2 x double> %i.id, double %i.ib, i64 1
-  %27 = fsub <2 x double> %25, %26                ; 3 uses
+  %i.ia = getelementptr inbounds nuw i8, ptr %i.hu, i64 24
+  %i.ib = load double, ptr %i.ia, align 8, !tbaa !8, !noalias !19
+  %20 = fadd double %i.g, %i.hz                   ; 6 uses
+  %21 = insertelement <2 x double> poison, double %i.f, i64 0
+  %22 = insertelement <2 x double> %21, double %16, i64 1
+  %23 = fadd <2 x double> %22, %i.hy              ; 7 uses
+  %i.ic = load double, ptr %19, align 8, !tbaa !14, !noalias !19
+  %24 = load double, ptr %18, align 8, !tbaa !15, !noalias !19
+  %25 = fsub double %20, %i.ic                    ; 3 uses
+  %26 = insertelement <2 x double> poison, double %i.ib, i64 0
+  %i.id = insertelement <2 x double> %26, double %24, i64 1
+  %27 = fsub <2 x double> %23, %i.id              ; 3 uses
+  %28 = fmul double %25, %25
   %i.ie = extractelement <2 x double> %27, i64 1  ; 2 uses
-  %i.if = tail call double @llvm.fmuladd.f64(double %i.ie, double %i.ie, double %23)
+  %i.if = tail call double @llvm.fmuladd.f64(double %i.ie, double %i.ie, double %28)
   %i.ig = extractelement <2 x double> %27, i64 0  ; 2 uses
   %i.ih = tail call double @llvm.fmuladd.f64(double %i.ig, double %i.ig, double %i.if)
   %sqrt.i = tail call double @llvm.sqrt.f64(double %i.ih)
   %i.ii = fdiv double 1.000000e+00, %sqrt.i       ; 2 uses
-  %i.ij = fmul double %21, %i.ii                  ; 10 uses
+  %i.ij = fmul double %25, %i.ii                  ; 10 uses
   %i.ik = insertelement <2 x double> poison, double %i.ii, i64 0
   %i.il = shufflevector <2 x double> %i.ik, <2 x double> poison, <2 x i32> zeroinitializer
   %i.im = fmul <2 x double> %27, %i.il            ; 6 uses
-  %i.in = fmul double %i.i, %i.ij
+  %i.in = fmul double %i.h, %i.ij
   %i.io = extractelement <2 x double> %i.im, i64 1 ; 8 uses
-  %i.ip = tail call double @llvm.fmuladd.f64(double %i.io, double %i.h, double %i.in)
+  %i.ip = tail call double @llvm.fmuladd.f64(double %i.io, double %i.i, double %i.in)
   %i.iq = extractelement <2 x double> %i.im, i64 0 ; 7 uses
   %i.ir = tail call noundef double @llvm.fmuladd.f64(double %i.iq, double %i.j, double %i.ip)
   %i.is = fcmp olt double %i.ir, 0.000000e+00     ; 2 uses
@@ -487,9 +488,9 @@ bb.ad:                                            ; preds = %_ZNK6Sphere9interse
   %i.iw = shufflevector <2 x i1> %i.iv, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.ix = select <2 x i1> %i.iw, <2 x double> %i.im, <2 x double> %i.iu ; 10 uses
   %i.iy = getelementptr inbounds nuw i8, ptr %i.hu, i64 56
-  %i.iz = load <2 x double>, ptr %i.iy, align 8, !tbaa !15 ; 4 uses
+  %i.iz = load <2 x double>, ptr %i.iy, align 8, !tbaa !22 ; 4 uses
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hu, i64 72
-  %.sroa.18.0.copyload = load double, ptr %.sroa.18.0..sroa_idx, align 8, !tbaa !15 ; 5 uses
+  %.sroa.18.0.copyload = load double, ptr %.sroa.18.0..sroa_idx, align 8, !tbaa !22 ; 5 uses
   %i.ja = extractelement <2 x double> %i.iz, i64 0 ; 3 uses
   %i.jb = extractelement <2 x double> %i.iz, i64 1 ; 3 uses
   %i.jc = fcmp ogt double %i.ja, %i.jb
@@ -552,13 +553,13 @@ bb.ai:                                            ; preds = %.thread
   %i.ki = getelementptr inbounds nuw i8, ptr %i.hu, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
-  %i.kj = extractelement <2 x double> %25, i64 1
-  store double %i.kj, ptr %5, align 8, !tbaa !15
+  %i.kj = extractelement <2 x double> %23, i64 1
+  store double %i.kj, ptr %5, align 8, !tbaa !22
   %.sroa.4300.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store double %18, ptr %.sroa.4300.0..sroa_idx, align 8, !tbaa !15
+  store double %20, ptr %.sroa.4300.0..sroa_idx, align 8, !tbaa !22
   %.sroa.5301.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.kk = extractelement <2 x double> %25, i64 0
-  store double %i.kk, ptr %.sroa.5301.0..sroa_idx, align 8, !tbaa !15
+  %i.kk = extractelement <2 x double> %23, i64 0
+  store double %i.kk, ptr %.sroa.5301.0..sroa_idx, align 8, !tbaa !22
   %i.kl = getelementptr inbounds nuw i8, ptr %5, i64 24
   %.sroa.5183.0 = select i1 %i.kb, double 1.000000e+00, double 0.000000e+00 ; 2 uses
   %.sroa.0182.0 = select i1 %i.kb, double 0.000000e+00, double 1.000000e+00 ; 2 uses
@@ -632,24 +633,24 @@ bb.ai:                                            ; preds = %.thread
   %i.mz = shufflevector <2 x double> %i.my, <2 x double> poison, <2 x i32> zeroinitializer
   %i.na = fmul <2 x double> %i.mi, %i.mz
   %i.nb = fmul double %i.mu, %i.mx
-  store <2 x double> %i.na, ptr %i.kl, align 8, !tbaa !15
+  store <2 x double> %i.na, ptr %i.kl, align 8, !tbaa !22
   %.sroa.5304.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 40
-  store double %i.nb, ptr %.sroa.5304.0..sroa_idx, align 8, !tbaa !15
+  store double %i.nb, ptr %.sroa.5304.0..sroa_idx, align 8, !tbaa !22
   call void @_Z8radianceRK3RayiPt(ptr dead_on_unwind nonnull writable sret(%struct.Vec) align 8 %4, ptr noundef nonnull align 8 dereferenceable(48) %5, i32 noundef %i.jh, ptr noundef %3)
   %i.nc = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.nd = load double, ptr %i.nc, align 16, !tbaa !16, !noalias !25
+  %i.nd = load double, ptr %i.nc, align 16, !tbaa !8, !noalias !25
   %i.ne = fmul double %.sroa.18.0336, %i.nd
   tail call void @llvm.experimental.noalias.scope.decl(metadata !28)
   %i.nf = getelementptr inbounds nuw i8, ptr %i.hu, i64 48
-  %i.ng = load double, ptr %i.nf, align 8, !tbaa !16, !noalias !28
+  %i.ng = load double, ptr %i.nf, align 8, !tbaa !8, !noalias !28
   %i.nh = fadd double %i.ne, %i.ng
-  %i.ni = load <2 x double>, ptr %4, align 16, !tbaa !15, !noalias !25
+  %i.ni = load <2 x double>, ptr %4, align 16, !tbaa !22, !noalias !25
   %i.nj = fmul <2 x double> %i.jt, %i.ni
-  %i.nk = load <2 x double>, ptr %i.ki, align 8, !tbaa !15, !noalias !28
+  %i.nk = load <2 x double>, ptr %i.ki, align 8, !tbaa !22, !noalias !28
   %i.nl = fadd <2 x double> %i.nj, %i.nk
-  store <2 x double> %i.nl, ptr %0, align 8, !tbaa !15, !alias.scope !28
+  store <2 x double> %i.nl, ptr %0, align 8, !tbaa !22, !alias.scope !28
   %i.nm = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store double %i.nh, ptr %i.nm, align 8, !tbaa !16, !alias.scope !28
+  store double %i.nh, ptr %i.nm, align 8, !tbaa !8, !alias.scope !28
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
   br label %bb.av
@@ -659,19 +660,19 @@ bb.aj:                                            ; preds = %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
   %i.no = fmul double %i.iq, 2.000000e+00
-  %i.np = load double, ptr %i.e, align 8, !tbaa !16 ; 2 uses
-  %i.nq = extractelement <2 x double> %25, i64 1
-  store double %i.nq, ptr %7, align 8, !tbaa !15
+  %i.np = load double, ptr %i.e, align 8, !tbaa !8 ; 2 uses
+  %i.nq = extractelement <2 x double> %23, i64 1
+  store double %i.nq, ptr %7, align 8, !tbaa !22
   %.sroa.4306.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store double %18, ptr %.sroa.4306.0..sroa_idx, align 8, !tbaa !15
+  store double %20, ptr %.sroa.4306.0..sroa_idx, align 8, !tbaa !22
   %.sroa.5307.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %i.nr = extractelement <2 x double> %25, i64 0
-  store double %i.nr, ptr %.sroa.5307.0..sroa_idx, align 8, !tbaa !15
+  %i.nr = extractelement <2 x double> %23, i64 0
+  store double %i.nr, ptr %.sroa.5307.0..sroa_idx, align 8, !tbaa !22
   %i.ns = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.nt = shufflevector <2 x double> %i.im, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.nu = insertelement <2 x double> %i.nt, double %i.ij, i64 1
   %i.nv = fmul <2 x double> %i.nu, splat (double 2.000000e+00)
-  %i.nw = load <2 x double>, ptr %i.c, align 8, !tbaa !15 ; 3 uses
+  %i.nw = load <2 x double>, ptr %i.c, align 8, !tbaa !22 ; 3 uses
   %i.nx = extractelement <2 x double> %i.nw, i64 1
   %i.ny = fmul double %i.ij, %i.nx
   %i.nz = extractelement <2 x double> %i.nw, i64 0
@@ -683,24 +684,24 @@ bb.aj:                                            ; preds = %.thread
   %i.of = fmul double %i.no, %i.ob
   %i.og = fsub <2 x double> %i.nw, %i.oe
   %i.oh = fsub double %i.np, %i.of
-  store <2 x double> %i.og, ptr %i.ns, align 8, !tbaa !15
+  store <2 x double> %i.og, ptr %i.ns, align 8, !tbaa !22
   %.sroa.5310.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 40
-  store double %i.oh, ptr %.sroa.5310.0..sroa_idx, align 8, !tbaa !15
+  store double %i.oh, ptr %.sroa.5310.0..sroa_idx, align 8, !tbaa !22
   call void @_Z8radianceRK3RayiPt(ptr dead_on_unwind nonnull writable sret(%struct.Vec) align 8 %6, ptr noundef nonnull align 8 dereferenceable(48) %7, i32 noundef %i.jh, ptr noundef %3)
   %i.oi = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.oj = load double, ptr %i.oi, align 16, !tbaa !16, !noalias !31
+  %i.oj = load double, ptr %i.oi, align 16, !tbaa !8, !noalias !31
   %i.ok = fmul double %.sroa.18.0336, %i.oj
   tail call void @llvm.experimental.noalias.scope.decl(metadata !34)
   %i.ol = getelementptr inbounds nuw i8, ptr %i.hu, i64 48
-  %i.om = load double, ptr %i.ol, align 8, !tbaa !16, !noalias !34
+  %i.om = load double, ptr %i.ol, align 8, !tbaa !8, !noalias !34
   %i.on = fadd double %i.ok, %i.om
-  %i.oo = load <2 x double>, ptr %6, align 16, !tbaa !15, !noalias !31
+  %i.oo = load <2 x double>, ptr %6, align 16, !tbaa !22, !noalias !31
   %i.op = fmul <2 x double> %i.jt, %i.oo
-  %i.oq = load <2 x double>, ptr %i.nn, align 8, !tbaa !15, !noalias !34
+  %i.oq = load <2 x double>, ptr %i.nn, align 8, !tbaa !22, !noalias !34
   %i.or = fadd <2 x double> %i.op, %i.oq
-  store <2 x double> %i.or, ptr %0, align 8, !tbaa !15, !alias.scope !34
+  store <2 x double> %i.or, ptr %0, align 8, !tbaa !22, !alias.scope !34
   %i.os = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store double %i.on, ptr %i.os, align 8, !tbaa !16, !alias.scope !34
+  store double %i.on, ptr %i.os, align 8, !tbaa !8, !alias.scope !34
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
   br label %bb.av
@@ -710,45 +711,45 @@ bb.ak:                                            ; preds = %.thread
   %i.ot = fmul double %i.io, 2.000000e+00
   %i.ou = fmul double %i.ij, 2.000000e+00
   %i.ov = fmul double %i.iq, 2.000000e+00
-  %i.ow = load double, ptr %i.c, align 8, !tbaa !8 ; 4 uses
-  %i.ox = load double, ptr %i.d, align 8, !tbaa !14 ; 4 uses
-  %28 = fmul double %i.ij, %i.ox
-  %29 = tail call double @llvm.fmuladd.f64(double %i.io, double %i.ow, double %28)
-  %30 = load double, ptr %i.e, align 8, !tbaa !16 ; 4 uses
-  %31 = tail call noundef double @llvm.fmuladd.f64(double %i.iq, double %30, double %29) ; 3 uses
-  %32 = fmul double %i.ot, %31
-  %33 = fmul double %i.ou, %31
-  %34 = fmul double %i.ov, %31
-  %35 = fsub double %i.ow, %32
-  %36 = fsub double %i.ox, %33
-  %37 = fsub double %30, %34
-  %38 = extractelement <2 x double> %25, i64 1    ; 3 uses
-  store double %38, ptr %8, align 8, !tbaa !15
+  %i.ow = load double, ptr %i.d, align 8, !tbaa !14 ; 4 uses
+  %i.ox = load double, ptr %i.e, align 8, !tbaa !8 ; 4 uses
+  %29 = extractelement <2 x double> %23, i64 1    ; 3 uses
+  store double %29, ptr %8, align 8, !tbaa !22
   %.sroa.4312.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store double %18, ptr %.sroa.4312.0..sroa_idx, align 8, !tbaa !15
+  store double %20, ptr %.sroa.4312.0..sroa_idx, align 8, !tbaa !22
   %.sroa.5313.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %39 = extractelement <2 x double> %25, i64 0    ; 3 uses
-  store double %39, ptr %.sroa.5313.0..sroa_idx, align 8, !tbaa !15
-  %40 = getelementptr inbounds nuw i8, ptr %8, i64 24
-  store double %35, ptr %40, align 8, !tbaa !15
+  %30 = extractelement <2 x double> %23, i64 0    ; 3 uses
+  store double %30, ptr %.sroa.5313.0..sroa_idx, align 8, !tbaa !22
+  %31 = getelementptr inbounds nuw i8, ptr %8, i64 24
   %.sroa.4315.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 32
-  store double %36, ptr %.sroa.4315.0..sroa_idx, align 8, !tbaa !15
   %.sroa.5316.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 40
-  store double %37, ptr %.sroa.5316.0..sroa_idx, align 8, !tbaa !15
-  %41 = fmul double %i.ij, %.sroa.7227.0
+  %32 = fmul double %i.ij, %.sroa.7227.0
+  %33 = fmul double %.sroa.7227.0, %i.ow
+  %34 = load double, ptr %i.c, align 8, !tbaa !15 ; 4 uses
+  %35 = fmul double %i.ij, %i.ow
+  %36 = tail call double @llvm.fmuladd.f64(double %i.io, double %34, double %35)
+  %37 = tail call noundef double @llvm.fmuladd.f64(double %i.iq, double %i.ox, double %36) ; 3 uses
+  %38 = fmul double %i.ot, %37
+  %39 = fmul double %i.ou, %37
+  %40 = fmul double %i.ov, %37
+  %41 = fsub double %34, %38
+  %42 = fsub double %i.ow, %39
+  %43 = fsub double %i.ox, %40
+  store double %41, ptr %31, align 8, !tbaa !22
+  store double %42, ptr %.sroa.4315.0..sroa_idx, align 8, !tbaa !22
+  store double %43, ptr %.sroa.5316.0..sroa_idx, align 8, !tbaa !22
   %i.oy = extractelement <2 x double> %i.ix, i64 1
-  %i.oz = tail call double @llvm.fmuladd.f64(double %i.io, double %i.oy, double %41)
-  %42 = fmul double %.sroa.7227.0, %i.ox
-  %i.pa = insertelement <2 x double> %i.im, double %i.ow, i64 1
+  %i.oz = tail call double @llvm.fmuladd.f64(double %i.io, double %i.oy, double %32)
+  %i.pa = insertelement <2 x double> %i.im, double %34, i64 1
   %i.pb = insertelement <2 x double> poison, double %i.oz, i64 0
-  %i.pc = insertelement <2 x double> %i.pb, double %42, i64 1
+  %i.pc = insertelement <2 x double> %i.pb, double %33, i64 1
   %i.pd = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.pa, <2 x double> %i.ix, <2 x double> %i.pc) ; 2 uses
   %i.pe = extractelement <2 x double> %i.pd, i64 0
   %i.pf = fcmp ogt double %i.pe, 0.000000e+00     ; 3 uses
   %. = select i1 %i.pf, double f0x3FE5555555555555, double 1.500000e+00 ; 6 uses
   %i.pg = extractelement <2 x double> %i.pd, i64 1
   %i.ph = extractelement <2 x double> %i.ix, i64 0
-  %i.pi = tail call noundef double @llvm.fmuladd.f64(double %30, double %i.ph, double %i.pg) ; 3 uses
+  %i.pi = tail call noundef double @llvm.fmuladd.f64(double %i.ox, double %i.ph, double %i.pg) ; 3 uses
   %i.pj = fneg double %i.pi                       ; 2 uses
   %i.pk = tail call double @llvm.fmuladd.f64(double %i.pj, double %i.pi, double 1.000000e+00)
   %i.pl = fneg double %.
@@ -762,26 +763,26 @@ bb.al:                                            ; preds = %bb.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #10
   call void @_Z8radianceRK3RayiPt(ptr dead_on_unwind nonnull writable sret(%struct.Vec) align 8 %9, ptr noundef nonnull align 8 dereferenceable(48) %8, i32 noundef %i.jh, ptr noundef %3)
   %i.pq = getelementptr inbounds nuw i8, ptr %9, i64 16
-  %i.pr = load double, ptr %i.pq, align 16, !tbaa !16, !noalias !37
+  %i.pr = load double, ptr %i.pq, align 16, !tbaa !8, !noalias !37
   %i.ps = fmul double %.sroa.18.0336, %i.pr
   tail call void @llvm.experimental.noalias.scope.decl(metadata !40)
   %i.pt = getelementptr inbounds nuw i8, ptr %i.hu, i64 48
-  %i.pu = load double, ptr %i.pt, align 8, !tbaa !16, !noalias !40
+  %i.pu = load double, ptr %i.pt, align 8, !tbaa !8, !noalias !40
   %i.pv = fadd double %i.ps, %i.pu
-  %i.pw = load <2 x double>, ptr %9, align 16, !tbaa !15, !noalias !37
+  %i.pw = load <2 x double>, ptr %9, align 16, !tbaa !22, !noalias !37
   %i.px = fmul <2 x double> %i.jt, %i.pw
-  %i.py = load <2 x double>, ptr %i.pp, align 8, !tbaa !15, !noalias !40
+  %i.py = load <2 x double>, ptr %i.pp, align 8, !tbaa !22, !noalias !40
   %i.pz = fadd <2 x double> %i.px, %i.py
-  store <2 x double> %i.pz, ptr %0, align 8, !tbaa !15, !alias.scope !40
+  store <2 x double> %i.pz, ptr %0, align 8, !tbaa !22, !alias.scope !40
   %i.qa = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store double %i.pv, ptr %i.qa, align 8, !tbaa !16, !alias.scope !40
+  store double %i.pv, ptr %i.qa, align 8, !tbaa !8, !alias.scope !40
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #10
   br label %bb.au
 
 bb.am:                                            ; preds = %bb.ak
-  %i.qb = fmul double %., %i.ow
-  %i.qc = fmul double %., %i.ox
-  %i.qd = fmul double %., %30
+  %i.qb = fmul double %., %34
+  %i.qc = fmul double %., %i.ow
+  %i.qd = fmul double %., %i.ox
   %i.qe = tail call double @sqrt(double noundef %i.pn) #10, !tbaa !4
   %i.qf = tail call double @llvm.fmuladd.f64(double %i.pi, double %., double %i.qe) ; 2 uses
   %i.qg = fneg double %i.qf
@@ -838,64 +839,64 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.ap
   call void @_Z8radianceRK3RayiPt(ptr dead_on_unwind nonnull writable sret(%struct.Vec) align 8 %10, ptr noundef nonnull align 8 dereferenceable(48) %8, i32 noundef %i.jh, ptr noundef %3)
-  %i.ro = load <2 x double>, ptr %10, align 16, !tbaa !15, !noalias !43
+  %i.ro = load <2 x double>, ptr %10, align 16, !tbaa !22, !noalias !43
   %i.rp = insertelement <2 x double> poison, double %i.rh, i64 0
   %i.rq = shufflevector <2 x double> %i.rp, <2 x double> poison, <2 x i32> zeroinitializer
   %i.rr = fmul <2 x double> %i.rq, %i.ro
   %i.rs = getelementptr inbounds nuw i8, ptr %10, i64 16
-  %i.rt = load double, ptr %i.rs, align 16, !tbaa !16, !noalias !43
+  %i.rt = load double, ptr %i.rs, align 16, !tbaa !8, !noalias !43
   %i.ru = fmul double %i.rh, %i.rt
   br label %bb.at
 
 bb.ar:                                            ; preds = %bb.ap
-  store double %38, ptr %12, align 8, !tbaa !15
+  store double %29, ptr %12, align 8, !tbaa !22
   %.sroa.4318.0..sroa_idx = getelementptr inbounds nuw i8, ptr %12, i64 8
-  store double %18, ptr %.sroa.4318.0..sroa_idx, align 8, !tbaa !15
+  store double %20, ptr %.sroa.4318.0..sroa_idx, align 8, !tbaa !22
   %.sroa.5319.0..sroa_idx = getelementptr inbounds nuw i8, ptr %12, i64 16
-  store double %39, ptr %.sroa.5319.0..sroa_idx, align 8, !tbaa !15
+  store double %30, ptr %.sroa.5319.0..sroa_idx, align 8, !tbaa !22
   %i.rv = getelementptr inbounds nuw i8, ptr %12, i64 24
-  store double %i.qs, ptr %i.rv, align 8, !tbaa !15
+  store double %i.qs, ptr %i.rv, align 8, !tbaa !22
   %.sroa.4321.0..sroa_idx = getelementptr inbounds nuw i8, ptr %12, i64 32
-  store double %i.qt, ptr %.sroa.4321.0..sroa_idx, align 8, !tbaa !15
+  store double %i.qt, ptr %.sroa.4321.0..sroa_idx, align 8, !tbaa !22
   %.sroa.5322.0..sroa_idx = getelementptr inbounds nuw i8, ptr %12, i64 40
-  store double %i.qu, ptr %.sroa.5322.0..sroa_idx, align 8, !tbaa !15
+  store double %i.qu, ptr %.sroa.5322.0..sroa_idx, align 8, !tbaa !22
   call void @_Z8radianceRK3RayiPt(ptr dead_on_unwind nonnull writable sret(%struct.Vec) align 8 %11, ptr noundef nonnull align 8 dereferenceable(48) %12, i32 noundef %i.jh, ptr noundef %3)
-  %i.rw = load <2 x double>, ptr %11, align 16, !tbaa !15, !noalias !46
+  %i.rw = load <2 x double>, ptr %11, align 16, !tbaa !22, !noalias !46
   %i.rx = insertelement <2 x double> poison, double %i.rj, i64 0
   %i.ry = shufflevector <2 x double> %i.rx, <2 x double> poison, <2 x i32> zeroinitializer
   %i.rz = fmul <2 x double> %i.ry, %i.rw
   %i.sa = getelementptr inbounds nuw i8, ptr %11, i64 16
-  %i.sb = load double, ptr %i.sa, align 16, !tbaa !16, !noalias !46
+  %i.sb = load double, ptr %i.sa, align 16, !tbaa !8, !noalias !46
   %i.sc = fmul double %i.rj, %i.sb
   br label %bb.at
 
 bb.as:                                            ; preds = %bb.ao
   call void @_Z8radianceRK3RayiPt(ptr dead_on_unwind nonnull writable sret(%struct.Vec) align 8 %13, ptr noundef nonnull align 8 dereferenceable(48) %8, i32 noundef %i.jh, ptr noundef %3)
   %i.sd = getelementptr inbounds nuw i8, ptr %13, i64 16
-  %i.se = load double, ptr %i.sd, align 16, !tbaa !16, !noalias !49
+  %i.se = load double, ptr %i.sd, align 16, !tbaa !8, !noalias !49
   %i.sf = fmul double %i.re, %i.se
-  store double %38, ptr %15, align 8, !tbaa !15
+  store double %29, ptr %15, align 8, !tbaa !22
   %.sroa.4324.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 8
-  store double %18, ptr %.sroa.4324.0..sroa_idx, align 8, !tbaa !15
+  store double %20, ptr %.sroa.4324.0..sroa_idx, align 8, !tbaa !22
   %.sroa.5325.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 16
-  store double %39, ptr %.sroa.5325.0..sroa_idx, align 8, !tbaa !15
+  store double %30, ptr %.sroa.5325.0..sroa_idx, align 8, !tbaa !22
   %i.sg = getelementptr inbounds nuw i8, ptr %15, i64 24
-  store double %i.qs, ptr %i.sg, align 8, !tbaa !15
+  store double %i.qs, ptr %i.sg, align 8, !tbaa !22
   %.sroa.4327.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 32
-  store double %i.qt, ptr %.sroa.4327.0..sroa_idx, align 8, !tbaa !15
+  store double %i.qt, ptr %.sroa.4327.0..sroa_idx, align 8, !tbaa !22
   %.sroa.5328.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 40
-  store double %i.qu, ptr %.sroa.5328.0..sroa_idx, align 8, !tbaa !15
+  store double %i.qu, ptr %.sroa.5328.0..sroa_idx, align 8, !tbaa !22
   call void @_Z8radianceRK3RayiPt(ptr dead_on_unwind nonnull writable sret(%struct.Vec) align 8 %14, ptr noundef nonnull align 8 dereferenceable(48) %15, i32 noundef %i.jh, ptr noundef %3)
-  %i.sh = load <2 x double>, ptr %13, align 16, !tbaa !15, !noalias !49
+  %i.sh = load <2 x double>, ptr %13, align 16, !tbaa !22, !noalias !49
   %i.si = insertelement <2 x double> poison, double %i.re, i64 0
   %i.sj = shufflevector <2 x double> %i.si, <2 x double> poison, <2 x i32> zeroinitializer
   %i.sk = fmul <2 x double> %i.sj, %i.sh
-  %i.sl = load <2 x double>, ptr %14, align 16, !tbaa !15, !noalias !52
+  %i.sl = load <2 x double>, ptr %14, align 16, !tbaa !22, !noalias !52
   %i.sm = insertelement <2 x double> poison, double %i.rf, i64 0
   %i.sn = shufflevector <2 x double> %i.sm, <2 x double> poison, <2 x i32> zeroinitializer
   %i.so = fmul <2 x double> %i.sn, %i.sl
   %i.sp = getelementptr inbounds nuw i8, ptr %14, i64 16
-  %i.sq = load double, ptr %i.sp, align 16, !tbaa !16, !noalias !52
+  %i.sq = load double, ptr %i.sp, align 16, !tbaa !8, !noalias !52
   %i.sr = fmul double %i.rf, %i.sq
   %i.ss = fadd <2 x double> %i.sk, %i.so
   %i.st = fadd double %i.sf, %i.sr
@@ -907,14 +908,14 @@ bb.at:                                            ; preds = %bb.aq, %bb.ar, %bb.
   %i.sv = fmul double %.sroa.18.0336, %.sroa.10.0
   tail call void @llvm.experimental.noalias.scope.decl(metadata !55)
   %i.sw = getelementptr inbounds nuw i8, ptr %i.hu, i64 48
-  %i.sx = load double, ptr %i.sw, align 8, !tbaa !16, !noalias !55
+  %i.sx = load double, ptr %i.sw, align 8, !tbaa !8, !noalias !55
   %i.sy = fadd double %i.sv, %i.sx
   %i.sz = fmul <2 x double> %i.jt, %i.su
-  %i.ta = load <2 x double>, ptr %i.rk, align 8, !tbaa !15, !noalias !55
+  %i.ta = load <2 x double>, ptr %i.rk, align 8, !tbaa !22, !noalias !55
   %i.tb = fadd <2 x double> %i.sz, %i.ta
-  store <2 x double> %i.tb, ptr %0, align 8, !tbaa !15, !alias.scope !55
+  store <2 x double> %i.tb, ptr %0, align 8, !tbaa !22, !alias.scope !55
   %i.tc = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store double %i.sy, ptr %i.tc, align 8, !tbaa !16, !alias.scope !55
+  store double %i.sy, ptr %i.tc, align 8, !tbaa !8, !alias.scope !55
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #10
@@ -972,7 +973,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.h = phi i32 [ %i.g, %bb.b ], [ 1, %bb.a ]    ; 5 uses
   %i.i = tail call noalias noundef nonnull dereferenceable(18874368) ptr @_Znam(i64 noundef 18874368) #11 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(18874368) %i.i, i8 0, i64 18874368, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(18874368) %i.i, i8 0, i64 18874368, i1 false), !tbaa !22
   %i.j = load ptr, ptr @stderr, align 8, !tbaa !62
   %i.k = shl nsw i32 %i.h, 2
   %i.l = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.j, ptr noundef nonnull @.str, i32 noundef %i.k) #12 ; 0 uses
@@ -1096,17 +1097,17 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %sqrt.i57.us.us.us.us = call double @llvm.sqrt.f64(double %i.cc)
   %i.cd = fdiv double 1.000000e+00, %sqrt.i57.us.us.us.us ; 2 uses
   %i.ce = fmul double %i.bu, %i.cd
-  store <2 x double> %i.bx, ptr %3, align 16, !tbaa !15
-  store double %i.by, ptr %.sroa.5135.0..sroa_idx, align 16, !tbaa !15
+  store <2 x double> %i.bx, ptr %3, align 16, !tbaa !22
+  store double %i.by, ptr %.sroa.5135.0..sroa_idx, align 16, !tbaa !22
   %i.cf = insertelement <2 x double> poison, double %i.cd, i64 0
   %i.cg = shufflevector <2 x double> %i.cf, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ch = fmul <2 x double> %i.bt, %i.cg
-  store <2 x double> %i.ch, ptr %i.p, align 8, !tbaa !15
-  store double %i.ce, ptr %.sroa.5138.0..sroa_idx, align 8, !tbaa !15
+  store <2 x double> %i.ch, ptr %i.p, align 8, !tbaa !22
+  store double %i.ce, ptr %.sroa.5138.0..sroa_idx, align 8, !tbaa !22
   call void @_Z8radianceRK3RayiPt(ptr dead_on_unwind nonnull writable sret(%struct.Vec) align 8 %2, ptr noundef nonnull align 8 dereferenceable(48) %3, i32 noundef 0, ptr noundef nonnull %i.a)
-  %i.ci = load <2 x double>, ptr %2, align 16, !tbaa !15, !noalias !66
+  %i.ci = load <2 x double>, ptr %2, align 16, !tbaa !22, !noalias !66
   %i.cj = fmul <2 x double> %i.u, %i.ci
-  %i.ck = load double, ptr %i.s, align 16, !tbaa !16, !noalias !66
+  %i.ck = load double, ptr %i.s, align 16, !tbaa !8, !noalias !66
   %i.cl = fmul double %i.r, %i.ck
   %i.cm = fadd <2 x double> %i.ah, %i.cj          ; 4 uses
   %i.cn = fadd double %.sroa.12.4142.us.us.us.us, %i.cl ; 4 uses
@@ -1127,12 +1128,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.cw = select <2 x i1> %i.cq, <2 x double> splat (double 1.000000e+00), <2 x double> %i.cm
   %i.cx = fmul <2 x double> %i.cw, splat (double 2.500000e-01)
   %i.cy = select <2 x i1> %i.cp, <2 x double> zeroinitializer, <2 x double> %i.cx
-  %i.cz = load <2 x double>, ptr %i.ae, align 8, !tbaa !15, !noalias !69
+  %i.cz = load <2 x double>, ptr %i.ae, align 8, !tbaa !22, !noalias !69
   %i.da = fadd <2 x double> %i.cy, %i.cz          ; 2 uses
-  %i.db = load double, ptr %i.af, align 8, !tbaa !16, !noalias !69
+  %i.db = load double, ptr %i.af, align 8, !tbaa !8, !noalias !69
   %i.dc = fadd double %i.cv, %i.db                ; 2 uses
-  store <2 x double> %i.da, ptr %i.ae, align 8, !tbaa !15
-  store double %i.dc, ptr %i.af, align 8, !tbaa !15
+  store <2 x double> %i.da, ptr %i.ae, align 8, !tbaa !22
+  store double %i.dc, ptr %i.af, align 8, !tbaa !22
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.q, %._crit_edge.us.us.us.us
@@ -1210,17 +1211,17 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %sqrt.i57.us.us.us.us.1 = call double @llvm.sqrt.f64(double %i.ey)
   %i.ez = fdiv double 1.000000e+00, %sqrt.i57.us.us.us.us.1 ; 2 uses
   %i.fa = fmul double %i.eq, %i.ez
-  store <2 x double> %i.et, ptr %3, align 16, !tbaa !15
-  store double %i.eu, ptr %.sroa.5135.0..sroa_idx, align 16, !tbaa !15
+  store <2 x double> %i.et, ptr %3, align 16, !tbaa !22
+  store double %i.eu, ptr %.sroa.5135.0..sroa_idx, align 16, !tbaa !22
   %i.fb = insertelement <2 x double> poison, double %i.ez, i64 0
   %i.fc = shufflevector <2 x double> %i.fb, <2 x double> poison, <2 x i32> zeroinitializer
   %i.fd = fmul <2 x double> %i.ep, %i.fc
-  store <2 x double> %i.fd, ptr %i.p, align 8, !tbaa !15
-  store double %i.fa, ptr %.sroa.5138.0..sroa_idx, align 8, !tbaa !15
+  store <2 x double> %i.fd, ptr %i.p, align 8, !tbaa !22
+  store double %i.fa, ptr %.sroa.5138.0..sroa_idx, align 8, !tbaa !22
   call void @_Z8radianceRK3RayiPt(ptr dead_on_unwind nonnull writable sret(%struct.Vec) align 8 %2, ptr noundef nonnull align 8 dereferenceable(48) %3, i32 noundef 0, ptr noundef nonnull %i.a)
-  %i.fe = load <2 x double>, ptr %2, align 16, !tbaa !15, !noalias !66
+  %i.fe = load <2 x double>, ptr %2, align 16, !tbaa !22, !noalias !66
   %i.ff = fmul <2 x double> %i.u, %i.fe
-  %i.fg = load double, ptr %i.s, align 16, !tbaa !16, !noalias !66
+  %i.fg = load double, ptr %i.s, align 16, !tbaa !8, !noalias !66
   %i.fh = fmul double %i.r, %i.fg
   %i.fi = fadd <2 x double> %i.dd, %i.ff          ; 4 uses
   %i.fj = fadd double %.sroa.12.4142.us.us.us.us.1, %i.fh ; 4 uses
@@ -1243,8 +1244,8 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.fu = fmul <2 x double> %i.ft, splat (double 2.500000e-01)
   %i.fv = select <2 x i1> %i.fl, <2 x double> zeroinitializer, <2 x double> %i.fu
   %i.fw = fadd <2 x double> %i.fv, %i.da
-  store <2 x double> %i.fw, ptr %i.ae, align 8, !tbaa !15
-  store double %i.fs, ptr %i.af, align 8, !tbaa !15
+  store <2 x double> %i.fw, ptr %i.ae, align 8, !tbaa !22
+  store double %i.fs, ptr %i.af, align 8, !tbaa !22
   br i1 %i.ag, label %.preheader139.us.us.us, label %.split154.us.us.us
 
 .split154.us.us.us:                               ; preds = %._crit_edge.us.us.us.us.1
@@ -1279,23 +1280,23 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.fz = getelementptr [24 x i8], ptr %i.i, i64 %i.fy ; 2 uses
   %i.ga = getelementptr i8, ptr %i.fz, i64 18849792 ; 2 uses
   %i.gb = getelementptr i8, ptr %i.fz, i64 18849808 ; 2 uses
-  %.promoted158 = load double, ptr %i.gb, align 8, !tbaa !15
+  %.promoted158 = load double, ptr %i.gb, align 8, !tbaa !22
   %i.gc = fadd double %.promoted158, 0.000000e+00
-  %i.gd = load <2 x double>, ptr %i.ga, align 8, !tbaa !15
+  %i.gd = load <2 x double>, ptr %i.ga, align 8, !tbaa !22
   %i.ge = fadd <2 x double> %i.gd, zeroinitializer
-  store <2 x double> %i.ge, ptr %i.ga, align 8, !tbaa !15
-  store double %i.gc, ptr %i.gb, align 8, !tbaa !15
+  store <2 x double> %i.ge, ptr %i.ga, align 8, !tbaa !22
+  store double %i.gc, ptr %i.gb, align 8, !tbaa !22
   %indvars.iv.next172 = or disjoint i64 %indvars.iv171, 1
   %i.gf = sub nsw i64 %indvars.iv.next172, %i.fx
   %i.gg = getelementptr [24 x i8], ptr %i.i, i64 %i.gf ; 2 uses
   %i.gh = getelementptr i8, ptr %i.gg, i64 18849792 ; 2 uses
   %i.gi = getelementptr i8, ptr %i.gg, i64 18849808 ; 2 uses
-  %.promoted158.1 = load double, ptr %i.gi, align 8, !tbaa !15
+  %.promoted158.1 = load double, ptr %i.gi, align 8, !tbaa !22
   %i.gj = fadd double %.promoted158.1, 0.000000e+00
-  %i.gk = load <2 x double>, ptr %i.gh, align 8, !tbaa !15
+  %i.gk = load <2 x double>, ptr %i.gh, align 8, !tbaa !22
   %i.gl = fadd <2 x double> %i.gk, zeroinitializer
-  store <2 x double> %i.gl, ptr %i.gh, align 8, !tbaa !15
-  store double %i.gj, ptr %i.gi, align 8, !tbaa !15
+  store <2 x double> %i.gl, ptr %i.gh, align 8, !tbaa !22
+  store double %i.gj, ptr %i.gi, align 8, !tbaa !22
   %indvars.iv.next172.1 = add nuw nsw i64 %indvars.iv171, 2 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next172.1, 1024
   br i1 %exitcond.not.1, label %.split163, label %.split152
@@ -1350,23 +1351,23 @@ attributes #12 = { cold nounwind }
 !5 = !{!"int", !6, i64 0}
 !6 = !{!"omnipotent char", !7, i64 0}
 !7 = !{!"Simple C++ TBAA"}
-!8 = !{!9, !10, i64 0}
+!8 = !{!9, !10, i64 16}
 !9 = !{!"_ZTS3Vec", !10, i64 0, !10, i64 8, !10, i64 16}
 !10 = !{!"double", !6, i64 0}
 !11 = !{!12}
 !12 = distinct !{!12, !13, !"_ZNK3VecmiERKS_: argument 0"}
 !13 = distinct !{!13, !"_ZNK3VecmiERKS_"}
 !14 = !{!9, !10, i64 8}
-!15 = !{!10, !10, i64 0}
-!16 = !{!9, !10, i64 16}
-!17 = !{!18, !10, i64 0}
-!18 = !{!"_ZTS6Sphere", !10, i64 0, !9, i64 8, !9, i64 32, !9, i64 56, !19, i64 80}
-!19 = !{!"_ZTS6Refl_t", !6, i64 0}
-!20 = !{!21}
-!21 = distinct !{!21, !22, !"_ZNK3VecmiERKS_: argument 0"}
-!22 = distinct !{!22, !"_ZNK3VecmiERKS_"}
-!23 = !{i64 0, i64 8, !15, i64 8, i64 8, !15, i64 16, i64 8, !15}
-!24 = !{!18, !19, i64 80}
+!15 = !{!9, !10, i64 0}
+!16 = !{!17, !10, i64 0}
+!17 = !{!"_ZTS6Sphere", !10, i64 0, !9, i64 8, !9, i64 32, !9, i64 56, !18, i64 80}
+!18 = !{!"_ZTS6Refl_t", !6, i64 0}
+!19 = !{!20}
+!20 = distinct !{!20, !21, !"_ZNK3VecmiERKS_: argument 0"}
+!21 = distinct !{!21, !"_ZNK3VecmiERKS_"}
+!22 = !{!10, !10, i64 0}
+!23 = !{i64 0, i64 8, !22, i64 8, i64 8, !22, i64 16, i64 8, !22}
+!24 = !{!17, !18, i64 80}
 !25 = !{!26}
 !26 = distinct !{!26, !27, !"_ZNK3Vec4multERKS_: argument 0"}
 !27 = distinct !{!27, !"_ZNK3Vec4multERKS_"}
