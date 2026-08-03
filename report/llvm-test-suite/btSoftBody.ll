@@ -1,0 +1,560 @@
+inline.NumInlined: 2865
+inline.NumDeleted: 633
+loop-unroll.NumCompletelyUnrolled: 21
+loop-unroll.NumRuntimeUnrolled: 101
+loop-unroll.NumUnrolled: 122
+begin_hunk_0_@_ZN10btSoftBody6CJoint5SolveEff:bb.a
+  %i.gf = insertelement <2 x float> poison, float %i.ge, i64 0
+  %i.gg = shufflevector <2 x float> %i.gf, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.gh = fmul <2 x float> %i.gg, %i.gb
+  store <2 x float> %i.gh, ptr %4, align 8, !tbaa !159, !alias.scope !630
+  %i.gi = fmul float %i.ge, %i.gc
+  store float %i.gi, ptr %.sroa.7.0..sroa_idx86, align 8, !tbaa !159, !alias.scope !630
+  %i.gj = fmul float %i.ge, -0.000000e+00         ; 2 uses
+  store float %i.gj, ptr %.sroa.9.0..sroa_idx88, align 8, !tbaa !159, !alias.scope !630
+  %i.gk = getelementptr inbounds nuw i8, ptr %4, i64 20
+  %i.gl = fmul float %i.ge, -0.000000e+00
+  store float %i.gl, ptr %i.gk, align 4, !tbaa !159, !alias.scope !630
+  store float %i.gj, ptr %.sroa.12.0..sroa_idx90, align 8, !tbaa !159, !alias.scope !630
+  %i.gm = trunc i32 %i.ga to i8                   ; 2 uses
+  %i.gn = and i8 %i.gm, 1
+  %.not.i = icmp eq i8 %i.gn, 0
+  br i1 %.not.i, label %bb.n, label %bb.m
+
+bb.m:                                             ; preds = %bb.l
+  call void @_ZNK10btSoftBody4Body13applyVImpulseERK9btVector3S3_(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 4 dereferenceable(33) %4, ptr noundef nonnull align 4 dereferenceable(16) %i.b)
+  %.pre.i = load i8, ptr %.sroa.14.0..sroa_idx92, align 8
+  br label %bb.n
+
+bb.n:                                             ; preds = %bb.m, %bb.l
+  %i.go = phi i8 [ %.pre.i, %bb.m ], [ %i.gm, %bb.l ]
+  %.mask.i = and i8 %i.go, 2
+  %.not7.i = icmp eq i8 %.mask.i, 0
+  br i1 %.not7.i, label %_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit, label %bb.o
+
+bb.o:                                             ; preds = %bb.n
+  call void @_ZNK10btSoftBody4Body13applyDImpulseERK9btVector3S3_(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.9.0..sroa_idx88, ptr noundef nonnull align 4 dereferenceable(16) %i.b)
+  br label %_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit
+
+_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit: ; preds = %bb.n, %bb.o
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
+  %i.gp = load ptr, ptr %i.a, align 8, !tbaa !293
+  %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 412
+  %i.gr = load float, ptr %i.gq, align 4, !tbaa !629 ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %5, ptr noundef nonnull align 8 dereferenceable(36) %3, i64 36, i1 false), !tbaa.struct !612
+  %i.gs = load <2 x float>, ptr %5, align 8, !tbaa !159, !alias.scope !633
+  %i.gt = insertelement <2 x float> poison, float %i.gr, i64 0
+  %i.gu = shufflevector <2 x float> %i.gt, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.gv = fmul <2 x float> %i.gu, %i.gs
+  store <2 x float> %i.gv, ptr %5, align 8, !tbaa !159, !alias.scope !633
+  %i.gw = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  %i.gx = load float, ptr %i.gw, align 8, !tbaa !159, !alias.scope !633
+  %i.gy = fmul float %i.gr, %i.gx
+  store float %i.gy, ptr %i.gw, align 8, !tbaa !159, !alias.scope !633
+  %i.gz = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
+  %i.ha = load <2 x float>, ptr %i.gz, align 8, !tbaa !159, !alias.scope !633
+  %i.hb = fmul <2 x float> %i.gu, %i.ha
+  store <2 x float> %i.hb, ptr %i.gz, align 8, !tbaa !159, !alias.scope !633
+  %i.hc = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
+  %i.hd = load float, ptr %i.hc, align 8, !tbaa !159, !alias.scope !633
+  %i.he = fmul float %i.gr, %i.hd
+  store float %i.he, ptr %i.hc, align 8, !tbaa !159, !alias.scope !633
+  %i.hf = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
+  %i.hg = load i8, ptr %i.hf, align 8             ; 2 uses
+  %i.hh = and i8 %i.hg, 1
+  %.not.i64 = icmp eq i8 %i.hh, 0
+  br i1 %.not.i64, label %bb.q, label %bb.p
+
+bb.p:                                             ; preds = %_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit
+  call void @_ZNK10btSoftBody4Body13applyVImpulseERK9btVector3S3_(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 4 dereferenceable(33) %5, ptr noundef nonnull align 4 dereferenceable(16) %i.ax)
+  %.pre.i65 = load i8, ptr %i.hf, align 8
+  br label %bb.q
+
+bb.q:                                             ; preds = %bb.p, %_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit
+  %i.hi = phi i8 [ %.pre.i65, %bb.p ], [ %i.hg, %_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit ]
+  %.mask.i66 = and i8 %i.hi, 2
+  %.not7.i67 = icmp eq i8 %.mask.i66, 0
+  br i1 %.not7.i67, label %_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit68, label %bb.r
+
+bb.r:                                             ; preds = %bb.q
+  call void @_ZNK10btSoftBody4Body13applyDImpulseERK9btVector3S3_(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 4 dereferenceable(16) %i.gz, ptr noundef nonnull align 4 dereferenceable(16) %i.ax)
+  br label %_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit68
+
+_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit68: ; preds = %bb.q, %bb.r
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
+  br label %_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit84
+
+bb.s:                                             ; preds = %bb.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #34
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %6, ptr noundef nonnull align 8 dereferenceable(36) %3, i64 36, i1 false), !tbaa.struct !612
+  %i.hj = load <2 x float>, ptr %6, align 8, !tbaa !159, !alias.scope !636
+  %i.hk = fneg <2 x float> %i.hj
+  %i.hl = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.hm = load float, ptr %i.hl, align 8, !tbaa !159, !alias.scope !636
+  %i.hn = fneg float %i.hm
+  %.sroa.3.12.vec.insert.i.i71 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.hn, i64 0
+  store <2 x float> %i.hk, ptr %6, align 8, !alias.scope !636
+  store <2 x float> %.sroa.3.12.vec.insert.i.i71, ptr %i.hl, align 8, !tbaa !185, !alias.scope !636
+  %i.ho = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
+  %i.hp = load <2 x float>, ptr %i.ho, align 8, !tbaa !159, !alias.scope !636
+  %i.hq = fneg <2 x float> %i.hp
+  %i.hr = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
+  %i.hs = load float, ptr %i.hr, align 8, !tbaa !159, !alias.scope !636
+  %i.ht = fneg float %i.hs
+  %.sroa.3.12.vec.insert.i5.i74 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ht, i64 0
+  store <2 x float> %i.hq, ptr %i.ho, align 8, !alias.scope !636
+  store <2 x float> %.sroa.3.12.vec.insert.i5.i74, ptr %i.hr, align 8, !tbaa !185, !alias.scope !636
+  %i.hu = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
+  %i.hv = load i8, ptr %i.hu, align 8             ; 2 uses
+  %i.hw = and i8 %i.hv, 1
+  %.not.i75 = icmp eq i8 %i.hw, 0
+  br i1 %.not.i75, label %bb.u, label %bb.t
+
+bb.t:                                             ; preds = %bb.s
+  call void @_ZNK10btSoftBody4Body13applyVImpulseERK9btVector3S3_(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 4 dereferenceable(33) %6, ptr noundef nonnull align 4 dereferenceable(16) %i.b)
+  %.pre.i76 = load i8, ptr %i.hu, align 8
+  br label %bb.u
+
+bb.u:                                             ; preds = %bb.t, %bb.s
+  %i.hx = phi i8 [ %.pre.i76, %bb.t ], [ %i.hv, %bb.s ]
+  %.mask.i77 = and i8 %i.hx, 2
+  %.not7.i78 = icmp eq i8 %.mask.i77, 0
+  br i1 %.not7.i78, label %bb.w, label %bb.v
+
+bb.v:                                             ; preds = %bb.u
+  call void @_ZNK10btSoftBody4Body13applyDImpulseERK9btVector3S3_(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 4 dereferenceable(16) %i.ho, ptr noundef nonnull align 4 dereferenceable(16) %i.b)
+  br label %bb.w
+
+bb.w:                                             ; preds = %bb.u, %bb.v
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
+  call void @_ZNK10btSoftBody4Body13applyVImpulseERK9btVector3S3_(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 4 dereferenceable(33) %3, ptr noundef nonnull align 4 dereferenceable(16) %i.ax)
+  %.pre.i81 = load i8, ptr %i.dd, align 8
+  %.mask.i82 = and i8 %.pre.i81, 2
+  %.not7.i83 = icmp eq i8 %.mask.i82, 0
+  br i1 %.not7.i83, label %_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit84, label %bb.x
+
+bb.x:                                             ; preds = %bb.w
+  %i.hy = getelementptr inbounds nuw i8, ptr %3, i64 16
+  call void @_ZNK10btSoftBody4Body13applyDImpulseERK9btVector3S3_(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 4 dereferenceable(16) %i.hy, ptr noundef nonnull align 4 dereferenceable(16) %i.ax)
+  br label %_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit84
+
+_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit84: ; preds = %bb.x, %bb.w, %bb.j, %_ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit68, %bb.k
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
+  ret void
+}
+
+; Function Attrs: uwtable
+define dso_local void @_ZN10btSoftBody6CJoint9TerminateEf(ptr noundef nonnull align 8 dereferenceable(244) %0, float %1) unnamed_addr #0 align 2 {
+bb.a:
+  %2 = alloca %class.btVector3, align 8           ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96
+  %i.b = load float, ptr %i.a, align 8, !tbaa !308
+  %i.c = fcmp ogt float %i.b, 0.000000e+00
+  br i1 %i.c, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #34
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 116 ; 2 uses
+  %i.f = load <2 x float>, ptr %i.e, align 4, !tbaa !159
+  %i.g = fneg <2 x float> %i.f
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 124
+  %i.i = load float, ptr %i.h, align 4, !tbaa !159
+  %i.j = fneg float %i.i
+  %.sroa.3.12.vec.insert.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.j, i64 0
+  store <2 x float> %i.g, ptr %2, align 8
+  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store <2 x float> %.sroa.3.12.vec.insert.i, ptr %i.k, align 8
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 192
+  call void @_ZNK10btSoftBody4Body13applyDImpulseERK9btVector3S3_(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 4 dereferenceable(16) %2, ptr noundef nonnull align 4 dereferenceable(16) %i.l)
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #34
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 208
+  call void @_ZNK10btSoftBody4Body13applyDImpulseERK9btVector3S3_(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 4 dereferenceable(16) %i.e, ptr noundef nonnull align 4 dereferenceable(16) %i.n)
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.b, %bb.a
+  ret void
+}
+
+; Function Attrs: uwtable
+define dso_local void @_ZN10btSoftBody14PSolve_AnchorsEPS_ff(ptr nofree noundef readonly captures(none) %0, float noundef %1, float %2) #0 align 2 {
+bb.a:
+  %3 = alloca %class.btVector3, align 8           ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 360
+  %i.b = load float, ptr %i.a, align 8, !tbaa !639
+  %i.c = fmul float %1, %i.b                      ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 512
+  %i.e = load float, ptr %i.d, align 8, !tbaa !487 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 948
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !126  ; 2 uses
+  %i.h = icmp sgt i32 %i.g, 0
+  br i1 %i.h, label %.lr.ph, label %._crit_edge
+
+.lr.ph:                                           ; preds = %bb.a
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 960
+  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %wide.trip.count = zext nneg i32 %i.g to i64
+  br label %bb.b
+
+._crit_edge:                                      ; preds = %bb.b, %bb.a
+  ret void
+
+bb.b:                                             ; preds = %.lr.ph, %bb.b
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
+  %i.k = load ptr, ptr %i.i, align 8, !tbaa !125
+  %i.l = getelementptr inbounds nuw [104 x i8], ptr %i.k, i64 %indvars.iv ; 16 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 24
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !522  ; 19 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 72
+  %i.p = load ptr, ptr %i.l, align 8, !tbaa !261  ; 5 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  %i.r = load float, ptr %i.o, align 4, !tbaa !159
+  %i.s = load float, ptr %i.q, align 8, !tbaa !159 ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 76
+  %i.u = load float, ptr %i.t, align 4, !tbaa !159
+  %i.v = getelementptr inbounds nuw i8, ptr %i.l, i64 12
+  %i.w = load float, ptr %i.v, align 4, !tbaa !159 ; 3 uses
+  %4 = fmul float %i.u, %i.w
+  %5 = call float @llvm.fmuladd.f32(float %i.r, float %i.s, float %4)
+  %i.x = getelementptr inbounds nuw i8, ptr %i.n, i64 80
+  %i.y = load float, ptr %i.x, align 4, !tbaa !159
+  %i.z = getelementptr inbounds nuw i8, ptr %i.l, i64 16
+  %i.aa = load float, ptr %i.z, align 8, !tbaa !159 ; 3 uses
+  %6 = call noundef float @llvm.fmuladd.f32(float %i.y, float %i.aa, float %5)
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.n, i64 120
+  %i.ac = load float, ptr %i.ab, align 4, !tbaa !159
+  %7 = fadd float %6, %i.ac
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.n, i64 88
+  %i.ae = load float, ptr %i.ad, align 4, !tbaa !159
+  %i.af = getelementptr inbounds nuw i8, ptr %i.n, i64 92
+  %i.ag = load float, ptr %i.af, align 4, !tbaa !159
+  %8 = fmul float %i.w, %i.ag
+  %9 = call float @llvm.fmuladd.f32(float %i.ae, float %i.s, float %8)
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.n, i64 96
+  %i.ai = load float, ptr %i.ah, align 4, !tbaa !159
+  %10 = call noundef float @llvm.fmuladd.f32(float %i.ai, float %i.aa, float %9)
+  %11 = getelementptr inbounds nuw i8, ptr %i.n, i64 124
+  %i.aj = load float, ptr %11, align 4, !tbaa !159
+  %12 = fadd float %i.aj, %10
+  %13 = getelementptr inbounds nuw i8, ptr %i.n, i64 104
+  %14 = load float, ptr %13, align 4, !tbaa !159
+  %15 = getelementptr inbounds nuw i8, ptr %i.n, i64 108
+  %16 = load float, ptr %15, align 4, !tbaa !159
+  %i.ak = fmul float %i.w, %16
+  %i.al = call float @llvm.fmuladd.f32(float %14, float %i.s, float %i.ak)
+  %17 = getelementptr inbounds nuw i8, ptr %i.n, i64 112
+  %i.am = load float, ptr %17, align 4, !tbaa !159
+  %18 = call noundef float @llvm.fmuladd.f32(float %i.am, float %i.aa, float %i.al)
+  %19 = getelementptr inbounds nuw i8, ptr %i.n, i64 128
+  %i.an = load float, ptr %19, align 4, !tbaa !159
+  %20 = fadd float %i.an, %18
+  %21 = getelementptr inbounds nuw i8, ptr %i.l, i64 80 ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %i.n, i64 328
+  %23 = getelementptr inbounds nuw i8, ptr %i.n, i64 344
+  %24 = getelementptr inbounds nuw i8, ptr %i.n, i64 348
+  %25 = load float, ptr %24, align 4, !tbaa !159  ; 2 uses
+  %26 = getelementptr inbounds nuw i8, ptr %i.l, i64 88
+  %27 = load float, ptr %26, align 8, !tbaa !159  ; 2 uses
+  %28 = getelementptr inbounds nuw i8, ptr %i.n, i64 352
+  %29 = load float, ptr %28, align 4, !tbaa !159  ; 2 uses
+  %30 = getelementptr inbounds nuw i8, ptr %i.l, i64 84
+  %31 = load float, ptr %30, align 4, !tbaa !159  ; 2 uses
+  %32 = fneg float %31
+  %33 = fmul float %29, %32
+  %34 = call float @llvm.fmuladd.f32(float %25, float %27, float %33)
+  %35 = load float, ptr %21, align 8, !tbaa !159  ; 2 uses
+  %36 = load float, ptr %23, align 4, !tbaa !159  ; 2 uses
+  %37 = fneg float %27
+  %38 = fmul float %36, %37
+  %39 = call float @llvm.fmuladd.f32(float %29, float %35, float %38)
+  %40 = fneg float %35
+  %41 = fmul float %25, %40
+  %42 = call float @llvm.fmuladd.f32(float %36, float %31, float %41)
+  %i.ao = load float, ptr %22, align 4, !tbaa !159
+  %i.ap = fadd float %34, %i.ao
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.n, i64 332
+  %i.ar = load float, ptr %i.aq, align 4, !tbaa !159
+  %i.as = fadd float %i.ar, %39
+  %i.at = getelementptr inbounds nuw i8, ptr %i.n, i64 336
+  %i.au = load float, ptr %i.at, align 4, !tbaa !159
+  %i.av = fadd float %42, %i.au
+  %i.aw = fmul float %i.e, %i.ap
+  %i.ax = fmul float %i.e, %i.as
+  %i.ay = fmul float %i.e, %i.av
+  %i.az = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 2 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.p, i64 32
+  %i.bb = load float, ptr %i.ba, align 4, !tbaa !159
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.p, i64 36
+  %i.bd = load float, ptr %i.bc, align 4, !tbaa !159
+  %i.be = getelementptr inbounds nuw i8, ptr %i.p, i64 24 ; 2 uses
+  %i.bf = load float, ptr %i.be, align 4, !tbaa !159 ; 3 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.p, i64 40
+  %i.bh = load float, ptr %i.bg, align 4, !tbaa !159
+  %i.bi = fsub float %i.bf, %i.bh
+  %i.bj = fsub float %i.ay, %i.bi
+  %i.bk = fsub float %20, %i.bf
+  %i.bl = fmul float %i.c, %i.bk
+  %i.bm = fadd float %i.bl, %i.bj                 ; 2 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.l, i64 32
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.l, i64 40
+  %i.bp = load float, ptr %i.bo, align 8, !tbaa !159
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.l, i64 48
+  %i.br = getelementptr inbounds nuw i8, ptr %i.l, i64 56
+  %i.bs = load float, ptr %i.br, align 8, !tbaa !159
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.l, i64 64
+  %i.bu = load float, ptr %i.bt, align 8, !tbaa !159
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.l, i64 68
+  %i.bw = load float, ptr %i.bv, align 4, !tbaa !159
+  %i.bx = getelementptr inbounds nuw i8, ptr %i.l, i64 72
+  %i.by = load float, ptr %i.bx, align 8, !tbaa !159
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.l, i64 96
+  %i.ca = load float, ptr %i.bz, align 8, !tbaa !159 ; 2 uses
+  %i.cb = load <2 x float>, ptr %i.az, align 4, !tbaa !159 ; 3 uses
+  %i.cc = extractelement <2 x float> %i.cb, i64 0 ; 2 uses
+  %i.cd = fsub float %i.cc, %i.bb
+  %i.ce = extractelement <2 x float> %i.cb, i64 1 ; 2 uses
+  %i.cf = fsub float %i.ce, %i.bd
+  %i.cg = fsub float %i.aw, %i.cd
+  %i.ch = fsub float %i.ax, %i.cf
+  %i.ci = fsub float %7, %i.cc
+  %i.cj = fsub float %12, %i.ce
+  %i.ck = fmul float %i.c, %i.ci
+  %i.cl = fmul float %i.c, %i.cj
+  %i.cm = fadd float %i.ck, %i.cg                 ; 2 uses
+  %i.cn = fadd float %i.cl, %i.ch                 ; 2 uses
+  %i.co = load <2 x float>, ptr %i.bn, align 8, !tbaa !159 ; 2 uses
+  %i.cp = load <2 x float>, ptr %i.bq, align 8, !tbaa !159 ; 2 uses
+  %i.cq = insertelement <2 x float> poison, float %i.cn, i64 0
+  %i.cr = shufflevector <2 x float> %i.cq, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cs = shufflevector <2 x float> %i.co, <2 x float> %i.cp, <2 x i32> <i32 1, i32 3>
+  %i.ct = fmul <2 x float> %i.cr, %i.cs
+  %i.cu = shufflevector <2 x float> %i.co, <2 x float> %i.cp, <2 x i32> <i32 0, i32 2>
+  %i.cv = insertelement <2 x float> poison, float %i.cm, i64 0
+  %i.cw = shufflevector <2 x float> %i.cv, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cx = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cu, <2 x float> %i.cw, <2 x float> %i.ct)
+  %i.cy = insertelement <2 x float> poison, float %i.bp, i64 0
+  %i.cz = insertelement <2 x float> %i.cy, float %i.bs, i64 1
+  %i.da = insertelement <2 x float> poison, float %i.bm, i64 0
+  %i.db = shufflevector <2 x float> %i.da, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.dc = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cz, <2 x float> %i.db, <2 x float> %i.cx) ; 2 uses
+  %i.dd = fmul float %i.cn, %i.bw
+  %i.de = call float @llvm.fmuladd.f32(float %i.bu, float %i.cm, float %i.dd)
+  %i.df = call noundef float @llvm.fmuladd.f32(float %i.by, float %i.bm, float %i.de) ; 2 uses
+  %i.dg = insertelement <2 x float> poison, float %i.ca, i64 0
+  %i.dh = shufflevector <2 x float> %i.dg, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.di = fmul <2 x float> %i.dc, %i.dh
+  %i.dj = fmul float %i.ca, %i.df
+  %i.dk = fadd <2 x float> %i.cb, %i.di
+  store <2 x float> %i.dk, ptr %i.az, align 4, !tbaa !159
+  %i.dl = fadd float %i.bf, %i.dj
+  store float %i.dl, ptr %i.be, align 4, !tbaa !159
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
+  %i.dm = fneg <2 x float> %i.dc
+  %i.dn = fneg float %i.df
+  %.sroa.3.12.vec.insert.i59 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.dn, i64 0
+  store <2 x float> %i.dm, ptr %3, align 8
+  store <2 x float> %.sroa.3.12.vec.insert.i59, ptr %i.j, align 8
+  call void @_ZN11btRigidBody12applyImpulseERK9btVector3S2_(ptr noundef nonnull align 8 dereferenceable(564) %i.n, ptr noundef nonnull align 4 dereferenceable(16) %3, ptr noundef nonnull align 4 dereferenceable(16) %21)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b
+}
+
+; Function Attrs: uwtable
+define linkonce_odr dso_local void @_ZN11btRigidBody12applyImpulseERK9btVector3S2_(ptr noundef nonnull align 8 dereferenceable(564) %0, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(16) %2) local_unnamed_addr #0 comdat align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 360
+  %i.b = load float, ptr %i.a, align 8, !tbaa !523 ; 3 uses
+  %i.c = fcmp une float %i.b, 0.000000e+00
+  br i1 %i.c, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 380
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.g = load float, ptr %i.f, align 4, !tbaa !159
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 388
+  %i.i = load float, ptr %i.h, align 4, !tbaa !159 ; 2 uses
+  %i.j = fmul float %i.g, %i.i
+  %i.k = fmul float %i.b, %i.j
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 2 uses
+  %i.m = load <2 x float>, ptr %1, align 4, !tbaa !159
+  %i.n = load <2 x float>, ptr %i.d, align 4, !tbaa !159 ; 3 uses
+  %i.o = fmul <2 x float> %i.m, %i.n
+  %i.p = insertelement <2 x float> poison, float %i.b, i64 0
+  %i.q = shufflevector <2 x float> %i.p, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.r = fmul <2 x float> %i.q, %i.o
+  %i.s = load <2 x float>, ptr %i.l, align 8, !tbaa !159
+  %i.t = fadd <2 x float> %i.r, %i.s
+  store <2 x float> %i.t, ptr %i.l, align 8, !tbaa !159
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 2 uses
+  %i.v = load float, ptr %i.u, align 8, !tbaa !159
+  %i.w = fadd float %i.k, %i.v
+  store float %i.w, ptr %i.u, align 8, !tbaa !159
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 364
+  %i.y = load float, ptr %1, align 4, !tbaa !159
+  %i.z = extractelement <2 x float> %i.n, i64 0
+  %i.aa = fmul float %i.z, %i.y                   ; 2 uses
+  %i.ab = load float, ptr %i.e, align 4, !tbaa !159
+  %i.ac = extractelement <2 x float> %i.n, i64 1
+  %i.ad = fmul float %i.ab, %i.ac                 ; 2 uses
+  %i.ae = load float, ptr %i.f, align 4, !tbaa !159
+  %i.af = fmul float %i.ae, %i.i                  ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %i.ah = load float, ptr %i.ag, align 4, !tbaa !159 ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.aj = load float, ptr %i.ai, align 4, !tbaa !159 ; 2 uses
+  %i.ak = fneg float %i.ad
+  %i.al = fmul float %i.aj, %i.ak
+  %i.am = tail call float @llvm.fmuladd.f32(float %i.ah, float %i.af, float %i.al) ; 2 uses
+  %i.an = load float, ptr %2, align 4, !tbaa !159 ; 2 uses
+  %i.ao = fneg float %i.af
+  %i.ap = fmul float %i.an, %i.ao
+  %i.aq = tail call float @llvm.fmuladd.f32(float %i.aj, float %i.aa, float %i.ap) ; 2 uses
+  %i.ar = fneg float %i.aa
+  %i.as = fmul float %i.ah, %i.ar
+  %i.at = tail call float @llvm.fmuladd.f32(float %i.an, float %i.ad, float %i.as) ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 280
+  %i.av = getelementptr inbounds nuw i8, ptr %0, i64 288
+  %i.aw = load float, ptr %i.av, align 8, !tbaa !159
+  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 296
+  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 304
+  %i.az = load float, ptr %i.ay, align 8, !tbaa !159
+  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 312
+  %i.bb = load float, ptr %i.ba, align 8, !tbaa !159
+  %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 316
+  %i.bd = load float, ptr %i.bc, align 4, !tbaa !159
+  %i.be = fmul float %i.aq, %i.bd
+  %i.bf = tail call float @llvm.fmuladd.f32(float %i.bb, float %i.am, float %i.be)
+  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 320
+  %i.bh = load float, ptr %i.bg, align 8, !tbaa !159
+  %i.bi = tail call noundef float @llvm.fmuladd.f32(float %i.bh, float %i.at, float %i.bf)
+  %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 372
+  %i.bk = load float, ptr %i.bj, align 4, !tbaa !159
+  %i.bl = fmul float %i.bi, %i.bk
+  %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
+  %i.bn = load <2 x float>, ptr %i.au, align 8, !tbaa !159 ; 2 uses
+  %i.bo = load <2 x float>, ptr %i.ax, align 8, !tbaa !159 ; 2 uses
+  %i.bp = shufflevector <2 x float> %i.bn, <2 x float> %i.bo, <2 x i32> <i32 1, i32 3>
+  %i.bq = insertelement <2 x float> poison, float %i.aq, i64 0
+  %i.br = shufflevector <2 x float> %i.bq, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.bs = fmul <2 x float> %i.bp, %i.br
+  %i.bt = shufflevector <2 x float> %i.bn, <2 x float> %i.bo, <2 x i32> <i32 0, i32 2>
+  %i.bu = insertelement <2 x float> poison, float %i.am, i64 0
+  %i.bv = shufflevector <2 x float> %i.bu, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.bw = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bt, <2 x float> %i.bv, <2 x float> %i.bs)
+  %i.bx = insertelement <2 x float> poison, float %i.aw, i64 0
+  %i.by = insertelement <2 x float> %i.bx, float %i.az, i64 1
+  %i.bz = insertelement <2 x float> poison, float %i.at, i64 0
+  %i.ca = shufflevector <2 x float> %i.bz, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cb = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.by, <2 x float> %i.ca, <2 x float> %i.bw)
+  %i.cc = load <2 x float>, ptr %i.x, align 4, !tbaa !159
+  %i.cd = fmul <2 x float> %i.cb, %i.cc
+  %i.ce = load <2 x float>, ptr %i.bm, align 8, !tbaa !159
+  %i.cf = fadd <2 x float> %i.cd, %i.ce
+  store <2 x float> %i.cf, ptr %i.bm, align 8, !tbaa !159
+  %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
+  %i.ch = load float, ptr %i.cg, align 8, !tbaa !159
+  %i.ci = fadd float %i.bl, %i.ch
+  store float %i.ci, ptr %i.cg, align 8, !tbaa !159
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.b, %bb.a
+  ret void
+}
+
+; Function Attrs: uwtable
+define dso_local void @_ZN10btSoftBody16PSolve_RContactsEPS_ff(ptr nofree noundef readonly captures(none) %0, float noundef %1, float %2) #0 align 2 {
+bb.a:
+  %3 = alloca %class.btVector3, align 8           ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 512
+  %i.b = load float, ptr %i.a, align 8, !tbaa !487 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 200
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !177  ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !8
+  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 88
+  %i.g = load ptr, ptr %i.f, align 8
+  %i.h = tail call noundef float %i.g(ptr noundef nonnull align 8 dereferenceable(24) %i.d) ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 980
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !130  ; 2 uses
+  %i.k = icmp sgt i32 %i.j, 0
+  br i1 %i.k, label %.lr.ph, label %._crit_edge
+
+.lr.ph:                                           ; preds = %bb.a
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 992
+  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %wide.trip.count = zext nneg i32 %i.j to i64
+  %i.n = insertelement <2 x float> poison, float %i.b, i64 0
+  %i.o = shufflevector <2 x float> %i.n, <2 x float> poison, <2 x i32> zeroinitializer
+  br label %bb.b
+
+._crit_edge:                                      ; preds = %bb.h, %bb.a
+  ret void
+
+bb.b:                                             ; preds = %.lr.ph, %bb.h
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 2 uses
+  %i.p = load ptr, ptr %i.l, align 8, !tbaa !129
+  %i.q = getelementptr inbounds nuw [120 x i8], ptr %i.p, i64 %indvars.iv ; 19 uses
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !570  ; 7 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 256
+  %i.t = load i32, ptr %i.s, align 8, !tbaa !156
+  %i.u = icmp ne i32 %i.t, 2
+  %.not128 = icmp eq ptr %i.r, null
+  %.not = or i1 %.not128, %i.u                    ; 2 uses
+  br i1 %.not, label %bb.d, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 88
+  %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 328
+  %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 344
+  %i.y = getelementptr inbounds nuw i8, ptr %i.r, i64 348
+  %i.z = getelementptr inbounds nuw i8, ptr %i.q, i64 92
+  %i.aa = load float, ptr %i.v, align 8, !tbaa !159 ; 2 uses
+  %i.ab = load float, ptr %i.x, align 8, !tbaa !159 ; 2 uses
+  %i.ac = fneg float %i.aa
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.r, i64 336
+  %i.ae = load float, ptr %i.ad, align 8, !tbaa !159
+  %i.af = load <2 x float>, ptr %i.y, align 4, !tbaa !159 ; 3 uses
+  %i.ag = load <2 x float>, ptr %i.z, align 4, !tbaa !159 ; 3 uses
+  %i.ah = fneg <2 x float> %i.ag
+  %i.ai = shufflevector <2 x float> %i.af, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.aj = insertelement <2 x float> %i.ai, float %i.ab, i64 1
+  %i.ak = fmul <2 x float> %i.aj, %i.ah
+  %i.al = shufflevector <2 x float> %i.ag, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.am = insertelement <2 x float> %i.al, float %i.aa, i64 1
+  %i.an = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.af, <2 x float> %i.am, <2 x float> %i.ak)
+  %i.ao = extractelement <2 x float> %i.af, i64 0
+  %i.ap = fmul float %i.ao, %i.ac
+  %i.aq = extractelement <2 x float> %i.ag, i64 0
+  %i.ar = call float @llvm.fmuladd.f32(float %i.ab, float %i.aq, float %i.ap)
+  %i.as = load <2 x float>, ptr %i.w, align 8, !tbaa !159
+  %i.at = fadd <2 x float> %i.an, %i.as
+  %i.au = fadd float %i.ar, %i.ae
+  %i.av = fmul <2 x float> %i.o, %i.at
+  %i.aw = fmul float %i.b, %i.au
+  %.sroa.3.12.vec.insert.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.aw, i64 0
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.sroa.0121.1 = phi <2 x float> [ %i.av, %bb.c ], [ zeroinitializer, %bb.b ] ; 2 uses
+  %.sroa.7.1 = phi <2 x float> [ %.sroa.3.12.vec.insert.i, %bb.c ], [ zeroinitializer, %bb.b ]
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.q, i64 32 ; 2 uses
+  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !640 ; 6 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
+  %i.bb = load float, ptr %i.az, align 4, !tbaa !159 ; 2 uses
+  %i.bc = load float, ptr %i.ba, align 4, !tbaa !159
+  %i.bd = fsub float %i.bb, %i.bc
+  %i.be = getelementptr inbounds nuw i8, ptr %i.ay, i64 20
+  %i.bf = load float, ptr %i.be, align 4, !tbaa !159 ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.ay, i64 36
+  %i.bh = load float, ptr %i.bg, align 4, !tbaa !159
+  %i.bi = fsub float %i.bf, %i.bh
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.ay, i64 24
+  %i.bk = load float, ptr %i.bj, align 4, !tbaa !159 ; 2 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.ay, i64 40
+  %i.bm = load float, ptr %i.bl, align 4, !tbaa !159
+end_hunk_0
