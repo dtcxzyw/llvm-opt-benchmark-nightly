@@ -64,11 +64,11 @@ bb.b:                                             ; preds = %.lr.ph35, %.loopexi
   %indvars.iv = phi i64 [ %i.y, %.lr.ph.preheader ], [ %indvars.iv.next, %lastbit32.exit ] ; 2 uses
   %.02832 = phi i32 [ %i.x, %.lr.ph.preheader ], [ %i.ac, %lastbit32.exit ] ; 4 uses
   %i.aa = sub i32 0, %.02832
-  %i.ab = and i32 %.02832, %i.aa                  ; 5 uses
+  %i.ab = and i32 %.02832, %i.aa                  ; 4 uses
   %i.ac = xor i32 %i.ab, %.02832
   %i.ad = and i32 %i.ab, 65535                    ; 2 uses
   %.not.i = icmp eq i32 %i.ad, 0
-  br i1 %.not.i, label %2, label %bb.c
+  br i1 %.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
   %i.ae = zext nneg i32 %i.ad to i64
@@ -76,11 +76,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !4
   br label %lastbit32.exit
 
-2:                                                ; preds = %.lr.ph
-  %.not6.i = icmp eq i32 %i.ab, 0
-  br i1 %.not6.i, label %lastbit32.exit, label %bb.d
-
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %.lr.ph
   %i.ah = lshr exact i32 %i.ab, 16
   %i.ai = zext nneg i32 %i.ah to i64
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr @lastbit16, i64 %i.ai
@@ -88,8 +84,8 @@ bb.d:                                             ; preds = %2
   %i.al = add nsw i32 %i.ak, 16
   br label %lastbit32.exit
 
-lastbit32.exit:                                   ; preds = %bb.c, %2, %bb.d
-  %.0.i = phi i32 [ %i.ag, %bb.c ], [ %i.al, %bb.d ], [ 100, %2 ]
+lastbit32.exit:                                   ; preds = %bb.c, %bb.d
+  %.0.i = phi i32 [ %i.ag, %bb.c ], [ %i.al, %bb.d ]
   %i.am = getelementptr inbounds [12 x i8], ptr %0, i64 %indvars.iv ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 4
   store i32 %.0.i, ptr %i.an, align 4, !tbaa !10
@@ -160,11 +156,11 @@ bb.b:                                             ; preds = %.lr.ph35, %.loopexi
   %indvars.iv = phi i64 [ %i.x, %.lr.ph.preheader ], [ %indvars.iv.next, %lastbit32.exit ] ; 2 uses
   %.02832 = phi i32 [ %i.w, %.lr.ph.preheader ], [ %i.ab, %lastbit32.exit ] ; 4 uses
   %i.z = sub i32 0, %.02832
-  %i.aa = and i32 %.02832, %i.z                   ; 5 uses
+  %i.aa = and i32 %.02832, %i.z                   ; 4 uses
   %i.ab = xor i32 %i.aa, %.02832
   %i.ac = and i32 %i.aa, 65535                    ; 2 uses
   %.not.i = icmp eq i32 %i.ac, 0
-  br i1 %.not.i, label %2, label %bb.c
+  br i1 %.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
   %i.ad = zext nneg i32 %i.ac to i64
@@ -172,11 +168,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !4
   br label %lastbit32.exit
 
-2:                                                ; preds = %.lr.ph
-  %.not6.i = icmp eq i32 %i.aa, 0
-  br i1 %.not6.i, label %lastbit32.exit, label %bb.d
-
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %.lr.ph
   %i.ag = lshr exact i32 %i.aa, 16
   %i.ah = zext nneg i32 %i.ag to i64
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr @lastbit16, i64 %i.ah
@@ -184,8 +176,8 @@ bb.d:                                             ; preds = %2
   %i.ak = add nsw i32 %i.aj, 16
   br label %lastbit32.exit
 
-lastbit32.exit:                                   ; preds = %bb.c, %2, %bb.d
-  %.0.i = phi i32 [ %i.af, %bb.c ], [ %i.ak, %bb.d ], [ 100, %2 ]
+lastbit32.exit:                                   ; preds = %bb.c, %bb.d
+  %.0.i = phi i32 [ %i.af, %bb.c ], [ %i.ak, %bb.d ]
   %i.al = getelementptr inbounds [12 x i8], ptr %0, i64 %indvars.iv ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 4
   store i32 %.0.i, ptr %i.am, align 4, !tbaa !10
@@ -258,11 +250,11 @@ bb.b:                                             ; preds = %.lr.ph35, %.loopexi
   %indvars.iv = phi i64 [ %i.z, %.lr.ph.preheader ], [ %indvars.iv.next, %lastbit32.exit ] ; 2 uses
   %.02831 = phi i32 [ %i.y, %.lr.ph.preheader ], [ %i.ad, %lastbit32.exit ] ; 4 uses
   %i.ab = sub i32 0, %.02831
-  %i.ac = and i32 %.02831, %i.ab                  ; 5 uses
+  %i.ac = and i32 %.02831, %i.ab                  ; 4 uses
   %i.ad = xor i32 %i.ac, %.02831
   %i.ae = and i32 %i.ac, 65535                    ; 2 uses
   %.not.i = icmp eq i32 %i.ae, 0
-  br i1 %.not.i, label %3, label %bb.c
+  br i1 %.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
   %i.af = zext nneg i32 %i.ae to i64
@@ -270,11 +262,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !4
   br label %lastbit32.exit
 
-3:                                                ; preds = %.lr.ph
-  %.not6.i = icmp eq i32 %i.ac, 0
-  br i1 %.not6.i, label %lastbit32.exit, label %bb.d
-
-bb.d:                                             ; preds = %3
+bb.d:                                             ; preds = %.lr.ph
   %i.ai = lshr exact i32 %i.ac, 16
   %i.aj = zext nneg i32 %i.ai to i64
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr @lastbit16, i64 %i.aj
@@ -282,8 +270,8 @@ bb.d:                                             ; preds = %3
   %i.am = add nsw i32 %i.al, 16
   br label %lastbit32.exit
 
-lastbit32.exit:                                   ; preds = %bb.c, %3, %bb.d
-  %.0.i = phi i32 [ %i.ah, %bb.c ], [ %i.am, %bb.d ], [ 100, %3 ]
+lastbit32.exit:                                   ; preds = %bb.c, %bb.d
+  %.0.i = phi i32 [ %i.ah, %bb.c ], [ %i.am, %bb.d ]
   %i.an = getelementptr inbounds [12 x i8], ptr %0, i64 %indvars.iv ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 4
   store i32 %.0.i, ptr %i.ao, align 4, !tbaa !10
