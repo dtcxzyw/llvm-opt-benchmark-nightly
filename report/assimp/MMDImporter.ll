@@ -203,7 +203,7 @@ bb.v:                                             ; preds = %bb.s
 bb.w:                                             ; preds = %.lr.ph144, %bb.ab
   %indvars.iv160 = phi i64 [ 0, %.lr.ph144 ], [ %indvars.iv.next161, %bb.ab ] ; 4 uses
   %i.fw = load ptr, ptr %i.fh, align 8
-  %i.fx = getelementptr inbounds nuw [176 x i8], ptr %i.fw, i64 %indvars.iv160 ; 4 uses
+  %i.fx = getelementptr inbounds nuw [176 x i8], ptr %i.fw, i64 %indvars.iv160 ; 3 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 76 ; 2 uses
   %i.fz = load i32, ptr %i.fy, align 4            ; 2 uses
   %i.ga = icmp slt i32 %i.fz, 0
@@ -234,20 +234,15 @@ bb.aa:                                            ; preds = %bb.z
   %i.gk = load i32, ptr %i.fy, align 4
   %i.gl = sext i32 %i.gk to i64
   %i.gm = load ptr, ptr %i.fh, align 8
-  %i.gn = getelementptr inbounds nuw [176 x i8], ptr %i.gm, i64 %i.gl ; 3 uses
+  %i.gn = getelementptr inbounds nuw [176 x i8], ptr %i.gm, i64 %i.gl ; 2 uses
   %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 64
   %i.gp = load float, ptr %i.go, align 8
   %i.gq = fsub float %i.gj, %i.gp
   %i.gr = getelementptr inbounds nuw i8, ptr %i.fx, i64 68
-  %9 = load float, ptr %i.gr, align 4
-  %10 = getelementptr inbounds nuw i8, ptr %i.gn, i64 68
-  %11 = load float, ptr %10, align 4
-  %12 = fsub float %9, %11
-  %i.gs = getelementptr inbounds nuw i8, ptr %i.fx, i64 72
-  %13 = load float, ptr %i.gs, align 8
-  %14 = getelementptr inbounds nuw i8, ptr %i.gn, i64 72
-  %15 = load float, ptr %14, align 8
-  %16 = fsub float %13, %15
+  %i.gs = getelementptr inbounds nuw i8, ptr %i.gn, i64 68
+  %9 = load <2 x float>, ptr %i.gr, align 4
+  %10 = load <2 x float>, ptr %i.gs, align 4
+  %11 = fsub <2 x float> %9, %10                  ; 2 uses
   %i.gt = load ptr, ptr %i.gh, align 8            ; 10 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 1028
   store float 1.000000e+00, ptr %i.gu, align 4
@@ -267,8 +262,10 @@ bb.aa:                                            ; preds = %bb.z
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gt, i64 1040
   store float %i.gq, ptr %i.gw, align 4
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gt, i64 1056
+  %12 = extractelement <2 x float> %11, i64 0
   store float %12, ptr %i.gx, align 4
-  store float %16, ptr %.sroa.8.0..sroa_idx.i, align 4
+  %13 = extractelement <2 x float> %11, i64 1
+  store float %13, ptr %.sroa.8.0..sroa_idx.i, align 4
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.x, %bb.aa
@@ -671,7 +668,7 @@ bb.cr:                                            ; preds = %bb.cq
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.aha, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %i.ahb, align 4
   %i.ahc = load ptr, ptr %i.ago, align 8
-  %i.ahd = getelementptr inbounds nuw [176 x i8], ptr %i.ahc, i64 %indvars.iv713 ; 5 uses
+  %i.ahd = getelementptr inbounds nuw [176 x i8], ptr %i.ahc, i64 %indvars.iv713 ; 4 uses
   %i.ahe = getelementptr inbounds nuw i8, ptr %i.ahd, i64 8
   %i.ahf = load i64, ptr %i.ahe, align 8          ; 4 uses
   %i.ahg = icmp ugt i64 %i.ahf, 1023
@@ -691,12 +688,9 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr
   %i.ahl = getelementptr inbounds nuw i8, ptr %i.ahd, i64 64
   %i.ahm = load float, ptr %i.ahl, align 8
   %i.ahn = getelementptr inbounds nuw i8, ptr %i.ahd, i64 68
-  %31 = load float, ptr %i.ahn, align 4
-  %32 = getelementptr inbounds nuw i8, ptr %i.ahd, i64 72
-  %33 = load float, ptr %32, align 8
   %i.aho = fneg float %i.ahm
-  %34 = fneg float %31
-  %35 = fneg float %33
+  %31 = load <2 x float>, ptr %i.ahn, align 4
+  %32 = fneg <2 x float> %31                      ; 2 uses
   store float 1.000000e+00, ptr %i.agv, align 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.agw, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %i.agx, align 4
@@ -708,8 +702,10 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr
   %i.ahq = getelementptr inbounds nuw i8, ptr %i.agu, i64 1068
   store float %i.aho, ptr %i.ahq, align 4
   %i.ahr = getelementptr inbounds nuw i8, ptr %i.agu, i64 1084
-  store float %34, ptr %i.ahr, align 4
-  store float %35, ptr %i.aha, align 4
+  %33 = extractelement <2 x float> %32, i64 0
+  store float %33, ptr %i.ahr, align 4
+  %34 = extractelement <2 x float> %32, i64 1
+  store float %34, ptr %i.aha, align 4
   %i.ahs = load ptr, ptr %i.cm, align 8           ; 2 uses
   %.not10.i.i.i = icmp eq ptr %i.ahs, null
   br i1 %.not10.i.i.i, label %_ZNSt3mapIiSt6vectorI14aiVertexWeightSaIS1_EESt4lessIiESaISt4pairIKiS3_EEE4findERS7_.exit.thread, label %.lr.ph.i.i.i

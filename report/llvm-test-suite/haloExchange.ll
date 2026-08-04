@@ -203,18 +203,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = sext i32 %2 to i64                       ; 3 uses
   %i.c = getelementptr inbounds [8 x i8], ptr %i.a, i64 %i.b
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !14   ; 3 uses
-  %4 = load double, ptr %i.d, align 8, !tbaa !18
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !14   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !21   ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.f, i64 72
-  %6 = load double, ptr %5, align 8, !tbaa !18
-  %7 = fmul double %4, %6
-  %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %8 = load double, ptr %i.g, align 8, !tbaa !18
-  %9 = getelementptr inbounds nuw i8, ptr %i.f, i64 80
-  %10 = load double, ptr %9, align 8, !tbaa !18
-  %11 = fmul double %8, %10
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !21   ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 72
+  %4 = load <2 x double>, ptr %i.d, align 8, !tbaa !18
+  %5 = load <2 x double>, ptr %i.g, align 8, !tbaa !18
+  %6 = fmul <2 x double> %4, %5                   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.i = load double, ptr %i.h, align 8, !tbaa !18
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 88
@@ -235,6 +230,8 @@ bb.a:
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !30
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 32
   %wide.trip.count = zext nneg i32 %i.n to i64
+  %7 = extractelement <2 x double> %6, i64 0
+  %8 = extractelement <2 x double> %6, i64 1
   br label %bb.b
 
 ._crit_edge68.loopexit:                           ; preds = %._crit_edge
@@ -299,7 +296,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   store double %i.az, ptr %i.ba, align 8, !tbaa !41
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   %i.bc = load double, ptr %i.bb, align 8, !tbaa !18
-  %i.bd = fadd double %11, %i.bc
+  %i.bd = fadd double %8, %i.bc
   %i.be = getelementptr inbounds nuw i8, ptr %i.at, i64 16
   store double %i.bd, ptr %i.be, align 8, !tbaa !42
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ax, i64 16

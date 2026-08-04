@@ -203,7 +203,7 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #6
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN4node9inspector11InspectorIoC2ESt10shared_ptrINS0_16MainThreadHandleEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES2_INS_15ExclusiveAccessINS_8HostPortENS_9MutexBaseINS_16LibuvMutexTraitsEEEEEERKNS_17InspectPublishUidE(ptr noundef nonnull align 8 dereferenceable(216) initializes((0, 50), (56, 64)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(2) %4) unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [8 x i16], align 16               ; 11 uses
+  %i.a = alloca [8 x i16], align 16               ; 10 uses
   %i.b = alloca [256 x i8], align 16              ; 6 uses
   %i.c = load ptr, ptr %1, align 8
   store ptr %i.c, ptr %0, align 8
@@ -362,15 +362,13 @@ bb.q:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.bb = load i16, ptr %i.ba, align 4, !noalias !31
   %i.bc = zext i16 %i.bb to i32
   %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %5 = load i16, ptr %i.bd, align 2, !noalias !31
-  %6 = and i16 %5, 4095
-  %7 = or disjoint i16 %6, 16384
-  %8 = zext nneg i16 %7 to i32
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %10 = load i16, ptr %9, align 8, !noalias !31
-  %11 = and i16 %10, 16383
-  %12 = or disjoint i16 %11, -32768
-  %i.be = zext i16 %12 to i32
+  %5 = load <2 x i16>, ptr %i.bd, align 2, !noalias !31
+  %6 = and <2 x i16> %5, <i16 4095, i16 16383>
+  %7 = or disjoint <2 x i16> %6, <i16 16384, i16 -32768> ; 2 uses
+  %8 = extractelement <2 x i16> %7, i64 0
+  %9 = zext nneg i16 %8 to i32
+  %10 = extractelement <2 x i16> %7, i64 1
+  %i.be = zext i16 %10 to i32
   %i.bf = getelementptr inbounds nuw i8, ptr %i.a, i64 10
   %i.bg = load i16, ptr %i.bf, align 2, !noalias !31
   %i.bh = zext i16 %i.bg to i32
@@ -380,7 +378,7 @@ bb.q:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.bl = getelementptr inbounds nuw i8, ptr %i.a, i64 14
   %i.bm = load i16, ptr %i.bl, align 2, !noalias !31
   %i.bn = zext i16 %i.bm to i32
-  %i.bo = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.b, i64 noundef 256, ptr noundef nonnull @.str.37, i32 noundef %i.aw, i32 noundef %i.az, i32 noundef %i.bc, i32 noundef %8, i32 noundef %i.be, i32 noundef %i.bh, i32 noundef %i.bk, i32 noundef %i.bn) #26, !noalias !31 ; 0 uses
+  %i.bo = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.b, i64 noundef 256, ptr noundef nonnull @.str.37, i32 noundef %i.aw, i32 noundef %i.az, i32 noundef %i.bc, i32 noundef %9, i32 noundef %i.be, i32 noundef %i.bh, i32 noundef %i.bk, i32 noundef %i.bn) #26, !noalias !31 ; 0 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses
   store ptr %i.bp, ptr %i.at, align 8, !alias.scope !31
   %i.bq = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #26, !noalias !31 ; 8 uses

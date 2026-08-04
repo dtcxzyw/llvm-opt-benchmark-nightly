@@ -203,11 +203,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load <2 x double>, ptr %0, align 8, !tbaa !9 ; 2 uses
   %i.c = load <2 x double>, ptr %i.a, align 8, !tbaa !9
-  %i.d = fsub <2 x double> %i.c, %i.b             ; 6 uses
-  %foldExtExtBinop = fmul <2 x double> %i.d, %i.d
-  %foldExtExtBinop38 = fmul <2 x double> %i.d, %i.d
+  %i.d = fsub <2 x double> %i.c, %i.b             ; 4 uses
+  %foldExtExtBinop38 = fmul <2 x double> %i.d, %i.d ; 2 uses
   %shift = shufflevector <2 x double> %foldExtExtBinop38, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop40 = fadd <2 x double> %foldExtExtBinop, %shift
+  %foldExtExtBinop40 = fadd <2 x double> %foldExtExtBinop38, %shift
   %i.e = extractelement <2 x double> %foldExtExtBinop40, i64 0 ; 2 uses
   %sqrt = tail call double @llvm.sqrt.f64(double %i.e)
   %i.f = fcmp une double %2, 0.000000e+00

@@ -203,7 +203,7 @@ bb.qk:                                            ; preds = %.thread725, %bb.qj
   %i.bfl = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.bfm = load ptr, ptr %i.bfl, align 8, !noalias !918, !nonnull !8, !align !12, !noundef !8 ; 5 uses
   %i.bfn = getelementptr inbounds nuw i8, ptr %0, i64 176
-  %i.bfo = load ptr, ptr %i.bfn, align 8, !noalias !918, !nonnull !8, !align !12, !noundef !8 ; 2 uses
+  %i.bfo = load ptr, ptr %i.bfn, align 8, !noalias !918, !nonnull !8, !align !12, !noundef !8
   %i.bfp = load i64, ptr %i.bfm, align 8, !range !14, !noalias !918, !noundef !8
   %i.bfq = trunc nuw i64 %i.bfp to i1
   br i1 %i.bfq, label %bb.ql, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMsd_NtNtCs95DO3lnzZ3L_4moka6future10base_cacheINtBO_5InnerNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE23enable_frequency_sketch0EB2m_.exit
@@ -217,14 +217,13 @@ bb.ql:                                            ; preds = %bb.qk
   br i1 %.not.i.i214, label %.thread.i215, label %bb.qm
 
 bb.qm:                                            ; preds = %bb.ql
-  %2 = load i64, ptr %i.bfo, align 8, !noalias !918, !noundef !8
-  %3 = uitofp i64 %2 to double
-  %4 = getelementptr inbounds nuw i8, ptr %i.bfo, i64 8
-  %5 = load i64, ptr %4, align 8, !noalias !918, !noundef !8
-  %6 = uitofp i64 %5 to double
-  %7 = uitofp i64 %i.bfs to double
-  %8 = fdiv double %6, %7
-  %i.bfu = fmul double %8, %3
+  %2 = load <2 x i64>, ptr %i.bfo, align 8, !noalias !918
+  %3 = uitofp <2 x i64> %2 to <2 x double>        ; 2 uses
+  %4 = uitofp i64 %i.bfs to double
+  %5 = extractelement <2 x double> %3, i64 1
+  %6 = fdiv double %5, %4
+  %7 = extractelement <2 x double> %3, i64 0
+  %i.bfu = fmul double %6, %7
   %i.bfv = call i64 @llvm.fptoui.sat.i64.f64(double %i.bfu)
   br label %.thread.i215
 

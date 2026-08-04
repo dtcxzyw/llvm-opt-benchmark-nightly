@@ -201,12 +201,11 @@ _lib_location_place_get_zoom.exit:                ; preds = %bb.e, %switch.looku
   %.0.i = phi double [ %switch.load, %switch.lookup ], [ 8.000000e+00, %bb.e ]
   %i.p = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 80), align 8, !tbaa !32
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %2 = load float, ptr %i.q, align 8, !tbaa !92
-  %3 = fpext reassoc nsz arcp contract afn float %2 to double
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %5 = load float, ptr %4, align 4, !tbaa !91
-  %6 = fpext reassoc nsz arcp contract afn float %5 to double
-  tail call void @dt_view_map_center_on_location(ptr noundef %i.p, double noundef %3, double noundef %6, double noundef %.0.i) #12
+  %2 = load <2 x float>, ptr %i.q, align 8, !tbaa !84
+  %3 = fpext <2 x float> %2 to <2 x double>       ; 2 uses
+  %4 = extractelement <2 x double> %3, i64 0
+  %5 = extractelement <2 x double> %3, i64 1
+  tail call void @dt_view_map_center_on_location(ptr noundef %i.p, double noundef %4, double noundef %5, double noundef %.0.i) #12
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d

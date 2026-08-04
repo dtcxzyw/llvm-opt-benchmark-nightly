@@ -1,3 +1,5 @@
+inline.NumInlined: 2
+inline.NumDeleted: 1
 begin_hunk_0_@pango_loadimage_cairo:bb.a
   %i.u = load double, ptr %i.q, align 8, !tbaa !41 ; 2 uses
   %i.v = fneg double %i.u
@@ -199,25 +201,17 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.ap = load <2 x double>, ptr %i.ao, align 8, !tbaa !43
-  %i.aq = fdiv <2 x double> %i.ap, splat (double 9.600000e+01) ; 2 uses
-  %4 = extractelement <2 x double> %i.aq, i64 0
-  %5 = fsub double 1.000000e+00, %4
-  %6 = extractelement <2 x double> %i.aq, i64 1
-  %7 = fsub double 1.000000e+00, %6
-  %i.ar = load <2 x double>, ptr %2, align 8, !tbaa !43 ; 3 uses
+  %i.aq = fdiv <2 x double> %i.ap, splat (double 9.600000e+01)
+  %4 = fsub <2 x double> splat (double 1.000000e+00), %i.aq
+  %i.ar = load <2 x double>, ptr %2, align 8, !tbaa !43 ; 2 uses
   %i.as = load <2 x double>, ptr %i.an, align 8, !tbaa !43
-  %i.at = fsub <2 x double> %i.as, %i.ar          ; 3 uses
-  %8 = extractelement <2 x double> %i.at, i64 0
-  %9 = fmul double %8, %5
-  %10 = fmul double %9, 5.000000e-01
-  %11 = extractelement <2 x double> %i.ar, i64 0
-  %12 = fadd double %11, %10
-  %i.au = extractelement <2 x double> %i.at, i64 1
-  %13 = fmul double %i.au, %7
-  %14 = fmul double %13, 5.000000e-01
-  %i.av = extractelement <2 x double> %i.ar, i64 1
-  %15 = fadd double %i.av, %14
-  tail call void (ptr, ptr, ...) @gvprintf(ptr noundef %0, ptr noundef nonnull @.str.12, double noundef %12, double noundef %15) #4
+  %i.at = fsub <2 x double> %i.as, %i.ar          ; 2 uses
+  %5 = fmul <2 x double> %i.at, %4
+  %6 = fmul <2 x double> %5, splat (double 5.000000e-01)
+  %7 = fadd <2 x double> %i.ar, %6                ; 2 uses
+  %i.au = extractelement <2 x double> %7, i64 0
+  %i.av = extractelement <2 x double> %7, i64 1
+  tail call void (ptr, ptr, ...) @gvprintf(ptr noundef %0, ptr noundef nonnull @.str.12, double noundef %i.au, double noundef %i.av) #4
   %i.aw = fmul <2 x double> %i.at, splat (double 7.200000e+01)
   %i.ax = fdiv <2 x double> %i.aw, splat (double 9.600000e+01) ; 2 uses
   %i.ay = extractelement <2 x double> %i.ax, i64 0

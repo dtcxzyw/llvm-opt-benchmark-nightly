@@ -203,7 +203,7 @@ declare void @_ZN17btSoftBodyHelpers15DrawClusterTreeEP10btSoftBodyP12btIDebugDr
 define dso_local void @_ZNK24btSoftRigidDynamicsWorld7rayTestERK9btVector3S2_RN16btCollisionWorld17RayResultCallbackE(ptr noundef nonnull align 8 dereferenceable(689) %0, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(36) %3) unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %class.CProfileSample, align 1      ; 6 uses
-  %5 = alloca %struct.btSoftSingleRayCallback, align 8 ; 32 uses
+  %5 = alloca %struct.btSoftSingleRayCallback, align 8 ; 30 uses
   %6 = alloca %class.btVector3, align 4           ; 5 uses
   %7 = alloca %class.btVector3, align 4           ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
@@ -287,20 +287,17 @@ bb.a:
   %i.ay = load float, ptr %i.a, align 8, !tbaa !21
   %i.az = fsub float %i.ax, %i.ay
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 60
-  %8 = load float, ptr %i.ba, align 4, !tbaa !21
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 44
-  %9 = load float, ptr %i.bb, align 4, !tbaa !21
-  %10 = fsub float %8, %9
-  %11 = getelementptr inbounds nuw i8, ptr %5, i64 64
-  %12 = load float, ptr %11, align 8, !tbaa !21
-  %13 = getelementptr inbounds nuw i8, ptr %5, i64 48
-  %14 = load float, ptr %13, align 8, !tbaa !21
-  %15 = fsub float %12, %14
-  %i.bc = extractelement <2 x float> %i.ai, i64 1
-  %16 = fmul float %i.bc, %10
-  %i.bd = extractelement <2 x float> %i.ai, i64 0
-  %17 = call float @llvm.fmuladd.f32(float %i.bd, float %i.az, float %16)
-  %i.be = call noundef float @llvm.fmuladd.f32(float %i.aj, float %15, float %17)
+  %8 = load <2 x float>, ptr %i.ba, align 4, !tbaa !21
+  %9 = load <2 x float>, ptr %i.bb, align 4, !tbaa !21
+  %10 = fsub <2 x float> %8, %9                   ; 2 uses
+  %shift = shufflevector <2 x float> %i.ai, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop15 = fmul <2 x float> %shift, %10
+  %11 = extractelement <2 x float> %foldExtExtBinop15, i64 0
+  %i.bc = extractelement <2 x float> %i.ai, i64 0
+  %12 = call float @llvm.fmuladd.f32(float %i.bc, float %i.az, float %11)
+  %i.bd = extractelement <2 x float> %10, i64 1
+  %i.be = call noundef float @llvm.fmuladd.f32(float %i.aj, float %i.bd, float %12)
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 36
   store float %i.be, ptr %i.bf, align 4, !tbaa !212
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 104

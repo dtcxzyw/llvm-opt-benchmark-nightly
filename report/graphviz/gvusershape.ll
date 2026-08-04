@@ -1,3 +1,7 @@
+inline.NumInlined: 88
+inline.NumDeleted: 35
+loop-unroll.NumCompletelyUnrolled: 18
+loop-unroll.NumUnrolled: 18
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -195,19 +199,13 @@ bb.b:                                             ; preds = %bb.a
   %i.f = fmul <2 x double> %i.e, splat (double 7.200000e+01)
   %i.g = insertelement <2 x double> poison, double %.sroa.0.0, i64 0
   %i.h = insertelement <2 x double> %i.g, double %.sroa.3.0, i64 1
-  %i.i = fdiv <2 x double> %i.f, %i.h             ; 2 uses
-  %3 = extractelement <2 x double> %i.i, i64 0
-  %4 = fptosi double %3 to i32
-  %5 = extractelement <2 x double> %i.i, i64 1
-  %6 = fptosi double %5 to i32
-  %7 = zext i32 %6 to i64
-  %8 = shl nuw i64 %7, 32
-  %9 = zext i32 %4 to i64
-  %10 = or disjoint i64 %8, %9
+  %i.i = fdiv <2 x double> %i.f, %i.h
+  %3 = fptosi <2 x double> %i.i to <2 x i32>
+  %4 = bitcast <2 x i32> %3 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.05.0.insert.insert = phi i64 [ %10, %bb.b ], [ -1, %bb.a ]
+  %.sroa.05.0.insert.insert = phi i64 [ %4, %bb.b ], [ -1, %bb.a ]
   ret i64 %.sroa.05.0.insert.insert
 }
 
@@ -610,19 +608,13 @@ bb.aj:                                            ; preds = %gvusershape_file_re
   %i.ds = fmul <2 x double> %i.dr, splat (double 7.200000e+01)
   %i.dt = insertelement <2 x double> poison, double %.sroa.3.0.i, i64 0
   %i.du = shufflevector <2 x double> %i.dt, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.dv = fdiv <2 x double> %i.ds, %i.du          ; 2 uses
-  %2 = extractelement <2 x double> %i.dv, i64 0
-  %3 = fptosi double %2 to i32
-  %4 = extractelement <2 x double> %i.dv, i64 1
-  %5 = fptosi double %4 to i32
-  %6 = zext i32 %5 to i64
-  %7 = shl nuw i64 %6, 32
-  %8 = zext i32 %3 to i64
-  %9 = or disjoint i64 %7, %8
+  %i.dv = fdiv <2 x double> %i.ds, %i.du
+  %2 = fptosi <2 x double> %i.dv to <2 x i32>
+  %3 = bitcast <2 x i32> %2 to i64
   br label %gvusershape_size_dpi.exit
 
 gvusershape_size_dpi.exit:                        ; preds = %bb.aj, %freeUsershape.exit.i, %freeUsershape.exit, %bb.a, %bb.b
-  %.sroa.06.0.insert.insert = phi i64 [ -1, %bb.a ], [ -1, %bb.b ], [ %9, %bb.aj ], [ -1, %freeUsershape.exit.i ], [ -1, %freeUsershape.exit ]
+  %.sroa.06.0.insert.insert = phi i64 [ -1, %bb.a ], [ -1, %bb.b ], [ %3, %bb.aj ], [ -1, %freeUsershape.exit.i ], [ -1, %freeUsershape.exit ]
   ret i64 %.sroa.06.0.insert.insert
 }
 

@@ -201,14 +201,13 @@ middle.block:                                     ; preds = %vector.body
   %i.hm = insertelement <2 x double> poison, double %i.hf, i64 0
   %i.hn = shufflevector <2 x double> %i.hm, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ho = fmul nnan <2 x double> %i.hn, %i.hl
-  %i.hp = fdiv <2 x double> %i.ho, splat (double 2.550000e+02) ; 2 uses
-  %3 = extractelement <2 x double> %i.hp, i64 0
-  %4 = fadd double %3, 5.000000e-01
+  %i.hp = fdiv <2 x double> %i.ho, splat (double 2.550000e+02)
+  %3 = fadd <2 x double> %i.hp, splat (double 5.000000e-01) ; 2 uses
+  %4 = extractelement <2 x double> %3, i64 0
   %i.hq = fptoui double %4 to i8
   store i8 %i.hq, ptr %i.hd, align 1, !tbaa !37
-  %i.hr = extractelement <2 x double> %i.hp, i64 1
-  %5 = fadd double %i.hr, 5.000000e-01
-  %i.hs = fptoui double %5 to i8
+  %i.hr = extractelement <2 x double> %3, i64 1
+  %i.hs = fptoui double %i.hr to i8
   store i8 %i.hs, ptr %.295, align 1, !tbaa !37
   %i.ht = getelementptr inbounds nuw i8, ptr %.295, i64 3 ; 2 uses
   %i.hu = add i32 %.18194, -1                     ; 2 uses

@@ -204,19 +204,15 @@ bb.dg:                                            ; preds = %bb.dc, %bb.df
 ._crit_edge343:                                   ; preds = %bb.dg
   %i.sd = sitofp <2 x i32> %i.rz to <2 x float>
   %i.se = load ptr, ptr %i.f, align 8, !tbaa !34
-  %i.sf = fdiv <2 x float> %i.sd, %i.ry           ; 3 uses
-  %i.sg = fcmp ogt <2 x float> %i.sf, zeroinitializer ; 2 uses
-  %77 = extractelement <2 x i1> %i.sg, i64 0
-  %78 = extractelement <2 x float> %i.sf, i64 0
-  %79 = fpext float %78 to double
-  %80 = select i1 %77, double %79, double 0.000000e+00
-  %i.sh = call i32 (ptr, i32, ...) @TIFFSetField(ptr noundef %i.se, i32 noundef 286, double noundef %80) ; 0 uses
+  %i.sf = fdiv <2 x float> %i.sd, %i.ry           ; 2 uses
+  %i.sg = fcmp ogt <2 x float> %i.sf, zeroinitializer
+  %77 = select <2 x i1> %i.sg, <2 x float> %i.sf, <2 x float> zeroinitializer
+  %78 = fpext <2 x float> %77 to <2 x double>     ; 2 uses
+  %79 = extractelement <2 x double> %78, i64 0
+  %i.sh = call i32 (ptr, i32, ...) @TIFFSetField(ptr noundef %i.se, i32 noundef 286, double noundef %79) ; 0 uses
   %i.si = load ptr, ptr %i.f, align 8, !tbaa !34
-  %81 = extractelement <2 x i1> %i.sg, i64 1
-  %82 = extractelement <2 x float> %i.sf, i64 1
-  %83 = fpext float %82 to double
-  %84 = select i1 %81, double %83, double 0.000000e+00
-  %i.sj = call i32 (ptr, i32, ...) @TIFFSetField(ptr noundef %i.si, i32 noundef 287, double noundef %84) ; 0 uses
+  %80 = extractelement <2 x double> %78, i64 1
+  %i.sj = call i32 (ptr, i32, ...) @TIFFSetField(ptr noundef %i.si, i32 noundef 287, double noundef %80) ; 0 uses
   br label %bb.dh
 
 bb.dh:                                            ; preds = %bb.dg, %._crit_edge343

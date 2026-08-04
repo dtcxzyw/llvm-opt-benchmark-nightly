@@ -204,14 +204,14 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit42.thread: ; preds = %_Z
   %i.al = add i64 %i.ak, 1                        ; 2 uses
   store i64 %i.al, ptr %i.ah, align 8, !tbaa !593
   %i.am = uitofp i64 %i.al to double
-  %i.an = load double, ptr %i.aj, align 8, !tbaa !59 ; 2 uses
+  %i.an = load double, ptr %i.aj, align 8, !tbaa !59
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ah, i64 8 ; 2 uses
-  %i.ap = load double, ptr %i.ai, align 8, !tbaa !59 ; 3 uses
+  %i.ap = load double, ptr %i.ai, align 8, !tbaa !59 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ah, i64 24 ; 2 uses
   %i.ar = load double, ptr %i.aq, align 8, !tbaa !595
   %i.as = load <2 x double>, ptr %i.ao, align 8, !tbaa !59 ; 2 uses
   %i.at = insertelement <2 x double> poison, double %i.an, i64 0
-  %i.au = insertelement <2 x double> %i.at, double %i.ap, i64 1 ; 2 uses
+  %i.au = insertelement <2 x double> %i.at, double %i.ap, i64 1 ; 3 uses
   %i.av = fsub <2 x double> %i.au, %i.as          ; 2 uses
   %i.aw = insertelement <2 x double> poison, double %i.am, i64 0
   %i.ax = shufflevector <2 x double> %i.aw, <2 x double> poison, <2 x i32> zeroinitializer
@@ -226,43 +226,41 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit42.thread: ; preds = %_Z
   %i.be = getelementptr inbounds nuw i8, ptr %i.ah, i64 32 ; 2 uses
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !596
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ah, i64 40 ; 2 uses
-  %i.bh = load double, ptr %i.bg, align 8, !tbaa !598 ; 2 uses
+  %i.bh = load double, ptr %i.bg, align 8, !tbaa !598
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ah, i64 48 ; 2 uses
   %i.bj = load double, ptr %i.bi, align 8, !tbaa !599
   %i.bk = getelementptr inbounds nuw i8, ptr %i.ah, i64 56 ; 2 uses
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !596
   %i.bm = getelementptr inbounds nuw i8, ptr %i.ah, i64 64 ; 2 uses
-  %i.bn = load double, ptr %i.bm, align 8, !tbaa !598 ; 2 uses
+  %i.bn = load double, ptr %i.bm, align 8, !tbaa !598
   %i.bo = insertelement <2 x i64> poison, i64 %i.bf, i64 0
   %i.bp = insertelement <2 x i64> %i.bo, i64 %i.bl, i64 1
   %i.bq = add <2 x i64> %i.bp, splat (i64 1)      ; 3 uses
   %i.br = extractelement <2 x i64> %i.bq, i64 0
   store i64 %i.br, ptr %i.be, align 8, !tbaa !596
   %i.bs = insertelement <2 x double> poison, double %i.bh, i64 0
-  %i.bt = insertelement <2 x double> %i.bs, double %i.bn, i64 1
-  %i.bu = fsub <2 x double> %i.au, %i.bt          ; 3 uses
+  %i.bt = insertelement <2 x double> %i.bs, double %i.bn, i64 1 ; 2 uses
+  %i.bu = fsub <2 x double> %i.au, %i.bt          ; 2 uses
   %i.bv = uitofp <2 x i64> %i.bq to <2 x double>
-  %i.bw = fdiv <2 x double> %i.bu, %i.bv          ; 2 uses
-  %10 = extractelement <2 x double> %i.bw, i64 0
-  %11 = fadd double %i.bh, %10                    ; 2 uses
-  %12 = fsub double %i.an, %11
-  %13 = extractelement <2 x double> %i.bu, i64 0
-  %14 = fmul double %13, %12
-  %15 = fadd double %i.bj, %14
-  store double %11, ptr %i.bg, align 8, !tbaa !598
-  store double %15, ptr %i.bi, align 8, !tbaa !599
-  %16 = extractelement <2 x i64> %i.bq, i64 1
-  store i64 %16, ptr %i.bk, align 8, !tbaa !596
-  %17 = extractelement <2 x double> %i.bw, i64 1
-  %18 = fadd double %i.bn, %17                    ; 2 uses
-  %19 = fsub double %i.ap, %18
-  %i.bx = extractelement <2 x double> %i.bu, i64 1
-  %20 = fmul double %i.bx, %19
-  %21 = getelementptr inbounds nuw i8, ptr %i.ah, i64 72 ; 2 uses
-  %22 = load double, ptr %21, align 8, !tbaa !599
-  %23 = fadd double %22, %20
-  store double %18, ptr %i.bm, align 8, !tbaa !598
-  store double %23, ptr %21, align 8, !tbaa !599
+  %i.bw = fdiv <2 x double> %i.bu, %i.bv
+  %10 = extractelement <2 x i64> %i.bq, i64 1
+  store i64 %10, ptr %i.bk, align 8, !tbaa !596
+  %11 = fadd <2 x double> %i.bt, %i.bw            ; 3 uses
+  %12 = fsub <2 x double> %i.au, %11
+  %13 = fmul <2 x double> %i.bu, %12
+  %14 = extractelement <2 x double> %11, i64 0
+  store double %14, ptr %i.bg, align 8, !tbaa !598
+  %15 = getelementptr inbounds nuw i8, ptr %i.ah, i64 72 ; 2 uses
+  %16 = load double, ptr %15, align 8, !tbaa !599
+  %17 = insertelement <2 x double> poison, double %i.bj, i64 0
+  %18 = insertelement <2 x double> %17, double %16, i64 1
+  %19 = fadd <2 x double> %18, %13                ; 2 uses
+  %i.bx = extractelement <2 x double> %19, i64 0
+  store double %i.bx, ptr %i.bi, align 8, !tbaa !599
+  %20 = extractelement <2 x double> %11, i64 1
+  store double %20, ptr %i.bm, align 8, !tbaa !598
+  %21 = extractelement <2 x double> %19, i64 1
+  store double %21, ptr %15, align 8, !tbaa !599
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit42.thread, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit42, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
@@ -310,14 +308,14 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit48:  ; preds = %_ZNK6duckdb15Select
   %i.cq = add i64 %i.cp, 1                        ; 2 uses
   store i64 %i.cq, ptr %i.cm, align 8, !tbaa !593
   %i.cr = uitofp i64 %i.cq to double
-  %i.cs = load double, ptr %i.co, align 8, !tbaa !59 ; 2 uses
+  %i.cs = load double, ptr %i.co, align 8, !tbaa !59
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cm, i64 8 ; 2 uses
-  %i.cu = load double, ptr %i.cn, align 8, !tbaa !59 ; 3 uses
+  %i.cu = load double, ptr %i.cn, align 8, !tbaa !59 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cm, i64 24 ; 2 uses
   %i.cw = load double, ptr %i.cv, align 8, !tbaa !595
   %i.cx = load <2 x double>, ptr %i.ct, align 8, !tbaa !59 ; 2 uses
   %i.cy = insertelement <2 x double> poison, double %i.cs, i64 0
-  %i.cz = insertelement <2 x double> %i.cy, double %i.cu, i64 1 ; 2 uses
+  %i.cz = insertelement <2 x double> %i.cy, double %i.cu, i64 1 ; 3 uses
   %i.da = fsub <2 x double> %i.cz, %i.cx          ; 2 uses
   %i.db = insertelement <2 x double> poison, double %i.cr, i64 0
   %i.dc = shufflevector <2 x double> %i.db, <2 x double> poison, <2 x i32> zeroinitializer
@@ -332,43 +330,41 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit48:  ; preds = %_ZNK6duckdb15Select
   %i.dj = getelementptr inbounds nuw i8, ptr %i.cm, i64 32 ; 2 uses
   %i.dk = load i64, ptr %i.dj, align 8, !tbaa !596
   %i.dl = getelementptr inbounds nuw i8, ptr %i.cm, i64 40 ; 2 uses
-  %i.dm = load double, ptr %i.dl, align 8, !tbaa !598 ; 2 uses
+  %i.dm = load double, ptr %i.dl, align 8, !tbaa !598
   %i.dn = getelementptr inbounds nuw i8, ptr %i.cm, i64 48 ; 2 uses
   %i.do = load double, ptr %i.dn, align 8, !tbaa !599
   %i.dp = getelementptr inbounds nuw i8, ptr %i.cm, i64 56 ; 2 uses
   %i.dq = load i64, ptr %i.dp, align 8, !tbaa !596
   %i.dr = getelementptr inbounds nuw i8, ptr %i.cm, i64 64 ; 2 uses
-  %i.ds = load double, ptr %i.dr, align 8, !tbaa !598 ; 2 uses
+  %i.ds = load double, ptr %i.dr, align 8, !tbaa !598
   %i.dt = insertelement <2 x i64> poison, i64 %i.dk, i64 0
   %i.du = insertelement <2 x i64> %i.dt, i64 %i.dq, i64 1
   %i.dv = add <2 x i64> %i.du, splat (i64 1)      ; 3 uses
   %i.dw = extractelement <2 x i64> %i.dv, i64 0
   store i64 %i.dw, ptr %i.dj, align 8, !tbaa !596
   %i.dx = insertelement <2 x double> poison, double %i.dm, i64 0
-  %i.dy = insertelement <2 x double> %i.dx, double %i.ds, i64 1
-  %i.dz = fsub <2 x double> %i.cz, %i.dy          ; 3 uses
+  %i.dy = insertelement <2 x double> %i.dx, double %i.ds, i64 1 ; 2 uses
+  %i.dz = fsub <2 x double> %i.cz, %i.dy          ; 2 uses
   %i.ea = uitofp <2 x i64> %i.dv to <2 x double>
-  %i.eb = fdiv <2 x double> %i.dz, %i.ea          ; 2 uses
-  %24 = extractelement <2 x double> %i.eb, i64 0
-  %25 = fadd double %i.dm, %24                    ; 2 uses
-  %26 = fsub double %i.cs, %25
-  %27 = extractelement <2 x double> %i.dz, i64 0
-  %28 = fmul double %27, %26
-  %29 = fadd double %i.do, %28
-  store double %25, ptr %i.dl, align 8, !tbaa !598
-  store double %29, ptr %i.dn, align 8, !tbaa !599
-  %30 = extractelement <2 x i64> %i.dv, i64 1
-  store i64 %30, ptr %i.dp, align 8, !tbaa !596
-  %31 = extractelement <2 x double> %i.eb, i64 1
-  %32 = fadd double %i.ds, %31                    ; 2 uses
-  %33 = fsub double %i.cu, %32
-  %i.ec = extractelement <2 x double> %i.dz, i64 1
-  %34 = fmul double %i.ec, %33
-  %35 = getelementptr inbounds nuw i8, ptr %i.cm, i64 72 ; 2 uses
-  %36 = load double, ptr %35, align 8, !tbaa !599
-  %37 = fadd double %36, %34
+  %i.eb = fdiv <2 x double> %i.dz, %i.ea
+  %22 = extractelement <2 x i64> %i.dv, i64 1
+  store i64 %22, ptr %i.dp, align 8, !tbaa !596
+  %23 = fadd <2 x double> %i.dy, %i.eb            ; 3 uses
+  %24 = fsub <2 x double> %i.cz, %23
+  %25 = fmul <2 x double> %i.dz, %24
+  %26 = extractelement <2 x double> %23, i64 0
+  store double %26, ptr %i.dl, align 8, !tbaa !598
+  %27 = getelementptr inbounds nuw i8, ptr %i.cm, i64 72 ; 2 uses
+  %28 = load double, ptr %27, align 8, !tbaa !599
+  %29 = insertelement <2 x double> poison, double %i.do, i64 0
+  %30 = insertelement <2 x double> %29, double %28, i64 1
+  %31 = fadd <2 x double> %30, %25                ; 2 uses
+  %i.ec = extractelement <2 x double> %31, i64 0
+  store double %i.ec, ptr %i.dn, align 8, !tbaa !599
+  %32 = extractelement <2 x double> %23, i64 1
   store double %32, ptr %i.dr, align 8, !tbaa !598
-  store double %37, ptr %35, align 8, !tbaa !599
+  %33 = extractelement <2 x double> %31, i64 1
+  store double %33, ptr %27, align 8, !tbaa !599
   %i.ed = add nuw i64 %.03259, 1                  ; 2 uses
   %exitcond64.not = icmp eq i64 %i.ed, %4
   br i1 %exitcond64.not, label %.loopexit, label %bb.g, !llvm.loop !601
@@ -480,8 +476,8 @@ bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.m = load double, ptr %i.l, align 8, !tbaa !595
   %i.n = fadd double %i.k, %i.m
-  %i.o = load <2 x double>, ptr %i.h, align 8, !tbaa !59 ; 3 uses
-  %i.p = load <2 x double>, ptr %i.i, align 8, !tbaa !59 ; 3 uses
+  %i.o = load <2 x double>, ptr %i.h, align 8, !tbaa !59 ; 2 uses
+  %i.p = load <2 x double>, ptr %i.i, align 8, !tbaa !59 ; 2 uses
   %i.q = insertelement <2 x double> poison, double %i.e, i64 0
   %i.r = shufflevector <2 x double> %i.q, <2 x double> poison, <2 x i32> zeroinitializer
   %i.s = fmul <2 x double> %i.p, %i.r
@@ -491,10 +487,9 @@ bb.d:                                             ; preds = %bb.c
   %i.w = insertelement <2 x double> poison, double %i.g, i64 0
   %i.x = shufflevector <2 x double> %i.w, <2 x double> poison, <2 x i32> zeroinitializer
   %i.y = fdiv <2 x double> %i.v, %i.x
-  %foldExtExtBinop = fsub <2 x double> %i.p, %i.o
-  %foldExtExtBinop18 = fsub <2 x double> %i.p, %i.o
+  %foldExtExtBinop18 = fsub <2 x double> %i.p, %i.o ; 2 uses
   %shift = shufflevector <2 x double> %foldExtExtBinop18, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop20 = fmul <2 x double> %foldExtExtBinop, %shift
+  %foldExtExtBinop20 = fmul <2 x double> %foldExtExtBinop18, %shift
   %i.z = extractelement <2 x double> %foldExtExtBinop20, i64 0
   %i.aa = fmul double %i.z, %i.f
   %i.ab = fmul double %i.aa, %i.e
@@ -897,10 +892,10 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit36.us77: ; preds = %.lr.ph49.split,
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.048.us78
   %i.bz = add i64 %i.bq, 1                        ; 2 uses
   %i.ca = uitofp i64 %i.bz to double
-  %i.cb = load double, ptr %i.by, align 8, !tbaa !59 ; 2 uses
-  %i.cc = load double, ptr %i.bx, align 8, !tbaa !59 ; 3 uses
+  %i.cb = load double, ptr %i.by, align 8, !tbaa !59
+  %i.cc = load double, ptr %i.bx, align 8, !tbaa !59 ; 2 uses
   %i.cd = insertelement <2 x double> poison, double %i.cb, i64 0
-  %i.ce = insertelement <2 x double> %i.cd, double %i.cc, i64 1 ; 2 uses
+  %i.ce = insertelement <2 x double> %i.cd, double %i.cc, i64 1 ; 3 uses
   %i.cf = fsub <2 x double> %i.ce, %i.br          ; 2 uses
   %i.cg = insertelement <2 x double> poison, double %i.ca, i64 0
   %i.ch = shufflevector <2 x double> %i.cg, <2 x double> poison, <2 x i32> zeroinitializer
@@ -911,23 +906,19 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit36.us77: ; preds = %.lr.ph49.split,
   %i.cm = extractelement <2 x double> %i.cf, i64 0
   %i.cn = tail call double @llvm.fmuladd.f64(double %i.cm, double %i.cl, double %i.bp) ; 2 uses
   %i.co = add <2 x i64> %i.bt, splat (i64 1)      ; 2 uses
-  %i.cp = fsub <2 x double> %i.ce, %i.bs          ; 3 uses
+  %i.cp = fsub <2 x double> %i.ce, %i.bs          ; 2 uses
   %i.cq = uitofp <2 x i64> %i.co to <2 x double>
   %i.cr = fdiv <2 x double> %i.cp, %i.cq
-  %i.cs = fadd <2 x double> %i.bs, %i.cr          ; 3 uses
-  %9 = extractelement <2 x double> %i.cs, i64 0   ; 2 uses
-  %10 = fsub double %i.cb, %9
-  %i.ct = extractelement <2 x double> %i.cp, i64 0
-  %11 = fmul double %i.ct, %10
-  %i.cu = fadd double %i.bo, %11                  ; 2 uses
-  %12 = extractelement <2 x double> %i.cs, i64 1  ; 2 uses
-  %13 = fsub double %i.cc, %12
-  %i.cv = extractelement <2 x double> %i.cp, i64 1
-  %14 = fmul double %i.cv, %13
-  %i.cw = fadd double %i.bn, %14                  ; 2 uses
+  %i.cs = fadd <2 x double> %i.bs, %i.cr          ; 4 uses
+  %9 = fsub <2 x double> %i.ce, %i.cs
+  %10 = fmul <2 x double> %i.cp, %9               ; 2 uses
+  %i.ct = extractelement <2 x double> %10, i64 0
+  %i.cu = fadd double %i.bo, %i.ct                ; 2 uses
+  %i.cv = extractelement <2 x double> %10, i64 1
+  %i.cw = fadd double %i.bn, %i.cv                ; 2 uses
   %i.cx = add nuw i64 %.048.us78, 1               ; 2 uses
   %exitcond134.not = icmp eq i64 %i.cx, %4
-  br i1 %exitcond134.not, label %..loopexit_crit_edge, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit36.us77, !llvm.loop !612
+  br i1 %exitcond134.not, label %..loopexit_crit_edge.loopexit193, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit36.us77, !llvm.loop !612
 
 bb.c:                                             ; preds = %.lr.ph, %bb.f
   %.02647 = phi i64 [ 0, %.lr.ph ], [ %i.fb, %bb.f ] ; 5 uses
@@ -983,12 +974,12 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit34.thread: ; preds = %_Z
   %i.dv = add i64 %i.du, 1                        ; 2 uses
   store i64 %i.dv, ptr %3, align 8, !tbaa !593
   %i.dw = uitofp i64 %i.dv to double
-  %i.dx = load double, ptr %i.dt, align 8, !tbaa !59 ; 2 uses
-  %i.dy = load double, ptr %i.ds, align 8, !tbaa !59 ; 3 uses
+  %i.dx = load double, ptr %i.dt, align 8, !tbaa !59
+  %i.dy = load double, ptr %i.ds, align 8, !tbaa !59 ; 2 uses
   %i.dz = load double, ptr %i.f, align 8, !tbaa !595
   %i.ea = load <2 x double>, ptr %i.e, align 8, !tbaa !59 ; 2 uses
   %i.eb = insertelement <2 x double> poison, double %i.dx, i64 0
-  %i.ec = insertelement <2 x double> %i.eb, double %i.dy, i64 1 ; 2 uses
+  %i.ec = insertelement <2 x double> %i.eb, double %i.dy, i64 1 ; 3 uses
   %i.ed = fsub <2 x double> %i.ec, %i.ea          ; 2 uses
   %i.ee = insertelement <2 x double> poison, double %i.dw, i64 0
   %i.ef = shufflevector <2 x double> %i.ee, <2 x double> poison, <2 x i32> zeroinitializer
@@ -1001,39 +992,37 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit34.thread: ; preds = %_Z
   store <2 x double> %i.eh, ptr %i.e, align 8, !tbaa !59
   store double %i.el, ptr %i.f, align 8, !tbaa !595
   %i.em = load i64, ptr %i.g, align 8, !tbaa !596
-  %i.en = load double, ptr %i.h, align 8, !tbaa !598 ; 2 uses
+  %i.en = load double, ptr %i.h, align 8, !tbaa !598
   %i.eo = load double, ptr %i.i, align 8, !tbaa !599
   %i.ep = load i64, ptr %i.j, align 8, !tbaa !596
-  %i.eq = load double, ptr %i.k, align 8, !tbaa !598 ; 2 uses
+  %i.eq = load double, ptr %i.k, align 8, !tbaa !598
   %i.er = insertelement <2 x i64> poison, i64 %i.em, i64 0
   %i.es = insertelement <2 x i64> %i.er, i64 %i.ep, i64 1
   %i.et = add <2 x i64> %i.es, splat (i64 1)      ; 3 uses
   %i.eu = extractelement <2 x i64> %i.et, i64 0
   store i64 %i.eu, ptr %i.g, align 8, !tbaa !596
   %i.ev = insertelement <2 x double> poison, double %i.en, i64 0
-  %i.ew = insertelement <2 x double> %i.ev, double %i.eq, i64 1
-  %i.ex = fsub <2 x double> %i.ec, %i.ew          ; 3 uses
+  %i.ew = insertelement <2 x double> %i.ev, double %i.eq, i64 1 ; 2 uses
+  %i.ex = fsub <2 x double> %i.ec, %i.ew          ; 2 uses
   %i.ey = uitofp <2 x i64> %i.et to <2 x double>
-  %i.ez = fdiv <2 x double> %i.ex, %i.ey          ; 2 uses
-  %15 = extractelement <2 x double> %i.ez, i64 0
-  %16 = fadd double %i.en, %15                    ; 2 uses
-  %17 = fsub double %i.dx, %16
-  %18 = extractelement <2 x double> %i.ex, i64 0
-  %19 = fmul double %18, %17
-  %20 = fadd double %i.eo, %19
-  store double %16, ptr %i.h, align 8, !tbaa !598
-  store double %20, ptr %i.i, align 8, !tbaa !599
-  %21 = extractelement <2 x i64> %i.et, i64 1
-  store i64 %21, ptr %i.j, align 8, !tbaa !596
-  %22 = extractelement <2 x double> %i.ez, i64 1
-  %23 = fadd double %i.eq, %22                    ; 2 uses
-  %24 = fsub double %i.dy, %23
-  %i.fa = extractelement <2 x double> %i.ex, i64 1
-  %25 = fmul double %i.fa, %24
-  %26 = load double, ptr %i.l, align 8, !tbaa !599
-  %27 = fadd double %26, %25
-  store double %23, ptr %i.k, align 8, !tbaa !598
-  store double %27, ptr %i.l, align 8, !tbaa !599
+  %i.ez = fdiv <2 x double> %i.ex, %i.ey
+  %11 = extractelement <2 x i64> %i.et, i64 1
+  store i64 %11, ptr %i.j, align 8, !tbaa !596
+  %12 = fadd <2 x double> %i.ew, %i.ez            ; 3 uses
+  %13 = fsub <2 x double> %i.ec, %12
+  %14 = fmul <2 x double> %i.ex, %13
+  %15 = extractelement <2 x double> %12, i64 0
+  store double %15, ptr %i.h, align 8, !tbaa !598
+  %16 = load double, ptr %i.l, align 8, !tbaa !599
+  %17 = insertelement <2 x double> poison, double %i.eo, i64 0
+  %18 = insertelement <2 x double> %17, double %16, i64 1
+  %19 = fadd <2 x double> %18, %14                ; 2 uses
+  %i.fa = extractelement <2 x double> %19, i64 0
+  store double %i.fa, ptr %i.i, align 8, !tbaa !599
+  %20 = extractelement <2 x double> %12, i64 1
+  store double %20, ptr %i.k, align 8, !tbaa !598
+  %21 = extractelement <2 x double> %19, i64 1
+  store double %21, ptr %i.l, align 8, !tbaa !599
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit34, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit34.thread
@@ -1060,10 +1049,10 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit36:  ; preds = %.lr.ph49.split, %_Z
   %i.fq = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.fo
   %i.fr = add i64 %i.ff, 1                        ; 2 uses
   %i.fs = uitofp i64 %i.fr to double
-  %i.ft = load double, ptr %i.fq, align 8, !tbaa !59 ; 2 uses
-  %i.fu = load double, ptr %i.fp, align 8, !tbaa !59 ; 3 uses
+  %i.ft = load double, ptr %i.fq, align 8, !tbaa !59
+  %i.fu = load double, ptr %i.fp, align 8, !tbaa !59 ; 2 uses
   %i.fv = insertelement <2 x double> poison, double %i.ft, i64 0
-  %i.fw = insertelement <2 x double> %i.fv, double %i.fu, i64 1 ; 2 uses
+  %i.fw = insertelement <2 x double> %i.fv, double %i.fu, i64 1 ; 3 uses
   %i.fx = fsub <2 x double> %i.fw, %i.fg          ; 2 uses
   %i.fy = insertelement <2 x double> poison, double %i.fs, i64 0
   %i.fz = shufflevector <2 x double> %i.fy, <2 x double> poison, <2 x i32> zeroinitializer
@@ -1074,23 +1063,19 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit36:  ; preds = %.lr.ph49.split, %_Z
   %i.ge = extractelement <2 x double> %i.fx, i64 0
   %i.gf = tail call double @llvm.fmuladd.f64(double %i.ge, double %i.gd, double %i.fe) ; 2 uses
   %i.gg = add <2 x i64> %i.fi, splat (i64 1)      ; 2 uses
-  %i.gh = fsub <2 x double> %i.fw, %i.fh          ; 3 uses
+  %i.gh = fsub <2 x double> %i.fw, %i.fh          ; 2 uses
   %i.gi = uitofp <2 x i64> %i.gg to <2 x double>
   %i.gj = fdiv <2 x double> %i.gh, %i.gi
-  %i.gk = fadd <2 x double> %i.fh, %i.gj          ; 3 uses
-  %28 = extractelement <2 x double> %i.gk, i64 0  ; 2 uses
-  %29 = fsub double %i.ft, %28
-  %i.gl = extractelement <2 x double> %i.gh, i64 0
-  %30 = fmul double %i.gl, %29
-  %i.gm = fadd double %i.fd, %30                  ; 2 uses
-  %31 = extractelement <2 x double> %i.gk, i64 1  ; 2 uses
-  %32 = fsub double %i.fu, %31
-  %i.gn = extractelement <2 x double> %i.gh, i64 1
-  %33 = fmul double %i.gn, %32
-  %i.go = fadd double %i.fc, %33                  ; 2 uses
+  %i.gk = fadd <2 x double> %i.fh, %i.gj          ; 4 uses
+  %22 = fsub <2 x double> %i.fw, %i.gk
+  %23 = fmul <2 x double> %i.gh, %22              ; 2 uses
+  %i.gl = extractelement <2 x double> %23, i64 0
+  %i.gm = fadd double %i.fd, %i.gl                ; 2 uses
+  %i.gn = extractelement <2 x double> %23, i64 1
+  %i.go = fadd double %i.fc, %i.gn                ; 2 uses
   %i.gp = add nuw i64 %.048, 1                    ; 2 uses
   %exitcond133.not = icmp eq i64 %i.gp, %4
-  br i1 %exitcond133.not, label %..loopexit_crit_edge, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit36, !llvm.loop !612
+  br i1 %exitcond133.not, label %..loopexit_crit_edge.loopexit200, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit36, !llvm.loop !612
 
 ..loopexit_crit_edge.loopexit:                    ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit38.us
   %i.gq = extractelement <2 x double> %i.bl, i64 1
@@ -1099,13 +1084,23 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit36:  ; preds = %.lr.ph49.split, %_Z
   %i.gt = extractelement <2 x double> %i.bi, i64 0
   br label %..loopexit_crit_edge
 
-..loopexit_crit_edge:                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit36, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36.us77, %..loopexit_crit_edge.loopexit
-  %.us-phi = phi double [ %i.cw, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36.us77 ], [ %i.gq, %..loopexit_crit_edge.loopexit ], [ %i.go, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36 ]
-  %.us-phi68 = phi double [ %12, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36.us77 ], [ %i.gs, %..loopexit_crit_edge.loopexit ], [ %31, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36 ]
-  %.us-phi70 = phi double [ %i.cu, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36.us77 ], [ %i.gr, %..loopexit_crit_edge.loopexit ], [ %i.gm, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36 ]
-  %.us-phi71 = phi double [ %9, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36.us77 ], [ %i.gt, %..loopexit_crit_edge.loopexit ], [ %28, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36 ]
-  %.us-phi73 = phi double [ %i.cn, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36.us77 ], [ %i.bd, %..loopexit_crit_edge.loopexit ], [ %i.gf, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36 ]
-  %i.gu = phi <2 x double> [ %i.cj, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36.us77 ], [ %i.az, %..loopexit_crit_edge.loopexit ], [ %i.gb, %_ZNK6duckdb15SelectionVector9get_indexEm.exit36 ]
+..loopexit_crit_edge.loopexit193:                 ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit36.us77
+  %24 = extractelement <2 x double> %i.cs, i64 1
+  %25 = extractelement <2 x double> %i.cs, i64 0
+  br label %..loopexit_crit_edge
+
+..loopexit_crit_edge.loopexit200:                 ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit36
+  %26 = extractelement <2 x double> %i.gk, i64 1
+  %27 = extractelement <2 x double> %i.gk, i64 0
+  br label %..loopexit_crit_edge
+
+..loopexit_crit_edge:                             ; preds = %..loopexit_crit_edge.loopexit200, %..loopexit_crit_edge.loopexit193, %..loopexit_crit_edge.loopexit
+  %.us-phi = phi double [ %i.cw, %..loopexit_crit_edge.loopexit193 ], [ %i.gq, %..loopexit_crit_edge.loopexit ], [ %i.go, %..loopexit_crit_edge.loopexit200 ]
+  %.us-phi68 = phi double [ %24, %..loopexit_crit_edge.loopexit193 ], [ %i.gs, %..loopexit_crit_edge.loopexit ], [ %26, %..loopexit_crit_edge.loopexit200 ]
+  %.us-phi70 = phi double [ %i.cu, %..loopexit_crit_edge.loopexit193 ], [ %i.gr, %..loopexit_crit_edge.loopexit ], [ %i.gm, %..loopexit_crit_edge.loopexit200 ]
+  %.us-phi71 = phi double [ %25, %..loopexit_crit_edge.loopexit193 ], [ %i.gt, %..loopexit_crit_edge.loopexit ], [ %27, %..loopexit_crit_edge.loopexit200 ]
+  %.us-phi73 = phi double [ %i.cn, %..loopexit_crit_edge.loopexit193 ], [ %i.bd, %..loopexit_crit_edge.loopexit ], [ %i.gf, %..loopexit_crit_edge.loopexit200 ]
+  %i.gu = phi <2 x double> [ %i.cj, %..loopexit_crit_edge.loopexit193 ], [ %i.az, %..loopexit_crit_edge.loopexit ], [ %i.gb, %..loopexit_crit_edge.loopexit200 ]
   %.us-phi76 = add i64 %.promoted, %4
   %.us-phi72 = add i64 %.promoted56, %4
   %.us-phi69 = add i64 %.promoted62, %4
@@ -1508,8 +1503,8 @@ bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
   %i.u = load double, ptr %i.t, align 8, !tbaa !595
   %i.v = fadd double %i.s, %i.u
-  %i.w = load <2 x double>, ptr %i.p, align 8, !tbaa !59 ; 3 uses
-  %i.x = load <2 x double>, ptr %i.q, align 8, !tbaa !59 ; 3 uses
+  %i.w = load <2 x double>, ptr %i.p, align 8, !tbaa !59 ; 2 uses
+  %i.x = load <2 x double>, ptr %i.q, align 8, !tbaa !59 ; 2 uses
   %i.y = insertelement <2 x double> poison, double %i.m, i64 0
   %i.z = shufflevector <2 x double> %i.y, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aa = fmul <2 x double> %i.x, %i.z
@@ -1519,10 +1514,9 @@ bb.d:                                             ; preds = %bb.c
   %i.ae = insertelement <2 x double> poison, double %i.o, i64 0
   %i.af = shufflevector <2 x double> %i.ae, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ag = fdiv <2 x double> %i.ad, %i.af
-  %foldExtExtBinop = fsub <2 x double> %i.x, %i.w
-  %foldExtExtBinop7 = fsub <2 x double> %i.x, %i.w
+  %foldExtExtBinop7 = fsub <2 x double> %i.x, %i.w ; 2 uses
   %shift = shufflevector <2 x double> %foldExtExtBinop7, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop9 = fmul <2 x double> %foldExtExtBinop, %shift
+  %foldExtExtBinop9 = fmul <2 x double> %foldExtExtBinop7, %shift
   %i.ah = extractelement <2 x double> %foldExtExtBinop9, i64 0
   %i.ai = fmul double %i.ah, %i.n
   %i.aj = fmul double %i.ai, %i.m
@@ -1925,8 +1919,8 @@ bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
   %i.u = load double, ptr %i.t, align 8, !tbaa !595
   %i.v = fadd double %i.s, %i.u
-  %i.w = load <2 x double>, ptr %i.p, align 8, !tbaa !59 ; 3 uses
-  %i.x = load <2 x double>, ptr %i.q, align 8, !tbaa !59 ; 3 uses
+  %i.w = load <2 x double>, ptr %i.p, align 8, !tbaa !59 ; 2 uses
+  %i.x = load <2 x double>, ptr %i.q, align 8, !tbaa !59 ; 2 uses
   %i.y = insertelement <2 x double> poison, double %i.m, i64 0
   %i.z = shufflevector <2 x double> %i.y, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aa = fmul <2 x double> %i.x, %i.z
@@ -1936,10 +1930,9 @@ bb.d:                                             ; preds = %bb.c
   %i.ae = insertelement <2 x double> poison, double %i.o, i64 0
   %i.af = shufflevector <2 x double> %i.ae, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ag = fdiv <2 x double> %i.ad, %i.af
-  %foldExtExtBinop = fsub <2 x double> %i.x, %i.w
-  %foldExtExtBinop7 = fsub <2 x double> %i.x, %i.w
+  %foldExtExtBinop7 = fsub <2 x double> %i.x, %i.w ; 2 uses
   %shift = shufflevector <2 x double> %foldExtExtBinop7, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop9 = fmul <2 x double> %foldExtExtBinop, %shift
+  %foldExtExtBinop9 = fmul <2 x double> %foldExtExtBinop7, %shift
   %i.ah = extractelement <2 x double> %foldExtExtBinop9, i64 0
   %i.ai = fmul double %i.ah, %i.n
   %i.aj = fmul double %i.ai, %i.m

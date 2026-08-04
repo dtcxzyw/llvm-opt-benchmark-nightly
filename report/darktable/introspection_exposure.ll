@@ -204,7 +204,7 @@ define internal noundef i32 @_origin_color_draw(ptr noundef %0, ptr noundef %1, 
 bb.a:
   %3 = alloca %struct._cairo_rectangle_int, align 4 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 704
-  %i.b = load ptr, ptr %i.a, align 16, !tbaa !96  ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 16, !tbaa !96  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @gtk_widget_get_allocation(ptr noundef %0, ptr noundef nonnull %3) #22
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -241,12 +241,11 @@ bb.a:
   %i.ag = load float, ptr %i.af, align 16, !tbaa !14
   %i.ah = fpext reassoc nsz arcp contract afn float %i.ag to double
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 212
-  %4 = load float, ptr %i.ai, align 4, !tbaa !14
-  %5 = fpext reassoc nsz arcp contract afn float %4 to double
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 216
-  %7 = load float, ptr %6, align 8, !tbaa !14
-  %8 = fpext reassoc nsz arcp contract afn float %7 to double
-  call void @cairo_set_source_rgb(ptr noundef %i.t, double noundef %i.ah, double noundef %5, double noundef %8) #22
+  %4 = load <2 x float>, ptr %i.ai, align 4, !tbaa !14
+  %5 = fpext <2 x float> %4 to <2 x double>       ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = extractelement <2 x double> %5, i64 1
+  call void @cairo_set_source_rgb(ptr noundef %i.t, double noundef %i.ah, double noundef %6, double noundef %7) #22
   %i.aj = fpext reassoc nsz arcp contract afn float %i.y to double
   %i.ak = sitofp reassoc nsz arcp contract afn i32 %i.aa to double
   %i.al = sitofp reassoc nsz arcp contract afn i32 %i.ae to double
@@ -267,7 +266,7 @@ declare ptr @gtk_label_new(ptr noundef) local_unnamed_addr #3
 define internal noundef i32 @_target_color_draw(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2) #1 {
 bb.a:
   %3 = alloca %struct._cairo_rectangle_int, align 4 ; 5 uses
-  %i.a = alloca [4 x float], align 16             ; 6 uses
+  %i.a = alloca [4 x float], align 16             ; 5 uses
   %i.b = alloca [4 x float], align 16             ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 704
   %i.d = load ptr, ptr %i.c, align 16, !tbaa !96
@@ -326,12 +325,11 @@ bb.a:
   %i.ax = load float, ptr %i.a, align 16, !tbaa !14
   %i.ay = fpext reassoc nsz arcp contract afn float %i.ax to double
   %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %4 = load float, ptr %i.az, align 4, !tbaa !14
-  %5 = fpext reassoc nsz arcp contract afn float %4 to double
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %7 = load float, ptr %6, align 8, !tbaa !14
-  %8 = fpext reassoc nsz arcp contract afn float %7 to double
-  call void @cairo_set_source_rgb(ptr noundef %i.v, double noundef %i.ay, double noundef %5, double noundef %8) #22
+  %4 = load <2 x float>, ptr %i.az, align 4, !tbaa !14
+  %5 = fpext <2 x float> %4 to <2 x double>       ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = extractelement <2 x double> %5, i64 1
+  call void @cairo_set_source_rgb(ptr noundef %i.v, double noundef %i.ay, double noundef %6, double noundef %7) #22
   %i.ba = fpext reassoc nsz arcp contract afn float %i.aa to double
   %i.bb = sitofp reassoc nsz arcp contract afn i32 %i.ac to double
   %i.bc = sitofp reassoc nsz arcp contract afn i32 %i.ag to double

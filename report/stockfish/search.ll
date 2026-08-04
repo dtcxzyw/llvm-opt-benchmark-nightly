@@ -204,7 +204,10 @@ bb.bj:                                            ; preds = %bb.bi
   %i.yv = fdiv double 8.500000e-01, %i.yu
   %i.yw = fadd double %i.yv, 6.600000e-01         ; 4 uses
   %i.yx = load double, ptr %i.ng, align 8, !tbaa !284
-  %i.yy = fmul double %i.yw, 2.280000e+00
+  %9 = fadd double %i.yx, 1.430000e+00
+  %10 = fmul double %i.yw, 2.280000e+00
+  %11 = fdiv double %9, %10
+  %i.yy = fmul double %.2141.lcssa, 2.140000e+00
   %i.yz = load ptr, ptr %i.mj, align 64, !tbaa !220, !nonnull !48, !align !49 ; 2 uses
   %i.za = getelementptr inbounds nuw i8, ptr %i.yz, i64 16
   %i.zb = getelementptr inbounds nuw i8, ptr %i.yz, i64 24
@@ -215,22 +218,14 @@ bb.bj:                                            ; preds = %bb.bi
   %i.zg = sub i64 %i.ze, %i.zf
   %i.zh = ashr exact i64 %i.zg, 3
   %i.zi = uitofp i64 %i.zh to double
-  %9 = fmul double %.2141.lcssa, 2.140000e+00
-  %10 = fadd double %i.yx, 1.430000e+00
-  %11 = insertelement <2 x double> poison, double %10, i64 0
-  %12 = insertelement <2 x double> %11, double %9, i64 1
-  %13 = insertelement <2 x double> poison, double %i.yy, i64 0
-  %14 = insertelement <2 x double> %13, double %i.zi, i64 1
-  %15 = fdiv <2 x double> %12, %14                ; 2 uses
-  %16 = extractelement <2 x double> %15, i64 1
-  %i.zj = fadd double %16, 1.020000e+00
+  %12 = fdiv double %i.yy, %i.zi
+  %i.zj = fadd double %12, 1.020000e+00
   %i.zk = icmp ugt i64 %i.xy, 93339
   %i.zl = select i1 %i.zk, double 7.600000e-01, double 1.000000e+00
   %i.zm = call noundef i64 @_ZNK9Stockfish14TimeManagement7optimumEv(ptr noundef nonnull align 8 dereferenceable(33) %i.nh) #33
   %i.zn = sitofp i64 %i.zm to double
   %i.zo = fmul double %.sroa.speculated241, %i.zn
-  %17 = extractelement <2 x double> %15, i64 0
-  %i.zp = fmul double %17, %i.zo
+  %i.zp = fmul double %11, %i.zo
   %i.zq = fmul double %i.zp, %i.zj
   %i.zr = fmul double %i.zl, %i.zq                ; 2 uses
   %i.zs = load ptr, ptr %i.dc, align 32, !tbaa !193
@@ -633,15 +628,18 @@ _ZN9Stockfish10MultiArrayINS_16CorrectionBundleIsLi1024EEELm2EJEE2atEm.exit35: ;
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %i.ac
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.e
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 2 ; 2 uses
-  %3 = mul nsw i32 %2, 156
-  %4 = sdiv i32 %3, 128
-  %.sroa.speculate.load.false.sroa.speculated.i28 = tail call i32 @llvm.smax.i32(i32 %4, i32 -1024)
-  %.sroa.speculated.i29 = tail call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i28, i32 1024) ; 2 uses
-  %5 = load atomic i16, ptr %i.ag monotonic, align 2
-  %6 = sext i16 %5 to i32                         ; 2 uses
-  %i.ah = add nsw i32 %.sroa.speculated.i29, %6
+  %3 = insertelement <2 x i32> poison, i32 %2, i64 0
+  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
+  %5 = mul nsw <2 x i32> %4, <i32 156, i32 178>
+  %6 = load atomic i16, ptr %i.ag monotonic, align 2
+  %7 = sext i16 %6 to i32                         ; 2 uses
+  %8 = sdiv <2 x i32> %5, splat (i32 128)
+  %9 = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %8, <2 x i32> splat (i32 -1024)) ; 2 uses
+  %10 = extractelement <2 x i32> %9, i64 0
+  %.sroa.speculated.i29 = tail call i32 @llvm.smin.i32(i32 %10, i32 1024) ; 2 uses
+  %i.ah = add nsw i32 %.sroa.speculated.i29, %7
   %i.ai = tail call i32 @llvm.abs.i32(i32 %.sroa.speculated.i29, i1 true)
-  %i.aj = mul nsw i32 %i.ai, %6
+  %i.aj = mul nsw i32 %i.ai, %7
   %.neg.i30 = sdiv i32 %i.aj, -1024
   %i.ak = add nsw i32 %i.ah, %.neg.i30
   %i.al = trunc i32 %i.ak to i16
@@ -655,10 +653,8 @@ _ZN9Stockfish10MultiArrayINS_16CorrectionBundleIsLi1024EEELm2EJEE2atEm.exit35: ;
   %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.ar, i64 %i.aq
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %i.e
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 4 ; 2 uses
-  %7 = mul nsw i32 %2, 178
-  %8 = sdiv i32 %7, 128
-  %.sroa.speculate.load.false.sroa.speculated.i32 = tail call i32 @llvm.smax.i32(i32 %8, i32 -1024)
-  %.sroa.speculated.i33 = tail call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i32, i32 1024) ; 3 uses
+  %11 = extractelement <2 x i32> %9, i64 1
+  %.sroa.speculated.i33 = tail call i32 @llvm.smin.i32(i32 %11, i32 1024) ; 3 uses
   %i.av = load atomic i16, ptr %i.au monotonic, align 2
   %i.aw = sext i16 %i.av to i32                   ; 2 uses
   %i.ax = add nsw i32 %.sroa.speculated.i33, %i.aw
@@ -700,28 +696,27 @@ bb.c:                                             ; preds = %_ZN9Stockfish10Mult
   %i.bx = zext i8 %i.bu to i64                    ; 2 uses
   %i.by = getelementptr inbounds nuw [128 x i8], ptr %i.bw, i64 %i.bx
   %i.bz = getelementptr inbounds nuw [2 x i8], ptr %i.by, i64 %i.bs ; 2 uses
-  %9 = mul nsw i32 %2, 127
-  %10 = sdiv i32 %9, 128
-  %.sroa.speculate.load.false.sroa.speculated.i39 = tail call i32 @llvm.smax.i32(i32 %10, i32 -1024)
-  %.sroa.speculated.i40 = tail call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i39, i32 1024) ; 2 uses
-  %11 = load i16, ptr %i.bz, align 2, !tbaa !165
-  %12 = sext i16 %11 to i32                       ; 2 uses
-  %13 = add nsw i32 %.sroa.speculated.i40, %12
-  %14 = tail call i32 @llvm.abs.i32(i32 %.sroa.speculated.i40, i1 true)
-  %15 = mul nsw i32 %14, %12
-  %.neg.i41 = sdiv i32 %15, -1024
-  %16 = add nsw i32 %13, %.neg.i41
-  %17 = trunc i32 %16 to i16
-  store i16 %17, ptr %i.bz, align 2, !tbaa !165
-  %18 = getelementptr inbounds i8, ptr %1, i64 -208
-  %19 = load ptr, ptr %18, align 8, !tbaa !251
-  %20 = getelementptr inbounds nuw [128 x i8], ptr %19, i64 %i.bx
-  %21 = getelementptr inbounds nuw [2 x i8], ptr %20, i64 %i.bs ; 2 uses
-  %22 = mul nsw i32 %2, 59
-  %23 = sdiv i32 %22, 128
-  %.sroa.speculate.load.false.sroa.speculated.i42 = tail call i32 @llvm.smax.i32(i32 %23, i32 -1024)
-  %.sroa.speculated.i43 = tail call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i42, i32 1024) ; 2 uses
-  %i.ca = load i16, ptr %21, align 2, !tbaa !165
+  %12 = mul nsw <2 x i32> %4, <i32 127, i32 59>
+  %13 = load i16, ptr %i.bz, align 2, !tbaa !165
+  %14 = sext i16 %13 to i32                       ; 2 uses
+  %15 = getelementptr inbounds i8, ptr %1, i64 -208
+  %16 = load ptr, ptr %15, align 8, !tbaa !251
+  %17 = getelementptr inbounds nuw [128 x i8], ptr %16, i64 %i.bx
+  %18 = getelementptr inbounds nuw [2 x i8], ptr %17, i64 %i.bs ; 2 uses
+  %19 = sdiv <2 x i32> %12, splat (i32 128)
+  %20 = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %19, <2 x i32> splat (i32 -1024)) ; 2 uses
+  %21 = extractelement <2 x i32> %20, i64 0
+  %.sroa.speculated.i40 = tail call i32 @llvm.smin.i32(i32 %21, i32 1024) ; 2 uses
+  %22 = add nsw i32 %.sroa.speculated.i40, %14
+  %23 = tail call i32 @llvm.abs.i32(i32 %.sroa.speculated.i40, i1 true)
+  %24 = mul nsw i32 %23, %14
+  %.neg.i41 = sdiv i32 %24, -1024
+  %25 = add nsw i32 %22, %.neg.i41
+  %26 = trunc i32 %25 to i16
+  store i16 %26, ptr %i.bz, align 2, !tbaa !165
+  %27 = extractelement <2 x i32> %20, i64 1
+  %.sroa.speculated.i43 = tail call i32 @llvm.smin.i32(i32 %27, i32 1024) ; 2 uses
+  %i.ca = load i16, ptr %18, align 2, !tbaa !165
   %i.cb = sext i16 %i.ca to i32                   ; 2 uses
   %i.cc = add nsw i32 %.sroa.speculated.i43, %i.cb
   %i.cd = tail call i32 @llvm.abs.i32(i32 %.sroa.speculated.i43, i1 true)
@@ -729,7 +724,7 @@ bb.c:                                             ; preds = %_ZN9Stockfish10Mult
   %.neg.i44 = sdiv i32 %i.ce, -1024
   %i.cf = add nsw i32 %i.cc, %.neg.i44
   %i.cg = trunc i32 %i.cf to i16
-  store i16 %i.cg, ptr %21, align 2, !tbaa !165
+  store i16 %i.cg, ptr %18, align 2, !tbaa !165
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN9Stockfish10MultiArrayINS_16CorrectionBundleIsLi1024EEELm2EJEE2atEm.exit35, %_ZN9Stockfish10MultiArrayINS_16CorrectionBundleIsLi1024EEELm2EJEE2atEm.exit35, %bb.c
@@ -1131,6 +1126,9 @@ declare i32 @llvm.vector.reduce.add.v16i32(<16 x i32>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="znver5" "target-features"="+adx,+aes,+avx,+avx2,+avx512bf16,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vp2intersect,+avx512vpopcntdq,+avxvnni,+bmi,+bmi2,+clflushopt,+clwb,+clzero,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+movdir64b,+movdiri,+mwaitx,+pclmul,+pku,+popcnt,+prefetchi,+prfchw,+rdpid,+rdpru,+rdrnd,+rdseed,+sahf,+sha,+shstk,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+sse4a,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nofree nounwind }

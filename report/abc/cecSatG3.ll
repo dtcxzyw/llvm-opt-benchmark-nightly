@@ -203,11 +203,8 @@ bb.cv:                                            ; preds = %.loopexit
   %i.wv = sub nsw <2 x i32> %i.wj, %i.wu
   %i.ww = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.wv, <2 x i32> splat (i32 1))
   %i.wx = uitofp nneg <2 x i32> %i.ww to <2 x float>
-  %i.wy = fdiv <2 x float> %i.wt, %i.wx           ; 2 uses
-  %10 = extractelement <2 x float> %i.wy, i64 1
-  %11 = fpext float %10 to double
-  %12 = extractelement <2 x float> %i.wy, i64 0
-  %13 = fpext float %12 to double
+  %i.wy = fdiv <2 x float> %i.wt, %i.wx
+  %10 = fpext <2 x float> %i.wy to <2 x double>   ; 2 uses
   %i.wz = getelementptr inbounds nuw i8, ptr %i.a, i64 220
   %i.xa = load i32, ptr %i.wz, align 4, !tbaa !22
   %i.xb = getelementptr inbounds nuw i8, ptr %i.a, i64 204
@@ -224,7 +221,9 @@ bb.cv:                                            ; preds = %.loopexit
   %i.xm = call noundef i32 @llvm.smax.i32(i32 %i.xl, i32 1)
   %i.xn = uitofp nneg i32 %i.xm to double
   %i.xo = fdiv double %i.xj, %i.xn
-  %i.xp = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.38, i32 noundef %i.wn, i32 noundef %i.wl, i32 noundef %i.wp, double noundef %11, i32 noundef %i.wi, i32 noundef %i.wk, i32 noundef %i.wr, double noundef %13, i32 noundef %i.xa, i32 noundef %i.we, i32 noundef %i.xc, i32 noundef %i.xe, double noundef %i.xo) ; 0 uses
+  %11 = extractelement <2 x double> %10, i64 0
+  %12 = extractelement <2 x double> %10, i64 1
+  %i.xp = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.38, i32 noundef %i.wn, i32 noundef %i.wl, i32 noundef %i.wp, double noundef %12, i32 noundef %i.wi, i32 noundef %i.wk, i32 noundef %i.wr, double noundef %11, i32 noundef %i.xa, i32 noundef %i.we, i32 noundef %i.xc, i32 noundef %i.xe, double noundef %i.xo) ; 0 uses
   br label %.thread484
 
 .thread484:                                       ; preds = %bb.ct, %bb.cv, %.loopexit

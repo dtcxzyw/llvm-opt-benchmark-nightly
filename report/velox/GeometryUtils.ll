@@ -203,19 +203,17 @@ bb.k:                                             ; preds = %._crit_edge
   %i.bo = load double, ptr %i.bn, align 8, !tbaa !241
   %i.bp = call double @atan2(double noundef %sqrt.i, double noundef %i.bo) #26
   %i.bq = call double @atan2(double noundef %i.bk, double noundef %i.bh) #26
-  %6 = insertelement <2 x double> poison, double %i.bp, i64 0
-  %7 = insertelement <2 x double> %6, double %i.bq, i64 1
-  %8 = fmul <2 x double> %7, splat (double 1.800000e+02)
-  %9 = fdiv <2 x double> %8, splat (double f0x400921FB54442D18) ; 2 uses
-  %10 = extractelement <2 x double> %9, i64 0
-  %11 = fsub double 9.000000e+01, %10
+  %6 = fmul double %i.bp, 1.800000e+02
+  %7 = fdiv double %6, f0x400921FB54442D18
+  %8 = fsub double 9.000000e+01, %7
+  %9 = fmul double %i.bq, 1.800000e+02
+  %10 = fdiv double %9, f0x400921FB54442D18
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
-  %12 = extractelement <2 x double> %9, i64 1
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.d
-  %.sroa.0.0 = phi double [ %i.n, %bb.d ], [ %12, %bb.k ]
-  %.sroa.3.0 = phi double [ %i.o, %bb.d ], [ %11, %bb.k ]
+  %.sroa.0.0 = phi double [ %i.n, %bb.d ], [ %10, %bb.k ]
+  %.sroa.3.0 = phi double [ %i.o, %bb.d ], [ %8, %bb.k ]
   %.fca.0.insert = insertvalue { double, double } poison, double %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %.sroa.3.0, 1
   ret { double, double } %.fca.1.insert

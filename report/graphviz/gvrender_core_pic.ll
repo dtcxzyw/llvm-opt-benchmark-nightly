@@ -1,3 +1,7 @@
+inline.NumInlined: 13
+inline.NumDeleted: 10
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@pic_begin_page:bb.a
   %.0.i = phi double [ %i.v, %bb.e ], [ 3.000000e+00, %bb.d ]
   %.046 = select i1 %i.n, double %i.o, double %i.p ; 2 uses
@@ -199,23 +203,17 @@ font_size_eq.exit.thread:                         ; preds = %._crit_edge68, %fon
   %i.az = phi ptr [ %i.ap, %._crit_edge68 ], [ %i.ar, %font_size_eq.exit ] ; 2 uses
   %i.ba = phi double [ %i.ao, %._crit_edge68 ], [ %i.as, %font_size_eq.exit ] ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 584
-  %.sroa.05.0.copyload.i = load i32, ptr %i.bb, align 8, !tbaa !43
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 588
-  %.sroa.4.0.copyload.i = load i32, ptr %.sroa.4.0..sroa_idx.i, align 4, !tbaa !43
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 592
-  %.sroa.5.0.copyload.i = load i32, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !43
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 596
-  %.sroa.6.0.copyload.i = load i32, ptr %.sroa.6.0..sroa_idx.i, align 4, !tbaa !43
-  %4 = sitofp i32 %.sroa.6.0.copyload.i to double
-  %5 = sitofp i32 %.sroa.4.0.copyload.i to double
-  %6 = fsub double %4, %5
-  %7 = sitofp i32 %.sroa.5.0.copyload.i to double
-  %8 = sitofp i32 %.sroa.05.0.copyload.i to double
-  %9 = fsub double %7, %8
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 488
-  %11 = load i32, ptr %10, align 8, !tbaa !42
-  %12 = icmp eq i32 %11, 90
-  %.v = select i1 %12, double %6, double %9
+  %4 = load <4 x i32>, ptr %i.bb, align 8, !tbaa !43
+  %5 = sitofp <4 x i32> %4 to <4 x double>        ; 2 uses
+  %6 = shufflevector <4 x double> %5, <4 x double> poison, <2 x i32> <i32 2, i32 3>
+  %7 = shufflevector <4 x double> %5, <4 x double> poison, <2 x i32> <i32 0, i32 1>
+  %8 = fsub <2 x double> %6, %7                   ; 2 uses
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 488
+  %.sroa.6.0.copyload.i = load i32, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !42
+  %9 = icmp eq i32 %.sroa.6.0.copyload.i, 90
+  %10 = extractelement <2 x double> %8, i64 0
+  %11 = extractelement <2 x double> %8, i64 1
+  %.v = select i1 %9, double %11, double %10
   %i.bc = fdiv double %.v, 7.200000e+01           ; 2 uses
   %i.bd = fcmp ogt double %i.bc, 0.000000e+00
   br i1 %i.bd, label %bb.l, label %get_fontscale.exit

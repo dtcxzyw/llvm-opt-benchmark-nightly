@@ -68,12 +68,11 @@ _ZN4geos9algorithm8CentroidC2ERKNS_4geom8GeometryE.exit: ; preds = %bb.a
 
 bb.c:                                             ; preds = %_ZN4geos9algorithm8CentroidC2ERKNS_4geom8GeometryE.exit
   %i.m = load <2 x double>, ptr %i.b, align 8, !tbaa !22
-  %i.n = fdiv <2 x double> %i.m, <double 3.000000e+00, double 1.000000e+00>
-  %3 = insertelement <2 x double> <double poison, double 3.000000e+00>, double %i.k, i64 0
-  %4 = fdiv <2 x double> %i.n, %3                 ; 2 uses
-  %5 = extractelement <2 x double> %4, i64 0
-  store double %5, ptr %1, align 8, !tbaa !23
-  %i.o = extractelement <2 x double> %4, i64 1
+  %i.n = fdiv <2 x double> %i.m, splat (double 3.000000e+00) ; 2 uses
+  %3 = extractelement <2 x double> %i.n, i64 0
+  %4 = fdiv double %3, %i.k
+  store double %4, ptr %1, align 8, !tbaa !23
+  %i.o = extractelement <2 x double> %i.n, i64 1
   %i.p = fdiv double %i.o, %i.k
   br label %.sink.split.i
 
@@ -145,12 +144,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load <2 x double>, ptr %i.d, align 8, !tbaa !22
-  %i.f = fdiv <2 x double> %i.e, <double 3.000000e+00, double 1.000000e+00>
-  %2 = insertelement <2 x double> <double poison, double 3.000000e+00>, double %i.b, i64 0
-  %3 = fdiv <2 x double> %i.f, %2                 ; 2 uses
-  %4 = extractelement <2 x double> %3, i64 0
-  store double %4, ptr %1, align 8, !tbaa !23
-  %i.g = extractelement <2 x double> %3, i64 1
+  %i.f = fdiv <2 x double> %i.e, splat (double 3.000000e+00) ; 2 uses
+  %2 = extractelement <2 x double> %i.f, i64 0
+  %3 = fdiv double %2, %i.b
+  store double %3, ptr %1, align 8, !tbaa !23
+  %i.g = extractelement <2 x double> %i.f, i64 1
   %i.h = fdiv double %i.g, %i.b
   br label %.sink.split
 

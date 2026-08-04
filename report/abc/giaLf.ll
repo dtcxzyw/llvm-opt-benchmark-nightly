@@ -204,7 +204,7 @@ bb.a:
   %i.d = getelementptr inbounds [4 x i8], ptr %.val43, i64 %i.c
   %i.e = load i32, ptr %i.d, align 4, !tbaa !43
   %i.f = sext i32 %i.e to i64
-  %i.g = getelementptr inbounds [32 x i8], ptr %.val, i64 %i.f ; 6 uses
+  %i.g = getelementptr inbounds [32 x i8], ptr %.val, i64 %i.f ; 5 uses
   %i.h = getelementptr i8, ptr %0, i64 192        ; 2 uses
   %.val47 = load ptr, ptr %i.h, align 8, !tbaa !42
   %i.i = getelementptr inbounds [4 x i8], ptr %.val47, i64 %i.c
@@ -236,14 +236,13 @@ bb.c:                                             ; preds = %Gia_ObjIsMuxId.exit
   br i1 %i.t, label %Lf_ManSetMuxCut.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.u = getelementptr inbounds nuw i8, ptr %i.g, i64 20
-  %2 = load float, ptr %i.u, align 4, !tbaa !66
-  %3 = fpext float %2 to double
-  %4 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %5 = load float, ptr %4, align 4, !tbaa !66
-  %6 = fpext float %5 to double
-  %7 = fmul double %6, 1.100000e+00
-  %i.v = fcmp olt double %7, %3
+  %i.u = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  %2 = load <2 x float>, ptr %i.u, align 4, !tbaa !66
+  %3 = fpext <2 x float> %2 to <2 x double>       ; 2 uses
+  %4 = extractelement <2 x double> %3, i64 0
+  %5 = fmul double %4, 1.100000e+00
+  %6 = extractelement <2 x double> %3, i64 1
+  %i.v = fcmp olt double %5, %6
   br i1 %i.v, label %Lf_ManSetMuxCut.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d

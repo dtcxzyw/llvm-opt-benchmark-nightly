@@ -201,14 +201,14 @@ _ZN7testing8internal8EqHelper7CompareIN4absl12lts_202605267uint128ES5_TnPNSt9ena
   %13 = alloca %"class.testing::Message", align 8 ; 7 uses
   %14 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %15 = alloca %"class.absl::lts_20260526::uint128", align 16 ; 7 uses
-  %16 = alloca %"class.absl::lts_20260526::uint128", align 16 ; 7 uses
+  %16 = alloca %"class.absl::lts_20260526::uint128", align 16 ; 6 uses
   %17 = alloca %"class.testing::AssertionResult", align 8 ; 9 uses
   %18 = alloca %"class.testing::Message", align 8 ; 7 uses
   %19 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %20 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
   %21 = alloca %"class.testing::Message", align 8 ; 7 uses
   %22 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
-  %23 = alloca %"class.absl::lts_20260526::uint128", align 16 ; 6 uses
+  %23 = alloca %"class.absl::lts_20260526::uint128", align 16 ; 5 uses
   %24 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
   %25 = alloca %"class.testing::Message", align 8 ; 7 uses
   %26 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
@@ -611,7 +611,6 @@ _ZN7testing15AssertionResultD2Ev.exit161:         ; preds = %bb.aw, %_ZNKSt14def
   %.sroa.01.0.copyload.i.i162 = load i64, ptr %15, align 16, !tbaa !38, !noalias !556
   %.sroa.22.0..sroa_idx.i.i163 = getelementptr inbounds nuw i8, ptr %15, i64 8
   %.sroa.22.0.copyload.i.i164 = load i64, ptr %.sroa.22.0..sroa_idx.i.i163, align 8, !tbaa !38, !noalias !556
-  %.sroa.2.0..sroa_idx.i.i166 = getelementptr inbounds nuw i8, ptr %16, i64 8
   %i.dy = zext i64 %.sroa.22.0.copyload.i.i164 to i128
   %i.dz = shl nuw i128 %i.dy, 64
   %i.ea = zext i64 %.sroa.01.0.copyload.i.i162 to i128
@@ -737,11 +736,11 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 _ZN7testing15AssertionResultD2Ev.exit181:         ; preds = %bb.bj, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i179
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #24
-  %53 = load i64, ptr %16, align 16, !tbaa !538
-  %54 = uitofp i64 %53 to double
-  %55 = load i64, ptr %.sroa.2.0..sroa_idx.i.i166, align 8, !tbaa !540
-  %56 = uitofp i64 %55 to double
-  %i.fb = call noundef double @llvm.fmuladd.f64(double %56, double f0x43F0000000000000, double %54)
+  %53 = load <2 x i64>, ptr %16, align 16, !tbaa !38
+  %54 = uitofp <2 x i64> %53 to <2 x double>      ; 2 uses
+  %55 = extractelement <2 x double> %54, i64 0
+  %56 = extractelement <2 x double> %54, i64 1
+  %i.fb = call noundef double @llvm.fmuladd.f64(double %56, double f0x43F0000000000000, double %55)
   call void @_ZN7testing8internal24CmpHelperFloatingPointEQIdEENS_15AssertionResultEPKcS4_T_S5_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %20, ptr noundef nonnull @.str.212, ptr noundef nonnull @.str.213, double noundef %i.fb, double noundef f0x44D4C3B69D000000)
   %i.fc = load i8, ptr %20, align 8, !tbaa !265, !range !274, !noundef !282
   %i.fd = trunc nuw i8 %i.fc to i1
@@ -854,12 +853,11 @@ _ZN7testing15AssertionResultD2Ev.exit194:         ; preds = %bb.bu, %_ZNKSt14def
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #24
   call void @_ZN4absl12lts_202605267uint128C1Ed(ptr noundef nonnull align 16 dereferenceable(16) %23, double noundef f0x47EFFFFDDDDBBBBA)
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #24
-  %57 = load i64, ptr %23, align 16, !tbaa !538
-  %58 = uitofp i64 %57 to double
-  %59 = getelementptr inbounds nuw i8, ptr %23, i64 8
-  %60 = load i64, ptr %59, align 8, !tbaa !540
-  %61 = uitofp i64 %60 to double
-  %i.ga = call noundef double @llvm.fmuladd.f64(double %61, double f0x43F0000000000000, double %58)
+  %57 = load <2 x i64>, ptr %23, align 16, !tbaa !38
+  %58 = uitofp <2 x i64> %57 to <2 x double>      ; 2 uses
+  %59 = extractelement <2 x double> %58, i64 0
+  %60 = extractelement <2 x double> %58, i64 1
+  %i.ga = call noundef double @llvm.fmuladd.f64(double %60, double f0x43F0000000000000, double %59)
   call void @_ZN7testing8internal24CmpHelperFloatingPointEQIdEENS_15AssertionResultEPKcS4_T_S5_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %24, ptr noundef nonnull @.str.214, ptr noundef nonnull @.str.215, double noundef %i.ga, double noundef f0x47EFFFFDDDDBBBBA)
   %i.gb = load i8, ptr %24, align 8, !tbaa !265, !range !274, !noundef !282
   %i.gc = trunc nuw i8 %i.gb to i1

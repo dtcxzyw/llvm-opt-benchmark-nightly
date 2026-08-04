@@ -58,7 +58,7 @@ bb.a:
   %4 = alloca %"class.OpenColorIO_v2_5::GpuShaderText::GpuShaderLine", align 8 ; 7 uses
   %5 = alloca %"class.OpenColorIO_v2_5::GpuShaderText::GpuShaderLine", align 8 ; 7 uses
   %6 = alloca %"class.OpenColorIO_v2_5::GpuShaderText::GpuShaderLine", align 8 ; 7 uses
-  %7 = alloca %"class.OpenColorIO_v2_5::MatrixOpData::Offsets", align 8 ; 8 uses
+  %7 = alloca %"class.OpenColorIO_v2_5::MatrixOpData::Offsets", align 16 ; 6 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
   %9 = alloca %"class.OpenColorIO_v2_5::GpuShaderText::GpuShaderLine", align 8 ; 7 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -461,18 +461,16 @@ bb.cq:                                            ; preds = %bb.cp
 
 bb.cr:                                            ; preds = %bb.cq
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #10
-  %35 = load double, ptr %7, align 8, !tbaa !23
-  %36 = fptrunc double %35 to float
-  %i.jr = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %37 = load double, ptr %i.jr, align 8, !tbaa !23
-  %38 = fptrunc double %37 to float
-  %39 = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %40 = load double, ptr %39, align 8, !tbaa !23
-  %41 = fptrunc double %40 to float
-  %42 = getelementptr inbounds nuw i8, ptr %7, i64 24
-  %43 = load double, ptr %42, align 8, !tbaa !23
-  %44 = fptrunc double %43 to float
-  invoke void @_ZNK16OpenColorIO_v2_513GpuShaderText11float4ConstB5cxx11Effff(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %26, ptr noundef nonnull align 8 dereferenceable(764) %2, float noundef %36, float noundef %38, float noundef %41, float noundef %44)
+  %35 = load <2 x double>, ptr %7, align 16, !tbaa !23
+  %36 = fptrunc <2 x double> %35 to <2 x float>   ; 2 uses
+  %i.jr = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %37 = load <2 x double>, ptr %i.jr, align 16, !tbaa !23
+  %38 = fptrunc <2 x double> %37 to <2 x float>   ; 2 uses
+  %39 = extractelement <2 x float> %36, i64 0
+  %40 = extractelement <2 x float> %36, i64 1
+  %41 = extractelement <2 x float> %38, i64 0
+  %42 = extractelement <2 x float> %38, i64 1
+  invoke void @_ZNK16OpenColorIO_v2_513GpuShaderText11float4ConstB5cxx11Effff(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %26, ptr noundef nonnull align 8 dereferenceable(764) %2, float noundef %39, float noundef %40, float noundef %41, float noundef %42)
           to label %bb.cs unwind label %bb.cx
 
 bb.cs:                                            ; preds = %bb.cr

@@ -204,12 +204,11 @@ bb.q:                                             ; preds = %bb.p
   %i.bl = fpext reassoc nsz arcp contract afn float %i.az to double
   %i.bm = fpext reassoc nsz arcp contract afn float %.pre242 to double
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %4 = load float, ptr %i.bn, align 4, !tbaa !102
-  %5 = fpext reassoc nsz arcp contract afn float %4 to double
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %7 = load float, ptr %6, align 8, !tbaa !102
-  %8 = fpext reassoc nsz arcp contract afn float %7 to double
-  %i.bo = tail call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.105, double noundef %i.bl, double noundef %i.bm, double noundef %5, double noundef %8, ptr noundef nonnull %.1136) #24
+  %4 = load <2 x float>, ptr %i.bn, align 4, !tbaa !102
+  %5 = fpext <2 x float> %4 to <2 x double>       ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = extractelement <2 x double> %5, i64 1
+  %i.bo = tail call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.105, double noundef %i.bl, double noundef %i.bm, double noundef %6, double noundef %7, ptr noundef nonnull %.1136) #24
   br label %.loopexit
 
 ._crit_edge238:                                   ; preds = %bb.a

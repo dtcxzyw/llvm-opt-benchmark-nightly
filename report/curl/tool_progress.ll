@@ -1,3 +1,7 @@
+inline.NumInlined: 12
+inline.NumDeleted: 1
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@progress_meter:bb.a
   %i.q = load i32, ptr @progress_meter.stamp.1, align 8
   %i.r = tail call i64 @curlx_timediff_ms(i64 %i.n, i32 %i.o, i64 %i.p, i32 %i.q) #6
@@ -199,11 +203,11 @@ bb.w:                                             ; preds = %.thread, %bb.v
   %i.cb = load i32, ptr @speedindex, align 4, !tbaa !34
   %i.cc = zext i32 %i.cb to i64
   %i.cd = getelementptr inbounds nuw [32 x i8], ptr @speedstore, i64 %i.cc ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
-  %4 = load i64, ptr %3, align 8, !tbaa !40
-  %5 = load i64, ptr %i.cd, align 16, !tbaa !38
-  %6 = sub nsw i64 %.0105.lcssa, %5
-  %i.ce = sub nsw i64 %.0104.lcssa, %4
+  %3 = load i64, ptr %i.cd, align 16, !tbaa !38
+  %4 = sub nsw i64 %.0105.lcssa, %3
+  %5 = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
+  %6 = load i64, ptr %5, align 8, !tbaa !40
+  %i.ce = sub nsw i64 %.0104.lcssa, %6
   br label %bb.y
 
 bb.x:                                             ; preds = %bb.v
@@ -214,23 +218,18 @@ bb.x:                                             ; preds = %bb.v
 
 bb.y:                                             ; preds = %bb.x, %bb.w
   %.063 = phi i64 [ %i.ca, %bb.w ], [ %i.ch, %bb.x ]
-  %.062 = phi i64 [ %6, %bb.w ], [ %.0105.lcssa, %bb.x ]
+  %.062 = phi i64 [ %4, %bb.w ], [ %.0105.lcssa, %bb.x ]
   %.061 = phi i64 [ %i.ce, %bb.w ], [ %.0104.lcssa, %bb.x ]
   %spec.select = call i64 @llvm.umax.i64(i64 %.063, i64 1)
   %i.ci = sitofp i64 %.062 to double
   %i.cj = sitofp i64 %spec.select to double
-  %i.ck = fdiv double %i.cj, 1.000000e+03
-  %7 = sitofp i64 %.061 to double
-  %8 = insertelement <2 x double> poison, double %i.ci, i64 0
-  %9 = insertelement <2 x double> %8, double %7, i64 1
-  %10 = insertelement <2 x double> poison, double %i.ck, i64 0
-  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
-  %12 = fdiv <2 x double> %9, %11                 ; 2 uses
-  %13 = extractelement <2 x double> %12, i64 0
-  %14 = fptosi double %13 to i64
-  %15 = extractelement <2 x double> %12, i64 1
-  %i.cl = fptosi double %15 to i64
-  %i.cm = call i64 @llvm.smax.i64(i64 %14, i64 %i.cl) ; 4 uses
+  %i.ck = fdiv double %i.cj, 1.000000e+03         ; 2 uses
+  %7 = fdiv double %i.ci, %i.ck
+  %8 = fptosi double %7 to i64
+  %9 = sitofp i64 %.061 to double
+  %10 = fdiv double %9, %i.ck
+  %i.cl = fptosi double %10 to i64
+  %i.cm = call i64 @llvm.smax.i64(i64 %8, i64 %i.cl) ; 4 uses
   %i.cn = icmp ne i64 %i.cm, 0
   %or.cond7 = select i1 %.060.lcssa, i1 %i.cn, i1 false
   br i1 %or.cond7, label %bb.z, label %bb.aa

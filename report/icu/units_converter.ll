@@ -189,16 +189,15 @@ bb.a:
   br i1 %rt.guard, label %.rtscalar, label %.rtvec
 
 .rtvec:                                           ; preds = %bb.a
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %2 = load double, ptr %i.e, align 8, !tbaa !14
-  %3 = load double, ptr %0, align 8, !tbaa !15
-  %4 = fmul double %2, %3
-  store double %4, ptr %0, align 8, !tbaa !15
-  %5 = load double, ptr %1, align 8, !tbaa !15
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %7 = load double, ptr %6, align 8, !tbaa !14
-  %8 = fmul double %5, %7
-  store double %8, ptr %6, align 8, !tbaa !14
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %2 = load <2 x double>, ptr %1, align 8, !tbaa !8
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %4 = load <2 x double>, ptr %0, align 8, !tbaa !8
+  %5 = fmul <2 x double> %3, %4                   ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  store double %6, ptr %0, align 8, !tbaa !14
+  %7 = extractelement <2 x double> %5, i64 1
+  store double %7, ptr %i.e, align 8, !tbaa !15
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.h = load <4 x i32>, ptr %i.f, align 4, !tbaa !10
@@ -240,15 +239,15 @@ bb.a:
 
 .rtscalar:                                        ; preds = %bb.a
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.al = load double, ptr %i.ak, align 8, !tbaa !14
-  %i.am = load double, ptr %0, align 8, !tbaa !15
+  %i.al = load double, ptr %i.ak, align 8, !tbaa !15
+  %i.am = load double, ptr %0, align 8, !tbaa !14
   %i.an = fmul double %i.al, %i.am
-  store double %i.an, ptr %0, align 8, !tbaa !15
-  %i.ao = load double, ptr %1, align 8, !tbaa !15
+  store double %i.an, ptr %0, align 8, !tbaa !14
+  %i.ao = load double, ptr %1, align 8, !tbaa !14
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.aq = load double, ptr %i.ap, align 8, !tbaa !14
+  %i.aq = load double, ptr %i.ap, align 8, !tbaa !15
   %i.ar = fmul double %i.ao, %i.aq
-  store double %i.ar, ptr %i.ap, align 8, !tbaa !14
+  store double %i.ar, ptr %i.ap, align 8, !tbaa !15
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.au = load i32, ptr %i.as, align 4, !tbaa !10
@@ -357,9 +356,9 @@ define void @_ZN6icu_785units6Factor8divideByEm(ptr nofree noundef nonnull align
 bb.a:
   %i.a = uitofp i64 %1 to double
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.c = load double, ptr %i.b, align 8, !tbaa !14
+  %i.c = load double, ptr %i.b, align 8, !tbaa !15
   %i.d = fmul double %i.c, %i.a
-  store double %i.d, ptr %i.b, align 8, !tbaa !14
+  store double %i.d, ptr %i.b, align 8, !tbaa !15
   ret void
 }
 
@@ -393,15 +392,15 @@ bb.a:
   %i.t = mul nsw i32 %i.s, %1
   store i32 %i.t, ptr %i.r, align 4, !tbaa !10
   %i.u = icmp slt i32 %1, 0
-  %i.v = load double, ptr %0, align 8, !tbaa !15
+  %i.v = load double, ptr %0, align 8, !tbaa !14
   %i.w = tail call i32 @llvm.abs.i32(i32 %1, i1 true)
   %i.x = uitofp nneg i32 %i.w to double           ; 2 uses
   %i.y = tail call noundef double @pow(double noundef %i.v, double noundef %i.x) #19 ; 2 uses
-  store double %i.y, ptr %0, align 8, !tbaa !15
+  store double %i.y, ptr %0, align 8, !tbaa !14
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.aa = load double, ptr %i.z, align 8, !tbaa !14
+  %i.aa = load double, ptr %i.z, align 8, !tbaa !15
   %i.ab = tail call noundef double @pow(double noundef %i.aa, double noundef %i.x) #19 ; 2 uses
-  store double %i.ab, ptr %i.z, align 8, !tbaa !14
+  store double %i.ab, ptr %i.z, align 8, !tbaa !15
   br i1 %i.u, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -433,16 +432,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = load double, ptr %0, align 8, !tbaa !15
+  %i.i = load double, ptr %0, align 8, !tbaa !14
   %i.j = fmul double %i.g, %i.i
-  store double %i.j, ptr %0, align 8, !tbaa !15
+  store double %i.j, ptr %0, align 8, !tbaa !14
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.l = load double, ptr %i.k, align 8, !tbaa !14
+  %i.l = load double, ptr %i.k, align 8, !tbaa !15
   %i.m = fmul double %i.g, %i.l
-  store double %i.m, ptr %i.k, align 8, !tbaa !14
+  store double %i.m, ptr %i.k, align 8, !tbaa !15
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.a
@@ -488,12 +487,12 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.n = fmul double %i.m, %i.c                   ; 2 uses
-  store double %i.n, ptr %i.b, align 8, !tbaa !14
+  store double %i.n, ptr %i.b, align 8, !tbaa !15
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
   %i.o = fmul double %i.m, %i.d                   ; 2 uses
-  store double %i.o, ptr %0, align 8, !tbaa !15
+  store double %i.o, ptr %0, align 8, !tbaa !14
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -603,9 +602,9 @@ bb.h:                                             ; preds = %bb.g
   %i.y = sitofp i32 %i.t to double
   %i.z = call noundef double @pow(double noundef 1.728000e+03, double noundef %i.y) #19
   %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.ab = load double, ptr %i.aa, align 8, !tbaa !14
+  %i.ab = load double, ptr %i.aa, align 8, !tbaa !15
   %i.ac = fmul double %i.z, %i.ab
-  store double %i.ac, ptr %i.aa, align 8, !tbaa !14
+  store double %i.ac, ptr %i.aa, align 8, !tbaa !15
   br label %bb.ap
 
 bb.i:                                             ; preds = %bb.g
@@ -868,15 +867,15 @@ bb.am:                                            ; preds = %bb.ak
 
 bb.an:                                            ; preds = %bb.am
   %i.dm = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.dn = load double, ptr %i.dm, align 8, !tbaa !14
+  %i.dn = load double, ptr %i.dm, align 8, !tbaa !15
   %i.do = fmul double %i.dl, %i.dn
-  store double %i.do, ptr %i.dm, align 8, !tbaa !14
+  store double %i.do, ptr %i.dm, align 8, !tbaa !15
   br label %bb.ap
 
 bb.ao:                                            ; preds = %bb.am
-  %i.dp = load double, ptr %4, align 8, !tbaa !15
+  %i.dp = load double, ptr %4, align 8, !tbaa !14
   %i.dq = fmul double %i.dl, %i.dp
-  store double %i.dq, ptr %4, align 8, !tbaa !15
+  store double %i.dq, ptr %4, align 8, !tbaa !14
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.d, %bb.h, %bb.l, %bb.p, %bb.t, %bb.x, %bb.ab, %bb.af, %bb.aj, %bb.an, %bb.ao, %bb.al, %bb.ah, %bb.ad, %bb.z, %bb.v, %bb.r, %bb.n, %bb.j, %bb.f, %bb.b
@@ -1279,13 +1278,13 @@ bb.l:                                             ; preds = %bb.k
   call fastcc void @_ZN6icu_785units12_GLOBAL__N_118loadCompoundFactorERKNS_15MeasureUnitImplERKNS0_15ConversionRatesER10UErrorCode(ptr dead_on_unwind noalias writable align 8 %7, ptr noundef nonnull align 8 dereferenceable(112) %1, ptr noundef nonnull align 8 dereferenceable(88) %4, ptr noundef nonnull align 4 dereferenceable(4) %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #19
   call fastcc void @_ZN6icu_785units12_GLOBAL__N_118loadCompoundFactorERKNS_15MeasureUnitImplERKNS0_15ConversionRatesER10UErrorCode(ptr dead_on_unwind noalias writable align 8 %8, ptr noundef nonnull align 8 dereferenceable(112) %2, ptr noundef nonnull align 8 dereferenceable(88) %4, ptr noundef nonnull align 4 dereferenceable(4) %5)
-  %i.ab = load double, ptr %6, align 16, !tbaa !15
+  %i.ab = load double, ptr %6, align 16, !tbaa !14
   %i.ac = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.ad = load <2 x double>, ptr %7, align 16, !tbaa !8 ; 3 uses
-  %i.ae = load double, ptr %i.ac, align 8, !tbaa !14
+  %i.ae = load double, ptr %i.ac, align 8, !tbaa !15
   %i.af = extractelement <2 x double> %i.ad, i64 0
   %i.ag = fmul double %i.af, %i.ab
-  %i.ah = load double, ptr %i.aa, align 8, !tbaa !14
+  %i.ah = load double, ptr %i.aa, align 8, !tbaa !15
   %i.ai = fmul double %i.ae, %i.ah
   %i.aj = getelementptr inbounds nuw i8, ptr %7, i64 28
   %i.ak = load <4 x i32>, ptr %i.aj, align 4, !tbaa !10
@@ -1320,8 +1319,8 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.bj = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.bk = load double, ptr %i.bj, align 8, !tbaa !14 ; 2 uses
-  %i.bl = load double, ptr %8, align 8, !tbaa !15 ; 2 uses
+  %i.bk = load double, ptr %i.bj, align 8, !tbaa !15 ; 2 uses
+  %i.bl = load double, ptr %8, align 8, !tbaa !14 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %8, i64 28
   %i.bn = load <4 x i32>, ptr %i.bm, align 4, !tbaa !10
   %i.bo = sub nsw <4 x i32> %i.am, %i.bn
@@ -1344,9 +1343,9 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.l
-  %i.cb = load double, ptr %8, align 8, !tbaa !15 ; 2 uses
+  %i.cb = load double, ptr %8, align 8, !tbaa !14 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.cd = load double, ptr %i.cc, align 8, !tbaa !14 ; 2 uses
+  %i.cd = load double, ptr %i.cc, align 8, !tbaa !15 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %8, i64 28
   %i.cf = load <4 x i32>, ptr %i.ce, align 4, !tbaa !10
   %i.cg = add nsw <4 x i32> %i.cf, %i.am
@@ -1749,13 +1748,13 @@ bb.k:                                             ; preds = %bb.h
   call fastcc void @_ZN6icu_785units12_GLOBAL__N_118loadCompoundFactorERKNS_15MeasureUnitImplERKNS0_15ConversionRatesER10UErrorCode(ptr dead_on_unwind noalias writable align 8 %6, ptr noundef nonnull align 8 dereferenceable(112) %1, ptr noundef nonnull align 8 dereferenceable(88) %2, ptr noundef nonnull align 4 dereferenceable(4) %3)
   call void @_ZN6icu_785units6Factor19substituteConstantsEv(ptr noundef nonnull align 8 dereferenceable(88) %5)
   call void @_ZN6icu_785units6Factor19substituteConstantsEv(ptr noundef nonnull align 8 dereferenceable(88) %6)
-  %i.n = load double, ptr %5, align 8, !tbaa !15
+  %i.n = load double, ptr %5, align 8, !tbaa !14
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.p = load double, ptr %i.o, align 8, !tbaa !14
+  %i.p = load double, ptr %i.o, align 8, !tbaa !15
   %i.q = fdiv double %i.n, %i.p
-  %i.r = load double, ptr %6, align 8, !tbaa !15
+  %i.r = load double, ptr %6, align 8, !tbaa !14
   %i.s = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.t = load double, ptr %i.s, align 8, !tbaa !14
+  %i.t = load double, ptr %i.s, align 8, !tbaa !15
   %i.u = fdiv double %i.r, %i.t
   %i.v = fsub double %i.q, %i.u                   ; 2 uses
   %i.w = fcmp ogt double %i.v, 0.000000e+00
@@ -2158,15 +2157,15 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.eh, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %i.ei = load double, ptr %16, align 16, !tbaa !15
+  %i.ei = load double, ptr %16, align 16, !tbaa !14
   %i.ej = fmul double %i.eg, %i.ei
-  store double %i.ej, ptr %16, align 16, !tbaa !15
+  store double %i.ej, ptr %16, align 16, !tbaa !14
   br label %_ZN6icu_785units6Factor11applyPrefixENS_14UMeasurePrefixE.exit
 
 bb.u:                                             ; preds = %bb.s
-  %i.ek = load double, ptr %i.l, align 8, !tbaa !14
+  %i.ek = load double, ptr %i.l, align 8, !tbaa !15
   %i.el = fmul double %i.eg, %i.ek
-  store double %i.el, ptr %i.l, align 8, !tbaa !14
+  store double %i.el, ptr %i.l, align 8, !tbaa !15
   br label %_ZN6icu_785units6Factor11applyPrefixENS_14UMeasurePrefixE.exit
 
 _ZN6icu_785units6Factor11applyPrefixENS_14UMeasurePrefixE.exit: ; preds = %bb.r, %bb.t, %bb.u
@@ -2217,12 +2216,12 @@ _ZN6icu_785units6Factor11applyPrefixENS_14UMeasurePrefixE.exit: ; preds = %bb.r,
   %i.fq = mul nsw i32 %i.fp, %i.em                ; 2 uses
   store i32 %i.fq, ptr %i.ar, align 4, !tbaa !10
   %i.fr = icmp slt i32 %i.em, 0                   ; 2 uses
-  %i.fs = load double, ptr %16, align 16, !tbaa !15
+  %i.fs = load double, ptr %16, align 16, !tbaa !14
   %i.ft = call i32 @llvm.abs.i32(i32 %i.em, i1 true)
   %i.fu = uitofp nneg i32 %i.ft to double         ; 2 uses
   %i.fv = call noundef double @pow(double noundef %i.fs, double noundef %i.fu) #19 ; 3 uses
-  store double %i.fv, ptr %16, align 16, !tbaa !15
-  %i.fw = load double, ptr %i.l, align 8, !tbaa !14
+  store double %i.fv, ptr %16, align 16, !tbaa !14
+  %i.fw = load double, ptr %i.l, align 8, !tbaa !15
   %i.fx = call noundef double @pow(double noundef %i.fw, double noundef %i.fu) #19 ; 2 uses
   %i.fy = select i1 %i.fr, double %i.fv, double %i.fx
   %i.fz = select i1 %i.fr, double %i.fx, double %i.fv
@@ -2288,7 +2287,7 @@ _ZN6icu_785units6Factor11applyPrefixENS_14UMeasurePrefixE.exit: ; preds = %bb.r,
 bb.v:                                             ; preds = %._crit_edge
   %i.gy = uitofp i64 %i.gx to double
   %i.gz = fmul double %i.gv, %i.gy
-  store double %i.gz, ptr %i.d, align 8, !tbaa !14
+  store double %i.gz, ptr %i.d, align 8, !tbaa !15
   br label %bb.w
 
 bb.w:                                             ; preds = %.loopexit, %._crit_edge, %bb.v
@@ -2691,8 +2690,8 @@ attributes #22 = { nounwind willreturn memory(read) }
 !11 = !{!12, !9, i64 16}
 !12 = !{!"_ZTSN6icu_785units6FactorE", !9, i64 0, !9, i64 8, !9, i64 16, !13, i64 24, !6, i64 28}
 !13 = !{!"bool", !6, i64 0}
-!14 = !{!12, !9, i64 8}
-!15 = !{!12, !9, i64 0}
+!14 = !{!12, !9, i64 0}
+!15 = !{!12, !9, i64 8}
 !16 = distinct !{!16, !17}
 !17 = !{!"llvm.loop.mustprogress"}
 !18 = !{!19, !5, i64 0}

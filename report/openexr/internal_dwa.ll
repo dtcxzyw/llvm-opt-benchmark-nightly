@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %.lr.ph507, %bb.x
   %i.ki = load ptr, ptr %i.ja, align 8, !tbaa !44
   %i.kj = call fastcc i32 @LossyDctEncoder_execute(ptr noundef %i.kh, ptr noundef %i.ki, ptr noundef %1)
   %i.kk = load <2 x i64>, ptr %i.ac, align 8, !tbaa !78
-  %i.kl = load <2 x i64>, ptr %i.jb, align 8, !tbaa !78 ; 3 uses
+  %i.kl = load <2 x i64>, ptr %i.jb, align 8, !tbaa !78 ; 2 uses
   %i.km = add <2 x i64> %i.kl, %i.kk
   store <2 x i64> %i.km, ptr %i.ac, align 8, !tbaa !78
   %i.kn = load ptr, ptr %i.iu, align 8, !tbaa !46 ; 4 uses
@@ -228,12 +228,11 @@ bb.w:                                             ; preds = %.lr.ph507, %bb.x
   br i1 %.not374, label %bb.x, label %DwaCompressor_writeRelevantChannelRules.exit.thread
 
 bb.x:                                             ; preds = %bb.w
-  %3 = extractelement <2 x i64> %i.kl, i64 1
-  %4 = shl i64 %3, 1
+  %3 = shl <2 x i64> %i.kl, splat (i64 1)         ; 2 uses
+  %4 = extractelement <2 x i64> %3, i64 1
   %i.la = getelementptr inbounds nuw i8, ptr %.1305505, i64 %4 ; 2 uses
-  %i.lb = extractelement <2 x i64> %i.kl, i64 0
-  %5 = shl i64 %i.lb, 1
-  %i.lc = getelementptr inbounds nuw i8, ptr %.1299506, i64 %5 ; 2 uses
+  %i.lb = extractelement <2 x i64> %3, i64 0
+  %i.lc = getelementptr inbounds nuw i8, ptr %.1299506, i64 %i.lb ; 2 uses
   %indvars.iv.next551 = add nuw nsw i64 %indvars.iv550, 1 ; 2 uses
   %i.ld = load i32, ptr %i.iq, align 4, !tbaa !119
   %i.le = sext i32 %i.ld to i64
@@ -320,15 +319,14 @@ bb.ab:                                            ; preds = %bb.z
   %i.mp = load ptr, ptr %i.ji, align 8, !tbaa !44
   %i.mq = call fastcc i32 @LossyDctEncoder_execute(ptr noundef %i.mo, ptr noundef %i.mp, ptr noundef %2)
   %i.mr = load <2 x i64>, ptr %i.ac, align 8, !tbaa !78
-  %i.ms = load <2 x i64>, ptr %i.jj, align 8, !tbaa !78 ; 3 uses
+  %i.ms = load <2 x i64>, ptr %i.jj, align 8, !tbaa !78 ; 2 uses
   %i.mt = add <2 x i64> %i.ms, %i.mr
   store <2 x i64> %i.mt, ptr %i.ac, align 8, !tbaa !78
-  %6 = extractelement <2 x i64> %i.ms, i64 0
-  %7 = shl i64 %6, 1
-  %i.mu = getelementptr inbounds nuw i8, ptr %.3301529, i64 %7
-  %i.mv = extractelement <2 x i64> %i.ms, i64 1
-  %8 = shl i64 %i.mv, 1
-  %i.mw = getelementptr inbounds nuw i8, ptr %.3307528, i64 %8
+  %5 = shl <2 x i64> %i.ms, splat (i64 1)         ; 2 uses
+  %6 = extractelement <2 x i64> %5, i64 0
+  %i.mu = getelementptr inbounds nuw i8, ptr %.3301529, i64 %6
+  %i.mv = extractelement <2 x i64> %5, i64 1
+  %i.mw = getelementptr inbounds nuw i8, ptr %.3307528, i64 %i.mv
   %.not378 = icmp eq i32 %i.mq, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
   br i1 %.not378, label %.loopexit, label %DwaCompressor_writeRelevantChannelRules.exit.thread
@@ -731,10 +729,10 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph199.ne
   br i1 %i.u, label %.preheader160.lr.ph, label %._crit_edge212
 
 .preheader160.lr.ph:                              ; preds = %.preheader161
-  %i.gz = shl nuw nsw i64 %indvars.iv298, 3       ; 9 uses
-  %i.ha = load i32, ptr %i.e, align 4, !tbaa !212 ; 10 uses
-  %reass.add = shl i32 %i.ha, 1                   ; 8 uses
-  %i.hb = add nsw i32 %i.ha, -1                   ; 8 uses
+  %i.gz = shl nuw nsw i64 %indvars.iv298, 3       ; 6 uses
+  %i.ha = load i32, ptr %i.e, align 4, !tbaa !212 ; 7 uses
+  %reass.add = shl i32 %i.ha, 1                   ; 5 uses
+  %i.hb = add nsw i32 %i.ha, -1                   ; 5 uses
   %i.hc = load i32, ptr %i.k, align 8, !tbaa !213 ; 4 uses
   %reass.add150 = shl i32 %i.hc, 1                ; 2 uses
   %i.hd = add nsw i32 %i.hc, -1                   ; 2 uses
@@ -776,42 +774,30 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph199.ne
   %i.ib = icmp slt i32 %.0114.us.us.us.3, 0
   %spec.select.us.us.us.3 = select i1 %i.ib, i32 %i.hb, i32 %.0114.us.us.us.3
   %i.ic = sext i32 %spec.select.us.us.us.3 to i64 ; 2 uses
-  %i.id = trunc i64 %i.gz to i32                  ; 2 uses
-  %3 = or disjoint i32 %i.id, 4                   ; 2 uses
-  %.not148.us.us.us.4 = icmp slt i32 %3, %i.ha
-  %4 = xor i32 %i.id, -5
-  %5 = add i32 %reass.add, %4
-  %.0114.us.us.us.4 = select i1 %.not148.us.us.us.4, i32 %3, i32 %5 ; 2 uses
-  %6 = icmp slt i32 %.0114.us.us.us.4, 0
-  %spec.select.us.us.us.4 = select i1 %6, i32 %i.hb, i32 %.0114.us.us.us.4
-  %7 = sext i32 %spec.select.us.us.us.4 to i64    ; 2 uses
-  %8 = trunc i64 %i.gz to i32                     ; 2 uses
-  %9 = or disjoint i32 %8, 5                      ; 2 uses
-  %.not148.us.us.us.5 = icmp slt i32 %9, %i.ha
-  %10 = xor i32 %8, -6
-  %11 = add i32 %reass.add, %10
-  %.0114.us.us.us.5 = select i1 %.not148.us.us.us.5, i32 %9, i32 %11 ; 2 uses
-  %12 = icmp slt i32 %.0114.us.us.us.5, 0
-  %spec.select.us.us.us.5 = select i1 %12, i32 %i.hb, i32 %.0114.us.us.us.5
-  %i.ie = sext i32 %spec.select.us.us.us.5 to i64 ; 2 uses
-  %13 = trunc i64 %i.gz to i32                    ; 2 uses
-  %14 = or disjoint i32 %13, 6                    ; 2 uses
-  %.not148.us.us.us.6 = icmp slt i32 %14, %i.ha
-  %15 = xor i32 %13, -7
-  %16 = add i32 %reass.add, %15
-  %.0114.us.us.us.6 = select i1 %.not148.us.us.us.6, i32 %14, i32 %16 ; 2 uses
-  %17 = icmp slt i32 %.0114.us.us.us.6, 0
-  %spec.select.us.us.us.6 = select i1 %17, i32 %i.hb, i32 %.0114.us.us.us.6
-  %i.if = sext i32 %spec.select.us.us.us.6 to i64 ; 2 uses
-  %18 = trunc i64 %i.gz to i32                    ; 2 uses
-  %19 = or disjoint i32 %18, 7                    ; 2 uses
-  %.not148.us.us.us.7 = icmp slt i32 %19, %i.ha
-  %20 = xor i32 %18, -8
-  %21 = add i32 %reass.add, %20
-  %.0114.us.us.us.7 = select i1 %.not148.us.us.us.7, i32 %19, i32 %21 ; 2 uses
-  %22 = icmp slt i32 %.0114.us.us.us.7, 0
-  %spec.select.us.us.us.7 = select i1 %22, i32 %i.hb, i32 %.0114.us.us.us.7
-  %i.ig = sext i32 %spec.select.us.us.us.7 to i64 ; 2 uses
+  %i.id = trunc i64 %i.gz to i32
+  %3 = insertelement <4 x i32> poison, i32 %i.id, i64 0
+  %4 = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %5 = or disjoint <4 x i32> %4, <i32 4, i32 5, i32 6, i32 7> ; 2 uses
+  %6 = insertelement <4 x i32> poison, i32 %i.ha, i64 0
+  %7 = shufflevector <4 x i32> %6, <4 x i32> poison, <4 x i32> zeroinitializer
+  %8 = icmp slt <4 x i32> %5, %7
+  %9 = xor <4 x i32> %4, <i32 -5, i32 -6, i32 -7, i32 -8>
+  %10 = insertelement <4 x i32> poison, i32 %reass.add, i64 0
+  %11 = shufflevector <4 x i32> %10, <4 x i32> poison, <4 x i32> zeroinitializer
+  %12 = add <4 x i32> %11, %9
+  %13 = select <4 x i1> %8, <4 x i32> %5, <4 x i32> %12 ; 2 uses
+  %14 = icmp slt <4 x i32> %13, zeroinitializer
+  %15 = insertelement <4 x i32> poison, i32 %i.hb, i64 0
+  %16 = shufflevector <4 x i32> %15, <4 x i32> poison, <4 x i32> zeroinitializer
+  %17 = select <4 x i1> %14, <4 x i32> %16, <4 x i32> %13 ; 4 uses
+  %18 = extractelement <4 x i32> %17, i64 0
+  %i.ie = sext i32 %18 to i64                     ; 2 uses
+  %19 = extractelement <4 x i32> %17, i64 1
+  %i.if = sext i32 %19 to i64                     ; 2 uses
+  %20 = extractelement <4 x i32> %17, i64 2
+  %21 = sext i32 %20 to i64                       ; 2 uses
+  %22 = extractelement <4 x i32> %17, i64 3
+  %i.ig = sext i32 %22 to i64                     ; 2 uses
   br i1 %.not151, label %.preheader160.us, label %.preheader160
 
 .preheader160.us:                                 ; preds = %.preheader160.lr.ph, %.split203.us.us
@@ -1003,7 +989,7 @@ half_to_float.exit.us.us.us.3:                    ; preds = %bb.an, %bb.am, %bb.
   %i.lt = getelementptr inbounds nuw [4 x i8], ptr %i.ii, i64 %i.it
   %i.lu = getelementptr inbounds nuw i8, ptr %i.lt, i64 12
   store i32 %.sroa.0.0.i.i.us.us.us.3, ptr %i.lu, align 4, !tbaa !185
-  %i.lv = getelementptr inbounds [2 x i8], ptr %i.is, i64 %7
+  %i.lv = getelementptr inbounds [2 x i8], ptr %i.is, i64 %i.ie
   %i.lw = load i16, ptr %i.lv, align 2, !tbaa !94 ; 2 uses
   %i.lx = zext i16 %i.lw to i32
   %i.ly = shl nuw nsw i32 %i.lx, 13
@@ -1045,7 +1031,7 @@ half_to_float.exit.us.us.us.4:                    ; preds = %bb.as, %bb.ar, %bb.
   %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.ii, i64 %i.it
   %i.mo = getelementptr inbounds nuw i8, ptr %i.mn, i64 16
   store i32 %.sroa.0.0.i.i.us.us.us.4, ptr %i.mo, align 4, !tbaa !185
-  %i.mp = getelementptr inbounds [2 x i8], ptr %i.is, i64 %i.ie
+  %i.mp = getelementptr inbounds [2 x i8], ptr %i.is, i64 %i.if
   %i.mq = load i16, ptr %i.mp, align 2, !tbaa !94 ; 2 uses
   %i.mr = zext i16 %i.mq to i32
   %i.ms = shl nuw nsw i32 %i.mr, 13
@@ -1087,7 +1073,7 @@ half_to_float.exit.us.us.us.5:                    ; preds = %bb.ax, %bb.aw, %bb.
   %i.nh = getelementptr inbounds nuw [4 x i8], ptr %i.ii, i64 %i.it
   %i.ni = getelementptr inbounds nuw i8, ptr %i.nh, i64 20
   store i32 %.sroa.0.0.i.i.us.us.us.5, ptr %i.ni, align 4, !tbaa !185
-  %i.nj = getelementptr inbounds [2 x i8], ptr %i.is, i64 %i.if
+  %i.nj = getelementptr inbounds [2 x i8], ptr %i.is, i64 %21
   %i.nk = load i16, ptr %i.nj, align 2, !tbaa !94 ; 2 uses
   %i.nl = zext i16 %i.nk to i32
   %i.nm = shl nuw nsw i32 %i.nl, 13
@@ -1424,7 +1410,7 @@ half_to_float.exit.3:                             ; preds = %bb.cb, %bb.ca, %bb.
   %i.ti = getelementptr inbounds nuw [4 x i8], ptr %i.oy, i64 %i.pw
   %i.tj = getelementptr inbounds nuw i8, ptr %i.ti, i64 12
   store i32 %.sroa.0.0.i.i.3, ptr %i.tj, align 4, !tbaa !185
-  %i.tk = getelementptr inbounds [2 x i8], ptr %i.pv, i64 %7
+  %i.tk = getelementptr inbounds [2 x i8], ptr %i.pv, i64 %i.ie
   %i.tl = load i16, ptr %i.tk, align 2, !tbaa !94
   %i.tm = zext i16 %i.tl to i64
   %i.tn = getelementptr inbounds nuw [2 x i8], ptr %i.he, i64 %i.tm
@@ -1469,7 +1455,7 @@ half_to_float.exit.4:                             ; preds = %bb.cg, %bb.cf, %bb.
   %i.uf = getelementptr inbounds nuw [4 x i8], ptr %i.oy, i64 %i.pw
   %i.ug = getelementptr inbounds nuw i8, ptr %i.uf, i64 16
   store i32 %.sroa.0.0.i.i.4, ptr %i.ug, align 4, !tbaa !185
-  %i.uh = getelementptr inbounds [2 x i8], ptr %i.pv, i64 %i.ie
+  %i.uh = getelementptr inbounds [2 x i8], ptr %i.pv, i64 %i.if
   %i.ui = load i16, ptr %i.uh, align 2, !tbaa !94
   %i.uj = zext i16 %i.ui to i64
   %i.uk = getelementptr inbounds nuw [2 x i8], ptr %i.he, i64 %i.uj
@@ -1514,7 +1500,7 @@ half_to_float.exit.5:                             ; preds = %bb.cl, %bb.ck, %bb.
   %i.vc = getelementptr inbounds nuw [4 x i8], ptr %i.oy, i64 %i.pw
   %i.vd = getelementptr inbounds nuw i8, ptr %i.vc, i64 20
   store i32 %.sroa.0.0.i.i.5, ptr %i.vd, align 4, !tbaa !185
-  %i.ve = getelementptr inbounds [2 x i8], ptr %i.pv, i64 %i.if
+  %i.ve = getelementptr inbounds [2 x i8], ptr %i.pv, i64 %21
   %i.vf = load i16, ptr %i.ve, align 2, !tbaa !94
   %i.vg = zext i16 %i.vf to i64
   %i.vh = getelementptr inbounds nuw [2 x i8], ptr %i.he, i64 %i.vg
@@ -1917,21 +1903,16 @@ begin_hunk_2_@LossyDctDecoder_execute:bb.a
   br label %.lr.ph382.split.us.preheader
 
 .thread:                                          ; preds = %bb.aj
-  %i.pt = load float, ptr %i.gn, align 4, !tbaa !185 ; 2 uses
-  %i.pu = load float, ptr %i.go, align 4, !tbaa !185 ; 2 uses
-  %i.pv = load float, ptr %i.gm, align 4, !tbaa !185 ; 3 uses
-  %i.pw = tail call float @llvm.fmuladd.f32(float %i.pu, float 1.574700e+00, float %i.pv)
+  %i.pt = load float, ptr %i.gm, align 4, !tbaa !185 ; 3 uses
+  %i.pu = load float, ptr %i.gn, align 4, !tbaa !185 ; 2 uses
+  %i.pv = load float, ptr %i.go, align 4, !tbaa !185 ; 2 uses
+  %i.pw = tail call float @llvm.fmuladd.f32(float %i.pv, float 1.574700e+00, float %i.pt)
   store float %i.pw, ptr %i.gm, align 4, !tbaa !185
-  %i.px = tail call float @llvm.fmuladd.f32(float %i.pt, float -1.873000e-01, float %i.pv)
-  %3 = insertelement <2 x float> poison, float %i.pu, i64 0
-  %4 = insertelement <2 x float> %3, float %i.pt, i64 1
-  %5 = insertelement <2 x float> poison, float %i.px, i64 0
-  %6 = insertelement <2 x float> %5, float %i.pv, i64 1
-  %7 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %4, <2 x float> <float -4.682000e-01, float 1.855600e+00>, <2 x float> %6) ; 2 uses
-  %8 = extractelement <2 x float> %7, i64 0
-  store float %8, ptr %i.gn, align 4, !tbaa !185
-  %9 = extractelement <2 x float> %7, i64 1
-  store float %9, ptr %i.go, align 4, !tbaa !185
+  %i.px = tail call float @llvm.fmuladd.f32(float %i.pu, float -1.873000e-01, float %i.pt)
+  %3 = tail call float @llvm.fmuladd.f32(float %i.pv, float -4.682000e-01, float %i.px)
+  store float %3, ptr %i.gn, align 4, !tbaa !185
+  %4 = tail call float @llvm.fmuladd.f32(float %i.pu, float 1.855600e+00, float %i.pt)
+  store float %4, ptr %i.go, align 4, !tbaa !185
   %i.py = shl nuw nsw i64 %indvars.iv471, 6
   br label %.lr.ph382.split.preheader
 
@@ -2333,9 +2314,6 @@ declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i16> @llvm.ctpop.v2i16(<2 x i16>) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

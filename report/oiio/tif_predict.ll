@@ -202,9 +202,9 @@ bb.a:
   %.fr100 = freeze i64 %i.d                       ; 21 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 116
   %i.f = load i16, ptr %i.e, align 4, !tbaa !81
-  %i.g = lshr i16 %i.f, 3                         ; 6 uses
+  %i.g = lshr i16 %i.f, 3                         ; 5 uses
   %i.h = zext nneg i16 %i.g to i64                ; 3 uses
-  %i.i = zext nneg i16 %i.g to i64                ; 3 uses
+  %i.i = zext nneg i16 %i.g to i64                ; 5 uses
   %i.j = sdiv i64 %2, %i.i                        ; 5 uses
   %i.k = mul nsw i64 %.fr100, %i.i
   %i.l = srem i64 %2, %i.k
@@ -228,10 +228,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond, label %.preheader.preheader, label %._crit_edge92.split
 
 .preheader.preheader:                             ; preds = %bb.d
-  %wide.trip.count = zext nneg i16 %i.g to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
+  %xtraiter = and i64 %i.i, 1
   %i.p = icmp eq i16 %i.g, 1
-  %unroll_iter = and i64 %wide.trip.count, 8190
+  %unroll_iter = and i64 %i.i, 8190
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod131 = trunc i16 %i.g to i1
   br label %.preheader

@@ -1,3 +1,5 @@
+inline.NumInlined: 9
+inline.NumDeleted: 5
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -107,6 +109,10 @@ bb.a:
   %i.cl = fmul double %i.ck, f0x3F66C16C16C16C17
   %i.cm = fadd double %i.cl, 5.000000e-01
   %i.cn = tail call double @llvm.floor.f64(double %i.cm)
+  %10 = fmul double %i.cn, 3.600000e+02
+  %11 = fsub double %i.ck, %10
+  %12 = fdiv double %11, 1.500000e+01
+  %13 = fsub double 1.200000e+01, %12             ; 3 uses
   %.not = icmp eq i32 %4, 0
   %i.co = fdiv double 2.666000e-01, %sqrt.i.i
   %i.cp = fsub double %3, %i.co
@@ -116,27 +122,18 @@ bb.a:
   %i.cs = fmul double %2, f0x3F91DF46A2529D39     ; 2 uses
   %i.ct = tail call double @sin(double noundef %i.cs) #6
   %i.cu = fmul double %i.cj, f0x3F91DF46A2529D39  ; 2 uses
-  %10 = tail call double @sin(double noundef %i.cu) #6
-  %11 = tail call double @cos(double noundef %i.cs) #6
-  %i.cv = tail call double @cos(double noundef %i.cu) #6
-  %i.cw = fmul double %11, %i.cv
-  %12 = insertelement <2 x double> poison, double %i.cn, i64 0
-  %13 = insertelement <2 x double> %12, double %i.ct, i64 1
-  %14 = insertelement <2 x double> <double 3.600000e+02, double poison>, double %10, i64 1
-  %15 = fmul <2 x double> %13, %14
-  %16 = insertelement <2 x double> poison, double %i.ck, i64 0
-  %17 = insertelement <2 x double> %16, double %i.cr, i64 1
-  %18 = fsub <2 x double> %17, %15
-  %19 = insertelement <2 x double> <double 1.500000e+01, double poison>, double %i.cw, i64 1
-  %20 = fdiv <2 x double> %18, %19                ; 2 uses
-  %21 = extractelement <2 x double> %20, i64 0
-  %22 = fsub double 1.200000e+01, %21             ; 3 uses
-  %i.cx = fmul double %22, 3.600000e+03           ; 2 uses
+  %i.cv = tail call double @sin(double noundef %i.cu) #6
+  %i.cw = fmul double %i.ct, %i.cv
+  %14 = fsub double %i.cr, %i.cw
+  %15 = tail call double @cos(double noundef %i.cs) #6
+  %16 = tail call double @cos(double noundef %i.cu) #6
+  %17 = fmul double %15, %16
+  %18 = fdiv double %14, %17                      ; 3 uses
+  %i.cx = fmul double %13, 3.600000e+03           ; 2 uses
   %i.cy = fadd double %i.cx, %i.m
   %i.cz = fptosi double %i.cy to i64
   store i64 %i.cz, ptr %9, align 8, !tbaa !21
-  %23 = extractelement <2 x double> %20, i64 1    ; 3 uses
-  %i.da = fcmp ult double %23, 1.000000e+00
+  %i.da = fcmp ult double %18, 1.000000e+00
   br i1 %i.da, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -149,7 +146,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %i.df = fcmp ugt double %23, -1.000000e+00
+  %i.df = fcmp ugt double %18, -1.000000e+00
   br i1 %i.df, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -162,17 +159,17 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %i.dk = tail call double @acos(double noundef %23) #6
+  %i.dk = tail call double @acos(double noundef %18) #6
   %i.dl = fmul double %i.dk, f0x404CA5DC1A63C1F8
   %i.dm = fdiv double %i.dl, 1.500000e+01         ; 2 uses
-  %i.dn = fsub double %22, %i.dm                  ; 2 uses
+  %i.dn = fsub double %13, %i.dm                  ; 2 uses
   %i.do = fmul double %i.dn, 3.600000e+03
   %i.dp = load i64, ptr %i.k, align 8, !tbaa !12
   %i.dq = sitofp i64 %i.dp to double
   %i.dr = fadd double %i.do, %i.dq
   %i.ds = fptosi double %i.dr to i64
   store i64 %i.ds, ptr %7, align 8, !tbaa !21
-  %i.dt = fadd double %22, %i.dm                  ; 2 uses
+  %i.dt = fadd double %13, %i.dm                  ; 2 uses
   %i.du = fmul double %i.dt, 3.600000e+03
   %i.dv = load i64, ptr %i.k, align 8, !tbaa !12
   %i.dw = sitofp i64 %i.dv to double

@@ -204,9 +204,9 @@ bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c
   call void @llvm.assume(i1 %i.ag)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph132, i64 %i.af ; 5 uses
-  %i.ai = load i32, ptr %i.ah, align 4            ; 13 uses
+  %i.ai = load i32, ptr %i.ah, align 4            ; 6 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
-  %i.ak = load i32, ptr %i.aj, align 4            ; 7 uses
+  %i.ak = load i32, ptr %i.aj, align 4            ; 4 uses
   store i32 %i.ai, ptr %i.a, align 4
   store i32 %i.ak, ptr %i.c, align 4
   br i1 %.not, label %bb.i, label %bb.h
@@ -228,6 +228,10 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.ap = getelementptr [8 x i8], ptr %2, i64 %.sroa.16.0125280 ; 3 uses
+  %7 = insertelement <4 x i32> poison, i32 %i.ai, i64 0
+  %8 = shufflevector <4 x i32> %7, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %9 = insertelement <4 x i32> poison, i32 %i.ak, i64 0
+  %10 = shufflevector <4 x i32> %9, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.i
@@ -245,68 +249,51 @@ bb.l:                                             ; preds = %bb.m, %bb.j
   br i1 %i.as, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.l, %.lr.ph.i
-  %.sroa.43.131.i = phi ptr [ %36, %.lr.ph.i ], [ %.sroa.43.0.i, %bb.l ] ; 4 uses
-  %.sroa.9.130.i = phi ptr [ %i.bf, %.lr.ph.i ], [ %.sroa.9.0.i, %bb.l ] ; 10 uses
+  %.sroa.43.131.i = phi ptr [ %17, %.lr.ph.i ], [ %.sroa.43.0.i, %bb.l ] ; 4 uses
+  %.sroa.9.130.i = phi ptr [ %i.bf, %.lr.ph.i ], [ %.sroa.9.0.i, %bb.l ] ; 6 uses
   %.sroa.27.129.i = phi i64 [ %i.be, %.lr.ph.i ], [ %.sroa.27.0.i, %bb.l ] ; 2 uses
-  %.val29.i = load i32, ptr %.sroa.9.130.i, align 4, !range !335, !alias.scope !512, !noalias !515, !noundef !19 ; 2 uses
-  %i.at = getelementptr i8, ptr %.sroa.9.130.i, i64 4
-  %.val30.i = load i32, ptr %i.at, align 4, !alias.scope !512, !noalias !515
-  %7 = icmp eq i32 %.val29.i, %i.ai
-  %8 = icmp ult i32 %.val30.i, %i.ak
-  %9 = icmp ult i32 %.val29.i, %i.ai
-  %10 = select i1 %7, i1 %8, i1 %9                ; 2 uses
-  %i.au = getelementptr inbounds i8, ptr %.sroa.43.131.i, i64 -8
-  %.sroa.01.0.i.i = select i1 %10, ptr %2, ptr %i.au
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i.i, i64 %.sroa.27.129.i
-  %i.av = load i64, ptr %.sroa.9.130.i, align 4, !alias.scope !512, !noalias !517
-  store i64 %i.av, ptr %11, align 4, !alias.scope !515, !noalias !520
-  %12 = zext i1 %10 to i64
-  %13 = add i64 %.sroa.27.129.i, %12              ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %.sroa.9.130.i, i64 8 ; 2 uses
-  %.val25.i = load i32, ptr %14, align 4, !range !335, !alias.scope !512, !noalias !515, !noundef !19 ; 2 uses
-  %15 = getelementptr i8, ptr %.sroa.9.130.i, i64 12
-  %.val26.i = load i32, ptr %15, align 4, !alias.scope !512, !noalias !515
-  %16 = icmp eq i32 %.val25.i, %i.ai
-  %17 = icmp ult i32 %.val26.i, %i.ak
-  %18 = icmp ult i32 %.val25.i, %i.ai
-  %19 = select i1 %16, i1 %17, i1 %18             ; 2 uses
-  %20 = getelementptr inbounds i8, ptr %.sroa.43.131.i, i64 -16
-  %.sroa.01.0.i33.i.a = select i1 %19, ptr %2, ptr %20
-  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i33.i.a, i64 %13
-  %21 = load i64, ptr %14, align 4, !alias.scope !512, !noalias !521
-  store i64 %21, ptr %i.aw, align 4, !alias.scope !515, !noalias !524
-  %i.ax = zext i1 %19 to i64
-  %i.ay = add i64 %13, %i.ax                      ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %.sroa.9.130.i, i64 16 ; 2 uses
-  %.val21.i = load i32, ptr %22, align 4, !range !335, !alias.scope !512, !noalias !515, !noundef !19 ; 2 uses
-  %23 = getelementptr i8, ptr %.sroa.9.130.i, i64 20
-  %.val22.i = load i32, ptr %23, align 4, !alias.scope !512, !noalias !515
-  %24 = icmp eq i32 %.val21.i, %i.ai
-  %25 = icmp ult i32 %.val22.i, %i.ak
-  %26 = icmp ult i32 %.val21.i, %i.ai
-  %27 = select i1 %24, i1 %25, i1 %26             ; 2 uses
-  %28 = getelementptr inbounds i8, ptr %.sroa.43.131.i, i64 -24
-  %.sroa.01.0.i34.i.a = select i1 %27, ptr %2, ptr %28
+  %i.at = getelementptr inbounds i8, ptr %.sroa.43.131.i, i64 -8
+  %11 = load i64, ptr %.sroa.9.130.i, align 4, !alias.scope !512, !noalias !517
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.9.130.i, i64 8
+  %13 = getelementptr inbounds i8, ptr %.sroa.43.131.i, i64 -16
+  %14 = load i64, ptr %12, align 4, !alias.scope !512, !noalias !520
+  %i.au = getelementptr inbounds nuw i8, ptr %.sroa.9.130.i, i64 16
+  %15 = getelementptr inbounds i8, ptr %.sroa.43.131.i, i64 -24
+  %i.av = load i64, ptr %i.au, align 4, !alias.scope !512, !noalias !523
+  %16 = getelementptr inbounds nuw i8, ptr %.sroa.9.130.i, i64 24
+  %17 = getelementptr inbounds i8, ptr %.sroa.43.131.i, i64 -32 ; 3 uses
+  %18 = load i64, ptr %16, align 4, !alias.scope !512, !noalias !526
+  %19 = load <8 x i32>, ptr %.sroa.9.130.i, align 4, !alias.scope !512, !noalias !515 ; 2 uses
+  %20 = shufflevector <8 x i32> %19, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6> ; 2 uses
+  %21 = icmp eq <4 x i32> %20, %8
+  %22 = shufflevector <8 x i32> %19, <8 x i32> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %23 = icmp ult <4 x i32> %22, %10
+  %24 = icmp ult <4 x i32> %20, %8
+  %25 = select <4 x i1> %21, <4 x i1> %23, <4 x i1> %24 ; 4 uses
+  %26 = extractelement <4 x i1> %25, i64 0        ; 2 uses
+  %.sroa.01.0.i33.i.a = select i1 %26, ptr %2, ptr %i.at
+  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i33.i.a, i64 %.sroa.27.129.i
+  store i64 %11, ptr %i.aw, align 4, !alias.scope !515, !noalias !529
+  %i.ax = zext i1 %26 to i64
+  %i.ay = add i64 %.sroa.27.129.i, %i.ax          ; 2 uses
+  %27 = extractelement <4 x i1> %25, i64 1        ; 2 uses
+  %.sroa.01.0.i34.i.a = select i1 %27, ptr %2, ptr %13
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i34.i.a, i64 %i.ay
-  %29 = load i64, ptr %22, align 4, !alias.scope !512, !noalias !525
-  store i64 %29, ptr %i.az, align 4, !alias.scope !515, !noalias !528
+  store i64 %14, ptr %i.az, align 4, !alias.scope !515, !noalias !530
   %i.ba = zext i1 %27 to i64
   %i.bb = add i64 %i.ay, %i.ba                    ; 2 uses
-  %30 = getelementptr inbounds nuw i8, ptr %.sroa.9.130.i, i64 24 ; 2 uses
-  %.val17.i = load i32, ptr %30, align 4, !range !335, !alias.scope !512, !noalias !515, !noundef !19 ; 2 uses
-  %31 = getelementptr i8, ptr %.sroa.9.130.i, i64 28
-  %.val18.i = load i32, ptr %31, align 4, !alias.scope !512, !noalias !515
-  %32 = icmp eq i32 %.val17.i, %i.ai
-  %33 = icmp ult i32 %.val18.i, %i.ak
-  %34 = icmp ult i32 %.val17.i, %i.ai
-  %35 = select i1 %32, i1 %33, i1 %34             ; 2 uses
-  %36 = getelementptr inbounds i8, ptr %.sroa.43.131.i, i64 -32 ; 3 uses
-  %.sroa.01.0.i35.i = select i1 %35, ptr %2, ptr %36
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i35.i, i64 %i.bb
-  %37 = load i64, ptr %30, align 4, !alias.scope !512, !noalias !529
-  store i64 %37, ptr %i.bc, align 4, !alias.scope !515, !noalias !532
-  %i.bd = zext i1 %35 to i64
-  %i.be = add i64 %i.bb, %i.bd                    ; 2 uses
+  %28 = extractelement <4 x i1> %25, i64 2        ; 2 uses
+  %.sroa.01.0.i34.i = select i1 %28, ptr %2, ptr %15
+  %29 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i34.i, i64 %i.bb
+  store i64 %i.av, ptr %29, align 4, !alias.scope !515, !noalias !531
+  %30 = zext i1 %28 to i64
+  %31 = add i64 %i.bb, %30                        ; 2 uses
+  %32 = extractelement <4 x i1> %25, i64 3        ; 2 uses
+  %.sroa.01.0.i35.i = select i1 %32, ptr %2, ptr %17
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i35.i, i64 %31
+  store i64 %18, ptr %i.bc, align 4, !alias.scope !515, !noalias !532
+  %i.bd = zext i1 %32 to i64
+  %i.be = add i64 %31, %i.bd                      ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.9.130.i, i64 32 ; 3 uses
   %i.bg = icmp ult ptr %i.bf, %i.ar
   br i1 %i.bg, label %.lr.ph.i, label %._crit_edge.i
@@ -314,7 +301,7 @@ bb.l:                                             ; preds = %bb.m, %bb.j
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.l
   %.sroa.27.1.lcssa.i = phi i64 [ %.sroa.27.0.i, %bb.l ], [ %i.be, %.lr.ph.i ] ; 2 uses
   %.sroa.9.1.lcssa.i = phi ptr [ %.sroa.9.0.i, %bb.l ], [ %i.bf, %.lr.ph.i ] ; 3 uses
-  %.sroa.43.1.lcssa.i = phi ptr [ %.sroa.43.0.i, %bb.l ], [ %36, %.lr.ph.i ] ; 2 uses
+  %.sroa.43.1.lcssa.i = phi ptr [ %.sroa.43.0.i, %bb.l ], [ %17, %.lr.ph.i ] ; 2 uses
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph132, i64 %.sroa.0.0.i39 ; 2 uses
   %i.bi = icmp ult ptr %.sroa.9.1.lcssa.i, %i.bh
   br i1 %i.bi, label %.lr.ph38.i, label %._crit_edge39.i
@@ -717,19 +704,19 @@ begin_hunk_1_@llvm.abs.i128
 !517 = !{!518, !516}
 !518 = distinct !{!518, !519, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide: argument 0"}
 !519 = distinct !{!519, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide"}
-!520 = !{!518, !513}
-!521 = !{!522, !516}
-!522 = distinct !{!522, !523, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide: argument 0"}
-!523 = distinct !{!523, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide"}
-!524 = !{!522, !513}
-!525 = !{!526, !516}
-!526 = distinct !{!526, !527, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide: argument 0"}
-!527 = distinct !{!527, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide"}
-!528 = !{!526, !513}
-!529 = !{!530, !516}
-!530 = distinct !{!530, !531, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide: argument 0"}
-!531 = distinct !{!531, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide"}
-!532 = !{!530, !513}
+!520 = !{!521, !516}
+!521 = distinct !{!521, !522, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide: argument 0"}
+!522 = distinct !{!522, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide"}
+!523 = !{!524, !516}
+!524 = distinct !{!524, !525, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide: argument 0"}
+!525 = distinct !{!525, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide"}
+!526 = !{!527, !516}
+!527 = distinct !{!527, !528, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide: argument 0"}
+!528 = distinct !{!528, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide"}
+!529 = !{!518, !513}
+!530 = !{!521, !513}
+!531 = !{!524, !513}
+!532 = !{!527, !513}
 !533 = !{!534, !516}
 !534 = distinct !{!534, !535, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide: argument 0"}
 !535 = distinct !{!535, !"_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsgIpRO4v45SJ_7base_db5input5CrateE13partition_oneCslLuZgPVt6hg_3ide"}

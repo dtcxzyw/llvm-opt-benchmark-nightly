@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 8) i32 @make_table(ptr nofree noundef nonnull captures(none) %0, i32 noundef range(i32 19, 511) %1, ptr nofree noundef nonnull readonly captures(none) %2, i32 noundef range(i32 8, 13) %3, ptr nofree noundef nonnull captures(none) %4, i32 noundef range(i32 256, 4097) %5) unnamed_addr #0 {
 .preheader124.preheader:
-  %i.a = alloca [17 x i16], align 16              ; 19 uses
+  %i.a = alloca [17 x i16], align 16              ; 9 uses
   %i.b = alloca [17 x i16], align 16              ; 11 uses
   %i.c = alloca [18 x i16], align 16              ; 24 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
@@ -240,51 +240,38 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   store i16 %i.m, ptr %i.n, align 4, !tbaa !22
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %6 = load i16, ptr %i.o, align 4, !tbaa !22
-  %7 = shl i16 %6, 14
-  %8 = add i16 %i.m, %7                           ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 6
-  store i16 %8, ptr %i.p, align 2, !tbaa !22
-  %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %9 = load i16, ptr %i.q, align 2, !tbaa !22
-  %10 = shl i16 %9, 13
-  %11 = add i16 %8, %10                           ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store i16 %11, ptr %i.r, align 8, !tbaa !22
-  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %12 = load i16, ptr %i.s, align 8, !tbaa !22
-  %13 = shl i16 %12, 12
-  %14 = add i16 %11, %13                          ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %i.c, i64 10
-  store i16 %14, ptr %15, align 2, !tbaa !22
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  %17 = load i16, ptr %16, align 2, !tbaa !22
-  %18 = shl i16 %17, 11
-  %i.t = add i16 %14, %18                         ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %i.c, i64 12
-  store i16 %i.t, ptr %19, align 4, !tbaa !22
-  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %21 = load i16, ptr %20, align 4, !tbaa !22
-  %22 = shl i16 %21, 10
-  %i.u = add i16 %i.t, %22                        ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %i.c, i64 14
-  store i16 %i.u, ptr %23, align 2, !tbaa !22
-  %24 = getelementptr inbounds nuw i8, ptr %i.a, i64 14
-  %25 = load i16, ptr %24, align 2, !tbaa !22
-  %26 = shl i16 %25, 9
-  %i.v = add i16 %i.u, %26                        ; 2 uses
-  %27 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store i16 %i.v, ptr %27, align 16, !tbaa !22
-  %28 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %29 = load i16, ptr %28, align 16, !tbaa !22
-  %30 = shl i16 %29, 8
-  %i.w = add i16 %i.v, %30                        ; 2 uses
-  %31 = getelementptr inbounds nuw i8, ptr %i.c, i64 18
-  store i16 %i.w, ptr %31, align 2, !tbaa !22
-  %32 = getelementptr inbounds nuw i8, ptr %i.a, i64 18
-  %33 = load i16, ptr %32, align 2, !tbaa !22
-  %34 = shl i16 %33, 7
-  %i.x = add i16 %i.w, %34                        ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 10
+  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 12
+  %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 14
+  %8 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 18
+  %9 = load <8 x i16>, ptr %i.o, align 4, !tbaa !22
+  %10 = shl <8 x i16> %9, <i16 14, i16 13, i16 12, i16 11, i16 10, i16 9, i16 8, i16 7> ; 8 uses
+  %11 = extractelement <8 x i16> %10, i64 0
+  %12 = add i16 %i.m, %11                         ; 2 uses
+  store i16 %12, ptr %i.p, align 2, !tbaa !22
+  %13 = extractelement <8 x i16> %10, i64 1
+  %i.t = add i16 %12, %13                         ; 2 uses
+  store i16 %i.t, ptr %i.q, align 8, !tbaa !22
+  %14 = extractelement <8 x i16> %10, i64 2
+  %i.u = add i16 %i.t, %14                        ; 2 uses
+  store i16 %i.u, ptr %6, align 2, !tbaa !22
+  %15 = extractelement <8 x i16> %10, i64 3
+  %i.v = add i16 %i.u, %15                        ; 2 uses
+  store i16 %i.v, ptr %7, align 4, !tbaa !22
+  %16 = extractelement <8 x i16> %10, i64 4
+  %17 = add i16 %i.v, %16                         ; 2 uses
+  store i16 %17, ptr %i.r, align 2, !tbaa !22
+  %18 = extractelement <8 x i16> %10, i64 5
+  %i.w = add i16 %17, %18                         ; 2 uses
+  store i16 %i.w, ptr %8, align 16, !tbaa !22
+  %19 = extractelement <8 x i16> %10, i64 6
+  %20 = add i16 %i.w, %19                         ; 2 uses
+  store i16 %20, ptr %i.s, align 2, !tbaa !22
+  %21 = extractelement <8 x i16> %10, i64 7
+  %i.x = add i16 %20, %21                         ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   store i16 %i.x, ptr %i.y, align 4, !tbaa !22
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 20
@@ -300,27 +287,22 @@ bb.b:                                             ; preds = %bb.a
   %i.ai = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store i16 %i.ah, ptr %i.ai, align 8, !tbaa !22
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %35 = load i16, ptr %i.aj, align 8, !tbaa !22
-  %36 = shl i16 %35, 4
-  %37 = add i16 %i.ah, %36                        ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.c, i64 26
-  store i16 %37, ptr %i.ak, align 2, !tbaa !22
-  %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 26
-  %38 = load i16, ptr %i.al, align 2, !tbaa !22
-  %39 = shl i16 %38, 3
-  %40 = add i16 %37, %39                          ; 2 uses
-  %41 = getelementptr inbounds nuw i8, ptr %i.c, i64 28
-  store i16 %40, ptr %41, align 4, !tbaa !22
-  %42 = getelementptr inbounds nuw i8, ptr %i.a, i64 28
-  %43 = load i16, ptr %42, align 4, !tbaa !22
-  %44 = shl i16 %43, 2
-  %i.am = add i16 %40, %44                        ; 2 uses
-  %45 = getelementptr inbounds nuw i8, ptr %i.c, i64 30
-  store i16 %i.am, ptr %45, align 2, !tbaa !22
-  %46 = getelementptr inbounds nuw i8, ptr %i.a, i64 30
-  %47 = load i16, ptr %46, align 2, !tbaa !22
-  %48 = shl i16 %47, 1
-  %i.an = add i16 %i.am, %48                      ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %i.c, i64 28
+  %i.al = getelementptr inbounds nuw i8, ptr %i.c, i64 30
+  %23 = load <4 x i16>, ptr %i.aj, align 8, !tbaa !22
+  %24 = shl <4 x i16> %23, <i16 4, i16 3, i16 2, i16 1> ; 4 uses
+  %25 = extractelement <4 x i16> %24, i64 0
+  %26 = add i16 %i.ah, %25                        ; 2 uses
+  store i16 %26, ptr %i.ak, align 2, !tbaa !22
+  %27 = extractelement <4 x i16> %24, i64 1
+  %i.am = add i16 %26, %27                        ; 2 uses
+  store i16 %i.am, ptr %22, align 4, !tbaa !22
+  %28 = extractelement <4 x i16> %24, i64 2
+  %29 = add i16 %i.am, %28                        ; 2 uses
+  store i16 %29, ptr %i.al, align 2, !tbaa !22
+  %30 = extractelement <4 x i16> %24, i64 3
+  %i.an = add i16 %29, %30                        ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store i16 %i.an, ptr %i.ao, align 16, !tbaa !22
   %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 32

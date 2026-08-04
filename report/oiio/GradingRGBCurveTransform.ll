@@ -201,7 +201,7 @@ bb.a:
   %i.k = load ptr, ptr %1, align 8, !tbaa !7
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   %i.m = load ptr, ptr %i.l, align 8
-  %i.n = tail call noundef nonnull align 4 dereferenceable(8) ptr %i.m(ptr noundef nonnull align 8 dereferenceable(8) %1, i64 noundef %.015) ; 4 uses
+  %i.n = tail call noundef nonnull align 4 dereferenceable(8) ptr %i.m(ptr noundef nonnull align 8 dereferenceable(8) %1, i64 noundef %.015) ; 3 uses
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph
@@ -215,15 +215,14 @@ bb.b:                                             ; preds = %.lr.ph
   br label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
-  %.sroa.0.0.copyload = load float, ptr %i.n, align 4, !tbaa !105
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 4
-  %.sroa.4.0.copyload = load float, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !105
-  %2 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.8, i64 noundef 3) ; 0 uses
-  %3 = fpext float %.sroa.0.0.copyload to double
-  %i.v = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %0, double noundef %3) ; 2 uses
+  %2 = load <2 x float>, ptr %i.n, align 4, !tbaa !105
+  %3 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.8, i64 noundef 3) ; 0 uses
+  %4 = fpext <2 x float> %2 to <2 x double>       ; 2 uses
+  %5 = extractelement <2 x double> %4, i64 0
+  %i.v = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %0, double noundef %5) ; 2 uses
   %i.w = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.v, ptr noundef nonnull @.str.9, i64 noundef 4) ; 0 uses
-  %4 = fpext float %.sroa.4.0.copyload to double
-  %i.x = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.v, double noundef %4) ; 2 uses
+  %6 = extractelement <2 x double> %4, i64 1
+  %i.x = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.v, double noundef %6) ; 2 uses
   %i.y = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.x, ptr noundef nonnull @.str.11, i64 noundef 6) ; 0 uses
   %i.z = load ptr, ptr %1, align 8, !tbaa !7
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 40

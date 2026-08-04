@@ -204,7 +204,7 @@ define i32 @Abc_TtCanonicizeCA(ptr nofree noundef captures(address_is_null) %0, 
 bb.a:
   %i.a = ptrtoaddr ptr %1 to i64
   %5 = alloca %struct.Abc_TgMan_t_, align 8       ; 29 uses
-  %6 = alloca %struct.Abc_TgMan_t_, align 8       ; 12 uses
+  %6 = alloca %struct.Abc_TgMan_t_, align 8       ; 11 uses
   %i.b = icmp slt i32 %2, 7
   %i.c = add nsw i32 %2, -6
   %i.d = shl nuw i32 1, %i.c
@@ -607,13 +607,12 @@ bb.g:                                             ; preds = %Abc_TtFill.exit
   %.fca.1.extract5 = extractvalue { i64, i32 } %i.ef, 1
   %.fca.0.extract4 = extractvalue { i64, i32 } %i.ef, 0
   %i.eg = call fastcc double @Abc_SccEnumCost(ptr noundef %6, i64 %.fca.0.extract4, i32 %.fca.1.extract5)
-  %.val = load i32, ptr %i.cz, align 8, !tbaa !313
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 12
-  %.val52 = load i32, ptr %7, align 4, !tbaa !309
-  %8 = sitofp i32 %.val to double
-  %9 = sitofp i32 %.val52 to double
+  %7 = load <2 x i32>, ptr %i.cz, align 8, !tbaa !16
+  %8 = sitofp <2 x i32> %7 to <2 x double>        ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 1
   %10 = fmul nnan double %9, 1.043000e+00
-  %i.eh = call double @llvm.fmuladd.f64(double %8, double f0x3FEFE76C8B439581, double %10)
+  %11 = extractelement <2 x double> %8, i64 0
+  %i.eh = call double @llvm.fmuladd.f64(double %11, double f0x3FEFE76C8B439581, double %10)
   %i.ei = fadd double %i.eh, -1.590000e+01
   %i.ej = fcmp ogt double %i.eg, %i.ei
   br i1 %i.ej, label %bb.h, label %bb.i

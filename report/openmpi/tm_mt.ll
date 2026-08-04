@@ -201,19 +201,19 @@ tm_init_genrand.exit.i:                           ; preds = %bb.c, %._crit_edge.
   %i.z = and i64 %i.u, 1
   %i.aa = icmp eq i64 %i.z, 0
   %i.ab = select i1 %i.aa, i64 0, i64 2567483615
-  %0 = xor i64 %i.y, %i.ab                        ; 3 uses
-  store i64 %0, ptr %i.o, align 8, !tbaa !8
-  %1 = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 2 uses
-  %i.ac = icmp eq ptr %i.q, getelementptr inbounds nuw (i8, ptr @x, i64 4992)
-  %spec.select.a = select i1 %i.ac, ptr @x, ptr %i.q ; 2 uses
-  %2 = icmp eq ptr %1, getelementptr inbounds nuw (i8, ptr @x, i64 4992)
-  %.pre9.i5 = select i1 %2, ptr @x, ptr %1        ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.a, i64 8 ; 2 uses
-  store ptr %3, ptr @pm, align 8, !tbaa !10
-  %i.ad = load i64, ptr %spec.select.a, align 8, !tbaa !8
+  %0 = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 2 uses
+  %1 = icmp eq ptr %i.q, getelementptr inbounds nuw (i8, ptr @x, i64 4992)
+  %spec.select = select i1 %1, ptr @x, ptr %i.q   ; 2 uses
+  %i.ac = icmp eq ptr %0, getelementptr inbounds nuw (i8, ptr @x, i64 4992)
+  %spec.select.a = select i1 %i.ac, ptr @x, ptr %0 ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %spec.select, i64 8 ; 2 uses
+  store ptr %2, ptr @pm, align 8, !tbaa !10
+  %3 = xor i64 %i.y, %i.ab                        ; 2 uses
+  store i64 %3, ptr %i.o, align 8, !tbaa !8
+  %i.ad = load i64, ptr %spec.select, align 8, !tbaa !8
   %i.ae = load i64, ptr %i.n, align 8, !tbaa !8
   %i.af = and i64 %i.ae, 2147483648
-  %i.ag = load i64, ptr %.pre9.i5, align 8, !tbaa !8 ; 2 uses
+  %i.ag = load i64, ptr %spec.select.a, align 8, !tbaa !8 ; 2 uses
   %i.ah = and i64 %i.ag, 2147483646
   %i.ai = or disjoint i64 %i.ah, %i.af
   %i.aj = lshr exact i64 %i.ai, 1
@@ -221,12 +221,12 @@ tm_init_genrand.exit.i:                           ; preds = %bb.c, %._crit_edge.
   %i.al = and i64 %i.ag, 1
   %i.am = icmp eq i64 %i.al, 0
   %i.an = select i1 %i.am, i64 0, i64 2567483615
-  %i.ao = xor i64 %i.ak, %i.an                    ; 3 uses
+  %i.ao = xor i64 %i.ak, %i.an                    ; 2 uses
   store i64 %i.ao, ptr %i.n, align 8, !tbaa !8
-  %i.ap = getelementptr inbounds nuw i8, ptr %.pre9.i5, i64 8 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %spec.select.a, i64 8 ; 2 uses
   store ptr %i.ap, ptr @p1, align 8, !tbaa !10
-  store ptr %.pre9.i5, ptr @p0, align 8, !tbaa !10
-  %i.aq = icmp eq ptr %3, getelementptr inbounds nuw (i8, ptr @x, i64 4992)
+  store ptr %spec.select.a, ptr @p0, align 8, !tbaa !10
+  %i.aq = icmp eq ptr %2, getelementptr inbounds nuw (i8, ptr @x, i64 4992)
   br i1 %i.aq, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %tm_init_genrand.exit.i
@@ -242,31 +242,23 @@ bb.g:                                             ; preds = %bb.f
   br label %tm_genrand_int32.exit10
 
 tm_genrand_int32.exit10:                          ; preds = %bb.f, %bb.g
-  %4 = lshr i64 %0, 11
-  %5 = xor i64 %4, %0                             ; 2 uses
-  %6 = shl i64 %5, 7
-  %7 = and i64 %6, 2636928640
-  %8 = xor i64 %7, %5                             ; 2 uses
-  %9 = shl i64 %8, 15
-  %10 = and i64 %9, 4022730752
-  %11 = xor i64 %10, %8                           ; 2 uses
-  %12 = lshr i64 %11, 23
-  %13 = lshr i64 %11, 5
-  %14 = xor i64 %12, %13
-  %15 = lshr i64 %i.ao, 11
-  %16 = xor i64 %15, %i.ao                        ; 2 uses
-  %17 = shl i64 %16, 7
-  %18 = and i64 %17, 2636928640
-  %19 = xor i64 %18, %16                          ; 2 uses
-  %20 = shl i64 %19, 15
-  %21 = and i64 %20, 4022730752
-  %22 = xor i64 %21, %19                          ; 2 uses
-  %23 = lshr i64 %22, 24
-  %24 = lshr i64 %22, 6
-  %25 = xor i64 %23, %24
-  %26 = uitofp nneg i64 %14 to double
-  %27 = uitofp nneg i64 %25 to double
-  %i.as = tail call nnan double @llvm.fmuladd.f64(double %26, double f0x4190000000000000, double %27)
+  %4 = insertelement <2 x i64> poison, i64 %3, i64 0
+  %5 = insertelement <2 x i64> %4, i64 %i.ao, i64 1 ; 2 uses
+  %6 = lshr <2 x i64> %5, splat (i64 11)
+  %7 = xor <2 x i64> %6, %5                       ; 2 uses
+  %8 = shl <2 x i64> %7, splat (i64 7)
+  %9 = and <2 x i64> %8, splat (i64 2636928640)
+  %10 = xor <2 x i64> %9, %7                      ; 2 uses
+  %11 = shl <2 x i64> %10, splat (i64 15)
+  %12 = and <2 x i64> %11, splat (i64 4022730752)
+  %13 = xor <2 x i64> %12, %10                    ; 2 uses
+  %14 = lshr <2 x i64> %13, <i64 23, i64 24>
+  %15 = lshr <2 x i64> %13, <i64 5, i64 6>
+  %16 = xor <2 x i64> %14, %15
+  %17 = uitofp nneg <2 x i64> %16 to <2 x double> ; 2 uses
+  %18 = extractelement <2 x double> %17, i64 0
+  %19 = extractelement <2 x double> %17, i64 1
+  %i.as = tail call nnan double @llvm.fmuladd.f64(double %18, double f0x4190000000000000, double %19)
   %i.at = fmul nnan double %i.as, f0x3CA0000000000000
   ret double %i.at
 }

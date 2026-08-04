@@ -1,3 +1,5 @@
+inline.NumInlined: 45
+inline.NumDeleted: 16
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -99,7 +101,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.h = load i32, ptr %i.g, align 8, !tbaa !35
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 576 ; 4 uses
-  %i.j = load <2 x i32>, ptr %i.i, align 8, !tbaa !36 ; 9 uses
+  %i.j = load <2 x i32>, ptr %i.i, align 8, !tbaa !36 ; 6 uses
   switch i32 %i.h, label %bb.o [
     i32 2, label %bb.c
     i32 5, label %bb.c
@@ -108,11 +110,10 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b
-  %1 = extractelement <2 x i32> %i.j, i64 0
-  %2 = uitofp i32 %1 to double
-  %3 = extractelement <2 x i32> %i.j, i64 1
-  %4 = uitofp i32 %3 to double
-  %i.k = tail call ptr @cairo_ps_surface_create_for_stream(ptr noundef nonnull @writer, ptr noundef nonnull %0, double noundef %2, double noundef %4) #18 ; 3 uses
+  %1 = uitofp <2 x i32> %i.j to <2 x double>      ; 2 uses
+  %2 = extractelement <2 x double> %1, i64 0
+  %3 = extractelement <2 x double> %1, i64 1
+  %i.k = tail call ptr @cairo_ps_surface_create_for_stream(ptr noundef nonnull @writer, ptr noundef nonnull %0, double noundef %2, double noundef %3) #18 ; 3 uses
   %i.l = load i32, ptr %i.g, align 8, !tbaa !35
   %i.m = icmp eq i32 %i.l, 5
   br i1 %i.m, label %bb.d, label %bb.r
@@ -122,11 +123,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.r
 
 bb.e:                                             ; preds = %bb.b
-  %5 = extractelement <2 x i32> %i.j, i64 0
-  %6 = uitofp i32 %5 to double
-  %7 = extractelement <2 x i32> %i.j, i64 1
-  %8 = uitofp i32 %7 to double
-  %i.n = tail call ptr @cairo_pdf_surface_create_for_stream(ptr noundef nonnull @writer, ptr noundef nonnull %0, double noundef %6, double noundef %8) #18 ; 4 uses
+  %4 = uitofp <2 x i32> %i.j to <2 x double>      ; 2 uses
+  %5 = extractelement <2 x double> %4, i64 0
+  %6 = extractelement <2 x double> %4, i64 1
+  %i.n = tail call ptr @cairo_pdf_surface_create_for_stream(ptr noundef nonnull @writer, ptr noundef nonnull %0, double noundef %5, double noundef %6) #18 ; 4 uses
   %i.o = tail call ptr @getenv(ptr noundef nonnull @.str.6) #18 ; 4 uses
   %.not = icmp eq ptr %i.o, null
   br i1 %.not, label %bb.r, label %bb.f
@@ -186,11 +186,10 @@ bb.m:                                             ; preds = %bb.k
   br label %bb.r
 
 bb.n:                                             ; preds = %bb.b
-  %9 = extractelement <2 x i32> %i.j, i64 0
-  %10 = uitofp i32 %9 to double
-  %11 = extractelement <2 x i32> %i.j, i64 1
-  %12 = uitofp i32 %11 to double
-  %i.ac = tail call ptr @cairo_svg_surface_create_for_stream(ptr noundef nonnull @writer, ptr noundef nonnull %0, double noundef %10, double noundef %12) #18
+  %7 = uitofp <2 x i32> %i.j to <2 x double>      ; 2 uses
+  %8 = extractelement <2 x double> %7, i64 0
+  %9 = extractelement <2 x double> %7, i64 1
+  %i.ac = tail call ptr @cairo_svg_surface_create_for_stream(ptr noundef nonnull @writer, ptr noundef nonnull %0, double noundef %8, double noundef %9) #18
   br label %bb.r
 
 bb.o:                                             ; preds = %bb.b

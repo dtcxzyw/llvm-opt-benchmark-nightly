@@ -1,3 +1,5 @@
+inline.NumInlined: 7
+inline.NumDeleted: 2
 begin_hunk_0_@_Z35pj_projection_specific_setup_affineP8PJconsts
 define hidden noundef ptr @_Z35pj_projection_specific_setup_affineP8PJconsts(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
@@ -199,6 +201,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.ec = shufflevector <2 x double> %i.eb, <2 x double> %i.cv, <2 x i32> <i32 0, i32 2>
   %i.ed = fmul <2 x double> %i.dv, %i.ec
   %i.ee = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dx, <2 x double> %i.dy, <2 x double> %i.ed) ; 2 uses
+  %1 = shufflevector <2 x double> %i.dm, <2 x double> %i.ee, <2 x i32> <i32 1, i32 2>
+  %2 = fneg <2 x double> %1                       ; 2 uses
   %i.ef = fmul <2 x double> %i.cw, %i.eb
   %i.eg = insertelement <2 x double> poison, double %i.cl, i64 0
   %i.eh = shufflevector <2 x double> %i.eg, <2 x double> poison, <2 x i32> zeroinitializer
@@ -233,19 +237,17 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br label %_ZL24computeReverseParametersP8PJconsts.exit
 
 bb.p:                                             ; preds = %bb.l
-  %1 = fneg <2 x double> %i.dm
-  %2 = shufflevector <2 x double> %i.dh, <2 x double> %1, <2 x i32> <i32 1, i32 3>
+  %3 = shufflevector <2 x double> %i.dh, <2 x double> %2, <2 x i32> <i32 1, i32 2>
   %i.eu = insertelement <2 x double> poison, double %i.em, i64 0 ; 2 uses
   %i.ev = shufflevector <2 x double> %i.eu, <2 x double> poison, <2 x i32> zeroinitializer ; 4 uses
-  %i.ew = fdiv <2 x double> %2, %i.ev
+  %i.ew = fdiv <2 x double> %3, %i.ev
   %i.ex = getelementptr inbounds nuw i8, ptr %i.cj, i64 112
   store <2 x double> %i.ew, ptr %i.ex, align 8, !tbaa !46
   %i.ey = shufflevector <2 x double> %i.du, <2 x double> %i.eb, <2 x i32> <i32 1, i32 3>
   %i.ez = fdiv <2 x double> %i.ey, %i.ev
   %i.fa = getelementptr inbounds nuw i8, ptr %i.cj, i64 128
   store <2 x double> %i.ez, ptr %i.fa, align 8, !tbaa !46
-  %3 = fneg <2 x double> %i.ee
-  %4 = shufflevector <2 x double> %i.ee, <2 x double> %3, <2 x i32> <i32 1, i32 2>
+  %4 = shufflevector <2 x double> %i.ee, <2 x double> %2, <2 x i32> <i32 1, i32 3>
   %i.fb = fdiv <2 x double> %4, %i.ev
   %i.fc = getelementptr inbounds nuw i8, ptr %i.cj, i64 144
   store <2 x double> %i.fb, ptr %i.fc, align 8, !tbaa !46
@@ -513,27 +515,24 @@ bb.a:
 define internal { double, double } @_ZL10reverse_2d5PJ_XYP8PJconsts(double %0, double %1, ptr nofree noundef readonly captures(none) %2) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 88
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 112
-  %3 = load double, ptr %i.b, align 8, !tbaa !58
-  %4 = fsub double %0, %3
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %6 = load double, ptr %5, align 8, !tbaa !59
-  %7 = fsub double %1, %6
+  %3 = load <2 x double>, ptr %i.b, align 8, !tbaa !46
+  %4 = insertelement <2 x double> poison, double %0, i64 0
+  %5 = insertelement <2 x double> %4, double %1, i64 1
+  %6 = fsub <2 x double> %5, %3                   ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.e = load double, ptr %i.d, align 8, !tbaa !60
   %i.f = fsub double 0.000000e+00, %i.e
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 144
   %i.h = load <4 x double>, ptr %i.c, align 8, !tbaa !46 ; 3 uses
   %i.i = load <2 x double>, ptr %i.g, align 8, !tbaa !46
-  %8 = insertelement <2 x double> poison, double %7, i64 0
-  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.j = shufflevector <2 x double> %i.i, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   %i.k = shufflevector <4 x double> %i.h, <4 x double> %i.j, <2 x i32> <i32 1, i32 4>
-  %i.l = fmul <2 x double> %9, %i.k
+  %i.l = fmul <2 x double> %7, %i.k
   %i.m = shufflevector <4 x double> %i.h, <4 x double> poison, <2 x i32> <i32 0, i32 3>
-  %10 = insertelement <2 x double> poison, double %4, i64 0
-  %i.n = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.n = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
   %i.o = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.m, <2 x double> %i.n, <2 x double> %i.l)
   %i.p = shufflevector <4 x double> %i.h, <4 x double> %i.j, <2 x i32> <i32 2, i32 5>
   %i.q = insertelement <2 x double> poison, double %i.f, i64 0

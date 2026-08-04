@@ -204,13 +204,12 @@ bb.acz:                                           ; preds = %bb.acr
   %i.cyy = insertelement <2 x double> %i.cyx, double %i.cyw, i64 1
   %i.cyz = insertelement <2 x double> poison, double %i.cyv, i64 0
   %i.cza = shufflevector <2 x double> %i.cyz, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.czb = fdiv <2 x double> %i.cyy, %i.cza       ; 2 uses
-  %36 = extractelement <2 x double> %i.czb, i64 0
-  %37 = fmul double %36, 1.000000e+02
+  %i.czb = fdiv <2 x double> %i.cyy, %i.cza
+  %36 = fmul <2 x double> %i.czb, splat (double 1.000000e+02) ; 2 uses
+  %37 = extractelement <2 x double> %36, i64 0
   %i.czc = select i1 %i.cyt, double %37, double 0.000000e+00
-  %i.czd = extractelement <2 x double> %i.czb, i64 1
-  %38 = fmul double %i.czd, 1.000000e+02
-  %i.cze = select i1 %i.cyt, double %38, double 0.000000e+00
+  %i.czd = extractelement <2 x double> %36, i64 1
+  %i.cze = select i1 %i.cyt, double %i.czd, double 0.000000e+00
   %i.czf = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.876, i64 noundef %i.cys, i64 noundef %.030.i, double noundef %i.czc, i64 noundef %.027.i, double noundef %i.cze) ; 0 uses
   br label %bb.acq
 

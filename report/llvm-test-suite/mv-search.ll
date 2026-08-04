@@ -204,9 +204,9 @@ bb.a:
   %i.r = tail call double @log(double noundef %i.q) #9, !tbaa !4
   %i.s = insertelement <2 x double> poison, double %i.n, i64 0
   %i.t = insertelement <2 x double> %i.s, double %i.r, i64 1
-  %i.u = fdiv <2 x double> %i.t, splat (double f0x3FE62E42FEFA39EF) ; 2 uses
-  %0 = extractelement <2 x double> %i.u, i64 0
-  %1 = fadd double %0, 1.000000e-10
+  %i.u = fdiv <2 x double> %i.t, splat (double f0x3FE62E42FEFA39EF)
+  %0 = fadd <2 x double> %i.u, splat (double 1.000000e-10) ; 2 uses
+  %1 = extractelement <2 x double> %0, i64 0
   %i.v = tail call double @llvm.floor.f64(double %1)
   %i.w = fptosi double %i.v to i32                ; 2 uses
   %i.x = shl nsw i32 %i.w, 1
@@ -214,9 +214,8 @@ bb.a:
   %i.z = add nsw i32 %i.w, 1
   %notmask = shl nsw i32 -1, %i.z
   %i.aa = xor i32 %notmask, -1
-  %i.ab = extractelement <2 x double> %i.u, i64 1
-  %2 = fadd double %i.ab, 1.000000e-10
-  %i.ac = tail call double @llvm.ceil.f64(double %2)
+  %i.ab = extractelement <2 x double> %0, i64 1
+  %i.ac = tail call double @llvm.ceil.f64(double %i.ab)
   %i.ad = fptosi double %i.ac to i32              ; 2 uses
   %i.ae = shl nsw i32 %i.ad, 1
   %i.af = add nsw i32 %i.ae, 3                    ; 2 uses

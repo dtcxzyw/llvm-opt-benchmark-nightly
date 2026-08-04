@@ -7,15 +7,12 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable
 define hidden double @ngdist(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = load double, ptr %0, align 8, !tbaa !8
-  %3 = load double, ptr %1, align 8, !tbaa !8
-  %4 = fsub double %2, %3
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load double, ptr %5, align 8, !tbaa !13
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %8 = load double, ptr %7, align 8, !tbaa !13
-  %9 = fsub double %6, %8
-  %i.a = tail call double @hypot(double noundef %4, double noundef %9) #2
+  %2 = load <2 x double>, ptr %0, align 8, !tbaa !8
+  %3 = load <2 x double>, ptr %1, align 8, !tbaa !8
+  %4 = fsub <2 x double> %2, %3                   ; 2 uses
+  %5 = extractelement <2 x double> %4, i64 0
+  %6 = extractelement <2 x double> %4, i64 1
+  %i.a = tail call double @hypot(double noundef %5, double noundef %6) #2
   ret double %i.a
 }
 
@@ -38,10 +35,6 @@ attributes #2 = { nounwind }
 !5 = !{!"int", !6, i64 0}
 !6 = !{!"omnipotent char", !7, i64 0}
 !7 = !{!"Simple C/C++ TBAA"}
-!8 = !{!9, !11, i64 0}
-!9 = !{!"Site", !10, i64 0, !12, i64 16}
-!10 = !{!"Point", !11, i64 0, !11, i64 8}
-!11 = !{!"double", !6, i64 0}
-!12 = !{!"long", !6, i64 0}
-!13 = !{!9, !11, i64 8}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"double", !6, i64 0}
 end_hunk_0

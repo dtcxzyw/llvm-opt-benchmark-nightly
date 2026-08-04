@@ -1,3 +1,7 @@
+inline.NumInlined: 68
+inline.NumDeleted: 14
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@CRYPTO_poly1305_update:bb.a
   %i.a = ptrtoint ptr %0 to i64
   %i.b = add i64 %i.a, 63
@@ -199,51 +203,48 @@ bb.a:
   %i.br = lshr i64 %i.bq, 44
   %i.bs = and i64 %i.bq, 17592186044415           ; 3 uses
   %i.bt = add nuw nsw i64 %i.br, %i.bh            ; 5 uses
-  %2 = trunc i64 %i.bq to i32
-  %3 = and i32 %2, 67108863
-  %4 = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %3, i64 0
-  %5 = shufflevector <4 x i32> %4, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %5, ptr %i.a, align 16, !tbaa !11
-  %i.bu = lshr i64 %i.bs, 26
-  %i.bv = shl nuw nsw i64 %i.bt, 18
-  %i.bw = or disjoint i64 %i.bv, %i.bu
-  %i.bx = trunc i64 %i.bw to i32
-  %6 = and i32 %i.bx, 67108863
-  %i.by = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %6, i64 0
-  %7 = shufflevector <4 x i32> %i.by, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store <4 x i32> %7, ptr %8, align 16, !tbaa !11
-  %9 = lshr i64 %i.bt, 8
-  %i.bz = trunc i64 %9 to i32
-  %10 = and i32 %i.bz, 67108863
-  %i.ca = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %10, i64 0
-  %11 = shufflevector <4 x i32> %i.ca, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 176
-  store <4 x i32> %11, ptr %12, align 16, !tbaa !11
-  %13 = lshr i64 %i.bt, 34
-  %14 = shl nuw nsw i64 %i.bm, 10
-  %15 = or i64 %13, %14
-  %16 = trunc i64 %15 to i32
-  %17 = and i32 %16, 67108863
-  %18 = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %17, i64 0
-  %19 = shufflevector <4 x i32> %18, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %2 = lshr i64 %i.bs, 26
+  %3 = shl nuw nsw i64 %i.bt, 18
+  %4 = or disjoint i64 %3, %2
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 160
+  %6 = lshr i64 %i.bt, 8
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %i.bu = lshr i64 %i.bt, 34
+  %i.bv = shl nuw nsw i64 %i.bm, 10
+  %i.bw = or i64 %i.bu, %i.bv
+  %i.bx = trunc i64 %i.bq to i32
+  %i.by = insertelement <4 x i32> poison, i32 %i.bx, i64 0
+  %8 = trunc i64 %4 to i32
+  %9 = insertelement <4 x i32> %i.by, i32 %8, i64 1
+  %10 = trunc i64 %6 to i32
+  %11 = insertelement <4 x i32> %9, i32 %10, i64 2
+  %i.bz = trunc i64 %i.bw to i32
+  %i.ca = insertelement <4 x i32> %11, i32 %i.bz, i64 3
+  %12 = and <4 x i32> %i.ca, splat (i32 67108863) ; 4 uses
+  %13 = shufflevector <4 x i32> %12, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 5, i32 0, i32 5>
+  store <4 x i32> %13, ptr %i.a, align 16, !tbaa !11
+  %14 = shufflevector <4 x i32> %12, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 1, i32 5, i32 1, i32 5> ; 2 uses
+  store <4 x i32> %14, ptr %5, align 16, !tbaa !11
+  %15 = shufflevector <4 x i32> %12, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 2, i32 5, i32 2, i32 5> ; 2 uses
+  store <4 x i32> %15, ptr %7, align 16, !tbaa !11
+  %16 = shufflevector <4 x i32> %12, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 3, i32 5, i32 3, i32 5> ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 192
-  store <4 x i32> %19, ptr %i.cb, align 16, !tbaa !11
+  store <4 x i32> %16, ptr %i.cb, align 16, !tbaa !11
   %i.cc = lshr i64 %i.bm, 16
   %i.cd = trunc nuw nsw i64 %i.cc to i32
   %i.ce = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %i.cd, i64 0
   %i.cf = shufflevector <4 x i32> %i.ce, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 208
   store <4 x i32> %i.cf, ptr %i.cg, align 16, !tbaa !11
-  %i.ch = bitcast <4 x i32> %7 to <2 x i64>
+  %i.ch = bitcast <4 x i32> %14 to <2 x i64>
   %i.ci = mul nuw nsw <2 x i64> %i.ch, splat (i64 5)
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 224
   store <2 x i64> %i.ci, ptr %i.cj, align 16, !tbaa !11
-  %i.ck = bitcast <4 x i32> %11 to <2 x i64>
+  %i.ck = bitcast <4 x i32> %15 to <2 x i64>
   %i.cl = mul nuw nsw <2 x i64> %i.ck, splat (i64 5)
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 240
   store <2 x i64> %i.cl, ptr %i.cm, align 16, !tbaa !11
-  %i.cn = bitcast <4 x i32> %19 to <2 x i64>
+  %i.cn = bitcast <4 x i32> %16 to <2 x i64>
   %i.co = mul nuw nsw <2 x i64> %i.cn, splat (i64 5)
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 256
   store <2 x i64> %i.co, ptr %i.cp, align 16, !tbaa !11
@@ -287,52 +288,49 @@ bb.a:
   %i.ea = add nuw nsw i64 %i.dz, %i.do            ; 3 uses
   %i.eb = lshr i64 %i.ea, 44
   %i.ec = add nuw nsw i64 %i.eb, %i.ds            ; 3 uses
-  %20 = trunc i64 %i.ea to i32
-  %21 = and i32 %20, 67108863
-  %22 = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %21, i64 0
-  %23 = shufflevector <4 x i32> %22, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %23, ptr %0, align 16, !tbaa !11
-  %i.ed = lshr i64 %i.ea, 26
-  %24 = and i64 %i.ed, 262143
-  %i.ee = shl nuw nsw i64 %i.ec, 18
-  %i.ef = or disjoint i64 %i.ee, %24
-  %i.eg = trunc i64 %i.ef to i32
-  %25 = and i32 %i.eg, 67108863
-  %i.eh = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %25, i64 0
-  %26 = shufflevector <4 x i32> %i.eh, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
-  %27 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store <4 x i32> %26, ptr %27, align 16, !tbaa !11
-  %28 = lshr i64 %i.ec, 8
-  %i.ei = trunc i64 %28 to i32
-  %29 = and i32 %i.ei, 67108863
-  %i.ej = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %29, i64 0
-  %30 = shufflevector <4 x i32> %i.ej, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
-  %31 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store <4 x i32> %30, ptr %31, align 16, !tbaa !11
-  %32 = lshr i64 %i.ec, 34
-  %33 = shl nuw nsw i64 %i.dw, 10
-  %34 = or i64 %32, %33
-  %35 = trunc i64 %34 to i32
-  %36 = and i32 %35, 67108863
-  %37 = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %36, i64 0
-  %38 = shufflevector <4 x i32> %37, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %17 = lshr i64 %i.ea, 26
+  %18 = and i64 %17, 262143
+  %19 = shl nuw nsw i64 %i.ec, 18
+  %20 = or disjoint i64 %19, %18
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.ed = lshr i64 %i.ec, 8
+  %22 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %23 = lshr i64 %i.ec, 34
+  %i.ee = shl nuw nsw i64 %i.dw, 10
+  %i.ef = or i64 %23, %i.ee
+  %i.eg = trunc i64 %i.ea to i32
+  %i.eh = insertelement <4 x i32> poison, i32 %i.eg, i64 0
+  %24 = trunc i64 %20 to i32
+  %25 = insertelement <4 x i32> %i.eh, i32 %24, i64 1
+  %26 = trunc i64 %i.ed to i32
+  %27 = insertelement <4 x i32> %25, i32 %26, i64 2
+  %i.ei = trunc i64 %i.ef to i32
+  %i.ej = insertelement <4 x i32> %27, i32 %i.ei, i64 3
+  %28 = and <4 x i32> %i.ej, splat (i32 67108863) ; 4 uses
+  %29 = shufflevector <4 x i32> %28, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 5, i32 0, i32 5>
+  store <4 x i32> %29, ptr %0, align 16, !tbaa !11
+  %30 = shufflevector <4 x i32> %28, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 1, i32 5, i32 1, i32 5> ; 2 uses
+  store <4 x i32> %30, ptr %21, align 16, !tbaa !11
+  %31 = shufflevector <4 x i32> %28, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 2, i32 5, i32 2, i32 5> ; 2 uses
+  store <4 x i32> %31, ptr %22, align 16, !tbaa !11
+  %32 = shufflevector <4 x i32> %28, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 3, i32 5, i32 3, i32 5> ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store <4 x i32> %38, ptr %i.ek, align 16, !tbaa !11
+  store <4 x i32> %32, ptr %i.ek, align 16, !tbaa !11
   %i.el = lshr i64 %i.dw, 16
   %i.em = trunc nuw nsw i64 %i.el to i32
   %i.en = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %i.em, i64 0
   %i.eo = shufflevector <4 x i32> %i.en, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 64
   store <4 x i32> %i.eo, ptr %i.ep, align 16, !tbaa !11
-  %i.eq = bitcast <4 x i32> %26 to <2 x i64>
+  %i.eq = bitcast <4 x i32> %30 to <2 x i64>
   %i.er = mul nuw nsw <2 x i64> %i.eq, splat (i64 5)
   %i.es = getelementptr inbounds nuw i8, ptr %0, i64 80
   store <2 x i64> %i.er, ptr %i.es, align 16, !tbaa !11
-  %i.et = bitcast <4 x i32> %30 to <2 x i64>
+  %i.et = bitcast <4 x i32> %31 to <2 x i64>
   %i.eu = mul nuw nsw <2 x i64> %i.et, splat (i64 5)
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 96
   store <2 x i64> %i.eu, ptr %i.ev, align 16, !tbaa !11
-  %i.ew = bitcast <4 x i32> %38 to <2 x i64>
+  %i.ew = bitcast <4 x i32> %32 to <2 x i64>
   %i.ex = mul nuw nsw <2 x i64> %i.ew, splat (i64 5)
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 112
   store <2 x i64> %i.ex, ptr %i.ey, align 16, !tbaa !11

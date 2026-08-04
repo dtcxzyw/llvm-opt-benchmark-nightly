@@ -203,7 +203,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 116
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
@@ -488,21 +488,19 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %._crit_edge, %bb.p, %bb.n
   %i.fc = phi float [ %.pre, %._crit_edge ], [ %i.fa, %bb.p ], [ %i.dz, %bb.n ]
-  %i.fd = phi <2 x float> [ %i.ev, %._crit_edge ], [ %i.fb, %bb.p ], [ %i.er, %bb.n ] ; 2 uses
+  %i.fd = phi <2 x float> [ %i.ev, %._crit_edge ], [ %i.fb, %bb.p ], [ %i.er, %bb.n ]
   %i.fe = load float, ptr %5, align 8, !tbaa !29
   %i.ff = fsub float %i.fe, %i.fc
-  %8 = load float, ptr %i.t, align 4, !tbaa !29
-  %9 = extractelement <2 x float> %i.fd, i64 0
-  %10 = fsub float %8, %9
-  %i.fg = load float, ptr %.sroa.46.0..sroa_idx, align 8, !tbaa !29
-  %11 = extractelement <2 x float> %i.fd, i64 1
-  %12 = fsub float %i.fg, %11
-  %i.fh = load float, ptr %4, align 4, !tbaa !29
-  %13 = load float, ptr %i.f, align 4, !tbaa !29
-  %i.fi = fmul float %10, %13
-  %i.fj = call float @llvm.fmuladd.f32(float %i.ff, float %i.fh, float %i.fi)
+  %8 = load <2 x float>, ptr %i.t, align 4, !tbaa !29
+  %9 = fsub <2 x float> %8, %i.fd                 ; 2 uses
+  %i.fg = load float, ptr %4, align 4, !tbaa !29
+  %i.fh = load float, ptr %i.f, align 4, !tbaa !29
+  %10 = extractelement <2 x float> %9, i64 0
+  %i.fi = fmul float %10, %i.fh
+  %i.fj = call float @llvm.fmuladd.f32(float %i.ff, float %i.fg, float %i.fi)
   %i.fk = load float, ptr %i.g, align 4, !tbaa !29
-  %i.fl = call noundef float @llvm.fmuladd.f32(float %12, float %i.fk, float %i.fj)
+  %11 = extractelement <2 x float> %9, i64 1
+  %i.fl = call noundef float @llvm.fmuladd.f32(float %11, float %i.fk, float %i.fj)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %7, i8 0, i64 16, i1 false)
   %i.fm = load float, ptr %i.v, align 4, !tbaa !100 ; 2 uses

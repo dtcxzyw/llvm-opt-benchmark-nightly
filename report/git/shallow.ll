@@ -1,3 +1,7 @@
+inline.NumInlined: 66
+inline.NumDeleted: 31
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -178,27 +182,19 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.r, label %bb.c, label %move_array.exit
 
 bb.c:                                             ; preds = %bb.b
-  %1 = getelementptr inbounds nuw i8, ptr %i.o, i64 64
-  %2 = load ptr, ptr %1, align 8, !tbaa !57
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.i ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.s = xor i32 %i.b, -1
-  %i.t = add nsw i32 %i.q, %i.s                   ; 3 uses
-  %5 = sext i32 %i.t to i64                       ; 2 uses
+  %i.t = add nsw i32 %i.q, %i.s                   ; 2 uses
   %.not.i = icmp eq i32 %i.t, 0
-  br i1 %.not.i, label %move_array.exit, label %6
+  br i1 %.not.i, label %move_array.exit, label %st_mult.exit.i
 
-6:                                                ; preds = %bb.c
-  %mul.ov.i.i = icmp slt i32 %i.t, 0
-  br i1 %mul.ov.i.i, label %7, label %st_mult.exit.i
-
-7:                                                ; preds = %6
-  tail call void (ptr, ...) @die(ptr noundef nonnull @.str.19, i64 noundef 8, i64 noundef range(i64 -2147483646, 2147483647) %5) #13
-  unreachable
-
-st_mult.exit.i:                                   ; preds = %6
-  %i.u = shl nuw nsw i64 %5, 3
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %3, ptr nonnull readonly align 1 %4, i64 %i.u, i1 false)
+st_mult.exit.i:                                   ; preds = %bb.c
+  %1 = sext i32 %i.t to i64
+  %2 = getelementptr inbounds nuw i8, ptr %i.o, i64 64
+  %3 = load ptr, ptr %2, align 8, !tbaa !57
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.i ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.u = shl nuw nsw i64 %1, 3
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %4, ptr nonnull readonly align 1 %5, i64 %i.u, i1 false)
   %.pre = load ptr, ptr @the_repository, align 8, !tbaa !56
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 24
   %.pre9 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !12 ; 2 uses

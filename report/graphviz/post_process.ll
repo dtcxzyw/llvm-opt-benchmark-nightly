@@ -1,3 +1,7 @@
+inline.NumInlined: 33
+inline.NumDeleted: 5
+loop-unroll.NumRuntimeUnrolled: 10
+loop-unroll.NumUnrolled: 10
 begin_hunk_0_@StressMajorizationSmoother2_new:bb.a
   %i.el = add nsw i64 %wide.trip.count501, -1
   %i.em = icmp eq i64 %i.el, %i.ec
@@ -199,10 +203,8 @@ bb.y:                                             ; preds = %bb.s, %bb.x
   %i.hn = phi i32 [ %i.fp, %.lr.ph471 ], [ %.pre531, %._crit_edge429.loopexit ] ; 2 uses
   %.7.lcssa = phi i64 [ %.6468, %.lr.ph471 ], [ %.8, %._crit_edge429.loopexit ] ; 2 uses
   %i.ho = phi <2 x double> [ %i.fk, %.lr.ph471 ], [ %i.hi, %._crit_edge429.loopexit ] ; 2 uses
-  %i.hp = phi <2 x double> [ zeroinitializer, %.lr.ph471 ], [ %i.hj, %._crit_edge429.loopexit ] ; 3 uses
+  %i.hp = phi <2 x double> [ zeroinitializer, %.lr.ph471 ], [ %i.hj, %._crit_edge429.loopexit ] ; 2 uses
   %i.hq = icmp slt i32 %i.hn, %i.hm
-  %5 = extractelement <2 x double> %i.hp, i64 0
-  %6 = extractelement <2 x double> %i.hp, i64 1
   br i1 %i.hq, label %.lr.ph459, label %._crit_edge460
 
 .lr.ph459:                                        ; preds = %._crit_edge429
@@ -324,38 +326,34 @@ bb.ag:                                            ; preds = %bb.aa, %bb.af
   %i.ka = phi i32 [ %i.hu, %bb.z ], [ %.pre534, %._crit_edge446.loopexit ] ; 2 uses
   %.10.lcssa = phi i64 [ %.9457, %bb.z ], [ %.11, %._crit_edge446.loopexit ] ; 2 uses
   %i.kb = phi <2 x double> [ %i.hv, %bb.z ], [ %i.jw, %._crit_edge446.loopexit ] ; 2 uses
-  %i.kc = phi <2 x double> [ %i.hw, %bb.z ], [ %i.jx, %._crit_edge446.loopexit ] ; 3 uses
+  %i.kc = phi <2 x double> [ %i.hw, %bb.z ], [ %i.jx, %._crit_edge446.loopexit ] ; 2 uses
   %indvars.iv.next520 = add nsw i64 %indvars.iv519, 1 ; 2 uses
   %i.kd = sext i32 %i.ka to i64
   %i.ke = icmp slt i64 %indvars.iv.next520, %i.kd
-  br i1 %i.ke, label %bb.z, label %._crit_edge460.loopexit, !llvm.loop !43
+  br i1 %i.ke, label %bb.z, label %._crit_edge460, !llvm.loop !43
 
-._crit_edge460.loopexit:                          ; preds = %._crit_edge446
-  %7 = extractelement <2 x double> %i.kc, i64 1
-  %8 = extractelement <2 x double> %i.kc, i64 0
-  br label %._crit_edge460
-
-._crit_edge460:                                   ; preds = %._crit_edge460.loopexit, %._crit_edge429
-  %.2333.lcssa = phi double [ %5, %._crit_edge429 ], [ %8, %._crit_edge460.loopexit ] ; 2 uses
-  %.2314.lcssa = phi double [ %6, %._crit_edge429 ], [ %7, %._crit_edge460.loopexit ]
-  %.9.lcssa = phi i64 [ %.7.lcssa, %._crit_edge429 ], [ %.10.lcssa, %._crit_edge460.loopexit ] ; 6 uses
-  %i.kf = phi <2 x double> [ %i.ho, %._crit_edge429 ], [ %i.kb, %._crit_edge460.loopexit ] ; 3 uses
+._crit_edge460:                                   ; preds = %._crit_edge446, %._crit_edge429
+  %.9.lcssa = phi i64 [ %.7.lcssa, %._crit_edge429 ], [ %.10.lcssa, %._crit_edge446 ] ; 6 uses
+  %i.kf = phi <2 x double> [ %i.ho, %._crit_edge429 ], [ %i.kb, %._crit_edge446 ] ; 3 uses
+  %5 = phi <2 x double> [ %i.hp, %._crit_edge429 ], [ %i.kc, %._crit_edge446 ] ; 2 uses
   %i.kg = getelementptr inbounds nuw [4 x i8], ptr %i.cd, i64 %.9.lcssa
   %i.kh = trunc nuw nsw i64 %indvars.iv522 to i32 ; 2 uses
   store i32 %i.kh, ptr %i.kg, align 4, !tbaa !29
-  %9 = fneg double %.2333.lcssa
+  %6 = fneg <2 x double> %5                       ; 2 uses
   %i.ki = getelementptr inbounds nuw [8 x i8], ptr %i.bu, i64 %indvars.iv522 ; 2 uses
   %i.kj = load double, ptr %i.ki, align 8, !tbaa !18
-  %i.kk = fmul double %i.kj, %9                   ; 2 uses
+  %7 = extractelement <2 x double> %6, i64 0
+  %i.kk = fmul double %i.kj, %7                   ; 2 uses
   store double %i.kk, ptr %i.ki, align 8, !tbaa !18
-  %i.kl = fsub double %i.kk, %.2333.lcssa
+  %8 = extractelement <2 x double> %5, i64 0
+  %i.kl = fsub double %i.kk, %8
   %i.km = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %.9.lcssa
   store double %i.kl, ptr %i.km, align 8, !tbaa !18
   %i.kn = getelementptr inbounds nuw [4 x i8], ptr %i.cl, i64 %.9.lcssa
   store i32 %i.kh, ptr %i.kn, align 4, !tbaa !29
-  %10 = fneg double %.2314.lcssa
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.ch, i64 %.9.lcssa
-  store double %10, ptr %11, align 8, !tbaa !18
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.ch, i64 %.9.lcssa
+  %10 = extractelement <2 x double> %6, i64 1
+  store double %10, ptr %9, align 8, !tbaa !18
   %i.ko = add i64 %.9.lcssa, 1                    ; 8 uses
   %i.kp = trunc i64 %i.ko to i32                  ; 2 uses
   %i.kq = getelementptr inbounds nuw [4 x i8], ptr %i.cb, i64 %indvars.iv.next523

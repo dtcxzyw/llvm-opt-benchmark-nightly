@@ -68,16 +68,14 @@ bb.a:
   br i1 %rt.guard, label %.rtscalar, label %.rtvec
 
 .rtvec:                                           ; preds = %bb.a
-  %2 = load double, ptr %1, align 8
-  %3 = load double, ptr %0, align 8
-  %4 = fmul double %2, %3
-  store double %4, ptr %0, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %6 = load double, ptr %5, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %8 = load double, ptr %7, align 8
-  %9 = fmul double %6, %8
-  store double %9, ptr %7, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %3 = load <2 x double>, ptr %1, align 8
+  %4 = load <2 x double>, ptr %0, align 8
+  %5 = fmul <2 x double> %3, %4                   ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  store double %6, ptr %0, align 8
+  %7 = extractelement <2 x double> %5, i64 1
+  store double %7, ptr %2, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.g = load <4 x i32>, ptr %i.e, align 4
@@ -251,16 +249,15 @@ bb.a:
   br i1 %rt.guard, label %.rtscalar, label %.rtvec
 
 .rtvec:                                           ; preds = %bb.a
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %2 = load double, ptr %i.e, align 8
-  %3 = load double, ptr %0, align 8
-  %4 = fmul double %2, %3
-  store double %4, ptr %0, align 8
-  %5 = load double, ptr %1, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %7 = load double, ptr %6, align 8
-  %8 = fmul double %5, %7
-  store double %8, ptr %6, align 8
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %2 = load <2 x double>, ptr %1, align 8
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %4 = load <2 x double>, ptr %0, align 8
+  %5 = fmul <2 x double> %3, %4                   ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  store double %6, ptr %0, align 8
+  %7 = extractelement <2 x double> %5, i64 1
+  store double %7, ptr %i.e, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.h = load <4 x i32>, ptr %i.f, align 4

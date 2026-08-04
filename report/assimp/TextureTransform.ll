@@ -204,7 +204,7 @@ bb.ch:                                            ; preds = %.lr.ph671, %bb.dd
   %i.rc = phi i64 [ 0, %.lr.ph671 ], [ %i.zw, %bb.dd ]
   %.sroa.0481.3669.in = phi ptr [ %i.jp, %.lr.ph671 ], [ %.sroa.0481.3669, %bb.dd ]
   %.0215667 = phi i32 [ 0, %.lr.ph671 ], [ %i.zv, %bb.dd ] ; 7 uses
-  %.sroa.0481.3669 = load ptr, ptr %.sroa.0481.3669.in, align 8 ; 15 uses
+  %.sroa.0481.3669 = load ptr, ptr %.sroa.0481.3669.in, align 8 ; 12 uses
   %.not239 = icmp ult i32 %.0215667, %.0218
   br i1 %.not239, label %bb.cm, label %bb.ci
 
@@ -277,17 +277,8 @@ bb.cn:                                            ; preds = %bb.cm
 
 bb.co:                                            ; preds = %bb.cn
   %i.rr = getelementptr inbounds nuw i8, ptr %.sroa.0481.3669, i64 16
-  %3 = load float, ptr %i.rr, align 8
-  %4 = fpext float %3 to double
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0481.3669, i64 20
-  %6 = load float, ptr %5, align 4
-  %7 = fpext float %6 to double
-  %8 = getelementptr inbounds nuw i8, ptr %.sroa.0481.3669, i64 24
-  %9 = load float, ptr %8, align 8
-  %10 = fpext float %9 to double
-  %11 = getelementptr inbounds nuw i8, ptr %.sroa.0481.3669, i64 28
-  %12 = load float, ptr %11, align 4
-  %13 = fpext float %12 to double
+  %3 = load <4 x float>, ptr %i.rr, align 8
+  %4 = fpext <4 x float> %3 to <4 x double>       ; 4 uses
   %i.rs = getelementptr inbounds nuw i8, ptr %.sroa.0481.3669, i64 32
   %i.rt = load float, ptr %i.rs, align 8
   %i.ru = fmul float %i.rt, f0x42652EE1
@@ -304,7 +295,11 @@ bb.co:                                            ; preds = %bb.cn
   %switch.select.i331 = select i1 %switch.selectcmp.i330, ptr @.str.26, ptr @.str.27
   %switch.selectcmp3.i332 = icmp eq i32 %i.rz, 0
   %switch.select4.i333 = select i1 %switch.selectcmp3.i332, ptr @.str.25, ptr %switch.select.i331
-  %i.sa = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.c, i64 noundef 1024, ptr noundef nonnull @.str.19, i32 noundef %i.rb, i32 noundef %.0215667, double noundef %4, double noundef %7, double noundef %10, double noundef %13, double noundef %i.rv, ptr noundef nonnull %switch.select4.i, ptr noundef nonnull %switch.select4.i333) #17 ; 0 uses
+  %5 = extractelement <4 x double> %4, i64 0
+  %6 = extractelement <4 x double> %4, i64 1
+  %7 = extractelement <4 x double> %4, i64 2
+  %8 = extractelement <4 x double> %4, i64 3
+  %i.sa = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.c, i64 noundef 1024, ptr noundef nonnull @.str.19, i32 noundef %i.rb, i32 noundef %.0215667, double noundef %5, double noundef %6, double noundef %7, double noundef %8, double noundef %i.rv, ptr noundef nonnull %switch.select4.i, ptr noundef nonnull %switch.select4.i333) #17 ; 0 uses
   %i.sb = invoke noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
           to label %bb.cp unwind label %.loopexit.split-lp
 

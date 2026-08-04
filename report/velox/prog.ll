@@ -204,16 +204,12 @@ bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds i8, ptr %i.f, i64 -1
   %i.h = lshr i64 %i.d, 5
   %i.i = getelementptr [32 x i8], ptr %1, i64 %i.h ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %3 = load i32, ptr %i.j, align 8, !tbaa !10     ; 2 uses
-  %4 = trunc i32 %3 to i8
-  %5 = insertelement <32 x i8> poison, i8 %4, i64 0
-  %6 = shufflevector <32 x i8> %5, <32 x i8> poison, <32 x i32> zeroinitializer
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.k = load i32, ptr %7, align 4, !tbaa !10
-  %8 = trunc i32 %i.k to i8
-  %9 = insertelement <32 x i8> poison, i8 %8, i64 0
-  %10 = shufflevector <32 x i8> %9, <32 x i8> poison, <32 x i32> zeroinitializer
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %3 = load <2 x i32>, ptr %i.j, align 8, !tbaa !10
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !10
+  %4 = trunc <2 x i32> %3 to <2 x i8>             ; 2 uses
+  %5 = shufflevector <2 x i8> %4, <2 x i8> poison, <32 x i32> zeroinitializer
+  %6 = shufflevector <2 x i8> %4, <2 x i8> poison, <32 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %bb.c
@@ -221,10 +217,10 @@ bb.d:                                             ; preds = %bb.e, %bb.c
   %.046 = phi ptr [ %1, %bb.c ], [ %i.u, %bb.e ]  ; 3 uses
   %i.l = load <32 x i8>, ptr %.046, align 1, !tbaa !10
   %i.m = load <32 x i8>, ptr %.047, align 1, !tbaa !10
-  %i.n = icmp eq <32 x i8> %6, %i.l               ; 2 uses
+  %i.n = icmp eq <32 x i8> %5, %i.l               ; 2 uses
   %i.o = sext <32 x i1> %i.n to <32 x i8>
   %i.p = bitcast <32 x i8> %i.o to <4 x i64>
-  %i.q = icmp eq <32 x i8> %10, %i.m              ; 2 uses
+  %i.q = icmp eq <32 x i8> %6, %i.m               ; 2 uses
   %i.r = sext <32 x i1> %i.q to <32 x i8>
   %i.s = bitcast <32 x i8> %i.r to <4 x i64>
   %i.t = tail call noundef i32 @llvm.x86.avx.ptestz.256(<4 x i64> %i.p, <4 x i64> %i.s)
@@ -250,7 +246,7 @@ bb.f:                                             ; preds = %bb.d
   br label %.loopexit
 
 bb.g:                                             ; preds = %._crit_edge, %.thread58
-  %i.ac = phi i32 [ %3, %.thread58 ], [ %.pre, %._crit_edge ] ; 2 uses
+  %i.ac = phi i32 [ %i.k, %.thread58 ], [ %.pre, %._crit_edge ] ; 2 uses
   %.145 = phi i64 [ %i.w, %.thread58 ], [ %i.d, %._crit_edge ] ; 2 uses
   %.143 = phi ptr [ %i.i, %.thread58 ], [ %1, %._crit_edge ] ; 2 uses
   %i.ad = ptrtoint ptr %.143 to i64

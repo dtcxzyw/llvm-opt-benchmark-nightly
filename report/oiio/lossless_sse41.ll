@@ -28,17 +28,16 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.b = load i8, ptr %i.a, align 1, !tbaa !9
-  %4 = zext i8 %i.b to i16
-  %5 = shl nuw i16 %4, 8
-  %6 = ashr exact i16 %5, 5
-  %7 = sext i16 %6 to i32
-  %8 = insertelement <4 x i32> poison, i32 %7, i64 0
-  %9 = load i8, ptr %0, align 1, !tbaa !11
-  %10 = zext i8 %9 to i16
-  %11 = shl nuw i16 %10, 8
-  %12 = ashr exact i16 %11, 5
-  %13 = sext i16 %12 to i32
-  %i.c = shl nsw i32 %13, 16
+  %4 = load i8, ptr %0, align 1, !tbaa !11
+  %5 = zext i8 %4 to i16
+  %6 = zext i8 %i.b to i16
+  %7 = insertelement <2 x i16> poison, i16 %6, i64 0
+  %8 = insertelement <2 x i16> %7, i16 %5, i64 1
+  %9 = shl nuw <2 x i16> %8, splat (i16 8)
+  %10 = ashr exact <2 x i16> %9, splat (i16 5)
+  %11 = sext <2 x i16> %10 to <2 x i32>           ; 2 uses
+  %12 = extractelement <2 x i32> %11, i64 1
+  %i.c = shl nsw i32 %12, 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.e = load i8, ptr %i.d, align 1, !tbaa !12
   %i.f = zext i8 %i.e to i16
@@ -49,8 +48,8 @@ bb.a:
   %i.k = insertelement <4 x i32> poison, i32 %i.j, i64 0
   %i.l = bitcast <4 x i32> %i.k to <8 x i16>
   %i.m = shufflevector <8 x i16> %i.l, <8 x i16> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
-  %14 = bitcast <4 x i32> %8 to <8 x i16>
-  %i.n = shufflevector <8 x i16> %14, <8 x i16> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
+  %13 = bitcast <2 x i32> %11 to <4 x i16>
+  %i.n = shufflevector <4 x i16> %13, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
   %i.o = zext nneg i32 %2 to i64
   br label %bb.b
 

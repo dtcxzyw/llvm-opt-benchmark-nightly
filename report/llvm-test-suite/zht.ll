@@ -25,7 +25,7 @@ define dso_local range(i32 -2147483648, 2) i32 @zsetscreen(ptr noundef %0) #0 {
 bb.a:
   %1 = alloca %struct.gs_point_s, align 4         ; 5 uses
   %2 = alloca %struct.ref_s, align 8              ; 4 uses
-  %i.a = alloca [2 x float], align 4              ; 5 uses
+  %i.a = alloca [2 x float], align 8              ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   %i.b = getelementptr inbounds i8, ptr %0, i64 -16 ; 4 uses
   %i.c = call i32 @num_params(ptr noundef nonnull %i.b, i32 noundef 2, ptr noundef nonnull %i.a) #3 ; 2 uses
@@ -55,12 +55,11 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.m = load ptr, ptr @igs, align 8, !tbaa !11
-  %3 = load float, ptr %i.a, align 4, !tbaa !14
-  %4 = fpext float %3 to double
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %6 = load float, ptr %5, align 4, !tbaa !14
-  %7 = fpext float %6 to double
-  %i.n = call i32 @gs_screen_init(ptr noundef nonnull %i.k, ptr noundef %i.m, double noundef %4, double noundef %7) #3 ; 2 uses
+  %3 = load <2 x float>, ptr %i.a, align 8, !tbaa !14
+  %4 = fpext <2 x float> %3 to <2 x double>       ; 2 uses
+  %5 = extractelement <2 x double> %4, i64 0
+  %6 = extractelement <2 x double> %4, i64 1
+  %i.n = call i32 @gs_screen_init(ptr noundef nonnull %i.k, ptr noundef %i.m, double noundef %5, double noundef %6) #3 ; 2 uses
   %i.o = icmp slt i32 %i.n, 0
   br i1 %i.o, label %bb.f, label %bb.g
 

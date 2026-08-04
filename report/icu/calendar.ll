@@ -203,14 +203,13 @@ _ZN6icu_788Calendar18computeMillisInDayEv.exit:   ; preds = %bb.i, %bb.k, %bb.l
   %i.bv = fadd nnan double %i.br, %i.bu
   %i.bw = fmul nnan double %i.bv, 6.000000e+01
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 60
-  %2 = load i32, ptr %i.bx, align 4, !tbaa !46
-  %3 = sitofp i32 %2 to double
-  %4 = fadd nnan double %i.bw, %3
-  %5 = fmul nnan double %4, 1.000000e+03
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %7 = load i32, ptr %6, align 8, !tbaa !46
-  %8 = sitofp i32 %7 to double
-  %i.by = fadd double %5, %8
+  %2 = load <2 x i32>, ptr %i.bx, align 4, !tbaa !46
+  %3 = sitofp <2 x i32> %2 to <2 x double>        ; 2 uses
+  %4 = extractelement <2 x double> %3, i64 0
+  %5 = fadd nnan double %i.bw, %4
+  %6 = fmul nnan double %5, 1.000000e+03
+  %7 = extractelement <2 x double> %3, i64 1
+  %i.by = fadd double %6, %7
   br label %bb.m
 
 bb.m:                                             ; preds = %_ZN6icu_788Calendar18computeMillisInDayEv.exit, %bb.h
@@ -229,13 +228,12 @@ bb.n:                                             ; preds = %bb.m
 .thread:                                          ; preds = %bb.m, %bb.n
   %i.cf = fadd double %i.aa, %.0
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %9 = load i32, ptr %i.cg, align 4, !tbaa !46
-  %10 = sitofp i32 %9 to double
+  %8 = load <2 x i32>, ptr %i.cg, align 4, !tbaa !46
+  %9 = sitofp <2 x i32> %8 to <2 x double>        ; 2 uses
+  %10 = extractelement <2 x double> %9, i64 0
   %11 = fsub double %i.cf, %10
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %13 = load i32, ptr %12, align 8, !tbaa !46
-  %14 = sitofp i32 %13 to double
-  %i.ch = fsub double %11, %14
+  %12 = extractelement <2 x double> %9, i64 1
+  %i.ch = fsub double %11, %12
   br label %bb.y
 
 bb.o:                                             ; preds = %bb.n
@@ -536,14 +534,13 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.a
   %i.y = fadd nnan double %i.u, %i.x
   %i.z = fmul nnan double %i.y, 6.000000e+01
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 60
-  %1 = load i32, ptr %i.aa, align 4, !tbaa !46
-  %2 = sitofp i32 %1 to double
-  %3 = fadd nnan double %i.z, %2
-  %4 = fmul nnan double %3, 1.000000e+03
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %6 = load i32, ptr %5, align 8, !tbaa !46
-  %7 = sitofp i32 %6 to double
-  %i.ab = fadd double %4, %7
+  %1 = load <2 x i32>, ptr %i.aa, align 4, !tbaa !46
+  %2 = sitofp <2 x i32> %1 to <2 x double>        ; 2 uses
+  %3 = extractelement <2 x double> %2, i64 0
+  %4 = fadd nnan double %i.z, %3
+  %5 = fmul nnan double %4, 1.000000e+03
+  %6 = extractelement <2 x double> %2, i64 1
+  %i.ab = fadd double %5, %6
   ret double %i.ab
 }
 

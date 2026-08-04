@@ -1,3 +1,7 @@
+inline.NumInlined: 71
+inline.NumDeleted: 30
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@cache_tree:bb.a
 }
 
@@ -199,7 +203,7 @@ bb.h:                                             ; preds = %cache_tree_subtree_
   br i1 %.not, label %bb.p, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.z = xor i32 %.2.i, -1                        ; 2 uses
+  %i.z = xor i32 %.2.i, -1                        ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !28 ; 2 uses
   %.not46 = icmp slt i32 %i.d, %i.ab
@@ -259,35 +263,27 @@ st_add.exit48:                                    ; preds = %st_add.exit
   store i32 %2, ptr %i.au, align 4, !tbaa !26
   %i.av = load i32, ptr %i.c, align 8, !tbaa !20  ; 2 uses
   %i.aw = icmp sgt i32 %i.av, %i.z
-  %.pre52 = load ptr, ptr %i.a, align 8, !tbaa !21 ; 3 uses
-  %4 = zext nneg i32 %i.z to i64                  ; 2 uses
   br i1 %i.aw, label %bb.o, label %move_array.exit
 
 bb.o:                                             ; preds = %st_add.exit48
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %.pre52, i64 %4 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.ax = add nsw i32 %i.av, %.2.i                ; 3 uses
-  %7 = sext i32 %i.ax to i64                      ; 2 uses
+  %i.ax = add nsw i32 %i.av, %.2.i                ; 2 uses
   %.not.i = icmp eq i32 %i.ax, 0
-  br i1 %.not.i, label %move_array.exit, label %8
+  br i1 %.not.i, label %move_array.exit, label %st_mult.exit.i
 
-8:                                                ; preds = %bb.o
-  %9 = icmp slt i32 %i.ax, 0
-  br i1 %9, label %10, label %st_mult.exit.i
-
-10:                                               ; preds = %8
-  tail call void (ptr, ...) @die(ptr noundef nonnull @.str.13, i64 noundef 8, i64 noundef range(i64 -2147483648, 2147483647) %7) #20
-  unreachable
-
-st_mult.exit.i:                                   ; preds = %8
-  %11 = shl nuw nsw i64 %7, 3
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %6, ptr readonly align 1 %5, i64 %11, i1 false)
-  %.pre51 = load ptr, ptr %i.a, align 8, !tbaa !21
+st_mult.exit.i:                                   ; preds = %bb.o
+  %4 = sext i32 %i.ax to i64
+  %5 = load ptr, ptr %i.a, align 8, !tbaa !21
+  %6 = zext nneg i32 %i.z to i64
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %6 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %9 = shl nuw nsw i64 %4, 3
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %8, ptr readonly align 1 %7, i64 %9, i1 false)
   br label %move_array.exit
 
-move_array.exit:                                  ; preds = %st_add.exit48, %st_mult.exit.i, %bb.o
-  %12 = phi ptr [ %.pre52, %bb.o ], [ %.pre51, %st_mult.exit.i ], [ %.pre52, %st_add.exit48 ]
-  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %4
+move_array.exit:                                  ; preds = %st_mult.exit.i, %bb.o, %st_add.exit48
+  %10 = load ptr, ptr %i.a, align 8, !tbaa !21
+  %11 = zext nneg i32 %i.z to i64
+  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %11
   store ptr %i.as, ptr %i.ay, align 8, !tbaa !22
   br label %bb.p
 

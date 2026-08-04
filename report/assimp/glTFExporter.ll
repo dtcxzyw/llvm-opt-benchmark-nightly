@@ -204,22 +204,20 @@ bb.cp:                                            ; preds = %.lr.ph603, %bb.cq
   %.0602 = phi i64 [ 0, %.lr.ph603 ], [ %i.xn, %bb.cq ] ; 4 uses
   %i.xf = load ptr, ptr %i.xd, align 8
   %.idx486 = shl nuw nsw i64 %.0602, 3
-  %18 = getelementptr inbounds nuw i8, ptr %i.xf, i64 %.idx486 ; 2 uses
-  %19 = load float, ptr %18, align 4
-  %i.xg = getelementptr inbounds nuw i8, ptr %18, i64 4
-  %20 = load float, ptr %i.xg, align 4
+  %i.xg = getelementptr inbounds nuw i8, ptr %i.xf, i64 %.idx486
   %i.xh = mul i64 %.0602, %4
   %i.xi = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.xh ; 4 uses
-  %21 = load float, ptr %i.xi, align 4
-  %22 = fadd float %19, %21
-  %23 = getelementptr i8, ptr %i.xi, i64 4        ; 2 uses
-  %24 = load float, ptr %23, align 4
-  %25 = fadd float %20, %24
+  %18 = getelementptr i8, ptr %i.xi, i64 4
+  %19 = load <2 x float>, ptr %i.xg, align 4
+  %20 = load <2 x float>, ptr %i.xi, align 4
+  %21 = fadd <2 x float> %19, %20                 ; 2 uses
   %i.xj = load ptr, ptr %i.xe, align 8
   %i.xk = getelementptr inbounds nuw i8, ptr %i.xj, i64 %.0602
   %i.xl = load i8, ptr %i.xk, align 1
   %i.xm = getelementptr i8, ptr %i.xi, i64 8
-  invoke void @_ZN5o3dgc12CubeToSphereEffcRfS0_S0_(float noundef %22, float noundef %25, i8 noundef signext %i.xl, ptr noundef nonnull align 4 dereferenceable(4) %i.xi, ptr noundef nonnull align 4 dereferenceable(4) %23, ptr noundef nonnull align 4 dereferenceable(4) %i.xm)
+  %22 = extractelement <2 x float> %21, i64 0
+  %23 = extractelement <2 x float> %21, i64 1
+  invoke void @_ZN5o3dgc12CubeToSphereEffcRfS0_S0_(float noundef %22, float noundef %23, i8 noundef signext %i.xl, ptr noundef nonnull align 4 dereferenceable(4) %i.xi, ptr noundef nonnull align 4 dereferenceable(4) %18, ptr noundef nonnull align 4 dereferenceable(4) %i.xm)
           to label %bb.cq unwind label %bb.cr
 
 bb.cq:                                            ; preds = %bb.cp

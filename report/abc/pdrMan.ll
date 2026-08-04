@@ -203,17 +203,13 @@ bb.b:                                             ; preds = %bb.a
   tail call void (i32, ptr, ...) @Abc_Print(i32 poison, ptr noundef nonnull @.str.4, double noundef %i.cw, double noundef %i.db)
   tail call void (i32, ptr, ...) @Abc_Print(i32 poison, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.13)
   %i.dc = load i64, ptr %i.ac, align 8, !tbaa !128 ; 2 uses
+  %i.dd = sitofp i64 %i.dc to double              ; 3 uses
+  %1 = fdiv double %i.dd, 1.000000e+06
   %.not159 = icmp eq i64 %i.dc, 0
-  %i.dd = sitofp i64 %i.dc to double              ; 2 uses
-  %1 = insertelement <2 x double> poison, double %i.dd, i64 0
-  %2 = shufflevector <2 x double> %1, <2 x double> poison, <2 x i32> zeroinitializer
-  %3 = fmul nnan <2 x double> %2, <double 1.000000e+00, double 1.000000e+02>
-  %4 = insertelement <2 x double> <double 1.000000e+06, double poison>, double %i.dd, i64 1
-  %5 = fdiv <2 x double> %3, %4                   ; 2 uses
-  %6 = extractelement <2 x double> %5, i64 1
-  %i.de = select i1 %.not159, double 0.000000e+00, double %6
-  %7 = extractelement <2 x double> %5, i64 0
-  tail call void (i32, ptr, ...) @Abc_Print(i32 poison, ptr noundef nonnull @.str.4, double noundef %7, double noundef %i.de)
+  %2 = fmul nnan double %i.dd, 1.000000e+02
+  %3 = fdiv double %2, %i.dd
+  %i.de = select i1 %.not159, double 0.000000e+00, double %3
+  tail call void (i32, ptr, ...) @Abc_Print(i32 poison, ptr noundef nonnull @.str.4, double noundef %1, double noundef %i.de)
   %i.df = load ptr, ptr @stdout, align 8, !tbaa !137
   %i.dg = tail call i32 @fflush(ptr noundef %i.df) ; 0 uses
   br label %bb.c

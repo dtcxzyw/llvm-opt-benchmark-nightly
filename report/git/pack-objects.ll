@@ -1,3 +1,8 @@
+inline.NumInlined: 363
+inline.NumDeleted: 121
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@show_object__ma_allow_any:bb.a
   %.not = icmp eq i32 %i.g, 0
   br i1 %.not, label %bb.e, label %bb.d
@@ -199,7 +204,7 @@ done_pbase_path_pos.exit.i:                       ; preds = %bb.t, %bb.u
   br i1 %i.aq, label %check_pbase_path.exit, label %bb.v
 
 bb.v:                                             ; preds = %done_pbase_path_pos.exit.i
-  %i.ar = xor i32 %.2.i.i, -1                     ; 2 uses
+  %i.ar = xor i32 %.2.i.i, -1                     ; 3 uses
   %i.as = load i32, ptr @done_pbase_paths_alloc, align 4, !tbaa !60 ; 2 uses
   %.not.i15 = icmp slt i32 %i.ae, %i.as
   br i1 %.not.i15, label %bb.y, label %bb.w
@@ -232,32 +237,25 @@ bb.y:                                             ; preds = %st_mult.exit.i, %bb
   %i.bc = add nsw i32 %i.bb, 1                    ; 2 uses
   store i32 %i.bc, ptr @done_pbase_paths_num, align 4, !tbaa !60
   %.not17.i = icmp slt i32 %i.bb, %i.ar
-  %.pre21.i = zext nneg i32 %i.ar to i64          ; 2 uses
   br i1 %.not17.i, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.ba, i64 %.pre21.i ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.bd = add nsw i32 %i.bc, %.2.i.i              ; 3 uses
-  %4 = sext i32 %i.bd to i64                      ; 2 uses
+  %i.bd = add nsw i32 %i.bc, %.2.i.i              ; 2 uses
   %.not.i18.i = icmp eq i32 %i.bd, 0
-  br i1 %.not.i18.i, label %bb.aa, label %5
+  br i1 %.not.i18.i, label %bb.aa, label %st_mult.exit.i.i
 
-5:                                                ; preds = %bb.z
-  %mul.ov.i.i.i = icmp slt i32 %i.bd, 0
-  br i1 %mul.ov.i.i.i, label %6, label %st_mult.exit.i.i
-
-6:                                                ; preds = %5
-  tail call void (ptr, ...) @die(ptr noundef nonnull @.str.164, i64 noundef 4, i64 noundef %4) #22
-  unreachable
-
-st_mult.exit.i.i:                                 ; preds = %5
-  %i.be = shl nuw nsw i64 %4, 2
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %3, ptr readonly align 1 %2, i64 %i.be, i1 false)
+st_mult.exit.i.i:                                 ; preds = %bb.z
+  %2 = sext i32 %i.bd to i64
+  %3 = zext nneg i32 %i.ar to i64
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.ba, i64 %3 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %i.be = shl nuw nsw i64 %2, 2
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %5, ptr readonly align 1 %4, i64 %i.be, i1 false)
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.y, %bb.z, %st_mult.exit.i.i
-  %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.ba, i64 %.pre21.i
+  %6 = zext nneg i32 %i.ar to i64
+  %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.ba, i64 %6
   store i32 %.0.i, ptr %i.bf, align 4, !tbaa !60
   %i.bg = tail call i64 @strcspn(ptr noundef readonly %0, ptr noundef nonnull @.str.165) #24 ; 2 uses
   %.028 = load ptr, ptr @pbase_tree, align 8, !tbaa !199 ; 3 uses

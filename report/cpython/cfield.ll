@@ -201,12 +201,11 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 ; Function Attrs: nounwind uwtable
 define internal ptr @F_get(ptr nofree noundef readonly captures(none) %0, i64 %1) #2 {
 bb.a:
-  %.sroa.0.0.copyload = load float, ptr %0, align 1
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %.sroa.4.0.copyload = load float, ptr %.sroa.4.0..sroa_idx, align 1
-  %2 = fpext float %.sroa.0.0.copyload to double
-  %3 = fpext float %.sroa.4.0.copyload to double
-  %i.a = tail call ptr @PyComplex_FromDoubles(double noundef %2, double noundef %3) #11
+  %2 = load <2 x float>, ptr %0, align 1
+  %3 = fpext <2 x float> %2 to <2 x double>       ; 2 uses
+  %4 = extractelement <2 x double> %3, i64 0
+  %5 = extractelement <2 x double> %3, i64 1
+  %i.a = tail call ptr @PyComplex_FromDoubles(double noundef %4, double noundef %5) #11
   ret ptr %i.a
 }
 

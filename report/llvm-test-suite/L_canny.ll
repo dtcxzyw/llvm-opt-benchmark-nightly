@@ -199,15 +199,13 @@ bb.c:                                             ; preds = %bb.a
   %i.q = fmul double %i.b, f0x40040D931FF62705    ; 2 uses
   %i.r = insertelement <2 x double> poison, double %i.q, i64 0
   %i.s = shufflevector <2 x double> %i.r, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.t = fdiv <2 x double> <double -1.000000e+00, double 1.000000e+00>, %i.s ; 2 uses
-  %4 = extractelement <2 x double> %i.t, i64 0
-  %5 = fptrunc double %4 to float
-  %6 = fpext float %5 to double
-  %7 = extractelement <2 x double> %i.t, i64 1
-  %8 = fptrunc double %7 to float
-  %9 = fpext float %8 to double
-  %10 = insertelement <2 x double> poison, double %i.p, i64 0
-  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.t = fdiv <2 x double> <double -1.000000e+00, double 1.000000e+00>, %i.s
+  %4 = fptrunc <2 x double> %i.t to <2 x float>
+  %5 = fpext <2 x float> %4 to <2 x double>       ; 2 uses
+  %6 = insertelement <2 x double> poison, double %i.p, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %8 = extractelement <2 x double> %5, i64 0
+  %9 = extractelement <2 x double> %5, i64 1
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.i
@@ -242,7 +240,7 @@ bb.g:                                             ; preds = %bb.f
   %i.al = fmul double %i.aj, %i.ak
   %i.am = fdiv double %i.al, %i.p
   %i.an = tail call double @exp(double noundef %i.am) #7, !tbaa !4
-  %i.ao = fmul double %i.an, %6
+  %i.ao = fmul double %i.an, %8
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
@@ -251,7 +249,7 @@ bb.h:                                             ; preds = %bb.f
   %i.ar = fadd <2 x double> %i.aq, <double 5.000000e-01, double -5.000000e-01> ; 2 uses
   %i.as = fneg <2 x double> %i.ar
   %i.at = fmul <2 x double> %i.ar, %i.as
-  %i.au = fdiv <2 x double> %i.at, %11            ; 2 uses
+  %i.au = fdiv <2 x double> %i.at, %7             ; 2 uses
   %i.av = extractelement <2 x double> %i.au, i64 0
   %i.aw = tail call double @exp(double noundef %i.av) #7, !tbaa !4
   %i.ax = extractelement <2 x double> %i.au, i64 1

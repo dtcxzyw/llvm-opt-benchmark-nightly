@@ -1,3 +1,7 @@
+inline.NumInlined: 813
+inline.NumDeleted: 372
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN12_GLOBAL__N_113gridshiftData16grid_interpolateEP6pj_ctxRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE5PJ_XYPKN5osgeo4proj16GenericShiftGridERb:bb.a
   %or.cond25 = select i1 %i.tw, i1 %i.tx, i1 false
   br i1 %or.cond25, label %bb.ci, label %bb.dr
@@ -199,22 +203,17 @@ bb.ct:                                            ; preds = %bb.cs
 
 bb.cu:                                            ; preds = %bb.ct, %bb.cr
   %i.yl = getelementptr inbounds nuw i8, ptr %.sroa.0553.0, i64 56
-  %i.ym = load ptr, ptr %i.yl, align 8, !tbaa !146 ; 4 uses
-  %17 = load float, ptr %i.ym, align 4, !tbaa !191
-  %18 = fpext float %17 to double
-  %19 = getelementptr inbounds nuw i8, ptr %i.ym, i64 4
-  %20 = load float, ptr %19, align 4, !tbaa !191
-  %21 = fpext float %20 to double
-  %i.yn = fmul double %i.uj, %21
-  %22 = call double @llvm.fmuladd.f64(double %i.ui, double %18, double %i.yn)
-  %23 = getelementptr inbounds nuw i8, ptr %i.ym, i64 8
-  %24 = load float, ptr %23, align 4, !tbaa !191
-  %25 = fpext float %24 to double
-  %i.yo = call double @llvm.fmuladd.f64(double %i.ug, double %25, double %22)
-  %26 = getelementptr inbounds nuw i8, ptr %i.ym, i64 12
-  %27 = load float, ptr %26, align 4, !tbaa !191
-  %28 = fpext float %27 to double
-  %i.yp = call double @llvm.fmuladd.f64(double %i.uf, double %28, double %i.yo)
+  %i.ym = load ptr, ptr %i.yl, align 8, !tbaa !146
+  %17 = load <4 x float>, ptr %i.ym, align 4, !tbaa !191
+  %18 = fpext <4 x float> %17 to <4 x double>     ; 4 uses
+  %19 = extractelement <4 x double> %18, i64 1
+  %i.yn = fmul double %i.uj, %19
+  %20 = extractelement <4 x double> %18, i64 0
+  %i.yo = call double @llvm.fmuladd.f64(double %i.ui, double %20, double %i.yn)
+  %21 = extractelement <4 x double> %18, i64 2
+  %22 = call double @llvm.fmuladd.f64(double %i.ug, double %21, double %i.yo)
+  %23 = extractelement <4 x double> %18, i64 3
+  %i.yp = call double @llvm.fmuladd.f64(double %i.uf, double %23, double %22)
   store double %i.yp, ptr %i.e, align 8, !tbaa !118
   br label %bb.dp
 

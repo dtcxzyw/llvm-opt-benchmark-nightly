@@ -203,7 +203,6 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.k = load double, ptr %i.j, align 16, !tbaa !244 ; 3 uses
   %i.l = fcmp oeq double %i.k, -1.000000e+00      ; 2 uses
-  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.n = load double, ptr %i.m, align 16          ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 40
@@ -366,11 +365,11 @@ _ZNK4absl12lts_2026052617zipf_distributionINS0_7uint128EE10param_type4hinvEd.exi
   %i.dd = phi double [ %i.cy, %bb.b ], [ %i.dc, %bb.c ]
   %i.de = fsub double %i.dd, %i.i                 ; 2 uses
   %i.df = tail call double @llvm.rint.f64(double %i.de) ; 5 uses
-  %.sroa.0.0.copyload.i = load i64, ptr %2, align 16, !tbaa !22
-  %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !22
-  %4 = uitofp i64 %.sroa.0.0.copyload.i to double
-  %5 = uitofp i64 %.sroa.2.0.copyload.i to double
-  %i.dg = tail call noundef double @llvm.fmuladd.f64(double %5, double f0x43F0000000000000, double %4)
+  %4 = load <2 x i64>, ptr %2, align 16, !tbaa !22
+  %5 = uitofp <2 x i64> %4 to <2 x double>        ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = extractelement <2 x double> %5, i64 1
+  %i.dg = tail call noundef double @llvm.fmuladd.f64(double %7, double f0x43F0000000000000, double %6)
   %i.dh = fcmp ogt double %i.df, %i.dg
   br i1 %i.dh, label %select.unfold.backedge, label %bb.d
 
@@ -773,7 +772,6 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
-  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.pre.i.i.pre = load i64, ptr %i.d, align 8, !tbaa !275
@@ -850,11 +848,11 @@ _ZNK4absl12lts_2026052617zipf_distributionINS0_7uint128EE10param_type4hinvEd.exi
   %i.as = phi double [ %i.am, %bb.e ], [ %i.ar, %bb.f ]
   %i.at = fsub double %i.as, %i.aj                ; 2 uses
   %i.au = tail call double @llvm.rint.f64(double %i.at) ; 5 uses
-  %.sroa.0.0.copyload.i = load i64, ptr %2, align 16, !tbaa !22
-  %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !22
-  %4 = uitofp i64 %.sroa.0.0.copyload.i to double
-  %5 = uitofp i64 %.sroa.2.0.copyload.i to double
-  %i.av = tail call noundef double @llvm.fmuladd.f64(double %5, double f0x43F0000000000000, double %4)
+  %4 = load <2 x i64>, ptr %2, align 16, !tbaa !22
+  %5 = uitofp <2 x i64> %4 to <2 x double>        ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = extractelement <2 x double> %5, i64 1
+  %i.av = tail call noundef double @llvm.fmuladd.f64(double %7, double f0x43F0000000000000, double %6)
   %i.aw = fcmp ogt double %i.au, %i.av
   br i1 %i.aw, label %select.unfold.backedge, label %bb.g
 
@@ -1257,7 +1255,6 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.h = load double, ptr %i.g, align 16, !tbaa !244 ; 3 uses
   %i.i = fcmp oeq double %i.h, -1.000000e+00      ; 2 uses
-  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.k = load double, ptr %i.j, align 16          ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 40
@@ -1327,11 +1324,11 @@ _ZNK4absl12lts_2026052617zipf_distributionINS0_7uint128EE10param_type4hinvEd.exi
   %i.as = phi double [ %i.an, %bb.b ], [ %i.ar, %bb.c ]
   %i.at = fsub double %i.as, %i.f                 ; 2 uses
   %i.au = tail call double @llvm.rint.f64(double %i.at) ; 5 uses
-  %.sroa.0.0.copyload.i = load i64, ptr %2, align 16, !tbaa !22
-  %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !22
-  %4 = uitofp i64 %.sroa.0.0.copyload.i to double
-  %5 = uitofp i64 %.sroa.2.0.copyload.i to double
-  %i.av = tail call noundef double @llvm.fmuladd.f64(double %5, double f0x43F0000000000000, double %4)
+  %4 = load <2 x i64>, ptr %2, align 16, !tbaa !22
+  %5 = uitofp <2 x i64> %4 to <2 x double>        ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = extractelement <2 x double> %5, i64 1
+  %i.av = tail call noundef double @llvm.fmuladd.f64(double %7, double f0x43F0000000000000, double %6)
   %i.aw = fcmp ogt double %i.au, %i.av
   br i1 %i.aw, label %.split.i.i.backedge, label %bb.d
 

@@ -37,7 +37,7 @@ bb.a:
   %i.q = add nuw nsw i32 %i.g, 1                  ; 2 uses
   %i.r = icmp slt i32 %i.q, %0
   %i.s = zext nneg i32 %i.q to i64
-  %i.t = getelementptr inbounds nuw [1024 x i8], ptr %2, i64 %i.s ; 2 uses
+  %i.t = getelementptr inbounds nuw [1024 x i8], ptr %2, i64 %i.s
   br i1 %i.r, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.preheader, %bb.c
@@ -63,7 +63,7 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph.split.us
-  %i.aj = zext nneg i32 %i.aa to i64              ; 2 uses
+  %i.aj = zext nneg i32 %i.aa to i64
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.aj
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !4
   %i.am = sitofp i32 %i.al to float
@@ -71,15 +71,14 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   %i.ao = fmul float %i.z, %i.an
   %i.ap = tail call float @llvm.fmuladd.f32(float %i.ah, float %i.n, float %i.ao)
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.ac
-  %4 = load i32, ptr %i.aq, align 4, !tbaa !4
-  %5 = sitofp i32 %4 to float
-  %6 = fmul float %i.k, %5
-  %7 = tail call float @llvm.fmuladd.f32(float %6, float %i.ag, float %i.ap)
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.aj
-  %9 = load i32, ptr %8, align 4, !tbaa !4
-  %10 = sitofp i32 %9 to float
-  %i.ar = fmul float %i.k, %10
-  %i.as = tail call float @llvm.fmuladd.f32(float %i.ar, float %i.z, float %7)
+  %4 = load <2 x i32>, ptr %i.aq, align 4, !tbaa !4
+  %5 = sitofp <2 x i32> %4 to <2 x float>         ; 2 uses
+  %6 = extractelement <2 x float> %5, i64 0
+  %7 = fmul float %i.k, %6
+  %8 = tail call float @llvm.fmuladd.f32(float %7, float %i.ag, float %i.ap)
+  %9 = extractelement <2 x float> %5, i64 1
+  %i.ar = fmul float %i.k, %9
+  %i.as = tail call float @llvm.fmuladd.f32(float %i.ar, float %i.z, float %8)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.critedge.us

@@ -201,12 +201,9 @@ bb.a:
   %i.z = load i64, ptr %i.y, align 8
   %i.aa = uitofp i64 %i.z to double
   %i.ab = fdiv double %i.x, %i.aa
-  %6 = insertelement <2 x double> poison, double %i.x, i64 0
-  %7 = insertelement <2 x double> %6, double %i.c, i64 1
-  %8 = fdiv <2 x double> %7, <double 1.000000e+06, double 1.000000e+03> ; 2 uses
-  %9 = extractelement <2 x double> %8, i64 0
-  %10 = extractelement <2 x double> %8, i64 1
-  %i.ac = fdiv double %9, %10
+  %6 = fdiv double %i.x, 1.000000e+06
+  %7 = fdiv double %i.c, 1.000000e+03
+  %i.ac = fdiv double %6, %7
   br i1 %1, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a

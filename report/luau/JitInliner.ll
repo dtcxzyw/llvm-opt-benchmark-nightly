@@ -204,7 +204,7 @@ bb.a:
   %i.c = sext i32 %2 to i64
   %i.d = load ptr, ptr %i.b, align 8, !tbaa !119
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.c
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !121  ; 9 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !121  ; 8 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 12
   %i.h = load i32, ptr %i.g, align 4, !tbaa !707
   switch i32 %i.h, label %bb.v [
@@ -244,12 +244,11 @@ bb.f:                                             ; preds = %bb.a
   %i.m = load float, ptr %i.f, align 4, !tbaa !669
   %i.n = fpext float %i.m to double
   %i.o = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %4 = load float, ptr %i.o, align 4, !tbaa !669
-  %5 = fpext float %4 to double
-  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %7 = load float, ptr %6, align 4, !tbaa !669
-  %8 = fpext float %7 to double
-  tail call void (ptr, ptr, ...) @_ZN4Luau12formatAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcz(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @.str.15, double noundef %i.n, double noundef %5, double noundef %8)
+  %4 = load <2 x float>, ptr %i.o, align 4, !tbaa !669
+  %5 = fpext <2 x float> %4 to <2 x double>       ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = extractelement <2 x double> %5, i64 1
+  tail call void (ptr, ptr, ...) @_ZN4Luau12formatAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcz(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @.str.15, double noundef %i.n, double noundef %6, double noundef %7)
   br label %bb.w
 
 bb.g:                                             ; preds = %bb.a

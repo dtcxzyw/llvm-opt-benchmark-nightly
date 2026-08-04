@@ -204,26 +204,23 @@ scalar.ph.preheader:                              ; preds = %.lr.ph329, %middle.
   %i.lp = extractelement <2 x float> %i.lo, i64 0
   %i.lq = fmul reassoc nsz arcp contract afn float %i.lp, 5.000000e-01 ; 2 uses
   store float %i.lq, ptr %i.ll, align 4, !tbaa !81
-  %i.lr = load <2 x float>, ptr %i.lm, align 8, !tbaa !50 ; 3 uses
-  %6 = extractelement <2 x float> %i.lr, i64 0
-  %7 = fpext reassoc nsz arcp contract afn float %6 to double
+  %i.lr = load <2 x float>, ptr %i.lm, align 8, !tbaa !50 ; 2 uses
   %i.ls = fsub reassoc nsz arcp contract afn <2 x float> %i.lr, %i.lo
   %i.lt = fpext <2 x float> %i.ls to <2 x double>
   %i.lu = fmul reassoc nsz arcp contract afn <2 x double> %i.lt, splat (double 5.000000e-01) ; 2 uses
-  %8 = insertelement <2 x double> poison, double %7, i64 0
-  %i.lv = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 844
+  %7 = fpext <2 x float> %i.lr to <2 x double>    ; 2 uses
+  %i.lv = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.lw = fsub reassoc nsz arcp contract afn <2 x double> %i.lv, %i.lu
   %i.lx = fadd reassoc nsz arcp contract afn <2 x double> %i.lv, %i.lu
   %i.ly = shufflevector <2 x double> %i.lw, <2 x double> %i.lx, <2 x i32> <i32 0, i32 3>
   %i.lz = fptrunc <2 x double> %i.ly to <2 x float> ; 3 uses
   %i.ma = extractelement <2 x float> %i.lz, i64 0
   store float %i.ma, ptr %i.ln, align 4, !tbaa !81
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 844
   %i.mb = extractelement <2 x float> %i.lz, i64 1
-  store float %i.mb, ptr %9, align 4, !tbaa !81
-  %10 = extractelement <2 x float> %i.lr, i64 1
-  %11 = fpext reassoc nsz arcp contract afn float %10 to double
-  %i.mc = fmul reassoc nsz arcp contract afn double %11, 5.000000e-01
+  store float %i.mb, ptr %6, align 4, !tbaa !81
+  %8 = extractelement <2 x double> %7, i64 1
+  %i.mc = fmul reassoc nsz arcp contract afn double %8, 5.000000e-01
   %i.md = fadd reassoc nsz arcp contract afn double %i.mc, 5.000000e-01
   %i.me = fptrunc reassoc nsz arcp contract afn double %i.md to float ; 2 uses
   %i.mf = getelementptr inbounds nuw i8, ptr %3, i64 852

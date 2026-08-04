@@ -201,12 +201,12 @@ declare i32 @ossl_quic_reactor_init(ptr noundef, ptr noundef, ptr noundef, ptr n
 ; Function Attrs: nounwind uwtable
 define internal void @qeng_tick(ptr nofree noundef captures(none) initializes((0, 11)) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) #0 {
 bb.a:
-  %3 = alloca %struct.quic_tick_result_st, align 8 ; 8 uses
+  %3 = alloca %struct.quic_tick_result_st, align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   store i8 0, ptr %i.a, align 8, !tbaa !44
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 9 ; 3 uses
   store i8 0, ptr %i.b, align 1, !tbaa !46
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
   store i8 0, ptr %i.c, align 2, !tbaa !47
   store i64 -1, ptr %0, align 8, !tbaa !48
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 160
@@ -222,9 +222,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not1115, label %.loopexit, label %ossl_quic_tick_result_merge_into.exit.lr.ph
 
 ossl_quic_tick_result_merge_into.exit.lr.ph:      ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 9
-  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 10
+  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 9
   br label %ossl_quic_tick_result_merge_into.exit
 
 ossl_quic_tick_result_merge_into.exit:            ; preds = %ossl_quic_tick_result_merge_into.exit.lr.ph, %ossl_quic_tick_result_merge_into.exit
@@ -234,24 +233,21 @@ ossl_quic_tick_result_merge_into.exit:            ; preds = %ossl_quic_tick_resu
   call void @ossl_quic_port_subtick(ptr noundef nonnull %.016, ptr noundef nonnull %3, i32 noundef %2) #9
   %i.j = load i8, ptr %i.a, align 8, !tbaa !44
   %.not.i = icmp ne i8 %i.j, 0
-  %i.k = load i8, ptr %4, align 8
+  %i.k = load i8, ptr %i.h, align 8
   %i.l = icmp ne i8 %i.k, 0
   %narrow = select i1 %.not.i, i1 true, i1 %i.l
   %i.m = zext i1 %narrow to i8
   store i8 %i.m, ptr %i.a, align 8, !tbaa !44
-  %5 = load i8, ptr %i.b, align 1, !tbaa !46
-  %.not12.i = icmp ne i8 %5, 0
-  %6 = load i8, ptr %i.h, align 1
-  %7 = icmp ne i8 %6, 0
-  %narrow12 = select i1 %.not12.i, i1 true, i1 %7
-  %8 = zext i1 %narrow12 to i8
-  store i8 %8, ptr %i.b, align 1, !tbaa !46
-  %9 = load i8, ptr %i.c, align 2, !tbaa !47
-  %.not13.i = icmp ne i8 %9, 0
-  %10 = load i8, ptr %i.i, align 2
-  %11 = icmp ne i8 %10, 0
-  %narrow13 = select i1 %.not13.i, i1 true, i1 %11
-  %i.n = zext i1 %narrow13 to i8
+  %4 = load <2 x i8>, ptr %i.b, align 1, !tbaa !49
+  %5 = icmp ne <2 x i8> %4, zeroinitializer
+  %6 = load <2 x i8>, ptr %i.i, align 1
+  %7 = icmp ne <2 x i8> %6, zeroinitializer
+  %8 = select <2 x i1> %5, <2 x i1> splat (i1 true), <2 x i1> %7 ; 2 uses
+  %9 = extractelement <2 x i1> %8, i64 0
+  %10 = zext i1 %9 to i8
+  store i8 %10, ptr %i.b, align 1, !tbaa !46
+  %11 = extractelement <2 x i1> %8, i64 1
+  %i.n = zext i1 %11 to i8
   store i8 %i.n, ptr %i.c, align 2, !tbaa !47
   %i.o = load i64, ptr %0, align 8
   %i.p = load i64, ptr %3, align 8
@@ -261,7 +257,7 @@ ossl_quic_tick_result_merge_into.exit:            ; preds = %ossl_quic_tick_resu
   %i.q = getelementptr i8, ptr %.016, i64 8
   %.0 = load ptr, ptr %i.q, align 8, !tbaa !32    ; 2 uses
   %.not11 = icmp eq ptr %.0, null
-  br i1 %.not11, label %.loopexit, label %ossl_quic_tick_result_merge_into.exit, !llvm.loop !49
+  br i1 %.not11, label %.loopexit, label %ossl_quic_tick_result_merge_into.exit, !llvm.loop !50
 
 .loopexit:                                        ; preds = %ossl_quic_tick_result_merge_into.exit, %bb.b, %bb.a
   ret void
@@ -347,5 +343,6 @@ attributes #9 = { nounwind }
 !46 = !{!45, !8, i64 9}
 !47 = !{!45, !8, i64 10}
 !48 = !{!17, !17, i64 0}
-!49 = distinct !{!49, !34}
+!49 = !{!8, !8, i64 0}
+!50 = distinct !{!50, !34}
 end_hunk_0

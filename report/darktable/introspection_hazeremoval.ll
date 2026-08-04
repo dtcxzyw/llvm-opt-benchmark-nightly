@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %.loopexit.i
 _ambient_light.exit:                              ; preds = %bb.z, %.loopexit.i, %bb.m
   %.sroa.0156.1 = phi nsz float [ %.sroa.0156.0, %bb.m ], [ %.sroa.0.3.i, %.loopexit.i ], [ %.sroa.0.3.i, %bb.z ] ; 9 uses
   %.1 = phi nsz float [ %.0120, %bb.m ], [ f0x42317218, %.loopexit.i ], [ %i.lp, %bb.z ] ; 4 uses
-  %i.lq = phi <2 x float> [ %i.cc, %bb.m ], [ %i.lm, %.loopexit.i ], [ %i.lm, %bb.z ] ; 14 uses
+  %i.lq = phi <2 x float> [ %i.cc, %bb.m ], [ %i.lm, %.loopexit.i ], [ %i.lm, %bb.z ] ; 13 uses
   br i1 %i.cb, label %bb.aa, label %bb.ac
 
 bb.aa:                                            ; preds = %_ambient_light.exit
@@ -419,11 +419,10 @@ bb.ag:                                            ; preds = %bb.af
   %i.py = fpext reassoc nsz arcp contract afn float %i.pu to double
   %i.pz = fpext reassoc nsz arcp contract afn float %.1 to double
   %i.qa = fpext reassoc nsz arcp contract afn float %.sroa.0156.1 to double
-  %6 = extractelement <2 x float> %i.lq, i64 0
-  %7 = fpext reassoc nsz arcp contract afn float %6 to double
-  %8 = extractelement <2 x float> %i.lq, i64 1
-  %9 = fpext reassoc nsz arcp contract afn float %8 to double
-  tail call void (ptr, ptr, ptr, i32, ptr, ptr, ptr, ...) @dt_print_pipe_ext(ptr noundef nonnull @.str.18, ptr noundef %i.px, ptr noundef %0, i32 noundef -1, ptr noundef %4, ptr noundef %5, ptr noundef nonnull @.str.19, double noundef %i.py, double noundef %i.pz, double noundef %i.qa, double noundef %7, double noundef %9) #21
+  %6 = fpext <2 x float> %i.lq to <2 x double>    ; 2 uses
+  %7 = extractelement <2 x double> %6, i64 0
+  %8 = extractelement <2 x double> %6, i64 1
+  tail call void (ptr, ptr, ptr, i32, ptr, ptr, ptr, ...) @dt_print_pipe_ext(ptr noundef nonnull @.str.18, ptr noundef %i.px, ptr noundef %0, i32 noundef -1, ptr noundef %4, ptr noundef %5, ptr noundef nonnull @.str.19, double noundef %i.py, double noundef %i.pz, double noundef %i.qa, double noundef %7, double noundef %8) #21
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af

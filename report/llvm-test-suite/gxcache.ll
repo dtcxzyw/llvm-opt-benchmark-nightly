@@ -200,15 +200,13 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.s = load <2 x i64>, ptr %i.r, align 8, !tbaa !91
-  %i.t = sub nsw <2 x i64> %i.g, %i.s             ; 3 uses
-  %3 = extractelement <2 x i64> %i.t, i64 0
-  %4 = add nsw i64 %3, 2048
-  %5 = lshr i64 %4, 12
-  %6 = trunc i64 %5 to i32                        ; 3 uses
-  %7 = extractelement <2 x i64> %i.t, i64 1
-  %8 = add nsw i64 %7, 2048
-  %9 = lshr i64 %8, 12
-  %10 = trunc i64 %9 to i32                       ; 3 uses
+  %i.t = sub nsw <2 x i64> %i.g, %i.s             ; 2 uses
+  %3 = add nsw <2 x i64> %i.t, splat (i64 2048)
+  %4 = lshr <2 x i64> %3, splat (i64 12)          ; 2 uses
+  %5 = bitcast <2 x i64> %4 to <4 x i32>
+  %6 = extractelement <4 x i32> %5, i64 0         ; 3 uses
+  %7 = bitcast <2 x i64> %4 to <4 x i32>
+  %8 = extractelement <4 x i32> %7, i64 2         ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.v = load i16, ptr %i.u, align 4, !tbaa !39
   %i.w = zext i16 %i.v to i32                     ; 2 uses
@@ -230,11 +228,11 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !100
-  %i.aj = icmp sgt i32 %i.ai, %10
+  %i.aj = icmp sgt i32 %i.ai, %8
   br i1 %i.aj, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ak = add nsw i32 %10, %i.z
+  %i.ak = add nsw i32 %8, %i.z
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.am = load i32, ptr %i.al, align 8, !tbaa !101
   %i.an = icmp sgt i32 %i.ak, %i.am
@@ -284,7 +282,7 @@ bb.j:                                             ; preds = %bb.h
   %i.bu = getelementptr inbounds nuw i8, ptr %i.a, i64 312
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !93
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !111
-  %i.bx = tail call i32 %i.bo(ptr noundef %i.bk, ptr noundef %i.bq, i32 noundef 0, i32 noundef %i.bt, i32 noundef %6, i32 noundef %10, i32 noundef %i.w, i32 noundef %i.z, i64 noundef -1, i64 noundef %i.bw) #9
+  %i.bx = tail call i32 %i.bo(ptr noundef %i.bk, ptr noundef %i.bq, i32 noundef 0, i32 noundef %i.bt, i32 noundef %6, i32 noundef %8, i32 noundef %i.w, i32 noundef %i.z, i64 noundef -1, i64 noundef %i.bw) #9
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i

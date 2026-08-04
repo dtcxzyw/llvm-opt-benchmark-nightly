@@ -201,7 +201,7 @@ bb.p:                                             ; preds = %_ZNK10aiMaterial3Ge
   %i.co = load ptr, ptr %3, align 8
   store i8 0, ptr %i.co, align 1
   %i.cp = load <4 x float>, ptr %7, align 16
-  %.fr = freeze <4 x float> %i.cp                 ; 5 uses
+  %.fr = freeze <4 x float> %i.cp                 ; 2 uses
   %i.cq = fcmp ugt <4 x float> %.fr, splat (float 1.000000e+00)
   %i.cr = bitcast <4 x i1> %i.cq to i4
   %i.cs = icmp eq i4 %i.cr, 0
@@ -209,18 +209,15 @@ bb.p:                                             ; preds = %_ZNK10aiMaterial3Ge
 
 bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #19
-  %18 = extractelement <4 x float> %.fr, i64 0
-  %19 = fmul nnan float %18, 2.550000e+02
+  %18 = fmul nnan <4 x float> %.fr, splat (float 2.550000e+02) ; 4 uses
+  %19 = extractelement <4 x float> %18, i64 0
   %i.ct = fptosi float %19 to i32
-  %i.cu = extractelement <4 x float> %.fr, i64 1
-  %20 = fmul nnan float %i.cu, 2.550000e+02
-  %i.cv = fptosi float %20 to i32
-  %i.cw = extractelement <4 x float> %.fr, i64 2
-  %21 = fmul nnan float %i.cw, 2.550000e+02
-  %i.cx = fptosi float %21 to i32
-  %i.cy = extractelement <4 x float> %.fr, i64 3
-  %22 = fmul nnan float %i.cy, 2.550000e+02
-  %i.cz = fptosi float %22 to i32
+  %i.cu = extractelement <4 x float> %18, i64 1
+  %i.cv = fptosi float %i.cu to i32
+  %i.cw = extractelement <4 x float> %18, i64 2
+  %i.cx = fptosi float %i.cw to i32
+  %i.cy = extractelement <4 x float> %18, i64 3
+  %i.cz = fptosi float %i.cy to i32
   invoke void @_Z11ai_rgba2hexB5cxx11iiiib(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %8, i32 noundef %i.ct, i32 noundef %i.cv, i32 noundef %i.cx, i32 noundef %i.cz, i1 noundef zeroext true)
           to label %bb.r unwind label %bb.x
 

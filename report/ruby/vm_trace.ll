@@ -203,35 +203,26 @@ bb.d:                                             ; preds = %rb_vm_lock_enter.ex
   %i.f = load i32, ptr @ruby_vm_event_enabled_global_flags, align 4, !tbaa !7 ; 2 uses
   %i.g = and i32 %1, 213887
   %i.h = xor i32 %i.f, -1
-  %4 = and i32 %i.g, %i.h
-  %5 = icmp ne i32 %4, 0                          ; 2 uses
-  %6 = and i32 %0, 8
-  %7 = icmp eq i32 %6, 0
-  %8 = and i32 %1, 8
-  %9 = icmp ne i32 %8, 0
-  %10 = and i1 %7, %9
-  %11 = and i32 %0, 16
-  %12 = icmp eq i32 %11, 0
-  %i.i = and i32 %1, 16
-  %i.j = icmp ne i32 %i.i, 0
-  %13 = and i1 %12, %i.j
-  %14 = and i32 %0, 32
-  %15 = icmp eq i32 %14, 0
-  %16 = and i32 %1, 32
-  %17 = icmp ne i32 %16, 0
-  %18 = and i1 %15, %17
-  %19 = and i32 %0, 64
-  %20 = icmp eq i32 %19, 0
-  %21 = and i32 %1, 64
-  %22 = icmp ne i32 %21, 0
-  %23 = and i1 %20, %22
-  %24 = or i1 %18, %23                            ; 2 uses
+  %i.i = and i32 %i.g, %i.h
+  %i.j = icmp ne i32 %i.i, 0                      ; 2 uses
+  %4 = insertelement <4 x i32> poison, i32 %0, i64 0
+  %5 = shufflevector <4 x i32> %4, <4 x i32> poison, <4 x i32> zeroinitializer
+  %6 = and <4 x i32> %5, <i32 8, i32 16, i32 32, i32 64>
+  %7 = insertelement <4 x i32> poison, i32 %1, i64 0
+  %8 = shufflevector <4 x i32> %7, <4 x i32> poison, <4 x i32> zeroinitializer
+  %9 = and <4 x i32> %8, <i32 8, i32 16, i32 32, i32 64>
+  %10 = icmp eq <4 x i32> %6, zeroinitializer
+  %11 = icmp ne <4 x i32> %9, zeroinitializer
+  %12 = and <4 x i1> %10, %11                     ; 3 uses
+  %shift = shufflevector <4 x i1> %12, <4 x i1> poison, <4 x i32> <i32 poison, i32 poison, i32 3, i32 poison>
+  %foldExtExtBinop = or <4 x i1> %12, %shift
+  %13 = extractelement <4 x i1> %foldExtExtBinop, i64 2 ; 2 uses
   %i.k = load i32, ptr @ruby_vm_event_flags, align 4, !tbaa !7
   %i.l = xor i32 %0, -1
   %i.m = and i32 %i.k, %i.l
   %i.n = or i32 %i.m, %1                          ; 3 uses
   store i32 %i.n, ptr @ruby_vm_event_flags, align 4, !tbaa !7
-  br i1 %5, label %bb.e, label %bb.f
+  br i1 %i.j, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.o = or i32 %i.f, %1
@@ -240,15 +231,17 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.j
 
 bb.f:                                             ; preds = %bb.d
-  br i1 %24, label %bb.g, label %bb.h
+  br i1 %13, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   call void @rb_clear_attr_ccs() #6
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.f
-  %or.cond = or i1 %10, %13
-  br i1 %or.cond, label %bb.i, label %bb.j
+  %.bc = bitcast <4 x i1> %12 to <2 x i2>
+  %.extract = extractelement <2 x i2> %.bc, i64 0
+  %or.cond.not = icmp eq i2 %.extract, 0
+  br i1 %or.cond.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   call void @rb_clear_bf_ccs() #6
@@ -272,7 +265,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %or.cond3 = or i1 %24, %5
+  %or.cond3 = or i1 %13, %i.j
   br i1 %or.cond3, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l

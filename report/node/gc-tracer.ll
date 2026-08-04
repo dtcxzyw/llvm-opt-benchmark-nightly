@@ -204,11 +204,9 @@ switch.lookup:                                    ; preds = %bb.b, %bb.a
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 5078
   %i.ar = load i8, ptr %i.aq, align 2, !range !5, !noundef !6
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %3 = load i64, ptr %i.as, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.at = load i64, ptr %4, align 8
+  %i.at = load i64, ptr %i.as, align 8
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %5 = load i64, ptr %i.au, align 8
+  %3 = load <2 x i64>, ptr %i.au, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.aw = load i64, ptr %i.av, align 8
   %i.ax = load ptr, ptr %0, align 8
@@ -372,12 +370,10 @@ _ZN2v88internal8ToStringENS0_23GarbageCollectionReasonE.exit: ; preds = %switch.
   %i.bs = fmul nnan double %i.br, f0x3EB0000000000000
   %i.bt = uitofp i64 %i.aw to double
   %i.bu = fmul nnan double %i.bt, f0x3EB0000000000000
-  %6 = uitofp i64 %5 to double
-  %7 = fmul nnan double %6, f0x3EB0000000000000
+  %4 = uitofp <2 x i64> %3 to <2 x double>
+  %5 = fmul nnan <2 x double> %4, splat (double f0x3EB0000000000000) ; 2 uses
   %i.bv = uitofp i64 %i.at to double
-  %8 = fmul nnan double %i.bv, f0x3EB0000000000000
-  %9 = uitofp i64 %3 to double
-  %i.bw = fmul nnan double %9, f0x3EB0000000000000
+  %i.bw = fmul nnan double %i.bv, f0x3EB0000000000000
   %i.bx = trunc nuw i8 %i.ar to i1
   %i.by = select i1 %i.bx, ptr @.str.29, ptr @.str.28
   %i.bz = trunc nuw i8 %i.ap to i1
@@ -386,7 +382,9 @@ _ZN2v88internal8ToStringENS0_23GarbageCollectionReasonE.exit: ; preds = %switch.
   %i.cc = fadd double %i.cb, %i.y
   %i.cd = fadd double %i.cc, %i.aa
   %i.ce = fadd double %i.cd, %i.ac
-  call void (ptr, ptr, ...) @_ZNK2v88internal8GCTracer6OutputEPKcz(ptr noundef nonnull align 8 dereferenceable(6440) %0, ptr noundef nonnull @.str.26, i32 noundef %i.ad, ptr noundef nonnull %i.ah, double noundef %i.bn, ptr noundef nonnull %switch.load, ptr noundef nonnull %i.ca, ptr noundef nonnull %i.by, double noundef %i.bw, double noundef %8, double noundef %7, double noundef %i.bu, double noundef %i.bs, double noundef %i.bb, double noundef %i.ce, ptr noundef nonnull %i.a, double noundef %.0.i3, double noundef %i.bh, ptr noundef nonnull %.0.i4, ptr noundef nonnull %spec.select)
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = extractelement <2 x double> %5, i64 1
+  call void (ptr, ptr, ...) @_ZNK2v88internal8GCTracer6OutputEPKcz(ptr noundef nonnull align 8 dereferenceable(6440) %0, ptr noundef nonnull @.str.26, i32 noundef %i.ad, ptr noundef nonnull %i.ah, double noundef %i.bn, ptr noundef nonnull %switch.load, ptr noundef nonnull %i.ca, ptr noundef nonnull %i.by, double noundef %i.bw, double noundef %7, double noundef %6, double noundef %i.bu, double noundef %i.bs, double noundef %i.bb, double noundef %i.ce, ptr noundef nonnull %i.a, double noundef %.0.i3, double noundef %i.bh, ptr noundef nonnull %.0.i4, ptr noundef nonnull %spec.select)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #19
   ret void
