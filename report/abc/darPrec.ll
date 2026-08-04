@@ -203,7 +203,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nounwind memory(readwrite, argmem: read, target_mem: none) uwtable
 define i32 @Dar_TruthPermute(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #8 {
 bb.a:
-  %i.a = shl nuw i32 1, %2                        ; 7 uses
+  %i.a = shl nuw i32 1, %2                        ; 8 uses
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 2                      ; 3 uses
   %i.d = tail call noalias ptr @malloc(i64 noundef %i.c) #14 ; 11 uses
@@ -212,8 +212,8 @@ bb.a:
   br i1 %.not55, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1) ; 3 uses
-  %wide.trip.count = zext nneg i32 %smax to i64   ; 5 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1) ; 2 uses
+  %wide.trip.count = zext nneg i32 %smax to i64   ; 3 uses
   %min.iters.check = icmp slt i32 %i.a, 8
   br i1 %min.iters.check, label %.lr.ph, label %vector.ph
 
@@ -363,12 +363,14 @@ Dar_TruthPermute_int.exit.thread:                 ; preds = %._crit_edge
   br i1 %.not74, label %.lr.ph53.preheader, label %.lr.ph50.preheader
 
 .lr.ph50.preheader:                               ; preds = %Dar_TruthPermute_int.exit, %Dar_TruthPermute_int.exit.thread
-  %xtraiter85 = and i64 %wide.trip.count, 1
+  %smax63 = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1) ; 2 uses
+  %wide.trip.count64 = zext nneg i32 %smax63 to i64 ; 2 uses
+  %xtraiter85 = and i64 %wide.trip.count64, 1
   %i.au = icmp slt i32 %i.a, 2
   br i1 %i.au, label %.lr.ph50.epil.preheader, label %.lr.ph50.preheader.new
 
 .lr.ph50.preheader.new:                           ; preds = %.lr.ph50.preheader
-  %unroll_iter89 = and i64 %wide.trip.count, 2147483646
+  %unroll_iter89 = and i64 %wide.trip.count64, 2147483646
   br label %.lr.ph50
 
 .lr.ph53.preheader:                               ; preds = %Dar_TruthPermute_int.exit, %Dar_TruthPermute_int.exit.thread
@@ -477,7 +479,7 @@ bb.j:                                             ; preds = %.lr.ph53.epil.prehe
 .lr.ph50.epil.preheader:                          ; preds = %.loopexit.loopexit81.unr-lcssa, %.lr.ph50.preheader
   %indvars.iv60.epil.init = phi i64 [ 0, %.lr.ph50.preheader ], [ %indvars.iv.next61.1, %.loopexit.loopexit81.unr-lcssa ] ; 2 uses
   %.03648.epil.init = phi i32 [ 0, %.lr.ph50.preheader ], [ %.137.1, %.loopexit.loopexit81.unr-lcssa ]
-  %lcmp.mod88 = trunc i32 %smax to i1
+  %lcmp.mod88 = trunc i32 %smax63 to i1
   tail call void @llvm.assume(i1 %lcmp.mod88)
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv60.epil.init
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !30

@@ -204,20 +204,21 @@ bb.n:                                             ; preds = %bb.g
   %i.bb = sitofp i32 %i.ae to double              ; 4 uses
   %i.bc = fmul double %i.ba, %i.ba                ; 3 uses
   %i.bd = add nsw i32 %i.s, -398458
-  %i.be = fmul double %i.bc, %i.bc                ; 4 uses
+  %i.be = fmul double %i.bc, %i.bc                ; 2 uses
   %i.bf = sub nsw i32 440401, %i.s
-  %i.bg = insertelement <2 x double> <double poison, double -0.000000e+00>, double %i.be, i64 0 ; 2 uses
-  %1 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bg, <2 x double> <double f0x3FC39A09D078C69F, double 0.000000e+00>, <2 x double> <double f0x3FCC71C51D8E78AF, double f0x3FC2F112DF3E5244>)
-  %i.bh = shufflevector <2 x double> %i.bg, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.bi = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bh, <2 x double> %1, <2 x double> <double f0x3FD999999997FA04, double f0x3FC7466496CB03DE>) ; 2 uses
-  %i.bj = extractelement <2 x double> %i.bi, i64 0
-  %2 = fmul double %i.be, %i.bj
-  %3 = extractelement <2 x double> %i.bi, i64 1
-  %4 = tail call double @llvm.fmuladd.f64(double %i.be, double %3, double f0x3FD2492494229359)
-  %5 = tail call double @llvm.fmuladd.f64(double %i.be, double %4, double f0x3FE5555555555593)
-  %6 = fmul double %i.bc, %5
+  %i.bg = insertelement <2 x double> poison, double %i.be, i64 0 ; 2 uses
+  %i.bh = shufflevector <2 x double> %i.bg, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.bi = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bh, <2 x double> <double f0x3FC39A09D078C69F, double f0x3FC2F112DF3E5244>, <2 x double> <double f0x3FCC71C51D8E78AF, double f0x3FC7466496CB03DE>) ; 2 uses
+  %i.bj = extractelement <2 x double> %i.bi, i64 1
+  %1 = tail call double @llvm.fmuladd.f64(double %i.be, double %i.bj, double f0x3FD2492494229359)
+  %2 = insertelement <2 x double> %i.bi, double %1, i64 1
+  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bh, <2 x double> %2, <2 x double> <double f0x3FD999999997FA04, double f0x3FE5555555555593>)
+  %4 = insertelement <2 x double> %i.bg, double %i.bc, i64 1
+  %5 = fmul <2 x double> %4, %3                   ; 2 uses
   %i.bk = or i32 %i.bd, %i.bf
-  %7 = fadd double %2, %6                         ; 2 uses
+  %shift = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %5, %shift
+  %6 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 2 uses
   %i.bl = icmp sgt i32 %i.bk, 0
   br i1 %i.bl, label %bb.o, label %bb.r
 
@@ -225,7 +226,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bm = fmul double %i.af, 5.000000e-01
   %i.bn = fmul double %i.af, %i.bm                ; 3 uses
   %i.bo = icmp eq i32 %i.ae, 0
-  %i.bp = fadd double %i.bn, %7                   ; 2 uses
+  %i.bp = fadd double %i.bn, %6                   ; 2 uses
   br i1 %i.bo, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
@@ -245,7 +246,7 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %bb.n
   %i.bz = icmp eq i32 %i.ae, 0
-  %i.ca = fsub double %i.af, %7                   ; 2 uses
+  %i.ca = fsub double %i.af, %6                   ; 2 uses
   br i1 %i.bz, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
@@ -648,16 +649,16 @@ bb.f:                                             ; preds = %bb.c, %bb.e
   %.038 = bitcast i64 %.038.in to double          ; 4 uses
   %i.s = fmul double %.038, %.038
   %i.t = fdiv double %.038, %0
-  %i.u = fmul double %i.s, %i.t                   ; 4 uses
+  %i.u = fmul double %i.s, %i.t                   ; 5 uses
   %i.v = fmul double %i.u, %i.u
   %i.w = fmul double %i.u, %i.v
-  %i.x = insertelement <2 x double> <double poison, double -0.000000e+00>, double %i.u, i64 0 ; 2 uses
-  %1 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.x, <2 x double> <double f0x3FF9F1604A49D6C2, double 0.000000e+00>, <2 x double> <double f0xBFFE28E092F02420, double f0x3FC2B000D4E4EDD7>)
+  %i.x = insertelement <2 x double> poison, double %i.u, i64 0
   %i.y = shufflevector <2 x double> %i.x, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.z = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.y, <2 x double> %1, <2 x double> <double f0x3FFE03E60F61E692, double f0xBFE844CBBEE751D9>) ; 2 uses
+  %i.z = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.y, <2 x double> <double f0x3FF9F1604A49D6C2, double f0x3FC2B000D4E4EDD7>, <2 x double> <double f0xBFFE28E092F02420, double f0xBFE844CBBEE751D9>) ; 2 uses
   %i.aa = extractelement <2 x double> %i.z, i64 0
+  %1 = tail call double @llvm.fmuladd.f64(double %i.u, double %i.aa, double f0x3FFE03E60F61E692)
   %i.ab = extractelement <2 x double> %i.z, i64 1
-  %i.ac = tail call double @llvm.fmuladd.f64(double %i.w, double %i.ab, double %i.aa)
+  %i.ac = tail call double @llvm.fmuladd.f64(double %i.w, double %i.ab, double %1)
   %i.ad = fmul double %i.ac, %.038
   %i.ae = bitcast double %i.ad to i64
   %i.af = and i64 %i.ae, -1073741824

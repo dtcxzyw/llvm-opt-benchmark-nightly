@@ -204,16 +204,20 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.be = sitofp i64 %i.ar to float
-  %i.bf = uitofp i32 %i.aw to float               ; 2 uses
-  %1 = fdiv float %i.be, %i.bf
-  %2 = fpext float %1 to double
-  %3 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.10, double noundef %2) ; 0 uses
-  %4 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.11, i32 noundef %.132) ; 0 uses
-  %5 = uitofp nneg i32 %.1 to float
-  %6 = fmul nnan float %5, 1.000000e+02
-  %7 = fdiv float %6, %i.bf
-  %8 = fpext float %7 to double
-  %i.bg = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.12, i32 noundef %.1, double noundef %8) ; 0 uses
+  %i.bf = uitofp i32 %i.aw to float
+  %1 = uitofp nneg i32 %.1 to float
+  %2 = fmul nnan float %1, 1.000000e+02
+  %3 = insertelement <2 x float> poison, float %i.be, i64 0
+  %4 = insertelement <2 x float> %3, float %2, i64 1
+  %5 = insertelement <2 x float> poison, float %i.bf, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = fdiv <2 x float> %4, %6
+  %8 = fpext <2 x float> %7 to <2 x double>       ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  %10 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.10, double noundef %9) ; 0 uses
+  %11 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.11, i32 noundef %.132) ; 0 uses
+  %12 = extractelement <2 x double> %8, i64 1
+  %i.bg = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.12, i32 noundef %.1, double noundef %12) ; 0 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f, %bb.c
@@ -616,12 +620,11 @@ bb.q:                                             ; preds = %hnsw_release_read_s
   %i.dw = fmul nnan <2 x float> %i.dv, splat (float 1.000000e+02)
   %i.dx = insertelement <2 x float> poison, float %i.ds, i64 0
   %i.dy = shufflevector <2 x float> %i.dx, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.dz = fdiv <2 x float> %i.dw, %i.dy           ; 2 uses
-  %3 = extractelement <2 x float> %i.dz, i64 1
-  %4 = fpext float %3 to double
+  %i.dz = fdiv <2 x float> %i.dw, %i.dy
+  %3 = fpext <2 x float> %i.dz to <2 x double>    ; 2 uses
+  %4 = extractelement <2 x double> %3, i64 1
   %i.ea = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.36, i32 noundef %.095.lcssa, double noundef %4) ; 0 uses
-  %5 = extractelement <2 x float> %i.dz, i64 0
-  %6 = fpext float %5 to double
+  %5 = extractelement <2 x double> %3, i64 0
   br label %bb.r
 
 .critedge110:                                     ; preds = %hnsw_release_read_slot.exit
@@ -629,7 +632,7 @@ bb.q:                                             ; preds = %hnsw_release_read_s
   br label %bb.r
 
 bb.r:                                             ; preds = %.critedge110, %bb.q
-  %i.ec = phi double [ %6, %bb.q ], [ 0.000000e+00, %.critedge110 ]
+  %i.ec = phi double [ %5, %bb.q ], [ 0.000000e+00, %.critedge110 ]
   %i.ed = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.37, i32 noundef %.092.lcssa, double noundef %i.ec) ; 0 uses
   br label %bb.s
 

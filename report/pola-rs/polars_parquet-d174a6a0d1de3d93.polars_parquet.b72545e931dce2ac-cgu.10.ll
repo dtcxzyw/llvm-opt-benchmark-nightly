@@ -1,3 +1,8 @@
+inline.NumInlined: 2534
+inline.NumDeleted: 536
+loop-unroll.NumCompletelyUnrolled: 65
+loop-unroll.NumRuntimeUnrolled: 15
+loop-unroll.NumUnrolled: 132
 begin_hunk_0_@_RNvMs1_NtNtCsk4ZPsEfLtLH_6brotli3enc11stride_evalINtB5_10StrideEvalNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocE13choose_strideCsfISxE4fmY1Y_14polars_parquet:bb.a
   %i.p = add i64 %i.o, %.val20, !dbg !34954
   %i.q = lshr i64 %i.p, 3, !dbg !34954
@@ -199,32 +204,31 @@ bb.i:                                             ; preds = %_RNvMNtCscgRAwXFJnX
   ret void, !dbg !34996
 
 _RNvMNtCscgRAwXFJnXP_4core5sliceSf8split_atCsfISxE4fmY1Y_14polars_parquet.exit25: ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSf8split_atCsfISxE4fmY1Y_14polars_parquet.exit
-  %i.fk = getelementptr inbounds nuw [4 x i8], ptr %.val19, i64 %i.fi, !dbg !34961 ; 8 uses
+  %i.fk = getelementptr inbounds nuw [4 x i8], ptr %.val19, i64 %i.fi, !dbg !34961 ; 4 uses
   %i.fl = load float, ptr %i.fk, align 4, !dbg !34964, !noundef !14 ; 2 uses
   %.sroa.033.0.ptr50.1 = getelementptr inbounds nuw i8, ptr %i.fk, i64 4, !dbg !34967
-  %3 = load float, ptr %.sroa.033.0.ptr50.1, align 4, !dbg !34974, !noundef !14 ; 2 uses
-  %4 = fadd float %3, 2.000000e+00, !dbg !34974
-  %5 = fcmp olt float %4, %i.fl, !dbg !34974      ; 2 uses
-  %.sroa.04.1.1 = zext i1 %5 to i8, !dbg !34974
-  %.sroa.05.1.1 = select i1 %5, float %3, float %i.fl, !dbg !34974 ; 2 uses
-  %.sroa.033.0.ptr50.2 = getelementptr inbounds nuw i8, ptr %i.fk, i64 8, !dbg !34967
-  %6 = load float, ptr %.sroa.033.0.ptr50.2, align 4, !dbg !34974, !noundef !14 ; 2 uses
-  %7 = fadd float %6, 2.000000e+00, !dbg !34974
-  %i.fm = fcmp olt float %7, %.sroa.05.1.1, !dbg !34974 ; 2 uses
+  %3 = load <4 x float>, ptr %.sroa.033.0.ptr50.1, align 4, !dbg !34974 ; 5 uses
+  %4 = fadd <4 x float> %3, splat (float 2.000000e+00), !dbg !34974 ; 4 uses
+  %5 = extractelement <4 x float> %4, i64 0, !dbg !34974
+  %6 = fcmp olt float %5, %i.fl, !dbg !34974      ; 2 uses
+  %.sroa.04.1.1 = zext i1 %6 to i8, !dbg !34974
+  %7 = extractelement <4 x float> %3, i64 0, !dbg !34974
+  %.sroa.05.1.1 = select i1 %6, float %7, float %i.fl, !dbg !34974 ; 2 uses
+  %8 = extractelement <4 x float> %4, i64 1, !dbg !34974
+  %i.fm = fcmp olt float %8, %.sroa.05.1.1, !dbg !34974 ; 2 uses
   %.sroa.04.1.2 = select i1 %i.fm, i8 2, i8 %.sroa.04.1.1, !dbg !34974
-  %.sroa.05.1.2 = select i1 %i.fm, float %6, float %.sroa.05.1.1, !dbg !34974 ; 2 uses
-  %.sroa.033.0.ptr50.3 = getelementptr inbounds nuw i8, ptr %i.fk, i64 12, !dbg !34967
-  %8 = load float, ptr %.sroa.033.0.ptr50.3, align 4, !dbg !34974, !noundef !14 ; 2 uses
-  %9 = fadd float %8, 2.000000e+00, !dbg !34974
-  %i.fn = fcmp olt float %9, %.sroa.05.1.2, !dbg !34974 ; 2 uses
+  %9 = extractelement <4 x float> %3, i64 1, !dbg !34974
+  %.sroa.05.1.2 = select i1 %i.fm, float %9, float %.sroa.05.1.1, !dbg !34974 ; 2 uses
+  %10 = extractelement <4 x float> %4, i64 2, !dbg !34974
+  %i.fn = fcmp olt float %10, %.sroa.05.1.2, !dbg !34974 ; 2 uses
   %.sroa.04.1.3 = select i1 %i.fn, i8 3, i8 %.sroa.04.1.2, !dbg !34974
-  %.sroa.05.1.3 = select i1 %i.fn, float %8, float %.sroa.05.1.2, !dbg !34974 ; 2 uses
-  %.sroa.033.0.ptr50.4 = getelementptr inbounds nuw i8, ptr %i.fk, i64 16, !dbg !34967
-  %10 = load float, ptr %.sroa.033.0.ptr50.4, align 4, !dbg !34974, !noundef !14 ; 2 uses
-  %11 = fadd float %10, 2.000000e+00, !dbg !34974
-  %12 = fcmp olt float %11, %.sroa.05.1.3, !dbg !34974 ; 2 uses
-  %.sroa.04.1.4 = select i1 %12, i8 4, i8 %.sroa.04.1.3, !dbg !34974
-  %.sroa.05.1.4 = select i1 %12, float %10, float %.sroa.05.1.3, !dbg !34974 ; 2 uses
+  %11 = extractelement <4 x float> %3, i64 2, !dbg !34974
+  %.sroa.05.1.3 = select i1 %i.fn, float %11, float %.sroa.05.1.2, !dbg !34974 ; 2 uses
+  %12 = extractelement <4 x float> %4, i64 3, !dbg !34974
+  %13 = fcmp olt float %12, %.sroa.05.1.3, !dbg !34974 ; 2 uses
+  %.sroa.04.1.4 = select i1 %13, i8 4, i8 %.sroa.04.1.3, !dbg !34974
+  %14 = extractelement <4 x float> %3, i64 3, !dbg !34974
+  %.sroa.05.1.4 = select i1 %13, float %14, float %.sroa.05.1.3, !dbg !34974 ; 2 uses
   %.sroa.033.0.ptr50.5 = getelementptr inbounds nuw i8, ptr %i.fk, i64 20, !dbg !34967
   %i.fo = load float, ptr %.sroa.033.0.ptr50.5, align 4, !dbg !34974, !noundef !14 ; 2 uses
   %i.fp = fadd float %i.fo, 2.000000e+00, !dbg !34974
@@ -232,15 +236,15 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSf8split_atCsfISxE4fmY1Y_14polars_parquet.exit25
   %.sroa.04.1.5 = select i1 %i.fq, i8 5, i8 %.sroa.04.1.4, !dbg !34974
   %.sroa.05.1.5 = select i1 %i.fq, float %i.fo, float %.sroa.05.1.4, !dbg !34974 ; 2 uses
   %.sroa.033.0.ptr50.6 = getelementptr inbounds nuw i8, ptr %i.fk, i64 24, !dbg !34967
-  %13 = load float, ptr %.sroa.033.0.ptr50.6, align 4, !dbg !34974, !noundef !14 ; 2 uses
-  %14 = fadd float %13, 2.000000e+00, !dbg !34974
-  %15 = fcmp olt float %14, %.sroa.05.1.5, !dbg !34974 ; 2 uses
-  %.sroa.04.1.6 = select i1 %15, i8 6, i8 %.sroa.04.1.5, !dbg !34974
-  %.sroa.05.1.6 = select i1 %15, float %13, float %.sroa.05.1.5, !dbg !34974
-  %.sroa.033.0.ptr50.7 = getelementptr inbounds nuw i8, ptr %i.fk, i64 28, !dbg !34967
-  %16 = load float, ptr %.sroa.033.0.ptr50.7, align 4, !dbg !34974, !noundef !14
-  %17 = fadd float %16, 2.000000e+00, !dbg !34974
-  %i.fr = fcmp olt float %17, %.sroa.05.1.6, !dbg !34974
+  %15 = load <2 x float>, ptr %.sroa.033.0.ptr50.6, align 4, !dbg !34974 ; 2 uses
+  %16 = fadd <2 x float> %15, splat (float 2.000000e+00), !dbg !34974 ; 2 uses
+  %17 = extractelement <2 x float> %16, i64 0, !dbg !34974
+  %18 = fcmp olt float %17, %.sroa.05.1.5, !dbg !34974 ; 2 uses
+  %.sroa.04.1.6 = select i1 %18, i8 6, i8 %.sroa.04.1.5, !dbg !34974
+  %19 = extractelement <2 x float> %15, i64 0, !dbg !34974
+  %.sroa.05.1.6 = select i1 %18, float %19, float %.sroa.05.1.5, !dbg !34974
+  %20 = extractelement <2 x float> %16, i64 1, !dbg !34974
+  %i.fr = fcmp olt float %20, %.sroa.05.1.6, !dbg !34974
   %.sroa.04.1.7 = select i1 %i.fr, i8 7, i8 %.sroa.04.1.6, !dbg !34974
   store i8 %.sroa.04.1.7, ptr %.sroa.0.052, align 1, !dbg !34976
   %i.fs = icmp eq ptr %i.ff, %i.k, !dbg !34943

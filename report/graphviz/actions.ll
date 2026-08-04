@@ -1,3 +1,8 @@
+inline.NumInlined: 62
+inline.NumDeleted: 27
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@colorx:bb.a
 
 bb.u:                                             ; preds = %bb.k
@@ -199,12 +204,17 @@ bb.af:                                            ; preds = %bb.ae
   %i.et = fsub double %i.eq, %i.es                ; 2 uses
   %i.eu = fsub nnan double 1.000000e+00, %i.ek
   %i.ev = fmul double %i.eu, %i.el                ; 6 uses
-  %i.ew = fneg double %i.ek                       ; 2 uses
-  %5 = call nnan double @llvm.fmuladd.f64(double %i.ew, double %i.et, double 1.000000e+00)
-  %6 = fmul double %i.el, %5                      ; 3 uses
-  %7 = fsub nnan double 1.000000e+00, %i.et
-  %8 = call nnan double @llvm.fmuladd.f64(double %i.ew, double %7, double 1.000000e+00)
-  %i.ex = fmul double %i.el, %8                   ; 3 uses
+  %i.ew = fneg double %i.ek
+  %5 = fsub nnan double 1.000000e+00, %i.et
+  %6 = insertelement <2 x double> poison, double %i.ew, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %8 = insertelement <2 x double> poison, double %i.et, i64 0
+  %9 = insertelement <2 x double> %8, double %5, i64 1
+  %10 = call nnan <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %9, <2 x double> splat (double 1.000000e+00)) ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 0
+  %12 = fmul double %i.el, %11                    ; 3 uses
+  %13 = extractelement <2 x double> %10, i64 1
+  %i.ex = fmul double %i.el, %13                  ; 3 uses
   switch i32 %i.er, label %bb.al [
     i32 0, label %hsv2rgb.exit.i
     i32 1, label %bb.ag
@@ -236,9 +246,9 @@ bb.al:                                            ; preds = %bb.af
   unreachable
 
 hsv2rgb.exit.i:                                   ; preds = %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae
-  %.sink59.i.i = phi double [ %i.el, %bb.ae ], [ %6, %bb.ag ], [ %i.ev, %bb.ah ], [ %i.ev, %bb.ai ], [ %i.ex, %bb.aj ], [ %i.el, %bb.ak ], [ %i.el, %bb.af ]
-  %.sink58.i.i = phi double [ %i.el, %bb.ae ], [ %i.el, %bb.ag ], [ %i.el, %bb.ah ], [ %6, %bb.ai ], [ %i.ev, %bb.aj ], [ %i.ev, %bb.ak ], [ %i.ex, %bb.af ]
-  %.sink.i.i = phi double [ %i.el, %bb.ae ], [ %i.ev, %bb.ag ], [ %i.ex, %bb.ah ], [ %i.el, %bb.ai ], [ %i.el, %bb.aj ], [ %6, %bb.ak ], [ %i.ev, %bb.af ]
+  %.sink59.i.i = phi double [ %i.el, %bb.ae ], [ %12, %bb.ag ], [ %i.ev, %bb.ah ], [ %i.ev, %bb.ai ], [ %i.ex, %bb.aj ], [ %i.el, %bb.ak ], [ %i.el, %bb.af ]
+  %.sink58.i.i = phi double [ %i.el, %bb.ae ], [ %i.el, %bb.ag ], [ %i.el, %bb.ah ], [ %12, %bb.ai ], [ %i.ev, %bb.aj ], [ %i.ev, %bb.ak ], [ %i.ex, %bb.af ]
+  %.sink.i.i = phi double [ %i.el, %bb.ae ], [ %i.ev, %bb.ag ], [ %i.ex, %bb.ah ], [ %i.el, %bb.ai ], [ %i.el, %bb.aj ], [ %12, %bb.ak ], [ %i.ev, %bb.af ]
   %i.fa = insertelement <4 x double> %i.ei, double %.sink59.i.i, i64 0
   %i.fb = insertelement <4 x double> %i.fa, double %.sink58.i.i, i64 1
   %i.fc = insertelement <4 x double> %i.fb, double %.sink.i.i, i64 2
@@ -641,9 +651,6 @@ declare double @llvm.minnum.f64(double, double) #15
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.maxnum.f64(double, double) #15
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #15
-
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite, errnomem: write)
 declare noalias ptr @strdup(ptr noundef readonly captures(none)) local_unnamed_addr #16
 
@@ -676,6 +683,9 @@ declare <4 x double> @llvm.minnum.v4f64(<4 x double>, <4 x double>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.maxnum.v4f64(<4 x double>, <4 x double>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #15
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

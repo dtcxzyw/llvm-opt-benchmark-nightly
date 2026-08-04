@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 define range(i32 0, 2) i32 @button_pressed(ptr nofree noundef readonly captures(none) %0, double noundef %1, double noundef %2, double noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 288
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !11   ; 17 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !11   ; 19 uses
   %i.c = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 64), align 8, !tbaa !19
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 2892
   %i.e = load i32, ptr %i.d, align 4, !tbaa !155
@@ -234,9 +234,9 @@ bb.e:                                             ; preds = %bb.d
   %i.n = load <2 x double>, ptr %i.m, align 8, !tbaa !139
   %i.o = insertelement <2 x double> poison, double %1, i64 0
   %i.p = insertelement <2 x double> %i.o, double %2, i64 1
-  %i.q = fdiv reassoc nsz arcp contract afn <2 x double> %i.p, %i.n ; 5 uses
-  %i.r = extractelement <2 x double> %i.q, i64 1  ; 6 uses
-  %i.s = extractelement <2 x double> %i.q, i64 0  ; 6 uses
+  %i.q = fdiv reassoc nsz arcp contract afn <2 x double> %i.p, %i.n ; 3 uses
+  %i.r = extractelement <2 x double> %i.q, i64 1  ; 8 uses
+  %i.s = extractelement <2 x double> %i.q, i64 0  ; 8 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 1548 ; 3 uses
   %i.u = load i32, ptr %i.t, align 4, !tbaa !118
   %.not69 = icmp eq i32 %i.u, 0                   ; 2 uses
@@ -342,7 +342,9 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bs = getelementptr inbounds nuw i8, ptr %i.b, i64 1584
   store <2 x double> %i.q, ptr %i.bs, align 8, !tbaa !139
   %i.bt = getelementptr inbounds nuw i8, ptr %i.b, i64 1600
-  store <2 x double> %i.q, ptr %i.bt, align 8, !tbaa !139
+  store double %i.s, ptr %i.bt, align 8, !tbaa !156
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 1608
+  store double %i.r, ptr %7, align 8, !tbaa !157
   store i32 1, ptr %i.k, align 8, !tbaa !141
   tail call void @dt_control_queue_redraw_center() #12
   br label %bb.r
@@ -350,8 +352,10 @@ bb.p:                                             ; preds = %bb.o, %bb.n
 bb.q:                                             ; preds = %bb.k, %bb.j
   %i.bu = getelementptr inbounds nuw i8, ptr %i.b, i64 1544
   store i32 1, ptr %i.bu, align 8, !tbaa !137
+  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 1592
+  store double %i.r, ptr %8, align 8, !tbaa !116
   %i.bv = getelementptr inbounds nuw i8, ptr %i.b, i64 1584
-  store <2 x double> %i.q, ptr %i.bv, align 8, !tbaa !139
+  store double %i.s, ptr %i.bv, align 8, !tbaa !115
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ap, i8 0, i64 16, i1 false)
   tail call void @dt_control_queue_redraw_center() #12
   br label %bb.r

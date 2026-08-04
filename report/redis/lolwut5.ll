@@ -82,6 +82,7 @@ bb.a:
 .lr.ph.split.us.preheader:                        ; preds = %.preheader
   %i.ab = insertelement <2 x float> poison, float %i.v, i64 0
   %i.ac = shufflevector <2 x float> %i.ab, <2 x float> poison, <2 x i32> zeroinitializer
+  %3 = insertelement <2 x float> poison, float %i.aa, i64 1
   br label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split.us
@@ -118,14 +119,14 @@ bb.a:
   %i.be = fneg <2 x float> %i.az
   %i.bf = select <2 x i1> %i.bd, <2 x float> %i.az, <2 x float> %i.be
   %i.bg = fmul <2 x float> %i.u, %i.bf
-  %i.bh = fdiv <2 x float> %i.bg, splat (float 3.000000e+00) ; 2 uses
-  %3 = extractelement <2 x float> %i.bh, i64 0
-  %4 = fadd float %3, %i.at
-  %5 = fptosi float %4 to i32
-  %6 = extractelement <2 x float> %i.bh, i64 1
-  %7 = fadd float %6, %i.aa
-  %i.bi = fptosi float %7 to i32
-  tail call void @lwDrawSquare(ptr noundef %i.m, i32 noundef %5, i32 noundef %i.bi, float noundef %i.h, float noundef %.047.us, i32 noundef 1) #6
+  %i.bh = fdiv <2 x float> %i.bg, splat (float 3.000000e+00)
+  %4 = insertelement <2 x float> %3, float %i.at, i64 0
+  %5 = fadd <2 x float> %i.bh, %4                 ; 2 uses
+  %6 = extractelement <2 x float> %5, i64 0
+  %7 = fptosi float %6 to i32
+  %8 = extractelement <2 x float> %5, i64 1
+  %i.bi = fptosi float %8 to i32
+  tail call void @lwDrawSquare(ptr noundef %i.m, i32 noundef %7, i32 noundef %i.bi, float noundef %i.h, float noundef %.047.us, i32 noundef 1) #6
   %i.bj = add nuw nsw i32 %.05155.us, 1           ; 2 uses
   %exitcond59.not = icmp eq i32 %i.bj, %1
   br i1 %exitcond59.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !14

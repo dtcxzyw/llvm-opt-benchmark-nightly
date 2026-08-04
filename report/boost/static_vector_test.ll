@@ -1,3 +1,8 @@
+inline.NumInlined: 8588
+inline.NumDeleted: 2636
+loop-unroll.NumCompletelyUnrolled: 202
+loop-unroll.NumRuntimeUnrolled: 102
+loop-unroll.NumUnrolled: 307
 begin_hunk_0_@_Z23test_copy_and_assign_ndI14counting_valueLm10EEvRKT_:bb.a
   %i.cu = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 8
   %.not.i15.i.i.i.i = icmp eq i64 %i.cr, 0
@@ -199,7 +204,7 @@ _Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES
   %i.fg = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i64 10, ptr %i.fg, align 8, !tbaa !281
   %i.fh = invoke noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #27
-          to label %.noexc60 unwind label %bb.an  ; 18 uses
+          to label %.noexc60 unwind label %bb.an  ; 25 uses
 
 .noexc60:                                         ; preds = %_Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_.exit58
   %i.fi = getelementptr inbounds nuw i8, ptr %9, i64 16
@@ -207,12 +212,26 @@ _Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES
   store i64 10, ptr %i.fi, align 8, !tbaa !69
   %_ZZN14counting_value1cEvE2co.promoted.i.i59 = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8
   %i.fj = load <2 x i32>, ptr %0, align 4, !tbaa !18 ; 5 uses
-  %i.fk = shufflevector <2 x i32> %i.fj, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1> ; 2 uses
-  %i.fl = extractelement <2 x i32> %i.fj, i64 1   ; 4 uses
-  %i.fm = extractelement <2 x i32> %i.fj, i64 0   ; 4 uses
+  %i.fk = shufflevector <2 x i32> %i.fj, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
+  %i.fl = extractelement <2 x i32> %i.fj, i64 1   ; 8 uses
+  %i.fm = extractelement <2 x i32> %i.fj, i64 0   ; 8 uses
   store <8 x i32> %i.fk, ptr %i.fh, align 4, !tbaa !18
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fh, i64 32
-  store <8 x i32> %i.fk, ptr %i.fn, align 4, !tbaa !18
+  store i32 %i.fm, ptr %i.fn, align 4, !tbaa !72
+  %10 = getelementptr inbounds nuw i8, ptr %i.fh, i64 36
+  store i32 %i.fl, ptr %10, align 4, !tbaa !74
+  %11 = getelementptr inbounds nuw i8, ptr %i.fh, i64 40
+  store i32 %i.fm, ptr %11, align 4, !tbaa !72
+  %12 = getelementptr inbounds nuw i8, ptr %i.fh, i64 44
+  store i32 %i.fl, ptr %12, align 4, !tbaa !74
+  %13 = getelementptr inbounds nuw i8, ptr %i.fh, i64 48
+  store i32 %i.fm, ptr %13, align 4, !tbaa !72
+  %14 = getelementptr inbounds nuw i8, ptr %i.fh, i64 52
+  store i32 %i.fl, ptr %14, align 4, !tbaa !74
+  %15 = getelementptr inbounds nuw i8, ptr %i.fh, i64 56
+  store i32 %i.fm, ptr %15, align 4, !tbaa !72
+  %16 = getelementptr inbounds nuw i8, ptr %i.fh, i64 60
+  store i32 %i.fl, ptr %16, align 4, !tbaa !74
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fh, i64 64
   store i32 %i.fm, ptr %i.fo, align 4, !tbaa !72
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fh, i64 68
@@ -615,52 +634,75 @@ _ZN5boost9container6vectorINS0_13static_vectorI8value_ndLm10EvEENS0_3dtl24static
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_Z12test_sv_elemI14counting_valueLm10EEvRKT_(ptr noundef nonnull align 4 dereferenceable(8) %0) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 .lr.ph.i.i.i.i.i.i.i:
-  %1 = alloca %"class.boost::container::static_vector.310", align 8 ; 25 uses
-  %2 = alloca %"class.boost::container::static_vector.29", align 16 ; 8 uses
+  %1 = alloca %"class.boost::container::static_vector.310", align 8 ; 30 uses
+  %2 = alloca %"class.boost::container::static_vector.29", align 8 ; 15 uses
   %3 = alloca %"class.boost::container::static_vector.29", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 880 ; 4 uses
   %_ZZN14counting_value1cEvE2co.promoted.i.i.i = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 80
   store i64 5, ptr %i.b, align 8, !tbaa !179
-  %i.c = load <2 x i32>, ptr %0, align 4, !tbaa !18 ; 10 uses
+  %i.c = load <2 x i32>, ptr %0, align 4, !tbaa !18 ; 3 uses
   %i.d = shufflevector <2 x i32> %i.c, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
-  %i.e = extractelement <2 x i32> %i.c, i64 1
-  %i.f = extractelement <2 x i32> %i.c, i64 0
+  %i.e = extractelement <2 x i32> %i.c, i64 1     ; 11 uses
+  %i.f = extractelement <2 x i32> %i.c, i64 0     ; 11 uses
   store <8 x i32> %i.d, ptr %1, align 8, !tbaa !18
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 32
-  store i32 %i.f, ptr %i.g, align 8, !tbaa !72
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 36
-  store i32 %i.e, ptr %i.h, align 4, !tbaa !74
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 168
-  store i64 5, ptr %i.j, align 8, !tbaa !179
-  store <2 x i32> %i.c, ptr %i.i, align 8, !tbaa !18
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 96
-  store <2 x i32> %i.c, ptr %i.k, align 8, !tbaa !18
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 104
-  store <2 x i32> %i.c, ptr %i.l, align 8, !tbaa !18
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 112
-  store <2 x i32> %i.c, ptr %i.m, align 8, !tbaa !18
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 120
-  store <2 x i32> %i.c, ptr %i.n, align 8, !tbaa !18
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  store i32 %i.f, ptr %4, align 8, !tbaa !72
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 36
+  store i32 %i.e, ptr %5, align 4, !tbaa !74
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 88
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 168
+  store i64 5, ptr %7, align 8, !tbaa !179
+  store i32 %i.f, ptr %6, align 8, !tbaa !72
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 92
+  store i32 %i.e, ptr %i.g, align 4, !tbaa !74
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 96
+  store i32 %i.f, ptr %i.h, align 8, !tbaa !72
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 100
+  store i32 %i.e, ptr %i.i, align 4, !tbaa !74
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 104
+  store i32 %i.f, ptr %i.j, align 8, !tbaa !72
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 108
+  store i32 %i.e, ptr %8, align 4, !tbaa !74
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 112
+  store i32 %i.f, ptr %i.k, align 8, !tbaa !72
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 116
+  store i32 %i.e, ptr %i.l, align 4, !tbaa !74
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 120
+  store i32 %i.f, ptr %i.m, align 8, !tbaa !72
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 124
+  store i32 %i.e, ptr %i.n, align 4, !tbaa !74
   store i64 2, ptr %i.a, align 8, !tbaa !1300
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
-  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 3 uses
-  store i64 5, ptr %i.o, align 16, !tbaa !179
-  %4 = shufflevector <2 x i32> %i.c, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
-  store <4 x i32> %4, ptr %2, align 16, !tbaa !18
-  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store <4 x i32> %4, ptr %i.p, align 16, !tbaa !18
-  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 32
-  store <2 x i32> %i.c, ptr %i.q, align 16, !tbaa !18
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 3 uses
+  store i64 5, ptr %9, align 8, !tbaa !179
+  store i32 %i.f, ptr %2, align 8, !tbaa !72
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  store i32 %i.e, ptr %10, align 4, !tbaa !74
+  %11 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i32 %i.f, ptr %11, align 8, !tbaa !72
+  %12 = getelementptr inbounds nuw i8, ptr %2, i64 12
+  store i32 %i.e, ptr %12, align 4, !tbaa !74
+  %13 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store i32 %i.f, ptr %13, align 8, !tbaa !72
+  %14 = getelementptr inbounds nuw i8, ptr %2, i64 20
+  store i32 %i.e, ptr %14, align 4, !tbaa !74
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 24
+  store i32 %i.f, ptr %i.o, align 8, !tbaa !72
+  %15 = getelementptr inbounds nuw i8, ptr %2, i64 28
+  store i32 %i.e, ptr %15, align 4, !tbaa !74
+  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 32
+  store i32 %i.f, ptr %i.p, align 8, !tbaa !72
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 36
+  store i32 %i.e, ptr %i.q, align 4, !tbaa !74
   %i.r = add i64 %_ZZN14counting_value1cEvE2co.promoted.i.i.i, 15
   store i64 %i.r, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69
   invoke void @_ZN5boost9container6vectorINS0_13static_vectorI14counting_valueLm10EvEENS0_3dtl24static_storage_allocatorIS4_Lm10ELm0ELb1EEEvE40priv_insert_forward_range_expand_forwardINS5_20insert_emplace_proxyIS7_JS4_EEEEEvPS4_mT_NS_11move_detail17integral_constantIbLb1EEE(ptr noundef nonnull align 8 dereferenceable(888) %1, ptr noundef nonnull %1, i64 noundef 1, ptr nonnull align 8 dereferenceable(88) %2)
           to label %_ZN5boost9container6vectorINS0_13static_vectorI14counting_valueLm10EvEENS0_3dtl24static_storage_allocatorIS4_Lm10ELm0ELb1EEEvE6insertENS0_12vec_iteratorIPS4_Lb1EEEOS4_.exit22 unwind label %bb.c
 
 _ZN5boost9container6vectorINS0_13static_vectorI14counting_valueLm10EvEENS0_3dtl24static_storage_allocatorIS4_Lm10ELm0ELb1EEEvE6insertENS0_12vec_iteratorIPS4_Lb1EEEOS4_.exit22: ; preds = %.lr.ph.i.i.i.i.i.i.i
-  %i.s = load i64, ptr %i.o, align 16, !tbaa !167 ; 2 uses
+  %i.s = load i64, ptr %9, align 8, !tbaa !167    ; 2 uses
   %.not3.i.i50 = icmp eq i64 %i.s, 0
   %_ZZN14counting_value1cEvE2co.promoted.i.i.i54.pre = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8 ; 2 uses
   br i1 %.not3.i.i50, label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit53, label %.lr.ph.preheader.i.i51
@@ -806,7 +848,7 @@ _ZN5boost9container6vectorINS0_13static_vectorI14counting_valueLm10EvEENS0_3dtl2
 bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i
   %i.bd = landingpad { ptr, i32 }
           cleanup
-  %i.be = load i64, ptr %i.o, align 16, !tbaa !167 ; 2 uses
+  %i.be = load i64, ptr %9, align 8, !tbaa !167   ; 2 uses
   %.not3.i.i85 = icmp eq i64 %i.be, 0
   br i1 %.not3.i.i85, label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit88, label %.lr.ph.preheader.i.i86
 

@@ -1,3 +1,8 @@
+inline.NumInlined: 37
+inline.NumDeleted: 2
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 31
+loop-unroll.NumUnrolled: 33
 begin_hunk_0_@stress_majorization_kD_mkernel:bb.a
 
 bb.f:                                             ; preds = %bb.e
@@ -199,7 +204,7 @@ gv_calloc.exit554.i:                              ; preds = %gv_calloc.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
-  %i.ce = zext nneg i32 %1 to i64                 ; 69 uses
+  %i.ce = zext nneg i32 %1 to i64                 ; 70 uses
   %xtraiter = and i64 %i.br, 3                    ; 3 uses
   %i.cf = add nsw i32 %i.bq, -1
   %i.cg = icmp ult i32 %i.cf, 3
@@ -517,9 +522,9 @@ bb.al:                                            ; preds = %gv_calloc.exit565.p
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.dl, ptr noundef nonnull align 4 dereferenceable(1) %i.dv, i64 %i.df, i1 false), !tbaa !50
+  %8 = add nsw i64 %i.ce, -1                      ; 2 uses
   %xtraiter973 = and i64 %i.ce, 3                 ; 3 uses
-  %8 = add nsw i32 %1, -1
-  %i.hi = icmp ult i32 %8, 3
+  %i.hi = icmp ult i64 %8, 3
   br i1 %i.hi, label %.epil.preheader972, label %.new
 
 .new:                                             ; preds = %bb.am
@@ -671,7 +676,7 @@ bb.av:                                            ; preds = %bb.au, %._crit_edge
 gv_calloc.exit571.preheader.i:                    ; preds = %.preheader645.preheader.i
   %i.iw = add nsw i32 %1, -1
   %i.ix = zext i32 %i.iw to i64                   ; 8 uses
-  %i.iy = add nsw i64 %i.ce, -1                   ; 6 uses
+  %i.iy = add nsw i64 %i.ce, -1                   ; 5 uses
   %i.iz = add nsw i64 %i.ix, -1
   br label %bb.ax
 
@@ -1074,7 +1079,7 @@ sparse_stress_subspace_majorization_kD.exit:      ; preds = %bb.cn, %bb.co
 
 .lr.ph.preheader:                                 ; preds = %.preheader489
   %xtraiter1020 = and i64 %i.ce, 1
-  %i.zo = icmp eq i64 %i.iy, 0
+  %i.zo = icmp eq i64 %8, 0
   %unroll_iter1025 = and i64 %i.ce, 2147483646
   %lcmp.mod1022.not = icmp eq i64 %xtraiter1020, 0
   %lcmp.mod1024 = trunc i32 %1 to i1

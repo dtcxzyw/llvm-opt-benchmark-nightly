@@ -204,14 +204,18 @@ bb.j:                                             ; preds = %bb.i
   %i.ac = add nuw i64 %i.f, 1
   %i.ad = uitofp i64 %i.ac to float
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %i.af = load float, ptr %i.ae, align 4, !tbaa !923 ; 2 uses
-  %2 = fdiv float %i.ad, %i.af
-  %3 = tail call noundef float @llvm.ceil.f32(float %2)
-  %4 = fptoui float %3 to i64
-  %5 = fdiv float %i.y, %i.af
-  %6 = tail call noundef float @llvm.ceil.f32(float %5)
-  %i.ag = fptoui float %6 to i64
-  %.sroa.speculated.i.i = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.ag)
+  %i.af = load float, ptr %i.ae, align 4, !tbaa !923
+  %2 = insertelement <2 x float> poison, float %i.ad, i64 0
+  %3 = insertelement <2 x float> %2, float %i.y, i64 1
+  %4 = insertelement <2 x float> poison, float %i.af, i64 0
+  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
+  %6 = fdiv <2 x float> %3, %5
+  %7 = tail call <2 x float> @llvm.ceil.v2f32(<2 x float> %6) ; 2 uses
+  %8 = extractelement <2 x float> %7, i64 0
+  %9 = fptoui float %8 to i64
+  %10 = extractelement <2 x float> %7, i64 1
+  %i.ag = fptoui float %10 to i64
+  %.sroa.speculated.i.i = tail call i64 @llvm.umax.i64(i64 %9, i64 %i.ag)
   tail call void @_ZN3tsl17detail_robin_hash10robin_hashISt4pairImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEENS_9robin_mapImS8_St4hashImESt8equal_toImESaIS9_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSJ_11ValueSelectESC_SE_SF_Lb0ESI_E11rehash_implEm(ptr noundef nonnull align 8 dereferenceable(74) %0, i64 noundef %.sroa.speculated.i.i)
   br label %bb.k
 
@@ -442,9 +446,6 @@ bb.l:                                             ; preds = %_ZN3tsl17detail_rob
 
 ; Function Attrs: nounwind
 declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(32)) local_unnamed_addr #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.ceil.f32(float) #32
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN3tsl17detail_robin_hash10robin_hashISt4pairImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEENS_9robin_mapImS8_St4hashImESt8equal_toImESaIS9_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSJ_11ValueSelectESC_SE_SF_Lb0ESI_E17insert_value_implEmsjRS9_(ptr noundef nonnull align 8 dereferenceable(74) %0, i64 noundef %1, i16 noundef signext %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(40) %4) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
@@ -765,6 +766,9 @@ declare i128 @llvm.ctlz.i128(i128, i1 immarg) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #32
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.ceil.v2f32(<2 x float>) #32
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

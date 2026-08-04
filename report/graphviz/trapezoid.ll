@@ -1,3 +1,7 @@
+inline.NumInlined: 101
+inline.NumDeleted: 18
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@add_segment:bb.a
   store i64 %.0783848, ptr %i.aly, align 8, !tbaa !36
   %i.alz = load ptr, ptr %2, align 8, !tbaa !8    ; 2 uses
@@ -199,7 +203,7 @@ bb.f:                                             ; preds = %tailrecurse
   %i.ak = getelementptr inbounds [64 x i8], ptr %3, i64 %i.aj ; 4 uses
   %i.al = load <2 x double>, ptr %0, align 8      ; 9 uses
   %i.am = load <2 x double>, ptr %i.ak, align 8   ; 5 uses
-  %i.an = extractelement <2 x double> %i.am, i64 1 ; 13 uses
+  %i.an = extractelement <2 x double> %i.am, i64 1 ; 11 uses
   %i.ao = extractelement <2 x double> %i.am, i64 0 ; 9 uses
   %i.ap = fsub <2 x double> %i.al, %i.am          ; 3 uses
   %i.aq = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ap)
@@ -320,7 +324,7 @@ is_left_of.exit.thread90:                         ; preds = %is_left_of.exit84, 
 
 bb.u:                                             ; preds = %bb.g
   %i.db = fadd double %i.an, f0x3E7AD7F29ABCAF48
-  %i.dc = extractelement <2 x double> %i.aw, i64 1 ; 5 uses
+  %i.dc = extractelement <2 x double> %i.aw, i64 1 ; 3 uses
   %i.dd = fcmp ogt double %i.dc, %i.db
   %i.de = fadd double %i.an, f0xBE7AD7F29ABCAF48
   %i.df = fcmp uge double %i.dc, %i.de
@@ -354,14 +358,14 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.dt, label %tailrecurse.backedge, label %is_left_of.exit.thread90
 
 bb.z:                                             ; preds = %bb.x
-  %foldExtExtBinop = fsub <2 x double> %i.aw, %i.am
-  %i.du = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %5 = fsub double %i.dc, %i.an
-  %i.dv = extractelement <2 x double> %i.ap, i64 0
-  %6 = fneg double %i.dv
-  %7 = fmul double %5, %6
-  %i.dw = extractelement <2 x double> %i.ap, i64 1
-  %i.dx = tail call double @llvm.fmuladd.f64(double %i.du, double %i.dw, double %7)
+  %foldExtExtBinop = fsub <2 x double> %i.aw, %i.am ; 2 uses
+  %i.du = extractelement <2 x double> %i.ap, i64 0
+  %5 = fneg double %i.du
+  %i.dv = extractelement <2 x double> %foldExtExtBinop, i64 1
+  %6 = fmul double %i.dv, %5
+  %7 = extractelement <2 x double> %i.ap, i64 1
+  %i.dw = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.dx = tail call double @llvm.fmuladd.f64(double %i.dw, double %7, double %6)
   br label %is_left_of.exit84
 
 bb.aa:                                            ; preds = %bb.u
@@ -384,14 +388,14 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.ee, label %tailrecurse.backedge, label %is_left_of.exit.thread90
 
 bb.ae:                                            ; preds = %bb.ac
-  %foldExtExtBinop113 = fsub <2 x double> %i.am, %i.aw
-  %i.ef = extractelement <2 x double> %foldExtExtBinop113, i64 0
-  %8 = fsub double %i.an, %i.dc
-  %i.eg = extractelement <2 x double> %i.ax, i64 0
-  %9 = fneg double %i.eg
-  %10 = fmul double %8, %9
-  %i.eh = extractelement <2 x double> %i.ax, i64 1
-  %i.ei = tail call double @llvm.fmuladd.f64(double %i.ef, double %i.eh, double %10)
+  %foldExtExtBinop113 = fsub <2 x double> %i.am, %i.aw ; 2 uses
+  %i.ef = extractelement <2 x double> %i.ax, i64 0
+  %8 = fneg double %i.ef
+  %i.eg = extractelement <2 x double> %foldExtExtBinop113, i64 1
+  %9 = fmul double %i.eg, %8
+  %10 = extractelement <2 x double> %i.ax, i64 1
+  %i.eh = extractelement <2 x double> %foldExtExtBinop113, i64 0
+  %i.ei = tail call double @llvm.fmuladd.f64(double %i.eh, double %10, double %9)
   br label %is_left_of.exit84
 
 is_left_of.exit84:                                ; preds = %bb.z, %bb.ae

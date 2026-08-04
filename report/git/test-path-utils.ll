@@ -1,3 +1,8 @@
+inline.NumInlined: 26
+inline.NumDeleted: 14
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@cmd__path_utils:bb.a
   %i.oe = load ptr, ptr %i.ne, align 8, !tbaa !12
   %i.of = add i64 %.098.i, -2                     ; 3 uses
@@ -199,24 +204,24 @@ bb.de:                                            ; preds = %._crit_edge.i, %bb.
   %i.ux = load i32, ptr @protect_hfs, align 4, !tbaa !51
   %i.uy = sub i64 %i.uv, %i.uu                    ; 4 uses
   %i.uz = add i64 %i.uq, %i.uy
-  %11 = insertelement <2 x i64> poison, i64 %i.uy, i64 0
-  %12 = insertelement <2 x i64> %11, i64 %i.uz, i64 1
-  %13 = uitofp <2 x i64> %12 to <2 x double>
-  %14 = fdiv <2 x double> %13, <double 1.000000e+06, double 1.500000e+01> ; 3 uses
-  %15 = extractelement <2 x double> %14, i64 0
-  %16 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.76, i32 noundef %i.uw, i32 noundef %i.ux, double noundef %15) ; 0 uses
-  %17 = mul i64 %i.uy, %i.uy
-  %18 = uitofp i64 %17 to double
-  %19 = fadd double %i.ut, %18
+  %11 = mul i64 %i.uy, %i.uy
+  %12 = uitofp i64 %11 to double
+  %13 = fadd double %i.ut, %12
+  %14 = insertelement <2 x i64> poison, i64 %i.uy, i64 0
+  %15 = insertelement <2 x i64> %14, i64 %i.uz, i64 1
+  %16 = uitofp <2 x i64> %15 to <2 x double>
+  %17 = fdiv <2 x double> %16, <double 1.000000e+06, double 1.500000e+01> ; 3 uses
+  %18 = extractelement <2 x double> %17, i64 0
+  %19 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.76, i32 noundef %i.uw, i32 noundef %i.ux, double noundef %18) ; 0 uses
   %i.va = load i32, ptr @protect_ntfs, align 4, !tbaa !51
   %i.vb = sext i32 %i.va to i64
   %i.vc = getelementptr inbounds [16 x i8], ptr %i.b, i64 %i.vb
   %i.vd = load i32, ptr @protect_hfs, align 4, !tbaa !51
   %i.ve = sext i32 %i.vd to i64
   %i.vf = getelementptr inbounds [8 x i8], ptr %i.vc, i64 %i.ve
-  %i.vg = extractelement <2 x double> %14, i64 1  ; 3 uses
+  %i.vg = extractelement <2 x double> %17, i64 1  ; 3 uses
   store double %i.vg, ptr %i.vf, align 8, !tbaa !55
-  %i.vh = fdiv double %19, 1.500000e+01
+  %i.vh = fdiv double %13, 1.500000e+01
   %i.vi = fneg double %i.vg
   %i.vj = tail call double @llvm.fmuladd.f64(double %i.vi, double %i.vg, double %i.vh) ; 3 uses
   %i.vk = fcmp oeq double %i.vj, 0.000000e+00
@@ -234,7 +239,7 @@ bb.de:                                            ; preds = %._crit_edge.i, %bb.
 
 my_sqrt.exit.i:                                   ; preds = %.preheader.i.i, %.preheader94.i
   %.2.i.i = phi double [ 0.000000e+00, %.preheader94.i ], [ %i.vp, %.preheader.i.i ]
-  %i.vq = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.vq = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.vr = insertelement <2 x double> %i.vq, double %.2.i.i, i64 1
   %i.vs = fdiv <2 x double> %i.vr, splat (double 1.000000e+06) ; 2 uses
   %i.vt = extractelement <2 x double> %i.vs, i64 0

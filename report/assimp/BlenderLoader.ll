@@ -204,10 +204,13 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   %i.cg = getelementptr inbounds nuw i8, ptr %i.b, i64 1068
   store float 1.000000e+00, ptr %i.cg, align 4
-  %6 = fdiv float 2.000000e+00, %i.ce
-  store float %6, ptr %i.c, align 4
-  %7 = fmul nnan float %i.ce, %i.ce
-  %8 = fdiv float 1.000000e+00, %7
+  %6 = fmul nnan float %i.ce, %i.ce
+  %7 = insertelement <2 x float> poison, float %i.ce, i64 0
+  %8 = insertelement <2 x float> %7, float %6, i64 1
+  %9 = fdiv <2 x float> <float 2.000000e+00, float 1.000000e+00>, %8 ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 0
+  store float %10, ptr %i.c, align 4
+  %11 = extractelement <2 x float> %9, i64 1
   br label %_ZNSt10unique_ptrI7aiLightSt14default_deleteIS0_EED2Ev.exit
 
 ._crit_edge:                                      ; preds = %bb.m, %bb.o, %bb.n
@@ -218,7 +221,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZNSt10unique_ptrI7aiLightSt14default_deleteIS0_EED2Ev.exit
 
 _ZNSt10unique_ptrI7aiLightSt14default_deleteIS0_EED2Ev.exit: ; preds = %bb.p, %._crit_edge
-  %storemerge = phi float [ %i.cj, %._crit_edge ], [ %8, %bb.p ]
+  %storemerge = phi float [ %i.cj, %._crit_edge ], [ %11, %bb.p ]
   store float %storemerge, ptr %i.d, align 4
   ret ptr %i.b
 }

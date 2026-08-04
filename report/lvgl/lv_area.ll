@@ -1,3 +1,5 @@
+inline.NumInlined: 80
+inline.NumDeleted: 1
 begin_hunk_0_@lv_area_align:bb.a
 bb.k:                                             ; preds = %bb.a
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -199,19 +201,24 @@ bb.u:                                             ; preds = %bb.a
 bb.v:                                             ; preds = %bb.a, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
   %.070 = phi i32 [ %i.jh, %bb.t ], [ %i.z, %bb.b ], [ %i.jx, %bb.u ], [ 0, %bb.c ], [ 0, %bb.d ], [ %i.bf, %bb.e ], [ %i.cc, %bb.f ], [ %i.cw, %bb.g ], [ %i.dk, %bb.h ], [ %i.eh, %bb.i ], [ %.neg96, %bb.j ], [ %.neg94, %bb.k ], [ %.neg92, %bb.l ], [ %i.fu, %bb.m ], [ %i.gm, %bb.n ], [ %i.hb, %bb.o ], [ 0, %bb.p ], [ %i.hv, %bb.q ], [ %i.ij, %bb.r ], [ 0, %bb.s ], [ 0, %bb.a ]
   %.0 = phi i32 [ %i.it, %bb.t ], [ %i.y, %bb.b ], [ %i.jw, %bb.u ], [ %i.al, %bb.c ], [ %i.au, %bb.d ], [ 0, %bb.e ], [ %i.br, %bb.f ], [ %i.cv, %bb.g ], [ 0, %bb.h ], [ %i.dt, %bb.i ], [ 0, %bb.j ], [ %i.ex, %bb.k ], [ %i.fo, %bb.l ], [ 0, %bb.m ], [ %i.gg, %bb.n ], [ %i.ha, %bb.o ], [ %.neg86, %bb.p ], [ %.neg84, %bb.q ], [ %.neg80, %bb.r ], [ %i.io, %bb.s ], [ 0, %bb.a ]
-  %i.jy = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.jy = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.jz = add i32 %.0, %3
   %i.ka = add i32 %.070, %4
-  %5 = load <2 x i32>, ptr %0, align 4, !tbaa !13
+  %7 = load i32, ptr %5, align 4, !tbaa !10
+  %8 = load i32, ptr %0, align 4, !tbaa !8
   %i.kb = load <2 x i32>, ptr %i.jy, align 4, !tbaa !13
   %i.kc = load <2 x i32>, ptr %1, align 4, !tbaa !13
-  %6 = insertelement <2 x i32> poison, i32 %i.jz, i64 0
-  %i.kd = insertelement <2 x i32> %6, i32 %i.ka, i64 1
-  %7 = add <2 x i32> %i.kd, %5                    ; 2 uses
-  %i.ke = add <2 x i32> %7, %i.kb
+  %9 = add i32 %i.ka, %7                          ; 2 uses
+  %10 = add i32 %i.jz, %8                         ; 2 uses
+  store i32 %10, ptr %1, align 4, !tbaa !8
+  store i32 %9, ptr %6, align 4, !tbaa !10
+  %i.kd = insertelement <2 x i32> poison, i32 %10, i64 0
+  %11 = insertelement <2 x i32> %i.kd, i32 %9, i64 1
+  %i.ke = add <2 x i32> %11, %i.kb
   %i.kf = sub <2 x i32> %i.ke, %i.kc
-  %8 = shufflevector <2 x i32> %7, <2 x i32> %i.kf, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i32> %8, ptr %1, align 4, !tbaa !13
+  store <2 x i32> %i.kf, ptr %i.jy, align 4, !tbaa !13
   ret void
 }
 

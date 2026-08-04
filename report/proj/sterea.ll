@@ -1,3 +1,4 @@
+inline.NumInlined: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -170,10 +171,15 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !8    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 488
-  %i.d = load double, ptr %i.c, align 8, !tbaa !55 ; 2 uses
-  %3 = fdiv double %0, %i.d                       ; 2 uses
-  %4 = fdiv double %1, %i.d                       ; 3 uses
-  %i.e = tail call double @hypot(double noundef %3, double noundef %4) #7 ; 4 uses
+  %i.d = load double, ptr %i.c, align 8, !tbaa !55
+  %3 = insertelement <2 x double> poison, double %1, i64 0
+  %4 = insertelement <2 x double> %3, double %0, i64 1
+  %5 = insertelement <2 x double> poison, double %i.d, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = fdiv <2 x double> %4, %6                   ; 3 uses
+  %8 = extractelement <2 x double> %7, i64 0      ; 2 uses
+  %9 = extractelement <2 x double> %7, i64 1
+  %i.e = tail call double @hypot(double noundef %9, double noundef %8) #7 ; 4 uses
   %i.f = fcmp une double %i.e, 0.000000e+00
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -182,24 +188,27 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load double, ptr %i.g, align 8, !tbaa !46
   %i.i = tail call double @atan2(double noundef %i.e, double noundef %i.h) #7
   %i.j = fmul double %i.i, 2.000000e+00           ; 2 uses
-  %i.k = tail call double @sin(double noundef %i.j) #7 ; 3 uses
+  %i.k = tail call double @sin(double noundef %i.j) #7 ; 2 uses
   %i.l = tail call double @cos(double noundef %i.j) #7 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.n = load double, ptr %i.m, align 8, !tbaa !43 ; 2 uses
-  %5 = fmul double %4, %i.k
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.p = load double, ptr %i.o, align 8, !tbaa !44 ; 2 uses
-  %i.q = fmul double %5, %i.p
+  %10 = insertelement <2 x double> poison, double %i.k, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %12 = fmul <2 x double> %7, %11                 ; 2 uses
+  %13 = extractelement <2 x double> %12, i64 0
+  %i.q = fmul double %13, %i.p
   %i.r = fdiv double %i.q, %i.e
   %i.s = tail call double @llvm.fmuladd.f64(double %i.l, double %i.n, double %i.r)
   %i.t = tail call double @asin(double noundef %i.s) #7
-  %6 = fmul double %3, %i.k
   %i.u = fmul double %i.e, %i.p
-  %i.v = fmul double %4, %i.n
+  %i.v = fmul double %8, %i.n
   %i.w = fneg double %i.k
   %i.x = fmul double %i.v, %i.w
   %i.y = tail call double @llvm.fmuladd.f64(double %i.u, double %i.l, double %i.x)
-  %i.z = tail call double @atan2(double noundef %6, double noundef %i.y) #7
+  %14 = extractelement <2 x double> %12, i64 1
+  %i.z = tail call double @atan2(double noundef %14, double noundef %i.y) #7
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a

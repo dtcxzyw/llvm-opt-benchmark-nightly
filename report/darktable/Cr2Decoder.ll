@@ -203,15 +203,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   br i1 %i.aj, label %bb.d, label %_ZN8rawspeed12RawImageData32getByteDataAsUncroppedArray2DRefEv.exit
 
 bb.d:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %7 = uitofp i16 %i.d to float
-  %8 = fmul nnan float %7, f0x3A800000
-  %9 = fdiv float 1.024000e+03, %8
-  %10 = fptosi float %9 to i32
-  %.sroa.0185.0.insert.ext188 = zext i32 %10 to i64
-  %11 = uitofp i16 %i.l to float
-  %12 = fmul nnan float %11, f0x3A800000
-  %13 = fdiv float 1.024000e+03, %12
-  %i.ak = fptosi float %13 to i32
+  %7 = insertelement <2 x i16> poison, i16 %i.d, i64 0
+  %8 = insertelement <2 x i16> %7, i16 %i.l, i64 1
+  %9 = uitofp <2 x i16> %8 to <2 x float>
+  %10 = fmul nnan <2 x float> %9, splat (float f0x3A800000)
+  %11 = fdiv <2 x float> splat (float 1.024000e+03), %10 ; 2 uses
+  %12 = extractelement <2 x float> %11, i64 0
+  %13 = fptosi float %12 to i32
+  %.sroa.0185.0.insert.ext188 = zext i32 %13 to i64
+  %14 = extractelement <2 x float> %11, i64 1
+  %i.ak = fptosi float %14 to i32
   br label %_ZN8rawspeed12RawImageData32getByteDataAsUncroppedArray2DRefEv.exit
 
 _ZN8rawspeed12RawImageData32getByteDataAsUncroppedArray2DRefEv.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread, %bb.d, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit

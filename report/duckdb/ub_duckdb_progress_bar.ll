@@ -203,12 +203,15 @@ bb.a:
   %.sroa.0.0.copyload.i2.i.i = load i64, ptr %i.b, align 8, !tbaa !63
   %i.c = sub nsw i64 %i.a, %.sroa.0.0.copyload.i2.i.i
   %i.d = sitofp i64 %i.c to double
-  %3 = fdiv double %i.d, 1.000000e+09             ; 4 uses
-  %4 = fdiv double %1, 1.000000e+02               ; 2 uses
+  %3 = insertelement <2 x double> poison, double %i.d, i64 0
+  %4 = insertelement <2 x double> %3, double %1, i64 1
+  %5 = fdiv <2 x double> %4, <double 1.000000e+09, double 1.000000e+02> ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0      ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 3 uses
   %i.g = load double, ptr %i.f, align 8, !tbaa !146
-  %i.h = fmul double %4, %i.g                     ; 6 uses
+  %7 = extractelement <2 x double> %5, i64 1      ; 2 uses
+  %i.h = fmul double %7, %i.g                     ; 6 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 3 uses
   %i.j = load i8, ptr %i.i, align 8, !tbaa !160, !range !98, !noundef !99
   %i.k = trunc nuw i8 %i.j to i1
@@ -216,7 +219,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.l = fcmp oeq double %i.h, 0.000000e+00
-  %i.m = fcmp oeq double %3, 0.000000e+00
+  %i.m = fcmp oeq double %6, 0.000000e+00
   %or.cond.i.i = or i1 %i.l, %i.m
   br i1 %or.cond.i.i, label %_ZN6duckdb21UnscentedKalmanFilter6UpdateEdd.exit, label %bb.c
 
@@ -229,18 +232,18 @@ bb.c:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.r = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorIdLb1ESaIdEEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.q, i64 noundef 0)
   store double %i.p, ptr %i.r, align 8, !tbaa !161
-  %i.s = fdiv double %i.p, %3
+  %i.s = fdiv double %i.p, %6
   %i.t = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorIdLb1ESaIdEEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.q, i64 noundef 1)
   store double %i.s, ptr %i.t, align 8, !tbaa !161
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 216
-  store double %3, ptr %i.u, align 8, !tbaa !162
+  store double %6, ptr %i.u, align 8, !tbaa !162
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 232
   store double %i.p, ptr %i.v, align 8, !tbaa !163
   store i8 1, ptr %i.i, align 8, !tbaa !160
   br label %_ZN6duckdb21UnscentedKalmanFilter6UpdateEdd.exit
 
 bb.d:                                             ; preds = %bb.a
-  tail call void @_ZN6duckdb21UnscentedKalmanFilter7PredictEd(ptr noundef nonnull align 8 dereferenceable(184) %i.e, double noundef %3)
+  tail call void @_ZN6duckdb21UnscentedKalmanFilter7PredictEd(ptr noundef nonnull align 8 dereferenceable(184) %i.e, double noundef %6)
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
   %i.x = load double, ptr %i.w, align 8, !tbaa !163
   %i.y = fcmp une double %i.x, %i.h
@@ -252,7 +255,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN6duckdb21UnscentedKalmanFilter6UpdateEdd.exit
 
 _ZN6duckdb21UnscentedKalmanFilter6UpdateEdd.exit: ; preds = %bb.b, %bb.c, %bb.d, %bb.e
-  %i.z = fcmp ogt double %4, f0x3FEFAE147AE147AE
+  %i.z = fcmp ogt double %7, f0x3FEFAE147AE147AE
   br i1 %i.z, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %_ZN6duckdb21UnscentedKalmanFilter6UpdateEdd.exit

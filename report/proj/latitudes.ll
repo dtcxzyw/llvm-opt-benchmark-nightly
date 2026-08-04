@@ -1,3 +1,7 @@
+inline.NumInlined: 9
+loop-unroll.NumCompletelyUnrolled: 12
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 17
 begin_hunk_0_@_Z16pj_conformal_latdPK8PJconsts:bb.a
   %i.m = tail call double @atan(double noundef %i.l) #12
   br label %bb.c
@@ -199,16 +203,16 @@ _Z10pj_polyvaldPKdi.exit.5:                       ; preds = %bb.i
   %i.ak = fmul <2 x double> %i.q, %i.aj
   store <2 x double> %i.ak, ptr %3, align 8, !tbaa !41
   %i.al = extractelement <2 x double> %i.q, i64 1
+  %4 = fmul double %0, %i.al                      ; 2 uses
   %i.am = add i32 %i.h, 6
   %i.an = sext i32 %i.am to i64
   %i.ao = getelementptr inbounds [8 x i8], ptr @_ZZ16pj_auxlat_coeffsd6AuxLatS_PdE6coeffs, i64 %i.an
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %5 = fmul double %0, %4                         ; 2 uses
   %i.aq = add i32 %i.h, 8
   %i.ar = sext i32 %i.aq to i64
   %i.as = getelementptr inbounds [8 x i8], ptr @_ZZ16pj_auxlat_coeffsd6AuxLatS_PdE6coeffs, i64 %i.ar
-  %4 = fmul double %0, %i.al                      ; 2 uses
   %i.at = load <2 x double>, ptr %i.ao, align 8, !tbaa !41 ; 2 uses
-  %5 = fmul double %0, %4                         ; 2 uses
   %i.au = load <2 x double>, ptr %i.as, align 8, !tbaa !41 ; 2 uses
   %i.av = shufflevector <2 x double> %i.at, <2 x double> %i.au, <2 x i32> <i32 1, i32 3>
   %i.aw = shufflevector <2 x double> %i.at, <2 x double> %i.au, <2 x i32> <i32 0, i32 2>
@@ -257,18 +261,18 @@ _Z10pj_polyvaldPKdi.exit65.5:                     ; preds = %bb.i
   %i.ci = fmul <2 x double> %i.ch, %i.cg
   store <2 x double> %i.ci, ptr %3, align 8, !tbaa !41
   %i.cj = add i32 %i.h, 11
+  %6 = fmul double %0, %i.bn                      ; 2 uses
   %i.ck = sext i32 %i.cj to i64
   %i.cl = getelementptr inbounds [8 x i8], ptr @_ZZ16pj_auxlat_coeffsd6AuxLatS_PdE6coeffs, i64 %i.ck ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 16
   %i.cn = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.co = add i32 %i.h, 15
+  %7 = fmul double %0, %6                         ; 2 uses
   %i.cp = sext i32 %i.co to i64
   %i.cq = getelementptr inbounds [8 x i8], ptr @_ZZ16pj_auxlat_coeffsd6AuxLatS_PdE6coeffs, i64 %i.cp ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 16
-  %6 = fmul double %0, %i.bn                      ; 2 uses
   %i.cs = load <2 x double>, ptr %i.cm, align 8, !tbaa !41 ; 2 uses
   %i.ct = load <2 x double>, ptr %i.cl, align 8, !tbaa !41 ; 2 uses
-  %7 = fmul double %0, %6                         ; 2 uses
   %i.cu = load double, ptr %i.cr, align 8, !tbaa !41
   %i.cv = shufflevector <2 x double> %i.cs, <2 x double> <double poison, double 0.000000e+00>, <2 x i32> <i32 1, i32 3>
   %i.cw = insertelement <2 x double> %i.cs, double %i.cu, i64 1

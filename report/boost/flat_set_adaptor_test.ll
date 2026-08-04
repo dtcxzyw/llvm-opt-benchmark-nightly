@@ -1,3 +1,8 @@
+inline.NumInlined: 24952
+inline.NumDeleted: 2814
+loop-unroll.NumCompletelyUnrolled: 140
+loop-unroll.NumRuntimeUnrolled: 169
+loop-unroll.NumUnrolled: 315
 begin_hunk_0_@_ZN5boost7movelib15detail_adaptive26adaptive_sort_build_blocksINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEENS3_3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS0_13adaptive_xbufIiS5_mEEEENS0_9iter_sizeIT_E4typeESI_SK_SK_SK_RT1_T0_:bb.a
 
 bb.ag:                                            ; preds = %_ZN5boost4moveIPiNS_9container14deque_iteratorIS1_Lb0ELj0ELj0EmEEEET0_T_S6_S5_.exit
@@ -199,7 +204,7 @@ define linkonce_odr hidden noundef zeroext i1 @_ZN5boost7movelib15detail_adaptiv
 bb.a:
   %7 = alloca %"class.boost::container::deque_iterator", align 8 ; 3 uses
   %8 = alloca %"class.boost::container::deque_iterator", align 8 ; 3 uses
-  %9 = alloca %"class.boost::container::deque_iterator", align 16 ; 2 uses
+  %9 = alloca %"class.boost::container::deque_iterator", align 8 ; 3 uses
   %10 = alloca %"class.boost::container::deque_iterator", align 8 ; 3 uses
   %11 = alloca %"class.boost::container::deque_iterator", align 8 ; 3 uses
   %12 = alloca %"class.boost::container::deque_iterator", align 16 ; 2 uses
@@ -208,9 +213,9 @@ bb.a:
   %14 = alloca %"class.boost::container::deque_iterator", align 8 ; 3 uses
   %15 = alloca %"class.boost::container::deque_iterator", align 8 ; 3 uses
   %i.b = load i64, ptr %5, align 8, !tbaa !272    ; 7 uses
-  %16 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %17 = load ptr, ptr %16, align 8, !tbaa !13016, !noalias !15536 ; 5 uses
-  %i.c = load ptr, ptr %2, align 8, !tbaa !1889, !noalias !15536 ; 4 uses
+  %16 = load ptr, ptr %2, align 8, !tbaa !1889, !noalias !15536 ; 4 uses
+  %17 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  %i.c = load ptr, ptr %17, align 8, !tbaa !13016, !noalias !15536 ; 5 uses
   %.not.i.i = icmp eq i64 %i.b, 0
   br i1 %.not.i.i, label %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit.thread, label %bb.b
 
@@ -219,8 +224,8 @@ _ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit.thread: ; preds =
   br label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = load ptr, ptr %17, align 8, !tbaa !75, !noalias !15536
-  %i.f = ptrtoint ptr %i.c to i64
+  %i.e = load ptr, ptr %i.c, align 8, !tbaa !75, !noalias !15536
+  %i.f = ptrtoint ptr %16 to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
   %i.i = ashr exact i64 %i.h, 2
@@ -229,7 +234,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond.i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.b
+  %i.k = getelementptr inbounds [4 x i8], ptr %16, i64 %i.b
   br label %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -237,7 +242,7 @@ bb.d:                                             ; preds = %bb.b
   %i.m = lshr i64 %i.j, 8                         ; 2 uses
   %i.n = or disjoint i64 %i.m, -72057594037927936
   %i.o = select i1 %i.l, i64 %i.m, i64 %i.n       ; 2 uses
-  %i.p = getelementptr inbounds [8 x i8], ptr %17, i64 %i.o ; 2 uses
+  %i.p = getelementptr inbounds [8 x i8], ptr %i.c, i64 %i.o ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !75, !noalias !15536
   %i.r = shl nsw i64 %i.o, 8
   %i.s = sub nsw i64 %i.j, %i.r
@@ -245,7 +250,7 @@ bb.d:                                             ; preds = %bb.b
   br label %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit
 
 _ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit: ; preds = %bb.c, %bb.d
-  %.sroa.6.1.i = phi ptr [ %i.p, %bb.d ], [ %17, %bb.c ] ; 3 uses
+  %.sroa.6.1.i = phi ptr [ %i.p, %bb.d ], [ %i.c, %bb.c ] ; 3 uses
   %.sroa.0.0.i = phi ptr [ %i.t, %bb.d ], [ %i.k, %bb.c ] ; 3 uses
   %i.u = sub i64 %3, %i.b                         ; 4 uses
   %i.v = load i64, ptr %1, align 8, !tbaa !272
@@ -260,17 +265,17 @@ bb.e:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not235, label %.thread, label %.thread.thread
 
 .thread:                                          ; preds = %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit.thread, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit, %bb.e
-  %.sroa.6.1.i225231 = phi ptr [ %.sroa.6.1.i, %bb.e ], [ %17, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit.thread ], [ %.sroa.6.1.i, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit ]
-  %.sroa.0.0.i226230 = phi ptr [ %.sroa.0.0.i, %bb.e ], [ %i.c, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit.thread ], [ %.sroa.0.0.i, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit ]
+  %.sroa.6.1.i225231 = phi ptr [ %.sroa.6.1.i, %bb.e ], [ %i.c, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit.thread ], [ %.sroa.6.1.i, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit ]
+  %.sroa.0.0.i226230 = phi ptr [ %.sroa.0.0.i, %bb.e ], [ %16, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit.thread ], [ %.sroa.0.0.i, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit ]
   %i.z = phi i64 [ %i.u, %bb.e ], [ %3, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit.thread ], [ %i.u, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit ] ; 2 uses
   %i.aa = phi i64 [ %i.w, %bb.e ], [ %i.d, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit.thread ], [ %i.w, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit ] ; 2 uses
   %i.ab = icmp ugt i64 %i.z, %4
   br i1 %i.ab, label %.lr.ph, label %.thread288
 
 .thread.thread:                                   ; preds = %bb.e
-  store ptr %i.c, ptr %7, align 8, !tbaa !1889
+  store ptr %16, ptr %7, align 8, !tbaa !1889
   %i.ac = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store ptr %17, ptr %i.ac, align 8, !tbaa !13016
+  store ptr %i.c, ptr %i.ac, align 8, !tbaa !13016
   call void @_ZN5boost7movelib13adaptive_xbufIiPimE11move_assignINS_9container14deque_iteratorIS2_Lb0ELj0ELj0EmEEEEvT_m(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dead_on_return %7, i64 noundef %i.b)
   br label %.lr.ph
 
@@ -282,14 +287,13 @@ bb.e:                                             ; preds = %_ZNK5boost9containe
   %i.af = phi i1 [ true, %.thread.thread ], [ false, %.thread ] ; 7 uses
   %i.ag = ptrtoint ptr %.sroa.0.0.i226230293 to i64 ; 5 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.ai = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %i.aj = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %i.ak = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %i.al = getelementptr inbounds nuw i8, ptr %13, i64 8
-  %i.am = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.an = getelementptr inbounds nuw i8, ptr %15, i64 8
-  %18 = insertelement <2 x ptr> poison, ptr %.sroa.0.0.i226230293, i64 0
-  %19 = insertelement <2 x ptr> %18, ptr %.sroa.6.1.i225231292, i64 1
+  %i.ai = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.aj = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %i.ak = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %i.al = getelementptr inbounds nuw i8, ptr %14, i64 8
+  %i.am = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %18 = getelementptr inbounds nuw i8, ptr %15, i64 8
   br label %bb.f
 
 ._crit_edge:                                      ; preds = %bb.ba
@@ -388,7 +392,8 @@ _ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEmiEl.exit: ; preds = %bb.j,
   %.sroa.0.0.i125 = phi ptr [ %.sroa.0.0.i226230293, %bb.j ], [ %i.bj, %bb.l ], [ %i.bs, %bb.m ]
   store ptr %.sroa.0.0.i125, ptr %8, align 8, !tbaa !1889, !alias.scope !15539
   store ptr %.sroa.6.1.i124, ptr %i.ah, align 8, !tbaa !13016, !alias.scope !15539
-  store <2 x ptr> %19, ptr %9, align 16, !tbaa !1854
+  store ptr %.sroa.0.0.i226230293, ptr %9, align 8, !tbaa !1889
+  store ptr %.sroa.6.1.i225231292, ptr %i.ai, align 8, !tbaa !13016
   call void @_ZN5boost7movelib15detail_adaptive18move_data_backwardINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEEvT_NS0_9iter_sizeIS7_E4typeES7_b(ptr noundef nonnull align 8 dead_on_return %8, i64 noundef %.0112243, ptr noundef nonnull align 8 dead_on_return %9, i1 noundef zeroext %i.af)
   br label %_ZN5boost7movelib15detail_adaptive17move_data_forwardINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEEvT_NS0_9iter_sizeIS7_E4typeES7_b.exit
 
@@ -493,7 +498,7 @@ bb.x:                                             ; preds = %bb.v, %bb.w
   %.sroa.6.1.i138.ph = phi ptr [ %i.dn, %bb.w ], [ %.sroa.6.1.i133, %bb.v ]
   %.sroa.0.0.i139.ph = phi ptr [ %i.dr, %bb.w ], [ %i.di, %bb.v ]
   store ptr %.sroa.0.0.i139.ph, ptr %10, align 8, !tbaa !1889, !alias.scope !15548
-  store ptr %.sroa.6.1.i138.ph, ptr %i.ai, align 8, !tbaa !13016, !alias.scope !15548
+  store ptr %.sroa.6.1.i138.ph, ptr %i.aj, align 8, !tbaa !13016, !alias.scope !15548
   %i.ds = load ptr, ptr %.sroa.6.1.i128, align 8, !tbaa !75, !noalias !15551
   %i.dt = ptrtoint ptr %.sroa.0.0.i129 to i64
   %i.du = ptrtoint ptr %i.ds to i64
@@ -523,7 +528,7 @@ _ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEmiEl.exit145: ; preds = %bb
   %.sroa.6.1.i143 = phi ptr [ %i.ed, %bb.z ], [ %.sroa.6.1.i128, %bb.y ]
   %.sroa.0.0.i144 = phi ptr [ %i.eh, %bb.z ], [ %i.dy, %bb.y ]
   store ptr %.sroa.0.0.i144, ptr %11, align 8, !tbaa !1889, !alias.scope !15551
-  store ptr %.sroa.6.1.i143, ptr %i.aj, align 8, !tbaa !13016, !alias.scope !15551
+  store ptr %.sroa.6.1.i143, ptr %i.ak, align 8, !tbaa !13016, !alias.scope !15551
   call void @_ZN5boost7movelib15detail_adaptive18move_data_backwardINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEEvT_NS0_9iter_sizeIS7_E4typeES7_b(ptr noundef nonnull align 8 dead_on_return %10, i64 noundef %i.da, ptr noundef nonnull align 8 dead_on_return %11, i1 noundef zeroext %i.af)
   br label %_ZN5boost7movelib15detail_adaptive17move_data_forwardINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEEvT_NS0_9iter_sizeIS7_E4typeES7_b.exit
 
@@ -717,7 +722,7 @@ _ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEmiEl.exit153: ; preds = %bb
   %storemerge281 = phi ptr [ %.sroa.0.0.i226230293, %bb.an ], [ %i.hi, %bb.aq ], [ %i.gz, %bb.ap ]
   %storemerge280 = phi ptr [ %.sroa.6.1.i225231292, %bb.an ], [ %i.he, %bb.aq ], [ %.sroa.6.1.i225231292, %bb.ap ]
   store ptr %storemerge281, ptr %13, align 8, !tbaa !1889
-  store ptr %storemerge280, ptr %i.al, align 8, !tbaa !13016
+  store ptr %storemerge280, ptr %i.am, align 8, !tbaa !13016
   call void @_ZN5boost7movelib15detail_adaptive28adaptive_sort_combine_blocksINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEENS3_3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEES6_SE_NS0_13adaptive_xbufIiS5_mEEEEvT_T0_T1_NS0_9iter_sizeISJ_E4typeESM_SM_bbRT3_T2_b(ptr noundef nonnull align 8 dead_on_return %12, ptr noundef nonnull align 8 dead_on_return %13, i64 noundef %i.ae, i64 noundef %.0245, i64 noundef %.1.i, i1 noundef zeroext %.1, i1 noundef zeroext %i.af, ptr noundef nonnull align 8 dereferenceable(24) %6, i1 noundef zeroext %i.az)
   br label %bb.ba
 
@@ -757,13 +762,13 @@ _ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEmiEl.exit158: ; preds = %bb
   %storemerge279 = phi ptr [ %.sroa.0.0.i226230293, %bb.ar ], [ %i.hy, %bb.au ], [ %i.hp, %bb.at ]
   %storemerge = phi ptr [ %.sroa.6.1.i225231292, %bb.ar ], [ %i.hu, %bb.au ], [ %.sroa.6.1.i225231292, %bb.at ]
   store ptr %storemerge279, ptr %14, align 8, !tbaa !1889
-  store ptr %storemerge, ptr %i.ak, align 8, !tbaa !13016
+  store ptr %storemerge, ptr %i.al, align 8, !tbaa !13016
   call void @_ZN5boost7movelib15detail_adaptive28adaptive_sort_combine_blocksIPhNS1_4lessENS_9container14deque_iteratorIPiLb0ELj0ELj0EmEENS5_3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS0_13adaptive_xbufIiS7_mEEEEvT_T0_T1_NS0_9iter_sizeISL_E4typeESO_SO_bbRT3_T2_b(ptr noundef nonnull %i.a, ptr noundef nonnull align 8 dead_on_return %14, i64 noundef %i.ae, i64 noundef %.0245, i64 noundef %.1.i, i1 noundef zeroext %.1, i1 noundef zeroext %i.af, ptr noundef nonnull align 8 dereferenceable(24) %6, i1 noundef zeroext %i.az)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   br label %bb.ba
 
 bb.av:                                            ; preds = %_ZN5boost7movelib15detail_adaptive17move_data_forwardINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEEvT_NS0_9iter_sizeIS7_E4typeES7_b.exit
-  %i.hz = load i64, ptr %i.am, align 8, !tbaa !2566
+  %i.hz = load i64, ptr %i.an, align 8, !tbaa !2566
   %i.ia = load ptr, ptr %6, align 8, !tbaa !2564
   %i.ib = getelementptr inbounds nuw [4 x i8], ptr %i.ia, i64 %i.hz
   %i.ic = ptrtoint ptr %i.ib to i64
@@ -808,7 +813,7 @@ _ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEmiEl.exit163: ; preds = %bb
   %storemerge283 = phi ptr [ %.sroa.0.0.i226230293, %bb.av ], [ %.sroa.0.0.i226230293, %bb.aw ], [ %i.im, %bb.ay ], [ %i.iv, %bb.az ]
   %storemerge282 = phi ptr [ %.sroa.6.1.i225231292, %bb.av ], [ %.sroa.6.1.i225231292, %bb.aw ], [ %.sroa.6.1.i225231292, %bb.ay ], [ %i.ir, %bb.az ]
   store ptr %storemerge283, ptr %15, align 8, !tbaa !1889
-  store ptr %storemerge282, ptr %i.an, align 8, !tbaa !13016
+  store ptr %storemerge282, ptr %18, align 8, !tbaa !13016
   call void @_ZN5boost7movelib15detail_adaptive28adaptive_sort_combine_blocksIPmNS1_4lessENS_9container14deque_iteratorIPiLb0ELj0ELj0EmEENS5_3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS0_13adaptive_xbufIiS7_mEEEEvT_T0_T1_NS0_9iter_sizeISL_E4typeESO_SO_bbRT3_T2_b(ptr noundef %i.if, ptr noundef nonnull align 8 dead_on_return %15, i64 noundef %i.ae, i64 noundef %.0245, i64 noundef %.1.i, i1 noundef zeroext %.1, i1 noundef zeroext %i.af, ptr noundef nonnull align 8 dereferenceable(24) %6, i1 noundef zeroext %i.az)
   br label %bb.ba
 
@@ -826,7 +831,7 @@ bb.bb:                                            ; preds = %._crit_edge
 
 bb.bc:                                            ; preds = %bb.bb
   %i.jb = load ptr, ptr %2, align 8, !tbaa !1889, !noalias !15576 ; 2 uses
-  %i.jc = load ptr, ptr %16, align 8, !tbaa !13016, !noalias !15576 ; 3 uses
+  %i.jc = load ptr, ptr %17, align 8, !tbaa !13016, !noalias !15576 ; 3 uses
   %i.jd = load ptr, ptr %i.jc, align 8, !tbaa !75, !noalias !15576
   %i.je = ptrtoint ptr %i.jb to i64
   %i.jf = ptrtoint ptr %i.jd to i64
@@ -983,7 +988,7 @@ bb.bk:                                            ; preds = %bb.bb
   br i1 %.not4.i170, label %_ZN5boost4moveIPiNS_9container14deque_iteratorIS1_Lb0ELj0ELj0EmEEEET0_T_S6_S5_.exit, label %.lr.ph.i174.preheader
 
 .lr.ph.i174.preheader:                            ; preds = %bb.bk
-  %i.mb = load ptr, ptr %16, align 8, !tbaa !13016 ; 3 uses
+  %i.mb = load ptr, ptr %17, align 8, !tbaa !13016 ; 3 uses
   %i.mc = load ptr, ptr %2, align 8, !tbaa !1889  ; 2 uses
   %.pre = load ptr, ptr %i.mb, align 8, !tbaa !75, !noalias !15583 ; 2 uses
   %i.md = add i64 %.idx236, -4                    ; 2 uses

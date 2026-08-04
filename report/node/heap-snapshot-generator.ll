@@ -203,16 +203,19 @@ bb.d:                                             ; preds = %bb.b
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 456 ; 2 uses
   %i.ao = uitofp i64 %i.am to double
   %i.ap = load float, ptr %i.an, align 8
-  %i.aq = fpext float %i.ap to double             ; 2 uses
-  %2 = fdiv double %i.ao, %i.aq
-  %3 = tail call double @llvm.ceil.f64(double %2)
-  %4 = fptoui double %3 to i64
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 464 ; 2 uses
-  %6 = load i64, ptr %5, align 8
-  %7 = fdiv double 1.000000e+00, %i.aq
-  %8 = tail call double @llvm.ceil.f64(double %7)
-  %i.ar = fptoui double %8 to i64
-  %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.ar)
+  %i.aq = fpext float %i.ap to double
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 464 ; 2 uses
+  %3 = load i64, ptr %2, align 8
+  %4 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %i.ao, i64 0
+  %5 = insertelement <2 x double> poison, double %i.aq, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = fdiv <2 x double> %4, %6
+  %8 = tail call <2 x double> @llvm.ceil.v2f64(<2 x double> %7) ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  %10 = fptoui double %9 to i64
+  %11 = extractelement <2 x double> %8, i64 1
+  %i.ar = fptoui double %11 to i64
+  %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %10, i64 %i.ar)
   %i.as = tail call noundef i64 @_ZNKSt8__detail20_Prime_rehash_policy11_M_next_bktEm(ptr noundef nonnull align 8 dereferenceable(16) %i.an, i64 noundef %.sroa.speculated.i.i.i) #29 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 432
   %i.au = load i64, ptr %i.at, align 8
@@ -224,7 +227,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt13unordered_mapIjPN2v88internal9HeapEntryESt4hashIjESt8equal_toIjESaISt4pairIKjS3_EEE7reserveEm.exit
 
 bb.f:                                             ; preds = %bb.d
-  store i64 %6, ptr %5, align 8
+  store i64 %3, ptr %2, align 8
   br label %_ZNSt13unordered_mapIjPN2v88internal9HeapEntryESt4hashIjESt8equal_toIjESaISt4pairIKjS3_EEE7reserveEm.exit
 
 _ZNSt13unordered_mapIjPN2v88internal9HeapEntryESt4hashIjESt8equal_toIjESaISt4pairIKjS3_EEE7reserveEm.exit: ; preds = %bb.e, %bb.f
@@ -627,9 +630,6 @@ _ZNSt10_HashtableIjSt4pairIKjPN2v88internal9HeapEntryEESaIS6_ENSt8__detail10_Sel
   ret void
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.ceil.f64(double) #25
-
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden { ptr, i8 } @_ZNSt10_HashtableIjSt4pairIKjPN2v88internal9HeapEntryEESaIS6_ENSt8__detail10_Select1stESt8equal_toIjESt4hashIjENS8_18_Mod_range_hashingENS8_20_Default_ranged_hashENS8_20_Prime_rehash_policyENS8_17_Hashtable_traitsILb0ELb0ELb1EEEE10_M_emplaceIJjS5_EEES0_INS8_14_Node_iteratorIS6_Lb0ELb0EEEbESt17integral_constantIbLb1EEDpOT_(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 4 dereferenceable(4) %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #3 comdat align 2 {
 bb.a:
@@ -1031,6 +1031,9 @@ declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.ceil.v2f64(<2 x double>) #25
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

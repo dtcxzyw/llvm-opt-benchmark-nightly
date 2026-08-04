@@ -204,13 +204,18 @@ bb.el:                                            ; preds = %._crit_edge1097
   %i.aiv = load double, ptr %i.aiu, align 8, !tbaa !67
   %i.aiw = load ptr, ptr %i.afe, align 8, !tbaa !66
   %i.aix = getelementptr inbounds nuw [8 x i8], ptr %i.aiw, i64 %i.ahs
-  %i.aiy = load double, ptr %i.aix, align 8, !tbaa !67 ; 2 uses
-  %61 = fdiv double %i.aiv, %i.aiy                ; 5 uses
-  %62 = fdiv double %.0346, %i.aiy                ; 4 uses
-  %i.aiz = fcmp uno double %61, 0.000000e+00      ; 3 uses
-  %63 = call nsz double @llvm.fabs.f64(double %62)
-  %64 = call nsz double @llvm.fabs.f64(double %61)
-  %i.aja = call nsz double @llvm.maxnum.f64(double %63, double %64) ; 2 uses
+  %i.aiy = load double, ptr %i.aix, align 8, !tbaa !67
+  %61 = insertelement <2 x double> poison, double %.0346, i64 0
+  %62 = insertelement <2 x double> %61, double %i.aiv, i64 1
+  %63 = insertelement <2 x double> poison, double %i.aiy, i64 0
+  %64 = shufflevector <2 x double> %63, <2 x double> poison, <2 x i32> zeroinitializer
+  %65 = fdiv <2 x double> %62, %64                ; 5 uses
+  %66 = extractelement <2 x double> %65, i64 1    ; 4 uses
+  %i.aiz = fcmp uno double %66, 0.000000e+00      ; 3 uses
+  %67 = call nsz <2 x double> @llvm.fabs.v2f64(<2 x double> %65) ; 2 uses
+  %68 = extractelement <2 x double> %67, i64 0
+  %69 = extractelement <2 x double> %67, i64 1
+  %i.aja = call nsz double @llvm.maxnum.f64(double %68, double %69) ; 2 uses
   br i1 %i.aiz, label %bb.eo, label %bb.em
 
 bb.em:                                            ; preds = %bb.el
@@ -221,7 +226,8 @@ bb.em:                                            ; preds = %bb.el
   br i1 %i.aje, label %bb.en, label %bb.fz
 
 bb.en:                                            ; preds = %bb.em
-  %i.ajf = fsub double %61, %62
+  %70 = extractelement <2 x double> %65, i64 0
+  %i.ajf = fsub double %66, %70
   %i.ajg = call double @llvm.fabs.f64(double %i.ajf)
   %i.ajh = getelementptr inbounds nuw i8, ptr %i.aip, i64 1536
   %i.aji = load double, ptr %i.ajh, align 8, !tbaa !407
@@ -294,7 +300,7 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit719 unwind label %bb.ev ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit719: ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit717
-  %i.akn = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.akl, double noundef %61)
+  %i.akn = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.akl, double noundef %66)
           to label %_ZNSolsEd.exit unwind label %bb.ev ; 2 uses
 
 _ZNSolsEd.exit:                                   ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit719
@@ -302,7 +308,8 @@ _ZNSolsEd.exit:                                   ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit722 unwind label %bb.ev ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit722: ; preds = %_ZNSolsEd.exit
-  %i.akp = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.akn, double noundef %62)
+  %71 = extractelement <2 x double> %65, i64 0
+  %i.akp = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.akn, double noundef %71)
           to label %_ZNSolsEd.exit724 unwind label %bb.ev ; 2 uses
 
 _ZNSolsEd.exit724:                                ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit722
@@ -705,7 +712,7 @@ _ZNSolsEd.exit818:                                ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit820 unwind label %.loopexit966 ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit820: ; preds = %_ZNSolsEd.exit818
-  %i.aqh = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.afg, double noundef %61)
+  %i.aqh = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.afg, double noundef %66)
           to label %_ZNSolsEd.exit822 unwind label %.loopexit966
 
 _ZNSolsEd.exit822:                                ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit820
@@ -713,7 +720,8 @@ _ZNSolsEd.exit822:                                ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit824 unwind label %.loopexit966 ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit824: ; preds = %_ZNSolsEd.exit822
-  %i.aqj = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.afg, double noundef %62)
+  %72 = extractelement <2 x double> %65, i64 0
+  %i.aqj = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.afg, double noundef %72)
           to label %_ZNSolsEd.exit826 unwind label %.loopexit966
 
 _ZNSolsEd.exit826:                                ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit824
@@ -1116,7 +1124,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.e
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.04451 ; 4 uses
   store double 0.000000e+00, ptr %i.h, align 8, !tbaa !67
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %.04451
-  %i.j = load double, ptr %i.i, align 8, !tbaa !67 ; 3 uses
+  %i.j = load double, ptr %i.i, align 8, !tbaa !67 ; 2 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %.pre52, i64 %.04451 ; 2 uses
   %i.l = load double, ptr %i.k, align 8, !tbaa !67 ; 4 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %.pre54, i64 %.04451 ; 3 uses
@@ -1133,15 +1141,21 @@ bb.b:                                             ; preds = %.lr.ph, %bb.e
 
 _ZN6casadi29casadi_smoothing_diff_weightsIdEET_xS1_S1_S1_PS1_.exit: ; preds = %bb.b
   %i.u = fmul nnan double %i.l, -4.000000e+00
-  %5 = tail call double @llvm.fmuladd.f64(double %i.n, double 3.000000e+00, double %i.u)
-  %6 = fadd double %i.j, %5
-  %7 = tail call double @llvm.fmuladd.f64(double %i.l, double -2.000000e+00, double %i.n)
-  %8 = fadd double %i.j, %7
-  %i.v = fdiv double %8, %i.b                     ; 2 uses
+  %5 = insertelement <2 x double> poison, double %i.n, i64 0
+  %6 = insertelement <2 x double> %5, double %i.l, i64 1
+  %7 = insertelement <2 x double> poison, double %i.u, i64 0
+  %8 = insertelement <2 x double> %7, double %i.n, i64 1
+  %9 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> <double 3.000000e+00, double -2.000000e+00>, <2 x double> %8)
+  %10 = insertelement <2 x double> poison, double %i.j, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %12 = fadd <2 x double> %11, %9                 ; 2 uses
+  %13 = extractelement <2 x double> %12, i64 1
+  %i.v = fdiv double %13, %i.b                    ; 2 uses
   %i.w = tail call double @llvm.fmuladd.f64(double %i.v, double %i.v, double %4)
   %i.x = fdiv double 1.000000e+00, %i.w           ; 2 uses
   %i.y = fadd double %i.x, 0.000000e+00
-  %i.z = tail call double @llvm.fmuladd.f64(double %i.x, double %6, double 0.000000e+00) ; 2 uses
+  %14 = extractelement <2 x double> %12, i64 0
+  %i.z = tail call double @llvm.fmuladd.f64(double %i.x, double %14, double 0.000000e+00) ; 2 uses
   store double %i.z, ptr %i.h, align 8, !tbaa !67
   %.pre56 = load double, ptr %i.k, align 8, !tbaa !67 ; 2 uses
   %.pre57 = load double, ptr %i.m, align 8, !tbaa !67 ; 2 uses
@@ -1542,6 +1556,9 @@ declare i64 @llvm.smax.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #18

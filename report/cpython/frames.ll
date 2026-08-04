@@ -202,14 +202,17 @@ bb.ao:                                            ; preds = %bb.ah
 
 bb.ap:                                            ; preds = %bb.ao
   %i.dt = getelementptr i8, ptr %0, i64 33856     ; 2 uses
+  %4 = load i64, ptr %i.dt, align 8, !tbaa !138
+  %5 = add i64 %4, 1
+  store i64 %5, ptr %i.dt, align 8, !tbaa !138
   %i.du = load ptr, ptr %i.bh, align 8, !tbaa !104
   %i.dv = getelementptr i8, ptr %i.du, i64 16
   %.val = load i64, ptr %i.dv, align 8, !tbaa !105
   %i.dw = sub i64 %.val, %.val76
-  %4 = load <2 x i64>, ptr %i.dt, align 8, !tbaa !70
-  %5 = insertelement <2 x i64> <i64 1, i64 poison>, i64 %i.dw, i64 1
-  %6 = add <2 x i64> %5, %4
-  store <2 x i64> %6, ptr %i.dt, align 8, !tbaa !70
+  %6 = getelementptr i8, ptr %0, i64 33864        ; 2 uses
+  %7 = load i64, ptr %6, align 8, !tbaa !134
+  %8 = add i64 %i.dw, %7
+  store i64 %8, ptr %6, align 8, !tbaa !134
   br label %.thread
 
 .critedge:                                        ; preds = %bb.ak
@@ -347,7 +350,7 @@ bb.k:                                             ; preds = %bb.d
   %i.ak = add i64 %i.k, %.036
   %i.al = load i64, ptr %i.d, align 8, !tbaa !124
   %.not38 = icmp eq i64 %i.k, %i.al
-  br i1 %.not38, label %.loopexit, label %bb.d, !llvm.loop !138
+  br i1 %.not38, label %.loopexit, label %bb.d, !llvm.loop !139
 
 .loopexit:                                        ; preds = %bb.k, %bb.h, %bb.j, %_PyErr_Occurred.exit.thread, %bb.g, %bb.f
   %.0 = phi i32 [ %i.p, %bb.f ], [ -1, %bb.h ], [ -1, %bb.g ], [ -1, %_PyErr_Occurred.exit.thread ], [ -1, %bb.j ], [ 0, %bb.k ]
@@ -437,7 +440,7 @@ bb.h:                                             ; preds = %bb.d
   %i.ag = add i64 %i.k, %.030
   %i.ah = load i64, ptr %i.f, align 8, !tbaa !124
   %.not34 = icmp eq i64 %i.k, %i.ah
-  br i1 %.not34, label %.thread, label %bb.d, !llvm.loop !139
+  br i1 %.not34, label %.thread, label %bb.d, !llvm.loop !140
 
 .thread:                                          ; preds = %bb.h, %_PyErr_Occurred.exit.thread, %bb.g, %bb.e
   %.2 = phi i32 [ -1, %_PyErr_Occurred.exit.thread ], [ -1, %bb.e ], [ -1, %bb.g ], [ 0, %bb.h ]
@@ -692,6 +695,7 @@ attributes #11 = { nounwind willreturn memory(none) }
 !135 = !{!20, !13, i64 33840}
 !136 = !{!20, !13, i64 33848}
 !137 = !{!12, !12, i64 0}
-!138 = distinct !{!138, !18}
+!138 = !{!20, !13, i64 33856}
 !139 = distinct !{!139, !18}
+!140 = distinct !{!140, !18}
 end_hunk_0

@@ -203,12 +203,13 @@ bb.a:
   %i.y = insertelement <2 x double> poison, double %i.p, i64 0
   %i.z = shufflevector <2 x double> %i.y, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.x, <2 x double> %i.x, <2 x double> %i.z)
-  %i.ab = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.aa)
-  %1 = fdiv <2 x double> splat (double 1.000000e+00), %i.ab ; 2 uses
-  %shift = shufflevector <2 x double> %1, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %shift, %1
-  %2 = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.ac = fmul double %2, 5.000000e-01
+  %i.ab = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.aa) ; 2 uses
+  %1 = extractelement <2 x double> %i.ab, i64 1
+  %2 = fdiv double 1.000000e+00, %1
+  %3 = extractelement <2 x double> %i.ab, i64 0
+  %4 = fdiv double 1.000000e+00, %3
+  %5 = fadd double %2, %4
+  %i.ac = fmul double %5, 5.000000e-01
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store double 0.000000e+00, ptr %i.a, align 8, !tbaa !41
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 28

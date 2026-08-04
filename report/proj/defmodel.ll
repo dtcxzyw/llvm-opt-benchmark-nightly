@@ -1,3 +1,7 @@
+inline.NumInlined: 4674
+inline.NumDeleted: 1744
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_ZNK16DeformationModel9Component23ExponentialTimeFunction10evaluateAtEd:bb.a
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @exp(double noundef) local_unnamed_addr #20
@@ -199,14 +203,13 @@ bb.w:                                             ; preds = %bb.v
   store i64 %i.az, ptr %i.ax, align 8, !tbaa !27
   store ptr null, ptr %10, align 8, !tbaa !27
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
-  %i.bb = load <2 x double>, ptr %i.ay, align 8, !tbaa !66 ; 5 uses
+  %i.bb = load <2 x double>, ptr %i.ay, align 8, !tbaa !66 ; 3 uses
   store <2 x double> %i.bb, ptr %i.ba, align 8, !tbaa !66
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ax, i64 24
-  %foldExtExtBinop = fmul <2 x double> %i.bb, %i.bb
-  %i.bd = extractelement <2 x double> %foldExtExtBinop, i64 1
-  %foldExtExtBinop127 = fmul <2 x double> %i.bb, %i.bb
-  %i.be = extractelement <2 x double> %foldExtExtBinop127, i64 0
-  %i.bf = fdiv double %i.bd, %i.be
+  %foldExtExtBinop = fmul <2 x double> %i.bb, %i.bb ; 2 uses
+  %i.bd = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.be = extractelement <2 x double> %foldExtExtBinop, i64 1
+  %i.bf = fdiv double %i.be, %i.bd
   %i.bg = fsub double 1.000000e+00, %i.bf
   store double %i.bg, ptr %i.bc, align 8, !tbaa !259
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ax, i64 32 ; 2 uses

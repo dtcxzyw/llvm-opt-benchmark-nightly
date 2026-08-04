@@ -203,14 +203,18 @@ bb.ep:                                            ; preds = %bb.eo
   %i.afk = load double, ptr %i.i, align 8         ; 2 uses
   %i.afl = fadd double %i.afj, %i.afk
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #26
-  %i.afm = uitofp nneg i64 %spec.store.select.i to double ; 3 uses
-  %65 = fdiv double %i.afl, %i.afm
-  %66 = fmul double %65, 1.000000e+02
-  store double %66, ptr %i.j, align 8
+  %i.afm = uitofp nneg i64 %spec.store.select.i to double ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #26
-  %67 = fdiv double %i.afj, %i.afm
-  %68 = fmul double %67, 1.000000e+02
-  store double %68, ptr %i.k, align 8
+  %65 = insertelement <2 x double> poison, double %i.afl, i64 0
+  %66 = insertelement <2 x double> %65, double %i.afj, i64 1
+  %67 = insertelement <2 x double> poison, double %i.afm, i64 0
+  %68 = shufflevector <2 x double> %67, <2 x double> poison, <2 x i32> zeroinitializer
+  %69 = fdiv <2 x double> %66, %68
+  %70 = fmul <2 x double> %69, splat (double 1.000000e+02) ; 2 uses
+  %71 = extractelement <2 x double> %70, i64 0
+  store double %71, ptr %i.j, align 8
+  %72 = extractelement <2 x double> %70, i64 1
+  store double %72, ptr %i.k, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #26
   %i.afn = fdiv double %i.afk, %i.afm
   %i.afo = fmul double %i.afn, 1.000000e+02
@@ -276,14 +280,18 @@ bb.er:                                            ; preds = %bb.eq
   %i.agm = load double, ptr %i.o, align 8         ; 2 uses
   %i.agn = fadd double %i.agl, %i.agm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #26
-  %i.ago = uitofp nneg i64 %spec.store.select.i to double ; 3 uses
-  %69 = fdiv double %i.agn, %i.ago
-  %70 = fmul double %69, 1.000000e+02
-  store double %70, ptr %i.p, align 8
+  %i.ago = uitofp nneg i64 %spec.store.select.i to double ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #26
-  %71 = fdiv double %i.agl, %i.ago
-  %72 = fmul double %71, 1.000000e+02
-  store double %72, ptr %i.q, align 8
+  %73 = insertelement <2 x double> poison, double %i.agn, i64 0
+  %74 = insertelement <2 x double> %73, double %i.agl, i64 1
+  %75 = insertelement <2 x double> poison, double %i.ago, i64 0
+  %76 = shufflevector <2 x double> %75, <2 x double> poison, <2 x i32> zeroinitializer
+  %77 = fdiv <2 x double> %74, %76
+  %78 = fmul <2 x double> %77, splat (double 1.000000e+02) ; 2 uses
+  %79 = extractelement <2 x double> %78, i64 0
+  store double %79, ptr %i.p, align 8
+  %80 = extractelement <2 x double> %78, i64 1
+  store double %80, ptr %i.q, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #26
   %i.agp = fdiv double %i.agm, %i.ago
   %i.agq = fmul double %i.agp, 1.000000e+02

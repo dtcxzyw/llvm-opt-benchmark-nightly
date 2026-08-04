@@ -205,9 +205,9 @@ bb.a:
 .lr.ph.i:                                         ; preds = %.noexc
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   br label %bb.b
 
 ._crit_edge.i:                                    ; preds = %.noexc7, %.noexc
@@ -217,9 +217,12 @@ bb.a:
   br label %.noexc6
 
 bb.b:                                             ; preds = %.noexc7, %.lr.ph.i
-  %.sroa.04.088.i.a = phi i32 [ 0, %.lr.ph.i ], [ %.sroa.04.1.i.a, %.noexc7 ] ; 4 uses
-  %.sroa.08.084.i = phi i32 [ 0, %.lr.ph.i ], [ %.sroa.08.1.i.a, %.noexc7 ] ; 4 uses
-  %2 = phi <4 x i32> [ undef, %.lr.ph.i ], [ %6, %.noexc7 ] ; 4 uses
+  %.sroa.04.088.i = phi i32 [ 0, %.lr.ph.i ], [ %.sroa.04.1.i, %.noexc7 ] ; 4 uses
+  %.sroa.4.087.i = phi i32 [ undef, %.lr.ph.i ], [ %.sroa.04.1.i.a, %.noexc7 ] ; 3 uses
+  %.sroa.66.086.i = phi i32 [ undef, %.lr.ph.i ], [ %.sroa.08.1.i.a, %.noexc7 ] ; 3 uses
+  %.sroa.04.088.i.a = phi i32 [ 0, %.lr.ph.i ], [ %.sroa.08.1.i, %.noexc7 ] ; 4 uses
+  %.sroa.08.084.i = phi i32 [ undef, %.lr.ph.i ], [ %.sroa.410.1.i, %.noexc7 ] ; 3 uses
+  %.sroa.611.082.i = phi i32 [ undef, %.lr.ph.i ], [ %.sroa.611.1.i, %.noexc7 ] ; 3 uses
   %i.p = load i8, ptr %i.i, align 1, !range !1964, !noalias !3122, !noundef !4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3122
   switch i8 %i.p, label %default.unreachable [
@@ -230,18 +233,18 @@ bb.b:                                             ; preds = %.noexc7, %.lr.ph.i
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.q = trunc nuw i32 %.sroa.04.088.i.a to i1
+  %i.q = trunc nuw i32 %.sroa.04.088.i to i1
   br i1 %i.q, label %bb.n, label %.invoke161
 
 default.unreachable:                              ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.r = icmp eq i32 %.sroa.04.088.i.a, 1
+  %i.r = icmp eq i32 %.sroa.04.088.i, 1
   br i1 %i.r, label %.invoke, label %bb.g, !prof !187
 
 bb.e:                                             ; preds = %bb.b
-  %i.s = icmp eq i32 %.sroa.08.084.i, 1
+  %i.s = icmp eq i32 %.sroa.04.088.i.a, 1
   br i1 %i.s, label %.invoke, label %bb.k, !prof !187
 
 bb.f:                                             ; preds = %bb.b
@@ -274,16 +277,18 @@ bb.h:                                             ; preds = %.noexc5
   br label %.noexc6
 
 bb.i:                                             ; preds = %.noexc5
-  %3 = load <2 x i32>, ptr %i.l, align 4, !noalias !3122
+  %2 = load i32, ptr %i.l, align 4, !noalias !3122, !noundef !4
+  %3 = load i32, ptr %i.m, align 8, !noalias !3122, !noundef !4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !3122
-  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %5 = shufflevector <4 x i32> %4, <4 x i32> %2, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.m, %bb.i, %.noexc4
-  %.sroa.08.1.i.a = phi i32 [ %.sroa.08.084.i, %bb.i ], [ 1, %bb.m ], [ %.sroa.08.084.i, %.noexc4 ]
-  %.sroa.04.1.i.a = phi i32 [ 1, %bb.i ], [ %.sroa.04.088.i.a, %bb.m ], [ %.sroa.04.088.i.a, %.noexc4 ]
-  %6 = phi <4 x i32> [ %5, %bb.i ], [ %9, %bb.m ], [ %2, %.noexc4 ]
+  %.sroa.611.1.i = phi i32 [ %.sroa.611.082.i, %bb.i ], [ %5, %bb.m ], [ %.sroa.611.082.i, %.noexc4 ]
+  %.sroa.410.1.i = phi i32 [ %.sroa.08.084.i, %bb.i ], [ %4, %bb.m ], [ %.sroa.08.084.i, %.noexc4 ]
+  %.sroa.08.1.i = phi i32 [ %.sroa.04.088.i.a, %bb.i ], [ 1, %bb.m ], [ %.sroa.04.088.i.a, %.noexc4 ]
+  %.sroa.08.1.i.a = phi i32 [ %3, %bb.i ], [ %.sroa.66.086.i, %bb.m ], [ %.sroa.66.086.i, %.noexc4 ]
+  %.sroa.04.1.i.a = phi i32 [ %2, %bb.i ], [ %.sroa.4.087.i, %bb.m ], [ %.sroa.4.087.i, %.noexc4 ]
+  %.sroa.04.1.i = phi i32 [ 1, %bb.i ], [ %.sroa.04.088.i, %bb.m ], [ %.sroa.04.088.i, %.noexc4 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !3122
   invoke void @_RINvXsa_NtNtCs8yjYO7b73r2_10serde_json5value2deNtB6_15MapDeserializerNtNtCsjQbM3MYDIrM_10serde_core2de9MapAccess13next_key_seedINtNtCshzWfHUSfYae_4core6marker11PhantomDataNtNvXNvNtNtCs1lnireelaHN_13gen_lsp_types9generated10structuress5n_1__NtB2Q_5RangeNtB17_11Deserialize11deserialize7___FieldEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %i.d)
           to label %.noexc7 unwind label %.loopexit
@@ -309,10 +314,9 @@ bb.l:                                             ; preds = %.noexc8
   br label %.noexc6
 
 bb.m:                                             ; preds = %.noexc8
-  %7 = load <2 x i32>, ptr %i.j, align 4, !noalias !3122
+  %4 = load i32, ptr %i.j, align 4, !noalias !3122, !noundef !4
+  %5 = load i32, ptr %i.k, align 8, !noalias !3122, !noundef !4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !3122
-  %8 = shufflevector <2 x i32> %7, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %9 = shufflevector <4 x i32> %2, <4 x i32> %8, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %bb.j
 
 .invoke161:                                       ; preds = %bb.n, %bb.c
@@ -322,7 +326,7 @@ bb.m:                                             ; preds = %.noexc8
           to label %.noexc6 unwind label %.loopexit.split-lp
 
 bb.n:                                             ; preds = %bb.c
-  %i.ai = trunc nuw i32 %.sroa.08.084.i to i1
+  %i.ai = trunc nuw i32 %.sroa.04.088.i.a to i1
   br i1 %i.ai, label %bb.t, label %.invoke161
 
 bb.o:                                             ; preds = %.loopexit, %.loopexit.split-lp, %bb.s
@@ -382,8 +386,13 @@ bb.s:                                             ; preds = %bb.u
 
 bb.t:                                             ; preds = %bb.n
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %.sroa.428.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <4 x i32> %2, ptr %i.as, align 4, !alias.scope !3119, !noalias !3124
+  store i32 %.sroa.4.087.i, ptr %i.as, align 4, !alias.scope !3119, !noalias !3124
+  %.sroa.428.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store i32 %.sroa.66.086.i, ptr %.sroa.428.0..sroa_idx.i, align 8, !alias.scope !3119, !noalias !3124
+  %.sroa.529.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i32 %.sroa.08.084.i, ptr %.sroa.529.0..sroa_idx.i, align 4, !alias.scope !3119, !noalias !3124
+  %.sroa.630.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i32 %.sroa.611.082.i, ptr %.sroa.630.0..sroa_idx.i, align 8, !alias.scope !3119, !noalias !3124
   store i32 0, ptr %0, align 8, !alias.scope !3119, !noalias !3124
   %i.at = getelementptr inbounds nuw i8, ptr %i.d, i64 72
   %i.au = getelementptr inbounds nuw i8, ptr %i.d, i64 80

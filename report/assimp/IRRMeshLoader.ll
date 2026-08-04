@@ -204,16 +204,16 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ah, %bb.
   br label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit77, !llvm.loop !26
 
 _ZN6Assimp9strtoul16EPKcPS1_.exit:                ; preds = %bb.ai
-  %i.df = lshr i32 %.0.i, 24
-  %i.dg = lshr i32 %.0.i, 8
-  %i.dh = lshr i32 %.0.i, 16
-  %i.di = insertelement <4 x i32> poison, i32 %i.dh, i64 0
-  %i.dj = insertelement <4 x i32> %i.di, i32 %i.dg, i64 1
-  %i.dk = insertelement <4 x i32> %i.dj, i32 %.0.i, i64 2
+  %i.df = lshr i32 %.0.i, 8
+  %i.dg = lshr i32 %.0.i, 16
+  %i.dh = lshr i32 %.0.i, 24
+  %i.di = insertelement <4 x i32> poison, i32 %.0.i, i64 0
+  %i.dj = insertelement <4 x i32> %i.di, i32 %i.dh, i64 1
+  %i.dk = insertelement <4 x i32> %i.dj, i32 %i.dg, i64 2
   %i.dl = insertelement <4 x i32> %i.dk, i32 %i.df, i64 3
-  %i.dm = and <4 x i32> %i.dl, <i32 255, i32 255, i32 255, i32 -1>
+  %i.dm = and <4 x i32> %i.dl, <i32 255, i32 -1, i32 255, i32 255>
   %i.dn = uitofp <4 x i32> %i.dm to <4 x float>
-  %i.do = fdiv <4 x float> %i.dn, splat (float 2.550000e+02) ; 6 uses
+  %i.do = fdiv <4 x float> %i.dn, splat (float 2.550000e+02) ; 12 uses
   %i.dp = load ptr, ptr %10, align 8
   %i.dq = load ptr, ptr %i.h, align 8             ; 7 uses
   %i.dr = icmp eq ptr %i.dp, %i.dq
@@ -222,28 +222,28 @@ _ZN6Assimp9strtoul16EPKcPS1_.exit:                ; preds = %bb.ai
 bb.al:                                            ; preds = %_ZN6Assimp9strtoul16EPKcPS1_.exit
   %i.ds = getelementptr inbounds i8, ptr %i.dq, i64 -16
   %i.dt = load float, ptr %i.ds, align 4
-  %i.du = extractelement <4 x float> %i.do, i64 0
+  %i.du = extractelement <4 x float> %i.do, i64 2
   %i.dv = fcmp une float %i.du, %i.dt
   br i1 %i.dv, label %_ZNK9aiColor4tIfEneERKS0_.exit.thread, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
   %i.dw = getelementptr inbounds i8, ptr %i.dq, i64 -12
   %i.dx = load float, ptr %i.dw, align 4
-  %i.dy = extractelement <4 x float> %i.do, i64 1
+  %i.dy = extractelement <4 x float> %i.do, i64 3
   %i.dz = fcmp une float %i.dy, %i.dx
   br i1 %i.dz, label %_ZNK9aiColor4tIfEneERKS0_.exit.thread, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
   %i.ea = getelementptr inbounds i8, ptr %i.dq, i64 -8
   %i.eb = load float, ptr %i.ea, align 4
-  %i.ec = extractelement <4 x float> %i.do, i64 2
+  %i.ec = extractelement <4 x float> %i.do, i64 0
   %i.ed = fcmp une float %i.ec, %i.eb
   br i1 %i.ed, label %_ZNK9aiColor4tIfEneERKS0_.exit.thread, label %_ZNK9aiColor4tIfEneERKS0_.exit
 
 _ZNK9aiColor4tIfEneERKS0_.exit:                   ; preds = %bb.an
   %i.ee = getelementptr inbounds i8, ptr %i.dq, i64 -4
   %i.ef = load float, ptr %i.ee, align 4
-  %i.eg = extractelement <4 x float> %i.do, i64 3
+  %i.eg = extractelement <4 x float> %i.do, i64 1
   %i.eh = fcmp une float %i.eg, %i.ef
   br i1 %i.eh, label %_ZNK9aiColor4tIfEneERKS0_.exit.thread, label %.critedge
 
@@ -253,13 +253,23 @@ _ZNK9aiColor4tIfEneERKS0_.exit.thread:            ; preds = %bb.al, %bb.am, %bb.
   br label %.critedge
 
 .critedge:                                        ; preds = %_ZN6Assimp9strtoul16EPKcPS1_.exit, %_ZNK9aiColor4tIfEneERKS0_.exit.thread, %_ZNK9aiColor4tIfEneERKS0_.exit
-  %i.ei = phi ptr [ %i.dq, %_ZN6Assimp9strtoul16EPKcPS1_.exit ], [ %.pre, %_ZNK9aiColor4tIfEneERKS0_.exit.thread ], [ %i.dq, %_ZNK9aiColor4tIfEneERKS0_.exit ] ; 5 uses
+  %i.ei = phi ptr [ %i.dq, %_ZN6Assimp9strtoul16EPKcPS1_.exit ], [ %.pre, %_ZNK9aiColor4tIfEneERKS0_.exit.thread ], [ %i.dq, %_ZNK9aiColor4tIfEneERKS0_.exit ] ; 8 uses
   %i.ej = load ptr, ptr %i.i, align 8
   %.not.i79 = icmp eq ptr %i.ei, %i.ej
   br i1 %.not.i79, label %bb.ap, label %bb.ao
 
 bb.ao:                                            ; preds = %.critedge
-  store <4 x float> %i.do, ptr %i.ei, align 4
+  %13 = extractelement <4 x float> %i.do, i64 2
+  store float %13, ptr %i.ei, align 4
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ei, i64 4
+  %14 = extractelement <4 x float> %i.do, i64 3
+  store float %14, ptr %.sroa.7.0..sroa_idx, align 4
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ei, i64 8
+  %15 = extractelement <4 x float> %i.do, i64 0
+  store float %15, ptr %.sroa.9.0..sroa_idx, align 4
+  %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ei, i64 12
+  %16 = extractelement <4 x float> %i.do, i64 1
+  store float %16, ptr %.sroa.11.0..sroa_idx, align 4
   %i.ek = load ptr, ptr %i.h, align 8
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 16
   store ptr %i.el, ptr %i.h, align 8
@@ -288,8 +298,18 @@ _ZNKSt6vectorI9aiColor4tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.a
   call void @llvm.assume(i1 %.not.i.i.i81)
   %i.ew = shl nuw nsw i64 %i.ev, 4
   %i.ex = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ew) #26 ; 5 uses
-  %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 %i.ep
-  store <4 x float> %i.do, ptr %i.ey, align 4
+  %17 = getelementptr inbounds nuw i8, ptr %i.ex, i64 %i.ep ; 4 uses
+  %18 = extractelement <4 x float> %i.do, i64 2
+  store float %18, ptr %17, align 4
+  %.sroa.7.0..sroa_idx212 = getelementptr inbounds nuw i8, ptr %17, i64 4
+  %19 = extractelement <4 x float> %i.do, i64 3
+  store float %19, ptr %.sroa.7.0..sroa_idx212, align 4
+  %.sroa.9.0..sroa_idx214 = getelementptr inbounds nuw i8, ptr %17, i64 8
+  %20 = extractelement <4 x float> %i.do, i64 0
+  store float %20, ptr %.sroa.9.0..sroa_idx214, align 4
+  %i.ey = getelementptr inbounds nuw i8, ptr %17, i64 12
+  %21 = extractelement <4 x float> %i.do, i64 1
+  store float %21, ptr %i.ey, align 4
   %.not10.i.i.i.i.i82 = icmp eq ptr %i.em, %i.ei
   br i1 %.not10.i.i.i.i.i82, label %_ZNSt6vectorI9aiColor4tIfESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i83
 

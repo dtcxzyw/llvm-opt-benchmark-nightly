@@ -203,26 +203,27 @@ bb.bz:                                            ; preds = %bb.by
   %i.qe = add i32 %i.b, -396
   %i.qf = add i32 %i.b, -4
   %i.qg = add i32 %i.b, -400
+  %5 = insertelement <2 x double> poison, double %i.fi, i64 0
+  %6 = insertelement <2 x double> %5, double %i.pu, i64 1
   br label %bb.ca
 
 bb.ca:                                            ; preds = %bb.ce, %bb.bz
-  %.1 = phi double [ %i.ps, %bb.bz ], [ %i.rp, %bb.ce ] ; 3 uses
-  %5 = fadd double %.1, %i.fi
-  %6 = fadd double %5, -1.000000e+00              ; 2 uses
-  %7 = bitcast double %6 to i64
-  %8 = fcmp uno double %6, 0.000000e+00
-  %9 = select i1 %8, i64 9221120237041090560, i64 %7
+  %.1 = phi double [ %i.ps, %bb.bz ], [ %i.rp, %bb.ce ] ; 2 uses
+  %7 = insertelement <2 x double> poison, double %.1, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = fadd <2 x double> %8, %6
   %.val1872 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.qh = getelementptr inbounds nuw i8, ptr %.val1872, i64 %i.pw
-  store i64 %9, ptr %i.qh, align 1
-  %10 = fadd double %.1, %i.pu
-  %11 = fadd double %10, -1.000000e+00            ; 2 uses
-  %12 = bitcast double %11 to i64
-  %13 = fcmp uno double %11, 0.000000e+00
-  %14 = select i1 %13, i64 9221120237041090560, i64 %12
+  %10 = fadd <2 x double> %9, splat (double -1.000000e+00) ; 2 uses
+  %11 = bitcast <2 x double> %10 to <2 x i64>
+  %12 = fcmp uno <2 x double> %10, zeroinitializer
+  %13 = select <2 x i1> %12, <2 x i64> splat (i64 9221120237041090560), <2 x i64> %11 ; 2 uses
+  %14 = extractelement <2 x i64> %13, i64 0
+  store i64 %14, ptr %i.qh, align 1
   %.val1871 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.qi = getelementptr inbounds nuw i8, ptr %.val1871, i64 %i.px
-  store i64 %14, ptr %i.qi, align 1
+  %15 = extractelement <2 x i64> %13, i64 1
+  store i64 %15, ptr %i.qi, align 1
   %.val1870 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.qj = getelementptr inbounds nuw i8, ptr %.val1870, i64 %i.ld
   store i64 -4294967296, ptr %i.qj, align 1

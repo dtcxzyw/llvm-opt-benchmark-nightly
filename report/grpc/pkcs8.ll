@@ -1,3 +1,8 @@
+inline.NumInlined: 14
+inline.NumDeleted: 7
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 5
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -107,7 +112,7 @@ _ZL22pkcs12_encode_passwordPKcmPPhPm.exit:        ; preds = %bb.h
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZL22pkcs12_encode_passwordPKcmPPhPm.exit, %bb.c
-  %i.q = call i64 @EVP_MD_block_size(ptr noundef %8) #6 ; 13 uses
+  %i.q = call i64 @EVP_MD_block_size(ptr noundef %8) #6 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
   %i.r = icmp eq i64 %i.q, 0
   br i1 %i.r, label %_ZL14OPENSSL_memsetPvim.exit, label %bb.j
@@ -125,7 +130,7 @@ _ZL14OPENSSL_memsetPvim.exit:                     ; preds = %bb.i, %bb.j
 bb.k:                                             ; preds = %_ZL14OPENSSL_memsetPvim.exit
   %i.v = load i64, ptr %i.c, align 8, !tbaa !14
   %.fr = freeze i64 %i.v                          ; 2 uses
-  %i.w = add i64 %i.q, -1                         ; 2 uses
+  %i.w = add i64 %i.q, -1                         ; 3 uses
   %i.x = add i64 %i.w, %.fr                       ; 4 uses
   %i.y = icmp ult i64 %i.x, %.fr
   br i1 %i.y, label %bb.l, label %bb.m
@@ -248,7 +253,7 @@ bb.o:                                             ; preds = %bb.m
 
 .lr.ph188.preheader:                              ; preds = %.lr.ph164
   %xtraiter201 = and i64 %i.q, 1
-  %i.be = icmp eq i64 %i.q, 1
+  %i.be = icmp eq i64 %i.w, 0
   %unroll_iter204 = and i64 %i.q, -2
   %lcmp.mod202.not = icmp eq i64 %xtraiter201, 0
   %lcmp.mod203 = trunc i64 %i.q to i1

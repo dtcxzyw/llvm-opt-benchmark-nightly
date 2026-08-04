@@ -1,3 +1,8 @@
+inline.NumInlined: 337
+inline.NumDeleted: 193
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5_NS_4hashIS5_EESt8equal_toIS5_EEEE14emplace_uniqueIJS5_EEESt4pairINS1_15iterator_detail8iteratorINS1_4nodeIS5_PvEENS1_6bucketISJ_SI_EEEEbERKS5_DpOT_:bb.a
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
@@ -199,15 +204,20 @@ _ZNK5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5
 
 _ZN5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typeindex15ctti_type_indexEPvEES7_EESaIS6_ENS1_15prime_fmod_sizeIvEEE16bucket_count_forEm.exit.i.i: ; preds = %_ZNK5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5_NS_4hashIS5_EESt8equal_toIS5_EEEE14find_node_implIS5_EEPNS1_4nodeIS5_PvEERKT_NS1_23grouped_bucket_iteratorINS1_6bucketISG_SF_EEEE.exit.thread
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.dr = load float, ptr %i.dq, align 8, !tbaa !19 ; 2 uses
+  %i.dr = load float, ptr %i.dq, align 8, !tbaa !19
   %i.ds = uitofp i64 %i.dm to float
-  %4 = fdiv float %i.ds, %i.dr
-  %i.dt = tail call noundef float @llvm.ceil.f32(float %4) ; 2 uses
+  %4 = uitofp i64 %i.dl to float
+  %5 = insertelement <2 x float> poison, float %i.ds, i64 0
+  %6 = insertelement <2 x float> %5, float %4, i64 1
+  %7 = insertelement <2 x float> poison, float %i.dr, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = fdiv <2 x float> %6, %8                    ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 0
+  %i.dt = tail call noundef float @llvm.ceil.f32(float %10) ; 2 uses
   %i.du = fcmp ult float %i.dt, f0x5F800000
   %i.dv = fptoui float %i.dt to i64
-  %5 = uitofp i64 %i.dl to float
-  %6 = fdiv float %5, %i.dr
-  %i.dw = tail call noundef float @llvm.ceil.f32(float %6) ; 2 uses
+  %11 = extractelement <2 x float> %9, i64 1
+  %i.dw = tail call noundef float @llvm.ceil.f32(float %11) ; 2 uses
   %i.dx = fcmp ult float %i.dw, f0x5F800000
   %i.dy = fptoui float %i.dw to i64
   %i.dz = tail call i64 @llvm.umax.i64(i64 %i.dv, i64 %i.dy)

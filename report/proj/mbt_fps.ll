@@ -1,3 +1,6 @@
+inline.NumInlined: 1
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -71,14 +74,18 @@ bb.a:
   %i.h = fdiv double %i.f, %i.g
   %i.i = fadd double %i.h, 1.000000e+00
   %i.j = fmul double %i.i, 2.224800e-01
-  %3 = fdiv double %0, %i.j
   %i.k = load ptr, ptr %2, align 8, !tbaa !45
   %i.l = tail call double @sin(double noundef %i.c) #6
   %i.m = tail call double @sin(double noundef %i.d) #6
   %i.n = tail call double @llvm.fmuladd.f64(double %i.l, double 4.550300e-01, double %i.m)
-  %4 = fdiv double %i.n, 1.415460e+00
-  %i.o = tail call noundef double @_Z5aasinP6pj_ctxd(ptr noundef %i.k, double noundef %4)
-  %.fca.0.insert = insertvalue { double, double } poison, double %3, 0
+  %3 = insertelement <2 x double> poison, double %0, i64 0
+  %4 = insertelement <2 x double> %3, double %i.n, i64 1
+  %5 = insertelement <2 x double> <double poison, double 1.415460e+00>, double %i.j, i64 0
+  %6 = fdiv <2 x double> %4, %5                   ; 2 uses
+  %7 = extractelement <2 x double> %6, i64 1
+  %i.o = tail call noundef double @_Z5aasinP6pj_ctxd(ptr noundef %i.k, double noundef %7)
+  %8 = extractelement <2 x double> %6, i64 0
+  %.fca.0.insert = insertvalue { double, double } poison, double %8, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %i.o, 1
   ret { double, double } %.fca.1.insert
 }

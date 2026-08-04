@@ -203,20 +203,22 @@ bb.a:
   %i.i = shl nuw nsw i64 %indvars.iv, 1           ; 4 uses
   %notmask.i = shl nsw i64 -1, %i.i               ; 2 uses
   %i.j = xor i64 %notmask.i, -1
-  %i.k = and i64 %i.h, %i.j                       ; 3 uses
-  %10 = call range(i64 0, 63) i64 @llvm.ctpop.i64(i64 %i.k)
-  %11 = trunc nuw nsw i64 %10 to i32
-  %12 = and i64 %i.k, 3074457345618258602
-  %13 = call range(i64 0, 32) i64 @llvm.ctpop.i64(i64 %12)
-  %i.l = trunc nuw nsw i64 %13 to i32
-  %14 = trunc nuw nsw i64 %indvars.iv to i32
-  %i.m = add nuw nsw i32 %14, %11
-  %i.n = add nuw nsw i32 %i.m, %i.l               ; 2 uses
+  %10 = and i64 %i.h, %i.j                        ; 3 uses
+  %i.k = and i64 %10, 3074457345618258602
+  %11 = insertelement <2 x i64> poison, i64 %10, i64 0
+  %12 = insertelement <2 x i64> %11, i64 %i.k, i64 1
+  %13 = call range(i64 0, 63) <2 x i64> @llvm.ctpop.v2i64(<2 x i64> %12)
+  %14 = trunc nuw nsw <2 x i64> %13 to <2 x i32>  ; 2 uses
+  %i.l = trunc nuw nsw i64 %indvars.iv to i32
+  %15 = extractelement <2 x i32> %14, i64 0
+  %i.m = add nuw nsw i32 %15, %i.l
+  %16 = extractelement <2 x i32> %14, i64 1
+  %i.n = add nuw nsw i32 %i.m, %16                ; 2 uses
   %i.o = shl nuw nsw i64 1, %i.i
   %i.p = and i64 %i.h, %notmask.i
   %i.q = shl i64 %i.p, 2
   %i.r = or i64 %i.o, %i.q
-  %i.s = or i64 %i.r, %i.k                        ; 2 uses
+  %i.s = or i64 %i.r, %10                         ; 2 uses
   store i32 %i.n, ptr %i.a, align 4, !tbaa !43
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   %i.t = trunc nuw nsw i64 %i.i to i32

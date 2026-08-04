@@ -1,3 +1,7 @@
+inline.NumInlined: 23
+inline.NumDeleted: 2
+loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@PHP_HAVAL160Final:Encode.exit
   %i.ek = load i32, ptr %i.bz, align 4, !tbaa !12
   %i.el = lshr i32 %i.ek, 24
@@ -199,7 +203,6 @@ PHP_HAVALUpdate.exit38:                           ; preds = %bb.d, %bb.c
   %i.bo = getelementptr inbounds nuw i8, ptr %i.a, i64 %.1.i35
   %i.bp = sub nuw nsw i64 10, %.1.i35
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bn, ptr nonnull align 1 %i.bo, i64 %i.bp, i1 false)
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 6 uses
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !12
@@ -208,9 +211,10 @@ PHP_HAVALUpdate.exit38:                           ; preds = %bb.d, %bb.c
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 4 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
-  %3 = load i32, ptr %2, align 4, !tbaa !12       ; 6 uses
-  %4 = load i32, ptr %i.bq, align 8, !tbaa !12    ; 6 uses
+  %2 = load <2 x i32>, ptr %i.bq, align 8, !tbaa !12 ; 4 uses
+  %3 = extractelement <2 x i32> %2, i64 1         ; 4 uses
   %i.by = and i32 %3, -67108864
+  %4 = extractelement <2 x i32> %2, i64 0         ; 4 uses
   %i.bz = and i32 %4, 65011712
   %i.ca = or disjoint i32 %i.bz, %i.by
   %i.cb = lshr exact i32 %i.ca, 21
@@ -222,24 +226,23 @@ PHP_HAVALUpdate.exit38:                           ; preds = %bb.d, %bb.c
   %i.cg = lshr exact i32 %i.cf, 16
   %i.ch = add i32 %i.bu, %i.cg
   store i32 %i.ch, ptr %i.bt, align 8, !tbaa !12
-  %5 = and i32 %3, 2031616
-  %6 = and i32 %3, 64512
-  %i.ci = and i32 %3, 992
+  %i.ci = and i32 %3, 2031616
   %i.cj = and i32 %3, 31
   %i.ck = and i32 %4, -67108864
   %i.cl = or disjoint i32 %i.ck, %i.cj            ; 2 uses
   %i.cm = tail call i32 @llvm.fshl.i32(i32 %i.cl, i32 %i.cl, i32 6)
   %i.cn = and i32 %4, 64512
-  %7 = and i32 %4, 992
-  %8 = and i32 %4, 31
-  %9 = or disjoint i32 %i.cn, %5
-  %i.co = or disjoint i32 %7, %6
-  %10 = or disjoint i32 %8, %i.ci
-  %i.cp = lshr exact i32 %9, 10
-  %i.cq = lshr exact i32 %i.co, 5
+  %5 = and <2 x i32> %2, splat (i32 992)
+  %6 = and <2 x i32> %2, <i32 31, i32 64512>
+  %7 = shufflevector <2 x i32> %6, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
+  %i.co = or disjoint i32 %i.cn, %i.ci
+  %8 = or disjoint <2 x i32> %7, %5               ; 2 uses
+  %i.cp = lshr exact i32 %i.co, 10
+  %9 = extractelement <2 x i32> %8, i64 0
+  %i.cq = lshr exact i32 %9, 5
   %i.cr = load <4 x i32>, ptr %1, align 8, !tbaa !12
-  %11 = insertelement <4 x i32> poison, i32 %i.cm, i64 0
-  %i.cs = insertelement <4 x i32> %11, i32 %10, i64 1
+  %10 = shufflevector <2 x i32> %8, <2 x i32> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %i.cs = insertelement <4 x i32> %10, i32 %i.cm, i64 0
   %i.ct = insertelement <4 x i32> %i.cs, i32 %i.cq, i64 2
   %i.cu = insertelement <4 x i32> %i.ct, i32 %i.cp, i64 3
   %i.cv = add <4 x i32> %i.cr, %i.cu              ; 2 uses

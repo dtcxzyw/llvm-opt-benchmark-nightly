@@ -1,3 +1,8 @@
+inline.NumInlined: 6898
+inline.NumDeleted: 3505
+loop-unroll.NumCompletelyUnrolled: 86
+loop-unroll.NumRuntimeUnrolled: 29
+loop-unroll.NumUnrolled: 115
 begin_hunk_0_@_RINvXs3_NtCs2mZqlW55729_12polars_utils7idx_vecINtB6_7UnitVecINtNtNtCsidoPH4Qgqxm_12polars_async10primitives18opt_spawned_future20LocalOrSpawnedFutureNCNCNCNCNvMNtNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes8io_sinks7writers7parquet17row_group_encoderNtB2y_15RowGroupEncoder3run0000INtNtCscgRAwXFJnXP_4core6result6ResultIBJ_INtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet4page14CompressedPageEENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEEINtNtNtNtB4z_4iter6traits7collect6ExtendBW_E6extendINtNtNtB7D_8adapters3map3MapIB8m_INtNtB8q_9enumerate9EnumerateINtNtB5d_9into_iter8IntoIterNtNtNtCs1LHh8CLbVkQ_11polars_core5frame6column6ColumnEENCB2r_0ENCINvBZ_31parallelize_first_to_local_implB8N_B2n_B4u_E0EEB2I_:bb.a
 bb.m:                                             ; preds = %thread-pre-split, %bb.k
   %i.bg = phi i32 [ %.pr, %thread-pre-split ], [ %i.be, %bb.k ], !dbg !44681
@@ -199,7 +204,7 @@ bb.j:                                             ; preds = %bb.a
 define hidden void @_RINvXs3_NtCs2mZqlW55729_12polars_utils7idx_vecINtB6_7UnitVecINtNtNtCsidoPH4Qgqxm_12polars_async10primitives18opt_spawned_future20LocalOrSpawnedFutureNCNCNCNCNvNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes8io_sinks10components9par_utils11rechunk_par0000TjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame6column6ColumnEEEINtNtNtNtCscgRAwXFJnXP_4core4iter6traits7collect6ExtendBW_E6extendINtNtNtB53_8adapters3map3MapINtNtB65_10filter_map9FilterMapINtNtB65_9enumerate9EnumerateINtNtNtB55_5slice4iter7IterMutB42_EENCB2t_0ENCINvBZ_31parallelize_first_to_local_implB6s_B2n_B40_E0EEB2F_(ptr nofree noundef nonnull align 16 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #16 personality ptr @rust_eh_personality !dbg !44841 {
 bb.a:
   %i.a = alloca [192 x i8], align 16              ; 6 uses
-  %i.b = alloca [16 x i8], align 16               ; 8 uses
+  %i.b = alloca [16 x i8], align 8                ; 8 uses
   %i.c = alloca [176 x i8], align 16              ; 4 uses
   %i.d = alloca [192 x i8], align 16              ; 3 uses
   %i.e = alloca [192 x i8], align 16              ; 4 uses
@@ -208,17 +213,17 @@ bb.a:
   %.sroa.5.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !44842
   %.sroa.5.0.copyload6 = load ptr, ptr %.sroa.5.0..sroa_idx5, align 8, !dbg !44842, !alias.scope !44845, !nonnull !14, !noundef !14 ; 3 uses
   %.sroa.6.0..sroa_idx7 = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !44842
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !44849
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8, !dbg !44849 ; 2 uses
   %.sroa.310.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 16, !dbg !44849 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 24 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !44849
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.310.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx7, i64 16, i1 false), !dbg !44842
   tail call void @_RNvMs0_NtCs2mZqlW55729_12polars_utils7idx_vecINtB5_7UnitVecINtNtNtCsidoPH4Qgqxm_12polars_async10primitives18opt_spawned_future20LocalOrSpawnedFutureNCNCNCNCNvNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes8io_sinks10components9par_utils11rechunk_par0000TjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame6column6ColumnEEE7reserveB2E_(ptr noundef nonnull align 16 %0, i64 noundef 0), !dbg !44851
   store ptr %.sroa.0.0.copyload4, ptr %i.f, align 8, !dbg !44849
+  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8, !dbg !44849 ; 2 uses
   store ptr %.sroa.5.0.copyload6, ptr %.sroa.2.0..sroa_idx, align 8, !dbg !44849
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 24 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !44852
-  store ptr %2, ptr %i.b, align 16, !noalias !44867
+  store ptr %2, ptr %i.b, align 8, !noalias !44867
   store ptr %.sroa.310.0..sroa_idx, ptr %i.g, align 8, !noalias !44867
   %i.h = icmp eq ptr %.sroa.0.0.copyload4, %.sroa.5.0.copyload6, !dbg !44873
   br i1 %i.h, label %.loopexit16, label %.lr.ph.i.i.i.i.i.preheader.lr.ph, !dbg !44897
@@ -229,8 +234,6 @@ bb.a:
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 196 ; 2 uses
-  %3 = insertelement <2 x ptr> poison, ptr %2, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %.sroa.310.0..sroa_idx, i64 1
   br label %.lr.ph.i.i.i.i.i.preheader, !dbg !44897
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.lr.ph.i.i.i.i.i.preheader.lr.ph, %_RNvMs0_NtCs2mZqlW55729_12polars_utils7idx_vecINtB5_7UnitVecINtNtNtCsidoPH4Qgqxm_12polars_async10primitives18opt_spawned_future20LocalOrSpawnedFutureNCNCNCNCNvNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes8io_sinks10components9par_utils11rechunk_par0000TjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame6column6ColumnEEE4pushB2E_.exit
@@ -338,7 +341,8 @@ _RNvMs0_NtCs2mZqlW55729_12polars_utils7idx_vecINtB5_7UnitVecINtNtNtCsidoPH4Qgqxm
   call void @llvm.experimental.noalias.scope.decl(metadata !45012), !dbg !44909
   call void @llvm.experimental.noalias.scope.decl(metadata !45014), !dbg !44912
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !45016
-  store <2 x ptr> %4, ptr %i.b, align 16, !noalias !45017
+  store ptr %2, ptr %i.b, align 8, !noalias !45017
+  store ptr %.sroa.310.0..sroa_idx, ptr %i.g, align 8, !noalias !45017
   %i.as = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !45018, !noalias !44950, !nonnull !14, !noundef !14 ; 2 uses
   %.promoted.i.i.i.i.i = load ptr, ptr %i.f, align 8, !alias.scope !45018, !noalias !44950 ; 2 uses
   %i.at = icmp eq ptr %.promoted.i.i.i.i.i, %i.as, !dbg !44873

@@ -1,3 +1,8 @@
+inline.NumInlined: 9010
+inline.NumDeleted: 3867
+loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumRuntimeUnrolled: 19
+loop-unroll.NumUnrolled: 28
 begin_hunk_0_@_RINvXs1_NtNtCs8774dFTUdNv_12polars_arrow5array20static_array_collectINtNtB8_9primitive14PrimitiveArraydEINtB6_13ArrayFromIterINtNtCscgRAwXFJnXP_4core6option6OptiondEE13arr_from_iterINtNtNtNtB24_4iter8adapters3map3MapINtNtNtCsgZ49sUHp3tW_5alloc3vec9into_iter8IntoIterTdjEENCNvNtNtCskY9G75ZWc4U_11polars_expr6reduce4mean13finish_outputs1_0EEB4t_:bb.a
           to label %bb.ab unwind label %bb.j, !dbg !70821
 
@@ -199,13 +204,14 @@ bb.i:                                             ; preds = %.lr.ph, %_RNvMNtNtC
   call void @llvm.experimental.noalias.scope.decl(metadata !71012), !dbg !71014
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 16, !dbg !71015
   store ptr %i.ap, ptr %i.ad, align 8, !dbg !71019, !alias.scope !71020, !noalias !70998
-  %i.aq = load i64, ptr %i.ao, align 8, !dbg !71021, !noalias !71027, !noundef !13
   %2 = getelementptr inbounds nuw i8, ptr %i.ao, i64 8, !dbg !71021
-  %3 = load i64, ptr %2, align 8, !dbg !71021, !noalias !71027, !noundef !13 ; 2 uses
-  %4 = icmp ne i64 %3, 0, !dbg !71028             ; 2 uses
-  %5 = uitofp i64 %i.aq to double, !dbg !71028
-  %6 = uitofp i64 %3 to double, !dbg !71028
-  %i.ar = fdiv double %5, %6, !dbg !71028
+  %i.aq = load i64, ptr %2, align 8, !dbg !71021, !noalias !71027, !noundef !13
+  %3 = load <2 x i64>, ptr %i.ao, align 8, !dbg !71021, !noalias !71027
+  %4 = icmp ne i64 %i.aq, 0, !dbg !71028          ; 2 uses
+  %5 = uitofp <2 x i64> %3 to <2 x double>, !dbg !71028 ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0, !dbg !71028
+  %7 = extractelement <2 x double> %5, i64 1, !dbg !71028
+  %i.ar = fdiv double %6, %7, !dbg !71028
   %i.as = load i64, ptr %i.aa, align 8, !dbg !71041, !noundef !13 ; 3 uses
   %i.at = icmp ult i64 %i.as, 1152921504606846976, !dbg !71045
   call void @llvm.assume(i1 %i.at), !dbg !71047

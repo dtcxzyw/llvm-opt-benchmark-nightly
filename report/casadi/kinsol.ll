@@ -203,14 +203,19 @@ bb.fw:                                            ; preds = %.loopexit.i180
   %i.acx = load double, ptr %i.dw, align 8, !tbaa !92
   %i.acy = extractelement <2 x double> %i.xp, i64 1
   %i.acz = fcmp olt double %i.acy, %i.acx
-  br i1 %i.acz, label %.preheader.i, label %.thread495.i
+  br i1 %i.acz, label %.preheader.i.preheader, label %.thread495.i
 
-.preheader.i:                                     ; preds = %.thread.i177, %bb.fz
-  %.1322.i = phi double [ %i.ada, %bb.fz ], [ 1.000000e+00, %.thread.i177 ] ; 2 uses
-  %.1311.i = phi i32 [ %i.add, %bb.fz ], [ %.0310.lcssa473481.i, %.thread.i177 ]
+.preheader.i.preheader:                           ; preds = %.thread.i177
+  %5 = insertelement <2 x double> poison, double %i.yz, i64 0
+  %6 = insertelement <2 x double> %5, double %i.acw, i64 1
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i.preheader, %bb.fz
+  %.1322.i = phi double [ %i.ada, %bb.fz ], [ 1.000000e+00, %.preheader.i.preheader ] ; 2 uses
+  %.1311.i = phi i32 [ %i.add, %bb.fz ], [ %.0310.lcssa473481.i, %.preheader.i.preheader ]
   %i.ada = fmul double %.1322.i, 2.000000e+00     ; 3 uses
   %i.adb = fcmp uge double %i.ada, %.2327406.lcssa.i ; 2 uses
-  %i.adc = select i1 %i.adb, double %.2327406.lcssa.i, double %i.ada ; 5 uses
+  %i.adc = select i1 %i.adb, double %.2327406.lcssa.i, double %i.ada ; 4 uses
   %i.add = add nuw nsw i32 %.1311.i, 1            ; 2 uses
   %i.ade = load ptr, ptr %i.e, align 8, !tbaa !78
   %i.adf = load ptr, ptr %i.hb, align 8, !tbaa !63
@@ -233,20 +238,26 @@ bb.fx:                                            ; preds = %.preheader.i
   %i.adq = tail call double @N_VWL2Norm(ptr noundef %i.ado, ptr noundef %i.adp) #12 ; 3 uses
   %i.adr = fmul double %i.adq, 5.000000e-01
   %i.ads = fmul double %i.adq, %i.adr             ; 4 uses
-  %i.adt = load double, ptr %i.fx, align 8, !tbaa !99 ; 2 uses
-  %5 = tail call double @llvm.fmuladd.f64(double %i.yz, double %i.adc, double %i.adt) ; 2 uses
-  %6 = tail call double @llvm.fmuladd.f64(double %i.acw, double %i.adc, double %i.adt) ; 2 uses
+  %i.adt = load double, ptr %i.fx, align 8, !tbaa !99
+  %7 = insertelement <2 x double> poison, double %i.adc, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = insertelement <2 x double> poison, double %i.adt, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> %8, <2 x double> %10) ; 3 uses
   %i.adu = load i32, ptr %i.di, align 4, !tbaa !83
   %i.adv = icmp sgt i32 %i.adu, 2
   br i1 %i.adv, label %bb.fy, label %bb.fz
 
 bb.fy:                                            ; preds = %bb.fx
-  tail call void (ptr, i32, ptr, ptr, ptr, ...) @KINPrintInfo(ptr noundef nonnull %0, i32 noundef 10, ptr noundef nonnull @.str, ptr noundef nonnull @.str.56, ptr noundef nonnull @.str.61, double noundef %i.ads, double noundef %6, double noundef %i.adc)
+  %12 = extractelement <2 x double> %11, i64 1
+  tail call void (ptr, i32, ptr, ptr, ptr, ...) @KINPrintInfo(ptr noundef nonnull %0, i32 noundef 10, ptr noundef nonnull @.str, ptr noundef nonnull @.str.56, ptr noundef nonnull @.str.61, double noundef %i.ads, double noundef %12, double noundef %i.adc)
   br label %bb.fz
 
 bb.fz:                                            ; preds = %bb.fy, %bb.fx
-  %i.adw = fcmp ugt double %i.ads, %5
-  %i.adx = fcmp uge double %i.ads, %6
+  %13 = extractelement <2 x double> %11, i64 0    ; 2 uses
+  %i.adw = fcmp ugt double %i.ads, %13
+  %14 = extractelement <2 x double> %11, i64 1
+  %i.adx = fcmp uge double %i.ads, %14
   %or.cond.i.not589 = select i1 %i.adw, i1 true, i1 %i.adx ; 2 uses
   %brmerge = or i1 %or.cond.i.not589, %i.adb
   br i1 %brmerge, label %.critedge.i.loopexit, label %.preheader.i
@@ -261,7 +272,7 @@ bb.fz:                                            ; preds = %bb.fy, %bb.fx
   %i.ady = phi double [ %i.aco, %bb.fw ], [ %i.acw, %.critedge.i.loopexit ]
   %.1336.i = phi double [ %.0335.i, %bb.fw ], [ %.1322.i, %.critedge.i.loopexit ] ; 3 uses
   %.2323.i = phi double [ %.0321.i, %bb.fw ], [ %.mux, %.critedge.i.loopexit ] ; 6 uses
-  %.0320.i = phi double [ %i.zz, %bb.fw ], [ %5, %.critedge.i.loopexit ]
+  %.0320.i = phi double [ %i.zz, %bb.fw ], [ %13, %.critedge.i.loopexit ]
   %.2.i = phi i32 [ %.0310.i, %bb.fw ], [ %i.add, %.critedge.i.loopexit ] ; 2 uses
   %i.adz = fcmp olt double %.2323.i, 1.000000e+00
   br i1 %i.adz, label %bb.gb, label %bb.ga

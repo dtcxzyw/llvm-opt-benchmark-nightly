@@ -1,3 +1,7 @@
+inline.NumInlined: 77
+inline.NumDeleted: 27
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@graph_init:bb.a
   %i.jq = load i8, ptr %i.jp, align 1, !tbaa !44
   %.not162 = icmp eq i8 %i.jq, 0
@@ -199,14 +203,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.k = insertelement <2 x double> poison, double %i.g, i64 0
   %i.l = insertelement <2 x double> %i.k, double %i.i, i64 1
-  %i.m = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.l, <2 x double> splat (double 7.200000e+01), <2 x double> splat (double 5.000000e-01)) ; 2 uses
-  %3 = extractelement <2 x double> %i.m, i64 0
-  %4 = fptosi double %3 to i32
-  %5 = sitofp i32 %4 to double
+  %i.m = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.l, <2 x double> splat (double 7.200000e+01), <2 x double> splat (double 5.000000e-01))
+  %3 = fptosi <2 x double> %i.m to <2 x i32>
+  %4 = sitofp <2 x i32> %3 to <2 x double>        ; 2 uses
+  %5 = extractelement <2 x double> %4, i64 0
   store double %5, ptr %2, align 8, !tbaa !125
-  %i.n = extractelement <2 x double> %i.m, i64 1
-  %6 = fptosi double %i.n to i32
-  %7 = sitofp i32 %6 to double
+  %i.n = extractelement <2 x double> %4, i64 1
   br label %.sink.split
 
 bb.d:                                             ; preds = %bb.b
@@ -226,7 +228,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.e, %bb.c
-  %.sink = phi double [ %7, %bb.c ], [ %i.u, %bb.e ]
+  %.sink = phi double [ %i.n, %bb.c ], [ %i.u, %bb.e ]
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 8
   store double %.sink, ptr %i.v, align 8, !tbaa !126
   %i.w = load i8, ptr %i.c, align 1, !tbaa !44

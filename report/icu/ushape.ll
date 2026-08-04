@@ -25,10 +25,10 @@ bb.a:
   %i.a = alloca [300 x i16], align 16             ; 5 uses
   %i.b = alloca i32, align 4                      ; 8 uses
   %i.c = alloca i32, align 4                      ; 8 uses
-  %6 = alloca %struct.uShapeVariables, align 8    ; 5 uses
-  %7 = alloca %struct.uShapeVariables, align 8    ; 5 uses
-  %8 = alloca %struct.uShapeVariables, align 8    ; 5 uses
-  %9 = alloca %struct.uShapeVariables, align 8    ; 5 uses
+  %6 = alloca %struct.uShapeVariables, align 8    ; 8 uses
+  %7 = alloca %struct.uShapeVariables, align 8    ; 8 uses
+  %8 = alloca %struct.uShapeVariables, align 8    ; 8 uses
+  %9 = alloca %struct.uShapeVariables, align 8    ; 8 uses
   %i.d = icmp eq ptr %5, null
   br i1 %i.d, label %bb.bo, label %bb.b
 
@@ -383,8 +383,11 @@ bb.aq:                                            ; preds = %_ZL12invertBufferPD
   br label %_ZL12invertBufferPDsijii.exit.thread
 
 _ZL12invertBufferPDsijii.exit.thread:             ; preds = %.lr.ph.i, %bb.ap, %bb.aq, %_ZL12invertBufferPDsijii.exit
-  %.sroa.13.0.a = phi i32 [ 1, %bb.aq ], [ 0, %_ZL12invertBufferPDsijii.exit ], [ 0, %bb.ap ], [ 0, %.lr.ph.i ] ; 4 uses
-  %10 = phi <4 x i32> [ <i32 2, i32 3, i32 393216, i32 262144>, %bb.aq ], [ <i32 3, i32 2, i32 262144, i32 393216>, %_ZL12invertBufferPDsijii.exit ], [ <i32 3, i32 2, i32 262144, i32 393216>, %bb.ap ], [ <i32 3, i32 2, i32 262144, i32 393216>, %.lr.ph.i ] ; 4 uses
+  %.sroa.11.0 = phi i32 [ 393216, %bb.aq ], [ 262144, %_ZL12invertBufferPDsijii.exit ], [ 262144, %bb.ap ], [ 262144, %.lr.ph.i ] ; 4 uses
+  %.sroa.10.0 = phi i32 [ 3, %bb.aq ], [ 2, %_ZL12invertBufferPDsijii.exit ], [ 2, %bb.ap ], [ 2, %.lr.ph.i ] ; 4 uses
+  %.sroa.994.0 = phi i32 [ 2, %bb.aq ], [ 3, %_ZL12invertBufferPDsijii.exit ], [ 3, %bb.ap ], [ 3, %.lr.ph.i ] ; 4 uses
+  %.sroa.13.0.a = phi i32 [ 262144, %bb.aq ], [ 393216, %_ZL12invertBufferPDsijii.exit ], [ 393216, %bb.ap ], [ 393216, %.lr.ph.i ] ; 4 uses
+  %.sroa.13.0 = phi i32 [ 1, %bb.aq ], [ 0, %_ZL12invertBufferPDsijii.exit ], [ 0, %bb.ap ], [ 0, %.lr.ph.i ] ; 4 uses
   switch i32 %i.m, label %.unreachabledefault [
     i32 8, label %bb.ar
     i32 24, label %bb.av
@@ -399,23 +402,35 @@ bb.ar:                                            ; preds = %_ZL12invertBufferPD
 
 bb.as:                                            ; preds = %bb.ar
   store i16 %., ptr %6, align 8, !tbaa !11
-  %.sroa.9.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 2
-  store i16 0, ptr %.sroa.9.0..sroa_idx.a, align 2
-  %.sroa.994.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 4
-  store <4 x i32> %10, ptr %.sroa.994.0..sroa_idx.a, align 4, !tbaa !10
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 2
+  store i16 0, ptr %.sroa.9.0..sroa_idx, align 2
+  %.sroa.994.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 4
+  store i32 %.sroa.994.0, ptr %.sroa.994.0..sroa_idx, align 4, !tbaa !10
+  %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store i32 %.sroa.10.0, ptr %.sroa.10.0..sroa_idx, align 8, !tbaa !10
+  %.sroa.9.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 12
+  store i32 %.sroa.11.0, ptr %.sroa.9.0..sroa_idx.a, align 4, !tbaa !10
+  %.sroa.994.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 16
+  store i32 %.sroa.13.0.a, ptr %.sroa.994.0..sroa_idx.a, align 8, !tbaa !10
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 20
-  store i32 %.sroa.13.0.a, ptr %.sroa.13.0..sroa_idx, align 4, !tbaa !10
+  store i32 %.sroa.13.0, ptr %.sroa.13.0..sroa_idx, align 4, !tbaa !10
   %i.da = call fastcc noundef i32 @_ZL12shapeUnicodePDsiijP10UErrorCodei15uShapeVariables(ptr noundef %.0308, i32 noundef %.2300, i32 noundef %4, ptr noundef %5, i32 noundef 2, ptr noundef nonnull byval(%struct.uShapeVariables) align 8 %6)
   br label %bb.ax
 
 bb.at:                                            ; preds = %bb.ar, %bb.ar
   store i16 %., ptr %7, align 8, !tbaa !11
-  %.sroa.9.0..sroa_idx88.a = getelementptr inbounds nuw i8, ptr %7, i64 2
-  store i16 0, ptr %.sroa.9.0..sroa_idx88.a, align 2
-  %.sroa.994.0..sroa_idx96.a = getelementptr inbounds nuw i8, ptr %7, i64 4
-  store <4 x i32> %10, ptr %.sroa.994.0..sroa_idx96.a, align 4, !tbaa !10
+  %.sroa.9.0..sroa_idx88 = getelementptr inbounds nuw i8, ptr %7, i64 2
+  store i16 0, ptr %.sroa.9.0..sroa_idx88, align 2
+  %.sroa.994.0..sroa_idx96 = getelementptr inbounds nuw i8, ptr %7, i64 4
+  store i32 %.sroa.994.0, ptr %.sroa.994.0..sroa_idx96, align 4, !tbaa !10
+  %.sroa.10.0..sroa_idx103 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  store i32 %.sroa.10.0, ptr %.sroa.10.0..sroa_idx103, align 8, !tbaa !10
+  %.sroa.9.0..sroa_idx88.a = getelementptr inbounds nuw i8, ptr %7, i64 12
+  store i32 %.sroa.11.0, ptr %.sroa.9.0..sroa_idx88.a, align 4, !tbaa !10
+  %.sroa.994.0..sroa_idx96.a = getelementptr inbounds nuw i8, ptr %7, i64 16
+  store i32 %.sroa.13.0.a, ptr %.sroa.994.0..sroa_idx96.a, align 8, !tbaa !10
   %.sroa.13.0..sroa_idx124 = getelementptr inbounds nuw i8, ptr %7, i64 20
-  store i32 %.sroa.13.0.a, ptr %.sroa.13.0..sroa_idx124, align 4, !tbaa !10
+  store i32 %.sroa.13.0, ptr %.sroa.13.0..sroa_idx124, align 4, !tbaa !10
   %i.db = call fastcc noundef i32 @_ZL12shapeUnicodePDsiijP10UErrorCodei15uShapeVariables(ptr noundef %.0308, i32 noundef %.2300, i32 noundef %4, ptr noundef %5, i32 noundef 1, ptr noundef nonnull byval(%struct.uShapeVariables) align 8 %7) ; 3 uses
   %i.dc = icmp eq i32 %i.l, 786432
   br i1 %i.dc, label %bb.au, label %bb.ax
@@ -426,23 +441,35 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %_ZL12invertBufferPDsijii.exit.thread
   store i16 %., ptr %8, align 8, !tbaa !11
-  %.sroa.9.0..sroa_idx90.a = getelementptr inbounds nuw i8, ptr %8, i64 2
-  store i16 0, ptr %.sroa.9.0..sroa_idx90.a, align 2
-  %.sroa.994.0..sroa_idx98.a = getelementptr inbounds nuw i8, ptr %8, i64 4
-  store <4 x i32> %10, ptr %.sroa.994.0..sroa_idx98.a, align 4, !tbaa !10
+  %.sroa.9.0..sroa_idx90 = getelementptr inbounds nuw i8, ptr %8, i64 2
+  store i16 0, ptr %.sroa.9.0..sroa_idx90, align 2
+  %.sroa.994.0..sroa_idx98 = getelementptr inbounds nuw i8, ptr %8, i64 4
+  store i32 %.sroa.994.0, ptr %.sroa.994.0..sroa_idx98, align 4, !tbaa !10
+  %.sroa.10.0..sroa_idx105 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  store i32 %.sroa.10.0, ptr %.sroa.10.0..sroa_idx105, align 8, !tbaa !10
+  %.sroa.9.0..sroa_idx90.a = getelementptr inbounds nuw i8, ptr %8, i64 12
+  store i32 %.sroa.11.0, ptr %.sroa.9.0..sroa_idx90.a, align 4, !tbaa !10
+  %.sroa.994.0..sroa_idx98.a = getelementptr inbounds nuw i8, ptr %8, i64 16
+  store i32 %.sroa.13.0.a, ptr %.sroa.994.0..sroa_idx98.a, align 8, !tbaa !10
   %.sroa.13.0..sroa_idx126 = getelementptr inbounds nuw i8, ptr %8, i64 20
-  store i32 %.sroa.13.0.a, ptr %.sroa.13.0..sroa_idx126, align 4, !tbaa !10
+  store i32 %.sroa.13.0, ptr %.sroa.13.0..sroa_idx126, align 4, !tbaa !10
   %i.de = call fastcc noundef i32 @_ZL12shapeUnicodePDsiijP10UErrorCodei15uShapeVariables(ptr noundef %.0308, i32 noundef %.2300, i32 noundef %4, ptr noundef %5, i32 noundef 0, ptr noundef nonnull byval(%struct.uShapeVariables) align 8 %8)
   br label %bb.ax
 
 bb.aw:                                            ; preds = %_ZL12invertBufferPDsijii.exit.thread
   store i16 %., ptr %9, align 8, !tbaa !11
-  %.sroa.9.0..sroa_idx92.a = getelementptr inbounds nuw i8, ptr %9, i64 2
-  store i16 0, ptr %.sroa.9.0..sroa_idx92.a, align 2
-  %.sroa.994.0..sroa_idx100.a = getelementptr inbounds nuw i8, ptr %9, i64 4
-  store <4 x i32> %10, ptr %.sroa.994.0..sroa_idx100.a, align 4, !tbaa !10
+  %.sroa.9.0..sroa_idx92 = getelementptr inbounds nuw i8, ptr %9, i64 2
+  store i16 0, ptr %.sroa.9.0..sroa_idx92, align 2
+  %.sroa.994.0..sroa_idx100 = getelementptr inbounds nuw i8, ptr %9, i64 4
+  store i32 %.sroa.994.0, ptr %.sroa.994.0..sroa_idx100, align 4, !tbaa !10
+  %.sroa.10.0..sroa_idx107 = getelementptr inbounds nuw i8, ptr %9, i64 8
+  store i32 %.sroa.10.0, ptr %.sroa.10.0..sroa_idx107, align 8, !tbaa !10
+  %.sroa.9.0..sroa_idx92.a = getelementptr inbounds nuw i8, ptr %9, i64 12
+  store i32 %.sroa.11.0, ptr %.sroa.9.0..sroa_idx92.a, align 4, !tbaa !10
+  %.sroa.994.0..sroa_idx100.a = getelementptr inbounds nuw i8, ptr %9, i64 16
+  store i32 %.sroa.13.0.a, ptr %.sroa.994.0..sroa_idx100.a, align 8, !tbaa !10
   %.sroa.13.0..sroa_idx128 = getelementptr inbounds nuw i8, ptr %9, i64 20
-  store i32 %.sroa.13.0.a, ptr %.sroa.13.0..sroa_idx128, align 4, !tbaa !10
+  store i32 %.sroa.13.0, ptr %.sroa.13.0..sroa_idx128, align 4, !tbaa !10
   %i.df = call fastcc noundef i32 @_ZL14deShapeUnicodePDsiijP10UErrorCode15uShapeVariables(ptr noundef %.0308, i32 noundef %.2300, i32 noundef %4, ptr noundef %5, ptr noundef nonnull byval(%struct.uShapeVariables) align 8 %9)
   br label %bb.ax
 

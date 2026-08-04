@@ -203,7 +203,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.cc = getelementptr inbounds nuw i8, ptr %.val478, i64 %i.ad
   store i32 %i.cb, ptr %i.cc, align 1
   %i.cd = fcmp ogt double %.0449, %i.bm
-  %i.ce = select i1 %i.cd, double %.0449, double %i.bm ; 6 uses
+  %i.ce = select i1 %i.cd, double %.0449, double %i.bm ; 5 uses
   %.not467 = icmp eq i32 %i.be, %.0446
   br i1 %.not467, label %bb.k, label %bb.f
 
@@ -299,6 +299,8 @@ bb.t:                                             ; preds = %bb.r, %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.de = shl i32 %.0.copyload.i534, 3
   %i.df = add i32 %.0.copyload.i535, %i.de
+  %5 = insertelement <2 x double> poison, double %i.ce, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.v, %bb.u
@@ -310,22 +312,24 @@ bb.v:                                             ; preds = %bb.v, %bb.u
   %i.dh = getelementptr inbounds nuw i8, ptr %.val517, i64 %i.dg
   %.0.copyload.i537 = load double, ptr %i.dh, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i537) #8, !srcloc !37
-  %5 = fdiv double %.0.copyload.i537, %i.ce       ; 2 uses
-  %6 = fmul double %5, %5
-  %7 = fsub double %6, %.1448                     ; 2 uses
-  %8 = fadd double %.1451, %7                     ; 3 uses
   %.val516 = load ptr, ptr %i.d, align 8, !tbaa !18
-  %9 = getelementptr inbounds nuw i8, ptr %.val516, i64 %i.dg
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %.0.copyload.i538 = load double, ptr %10, align 1 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.val516, i64 %i.dg
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.0.copyload.i538 = load double, ptr %8, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i538) #8, !srcloc !37
-  %11 = fdiv double %.0.copyload.i538, %i.ce      ; 2 uses
-  %12 = fmul double %11, %11
-  %i.di = fsub double %.1451, %8
-  %i.dj = fadd double %7, %i.di
-  %i.dk = fadd double %12, %i.dj                  ; 2 uses
-  %i.dl = fadd double %8, %i.dk                   ; 3 uses
-  %i.dm = fsub double %i.dl, %8
+  %9 = insertelement <2 x double> poison, double %.0.copyload.i537, i64 0
+  %10 = insertelement <2 x double> %9, double %.0.copyload.i538, i64 1
+  %11 = fdiv <2 x double> %10, %6                 ; 2 uses
+  %12 = fmul <2 x double> %11, %11                ; 2 uses
+  %13 = extractelement <2 x double> %12, i64 0
+  %14 = fsub double %13, %.1448                   ; 2 uses
+  %15 = fadd double %.1451, %14                   ; 3 uses
+  %i.di = fsub double %.1451, %15
+  %i.dj = fadd double %14, %i.di
+  %16 = extractelement <2 x double> %12, i64 1
+  %i.dk = fadd double %16, %i.dj                  ; 2 uses
+  %i.dl = fadd double %15, %i.dk                  ; 3 uses
+  %i.dm = fsub double %i.dl, %15
   %i.dn = fsub double %i.dm, %i.dk
   %i.do = add i32 %.2458, 16                      ; 2 uses
   %.not473 = icmp eq i32 %i.do, %i.df

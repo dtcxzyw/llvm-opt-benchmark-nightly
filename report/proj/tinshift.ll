@@ -1,3 +1,7 @@
+inline.NumInlined: 3866
+inline.NumDeleted: 1338
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN8TINShiftL13BuildQuadTreeERKNS_12TINShiftFileEb:bb.a
   %.sroa.speculated85 = select i1 %i.ch, double %i.bt, double %i.bk ; 2 uses
   %i.ci = fcmp olt double %i.bx, %i.bo
@@ -199,31 +203,32 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.bq = insertelement <2 x double> poison, double %i.bd, i64 0
   %i.br = shufflevector <2 x double> %i.bq, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bs = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.br, <2 x double> %i.bi, <2 x double> %i.bp) ; 2 uses
-  %9 = extractelement <2 x double> %i.bs, i64 0
-  %10 = extractelement <2 x double> %i.bs, i64 1  ; 2 uses
-  %11 = fdiv double %9, %10
-  store double %11, ptr %6, align 8, !tbaa !150
-  %12 = fsub double %i.bc, %i.ak
+  %9 = fsub double %i.bc, %i.ak
   %shift = shufflevector <2 x double> %i.bi, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fmul <2 x double> %shift, %i.bm
-  %13 = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.bt = extractelement <2 x double> %i.bi, i64 0
-  %14 = tail call double @llvm.fmuladd.f64(double %12, double %i.bt, double %13)
-  %15 = fdiv double %14, %10                      ; 4 uses
-  store double %15, ptr %7, align 8, !tbaa !150
+  %10 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %11 = extractelement <2 x double> %i.bi, i64 0
+  %12 = tail call double @llvm.fmuladd.f64(double %9, double %11, double %10)
+  %13 = insertelement <2 x double> %i.bs, double %12, i64 1
+  %14 = shufflevector <2 x double> %i.bs, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %15 = fdiv <2 x double> %13, %14                ; 2 uses
+  %i.bt = extractelement <2 x double> %15, i64 1  ; 4 uses
+  %16 = extractelement <2 x double> %15, i64 0
+  store double %16, ptr %6, align 8, !tbaa !150
+  store double %i.bt, ptr %7, align 8, !tbaa !150
   %i.bu = load double, ptr %6, align 8, !tbaa !150 ; 3 uses
   %i.bv = fcmp ult double %i.bu, -1.000000e-10
   %i.bw = fcmp ugt double %i.bu, f0x3FF000000006DF38
   %or.cond263 = or i1 %i.bv, %i.bw
-  %i.bx = fcmp ult double %15, -1.000000e-10
-  %i.by = fcmp ugt double %15, f0x3FF000000006DF38
+  %i.bx = fcmp ult double %i.bt, -1.000000e-10
+  %i.by = fcmp ugt double %i.bt, f0x3FF000000006DF38
   %i.bz = or i1 %i.bx, %i.by
   %or.cond265 = select i1 %or.cond263, i1 true, i1 %i.bz
   br i1 %or.cond265, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.ca = fsub double 1.000000e+00, %i.bu
-  %i.cb = fsub double %i.ca, %15                  ; 2 uses
+  %i.cb = fsub double %i.ca, %i.bt                ; 2 uses
   store double %i.cb, ptr %8, align 8, !tbaa !150
   %i.cc = fcmp ult double %i.cb, 0.000000e+00
   br i1 %i.cc, label %bb.d, label %.thread333

@@ -1,3 +1,4 @@
+inline.NumInlined: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -181,9 +182,9 @@ define internal { double, double } @_ZL17calcofi_s_inverse5PJ_XYP8PJconsts(doubl
 bb.a:
   %i.a = fadd double %0, -8.000000e+01
   %i.b = fmul double %i.a, f0xBF6C987103B761F5
+  %3 = tail call double @llvm.fmuladd.f64(double %i.b, double f0x3FEBB67AE8584CAB, double f0x3FE312AD613A9096) ; 2 uses
   %i.c = fadd double %1, -6.000000e+01
   %i.d = fmul double %i.c, f0xBF53104B57CF96A3
-  %3 = tail call double @llvm.fmuladd.f64(double %i.b, double f0x3FEBB67AE8584CAB, double f0x3FE312AD613A9096) ; 2 uses
   %i.e = tail call double @llvm.fmuladd.f64(double %i.d, double f0x3FDFFFFFFFFFFFFF, double %3) ; 2 uses
   %i.f = insertelement <2 x double> poison, double %3, i64 0
   %i.g = insertelement <2 x double> %i.f, double %i.e, i64 1

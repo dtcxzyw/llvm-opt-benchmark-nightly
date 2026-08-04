@@ -1,3 +1,7 @@
+inline.NumInlined: 20
+inline.NumDeleted: 9
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@img_draw_core:bb.a
   %i.gu = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 2 uses
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !75
@@ -199,13 +203,13 @@ bb.ai:                                            ; preds = %bb.cw, %.lr.ph.i110
 
 bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #6
-  %i.kp = load <4 x i32>, ptr %8, align 16, !tbaa !29 ; 3 uses
+  %i.kp = load <4 x i32>, ptr %8, align 16, !tbaa !29 ; 2 uses
   store <4 x i32> %i.kp, ptr %10, align 16, !tbaa !29
-  %16 = extractelement <4 x i32> %i.kp, i64 0
-  %17 = sub nsw i32 0, %16
-  %i.kq = extractelement <4 x i32> %i.kp, i64 1
-  %18 = sub nsw i32 0, %i.kq
-  call void @lv_area_move(ptr noundef nonnull %10, i32 noundef %17, i32 noundef %18) #6
+  %16 = shufflevector <4 x i32> %i.kp, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
+  %17 = sub nsw <2 x i32> zeroinitializer, %16    ; 2 uses
+  %i.kq = extractelement <2 x i32> %17, i64 0
+  %18 = extractelement <2 x i32> %17, i64 1
+  call void @lv_area_move(ptr noundef nonnull %10, i32 noundef %i.kq, i32 noundef %18) #6
   %i.kr = load i32, ptr %i.jx, align 8, !tbaa !66 ; 7 uses
   %i.ks = load i64, ptr %10, align 16             ; 2 uses
   %i.kt = load i64, ptr %i.jw, align 8            ; 2 uses

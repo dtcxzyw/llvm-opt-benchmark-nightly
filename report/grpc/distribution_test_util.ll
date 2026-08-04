@@ -1,3 +1,7 @@
+inline.NumInlined: 84
+inline.NumDeleted: 56
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@log
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fma.f64(double, double, double) #2
@@ -199,9 +203,6 @@ bb.d:                                             ; preds = %bb.c
   %i.r = fadd <2 x double> %i.q, %i.q
   %i.s = fadd <2 x double> %i.r, splat (double -1.000000e+00)
   %i.t = fdiv <2 x double> splat (double 1.000000e+00), %i.s ; 5 uses
-  %shift = shufflevector <2 x double> %i.t, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fsub <2 x double> %i.t, %shift
-  %4 = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.u = tail call double @llvm.fmuladd.f64(double %i.m, double %i.m, double -3.000000e+00)
   %i.v = insertelement <2 x double> <double poison, double 2.000000e+00>, double %i.u, i64 0
   %i.w = insertelement <2 x double> %i.t, double 6.000000e+00, i64 0
@@ -218,12 +219,14 @@ bb.d:                                             ; preds = %bb.c
   %i.af = insertelement <2 x double> %i.ae, double %i.ac, i64 0
   %i.ag = shufflevector <2 x double> %i.z, <2 x double> %i.ad, <2 x i32> <i32 1, i32 3>
   %i.ah = fdiv <2 x double> %i.af, %i.ag          ; 2 uses
-  %shift193 = shufflevector <2 x double> %i.ah, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop194 = fsub <2 x double> %i.z, %shift193
+  %4 = shufflevector <2 x double> %i.t, <2 x double> %i.z, <2 x i32> <i32 0, i32 2>
+  %5 = shufflevector <2 x double> %i.t, <2 x double> %i.ah, <2 x i32> <i32 1, i32 3>
+  %foldExtExtBinop194 = fsub <2 x double> %4, %5  ; 2 uses
   %i.ai = extractelement <2 x double> %foldExtExtBinop194, i64 0
-  %i.aj = fneg double %4
-  %i.ak = extractelement <2 x double> %i.ah, i64 0
-  %i.al = tail call double @llvm.fmuladd.f64(double %i.aj, double %i.ai, double %i.ak) ; 2 uses
+  %i.aj = fneg double %i.ai
+  %6 = extractelement <2 x double> %i.ah, i64 0
+  %i.ak = extractelement <2 x double> %foldExtExtBinop194, i64 1
+  %i.al = tail call double @llvm.fmuladd.f64(double %i.aj, double %i.ak, double %6) ; 2 uses
   %i.am = fadd double %i.al, %i.al
   %i.an = tail call double @exp(double noundef %i.am) #13
   %i.ao = tail call double @llvm.fmuladd.f64(double %1, double %i.an, double %0)

@@ -204,14 +204,18 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r
   %i.bq = add nuw i64 %i.az, 1
   %i.br = uitofp i64 %i.bq to float
-  %i.bs = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 68), align 4, !tbaa !422 ; 2 uses
-  %2 = fdiv float %i.br, %i.bs
-  %3 = call noundef float @llvm.ceil.f32(float %2)
-  %4 = fptoui float %3 to i64
-  %5 = fdiv float %i.bm, %i.bs
-  %6 = call noundef float @llvm.ceil.f32(float %5)
-  %i.bt = fptoui float %6 to i64
-  %.sroa.speculated.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %4, i64 %i.bt)
+  %i.bs = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZZN11OpenImageIO4v3_112_GLOBAL__N_114xmp_tagmap_refEvE1T, i64 68), align 4, !tbaa !422
+  %2 = insertelement <2 x float> poison, float %i.br, i64 0
+  %3 = insertelement <2 x float> %2, float %i.bm, i64 1
+  %4 = insertelement <2 x float> poison, float %i.bs, i64 0
+  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
+  %6 = fdiv <2 x float> %3, %5
+  %7 = call <2 x float> @llvm.ceil.v2f32(<2 x float> %6) ; 2 uses
+  %8 = extractelement <2 x float> %7, i64 0
+  %9 = fptoui float %8 to i64
+  %10 = extractelement <2 x float> %7, i64 1
+  %i.bt = fptoui float %10 to i64
+  %.sroa.speculated.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %9, i64 %i.bt)
   invoke fastcc void @_ZN3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_112_GLOBAL__N_16XMPtagEENS_9robin_mapIS8_SE_St4hashIS8_ESt8equal_toIS8_ESaISF_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSP_11ValueSelectESI_SK_SL_Lb0ESO_E11rehash_implEm(i64 noundef %.sroa.speculated.i.i.i.i.i.i.i)
           to label %.noexc13 unwind label %.loopexit
 
@@ -614,9 +618,6 @@ bb.u:                                             ; preds = %_ZN3tsl17detail_rob
 ; Function Attrs: nounwind
 declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(32)) local_unnamed_addr #15
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.ceil.f32(float) #19
-
 declare noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32), i64 noundef, i64 noundef, ptr noundef, i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress uwtable
@@ -1018,6 +1019,9 @@ declare i32 @llvm.umin.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.ceil.v2f32(<2 x float>) #19
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

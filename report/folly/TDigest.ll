@@ -203,7 +203,7 @@ _ZNSt6vectorIZN5folly7TDigest9mergeImplIPKS1_EES1_NS0_5RangeIT_EEE6CursorSaIS8_E
   %.sroa.14.1 = phi ptr [ %.sroa.14.0200, %.lr.ph204 ], [ %i.ej, %.noexc76 ], [ %i.dk, %bb.q ] ; 4 uses
   %.sroa.0129.1 = phi ptr [ %.sroa.0129.0201, %.lr.ph204 ], [ %i.dv, %.noexc76 ], [ %.sroa.0129.0201, %bb.q ] ; 31 uses
   %.160 = phi double [ %.059203, %.lr.ph204 ], [ %i.cz, %.noexc76 ], [ %i.cz, %bb.q ] ; 5 uses
-  %i.el = phi <2 x double> [ %i.cp, %.lr.ph204 ], [ %i.cy, %.noexc76 ], [ %i.cy, %bb.q ] ; 3 uses
+  %i.el = phi <2 x double> [ %i.cp, %.lr.ph204 ], [ %i.cy, %.noexc76 ], [ %i.cy, %bb.q ] ; 5 uses
   %i.em = getelementptr inbounds nuw i8, ptr %.061202, i64 64 ; 2 uses
   %.not63 = icmp eq ptr %i.em, %2
   br i1 %.not63, label %._crit_edge205, label %.lr.ph204
@@ -515,6 +515,7 @@ _ZN5folly9down_heapIN9__gnu_cxx17__normal_iteratorIPZNS_7TDigest9mergeImplIPKS3_
   %i.jf = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.jg = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.jf, i8 0, i64 16, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   store <2 x double> splat (double +qnan), ptr %i.jg, align 8, !tbaa !29
   %i.jh = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 3 uses
   br i1 %i.jd, label %bb.aq, label %_ZNSt4pairISt6vectorIN5folly7TDigest8CentroidESaIS3_EEdED2Ev.exit.thread
@@ -523,7 +524,10 @@ _ZNSt4pairISt6vectorIN5folly7TDigest8CentroidESaIS3_EEdED2Ev.exit.thread: ; pred
   %i.ji = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   store double %.160, ptr %i.ji, align 8, !tbaa !23
-  store <2 x double> %i.el, ptr %i.jg, align 8, !tbaa !29
+  %5 = extractelement <2 x double> %i.el, i64 1
+  store double %5, ptr %4, align 8, !tbaa !25
+  %6 = extractelement <2 x double> %i.el, i64 0
+  store double %6, ptr %i.jg, align 8, !tbaa !24
   br label %_ZNSt6vectorIN5folly7TDigest8CentroidESaIS2_EE13shrink_to_fitEv.exit
 
 bb.aq:                                            ; preds = %._crit_edge214
@@ -592,7 +596,10 @@ _ZNSt4pairISt6vectorIN5folly7TDigest8CentroidESaIS3_EEdED2Ev.exit: ; preds = %bb
   store double %i.kg, ptr %i.jf, align 8, !tbaa !29
   %i.kn = getelementptr inbounds nuw i8, ptr %0, i64 40
   store double %.160, ptr %i.kn, align 8, !tbaa !23
-  store <2 x double> %i.el, ptr %i.jg, align 8, !tbaa !29
+  %7 = extractelement <2 x double> %i.el, i64 1
+  store double %7, ptr %4, align 8, !tbaa !25
+  %8 = extractelement <2 x double> %i.el, i64 0
+  store double %8, ptr %i.jg, align 8, !tbaa !24
   %i.ko = icmp eq ptr %i.km, %i.kl
   br i1 %i.ko, label %_ZNSt6vectorIN5folly7TDigest8CentroidESaIS2_EE13shrink_to_fitEv.exit, label %bb.au
 
@@ -995,7 +1002,7 @@ _ZNSt6vectorIZN5folly7TDigest9mergeImplIPPKS1_EES1_NS0_5RangeIT_EEE6CursorSaIS9_
   %.sroa.14.1 = phi ptr [ %.sroa.14.0200, %.lr.ph204 ], [ %i.en, %.noexc76 ], [ %i.do, %bb.r ] ; 4 uses
   %.sroa.0129.1 = phi ptr [ %.sroa.0129.0201, %.lr.ph204 ], [ %i.dz, %.noexc76 ], [ %.sroa.0129.0201, %bb.r ] ; 31 uses
   %.160 = phi double [ %.059203, %.lr.ph204 ], [ %i.dd, %.noexc76 ], [ %i.dd, %bb.r ] ; 5 uses
-  %i.ep = phi <2 x double> [ %i.cs, %.lr.ph204 ], [ %i.dc, %.noexc76 ], [ %i.dc, %bb.r ] ; 3 uses
+  %i.ep = phi <2 x double> [ %i.cs, %.lr.ph204 ], [ %i.dc, %.noexc76 ], [ %i.dc, %bb.r ] ; 5 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %.061202, i64 8 ; 2 uses
   %.not63 = icmp eq ptr %i.eq, %2
   br i1 %.not63, label %._crit_edge205, label %.lr.ph204
@@ -1307,6 +1314,7 @@ _ZN5folly9down_heapIN9__gnu_cxx17__normal_iteratorIPZNS_7TDigest9mergeImplIPPKS3
   %i.jj = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.jj, i8 0, i64 16, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   store <2 x double> splat (double +qnan), ptr %i.jk, align 8, !tbaa !29
   %i.jl = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 3 uses
   br i1 %i.jh, label %bb.ar, label %_ZNSt4pairISt6vectorIN5folly7TDigest8CentroidESaIS3_EEdED2Ev.exit.thread
@@ -1315,7 +1323,10 @@ _ZNSt4pairISt6vectorIN5folly7TDigest8CentroidESaIS3_EEdED2Ev.exit.thread: ; pred
   %i.jm = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   store double %.160, ptr %i.jm, align 8, !tbaa !23
-  store <2 x double> %i.ep, ptr %i.jk, align 8, !tbaa !29
+  %5 = extractelement <2 x double> %i.ep, i64 1
+  store double %5, ptr %4, align 8, !tbaa !25
+  %6 = extractelement <2 x double> %i.ep, i64 0
+  store double %6, ptr %i.jk, align 8, !tbaa !24
   br label %_ZNSt6vectorIN5folly7TDigest8CentroidESaIS2_EE13shrink_to_fitEv.exit
 
 bb.ar:                                            ; preds = %._crit_edge214
@@ -1384,7 +1395,10 @@ _ZNSt4pairISt6vectorIN5folly7TDigest8CentroidESaIS3_EEdED2Ev.exit: ; preds = %bb
   store double %i.kk, ptr %i.jj, align 8, !tbaa !29
   %i.kr = getelementptr inbounds nuw i8, ptr %0, i64 40
   store double %.160, ptr %i.kr, align 8, !tbaa !23
-  store <2 x double> %i.ep, ptr %i.jk, align 8, !tbaa !29
+  %7 = extractelement <2 x double> %i.ep, i64 1
+  store double %7, ptr %4, align 8, !tbaa !25
+  %8 = extractelement <2 x double> %i.ep, i64 0
+  store double %8, ptr %i.jk, align 8, !tbaa !24
   %i.ks = icmp eq ptr %i.kq, %i.kp
   br i1 %i.ks, label %_ZNSt6vectorIN5folly7TDigest8CentroidESaIS2_EE13shrink_to_fitEv.exit, label %bb.av
 

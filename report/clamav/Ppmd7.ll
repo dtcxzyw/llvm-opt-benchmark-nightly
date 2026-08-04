@@ -204,42 +204,160 @@ bb.b:                                             ; preds = %bb.b, %bb.a
 
 .preheader68:                                     ; preds = %.preheader69, %.preheader68
   %indvars.iv84 = phi i64 [ 0, %.preheader69 ], [ %indvars.iv.next85, %.preheader68 ] ; 3 uses
-  %i.aw = getelementptr inbounds nuw [128 x i8], ptr %i.al, i64 %indvars.iv84 ; 4 uses
+  %i.aw = getelementptr inbounds nuw [128 x i8], ptr %i.al, i64 %indvars.iv84 ; 64 uses
   %i.ax = trunc i64 %indvars.iv84 to i32
   %i.ay = add i32 %i.ax, 2                        ; 8 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 32
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.aw, i64 64
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.aw, i64 96
-  %i.bc = udiv i32 24657, %i.ay
-  %i.bd = udiv i32 26162, %i.ay
-  %i.be = udiv i32 23228, %i.ay
+  %1 = udiv i32 15581, %i.ay
+  %2 = trunc nuw nsw i32 %1 to i16
+  %3 = sub nuw nsw i16 16384, %2                  ; 8 uses
+  store i16 %3, ptr %i.aw, align 2, !tbaa !54
+  %4 = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
+  store i16 %3, ptr %4, align 2, !tbaa !54
+  %5 = getelementptr inbounds nuw i8, ptr %i.aw, i64 32
+  store i16 %3, ptr %5, align 2, !tbaa !54
+  %6 = getelementptr inbounds nuw i8, ptr %i.aw, i64 48
+  store i16 %3, ptr %6, align 2, !tbaa !54
+  %7 = getelementptr inbounds nuw i8, ptr %i.aw, i64 64
+  store i16 %3, ptr %7, align 2, !tbaa !54
+  %8 = getelementptr inbounds nuw i8, ptr %i.aw, i64 80
+  store i16 %3, ptr %8, align 2, !tbaa !54
+  %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 96
+  store i16 %3, ptr %i.az, align 2, !tbaa !54
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.aw, i64 112
+  store i16 %3, ptr %i.ba, align 2, !tbaa !54
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.aw, i64 2
+  %i.bc = udiv i32 7999, %i.ay
+  %9 = trunc nuw nsw i32 %i.bc to i16
+  %10 = sub nuw nsw i16 16384, %9                 ; 8 uses
+  store i16 %10, ptr %i.bb, align 2, !tbaa !54
+  %11 = getelementptr inbounds nuw i8, ptr %i.aw, i64 18
+  store i16 %10, ptr %11, align 2, !tbaa !54
+  %12 = getelementptr inbounds nuw i8, ptr %i.aw, i64 34
+  store i16 %10, ptr %12, align 2, !tbaa !54
+  %13 = getelementptr inbounds nuw i8, ptr %i.aw, i64 50
+  store i16 %10, ptr %13, align 2, !tbaa !54
+  %14 = getelementptr inbounds nuw i8, ptr %i.aw, i64 66
+  store i16 %10, ptr %14, align 2, !tbaa !54
+  %15 = getelementptr inbounds nuw i8, ptr %i.aw, i64 82
+  store i16 %10, ptr %15, align 2, !tbaa !54
+  %16 = getelementptr inbounds nuw i8, ptr %i.aw, i64 98
+  store i16 %10, ptr %16, align 2, !tbaa !54
+  %17 = getelementptr inbounds nuw i8, ptr %i.aw, i64 114
+  store i16 %10, ptr %17, align 2, !tbaa !54
+  %18 = getelementptr inbounds nuw i8, ptr %i.aw, i64 4
+  %i.bd = udiv i32 22975, %i.ay
+  %19 = trunc nuw nsw i32 %i.bd to i16
+  %20 = sub nuw nsw i16 16384, %19                ; 8 uses
+  store i16 %20, ptr %18, align 2, !tbaa !54
+  %21 = getelementptr inbounds nuw i8, ptr %i.aw, i64 20
+  store i16 %20, ptr %21, align 2, !tbaa !54
+  %22 = getelementptr inbounds nuw i8, ptr %i.aw, i64 36
+  store i16 %20, ptr %22, align 2, !tbaa !54
+  %23 = getelementptr inbounds nuw i8, ptr %i.aw, i64 52
+  store i16 %20, ptr %23, align 2, !tbaa !54
+  %24 = getelementptr inbounds nuw i8, ptr %i.aw, i64 68
+  store i16 %20, ptr %24, align 2, !tbaa !54
+  %25 = getelementptr inbounds nuw i8, ptr %i.aw, i64 84
+  store i16 %20, ptr %25, align 2, !tbaa !54
+  %26 = getelementptr inbounds nuw i8, ptr %i.aw, i64 100
+  store i16 %20, ptr %26, align 2, !tbaa !54
+  %27 = getelementptr inbounds nuw i8, ptr %i.aw, i64 116
+  store i16 %20, ptr %27, align 2, !tbaa !54
+  %28 = getelementptr inbounds nuw i8, ptr %i.aw, i64 6
+  %i.be = udiv i32 18675, %i.ay
+  %29 = trunc nuw nsw i32 %i.be to i16
+  %30 = sub nuw nsw i16 16384, %29                ; 8 uses
+  store i16 %30, ptr %28, align 2, !tbaa !54
+  %31 = getelementptr inbounds nuw i8, ptr %i.aw, i64 22
+  store i16 %30, ptr %31, align 2, !tbaa !54
+  %32 = getelementptr inbounds nuw i8, ptr %i.aw, i64 38
+  store i16 %30, ptr %32, align 2, !tbaa !54
+  %33 = getelementptr inbounds nuw i8, ptr %i.aw, i64 54
+  store i16 %30, ptr %33, align 2, !tbaa !54
+  %34 = getelementptr inbounds nuw i8, ptr %i.aw, i64 70
+  store i16 %30, ptr %34, align 2, !tbaa !54
+  %35 = getelementptr inbounds nuw i8, ptr %i.aw, i64 86
+  store i16 %30, ptr %35, align 2, !tbaa !54
+  %36 = getelementptr inbounds nuw i8, ptr %i.aw, i64 102
+  store i16 %30, ptr %36, align 2, !tbaa !54
+  %37 = getelementptr inbounds nuw i8, ptr %i.aw, i64 118
+  store i16 %30, ptr %37, align 2, !tbaa !54
+  %38 = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.bf = udiv i32 25761, %i.ay
-  %i.bg = udiv i32 18675, %i.ay
-  %1 = udiv i32 22975, %i.ay
-  %2 = udiv i32 7999, %i.ay
-  %i.bh = udiv i32 15581, %i.ay
-  %i.bi = trunc nuw nsw i32 %i.bc to i16
-  %3 = trunc nuw nsw i32 %i.bd to i16
-  %4 = trunc nuw nsw i32 %i.be to i16
-  %5 = trunc nuw nsw i32 %i.bf to i16
-  %6 = trunc nuw nsw i32 %i.bg to i16
-  %7 = trunc nuw nsw i32 %1 to i16
-  %i.bj = trunc nuw nsw i32 %2 to i16
-  %8 = trunc nuw nsw i32 %i.bh to i16
-  %9 = insertelement <8 x i16> poison, i16 %8, i64 0
-  %10 = insertelement <8 x i16> %9, i16 %i.bj, i64 1
-  %11 = insertelement <8 x i16> %10, i16 %7, i64 2
-  %12 = insertelement <8 x i16> %11, i16 %6, i64 3
-  %13 = insertelement <8 x i16> %12, i16 %5, i64 4
-  %14 = insertelement <8 x i16> %13, i16 %4, i64 5
-  %15 = insertelement <8 x i16> %14, i16 %3, i64 6
-  %16 = insertelement <8 x i16> %15, i16 %i.bi, i64 7
-  %17 = shufflevector <8 x i16> %16, <8 x i16> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %18 = sub nuw nsw <16 x i16> splat (i16 16384), %17 ; 4 uses
-  store <16 x i16> %18, ptr %i.aw, align 2, !tbaa !54
-  store <16 x i16> %18, ptr %i.az, align 2, !tbaa !54
-  store <16 x i16> %18, ptr %i.ba, align 2, !tbaa !54
-  store <16 x i16> %18, ptr %i.bb, align 2, !tbaa !54
+  %39 = trunc nuw nsw i32 %i.bf to i16
+  %40 = sub nuw nsw i16 16384, %39                ; 8 uses
+  store i16 %40, ptr %38, align 2, !tbaa !54
+  %41 = getelementptr inbounds nuw i8, ptr %i.aw, i64 24
+  store i16 %40, ptr %41, align 2, !tbaa !54
+  %42 = getelementptr inbounds nuw i8, ptr %i.aw, i64 40
+  store i16 %40, ptr %42, align 2, !tbaa !54
+  %43 = getelementptr inbounds nuw i8, ptr %i.aw, i64 56
+  store i16 %40, ptr %43, align 2, !tbaa !54
+  %44 = getelementptr inbounds nuw i8, ptr %i.aw, i64 72
+  store i16 %40, ptr %44, align 2, !tbaa !54
+  %45 = getelementptr inbounds nuw i8, ptr %i.aw, i64 88
+  store i16 %40, ptr %45, align 2, !tbaa !54
+  %46 = getelementptr inbounds nuw i8, ptr %i.aw, i64 104
+  store i16 %40, ptr %46, align 2, !tbaa !54
+  %47 = getelementptr inbounds nuw i8, ptr %i.aw, i64 120
+  store i16 %40, ptr %47, align 2, !tbaa !54
+  %48 = getelementptr inbounds nuw i8, ptr %i.aw, i64 10
+  %i.bg = udiv i32 23228, %i.ay
+  %49 = trunc nuw nsw i32 %i.bg to i16
+  %50 = sub nuw nsw i16 16384, %49                ; 8 uses
+  store i16 %50, ptr %48, align 2, !tbaa !54
+  %51 = getelementptr inbounds nuw i8, ptr %i.aw, i64 26
+  store i16 %50, ptr %51, align 2, !tbaa !54
+  %52 = getelementptr inbounds nuw i8, ptr %i.aw, i64 42
+  store i16 %50, ptr %52, align 2, !tbaa !54
+  %53 = getelementptr inbounds nuw i8, ptr %i.aw, i64 58
+  store i16 %50, ptr %53, align 2, !tbaa !54
+  %54 = getelementptr inbounds nuw i8, ptr %i.aw, i64 74
+  store i16 %50, ptr %54, align 2, !tbaa !54
+  %55 = getelementptr inbounds nuw i8, ptr %i.aw, i64 90
+  store i16 %50, ptr %55, align 2, !tbaa !54
+  %56 = getelementptr inbounds nuw i8, ptr %i.aw, i64 106
+  store i16 %50, ptr %56, align 2, !tbaa !54
+  %57 = getelementptr inbounds nuw i8, ptr %i.aw, i64 122
+  store i16 %50, ptr %57, align 2, !tbaa !54
+  %58 = getelementptr inbounds nuw i8, ptr %i.aw, i64 12
+  %i.bh = udiv i32 26162, %i.ay
+  %i.bi = trunc nuw nsw i32 %i.bh to i16
+  %59 = sub nuw nsw i16 16384, %i.bi              ; 8 uses
+  store i16 %59, ptr %58, align 2, !tbaa !54
+  %60 = getelementptr inbounds nuw i8, ptr %i.aw, i64 28
+  store i16 %59, ptr %60, align 2, !tbaa !54
+  %61 = getelementptr inbounds nuw i8, ptr %i.aw, i64 44
+  store i16 %59, ptr %61, align 2, !tbaa !54
+  %62 = getelementptr inbounds nuw i8, ptr %i.aw, i64 60
+  store i16 %59, ptr %62, align 2, !tbaa !54
+  %63 = getelementptr inbounds nuw i8, ptr %i.aw, i64 76
+  store i16 %59, ptr %63, align 2, !tbaa !54
+  %64 = getelementptr inbounds nuw i8, ptr %i.aw, i64 92
+  store i16 %59, ptr %64, align 2, !tbaa !54
+  %65 = getelementptr inbounds nuw i8, ptr %i.aw, i64 108
+  store i16 %59, ptr %65, align 2, !tbaa !54
+  %66 = getelementptr inbounds nuw i8, ptr %i.aw, i64 124
+  store i16 %59, ptr %66, align 2, !tbaa !54
+  %67 = getelementptr inbounds nuw i8, ptr %i.aw, i64 14
+  %68 = udiv i32 24657, %i.ay
+  %i.bj = trunc nuw nsw i32 %68 to i16
+  %69 = sub nuw nsw i16 16384, %i.bj              ; 8 uses
+  store i16 %69, ptr %67, align 2, !tbaa !54
+  %70 = getelementptr inbounds nuw i8, ptr %i.aw, i64 30
+  store i16 %69, ptr %70, align 2, !tbaa !54
+  %71 = getelementptr inbounds nuw i8, ptr %i.aw, i64 46
+  store i16 %69, ptr %71, align 2, !tbaa !54
+  %72 = getelementptr inbounds nuw i8, ptr %i.aw, i64 62
+  store i16 %69, ptr %72, align 2, !tbaa !54
+  %73 = getelementptr inbounds nuw i8, ptr %i.aw, i64 78
+  store i16 %69, ptr %73, align 2, !tbaa !54
+  %74 = getelementptr inbounds nuw i8, ptr %i.aw, i64 94
+  store i16 %69, ptr %74, align 2, !tbaa !54
+  %75 = getelementptr inbounds nuw i8, ptr %i.aw, i64 110
+  store i16 %69, ptr %75, align 2, !tbaa !54
+  %76 = getelementptr inbounds nuw i8, ptr %i.aw, i64 126
+  store i16 %69, ptr %76, align 2, !tbaa !54
   %indvars.iv.next85 = add nuw nsw i64 %indvars.iv84, 1 ; 2 uses
   %exitcond87.not = icmp eq i64 %indvars.iv.next85, 128
   br i1 %exitcond87.not, label %.preheader67, label %.preheader68

@@ -1,3 +1,5 @@
+inline.NumInlined: 3304
+inline.NumDeleted: 1614
 begin_hunk_0_@_ZN12_GLOBAL__N_116fill_in_metadataEPNS_13inproc_streamEPK19grpc_metadata_batchPS2_Pb:bb.a
   %i.qu = atomicrmw sub ptr %.pr.i.i.i.i293.i.i.i, i64 1 acq_rel, align 8
   %i.qv = icmp eq i64 %i.qu, 1
@@ -199,18 +201,29 @@ bb.a:
   store ptr %2, ptr %i.a, align 8, !tbaa !246
   store ptr %3, ptr %i.b, align 8, !tbaa !278
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2744
-  %8 = load <4 x ptr>, ptr %i.c, align 8, !tbaa !246
-  %9 = insertelement <4 x ptr> poison, ptr %2, i64 0
-  %10 = shufflevector <4 x ptr> %9, <4 x ptr> poison, <4 x i32> zeroinitializer
-  %11 = icmp eq <4 x ptr> %10, %8
+  %8 = load ptr, ptr %i.c, align 8, !tbaa !287
+  %9 = icmp eq ptr %2, %8
+  %10 = zext i1 %9 to i32
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 2752
+  %12 = load ptr, ptr %11, align 8, !tbaa !288
+  %13 = icmp eq ptr %2, %12
+  %14 = zext i1 %13 to i32
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 2760
+  %16 = load ptr, ptr %15, align 8, !tbaa !289
+  %17 = icmp eq ptr %2, %16
+  %18 = zext i1 %17 to i32
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 2768
+  %20 = load ptr, ptr %19, align 8, !tbaa !290
+  %21 = icmp eq ptr %2, %20
+  %22 = zext i1 %21 to i32
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2776
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !291
   %i.f = icmp eq ptr %2, %i.e
   %i.g = zext i1 %i.f to i32
-  %12 = bitcast <4 x i1> %11 to i4
-  %13 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %12)
-  %14 = zext nneg i4 %13 to i32
-  %op.rdx = add nuw nsw i32 %14, %i.g
+  %23 = add nuw nsw i32 %14, %10
+  %24 = add nuw nsw i32 %23, %18
+  %25 = add nuw nsw i32 %24, %22
+  %op.rdx = add nuw nsw i32 %25, %i.g
   %i.h = icmp eq i32 %op.rdx, 1
   br i1 %i.h, label %bb.b, label %bb.s
 
@@ -612,9 +625,6 @@ declare i64 @llvm.umin.i64(i64, i64) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #30
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i4 @llvm.ctpop.i4(i4) #30
 
 attributes #0 = { uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

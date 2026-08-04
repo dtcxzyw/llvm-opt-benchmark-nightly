@@ -204,12 +204,16 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k, %bb.j
   %.118.i = phi ptr [ %i.ho, %bb.k ], [ null, %bb.j ]
   %i.hq = phi double [ %i.hp, %bb.k ], [ 0.000000e+00, %bb.j ]
-  %5 = fsub nsz double %i.hk, %i.hq
-  %6 = call nsz double @llvm.maxnum.f64(double %5, double 0.000000e+00)
-  %7 = call nsz double @llvm.maxnum.f64(double %.01924.i, double %6)
-  %8 = fsub nsz double %i.hn, %i.hk
-  %i.hr = call nsz double @llvm.maxnum.f64(double %8, double 0.000000e+00)
-  %i.hs = call nsz double @llvm.maxnum.f64(double %7, double %i.hr) ; 2 uses
+  %5 = insertelement <2 x double> poison, double %i.hk, i64 0
+  %6 = insertelement <2 x double> %5, double %i.hn, i64 1
+  %7 = insertelement <2 x double> poison, double %i.hq, i64 0
+  %8 = insertelement <2 x double> %7, double %i.hk, i64 1
+  %9 = fsub nsz <2 x double> %6, %8
+  %10 = call nsz <2 x double> @llvm.maxnum.v2f64(<2 x double> %9, <2 x double> zeroinitializer) ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 0
+  %i.hr = call nsz double @llvm.maxnum.f64(double %.01924.i, double %11)
+  %12 = extractelement <2 x double> %10, i64 1
+  %i.hs = call nsz double @llvm.maxnum.f64(double %i.hr, double %12) ; 2 uses
   %i.ht = add nuw nsw i64 %.02023.i, 1            ; 2 uses
   %exitcond.not.i232 = icmp eq i64 %i.ht, %i.hd
   br i1 %exitcond.not.i232, label %_ZN6casadi15casadi_max_violIdEET_xPKS1_S3_S3_.exit, label %.lr.ph.i230, !llvm.loop !226
@@ -612,12 +616,16 @@ bb.be:                                            ; preds = %bb.bd
 bb.bf:                                            ; preds = %bb.be, %bb.bd
   %.118.i382 = phi ptr [ %i.aei, %bb.be ], [ null, %bb.bd ]
   %i.aek = phi double [ %i.aej, %bb.be ], [ 0.000000e+00, %bb.bd ]
-  %9 = fsub nsz double %i.aee, %i.aek
-  %10 = call nsz double @llvm.maxnum.f64(double %9, double 0.000000e+00)
-  %11 = call nsz double @llvm.maxnum.f64(double %.01924.i375, double %10)
-  %12 = fsub nsz double %i.aeh, %i.aee
-  %i.ael = call nsz double @llvm.maxnum.f64(double %12, double 0.000000e+00)
-  %i.aem = call nsz double @llvm.maxnum.f64(double %11, double %i.ael) ; 2 uses
+  %13 = insertelement <2 x double> poison, double %i.aee, i64 0
+  %14 = insertelement <2 x double> %13, double %i.aeh, i64 1
+  %15 = insertelement <2 x double> poison, double %i.aek, i64 0
+  %16 = insertelement <2 x double> %15, double %i.aee, i64 1
+  %17 = fsub nsz <2 x double> %14, %16
+  %18 = call nsz <2 x double> @llvm.maxnum.v2f64(<2 x double> %17, <2 x double> zeroinitializer) ; 2 uses
+  %19 = extractelement <2 x double> %18, i64 0
+  %i.ael = call nsz double @llvm.maxnum.f64(double %.01924.i375, double %19)
+  %20 = extractelement <2 x double> %18, i64 1
+  %i.aem = call nsz double @llvm.maxnum.f64(double %i.ael, double %20) ; 2 uses
   %i.aen = add nuw nsw i64 %.02023.i376, 1        ; 2 uses
   %exitcond.not.i383 = icmp eq i64 %i.aen, %i.adf
   br i1 %exitcond.not.i383, label %_ZN6casadi15casadi_max_violIdEET_xPKS1_S3_S3_.exit384, label %.lr.ph.i371, !llvm.loop !226
@@ -1020,12 +1028,16 @@ bb.bs:                                            ; preds = %bb.br
 bb.bt:                                            ; preds = %bb.bs, %bb.br
   %.118.i433 = phi ptr [ %i.ale, %bb.bs ], [ null, %bb.br ]
   %i.alg = phi double [ %i.alf, %bb.bs ], [ 0.000000e+00, %bb.br ]
-  %13 = fsub nsz double %i.ala, %i.alg
-  %14 = call nsz double @llvm.maxnum.f64(double %13, double 0.000000e+00)
-  %15 = call nsz double @llvm.maxnum.f64(double %.01924.i426, double %14)
-  %16 = fsub nsz double %i.ald, %i.ala
-  %i.alh = call nsz double @llvm.maxnum.f64(double %16, double 0.000000e+00)
-  %i.ali = call nsz double @llvm.maxnum.f64(double %15, double %i.alh) ; 2 uses
+  %21 = insertelement <2 x double> poison, double %i.ala, i64 0
+  %22 = insertelement <2 x double> %21, double %i.ald, i64 1
+  %23 = insertelement <2 x double> poison, double %i.alg, i64 0
+  %24 = insertelement <2 x double> %23, double %i.ala, i64 1
+  %25 = fsub nsz <2 x double> %22, %24
+  %26 = call nsz <2 x double> @llvm.maxnum.v2f64(<2 x double> %25, <2 x double> zeroinitializer) ; 2 uses
+  %27 = extractelement <2 x double> %26, i64 0
+  %i.alh = call nsz double @llvm.maxnum.f64(double %.01924.i426, double %27)
+  %28 = extractelement <2 x double> %26, i64 1
+  %i.ali = call nsz double @llvm.maxnum.f64(double %i.alh, double %28) ; 2 uses
   %i.alj = add nuw nsw i64 %.02023.i427, 1        ; 2 uses
   %exitcond.not.i434 = icmp eq i64 %i.alj, %i.akt
   br i1 %exitcond.not.i434, label %_ZN6casadi15casadi_max_violIdEET_xPKS1_S3_S3_.exit435, label %.lr.ph.i422, !llvm.loop !226
@@ -1427,6 +1439,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.maxnum.v2f64(<2 x double>, <2 x double>) #14
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

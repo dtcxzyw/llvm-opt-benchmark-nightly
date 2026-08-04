@@ -203,172 +203,176 @@ bb.a:
   %i.g = load i8, ptr %i.f, align 8, !range !994, !noundef !5
   %.not265 = icmp ne i8 %i.g, -2                  ; 2 uses
   %.sroa.06.0 = zext i1 %.not265 to i64
+  %2 = add nuw nsw i64 %.sroa.06.0, %.
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.i = load i64, ptr %i.h, align 8, !range !170, !noundef !5
   %.not266 = icmp ne i64 %i.i, -2                 ; 2 uses
   %.sroa.07.0 = zext i1 %.not266 to i64
+  %3 = add nuw nsw i64 %2, %.sroa.07.0
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 136 ; 2 uses
   %i.k = load i64, ptr %i.j, align 8, !range !170, !noundef !5
   %.not267 = icmp ne i64 %i.k, -2                 ; 2 uses
   %.sroa.08.0 = zext i1 %.not267 to i64
+  %4 = add nuw nsw i64 %3, %.sroa.08.0
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 1560 ; 2 uses
   %i.m = load i8, ptr %i.l, align 8, !range !6, !noundef !5
   %.not268 = icmp ne i8 %i.m, 2                   ; 2 uses
   %.sroa.09.0 = zext i1 %.not268 to i64
+  %5 = add nuw nsw i64 %4, %.sroa.09.0
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 192 ; 2 uses
   %i.o = load i64, ptr %i.n, align 8, !range !170, !noundef !5
   %.not269 = icmp ne i64 %i.o, -2                 ; 2 uses
   %.sroa.010.0 = zext i1 %.not269 to i64
+  %6 = add nuw nsw i64 %5, %.sroa.010.0
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 816 ; 2 uses
   %i.q = load i64, ptr %i.p, align 8, !range !995, !noundef !5
   %.not270 = icmp ne i64 %i.q, -2                 ; 2 uses
   %.sroa.011.0 = zext i1 %.not270 to i64
+  %7 = add nuw nsw i64 %6, %.sroa.011.0
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 1562 ; 2 uses
   %i.s = load i8, ptr %i.r, align 2, !range !6, !noundef !5
   %.not271 = icmp ne i8 %i.s, 2                   ; 2 uses
   %.sroa.012.0 = zext i1 %.not271 to i64
+  %8 = add nuw nsw i64 %7, %.sroa.012.0
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 872 ; 2 uses
   %i.u = load i64, ptr %i.t, align 8, !range !995, !noundef !5
   %.not272 = icmp ne i64 %i.u, -2                 ; 2 uses
   %.sroa.013.0 = zext i1 %.not272 to i64
+  %9 = add nuw nsw i64 %8, %.sroa.013.0
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 928 ; 2 uses
   %i.w = load i64, ptr %i.v, align 8, !range !995, !noundef !5
   %.not273 = icmp ne i64 %i.w, -2                 ; 2 uses
   %.sroa.014.0 = zext i1 %.not273 to i64
+  %10 = add nuw nsw i64 %9, %.sroa.014.0
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 1564 ; 2 uses
   %i.y = load i8, ptr %i.x, align 4, !range !6, !noundef !5
   %.not274 = icmp ne i8 %i.y, 2                   ; 2 uses
   %.sroa.015.0 = zext i1 %.not274 to i64
+  %11 = add nuw nsw i64 %10, %.sroa.015.0
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 1566 ; 2 uses
   %i.aa = load i8, ptr %i.z, align 2, !range !6, !noundef !5
   %.not275 = icmp ne i8 %i.aa, 2                  ; 2 uses
   %.sroa.016.0 = zext i1 %.not275 to i64
+  %12 = add nuw nsw i64 %11, %.sroa.016.0
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 424 ; 2 uses
   %i.ac = load i64, ptr %i.ab, align 8, !range !205, !noundef !5
   %.not276 = icmp ne i64 %i.ac, -3                ; 2 uses
   %.sroa.017.0 = zext i1 %.not276 to i64
+  %13 = add nuw nsw i64 %12, %.sroa.017.0
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 456 ; 2 uses
   %i.ae = load i64, ptr %i.ad, align 8, !range !205, !noundef !5
   %.not277 = icmp ne i64 %i.ae, -3                ; 2 uses
   %.sroa.018.0 = zext i1 %.not277 to i64
+  %14 = add nuw nsw i64 %13, %.sroa.018.0
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 1572 ; 2 uses
   %i.ag = load i8, ptr %i.af, align 4, !range !864, !noundef !5
   %.not278 = icmp ne i8 %i.ag, -1                 ; 2 uses
   %.sroa.019.0 = zext i1 %.not278 to i64
+  %15 = add nuw nsw i64 %14, %.sroa.019.0
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 1574 ; 2 uses
   %i.ai = load i8, ptr %i.ah, align 2, !range !864, !noundef !5
   %.not279 = icmp ne i8 %i.ai, -1                 ; 2 uses
   %.sroa.020.0 = zext i1 %.not279 to i64
+  %16 = add nuw nsw i64 %15, %.sroa.020.0
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 984 ; 2 uses
   %i.ak = load i64, ptr %i.aj, align 8, !range !995, !noundef !5
   %.not280 = icmp ne i64 %i.ak, -2                ; 2 uses
   %.sroa.021.0 = zext i1 %.not280 to i64
+  %17 = add nuw nsw i64 %16, %.sroa.021.0
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 1582 ; 2 uses
   %i.am = load i8, ptr %i.al, align 2, !range !994, !noundef !5
   %.not281 = icmp ne i8 %i.am, -2                 ; 2 uses
   %.sroa.022.0 = zext i1 %.not281 to i64
+  %18 = add nuw nsw i64 %17, %.sroa.022.0
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 1568 ; 2 uses
   %i.ao = load i8, ptr %i.an, align 8, !range !6, !noundef !5
   %.not282 = icmp ne i8 %i.ao, 2                  ; 2 uses
   %.sroa.023.0 = zext i1 %.not282 to i64
+  %19 = add nuw nsw i64 %18, %.sroa.023.0
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 1584 ; 2 uses
   %i.aq = load i8, ptr %i.ap, align 8, !range !994, !noundef !5
   %.not283 = icmp ne i8 %i.aq, -2                 ; 2 uses
   %.sroa.024.0 = zext i1 %.not283 to i64
+  %20 = add nuw nsw i64 %19, %.sroa.024.0
   %i.ar = load i64, ptr %1, align 8, !range !4, !noundef !5
   %.not284 = icmp ne i64 %i.ar, -1                ; 2 uses
   %.sroa.025.0 = zext i1 %.not284 to i64
+  %21 = add nuw nsw i64 %20, %.sroa.025.0
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 1586 ; 2 uses
   %i.at = load i8, ptr %i.as, align 2, !range !994, !noundef !5
   %.not285 = icmp ne i8 %i.at, -2                 ; 2 uses
   %.sroa.026.0 = zext i1 %.not285 to i64
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 1040 ; 2 uses
-  %3 = load i64, ptr %2, align 8, !range !995, !noundef !5
-  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 1096 ; 2 uses
+  %22 = add nuw nsw i64 %21, %.sroa.026.0
+  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 1040 ; 2 uses
   %i.av = load i64, ptr %i.au, align 8, !range !995, !noundef !5
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  %5 = load i64, ptr %4, align 8, !range !4, !noundef !5
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 1152 ; 2 uses
-  %7 = load i64, ptr %6, align 8, !range !995, !noundef !5
-  %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 1208 ; 2 uses
+  %.not286 = icmp ne i64 %i.av, -2                ; 2 uses
+  %.sroa.027.0 = zext i1 %.not286 to i64
+  %23 = add nuw nsw i64 %22, %.sroa.027.0
+  %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 1096 ; 2 uses
   %i.ax = load i64, ptr %i.aw, align 8, !range !995, !noundef !5
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 248 ; 2 uses
-  %9 = load i64, ptr %8, align 8, !range !170, !noundef !5
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 1264 ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 1296 ; 2 uses
-  %11 = load i64, ptr %i.ay, align 8, !range !995, !noundef !5
-  %i.az = load i64, ptr %10, align 8, !range !995, !noundef !5
-  %.not293 = icmp ne i64 %11, -2                  ; 2 uses
-  %.not292 = icmp ne i64 %i.az, -2                ; 2 uses
-  %.not291.a = icmp ne i64 %9, -2                 ; 2 uses
-  %.not290 = icmp ne i64 %i.ax, -2                ; 2 uses
-  %.not289 = icmp ne i64 %7, -2                   ; 2 uses
-  %.not288 = icmp ne i64 %5, -1                   ; 2 uses
-  %.not287 = icmp ne i64 %i.av, -2                ; 2 uses
-  %.not286.a = icmp ne i64 %3, -2                 ; 2 uses
-  %12 = insertelement <8 x i1> poison, i1 %.not286.a, i64 0
-  %13 = insertelement <8 x i1> %12, i1 %.not287, i64 1
-  %14 = insertelement <8 x i1> %13, i1 %.not288, i64 2
-  %15 = insertelement <8 x i1> %14, i1 %.not289, i64 3
-  %16 = insertelement <8 x i1> %15, i1 %.not290, i64 4
-  %17 = insertelement <8 x i1> %16, i1 %.not291.a, i64 5
-  %18 = insertelement <8 x i1> %17, i1 %.not292, i64 6
-  %19 = insertelement <8 x i1> %18, i1 %.not293, i64 7
-  %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 1352 ; 2 uses
+  %.not287 = icmp ne i64 %i.ax, -2                ; 2 uses
+  %.sroa.028.0 = zext i1 %.not287 to i64
+  %24 = add nuw nsw i64 %23, %.sroa.028.0
+  %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
+  %i.az = load i64, ptr %i.ay, align 8, !range !4, !noundef !5
+  %.not291.a = icmp ne i64 %i.az, -1              ; 2 uses
+  %.sroa.029.0 = zext i1 %.not291.a to i64
+  %25 = add nuw nsw i64 %24, %.sroa.029.0
+  %26 = getelementptr inbounds nuw i8, ptr %1, i64 1152 ; 2 uses
+  %27 = load i64, ptr %26, align 8, !range !995, !noundef !5
+  %.not286.a = icmp ne i64 %27, -2                ; 2 uses
+  %.sroa.030.0 = zext i1 %.not286.a to i64
+  %28 = add nuw nsw i64 %25, %.sroa.030.0
+  %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 1208 ; 2 uses
   %i.bb = load i64, ptr %i.ba, align 8, !range !995, !noundef !5
   %.not294.a = icmp ne i64 %i.bb, -2              ; 2 uses
   %.sroa.035.0.a = zext i1 %.not294.a to i64
-  %20 = getelementptr inbounds nuw i8, ptr %1, i64 1408 ; 2 uses
-  %21 = load i64, ptr %20, align 8, !range !995, !noundef !5
-  %.not295 = icmp ne i64 %21, -2                  ; 2 uses
-  %.sroa.036.0 = zext i1 %.not295 to i64
-  %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 512 ; 2 uses
-  %i.bd = load i64, ptr %i.bc, align 8, !range !205, !noundef !5
-  %.not296.a = icmp ne i64 %i.bd, -3              ; 2 uses
+  %29 = add nuw nsw i64 %28, %.sroa.035.0.a
+  %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 248 ; 2 uses
+  %i.bd = load i64, ptr %i.bc, align 8, !range !170, !noundef !5
+  %.not296.a = icmp ne i64 %i.bd, -2              ; 2 uses
   %.sroa.037.0.a = zext i1 %.not296.a to i64
-  %22 = getelementptr inbounds nuw i8, ptr %1, i64 1570 ; 2 uses
-  %23 = load i8, ptr %22, align 2, !range !6, !noundef !5
-  %.not297 = icmp ne i8 %23, 2                    ; 2 uses
-  %.sroa.038.0 = zext i1 %.not297 to i64
-  %i.be = getelementptr inbounds nuw i8, ptr %1, i64 592 ; 2 uses
-  %i.bf = load i64, ptr %i.be, align 8, !range !205, !noundef !5
-  %.not298.a = icmp ne i64 %i.bf, -3              ; 2 uses
+  %30 = add nuw nsw i64 %29, %.sroa.037.0.a
+  %i.be = getelementptr inbounds nuw i8, ptr %1, i64 1264 ; 2 uses
+  %i.bf = load i64, ptr %i.be, align 8, !range !995, !noundef !5
+  %.not298.a = icmp ne i64 %i.bf, -2              ; 2 uses
   %.sroa.039.0.a = zext i1 %.not298.a to i64
-  %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 1488 ; 2 uses
-  %i.bh = load i64, ptr %i.bg, align 8, !range !52, !noundef !5
-  %.not299.a = icmp ne i64 %i.bh, -1              ; 2 uses
+  %31 = add nuw nsw i64 %30, %.sroa.039.0.a
+  %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 1296 ; 2 uses
+  %i.bh = load i64, ptr %i.bg, align 8, !range !995, !noundef !5
+  %.not299.a = icmp ne i64 %i.bh, -2              ; 2 uses
   %.sroa.040.0.a = zext i1 %.not299.a to i64
-  %24 = bitcast <8 x i1> %19 to i8
-  %25 = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %24)
-  %26 = zext nneg i8 %25 to i64
-  %op.rdx = add nuw nsw i64 %26, %.sroa.06.0
-  %op.rdx413 = add nuw nsw i64 %., %.sroa.07.0
-  %op.rdx414 = add nuw nsw i64 %.sroa.08.0, %.sroa.09.0
-  %op.rdx415 = add nuw nsw i64 %.sroa.010.0, %.sroa.011.0
-  %op.rdx416 = add nuw nsw i64 %.sroa.012.0, %.sroa.013.0
-  %op.rdx417 = add nuw nsw i64 %.sroa.014.0, %.sroa.015.0
-  %op.rdx418 = add nuw nsw i64 %.sroa.016.0, %.sroa.017.0
-  %op.rdx419 = add nuw nsw i64 %.sroa.018.0, %.sroa.019.0
-  %op.rdx420 = add nuw nsw i64 %.sroa.020.0, %.sroa.021.0
-  %op.rdx421 = add nuw nsw i64 %.sroa.022.0, %.sroa.023.0
-  %op.rdx422 = add nuw nsw i64 %.sroa.024.0, %.sroa.025.0
-  %op.rdx423 = add nuw nsw i64 %.sroa.026.0, %.sroa.035.0.a
-  %op.rdx424 = add nuw nsw i64 %.sroa.036.0, %.sroa.037.0.a
-  %op.rdx425 = add nuw nsw i64 %.sroa.038.0, %.sroa.039.0.a
-  %op.rdx426 = add nuw nsw i64 %op.rdx, %op.rdx413
-  %op.rdx427 = add nuw nsw i64 %op.rdx414, %op.rdx415
-  %op.rdx428 = add nuw nsw i64 %op.rdx416, %op.rdx417
-  %op.rdx429 = add nuw nsw i64 %op.rdx418, %op.rdx419
-  %op.rdx430 = add nuw nsw i64 %op.rdx420, %op.rdx421
-  %op.rdx431 = add nuw nsw i64 %op.rdx422, %op.rdx423
-  %op.rdx432 = add nuw nsw i64 %op.rdx424, %op.rdx425
-  %op.rdx433 = add nuw nsw i64 %op.rdx426, %op.rdx427
-  %op.rdx434 = add nuw nsw i64 %op.rdx428, %op.rdx429
-  %op.rdx435 = add nuw nsw i64 %op.rdx430, %op.rdx431
-  %op.rdx436 = add nuw nsw i64 %op.rdx432, %.sroa.040.0.a
-  %op.rdx437 = add nuw nsw i64 %op.rdx433, %op.rdx434
-  %op.rdx438 = add nuw nsw i64 %op.rdx435, %op.rdx436
-  %op.rdx439 = add nuw nsw i64 %op.rdx437, %op.rdx438
+  %32 = add nuw nsw i64 %31, %.sroa.040.0.a
+  %33 = getelementptr inbounds nuw i8, ptr %1, i64 1352 ; 2 uses
+  %34 = load i64, ptr %33, align 8, !range !995, !noundef !5
+  %.not294 = icmp ne i64 %34, -2                  ; 2 uses
+  %.sroa.035.0 = zext i1 %.not294 to i64
+  %op.rdx414 = add nuw nsw i64 %32, %.sroa.035.0
+  %35 = getelementptr inbounds nuw i8, ptr %1, i64 1408 ; 2 uses
+  %36 = load i64, ptr %35, align 8, !range !995, !noundef !5
+  %.not295 = icmp ne i64 %36, -2                  ; 2 uses
+  %.sroa.036.0 = zext i1 %.not295 to i64
+  %op.rdx419 = add nuw nsw i64 %op.rdx414, %.sroa.036.0
+  %37 = getelementptr inbounds nuw i8, ptr %1, i64 512 ; 2 uses
+  %38 = load i64, ptr %37, align 8, !range !205, !noundef !5
+  %.not296 = icmp ne i64 %38, -3                  ; 2 uses
+  %.sroa.037.0 = zext i1 %.not296 to i64
+  %op.rdx424 = add nuw nsw i64 %op.rdx419, %.sroa.037.0
+  %39 = getelementptr inbounds nuw i8, ptr %1, i64 1570 ; 2 uses
+  %40 = load i8, ptr %39, align 2, !range !6, !noundef !5
+  %.not297 = icmp ne i8 %40, 2                    ; 2 uses
+  %.sroa.038.0 = zext i1 %.not297 to i64
+  %op.rdx429 = add nuw nsw i64 %op.rdx424, %.sroa.038.0
+  %41 = getelementptr inbounds nuw i8, ptr %1, i64 592 ; 2 uses
+  %42 = load i64, ptr %41, align 8, !range !205, !noundef !5
+  %.not298 = icmp ne i64 %42, -3                  ; 2 uses
+  %.sroa.039.0 = zext i1 %.not298 to i64
+  %op.rdx434 = add nuw nsw i64 %op.rdx429, %.sroa.039.0
+  %43 = getelementptr inbounds nuw i8, ptr %1, i64 1488 ; 2 uses
+  %44 = load i64, ptr %43, align 8, !range !52, !noundef !5
+  %.not299 = icmp ne i64 %44, -1                  ; 2 uses
+  %.sroa.040.0 = zext i1 %.not299 to i64
+  %op.rdx439 = add nuw nsw i64 %op.rdx434, %.sroa.040.0
   call void @_RNvXs_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB4_10SerializerNtNtCsjQbM3MYDIrM_10serde_core3ser10Serializer16serialize_struct(ptr noalias nofree noundef nonnull sret([96 x i8]) align 8 captures(address) dereferenceable(96) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @238, i64 noundef 18, i64 noundef %op.rdx439)
   %i.bi = load i64, ptr %i.b, align 8, !range !4, !noundef !5 ; 2 uses
   %i.bj = icmp eq i64 %i.bi, -1
@@ -633,10 +637,10 @@ bb.bp:                                            ; preds = %bb.bo
   br i1 %.not343, label %bb.bq, label %bb.di
 
 bb.bq:                                            ; preds = %bb.bn, %bb.bp
-  br i1 %.not286.a, label %bb.br, label %bb.bt
+  br i1 %.not286, label %bb.br, label %bb.bt
 
 bb.br:                                            ; preds = %bb.bq
-  %i.cj = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors20FoldingRangeProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @261, i64 noundef 20, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %2)
+  %i.cj = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors20FoldingRangeProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @261, i64 noundef 20, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.au)
           to label %bb.bs unwind label %bb.dk     ; 2 uses
 
 bb.bs:                                            ; preds = %bb.br
@@ -647,7 +651,7 @@ bb.bt:                                            ; preds = %bb.bq, %bb.bs
   br i1 %.not287, label %bb.bu, label %bb.bw
 
 bb.bu:                                            ; preds = %bb.bt
-  %i.ck = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors22SelectionRangeProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @262, i64 noundef 22, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.au)
+  %i.ck = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors22SelectionRangeProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @262, i64 noundef 22, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.aw)
           to label %bb.bv unwind label %bb.dk     ; 2 uses
 
 bb.bv:                                            ; preds = %bb.bu
@@ -655,10 +659,10 @@ bb.bv:                                            ; preds = %bb.bu
   br i1 %.not347, label %bb.bw, label %bb.di
 
 bb.bw:                                            ; preds = %bb.bt, %bb.bv
-  br i1 %.not288, label %bb.bx, label %bb.bz
+  br i1 %.not291.a, label %bb.bx, label %bb.bz
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.cl = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated10structures21ExecuteCommandOptionsEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @263, i64 noundef 22, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %4)
+  %i.cl = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated10structures21ExecuteCommandOptionsEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @263, i64 noundef 22, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ay)
           to label %bb.by unwind label %bb.dk     ; 2 uses
 
 bb.by:                                            ; preds = %bb.bx
@@ -666,10 +670,10 @@ bb.by:                                            ; preds = %bb.bx
   br i1 %.not349, label %bb.bz, label %bb.di
 
 bb.bz:                                            ; preds = %bb.bw, %bb.by
-  br i1 %.not289, label %bb.ca, label %bb.cc
+  br i1 %.not286.a, label %bb.ca, label %bb.cc
 
 bb.ca:                                            ; preds = %bb.bz
-  %i.cm = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors21CallHierarchyProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @264, i64 noundef 21, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %6)
+  %i.cm = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors21CallHierarchyProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @264, i64 noundef 21, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %26)
           to label %bb.cb unwind label %bb.dk     ; 2 uses
 
 bb.cb:                                            ; preds = %bb.ca
@@ -677,10 +681,10 @@ bb.cb:                                            ; preds = %bb.ca
   br i1 %.not351, label %bb.cc, label %bb.di
 
 bb.cc:                                            ; preds = %bb.bz, %bb.cb
-  br i1 %.not290, label %bb.cd, label %bb.cf
+  br i1 %.not294.a, label %bb.cd, label %bb.cf
 
 bb.cd:                                            ; preds = %bb.cc
-  %i.cn = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors26LinkedEditingRangeProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @265, i64 noundef 26, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.aw)
+  %i.cn = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors26LinkedEditingRangeProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @265, i64 noundef 26, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.ba)
           to label %bb.ce unwind label %bb.dk     ; 2 uses
 
 bb.ce:                                            ; preds = %bb.cd
@@ -688,10 +692,10 @@ bb.ce:                                            ; preds = %bb.cd
   br i1 %.not353, label %bb.cf, label %bb.di
 
 bb.cf:                                            ; preds = %bb.cc, %bb.ce
-  br i1 %.not291.a, label %bb.cg, label %bb.ci
+  br i1 %.not296.a, label %bb.cg, label %bb.ci
 
 bb.cg:                                            ; preds = %bb.cf
-  %i.co = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors22SemanticTokensProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @266, i64 noundef 22, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(176) %8)
+  %i.co = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors22SemanticTokensProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @266, i64 noundef 22, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(176) %i.bc)
           to label %bb.ch unwind label %bb.dk     ; 2 uses
 
 bb.ch:                                            ; preds = %bb.cg
@@ -699,10 +703,10 @@ bb.ch:                                            ; preds = %bb.cg
   br i1 %.not355, label %bb.ci, label %bb.di
 
 bb.ci:                                            ; preds = %bb.cf, %bb.ch
-  br i1 %.not292, label %bb.cj, label %bb.cl
+  br i1 %.not298.a, label %bb.cj, label %bb.cl
 
 bb.cj:                                            ; preds = %bb.ci
-  %i.cp = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors15MonikerProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @267, i64 noundef 15, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %10)
+  %i.cp = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors15MonikerProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @267, i64 noundef 15, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.be)
           to label %bb.ck unwind label %bb.dk     ; 2 uses
 
 bb.ck:                                            ; preds = %bb.cj
@@ -710,10 +714,10 @@ bb.ck:                                            ; preds = %bb.cj
   br i1 %.not357, label %bb.cl, label %bb.di
 
 bb.cl:                                            ; preds = %bb.ci, %bb.ck
-  br i1 %.not293, label %bb.cm, label %bb.co
+  br i1 %.not299.a, label %bb.cm, label %bb.co
 
 bb.cm:                                            ; preds = %bb.cl
-  %i.cq = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors21TypeHierarchyProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @268, i64 noundef 21, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.ay)
+  %i.cq = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors21TypeHierarchyProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @268, i64 noundef 21, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.bg)
           to label %bb.cn unwind label %bb.dk     ; 2 uses
 
 bb.cn:                                            ; preds = %bb.cm
@@ -721,10 +725,10 @@ bb.cn:                                            ; preds = %bb.cm
   br i1 %.not359, label %bb.co, label %bb.di
 
 bb.co:                                            ; preds = %bb.cl, %bb.cn
-  br i1 %.not294.a, label %bb.cp, label %bb.cr
+  br i1 %.not294, label %bb.cp, label %bb.cr
 
 bb.cp:                                            ; preds = %bb.co
-  %i.cr = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors19InlineValueProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @269, i64 noundef 19, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.ba)
+  %i.cr = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors19InlineValueProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @269, i64 noundef 19, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %33)
           to label %bb.cq unwind label %bb.dk     ; 2 uses
 
 bb.cq:                                            ; preds = %bb.cp
@@ -735,7 +739,7 @@ bb.cr:                                            ; preds = %bb.co, %bb.cq
   br i1 %.not295, label %bb.cs, label %bb.cu
 
 bb.cs:                                            ; preds = %bb.cr
-  %i.cs = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors17InlayHintProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @270, i64 noundef 17, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %20)
+  %i.cs = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors17InlayHintProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @270, i64 noundef 17, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %35)
           to label %bb.ct unwind label %bb.dk     ; 2 uses
 
 bb.ct:                                            ; preds = %bb.cs
@@ -743,10 +747,10 @@ bb.ct:                                            ; preds = %bb.cs
   br i1 %.not363, label %bb.cu, label %bb.di
 
 bb.cu:                                            ; preds = %bb.cr, %bb.ct
-  br i1 %.not296.a, label %bb.cv, label %bb.cx
+  br i1 %.not296, label %bb.cv, label %bb.cx
 
 bb.cv:                                            ; preds = %bb.cu
-  %i.ct = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors18DiagnosticProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @271, i64 noundef 18, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.bc)
+  %i.ct = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors18DiagnosticProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @271, i64 noundef 18, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %37)
           to label %bb.cw unwind label %bb.dk     ; 2 uses
 
 bb.cw:                                            ; preds = %bb.cv
@@ -757,7 +761,7 @@ bb.cx:                                            ; preds = %bb.cu, %bb.cw
   br i1 %.not297, label %bb.cy, label %bb.da
 
 bb.cy:                                            ; preds = %bb.cx
-  %i.cu = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors24InlineCompletionProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @272, i64 noundef 24, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(2) %22)
+  %i.cu = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated8enum_ors24InlineCompletionProviderEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @272, i64 noundef 24, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(2) %39)
           to label %bb.cz unwind label %bb.dk     ; 2 uses
 
 bb.cz:                                            ; preds = %bb.cy
@@ -765,10 +769,10 @@ bb.cz:                                            ; preds = %bb.cy
   br i1 %.not367, label %bb.da, label %bb.di
 
 bb.da:                                            ; preds = %bb.cx, %bb.cz
-  br i1 %.not298.a, label %bb.db, label %bb.dd
+  br i1 %.not298, label %bb.db, label %bb.dd
 
 bb.db:                                            ; preds = %bb.da
-  %i.cv = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated10structures16WorkspaceOptionsEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @273, i64 noundef 9, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(224) %i.be)
+  %i.cv = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtCs1lnireelaHN_13gen_lsp_types9generated10structures16WorkspaceOptionsEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @273, i64 noundef 9, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(224) %41)
           to label %bb.dc unwind label %bb.dk     ; 2 uses
 
 bb.dc:                                            ; preds = %bb.db
@@ -776,10 +780,10 @@ bb.dc:                                            ; preds = %bb.db
   br i1 %.not369, label %bb.dd, label %bb.di
 
 bb.dd:                                            ; preds = %bb.da, %bb.dc
-  br i1 %.not299.a, label %bb.de, label %bb.dg
+  br i1 %.not299, label %bb.de, label %bb.dg
 
 bb.de:                                            ; preds = %bb.dd
-  %i.cw = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtB8_5ValueEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @274, i64 noundef 12, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %i.bg)
+  %i.cw = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB6_12SerializeMapNtNtCsjQbM3MYDIrM_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCshzWfHUSfYae_4core6option6OptionNtB8_5ValueEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @274, i64 noundef 12, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %43)
           to label %bb.df unwind label %bb.dk     ; 2 uses
 
 bb.df:                                            ; preds = %bb.de
@@ -1181,9 +1185,6 @@ declare i8 @llvm.umin.i8(i8, i8) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #22
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.ctpop.i8(i8) #22
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

@@ -203,10 +203,13 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   %.0248 = phi double [ %i.de, %bb.w ], [ %i.cz, %bb.v ] ; 2 uses
-  %3 = fdiv double 5.000000e-01, %i.ct
-  %i.df = fcmp ogt double %.0248, %3
-  %4 = fdiv double 5.000000e-01, %.0248
-  %.0249 = select i1 %i.df, double %4, double %i.ct ; 2 uses
+  %3 = insertelement <2 x double> poison, double %i.ct, i64 0
+  %4 = insertelement <2 x double> %3, double %.0248, i64 1
+  %5 = fdiv <2 x double> splat (double 5.000000e-01), %4 ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %i.df = fcmp ogt double %.0248, %6
+  %7 = extractelement <2 x double> %5, i64 1
+  %.0249 = select i1 %i.df, double %7, double %i.ct ; 2 uses
   %i.dg = load double, ptr %i.m, align 8, !tbaa !23
   %i.dh = fcmp olt double %2, %i.dg
   %i.di = fneg double %.0249

@@ -27,12 +27,17 @@ bb.a:
   %i.k = fsub double %.0, %i.j                    ; 2 uses
   %i.l = fsub double 1.000000e+00, %i.c
   %i.m = fmul double %i.e, %i.l                   ; 6 uses
-  %i.n = fneg double %i.c                         ; 2 uses
-  %2 = tail call double @llvm.fmuladd.f64(double %i.n, double %i.k, double 1.000000e+00)
-  %3 = fmul double %i.e, %2                       ; 3 uses
-  %4 = fsub double 1.000000e+00, %i.k
-  %5 = tail call double @llvm.fmuladd.f64(double %i.n, double %4, double 1.000000e+00)
-  %i.o = fmul double %i.e, %5                     ; 3 uses
+  %i.n = fneg double %i.c
+  %2 = fsub double 1.000000e+00, %i.k
+  %3 = insertelement <2 x double> poison, double %i.n, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = insertelement <2 x double> poison, double %i.k, i64 0
+  %6 = insertelement <2 x double> %5, double %2, i64 1
+  %7 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %6, <2 x double> splat (double 1.000000e+00)) ; 2 uses
+  %8 = extractelement <2 x double> %7, i64 0
+  %9 = fmul double %i.e, %8                       ; 3 uses
+  %10 = extractelement <2 x double> %7, i64 1
+  %i.o = fmul double %i.e, %10                    ; 3 uses
   switch i32 %i.i, label %bb.h [
     i32 0, label %bb.b
     i32 1, label %bb.c
@@ -61,9 +66,9 @@ bb.g:                                             ; preds = %bb.a
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.039 = phi double [ 0.000000e+00, %bb.a ], [ %i.m, %bb.b ], [ %i.m, %bb.c ], [ %i.o, %bb.d ], [ %i.e, %bb.e ], [ %i.e, %bb.f ], [ %3, %bb.g ]
-  %.038 = phi double [ 0.000000e+00, %bb.a ], [ %i.o, %bb.b ], [ %i.e, %bb.c ], [ %i.e, %bb.d ], [ %3, %bb.e ], [ %i.m, %bb.f ], [ %i.m, %bb.g ]
-  %.037 = phi double [ 0.000000e+00, %bb.a ], [ %i.e, %bb.b ], [ %3, %bb.c ], [ %i.m, %bb.d ], [ %i.m, %bb.e ], [ %i.o, %bb.f ], [ %i.e, %bb.g ]
+  %.039 = phi double [ 0.000000e+00, %bb.a ], [ %i.m, %bb.b ], [ %i.m, %bb.c ], [ %i.o, %bb.d ], [ %i.e, %bb.e ], [ %i.e, %bb.f ], [ %9, %bb.g ]
+  %.038 = phi double [ 0.000000e+00, %bb.a ], [ %i.o, %bb.b ], [ %i.e, %bb.c ], [ %i.e, %bb.d ], [ %9, %bb.e ], [ %i.m, %bb.f ], [ %i.m, %bb.g ]
+  %.037 = phi double [ 0.000000e+00, %bb.a ], [ %i.e, %bb.b ], [ %9, %bb.c ], [ %i.m, %bb.d ], [ %i.m, %bb.e ], [ %i.o, %bb.f ], [ %i.e, %bb.g ]
   store double %.037, ptr %0, align 8, !tbaa !8
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   store double %.038, ptr %i.p, align 8, !tbaa !11
@@ -74,9 +79,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.floor.f64(double) #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN9Imath_3_29hsv2rgb_dERKNS_6Color4IdEE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.Imath_3_2::Color4") align 8 captures(none) initializes((0, 32)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #0 {
@@ -95,12 +97,17 @@ bb.a:
   %i.k = fsub double %.0, %i.j                    ; 2 uses
   %i.l = fsub double 1.000000e+00, %i.c
   %i.m = fmul double %i.e, %i.l                   ; 6 uses
-  %i.n = fneg double %i.c                         ; 2 uses
-  %2 = tail call double @llvm.fmuladd.f64(double %i.n, double %i.k, double 1.000000e+00)
-  %3 = fmul double %i.e, %2                       ; 3 uses
-  %4 = fsub double 1.000000e+00, %i.k
-  %5 = tail call double @llvm.fmuladd.f64(double %i.n, double %4, double 1.000000e+00)
-  %i.o = fmul double %i.e, %5                     ; 3 uses
+  %i.n = fneg double %i.c
+  %2 = fsub double 1.000000e+00, %i.k
+  %3 = insertelement <2 x double> poison, double %i.n, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = insertelement <2 x double> poison, double %i.k, i64 0
+  %6 = insertelement <2 x double> %5, double %2, i64 1
+  %7 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %6, <2 x double> splat (double 1.000000e+00)) ; 2 uses
+  %8 = extractelement <2 x double> %7, i64 0
+  %9 = fmul double %i.e, %8                       ; 3 uses
+  %10 = extractelement <2 x double> %7, i64 1
+  %i.o = fmul double %i.e, %10                    ; 3 uses
   switch i32 %i.i, label %bb.h [
     i32 0, label %bb.b
     i32 1, label %bb.c
@@ -129,9 +136,9 @@ bb.g:                                             ; preds = %bb.a
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.040 = phi double [ 0.000000e+00, %bb.a ], [ %i.m, %bb.b ], [ %i.m, %bb.c ], [ %i.o, %bb.d ], [ %i.e, %bb.e ], [ %i.e, %bb.f ], [ %3, %bb.g ]
-  %.039 = phi double [ 0.000000e+00, %bb.a ], [ %i.o, %bb.b ], [ %i.e, %bb.c ], [ %i.e, %bb.d ], [ %3, %bb.e ], [ %i.m, %bb.f ], [ %i.m, %bb.g ]
-  %.038 = phi double [ 0.000000e+00, %bb.a ], [ %i.e, %bb.b ], [ %3, %bb.c ], [ %i.m, %bb.d ], [ %i.m, %bb.e ], [ %i.o, %bb.f ], [ %i.e, %bb.g ]
+  %.040 = phi double [ 0.000000e+00, %bb.a ], [ %i.m, %bb.b ], [ %i.m, %bb.c ], [ %i.o, %bb.d ], [ %i.e, %bb.e ], [ %i.e, %bb.f ], [ %9, %bb.g ]
+  %.039 = phi double [ 0.000000e+00, %bb.a ], [ %i.o, %bb.b ], [ %i.e, %bb.c ], [ %i.e, %bb.d ], [ %9, %bb.e ], [ %i.m, %bb.f ], [ %i.m, %bb.g ]
+  %.038 = phi double [ 0.000000e+00, %bb.a ], [ %i.e, %bb.b ], [ %9, %bb.c ], [ %i.m, %bb.d ], [ %i.m, %bb.e ], [ %i.o, %bb.f ], [ %i.e, %bb.g ]
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.q = load double, ptr %i.p, align 8, !tbaa !17
   store double %.038, ptr %0, align 8, !tbaa !13
@@ -279,6 +286,9 @@ bb.h:                                             ; preds = %bb.g, %bb.a
   store double %i.ab, ptr %i.ae, align 8, !tbaa !17
   ret void
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #1
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

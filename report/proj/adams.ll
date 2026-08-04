@@ -1,3 +1,7 @@
+inline.NumInlined: 17
+inline.NumDeleted: 3
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@pj_adams_ws1:bb.a
   %i.a = tail call noalias dereferenceable_or_null(24) ptr @calloc(i64 noundef 1, i64 noundef 24) #7 ; 3 uses
   %i.b = icmp eq ptr %i.a, null
@@ -199,18 +203,24 @@ bb.e:                                             ; preds = %bb.d
   br label %.thread227
 
 bb.f:                                             ; preds = %bb.d
-  %i.q = tail call double @sin(double noundef %0) #9 ; 2 uses
+  %i.q = tail call double @sin(double noundef %0) #9
   %i.r = tail call double @sin(double noundef %1) #9 ; 2 uses
-  %i.s = tail call double @cos(double noundef %1) #9 ; 2 uses
+  %i.s = tail call double @cos(double noundef %1) #9
   %i.t = load ptr, ptr %2, align 8, !tbaa !48
   %i.u = fneg double %i.r
-  %7 = tail call double @llvm.fmuladd.f64(double %i.s, double %i.q, double %i.u)
-  %8 = fmul double %7, f0x3FE6A09E667F3BCD
-  %i.v = tail call noundef double @_Z5aacosP6pj_ctxd(ptr noundef %i.t, double noundef %8)
+  %7 = insertelement <2 x double> poison, double %i.s, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = insertelement <2 x double> poison, double %i.q, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = insertelement <2 x double> poison, double %i.u, i64 0
+  %12 = insertelement <2 x double> %11, double %i.r, i64 1
+  %13 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %10, <2 x double> %12)
+  %14 = fmul <2 x double> %13, splat (double f0x3FE6A09E667F3BCD) ; 2 uses
+  %15 = extractelement <2 x double> %14, i64 0
+  %i.v = tail call noundef double @_Z5aacosP6pj_ctxd(ptr noundef %i.t, double noundef %15)
   %i.w = load ptr, ptr %2, align 8, !tbaa !48
-  %9 = tail call double @llvm.fmuladd.f64(double %i.s, double %i.q, double %i.r)
-  %10 = fmul double %9, f0x3FE6A09E667F3BCD
-  %i.x = tail call noundef double @_Z5aacosP6pj_ctxd(ptr noundef %i.w, double noundef %10)
+  %16 = extractelement <2 x double> %14, i64 1
+  %i.x = tail call noundef double @_Z5aacosP6pj_ctxd(ptr noundef %i.w, double noundef %16)
   %i.y = fcmp olt double %0, 0.000000e+00
   %i.z = fcmp olt double %1, 0.000000e+00
   br label %bb.p

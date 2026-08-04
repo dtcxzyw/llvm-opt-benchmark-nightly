@@ -174,50 +174,51 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define internal noundef i32 @_ZL12vector_angleP9lua_State(ptr noundef %0) #0 {
 bb.a:
-  %i.a = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 3 uses
-  %i.b = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 2) ; 3 uses
+  %i.a = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 1)
+  %i.b = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 2) ; 2 uses
   %i.c = tail call noundef ptr @_Z14luaL_optvectorP9lua_StateiPKf(ptr noundef %0, i32 noundef 3, ptr noundef null) ; 4 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %i.e = load float, ptr %i.d, align 4, !tbaa !9  ; 3 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = load float, ptr %1, align 4, !tbaa !9      ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %4 = load float, ptr %3, align 4, !tbaa !9      ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %6 = load float, ptr %5, align 4, !tbaa !9      ; 3 uses
-  %7 = fneg float %6
-  %8 = fmul float %4, %7
-  %9 = tail call float @llvm.fmuladd.f32(float %i.e, float %2, float %8) ; 3 uses
-  %10 = load float, ptr %i.b, align 4, !tbaa !9   ; 3 uses
-  %11 = load float, ptr %i.a, align 4, !tbaa !9   ; 3 uses
-  %12 = fneg float %2
-  %13 = fmul float %11, %12
-  %14 = tail call float @llvm.fmuladd.f32(float %4, float %10, float %13) ; 3 uses
-  %15 = fneg float %10
-  %16 = fmul float %i.e, %15
-  %17 = tail call float @llvm.fmuladd.f32(float %11, float %6, float %16) ; 3 uses
-  %18 = fmul float %14, %14
-  %19 = tail call float @llvm.fmuladd.f32(float %9, float %9, float %18)
-  %i.f = tail call float @llvm.fmuladd.f32(float %17, float %17, float %19)
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %i.e = load float, ptr %i.d, align 4, !tbaa !9
+  %1 = load <3 x float>, ptr %i.b, align 4, !tbaa !9 ; 3 uses
+  %2 = shufflevector <3 x float> %1, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0> ; 2 uses
+  %3 = fneg float %i.e
+  %4 = load <3 x float>, ptr %i.a, align 4, !tbaa !9 ; 3 uses
+  %5 = shufflevector <3 x float> %4, <3 x float> poison, <4 x i32> <i32 2, i32 0, i32 1, i32 0>
+  %6 = extractelement <3 x float> %1, i64 2
+  %7 = fneg <3 x float> %1
+  %8 = shufflevector <3 x float> %7, <3 x float> poison, <2 x i32> <i32 2, i32 0>
+  %9 = shufflevector <3 x float> %4, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
+  %10 = shufflevector <2 x float> %8, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %11 = insertelement <4 x float> %10, float %3, i64 2
+  %12 = shufflevector <4 x float> %11, <4 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
+  %13 = fmul <4 x float> %9, %12
+  %14 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %5, <4 x float> %2, <4 x float> %13) ; 6 uses
+  %foldExtExtBinop = fmul <4 x float> %14, %14
+  %15 = extractelement <4 x float> %foldExtExtBinop, i64 0
+  %16 = extractelement <4 x float> %14, i64 2     ; 3 uses
+  %17 = tail call float @llvm.fmuladd.f32(float %16, float %16, float %15)
+  %18 = extractelement <4 x float> %14, i64 1     ; 3 uses
+  %i.f = tail call float @llvm.fmuladd.f32(float %18, float %18, float %17)
   %i.g = tail call noundef float @llvm.sqrt.f32(float %i.f)
   %i.h = fpext float %i.g to double
-  %20 = fmul float %i.e, %6
-  %21 = tail call float @llvm.fmuladd.f32(float %11, float %10, float %20)
-  %i.i = tail call float @llvm.fmuladd.f32(float %4, float %2, float %21)
+  %19 = extractelement <4 x float> %14, i64 3
+  %20 = extractelement <3 x float> %4, i64 2
+  %i.i = tail call float @llvm.fmuladd.f32(float %20, float %6, float %19)
   %i.j = fpext float %i.i to double
   %i.k = tail call double @llvm.atan2.f64(double %i.h, double %i.j) ; 3 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %21 = extractelement <4 x float> %14, i64 0
   %i.l = load float, ptr %i.c, align 4, !tbaa !9
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.n = load float, ptr %i.m, align 4, !tbaa !9
-  %i.o = fmul float %14, %i.n
-  %i.p = tail call float @llvm.fmuladd.f32(float %9, float %i.l, float %i.o)
+  %i.o = fmul float %21, %i.n
+  %i.p = tail call float @llvm.fmuladd.f32(float %16, float %i.l, float %i.o)
   %i.q = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.r = load float, ptr %i.q, align 4, !tbaa !9
-  %i.s = tail call float @llvm.fmuladd.f32(float %17, float %i.r, float %i.p)
+  %i.s = tail call float @llvm.fmuladd.f32(float %18, float %i.r, float %i.p)
   %i.t = fcmp olt float %i.s, 0.000000e+00
   br i1 %i.t, label %bb.c, label %bb.d
 
@@ -266,16 +267,15 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define internal noundef i32 @_ZL10vector_absP9lua_State(ptr noundef %0) #0 {
 bb.a:
-  %i.a = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 3 uses
+  %i.a = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 2 uses
   %i.b = load float, ptr %i.a, align 4, !tbaa !9
   %i.c = tail call float @llvm.fabs.f32(float %i.b)
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %1 = load float, ptr %i.d, align 4, !tbaa !9
-  %2 = tail call float @llvm.fabs.f32(float %1)
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %4 = load float, ptr %3, align 4, !tbaa !9
-  %5 = tail call float @llvm.fabs.f32(float %4)
-  tail call void @_Z14lua_pushvectorP9lua_Statefff(ptr noundef %0, float noundef %i.c, float noundef %2, float noundef %5)
+  %1 = load <2 x float>, ptr %i.d, align 4, !tbaa !9
+  %2 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %1) ; 2 uses
+  %3 = extractelement <2 x float> %2, i64 0
+  %4 = extractelement <2 x float> %2, i64 1
+  tail call void @_Z14lua_pushvectorP9lua_Statefff(ptr noundef %0, float noundef %i.c, float noundef %3, float noundef %4)
   ret i32 1
 }
 
@@ -458,25 +458,24 @@ bb.a:
   %i.d = fptrunc double %i.c to float             ; 3 uses
   %i.e = load float, ptr %i.a, align 4, !tbaa !9  ; 2 uses
   %i.f = load float, ptr %i.b, align 4, !tbaa !9  ; 2 uses
-  %i.g = fcmp oeq float %i.d, 1.000000e+00        ; 3 uses
+  %i.g = fcmp oeq float %i.d, 1.000000e+00        ; 2 uses
   %i.h = fsub float %i.f, %i.e
   %i.i = tail call float @llvm.fmuladd.f32(float %i.h, float %i.d, float %i.e)
   %i.j = select i1 %i.g, float %i.f, float %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.m = load <2 x float>, ptr %i.k, align 4, !tbaa !9 ; 2 uses
-  %i.n = load <2 x float>, ptr %i.l, align 4, !tbaa !9 ; 3 uses
+  %i.n = load <2 x float>, ptr %i.l, align 4, !tbaa !9 ; 2 uses
   %i.o = fsub <2 x float> %i.n, %i.m
   %i.p = insertelement <2 x float> poison, float %i.d, i64 0
   %i.q = shufflevector <2 x float> %i.p, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.r = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.o, <2 x float> %i.q, <2 x float> %i.m) ; 2 uses
-  %1 = extractelement <2 x float> %i.r, i64 0
-  %2 = extractelement <2 x float> %i.n, i64 0
-  %3 = select i1 %i.g, float %2, float %1
-  %i.s = extractelement <2 x float> %i.r, i64 1
-  %i.t = extractelement <2 x float> %i.n, i64 1
-  %4 = select i1 %i.g, float %i.t, float %i.s
-  tail call void @_Z14lua_pushvectorP9lua_Statefff(ptr noundef %0, float noundef %i.j, float noundef %3, float noundef %4)
+  %i.r = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.o, <2 x float> %i.q, <2 x float> %i.m)
+  %1 = insertelement <2 x i1> poison, i1 %i.g, i64 0
+  %2 = shufflevector <2 x i1> %1, <2 x i1> poison, <2 x i32> zeroinitializer
+  %3 = select <2 x i1> %2, <2 x float> %i.n, <2 x float> %i.r ; 2 uses
+  %i.s = extractelement <2 x float> %3, i64 0
+  %i.t = extractelement <2 x float> %3, i64 1
+  tail call void @_Z14lua_pushvectorP9lua_Statefff(ptr noundef %0, float noundef %i.j, float noundef %i.s, float noundef %i.t)
   ret i32 1
 }
 
@@ -570,6 +569,12 @@ declare void @_Z11luaL_errorLP9lua_StatePKcz(ptr noundef, ptr noundef, ...) loca
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #3
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

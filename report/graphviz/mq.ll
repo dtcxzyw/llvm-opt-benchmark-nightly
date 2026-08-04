@@ -1,3 +1,7 @@
+inline.NumInlined: 25
+inline.NumDeleted: 8
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@Multilevel_MQ_Clustering_establish:bb.a
   tail call fastcc void @graphviz_exit() #17
   unreachable
@@ -199,10 +203,10 @@ bb.q:                                             ; preds = %bb.m, %bb.p, %bb.o,
   %i.dj = extractelement <2 x double> %i.bt, i64 1
   %i.dk = fsub double %i.dj, %i.di
   %i.dl = icmp sgt i32 %.0445625, 2
-  %2 = add nsw i32 %.0445625, -2
   %i.dm = add nsw i32 %.0445625, -1               ; 3 uses
   %i.dn = sitofp i32 %i.dm to double
   %i.do = uitofp nneg i32 %i.dm to double
+  %2 = add nsw i32 %.0445625, -2
   %i.dp = mul nsw i32 %i.dm, %2
   %i.dq = uitofp nneg i32 %i.dp to double
   %i.dr = sext i32 %i.by to i64

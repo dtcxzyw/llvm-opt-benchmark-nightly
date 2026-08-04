@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %.lr.ph341, %._crit_
   %i.hj = shufflevector <4 x i32> %i.gu, <4 x i32> %i.hh, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.hk = sub nsw <8 x i32> %i.hi, %i.hj          ; 2 uses
   %i.hl = mul nsw <8 x i32> %i.hk, %i.hk
-  %i.hm = add nuw nsw <8 x i32> %i.hl, %i.hf      ; 5 uses
+  %i.hm = add nuw nsw <8 x i32> %i.hl, %i.hf      ; 4 uses
   store <8 x i32> %i.hm, ptr %i.b, align 16, !tbaa !96
   %i.hn = shufflevector <8 x float> %i.gl, <8 x float> poison, <2 x i32> <i32 0, i32 6> ; 2 uses
   %i.ho = shufflevector <8 x float> %i.gl, <8 x float> poison, <2 x i32> <i32 1, i32 7> ; 2 uses
@@ -213,13 +213,13 @@ bb.c:                                             ; preds = %.lr.ph341, %._crit_
   %i.hs = extractelement <2 x float> %i.hq, i64 1 ; 2 uses
   %i.ht = fcmp reassoc nsz arcp contract afn olt float %i.hr, %i.hs
   %. = select reassoc nsz arcp contract afn i1 %i.ht, float %i.hr, float %i.hs ; 12 uses
-  %1 = extractelement <8 x i32> %i.hm, i64 0
-  %2 = extractelement <8 x i32> %i.hm, i64 1
-  %3 = tail call i32 @llvm.smax.i32(i32 %1, i32 %2)
-  %4 = extractelement <8 x i32> %i.hm, i64 6
-  %5 = extractelement <8 x i32> %i.hm, i64 7
-  %6 = tail call i32 @llvm.smax.i32(i32 %4, i32 %5)
-  %i.hu = tail call i32 @llvm.smin.i32(i32 %3, i32 %6) ; 12 uses
+  %1 = shufflevector <8 x i32> %i.hm, <8 x i32> poison, <2 x i32> <i32 0, i32 6>
+  %2 = shufflevector <8 x i32> %i.hm, <8 x i32> poison, <2 x i32> <i32 1, i32 7>
+  %3 = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %1, <2 x i32> %2)
+  %4 = shufflevector <8 x i32> %i.hm, <8 x i32> poison, <2 x i32> <i32 0, i32 1>
+  %5 = tail call i32 @llvm.vector.reduce.smax.v2i32(<2 x i32> %4)
+  %6 = extractelement <2 x i32> %3, i64 1
+  %i.hu = tail call i32 @llvm.smin.i32(i32 %5, i32 %6) ; 12 uses
   br label %.backedge
 
 .loopexit.3.thread:                               ; preds = %.loopexit.3, %.critedge.1.3, %bb.s, %.critedge.3, %bb.r, %.preheader324.preheader.3
@@ -620,6 +620,12 @@ declare <8 x i32> @llvm.abs.v8i32(<8 x i32>, i1 immarg) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr>, <4 x i1>, <4 x i32>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.smax.v2i32(<2 x i32>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #5

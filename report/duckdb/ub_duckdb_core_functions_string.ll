@@ -204,8 +204,8 @@ _ZN10duckdb_fmt2v619basic_memory_bufferIcLm500ESaIcEED2Ev.exit10: ; preds = %.bo
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZN10duckdb_fmt2v68internal19parse_format_stringILb0EcRNS0_14format_handlerINS0_13arg_formatterINS0_12buffer_rangeIcEEEEcNS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEEEvNS0_17basic_string_viewIT0_EEOT1_(ptr %0, i64 %1, ptr noundef nonnull align 16 dereferenceable(112) %2) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.duckdb_fmt::v6::arg_formatter", align 8 ; 7 uses
-  %4 = alloca %"class.duckdb_fmt::v6::arg_formatter", align 8 ; 7 uses
+  %3 = alloca %"class.duckdb_fmt::v6::arg_formatter", align 8 ; 8 uses
+  %4 = alloca %"class.duckdb_fmt::v6::arg_formatter", align 8 ; 8 uses
   %5 = alloca %"class.duckdb_fmt::v6::basic_format_arg.355", align 16 ; 4 uses
   %6 = alloca %struct.pfs_writer, align 8         ; 6 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 4 uses
@@ -223,19 +223,19 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.b = ptrtoint ptr %i.a to i64
-  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 8 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 9 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %14 = insertelement <2 x ptr> poison, ptr %i.c, i64 0
-  %15 = insertelement <2 x ptr> %14, ptr %i.d, i64 1 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %14 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %15 = getelementptr inbounds nuw i8, ptr %3, i64 32
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.ab
@@ -324,7 +324,8 @@ bb.k:                                             ; preds = %bb.j
   store ptr %.sroa.0.0.copyload.i.i.i, ptr %4, align 8
   store ptr %.sroa.0.0.copyload.i7.i.i, ptr %i.h, align 8, !tbaa !13
   store ptr null, ptr %i.i, align 8, !tbaa !2323
-  store <2 x ptr> %15, ptr %i.j, align 8, !tbaa !13
+  store ptr %i.c, ptr %i.j, align 8, !tbaa !3417
+  store ptr %i.d, ptr %i.k, align 8, !tbaa !3419
   %i.ah = call ptr @_ZN10duckdb_fmt2v616visit_format_argINS0_13arg_formatterINS0_12buffer_rangeIcEEEENS0_20basic_format_contextISt20back_insert_iteratorINS0_8internal6bufferIcEEEcEEEEDTclfp_Li0EEEOT_RKNS0_16basic_format_argIT0_EE(ptr noundef nonnull align 8 dereferenceable(40) %4, ptr noundef nonnull align 16 dereferenceable(20) %i.e)
   store ptr %i.ah, ptr %i.c, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
@@ -343,7 +344,7 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.l
   %i.ao = load ptr, ptr %.sroa.0.0.copyload.i.i, align 8, !tbaa !59
   %i.ap = load ptr, ptr %i.ao, align 8
-  call void %i.ap(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.0.copyload.i.i, i64 noundef %i.ak), !inline_history !3417
+  call void %i.ap(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.0.copyload.i.i, i64 noundef %i.ak), !inline_history !3422
   br label %_ZN10duckdb_fmt2v614format_handlerINS0_13arg_formatterINS0_12buffer_rangeIcEEEEcNS0_20basic_format_contextISt20back_insert_iteratorINS0_8internal6bufferIcEEEcEEE7on_textEPKcSF_.exit
 
 _ZN10duckdb_fmt2v614format_handlerINS0_13arg_formatterINS0_12buffer_rangeIcEEEEcNS0_20basic_format_contextISt20back_insert_iteratorINS0_8internal6bufferIcEEEcEEE7on_textEPKcSF_.exit: ; preds = %bb.l, %bb.m
@@ -385,9 +386,10 @@ bb.p:                                             ; preds = %bb.o
   %.sroa.0.0.copyload.i.i.i55 = load ptr, ptr %i.c, align 16
   %.sroa.0.0.copyload.i7.i.i56 = load ptr, ptr %i.g, align 8, !tbaa !13
   store ptr %.sroa.0.0.copyload.i.i.i55, ptr %3, align 8
-  store ptr %.sroa.0.0.copyload.i7.i.i56, ptr %i.k, align 8, !tbaa !13
-  store ptr null, ptr %i.l, align 8, !tbaa !2323
-  store <2 x ptr> %15, ptr %i.m, align 8, !tbaa !13
+  store ptr %.sroa.0.0.copyload.i7.i.i56, ptr %i.l, align 8, !tbaa !13
+  store ptr null, ptr %i.m, align 8, !tbaa !2323
+  store ptr %i.c, ptr %14, align 8, !tbaa !3417
+  store ptr %i.d, ptr %15, align 8, !tbaa !3419
   %i.bd = call ptr @_ZN10duckdb_fmt2v616visit_format_argINS0_13arg_formatterINS0_12buffer_rangeIcEEEENS0_20basic_format_contextISt20back_insert_iteratorINS0_8internal6bufferIcEEEcEEEEDTclfp_Li0EEEOT_RKNS0_16basic_format_argIT0_EE(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef nonnull align 16 dereferenceable(20) %i.e)
   store ptr %i.bd, ptr %i.c, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
@@ -476,7 +478,7 @@ bb.ab:                                            ; preds = %bb.p, %bb.r, %_ZN10
   %.1 = phi ptr [ %i.au, %bb.p ], [ %i.bf, %bb.r ], [ %i.r, %bb.k ], [ %i.r, %_ZN10duckdb_fmt2v614format_handlerINS0_13arg_formatterINS0_12buffer_rangeIcEEEEcNS0_20basic_format_contextISt20back_insert_iteratorINS0_8internal6bufferIcEEEcEEE7on_textEPKcSF_.exit ]
   %i.bs = getelementptr inbounds nuw i8, ptr %.1, i64 1 ; 2 uses
   %.not = icmp eq ptr %i.bs, %i.a
-  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !3418
+  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !3423
 
 bb.ac:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %.pn52.pn = phi { ptr, i32 } [ %.pn52, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.pn49, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59 ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62 ]
@@ -507,7 +509,7 @@ bb.a:
 ._crit_edge:                                      ; preds = %bb.q, %.preheader
   %.013.lcssa = phi ptr [ %1, %.preheader ], [ %i.az, %bb.q ] ; 3 uses
   %.lcssa = phi i64 [ %i.d, %.preheader ], [ %i.bb, %bb.q ] ; 4 uses
-  %i.f = load ptr, ptr %0, align 8, !tbaa !3419, !nonnull !360, !align !2376
+  %i.f = load ptr, ptr %0, align 8, !tbaa !3424, !nonnull !360, !align !2376
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %.sroa.0.0.copyload.i.i = load ptr, ptr %i.g, align 16 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i, i64 16 ; 2 uses
@@ -521,7 +523,7 @@ bb.a:
 bb.b:                                             ; preds = %._crit_edge
   %i.n = load ptr, ptr %.sroa.0.0.copyload.i.i, align 8, !tbaa !59
   %i.o = load ptr, ptr %i.n, align 8
-  tail call void %i.o(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.0.copyload.i.i, i64 noundef %i.j), !inline_history !3417
+  tail call void %i.o(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.0.copyload.i.i, i64 noundef %i.j), !inline_history !3422
   br label %_ZN10duckdb_fmt2v68internal7reserveINS1_6bufferIcEETnNSt9enable_ifIXsr13is_contiguousIT_EE5valueEiE4typeELi0EEEPNS6_10value_typeERSt20back_insert_iteratorIS6_Em.exit.i
 
 _ZN10duckdb_fmt2v68internal7reserveINS1_6bufferIcEETnNSt9enable_ifIXsr13is_contiguousIT_EE5valueEiE4typeELi0EEEPNS6_10value_typeERSt20back_insert_iteratorIS6_Em.exit.i: ; preds = %bb.b, %._crit_edge
@@ -567,7 +569,7 @@ bb.g:                                             ; preds = %.lr.ph
   br i1 %.not, label %bb.k, label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %.lr.ph
-  %i.ab = load ptr, ptr %0, align 8, !tbaa !3419, !nonnull !360, !align !2376
+  %i.ab = load ptr, ptr %0, align 8, !tbaa !3424, !nonnull !360, !align !2376
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull @.str.91, ptr noundef nonnull align 1 dereferenceable(1) %4)
   invoke void @_ZN10duckdb_fmt2v68internal13error_handler8on_errorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 1 dereferenceable(1) %i.ab, ptr noundef nonnull %3) #27
@@ -593,7 +595,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.j,
   resume { ptr, i32 } %i.ac
 
 bb.k:                                             ; preds = %bb.g
-  %i.ag = load ptr, ptr %0, align 8, !tbaa !3419, !nonnull !360, !align !2376
+  %i.ag = load ptr, ptr %0, align 8, !tbaa !3424, !nonnull !360, !align !2376
   %i.ah = ptrtoint ptr %i.y to i64
   %i.ai = sub i64 %i.ah, %i.x                     ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 32 ; 2 uses
@@ -609,7 +611,7 @@ bb.k:                                             ; preds = %bb.g
 bb.l:                                             ; preds = %bb.k
   %i.aq = load ptr, ptr %.sroa.0.0.copyload.i.i17, align 8, !tbaa !59
   %i.ar = load ptr, ptr %i.aq, align 8
-  tail call void %i.ar(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.0.copyload.i.i17, i64 noundef %i.am), !inline_history !3417
+  tail call void %i.ar(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.0.copyload.i.i17, i64 noundef %i.am), !inline_history !3422
   br label %_ZN10duckdb_fmt2v68internal7reserveINS1_6bufferIcEETnNSt9enable_ifIXsr13is_contiguousIT_EE5valueEiE4typeELi0EEEPNS6_10value_typeERSt20back_insert_iteratorIS6_Em.exit.i18
 
 _ZN10duckdb_fmt2v68internal7reserveINS1_6bufferIcEETnNSt9enable_ifIXsr13is_contiguousIT_EE5valueEiE4typeELi0EEEPNS6_10value_typeERSt20back_insert_iteratorIS6_Em.exit.i18: ; preds = %bb.l, %bb.k
@@ -675,7 +677,7 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a
-  %i.i = load ptr, ptr %2, align 8, !tbaa !3421, !nonnull !360, !align !2376 ; 3 uses
+  %i.i = load ptr, ptr %2, align 8, !tbaa !3426, !nonnull !360, !align !2376 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = tail call noundef i32 @_ZN10duckdb_fmt2v626basic_format_parse_contextIcNS0_8internal13error_handlerEE11next_arg_idEv(ptr noundef nonnull align 8 dereferenceable(20) %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
@@ -721,7 +723,7 @@ bb.e:                                             ; preds = %bb.d
   store i8 0, ptr %i.x, align 1, !tbaa !66
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  %i.y = load ptr, ptr %2, align 8, !tbaa !3421, !nonnull !360, !align !2376
+  %i.y = load ptr, ptr %2, align 8, !tbaa !3426, !nonnull !360, !align !2376
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
   store ptr %i.z, ptr %6, align 8, !tbaa !316
   %i.aa = load ptr, ptr %8, align 8, !tbaa !328   ; 2 uses
@@ -794,7 +796,7 @@ bb.j:                                             ; preds = %.noexc.i.i
   br i1 %i.aq, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50.sink.split
 
 bb.k:                                             ; preds = %bb.e, %bb.e
-  %i.ar = load ptr, ptr %2, align 8, !tbaa !3421, !nonnull !360, !align !2376 ; 3 uses
+  %i.ar = load ptr, ptr %2, align 8, !tbaa !3426, !nonnull !360, !align !2376 ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   call void @_ZN10duckdb_fmt2v626basic_format_parse_contextIcNS0_8internal13error_handlerEE12check_arg_idEi(ptr noundef nonnull align 8 dereferenceable(20) %i.as, i32 noundef %i.o)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
@@ -838,7 +840,7 @@ bb.l:                                             ; preds = %bb.c
   store i8 0, ptr %i.bh, align 1, !tbaa !66
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  %i.bi = load ptr, ptr %2, align 8, !tbaa !3421, !nonnull !360, !align !2376
+  %i.bi = load ptr, ptr %2, align 8, !tbaa !3426, !nonnull !360, !align !2376
   %i.bj = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
   store ptr %i.bj, ptr %4, align 8, !tbaa !316
   %i.bk = load ptr, ptr %9, align 8, !tbaa !328   ; 2 uses
@@ -913,7 +915,7 @@ bb.q:                                             ; preds = %.noexc.i.i60
 .critedge7:                                       ; preds = %.lr.ph
   %i.cb = getelementptr inbounds nuw i8, ptr %i.cc, i64 1 ; 2 uses
   %.not = icmp eq ptr %i.cb, %1
-  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !3423
+  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !3428
 
 .lr.ph:                                           ; preds = %.critedge7.preheader, %.critedge7
   %i.cc = phi ptr [ %i.cb, %.critedge7 ], [ %i.bb, %.critedge7.preheader ] ; 3 uses
@@ -926,17 +928,17 @@ bb.q:                                             ; preds = %.noexc.i.i60
   %i.ci = add i8 %i.cd, -48
   %i.cj = icmp ult i8 %i.ci, 10
   %or.cond = or i1 %i.cj, %i.ch
-  br i1 %or.cond, label %.critedge7, label %..critedge_crit_edge, !llvm.loop !3423
+  br i1 %or.cond, label %.critedge7, label %..critedge_crit_edge, !llvm.loop !3428
 
 ..critedge_crit_edge:                             ; preds = %.lr.ph
-  br label %.critedge, !llvm.loop !3423
+  br label %.critedge, !llvm.loop !3428
 
 .critedge:                                        ; preds = %.critedge7, %..critedge_crit_edge, %.critedge7.preheader
   %.lcssa = phi ptr [ %i.cc, %..critedge_crit_edge ], [ %scevgep, %.critedge7.preheader ], [ %scevgep, %.critedge7 ] ; 2 uses
   %i.ck = ptrtoint ptr %.lcssa to i64
   %i.cl = ptrtoint ptr %0 to i64
   %i.cm = sub i64 %i.ck, %i.cl
-  %i.cn = load ptr, ptr %2, align 8, !tbaa !3421, !nonnull !360, !align !2376 ; 2 uses
+  %i.cn = load ptr, ptr %2, align 8, !tbaa !3426, !nonnull !360, !align !2376 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 32
   call void @_ZN10duckdb_fmt2v620basic_format_contextISt20back_insert_iteratorINS0_8internal6bufferIcEEEcE3argENS0_17basic_string_viewIcEE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb_fmt::v6::basic_format_arg.355") align 16 %3, ptr noundef nonnull align 8 dereferenceable(48) %i.co, ptr nonnull %0, i64 %i.cm)
@@ -990,7 +992,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.copyload.i = load ptr, ptr %i.k, align 16, !tbaa !13
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 88
   %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !13
-  tail call void %.sroa.2.0.copyload.i(ptr noundef %.sroa.0.0.copyload.i, ptr noundef nonnull align 8 dereferenceable(20) %i.a, ptr noundef nonnull align 8 dereferenceable(48) %i.j), !inline_history !3424
+  tail call void %.sroa.2.0.copyload.i(ptr noundef %.sroa.0.0.copyload.i, ptr noundef nonnull align 8 dereferenceable(20) %i.a, ptr noundef nonnull align 8 dereferenceable(48) %i.j), !inline_history !3429
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !2286
   br label %bb.h
 
@@ -1014,9 +1016,9 @@ _ZN10duckdb_fmt2v616visit_format_argIRNS0_8internal16custom_formatterINS0_20basi
   %.sroa.6.8..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
   store ptr %i.j, ptr %.sroa.6.8..sroa_idx, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store ptr %4, ptr %i.u, align 8, !tbaa !3425
+  store ptr %4, ptr %i.u, align 8, !tbaa !3430
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 32
-  store i32 %i.m, ptr %i.v, align 8, !tbaa !3427
+  store i32 %i.m, ptr %i.v, align 8, !tbaa !3432
   %i.w = call noundef ptr @_ZN10duckdb_fmt2v68internal18parse_format_specsIcRNS1_13specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEEEEEPKT_SJ_SJ_OT0_(ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(40) %4) ; 4 uses
   %i.x = icmp eq ptr %i.w, %2
   br i1 %i.x, label %bb.d, label %bb.c
@@ -1073,9 +1075,9 @@ bb.g:                                             ; preds = %bb.c
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %3, ptr %i.am, align 8, !tbaa !2323
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 24
-  store ptr %i.j, ptr %i.an, align 8, !tbaa !3429
+  store ptr %i.j, ptr %i.an, align 8, !tbaa !3417
   %i.ao = getelementptr inbounds nuw i8, ptr %7, i64 32
-  store ptr %i.a, ptr %i.ao, align 8, !tbaa !3431
+  store ptr %i.a, ptr %i.ao, align 8, !tbaa !3419
   %i.ap = call ptr @_ZN10duckdb_fmt2v616visit_format_argINS0_13arg_formatterINS0_12buffer_rangeIcEEEENS0_20basic_format_contextISt20back_insert_iteratorINS0_8internal6bufferIcEEEcEEEEDTclfp_Li0EEEOT_RKNS0_16basic_format_argIT0_EE(ptr noundef nonnull align 8 dereferenceable(40) %7, ptr noundef nonnull align 16 dereferenceable(20) %i.k)
   store ptr %i.ap, ptr %i.j, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
@@ -1478,7 +1480,7 @@ bb.z:                                             ; preds = %bb.a
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !13
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !3431
+  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !3419
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !3456, !nonnull !360, !align !625
   tail call void %.sroa.2.0.copyload(ptr noundef %.sroa.0.0.copyload, ptr noundef nonnull align 8 dereferenceable(20) %i.bf, ptr noundef nonnull align 8 dereferenceable(48) %i.bh), !inline_history !3457
@@ -1700,7 +1702,7 @@ bb.d:                                             ; preds = %bb.c
   store i8 0, ptr %i.w, align 1, !tbaa !66
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  %i.x = load ptr, ptr %2, align 8, !tbaa !3421, !nonnull !360, !align !2376
+  %i.x = load ptr, ptr %2, align 8, !tbaa !3426, !nonnull !360, !align !2376
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   store ptr %i.y, ptr %3, align 8, !tbaa !316
   %i.z = load ptr, ptr %4, align 8, !tbaa !328    ; 2 uses
@@ -2103,7 +2105,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.av = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.aw = load i32, ptr %i.av, align 8, !tbaa !3427
+  %i.aw = load i32, ptr %i.av, align 8, !tbaa !3432
   %i.ax = add i32 %i.aw, -1
   %i.ay = icmp ult i32 %i.ax, 12
   br i1 %i.ay, label %_ZN10duckdb_fmt2v68internal13specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEE7on_hashEv.exit, label %.noexc.i.i.i
@@ -2178,7 +2180,7 @@ bb.r:                                             ; preds = %thread-pre-split, %
 bb.s:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.bt = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.bu = load i32, ptr %i.bt, align 8, !tbaa !3427
+  %i.bu = load i32, ptr %i.bt, align 8, !tbaa !3432
   %i.bv = add i32 %i.bu, -1
   %i.bw = icmp ult i32 %i.bv, 12
   br i1 %i.bw, label %_ZN10duckdb_fmt2v68internal13specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEE7on_zeroEv.exit, label %.noexc.i.i.i74
@@ -2383,7 +2385,7 @@ bb.e:                                             ; preds = %_ZNSt7__cxx1112basi
 .split3.i:                                        ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !3427
+  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !3432
   %i.ae = add i32 %i.ad, -1
   %i.af = icmp ult i32 %i.ae, 12
   br i1 %i.af, label %_ZN10duckdb_fmt2v68internal21numeric_specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEE24require_numeric_argumentEv.exit.i, label %.noexc.i.i.i
@@ -2786,7 +2788,7 @@ bb.r:                                             ; preds = %bb.m, %_ZN10duckdb_
   %.2 = phi ptr [ %.5, %_ZN10duckdb_fmt2v68internal21parse_nonnegative_intIcRNS1_13specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEEEEEiRPKT_SJ_OT0_.exit ], [ %i.ao, %bb.m ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.bm = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.bn = load i32, ptr %i.bm, align 8, !tbaa !3427 ; 2 uses
+  %i.bn = load i32, ptr %i.bm, align 8, !tbaa !3432 ; 2 uses
   %i.bo = add i32 %i.bn, -1
   %i.bp = icmp ult i32 %i.bo, 9
   %i.bq = icmp eq i32 %i.bn, 15
@@ -2981,7 +2983,7 @@ bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !3427 ; 2 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !3432 ; 2 uses
   %i.e = add i32 %i.d, -1                         ; 2 uses
   %i.f = icmp ult i32 %i.e, 12
   br i1 %i.f, label %_ZN10duckdb_fmt2v68internal21numeric_specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEE24require_numeric_argumentEv.exit, label %.noexc.i.i
@@ -3032,7 +3034,7 @@ common.resume:                                    ; preds = %common.resume.sink.
   resume { ptr, i32 } %common.resume.op
 
 _ZN10duckdb_fmt2v68internal21numeric_specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEE24require_numeric_argumentEv.exitthread-pre-split: ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-  %.pr = load i32, ptr %i.c, align 8, !tbaa !3427 ; 2 uses
+  %.pr = load i32, ptr %i.c, align 8, !tbaa !3432 ; 2 uses
   %.pre = add i32 %.pr, -1
   br label %_ZN10duckdb_fmt2v68internal21numeric_specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEE24require_numeric_argumentEv.exit
 
@@ -3435,23 +3437,23 @@ begin_hunk_4_@llvm.ctpop.v2i64
 !3414 = distinct !{!3414, !"_ZN10duckdb_fmt2v69to_stringIcLm500EEENSt7__cxx1112basic_stringIT_St11char_traitsIS4_ESaIS4_EEERKNS0_19basic_memory_bufferIS4_XT0_ES7_EE"}
 !3415 = !{!3416, !3416, i64 0}
 !3416 = !{!"p1 _ZTSN10duckdb_fmt2v614format_handlerINS0_13arg_formatterINS0_12buffer_rangeIcEEEEcNS0_20basic_format_contextISt20back_insert_iteratorINS0_8internal6bufferIcEEEcEEEE", !10, i64 0}
-!3417 = distinct !{null, null, null, null}
-!3418 = distinct !{!3418, !19}
-!3419 = !{!3420, !3416, i64 0}
-!3420 = !{!"_ZTSZN10duckdb_fmt2v68internal19parse_format_stringILb0EcRNS0_14format_handlerINS0_13arg_formatterINS0_12buffer_rangeIcEEEEcNS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEEEvNS0_17basic_string_viewIT0_EEOT1_E10pfs_writer", !3416, i64 0}
-!3421 = !{!3422, !3416, i64 0}
-!3422 = !{!"_ZTSN10duckdb_fmt2v68internal10id_adapterIRNS0_14format_handlerINS0_13arg_formatterINS0_12buffer_rangeIcEEEEcNS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEcEE", !3416, i64 0}
+!3417 = !{!3418, !3418, i64 0}
+!3418 = !{!"p1 _ZTSN10duckdb_fmt2v620basic_format_contextISt20back_insert_iteratorINS0_8internal6bufferIcEEEcEE", !10, i64 0}
+!3419 = !{!3420, !3421, i64 32}
+!3420 = !{!"_ZTSN10duckdb_fmt2v613arg_formatterINS0_12buffer_rangeIcEEEE", !2324, i64 0, !3418, i64 24, !3421, i64 32}
+!3421 = !{!"p1 _ZTSN10duckdb_fmt2v626basic_format_parse_contextIcNS0_8internal13error_handlerEEE", !10, i64 0}
+!3422 = distinct !{null, null, null, null}
 !3423 = distinct !{!3423, !19}
-!3424 = distinct !{null, null, null}
-!3425 = !{!3426, !3426, i64 0}
-!3426 = !{!"p1 _ZTSN10duckdb_fmt2v68internal13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEE", !10, i64 0}
-!3427 = !{!3428, !362, i64 8}
-!3428 = !{!"_ZTSN10duckdb_fmt2v68internal21numeric_specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEEE", !3426, i64 0, !362, i64 8}
-!3429 = !{!3430, !3430, i64 0}
-!3430 = !{!"p1 _ZTSN10duckdb_fmt2v620basic_format_contextISt20back_insert_iteratorINS0_8internal6bufferIcEEEcEE", !10, i64 0}
-!3431 = !{!3432, !3433, i64 32}
-!3432 = !{!"_ZTSN10duckdb_fmt2v613arg_formatterINS0_12buffer_rangeIcEEEE", !2324, i64 0, !3430, i64 24, !3433, i64 32}
-!3433 = !{!"p1 _ZTSN10duckdb_fmt2v626basic_format_parse_contextIcNS0_8internal13error_handlerEEE", !10, i64 0}
+!3424 = !{!3425, !3416, i64 0}
+!3425 = !{!"_ZTSZN10duckdb_fmt2v68internal19parse_format_stringILb0EcRNS0_14format_handlerINS0_13arg_formatterINS0_12buffer_rangeIcEEEEcNS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEEEvNS0_17basic_string_viewIT0_EEOT1_E10pfs_writer", !3416, i64 0}
+!3426 = !{!3427, !3416, i64 0}
+!3427 = !{!"_ZTSN10duckdb_fmt2v68internal10id_adapterIRNS0_14format_handlerINS0_13arg_formatterINS0_12buffer_rangeIcEEEEcNS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEcEE", !3416, i64 0}
+!3428 = distinct !{!3428, !19}
+!3429 = distinct !{null, null, null}
+!3430 = !{!3431, !3431, i64 0}
+!3431 = !{!"p1 _ZTSN10duckdb_fmt2v68internal13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEE", !10, i64 0}
+!3432 = !{!3433, !362, i64 8}
+!3433 = !{!"_ZTSN10duckdb_fmt2v68internal21numeric_specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEEE", !3431, i64 0, !362, i64 8}
 !3434 = !{!3435}
 !3435 = distinct !{!3435, !3436, !"_ZNK10duckdb_fmt2v620basic_format_contextISt20back_insert_iteratorINS0_8internal6bufferIcEEEcE3argEi: argument 0"}
 !3436 = distinct !{!3436, !"_ZNK10duckdb_fmt2v620basic_format_contextISt20back_insert_iteratorINS0_8internal6bufferIcEEEcE3argEi"}
@@ -3474,7 +3476,7 @@ begin_hunk_4_@llvm.ctpop.v2i64
 !3453 = !{!3454}
 !3454 = distinct !{!3454, !3455, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_: argument 0"}
 !3455 = distinct !{!3455, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_"}
-!3456 = !{!3432, !3430, i64 24}
+!3456 = !{!3420, !3418, i64 24}
 !3457 = distinct !{null, null}
 !3458 = distinct !{null, null, null, null, null, null}
 !3459 = distinct !{!3459, !19}
@@ -3506,18 +3508,18 @@ begin_hunk_4_@llvm.ctpop.v2i64
 !3485 = distinct !{!3485, !19}
 !3486 = !{!3487, !2329, i64 0}
 !3487 = !{!"_ZTSN10duckdb_fmt2v68internal12specs_setterIcEE", !2329, i64 0}
-!3488 = !{!3428, !3426, i64 0}
+!3488 = !{!3433, !3431, i64 0}
 !3489 = distinct !{!3489, !19}
 !3490 = !{!3491, !3491, i64 0}
 !3491 = !{!"p1 _ZTSN10duckdb_fmt2v68internal13specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEEE", !10, i64 0}
 !3492 = !{!3493, !3491, i64 0}
 !3493 = !{!"_ZTSN10duckdb_fmt2v68internal13width_adapterIRNS1_13specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEEEEcEE", !3491, i64 0}
-!3494 = !{!3495, !3430, i64 16}
-!3495 = !{!"_ZTSN10duckdb_fmt2v68internal13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEE", !3487, i64 0, !3433, i64 8, !3430, i64 16}
+!3494 = !{!3495, !3418, i64 16}
+!3495 = !{!"_ZTSN10duckdb_fmt2v68internal13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEEE", !3487, i64 0, !3421, i64 8, !3418, i64 16}
 !3496 = !{!3497}
 !3497 = distinct !{!3497, !3498, !"_ZN10duckdb_fmt2v68internal13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEE7get_argENS1_7auto_idE: argument 0"}
 !3498 = distinct !{!3498, !"_ZN10duckdb_fmt2v68internal13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorINS1_6bufferIcEEEcEEE7get_argENS1_7auto_idE"}
-!3499 = !{!3495, !3433, i64 8}
+!3499 = !{!3495, !3421, i64 8}
 !3500 = !{!3501, !3501, i64 0}
 !3501 = !{!"p1 _ZTSN10duckdb_fmt2v68internal13error_handlerE", !10, i64 0}
 !3502 = !{!3503}

@@ -203,25 +203,28 @@ bb.e:                                             ; preds = %bb.c
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
-  %.05261 = phi double [ %i.ae, %.lr.ph.preheader ], [ %10, %.lr.ph ] ; 2 uses
-  %.05360 = phi double [ 0.000000e+00, %.lr.ph.preheader ], [ %6, %.lr.ph ]
-  %.05459 = phi double [ 1.000000e+00, %.lr.ph.preheader ], [ %7, %.lr.ph ] ; 2 uses
-  %i.ag = getelementptr [8 x i8], ptr %i.ac, i64 %indvars.iv ; 2 uses
+  %.05261 = phi double [ %i.ae, %.lr.ph.preheader ], [ %13, %.lr.ph ] ; 2 uses
+  %.05360 = phi double [ 0.000000e+00, %.lr.ph.preheader ], [ %12, %.lr.ph ]
+  %.05459 = phi double [ 1.000000e+00, %.lr.ph.preheader ], [ %4, %.lr.ph ] ; 2 uses
+  %i.ag = getelementptr [8 x i8], ptr %i.ac, i64 %indvars.iv
   %i.ah = getelementptr i8, ptr %i.ag, i64 -8
-  %4 = load double, ptr %i.ah, align 8, !tbaa !60 ; 2 uses
-  %5 = fdiv double %.05459, %4
-  %6 = tail call double @llvm.fmuladd.f64(double %.05360, double %.05261, double %5) ; 2 uses
-  %7 = fmul double %.05459, %.05261               ; 2 uses
-  %8 = fadd double %i.ab, %4
-  %9 = load double, ptr %i.ag, align 8, !tbaa !60
-  %10 = fdiv double %8, %9
+  %4 = fmul double %.05459, %.05261               ; 2 uses
+  %5 = load <2 x double>, ptr %i.ah, align 8, !tbaa !60 ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = fadd double %i.ab, %6
+  %8 = insertelement <2 x double> poison, double %.05459, i64 0
+  %9 = insertelement <2 x double> %8, double %7, i64 1
+  %10 = fdiv <2 x double> %9, %5                  ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 0
+  %12 = tail call double @llvm.fmuladd.f64(double %.05360, double %.05261, double %11) ; 2 uses
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %indvars.iv ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !57
-  tail call void @N_VLinearSum(double noundef 1.000000e+00, ptr noundef %2, double noundef %7, ptr noundef %i.aj, ptr noundef %2) #12
+  tail call void @N_VLinearSum(double noundef 1.000000e+00, ptr noundef %2, double noundef %4, ptr noundef %i.aj, ptr noundef %2) #12
   %i.ak = load ptr, ptr %i.ai, align 8, !tbaa !57
-  tail call void @N_VLinearSum(double noundef 1.000000e+00, ptr noundef %3, double noundef %6, ptr noundef %i.ak, ptr noundef %3) #12
+  tail call void @N_VLinearSum(double noundef 1.000000e+00, ptr noundef %3, double noundef %12, ptr noundef %i.ak, ptr noundef %3) #12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %13 = extractelement <2 x double> %10, i64 1
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !333
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.e, %bb.d, %bb.b

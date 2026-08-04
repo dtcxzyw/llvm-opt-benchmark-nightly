@@ -1,3 +1,4 @@
+inline.NumInlined: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -85,18 +86,18 @@ bb.e:                                             ; preds = %bb.f
 bb.f:                                             ; preds = %bb.d, %bb.e
   %.03947 = phi i32 [ 100, %bb.d ], [ %i.e, %bb.e ]
   %.04046 = phi double [ %.sroa.2.0, %bb.d ], [ %i.u, %bb.e ] ; 4 uses
-  %i.f = fmul double %.04046, %.04046             ; 4 uses
+  %i.f = fmul double %.04046, %.04046             ; 3 uses
   %i.g = fmul double %i.f, %i.f                   ; 4 uses
   %i.h = fmul double %i.g, %i.g                   ; 2 uses
-  %i.i = insertelement <2 x double> <double poison, double -0.000000e+00>, double %i.f, i64 0
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.i, <2 x double> <double 1.926000e-02, double 0.000000e+00>, <2 x double> <double -2.625000e-02, double -2.362500e-01>)
-  %4 = insertelement <2 x double> poison, double %i.g, i64 0
-  %5 = insertelement <2 x double> %4, double %i.f, i64 1
-  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %5, <2 x double> <double -3.960000e-03, double 2.118600e-01>, <2 x double> %3) ; 2 uses
+  %i.i = insertelement <2 x double> poison, double %i.f, i64 0
+  %3 = shufflevector <2 x double> %i.i, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> <double 1.926000e-02, double 2.118600e-01>, <2 x double> <double -2.625000e-02, double -2.362500e-01>) ; 2 uses
+  %5 = extractelement <2 x double> %4, i64 0
+  %6 = tail call double @llvm.fmuladd.f64(double %i.g, double -3.960000e-03, double %5)
   %i.j = insertelement <2 x double> poison, double %i.h, i64 0
   %i.k = insertelement <2 x double> %i.j, double %i.g, i64 1
-  %i.l = insertelement <2 x double> %6, double -5.148000e-02, i64 1
-  %i.m = insertelement <2 x double> %6, double 1.011830e+00, i64 0
+  %i.l = insertelement <2 x double> <double poison, double -5.148000e-02>, double %6, i64 0
+  %i.m = insertelement <2 x double> %4, double 1.011830e+00, i64 0
   %i.n = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.k, <2 x double> %i.l, <2 x double> %i.m)
   %i.o = insertelement <2 x double> poison, double %.04046, i64 0
   %i.p = insertelement <2 x double> %i.o, double %i.h, i64 1

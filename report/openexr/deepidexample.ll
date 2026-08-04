@@ -203,16 +203,21 @@ declare float @llvm.fmuladd.f32(float, float, float) #9
 ; Function Attrs: mustprogress nofree nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef float @_Z8getAlphafffff(float noundef %0, float noundef %1, float noundef %2, float noundef %3, float noundef %4) local_unnamed_addr #10 {
 bb.a:
-  %5 = fmul float %1, %1                          ; 2 uses
-  %i.a = tail call float @llvm.fmuladd.f32(float %0, float %0, float %5)
+  %5 = insertelement <2 x float> poison, float %1, i64 0
+  %6 = insertelement <2 x float> %5, float %3, i64 1 ; 2 uses
+  %7 = fmul <2 x float> %6, %6                    ; 2 uses
+  %8 = extractelement <2 x float> %7, i64 0
+  %i.a = tail call float @llvm.fmuladd.f32(float %0, float %0, float %8)
   %i.b = fmul float %4, %4                        ; 3 uses
   %i.c = fcmp olt float %i.a, %i.b                ; 2 uses
-  %6 = tail call float @llvm.fmuladd.f32(float %2, float %2, float %5)
-  %7 = fcmp olt float %6, %i.b                    ; 2 uses
-  %8 = fmul float %3, %3
-  %9 = tail call float @llvm.fmuladd.f32(float %0, float %0, float %8)
-  %i.d = fcmp olt float %9, %i.b                  ; 2 uses
-  %or.cond = and i1 %i.c, %7
+  %9 = insertelement <2 x float> poison, float %2, i64 0
+  %10 = insertelement <2 x float> %9, float %0, i64 1 ; 2 uses
+  %11 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> %10, <2 x float> %7) ; 2 uses
+  %12 = extractelement <2 x float> %11, i64 0
+  %13 = fcmp olt float %12, %i.b                  ; 2 uses
+  %14 = extractelement <2 x float> %11, i64 1
+  %i.d = fcmp olt float %14, %i.b                 ; 2 uses
+  %or.cond = and i1 %i.c, %13
   %or.cond3 = and i1 %i.d, %or.cond
   br i1 %or.cond3, label %bb.b, label %bb.c
 
@@ -223,7 +228,7 @@ bb.b:                                             ; preds = %bb.a
   br label %common.ret79
 
 bb.c:                                             ; preds = %bb.a
-  %or.cond7 = or i1 %i.c, %7
+  %or.cond7 = or i1 %i.c, %13
   %or.cond9 = or i1 %i.d, %or.cond7
   br i1 %or.cond9, label %bb.d, label %common.ret79
 
@@ -625,6 +630,9 @@ declare float @llvm.sqrt.f32(float) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #9
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }

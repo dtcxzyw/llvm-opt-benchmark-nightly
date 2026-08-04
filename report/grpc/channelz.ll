@@ -1,3 +1,9 @@
+inline.NumInlined: 5039
+inline.NumDeleted: 2603
+loop-unroll.NumCompletelyUnrolled: 33
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 38
+loop-unroll.NumUnrolledNotLatch: 2
 begin_hunk_0_@_ZN9grpc_core8channelz8BaseNode15SerializeEntityEP23grpc_channelz_v2_EntityP9upb_ArenaN4absl12lts_202505128DurationE:bb.a
   store i32 1, ptr %i.ce, align 8, !tbaa !154, !noalias !236
   %i.cf = getelementptr inbounds nuw i8, ptr %i.cd, i64 12
@@ -199,8 +205,8 @@ bb.af:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 "_ZZN9grpc_core8channelz8BaseNode15SerializeEntityEP23grpc_channelz_v2_EntityP9upb_ArenaN4absl12lts_202505128DurationEENK3$_1clEv.exit": ; preds = %bb.af, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i7.i, %bb.ab, %_ZNSt12__shared_ptrIN9grpc_core8channelz30DataSinkCompletionNotificationELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
   %i.et = phi ptr [ %i.dt, %bb.af ], [ %i.dt, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i7.i ], [ %i.dt, %bb.ab ], [ %i.ds, %_ZNSt12__shared_ptrIN9grpc_core8channelz30DataSinkCompletionNotificationELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i ]
-  %i.eu = phi ptr [ %i.du, %bb.af ], [ %i.du, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i7.i ], [ %i.du, %bb.ab ], [ %i.dl, %_ZNSt12__shared_ptrIN9grpc_core8channelz30DataSinkCompletionNotificationELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i ] ; 12 uses
-  %i.ev = phi ptr [ %i.dv, %bb.af ], [ %i.dv, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i7.i ], [ %i.dv, %bb.ab ], [ %i.dk, %_ZNSt12__shared_ptrIN9grpc_core8channelz30DataSinkCompletionNotificationELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i ] ; 3 uses
+  %i.eu = phi ptr [ %i.du, %bb.af ], [ %i.du, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i7.i ], [ %i.du, %bb.ab ], [ %i.dl, %_ZNSt12__shared_ptrIN9grpc_core8channelz30DataSinkCompletionNotificationELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i ] ; 13 uses
+  %i.ev = phi ptr [ %i.dv, %bb.af ], [ %i.dv, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i7.i ], [ %i.dv, %bb.ab ], [ %i.dk, %_ZNSt12__shared_ptrIN9grpc_core8channelz30DataSinkCompletionNotificationELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i ] ; 4 uses
   %.not.i.i.i79246249252255 = phi i1 [ %.not.i.i.i79246249252256, %bb.af ], [ %.not.i.i.i79246249252256, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i7.i ], [ %.not.i.i.i79246249252256, %bb.ab ], [ false, %_ZNSt12__shared_ptrIN9grpc_core8channelz30DataSinkCompletionNotificationELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i ] ; 3 uses
   %i.ew = load ptr, ptr %0, align 8, !tbaa !24
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 32
@@ -315,9 +321,7 @@ _ZN4absl12lts_202505129MutexLockC2EPNS0_5MutexE.exit88: ; preds = %_ZN9grpc_core
   %i.gl = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 2 uses
   %i.gm = getelementptr inbounds nuw i8, ptr %i.cm, i64 12 ; 4 uses
   %i.gn = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 2 uses
-  %i.go = getelementptr inbounds nuw i8, ptr %14, i64 24
-  %19 = insertelement <2 x ptr> poison, ptr %i.ev, i64 0
-  %20 = insertelement <2 x ptr> %19, ptr %i.eu, i64 1 ; 2 uses
+  %i.go = getelementptr inbounds nuw i8, ptr %14, i64 24 ; 3 uses
   br label %bb.bm
 
 ._crit_edge198:                                   ; preds = %_ZN9grpc_core8channelz8DataSinkD2Ev.exit123, %_ZN4absl12lts_202505129MutexLockC2EPNS0_5MutexE.exit88
@@ -534,11 +538,13 @@ bb.bv:                                            ; preds = %bb.bt
   br label %bb.bw
 
 _ZNSt12__shared_ptrIN9grpc_core8channelz30DataSinkCompletionNotificationELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i112: ; preds = %_ZNSt10shared_ptrIN9grpc_core8channelz30DataSinkCompletionNotificationEEC2ERKS3_.exit.i107
-  store <2 x ptr> %20, ptr %i.gn, align 8, !tbaa !181, !alias.scope !248
+  store ptr %i.ev, ptr %i.gn, align 8, !tbaa !182, !alias.scope !248
+  store ptr %i.eu, ptr %i.go, align 8, !tbaa !157, !alias.scope !248
   br label %"_ZZN9grpc_core8channelz8BaseNode15SerializeEntityEP23grpc_channelz_v2_EntityP9upb_ArenaN4absl12lts_202505128DurationEENK3$_1clEv.exit113"
 
 bb.bw:                                            ; preds = %bb.bv, %bb.bu
-  store <2 x ptr> %20, ptr %i.gn, align 8, !tbaa !181, !alias.scope !248
+  store ptr %i.ev, ptr %i.gn, align 8, !tbaa !182, !alias.scope !248
+  store ptr %i.eu, ptr %i.go, align 8, !tbaa !157, !alias.scope !248
   %i.ir = load atomic i64, ptr %i.gj acquire, align 8, !noalias !248 ; 2 uses
   %i.is = icmp eq i64 %i.ir, 4294967297
   %i.it = trunc i64 %i.ir to i32                  ; 2 uses
