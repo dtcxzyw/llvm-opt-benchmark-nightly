@@ -111,11 +111,11 @@ _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core33create_comp_flags_from_zip_par
   %i.o = trunc nuw nsw i32 %i.n to i8
   %i.p = and i8 %i.o, 1
   store i8 %i.p, ptr %i.m, align 2
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 65584
-  %4 = and i32 %phi.call, 4095                    ; 2 uses
-  %5 = lshr i32 %4, 2
-  %i.q = trunc nuw nsw i32 %5 to i16
-  %i.r = trunc nuw nsw i32 %4 to i16
+  %3 = and i32 %phi.call, 4095                    ; 2 uses
+  %4 = lshr i32 %3, 2
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 65584
+  %i.q = trunc nuw nsw i32 %4 to i16
+  %i.r = trunc nuw nsw i32 %3 to i16
   %.lhs.trunc9 = add nuw nsw i16 %i.q, 2
   %.lhs.trunc = add nuw nsw i16 %i.r, 2
   %i.s = udiv i16 %.lhs.trunc9, 3
@@ -124,7 +124,7 @@ _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core33create_comp_flags_from_zip_par
   %i.v = insertelement <2 x i16> %i.u, i16 %i.s, i64 1
   %i.w = add nuw nsw <2 x i16> %i.v, splat (i16 1)
   %i.x = zext nneg <2 x i16> %i.w to <2 x i32>
-  store <2 x i32> %i.x, ptr %3, align 8
+  store <2 x i32> %i.x, ptr %5, align 8
   ret void
 }
 
@@ -168,11 +168,11 @@ _RNvMs1_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_15CompressorOxide20set_
   %i.r = trunc nuw nsw i32 %i.q to i8
   %i.s = and i8 %i.r, 1
   store i8 %i.s, ptr %i.p, align 2, !alias.scope !5
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 65584
-  %3 = and i32 %phi.call.i, 4095                  ; 2 uses
-  %4 = lshr i32 %3, 2
-  %i.t = trunc nuw nsw i32 %4 to i16
-  %i.u = trunc nuw nsw i32 %3 to i16
+  %2 = and i32 %phi.call.i, 4095                  ; 2 uses
+  %3 = lshr i32 %2, 2
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 65584
+  %i.t = trunc nuw nsw i32 %3 to i16
+  %i.u = trunc nuw nsw i32 %2 to i16
   %.lhs.trunc9.i = add nuw nsw i16 %i.t, 2
   %.lhs.trunc.i = add nuw nsw i16 %i.u, 2
   %i.v = udiv i16 %.lhs.trunc9.i, 3
@@ -181,7 +181,7 @@ _RNvMs1_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_15CompressorOxide20set_
   %i.y = insertelement <2 x i16> %i.x, i16 %i.v, i64 1
   %i.z = add nuw nsw <2 x i16> %i.y, splat (i16 1)
   %i.aa = zext nneg <2 x i16> %i.z to <2 x i32>
-  store <2 x i32> %i.aa, ptr %2, align 8, !alias.scope !5
+  store <2 x i32> %i.aa, ptr %4, align 8, !alias.scope !5
   ret void
 }
 
@@ -218,6 +218,8 @@ bb.a:
 bb.b:                                             ; preds = %.split, %.split2
   %spec.select.i.sink = phi i32 [ %spec.select11.i, %.split2 ], [ %spec.select.i, %.split ] ; 2 uses
   %.sink10.in.in.in.in.in.in = phi i32 [ %spec.select11.i, %.split2 ], [ %i.i, %.split ]
+  %.sink10.in.in.in.in.in = and i32 %.sink10.in.in.in.in.in.in, 4095 ; 2 uses
+  %.sink.in.in.in.in.in = lshr i32 %.sink10.in.in.in.in.in, 2
   %.sink11.in.in = lshr i32 %spec.select.i.sink, 14
   %.sink11.in = trunc nuw nsw i32 %.sink11.in.in to i8
   %.sink11 = and i8 %.sink11.in, 1
@@ -225,8 +227,6 @@ bb.b:                                             ; preds = %.split, %.split2
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 65706
   store i8 %.sink11, ptr %i.o, align 2
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 65584
-  %.sink10.in.in.in.in.in = and i32 %.sink10.in.in.in.in.in.in, 4095 ; 2 uses
-  %.sink.in.in.in.in.in = lshr i32 %.sink10.in.in.in.in.in, 2
   %.sink.in.in.in.in = trunc nuw nsw i32 %.sink.in.in.in.in.in to i16
   %.sink10.in.in.in.in = trunc nuw nsw i32 %.sink10.in.in.in.in.in to i16
   %.sink.in.in.in = add nuw nsw i16 %.sink.in.in.in.in, 2
@@ -284,12 +284,12 @@ bb.e:                                             ; preds = %_RNvXs9_NtCsbSS6DM8
   br label %bb.g
 
 bb.f:                                             ; preds = %_RNvXs9_NtCsbSS6DM8SDEO_5alloc5boxedINtB5_3BoxNtNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core12HuffmanOxideENtNtCshzWfHUSfYae_4core7default7Default7defaultBN_.exit
+  %2 = and i32 %1, 4095                           ; 2 uses
+  %3 = lshr i32 %2, 2
   %i.f = lshr i32 %1, 14
   %i.g = trunc i32 %i.f to i8
   %i.h = and i8 %i.g, 1
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %2 = and i32 %1, 4095                           ; 2 uses
-  %3 = lshr i32 %2, 2
   %i.j = trunc nuw nsw i32 %3 to i16
   %i.k = trunc nuw nsw i32 %2 to i16
   %.lhs.trunc1.i = add nuw nsw i16 %i.j, 2

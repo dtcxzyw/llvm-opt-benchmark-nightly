@@ -139,7 +139,7 @@ bb.c:                                             ; preds = %bb.b
   %i.cb = mul nsw i64 %i.bx, %i.ca
   %i.cc = add nsw i64 %i.cb, %i.bs                ; 3 uses
   %indvars.iv.next107.3 = add nuw nsw i64 %indvars.iv106, 4 ; 2 uses
-  %niter143.next.3 = add i64 %niter143, 4         ; 2 uses
+  %niter143.next.3 = add nuw i64 %niter143, 4     ; 2 uses
   %niter143.ncmp.3 = icmp eq i64 %niter143.next.3, %unroll_iter142
   br i1 %niter143.ncmp.3, label %.loopexit.thread.loopexit.unr-lcssa, label %.lr.ph90, !llvm.loop !16
 

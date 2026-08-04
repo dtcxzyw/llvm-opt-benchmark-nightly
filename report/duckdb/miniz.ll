@@ -204,12 +204,12 @@ bb.o:                                             ; preds = %bb.n
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ag, i8 0, i64 16, i1 false)
   store i32 %i.q, ptr %i.ai, align 8, !tbaa !28
+  %6 = and i32 %.1.i, 4095                        ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 20
   %i.ak = lshr i32 %.1.i, 14
   %.lobit.i = and i32 %i.ak, 1
   %i.al = getelementptr inbounds nuw i8, ptr %i.ag, i64 28
   store i32 %.lobit.i, ptr %i.al, align 4, !tbaa !33
-  %6 = and i32 %.1.i, 4095                        ; 2 uses
   %i.am = lshr i32 %6, 2
   %i.an = trunc nuw nsw i32 %i.am to i16
   %i.ao = trunc nuw nsw i32 %6 to i16
@@ -339,12 +339,12 @@ bb.a:
   store ptr %2, ptr %i.a, align 8, !tbaa !44
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %3, ptr %i.b, align 8, !tbaa !28
+  %4 = and i32 %3, 4095                           ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.d = lshr i32 %3, 14
   %.lobit = and i32 %i.d, 1
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 %.lobit, ptr %i.e, align 4, !tbaa !33
-  %4 = and i32 %3, 4095                           ; 2 uses
   %i.f = lshr i32 %4, 2
   %i.g = trunc nuw nsw i32 %i.f to i16
   %i.h = trunc nuw nsw i32 %4 to i16
@@ -468,13 +468,13 @@ bb.e:                                             ; preds = %bb.d
   store i64 0, ptr %i.h, align 8, !tbaa !23
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.j = load i32, ptr %i.i, align 8, !tbaa !28   ; 3 uses
+  %1 = and i32 %i.j, 4095                         ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 20
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
   %i.l = lshr i32 %i.j, 14
   %.lobit.i = and i32 %i.l, 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 28
   store i32 %.lobit.i, ptr %i.m, align 4, !tbaa !33
-  %1 = and i32 %i.j, 4095                         ; 2 uses
   %i.n = lshr i32 %1, 2
   %i.o = trunc nuw nsw i32 %i.n to i16
   %i.p = trunc nuw nsw i32 %1 to i16
@@ -877,12 +877,12 @@ bb.c:                                             ; preds = %bb.b
   store ptr %3, ptr %i.f, align 8, !tbaa !44
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i32 %4, ptr %i.g, align 8, !tbaa !28
+  %5 = and i32 %4, 4095                           ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 20
   %i.i = lshr i32 %4, 14
   %.lobit.i = and i32 %i.i, 1
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 28
   store i32 %.lobit.i, ptr %i.j, align 4, !tbaa !33
-  %5 = and i32 %4, 4095                           ; 2 uses
   %i.k = lshr i32 %5, 2
   %i.l = trunc nuw nsw i32 %i.k to i16
   %i.m = trunc nuw nsw i32 %5 to i16
@@ -1178,12 +1178,12 @@ _ZN12duckdb_miniz10tdefl_initEPNS_16tdefl_compressorEPFiPKviPvES4_i.exit: ; pred
   store ptr %7, ptr %i.ap, align 8, !tbaa !44
   %i.aq = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i32 %i.ao, ptr %i.aq, align 8, !tbaa !28
+  %8 = and i32 %i.an, 4095                        ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.e, i64 20
   %i.as = lshr i32 %i.an, 14
   %.lobit.i = and i32 %i.as, 1
   %i.at = getelementptr inbounds nuw i8, ptr %i.e, i64 28
   store i32 %.lobit.i, ptr %i.at, align 4, !tbaa !33
-  %8 = and i32 %i.an, 4095                        ; 2 uses
   %i.au = lshr i32 %8, 2
   %i.av = trunc nuw nsw i32 %i.au to i16
   %i.aw = trunc nuw nsw i32 %8 to i16

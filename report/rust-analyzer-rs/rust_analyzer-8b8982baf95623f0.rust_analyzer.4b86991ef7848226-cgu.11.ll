@@ -204,7 +204,7 @@ bb.a:
   %i.s = alloca [88 x i8], align 8                ; 7 uses
   %i.t = alloca [88 x i8], align 8                ; 16 uses
   %i.u = alloca [16 x i8], align 8                ; 15 uses
-  %i.v = alloca [288 x i8], align 8               ; 34 uses
+  %i.v = alloca [288 x i8], align 8               ; 40 uses
   %i.w = alloca [16 x i8], align 8                ; 14 uses
   %.sroa.20.sroa.12.i = alloca [192 x i8], align 8 ; 13 uses
   %i.x = alloca [200 x i8], align 8               ; 6 uses
@@ -607,6 +607,12 @@ bb.bh:                                            ; preds = %.sink.split, %bb.bf
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 24
   %i.fh = getelementptr inbounds nuw i8, ptr %i.v, i64 32
+  %3 = getelementptr inbounds nuw i8, ptr %i.v, i64 64
+  %4 = getelementptr inbounds nuw i8, ptr %i.v, i64 96
+  %5 = getelementptr inbounds nuw i8, ptr %i.v, i64 128
+  %6 = getelementptr inbounds nuw i8, ptr %i.v, i64 160
+  %7 = getelementptr inbounds nuw i8, ptr %i.v, i64 192
+  %8 = getelementptr inbounds nuw i8, ptr %i.v, i64 224
   %i.fi = getelementptr inbounds nuw i8, ptr %i.v, i64 256
   %i.fj = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.v, i64 40
@@ -680,18 +686,6 @@ bb.bh:                                            ; preds = %.sink.split, %bb.bf
   %.sroa.5125.0..sroa_idx126.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.hn = getelementptr inbounds nuw i8, ptr %i.az, i64 32
   %i.ho = getelementptr inbounds nuw i8, ptr %i.az, i64 24
-  %3 = insertelement <2 x ptr> poison, ptr %i.fj, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %i.fn, i64 1
-  %5 = insertelement <2 x ptr> poison, ptr %i.fn, i64 0
-  %6 = insertelement <2 x ptr> %5, ptr %i.fg, i64 1
-  %7 = insertelement <2 x ptr> poison, ptr %i.fg, i64 0
-  %8 = insertelement <2 x ptr> %7, ptr %i.fu, i64 1
-  %9 = insertelement <2 x ptr> poison, ptr %i.fu, i64 0
-  %10 = insertelement <2 x ptr> %9, ptr %i.fy, i64 1
-  %11 = insertelement <2 x ptr> poison, ptr %i.fy, i64 0
-  %12 = insertelement <2 x ptr> %11, ptr %i.gc, i64 1
-  %13 = insertelement <2 x ptr> poison, ptr %i.gc, i64 0
-  %14 = insertelement <2 x ptr> %13, ptr %i.gg, i64 1
   br label %bb.bq
 
 bb.bi:                                            ; preds = %bb.bg
@@ -798,22 +792,28 @@ bb.br:                                            ; preds = %.noexc
   store ptr %i.fj, ptr %i.fh, align 8, !noalias !3869
   store ptr @215, ptr %i.fk, align 8, !noalias !3869
   store i64 1, ptr %i.fl, align 8, !noalias !3869
-  store <2 x ptr> %4, ptr %i.fm, align 8, !noalias !3869
+  store ptr %i.fj, ptr %i.fm, align 8, !noalias !3869
+  store ptr %i.fn, ptr %3, align 8, !noalias !3869
   store ptr @216, ptr %i.fo, align 8, !noalias !3869
   store i64 2, ptr %i.fp, align 8, !noalias !3869
-  store <2 x ptr> %6, ptr %i.fq, align 8, !noalias !3869
+  store ptr %i.fn, ptr %i.fq, align 8, !noalias !3869
+  store ptr %i.fg, ptr %4, align 8, !noalias !3869
   store ptr @215, ptr %i.fr, align 8, !noalias !3869
   store i64 3, ptr %i.fs, align 8, !noalias !3869
-  store <2 x ptr> %8, ptr %i.ft, align 8, !noalias !3869
+  store ptr %i.fg, ptr %i.ft, align 8, !noalias !3869
+  store ptr %i.fu, ptr %5, align 8, !noalias !3869
   store ptr @217, ptr %i.fv, align 8, !noalias !3869
   store i64 4, ptr %i.fw, align 8, !noalias !3869
-  store <2 x ptr> %10, ptr %i.fx, align 8, !noalias !3869
+  store ptr %i.fu, ptr %i.fx, align 8, !noalias !3869
+  store ptr %i.fy, ptr %6, align 8, !noalias !3869
   store ptr @218, ptr %i.fz, align 8, !noalias !3869
   store i64 5, ptr %i.ga, align 8, !noalias !3869
-  store <2 x ptr> %12, ptr %i.gb, align 8, !noalias !3869
+  store ptr %i.fy, ptr %i.gb, align 8, !noalias !3869
+  store ptr %i.gc, ptr %7, align 8, !noalias !3869
   store ptr @219, ptr %i.gd, align 8, !noalias !3869
   store i64 6, ptr %i.ge, align 8, !noalias !3869
-  store <2 x ptr> %14, ptr %i.gf, align 8, !noalias !3869
+  store ptr %i.gc, ptr %i.gf, align 8, !noalias !3869
+  store ptr %i.gg, ptr %8, align 8, !noalias !3869
   store ptr @220, ptr %i.gh, align 8, !noalias !3869
   store i64 7, ptr %i.gi, align 8, !noalias !3869
   store ptr %i.gg, ptr %i.gj, align 8, !noalias !3869
