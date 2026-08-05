@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %.lr.ph.i
   %exitcond.not.i = icmp eq i64 %i.r, %3
   br i1 %exitcond.not.i, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread, label %.lr.ph.i
 
-_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit: ; preds = %bb.ao, %bb.an, %bb.e
+_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit: ; preds = %bb.ao, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMsu_NtNtCshzWfHUSfYae_4core3str7patternNtB5_11StrSearcher3new(ptr noalias nofree noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1200)
@@ -606,16 +606,15 @@ bb.am:                                            ; preds = %bb.e
   br i1 %i.gw, label %.thread.i, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %i.gx = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %1, i64 4) ; 2 uses
-  %4 = icmp ult i64 %i.gx, %1
-  br i1 %4, label %.lr.ph, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit
+  %i.gx = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %1, i64 4)
+  br label %.lr.ph
 
 bb.ao:                                            ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Csf8NQSppxkmK_14ide_completion.exit.i.i
   %i.gy = icmp ult i64 %i.gx, %i.ha
   br i1 %i.gy, label %.lr.ph, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit
 
 .lr.ph:                                           ; preds = %bb.an, %bb.ao
-  %i.gz = phi i64 [ %i.ha, %bb.ao ], [ %1, %bb.an ]
+  %i.gz = phi i64 [ %1, %bb.an ], [ %i.ha, %bb.ao ]
   %i.ha = add nsw i64 %i.gz, -1                   ; 6 uses
   %i.hb = icmp ult i64 %i.ha, %1
   br i1 %i.hb, label %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Csf8NQSppxkmK_14ide_completion.exit.i.i, label %bb.ap

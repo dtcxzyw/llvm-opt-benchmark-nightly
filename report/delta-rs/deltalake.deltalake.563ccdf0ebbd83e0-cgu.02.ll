@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %.lr.ph.i
   %exitcond.not.i = icmp eq i64 %i.s, %3
   br i1 %exitcond.not.i, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit.thread, label %.lr.ph.i
 
-_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit: ; preds = %bb.k, %bb.j, %bb.e
+_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit: ; preds = %bb.k, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMsu_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1)
@@ -223,16 +223,15 @@ bb.i:                                             ; preds = %bb.e
   br i1 %i.x, label %.thread.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.y = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %1, i64 4) ; 2 uses
-  %4 = icmp ult i64 %i.y, %1
-  br i1 %4, label %.lr.ph, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit
+  %i.y = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %1, i64 4)
+  br label %.lr.ph
 
 bb.k:                                             ; preds = %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs7p2uQeJxui2_9deltalake.exit.i.i
   %i.z = icmp ult i64 %i.y, %i.ab
   br i1 %i.z, label %.lr.ph, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit
 
 .lr.ph:                                           ; preds = %bb.j, %bb.k
-  %i.aa = phi i64 [ %i.ab, %bb.k ], [ %1, %bb.j ]
+  %i.aa = phi i64 [ %1, %bb.j ], [ %i.ab, %bb.k ]
   %i.ab = add nsw i64 %i.aa, -1                   ; 6 uses
   %i.ac = icmp ult i64 %i.ab, %1
   br i1 %i.ac, label %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs7p2uQeJxui2_9deltalake.exit.i.i, label %bb.l

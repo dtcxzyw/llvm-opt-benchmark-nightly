@@ -204,16 +204,15 @@ bb.g:                                             ; preds = %bb.b
   br i1 %i.t, label %.thread.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.u = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 24) %1, i64 4) ; 2 uses
-  %4 = icmp samesign ult i64 %i.u, %1
-  br i1 %4, label %.lr.ph, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit
+  %i.u = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 24) %1, i64 4)
+  br label %.lr.ph
 
 bb.i:                                             ; preds = %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i
   %i.v = icmp ult i64 %i.u, %i.x
   br i1 %i.v, label %.lr.ph, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit
 
 .lr.ph:                                           ; preds = %bb.h, %bb.i
-  %i.w = phi i64 [ %i.x, %bb.i ], [ %1, %bb.h ]
+  %i.w = phi i64 [ %1, %bb.h ], [ %i.x, %bb.i ]
   %i.x = add nsw i64 %i.w, -1                     ; 6 uses
   %i.y = icmp ult i64 %i.x, %1
   br i1 %i.y, label %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i, label %bb.j
@@ -445,7 +444,7 @@ bb.v:                                             ; preds = %._crit_edge.i7
   %i.dw = or i8 %.sroa.014.3.lcssa.i, %i.dv
   br label %bb.u
 
-_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit: ; preds = %bb.i, %bb.h
+_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit: ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMsu_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1)
