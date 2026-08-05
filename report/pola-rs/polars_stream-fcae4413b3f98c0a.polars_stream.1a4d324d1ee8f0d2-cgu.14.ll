@@ -202,7 +202,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcN
 
 bb.hp:                                            ; preds = %bb.gx
   %i.vj = getelementptr inbounds nuw i8, ptr %1, i64 544, !dbg !97024 ; 6 uses
-  %i.vk = load ptr, ptr %i.vj, align 8, !dbg !97367, !alias.scope !97369, !noalias !96942, !noundef !11
+  %i.vk = load ptr, ptr %i.vj, align 8, !dbg !97367, !alias.scope !97369, !noalias !96995, !noundef !11
   %i.vl = icmp eq ptr %i.vk, null, !dbg !97367
   br i1 %i.vl, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCsidoPH4Qgqxm_12polars_async10primitives10wait_group9WaitTokenEECs2g09Ig8GZd6_13polars_stream.exit.i, label %bb.hq, !dbg !97367
 
@@ -213,30 +213,30 @@ bb.hq:                                            ; preds = %bb.hp
 bb.hr:                                            ; preds = %bb.hq
   %i.vm = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !97374), !dbg !97372
-  call void @llvm.experimental.noalias.scope.decl(metadata !97377), !dbg !97380
-  %i.vn = load ptr, ptr %i.vj, align 8, !dbg !97382, !alias.scope !97386, !noalias !96942, !nonnull !11, !noundef !11
+  call void @llvm.experimental.noalias.scope.decl(metadata !97374), !dbg !97372, !noalias !96995
+  call void @llvm.experimental.noalias.scope.decl(metadata !97377), !dbg !97380, !noalias !96995
+  %i.vn = load ptr, ptr %i.vj, align 8, !dbg !97382, !alias.scope !97386, !noalias !96995, !nonnull !11, !noundef !11
   %i.vo = atomicrmw sub ptr %i.vn, i64 1 release, align 8, !dbg !97389, !noalias !97392
   %i.vp = icmp eq i64 %i.vo, 1, !dbg !97393
   br i1 %i.vp, label %bb.hs, label %.body100.i, !dbg !97393
 
 bb.hs:                                            ; preds = %bb.hr
-  fence acquire, !dbg !97394
+  fence acquire, !dbg !97394, !noalias !96995
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtNtCsidoPH4Qgqxm_12polars_async10primitives10wait_group14WaitGroupInnerE9drop_slowCs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.vj) #41
           to label %.body100.i unwind label %bb.hv, !dbg !97396, !noalias !96995
 
 bb.ht:                                            ; preds = %bb.hq
-  call void @llvm.experimental.noalias.scope.decl(metadata !97397), !dbg !97372
-  call void @llvm.experimental.noalias.scope.decl(metadata !97400), !dbg !97403
-  %i.vq = load ptr, ptr %i.vj, align 8, !dbg !97405, !alias.scope !97409, !noalias !96942, !nonnull !11, !noundef !11
+  call void @llvm.experimental.noalias.scope.decl(metadata !97397), !dbg !97372, !noalias !96995
+  call void @llvm.experimental.noalias.scope.decl(metadata !97400), !dbg !97403, !noalias !96995
+  %i.vq = load ptr, ptr %i.vj, align 8, !dbg !97405, !alias.scope !97409, !noalias !96995, !nonnull !11, !noundef !11
   %i.vr = atomicrmw sub ptr %i.vq, i64 1 release, align 8, !dbg !97410, !noalias !97413
   %i.vs = icmp eq i64 %i.vr, 1, !dbg !97414
   br i1 %i.vs, label %bb.hu, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCsidoPH4Qgqxm_12polars_async10primitives10wait_group9WaitTokenEECs2g09Ig8GZd6_13polars_stream.exit.i, !dbg !97414
 
 bb.hu:                                            ; preds = %bb.ht
-  fence acquire, !dbg !97415
+  fence acquire, !dbg !97415, !noalias !96995
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtNtCsidoPH4Qgqxm_12polars_async10primitives10wait_group14WaitGroupInnerE9drop_slowCs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.vj) #41
-          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCsidoPH4Qgqxm_12polars_async10primitives10wait_group9WaitTokenEECs2g09Ig8GZd6_13polars_stream.exit.i unwind label %bb.hw, !dbg !97417, !noalias !96995
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCsidoPH4Qgqxm_12polars_async10primitives10wait_group9WaitTokenEECs2g09Ig8GZd6_13polars_stream.exit.i unwind label %bb.hw, !dbg !97417
 
 bb.hv:                                            ; preds = %bb.hs
   %i.vt = landingpad { ptr, i32 }
@@ -244,7 +244,7 @@ bb.hv:                                            ; preds = %bb.hs
   call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #40, !dbg !97372, !noalias !96995
   unreachable, !dbg !97372
 
-.body100.i:                                       ; preds = %bb.jq, %bb.hw, %bb.hs, %bb.hr, %.body85.i
+.body100.i:                                       ; preds = %bb.hw, %bb.hs, %bb.hr, %bb.jq, %.body85.i
   %i.vu = phi ptr [ %i.ls, %.body85.i ], [ %i.ls, %bb.jq ], [ %i.lb, %bb.hw ], [ %i.lb, %bb.hs ], [ %i.lb, %bb.hr ]
   %i.vv = phi ptr [ %i.lt, %.body85.i ], [ %i.lt, %bb.jq ], [ %i.lc, %bb.hw ], [ %i.lc, %bb.hs ], [ %i.lc, %bb.hr ]
   %.pn44.i = phi { ptr, i32 } [ %.pn39.pn.pn.pn.i, %.body85.i ], [ %.pn39.pn.pn.pn.i, %bb.jq ], [ %i.vy, %bb.hw ], [ %i.vm, %bb.hs ], [ %i.vm, %bb.hr ]
@@ -259,7 +259,7 @@ bb.hw:                                            ; preds = %bb.hu
           cleanup
   br label %.body100.i
 
-_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCsidoPH4Qgqxm_12polars_async10primitives10wait_group9WaitTokenEECs2g09Ig8GZd6_13polars_stream.exit.i: ; preds = %bb.hu, %bb.ht, %bb.hp
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCsidoPH4Qgqxm_12polars_async10primitives10wait_group9WaitTokenEECs2g09Ig8GZd6_13polars_stream.exit.i: ; preds = %bb.ht, %bb.hp, %bb.hu
   %i.vz = getelementptr inbounds nuw i8, ptr %1, i64 627, !dbg !97024
   store i8 0, ptr %i.vz, align 1, !dbg !97024, !noalias !96942
   %i.wa = getelementptr inbounds nuw i8, ptr %1, i64 488, !dbg !97024
@@ -289,30 +289,30 @@ bb.hz:                                            ; preds = %_RINvNtCscgRAwXFJnX
 bb.ia:                                            ; preds = %bb.hz
   %i.wi = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !97421), !dbg !97418
-  call void @llvm.experimental.noalias.scope.decl(metadata !97424), !dbg !97427
-  %i.wj = load ptr, ptr %i.wh, align 8, !dbg !97429, !alias.scope !97433, !noalias !96942, !nonnull !11, !noundef !11
+  call void @llvm.experimental.noalias.scope.decl(metadata !97421), !dbg !97418, !noalias !96995
+  call void @llvm.experimental.noalias.scope.decl(metadata !97424), !dbg !97427, !noalias !96995
+  %i.wj = load ptr, ptr %i.wh, align 8, !dbg !97429, !alias.scope !97433, !noalias !96995, !nonnull !11, !noundef !11
   %i.wk = atomicrmw sub ptr %i.wj, i64 1 release, align 8, !dbg !97438, !noalias !97441
   %i.wl = icmp eq i64 %i.wk, 1, !dbg !97442
   br i1 %i.wl, label %bb.ib, label %.body103.i, !dbg !97442
 
 bb.ib:                                            ; preds = %bb.ia
-  fence acquire, !dbg !97443
+  fence acquire, !dbg !97443, !noalias !96995
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtNtNtCskmDBXs7hs3c_5tokio4sync4mpsc4chan4ChanTINtNtNtCs2mZqlW55729_12polars_utils11async_utils16tokio_handle_ext17AbortOnDropHandleINtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources3ipc23record_batch_data_fetch15RecordBatchDataNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEINtNtB2W_6option6OptionNtNtNtB3z_6shared15pipeline_budget14PipelinePermitEENtNtBL_7bounded9SemaphoreEE9drop_slowB3D_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.wh) #41
           to label %.body103.i unwind label %bb.ie, !dbg !97445, !noalias !96995
 
 bb.ic:                                            ; preds = %bb.hz
-  call void @llvm.experimental.noalias.scope.decl(metadata !97446), !dbg !97418
-  call void @llvm.experimental.noalias.scope.decl(metadata !97449), !dbg !97452
-  %i.wm = load ptr, ptr %i.wh, align 8, !dbg !97454, !alias.scope !97458, !noalias !96942, !nonnull !11, !noundef !11
+  call void @llvm.experimental.noalias.scope.decl(metadata !97446), !dbg !97418, !noalias !96995
+  call void @llvm.experimental.noalias.scope.decl(metadata !97449), !dbg !97452, !noalias !96995
+  %i.wm = load ptr, ptr %i.wh, align 8, !dbg !97454, !alias.scope !97458, !noalias !96995, !nonnull !11, !noundef !11
   %i.wn = atomicrmw sub ptr %i.wm, i64 1 release, align 8, !dbg !97459, !noalias !97462
   %i.wo = icmp eq i64 %i.wn, 1, !dbg !97463
   br i1 %i.wo, label %bb.id, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCskmDBXs7hs3c_5tokio4sync4mpsc7bounded6SenderTINtNtNtCs2mZqlW55729_12polars_utils11async_utils16tokio_handle_ext17AbortOnDropHandleINtNtB4_6result6ResultNtNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources3ipc23record_batch_data_fetch15RecordBatchDataNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEINtNtB4_6option6OptionNtNtNtB3o_6shared15pipeline_budget14PipelinePermitEEEEB3s_.exit.i.a, !dbg !97463
 
 bb.id:                                            ; preds = %bb.ic
-  fence acquire, !dbg !97464
+  fence acquire, !dbg !97464, !noalias !96995
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtNtNtCskmDBXs7hs3c_5tokio4sync4mpsc4chan4ChanTINtNtNtCs2mZqlW55729_12polars_utils11async_utils16tokio_handle_ext17AbortOnDropHandleINtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources3ipc23record_batch_data_fetch15RecordBatchDataNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEINtNtB2W_6option6OptionNtNtNtB3z_6shared15pipeline_budget14PipelinePermitEENtNtBL_7bounded9SemaphoreEE9drop_slowB3D_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.wh) #41
-          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCskmDBXs7hs3c_5tokio4sync4mpsc7bounded6SenderTINtNtNtCs2mZqlW55729_12polars_utils11async_utils16tokio_handle_ext17AbortOnDropHandleINtNtB4_6result6ResultNtNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources3ipc23record_batch_data_fetch15RecordBatchDataNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEINtNtB4_6option6OptionNtNtNtB3o_6shared15pipeline_budget14PipelinePermitEEEEB3s_.exit.i.a unwind label %bb.ih, !dbg !97466, !noalias !96995
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCskmDBXs7hs3c_5tokio4sync4mpsc7bounded6SenderTINtNtNtCs2mZqlW55729_12polars_utils11async_utils16tokio_handle_ext17AbortOnDropHandleINtNtB4_6result6ResultNtNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources3ipc23record_batch_data_fetch15RecordBatchDataNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEINtNtB4_6option6OptionNtNtNtB3o_6shared15pipeline_budget14PipelinePermitEEEEB3s_.exit.i.a unwind label %bb.ih, !dbg !97466
 
 bb.ie:                                            ; preds = %bb.ib
   %i.wp = landingpad { ptr, i32 }
@@ -320,10 +320,10 @@ bb.ie:                                            ; preds = %bb.ib
   call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #40, !dbg !97418, !noalias !96995
   unreachable, !dbg !97418
 
-.body103.i:                                       ; preds = %bb.je, %bb.jd, %bb.ih, %bb.ib, %bb.ia, %bb.hx
-  %i.wq = phi ptr [ %i.wb, %bb.hx ], [ %i.lb, %bb.ia ], [ %i.lb, %bb.ib ], [ %i.wx, %bb.ih ], [ %i.rc, %bb.je ], [ %i.rc, %bb.jd ] ; 3 uses
-  %i.wr = phi ptr [ %i.wc, %bb.hx ], [ %i.lc, %bb.ia ], [ %i.lc, %bb.ib ], [ %i.wy, %bb.ih ], [ %i.rd, %bb.je ], [ %i.rd, %bb.jd ] ; 3 uses
-  %.pn48.i = phi { ptr, i32 } [ %.pn46.i, %bb.hx ], [ %i.wi, %bb.ia ], [ %i.wi, %bb.ib ], [ %i.wz, %bb.ih ], [ %i.zo, %bb.je ], [ %i.zo, %bb.jd ] ; 3 uses
+.body103.i:                                       ; preds = %bb.ih, %bb.ib, %bb.ia, %bb.je, %bb.jd, %bb.hx
+  %i.wq = phi ptr [ %i.wb, %bb.hx ], [ %i.rc, %bb.jd ], [ %i.rc, %bb.je ], [ %i.wx, %bb.ih ], [ %i.lb, %bb.ib ], [ %i.lb, %bb.ia ] ; 3 uses
+  %i.wr = phi ptr [ %i.wc, %bb.hx ], [ %i.rd, %bb.jd ], [ %i.rd, %bb.je ], [ %i.wy, %bb.ih ], [ %i.lc, %bb.ib ], [ %i.lc, %bb.ia ] ; 3 uses
+  %.pn48.i = phi { ptr, i32 } [ %.pn46.i, %bb.hx ], [ %i.zo, %bb.jd ], [ %i.zo, %bb.je ], [ %i.wz, %bb.ih ], [ %i.wi, %bb.ib ], [ %i.wi, %bb.ia ] ; 3 uses
   %i.ws = getelementptr inbounds nuw i8, ptr %1, i64 432, !dbg !97024 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !97467), !dbg !97024
   %i.wt = load ptr, ptr %i.ws, align 8, !dbg !97470, !alias.scope !97467, !noalias !96942, !noundef !11 ; 2 uses
@@ -340,14 +340,14 @@ bb.ig:                                            ; preds = %bb.if
   invoke void @_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcSjE9drop_slowCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.ws) #41
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcSjEEECs2g09Ig8GZd6_13polars_stream.exit.i unwind label %bb.hk, !dbg !97485, !noalias !96995
 
-bb.ih:                                            ; preds = %bb.jg, %bb.id
-  %i.wx = phi ptr [ %i.rc, %bb.jg ], [ %i.lb, %bb.id ]
-  %i.wy = phi ptr [ %i.rd, %bb.jg ], [ %i.lc, %bb.id ]
+bb.ih:                                            ; preds = %bb.id, %bb.jg
+  %i.wx = phi ptr [ %i.lb, %bb.id ], [ %i.rc, %bb.jg ]
+  %i.wy = phi ptr [ %i.lc, %bb.id ], [ %i.rd, %bb.jg ]
   %i.wz = landingpad { ptr, i32 }
           cleanup
   br label %.body103.i
 
-_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCskmDBXs7hs3c_5tokio4sync4mpsc7bounded6SenderTINtNtNtCs2mZqlW55729_12polars_utils11async_utils16tokio_handle_ext17AbortOnDropHandleINtNtB4_6result6ResultNtNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources3ipc23record_batch_data_fetch15RecordBatchDataNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEINtNtB4_6option6OptionNtNtNtB3o_6shared15pipeline_budget14PipelinePermitEEEEB3s_.exit.i.a: ; preds = %bb.id, %bb.ic
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCskmDBXs7hs3c_5tokio4sync4mpsc7bounded6SenderTINtNtNtCs2mZqlW55729_12polars_utils11async_utils16tokio_handle_ext17AbortOnDropHandleINtNtB4_6result6ResultNtNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources3ipc23record_batch_data_fetch15RecordBatchDataNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEINtNtB4_6option6OptionNtNtNtB3o_6shared15pipeline_budget14PipelinePermitEEEEB3s_.exit.i.a: ; preds = %bb.ic, %bb.id
   call void @llvm.experimental.noalias.scope.decl(metadata !97486), !dbg !97024
   %i.xa = load ptr, ptr %i.si, align 8, !dbg !97489, !alias.scope !97486, !noalias !96942, !noundef !11 ; 2 uses
   %i.xb = icmp eq ptr %i.xa, null, !dbg !97489
