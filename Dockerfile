@@ -33,7 +33,8 @@ RUN add-apt-repository -y "deb http://apt.llvm.org/$(lsb_release -cs)/ llvm-tool
     clang-24 \
     llvm-24-dev \
     clang-format-24 \
-    clangd-24
+    clangd-24 \
+    libomp-24-dev
 RUN find /usr/bin -name "*-24" -type l -exec sh -c 'cp -P "$1" "${1%-24}"' _ {} \;
 # Common build dependencies
 RUN apt-get install -y pkg-config autoconf automake libtool
