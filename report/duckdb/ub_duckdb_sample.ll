@@ -203,9 +203,9 @@ bb.i:                                             ; preds = %.noexc
   br label %_ZNK6duckdb15ReservoirSample20GetActiveSampleCountEv.exit
 
 _ZNK6duckdb15ReservoirSample20GetActiveSampleCountEv.exit: ; preds = %.noexc32, %bb.h
-  %.06.i = phi i64 [ %i.u, %bb.h ], [ %i.ad, %.noexc32 ] ; 5 uses
+  %.06.i = phi i64 [ %i.u, %bb.h ], [ %i.ad, %.noexc32 ] ; 4 uses
   %i.ae = icmp eq i64 %.06.i, 0
-  br i1 %i.ae, label %bb.j, label %5
+  br i1 %i.ae, label %bb.j, label %.lr.ph
 
 bb.j:                                             ; preds = %_ZNK6duckdb15ReservoirSample20GetActiveSampleCountEv.exit
   store ptr null, ptr %0, align 8, !tbaa !166
@@ -216,18 +216,14 @@ bb.k:                                             ; preds = %bb.i, %_ZN6duckdb15
           cleanup
   br label %bb.al
 
-5:                                                ; preds = %_ZNK6duckdb15ReservoirSample20GetActiveSampleCountEv.exit
-  %.024 = call i64 @llvm.usub.sat.i64(i64 %.06.i, i64 2048) ; 3 uses
+.lr.ph:                                           ; preds = %_ZNK6duckdb15ReservoirSample20GetActiveSampleCountEv.exit
+  %.024 = call i64 @llvm.usub.sat.i64(i64 %.06.i, i64 2048) ; 2 uses
   %.023 = call i64 @llvm.umin.i64(i64 %.06.i, i64 2048) ; 2 uses
-  %6 = icmp ult i64 %.024, %.06.i
-  br i1 %6, label %.lr.ph, label %._crit_edge
-
-.lr.ph:                                           ; preds = %5
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   br label %bb.l
 
-._crit_edge:                                      ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit, %5
+._crit_edge:                                      ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.ai = invoke noundef nonnull align 8 dereferenceable(72) ptr @_ZNK6duckdb10unique_ptrINS_14ReservoirChunkESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d)
           to label %_ZN6duckdb15ReservoirSample5ChunkEv.exit unwind label %bb.ab
@@ -292,9 +288,9 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit:    ; preds = %bb.s, %bb.t, %bb.o,
   %i.be = load i64, ptr %i.ah, align 8, !tbaa !117
   %i.bf = add i64 %i.be, -1
   store i64 %i.bf, ptr %i.ah, align 8, !tbaa !117
-  %i.bg = add i64 %.02243, 1                      ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bg, %.06.i
-  br i1 %exitcond.not, label %._crit_edge, label %bb.l, !llvm.loop !173
+  %i.bg = add nuw i64 %.02243, 1                  ; 2 uses
+  %5 = icmp ult i64 %i.bg, %.06.i
+  br i1 %5, label %bb.l, label %._crit_edge, !llvm.loop !173
 
 _ZN6duckdb15ReservoirSample5ChunkEv.exit:         ; preds = %._crit_edge
   invoke void @_ZNK6duckdb9DataChunk8GetTypesEv(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::vector.46") align 8 %4, ptr noundef nonnull align 8 dereferenceable(72) %i.ai)

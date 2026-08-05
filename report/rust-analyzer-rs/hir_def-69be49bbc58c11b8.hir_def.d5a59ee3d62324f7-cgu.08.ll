@@ -204,15 +204,13 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.m
   call void @llvm.experimental.noalias.scope.decl(metadata !4450)
-  %i.as = load i64, ptr %.sroa.516.0..sroa_idx, align 8, !alias.scope !4450, !noundef !8 ; 4 uses
+  %i.as = load i64, ptr %.sroa.516.0..sroa_idx, align 8, !alias.scope !4450, !noundef !8 ; 3 uses
   %i.at = icmp sgt i64 %i.as, -1
   call void @llvm.assume(i1 %i.at)
-  %i.au = call i64 @llvm.usub.sat.i64(i64 %i.as, i64 1) ; 3 uses
+  %i.au = call i64 @llvm.usub.sat.i64(i64 %i.as, i64 1) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4453)
   %i.av = icmp samesign ugt i64 %i.as, 1
-  %.not2.i.i = icmp samesign ult i64 %i.au, %i.as
-  %or.cond.i.i = select i1 %i.av, i1 %.not2.i.i, i1 false
-  br i1 %or.cond.i.i, label %bb.q, label %_RNvMNtCsbSS6DM8SDEO_5alloc6stringNtB2_6String8truncate.exit.i
+  br i1 %i.av, label %bb.q, label %_RNvMNtCsbSS6DM8SDEO_5alloc6stringNtB2_6String8truncate.exit.i
 
 bb.q:                                             ; preds = %bb.p
   %i.aw = load ptr, ptr %.sroa.415.0..sroa_idx, align 8, !alias.scope !4456, !nonnull !8, !noundef !8

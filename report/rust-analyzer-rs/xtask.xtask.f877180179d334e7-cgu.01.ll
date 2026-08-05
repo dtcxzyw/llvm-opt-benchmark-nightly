@@ -203,16 +203,15 @@ bb.k:                                             ; preds = %bb.c
   br i1 %i.z, label %.lr.ph.split.us.i.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.aa = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %1, i64 4) ; 2 uses
-  %3 = icmp ult i64 %i.aa, %1
-  br i1 %3, label %.lr.ph, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit
+  %i.aa = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %1, i64 4)
+  br label %.lr.ph
 
 bb.m:                                             ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CslkzCjlEuW1f_5xtask.exit.i.i
   %i.ab = icmp ult i64 %i.aa, %i.ad
   br i1 %i.ab, label %.lr.ph, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit
 
 .lr.ph:                                           ; preds = %bb.l, %bb.m
-  %i.ac = phi i64 [ %i.ad, %bb.m ], [ %1, %bb.l ]
+  %i.ac = phi i64 [ %1, %bb.l ], [ %i.ad, %bb.m ]
   %i.ad = add nsw i64 %i.ac, -1                   ; 5 uses
   %i.ae = icmp ult i64 %i.ad, %1
   br i1 %i.ae, label %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CslkzCjlEuW1f_5xtask.exit.i.i, label %bb.n
@@ -245,7 +244,7 @@ _RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkRShN
   %.not27.i.i.not.not = icmp samesign ule i64 %1, %i.al ; 3 uses
   br i1 %.not27.i.i.not.not, label %.split.us.i.i, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread
 
-_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit: ; preds = %bb.m, %bb.l
+_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit: ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMsu_NtNtCshzWfHUSfYae_4core3str7patternNtB5_11StrSearcher3new(ptr noalias nofree noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef 6, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1)

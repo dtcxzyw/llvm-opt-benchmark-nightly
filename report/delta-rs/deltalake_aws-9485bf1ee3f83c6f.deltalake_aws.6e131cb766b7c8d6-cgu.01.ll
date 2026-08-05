@@ -203,7 +203,7 @@ _RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs6Po7BT7Nknu
   %i.ih = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.ii = load ptr, ptr %i.ih, align 8, !noalias !2627, !nonnull !3, !noundef !3 ; 9 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %i.ik = load i64, ptr %i.ij, align 8, !noalias !2627, !noundef !3 ; 19 uses
+  %i.ik = load i64, ptr %i.ij, align 8, !noalias !2627, !noundef !3 ; 18 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !2638)
   call void @llvm.experimental.noalias.scope.decl(metadata !2641)
   %i.il = icmp eq i64 %i.ik, 0
@@ -252,7 +252,7 @@ bb.dk:                                            ; preds = %.lr.ph.i.i.i.i.i
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.iz, %i.if
   br i1 %exitcond.not.i.i.i.i.i, label %.thread55.i.i.i, label %.lr.ph.i.i.i.i.i
 
-_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit.i.i.i.i: ; preds = %bb.ev, %bb.eu, %bb.dh
+_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit.i.i.i.i: ; preds = %bb.ev, %bb.dh
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !2648
   invoke void @_RNvMsu_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.e, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.id, i64 noundef %i.if, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ii, i64 noundef %i.ik)
           to label %.noexc9.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.i.i, !noalias !2636
@@ -655,16 +655,15 @@ bb.et:                                            ; preds = %bb.dh
   br i1 %i.pp, label %.thread.i.i.i.i.i, label %bb.eu
 
 bb.eu:                                            ; preds = %bb.et
-  %i.pq = call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.ik, i64 4) ; 2 uses
-  %3 = icmp ult i64 %i.pq, %i.ik
-  br i1 %3, label %.lr.ph, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit.i.i.i.i
+  %i.pq = call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.ik, i64 4)
+  br label %.lr.ph
 
 bb.ev:                                            ; preds = %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs9rVkZwOUgsI_13deltalake_aws.exit.i.i.i.i.i.i
   %i.pr = icmp ult i64 %i.pq, %i.pt
   br i1 %i.pr, label %.lr.ph, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit.i.i.i.i
 
 .lr.ph:                                           ; preds = %bb.eu, %bb.ev
-  %i.ps = phi i64 [ %i.pt, %bb.ev ], [ %i.ik, %bb.eu ]
+  %i.ps = phi i64 [ %i.ik, %bb.eu ], [ %i.pt, %bb.ev ]
   %i.pt = add nsw i64 %i.ps, -1                   ; 6 uses
   %i.pu = icmp ult i64 %i.pt, %i.ik
   br i1 %i.pu, label %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs9rVkZwOUgsI_13deltalake_aws.exit.i.i.i.i.i.i, label %.invoke.i.i.i

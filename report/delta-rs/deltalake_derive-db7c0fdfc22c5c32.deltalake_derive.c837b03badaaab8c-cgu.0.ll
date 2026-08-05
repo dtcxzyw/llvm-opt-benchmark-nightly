@@ -203,12 +203,15 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1328)
   %i.f = load i8, ptr %0, align 1, !alias.scope !1325, !noalias !1328, !noundef !4 ; 9 uses
   %i.g = add nsw i64 %1, -1                       ; 2 uses
-  %i.h = tail call i64 @llvm.usub.sat.i64(i64 range(i64 3, 9) %1, i64 4) ; 8 uses
-  %4 = icmp samesign ult i64 %i.h, %1
-  br i1 %4, label %.lr.ph, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit
+  %i.h = tail call i64 @llvm.usub.sat.i64(i64 range(i64 3, 9) %1, i64 4) ; 7 uses
+  %4 = add nsw i64 %1, -1                         ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %4
+  %6 = load i8, ptr %5, align 1, !alias.scope !1325, !noalias !1330, !noundef !4 ; 2 uses
+  %.not.i.not.i.i = icmp eq i8 %6, %i.f
+  br i1 %.not.i.not.i.i, label %bb.d, label %bb.l
 
-bb.d:                                             ; preds = %.lr.ph
-  %i.i = icmp ult i64 %i.h, %7
+bb.d:                                             ; preds = %bb.c
+  %i.i = icmp ult i64 %i.h, %4
   br i1 %i.i, label %.lr.ph.1, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit
 
 .lr.ph.1:                                         ; preds = %bb.d
@@ -296,29 +299,22 @@ bb.j:                                             ; preds = %_RNCINvNvNtNtNtNtCs
 .lr.ph.7:                                         ; preds = %bb.j
   %i.aj = add nsw i64 %1, -8                      ; 3 uses
   %i.ak = icmp samesign ugt i64 %1, 7
-  br i1 %i.ak, label %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.7, label %bb.k
+  br i1 %i.ak, label %.lr.ph, label %bb.k
 
-_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.7: ; preds = %.lr.ph.7
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %i.aj
-  %6 = load i8, ptr %5, align 1, !alias.scope !1325, !noalias !1330, !noundef !4 ; 2 uses
-  %.not.i.not.i.i.7 = icmp eq i8 %6, %i.f
-  br i1 %.not.i.not.i.i.7, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit, label %bb.l
-
-.lr.ph:                                           ; preds = %bb.c
-  %7 = add nsw i64 %1, -1                         ; 3 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %0, i64 %7
+.lr.ph:                                           ; preds = %.lr.ph.7
+  %i.al = getelementptr inbounds nuw i8, ptr %0, i64 %i.aj
   %i.am = load i8, ptr %i.al, align 1, !alias.scope !1325, !noalias !1330, !noundef !4 ; 2 uses
   %.not.i.not.i.i.a = icmp eq i8 %i.am, %i.f
-  br i1 %.not.i.not.i.i.a, label %bb.d, label %bb.l
+  br i1 %.not.i.not.i.i.a, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit, label %bb.l
 
 bb.k:                                             ; preds = %.lr.ph.7, %.lr.ph.6, %.lr.ph.5, %.lr.ph.4, %.lr.ph.3
   %.lcssa314 = phi i64 [ %i.aj, %.lr.ph.7 ], [ %i.af, %.lr.ph.6 ], [ %i.aa, %.lr.ph.5 ], [ %i.r, %.lr.ph.3 ], [ %i.w, %.lr.ph.4 ]
   tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking18panic_bounds_check(i64 noundef %.lcssa314, i64 noundef range(i64 3, 9) %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #20, !noalias !1338
   unreachable
 
-bb.l:                                             ; preds = %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.7, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.6, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.5, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.4, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.3, %.lr.ph.2, %.lr.ph.1, %.lr.ph
-  %.lcssa317 = phi i8 [ %i.am, %.lr.ph ], [ %i.l, %.lr.ph.1 ], [ %i.p, %.lr.ph.2 ], [ %i.u, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.3 ], [ %i.y, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.4 ], [ %i.ad, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.5 ], [ %i.ah, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.6 ], [ %6, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.7 ]
-  %.lcssa315 = phi i64 [ %7, %.lr.ph ], [ %i.j, %.lr.ph.1 ], [ %i.n, %.lr.ph.2 ], [ %i.r, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.3 ], [ %i.w, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.4 ], [ %i.aa, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.5 ], [ %i.af, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.6 ], [ %i.aj, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.7 ] ; 6 uses
+bb.l:                                             ; preds = %.lr.ph, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.6, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.5, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.4, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.3, %.lr.ph.2, %.lr.ph.1, %bb.c
+  %.lcssa317 = phi i8 [ %6, %bb.c ], [ %i.l, %.lr.ph.1 ], [ %i.p, %.lr.ph.2 ], [ %i.u, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.3 ], [ %i.y, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.4 ], [ %i.ad, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.5 ], [ %i.ah, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.6 ], [ %i.am, %.lr.ph ]
+  %.lcssa315 = phi i64 [ %4, %bb.c ], [ %i.j, %.lr.ph.1 ], [ %i.n, %.lr.ph.2 ], [ %i.r, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.3 ], [ %i.w, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.4 ], [ %i.aa, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.5 ], [ %i.af, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.6 ], [ %i.aj, %.lr.ph ] ; 6 uses
   %i.an = add nuw nsw i64 %1, 15                  ; 3 uses
   %i.ao = icmp ult i64 %3, %i.an
   br i1 %i.ao, label %.lr.ph.split.us.i.i, label %bb.m
@@ -517,7 +513,7 @@ bb.v:                                             ; preds = %._crit_edge.i
   %i.ec = or i8 %.sroa.014.3.lcssa.i, %i.eb
   br label %bb.u
 
-_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit: ; preds = %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CshbKHpCRGxgC_16deltalake_derive.exit.i.i.7, %bb.c
+_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit: ; preds = %.lr.ph, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMsu_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1353)

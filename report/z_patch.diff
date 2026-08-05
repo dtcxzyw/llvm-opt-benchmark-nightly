@@ -1,0 +1,149 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 70d584740f5b9..8c9356521de6b 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -3953,6 +3953,36 @@ Instruction *InstCombinerImpl::foldICmpEqIntrinsicWithConstant(
+ }
+ 
+ /// Fold an icmp with LLVM intrinsics
++static Instruction *
++foldICmpUSubSatWithLHS(ICmpInst &Cmp) {
++  // For C != 0:
++  // usub.sat(X, C) == X  -->  X == 0
++  // usub.sat(X, C) <  X  -->  X != 0
++  ICmpInst::Predicate Pred = Cmp.getPredicate();
++  if (Pred != ICmpInst::ICMP_EQ && Pred != ICmpInst::ICMP_ULT)
++    return nullptr;
++
++  Value *Op0 = Cmp.getOperand(0), *Op1 = Cmp.getOperand(1);
++  const auto *II = dyn_cast<IntrinsicInst>(Op0);
++  Value *X = Op1;
++  if (!II && Pred == ICmpInst::ICMP_EQ) {
++    II = dyn_cast<IntrinsicInst>(Op1);
++    X = Op0;
++  }
++
++  if (!II || II->getIntrinsicID() != Intrinsic::usub_sat ||
++      II->getArgOperand(0) != X)
++    return nullptr;
++
++  const APInt *C;
++  if (!match(II->getArgOperand(1), m_APInt(C)) || C->isZero())
++    return nullptr;
++
++  ICmpInst::Predicate NewPred =
++      Pred == ICmpInst::ICMP_EQ ? ICmpInst::ICMP_EQ : ICmpInst::ICMP_NE;
++  return new ICmpInst(NewPred, X, Constant::getNullValue(X->getType()));
++}
++
+ static Instruction *
+ foldICmpIntrinsicWithIntrinsic(ICmpInst &Cmp,
+                                InstCombiner::BuilderTy &Builder) {
+@@ -7853,6 +7883,9 @@ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+   if (Instruction *Res = canonicalizeICmpPredicate(I))
+     return Res;
+ 
++  if (Instruction *Res = foldICmpUSubSatWithLHS(I))
++    return Res;
++
+   if (Instruction *Res = foldICmpWithConstant(I))
+     return Res;
+ 
+diff --git a/llvm/test/Transforms/InstCombine/icmp-usub-sat.ll b/llvm/test/Transforms/InstCombine/icmp-usub-sat.ll
+index 2cd07b17af580..7f883710ef78c 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-usub-sat.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-usub-sat.ll
+@@ -425,6 +425,88 @@ define <2 x i1> @icmp_eq_vector_multiuse_negative_equal(<2 x i8> %arg) {
+   ret <2 x i1> %cmp
+ }
+ 
++define i1 @icmp_eq_lhs_nonzero_constant(i64 %x) {
++; CHECK-LABEL: define i1 @icmp_eq_lhs_nonzero_constant
++; CHECK-SAME: (i64 [[X:%.*]]) {
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i64 [[X]], 0
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %sat = call i64 @llvm.usub.sat.i64(i64 %x, i64 10)
++  %cmp = icmp eq i64 %sat, %x
++  ret i1 %cmp
++}
++
++define i1 @icmp_eq_lhs_nonzero_constant_commuted(i64 %x) {
++; CHECK-LABEL: define i1 @icmp_eq_lhs_nonzero_constant_commuted
++; CHECK-SAME: (i64 [[X:%.*]]) {
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i64 [[X]], 0
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %sat = call i64 @llvm.usub.sat.i64(i64 %x, i64 10)
++  %cmp = icmp eq i64 %x, %sat
++  ret i1 %cmp
++}
++
++define i1 @icmp_ult_lhs_nonzero_constant(i64 %x) {
++; CHECK-LABEL: define i1 @icmp_ult_lhs_nonzero_constant
++; CHECK-SAME: (i64 [[X:%.*]]) {
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ne i64 [[X]], 0
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %sat = call i64 @llvm.usub.sat.i64(i64 %x, i64 10)
++  %cmp = icmp ult i64 %sat, %x
++  ret i1 %cmp
++}
++
++define i1 @icmp_eq_lhs_nonzero_constant_multiuse(i64 %x) {
++; CHECK-LABEL: define i1 @icmp_eq_lhs_nonzero_constant_multiuse
++; CHECK-SAME: (i64 [[X:%.*]]) {
++; CHECK-NEXT:    [[SAT:%.*]] = call i64 @llvm.usub.sat.i64(i64 [[X]], i64 10)
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i64 [[X]], 0
++; CHECK-NEXT:    call void @use.i64(i64 [[SAT]])
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %sat = call i64 @llvm.usub.sat.i64(i64 %x, i64 10)
++  %cmp = icmp eq i64 %sat, %x
++  call void @use.i64(i64 %sat)
++  ret i1 %cmp
++}
++
++define i1 @icmp_ult_lhs_nonzero_constant_multiuse(i64 %x) {
++; CHECK-LABEL: define i1 @icmp_ult_lhs_nonzero_constant_multiuse
++; CHECK-SAME: (i64 [[X:%.*]]) {
++; CHECK-NEXT:    [[SAT:%.*]] = call i64 @llvm.usub.sat.i64(i64 [[X]], i64 10)
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ne i64 [[X]], 0
++; CHECK-NEXT:    call void @use.i64(i64 [[SAT]])
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %sat = call i64 @llvm.usub.sat.i64(i64 %x, i64 10)
++  %cmp = icmp ult i64 %sat, %x
++  call void @use.i64(i64 %sat)
++  ret i1 %cmp
++}
++
++define i1 @icmp_eq_lhs_zero_constant(i64 %x) {
++; CHECK-LABEL: define i1 @icmp_eq_lhs_zero_constant
++; CHECK-SAME: (i64 [[X:%.*]]) {
++; CHECK-NEXT:    ret i1 true
++;
++  %sat = call i64 @llvm.usub.sat.i64(i64 %x, i64 0)
++  %cmp = icmp eq i64 %sat, %x
++  ret i1 %cmp
++}
++
++define <2 x i1> @icmp_ult_lhs_nonzero_constant_vector(<2 x i8> %x) {
++; CHECK-LABEL: define <2 x i1> @icmp_ult_lhs_nonzero_constant_vector
++; CHECK-SAME: (<2 x i8> [[X:%.*]]) {
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ne <2 x i8> [[X]], zeroinitializer
++; CHECK-NEXT:    ret <2 x i1> [[CMP]]
++;
++  %sat = call <2 x i8> @llvm.usub.sat.v2i8(<2 x i8> %x, <2 x i8> <i8 10, i8 10>)
++  %cmp = icmp ult <2 x i8> %sat, %x
++  ret <2 x i1> %cmp
++}
++
+ declare i8 @llvm.usub.sat.i8(i8, i8)
+ declare i16 @llvm.usub.sat.i16(i16, i16)
+ declare i32 @llvm.usub.sat.i32(i32, i32)
+@@ -437,3 +519,4 @@ declare <2 x i8> @llvm.usub.sat.v2i8(<2 x i8>, <2 x i8>)
+ 
+ declare void @use.i8(i8)
+ declare void @use.v2i8(<2 x i8>)
++declare void @use.i64(i64)
