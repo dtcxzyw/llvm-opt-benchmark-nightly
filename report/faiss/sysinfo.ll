@@ -1,3 +1,7 @@
+inline.NumInlined: 626
+inline.NumDeleted: 265
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN9benchmark7CPUInfoC2Ev:bb.a
 bb.bk:                                            ; preds = %bb.bf
   %i.ly = load i32, ptr %i.lq, align 4, !tbaa !12
@@ -199,15 +203,11 @@ bb.ce:                                            ; preds = %bb.cf, %bb.cd
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %bb.ce
   %.03.i.i = phi i64 [ 10000, %bb.ce ], [ %i.on, %.lr.ph.i.i ]
   %i.oi = phi i64 [ %.sroa.0.0.i, %bb.ce ], [ %i.om, %.lr.ph.i.i ]
-  %32 = mul nuw nsw i64 %i.oi, 48271
-  %33 = urem i64 %32, 2147483647
-  %34 = mul nuw nsw i64 %33, 48271
-  %35 = urem i64 %34, 2147483647
-  %i.oj = mul nuw nsw i64 %35, 48271
+  %i.oj = mul nuw nsw i64 %i.oi, 48271
   %i.ok = urem i64 %i.oj, 2147483647
   %i.ol = mul nuw nsw i64 %i.ok, 48271
   %i.om = urem i64 %i.ol, 2147483647              ; 2 uses
-  %i.on = add nsw i64 %.03.i.i, -4                ; 2 uses
+  %i.on = add nsw i64 %.03.i.i, -2                ; 2 uses
   %.not.i219.i.3 = icmp eq i64 %i.on, 0
   br i1 %.not.i219.i.3, label %bb.cf, label %.lr.ph.i.i, !llvm.loop !76
 

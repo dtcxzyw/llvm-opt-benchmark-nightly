@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = add i64 %i.s, -24                        ; 2 uses
   %i.u = udiv i64 %i.t, 24
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 24
+  %min.iters.check = icmp ult i64 %i.t, 72
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
@@ -366,7 +366,7 @@ bb.c:                                             ; preds = %_ZN6Assimp3IFC8Temp
   %i.ds = add i64 %i.dr, -24                      ; 2 uses
   %i.dt = udiv i64 %i.ds, 24
   %i.du = add nuw nsw i64 %i.dt, 1                ; 2 uses
-  %min.iters.check46 = icmp ult i64 %i.ds, 24
+  %min.iters.check46 = icmp ult i64 %i.ds, 72
   br i1 %min.iters.check46, label %scalar.ph45.preheader, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i5
@@ -564,7 +564,7 @@ bb.a:
   %i.r = add i64 %i.q, -24                        ; 2 uses
   %i.s = udiv i64 %i.r, 24
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 24
+  %min.iters.check = icmp ult i64 %i.r, 72
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph

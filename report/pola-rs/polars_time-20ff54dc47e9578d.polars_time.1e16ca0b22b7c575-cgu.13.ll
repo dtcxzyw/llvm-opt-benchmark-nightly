@@ -203,7 +203,7 @@ iter.check:                                       ; preds = %bb.a
   %i.e = ptrtoint ptr %i.c to i64, !dbg !29353    ; 3 uses
   %i.f = ptrtoint ptr %i.a to i64, !dbg !29353    ; 4 uses
   %i.g = sub nuw i64 %i.e, %i.f, !dbg !29353      ; 8 uses
-  %min.iters.check = icmp ult i64 %i.g, 8, !dbg !29365
+  %min.iters.check = icmp ult i64 %i.g, 4, !dbg !29365
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck, !dbg !29365
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -217,7 +217,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check3, label %vec.epilog.ph, label %vector.ph, !dbg !29365
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i64 %i.g, 8
+  %n.mod.vf = and i64 %i.g, 12
   %n.vec = and i64 %i.g, -16                      ; 5 uses
   %i.j = add i64 %.sroa.5.0.copyload, %n.vec      ; 2 uses
   %i.k = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
@@ -245,7 +245,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !29366
-  %n.vec5 = and i64 %i.g, -8                      ; 4 uses
+  %n.vec5 = and i64 %i.g, -4                      ; 4 uses
   %i.q = add i64 %.sroa.5.0.copyload, %n.vec5     ; 2 uses
   %i.r = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vec.epilog.vector.body
@@ -253,12 +253,12 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index6 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next8, %vec.epilog.vector.body ], !dbg !29366 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 %index6, !dbg !29367
-  %wide.load7 = load <8 x i8>, ptr %i.s, align 1, !dbg !29371, !noalias !29372
-  %2 = add <8 x i8> %wide.load7, splat (i8 2), !dbg !29375
-  %3 = sdiv <8 x i8> %2, splat (i8 3), !dbg !29375
+  %wide.load7 = load <4 x i8>, ptr %i.s, align 1, !dbg !29371, !noalias !29372
+  %2 = add <4 x i8> %wide.load7, splat (i8 2), !dbg !29375
+  %3 = sdiv <4 x i8> %2, splat (i8 3), !dbg !29375
   %i.t = getelementptr i8, ptr %i.r, i64 %index6, !dbg !29387
-  store <8 x i8> %3, ptr %i.t, align 1, !dbg !29394, !noalias !29397
-  %index.next8 = add nuw i64 %index6, 8, !dbg !29366 ; 2 uses
+  store <4 x i8> %3, ptr %i.t, align 1, !dbg !29394, !noalias !29397
+  %index.next8 = add nuw i64 %index6, 4, !dbg !29366 ; 2 uses
   %i.u = icmp eq i64 %index.next8, %n.vec5, !dbg !29404
   br i1 %i.u, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !dbg !29404, !llvm.loop !29407
 
@@ -661,7 +661,7 @@ begin_hunk_1_@llvm.usub.sat.i64
 !29403 = distinct !{!29403, !"_RNCINvNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map8map_foldRaauNCINvNtNtCs8774dFTUdNv_12polars_arrow7compute12arity_assign5unaryaNCNvNtCs2Aa799EbAFJ_11polars_time12chunkedarray18months_to_quarters0Es_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callaNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB4f_3VecaE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter4IteraEBY_EE0E0E0B28_"}
 !29404 = !DILocation(line: 284, column: 24, scope: !29370, inlinedAt: !29351)
 !29405 = distinct !{!29405, !24970, !24971}
-!29406 = !{!"branch_weights", i32 8, i32 8}
+!29406 = !{!"branch_weights", i32 4, i32 12}
 !29407 = distinct !{!29407, !24970, !24971}
 !29408 = !DILocation(line: 19, column: 9, scope: !29409, inlinedAt: !29410)
 !29409 = distinct !DISubprogram(name: "increment_len", linkageName: "_RNvMNtNtCsgZ49sUHp3tW_5alloc3vec15set_len_on_dropNtB2_12SetLenOnDrop13increment_len", scope: !2326, file: !2325, line: 18, type: !12, scopeLine: 18, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)

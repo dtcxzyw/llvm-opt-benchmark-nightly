@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = ptrtoint ptr %i.a to i64, !dbg !22073    ; 2 uses
   %i.g = sub nuw i64 %i.e, %i.f, !dbg !22073      ; 3 uses
   %i.h = lshr i64 %i.g, 2, !dbg !22073            ; 4 uses
-  %min.iters.check = icmp ult i64 %i.g, 48, !dbg !22085
+  %min.iters.check = icmp ult i64 %i.g, 32, !dbg !22085
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck, !dbg !22085
 
 vector.memcheck:                                  ; preds = %bb.b

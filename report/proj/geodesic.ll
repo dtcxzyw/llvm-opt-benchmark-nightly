@@ -99,7 +99,6 @@ bb.g:                                             ; preds = %bb.b, %bb.f
   %i.ae = fmul double %i.ad, 5.000000e-01
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 56
   store double %i.ae, ptr %i.af, align 8, !tbaa !16
-  %3 = load double, ptr @tol2, align 8, !tbaa !8
   %i.ag = tail call nsz double @llvm.fabs.f64(double %2)
   %i.ah = tail call nsz double @llvm.maxnum.f64(double %i.ag, double 1.000000e-03)
   %i.ai = fmul nsz double %2, 5.000000e-01
@@ -186,6 +185,7 @@ bb.g:                                             ; preds = %bb.b, %bb.f
   %i.cw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cv, <2 x double> %i.at, <2 x double> <double -8.580000e+02, double -3.003000e+03>)
   %i.cx = fdiv <2 x double> %i.cw, <double 4.504500e+04, double 1.501500e+04>
   store <2 x double> %i.cx, ptr %i.cs, align 8, !tbaa !8
+  %3 = load double, ptr @tol2, align 8, !tbaa !8
   %i.cy = fmul double %3, 1.000000e-01
   %i.cz = insertelement <2 x double> poison, double %i.cy, i64 0
   %i.da = insertelement <2 x double> <double poison, double 4.504500e+04>, double %i.an, i64 0
