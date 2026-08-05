@@ -203,8 +203,8 @@ begin_hunk_0_@llvm.smax.i32
 !204 = distinct !{!204, !79}
 !205 = distinct !{!205, !79}
 !206 = distinct !{!206, !79}
-!207 = !{!"branch_weights", !"expected", i32 1085839, i32 2146397809}
-!208 = !{!"branch_weights", !"expected", i32 1488300, i32 2145995348}
+!207 = !{!"branch_weights", !"expected", i32 1085841, i32 2146397807}
+!208 = !{!"branch_weights", !"expected", i32 1487765, i32 2145995883}
 !209 = distinct !{!209, !79}
 !210 = distinct !{!210, !79}
 !211 = distinct !{!211, !79}
