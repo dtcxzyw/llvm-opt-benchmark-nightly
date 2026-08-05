@@ -1,3 +1,5 @@
+inline.NumInlined: 253
+inline.NumDeleted: 173
 begin_hunk_0_@_ZN14LuaLocalPlayer19l_swimming_verticalEP9lua_State:bb.a
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !14
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !9
@@ -199,14 +201,13 @@ bb.a:
   %i.v = zext nneg i8 %i.u to i32
   tail call void @lua_pushboolean(ptr noundef %0, i32 noundef %i.v)
   tail call void @lua_setfield(ptr noundef %0, i32 noundef -2, ptr noundef nonnull @.str.21)
-  %i.w = tail call nsz <2 x float> @_ZNK13PlayerControl11getMovementEv(ptr noundef nonnull align 4 dereferenceable(24) %i.d) ; 2 uses
-  %.sroa.0.0.vec.extract = extractelement <2 x float> %i.w, i64 0
-  %1 = fpext nsz float %.sroa.0.0.vec.extract to double
-  tail call void @lua_pushnumber(ptr noundef %0, double noundef %1)
-  tail call void @lua_setfield(ptr noundef %0, i32 noundef -2, ptr noundef nonnull @.str.22)
-  %.sroa.0.4.vec.extract = extractelement <2 x float> %i.w, i64 1
-  %2 = fpext nsz float %.sroa.0.4.vec.extract to double
+  %i.w = tail call nsz <2 x float> @_ZNK13PlayerControl11getMovementEv(ptr noundef nonnull align 4 dereferenceable(24) %i.d)
+  %1 = fpext <2 x float> %i.w to <2 x double>     ; 2 uses
+  %2 = extractelement <2 x double> %1, i64 0
   tail call void @lua_pushnumber(ptr noundef %0, double noundef %2)
+  tail call void @lua_setfield(ptr noundef %0, i32 noundef -2, ptr noundef nonnull @.str.22)
+  %3 = extractelement <2 x double> %1, i64 1
+  tail call void @lua_pushnumber(ptr noundef %0, double noundef %3)
   tail call void @lua_setfield(ptr noundef %0, i32 noundef -2, ptr noundef nonnull @.str.23)
   %i.x = load i8, ptr %i.d, align 4, !tbaa !120
   %i.y = and i8 %i.x, 1

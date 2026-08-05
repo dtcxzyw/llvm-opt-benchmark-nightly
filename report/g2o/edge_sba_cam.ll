@@ -1,3 +1,7 @@
+inline.NumInlined: 3273
+inline.NumDeleted: 1816
+loop-unroll.NumCompletelyUnrolled: 21
+loop-unroll.NumUnrolled: 21
 begin_hunk_0_@_ZN3g2o10EdgeSBACam14setMeasurementERKNS_7SE3QuatE:bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.h = load <2 x double>, ptr %i.g, align 16, !tbaa !55
@@ -199,8 +203,8 @@ define void @_ZN3g2o10EdgeSBACam12computeErrorEv(ptr nofree noundef nonnull alig
   %i.t = fneg double %i.s
   %bc.i = bitcast <2 x i64> %i.k to <2 x double>  ; 4 uses
   %i.u = extractelement <2 x double> %bc.i, i64 1 ; 3 uses
-  %bc7.i = bitcast <2 x i64> %i.n to <2 x double> ; 2 uses
-  %i.v = extractelement <2 x double> %bc7.i, i64 0 ; 6 uses
+  %bc7.i = bitcast <2 x i64> %i.n to <2 x double> ; 3 uses
+  %i.v = extractelement <2 x double> %bc7.i, i64 0 ; 4 uses
   %.sroa.0.8.vec.extract.i.i.i = extractelement <2 x double> %i.q, i64 1
   %i.w = fneg double %.sroa.0.8.vec.extract.i.i.i
   %i.x = fmul double %i.v, %i.w
@@ -211,10 +215,7 @@ define void @_ZN3g2o10EdgeSBACam12computeErrorEv(ptr nofree noundef nonnull alig
   %i.ab = tail call double @llvm.fmuladd.f64(double %i.v, double %.sroa.0.0.vec.extract.i.i.i, double %i.aa)
   %.sroa.027.0.vec.insert.i.i.i.i = insertelement <2 x double> poison, double %i.y, i64 0
   %.sroa.027.8.vec.insert.i.i.i.i = insertelement <2 x double> %.sroa.027.0.vec.insert.i.i.i.i, double %i.ab, i64 1 ; 2 uses
-  %i.ac = fadd <2 x double> %.sroa.027.8.vec.insert.i.i.i.i, %.sroa.027.8.vec.insert.i.i.i.i ; 5 uses
-  %.sroa.027.8.vec.extract.i.i.i.i = extractelement <2 x double> %i.ac, i64 1
-  %1 = fneg double %.sroa.027.8.vec.extract.i.i.i.i
-  %2 = fmul double %i.v, %1
+  %i.ac = fadd <2 x double> %.sroa.027.8.vec.insert.i.i.i.i, %.sroa.027.8.vec.insert.i.i.i.i ; 4 uses
   %.sroa.027.0.vec.extract.i.i.i.i = extractelement <2 x double> %i.ac, i64 0
   %i.ad = shufflevector <2 x double> %bc7.i, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 3 uses
   %i.ae = fmul <2 x double> %i.ad, %i.ac
@@ -235,10 +236,11 @@ define void @_ZN3g2o10EdgeSBACam12computeErrorEv(ptr nofree noundef nonnull alig
   %i.ar = shufflevector <2 x double> %i.ak, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.as = insertelement <2 x double> %i.ar, double %i.aj, i64 1
   %i.at = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aq, <2 x double> %i.as, <2 x double> %i.ao) ; 2 uses
-  %i.au = fadd <2 x double> %i.at, %i.at          ; 5 uses
-  %.sroa.027.8.vec.extract.i.i.i.i6 = extractelement <2 x double> %i.au, i64 1
-  %3 = fneg double %.sroa.027.8.vec.extract.i.i.i.i6
-  %4 = fmul double %i.v, %3
+  %i.au = fadd <2 x double> %i.at, %i.at          ; 4 uses
+  %1 = shufflevector <2 x double> %i.ac, <2 x double> %i.au, <2 x i32> <i32 1, i32 3> ; 2 uses
+  %2 = fneg <2 x double> %1
+  %3 = shufflevector <2 x double> %bc7.i, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = fmul <2 x double> %3, %2                   ; 2 uses
   %.sroa.027.0.vec.extract.i.i.i.i7 = extractelement <2 x double> %i.au, i64 0
   %i.av = load <2 x double>, ptr %i.ah, align 8, !tbaa !55, !noalias !206
   %i.aw = fmul <2 x double> %i.ad, %i.au
@@ -251,24 +253,25 @@ define void @_ZN3g2o10EdgeSBACam12computeErrorEv(ptr nofree noundef nonnull alig
   %i.bd = shufflevector <2 x double> %i.q, <2 x double> %i.ak, <2 x i32> <i32 1, i32 2>
   %i.be = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bc, <2 x double> %i.bd, <2 x double> %i.bb) ; 2 uses
   %i.bf = fadd <2 x double> %i.be, %i.be          ; 3 uses
-  %i.bg = extractelement <2 x double> %i.bf, i64 0 ; 2 uses
-  %i.bh = tail call double @llvm.fmuladd.f64(double %i.u, double %i.bg, double %2)
-  %i.bi = fneg double %i.bg
+  %5 = extractelement <2 x double> %i.bf, i64 0   ; 2 uses
+  %i.bg = extractelement <2 x double> %4, i64 0
+  %i.bh = tail call double @llvm.fmuladd.f64(double %i.u, double %5, double %i.bg)
+  %i.bi = fneg double %5
   %i.bj = fmul double %i.z, %i.bi
   %i.bk = tail call double @llvm.fmuladd.f64(double %i.v, double %.sroa.027.0.vec.extract.i.i.i.i, double %i.bj)
   %.sroa.0.0.vec.insert.i.i.i.i = insertelement <2 x double> poison, double %i.bh, i64 0
   %.sroa.0.8.vec.insert.i.i.i.i = insertelement <2 x double> %.sroa.0.0.vec.insert.i.i.i.i, double %i.bk, i64 1
   %i.bl = fadd <2 x double> %i.af, %.sroa.0.8.vec.insert.i.i.i.i
-  %i.bm = extractelement <2 x double> %i.bf, i64 1 ; 2 uses
-  %i.bn = tail call double @llvm.fmuladd.f64(double %i.u, double %i.bm, double %4)
-  %i.bo = fneg double %i.bm
+  %6 = extractelement <2 x double> %i.bf, i64 1   ; 2 uses
+  %i.bm = extractelement <2 x double> %4, i64 1
+  %i.bn = tail call double @llvm.fmuladd.f64(double %i.u, double %6, double %i.bm)
+  %i.bo = fneg double %6
   %i.bp = fmul double %i.z, %i.bo
   %i.bq = tail call double @llvm.fmuladd.f64(double %i.v, double %.sroa.027.0.vec.extract.i.i.i.i7, double %i.bp)
   %i.br = shufflevector <2 x double> %i.ac, <2 x double> %i.au, <2 x i32> <i32 0, i32 2>
   %i.bs = fneg <2 x double> %i.br
   %i.bt = fmul <2 x double> %i.ba, %i.bs
-  %5 = shufflevector <2 x double> %i.ac, <2 x double> %i.au, <2 x i32> <i32 1, i32 3>
-  %i.bu = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bc, <2 x double> %5, <2 x double> %i.bt)
+  %i.bu = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bc, <2 x double> %1, <2 x double> %i.bt)
   %.sroa.0.0.vec.insert.i.i.i.i8 = insertelement <2 x double> poison, double %i.bn, i64 0
   %.sroa.0.8.vec.insert.i.i.i.i9 = insertelement <2 x double> %.sroa.0.0.vec.insert.i.i.i.i8, double %i.bq, i64 1
   %i.bv = fadd <2 x double> %i.ax, %.sroa.0.8.vec.insert.i.i.i.i9

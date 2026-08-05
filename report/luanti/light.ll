@@ -1,3 +1,5 @@
+inline.NumInlined: 71
+inline.NumDeleted: 35
 begin_hunk_0_@_Z15set_light_curvef:._crit_edge.i.i
 bb.a:                                             ; preds = %bb.n
   ret void
@@ -199,15 +201,14 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.i = extractvalue { float, float } %i.c, 0    ; 2 uses
   %i.j = zext nneg i32 %i.e to i64
-  %i.k = getelementptr inbounds nuw i8, ptr @_ZL9light_LUT, i64 %i.j ; 2 uses
-  %1 = load i8, ptr %i.k, align 1, !tbaa !18
-  %2 = getelementptr inbounds nuw i8, ptr %i.k, i64 1
-  %3 = load i8, ptr %2, align 1, !tbaa !18
-  %4 = uitofp i8 %1 to float
-  %5 = fsub nsz float 1.000000e+00, %i.i
-  %6 = uitofp i8 %3 to float
-  %7 = fmul nsz float %i.i, %6
-  %i.l = tail call nsz float @llvm.fmuladd.f32(float %4, float %5, float %7)
+  %i.k = getelementptr inbounds nuw i8, ptr @_ZL9light_LUT, i64 %i.j
+  %1 = fsub nsz float 1.000000e+00, %i.i
+  %2 = load <2 x i8>, ptr %i.k, align 1, !tbaa !18
+  %3 = uitofp <2 x i8> %2 to <2 x float>          ; 2 uses
+  %4 = extractelement <2 x float> %3, i64 1
+  %5 = fmul nsz float %i.i, %4
+  %6 = extractelement <2 x float> %3, i64 0
+  %i.l = tail call nsz float @llvm.fmuladd.f32(float %6, float %1, float %5)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b

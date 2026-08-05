@@ -1,3 +1,8 @@
+inline.NumInlined: 3253
+inline.NumDeleted: 1381
+loop-unroll.NumCompletelyUnrolled: 13
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 16
 begin_hunk_0_@_ZN7rocksdb13InternalStats26DumpCFStatsNoFileHistogramEbPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:._crit_edge.i.i
   %induction = or disjoint <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3>
   br label %vec.epilog.vector.body
@@ -199,20 +204,19 @@ bb.ej:                                            ; preds = %bb.ec, %bb.eb, %bb.
   %i.yn = insertelement <2 x i64> poison, i64 %.0111.lcssa, i64 0
   %i.yo = insertelement <2 x i64> %i.yn, i64 %.0108.lcssa, i64 1
   %i.yp = sub <2 x i64> %i.yo, %i.ym
-  %i.yq = uitofp <2 x i64> %i.yp to <2 x double>  ; 3 uses
-  %24 = extractelement <2 x double> %i.yq, i64 0
-  %25 = fmul nnan double %24, f0x3E10000000000000
-  %26 = extractelement <2 x double> %i.yq, i64 1
-  %27 = fmul nnan double %26, f0x3E10000000000000
+  %i.yq = uitofp <2 x i64> %i.yp to <2 x double>  ; 2 uses
+  %24 = fmul nnan <2 x double> %i.yq, splat (double f0x3E10000000000000) ; 2 uses
   %i.yr = fmul nnan <2 x double> %i.yq, splat (double f0x3EB0000000000000)
   %i.ys = insertelement <2 x double> poison, double %.sroa.speculated449, i64 0
   %i.yt = shufflevector <2 x double> %i.ys, <2 x double> poison, <2 x i32> zeroinitializer
   %i.yu = fdiv <2 x double> %i.yr, %i.yt          ; 2 uses
   %i.yv = uitofp i64 %i.yk to double
   %i.yw = fdiv double %i.yv, 1.000000e+06
-  %i.yx = extractelement <2 x double> %i.yu, i64 0
-  %i.yy = extractelement <2 x double> %i.yu, i64 1
-  %i.yz = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 2000, ptr noundef nonnull @.str.318, double noundef %25, double noundef %i.yx, double noundef %27, double noundef %i.yy, double noundef %i.yw) #37 ; 0 uses
+  %25 = extractelement <2 x double> %i.yu, i64 0
+  %26 = extractelement <2 x double> %i.yu, i64 1
+  %i.yx = extractelement <2 x double> %24, i64 0
+  %i.yy = extractelement <2 x double> %24, i64 1
+  %i.yz = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 2000, ptr noundef nonnull @.str.318, double noundef %i.yx, double noundef %25, double noundef %i.yy, double noundef %26, double noundef %i.yw) #37 ; 0 uses
   %i.za = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #37 ; 6 uses
   %i.zb = load i64, ptr %i.q, align 8, !tbaa !38  ; 5 uses
   %i.zc = sub i64 9223372036854775807, %i.zb
@@ -615,32 +619,29 @@ bb.a:
   %i.z = load i64, ptr %i.y, align 8, !tbaa !977  ; 2 uses
   %i.aa = add i64 %i.z, %i.x
   %i.ab = getelementptr inbounds nuw i8, ptr %6, i64 48 ; 2 uses
+  %7 = load i64, ptr %i.ab, align 8, !tbaa !979
+  %8 = add i64 %i.aa, %7
   %i.ac = getelementptr inbounds nuw i8, ptr %6, i64 56 ; 2 uses
+  %9 = load i64, ptr %i.ac, align 8, !tbaa !964   ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %6, i64 72 ; 2 uses
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !965
+  %10 = add i64 %i.ae, %9
+  %11 = sub i64 %9, %i.z
   %i.af = load i64, ptr %6, align 8, !tbaa !980
   %i.ag = add i64 %i.af, 1
   %i.ah = uitofp i64 %i.ag to double
-  %i.ai = fdiv double %i.ah, 1.000000e+06
+  %i.ai = fdiv double %i.ah, 1.000000e+06         ; 2 uses
   %i.aj = sitofp i32 %1 to double
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #37
   store i32 1, ptr %i.a, align 4, !tbaa !28
-  %7 = sitofp i32 %2 to double
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 64
-  %9 = getelementptr inbounds nuw i8, ptr %6, i64 80
-  %10 = load i64, ptr %i.ac, align 8, !tbaa !964
-  %11 = load <2 x i64>, ptr %i.ab, align 8, !tbaa !267
-  %12 = insertelement <2 x i64> poison, i64 %i.aa, i64 0
-  %13 = insertelement <2 x i64> %12, i64 %i.ae, i64 1
-  %14 = add <2 x i64> %13, %11
-  %15 = sub i64 %10, %i.z
   %i.ak = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
   store double %i.aj, ptr %i.ak, align 8, !tbaa !1056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
+  %12 = sitofp i32 %2 to double
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #37
   store i32 2, ptr %i.b, align 4, !tbaa !28
   %i.al = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
-  store double %7, ptr %i.al, align 8, !tbaa !1056
+  store double %12, ptr %i.al, align 8, !tbaa !1056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #37
   store i32 3, ptr %i.c, align 4, !tbaa !28
@@ -652,9 +653,8 @@ bb.a:
   %i.an = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.d)
   store double %4, ptr %i.an, align 8, !tbaa !1056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #37
-  %16 = uitofp <2 x i64> %14 to <2 x double>      ; 2 uses
-  %17 = extractelement <2 x double> %16, i64 0
-  %i.ao = fmul nnan double %17, f0x3E10000000000000
+  %13 = uitofp i64 %8 to double                   ; 2 uses
+  %i.ao = fmul nnan double %13, f0x3E10000000000000
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #37
   store i32 5, ptr %i.e, align 4, !tbaa !28
   %i.ap = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.e)
@@ -684,7 +684,8 @@ bb.a:
   %i.bb = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.h)
   store double %i.ba, ptr %i.bb, align 8, !tbaa !1056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #37
-  %i.bc = load i64, ptr %8, align 8, !tbaa !1071
+  %14 = getelementptr inbounds nuw i8, ptr %6, i64 64
+  %i.bc = load i64, ptr %14, align 8, !tbaa !1071
   %i.bd = uitofp i64 %i.bc to double
   %i.be = fmul nnan double %i.bd, f0x3E10000000000000
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #37
@@ -692,14 +693,15 @@ bb.a:
   %i.bf = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.i)
   store double %i.be, ptr %i.bf, align 8, !tbaa !1056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #37
-  %i.bg = sitofp i64 %15 to double
+  %i.bg = sitofp i64 %11 to double
   %i.bh = fmul nnan double %i.bg, f0x3E10000000000000
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #37
   store i32 10, ptr %i.j, align 4, !tbaa !28
   %i.bi = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.j)
   store double %i.bh, ptr %i.bi, align 8, !tbaa !1056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #37
-  %i.bj = load i64, ptr %9, align 8, !tbaa !962
+  %15 = getelementptr inbounds nuw i8, ptr %6, i64 80
+  %i.bj = load i64, ptr %15, align 8, !tbaa !962
   %i.bk = uitofp i64 %i.bj to double
   %i.bl = fmul nnan double %i.bk, f0x3E10000000000000
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #37
@@ -712,40 +714,40 @@ bb.a:
   %i.bn = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.l)
   store double %5, ptr %i.bn, align 8, !tbaa !1056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #37
+  %16 = fmul nnan double %13, f0x3EB0000000000000
+  %17 = fdiv double %16, %i.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #37
   store i32 13, ptr %i.m, align 4, !tbaa !28
   %i.bo = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.m)
-  %18 = fmul nnan <2 x double> %16, splat (double f0x3EB0000000000000)
-  %19 = insertelement <2 x double> poison, double %i.ai, i64 0
-  %20 = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> zeroinitializer
-  %21 = fdiv <2 x double> %18, %20                ; 2 uses
-  %22 = extractelement <2 x double> %21, i64 0
-  store double %22, ptr %i.bo, align 8, !tbaa !1056
+  store double %17, ptr %i.bo, align 8, !tbaa !1056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #37
   store i32 14, ptr %i.n, align 4, !tbaa !28
-  %23 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.n)
-  %24 = extractelement <2 x double> %21, i64 1
-  store double %24, ptr %23, align 8, !tbaa !1056
+  %18 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #37
+  %19 = load i64, ptr %6, align 8, !tbaa !980
+  %20 = insertelement <2 x i64> poison, i64 %10, i64 0
+  %21 = insertelement <2 x i64> %20, i64 %19, i64 1
+  %22 = uitofp <2 x i64> %21 to <2 x double>
+  %23 = fmul nnan <2 x double> %22, <double f0x3EB0000000000000, double 1.000000e+00>
+  %24 = insertelement <2 x double> <double poison, double 1.000000e+06>, double %i.ai, i64 0
+  %25 = fdiv <2 x double> %23, %24                ; 2 uses
+  %26 = extractelement <2 x double> %25, i64 0
+  store double %26, ptr %18, align 8, !tbaa !1056
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #37
   store i32 15, ptr %i.o, align 4, !tbaa !28
-  %25 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %26 = load i64, ptr %6, align 8, !tbaa !980
   %i.bp = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.o)
+  %27 = extractelement <2 x double> %25, i64 1
+  store double %27, ptr %i.bp, align 8, !tbaa !1056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #37
-  %27 = load i64, ptr %25, align 8, !tbaa !1064
-  %28 = insertelement <2 x i64> poison, i64 %26, i64 0
-  %29 = insertelement <2 x i64> %28, i64 %27, i64 1
-  %30 = uitofp <2 x i64> %29 to <2 x double>
-  %31 = fdiv <2 x double> %30, splat (double 1.000000e+06) ; 2 uses
-  %32 = extractelement <2 x double> %31, i64 0
-  store double %32, ptr %i.bp, align 8, !tbaa !1056
+  %28 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %29 = load i64, ptr %28, align 8, !tbaa !1064
+  %30 = uitofp i64 %29 to double
+  %31 = fdiv double %30, 1.000000e+06
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #37
   store i32 16, ptr %i.p, align 4, !tbaa !28
   %i.bq = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN7rocksdb13LevelStatTypeEdSt4lessIS1_ESaISt4pairIKS1_dEEEixEOS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.p)
-  %33 = extractelement <2 x double> %31, i64 1
-  store double %33, ptr %i.bq, align 8, !tbaa !1056
+  store double %31, ptr %i.bq, align 8, !tbaa !1056
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #37
   %i.br = getelementptr inbounds nuw i8, ptr %6, i64 136 ; 2 uses
   %i.bs = load i32, ptr %i.br, align 8, !tbaa !1080

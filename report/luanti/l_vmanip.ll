@@ -1,3 +1,7 @@
+inline.NumInlined: 290
+inline.NumDeleted: 154
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN8LuaErrorC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:bb.a
 bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.j, ptr align 1 %i.d, i64 %i.f, i1 false)
@@ -199,13 +203,12 @@ _Z16sortBoxVerticiesIsEvRN4core8vector3dIT_EES4_.exit: ; preds = %_ZN13LuaVoxelM
   %.sroa.0.0.insert.ext.i = zext i16 %i.bi to i48
   %i.bj = or disjoint i48 %.sroa.3.0.insert.shift.i, %.sroa.0.0.insert.ext.i
   %.sroa.0.0.insert.insert.i = or disjoint i48 %i.bj, %.sroa.2.0.insert.shift.i
-  %i.bk = shl nsw <2 x i16> %i.bd, splat (i16 4)  ; 3 uses
-  %4 = extractelement <2 x i16> %i.bk, i64 0
-  %5 = or disjoint i16 %4, 15
-  %i.bl = extractelement <2 x i16> %i.bk, i64 1
-  %6 = or disjoint i16 %i.bl, 15
-  %.sroa.2.0.insert.ext.i62 = zext i16 %6 to i48
+  %i.bk = shl nsw <2 x i16> %i.bd, splat (i16 4)  ; 2 uses
+  %4 = or disjoint <2 x i16> %i.bk, splat (i16 15) ; 2 uses
+  %i.bl = extractelement <2 x i16> %4, i64 1
+  %.sroa.2.0.insert.ext.i62 = zext i16 %i.bl to i48
   %.sroa.2.0.insert.shift.i63 = shl nuw nsw i48 %.sroa.2.0.insert.ext.i62, 16
+  %5 = extractelement <2 x i16> %4, i64 0
   %.sroa.0.0.insert.ext.i65 = zext i16 %5 to i48
   %i.bm = or disjoint i48 %.sroa.3.0.insert.shift.i61, %.sroa.0.0.insert.ext.i65
   %.sroa.0.0.insert.insert.i66 = or disjoint i48 %i.bm, %.sroa.2.0.insert.shift.i63

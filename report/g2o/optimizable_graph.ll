@@ -1,3 +1,8 @@
+inline.NumInlined: 8546
+inline.NumDeleted: 4117
+loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumRuntimeUnrolled: 58
+loop-unroll.NumUnrolled: 67
 begin_hunk_0_@_ZN5Eigen8internal27queryCacheSizes_intel_codesERiS1_S1_:bb.a
 
 bb.z:                                             ; preds = %bb.c
@@ -199,7 +204,7 @@ bb.a:
   br i1 %i.h, label %.lr.ph.us.preheader, label %.preheader
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph62
-  %i.i = add nsw i64 %3, -1                       ; 4 uses
+  %i.i = add nsw i64 %3, -1                       ; 2 uses
   %scevgep = getelementptr i8, ptr %1, i64 8
   %scevgep82 = getelementptr i8, ptr %1, i64 16
   %scevgep87.a = getelementptr i8, ptr %1, i64 24
@@ -232,11 +237,9 @@ bb.a:
   %i.ab = shl i64 %i.aa, 5
   %i.ac = getelementptr i8, ptr %i.e, i64 %i.ab
   %scevgep101 = getelementptr i8, ptr %i.ac, i64 %i.q
-  %min.iters.check = icmp ult i64 %3, 92
-  %mul.result = shl i64 %i.i, 5
-  %mul.result85 = shl i64 %i.i, 5
+  %min.iters.check = icmp ult i64 %3, 60
+  %mul.result85 = shl i64 %i.i, 5                 ; 3 uses
   %mul.overflow86 = icmp ugt i64 %i.i, 576460752303423487
-  %mul.result90 = shl i64 %i.i, 5
   %.mask = and i64 %i.g, 288230376151711744
   %stride.check105 = icmp ne i64 %.mask, 0
   %n.vec = and i64 %3, 1152921504606846974        ; 4 uses
@@ -265,17 +268,17 @@ bb.a:
 vector.scevcheck:                                 ; preds = %.lr.ph.us
   %i.ap = shl i64 %.04559.us, 3                   ; 3 uses
   %scevgep81 = getelementptr i8, ptr %scevgep, i64 %i.ap ; 2 uses
-  %i.aq = getelementptr i8, ptr %scevgep81, i64 %mul.result
+  %i.aq = getelementptr i8, ptr %scevgep81, i64 %mul.result85
   %i.ar = icmp ult ptr %i.aq, %scevgep81
   %scevgep83 = getelementptr i8, ptr %scevgep82, i64 %i.ap ; 2 uses
   %i.as = getelementptr i8, ptr %scevgep83, i64 %mul.result85
   %i.at = icmp ult ptr %i.as, %scevgep83
-  %7 = or i1 %i.at, %mul.overflow86
-  %scevgep88.a = getelementptr i8, ptr %scevgep87.a, i64 %i.ap ; 2 uses
-  %8 = getelementptr i8, ptr %scevgep88.a, i64 %mul.result90
-  %9 = icmp ult ptr %8, %scevgep88.a
-  %i.au = or i1 %i.ar, %7
-  %i.av = or i1 %9, %i.au
+  %scevgep85 = getelementptr i8, ptr %scevgep87.a, i64 %i.ap ; 2 uses
+  %scevgep88.a = getelementptr i8, ptr %scevgep85, i64 %mul.result85
+  %7 = icmp ult ptr %scevgep88.a, %scevgep85
+  %8 = or i1 %7, %mul.overflow86
+  %i.au = or i1 %i.at, %i.ar
+  %i.av = or i1 %i.au, %8
   br i1 %i.av, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck

@@ -1,3 +1,5 @@
+inline.NumInlined: 70
+inline.NumDeleted: 27
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -93,7 +95,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr i64 @_ZN7xgboost6detail17PowerBaseComputer14Binary2DecimalENS0_18UnsignedFloatBase2E(i64 %0) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %1 = alloca %"struct.xgboost::detail::MantissaInteval", align 8 ; 5 uses
+  %1 = alloca %"struct.xgboost::detail::MantissaInteval", align 16 ; 4 uses
   %i.a = alloca i8, align 1                       ; 5 uses
   %i.b = alloca i8, align 1                       ; 5 uses
   %.sroa.016.0.extract.trunc = trunc i64 %0 to i32 ; 3 uses
@@ -129,19 +131,19 @@ bb.a:
   %i.p = call noundef zeroext i8 @_ZN7xgboost6detail17PowerBaseComputer13ToDecimalBaseEbjNS0_15MantissaIntevalEPS2_PbS4_(i1 noundef zeroext %i.g, i32 noundef %i.m, i64 %.sroa.012.4.insert.insert, i64 %.sroa.6.12.insert.insert, ptr noundef nonnull %1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #6 ; 3 uses
   %i.q = load i8, ptr %i.a, align 1, !tbaa !9, !range !11, !noundef !12 ; 2 uses
   %i.r = load i8, ptr %i.b, align 1, !tbaa !9, !range !11, !noundef !12 ; 2 uses
-  %.sroa.0.0.copyload = load i64, ptr %1, align 8 ; 2 uses
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8 ; 2 uses
-  %.sroa.2.0.extract.shift.i = lshr i64 %.sroa.0.0.copyload, 32
-  %.sroa.2.0.extract.trunc.i = trunc nuw i64 %.sroa.2.0.extract.shift.i to i32 ; 4 uses
-  %.sroa.14.8.extract.trunc.i = trunc i64 %.sroa.2.0.copyload to i32 ; 4 uses
-  %.sroa.29.8.extract.shift.i = lshr i64 %.sroa.2.0.copyload, 32
-  %.sroa.29.8.extract.trunc.i = trunc nuw i64 %.sroa.29.8.extract.shift.i to i32
   %2 = or i8 %i.r, %i.q
   %or.cond.i.not = icmp eq i8 %2, 0
-  %3 = udiv i32 %.sroa.29.8.extract.trunc.i, 10   ; 3 uses
-  %4 = udiv i32 %.sroa.2.0.extract.trunc.i, 10    ; 3 uses
-  %i.s = icmp samesign ugt i32 %3, %4             ; 2 uses
+  %3 = load <2 x i64>, ptr %1, align 16           ; 4 uses
+  %4 = bitcast <2 x i64> %3 to <4 x i32>
+  %.sroa.14.8.extract.trunc.i = extractelement <4 x i32> %4, i64 2 ; 4 uses
+  %5 = lshr <2 x i64> %3, splat (i64 32)
+  %6 = trunc nuw <2 x i64> %5 to <2 x i32>
+  %7 = bitcast <2 x i64> %3 to <4 x i32>
+  %.sroa.2.0.extract.trunc.i = extractelement <4 x i32> %7, i64 1 ; 3 uses
+  %8 = udiv <2 x i32> %6, splat (i32 10)          ; 3 uses
+  %9 = extractelement <2 x i32> %8, i64 0         ; 2 uses
+  %10 = extractelement <2 x i32> %8, i64 1        ; 2 uses
+  %i.s = icmp samesign ugt i32 %10, %9            ; 2 uses
   br i1 %or.cond.i.not, label %.preheader68.i, label %.preheader67.i
 
 .preheader68.i:                                   ; preds = %bb.a
@@ -153,8 +155,8 @@ bb.a:
   br i1 %i.s, label %.lr.ph80.i, label %._crit_edge81.i
 
 .lr.ph80.i:                                       ; preds = %.preheader67.i, %.lr.ph80.i
-  %i.v = phi i32 [ %i.ah, %.lr.ph80.i ], [ %4, %.preheader67.i ] ; 3 uses
-  %i.w = phi i32 [ %i.ag, %.lr.ph80.i ], [ %3, %.preheader67.i ]
+  %i.v = phi i32 [ %i.ah, %.lr.ph80.i ], [ %9, %.preheader67.i ] ; 3 uses
+  %i.w = phi i32 [ %i.ag, %.lr.ph80.i ], [ %10, %.preheader67.i ]
   %.05079.i = phi i32 [ %i.af, %.lr.ph80.i ], [ 0, %.preheader67.i ]
   %.sroa.14.078.i = phi i32 [ %i.ae, %.lr.ph80.i ], [ %.sroa.14.8.extract.trunc.i, %.preheader67.i ] ; 2 uses
   %.05177.i = phi i8 [ %i.ad, %.lr.ph80.i ], [ %i.p, %.preheader67.i ]
@@ -225,24 +227,25 @@ bb.a:
   br label %_ZN7xgboost6detail17PowerBaseComputer22ShortestRepresentationEbbhbNS0_15MantissaIntevalE.exit
 
 .lr.ph.i:                                         ; preds = %.preheader68.i, %.lr.ph.i
-  %5 = phi i32 [ %7, %.lr.ph.i ], [ %4, %.preheader68.i ] ; 2 uses
-  %i.az = phi i32 [ %6, %.lr.ph.i ], [ %3, %.preheader68.i ]
-  %.370.i = phi i32 [ %i.bc, %.lr.ph.i ], [ 0, %.preheader68.i ]
-  %.sroa.14.369.i = phi i32 [ %i.ba, %.lr.ph.i ], [ %.sroa.14.8.extract.trunc.i, %.preheader68.i ] ; 2 uses
-  %i.ba = udiv i32 %.sroa.14.369.i, 10            ; 2 uses
-  %i.bb = urem i32 %.sroa.14.369.i, 10
-  %i.bc = add nuw nsw i32 %.370.i, 1              ; 2 uses
-  %6 = udiv i32 %i.az, 10                         ; 2 uses
-  %7 = udiv i32 %5, 10                            ; 2 uses
-  %i.bd = icmp samesign ugt i32 %6, %7
+  %i.az = phi i32 [ %i.bc, %.lr.ph.i ], [ 0, %.preheader68.i ]
+  %.370.i = phi i32 [ %i.ba, %.lr.ph.i ], [ %.sroa.14.8.extract.trunc.i, %.preheader68.i ] ; 2 uses
+  %11 = phi <2 x i32> [ %12, %.lr.ph.i ], [ %8, %.preheader68.i ] ; 2 uses
+  %i.ba = udiv i32 %.370.i, 10                    ; 2 uses
+  %i.bb = urem i32 %.370.i, 10
+  %i.bc = add nuw nsw i32 %i.az, 1                ; 2 uses
+  %12 = udiv <2 x i32> %11, splat (i32 10)        ; 3 uses
+  %13 = extractelement <2 x i32> %12, i64 0
+  %14 = extractelement <2 x i32> %12, i64 1
+  %i.bd = icmp samesign ugt i32 %14, %13
   br i1 %i.bd, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !16
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
   %i.be = trunc nuw nsw i32 %i.bb to i8
+  %15 = extractelement <2 x i32> %11, i64 0
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge.i, %.preheader68.i
-  %.sroa.2.3.lcssa.i = phi i32 [ %5, %._crit_edge.i ], [ %.sroa.2.0.extract.trunc.i, %.preheader68.i ]
+  %.sroa.2.3.lcssa.i = phi i32 [ %15, %._crit_edge.i ], [ %.sroa.2.0.extract.trunc.i, %.preheader68.i ]
   %.455.lcssa.i = phi i8 [ %i.be, %._crit_edge.i ], [ %i.p, %.preheader68.i ]
   %.sroa.14.3.lcssa.i = phi i32 [ %i.ba, %._crit_edge.i ], [ %.sroa.14.8.extract.trunc.i, %.preheader68.i ] ; 2 uses
   %.3.lcssa.i = phi i32 [ %i.bc, %._crit_edge.i ], [ 0, %.preheader68.i ]
@@ -257,7 +260,8 @@ _ZN7xgboost6detail17PowerBaseComputer22ShortestRepresentationEbbhbNS0_15Mantissa
   %.4.i = phi i32 [ %.3.lcssa.i, %bb.b ], [ %.2.i, %.loopexit.i ]
   %i.bi = zext i1 %.sink131.i to i32
   %i.bj = add i32 %.sroa.14.3.lcssa.sink.i, %i.bi
-  %.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.0.0.copyload to i32
+  %16 = bitcast <2 x i64> %3 to <4 x i32>
+  %.sroa.0.0.extract.trunc.i = extractelement <4 x i32> %16, i64 0
   %i.bk = add nsw i32 %.4.i, %.sroa.0.0.extract.trunc.i
   %.sroa.249.0.insert.ext.i = zext i32 %i.bk to i64
   %.sroa.249.0.insert.shift.i = shl nuw i64 %.sroa.249.0.insert.ext.i, 32

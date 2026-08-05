@@ -1,3 +1,7 @@
+inline.NumInlined: 3172
+inline.NumDeleted: 1790
+loop-unroll.NumCompletelyUnrolled: 12
+loop-unroll.NumUnrolled: 12
 begin_hunk_0_@_ZN3g2o8BaseEdgeILi3ENS_3SE2EE21readInformationMatrixERSi:bb.a
   %i.v = getelementptr inbounds i8, ptr %1, i64 %i.u
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 32
@@ -199,7 +203,7 @@ bb.a:
   %i.u = shufflevector <2 x double> %i.r, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %i.v = fmul <2 x double> %.sroa.5.24.vec.insert.i.i.i, %i.u
   %i.w = fadd <2 x double> %i.t, %i.v
-  %i.x = fadd <2 x double> %.sroa.427.16.copyload, %i.w ; 2 uses
+  %i.x = fadd <2 x double> %.sroa.427.16.copyload, %i.w
   %i.y = load double, ptr %i.k, align 16, !tbaa !8, !noalias !105 ; 2 uses
   %i.z = fadd double %i.l, %i.y
   %i.aa = fadd double %i.z, f0x400921FB54442D18
@@ -219,13 +223,10 @@ bb.a:
   %.sroa.0.8.vec.insert.i.i.i.i = insertelement <2 x double> %.sroa.0.0.vec.insert.i.i.i.i, double %i.ag, i64 1
   %.sroa.5.16.vec.insert.i.i.i.i = insertelement <2 x double> poison, double %i.ai, i64 0
   %.sroa.5.24.vec.insert.i.i.i.i = insertelement <2 x double> %.sroa.5.16.vec.insert.i.i.i.i, double %i.ah, i64 1
-  %.sroa.427.16.vec.extract = extractelement <2 x double> %i.x, i64 0
-  %1 = fneg double %.sroa.427.16.vec.extract
-  %2 = insertelement <2 x double> poison, double %1, i64 0
-  %i.aj = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %1 = fneg <2 x double> %i.x                     ; 2 uses
+  %i.aj = shufflevector <2 x double> %1, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ak = fmul <2 x double> %.sroa.0.8.vec.insert.i.i.i.i, %i.aj
-  %3 = fneg <2 x double> %i.x
-  %i.al = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.al = shufflevector <2 x double> %1, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.am = fmul <2 x double> %.sroa.5.24.vec.insert.i.i.i.i, %i.al
   %i.an = fadd <2 x double> %i.ak, %i.am
   %i.ao = getelementptr inbounds nuw i8, ptr %i.e, i64 192

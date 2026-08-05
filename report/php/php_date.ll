@@ -203,10 +203,16 @@ bb.aq:                                            ; preds = %bb.i
   %i.fy = load i64, ptr %i.as, align 8, !tbaa !140 ; 2 uses
   %i.fz = srem i64 %i.fy, 12
   %.not174 = icmp eq i64 %i.fz, 0
-  %5 = trunc i64 %i.fy to i32
-  %6 = srem i32 %5, 12
-  %7 = select i1 %.not174, i32 12, i32 %6
-  %8 = call i32 (ptr, i64, ptr, ...) @ap_php_slprintf(ptr noundef nonnull %i.a, i64 noundef 97, ptr noundef nonnull @.str.260, i32 noundef %7) #21
+  br i1 %.not174, label %8, label %5
+
+5:                                                ; preds = %bb.aq
+  %6 = trunc i64 %i.fy to i32
+  %7 = srem i32 %6, 12
+  br label %8
+
+8:                                                ; preds = %bb.aq, %5
+  %9 = phi i32 [ %7, %5 ], [ 12, %bb.aq ]
+  %10 = call i32 (ptr, i64, ptr, ...) @ap_php_slprintf(ptr noundef nonnull %i.a, i64 noundef 97, ptr noundef nonnull @.str.260, i32 noundef %9) #21
   br label %bb.cg
 
 bb.ar:                                            ; preds = %bb.i
@@ -219,10 +225,16 @@ bb.as:                                            ; preds = %bb.i
   %i.gd = load i64, ptr %i.as, align 8, !tbaa !140 ; 2 uses
   %i.ge = srem i64 %i.gd, 12
   %.not173 = icmp eq i64 %i.ge, 0
-  %9 = trunc i64 %i.gd to i32
-  %10 = srem i32 %9, 12
-  %11 = select i1 %.not173, i32 12, i32 %10
-  %12 = call i32 (ptr, i64, ptr, ...) @ap_php_slprintf(ptr noundef nonnull %i.a, i64 noundef 97, ptr noundef nonnull @.str.259, i32 noundef %11) #21
+  br i1 %.not173, label %14, label %11
+
+11:                                               ; preds = %bb.as
+  %12 = trunc i64 %i.gd to i32
+  %13 = srem i32 %12, 12
+  br label %14
+
+14:                                               ; preds = %bb.as, %11
+  %15 = phi i32 [ %13, %11 ], [ 12, %bb.as ]
+  %16 = call i32 (ptr, i64, ptr, ...) @ap_php_slprintf(ptr noundef nonnull %i.a, i64 noundef 97, ptr noundef nonnull @.str.259, i32 noundef %15) #21
   br label %bb.cg
 
 bb.at:                                            ; preds = %bb.i
@@ -500,10 +512,10 @@ bb.cf:                                            ; preds = %bb.ce, %bb.i
   store i8 0, ptr %i.ba, align 1, !tbaa !40
   br label %bb.cg
 
-bb.cg:                                            ; preds = %bb.br, %bb.bs, %bb.bm, %bb.bp, %bb.bo, %bb.bn, %bb.cf, %bb.cd, %bb.cc, %bb.by, %bb.bv, %bb.bk, %bb.bh, %bb.bd, %bb.ba, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.w, %bb.t, %bb.s, %bb.r, %english_suffix.exit, %php_date_full_day_name.exit, %bb.m, %php_date_short_day_name.exit, %bb.j
-  %.2166 = phi i64 [ %.1165, %bb.cf ], [ %.0164199, %bb.j ], [ %.0164199, %php_date_short_day_name.exit ], [ %.0164199, %bb.m ], [ %.0164199, %php_date_full_day_name.exit ], [ %.0164199, %english_suffix.exit ], [ %.0164199, %bb.r ], [ %.0164199, %bb.s ], [ %.0164199, %bb.t ], [ %.0164199, %bb.w ], [ %.0164199, %bb.z ], [ %.0164199, %bb.aa ], [ %.0164199, %bb.ab ], [ %.0164199, %bb.ac ], [ %.0164199, %bb.ad ], [ %.0164199, %bb.ae ], [ %.0164199, %bb.ai ], [ %.0164199, %bb.aj ], [ %.0164199, %bb.ak ], [ %.0164199, %bb.al ], [ %.0164199, %bb.am ], [ %.0164199, %bb.an ], [ %.0164199, %bb.ao ], [ %.0164199, %bb.ap ], [ %.0164199, %bb.aq ], [ %.0164199, %bb.ar ], [ %.0164199, %bb.as ], [ %.0164199, %bb.at ], [ %.0164199, %bb.au ], [ %.0164199, %bb.av ], [ %.0164199, %bb.aw ], [ %.0164199, %bb.ax ], [ %.0164199, %bb.ba ], [ %.0164199, %bb.bd ], [ %.0164199, %bb.bh ], [ %.0164199, %bb.bk ], [ %.0164199, %bb.bn ], [ %.0164199, %bb.bo ], [ %.0164199, %bb.bp ], [ %.0164199, %bb.cd ], [ %.0164199, %bb.bm ], [ %.0164199, %bb.bv ], [ %.0164199, %bb.by ], [ %.0164199, %bb.cc ], [ %.0164199, %bb.bs ], [ %.0164199, %bb.br ]
-  %.2163 = phi i32 [ 1, %bb.cf ], [ %i.bg, %bb.j ], [ %i.bo, %php_date_short_day_name.exit ], [ %i.br, %bb.m ], [ %i.bz, %php_date_full_day_name.exit ], [ %i.ce, %english_suffix.exit ], [ %i.ck, %bb.r ], [ %i.cq, %bb.s ], [ %i.cw, %bb.t ], [ %i.dc, %bb.w ], [ %i.dh, %bb.z ], [ %i.dm, %bb.aa ], [ %i.dp, %bb.ab ], [ %i.du, %bb.ac ], [ %i.dx, %bb.ad ], [ %i.ec, %bb.ae ], [ %i.em, %bb.ai ], [ %i.eq, %bb.aj ], [ %i.ev, %bb.ak ], [ %i.fc, %bb.al ], [ %i.fh, %bb.am ], [ %i.fl, %bb.an ], [ %i.fp, %bb.ao ], [ %i.fx, %bb.ap ], [ %8, %bb.aq ], [ %i.gc, %bb.ar ], [ %12, %bb.as ], [ %i.gh, %bb.at ], [ %i.gk, %bb.au ], [ %i.gn, %bb.av ], [ %i.gq, %bb.aw ], [ %i.gu, %bb.ax ], [ %i.gx, %bb.ba ], [ %i.hh, %bb.bd ], [ %i.hu, %bb.bh ], [ %i.hx, %bb.bk ], [ %.0161200, %bb.bn ], [ %i.ic, %bb.bo ], [ %i.ie, %bb.bp ], [ %i.lc, %bb.cd ], [ %i.hy, %bb.bm ], [ %i.iv, %bb.bv ], [ %i.jt, %bb.by ], [ %i.la, %bb.cc ], [ %i.is, %bb.bs ], [ %i.iq, %bb.br ] ; 2 uses
-  %.3 = phi i32 [ %.0158201, %bb.cf ], [ %.0158201, %bb.j ], [ %.0158201, %php_date_short_day_name.exit ], [ %.0158201, %bb.m ], [ %.0158201, %php_date_full_day_name.exit ], [ %.0158201, %english_suffix.exit ], [ %.0158201, %bb.r ], [ %.0158201, %bb.s ], [ %.0158201, %bb.t ], [ 1, %bb.w ], [ 1, %bb.z ], [ %.0158201, %bb.aa ], [ %.0158201, %bb.ab ], [ %.0158201, %bb.ac ], [ %.0158201, %bb.ad ], [ %.0158201, %bb.ae ], [ %.0158201, %bb.ai ], [ %.0158201, %bb.aj ], [ %.0158201, %bb.ak ], [ %.0158201, %bb.al ], [ %.0158201, %bb.am ], [ %.0158201, %bb.an ], [ %.0158201, %bb.ao ], [ %.0158201, %bb.ap ], [ %.0158201, %bb.aq ], [ %.0158201, %bb.ar ], [ %.0158201, %bb.as ], [ %.0158201, %bb.at ], [ %.0158201, %bb.au ], [ %.0158201, %bb.av ], [ %.0158201, %bb.aw ], [ %.0158201, %bb.ax ], [ %.0158201, %bb.ba ], [ %.0158201, %bb.bd ], [ %.0158201, %bb.bh ], [ %.0158201, %bb.bk ], [ %.0158201, %bb.bn ], [ %.0158201, %bb.bo ], [ %.0158201, %bb.bp ], [ %.0158201, %bb.cd ], [ %.0158201, %bb.bm ], [ %.0158201, %bb.bv ], [ %.0158201, %bb.by ], [ %.0158201, %bb.cc ], [ %.0158201, %bb.bs ], [ %.0158201, %bb.br ]
+bb.cg:                                            ; preds = %bb.br, %bb.bs, %bb.bm, %bb.bp, %bb.bo, %bb.bn, %bb.cf, %bb.cd, %bb.cc, %bb.by, %bb.bv, %bb.bk, %bb.bh, %bb.bd, %bb.ba, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %14, %bb.ar, %8, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.w, %bb.t, %bb.s, %bb.r, %english_suffix.exit, %php_date_full_day_name.exit, %bb.m, %php_date_short_day_name.exit, %bb.j
+  %.2166 = phi i64 [ %.1165, %bb.cf ], [ %.0164199, %bb.j ], [ %.0164199, %php_date_short_day_name.exit ], [ %.0164199, %bb.m ], [ %.0164199, %php_date_full_day_name.exit ], [ %.0164199, %english_suffix.exit ], [ %.0164199, %bb.r ], [ %.0164199, %bb.s ], [ %.0164199, %bb.t ], [ %.0164199, %bb.w ], [ %.0164199, %bb.z ], [ %.0164199, %bb.aa ], [ %.0164199, %bb.ab ], [ %.0164199, %bb.ac ], [ %.0164199, %bb.ad ], [ %.0164199, %bb.ae ], [ %.0164199, %bb.ai ], [ %.0164199, %bb.aj ], [ %.0164199, %bb.ak ], [ %.0164199, %bb.al ], [ %.0164199, %bb.am ], [ %.0164199, %bb.an ], [ %.0164199, %bb.ao ], [ %.0164199, %bb.ap ], [ %.0164199, %8 ], [ %.0164199, %bb.ar ], [ %.0164199, %14 ], [ %.0164199, %bb.at ], [ %.0164199, %bb.au ], [ %.0164199, %bb.av ], [ %.0164199, %bb.aw ], [ %.0164199, %bb.ax ], [ %.0164199, %bb.ba ], [ %.0164199, %bb.bd ], [ %.0164199, %bb.bh ], [ %.0164199, %bb.bk ], [ %.0164199, %bb.bn ], [ %.0164199, %bb.bo ], [ %.0164199, %bb.bp ], [ %.0164199, %bb.cd ], [ %.0164199, %bb.bm ], [ %.0164199, %bb.bv ], [ %.0164199, %bb.by ], [ %.0164199, %bb.cc ], [ %.0164199, %bb.bs ], [ %.0164199, %bb.br ]
+  %.2163 = phi i32 [ 1, %bb.cf ], [ %i.bg, %bb.j ], [ %i.bo, %php_date_short_day_name.exit ], [ %i.br, %bb.m ], [ %i.bz, %php_date_full_day_name.exit ], [ %i.ce, %english_suffix.exit ], [ %i.ck, %bb.r ], [ %i.cq, %bb.s ], [ %i.cw, %bb.t ], [ %i.dc, %bb.w ], [ %i.dh, %bb.z ], [ %i.dm, %bb.aa ], [ %i.dp, %bb.ab ], [ %i.du, %bb.ac ], [ %i.dx, %bb.ad ], [ %i.ec, %bb.ae ], [ %i.em, %bb.ai ], [ %i.eq, %bb.aj ], [ %i.ev, %bb.ak ], [ %i.fc, %bb.al ], [ %i.fh, %bb.am ], [ %i.fl, %bb.an ], [ %i.fp, %bb.ao ], [ %i.fx, %bb.ap ], [ %10, %8 ], [ %i.gc, %bb.ar ], [ %16, %14 ], [ %i.gh, %bb.at ], [ %i.gk, %bb.au ], [ %i.gn, %bb.av ], [ %i.gq, %bb.aw ], [ %i.gu, %bb.ax ], [ %i.gx, %bb.ba ], [ %i.hh, %bb.bd ], [ %i.hu, %bb.bh ], [ %i.hx, %bb.bk ], [ %.0161200, %bb.bn ], [ %i.ic, %bb.bo ], [ %i.ie, %bb.bp ], [ %i.lc, %bb.cd ], [ %i.hy, %bb.bm ], [ %i.iv, %bb.bv ], [ %i.jt, %bb.by ], [ %i.la, %bb.cc ], [ %i.is, %bb.bs ], [ %i.iq, %bb.br ] ; 2 uses
+  %.3 = phi i32 [ %.0158201, %bb.cf ], [ %.0158201, %bb.j ], [ %.0158201, %php_date_short_day_name.exit ], [ %.0158201, %bb.m ], [ %.0158201, %php_date_full_day_name.exit ], [ %.0158201, %english_suffix.exit ], [ %.0158201, %bb.r ], [ %.0158201, %bb.s ], [ %.0158201, %bb.t ], [ 1, %bb.w ], [ 1, %bb.z ], [ %.0158201, %bb.aa ], [ %.0158201, %bb.ab ], [ %.0158201, %bb.ac ], [ %.0158201, %bb.ad ], [ %.0158201, %bb.ae ], [ %.0158201, %bb.ai ], [ %.0158201, %bb.aj ], [ %.0158201, %bb.ak ], [ %.0158201, %bb.al ], [ %.0158201, %bb.am ], [ %.0158201, %bb.an ], [ %.0158201, %bb.ao ], [ %.0158201, %bb.ap ], [ %.0158201, %8 ], [ %.0158201, %bb.ar ], [ %.0158201, %14 ], [ %.0158201, %bb.at ], [ %.0158201, %bb.au ], [ %.0158201, %bb.av ], [ %.0158201, %bb.aw ], [ %.0158201, %bb.ax ], [ %.0158201, %bb.ba ], [ %.0158201, %bb.bd ], [ %.0158201, %bb.bh ], [ %.0158201, %bb.bk ], [ %.0158201, %bb.bn ], [ %.0158201, %bb.bo ], [ %.0158201, %bb.bp ], [ %.0158201, %bb.cd ], [ %.0158201, %bb.bm ], [ %.0158201, %bb.bv ], [ %.0158201, %bb.by ], [ %.0158201, %bb.cc ], [ %.0158201, %bb.bs ], [ %.0158201, %bb.br ]
   %i.lf = sext i32 %.2163 to i64                  ; 3 uses
   %i.lg = load ptr, ptr %4, align 8, !tbaa !154   ; 3 uses
   %.not.i178 = icmp eq ptr %i.lg, null
@@ -807,9 +819,11 @@ bb.u:                                             ; preds = %bb.f, %bb.f
   %i.cv = load i64, ptr %i.cu, align 8, !tbaa !140 ; 2 uses
   %i.cw = srem i64 %i.cv, 12
   %.not = icmp eq i64 %i.cw, 0
-  %3 = trunc i64 %i.cv to i32
-  %4 = srem i32 %3, 12
-  %5 = select i1 %.not, i32 12, i32 %4
+  br i1 %.not, label %bb.ad, label %3
+
+3:                                                ; preds = %bb.u
+  %4 = trunc i64 %i.cv to i32
+  %5 = srem i32 %4, 12
   br label %bb.ad
 
 bb.v:                                             ; preds = %bb.f, %bb.f
@@ -851,8 +865,8 @@ bb.ac:                                            ; preds = %bb.f
   %i.dl = trunc i64 %i.dk to i32
   br label %bb.ad
 
-bb.ad:                                            ; preds = %bb.n, %bb.p, %bb.o, %bb.ac, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f
-  %.1 = phi i32 [ -1, %bb.f ], [ %i.az, %bb.g ], [ %i.be, %bb.h ], [ %i.bj, %bb.i ], [ %i.bo, %bb.j ], [ %i.bq, %bb.k ], [ %i.bs, %bb.l ], [ %i.bw, %bb.m ], [ %i.dl, %bb.ac ], [ %i.ch, %bb.q ], [ %i.cj, %bb.r ], [ %i.cl, %bb.s ], [ %i.ct, %bb.t ], [ %5, %bb.u ], [ %i.cz, %bb.v ], [ %i.dc, %bb.w ], [ %i.df, %bb.x ], [ %i.ce, %bb.p ], [ 1, %bb.o ], [ 0, %bb.n ] ; 2 uses
+bb.ad:                                            ; preds = %3, %bb.u, %bb.n, %bb.p, %bb.o, %bb.ac, %bb.x, %bb.w, %bb.v, %bb.t, %bb.s, %bb.r, %bb.q, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f
+  %.1 = phi i32 [ -1, %bb.f ], [ %i.az, %bb.g ], [ %i.be, %bb.h ], [ %i.bj, %bb.i ], [ %i.bo, %bb.j ], [ %i.bq, %bb.k ], [ %i.bs, %bb.l ], [ %i.bw, %bb.m ], [ %i.dl, %bb.ac ], [ %i.ch, %bb.q ], [ %i.cj, %bb.r ], [ %i.cl, %bb.s ], [ %i.ct, %bb.t ], [ %i.ce, %bb.p ], [ %i.cz, %bb.v ], [ %i.dc, %bb.w ], [ %i.df, %bb.x ], [ 12, %bb.u ], [ %5, %3 ], [ 0, %bb.n ], [ 1, %bb.o ] ; 2 uses
   br i1 %2, label %.thread78, label %.thread82
 
 .thread82:                                        ; preds = %bb.z, %bb.ab, %bb.ad

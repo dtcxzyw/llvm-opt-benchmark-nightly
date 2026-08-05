@@ -1,3 +1,8 @@
+inline.NumInlined: 5418
+inline.NumDeleted: 3298
+loop-unroll.NumCompletelyUnrolled: 17
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 26
 begin_hunk_0_@_ZN3g2o19StructureOnlySolverILi3EE4calcERSt6vectorIPNS_16OptimizableGraph6VertexESaIS5_EEii:bb.a
 
 bb.aa:                                            ; preds = %bb.y, %bb.x, %._crit_edge271
@@ -199,16 +204,15 @@ _ZN5Eigen6MatrixIdLi3ELi1ELi0ELi3ELi1EEaSINS_7ProductINS_14TranspositionsILi3ELi
   %i.gz = fmul double %i.gv, %i.gy
   %i.ha = fadd double %i.gx, %i.gz
   %i.hb = fsub double %i.gq, %i.ha
-  %10 = load double, ptr %7, align 16, !tbaa !107 ; 2 uses
-  %11 = call noundef double @llvm.fabs.f64(double %10)
-  %12 = fcmp ogt double %11, f0x0010000000000000
-  %13 = fdiv double %i.gs, %10
-  %14 = select i1 %12, double %13, double 0.000000e+00
-  %15 = load double, ptr %.sroa.9.0..sroa_idx198, align 16, !tbaa !107 ; 2 uses
-  %16 = call noundef double @llvm.fabs.f64(double %15)
-  %17 = fcmp ogt double %16, f0x0010000000000000
-  %18 = fdiv double %i.gv, %15
-  %storemerge.i = select i1 %17, double %18, double 0.000000e+00
+  %10 = load <2 x double>, ptr %7, align 16
+  %11 = load double, ptr %.sroa.9.0..sroa_idx198, align 16, !tbaa !107
+  %12 = insertelement <2 x double> %10, double %11, i64 1 ; 2 uses
+  %13 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %12)
+  %14 = fcmp ogt <2 x double> %13, splat (double f0x0010000000000000)
+  %15 = insertelement <2 x double> poison, double %i.gs, i64 0
+  %16 = insertelement <2 x double> %15, double %i.gv, i64 1
+  %17 = fdiv <2 x double> %16, %12
+  %18 = select <2 x i1> %14, <2 x double> %17, <2 x double> zeroinitializer ; 2 uses
   %i.hc = load double, ptr %.sroa.13.0..sroa_idx204, align 16, !tbaa !107 ; 2 uses
   %i.hd = call noundef double @llvm.fabs.f64(double %i.hc)
   %i.he = fcmp ogt double %i.hd, f0x0010000000000000
@@ -216,15 +220,16 @@ _ZN5Eigen6MatrixIdLi3ELi1ELi0ELi3ELi1EEaSINS_7ProductINS_14TranspositionsILi3ELi
   %storemerge49.i = select i1 %i.he, double %i.hf, double 0.000000e+00 ; 2 uses
   store double %storemerge49.i, ptr %i.l, align 16, !tbaa !107
   %i.hg = fmul double %i.gy, %storemerge49.i
-  %i.hh = fsub double %storemerge.i, %i.hg
+  %19 = extractelement <2 x double> %18, i64 1
+  %i.hh = fsub double %19, %i.hg
   store double %i.hh, ptr %i.n, align 8, !tbaa !107
   %i.hi = load <2 x double>, ptr %i.p, align 8, !tbaa !17
   %i.hj = load <2 x double>, ptr %i.n, align 8    ; 2 uses
   %i.hk = fmul <2 x double> %i.hi, %i.hj          ; 2 uses
   %shift399 = shufflevector <2 x double> %i.hk, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop400 = fadd <2 x double> %i.hk, %shift399
-  %19 = extractelement <2 x double> %foldExtExtBinop400, i64 0
-  %20 = fsub double %14, %19
+  %foldExtExtBinop402 = fsub <2 x double> %18, %foldExtExtBinop400
+  %20 = extractelement <2 x double> %foldExtExtBinop402, i64 0
   store double %20, ptr %8, align 16, !tbaa !107
   br i1 %.not.2.i.i.i.i.i.i.i.i.i, label %bb.aq, label %bb.ap
 

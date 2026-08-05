@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.eg = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 2 uses
-  %i.ej = trunc i64 %i.bu to i16                  ; 5 uses
+  %i.ej = trunc i64 %i.bu to i16                  ; 4 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 9 uses
   %i.el = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 5 uses
   %i.em = icmp ult i16 %i.ej, 10
@@ -212,14 +212,15 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.eo = urem i16 %i.ej, 10
   %i.ep = trunc nuw nsw i16 %i.eo to i8
   %i.eq = or disjoint i8 %i.ep, 48
-  %19 = udiv i16 %i.ej, 10
-  %20 = urem i16 %19, 10
-  %21 = trunc nuw nsw i16 %20 to i8
-  %22 = or disjoint i8 %21, 48
-  %23 = udiv i16 %i.ej, 100
-  %24 = urem i16 %23, 10
-  %25 = trunc nuw nsw i16 %24 to i8
-  %i.er = or disjoint i8 %25, 48
+  %19 = insertelement <2 x i16> poison, i16 %i.ej, i64 0
+  %20 = shufflevector <2 x i16> %19, <2 x i16> poison, <2 x i32> zeroinitializer
+  %21 = udiv <2 x i16> %20, <i16 10, i16 100>
+  %22 = urem <2 x i16> %21, splat (i16 10)
+  %23 = trunc nuw nsw <2 x i16> %22 to <2 x i8>   ; 2 uses
+  %24 = extractelement <2 x i8> %23, i64 0
+  %25 = or disjoint i8 %24, 48
+  %26 = extractelement <2 x i8> %23, i64 1
+  %i.er = or disjoint i8 %26, 48
   %.lhs.trunc.i = trunc i64 %i.bu to i8           ; 3 uses
   %i.es = urem i8 %.lhs.trunc.i, 10
   %i.et = or disjoint i8 %i.es, 48
@@ -622,7 +623,7 @@ bb.an:                                            ; preds = %bb.al
   store i8 %i.eq, ptr %i.ke, align 1, !tbaa !14
   %i.ki = load ptr, ptr %14, align 8, !tbaa !8, !alias.scope !47
   %i.kj = getelementptr inbounds nuw i8, ptr %i.ki, i64 1
-  store i8 %22, ptr %i.kj, align 1, !tbaa !14
+  store i8 %25, ptr %i.kj, align 1, !tbaa !14
   %i.kk = load ptr, ptr %14, align 8, !tbaa !8, !alias.scope !47
   store i8 %i.er, ptr %i.kk, align 1, !tbaa !14
   br label %bb.ao

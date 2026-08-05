@@ -1,3 +1,8 @@
+inline.NumInlined: 92
+inline.NumDeleted: 48
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 @.str.5 = private unnamed_addr constant [35 x i8] c"Image dimensions too large in file\00", align 1
 @.str.6 = private unnamed_addr constant [26 x i8] c"Unsupported TGA file type\00", align 1
@@ -199,10 +204,9 @@ bb.a:
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %wide.trip.count = zext nneg i8 %i.d to i64     ; 6 uses
-  %i.q = add nsw i64 %wide.trip.count, -1         ; 3 uses
+  %i.q = add nsw i64 %wide.trip.count, -1         ; 2 uses
   %min.iters.check = icmp ult i8 %.fr, -96
-  %3 = trunc nuw nsw i64 %i.q to i32
-  %i.r = trunc nuw nsw i64 %i.q to i32
+  %i.r = trunc nuw nsw i64 %i.q to i32            ; 2 uses
   %i.s = icmp ugt i64 %i.q, 4294967295
   %n.vec = and i64 %wide.trip.count, 24           ; 3 uses
   %i.t = icmp eq i64 %n.vec, 16
@@ -295,7 +299,7 @@ bb.e:                                             ; preds = %bb.d
 
 vector.scevcheck:                                 ; preds = %.preheader.us.us.preheader
   %i.bm = xor i32 %.271.us.us, -1
-  %i.bn = icmp ult i32 %i.bm, %3
+  %i.bn = icmp ult i32 %i.bm, %i.r
   %i.bo = or i1 %i.bn, %i.an
   %i.bp = sub nsw i64 %i.ak, %i.bk
   %diff.check = icmp ugt i64 %i.bp, -8

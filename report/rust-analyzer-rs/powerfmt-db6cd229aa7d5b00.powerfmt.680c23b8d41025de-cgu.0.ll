@@ -201,66 +201,73 @@ define noundef range(i64 1, 41) i64 @_RNvXsc_NtCs8VQcym6bIqo_8powerfmt19smart_di
 bb.a:
   %i.a = load i128, ptr %0, align 16, !noundef !5 ; 6 uses
   %.not = icmp eq i128 %i.a, 0
-  br i1 %.not, label %.split, label %.split6.a
+  br i1 %.not, label %.split, label %.split6
 
-.split6.a:                                        ; preds = %bb.a
-  %i.b = icmp ugt i128 %i.a, 99999999999999999999999999999999
-  br i1 %i.b, label %bb.d, label %bb.b
+.split6:                                          ; preds = %bb.a
+  %2 = icmp ugt i128 %i.a, 99999999999999999999999999999999
+  br i1 %2, label %bb.b, label %.split6.a
 
-bb.b:                                             ; preds = %.split6.a
-  %i.c = icmp samesign ugt i128 %i.a, 9999999999999999 ; 2 uses
-  %2 = udiv i128 %i.a, 10000000000000000
-  %.sroa.07.0.i.a = select i1 %i.c, i32 16, i32 0
-  %.sroa.0.0.off0.v.i = select i1 %i.c, i128 %2, i128 %i.a
-  %.sroa.0.0.off0.i = trunc nuw nsw i128 %.sroa.0.0.off0.v.i to i64 ; 3 uses
-  %3 = icmp samesign ugt i64 %.sroa.0.0.off0.i, 9999999999 ; 2 uses
-  %4 = udiv i64 %.sroa.0.0.off0.i, 10000000000
-  %.sroa.05.0.i.i = select i1 %3, i32 10, i32 0   ; 2 uses
-  %.sroa.0.0.i.i = select i1 %3, i64 %4, i64 %.sroa.0.0.off0.i ; 3 uses
-  %5 = icmp samesign ugt i64 %.sroa.0.0.i.i, 99999
-  br i1 %5, label %bb.c, label %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a
+.split6.a:                                        ; preds = %.split6
+  %i.b = icmp samesign ugt i128 %i.a, 9999999999999999
+  %extract.t21.i = trunc nuw nsw i128 %i.a to i64
+  br i1 %i.b, label %bb.c, label %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a
 
-bb.c:                                             ; preds = %bb.b
-  %6 = udiv i64 %.sroa.0.0.i.i, 100000
-  %7 = or disjoint i32 %.sroa.05.0.i.i, 5
-  br label %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a
-
-_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a: ; preds = %bb.c, %bb.b
-  %.sroa.05.1.i.i.a = phi i32 [ %7, %bb.c ], [ %.sroa.05.0.i.i, %bb.b ]
-  %.sroa.0.1.i.i.a = phi i64 [ %6, %bb.c ], [ %.sroa.0.0.i.i, %bb.b ]
-  %8 = trunc nuw nsw i64 %.sroa.0.1.i.i.a to i32  ; 4 uses
-  %9 = add nuw nsw i32 %8, 393206
-  %10 = add nuw nsw i32 %8, 524188
+bb.b:                                             ; preds = %.split6
+  %3 = udiv i128 %i.a, 100000000000000000000000000000000
+  %4 = trunc nuw nsw i128 %3 to i32               ; 3 uses
+  %i.c = icmp samesign ugt i32 %4, 99999          ; 2 uses
+  %5 = udiv i32 %4, 100000
+  %.sroa.07.0.i.a = select i1 %i.c, i32 %5, i32 %4 ; 4 uses
+  %6 = add nuw nsw i32 %.sroa.07.0.i.a, 393206
+  %7 = add nuw nsw i32 %.sroa.07.0.i.a, 524188
+  %8 = and i32 %6, %7
+  %9 = add nuw nsw i32 %.sroa.07.0.i.a, 916504
+  %10 = add nuw nsw i32 %.sroa.07.0.i.a, 514288
   %11 = and i32 %9, %10
-  %12 = add nuw nsw i32 %8, 916504
-  %13 = add nuw nsw i32 %8, 514288
-  %14 = and i32 %12, %13
-  %15 = xor i32 %11, %14
-  %16 = lshr i32 %15, 17
-  %17 = add nuw nsw i32 %.sroa.05.1.i.i.a, %.sroa.07.0.i.a
-  %18 = add nuw nsw i32 %17, %16
+  %12 = xor i32 %8, %11
+  %13 = lshr i32 %12, 17
+  %14 = select i1 %i.c, i32 37, i32 32
+  %15 = add nuw nsw i32 %13, %14
   br label %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log109u128_impl.exit
 
-bb.d:                                             ; preds = %.split6.a
-  %19 = udiv i128 %i.a, 100000000000000000000000000000000
-  %20 = trunc nuw nsw i128 %19 to i32             ; 3 uses
-  %21 = icmp samesign ugt i32 %20, 99999          ; 2 uses
-  %22 = udiv i32 %20, 100000
-  %.sroa.011.0.i = select i1 %21, i32 %22, i32 %20 ; 4 uses
-  %i.d = add nuw nsw i32 %.sroa.011.0.i, 393206
-  %i.e = add nuw nsw i32 %.sroa.011.0.i, 524188
+bb.c:                                             ; preds = %.split6.a
+  %16 = udiv i128 %i.a, 10000000000000000
+  %extract.t.i = trunc nuw nsw i128 %16 to i64
+  br label %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a
+
+_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a: ; preds = %bb.c, %.split6.a
+  %.sroa.05.1.i.i.a = phi i32 [ 16, %bb.c ], [ 0, %.split6.a ]
+  %.sroa.0.1.i.i.a = phi i64 [ %extract.t.i, %bb.c ], [ %extract.t21.i, %.split6.a ] ; 3 uses
+  %17 = icmp samesign ugt i64 %.sroa.0.1.i.i.a, 9999999999 ; 2 uses
+  %18 = udiv i64 %.sroa.0.1.i.i.a, 10000000000
+  %.sroa.05.0.i.i = select i1 %17, i32 10, i32 0  ; 2 uses
+  %.sroa.0.0.i.i = select i1 %17, i64 %18, i64 %.sroa.0.1.i.i.a ; 3 uses
+  %19 = icmp samesign ugt i64 %.sroa.0.0.i.i, 99999
+  br i1 %19, label %20, label %bb.d
+
+20:                                               ; preds = %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a
+  %21 = udiv i64 %.sroa.0.0.i.i, 100000
+  %22 = or disjoint i32 %.sroa.05.0.i.i, 5
+  br label %bb.d
+
+bb.d:                                             ; preds = %20, %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a
+  %.sroa.05.1.i.i = phi i32 [ %22, %20 ], [ %.sroa.05.0.i.i, %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a ]
+  %.sroa.0.1.i.i = phi i64 [ %21, %20 ], [ %.sroa.0.0.i.i, %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a ]
+  %23 = trunc nuw nsw i64 %.sroa.0.1.i.i to i32   ; 4 uses
+  %i.d = add nuw nsw i32 %23, 393206
+  %i.e = add nuw nsw i32 %23, 524188
   %i.f = and i32 %i.d, %i.e
-  %i.g = add nuw nsw i32 %.sroa.011.0.i, 916504
-  %i.h = add nuw nsw i32 %.sroa.011.0.i, 514288
+  %i.g = add nuw nsw i32 %23, 916504
+  %i.h = add nuw nsw i32 %23, 514288
   %i.i = and i32 %i.g, %i.h
   %i.j = xor i32 %i.f, %i.i
   %i.k = lshr i32 %i.j, 17
-  %23 = select i1 %21, i32 37, i32 32
-  %i.l = add nuw nsw i32 %i.k, %23
+  %24 = add nuw nsw i32 %.sroa.05.1.i.i, %.sroa.05.1.i.i.a
+  %i.l = add nuw nsw i32 %24, %i.k
   br label %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log109u128_impl.exit
 
-_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log109u128_impl.exit: ; preds = %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a, %bb.d
-  %.sroa.06.0.i = phi i32 [ %i.l, %bb.d ], [ %18, %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a ] ; 2 uses
+_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log109u128_impl.exit: ; preds = %bb.b, %bb.d
+  %.sroa.06.0.i = phi i32 [ %15, %bb.b ], [ %i.l, %bb.d ] ; 2 uses
   %i.m = icmp samesign ult i32 %.sroa.06.0.i, 39
   tail call void @llvm.assume(i1 %i.m)
   %narrow = add nuw nsw i32 %.sroa.06.0.i, 1
@@ -501,66 +508,73 @@ bb.a:
   %i.c = load i128, ptr %0, align 16              ; 3 uses
   %.sroa.04.0 = tail call i128 @llvm.abs.i128(i128 %i.c, i1 false) ; 5 uses
   %.not = icmp eq i128 %i.c, 0
-  br i1 %.not, label %.split, label %.split8.a
+  br i1 %.not, label %.split, label %.split8
 
-.split8.a:                                        ; preds = %bb.a
-  %i.d = icmp ugt i128 %.sroa.04.0, 99999999999999999999999999999999
-  br i1 %i.d, label %bb.d, label %bb.b
+.split8:                                          ; preds = %bb.a
+  %2 = icmp ugt i128 %.sroa.04.0, 99999999999999999999999999999999
+  br i1 %2, label %bb.b, label %.split8.a
 
-bb.b:                                             ; preds = %.split8.a
-  %i.e = icmp samesign ugt i128 %.sroa.04.0, 9999999999999999 ; 2 uses
-  %2 = udiv i128 %.sroa.04.0, 10000000000000000
-  %.sroa.07.0.i.a = select i1 %i.e, i32 16, i32 0
-  %.sroa.0.0.off0.v.i = select i1 %i.e, i128 %2, i128 %.sroa.04.0
-  %.sroa.0.0.off0.i = trunc nuw nsw i128 %.sroa.0.0.off0.v.i to i64 ; 3 uses
-  %3 = icmp samesign ugt i64 %.sroa.0.0.off0.i, 9999999999 ; 2 uses
-  %4 = udiv i64 %.sroa.0.0.off0.i, 10000000000
-  %.sroa.05.0.i.i = select i1 %3, i32 10, i32 0   ; 2 uses
-  %.sroa.0.0.i.i = select i1 %3, i64 %4, i64 %.sroa.0.0.off0.i ; 3 uses
-  %5 = icmp samesign ugt i64 %.sroa.0.0.i.i, 99999
-  br i1 %5, label %bb.c, label %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a
+.split8.a:                                        ; preds = %.split8
+  %i.d = icmp samesign ugt i128 %.sroa.04.0, 9999999999999999
+  %extract.t21.i = trunc nuw nsw i128 %.sroa.04.0 to i64
+  br i1 %i.d, label %bb.c, label %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a
 
-bb.c:                                             ; preds = %bb.b
-  %6 = udiv i64 %.sroa.0.0.i.i, 100000
-  %7 = or disjoint i32 %.sroa.05.0.i.i, 5
-  br label %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a
-
-_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a: ; preds = %bb.c, %bb.b
-  %.sroa.05.1.i.i.a = phi i32 [ %7, %bb.c ], [ %.sroa.05.0.i.i, %bb.b ]
-  %.sroa.0.1.i.i.a = phi i64 [ %6, %bb.c ], [ %.sroa.0.0.i.i, %bb.b ]
-  %8 = trunc nuw nsw i64 %.sroa.0.1.i.i.a to i32  ; 4 uses
-  %9 = add nuw nsw i32 %8, 393206
-  %10 = add nuw nsw i32 %8, 524188
+bb.b:                                             ; preds = %.split8
+  %3 = udiv i128 %.sroa.04.0, 100000000000000000000000000000000
+  %4 = trunc nuw nsw i128 %3 to i32               ; 3 uses
+  %i.e = icmp samesign ugt i32 %4, 99999          ; 2 uses
+  %5 = udiv i32 %4, 100000
+  %.sroa.07.0.i.a = select i1 %i.e, i32 %5, i32 %4 ; 4 uses
+  %6 = add nuw nsw i32 %.sroa.07.0.i.a, 393206
+  %7 = add nuw nsw i32 %.sroa.07.0.i.a, 524188
+  %8 = and i32 %6, %7
+  %9 = add nuw nsw i32 %.sroa.07.0.i.a, 916504
+  %10 = add nuw nsw i32 %.sroa.07.0.i.a, 514288
   %11 = and i32 %9, %10
-  %12 = add nuw nsw i32 %8, 916504
-  %13 = add nuw nsw i32 %8, 514288
-  %14 = and i32 %12, %13
-  %15 = xor i32 %11, %14
-  %16 = lshr i32 %15, 17
-  %17 = add nuw nsw i32 %.sroa.05.1.i.i.a, %.sroa.07.0.i.a
-  %18 = add nuw nsw i32 %17, %16
+  %12 = xor i32 %8, %11
+  %13 = lshr i32 %12, 17
+  %14 = select i1 %i.e, i32 37, i32 32
+  %15 = add nuw nsw i32 %13, %14
   br label %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log109u128_impl.exit
 
-bb.d:                                             ; preds = %.split8.a
-  %19 = udiv i128 %.sroa.04.0, 100000000000000000000000000000000
-  %20 = trunc nuw nsw i128 %19 to i32             ; 3 uses
-  %21 = icmp samesign ugt i32 %20, 99999          ; 2 uses
-  %22 = udiv i32 %20, 100000
-  %.sroa.011.0.i = select i1 %21, i32 %22, i32 %20 ; 4 uses
-  %i.f = add nuw nsw i32 %.sroa.011.0.i, 393206
-  %i.g = add nuw nsw i32 %.sroa.011.0.i, 524188
+bb.c:                                             ; preds = %.split8.a
+  %16 = udiv i128 %.sroa.04.0, 10000000000000000
+  %extract.t.i = trunc nuw nsw i128 %16 to i64
+  br label %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a
+
+_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a: ; preds = %bb.c, %.split8.a
+  %.sroa.05.1.i.i.a = phi i32 [ 16, %bb.c ], [ 0, %.split8.a ]
+  %.sroa.0.1.i.i.a = phi i64 [ %extract.t.i, %bb.c ], [ %extract.t21.i, %.split8.a ] ; 3 uses
+  %17 = icmp samesign ugt i64 %.sroa.0.1.i.i.a, 9999999999 ; 2 uses
+  %18 = udiv i64 %.sroa.0.1.i.i.a, 10000000000
+  %.sroa.05.0.i.i = select i1 %17, i32 10, i32 0  ; 2 uses
+  %.sroa.0.0.i.i = select i1 %17, i64 %18, i64 %.sroa.0.1.i.i.a ; 3 uses
+  %19 = icmp samesign ugt i64 %.sroa.0.0.i.i, 99999
+  br i1 %19, label %20, label %bb.d
+
+20:                                               ; preds = %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a
+  %21 = udiv i64 %.sroa.0.0.i.i, 100000
+  %22 = or disjoint i32 %.sroa.05.0.i.i, 5
+  br label %bb.d
+
+bb.d:                                             ; preds = %20, %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a
+  %.sroa.05.1.i.i = phi i32 [ %22, %20 ], [ %.sroa.05.0.i.i, %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a ]
+  %.sroa.0.1.i.i = phi i64 [ %21, %20 ], [ %.sroa.0.0.i.i, %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a ]
+  %23 = trunc nuw nsw i64 %.sroa.0.1.i.i to i32   ; 4 uses
+  %i.f = add nuw nsw i32 %23, 393206
+  %i.g = add nuw nsw i32 %23, 524188
   %i.h = and i32 %i.f, %i.g
-  %i.i = add nuw nsw i32 %.sroa.011.0.i, 916504
-  %i.j = add nuw nsw i32 %.sroa.011.0.i, 514288
+  %i.i = add nuw nsw i32 %23, 916504
+  %i.j = add nuw nsw i32 %23, 514288
   %i.k = and i32 %i.i, %i.j
   %i.l = xor i32 %i.h, %i.k
   %i.m = lshr i32 %i.l, 17
-  %23 = select i1 %21, i32 37, i32 32
-  %i.n = add nuw nsw i32 %i.m, %23
+  %24 = add nuw nsw i32 %.sroa.05.1.i.i, %.sroa.05.1.i.i.a
+  %i.n = add nuw nsw i32 %24, %i.m
   br label %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log109u128_impl.exit
 
-_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log109u128_impl.exit: ; preds = %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a, %bb.d
-  %.sroa.06.0.i = phi i32 [ %i.n, %bb.d ], [ %18, %_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log108u64_impl.exit.i.a ] ; 2 uses
+_RNvNtNtNtCshzWfHUSfYae_4core3num3imp9int_log109u128_impl.exit: ; preds = %bb.b, %bb.d
+  %.sroa.06.0.i = phi i32 [ %15, %bb.b ], [ %i.n, %bb.d ] ; 2 uses
   %i.o = icmp samesign ult i32 %.sroa.06.0.i, 39
   tail call void @llvm.assume(i1 %i.o)
   %narrow = add nuw nsw i32 %.sroa.06.0.i, 1

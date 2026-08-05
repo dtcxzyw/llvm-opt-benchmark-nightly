@@ -1,3 +1,7 @@
+inline.NumInlined: 1106
+inline.NumDeleted: 573
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZNK7UnitSAO35generateUpdateAnimationSpeedCommandB5cxx11Ev:bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !180, !noalias !194 ; 2 uses
@@ -199,18 +203,16 @@ bb.h:                                             ; preds = %bb.f
   %i.bm = fsub nsz double %i.aj, %i.an
   %i.bn = fsub nsz double %i.bm, %i.aq
   %i.bo = fadd nsz double %i.bn, %i.af
-  %i.bp = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ag, <2 x float> %i.ak, <2 x float> %i.bl) ; 2 uses
-  %5 = extractelement <2 x float> %i.bp, i64 0
-  %6 = fpext nsz float %5 to double
-  %7 = fmul nsz double %6, 2.000000e+00
+  %i.bp = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ag, <2 x float> %i.ak, <2 x float> %i.bl)
+  %5 = fpext <2 x float> %i.bp to <2 x double>
+  %6 = fmul nsz <2 x double> %5, splat (double 2.000000e+00) ; 2 uses
+  %7 = extractelement <2 x double> %6, i64 0
   %i.bq = call nsz double @llvm.atan2.f64(double %7, double %i.bo)
-  %8 = extractelement <2 x float> %i.bp, i64 1
-  %9 = fpext nsz float %8 to double
-  %10 = fmul nsz double %9, 2.000000e+00
   %i.br = fadd nsz double %i.aj, %i.an
   %i.bs = fsub nsz double %i.aq, %i.br
   %i.bt = fadd nsz double %i.bs, %i.af
-  %i.bu = call nsz double @llvm.atan2.f64(double %10, double %i.bt)
+  %8 = extractelement <2 x double> %6, i64 1
+  %i.bu = call nsz double @llvm.atan2.f64(double %8, double %i.bt)
   %i.bv = fptrunc nsz double %i.bu to float
   %i.bw = fcmp nsz olt double %i.av, -1.000000e+00
   %i.bx = select i1 %i.bw, double -1.000000e+00, double %i.av ; 2 uses

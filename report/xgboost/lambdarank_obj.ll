@@ -1,3 +1,8 @@
+inline.NumInlined: 8766
+inline.NumDeleted: 2252
+loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumRuntimeUnrolled: 37
+loop-unroll.NumUnrolled: 46
 begin_hunk_0_@_ZN7xgboost6common7ArgSortImNS0_18IndexTransformIterIZNS_3obj9MakePairsIZNS3_13LambdaRankObjINS3_13LambdaRankMAPENS_3ltr8MAPCacheEE18CalcLambdaForGroupILb1ELb1EZNS6_15GetGradientImplEjRKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNS0_4SpanIKfLm18446744073709551615EEENSI_10TensorViewIST_Li1EEEfNSS_IKmLm18446744073709551615EEEjT1_NSV_ISM_Li1EEEEUlmmE_EEvPKNS_7ContextEjSt10shared_ptrINS7_12RankingCacheEEjSW_SY_SP_EUlmE_EEfSt7greaterIvEEESt6vectorISP_SaISP_EES14_SQ_SQ_T2_:bb.a
 
 bb.b:                                             ; preds = %.noexc13
@@ -199,15 +204,19 @@ _ZZN7xgboost3obj13LambdaRankObjINS0_13LambdaRankMAPENS_3ltr8MAPCacheEE18CalcLamb
   %i.bw = tail call noundef double @llvm.fabs.f64(double %i.bv) ; 2 uses
   %i.bx = fcmp une float %i.t, %i.z
   %i.by = fpext float %i.ah to double
-  %11 = fadd double %i.by, 1.000000e-02
-  %12 = fdiv double %i.bw, %11
-  %.023 = select i1 %i.bx, double %12, double %i.bw ; 3 uses
-  %13 = fsub double 1.000000e+00, %i.ao           ; 2 uses
-  %14 = fdiv double 1.000000e+00, %13
-  %i.bz = tail call double @log(double noundef %14) #11
+  %11 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %i.by, i64 0
+  %12 = insertelement <2 x double> <double -1.000000e-02, double poison>, double %i.ao, i64 1
+  %13 = fsub <2 x double> %11, %12                ; 2 uses
+  %14 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %i.bw, i64 0
+  %15 = fdiv <2 x double> %14, %13                ; 2 uses
+  %16 = extractelement <2 x double> %15, i64 0
+  %.023 = select i1 %i.bx, double %16, double %i.bw ; 3 uses
+  %17 = extractelement <2 x double> %15, i64 1
+  %i.bz = tail call double @log(double noundef %17) #11
   %i.ca = fmul double %i.bz, %.023
   store double %i.ca, ptr %10, align 8, !tbaa !67
-  %i.cb = fmul double %13, %i.ao                  ; 2 uses
+  %18 = extractelement <2 x double> %13, i64 1
+  %i.cb = fmul double %18, %i.ao                  ; 2 uses
   %i.cc = fcmp olt double %i.cb, f0x3C9CD2B297D889BC
   %.sroa.speculated = select i1 %i.cc, double f0x3C9CD2B297D889BC, double %i.cb
   %i.cd = fmul double %.sroa.speculated, %.023

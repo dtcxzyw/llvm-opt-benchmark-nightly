@@ -1,3 +1,5 @@
+inline.NumInlined: 128
+inline.NumDeleted: 87
 begin_hunk_0_@_ZN12SmokePuffCSOC2EPN5scene13ISceneManagerEP17ClientEnvironmentRKN4core8vector3dIfEERKNS5_8vector2dIfEE:bb.a
   %9 = alloca %"class.video::SColor", align 4     ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -199,17 +201,16 @@ bb.g:                                             ; preds = %_ZN5scene10ISceneNo
   %i.cq = fcmp nsz ogt <2 x float> %i.cp, zeroinitializer
   %i.cr = select <2 x i1> %i.cq, <2 x float> splat (float 5.000000e+00), <2 x float> splat (float -5.000000e+00)
   %i.cs = fadd nsz <2 x float> %i.cp, %i.cr
-  %i.ct = fdiv nsz <2 x float> %i.cs, splat (float 1.000000e+01) ; 2 uses
-  %10 = extractelement <2 x float> %i.ct, i64 0
-  %11 = fptosi float %10 to i16
-  %12 = extractelement <2 x float> %i.ct, i64 1
-  %13 = fptosi float %12 to i16
-  %.sroa.3.0.insert.ext.i = zext i16 %13 to i48
-  %.sroa.3.0.insert.shift.i = shl nuw i48 %.sroa.3.0.insert.ext.i, 32
+  %i.ct = fdiv nsz <2 x float> %i.cs, splat (float 1.000000e+01)
   %.sroa.2.0.insert.ext.i = zext i16 %i.co to i48
   %.sroa.2.0.insert.shift.i = shl nuw nsw i48 %.sroa.2.0.insert.ext.i, 16
+  %10 = fptosi <2 x float> %i.ct to <2 x i16>     ; 2 uses
+  %11 = extractelement <2 x i16> %10, i64 1
+  %.sroa.3.0.insert.ext.i = zext i16 %11 to i48
+  %.sroa.3.0.insert.shift.i = shl nuw i48 %.sroa.3.0.insert.ext.i, 32
   %.sroa.2.0.insert.insert.i = or disjoint i48 %.sroa.3.0.insert.shift.i, %.sroa.2.0.insert.shift.i
-  %.sroa.0.0.insert.ext.i = zext i16 %11 to i48
+  %12 = extractelement <2 x i16> %10, i64 0
+  %.sroa.0.0.insert.ext.i = zext i16 %12 to i48
   %.sroa.0.0.insert.insert.i = or disjoint i48 %.sroa.2.0.insert.insert.i, %.sroa.0.0.insert.ext.i
   %i.cu = invoke i32 @_ZN3Map7getNodeEN4core8vector3dIsEEPb(ptr noundef nonnull align 8 dereferenceable(144) %i.cj, i48 %.sroa.0.0.insert.insert.i, ptr noundef nonnull %i.b)
           to label %bb.h unwind label %bb.q       ; 2 uses

@@ -1,3 +1,7 @@
+inline.NumInlined: 2585
+inline.NumDeleted: 1325
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_ZN7rocksdb13SstFileDumper19ShowCompressionSizeENS_15CompressionTypeERKNS_18CompressionOptionsE:bb.a
   %i.jr = load i8, ptr %i.jn, align 2, !tbaa !30, !noalias !748
   br label %bb.bg
@@ -199,13 +203,12 @@ bb.bv:                                            ; preds = %bb.bu
   %i.mv = uitofp <2 x i64> %i.mu to <2 x double>
   %i.mw = insertelement <2 x double> poison, double %i.ms, i64 0
   %i.mx = shufflevector <2 x double> %i.mw, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.my = fdiv <2 x double> %i.mv, %i.mx          ; 2 uses
-  %27 = extractelement <2 x double> %i.my, i64 0
-  %28 = fmul double %27, 1.000000e+02
+  %i.my = fdiv <2 x double> %i.mv, %i.mx
+  %27 = fmul <2 x double> %i.my, splat (double 1.000000e+02) ; 2 uses
+  %28 = extractelement <2 x double> %27, i64 0
   %i.mz = select i1 %i.mr, double 0.000000e+00, double %28
-  %i.na = extractelement <2 x double> %i.my, i64 1
-  %29 = fmul double %i.na, 1.000000e+02
-  %i.nb = select i1 %i.mr, double 0.000000e+00, double %29
+  %i.na = extractelement <2 x double> %27, i64 1
+  %i.nb = select i1 %i.mr, double 0.000000e+00, double %i.na
   %i.nc = uitofp i64 %i.mo to double
   %i.nd = fdiv double %i.nc, %i.ms
   %i.ne = fmul double %i.nd, 1.000000e+02

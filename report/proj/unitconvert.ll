@@ -204,7 +204,7 @@ _ZL12days_in_yearl.exit:                          ; preds = %.lr.ph, %_ZL12is_le
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !82
 
 ._crit_edge:                                      ; preds = %_ZL12days_in_yearl.exit, %bb.a
-  %.022.lcssa = phi i32 [ 1858, %bb.a ], [ %.02253, %_ZL12days_in_yearl.exit ] ; 5 uses
+  %.022.lcssa = phi i32 [ 1858, %bb.a ], [ %.02253, %_ZL12days_in_yearl.exit ] ; 4 uses
   %.0.lcssa = phi i32 [ 45, %bb.a ], [ %i.h, %_ZL12days_in_yearl.exit ] ; 3 uses
   %i.j = and i32 %.022.lcssa, 3
   %i.k = icmp ne i32 %i.j, 0
@@ -214,22 +214,26 @@ _ZL12days_in_yearl.exit:                          ; preds = %.lr.ph, %_ZL12is_le
   br i1 %or.cond.i.i26, label %_ZL12days_in_yearl.exit30.split.us, label %_ZL12days_in_yearl.exit30.split
 
 _ZL12days_in_yearl.exit30.split.us:               ; preds = %._crit_edge
-  %1 = urem i32 %.022.lcssa, 400
-  %.not.i28 = icmp eq i32 %1, 0
-  %spec.select.i29.neg = select i1 %.not.i28, i32 -366, i32 -365
-  %2 = add i32 %spec.select.i29.neg, %.0.lcssa    ; 3 uses
-  %3 = urem i32 %.022.lcssa, 400
-  %4 = icmp eq i32 %3, 0                          ; 2 uses
-  %spec.select.i34.us63 = add i32 %2, 31
+  %1 = insertelement <2 x i32> poison, i32 %.022.lcssa, i64 0
+  %2 = urem <2 x i32> %1, <i32 400, i32 1>
+  %3 = icmp eq <2 x i32> %2, zeroinitializer      ; 2 uses
+  %4 = extractelement <2 x i1> %3, i64 0
+  %spec.select.i29.neg = select i1 %4, i32 -366, i32 -365
+  %5 = add i32 %spec.select.i29.neg, %.0.lcssa    ; 3 uses
+  %spec.select.i34.us63 = add i32 %5, 31
   %.not24.us64 = icmp ugt i32 %spec.select.i34.us63, %i.b
-  br i1 %.not24.us64, label %.split.us, label %_ZL13days_in_monthmm.exit42.us
+  br i1 %.not24.us64, label %.split.us, label %_ZL13days_in_monthmm.exit42.us.preheader
 
-_ZL13days_in_monthmm.exit42.us:                   ; preds = %_ZL12days_in_yearl.exit30.split.us, %_ZL13days_in_monthmm.exit42.us
-  %i.m = phi i1 [ %i.x, %_ZL13days_in_monthmm.exit42.us ], [ false, %_ZL12days_in_yearl.exit30.split.us ]
-  %i.n = phi i32 [ %i.w, %_ZL13days_in_monthmm.exit42.us ], [ 31, %_ZL12days_in_yearl.exit30.split.us ]
-  %.1.us66 = phi i32 [ %i.q, %_ZL13days_in_monthmm.exit42.us ], [ %2, %_ZL12days_in_yearl.exit30.split.us ]
-  %.021.us65 = phi i32 [ %i.r, %_ZL13days_in_monthmm.exit42.us ], [ 1, %_ZL12days_in_yearl.exit30.split.us ]
-  %i.o = and i1 %4, %i.m
+_ZL13days_in_monthmm.exit42.us.preheader:         ; preds = %_ZL12days_in_yearl.exit30.split.us
+  %6 = extractelement <2 x i1> %3, i64 0          ; 2 uses
+  br label %_ZL13days_in_monthmm.exit42.us
+
+_ZL13days_in_monthmm.exit42.us:                   ; preds = %_ZL13days_in_monthmm.exit42.us.preheader, %_ZL13days_in_monthmm.exit42.us
+  %i.m = phi i1 [ %i.x, %_ZL13days_in_monthmm.exit42.us ], [ false, %_ZL13days_in_monthmm.exit42.us.preheader ]
+  %i.n = phi i32 [ %i.w, %_ZL13days_in_monthmm.exit42.us ], [ 31, %_ZL13days_in_monthmm.exit42.us.preheader ]
+  %.1.us66 = phi i32 [ %i.q, %_ZL13days_in_monthmm.exit42.us ], [ %5, %_ZL13days_in_monthmm.exit42.us.preheader ]
+  %.021.us65 = phi i32 [ %i.r, %_ZL13days_in_monthmm.exit42.us ], [ 1, %_ZL13days_in_monthmm.exit42.us.preheader ]
+  %i.o = and i1 %6, %i.m
   %i.p = zext i1 %i.o to i32
   %spec.select.i41.us = add i32 %i.n, %.1.us66
   %i.q = add i32 %spec.select.i41.us, %i.p        ; 3 uses
@@ -242,7 +246,7 @@ _ZL13days_in_monthmm.exit42.us:                   ; preds = %_ZL12days_in_yearl.
   %i.v = getelementptr i8, ptr %i.u, i64 -4
   %i.w = load i32, ptr %i.v, align 4, !tbaa !79   ; 2 uses
   %i.x = icmp eq i32 %narrow.us, 2                ; 2 uses
-  %or.cond.i.us = and i1 %4, %i.x
+  %or.cond.i.us = and i1 %6, %i.x
   %i.y = zext i1 %or.cond.i.us to i32
   %spec.select.i34.us = add i32 %i.w, %i.q
   %i.z = add i32 %spec.select.i34.us, %i.y
@@ -280,7 +284,7 @@ _ZL13days_in_monthmm.exit42:                      ; preds = %_ZL12days_in_yearl.
 
 .split.us:                                        ; preds = %_ZL13days_in_monthmm.exit42, %_ZL13days_in_monthmm.exit42.us, %_ZL12days_in_yearl.exit30.split, %_ZL12days_in_yearl.exit30.split.us
   %.us-phi = phi i32 [ %i.r, %_ZL13days_in_monthmm.exit42.us ], [ 1, %_ZL12days_in_yearl.exit30.split.us ], [ 1, %_ZL12days_in_yearl.exit30.split ], [ %i.af, %_ZL13days_in_monthmm.exit42 ]
-  %.us-phi56 = phi i32 [ %i.q, %_ZL13days_in_monthmm.exit42.us ], [ %2, %_ZL12days_in_yearl.exit30.split.us ], [ %i.aa, %_ZL12days_in_yearl.exit30.split ], [ %i.ae, %_ZL13days_in_monthmm.exit42 ]
+  %.us-phi56 = phi i32 [ %i.q, %_ZL13days_in_monthmm.exit42.us ], [ %5, %_ZL12days_in_yearl.exit30.split.us ], [ %i.aa, %_ZL12days_in_yearl.exit30.split ], [ %i.ae, %_ZL13days_in_monthmm.exit42 ]
   %i.ao = add nuw i32 %i.b, 1
   %i.ap = sub i32 %i.ao, %.us-phi56
   %i.aq = uitofp i32 %.022.lcssa to double

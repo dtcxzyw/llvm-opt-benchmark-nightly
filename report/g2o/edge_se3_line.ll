@@ -1,3 +1,7 @@
+inline.NumInlined: 5854
+inline.NumDeleted: 3439
+loop-unroll.NumCompletelyUnrolled: 17
+loop-unroll.NumUnrolled: 17
 begin_hunk_0_@_ZN3g2o8internal11writeVectorIN5Eigen6MatrixIdLi6ELi1ELi0ELi6ELi1EEEEEbRSoRKNS2_9DenseBaseIT_EE:bb.a
   %i.f = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %0, double noundef %i.e)
   %i.g = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull @.str.6, i64 noundef 1) ; 0 uses
@@ -199,8 +203,6 @@ bb.a:
   %i.i = shufflevector <2 x double> %i.h, <2 x double> %i.e, <2 x i32> <i32 0, i32 2>
   %i.j = shufflevector <2 x double> %i.h, <2 x double> %i.e, <2 x i32> <i32 1, i32 3>
   %i.k = fadd <2 x double> %i.i, %i.j
-  %.sroa.0157.8.vec.extract.i = extractelement <2 x double> %i.b, i64 1
-  %.sroa.0159.0.vec.extract.i = extractelement <2 x double> %i.f, i64 0
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.m = load <2 x double>, ptr %i.l, align 8, !tbaa !66, !noalias !102 ; 7 uses
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 40
@@ -257,16 +259,15 @@ bb.a:
   %i.bl = insertelement <2 x double> %i.bk, double %i.r, i64 1
   %i.bm = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bj, <2 x double> %i.bl, <2 x double> %i.bi) ; 3 uses
   %i.bn = fmul <2 x double> %i.bm, %i.bm          ; 2 uses
-  %5 = fneg double %i.d
-  %6 = fneg double %.sroa.0157.8.vec.extract.i
-  %7 = fmul double %.sroa.0159.0.vec.extract.i, %5
-  %8 = fmul double %i.ac, %6
+  %5 = insertelement <2 x double> %i.b, double %i.d, i64 0
+  %6 = fneg <2 x double> %5
+  %7 = insertelement <2 x double> %i.f, double %i.ac, i64 1
+  %8 = fmul <2 x double> %7, %6
   %i.bo = shufflevector <2 x double> %i.f, <2 x double> %i.b, <2 x i32> <i32 1, i32 2>
-  %9 = insertelement <2 x double> poison, double %i.d, i64 0 ; 2 uses
-  %i.bp = insertelement <2 x double> %9, double %i.ac, i64 1
-  %i.bq = insertelement <2 x double> poison, double %8, i64 0
-  %10 = insertelement <2 x double> %i.bq, double %7, i64 1
-  %i.br = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bo, <2 x double> %i.bp, <2 x double> %10) ; 3 uses
+  %i.bp = insertelement <2 x double> poison, double %i.d, i64 0 ; 2 uses
+  %i.bq = insertelement <2 x double> %i.bp, double %i.ac, i64 1
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %i.br = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bo, <2 x double> %i.bq, <2 x double> %9) ; 3 uses
   %i.bs = fmul <2 x double> %i.br, %i.br          ; 2 uses
   %i.bt = shufflevector <2 x double> %i.bn, <2 x double> %i.bs, <2 x i32> <i32 0, i32 2>
   %i.bu = shufflevector <2 x double> %i.bn, <2 x double> %i.bs, <2 x i32> <i32 1, i32 3>
@@ -287,7 +288,7 @@ bb.a:
   %i.cj = fmul <2 x double> %i.bm, %i.ci          ; 3 uses
   %i.ck = shufflevector <2 x double> %i.ch, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cl = fmul <2 x double> %i.m, %i.ck           ; 3 uses
-  %i.cm = insertelement <2 x double> %9, double %i.r, i64 1
+  %i.cm = insertelement <2 x double> %i.bp, double %i.r, i64 1
   %i.cn = fmul <2 x double> %i.cm, %i.aw          ; 4 uses
   %i.co = insertelement <2 x double> %i.az, double %i.ai, i64 0
   %i.cp = fmul <2 x double> %i.co, %i.ch          ; 4 uses

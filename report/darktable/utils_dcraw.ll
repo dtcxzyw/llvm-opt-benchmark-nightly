@@ -50,14 +50,16 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 548
-  %3 = add nsw i32 %1, 6
-  %4 = srem i32 %3, 6
-  %5 = sext i32 %4 to i64
-  %6 = getelementptr inbounds [6 x i8], ptr %i.s, i64 %5
-  %7 = add nsw i32 %2, 6
-  %8 = srem i32 %7, 6
-  %i.t = sext i32 %8 to i64
-  %i.u = getelementptr inbounds i8, ptr %6, i64 %i.t
+  %3 = insertelement <2 x i32> poison, i32 %1, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %2, i64 1
+  %5 = add nsw <2 x i32> %4, splat (i32 6)
+  %6 = srem <2 x i32> %5, splat (i32 6)           ; 2 uses
+  %7 = extractelement <2 x i32> %6, i64 0
+  %8 = sext i32 %7 to i64
+  %9 = getelementptr inbounds [6 x i8], ptr %i.s, i64 %8
+  %10 = extractelement <2 x i32> %6, i64 1
+  %i.t = sext i32 %10 to i64
+  %i.u = getelementptr inbounds i8, ptr %9, i64 %i.t
   %i.v = load i8, ptr %i.u, align 1, !tbaa !76
   %i.w = sext i8 %i.v to i32
   br label %bb.e

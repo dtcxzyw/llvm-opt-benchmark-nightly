@@ -204,13 +204,12 @@ bb.bx:                                            ; preds = %bb.bw, %.preheader6
 bb.by:                                            ; preds = %bb.bx
   %i.mm = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.mn = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 2 uses
-  %i.mo = load i16, ptr %i.mn, align 2, !tbaa !2220 ; 3 uses
-  %2 = udiv i16 %i.mo, 11
-  %.zext647 = zext nneg i16 %2 to i64
-  %3 = shl nuw nsw i64 %.zext647, 4
-  %4 = udiv i16 %i.mo, 14
-  %.zext649 = zext nneg i16 %4 to i64
-  %5 = shl nuw nsw i64 %.zext649, 4
+  %i.mo = load i16, ptr %i.mn, align 2, !tbaa !2220 ; 2 uses
+  %2 = insertelement <2 x i16> poison, i16 %i.mo, i64 0
+  %3 = shufflevector <2 x i16> %2, <2 x i16> poison, <2 x i32> zeroinitializer
+  %4 = udiv <2 x i16> %3, <i16 11, i16 14>
+  %5 = zext nneg <2 x i16> %4 to <2 x i32>
+  %6 = shl nuw nsw <2 x i32> %5, splat (i32 4)    ; 2 uses
   %i.mp = getelementptr inbounds nuw i8, ptr %0, i64 381800
   %i.mq = load i64, ptr %i.mp, align 8, !tbaa !2272 ; 2 uses
   %.not423 = icmp eq i64 %i.mq, 0
@@ -248,8 +247,10 @@ bb.cc:                                            ; preds = %bb.ca, %bb.by
 
 bb.cd:                                            ; preds = %bb.cc
   %i.nd = load i16, ptr %i.mm, align 8, !tbaa !2221
-  %i.ne = zext i16 %i.nd to i64
-  %i.nf = mul nuw nsw i64 %3, %i.ne
+  %7 = zext i16 %i.nd to i64
+  %8 = extractelement <2 x i32> %6, i64 0
+  %i.ne = zext nneg i32 %8 to i64
+  %i.nf = mul nuw nsw i64 %i.ne, %7
   %i.ng = icmp eq i64 %i.nf, %.0328
   br i1 %i.ng, label %bb.ce, label %bb.cf
 
@@ -265,8 +266,10 @@ bb.cf:                                            ; preds = %bb.cd, %bb.cc
 
 bb.cg:                                            ; preds = %bb.cf
   %i.nj = load i16, ptr %i.mm, align 8, !tbaa !2221
-  %i.nk = zext i16 %i.nj to i64
-  %i.nl = mul nuw nsw i64 %5, %i.nk
+  %9 = zext i16 %i.nj to i64
+  %10 = extractelement <2 x i32> %6, i64 1
+  %i.nk = zext nneg i32 %10 to i64
+  %i.nl = mul nuw nsw i64 %i.nk, %9
   %i.nm = icmp eq i64 %i.nl, %.0328
   br i1 %i.nm, label %bb.ch, label %bb.ci
 

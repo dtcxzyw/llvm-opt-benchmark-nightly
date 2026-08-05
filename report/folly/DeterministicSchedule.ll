@@ -204,15 +204,21 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceISt20discard_block_engineISt26subtract_with_carry_engineImLm48ELm5ELm12EELm389ELm11EESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !258, !noalias !7425
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
   %i.e = icmp eq i64 %1, 0
-  %3 = urem i64 %1, 2147483563
-  %4 = trunc nuw nsw i64 %3 to i32
-  %5 = tail call i32 @llvm.umax.i32(i32 %4, i32 1)
-  %storemerge.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.e, i32 19780503, i32 %5
+  br i1 %i.e, label %.preheader.i.i.i.i.i.i.i.i.i.preheader, label %3
+
+3:                                                ; preds = %bb.a
+  %4 = urem i64 %1, 2147483563
+  %5 = trunc nuw nsw i64 %4 to i32
+  %6 = tail call i32 @llvm.umax.i32(i32 %5, i32 1)
+  br label %.preheader.i.i.i.i.i.i.i.i.i.preheader
+
+.preheader.i.i.i.i.i.i.i.i.i.preheader:           ; preds = %3, %bb.a
+  %.sroa.0.019.i.i.i.i.i.i.i.i.i.ph = phi i32 [ 19780503, %bb.a ], [ %6, %3 ]
   br label %.preheader.i.i.i.i.i.i.i.i.i
 
-.preheader.i.i.i.i.i.i.i.i.i:                     ; preds = %.preheader.i.i.i.i.i.i.i.i.i, %bb.a
-  %.01320.i.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.a ], [ %i.w, %.preheader.i.i.i.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.0.019.i.i.i.i.i.i.i.i.i = phi i32 [ %storemerge.i.i.i.i.i.i.i.i.i.i.i, %bb.a ], [ %.0.i.i.i.1.i.i.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i.i.i.i ] ; 2 uses
+.preheader.i.i.i.i.i.i.i.i.i:                     ; preds = %.preheader.i.i.i.i.i.i.i.i.i.preheader, %.preheader.i.i.i.i.i.i.i.i.i
+  %.01320.i.i.i.i.i.i.i.i.i = phi i64 [ %i.w, %.preheader.i.i.i.i.i.i.i.i.i ], [ 0, %.preheader.i.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
+  %.sroa.0.019.i.i.i.i.i.i.i.i.i = phi i32 [ %.0.i.i.i.1.i.i.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i.i.i.i ], [ %.sroa.0.019.i.i.i.i.i.i.i.i.i.ph, %.preheader.i.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
   %i.f = urem i32 %.sroa.0.019.i.i.i.i.i.i.i.i.i, 53668
   %i.g = mul nuw nsw i32 %i.f, 40014              ; 2 uses
   %i.h = udiv i32 %.sroa.0.019.i.i.i.i.i.i.i.i.i, 53668

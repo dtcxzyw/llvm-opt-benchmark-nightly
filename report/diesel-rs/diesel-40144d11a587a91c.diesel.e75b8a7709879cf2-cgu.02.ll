@@ -1,3 +1,7 @@
+inline.NumInlined: 285
+inline.NumDeleted: 111
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_RNvXNtNtNtNtCsjRvGck33osM_6diesel2pg5types13date_and_time6chronoNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtBa_11deserialize7FromSqlNtNtBa_9sql_types9TimestampNtNtB8_7backend2PgE8from_sql:bb.a
   %i.ab = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef range(i64 1, 25) 24, i64 noundef range(i64 1, 9) 8) #20, !noalias !117 ; 3 uses
   %i.ac = icmp eq ptr %i.ab, null
@@ -199,7 +203,7 @@ bb.a:
 define void @_RNvXs0_NtNtNtNtCsjRvGck33osM_6diesel5mysql5types13date_and_time6chronoNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtBd_9serialize5ToSqlNtNtBd_9sql_types9TimestampNtNtBb_7backend5MysqlE6to_sql(ptr dead_on_unwind noalias noundef writable sret([16 x i8]) align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef readonly align 4 captures(none) dereferenceable(12) %1, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  %i.b = alloca [48 x i8], align 8                ; 14 uses
+  %i.b = alloca [48 x i8], align 8                ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = load i32, ptr %1, align 4, !range !121, !noundef !3 ; 2 uses
   %i.d = ashr i32 %i.c, 13                        ; 2 uses
@@ -246,8 +250,6 @@ bb.f:                                             ; preds = %bb.d
   %i.u = load i32, ptr %i.t, align 4, !noundef !3 ; 3 uses
   %i.v = udiv i32 %i.u, 60
   %i.w = udiv i32 %i.u, 3600
-  %3 = urem i32 %i.v, 60
-  %4 = urem i32 %i.u, 60
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.y = load i32, ptr %i.x, align 4, !noundef !3
   %i.z = udiv i32 %i.y, 1000
@@ -260,9 +262,10 @@ bb.f:                                             ; preds = %bb.d
   %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   store i32 %i.w, ptr %i.ad, align 4
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i32 %3, ptr %i.ae, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 20
-  store i32 %4, ptr %5, align 4
+  %3 = insertelement <2 x i32> poison, i32 %i.v, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %i.u, i64 1
+  %5 = urem <2 x i32> %4, splat (i32 60)
+  store <2 x i32> %5, ptr %i.ae, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store i64 %i.aa, ptr %i.af, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 32
@@ -665,24 +668,23 @@ bb.a:
 define void @_RNvXs2_NtNtNtNtCsjRvGck33osM_6diesel5mysql5types13date_and_time6chronoNtNtNtCslCQnfik72jt_6chrono5naive4time9NaiveTimeINtNtBd_9serialize5ToSqlNtNtBd_9sql_types4TimeNtNtBb_7backend5MysqlE6to_sql(ptr dead_on_unwind noalias noundef writable sret([16 x i8]) align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef readonly align 4 captures(none) dereferenceable(8) %1, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  %i.b = alloca [48 x i8], align 8                ; 13 uses
+  %i.b = alloca [48 x i8], align 8                ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = load i32, ptr %1, align 4, !noundef !3   ; 3 uses
   %i.d = udiv i32 %i.c, 60
   %i.e = udiv i32 %i.c, 3600
-  %3 = urem i32 %i.d, 60
-  %4 = urem i32 %i.c, 60
   store i32 0, ptr %i.b, align 8
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i32 0, ptr %i.f, align 4
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i32 0, ptr %i.g, align 8
-  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  store i32 %i.e, ptr %i.h, align 4
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i32 %3, ptr %5, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 20
-  store i32 %4, ptr %6, align 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  store i32 0, ptr %3, align 4
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store i32 0, ptr %i.f, align 8
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 12
+  store i32 %i.e, ptr %i.g, align 4
+  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %4 = insertelement <2 x i32> poison, i32 %i.d, i64 0
+  %5 = insertelement <2 x i32> %4, i32 %i.c, i64 1
+  %6 = urem <2 x i32> %5, splat (i32 60)
+  store <2 x i32> %6, ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store i64 0, ptr %i.i, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 32

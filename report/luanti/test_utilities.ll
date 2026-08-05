@@ -1,3 +1,7 @@
+inline.NumInlined: 3058
+inline.NumDeleted: 873
+loop-unroll.NumCompletelyUnrolled: 21
+loop-unroll.NumUnrolled: 21
 begin_hunk_0_@_ZN13TestUtilities19testSanitizeDirNameEv:bb.a
   call void @_Z15sanitizeDirNameB5cxx11St17basic_string_viewIcSt11char_traitsIcEES2_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %22, i64 8, ptr nonnull @.str.406, i64 1, ptr nonnull @.str.386)
   %i.js = getelementptr inbounds nuw i8, ptr %22, i64 8 ; 2 uses
@@ -199,16 +203,15 @@ bb.b:                                             ; preds = %_ZNSt6vectorIN4core
   %i.u = fmul nsz <2 x double> %i.j, %i.t
   %i.v = insertelement <2 x double> poison, double %i.p, i64 0
   %i.w = shufflevector <2 x double> %i.v, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.x = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.w, <2 x double> %i.k, <2 x double> %i.u) ; 2 uses
-  %5 = extractelement <2 x double> %i.x, i64 1
-  %6 = fptosi double %5 to i16
-  %7 = extractelement <2 x double> %i.x, i64 0
-  %8 = fptosi double %7 to i16
-  %.sroa.55.0.insert.ext.i.i = zext i16 %8 to i48
-  %.sroa.55.0.insert.shift.i.i = shl nuw i48 %.sroa.55.0.insert.ext.i.i, 32
+  %i.x = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.w, <2 x double> %i.k, <2 x double> %i.u)
   %.sroa.54.0.insert.ext.i.i = and i48 %.sroa.02.0.copyload.i, 4294901760
+  %5 = fptosi <2 x double> %i.x to <2 x i16>      ; 2 uses
+  %6 = extractelement <2 x i16> %5, i64 0
+  %.sroa.55.0.insert.ext.i.i = zext i16 %6 to i48
+  %.sroa.55.0.insert.shift.i.i = shl nuw i48 %.sroa.55.0.insert.ext.i.i, 32
   %.sroa.54.0.insert.insert.i.i = or disjoint i48 %.sroa.55.0.insert.shift.i.i, %.sroa.54.0.insert.ext.i.i
-  %.sroa.03.0.insert.ext.i.i = zext i16 %6 to i48
+  %7 = extractelement <2 x i16> %5, i64 1
+  %.sroa.03.0.insert.ext.i.i = zext i16 %7 to i48
   %.sroa.03.0.insert.insert.i.i = or disjoint i48 %.sroa.54.0.insert.insert.i.i, %.sroa.03.0.insert.ext.i.i ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.n, %i.o
   br i1 %.not.i.i.i, label %bb.d, label %bb.c

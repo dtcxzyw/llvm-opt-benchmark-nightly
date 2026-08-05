@@ -1,3 +1,8 @@
+inline.NumInlined: 6888
+inline.NumDeleted: 3272
+loop-unroll.NumCompletelyUnrolled: 10
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 11
 begin_hunk_0_@_ZN7rocksdb13CompactionJob7InstallEPb:bb.a
   br i1 %.not.i.i.i.i.i, label %bb.e, label %_ZNSt10unique_ptrIA_KcSt14default_deleteIS1_EEaSEOS4_.exit.i
 
@@ -199,7 +204,7 @@ _ZN7rocksdb8IOStatusaSERKS0_.exit:                ; preds = %_ZNSt10unique_ptrIA
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.cg = load i64, ptr %i.cf, align 8, !tbaa !1152
   %i.ch = add i64 %i.cg, %i.ce                    ; 3 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.cj = load i64, ptr %i.ci, align 8, !tbaa !1153
   %i.ck = add i64 %i.cj, %i.ch                    ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 3 uses
@@ -263,12 +268,9 @@ bb.w:                                             ; preds = %bb.v
   %i.ea = load i32, ptr %i.dz, align 8, !tbaa !1161
   %i.eb = getelementptr inbounds nuw i8, ptr %1, i64 124 ; 3 uses
   %i.ec = load i32, ptr %i.eb, align 4, !tbaa !1162
-  %13 = load i64, ptr %i.cd, align 8, !tbaa !1151
-  %14 = uitofp i64 %13 to double
-  %15 = fmul nnan double %14, f0x3EB0000000000000
-  %16 = load i64, ptr %i.ci, align 8, !tbaa !1153
-  %17 = uitofp i64 %16 to double
-  %18 = fmul nnan double %17, f0x3EB0000000000000
+  %13 = load <2 x i64>, ptr %i.cd, align 8, !tbaa !371
+  %14 = uitofp <2 x i64> %13 to <2 x double>
+  %15 = fmul nnan <2 x double> %14, splat (double f0x3EB0000000000000) ; 2 uses
   %i.ed = load i64, ptr %i.cf, align 8, !tbaa !1152
   %i.ee = uitofp i64 %i.ed to double
   %i.ef = fmul nnan double %i.ee, f0x3EB0000000000000
@@ -310,7 +312,9 @@ bb.y:                                             ; preds = %bb.x
   %i.ff = extractelement <2 x double> %i.dh, i64 1
   %i.fg = extractelement <2 x double> %i.cy, i64 0
   %i.fh = extractelement <2 x double> %i.cy, i64 1
-  invoke void (ptr, ptr, ...) @_ZN7rocksdb11LogToBufferEPNS_9LogBufferEPKcz(ptr noundef %i.dk, ptr noundef nonnull @.str.71, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.65, i64 32), ptr noundef %i.dl, ptr noundef %i.dm, double noundef %i.ff, double noundef %i.fe, i32 noundef %i.dq, i32 noundef %i.ds, i32 noundef %i.du, i32 noundef %i.dw, i32 noundef %i.dy, i32 noundef %i.ea, i32 noundef %i.ec, double noundef %15, double noundef %18, double noundef %i.ef, double noundef %i.ej, double noundef %i.en, double noundef %i.eq, double noundef %i.et, double noundef %i.fh, double noundef %i.fg, ptr noundef %i.eu, i64 noundef %i.ew, i64 noundef %i.ey, ptr noundef %i.fd)
+  %16 = extractelement <2 x double> %15, i64 0
+  %17 = extractelement <2 x double> %15, i64 1
+  invoke void (ptr, ptr, ...) @_ZN7rocksdb11LogToBufferEPNS_9LogBufferEPKcz(ptr noundef %i.dk, ptr noundef nonnull @.str.71, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.65, i64 32), ptr noundef %i.dl, ptr noundef %i.dm, double noundef %i.ff, double noundef %i.fe, i32 noundef %i.dq, i32 noundef %i.ds, i32 noundef %i.du, i32 noundef %i.dw, i32 noundef %i.dy, i32 noundef %i.ea, i32 noundef %i.ec, double noundef %16, double noundef %17, double noundef %i.ef, double noundef %i.ej, double noundef %i.en, double noundef %i.eq, double noundef %i.et, double noundef %i.fh, double noundef %i.fg, ptr noundef %i.eu, i64 noundef %i.ew, i64 noundef %i.ey, ptr noundef %i.fd)
           to label %bb.z unwind label %bb.ae
 
 bb.z:                                             ; preds = %bb.y

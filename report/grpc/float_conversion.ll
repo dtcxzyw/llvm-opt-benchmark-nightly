@@ -204,7 +204,7 @@ _ZSt6invokeIRKZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryTo
 ; Function Attrs: mustprogress uwtable
 define internal void @"_ZN4absl12lts_2025051219functional_internal12InvokeObjectIZNS0_19str_format_internal12_GLOBAL__N_122FormatFPositiveExpSlowENS0_7uint128EiRKNS4_11FormatStateEE3$_0vJNS4_15BinaryToDecimalEEEET0_NS1_7VoidPtrEDpNS1_8ForwardTIT1_E4typeE"(ptr nofree readonly captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1) #0 {
 bb.a:
-  %2 = alloca %"class.absl::lts_20250512::str_format_internal::(anonymous namespace)::BinaryToDecimal", align 8 ; 16 uses
+  %2 = alloca %"class.absl::lts_20250512::str_format_internal::(anonymous namespace)::BinaryToDecimal", align 8 ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %2, ptr noundef nonnull readonly align 8 dereferenceable(56) %1, i64 56, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
@@ -212,7 +212,7 @@ bb.a:
   %i.c = load i64, ptr %2, align 8, !tbaa !115
   %i.d = sub i64 %i.b, %i.c
   %i.e = mul i64 %i.d, 9
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
   %i.g = load i64, ptr %i.f, align 8, !tbaa !104  ; 8 uses
   %i.h = add i64 %i.e, %i.g
   %i.i = load ptr, ptr %0, align 8, !tbaa !119, !nonnull !121, !align !122 ; 8 uses
@@ -370,7 +370,7 @@ _ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit16.i.i
 bb.i:                                             ; preds = %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit16.i.i.i.i, %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit.i.i.i.i
   %i.bw = phi ptr [ %.pre76.i.i.i.i.a, %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit16.i.i.i.i ], [ %i.bg, %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit.i.i.i.i ]
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 24
-  %i.by = load ptr, ptr %i.bx, align 8, !tbaa !33 ; 8 uses
+  %i.by = load ptr, ptr %i.bx, align 8, !tbaa !33 ; 7 uses
   %i.bz = icmp eq i64 %.sroa.7.064.i.i.i.i, 0
   br i1 %i.bz, label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit26.i.i.i.i, label %bb.j
 
@@ -433,32 +433,27 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.i20.i
   %i.cy = load ptr, ptr %i.ce, align 8, !tbaa !80
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 %.0.lcssa.i18.i.i.i.i
   store ptr %i.cz, ptr %i.ce, align 8, !tbaa !80
-  %.pre77.i.i.i.i = load ptr, ptr %0, align 8, !tbaa !119
-  %.phi.trans.insert.i.i.i.i = getelementptr inbounds nuw i8, ptr %.pre77.i.i.i.i, i64 24
-  %.pre78.i.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8, !tbaa !33
   br label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit26.i.i.i.i
 
 _ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit26.i.i.i.i: ; preds = %._crit_edge.i17.i.i.i.i, %bb.i
-  %3 = phi ptr [ %i.by, %bb.i ], [ %.pre78.i.i.i.i, %._crit_edge.i17.i.i.i.i ] ; 7 uses
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
-  %i.da = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.db = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 20
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 19
-  %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 18
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 17
+  %i.da = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
+  %i.db = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
+  %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
+  %3 = load ptr, ptr %0, align 8, !tbaa !119, !nonnull !121, !align !122
+  %i.dd = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %4 = load ptr, ptr %i.dd, align 8, !tbaa !33    ; 7 uses
   %i.de = sub i64 9, %i.g
-  %i.df = getelementptr inbounds nuw i8, ptr %4, i64 %i.de ; 2 uses
+  %i.df = getelementptr inbounds nuw i8, ptr %i.da, i64 %i.de ; 2 uses
   %i.dg = icmp eq i64 %i.g, 0
   br i1 %i.dg, label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.peel.i.i.i.i, label %bb.m
 
 bb.m:                                             ; preds = %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit26.i.i.i.i
-  %i.dh = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %i.dh = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.di = load i64, ptr %i.dh, align 8, !tbaa !77
   %i.dj = add i64 %i.di, %i.g
   store i64 %i.dj, ptr %i.dh, align 8, !tbaa !77
-  %i.dk = getelementptr inbounds nuw i8, ptr %3, i64 1056
-  %i.dl = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 4 uses
+  %i.dk = getelementptr inbounds nuw i8, ptr %4, i64 1056
+  %i.dl = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 4 uses
   %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !80 ; 2 uses
   %i.dn = ptrtoint ptr %i.dk to i64
   %i.do = ptrtoint ptr %i.dm to i64               ; 2 uses
@@ -467,16 +462,16 @@ bb.m:                                             ; preds = %_ZN4absl12lts_20250
   br i1 %.not.i27.peel.i.i.i.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.dq = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 3 uses
+  %i.dq = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   %i.dr = ptrtoint ptr %i.dq to i64
   %i.ds = sub i64 %i.do, %i.dr
-  %i.dt = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.dt = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.du = load ptr, ptr %i.dt, align 8, !tbaa !81
-  %i.dv = load ptr, ptr %3, align 8, !tbaa !82
+  %i.dv = load ptr, ptr %4, align 8, !tbaa !82
   tail call void %i.du(ptr noundef %i.dv, i64 %i.ds, ptr nonnull %i.dq), !inline_history !127
   store ptr %i.dq, ptr %i.dl, align 8, !tbaa !80
   %i.dw = load ptr, ptr %i.dt, align 8, !tbaa !81
-  %i.dx = load ptr, ptr %3, align 8, !tbaa !82
+  %i.dx = load ptr, ptr %4, align 8, !tbaa !82
   call void %i.dw(ptr noundef %i.dx, i64 %i.g, ptr nonnull %i.df), !inline_history !128
   br label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.peel.i.i.i.i
 
@@ -488,100 +483,136 @@ bb.o:                                             ; preds = %bb.m
   br label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.peel.i.i.i.i
 
 _ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.peel.i.i.i.i: ; preds = %bb.o, %bb.n, %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit26.i.i.i.i
-  %i.ea = load i64, ptr %2, align 8, !tbaa !115   ; 2 uses
+  %i.ea = load i64, ptr %2, align 8, !tbaa !115   ; 3 uses
   %i.eb = load i64, ptr %i.a, align 8, !tbaa !111
   %.not.i28.peel.i.i.i.i = icmp ult i64 %i.ea, %i.eb
   br i1 %.not.i28.peel.i.i.i.i, label %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13AdvanceDigitsEv.exit.i.i.i.i.a, label %.loopexit.i.i.i.i
 
-_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13AdvanceDigitsEv.exit.i.i.i.i.a: ; preds = %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.peel.i.i.i.i, %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.i.i.i.i
-  %.sink126.i.i.i.i = phi i64 [ %i.eq, %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.i.i.i.i ], [ %i.ea, %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.peel.i.i.i.i ] ; 2 uses
-  %i.ec = add nuw i64 %.sink126.i.i.i.i, 1
+_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13AdvanceDigitsEv.exit.i.i.i.i.a: ; preds = %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.peel.i.i.i.i
+  %i.ec = add nuw i64 %i.ea, 1
   store i64 %i.ec, ptr %2, align 8, !tbaa !115
-  %i.ed = load ptr, ptr %i.da, align 8, !tbaa !109
-  %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %.sink126.i.i.i.i
-  %storemerge.in.in.in.in.i.i.i.i = load i32, ptr %i.ee, align 4, !tbaa !17 ; 9 uses
+  %i.ed = load ptr, ptr %i.db, align 8, !tbaa !109
+  %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %i.ea
+  %storemerge.in.in.in.in.i.i.i.i = load i32, ptr %i.ee, align 4, !tbaa !17 ; 6 uses
   %storemerge121.in.in.i.i.i.i = urem i32 %storemerge.in.in.in.in.i.i.i.i, 10
   %storemerge121.in.i.i.i.i = trunc nuw nsw i32 %storemerge121.in.in.i.i.i.i to i8
   %storemerge121.i.i.i.i = or disjoint i8 %storemerge121.in.i.i.i.i, 48
-  store i8 %storemerge121.i.i.i.i, ptr %i.db, align 8, !tbaa !13
-  %storemerge120.in.in.in.i.i.i.i = udiv i32 %storemerge.in.in.in.in.i.i.i.i, 10
-  %storemerge119.in.in.in.i.i.i.i = udiv i32 %storemerge.in.in.in.in.i.i.i.i, 100
-  %storemerge118.in.in.in.i.i.i.i = udiv i32 %storemerge.in.in.in.in.i.i.i.i, 1000
-  %storemerge117.in.in.in.i.i.i.i = udiv i32 %storemerge.in.in.in.in.i.i.i.i, 10000
-  %7 = insertelement <4 x i32> poison, i32 %storemerge117.in.in.in.i.i.i.i, i64 0
-  %8 = insertelement <4 x i32> %7, i32 %storemerge118.in.in.in.i.i.i.i, i64 1
-  %9 = insertelement <4 x i32> %8, i32 %storemerge119.in.in.in.i.i.i.i, i64 2
-  %i.ef = insertelement <4 x i32> %9, i32 %storemerge120.in.in.in.i.i.i.i, i64 3
-  %10 = urem <4 x i32> %i.ef, splat (i32 10)
-  %11 = trunc nuw nsw <4 x i32> %10 to <4 x i8>
-  %12 = or disjoint <4 x i8> %11, splat (i8 48)
-  store <4 x i8> %12, ptr %i.dc, align 4, !tbaa !13
+  store i8 %storemerge121.i.i.i.i, ptr %i.dc, align 8, !tbaa !13
+  %storemerge120.in.in.in.i.i.i.i = udiv i32 %storemerge.in.in.in.in.i.i.i.i, 10000000
+  %.lhs.trunc9.i.i.i.i.i.peel = trunc nuw nsw i32 %storemerge120.in.in.in.i.i.i.i to i16
+  %5 = urem i16 %.lhs.trunc9.i.i.i.i.i.peel, 10
+  %6 = trunc nuw nsw i16 %5 to i8
+  %7 = udiv i32 %storemerge.in.in.in.in.i.i.i.i, 100000000
+  %.lhs.trunc11.i.i.i.i.i.peel = trunc nuw nsw i32 %7 to i8
+  %8 = urem i8 %.lhs.trunc11.i.i.i.i.i.peel, 10
+  %i.ef = insertelement <4 x i32> poison, i32 %storemerge.in.in.in.in.i.i.i.i, i64 0
+  %9 = shufflevector <4 x i32> %i.ef, <4 x i32> poison, <4 x i32> zeroinitializer
+  %10 = udiv <4 x i32> %9, <i32 10000, i32 1000, i32 100, i32 10>
+  %11 = urem <4 x i32> %10, splat (i32 10)
+  %12 = trunc nuw nsw <4 x i32> %11 to <4 x i8>
   %storemerge116.in.in.in.in.i.i.i.i = udiv i32 %storemerge.in.in.in.in.i.i.i.i, 100000
-  %storemerge116.in.in.in.i.i.i.i = trunc nuw i32 %storemerge116.in.in.in.in.i.i.i.i to i16
-  %storemerge116.in.in.i.i.i.i = urem i16 %storemerge116.in.in.in.i.i.i.i, 10
-  %storemerge116.in.i.i.i.i = trunc nuw nsw i16 %storemerge116.in.in.i.i.i.i to i8
-  %storemerge116.i.i.i.i = or disjoint i8 %storemerge116.in.i.i.i.i, 48
-  store i8 %storemerge116.i.i.i.i, ptr %5, align 1, !tbaa !13
   %storemerge115.in.in.in.in.i.i.i.i = udiv i32 %storemerge.in.in.in.in.i.i.i.i, 1000000
-  %storemerge115.in.in.in.i.i.i.i = trunc nuw nsw i32 %storemerge115.in.in.in.in.i.i.i.i to i16
-  %storemerge115.in.in.i.i.i.i = urem i16 %storemerge115.in.in.in.i.i.i.i, 10
-  %storemerge115.in.i.i.i.i = trunc nuw nsw i16 %storemerge115.in.in.i.i.i.i to i8
-  %storemerge115.i.i.i.i = or disjoint i8 %storemerge115.in.i.i.i.i, 48
-  store i8 %storemerge115.i.i.i.i, ptr %i.dd, align 2, !tbaa !13
-  %storemerge114.in.in.in.in.i.i.i.i = udiv i32 %storemerge.in.in.in.in.i.i.i.i, 10000000
-  %storemerge114.in.in.in.i.i.i.i = trunc nuw nsw i32 %storemerge114.in.in.in.in.i.i.i.i to i16
-  %storemerge114.in.in.i.i.i.i = urem i16 %storemerge114.in.in.in.i.i.i.i, 10
-  %storemerge114.in.i.i.i.i = trunc nuw nsw i16 %storemerge114.in.in.i.i.i.i to i8
-  %storemerge114.i.i.i.i = or disjoint i8 %storemerge114.in.i.i.i.i, 48
-  store i8 %storemerge114.i.i.i.i, ptr %6, align 1, !tbaa !13
-  %storemerge.in.in.in.i.i.i.i = udiv i32 %storemerge.in.in.in.in.i.i.i.i, 100000000
-  %storemerge.in.in.i.i.i.i = trunc nuw nsw i32 %storemerge.in.in.in.i.i.i.i to i8
-  %storemerge.in.i.i.i.i = urem i8 %storemerge.in.in.i.i.i.i, 10
-  %storemerge.i.i.i.i = or disjoint i8 %storemerge.in.i.i.i.i, 48
-  store i8 %storemerge.i.i.i.i, ptr %4, align 8, !tbaa !13
+  %storemerge115.in.in.in.i.i.i.i = trunc nuw i32 %storemerge116.in.in.in.in.i.i.i.i to i16
+  %.lhs.trunc7.i.i.i.i.i.peel = trunc nuw nsw i32 %storemerge115.in.in.in.in.i.i.i.i to i16
+  %13 = insertelement <2 x i16> poison, i16 %.lhs.trunc7.i.i.i.i.i.peel, i64 0
+  %14 = insertelement <2 x i16> %13, i16 %storemerge115.in.in.in.i.i.i.i, i64 1
+  %15 = urem <2 x i16> %14, splat (i16 10)
+  %16 = insertelement <8 x i8> poison, i8 %8, i64 0
+  %17 = insertelement <8 x i8> %16, i8 %6, i64 1
+  %18 = shufflevector <4 x i8> %12, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %19 = shufflevector <8 x i8> %17, <8 x i8> %18, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 8, i32 9, i32 10, i32 11>
+  %20 = shufflevector <2 x i16> %15, <2 x i16> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %21 = trunc <8 x i16> %20 to <8 x i8>
+  %22 = shufflevector <8 x i8> %19, <8 x i8> %21, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 4, i32 5, i32 6, i32 7>
+  %23 = or disjoint <8 x i8> %22, splat (i8 48)
+  store <8 x i8> %23, ptr %i.da, align 8, !tbaa !13
   store i64 9, ptr %i.f, align 8, !tbaa !104
-  %13 = load ptr, ptr %0, align 8, !tbaa !119, !nonnull !121, !align !122
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 24
-  %15 = load ptr, ptr %14, align 8, !tbaa !33     ; 7 uses
-  %16 = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 2 uses
-  %17 = load i64, ptr %16, align 8, !tbaa !77
-  %18 = add i64 %17, 9
-  store i64 %18, ptr %16, align 8, !tbaa !77
-  %19 = getelementptr inbounds nuw i8, ptr %15, i64 1056
-  %20 = getelementptr inbounds nuw i8, ptr %15, i64 24 ; 4 uses
-  %21 = load ptr, ptr %20, align 8, !tbaa !80     ; 2 uses
-  %22 = ptrtoint ptr %19 to i64
-  %23 = ptrtoint ptr %21 to i64                   ; 2 uses
-  %24 = sub i64 %22, %23
-  %.not.i27.i.i.i.i = icmp ugt i64 %24, 9
+  br label %24
+
+24:                                               ; preds = %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13AdvanceDigitsEv.exit.i.i.i.i, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13AdvanceDigitsEv.exit.i.i.i.i.a
+  %25 = load ptr, ptr %0, align 8, !tbaa !119, !nonnull !121, !align !122
+  %26 = getelementptr inbounds nuw i8, ptr %25, i64 24
+  %27 = load ptr, ptr %26, align 8, !tbaa !33     ; 7 uses
+  %28 = getelementptr inbounds nuw i8, ptr %27, i64 16 ; 2 uses
+  %29 = load i64, ptr %28, align 8, !tbaa !77
+  %30 = add i64 %29, 9
+  store i64 %30, ptr %28, align 8, !tbaa !77
+  %31 = getelementptr inbounds nuw i8, ptr %27, i64 1056
+  %32 = getelementptr inbounds nuw i8, ptr %27, i64 24 ; 4 uses
+  %33 = load ptr, ptr %32, align 8, !tbaa !80     ; 2 uses
+  %34 = ptrtoint ptr %31 to i64
+  %35 = ptrtoint ptr %33 to i64                   ; 2 uses
+  %36 = sub i64 %34, %35
+  %.not.i27.i.i.i.i = icmp ugt i64 %36, 9
   br i1 %.not.i27.i.i.i.i, label %bb.q, label %bb.p
 
-bb.p:                                             ; preds = %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13AdvanceDigitsEv.exit.i.i.i.i.a
-  %i.eg = getelementptr inbounds nuw i8, ptr %15, i64 32 ; 3 uses
+bb.p:                                             ; preds = %24
+  %i.eg = getelementptr inbounds nuw i8, ptr %27, i64 32 ; 3 uses
   %i.eh = ptrtoint ptr %i.eg to i64
-  %i.ei = sub i64 %23, %i.eh
-  %i.ej = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 2 uses
+  %i.ei = sub i64 %35, %i.eh
+  %i.ej = getelementptr inbounds nuw i8, ptr %27, i64 8 ; 2 uses
   %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !81
-  %i.el = load ptr, ptr %15, align 8, !tbaa !82
+  %i.el = load ptr, ptr %27, align 8, !tbaa !82
   call void %i.ek(ptr noundef %i.el, i64 %i.ei, ptr nonnull %i.eg), !inline_history !127
-  store ptr %i.eg, ptr %20, align 8, !tbaa !80
+  store ptr %i.eg, ptr %32, align 8, !tbaa !80
   %i.em = load ptr, ptr %i.ej, align 8, !tbaa !81
-  %i.en = load ptr, ptr %15, align 8, !tbaa !82
-  call void %i.em(ptr noundef %i.en, i64 9, ptr nonnull %4), !inline_history !128
+  %i.en = load ptr, ptr %27, align 8, !tbaa !82
+  call void %i.em(ptr noundef %i.en, i64 9, ptr nonnull %i.da), !inline_history !128
   br label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.i.i.i.i
 
-bb.q:                                             ; preds = %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13AdvanceDigitsEv.exit.i.i.i.i.a
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %21, ptr noundef nonnull align 8 dereferenceable(9) %4, i64 9, i1 false)
-  %i.eo = load ptr, ptr %20, align 8, !tbaa !80
+bb.q:                                             ; preds = %24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %33, ptr noundef nonnull align 8 dereferenceable(9) %i.da, i64 9, i1 false)
+  %i.eo = load ptr, ptr %32, align 8, !tbaa !80
   %i.ep = getelementptr inbounds nuw i8, ptr %i.eo, i64 9
-  store ptr %i.ep, ptr %20, align 8, !tbaa !80
+  store ptr %i.ep, ptr %32, align 8, !tbaa !80
   br label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.i.i.i.i
 
 _ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.i.i.i.i: ; preds = %bb.q, %bb.p
-  %i.eq = load i64, ptr %2, align 8, !tbaa !115   ; 2 uses
+  %i.eq = load i64, ptr %2, align 8, !tbaa !115   ; 3 uses
   %i.er = load i64, ptr %i.a, align 8, !tbaa !111
   %.not.i28.i.i.i.i = icmp ult i64 %i.eq, %i.er
-  br i1 %.not.i28.i.i.i.i, label %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13AdvanceDigitsEv.exit.i.i.i.i.a, label %.loopexit.i.i.i.i, !llvm.loop !129
+  br i1 %.not.i28.i.i.i.i, label %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13AdvanceDigitsEv.exit.i.i.i.i, label %.loopexit.i.i.i.i
+
+_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13AdvanceDigitsEv.exit.i.i.i.i: ; preds = %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.i.i.i.i
+  %37 = add nuw i64 %i.eq, 1
+  store i64 %37, ptr %2, align 8, !tbaa !115
+  %38 = load ptr, ptr %i.db, align 8, !tbaa !109
+  %39 = getelementptr inbounds nuw [4 x i8], ptr %38, i64 %i.eq
+  %40 = load i32, ptr %39, align 4, !tbaa !17     ; 6 uses
+  %41 = urem i32 %40, 10
+  %42 = trunc nuw nsw i32 %41 to i8
+  %43 = or disjoint i8 %42, 48
+  store i8 %43, ptr %i.dc, align 8, !tbaa !13
+  %44 = udiv i32 %40, 10000000
+  %.lhs.trunc9.i.i.i.i.i = trunc nuw nsw i32 %44 to i16
+  %45 = urem i16 %.lhs.trunc9.i.i.i.i.i, 10
+  %46 = trunc nuw nsw i16 %45 to i8
+  %47 = udiv i32 %40, 100000000
+  %.lhs.trunc11.i.i.i.i.i = trunc nuw nsw i32 %47 to i8
+  %48 = urem i8 %.lhs.trunc11.i.i.i.i.i, 10
+  %49 = insertelement <4 x i32> poison, i32 %40, i64 0
+  %50 = shufflevector <4 x i32> %49, <4 x i32> poison, <4 x i32> zeroinitializer
+  %51 = udiv <4 x i32> %50, <i32 10000, i32 1000, i32 100, i32 10>
+  %52 = urem <4 x i32> %51, splat (i32 10)
+  %53 = trunc nuw nsw <4 x i32> %52 to <4 x i8>
+  %54 = udiv i32 %40, 100000
+  %55 = udiv i32 %40, 1000000
+  %.lhs.trunc.i.i.i.i.i = trunc nuw i32 %54 to i16
+  %.lhs.trunc7.i.i.i.i.i = trunc nuw nsw i32 %55 to i16
+  %56 = insertelement <2 x i16> poison, i16 %.lhs.trunc7.i.i.i.i.i, i64 0
+  %57 = insertelement <2 x i16> %56, i16 %.lhs.trunc.i.i.i.i.i, i64 1
+  %58 = urem <2 x i16> %57, splat (i16 10)
+  %59 = insertelement <8 x i8> poison, i8 %48, i64 0
+  %60 = insertelement <8 x i8> %59, i8 %46, i64 1
+  %61 = shufflevector <4 x i8> %53, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %62 = shufflevector <8 x i8> %60, <8 x i8> %61, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 8, i32 9, i32 10, i32 11>
+  %63 = shufflevector <2 x i16> %58, <2 x i16> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %64 = trunc <8 x i16> %63 to <8 x i8>
+  %65 = shufflevector <8 x i8> %62, <8 x i8> %64, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 4, i32 5, i32 6, i32 7>
+  %66 = or disjoint <8 x i8> %65, splat (i8 48)
+  store <8 x i8> %66, ptr %i.da, align 8, !tbaa !13
+  store i64 9, ptr %i.f, align 8, !tbaa !104
+  br label %24, !llvm.loop !129
 
 .loopexit.i.i.i.i:                                ; preds = %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.i.i.i.i, %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.peel.i.i.i.i
   %i.es = load ptr, ptr %0, align 8, !tbaa !119, !nonnull !121, !align !122 ; 4 uses

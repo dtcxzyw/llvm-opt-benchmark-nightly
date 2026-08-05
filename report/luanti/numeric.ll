@@ -1,3 +1,7 @@
+inline.NumInlined: 29
+inline.NumDeleted: 18
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_Z14isBlockInSightN4core8vector3dIsEENS0_IfEES2_ffPf:bb.a
   %.not = icmp eq ptr %7, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -199,12 +203,11 @@ bb.a:
   %i.ak = insertelement <2 x double> %i.aj, double %cos, i64 1 ; 2 uses
   %i.al = fmul nsz <2 x double> %i.ak, %i.ai
   %i.am = shufflevector <2 x double> %i.ak, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.an = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.am, <2 x double> %i.af, <2 x double> %i.al) ; 2 uses
-  %1 = extractelement <2 x double> %i.an, i64 1
-  %2 = fptrunc nsz double %1 to float
-  %3 = extractelement <2 x double> %i.an, i64 0
-  %4 = fptrunc nsz double %3 to float
-  %i.ao = tail call nsz float @llvm.atan2.f32(float %2, float %4)
+  %i.an = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.am, <2 x double> %i.af, <2 x double> %i.al)
+  %1 = fptrunc <2 x double> %i.an to <2 x float>  ; 2 uses
+  %2 = extractelement <2 x float> %1, i64 0
+  %3 = extractelement <2 x float> %1, i64 1
+  %i.ao = tail call nsz float @llvm.atan2.f32(float %3, float %2)
   %i.ap = fptrunc nsz double %i.g to float
   %.sroa.0.0.vec.insert = insertelement <2 x float> poison, float %i.u, i64 0
   %.sroa.0.4.vec.insert = insertelement <2 x float> %.sroa.0.0.vec.insert, float %i.ao, i64 1

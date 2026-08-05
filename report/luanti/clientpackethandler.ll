@@ -1,3 +1,7 @@
+inline.NumInlined: 2825
+inline.NumDeleted: 1204
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN6Client24handleCommand_MovePlayerEP13NetworkPacket:bb.a
   br label %_ZTW10infostream.exit
 
@@ -199,17 +203,16 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.i = phi ptr [ %.pre, %bb.c ], [ %i.a, %bb.b ] ; 2 uses
-  %.sroa.01.0.copyload = load <2 x float>, ptr %1, align 4 ; 2 uses
+  %.sroa.01.0.copyload = load <2 x float>, ptr %1, align 4
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.22.0.copyload = load float, ptr %.sroa.22.0..sroa_idx, align 4, !tbaa !279
   %i.j = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull @.str.113, i64 noundef 1) ; 0 uses
-  %.sroa.01.0.vec.extract.i = extractelement <2 x float> %.sroa.01.0.copyload, i64 0
-  %2 = fpext nsz float %.sroa.01.0.vec.extract.i to double
-  %i.k = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.i, double noundef %2) ; 2 uses
+  %2 = fpext <2 x float> %.sroa.01.0.copyload to <2 x double> ; 2 uses
+  %3 = extractelement <2 x double> %2, i64 0
+  %i.k = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.i, double noundef %3) ; 2 uses
   %i.l = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.k, ptr noundef nonnull @.str.50, i64 noundef 1) ; 0 uses
-  %.sroa.01.4.vec.extract.i = extractelement <2 x float> %.sroa.01.0.copyload, i64 1
-  %3 = fpext nsz float %.sroa.01.4.vec.extract.i to double
-  %i.m = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.k, double noundef %3) ; 2 uses
+  %4 = extractelement <2 x double> %2, i64 1
+  %i.m = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.k, double noundef %4) ; 2 uses
   %i.n = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.m, ptr noundef nonnull @.str.50, i64 noundef 1) ; 0 uses
   %i.o = fpext nsz float %.sroa.22.0.copyload to double
   %i.p = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.m, double noundef %i.o)

@@ -1,3 +1,7 @@
+inline.NumInlined: 4380
+inline.NumDeleted: 1372
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_ZN7xgboost6metric13QuantileError4EvalERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoE:bb.a
           cleanup
   invoke void @_ZN4dmlc15LogMessageFatalD2Ev(ptr noundef nonnull align 1 dereferenceable(1) %25)
@@ -199,7 +203,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit142: ; preds = %_ZN4dmlc11LogCheck_NEImiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit, %_ZN4dmlc11LogCheck_NEImiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread, %bb.am, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i140
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #18
-  %i.dz = call noundef i64 @_ZNK7xgboost16HostDeviceVectorIfE4SizeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.j) ; 13 uses
+  %i.dz = call noundef i64 @_ZNK7xgboost16HostDeviceVectorIfE4SizeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.j) ; 15 uses
   %.sroa.0.0.copyload.i.i.i = load i32, ptr %i.cu, align 8, !noalias !747
   %i.ea = and i32 %.sroa.0.0.copyload.i.i.i, 65535
   %i.eb = icmp eq i32 %i.ea, 0
@@ -217,7 +221,7 @@ bb.ap:                                            ; preds = %_ZNSt10unique_ptrIN
 
 _ZN7xgboost6linalg14MakeTensorViewIfJmmRmEEEDaPKNS_7ContextEPKNS_16HostDeviceVectorIT_EEDpOT0_.exit: ; preds = %bb.ao, %bb.ap
   %.pn.i = phi ptr [ %i.ed, %bb.ao ], [ %i.ef, %bb.ap ] ; 2 uses
-  %i.eg = load i64, ptr %i.g, align 8, !tbaa !47, !noalias !750 ; 15 uses
+  %i.eg = load i64, ptr %i.g, align 8, !tbaa !47, !noalias !750 ; 17 uses
   %i.eh = mul i64 %i.eg, %i.dz                    ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 3 uses
   %.sroa.0.0.copyload.i144 = load i32, ptr %i.cu, align 8
@@ -365,16 +369,19 @@ _ZNK7xgboost6linalg6TensorIfLi2EE4SizeEv.exit.i:  ; preds = %_ZNSt6vectorIdSaIdE
 
 .lr.ph108.i.i.i.preheader.i:                      ; preds = %.preheader.i.i.i.i
   %i.fv = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.fw = trunc i64 %i.eg to i32                  ; 5 uses
-  %33 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.fw)
-  %.not.i7.i.i86.i = icmp samesign ult i32 %33, 2
-  %34 = add i32 %i.fw, -1                         ; 2 uses
-  %35 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %34)
-  %i.fx = trunc i64 %i.dz to i32                  ; 5 uses
-  %36 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.fx)
-  %.not.1.i9.i.i89.i.a = icmp samesign ult i32 %36, 2
-  %37 = add i32 %i.fx, -1                         ; 2 uses
-  %38 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %37)
+  %i.fw = trunc i64 %i.eg to i32
+  %33 = insertelement <2 x i32> poison, i32 %i.fw, i64 0
+  %34 = trunc i64 %i.dz to i32
+  %35 = insertelement <2 x i32> %33, i32 %34, i64 1
+  %36 = shufflevector <2 x i32> %35, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %37 = trunc i64 %i.eg to i32                    ; 3 uses
+  %i.fx = trunc i64 %i.dz to i32                  ; 3 uses
+  %38 = add <4 x i32> %36, <i32 0, i32 0, i32 -1, i32 -1> ; 3 uses
+  %39 = call range(i32 0, 33) <4 x i32> @llvm.ctpop.v4i32(<4 x i32> %38) ; 4 uses
+  %40 = extractelement <4 x i32> %39, i64 0
+  %.not.1.i9.i.i89.i.a = icmp samesign ult i32 %40, 2
+  %41 = extractelement <4 x i32> %39, i64 1
+  %.not.1.i9.i.i89.i = icmp samesign ult i32 %41, 2
   %i.fy = add i64 %i.eg, -1                       ; 2 uses
   %i.fz = insertelement <2 x i64> poison, i64 %i.eg, i64 0
   %i.ga = insertelement <2 x i64> %i.fz, i64 %i.fy, i64 1
@@ -389,6 +396,10 @@ _ZNK7xgboost6linalg6TensorIfLi2EE4SizeEv.exit.i:  ; preds = %_ZNSt6vectorIdSaIdE
   %i.gi = extractelement <2 x i64> %i.gh, i64 0
   %.not.1.i.i.i105.i = icmp samesign ult i64 %i.gi, 2
   %i.gj = icmp eq i64 %.sroa.01.0, 0
+  %42 = extractelement <4 x i32> %38, i64 2
+  %43 = extractelement <4 x i32> %39, i64 2
+  %44 = extractelement <4 x i32> %38, i64 3
+  %45 = extractelement <4 x i32> %39, i64 3
   %i.gk = extractelement <2 x i64> %i.gb, i64 1
   %i.gl = extractelement <2 x i64> %i.gh, i64 1
   br label %.lr.ph108.i.i.i.i
@@ -447,23 +458,23 @@ bb.bf:                                            ; preds = %bb.bd
 
 bb.bg:                                            ; preds = %.lr.ph.i.i64.i
   %i.ha = trunc nuw i64 %.0181.i.i67.i to i32     ; 4 uses
-  br i1 %.not.i7.i.i86.i, label %bb.bi, label %bb.bh
+  br i1 %.not.1.i9.i.i89.i.a, label %bb.bi, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.hb = udiv i32 %i.ha, %i.fw                   ; 2 uses
-  %i.hc = mul i32 %i.hb, %i.fw                    ; 0 uses
-  %.recomposed334 = urem i32 %i.ha, %i.fw
+  %i.hb = udiv i32 %i.ha, %37                     ; 2 uses
+  %i.hc = mul i32 %i.hb, %37                      ; 0 uses
+  %.recomposed334 = urem i32 %i.ha, %37
   br label %bb.bj
 
 bb.bi:                                            ; preds = %bb.bg
-  %i.hd = and i32 %34, %i.ha
-  %i.he = lshr i32 %i.ha, %35
+  %i.hd = and i32 %42, %i.ha
+  %i.he = lshr i32 %i.ha, %43
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh
   %.sroa.7.0.in.i.i.i87.i = phi i32 [ %i.hd, %bb.bi ], [ %.recomposed334, %bb.bh ]
   %.1.i8.i.i88.i = phi i32 [ %i.he, %bb.bi ], [ %i.hb, %bb.bh ] ; 4 uses
-  br i1 %.not.1.i9.i.i89.i.a, label %bb.bl, label %bb.bk
+  br i1 %.not.1.i9.i.i89.i, label %bb.bl, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj
   %i.hf = udiv i32 %.1.i8.i.i88.i, %i.fx          ; 2 uses
@@ -472,8 +483,8 @@ bb.bk:                                            ; preds = %bb.bj
   br label %_ZN7xgboost6linalg6detail11UnravelImplIjLi3EEEDaT_NS_6common4SpanIKmXT0_EEE.exit.i.i90.i
 
 bb.bl:                                            ; preds = %bb.bj
-  %i.hh = and i32 %.1.i8.i.i88.i, %37
-  %i.hi = lshr i32 %.1.i8.i.i88.i, %38
+  %i.hh = and i32 %.1.i8.i.i88.i, %44
+  %i.hi = lshr i32 %.1.i8.i.i88.i, %45
   br label %_ZN7xgboost6linalg6detail11UnravelImplIjLi3EEEDaT_NS_6common4SpanIKmXT0_EEE.exit.i.i90.i
 
 _ZN7xgboost6linalg6detail11UnravelImplIjLi3EEEDaT_NS_6common4SpanIKmXT0_EEE.exit.i.i90.i: ; preds = %bb.bl, %bb.bk
@@ -671,16 +682,19 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 .lr.ph100.i.i.preheader.i.i:                      ; preds = %.preheader90.i.i.i.i
   %i.jp = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 3 uses
   %i.jq = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.jr = trunc i64 %i.eg to i32                  ; 5 uses
-  %39 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.jr)
-  %.not.i7.i.i.i = icmp samesign ult i32 %39, 2
-  %40 = add i32 %i.jr, -1                         ; 2 uses
-  %41 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %40)
-  %i.js = trunc i64 %i.dz to i32                  ; 5 uses
-  %42 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.js)
-  %.not.1.i9.i.i.i.a = icmp samesign ult i32 %42, 2
-  %43 = add i32 %i.js, -1                         ; 2 uses
-  %44 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %43)
+  %i.jr = trunc i64 %i.eg to i32
+  %46 = insertelement <2 x i32> poison, i32 %i.jr, i64 0
+  %47 = trunc i64 %i.dz to i32
+  %48 = insertelement <2 x i32> %46, i32 %47, i64 1
+  %49 = shufflevector <2 x i32> %48, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %50 = trunc i64 %i.eg to i32                    ; 3 uses
+  %i.js = trunc i64 %i.dz to i32                  ; 3 uses
+  %51 = add <4 x i32> %49, <i32 0, i32 0, i32 -1, i32 -1> ; 3 uses
+  %52 = call range(i32 0, 33) <4 x i32> @llvm.ctpop.v4i32(<4 x i32> %51) ; 4 uses
+  %53 = extractelement <4 x i32> %52, i64 0
+  %.not.1.i9.i.i.i.a = icmp samesign ult i32 %53, 2
+  %54 = extractelement <4 x i32> %52, i64 1
+  %.not.1.i9.i.i.i = icmp samesign ult i32 %54, 2
   %i.jt = add i64 %i.eg, -1                       ; 2 uses
   %i.ju = insertelement <2 x i64> poison, i64 %i.eg, i64 0
   %i.jv = insertelement <2 x i64> %i.ju, i64 %i.jt, i64 1
@@ -695,6 +709,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %i.kd = extractelement <2 x i64> %i.kc, i64 0
   %.not.1.i.i.i.i = icmp samesign ult i64 %i.kd, 2
   %i.ke = icmp eq i64 %.sroa.01.0, 0
+  %55 = extractelement <4 x i32> %51, i64 2
+  %56 = extractelement <4 x i32> %52, i64 2
+  %57 = extractelement <4 x i32> %51, i64 3
+  %58 = extractelement <4 x i32> %52, i64 3
   %i.kf = extractelement <2 x i64> %i.jw, i64 1
   %i.kg = extractelement <2 x i64> %i.kc, i64 1
   br label %.lr.ph100.i.i.i.i
@@ -757,23 +775,23 @@ bb.cb:                                            ; preds = %bb.bz
 
 bb.cc:                                            ; preds = %.lr.ph.i.i.i
   %i.kv = trunc nuw i64 %.0181.i.i.i to i32       ; 4 uses
-  br i1 %.not.i7.i.i.i, label %bb.ce, label %bb.cd
+  br i1 %.not.1.i9.i.i.i.a, label %bb.ce, label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc
-  %i.kw = udiv i32 %i.kv, %i.jr                   ; 2 uses
-  %i.kx = mul i32 %i.kw, %i.jr                    ; 0 uses
-  %.recomposed338 = urem i32 %i.kv, %i.jr
+  %i.kw = udiv i32 %i.kv, %50                     ; 2 uses
+  %i.kx = mul i32 %i.kw, %50                      ; 0 uses
+  %.recomposed338 = urem i32 %i.kv, %50
   br label %bb.cf
 
 bb.ce:                                            ; preds = %bb.cc
-  %i.ky = and i32 %40, %i.kv
-  %i.kz = lshr i32 %i.kv, %41
+  %i.ky = and i32 %55, %i.kv
+  %i.kz = lshr i32 %i.kv, %56
   br label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce, %bb.cd
   %.sroa.7.0.in.i.i.i.i = phi i32 [ %i.ky, %bb.ce ], [ %.recomposed338, %bb.cd ]
   %.1.i8.i.i.i = phi i32 [ %i.kz, %bb.ce ], [ %i.kw, %bb.cd ] ; 4 uses
-  br i1 %.not.1.i9.i.i.i.a, label %bb.ch, label %bb.cg
+  br i1 %.not.1.i9.i.i.i, label %bb.ch, label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf
   %i.la = udiv i32 %.1.i8.i.i.i, %i.js            ; 2 uses
@@ -782,8 +800,8 @@ bb.cg:                                            ; preds = %bb.cf
   br label %_ZN7xgboost6linalg6detail11UnravelImplIjLi3EEEDaT_NS_6common4SpanIKmXT0_EEE.exit.i.i.i
 
 bb.ch:                                            ; preds = %bb.cf
-  %i.lc = and i32 %.1.i8.i.i.i, %43
-  %i.ld = lshr i32 %.1.i8.i.i.i, %44
+  %i.lc = and i32 %.1.i8.i.i.i, %57
+  %i.ld = lshr i32 %.1.i8.i.i.i, %58
   br label %_ZN7xgboost6linalg6detail11UnravelImplIjLi3EEEDaT_NS_6common4SpanIKmXT0_EEE.exit.i.i.i
 
 _ZN7xgboost6linalg6detail11UnravelImplIjLi3EEEDaT_NS_6common4SpanIKmXT0_EEE.exit.i.i.i: ; preds = %bb.ch, %bb.cg
@@ -1186,7 +1204,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit142: ; preds = %_ZN4dmlc11LogCheck_NEImiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit, %_ZN4dmlc11LogCheck_NEImiEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread, %bb.am, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i140
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #18
-  %i.dz = call noundef i64 @_ZNK7xgboost16HostDeviceVectorIfE4SizeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.j) ; 13 uses
+  %i.dz = call noundef i64 @_ZNK7xgboost16HostDeviceVectorIfE4SizeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.j) ; 15 uses
   %.sroa.0.0.copyload.i.i.i = load i32, ptr %i.cu, align 8, !noalias !837
   %i.ea = and i32 %.sroa.0.0.copyload.i.i.i, 65535
   %i.eb = icmp eq i32 %i.ea, 0
@@ -1204,7 +1222,7 @@ bb.ap:                                            ; preds = %_ZNSt10unique_ptrIN
 
 _ZN7xgboost6linalg14MakeTensorViewIfJmmRmEEEDaPKNS_7ContextEPKNS_16HostDeviceVectorIT_EEDpOT0_.exit: ; preds = %bb.ao, %bb.ap
   %.pn.i = phi ptr [ %i.ed, %bb.ao ], [ %i.ef, %bb.ap ] ; 2 uses
-  %i.eg = load i64, ptr %i.g, align 8, !tbaa !47, !noalias !840 ; 15 uses
+  %i.eg = load i64, ptr %i.g, align 8, !tbaa !47, !noalias !840 ; 17 uses
   %i.eh = mul i64 %i.eg, %i.dz                    ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 3 uses
   %.sroa.0.0.copyload.i144 = load i32, ptr %i.cu, align 8
@@ -1352,16 +1370,19 @@ _ZNK7xgboost6linalg6TensorIfLi2EE4SizeEv.exit.i:  ; preds = %_ZNSt6vectorIdSaIdE
 
 .lr.ph108.i.i.i.preheader.i:                      ; preds = %.preheader.i.i.i.i
   %i.fv = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.fw = trunc i64 %i.eg to i32                  ; 5 uses
-  %33 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.fw)
-  %.not.i7.i.i86.i = icmp samesign ult i32 %33, 2
-  %34 = add i32 %i.fw, -1                         ; 2 uses
-  %35 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %34)
-  %i.fx = trunc i64 %i.dz to i32                  ; 5 uses
-  %36 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.fx)
-  %.not.1.i9.i.i89.i.a = icmp samesign ult i32 %36, 2
-  %37 = add i32 %i.fx, -1                         ; 2 uses
-  %38 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %37)
+  %i.fw = trunc i64 %i.eg to i32
+  %33 = insertelement <2 x i32> poison, i32 %i.fw, i64 0
+  %34 = trunc i64 %i.dz to i32
+  %35 = insertelement <2 x i32> %33, i32 %34, i64 1
+  %36 = shufflevector <2 x i32> %35, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %37 = trunc i64 %i.eg to i32                    ; 3 uses
+  %i.fx = trunc i64 %i.dz to i32                  ; 3 uses
+  %38 = add <4 x i32> %36, <i32 0, i32 0, i32 -1, i32 -1> ; 3 uses
+  %39 = call range(i32 0, 33) <4 x i32> @llvm.ctpop.v4i32(<4 x i32> %38) ; 4 uses
+  %40 = extractelement <4 x i32> %39, i64 0
+  %.not.1.i9.i.i89.i.a = icmp samesign ult i32 %40, 2
+  %41 = extractelement <4 x i32> %39, i64 1
+  %.not.1.i9.i.i89.i = icmp samesign ult i32 %41, 2
   %i.fy = add i64 %i.eg, -1                       ; 2 uses
   %i.fz = insertelement <2 x i64> poison, i64 %i.eg, i64 0
   %i.ga = insertelement <2 x i64> %i.fz, i64 %i.fy, i64 1
@@ -1376,6 +1397,10 @@ _ZNK7xgboost6linalg6TensorIfLi2EE4SizeEv.exit.i:  ; preds = %_ZNSt6vectorIdSaIdE
   %i.gi = extractelement <2 x i64> %i.gh, i64 0
   %.not.1.i.i.i105.i = icmp samesign ult i64 %i.gi, 2
   %i.gj = icmp eq i64 %.sroa.01.0, 0
+  %42 = extractelement <4 x i32> %38, i64 2
+  %43 = extractelement <4 x i32> %39, i64 2
+  %44 = extractelement <4 x i32> %38, i64 3
+  %45 = extractelement <4 x i32> %39, i64 3
   %i.gk = extractelement <2 x i64> %i.gb, i64 1
   %i.gl = extractelement <2 x i64> %i.gh, i64 1
   br label %.lr.ph108.i.i.i.i
@@ -1434,23 +1459,23 @@ bb.bf:                                            ; preds = %bb.bd
 
 bb.bg:                                            ; preds = %.lr.ph.i.i64.i
   %i.ha = trunc nuw i64 %.0181.i.i67.i to i32     ; 4 uses
-  br i1 %.not.i7.i.i86.i, label %bb.bi, label %bb.bh
+  br i1 %.not.1.i9.i.i89.i.a, label %bb.bi, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.hb = udiv i32 %i.ha, %i.fw                   ; 2 uses
-  %i.hc = mul i32 %i.hb, %i.fw                    ; 0 uses
-  %.recomposed334 = urem i32 %i.ha, %i.fw
+  %i.hb = udiv i32 %i.ha, %37                     ; 2 uses
+  %i.hc = mul i32 %i.hb, %37                      ; 0 uses
+  %.recomposed334 = urem i32 %i.ha, %37
   br label %bb.bj
 
 bb.bi:                                            ; preds = %bb.bg
-  %i.hd = and i32 %34, %i.ha
-  %i.he = lshr i32 %i.ha, %35
+  %i.hd = and i32 %42, %i.ha
+  %i.he = lshr i32 %i.ha, %43
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh
   %.sroa.7.0.in.i.i.i87.i = phi i32 [ %i.hd, %bb.bi ], [ %.recomposed334, %bb.bh ]
   %.1.i8.i.i88.i = phi i32 [ %i.he, %bb.bi ], [ %i.hb, %bb.bh ] ; 4 uses
-  br i1 %.not.1.i9.i.i89.i.a, label %bb.bl, label %bb.bk
+  br i1 %.not.1.i9.i.i89.i, label %bb.bl, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj
   %i.hf = udiv i32 %.1.i8.i.i88.i, %i.fx          ; 2 uses
@@ -1459,8 +1484,8 @@ bb.bk:                                            ; preds = %bb.bj
   br label %_ZN7xgboost6linalg6detail11UnravelImplIjLi3EEEDaT_NS_6common4SpanIKmXT0_EEE.exit.i.i90.i
 
 bb.bl:                                            ; preds = %bb.bj
-  %i.hh = and i32 %.1.i8.i.i88.i, %37
-  %i.hi = lshr i32 %.1.i8.i.i88.i, %38
+  %i.hh = and i32 %.1.i8.i.i88.i, %44
+  %i.hi = lshr i32 %.1.i8.i.i88.i, %45
   br label %_ZN7xgboost6linalg6detail11UnravelImplIjLi3EEEDaT_NS_6common4SpanIKmXT0_EEE.exit.i.i90.i
 
 _ZN7xgboost6linalg6detail11UnravelImplIjLi3EEEDaT_NS_6common4SpanIKmXT0_EEE.exit.i.i90.i: ; preds = %bb.bl, %bb.bk
@@ -1654,16 +1679,19 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 .lr.ph100.i.i.preheader.i.i:                      ; preds = %.preheader90.i.i.i.i
   %i.jl = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 3 uses
   %i.jm = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.jn = trunc i64 %i.eg to i32                  ; 5 uses
-  %39 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.jn)
-  %.not.i7.i.i.i = icmp samesign ult i32 %39, 2
-  %40 = add i32 %i.jn, -1                         ; 2 uses
-  %41 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %40)
-  %i.jo = trunc i64 %i.dz to i32                  ; 5 uses
-  %42 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.jo)
-  %.not.1.i9.i.i.i.a = icmp samesign ult i32 %42, 2
-  %43 = add i32 %i.jo, -1                         ; 2 uses
-  %44 = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %43)
+  %i.jn = trunc i64 %i.eg to i32
+  %46 = insertelement <2 x i32> poison, i32 %i.jn, i64 0
+  %47 = trunc i64 %i.dz to i32
+  %48 = insertelement <2 x i32> %46, i32 %47, i64 1
+  %49 = shufflevector <2 x i32> %48, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %50 = trunc i64 %i.eg to i32                    ; 3 uses
+  %i.jo = trunc i64 %i.dz to i32                  ; 3 uses
+  %51 = add <4 x i32> %49, <i32 0, i32 0, i32 -1, i32 -1> ; 3 uses
+  %52 = call range(i32 0, 33) <4 x i32> @llvm.ctpop.v4i32(<4 x i32> %51) ; 4 uses
+  %53 = extractelement <4 x i32> %52, i64 0
+  %.not.1.i9.i.i.i.a = icmp samesign ult i32 %53, 2
+  %54 = extractelement <4 x i32> %52, i64 1
+  %.not.1.i9.i.i.i = icmp samesign ult i32 %54, 2
   %i.jp = add i64 %i.eg, -1                       ; 2 uses
   %i.jq = insertelement <2 x i64> poison, i64 %i.eg, i64 0
   %i.jr = insertelement <2 x i64> %i.jq, i64 %i.jp, i64 1
@@ -1678,6 +1706,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %i.jz = extractelement <2 x i64> %i.jy, i64 0
   %.not.1.i.i.i.i = icmp samesign ult i64 %i.jz, 2
   %i.ka = icmp eq i64 %.sroa.01.0, 0
+  %55 = extractelement <4 x i32> %51, i64 2
+  %56 = extractelement <4 x i32> %52, i64 2
+  %57 = extractelement <4 x i32> %51, i64 3
+  %58 = extractelement <4 x i32> %52, i64 3
   %i.kb = extractelement <2 x i64> %i.js, i64 1
   %i.kc = extractelement <2 x i64> %i.jy, i64 1
   br label %.lr.ph100.i.i.i.i
@@ -1740,23 +1772,23 @@ bb.cb:                                            ; preds = %bb.bz
 
 bb.cc:                                            ; preds = %.lr.ph.i.i.i
   %i.kr = trunc nuw i64 %.0181.i.i.i to i32       ; 4 uses
-  br i1 %.not.i7.i.i.i, label %bb.ce, label %bb.cd
+  br i1 %.not.1.i9.i.i.i.a, label %bb.ce, label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc
-  %i.ks = udiv i32 %i.kr, %i.jn                   ; 2 uses
-  %i.kt = mul i32 %i.ks, %i.jn                    ; 0 uses
-  %.recomposed338 = urem i32 %i.kr, %i.jn
+  %i.ks = udiv i32 %i.kr, %50                     ; 2 uses
+  %i.kt = mul i32 %i.ks, %50                      ; 0 uses
+  %.recomposed338 = urem i32 %i.kr, %50
   br label %bb.cf
 
 bb.ce:                                            ; preds = %bb.cc
-  %i.ku = and i32 %40, %i.kr
-  %i.kv = lshr i32 %i.kr, %41
+  %i.ku = and i32 %55, %i.kr
+  %i.kv = lshr i32 %i.kr, %56
   br label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce, %bb.cd
   %.sroa.7.0.in.i.i.i.i = phi i32 [ %i.ku, %bb.ce ], [ %.recomposed338, %bb.cd ]
   %.1.i8.i.i.i = phi i32 [ %i.kv, %bb.ce ], [ %i.ks, %bb.cd ] ; 4 uses
-  br i1 %.not.1.i9.i.i.i.a, label %bb.ch, label %bb.cg
+  br i1 %.not.1.i9.i.i.i, label %bb.ch, label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf
   %i.kw = udiv i32 %.1.i8.i.i.i, %i.jo            ; 2 uses
@@ -1765,8 +1797,8 @@ bb.cg:                                            ; preds = %bb.cf
   br label %_ZN7xgboost6linalg6detail11UnravelImplIjLi3EEEDaT_NS_6common4SpanIKmXT0_EEE.exit.i.i.i
 
 bb.ch:                                            ; preds = %bb.cf
-  %i.ky = and i32 %.1.i8.i.i.i, %43
-  %i.kz = lshr i32 %.1.i8.i.i.i, %44
+  %i.ky = and i32 %.1.i8.i.i.i, %57
+  %i.kz = lshr i32 %.1.i8.i.i.i, %58
   br label %_ZN7xgboost6linalg6detail11UnravelImplIjLi3EEEDaT_NS_6common4SpanIKmXT0_EEE.exit.i.i.i
 
 _ZN7xgboost6linalg6detail11UnravelImplIjLi3EEEDaT_NS_6common4SpanIKmXT0_EEE.exit.i.i.i: ; preds = %bb.ch, %bb.cg
@@ -2168,6 +2200,9 @@ declare float @llvm.sqrt.f32(float) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.ctpop.v2i64(<2 x i64>) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.ctpop.v4i32(<4 x i32>) #24
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

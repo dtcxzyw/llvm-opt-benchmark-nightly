@@ -1,3 +1,8 @@
+inline.NumInlined: 20610
+inline.NumDeleted: 6885
+loop-unroll.NumCompletelyUnrolled: 16
+loop-unroll.NumRuntimeUnrolled: 29
+loop-unroll.NumUnrolled: 46
 begin_hunk_0_@_ZN5Catch9Benchmark6Detail7analyseERKNS_7IConfigEPNSt6chrono8durationIdSt5ratioILl1ELl1000000000EEEESA_:bb.a
 
 bb.z:                                             ; preds = %bb.y
@@ -199,10 +204,6 @@ bb.a:
   %.sroa.0.0.copyload = load double, ptr %7, align 8, !tbaa !14 ; 3 uses
   %i.i = sitofp i32 %i.h to double                ; 4 uses
   %i.j = tail call noundef double @sqrt(double noundef %i.i) #63
-  %8 = fmul double %.sroa.0.0.copyload, %.sroa.0.0.copyload ; 3 uses
-  %9 = sub nsw i32 0, %i.h
-  %10 = sitofp i32 %9 to double
-  %11 = fneg double %i.i
   %i.k = insertelement <2 x double> poison, double %.sroa.0.0.copyload, i64 0
   %i.l = insertelement <2 x double> %i.k, double %.sroa.010.0.copyload, i64 1
   %i.m = insertelement <2 x double> poison, double %i.j, i64 0
@@ -214,9 +215,13 @@ bb.a:
   %i.s = extractelement <2 x double> %i.o, i64 0  ; 2 uses
   %i.t = fcmp olt double %i.s, %i.r
   %.sroa.speculated21.i = select i1 %i.t, double %i.s, double %i.r ; 2 uses
-  %i.u = fmul double %.sroa.speculated21.i, %.sroa.speculated21.i ; 3 uses
-  %i.v = tail call double @llvm.fmuladd.f64(double %11, double %i.u, double %8)
-  %i.w = fmul double %i.u, 4.000000e+00
+  %8 = fmul double %.sroa.speculated21.i, %.sroa.speculated21.i ; 3 uses
+  %i.u = fmul double %.sroa.0.0.copyload, %.sroa.0.0.copyload ; 3 uses
+  %9 = sub nsw i32 0, %i.h
+  %10 = sitofp i32 %9 to double
+  %11 = fneg double %i.i
+  %i.v = tail call double @llvm.fmuladd.f64(double %11, double %8, double %i.u)
+  %i.w = fmul double %8, 4.000000e+00
   %foldExtExtBinop = fsub <2 x double> %i.o, %i.p
   %i.x = shufflevector <2 x double> %foldExtExtBinop, <2 x double> %i.o, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.y = fmul <2 x double> %i.x, %i.x
@@ -253,9 +258,9 @@ bb.a:
   %i.bc = fsub <2 x double> %i.aa, %i.bb          ; 2 uses
   %i.bd = fdiv <2 x double> %i.bc, %i.aa
   %i.be = fneg <2 x double> %i.bc
-  %i.bf = insertelement <2 x double> poison, double %i.u, i64 0
+  %i.bf = insertelement <2 x double> poison, double %8, i64 0
   %i.bg = shufflevector <2 x double> %i.bf, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.bh = insertelement <2 x double> poison, double %8, i64 0
+  %i.bh = insertelement <2 x double> poison, double %i.u, i64 0
   %i.bi = shufflevector <2 x double> %i.bh, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bj = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.be, <2 x double> %i.bg, <2 x double> %i.bi)
   %i.bk = fmul <2 x double> %i.bd, %i.bj          ; 2 uses
@@ -263,7 +268,7 @@ bb.a:
   %i.bm = extractelement <2 x double> %i.bk, i64 1 ; 2 uses
   %i.bn = fcmp olt double %i.bl, %i.bm
   %.sroa.speculated4.i = select i1 %i.bn, double %i.bl, double %i.bm
-  %i.bo = fdiv double %.sroa.speculated4.i, %8
+  %i.bo = fdiv double %.sroa.speculated4.i, %i.u
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 32, i1 false), !tbaa.struct !48
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bp, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 32, i1 false), !tbaa.struct !48

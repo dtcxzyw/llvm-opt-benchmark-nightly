@@ -201,14 +201,16 @@ bb.a:
   %i.b = icmp ugt i32 %1, 10000
   %i.c = icmp ugt i32 %2, 10000
   %i.d = trunc i32 %0 to i16
-  %.lhs.trunc = add i16 %i.d, 5
-  %3 = udiv i16 %.lhs.trunc, 10
-  %.zext = zext nneg i16 %3 to i32
-  %4 = select i1 %i.a, i32 1023, i32 %.zext
-  %5 = trunc i32 %1 to i16
-  %.lhs.trunc11 = add i16 %5, 5
-  %6 = udiv i16 %.lhs.trunc11, 10
-  %.zext12 = zext nneg i16 %6 to i32
+  %3 = insertelement <2 x i16> poison, i16 %i.d, i64 0
+  %4 = trunc i32 %1 to i16
+  %5 = insertelement <2 x i16> %3, i16 %4, i64 1
+  %6 = add <2 x i16> %5, splat (i16 5)
+  %7 = udiv <2 x i16> %6, splat (i16 10)          ; 2 uses
+  %8 = extractelement <2 x i16> %7, i64 0
+  %.zext = zext nneg i16 %8 to i32
+  %9 = select i1 %i.a, i32 1023, i32 %.zext
+  %10 = extractelement <2 x i16> %7, i64 1
+  %.zext12 = zext nneg i16 %10 to i32
   %i.e = add i32 %2, 5
   %i.f = udiv i32 %i.e, 10
   %i.g = shl i32 %i.f, 20
@@ -216,7 +218,7 @@ bb.a:
   %i.i = select i1 %i.c, i32 -1074790400, i32 %i.h
   %i.j = shl nuw nsw i32 %.zext12, 10
   %i.k = select i1 %i.b, i32 1047552, i32 %i.j
-  %i.l = add nuw nsw i32 %i.k, %4
+  %i.l = add nuw nsw i32 %i.k, %9
   %i.m = add i32 %i.l, %i.i
   ret i32 %i.m
 }

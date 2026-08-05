@@ -1,3 +1,8 @@
+inline.NumInlined: 4971
+inline.NumDeleted: 2084
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZN7xgboost4tree8ColMaker7Builder8InitRootERKSt6vectorINS_6detail20GradientPairInternalIfEESaIS6_EERKNS_7DMatrixERKNS_7RegTreeE:bb.a
 
 _ZN4dmlc15LogMessageFatal6streamB5cxx11Ev.exit:   ; preds = %_ZN4dmlc15LogMessageFatalC2EPKci.exit
@@ -199,7 +204,7 @@ _ZNK7xgboost4tree13TreeEvaluator12GetEvaluatorINS0_10TrainParamEEEDav.exit: ; pr
   %.sink3.i = load i8, ptr %.sink3.in.i, align 8, !tbaa !583, !range !106, !noalias !734, !noundef !107
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !577 ; 4 uses
-  %i.bp = load ptr, ptr %0, align 8, !tbaa !558, !nonnull !107, !align !559 ; 8 uses
+  %i.bp = load ptr, ptr %0, align 8, !tbaa !558, !nonnull !107, !align !559 ; 7 uses
   %.sroa.0.0.copyload.i.i = load double, ptr %i.bo, align 8, !tbaa !737 ; 9 uses
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
   %.sroa.2.0.copyload.i.i = load double, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !737 ; 4 uses
@@ -341,20 +346,19 @@ bb.af:                                            ; preds = %_ZNK7xgboost4tree13
   %i.dv = fmul double %.sroa.0.0.copyload.i.i, 2.000000e+00
   %i.dw = fpext float %.1.i.i.i.i to double
   %i.dx = getelementptr inbounds nuw i8, ptr %i.bp, i64 40
-  %8 = load float, ptr %i.dx, align 8, !tbaa !739
+  %8 = fmul float %.1.i.i.i.i, %.1.i.i.i.i
   %i.dy = fpext float %8 to double
-  %9 = fadd double %.sroa.2.0.copyload.i.i, %i.dy
-  %10 = fmul float %.1.i.i.i.i, %.1.i.i.i.i
-  %11 = fpext float %10 to double
-  %12 = fmul double %9, %11
-  %13 = call double @llvm.fmuladd.f64(double %i.dv, double %i.dw, double %12)
-  %14 = getelementptr inbounds nuw i8, ptr %i.bp, i64 44
-  %15 = load float, ptr %14, align 4, !tbaa !738
-  %16 = fpext float %15 to double
-  %i.dz = fmul double %16, 2.000000e+00
+  %9 = load <2 x float>, ptr %i.dx, align 8, !tbaa !108
+  %10 = fpext <2 x float> %9 to <2 x double>      ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 0
+  %12 = fadd double %.sroa.2.0.copyload.i.i, %11
+  %13 = fmul double %12, %i.dy
+  %14 = call double @llvm.fmuladd.f64(double %i.dv, double %i.dw, double %13)
+  %15 = extractelement <2 x double> %10, i64 1
+  %i.dz = fmul double %15, 2.000000e+00
   %i.ea = call noundef float @llvm.fabs.f32(float %.1.i.i.i.i)
   %i.eb = fpext float %i.ea to double
-  %i.ec = call double @llvm.fmuladd.f64(double %i.dz, double %i.eb, double %13)
+  %i.ec = call double @llvm.fmuladd.f64(double %i.dz, double %i.eb, double %14)
   %i.ed = fptrunc double %i.ec to float
   %i.ee = fneg float %i.ed
   br label %_ZNK7xgboost4tree13TreeEvaluator14SplitEvaluatorINS0_10TrainParamEE8CalcGainINS0_9GradStatsETnNSt9enable_ifIXntsr10split_impl19IsVectorGradientSumIT_EE5valueEiE4typeELi0EEEfiRKS3_RKS8_.exit
@@ -757,7 +761,7 @@ _ZNK7xgboost4tree13TreeEvaluator12GetEvaluatorINS0_10TrainParamEEEDav.exit: ; pr
   %i.y = load ptr, ptr %0, align 8, !tbaa !558, !nonnull !107, !align !559 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !577
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.y, i64 44 ; 3 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.y, i64 44 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 40 ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.y, i64 48 ; 2 uses
   %i.ae = trunc nuw i8 %.sink3.i to i1            ; 2 uses
@@ -1024,19 +1028,19 @@ _ZNK7xgboost4tree13TreeEvaluator14SplitEvaluatorINS0_10TrainParamEE10CalcWeightI
 bb.aa:                                            ; preds = %_ZNK7xgboost4tree13TreeEvaluator14SplitEvaluatorINS0_10TrainParamEE10CalcWeightINS0_9GradStatsETnNSt9enable_ifIXntsr10split_impl19IsVectorGradientSumIT_EE5valueEiE4typeELi0EEEfiRKS3_RKS8_.exit.i
   %i.dl = fmul double %.sroa.0.0.copyload.i.i, 2.000000e+00
   %i.dm = fpext float %.1.i.i.i.i to double
-  %8 = load float, ptr %i.ac, align 8, !tbaa !739
+  %8 = fmul float %.1.i.i.i.i, %.1.i.i.i.i
   %i.dn = fpext float %8 to double
-  %9 = fadd double %.sroa.2.0.copyload.i.i, %i.dn
-  %10 = fmul float %.1.i.i.i.i, %.1.i.i.i.i
-  %11 = fpext float %10 to double
-  %12 = fmul double %9, %11
-  %13 = call double @llvm.fmuladd.f64(double %i.dl, double %i.dm, double %12)
-  %14 = load float, ptr %i.ab, align 4, !tbaa !738
-  %15 = fpext float %14 to double
+  %9 = load <2 x float>, ptr %i.ac, align 8, !tbaa !108
+  %10 = fpext <2 x float> %9 to <2 x double>      ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 0
+  %12 = fadd double %.sroa.2.0.copyload.i.i, %11
+  %13 = fmul double %12, %i.dn
+  %14 = call double @llvm.fmuladd.f64(double %i.dl, double %i.dm, double %13)
+  %15 = extractelement <2 x double> %10, i64 1
   %i.do = fmul double %15, 2.000000e+00
   %i.dp = call noundef float @llvm.fabs.f32(float %.1.i.i.i.i)
   %i.dq = fpext float %i.dp to double
-  %i.dr = call double @llvm.fmuladd.f64(double %i.do, double %i.dq, double %13)
+  %i.dr = call double @llvm.fmuladd.f64(double %i.do, double %i.dq, double %14)
   %i.ds = fptrunc double %i.dr to float
   %i.dt = fneg float %i.ds
   br label %_ZNK7xgboost4tree13TreeEvaluator14SplitEvaluatorINS0_10TrainParamEE8CalcGainINS0_9GradStatsETnNSt9enable_ifIXntsr10split_impl19IsVectorGradientSumIT_EE5valueEiE4typeELi0EEEfiRKS3_RKS8_.exit
@@ -1439,7 +1443,7 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZNK7xgboost4tree13TreeEvaluator14SplitEvaluatorINS0_10TrainParamEE10CalcWeightINS0_9GradStatsETnNSt9enable_ifIXntsr10split_impl19IsVectorGradientSumIT_EE5valueEiE4typeELi0EEEfiRKS3_RKS8_.exit
 
 _ZNK7xgboost4tree13TreeEvaluator14SplitEvaluatorINS0_10TrainParamEE10CalcWeightINS0_9GradStatsETnNSt9enable_ifIXntsr10split_impl19IsVectorGradientSumIT_EE5valueEiE4typeELi0EEEfiRKS3_RKS8_.exit: ; preds = %_ZN7xgboost4tree10CalcWeightINS0_10TrainParamENS0_9GradStatsEEEfRKT_T0_.exit.i.i, %bb.k, %bb.l
-  %.1.i.i.i = phi float [ %i.ap, %_ZN7xgboost4tree10CalcWeightINS0_10TrainParamENS0_9GradStatsEEEfRKT_T0_.exit.i.i ], [ %i.ay, %bb.k ], [ %..i.i.i, %bb.l ] ; 6 uses
+  %.1.i.i.i = phi float [ %i.ap, %_ZN7xgboost4tree10CalcWeightINS0_10TrainParamENS0_9GradStatsEEEfRKT_T0_.exit.i.i ], [ %i.ay, %bb.k ], [ %..i.i.i, %bb.l ] ; 3 uses
   %.sroa.0.0.copyload.i.i29 = load double, ptr %5, align 8, !tbaa !737 ; 5 uses
   %i.bf = fcmp ogt double %.sroa.0.0.copyload.i.i29, %i.v
   br i1 %i.bf, label %bb.m, label %bb.n
@@ -1503,36 +1507,30 @@ bb.s:                                             ; preds = %bb.r
   br label %_ZNK7xgboost4tree13TreeEvaluator14SplitEvaluatorINS0_10TrainParamEE10CalcWeightINS0_9GradStatsETnNSt9enable_ifIXntsr10split_impl19IsVectorGradientSumIT_EE5valueEiE4typeELi0EEEfiRKS3_RKS8_.exit38
 
 _ZNK7xgboost4tree13TreeEvaluator14SplitEvaluatorINS0_10TrainParamEE10CalcWeightINS0_9GradStatsETnNSt9enable_ifIXntsr10split_impl19IsVectorGradientSumIT_EE5valueEiE4typeELi0EEEfiRKS3_RKS8_.exit38: ; preds = %bb.s, %bb.r, %_ZN7xgboost4tree10CalcWeightINS0_10TrainParamENS0_9GradStatsEEEfRKT_T0_.exit.i.i32
-  %.1.i.i.i34 = phi float [ %i.bs, %_ZN7xgboost4tree10CalcWeightINS0_10TrainParamENS0_9GradStatsEEEfRKT_T0_.exit.i.i32 ], [ %i.cb, %bb.r ], [ %..i.i.i35, %bb.s ] ; 6 uses
-  %6 = fmul double %.sroa.0.0.copyload.i.i, 2.000000e+00
-  %7 = fpext float %.1.i.i.i to double
-  %8 = fmul float %.1.i.i.i, %.1.i.i.i
-  %9 = fpext float %8 to double
-  %10 = fmul double %i.ag, %9
-  %11 = tail call double @llvm.fmuladd.f64(double %6, double %7, double %10)
-  %i.ci = insertelement <2 x double> poison, double %i.v, i64 0
+  %.1.i.i.i34 = phi float [ %i.bs, %_ZN7xgboost4tree10CalcWeightINS0_10TrainParamENS0_9GradStatsEEEfRKT_T0_.exit.i.i32 ], [ %i.cb, %bb.r ], [ %..i.i.i35, %bb.s ] ; 3 uses
+  %i.ci = insertelement <2 x double> poison, double %.sroa.0.0.copyload.i.i, i64 0
   %i.cj = insertelement <2 x double> %i.ci, double %.sroa.0.0.copyload.i.i29, i64 1
-  %i.ck = fmul <2 x double> %i.cj, splat (double 2.000000e+00) ; 2 uses
-  %12 = tail call noundef float @llvm.fabs.f32(float %.1.i.i.i)
-  %13 = fmul float %.1.i.i.i34, %.1.i.i.i34
-  %14 = fpext float %13 to double
-  %15 = fmul double %i.bm, %14
-  %16 = insertelement <2 x float> poison, float %12, i64 0
-  %17 = insertelement <2 x float> %16, float %.1.i.i.i34, i64 1
-  %i.cl = fpext <2 x float> %17 to <2 x double>
-  %i.cm = insertelement <2 x double> poison, double %11, i64 0
-  %i.cn = insertelement <2 x double> %i.cm, double %15, i64 1
-  %18 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ck, <2 x double> %i.cl, <2 x double> %i.cn) ; 2 uses
-  %19 = extractelement <2 x double> %18, i64 0
-  %20 = fptrunc double %19 to float
-  %21 = fneg float %20
-  %22 = tail call noundef float @llvm.fabs.f32(float %.1.i.i.i34)
-  %23 = fpext float %22 to double
-  %24 = extractelement <2 x double> %18, i64 1
-  %25 = extractelement <2 x double> %i.ck, i64 0
-  %26 = tail call double @llvm.fmuladd.f64(double %25, double %23, double %24)
-  %27 = fptrunc double %26 to float
-  %i.co = fsub float %21, %27                     ; 3 uses
+  %i.ck = fmul <2 x double> %i.cj, splat (double 2.000000e+00)
+  %6 = insertelement <2 x float> poison, float %.1.i.i.i, i64 0
+  %7 = insertelement <2 x float> %6, float %.1.i.i.i34, i64 1 ; 4 uses
+  %8 = fpext <2 x float> %7 to <2 x double>
+  %9 = fmul <2 x float> %7, %7
+  %10 = fmul double %i.v, 2.000000e+00
+  %11 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %7)
+  %i.cl = fpext <2 x float> %9 to <2 x double>
+  %i.cm = insertelement <2 x double> poison, double %i.ag, i64 0
+  %i.cn = insertelement <2 x double> %i.cm, double %i.bm, i64 1
+  %12 = fmul <2 x double> %i.cn, %i.cl
+  %13 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ck, <2 x double> %8, <2 x double> %12)
+  %14 = fpext <2 x float> %11 to <2 x double>
+  %15 = insertelement <2 x double> poison, double %10, i64 0
+  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
+  %17 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %16, <2 x double> %14, <2 x double> %13)
+  %18 = fptrunc <2 x double> %17 to <2 x float>   ; 2 uses
+  %19 = extractelement <2 x float> %18, i64 0
+  %20 = fneg float %19
+  %21 = extractelement <2 x float> %18, i64 1
+  %i.co = fsub float %20, %21                     ; 3 uses
   %i.cp = icmp eq i32 %i.s, 0
   br i1 %i.cp, label %_ZN7xgboost4tree12IsValidSplitINS0_10TrainParamEdEEbRKT_T0_S6_.exit.thread, label %bb.t
 
@@ -1934,6 +1932,9 @@ declare i32 @llvm.smax.i32(i32, i32) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #30
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

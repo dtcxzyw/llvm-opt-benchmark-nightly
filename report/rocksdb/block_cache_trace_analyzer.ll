@@ -1,3 +1,8 @@
+inline.NumInlined: 8970
+inline.NumDeleted: 3445
+loop-unroll.NumCompletelyUnrolled: 12
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 18
 begin_hunk_0_@"_ZNSt17_Function_handlerIFvRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmjN7rocksdb9TraceTypeES7_mRKNS8_15BlockAccessInfoEEZNKS8_23BlockCacheTraceAnalyzer21PrintAccessCountStatsEbjjE3$_0E9_M_invokeERKSt9_Any_dataS7_OmOjOS9_S7_SK_SC_":bb.a
 ._crit_edge.i.i.i.i.i.i.i:                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i.i.i.i, %bb.g
   %i.ba = phi ptr [ %i.az, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i.i.i.i ], [ %i.ar, %bb.g ] ; 3 uses
@@ -199,13 +204,12 @@ bb.b:                                             ; preds = %bb.a
   %i.j = uitofp <2 x i64> %i.i to <2 x double>
   %i.k = insertelement <2 x double> poison, double %i.f, i64 0
   %i.l = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.m = fdiv <2 x double> %i.j, %i.l             ; 2 uses
-  %9 = extractelement <2 x double> %i.m, i64 0
-  %10 = fmul double %9, 1.000000e+04
+  %i.m = fdiv <2 x double> %i.j, %i.l
+  %9 = fmul <2 x double> %i.m, splat (double 1.000000e+04) ; 2 uses
+  %10 = extractelement <2 x double> %9, i64 0
   %i.n = fptoui double %10 to i64                 ; 2 uses
-  %i.o = extractelement <2 x double> %i.m, i64 1
-  %11 = fmul double %i.o, 1.000000e+04
-  %i.p = fptoui double %11 to i64                 ; 2 uses
+  %i.o = extractelement <2 x double> %9, i64 1
+  %i.p = fptoui double %i.o to i64                ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %7, i64 160
   %i.r = load i64, ptr %i.q, align 8, !tbaa !661
   %i.s = uitofp i64 %i.r to double

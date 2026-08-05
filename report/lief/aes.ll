@@ -1,3 +1,8 @@
+inline.NumInlined: 16
+inline.NumDeleted: 5
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 11
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -155,17 +160,21 @@ bb.f:                                             ; preds = %bb.f, %bb.e
 
 .preheader.i:                                     ; preds = %bb.g
   %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 14
-  %i.v = load i8, ptr %i.u, align 2
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 9
+  %i.v = load i8, ptr %3, align 1
   %i.w = zext i8 %i.v to i16
-  %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 9
+  %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 13
+  %4 = load i8, ptr %i.u, align 2
   %i.y = load i8, ptr %i.x, align 1
+  %5 = zext i8 %4 to i16
   %i.z = zext i8 %i.y to i16
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 13
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 11
   %i.ab = load i8, ptr %i.aa, align 1
   %i.ac = zext i8 %i.ab to i16
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 11
-  %4 = load i8, ptr %3, align 1
-  %5 = zext i8 %4 to i16
+  %6 = insertelement <4 x i16> poison, i16 %5, i64 0
+  %7 = insertelement <4 x i16> %6, i16 %i.w, i64 1
+  %8 = insertelement <4 x i16> %7, i16 %i.z, i64 2
+  %9 = insertelement <4 x i16> %8, i16 %i.ac, i64 3
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.g, %.preheader91.preheader.i
@@ -234,32 +243,33 @@ bb.i:                                             ; preds = %bb.h
   %i.bv = zext i8 %i.bu to i64
   %i.bw = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.bv
   %i.bx = load i8, ptr %i.bw, align 1, !tbaa !11
-  %i.by = zext i8 %i.bx to i16                    ; 4 uses
-  %.lhs.trunc.i = add nuw nsw i16 %i.by, %i.w
-  %6 = urem i16 %.lhs.trunc.i, 255
-  %i.bz = zext nneg i16 %6 to i64
+  %i.by = zext i8 %i.bx to i16
+  %10 = insertelement <4 x i16> poison, i16 %i.by, i64 0
+  %11 = shufflevector <4 x i16> %10, <4 x i16> poison, <4 x i32> zeroinitializer
+  %12 = add nuw nsw <4 x i16> %11, %9
+  %13 = urem <4 x i16> %12, splat (i16 255)
+  %14 = trunc nuw <4 x i16> %13 to <4 x i8>       ; 4 uses
+  %15 = extractelement <4 x i8> %14, i64 0
+  %i.bz = zext i8 %15 to i64
   %i.ca = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.bz
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !11
   %i.cc = zext i8 %i.cb to i32
-  %.lhs.trunc85.i = add nuw nsw i16 %i.by, %i.z
-  %7 = urem i16 %.lhs.trunc85.i, 255
-  %i.cd = zext nneg i16 %7 to i64
+  %16 = extractelement <4 x i8> %14, i64 1
+  %i.cd = zext i8 %16 to i64
   %i.ce = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.cd
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !11
   %i.cg = zext i8 %i.cf to i32
   %i.ch = shl nuw nsw i32 %i.cg, 8
   %i.ci = or disjoint i32 %i.ch, %i.cc
-  %.lhs.trunc87.i = add nuw nsw i16 %i.by, %i.ac
-  %8 = urem i16 %.lhs.trunc87.i, 255
-  %i.cj = zext nneg i16 %8 to i64
+  %17 = extractelement <4 x i8> %14, i64 2
+  %i.cj = zext i8 %17 to i64
   %i.ck = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.cj
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !11
   %i.cm = zext i8 %i.cl to i32
   %i.cn = shl nuw nsw i32 %i.cm, 16
   %i.co = or disjoint i32 %i.ci, %i.cn
-  %.lhs.trunc89.i = add nuw nsw i16 %i.by, %5
-  %9 = urem i16 %.lhs.trunc89.i, 255
-  %i.cp = zext nneg i16 %9 to i64
+  %18 = extractelement <4 x i8> %14, i64 3
+  %i.cp = zext i8 %18 to i64
   %i.cq = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.cp
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !11
   %i.cs = zext i8 %i.cr to i32

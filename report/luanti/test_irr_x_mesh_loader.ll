@@ -1,3 +1,7 @@
+inline.NumInlined: 1089
+inline.NumDeleted: 303
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZL22CATCH2_INTERNAL_TEST_0v:._crit_edge.i.i
           to label %bb.dn unwind label %bb.or
 
@@ -199,23 +203,23 @@ bb.dz:                                            ; preds = %.lr.ph
   %i.oz = extractelement <2 x float> %i.ov, i64 1
   %i.pa = fneg nsz float %i.oz
   %i.pb = fneg nsz float %.scalar
+  %85 = fmul nsz float %i.og, %.scalar            ; 2 uses
   %i.pc = insertelement <4 x float> <float poison, float poison, float 1.000000e+00, float poison>, float %i.pa, i64 0
   %i.pd = shufflevector <2 x float> %i.ov, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 1, i32 poison>
   %i.pe = shufflevector <4 x float> %i.pc, <4 x float> %i.pd, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
   %i.pf = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ok, <4 x float> %i.of, <4 x float> %i.pe)
-  %85 = insertelement <2 x float> %i.om, float %i.or, i64 0
-  %86 = shufflevector <4 x float> %i.of, <4 x float> poison, <2 x i32> <i32 1, i32 0>
-  %87 = fmul nsz float %i.og, %.scalar            ; 2 uses
-  %88 = fneg nsz float %87
-  %89 = call nsz float @llvm.fmuladd.f32(float %i.pb, float %i.oa, float 1.000000e+00) ; 2 uses
-  %i.pg = insertelement <2 x float> poison, float %89, i64 0
-  %i.ph = insertelement <2 x float> %i.pg, float %88, i64 1
-  %i.pi = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %85, <2 x float> %86, <2 x float> %i.ph)
+  %86 = fneg nsz float %85
+  %87 = call nsz float @llvm.fmuladd.f32(float %i.pb, float %i.oa, float 1.000000e+00) ; 2 uses
+  %88 = insertelement <2 x float> %i.om, float %i.or, i64 0
+  %89 = shufflevector <4 x float> %i.of, <4 x float> poison, <2 x i32> <i32 1, i32 0>
+  %i.pg = insertelement <2 x float> poison, float %87, i64 0
+  %i.ph = insertelement <2 x float> %i.pg, float %86, i64 1
+  %i.pi = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %88, <2 x float> %89, <2 x float> %i.ph)
   %i.pj = shufflevector <2 x float> %i.om, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.pk = insertelement <2 x float> %i.pj, float %i.oo, i64 1
   %i.pl = shufflevector <4 x float> %i.of, <4 x float> poison, <2 x i32> zeroinitializer
-  %i.pm = insertelement <2 x float> poison, float %87, i64 0
-  %i.pn = insertelement <2 x float> %i.pm, float %89, i64 1
+  %i.pm = insertelement <2 x float> poison, float %85, i64 0
+  %i.pn = insertelement <2 x float> %i.pm, float %87, i64 1
   %i.po = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.pk, <2 x float> %i.pl, <2 x float> %i.pn)
   %i.pp = load <2 x float>, ptr %i.np, align 4, !tbaa !112, !noalias !114 ; 2 uses
   %i.pq = load float, ptr %i.nq, align 4, !tbaa !117, !noalias !114

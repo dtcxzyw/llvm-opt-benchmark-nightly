@@ -1,8 +1,7 @@
 inline.NumInlined: 22
 inline.NumDeleted: 11
-loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@php_debug_zval_dump:bb.a
 
 bb.bj:                                            ; preds = %bb.bi
@@ -204,13 +203,14 @@ bb.a:
   %i.f = alloca [32 x i8], align 16               ; 3 uses
   %i.g = alloca ptr, align 8                      ; 5 uses
   %i.h = alloca ptr, align 8                      ; 5 uses
+  %3 = alloca [32 x i8], align 16                 ; 3 uses
   %i.i = alloca [32 x i8], align 16               ; 3 uses
   %i.j = alloca ptr, align 8                      ; 3 uses
   %i.k = alloca ptr, align 8                      ; 4 uses
   %i.l = alloca ptr, align 8                      ; 5 uses
   %i.m = alloca ptr, align 8                      ; 5 uses
   %i.n = alloca ptr, align 8                      ; 5 uses
-  %3 = alloca %struct._zval_struct, align 8       ; 5 uses
+  %4 = alloca %struct._zval_struct, align 8       ; 5 uses
   %i.o = alloca ptr, align 8                      ; 5 uses
   br label %bb.b
 
@@ -335,9 +335,32 @@ smart_str_alloc.exit298:                          ; preds = %bb.j, %bb.k
 bb.l:                                             ; preds = %bb.b
   %i.bb = load i64, ptr %.0176, align 8, !tbaa !12 ; 4 uses
   %i.bc = icmp eq i64 %i.bb, -9223372036854775808
-  br i1 %i.bc, label %zend_print_ulong_to_buf.exit, label %bb.q
+  br i1 %i.bc, label %5, label %bb.q
 
-zend_print_ulong_to_buf.exit:                     ; preds = %bb.l
+5:                                                ; preds = %bb.l
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #12
+  %6 = getelementptr inbounds nuw i8, ptr %i.i, i64 31 ; 3 uses
+  store i8 0, ptr %6, align 1, !tbaa !12
+  br label %7
+
+7:                                                ; preds = %7, %5
+  %.05.i = phi ptr [ %6, %5 ], [ %11, %7 ]        ; 2 uses
+  %.0.i321 = phi i64 [ 9223372036854775807, %5 ], [ %12, %7 ] ; 3 uses
+  %8 = urem i64 %.0.i321, 10
+  %9 = trunc nuw nsw i64 %8 to i8
+  %10 = or disjoint i8 %9, 48
+  %11 = getelementptr inbounds i8, ptr %.05.i, i64 -1 ; 2 uses
+  store i8 %10, ptr %11, align 1, !tbaa !12
+  %12 = udiv i64 %.0.i321, 10
+  %.not.i322 = icmp samesign ult i64 %.0.i321, 10
+  br i1 %.not.i322, label %zend_print_ulong_to_buf.exit, label %7, !llvm.loop !113
+
+zend_print_ulong_to_buf.exit:                     ; preds = %7
+  %13 = getelementptr inbounds i8, ptr %.05.i, i64 -2 ; 3 uses
+  store i8 45, ptr %13, align 1, !tbaa !12
+  %14 = ptrtoint ptr %6 to i64
+  %15 = ptrtoint ptr %13 to i64
+  %16 = sub i64 %14, %15                          ; 3 uses
   %i.bd = load ptr, ptr %2, align 8, !tbaa !110   ; 3 uses
   %.not.i.i = icmp eq ptr %i.bd, null
   br i1 %.not.i.i, label %bb.n, label %bb.m, !prof !35
@@ -345,15 +368,15 @@ zend_print_ulong_to_buf.exit:                     ; preds = %bb.l
 bb.m:                                             ; preds = %zend_print_ulong_to_buf.exit
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !26 ; 2 uses
-  %i.bg = add i64 %i.bf, 20                       ; 3 uses
+  %i.bg = add i64 %i.bf, %16                      ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bi = load i64, ptr %i.bh, align 8, !tbaa !112
   %.not12.i.i = icmp ult i64 %i.bg, %i.bi
   br i1 %.not12.i.i, label %bb.o, label %bb.n, !prof !65
 
 bb.n:                                             ; preds = %bb.m, %zend_print_ulong_to_buf.exit
-  %.0.i.i = phi i64 [ 20, %zend_print_ulong_to_buf.exit ], [ %i.bg, %bb.m ] ; 2 uses
-  tail call void @smart_str_erealloc(ptr noundef nonnull %2, i64 noundef %.0.i.i) #12
+  %.0.i.i = phi i64 [ %16, %zend_print_ulong_to_buf.exit ], [ %i.bg, %bb.m ] ; 2 uses
+  call void @smart_str_erealloc(ptr noundef nonnull %2, i64 noundef %.0.i.i) #12
   %.pre553 = load ptr, ptr %2, align 8, !tbaa !110 ; 2 uses
   %.phi.trans.insert554 = getelementptr inbounds nuw i8, ptr %.pre553, i64 16
   %.pre555 = load i64, ptr %.phi.trans.insert554, align 8, !tbaa !26
@@ -362,31 +385,31 @@ bb.n:                                             ; preds = %bb.m, %zend_print_u
 bb.o:                                             ; preds = %bb.n, %bb.m
   %i.bj = phi i64 [ %i.bf, %bb.m ], [ %.pre555, %bb.n ]
   %i.bk = phi ptr [ %i.bd, %bb.m ], [ %.pre553, %bb.n ]
-  %.1.i.i = phi i64 [ %i.bg, %bb.m ], [ %.0.i.i, %bb.n ] ; 3 uses
+  %.1.i.i = phi i64 [ %i.bg, %bb.m ], [ %.0.i.i, %bb.n ]
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 24
-  %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bj ; 2 uses
-  store <16 x i8> <i8 45, i8 57, i8 50, i8 50, i8 51, i8 51, i8 55, i8 50, i8 48, i8 51, i8 54, i8 56, i8 53, i8 52, i8 55, i8 55>, ptr %i.bm, align 1
-  %.sroa.19.11..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bm, i64 16
-  store <4 x i8> <i8 53, i8 56, i8 48, i8 55>, ptr %.sroa.19.11..sroa_idx, align 1
-  %4 = load ptr, ptr %2, align 8, !tbaa !110      ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store i64 %.1.i.i, ptr %5, align 8, !tbaa !26
-  %i.bn = add i64 %.1.i.i, 2                      ; 3 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bj
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bm, ptr nonnull align 1 %13, i64 %16, i1 false)
+  %17 = load ptr, ptr %2, align 8, !tbaa !110     ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 2 uses
+  store i64 %.1.i.i, ptr %18, align 8, !tbaa !26
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #12
+  %19 = load i64, ptr %18, align 8, !tbaa !26     ; 2 uses
+  %i.bn = add i64 %19, 2                          ; 3 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !112
   %.not12.i310 = icmp ult i64 %i.bn, %i.bp
   br i1 %.not12.i310, label %smart_str_alloc.exit313, label %bb.p, !prof !65
 
 bb.p:                                             ; preds = %bb.o
-  tail call void @smart_str_erealloc(ptr noundef nonnull %2, i64 noundef %i.bn) #12
+  call void @smart_str_erealloc(ptr noundef nonnull %2, i64 noundef %i.bn) #12
   %.pre556 = load ptr, ptr %2, align 8, !tbaa !110 ; 2 uses
   %.phi.trans.insert557 = getelementptr inbounds nuw i8, ptr %.pre556, i64 16
   %.pre558 = load i64, ptr %.phi.trans.insert557, align 8, !tbaa !26
   br label %smart_str_alloc.exit313
 
 smart_str_alloc.exit313:                          ; preds = %bb.o, %bb.p
-  %i.bq = phi i64 [ %.1.i.i, %bb.o ], [ %.pre558, %bb.p ]
-  %i.br = phi ptr [ %4, %bb.o ], [ %.pre556, %bb.p ]
+  %i.bq = phi i64 [ %19, %bb.o ], [ %.pre558, %bb.p ]
+  %i.br = phi ptr [ %17, %bb.o ], [ %.pre556, %bb.p ]
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 24
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 %i.bq
   store i16 12589, ptr %i.bt, align 1
@@ -396,8 +419,8 @@ smart_str_alloc.exit313:                          ; preds = %bb.o, %bb.p
   br label %zend_string_free.exit
 
 bb.q:                                             ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #12
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.i, i64 31 ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
+  %i.bw = getelementptr inbounds nuw i8, ptr %3, i64 31 ; 5 uses
   %i.bx = icmp slt i64 %i.bb, 0
   br i1 %i.bx, label %bb.r, label %bb.t
 
@@ -475,7 +498,7 @@ smart_str_append_long_ex.exit318:                 ; preds = %bb.v, %bb.w
   %i.cx = load ptr, ptr %2, align 8, !tbaa !110
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 16
   store i64 %.1.i.i317, ptr %i.cy, align 8, !tbaa !26
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %zend_string_free.exit
 
 bb.x:                                             ; preds = %bb.b
@@ -878,7 +901,7 @@ bb.ed:                                            ; preds = %bb.eb, %bb.ec, %bb.
   br i1 %i.uc, label %.thread418, label %bb.ee, !prof !35
 
 bb.ee:                                            ; preds = %bb.ed
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   %i.ud = load i8, ptr %i.ua, align 8, !tbaa !12
   %i.ue = icmp eq i8 %i.ud, 13
   br i1 %i.ue, label %bb.ef, label %zend_array_release.exit233, !prof !35
@@ -924,7 +947,7 @@ zend_string_alloc.exit:                           ; preds = %bb.eg, %bb.ef
   store i8 0, ptr %i.uy, align 1, !tbaa !12
   %i.uz = getelementptr inbounds nuw i8, ptr %i.uf, i64 32
   %i.va = load ptr, ptr %i.uz, align 8, !tbaa !122
-  %i.vb = call ptr @zend_read_property_ex(ptr noundef %i.va, ptr noundef %i.oi, ptr noundef nonnull %i.ut, i1 noundef zeroext true, ptr noundef nonnull %3) #12
+  %i.vb = call ptr @zend_read_property_ex(ptr noundef %i.va, ptr noundef %i.oi, ptr noundef nonnull %i.ut, i1 noundef zeroext true, ptr noundef nonnull %4) #12
   %i.vc = load i32, ptr %i.uu, align 4, !tbaa !12
   %i.vd = and i32 %i.vc, 64
   %.not.i = icmp eq i32 %i.vd, 0
@@ -1285,7 +1308,7 @@ php_object_element_export.exit:                   ; preds = %bb.fl, %bb.fm
   %i.zx = load ptr, ptr %2, align 8, !tbaa !110
   %i.zy = getelementptr inbounds nuw i8, ptr %i.zx, i64 16
   store i64 %i.zs, ptr %i.zy, align 8, !tbaa !26
-  %i.zz = icmp eq ptr %.1183, %3
+  %i.zz = icmp eq ptr %.1183, %4
   br i1 %i.zz, label %bb.fn, label %.thread418.sink.split
 
 bb.fn:                                            ; preds = %php_object_element_export.exit
@@ -1293,7 +1316,7 @@ bb.fn:                                            ; preds = %php_object_element_
   br label %.thread418.sink.split
 
 .thread418.sink.split:                            ; preds = %bb.eg, %php_object_element_export.exit, %bb.fn
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   br label %.thread418
 
 .thread418:                                       ; preds = %.thread418.sink.split, %bb.ed
@@ -1457,7 +1480,7 @@ smart_str_alloc.exit243:                          ; preds = %bb.gc, %bb.gd
   br label %zend_string_free.exit
 
 bb.ge:                                            ; preds = %bb.em, %bb.en, %bb.eo
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   br label %zend_string_free.exit
 
 bb.gf:                                            ; preds = %bb.b

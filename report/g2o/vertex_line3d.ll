@@ -1,3 +1,8 @@
+inline.NumInlined: 5025
+inline.NumDeleted: 2785
+loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 13
 begin_hunk_0_@_ZThn64_N3g2o12VertexLine3DD0Ev:bb.a
   tail call void @_ZdlPvm(ptr noundef nonnull align 16 dereferenceable(272) %i.a, i64 noundef 272) #20
   ret void
@@ -199,15 +204,10 @@ _ZN5Eigen14QuaternionBaseINS_10QuaternionIdLi0EEEE9normalizeEv.exit:
   %.sroa.0159.0.vec.extract.i = extractelement <2 x double> %i.f, i64 0 ; 2 uses
   %i.m = fneg double %i.d
   %i.n = fmul double %.sroa.0159.0.vec.extract.i, %i.m
-  %2 = tail call double @llvm.fmuladd.f64(double %i.h, double %.sroa.0157.0.vec.extract.i, double %i.n) ; 2 uses
   %i.o = fneg double %.sroa.0157.0.vec.extract.i
   %i.p = fmul double %.sroa.0159.8.vec.extract.i, %i.o
   %i.q = tail call double @llvm.fmuladd.f64(double %.sroa.0159.0.vec.extract.i, double %.sroa.0157.8.vec.extract.i, double %i.p) ; 3 uses
-  %.sroa.0164.0.vec.insert.i = insertelement <2 x double> poison, double %i.l, i64 0
-  %.sroa.0164.8.vec.insert.i.a = insertelement <2 x double> %.sroa.0164.0.vec.insert.i, double %2, i64 1 ; 2 uses
-  %3 = fmul <2 x double> %.sroa.0164.8.vec.insert.i.a, %.sroa.0164.8.vec.insert.i.a ; 2 uses
-  %shift = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %3, %shift
+  %.sroa.0164.8.vec.insert.i.a = insertelement <2 x double> poison, double %i.l, i64 0
   %i.r = shufflevector <2 x double> %i.i, <2 x double> %i.e, <2 x i32> <i32 0, i32 2>
   %i.s = shufflevector <2 x double> %i.i, <2 x double> %i.e, <2 x i32> <i32 1, i32 3>
   %i.t = fadd <2 x double> %i.r, %i.s
@@ -218,26 +218,28 @@ _ZN5Eigen14QuaternionBaseINS_10QuaternionIdLi0EEEE9normalizeEv.exit:
   %i.y = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.x) ; 7 uses
   %i.z = fmul <2 x double> %i.y, %i.y
   %i.aa = shufflevector <2 x double> %i.z, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %2 = insertelement <2 x double> %i.y, double %i.q, i64 0
   %i.ab = insertelement <2 x double> %i.y, double %i.q, i64 0
-  %i.ac = insertelement <2 x double> %i.y, double %i.q, i64 0
-  %i.ad = fmul <2 x double> %i.ab, %i.ac
+  %3 = fmul <2 x double> %2, %i.ab
+  %4 = tail call double @llvm.fmuladd.f64(double %i.h, double %.sroa.0157.0.vec.extract.i, double %i.n) ; 2 uses
+  %i.ac = insertelement <2 x double> %.sroa.0164.8.vec.insert.i.a, double %4, i64 1 ; 2 uses
+  %i.ad = fmul <2 x double> %i.ac, %i.ac          ; 2 uses
+  %shift = shufflevector <2 x double> %i.ad, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %i.ad, %shift
   %i.ae = shufflevector <2 x double> %foldExtExtBinop, <2 x double> %i.aa, <2 x i32> <i32 0, i32 3>
-  %i.af = fadd <2 x double> %i.ad, %i.ae
+  %i.af = fadd <2 x double> %3, %i.ae
   %i.ag = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.af)
   %i.ah = fdiv <2 x double> splat (double 1.000000e+00), %i.ag ; 3 uses
-  %i.ai = extractelement <2 x double> %i.ah, i64 0 ; 3 uses
+  %i.ai = extractelement <2 x double> %i.ah, i64 0 ; 2 uses
   %i.aj = fmul double %i.l, %i.ai
   %.sroa.31.80.vec.insert = insertelement <2 x double> poison, double %i.aj, i64 0
-  %4 = fmul double %2, %i.ai
-  %.sroa.31.88.vec.insert = insertelement <2 x double> %.sroa.31.80.vec.insert, double %4, i64 1 ; 2 uses
-  %5 = extractelement <2 x double> %i.y, i64 1
-  %6 = fneg double %5
-  %7 = extractelement <2 x double> %i.ah, i64 1
-  %8 = fmul double %7, %6
-  %.sroa.8.16.vec.insert = insertelement <2 x double> poison, double %8, i64 0
+  %5 = fneg <2 x double> %i.y
+  %.sroa.31.88.vec.insert = insertelement <2 x double> %5, double %4, i64 0
+  %6 = fmul <2 x double> %.sroa.31.88.vec.insert, %i.ah ; 2 uses
+  %7 = shufflevector <2 x double> %.sroa.31.80.vec.insert, <2 x double> %6, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.ak = shufflevector <2 x double> %i.ah, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.al = fmul <2 x double> %i.y, %i.ak           ; 2 uses
-  %9 = shufflevector <2 x double> %.sroa.8.16.vec.insert, <2 x double> %i.al, <2 x i32> <i32 0, i32 2>
+  %8 = shufflevector <2 x double> %6, <2 x double> %i.al, <2 x i32> <i32 1, i32 2>
   %i.am = fdiv <2 x double> splat (double 1.000000e+00), %i.y ; 3 uses
   %i.an = shufflevector <2 x double> %i.am, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ao = fmul <2 x double> %i.f, %i.an           ; 2 uses
@@ -329,7 +331,7 @@ _ZN5Eigen14QuaternionBaseINS_10QuaternionIdLi0EEEE9normalizeEv.exit:
   %.sroa.12.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.12, i64 16
   %.sroa.12.16..sroa.12.16..sroa.12.48. = load <2 x double>, ptr %.sroa.12.16..sroa_idx, align 16 ; 4 uses
   %i.cs = shufflevector <2 x double> %.sroa.12.16..sroa.12.16..sroa.12.48., <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ct = fmul <2 x double> %.sroa.31.88.vec.insert, %i.cs
+  %i.ct = fmul <2 x double> %7, %i.cs
   %i.cu = fadd <2 x double> %i.cr, %i.ct
   %.sroa.18.sroa.0.0..sroa.18.sroa.0.0..sroa.18.0..sroa.18.48.99 = load double, ptr %.sroa.18.sroa.0, align 16, !tbaa !13 ; 2 uses
   %i.cv = extractelement <2 x double> %.sroa.12.0..sroa.12.0..sroa.12.32., i64 0
@@ -350,7 +352,7 @@ _ZN5Eigen14QuaternionBaseINS_10QuaternionIdLi0EEEE9normalizeEv.exit:
   %i.dj = fadd <2 x double> %i.df, %i.di
   %i.dk = insertelement <2 x double> poison, double %i.cm, i64 0
   %i.dl = shufflevector <2 x double> %i.dk, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.dm = fmul <2 x double> %.sroa.31.88.vec.insert, %i.dl
+  %i.dm = fmul <2 x double> %7, %i.dl
   %i.dn = fadd <2 x double> %i.dm, %i.dj
   %.sroa.4.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i.i, i64 8
   store <2 x double> %i.dn, ptr %.sroa.4.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx, align 8, !tbaa !37
@@ -370,7 +372,7 @@ _ZN5Eigen14QuaternionBaseINS_10QuaternionIdLi0EEEE9normalizeEv.exit:
   %i.dv = fmul <2 x double> %i.al, %i.du
   %i.dw = bitcast double %i.az to <1 x double>
   %i.dx = shufflevector <1 x double> %i.dw, <1 x double> poison, <2 x i32> zeroinitializer
-  %i.dy = fmul <2 x double> %9, %i.dx
+  %i.dy = fmul <2 x double> %8, %i.dx
   %i.dz = fadd <2 x double> %i.dv, %i.dy          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   %i.ea = shufflevector <2 x double> %i.dz, <2 x double> poison, <2 x i32> zeroinitializer
