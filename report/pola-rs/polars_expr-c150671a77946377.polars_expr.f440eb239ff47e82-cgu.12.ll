@@ -204,7 +204,7 @@ bb.az:                                            ; preds = %bb.aj
   %i.lu = icmp eq ptr %i.u, %i.i, !dbg !109680
   br i1 %i.lu, label %bb.bb, label %bb.ba, !dbg !109686, !prof !103
 
-.loopexit416:                                     ; preds = %bb.ai, %bb.aj
+.loopexit416:                                     ; preds = %bb.aj, %bb.ai
   store i32 0, ptr %0, align 4, !dbg !109687
   br label %_RNvMNtNtCs9o5SvTbM2BP_6chrono5naive4dateNtB2_9NaiveDate16and_hms_nano_opt.exit, !dbg !108690
 
@@ -237,7 +237,7 @@ bb.bd:                                            ; preds = %bb.al
   %i.mk = icmp eq ptr %i.u, %i.i, !dbg !109720
   br i1 %i.mk, label %bb.bf, label %bb.be, !dbg !109726, !prof !103
 
-.loopexit415:                                     ; preds = %bb.ak, %bb.al
+.loopexit415:                                     ; preds = %bb.al, %bb.ak
   store i32 0, ptr %0, align 4, !dbg !109727
   br label %_RNvMNtNtCs9o5SvTbM2BP_6chrono5naive4dateNtB2_9NaiveDate16and_hms_nano_opt.exit, !dbg !108690
 
