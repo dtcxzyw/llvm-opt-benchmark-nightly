@@ -203,20 +203,19 @@ bb.i:                                             ; preds = %bb.c
   %i.az = phi ptr [ %i.h, %bb.i ], [ %i.ao, %bb.h ], [ %i.ag, %bb.g ], [ %i.y, %bb.f ], [ %i.q, %bb.e ]
   %i.ba = phi ptr [ %i.i, %bb.i ], [ %i.ap, %bb.h ], [ %i.ah, %bb.g ], [ %i.z, %bb.f ], [ %i.r, %bb.e ]
   store i8 %i.e, ptr %i.ax, align 8, !tbaa !1327
-  %13 = zext nneg i8 %i.e to i64
   br label %.noexc35
 
 .noexc35:                                         ; preds = %.sink.split.i.i.i.i.i.i, %.thread
-  %14 = phi i64 [ 0, %.thread ], [ %13, %.sink.split.i.i.i.i.i.i ]
   %i.bb = phi ptr [ %i.n, %.thread ], [ %i.ax, %.sink.split.i.i.i.i.i.i ]
   %i.bc = phi ptr [ %i.m, %.thread ], [ %i.ay, %.sink.split.i.i.i.i.i.i ]
   %.ph6371 = phi ptr [ %i.k, %.thread ], [ %i.az, %.sink.split.i.i.i.i.i.i ] ; 2 uses
   %.ph70 = phi ptr [ %i.l, %.thread ], [ %i.ba, %.sink.split.i.i.i.i.i.i ] ; 2 uses
+  %13 = zext nneg i8 %i.e to i64
   %i.bd = getelementptr inbounds nuw i8, ptr %11, i64 24 ; 2 uses
   store ptr %1, ptr %i.bd, align 8, !tbaa !1349
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #31
   store ptr %11, ptr %9, align 8, !tbaa !1340
-  call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm6EE4callILm0ENS_5beast16buffers_cat_viewIJNS_4asio12const_bufferES8_S8_S8_EE14const_iterator9incrementEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSC_(i64 noundef %14, ptr noundef nonnull align 8 dereferenceable(8) %9)
+  call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm6EE4callILm0ENS_5beast16buffers_cat_viewIJNS_4asio12const_bufferES8_S8_S8_EE14const_iterator9incrementEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSC_(i64 noundef %13, ptr noundef nonnull align 8 dereferenceable(8) %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #31
   %i.be = load ptr, ptr %11, align 8, !tbaa !1322
   %i.bf = load i8, ptr %i.bb, align 8, !tbaa !1327
@@ -619,18 +618,17 @@ bb.q:                                             ; preds = %bb.k
 
 .sink.split.i.i.i.i.i.i.i:                        ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m
   store i8 %i.aj, ptr %i.h, align 8, !tbaa !1327, !alias.scope !1633
-  %5 = zext nneg i8 %i.aj to i64
   br label %_ZN5boost5beast19buffers_prefix_viewINS0_16buffers_cat_viewIJNS_4asio12const_bufferES4_S4_S4_EEEE14const_iteratorppEv.exit
 
 _ZN5boost5beast19buffers_prefix_viewINS0_16buffers_cat_viewIJNS_4asio12const_bufferES4_S4_S4_EEEE14const_iteratorppEv.exit: ; preds = %bb.k, %.sink.split.i.i.i.i.i.i.i
-  %6 = phi i64 [ %5, %.sink.split.i.i.i.i.i.i.i ], [ 0, %bb.k ] ; 2 uses
+  %5 = zext nneg i8 %i.aj to i64                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #31, !noalias !1633
   store ptr %i.c, ptr %2, align 8, !tbaa !1340, !noalias !1633
-  call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm6EE4callILm0ENS_5beast16buffers_cat_viewIJNS_4asio12const_bufferES8_S8_S8_EE14const_iterator9incrementEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSC_(i64 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %2), !noalias !1633
+  call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm6EE4callILm0ENS_5beast16buffers_cat_viewIJNS_4asio12const_bufferES8_S8_S8_EE14const_iterator9incrementEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSC_(i64 noundef %5, ptr noundef nonnull align 8 dereferenceable(8) %2), !noalias !1633
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31, !noalias !1633
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #31
   store ptr %3, ptr %1, align 8, !tbaa !1340
-  %i.ap = call { ptr, i64 } @_ZN5boost4mp116detail19mp_with_index_impl_ILm6EE4callILm0ENS_5beast16buffers_cat_viewIJNS_4asio12const_bufferES8_S8_S8_EE14const_iterator11dereferenceEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSC_(i64 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %1)
+  %i.ap = call { ptr, i64 } @_ZN5boost4mp116detail19mp_with_index_impl_ILm6EE4callILm0ENS_5beast16buffers_cat_viewIJNS_4asio12const_bufferES8_S8_S8_EE14const_iterator11dereferenceEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSC_(i64 noundef %5, ptr noundef nonnull align 8 dereferenceable(8) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #31
   %i.aq = extractvalue { ptr, i64 } %i.ap, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #31
@@ -950,18 +948,17 @@ bb.l:                                             ; preds = %bb.f
 
 .sink.split.i.i.i.i.i.i.i.i:                      ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
   store i8 %i.l, ptr %i.j, align 8, !tbaa !1327, !alias.scope !1643
-  %10 = zext nneg i8 %i.l to i64
   br label %_ZN5boost5beast16buffers_cat_viewIJNS0_19buffers_prefix_viewINS1_IJNS_4asio12const_bufferES4_S4_S4_EEEEENS0_14buffers_suffixIS5_EEEE14const_iterator9incrementclILm1EEEvSt17integral_constantImXT_EE.exit
 
 _ZN5boost5beast16buffers_cat_viewIJNS0_19buffers_prefix_viewINS1_IJNS_4asio12const_bufferES4_S4_S4_EEEEENS0_14buffers_suffixIS5_EEEE14const_iterator9incrementclILm1EEEvSt17integral_constantImXT_EE.exit: ; preds = %bb.f, %.sink.split.i.i.i.i.i.i.i.i
-  %11 = phi i64 [ %10, %.sink.split.i.i.i.i.i.i.i.i ], [ 0, %bb.f ] ; 2 uses
+  %10 = zext nneg i8 %i.l to i64                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #31, !noalias !1643
   store ptr %i.f, ptr %6, align 8, !tbaa !1340, !noalias !1643
-  call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm6EE4callILm0ENS_5beast16buffers_cat_viewIJNS_4asio12const_bufferES8_S8_S8_EE14const_iterator9incrementEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSC_(i64 noundef %11, ptr noundef nonnull align 8 dereferenceable(8) %6), !noalias !1643
+  call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm6EE4callILm0ENS_5beast16buffers_cat_viewIJNS_4asio12const_bufferES8_S8_S8_EE14const_iterator9incrementEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSC_(i64 noundef %10, ptr noundef nonnull align 8 dereferenceable(8) %6), !noalias !1643
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #31, !noalias !1643
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #31
   store ptr %7, ptr %5, align 8, !tbaa !1340
-  %i.r = call { ptr, i64 } @_ZN5boost4mp116detail19mp_with_index_impl_ILm6EE4callILm0ENS_5beast16buffers_cat_viewIJNS_4asio12const_bufferES8_S8_S8_EE14const_iterator11dereferenceEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSC_(i64 noundef %11, ptr noundef nonnull align 8 dereferenceable(8) %5)
+  %i.r = call { ptr, i64 } @_ZN5boost4mp116detail19mp_with_index_impl_ILm6EE4callILm0ENS_5beast16buffers_cat_viewIJNS_4asio12const_bufferES8_S8_S8_EE14const_iterator11dereferenceEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSC_(i64 noundef %10, ptr noundef nonnull align 8 dereferenceable(8) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #31
   %i.s = extractvalue { ptr, i64 } %i.r, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #31

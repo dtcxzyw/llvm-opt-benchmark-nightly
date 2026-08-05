@@ -201,23 +201,22 @@ bb.a:
 bb.b:                                             ; preds = %bb.c, %bb.a
   %i.a = tail call noundef i32 @_ZN2v88internal18ExperimentalRegExp14OneshotExecRawEPNS0_7IsolateENS0_12DirectHandleINS0_12IrRegExpDataEEENS4_INS0_6StringEEEPiii(ptr noundef %0, ptr %1, ptr %2, ptr noundef %4, i32 noundef %5, i32 noundef %3) ; 3 uses
   %i.b = icmp sgt i32 %i.a, 0
-  br i1 %i.b, label %.loopexit14, label %bb.c
+  br i1 %i.b, label %.loopexit.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   switch i32 %i.a, label %.loopexit14 [
-    i32 0, label %.loopexit
+    i32 0, label %.loopexit.loopexit
     i32 -2, label %bb.b
   ]
 
-.loopexit14:                                      ; preds = %bb.c, %bb.b
-  %.sroa.3.1.ph.ph = phi i64 [ 4294967296, %bb.b ], [ 0, %bb.c ]
+.loopexit.loopexit:                               ; preds = %bb.c, %bb.b
+  br label %.loopexit14
+
+.loopexit14:                                      ; preds = %bb.c, %.loopexit.loopexit
+  %.sroa.3.1.ph.ph = phi i64 [ 4294967296, %.loopexit.loopexit ], [ 0, %bb.c ]
   %i.c = zext i32 %i.a to i64
   %i.d = or disjoint i64 %.sroa.3.1.ph.ph, %i.c
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %bb.c, %.loopexit14
-  %.sroa.0.0.insert.insert = phi i64 [ %i.d, %.loopexit14 ], [ 4294967296, %bb.c ]
-  ret i64 %.sroa.0.0.insert.insert
+  ret i64 %i.d
 }
 
 declare void @_ZN2v88internal8OFStreamC2EP8_IO_FILE(ptr noundef nonnull align 8 dereferenceable(80), ptr noundef, ptr noundef) unnamed_addr #2

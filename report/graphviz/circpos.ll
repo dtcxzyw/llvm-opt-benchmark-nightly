@@ -201,11 +201,10 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph97.spl
   %i.ez = load double, ptr %i.ey, align 8, !tbaa !65
   %i.fa = call nsz double @llvm.maxnum.f64(double %i.ez, double %i.ew)
   store double %i.fa, ptr %i.ey, align 8, !tbaa !65
-  %5 = zext nneg i32 %.075.lcssa.i to i64
   br label %.lr.ph103.i
 
 .lr.ph103.i:                                      ; preds = %.loopexit.loopexit.peel.begin.i, %bb.n, %bb.m
-  %.075.lcssa137.ph.i = phi i64 [ 1, %bb.m ], [ 2, %bb.n ], [ %5, %.loopexit.loopexit.peel.begin.i ]
+  %.075.lcssa137.ph.i = zext nneg i32 %.075.lcssa.i to i64
   %i.fb = icmp eq i64 %.val, 1                    ; 4 uses
   br label %bb.p
 
