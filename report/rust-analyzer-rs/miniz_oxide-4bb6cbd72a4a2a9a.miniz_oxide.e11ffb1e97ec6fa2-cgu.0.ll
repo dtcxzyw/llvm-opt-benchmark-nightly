@@ -114,14 +114,12 @@ _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core33create_comp_flags_from_zip_par
   %i.q = and i32 %phi.call, 4095                  ; 2 uses
   %i.r = lshr i32 %i.q, 2
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 65584
-  %3 = trunc nuw nsw i32 %i.r to i16
   %i.t = trunc nuw nsw i32 %i.q to i16
-  %.lhs.trunc9 = add nuw nsw i16 %3, 2
-  %.lhs.trunc = add nuw nsw i16 %i.t, 2
-  %4 = udiv i16 %.lhs.trunc9, 3
-  %5 = udiv i16 %.lhs.trunc, 3
-  %6 = insertelement <2 x i16> poison, i16 %5, i64 0
-  %7 = insertelement <2 x i16> %6, i16 %4, i64 1
+  %3 = insertelement <2 x i16> poison, i16 %i.t, i64 0
+  %4 = trunc nuw nsw i32 %i.r to i16
+  %5 = insertelement <2 x i16> %3, i16 %4, i64 1
+  %6 = add nuw nsw <2 x i16> %5, splat (i16 2)
+  %7 = udiv <2 x i16> %6, splat (i16 3)
   %i.u = add nuw nsw <2 x i16> %7, splat (i16 1)
   %i.v = zext nneg <2 x i16> %i.u to <2 x i32>
   store <2 x i32> %i.v, ptr %i.s, align 8
@@ -171,14 +169,12 @@ _RNvMs1_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_15CompressorOxide20set_
   %i.t = and i32 %phi.call.i, 4095                ; 2 uses
   %i.u = lshr i32 %i.t, 2
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 65584
-  %2 = trunc nuw nsw i32 %i.u to i16
   %i.w = trunc nuw nsw i32 %i.t to i16
-  %.lhs.trunc9.i = add nuw nsw i16 %2, 2
-  %.lhs.trunc.i = add nuw nsw i16 %i.w, 2
-  %3 = udiv i16 %.lhs.trunc9.i, 3
-  %4 = udiv i16 %.lhs.trunc.i, 3
-  %5 = insertelement <2 x i16> poison, i16 %4, i64 0
-  %6 = insertelement <2 x i16> %5, i16 %3, i64 1
+  %2 = insertelement <2 x i16> poison, i16 %i.w, i64 0
+  %3 = trunc nuw nsw i32 %i.u to i16
+  %4 = insertelement <2 x i16> %2, i16 %3, i64 1
+  %5 = add nuw nsw <2 x i16> %4, splat (i16 2)
+  %6 = udiv <2 x i16> %5, splat (i16 3)
   %i.x = add nuw nsw <2 x i16> %6, splat (i16 1)
   %i.y = zext nneg <2 x i16> %i.x to <2 x i32>
   store <2 x i32> %i.y, ptr %i.v, align 8, !alias.scope !5
@@ -227,15 +223,13 @@ bb.b:                                             ; preds = %.split, %.split2
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 65706
   store i8 %.sink11, ptr %i.o, align 2
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 65584
-  %.sink.in.in.in.in = trunc nuw nsw i32 %.sink.in.in.in.in.in to i16
   %.sink10.in.in.in.in = trunc nuw nsw i32 %.sink10.in.in.in.in.in to i16
-  %.sink.in.in.in = add nuw nsw i16 %.sink.in.in.in.in, 2
-  %.sink10.in.in.in = add nuw nsw i16 %.sink10.in.in.in.in, 2
-  %.sink.in.in = udiv i16 %.sink.in.in.in, 3
-  %.sink10.in.in = udiv i16 %.sink10.in.in.in, 3
-  %2 = insertelement <2 x i16> poison, i16 %.sink10.in.in, i64 0
-  %3 = insertelement <2 x i16> %2, i16 %.sink.in.in, i64 1
-  %i.q = add nuw nsw <2 x i16> %3, splat (i16 1)
+  %2 = insertelement <2 x i16> poison, i16 %.sink10.in.in.in.in, i64 0
+  %3 = trunc nuw nsw i32 %.sink.in.in.in.in.in to i16
+  %4 = insertelement <2 x i16> %2, i16 %3, i64 1
+  %5 = add nuw nsw <2 x i16> %4, splat (i16 2)
+  %6 = udiv <2 x i16> %5, splat (i16 3)
+  %i.q = add nuw nsw <2 x i16> %6, splat (i16 1)
   %i.r = zext nneg <2 x i16> %i.q to <2 x i32>
   store <2 x i32> %i.r, ptr %i.p, align 8
   ret void
@@ -290,14 +284,12 @@ bb.f:                                             ; preds = %_RNvXs9_NtCsbSS6DM8
   %i.i = trunc i32 %i.h to i8
   %i.j = and i8 %i.i, 1
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %2 = trunc nuw nsw i32 %i.g to i16
   %i.l = trunc nuw nsw i32 %i.f to i16
-  %.lhs.trunc1.i = add nuw nsw i16 %2, 2
-  %.lhs.trunc.i = add nuw nsw i16 %i.l, 2
-  %3 = udiv i16 %.lhs.trunc1.i, 3
-  %4 = udiv i16 %.lhs.trunc.i, 3
-  %5 = insertelement <2 x i16> poison, i16 %4, i64 0
-  %6 = insertelement <2 x i16> %5, i16 %3, i64 1
+  %2 = insertelement <2 x i16> poison, i16 %i.l, i64 0
+  %3 = trunc nuw nsw i32 %i.g to i16
+  %4 = insertelement <2 x i16> %2, i16 %3, i64 1
+  %5 = add nuw nsw <2 x i16> %4, splat (i16 2)
+  %6 = udiv <2 x i16> %5, splat (i16 3)
   %i.m = add nuw nsw <2 x i16> %6, splat (i16 1)
   %i.n = zext nneg <2 x i16> %i.m to <2 x i32>
   store <2 x i32> %i.n, ptr %i.k, align 8, !alias.scope !12

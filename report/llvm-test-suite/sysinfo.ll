@@ -203,15 +203,11 @@ bb.dz:                                            ; preds = %bb.ea, %bb.dy
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %bb.dz
   %.03.i.i = phi i64 [ 10000, %bb.dz ], [ %i.ue, %.lr.ph.i.i ]
   %i.tz = phi i64 [ %.sroa.0.0.i, %bb.dz ], [ %i.ud, %.lr.ph.i.i ]
-  %37 = mul nuw nsw i64 %i.tz, 48271
-  %38 = urem i64 %37, 2147483647
-  %39 = mul nuw nsw i64 %38, 48271
-  %40 = urem i64 %39, 2147483647
-  %i.ua = mul nuw nsw i64 %40, 48271
+  %i.ua = mul nuw nsw i64 %i.tz, 48271
   %i.ub = urem i64 %i.ua, 2147483647
   %i.uc = mul nuw nsw i64 %i.ub, 48271
   %i.ud = urem i64 %i.uc, 2147483647              ; 2 uses
-  %i.ue = add nsw i64 %.03.i.i, -4                ; 2 uses
+  %i.ue = add nsw i64 %.03.i.i, -2                ; 2 uses
   %.not.i224.i.3 = icmp eq i64 %i.ue, 0
   br i1 %.not.i224.i.3, label %bb.ea, label %.lr.ph.i.i, !llvm.loop !82
 

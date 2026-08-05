@@ -1,7 +1,7 @@
 inline.NumInlined: 486
 inline.NumDeleted: 221
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 %"class.std::allocator.11" = type { i8 }
 %"class.arrow::Result.2" = type { %"class.arrow::Status", %"class.arrow::internal::AlignedStorage.5" }
@@ -203,21 +203,8 @@ define internal void @_ZN5arrow4util8internalL20InitializeLargeTableEv() #3 {
   br label %bb.b
 
 .preheader.1:                                     ; preds = %bb.b, %.preheader.1
-  %indvars.iv.1 = phi i64 [ %indvars.iv.next.1.1, %.preheader.1 ], [ 0, %bb.b ] ; 4 uses
-  %0 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.1
-  %1 = load i8, ptr %0, align 2, !tbaa !9
-  %2 = zext i8 %1 to i64
-  %3 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %2
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 268
-  %5 = load i8, ptr %4, align 1, !tbaa !9
-  %6 = udiv i8 %5, 12
-  %7 = zext nneg i8 %6 to i16
-  %8 = shl nuw nsw i16 %7, 8
-  %9 = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.1
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 512
-  store i16 %8, ptr %10, align 4, !tbaa !10
-  %indvars.iv.next.1 = or disjoint i64 %indvars.iv.1, 1 ; 2 uses
-  %i.a = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.next.1
+  %indvars.iv.1 = phi i64 [ %indvars.iv.next.1.1, %.preheader.1 ], [ 0, %bb.b ] ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.1
   %i.b = load i8, ptr %i.a, align 1, !tbaa !9
   %i.c = zext i8 %i.b to i64
   %i.d = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %i.c
@@ -226,29 +213,16 @@ define internal void @_ZN5arrow4util8internalL20InitializeLargeTableEv() #3 {
   %i.g = udiv i8 %i.f, 12
   %i.h = zext nneg i8 %i.g to i16
   %i.i = shl nuw nsw i16 %i.h, 8
-  %i.j = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.next.1
+  %i.j = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.1
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 512
   store i16 %i.i, ptr %i.k, align 2, !tbaa !10
-  %indvars.iv.next.1.1 = add nuw nsw i64 %indvars.iv.1, 2 ; 2 uses
+  %indvars.iv.next.1.1 = add nuw nsw i64 %indvars.iv.1, 1 ; 2 uses
   %exitcond.1.not.1 = icmp eq i64 %indvars.iv.next.1.1, 256
   br i1 %exitcond.1.not.1, label %.preheader.2, label %.preheader.1, !llvm.loop !12
 
 .preheader.2:                                     ; preds = %.preheader.1, %.preheader.2
-  %indvars.iv.2 = phi i64 [ %indvars.iv.next.2.1, %.preheader.2 ], [ 0, %.preheader.1 ] ; 4 uses
-  %11 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.2
-  %12 = load i8, ptr %11, align 2, !tbaa !9
-  %13 = zext i8 %12 to i64
-  %14 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %13
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 280
-  %16 = load i8, ptr %15, align 1, !tbaa !9
-  %17 = udiv i8 %16, 12
-  %18 = zext nneg i8 %17 to i16
-  %19 = shl nuw nsw i16 %18, 8
-  %20 = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.2
-  %21 = getelementptr inbounds nuw i8, ptr %20, i64 1024
-  store i16 %19, ptr %21, align 4, !tbaa !10
-  %indvars.iv.next.2 = or disjoint i64 %indvars.iv.2, 1 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.next.2
+  %indvars.iv.2 = phi i64 [ %indvars.iv.next.2.1, %.preheader.2 ], [ 0, %.preheader.1 ] ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.2
   %i.m = load i8, ptr %i.l, align 1, !tbaa !9
   %i.n = zext i8 %i.m to i64
   %i.o = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %i.n
@@ -257,29 +231,16 @@ define internal void @_ZN5arrow4util8internalL20InitializeLargeTableEv() #3 {
   %i.r = udiv i8 %i.q, 12
   %i.s = zext nneg i8 %i.r to i16
   %i.t = shl nuw nsw i16 %i.s, 8
-  %i.u = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.next.2
+  %i.u = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.2
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1024
   store i16 %i.t, ptr %i.v, align 2, !tbaa !10
-  %indvars.iv.next.2.1 = add nuw nsw i64 %indvars.iv.2, 2 ; 2 uses
+  %indvars.iv.next.2.1 = add nuw nsw i64 %indvars.iv.2, 1 ; 2 uses
   %exitcond.2.not.1 = icmp eq i64 %indvars.iv.next.2.1, 256
   br i1 %exitcond.2.not.1, label %.preheader.3, label %.preheader.2, !llvm.loop !12
 
 .preheader.3:                                     ; preds = %.preheader.2, %.preheader.3
-  %indvars.iv.3 = phi i64 [ %indvars.iv.next.3.1, %.preheader.3 ], [ 0, %.preheader.2 ] ; 4 uses
-  %22 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.3
-  %23 = load i8, ptr %22, align 2, !tbaa !9
-  %24 = zext i8 %23 to i64
-  %25 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %24
-  %26 = getelementptr inbounds nuw i8, ptr %25, i64 292
-  %27 = load i8, ptr %26, align 1, !tbaa !9
-  %28 = udiv i8 %27, 12
-  %29 = zext nneg i8 %28 to i16
-  %30 = shl nuw nsw i16 %29, 8
-  %31 = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.3
-  %32 = getelementptr inbounds nuw i8, ptr %31, i64 1536
-  store i16 %30, ptr %32, align 4, !tbaa !10
-  %indvars.iv.next.3 = or disjoint i64 %indvars.iv.3, 1 ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.next.3
+  %indvars.iv.3 = phi i64 [ %indvars.iv.next.3.1, %.preheader.3 ], [ 0, %.preheader.2 ] ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.3
   %i.x = load i8, ptr %i.w, align 1, !tbaa !9
   %i.y = zext i8 %i.x to i64
   %i.z = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %i.y
@@ -288,29 +249,16 @@ define internal void @_ZN5arrow4util8internalL20InitializeLargeTableEv() #3 {
   %i.ac = udiv i8 %i.ab, 12
   %i.ad = zext nneg i8 %i.ac to i16
   %i.ae = shl nuw nsw i16 %i.ad, 8
-  %i.af = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.next.3
+  %i.af = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.3
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 1536
   store i16 %i.ae, ptr %i.ag, align 2, !tbaa !10
-  %indvars.iv.next.3.1 = add nuw nsw i64 %indvars.iv.3, 2 ; 2 uses
+  %indvars.iv.next.3.1 = add nuw nsw i64 %indvars.iv.3, 1 ; 2 uses
   %exitcond.3.not.1 = icmp eq i64 %indvars.iv.next.3.1, 256
   br i1 %exitcond.3.not.1, label %.preheader.4, label %.preheader.3, !llvm.loop !12
 
 .preheader.4:                                     ; preds = %.preheader.3, %.preheader.4
-  %indvars.iv.4 = phi i64 [ %indvars.iv.next.4.1, %.preheader.4 ], [ 0, %.preheader.3 ] ; 4 uses
-  %33 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.4
-  %34 = load i8, ptr %33, align 2, !tbaa !9
-  %35 = zext i8 %34 to i64
-  %36 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %35
-  %37 = getelementptr inbounds nuw i8, ptr %36, i64 304
-  %38 = load i8, ptr %37, align 1, !tbaa !9
-  %39 = udiv i8 %38, 12
-  %40 = zext nneg i8 %39 to i16
-  %41 = shl nuw nsw i16 %40, 8
-  %42 = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.4
-  %43 = getelementptr inbounds nuw i8, ptr %42, i64 2048
-  store i16 %41, ptr %43, align 4, !tbaa !10
-  %indvars.iv.next.4 = or disjoint i64 %indvars.iv.4, 1 ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.next.4
+  %indvars.iv.4 = phi i64 [ %indvars.iv.next.4.1, %.preheader.4 ], [ 0, %.preheader.3 ] ; 3 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.4
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !9
   %i.aj = zext i8 %i.ai to i64
   %i.ak = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %i.aj
@@ -319,29 +267,16 @@ define internal void @_ZN5arrow4util8internalL20InitializeLargeTableEv() #3 {
   %i.an = udiv i8 %i.am, 12
   %i.ao = zext nneg i8 %i.an to i16
   %i.ap = shl nuw nsw i16 %i.ao, 8
-  %i.aq = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.next.4
+  %i.aq = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.4
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 2048
   store i16 %i.ap, ptr %i.ar, align 2, !tbaa !10
-  %indvars.iv.next.4.1 = add nuw nsw i64 %indvars.iv.4, 2 ; 2 uses
+  %indvars.iv.next.4.1 = add nuw nsw i64 %indvars.iv.4, 1 ; 2 uses
   %exitcond.4.not.1 = icmp eq i64 %indvars.iv.next.4.1, 256
   br i1 %exitcond.4.not.1, label %.preheader.5, label %.preheader.4, !llvm.loop !12
 
 .preheader.5:                                     ; preds = %.preheader.4, %.preheader.5
-  %indvars.iv.5 = phi i64 [ %indvars.iv.next.5.1, %.preheader.5 ], [ 0, %.preheader.4 ] ; 4 uses
-  %44 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.5
-  %45 = load i8, ptr %44, align 2, !tbaa !9
-  %46 = zext i8 %45 to i64
-  %47 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %46
-  %48 = getelementptr inbounds nuw i8, ptr %47, i64 316
-  %49 = load i8, ptr %48, align 1, !tbaa !9
-  %50 = udiv i8 %49, 12
-  %51 = zext nneg i8 %50 to i16
-  %52 = shl nuw nsw i16 %51, 8
-  %53 = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.5
-  %54 = getelementptr inbounds nuw i8, ptr %53, i64 2560
-  store i16 %52, ptr %54, align 4, !tbaa !10
-  %indvars.iv.next.5 = or disjoint i64 %indvars.iv.5, 1 ; 2 uses
-  %i.as = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.next.5
+  %indvars.iv.5 = phi i64 [ %indvars.iv.next.5.1, %.preheader.5 ], [ 0, %.preheader.4 ] ; 3 uses
+  %i.as = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.5
   %i.at = load i8, ptr %i.as, align 1, !tbaa !9
   %i.au = zext i8 %i.at to i64
   %i.av = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %i.au
@@ -350,29 +285,16 @@ define internal void @_ZN5arrow4util8internalL20InitializeLargeTableEv() #3 {
   %i.ay = udiv i8 %i.ax, 12
   %i.az = zext nneg i8 %i.ay to i16
   %i.ba = shl nuw nsw i16 %i.az, 8
-  %i.bb = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.next.5
+  %i.bb = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.5
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 2560
   store i16 %i.ba, ptr %i.bc, align 2, !tbaa !10
-  %indvars.iv.next.5.1 = add nuw nsw i64 %indvars.iv.5, 2 ; 2 uses
+  %indvars.iv.next.5.1 = add nuw nsw i64 %indvars.iv.5, 1 ; 2 uses
   %exitcond.5.not.1 = icmp eq i64 %indvars.iv.next.5.1, 256
   br i1 %exitcond.5.not.1, label %.preheader.6, label %.preheader.5, !llvm.loop !12
 
 .preheader.6:                                     ; preds = %.preheader.5, %.preheader.6
-  %indvars.iv.6 = phi i64 [ %indvars.iv.next.6.1, %.preheader.6 ], [ 0, %.preheader.5 ] ; 4 uses
-  %55 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.6
-  %56 = load i8, ptr %55, align 2, !tbaa !9
-  %57 = zext i8 %56 to i64
-  %58 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %57
-  %59 = getelementptr inbounds nuw i8, ptr %58, i64 328
-  %60 = load i8, ptr %59, align 1, !tbaa !9
-  %61 = udiv i8 %60, 12
-  %62 = zext nneg i8 %61 to i16
-  %63 = shl nuw nsw i16 %62, 8
-  %64 = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.6
-  %65 = getelementptr inbounds nuw i8, ptr %64, i64 3072
-  store i16 %63, ptr %65, align 4, !tbaa !10
-  %indvars.iv.next.6 = or disjoint i64 %indvars.iv.6, 1 ; 2 uses
-  %i.bd = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.next.6
+  %indvars.iv.6 = phi i64 [ %indvars.iv.next.6.1, %.preheader.6 ], [ 0, %.preheader.5 ] ; 3 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.6
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !9
   %i.bf = zext i8 %i.be to i64
   %i.bg = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %i.bf
@@ -381,29 +303,16 @@ define internal void @_ZN5arrow4util8internalL20InitializeLargeTableEv() #3 {
   %i.bj = udiv i8 %i.bi, 12
   %i.bk = zext nneg i8 %i.bj to i16
   %i.bl = shl nuw nsw i16 %i.bk, 8
-  %i.bm = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.next.6
+  %i.bm = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.6
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 3072
   store i16 %i.bl, ptr %i.bn, align 2, !tbaa !10
-  %indvars.iv.next.6.1 = add nuw nsw i64 %indvars.iv.6, 2 ; 2 uses
+  %indvars.iv.next.6.1 = add nuw nsw i64 %indvars.iv.6, 1 ; 2 uses
   %exitcond.6.not.1 = icmp eq i64 %indvars.iv.next.6.1, 256
   br i1 %exitcond.6.not.1, label %.preheader.7, label %.preheader.6, !llvm.loop !12
 
 .preheader.7:                                     ; preds = %.preheader.6, %.preheader.7
-  %indvars.iv.7 = phi i64 [ %indvars.iv.next.7.1, %.preheader.7 ], [ 0, %.preheader.6 ] ; 4 uses
-  %66 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.7
-  %67 = load i8, ptr %66, align 2, !tbaa !9
-  %68 = zext i8 %67 to i64
-  %69 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %68
-  %70 = getelementptr inbounds nuw i8, ptr %69, i64 340
-  %71 = load i8, ptr %70, align 1, !tbaa !9
-  %72 = udiv i8 %71, 12
-  %73 = zext nneg i8 %72 to i16
-  %74 = shl nuw nsw i16 %73, 8
-  %75 = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.7
-  %76 = getelementptr inbounds nuw i8, ptr %75, i64 3584
-  store i16 %74, ptr %76, align 4, !tbaa !10
-  %indvars.iv.next.7 = or disjoint i64 %indvars.iv.7, 1 ; 2 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.next.7
+  %indvars.iv.7 = phi i64 [ %indvars.iv.next.7.1, %.preheader.7 ], [ 0, %.preheader.6 ] ; 3 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.7
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !9
   %i.bq = zext i8 %i.bp to i64
   %i.br = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %i.bq
@@ -412,29 +321,16 @@ define internal void @_ZN5arrow4util8internalL20InitializeLargeTableEv() #3 {
   %i.bu = udiv i8 %i.bt, 12
   %i.bv = zext nneg i8 %i.bu to i16
   %i.bw = shl nuw nsw i16 %i.bv, 8
-  %i.bx = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.next.7
+  %i.bx = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.7
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 3584
   store i16 %i.bw, ptr %i.by, align 2, !tbaa !10
-  %indvars.iv.next.7.1 = add nuw nsw i64 %indvars.iv.7, 2 ; 2 uses
+  %indvars.iv.next.7.1 = add nuw nsw i64 %indvars.iv.7, 1 ; 2 uses
   %exitcond.7.not.1 = icmp eq i64 %indvars.iv.next.7.1, 256
   br i1 %exitcond.7.not.1, label %.preheader.8, label %.preheader.7, !llvm.loop !12
 
 .preheader.8:                                     ; preds = %.preheader.7, %.preheader.8
-  %indvars.iv.8 = phi i64 [ %indvars.iv.next.8.1, %.preheader.8 ], [ 0, %.preheader.7 ] ; 4 uses
-  %77 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.8
-  %78 = load i8, ptr %77, align 2, !tbaa !9
-  %79 = zext i8 %78 to i64
-  %80 = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %79
-  %81 = getelementptr inbounds nuw i8, ptr %80, i64 352
-  %82 = load i8, ptr %81, align 1, !tbaa !9
-  %83 = udiv i8 %82, 12
-  %84 = zext nneg i8 %83 to i16
-  %85 = shl nuw nsw i16 %84, 8
-  %86 = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.8
-  %87 = getelementptr inbounds nuw i8, ptr %86, i64 4096
-  store i16 %85, ptr %87, align 4, !tbaa !10
-  %indvars.iv.next.8 = or disjoint i64 %indvars.iv.8, 1 ; 2 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.next.8
+  %indvars.iv.8 = phi i64 [ %indvars.iv.next.8.1, %.preheader.8 ], [ 0, %.preheader.7 ] ; 3 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %indvars.iv.8
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !9
   %i.cb = zext i8 %i.ca to i64
   %i.cc = getelementptr inbounds nuw i8, ptr @_ZN5arrow4util8internal16utf8_small_tableE, i64 %i.cb
@@ -443,10 +339,10 @@ define internal void @_ZN5arrow4util8internalL20InitializeLargeTableEv() #3 {
   %i.cf = udiv i8 %i.ce, 12
   %i.cg = zext nneg i8 %i.cf to i16
   %i.ch = shl nuw nsw i16 %i.cg, 8
-  %i.ci = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.next.8
+  %i.ci = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %indvars.iv.8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 4096
   store i16 %i.ch, ptr %i.cj, align 2, !tbaa !10
-  %indvars.iv.next.8.1 = add nuw nsw i64 %indvars.iv.8, 2 ; 2 uses
+  %indvars.iv.next.8.1 = add nuw nsw i64 %indvars.iv.8, 1 ; 2 uses
   %exitcond.8.not.1 = icmp eq i64 %indvars.iv.next.8.1, 256
   br i1 %exitcond.8.not.1, label %bb.a, label %.preheader.8, !llvm.loop !12
 

@@ -1,8 +1,8 @@
 inline.NumInlined: 148
 inline.NumDeleted: 54
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 22
-loop-unroll.NumUnrolled: 23
+loop-unroll.NumRuntimeUnrolled: 21
+loop-unroll.NumUnrolled: 22
 begin_hunk_0_@Cec_ManSRunImply:bb.a
   br label %vector.body213
 
@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.w, label %.lr.ph.preheader.i, label %.thread
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %wide.trip.count.i = zext nneg i32 %.val143 to i64 ; 85 uses
+  %wide.trip.count.i = zext nneg i32 %.val143 to i64 ; 83 uses
   br label %.lr.ph.i
 
 bb.b:                                             ; preds = %.lr.ph.i
@@ -272,17 +272,16 @@ Abc_TtIsConst0.exit:                              ; preds = %.lr.ph.i, %.lr.ph.i
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !125 ; 2 uses
   %i.bh = icmp eq i32 %i.bg, 112
   %i.bi = add nsw i32 %i.bg, 1
-  %spec.select = select i1 %i.bh, i32 0, i32 %i.bi ; 5 uses
+  %spec.select = select i1 %i.bh, i32 0, i32 %i.bi ; 3 uses
   store i32 %spec.select, ptr %i.bf, align 4, !tbaa !125
   %i.bj = icmp eq i32 %.val143, 1
   br i1 %i.bj, label %bb.d, label %.lr.ph
 
 .lr.ph:                                           ; preds = %Abc_TtIsConst0.exit
-  %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !48 ; 3 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
-  %unroll_iter = and i64 %wide.trip.count.i, 2147483646
+  %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !48
+  %wide.trip.count = zext nneg i32 %.val143 to i64
   br label %bb.e
 
 bb.d:                                             ; preds = %Abc_TtIsConst0.exit
@@ -345,52 +344,22 @@ bb.d:                                             ; preds = %Abc_TtIsConst0.exit
   store i64 %i.dh, ptr %i.be, align 8, !tbaa !49
   br label %Abc_TtAndSharp.exit240
 
-bb.e:                                             ; preds = %bb.e, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %bb.e ] ; 4 uses
-  %niter = phi i64 [ 0, %.lr.ph ], [ %niter.next.1, %bb.e ]
-  %2 = trunc i64 %indvars.iv to i32
-  %3 = add i32 %spec.select, %2
-  %4 = srem i32 %3, 113
-  %5 = sext i32 %4 to i64
-  %6 = getelementptr inbounds [8 x i8], ptr %i.bk, i64 %5
-  %7 = load i64, ptr %6, align 8, !tbaa !49
-  %8 = xor i64 %7, -1
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %indvars.iv
-  store i64 %8, ptr %9, align 8, !tbaa !49
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %i.di = trunc i64 %indvars.iv.next to i32
+bb.e:                                             ; preds = %.lr.ph, %bb.e
+  %niter = phi i64 [ 0, %.lr.ph ], [ %niter.next.1, %bb.e ] ; 3 uses
+  %i.di = trunc i64 %niter to i32
   %i.dj = add i32 %spec.select, %i.di
   %i.dk = srem i32 %i.dj, 113
   %i.dl = sext i32 %i.dk to i64
   %i.dm = getelementptr inbounds [8 x i8], ptr %i.bk, i64 %i.dl
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !49
   %i.do = xor i64 %i.dn, -1
-  %i.dp = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %indvars.iv.next
+  %i.dp = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %niter
   store i64 %i.do, ptr %i.dp, align 8, !tbaa !49
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.lr.ph.i156.preheader.unr-lcssa, label %bb.e, !llvm.loop !126
+  %niter.next.1 = add nuw nsw i64 %niter, 1       ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %wide.trip.count
+  br i1 %niter.ncmp.1, label %.lr.ph.i156.preheader, label %bb.e, !llvm.loop !126
 
-.lr.ph.i156.preheader.unr-lcssa:                  ; preds = %bb.e
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i156.preheader, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %.lr.ph.i156.preheader.unr-lcssa
-  %lcmp.mod543 = trunc i32 %.val143 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod543)
-  %10 = trunc i64 %indvars.iv.next.1 to i32
-  %11 = add i32 %spec.select, %10
-  %12 = srem i32 %11, 113
-  %13 = sext i32 %12 to i64
-  %14 = getelementptr inbounds [8 x i8], ptr %i.bk, i64 %13
-  %15 = load i64, ptr %14, align 8, !tbaa !49
-  %16 = xor i64 %15, -1
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %indvars.iv.next.1
-  store i64 %16, ptr %17, align 8, !tbaa !49
-  br label %.lr.ph.i156.preheader
-
-.lr.ph.i156.preheader:                            ; preds = %.lr.ph.i156.preheader.unr-lcssa, %.epil.preheader
+.lr.ph.i156.preheader:                            ; preds = %bb.e
   %min.iters.check = icmp ult i32 %.val143, 20
   br i1 %min.iters.check, label %.lr.ph.i156.preheader541, label %vector.memcheck
 

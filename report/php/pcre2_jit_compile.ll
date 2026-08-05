@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
   store i32 3, ptr %i.n, align 8, !tbaa !21
   %i.o = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 12 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.o, i8 -1, i64 12, i1 false), !tbaa !21
-  %i.p = getelementptr inbounds nuw i8, ptr %6, i64 56 ; 16 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %6, i64 56 ; 15 uses
   store i32 0, ptr %i.p, align 8, !tbaa !666
   %i.q = load ptr, ptr %0, align 8, !tbaa !126    ; 7 uses
   store ptr %i.q, ptr %6, align 8, !tbaa !668
@@ -291,7 +291,7 @@ bb.i:                                             ; preds = %delayed_mem_copy_mo
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 172
   %i.ba = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 6 uses
-  %i.bb = getelementptr inbounds nuw i8, ptr %6, i64 20 ; 12 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %6, i64 20 ; 11 uses
   %i.bc = or disjoint i32 %.0244521, 128          ; 3 uses
   %i.bd = icmp eq i32 %3, 4                       ; 2 uses
   br label %.lr.ph
@@ -694,7 +694,7 @@ bb.db:                                            ; preds = %.loopexit590, %.loo
   br label %.loopexit588
 
 .loopexit588:                                     ; preds = %bb.da, %.preheader587, %bb.db
-  %.4267 = phi i32 [ %i.yt, %bb.db ], [ %.2265, %.preheader587 ], [ %i.yr, %bb.da ] ; 4 uses
+  %.4267 = phi i32 [ %i.yt, %bb.db ], [ %.2265, %.preheader587 ], [ %i.yr, %bb.da ] ; 3 uses
   switch i32 %3, label %.preheader [
     i32 4, label %bb.dg
     i32 1, label %bb.dg
@@ -705,30 +705,23 @@ bb.db:                                            ; preds = %.loopexit590, %.loo
   br i1 %i.yu, label %.lr.ph632.a, label %.outer
 
 .lr.ph632.a:                                      ; preds = %.preheader
-  %wide.trip.count687 = zext nneg i32 %.4 to i64  ; 2 uses
-  br i1 %i.i, label %.critedge.us.preheader, label %.lr.ph632.split.preheader
+  %wide.trip.count687 = zext nneg i32 %.4 to i64
+  br label %.lr.ph632.split.preheader
 
-.lr.ph632.split.preheader:                        ; preds = %.lr.ph632.a
-  %.pre705 = load ptr, ptr %6, align 8, !tbaa !668 ; 6 uses
-  %.pre706 = load i32, ptr %i.p, align 8, !tbaa !666
-  %7 = getelementptr inbounds nuw i8, ptr %.pre705, i64 144
-  %8 = getelementptr inbounds nuw i8, ptr %.pre705, i64 144
-  br label %.lr.ph632.split
+.lr.ph632.split.preheader:                        ; preds = %.lr.ph632.a, %delayed_mem_copy_move.exit487
+  %indvars.iv677 = phi i64 [ 0, %.lr.ph632.a ], [ %indvars.iv.next680, %delayed_mem_copy_move.exit487 ] ; 3 uses
+  %.5268630 = phi i32 [ %.4267, %.lr.ph632.a ], [ %i.aad, %delayed_mem_copy_move.exit487 ] ; 3 uses
+  br i1 %i.i, label %.lr.ph632.split, label %.critedge.us
 
-.critedge.us.preheader:                           ; preds = %.lr.ph632.a
-  %.pre707 = load i32, ptr %i.p, align 8, !tbaa !666
-  br label %.critedge.us
-
-.critedge.us:                                     ; preds = %.critedge.us.preheader, %delayed_mem_copy_move.exit496.us
-  %9 = phi i32 [ %.pre707, %.critedge.us.preheader ], [ %storemerge.us, %delayed_mem_copy_move.exit496.us ] ; 2 uses
-  %indvars.iv684 = phi i64 [ 0, %.critedge.us.preheader ], [ %indvars.iv.next685, %delayed_mem_copy_move.exit496.us ] ; 2 uses
-  %.5268630.us = phi i32 [ %.4267, %.critedge.us.preheader ], [ %19, %delayed_mem_copy_move.exit496.us ] ; 2 uses
-  %i.yv = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv684
-  %i.yw = load i64, ptr %i.yv, align 8, !tbaa !31 ; 2 uses
-  %i.yx = load ptr, ptr %6, align 8, !tbaa !668   ; 8 uses
-  %i.yy = sext i32 %9 to i64                      ; 4 uses
+.critedge.us:                                     ; preds = %.lr.ph632.split.preheader
+  %7 = sext i32 %.5268630 to i64
+  %i.yv = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv677
+  %i.yw = load i64, ptr %i.yv, align 8, !tbaa !31
+  %i.yx = load ptr, ptr %6, align 8, !tbaa !668   ; 6 uses
+  %8 = load i32, ptr %i.p, align 8, !tbaa !666    ; 2 uses
+  %i.yy = sext i32 %8 to i64                      ; 4 uses
   %i.yz = getelementptr inbounds [4 x i8], ptr %i.ba, i64 %i.yy
-  %i.za = load i32, ptr %i.yz, align 4, !tbaa !21 ; 6 uses
+  %i.za = load i32, ptr %i.yz, align 4, !tbaa !21 ; 4 uses
   %i.zb = getelementptr inbounds [4 x i8], ptr %i.o, i64 %i.yy ; 2 uses
   %i.zc = load i32, ptr %i.zb, align 4, !tbaa !21 ; 2 uses
   %i.zd = icmp eq i32 %i.zc, -1
@@ -749,7 +742,7 @@ bb.dd:                                            ; preds = %bb.dc
   %i.zj = icmp slt i32 %i.za, 127
   %i.zk = icmp eq i32 %i.za, %i.ze
   %or.cond.i.i490.us = and i1 %i.zj, %i.zk
-  br i1 %or.cond.i.i490.us, label %sljit_emit_op1.exit.thread.i495.thread.us, label %.thread.i.i491.us
+  br i1 %or.cond.i.i490.us, label %sljit_emit_op1.exit.thread.i495.us, label %.thread.i.i491.us
 
 .thread.i.i491.us:                                ; preds = %bb.dd
   %i.zl = tail call fastcc i32 @emit_mov(ptr noundef nonnull %i.yx, i32 noundef %i.ze, i64 noundef range(i64 -2147483648, 2147483664) %i.zh, i32 noundef %i.za, i64 noundef 0) ; 0 uses
@@ -761,62 +754,29 @@ sljit_emit_op1.exit.i493.us:                      ; preds = %.thread.i.i491.us, 
   %.not.i30.i494.us = icmp eq i32 %i.zm, 0
   br i1 %.not.i30.i494.us, label %sljit_emit_op1.exit.thread.i495.us, label %delayed_mem_copy_move.exit496.us, !prof !669
 
-sljit_emit_op1.exit.thread.i495.us:               ; preds = %sljit_emit_op1.exit.i493.us
+sljit_emit_op1.exit.thread.i495.us:               ; preds = %sljit_emit_op1.exit.i493.us, %bb.dd
   %i.zn = getelementptr inbounds nuw i8, ptr %i.yx, i64 144
   store i32 0, ptr %i.zn, align 8, !tbaa !130
-  %10 = icmp slt i32 %i.za, 127
-  br i1 %10, label %sljit_emit_op1.exit.thread.i495.thread.us, label %11
-
-11:                                               ; preds = %sljit_emit_op1.exit.thread.i495.us
-  %12 = tail call fastcc ptr @emit_x86_instruction(ptr noundef nonnull %i.yx, i64 noundef 1, i32 noundef 15, i64 noundef 0, i32 noundef 142, i64 noundef %i.yw) ; 2 uses
-  %.not.i514.us = icmp eq ptr %12, null
-  br i1 %.not.i514.us, label %delayed_mem_copy_move.exit496.us, label %13, !prof !37
-
-13:                                               ; preds = %11
-  store i8 -117, ptr %12, align 1, !tbaa !82
-  %14 = tail call fastcc ptr @emit_x86_instruction(ptr noundef nonnull %i.yx, i64 noundef 1, i32 noundef 15, i64 noundef 0, i32 noundef %i.za, i64 noundef 0) ; 2 uses
-  %.not65.i515.us = icmp eq ptr %14, null
-  br i1 %.not65.i515.us, label %delayed_mem_copy_move.exit496.us, label %15, !prof !37
-
-15:                                               ; preds = %13
-  store i8 -119, ptr %14, align 1, !tbaa !82
+  %9 = tail call fastcc i32 @emit_mov(ptr noundef nonnull %i.yx, i32 noundef %i.za, i64 noundef 0, i32 noundef %i.bc, i64 noundef %7) ; 0 uses
   br label %delayed_mem_copy_move.exit496.us
 
-sljit_emit_op1.exit.thread.i495.thread.us:        ; preds = %bb.dd, %sljit_emit_op1.exit.thread.i495.us
-  %16 = tail call fastcc ptr @emit_x86_instruction(ptr noundef nonnull %i.yx, i64 noundef 1, i32 noundef %i.za, i64 noundef 0, i32 noundef 142, i64 noundef %i.yw) ; 2 uses
-  %.not66.i517.us = icmp eq ptr %16, null
-  br i1 %.not66.i517.us, label %delayed_mem_copy_move.exit496.us, label %17, !prof !37
+delayed_mem_copy_move.exit496.us:                 ; preds = %bb.dc, %sljit_emit_op1.exit.i493.us, %sljit_emit_op1.exit.thread.i495.us
+  store i32 14, ptr %i.zb, align 4, !tbaa !21
+  %10 = trunc i64 %i.yw to i32
+  br label %delayed_mem_copy_move.exit487
 
-17:                                               ; preds = %sljit_emit_op1.exit.thread.i495.thread.us
-  store i8 -117, ptr %16, align 1, !tbaa !82
-  br label %delayed_mem_copy_move.exit496.us
-
-delayed_mem_copy_move.exit496.us:                 ; preds = %17, %sljit_emit_op1.exit.thread.i495.thread.us, %15, %13, %11, %sljit_emit_op1.exit.i493.us, %bb.dc
-  store i32 %.0244521, ptr %i.zb, align 4, !tbaa !21
-  %18 = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %i.yy
-  store i32 %.5268630.us, ptr %18, align 4, !tbaa !21
-  %storemerge.in.us = add nsw i32 %9, 1
-  %storemerge.us = srem i32 %storemerge.in.us, 3  ; 2 uses
-  store i32 %storemerge.us, ptr %i.p, align 8, !tbaa !666
-  %19 = add i32 %.5268630.us, 8                   ; 2 uses
-  %indvars.iv.next685 = add nuw nsw i64 %indvars.iv684, 1 ; 2 uses
-  %exitcond688.not = icmp eq i64 %indvars.iv.next685, %wide.trip.count687
-  br i1 %exitcond688.not, label %.outer, label %.critedge.us, !llvm.loop !673
-
-.lr.ph632.split:                                  ; preds = %.lr.ph632.split.preheader, %delayed_mem_copy_move.exit487
-  %20 = phi i32 [ %.pre706, %.lr.ph632.split.preheader ], [ %storemerge, %delayed_mem_copy_move.exit487 ] ; 2 uses
-  %indvars.iv679 = phi i64 [ 0, %.lr.ph632.split.preheader ], [ %indvars.iv.next680, %delayed_mem_copy_move.exit487 ] ; 2 uses
-  %.5268630 = phi i32 [ %.4267, %.lr.ph632.split.preheader ], [ %i.aad, %delayed_mem_copy_move.exit487 ] ; 2 uses
-  %21 = sext i32 %.5268630 to i64
-  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv679
-  %23 = load i64, ptr %22, align 8, !tbaa !31
-  %i.zo = sext i32 %20 to i64                     ; 4 uses
+.lr.ph632.split:                                  ; preds = %.lr.ph632.split.preheader
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv677
+  %12 = load i64, ptr %11, align 8, !tbaa !31     ; 2 uses
+  %13 = load ptr, ptr %6, align 8, !tbaa !668     ; 8 uses
+  %14 = load i32, ptr %i.p, align 8, !tbaa !666   ; 2 uses
+  %i.zo = sext i32 %14 to i64                     ; 4 uses
   %i.zp = getelementptr inbounds [4 x i8], ptr %i.ba, i64 %i.zo
-  %i.zq = load i32, ptr %i.zp, align 4, !tbaa !21 ; 4 uses
+  %i.zq = load i32, ptr %i.zp, align 4, !tbaa !21 ; 6 uses
   %i.zr = getelementptr inbounds [4 x i8], ptr %i.o, i64 %i.zo ; 2 uses
   %i.zs = load i32, ptr %i.zr, align 4, !tbaa !21 ; 2 uses
   %i.zt = icmp eq i32 %i.zs, -1
-  %.pre38.i479 = load i32, ptr %.pre705, align 8, !tbaa !127 ; 2 uses
+  %.pre38.i479 = load i32, ptr %13, align 8, !tbaa !127 ; 2 uses
   br i1 %i.zt, label %sljit_emit_op1.exit.i484, label %bb.de
 
 bb.de:                                            ; preds = %.lr.ph632.split
@@ -825,50 +785,81 @@ bb.de:                                            ; preds = %.lr.ph632.split
   %i.zw = load i32, ptr %i.zv, align 4, !tbaa !21
   %i.zx = sext i32 %i.zw to i64
   %.not.i.i480 = icmp eq i32 %.pre38.i479, 0
-  br i1 %.not.i.i480, label %bb.df, label %delayed_mem_copy_move.exit487, !prof !128
+  br i1 %.not.i.i480, label %bb.df, label %delayed_mem_copy_move.exit496, !prof !128
 
 bb.df:                                            ; preds = %bb.de
-  store i32 0, ptr %7, align 8, !tbaa !130
+  %15 = getelementptr inbounds nuw i8, ptr %13, i64 144
+  store i32 0, ptr %15, align 8, !tbaa !130
   %i.zy = icmp slt i32 %i.zq, 127
   %i.zz = icmp eq i32 %i.zq, %i.zu
   %or.cond.i.i481 = and i1 %i.zy, %i.zz
-  br i1 %or.cond.i.i481, label %sljit_emit_op1.exit.thread.i486, label %.thread.i.i482
+  br i1 %or.cond.i.i481, label %sljit_emit_op1.exit.thread.i495.thread, label %.thread.i.i482
 
 .thread.i.i482:                                   ; preds = %bb.df
-  %i.aaa = tail call fastcc i32 @emit_mov(ptr noundef nonnull %.pre705, i32 noundef %i.zu, i64 noundef range(i64 -2147483648, 2147483664) %i.zx, i32 noundef %i.zq, i64 noundef 0) ; 0 uses
-  %.pre.i483 = load i32, ptr %.pre705, align 8, !tbaa !127
+  %i.aaa = tail call fastcc i32 @emit_mov(ptr noundef nonnull %13, i32 noundef %i.zu, i64 noundef range(i64 -2147483648, 2147483664) %i.zx, i32 noundef %i.zq, i64 noundef 0) ; 0 uses
+  %.pre.i483 = load i32, ptr %13, align 8, !tbaa !127
   br label %sljit_emit_op1.exit.i484
 
 sljit_emit_op1.exit.i484:                         ; preds = %.thread.i.i482, %.lr.ph632.split
   %i.aab = phi i32 [ %.pre.i483, %.thread.i.i482 ], [ %.pre38.i479, %.lr.ph632.split ]
   %.not.i30.i485 = icmp eq i32 %i.aab, 0
-  br i1 %.not.i30.i485, label %sljit_emit_op1.exit.thread.i486, label %delayed_mem_copy_move.exit487, !prof !669
+  br i1 %.not.i30.i485, label %sljit_emit_op1.exit.thread.i495, label %delayed_mem_copy_move.exit496, !prof !669
 
-sljit_emit_op1.exit.thread.i486:                  ; preds = %sljit_emit_op1.exit.i484, %bb.df
-  store i32 0, ptr %8, align 8, !tbaa !130
-  %24 = tail call fastcc i32 @emit_mov(ptr noundef nonnull %.pre705, i32 noundef %i.zq, i64 noundef 0, i32 noundef %i.bc, i64 noundef %21) ; 0 uses
+sljit_emit_op1.exit.thread.i495:                  ; preds = %sljit_emit_op1.exit.i484
+  %16 = getelementptr inbounds nuw i8, ptr %13, i64 144
+  store i32 0, ptr %16, align 8, !tbaa !130
+  %17 = icmp slt i32 %i.zq, 127
+  br i1 %17, label %sljit_emit_op1.exit.thread.i495.thread, label %20
+
+sljit_emit_op1.exit.thread.i495.thread:           ; preds = %bb.df, %sljit_emit_op1.exit.thread.i495
+  %18 = tail call fastcc ptr @emit_x86_instruction(ptr noundef nonnull %13, i64 noundef 1, i32 noundef %i.zq, i64 noundef 0, i32 noundef 142, i64 noundef %12) ; 2 uses
+  %.not66.i517 = icmp eq ptr %18, null
+  br i1 %.not66.i517, label %delayed_mem_copy_move.exit496, label %19, !prof !37
+
+19:                                               ; preds = %sljit_emit_op1.exit.thread.i495.thread
+  store i8 -117, ptr %18, align 1, !tbaa !82
+  br label %delayed_mem_copy_move.exit496
+
+20:                                               ; preds = %sljit_emit_op1.exit.thread.i495
+  %21 = tail call fastcc ptr @emit_x86_instruction(ptr noundef nonnull %13, i64 noundef 1, i32 noundef 15, i64 noundef 0, i32 noundef 142, i64 noundef %12) ; 2 uses
+  %.not.i514 = icmp eq ptr %21, null
+  br i1 %.not.i514, label %delayed_mem_copy_move.exit496, label %sljit_emit_op1.exit.thread.i486, !prof !37
+
+sljit_emit_op1.exit.thread.i486:                  ; preds = %20
+  store i8 -117, ptr %21, align 1, !tbaa !82
+  %22 = tail call fastcc ptr @emit_x86_instruction(ptr noundef nonnull %13, i64 noundef 1, i32 noundef 15, i64 noundef 0, i32 noundef %i.zq, i64 noundef 0) ; 2 uses
+  %.not65.i515 = icmp eq ptr %22, null
+  br i1 %.not65.i515, label %delayed_mem_copy_move.exit496, label %23, !prof !37
+
+23:                                               ; preds = %sljit_emit_op1.exit.thread.i486
+  store i8 -119, ptr %22, align 1, !tbaa !82
+  br label %delayed_mem_copy_move.exit496
+
+delayed_mem_copy_move.exit496:                    ; preds = %sljit_emit_op1.exit.thread.i495.thread, %23, %19, %20, %sljit_emit_op1.exit.thread.i486, %bb.de, %sljit_emit_op1.exit.i484
+  store i32 %.0244521, ptr %i.zr, align 4, !tbaa !21
   br label %delayed_mem_copy_move.exit487
 
-delayed_mem_copy_move.exit487:                    ; preds = %bb.de, %sljit_emit_op1.exit.i484, %sljit_emit_op1.exit.thread.i486
-  store i32 14, ptr %i.zr, align 4, !tbaa !21
-  %25 = trunc i64 %23 to i32
-  %i.aac = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %i.zo
-  store i32 %25, ptr %i.aac, align 4, !tbaa !21
-  %storemerge.in = add nsw i32 %20, 1
-  %storemerge = srem i32 %storemerge.in, 3        ; 2 uses
+delayed_mem_copy_move.exit487:                    ; preds = %delayed_mem_copy_move.exit496.us, %delayed_mem_copy_move.exit496
+  %.sink790 = phi i64 [ %i.yy, %delayed_mem_copy_move.exit496.us ], [ %i.zo, %delayed_mem_copy_move.exit496 ]
+  %.sink788 = phi i32 [ %10, %delayed_mem_copy_move.exit496.us ], [ %.5268630, %delayed_mem_copy_move.exit496 ]
+  %storemerge.in.in = phi i32 [ %8, %delayed_mem_copy_move.exit496.us ], [ %14, %delayed_mem_copy_move.exit496 ]
+  %i.aac = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %.sink790
+  store i32 %.sink788, ptr %i.aac, align 4, !tbaa !21
+  %storemerge.in = add nsw i32 %storemerge.in.in, 1
+  %storemerge = srem i32 %storemerge.in, 3
   store i32 %storemerge, ptr %i.p, align 8, !tbaa !666
   %i.aad = add i32 %.5268630, 8                   ; 2 uses
-  %indvars.iv.next680 = add nuw nsw i64 %indvars.iv679, 1 ; 2 uses
+  %indvars.iv.next680 = add nuw nsw i64 %indvars.iv677, 1 ; 2 uses
   %exitcond683.not = icmp eq i64 %indvars.iv.next680, %wide.trip.count687
-  br i1 %exitcond683.not, label %.outer, label %.lr.ph632.split, !llvm.loop !673
+  br i1 %exitcond683.not, label %.outer, label %.lr.ph632.split.preheader, !llvm.loop !673
 
 bb.dg:                                            ; preds = %.loopexit588, %.loopexit588
   %i.aae = shl nuw nsw i32 %.4, 3
   %i.aaf = add i32 %.4267, %i.aae
   br label %.outer
 
-.outer:                                           ; preds = %delayed_mem_copy_move.exit487, %delayed_mem_copy_move.exit496.us, %.preheader, %bb.dg
-  %.6269 = phi i32 [ %i.aaf, %bb.dg ], [ %.4267, %.preheader ], [ %19, %delayed_mem_copy_move.exit496.us ], [ %i.aad, %delayed_mem_copy_move.exit487 ]
+.outer:                                           ; preds = %delayed_mem_copy_move.exit487, %.preheader, %bb.dg
+  %.6269 = phi i32 [ %i.aaf, %bb.dg ], [ %.4267, %.preheader ], [ %i.aad, %delayed_mem_copy_move.exit487 ]
   %i.aag = icmp ult ptr %.2262, %2
   br i1 %i.aag, label %.lr.ph, label %.outer._crit_edge, !llvm.loop !670
 

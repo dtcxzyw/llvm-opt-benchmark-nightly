@@ -1,3 +1,7 @@
+inline.NumInlined: 120
+inline.NumDeleted: 49
+loop-unroll.NumCompletelyUnrolled: 14
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@test_extra_tickets:bb.a
   %i.fz = load ptr, ptr %i.c, align 8, !tbaa !23
   %i.ga = call i32 @SSL_do_handshake(ptr noundef %i.fz) #24
@@ -199,30 +203,28 @@ bb.a:
   br i1 %i.e, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %1 = srem i32 %0, 3
-  %2 = sdiv i32 %0, 3
-  %3 = srem i32 %2, 3
-  %4 = sdiv i32 %0, 9
-  %5 = srem i32 %4, 3
-  %6 = sdiv i32 %0, 27
-  %7 = srem i32 %6, 3
+  %1 = insertelement <4 x i32> poison, i32 %0, i64 0
+  %2 = shufflevector <4 x i32> %1, <4 x i32> poison, <4 x i32> zeroinitializer
+  %3 = sdiv <4 x i32> %2, <i32 1, i32 3, i32 9, i32 27>
+  %4 = srem <4 x i32> %3, splat (i32 3)
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.f = add nsw i32 %0, -81                      ; 3 uses
-  %8 = and i32 %i.f, 1
-  %i.g = lshr i32 %i.f, 1
+  %5 = lshr i32 %i.f, 1
+  %6 = insertelement <2 x i32> poison, i32 %i.f, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %5, i64 1
+  %8 = and <2 x i32> %7, splat (i32 1)
+  %i.g = lshr i32 %i.f, 2
   %i.h = and i32 %i.g, 1
-  %9 = lshr i32 %i.f, 2
-  %10 = and i32 %9, 1
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %10 = shufflevector <4 x i32> <i32 3, i32 3, i32 poison, i32 poison>, <4 x i32> %9, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %11 = freeze <4 x i32> %10
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.055 = phi i32 [ %1, %bb.b ], [ 3, %bb.c ]     ; 3 uses
-  %.054 = phi i32 [ %3, %bb.b ], [ 3, %bb.c ]     ; 3 uses
-  %.053 = phi i32 [ %5, %bb.b ], [ %8, %bb.c ]    ; 3 uses
-  %.052 = phi i32 [ %7, %bb.b ], [ %i.h, %bb.c ]  ; 3 uses
-  %.051 = phi i32 [ 2, %bb.b ], [ %10, %bb.c ]    ; 3 uses
+  %.052 = phi i32 [ 2, %bb.b ], [ %i.h, %bb.c ]   ; 3 uses
+  %.fr = phi <4 x i32> [ %4, %bb.b ], [ %11, %bb.c ] ; 6 uses
   %i.i = load ptr, ptr @libctx, align 8, !tbaa !9
   %i.j = tail call ptr @TLS_server_method() #24
   %i.k = tail call ptr @TLS_client_method() #24
@@ -236,7 +238,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.not, label %bb.aj, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.r = icmp eq i32 %.051, 1
+  %i.r = icmp eq i32 %.052, 1
   br i1 %i.r, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -257,14 +259,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %.not69, label %bb.aj, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %11 = icmp eq i32 %.055, 1
-  %12 = icmp eq i32 %.054, 1
-  %or.cond = or i1 %11, %12
-  %13 = icmp eq i32 %.053, 1
-  %or.cond3 = select i1 %or.cond, i1 true, i1 %13
-  %i.ac = icmp eq i32 %.052, 1
-  %or.cond5 = select i1 %or.cond3, i1 true, i1 %i.ac
-  br i1 %or.cond5, label %bb.i, label %bb.j
+  %12 = icmp eq <4 x i32> %.fr, splat (i32 1)
+  %13 = bitcast <4 x i1> %12 to i4
+  %i.ac = icmp eq i4 %13, 0
+  br i1 %i.ac, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ad = call ptr @BIO_s_mem() #24
@@ -275,14 +273,10 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.057 = phi ptr [ %i.ae, %bb.i ], [ null, %bb.h ] ; 12 uses
-  %14 = icmp eq i32 %.055, 2
-  %15 = icmp eq i32 %.054, 2
-  %or.cond7 = or i1 %14, %15
-  %16 = icmp eq i32 %.053, 2
-  %or.cond9 = select i1 %or.cond7, i1 true, i1 %16
-  %i.ag = icmp eq i32 %.052, 2
-  %or.cond11 = select i1 %or.cond9, i1 true, i1 %i.ag
-  br i1 %or.cond11, label %bb.k, label %bb.l
+  %14 = icmp eq <4 x i32> %.fr, splat (i32 2)
+  %15 = bitcast <4 x i1> %14 to i4
+  %i.ag = icmp eq i4 %15, 0
+  br i1 %i.ag, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.ah = call ptr @BIO_s_mem() #24
@@ -293,7 +287,8 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   %.056 = phi ptr [ %i.ai, %bb.k ], [ null, %bb.j ] ; 11 uses
-  switch i32 %.055, label %setupbio.exit [
+  %16 = extractelement <4 x i32> %.fr, i64 0
+  switch i32 %16, label %setupbio.exit [
     i32 3, label %bb.u
     i32 2, label %bb.n
     i32 1, label %bb.m
@@ -307,7 +302,8 @@ bb.n:                                             ; preds = %bb.l
 
 setupbio.exit:                                    ; preds = %bb.l, %bb.m, %bb.n
   %.1135 = phi ptr [ null, %bb.l ], [ %.056, %bb.n ], [ %.057, %bb.m ] ; 7 uses
-  switch i32 %.054, label %setupbio.exit101 [
+  %17 = extractelement <4 x i32> %.fr, i64 1
+  switch i32 %17, label %setupbio.exit101 [
     i32 2, label %bb.p
     i32 1, label %bb.o
   ]
@@ -348,14 +344,14 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.l, %bb.r, %bb.s
   %.0134 = phi ptr [ null, %bb.l ], [ %.1135, %bb.r ], [ %.1135, %bb.s ] ; 2 uses
   %.0132 = phi ptr [ null, %bb.l ], [ %.1133, %bb.r ], [ %.1133, %bb.s ] ; 3 uses
-  %.not78 = icmp eq i32 %.051, 2
+  %.not78 = icmp eq i32 %.052, 2
   br i1 %.not78, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.ao = load ptr, ptr %i.c, align 8, !tbaa !23
   %i.ap = load ptr, ptr %i.d, align 8, !tbaa !23
   %i.aq = call i32 @create_ssl_connection(ptr noundef %i.ao, ptr noundef %i.ap, i32 noundef 0) #24
-  %i.ar = icmp eq i32 %.051, 0
+  %i.ar = icmp eq i32 %.052, 0
   %i.as = zext i1 %i.ar to i32
   %i.at = icmp eq i32 %i.aq, %i.as
   %i.au = zext i1 %i.at to i32
@@ -364,7 +360,8 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not79, label %bb.aj, label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  switch i32 %.053, label %setupbio.exit104 [
+  %18 = extractelement <4 x i32> %.fr, i64 2
+  switch i32 %18, label %setupbio.exit104 [
     i32 2, label %bb.y
     i32 1, label %bb.x
   ]
@@ -377,7 +374,8 @@ bb.y:                                             ; preds = %bb.w
 
 setupbio.exit104:                                 ; preds = %bb.x, %bb.y, %bb.w
   %.0131 = phi ptr [ null, %bb.w ], [ %.056, %bb.y ], [ %.057, %bb.x ] ; 7 uses
-  switch i32 %.052, label %setupbio.exit107 [
+  %19 = extractelement <4 x i32> %.fr, i64 3
+  switch i32 %19, label %setupbio.exit107 [
     i32 2, label %bb.aa
     i32 1, label %bb.z
   ]

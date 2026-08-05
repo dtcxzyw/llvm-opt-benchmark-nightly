@@ -204,92 +204,79 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !129
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %.sroa.0142.0.copyload = load i64, ptr %i.g, align 8 ; 2 uses
+  %.sroa.0142.0.copyload = load i64, ptr %i.g, align 8
   %.sroa.23.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
-  %.sroa.23.0.copyload = load i64, ptr %.sroa.23.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.23.0.copyload = load i64, ptr %.sroa.23.0..sroa_idx, align 8
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
-  %.sroa.42.0.copyload = load i64, ptr %.sroa.42.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.42.0.copyload = load i64, ptr %.sroa.42.0..sroa_idx, align 8
   %.sroa.61.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %.sroa.61.0.copyload = load i64, ptr %.sroa.61.0..sroa_idx, align 8 ; 2 uses
-  %.sroa.0.0.copyload290 = load ptr, ptr %0, align 8 ; 3 uses
+  %.sroa.61.0.copyload = load i64, ptr %.sroa.61.0..sroa_idx, align 8
+  %.sroa.0.0.copyload290 = load ptr, ptr %0, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.sroa.13.0.copyload = load ptr, ptr %.sroa.13.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.13.0.copyload = load ptr, ptr %.sroa.13.0..sroa_idx, align 8
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %.sroa.17.0.copyload = load ptr, ptr %.sroa.17.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.17.0.copyload = load ptr, ptr %.sroa.17.0..sroa_idx, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %.sroa.0.0.copyload = load ptr, ptr %i.h, align 8 ; 2 uses
+  %.sroa.0.0.copyload = load ptr, ptr %i.h, align 8
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %.sroa.11.0.copyload = load ptr, ptr %.sroa.11.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.11.0.copyload = load ptr, ptr %.sroa.11.0..sroa_idx, align 8
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %.sroa.18.0.copyload = load ptr, ptr %.sroa.18.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.18.0.copyload = load ptr, ptr %.sroa.18.0..sroa_idx, align 8
   %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %.sroa.25.0.copyload = load ptr, ptr %.sroa.25.0..sroa_idx, align 8 ; 4 uses
-  %1 = ptrtoint ptr %i.d to i64                   ; 2 uses
-  %2 = ptrtoint ptr %i.f to i64                   ; 2 uses
-  %i.i = ptrtoint ptr %.sroa.25.0.copyload to i64
-  %3 = sub i64 %1, %i.i
-  %4 = udiv i64 %3, 5
-  %i.j = ptrtoint ptr %.sroa.0.0.copyload290 to i64
-  %5 = sub i64 %i.j, %2
-  %6 = udiv i64 %5, 7
-  %7 = tail call i64 @llvm.umin.i64(i64 %4, i64 %6) ; 2 uses
-  %8 = icmp eq i64 %7, 0
-  br i1 %8, label %.loopexit229, label %.preheader228.lr.ph
-
-.preheader228.lr.ph:                              ; preds = %bb.a
-  %9 = mul nuw i64 %7, 5
-  %10 = getelementptr inbounds nuw i8, ptr %.sroa.25.0.copyload, i64 %9
+  %.sroa.25.0.copyload = load ptr, ptr %.sroa.25.0..sroa_idx, align 8
+  %i.i = ptrtoint ptr %i.d to i64
+  %i.j = ptrtoint ptr %i.f to i64
   br label %.preheader228
 
-.loopexit:                                        ; preds = %.preheader
-  %11 = ptrtoint ptr %i.hj to i64
-  %12 = sub i64 %1, %11
-  %13 = udiv i64 %12, 5
-  %14 = ptrtoint ptr %i.gn to i64
-  %15 = sub i64 %14, %2
-  %16 = udiv i64 %15, 7
-  %17 = tail call i64 @llvm.umin.i64(i64 %13, i64 %16) ; 2 uses
-  %18 = mul nuw i64 %17, 5
-  %19 = getelementptr inbounds nuw i8, ptr %i.hj, i64 %18
-  %20 = icmp eq i64 %17, 0
-  br i1 %20, label %.loopexit229, label %.preheader228, !llvm.loop !135
+.preheader228.lr.ph:                              ; preds = %.preheader
+  br label %.preheader228, !llvm.loop !135
 
-.preheader228:                                    ; preds = %.preheader228.lr.ph, %.loopexit
-  %.sroa.17.0 = phi ptr [ %.sroa.17.0.copyload, %.preheader228.lr.ph ], [ %i.hl, %.loopexit ] ; 3 uses
-  %.sroa.13.0 = phi ptr [ %.sroa.13.0.copyload, %.preheader228.lr.ph ], [ %i.hd, %.loopexit ] ; 4 uses
-  %.sroa.9.0 = phi ptr [ %.sroa.9.0.copyload, %.preheader228.lr.ph ], [ %i.gv, %.loopexit ] ; 4 uses
-  %.sroa.0.0 = phi ptr [ %.sroa.0.0.copyload290, %.preheader228.lr.ph ], [ %i.gn, %.loopexit ] ; 3 uses
-  %i.k = phi ptr [ %10, %.preheader228.lr.ph ], [ %19, %.loopexit ]
-  %.sroa.61.0262 = phi i64 [ %.sroa.61.0.copyload, %.preheader228.lr.ph ], [ %i.hn, %.loopexit ] ; 2 uses
-  %.sroa.42.0261 = phi i64 [ %.sroa.42.0.copyload, %.preheader228.lr.ph ], [ %i.hf, %.loopexit ] ; 2 uses
-  %.sroa.23.0260 = phi i64 [ %.sroa.23.0.copyload, %.preheader228.lr.ph ], [ %i.gx, %.loopexit ] ; 2 uses
-  %.sroa.0142.0259 = phi i64 [ %.sroa.0142.0.copyload, %.preheader228.lr.ph ], [ %i.gp, %.loopexit ] ; 2 uses
-  %.sroa.25.0258 = phi ptr [ %.sroa.25.0.copyload, %.preheader228.lr.ph ], [ %i.hj, %.loopexit ] ; 2 uses
-  %.sroa.18.0257 = phi ptr [ %.sroa.18.0.copyload, %.preheader228.lr.ph ], [ %i.hb, %.loopexit ] ; 2 uses
-  %.sroa.11.0256 = phi ptr [ %.sroa.11.0.copyload, %.preheader228.lr.ph ], [ %i.gt, %.loopexit ] ; 2 uses
-  %.sroa.0.0255 = phi ptr [ %.sroa.0.0.copyload, %.preheader228.lr.ph ], [ %i.gl, %.loopexit ] ; 2 uses
-  %i.l = icmp ult ptr %.sroa.9.0, %.sroa.0.0
-  %i.m = icmp ult ptr %.sroa.13.0, %.sroa.9.0
-  %or.cond.a = select i1 %i.l, i1 true, i1 %i.m
-  %i.n = icmp ult ptr %.sroa.17.0, %.sroa.13.0
+.preheader228:                                    ; preds = %.preheader228.lr.ph, %bb.a
+  %.sroa.16.0 = phi ptr [ %.sroa.17.0.copyload, %bb.a ], [ %i.hl, %.preheader228.lr.ph ] ; 3 uses
+  %.sroa.12.0 = phi ptr [ %.sroa.13.0.copyload, %bb.a ], [ %i.hd, %.preheader228.lr.ph ] ; 4 uses
+  %.sroa.8.0 = phi ptr [ %.sroa.9.0.copyload, %bb.a ], [ %i.gv, %.preheader228.lr.ph ] ; 4 uses
+  %.sroa.17.0 = phi ptr [ %.sroa.0.0.copyload290, %bb.a ], [ %i.gn, %.preheader228.lr.ph ] ; 4 uses
+  %.sroa.13.0 = phi ptr [ %.sroa.0.0.copyload, %bb.a ], [ %i.gl, %.preheader228.lr.ph ] ; 2 uses
+  %.sroa.9.0 = phi ptr [ %.sroa.11.0.copyload, %bb.a ], [ %i.gt, %.preheader228.lr.ph ] ; 2 uses
+  %.sroa.0.0 = phi ptr [ %.sroa.18.0.copyload, %bb.a ], [ %i.hb, %.preheader228.lr.ph ] ; 2 uses
+  %i.k = phi ptr [ %.sroa.25.0.copyload, %bb.a ], [ %i.hj, %.preheader228.lr.ph ] ; 4 uses
+  %.sroa.61.0262 = phi i64 [ %.sroa.0142.0.copyload, %bb.a ], [ %i.gp, %.preheader228.lr.ph ] ; 2 uses
+  %.sroa.42.0261 = phi i64 [ %.sroa.23.0.copyload, %bb.a ], [ %i.gx, %.preheader228.lr.ph ] ; 2 uses
+  %.sroa.23.0260 = phi i64 [ %.sroa.42.0.copyload, %bb.a ], [ %i.hf, %.preheader228.lr.ph ] ; 2 uses
+  %.sroa.0142.0259 = phi i64 [ %.sroa.61.0.copyload, %bb.a ], [ %i.hn, %.preheader228.lr.ph ] ; 2 uses
+  %1 = ptrtoint ptr %i.k to i64
+  %2 = sub i64 %i.i, %1
+  %3 = udiv i64 %2, 5
+  %4 = ptrtoint ptr %.sroa.17.0 to i64
+  %5 = sub i64 %4, %i.j
+  %6 = udiv i64 %5, 7
+  %7 = tail call i64 @llvm.umin.i64(i64 %3, i64 %6) ; 2 uses
+  %8 = mul nuw i64 %7, 5
+  %9 = getelementptr inbounds nuw i8, ptr %i.k, i64 %8
+  %10 = icmp eq i64 %7, 0
+  %i.l = icmp ult ptr %.sroa.8.0, %.sroa.17.0
+  %or.cond = select i1 %10, i1 true, i1 %i.l
+  %i.m = icmp ult ptr %.sroa.12.0, %.sroa.8.0
+  %or.cond.a = select i1 %or.cond, i1 true, i1 %i.m
+  %i.n = icmp ult ptr %.sroa.16.0, %.sroa.12.0
   %or.cond305 = select i1 %or.cond.a, i1 true, i1 %i.n
   br i1 %or.cond305, label %.loopexit229, label %.preheader
 
 .preheader:                                       ; preds = %.preheader228, %.preheader
-  %.sroa.17.1 = phi ptr [ %i.hl, %.preheader ], [ %.sroa.17.0, %.preheader228 ]
-  %.sroa.13.1 = phi ptr [ %i.hd, %.preheader ], [ %.sroa.13.0, %.preheader228 ]
-  %.sroa.9.1 = phi ptr [ %i.gv, %.preheader ], [ %.sroa.9.0, %.preheader228 ]
-  %.sroa.0.1303 = phi ptr [ %i.gn, %.preheader ], [ %.sroa.0.0, %.preheader228 ]
-  %.sroa.0.1 = phi ptr [ %i.gl, %.preheader ], [ %.sroa.0.0255, %.preheader228 ] ; 6 uses
-  %.sroa.11.1 = phi ptr [ %i.gt, %.preheader ], [ %.sroa.11.0256, %.preheader228 ] ; 6 uses
-  %.sroa.18.1 = phi ptr [ %i.hb, %.preheader ], [ %.sroa.18.0257, %.preheader228 ] ; 6 uses
-  %.sroa.25.1 = phi ptr [ %i.hj, %.preheader ], [ %.sroa.25.0258, %.preheader228 ] ; 6 uses
-  %.sroa.0142.1 = phi i64 [ %i.gp, %.preheader ], [ %.sroa.0142.0259, %.preheader228 ] ; 2 uses
-  %.sroa.23.1 = phi i64 [ %i.gx, %.preheader ], [ %.sroa.23.0260, %.preheader228 ] ; 2 uses
-  %.sroa.42.1 = phi i64 [ %i.hf, %.preheader ], [ %.sroa.42.0261, %.preheader228 ] ; 2 uses
-  %.sroa.61.1 = phi i64 [ %i.hn, %.preheader ], [ %.sroa.61.0262, %.preheader228 ] ; 2 uses
+  %.sroa.17.1 = phi ptr [ %i.hl, %.preheader ], [ %.sroa.16.0, %.preheader228 ]
+  %.sroa.13.1 = phi ptr [ %i.hd, %.preheader ], [ %.sroa.12.0, %.preheader228 ]
+  %.sroa.9.1 = phi ptr [ %i.gv, %.preheader ], [ %.sroa.8.0, %.preheader228 ]
+  %.sroa.0.1303 = phi ptr [ %i.gn, %.preheader ], [ %.sroa.17.0, %.preheader228 ]
+  %.sroa.0.1 = phi ptr [ %i.gl, %.preheader ], [ %.sroa.13.0, %.preheader228 ] ; 6 uses
+  %.sroa.11.1 = phi ptr [ %i.gt, %.preheader ], [ %.sroa.9.0, %.preheader228 ] ; 6 uses
+  %.sroa.18.1 = phi ptr [ %i.hb, %.preheader ], [ %.sroa.0.0, %.preheader228 ] ; 6 uses
+  %.sroa.25.1 = phi ptr [ %i.hj, %.preheader ], [ %i.k, %.preheader228 ] ; 6 uses
+  %.sroa.0142.1 = phi i64 [ %i.gp, %.preheader ], [ %.sroa.61.0262, %.preheader228 ] ; 2 uses
+  %.sroa.23.1 = phi i64 [ %i.gx, %.preheader ], [ %.sroa.42.0261, %.preheader228 ] ; 2 uses
+  %.sroa.42.1 = phi i64 [ %i.hf, %.preheader ], [ %.sroa.23.0260, %.preheader228 ] ; 2 uses
+  %.sroa.61.1 = phi i64 [ %i.hn, %.preheader ], [ %.sroa.0142.0259, %.preheader228 ] ; 2 uses
   %i.o = lshr i64 %.sroa.0142.1, 53
   %i.p = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %i.o
   %i.q = load i16, ptr %i.p, align 2, !tbaa !115  ; 2 uses
@@ -489,67 +476,55 @@ bb.a:
   %i.gi = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.fd, i1 true) ; 2 uses
   %i.gj = and i64 %i.gi, 7
   %i.gk = lshr i64 %i.gi, 3
-  %i.gl = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 5 ; 3 uses
+  %i.gl = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 5 ; 2 uses
   %i.gm = sub nsw i64 0, %i.gk
-  %i.gn = getelementptr inbounds i8, ptr %.sroa.0.1303, i64 %i.gm ; 5 uses
+  %i.gn = getelementptr inbounds i8, ptr %.sroa.0.1303, i64 %i.gm ; 3 uses
   %.val207 = load i64, ptr %i.gn, align 1, !tbaa !32
   %i.go = or i64 %.val207, 1
-  %i.gp = shl i64 %i.go, %i.gj                    ; 3 uses
+  %i.gp = shl i64 %i.go, %i.gj                    ; 2 uses
   %i.gq = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.fm, i1 true) ; 2 uses
   %i.gr = and i64 %i.gq, 7
   %i.gs = lshr i64 %i.gq, 3
-  %i.gt = getelementptr inbounds nuw i8, ptr %.sroa.11.1, i64 5 ; 3 uses
+  %i.gt = getelementptr inbounds nuw i8, ptr %.sroa.11.1, i64 5 ; 2 uses
   %i.gu = sub nsw i64 0, %i.gs
-  %i.gv = getelementptr inbounds i8, ptr %.sroa.9.1, i64 %i.gu ; 4 uses
+  %i.gv = getelementptr inbounds i8, ptr %.sroa.9.1, i64 %i.gu ; 3 uses
   %.val206 = load i64, ptr %i.gv, align 1, !tbaa !32
   %i.gw = or i64 %.val206, 1
-  %i.gx = shl i64 %i.gw, %i.gr                    ; 3 uses
+  %i.gx = shl i64 %i.gw, %i.gr                    ; 2 uses
   %i.gy = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.fv, i1 true) ; 2 uses
   %i.gz = and i64 %i.gy, 7
   %i.ha = lshr i64 %i.gy, 3
-  %i.hb = getelementptr inbounds nuw i8, ptr %.sroa.18.1, i64 5 ; 3 uses
+  %i.hb = getelementptr inbounds nuw i8, ptr %.sroa.18.1, i64 5 ; 2 uses
   %i.hc = sub nsw i64 0, %i.ha
-  %i.hd = getelementptr inbounds i8, ptr %.sroa.13.1, i64 %i.hc ; 4 uses
+  %i.hd = getelementptr inbounds i8, ptr %.sroa.13.1, i64 %i.hc ; 3 uses
   %.val205 = load i64, ptr %i.hd, align 1, !tbaa !32
   %i.he = or i64 %.val205, 1
-  %i.hf = shl i64 %i.he, %i.gz                    ; 3 uses
+  %i.hf = shl i64 %i.he, %i.gz                    ; 2 uses
   %i.hg = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.ge, i1 true) ; 2 uses
   %i.hh = and i64 %i.hg, 7
   %i.hi = lshr i64 %i.hg, 3
-  %i.hj = getelementptr inbounds nuw i8, ptr %.sroa.25.1, i64 5 ; 6 uses
+  %i.hj = getelementptr inbounds nuw i8, ptr %.sroa.25.1, i64 5 ; 3 uses
   %i.hk = sub nsw i64 0, %i.hi
-  %i.hl = getelementptr inbounds i8, ptr %.sroa.17.1, i64 %i.hk ; 4 uses
+  %i.hl = getelementptr inbounds i8, ptr %.sroa.17.1, i64 %i.hk ; 3 uses
   %.val = load i64, ptr %i.hl, align 1, !tbaa !32
   %i.hm = or i64 %.val, 1
-  %i.hn = shl i64 %i.hm, %i.hh                    ; 3 uses
-  %i.ho = icmp ult ptr %i.hj, %i.k
-  br i1 %i.ho, label %.preheader, label %.loopexit, !llvm.loop !135
+  %i.hn = shl i64 %i.hm, %i.hh                    ; 2 uses
+  %i.ho = icmp ult ptr %i.hj, %9
+  br i1 %i.ho, label %.preheader, label %.preheader228.lr.ph, !llvm.loop !135
 
-.loopexit229:                                     ; preds = %.loopexit, %.preheader228, %bb.a
-  %.sroa.17.2 = phi ptr [ %.sroa.17.0.copyload, %bb.a ], [ %i.hl, %.loopexit ], [ %.sroa.17.0, %.preheader228 ]
-  %.sroa.13.2 = phi ptr [ %.sroa.13.0.copyload, %bb.a ], [ %i.hd, %.loopexit ], [ %.sroa.13.0, %.preheader228 ]
-  %.sroa.9.2 = phi ptr [ %.sroa.9.0.copyload, %bb.a ], [ %i.gv, %.loopexit ], [ %.sroa.9.0, %.preheader228 ]
-  %.sroa.0.2 = phi ptr [ %.sroa.0.0.copyload290, %bb.a ], [ %i.gn, %.loopexit ], [ %.sroa.0.0, %.preheader228 ]
-  %.sroa.0.0253 = phi ptr [ %.sroa.0.0.copyload, %bb.a ], [ %i.gl, %.loopexit ], [ %.sroa.0.0255, %.preheader228 ]
-  %.sroa.11.0251 = phi ptr [ %.sroa.11.0.copyload, %bb.a ], [ %i.gt, %.loopexit ], [ %.sroa.11.0256, %.preheader228 ]
-  %.sroa.18.0249 = phi ptr [ %.sroa.18.0.copyload, %bb.a ], [ %i.hb, %.loopexit ], [ %.sroa.18.0257, %.preheader228 ]
-  %.sroa.25.0247 = phi ptr [ %.sroa.25.0.copyload, %bb.a ], [ %i.hj, %.loopexit ], [ %.sroa.25.0258, %.preheader228 ]
-  %.sroa.0142.0245 = phi i64 [ %.sroa.0142.0.copyload, %bb.a ], [ %i.gp, %.loopexit ], [ %.sroa.0142.0259, %.preheader228 ]
-  %.sroa.23.0243 = phi i64 [ %.sroa.23.0.copyload, %bb.a ], [ %i.gx, %.loopexit ], [ %.sroa.23.0260, %.preheader228 ]
-  %.sroa.42.0241 = phi i64 [ %.sroa.42.0.copyload, %bb.a ], [ %i.hf, %.loopexit ], [ %.sroa.42.0261, %.preheader228 ]
-  %.sroa.61.0239 = phi i64 [ %.sroa.61.0.copyload, %bb.a ], [ %i.hn, %.loopexit ], [ %.sroa.61.0262, %.preheader228 ]
-  store i64 %.sroa.0142.0245, ptr %i.g, align 8
-  store i64 %.sroa.23.0243, ptr %.sroa.23.0..sroa_idx, align 8
-  store i64 %.sroa.42.0241, ptr %.sroa.42.0..sroa_idx, align 8
-  store i64 %.sroa.61.0239, ptr %.sroa.61.0..sroa_idx, align 8
-  store ptr %.sroa.0.2, ptr %0, align 8
-  store ptr %.sroa.9.2, ptr %.sroa.9.0..sroa_idx, align 8
-  store ptr %.sroa.13.2, ptr %.sroa.13.0..sroa_idx, align 8
-  store ptr %.sroa.17.2, ptr %.sroa.17.0..sroa_idx, align 8
-  store ptr %.sroa.0.0253, ptr %i.h, align 8
-  store ptr %.sroa.11.0251, ptr %.sroa.11.0..sroa_idx, align 8
-  store ptr %.sroa.18.0249, ptr %.sroa.18.0..sroa_idx, align 8
-  store ptr %.sroa.25.0247, ptr %.sroa.25.0..sroa_idx, align 8
+.loopexit229:                                     ; preds = %.preheader228
+  store i64 %.sroa.61.0262, ptr %i.g, align 8
+  store i64 %.sroa.42.0261, ptr %.sroa.23.0..sroa_idx, align 8
+  store i64 %.sroa.23.0260, ptr %.sroa.42.0..sroa_idx, align 8
+  store i64 %.sroa.0142.0259, ptr %.sroa.61.0..sroa_idx, align 8
+  store ptr %.sroa.17.0, ptr %0, align 8
+  store ptr %.sroa.8.0, ptr %.sroa.9.0..sroa_idx, align 8
+  store ptr %.sroa.12.0, ptr %.sroa.13.0..sroa_idx, align 8
+  store ptr %.sroa.16.0, ptr %.sroa.17.0..sroa_idx, align 8
+  store ptr %.sroa.13.0, ptr %i.h, align 8
+  store ptr %.sroa.9.0, ptr %.sroa.11.0..sroa_idx, align 8
+  store ptr %.sroa.0.0, ptr %.sroa.18.0..sroa_idx, align 8
+  store ptr %i.k, ptr %.sroa.25.0..sroa_idx, align 8
   ret void
 }
 

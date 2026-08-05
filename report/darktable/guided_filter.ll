@@ -203,28 +203,20 @@ scalar.ph190:                                     ; preds = %scalar.ph190.prehea
   br i1 %min.iters.check119, label %.lr.ph.i.us.preheader225, label %vector.scevcheck103
 
 vector.scevcheck103:                              ; preds = %.lr.ph.i.us.preheader
-  %i.gj = add i64 %i.cd, -1                       ; 3 uses
+  %i.gj = add i64 %i.cd, -1
   %mul = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.gj, i64 36) ; 2 uses
-  %mul.result = extractvalue { i64, i1 } %mul, 0
+  %mul.result = extractvalue { i64, i1 } %mul, 0  ; 3 uses
   %mul.overflow = extractvalue { i64, i1 } %mul, 1
   %i.gk = getelementptr i8, ptr %i.cj, i64 %mul.result
   %i.gl = icmp ult ptr %i.gk, %i.cj
-  %11 = or i1 %i.gl, %mul.overflow
   %scevgep104 = getelementptr i8, ptr %i.cj, i64 4 ; 2 uses
-  %mul105 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.gj, i64 36) ; 2 uses
-  %mul.result106 = extractvalue { i64, i1 } %mul105, 0
-  %mul.overflow107 = extractvalue { i64, i1 } %mul105, 1
-  %i.gm = getelementptr i8, ptr %scevgep104, i64 %mul.result106
+  %i.gm = getelementptr i8, ptr %scevgep104, i64 %mul.result
   %i.gn = icmp ult ptr %i.gm, %scevgep104
-  %12 = or i1 %i.gn, %mul.overflow107
   %scevgep108.a = getelementptr i8, ptr %i.cj, i64 8 ; 2 uses
-  %mul109 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.gj, i64 36) ; 2 uses
-  %mul.result110 = extractvalue { i64, i1 } %mul109, 0
-  %mul.overflow111 = extractvalue { i64, i1 } %mul109, 1
-  %i.go = getelementptr i8, ptr %scevgep108.a, i64 %mul.result110
+  %i.go = getelementptr i8, ptr %scevgep108.a, i64 %mul.result
   %i.gp = icmp ult ptr %i.go, %scevgep108.a
-  %i.gq = or i1 %i.gp, %mul.overflow111
-  %i.gr = or i1 %11, %12
+  %i.gq = or i1 %i.gp, %mul.overflow
+  %i.gr = or i1 %i.gn, %i.gl
   %i.gs = or i1 %i.gr, %i.gq
   br i1 %i.gs, label %.lr.ph.i.us.preheader225, label %vector.memcheck112
 

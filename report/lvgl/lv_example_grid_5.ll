@@ -1,5 +1,3 @@
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -14,72 +12,44 @@ target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: nounwind uwtable
 define void @lv_example_grid_5() local_unnamed_addr #0 {
-bb.a:
-  %0 = alloca %struct._lv_anim_t, align 8         ; 14 uses
-  %1 = tail call ptr @lv_screen_active() #3
-  %2 = tail call ptr @lv_obj_create(ptr noundef %1) #3 ; 13 uses
-  tail call void @lv_obj_set_size(ptr noundef %2, i32 noundef 300, i32 noundef 220) #3
-  tail call void @lv_obj_center(ptr noundef %2) #3
-  tail call void @lv_obj_set_grid_dsc_array(ptr noundef %2, ptr noundef nonnull @lv_example_grid_5.col_dsc, ptr noundef nonnull @lv_example_grid_5.row_dsc) #3
-  %3 = tail call ptr @lv_obj_create(ptr noundef %2) #3 ; 2 uses
-  tail call void @lv_obj_set_grid_cell(ptr noundef %3, i32 noundef 3, i32 noundef 0, i32 noundef 1, i32 noundef 3, i32 noundef 0, i32 noundef 1) #3
-  %4 = tail call ptr @lv_label_create(ptr noundef %3) #3 ; 2 uses
-  tail call void (ptr, ptr, ...) @lv_label_set_text_fmt(ptr noundef %4, ptr noundef nonnull @.str, i32 noundef 0, i32 noundef 0) #3
-  tail call void @lv_obj_center(ptr noundef %4) #3
-  %5 = tail call ptr @lv_obj_create(ptr noundef %2) #3 ; 2 uses
-  tail call void @lv_obj_set_grid_cell(ptr noundef %5, i32 noundef 3, i32 noundef 1, i32 noundef 1, i32 noundef 3, i32 noundef 0, i32 noundef 1) #3
-  %6 = tail call ptr @lv_label_create(ptr noundef %5) #3 ; 2 uses
-  tail call void (ptr, ptr, ...) @lv_label_set_text_fmt(ptr noundef %6, ptr noundef nonnull @.str, i32 noundef 1, i32 noundef 0) #3
-  tail call void @lv_obj_center(ptr noundef %6) #3
-  %7 = tail call ptr @lv_obj_create(ptr noundef %2) #3 ; 2 uses
-  tail call void @lv_obj_set_grid_cell(ptr noundef %7, i32 noundef 3, i32 noundef 2, i32 noundef 1, i32 noundef 3, i32 noundef 0, i32 noundef 1) #3
-  %8 = tail call ptr @lv_label_create(ptr noundef %7) #3 ; 2 uses
-  tail call void (ptr, ptr, ...) @lv_label_set_text_fmt(ptr noundef %8, ptr noundef nonnull @.str, i32 noundef 2, i32 noundef 0) #3
-  tail call void @lv_obj_center(ptr noundef %8) #3
-  %9 = tail call ptr @lv_obj_create(ptr noundef %2) #3 ; 2 uses
-  tail call void @lv_obj_set_grid_cell(ptr noundef %9, i32 noundef 3, i32 noundef 0, i32 noundef 1, i32 noundef 3, i32 noundef 1, i32 noundef 1) #3
-  %10 = tail call ptr @lv_label_create(ptr noundef %9) #3 ; 2 uses
-  tail call void (ptr, ptr, ...) @lv_label_set_text_fmt(ptr noundef %10, ptr noundef nonnull @.str, i32 noundef 0, i32 noundef 1) #3
+  %1 = alloca %struct._lv_anim_t, align 8         ; 14 uses
+  %2 = tail call ptr @lv_screen_active() #3
+  %3 = tail call ptr @lv_obj_create(ptr noundef %2) #3 ; 5 uses
+  tail call void @lv_obj_set_size(ptr noundef %3, i32 noundef 300, i32 noundef 220) #3
+  tail call void @lv_obj_center(ptr noundef %3) #3
+  tail call void @lv_obj_set_grid_dsc_array(ptr noundef %3, ptr noundef nonnull @lv_example_grid_5.col_dsc, ptr noundef nonnull @lv_example_grid_5.row_dsc) #3
+  br label %4
+
+4:                                                ; preds = %0, %4
+  %.017 = phi i8 [ 0, %0 ], [ %11, %4 ]           ; 3 uses
+  %5 = urem i8 %.017, 3
+  %6 = udiv i8 %.017, 3
+  %7 = tail call ptr @lv_obj_create(ptr noundef %3) #3 ; 2 uses
+  %8 = zext nneg i8 %5 to i32                     ; 2 uses
+  %9 = zext nneg i8 %6 to i32                     ; 2 uses
+  tail call void @lv_obj_set_grid_cell(ptr noundef %7, i32 noundef 3, i32 noundef %8, i32 noundef 1, i32 noundef 3, i32 noundef %9, i32 noundef 1) #3
+  %10 = tail call ptr @lv_label_create(ptr noundef %7) #3 ; 2 uses
+  tail call void (ptr, ptr, ...) @lv_label_set_text_fmt(ptr noundef %10, ptr noundef nonnull @.str, i32 noundef %8, i32 noundef %9) #3
   tail call void @lv_obj_center(ptr noundef %10) #3
-  %11 = tail call ptr @lv_obj_create(ptr noundef %2) #3 ; 2 uses
-  tail call void @lv_obj_set_grid_cell(ptr noundef %11, i32 noundef 3, i32 noundef 1, i32 noundef 1, i32 noundef 3, i32 noundef 1, i32 noundef 1) #3
-  %12 = tail call ptr @lv_label_create(ptr noundef %11) #3 ; 2 uses
-  tail call void (ptr, ptr, ...) @lv_label_set_text_fmt(ptr noundef %12, ptr noundef nonnull @.str, i32 noundef 1, i32 noundef 1) #3
-  tail call void @lv_obj_center(ptr noundef %12) #3
-  %13 = tail call ptr @lv_obj_create(ptr noundef %2) #3 ; 2 uses
-  tail call void @lv_obj_set_grid_cell(ptr noundef %13, i32 noundef 3, i32 noundef 2, i32 noundef 1, i32 noundef 3, i32 noundef 1, i32 noundef 1) #3
-  %14 = tail call ptr @lv_label_create(ptr noundef %13) #3 ; 2 uses
-  tail call void (ptr, ptr, ...) @lv_label_set_text_fmt(ptr noundef %14, ptr noundef nonnull @.str, i32 noundef 2, i32 noundef 1) #3
-  tail call void @lv_obj_center(ptr noundef %14) #3
-  %15 = tail call ptr @lv_obj_create(ptr noundef %2) #3 ; 2 uses
-  tail call void @lv_obj_set_grid_cell(ptr noundef %15, i32 noundef 3, i32 noundef 0, i32 noundef 1, i32 noundef 3, i32 noundef 2, i32 noundef 1) #3
-  %16 = tail call ptr @lv_label_create(ptr noundef %15) #3 ; 2 uses
-  tail call void (ptr, ptr, ...) @lv_label_set_text_fmt(ptr noundef %16, ptr noundef nonnull @.str, i32 noundef 0, i32 noundef 2) #3
-  tail call void @lv_obj_center(ptr noundef %16) #3
-  %17 = tail call ptr @lv_obj_create(ptr noundef %2) #3 ; 2 uses
-  tail call void @lv_obj_set_grid_cell(ptr noundef %17, i32 noundef 3, i32 noundef 1, i32 noundef 1, i32 noundef 3, i32 noundef 2, i32 noundef 1) #3
-  %18 = tail call ptr @lv_label_create(ptr noundef %17) #3 ; 2 uses
-  tail call void (ptr, ptr, ...) @lv_label_set_text_fmt(ptr noundef %18, ptr noundef nonnull @.str, i32 noundef 1, i32 noundef 2) #3
-  tail call void @lv_obj_center(ptr noundef %18) #3
-  %19 = tail call ptr @lv_obj_create(ptr noundef %2) #3 ; 2 uses
-  tail call void @lv_obj_set_grid_cell(ptr noundef %19, i32 noundef 3, i32 noundef 2, i32 noundef 1, i32 noundef 3, i32 noundef 2, i32 noundef 1) #3
-  %20 = tail call ptr @lv_label_create(ptr noundef %19) #3 ; 2 uses
-  tail call void (ptr, ptr, ...) @lv_label_set_text_fmt(ptr noundef %20, ptr noundef nonnull @.str, i32 noundef 2, i32 noundef 2) #3
-  tail call void @lv_obj_center(ptr noundef %20) #3
-  call void @llvm.lifetime.start.p0(ptr nonnull %0) #3
-  call void @lv_anim_init(ptr noundef nonnull %0) #3
-  call void @lv_anim_set_var(ptr noundef nonnull %0, ptr noundef %2) #3
-  call void @lv_anim_set_values(ptr noundef nonnull %0, i32 noundef 0, i32 noundef 10) #3
-  call void @lv_anim_set_repeat_count(ptr noundef nonnull %0, i32 noundef -1) #3
-  call void @lv_anim_set_exec_cb(ptr noundef nonnull %0, ptr noundef nonnull @row_gap_anim) #3
-  call void @lv_anim_set_duration(ptr noundef nonnull %0, i32 noundef 500) #3
-  call void @lv_anim_set_reverse_duration(ptr noundef nonnull %0, i32 noundef 500) #3
-  %i.a = call ptr @lv_anim_start(ptr noundef nonnull %0) #3 ; 0 uses
-  call void @lv_anim_set_exec_cb(ptr noundef nonnull %0, ptr noundef nonnull @column_gap_anim) #3
-  call void @lv_anim_set_duration(ptr noundef nonnull %0, i32 noundef 3000) #3
-  call void @lv_anim_set_reverse_duration(ptr noundef nonnull %0, i32 noundef 3000) #3
-  %i.b = call ptr @lv_anim_start(ptr noundef nonnull %0) #3 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %0) #3
+  %11 = add nuw nsw i8 %.017, 1                   ; 2 uses
+  %exitcond.not = icmp eq i8 %11, 9
+  br i1 %exitcond.not, label %bb.a, label %4, !llvm.loop !8
+
+bb.a:                                             ; preds = %4
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #3
+  call void @lv_anim_init(ptr noundef nonnull %1) #3
+  call void @lv_anim_set_var(ptr noundef nonnull %1, ptr noundef %3) #3
+  call void @lv_anim_set_values(ptr noundef nonnull %1, i32 noundef 0, i32 noundef 10) #3
+  call void @lv_anim_set_repeat_count(ptr noundef nonnull %1, i32 noundef -1) #3
+  call void @lv_anim_set_exec_cb(ptr noundef nonnull %1, ptr noundef nonnull @row_gap_anim) #3
+  call void @lv_anim_set_duration(ptr noundef nonnull %1, i32 noundef 500) #3
+  call void @lv_anim_set_reverse_duration(ptr noundef nonnull %1, i32 noundef 500) #3
+  %i.a = call ptr @lv_anim_start(ptr noundef nonnull %1) #3 ; 0 uses
+  call void @lv_anim_set_exec_cb(ptr noundef nonnull %1, ptr noundef nonnull @column_gap_anim) #3
+  call void @lv_anim_set_duration(ptr noundef nonnull %1, i32 noundef 3000) #3
+  call void @lv_anim_set_reverse_duration(ptr noundef nonnull %1, i32 noundef 3000) #3
+  %i.b = call ptr @lv_anim_start(ptr noundef nonnull %1) #3 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #3
   ret void
 }
 
@@ -156,4 +126,6 @@ attributes #3 = { nounwind }
 !5 = !{!"int", !6, i64 0}
 !6 = !{!"omnipotent char", !7, i64 0}
 !7 = !{!"Simple C/C++ TBAA"}
+!8 = distinct !{!8, !9}
+!9 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

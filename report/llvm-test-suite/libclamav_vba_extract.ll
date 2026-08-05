@@ -204,15 +204,14 @@ iter.check:                                       ; preds = %bb.m, %bb.l, %bb.n,
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %narrow = add nuw i16 %i.ag, 2                  ; 2 uses
+  %narrow = add nuw i16 %i.ag, 2
   %i.al = trunc i32 %.1101 to i12                 ; 2 uses
-  %i.am = trunc i16 %narrow to i12
+  %i.am = trunc i16 %narrow to i12                ; 2 uses
   %i.an = xor i12 %i.al, -1
   %i.ao = icmp ult i12 %i.an, %i.am
   %i.ap = trunc i32 %i.ai to i12
-  %3 = trunc i16 %narrow to i12
   %i.aq = sub i12 %i.ap, %i.al
-  %i.ar = icmp ult i12 %i.aq, %3
+  %i.ar = icmp ult i12 %i.aq, %i.am
   %i.as = icmp samesign ugt i16 %i.ag, 4093
   %i.at = or i1 %i.ar, %i.as
   %i.au = or i1 %i.ao, %i.at

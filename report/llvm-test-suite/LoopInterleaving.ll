@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 6 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 5 uses
   %i.b = phi <2 x i32> [ zeroinitializer, %vector.ph ], [ %i.e, %vector.body ]
   %i.c = getelementptr inbounds nuw [4 x i8], ptr @A, i64 %index
   %i.d = load <2 x i32>, ptr %i.c, align 8, !tbaa !4
@@ -217,15 +217,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.j = load <2 x i32>, ptr %i.i, align 8, !tbaa !4
   %i.k = shl nsw <2 x i32> %i.j, splat (i32 1)
   store <2 x i32> %i.k, ptr %i.i, align 8, !tbaa !4
-  %1 = getelementptr inbounds nuw [4 x i8], ptr @F, i64 %index ; 2 uses
-  %i.l = getelementptr inbounds nuw [4 x i8], ptr @F, i64 %index
-  %2 = getelementptr inbounds nuw i8, ptr %i.l, i64 4 ; 2 uses
-  %3 = load i32, ptr %1, align 8, !tbaa !4
-  %4 = load i32, ptr %2, align 4, !tbaa !4
-  %5 = sdiv i32 %3, 5
-  %6 = sdiv i32 %4, 5
-  store i32 %5, ptr %1, align 8, !tbaa !4
-  store i32 %6, ptr %2, align 4, !tbaa !4
+  %i.l = getelementptr inbounds nuw [4 x i8], ptr @F, i64 %index ; 2 uses
+  %1 = load <2 x i32>, ptr %i.l, align 8, !tbaa !4
+  %2 = sdiv <2 x i32> %1, splat (i32 5)
+  store <2 x i32> %2, ptr %i.l, align 8, !tbaa !4
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.m = icmp eq i64 %index.next, %n.vec
   br i1 %i.m, label %middle.block, label %vector.body, !llvm.loop !86

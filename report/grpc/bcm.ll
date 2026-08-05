@@ -1,8 +1,8 @@
 inline.NumInlined: 5608
 inline.NumDeleted: 1017
 loop-unroll.NumCompletelyUnrolled: 186
-loop-unroll.NumRuntimeUnrolled: 134
-loop-unroll.NumUnrolled: 373
+loop-unroll.NumRuntimeUnrolled: 132
+loop-unroll.NumUnrolled: 371
 begin_hunk_0_@DH_check:bb.a
 
 bb.h:                                             ; preds = %bb.g
@@ -204,64 +204,30 @@ BN_is_word.exit:                                  ; preds = %BN_abs_is_word.exit
 bb.t:                                             ; preds = %BN_is_word.exit
   %i.ck = load ptr, ptr %0, align 8, !tbaa !823   ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 8
-  %i.cm = load i32, ptr %i.cl, align 8, !tbaa !186 ; 4 uses
+  %i.cm = load i32, ptr %i.cl, align 8, !tbaa !186 ; 2 uses
   %i.cn = icmp sgt i32 %i.cm, 0
   br i1 %i.cn, label %.lr.ph.i, label %.sink.split162
 
 .lr.ph.i:                                         ; preds = %bb.t
-  %i.co = load ptr, ptr %i.ck, align 8, !tbaa !185 ; 3 uses
-  %i.cp = zext nneg i32 %i.cm to i64              ; 4 uses
-  %xtraiter221 = and i64 %i.cp, 1
-  %2 = icmp eq i32 %i.cm, 1
-  br i1 %2, label %.epil.preheader220, label %.lr.ph.i.new
-
-.lr.ph.i.new:                                     ; preds = %.lr.ph.i
-  %unroll_iter225 = and i64 %i.cp, 2147483646
+  %i.co = load ptr, ptr %i.ck, align 8, !tbaa !185
+  %i.cp = zext nneg i32 %i.cm to i64
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.u, %.lr.ph.i.new
-  %indvars.iv.i = phi i64 [ %i.cp, %.lr.ph.i.new ], [ %indvars.iv.next.i.1, %bb.u ] ; 2 uses
-  %.0912.i = phi i128 [ 0, %.lr.ph.i.new ], [ %i.cv, %bb.u ]
-  %niter226 = phi i64 [ 0, %.lr.ph.i.new ], [ %niter226.next.1, %bb.u ]
-  %3 = shl nuw nsw i128 %.0912.i, 64
-  %4 = getelementptr [8 x i8], ptr %i.co, i64 %indvars.iv.i
-  %5 = getelementptr i8, ptr %4, i64 -8
-  %6 = load i64, ptr %5, align 8, !tbaa !94
-  %7 = zext i64 %6 to i128
-  %8 = or disjoint i128 %3, %7
-  %9 = urem i128 %8, 24
-  %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -2 ; 3 uses
-  %i.cq = shl nuw nsw i128 %9, 64
+bb.u:                                             ; preds = %bb.u, %.lr.ph.i
+  %indvars.iv.i = phi i64 [ %i.cp, %.lr.ph.i ], [ %indvars.iv.next.i.1, %bb.u ] ; 2 uses
+  %.0912.i = phi i128 [ 0, %.lr.ph.i ], [ %i.cv, %bb.u ]
+  %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %i.cq = shl nuw nsw i128 %.0912.i, 64
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %indvars.iv.next.i.1
   %i.cs = load i64, ptr %i.cr, align 8, !tbaa !94
   %i.ct = zext i64 %i.cs to i128
   %i.cu = or disjoint i128 %i.cq, %i.ct
-  %i.cv = urem i128 %i.cu, 24                     ; 3 uses
-  %niter226.next.1 = add i64 %niter226, 2         ; 2 uses
-  %niter226.ncmp.1.not = icmp eq i64 %niter226.next.1, %unroll_iter225
-  br i1 %niter226.ncmp.1.not, label %BN_mod_word.exit.unr-lcssa, label %bb.u, !llvm.loop !357
+  %i.cv = urem i128 %i.cu, 24                     ; 2 uses
+  %2 = icmp samesign ugt i64 %indvars.iv.i, 1
+  br i1 %2, label %bb.u, label %BN_mod_word.exit, !llvm.loop !357
 
-BN_mod_word.exit.unr-lcssa:                       ; preds = %bb.u
-  %lcmp.mod222.not = icmp eq i64 %xtraiter221, 0
-  br i1 %lcmp.mod222.not, label %BN_mod_word.exit, label %.epil.preheader220
-
-.epil.preheader220:                               ; preds = %BN_mod_word.exit.unr-lcssa, %.lr.ph.i
-  %indvars.iv.i.epil.init = phi i64 [ %i.cp, %.lr.ph.i ], [ %indvars.iv.next.i.1, %BN_mod_word.exit.unr-lcssa ]
-  %.0912.i.epil.init = phi i128 [ 0, %.lr.ph.i ], [ %i.cv, %BN_mod_word.exit.unr-lcssa ]
-  %lcmp.mod224 = trunc i32 %i.cm to i1
-  tail call void @llvm.assume(i1 %lcmp.mod224)
-  %10 = shl nuw nsw i128 %.0912.i.epil.init, 64
-  %11 = getelementptr [8 x i8], ptr %i.co, i64 %indvars.iv.i.epil.init
-  %12 = getelementptr i8, ptr %11, i64 -8
-  %13 = load i64, ptr %12, align 8, !tbaa !94
-  %14 = zext i64 %13 to i128
-  %15 = or disjoint i128 %10, %14
-  %16 = urem i128 %15, 24
-  br label %BN_mod_word.exit
-
-BN_mod_word.exit:                                 ; preds = %BN_mod_word.exit.unr-lcssa, %.epil.preheader220
-  %.lcssa = phi i128 [ %i.cv, %BN_mod_word.exit.unr-lcssa ], [ %16, %.epil.preheader220 ]
-  %cond = icmp eq i128 %.lcssa, 11
+BN_mod_word.exit:                                 ; preds = %bb.u
+  %cond = icmp eq i128 %i.cv, 11
   br i1 %cond, label %bb.x, label %.sink.split162
 
 .thread:                                          ; preds = %BN_is_word.exit, %BN_abs_is_word.exit.i88
@@ -330,64 +296,30 @@ BN_is_word.exit107:                               ; preds = %BN_abs_is_word.exit
 bb.v:                                             ; preds = %BN_is_word.exit107
   %i.dm = load ptr, ptr %0, align 8, !tbaa !823   ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 8
-  %i.do = load i32, ptr %i.dn, align 8, !tbaa !186 ; 4 uses
+  %i.do = load i32, ptr %i.dn, align 8, !tbaa !186 ; 2 uses
   %i.dp = icmp sgt i32 %i.do, 0
   br i1 %i.dp, label %.lr.ph.i109, label %.sink.split162
 
 .lr.ph.i109:                                      ; preds = %bb.v
-  %i.dq = load ptr, ptr %i.dm, align 8, !tbaa !185 ; 3 uses
-  %i.dr = zext nneg i32 %i.do to i64              ; 4 uses
-  %xtraiter = and i64 %i.dr, 1
-  %17 = icmp eq i32 %i.do, 1
-  br i1 %17, label %.epil.preheader, label %.lr.ph.i109.new
-
-.lr.ph.i109.new:                                  ; preds = %.lr.ph.i109
-  %unroll_iter = and i64 %i.dr, 2147483646
+  %i.dq = load ptr, ptr %i.dm, align 8, !tbaa !185
+  %i.dr = zext nneg i32 %i.do to i64
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.w, %.lr.ph.i109.new
-  %indvars.iv.i110 = phi i64 [ %i.dr, %.lr.ph.i109.new ], [ %indvars.iv.next.i112.1, %bb.w ] ; 2 uses
-  %.0912.i111 = phi i128 [ 0, %.lr.ph.i109.new ], [ %i.dx, %bb.w ]
-  %niter = phi i64 [ 0, %.lr.ph.i109.new ], [ %niter.next.1, %bb.w ]
-  %18 = shl nuw nsw i128 %.0912.i111, 64
-  %19 = getelementptr [8 x i8], ptr %i.dq, i64 %indvars.iv.i110
-  %20 = getelementptr i8, ptr %19, i64 -8
-  %21 = load i64, ptr %20, align 8, !tbaa !94
-  %22 = zext i64 %21 to i128
-  %23 = or disjoint i128 %18, %22
-  %24 = urem i128 %23, 10
-  %indvars.iv.next.i112.1 = add nsw i64 %indvars.iv.i110, -2 ; 3 uses
-  %i.ds = shl nuw nsw i128 %24, 64
+bb.w:                                             ; preds = %bb.w, %.lr.ph.i109
+  %indvars.iv.i110 = phi i64 [ %i.dr, %.lr.ph.i109 ], [ %indvars.iv.next.i112.1, %bb.w ] ; 2 uses
+  %.0912.i111 = phi i128 [ 0, %.lr.ph.i109 ], [ %i.dx, %bb.w ]
+  %indvars.iv.next.i112.1 = add nsw i64 %indvars.iv.i110, -1 ; 2 uses
+  %i.ds = shl nuw nsw i128 %.0912.i111, 64
   %i.dt = getelementptr inbounds nuw [8 x i8], ptr %i.dq, i64 %indvars.iv.next.i112.1
   %i.du = load i64, ptr %i.dt, align 8, !tbaa !94
   %i.dv = zext i64 %i.du to i128
   %i.dw = or disjoint i128 %i.ds, %i.dv
-  %i.dx = urem i128 %i.dw, 10                     ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1.not, label %BN_mod_word.exit115.unr-lcssa, label %bb.w, !llvm.loop !357
+  %i.dx = urem i128 %i.dw, 10                     ; 2 uses
+  %3 = icmp samesign ugt i64 %indvars.iv.i110, 1
+  br i1 %3, label %bb.w, label %BN_mod_word.exit115, !llvm.loop !357
 
-BN_mod_word.exit115.unr-lcssa:                    ; preds = %bb.w
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %BN_mod_word.exit115, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %BN_mod_word.exit115.unr-lcssa, %.lr.ph.i109
-  %indvars.iv.i110.epil.init = phi i64 [ %i.dr, %.lr.ph.i109 ], [ %indvars.iv.next.i112.1, %BN_mod_word.exit115.unr-lcssa ]
-  %.0912.i111.epil.init = phi i128 [ 0, %.lr.ph.i109 ], [ %i.dx, %BN_mod_word.exit115.unr-lcssa ]
-  %lcmp.mod219 = trunc i32 %i.do to i1
-  tail call void @llvm.assume(i1 %lcmp.mod219)
-  %25 = shl nuw nsw i128 %.0912.i111.epil.init, 64
-  %26 = getelementptr [8 x i8], ptr %i.dq, i64 %indvars.iv.i110.epil.init
-  %27 = getelementptr i8, ptr %26, i64 -8
-  %28 = load i64, ptr %27, align 8, !tbaa !94
-  %29 = zext i64 %28 to i128
-  %30 = or disjoint i128 %25, %29
-  %31 = urem i128 %30, 10
-  br label %BN_mod_word.exit115
-
-BN_mod_word.exit115:                              ; preds = %BN_mod_word.exit115.unr-lcssa, %.epil.preheader
-  %.lcssa208 = phi i128 [ %i.dx, %BN_mod_word.exit115.unr-lcssa ], [ %31, %.epil.preheader ]
-  %i.dy = and i128 %.lcssa208, 11
+BN_mod_word.exit115:                              ; preds = %bb.w
+  %i.dy = and i128 %i.dx, 11
   %or.cond.not = icmp eq i128 %i.dy, 3
   br i1 %or.cond.not, label %bb.x, label %.sink.split162
 

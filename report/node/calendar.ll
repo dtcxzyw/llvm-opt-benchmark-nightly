@@ -203,14 +203,13 @@ bb.k:                                             ; preds = %_ZN6icu_788Calendar
   %i.bf = srem i32 %i.bd, 1000
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i32 %i.bf, ptr %i.bg, align 8
-  %2 = sdiv i32 %i.bd, 1000
-  %3 = srem i32 %2, 60
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 60
-  store i32 %3, ptr %4, align 4
-  %5 = sdiv i32 %i.bd, 60000
-  %6 = srem i32 %5, 60
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i32 %6, ptr %7, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %3 = sdiv i32 %i.bd, 1000
+  %4 = sdiv i32 %i.bd, 60000
+  %5 = insertelement <2 x i32> poison, i32 %4, i64 0
+  %6 = insertelement <2 x i32> %5, i32 %3, i64 1
+  %7 = srem <2 x i32> %6, splat (i32 60)
+  store <2 x i32> %7, ptr %2, align 8
   %i.bh = sdiv i32 %i.bd, 3600000                 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 52
   store i32 %i.bh, ptr %i.bi, align 4

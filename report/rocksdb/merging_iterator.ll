@@ -1,3 +1,8 @@
+inline.NumInlined: 1811
+inline.NumDeleted: 678
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZN7rocksdb20MergeIteratorBuilderC2EPKNS_21InternalKeyComparatorEPNS_5ArenaEbPKNS_5SliceE:bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 160
   store ptr %i.p, ptr %i.s, align 8, !tbaa !81
@@ -199,7 +204,7 @@ bb.e:                                             ; preds = %.thread59.a, %.thre
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 216
   %i.ae = load ptr, ptr %i.ad, align 8
   tail call void %i.ae(ptr noundef nonnull align 8 dereferenceable(344) %i.ab, ptr noundef %1)
-  br i1 %i.aa, label %.preheader, label %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit11
+  br i1 %i.aa, label %.preheader.preheader, label %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit11
 
 .preheader.critedge:                              ; preds = %.thread59.a, %.thread
   %i.af = load ptr, ptr %0, align 8, !tbaa !502   ; 2 uses
@@ -207,18 +212,21 @@ bb.e:                                             ; preds = %.thread59.a, %.thre
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 216
   %i.ai = load ptr, ptr %i.ah, align 8
   tail call void %i.ai(ptr noundef nonnull align 8 dereferenceable(344) %i.af, ptr noundef %1)
+  br label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %.preheader.critedge, %.thread62
   br label %.preheader
 
-.preheader:                                       ; preds = %.preheader.critedge, %.thread62
+.preheader:                                       ; preds = %.preheader.preheader, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit
   %i.aj = load ptr, ptr %0, align 8, !tbaa !502   ; 6 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 104 ; 3 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 112 ; 2 uses
-  %i.am = load ptr, ptr %i.al, align 8, !tbaa !430 ; 3 uses
-  %i.an = load ptr, ptr %i.ak, align 8, !tbaa !84 ; 2 uses
-  %i.ao = ptrtoint ptr %i.am to i64
-  %i.ap = ptrtoint ptr %i.an to i64               ; 2 uses
-  %i.aq = sub i64 %i.ao, %i.ap                    ; 2 uses
-  %i.ar = ashr exact i64 %i.aq, 3                 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 112 ; 4 uses
+  %i.am = load ptr, ptr %i.al, align 8, !tbaa !430 ; 10 uses
+  %i.an = load ptr, ptr %i.ak, align 8, !tbaa !84 ; 12 uses
+  %i.ao = ptrtoint ptr %i.am to i64               ; 3 uses
+  %i.ap = ptrtoint ptr %i.an to i64               ; 4 uses
+  %i.aq = sub i64 %i.ao, %i.ap                    ; 3 uses
+  %i.ar = ashr exact i64 %i.aq, 3                 ; 4 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.aj, i64 56
   %i.at = getelementptr inbounds nuw i8, ptr %i.aj, i64 64
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !110
@@ -231,32 +239,22 @@ bb.e:                                             ; preds = %.thread59.a, %.thre
   %i.bb = icmp ult i64 %i.ar, %i.ba
   br i1 %i.bb, label %.lr.ph, label %._crit_edge
 
-.lr.ph:                                           ; preds = %.preheader, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit
-  %5 = phi ptr [ %18, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit ], [ %i.aj, %.preheader ] ; 3 uses
-  %6 = phi i64 [ %25, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit ], [ %i.ar, %.preheader ] ; 3 uses
-  %7 = phi i64 [ %24, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit ], [ %i.aq, %.preheader ]
-  %8 = phi i64 [ %23, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit ], [ %i.ap, %.preheader ] ; 2 uses
-  %9 = phi ptr [ %21, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit ], [ %i.an, %.preheader ] ; 12 uses
-  %10 = phi ptr [ %17, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit ], [ %i.am, %.preheader ] ; 6 uses
-  %11 = phi ptr [ %20, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit ], [ %i.al, %.preheader ]
-  %12 = phi ptr [ %19, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit ], [ %i.ak, %.preheader ]
-  %13 = ptrtoaddr ptr %9 to i64                   ; 2 uses
+.lr.ph:                                           ; preds = %.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   store ptr null, ptr %4, align 8, !tbaa !505
-  %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 120 ; 3 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.aj, i64 120 ; 3 uses
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !507
-  %.not.i.i = icmp eq ptr %10, %i.bd
+  %.not.i.i = icmp eq ptr %i.am, %i.bd
   br i1 %.not.i.i, label %bb.f, label %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit.thread
 
 _ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit.thread: ; preds = %.lr.ph
-  %14 = getelementptr inbounds nuw i8, ptr %5, i64 112
-  store i64 0, ptr %10, align 8, !tbaa !86
-  %i.be = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
-  store ptr %i.be, ptr %14, align 8, !tbaa !430
+  store i64 0, ptr %i.am, align 8, !tbaa !86
+  %i.be = getelementptr inbounds nuw i8, ptr %i.am, i64 8
+  store ptr %i.be, ptr %i.al, align 8, !tbaa !430
   br label %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.bf = icmp eq i64 %7, 9223372036854775800
+  %i.bf = icmp eq i64 %i.aq, 9223372036854775800
   br i1 %i.bf, label %bb.g, label %_ZNKSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
 
 bb.g:                                             ; preds = %bb.f
@@ -267,9 +265,9 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZNKSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.f
-  %.sroa.speculated.i.i = tail call i64 @llvm.umax.i64(i64 %6, i64 1)
-  %i.bg = add nsw i64 %.sroa.speculated.i.i, %6   ; 2 uses
-  %i.bh = icmp ult i64 %i.bg, %6
+  %.sroa.speculated.i.i = tail call i64 @llvm.umax.i64(i64 %i.ar, i64 1)
+  %i.bg = add nsw i64 %.sroa.speculated.i.i, %i.ar ; 2 uses
+  %i.bh = icmp ult i64 %i.bg, %i.ar
   %i.bi = tail call i64 @llvm.umin.i64(i64 %i.bg, i64 1152921504606846975)
   %i.bj = select i1 %i.bh, i64 1152921504606846975, i64 %i.bi ; 3 uses
   %.not.i.i15 = icmp ne i64 %i.bj, 0
@@ -279,16 +277,14 @@ _ZNKSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_de
           to label %.noexc18 unwind label %.loopexit ; 12 uses
 
 .noexc18:                                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
-  %15 = ptrtoint ptr %10 to i64                   ; 3 uses
-  %16 = sub i64 %15, %8
-  %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %16
+  %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.aq
   store i64 0, ptr %i.bm, align 8, !tbaa !86
-  %.not10.i.i.i.i = icmp eq ptr %9, %10
+  %.not10.i.i.i.i = icmp eq ptr %i.an, %i.am
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %iter.check
 
 iter.check:                                       ; preds = %.noexc18
-  %i.bn = add i64 %15, -8
-  %i.bo = sub i64 %i.bn, %13                      ; 3 uses
+  %i.bn = add i64 %i.ao, -8
+  %i.bo = sub i64 %i.bn, %i.ap                    ; 3 uses
   %i.bp = lshr i64 %i.bo, 3
   %i.bq = add nuw nsw i64 %i.bp, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.bo, 24
@@ -296,14 +292,14 @@ iter.check:                                       ; preds = %.noexc18
 
 vector.memcheck:                                  ; preds = %iter.check
   %scevgep = getelementptr i8, ptr %i.bl, i64 8
-  %i.br = add i64 %15, -8
-  %i.bs = sub i64 %i.br, %13
+  %i.br = add i64 %i.ao, -8
+  %i.bs = sub i64 %i.br, %i.ap
   %i.bt = and i64 %i.bs, -8                       ; 2 uses
   %scevgep72 = getelementptr i8, ptr %scevgep, i64 %i.bt
-  %scevgep73 = getelementptr i8, ptr %9, i64 8
+  %scevgep73 = getelementptr i8, ptr %i.an, i64 8
   %scevgep74 = getelementptr i8, ptr %scevgep73, i64 %i.bt
   %bound0 = icmp ult ptr %i.bl, %scevgep74
-  %bound1 = icmp ult ptr %9, %scevgep72
+  %bound1 = icmp ult ptr %i.an, %scevgep72
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -316,14 +312,14 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.bq, 4611686018427387888     ; 4 uses
   %i.bu = shl i64 %n.vec, 3                       ; 2 uses
   %i.bv = getelementptr i8, ptr %i.bl, i64 %i.bu  ; 2 uses
-  %i.bw = getelementptr i8, ptr %9, i64 %i.bu
+  %i.bw = getelementptr i8, ptr %i.an, i64 %i.bu
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bx = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.bl, i64 %i.bx ; 4 uses
-  %next.gep76 = getelementptr i8, ptr %9, i64 %i.bx ; 8 uses
+  %next.gep76 = getelementptr i8, ptr %i.an, i64 %i.bx ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !508)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !511)
   %i.by = getelementptr i8, ptr %next.gep76, i64 32
@@ -364,14 +360,14 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %n.vec82 = and i64 %i.bq, 4611686018427387900   ; 3 uses
   %i.ci = shl i64 %n.vec82, 3                     ; 2 uses
   %i.cj = getelementptr i8, ptr %i.bl, i64 %i.ci  ; 2 uses
-  %i.ck = getelementptr i8, ptr %9, i64 %i.ci
+  %i.ck = getelementptr i8, ptr %i.an, i64 %i.ci
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index83 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next87, %vec.epilog.vector.body ] ; 2 uses
   %i.cl = shl i64 %index83, 3                     ; 2 uses
   %next.gep84 = getelementptr i8, ptr %i.bl, i64 %i.cl
-  %next.gep85 = getelementptr i8, ptr %9, i64 %i.cl ; 2 uses
+  %next.gep85 = getelementptr i8, ptr %i.an, i64 %i.cl ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !508)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !511)
   %wide.load86 = load <4 x i64>, ptr %next.gep85, align 8, !tbaa !86, !alias.scope !513, !noalias !508
@@ -387,7 +383,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.012.i.i.i.i.ph = phi ptr [ %i.bl, %iter.check ], [ %i.bl, %vector.memcheck ], [ %i.bv, %vec.epilog.iter.check ], [ %i.cj, %vec.epilog.middle.block ]
-  %.0911.i.i.i.i.ph = phi ptr [ %9, %iter.check ], [ %9, %vector.memcheck ], [ %i.bw, %vec.epilog.iter.check ], [ %i.ck, %vec.epilog.middle.block ]
+  %.0911.i.i.i.i.ph = phi ptr [ %i.an, %iter.check ], [ %i.an, %vector.memcheck ], [ %i.bw, %vec.epilog.iter.check ], [ %i.ck, %vec.epilog.middle.block ]
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.preheader, %.lr.ph.i.i.i.i
@@ -400,54 +396,32 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store ptr null, ptr %.0911.i.i.i.i, align 8, !tbaa !86, !alias.scope !511, !noalias !508
   %i.co = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 8 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 8 ; 2 uses
-  %.not.i.i.i.i16 = icmp eq ptr %i.co, %10
+  %.not.i.i.i.i16 = icmp eq ptr %i.co, %i.am
   br i1 %.not.i.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i, !llvm.loop !523
 
 _ZNSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i: ; preds = %.lr.ph.i.i.i.i, %middle.block, %vec.epilog.middle.block, %.noexc18
   %.0.lcssa.i.i.i.i = phi ptr [ %i.bl, %.noexc18 ], [ %i.cj, %vec.epilog.middle.block ], [ %i.bv, %middle.block ], [ %i.cp, %.lr.ph.i.i.i.i ]
   %i.cq = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i, i64 8
-  %.not.i23.i = icmp eq ptr %9, null
+  %.not.i23.i = icmp eq ptr %i.an, null
   br i1 %.not.i23.i, label %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit._ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit_crit_edge, label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i
   %i.cr = load ptr, ptr %i.bc, align 8, !tbaa !507
   %i.cs = ptrtoint ptr %i.cr to i64
-  %i.ct = sub i64 %i.cs, %8
-  tail call void @_ZdlPvm(ptr noundef nonnull %9, i64 noundef %i.ct) #24
+  %i.ct = sub i64 %i.cs, %i.ap
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.an, i64 noundef %i.ct) #24
   br label %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit._ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit_crit_edge
 
-_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit._ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit_crit_edge: ; preds = %bb.h, %_ZNSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i
-  store ptr %i.bl, ptr %12, align 8, !tbaa !84
-  store ptr %i.cq, ptr %11, align 8, !tbaa !430
+_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit._ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit_crit_edge: ; preds = %_ZNSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, %bb.h
+  store ptr %i.bl, ptr %i.ak, align 8, !tbaa !84
+  store ptr %i.cq, ptr %i.al, align 8, !tbaa !430
   %i.cu = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %i.bj
   store ptr %i.cu, ptr %i.bc, align 8, !tbaa !507
-  %.pre40 = load ptr, ptr %0, align 8, !tbaa !502 ; 2 uses
-  %.phi.trans.insert41 = getelementptr inbounds nuw i8, ptr %.pre40, i64 112
-  %.pre42 = load ptr, ptr %.phi.trans.insert41, align 8, !tbaa !430
   br label %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit
 
 _ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit: ; preds = %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit._ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit_crit_edge, %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit.thread
-  %17 = phi ptr [ %.pre42, %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit._ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit_crit_edge ], [ %i.be, %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit.thread ] ; 3 uses
-  %18 = phi ptr [ %.pre40, %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit._ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit_crit_edge ], [ %5, %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit.thread ] ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 104 ; 3 uses
-  %20 = getelementptr inbounds nuw i8, ptr %18, i64 112
-  %21 = load ptr, ptr %19, align 8, !tbaa !84     ; 2 uses
-  %22 = ptrtoint ptr %17 to i64
-  %23 = ptrtoint ptr %21 to i64                   ; 2 uses
-  %24 = sub i64 %22, %23                          ; 2 uses
-  %25 = ashr exact i64 %24, 3                     ; 2 uses
-  %26 = getelementptr inbounds nuw i8, ptr %18, i64 56
-  %27 = getelementptr inbounds nuw i8, ptr %18, i64 64
-  %28 = load ptr, ptr %27, align 8, !tbaa !110
-  %29 = load ptr, ptr %26, align 8, !tbaa !66
-  %30 = ptrtoint ptr %28 to i64
-  %31 = ptrtoint ptr %29 to i64
-  %32 = sub i64 %30, %31
-  %33 = sdiv exact i64 %32, 88
-  %34 = add nsw i64 %33, -1
-  %35 = icmp ult i64 %25, %34
-  br i1 %35, label %.lr.ph, label %._crit_edge, !llvm.loop !524
+  br label %.preheader, !llvm.loop !524
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -465,26 +439,22 @@ bb.i:                                             ; preds = %.loopexit.split-lp,
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   resume { ptr, i32 } %lpad.phi
 
-._crit_edge:                                      ; preds = %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit, %.preheader
-  %36 = phi ptr [ %i.am, %.preheader ], [ %17, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit ] ; 4 uses
-  %.lcssa30 = phi ptr [ %i.aj, %.preheader ], [ %18, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit ] ; 2 uses
-  %.lcssa27 = phi ptr [ %i.ak, %.preheader ], [ %19, %_ZNSt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS1_EED2Ev.exit ]
-  %i.cv = getelementptr inbounds nuw i8, ptr %.lcssa30, i64 120
+._crit_edge:                                      ; preds = %.preheader
+  %i.cv = getelementptr inbounds nuw i8, ptr %i.aj, i64 120
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !507
-  %.not.i.i10 = icmp eq ptr %36, %i.cw
+  %.not.i.i10 = icmp eq ptr %i.am, %i.cw
   br i1 %.not.i.i10, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge
-  %37 = getelementptr inbounds nuw i8, ptr %.lcssa30, i64 112
   %i.cx = load i64, ptr %2, align 8, !tbaa !86
-  store i64 %i.cx, ptr %36, align 8, !tbaa !86
+  store i64 %i.cx, ptr %i.am, align 8, !tbaa !86
   store ptr null, ptr %2, align 8, !tbaa !86
-  %i.cy = getelementptr inbounds nuw i8, ptr %36, i64 8
-  store ptr %i.cy, ptr %37, align 8, !tbaa !430
+  %i.cy = getelementptr inbounds nuw i8, ptr %i.am, i64 8
+  store ptr %i.cy, ptr %i.al, align 8, !tbaa !430
   br label %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit11
 
 bb.k:                                             ; preds = %._crit_edge
-  tail call void @_ZNSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %.lcssa27, ptr %36, ptr noundef nonnull align 8 dereferenceable(8) %2)
+  tail call void @_ZNSt6vectorISt10unique_ptrIN7rocksdb25TruncatedRangeDelIteratorESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %i.ak, ptr %i.am, ptr noundef nonnull align 8 dereferenceable(8) %2)
   br label %_ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit11
 
 _ZN7rocksdb15MergingIterator25AddRangeTombstoneIteratorEOSt10unique_ptrINS_25TruncatedRangeDelIteratorESt14default_deleteIS2_EE.exit11: ; preds = %bb.k, %bb.j, %.thread62

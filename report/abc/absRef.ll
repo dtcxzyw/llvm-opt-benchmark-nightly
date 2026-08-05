@@ -203,23 +203,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.bw, label %.critedge, label %Gia_ObjIsPo.exit
 
 .critedge155.preheader:                           ; preds = %bb.p
-  %4 = load ptr, ptr %0, align 8, !tbaa !8        ; 3 uses
-  %i.bx = ptrtoint ptr %.tr152 to i64             ; 2 uses
-  %5 = getelementptr i8, ptr %4, i64 32
-  %.val126171 = load ptr, ptr %5, align 8, !tbaa !62 ; 2 uses
-  %6 = getelementptr i8, ptr %4, i64 248
-  %.val127172 = load ptr, ptr %6, align 8, !tbaa !89
-  %7 = getelementptr i8, ptr %.val127172, i64 8
-  %.val127.val173 = load ptr, ptr %7, align 8, !tbaa !21
-  %8 = ptrtoint ptr %.val126171 to i64
-  %9 = sub i64 %i.bx, %8
-  %10 = sdiv exact i64 %9, 12
-  %sext.i174 = shl i64 %10, 32
-  %11 = ashr exact i64 %sext.i174, 30             ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %.val127.val173, i64 %11
-  %13 = load i32, ptr %12, align 4, !tbaa !54
-  %14 = icmp sgt i32 %13, 0
-  br i1 %14, label %.lr.ph177, label %.critedge
+  %i.bx = ptrtoint ptr %.tr152 to i64
+  br label %.critedge155
 
 Gia_ObjIsPo.exit:                                 ; preds = %bb.q
   %i.by = load ptr, ptr %0, align 8, !tbaa !8     ; 4 uses
@@ -267,23 +252,38 @@ Gia_ObjIsRi.exit:                                 ; preds = %Gia_ObjIsPo.exit
   %.not91 = icmp eq i32 %i.cz, 0
   br i1 %.not91, label %tailrecurse, label %.critedge
 
-.lr.ph177:                                        ; preds = %.critedge155.preheader, %.critedge155.a
-  %15 = phi i64 [ %24, %.critedge155.a ], [ %11, %.critedge155.preheader ]
-  %.val126176 = phi ptr [ %.val126, %.critedge155.a ], [ %.val126171, %.critedge155.preheader ]
-  %16 = phi ptr [ %17, %.critedge155.a ], [ %4, %.critedge155.preheader ]
-  %.0175 = phi i32 [ %i.fb, %.critedge155.a ], [ 0, %.critedge155.preheader ] ; 2 uses
-  %i.da = getelementptr i8, ptr %16, i64 256
+.critedge155:                                     ; preds = %.critedge155.preheader, %.critedge155.a
+  %.0 = phi i32 [ %i.fb, %.critedge155.a ], [ 0, %.critedge155.preheader ] ; 3 uses
+  %4 = load ptr, ptr %0, align 8, !tbaa !8        ; 3 uses
+  %5 = getelementptr i8, ptr %4, i64 32
+  %.val126 = load ptr, ptr %5, align 8, !tbaa !62 ; 2 uses
+  %6 = getelementptr i8, ptr %4, i64 248
+  %.val127 = load ptr, ptr %6, align 8, !tbaa !89
+  %7 = getelementptr i8, ptr %.val127, i64 8
+  %.val127.val = load ptr, ptr %7, align 8, !tbaa !21
+  %8 = ptrtoint ptr %.val126 to i64
+  %9 = sub i64 %i.bx, %8
+  %10 = sdiv exact i64 %9, 12
+  %sext.i = shl i64 %10, 32
+  %11 = ashr exact i64 %sext.i, 30                ; 2 uses
+  %12 = getelementptr inbounds i8, ptr %.val127.val, i64 %11
+  %13 = load i32, ptr %12, align 4, !tbaa !54
+  %14 = icmp slt i32 %.0, %13
+  br i1 %14, label %.lr.ph177, label %.critedge
+
+.lr.ph177:                                        ; preds = %.critedge155
+  %i.da = getelementptr i8, ptr %4, i64 256
   %.val129 = load ptr, ptr %i.da, align 8, !tbaa !45
   %i.db = getelementptr i8, ptr %.val129, i64 8
   %.val129.val = load ptr, ptr %i.db, align 8, !tbaa !21 ; 2 uses
-  %i.dc = getelementptr inbounds i8, ptr %.val129.val, i64 %15
+  %i.dc = getelementptr inbounds i8, ptr %.val129.val, i64 %11
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !54
-  %i.de = add nsw i32 %i.dd, %.0175
+  %i.de = add nsw i32 %i.dd, %.0
   %i.df = sext i32 %i.de to i64
   %i.dg = getelementptr inbounds [4 x i8], ptr %.val129.val, i64 %i.df
   %i.dh = load i32, ptr %i.dg, align 4, !tbaa !54
   %i.di = sext i32 %i.dh to i64
-  %i.dj = getelementptr inbounds [12 x i8], ptr %.val126176, i64 %i.di ; 5 uses
+  %i.dj = getelementptr inbounds [12 x i8], ptr %.val126, i64 %i.di ; 5 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   %i.dl = load i32, ptr %i.dk, align 4, !tbaa !64 ; 2 uses
   %i.dm = icmp eq i32 %i.dl, 0
@@ -362,25 +362,10 @@ bb.v:                                             ; preds = %bb.u
   br label %.critedge155.a
 
 .critedge155.a:                                   ; preds = %.critedge155.sink.split, %bb.v, %bb.r, %.lr.ph177
-  %i.fb = add nuw nsw i32 %.0175, 1               ; 2 uses
-  %17 = load ptr, ptr %0, align 8, !tbaa !8       ; 3 uses
-  %18 = getelementptr i8, ptr %17, i64 32
-  %.val126 = load ptr, ptr %18, align 8, !tbaa !62 ; 2 uses
-  %19 = getelementptr i8, ptr %17, i64 248
-  %.val127 = load ptr, ptr %19, align 8, !tbaa !89
-  %20 = getelementptr i8, ptr %.val127, i64 8
-  %.val127.val = load ptr, ptr %20, align 8, !tbaa !21
-  %21 = ptrtoint ptr %.val126 to i64
-  %22 = sub i64 %i.bx, %21
-  %23 = sdiv exact i64 %22, 12
-  %sext.i = shl i64 %23, 32
-  %24 = ashr exact i64 %sext.i, 30                ; 2 uses
-  %25 = getelementptr inbounds i8, ptr %.val127.val, i64 %24
-  %26 = load i32, ptr %25, align 4, !tbaa !54
-  %27 = icmp slt i32 %i.fb, %26
-  br i1 %27, label %.lr.ph177, label %.critedge, !llvm.loop !90
+  %i.fb = add nuw nsw i32 %.0, 1
+  br label %.critedge155, !llvm.loop !90
 
-.critedge:                                        ; preds = %Gia_ObjIsRi.exit, %bb.q, %Gia_ObjIsPo.exit, %.critedge155.a, %.critedge155.preheader, %Vec_IntPush.exit
+.critedge:                                        ; preds = %Gia_ObjIsRi.exit, %bb.q, %Gia_ObjIsPo.exit, %.critedge155, %Vec_IntPush.exit
   ret void
 }
 

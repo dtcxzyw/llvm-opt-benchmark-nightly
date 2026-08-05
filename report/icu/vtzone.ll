@@ -204,14 +204,11 @@ bb.b:                                             ; preds = %bb.a
   %storemerge.i = select i1 %.not.i, i16 %i.z, i16 2
   store i16 %storemerge.i, ptr %i.w, align 8, !tbaa !12
   %i.aa = load i32, ptr %i.n, align 4, !tbaa !45  ; 2 uses
-  %spec.select.i = call i32 @llvm.abs.i32(i32 %i.aa, i1 true) ; 4 uses
-  %3 = urem i32 %spec.select.i, 10
-  %4 = udiv i32 %spec.select.i, 10
-  %5 = urem i32 %4, 10
-  %6 = udiv i32 %spec.select.i, 100
-  %7 = urem i32 %6, 10
-  %8 = udiv i32 %spec.select.i, 1000
-  %9 = urem i32 %8, 10
+  %spec.select.i = call i32 @llvm.abs.i32(i32 %i.aa, i1 true)
+  %3 = insertelement <4 x i32> poison, i32 %spec.select.i, i64 0
+  %4 = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> zeroinitializer
+  %5 = udiv <4 x i32> %4, <i32 1000, i32 100, i32 10, i32 1>
+  %6 = urem <4 x i32> %5, splat (i32 10)
   %i.ab = icmp sgt i32 %i.aa, -1
   br i1 %i.ab, label %.lr.ph.i, label %bb.c
 
@@ -223,28 +220,30 @@ bb.c:                                             ; preds = %.preheader32.i
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.preheader32.i
-  %10 = trunc nuw nsw i32 %9 to i16
-  %11 = or disjoint i16 %10, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
-  store i16 %11, ptr %i.l, align 2, !tbaa !13
+  %7 = trunc nuw nsw <4 x i32> %6 to <4 x i8>
+  %8 = or disjoint <4 x i8> %7, splat (i8 48)     ; 4 uses
+  %9 = extractelement <4 x i8> %8, i64 0
+  %10 = zext nneg i8 %9 to i16
+  store i16 %10, ptr %i.l, align 2, !tbaa !13
   %i.ad = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendEPKDsii(ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull %i.l, i32 noundef 0, i32 noundef 1) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  %12 = trunc nuw nsw i32 %7 to i16
-  %13 = or disjoint i16 %12, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
-  store i16 %13, ptr %i.l, align 2, !tbaa !13
+  %11 = extractelement <4 x i8> %8, i64 1
+  %12 = zext nneg i8 %11 to i16
+  store i16 %12, ptr %i.l, align 2, !tbaa !13
   %i.ae = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendEPKDsii(ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull %i.l, i32 noundef 0, i32 noundef 1) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  %14 = trunc nuw nsw i32 %5 to i16
-  %15 = or disjoint i16 %14, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
-  store i16 %15, ptr %i.l, align 2, !tbaa !13
+  %13 = extractelement <4 x i8> %8, i64 2
+  %14 = zext nneg i8 %13 to i16
+  store i16 %14, ptr %i.l, align 2, !tbaa !13
   %i.af = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendEPKDsii(ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull %i.l, i32 noundef 0, i32 noundef 1) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  %16 = trunc nuw nsw i32 %3 to i16
-  %17 = or disjoint i16 %16, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
-  store i16 %17, ptr %i.l, align 2, !tbaa !13
+  %15 = extractelement <4 x i8> %8, i64 3
+  %16 = zext nneg i8 %15 to i16
+  store i16 %16, ptr %i.l, align 2, !tbaa !13
   %i.ag = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendEPKDsii(ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull %i.l, i32 noundef 0, i32 noundef 1) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   %i.ah = load i8, ptr %i.p, align 1, !tbaa !12

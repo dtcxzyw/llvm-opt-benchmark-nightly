@@ -204,14 +204,12 @@ bb.o:                                             ; preds = %bb.n
   %i.am = getelementptr inbounds nuw i8, ptr %i.ag, i64 28
   store i32 %.lobit.i, ptr %i.am, align 4, !tbaa !31
   %i.an = lshr i32 %i.aj, 2
-  %6 = trunc nuw nsw i32 %i.an to i16
   %i.ao = trunc nuw nsw i32 %i.aj to i16
-  %.lhs.trunc49.i = add nuw nsw i16 %6, 2
-  %.lhs.trunc.i = add nuw nsw i16 %i.ao, 2
-  %7 = udiv i16 %.lhs.trunc49.i, 3
-  %8 = udiv i16 %.lhs.trunc.i, 3
-  %9 = insertelement <2 x i16> poison, i16 %8, i64 0
-  %10 = insertelement <2 x i16> %9, i16 %7, i64 1
+  %6 = insertelement <2 x i16> poison, i16 %i.ao, i64 0
+  %7 = trunc nuw nsw i32 %i.an to i16
+  %8 = insertelement <2 x i16> %6, i16 %7, i64 1
+  %9 = add nuw nsw <2 x i16> %8, splat (i16 2)
+  %10 = udiv <2 x i16> %9, splat (i16 3)
   %i.ap = add nuw nsw <2 x i16> %10, splat (i16 1)
   %i.aq = zext nneg <2 x i16> %i.ap to <2 x i32>
   store <2 x i32> %i.aq, ptr %i.ak, align 4, !tbaa !3
@@ -346,14 +344,12 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 %.lobit, ptr %i.f, align 4, !tbaa !31
   %i.g = lshr i32 %i.c, 2
-  %4 = trunc nuw nsw i32 %i.g to i16
   %i.h = trunc nuw nsw i32 %i.c to i16
-  %.lhs.trunc49 = add nuw nsw i16 %4, 2
-  %.lhs.trunc = add nuw nsw i16 %i.h, 2
-  %5 = udiv i16 %.lhs.trunc49, 3
-  %6 = udiv i16 %.lhs.trunc, 3
-  %7 = insertelement <2 x i16> poison, i16 %6, i64 0
-  %8 = insertelement <2 x i16> %7, i16 %5, i64 1
+  %4 = insertelement <2 x i16> poison, i16 %i.h, i64 0
+  %5 = trunc nuw nsw i32 %i.g to i16
+  %6 = insertelement <2 x i16> %4, i16 %5, i64 1
+  %7 = add nuw nsw <2 x i16> %6, splat (i16 2)
+  %8 = udiv <2 x i16> %7, splat (i16 3)
   %i.i = add nuw nsw <2 x i16> %8, splat (i16 1)
   %i.j = zext nneg <2 x i16> %i.i to <2 x i32>
   store <2 x i32> %i.j, ptr %i.d, align 4, !tbaa !3
@@ -468,14 +464,12 @@ bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 28
   store i32 %.lobit.i, ptr %i.n, align 4, !tbaa !31
   %i.o = lshr i32 %i.k, 2
-  %1 = trunc nuw nsw i32 %i.o to i16
   %i.p = trunc nuw nsw i32 %i.k to i16
-  %.lhs.trunc49.i = add nuw nsw i16 %1, 2
-  %.lhs.trunc.i = add nuw nsw i16 %i.p, 2
-  %2 = udiv i16 %.lhs.trunc49.i, 3
-  %3 = udiv i16 %.lhs.trunc.i, 3
-  %4 = insertelement <2 x i16> poison, i16 %3, i64 0
-  %5 = insertelement <2 x i16> %4, i16 %2, i64 1
+  %1 = insertelement <2 x i16> poison, i16 %i.p, i64 0
+  %2 = trunc nuw nsw i32 %i.o to i16
+  %3 = insertelement <2 x i16> %1, i16 %2, i64 1
+  %4 = add nuw nsw <2 x i16> %3, splat (i16 2)
+  %5 = udiv <2 x i16> %4, splat (i16 3)
   %i.q = add nuw nsw <2 x i16> %5, splat (i16 1)
   %i.r = zext nneg <2 x i16> %i.q to <2 x i32>
   store <2 x i32> %i.r, ptr %i.l, align 4, !tbaa !3
@@ -878,14 +872,12 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 28
   store i32 %.lobit.i, ptr %i.k, align 4, !tbaa !31
   %i.l = lshr i32 %i.h, 2
-  %5 = trunc nuw nsw i32 %i.l to i16
   %i.m = trunc nuw nsw i32 %i.h to i16
-  %.lhs.trunc49.i = add nuw nsw i16 %5, 2
-  %.lhs.trunc.i = add nuw nsw i16 %i.m, 2
-  %6 = udiv i16 %.lhs.trunc49.i, 3
-  %7 = udiv i16 %.lhs.trunc.i, 3
-  %8 = insertelement <2 x i16> poison, i16 %7, i64 0
-  %9 = insertelement <2 x i16> %8, i16 %6, i64 1
+  %5 = insertelement <2 x i16> poison, i16 %i.m, i64 0
+  %6 = trunc nuw nsw i32 %i.l to i16
+  %7 = insertelement <2 x i16> %5, i16 %6, i64 1
+  %8 = add nuw nsw <2 x i16> %7, splat (i16 2)
+  %9 = udiv <2 x i16> %8, splat (i16 3)
   %i.n = add nuw nsw <2 x i16> %9, splat (i16 1)
   %i.o = zext nneg <2 x i16> %i.n to <2 x i32>
   store <2 x i32> %i.o, ptr %i.i, align 4, !tbaa !3
@@ -1171,14 +1163,12 @@ tdefl_init.exit:                                  ; preds = %tdefl_output_buffer
   %i.au = getelementptr inbounds nuw i8, ptr %i.e, i64 28
   store i32 %.lobit.i, ptr %i.au, align 4, !tbaa !31
   %i.av = lshr i32 %i.ar, 2
-  %8 = trunc nuw nsw i32 %i.av to i16
   %i.aw = trunc nuw nsw i32 %i.ar to i16
-  %.lhs.trunc49.i = add nuw nsw i16 %8, 2
-  %.lhs.trunc.i = add nuw nsw i16 %i.aw, 2
-  %9 = udiv i16 %.lhs.trunc49.i, 3
-  %10 = udiv i16 %.lhs.trunc.i, 3
-  %11 = insertelement <2 x i16> poison, i16 %10, i64 0
-  %12 = insertelement <2 x i16> %11, i16 %9, i64 1
+  %8 = insertelement <2 x i16> poison, i16 %i.aw, i64 0
+  %9 = trunc nuw nsw i32 %i.av to i16
+  %10 = insertelement <2 x i16> %8, i16 %9, i64 1
+  %11 = add nuw nsw <2 x i16> %10, splat (i16 2)
+  %12 = udiv <2 x i16> %11, splat (i16 3)
   %i.ax = add nuw nsw <2 x i16> %12, splat (i16 1)
   %i.ay = zext nneg <2 x i16> %i.ax to <2 x i32>
   store <2 x i32> %i.ay, ptr %i.as, align 4, !tbaa !3

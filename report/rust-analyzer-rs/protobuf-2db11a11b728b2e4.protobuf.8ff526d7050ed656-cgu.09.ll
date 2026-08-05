@@ -1,8 +1,7 @@
 inline.NumInlined: 762
 inline.NumDeleted: 300
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvXs0_NtNtCscmhy3HNZezq_8protobuf10descriptor19generated_code_infoNtB5_10AnnotationNtNtB9_7message7Message10merge_from:bb.a
   br i1 %i.g, label %._crit_edge, label %.lr.ph
 
@@ -204,38 +203,17 @@ bb.w:                                             ; preds = %bb.i
 define noundef i64 @_RNvXs0_NtNtCscmhy3HNZezq_8protobuf10descriptor19generated_code_infoNtB5_10AnnotationNtNtB9_7message7Message12compute_size(ptr noundef nonnull align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !nonnull !5, !noundef !5 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !nonnull !5, !noundef !5
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load i64, ptr %i.c, align 8, !noundef !5 ; 5 uses
+  %i.d = load i64, ptr %i.c, align 8, !noundef !5 ; 2 uses
   %i.e = icmp eq i64 %i.d, 0
-  br i1 %i.e, label %_RINvNtNtCscmhy3HNZezq_8protobuf2rt6packed22vec_packed_varint_sizelEB6_.exit, label %.preheader.i.preheader
+  br i1 %i.e, label %_RINvNtNtCscmhy3HNZezq_8protobuf2rt6packed22vec_packed_varint_sizelEB6_.exit, label %.preheader.i
 
-.preheader.i.preheader:                           ; preds = %bb.a
-  %xtraiter = and i64 %i.d, 1
-  %1 = icmp eq i64 %i.d, 1
-  br i1 %1, label %.preheader.i.epil.preheader, label %.preheader.i.preheader.new
-
-.preheader.i.preheader.new:                       ; preds = %.preheader.i.preheader
-  %unroll_iter = and i64 %i.d, -2
-  br label %.preheader.i
-
-.preheader.i:                                     ; preds = %.preheader.i, %.preheader.i.preheader.new
-  %.sroa.04.0.i.i = phi i64 [ 0, %.preheader.i.preheader.new ], [ %i.l, %.preheader.i ] ; 3 uses
-  %.sroa.02.0.i.i.a = phi i64 [ 0, %.preheader.i.preheader.new ], [ %10, %.preheader.i ]
-  %niter = phi i64 [ 0, %.preheader.i.preheader.new ], [ %niter.next.1, %.preheader.i ]
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.sroa.04.0.i.i
-  %.val.i.i = load i32, ptr %2, align 4, !alias.scope !880, !noundef !5
-  %3 = or i32 %.val.i.i, 1
-  %4 = sext i32 %3 to i64
-  %5 = tail call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 %4, i1 true)
-  %6 = trunc nuw nsw i64 %5 to i8
-  %.lhs.trunc.i.i.i.i.i = sub nuw nsw i8 70, %6
-  %7 = udiv i8 %.lhs.trunc.i.i.i.i.i, 7
-  %.zext.i.i.i.i.i = zext nneg i8 %7 to i64
-  %8 = add i64 %.sroa.02.0.i.i.a, %.zext.i.i.i.i.i
-  %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.sroa.04.0.i.i
-  %9 = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %.val.i.i.1 = load i32, ptr %9, align 4, !alias.scope !880, !noundef !5
+.preheader.i:                                     ; preds = %bb.a, %.preheader.i
+  %.sroa.02.0.i.i.a = phi i64 [ %niter.next.1, %.preheader.i ], [ 0, %bb.a ] ; 2 uses
+  %niter = phi i64 [ %i.l, %.preheader.i ], [ 0, %bb.a ]
+  %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.sroa.02.0.i.i.a
+  %.val.i.i.1 = load i32, ptr %i.f, align 4, !alias.scope !880, !noundef !5
   %i.g = or i32 %.val.i.i.1, 1
   %i.h = sext i32 %i.g to i64
   %i.i = tail call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 %i.h, i1 true)
@@ -243,43 +221,20 @@ bb.a:
   %.lhs.trunc.i.i.i.i.i.1 = sub nuw nsw i8 70, %i.j
   %i.k = udiv i8 %.lhs.trunc.i.i.i.i.i.1, 7
   %.zext.i.i.i.i.i.1 = zext nneg i8 %i.k to i64
-  %10 = add i64 %8, %.zext.i.i.i.i.i.1            ; 3 uses
-  %i.l = add nuw nsw i64 %.sroa.04.0.i.i, 2       ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i.unr-lcssa, label %.preheader.i
+  %i.l = add i64 %niter, %.zext.i.i.i.i.i.1       ; 3 uses
+  %niter.next.1 = add nuw nsw i64 %.sroa.02.0.i.i.a, 1 ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %i.d
+  br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i, label %.preheader.i
 
-_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i.unr-lcssa: ; preds = %.preheader.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i, label %.preheader.i.epil.preheader
-
-.preheader.i.epil.preheader:                      ; preds = %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i.unr-lcssa, %.preheader.i.preheader
-  %.sroa.04.0.i.i.epil.init = phi i64 [ 0, %.preheader.i.preheader ], [ %i.l, %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i.unr-lcssa ]
-  %.sroa.02.0.i.i.epil.init = phi i64 [ 0, %.preheader.i.preheader ], [ %10, %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i.unr-lcssa ]
-  %lcmp.mod12 = trunc i64 %i.d to i1
-  tail call void @llvm.assume(i1 %lcmp.mod12)
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.sroa.04.0.i.i.epil.init
-  %.val.i.i.epil = load i32, ptr %11, align 4, !alias.scope !880, !noundef !5
-  %12 = or i32 %.val.i.i.epil, 1
-  %13 = sext i32 %12 to i64
-  %14 = tail call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 %13, i1 true)
-  %15 = trunc nuw nsw i64 %14 to i8
-  %.lhs.trunc.i.i.i.i.i.epil = sub nuw nsw i8 70, %15
-  %16 = udiv i8 %.lhs.trunc.i.i.i.i.i.epil, 7
-  %.zext.i.i.i.i.i.epil = zext nneg i8 %16 to i64
-  %17 = add i64 %.sroa.02.0.i.i.epil.init, %.zext.i.i.i.i.i.epil
-  br label %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i
-
-_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i: ; preds = %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i.unr-lcssa, %.preheader.i.epil.preheader
-  %.lcssa = phi i64 [ %10, %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i.unr-lcssa ], [ %17, %.preheader.i.epil.preheader ] ; 2 uses
-  %i.m = or i64 %.lcssa, 1
+_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i: ; preds = %.preheader.i
+  %i.m = or i64 %i.l, 1
   %i.n = tail call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 %i.m, i1 true)
   %i.o = trunc nuw nsw i64 %i.n to i8
   %.lhs.trunc.i = sub nuw nsw i8 70, %i.o
   %i.p = udiv i8 %.lhs.trunc.i, 7
   %narrow.i = add nuw nsw i8 %i.p, 1
   %i.q = zext nneg i8 %narrow.i to i64
-  %i.r = add i64 %.lcssa, %i.q
+  %i.r = add i64 %i.l, %i.q
   br label %_RINvNtNtCscmhy3HNZezq_8protobuf2rt6packed22vec_packed_varint_sizelEB6_.exit
 
 _RINvNtNtCscmhy3HNZezq_8protobuf2rt6packed22vec_packed_varint_sizelEB6_.exit: ; preds = %bb.a, %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterlENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtBY_8adapters3map8map_foldRlyyNCINvNtNtCscmhy3HNZezq_8protobuf2rt6packed27vec_packed_varint_data_sizelE0NCINvXsC_NtBW_5accumyNtB3A_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2o_.exit.i

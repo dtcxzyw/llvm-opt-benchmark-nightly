@@ -1,3 +1,7 @@
+inline.NumInlined: 2968
+inline.NumDeleted: 1693
+loop-unroll.NumCompletelyUnrolled: 10
+loop-unroll.NumUnrolled: 10
 begin_hunk_0_@_ZN3g2o8BaseEdgeILi3ENS_19VelocityMeasurementEE21readInformationMatrixERSi:bb.a
 .critedge2:                                       ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
@@ -199,27 +203,24 @@ bb.a:
   %2 = alloca %"class.g2o::MotionMeasurement", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !50   ; 3 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !47   ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !47   ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !47   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !47   ; 3 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !47   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 176
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 176
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #19
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 176
-  %3 = load double, ptr %i.j, align 16, !tbaa !51
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 168
-  %4 = load double, ptr %i.k, align 8, !tbaa !51
-  %5 = fmul double %3, %4
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %7 = load double, ptr %6, align 8, !tbaa !51
-  %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 176
-  %i.m = load double, ptr %i.l, align 8, !tbaa !51
-  %8 = fmul double %7, %i.m
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 192
-  %10 = load double, ptr %9, align 16, !tbaa !63
-  call void @_ZN3g2o19VelocityMeasurementC1Eddd(ptr noundef nonnull align 16 dereferenceable(24) %1, double noundef %5, double noundef %8, double noundef %10)
+  %3 = load <2 x double>, ptr %i.j, align 16, !tbaa !51
+  %4 = load <2 x double>, ptr %i.k, align 8, !tbaa !51
+  %5 = fmul <2 x double> %3, %4                   ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 192
+  %i.m = load double, ptr %i.l, align 16, !tbaa !63
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = extractelement <2 x double> %5, i64 1
+  call void @_ZN3g2o19VelocityMeasurementC1Eddd(ptr noundef nonnull align 16 dereferenceable(24) %1, double noundef %6, double noundef %7, double noundef %i.m)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
   %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 184
   %i.o = load double, ptr %i.n, align 8, !tbaa !51
@@ -264,17 +265,12 @@ bb.a:
   %.sroa.0.8.vec.insert.i.i.i.i11 = insertelement <2 x double> %.sroa.0.0.vec.insert.i.i.i.i10, double %i.ao, i64 1
   %.sroa.5.16.vec.insert.i.i.i.i12 = insertelement <2 x double> poison, double %i.aq, i64 0
   %.sroa.5.24.vec.insert.i.i.i.i13 = insertelement <2 x double> %.sroa.5.16.vec.insert.i.i.i.i12, double %i.ap, i64 1
-  %11 = load double, ptr %i.an, align 8, !tbaa !51, !noalias !117
-  %12 = fneg double %11
-  %13 = insertelement <2 x double> poison, double %12, i64 0
-  %i.ar = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
+  %8 = load <2 x double>, ptr %i.an, align 8, !tbaa !51, !noalias !117
+  %9 = fneg <2 x double> %8                       ; 2 uses
+  %i.ar = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
   %i.as = fmul <2 x double> %.sroa.0.8.vec.insert.i.i.i.i11, %i.ar
-  %14 = getelementptr inbounds nuw i8, ptr %i.c, i64 200
-  %15 = load double, ptr %14, align 8, !tbaa !51, !noalias !117
-  %16 = fneg double %15
-  %17 = insertelement <2 x double> poison, double %16, i64 0
-  %18 = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.at = fmul <2 x double> %.sroa.5.24.vec.insert.i.i.i.i13, %18
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.at = fmul <2 x double> %.sroa.5.24.vec.insert.i.i.i.i13, %10
   %i.au = fadd <2 x double> %i.as, %i.at          ; 2 uses
   %i.av = call double @sin(double noundef %.0.i.i) #19, !noalias !118 ; 2 uses
   %i.aw = call double @cos(double noundef %.0.i.i) #19, !noalias !118 ; 2 uses

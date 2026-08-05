@@ -203,8 +203,8 @@ bb.a:
   %i.bc = getelementptr inbounds nuw i8, ptr %3, i64 104 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 112 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %i.bg = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %scevgep = getelementptr inbounds nuw i8, ptr %i.am, i64 8 ; 2 uses
   %scevgep636 = getelementptr inbounds nuw i8, ptr %i.an, i64 8 ; 2 uses
   %bound0 = icmp ult ptr %i.am, %scevgep636
@@ -228,8 +228,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.not, label %.preheader386, label %bb.e
 
 .preheader386:                                    ; preds = %bb.d
-  %i.bl = load ptr, ptr %i.as, align 8, !tbaa !233 ; 2 uses
-  %i.bm = load ptr, ptr %i.ar, align 8, !tbaa !234 ; 2 uses
+  %i.bl = load ptr, ptr %i.as, align 8, !tbaa !233 ; 4 uses
+  %i.bm = load ptr, ptr %i.ar, align 8, !tbaa !234 ; 4 uses
   %i.bn = ptrtoint ptr %i.bl to i64
   %i.bo = ptrtoint ptr %i.bm to i64
   %i.bp = sub i64 %i.bn, %i.bo
@@ -632,64 +632,34 @@ bb.an:                                            ; preds = %bb.am, %bb.al
 
 .preheader383:                                    ; preds = %.critedge
   %i.jh = load ptr, ptr %i.bf, align 8, !tbaa !233
-  %i.ji = load ptr, ptr %1, align 8, !tbaa !234   ; 3 uses
+  %i.ji = load ptr, ptr %1, align 8, !tbaa !234   ; 2 uses
   %.not488 = icmp eq ptr %i.jh, %i.ji
   br i1 %.not488, label %.loopexit384, label %.lr.ph478
 
 .lr.ph478:                                        ; preds = %.preheader383
   %i.jj = icmp eq i64 %.0151.lcssa, 1
-  br i1 %i.jj, label %.lr.ph478.split.us, label %.lr.ph478.split
+  br label %.lr.ph478.split.us
 
-.lr.ph478.split.us:                               ; preds = %.lr.ph478, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit215.us
-  %i.jk = phi ptr [ %28, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit215.us ], [ %i.ji, %.lr.ph478 ]
-  %.0154477.us = phi i64 [ %26, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit215.us ], [ 0, %.lr.ph478 ] ; 5 uses
+.lr.ph478.split.us:                               ; preds = %.lr.ph478, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a
+  %i.jk = phi ptr [ %i.ji, %.lr.ph478 ], [ %i.kn, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a ] ; 2 uses
+  %.0154477.us = phi i64 [ 0, %.lr.ph478 ], [ %i.kl, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a ] ; 8 uses
   %i.jl = load ptr, ptr %i.bg, align 8, !tbaa !233
-  %i.jm = load ptr, ptr %2, align 8, !tbaa !234   ; 2 uses
+  %i.jm = load ptr, ptr %2, align 8, !tbaa !234   ; 3 uses
   %i.jn = ptrtoint ptr %i.jl to i64
   %i.jo = ptrtoint ptr %i.jm to i64
   %i.jp = sub i64 %i.jn, %i.jo
-  %i.jq = sdiv exact i64 %i.jp, 104               ; 2 uses
+  %i.jq = sdiv exact i64 %i.jp, 104               ; 3 uses
+  %.not.i.i.i201.us = icmp ult i64 %.0154477.us, %i.jq ; 2 uses
+  br i1 %i.jj, label %.lr.ph478.split, label %26
+
+.lr.ph478.split:                                  ; preds = %.lr.ph478.split.us
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad)
   store i64 %.0154477.us, ptr %i.ac, align 8, !tbaa !86
   store i64 %i.jq, ptr %i.ad, align 8, !tbaa !86
-  %.not.i.i.i201.us = icmp ult i64 %.0154477.us, %i.jq
-  br i1 %.not.i.i.i201.us, label %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit215.us, label %.noexc.i316, !prof !87
+  br i1 %.not.i.i.i201.us, label %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit215, label %.noexc.i316, !prof !87
 
-_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit215.us: ; preds = %.lr.ph478.split.us
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ad)
-  %23 = getelementptr inbounds nuw [104 x i8], ptr %i.jm, i64 %.0154477.us
-  %24 = getelementptr inbounds nuw [104 x i8], ptr %i.jk, i64 %.0154477.us
-  %25 = load i64, ptr %i.aq, align 8, !tbaa !236
-  call void @_ZN6duckdb14ConstantVector9ReferenceERNS_6VectorES2_mm(ptr noundef nonnull align 8 dereferenceable(104) %23, ptr noundef nonnull align 8 dereferenceable(104) %24, i64 noundef %i.bj, i64 noundef %25)
-  %26 = add nuw i64 %.0154477.us, 1               ; 2 uses
-  %27 = load ptr, ptr %i.bf, align 8, !tbaa !233
-  %28 = load ptr, ptr %1, align 8, !tbaa !234     ; 2 uses
-  %29 = ptrtoint ptr %27 to i64
-  %30 = ptrtoint ptr %28 to i64
-  %31 = sub i64 %29, %30
-  %32 = sdiv exact i64 %31, 104                   ; 2 uses
-  %33 = icmp ult i64 %26, %32
-  br i1 %33, label %.lr.ph478.split.us, label %.loopexit384, !llvm.loop !442
-
-.lr.ph478.split:                                  ; preds = %.lr.ph478, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a
-  %34 = phi ptr [ %i.kn, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a ], [ %i.ji, %.lr.ph478 ]
-  %.0154477 = phi i64 [ %i.kl, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a ], [ 0, %.lr.ph478 ] ; 5 uses
-  %35 = load ptr, ptr %i.bg, align 8, !tbaa !233
-  %36 = load ptr, ptr %2, align 8, !tbaa !234     ; 2 uses
-  %37 = ptrtoint ptr %35 to i64
-  %38 = ptrtoint ptr %36 to i64
-  %39 = sub i64 %37, %38
-  %40 = sdiv exact i64 %39, 104                   ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.aa)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.ab)
-  store i64 %.0154477, ptr %i.aa, align 8, !tbaa !86
-  store i64 %40, ptr %i.ab, align 8, !tbaa !86
-  %.not.i.i.i216 = icmp ult i64 %.0154477, %40
-  br i1 %.not.i.i.i216, label %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a, label %.noexc.i324, !prof !87
-
-.noexc.i316:                                      ; preds = %.lr.ph478.split.us
+.noexc.i316:                                      ; preds = %.lr.ph478.split
   %i.jr = call ptr @__cxa_allocate_exception(i64 16) #21 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #21
   %i.js = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 3 uses
@@ -747,7 +717,23 @@ bb.aq:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.ar:                                            ; preds = %bb.ao
   unreachable
 
-.noexc.i324:                                      ; preds = %.lr.ph478.split
+_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit215: ; preds = %.lr.ph478.split
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ad)
+  %23 = getelementptr inbounds nuw [104 x i8], ptr %i.jm, i64 %.0154477.us
+  %24 = getelementptr inbounds nuw [104 x i8], ptr %i.jk, i64 %.0154477.us
+  %25 = load i64, ptr %i.aq, align 8, !tbaa !236
+  call void @_ZN6duckdb14ConstantVector9ReferenceERNS_6VectorES2_mm(ptr noundef nonnull align 8 dereferenceable(104) %23, ptr noundef nonnull align 8 dereferenceable(104) %24, i64 noundef %i.bj, i64 noundef %25)
+  br label %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a
+
+26:                                               ; preds = %.lr.ph478.split.us
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.aa)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.ab)
+  store i64 %.0154477.us, ptr %i.aa, align 8, !tbaa !86
+  store i64 %i.jq, ptr %i.ab, align 8, !tbaa !86
+  br i1 %.not.i.i.i201.us, label %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231, label %.noexc.i324, !prof !87
+
+.noexc.i324:                                      ; preds = %26
   %i.kb = call ptr @__cxa_allocate_exception(i64 16) #21 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #21
   %i.kc = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 3 uses
@@ -805,13 +791,16 @@ bb.au:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.av:                                            ; preds = %bb.as
   unreachable
 
-_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a: ; preds = %.lr.ph478.split
+_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231: ; preds = %26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab)
-  %41 = getelementptr inbounds nuw [104 x i8], ptr %36, i64 %.0154477
-  %42 = getelementptr inbounds nuw [104 x i8], ptr %34, i64 %.0154477
-  call void @_ZN6duckdb6Vector5SliceERKS0_RKNS_15SelectionVectorEm(ptr noundef nonnull align 8 dereferenceable(104) %41, ptr noundef nonnull align 8 dereferenceable(104) %42, ptr noundef nonnull align 8 dereferenceable(24) %i.ax, i64 noundef %.0144.lcssa)
-  %i.kl = add nuw i64 %.0154477, 1                ; 2 uses
+  %27 = getelementptr inbounds nuw [104 x i8], ptr %i.jm, i64 %.0154477.us
+  %28 = getelementptr inbounds nuw [104 x i8], ptr %i.jk, i64 %.0154477.us
+  call void @_ZN6duckdb6Vector5SliceERKS0_RKNS_15SelectionVectorEm(ptr noundef nonnull align 8 dereferenceable(104) %27, ptr noundef nonnull align 8 dereferenceable(104) %28, ptr noundef nonnull align 8 dereferenceable(24) %i.ax, i64 noundef %.0144.lcssa)
+  br label %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a
+
+_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a: ; preds = %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit215, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231
+  %i.kl = add nuw i64 %.0154477.us, 1             ; 2 uses
   %i.km = load ptr, ptr %i.bf, align 8, !tbaa !233
   %i.kn = load ptr, ptr %1, align 8, !tbaa !234   ; 2 uses
   %i.ko = ptrtoint ptr %i.km to i64
@@ -819,13 +808,18 @@ _ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a: ; preds = %.lr.ph478.sp
   %i.kq = sub i64 %i.ko, %i.kp
   %i.kr = sdiv exact i64 %i.kq, 104               ; 2 uses
   %i.ks = icmp ult i64 %i.kl, %i.kr
-  br i1 %i.ks, label %.lr.ph478.split, label %.loopexit384, !llvm.loop !442
+  br i1 %i.ks, label %.lr.ph478.split.us, label %.loopexit384.loopexit, !llvm.loop !442
 
-.loopexit384:                                     ; preds = %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit215.us, %.preheader383, %.critedge
-  %.0155 = phi i64 [ 0, %.critedge ], [ 0, %.preheader383 ], [ %32, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit215.us ], [ %i.kr, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a ]
-  %43 = load ptr, ptr %i.as, align 8, !tbaa !233
-  %44 = load ptr, ptr %i.ar, align 8, !tbaa !234  ; 2 uses
-  %.not489 = icmp eq ptr %43, %44
+.loopexit384.loopexit:                            ; preds = %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a
+  %.pre526 = load ptr, ptr %i.as, align 8, !tbaa !233
+  %.pre527 = load ptr, ptr %i.ar, align 8, !tbaa !234
+  br label %.loopexit384
+
+.loopexit384:                                     ; preds = %.loopexit384.loopexit, %.preheader383, %.critedge
+  %29 = phi ptr [ %i.bm, %.critedge ], [ %i.bm, %.preheader383 ], [ %.pre527, %.loopexit384.loopexit ] ; 2 uses
+  %30 = phi ptr [ %i.bl, %.critedge ], [ %i.bl, %.preheader383 ], [ %.pre526, %.loopexit384.loopexit ]
+  %.0155 = phi i64 [ 0, %.critedge ], [ 0, %.preheader383 ], [ %i.kr, %.loopexit384.loopexit ]
+  %.not489 = icmp eq ptr %30, %29
   br i1 %.not489, label %._crit_edge484, label %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit239
 
 ._crit_edge484:                                   ; preds = %.loopexit, %.loopexit384
@@ -834,7 +828,7 @@ _ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit231.a: ; preds = %.lr.ph478.sp
   br i1 %i.ku, label %bb.b, label %.loopexit387, !llvm.loop !443
 
 _ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit239: ; preds = %.loopexit384, %.loopexit
-  %i.kv = phi ptr [ %i.pz, %.loopexit ], [ %44, %.loopexit384 ]
+  %i.kv = phi ptr [ %i.pz, %.loopexit ], [ %29, %.loopexit384 ]
   %.0153482 = phi i64 [ %i.px, %.loopexit ], [ 0, %.loopexit384 ] ; 20 uses
   %i.kw = getelementptr inbounds nuw [104 x i8], ptr %i.kv, i64 %.0153482 ; 3 uses
   %i.kx = add nuw i64 %.0153482, %.0155           ; 3 uses

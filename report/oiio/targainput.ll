@@ -1,8 +1,8 @@
 inline.NumInlined: 3090
 inline.NumDeleted: 897
 loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumRuntimeUnrolled: 36
-loop-unroll.NumUnrolled: 41
+loop-unroll.NumRuntimeUnrolled: 35
+loop-unroll.NumUnrolled: 40
 begin_hunk_0_@_ZN11OpenImageIO4v3_18TGAInput7readimgEv:bb.a
   %i.qg = icmp sgt i32 %i.qf, 3
   br i1 %i.qg, label %bb.bi, label %_ZN11OpenImageIO4v3_18TGAInput12decode_pixelEPhS2_S2_iim.exit189.thread
@@ -204,7 +204,7 @@ bb.bv:                                            ; preds = %.lr.ph392, %bb.bu
 bb.bw:                                            ; preds = %.critedge158
   %i.td = load ptr, ptr %i.m, align 8, !tbaa !17  ; 2 uses
   %i.te = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %i.tf = load i32, ptr %i.te, align 4, !tbaa !71 ; 10 uses
+  %i.tf = load i32, ptr %i.te, align 4, !tbaa !71 ; 8 uses
   %i.tg = load i32, ptr %i.sg, align 8, !tbaa !74 ; 4 uses
   %i.th = fcmp oeq float %i.tc, 1.000000e+00
   br i1 %i.th, label %.preheader58.i, label %.preheader59.i
@@ -238,73 +238,29 @@ bb.bw:                                            ; preds = %.critedge158
   br i1 %i.tn, label %.preheader.preheader.i, label %.loopexit
 
 .preheader.preheader.i:                           ; preds = %.preheader.lr.ph.i
-  %i.tq = zext i32 %i.tg to i64                   ; 3 uses
-  %wide.trip.count76.i = zext nneg i32 %i.tf to i64 ; 2 uses
-  %xtraiter523 = and i64 %wide.trip.count76.i, 1
-  %2 = icmp eq i32 %i.tf, 1
-  %unroll_iter527 = and i64 %wide.trip.count76.i, 2147483646
-  %lcmp.mod525.not = icmp eq i64 %xtraiter523, 0
-  %lcmp.mod526 = trunc i32 %i.tf to i1
+  %i.tq = zext i32 %i.tg to i64
+  %wide.trip.count76.i = zext nneg i32 %i.tf to i64
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge67.i, %.preheader.preheader.i
-  %.03669.i = phi ptr [ %i.tt, %._crit_edge67.i ], [ %i.td, %.preheader.preheader.i ] ; 5 uses
+  %.03669.i = phi ptr [ %i.tt, %._crit_edge67.i ], [ %i.td, %.preheader.preheader.i ] ; 3 uses
   %.03868.i = phi i64 [ %i.ts, %._crit_edge67.i ], [ 0, %.preheader.preheader.i ]
-  %i.tr = getelementptr inbounds i8, ptr %.03669.i, i64 %i.to ; 3 uses
-  br i1 %2, label %.epil.preheader522, label %.preheader.i.new
+  %i.tr = getelementptr inbounds i8, ptr %.03669.i, i64 %i.to
+  br label %.preheader.i.new
 
-._crit_edge67.i.unr-lcssa:                        ; preds = %bb.by
-  br i1 %lcmp.mod525.not, label %._crit_edge67.i, label %.epil.preheader522
-
-.epil.preheader522:                               ; preds = %._crit_edge67.i.unr-lcssa, %.preheader.i
-  %indvars.iv73.i.epil.init = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next74.i.1, %._crit_edge67.i.unr-lcssa ] ; 2 uses
-  call void @llvm.assume(i1 %lcmp.mod526)
-  %.not43.i.epil = icmp eq i64 %indvars.iv73.i.epil.init, %i.tq
-  br i1 %.not43.i.epil, label %._crit_edge67.i, label %3
-
-3:                                                ; preds = %.epil.preheader522
-  %4 = getelementptr inbounds nuw i8, ptr %.03669.i, i64 %indvars.iv73.i.epil.init ; 2 uses
-  %5 = load i8, ptr %4, align 1, !tbaa !16
-  %6 = zext i8 %5 to i16
-  %7 = load i8, ptr %i.tr, align 1, !tbaa !16
-  %8 = zext i8 %7 to i16
-  %9 = mul nuw i16 %8, %6
-  %10 = udiv i16 %9, 255
-  %11 = trunc nuw i16 %10 to i8
-  store i8 %11, ptr %4, align 1, !tbaa !16
-  br label %._crit_edge67.i
-
-._crit_edge67.i:                                  ; preds = %.epil.preheader522, %3, %._crit_edge67.i.unr-lcssa
+._crit_edge67.i:                                  ; preds = %bb.by
   %i.ts = add nuw nsw i64 %.03868.i, 1            ; 2 uses
   %i.tt = getelementptr inbounds nuw i8, ptr %.03669.i, i64 %i.tp
   %exitcond78.not.i = icmp eq i64 %i.ts, %i.sq
   br i1 %exitcond78.not.i, label %.loopexit, label %.preheader.i, !llvm.loop !162
 
-.preheader.i.new:                                 ; preds = %.preheader.i, %bb.by
-  %indvars.iv73.i = phi i64 [ %indvars.iv.next74.i.1, %bb.by ], [ 0, %.preheader.i ] ; 4 uses
-  %niter528 = phi i64 [ %niter528.next.1, %bb.by ], [ 0, %.preheader.i ]
-  %.not43.i = icmp eq i64 %indvars.iv73.i, %i.tq
-  br i1 %.not43.i, label %21, label %12
+.preheader.i.new:                                 ; preds = %bb.by, %.preheader.i
+  %niter528 = phi i64 [ 0, %.preheader.i ], [ %niter528.next.1, %bb.by ] ; 3 uses
+  %.not43.i = icmp eq i64 %niter528, %i.tq
+  br i1 %.not43.i, label %bb.by, label %bb.bx
 
-12:                                               ; preds = %.preheader.i.new
-  %13 = getelementptr inbounds nuw i8, ptr %.03669.i, i64 %indvars.iv73.i ; 2 uses
-  %14 = load i8, ptr %13, align 1, !tbaa !16
-  %15 = zext i8 %14 to i16
-  %16 = load i8, ptr %i.tr, align 1, !tbaa !16
-  %17 = zext i8 %16 to i16
-  %18 = mul nuw i16 %17, %15
-  %19 = udiv i16 %18, 255
-  %20 = trunc nuw i16 %19 to i8
-  store i8 %20, ptr %13, align 1, !tbaa !16
-  br label %21
-
-21:                                               ; preds = %12, %.preheader.i.new
-  %indvars.iv.next74.i = or disjoint i64 %indvars.iv73.i, 1 ; 2 uses
-  %.not43.i.1 = icmp eq i64 %indvars.iv.next74.i, %i.tq
-  br i1 %.not43.i.1, label %bb.by, label %bb.bx
-
-bb.bx:                                            ; preds = %21
-  %i.tu = getelementptr inbounds nuw i8, ptr %.03669.i, i64 %indvars.iv.next74.i ; 2 uses
+bb.bx:                                            ; preds = %.preheader.i.new
+  %i.tu = getelementptr inbounds nuw i8, ptr %.03669.i, i64 %niter528 ; 2 uses
   %i.tv = load i8, ptr %i.tu, align 1, !tbaa !16
   %i.tw = zext i8 %i.tv to i16
   %i.tx = load i8, ptr %i.tr, align 1, !tbaa !16
@@ -315,11 +271,10 @@ bb.bx:                                            ; preds = %21
   store i8 %i.ub, ptr %i.tu, align 1, !tbaa !16
   br label %bb.by
 
-bb.by:                                            ; preds = %bb.bx, %21
-  %indvars.iv.next74.i.1 = add nuw nsw i64 %indvars.iv73.i, 2 ; 2 uses
-  %niter528.next.1 = add i64 %niter528, 2         ; 2 uses
-  %niter528.ncmp.1 = icmp eq i64 %niter528.next.1, %unroll_iter527
-  br i1 %niter528.ncmp.1, label %._crit_edge67.i.unr-lcssa, label %.preheader.i.new, !llvm.loop !163
+bb.by:                                            ; preds = %bb.bx, %.preheader.i.new
+  %niter528.next.1 = add nuw nsw i64 %niter528, 1 ; 2 uses
+  %niter528.ncmp.1 = icmp eq i64 %niter528.next.1, %wide.trip.count76.i
+  br i1 %niter528.ncmp.1, label %._crit_edge67.i, label %.preheader.i.new, !llvm.loop !163
 
 .lr.ph.i192:                                      ; preds = %._crit_edge.i196, %.lr.ph.preheader.i190
   %.163.i = phi ptr [ %i.wi, %._crit_edge.i196 ], [ %i.td, %.lr.ph.preheader.i190 ] ; 5 uses

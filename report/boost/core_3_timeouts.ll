@@ -204,10 +204,9 @@ bb.q:                                             ; preds = %_ZN5boost4asio2ip23
           to label %bb.r unwind label %bb.p, !inline_history !858
 
 bb.r:                                             ; preds = %bb.q
-  %i.bb = load ptr, ptr %20, align 8, !tbaa !848
-  %.fr = freeze ptr %i.bb                         ; 5 uses
-  %i.bc = load ptr, ptr %i.j, align 8, !tbaa !198 ; 20 uses
-  %.not.i.i.i.i10.i = icmp eq ptr %i.bc, null     ; 4 uses
+  %i.bb = load ptr, ptr %20, align 8, !tbaa !848  ; 3 uses
+  %i.bc = load ptr, ptr %i.j, align 8, !tbaa !198 ; 13 uses
+  %.not.i.i.i.i10.i = icmp eq ptr %i.bc, null     ; 3 uses
   br i1 %.not.i.i.i.i10.i, label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit12.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -227,9 +226,8 @@ bb.u:                                             ; preds = %bb.s
   br label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit12.i
 
 _ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit12.i: ; preds = %bb.u, %bb.t, %bb.r
-  %i.bi = load i64, ptr %i.k, align 8, !tbaa !263 ; 3 uses
-  %i.bj = load ptr, ptr %15, align 8, !tbaa !848
-  %.fr30 = freeze ptr %i.bj                       ; 3 uses
+  %i.bi = load i64, ptr %i.k, align 8, !tbaa !263 ; 2 uses
+  %i.bj = load ptr, ptr %15, align 8, !tbaa !848  ; 3 uses
   %i.bk = load ptr, ptr %i.l, align 8, !tbaa !198 ; 17 uses
   %.not.i.i.i.i13.i = icmp eq ptr %i.bk, null     ; 4 uses
   br i1 %.not.i.i.i.i13.i, label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit15.i, label %bb.v
@@ -290,106 +288,53 @@ bb.ad:                                            ; preds = %bb.ab
   br label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit21.i
 
 _ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit21.i: ; preds = %bb.ad, %bb.ac, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit18.i
-  %i.cb = icmp ne ptr %.fr, null
-  %i.cc = icmp ne ptr %.fr30, null                ; 2 uses
-  %or.cond.i.i5.i.i = or i1 %i.cb, %i.cc
+  %i.cb = icmp ne ptr %i.bb, null
+  %i.cc = icmp ne ptr %i.bj, null                 ; 2 uses
+  %or.cond.i.i5.i.i = select i1 %i.cb, i1 true, i1 %i.cc
   br i1 %or.cond.i.i5.i.i, label %.lr.ph.i22.i, label %_ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.i
 
 .lr.ph.i22.i:                                     ; preds = %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit21.i
-  %.not.i.i.i135.i = icmp eq ptr %.fr, %.fr30
+  %.not.i.i.i135.i = icmp eq ptr %i.bb, %i.bj
   %.not.i30136.i = icmp eq i64 %i.bi, %i.bq
   %or.cond137.i = select i1 %.not.i.i.i135.i, i1 %.not.i30136.i, i1 false
-  br i1 %or.cond137.i, label %_ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.i, label %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.preheader
+  br i1 %or.cond137.i, label %_ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.i, label %bb.ae
 
-_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.preheader: ; preds = %.lr.ph.i22.i
-  br i1 %i.cc, label %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us, label %.split.us, !llvm.loop !860
+_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us: ; preds = %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us
+  %.06.i140.i.us = phi i64 [ %i.ch, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us ], [ %31, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i ] ; 2 uses
+  %i.cd = phi ptr [ %22, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us ], [ null, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i ] ; 2 uses
+  %.pre.i23139.i.us = phi i64 [ %24, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us ], [ 0, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i ] ; 2 uses
+  %i.ce = phi ptr [ %23, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us ], [ null, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i ] ; 2 uses
+  %.not.i.i.i.i = icmp eq ptr %i.cd, %i.bj
+  %.not.i30.i = icmp eq i64 %.pre.i23139.i.us, %i.bq
+  %or.cond.i = select i1 %.not.i.i.i.i, i1 %.not.i30.i, i1 false
+  br i1 %or.cond.i, label %_ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.i, label %bb.ae, !llvm.loop !860
 
-_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us: ; preds = %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.preheader, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us
-  %.06.i140.i.us = phi i64 [ %i.ch, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us ], [ 0, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.preheader ]
-  %i.cd = phi ptr [ %50, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us ], [ %.fr, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.preheader ] ; 3 uses
-  %.pre.i23139.i.us = phi i64 [ %.pre10.i190.i.us, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us ], [ %i.bi, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.preheader ]
-  %i.ce = phi ptr [ %51, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us ], [ %i.bc, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.preheader ] ; 9 uses
-  %22 = add i64 %.pre.i23139.i.us, 1              ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
-  %24 = load ptr, ptr %23, align 8, !tbaa !852
-  %25 = load ptr, ptr %i.cd, align 8, !tbaa !855
-  %26 = ptrtoint ptr %24 to i64
-  %27 = ptrtoint ptr %25 to i64
+bb.ae:                                            ; preds = %.lr.ph.i22.i, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us
+  %.06.i140.i = phi i64 [ %.06.i140.i.us, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us ], [ 0, %.lr.ph.i22.i ] ; 2 uses
+  %22 = phi ptr [ %i.cd, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us ], [ %i.bb, %.lr.ph.i22.i ] ; 3 uses
+  %.pre.i23139.i = phi i64 [ %.pre.i23139.i.us, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us ], [ %i.bi, %.lr.ph.i22.i ]
+  %23 = phi ptr [ %i.ce, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us ], [ %i.bc, %.lr.ph.i22.i ] ; 9 uses
+  %24 = add i64 %.pre.i23139.i, 1                 ; 2 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %22, i64 8
+  %25 = load ptr, ptr %i.cf, align 8, !tbaa !852
+  %i.cg = load ptr, ptr %22, align 8, !tbaa !855
+  %26 = ptrtoint ptr %25 to i64
+  %27 = ptrtoint ptr %i.cg to i64
   %28 = sub i64 %26, %27
   %29 = sdiv exact i64 %28, 96
-  %30 = icmp eq i64 %22, %29
-  br i1 %30, label %31, label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us
+  %30 = icmp eq i64 %24, %29
+  br i1 %30, label %.split.us, label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us
 
-31:                                               ; preds = %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us
-  %.not.i.i.i.i.i.i25.i.us = icmp eq ptr %i.ce, null
-  br i1 %.not.i.i.i.i.i.i25.i.us, label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us, label %32
+_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us: ; preds = %bb.ae
+  %i.ch = add nuw nsw i64 %.06.i140.i, 1
+  br label %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us
 
-32:                                               ; preds = %31
-  %33 = getelementptr inbounds nuw i8, ptr %i.ce, i64 8 ; 4 uses
-  %34 = load atomic i64, ptr %33 acquire, align 8 ; 2 uses
-  %35 = icmp eq i64 %34, 4294967297
-  %36 = trunc i64 %34 to i32                      ; 2 uses
-  br i1 %35, label %bb.ae, label %37
-
-37:                                               ; preds = %32
-  %38 = load i8, ptr @__libc_single_threaded, align 1, !tbaa !19
-  %.not.i.i.i.i.i.i.i26.i.us = icmp eq i8 %38, 0
-  br i1 %.not.i.i.i.i.i.i.i26.i.us, label %41, label %39
-
-39:                                               ; preds = %37
-  %40 = add nsw i32 %36, -1
-  store i32 %40, ptr %33, align 8, !tbaa !203
-  br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i27.i.us
-
-41:                                               ; preds = %37
-  %42 = atomicrmw volatile add ptr %33, i32 -1 acq_rel, align 4
-  br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i27.i.us
-
-_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i27.i.us: ; preds = %41, %39
-  %.0.i.i.i.i.i.i.i.i28.i.us = phi i32 [ %36, %39 ], [ %42, %41 ]
-  %43 = icmp eq i32 %.0.i.i.i.i.i.i.i.i28.i.us, 1
-  br i1 %43, label %44, label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us, !prof !204
-
-44:                                               ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i27.i.us
-  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.ce) #38, !inline_history !858
-  br label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us
-
-bb.ae:                                            ; preds = %32
-  store i32 0, ptr %33, align 8, !tbaa !199
-  %45 = getelementptr inbounds nuw i8, ptr %i.ce, i64 12
-  store i32 0, ptr %45, align 4, !tbaa !201
-  %46 = load ptr, ptr %i.ce, align 8, !tbaa !9
-  %i.cf = getelementptr inbounds nuw i8, ptr %46, i64 16
-  %i.cg = load ptr, ptr %i.cf, align 8
-  call void %i.cg(ptr noundef nonnull align 8 dereferenceable(16) %i.ce) #38, !inline_history !861
-  %47 = load ptr, ptr %i.ce, align 8, !tbaa !9
-  %48 = getelementptr inbounds nuw i8, ptr %47, i64 24
-  %49 = load ptr, ptr %48, align 8
-  call void %49(ptr noundef nonnull align 8 dereferenceable(16) %i.ce) #38, !inline_history !861
-  br label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us
-
-_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us: ; preds = %31, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i27.i.us, %44, %bb.ae, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us
-  %50 = phi ptr [ %i.cd, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us ], [ null, %bb.ae ], [ null, %44 ], [ null, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i27.i.us ], [ null, %31 ] ; 2 uses
-  %.pre10.i190.i.us = phi i64 [ %22, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us ], [ 0, %bb.ae ], [ 0, %44 ], [ 0, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i27.i.us ], [ 0, %31 ] ; 2 uses
-  %51 = phi ptr [ %i.ce, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us ], [ null, %bb.ae ], [ null, %44 ], [ null, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i27.i.us ], [ null, %31 ] ; 2 uses
-  %i.ch = add nuw nsw i64 %.06.i140.i.us, 1       ; 2 uses
-  %.not.i.i.i.i.us = icmp eq ptr %50, %.fr30
-  %.not.i30.i.us = icmp eq i64 %.pre10.i190.i.us, %i.bq
-  %or.cond.i.us = select i1 %.not.i.i.i.i.us, i1 %.not.i30.i.us, i1 false
-  br i1 %or.cond.i.us, label %_ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.i, label %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us, !llvm.loop !860
-
-.split.us:                                        ; preds = %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.preheader
-  %52 = getelementptr inbounds nuw i8, ptr %.fr, i64 8
-  %53 = load ptr, ptr %52, align 8, !tbaa !852
-  %54 = ptrtoint ptr %53 to i64
-  %55 = load ptr, ptr %.fr, align 8, !tbaa !855
-  %56 = ptrtoint ptr %55 to i64
-  %57 = sub i64 %54, %56
-  %58 = sdiv exact i64 %57, 96
-  br i1 %.not.i.i.i.i10.i, label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i, label %bb.af
+.split.us:                                        ; preds = %bb.ae
+  %.not.i.i.i.i.i.i25.i = icmp eq ptr %23, null
+  br i1 %.not.i.i.i.i.i.i25.i, label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i, label %bb.af
 
 bb.af:                                            ; preds = %.split.us
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.bc, i64 8 ; 4 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 4 uses
   %i.cj = load atomic i64, ptr %i.ci acquire, align 8 ; 2 uses
   %i.ck = icmp eq i64 %i.cj, 4294967297
   %i.cl = trunc i64 %i.cj to i32                  ; 2 uses
@@ -397,16 +342,16 @@ bb.af:                                            ; preds = %.split.us
 
 bb.ag:                                            ; preds = %bb.af
   store i32 0, ptr %i.ci, align 8, !tbaa !199
-  %i.cm = getelementptr inbounds nuw i8, ptr %i.bc, i64 12
+  %i.cm = getelementptr inbounds nuw i8, ptr %23, i64 12
   store i32 0, ptr %i.cm, align 4, !tbaa !201
-  %i.cn = load ptr, ptr %i.bc, align 8, !tbaa !9
+  %i.cn = load ptr, ptr %23, align 8, !tbaa !9
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 16
   %i.cp = load ptr, ptr %i.co, align 8
-  call void %i.cp(ptr noundef nonnull align 8 dereferenceable(16) %i.bc) #38, !inline_history !861
-  %i.cq = load ptr, ptr %i.bc, align 8, !tbaa !9
+  call void %i.cp(ptr noundef nonnull align 8 dereferenceable(16) %23) #38, !inline_history !861
+  %i.cq = load ptr, ptr %23, align 8, !tbaa !9
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 24
   %i.cs = load ptr, ptr %i.cr, align 8
-  call void %i.cs(ptr noundef nonnull align 8 dereferenceable(16) %i.bc) #38, !inline_history !861
+  call void %i.cs(ptr noundef nonnull align 8 dereferenceable(16) %23) #38, !inline_history !861
   br label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i
 
 bb.ah:                                            ; preds = %bb.af
@@ -429,16 +374,19 @@ _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i27.i: ; preds =
   br i1 %i.cw, label %bb.ak, label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i, !prof !204
 
 bb.ak:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i27.i
-  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bc) #38, !inline_history !858
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %23) #38, !inline_history !858
   br label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i
 
 _ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i: ; preds = %bb.ak, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i27.i, %bb.ag, %.split.us
-  %59 = sub i64 %58, %i.bi
+  %31 = add nuw nsw i64 %.06.i140.i, 1            ; 2 uses
+  br i1 %i.cc, label %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us, label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24._ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.loopexit_crit_edge.i, !llvm.loop !860
+
+_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24._ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.loopexit_crit_edge.i: ; preds = %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i
   br label %_ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.i, !llvm.loop !860
 
-_ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.i: ; preds = %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i, %.lr.ph.i22.i, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit21.i
-  %.sroa.6.0163.i = phi ptr [ %i.bc, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit21.i ], [ %i.bc, %.lr.ph.i22.i ], [ null, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i ], [ %51, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us ] ; 8 uses
-  %.0.lcssa.i.i = phi i64 [ 0, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit21.i ], [ 0, %.lr.ph.i22.i ], [ %59, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.i ], [ %i.ch, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24.thread.i.us ]
+_ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.i: ; preds = %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24._ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.loopexit_crit_edge.i, %.lr.ph.i22.i, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit21.i
+  %.sroa.6.0163.i = phi ptr [ %i.bc, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit21.i ], [ %i.bc, %.lr.ph.i22.i ], [ null, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24._ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.loopexit_crit_edge.i ], [ %i.ce, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us ] ; 8 uses
+  %.0.lcssa.i.i = phi i64 [ 0, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEC2ERKS4_.exit21.i ], [ 0, %.lr.ph.i22.i ], [ %31, %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEEppEv.exit.i24._ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.loopexit_crit_edge.i ], [ %.06.i140.i.us, %_ZN5boost4asio2ipneERKNS1_23basic_resolver_iteratorINS1_3tcpEEES6_.exit.thread.i.i.us ]
   br i1 %.not.i.i.i.i13.i, label %_ZN5boost4asio2ip23basic_resolver_iteratorINS1_3tcpEED2Ev.exit.i, label %bb.al
 
 bb.al:                                            ; preds = %_ZSt8distanceIN5boost4asio2ip23basic_resolver_iteratorINS2_3tcpEEEENSt15iterator_traitsIT_E15difference_typeES7_S7_.exit.i

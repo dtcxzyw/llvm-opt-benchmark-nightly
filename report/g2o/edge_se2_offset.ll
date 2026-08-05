@@ -1,3 +1,7 @@
+inline.NumInlined: 3688
+inline.NumDeleted: 2103
+loop-unroll.NumCompletelyUnrolled: 11
+loop-unroll.NumUnrolled: 11
 begin_hunk_0_@_ZNK3g2o13EdgeSE2Offset5writeERSo:bb.a
   %i.w = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %1, double noundef %i.p)
   %i.x = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.w, ptr noundef nonnull @.str.3, i64 noundef 1) ; 0 uses
@@ -199,7 +203,7 @@ bb.a:
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !126
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 72
-  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !170 ; 3 uses
+  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !170 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   %i.ai = load double, ptr %i.ah, align 8, !tbaa !8, !noalias !197
   %i.aj = fsub double f0x400921FB54442D18, %i.ai
@@ -215,17 +219,12 @@ bb.a:
   %.sroa.0.8.vec.insert.i.i.i.i = insertelement <2 x double> %.sroa.0.0.vec.insert.i.i.i.i, double %i.an, i64 1
   %.sroa.5.16.vec.insert.i.i.i.i = insertelement <2 x double> poison, double %i.ap, i64 0
   %.sroa.5.24.vec.insert.i.i.i.i = insertelement <2 x double> %.sroa.5.16.vec.insert.i.i.i.i, double %i.ao, i64 1
-  %3 = load double, ptr %i.am, align 8, !tbaa !56, !noalias !211
-  %4 = fneg double %3
-  %5 = insertelement <2 x double> poison, double %4, i64 0
-  %i.aq = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %3 = load <2 x double>, ptr %i.am, align 8, !tbaa !56, !noalias !211
+  %4 = fneg <2 x double> %3                       ; 2 uses
+  %i.aq = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ar = fmul <2 x double> %.sroa.0.8.vec.insert.i.i.i.i, %i.aq
-  %6 = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
-  %7 = load double, ptr %6, align 8, !tbaa !56, !noalias !211
-  %8 = fneg double %7
-  %9 = insertelement <2 x double> poison, double %8, i64 0
-  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.as = fmul <2 x double> %.sroa.5.24.vec.insert.i.i.i.i, %10
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.as = fmul <2 x double> %.sroa.5.24.vec.insert.i.i.i.i, %5
   %i.at = fadd <2 x double> %i.ar, %i.as          ; 2 uses
   %i.au = tail call double @sin(double noundef %.0.i.i.i) #24, !noalias !212 ; 2 uses
   %i.av = tail call double @cos(double noundef %.0.i.i.i) #24, !noalias !212 ; 2 uses

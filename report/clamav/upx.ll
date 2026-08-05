@@ -203,13 +203,12 @@ iter.check:                                       ; preds = %bb.ao
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %i.ev = add nsw i64 %i.ee, -1                   ; 3 uses
-  %i.ew = trunc i64 %i.ev to i32
+  %i.ev = add nsw i64 %i.ee, -1                   ; 2 uses
+  %i.ew = trunc i64 %i.ev to i32                  ; 2 uses
   %i.ex = xor i32 %i.s, -1
   %i.ey = icmp ult i32 %i.ex, %i.ew
-  %7 = trunc i64 %i.ev to i32
   %i.ez = xor i32 %i.eu, -1
-  %i.fa = icmp ult i32 %i.ez, %7
+  %i.fa = icmp ult i32 %i.ez, %i.ew
   %i.fb = icmp ugt i64 %i.ev, 4294967295
   %i.fc = or i1 %i.fa, %i.fb
   %i.fd = or i1 %i.ey, %i.fc
@@ -612,13 +611,12 @@ iter.check:                                       ; preds = %bb.av
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %i.fo = add nsw i64 %i.ex, -1                   ; 3 uses
-  %i.fp = trunc i64 %i.fo to i32
+  %i.fo = add nsw i64 %i.ex, -1                   ; 2 uses
+  %i.fp = trunc i64 %i.fo to i32                  ; 2 uses
   %i.fq = xor i32 %i.s, -1
   %i.fr = icmp ult i32 %i.fq, %i.fp
-  %7 = trunc i64 %i.fo to i32
   %i.fs = xor i32 %i.fn, -1
-  %i.ft = icmp ult i32 %i.fs, %7
+  %i.ft = icmp ult i32 %i.fs, %i.fp
   %i.fu = icmp ugt i64 %i.fo, 4294967295
   %i.fv = or i1 %i.ft, %i.fu
   %i.fw = or i1 %i.fr, %i.fv
@@ -1021,13 +1019,12 @@ iter.check:                                       ; preds = %bb.bb
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %i.go = add nsw i64 %i.fy, -1                   ; 3 uses
-  %i.gp = trunc i64 %i.go to i32
+  %i.go = add nsw i64 %i.fy, -1                   ; 2 uses
+  %i.gp = trunc i64 %i.go to i32                  ; 2 uses
   %i.gq = xor i32 %i.y, -1
   %i.gr = icmp ult i32 %i.gq, %i.gp
-  %7 = trunc i64 %i.go to i32
   %i.gs = xor i32 %i.gn, -1
-  %i.gt = icmp ult i32 %i.gs, %7
+  %i.gt = icmp ult i32 %i.gs, %i.gp
   %i.gu = icmp ugt i64 %i.go, 4294967295
   %i.gv = or i1 %i.gt, %i.gu
   %i.gw = or i1 %i.gr, %i.gv

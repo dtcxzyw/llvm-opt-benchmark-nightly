@@ -204,36 +204,31 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.z, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %xtraiter = and i32 %i.y, 3                     ; 2 uses
+  %10 = xor i32 %i.n, -1
+  %11 = add i32 %i.s, %10
+  %xtraiter = and i32 %i.y, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader, %.lr.ph.prol
-  %.037.prol = phi i32 [ %i.aa, %.lr.ph.prol ], [ %i.x, %.lr.ph.preheader ]
-  %.02536.prol = phi i32 [ %10, %.lr.ph.prol ], [ %i.y, %.lr.ph.preheader ]
-  %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph.prol ], [ 0, %.lr.ph.preheader ]
-  %i.aa = sdiv i32 %.037.prol, 10                 ; 3 uses
-  %10 = add nsw i32 %.02536.prol, -1              ; 2 uses
-  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !51
+.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
+  %i.aa = sdiv i32 %i.x, 10                       ; 2 uses
+  %prol.iter.next = add nsw i32 %i.y, -1
+  br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %.037.unr = phi i32 [ %i.x, %.lr.ph.preheader ], [ %i.aa, %.lr.ph.prol ]
-  %.02536.unr = phi i32 [ %i.y, %.lr.ph.preheader ], [ %10, %.lr.ph.prol ]
+  %.02536.unr = phi i32 [ %i.y, %.lr.ph.preheader ], [ %prol.iter.next, %.lr.ph.prol ]
   %.lcssa.unr = phi i32 [ poison, %.lr.ph.preheader ], [ %i.aa, %.lr.ph.prol ]
-  %11 = sub i32 %i.n, %i.s
-  %12 = add i32 %11, %3
-  %13 = icmp ugt i32 %12, -4
-  br i1 %13, label %._crit_edge, label %.lr.ph
+  %12 = icmp eq i32 %11, %3
+  br i1 %12, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %.037 = phi i32 [ %i.ab, %.lr.ph ], [ %.037.unr, %.lr.ph.prol.loopexit ]
   %.02536 = phi i32 [ %i.ac, %.lr.ph ], [ %.02536.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %i.ab = sdiv i32 %.037, 10000                   ; 2 uses
-  %i.ac = add nsw i32 %.02536, -4
-  %i.ad = icmp sgt i32 %.02536, 4
-  br i1 %i.ad, label %.lr.ph, label %._crit_edge, !llvm.loop !53
+  %i.ab = sdiv i32 %.037, 100                     ; 2 uses
+  %i.ac = add nsw i32 %.02536, -2
+  %i.ad = icmp sgt i32 %.02536, 2
+  br i1 %i.ad, label %.lr.ph, label %._crit_edge, !llvm.loop !51
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.d
   %.0.lcssa = phi i32 [ %i.x, %bb.d ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.ab, %.lr.ph ]
@@ -250,7 +245,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ag = load ptr, ptr %.sroa.0.0, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.ai = load ptr, ptr %i.ah, align 8
-  call void %i.ai(ptr noundef nonnull align 8 dereferenceable(136) %.sroa.0.0) #17, !inline_history !54
+  call void %i.ai(ptr noundef nonnull align 8 dereferenceable(136) %.sroa.0.0) #17, !inline_history !52
   br label %_ZN6icu_7812LocalPointerINS_13DecimalFormatEED2Ev.exit
 
 _ZN6icu_7812LocalPointerINS_13DecimalFormatEED2Ev.exit: ; preds = %_ZN6icu_7812LocalPointerINS_13DecimalFormatEE12adoptInsteadEPS1_.exit, %bb.e, %bb.f
@@ -378,7 +373,7 @@ _ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit.thread: ; preds = %bb.c, %bb.
   %i.bk = select i1 %i.bg, i32 %i.bj, i32 %i.bi
   %i.bl = sext i32 %i.bk to i64
   %.not35 = icmp slt i64 %indvars.iv.next, %i.bl
-  br i1 %.not35, label %_ZNK6icu_7813UnicodeStringixEi.exit, label %._crit_edge, !llvm.loop !55
+  br i1 %.not35, label %_ZNK6icu_7813UnicodeStringixEi.exit, label %._crit_edge, !llvm.loop !53
 
 ._crit_edge:                                      ; preds = %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit.thread
   %i.bm = icmp eq i8 %.1.shrunk, 0
@@ -418,7 +413,7 @@ bb.a:
   %i.e = load i16, ptr %i.d, align 2
   %i.f = icmp eq i16 %i.e, 0
   %i.g = add i64 %.0.i.i.i.i, 1
-  br i1 %i.f, label %_ZN6icu_7813UnicodeStringC2IPKDsvEERKT_.exit, label %.preheader.i.i, !llvm.loop !56
+  br i1 %i.f, label %_ZN6icu_7813UnicodeStringC2IPKDsvEERKT_.exit, label %.preheader.i.i, !llvm.loop !54
 
 _ZN6icu_7813UnicodeStringC2IPKDsvEERKT_.exit:     ; preds = %.preheader.i.i, %bb.a
   %.sroa.02.0.i.i = phi i64 [ 0, %bb.a ], [ %.0.i.i.i.i, %.preheader.i.i ]
@@ -724,7 +719,7 @@ bb.a:
   %i.g = load i16, ptr %i.f, align 2
   %i.h = icmp eq i16 %i.g, 0
   %i.i = add i64 %.0.i.i.i.i, 1
-  br i1 %i.h, label %_ZN6icu_7813UnicodeStringC2IPKDsvEERKT_.exit, label %.preheader.i.i, !llvm.loop !56
+  br i1 %i.h, label %_ZN6icu_7813UnicodeStringC2IPKDsvEERKT_.exit, label %.preheader.i.i, !llvm.loop !54
 
 _ZN6icu_7813UnicodeStringC2IPKDsvEERKT_.exit:     ; preds = %.preheader.i.i, %bb.a
   %.sroa.02.0.i.i = phi i64 [ 0, %bb.a ], [ %.0.i.i.i.i, %.preheader.i.i ]
@@ -1127,7 +1122,7 @@ bb.j:                                             ; preds = %_ZN6icu_7816SimpleD
   %.1 = phi i32 [ %.02958, %_ZN6icu_7816SimpleDateFormat12isSyntaxCharEDs.exit.thread ], [ %.02958, %_ZNK6icu_7813UnicodeStringixEi.exit47.thread ], [ %.02958, %bb.h ], [ %i.ac, %_ZNK6icu_7813UnicodeStringixEi.exit47 ]
   %i.ar = add nsw i32 %.1, 1                      ; 2 uses
   %.not42 = icmp slt i32 %i.ar, %i.k
-  br i1 %.not42, label %bb.b, label %.critedge, !llvm.loop !57
+  br i1 %.not42, label %bb.b, label %.critedge, !llvm.loop !55
 
 .critedge:                                        ; preds = %bb.j
   %i.as = icmp sgt i32 %.2, 0
@@ -1222,7 +1217,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ai = tail call noundef i32 @_ZNK6icu_7813UnicodeString8char32AtEi(ptr noundef nonnull align 8 dereferenceable(64) %1, i32 noundef %i.z) #17 ; 3 uses
   %i.aj = tail call noundef signext i8 @_ZN6icu_7812PatternProps12isWhiteSpaceEi(i32 noundef %i.ai) #17
   %.not71.peel = icmp eq i8 %i.aj, 0
-  br i1 %.not71.peel, label %..critedge_crit_edge88, label %bb.e, !llvm.loop !58
+  br i1 %.not71.peel, label %..critedge_crit_edge88, label %bb.e, !llvm.loop !56
 
 bb.e:                                             ; preds = %bb.d
   %i.ak = load i16, ptr %i.a, align 8             ; 2 uses
@@ -1249,7 +1244,7 @@ bb.f:                                             ; preds = %bb.h
   %i.az = load i32, ptr %i.j, align 4
   %i.ba = select i1 %i.aw, i32 %i.az, i32 %i.ay
   %i.bb = icmp slt i32 %i.bf, %i.ba
-  br i1 %i.bb, label %.lr.ph, label %.critedge, !llvm.loop !59
+  br i1 %i.bb, label %.lr.ph, label %.critedge, !llvm.loop !57
 
 .lr.ph:                                           ; preds = %.lr.ph.peel.next, %bb.f
   %.05284 = phi i32 [ %i.au, %bb.f ], [ %i.as, %.lr.ph.peel.next ] ; 2 uses
@@ -1276,12 +1271,12 @@ bb.h:                                             ; preds = %bb.g
   %i.bn = tail call noundef i32 @_ZNK6icu_7813UnicodeString8char32AtEi(ptr noundef nonnull align 8 dereferenceable(64) %1, i32 noundef %i.be) #17 ; 3 uses
   %i.bo = tail call noundef signext i8 @_ZN6icu_7812PatternProps12isWhiteSpaceEi(i32 noundef %i.bn) #17
   %.not71 = icmp eq i8 %i.bo, 0
-  br i1 %.not71, label %..critedge_crit_edge88, label %bb.f, !llvm.loop !58
+  br i1 %.not71, label %..critedge_crit_edge88, label %bb.f, !llvm.loop !56
 
 ..critedge_crit_edge88:                           ; preds = %bb.h, %bb.d
   %.lcssa115 = phi i32 [ %i.z, %bb.d ], [ %i.be, %bb.h ]
   %.lcssa = phi i32 [ %i.aa, %bb.d ], [ %i.bf, %bb.h ]
-  br label %.critedge, !llvm.loop !58
+  br label %.critedge, !llvm.loop !56
 
 .critedge:                                        ; preds = %.lr.ph, %bb.g, %bb.f, %.lr.ph.preheader, %bb.c, %bb.e, %..critedge_crit_edge88, %.preheader79
   %.265 = phi i32 [ %.063101, %.preheader79 ], [ %.lcssa, %..critedge_crit_edge88 ], [ %.063101, %.lr.ph.preheader ], [ %i.aa, %bb.c ], [ %i.aa, %bb.e ], [ %.16481, %.lr.ph ], [ %i.bf, %bb.g ], [ %i.bf, %bb.f ] ; 2 uses
@@ -1387,7 +1382,7 @@ bb.o:                                             ; preds = %bb.n
   %i.do = load i32, ptr %i.c, align 4
   %i.dp = select i1 %i.dl, i32 %i.do, i32 %i.dn
   %.not72 = icmp slt i32 %.057.be, %i.dp
-  br i1 %.not72, label %bb.b, label %_ZNK6icu_7816SimpleDateFormat15skipUWhiteSpaceERKNS_13UnicodeStringEi.exit75.thread, !llvm.loop !60
+  br i1 %.not72, label %bb.b, label %_ZNK6icu_7816SimpleDateFormat15skipUWhiteSpaceERKNS_13UnicodeStringEi.exit75.thread, !llvm.loop !58
 
 _ZNK6icu_7816SimpleDateFormat15skipUWhiteSpaceERKNS_13UnicodeStringEi.exit75.thread: ; preds = %.backedge, %bb.a
   %.568 = phi i32 [ %3, %bb.a ], [ %.063.be, %.backedge ]
@@ -1659,14 +1654,12 @@ attributes #20 = { noreturn nounwind }
 !48 = distinct !{!48, !6}
 !49 = distinct !{!49, !6}
 !50 = distinct !{!50, !6}
-!51 = distinct !{!51, !52}
-!52 = !{!"llvm.loop.unroll.disable"}
+!51 = distinct !{!51, !6}
+!52 = distinct !{null}
 !53 = distinct !{!53, !6}
-!54 = distinct !{null}
+!54 = distinct !{!54, !6}
 !55 = distinct !{!55, !6}
 !56 = distinct !{!56, !6}
-!57 = distinct !{!57, !6}
+!57 = distinct !{!57, !6, !42}
 !58 = distinct !{!58, !6}
-!59 = distinct !{!59, !6, !42}
-!60 = distinct !{!60, !6}
 end_hunk_1

@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.pre-phi = phi i64 [ %i.f, %bb.d ], [ %i.c, %bb.c ] ; 12 uses
+  %.pre-phi = phi i64 [ %i.f, %bb.d ], [ %i.c, %bb.c ] ; 11 uses
   %.0 = phi ptr [ %i.g, %bb.d ], [ %1, %bb.c ]    ; 3 uses
-  %i.h = getelementptr i8, ptr %0, i64 32         ; 13 uses
+  %i.h = getelementptr i8, ptr %0, i64 32         ; 12 uses
   %.val126 = load ptr, ptr %i.h, align 8, !tbaa !46
   %i.i = ptrtoint ptr %.val126 to i64
   %i.j = sub i64 %.pre-phi, %i.i
@@ -465,7 +465,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %i.em = getelementptr i8, ptr %0, i64 264       ; 3 uses
+  %i.em = getelementptr i8, ptr %0, i64 264       ; 2 uses
   %.val147 = load ptr, ptr %i.em, align 8, !tbaa !108 ; 2 uses
   %.not195 = icmp eq ptr %.val147, null
   br i1 %.not195, label %bb.x, label %bb.v
@@ -482,10 +482,14 @@ bb.v:                                             ; preds = %bb.u
   %i.es = getelementptr inbounds i8, ptr %.val148.val, i64 %i.er
   %i.et = load i32, ptr %i.es, align 4, !tbaa !8
   %.not197 = icmp eq i32 %i.et, 0
-  br i1 %.not197, label %bb.x, label %bb.w
+  br i1 %.not197, label %bb.x, label %2
 
-bb.w:                                             ; preds = %bb.v
-  %2 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.16) ; 0 uses
+2:                                                ; preds = %bb.v
+  %3 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.16) ; 0 uses
+  br label %bb.w
+
+bb.w:                                             ; preds = %.lr.ph.a, %2
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.a ], [ 0, %2 ] ; 3 uses
   %.val123203 = load ptr, ptr %i.h, align 8, !tbaa !46
   %i.eu = ptrtoint ptr %.val123203 to i64
   %i.ev = sub i64 %.pre-phi, %i.eu
@@ -500,36 +504,19 @@ bb.w:                                             ; preds = %bb.v
   %i.fb = sext i32 %i.fa to i64
   %i.fc = getelementptr inbounds [4 x i8], ptr %.val149.val205, i64 %i.fb ; 2 uses
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !8
-  %3 = icmp sgt i32 %i.fd, 0
-  br i1 %3, label %.lr.ph.a, label %.critedge
+  %4 = sext i32 %i.fd to i64
+  %5 = icmp slt i64 %indvars.iv, %4
+  br i1 %5, label %.lr.ph.a, label %.critedge
 
-.lr.ph.a:                                         ; preds = %bb.w, %.lr.ph.a
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.a ], [ 0, %bb.w ] ; 2 uses
-  %4 = phi ptr [ %13, %.lr.ph.a ], [ %i.fc, %bb.w ]
-  %i.fe = getelementptr inbounds nuw i8, ptr %4, i64 4
+.lr.ph.a:                                         ; preds = %bb.w
+  %i.fe = getelementptr inbounds nuw i8, ptr %i.fc, i64 4
   %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.fe, i64 %indvars.iv
   %i.fg = load i32, ptr %i.ff, align 4, !tbaa !8
   %i.fh = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.17, i32 noundef %i.fg) ; 0 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %.val123 = load ptr, ptr %i.h, align 8, !tbaa !46
-  %5 = ptrtoint ptr %.val123 to i64
-  %6 = sub i64 %.pre-phi, %5
-  %7 = sdiv exact i64 %6, 12
-  %.val149 = load ptr, ptr %i.em, align 8, !tbaa !108
-  %8 = getelementptr i8, ptr %.val149, i64 8
-  %.val149.val = load ptr, ptr %8, align 8, !tbaa !61 ; 2 uses
-  %sext198 = shl i64 %7, 32
-  %9 = ashr exact i64 %sext198, 30
-  %10 = getelementptr inbounds i8, ptr %.val149.val, i64 %9
-  %11 = load i32, ptr %10, align 4, !tbaa !8
-  %12 = sext i32 %11 to i64
-  %13 = getelementptr inbounds [4 x i8], ptr %.val149.val, i64 %12 ; 2 uses
-  %14 = load i32, ptr %13, align 4, !tbaa !8
-  %15 = sext i32 %14 to i64
-  %16 = icmp slt i64 %indvars.iv.next, %15
-  br i1 %16, label %.lr.ph.a, label %.critedge, !llvm.loop !116
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  br label %bb.w, !llvm.loop !116
 
-.critedge:                                        ; preds = %.lr.ph.a, %bb.w
+.critedge:                                        ; preds = %bb.w
   %putchar = tail call i32 @putchar(i32 125)      ; 0 uses
   br label %bb.x
 

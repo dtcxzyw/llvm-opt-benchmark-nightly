@@ -1,7 +1,7 @@
 inline.NumInlined: 299
 inline.NumDeleted: 103
-loop-unroll.NumRuntimeUnrolled: 10
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@Kf_SetPrepare:bb.a
   store i64 0, ptr %i.k, align 8, !tbaa !101
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
@@ -203,10 +203,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !98   ; 2 uses
   %i.c = zext i16 %i.b to i64                     ; 2 uses
-  %i.d = getelementptr i8, ptr %0, i64 2144       ; 7 uses
+  %i.d = getelementptr i8, ptr %0, i64 2144       ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8360 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 106664 ; 9 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 106664 ; 7 uses
   %.not.i.i = icmp eq i32 %1, 0
   br i1 %.not.i.i, label %.split.us, label %.split
 
@@ -398,7 +398,7 @@ select.unfold._crit_edge.split:                   ; preds = %Kf_SetStoreAddOne.e
   br i1 %exitcond.not, label %.split62.us, label %.split, !llvm.loop !207
 
 .split62.us:                                      ; preds = %select.unfold._crit_edge.split, %select.unfold._crit_edge.split.us.us
-  %.us-phi63 = phi i32 [ %.1.lcssa.us, %select.unfold._crit_edge.split.us.us ], [ %.1.lcssa, %select.unfold._crit_edge.split ] ; 5 uses
+  %.us-phi63 = phi i32 [ %.1.lcssa.us, %select.unfold._crit_edge.split.us.us ], [ %.1.lcssa, %select.unfold._crit_edge.split ] ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 3 uses
   store i32 %.us-phi63, ptr %i.cg, align 4, !tbaa !102
   %i.ch = load ptr, ptr %i.g, align 8, !tbaa !144
@@ -412,36 +412,14 @@ select.unfold._crit_edge.split:                   ; preds = %Kf_SetStoreAddOne.e
   br i1 %i.cm, label %.lr.ph67, label %._crit_edge
 
 .lr.ph67:                                         ; preds = %.split62.us
-  %i.cn = ptrtoint ptr %i.e to i64                ; 3 uses
-  %wide.trip.count87 = zext nneg i32 %.us-phi63 to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count87, 1
-  %2 = icmp eq i32 %.us-phi63, 1
-  br i1 %2, label %.epil.preheader, label %.lr.ph67.new
-
-.lr.ph67.new:                                     ; preds = %.lr.ph67
-  %unroll_iter = and i64 %wide.trip.count87, 2147483646
+  %i.cn = ptrtoint ptr %i.e to i64
+  %wide.trip.count87 = zext nneg i32 %.us-phi63 to i64
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.l, %.lr.ph67.new
-  %indvars.iv84 = phi i64 [ 0, %.lr.ph67.new ], [ %indvars.iv.next85.1, %bb.l ] ; 3 uses
-  %niter = phi i64 [ 0, %.lr.ph67.new ], [ %niter.next.1, %bb.l ]
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv84
-  %4 = load ptr, ptr %3, align 8, !tbaa !144      ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 28
-  %6 = load i32, ptr %5, align 4, !tbaa !99
-  %7 = sext i32 %6 to i64
-  %8 = getelementptr inbounds [4 x i8], ptr %i.d, i64 %7 ; 2 uses
-  %9 = load i32, ptr %8, align 4, !tbaa !40
-  %10 = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i32 %9, ptr %10, align 8, !tbaa !113
-  %11 = ptrtoint ptr %4 to i64
-  %12 = sub i64 %11, %i.cn
-  %13 = sdiv exact i64 %12, 96
-  %14 = trunc i64 %13 to i32
-  store i32 %14, ptr %8, align 4, !tbaa !40
-  %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv84
-  %15 = getelementptr inbounds nuw i8, ptr %i.co, i64 8
-  %i.cp = load ptr, ptr %15, align 8, !tbaa !144  ; 3 uses
+bb.l:                                             ; preds = %.lr.ph67, %bb.l
+  %niter = phi i64 [ 0, %.lr.ph67 ], [ %niter.next.1, %bb.l ] ; 2 uses
+  %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %niter
+  %i.cp = load ptr, ptr %i.co, align 8, !tbaa !144 ; 3 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 28
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !99
   %i.cs = sext i32 %i.cr to i64
@@ -454,36 +432,11 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph67.new
   %i.cy = sdiv exact i64 %i.cx, 96
   %i.cz = trunc i64 %i.cy to i32
   store i32 %i.cz, ptr %i.ct, align 4, !tbaa !40
-  %indvars.iv.next85.1 = add nuw nsw i64 %indvars.iv84, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.l, !llvm.loop !209
+  %niter.next.1 = add nuw nsw i64 %niter, 1       ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %wide.trip.count87
+  br i1 %niter.ncmp.1, label %._crit_edge, label %bb.l, !llvm.loop !209
 
-._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.l
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph67
-  %indvars.iv84.epil.init = phi i64 [ 0, %.lr.ph67 ], [ %indvars.iv.next85.1, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod3 = trunc i32 %.us-phi63 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod3)
-  %16 = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv84.epil.init
-  %17 = load ptr, ptr %16, align 8, !tbaa !144    ; 3 uses
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 28
-  %19 = load i32, ptr %18, align 4, !tbaa !99
-  %20 = sext i32 %19 to i64
-  %21 = getelementptr inbounds [4 x i8], ptr %i.d, i64 %20 ; 2 uses
-  %22 = load i32, ptr %21, align 4, !tbaa !40
-  %23 = getelementptr inbounds nuw i8, ptr %17, i64 24
-  store i32 %22, ptr %23, align 8, !tbaa !113
-  %24 = ptrtoint ptr %17 to i64
-  %25 = sub i64 %24, %i.cn
-  %26 = sdiv exact i64 %25, 96
-  %27 = trunc i64 %26 to i32
-  store i32 %27, ptr %21, align 4, !tbaa !40
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %.split62.us
+._crit_edge:                                      ; preds = %bb.l, %.split62.us
   store i32 0, ptr %i.cg, align 4, !tbaa !102
   br label %bb.m
 

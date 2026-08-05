@@ -204,7 +204,7 @@ _ZN6aiMeshaSERKS_.exit:                           ; preds = %bb.b, %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 1264 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 1264
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.s, ptr noundef nonnull align 8 dereferenceable(56) %i.t, i64 56, i1 false)
-  %i.u = load i32, ptr %i.d, align 4              ; 45 uses
+  %i.u = load i32, ptr %i.d, align 4              ; 31 uses
   %i.v = load ptr, ptr %i.f, align 8              ; 3 uses
   %.not.i = icmp eq ptr %i.v, null
   br i1 %.not.i, label %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit, label %bb.d
@@ -333,68 +333,62 @@ bb.q:                                             ; preds = %.loopexit.i51
 
 _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit53.thread: ; preds = %bb.p
   store ptr %i.az, ptr %i.av, align 8
-  br label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader
+  br label %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit53
 
 bb.r:                                             ; preds = %.loopexit.i51
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.az, ptr noundef nonnull align 4 dereferenceable(12) %i.aw, i64 12, i1 false)
   br label %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit53
 
-_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit53: ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit49, %bb.q, %bb.r
+_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit53: ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit49, %bb.q, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit53.thread, %bb.r
   %i.be = getelementptr inbounds nuw i8, ptr %i.c, i64 112 ; 2 uses
-  %2 = load ptr, ptr %i.be, align 8               ; 3 uses
-  %.not.i54 = icmp ne ptr %2, null
-  %i.bf = icmp ne i32 %i.u, 0                     ; 11 uses
-  %i.bg = select i1 %.not.i54, i1 %i.bf, i1 false
+  %2 = icmp ne i32 %i.u, 0                        ; 9 uses
+  %3 = zext i32 %i.u to i64
+  %4 = mul nuw nsw i64 %3, 12                     ; 18 uses
+  %5 = add nsw i64 %4, -12
+  %6 = urem i64 %5, 12
+  %7 = sub nuw nsw i64 %4, %6                     ; 8 uses
+  %.not9.i57 = icmp eq i32 %i.u, 1                ; 8 uses
+  %8 = load ptr, ptr %i.be, align 8               ; 3 uses
+  %i.bf = icmp ne ptr %8, null
+  %i.bg = select i1 %i.bf, i1 %2, i1 false
   br i1 %i.bg, label %.loopexit.i56, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader
 
-_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader:   ; preds = %bb.ag, %bb.ah, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit53.thread, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.6, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.5, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.4, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.3, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.2, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.1, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit53
-  %3 = phi i1 [ false, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit53.thread ], [ %i.bf, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit53 ], [ %i.bf, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.6 ], [ %i.bf, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.5 ], [ %i.bf, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.4 ], [ %i.bf, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.3 ], [ %i.bf, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.2 ], [ %i.bf, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.1 ], [ %i.bf, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58 ], [ %i.bf, %bb.ah ], [ %i.bf, %bb.ag ]
+_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader:   ; preds = %bb.ag, %bb.ah, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.6, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.5, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.4, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.3, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.2, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.1, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58, %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit53
   %i.bh = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 2 uses
   %i.bi = load ptr, ptr %i.bh, align 8            ; 3 uses
   %.not.i59 = icmp ne ptr %i.bi, null
-  %i.bj = select i1 %.not.i59, i1 %3, i1 false
+  %i.bj = select i1 %.not.i59, i1 %2, i1 false
   br i1 %i.bj, label %.loopexit.i62, label %_ZNK6aiMesh15HasVertexColorsEj.exit.thread
 
 .loopexit.i56:                                    ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit53
-  %4 = zext i32 %i.u to i64
-  %5 = mul nuw nsw i64 %4, 12                     ; 4 uses
-  %i.bk = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %5) #22 ; 4 uses
-  %6 = add nsw i64 %5, -12
-  %7 = urem i64 %6, 12
-  %8 = sub nuw nsw i64 %5, %7
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bk, i8 0, i64 %8, i1 false)
+  %i.bk = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %4) #22 ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bk, i8 0, i64 %7, i1 false)
   store ptr %i.bk, ptr %i.be, align 8
-  %.not9.i57 = icmp eq i32 %i.u, 1
   br i1 %.not9.i57, label %bb.t, label %bb.s, !prof !44
 
 bb.s:                                             ; preds = %.loopexit.i56
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bk, ptr nonnull align 4 %2, i64 %5, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bk, ptr nonnull align 4 %8, i64 %4, i1 false)
   br label %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58
 
 bb.t:                                             ; preds = %.loopexit.i56
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.bk, ptr noundef nonnull align 4 dereferenceable(12) %2, i64 12, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.bk, ptr noundef nonnull align 4 dereferenceable(12) %8, i64 12, i1 false)
   br label %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58
 
 _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58: ; preds = %bb.s, %bb.t
   %i.bl = getelementptr inbounds nuw i8, ptr %i.c, i64 120 ; 2 uses
   %i.bm = load ptr, ptr %i.bl, align 8            ; 3 uses
-  %.not.i54.1.not = icmp eq ptr %i.bm, null
-  br i1 %.not.i54.1.not, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader, label %.loopexit.i56.1
+  %.not.i54.1 = icmp ne ptr %i.bm, null
+  %9 = select i1 %.not.i54.1, i1 %2, i1 false
+  br i1 %9, label %.loopexit.i56.1, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader
 
 .loopexit.i56.1:                                  ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58
-  %9 = zext i32 %i.u to i64
-  %10 = mul nuw nsw i64 %9, 12                    ; 4 uses
-  %i.bn = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %10) #22 ; 4 uses
-  %11 = add nsw i64 %10, -12
-  %12 = urem i64 %11, 12
-  %13 = sub nuw nsw i64 %10, %12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bn, i8 0, i64 %13, i1 false)
+  %i.bn = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %4) #22 ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bn, i8 0, i64 %7, i1 false)
   store ptr %i.bn, ptr %i.bl, align 8
-  %.not9.i57.1 = icmp eq i32 %i.u, 1
-  br i1 %.not9.i57.1, label %bb.v, label %bb.u, !prof !44
+  br i1 %.not9.i57, label %bb.v, label %bb.u, !prof !44
 
 bb.u:                                             ; preds = %.loopexit.i56.1
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bn, ptr nonnull align 4 %i.bm, i64 %10, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bn, ptr nonnull align 4 %i.bm, i64 %4, i1 false)
   br label %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.1
 
 bb.v:                                             ; preds = %.loopexit.i56.1
@@ -404,23 +398,18 @@ bb.v:                                             ; preds = %.loopexit.i56.1
 _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.1: ; preds = %bb.v, %bb.u
   %i.bo = getelementptr inbounds nuw i8, ptr %i.c, i64 128 ; 2 uses
   %i.bp = load ptr, ptr %i.bo, align 8            ; 3 uses
-  %.not.i54.2.not = icmp eq ptr %i.bp, null
-  br i1 %.not.i54.2.not, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader, label %.loopexit.i56.2
+  %.not.i54.2 = icmp ne ptr %i.bp, null
+  %10 = select i1 %.not.i54.2, i1 %2, i1 false
+  br i1 %10, label %.loopexit.i56.2, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader
 
 .loopexit.i56.2:                                  ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.1
-  %14 = zext i32 %i.u to i64
-  %15 = mul nuw nsw i64 %14, 12                   ; 4 uses
-  %i.bq = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %15) #22 ; 4 uses
-  %16 = add nsw i64 %15, -12
-  %17 = urem i64 %16, 12
-  %18 = sub nuw nsw i64 %15, %17
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bq, i8 0, i64 %18, i1 false)
+  %i.bq = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %4) #22 ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bq, i8 0, i64 %7, i1 false)
   store ptr %i.bq, ptr %i.bo, align 8
-  %.not9.i57.2 = icmp eq i32 %i.u, 1
-  br i1 %.not9.i57.2, label %bb.x, label %bb.w, !prof !44
+  br i1 %.not9.i57, label %bb.x, label %bb.w, !prof !44
 
 bb.w:                                             ; preds = %.loopexit.i56.2
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bq, ptr nonnull align 4 %i.bp, i64 %15, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bq, ptr nonnull align 4 %i.bp, i64 %4, i1 false)
   br label %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.2
 
 bb.x:                                             ; preds = %.loopexit.i56.2
@@ -430,23 +419,18 @@ bb.x:                                             ; preds = %.loopexit.i56.2
 _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.2: ; preds = %bb.x, %bb.w
   %i.br = getelementptr inbounds nuw i8, ptr %i.c, i64 136 ; 2 uses
   %i.bs = load ptr, ptr %i.br, align 8            ; 3 uses
-  %.not.i54.3.not = icmp eq ptr %i.bs, null
-  br i1 %.not.i54.3.not, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader, label %.loopexit.i56.3
+  %.not.i54.3 = icmp ne ptr %i.bs, null
+  %11 = select i1 %.not.i54.3, i1 %2, i1 false
+  br i1 %11, label %.loopexit.i56.3, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader
 
 .loopexit.i56.3:                                  ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.2
-  %19 = zext i32 %i.u to i64
-  %20 = mul nuw nsw i64 %19, 12                   ; 4 uses
-  %i.bt = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %20) #22 ; 4 uses
-  %21 = add nsw i64 %20, -12
-  %22 = urem i64 %21, 12
-  %23 = sub nuw nsw i64 %20, %22
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bt, i8 0, i64 %23, i1 false)
+  %i.bt = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %4) #22 ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bt, i8 0, i64 %7, i1 false)
   store ptr %i.bt, ptr %i.br, align 8
-  %.not9.i57.3 = icmp eq i32 %i.u, 1
-  br i1 %.not9.i57.3, label %bb.z, label %bb.y, !prof !44
+  br i1 %.not9.i57, label %bb.z, label %bb.y, !prof !44
 
 bb.y:                                             ; preds = %.loopexit.i56.3
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bt, ptr nonnull align 4 %i.bs, i64 %20, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bt, ptr nonnull align 4 %i.bs, i64 %4, i1 false)
   br label %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.3
 
 bb.z:                                             ; preds = %.loopexit.i56.3
@@ -456,23 +440,18 @@ bb.z:                                             ; preds = %.loopexit.i56.3
 _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.3: ; preds = %bb.z, %bb.y
   %i.bu = getelementptr inbounds nuw i8, ptr %i.c, i64 144 ; 2 uses
   %i.bv = load ptr, ptr %i.bu, align 8            ; 3 uses
-  %.not.i54.4.not = icmp eq ptr %i.bv, null
-  br i1 %.not.i54.4.not, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader, label %.loopexit.i56.4
+  %.not.i54.4 = icmp ne ptr %i.bv, null
+  %12 = select i1 %.not.i54.4, i1 %2, i1 false
+  br i1 %12, label %.loopexit.i56.4, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader
 
 .loopexit.i56.4:                                  ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.3
-  %24 = zext i32 %i.u to i64
-  %25 = mul nuw nsw i64 %24, 12                   ; 4 uses
-  %i.bw = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %25) #22 ; 4 uses
-  %26 = add nsw i64 %25, -12
-  %27 = urem i64 %26, 12
-  %28 = sub nuw nsw i64 %25, %27
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bw, i8 0, i64 %28, i1 false)
+  %i.bw = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %4) #22 ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bw, i8 0, i64 %7, i1 false)
   store ptr %i.bw, ptr %i.bu, align 8
-  %.not9.i57.4 = icmp eq i32 %i.u, 1
-  br i1 %.not9.i57.4, label %bb.ab, label %bb.aa, !prof !44
+  br i1 %.not9.i57, label %bb.ab, label %bb.aa, !prof !44
 
 bb.aa:                                            ; preds = %.loopexit.i56.4
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bw, ptr nonnull align 4 %i.bv, i64 %25, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bw, ptr nonnull align 4 %i.bv, i64 %4, i1 false)
   br label %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.4
 
 bb.ab:                                            ; preds = %.loopexit.i56.4
@@ -482,23 +461,18 @@ bb.ab:                                            ; preds = %.loopexit.i56.4
 _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.4: ; preds = %bb.ab, %bb.aa
   %i.bx = getelementptr inbounds nuw i8, ptr %i.c, i64 152 ; 2 uses
   %i.by = load ptr, ptr %i.bx, align 8            ; 3 uses
-  %.not.i54.5.not = icmp eq ptr %i.by, null
-  br i1 %.not.i54.5.not, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader, label %.loopexit.i56.5
+  %.not.i54.5 = icmp ne ptr %i.by, null
+  %13 = select i1 %.not.i54.5, i1 %2, i1 false
+  br i1 %13, label %.loopexit.i56.5, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader
 
 .loopexit.i56.5:                                  ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.4
-  %29 = zext i32 %i.u to i64
-  %30 = mul nuw nsw i64 %29, 12                   ; 4 uses
-  %i.bz = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %30) #22 ; 4 uses
-  %31 = add nsw i64 %30, -12
-  %32 = urem i64 %31, 12
-  %33 = sub nuw nsw i64 %30, %32
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bz, i8 0, i64 %33, i1 false)
+  %i.bz = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %4) #22 ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bz, i8 0, i64 %7, i1 false)
   store ptr %i.bz, ptr %i.bx, align 8
-  %.not9.i57.5 = icmp eq i32 %i.u, 1
-  br i1 %.not9.i57.5, label %bb.ad, label %bb.ac, !prof !44
+  br i1 %.not9.i57, label %bb.ad, label %bb.ac, !prof !44
 
 bb.ac:                                            ; preds = %.loopexit.i56.5
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bz, ptr nonnull align 4 %i.by, i64 %30, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bz, ptr nonnull align 4 %i.by, i64 %4, i1 false)
   br label %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.5
 
 bb.ad:                                            ; preds = %.loopexit.i56.5
@@ -508,23 +482,18 @@ bb.ad:                                            ; preds = %.loopexit.i56.5
 _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.5: ; preds = %bb.ad, %bb.ac
   %i.ca = getelementptr inbounds nuw i8, ptr %i.c, i64 160 ; 2 uses
   %i.cb = load ptr, ptr %i.ca, align 8            ; 3 uses
-  %.not.i54.6.not = icmp eq ptr %i.cb, null
-  br i1 %.not.i54.6.not, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader, label %.loopexit.i56.6
+  %.not.i54.6 = icmp ne ptr %i.cb, null
+  %14 = select i1 %.not.i54.6, i1 %2, i1 false
+  br i1 %14, label %.loopexit.i56.6, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader
 
 .loopexit.i56.6:                                  ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.5
-  %34 = zext i32 %i.u to i64
-  %35 = mul nuw nsw i64 %34, 12                   ; 4 uses
-  %i.cc = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %35) #22 ; 4 uses
-  %36 = add nsw i64 %35, -12
-  %37 = urem i64 %36, 12
-  %38 = sub nuw nsw i64 %35, %37
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cc, i8 0, i64 %38, i1 false)
+  %i.cc = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %4) #22 ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cc, i8 0, i64 %7, i1 false)
   store ptr %i.cc, ptr %i.ca, align 8
-  %.not9.i57.6 = icmp eq i32 %i.u, 1
-  br i1 %.not9.i57.6, label %bb.af, label %bb.ae, !prof !44
+  br i1 %.not9.i57, label %bb.af, label %bb.ae, !prof !44
 
 bb.ae:                                            ; preds = %.loopexit.i56.6
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.cc, ptr nonnull align 4 %i.cb, i64 %35, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.cc, ptr nonnull align 4 %i.cb, i64 %4, i1 false)
   br label %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.6
 
 bb.af:                                            ; preds = %.loopexit.i56.6
@@ -534,23 +503,18 @@ bb.af:                                            ; preds = %.loopexit.i56.6
 _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.6: ; preds = %bb.af, %bb.ae
   %i.cd = getelementptr inbounds nuw i8, ptr %i.c, i64 168 ; 2 uses
   %i.ce = load ptr, ptr %i.cd, align 8            ; 3 uses
-  %.not.i54.7.not = icmp eq ptr %i.ce, null
-  br i1 %.not.i54.7.not, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader, label %.loopexit.i56.7
+  %.not.i54.7 = icmp ne ptr %i.ce, null
+  %15 = select i1 %.not.i54.7, i1 %2, i1 false
+  br i1 %15, label %.loopexit.i56.7, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader
 
 .loopexit.i56.7:                                  ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit58.6
-  %39 = zext i32 %i.u to i64
-  %40 = mul nuw nsw i64 %39, 12                   ; 4 uses
-  %i.cf = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %40) #22 ; 4 uses
-  %41 = add nsw i64 %40, -12
-  %42 = urem i64 %41, 12
-  %43 = sub nuw nsw i64 %40, %42
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cf, i8 0, i64 %43, i1 false)
+  %i.cf = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %4) #22 ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cf, i8 0, i64 %7, i1 false)
   store ptr %i.cf, ptr %i.cd, align 8
-  %.not9.i57.7 = icmp eq i32 %i.u, 1
-  br i1 %.not9.i57.7, label %bb.ah, label %bb.ag, !prof !44
+  br i1 %.not9.i57, label %bb.ah, label %bb.ag, !prof !44
 
 bb.ag:                                            ; preds = %.loopexit.i56.7
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.cf, ptr nonnull align 4 %i.ce, i64 %40, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.cf, ptr nonnull align 4 %i.ce, i64 %4, i1 false)
   br label %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader
 
 bb.ah:                                            ; preds = %.loopexit.i56.7
@@ -953,8 +917,8 @@ bb.c:                                             ; preds = %bb.b
 _ZN10aiAnimMeshaSERKS_.exit:                      ; preds = %bb.b, %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 1032
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(168) %i.d, ptr noundef nonnull align 8 dereferenceable(168) %i.k, i64 168, i1 false)
-  %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 1192
-  %i.m = load i32, ptr %i.l, align 8              ; 60 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 1192 ; 10 uses
+  %i.m = load i32, ptr %i.l, align 8              ; 12 uses
   %i.n = load ptr, ptr %i.d, align 8              ; 3 uses
   %.not.i = icmp eq ptr %i.n, null
   br i1 %.not.i, label %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit, label %bb.d
@@ -1102,10 +1066,11 @@ _ZNK10aiAnimMesh16HasTextureCoordsEj.exit.preheader: ; preds = %bb.aw, %bb.ax, %
   br i1 %.not45, label %_ZNK10aiAnimMesh15HasVertexColorsEj.exit.thread, label %bb.az
 
 bb.t:                                             ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit36
-  %i.ba = zext i32 %i.m to i64
+  %2 = load i32, ptr %i.l, align 8                ; 3 uses
+  %i.ba = zext i32 %2 to i64
   %i.bb = mul nuw nsw i64 %i.ba, 12               ; 4 uses
   %i.bc = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.bb) #22 ; 5 uses
-  %i.bd = icmp eq i32 %i.m, 0
+  %i.bd = icmp eq i32 %2, 0
   br i1 %i.bd, label %bb.v, label %.loopexit.i38
 
 .loopexit.i38:                                    ; preds = %bb.t
@@ -1114,7 +1079,7 @@ bb.t:                                             ; preds = %_ZN6Assimp12GetArra
   %i.bg = sub nsw i64 %i.bb, %i.bf
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bc, i8 0, i64 %i.bg, i1 false)
   store ptr %i.bc, ptr %i.aw, align 8
-  %.not9.i39 = icmp eq i32 %i.m, 1
+  %.not9.i39 = icmp eq i32 %2, 1
   br i1 %.not9.i39, label %bb.w, label %bb.u, !prof !44
 
 bb.u:                                             ; preds = %.loopexit.i38
@@ -1136,10 +1101,11 @@ _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40: ; preds = %bb.u, %bb.v,
   br i1 %.not.1, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.preheader, label %bb.x
 
 bb.x:                                             ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40
-  %i.bj = zext i32 %i.m to i64
+  %3 = load i32, ptr %i.l, align 8                ; 3 uses
+  %i.bj = zext i32 %3 to i64
   %i.bk = mul nuw nsw i64 %i.bj, 12               ; 4 uses
   %i.bl = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.bk) #22 ; 5 uses
-  %i.bm = icmp eq i32 %i.m, 0
+  %i.bm = icmp eq i32 %3, 0
   br i1 %i.bm, label %bb.aa, label %.loopexit.i38.1
 
 .loopexit.i38.1:                                  ; preds = %bb.x
@@ -1148,7 +1114,7 @@ bb.x:                                             ; preds = %_ZN6Assimp12GetArra
   %i.bp = sub nsw i64 %i.bk, %i.bo
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bl, i8 0, i64 %i.bp, i1 false)
   store ptr %i.bl, ptr %i.bh, align 8
-  %.not9.i39.1 = icmp eq i32 %i.m, 1
+  %.not9.i39.1 = icmp eq i32 %3, 1
   br i1 %.not9.i39.1, label %bb.z, label %bb.y, !prof !44
 
 bb.y:                                             ; preds = %.loopexit.i38.1
@@ -1170,10 +1136,11 @@ _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40.1: ; preds = %bb.aa, %bb
   br i1 %.not.2, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.preheader, label %bb.ab
 
 bb.ab:                                            ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40.1
-  %i.bs = zext i32 %i.m to i64
+  %4 = load i32, ptr %i.l, align 8                ; 3 uses
+  %i.bs = zext i32 %4 to i64
   %i.bt = mul nuw nsw i64 %i.bs, 12               ; 4 uses
   %i.bu = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.bt) #22 ; 5 uses
-  %i.bv = icmp eq i32 %i.m, 0
+  %i.bv = icmp eq i32 %4, 0
   br i1 %i.bv, label %bb.ae, label %.loopexit.i38.2
 
 .loopexit.i38.2:                                  ; preds = %bb.ab
@@ -1182,7 +1149,7 @@ bb.ab:                                            ; preds = %_ZN6Assimp12GetArra
   %i.by = sub nsw i64 %i.bt, %i.bx
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bu, i8 0, i64 %i.by, i1 false)
   store ptr %i.bu, ptr %i.bq, align 8
-  %.not9.i39.2 = icmp eq i32 %i.m, 1
+  %.not9.i39.2 = icmp eq i32 %4, 1
   br i1 %.not9.i39.2, label %bb.ad, label %bb.ac, !prof !44
 
 bb.ac:                                            ; preds = %.loopexit.i38.2
@@ -1204,10 +1171,11 @@ _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40.2: ; preds = %bb.ae, %bb
   br i1 %.not.3, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.preheader, label %bb.af
 
 bb.af:                                            ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40.2
-  %i.cb = zext i32 %i.m to i64
+  %5 = load i32, ptr %i.l, align 8                ; 3 uses
+  %i.cb = zext i32 %5 to i64
   %i.cc = mul nuw nsw i64 %i.cb, 12               ; 4 uses
   %i.cd = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.cc) #22 ; 5 uses
-  %i.ce = icmp eq i32 %i.m, 0
+  %i.ce = icmp eq i32 %5, 0
   br i1 %i.ce, label %bb.ai, label %.loopexit.i38.3
 
 .loopexit.i38.3:                                  ; preds = %bb.af
@@ -1216,7 +1184,7 @@ bb.af:                                            ; preds = %_ZN6Assimp12GetArra
   %i.ch = sub nsw i64 %i.cc, %i.cg
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cd, i8 0, i64 %i.ch, i1 false)
   store ptr %i.cd, ptr %i.bz, align 8
-  %.not9.i39.3 = icmp eq i32 %i.m, 1
+  %.not9.i39.3 = icmp eq i32 %5, 1
   br i1 %.not9.i39.3, label %bb.ah, label %bb.ag, !prof !44
 
 bb.ag:                                            ; preds = %.loopexit.i38.3
@@ -1238,10 +1206,11 @@ _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40.3: ; preds = %bb.ai, %bb
   br i1 %.not.4, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.preheader, label %bb.aj
 
 bb.aj:                                            ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40.3
-  %i.ck = zext i32 %i.m to i64
+  %6 = load i32, ptr %i.l, align 8                ; 3 uses
+  %i.ck = zext i32 %6 to i64
   %i.cl = mul nuw nsw i64 %i.ck, 12               ; 4 uses
   %i.cm = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.cl) #22 ; 5 uses
-  %i.cn = icmp eq i32 %i.m, 0
+  %i.cn = icmp eq i32 %6, 0
   br i1 %i.cn, label %bb.am, label %.loopexit.i38.4
 
 .loopexit.i38.4:                                  ; preds = %bb.aj
@@ -1250,7 +1219,7 @@ bb.aj:                                            ; preds = %_ZN6Assimp12GetArra
   %i.cq = sub nsw i64 %i.cl, %i.cp
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cm, i8 0, i64 %i.cq, i1 false)
   store ptr %i.cm, ptr %i.ci, align 8
-  %.not9.i39.4 = icmp eq i32 %i.m, 1
+  %.not9.i39.4 = icmp eq i32 %6, 1
   br i1 %.not9.i39.4, label %bb.al, label %bb.ak, !prof !44
 
 bb.ak:                                            ; preds = %.loopexit.i38.4
@@ -1272,10 +1241,11 @@ _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40.4: ; preds = %bb.am, %bb
   br i1 %.not.5, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.preheader, label %bb.an
 
 bb.an:                                            ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40.4
-  %i.ct = zext i32 %i.m to i64
+  %7 = load i32, ptr %i.l, align 8                ; 3 uses
+  %i.ct = zext i32 %7 to i64
   %i.cu = mul nuw nsw i64 %i.ct, 12               ; 4 uses
   %i.cv = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.cu) #22 ; 5 uses
-  %i.cw = icmp eq i32 %i.m, 0
+  %i.cw = icmp eq i32 %7, 0
   br i1 %i.cw, label %bb.aq, label %.loopexit.i38.5
 
 .loopexit.i38.5:                                  ; preds = %bb.an
@@ -1284,7 +1254,7 @@ bb.an:                                            ; preds = %_ZN6Assimp12GetArra
   %i.cz = sub nsw i64 %i.cu, %i.cy
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cv, i8 0, i64 %i.cz, i1 false)
   store ptr %i.cv, ptr %i.cr, align 8
-  %.not9.i39.5 = icmp eq i32 %i.m, 1
+  %.not9.i39.5 = icmp eq i32 %7, 1
   br i1 %.not9.i39.5, label %bb.ap, label %bb.ao, !prof !44
 
 bb.ao:                                            ; preds = %.loopexit.i38.5
@@ -1306,10 +1276,11 @@ _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40.5: ; preds = %bb.aq, %bb
   br i1 %.not.6, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.preheader, label %bb.ar
 
 bb.ar:                                            ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40.5
-  %i.dc = zext i32 %i.m to i64
+  %8 = load i32, ptr %i.l, align 8                ; 3 uses
+  %i.dc = zext i32 %8 to i64
   %i.dd = mul nuw nsw i64 %i.dc, 12               ; 4 uses
   %i.de = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.dd) #22 ; 5 uses
-  %i.df = icmp eq i32 %i.m, 0
+  %i.df = icmp eq i32 %8, 0
   br i1 %i.df, label %bb.au, label %.loopexit.i38.6
 
 .loopexit.i38.6:                                  ; preds = %bb.ar
@@ -1318,7 +1289,7 @@ bb.ar:                                            ; preds = %_ZN6Assimp12GetArra
   %i.di = sub nsw i64 %i.dd, %i.dh
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.de, i8 0, i64 %i.di, i1 false)
   store ptr %i.de, ptr %i.da, align 8
-  %.not9.i39.6 = icmp eq i32 %i.m, 1
+  %.not9.i39.6 = icmp eq i32 %8, 1
   br i1 %.not9.i39.6, label %bb.at, label %bb.as, !prof !44
 
 bb.as:                                            ; preds = %.loopexit.i38.6
@@ -1340,10 +1311,11 @@ _ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40.6: ; preds = %bb.au, %bb
   br i1 %.not.7, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.preheader, label %bb.av
 
 bb.av:                                            ; preds = %_ZN6Assimp12GetArrayCopyI10aiVector3tIfEEEvRPT_j.exit40.6
-  %i.dl = zext i32 %i.m to i64
+  %9 = load i32, ptr %i.l, align 8                ; 3 uses
+  %i.dl = zext i32 %9 to i64
   %i.dm = mul nuw nsw i64 %i.dl, 12               ; 4 uses
   %i.dn = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.dm) #22 ; 5 uses
-  %i.do = icmp eq i32 %i.m, 0
+  %i.do = icmp eq i32 %9, 0
   br i1 %i.do, label %bb.ay, label %.loopexit.i38.7
 
 .loopexit.i38.7:                                  ; preds = %bb.av
@@ -1352,7 +1324,7 @@ bb.av:                                            ; preds = %_ZN6Assimp12GetArra
   %i.dr = sub nsw i64 %i.dm, %i.dq
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.dn, i8 0, i64 %i.dr, i1 false)
   store ptr %i.dn, ptr %i.dj, align 8
-  %.not9.i39.7 = icmp eq i32 %i.m, 1
+  %.not9.i39.7 = icmp eq i32 %9, 1
   br i1 %.not9.i39.7, label %bb.ax, label %bb.aw, !prof !44
 
 bb.aw:                                            ; preds = %.loopexit.i38.7
@@ -1368,16 +1340,17 @@ bb.ay:                                            ; preds = %bb.av
   br label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.preheader
 
 bb.az:                                            ; preds = %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.preheader
-  %i.ds = zext i32 %i.m to i64
+  %10 = load i32, ptr %i.l, align 8               ; 24 uses
+  %i.ds = zext i32 %10 to i64
   %i.dt = shl nuw nsw i64 %i.ds, 4                ; 3 uses
   %i.du = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.dt) #22 ; 5 uses
-  %i.dv = icmp eq i32 %i.m, 0
+  %i.dv = icmp eq i32 %10, 0
   br i1 %i.dv, label %bb.bb, label %.loopexit.i42
 
 .loopexit.i42:                                    ; preds = %bb.az
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.du, i8 0, i64 %i.dt, i1 false)
   store ptr %i.du, ptr %i.ay, align 8
-  %.not9.i43 = icmp eq i32 %i.m, 1
+  %.not9.i43 = icmp eq i32 %10, 1
   br i1 %.not9.i43, label %bb.bc, label %bb.ba, !prof !44
 
 bb.ba:                                            ; preds = %.loopexit.i42
@@ -1399,16 +1372,16 @@ _ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit: ; preds = %bb.ba, %bb.bb, %
   br i1 %.not45.1, label %_ZNK10aiAnimMesh15HasVertexColorsEj.exit.thread, label %bb.bd
 
 bb.bd:                                            ; preds = %_ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit
-  %i.dy = zext i32 %i.m to i64
+  %i.dy = zext i32 %10 to i64
   %i.dz = shl nuw nsw i64 %i.dy, 4                ; 3 uses
   %i.ea = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.dz) #22 ; 5 uses
-  %i.eb = icmp eq i32 %i.m, 0
+  %i.eb = icmp eq i32 %10, 0
   br i1 %i.eb, label %bb.bg, label %.loopexit.i42.1
 
 .loopexit.i42.1:                                  ; preds = %bb.bd
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ea, i8 0, i64 %i.dz, i1 false)
   store ptr %i.ea, ptr %i.dw, align 8
-  %.not9.i43.1 = icmp eq i32 %i.m, 1
+  %.not9.i43.1 = icmp eq i32 %10, 1
   br i1 %.not9.i43.1, label %bb.bf, label %bb.be, !prof !44
 
 bb.be:                                            ; preds = %.loopexit.i42.1
@@ -1430,16 +1403,16 @@ _ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit.1: ; preds = %bb.bg, %bb.bf,
   br i1 %.not45.2, label %_ZNK10aiAnimMesh15HasVertexColorsEj.exit.thread, label %bb.bh
 
 bb.bh:                                            ; preds = %_ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit.1
-  %i.ee = zext i32 %i.m to i64
+  %i.ee = zext i32 %10 to i64
   %i.ef = shl nuw nsw i64 %i.ee, 4                ; 3 uses
   %i.eg = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ef) #22 ; 5 uses
-  %i.eh = icmp eq i32 %i.m, 0
+  %i.eh = icmp eq i32 %10, 0
   br i1 %i.eh, label %bb.bk, label %.loopexit.i42.2
 
 .loopexit.i42.2:                                  ; preds = %bb.bh
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.eg, i8 0, i64 %i.ef, i1 false)
   store ptr %i.eg, ptr %i.ec, align 8
-  %.not9.i43.2 = icmp eq i32 %i.m, 1
+  %.not9.i43.2 = icmp eq i32 %10, 1
   br i1 %.not9.i43.2, label %bb.bj, label %bb.bi, !prof !44
 
 bb.bi:                                            ; preds = %.loopexit.i42.2
@@ -1461,16 +1434,16 @@ _ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit.2: ; preds = %bb.bk, %bb.bj,
   br i1 %.not45.3, label %_ZNK10aiAnimMesh15HasVertexColorsEj.exit.thread, label %bb.bl
 
 bb.bl:                                            ; preds = %_ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit.2
-  %i.ek = zext i32 %i.m to i64
+  %i.ek = zext i32 %10 to i64
   %i.el = shl nuw nsw i64 %i.ek, 4                ; 3 uses
   %i.em = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.el) #22 ; 5 uses
-  %i.en = icmp eq i32 %i.m, 0
+  %i.en = icmp eq i32 %10, 0
   br i1 %i.en, label %bb.bo, label %.loopexit.i42.3
 
 .loopexit.i42.3:                                  ; preds = %bb.bl
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.em, i8 0, i64 %i.el, i1 false)
   store ptr %i.em, ptr %i.ei, align 8
-  %.not9.i43.3 = icmp eq i32 %i.m, 1
+  %.not9.i43.3 = icmp eq i32 %10, 1
   br i1 %.not9.i43.3, label %bb.bn, label %bb.bm, !prof !44
 
 bb.bm:                                            ; preds = %.loopexit.i42.3
@@ -1492,16 +1465,16 @@ _ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit.3: ; preds = %bb.bo, %bb.bn,
   br i1 %.not45.4, label %_ZNK10aiAnimMesh15HasVertexColorsEj.exit.thread, label %bb.bp
 
 bb.bp:                                            ; preds = %_ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit.3
-  %i.eq = zext i32 %i.m to i64
+  %i.eq = zext i32 %10 to i64
   %i.er = shl nuw nsw i64 %i.eq, 4                ; 3 uses
   %i.es = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.er) #22 ; 5 uses
-  %i.et = icmp eq i32 %i.m, 0
+  %i.et = icmp eq i32 %10, 0
   br i1 %i.et, label %bb.bs, label %.loopexit.i42.4
 
 .loopexit.i42.4:                                  ; preds = %bb.bp
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.es, i8 0, i64 %i.er, i1 false)
   store ptr %i.es, ptr %i.eo, align 8
-  %.not9.i43.4 = icmp eq i32 %i.m, 1
+  %.not9.i43.4 = icmp eq i32 %10, 1
   br i1 %.not9.i43.4, label %bb.br, label %bb.bq, !prof !44
 
 bb.bq:                                            ; preds = %.loopexit.i42.4
@@ -1523,16 +1496,16 @@ _ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit.4: ; preds = %bb.bs, %bb.br,
   br i1 %.not45.5, label %_ZNK10aiAnimMesh15HasVertexColorsEj.exit.thread, label %bb.bt
 
 bb.bt:                                            ; preds = %_ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit.4
-  %i.ew = zext i32 %i.m to i64
+  %i.ew = zext i32 %10 to i64
   %i.ex = shl nuw nsw i64 %i.ew, 4                ; 3 uses
   %i.ey = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ex) #22 ; 5 uses
-  %i.ez = icmp eq i32 %i.m, 0
+  %i.ez = icmp eq i32 %10, 0
   br i1 %i.ez, label %bb.bw, label %.loopexit.i42.5
 
 .loopexit.i42.5:                                  ; preds = %bb.bt
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ey, i8 0, i64 %i.ex, i1 false)
   store ptr %i.ey, ptr %i.eu, align 8
-  %.not9.i43.5 = icmp eq i32 %i.m, 1
+  %.not9.i43.5 = icmp eq i32 %10, 1
   br i1 %.not9.i43.5, label %bb.bv, label %bb.bu, !prof !44
 
 bb.bu:                                            ; preds = %.loopexit.i42.5
@@ -1554,16 +1527,16 @@ _ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit.5: ; preds = %bb.bw, %bb.bv,
   br i1 %.not45.6, label %_ZNK10aiAnimMesh15HasVertexColorsEj.exit.thread, label %bb.bx
 
 bb.bx:                                            ; preds = %_ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit.5
-  %i.fc = zext i32 %i.m to i64
+  %i.fc = zext i32 %10 to i64
   %i.fd = shl nuw nsw i64 %i.fc, 4                ; 3 uses
   %i.fe = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.fd) #22 ; 5 uses
-  %i.ff = icmp eq i32 %i.m, 0
+  %i.ff = icmp eq i32 %10, 0
   br i1 %i.ff, label %bb.ca, label %.loopexit.i42.6
 
 .loopexit.i42.6:                                  ; preds = %bb.bx
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.fe, i8 0, i64 %i.fd, i1 false)
   store ptr %i.fe, ptr %i.fa, align 8
-  %.not9.i43.6 = icmp eq i32 %i.m, 1
+  %.not9.i43.6 = icmp eq i32 %10, 1
   br i1 %.not9.i43.6, label %bb.bz, label %bb.by, !prof !44
 
 bb.by:                                            ; preds = %.loopexit.i42.6
@@ -1585,16 +1558,16 @@ _ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit.6: ; preds = %bb.ca, %bb.bz,
   br i1 %.not45.7, label %_ZNK10aiAnimMesh15HasVertexColorsEj.exit.thread, label %bb.cb
 
 bb.cb:                                            ; preds = %_ZN6Assimp12GetArrayCopyI9aiColor4tIfEEEvRPT_j.exit.6
-  %i.fi = zext i32 %i.m to i64
+  %i.fi = zext i32 %10 to i64
   %i.fj = shl nuw nsw i64 %i.fi, 4                ; 3 uses
   %i.fk = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.fj) #22 ; 5 uses
-  %i.fl = icmp eq i32 %i.m, 0
+  %i.fl = icmp eq i32 %10, 0
   br i1 %i.fl, label %bb.ce, label %.loopexit.i42.7
 
 .loopexit.i42.7:                                  ; preds = %bb.cb
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.fk, i8 0, i64 %i.fj, i1 false)
   store ptr %i.fk, ptr %i.fg, align 8
-  %.not9.i43.7 = icmp eq i32 %i.m, 1
+  %.not9.i43.7 = icmp eq i32 %10, 1
   br i1 %.not9.i43.7, label %bb.cd, label %bb.cc, !prof !44
 
 bb.cc:                                            ; preds = %.loopexit.i42.7

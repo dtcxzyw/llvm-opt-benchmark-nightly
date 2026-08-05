@@ -203,32 +203,24 @@ bb.i:                                             ; preds = %bb.h, %_ZNSt12__sha
   %i.ai = load ptr, ptr %1, align 8, !tbaa !138   ; 6 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 200
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !138 ; 10 uses
-  %min.iters.check = icmp ult i64 %i.g, 44
+  %min.iters.check = icmp ult i64 %i.g, 28
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph
-  %i.al = add nsw i64 %i.g, -1                    ; 3 uses
+  %i.al = add nsw i64 %i.g, -1
   %mul = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.al, i64 12) ; 2 uses
-  %mul.result = extractvalue { i64, i1 } %mul, 0
+  %mul.result = extractvalue { i64, i1 } %mul, 0  ; 3 uses
   %mul.overflow = extractvalue { i64, i1 } %mul, 1
   %i.am = getelementptr i8, ptr %i.ak, i64 %mul.result
   %i.an = icmp ult ptr %i.am, %i.ak
-  %3 = or i1 %i.an, %mul.overflow
   %scevgep = getelementptr i8, ptr %i.ak, i64 4   ; 2 uses
-  %mul20 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.al, i64 12) ; 2 uses
-  %mul.result21 = extractvalue { i64, i1 } %mul20, 0
-  %mul.overflow22 = extractvalue { i64, i1 } %mul20, 1
-  %i.ao = getelementptr i8, ptr %scevgep, i64 %mul.result21
+  %i.ao = getelementptr i8, ptr %scevgep, i64 %mul.result
   %i.ap = icmp ult ptr %i.ao, %scevgep
-  %4 = or i1 %i.ap, %mul.overflow22
   %scevgep23 = getelementptr i8, ptr %i.ak, i64 8 ; 2 uses
-  %mul24 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.al, i64 12) ; 2 uses
-  %mul.result25 = extractvalue { i64, i1 } %mul24, 0
-  %mul.overflow26 = extractvalue { i64, i1 } %mul24, 1
-  %i.aq = getelementptr i8, ptr %scevgep23, i64 %mul.result25
+  %i.aq = getelementptr i8, ptr %scevgep23, i64 %mul.result
   %i.ar = icmp ult ptr %i.aq, %scevgep23
-  %i.as = or i1 %i.ar, %mul.overflow26
-  %i.at = or i1 %3, %4
+  %i.as = or i1 %i.ar, %mul.overflow
+  %i.at = or i1 %i.ap, %i.an
   %i.au = or i1 %i.at, %i.as
   br i1 %i.au, label %scalar.ph.preheader, label %vector.memcheck
 

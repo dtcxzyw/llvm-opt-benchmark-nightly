@@ -203,11 +203,10 @@ begin_hunk_0_@susan_corners_quick:bb.a
   %i.nb = sub nsw i32 %i.mz, %i.mo
   %.lhs.trunc770.us = trunc nsw i32 %i.na to i16
   %.lhs.trunc769.us = trunc nsw i32 %i.nb to i16
-  %7 = sdiv i16 %.lhs.trunc770.us, 15
-  %8 = sdiv i16 %.lhs.trunc769.us, 15
-  %i.nc = insertelement <2 x i16> poison, i16 %8, i64 0
-  %9 = insertelement <2 x i16> %i.nc, i16 %7, i64 1
-  %i.nd = sext <2 x i16> %9 to <2 x i32>
+  %7 = insertelement <2 x i16> poison, i16 %.lhs.trunc769.us, i64 0
+  %i.nc = insertelement <2 x i16> %7, i16 %.lhs.trunc770.us, i64 1
+  %8 = sdiv <2 x i16> %i.nc, splat (i16 15)
+  %i.nd = sext <2 x i16> %8 to <2 x i32>
   store <2 x i32> %i.nd, ptr %i.la, align 4, !tbaa !4
   %i.ne = add nsw i32 %.1811.us, 1                ; 2 uses
   %i.nf = icmp eq i32 %i.ne, 15000

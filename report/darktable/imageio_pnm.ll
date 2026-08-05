@@ -203,26 +203,18 @@ bb.d:                                             ; preds = %bb.c
   br i1 %min.iters.check156, label %.preheader.preheader175, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.preheader.preheader
-  %i.af = add i64 %i.ac, -1                       ; 3 uses
+  %i.af = add i64 %i.ac, -1
   %mul = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.af, i64 3) ; 2 uses
-  %mul.result = extractvalue { i64, i1 } %mul, 0
+  %mul.result = extractvalue { i64, i1 } %mul, 0  ; 3 uses
   %mul.overflow = extractvalue { i64, i1 } %mul, 1
   %i.ag = getelementptr i8, ptr %i.l, i64 %mul.result
   %i.ah = icmp ult ptr %i.ag, %i.l
-  %3 = or i1 %i.ah, %mul.overflow
-  %mul146 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.af, i64 3) ; 2 uses
-  %mul.result147 = extractvalue { i64, i1 } %mul146, 0
-  %mul.overflow148 = extractvalue { i64, i1 } %mul146, 1
-  %i.ai = getelementptr i8, ptr %scevgep, i64 %mul.result147
+  %i.ai = getelementptr i8, ptr %scevgep, i64 %mul.result
   %i.aj = icmp ult ptr %i.ai, %scevgep
-  %4 = or i1 %i.aj, %mul.overflow148
-  %mul150 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.af, i64 3) ; 2 uses
-  %mul.result151 = extractvalue { i64, i1 } %mul150, 0
-  %mul.overflow152 = extractvalue { i64, i1 } %mul150, 1
-  %i.ak = getelementptr i8, ptr %scevgep149, i64 %mul.result151
+  %i.ak = getelementptr i8, ptr %scevgep149, i64 %mul.result
   %i.al = icmp ult ptr %i.ak, %scevgep149
-  %i.am = or i1 %i.al, %mul.overflow152
-  %i.an = or i1 %3, %4
+  %i.am = or i1 %i.al, %mul.overflow
+  %i.an = or i1 %i.aj, %i.ah
   %i.ao = or i1 %i.an, %i.am
   br i1 %i.ao, label %.preheader.preheader175, label %vector.memcheck
 

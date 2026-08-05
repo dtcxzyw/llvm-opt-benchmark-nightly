@@ -55,22 +55,17 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %i.y = load ptr, ptr %i.c, align 8, !tbaa !10
   %i.z = call ptr @pdivmod(ptr noundef %i.x, ptr noundef %i.y, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #4 ; 0 uses
   %i.aa = load ptr, ptr %i.a, align 8, !tbaa !10
-  %i.ab = call i32 @ptou(ptr noundef %i.aa) #4    ; 9 uses
+  %i.ab = call i32 @ptou(ptr noundef %i.aa) #4    ; 6 uses
   %i.ac = urem i32 %i.ab, 10
   %i.ad = trunc nuw nsw i32 %i.ac to i8
   %i.ae = or disjoint i8 %i.ad, 48
   %i.af = getelementptr inbounds i8, ptr %i.w, i64 -2
   store i8 %i.ae, ptr %i.af, align 1, !tbaa !14
   %i.ag = getelementptr inbounds i8, ptr %i.w, i64 -6
-  %1 = udiv i32 %i.ab, 10
-  %2 = udiv i32 %i.ab, 100
-  %3 = udiv i32 %i.ab, 1000
-  %4 = udiv i32 %i.ab, 10000
-  %5 = insertelement <4 x i32> poison, i32 %4, i64 0
-  %i.ah = insertelement <4 x i32> %5, i32 %3, i64 1
-  %6 = insertelement <4 x i32> %i.ah, i32 %2, i64 2
-  %7 = insertelement <4 x i32> %6, i32 %1, i64 3
-  %i.ai = urem <4 x i32> %7, splat (i32 10)
+  %i.ah = insertelement <4 x i32> poison, i32 %i.ab, i64 0
+  %1 = shufflevector <4 x i32> %i.ah, <4 x i32> poison, <4 x i32> zeroinitializer
+  %2 = udiv <4 x i32> %1, <i32 10000, i32 1000, i32 100, i32 10>
+  %i.ai = urem <4 x i32> %2, splat (i32 10)
   %i.aj = trunc nuw nsw <4 x i32> %i.ai to <4 x i8>
   %i.ak = or disjoint <4 x i8> %i.aj, splat (i8 48)
   store <4 x i8> %i.ak, ptr %i.ag, align 1, !tbaa !14

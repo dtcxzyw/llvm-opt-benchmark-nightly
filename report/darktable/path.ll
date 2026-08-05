@@ -204,24 +204,23 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bv = sext i32 %i.ax to i64                   ; 8 uses
   %wide.trip.count = zext nneg i32 %i.ae to i64   ; 6 uses
   %i.bw = sub nsw i64 %wide.trip.count, %i.bv     ; 3 uses
-  %min.iters.check = icmp ult i64 %i.bw, 24
+  %min.iters.check = icmp ult i64 %i.bw, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph419
   %i.bx = xor i64 %i.bv, -1
-  %i.by = add nsw i64 %i.bx, %wide.trip.count     ; 3 uses
+  %i.by = add nsw i64 %i.bx, %wide.trip.count     ; 2 uses
   %i.bz = shl nsw i64 %i.bv, 3                    ; 2 uses
   %scevgep = getelementptr i8, ptr %i.bt, i64 %i.bz ; 2 uses
-  %mul.result = shl nsw i64 %i.by, 3
+  %mul.result = shl nsw i64 %i.by, 3              ; 2 uses
+  %mul.overflow = icmp ugt i64 %i.by, 2305843009213693951
   %i.ca = getelementptr i8, ptr %scevgep, i64 %mul.result
   %i.cb = icmp ult ptr %i.ca, %scevgep
   %i.cc = getelementptr i8, ptr %i.bt, i64 %i.bz
   %scevgep623 = getelementptr i8, ptr %i.cc, i64 4 ; 2 uses
-  %mul.result625 = shl nsw i64 %i.by, 3
-  %mul.overflow626 = icmp ugt i64 %i.by, 2305843009213693951
-  %i.cd = getelementptr i8, ptr %scevgep623, i64 %mul.result625
+  %i.cd = getelementptr i8, ptr %scevgep623, i64 %mul.result
   %i.ce = icmp ult ptr %i.cd, %scevgep623
-  %i.cf = or i1 %i.ce, %mul.overflow626
+  %i.cf = or i1 %i.ce, %mul.overflow
   %i.cg = or i1 %i.cb, %i.cf
   br i1 %i.cg, label %scalar.ph.preheader, label %vector.ph
 

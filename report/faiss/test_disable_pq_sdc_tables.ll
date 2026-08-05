@@ -1,3 +1,7 @@
+inline.NumInlined: 557
+inline.NumDeleted: 310
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN68IO_TestReadHNSWPQ_whenSDCDisabledFlagPassed_thenDisableSDCTable_Test8TestBodyEv:bb.a
   %i.bo = phi ptr [ %i.bj, %bb.q ], [ %i.bn, %bb.s ], [ %i.bj, %bb.r ]
   %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -199,14 +203,10 @@ bb.af:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.eg = fdiv x86_fp80 %i.ef, %i.ai
   %i.eh = fptoui x86_fp80 %i.eg to i64            ; 2 uses
   %i.ei = add i64 %i.eh, 23
-  %i.ej = udiv i64 %i.ei, %i.eh                   ; 2 uses
-  %spec.select.i.i.i.i82 = call i64 @llvm.umax.i64(i64 %i.ej, i64 1) ; 3 uses
+  %i.ej = udiv i64 %i.ei, %i.eh
+  %spec.select.i.i.i.i82 = call i64 @llvm.umax.i64(i64 %i.ej, i64 1)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(32768) %i.ee, i8 0, i64 32768, i1 false)
-  %xtraiter = and i64 %spec.select.i.i.i.i82, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %14 = add nsw i64 %spec.select.i.i.i.i82, -1
-  %15 = icmp ult i64 %i.ej, 2
-  br label %16
+  br label %select.unfold.i.i.i.i83.prol.loopexit
 
 bb.ag:                                            ; preds = %bb.ao
   %i.ek = invoke noundef ptr @_ZN5faiss13index_factoryEiPKcNS_10MetricTypeEb(i32 noundef 32, ptr noundef nonnull @.str.11, i32 noundef 1, i1 noundef zeroext true)
@@ -263,57 +263,30 @@ bb.am:                                            ; preds = %_ZNSt7__cxx1112basi
           cleanup
   br label %bb.ci
 
-16:                                               ; preds = %bb.af, %bb.ao
-  %indvars.iv = phi i64 [ 0, %bb.af ], [ %indvars.iv.next, %bb.ao ] ; 2 uses
-  %.sroa.0160.0182 = phi i64 [ 123, %bb.af ], [ %.lcssa257, %bb.ao ] ; 2 uses
-  br i1 %lcmp.mod.not, label %select.unfold.i.i.i.i83.prol.loopexit, label %select.unfold.i.i.i.i83.prol
+select.unfold.i.i.i.i83.prol.loopexit:            ; preds = %bb.af, %bb.ao
+  %.023.i.i.i.i84.unr = phi i64 [ 0, %bb.af ], [ %indvars.iv.next, %bb.ao ] ; 2 uses
+  %.unr = phi i64 [ 123, %bb.af ], [ %i.fd, %bb.ao ]
+  br label %select.unfold.i.i.i.i83
 
-select.unfold.i.i.i.i83.prol:                     ; preds = %16
-  %17 = mul nuw nsw i64 %.sroa.0160.0182, 16807
-  %18 = urem i64 %17, 2147483647                  ; 3 uses
-  %19 = add nsw i64 %18, -1
-  %20 = uitofp i64 %19 to float                   ; 2 uses
-  br label %select.unfold.i.i.i.i83.prol.loopexit
-
-select.unfold.i.i.i.i83.prol.loopexit:            ; preds = %select.unfold.i.i.i.i83.prol, %16
-  %.lcssa257.unr = phi i64 [ poison, %16 ], [ %18, %select.unfold.i.i.i.i83.prol ]
-  %.lcssa256.unr = phi float [ poison, %16 ], [ %20, %select.unfold.i.i.i.i83.prol ]
-  %.023.i.i.i.i84.unr = phi i64 [ %spec.select.i.i.i.i82, %16 ], [ %14, %select.unfold.i.i.i.i83.prol ]
-  %.01422.i.i.i.i85.unr = phi float [ 1.000000e+00, %16 ], [ f0x4F000000, %select.unfold.i.i.i.i83.prol ]
-  %.01521.i.i.i.i86.unr = phi float [ 0.000000e+00, %16 ], [ %20, %select.unfold.i.i.i.i83.prol ]
-  %.unr = phi i64 [ %.sroa.0160.0182, %16 ], [ %18, %select.unfold.i.i.i.i83.prol ]
-  br i1 %15, label %.unr-lcssa, label %select.unfold.i.i.i.i83
-
-.unr-lcssa:                                       ; preds = %select.unfold.i.i.i.i83, %select.unfold.i.i.i.i83.prol.loopexit
-  %.lcssa257 = phi i64 [ %.lcssa257.unr, %select.unfold.i.i.i.i83.prol.loopexit ], [ %i.fd, %select.unfold.i.i.i.i83 ]
-  %.lcssa256 = phi float [ %.lcssa256.unr, %select.unfold.i.i.i.i83.prol.loopexit ], [ %i.fg, %select.unfold.i.i.i.i83 ]
-  %.lcssa = phi float [ f0x4F000000, %select.unfold.i.i.i.i83.prol.loopexit ], [ %i.fj, %select.unfold.i.i.i.i83 ]
-  %i.ez = fdiv float %.lcssa256, %.lcssa          ; 2 uses
+.unr-lcssa:                                       ; preds = %select.unfold.i.i.i.i83
+  %i.ez = fdiv float %i.fg, %i.fj                 ; 2 uses
   %i.fa = fcmp ult float %i.ez, 1.000000e+00
   br i1 %i.fa, label %bb.ao, label %bb.an, !prof !22
 
-select.unfold.i.i.i.i83:                          ; preds = %select.unfold.i.i.i.i83.prol.loopexit, %select.unfold.i.i.i.i83
-  %.023.i.i.i.i84 = phi i64 [ %i.fk, %select.unfold.i.i.i.i83 ], [ %.023.i.i.i.i84.unr, %select.unfold.i.i.i.i83.prol.loopexit ]
-  %.01422.i.i.i.i85 = phi float [ %i.fj, %select.unfold.i.i.i.i83 ], [ %.01422.i.i.i.i85.unr, %select.unfold.i.i.i.i83.prol.loopexit ] ; 2 uses
-  %.01521.i.i.i.i86 = phi float [ %i.fg, %select.unfold.i.i.i.i83 ], [ %.01521.i.i.i.i86.unr, %select.unfold.i.i.i.i83.prol.loopexit ]
-  %i.fb = phi i64 [ %i.fd, %select.unfold.i.i.i.i83 ], [ %.unr, %select.unfold.i.i.i.i83.prol.loopexit ]
-  %21 = mul nuw nsw i64 %i.fb, 16807
-  %22 = urem i64 %21, 2147483647                  ; 2 uses
-  %23 = add nsw i64 %22, -1
-  %24 = uitofp i64 %23 to float
-  %25 = call float @llvm.fmuladd.f32(float %24, float %.01422.i.i.i.i85, float %.01521.i.i.i.i86)
-  %26 = fpext float %.01422.i.i.i.i85 to x86_fp80
-  %27 = fmul x86_fp80 %26, f0x401DFFFFFFFC00000000
-  %28 = fptrunc x86_fp80 %27 to float             ; 2 uses
-  %i.fc = mul nuw nsw i64 %22, 16807
+select.unfold.i.i.i.i83:                          ; preds = %select.unfold.i.i.i.i83, %select.unfold.i.i.i.i83.prol.loopexit
+  %.023.i.i.i.i84 = phi i64 [ %spec.select.i.i.i.i82, %select.unfold.i.i.i.i83.prol.loopexit ], [ %i.fk, %select.unfold.i.i.i.i83 ]
+  %.01422.i.i.i.i85 = phi float [ 1.000000e+00, %select.unfold.i.i.i.i83.prol.loopexit ], [ %i.fj, %select.unfold.i.i.i.i83 ] ; 2 uses
+  %.01521.i.i.i.i86 = phi float [ 0.000000e+00, %select.unfold.i.i.i.i83.prol.loopexit ], [ %i.fg, %select.unfold.i.i.i.i83 ]
+  %i.fb = phi i64 [ %.unr, %select.unfold.i.i.i.i83.prol.loopexit ], [ %i.fd, %select.unfold.i.i.i.i83 ]
+  %i.fc = mul nuw nsw i64 %i.fb, 16807
   %i.fd = urem i64 %i.fc, 2147483647              ; 3 uses
   %i.fe = add nsw i64 %i.fd, -1
   %i.ff = uitofp i64 %i.fe to float
-  %i.fg = call float @llvm.fmuladd.f32(float %i.ff, float %28, float %25) ; 2 uses
-  %i.fh = fpext float %28 to x86_fp80
+  %i.fg = call float @llvm.fmuladd.f32(float %i.ff, float %.01422.i.i.i.i85, float %.01521.i.i.i.i86) ; 2 uses
+  %i.fh = fpext float %.01422.i.i.i.i85 to x86_fp80
   %i.fi = fmul x86_fp80 %i.fh, f0x401DFFFFFFFC00000000
   %i.fj = fptrunc x86_fp80 %i.fi to float         ; 2 uses
-  %i.fk = add i64 %.023.i.i.i.i84, -2             ; 2 uses
+  %i.fk = add i64 %.023.i.i.i.i84, -1             ; 2 uses
   %.not.i.i.i.i87.1 = icmp eq i64 %i.fk, 0
   br i1 %.not.i.i.i.i87.1, label %.unr-lcssa, label %select.unfold.i.i.i.i83, !llvm.loop !34
 
@@ -323,11 +296,11 @@ bb.an:                                            ; preds = %.unr-lcssa
 bb.ao:                                            ; preds = %bb.an, %.unr-lcssa
   %.016.i.i.i.i88 = phi float [ f0x3F7FFFFF, %bb.an ], [ %i.ez, %.unr-lcssa ]
   %i.fl = call noundef float @llvm.fmuladd.f32(float %.016.i.i.i.i88, float 1.000000e+02, float 0.000000e+00)
-  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv
+  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %.023.i.i.i.i84.unr
   store float %i.fl, ptr %i.fm, align 4, !tbaa !35
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %.023.i.i.i.i84.unr, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 8192
-  br i1 %exitcond.not, label %bb.ag, label %16, !llvm.loop !37
+  br i1 %exitcond.not, label %bb.ag, label %select.unfold.i.i.i.i83.prol.loopexit, !llvm.loop !37
 
 bb.ap:                                            ; preds = %bb.ag
   %i.fn = load ptr, ptr %i.ek, align 8, !tbaa !38

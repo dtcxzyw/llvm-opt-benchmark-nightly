@@ -1,7 +1,7 @@
 inline.NumInlined: 12995
 inline.NumDeleted: 1495
 loop-unroll.NumCompletelyUnrolled: 32
-loop-unroll.NumUnrolled: 33
+loop-unroll.NumUnrolled: 32
 begin_hunk_0_@_ZNK7testing8internal29PredicateFormatterFromMatcherINS0_9EqMatcherIPKcEEEclINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_15AssertionResultES4_RKT_:bb.a
 _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit54, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #31
@@ -203,7 +203,7 @@ define internal fastcc void @_ZN12_GLOBAL__N_111PerfectDtoaB5cxx11Ed(ptr dead_on
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %i.b = alloca [1105 x i8], align 16             ; 10 uses
+  %i.b = alloca [1105 x i8], align 16             ; 9 uses
   %i.c = fcmp oeq double %1, 0.000000e+00
   br i1 %i.c, label %._crit_edge.i.i, label %bb.b
 
@@ -342,25 +342,18 @@ bb.g:                                             ; preds = %bb.h
   %i.aw = select i1 %i.au, i64 1, i64 -1
   br label %.preheader
 
-bb.h:                                             ; preds = %bb.h, %._crit_edge
+bb.h:                                             ; preds = %._crit_edge, %bb.h
   %.05082 = phi i64 [ 1100, %._crit_edge ], [ %i.ax, %bb.h ] ; 2 uses
-  %.05181 = phi i64 [ %.lcssa, %._crit_edge ], [ %i.bc, %bb.h ] ; 3 uses
-  %3 = add nsw i64 %.05082, -1                    ; 2 uses
-  %4 = srem i64 %.05181, 10
-  %5 = trunc nsw i64 %4 to i8
-  %6 = add nsw i8 %5, 48
-  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 %3
-  store i8 %6, ptr %7, align 1, !tbaa !26
-  %8 = sdiv i64 %.05181, 10
-  %i.ax = add nsw i64 %.05082, -2                 ; 2 uses
-  %i.ay = srem i64 %8, 10
+  %.05181 = phi i64 [ %.lcssa, %._crit_edge ], [ %i.bc, %bb.h ] ; 2 uses
+  %i.ax = add nsw i64 %.05082, -1                 ; 2 uses
+  %i.ay = srem i64 %.05181, 10
   %i.az = trunc nsw i64 %i.ay to i8
   %i.ba = add nsw i8 %i.az, 48
   %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ax
-  store i8 %i.ba, ptr %i.bb, align 2, !tbaa !26
-  %i.bc = sdiv i64 %.05181, 100
-  %.not112 = icmp eq i64 %3, 1
-  br i1 %.not112, label %bb.g, label %bb.h, !llvm.loop !126
+  store i8 %i.ba, ptr %i.bb, align 1, !tbaa !26
+  %i.bc = sdiv i64 %.05181, 10
+  %3 = icmp samesign ugt i64 %.05082, 1
+  br i1 %3, label %bb.h, label %bb.g, !llvm.loop !126
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.i
   %indvars.iv = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next, %bb.i ]

@@ -1,3 +1,7 @@
+inline.NumInlined: 1845
+inline.NumDeleted: 811
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZZNK7xgboost6common9TransformILb0EE9EvaluatorIZNS_3obj6AFTObj15GetGradientImplINS0_18NormalDistributionEEEvRKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEmNS_9DeviceOrdEbfEUlmNS0_4SpanISJ_Lm18446744073709551615EEENSN_IKfLm18446744073709551615EEESQ_SQ_SQ_E_E9LaunchCPUIJNS8_ISJ_EESA_SA_SA_SA_EEEvSR_DpPT_ENKUlmE_clEm:bb.a
   %i.bv = fmul float %i.bs, %i.bu
   %i.bw = fptrunc double %i.bi to float
@@ -199,21 +203,18 @@ bb.d:                                             ; preds = %bb.c
   %i.r = fmul double %i.p, %i.q
   %i.s = fmul double %i.r, 5.000000e-01
   %i.t = tail call double @exp(double noundef %i.s) #19
-  %4 = insertelement <2 x double> poison, double %i.t, i64 0
-  %5 = insertelement <2 x double> %4, double %i.p, i64 1
-  %6 = fdiv <2 x double> %5, <double f0x40040D931FF62705, double f0x3FF6A09E667F3BCD> ; 2 uses
-  %7 = extractelement <2 x double> %6, i64 1
-  %i.u = tail call double @erf(double noundef %7) #19
+  %4 = fdiv double %i.t, f0x40040D931FF62705
+  %5 = fdiv double %i.p, f0x3FF6A09E667F3BCD
+  %i.u = tail call double @erf(double noundef %5) #19
   %i.v = fadd double %i.u, 1.000000e+00
   %i.w = fmul double %i.v, 5.000000e-01
   %i.x = fcmp ogt double %i.p, 0.000000e+00
-  %8 = extractelement <2 x double> %6, i64 0
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %.049 = phi i8 [ 3, %bb.d ], [ 1, %bb.c ]
   %.044 = phi i1 [ %i.x, %bb.d ], [ false, %bb.c ] ; 2 uses
-  %.042 = phi double [ %8, %bb.d ], [ 0.000000e+00, %bb.c ]
+  %.042 = phi double [ %4, %bb.d ], [ 0.000000e+00, %bb.c ]
   %.040 = phi double [ %i.w, %bb.d ], [ 1.000000e+00, %bb.c ]
   %i.y = fcmp ugt double %0, 0.000000e+00
   br i1 %i.y, label %bb.f, label %bb.g
@@ -225,22 +226,19 @@ bb.f:                                             ; preds = %bb.e
   %i.ac = fmul double %i.aa, %i.ab
   %i.ad = fmul double %i.ac, 5.000000e-01
   %i.ae = tail call double @exp(double noundef %i.ad) #19
-  %9 = insertelement <2 x double> poison, double %i.ae, i64 0
-  %10 = insertelement <2 x double> %9, double %i.aa, i64 1
-  %11 = fdiv <2 x double> %10, <double f0x40040D931FF62705, double f0x3FF6A09E667F3BCD> ; 2 uses
-  %12 = extractelement <2 x double> %11, i64 1
-  %i.af = tail call double @erf(double noundef %12) #19
+  %6 = fdiv double %i.ae, f0x40040D931FF62705
+  %7 = fdiv double %i.aa, f0x3FF6A09E667F3BCD
+  %i.af = tail call double @erf(double noundef %7) #19
   %i.ag = fadd double %i.af, 1.000000e+00
   %i.ah = fmul double %i.ag, 5.000000e-01
   %i.ai = fcmp ogt double %i.aa, 0.000000e+00
   %i.aj = or i1 %i.ai, %.044
-  %13 = extractelement <2 x double> %11, i64 0
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
   %.1 = phi i8 [ %.049, %bb.f ], [ 2, %bb.e ]
   %.043 = phi i1 [ %i.aj, %bb.f ], [ %.044, %bb.e ]
-  %.041 = phi double [ %13, %bb.f ], [ 0.000000e+00, %bb.e ]
+  %.041 = phi double [ %6, %bb.f ], [ 0.000000e+00, %bb.e ]
   %.0 = phi double [ %i.ah, %bb.f ], [ 0.000000e+00, %bb.e ]
   %i.ak = fsub double %.042, %.041
   %i.al = fsub double %.040, %.0
@@ -336,24 +334,21 @@ bb.d:                                             ; preds = %bb.c
   %i.aa = fmul double %i.y, %i.z
   %i.ab = fmul double %i.aa, 5.000000e-01         ; 2 uses
   %i.ac = tail call double @exp(double noundef %i.ab) #19
-  %4 = insertelement <2 x double> poison, double %i.ac, i64 0
-  %5 = insertelement <2 x double> %4, double %i.y, i64 1
-  %6 = fdiv <2 x double> %5, <double f0x40040D931FF62705, double f0x3FF6A09E667F3BCD> ; 2 uses
-  %7 = extractelement <2 x double> %6, i64 1
-  %i.ad = tail call double @erf(double noundef %7) #19
+  %4 = fdiv double %i.ac, f0x40040D931FF62705
+  %5 = fdiv double %i.y, f0x3FF6A09E667F3BCD
+  %i.ad = tail call double @erf(double noundef %5) #19
   %i.ae = fadd double %i.ad, 1.000000e+00
   %i.af = fmul double %i.ae, 5.000000e-01
   %i.ag = tail call double @exp(double noundef %i.ab) #19
   %i.ah = fdiv double %i.ag, f0x40040D931FF62705
   %i.ai = fmul double %i.ah, %i.z
   %i.aj = fcmp ogt double %i.y, 0.000000e+00
-  %8 = extractelement <2 x double> %6, i64 0
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %.067 = phi i1 [ %i.aj, %bb.d ], [ false, %bb.c ] ; 2 uses
   %.065 = phi double [ %i.ai, %bb.d ], [ 0.000000e+00, %bb.c ]
-  %.063 = phi double [ %8, %bb.d ], [ 0.000000e+00, %bb.c ]
+  %.063 = phi double [ %4, %bb.d ], [ 0.000000e+00, %bb.c ]
   %.061 = phi double [ %i.af, %bb.d ], [ 1.000000e+00, %bb.c ]
   %.059 = phi i8 [ 3, %bb.d ], [ 1, %bb.c ]
   %i.ak = fcmp ugt double %0, 0.000000e+00
@@ -366,11 +361,9 @@ bb.f:                                             ; preds = %bb.e
   %i.ao = fmul double %i.am, %i.an
   %i.ap = fmul double %i.ao, 5.000000e-01         ; 2 uses
   %i.aq = tail call double @exp(double noundef %i.ap) #19
-  %9 = insertelement <2 x double> poison, double %i.aq, i64 0
-  %10 = insertelement <2 x double> %9, double %i.am, i64 1
-  %11 = fdiv <2 x double> %10, <double f0x40040D931FF62705, double f0x3FF6A09E667F3BCD> ; 2 uses
-  %12 = extractelement <2 x double> %11, i64 1
-  %i.ar = tail call double @erf(double noundef %12) #19
+  %6 = fdiv double %i.aq, f0x40040D931FF62705
+  %7 = fdiv double %i.am, f0x3FF6A09E667F3BCD
+  %i.ar = tail call double @erf(double noundef %7) #19
   %i.as = fadd double %i.ar, 1.000000e+00
   %i.at = fmul double %i.as, 5.000000e-01
   %i.au = tail call double @exp(double noundef %i.ap) #19
@@ -378,13 +371,12 @@ bb.f:                                             ; preds = %bb.e
   %i.aw = fmul double %i.av, %i.an
   %i.ax = fcmp ogt double %i.am, 0.000000e+00
   %i.ay = or i1 %i.ax, %.067
-  %13 = extractelement <2 x double> %11, i64 0
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
   %.066 = phi i1 [ %i.ay, %bb.f ], [ %.067, %bb.e ]
   %.064 = phi double [ %i.aw, %bb.f ], [ 0.000000e+00, %bb.e ]
-  %.062 = phi double [ %13, %bb.f ], [ 0.000000e+00, %bb.e ]
+  %.062 = phi double [ %6, %bb.f ], [ 0.000000e+00, %bb.e ]
   %.060 = phi double [ %i.at, %bb.f ], [ 0.000000e+00, %bb.e ]
   %.1 = phi i8 [ %.059, %bb.f ], [ 2, %bb.e ]
   %i.az = fsub double %.061, %.060                ; 2 uses

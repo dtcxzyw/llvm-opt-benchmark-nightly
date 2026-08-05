@@ -203,22 +203,17 @@ bb.p:                                             ; preds = %_ZN2v86bigint6Digit
   br i1 %.not.wide.i.i, label %_ZN2v86bigint12_GLOBAL__N_113DivideByMagicILm10EEEPcNS0_8RWDigitsENS0_6DigitsES3_.exit.i, label %.lr.ph.i.i33, !llvm.loop !14
 
 _ZN2v86bigint12_GLOBAL__N_113DivideByMagicILm10EEEPcNS0_8RWDigitsENS0_6DigitsES3_.exit.i: ; preds = %.lr.ph.i.i33
-  %.lhs.trunc.i.i = trunc nuw nsw i64 %i.fy to i32 ; 9 uses
+  %.lhs.trunc.i.i = trunc nuw nsw i64 %i.fy to i32 ; 6 uses
   %i.gc = urem i32 %.lhs.trunc.i.i, 10
   %i.gd = trunc nuw nsw i32 %i.gc to i8
   %i.ge = or disjoint i8 %i.gd, 48
   %i.gf = getelementptr inbounds i8, ptr %i.fl, i64 -1
   store i8 %i.ge, ptr %i.gf, align 1
   %i.gg = getelementptr inbounds i8, ptr %i.fl, i64 -5
-  %9 = udiv i32 %.lhs.trunc.i.i, 10
-  %10 = udiv i32 %.lhs.trunc.i.i, 100
-  %11 = udiv i32 %.lhs.trunc.i.i, 1000
-  %12 = udiv i32 %.lhs.trunc.i.i, 10000
-  %13 = insertelement <4 x i32> poison, i32 %12, i64 0
-  %i.gh = insertelement <4 x i32> %13, i32 %11, i64 1
-  %14 = insertelement <4 x i32> %i.gh, i32 %10, i64 2
-  %15 = insertelement <4 x i32> %14, i32 %9, i64 3
-  %i.gi = urem <4 x i32> %15, splat (i32 10)
+  %i.gh = insertelement <4 x i32> poison, i32 %.lhs.trunc.i.i, i64 0
+  %9 = shufflevector <4 x i32> %i.gh, <4 x i32> poison, <4 x i32> zeroinitializer
+  %10 = udiv <4 x i32> %9, <i32 10000, i32 1000, i32 100, i32 10>
+  %i.gi = urem <4 x i32> %10, splat (i32 10)
   %i.gj = trunc nuw nsw <4 x i32> %i.gi to <4 x i8>
   %i.gk = or disjoint <4 x i8> %i.gj, splat (i8 48)
   store <4 x i8> %i.gk, ptr %i.gg, align 1

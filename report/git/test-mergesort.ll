@@ -1,8 +1,8 @@
 inline.NumInlined: 41
 inline.NumDeleted: 21
 loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 11
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 10
 begin_hunk_0_@test:bb.a
   %i.bz = lshr i64 %.02022.i, 1
   %i.ca = and i64 %.02022.i, 2
@@ -204,55 +204,23 @@ bb.a:
   br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %3 = icmp eq i32 %1, 1
-  br i1 %3, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
-
-.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %wide.trip.count = zext nneg i32 %1 to i64
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 3 uses
-  %.056.a = phi i64 [ 1, %.lr.ph.preheader.new ], [ %i.c, %.lr.ph ]
-  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
-  %4 = mul nuw nsw i64 %.056.a, 48271
-  %5 = urem i64 %4, 2147483647                    ; 2 uses
-  %6 = trunc nuw nsw i64 %5 to i32
-  %7 = urem i32 %6, %2
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
-  store i32 %7, ptr %8, align 4, !tbaa !22
-  %i.b = mul nuw nsw i64 %5, 48271
-  %i.c = urem i64 %i.b, 2147483647                ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %.056.a = phi i64 [ 0, %.lr.ph.preheader ], [ %niter.next.1, %.lr.ph ] ; 2 uses
+  %niter = phi i64 [ 1, %.lr.ph.preheader ], [ %i.c, %.lr.ph ]
+  %i.b = mul nuw nsw i64 %niter, 48271
+  %i.c = urem i64 %i.b, 2147483647                ; 2 uses
   %i.d = trunc nuw nsw i64 %i.c to i32
   %i.e = urem i32 %i.d, %2
-  %i.f = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
-  %9 = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  store i32 %i.e, ptr %9, align 4, !tbaa !22
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !60
+  %i.f = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.056.a
+  store i32 %i.e, ptr %i.f, align 4, !tbaa !22
+  %niter.next.1 = add nuw nsw i64 %.056.a, 1      ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %wide.trip.count
+  br i1 %niter.ncmp.1, label %._crit_edge, label %.lr.ph, !llvm.loop !60
 
-._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
-
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ]
-  %.056.epil.init = phi i64 [ 1, %.lr.ph.preheader ], [ %i.c, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod9 = trunc i32 %1 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod9)
-  %10 = mul nuw nsw i64 %.056.epil.init, 48271
-  %11 = urem i64 %10, 2147483647
-  %12 = trunc nuw nsw i64 %11 to i32
-  %13 = urem i32 %12, %2
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.epil.init
-  store i32 %13, ptr %14, align 4, !tbaa !22
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
 }
 

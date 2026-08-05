@@ -1,8 +1,8 @@
 inline.NumInlined: 13633
 inline.NumDeleted: 4657
 loop-unroll.NumCompletelyUnrolled: 15
-loop-unroll.NumRuntimeUnrolled: 69
-loop-unroll.NumUnrolled: 85
+loop-unroll.NumRuntimeUnrolled: 68
+loop-unroll.NumUnrolled: 84
 begin_hunk_0_@_ZN11OpenImageIO4v3_114ImageCacheFile14init_from_specEv:bb.a
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -204,49 +204,21 @@ _ZNK11OpenImageIO4v3_17ustringcvNS0_17basic_string_viewIcSt11char_traitsIcEEEEv.
   store i64 %i.cg, ptr %i.ch, align 8, !tbaa !576
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !276
-  %i.ck = load ptr, ptr %i.b, align 8, !tbaa !275 ; 4 uses
+  %i.ck = load ptr, ptr %i.b, align 8, !tbaa !275 ; 2 uses
   %i.cl = ptrtoint ptr %i.cj to i64
   %i.cm = ptrtoint ptr %i.ck to i64
-  %i.cn = sub i64 %i.cl, %i.cm                    ; 3 uses
-  %i.co = lshr exact i64 %i.cn, 7                 ; 3 uses
+  %i.cn = sub i64 %i.cl, %i.cm
+  %i.co = lshr exact i64 %i.cn, 7                 ; 2 uses
   %i.cp = trunc i64 %i.co to i32
   %i.cq = icmp sgt i32 %i.cp, 0
-  br i1 %i.cq, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.cq, label %.lr.ph.preheader.new, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %_ZNK11OpenImageIO4v3_17ustringcvNS0_17basic_string_viewIcSt11char_traitsIcEEEEv.exit
-  %14 = and i64 %i.cn, 274877906816
-  %15 = icmp eq i64 %14, 128
-  br i1 %15, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
-
-.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.co, 2147483646
+.lr.ph.preheader.new:                             ; preds = %_ZNK11OpenImageIO4v3_17ustringcvNS0_17basic_string_viewIcSt11char_traitsIcEEEEv.exit
+  %unroll_iter = and i64 %i.co, 2147483647
   br label %.lr.ph
 
-._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %16 = and i64 %i.cn, 128
-  %lcmp.mod.not = icmp eq i64 %16, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.loopexit, label %.lr.ph.epil.preheader
-
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ]
-  %.05356.epil.init = phi i32 [ 1, %.lr.ph.preheader ], [ %.sroa.speculated.1, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod73 = trunc i64 %i.co to i1
-  call void @llvm.assume(i1 %lcmp.mod73)
-  %17 = getelementptr inbounds nuw [128 x i8], ptr %i.ck, i64 %indvars.iv.epil.init ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 8
-  %19 = load ptr, ptr %18, align 8, !tbaa !375
-  %20 = load ptr, ptr %17, align 8, !tbaa !374
-  %21 = ptrtoint ptr %19 to i64
-  %22 = ptrtoint ptr %20 to i64
-  %23 = sub i64 %21, %22
-  %24 = sdiv exact i64 %23, 40
-  %25 = trunc i64 %24 to i32
-  %.sroa.speculated.epil = call i32 @llvm.smax.i32(i32 %.05356.epil.init, i32 %25)
-  br label %._crit_edge.loopexit
-
-._crit_edge.loopexit:                             ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil.preheader
-  %.sroa.speculated.lcssa = phi i32 [ %.sroa.speculated.1, %._crit_edge.loopexit.unr-lcssa ], [ %.sroa.speculated.epil, %.lr.ph.epil.preheader ]
-  %i.cr = zext nneg i32 %.sroa.speculated.lcssa to i64
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %i.cr = zext nneg i32 %.sroa.speculated.1 to i64
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNK11OpenImageIO4v3_17ustringcvNS0_17basic_string_viewIcSt11char_traitsIcEEEEv.exit
@@ -298,35 +270,22 @@ _ZNSt6vectorImSaImEE6resizeEmRKm.exit:            ; preds = %bb.r, %bb.s, %bb.t,
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #5
   ret void
 
-.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader.new, %.lr.ph
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ] ; 2 uses
   %.05356 = phi i32 [ 1, %.lr.ph.preheader.new ], [ %.sroa.speculated.1, %.lr.ph ]
-  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
-  %26 = getelementptr inbounds nuw [128 x i8], ptr %i.ck, i64 %indvars.iv ; 2 uses
-  %27 = getelementptr inbounds nuw i8, ptr %26, i64 8
-  %28 = load ptr, ptr %27, align 8, !tbaa !375
-  %29 = load ptr, ptr %26, align 8, !tbaa !374
-  %30 = ptrtoint ptr %28 to i64
-  %31 = ptrtoint ptr %29 to i64
-  %32 = sub i64 %30, %31
-  %33 = sdiv exact i64 %32, 40
-  %34 = trunc i64 %33 to i32
-  %.sroa.speculated = call i32 @llvm.smax.i32(i32 %.05356, i32 %34)
   %i.dg = getelementptr inbounds nuw [128 x i8], ptr %i.ck, i64 %indvars.iv ; 2 uses
-  %35 = getelementptr inbounds nuw i8, ptr %i.dg, i64 128
-  %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 136
+  %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 8
   %i.di = load ptr, ptr %i.dh, align 8, !tbaa !375
-  %i.dj = load ptr, ptr %35, align 8, !tbaa !374
+  %i.dj = load ptr, ptr %i.dg, align 8, !tbaa !374
   %i.dk = ptrtoint ptr %i.di to i64
   %i.dl = ptrtoint ptr %i.dj to i64
   %i.dm = sub i64 %i.dk, %i.dl
   %i.dn = sdiv exact i64 %i.dm, 40
   %i.do = trunc i64 %i.dn to i32
-  %.sroa.speculated.1 = call i32 @llvm.smax.i32(i32 %.sroa.speculated, i32 %i.do) ; 3 uses
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %.sroa.speculated.1 = call i32 @llvm.smax.i32(i32 %.05356, i32 %i.do) ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %indvars.iv, 1  ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !578
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !578
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

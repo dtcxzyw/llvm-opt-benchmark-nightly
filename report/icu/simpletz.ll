@@ -1,7 +1,5 @@
 inline.NumInlined: 61
 inline.NumDeleted: 17
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZNK6icu_7814SimpleTimeZone9getOffsetEhiiihiiR10UErrorCode:bb.a
 
 bb.b:                                             ; preds = %bb.a
@@ -203,67 +201,29 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #7
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef range(i32 -1, 2) i32 @_ZN6icu_7814SimpleTimeZone13compareToRuleEaaaaaiiNS0_5EModeEaaai(i8 noundef signext %0, i8 noundef signext %1, i8 noundef signext %2, i8 noundef signext %3, i8 noundef signext %4, i32 noundef %5, i32 noundef %6, i32 noundef %7, i8 noundef signext %8, i8 noundef signext %9, i8 noundef signext %10, i32 noundef %11) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = add nsw i32 %6, %5                       ; 6 uses
+  %i.a = add nsw i32 %6, %5                       ; 5 uses
   %i.b = icmp sgt i32 %i.a, 86399999
-  br i1 %i.b, label %.lr.ph.preheader, label %.preheader
-
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %12 = add i32 %6, %5
-  %13 = add i32 %12, -86400000                    ; 2 uses
-  %14 = udiv i32 %13, 86400000
-  %15 = and i32 %14, 1
-  %lcmp.mod.not.not = icmp eq i32 %15, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
-
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %16 = add nsw i32 %i.a, -86400000               ; 2 uses
-  %17 = add i8 %3, 1                              ; 2 uses
-  %18 = srem i8 %4, 7
-  %19 = add nsw i8 %18, 1                         ; 2 uses
-  %20 = icmp sgt i8 %17, %1                       ; 2 uses
-  %spec.select.prol = select i1 %20, i8 1, i8 %17 ; 2 uses
-  %21 = zext i1 %20 to i8
-  %spec.select73.prol = add i8 %0, %21            ; 2 uses
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.05798.unr = phi i8 [ %0, %.lr.ph.preheader ], [ %spec.select73.prol, %.lr.ph.prol ]
-  %.05997.unr = phi i8 [ %3, %.lr.ph.preheader ], [ %spec.select.prol, %.lr.ph.prol ]
-  %.06396.unr = phi i8 [ %4, %.lr.ph.preheader ], [ %19, %.lr.ph.prol ]
-  %.06595.unr = phi i32 [ %i.a, %.lr.ph.preheader ], [ %16, %.lr.ph.prol ]
-  %.lcssa132.unr = phi i32 [ poison, %.lr.ph.preheader ], [ %16, %.lr.ph.prol ]
-  %.lcssa.unr = phi i8 [ poison, %.lr.ph.preheader ], [ %19, %.lr.ph.prol ]
-  %spec.select.lcssa.unr = phi i8 [ poison, %.lr.ph.preheader ], [ %spec.select.prol, %.lr.ph.prol ]
-  %spec.select73.lcssa.unr = phi i8 [ poison, %.lr.ph.preheader ], [ %spec.select73.prol, %.lr.ph.prol ]
-  %22 = icmp ult i32 %13, 86400000
-  br i1 %22, label %._crit_edge, label %.lr.ph
+  br i1 %i.b, label %.lr.ph, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
   %i.c = icmp slt i32 %i.a, 0
   br i1 %i.c, label %.lr.ph106, label %._crit_edge
 
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.05798 = phi i8 [ %spec.select73.1, %.lr.ph ], [ %.05798.unr, %.lr.ph.prol.loopexit ]
-  %.05997 = phi i8 [ %spec.select.1, %.lr.ph ], [ %.05997.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %.06396 = phi i8 [ %i.g, %.lr.ph ], [ %.06396.unr, %.lr.ph.prol.loopexit ]
-  %.06595 = phi i32 [ %i.d, %.lr.ph ], [ %.06595.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %23 = add i8 %.05997, 1
-  %24 = srem i8 %.06396, 7
-  %25 = add nsw i8 %24, 1
-  %26 = icmp sgt i8 %23, %1                       ; 2 uses
-  %27 = zext i1 %26 to i8
-  %spec.select73 = add i8 %.05798, %27
-  %i.d = add nsw i32 %.06595, -172800000          ; 2 uses
-  %i.e = add i8 %.05997, 2
-  %28 = select i1 %26, i8 2, i8 %i.e              ; 2 uses
-  %i.f = srem i8 %25, 7
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %.05798 = phi i8 [ %spec.select73.1, %.lr.ph ], [ %0, %bb.a ]
+  %.05997 = phi i8 [ %spec.select.1, %.lr.ph ], [ %3, %bb.a ]
+  %.06396 = phi i8 [ %i.g, %.lr.ph ], [ %4, %bb.a ]
+  %.06595 = phi i32 [ %i.d, %.lr.ph ], [ %i.a, %bb.a ] ; 2 uses
+  %i.d = add nsw i32 %.06595, -86400000           ; 2 uses
+  %i.e = add i8 %.05997, 1                        ; 2 uses
+  %i.f = srem i8 %.06396, 7
   %i.g = add nsw i8 %i.f, 1                       ; 2 uses
-  %i.h = icmp sgt i8 %28, %1                      ; 2 uses
-  %spec.select.1 = select i1 %i.h, i8 1, i8 %28   ; 2 uses
+  %i.h = icmp sgt i8 %i.e, %1                     ; 2 uses
+  %spec.select.1 = select i1 %i.h, i8 1, i8 %i.e  ; 2 uses
   %i.i = zext i1 %i.h to i8
-  %spec.select73.1 = add i8 %spec.select73, %i.i  ; 2 uses
-  %29 = icmp sgt i32 %.06595, 259199999
-  br i1 %29, label %.lr.ph, label %._crit_edge, !llvm.loop !52
+  %spec.select73.1 = add i8 %.05798, %i.i         ; 2 uses
+  %12 = icmp samesign ugt i32 %.06595, 172799999
+  br i1 %12, label %.lr.ph, label %._crit_edge, !llvm.loop !52
 
 .lr.ph106:                                        ; preds = %.preheader, %.lr.ph106
   %.2105 = phi i8 [ %spec.select75, %.lr.ph106 ], [ %0, %.preheader ]
@@ -284,11 +244,11 @@ bb.a:
   %i.r = icmp samesign ult i32 %.166102, -86400000
   br i1 %i.r, label %.lr.ph106, label %._crit_edge, !llvm.loop !54
 
-._crit_edge:                                      ; preds = %.lr.ph106, %.lr.ph.prol.loopexit, %.lr.ph, %.preheader
-  %.166.lcssa = phi i32 [ %i.a, %.preheader ], [ %i.d, %.lr.ph ], [ %.lcssa132.unr, %.lr.ph.prol.loopexit ], [ %i.j, %.lr.ph106 ] ; 2 uses
-  %.164.lcssa = phi i8 [ %4, %.preheader ], [ %i.g, %.lr.ph ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.o, %.lr.ph106 ] ; 4 uses
-  %.261.lcssa = phi i8 [ %3, %.preheader ], [ %spec.select.1, %.lr.ph ], [ %spec.select.lcssa.unr, %.lr.ph.prol.loopexit ], [ %spec.select74, %.lr.ph106 ] ; 5 uses
-  %.2.lcssa = phi i8 [ %0, %.preheader ], [ %spec.select73.1, %.lr.ph ], [ %spec.select73.lcssa.unr, %.lr.ph.prol.loopexit ], [ %spec.select75, %.lr.ph106 ] ; 2 uses
+._crit_edge:                                      ; preds = %.lr.ph106, %.lr.ph, %.preheader
+  %.166.lcssa = phi i32 [ %i.a, %.preheader ], [ %i.d, %.lr.ph ], [ %i.j, %.lr.ph106 ] ; 2 uses
+  %.164.lcssa = phi i8 [ %4, %.preheader ], [ %i.g, %.lr.ph ], [ %i.o, %.lr.ph106 ] ; 4 uses
+  %.261.lcssa = phi i8 [ %3, %.preheader ], [ %spec.select.1, %.lr.ph ], [ %spec.select74, %.lr.ph106 ] ; 5 uses
+  %.2.lcssa = phi i8 [ %0, %.preheader ], [ %spec.select73.1, %.lr.ph ], [ %spec.select75, %.lr.ph106 ] ; 2 uses
   %i.s = icmp slt i8 %.2.lcssa, %8
   br i1 %i.s, label %bb.n, label %bb.b
 

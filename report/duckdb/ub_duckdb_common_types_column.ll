@@ -203,19 +203,18 @@ bb.f:                                             ; preds = %_ZN6duckdb21Templat
 
 .lr.ph111.split.us.preheader.i:                   ; preds = %.lr.ph111.i
   %invariant.gep143.i = getelementptr [16 x i8], ptr %i.at, i64 %.0115.i ; 10 uses
-  %min.iters.check = icmp samesign ult i64 %i.v, 44
+  %min.iters.check = icmp samesign ult i64 %i.v, 30
   br i1 %min.iters.check, label %.lr.ph111.split.us.i.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph111.split.us.preheader.i
-  %i.aw = add nsw i64 %i.v, -1                    ; 3 uses
-  %mul.result = shl nsw i64 %i.aw, 4
+  %i.aw = add nsw i64 %i.v, -1                    ; 2 uses
+  %mul.result = shl nsw i64 %i.aw, 4              ; 2 uses
+  %mul.overflow = icmp ugt i64 %i.aw, 1152921504606846975
   %7 = getelementptr i8, ptr %invariant.gep.i, i64 %mul.result
   %8 = icmp ult ptr %7, %invariant.gep.i
-  %mul.result22 = shl nsw i64 %i.aw, 4
-  %mul.overflow23 = icmp ugt i64 %i.aw, 1152921504606846975
-  %i.ax = getelementptr i8, ptr %invariant.gep143.i, i64 %mul.result22
+  %i.ax = getelementptr i8, ptr %invariant.gep143.i, i64 %mul.result
   %i.ay = icmp ult ptr %i.ax, %invariant.gep143.i
-  %i.az = or i1 %i.ay, %mul.overflow23
+  %i.az = or i1 %i.ay, %mul.overflow
   %i.ba = or i1 %8, %i.az
   br i1 %i.ba, label %.lr.ph111.split.us.i.preheader, label %vector.memcheck
 
@@ -618,19 +617,18 @@ bb.f:                                             ; preds = %_ZN6duckdb21Templat
 
 .lr.ph111.split.us.preheader.i:                   ; preds = %.lr.ph111.i
   %invariant.gep143.i = getelementptr [16 x i8], ptr %i.at, i64 %.0115.i ; 10 uses
-  %min.iters.check = icmp samesign ult i64 %i.v, 44
+  %min.iters.check = icmp samesign ult i64 %i.v, 30
   br i1 %min.iters.check, label %.lr.ph111.split.us.i.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph111.split.us.preheader.i
-  %i.aw = add nsw i64 %i.v, -1                    ; 3 uses
-  %mul.result = shl nsw i64 %i.aw, 4
+  %i.aw = add nsw i64 %i.v, -1                    ; 2 uses
+  %mul.result = shl nsw i64 %i.aw, 4              ; 2 uses
+  %mul.overflow = icmp ugt i64 %i.aw, 1152921504606846975
   %7 = getelementptr i8, ptr %invariant.gep.i, i64 %mul.result
   %8 = icmp ult ptr %7, %invariant.gep.i
-  %mul.result22 = shl nsw i64 %i.aw, 4
-  %mul.overflow23 = icmp ugt i64 %i.aw, 1152921504606846975
-  %i.ax = getelementptr i8, ptr %invariant.gep143.i, i64 %mul.result22
+  %i.ax = getelementptr i8, ptr %invariant.gep143.i, i64 %mul.result
   %i.ay = icmp ult ptr %i.ax, %invariant.gep143.i
-  %i.az = or i1 %i.ay, %mul.overflow23
+  %i.az = or i1 %i.ay, %mul.overflow
   %i.ba = or i1 %8, %i.az
   br i1 %i.ba, label %.lr.ph111.split.us.i.preheader, label %vector.memcheck
 

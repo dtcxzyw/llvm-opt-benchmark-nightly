@@ -1,3 +1,8 @@
+inline.NumInlined: 638
+inline.NumDeleted: 294
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_Z11nMismatchesRKSt6vectorIfSaIfEES3_:bb.a
   %i.o = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.m)
   %i.p = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.n)
@@ -199,13 +204,9 @@ bb.l:                                             ; preds = %_ZNSt6vectorIfSaIfE
   %i.am = fdiv x86_fp80 %i.ak, %i.al
   %i.an = fptoui x86_fp80 %i.am to i64            ; 2 uses
   %i.ao = add i64 %i.an, 23
-  %i.ap = udiv i64 %i.ao, %i.an                   ; 2 uses
-  %spec.select.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ap, i64 1) ; 3 uses
-  %xtraiter = and i64 %spec.select.i.i.i.i, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %24 = add nsw i64 %spec.select.i.i.i.i, -1
-  %25 = icmp ult i64 %i.ap, 2
-  br label %26
+  %i.ap = udiv i64 %i.ao, %i.an
+  %spec.select.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ap, i64 1)
+  br label %select.unfold.i.i.i.i.prol.loopexit
 
 ._crit_edge:                                      ; preds = %bb.r, %.loopexit454.thread, %.loopexit454
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
@@ -252,57 +253,30 @@ bb.p:                                             ; preds = %bb.l, %bb.k
           cleanup
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit355
 
-26:                                               ; preds = %.lr.ph, %bb.r
-  %.036458 = phi i64 [ 0, %.lr.ph ], [ %i.bn, %bb.r ] ; 2 uses
-  %.sroa.0446.0457 = phi i64 [ 123, %.lr.ph ], [ %.lcssa619, %bb.r ] ; 2 uses
-  br i1 %lcmp.mod.not, label %select.unfold.i.i.i.i.prol.loopexit, label %select.unfold.i.i.i.i.prol
+select.unfold.i.i.i.i.prol.loopexit:              ; preds = %.lr.ph, %bb.r
+  %.023.i.i.i.i.unr = phi i64 [ 0, %.lr.ph ], [ %i.bn, %bb.r ] ; 2 uses
+  %.unr = phi i64 [ 123, %.lr.ph ], [ %i.bd, %bb.r ]
+  br label %select.unfold.i.i.i.i
 
-select.unfold.i.i.i.i.prol:                       ; preds = %26
-  %27 = mul nuw nsw i64 %.sroa.0446.0457, 48271
-  %28 = urem i64 %27, 2147483647                  ; 3 uses
-  %29 = add nsw i64 %28, -1
-  %30 = uitofp i64 %29 to float                   ; 2 uses
-  br label %select.unfold.i.i.i.i.prol.loopexit
-
-select.unfold.i.i.i.i.prol.loopexit:              ; preds = %select.unfold.i.i.i.i.prol, %26
-  %.lcssa619.unr = phi i64 [ poison, %26 ], [ %28, %select.unfold.i.i.i.i.prol ]
-  %.lcssa618.unr = phi float [ poison, %26 ], [ %30, %select.unfold.i.i.i.i.prol ]
-  %.023.i.i.i.i.unr = phi i64 [ %spec.select.i.i.i.i, %26 ], [ %24, %select.unfold.i.i.i.i.prol ]
-  %.01422.i.i.i.i.unr = phi float [ 1.000000e+00, %26 ], [ f0x4F000000, %select.unfold.i.i.i.i.prol ]
-  %.01521.i.i.i.i.unr = phi float [ 0.000000e+00, %26 ], [ %30, %select.unfold.i.i.i.i.prol ]
-  %.unr = phi i64 [ %.sroa.0446.0457, %26 ], [ %28, %select.unfold.i.i.i.i.prol ]
-  br i1 %25, label %.unr-lcssa, label %select.unfold.i.i.i.i
-
-.unr-lcssa:                                       ; preds = %select.unfold.i.i.i.i, %select.unfold.i.i.i.i.prol.loopexit
-  %.lcssa619 = phi i64 [ %.lcssa619.unr, %select.unfold.i.i.i.i.prol.loopexit ], [ %i.bd, %select.unfold.i.i.i.i ]
-  %.lcssa618 = phi float [ %.lcssa618.unr, %select.unfold.i.i.i.i.prol.loopexit ], [ %i.bg, %select.unfold.i.i.i.i ]
-  %.lcssa617 = phi float [ f0x4F000000, %select.unfold.i.i.i.i.prol.loopexit ], [ %i.bj, %select.unfold.i.i.i.i ]
-  %i.az = fdiv float %.lcssa618, %.lcssa617       ; 2 uses
+.unr-lcssa:                                       ; preds = %select.unfold.i.i.i.i
+  %i.az = fdiv float %i.bg, %i.bj                 ; 2 uses
   %i.ba = fcmp ult float %i.az, 1.000000e+00
   br i1 %i.ba, label %bb.r, label %bb.q, !prof !35
 
-select.unfold.i.i.i.i:                            ; preds = %select.unfold.i.i.i.i.prol.loopexit, %select.unfold.i.i.i.i
-  %.023.i.i.i.i = phi i64 [ %i.bk, %select.unfold.i.i.i.i ], [ %.023.i.i.i.i.unr, %select.unfold.i.i.i.i.prol.loopexit ]
-  %.01422.i.i.i.i = phi float [ %i.bj, %select.unfold.i.i.i.i ], [ %.01422.i.i.i.i.unr, %select.unfold.i.i.i.i.prol.loopexit ] ; 2 uses
-  %.01521.i.i.i.i = phi float [ %i.bg, %select.unfold.i.i.i.i ], [ %.01521.i.i.i.i.unr, %select.unfold.i.i.i.i.prol.loopexit ]
-  %i.bb = phi i64 [ %i.bd, %select.unfold.i.i.i.i ], [ %.unr, %select.unfold.i.i.i.i.prol.loopexit ]
-  %31 = mul nuw nsw i64 %i.bb, 48271
-  %32 = urem i64 %31, 2147483647                  ; 2 uses
-  %33 = add nsw i64 %32, -1
-  %34 = uitofp i64 %33 to float
-  %35 = tail call float @llvm.fmuladd.f32(float %34, float %.01422.i.i.i.i, float %.01521.i.i.i.i)
-  %36 = fpext float %.01422.i.i.i.i to x86_fp80
-  %37 = fmul x86_fp80 %36, f0x401DFFFFFFFC00000000
-  %38 = fptrunc x86_fp80 %37 to float             ; 2 uses
-  %i.bc = mul nuw nsw i64 %32, 48271
+select.unfold.i.i.i.i:                            ; preds = %select.unfold.i.i.i.i, %select.unfold.i.i.i.i.prol.loopexit
+  %.023.i.i.i.i = phi i64 [ %spec.select.i.i.i.i, %select.unfold.i.i.i.i.prol.loopexit ], [ %i.bk, %select.unfold.i.i.i.i ]
+  %.01422.i.i.i.i = phi float [ 1.000000e+00, %select.unfold.i.i.i.i.prol.loopexit ], [ %i.bj, %select.unfold.i.i.i.i ] ; 2 uses
+  %.01521.i.i.i.i = phi float [ 0.000000e+00, %select.unfold.i.i.i.i.prol.loopexit ], [ %i.bg, %select.unfold.i.i.i.i ]
+  %i.bb = phi i64 [ %.unr, %select.unfold.i.i.i.i.prol.loopexit ], [ %i.bd, %select.unfold.i.i.i.i ]
+  %i.bc = mul nuw nsw i64 %i.bb, 48271
   %i.bd = urem i64 %i.bc, 2147483647              ; 3 uses
   %i.be = add nsw i64 %i.bd, -1
   %i.bf = uitofp i64 %i.be to float
-  %i.bg = tail call float @llvm.fmuladd.f32(float %i.bf, float %38, float %35) ; 2 uses
-  %i.bh = fpext float %38 to x86_fp80
+  %i.bg = tail call float @llvm.fmuladd.f32(float %i.bf, float %.01422.i.i.i.i, float %.01521.i.i.i.i) ; 2 uses
+  %i.bh = fpext float %.01422.i.i.i.i to x86_fp80
   %i.bi = fmul x86_fp80 %i.bh, f0x401DFFFFFFFC00000000
   %i.bj = fptrunc x86_fp80 %i.bi to float         ; 2 uses
-  %i.bk = add i64 %.023.i.i.i.i, -2               ; 2 uses
+  %i.bk = add i64 %.023.i.i.i.i, -1               ; 2 uses
   %.not.i.i.i.i116.1 = icmp eq i64 %i.bk, 0
   br i1 %.not.i.i.i.i116.1, label %.unr-lcssa, label %select.unfold.i.i.i.i, !llvm.loop !36
 
@@ -312,11 +286,11 @@ bb.q:                                             ; preds = %.unr-lcssa
 bb.r:                                             ; preds = %bb.q, %.unr-lcssa
   %.016.i.i.i.i = phi float [ f0x3F7FFFFF, %bb.q ], [ %i.az, %.unr-lcssa ]
   %i.bl = fadd float %.016.i.i.i.i, 0.000000e+00
-  %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %.036458
+  %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %.023.i.i.i.i.unr
   store float %i.bl, ptr %i.bm, align 4, !tbaa !15
-  %i.bn = add nuw i64 %.036458, 1                 ; 2 uses
+  %i.bn = add nuw i64 %.023.i.i.i.i.unr, 1        ; 2 uses
   %exitcond.not = icmp eq i64 %i.bn, %i.aj
-  br i1 %exitcond.not, label %._crit_edge, label %26, !llvm.loop !37
+  br i1 %exitcond.not, label %._crit_edge, label %select.unfold.i.i.i.i.prol.loopexit, !llvm.loop !37
 
 bb.s:                                             ; preds = %bb.o, %.noexc115, %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.thread.i
   %.0.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.thread.i ], [ %i.av, %.noexc115 ], [ %i.at, %bb.o ]

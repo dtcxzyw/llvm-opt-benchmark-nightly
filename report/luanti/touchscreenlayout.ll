@@ -1,3 +1,7 @@
+inline.NumInlined: 874
+inline.NumDeleted: 409
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0
 %"union.Json::Value::ValueHolder" = type { i64 }
 %struct.anon = type { i16, [2 x i8] }
@@ -199,15 +203,9 @@ bb.a:
   %i.i = fmul nsz <2 x float> %i.f, %i.h
   %i.j = insertelement <2 x float> poison, float %i.e, i64 0
   %i.k = insertelement <2 x float> %i.j, float %i.d, i64 1
-  %i.l = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.c, <2 x float> %i.k, <2 x float> %i.i) ; 2 uses
-  %3 = extractelement <2 x float> %i.l, i64 0
-  %4 = fptosi float %3 to i32
-  %5 = extractelement <2 x float> %i.l, i64 1
-  %6 = fptosi float %5 to i32
-  %.sroa.2.0.insert.ext = zext i32 %6 to i64
-  %.sroa.2.0.insert.shift = shl nuw i64 %.sroa.2.0.insert.ext, 32
-  %.sroa.0.0.insert.ext = zext i32 %4 to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %i.l = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.c, <2 x float> %i.k, <2 x float> %i.i)
+  %3 = fptosi <2 x float> %i.l to <2 x i32>
+  %.sroa.0.0.insert.insert = bitcast <2 x i32> %3 to i64
   ret i64 %.sroa.0.0.insert.insert
 }
 

@@ -50,7 +50,7 @@ $_ZN4absl12lts_2026052613time_internal4cctz6detail4impl14day_differenceElaalaa =
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN4absl12lts_2026052613time_internal4cctz12TimeZoneLibC4MakeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) initializes((0, 8)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #13 ; 3 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #14 ; 3 uses
   store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN4absl12lts_2026052613time_internal4cctz12TimeZoneLibCE, i64 16), ptr %i.a, align 8, !tbaa !9
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !11
@@ -104,20 +104,20 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store ptr @.str, ptr %i.f, align 8, !tbaa !31
   %.sroa.0.0.copyload.i.i1.i = load i64, ptr %2, align 8, !tbaa !32 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   store i64 %.sroa.0.0.copyload.i.i1.i, ptr %i.a, align 8, !tbaa !32
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.h = load i8, ptr %i.g, align 8, !tbaa !18, !range !33, !noundef !34
   %i.i = trunc nuw i8 %i.h to i1
   br i1 %i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = call noundef ptr @localtime_r(ptr noundef nonnull %i.a, ptr noundef nonnull %3) #14
+  %i.j = call noundef ptr @localtime_r(ptr noundef nonnull %i.a, ptr noundef nonnull %3) #15
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.k = call noundef ptr @gmtime_r(ptr noundef nonnull %i.a, ptr noundef nonnull %3) #14
+  %i.k = call noundef ptr @gmtime_r(ptr noundef nonnull %i.a, ptr noundef nonnull %3) #15
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -130,7 +130,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.n, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.o = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 9223372036854775807, i8 noundef signext 12, i64 noundef 31, i64 noundef 0, i8 noundef signext 23, i8 noundef signext 59, i8 noundef signext 59) #14 ; 2 uses
+  %i.o = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 9223372036854775807, i8 noundef signext 12, i64 noundef 31, i64 noundef 0, i8 noundef signext 23, i8 noundef signext 59, i8 noundef signext 59) #15 ; 2 uses
   %.fca.1.extract.i.i.i22 = extractvalue { i64, i64 } %i.o, 1
   %.sroa.2.8.insert.ext.i23 = and i64 %.fca.1.extract.i.i.i22, 1099511627775
   %.fca.1.insert.i24 = insertvalue { i64, i64 } %i.o, i64 %.sroa.2.8.insert.ext.i23, 1
@@ -164,7 +164,7 @@ bb.h:                                             ; preds = %bb.d
   %i.af = sext i32 %i.ae to i64
   %i.ag = load i32, ptr %i.l, align 8, !tbaa !41
   %i.ah = sext i32 %i.ag to i64
-  %i.ai = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_secEllllll(i64 noundef %i.s, i64 noundef %i.w, i64 noundef %i.z, i64 noundef %i.ac, i64 noundef %i.af, i64 noundef %i.ah) #14 ; 2 uses
+  %i.ai = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_secEllllll(i64 noundef %i.s, i64 noundef %i.w, i64 noundef %i.z, i64 noundef %i.ac, i64 noundef %i.af, i64 noundef %i.ah) #15 ; 2 uses
   %.fca.0.extract.i = extractvalue { i64, i64 } %i.ai, 0
   %.fca.1.extract.i = extractvalue { i64, i64 } %i.ai, 1
   %.sroa.2.0.extract.trunc.i.i = trunc i64 %.fca.1.extract.i to i40
@@ -194,8 +194,8 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.g, %bb.j
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   ret void
 }
 
@@ -231,18 +231,18 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.c, label %bb.e, !prof !45
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9min_tp_cs) #14
+  %i.j = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9min_tp_cs) #15
   %.not = icmp eq i32 %i.j, 0
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailplENS3_10civil_timeINS3_10second_tagEEEl(i64 1970, i64 257, i64 noundef -9223372036854775808) #14 ; 2 uses
+  %i.k = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailplENS3_10civil_timeINS3_10second_tagEEEl(i64 1970, i64 257, i64 noundef -9223372036854775808) #15 ; 2 uses
   %i.l = extractvalue { i64, i64 } %i.k, 0
   store i64 %i.l, ptr @_ZZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9min_tp_cs, align 8
   %i.m = extractvalue { i64, i64 } %i.k, 1
   store i64 %i.m, ptr getelementptr inbounds nuw (i8, ptr @_ZZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9min_tp_cs, i64 8), align 8
   %i.n = tail call ptr @llvm.invariant.start.p0(i64 16, ptr nonnull @_ZZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9min_tp_cs) ; 0 uses
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9min_tp_cs) #14
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9min_tp_cs) #15
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
@@ -251,18 +251,18 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   br i1 %i.p, label %bb.f, label %bb.h, !prof !45
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9max_tp_cs) #14
+  %i.q = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9max_tp_cs) #15
   %.not37 = icmp eq i32 %i.q, 0
   br i1 %.not37, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.r = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailplENS3_10civil_timeINS3_10second_tagEEEl(i64 1970, i64 257, i64 noundef 9223372036854775807) #14 ; 2 uses
+  %i.r = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailplENS3_10civil_timeINS3_10second_tagEEEl(i64 1970, i64 257, i64 noundef 9223372036854775807) #15 ; 2 uses
   %i.s = extractvalue { i64, i64 } %i.r, 0
   store i64 %i.s, ptr @_ZZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9max_tp_cs, align 8
   %i.t = extractvalue { i64, i64 } %i.r, 1
   store i64 %i.t, ptr getelementptr inbounds nuw (i8, ptr @_ZZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9max_tp_cs, i64 8), align 8
   %i.u = tail call ptr @llvm.invariant.start.p0(i64 16, ptr nonnull @_ZZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9max_tp_cs) ; 0 uses
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9max_tp_cs) #14
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZNK4absl12lts_2026052613time_internal4cctz12TimeZoneLibC8MakeTimeERKNS2_6detail10civil_timeINS4_10second_tagEEEE9max_tp_cs) #15
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
@@ -392,7 +392,7 @@ _ZN4absl12lts_2026052613time_internal4cctz6detailgtINS3_10second_tagES5_EEbRKNS3
   %.sroa.22.8.extract.trunc.i.i.i.i.i = trunc i64 %.sroa.2.0.copyload to i8
   %.sroa.43.8.extract.shift.i.i.i.i.i = lshr i64 %.sroa.2.0.copyload, 8
   %.sroa.43.8.extract.trunc.i.i.i.i.i = trunc i64 %.sroa.43.8.extract.shift.i.i.i.i.i to i8
-  %i.by = tail call noundef i64 @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl14day_differenceElaalaa(i64 noundef %i.v, i8 noundef signext %.sroa.22.8.extract.trunc.i.i.i.i.i, i8 noundef signext %.sroa.43.8.extract.trunc.i.i.i.i.i, i64 noundef 1970, i8 noundef signext 1, i8 noundef signext 1) #14
+  %i.by = tail call noundef i64 @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl14day_differenceElaalaa(i64 noundef %i.v, i8 noundef signext %.sroa.22.8.extract.trunc.i.i.i.i.i, i8 noundef signext %.sroa.43.8.extract.trunc.i.i.i.i.i, i64 noundef 1970, i8 noundef signext 1, i8 noundef signext 1) #15
   %i.bz = shl i64 %.sroa.2.0.copyload, 40
   %i.ca = ashr i64 %i.bz, 56
   %.pn.i.i.i.i = mul i64 %i.by, 24
@@ -452,10 +452,10 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.bp
 
 bb.af:                                            ; preds = %bb.ad, %bb.ab
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #14
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #14
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #15
   %i.cv = trunc i64 %i.cl to i32
   %i.cw = add i32 %i.cv, -1900
   %i.cx = getelementptr inbounds nuw i8, ptr %6, i64 20 ; 2 uses
@@ -479,14 +479,14 @@ bb.af:                                            ; preds = %bb.ad, %bb.ab
   store <4 x i32> %i.dm, ptr %6, align 16, !tbaa !58
   %i.dn = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
   store i32 0, ptr %i.dn, align 16, !tbaa !44
-  %i.do = call i64 @mktime(ptr noundef nonnull %6) #14 ; 2 uses
+  %i.do = call i64 @mktime(ptr noundef nonnull %6) #15 ; 2 uses
   store i64 %i.do, ptr %i.c, align 8, !tbaa !32
   %i.dp = icmp eq i64 %i.do, -1
   br i1 %i.dp, label %bb.ag, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit.thread
 
 bb.ag:                                            ; preds = %bb.af
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
-  %i.dq = call noundef ptr @localtime_r(ptr noundef nonnull %i.c, ptr noundef nonnull %5) #14 ; 7 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
+  %i.dq = call noundef ptr @localtime_r(ptr noundef nonnull %i.c, ptr noundef nonnull %5) #15 ; 7 uses
   %i.dr = icmp eq ptr %i.dq, null
   br i1 %i.dr, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit.thread81, label %bb.ah
 
@@ -526,14 +526,14 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %.not37.i, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit.thread81
 
 _ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit.thread81: ; preds = %bb.ah, %bb.ag, %bb.al, %bb.ak, %bb.aj, %bb.ai
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
   br label %bb.be
 
 _ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit: ; preds = %bb.al
   %i.eh = load i32, ptr %i.dq, align 8, !tbaa !41
   %i.ei = load i32, ptr %6, align 16, !tbaa !41
   %.not38.i = icmp eq i32 %i.eh, %i.ei
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
   br i1 %.not38.i, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit.thread, label %bb.be
 
 _ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit.thread: ; preds = %bb.af, %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit
@@ -556,14 +556,14 @@ _ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail
   store <4 x i32> %i.ew, ptr %7, align 16, !tbaa !58
   %i.ex = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 2 uses
   store i32 1, ptr %i.ex, align 16, !tbaa !44
-  %i.ey = call i64 @mktime(ptr noundef nonnull %7) #14 ; 2 uses
+  %i.ey = call i64 @mktime(ptr noundef nonnull %7) #15 ; 2 uses
   store i64 %i.ey, ptr %i.d, align 8, !tbaa !32
   %i.ez = icmp eq i64 %i.ey, -1
   br i1 %i.ez, label %bb.am, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit51.thread
 
 bb.am:                                            ; preds = %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit.thread
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
-  %i.fa = call noundef ptr @localtime_r(ptr noundef nonnull %i.d, ptr noundef nonnull %4) #14 ; 7 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
+  %i.fa = call noundef ptr @localtime_r(ptr noundef nonnull %i.d, ptr noundef nonnull %4) #15 ; 7 uses
   %i.fb = icmp eq ptr %i.fa, null
   br i1 %i.fb, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit51.thread84, label %bb.an
 
@@ -603,14 +603,14 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %.not37.i49, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit51, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit51.thread84
 
 _ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit51.thread84: ; preds = %bb.an, %bb.am, %bb.ar, %bb.aq, %bb.ap, %bb.ao
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   br label %bb.be
 
 _ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit51: ; preds = %bb.ar
   %i.fr = load i32, ptr %i.fa, align 8, !tbaa !41
   %i.fs = load i32, ptr %7, align 16, !tbaa !41
   %.not38.i50 = icmp eq i32 %i.fr, %i.fs
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   br i1 %.not38.i50, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit51.thread, label %bb.be
 
 _ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit51.thread: ; preds = %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit.thread, %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_19make_timeERKNS2_6detail10civil_timeINS4_10second_tagEEEiPlP2tm.exit51
@@ -653,7 +653,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at
   %.035 = phi i64 [ %.val, %bb.au ], [ %.val41, %bb.at ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.gh, ptr %i.a, align 8, !tbaa !32
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
   br label %bb.aw
 
 bb.aw:                                            ; preds = %._crit_edge.i, %bb.av
@@ -665,12 +665,12 @@ bb.aw:                                            ; preds = %._crit_edge.i, %bb.
   br i1 %.not.i52, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_110find_transElll.exit, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
   %i.gk = sub nsw i64 %.012.i, %i.gi
   %i.gl = sdiv i64 %i.gk, 2
   %i.gm = add nsw i64 %i.gl, %i.gi
   store i64 %i.gm, ptr %i.b, align 8, !tbaa !32
-  %i.gn = call noundef ptr @localtime_r(ptr noundef nonnull %i.b, ptr noundef nonnull %3) #14 ; 2 uses
+  %i.gn = call noundef ptr @localtime_r(ptr noundef nonnull %i.b, ptr noundef nonnull %3) #15 ; 2 uses
   %.not17.not.i = icmp eq ptr %i.gn, null         ; 2 uses
   br i1 %.not17.not.i, label %.preheader.i, label %bb.ay
 
@@ -682,7 +682,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %.not1821.i, label %._crit_edge.thread.i, label %.lr.ph.i
 
 ._crit_edge.thread.i:                             ; preds = %.preheader.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   br label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_110find_transElll.exit
 
 bb.ay:                                            ; preds = %bb.ax
@@ -697,7 +697,7 @@ bb.az:                                            ; preds = %bb.ay
   br label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.bb
-  %i.gt = call noundef ptr @localtime_r(ptr noundef nonnull %i.a, ptr noundef nonnull %3) #14 ; 2 uses
+  %i.gt = call noundef ptr @localtime_r(ptr noundef nonnull %i.a, ptr noundef nonnull %3) #15 ; 2 uses
   %.not19.i = icmp eq ptr %i.gt, null
   br i1 %.not19.i, label %bb.bb, label %bb.ba
 
@@ -721,12 +721,12 @@ bb.bb:                                            ; preds = %bb.ba, %.lr.ph.i
 ._crit_edge.i:                                    ; preds = %bb.bb, %.._crit_edge.loopexit_crit_edge.i, %bb.az, %bb.ay
   %.214.i = phi i64 [ %.012.i, %bb.az ], [ %i.gs, %bb.ay ], [ %.012.i, %.._crit_edge.loopexit_crit_edge.i ], [ %.012.i, %bb.bb ]
   %.1.i53 = phi i64 [ %.011.i, %bb.az ], [ %.011.i, %bb.ay ], [ %.pre.pre.i, %.._crit_edge.loopexit_crit_edge.i ], [ %.012.i, %bb.bb ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   br i1 %.not17.not.i, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_110find_transElll.exit, label %bb.aw, !llvm.loop !61
 
 _ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_110find_transElll.exit: ; preds = %bb.aw, %._crit_edge.i, %._crit_edge.thread.i
   %.2.i = phi i64 [ %.012.i, %._crit_edge.thread.i ], [ %.1.i53, %._crit_edge.i ], [ %.012.i, %bb.aw ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.not39 = icmp eq i32 %i.ft, 0
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -817,10 +817,10 @@ _ZN4absl12lts_2026052613time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3
   br label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bc, %bb.bd, %_ZN4absl12lts_2026052613time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread, %bb.as
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #14
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #15
   br label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo, %bb.ae, %bb.ac, %_ZN4absl12lts_2026052613time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread
@@ -847,7 +847,7 @@ bb.a:
   %i.k = ashr i64 %i.j, 56
   %i.l = srem i64 %2, 60
   %i.m = add nsw i64 %i.k, %i.l
-  %i.n = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_secEllllll(i64 noundef %0, i64 noundef %i.a, i64 noundef %i.c, i64 noundef %i.e, i64 noundef %i.i, i64 noundef %i.m) #14 ; 2 uses
+  %i.n = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_secEllllll(i64 noundef %0, i64 noundef %i.a, i64 noundef %i.c, i64 noundef %i.e, i64 noundef %i.i, i64 noundef %i.m) #15 ; 2 uses
   %.fca.1.extract.i = extractvalue { i64, i64 } %i.n, 1
   %.sroa.2.8.insert.ext = and i64 %.fca.1.extract.i, 1099511627775
   %.fca.1.insert = insertvalue { i64, i64 } %i.n, i64 %.sroa.2.8.insert.ext, 1
@@ -938,8 +938,8 @@ declare void @_ZN4absl12lts_2026052613time_internal4cctz10TimeZoneIfD2Ev(ptr nou
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052613time_internal4cctz12TimeZoneLibCD0Ev(ptr noundef nonnull align 8 dereferenceable(9) %0) unnamed_addr #11 comdat align 2 {
 bb.a:
-  tail call void @_ZN4absl12lts_2026052613time_internal4cctz10TimeZoneIfD2Ev(ptr noundef nonnull align 8 dead_on_return(9) dereferenceable(9) %0) #14
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #15
+  tail call void @_ZN4absl12lts_2026052613time_internal4cctz10TimeZoneIfD2Ev(ptr noundef nonnull align 8 dead_on_return(9) dereferenceable(9) %0) #15
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #16
   ret void
 }
 
@@ -994,7 +994,7 @@ _ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_monEllllaaa.exit: ; pre
   %.016.i = phi i64 [ %i.l, %bb.g ], [ %i.i, %bb.f ], [ 12, %bb.e ]
   %.0.i = phi i64 [ %i.k, %bb.g ], [ %i.h, %bb.f ], [ %0, %bb.e ]
   %i.m = trunc nuw nsw i64 %.016.i to i8
-  %i.n = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef %.0.i, i8 noundef signext %i.m, i64 noundef %2, i64 noundef 0, i8 noundef signext %i.c, i8 noundef signext %i.b, i8 noundef signext %i.a) #14 ; 2 uses
+  %i.n = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef %.0.i, i8 noundef signext %i.m, i64 noundef %2, i64 noundef 0, i8 noundef signext %i.c, i8 noundef signext %i.b, i8 noundef signext %i.a) #15 ; 2 uses
   %.fca.1.extract.i = extractvalue { i64, i64 } %i.n, 1 ; 5 uses
   %.fca.0.extract22 = extractvalue { i64, i64 } %i.n, 0
   %.sroa.6.sroa.6.0.extract.shift112146 = lshr i64 %.fca.1.extract.i, 8
@@ -1031,7 +1031,7 @@ _ZN4absl12lts_2026052613time_internal4cctz6detail4impl6n_hourElllllaa.exit: ; pr
   %.lobit.i = ashr i64 %i.p, 63
   %.0.i85 = add nsw i64 %.lobit.i, %i.o
   %i.z = trunc nuw nsw i64 %.016.i.i to i8
-  %i.aa = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef %.0.i.i, i8 noundef signext %i.z, i64 noundef %2, i64 noundef %.0.i85, i8 noundef signext %i.y, i8 noundef signext %i.b, i8 noundef signext %i.a) #14 ; 2 uses
+  %i.aa = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef %.0.i.i, i8 noundef signext %i.z, i64 noundef %2, i64 noundef %.0.i85, i8 noundef signext %i.y, i8 noundef signext %i.b, i8 noundef signext %i.a) #15 ; 2 uses
   %.fca.1.extract.i.i = extractvalue { i64, i64 } %i.aa, 1 ; 5 uses
   %.fca.0.extract18 = extractvalue { i64, i64 } %i.aa, 0
   %.sroa.6.sroa.6.0.extract.shift110142 = lshr i64 %.fca.1.extract.i.i, 8
@@ -1085,7 +1085,7 @@ _ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_minElllllla.exit: ; pre
   %.lobit.i.i = sext i8 %i.ay to i64
   %.0.i.i89 = add nsw i64 %i.ax, %.lobit.i.i
   %i.az = trunc nuw nsw i64 %.016.i.i.i to i8
-  %i.ba = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef %.0.i.i.i, i8 noundef signext %i.az, i64 noundef %2, i64 noundef %.0.i.i89, i8 noundef signext %i.av, i8 noundef signext %i.al, i8 noundef signext %i.a) #14 ; 2 uses
+  %i.ba = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef %.0.i.i.i, i8 noundef signext %i.az, i64 noundef %2, i64 noundef %.0.i.i89, i8 noundef signext %i.av, i8 noundef signext %i.al, i8 noundef signext %i.a) #15 ; 2 uses
   %.fca.1.extract.i.i.i = extractvalue { i64, i64 } %i.ba, 1 ; 5 uses
   %.fca.0.extract14 = extractvalue { i64, i64 } %i.ba, 0
   %.sroa.6.sroa.6.0.extract.shift108138 = lshr i64 %.fca.1.extract.i.i.i, 8
@@ -1156,7 +1156,7 @@ _ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_minElllllla.exit104: ; 
   %.lobit.i.i99 = sext i8 %i.cl to i64
   %.0.i.i100 = add nsw i64 %i.ck, %.lobit.i.i99
   %i.cm = trunc nuw nsw i64 %.016.i.i.i92 to i8
-  %i.cn = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef %.0.i.i.i93, i8 noundef signext %i.cm, i64 noundef %2, i64 noundef %.0.i.i100, i8 noundef signext %i.ci, i8 noundef signext %i.bv, i8 noundef signext %i.bl) #14 ; 2 uses
+  %i.cn = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef %.0.i.i.i93, i8 noundef signext %i.cm, i64 noundef %2, i64 noundef %.0.i.i100, i8 noundef signext %i.ci, i8 noundef signext %i.bv, i8 noundef signext %i.bl) #15 ; 2 uses
   %.fca.1.extract.i.i.i101 = extractvalue { i64, i64 } %i.cn, 1 ; 5 uses
   %.fca.0.extract = extractvalue { i64, i64 } %i.cn, 0
   %.sroa.6.sroa.6.0.extract.shift134 = lshr i64 %.fca.1.extract.i.i.i101, 8
@@ -1428,7 +1428,9 @@ bb.a:
   %i.c = sub nsw i64 %0, %i.a
   %.neg = sub i64 %i.b, %3
   %i.d = add i64 %.neg, %i.c                      ; 5 uses
-  %6 = sext i8 %1 to i16
+  %6 = insertelement <2 x i8> poison, i8 %1, i64 0
+  %7 = insertelement <2 x i8> %6, i8 %4, i64 1    ; 2 uses
+  %8 = sext <2 x i8> %7 to <2 x i16>
   %i.e = icmp slt i8 %1, 3
   %i.f = sext i1 %i.e to i64
   %i.g = add nsw i64 %i.a, %i.f                   ; 4 uses
@@ -1440,20 +1442,8 @@ bb.a:
   %.sext = sext i16 %i.k to i64                   ; 2 uses
   %.neg.i = mul nsw i64 %.sext, -400
   %i.l = add nsw i64 %.neg.i, %i.g                ; 2 uses
-  %7 = icmp sgt i8 %1, 2
-  %8 = select i1 %7, i16 -3, i16 9
-  %9 = add nsw i16 %8, %6
-  %10 = mul nsw i16 %9, 153
-  %.lhs.trunc.i = add nsw i16 %10, 2
-  %11 = sdiv i16 %.lhs.trunc.i, 5
-  %.sext.i = sext i16 %11 to i64
+  %9 = icmp sgt <2 x i8> %7, splat (i8 2)
   %i.m = sext i8 %2 to i64
-  %.lhs.trunc33 = trunc i64 %i.l to i16           ; 2 uses
-  %12 = sdiv i16 %.lhs.trunc33, 4
-  %.sext34 = sext i16 %12 to i64
-  %.neg17.i35 = sdiv i16 %.lhs.trunc33, -100
-  %.neg17.i.sext = sext i16 %.neg17.i35 to i64
-  %13 = sext i8 %4 to i16
   %i.n = icmp slt i8 %4, 3
   %i.o = sext i1 %i.n to i64
   %i.p = add nsw i64 %i.b, %i.o                   ; 4 uses
@@ -1465,32 +1455,28 @@ bb.a:
   %.sext37 = sext i16 %i.t to i64                 ; 2 uses
   %.neg.i29 = mul nsw i64 %.sext37, -400
   %i.u = add nsw i64 %.neg.i29, %i.p              ; 2 uses
-  %14 = icmp sgt i8 %4, 2
-  %15 = select i1 %14, i16 -3, i16 9
-  %16 = add nsw i16 %15, %13
-  %17 = mul nsw i16 %16, 153
-  %.lhs.trunc.i30 = add nsw i16 %17, 2
-  %.neg53 = sdiv i16 %.lhs.trunc.i30, -5
-  %18 = sext i8 %5 to i64
-  %.lhs.trunc38 = trunc i64 %i.u to i16           ; 2 uses
-  %.neg54 = sdiv i16 %.lhs.trunc38, -4
-  %.neg17.i3240.neg = sdiv i16 %.lhs.trunc38, 100
-  %.neg17.i32.sext.neg = sext i16 %.neg17.i3240.neg to i64
-  %.sext.i31.neg = sext i16 %.neg53 to i64
-  %.sext39.neg = sext i16 %.neg54 to i64
+  %10 = select <2 x i1> %9, <2 x i16> splat (i16 -3), <2 x i16> splat (i16 9)
+  %11 = add nsw <2 x i16> %10, %8
+  %12 = sext i8 %5 to i64
+  %.lhs.trunc33 = trunc i64 %i.l to i16
+  %.lhs.trunc38 = trunc i64 %i.u to i16
+  %13 = shufflevector <2 x i16> %11, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %14 = insertelement <4 x i16> %13, i16 %.lhs.trunc33, i64 2
+  %15 = insertelement <4 x i16> %14, i16 %.lhs.trunc38, i64 3
+  %16 = mul nsw <4 x i16> %15, <i16 153, i16 153, i16 1, i16 1>
+  %17 = add nsw <4 x i16> %16, <i16 2, i16 2, i16 0, i16 0>
+  %18 = shufflevector <4 x i16> %17, <4 x i16> poison, <6 x i32> <i32 0, i32 1, i32 2, i32 2, i32 3, i32 3>
+  %19 = sdiv <6 x i16> %18, <i16 5, i16 -5, i16 4, i16 -100, i16 -4, i16 100>
   %reass.add = sub nsw i64 %i.l, %i.u
   %reass.mul = mul nsw i64 %reass.add, 365
   %reass.add51 = sub nsw i64 %.sext, %.sext37
   %reass.mul52 = mul nsw i64 %reass.add51, 146097
-  %.neg48 = sub nsw i64 %i.m, %18
-  %.neg49 = add nsw i64 %.neg48, %.sext.i
-  %19 = add nsw i64 %.neg49, %.sext.i31.neg
-  %20 = add nsw i64 %19, %.sext34
-  %21 = add nsw i64 %20, %.neg17.i.sext
-  %22 = add nsw i64 %21, %reass.mul52
-  %i.v = add nsw i64 %22, %reass.mul
-  %i.w = add nsw i64 %i.v, %.sext39.neg
-  %i.x = add nsw i64 %i.w, %.neg17.i32.sext.neg   ; 5 uses
+  %.neg48 = sub nsw i64 %i.m, %12
+  %20 = sext <6 x i16> %19 to <6 x i64>
+  %21 = tail call i64 @llvm.vector.reduce.add.v6i64(<6 x i64> %20)
+  %i.v = add i64 %21, %reass.mul52
+  %i.w = add nsw i64 %reass.mul, %.neg48
+  %i.x = add i64 %i.v, %i.w                       ; 5 uses
   %i.y = icmp sgt i64 %i.d, 0
   %i.z = icmp slt i64 %i.x, 0
   %or.cond = select i1 %i.y, i1 %i.z, i1 false
@@ -1524,6 +1510,9 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 ; Function Attrs: mustprogress nofree nounwind willreturn
 declare noundef i64 @mktime(ptr noundef captures(none)) local_unnamed_addr #12
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.add.v6i64(<6 x i64>) #13
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1537,9 +1526,10 @@ attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #10 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #12 = { mustprogress nofree nounwind willreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #13 = { builtin allocsize(0) }
-attributes #14 = { nounwind }
-attributes #15 = { builtin nounwind }
+attributes #13 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #14 = { builtin allocsize(0) }
+attributes #15 = { nounwind }
+attributes #16 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

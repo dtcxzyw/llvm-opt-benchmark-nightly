@@ -1,8 +1,7 @@
 inline.NumInlined: 26
 inline.NumDeleted: 14
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@cmd__path_utils:bb.a
   %i.ir = tail call i32 @close(i32 noundef %i.ic) #15 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #15
@@ -204,11 +203,11 @@ bb.db:                                            ; preds = %bb.cz, %st_mult.exi
 .lr.ph102.i:                                      ; preds = %bb.db, %.thread135.i
   %.fr115145.i = phi i64 [ 1000000, %.thread135.i ], [ %.fr115.i, %bb.db ] ; 2 uses
   %.156144.i = phi i64 [ 20, %.thread135.i ], [ %.156.i, %bb.db ]
-  %.057143.i = phi i64 [ 3, %.thread135.i ], [ %.057.i, %bb.db ] ; 3 uses
+  %.057143.i = phi i64 [ 3, %.thread135.i ], [ %.057.i, %bb.db ] ; 2 uses
   %.052718791141.i = phi i32 [ %.05271.ph.i, %.thread135.i ], [ %.05272.i, %bb.db ]
   %i.lb = phi ptr [ %i.kn, %.thread135.i ], [ %i.ks, %bb.db ] ; 2 uses
   %invariant.op.i = add i64 %.156144.i, 1
-  %.reass.i = sub i64 %invariant.op.i, %.057143.i ; 2 uses
+  %.reass.i = sub i64 %invariant.op.i, %.057143.i
   %.pre127.i = load i64, ptr @my_random_value, align 8, !tbaa !52
   br label %bb.dd
 
@@ -310,78 +309,39 @@ bb.dc:                                            ; preds = %bb.dc, %.lr.ph105.u
 bb.dd:                                            ; preds = %bb.de, %.lr.ph102.i
   %i.my = phi i64 [ %.pre127.i, %.lr.ph102.i ], [ %i.no, %bb.de ]
   %.053100.i = phi i64 [ 0, %.lr.ph102.i ], [ %i.np, %bb.de ] ; 2 uses
-  %.fr = freeze i64 %i.my
-  %i.mz = mul i64 %.fr, 1103515245                ; 2 uses
-  %i.na = add i64 %i.mz, 12345                    ; 4 uses
+  %i.mz = mul i64 %i.my, 1103515245
+  %i.na = add i64 %i.mz, 12345                    ; 2 uses
   store i64 %i.na, ptr @my_random_value, align 8, !tbaa !52
   %i.nb = urem i64 %i.na, %.reass.i
-  %i.nc = add i64 %i.nb, %.057143.i               ; 5 uses
+  %i.nc = add i64 %i.nb, %.057143.i               ; 3 uses
   %i.nd = tail call ptr @xmallocz(i64 noundef %i.nc) #15
-  %i.ne = getelementptr inbounds nuw [8 x i8], ptr %i.lb, i64 %.053100.i ; 4 uses
+  %i.ne = getelementptr inbounds nuw [8 x i8], ptr %i.lb, i64 %.053100.i ; 2 uses
   store ptr %i.nd, ptr %i.ne, align 8, !tbaa !12
-  %my_random_value.promoted.i = load i64, ptr @my_random_value, align 8 ; 3 uses
+  %my_random_value.promoted.i = load i64, ptr @my_random_value, align 8 ; 2 uses
   %.not6797.i = icmp eq i64 %i.nc, 0
-  br i1 %.not6797.i, label %bb.de, label %.lr.ph.i304.preheader
+  br i1 %.not6797.i, label %bb.de, label %.lr.ph.i304
 
-.lr.ph.i304.preheader:                            ; preds = %bb.dd
-  %11 = add i64 %.057143.i, %i.mz
-  %.neg473 = sub i64 -12344, %11
-  %12 = urem i64 %i.na, %.reass.i
-  %.neg = sub i64 %12, %i.na
-  %xtraiter = and i64 %i.nc, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i304.prol.loopexit, label %.lr.ph.i304.prol
-
-.lr.ph.i304.prol:                                 ; preds = %.lr.ph.i304.preheader
-  %13 = mul i64 %my_random_value.promoted.i, 1103515245
-  %14 = add i64 %13, 12345                        ; 3 uses
-  %15 = urem i64 %14, 95
-  %16 = trunc nuw nsw i64 %15 to i8
-  %17 = add nuw nsw i8 %16, 32
-  %18 = load ptr, ptr %i.ne, align 8, !tbaa !12
-  %19 = add nsw i64 %i.nc, -1                     ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %18, i64 %19
-  store i8 %17, ptr %20, align 1, !tbaa !25
-  br label %.lr.ph.i304.prol.loopexit
-
-.lr.ph.i304.prol.loopexit:                        ; preds = %.lr.ph.i304.prol, %.lr.ph.i304.preheader
-  %.lcssa467.unr = phi i64 [ poison, %.lr.ph.i304.preheader ], [ %14, %.lr.ph.i304.prol ]
-  %.098.i.unr = phi i64 [ %i.nc, %.lr.ph.i304.preheader ], [ %19, %.lr.ph.i304.prol ]
-  %.unr = phi i64 [ %my_random_value.promoted.i, %.lr.ph.i304.preheader ], [ %14, %.lr.ph.i304.prol ]
-  %21 = icmp eq i64 %.neg, %.neg473
-  br i1 %21, label %._crit_edge.i, label %.lr.ph.i304
-
-.lr.ph.i304:                                      ; preds = %.lr.ph.i304.prol.loopexit, %.lr.ph.i304
-  %.098.i = phi i64 [ %i.nm, %.lr.ph.i304 ], [ %.098.i.unr, %.lr.ph.i304.prol.loopexit ] ; 2 uses
-  %i.nf = phi i64 [ %i.nh, %.lr.ph.i304 ], [ %.unr, %.lr.ph.i304.prol.loopexit ]
-  %22 = mul i64 %i.nf, 1103515245
-  %23 = add i64 %22, 12345                        ; 2 uses
-  %24 = urem i64 %23, 95
-  %25 = trunc nuw nsw i64 %24 to i8
-  %26 = add nuw nsw i8 %25, 32
-  %27 = load ptr, ptr %i.ne, align 8, !tbaa !12
-  %28 = getelementptr i8, ptr %27, i64 %.098.i
-  %29 = getelementptr i8, ptr %28, i64 -1
-  store i8 %26, ptr %29, align 1, !tbaa !25
-  %i.ng = mul i64 %23, 1103515245
-  %i.nh = add i64 %i.ng, 12345                    ; 3 uses
+.lr.ph.i304:                                      ; preds = %bb.dd, %.lr.ph.i304
+  %.098.i = phi i64 [ %i.nm, %.lr.ph.i304 ], [ %i.nc, %bb.dd ]
+  %i.nf = phi i64 [ %i.nh, %.lr.ph.i304 ], [ %my_random_value.promoted.i, %bb.dd ]
+  %i.ng = mul i64 %i.nf, 1103515245
+  %i.nh = add i64 %i.ng, 12345                    ; 4 uses
   %i.ni = urem i64 %i.nh, 95
   %i.nj = trunc nuw nsw i64 %i.ni to i8
   %i.nk = add nuw nsw i8 %i.nj, 32
   %i.nl = load ptr, ptr %i.ne, align 8, !tbaa !12
-  %i.nm = add i64 %.098.i, -2                     ; 3 uses
+  %i.nm = add i64 %.098.i, -1                     ; 3 uses
   %i.nn = getelementptr inbounds nuw i8, ptr %i.nl, i64 %i.nm
   store i8 %i.nk, ptr %i.nn, align 1, !tbaa !25
   %.not67.i.1 = icmp eq i64 %i.nm, 0
   br i1 %.not67.i.1, label %._crit_edge.i, label %.lr.ph.i304, !llvm.loop !58
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i304, %.lr.ph.i304.prol.loopexit
-  %.lcssa467 = phi i64 [ %.lcssa467.unr, %.lr.ph.i304.prol.loopexit ], [ %i.nh, %.lr.ph.i304 ] ; 2 uses
-  store i64 %.lcssa467, ptr @my_random_value, align 8, !tbaa !52
+._crit_edge.i:                                    ; preds = %.lr.ph.i304
+  store i64 %i.nh, ptr @my_random_value, align 8, !tbaa !52
   br label %bb.de
 
 bb.de:                                            ; preds = %._crit_edge.i, %bb.dd
-  %i.no = phi i64 [ %.lcssa467, %._crit_edge.i ], [ %my_random_value.promoted.i, %bb.dd ]
+  %i.no = phi i64 [ %i.nh, %._crit_edge.i ], [ %my_random_value.promoted.i, %bb.dd ]
   %i.np = add nuw i64 %.053100.i, 1               ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.np, %.fr115145.i
   br i1 %exitcond.not.i, label %.preheader96.i, label %bb.dd, !llvm.loop !59

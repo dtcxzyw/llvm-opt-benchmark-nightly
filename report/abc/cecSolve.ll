@@ -203,14 +203,21 @@ declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr
 
 ; Function Attrs: nounwind uwtable
 define void @Cec_SetActivityFactors_rec(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #1 {
-bb.a:
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.a = load ptr, ptr %4, align 8, !tbaa !17     ; 4 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %6 = getelementptr i8, ptr %0, i64 48
+  %7 = sub nsw i32 %3, %2
+  %8 = sitofp i32 %7 to float
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  br label %bb.a
+
+bb.a:                                             ; preds = %tailrecurse, %4
+  %.tr40 = phi ptr [ %1, %4 ], [ %i.bx, %tailrecurse ] ; 8 uses
+  %i.a = load ptr, ptr %5, align 8, !tbaa !17     ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 624
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !79
   %i.d = getelementptr i8, ptr %i.a, i64 32
   %.val.i43 = load ptr, ptr %i.d, align 8, !tbaa !19 ; 2 uses
-  %i.e = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.e = ptrtoint ptr %.tr40 to i64               ; 2 uses
   %i.f = ptrtoint ptr %.val.i43 to i64
   %i.g = sub i64 %i.e, %i.f
   %i.h = sdiv exact i64 %i.g, 12
@@ -221,42 +228,29 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 176
   %i.m = load i32, ptr %i.l, align 8, !tbaa !80   ; 2 uses
   %.not45 = icmp eq i32 %i.k, %i.m
-  br i1 %.not45, label %._crit_edge, label %.lr.ph
+  br i1 %.not45, label %._crit_edge, label %bb.b
 
-.lr.ph:                                           ; preds = %bb.a
-  %5 = getelementptr i8, ptr %0, i64 48
-  %6 = sub nsw i32 %3, %2
-  %7 = sitofp i32 %6 to float
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  br label %bb.b
-
-bb.b:                                             ; preds = %.lr.ph, %tailrecurse
-  %9 = phi i32 [ %i.m, %.lr.ph ], [ %25, %tailrecurse ]
-  %10 = phi ptr [ %i.j, %.lr.ph ], [ %22, %tailrecurse ]
-  %11 = phi i64 [ %i.e, %.lr.ph ], [ %17, %tailrecurse ]
-  %.val.i47 = phi ptr [ %.val.i43, %.lr.ph ], [ %.val.i, %tailrecurse ]
-  %12 = phi ptr [ %i.a, %.lr.ph ], [ %13, %tailrecurse ]
-  %.tr4046 = phi ptr [ %1, %.lr.ph ], [ %i.bx, %tailrecurse ] ; 7 uses
-  store i32 %9, ptr %10, align 4, !tbaa !36
-  %i.n = getelementptr i8, ptr %12, i64 160
+bb.b:                                             ; preds = %bb.a
+  store i32 %i.m, ptr %i.j, align 4, !tbaa !36
+  %i.n = getelementptr i8, ptr %i.a, i64 160
   %.val36 = load ptr, ptr %i.n, align 8, !tbaa !81
-  %i.o = tail call fastcc i32 @Gia_ObjLevel(ptr %.val.i47, ptr %.val36, ptr noundef %.tr4046)
+  %i.o = tail call fastcc i32 @Gia_ObjLevel(ptr %.val.i43, ptr %.val36, ptr noundef %.tr40)
   %.not28 = icmp sgt i32 %i.o, %2
   br i1 %.not28, label %bb.c, label %._crit_edge
 
 bb.c:                                             ; preds = %bb.b
-  %.val32 = load i64, ptr %.tr4046, align 4       ; 2 uses
+  %.val32 = load i64, ptr %.tr40, align 4         ; 2 uses
   %i.p = and i64 %.val32, 2684354559
   %narrow.i.not = icmp eq i64 %i.p, 2684354559
   br i1 %narrow.i.not, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.val = load ptr, ptr %4, align 8, !tbaa !17    ; 2 uses
-  %.val31 = load ptr, ptr %5, align 8, !tbaa !18
+  %.val = load ptr, ptr %5, align 8, !tbaa !17    ; 2 uses
+  %.val31 = load ptr, ptr %6, align 8, !tbaa !18
   %i.q = getelementptr i8, ptr %.val, i64 32
   %.val.val = load ptr, ptr %i.q, align 8, !tbaa !19 ; 2 uses
   %i.r = ptrtoint ptr %.val.val to i64
-  %i.s = sub i64 %11, %i.r
+  %i.s = sub i64 %i.e, %i.r
   %i.t = sdiv exact i64 %i.s, 12
   %sext.i39 = shl i64 %i.t, 32
   %i.u = ashr exact i64 %sext.i39, 30
@@ -268,13 +262,13 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.x = getelementptr i8, ptr %.val, i64 160
   %.val34 = load ptr, ptr %i.x, align 8, !tbaa !81
-  %i.y = tail call fastcc i32 @Gia_ObjLevel(ptr %.val.val, ptr %.val34, ptr noundef nonnull %.tr4046)
+  %i.y = tail call fastcc i32 @Gia_ObjLevel(ptr %.val.val, ptr %.val34, ptr noundef nonnull %.tr40)
   %i.z = sub nsw i32 %i.y, %2
   %i.aa = sitofp i32 %i.z to float
   %i.ab = fmul nnan float %i.aa, 2.000000e+01
-  %i.ac = fdiv float %i.ab, %7
+  %i.ac = fdiv float %i.ab, %8
   %i.ad = fpext float %i.ac to double
-  %i.ae = load ptr, ptr %8, align 8, !tbaa !8     ; 5 uses
+  %i.ae = load ptr, ptr %9, align 8, !tbaa !8     ; 5 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 536
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !76
   %i.ah = sext i32 %i.w to i64
@@ -339,39 +333,23 @@ veci_push.exit:                                   ; preds = %bb.e, %bb.k
   %i.bn = sext i32 %i.bj to i64
   %i.bo = getelementptr inbounds [4 x i8], ptr %i.bl, i64 %i.bn
   store i32 %i.w, ptr %i.bo, align 4, !tbaa !36
-  %.pre = load i64, ptr %.tr4046, align 4
+  %.pre = load i64, ptr %.tr40, align 4
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %veci_push.exit, %bb.d
   %i.bp = phi i64 [ %.pre, %veci_push.exit ], [ %.val32, %bb.d ]
   %i.bq = and i64 %i.bp, 536870911
   %i.br = sub nsw i64 0, %i.bq
-  %i.bs = getelementptr inbounds [12 x i8], ptr %.tr4046, i64 %i.br
+  %i.bs = getelementptr inbounds [12 x i8], ptr %.tr40, i64 %i.br
   tail call void @Cec_SetActivityFactors_rec(ptr noundef nonnull %0, ptr noundef nonnull %i.bs, i32 noundef %2, i32 noundef %3)
-  %i.bt = load i64, ptr %.tr4046, align 4
+  %i.bt = load i64, ptr %.tr40, align 4
   %i.bu = lshr i64 %i.bt, 32
   %i.bv = and i64 %i.bu, 536870911
   %i.bw = sub nsw i64 0, %i.bv
-  %i.bx = getelementptr inbounds [12 x i8], ptr %.tr4046, i64 %i.bw ; 2 uses
-  %13 = load ptr, ptr %4, align 8, !tbaa !17      ; 4 uses
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 624
-  %15 = load ptr, ptr %14, align 8, !tbaa !79
-  %16 = getelementptr i8, ptr %13, i64 32
-  %.val.i = load ptr, ptr %16, align 8, !tbaa !19 ; 2 uses
-  %17 = ptrtoint ptr %i.bx to i64                 ; 2 uses
-  %18 = ptrtoint ptr %.val.i to i64
-  %19 = sub i64 %17, %18
-  %20 = sdiv exact i64 %19, 12
-  %sext.i = shl i64 %20, 32
-  %21 = ashr exact i64 %sext.i, 30
-  %22 = getelementptr inbounds i8, ptr %15, i64 %21 ; 2 uses
-  %23 = load i32, ptr %22, align 4, !tbaa !36
-  %24 = getelementptr inbounds nuw i8, ptr %13, i64 176
-  %25 = load i32, ptr %24, align 8, !tbaa !80     ; 2 uses
-  %.not = icmp eq i32 %23, %25
-  br i1 %.not, label %._crit_edge, label %bb.b
+  %i.bx = getelementptr inbounds [12 x i8], ptr %.tr40, i64 %i.bw
+  br label %bb.a
 
-._crit_edge:                                      ; preds = %tailrecurse, %bb.c, %bb.b, %bb.a
+._crit_edge:                                      ; preds = %bb.b, %bb.c, %bb.a
   ret void
 }
 

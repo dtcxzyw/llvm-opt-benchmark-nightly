@@ -2,7 +2,7 @@ inline.NumInlined: 35
 inline.NumDeleted: 5
 loop-unroll.NumCompletelyUnrolled: 6
 loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 14
+loop-unroll.NumUnrolled: 13
 begin_hunk_0_@XYZtoRGB24:bb.a
   %i.aj = fmul double %i.ai, 2.560000e+02
   %i.ak = fptosi double %i.aj to i32
@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.h,
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc i32 @oog_encode(double noundef %0, double noundef %1) unnamed_addr #6 {
 bb.a:
-  %i.a = alloca [100 x double], align 16          ; 58 uses
+  %i.a = alloca [100 x double], align 16          ; 57 uses
   %.b = load i1, ptr @oog_encode.initialized, align 4
   br i1 %.b, label %bb.k, label %vector.ph
 
@@ -408,43 +408,29 @@ bb.f:                                             ; preds = %.preheader.1
 
 bb.g:                                             ; preds = %.preheader.1, %.preheader, %bb.e
   %.049.lcssa = phi i32 [ %.04960, %.preheader ], [ 50, %bb.e ], [ %i.cr, %.preheader.1 ] ; 2 uses
-  %i.cy = add nuw nsw i32 %.163, 99               ; 3 uses
+  %i.cy = add nuw nsw i32 %.163, 99               ; 2 uses
   br label %bb.h
 
-bb.h:                                             ; preds = %8, %bb.g
-  %.0.neg62 = phi i32 [ -1, %bb.g ], [ %.0.neg.1, %8 ] ; 2 uses
-  %.061 = phi i32 [ 1, %bb.g ], [ %9, %8 ]        ; 5 uses
+bb.h:                                             ; preds = %bb.g, %bb.i
+  %.0.neg62 = phi i32 [ -1, %bb.g ], [ %.0.neg, %bb.i ] ; 2 uses
+  %.061 = phi i32 [ 1, %bb.g ], [ %i.de, %bb.i ]  ; 3 uses
   %i.cz = add nsw i32 %i.cy, %.0.neg62
   %.urem68 = urem i32 %i.cz, 100
   %i.da = zext nneg i32 %.urem68 to i64
   %i.db = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.da
   %i.dc = load double, ptr %i.db, align 8, !tbaa !15
   %i.dd = fcmp olt double %i.dc, 1.500000e+00
-  br i1 %i.dd, label %.preheader56._crit_edge.sink.split, label %2
+  br i1 %i.dd, label %.preheader56._crit_edge.sink.split, label %bb.i
 
-2:                                                ; preds = %bb.h
-  %3 = add nuw nsw i32 %.061, 1                   ; 2 uses
-  %exitcond69.not = icmp eq i32 %3, 50
-  br i1 %exitcond69.not, label %.preheader56._crit_edge.sink.split, label %bb.i
+bb.i:                                             ; preds = %bb.h
+  %i.de = add nuw nsw i32 %.061, 1                ; 2 uses
+  %.0.neg = xor i32 %.061, -1
+  %exitcond69.not = icmp eq i32 %i.de, 50
+  br i1 %exitcond69.not, label %.preheader56._crit_edge.sink.split, label %bb.h
 
-bb.i:                                             ; preds = %2
-  %.0.neg = xor i32 %.061, -1                     ; 2 uses
-  %i.de = add nsw i32 %i.cy, %.0.neg
-  %.urem68.1 = urem i32 %i.de, 100
-  %4 = zext nneg i32 %.urem68.1 to i64
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %4
-  %6 = load double, ptr %5, align 8, !tbaa !15
-  %7 = fcmp olt double %6, 1.500000e+00
-  br i1 %7, label %.preheader56._crit_edge.sink.split, label %8
-
-8:                                                ; preds = %bb.i
-  %9 = add nuw nsw i32 %.061, 2
-  %.0.neg.1 = sub nuw i32 -2, %.061
-  br label %bb.h
-
-.preheader56._crit_edge.sink.split:               ; preds = %bb.i, %bb.h, %2
-  %.0.lcssa = phi i32 [ %.061, %bb.h ], [ 50, %2 ], [ %3, %bb.i ]
-  %.0.neg.lcssa = phi i32 [ %.0.neg62, %bb.h ], [ -50, %2 ], [ %.0.neg, %bb.i ]
+.preheader56._crit_edge.sink.split:               ; preds = %bb.h, %bb.i
+  %.0.lcssa = phi i32 [ %.061, %bb.h ], [ 50, %bb.i ]
+  %.0.neg.lcssa = phi i32 [ %.0.neg62, %bb.h ], [ -50, %bb.i ]
   %i.df = icmp samesign ult i32 %.049.lcssa, %.0.lcssa
   %i.dg = getelementptr inbounds [4 x i8], ptr @oog_encode.oog_table, i64 %indvars.iv70
   %i.dh = add nsw i32 %.049.lcssa, %i.cl
@@ -847,7 +833,7 @@ bb.e:                                             ; preds = %bb.a, %bb.d
   %i.x = add nsw i64 %i.f, -1
   %umin55 = tail call i64 @llvm.umin.i64(i64 %i.w, i64 %i.x) ; 2 uses
   %i.y = add nuw nsw i64 %umin55, 1               ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %umin55, 27
+  %min.iters.check = icmp samesign ult i64 %umin55, 35
   br i1 %min.iters.check, label %.lr.ph.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader

@@ -1,8 +1,7 @@
 inline.NumInlined: 407
 inline.NumDeleted: 131
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN5boost10stacktrace6detail11source_lineEPKvb:bb.a
   %i.e = sub i64 %i.d, %.09
   %i.f = inttoptr i64 %i.e to ptr
@@ -204,7 +203,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17: ; preds = %bb.
 define void @_ZN5boost10stacktrace6detail9to_stringB5cxx11EPKNS0_5frameEm(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.boost::stacktrace::detail::to_string_impl_base", align 8 ; 9 uses
-  %4 = alloca %"struct.std::array", align 1       ; 11 uses
+  %4 = alloca %"struct.std::array", align 1       ; 9 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 12 uses
   store ptr %i.a, ptr %0, align 8, !tbaa !19
@@ -251,7 +250,7 @@ bb.e:                                             ; preds = %bb.b
   br label %bb.z
 
 bb.f:                                             ; preds = %bb.c, %bb.t
-  %.061 = phi i64 [ 0, %bb.c ], [ %i.cl, %bb.t ]  ; 7 uses
+  %.061 = phi i64 [ 0, %bb.c ], [ %i.cl, %bb.t ]  ; 6 uses
   %i.n = icmp ult i64 %.061, 10
   br i1 %i.n, label %bb.g, label %.thread
 
@@ -314,71 +313,38 @@ bb.k:                                             ; preds = %bb.j
 
 .preheader.i:                                     ; preds = %.preheader19.i
   %.not1822.i = icmp eq i64 %i.ab, 0
-  br i1 %.not1822.i, label %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit, label %.lr.ph.preheader.i
+  br i1 %.not1822.i, label %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit, label %.lr.ph.preheader.i.new
 
-.lr.ph.preheader.i:                               ; preds = %.preheader.i
+.lr.ph.preheader.i.new:                           ; preds = %.preheader.i
   %umax.i = call i64 @llvm.umax.i64(i64 %indvars.iv.i, i64 2)
-  %6 = add i64 %umax.i, -1                        ; 3 uses
-  %xtraiter = and i64 %6, 1
-  %7 = icmp ult i64 %indvars.iv.i, 3
-  br i1 %7, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
-
-.lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter = and i64 %6, -2
   br label %.lr.ph.i
 
 .preheader19.i:                                   ; preds = %.preheader19.i.preheader, %.preheader19.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.preheader19.i ], [ 2, %.preheader19.i.preheader ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.preheader19.i ], [ 2, %.preheader19.i.preheader ] ; 2 uses
   %.01321.i = phi i64 [ %i.ac, %.preheader19.i ], [ %.061, %.preheader19.i.preheader ] ; 2 uses
-  %.01420.i = phi i64 [ %i.ab, %.preheader19.i ], [ 0, %.preheader19.i.preheader ] ; 2 uses
-  %i.ab = add i64 %.01420.i, 1                    ; 6 uses
+  %.01420.i = phi i64 [ %i.ab, %.preheader19.i ], [ 0, %.preheader19.i.preheader ]
+  %i.ab = add i64 %.01420.i, 1                    ; 4 uses
   %i.ac = udiv i64 %.01321.i, 10
   %.not17.i = icmp ult i64 %.01321.i, 10
   %indvars.iv.next.i = add i64 %indvars.iv.i, 1
   br i1 %.not17.i, label %.preheader.i, label %.preheader19.i, !llvm.loop !31
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
-  %.024.i = phi i64 [ 1, %.lr.ph.preheader.i.new ], [ %14, %.lr.ph.i ] ; 3 uses
-  %.01523.i.a = phi i64 [ %.061, %.lr.ph.preheader.i.new ], [ %i.ai, %.lr.ph.i ] ; 3 uses
-  %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.1, %.lr.ph.i ]
-  %8 = urem i64 %.01523.i.a, 10
-  %9 = trunc nuw nsw i64 %8 to i8
-  %10 = or disjoint i8 %9, 48
-  %11 = sub nuw i64 %i.ab, %.024.i
-  %12 = getelementptr inbounds nuw i8, ptr %4, i64 %11
-  store i8 %10, ptr %12, align 1, !tbaa !18, !alias.scope !28
-  %13 = udiv i64 %.01523.i.a, 10
-  %i.ad = urem i64 %13, 10
+  %.01523.i.a = phi i64 [ %niter.next.1, %.lr.ph.i ], [ 1, %.lr.ph.preheader.i.new ] ; 2 uses
+  %niter = phi i64 [ %i.ai, %.lr.ph.i ], [ %.061, %.lr.ph.preheader.i.new ] ; 2 uses
+  %i.ad = urem i64 %niter, 10
   %i.ae = trunc nuw nsw i64 %i.ad to i8
   %i.af = or disjoint i8 %i.ae, 48
-  %i.ag = sub i64 %.01420.i, %.024.i
+  %i.ag = sub nuw i64 %i.ab, %.01523.i.a
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 %i.ag
   store i8 %i.af, ptr %i.ah, align 1, !tbaa !18, !alias.scope !28
-  %i.ai = udiv i64 %.01523.i.a, 100               ; 2 uses
-  %14 = add nuw i64 %.024.i, 2                    ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !33
+  %i.ai = udiv i64 %niter, 10
+  %niter.next.1 = add nuw i64 %.01523.i.a, 1      ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %umax.i
+  br i1 %niter.ncmp.1, label %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit, label %.lr.ph.i, !llvm.loop !33
 
-_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit, label %.lr.ph.i.epil.preheader
-
-.lr.ph.i.epil.preheader:                          ; preds = %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa, %.lr.ph.preheader.i
-  %.024.i.epil.init = phi i64 [ 1, %.lr.ph.preheader.i ], [ %14, %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa ]
-  %.01523.i.epil.init = phi i64 [ %.061, %.lr.ph.preheader.i ], [ %i.ai, %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa ]
-  %lcmp.mod77 = trunc i64 %6 to i1
-  call void @llvm.assume(i1 %lcmp.mod77)
-  %15 = urem i64 %.01523.i.epil.init, 10
-  %16 = trunc nuw nsw i64 %15 to i8
-  %17 = or disjoint i8 %16, 48
-  %18 = sub nuw i64 %i.ab, %.024.i.epil.init
-  %19 = getelementptr inbounds nuw i8, ptr %4, i64 %18
-  store i8 %17, ptr %19, align 1, !tbaa !18, !alias.scope !28
-  br label %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit
-
-_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit: ; preds = %.lr.ph.i.epil.preheader, %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa, %bb.k, %.preheader.i
-  %.lcssa.sink.i = phi i64 [ 1, %bb.k ], [ 0, %.preheader.i ], [ %i.ab, %_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit.loopexit.unr-lcssa ], [ %i.ab, %.lr.ph.i.epil.preheader ]
+_ZN5boost10stacktrace6detail12to_dec_arrayEm.exit: ; preds = %.lr.ph.i, %bb.k, %.preheader.i
+  %.lcssa.sink.i = phi i64 [ 1, %bb.k ], [ 0, %.preheader.i ], [ %i.ab, %.lr.ph.i ]
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 %.lcssa.sink.i
   store i8 0, ptr %i.aj, align 1, !tbaa !18, !alias.scope !28
   %i.ak = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %4) #19 ; 2 uses

@@ -1,8 +1,8 @@
 inline.NumInlined: 18938
 inline.NumDeleted: 8313
 loop-unroll.NumCompletelyUnrolled: 39
-loop-unroll.NumRuntimeUnrolled: 82
-loop-unroll.NumUnrolled: 121
+loop-unroll.NumRuntimeUnrolled: 80
+loop-unroll.NumUnrolled: 119
 begin_hunk_0_@_ZN6duckdb23ArrowToDuckDBConversion19ColumnArrowToDuckDBERNS_6VectorER10ArrowArraymRNS_19ArrowArrayScanStateEmRKNS_9ArrowTypeElPNS_12ValidityMaskEmb:bb.a
 bb.ca:                                            ; preds = %bb.bv
   %i.lg = call ptr @__cxa_allocate_exception(i64 16) #29 ; 3 uses
@@ -204,7 +204,7 @@ bb.cs:                                            ; preds = %bb.cp
 bb.ct:                                            ; preds = %bb.cp
   call void @_ZN6duckdb14ConstantVector16VerifyVectorTypeINS_10interval_tEEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %0)
   %i.nc = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.nd = load ptr, ptr %i.nc, align 8, !tbaa !419 ; 3 uses
+  %i.nd = load ptr, ptr %i.nc, align 8, !tbaa !419
   %i.ne = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.nf = load ptr, ptr %i.ne, align 8, !tbaa !352
   %i.ng = getelementptr inbounds nuw i8, ptr %i.nf, i64 8
@@ -216,45 +216,24 @@ bb.ct:                                            ; preds = %bb.cp
   %i.nl = add i64 %i.ni, %2
   %.0.v.i660 = select i1 %.not.i659, i64 %i.nl, i64 %6
   %i.nm = getelementptr [8 x i8], ptr %i.nh, i64 %.0.v.i660
-  %i.nn = getelementptr [8 x i8], ptr %i.nm, i64 %i.nk ; 3 uses
+  %i.nn = getelementptr [8 x i8], ptr %i.nm, i64 %i.nk
   %.not906 = icmp eq i64 %4, 0
-  br i1 %.not906, label %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit, label %.lr.ph881.preheader
+  br i1 %.not906, label %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit, label %.lr.ph881
 
-.lr.ph881.preheader:                              ; preds = %bb.ct
-  %xtraiter1061 = and i64 %4, 1
-  %52 = icmp eq i64 %4, 1
-  br i1 %52, label %.lr.ph881.epil.preheader, label %.lr.ph881.preheader.new
-
-.lr.ph881.preheader.new:                          ; preds = %.lr.ph881.preheader
-  %unroll_iter1064 = and i64 %4, -2
-  br label %.lr.ph881
-
-.lr.ph881:                                        ; preds = %.lr.ph881, %.lr.ph881.preheader.new
-  %.0552879 = phi i64 [ 0, %.lr.ph881.preheader.new ], [ %60, %.lr.ph881 ] ; 4 uses
-  %niter1065 = phi i64 [ 0, %.lr.ph881.preheader.new ], [ %niter1065.next.1, %.lr.ph881 ]
-  %53 = getelementptr inbounds nuw [8 x i8], ptr %i.nn, i64 %.0552879
-  %54 = load i64, ptr %53, align 8, !tbaa !23
-  %55 = sdiv i64 %54, 1000
-  %56 = getelementptr inbounds nuw [16 x i8], ptr %i.nd, i64 %.0552879 ; 3 uses
-  %57 = getelementptr inbounds nuw i8, ptr %56, i64 8
-  store i64 %55, ptr %57, align 8, !tbaa !439
-  %58 = getelementptr inbounds nuw i8, ptr %56, i64 4
-  store i32 0, ptr %58, align 4, !tbaa !441
-  store i32 0, ptr %56, align 8, !tbaa !442
-  %59 = or disjoint i64 %.0552879, 1              ; 2 uses
-  %i.no = getelementptr inbounds nuw [8 x i8], ptr %i.nn, i64 %59
+.lr.ph881:                                        ; preds = %bb.ct, %.lr.ph881
+  %niter1065 = phi i64 [ %niter1065.next.1, %.lr.ph881 ], [ 0, %bb.ct ] ; 3 uses
+  %i.no = getelementptr inbounds nuw [8 x i8], ptr %i.nn, i64 %niter1065
   %i.np = load i64, ptr %i.no, align 8, !tbaa !23
   %i.nq = sdiv i64 %i.np, 1000
-  %i.nr = getelementptr inbounds nuw [16 x i8], ptr %i.nd, i64 %59 ; 3 uses
+  %i.nr = getelementptr inbounds nuw [16 x i8], ptr %i.nd, i64 %niter1065 ; 3 uses
   %i.ns = getelementptr inbounds nuw i8, ptr %i.nr, i64 8
   store i64 %i.nq, ptr %i.ns, align 8, !tbaa !439
   %i.nt = getelementptr inbounds nuw i8, ptr %i.nr, i64 4
   store i32 0, ptr %i.nt, align 4, !tbaa !441
   store i32 0, ptr %i.nr, align 8, !tbaa !442
-  %60 = add nuw i64 %.0552879, 2                  ; 2 uses
-  %niter1065.next.1 = add nuw i64 %niter1065, 2   ; 2 uses
-  %niter1065.ncmp.1 = icmp eq i64 %niter1065.next.1, %unroll_iter1064
-  br i1 %niter1065.ncmp.1, label %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1049.unr-lcssa, label %.lr.ph881, !llvm.loop !443
+  %niter1065.next.1 = add nuw i64 %niter1065, 1   ; 2 uses
+  %niter1065.ncmp.1 = icmp eq i64 %niter1065.next.1, %4
+  br i1 %niter1065.ncmp.1, label %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit, label %.lr.ph881, !llvm.loop !443
 
 bb.cu:                                            ; preds = %bb.cp
   %i.nu = call noundef i64 @_ZN6duckdb15NumericCastImplIlmLb0EE7ConvertEm(i64 noundef %8)
@@ -657,26 +636,7 @@ _ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1048.unr
   store i64 %i.adh, ptr %i.adi, align 8, !tbaa !436
   br label %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit
 
-_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1049.unr-lcssa: ; preds = %.lr.ph881
-  %lcmp.mod1062.not = icmp eq i64 %xtraiter1061, 0
-  br i1 %lcmp.mod1062.not, label %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit, label %.lr.ph881.epil.preheader
-
-.lr.ph881.epil.preheader:                         ; preds = %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1049.unr-lcssa, %.lr.ph881.preheader
-  %.0552879.epil.init = phi i64 [ 0, %.lr.ph881.preheader ], [ %60, %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1049.unr-lcssa ] ; 2 uses
-  %lcmp.mod1063 = trunc i64 %4 to i1
-  call void @llvm.assume(i1 %lcmp.mod1063)
-  %61 = getelementptr inbounds nuw [8 x i8], ptr %i.nn, i64 %.0552879.epil.init
-  %62 = load i64, ptr %61, align 8, !tbaa !23
-  %63 = sdiv i64 %62, 1000
-  %64 = getelementptr inbounds nuw [16 x i8], ptr %i.nd, i64 %.0552879.epil.init ; 3 uses
-  %65 = getelementptr inbounds nuw i8, ptr %64, i64 8
-  store i64 %63, ptr %65, align 8, !tbaa !439
-  %66 = getelementptr inbounds nuw i8, ptr %64, i64 4
-  store i32 0, ptr %66, align 4, !tbaa !441
-  store i32 0, ptr %64, align 8, !tbaa !442
-  br label %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit
-
-_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit: ; preds = %bb.fq, %.lr.ph881.epil.preheader, %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1049.unr-lcssa, %.lr.ph884.epil.preheader, %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1048.unr-lcssa, %.lr.ph887.epil.preheader, %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1047.unr-lcssa, %.lr.ph890.epil.preheader, %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1046.unr-lcssa, %bb.bc, %bb.aw, %.lr.ph.i.epil.preheader, %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1043.unr-lcssa, %.lr.ph899.epil.preheader, %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit.unr-lcssa, %bb.fd, %bb.ct, %bb.cj, %bb.bp, %bb.bf, %bb.bb, %bb.as, %bb.ep, %bb.eo, %bb.en, %bb.el, %.preheader.i, %.preheader38.i, %bb.cq, %bb.cr, %bb.cs, %bb.cu, %bb.cv, %bb.cg, %bb.ch, %bb.ci, %bb.bw, %bb.bx, %bb.by, %bb.bz, %bb.bm, %bb.bn, %bb.bo, %bb.be, %bb.ax, %bb.ay, %bb.az, %bb.ba, %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb11LogicalTypeEESaIS9_EED2Ev.exit, %bb.ee, %_ZN6duckdb21TemplatedValidityMaskImED2Ev.exit, %bb.at, %bb.ao, %bb.h
+_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit: ; preds = %bb.fq, %.lr.ph881, %.lr.ph884.epil.preheader, %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1048.unr-lcssa, %.lr.ph887.epil.preheader, %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1047.unr-lcssa, %.lr.ph890.epil.preheader, %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1046.unr-lcssa, %bb.bc, %bb.aw, %.lr.ph.i.epil.preheader, %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit1043.unr-lcssa, %.lr.ph899.epil.preheader, %_ZN6duckdbL14UUIDConversionERNS_6VectorERK10ArrowArraymllm.exit.loopexit.unr-lcssa, %bb.fd, %bb.ct, %bb.cj, %bb.bp, %bb.bf, %bb.bb, %bb.as, %bb.ep, %bb.eo, %bb.en, %bb.el, %.preheader.i, %.preheader38.i, %bb.cq, %bb.cr, %bb.cs, %bb.cu, %bb.cv, %bb.cg, %bb.ch, %bb.ci, %bb.bw, %bb.bx, %bb.by, %bb.bz, %bb.bm, %bb.bn, %bb.bo, %bb.be, %bb.ax, %bb.ay, %bb.az, %bb.ba, %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb11LogicalTypeEESaIS9_EED2Ev.exit, %bb.ee, %_ZN6duckdb21TemplatedValidityMaskImED2Ev.exit, %bb.at, %bb.ao, %bb.h
   ret void
 
 bb.ii:                                            ; preds = %bb.if, %bb.hb, %bb.go, %bb.fn, %bb.dt, %bb.cy, %bb.cm, %bb.cc, %bb.bs, %bb.bi
@@ -1079,7 +1039,7 @@ define internal fastcc void @_ZN6duckdbL31IntervalConversionMonthDayNanosERNS_6V
 bb.a:
   tail call void @_ZN6duckdb14ConstantVector16VerifyVectorTypeINS_10interval_tEEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %0)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !419  ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !419
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !352
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -1090,56 +1050,17 @@ bb.a:
   %i.i = add i64 %4, %2
   %.0.v.i = select i1 %.not.i, i64 %i.i, i64 %3
   %i.j = getelementptr [16 x i8], ptr %i.f, i64 %.0.v.i
-  %i.k = getelementptr [16 x i8], ptr %i.j, i64 %i.h ; 3 uses
+  %i.k = getelementptr [16 x i8], ptr %i.j, i64 %i.h
   %.not = icmp eq i64 %5, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %xtraiter = and i64 %5, 1
-  %6 = icmp eq i64 %5, 1
-  br i1 %6, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
-
-.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %5, -2
-  br label %.lr.ph
-
-._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
-
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
-  %.020.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %22, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod21 = trunc i64 %5 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod21)
-  %7 = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %.020.epil.init ; 2 uses
-  %8 = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %.020.epil.init ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %10 = load i64, ptr %9, align 8, !tbaa !840
-  %11 = sdiv i64 %10, 1000
-  %12 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store i64 %11, ptr %12, align 8, !tbaa !439
-  %13 = load <2 x i32>, ptr %7, align 8, !tbaa !3
-  store <2 x i32> %13, ptr %8, align 8, !tbaa !3
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
 
-.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %.020 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %22, %.lr.ph ] ; 4 uses
-  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
-  %14 = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %.020 ; 2 uses
-  %15 = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %.020 ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %17 = load i64, ptr %16, align 8, !tbaa !840
-  %18 = sdiv i64 %17, 1000
-  %19 = getelementptr inbounds nuw i8, ptr %15, i64 8
-  store i64 %18, ptr %19, align 8, !tbaa !439
-  %20 = load <2 x i32>, ptr %14, align 8, !tbaa !3
-  store <2 x i32> %20, ptr %15, align 8, !tbaa !3
-  %21 = or disjoint i64 %.020, 1                  ; 2 uses
-  %i.l = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %21 ; 2 uses
-  %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %21 ; 2 uses
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %niter = phi i64 [ %niter.next.1, %.lr.ph ], [ 0, %bb.a ] ; 3 uses
+  %i.l = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %niter ; 2 uses
+  %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %niter ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.o = load i64, ptr %i.n, align 8, !tbaa !840
   %i.p = sdiv i64 %i.o, 1000
@@ -1147,10 +1068,9 @@ bb.a:
   store i64 %i.p, ptr %i.q, align 8, !tbaa !439
   %i.r = load <2 x i32>, ptr %i.l, align 8, !tbaa !3
   store <2 x i32> %i.r, ptr %i.m, align 8, !tbaa !3
-  %22 = add nuw i64 %.020, 2                      ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !842
+  %niter.next.1 = add nuw i64 %niter, 1           ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %5
+  br i1 %niter.ncmp.1, label %._crit_edge, label %.lr.ph, !llvm.loop !842
 }
 
 declare noundef zeroext i8 @_ZNK6duckdb16ArrowDecimalInfo11GetBitWidthEv(ptr noundef nonnull align 8 dereferenceable(16)) local_unnamed_addr #2

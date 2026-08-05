@@ -1,7 +1,5 @@
 inline.NumInlined: 83
 inline.NumDeleted: 46
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN5folly7logging6detail19appendRawObjectInfoERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKSt9type_infoPKhm:bb.a
   %i.dj = icmp ugt i64 %i.dd, %i.di
   br i1 %i.dj, label %bb.ad, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit13.i
@@ -203,7 +201,7 @@ declare void @_ZSt9terminatev() local_unnamed_addr #4
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN5folly8toAppendINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmEENSt9enable_ifIXaaaaaa13is_integral_vIT0_Ent11is_signed_vIS8_Esr12IsSomeStringIT_EE5valuegestS8_Li4EEvE4typeES8_PS9_(i64 noundef %0, ptr noundef %1) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [20 x i8], align 16               ; 9 uses
+  %i.a = alloca [20 x i8], align 16               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   %.not.i.i.i.i = icmp eq i64 %0, 0
   br i1 %.not.i.i.i.i, label %._crit_edge.thread.i.i.i, label %_ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i, !prof !27
@@ -216,53 +214,21 @@ _ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i: ; preds = %bb.a
   %i.c = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %0, i1 true)
   %i.d = sub nuw nsw i64 64, %i.c
   %i.e = mul nuw nsw i64 %i.d, 78
-  %i.f = lshr i64 %i.e, 8                         ; 3 uses
+  %i.f = lshr i64 %i.e, 8                         ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr @_ZN5folly6detail15to_ascii_powersILm10EmE4dataE, i64 %i.f
   %i.h = load i64, ptr %i.g, align 8, !tbaa !30
   %i.i = icmp uge i64 %0, %i.h
-  %i.j = zext i1 %i.i to i64                      ; 2 uses
-  %i.k = add nuw nsw i64 %i.f, %i.j               ; 6 uses
+  %i.j = zext i1 %i.i to i64
+  %i.k = add nuw nsw i64 %i.f, %i.j               ; 5 uses
   %i.l = icmp samesign ugt i64 %i.k, 2
-  br i1 %i.l, label %.lr.ph.i.i.i.preheader, label %._crit_edge.i.i.i
+  br i1 %i.l, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
-.lr.ph.i.i.i.preheader:                           ; preds = %_ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i
-  %2 = add nuw nsw i64 %i.f, %i.j
-  %3 = add nsw i64 %2, -3                         ; 2 uses
-  %4 = and i64 %3, 2
-  %lcmp.mod.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.prol, label %.lr.ph.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.prol:                                ; preds = %.lr.ph.i.i.i.preheader
-  %5 = add nsw i64 %i.k, -2                       ; 3 uses
-  %6 = udiv i64 %0, 100                           ; 2 uses
-  %7 = urem i64 %0, 100
-  %8 = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm10ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %7
-  %9 = load i16, ptr %8, align 2, !tbaa !28
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 %5
-  store i16 %9, ptr %10, align 1
-  br label %.lr.ph.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.i.i.i.preheader
-  %.0.i3.i.i.i.unr = phi i64 [ %0, %.lr.ph.i.i.i.preheader ], [ %6, %.lr.ph.i.i.i.prol ]
-  %.014.i2.i.i.i.unr = phi i64 [ %i.k, %.lr.ph.i.i.i.preheader ], [ %5, %.lr.ph.i.i.i.prol ]
-  %.lcssa8.unr = phi i64 [ poison, %.lr.ph.i.i.i.preheader ], [ %5, %.lr.ph.i.i.i.prol ]
-  %.lcssa.unr = phi i64 [ poison, %.lr.ph.i.i.i.preheader ], [ %6, %.lr.ph.i.i.i.prol ]
-  %11 = icmp ult i64 %3, 2
-  br i1 %11, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
-
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i
-  %.0.i3.i.i.i = phi i64 [ %i.n, %.lr.ph.i.i.i ], [ %.0.i3.i.i.i.unr, %.lr.ph.i.i.i.prol.loopexit ] ; 3 uses
-  %.014.i2.i.i.i = phi i64 [ %i.m, %.lr.ph.i.i.i ], [ %.014.i2.i.i.i.unr, %.lr.ph.i.i.i.prol.loopexit ] ; 2 uses
-  %12 = udiv i64 %.0.i3.i.i.i, 100
-  %13 = urem i64 %.0.i3.i.i.i, 100
-  %14 = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm10ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %13
-  %15 = load i16, ptr %14, align 2, !tbaa !28
-  %16 = getelementptr i8, ptr %i.a, i64 %.014.i2.i.i.i
-  %17 = getelementptr i8, ptr %16, i64 -2
-  store i16 %15, ptr %17, align 1
-  %i.m = add i64 %.014.i2.i.i.i, -4               ; 4 uses
-  %i.n = udiv i64 %.0.i3.i.i.i, 10000             ; 2 uses
-  %i.o = urem i64 %12, 100
+.lr.ph.i.i.i:                                     ; preds = %_ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i, %.lr.ph.i.i.i
+  %.0.i3.i.i.i = phi i64 [ %i.n, %.lr.ph.i.i.i ], [ %0, %_ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i ] ; 2 uses
+  %.014.i2.i.i.i = phi i64 [ %i.m, %.lr.ph.i.i.i ], [ %i.k, %_ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i ]
+  %i.m = add i64 %.014.i2.i.i.i, -2               ; 4 uses
+  %i.n = udiv i64 %.0.i3.i.i.i, 100               ; 2 uses
+  %i.o = urem i64 %.0.i3.i.i.i, 100
   %i.p = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm10ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %i.o
   %i.q = load i16, ptr %i.p, align 2, !tbaa !28
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.m
@@ -270,9 +236,9 @@ _ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i: ; preds = %bb.a
   %i.s = icmp ugt i64 %i.m, 2
   br i1 %i.s, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i, !llvm.loop !31
 
-._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %_ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i
-  %.014.i.lcssa.i.i.i = phi i64 [ %i.k, %_ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i ], [ %.lcssa8.unr, %.lr.ph.i.i.i.prol.loopexit ], [ %i.m, %.lr.ph.i.i.i ]
-  %.0.i.lcssa.i.i.i = phi i64 [ %0, %_ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i ], [ %.lcssa.unr, %.lr.ph.i.i.i.prol.loopexit ], [ %i.n, %.lr.ph.i.i.i ]
+._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i, %_ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i
+  %.014.i.lcssa.i.i.i = phi i64 [ %i.k, %_ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i ], [ %i.m, %.lr.ph.i.i.i ]
+  %.0.i.lcssa.i.i.i = phi i64 [ %0, %_ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i ], [ %i.n, %.lr.ph.i.i.i ]
   %i.t = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm10ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %.0.i.lcssa.i.i.i
   %i.u = load i16, ptr %i.t, align 2, !tbaa !28   ; 3 uses
   %i.v = icmp eq i64 %.014.i.lcssa.i.i.i, 2
