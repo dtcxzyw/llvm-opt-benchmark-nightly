@@ -1,6 +1,7 @@
 import os
 import subprocess
 import shutil
+import sys
 import multiprocessing as mp
 
 DUMP_PREFIX = os.environ["DUMP_PREFIX"]
@@ -44,7 +45,7 @@ if __name__ == "__main__":
         for line in crates_output.splitlines()
         if line.startswith("@@") and "proc-macro" not in line
     ]
-    keywords = []
+    keywords = sys.argv[1:]
     for crate in crates_info:
         crate_name = crate.split()[0]
         keywords.append(crate_name)
