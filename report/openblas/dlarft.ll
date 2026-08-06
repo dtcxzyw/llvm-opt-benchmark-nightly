@@ -1,3 +1,6 @@
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@dlarft_:bb.a
   %i.dp = mul i32 %i.do, %i.ao
   %i.dq = sext i32 %i.dp to i64
@@ -199,7 +202,7 @@ bb.k:                                             ; preds = %bb.j
   %i.jp = add i32 %i.jl, 1
   %i.jq = sub i32 %i.jp, %i.jm
   %wide.trip.count = zext i32 %i.jo to i64        ; 3 uses
-  %i.jr = add nsw i64 %wide.trip.count, -2        ; 3 uses
+  %i.jr = add nsw i64 %wide.trip.count, -2        ; 2 uses
   %i.js = add i32 %i.k, %i.jl
   %i.jt = add i32 %i.js, 1
   %i.ju = sub i32 %i.jt, %i.jm
@@ -217,9 +220,8 @@ bb.k:                                             ; preds = %bb.j
   %i.kg = zext nneg i32 %i.jm to i64
   %min.iters.check = icmp ult i32 %i.jm, 4
   %ident.check = icmp ne i32 %i.g, 1
-  %i.kh = trunc i64 %i.jr to i32
+  %i.kh = trunc i64 %i.jr to i32                  ; 2 uses
   %i.ki = icmp ugt i64 %i.jr, 4294967295
-  %9 = trunc i64 %i.jr to i32
   %invariant.op499 = or i1 %i.ki, %ident.check
   %min.iters.check442 = icmp ult i32 %i.jm, 16
   %n.mod.vf = and i64 %i.kf, 12
@@ -257,7 +259,7 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.kx = add i32 %i.ju, %i.kw                    ; 2 uses
   %i.ky = add i32 %i.kx, %i.kh
   %i.kz = icmp slt i32 %i.ky, %i.kx
-  %i.la = add i32 %i.kv, %9
+  %i.la = add i32 %i.kv, %i.kh
   %i.lb = icmp slt i32 %i.la, %i.kv
   %.reass500 = or i1 %i.kz, %invariant.op499
   %i.lc = or i1 %i.lb, %.reass500

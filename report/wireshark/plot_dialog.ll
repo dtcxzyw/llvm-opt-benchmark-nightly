@@ -1,3 +1,7 @@
+inline.NumInlined: 3689
+inline.NumDeleted: 1401
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_ZN17QArrayDataPointerI8QVariantE17reallocateAndGrowEN10QArrayData14GrowthPositionExPS1_:bb.a
   store ptr %i.be, ptr %3, align 8
   store ptr %i.bg, ptr %i.bl, align 8
@@ -199,17 +203,16 @@ bb.c:                                             ; preds = %bb.b
   %i.m = add i64 %i.l, -8                         ; 2 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
-  %min.iters.check196 = icmp ult i64 %i.m, 488
+  %min.iters.check196 = icmp ult i64 %i.m, 360
   br i1 %min.iters.check196, label %.lr.ph.i.preheader213, label %vector.scevcheck182
 
 vector.scevcheck182:                              ; preds = %.lr.ph.i.preheader
   %i.p = add i64 %i.g, -8
-  %i.q = sub i64 %i.p, %i.d                       ; 2 uses
-  %mul186 = and i64 %i.q, -8
-  %mul183 = and i64 %i.q, -8
+  %i.q = sub i64 %i.p, %i.d
+  %mul183 = and i64 %i.q, -8                      ; 2 uses
   %i.r = getelementptr i8, ptr %0, i64 %mul183
   %i.s = icmp ult ptr %i.r, %0
-  %i.t = getelementptr i8, ptr %1, i64 %mul186
+  %i.t = getelementptr i8, ptr %1, i64 %mul183
   %i.u = icmp ult ptr %i.t, %1
   %i.v = or i1 %i.s, %i.u
   br i1 %i.v, label %.lr.ph.i.preheader213, label %vector.memcheck189
@@ -323,20 +326,19 @@ bb.k:                                             ; preds = %bb.f
 
 .lr.ph110.preheader:                              ; preds = %bb.k
   %i.ay = getelementptr [8 x i8], ptr %.058, i64 %.082 ; 8 uses
-  %min.iters.check = icmp ult i64 %i.an, 44
+  %min.iters.check = icmp ult i64 %i.an, 30
   br i1 %min.iters.check, label %.lr.ph110.preheader214, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph110.preheader
   %i.az = xor i64 %.082, -1
-  %i.ba = add i64 %.086, %i.az                    ; 3 uses
-  %mul.result = shl i64 %i.ba, 3
+  %i.ba = add i64 %.086, %i.az                    ; 2 uses
+  %mul.result = shl i64 %i.ba, 3                  ; 2 uses
+  %mul.overflow = icmp ugt i64 %i.ba, 2305843009213693951
   %3 = getelementptr i8, ptr %.058, i64 %mul.result
   %4 = icmp ult ptr %3, %.058
-  %mul.result138 = shl i64 %i.ba, 3
-  %mul.overflow139 = icmp ugt i64 %i.ba, 2305843009213693951
-  %i.bb = getelementptr i8, ptr %i.ay, i64 %mul.result138
+  %i.bb = getelementptr i8, ptr %i.ay, i64 %mul.result
   %i.bc = icmp ult ptr %i.bb, %i.ay
-  %i.bd = or i1 %i.bc, %mul.overflow139
+  %i.bd = or i1 %i.bc, %mul.overflow
   %i.be = or i1 %4, %i.bd
   br i1 %i.be, label %.lr.ph110.preheader214, label %vector.memcheck
 
@@ -498,25 +500,26 @@ bb.r:                                             ; preds = %bb.m
   br i1 %i.de, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.r
-  %min.iters.check164 = icmp ult i64 %.082, 50
+  %min.iters.check164 = icmp ult i64 %.082, 36
   br i1 %min.iters.check164, label %.lr.ph.preheader215, label %vector.scevcheck147
 
 vector.scevcheck147:                              ; preds = %.lr.ph.preheader
-  %i.df = add nsw i64 %.082, -1                   ; 3 uses
+  %i.df = add nsw i64 %.082, -1                   ; 2 uses
   %scevgep148 = getelementptr i8, ptr %.058, i64 -8
   %i.dg = shl i64 %.082, 3
   %scevgep149 = getelementptr i8, ptr %scevgep148, i64 %i.dg ; 2 uses
-  %mul.result151.neg = mul i64 %i.df, -8
-  %i.dh = getelementptr i8, ptr %scevgep149, i64 %mul.result151.neg
+  %mul.result148 = shl i64 %i.df, 3               ; 2 uses
+  %mul.overflow149 = icmp ugt i64 %i.df, 2305843009213693951
+  %5 = sub i64 0, %mul.result148
+  %i.dh = getelementptr i8, ptr %scevgep149, i64 %5
   %i.di = icmp ugt ptr %i.dh, %scevgep149
   %scevgep153.a = getelementptr i8, ptr %.058, i64 -8
   %i.dj = shl i64 %.086, 3
   %scevgep154 = getelementptr i8, ptr %scevgep153.a, i64 %i.dj ; 2 uses
-  %mul.result156.neg = mul i64 %i.df, -8
-  %mul.overflow157 = icmp ugt i64 %i.df, 2305843009213693951
-  %i.dk = getelementptr i8, ptr %scevgep154, i64 %mul.result156.neg
+  %6 = sub i64 0, %mul.result148
+  %i.dk = getelementptr i8, ptr %scevgep154, i64 %6
   %i.dl = icmp ugt ptr %i.dk, %scevgep154
-  %i.dm = or i1 %i.dl, %mul.overflow157
+  %i.dm = or i1 %i.dl, %mul.overflow149
   %i.dn = or i1 %i.di, %i.dm
   br i1 %i.dn, label %.lr.ph.preheader215, label %vector.memcheck158
 

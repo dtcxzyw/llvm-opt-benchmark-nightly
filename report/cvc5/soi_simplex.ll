@@ -1,3 +1,7 @@
+inline.NumInlined: 1924
+inline.NumDeleted: 789
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZNK4cvc58internal13DeltaRationalplERKS1_:bb.a
 _ZN4cvc58internal8RationalD2Ev.exit6:             ; preds = %_ZN4cvc58internal8RationalD2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
@@ -199,13 +203,12 @@ bb.a:
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph
-  %i.c = add nsw i64 %wide.trip.count, -1         ; 3 uses
-  %i.d = trunc i64 %i.c to i32
+  %i.c = add nsw i64 %wide.trip.count, -1         ; 2 uses
+  %i.d = trunc i64 %i.c to i32                    ; 2 uses
   %i.e = xor i32 %2, -1
   %i.f = icmp ult i32 %i.e, %i.d
-  %4 = trunc i64 %i.c to i32
   %i.g = xor i32 %3, -1
-  %i.h = icmp ult i32 %i.g, %4
+  %i.h = icmp ult i32 %i.g, %i.d
   %i.i = icmp ugt i64 %i.c, 4294967295
   %i.j = or i1 %i.h, %i.i
   %i.k = or i1 %i.f, %i.j
@@ -608,13 +611,12 @@ bb.v:                                             ; preds = %_ZNSt6vectorIjSaIjE
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i68
-  %i.iv = add nsw i64 %wide.trip.count.i, -1      ; 3 uses
-  %i.iw = trunc i64 %i.iv to i32
+  %i.iv = add nsw i64 %wide.trip.count.i, -1      ; 2 uses
+  %i.iw = trunc i64 %i.iv to i32                  ; 2 uses
   %i.ix = sub i32 -2, %1
   %i.iy = icmp ult i32 %i.ix, %i.iw
-  %3 = trunc i64 %i.iv to i32
   %i.iz = xor i32 %i.ha, -1
-  %i.ja = icmp ult i32 %i.iz, %3
+  %i.ja = icmp ult i32 %i.iz, %i.iw
   %i.jb = icmp ugt i64 %i.iv, 4294967295
   %i.jc = or i1 %i.ja, %i.jb
   %i.jd = or i1 %i.iy, %i.jc

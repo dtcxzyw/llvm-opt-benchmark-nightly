@@ -1,3 +1,8 @@
+inline.NumInlined: 43
+inline.NumDeleted: 10
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@mult:bb.a
   %i.bj = sext i32 %i.i to i64
   %i.bk = getelementptr [4 x i8], ptr %i.bi, i64 %i.bj
@@ -199,7 +204,7 @@ Balloc.exit:                                      ; preds = %bb.c, %bb.h
   %i.bn = add i64 %i.bm, -25                      ; 2 uses
   %i.bo = lshr i64 %i.bn, 2
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bn, 444
+  %min.iters.check = icmp ult i64 %i.bn, 332
   br i1 %min.iters.check, label %.preheader.preheader79, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.preheader.preheader
@@ -209,12 +214,11 @@ vector.scevcheck:                                 ; preds = %.preheader.preheade
   %i.bt = add i64 %i.a, 28
   %umax = tail call i64 @llvm.umax.i64(i64 %i.bs, i64 %i.bt)
   %i.bu = add i64 %umax, -25
-  %i.bv = sub i64 %i.bu, %i.a                     ; 2 uses
-  %mul72 = and i64 %i.bv, -4
-  %mul = and i64 %i.bv, -4
+  %i.bv = sub i64 %i.bu, %i.a
+  %mul = and i64 %i.bv, -4                        ; 2 uses
   %i.bw = getelementptr i8, ptr %.038.lcssa, i64 %mul
   %i.bx = icmp ult ptr %i.bw, %.038.lcssa
-  %i.by = getelementptr i8, ptr %i.bc, i64 %mul72
+  %i.by = getelementptr i8, ptr %i.bc, i64 %mul
   %i.bz = icmp ult ptr %i.by, %i.bc
   %i.ca = or i1 %i.bx, %i.bz
   br i1 %i.ca, label %.preheader.preheader79, label %vector.memcheck

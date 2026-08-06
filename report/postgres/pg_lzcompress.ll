@@ -1,3 +1,5 @@
+inline.NumInlined: 1
+inline.NumDeleted: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -187,61 +189,61 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %.07222.us.i232 = phi i32 [ %spec.select.us.i, %.lr.ph25.split.us.i ], [ 0, %.lr.ph25.split.us.preheader.i ] ; 6 uses
   %.06924.us.i231 = phi i32 [ %spec.select85.us.i, %.lr.ph25.split.us.i ], [ 0, %.lr.ph25.split.us.preheader.i ]
   %i.cd = icmp sgt i32 %.07222.us.i232, 15
-  br i1 %i.cd, label %5, label %.preheader.us.i
+  br i1 %i.cd, label %4, label %.lr.ph15.us.i
 
-.preheader.us.i:                                  ; preds = %.lr.ph, %bb.p
-  %.19.us.i = phi i32 [ %i.ch, %bb.p ], [ 0, %.lr.ph ] ; 3 uses
-  %.1668.us.i = phi ptr [ %i.cj, %bb.p ], [ %i.cc, %.lr.ph ] ; 2 uses
-  %.1687.us.i = phi ptr [ %i.ci, %bb.p ], [ %.0151245, %.lr.ph ] ; 2 uses
+4:                                                ; preds = %.lr.ph
+  %5 = zext nneg i32 %.07222.us.i232 to i64       ; 3 uses
+  %bcmp.i = tail call i32 @bcmp(ptr nonnull %.0151245, ptr %i.cc, i64 %5)
+  %6 = icmp eq i32 %bcmp.i, 0
+  br i1 %6, label %7, label %.critedge.us.i
+
+7:                                                ; preds = %4
+  %8 = getelementptr inbounds nuw i8, ptr %.0151245, i64 %5 ; 2 uses
+  %9 = icmp ult ptr %8, %i.c
+  br i1 %9, label %.lr.ph15.preheader.i, label %.critedge.us.i
+
+.lr.ph15.preheader.i:                             ; preds = %7
+  %10 = getelementptr inbounds nuw i8, ptr %i.cc, i64 %5
+  br label %.preheader.us.i
+
+.preheader.us.i:                                  ; preds = %bb.p, %.lr.ph15.preheader.i
+  %.19.us.i = phi i32 [ %i.ch, %bb.p ], [ %.07222.us.i232, %.lr.ph15.preheader.i ] ; 3 uses
+  %.1668.us.i = phi ptr [ %i.cj, %bb.p ], [ %10, %.lr.ph15.preheader.i ] ; 2 uses
+  %.1687.us.i = phi ptr [ %i.ci, %bb.p ], [ %8, %.lr.ph15.preheader.i ] ; 2 uses
   %i.ce = load i8, ptr %.1687.us.i, align 1
   %i.cf = load i8, ptr %.1668.us.i, align 1
   %i.cg = icmp eq i8 %i.ce, %i.cf
-  %4 = icmp samesign ult i32 %.19.us.i, 273
-  %or.cond5.us.i = select i1 %i.cg, i1 %4, i1 false
+  %11 = icmp slt i32 %.19.us.i, 273
+  %or.cond5.us.i = select i1 %i.cg, i1 %11, i1 false
   br i1 %or.cond5.us.i, label %bb.p, label %.critedge.us.i
 
 bb.p:                                             ; preds = %.preheader.us.i
   %i.ch = add nuw nsw i32 %.19.us.i, 1
   %i.ci = getelementptr inbounds nuw i8, ptr %.1687.us.i, i64 1 ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.1668.us.i, i64 1
-  %exitcond.not.i = icmp eq ptr %i.ci, %i.c
-  br i1 %exitcond.not.i, label %.critedge.us.i, label %.preheader.us.i, !llvm.loop !4
+  %12 = icmp ult ptr %i.ci, %i.c
+  br i1 %12, label %.preheader.us.i, label %.critedge.us.i, !llvm.loop !4
 
-5:                                                ; preds = %.lr.ph
-  %6 = zext nneg i32 %.07222.us.i232 to i64       ; 3 uses
-  %bcmp.us.i = tail call i32 @bcmp(ptr nonnull %.0151245, ptr %i.cc, i64 %6)
-  %7 = icmp eq i32 %bcmp.us.i, 0
-  br i1 %7, label %8, label %.critedge.us.i
-
-8:                                                ; preds = %5
-  %9 = getelementptr inbounds nuw i8, ptr %.0151245, i64 %6 ; 2 uses
-  %10 = icmp ult ptr %9, %i.c
-  br i1 %10, label %.lr.ph15.us.preheader.i, label %.critedge.us.i
-
-.lr.ph15.us.preheader.i:                          ; preds = %8
-  %11 = getelementptr inbounds nuw i8, ptr %i.cc, i64 %6
-  br label %.lr.ph15.us.i
-
-.lr.ph15.us.i:                                    ; preds = %bb.q, %.lr.ph15.us.preheader.i
-  %.06314.us.i = phi i32 [ %i.cn, %bb.q ], [ %.07222.us.i232, %.lr.ph15.us.preheader.i ] ; 3 uses
-  %.06513.us.i = phi ptr [ %i.cp, %bb.q ], [ %11, %.lr.ph15.us.preheader.i ] ; 2 uses
-  %.06712.us.i = phi ptr [ %i.co, %bb.q ], [ %9, %.lr.ph15.us.preheader.i ] ; 2 uses
+.lr.ph15.us.i:                                    ; preds = %.lr.ph, %bb.q
+  %.06314.us.i = phi i32 [ %i.cn, %bb.q ], [ 0, %.lr.ph ] ; 3 uses
+  %.06513.us.i = phi ptr [ %i.cp, %bb.q ], [ %i.cc, %.lr.ph ] ; 2 uses
+  %.06712.us.i = phi ptr [ %i.co, %bb.q ], [ %.0151245, %.lr.ph ] ; 2 uses
   %i.ck = load i8, ptr %.06712.us.i, align 1
   %i.cl = load i8, ptr %.06513.us.i, align 1
   %i.cm = icmp eq i8 %i.ck, %i.cl
-  %12 = icmp slt i32 %.06314.us.i, 273
-  %or.cond.us.i = select i1 %i.cm, i1 %12, i1 false
+  %13 = icmp samesign ult i32 %.06314.us.i, 273
+  %or.cond.us.i = select i1 %i.cm, i1 %13, i1 false
   br i1 %or.cond.us.i, label %bb.q, label %.critedge.us.i
 
 bb.q:                                             ; preds = %.lr.ph15.us.i
   %i.cn = add nuw nsw i32 %.06314.us.i, 1
   %i.co = getelementptr inbounds nuw i8, ptr %.06712.us.i, i64 1 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %.06513.us.i, i64 1
-  %13 = icmp ult ptr %i.co, %i.c
-  br i1 %13, label %.lr.ph15.us.i, label %.critedge.us.i, !llvm.loop !6
+  %exitcond.not.i = icmp eq ptr %i.co, %i.c
+  br i1 %exitcond.not.i, label %.critedge.us.i, label %.lr.ph15.us.i, !llvm.loop !6
 
-.critedge.us.i:                                   ; preds = %bb.p, %.preheader.us.i, %bb.q, %.lr.ph15.us.i, %8, %5
-  %.2.us.i = phi i32 [ 0, %5 ], [ %.07222.us.i232, %8 ], [ %i.bu, %bb.q ], [ %.06314.us.i, %.lr.ph15.us.i ], [ %.19.us.i, %.preheader.us.i ], [ %i.bu, %bb.p ] ; 2 uses
+.critedge.us.i:                                   ; preds = %bb.q, %.lr.ph15.us.i, %bb.p, %.preheader.us.i, %7, %4
+  %.2.us.i = phi i32 [ 0, %4 ], [ %.19.us.i, %.preheader.us.i ], [ %.07222.us.i232, %7 ], [ %i.bu, %bb.p ], [ %.06314.us.i, %.lr.ph15.us.i ], [ %i.bu, %bb.q ] ; 2 uses
   %i.cq = icmp sgt i32 %.2.us.i, %.07222.us.i232
   %spec.select.us.i = tail call i32 @llvm.smax.i32(i32 %.2.us.i, i32 %.07222.us.i232) ; 7 uses
   %spec.select85.us.i = select i1 %i.cq, i32 %i.cb, i32 %.06924.us.i231 ; 3 uses

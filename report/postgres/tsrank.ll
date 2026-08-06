@@ -1,3 +1,7 @@
+inline.NumInlined: 68
+inline.NumDeleted: 13
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@calc_rank_cd:bb.a
   %i.hh = load i16, ptr %i.hg, align 2
   %i.hi = load i16, ptr %i.ge, align 8            ; 2 uses
@@ -199,7 +203,7 @@ bb.an:                                            ; preds = %.loopexit.i108
   %i.la = sdiv exact i64 %i.kz, 24
   %i.lb = add nsw i64 %i.la, 1
   %.not105158 = icmp ugt ptr %.185.i, %.05183.i
-  br i1 %.not105158, label %._crit_edge.a, label %.lr.ph
+  br i1 %.not105158, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.an, %.lr.ph
   %.0160 = phi ptr [ %i.lj, %.lr.ph ], [ %.185.i, %bb.an ] ; 2 uses
@@ -213,9 +217,9 @@ bb.an:                                            ; preds = %.loopexit.i108
   %i.li = fadd double %.083159, %i.lh             ; 2 uses
   %i.lj = getelementptr inbounds nuw i8, ptr %.0160, i64 24 ; 2 uses
   %.not105 = icmp ugt ptr %i.lj, %.05183.i
-  br i1 %.not105, label %._crit_edge.a, label %.lr.ph, !llvm.loop !23
+  br i1 %.not105, label %._crit_edge, label %.lr.ph, !llvm.loop !23
 
-._crit_edge.a:                                    ; preds = %.lr.ph, %bb.an
+._crit_edge:                                      ; preds = %.lr.ph, %bb.an
   %.083.lcssa = phi double [ 0.000000e+00, %bb.an ], [ %i.li, %.lr.ph ]
   %5 = ptrtoint ptr %.05183.i to i64
   %6 = ptrtoint ptr %.185.i to i64
@@ -228,9 +232,15 @@ bb.an:                                            ; preds = %.loopexit.i108
   %13 = add i32 %i.kx, %12
   %14 = sub i32 %i.kw, %13                        ; 2 uses
   %15 = icmp slt i32 %14, 0
-  %16 = sdiv i64 %7, 48
-  %17 = trunc i64 %16 to i32
-  %.081 = select i1 %15, i32 %17, i32 %14
+  br i1 %15, label %16, label %._crit_edge.a
+
+16:                                               ; preds = %._crit_edge
+  %17 = sdiv i64 %7, 48
+  %18 = trunc i64 %17 to i32
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %16, %._crit_edge
+  %.081 = phi i32 [ %18, %16 ], [ %14, %._crit_edge ]
   %i.lk = add i32 %.081, 1
   %i.ll = sitofp i32 %i.lk to double
   %i.lm = add nuw nsw i32 %i.kx, %i.kw

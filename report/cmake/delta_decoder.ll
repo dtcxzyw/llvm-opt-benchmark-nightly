@@ -1,3 +1,7 @@
+inline.NumInlined: 1
+inline.NumDeleted: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -37,12 +41,11 @@ iter.check:                                       ; preds = %bb.a
 
 vector.scevcheck:                                 ; preds = %iter.check
   %i.m = xor i64 %i.a, -1
-  %i.n = add i64 %i.f, %i.m                       ; 3 uses
-  %i.o = trunc i64 %i.n to i8
+  %i.n = add i64 %i.f, %i.m                       ; 2 uses
+  %i.o = trunc i64 %i.n to i8                     ; 2 uses
   %i.p = icmp ult i8 %.pre.i, %i.o
   %i.q = add i8 %.pre.i, %.tr.i
-  %9 = trunc i64 %i.n to i8
-  %i.r = icmp ult i8 %i.q, %9
+  %i.r = icmp ult i8 %i.q, %i.o
   %i.s = icmp ugt i64 %i.n, 255
   %i.t = or i1 %i.r, %i.s
   %i.u = or i1 %i.p, %i.t

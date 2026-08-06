@@ -1,3 +1,5 @@
+inline.NumInlined: 92
+inline.NumDeleted: 25
 begin_hunk_0_@_load_config:bb.a
 
 bb.bn:                                            ; preds = %bb.bm
@@ -199,7 +201,8 @@ bb.cq:                                            ; preds = %.sink.split273, %bb
 
 bb.cr:                                            ; preds = %bb.cq
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 17
-  br label %select.unfold.sink.split
+  %0 = tail call i64 @strtol(ptr noundef nonnull captures(none) %i.fa, ptr noundef null, i32 noundef 10) #14
+  br label %select.unfold
 
 bb.cs:                                            ; preds = %bb.cq
   %i.fb = tail call ptr @xstrcasestr(ptr noundef %i.a, ptr noundef nonnull @.str.67) #14 ; 2 uses
@@ -208,22 +211,21 @@ bb.cs:                                            ; preds = %bb.cq
 
 bb.ct:                                            ; preds = %bb.cs
   %i.fc = getelementptr inbounds nuw i8, ptr %i.fb, i64 19
-  br label %select.unfold.sink.split
+  %1 = tail call i64 @strtol(ptr noundef nonnull captures(none) %i.fc, ptr noundef null, i32 noundef 10) #14
+  br label %select.unfold
 
 bb.cu:                                            ; preds = %bb.cs
   %i.fd = load i32, ptr @max_rpc_cnt, align 4     ; 2 uses
   %i.fe = icmp sgt i32 %i.fd, 209
-  %0 = udiv i32 %i.fd, 10
-  %1 = zext nneg i32 %0 to i64
-  br i1 %i.fe, label %select.unfold, label %.thread218
+  br i1 %i.fe, label %select.unfold.sink.split, label %.thread218
 
-select.unfold.sink.split:                         ; preds = %bb.cr, %bb.ct
-  %.sink274 = phi ptr [ %i.fc, %bb.ct ], [ %i.fa, %bb.cr ]
-  %2 = tail call i64 @strtol(ptr noundef nonnull captures(none) %.sink274, ptr noundef null, i32 noundef 10) #14
+select.unfold.sink.split:                         ; preds = %bb.cu
+  %2 = udiv i32 %i.fd, 10
+  %3 = zext nneg i32 %2 to i64
   br label %select.unfold
 
-select.unfold:                                    ; preds = %select.unfold.sink.split, %bb.cu
-  %.0 = phi i64 [ %1, %bb.cu ], [ %2, %select.unfold.sink.split ] ; 3 uses
+select.unfold:                                    ; preds = %select.unfold.sink.split, %bb.ct, %bb.cr
+  %.0 = phi i64 [ %0, %bb.cr ], [ %1, %bb.ct ], [ %3, %select.unfold.sink.split ] ; 3 uses
   %or.cond37 = icmp ugt i64 %.0, 200
   br i1 %or.cond37, label %bb.cv, label %.thread218
 

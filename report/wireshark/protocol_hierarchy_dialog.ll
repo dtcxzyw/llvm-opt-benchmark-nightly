@@ -1,3 +1,7 @@
+inline.NumInlined: 989
+inline.NumDeleted: 456
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 
 $_ZN9QtPrivate11QSlotObjectIM23ProtocolHierarchyDialogFvvENS_4ListIJEEEvE4implEiPNS_15QSlotObjectBaseEP7QObjectPPvPb = comdat any
@@ -199,14 +203,13 @@ bb.e:                                             ; preds = %bb.d
   %i.s = load <2 x i32>, ptr %i.p, align 4
   %i.t = add <2 x i32> %i.r, splat (i32 1)
   %i.u = sub <2 x i32> %i.t, %i.s
-  %i.v = shl <2 x i32> %i.u, splat (i32 2)        ; 2 uses
-  %35 = extractelement <2 x i32> %i.v, i64 0
-  %36 = sdiv i32 %35, 5
-  %37 = extractelement <2 x i32> %i.v, i64 1
-  %38 = sdiv i32 %37, 5
+  %i.v = shl <2 x i32> %i.u, splat (i32 2)
+  %35 = sdiv <2 x i32> %i.v, splat (i32 5)        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) dereferenceable_or_null(24) %4, i8 0, i64 24, i1 false)
-  invoke void @_ZN19GeometryStateDialog12loadGeometryEiiRK7QString(ptr noundef align 8 dereferenceable_or_null(72) %0, i32 noundef %36, i32 noundef %38, ptr noundef nonnull align 8 dereferenceable(24) %4)
+  %36 = extractelement <2 x i32> %35, i64 0
+  %37 = extractelement <2 x i32> %35, i64 1
+  invoke void @_ZN19GeometryStateDialog12loadGeometryEiiRK7QString(ptr noundef align 8 dereferenceable_or_null(72) %0, i32 noundef %36, i32 noundef %37, ptr noundef nonnull align 8 dereferenceable(24) %4)
           to label %bb.f unwind label %bb.x
 
 bb.f:                                             ; preds = %bb.e

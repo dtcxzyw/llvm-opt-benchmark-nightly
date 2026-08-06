@@ -1,3 +1,5 @@
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@LAPACKE_ztr_trans:bb.a
 .preheader82:                                     ; preds = %bb.g
   %i.k = sub nsw i32 %3, %.
@@ -199,7 +201,7 @@ bb.h:                                             ; preds = %.lr.ph86, %._crit_e
   %scevgep129 = getelementptr i8, ptr %i.aa, i64 %i.cd
   %i.ce = mul i64 %i.y, %indvars.iv94
   %scevgep130 = getelementptr i8, ptr %i.ab, i64 %i.ce
-  %i.cf = sub i64 %i.t, %indvars.iv94             ; 3 uses
+  %i.cf = sub i64 %i.t, %indvars.iv94             ; 2 uses
   %i.cg = shl nuw nsw i64 %indvars.iv94, 5
   %scevgep = getelementptr i8, ptr %i.ac, i64 %i.cg ; 2 uses
   %i.ch = mul i64 %i.w, %indvars.iv94
@@ -211,20 +213,19 @@ bb.h:                                             ; preds = %.lr.ph86, %._crit_e
   %i.cj = mul nsw i64 %indvars.iv94, %i.r
   %invariant.gep = getelementptr [16 x i8], ptr %4, i64 %i.cj ; 7 uses
   %invariant.gep115 = getelementptr [16 x i8], ptr %6, i64 %indvars.iv94 ; 7 uses
-  %min.iters.check = icmp ult i64 %i.bz, 40
+  %min.iters.check = icmp ult i64 %i.bz, 28
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph
-  %mul.result = shl i64 %i.cf, 4
+  %mul.result = shl i64 %i.cf, 4                  ; 2 uses
   %mul.overflow = icmp ugt i64 %i.cf, 1152921504606846975
   %i.ck = getelementptr i8, ptr %scevgep, i64 %mul.result
   %i.cl = icmp ult ptr %i.ck, %scevgep
-  %8 = or i1 %i.cl, %mul.overflow
-  %mul.result125 = shl i64 %i.cf, 4
-  %9 = getelementptr i8, ptr %scevgep123, i64 %mul.result125
-  %10 = icmp ult ptr %9, %scevgep123
-  %i.cm = or i1 %ident.check, %8
-  %i.cn = or i1 %10, %i.cm
+  %8 = getelementptr i8, ptr %scevgep123, i64 %mul.result
+  %9 = icmp ult ptr %8, %scevgep123
+  %10 = or i1 %9, %mul.overflow
+  %i.cm = or i1 %i.cl, %ident.check
+  %i.cn = or i1 %i.cm, %10
   br i1 %i.cn, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck

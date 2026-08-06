@@ -1,3 +1,5 @@
+inline.NumInlined: 46
+inline.NumDeleted: 29
 begin_hunk_0_@heap_fetch_toast_slice:bb.a
 bb.l:                                             ; preds = %.split.i.i
   %i.br = load i32, ptr %i.bf, align 4
@@ -199,12 +201,12 @@ bb.an:                                            ; preds = %bb.am
   unreachable
 
 bb.ao:                                            ; preds = %bb.am
-  %7 = getelementptr inbounds nuw i8, ptr %i.dh, i64 %i.du
   %i.er = add nsw i32 %.081, -1
   %i.es = icmp eq i32 %.083125, %i.m
   %.079 = select i1 %i.es, i32 %i.aq, i32 0       ; 2 uses
   %i.et = icmp eq i32 %.083125, %i.s
   %.0 = select i1 %i.et, i32 %i.ar, i32 %i.er
+  %7 = getelementptr inbounds nuw i8, ptr %i.dh, i64 %i.du
   %sext108 = shl i64 %.1.i, 32
   %i.eu = ashr exact i64 %sext108, 32
   %i.ev = mul nsw i64 %i.eu, 1996

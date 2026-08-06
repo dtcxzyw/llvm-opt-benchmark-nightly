@@ -1,3 +1,5 @@
+inline.NumInlined: 712
+inline.NumDeleted: 341
 begin_hunk_0
 %"class.QMetaObject::Connection" = type { ptr }
 %class.QByteArray = type { %struct.QArrayDataPointer.9 }
@@ -199,14 +201,13 @@ bb.f:                                             ; preds = %bb.e
   %i.q = load <2 x i32>, ptr %i.n, align 4
   %i.r = add <2 x i32> %i.p, splat (i32 1)
   %i.s = sub <2 x i32> %i.r, %i.q
-  %i.t = shl <2 x i32> %i.s, splat (i32 1)        ; 2 uses
-  %30 = extractelement <2 x i32> %i.t, i64 0
-  %31 = sdiv i32 %30, 3
-  %32 = extractelement <2 x i32> %i.t, i64 1
-  %33 = sdiv i32 %32, 3
+  %i.t = shl <2 x i32> %i.s, splat (i32 1)
+  %30 = sdiv <2 x i32> %i.t, splat (i32 3)        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) dereferenceable_or_null(24) %8, i8 0, i64 24, i1 false)
-  invoke void @_ZN19GeometryStateDialog12loadGeometryEiiRK7QString(ptr noundef align 8 dereferenceable_or_null(72) %0, i32 noundef %31, i32 noundef %33, ptr noundef nonnull align 8 dereferenceable(24) %8)
+  %31 = extractelement <2 x i32> %30, i64 0
+  %32 = extractelement <2 x i32> %30, i64 1
+  invoke void @_ZN19GeometryStateDialog12loadGeometryEiiRK7QString(ptr noundef align 8 dereferenceable_or_null(72) %0, i32 noundef %31, i32 noundef %32, ptr noundef nonnull align 8 dereferenceable(24) %8)
           to label %bb.g unwind label %bb.k
 
 bb.g:                                             ; preds = %bb.f

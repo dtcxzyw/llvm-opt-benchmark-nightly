@@ -1,3 +1,7 @@
+inline.NumInlined: 303
+inline.NumDeleted: 18
+loop-unroll.NumCompletelyUnrolled: 89
+loop-unroll.NumUnrolled: 89
 begin_hunk_0_@prefs_pref_type_description:bb.a
 
 bb.bg:                                            ; preds = %bb.d
@@ -199,7 +203,7 @@ bb.g:                                             ; preds = %bb.c
   br label %g_strdup_inline.exit81
 
 bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d
-  %.053 = phi ptr [ %i.b, %bb.d ], [ %i.c, %bb.e ], [ %i.e, %bb.f ] ; 10 uses
+  %.053 = phi ptr [ %i.b, %bb.d ], [ %i.c, %bb.e ], [ %i.e, %bb.f ] ; 9 uses
   %i.g = getelementptr i8, ptr %0, i64 40
   %i.h = load i8, ptr %i.g, align 8, !range !9, !noundef !10
   %i.i = trunc nuw i8 %i.h to i1
@@ -332,14 +336,13 @@ bb.w:                                             ; preds = %bb.i
   %i.ay = udiv i16 %i.ax, 257
   %i.az = zext nneg i16 %i.ay to i32
   %i.ba = getelementptr i8, ptr %.053, i64 2
-  %2 = load i16, ptr %i.ba, align 2
-  %3 = udiv i16 %2, 257
-  %4 = zext nneg i16 %3 to i32
-  %5 = getelementptr i8, ptr %.053, i64 4
-  %6 = load i16, ptr %5, align 2
-  %7 = udiv i16 %6, 257
-  %i.bb = zext nneg i16 %7 to i32
-  %i.bc = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef null, ptr noundef nonnull @.str.90, i32 noundef %i.az, i32 noundef %4, i32 noundef %i.bb)
+  %2 = load <2 x i16>, ptr %i.ba, align 2
+  %3 = udiv <2 x i16> %2, splat (i16 257)         ; 2 uses
+  %4 = extractelement <2 x i16> %3, i64 0
+  %5 = zext nneg i16 %4 to i32
+  %6 = extractelement <2 x i16> %3, i64 1
+  %i.bb = zext nneg i16 %6 to i32
+  %i.bc = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef null, ptr noundef nonnull @.str.90, i32 noundef %i.az, i32 noundef %5, i32 noundef %i.bb)
   br label %g_strdup_inline.exit81
 
 bb.x:                                             ; preds = %bb.i

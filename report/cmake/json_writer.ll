@@ -1,3 +1,7 @@
+inline.NumInlined: 1079
+inline.NumDeleted: 271
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -166,19 +170,27 @@ $_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_Ident
 define dso_local void @_ZN4Json13valueToStringB5cxx11El(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, i64 noundef %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = alloca [25 x i8], align 16               ; 7 uses
+  %i.b = alloca [25 x i8], align 16               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   %i.c = icmp eq i64 %1, -9223372036854775808
-  br i1 %i.c, label %_ZN4JsonL12uintToStringEmRPc.exit, label %bb.b
+  br i1 %i.c, label %2, label %bb.b
 
-_ZN4JsonL12uintToStringEmRPc.exit:                ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  store i8 0, ptr %2, align 8, !tbaa !9
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 20
-  store <4 x i8> <i8 53, i8 56, i8 48, i8 56>, ptr %i.d, align 4, !tbaa !9
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
-  store <16 x i8> <i8 45, i8 57, i8 50, i8 50, i8 51, i8 51, i8 55, i8 50, i8 48, i8 51, i8 54, i8 56, i8 53, i8 52, i8 55, i8 55>, ptr %3, align 4, !tbaa !9
-  br label %.loopexit
+2:                                                ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
+  store i8 0, ptr %3, align 8, !tbaa !9
+  br label %_ZN4JsonL12uintToStringEmRPc.exit
+
+_ZN4JsonL12uintToStringEmRPc.exit:                ; preds = %_ZN4JsonL12uintToStringEmRPc.exit, %2
+  %.1 = phi ptr [ %3, %2 ], [ %i.d, %_ZN4JsonL12uintToStringEmRPc.exit ] ; 2 uses
+  %.0.i = phi i64 [ -9223372036854775808, %2 ], [ %7, %_ZN4JsonL12uintToStringEmRPc.exit ] ; 3 uses
+  %4 = urem i64 %.0.i, 10
+  %5 = trunc nuw nsw i64 %4 to i8
+  %6 = or disjoint i8 %5, 48
+  %i.d = getelementptr inbounds i8, ptr %.1, i64 -1 ; 2 uses
+  store i8 %6, ptr %i.d, align 1, !tbaa !9
+  %7 = udiv i64 %.0.i, 10
+  %.not.i = icmp ult i64 %.0.i, 10
+  br i1 %.not.i, label %.loopexit.sink.split, label %_ZN4JsonL12uintToStringEmRPc.exit, !llvm.loop !10
 
 bb.b:                                             ; preds = %bb.a
   %i.e = icmp slt i64 %1, 0
@@ -200,12 +212,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   store i8 %i.j, ptr %i.k, align 1, !tbaa !9
   %i.l = udiv i64 %.0.i5, 10
   %.not.i6 = icmp samesign ult i64 %.0.i5, 10
-  br i1 %.not.i6, label %_ZN4JsonL12uintToStringEmRPc.exit7, label %bb.d, !llvm.loop !10
-
-_ZN4JsonL12uintToStringEmRPc.exit7:               ; preds = %bb.d
-  %4 = getelementptr inbounds i8, ptr %.2, i64 -2 ; 2 uses
-  store i8 45, ptr %4, align 1, !tbaa !9
-  br label %.loopexit
+  br i1 %.not.i6, label %.loopexit.sink.split, label %bb.d, !llvm.loop !10
 
 bb.e:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
@@ -224,8 +231,14 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.not.i9 = icmp ult i64 %.0.i8, 10
   br i1 %.not.i9, label %.loopexit, label %bb.f, !llvm.loop !10
 
-.loopexit:                                        ; preds = %bb.f, %_ZN4JsonL12uintToStringEmRPc.exit, %_ZN4JsonL12uintToStringEmRPc.exit7
-  %.0 = phi ptr [ %3, %_ZN4JsonL12uintToStringEmRPc.exit ], [ %4, %_ZN4JsonL12uintToStringEmRPc.exit7 ], [ %i.q, %bb.f ] ; 3 uses
+.loopexit.sink.split:                             ; preds = %bb.d, %_ZN4JsonL12uintToStringEmRPc.exit
+  %.1.lcssa.sink = phi ptr [ %.1, %_ZN4JsonL12uintToStringEmRPc.exit ], [ %.2, %bb.d ]
+  %8 = getelementptr inbounds i8, ptr %.1.lcssa.sink, i64 -2 ; 2 uses
+  store i8 45, ptr %8, align 1, !tbaa !9
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.f, %.loopexit.sink.split
+  %.0 = phi ptr [ %8, %.loopexit.sink.split ], [ %i.q, %bb.f ] ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.s, ptr %0, align 8, !tbaa !12
   %i.t = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0) #25 ; 4 uses

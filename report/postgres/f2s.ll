@@ -1,3 +1,5 @@
+inline.NumInlined: 28
+inline.NumDeleted: 16
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -109,24 +111,24 @@ bb.l:                                             ; preds = %bb.k
   %i.au = zext nneg i32 %i.at to i64              ; 3 uses
   %i.av = lshr i64 %i.ar, %i.au                   ; 3 uses
   %i.aw = zext nneg i32 %i.w to i64               ; 2 uses
-  %2 = mul nuw nsw i64 %i.an, %i.aw
-  %i.ax = mul nuw nsw i64 %i.al, %i.aw
-  %3 = lshr i64 %2, 32
-  %4 = add nuw nsw i64 %3, %i.ax
-  %5 = lshr i64 %4, %i.au
-  %6 = trunc i64 %5 to i32                        ; 5 uses
-  %7 = zext i32 %i.ab to i64                      ; 2 uses
-  %8 = mul nuw i64 %i.an, %7
-  %9 = mul nuw i64 %i.al, %7
-  %i.ay = lshr i64 %8, 32
-  %10 = add nuw i64 %i.ay, %9
-  %11 = lshr i64 %10, %i.au
-  %i.az = trunc i64 %11 to i32                    ; 5 uses
+  %2 = zext i32 %i.ab to i64                      ; 2 uses
+  %i.ax = mul nuw nsw i64 %i.an, %i.aw
+  %3 = mul nuw i64 %i.an, %2
+  %4 = mul nuw nsw i64 %i.al, %i.aw
+  %5 = mul nuw i64 %i.al, %2
+  %6 = lshr i64 %i.ax, 32
+  %7 = lshr i64 %3, 32
+  %8 = add nuw nsw i64 %6, %4
+  %9 = add nuw i64 %7, %5
+  %i.ay = lshr i64 %8, %i.au
+  %10 = lshr i64 %9, %i.au
+  %11 = trunc i64 %i.ay to i32                    ; 5 uses
+  %i.az = trunc i64 %10 to i32                    ; 5 uses
   %.not163.i = icmp eq i32 %i.ae, 0
   br i1 %.not163.i, label %.thread.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ba = add i32 %6, -1
+  %i.ba = add i32 %11, -1
   %i.bb = udiv i32 %i.ba, 10
   %i.bc = udiv i32 %i.az, 10
   %.not164.i = icmp samesign ugt i32 %i.bb, %i.bc
@@ -192,7 +194,7 @@ multipleOfPowerOf5.exit173.i:                     ; preds = %.lr.ph.i.i169.i, %b
   %.08.lcssa.i.i168.i = phi i32 [ 0, %bb.p ], [ %i.ce, %.lr.ph.i.i169.i ]
   %i.cg = icmp uge i32 %.08.lcssa.i.i168.i, %i.ae
   %.neg165.i = sext i1 %i.cg to i32
-  %i.ch = add i32 %.neg165.i, %6
+  %i.ch = add i32 %.neg165.i, %11
   br label %.thread176.thread.i
 
 bb.q:                                             ; preds = %bb.k
@@ -217,21 +219,21 @@ bb.q:                                             ; preds = %bb.k
   %i.da = zext nneg i32 %i.cz to i64              ; 3 uses
   %i.db = lshr i64 %i.cx, %i.da                   ; 3 uses
   %i.dc = zext nneg i32 %i.w to i64               ; 2 uses
+  %12 = zext i32 %i.ab to i64                     ; 2 uses
   %i.dd = mul nuw nsw i64 %i.ct, %i.dc
-  %i.de = mul nuw nsw i64 %i.cr, %i.dc
-  %12 = lshr i64 %i.dd, 32
-  %13 = add nuw nsw i64 %12, %i.de
-  %i.df = lshr i64 %13, %i.da
-  %14 = trunc i64 %i.df to i32                    ; 4 uses
-  %15 = zext i32 %i.ab to i64                     ; 2 uses
-  %16 = mul nuw i64 %i.ct, %15
-  %17 = mul nuw i64 %i.cr, %15
-  %i.dg = lshr i64 %16, 32
-  %18 = add nuw i64 %i.dg, %17
-  %19 = lshr i64 %18, %i.da
-  %i.dh = trunc i64 %19 to i32                    ; 5 uses
+  %i.de = mul nuw i64 %i.ct, %12
+  %13 = mul nuw nsw i64 %i.cr, %i.dc
+  %14 = mul nuw i64 %i.cr, %12
+  %i.df = lshr i64 %i.dd, 32
+  %15 = lshr i64 %i.de, 32
+  %16 = add nuw nsw i64 %i.df, %13
+  %17 = add nuw i64 %15, %14
+  %18 = lshr i64 %16, %i.da
+  %i.dg = lshr i64 %17, %i.da
+  %19 = trunc i64 %18 to i32                      ; 4 uses
   %.not.i22 = icmp eq i32 %i.cj, 0
-  %.pre.i = add i32 %14, -1                       ; 2 uses
+  %i.dh = trunc i64 %i.dg to i32                  ; 5 uses
+  %.pre.i = add i32 %19, -1                       ; 2 uses
   br i1 %.not.i22, label %.thread176.thread232.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -284,7 +286,7 @@ bb.u:                                             ; preds = %bb.t
   %.2149.ph.i = phi i8 [ %.1148.i, %bb.u ], [ %.0147175.i, %multipleOfPowerOf5.exit173.i ], [ %.0147.i, %bb.o ]
   %.0139.ph.i = phi i32 [ %i.ck, %bb.u ], [ %i.ae, %multipleOfPowerOf5.exit173.i ], [ %i.ae, %bb.o ]
   %.0134.ph.i = phi i32 [ %i.dh, %bb.u ], [ %i.az, %multipleOfPowerOf5.exit173.i ], [ %i.az, %bb.o ]
-  %.2131.ph.i = phi i32 [ %14, %bb.u ], [ %i.ch, %multipleOfPowerOf5.exit173.i ], [ %6, %bb.o ]
+  %.2131.ph.i = phi i32 [ %19, %bb.u ], [ %i.ch, %multipleOfPowerOf5.exit173.i ], [ %11, %bb.o ]
   %.0124.in.ph.i = phi i64 [ %i.db, %bb.u ], [ %i.av, %multipleOfPowerOf5.exit173.i ], [ %i.av, %bb.o ]
   %.0124222.i = trunc i64 %.0124.in.ph.i to i32
   br label %.preheader183.i
@@ -301,52 +303,59 @@ bb.u:                                             ; preds = %bb.t
 
 .preheader183.i:                                  ; preds = %.thread176.i, %.thread176.thread.i, %.split.i
   %.0124228.i = phi i32 [ %.0124222.i, %.thread176.thread.i ], [ %.0124.i, %.thread176.i ], [ %.0124245.i, %.split.i ] ; 2 uses
-  %.2131227.i = phi i32 [ %.2131.ph.i, %.thread176.thread.i ], [ %6, %.thread176.i ], [ %14, %.split.i ]
+  %.2131227.i = phi i32 [ %.2131.ph.i, %.thread176.thread.i ], [ %11, %.thread176.i ], [ %19, %.split.i ]
   %.0134226.i = phi i32 [ %.0134.ph.i, %.thread176.thread.i ], [ %i.az, %.thread176.i ], [ %i.dh, %.split.i ] ; 2 uses
   %.0139225.i = phi i32 [ %.0139.ph.i, %.thread176.thread.i ], [ %i.ae, %.thread176.i ], [ %i.ck, %.split.i ]
   %.2149223.i = phi i8 [ %.2149.ph.i, %.thread176.thread.i ], [ %.0147175.i, %.thread176.i ], [ %.1148.i, %.split.i ]
-  %20 = udiv i32 %.2131227.i, 10                  ; 2 uses
-  %21 = udiv i32 %.0134226.i, 10                  ; 2 uses
-  %i.ej = icmp samesign ugt i32 %20, %21
+  %20 = insertelement <2 x i32> poison, i32 %.2131227.i, i64 0
+  %21 = insertelement <2 x i32> %20, i32 %.0134226.i, i64 1
+  %22 = udiv <2 x i32> %21, splat (i32 10)        ; 3 uses
+  %23 = extractelement <2 x i32> %22, i64 0
+  %24 = extractelement <2 x i32> %22, i64 1
+  %i.ej = icmp samesign ugt i32 %23, %24
   br i1 %i.ej, label %.lr.ph.i, label %bb.v
 
 .preheader.i:                                     ; preds = %.thread176.i, %.thread176.thread232.i, %.split.i
   %.0124244.i = phi i32 [ %.0124239.i, %.thread176.thread232.i ], [ %.0124.i, %.thread176.i ], [ %.0124245.i, %.split.i ] ; 2 uses
-  %.2131243.i = phi i32 [ %.pre.i, %.thread176.thread232.i ], [ %6, %.thread176.i ], [ %14, %.split.i ]
+  %.2131243.i = phi i32 [ %.pre.i, %.thread176.thread232.i ], [ %11, %.thread176.i ], [ %19, %.split.i ]
   %.0134242.i = phi i32 [ %i.dh, %.thread176.thread232.i ], [ %i.az, %.thread176.i ], [ %i.dh, %.split.i ] ; 2 uses
   %.0139241.i = phi i32 [ %i.ck, %.thread176.thread232.i ], [ %i.ae, %.thread176.i ], [ %i.ck, %.split.i ]
   %.2149240.i = phi i8 [ %.2149.ph230.i, %.thread176.thread232.i ], [ %.0147175.i, %.thread176.i ], [ %.1148.i, %.split.i ] ; 2 uses
-  %22 = udiv i32 %.2131243.i, 10                  ; 2 uses
-  %23 = udiv i32 %.0134242.i, 10                  ; 2 uses
-  %i.ek = icmp samesign ugt i32 %22, %23
+  %25 = insertelement <2 x i32> poison, i32 %.2131243.i, i64 0
+  %26 = insertelement <2 x i32> %25, i32 %.0134242.i, i64 1
+  %27 = udiv <2 x i32> %26, splat (i32 10)        ; 3 uses
+  %28 = extractelement <2 x i32> %27, i64 0
+  %29 = extractelement <2 x i32> %27, i64 1
+  %i.ek = icmp samesign ugt i32 %28, %29
   br i1 %i.ek, label %.lr.ph195.i, label %._crit_edge196.i
 
 .lr.ph195.i:                                      ; preds = %.preheader.i, %.lr.ph195.i
-  %24 = phi i32 [ %26, %.lr.ph195.i ], [ %23, %.preheader.i ] ; 2 uses
-  %i.el = phi i32 [ %25, %.lr.ph195.i ], [ %22, %.preheader.i ]
-  %.0122194.i = phi i32 [ %i.er, %.lr.ph195.i ], [ 0, %.preheader.i ]
-  %.1125193.i = phi i32 [ %i.eq, %.lr.ph195.i ], [ %.0124244.i, %.preheader.i ] ; 2 uses
+  %i.el = phi i32 [ %i.er, %.lr.ph195.i ], [ 0, %.preheader.i ]
+  %.0122194.i = phi i32 [ %i.eq, %.lr.ph195.i ], [ %.0124244.i, %.preheader.i ] ; 2 uses
   %.3144192.i = phi i1 [ %i.en, %.lr.ph195.i ], [ true, %.preheader.i ]
   %.3150191.i = phi i8 [ %i.ep, %.lr.ph195.i ], [ %.2149240.i, %.preheader.i ]
+  %30 = phi <2 x i32> [ %31, %.lr.ph195.i ], [ %27, %.preheader.i ] ; 2 uses
   %i.em = icmp eq i8 %.3150191.i, 0
   %i.en = select i1 %i.em, i1 %.3144192.i, i1 false ; 2 uses
-  %i.eo = urem i32 %.1125193.i, 10
+  %i.eo = urem i32 %.0122194.i, 10
   %i.ep = trunc nuw nsw i32 %i.eo to i8           ; 2 uses
-  %i.eq = udiv i32 %.1125193.i, 10                ; 2 uses
-  %i.er = add i32 %.0122194.i, 1                  ; 2 uses
-  %25 = udiv i32 %i.el, 10                        ; 2 uses
-  %26 = udiv i32 %24, 10                          ; 2 uses
-  %i.es = icmp samesign ugt i32 %25, %26
+  %i.eq = udiv i32 %.0122194.i, 10                ; 2 uses
+  %i.er = add i32 %i.el, 1                        ; 2 uses
+  %31 = udiv <2 x i32> %30, splat (i32 10)        ; 3 uses
+  %32 = extractelement <2 x i32> %31, i64 0
+  %33 = extractelement <2 x i32> %31, i64 1
+  %i.es = icmp samesign ugt i32 %32, %33
   br i1 %i.es, label %.lr.ph195.i, label %._crit_edge196.loopexit.i, !llvm.loop !4
 
 ._crit_edge196.loopexit.i:                        ; preds = %.lr.ph195.i
   %i.et = xor i1 %i.en, true
+  %34 = extractelement <2 x i32> %30, i64 1
   br label %._crit_edge196.i
 
 ._crit_edge196.i:                                 ; preds = %._crit_edge196.loopexit.i, %.preheader.i
   %.3150.lcssa.i = phi i8 [ %.2149240.i, %.preheader.i ], [ %i.ep, %._crit_edge196.loopexit.i ] ; 2 uses
   %.3144.lcssa.i = phi i1 [ false, %.preheader.i ], [ %i.et, %._crit_edge196.loopexit.i ]
-  %.1135.lcssa.i = phi i32 [ %.0134242.i, %.preheader.i ], [ %24, %._crit_edge196.loopexit.i ]
+  %.1135.lcssa.i = phi i32 [ %.0134242.i, %.preheader.i ], [ %34, %._crit_edge196.loopexit.i ]
   %.1125.lcssa.i = phi i32 [ %.0124244.i, %.preheader.i ], [ %i.eq, %._crit_edge196.loopexit.i ] ; 3 uses
   %.0122.lcssa.i = phi i32 [ 0, %.preheader.i ], [ %i.er, %._crit_edge196.loopexit.i ]
   %i.eu = icmp ne i8 %.3150.lcssa.i, 5
@@ -360,25 +369,26 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.w
 
 .lr.ph.i:                                         ; preds = %.preheader183.i, %.lr.ph.i
-  %27 = phi i32 [ %29, %.lr.ph.i ], [ %21, %.preheader183.i ] ; 2 uses
-  %i.fa = phi i32 [ %28, %.lr.ph.i ], [ %20, %.preheader183.i ]
-  %.3186.i = phi i32 [ %i.fd, %.lr.ph.i ], [ 0, %.preheader183.i ]
-  %.4128185.i = phi i32 [ %i.fb, %.lr.ph.i ], [ %.0124228.i, %.preheader183.i ] ; 2 uses
-  %i.fb = udiv i32 %.4128185.i, 10                ; 2 uses
-  %i.fc = urem i32 %.4128185.i, 10
-  %i.fd = add i32 %.3186.i, 1                     ; 2 uses
-  %28 = udiv i32 %i.fa, 10                        ; 2 uses
-  %29 = udiv i32 %27, 10                          ; 2 uses
-  %i.fe = icmp samesign ugt i32 %28, %29
+  %i.fa = phi i32 [ %i.fd, %.lr.ph.i ], [ 0, %.preheader183.i ]
+  %.3186.i = phi i32 [ %i.fb, %.lr.ph.i ], [ %.0124228.i, %.preheader183.i ] ; 2 uses
+  %35 = phi <2 x i32> [ %36, %.lr.ph.i ], [ %22, %.preheader183.i ] ; 2 uses
+  %i.fb = udiv i32 %.3186.i, 10                   ; 2 uses
+  %i.fc = urem i32 %.3186.i, 10
+  %i.fd = add i32 %i.fa, 1                        ; 2 uses
+  %36 = udiv <2 x i32> %35, splat (i32 10)        ; 3 uses
+  %37 = extractelement <2 x i32> %36, i64 0
+  %38 = extractelement <2 x i32> %36, i64 1
+  %i.fe = icmp samesign ugt i32 %37, %38
   br i1 %i.fe, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !6
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
   %i.ff = trunc nuw nsw i32 %i.fc to i8
+  %39 = extractelement <2 x i32> %35, i64 1
   br label %bb.v
 
 bb.v:                                             ; preds = %._crit_edge.i, %.preheader183.i
   %.7.lcssa.i = phi i8 [ %i.ff, %._crit_edge.i ], [ %.2149223.i, %.preheader183.i ]
-  %.4138.lcssa.i = phi i32 [ %27, %._crit_edge.i ], [ %.0134226.i, %.preheader183.i ]
+  %.4138.lcssa.i = phi i32 [ %39, %._crit_edge.i ], [ %.0134226.i, %.preheader183.i ]
   %.4128.lcssa.i = phi i32 [ %i.fb, %._crit_edge.i ], [ %.0124228.i, %.preheader183.i ] ; 2 uses
   %.3.lcssa.i = phi i32 [ %i.fd, %._crit_edge.i ], [ 0, %.preheader183.i ]
   %i.fg = icmp eq i32 %.4128.lcssa.i, %.4138.lcssa.i

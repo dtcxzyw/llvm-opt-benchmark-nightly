@@ -1,3 +1,8 @@
+inline.NumInlined: 24
+inline.NumDeleted: 11
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@llvm.memcpy.p0.p0.i64
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
@@ -199,12 +204,11 @@ iter.check290:                                    ; preds = %bb.m
   br i1 %min.iters.check276.a, label %.lr.ph125.preheader, label %vector.scevcheck274
 
 vector.scevcheck274:                              ; preds = %iter.check290
-  %i.ai = add i64 %i.ah, -1                       ; 3 uses
-  %2 = and i64 %i.ai, 4294967295
-  %i.aj = icmp eq i64 %2, 4294967295
-  %3 = trunc i64 %i.ai to i32
+  %i.ai = add i64 %i.ah, -1                       ; 2 uses
+  %2 = trunc i64 %i.ai to i32                     ; 2 uses
+  %i.aj = icmp eq i32 %2, -1
   %i.ak = xor i32 %.083131259, -1
-  %i.al = icmp ult i32 %i.ak, %3
+  %i.al = icmp ult i32 %i.ak, %2
   %i.am = icmp ugt i64 %i.ai, 4294967295
   %i.an = or i1 %i.al, %i.am
   %i.ao = or i1 %i.aj, %i.an
@@ -336,12 +340,11 @@ iter.check:                                       ; preds = %bb.q
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %i.cj = add i64 %i.ci, -1                       ; 3 uses
-  %4 = and i64 %i.cj, 4294967295
-  %i.ck = icmp eq i64 %4, 4294967295
-  %5 = trunc i64 %i.cj to i32
+  %i.cj = add i64 %i.ci, -1                       ; 2 uses
+  %3 = trunc i64 %i.cj to i32                     ; 2 uses
+  %i.ck = icmp eq i32 %3, -1
   %i.cl = xor i32 %.083131259, -1
-  %i.cm = icmp ult i32 %i.cl, %5
+  %i.cm = icmp ult i32 %i.cl, %3
   %i.cn = icmp ugt i64 %i.cj, 4294967295
   %i.co = or i1 %i.cm, %i.cn
   %i.cp = or i1 %i.ck, %i.co

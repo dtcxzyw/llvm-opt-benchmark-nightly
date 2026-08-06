@@ -1,3 +1,5 @@
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@dtrmm_olnncopy:bb.a
   %.1.us.ph = phi ptr [ %i.s, %bb.b ], [ %i.x, %bb.c ] ; 6 uses
   br i1 %lcmp.mod.not, label %.preheader151.us.prol.loopexit, label %.preheader151.us.prol
@@ -199,20 +201,19 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s,
   br i1 %.not148, label %.preheader153.split.split.us.preheader, label %.preheader153.split.split.preheader
 
 .preheader153.split.split.preheader:              ; preds = %.preheader153.split
-  %min.iters.check = icmp ult i64 %i.a, 168
+  %min.iters.check = icmp ult i64 %i.a, 160
   br i1 %min.iters.check, label %.preheader153.split.split.preheader237, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.preheader153.split.split.preheader
-  %i.cv = add nsw i64 %i.a, -1                    ; 5 uses
+  %i.cv = add nsw i64 %i.a, -1                    ; 4 uses
   %i.cw = mul i64 %3, %i.g
   %i.cx = add i64 %i.cw, %5
   %i.cy = shl i64 %i.cx, 3
   %scevgep = getelementptr i8, ptr %2, i64 %i.cy  ; 2 uses
-  %mul.result = shl i64 %i.cv, 4
+  %mul.result = shl i64 %i.cv, 4                  ; 2 uses
   %mul.overflow = icmp ugt i64 %i.cv, 1152921504606846975
   %i.cz = getelementptr i8, ptr %scevgep, i64 %mul.result
   %i.da = icmp ult ptr %i.cz, %scevgep
-  %7 = or i1 %i.da, %mul.overflow
   %i.db = shl i64 %3, 4                           ; 4 uses
   %i.dc = mul i64 %3, -16                         ; 2 uses
   %i.dd = add i64 %5, 1
@@ -236,9 +237,9 @@ vector.scevcheck:                                 ; preds = %.preheader153.split
   %i.dr = add i64 %i.dq, %5
   %i.ds = shl i64 %i.dr, 3
   %scevgep192 = getelementptr i8, ptr %2, i64 %i.ds ; 2 uses
-  %mul.result194 = shl i64 %i.cv, 4
-  %8 = getelementptr i8, ptr %scevgep192, i64 %mul.result194
-  %9 = icmp ult ptr %8, %scevgep192
+  %7 = getelementptr i8, ptr %scevgep192, i64 %mul.result
+  %8 = icmp ult ptr %7, %scevgep192
+  %9 = or i1 %8, %mul.overflow
   %i.dt = mul i64 %5, %3
   %i.du = add i64 %i.dt, %4
   %i.dv = shl i64 %i.du, 3
@@ -255,8 +256,8 @@ vector.scevcheck:                                 ; preds = %.preheader153.split
   %i.ec = icmp ugt ptr %i.ea, %scevgep196
   %i.ed = select i1 %i.dw, i1 %i.ec, i1 %i.eb
   %i.ee = or i1 %i.ed, %mul.overflow199
-  %i.ef = or i1 %7, %i.dp
-  %i.eg = or i1 %9, %i.ef
+  %i.ef = or i1 %i.da, %i.dp
+  %i.eg = or i1 %i.ef, %9
   %i.eh = or i1 %i.eg, %i.ee
   br i1 %i.eh, label %.preheader153.split.split.preheader237, label %vector.memcheck
 

@@ -1,3 +1,5 @@
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@LAPACKE_ctr_trans:bb.a
   %i.aa = getelementptr i8, ptr %4, i64 %i.u
   %i.ab = getelementptr i8, ptr %4, i64 %i.x
@@ -199,7 +201,7 @@ bb.h:                                             ; preds = %.lr.ph86, %._crit_e
   %scevgep129 = getelementptr i8, ptr %i.aa, i64 %i.cl
   %i.cm = mul i64 %i.y, %indvars.iv94
   %scevgep130 = getelementptr i8, ptr %i.ab, i64 %i.cm
-  %i.cn = sub i64 %i.t, %indvars.iv94             ; 3 uses
+  %i.cn = sub i64 %i.t, %indvars.iv94             ; 2 uses
   %i.co = shl nuw nsw i64 %indvars.iv94, 4
   %scevgep = getelementptr i8, ptr %i.ac, i64 %i.co ; 2 uses
   %i.cp = mul i64 %i.w, %indvars.iv94
@@ -215,16 +217,15 @@ iter.check:                                       ; preds = %bb.h
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %mul.result = shl i64 %i.cn, 3
+  %mul.result = shl i64 %i.cn, 3                  ; 2 uses
   %mul.overflow = icmp ugt i64 %i.cn, 2305843009213693951
   %i.cs = getelementptr i8, ptr %scevgep, i64 %mul.result
   %i.ct = icmp ult ptr %i.cs, %scevgep
-  %8 = or i1 %i.ct, %mul.overflow
-  %mul.result125 = shl i64 %i.cn, 3
-  %9 = getelementptr i8, ptr %scevgep123, i64 %mul.result125
-  %10 = icmp ult ptr %9, %scevgep123
-  %i.cu = or i1 %ident.check, %8
-  %i.cv = or i1 %10, %i.cu
+  %8 = getelementptr i8, ptr %scevgep123, i64 %mul.result
+  %9 = icmp ult ptr %8, %scevgep123
+  %10 = or i1 %9, %mul.overflow
+  %i.cu = or i1 %i.ct, %ident.check
+  %i.cv = or i1 %i.cu, %10
   br i1 %i.cv, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
