@@ -163,8 +163,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 ._crit_edge:                                      ; preds = %.loopexit, %.preheader40
   %i.bh = shl i64 %2, 1
-  %5 = udiv i64 %i.bh, 3
-  %i.bi = udiv i64 %5, %.pre                      ; 2 uses
+  %5 = mul nuw nsw i64 %.pre, 3
+  %i.bi = udiv i64 %i.bh, %5                      ; 2 uses
   store i64 %i.bi, ptr %4, align 8
   br label %bb.c
 
