@@ -73,10 +73,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.lr.ph
   %i.z = zext i32 %i.x to i64                     ; 2 uses
-  %3 = udiv i64 -1, %i.z
-  %4 = lshr i64 %3, 2
-  %5 = icmp samesign ult i64 %4, %.pre
-  br i1 %5, label %.preheader.i62, label %.lr.ph._crit_edge
+  %3 = shl nuw nsw i64 %i.z, 2
+  %mul = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %.pre)
+  %mul.ov = extractvalue { i64, i1 } %mul, 1
+  br i1 %mul.ov, label %.preheader.i62, label %.lr.ph._crit_edge
 
 .preheader.i62:                                   ; preds = %bb.d
   %i.aa = load i32, ptr %i.c, align 8, !tbaa !12  ; 2 uses
@@ -477,6 +477,9 @@ opj_image_destroy.exit:                           ; preds = %bb.c, %bb.d
   %.0 = phi ptr [ null, %opj_image_destroy.exit ], [ null, %bb.a ], [ %i.a, %.preheader ], [ %i.a, %.loopexit.loopexit.unr-lcssa ], [ %i.a, %.lr.ph.epil.preheader ]
   ret ptr %.0
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #5
