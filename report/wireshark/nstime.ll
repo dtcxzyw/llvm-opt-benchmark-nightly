@@ -1,3 +1,8 @@
+inline.NumInlined: 15
+inline.NumDeleted: 1
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@nstime_sum:bb.a
 .critedge:                                        ; preds = %nstime_is_unset.exit
   %i.k = getelementptr i8, ptr %1, i64 8
@@ -199,33 +204,26 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %xtraiter = and i32 %2, 3                       ; 3 uses
-  %4 = icmp ult i32 %2, 4
-  br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+  %xtraiter = and i32 %2, 1
+  %4 = icmp eq i32 %2, 1
+  br i1 %4, label %.lr.ph.epil, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i32 %2, -4
+  %unroll_iter = and i32 %2, -2
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil
 
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
-  %.01011.epil.init = phi i32 [ 1000000000, %.lr.ph.preheader ], [ %i.h, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod14 = icmp ne i32 %xtraiter, 0
+.lr.ph.epil:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
+  %epil.iter = phi i32 [ 1000000000, %.lr.ph.preheader ], [ %i.h, %._crit_edge.loopexit.unr-lcssa ]
+  %lcmp.mod14 = trunc i32 %2 to i1
   tail call void @llvm.assume(i1 %lcmp.mod14)
-  br label %.lr.ph.epil
+  %5 = udiv i32 %epil.iter, 10
+  br label %._crit_edge
 
-.lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
-  %.01011.epil = phi i32 [ %5, %.lr.ph.epil ], [ %.01011.epil.init, %.lr.ph.epil.preheader ]
-  %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
-  %5 = udiv i32 %.01011.epil, 10                  ; 2 uses
-  %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !6
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %bb.a
+._crit_edge:                                      ; preds = %.lr.ph.epil, %._crit_edge.loopexit.unr-lcssa, %bb.a
   %.010.lcssa = phi i32 [ 1000000000, %bb.a ], [ %i.h, %._crit_edge.loopexit.unr-lcssa ], [ %5, %.lr.ph.epil ] ; 2 uses
   %i.a = udiv i32 %.010.lcssa, 10
   %i.b = mul nuw nsw i32 %i.a, 5
@@ -244,10 +242,10 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %.01011 = phi i32 [ 1000000000, %.lr.ph.preheader.new ], [ %i.h, %.lr.ph ]
   %niter = phi i32 [ 0, %.lr.ph.preheader.new ], [ %niter.next.3, %.lr.ph ]
-  %i.h = udiv i32 %.01011, 10000                  ; 3 uses
-  %niter.next.3 = add nuw i32 %niter, 4           ; 2 uses
+  %i.h = udiv i32 %.01011, 100                    ; 3 uses
+  %niter.next.3 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !8
+  br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !6
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
@@ -650,7 +648,5 @@ attributes #15 = { nounwind }
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
 !6 = distinct !{!6, !7}
-!7 = !{!"llvm.loop.unroll.disable"}
-!8 = distinct !{!8, !9}
-!9 = !{!"llvm.loop.mustprogress"}
+!7 = !{!"llvm.loop.mustprogress"}
 end_hunk_1

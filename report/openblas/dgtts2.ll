@@ -1,3 +1,5 @@
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -53,7 +55,7 @@ bb.d:                                             ; preds = %bb.c
   %invariant.gep494 = getelementptr [8 x i8], ptr %i.h, i64 %i.z
   %i.ab = icmp ne i32 %i.w, 0
   %umin.neg = sext i1 %i.ab to i64
-  %i.ac = add nsw i64 %umin.neg, %i.y             ; 3 uses
+  %i.ac = add nsw i64 %umin.neg, %i.y             ; 2 uses
   %i.ad = sext i32 %i.f to i35                    ; 2 uses
   %i.ae = sext i32 %i.w to i35
   %i.af = add nsw i35 %i.ad, %i.ae                ; 2 uses
@@ -147,11 +149,9 @@ bb.d:                                             ; preds = %bb.c
   %.neg = sext i1 %i.ci to i64
   %i.cj = add nsw i64 %.neg, %i.y
   %i.ck = add nsw i64 %i.cj, 1                    ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ck, 20
-  %10 = trunc nsw i64 %i.ac to i35
-  %mul.result = shl i35 %10, 3
+  %min.iters.check = icmp ult i64 %i.ck, 16
   %i.cl = trunc nsw i64 %i.ac to i35
-  %mul.result508 = shl i35 %i.cl, 3
+  %mul.result508 = shl i35 %i.cl, 3               ; 2 uses
   %mul.overflow509 = icmp ugt i64 %i.ac, 4294967295
   %bound0 = icmp ult ptr %scevgep, %scevgep513.a
   %bound1 = icmp ult ptr %scevgep512.a, %scevgep511.a
@@ -318,15 +318,14 @@ bb.g:                                             ; preds = %.unr-lcssa, %.epil.
 vector.scevcheck637:                              ; preds = %.lr.ph393
   %i.fp = icmp ne i32 %i.cn, 0
   %umin638.neg = sext i1 %i.fp to i64
-  %i.fq = add nsw i64 %umin638.neg, %i.ct         ; 3 uses
+  %i.fq = add nsw i64 %umin638.neg, %i.ct         ; 2 uses
   %i.fr = add i32 %i.f, %i.i
   %i.fs = add i32 %i.fr, -1                       ; 2 uses
-  %i.ft = trunc i64 %i.fq to i32
+  %i.ft = trunc i64 %i.fq to i32                  ; 2 uses
   %i.fu = sub i32 %i.fs, %i.ft
   %i.fv = icmp sgt i32 %i.fu, %i.fs
   %i.fw = add i32 %i.f, %i.i                      ; 2 uses
-  %11 = trunc i64 %i.fq to i32
-  %i.fx = sub i32 %i.fw, %11
+  %i.fx = sub i32 %i.fw, %i.ft
   %i.fy = icmp sgt i32 %i.fx, %i.fw
   %i.fz = icmp ugt i64 %i.fq, 4294967295
   %i.ga = or i1 %i.fy, %i.fz
@@ -653,7 +652,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph383
-  %i.lz = sub i35 %i.jo, %mul.result
+  %i.lz = sub i35 %i.jo, %mul.result508
   %i.ma = icmp sgt i35 %i.lz, %i.jo
   %i.mb = sub i35 %i.jp, %mul.result508
   %i.mc = icmp sgt i35 %i.mb, %i.jp

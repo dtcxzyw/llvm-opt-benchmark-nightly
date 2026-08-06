@@ -1,3 +1,8 @@
+inline.NumInlined: 1375
+inline.NumDeleted: 458
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_ZNK16OpenColorIO_v2_515LocalFileFormat4readERSiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_13InterpolationE:bb.a
   store ptr %i.jg, ptr %11, align 8, !tbaa !54
   %i.jh = load i64, ptr %i.b, align 8, !tbaa !65  ; 3 uses
@@ -199,32 +204,24 @@ _ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut1DOpDataELN9__gnu_cxx12_Lock_policyE
   %i.ls = load ptr, ptr %i.lr, align 8, !tbaa !219 ; 12 uses
   %i.lt = load ptr, ptr %i.ir, align 8, !tbaa !219 ; 6 uses
   %i.lu = load ptr, ptr %i.iy, align 8, !tbaa !219 ; 6 uses
-  %min.iters.check = icmp ult i64 %i.iq, 48
+  %min.iters.check = icmp ult i64 %i.iq, 32
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph
-  %i.lv = add nsw i64 %i.iq, -1                   ; 3 uses
+  %i.lv = add nsw i64 %i.iq, -1
   %mul = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.lv, i64 12) ; 2 uses
-  %mul.result = extractvalue { i64, i1 } %mul, 0
+  %mul.result = extractvalue { i64, i1 } %mul, 0  ; 3 uses
   %mul.overflow = extractvalue { i64, i1 } %mul, 1
   %i.lw = getelementptr i8, ptr %i.ls, i64 %mul.result
   %i.lx = icmp ult ptr %i.lw, %i.ls
-  %13 = or i1 %i.lx, %mul.overflow
   %scevgep = getelementptr i8, ptr %i.ls, i64 4   ; 2 uses
-  %mul321 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.lv, i64 12) ; 2 uses
-  %mul.result322 = extractvalue { i64, i1 } %mul321, 0
-  %mul.overflow323 = extractvalue { i64, i1 } %mul321, 1
-  %i.ly = getelementptr i8, ptr %scevgep, i64 %mul.result322
+  %i.ly = getelementptr i8, ptr %scevgep, i64 %mul.result
   %i.lz = icmp ult ptr %i.ly, %scevgep
-  %14 = or i1 %i.lz, %mul.overflow323
   %scevgep324.a = getelementptr i8, ptr %i.ls, i64 8 ; 2 uses
-  %mul325 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.lv, i64 12) ; 2 uses
-  %mul.result326 = extractvalue { i64, i1 } %mul325, 0
-  %mul.overflow327 = extractvalue { i64, i1 } %mul325, 1
-  %i.ma = getelementptr i8, ptr %scevgep324.a, i64 %mul.result326
+  %i.ma = getelementptr i8, ptr %scevgep324.a, i64 %mul.result
   %i.mb = icmp ult ptr %i.ma, %scevgep324.a
-  %i.mc = or i1 %i.mb, %mul.overflow327
-  %i.md = or i1 %13, %14
+  %i.mc = or i1 %i.mb, %mul.overflow
+  %i.md = or i1 %i.lz, %i.lx
   %i.me = or i1 %i.md, %i.mc
   br i1 %i.me, label %scalar.ph.preheader, label %vector.memcheck
 

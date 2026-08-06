@@ -1,3 +1,5 @@
+inline.NumInlined: 42
+inline.NumDeleted: 17
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -47,22 +49,22 @@ bb.a:
   br i1 %i.c, label %CommitTsShmemBuffers.exit, label %.sink.split
 
 CommitTsShmemBuffers.exit:                        ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  %i.d = tail call i32 @SimpleLruAutotuneBuffers(i32 noundef 512, i32 noundef 1024) #10
-  %i.e = call i32 (ptr, i64, ptr, ...) @pg_snprintf(ptr noundef nonnull %i.a, i64 noundef 32, ptr noundef nonnull @.str.9, i32 noundef %i.d) #10 ; 0 uses
-  call void @SetConfigOption(ptr noundef nonnull @.str.3, ptr noundef nonnull %i.a, i32 noundef 1, i32 noundef 1) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  %i.d = tail call i32 @SimpleLruAutotuneBuffers(i32 noundef 512, i32 noundef 1024) #9
+  %i.e = call i32 (ptr, i64, ptr, ...) @pg_snprintf(ptr noundef nonnull %i.a, i64 noundef 32, ptr noundef nonnull @.str.9, i32 noundef %i.d) #9 ; 0 uses
+  call void @SetConfigOption(ptr noundef nonnull @.str.3, ptr noundef nonnull %i.a, i32 noundef 1, i32 noundef 1) #9
   %i.f = load i32, ptr @commit_timestamp_buffers, align 4 ; 2 uses
   %i.g = icmp eq i32 %i.f, 0
   br i1 %i.g, label %bb.b, label %.thread3
 
 .thread3:                                         ; preds = %CommitTsShmemBuffers.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %.sink.split
 
 bb.b:                                             ; preds = %CommitTsShmemBuffers.exit
-  call void @SetConfigOption(ptr noundef nonnull @.str.3, ptr noundef nonnull %i.a, i32 noundef 1, i32 noundef 10) #10
+  call void @SetConfigOption(ptr noundef nonnull @.str.3, ptr noundef nonnull %i.a, i32 noundef 1, i32 noundef 10) #9
   %.pr.pr = load i32, ptr @commit_timestamp_buffers, align 4 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %1, i8 0, i64 32, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 32
   store ptr @.str.10, ptr %i.h, align 8
@@ -73,7 +75,7 @@ bb.b:                                             ; preds = %CommitTsShmemBuffer
   br i1 %i.k, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = call i32 @SimpleLruAutotuneBuffers(i32 noundef 512, i32 noundef 1024) #10
+  %i.l = call i32 @SimpleLruAutotuneBuffers(i32 noundef 512, i32 noundef 1024) #9
   br label %CommitTsShmemBuffers.exit2
 
 .sink.split:                                      ; preds = %bb.a, %.thread3
@@ -115,7 +117,7 @@ CommitTsShmemBuffers.exit2:                       ; preds = %bb.c, %bb.d
   store i32 59, ptr %i.ab, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 100
   store i32 90, ptr %i.ac, align 4
-  call void @SimpleLruRequestWithOpts(ptr noundef nonnull %1) #10
+  call void @SimpleLruRequestWithOpts(ptr noundef nonnull %1) #9
   store ptr @.str.12, ptr %2, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 32, ptr %i.ad, align 8
@@ -123,7 +125,7 @@ CommitTsShmemBuffers.exit2:                       ; preds = %bb.c, %bb.d
   store i64 0, ptr %i.ae, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 24
   store ptr @commitTsShared, ptr %i.af, align 8
-  call void @ShmemRequestStructWithOpts(ptr noundef nonnull %2) #10
+  call void @ShmemRequestStructWithOpts(ptr noundef nonnull %2) #9
   ret void
 }
 
@@ -197,8 +199,8 @@ bb.f:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.f, %._crit_edge.loopexit.split.loop.exit, %bb.e
   %.0.lcssa = phi i32 [ %.031, %bb.e ], [ %i.s, %._crit_edge.loopexit.split.loop.exit ], [ %1, %bb.f ] ; 3 uses
   %.lcssa = phi i1 [ false, %bb.e ], [ true, %._crit_edge.loopexit.split.loop.exit ], [ false, %bb.f ]
-  %i.t = sub i32 %.0.lcssa, %.031                 ; 4 uses
-  %i.u = getelementptr inbounds [4 x i8], ptr %2, i64 %i.o ; 3 uses
+  %i.t = sub i32 %.0.lcssa, %.031                 ; 2 uses
+  %i.u = getelementptr inbounds [4 x i8], ptr %2, i64 %i.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i32 %.034, ptr %i.a, align 4
   %i.v = load i16, ptr getelementptr inbounds nuw (i8, ptr @CommitTsSlruDesc, i64 112), align 8
@@ -209,14 +211,14 @@ bb.f:                                             ; preds = %.lr.ph
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 56
   %i.z = load ptr, ptr %i.y, align 8
   %i.aa = getelementptr inbounds nuw [128 x i8], ptr %i.z, i64 %.zext.i.i ; 2 uses
-  %i.ab = call zeroext i1 @LWLockAcquire(ptr noundef %i.aa, i32 noundef 0) #10 ; 0 uses
-  %i.ac = call i32 @SimpleLruReadPage(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef range(i64 0, 5244161) %i.m, i1 noundef zeroext true, ptr noundef nonnull %i.a) #10
+  %i.ab = call zeroext i1 @LWLockAcquire(ptr noundef %i.aa, i32 noundef 0) #9 ; 0 uses
+  %i.ac = call i32 @SimpleLruReadPage(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef range(i64 0, 5244161) %i.m, i1 noundef zeroext true, ptr noundef nonnull %i.a) #9
   %i.ad = load i32, ptr %i.a, align 4
   %i.ae = urem i32 %i.ad, 819
   %i.af = load ptr, ptr getelementptr inbounds nuw (i8, ptr @CommitTsSlruDesc, i64 104), align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8
-  %i.ai = sext i32 %i.ac to i64                   ; 5 uses
+  %i.ai = sext i32 %i.ac to i64                   ; 3 uses
   %i.aj = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %i.ai
   %i.ak = load ptr, ptr %i.aj, align 8
   %narrow.i.i = mul nuw nsw i32 %i.ae, 10
@@ -226,38 +228,16 @@ bb.f:                                             ; preds = %.lr.ph
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   store i16 %4, ptr %.sroa.4.0..sroa_idx.i.i, align 1
   %i.an = icmp sgt i32 %i.t, 0
-  br i1 %i.an, label %.lr.ph.preheader.i, label %SetXidCommitTsInPage.exit
+  br i1 %i.an, label %.lr.ph.preheader.i.new, label %SetXidCommitTsInPage.exit
 
-.lr.ph.preheader.i:                               ; preds = %._crit_edge
-  %wide.trip.count.i = zext nneg i32 %i.t to i64  ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
-  %5 = icmp eq i32 %i.t, 1
-  br i1 %5, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
-
-.lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter = and i64 %wide.trip.count.i, 2147483646
+.lr.ph.preheader.i.new:                           ; preds = %._crit_edge
+  %wide.trip.count.i = zext nneg i32 %i.t to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next.i.1, %.lr.ph.i ] ; 3 uses
-  %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.1, %.lr.ph.i ]
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv.i
-  %7 = load i32, ptr %6, align 4
-  %8 = urem i32 %7, 819
-  %9 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @CommitTsSlruDesc, i64 104), align 8
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %11 = load ptr, ptr %10, align 8
-  %12 = getelementptr inbounds [8 x i8], ptr %11, i64 %i.ai
-  %13 = load ptr, ptr %12, align 8
-  %narrow.i15.i = mul nuw nsw i32 %8, 10
-  %14 = zext nneg i32 %narrow.i15.i to i64
-  %15 = getelementptr inbounds nuw i8, ptr %13, i64 %14 ; 2 uses
-  store i64 %3, ptr %15, align 1
-  %.sroa.4.0..sroa_idx.i16.i = getelementptr inbounds nuw i8, ptr %15, i64 8
-  store i16 %4, ptr %.sroa.4.0..sroa_idx.i16.i, align 1
-  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv.i
-  %16 = getelementptr inbounds nuw i8, ptr %i.ao, i64 4
-  %i.ap = load i32, ptr %16, align 4
+  %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.1, %.lr.ph.i ] ; 2 uses
+  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %niter
+  %i.ap = load i32, ptr %i.ao, align 4
   %i.aq = urem i32 %i.ap, 819
   %i.ar = load ptr, ptr getelementptr inbounds nuw (i8, ptr @CommitTsSlruDesc, i64 104), align 8
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
@@ -270,42 +250,17 @@ bb.f:                                             ; preds = %.lr.ph
   store i64 %3, ptr %i.ax, align 1
   %.sroa.4.0..sroa_idx.i16.i.1 = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   store i16 %4, ptr %.sroa.4.0..sroa_idx.i16.i.1, align 1
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %SetXidCommitTsInPage.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !8
+  %niter.next.1 = add nuw nsw i64 %niter, 1       ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %wide.trip.count.i
+  br i1 %niter.ncmp.1, label %SetXidCommitTsInPage.exit, label %.lr.ph.i, !llvm.loop !8
 
-SetXidCommitTsInPage.exit.loopexit.unr-lcssa:     ; preds = %.lr.ph.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %SetXidCommitTsInPage.exit, label %.lr.ph.i.epil.preheader
-
-.lr.ph.i.epil.preheader:                          ; preds = %SetXidCommitTsInPage.exit.loopexit.unr-lcssa, %.lr.ph.preheader.i
-  %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.1, %SetXidCommitTsInPage.exit.loopexit.unr-lcssa ]
-  %lcmp.mod53 = trunc i32 %i.t to i1
-  call void @llvm.assume(i1 %lcmp.mod53)
-  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv.i.epil.init
-  %18 = load i32, ptr %17, align 4
-  %19 = urem i32 %18, 819
-  %20 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @CommitTsSlruDesc, i64 104), align 8
-  %21 = getelementptr inbounds nuw i8, ptr %20, i64 8
-  %22 = load ptr, ptr %21, align 8
-  %23 = getelementptr inbounds [8 x i8], ptr %22, i64 %i.ai
-  %24 = load ptr, ptr %23, align 8
-  %narrow.i15.i.epil = mul nuw nsw i32 %19, 10
-  %25 = zext nneg i32 %narrow.i15.i.epil to i64
-  %26 = getelementptr inbounds nuw i8, ptr %24, i64 %25 ; 2 uses
-  store i64 %3, ptr %26, align 1
-  %.sroa.4.0..sroa_idx.i16.i.epil = getelementptr inbounds nuw i8, ptr %26, i64 8
-  store i16 %4, ptr %.sroa.4.0..sroa_idx.i16.i.epil, align 1
-  br label %SetXidCommitTsInPage.exit
-
-SetXidCommitTsInPage.exit:                        ; preds = %.lr.ph.i.epil.preheader, %SetXidCommitTsInPage.exit.loopexit.unr-lcssa, %._crit_edge
+SetXidCommitTsInPage.exit:                        ; preds = %.lr.ph.i, %._crit_edge
   %i.ay = load ptr, ptr getelementptr inbounds nuw (i8, ptr @CommitTsSlruDesc, i64 104), align 8
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 24
   %i.ba = load ptr, ptr %i.az, align 8
   %i.bb = getelementptr inbounds i8, ptr %i.ba, i64 %i.ai
   store i8 1, ptr %i.bb, align 1
-  call void @LWLockRelease(ptr noundef %i.aa) #10
+  call void @LWLockRelease(ptr noundef %i.aa) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br i1 %.lcssa, label %bb.g, label %bb.h
 
@@ -319,7 +274,7 @@ bb.g:                                             ; preds = %SetXidCommitTsInPag
 bb.h:                                             ; preds = %SetXidCommitTsInPage.exit
   %i.bg = load ptr, ptr @MainLWLockArray, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 4992
-  %i.bi = call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.bh, i32 noundef 0) #10 ; 0 uses
+  %i.bi = call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.bh, i32 noundef 0) #9 ; 0 uses
   %i.bj = load ptr, ptr @commitTsShared, align 8
   store i32 %0, ptr %i.bj, align 8
   %i.bk = load ptr, ptr @commitTsShared, align 8  ; 2 uses
@@ -346,7 +301,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.bv = load ptr, ptr @MainLWLockArray, align 8
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 4992
-  call void @LWLockRelease(ptr noundef nonnull %i.bw) #10
+  call void @LWLockRelease(ptr noundef nonnull %i.bw) #9
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.a, %bb.j
@@ -375,10 +330,10 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11 ; 0 uses
-  %i.f = tail call i32 @errcode(i32 noundef 50856066) #10 ; 0 uses
-  %i.g = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str, i32 noundef 0) #10 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 296, ptr noundef nonnull @__func__.TransactionIdGetCommitTsData) #10
+  %i.e = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #10 ; 0 uses
+  %i.f = tail call i32 @errcode(i32 noundef 50856066) #9 ; 0 uses
+  %i.g = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str, i32 noundef 0) #9 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 296, ptr noundef nonnull @__func__.TransactionIdGetCommitTsData) #9
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -397,7 +352,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.c
   %i.i = load ptr, ptr @MainLWLockArray, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 4992
-  %i.k = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.j, i32 noundef 1) #10 ; 0 uses
+  %i.k = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.j, i32 noundef 1) #9 ; 0 uses
   %i.l = load ptr, ptr @commitTsShared, align 8   ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %i.n = load i8, ptr %i.m, align 8, !range !4, !noundef !5
@@ -430,7 +385,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.w = load ptr, ptr @MainLWLockArray, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 4992
-  tail call void @LWLockRelease(ptr noundef nonnull %i.x) #10
+  tail call void @LWLockRelease(ptr noundef nonnull %i.x) #9
   %i.y = load i64, ptr %1, align 8
   %i.z = icmp ne i64 %i.y, 0
   br label %bb.t
@@ -443,7 +398,7 @@ bb.l:                                             ; preds = %bb.h
   %i.ae = load i32, ptr %i.ad, align 4            ; 3 uses
   %i.af = load ptr, ptr @MainLWLockArray, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 4992
-  tail call void @LWLockRelease(ptr noundef nonnull %i.ag) #10
+  tail call void @LWLockRelease(ptr noundef nonnull %i.ag) #9
   %.not25 = icmp eq i32 %i.ac, 0
   br i1 %.not25, label %bb.o, label %bb.m
 
@@ -473,7 +428,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.t
 
 bb.q:                                             ; preds = %bb.n
-  %i.ap = call i32 @SimpleLruReadPage_ReadOnly(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %i.c, ptr noundef nonnull %i.a) #10
+  %i.ap = call i32 @SimpleLruReadPage_ReadOnly(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %i.c, ptr noundef nonnull %i.a) #9
   %i.aq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @CommitTsSlruDesc, i64 104), align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   %i.as = load ptr, ptr %i.ar, align 8
@@ -503,7 +458,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 56
   %i.bc = load ptr, ptr %i.bb, align 8
   %i.bd = getelementptr inbounds nuw [128 x i8], ptr %i.bc, i64 %.zext.i
-  call void @LWLockRelease(ptr noundef %i.bd) #10
+  call void @LWLockRelease(ptr noundef %i.bd) #9
   %i.be = load i64, ptr %1, align 8
   %i.bf = icmp ne i64 %i.be, 0
   br label %bb.t
@@ -525,13 +480,13 @@ declare void @errfinish(ptr noundef, i32 noundef, ptr noundef) local_unnamed_add
 ; Function Attrs: cold noreturn nounwind uwtable
 define internal fastcc void @error_commit_ts_disabled() unnamed_addr #5 {
 bb.a:
-  %i.a = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11 ; 0 uses
-  %i.b = tail call i32 @errcode(i32 noundef 325) #10 ; 0 uses
-  %i.c = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.5) #10 ; 0 uses
-  %i.d = tail call zeroext i1 @RecoveryInProgress() #10
+  %i.a = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #10 ; 0 uses
+  %i.b = tail call i32 @errcode(i32 noundef 325) #9 ; 0 uses
+  %i.c = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.5) #9 ; 0 uses
+  %i.d = tail call zeroext i1 @RecoveryInProgress() #9
   %.str.6..str.8 = select i1 %i.d, ptr @.str.6, ptr @.str.8
-  %i.e = tail call i32 (ptr, ...) @errhint(ptr noundef nonnull %.str.6..str.8, ptr noundef nonnull @.str.7) #10 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 399, ptr noundef nonnull @__func__.error_commit_ts_disabled) #10
+  %i.e = tail call i32 (ptr, ...) @errhint(ptr noundef nonnull %.str.6..str.8, ptr noundef nonnull @.str.7) #9 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 399, ptr noundef nonnull @__func__.error_commit_ts_disabled) #9
   unreachable
 }
 
@@ -542,7 +497,7 @@ define dso_local i32 @GetLatestCommitTsData(ptr nofree noundef writeonly capture
 bb.a:
   %i.a = load ptr, ptr @MainLWLockArray, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4992
-  %i.c = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.b, i32 noundef 1) #10 ; 0 uses
+  %i.c = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.b, i32 noundef 1) #9 ; 0 uses
   %i.d = load ptr, ptr @commitTsShared, align 8   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.f = load i8, ptr %i.e, align 8, !range !4, !noundef !5
@@ -578,7 +533,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.n = load ptr, ptr @MainLWLockArray, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 4992
-  tail call void @LWLockRelease(ptr noundef nonnull %i.o) #10
+  tail call void @LWLockRelease(ptr noundef nonnull %i.o) #9
   ret i32 %i.h
 }
 
@@ -589,7 +544,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = load i64, ptr %i.b, align 8
   %i.d = trunc i64 %i.c to i32
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.e = call zeroext i1 @TransactionIdGetCommitTsData(i32 noundef %i.d, ptr noundef nonnull %i.a, ptr noundef null)
   br i1 %i.e, label %bb.c, label %bb.b
 
@@ -604,7 +559,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.0 = phi i64 [ %i.g, %bb.c ], [ 0, %bb.b ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i64 %.0
 }
 
@@ -614,12 +569,12 @@ bb.a:
   %i.a = alloca [3 x i64], align 16               ; 6 uses
   %i.b = alloca [3 x i8], align 1                 ; 7 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
   %i.d = load ptr, ptr @MainLWLockArray, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4992
-  %i.f = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.e, i32 noundef 1) #10 ; 0 uses
+  %i.f = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.e, i32 noundef 1) #9 ; 0 uses
   %i.g = load ptr, ptr @commitTsShared, align 8   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.i = load i8, ptr %i.h, align 8, !range !4, !noundef !5
@@ -638,15 +593,15 @@ GetLatestCommitTsData.exit:                       ; preds = %bb.a
   %i.o = load i16, ptr %i.n, align 8
   %i.p = load ptr, ptr @MainLWLockArray, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 4992
-  tail call void @LWLockRelease(ptr noundef nonnull %i.q) #10
-  %i.r = call i32 @get_call_result_type(ptr noundef %0, ptr noundef null, ptr noundef nonnull %i.c) #10
+  tail call void @LWLockRelease(ptr noundef nonnull %i.q) #9
+  %i.r = call i32 @get_call_result_type(ptr noundef %0, ptr noundef null, ptr noundef nonnull %i.c) #9
   %.not = icmp eq i32 %i.r, 1
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %GetLatestCommitTsData.exit
-  %i.s = call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11 ; 0 uses
-  %i.t = call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.2) #10 ; 0 uses
-  call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 443, ptr noundef nonnull @__func__.pg_last_committed_xact) #10
+  %i.s = call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #10 ; 0 uses
+  %i.t = call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.2) #9 ; 0 uses
+  call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 443, ptr noundef nonnull @__func__.pg_last_committed_xact) #9
   unreachable
 
 bb.d:                                             ; preds = %GetLatestCommitTsData.exit
@@ -674,13 +629,13 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ab = load ptr, ptr %i.c, align 8
-  %i.ac = call ptr @heap_form_tuple(ptr noundef %i.ab, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #10
+  %i.ac = call ptr @heap_form_tuple(ptr noundef %i.ab, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #9
   %i.ad = getelementptr i8, ptr %i.ac, i64 16
   %.val = load ptr, ptr %i.ad, align 8
-  %i.ae = call i64 @HeapTupleHeaderGetDatum(ptr noundef %.val) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  %i.ae = call i64 @HeapTupleHeaderGetDatum(ptr noundef %.val) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i64 %i.ae
 }
 
@@ -704,20 +659,20 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.g = load i64, ptr %i.f, align 8
   %i.h = trunc i64 %i.g to i32
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #9
   %i.i = call zeroext i1 @TransactionIdGetCommitTsData(i32 noundef %i.h, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a)
-  %i.j = call i32 @get_call_result_type(ptr noundef %0, ptr noundef null, ptr noundef nonnull %i.e) #10
+  %i.j = call i32 @get_call_result_type(ptr noundef %0, ptr noundef null, ptr noundef nonnull %i.e) #9
   %.not = icmp eq i32 %i.j, 1
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11 ; 0 uses
-  %i.l = call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.2) #10 ; 0 uses
-  call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 487, ptr noundef nonnull @__func__.pg_xact_commit_timestamp_origin) #10
+  %i.k = call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #10 ; 0 uses
+  %i.l = call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.2) #9 ; 0 uses
+  call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 487, ptr noundef nonnull @__func__.pg_xact_commit_timestamp_origin) #9
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -741,22 +696,22 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.r = load ptr, ptr %i.e, align 8
-  %i.s = call ptr @heap_form_tuple(ptr noundef %i.r, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) #10
+  %i.s = call ptr @heap_form_tuple(ptr noundef %i.r, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) #9
   %i.t = getelementptr i8, ptr %i.s, i64 16
   %.val = load ptr, ptr %i.t, align 8
-  %i.u = call i64 @HeapTupleHeaderGetDatum(ptr noundef %.val) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  %i.u = call i64 @HeapTupleHeaderGetDatum(ptr noundef %.val) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i64 %i.u
 }
 
 ; Function Attrs: nounwind uwtable
 define dso_local zeroext i1 @check_commit_ts_buffers(ptr noundef %0, ptr nofree noundef readnone captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call zeroext i1 @check_slru_buffers(ptr noundef nonnull @.str.3, ptr noundef %0) #10
+  %i.a = tail call zeroext i1 @check_slru_buffers(ptr noundef nonnull @.str.3, ptr noundef %0) #9
   ret i1 %i.a
 }
 
@@ -785,14 +740,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr @MainLWLockArray, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4992
-  %i.e = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.d, i32 noundef 0) #10 ; 0 uses
+  %i.e = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.d, i32 noundef 0) #9 ; 0 uses
   %i.f = load ptr, ptr @commitTsShared, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %i.h = load i8, ptr %i.g, align 8, !range !4, !noundef !5
   %i.i = trunc nuw i8 %i.h to i1
   %i.j = load ptr, ptr @MainLWLockArray, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 4992
-  tail call void @LWLockRelease(ptr noundef nonnull %i.k) #10
+  tail call void @LWLockRelease(ptr noundef nonnull %i.k) #9
   br i1 %i.i, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -807,7 +762,7 @@ bb.c:                                             ; preds = %bb.b
   store volatile i64 %i.q, ptr %i.s, align 8
   %i.t = load ptr, ptr @MainLWLockArray, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 4992
-  %i.v = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.u, i32 noundef 0) #10 ; 0 uses
+  %i.v = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.u, i32 noundef 0) #9 ; 0 uses
   %i.w = load ptr, ptr @TransamVariables, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 40
   %i.y = load i32, ptr %i.x, align 8
@@ -815,7 +770,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.z, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.aa = tail call i64 @ReadNextFullTransactionId() #10
+  %i.aa = tail call i64 @ReadNextFullTransactionId() #9
   %i.ab = trunc i64 %i.aa to i32                  ; 2 uses
   %i.ac = load ptr, ptr @TransamVariables, align 8 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 44
@@ -827,24 +782,24 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.af = load ptr, ptr @MainLWLockArray, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 4992
-  tail call void @LWLockRelease(ptr noundef nonnull %i.ag) #10
-  %i.ah = tail call zeroext i1 @SimpleLruDoesPhysicalPageExist(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %i.q) #10
+  tail call void @LWLockRelease(ptr noundef nonnull %i.ag) #9
+  %i.ah = tail call zeroext i1 @SimpleLruDoesPhysicalPageExist(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %i.q) #9
   br i1 %i.ah, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @SimpleLruZeroAndWritePage(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %i.q) #10
+  tail call void @SimpleLruZeroAndWritePage(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %i.q) #9
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ai = load ptr, ptr @MainLWLockArray, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 4992
-  %i.ak = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.aj, i32 noundef 0) #10 ; 0 uses
+  %i.ak = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.aj, i32 noundef 0) #9 ; 0 uses
   %i.al = load ptr, ptr @commitTsShared, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 24
   store i8 1, ptr %i.am, align 8
   %i.an = load ptr, ptr @MainLWLockArray, align 8
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 4992
-  tail call void @LWLockRelease(ptr noundef nonnull %i.ao) #10
+  tail call void @LWLockRelease(ptr noundef nonnull %i.ao) #9
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.b, %bb.a, %bb.g
@@ -861,7 +816,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr @MainLWLockArray, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4992
-  %i.e = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.d, i32 noundef 0) #10 ; 0 uses
+  %i.e = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.d, i32 noundef 0) #9 ; 0 uses
   %i.f = load ptr, ptr @commitTsShared, align 8   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   store i8 0, ptr %i.g, align 8
@@ -876,10 +831,10 @@ bb.b:                                             ; preds = %bb.a
   store i32 0, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 44
   store i32 0, ptr %i.m, align 4
-  %i.n = tail call zeroext i1 @SlruScanDirectory(ptr noundef nonnull @CommitTsSlruDesc, ptr noundef nonnull @SlruScanDirCbDeleteAll, ptr noundef null) #10 ; 0 uses
+  %i.n = tail call zeroext i1 @SlruScanDirectory(ptr noundef nonnull @CommitTsSlruDesc, ptr noundef nonnull @SlruScanDirCbDeleteAll, ptr noundef null) #9 ; 0 uses
   %i.o = load ptr, ptr @MainLWLockArray, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 4992
-  tail call void @LWLockRelease(ptr noundef nonnull %i.p) #10
+  tail call void @LWLockRelease(ptr noundef nonnull %i.p) #9
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -912,7 +867,7 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.d
   %i.e = load ptr, ptr @MainLWLockArray, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 4992
-  %i.g = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.f, i32 noundef 0) #10 ; 0 uses
+  %i.g = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.f, i32 noundef 0) #9 ; 0 uses
   %i.h = load ptr, ptr @commitTsShared, align 8   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   store i8 0, ptr %i.i, align 8
@@ -927,10 +882,10 @@ bb.e:                                             ; preds = %bb.d
   store i32 0, ptr %i.n, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 44
   store i32 0, ptr %i.o, align 4
-  %i.p = tail call zeroext i1 @SlruScanDirectory(ptr noundef nonnull @CommitTsSlruDesc, ptr noundef nonnull @SlruScanDirCbDeleteAll, ptr noundef null) #10 ; 0 uses
+  %i.p = tail call zeroext i1 @SlruScanDirectory(ptr noundef nonnull @CommitTsSlruDesc, ptr noundef nonnull @SlruScanDirCbDeleteAll, ptr noundef null) #9 ; 0 uses
   %i.q = load ptr, ptr @MainLWLockArray, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 4992
-  tail call void @LWLockRelease(ptr noundef nonnull %i.r) #10
+  tail call void @LWLockRelease(ptr noundef nonnull %i.r) #9
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b, %bb.c
@@ -940,7 +895,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b,
 ; Function Attrs: nounwind uwtable
 define dso_local void @CheckPointCommitTs() local_unnamed_addr #0 {
 bb.a:
-  tail call void @SimpleLruWriteAll(ptr noundef nonnull @CommitTsSlruDesc, i1 noundef zeroext true) #10
+  tail call void @SimpleLruWriteAll(ptr noundef nonnull @CommitTsSlruDesc, i1 noundef zeroext true) #9
   ret void
 }
 
@@ -973,18 +928,18 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 56
   %i.n = load ptr, ptr %i.m, align 8
   %i.o = getelementptr inbounds nuw [128 x i8], ptr %i.n, i64 %.zext.i ; 2 uses
-  %i.p = tail call zeroext i1 @LWLockAcquire(ptr noundef %i.o, i32 noundef 0) #10 ; 0 uses
-  %i.q = tail call i32 @SimpleLruZeroPage(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %i.i) #10 ; 0 uses
+  %i.p = tail call zeroext i1 @LWLockAcquire(ptr noundef %i.o, i32 noundef 0) #9 ; 0 uses
+  %i.q = tail call i32 @SimpleLruZeroPage(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %i.i) #9 ; 0 uses
   %i.r = load i8, ptr @InRecovery, align 1, !range !4, !noundef !5
   %i.s = trunc nuw i8 %i.r to i1
   br i1 %i.s, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.t = tail call i64 @XLogSimpleInsertInt64(i8 noundef zeroext 18, i8 noundef zeroext 0, i64 noundef %i.i) #10 ; 0 uses
+  %i.t = tail call i64 @XLogSimpleInsertInt64(i8 noundef zeroext 18, i8 noundef zeroext 0, i64 noundef %i.i) #9 ; 0 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  tail call void @LWLockRelease(ptr noundef %i.o) #10
+  tail call void @LWLockRelease(ptr noundef %i.o) #9
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.b, %bb.a, %bb.e
@@ -1000,29 +955,29 @@ define dso_local void @TruncateCommitTs(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.xl_commit_ts_truncate, align 8 ; 5 uses
   %i.a = alloca i64, align 8                      ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.b = udiv i32 %0, 819
   %i.c = zext nneg i32 %i.b to i64
   store i64 %i.c, ptr %i.a, align 8
-  %i.d = call zeroext i1 @SlruScanDirectory(ptr noundef nonnull @CommitTsSlruDesc, ptr noundef nonnull @SlruScanDirCbReportPresence, ptr noundef nonnull %i.a) #10
+  %i.d = call zeroext i1 @SlruScanDirectory(ptr noundef nonnull @CommitTsSlruDesc, ptr noundef nonnull @SlruScanDirCbReportPresence, ptr noundef nonnull %i.a) #9
   br i1 %i.d, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load i64, ptr %i.a, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #9
   store i64 %i.e, ptr %1, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 %0, ptr %i.f, align 8
-  call void @XLogBeginInsert() #10
-  call void @XLogRegisterData(ptr noundef nonnull %1, i32 noundef 12) #10
-  %i.g = call i64 @XLogInsert(i8 noundef zeroext 18, i8 noundef zeroext 16) #10 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #10
+  call void @XLogBeginInsert() #9
+  call void @XLogRegisterData(ptr noundef nonnull %1, i32 noundef 12) #9
+  %i.g = call i64 @XLogInsert(i8 noundef zeroext 18, i8 noundef zeroext 16) #9 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #9
   %i.h = load i64, ptr %i.a, align 8
-  call void @SimpleLruTruncate(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %i.h) #10
+  call void @SimpleLruTruncate(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %i.h) #9
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret void
 }
 
@@ -1037,7 +992,7 @@ define dso_local void @SetCommitTsLimit(i32 noundef %0, i32 noundef %1) local_un
 bb.a:
   %i.a = load ptr, ptr @MainLWLockArray, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4992
-  %i.c = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.b, i32 noundef 0) #10 ; 0 uses
+  %i.c = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.b, i32 noundef 0) #9 ; 0 uses
   %i.d = load ptr, ptr @TransamVariables, align 8 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 3 uses
   %i.f = load i32, ptr %i.e, align 8              ; 4 uses
@@ -1083,7 +1038,7 @@ bb.f:                                             ; preds = %bb.a
 bb.g:                                             ; preds = %bb.d, %bb.e, %bb.f
   %i.t = load ptr, ptr @MainLWLockArray, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 4992
-  tail call void @LWLockRelease(ptr noundef nonnull %i.u) #10
+  tail call void @LWLockRelease(ptr noundef nonnull %i.u) #9
   ret void
 }
 
@@ -1092,7 +1047,7 @@ define dso_local void @AdvanceOldestCommitTsXid(i32 noundef %0) local_unnamed_ad
 bb.a:
   %i.a = load ptr, ptr @MainLWLockArray, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4992
-  %i.c = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.b, i32 noundef 0) #10 ; 0 uses
+  %i.c = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.b, i32 noundef 0) #9 ; 0 uses
   %i.d = load ptr, ptr @TransamVariables, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8              ; 4 uses
@@ -1116,7 +1071,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.l = load ptr, ptr @MainLWLockArray, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4992
-  tail call void @LWLockRelease(ptr noundef nonnull %i.m) #10
+  tail call void @LWLockRelease(ptr noundef nonnull %i.m) #9
   ret void
 }
 
@@ -1137,7 +1092,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.g = load ptr, ptr %i.f, align 8
   %.0.copyload = load i64, ptr %i.g, align 1
-  tail call void @SimpleLruZeroAndWritePage(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %.0.copyload) #10
+  tail call void @SimpleLruZeroAndWritePage(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %.0.copyload) #9
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.a
@@ -1147,7 +1102,7 @@ bb.c:                                             ; preds = %bb.a
   %i.k = load i32, ptr %i.j, align 8              ; 4 uses
   %i.l = load ptr, ptr @MainLWLockArray, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4992
-  %i.n = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.m, i32 noundef 0) #10 ; 0 uses
+  %i.n = tail call zeroext i1 @LWLockAcquire(ptr noundef nonnull %i.m, i32 noundef 0) #9 ; 0 uses
   %i.o = load ptr, ptr @TransamVariables, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 40 ; 2 uses
   %i.q = load i32, ptr %i.p, align 8              ; 4 uses
@@ -1171,19 +1126,19 @@ bb.e:                                             ; preds = %bb.d
 AdvanceOldestCommitTsXid.exit:                    ; preds = %bb.c, %bb.d, %bb.e
   %i.w = load ptr, ptr @MainLWLockArray, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 4992
-  tail call void @LWLockRelease(ptr noundef nonnull %i.x) #10
+  tail call void @LWLockRelease(ptr noundef nonnull %i.x) #9
   %i.y = load ptr, ptr getelementptr inbounds nuw (i8, ptr @CommitTsSlruDesc, i64 104), align 8
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 88
   %i.aa = load i64, ptr %i.i, align 8             ; 2 uses
   store volatile i64 %i.aa, ptr %i.z, align 8
-  tail call void @SimpleLruTruncate(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %i.aa) #10
+  tail call void @SimpleLruTruncate(ptr noundef nonnull @CommitTsSlruDesc, i64 noundef %i.aa) #9
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.a
   %i.ab = zext i8 %i.e to i32
-  %i.ac = tail call zeroext i1 @errstart_cold(i32 noundef 24, ptr noundef null) #11 ; 0 uses
-  %i.ad = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.4, i32 noundef %i.ab) #10 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 1025, ptr noundef nonnull @__func__.commit_ts_redo) #10
+  %i.ac = tail call zeroext i1 @errstart_cold(i32 noundef 24, ptr noundef null) #10 ; 0 uses
+  %i.ad = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.4, i32 noundef %i.ab) #9 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 1025, ptr noundef nonnull @__func__.commit_ts_redo) #9
   unreachable
 
 bb.g:                                             ; preds = %AdvanceOldestCommitTsXid.exit, %bb.b
@@ -1195,7 +1150,7 @@ declare void @SimpleLruZeroAndWritePage(ptr noundef, i64 noundef) local_unnamed_
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @committssyncfiletag(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @SlruSyncFileTag(ptr noundef nonnull @CommitTsSlruDesc, ptr noundef %0, ptr noundef %1) #10
+  %i.a = tail call i32 @SlruSyncFileTag(ptr noundef nonnull @CommitTsSlruDesc, ptr noundef %0, ptr noundef %1) #9
   ret i32 %i.a
 }
 
@@ -1252,7 +1207,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 define internal i32 @commit_ts_errdetail_for_io_error(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = load i32, ptr %0, align 4
-  %i.b = tail call i32 (ptr, ...) @errdetail(ptr noundef nonnull @.str.13, i32 noundef %i.a) #10
+  %i.b = tail call i32 (ptr, ...) @errdetail(ptr noundef nonnull @.str.13, i32 noundef %i.a) #9
   ret i32 %i.b
 }
 
@@ -1274,14 +1229,11 @@ declare void @XLogRegisterData(ptr noundef, i32 noundef) local_unnamed_addr #3
 
 declare i64 @XLogInsert(i8 noundef zeroext, i8 noundef zeroext) local_unnamed_addr #3
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #8
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #9
+declare i32 @llvm.umin.i32(i32, i32) #8
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: write, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1291,10 +1243,9 @@ attributes #4 = { cold "no-trapping-math"="true" "stack-protector-buffer-size"="
 attributes #5 = { cold noreturn nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nounwind }
-attributes #11 = { cold nounwind }
+attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nounwind }
+attributes #10 = { cold nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

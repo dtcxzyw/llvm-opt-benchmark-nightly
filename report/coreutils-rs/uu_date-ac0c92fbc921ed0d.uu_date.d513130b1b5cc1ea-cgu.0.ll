@@ -1,3 +1,7 @@
+inline.NumInlined: 1460
+inline.NumDeleted: 758
+loop-unroll.NumCompletelyUnrolled: 15
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@_RNCINvMs0_NtNtCs2vKOLqTMYjT_3std4sync4onceNtB8_4Once15call_once_forceNCINvMNtBa_9once_lockINtB1b_8OnceLockReE10initializeNCINvB1a_11get_or_initNCNvNtCsiibOIv6tv3q_7uu_date6locale25get_locale_default_format0E0zE0E0B2n_:bb.a
   call void @_RNvNtCs6JMX4GRUq9U_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.r, i64 noundef %i.p, i64 noundef 0, i64 noundef %i.ab, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @195) #34, !noalias !496
   unreachable
@@ -199,7 +203,7 @@ bb.a:
   %i.ar = alloca [24 x i8], align 8               ; 4 uses
   %i.as = alloca [24 x i8], align 8               ; 4 uses
   %i.at = alloca [24 x i8], align 8               ; 4 uses
-  %i.au = alloca [9 x i8], align 1                ; 12 uses
+  %i.au = alloca [9 x i8], align 1                ; 9 uses
   %i.av = alloca [24 x i8], align 8               ; 12 uses
   %i.aw = alloca [24 x i8], align 8               ; 7 uses
   %i.ax = alloca [24 x i8], align 8               ; 7 uses
@@ -602,7 +606,7 @@ bb.ry:                                            ; preds = %bb.qt
   %.sroa.0544.5.extract.trunc553 = trunc i64 %.sroa.0544.5.extract.shift552 to i8
   %i.bro = and i64 %i.bkv, 281474976710656
   %.not2198 = icmp eq i64 %i.bro, 0
-  %.sroa.0544.0.extract.trunc547 = trunc i64 %i.bkv to i32 ; 11 uses
+  %.sroa.0544.0.extract.trunc547 = trunc i64 %i.bkv to i32 ; 8 uses
   %.phi.trans.insert2310 = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.pre2311 = load ptr, ptr %.phi.trans.insert2310, align 8, !alias.scope !2421, !noalias !2426 ; 6 uses
   br i1 %.not2198, label %._crit_edge2309, label %bb.tm
@@ -1005,30 +1009,14 @@ bb.ta:                                            ; preds = %_RINvMs4_NtNtCs3Jjg
   %i.bym = or disjoint i8 %i.byl, 48
   %.8..8..8..8..8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 8
   store i8 %i.bym, ptr %.8..8..8..8..8..sroa_idx, align 1, !noalias !2589
-  %2 = udiv i32 %.sroa.0544.0.extract.trunc547, 10
-  %3 = urem i32 %2, 10                            ; 2 uses
-  %4 = trunc nuw nsw i32 %3 to i8
-  %5 = or disjoint i8 %4, 48
-  %.7..7..7..7..7..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 7
-  store i8 %5, ptr %.7..7..7..7..7..sroa_idx, align 1, !noalias !2589
-  %6 = udiv i32 %.sroa.0544.0.extract.trunc547, 100
-  %7 = urem i32 %6, 10                            ; 2 uses
-  %8 = trunc nuw nsw i32 %7 to i8
-  %9 = or disjoint i8 %8, 48
-  %.6..6..6..6..6..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 6
-  store i8 %9, ptr %.6..6..6..6..6..sroa_idx, align 1, !noalias !2589
-  %10 = udiv i32 %.sroa.0544.0.extract.trunc547, 1000
-  %11 = urem i32 %10, 10                          ; 2 uses
-  %12 = trunc nuw nsw i32 %11 to i8
-  %13 = or disjoint i8 %12, 48
-  %.5..5..5..5..5..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 5
-  store i8 %13, ptr %.5..5..5..5..5..sroa_idx, align 1, !noalias !2589
-  %14 = udiv i32 %.sroa.0544.0.extract.trunc547, 10000
-  %15 = urem i32 %14, 10                          ; 2 uses
-  %16 = trunc nuw nsw i32 %15 to i8
-  %17 = or disjoint i8 %16, 48
+  %2 = insertelement <4 x i32> poison, i32 %.sroa.0544.0.extract.trunc547, i64 0
+  %3 = shufflevector <4 x i32> %2, <4 x i32> poison, <4 x i32> zeroinitializer
+  %4 = udiv <4 x i32> %3, <i32 10000, i32 1000, i32 100, i32 10>
+  %5 = urem <4 x i32> %4, splat (i32 10)          ; 5 uses
+  %6 = trunc nuw nsw <4 x i32> %5 to <4 x i8>
+  %7 = or disjoint <4 x i8> %6, splat (i8 48)
   %.4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 4
-  store i8 %17, ptr %.4..4..4..4..4..sroa_idx, align 1, !noalias !2589
+  store <4 x i8> %7, ptr %.4..4..4..4..4..sroa_idx, align 1, !noalias !2589
   %i.byn = udiv i32 %.sroa.0544.0.extract.trunc547, 100000
   %.lhs.trunc2507 = trunc nuw nsw i32 %i.byn to i16
   %i.byo = urem i16 %.lhs.trunc2507, 10           ; 2 uses
@@ -1064,19 +1052,23 @@ bb.tb:                                            ; preds = %bb.ta
   br i1 %i.bzb, label %bb.tc, label %bb.tk
 
 bb.tc:                                            ; preds = %.split
-  %i.bzc = icmp eq i32 %3, 0
+  %8 = extractelement <4 x i32> %5, i64 3
+  %i.bzc = icmp eq i32 %8, 0
   br i1 %i.bzc, label %bb.td, label %bb.tk
 
 bb.td:                                            ; preds = %bb.tc
-  %i.bzd = icmp eq i32 %7, 0
+  %9 = extractelement <4 x i32> %5, i64 2
+  %i.bzd = icmp eq i32 %9, 0
   br i1 %i.bzd, label %bb.te, label %bb.tk
 
 bb.te:                                            ; preds = %bb.td
-  %i.bze = icmp eq i32 %11, 0
+  %10 = extractelement <4 x i32> %5, i64 1
+  %i.bze = icmp eq i32 %10, 0
   br i1 %i.bze, label %bb.tf, label %bb.tk
 
 bb.tf:                                            ; preds = %bb.te
-  %i.bzf = icmp eq i32 %15, 0
+  %11 = extractelement <4 x i32> %5, i64 0
+  %i.bzf = icmp eq i32 %11, 0
   br i1 %i.bzf, label %bb.tg, label %bb.tk
 
 bb.tg:                                            ; preds = %bb.tf

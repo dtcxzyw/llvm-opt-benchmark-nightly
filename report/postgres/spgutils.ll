@@ -1,3 +1,8 @@
+inline.NumInlined: 75
+inline.NumDeleted: 29
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@SpGistUpdateMetaPage:bb.a
 
 bb.g:                                             ; preds = %BufferGetPage.exit, %bb.f, %bb.a
@@ -199,15 +204,16 @@ bb.w:                                             ; preds = %bb.v, %bb.g
 define internal fastcc i32 @allocNewBuffer(ptr noundef %0, i32 noundef %1) unnamed_addr #2 {
 bb.a:
   %i.a = tail call ptr @spgGetCache(ptr noundef %0)
-  %i.b = and i32 %1, 3                            ; 3 uses
+  %i.b = and i32 %1, 3                            ; 2 uses
   %.not39 = icmp eq i32 %i.b, 3                   ; 2 uses
   %spec.select = select i1 %.not39, i16 4, i16 0
   %i.c = trunc i32 %1 to i16
   %i.d = shl i16 %i.c, 1
   %i.e = and i16 %i.d, 8
   %.131 = or disjoint i16 %spec.select, %i.e      ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 2 uses
-  br i1 %.not39, label %.split.us, label %.split
+  %.not34 = icmp eq i16 %.131, 0
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 64
+  br i1 %.not39, label %.split.us, label %.split.split
 
 .split.us:                                        ; preds = %bb.a
   %i.g = tail call i32 @SpGistNewBuffer(ptr noundef %0) ; 4 uses
@@ -242,78 +248,7 @@ SpGistInitBuffer.exit.us:                         ; preds = %bb.c, %bb.b
   store i16 -126, ptr %i.w, align 2
   br label %.split41
 
-.split:                                           ; preds = %bb.a
-  %.not34 = icmp eq i16 %.131, 0
-  br i1 %.not34, label %.split.split.us, label %.split.split
-
-.split.split.us:                                  ; preds = %.split, %38
-  %2 = tail call i32 @SpGistNewBuffer(ptr noundef %0) ; 8 uses
-  %3 = icmp slt i32 %2, 0                         ; 2 uses
-  br i1 %3, label %10, label %4
-
-4:                                                ; preds = %.split.split.us
-  %5 = load ptr, ptr @BufferBlocks, align 8
-  %6 = add nsw i32 %2, -1
-  %7 = sext i32 %6 to i64
-  %8 = shl nsw i64 %7, 13
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 %8
-  br label %SpGistInitBuffer.exit.us42
-
-10:                                               ; preds = %.split.split.us
-  %11 = load ptr, ptr @LocalBufferBlockPointers, align 8
-  %12 = xor i32 %2, -1
-  %13 = zext nneg i32 %12 to i64
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %13
-  %15 = load ptr, ptr %14, align 8
-  br label %SpGistInitBuffer.exit.us42
-
-SpGistInitBuffer.exit.us42:                       ; preds = %10, %4
-  %.0.i.i.i.us43 = phi ptr [ %15, %10 ], [ %9, %4 ] ; 3 uses
-  tail call void @PageInit(ptr noundef %.0.i.i.i.us43, i64 noundef 8192, i64 noundef 8) #10
-  %16 = getelementptr inbounds nuw i8, ptr %.0.i.i.i.us43, i64 16
-  %17 = load i16, ptr %16, align 8
-  %18 = zext i16 %17 to i64
-  %19 = getelementptr inbounds nuw i8, ptr %.0.i.i.i.us43, i64 %18 ; 2 uses
-  store i16 0, ptr %19, align 2
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 6
-  store i16 -126, ptr %20, align 2
-  %21 = tail call i32 @BufferGetBlockNumber(i32 noundef %2) #10 ; 2 uses
-  %22 = urem i32 %21, 3                           ; 2 uses
-  %.not.us = icmp eq i32 %i.b, %22
-  br i1 %.not.us, label %.split41, label %23
-
-23:                                               ; preds = %SpGistInitBuffer.exit.us42
-  %24 = zext nneg i32 %22 to i64
-  %25 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %24 ; 2 uses
-  store i32 %21, ptr %25, align 4
-  br i1 %3, label %32, label %26
-
-26:                                               ; preds = %23
-  %27 = load ptr, ptr @BufferBlocks, align 8
-  %28 = add nsw i32 %2, -1
-  %29 = sext i32 %28 to i64
-  %30 = shl nsw i64 %29, 13
-  %31 = getelementptr inbounds nuw i8, ptr %27, i64 %30
-  br label %38
-
-32:                                               ; preds = %23
-  %33 = load ptr, ptr @LocalBufferBlockPointers, align 8
-  %34 = xor i32 %2, -1
-  %35 = zext nneg i32 %34 to i64
-  %36 = getelementptr inbounds nuw [8 x i8], ptr %33, i64 %35
-  %37 = load ptr, ptr %36, align 8
-  br label %38
-
-38:                                               ; preds = %32, %26
-  %.0.i.i.us = phi ptr [ %37, %32 ], [ %31, %26 ]
-  %39 = tail call i64 @PageGetExactFreeSpace(ptr noundef %.0.i.i.us) #10
-  %40 = trunc i64 %39 to i32
-  %41 = getelementptr inbounds nuw i8, ptr %25, i64 4
-  store i32 %40, ptr %41, align 4
-  tail call void @UnlockReleaseBuffer(i32 noundef %2) #10
-  br label %.split.split.us
-
-.split.split:                                     ; preds = %.split, %bb.i
+.split.split:                                     ; preds = %bb.a, %bb.i
   %i.x = tail call i32 @SpGistNewBuffer(ptr noundef %0) ; 8 uses
   %i.y = icmp slt i32 %i.x, 0                     ; 2 uses
   br i1 %i.y, label %bb.d, label %bb.e
@@ -345,15 +280,16 @@ SpGistInitBuffer.exit:                            ; preds = %bb.d, %bb.e
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 6
   store i16 -126, ptr %i.an, align 2
   %i.ao = tail call i32 @BufferGetBlockNumber(i32 noundef %i.x) #10 ; 2 uses
-  %i.ap = urem i32 %i.ao, 3                       ; 2 uses
+  %i.ap = urem i32 %i.ao, 3                       ; 3 uses
   %.not = icmp eq i32 %i.b, %i.ap
   br i1 %.not, label %.split41, label %bb.f
 
 bb.f:                                             ; preds = %SpGistInitBuffer.exit
-  %42 = zext nneg i32 %i.ap to i64
-  %43 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %42 ; 2 uses
-  %44 = getelementptr inbounds nuw i8, ptr %43, i64 32
-  store i32 %i.ao, ptr %44, align 4
+  %2 = or disjoint i32 %i.ap, 4
+  %spec.select35 = select i1 %.not34, i32 %i.ap, i32 %2
+  %3 = zext nneg i32 %spec.select35 to i64
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %3 ; 2 uses
+  store i32 %i.ao, ptr %4, align 4
   br i1 %i.y, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -376,13 +312,13 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.0.i.i = phi ptr [ %i.au, %bb.g ], [ %i.az, %bb.h ]
   %i.ba = tail call i64 @PageGetExactFreeSpace(ptr noundef %.0.i.i) #10
   %i.bb = trunc i64 %i.ba to i32
-  %i.bc = getelementptr inbounds nuw i8, ptr %43, i64 36
+  %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 4
   store i32 %i.bb, ptr %i.bc, align 4
   tail call void @UnlockReleaseBuffer(i32 noundef %i.x) #10
   br label %.split.split
 
-.split41:                                         ; preds = %SpGistInitBuffer.exit, %SpGistInitBuffer.exit.us42, %SpGistInitBuffer.exit.us
-  %.us-phi = phi i32 [ %i.g, %SpGistInitBuffer.exit.us ], [ %2, %SpGistInitBuffer.exit.us42 ], [ %i.x, %SpGistInitBuffer.exit ]
+.split41:                                         ; preds = %SpGistInitBuffer.exit, %SpGistInitBuffer.exit.us
+  %.us-phi = phi i32 [ %i.g, %SpGistInitBuffer.exit.us ], [ %i.x, %SpGistInitBuffer.exit ]
   ret i32 %.us-phi
 }
 

@@ -1,3 +1,5 @@
+inline.NumInlined: 38
+inline.NumDeleted: 8
 begin_hunk_0_@build_ustar_entry_name:bb.a
   %i.aa = load i8, ptr %.0118.ptr.ptr.lcssa, align 1, !tbaa !32
   %i.ab = icmp eq i8 %i.aa, 47
@@ -199,18 +201,18 @@ declare i64 @archive_entry_ctime_nsec(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @add_pax_attr_time(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [50 x i8], align 16               ; 4 uses
+  %i.a = alloca [50 x i8], align 16               ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 49 ; 4 uses
   store i8 0, ptr %i.b, align 1, !tbaa !32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.b
-  %.01725 = phi i32 [ 10, %bb.a ], [ %i.e, %bb.b ] ; 4 uses
-  %.02124 = phi i64 [ %3, %bb.a ], [ %i.d, %bb.b ] ; 3 uses
-  %i.c = urem i64 %.02124, 10                     ; 3 uses
-  %i.d = udiv i64 %.02124, 10                     ; 3 uses
-  %i.e = add nsw i32 %.01725, -1                  ; 4 uses
+  %.01725 = phi i32 [ 10, %bb.a ], [ %i.e, %bb.b ] ; 2 uses
+  %.02124 = phi i64 [ %3, %bb.a ], [ %i.d, %bb.b ] ; 2 uses
+  %i.c = urem i64 %.02124, 10                     ; 2 uses
+  %i.d = udiv i64 %.02124, 10                     ; 2 uses
+  %i.e = add nsw i32 %.01725, -1                  ; 3 uses
   %i.f = icmp ne i32 %i.e, 0                      ; 2 uses
   %i.g = icmp eq i64 %i.c, 0
   %i.h = select i1 %i.f, i1 %i.g, i1 false
@@ -221,55 +223,25 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader:                                       ; preds = %bb.c
   %i.i = icmp sgt i32 %.01725, 1
-  br i1 %i.i, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.i, label %.lr.ph, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %.preheader
-  %xtraiter = and i32 %i.e, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
-
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %4 = getelementptr inbounds nuw i8, ptr @.str.58, i64 %i.c
-  %5 = load i8, ptr %4, align 1, !tbaa !32
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 3 uses
-  store i8 %5, ptr %6, align 16, !tbaa !32
-  %7 = urem i64 %i.d, 10
-  %8 = udiv i64 %.02124, 100
-  %9 = add nsw i32 %.01725, -2
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.029.unr = phi ptr [ %i.b, %.lr.ph.preheader ], [ %6, %.lr.ph.prol ]
-  %.11828.unr = phi i32 [ %i.e, %.lr.ph.preheader ], [ %9, %.lr.ph.prol ]
-  %.12027.in.unr = phi i64 [ %i.c, %.lr.ph.preheader ], [ %7, %.lr.ph.prol ]
-  %.12226.unr = phi i64 [ %i.d, %.lr.ph.preheader ], [ %8, %.lr.ph.prol ]
-  %.lcssa45.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %6, %.lr.ph.prol ]
-  %10 = icmp eq i32 %.01725, 2
-  br i1 %10, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.029 = phi ptr [ %i.l, %.lr.ph ], [ %.029.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %.11828 = phi i32 [ %i.o, %.lr.ph ], [ %.11828.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %.12027.in = phi i64 [ %i.m, %.lr.ph ], [ %.12027.in.unr, %.lr.ph.prol.loopexit ]
-  %.12226 = phi i64 [ %i.n, %.lr.ph ], [ %.12226.unr, %.lr.ph.prol.loopexit ] ; 3 uses
-  %11 = getelementptr inbounds nuw i8, ptr @.str.58, i64 %.12027.in
-  %12 = load i8, ptr %11, align 1, !tbaa !32
-  %13 = getelementptr inbounds i8, ptr %.029, i64 -1
-  store i8 %12, ptr %13, align 1, !tbaa !32
-  %14 = urem i64 %.12226, 10
-  %15 = udiv i64 %.12226, 10
-  %i.j = getelementptr inbounds nuw i8, ptr @.str.58, i64 %14
+.lr.ph:                                           ; preds = %.preheader, %.lr.ph
+  %.029 = phi ptr [ %i.l, %.lr.ph ], [ %i.b, %.preheader ]
+  %.11828 = phi i32 [ %i.o, %.lr.ph ], [ %i.e, %.preheader ] ; 2 uses
+  %.12027.in = phi i64 [ %i.m, %.lr.ph ], [ %i.c, %.preheader ]
+  %.12226 = phi i64 [ %i.n, %.lr.ph ], [ %i.d, %.preheader ] ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr @.str.58, i64 %.12027.in
   %i.k = load i8, ptr %i.j, align 1, !tbaa !32
-  %i.l = getelementptr inbounds i8, ptr %.029, i64 -2 ; 3 uses
+  %i.l = getelementptr inbounds i8, ptr %.029, i64 -1 ; 3 uses
   store i8 %i.k, ptr %i.l, align 1, !tbaa !32
-  %i.m = urem i64 %15, 10
-  %i.n = udiv i64 %.12226, 100
-  %i.o = add nsw i32 %.11828, -2
-  %16 = icmp sgt i32 %.11828, 2
-  br i1 %16, label %.lr.ph, label %._crit_edge, !llvm.loop !70
+  %i.m = urem i64 %.12226, 10
+  %i.n = udiv i64 %.12226, 10
+  %i.o = add nsw i32 %.11828, -1
+  %4 = icmp samesign ugt i32 %.11828, 1
+  br i1 %4, label %.lr.ph, label %._crit_edge, !llvm.loop !70
 
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %.preheader
-  %.0.lcssa = phi ptr [ %i.b, %.preheader ], [ %.lcssa45.unr, %.lr.ph.prol.loopexit ], [ %i.l, %.lr.ph ]
+._crit_edge:                                      ; preds = %.lr.ph, %.preheader
+  %.0.lcssa = phi ptr [ %i.b, %.preheader ], [ %i.l, %.lr.ph ]
   %i.p = getelementptr inbounds i8, ptr %.0.lcssa, i64 -1 ; 2 uses
   store i8 46, ptr %i.p, align 1, !tbaa !32
   br label %bb.d

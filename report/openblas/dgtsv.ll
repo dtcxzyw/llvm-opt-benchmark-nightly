@@ -1,3 +1,6 @@
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@dgtsv_:bb.a
   %indvars.iv.next534.2 = add nuw nsw i64 %indvars.iv533, 3
   %i.ki = mul nsw i64 %indvars.iv.next534.2, %i.if ; 2 uses
@@ -199,7 +202,7 @@ bb.ae:                                            ; preds = %.loopexit479, %bb.q
   %invariant.gep610 = getelementptr [8 x i8], ptr %i.g, i64 %i.nf ; 2 uses
   %i.ng = icmp ne i32 %i.my, 0
   %umin730.neg = sext i1 %i.ng to i64
-  %i.nh = add nsw i64 %umin730.neg, %i.ne         ; 6 uses
+  %i.nh = add nsw i64 %umin730.neg, %i.ne         ; 4 uses
   %i.ni = sext i32 %i.e to i35                    ; 2 uses
   %i.nj = sext i32 %i.my to i35
   %i.nk = add nsw i35 %i.ni, %i.nj                ; 2 uses
@@ -279,20 +282,18 @@ bb.af:                                            ; preds = %.preheader
   %.neg816 = sext i1 %i.pd to i64
   %i.pe = add nsw i64 %.neg816, %i.ne
   %i.pf = add nsw i64 %i.pe, 1                    ; 3 uses
-  %min.iters.check782 = icmp ult i64 %i.pf, 20
+  %min.iters.check782 = icmp ult i64 %i.pf, 16
   br i1 %min.iters.check782, label %scalar.ph781.preheader, label %vector.scevcheck729
 
 vector.scevcheck729:                              ; preds = %.lr.ph516
   %i.pg = trunc nsw i64 %i.nh to i35
-  %mul.result734 = shl i35 %i.pg, 3
+  %mul.result734 = shl i35 %i.pg, 3               ; 2 uses
+  %mul.overflow732 = icmp ugt i64 %i.nh, 4294967295
   %8 = sub i35 %i.nm, %mul.result734
   %9 = icmp sgt i35 %8, %i.nm
-  %10 = trunc nsw i64 %i.nh to i35
-  %mul.result737 = shl i35 %10, 3
-  %mul.overflow738 = icmp ugt i64 %i.nh, 4294967295
-  %i.ph = sub i35 %i.np, %mul.result737
+  %i.ph = sub i35 %i.np, %mul.result734
   %i.pi = icmp sgt i35 %i.ph, %i.np
-  %i.pj = or i1 %i.pi, %mul.overflow738
+  %i.pj = or i1 %i.pi, %mul.overflow732
   %i.pk = or i1 %9, %i.pj
   br i1 %i.pk, label %scalar.ph781.preheader, label %vector.memcheck739
 
@@ -442,21 +443,19 @@ bb.ah:                                            ; preds = %bb.ag
   %.neg816.1 = sext i1 %i.rz to i64
   %i.sa = add nsw i64 %.neg816.1, %i.ne
   %i.sb = add nsw i64 %i.sa, 1                    ; 3 uses
-  %min.iters.check782.1 = icmp ult i64 %i.sb, 20
+  %min.iters.check782.1 = icmp ult i64 %i.sb, 16
   br i1 %min.iters.check782.1, label %scalar.ph781.preheader.1, label %vector.scevcheck729.1
 
 vector.scevcheck729.1:                            ; preds = %.lr.ph516.1
   %i.sc = trunc nsw i64 %i.nh to i35
-  %mul.result734.1 = shl i35 %i.sc, 3
-  %11 = sub i35 %i.rl, %mul.result734.1
-  %12 = icmp sgt i35 %11, %i.rl
-  %13 = trunc nsw i64 %i.nh to i35
-  %mul.result737.1 = shl i35 %13, 3
-  %mul.overflow738.1 = icmp ugt i64 %i.nh, 4294967295
-  %i.sd = sub i35 %i.rm, %mul.result737.1
+  %mul.result734.1 = shl i35 %i.sc, 3             ; 2 uses
+  %mul.overflow732.1 = icmp ugt i64 %i.nh, 4294967295
+  %10 = sub i35 %i.rl, %mul.result734.1
+  %11 = icmp sgt i35 %10, %i.rl
+  %i.sd = sub i35 %i.rm, %mul.result734.1
   %i.se = icmp sgt i35 %i.sd, %i.rm
-  %i.sf = or i1 %i.se, %mul.overflow738.1
-  %i.sg = or i1 %12, %i.sf
+  %i.sf = or i1 %i.se, %mul.overflow732.1
+  %i.sg = or i1 %11, %i.sf
   br i1 %i.sg, label %scalar.ph781.preheader.1, label %vector.memcheck739.1
 
 vector.memcheck739.1:                             ; preds = %vector.scevcheck729.1
@@ -578,7 +577,7 @@ bb.ai:                                            ; preds = %bb.ae
   %invariant.gep604 = getelementptr [8 x i8], ptr %i.g, i64 %i.uk
   %i.um = icmp ne i32 %i.uh, 0
   %umin.neg = sext i1 %i.um to i64
-  %i.un = add nsw i64 %umin.neg, %i.uj            ; 3 uses
+  %i.un = add nsw i64 %umin.neg, %i.uj            ; 2 uses
   %i.uo = sext i32 %i.e to i35                    ; 2 uses
   %i.up = sext i32 %i.uh to i35
   %i.uq = add nsw i35 %i.uo, %i.up                ; 2 uses
@@ -630,11 +629,9 @@ bb.ai:                                            ; preds = %bb.ae
   %.neg815 = sext i1 %i.vw to i64
   %i.vx = add nsw i64 %.neg815, %i.uj
   %i.vy = add nsw i64 %i.vx, 1                    ; 3 uses
-  %min.iters.check707 = icmp ult i64 %i.vy, 20
-  %14 = trunc nsw i64 %i.un to i35
-  %mul.result = shl i35 %14, 3
+  %min.iters.check707 = icmp ult i64 %i.vy, 16
   %i.vz = trunc nsw i64 %i.un to i35
-  %mul.result664 = shl i35 %i.vz, 3
+  %mul.result664 = shl i35 %i.vz, 3               ; 2 uses
   %mul.overflow665 = icmp ugt i64 %i.un, 4294967295
   %bound0684.a = icmp ult ptr %scevgep668.a, %scevgep671.a
   %bound1685.a = icmp ult ptr %scevgep670.a, %scevgep669.a
@@ -694,7 +691,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %min.iters.check707, label %scalar.ph706.preheader, label %vector.scevcheck662
 
 vector.scevcheck662:                              ; preds = %.lr.ph511
-  %i.wv = sub i35 %i.wh, %mul.result
+  %i.wv = sub i35 %i.wh, %mul.result664
   %i.ww = icmp sgt i35 %i.wv, %i.wh
   %i.wx = sub i35 %i.wi, %mul.result664
   %i.wy = icmp sgt i35 %i.wx, %i.wi

@@ -1,3 +1,5 @@
+loop-unroll.NumRuntimeUnrolled: 14
+loop-unroll.NumUnrolled: 14
 begin_hunk_0_@dsbgst_:bb.a
   %lftr.wideiv.3 = trunc i64 %indvars.iv.next.3 to i32
   %exitcond.not.3 = icmp eq i32 %i.cg, %lftr.wideiv.3
@@ -199,7 +201,7 @@ vec.epilog.scalar.ph4439:                         ; preds = %vec.epilog.scalar.p
   %i.he = zext nneg i32 %i.ek to i64              ; 11 uses
   %i.hf = sext i32 %i.gz to i64                   ; 4 uses
   %smax4280 = call i64 @llvm.smax.i64(i64 %i.hf, i64 %i.he)
-  %i.hg = sub nsw i64 %smax4280, %i.he            ; 3 uses
+  %i.hg = sub nsw i64 %smax4280, %i.he            ; 2 uses
   %i.hh = add i32 %i.bw, %i.ek
   %i.hi = call i32 @llvm.smin.i32(i32 %i.bp, i32 %i.br)
   %i.hj = xor i32 %i.hi, -1
@@ -273,8 +275,7 @@ vec.epilog.scalar.ph4439:                         ; preds = %vec.epilog.scalar.p
   %i.jp = call i32 @llvm.smin.i32(i32 %i.bp, i32 %i.br)
   %i.jq = sub i32 %i.jp, %i.bs
   %min.iters.check4304 = icmp ult i64 %i.il, 4
-  %13 = trunc i64 %i.hg to i32
-  %i.jr = trunc i64 %i.hg to i32
+  %i.jr = trunc i64 %i.hg to i32                  ; 2 uses
   %i.js = add i32 %i.hq, %i.jr
   %i.jt = icmp slt i32 %i.js, %i.hq
   %i.ju = icmp ugt i64 %i.hg, 4294967295
@@ -558,7 +559,7 @@ iter.check4327:                                   ; preds = %._crit_edge2964
   br i1 %min.iters.check4304, label %vec.epilog.scalar.ph4328.preheader, label %vector.scevcheck4279
 
 vector.scevcheck4279:                             ; preds = %iter.check4327
-  %i.px = add i32 %i.lb, %13
+  %i.px = add i32 %i.lb, %i.jr
   %i.py = icmp slt i32 %i.px, %i.lb
   %i.pz = or i1 %i.py, %i.jv
   br i1 %i.pz, label %vec.epilog.scalar.ph4328.preheader, label %vector.memcheck4283
@@ -961,17 +962,16 @@ bb.bn:                                            ; preds = %._crit_edge3122
 
 vector.scevcheck4228:                             ; preds = %.lr.ph3126
   %i.ane = xor i64 %i.anc, -1
-  %i.anf = add nsw i64 %i.ane, %i.anb             ; 3 uses
+  %i.anf = add nsw i64 %i.ane, %i.anb             ; 2 uses
   %i.ang = shl i32 %i.amz, 1
   %i.anh = xor i32 %i.ana, -1
   %i.ani = add i32 %i.ang, %i.anh                 ; 2 uses
-  %i.anj = trunc i64 %i.anf to i32
+  %i.anj = trunc i64 %i.anf to i32                ; 2 uses
   %i.ank = sub i32 %i.ani, %i.anj
   %i.anl = icmp sgt i32 %i.ank, %i.ani
   %i.anm = xor i32 %i.ana, -1
   %i.ann = add i32 %i.amz, %i.anm                 ; 2 uses
-  %14 = trunc i64 %i.anf to i32
-  %i.ano = sub i32 %i.ann, %14
+  %i.ano = sub i32 %i.ann, %i.anj
   %i.anp = icmp sgt i32 %i.ano, %i.ann
   %i.anq = icmp ugt i64 %i.anf, 4294967295
   %i.anr = or i1 %i.anp, %i.anq
@@ -1374,17 +1374,16 @@ bb.dk:                                            ; preds = %._crit_edge3204
 
 vector.scevcheck:                                 ; preds = %.lr.ph3208
   %i.buc = xor i64 %i.bua, -1
-  %i.bud = add nsw i64 %i.buc, %i.btz             ; 3 uses
+  %i.bud = add nsw i64 %i.buc, %i.btz             ; 2 uses
   %i.bue = shl i32 %i.btx, 1
   %i.buf = xor i32 %i.bty, -1
   %i.bug = add i32 %i.bue, %i.buf                 ; 2 uses
-  %i.buh = trunc i64 %i.bud to i32
+  %i.buh = trunc i64 %i.bud to i32                ; 2 uses
   %i.bui = sub i32 %i.bug, %i.buh
   %i.buj = icmp sgt i32 %i.bui, %i.bug
   %i.buk = xor i32 %i.bty, -1
   %i.bul = add i32 %i.btx, %i.buk                 ; 2 uses
-  %15 = trunc i64 %i.bud to i32
-  %i.bum = sub i32 %i.bul, %15
+  %i.bum = sub i32 %i.bul, %i.buh
   %i.bun = icmp sgt i32 %i.bum, %i.bul
   %i.buo = icmp ugt i64 %i.bud, 4294967295
   %i.bup = or i1 %i.bun, %i.buo
@@ -1775,17 +1774,15 @@ vector.scevcheck4601:                             ; preds = %bb.dq
   %i.cbr = add i32 %i.cbq, %i.ddq                 ; 2 uses
   %smax4602 = call i64 @llvm.smax.i64(i64 %indvars.iv3732, i64 %i.dct)
   %i.cbs = add i64 %indvar4603, %i.dcs
-  %i.cbt = sub i64 %smax4602, %i.cbs              ; 4 uses
-  %i.cbu = trunc i64 %i.cbt to i32
+  %i.cbt = sub i64 %smax4602, %i.cbs              ; 2 uses
+  %i.cbu = trunc i64 %i.cbt to i32                ; 3 uses
   %i.cbv = add i32 %i.cbr, %i.cbu
   %i.cbw = icmp slt i32 %i.cbv, %i.cbr
-  %16 = trunc i64 %i.cbt to i32
-  %i.cbx = add i32 %i.cbo, %16
+  %i.cbx = add i32 %i.cbo, %i.cbu
   %i.cby = icmp slt i32 %i.cbx, %i.cbo
   %i.cbz = icmp ugt i64 %i.cbt, 4294967295
   %i.cca = or i1 %i.cby, %i.cbz
-  %17 = trunc i64 %i.cbt to i32
-  %i.ccb = add i32 %i.cbm, %17
+  %i.ccb = add i32 %i.cbm, %i.cbu
   %i.ccc = icmp slt i32 %i.ccb, %i.cbm
   %i.ccd = or i1 %i.cbw, %i.cca
   %i.cce = or i1 %i.ccc, %i.ccd
@@ -2188,7 +2185,7 @@ iter.check4584:                                   ; preds = %.loopexit
   br i1 %min.iters.check4561, label %vec.epilog.scalar.ph4585.preheader, label %vector.scevcheck4537
 
 vector.scevcheck4537:                             ; preds = %iter.check4584
-  %i.dbd = add i32 %i.cba, %18
+  %i.dbd = add i32 %i.cba, %i.ddu
   %i.dbe = icmp slt i32 %i.dbd, %i.cba
   %i.dbf = or i1 %i.dbe, %i.ddy
   br i1 %i.dbf, label %vec.epilog.scalar.ph4585.preheader, label %vector.memcheck4541
@@ -2304,7 +2301,7 @@ vec.epilog.scalar.ph4585.preheader:               ; preds = %vector.memcheck4541
   %i.dct = sext i32 %i.bzt to i64                 ; 14 uses
   %i.dcu = sext i32 %i.byx to i64                 ; 5 uses
   %i.dcv = xor i64 %i.dct, -1
-  %i.dcw = add nsw i64 %i.dcv, %i.dcu             ; 3 uses
+  %i.dcw = add nsw i64 %i.dcv, %i.dcu             ; 2 uses
   %i.dcx = add nuw i32 %i.bxg, 1
   %i.dcy = mul i32 %i.n, %i.bzu                   ; 2 uses
   %i.dcz = add i32 %i.dcx, %i.dcy                 ; 2 uses
@@ -2336,8 +2333,7 @@ vec.epilog.scalar.ph4585.preheader:               ; preds = %vector.memcheck4541
   %invariant.op4829 = sub i32 1, %.32608.us
   %invariant.op4831 = sub i32 1, %.32608.us
   %min.iters.check4561 = icmp ult i64 %i.ddp, 4
-  %18 = trunc i64 %i.dcw to i32
-  %i.ddu = trunc i64 %i.dcw to i32
+  %i.ddu = trunc i64 %i.dcw to i32                ; 2 uses
   %i.ddv = add i32 %i.ddc, %i.ddu
   %i.ddw = icmp slt i32 %i.ddv, %i.ddc
   %i.ddx = icmp ugt i64 %i.dcw, 4294967295

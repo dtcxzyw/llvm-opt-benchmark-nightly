@@ -1,3 +1,5 @@
+inline.NumInlined: 45
+inline.NumDeleted: 9
 begin_hunk_0_@EncodeInterval:bb.a
   %.12 = phi i8 [ %.10, %AddVerboseIntPart.exit292 ], [ %.11, %bb.ay ] ; 3 uses
   %.7 = phi i8 [ %.6, %AddVerboseIntPart.exit292 ], [ 0, %bb.ay ] ; 2 uses
@@ -199,10 +201,10 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #13
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 9 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 13 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 11 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 12 uses
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 7 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 7 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 5 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
   store i32 0, ptr %i.d, align 4
   %i.p = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #14
@@ -475,14 +477,12 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ei = add i32 %i.eh, %i.eg
   store i32 %i.ei, ptr %i.k, align 4
   %i.ej = sdiv i32 %storemerge.i.i, 100
-  %3 = srem i32 %i.ej, 100
-  %4 = load i32, ptr %i.l, align 8
-  %5 = add i32 %4, %3
-  store i32 %5, ptr %i.l, align 8
-  %6 = srem i32 %storemerge.i.i, 100
-  %7 = load i32, ptr %i.m, align 4
-  %8 = add i32 %7, %6
-  store i32 %8, ptr %i.m, align 4
+  %3 = insertelement <2 x i32> poison, i32 %storemerge.i.i, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %i.ej, i64 1
+  %5 = srem <2 x i32> %4, splat (i32 100)
+  %6 = load <2 x i32>, ptr %i.m, align 4
+  %7 = add <2 x i32> %6, %5
+  store <2 x i32> %7, ptr %i.m, align 4
   %i.ek = fcmp oeq double %i.ba, 0.000000e+00
   br i1 %i.ek, label %AdjustFractSeconds.exit101.i, label %bb.ac
 
@@ -728,20 +728,19 @@ bb.ay:                                            ; preds = %bb.ax
   %i.iy = add i32 %i.ix, %i.iw
   store i32 %i.iy, ptr %i.n, align 8
   %i.iz = sdiv i32 %storemerge.i.i, 100
-  %9 = srem i32 %i.iz, 100
-  %10 = load i32, ptr %i.o, align 4
-  %11 = add i32 %10, %9
-  store i32 %11, ptr %i.o, align 4
-  %12 = srem i32 %storemerge.i.i, 100
-  %13 = load i32, ptr %2, align 8
-  %14 = add i32 %13, %12                          ; 2 uses
-  store i32 %14, ptr %2, align 8
+  %8 = insertelement <2 x i32> poison, i32 %storemerge.i.i, i64 0
+  %9 = insertelement <2 x i32> %8, i32 %i.iz, i64 1
+  %10 = srem <2 x i32> %9, splat (i32 100)
+  %11 = load <2 x i32>, ptr %2, align 8
+  %12 = add <2 x i32> %11, %10                    ; 2 uses
+  store <2 x i32> %12, ptr %2, align 8
   %i.ja = fcmp oeq double %i.ba, 0.000000e+00
   br i1 %i.ja, label %.sink.split176.sink.split, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
   %i.jb = fptosi double %i.ba to i32              ; 2 uses
-  %i.jc = add i32 %14, %i.jb
+  %13 = extractelement <2 x i32> %12, i64 0
+  %i.jc = add i32 %13, %i.jb
   store i32 %i.jc, ptr %2, align 8
   %i.jd = sitofp i32 %i.jb to double
   %i.je = fsub double %i.ba, %i.jd

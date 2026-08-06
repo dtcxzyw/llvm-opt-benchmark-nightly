@@ -1,3 +1,8 @@
+inline.NumInlined: 294
+inline.NumDeleted: 87
+loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@set_str_d_characters_bp:bb.a
   %i.aw = icmp ne i64 %i.at, 0                    ; 2 uses
   %i.ax = select i1 %i.av, i1 %i.aw, i1 false
@@ -199,71 +204,45 @@ bb.w:                                             ; preds = %bb.e, %bb.d, %bb.u,
 define internal fastcc void @set_date_time(ptr nofree noundef writeonly captures(none) initializes((0, 17)) %0, i64 noundef %1) unnamed_addr #0 {
 set_digit.exit:
   %i.a = alloca i64, align 8                      ; 2 uses
-  %2 = alloca %struct.tm, align 8                 ; 7 uses
+  %2 = alloca %struct.tm, align 8                 ; 8 uses
   store i64 %1, ptr %i.a, align 8, !tbaa !232
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
   tail call void @tzset() #23
   %i.b = call ptr @localtime_r(ptr noundef nonnull %i.a, ptr noundef nonnull %2) #23 ; 0 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %3 = load <4 x i32>, ptr %i.d, align 8, !tbaa !104 ; 3 uses
-  %4 = add nsw <4 x i32> %3, <i32 0, i32 0, i32 1, i32 1900> ; 3 uses
-  %5 = extractelement <4 x i32> %4, i64 3         ; 2 uses
-  %i.f = sdiv i32 %5, 100
-  %6 = sdiv i32 %5, 1000
-  %7 = insertelement <8 x i32> poison, i32 %6, i64 0
-  %8 = insertelement <8 x i32> %7, i32 %i.f, i64 1
-  %9 = sdiv <4 x i32> %4, splat (i32 10)          ; 2 uses
-  %10 = shufflevector <4 x i32> %9, <4 x i32> poison, <8 x i32> <i32 poison, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %11 = shufflevector <8 x i32> %8, <8 x i32> %10, <8 x i32> <i32 0, i32 1, i32 11, i32 poison, i32 10, i32 poison, i32 9, i32 poison>
-  %12 = shufflevector <4 x i32> %4, <4 x i32> poison, <8 x i32> <i32 poison, i32 poison, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %13 = shufflevector <8 x i32> %11, <8 x i32> %12, <8 x i32> <i32 0, i32 1, i32 2, i32 11, i32 4, i32 10, i32 6, i32 poison>
-  %14 = shufflevector <4 x i32> %3, <4 x i32> poison, <8 x i32> <i32 poison, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %15 = shufflevector <8 x i32> %13, <8 x i32> %14, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 9>
-  %i.g = srem <8 x i32> %15, splat (i32 10)
-  %16 = trunc nsw <8 x i32> %i.g to <8 x i8>
-  %17 = add nsw <8 x i8> %16, splat (i8 48)
-  store <8 x i8> %17, ptr %0, align 1, !tbaa !71
-  %18 = extractelement <4 x i32> %3, i64 0
-  %19 = srem i32 %18, 10
-  %20 = trunc nsw i32 %19 to i8
-  %21 = add nsw i8 %20, 48
-  store i8 %21, ptr %i.e, align 1, !tbaa !71
-  %22 = extractelement <4 x i32> %9, i64 0
-  %23 = srem i32 %22, 10
-  %24 = trunc nsw i32 %23 to i8
-  %25 = add nsw i8 %24, 48
-  store i8 %25, ptr %i.c, align 1, !tbaa !71
-  %26 = getelementptr inbounds nuw i8, ptr %0, i64 10
-  %27 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %28 = load i32, ptr %27, align 4, !tbaa !360    ; 2 uses
-  %29 = srem i32 %28, 10
-  %30 = trunc nsw i32 %29 to i8
-  %31 = add nsw i8 %30, 48
-  %32 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %31, ptr %32, align 1, !tbaa !71
-  %33 = sdiv i32 %28, 10
-  %34 = srem i32 %33, 10
-  %35 = trunc nsw i32 %34 to i8
-  %36 = add nsw i8 %35, 48
-  store i8 %36, ptr %26, align 1, !tbaa !71
-  %37 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %38 = load i32, ptr %2, align 8, !tbaa !361     ; 2 uses
-  %39 = srem i32 %38, 10
-  %40 = trunc nsw i32 %39 to i8
-  %41 = add nsw i8 %40, 48
-  %42 = getelementptr inbounds nuw i8, ptr %0, i64 13
-  store i8 %41, ptr %42, align 1, !tbaa !71
-  %43 = sdiv i32 %38, 10
-  %44 = srem i32 %43, 10
-  %45 = trunc nsw i32 %44 to i8
-  %46 = add nsw i8 %45, 48
-  store i8 %46, ptr %37, align 1, !tbaa !71
-  %47 = getelementptr inbounds nuw i8, ptr %0, i64 14
-  %48 = getelementptr inbounds nuw i8, ptr %0, i64 15
-  store i8 48, ptr %48, align 1, !tbaa !71
-  store i8 48, ptr %47, align 1, !tbaa !71
+  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 20
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %3 = load i32, ptr %2, align 8, !tbaa !361      ; 2 uses
+  %i.f = sdiv i32 %3, 10
+  %4 = load i32, ptr %i.c, align 4, !tbaa !355
+  %5 = load <2 x i32>, ptr %i.d, align 4, !tbaa !104
+  %6 = add nsw <2 x i32> %5, <i32 0, i32 1>
+  %7 = shufflevector <2 x i32> %6, <2 x i32> poison, <4 x i32> <i32 1, i32 1, i32 0, i32 0>
+  %8 = sdiv <4 x i32> %7, <i32 10, i32 1, i32 10, i32 1>
+  %9 = add nsw i32 %4, 1900
+  %10 = insertelement <4 x i32> poison, i32 %9, i64 0
+  %11 = shufflevector <4 x i32> %10, <4 x i32> poison, <4 x i32> zeroinitializer
+  %12 = sdiv <4 x i32> %11, <i32 1000, i32 100, i32 10, i32 1>
+  %13 = shufflevector <4 x i32> %12, <4 x i32> %8, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.g = srem <8 x i32> %13, splat (i32 10)
+  %14 = load <2 x i32>, ptr %i.e, align 4, !tbaa !104 ; 2 uses
+  %15 = sdiv <2 x i32> %14, splat (i32 10)
+  %16 = shufflevector <2 x i32> %15, <2 x i32> %14, <4 x i32> <i32 1, i32 3, i32 0, i32 2>
+  %17 = srem <4 x i32> %16, splat (i32 10)
+  %18 = trunc nsw <4 x i32> %17 to <4 x i8>
+  %19 = insertelement <2 x i32> poison, i32 %i.f, i64 0
+  %20 = insertelement <2 x i32> %19, i32 %3, i64 1
+  %21 = srem <2 x i32> %20, splat (i32 10)
+  %22 = trunc nsw <2 x i32> %21 to <2 x i8>
+  %23 = shufflevector <8 x i32> %i.g, <8 x i32> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %24 = trunc <16 x i32> %23 to <16 x i8>
+  %25 = shufflevector <16 x i8> %24, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0>, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 30, i32 31>
+  %26 = shufflevector <4 x i8> %18, <4 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %27 = shufflevector <16 x i8> %25, <16 x i8> %26, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 16, i32 17, i32 18, i32 19, i32 poison, i32 poison, i32 14, i32 15>
+  %28 = shufflevector <2 x i8> %22, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %29 = shufflevector <16 x i8> %27, <16 x i8> %28, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 16, i32 17, i32 14, i32 15>
+  %30 = add nsw <16 x i8> %29, splat (i8 48)
+  store <16 x i8> %30, ptr %0, align 1, !tbaa !71
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.j = load i64, ptr %i.i, align 8, !tbaa !362

@@ -1,3 +1,7 @@
+inline.NumInlined: 1375
+inline.NumDeleted: 538
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_ZSt13__stable_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_:bb.a
   %i.t = icmp eq ptr %.sroa.12.0, null
   br i1 %i.t, label %bb.e, label %bb.f, !prof !57
@@ -199,19 +203,18 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt21__move_merge_adaptiveIPP15QTreeWidgetItemN5QListIS1_E8iteratorES5_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS0_SA_EEEEvT_SE_T0_SF_T1_T2_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.b
-  %min.iters.check = icmp ult i64 %i.f, 64
+  %min.iters.check = icmp ult i64 %i.f, 44
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader155, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %i.h = add nsw i64 %i.f, -1                     ; 3 uses
-  %mul.result = shl i64 %i.h, 3
+  %i.h = add nsw i64 %i.f, -1                     ; 2 uses
+  %mul.result = shl i64 %i.h, 3                   ; 2 uses
+  %mul.overflow = icmp ugt i64 %i.h, 2305843009213693951
   %7 = getelementptr i8, ptr %5, i64 %mul.result
   %8 = icmp ult ptr %7, %5
-  %mul.result82 = shl i64 %i.h, 3
-  %mul.overflow83 = icmp ugt i64 %i.h, 2305843009213693951
-  %i.i = getelementptr i8, ptr %0, i64 %mul.result82
+  %i.i = getelementptr i8, ptr %0, i64 %mul.result
   %i.j = icmp ult ptr %i.i, %0
-  %i.k = or i1 %i.j, %mul.overflow83
+  %i.k = or i1 %i.j, %mul.overflow
   %i.l = or i1 %8, %i.k
   %i.m = sub i64 %i.d, %i.a
   %diff.check = icmp ugt i64 %i.m, -32
@@ -302,19 +305,18 @@ bb.c:                                             ; preds = %.lr.ph.i
   br i1 %i.ai, label %.lr.ph.i.i.i.i.i.i.preheader, label %_ZSt21__move_merge_adaptiveIPP15QTreeWidgetItemN5QListIS1_E8iteratorES5_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS0_SA_EEEEvT_SE_T0_SF_T1_T2_.exit
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.critedge.i
-  %min.iters.check99 = icmp ult i64 %i.ah, 68
+  %min.iters.check99 = icmp ult i64 %i.ah, 48
   br i1 %min.iters.check99, label %.lr.ph.i.i.i.i.i.i.preheader148, label %vector.scevcheck88
 
 vector.scevcheck88:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %i.aj = add nsw i64 %i.ah, -1                   ; 3 uses
-  %mul.result90 = shl i64 %i.aj, 3
+  %i.aj = add nsw i64 %i.ah, -1                   ; 2 uses
+  %mul.result90 = shl i64 %i.aj, 3                ; 2 uses
+  %mul.overflow88 = icmp ugt i64 %i.aj, 2305843009213693951
   %9 = getelementptr i8, ptr %.sroa.015.026.i, i64 %mul.result90
   %10 = icmp ult ptr %9, %.sroa.015.026.i
-  %mul.result93 = shl i64 %i.aj, 3
-  %mul.overflow94 = icmp ugt i64 %i.aj, 2305843009213693951
-  %i.ak = getelementptr i8, ptr %.028.i, i64 %mul.result93
+  %i.ak = getelementptr i8, ptr %.028.i, i64 %mul.result90
   %i.al = icmp ult ptr %i.ak, %.028.i
-  %i.am = or i1 %i.al, %mul.overflow94
+  %i.am = or i1 %i.al, %mul.overflow88
   %i.an = or i1 %10, %i.am
   br i1 %i.an, label %.lr.ph.i.i.i.i.i.i.preheader148, label %vector.memcheck95
 
@@ -379,19 +381,18 @@ bb.d:                                             ; preds = %bb.a
   br i1 %i.bi, label %.lr.ph.i.i.i.i.i23.preheader, label %_ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit27
 
 .lr.ph.i.i.i.i.i23.preheader:                     ; preds = %bb.d
-  %min.iters.check125 = icmp ult i64 %i.bh, 64
+  %min.iters.check125 = icmp ult i64 %i.bh, 44
   br i1 %min.iters.check125, label %.lr.ph.i.i.i.i.i23.preheader146, label %vector.scevcheck115
 
 vector.scevcheck115:                              ; preds = %.lr.ph.i.i.i.i.i23.preheader
-  %i.bj = add nsw i64 %i.bh, -1                   ; 3 uses
-  %mul.result117 = shl i64 %i.bj, 3
+  %i.bj = add nsw i64 %i.bh, -1                   ; 2 uses
+  %mul.result117 = shl i64 %i.bj, 3               ; 2 uses
+  %mul.overflow112 = icmp ugt i64 %i.bj, 2305843009213693951
   %11 = getelementptr i8, ptr %5, i64 %mul.result117
   %12 = icmp ult ptr %11, %5
-  %mul.result120 = shl i64 %i.bj, 3
-  %mul.overflow121 = icmp ugt i64 %i.bj, 2305843009213693951
-  %i.bk = getelementptr i8, ptr %1, i64 %mul.result120
+  %i.bk = getelementptr i8, ptr %1, i64 %mul.result117
   %i.bl = icmp ult ptr %i.bk, %1
-  %i.bm = or i1 %i.bl, %mul.overflow121
+  %i.bm = or i1 %i.bl, %mul.overflow112
   %i.bn = or i1 %12, %i.bm
   %i.bo = sub i64 %i.bf, %i.a
   %diff.check123 = icmp ugt i64 %i.bo, -32
@@ -794,19 +795,18 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt12__mo
   br i1 %i.t, label %.lr.ph.i.i.i.i.i.i.preheader, label %_ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit.i
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.critedge.i
-  %min.iters.check117 = icmp ult i64 %i.s, 58
+  %min.iters.check117 = icmp ult i64 %i.s, 38
   br i1 %min.iters.check117, label %.lr.ph.i.i.i.i.i.i.preheader194, label %vector.scevcheck106
 
 vector.scevcheck106:                              ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %i.u = add nsw i64 %i.s, -1                     ; 3 uses
-  %mul.result108 = shl i64 %i.u, 3
+  %i.u = add nsw i64 %i.s, -1                     ; 2 uses
+  %mul.result108 = shl i64 %i.u, 3                ; 2 uses
+  %mul.overflow106 = icmp ugt i64 %i.u, 2305843009213693951
   %5 = getelementptr i8, ptr %.0.lcssa.i, i64 %mul.result108
   %6 = icmp ult ptr %5, %.0.lcssa.i
-  %mul.result111 = shl i64 %i.u, 3
-  %mul.overflow112 = icmp ugt i64 %i.u, 2305843009213693951
-  %i.v = getelementptr i8, ptr %.sroa.022.0.lcssa.i, i64 %mul.result111
+  %i.v = getelementptr i8, ptr %.sroa.022.0.lcssa.i, i64 %mul.result108
   %i.w = icmp ult ptr %i.v, %.sroa.022.0.lcssa.i
-  %i.x = or i1 %i.w, %mul.overflow112
+  %i.x = or i1 %i.w, %mul.overflow106
   %i.y = or i1 %6, %i.x
   %i.z = sub i64 %i.q, %.0.lcssa.i114
   %diff.check115 = icmp ugt i64 %i.z, -32
@@ -869,19 +869,18 @@ _ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit.i: ; preds 
   br i1 %i.ar, label %.lr.ph.i.i.i.i.i14.i.preheader, label %_ZSt12__move_mergeIN5QListIP15QTreeWidgetItemE8iteratorEPS2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_SA_EEEET0_T_SF_SF_SF_SE_T1_.exit
 
 .lr.ph.i.i.i.i.i14.i.preheader:                   ; preds = %_ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit.i
-  %min.iters.check = icmp ult i64 %i.aq, 58
+  %min.iters.check = icmp ult i64 %i.aq, 38
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i14.i.preheader193, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i.i14.i.preheader
-  %i.as = add nsw i64 %i.aq, -1                   ; 3 uses
-  %mul.result = shl i64 %i.as, 3
+  %i.as = add nsw i64 %i.aq, -1                   ; 2 uses
+  %mul.result = shl i64 %i.as, 3                  ; 2 uses
+  %mul.overflow = icmp ugt i64 %i.as, 2305843009213693951
   %7 = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 %mul.result
   %8 = icmp ult ptr %7, %.0.lcssa.i.i.i.i.i.i
-  %mul.result99 = shl i64 %i.as, 3
-  %mul.overflow100 = icmp ugt i64 %i.as, 2305843009213693951
-  %i.at = getelementptr i8, ptr %.sroa.019.0.lcssa.i, i64 %mul.result99
+  %i.at = getelementptr i8, ptr %.sroa.019.0.lcssa.i, i64 %mul.result
   %i.au = icmp ult ptr %i.at, %.sroa.019.0.lcssa.i
-  %i.av = or i1 %i.au, %mul.overflow100
+  %i.av = or i1 %i.au, %mul.overflow
   %i.aw = or i1 %8, %i.av
   %i.ax = sub i64 %i.ao, %.0.lcssa.i.i.i.i.i.i101
   %diff.check = icmp ugt i64 %i.ax, -32
@@ -985,19 +984,18 @@ _ZSt12__move_mergeIN5QListIP15QTreeWidgetItemE8iteratorEPS2_N9__gnu_cxx5__ops15_
   br i1 %i.ca, label %.lr.ph.i.i.i.i.i.i29.preheader, label %_ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit.i22
 
 .lr.ph.i.i.i.i.i.i29.preheader:                   ; preds = %.critedge.i18
-  %min.iters.check144 = icmp ult i64 %i.bz, 64
+  %min.iters.check144 = icmp ult i64 %i.bz, 44
   br i1 %min.iters.check144, label %.lr.ph.i.i.i.i.i.i29.preheader191, label %vector.scevcheck133
 
 vector.scevcheck133:                              ; preds = %.lr.ph.i.i.i.i.i.i29.preheader
-  %i.cb = add nsw i64 %i.bz, -1                   ; 3 uses
-  %mul.result135 = shl i64 %i.cb, 3
+  %i.cb = add nsw i64 %i.bz, -1                   ; 2 uses
+  %mul.result135 = shl i64 %i.cb, 3               ; 2 uses
+  %mul.overflow130 = icmp ugt i64 %i.cb, 2305843009213693951
   %9 = getelementptr i8, ptr %.0.lcssa.i21, i64 %mul.result135
   %10 = icmp ult ptr %9, %.0.lcssa.i21
-  %mul.result138 = shl i64 %i.cb, 3
-  %mul.overflow139 = icmp ugt i64 %i.cb, 2305843009213693951
-  %i.cc = getelementptr i8, ptr %.sroa.022.0.lcssa.i20, i64 %mul.result138
+  %i.cc = getelementptr i8, ptr %.sroa.022.0.lcssa.i20, i64 %mul.result135
   %i.cd = icmp ult ptr %i.cc, %.sroa.022.0.lcssa.i20
-  %i.ce = or i1 %i.cd, %mul.overflow139
+  %i.ce = or i1 %i.cd, %mul.overflow130
   %i.cf = or i1 %10, %i.ce
   %i.cg = sub i64 %i.bx, %.0.lcssa.i21141
   %diff.check142 = icmp ugt i64 %i.cg, -32
@@ -1059,19 +1057,18 @@ _ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit.i22: ; pred
   br i1 %i.cx, label %.lr.ph.i.i.i.i.i14.i25.preheader, label %_ZSt12__move_mergeIN5QListIP15QTreeWidgetItemE8iteratorEPS2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_SA_EEEET0_T_SF_SF_SF_SE_T1_.exit44
 
 .lr.ph.i.i.i.i.i14.i25.preheader:                 ; preds = %_ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit.i22
-  %min.iters.check171 = icmp ult i64 %i.cw, 64
+  %min.iters.check171 = icmp ult i64 %i.cw, 44
   br i1 %min.iters.check171, label %.lr.ph.i.i.i.i.i14.i25.preheader190, label %vector.scevcheck160
 
 vector.scevcheck160:                              ; preds = %.lr.ph.i.i.i.i.i14.i25.preheader
-  %i.cy = add nsw i64 %i.cw, -1                   ; 3 uses
-  %mul.result162 = shl i64 %i.cy, 3
+  %i.cy = add nsw i64 %i.cw, -1                   ; 2 uses
+  %mul.result162 = shl i64 %i.cy, 3               ; 2 uses
+  %mul.overflow154 = icmp ugt i64 %i.cy, 2305843009213693951
   %11 = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i.i23, i64 %mul.result162
   %12 = icmp ult ptr %11, %.0.lcssa.i.i.i.i.i.i23
-  %mul.result165 = shl i64 %i.cy, 3
-  %mul.overflow166 = icmp ugt i64 %i.cy, 2305843009213693951
-  %i.cz = getelementptr i8, ptr %.sroa.019.0.lcssa.i19, i64 %mul.result165
+  %i.cz = getelementptr i8, ptr %.sroa.019.0.lcssa.i19, i64 %mul.result162
   %i.da = icmp ult ptr %i.cz, %.sroa.019.0.lcssa.i19
-  %i.db = or i1 %i.da, %mul.overflow166
+  %i.db = or i1 %i.da, %mul.overflow154
   %i.dc = or i1 %12, %i.db
   %i.dd = sub i64 %i.cu, %.0.lcssa.i.i.i.i.i.i23168
   %diff.check169 = icmp ugt i64 %i.dd, -32
@@ -1186,19 +1183,18 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt12__mo
   br i1 %i.v, label %.lr.ph.i.i.i.i.i.i.preheader, label %_ZSt4moveIPP15QTreeWidgetItemN5QListIS1_E8iteratorEET0_T_S7_S6_.exit.i
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %._crit_edge.i
-  %min.iters.check113 = icmp ult i64 %i.u, 58
+  %min.iters.check113 = icmp ult i64 %i.u, 38
   br i1 %min.iters.check113, label %.lr.ph.i.i.i.i.i.i.preheader190, label %vector.scevcheck102
 
 vector.scevcheck102:                              ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %i.w = add nsw i64 %i.u, -1                     ; 3 uses
-  %mul.result104 = shl i64 %i.w, 3
+  %i.w = add nsw i64 %i.u, -1                     ; 2 uses
+  %mul.result104 = shl i64 %i.w, 3                ; 2 uses
+  %mul.overflow102 = icmp ugt i64 %i.w, 2305843009213693951
   %5 = getelementptr i8, ptr %.sroa.024.0.lcssa.i, i64 %mul.result104
   %6 = icmp ult ptr %5, %.sroa.024.0.lcssa.i
-  %mul.result107 = shl i64 %i.w, 3
-  %mul.overflow108 = icmp ugt i64 %i.w, 2305843009213693951
-  %i.x = getelementptr i8, ptr %.0.lcssa.i, i64 %mul.result107
+  %i.x = getelementptr i8, ptr %.0.lcssa.i, i64 %mul.result104
   %i.y = icmp ult ptr %i.x, %.0.lcssa.i
-  %i.z = or i1 %i.y, %mul.overflow108
+  %i.z = or i1 %i.y, %mul.overflow102
   %i.aa = or i1 %6, %i.z
   %i.ab = sub i64 %i.s, %.sroa.024.0.lcssa.i110
   %diff.check111 = icmp ugt i64 %i.ab, -32
@@ -1261,19 +1257,18 @@ _ZSt4moveIPP15QTreeWidgetItemN5QListIS1_E8iteratorEET0_T_S7_S6_.exit.i: ; preds 
   br i1 %i.at, label %.lr.ph.i.i.i.i.i19.i.preheader, label %_ZSt12__move_mergeIPP15QTreeWidgetItemN5QListIS1_E8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS0_SA_EEEET0_T_SF_SF_SF_SE_T1_.exit
 
 .lr.ph.i.i.i.i.i19.i.preheader:                   ; preds = %_ZSt4moveIPP15QTreeWidgetItemN5QListIS1_E8iteratorEET0_T_S7_S6_.exit.i
-  %min.iters.check = icmp ult i64 %i.as, 58
+  %min.iters.check = icmp ult i64 %i.as, 38
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i19.i.preheader189, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i.i19.i.preheader
-  %i.au = add nsw i64 %i.as, -1                   ; 3 uses
-  %mul.result = shl i64 %i.au, 3
+  %i.au = add nsw i64 %i.as, -1                   ; 2 uses
+  %mul.result = shl i64 %i.au, 3                  ; 2 uses
+  %mul.overflow = icmp ugt i64 %i.au, 2305843009213693951
   %7 = getelementptr i8, ptr %.sroa.0.0.lcssa.i.i.i.i.i.i, i64 %mul.result
   %8 = icmp ult ptr %7, %.sroa.0.0.lcssa.i.i.i.i.i.i
-  %mul.result95 = shl i64 %i.au, 3
-  %mul.overflow96 = icmp ugt i64 %i.au, 2305843009213693951
-  %i.av = getelementptr i8, ptr %.016.lcssa.i, i64 %mul.result95
+  %i.av = getelementptr i8, ptr %.016.lcssa.i, i64 %mul.result
   %i.aw = icmp ult ptr %i.av, %.016.lcssa.i
-  %i.ax = or i1 %i.aw, %mul.overflow96
+  %i.ax = or i1 %i.aw, %mul.overflow
   %i.ay = or i1 %8, %i.ax
   %i.az = sub i64 %i.aq, %.sroa.0.0.lcssa.i.i.i.i.i.i97
   %diff.check = icmp ugt i64 %i.az, -32
@@ -1377,19 +1372,18 @@ _ZSt12__move_mergeIPP15QTreeWidgetItemN5QListIS1_E8iteratorEN9__gnu_cxx5__ops15_
   br i1 %i.ce, label %.lr.ph.i.i.i.i.i.i35.preheader, label %_ZSt4moveIPP15QTreeWidgetItemN5QListIS1_E8iteratorEET0_T_S7_S6_.exit.i28
 
 .lr.ph.i.i.i.i.i.i35.preheader:                   ; preds = %._crit_edge.i24
-  %min.iters.check140 = icmp ult i64 %i.cd, 64
+  %min.iters.check140 = icmp ult i64 %i.cd, 44
   br i1 %min.iters.check140, label %.lr.ph.i.i.i.i.i.i35.preheader187, label %vector.scevcheck129
 
 vector.scevcheck129:                              ; preds = %.lr.ph.i.i.i.i.i.i35.preheader
-  %i.cf = add nsw i64 %i.cd, -1                   ; 3 uses
-  %mul.result131 = shl i64 %i.cf, 3
+  %i.cf = add nsw i64 %i.cd, -1                   ; 2 uses
+  %mul.result131 = shl i64 %i.cf, 3               ; 2 uses
+  %mul.overflow126 = icmp ugt i64 %i.cf, 2305843009213693951
   %9 = getelementptr i8, ptr %.sroa.024.0.lcssa.i25, i64 %mul.result131
   %10 = icmp ult ptr %9, %.sroa.024.0.lcssa.i25
-  %mul.result134 = shl i64 %i.cf, 3
-  %mul.overflow135 = icmp ugt i64 %i.cf, 2305843009213693951
-  %i.cg = getelementptr i8, ptr %.0.lcssa.i27, i64 %mul.result134
+  %i.cg = getelementptr i8, ptr %.0.lcssa.i27, i64 %mul.result131
   %i.ch = icmp ult ptr %i.cg, %.0.lcssa.i27
-  %i.ci = or i1 %i.ch, %mul.overflow135
+  %i.ci = or i1 %i.ch, %mul.overflow126
   %i.cj = or i1 %10, %i.ci
   %i.ck = sub i64 %i.cb, %.sroa.024.0.lcssa.i25137
   %diff.check138 = icmp ugt i64 %i.ck, -32
@@ -1451,19 +1445,18 @@ _ZSt4moveIPP15QTreeWidgetItemN5QListIS1_E8iteratorEET0_T_S7_S6_.exit.i28: ; pred
   br i1 %i.db, label %.lr.ph.i.i.i.i.i19.i31.preheader, label %_ZSt12__move_mergeIPP15QTreeWidgetItemN5QListIS1_E8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS0_SA_EEEET0_T_SF_SF_SF_SE_T1_.exit49
 
 .lr.ph.i.i.i.i.i19.i31.preheader:                 ; preds = %_ZSt4moveIPP15QTreeWidgetItemN5QListIS1_E8iteratorEET0_T_S7_S6_.exit.i28
-  %min.iters.check167 = icmp ult i64 %i.da, 64
+  %min.iters.check167 = icmp ult i64 %i.da, 44
   br i1 %min.iters.check167, label %.lr.ph.i.i.i.i.i19.i31.preheader186, label %vector.scevcheck156
 
 vector.scevcheck156:                              ; preds = %.lr.ph.i.i.i.i.i19.i31.preheader
-  %i.dc = add nsw i64 %i.da, -1                   ; 3 uses
-  %mul.result158 = shl i64 %i.dc, 3
+  %i.dc = add nsw i64 %i.da, -1                   ; 2 uses
+  %mul.result158 = shl i64 %i.dc, 3               ; 2 uses
+  %mul.overflow150 = icmp ugt i64 %i.dc, 2305843009213693951
   %11 = getelementptr i8, ptr %.sroa.0.0.lcssa.i.i.i.i.i.i29, i64 %mul.result158
   %12 = icmp ult ptr %11, %.sroa.0.0.lcssa.i.i.i.i.i.i29
-  %mul.result161 = shl i64 %i.dc, 3
-  %mul.overflow162 = icmp ugt i64 %i.dc, 2305843009213693951
-  %i.dd = getelementptr i8, ptr %.016.lcssa.i26, i64 %mul.result161
+  %i.dd = getelementptr i8, ptr %.016.lcssa.i26, i64 %mul.result158
   %i.de = icmp ult ptr %i.dd, %.016.lcssa.i26
-  %i.df = or i1 %i.de, %mul.overflow162
+  %i.df = or i1 %i.de, %mul.overflow150
   %i.dg = or i1 %12, %i.df
   %i.dh = sub i64 %i.cy, %.sroa.0.0.lcssa.i.i.i.i.i.i29164
   %diff.check165 = icmp ugt i64 %i.dh, -32
@@ -1674,17 +1667,16 @@ bb.c:                                             ; preds = %bb.b
   %i.m = add i64 %i.l, -8                         ; 2 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
-  %min.iters.check197 = icmp ult i64 %i.m, 488
+  %min.iters.check197 = icmp ult i64 %i.m, 360
   br i1 %min.iters.check197, label %.lr.ph.i.preheader214, label %vector.scevcheck183
 
 vector.scevcheck183:                              ; preds = %.lr.ph.i.preheader
   %i.p = add i64 %i.g, -8
-  %i.q = sub i64 %i.p, %i.d                       ; 2 uses
-  %mul187 = and i64 %i.q, -8
-  %mul184 = and i64 %i.q, -8
+  %i.q = sub i64 %i.p, %i.d
+  %mul184 = and i64 %i.q, -8                      ; 2 uses
   %i.r = getelementptr i8, ptr %0, i64 %mul184
   %i.s = icmp ult ptr %i.r, %0
-  %i.t = getelementptr i8, ptr %1, i64 %mul187
+  %i.t = getelementptr i8, ptr %1, i64 %mul184
   %i.u = icmp ult ptr %i.t, %1
   %i.v = or i1 %i.s, %i.u
   br i1 %i.v, label %.lr.ph.i.preheader214, label %vector.memcheck190
@@ -1789,20 +1781,19 @@ bb.h:                                             ; preds = %bb.f
 
 .lr.ph101.preheader:                              ; preds = %bb.h
   %i.av = getelementptr [8 x i8], ptr %.sroa.048.0, i64 %.086 ; 8 uses
-  %min.iters.check = icmp ult i64 %i.an, 44
+  %min.iters.check = icmp ult i64 %i.an, 30
   br i1 %min.iters.check, label %.lr.ph101.preheader215, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph101.preheader
   %i.aw = xor i64 %.086, -1
-  %i.ax = add i64 %.0, %i.aw                      ; 3 uses
-  %mul.result = shl i64 %i.ax, 3
+  %i.ax = add i64 %.0, %i.aw                      ; 2 uses
+  %mul.result = shl i64 %i.ax, 3                  ; 2 uses
+  %mul.overflow = icmp ugt i64 %i.ax, 2305843009213693951
   %3 = getelementptr i8, ptr %.sroa.048.0, i64 %mul.result
   %4 = icmp ult ptr %3, %.sroa.048.0
-  %mul.result138 = shl i64 %i.ax, 3
-  %mul.overflow139 = icmp ugt i64 %i.ax, 2305843009213693951
-  %i.ay = getelementptr i8, ptr %i.av, i64 %mul.result138
+  %i.ay = getelementptr i8, ptr %i.av, i64 %mul.result
   %i.az = icmp ult ptr %i.ay, %i.av
-  %i.ba = or i1 %i.az, %mul.overflow139
+  %i.ba = or i1 %i.az, %mul.overflow
   %i.bb = or i1 %4, %i.ba
   br i1 %i.bb, label %.lr.ph101.preheader215, label %vector.memcheck
 
@@ -1953,25 +1944,26 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.cw, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.l
-  %min.iters.check165 = icmp ult i64 %.086, 50
+  %min.iters.check165 = icmp ult i64 %.086, 36
   br i1 %min.iters.check165, label %.lr.ph.preheader216, label %vector.scevcheck148
 
 vector.scevcheck148:                              ; preds = %.lr.ph.preheader
-  %i.cx = add nsw i64 %.086, -1                   ; 3 uses
+  %i.cx = add nsw i64 %.086, -1                   ; 2 uses
   %scevgep149 = getelementptr i8, ptr %.sroa.048.0, i64 -8
   %i.cy = shl i64 %.086, 3
   %scevgep150 = getelementptr i8, ptr %scevgep149, i64 %i.cy ; 2 uses
-  %mul.result152.neg = mul i64 %i.cx, -8
-  %i.cz = getelementptr i8, ptr %scevgep150, i64 %mul.result152.neg
+  %mul.result149 = shl i64 %i.cx, 3               ; 2 uses
+  %mul.overflow150 = icmp ugt i64 %i.cx, 2305843009213693951
+  %5 = sub i64 0, %mul.result149
+  %i.cz = getelementptr i8, ptr %scevgep150, i64 %5
   %i.da = icmp ugt ptr %i.cz, %scevgep150
   %scevgep154.a = getelementptr i8, ptr %.sroa.048.0, i64 -8
   %i.db = shl i64 %.0, 3
   %scevgep155 = getelementptr i8, ptr %scevgep154.a, i64 %i.db ; 2 uses
-  %mul.result157.neg = mul i64 %i.cx, -8
-  %mul.overflow158 = icmp ugt i64 %i.cx, 2305843009213693951
-  %i.dc = getelementptr i8, ptr %scevgep155, i64 %mul.result157.neg
+  %6 = sub i64 0, %mul.result149
+  %i.dc = getelementptr i8, ptr %scevgep155, i64 %6
   %i.dd = icmp ugt ptr %i.dc, %scevgep155
-  %i.de = or i1 %i.dd, %mul.overflow158
+  %i.de = or i1 %i.dd, %mul.overflow150
   %i.df = or i1 %i.da, %i.de
   br i1 %i.df, label %.lr.ph.preheader216, label %vector.memcheck159
 
@@ -2235,19 +2227,18 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.g, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.c
-  %min.iters.check = icmp ult i64 %i.f, 64
+  %min.iters.check = icmp ult i64 %i.f, 44
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader173, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %i.h = add nsw i64 %i.f, -1                     ; 3 uses
-  %mul.result = shl i64 %i.h, 3
+  %i.h = add nsw i64 %i.f, -1                     ; 2 uses
+  %mul.result = shl i64 %i.h, 3                   ; 2 uses
+  %mul.overflow = icmp ugt i64 %i.h, 2305843009213693951
   %7 = getelementptr i8, ptr %5, i64 %mul.result
   %8 = icmp ult ptr %7, %5
-  %mul.result79 = shl i64 %i.h, 3
-  %mul.overflow80 = icmp ugt i64 %i.h, 2305843009213693951
-  %i.i = getelementptr i8, ptr %1, i64 %mul.result79
+  %i.i = getelementptr i8, ptr %1, i64 %mul.result
   %i.j = icmp ult ptr %i.i, %1
-  %i.k = or i1 %i.j, %mul.overflow80
+  %i.k = or i1 %i.j, %mul.overflow
   %i.l = or i1 %8, %i.k
   %i.m = sub i64 %i.d, %i.a
   %diff.check = icmp ugt i64 %i.m, -32
@@ -2382,19 +2373,18 @@ _ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit: ;
   br i1 %i.bn, label %.lr.ph.i.i.i.i.i39.preheader, label %_ZSt4moveIPP15QTreeWidgetItemN5QListIS1_E8iteratorEET0_T_S7_S6_.exit
 
 .lr.ph.i.i.i.i.i39.preheader:                     ; preds = %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit
-  %min.iters.check95 = icmp ult i64 %i.bm, 64
+  %min.iters.check95 = icmp ult i64 %i.bm, 44
   br i1 %min.iters.check95, label %.lr.ph.i.i.i.i.i39.preheader170, label %vector.scevcheck85
 
 vector.scevcheck85:                               ; preds = %.lr.ph.i.i.i.i.i39.preheader
-  %i.bo = add nsw i64 %i.bm, -1                   ; 3 uses
-  %mul.result87 = shl i64 %i.bo, 3
+  %i.bo = add nsw i64 %i.bm, -1                   ; 2 uses
+  %mul.result87 = shl i64 %i.bo, 3                ; 2 uses
+  %mul.overflow85 = icmp ugt i64 %i.bo, 2305843009213693951
   %9 = getelementptr i8, ptr %0, i64 %mul.result87
   %10 = icmp ult ptr %9, %0
-  %mul.result90 = shl i64 %i.bo, 3
-  %mul.overflow91 = icmp ugt i64 %i.bo, 2305843009213693951
-  %i.bp = getelementptr i8, ptr %5, i64 %mul.result90
+  %i.bp = getelementptr i8, ptr %5, i64 %mul.result87
   %i.bq = icmp ult ptr %i.bp, %5
-  %i.br = or i1 %i.bq, %mul.overflow91
+  %i.br = or i1 %i.bq, %mul.overflow85
   %i.bs = or i1 %10, %i.br
   %i.bt = sub i64 %i.a, %i.aa
   %diff.check93 = icmp ugt i64 %i.bt, -32
@@ -2463,19 +2453,18 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.cl, label %.lr.ph.i.i.i.i.i42.preheader, label %_ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit46
 
 .lr.ph.i.i.i.i.i42.preheader:                     ; preds = %bb.f
-  %min.iters.check121 = icmp ult i64 %i.ck, 64
+  %min.iters.check121 = icmp ult i64 %i.ck, 44
   br i1 %min.iters.check121, label %.lr.ph.i.i.i.i.i42.preheader168, label %vector.scevcheck111
 
 vector.scevcheck111:                              ; preds = %.lr.ph.i.i.i.i.i42.preheader
-  %i.cm = add nsw i64 %i.ck, -1                   ; 3 uses
-  %mul.result113 = shl i64 %i.cm, 3
+  %i.cm = add nsw i64 %i.ck, -1                   ; 2 uses
+  %mul.result113 = shl i64 %i.cm, 3               ; 2 uses
+  %mul.overflow108 = icmp ugt i64 %i.cm, 2305843009213693951
   %11 = getelementptr i8, ptr %5, i64 %mul.result113
   %12 = icmp ult ptr %11, %5
-  %mul.result116 = shl i64 %i.cm, 3
-  %mul.overflow117 = icmp ugt i64 %i.cm, 2305843009213693951
-  %i.cn = getelementptr i8, ptr %0, i64 %mul.result116
+  %i.cn = getelementptr i8, ptr %0, i64 %mul.result113
   %i.co = icmp ult ptr %i.cn, %0
-  %i.cp = or i1 %i.co, %mul.overflow117
+  %i.cp = or i1 %i.co, %mul.overflow108
   %i.cq = or i1 %12, %i.cp
   %i.cr = sub i64 %i.ci, %i.a
   %diff.check119 = icmp ugt i64 %i.cr, -32
@@ -2536,19 +2525,18 @@ _ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit46: ; preds 
   br i1 %i.di, label %.lr.ph.i.i.i.i.i48.preheader, label %_ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit
 
 .lr.ph.i.i.i.i.i48.preheader:                     ; preds = %_ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit46
-  %min.iters.check147 = icmp ult i64 %i.dh, 64
+  %min.iters.check147 = icmp ult i64 %i.dh, 44
   br i1 %min.iters.check147, label %.lr.ph.i.i.i.i.i48.preheader167, label %vector.scevcheck137
 
 vector.scevcheck137:                              ; preds = %.lr.ph.i.i.i.i.i48.preheader
-  %i.dj = add nsw i64 %i.dh, -1                   ; 3 uses
-  %mul.result139 = shl i64 %i.dj, 3
+  %i.dj = add nsw i64 %i.dh, -1                   ; 2 uses
+  %mul.result139 = shl i64 %i.dj, 3               ; 2 uses
+  %mul.overflow131 = icmp ugt i64 %i.dj, 2305843009213693951
   %13 = getelementptr i8, ptr %0, i64 %mul.result139
   %14 = icmp ult ptr %13, %0
-  %mul.result142 = shl i64 %i.dj, 3
-  %mul.overflow143 = icmp ugt i64 %i.dj, 2305843009213693951
-  %i.dk = getelementptr i8, ptr %1, i64 %mul.result142
+  %i.dk = getelementptr i8, ptr %1, i64 %mul.result139
   %i.dl = icmp ult ptr %i.dk, %1
-  %i.dm = or i1 %i.dl, %mul.overflow143
+  %i.dm = or i1 %i.dl, %mul.overflow131
   %i.dn = or i1 %14, %i.dm
   %i.do = sub i64 %i.ch, %i.ci
   %diff.check145 = icmp ugt i64 %i.do, -32

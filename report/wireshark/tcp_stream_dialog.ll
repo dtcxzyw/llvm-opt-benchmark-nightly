@@ -1,3 +1,8 @@
+inline.NumInlined: 2779
+inline.NumDeleted: 833
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN15TCPStreamDialog14fillThroughputEv:bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28
   invoke void @_ZNK11QMetaObject2trEPKcS1_i(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %7, ptr noundef nonnull align 8 dereferenceable_or_null(56) @_ZN15TCPStreamDialog16staticMetaObjectE, ptr noundef nonnull @.str.43, ptr noundef null, i32 noundef -1)
@@ -199,7 +204,7 @@ _ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.i142: ; preds = %_ZN
   %i.cu = add i64 %i.ct, -8                       ; 2 uses
   %i.cv = lshr i64 %i.cu, 3
   %i.cw = add nuw nsw i64 %i.cv, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cu, 824
+  %min.iters.check = icmp ult i64 %i.cu, 616
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i144.preheader1011, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i144.preheader
@@ -207,12 +212,11 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i144.p
   %i.cy = and i64 %i.cx, 7
   %ident.check = icmp ne i64 %i.cy, 0
   %i.cz = add i64 %i.cp, -8
-  %i.da = sub i64 %i.cz, %i.eg                    ; 2 uses
-  %mul861 = and i64 %i.da, -8
-  %mul = and i64 %i.da, -8
+  %i.da = sub i64 %i.cz, %i.eg
+  %mul = and i64 %i.da, -8                        ; 2 uses
   %i.db = getelementptr i8, ptr %i.cr, i64 %mul
   %i.dc = icmp ult ptr %i.db, %i.cr
-  %i.dd = getelementptr i8, ptr %i.ee, i64 %mul861
+  %i.dd = getelementptr i8, ptr %i.ee, i64 %mul
   %i.de = icmp ult ptr %i.dd, %i.ee
   %i.df = or i1 %ident.check, %i.dc
   %i.dg = or i1 %i.df, %i.de
@@ -615,25 +619,23 @@ bb.br:                                            ; preds = %bb.bq
   br i1 %i.ne, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %bb.br
-  %min.iters.check963 = icmp ult i64 %i.nd, 72
+  %min.iters.check963 = icmp ult i64 %i.nd, 46
   br i1 %min.iters.check963, label %.lr.ph.i.i.i.i.i.i.i.i.preheader994, label %vector.scevcheck928
 
 vector.scevcheck928:                              ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
-  %i.nf = add nsw i64 %i.nd, -1                   ; 4 uses
-  %mul.result930 = shl i64 %i.nf, 3
+  %i.nf = add nsw i64 %i.nd, -1                   ; 2 uses
+  %mul.result930 = shl i64 %i.nf, 3               ; 3 uses
+  %mul.overflow919 = icmp ugt i64 %i.nf, 2305843009213693951
   %i.ng = getelementptr i8, ptr %i.mv, i64 %mul.result930
   %i.nh = icmp ult ptr %i.ng, %i.mv
   %scevgep932 = getelementptr i8, ptr %i.mv, i64 4 ; 2 uses
-  %mul.result934 = shl i64 %i.nf, 3
-  %mul.overflow935 = icmp ugt i64 %i.nf, 2305843009213693951
-  %i.ni = getelementptr i8, ptr %scevgep932, i64 %mul.result934
-  %i.nj = icmp ult ptr %i.ni, %scevgep932
-  %i.nk = or i1 %i.nj, %mul.overflow935
-  %mul.result937 = shl i64 %i.nf, 3
-  %19 = getelementptr i8, ptr %i.mz, i64 %mul.result937
-  %20 = icmp ult ptr %19, %.sroa.0133.0163.i
-  %i.nl = or i1 %i.nh, %i.nk
-  %i.nm = or i1 %20, %i.nl
+  %19 = getelementptr i8, ptr %scevgep932, i64 %mul.result930
+  %20 = icmp ult ptr %19, %scevgep932
+  %i.ni = getelementptr i8, ptr %i.mz, i64 %mul.result930
+  %i.nj = icmp ult ptr %i.ni, %.sroa.0133.0163.i
+  %i.nk = or i1 %i.nj, %mul.overflow919
+  %i.nl = or i1 %20, %i.nh
+  %i.nm = or i1 %i.nl, %i.nk
   br i1 %i.nm, label %.lr.ph.i.i.i.i.i.i.i.i.preheader994, label %vector.memcheck939
 
 vector.memcheck939:                               ; preds = %vector.scevcheck928
@@ -904,28 +906,26 @@ bb.ce:                                            ; preds = %bb.cd
   br i1 %i.qu, label %.lr.ph.i.i.i.i.i.i.i89.i.preheader, label %_ZNSt6vectorISt4pairIjjESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit.i
 
 .lr.ph.i.i.i.i.i.i.i89.i.preheader:               ; preds = %bb.ce
-  %min.iters.check907 = icmp ult i64 %i.qt, 60
+  %min.iters.check907 = icmp ult i64 %i.qt, 32
   br i1 %min.iters.check907, label %.lr.ph.i.i.i.i.i.i.i89.i.preheader989, label %vector.scevcheck893
 
 vector.scevcheck893:                              ; preds = %.lr.ph.i.i.i.i.i.i.i89.i.preheader
-  %i.qv = add nsw i64 %i.qt, -1                   ; 4 uses
-  %mul.result895 = shl i64 %i.qv, 3
+  %i.qv = add nsw i64 %i.qt, -1                   ; 2 uses
+  %mul.result895 = shl i64 %i.qv, 3               ; 3 uses
+  %mul.overflow890 = icmp ugt i64 %i.qv, 2305843009213693951
   %i.qw = getelementptr i8, ptr %i.qn, i64 %mul.result895
   %i.qx = icmp ult ptr %i.qw, %i.pp
   %scevgep = getelementptr i8, ptr %i.qk, i64 12
   %scevgep898 = getelementptr i8, ptr %scevgep, i64 %.sroa.0109.0174.i897
   %i.qy = sub i64 0, %i.ql
   %scevgep899 = getelementptr i8, ptr %scevgep898, i64 %i.qy ; 2 uses
-  %mul.result901 = shl i64 %i.qv, 3
-  %mul.overflow902 = icmp ugt i64 %i.qv, 2305843009213693951
-  %i.qz = getelementptr i8, ptr %scevgep899, i64 %mul.result901
-  %i.ra = icmp ult ptr %i.qz, %scevgep899
-  %i.rb = or i1 %i.ra, %mul.overflow902
-  %mul.result904 = shl i64 %i.qv, 3
-  %21 = getelementptr i8, ptr %i.qo, i64 %mul.result904
-  %22 = icmp ult ptr %21, %i.qo
-  %i.rc = or i1 %i.qx, %i.rb
-  %i.rd = or i1 %22, %i.rc
+  %21 = getelementptr i8, ptr %scevgep899, i64 %mul.result895
+  %22 = icmp ult ptr %21, %scevgep899
+  %i.qz = getelementptr i8, ptr %i.qo, i64 %mul.result895
+  %i.ra = icmp ult ptr %i.qz, %i.qo
+  %i.rb = or i1 %i.ra, %mul.overflow890
+  %i.rc = or i1 %22, %i.qx
+  %i.rd = or i1 %i.rc, %i.rb
   br i1 %i.rd, label %.lr.ph.i.i.i.i.i.i.i89.i.preheader989, label %vector.ph908
 
 vector.ph908:                                     ; preds = %vector.scevcheck893
@@ -1122,7 +1122,7 @@ _ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.i.i: ; preds = %bb.c
   %i.tp = add i64 %i.to, -8                       ; 2 uses
   %i.tq = lshr i64 %i.tp, 3
   %i.tr = add nuw nsw i64 %i.tq, 1                ; 2 uses
-  %min.iters.check878 = icmp ult i64 %i.tp, 776
+  %min.iters.check878 = icmp ult i64 %i.tp, 552
   br i1 %min.iters.check878, label %.lr.ph.i.i.i.i.i.preheader990, label %vector.scevcheck867
 
 vector.scevcheck867:                              ; preds = %.lr.ph.i.i.i.i.i.preheader
@@ -1130,12 +1130,11 @@ vector.scevcheck867:                              ; preds = %.lr.ph.i.i.i.i.i.pr
   %i.tt = and i64 %i.ts, 7
   %ident.check868 = icmp ne i64 %i.tt, 0
   %i.tu = add i64 %i.sz, -8
-  %i.tv = sub i64 %i.tu, %i.ta                    ; 2 uses
-  %mul872 = and i64 %i.tv, -8
-  %mul869 = and i64 %i.tv, -8
+  %i.tv = sub i64 %i.tu, %i.ta
+  %mul869 = and i64 %i.tv, -8                     ; 2 uses
   %i.tw = getelementptr i8, ptr %i.tk, i64 %mul869
   %i.tx = icmp ult ptr %i.tw, %i.tk
-  %i.ty = getelementptr i8, ptr %i.sy, i64 %mul872
+  %i.ty = getelementptr i8, ptr %i.sy, i64 %mul869
   %i.tz = icmp ult ptr %i.ty, %i.sy
   %i.ua = or i1 %ident.check868, %i.tx
   %i.ub = or i1 %i.ua, %i.tz
@@ -1538,7 +1537,7 @@ _ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.i, 
   %i.bv = add i64 %i.bu, -8                       ; 2 uses
   %i.bw = lshr i64 %i.bv, 3
   %i.bx = add nuw nsw i64 %i.bw, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bv, 824
+  %min.iters.check = icmp ult i64 %i.bv, 616
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader68, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i.preheader
@@ -1546,12 +1545,11 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i.preh
   %i.bz = and i64 %i.by, 7
   %ident.check = icmp ne i64 %i.bz, 0
   %i.ca = add i64 %i.b, -8
-  %i.cb = sub i64 %i.ca, %i.c                     ; 2 uses
-  %mul34 = and i64 %i.cb, -8
-  %mul = and i64 %i.cb, -8
+  %i.cb = sub i64 %i.ca, %i.c
+  %mul = and i64 %i.cb, -8                        ; 2 uses
   %i.cc = getelementptr i8, ptr %i.bq, i64 %mul
   %i.cd = icmp ult ptr %i.cc, %i.bq
-  %i.ce = getelementptr i8, ptr %i.a, i64 %mul34
+  %i.ce = getelementptr i8, ptr %i.a, i64 %mul
   %i.cf = icmp ult ptr %i.ce, %i.a
   %i.cg = or i1 %ident.check, %i.cd
   %i.ch = or i1 %i.cg, %i.cf
@@ -1617,7 +1615,7 @@ _ZNSt6vectorISt4pairIjjESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.i: ; preds = %
   %i.cv = add i64 %i.cu, -8                       ; 2 uses
   %i.cw = lshr i64 %i.cv, 3
   %i.cx = add nuw nsw i64 %i.cw, 1                ; 2 uses
-  %min.iters.check52 = icmp ult i64 %i.cv, 856
+  %min.iters.check52 = icmp ult i64 %i.cv, 632
   br i1 %min.iters.check52, label %.lr.ph.i.i.i17.i.preheader67, label %vector.scevcheck40
 
 vector.scevcheck40:                               ; preds = %.lr.ph.i.i.i17.i.preheader
@@ -1625,12 +1623,11 @@ vector.scevcheck40:                               ; preds = %.lr.ph.i.i.i17.i.pr
   %i.cz = and i64 %i.cy, 7
   %ident.check41 = icmp ne i64 %i.cz, 0
   %i.da = add i64 %i.bg, -8
-  %i.db = sub i64 %i.da, %i.b                     ; 2 uses
-  %mul45 = and i64 %i.db, -8
-  %mul42 = and i64 %i.db, -8
+  %i.db = sub i64 %i.da, %i.b
+  %mul42 = and i64 %i.db, -8                      ; 2 uses
   %i.dc = getelementptr i8, ptr %i.ct, i64 %mul42
   %i.dd = icmp ult ptr %i.dc, %i.ct
-  %i.de = getelementptr i8, ptr %i.bf, i64 %mul45
+  %i.de = getelementptr i8, ptr %i.bf, i64 %mul42
   %i.df = icmp ult ptr %i.de, %1
   %i.dg = or i1 %ident.check41, %i.dd
   %i.dh = or i1 %i.dg, %i.df
@@ -2033,7 +2030,7 @@ _ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.e, 
   %i.y = add i64 %i.x, -8                         ; 2 uses
   %i.z = lshr i64 %i.y, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses
-  %min.iters.check = icmp ult i64 %i.y, 824
+  %min.iters.check = icmp ult i64 %i.y, 616
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader13, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i.preheader
@@ -2041,12 +2038,11 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i.preh
   %i.ac = and i64 %i.ab, 7
   %ident.check = icmp ne i64 %i.ac, 0
   %i.ad = add i64 %i.i, -8
-  %i.ae = sub i64 %i.ad, %i.j                     ; 2 uses
-  %mul7 = and i64 %i.ae, -8
-  %mul = and i64 %i.ae, -8
+  %i.ae = sub i64 %i.ad, %i.j
+  %mul = and i64 %i.ae, -8                        ; 2 uses
   %i.af = getelementptr i8, ptr %i.t, i64 %mul
   %i.ag = icmp ult ptr %i.af, %i.t
-  %i.ah = getelementptr i8, ptr %i.h, i64 %mul7
+  %i.ah = getelementptr i8, ptr %i.h, i64 %mul
   %i.ai = icmp ult ptr %i.ah, %i.h
   %i.aj = or i1 %ident.check, %i.ag
   %i.ak = or i1 %i.aj, %i.ai
