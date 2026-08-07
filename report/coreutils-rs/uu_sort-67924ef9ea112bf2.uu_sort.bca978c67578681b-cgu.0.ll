@@ -204,14 +204,15 @@ bb.hl:                                            ; preds = %_RINvNtCs6JMX4GRUq9
   br label %.loopexit.i
 
 .peel.next.i:                                     ; preds = %bb.hm
-  %i.aad = getelementptr inbounds nuw i8, ptr %.sroa.0127.0.i561, i64 24 ; 2 uses
+  %i.aad = getelementptr i8, ptr %.sroa.0127.0.i561, i64 24 ; 2 uses
   %i.aae = icmp eq ptr %i.aad, %i.yz
   br i1 %i.aae, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgcf5BHVXlUt_7uu_sort6chunks5ChunkEEB11_.exit.i, label %bb.hm, !llvm.loop !11769
 
 bb.hm:                                            ; preds = %.lr.ph, %.peel.next.i
   %.sroa.07.1.i563 = phi i64 [ %i.zc, %.lr.ph ], [ %i.aaf, %.peel.next.i ]
   %.sroa.13.1.i562 = phi ptr [ %i.zb, %.lr.ph ], [ %.sroa.0127.0.i561, %.peel.next.i ]
-  %.sroa.0127.0.i561 = phi ptr [ %i.zg, %.lr.ph ], [ %i.aad, %.peel.next.i ] ; 4 uses
+  %.sroa.0127.0.i561 = phi ptr [ %i.zg, %.lr.ph ], [ %i.aad, %.peel.next.i ] ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0127.0.i561) ]
   %i.aaf = add i64 %.sroa.07.1.i563, 1            ; 3 uses
   %i.aag = call fastcc noundef i8 @_RNvCsgcf5BHVXlUt_7uu_sort10compare_by(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.13.1.i562, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.0127.0.i561, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(160) %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(144) %i.za, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(144) %i.za) #34
   %i.aah = icmp sgt i8 %i.aag, %..i
