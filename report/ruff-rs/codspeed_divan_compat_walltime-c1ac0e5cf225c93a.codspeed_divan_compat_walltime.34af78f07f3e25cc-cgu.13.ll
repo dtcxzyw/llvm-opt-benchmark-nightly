@@ -1,3 +1,8 @@
+inline.NumInlined: 275
+inline.NumDeleted: 180
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5entry4tree9EntryTreeENCNvMB1p_B1n_13max_name_span0ENtNtNtBa_6traits8iterator8Iterator4foldjNCINvNvB33_6max_by4foldjNvYjNtNtBc_3cmp3Ord3cmpE0EB1t_:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !175
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !175
@@ -199,9 +204,9 @@ define hidden void @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3M
 bb.a:
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 3 uses
+  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 2 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 3 uses
+  %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit, label %bb.b
@@ -209,57 +214,25 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 3 uses
-  %i.e = lshr exact i64 %i.d, 4                   ; 2 uses
-  %3 = icmp eq i64 %i.d, 16
-  br i1 %3, label %.epil.preheader, label %.new
-
-.new:                                             ; preds = %bb.b
-  %unroll_iter = and i64 %i.e, 1152921504606846974
+  %i.d = sub nuw i64 %i.b, %i.c
+  %i.e = lshr exact i64 %i.d, 4
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.c, %.new
-  %4 = phi i64 [ %.sroa.5.0.copyload, %.new ], [ %10, %bb.c ] ; 3 uses
-  %.sroa.01.0.i.a = phi i64 [ 0, %.new ], [ %i.i, %bb.c ] ; 3 uses
-  %niter = phi i64 [ 0, %.new ], [ %niter.next.1, %bb.c ]
-  %5 = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.0.i.a
-  %.val16.i = load i128, ptr %5, align 16, !noalias !232, !noundef !19
-  %6 = udiv i128 %.val16.i, 1000
-  %7 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.7.0.copyload, i64 %4
-  store i128 %6, ptr %7, align 16, !noalias !235
-  %i.f = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.0.i.a
-  %8 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %.val16.i.1 = load i128, ptr %8, align 16, !noalias !232, !noundef !19
+bb.c:                                             ; preds = %bb.c, %bb.b
+  %.sroa.01.0.i.a = phi i64 [ %.sroa.5.0.copyload, %bb.b ], [ %i.i, %bb.c ] ; 2 uses
+  %niter = phi i64 [ 0, %bb.b ], [ %niter.next.1, %bb.c ] ; 2 uses
+  %i.f = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %niter
+  %.val16.i.1 = load i128, ptr %i.f, align 16, !noalias !232, !noundef !19
   %i.g = udiv i128 %.val16.i.1, 1000
-  %i.h = getelementptr [16 x i8], ptr %.sroa.7.0.copyload, i64 %4
-  %9 = getelementptr i8, ptr %i.h, i64 16
-  store i128 %i.g, ptr %9, align 16, !noalias !235
-  %10 = add i64 %4, 2                             ; 3 uses
-  %i.i = add nuw i64 %.sroa.01.0.i.a, 2           ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit.loopexit.unr-lcssa, label %bb.c
+  %i.h = getelementptr inbounds nuw [16 x i8], ptr %.sroa.7.0.copyload, i64 %.sroa.01.0.i.a
+  store i128 %i.g, ptr %i.h, align 16, !noalias !235
+  %i.i = add i64 %.sroa.01.0.i.a, 1               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 1           ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %i.e
+  br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit, label %bb.c
 
-_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit.loopexit.unr-lcssa: ; preds = %bb.c
-  %11 = and i64 %i.d, 16
-  %lcmp.mod.not = icmp eq i64 %11, 0
-  br i1 %lcmp.mod.not, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit.loopexit.unr-lcssa, %bb.b
-  %.epil.init = phi i64 [ %.sroa.5.0.copyload, %bb.b ], [ %10, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit.loopexit.unr-lcssa ] ; 2 uses
-  %.sroa.01.0.i.epil.init = phi i64 [ 0, %bb.b ], [ %i.i, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit.loopexit.unr-lcssa ]
-  %lcmp.mod3 = trunc i64 %i.e to i1
-  tail call void @llvm.assume(i1 %lcmp.mod3)
-  %12 = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.0.i.epil.init
-  %.val16.i.epil = load i128, ptr %12, align 16, !noalias !232, !noundef !19
-  %13 = udiv i128 %.val16.i.epil, 1000
-  %14 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.7.0.copyload, i64 %.epil.init
-  store i128 %13, ptr %14, align 16, !noalias !235
-  %15 = add i64 %.epil.init, 1
-  br label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit
-
-_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit: ; preds = %.epil.preheader, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit.loopexit.unr-lcssa, %bb.a
-  %storemerge = phi i64 [ %.sroa.5.0.copyload, %bb.a ], [ %10, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit.loopexit.unr-lcssa ], [ %15, %.epil.preheader ]
+_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2c_8adapters3map8map_foldRBQ_ouNCNvNtNtBW_5divan8codspeed24collect_walltime_results0NCINvNvB26_8for_each4calloNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4W_3VecoE14extend_trustedINtB2W_3MapBF_B3w_EE0E0E0EBW_.exit: ; preds = %bb.c, %bb.a
+  %storemerge = phi i64 [ %.sroa.5.0.copyload, %bb.a ], [ %i.i, %bb.c ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
   store i64 %storemerge, ptr %.sroa.0.0.copyload, align 8, !noalias !232
   ret void
