@@ -1,3 +1,7 @@
+inline.NumInlined: 624
+inline.NumDeleted: 314
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvMs3_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_3Hir10repetition:bb.a
     i32 1, label %bb.n
   ]
@@ -199,7 +203,7 @@ bb.a:
   br i1 %i.ak, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterNtNtCs79ICTHwG85D_12regex_syntax3hir10PropertiesENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs98D8VPWzHuM_14regex_automata.exit.thread.i, label %.lr.ph38.preheader
 
 .lr.ph38.preheader:                               ; preds = %.peel.next.i
-  %.sroa.7.0.i19 = getelementptr inbounds nuw i8, ptr %.val8.pre, i64 8
+  %.sroa.7.0.i19 = getelementptr i8, ptr %.val8.pre, i64 8
   %.sroa.011.1.peel.i = xor i1 %i.aj, true
   %.sroa.010.2.peel.i = xor i1 %i.ae, true
   br label %.lr.ph38
@@ -365,7 +369,8 @@ bb.t:                                             ; preds = %bb.s, %bb.l
   %.sroa.011.2.i = phi i1 [ true, %bb.l ], [ %.sroa.011.1.i, %bb.s ]
   %i.ci = phi i64 [ %i.ao, %bb.l ], [ %i.ch, %bb.s ]
   %i.cj = phi i1 [ %i.an, %bb.l ], [ %i.cf, %bb.s ]
-  %.sroa.7.0.i = getelementptr inbounds nuw i8, ptr %.sroa.7.0.i37, i64 8 ; 2 uses
+  %.sroa.7.0.i = getelementptr i8, ptr %.sroa.7.0.i37, i64 8 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.i) ]
   %i.ck = icmp eq ptr %.sroa.7.0.i, %i.k
   br i1 %i.ck, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterNtNtCs79ICTHwG85D_12regex_syntax3hir10PropertiesENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs98D8VPWzHuM_14regex_automata.exit.thread.i, label %.lr.ph38, !llvm.loop !640
 

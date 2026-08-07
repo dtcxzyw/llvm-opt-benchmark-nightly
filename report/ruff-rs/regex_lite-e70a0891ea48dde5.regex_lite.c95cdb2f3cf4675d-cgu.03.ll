@@ -1,3 +1,7 @@
+inline.NumInlined: 123
+inline.NumDeleted: 65
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvMs_NtCshhQDFPpdXZx_10regex_lite3hirNtB4_3Hir10repetition:bb.a
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.m, i64 noundef 64, i64 noundef 8) #17
   resume { ptr, i32 } %i.n
@@ -199,7 +203,7 @@ bb.o:                                             ; preds = %.split.peel, %bb.n,
   br i1 %i.ag, label %.split63.us, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.split61.peel.next
-  %.sroa.58.080 = getelementptr inbounds nuw i8, ptr %i.m, i64 64
+  %.sroa.58.080 = getelementptr i8, ptr %i.m, i64 64
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph, %bb.x
@@ -235,7 +239,7 @@ bb.p:                                             ; preds = %.lr.ph, %bb.x
   br label %bb.g
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.58.0.pn83, i64 120
+  %i.am = getelementptr i8, ptr %.sroa.58.0.pn83, i64 120
   %i.an = load i8, ptr %i.am, align 8, !range !115, !noundef !44
   br label %bb.r
 
@@ -245,7 +249,7 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   br i1 %i.ao, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.58.0.pn83, i64 121
+  %i.ap = getelementptr i8, ptr %.sroa.58.0.pn83, i64 121
   %i.aq = load i8, ptr %i.ap, align 1, !range !115, !noundef !44
   br label %bb.t
 
@@ -263,7 +267,7 @@ bb.v:                                             ; preds = %bb.t
   br i1 %i.at, label %bb.w, label %bb.x
 
 .split:                                           ; preds = %bb.u
-  %i.au = getelementptr inbounds nuw i8, ptr %.sroa.58.0.pn83, i64 72
+  %i.au = getelementptr i8, ptr %.sroa.58.0.pn83, i64 72
   %i.av = load i64, ptr %i.au, align 8, !noundef !44
   %.not = icmp eq i64 %.sroa.5.184, %i.av
   br i1 %.not, label %bb.x, label %bb.w
@@ -274,7 +278,8 @@ bb.w:                                             ; preds = %.split, %bb.u, %bb.
 bb.x:                                             ; preds = %.split, %bb.w, %bb.v
   %.sroa.5.2 = phi i64 [ undef, %bb.w ], [ %.sroa.5.184, %bb.v ], [ %.sroa.5.184, %.split ] ; 2 uses
   %.sroa.02.2 = phi i64 [ 0, %bb.w ], [ 0, %bb.v ], [ 1, %.split ] ; 2 uses
-  %.sroa.58.0 = getelementptr inbounds nuw i8, ptr %.sroa.58.086, i64 64 ; 2 uses
+  %.sroa.58.0 = getelementptr i8, ptr %.sroa.58.086, i64 64 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.58.0) ]
   %i.aw = icmp eq ptr %.sroa.58.0, %i.n
   br i1 %i.aw, label %.split63.us, label %bb.p, !llvm.loop !124
 }

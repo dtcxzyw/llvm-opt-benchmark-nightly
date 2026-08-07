@@ -1,3 +1,5 @@
+inline.NumInlined: 839
+inline.NumDeleted: 358
 begin_hunk_0_@_RNvNtCshFZivb7RUAJ_8ruff_dev25generate_ty_cli_reference16generate_command:bb.a
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #30, !noalias !1133
   unreachable
@@ -199,7 +201,7 @@ bb.hd:                                            ; preds = %bb.hc
   unreachable
 
 bb.he:                                            ; preds = %bb.ha
-  %i.rn = getelementptr inbounds nuw i8, ptr %i.rg, i64 776
+  %i.rn = getelementptr i8, ptr %i.rg, i64 776
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCshFZivb7RUAJ_8ruff_dev(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 41)
           to label %bb.hg unwind label %.loopexit.split-lp.loopexit.split-lp
 
@@ -504,7 +506,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs
   br i1 %i.ud, label %.loopexit1331, label %bb.ht
 
 bb.ht:                                            ; preds = %.backedge1004
-  %i.ue = getelementptr inbounds nuw i8, ptr %.sroa.5.0, i64 776
+  %i.ue = getelementptr i8, ptr %.sroa.5.0, i64 776
   %i.uf = getelementptr inbounds nuw i8, ptr %.sroa.5.0, i64 764
   %i.ug = load i32, ptr %i.uf, align 4, !noundef !17
   %i.uh = and i32 %i.ug, 8388608
