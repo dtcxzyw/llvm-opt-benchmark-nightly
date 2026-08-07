@@ -201,7 +201,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.dh = getelementptr inbounds nuw i8, ptr %i.da, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvNtCsfxDLtZq386g_6semver5parse21prerelease_identifier(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.dh, i64 noundef %i.dg)
-  %i.di = load ptr, ptr %i.b, align 8, !noundef !13 ; 3 uses
+  %i.di = load ptr, ptr %i.b, align 8, !noundef !13 ; 4 uses
   %i.dj = icmp eq ptr %i.di, null
   %i.dk = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   br i1 %i.dj, label %bb.aq, label %bb.ar
@@ -231,7 +231,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 775, ptr %i.do, align 8
   store i64 2, ptr %0, align 8
-  tail call fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCsfxDLtZq386g_6semver10PrereleaseEBD_(ptr nonnull inttoptr (i64 -1 to ptr))
+  tail call fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCsfxDLtZq386g_6semver10PrereleaseEBD_(ptr nonnull %i.di)
   br label %bb.bi
 
 bb.at:                                            ; preds = %bb.ba, %.split.i190
@@ -370,7 +370,7 @@ bb.bb:                                            ; preds = %bb.ba
   unreachable
 
 bb.bc:                                            ; preds = %.split.i190
-  %i.fp = load ptr, ptr %i.a, align 8, !noundef !13 ; 3 uses
+  %i.fp = load ptr, ptr %i.a, align 8, !noundef !13 ; 4 uses
   %i.fq = icmp eq ptr %i.fp, null
   %i.fr = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   br i1 %i.fq, label %bb.bd, label %bb.be
@@ -400,7 +400,7 @@ bb.bg:                                            ; preds = %bb.be
   %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 1031, ptr %i.fv, align 8
   store i64 2, ptr %0, align 8
-  tail call fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCsfxDLtZq386g_6semver13BuildMetadataEBD_(ptr nonnull inttoptr (i64 -1 to ptr))
+  tail call fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCsfxDLtZq386g_6semver13BuildMetadataEBD_(ptr nonnull %i.fp)
   br label %bb.bj
 
 bb.bh:                                            ; preds = %_RNvXs_NtNtCshzWfHUSfYae_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher4next.exit.i.i197, %bb.ax

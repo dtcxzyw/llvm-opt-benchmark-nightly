@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %bb.x
 
 .preheader:                                       ; preds = %.preheader250, %bb.ah
   %i.dn = phi ptr [ %i.et, %bb.ah ], [ @pgtypes_date_months, %.preheader250 ]
-  %.0269 = phi ptr [ %.1, %bb.ah ], [ @pgtypes_date_months, %.preheader250 ] ; 2 uses
+  %.0269 = phi ptr [ %.1, %bb.ah ], [ @pgtypes_date_months, %.preheader250 ] ; 4 uses
   %.4268 = phi i32 [ %i.er, %bb.ah ], [ 0, %.preheader250 ] ; 4 uses
   br label %bb.z
 
@@ -266,11 +266,11 @@ bb.af:                                            ; preds = %bb.aa
 bb.ag:                                            ; preds = %bb.af
   %i.em = add i32 %.4268, 1
   %i.en = zext i32 %i.em to i64
-  %i.eo = getelementptr inbounds nuw [8 x i8], ptr @pgtypes_date_months, i64 %i.en
+  %i.eo = getelementptr inbounds nuw [8 x i8], ptr %.0269, i64 %i.en
   %i.ep = load ptr, ptr %i.eo, align 8
   %i.eq = icmp eq ptr %i.ep, null                 ; 2 uses
   %spec.select243 = select i1 %i.eq, i32 -1, i32 %.4268
-  %spec.select244 = select i1 %i.eq, ptr @months, ptr @pgtypes_date_months
+  %spec.select244 = select i1 %i.eq, ptr @months, ptr %.0269
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af

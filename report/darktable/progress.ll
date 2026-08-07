@@ -1,4 +1,4 @@
-inline.NumInlined: 40
+inline.NumInlined: 39
 inline.NumDeleted: 7
 begin_hunk_0_@dt_control_progress_destroy:bb.a
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 24 ; 2 uses
@@ -201,14 +201,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = load ptr, ptr %i.c, align 8, !tbaa !96
+  %i.g = load ptr, ptr %i.c, align 8, !tbaa !96   ; 2 uses
   %i.h = icmp eq ptr %i.g, @_control_progress_cancel_callback
   br i1 %i.h, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !97
-  tail call void @dt_control_job_cancel(ptr noundef %i.j) #6
+  tail call void %i.g(ptr noundef nonnull %0, ptr noundef %i.j) #6
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c

@@ -17,7 +17,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = tail call i32 @mca_coll_sm_reduce_intra(ptr noundef nonnull inttoptr (i64 1 to ptr), ptr noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, i32 noundef 0, ptr noundef nonnull %5, ptr noundef %6) #2
+  %i.d = tail call i32 @mca_coll_sm_reduce_intra(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, i32 noundef 0, ptr noundef nonnull %5, ptr noundef %6) #2
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b

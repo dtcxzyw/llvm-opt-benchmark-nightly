@@ -201,15 +201,15 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.n
   %i.ae = load i8, ptr @strbuf_slopbuf, align 1, !tbaa !16
   %.not10.i.i = icmp eq i8 %i.ae, 0
-  br i1 %.not10.i.i, label %._crit_edge.i, label %bb.q
+  br i1 %.not10.i.i, label %strbuf_setlen.exit.i, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   call void @__assert_fail(ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.10, i32 noundef 172, ptr noundef nonnull @__PRETTY_FUNCTION__.strbuf_setlen) #17
   unreachable
 
-strbuf_setlen.exit.i:                             ; preds = %bb.o, %bb.m
-  %.ph = phi ptr [ %.pre34, %bb.m ], [ %.pre, %bb.o ] ; 2 uses
-  %.pr = load i8, ptr %.ph, align 1, !tbaa !16
+strbuf_setlen.exit.i:                             ; preds = %bb.p, %bb.o, %bb.m
+  %6 = phi ptr [ @strbuf_slopbuf, %bb.p ], [ %.pre, %bb.o ], [ %.pre34, %bb.m ] ; 2 uses
+  %.pr = load i8, ptr %6, align 1, !tbaa !16
   %.not2430.i = icmp eq i8 %.pr, 0
   br i1 %.not2430.i, label %._crit_edge.i, label %.lr.ph.i
 
@@ -220,7 +220,7 @@ bb.r:                                             ; preds = %bb.w
   br i1 %.not24.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !29
 
 .lr.ph.i:                                         ; preds = %strbuf_setlen.exit.i, %bb.r
-  %.031.i = phi ptr [ %i.af, %bb.r ], [ %.ph, %strbuf_setlen.exit.i ]
+  %.031.i = phi ptr [ %i.af, %bb.r ], [ %6, %strbuf_setlen.exit.i ]
   %i.ah = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.031.i, i32 noundef 61) #16 ; 3 uses
   %.not25.i = icmp eq ptr %i.ah, null
   br i1 %.not25.i, label %._crit_edge.i, label %bb.s
@@ -276,7 +276,7 @@ bb.w:                                             ; preds = %st_add.exit27.i, %b
   %.not26.i = icmp eq i8 %i.bc, 0
   br i1 %.not26.i, label %._crit_edge.i, label %bb.r
 
-._crit_edge.i:                                    ; preds = %bb.w, %.lr.ph.i, %bb.r, %bb.p, %strbuf_setlen.exit.i
+._crit_edge.i:                                    ; preds = %bb.w, %.lr.ph.i, %bb.r, %strbuf_setlen.exit.i
   store i1 true, ptr @is_known_escape_sequence.initialized, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14

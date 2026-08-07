@@ -1,4 +1,4 @@
-inline.NumInlined: 9
+inline.NumInlined: 8
 inline.NumDeleted: 8
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -161,7 +161,7 @@ test_ASYNC_init_thread.exit:                      ; preds = %bb.k
   br i1 %.not.i9, label %.critedge47, label %bb.l
 
 bb.l:                                             ; preds = %test_ASYNC_init_thread.exit
-  %i.aw = call ptr @ASYNC_WAIT_CTX_new() #5       ; 10 uses
+  %i.aw = call ptr @ASYNC_WAIT_CTX_new() #5       ; 11 uses
   %i.ax = icmp eq ptr %i.aw, null
   br i1 %i.ax, label %.critedge47, label %bb.m
 
@@ -173,16 +173,20 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.az = call i32 @ASYNC_WAIT_CTX_get_callback(ptr noundef nonnull %i.aw, ptr noundef nonnull %i.r, ptr noundef nonnull %i.s) #5
   %i.ba = icmp ne i32 %i.az, 1
-  %i.bb = load ptr, ptr %i.r, align 8
+  %i.bb = load ptr, ptr %i.r, align 8             ; 2 uses
   %i.bc = icmp ne ptr %i.bb, @test_callback
   %or.cond.i12 = select i1 %i.ba, i1 true, i1 %i.bc
-  %i.bd = load ptr, ptr %i.s, align 8
+  %i.bd = load ptr, ptr %i.s, align 8             ; 2 uses
   %i.be = icmp ne ptr %i.bd, %i.q
   %or.cond3.i13 = select i1 %or.cond.i12, i1 true, i1 %i.be
-  br i1 %or.cond3.i13, label %.critedge47, label %bb.o
+  br i1 %or.cond3.i13, label %.critedge47, label %2
 
-bb.o:                                             ; preds = %bb.n
-  %puts.i.i = call i32 @puts(ptr nonnull dereferenceable(1) @str.1) ; 0 uses
+2:                                                ; preds = %bb.n
+  %3 = call i32 %i.bb(ptr noundef %i.bd) #5, !inline_history !15
+  %.not16.i14 = icmp eq i32 %3, 1
+  br i1 %.not16.i14, label %bb.o, label %.critedge47
+
+bb.o:                                             ; preds = %2
   %i.bf = call i32 @ASYNC_WAIT_CTX_set_status(ptr noundef nonnull %i.aw, i32 noundef 1) #5
   %.not17.i14 = icmp eq i32 %i.bf, 1
   br i1 %.not17.i14, label %bb.p, label %.critedge47
@@ -192,8 +196,8 @@ bb.p:                                             ; preds = %bb.o
   %.not18.i15 = icmp eq i32 %i.bg, 1
   br i1 %.not18.i15, label %test_ASYNC_callback_status.exit, label %.critedge47
 
-.critedge47:                                      ; preds = %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %test_ASYNC_init_thread.exit
-  %.011.i = phi ptr [ null, %bb.l ], [ %i.aw, %bb.m ], [ %i.aw, %bb.n ], [ null, %test_ASYNC_init_thread.exit ], [ %i.aw, %bb.o ], [ %i.aw, %bb.p ]
+.critedge47:                                      ; preds = %bb.p, %bb.o, %2, %bb.n, %bb.m, %bb.l, %test_ASYNC_init_thread.exit
+  %.011.i = phi ptr [ null, %bb.l ], [ %i.aw, %bb.m ], [ %i.aw, %bb.n ], [ %i.aw, %2 ], [ %i.aw, %bb.o ], [ %i.aw, %bb.p ], [ null, %test_ASYNC_init_thread.exit ]
   %i.bh = load ptr, ptr @stderr, align 8, !tbaa !9
   %i.bi = call i64 @fwrite(ptr nonnull @.str.3, i64 36, i64 1, ptr %i.bh) #6 ; 0 uses
   call void @ASYNC_WAIT_CTX_free(ptr noundef %.011.i) #5
@@ -596,7 +600,7 @@ test_ASYNC_start_job_ex.exit:                     ; preds = %bb.bc
 
 bb.be:                                            ; preds = %test_ASYNC_start_job_ex.exit
   call void @ASYNC_get_mem_functions(ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5
-  %i.gl = load ptr, ptr %i.a, align 8, !tbaa !15
+  %i.gl = load ptr, ptr %i.a, align 8, !tbaa !16
   %i.gm = icmp ne ptr %i.gl, @test_alloc_stack
   %i.gn = load ptr, ptr %i.b, align 8
   %i.go = icmp ne ptr %i.gn, @test_free_stack
@@ -833,7 +837,7 @@ declare i32 @ASYNC_set_mem_functions(ptr noundef, ptr noundef) local_unnamed_add
 define internal noalias ptr @test_alloc_stack(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   store i1 true, ptr @custom_alloc_used, align 4
-  %i.a = load i64, ptr %0, align 8, !tbaa !16
+  %i.a = load i64, ptr %0, align 8, !tbaa !17
   %i.b = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.a, ptr noundef nonnull @.str.18, i32 noundef 420) #5
   ret ptr %i.b
 }
@@ -885,7 +889,8 @@ attributes #6 = { cold }
 !12 = !{!13, !13, i64 0}
 !13 = !{!"p1 _ZTS12async_job_st", !11, i64 0}
 !14 = !{!6, !6, i64 0}
-!15 = !{!11, !11, i64 0}
-!16 = !{!17, !17, i64 0}
-!17 = !{!"long", !7, i64 0}
+!15 = distinct !{null}
+!16 = !{!11, !11, i64 0}
+!17 = !{!18, !18, i64 0}
+!18 = !{!"long", !7, i64 0}
 end_hunk_1
