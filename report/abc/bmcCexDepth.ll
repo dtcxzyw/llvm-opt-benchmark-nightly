@@ -203,7 +203,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br label %.critedge6
 
 .critedge6:                                       ; preds = %.critedge6.loopexit, %.critedge4
-  %.val121 = phi i32 [ %.val121.pre, %.critedge6.loopexit ], [ %.val121202, %.critedge4 ] ; 9 uses
+  %.val121 = phi i32 [ %.val121.pre, %.critedge6.loopexit ], [ %.val121202, %.critedge4 ] ; 8 uses
   %i.es = icmp sgt i32 %.val121, 0
   br i1 %i.es, label %.lr.ph161, label %.critedge10
 
@@ -219,7 +219,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.eu = getelementptr i8, ptr %.val129, i64 4
   %.val129.val = load i32, ptr %i.eu, align 4, !tbaa !37
   %invariant.op = sub i32 %.val129.val, %.val121
-  %wide.trip.count182 = zext nneg i32 %.val121 to i64
+  %wide.trip.count182 = zext nneg i32 %.val121 to i64 ; 3 uses
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph161.split, %bb.s
@@ -265,13 +265,12 @@ bb.s:                                             ; preds = %.lr.ph161.split, %b
   %i.fp = getelementptr i8, ptr %.val102, i64 4
   %.val102.val = load i32, ptr %i.fp, align 4, !tbaa !37
   %invariant.op171 = sub i32 %.val102.val, %.val121 ; 3 uses
-  %wide.trip.count187 = zext nneg i32 %.val121 to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count187, 1
+  %xtraiter = and i64 %wide.trip.count182, 1
   %i.fq = icmp eq i32 %.val121, 1
   br i1 %i.fq, label %.epil.preheader, label %.lr.ph167.split.new
 
 .lr.ph167.split.new:                              ; preds = %.lr.ph167.split
-  %unroll_iter = and i64 %wide.trip.count187, 2147483646
+  %unroll_iter = and i64 %wide.trip.count182, 2147483646
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.t, %.lr.ph167.split.new
