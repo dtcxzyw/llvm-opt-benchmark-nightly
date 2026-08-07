@@ -204,14 +204,15 @@ bb.d:                                             ; preds = %bb.b
   store <4 x i32> %i.br, ptr %i.a, align 16, !tbaa !118
   store i32 %i.bp, ptr %i.an, align 4, !tbaa !118
   store i32 %i.bp, ptr %i.am, align 16, !tbaa !118
-  %1 = zext i16 %i.bn to i64
-  %2 = mul nuw nsw i64 %indvars.iv, %1
   %i.bs = icmp ugt i16 %i.bn, 15
   br i1 %i.bs, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader136
+  %1 = zext i16 %i.bn to i64
+  %2 = mul nuw nsw i64 %indvars.iv, %1
   %i.bt = trunc nuw nsw i64 %indvars.iv to i32    ; 21 uses
   %.not127 = trunc i64 %indvars.iv to i1          ; 15 uses
+  %invariant.op = sub nsw i64 %i.n, %2
   %spec.select.sroa.sel.idx = select i1 %.not127, i64 0, i64 16
   %spec.select.sroa.sel = getelementptr inbounds nuw i8, ptr %i.a, i64 %spec.select.sroa.sel.idx
   %spec.select.sroa.sel334.idx = select i1 %.not127, i64 0, i64 16
@@ -614,11 +615,8 @@ bb.at:                                            ; preds = %bb.ar
 bb.au:                                            ; preds = %bb.at, %bb.as
   %i.pn = phi i32 [ %i.pj, %bb.as ], [ %i.pm, %bb.at ] ; 2 uses
   %i.po = sext i32 %i.pn to i64
-  %3 = add nsw i64 %2, %i.po                      ; 2 uses
-  %i.pp = icmp sgt i64 %3, -1
-  %.not126 = icmp slt i64 %3, %i.n
-  %or.cond129 = select i1 %i.pp, i1 %.not126, i1 false
-  br i1 %or.cond129, label %bb.aw, label %bb.av
+  %i.pp = icmp sgt i64 %invariant.op, %i.po
+  br i1 %i.pp, label %bb.aw, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
   %i.pq = tail call ptr @__cxa_allocate_exception(i64 4) #14 ; 2 uses

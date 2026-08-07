@@ -203,26 +203,25 @@ Extra_TruthOr.exit.i.i.loopexit:                  ; preds = %select.unfold.i239.
   %.fr298 = freeze i32 %i.uw
   %spec.select.i242.i.i = select i1 %i.uu, i32 1, i32 %.fr298 ; 6 uses
   %i.ux = icmp sgt i32 %spec.select.i242.i.i, 0   ; 4 uses
-  %i.uy = zext nneg i32 %spec.select.i242.i.i to i64 ; 4 uses
-  %i.uz = shl nuw nsw i64 %i.uy, 2                ; 7 uses
+  %i.uy = zext i32 %spec.select.i242.i.i to i64   ; 10 uses
+  %i.uz = shl nuw nsw i64 %i.uy, 2                ; 11 uses
   %i.va = icmp sgt i32 %.fr, 0                    ; 2 uses
   %i.vb = icmp sgt i32 %spec.select.i242.i.i, 0
   %i.vc = zext i32 %.fr to i64                    ; 2 uses
-  %i.vd = zext i32 %spec.select.i242.i.i to i64   ; 15 uses
-  %4 = shl nuw nsw i64 %i.vd, 2                   ; 4 uses
-  %scevgep = getelementptr i8, ptr %i.ur, i64 %4
+  %i.vd = zext nneg i32 %spec.select.i242.i.i to i64 ; 8 uses
+  %scevgep = getelementptr i8, ptr %i.ur, i64 %i.uz
   %scevgep431 = getelementptr i8, ptr %i.ur, i64 4
   %min.iters.check396 = icmp ult i32 %spec.select.i242.i.i, 8 ; 2 uses
-  %n.vec419 = and i64 %i.vd, 2147483640           ; 2 uses
-  %5 = and i64 %i.vd, 7
-  %cmp.n428 = icmp eq i64 %n.vec419, %i.vd
-  %n.vec399 = and i64 %i.vd, 2147483640           ; 2 uses
-  %6 = and i64 %i.vd, 7
-  %cmp.n408 = icmp eq i64 %n.vec399, %i.vd
+  %n.vec419 = and i64 %i.uy, 2147483640           ; 3 uses
+  %4 = sub nsw i64 %i.vd, %n.vec419
+  %cmp.n428 = icmp eq i64 %n.vec419, %i.uy
+  %n.vec399 = and i64 %i.uy, 2147483640           ; 3 uses
+  %5 = sub nsw i64 %i.vd, %n.vec399
+  %cmp.n408 = icmp eq i64 %n.vec399, %i.uy
   %min.iters.check376 = icmp ult i32 %spec.select.i242.i.i, 8
-  %n.vec379 = and i64 %i.vd, 2147483640           ; 3 uses
-  %7 = sub nsw i64 %i.uy, %n.vec379
-  %cmp.n388 = icmp eq i64 %n.vec379, %i.vd
+  %n.vec379 = and i64 %i.uy, 2147483640           ; 2 uses
+  %6 = and i64 %i.uy, 7
+  %cmp.n388 = icmp eq i64 %n.vec379, %i.uy
   br label %bb.as
 
 bb.as:                                            ; preds = %Abc_NodeGetLevel.exit.i.i, %.lr.ph336.i.i
@@ -262,7 +261,7 @@ Extra_TruthClear.exit244.i.i:                     ; preds = %select.unfold.prehe
   br i1 %i.vb, label %.lr.ph325.i.i.split.us.us.split.us.preheader, label %.loopexit.i.i.us
 
 .lr.ph325.i.i.split.us.us.split.us.preheader:     ; preds = %.lr.ph325.i.i.us
-  %scevgep374 = getelementptr i8, ptr %i.vl, i64 %4 ; 3 uses
+  %scevgep374 = getelementptr i8, ptr %i.vl, i64 %i.uz ; 3 uses
   %bound0 = icmp ult ptr %i.ur, %scevgep374
   %bound1 = icmp ult ptr %i.vl, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -320,7 +319,7 @@ select.unfold.i249.i.i.us.us.us.us.preheader:     ; preds = %bb.at
   br i1 %min.iters.check396, label %select.unfold.i249.i.i.us.us.us.us.preheader598, label %vector.memcheck410
 
 vector.memcheck410:                               ; preds = %select.unfold.i249.i.i.us.us.us.us.preheader
-  %scevgep411 = getelementptr i8, ptr %i.wd, i64 %4
+  %scevgep411 = getelementptr i8, ptr %i.wd, i64 %i.uz
   %bound0412 = icmp ult ptr %i.vl, %scevgep411
   %bound1413 = icmp ult ptr %i.wd, %scevgep374
   %found.conflict414 = and i1 %bound0412, %bound1413
@@ -352,14 +351,14 @@ middle.block427:                                  ; preds = %vector.body420
   br i1 %cmp.n428, label %Extra_TruthAnd.exit252.i.i.us.us.us.us, label %select.unfold.i249.i.i.us.us.us.us.preheader598
 
 select.unfold.i249.i.i.us.us.us.us.preheader598:  ; preds = %vector.memcheck410, %select.unfold.i249.i.i.us.us.us.us.preheader, %middle.block427
-  %indvars.iv.i250.i.i.us.us.us.us.ph = phi i64 [ %i.vd, %vector.memcheck410 ], [ %i.vd, %select.unfold.i249.i.i.us.us.us.us.preheader ], [ %5, %middle.block427 ]
+  %indvars.iv.i250.i.i.us.us.us.us.ph = phi i64 [ %i.vd, %vector.memcheck410 ], [ %i.vd, %select.unfold.i249.i.i.us.us.us.us.preheader ], [ %4, %middle.block427 ]
   br label %select.unfold.i249.i.i.us.us.us.us
 
 select.unfold.i255.i.i.us.us.us.us.preheader:     ; preds = %bb.at
   br i1 %min.iters.check396, label %select.unfold.i255.i.i.us.us.us.us.preheader597, label %vector.memcheck390
 
 vector.memcheck390:                               ; preds = %select.unfold.i255.i.i.us.us.us.us.preheader
-  %scevgep391 = getelementptr i8, ptr %i.wd, i64 %4
+  %scevgep391 = getelementptr i8, ptr %i.wd, i64 %i.uz
   %bound0392 = icmp ult ptr %i.vl, %scevgep391
   %bound1393 = icmp ult ptr %i.wd, %scevgep374
   %found.conflict394 = and i1 %bound0392, %bound1393
@@ -393,7 +392,7 @@ middle.block407:                                  ; preds = %vector.body400
   br i1 %cmp.n408, label %Extra_TruthAnd.exit252.i.i.us.us.us.us, label %select.unfold.i255.i.i.us.us.us.us.preheader597
 
 select.unfold.i255.i.i.us.us.us.us.preheader597:  ; preds = %vector.memcheck390, %select.unfold.i255.i.i.us.us.us.us.preheader, %middle.block407
-  %indvars.iv.i256.i.i.us.us.us.us.ph = phi i64 [ %i.vd, %vector.memcheck390 ], [ %i.vd, %select.unfold.i255.i.i.us.us.us.us.preheader ], [ %6, %middle.block407 ]
+  %indvars.iv.i256.i.i.us.us.us.us.ph = phi i64 [ %i.vd, %vector.memcheck390 ], [ %i.vd, %select.unfold.i255.i.i.us.us.us.us.preheader ], [ %5, %middle.block407 ]
   br label %select.unfold.i255.i.i.us.us.us.us
 
 select.unfold.i249.i.i.us.us.us.us:               ; preds = %select.unfold.i249.i.i.us.us.us.us.preheader598, %select.unfold.i249.i.i.us.us.us.us
@@ -459,7 +458,7 @@ middle.block387:                                  ; preds = %vector.body380
   br i1 %cmp.n388, label %Extra_TruthOr.exit264.i.i.us.us.us, label %select.unfold.i261.i.i.us.us.us.preheader600
 
 select.unfold.i261.i.i.us.us.us.preheader600:     ; preds = %select.unfold.i261.i.i.us.us.us.preheader, %middle.block387
-  %indvars.iv.i262.i.i.us.us.us.ph = phi i64 [ %7, %middle.block387 ], [ %i.uy, %select.unfold.i261.i.i.us.us.us.preheader ]
+  %indvars.iv.i262.i.i.us.us.us.ph = phi i64 [ %6, %middle.block387 ], [ %i.uy, %select.unfold.i261.i.i.us.us.us.preheader ]
   br label %select.unfold.i261.i.i.us.us.us
 
 .lr.ph327.i.i.split:                              ; preds = %.lr.ph327.i.i

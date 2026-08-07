@@ -204,8 +204,8 @@ dl.exit784:                                       ; preds = %bb.az, %._crit_edge
 
 iter.check1286:                                   ; preds = %._crit_edge.i, %.preheader.lr.ph.i
   %i.ait = sext i32 %.05.lcssa.i769816 to i64     ; 13 uses
-  %wide.trip.count.i.i = zext nneg i32 %.pre-phi to i64 ; 4 uses
-  %i.aiu = add nsw i64 %wide.trip.count.i.i, -1   ; 11 uses
+  %wide.trip.count.i.i = zext nneg i32 %.pre-phi to i64 ; 6 uses
+  %i.aiu = add nsw i64 %wide.trip.count.i.i, -1   ; 7 uses
   %min.iters.check1270 = icmp ugt i64 %i.aiu, 7
   %ident.check.not = icmp eq i32 %.05.lcssa.i769816, 1
   %or.cond1397 = select i1 %min.iters.check1270, i1 %ident.check.not, i1 false
@@ -305,23 +305,25 @@ vec.epilog.middle.block1297:                      ; preds = %vec.epilog.vector.b
   br i1 %.not.i.i, label %.lr.ph64.i.i.preheader, label %.lr.ph62.i.i.preheader
 
 .lr.ph62.i.i.preheader:                           ; preds = %._crit_edge.i.i
-  %xtraiter1696 = and i64 %i.aiu, 7               ; 3 uses
+  %9 = add nsw i64 %wide.trip.count.i.i, -1       ; 2 uses
+  %xtraiter1696 = and i64 %9, 7                   ; 3 uses
   %i.ajt = add i32 %.pre-phi, -2
   %i.aju = icmp ult i32 %i.ajt, 7
   br i1 %i.aju, label %.lr.ph62.i.i.epil.preheader, label %.lr.ph62.i.i.preheader.new
 
 .lr.ph62.i.i.preheader.new:                       ; preds = %.lr.ph62.i.i.preheader
-  %unroll_iter1700 = and i64 %i.aiu, -8
+  %unroll_iter1700 = and i64 %9, -8
   br label %.lr.ph62.i.i
 
 .lr.ph64.i.i.preheader:                           ; preds = %._crit_edge.i.i
-  %xtraiter1702 = and i64 %i.aiu, 7               ; 3 uses
+  %10 = add nsw i64 %wide.trip.count.i.i, -1      ; 2 uses
+  %xtraiter1702 = and i64 %10, 7                  ; 3 uses
   %i.ajv = add i32 %.pre-phi, -2
   %i.ajw = icmp ult i32 %i.ajv, 7
   br i1 %i.ajw, label %.lr.ph64.i.i.epil.preheader, label %.lr.ph64.i.i.preheader.new
 
 .lr.ph64.i.i.preheader.new:                       ; preds = %.lr.ph64.i.i.preheader
-  %unroll_iter1706 = and i64 %i.aiu, -8
+  %unroll_iter1706 = and i64 %10, -8
   br label %.lr.ph64.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i

@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   br i1 %.not166, label %._crit_edge159, label %.lr.ph158
 
 .lr.ph158:                                        ; preds = %.preheader125
-  %i.bo = zext i32 %i.bn to i64                   ; 5 uses
+  %i.bo = zext i32 %i.bn to i64                   ; 3 uses
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph158, %.backedge
@@ -466,7 +466,7 @@ bb.am:                                            ; preds = %bb.al
 .loopexit222:                                     ; preds = %.backedge, %bb.al
   %i.fd = zext i32 %i.bn to i64
   call void @qsort(ptr noundef nonnull %.pre, i64 noundef %i.fd, i64 noundef 16, ptr noundef nonnull @apprentice_sort) #28
-  %wide.trip.count.i = zext i32 %i.bn to i64      ; 4 uses
+  %wide.trip.count.i = zext i32 %i.bn to i64      ; 6 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.ap, %.loopexit222
@@ -534,10 +534,10 @@ set_last_default.exit:                            ; preds = %bb.ap, %bb.ao, %.sp
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %set_last_default.exit
-  %n.mod.vf = and i64 %i.bo, 7                    ; 2 uses
+  %n.mod.vf = and i64 %wide.trip.count.i, 7       ; 2 uses
   %i.fy = icmp eq i64 %n.mod.vf, 0
   %i.fz = select i1 %i.fy, i64 8, i64 %n.mod.vf
-  %n.vec = sub nsw i64 %i.bo, %i.fz               ; 2 uses
+  %n.vec = sub nsw i64 %wide.trip.count.i, %i.fz  ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.s
   br i1 %.not37.i.i.i, label %cvAltSum.exit28.thread.i.i, label %.lr.ph42.split.preheader.i.i.i
 
 .lr.ph42.split.preheader.i.i.i:                   ; preds = %bb.u
-  %i.ht = zext nneg i32 %i.hn to i64              ; 8 uses
+  %i.ht = zext nneg i32 %i.hn to i64              ; 7 uses
   %i.hu = shl nuw nsw i64 %i.ht, 3
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %scevgep.i.i.i, i8 0, i64 %i.hu, i1 false), !tbaa !49
   %i.hv = add nsw i32 %i.hn, -1                   ; 3 uses
@@ -359,12 +359,7 @@ scalar.ph860.2:                                   ; preds = %scalar.ph860.1
   br i1 %exitcond.not.i.i.i, label %.preheader.i15.i.i.preheader, label %.lr.ph42.split.i.i.i, !llvm.loop !310
 
 .preheader.i15.i.i.preheader:                     ; preds = %.loopexit943
-  %1 = add nsw i64 %i.ht, -1                      ; 2 uses
   %xtraiter1040 = and i64 %i.ht, 1
-  %2 = icmp eq i64 %1, 0
-  br i1 %2, label %.preheader.i15.i.i.epil.preheader, label %.preheader.i15.i.i.preheader.new
-
-.preheader.i15.i.i.preheader.new:                 ; preds = %.preheader.i15.i.i.preheader
   %unroll_iter1044 = and i64 %i.ht, 2147483646
   br label %.preheader.i15.i.i
 
@@ -372,10 +367,10 @@ cvAltSum.exit28.thread.i.i:                       ; preds = %bb.u
   store double 1.000000e+00, ptr %i.bq, align 8, !tbaa !49
   br label %._crit_edge.i.i.i
 
-.preheader.i15.i.i:                               ; preds = %.preheader.i15.i.i, %.preheader.i15.i.i.preheader.new
-  %indvars.iv.i16.i.i = phi i64 [ 0, %.preheader.i15.i.i.preheader.new ], [ %indvars.iv.next.i17.i.i.1, %.preheader.i15.i.i ] ; 4 uses
-  %.018.i.i.i = phi double [ 0.000000e+00, %.preheader.i15.i.i.preheader.new ], [ %i.kv, %.preheader.i15.i.i ]
-  %niter1045 = phi i64 [ 0, %.preheader.i15.i.i.preheader.new ], [ %niter1045.next.1, %.preheader.i15.i.i ]
+.preheader.i15.i.i:                               ; preds = %.preheader.i15.i.i, %.preheader.i15.i.i.preheader
+  %indvars.iv.i16.i.i = phi i64 [ 0, %.preheader.i15.i.i.preheader ], [ %indvars.iv.next.i17.i.i.1, %.preheader.i15.i.i ] ; 4 uses
+  %.018.i.i.i = phi double [ 0.000000e+00, %.preheader.i15.i.i.preheader ], [ %i.kv, %.preheader.i15.i.i ]
+  %niter1045 = phi i64 [ 0, %.preheader.i15.i.i.preheader ], [ %niter1045.next.1, %.preheader.i15.i.i ]
   %i.ki = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.i16.i.i
   %i.kj = load double, ptr %i.ki, align 16, !tbaa !49
   %i.kk = trunc i64 %indvars.iv.i16.i.i to i32
@@ -391,7 +386,7 @@ cvAltSum.exit28.thread.i.i:                       ; preds = %bb.u
   %i.kt = uitofp nneg i32 %i.ks to double
   %i.ku = fdiv double %i.kq, %i.kt
   %i.kv = fsub double %i.ko, %i.ku                ; 3 uses
-  %indvars.iv.next.i17.i.i.1 = add nuw nsw i64 %indvars.iv.i16.i.i, 2 ; 2 uses
+  %indvars.iv.next.i17.i.i.1 = add nuw nsw i64 %indvars.iv.i16.i.i, 2 ; 3 uses
   %niter1045.next.1 = add i64 %niter1045, 2       ; 2 uses
   %niter1045.ncmp.1 = icmp eq i64 %niter1045.next.1, %unroll_iter1044
   br i1 %niter1045.ncmp.1, label %.preheader.i21.i.i.preheader.unr-lcssa, label %.preheader.i15.i.i, !llvm.loop !308
@@ -400,34 +395,28 @@ cvAltSum.exit28.thread.i.i:                       ; preds = %bb.u
   %lcmp.mod1041.not = icmp eq i64 %xtraiter1040, 0
   br i1 %lcmp.mod1041.not, label %.preheader.i21.i.i.preheader, label %.preheader.i15.i.i.epil.preheader
 
-.preheader.i15.i.i.epil.preheader:                ; preds = %.preheader.i21.i.i.preheader.unr-lcssa, %.preheader.i15.i.i.preheader
-  %indvars.iv.i16.i.i.epil.init = phi i64 [ 0, %.preheader.i15.i.i.preheader ], [ %indvars.iv.next.i17.i.i.1, %.preheader.i21.i.i.preheader.unr-lcssa ] ; 2 uses
-  %.018.i.i.i.epil.init = phi double [ 0.000000e+00, %.preheader.i15.i.i.preheader ], [ %i.kv, %.preheader.i21.i.i.preheader.unr-lcssa ]
+.preheader.i15.i.i.epil.preheader:                ; preds = %.preheader.i21.i.i.preheader.unr-lcssa
   %lcmp.mod1043 = trunc i32 %i.hn to i1
   tail call void @llvm.assume(i1 %lcmp.mod1043)
-  %i.kw = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.i16.i.i.epil.init
+  %i.kw = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.next.i17.i.i.1
   %i.kx = load double, ptr %i.kw, align 8, !tbaa !49
-  %i.ky = trunc i64 %indvars.iv.i16.i.i.epil.init to i32
+  %i.ky = trunc i64 %indvars.iv.next.i17.i.i.1 to i32
   %i.kz = add i32 %i.ky, 1
   %i.la = uitofp nneg i32 %i.kz to double
   %i.lb = fdiv double %i.kx, %i.la
-  %i.lc = fadd double %i.lb, %.018.i.i.i.epil.init
+  %i.lc = fadd double %i.lb, %i.kv
   br label %.preheader.i21.i.i.preheader
 
 .preheader.i21.i.i.preheader:                     ; preds = %.preheader.i21.i.i.preheader.unr-lcssa, %.preheader.i15.i.i.epil.preheader
   %.lcssa980 = phi double [ %i.kv, %.preheader.i21.i.i.preheader.unr-lcssa ], [ %i.lc, %.preheader.i15.i.i.epil.preheader ]
   %xtraiter1046 = and i64 %i.ht, 1
-  %3 = icmp eq i64 %1, 0
-  br i1 %3, label %.preheader.i21.i.i.epil.preheader, label %.preheader.i21.i.i.preheader.new
-
-.preheader.i21.i.i.preheader.new:                 ; preds = %.preheader.i21.i.i.preheader
   %unroll_iter1050 = and i64 %i.ht, 2147483646
   br label %.preheader.i21.i.i
 
-.preheader.i21.i.i:                               ; preds = %.preheader.i21.i.i, %.preheader.i21.i.i.preheader.new
-  %indvars.iv.i22.i.i = phi i64 [ 0, %.preheader.i21.i.i.preheader.new ], [ %indvars.iv.next.i25.i.i.1, %.preheader.i21.i.i ] ; 4 uses
-  %.018.i23.i.i = phi double [ 0.000000e+00, %.preheader.i21.i.i.preheader.new ], [ %i.lq, %.preheader.i21.i.i ]
-  %niter1051 = phi i64 [ 0, %.preheader.i21.i.i.preheader.new ], [ %niter1051.next.1, %.preheader.i21.i.i ]
+.preheader.i21.i.i:                               ; preds = %.preheader.i21.i.i, %.preheader.i21.i.i.preheader
+  %indvars.iv.i22.i.i = phi i64 [ 0, %.preheader.i21.i.i.preheader ], [ %indvars.iv.next.i25.i.i.1, %.preheader.i21.i.i ] ; 4 uses
+  %.018.i23.i.i = phi double [ 0.000000e+00, %.preheader.i21.i.i.preheader ], [ %i.lq, %.preheader.i21.i.i ]
+  %niter1051 = phi i64 [ 0, %.preheader.i21.i.i.preheader ], [ %niter1051.next.1, %.preheader.i21.i.i ]
   %i.ld = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.i22.i.i
   %i.le = load double, ptr %i.ld, align 16, !tbaa !49
   %i.lf = trunc i64 %indvars.iv.i22.i.i to i32
@@ -443,7 +432,7 @@ cvAltSum.exit28.thread.i.i:                       ; preds = %bb.u
   %i.lo = uitofp nneg i32 %i.ln to double
   %i.lp = fdiv double %i.ll, %i.lo
   %i.lq = fsub double %i.lj, %i.lp                ; 3 uses
-  %indvars.iv.next.i25.i.i.1 = add nuw nsw i64 %indvars.iv.i22.i.i, 2 ; 2 uses
+  %indvars.iv.next.i25.i.i.1 = add nuw nsw i64 %indvars.iv.i22.i.i, 2 ; 3 uses
   %niter1051.next.1 = add i64 %niter1051, 2       ; 2 uses
   %niter1051.ncmp.1 = icmp eq i64 %niter1051.next.1, %unroll_iter1050
   br i1 %niter1051.ncmp.1, label %cvAltSum.exit28.i.i.unr-lcssa, label %.preheader.i21.i.i, !llvm.loop !308
@@ -452,18 +441,16 @@ cvAltSum.exit28.i.i.unr-lcssa:                    ; preds = %.preheader.i21.i.i
   %lcmp.mod1047.not = icmp eq i64 %xtraiter1046, 0
   br i1 %lcmp.mod1047.not, label %cvAltSum.exit28.i.i, label %.preheader.i21.i.i.epil.preheader
 
-.preheader.i21.i.i.epil.preheader:                ; preds = %cvAltSum.exit28.i.i.unr-lcssa, %.preheader.i21.i.i.preheader
-  %indvars.iv.i22.i.i.epil.init = phi i64 [ 0, %.preheader.i21.i.i.preheader ], [ %indvars.iv.next.i25.i.i.1, %cvAltSum.exit28.i.i.unr-lcssa ] ; 2 uses
-  %.018.i23.i.i.epil.init = phi double [ 0.000000e+00, %.preheader.i21.i.i.preheader ], [ %i.lq, %cvAltSum.exit28.i.i.unr-lcssa ]
+.preheader.i21.i.i.epil.preheader:                ; preds = %cvAltSum.exit28.i.i.unr-lcssa
   %lcmp.mod1049 = trunc i32 %i.hn to i1
   tail call void @llvm.assume(i1 %lcmp.mod1049)
-  %i.lr = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.i22.i.i.epil.init
+  %i.lr = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.next.i25.i.i.1
   %i.ls = load double, ptr %i.lr, align 8, !tbaa !49
-  %i.lt = trunc i64 %indvars.iv.i22.i.i.epil.init to i32
+  %i.lt = trunc i64 %indvars.iv.next.i25.i.i.1 to i32
   %i.lu = add i32 %i.lt, 2
   %i.lv = uitofp nneg i32 %i.lu to double
   %i.lw = fdiv double %i.ls, %i.lv
-  %i.lx = fadd double %i.lw, %.018.i23.i.i.epil.init
+  %i.lx = fadd double %i.lw, %i.lq
   br label %cvAltSum.exit28.i.i
 
 cvAltSum.exit28.i.i:                              ; preds = %cvAltSum.exit28.i.i.unr-lcssa, %.preheader.i21.i.i.epil.preheader
