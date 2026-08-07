@@ -203,7 +203,7 @@ bb.p:                                             ; preds = %bb.l
   br i1 %i.cz, label %bb.q, label %bb.v
 
 bb.q:                                             ; preds = %bb.p
-  %i.da = tail call fastcc ptr @ddSiftingDown(ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef %2) ; 7 uses
+  %i.da = tail call fastcc ptr @ddSiftingDown(ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef %2) ; 8 uses
   %magicptr.i = ptrtoint ptr %i.da to i64
   switch i64 %magicptr.i, label %bb.r [
     i64 -1, label %ddSiftingBackward.exit.i
@@ -257,7 +257,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not19.i149.i, label %ddSiftingBackward.exit.thread.i, label %.lr.ph26.i146.i, !llvm.loop !99
 
 bb.v:                                             ; preds = %bb.p
-  %i.dr = tail call fastcc ptr @ddSiftingUp(ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef %1) ; 7 uses
+  %i.dr = tail call fastcc ptr @ddSiftingUp(ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef %1) ; 8 uses
   %magicptr122.i = ptrtoint ptr %i.dr to i64
   switch i64 %magicptr122.i, label %bb.w [
     i64 -1, label %ddSiftingBackward.exit.i
@@ -357,8 +357,8 @@ bb.ab:                                            ; preds = %bb.ab, %.lr.ph193.i
   br i1 %.not121.i, label %..loopexit_crit_edge.i, label %bb.ab, !llvm.loop !101
 
 ddSiftingBackward.exit.i:                         ; preds = %bb.x, %bb.v, %bb.s, %bb.q, %bb.m, %bb.i, %bb.y, %bb.t, %bb.n, %bb.j
-  %.295.i = phi ptr [ %i.dr, %bb.y ], [ null, %bb.j ], [ %i.dd, %bb.t ], [ %i.cj, %bb.n ], [ %i.dr, %bb.x ], [ inttoptr (i64 -1 to ptr), %bb.v ], [ inttoptr (i64 -1 to ptr), %bb.s ], [ null, %bb.q ], [ inttoptr (i64 -1 to ptr), %bb.m ], [ null, %bb.i ] ; 2 uses
-  %.2.i = phi ptr [ %i.dt, %bb.y ], [ %i.bu, %bb.j ], [ %i.da, %bb.t ], [ null, %bb.n ], [ inttoptr (i64 -1 to ptr), %bb.x ], [ null, %bb.v ], [ %i.da, %bb.s ], [ inttoptr (i64 -1 to ptr), %bb.q ], [ null, %bb.m ], [ inttoptr (i64 -1 to ptr), %bb.i ] ; 2 uses
+  %.295.i = phi ptr [ %i.dr, %bb.y ], [ null, %bb.j ], [ %i.dd, %bb.t ], [ %i.cj, %bb.n ], [ %i.dr, %bb.x ], [ %i.dr, %bb.v ], [ inttoptr (i64 -1 to ptr), %bb.s ], [ null, %bb.q ], [ inttoptr (i64 -1 to ptr), %bb.m ], [ null, %bb.i ] ; 2 uses
+  %.2.i = phi ptr [ %i.dt, %bb.y ], [ %i.bu, %bb.j ], [ %i.da, %bb.t ], [ null, %bb.n ], [ inttoptr (i64 -1 to ptr), %bb.x ], [ null, %bb.v ], [ %i.da, %bb.s ], [ %i.da, %bb.q ], [ null, %bb.m ], [ inttoptr (i64 -1 to ptr), %bb.i ] ; 2 uses
   %magicptr123.i = ptrtoint ptr %.2.i to i64
   %magicptr123.off.i = add i64 %magicptr123.i, -1
   %switch.i = icmp ult i64 %magicptr123.off.i, -2

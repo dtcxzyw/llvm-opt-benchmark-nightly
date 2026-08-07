@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.a
   %i.t = load i32, ptr %i.s, align 4, !tbaa !37
   %i.u = sext i32 %i.t to i64
   %i.v = mul nsw i64 %i.m, %i.u
-  %i.w = getelementptr inbounds i8, ptr inttoptr (i64 1 to ptr), i64 %i.v
+  %i.w = getelementptr inbounds i8, ptr %0, i64 %i.v
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv93
   %i.y = load i32, ptr %i.x, align 4, !tbaa !37   ; 2 uses
   %i.z = icmp eq i32 %i.y, %.val
@@ -219,7 +219,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ad = load ptr, ptr getelementptr inbounds nuw (i8, ptr @mca_pml, i64 88), align 8, !tbaa !61
   %i.ae = zext nneg i32 %i.ab to i64
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %indvars.iv93
-  %i.ag = tail call i32 %i.ad(ptr noundef nonnull %i.w, i64 noundef %i.ae, ptr noundef %3, i32 noundef %i.y, i32 noundef 103, i32 noundef 4, ptr noundef %10, ptr noundef nonnull %i.af) #6 ; 2 uses
+  %i.ag = tail call i32 %i.ad(ptr noundef %i.w, i64 noundef %i.ae, ptr noundef %3, i32 noundef %i.y, i32 noundef 103, i32 noundef 4, ptr noundef %10, ptr noundef nonnull %i.af) #6 ; 2 uses
   %.not72.us = icmp eq i32 %i.ag, 0
   br i1 %.not72.us, label %bb.g, label %.split.us
 

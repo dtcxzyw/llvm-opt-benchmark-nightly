@@ -204,9 +204,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load345 = load <4 x float>, ptr %gep894, align 4, !alias.scope !930, !noalias !928
   %wide.load346 = load <4 x float>, ptr %gep892, align 4, !alias.scope !925, !noalias !928
   %i.aw = shufflevector <4 x float> %i.ar, <4 x float> %i.av, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %7 = fsub <4 x float> %wide.load345, %wide.load346
-  %8 = fsub <4 x float> %i.aq, %i.an
-  %9 = shufflevector <4 x float> %7, <4 x float> %8, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %7 = shufflevector <4 x float> %wide.load345, <4 x float> %i.aq, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %8 = shufflevector <4 x float> %wide.load346, <4 x float> %i.an, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %9 = fsub <8 x float> %7, %8
   %interleaved.vec = shufflevector <8 x float> %i.aw, <8 x float> %9, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
   store <16 x float> %interleaved.vec, ptr %i.au, align 4, !alias.scope !928
   %index.next = add nuw i64 %index, 4             ; 2 uses

@@ -204,6 +204,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %.sroa.0662.8.vec.extract = extractelement <2 x i64> %i.ar, i64 1
   %i.as = bitcast i64 %.sroa.0662.0.vec.extract to <2 x i32> ; 2 uses
   %i.at = bitcast i64 %.sroa.0662.8.vec.extract to <2 x i32> ; 2 uses
+  %.sroa.0637.8.vecblend = shufflevector <2 x i32> %i.as, <2 x i32> %i.at, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.au = icmp sgt i32 %8, %9
   br i1 %i.au, label %bb.d, label %bb.e
 
@@ -567,10 +568,9 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bh, label %bb.u, label %_ZN11OpenImageIO4v3_14simdrMERNS1_5vint4ERKS2_.exit
 
 bb.u:                                             ; preds = %bb.t
-  %32 = and <2 x i32> %i.jh, %i.as
-  %33 = and <2 x i32> %i.ji, %i.at
-  %34 = shufflevector <2 x i32> %32, <2 x i32> %33, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.jl = bitcast <4 x i32> %34 to <2 x i64>      ; 2 uses
+  %.sroa.01128.8.vecblend = shufflevector <2 x i32> %i.jh, <2 x i32> %i.ji, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %32 = and <4 x i32> %.sroa.01128.8.vecblend, %.sroa.0637.8.vecblend
+  %i.jl = bitcast <4 x i32> %32 to <2 x i64>      ; 2 uses
   %.sroa.0736.0.vec.extract = extractelement <2 x i64> %i.jl, i64 0
   %.sroa.0736.8.vec.extract = extractelement <2 x i64> %i.jl, i64 1
   br label %bb.v
