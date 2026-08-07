@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %bb.u, %bb.v, %bb.w
 bb.y:                                             ; preds = %.lr.ph, %.critedge203
   %i.dh = phi ptr [ %i.cl, %.lr.ph ], [ %i.js, %.critedge203 ] ; 5 uses
   %.0168228 = phi ptr [ %i.cq, %.lr.ph ], [ %i.jw, %.critedge203 ] ; 9 uses
-  %i.di = load i16, ptr %.0168228, align 4, !tbaa !48 ; 4 uses
+  %i.di = load i16, ptr %.0168228, align 4, !tbaa !48 ; 5 uses
   %i.dj = zext i16 %i.di to i32                   ; 6 uses
   %.not195 = icmp eq i16 %i.di, 1
   br i1 %.not195, label %bb.ag, label %bb.z
@@ -216,7 +216,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.dm = lshr exact i32 %i.dj, 1                 ; 4 uses
-  %i.dn = add nsw i32 %i.dm, -1                   ; 2 uses
+  %i.dn = add nsw i32 %i.dm, -1
   %i.do = zext i32 %i.dn to i64
   %i.dp = getelementptr inbounds nuw i8, ptr %i.cz, i64 %i.do
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !16  ; 3 uses
@@ -310,7 +310,7 @@ bb.af:                                            ; preds = %AllocUnits.exit._cr
   %.0167.unr = phi ptr [ %.0.i211, %bb.af ], [ %i.fd, %.prol.loopexit.unr-lcssa ]
   %.0166.unr = phi ptr [ %i.et, %bb.af ], [ %i.fc, %.prol.loopexit.unr-lcssa ]
   %.0165.unr = phi i32 [ %i.dm, %bb.af ], [ %i.fe, %.prol.loopexit.unr-lcssa ]
-  %i.ff = icmp eq i32 %i.dn, 0
+  %i.ff = icmp eq i16 %i.di, 2
   br i1 %i.ff, label %.unr-lcssa, label %.new
 
 .new:                                             ; preds = %.prol.loopexit, %.new
