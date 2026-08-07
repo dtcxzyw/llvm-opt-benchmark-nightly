@@ -203,8 +203,8 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.cz = add nsw i32 %i.cu, 1
   %i.da = sext i32 %i.cz to i64
-  %i.db = shl nsw i64 %i.da, 3                    ; 3 uses
-  %i.dc = shl nuw nsw i64 %i.cw, 3                ; 4 uses
+  %i.db = shl nsw i64 %i.da, 3                    ; 2 uses
+  %i.dc = shl nuw nsw i64 %i.cw, 3                ; 3 uses
   %i.dd = icmp eq i32 %i.cv, 0
   br i1 %i.dd, label %bb.k, label %bb.l
 
@@ -213,9 +213,9 @@ bb.k:                                             ; preds = %bb.j
   br label %gv_recalloc.exit.i
 
 bb.l:                                             ; preds = %bb.j
-  %i.de = tail call ptr @realloc(ptr noundef %i.ct, i64 noundef range(i64 0, 188978560937) %i.dc) #15 ; 4 uses
+  %i.de = tail call ptr @realloc(ptr noundef %i.ct, i64 noundef range(i64 0, 188978560937) %i.dc) #15 ; 3 uses
   %i.df = icmp eq ptr %i.de, null
-  br i1 %i.df, label %bb.m, label %1
+  br i1 %i.df, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   %i.dg = load ptr, ptr @stderr, align 8, !tbaa !76
@@ -223,18 +223,14 @@ bb.m:                                             ; preds = %bb.l
   tail call fastcc void @graphviz_exit() #14
   unreachable
 
-1:                                                ; preds = %bb.l
-  %2 = icmp ugt i64 %i.dc, %i.db
-  br i1 %2, label %bb.n, label %gv_recalloc.exit.i
-
-bb.n:                                             ; preds = %1
+bb.n:                                             ; preds = %bb.l
   %i.di = getelementptr inbounds nuw i8, ptr %i.de, i64 %i.db
   %i.dj = sub nuw nsw i64 %i.dc, %i.db
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.di, i8 0, i64 %i.dj, i1 false)
   br label %gv_recalloc.exit.i
 
-gv_recalloc.exit.i:                               ; preds = %bb.n, %1, %bb.k
-  %.0.i.i.i = phi ptr [ null, %bb.k ], [ %i.de, %bb.n ], [ %i.de, %1 ] ; 7 uses
+gv_recalloc.exit.i:                               ; preds = %bb.n, %bb.k
+  %.0.i.i.i = phi ptr [ null, %bb.k ], [ %i.de, %bb.n ] ; 7 uses
   %i.dk = load ptr, ptr %i.y, align 8, !tbaa !8
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 264
   %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !38

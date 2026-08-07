@@ -204,7 +204,7 @@ _RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_1
 _RNvMNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB2_12BlockBuilder8finalize.exit78: ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5block5BlockE8push_mutBM_.exit.i75, %bb.ax, %bb.af, %_RNvMNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB2_12BlockBuilder8finalize.exit
   %i.dt = getelementptr inbounds nuw i8, ptr %1, i64 84 ; 2 uses
   %i.du = load i8, ptr %i.dt, align 4, !range !5507, !noundef !4 ; 4 uses
-  %i.dv = icmp samesign ugt i8 %i.du, 1           ; 2 uses
+  %i.dv = icmp samesign ugt i8 %i.du, 1
   %i.dw = add nsw i8 %i.du, -17
   %switch = icmp ult i8 %i.dw, 2
   br i1 %switch, label %bb.be, label %.loopexit
@@ -372,9 +372,6 @@ bb.be:                                            ; preds = %_RNvMNtNtNtCsEhZmuQ
   %i.fg = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.fh = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.fi = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %2 = zext nneg i8 %i.du to i64
-  %3 = add nsw i64 %2, -1
-  %4 = select i1 %i.dv, i64 %3, i64 0
   %.not.not.not.i.not363 = icmp eq i64 %i.fa, 0
   br i1 %.not.not.not.i.not363, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB2v_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0EB2B_.exit, label %.lr.ph365
 
@@ -388,32 +385,32 @@ bb.bf:                                            ; preds = %_RNCNvXs_NtNtNtCsEh
   %.val3.i = load i32, ptr %i.fj, align 4, !noalias !7916, !noundef !4
   %i.fl = getelementptr i8, ptr %i.fj, i64 4
   %.val4.i = load i32, ptr %i.fl, align 4, !noalias !7916, !noundef !4
-  switch i64 %4, label %bb.bg [
-    i64 0, label %bb.bh
-    i64 1, label %_RNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB6_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0Bc_.exit.i
-    i64 2, label %_RNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB6_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0Bc_.exit.i
-    i64 3, label %bb.bi
-    i64 4, label %bb.bj
-    i64 5, label %bb.bk
-    i64 6, label %bb.bj
-    i64 7, label %bb.bj
-    i64 8, label %bb.bk
-    i64 9, label %bb.bi
-    i64 10, label %bb.bl
-    i64 11, label %bb.bk
-    i64 12, label %bb.bk
-    i64 13, label %_RNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB6_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0Bc_.exit.i
-    i64 14, label %bb.bm
-    i64 15, label %bb.bn
-    i64 16, label %bb.bi
-    i64 17, label %bb.bh
-    i64 18, label %bb.bi
-    i64 19, label %bb.bi
-    i64 20, label %bb.bn
-    i64 21, label %_RNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB6_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0Bc_.exit.i
-    i64 22, label %_RNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB6_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0Bc_.exit.i
-    i64 23, label %_RNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB6_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0Bc_.exit.i
-    i64 24, label %bb.bj
+  switch i8 %i.du, label %bb.bg [
+    i8 1, label %bb.bh
+    i8 2, label %_RNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB6_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0Bc_.exit.i
+    i8 3, label %_RNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB6_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0Bc_.exit.i
+    i8 4, label %bb.bi
+    i8 5, label %bb.bj
+    i8 6, label %bb.bk
+    i8 7, label %bb.bj
+    i8 8, label %bb.bj
+    i8 9, label %bb.bk
+    i8 10, label %bb.bi
+    i8 11, label %bb.bl
+    i8 12, label %bb.bk
+    i8 13, label %bb.bk
+    i8 14, label %_RNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB6_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0Bc_.exit.i
+    i8 15, label %bb.bm
+    i8 16, label %bb.bn
+    i8 17, label %bb.bi
+    i8 18, label %bb.bh
+    i8 19, label %bb.bi
+    i8 20, label %bb.bi
+    i8 21, label %bb.bn
+    i8 22, label %_RNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB6_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0Bc_.exit.i
+    i8 23, label %_RNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB6_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0Bc_.exit.i
+    i8 24, label %_RNCNvXs_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5blockNtB6_12BlockBuilderNtNtCskLngH8kgpZI_15ruff_python_ast17statement_visitor16StatementVisitor10visit_stmts2_0Bc_.exit.i
+    i8 25, label %bb.bj
   ]
 
 bb.bg:                                            ; preds = %.lr.ph365

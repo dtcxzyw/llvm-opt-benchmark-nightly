@@ -204,11 +204,11 @@ bb.a:
   %i.q = load i32, ptr %i.p, align 8, !tbaa !93
   %i.r = add nsw i32 %i.q, 1                      ; 2 uses
   store i32 %i.r, ptr %i.p, align 8, !tbaa !93
-  %i.s = and i64 %i.m, 4294967295                 ; 3 uses
+  %i.s = and i64 %i.m, 4294967295                 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.s ; 6 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 108
   %i.v = load i32, ptr %i.u, align 4, !tbaa !98   ; 3 uses
-  %i.w = zext i32 %i.v to i64                     ; 3 uses
+  %i.w = zext i32 %i.v to i64                     ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.w ; 5 uses
   %.not = icmp ugt i32 %i.v, %i.n
   br i1 %.not, label %bb.c, label %bb.b
@@ -265,10 +265,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
-  %3 = icmp samesign ult i64 %i.s, %i.w
   %i.at = icmp sgt i8 %i.al, -1
-  %or.cond = and i1 %3, %i.at
-  br i1 %or.cond, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i.i
+  br i1 %i.at, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i.i
 
 _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i.i:    ; preds = %bb.g
   %i.au = call noundef ptr @_ZN7rocksdb22GetVarint32PtrFallbackEPKcS1_Pj(ptr noundef nonnull %i.t, ptr noundef nonnull %i.x, ptr noundef nonnull %i.a) ; 2 uses

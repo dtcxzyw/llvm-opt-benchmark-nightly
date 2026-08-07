@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.n = shl nsw i64 %i.h, 3                      ; 3 uses
-  %i.o = shl nuw nsw i64 %i.j, 3                  ; 4 uses
+  %i.n = shl nsw i64 %i.h, 3                      ; 2 uses
+  %i.o = shl nuw nsw i64 %i.j, 3                  ; 3 uses
   %i.p = icmp eq i32 %i.i, 0
   br i1 %i.p, label %bb.d, label %bb.e
 
@@ -211,9 +211,9 @@ bb.d:                                             ; preds = %bb.c
   br label %gv_recalloc.exit
 
 bb.e:                                             ; preds = %bb.c
-  %i.q = tail call ptr @realloc(ptr noundef %i.g, i64 noundef range(i64 0, -7) %i.o) #20 ; 4 uses
+  %i.q = tail call ptr @realloc(ptr noundef %i.g, i64 noundef range(i64 0, -7) %i.o) #20 ; 3 uses
   %i.r = icmp eq ptr %i.q, null
-  br i1 %i.r, label %bb.f, label %2
+  br i1 %i.r, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.s = load ptr, ptr @stderr, align 8, !tbaa !85
@@ -221,18 +221,14 @@ bb.f:                                             ; preds = %bb.e
   tail call fastcc void @graphviz_exit() #19
   unreachable
 
-2:                                                ; preds = %bb.e
-  %3 = icmp ugt i64 %i.o, %i.n
-  br i1 %3, label %bb.g, label %gv_recalloc.exit
-
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.n
   %i.v = sub nuw nsw i64 %i.o, %i.n
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.u, i8 0, i64 %i.v, i1 false)
   br label %gv_recalloc.exit
 
-gv_recalloc.exit:                                 ; preds = %bb.d, %2, %bb.g
-  %.0.i.i = phi ptr [ null, %bb.d ], [ %i.q, %bb.g ], [ %i.q, %2 ] ; 2 uses
+gv_recalloc.exit:                                 ; preds = %bb.d, %bb.g
+  %.0.i.i = phi ptr [ null, %bb.d ], [ %i.q, %bb.g ] ; 2 uses
   %i.w = load ptr, ptr %i.a, align 8, !tbaa !8
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 240
   store ptr %.0.i.i, ptr %i.x, align 8, !tbaa !124

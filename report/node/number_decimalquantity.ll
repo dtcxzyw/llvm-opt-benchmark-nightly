@@ -204,9 +204,14 @@ _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit69: ; preds = %_ZNK6
 
 .lr.ph.preheader.a:                               ; preds = %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit69
   %wide.trip.count = zext nneg i32 %i.e to i64
-  br label %.lr.ph
+  br label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74
 
-.preheader111:                                    ; preds = %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit79
+1:                                                ; preds = %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.preheader111, label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74, !llvm.loop !49
+
+.preheader111:                                    ; preds = %1
   %.not126 = icmp eq i32 %i.e, 16
   br i1 %.not126, label %.thread91, label %.lr.ph117.preheader
 
@@ -244,7 +249,7 @@ vector.body.interim:                              ; preds = %vector.body
   %vec.ind.next = add nsw <16 x i32> %vec.ind, splat (i32 16)
   %index.next = add nuw i32 %index, 16            ; 2 uses
   %i.ay = icmp eq i32 %index.next, %n.vec
-  br i1 %i.ay, label %middle.block, label %vector.body, !llvm.loop !49
+  br i1 %i.ay, label %middle.block, label %vector.body, !llvm.loop !50
 
 middle.block:                                     ; preds = %vector.body.interim
   %cmp.n = icmp eq i32 %i.an, %n.vec
@@ -254,22 +259,13 @@ middle.block:                                     ; preds = %vector.body.interim
   %.0116.ph = phi i32 [ %i.e, %.lr.ph117.preheader ], [ %i.ao, %middle.block ]
   br label %.lr.ph117
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader.a, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit79
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.a ], [ %indvars.iv.next, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit79 ] ; 3 uses
-  %or.cond.i70 = icmp samesign ugt i64 %indvars.iv, 15
-  br i1 %or.cond.i70, label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit79, label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74
-
-_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74: ; preds = %.lr.ph
+_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74: ; preds = %.lr.ph.preheader.a, %1
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.a ], [ %indvars.iv.next, %1 ] ; 2 uses
   %i.az = shl nuw nsw i64 %indvars.iv, 2
   %i.ba = lshr i64 %i.ad, %i.az
   %i.bb = and i64 %i.ba, 14
   %i.bc = icmp samesign ugt i64 %i.bb, 9
-  br i1 %i.bc, label %.thread91, label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit79
-
-_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit79: ; preds = %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74, %.lr.ph
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.preheader111, label %.lr.ph, !llvm.loop !52
+  br i1 %i.bc, label %.thread91, label %1
 
 .lr.ph117:                                        ; preds = %.lr.ph117.preheader163, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84.thread
   %.0116 = phi i32 [ %i.bh, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84.thread ], [ %.0116.ph, %.lr.ph117.preheader163 ] ; 3 uses
@@ -672,11 +668,11 @@ attributes #23 = { nounwind willreturn memory(none) }
 !46 = distinct !{!46, !26}
 !47 = distinct !{!47, !9}
 !48 = distinct !{!48, !9}
-!49 = distinct !{!49, !9, !50, !51}
-!50 = !{!"llvm.loop.isvectorized", i32 1}
-!51 = !{!"llvm.loop.unroll.runtime.disable"}
-!52 = distinct !{!52, !9}
-!53 = distinct !{!53, !9, !51, !50}
+!49 = distinct !{!49, !9}
+!50 = distinct !{!50, !9, !51, !52}
+!51 = !{!"llvm.loop.isvectorized", i32 1}
+!52 = !{!"llvm.loop.unroll.runtime.disable"}
+!53 = distinct !{!53, !9, !52, !51}
 !54 = distinct !{!54, !9}
 !55 = distinct !{!55, !9}
 end_hunk_1

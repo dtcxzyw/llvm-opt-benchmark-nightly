@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.w, %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.d = mul nsw i32 %.088, %3
   %i.e = sext i32 %i.d to i64
-  %i.f = getelementptr inbounds i8, ptr %0, i64 %i.e ; 4 uses
+  %i.f = getelementptr inbounds i8, ptr %0, i64 %i.e ; 3 uses
   %i.g = sub nsw i32 %.090, %.088                 ; 2 uses
   %i.h = icmp sgt i32 %i.g, 1
   br i1 %i.h, label %.lr.ph.i, label %_ZL15doInsertionSortPciiPFiPKvS1_S1_ES1_Pv.exit
@@ -213,48 +213,15 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.h, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 1, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.h ] ; 5 uses
   %i.i = mul nuw nsw i64 %indvars.iv.i, %i.a
-  %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.i ; 3 uses
-  %8 = icmp samesign ugt i64 %indvars.iv.i, 8
-  %i.k = trunc nuw nsw i64 %indvars.iv.i to i32   ; 3 uses
-  br i1 %8, label %.lr.ph.i.i, label %.lr.ph49.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.lr.ph.i.i
-  %9 = icmp slt i32 %.131.i.i, %.1.i.i
-  br i1 %9, label %.lr.ph49.preheader.i.i, label %uprv_stableBinarySearch_78.exit.i
-
-.lr.ph49.preheader.i.i:                           ; preds = %.preheader.i.i, %bb.d
-  %.029.lcssa.i38.i = phi i32 [ %.1.i.i, %.preheader.i.i ], [ %i.k, %bb.d ] ; 2 uses
-  %.030.lcssa.i37.i = phi i32 [ %.131.i.i, %.preheader.i.i ], [ 0, %bb.d ]
-  %.032.lcssa.i36.i = phi i8 [ %.133.i.i, %.preheader.i.i ], [ 0, %bb.d ]
-  %10 = sext i32 %.030.lcssa.i37.i to i64
+  %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.i ; 2 uses
+  %i.k = trunc nuw nsw i64 %indvars.iv.i to i32   ; 2 uses
   br label %.lr.ph49.i.i
 
-.lr.ph.i.i:                                       ; preds = %bb.d, %.lr.ph.i.i
-  %.02944.i.i = phi i32 [ %.1.i.i, %.lr.ph.i.i ], [ %i.k, %bb.d ] ; 2 uses
-  %.03043.i.i = phi i32 [ %.131.i.i, %.lr.ph.i.i ], [ 0, %bb.d ] ; 2 uses
-  %.03242.i.i = phi i8 [ %.133.i.i, %.lr.ph.i.i ], [ 0, %bb.d ]
-  %11 = add nsw i32 %.03043.i.i, %.02944.i.i
-  %12 = sdiv i32 %11, 2                           ; 4 uses
-  %13 = mul nsw i32 %12, %3
-  %14 = sext i32 %13 to i64
-  %15 = getelementptr inbounds i8, ptr %i.f, i64 %14
-  %16 = tail call noundef i32 %4(ptr noundef %5, ptr noundef nonnull %i.j, ptr noundef %15) #6, !inline_history !9 ; 2 uses
-  %17 = icmp eq i32 %16, 0                        ; 2 uses
-  %18 = add nsw i32 %12, 1
-  %19 = icmp sgt i32 %16, -1                      ; 2 uses
-  %.030..i.i = select i1 %19, i32 %12, i32 %.03043.i.i
-  %.133.i.i = select i1 %17, i8 1, i8 %.03242.i.i ; 3 uses
-  %.131.i.i = select i1 %17, i32 %18, i32 %.030..i.i ; 5 uses
-  %.1.i.i = select i1 %19, i32 %.02944.i.i, i32 %12 ; 4 uses
-  %20 = sub nsw i32 %.1.i.i, %.131.i.i
-  %21 = icmp sgt i32 %20, 8
-  br i1 %21, label %.lr.ph.i.i, label %.preheader.i.i, !llvm.loop !5
-
-.lr.ph49.i.i:                                     ; preds = %bb.f, %.lr.ph49.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ %10, %.lr.ph49.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.f ] ; 3 uses
-  %.23447.i.i = phi i8 [ %.032.lcssa.i36.i, %.lr.ph49.preheader.i.i ], [ %.335.i.i, %bb.f ] ; 2 uses
-  %i.l = mul nsw i64 %indvars.iv.i.i, %i.a
-  %i.m = getelementptr inbounds i8, ptr %i.f, i64 %i.l
+.lr.ph49.i.i:                                     ; preds = %bb.f, %bb.d
+  %indvars.iv.i.i = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.i.i, %bb.f ] ; 3 uses
+  %.23447.i.i = phi i8 [ 0, %bb.d ], [ %.335.i.i, %bb.f ] ; 2 uses
+  %i.l = mul nuw nsw i64 %indvars.iv.i.i, %i.a
+  %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.l
   %i.n = tail call noundef i32 %4(ptr noundef %5, ptr noundef nonnull %i.j, ptr noundef %i.m) #6, !inline_history !9 ; 2 uses
   %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %bb.f, label %bb.e
@@ -265,18 +232,17 @@ bb.e:                                             ; preds = %.lr.ph49.i.i
 
 bb.f:                                             ; preds = %bb.e, %.lr.ph49.i.i
   %.335.i.i = phi i8 [ %.23447.i.i, %bb.e ], [ 1, %.lr.ph49.i.i ] ; 2 uses
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %lftr.wideiv.i.i = trunc i64 %indvars.iv.next.i.i to i32
-  %exitcond.not.i.i = icmp eq i32 %.029.lcssa.i38.i, %lftr.wideiv.i.i
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %indvars.iv.i
   br i1 %exitcond.not.i.i, label %uprv_stableBinarySearch_78.exit.i, label %.lr.ph49.i.i
 
 .thread.loopexit.split.loop.exit.i.i:             ; preds = %bb.e
   %i.q = trunc nsw i64 %indvars.iv.i.i to i32
   br label %uprv_stableBinarySearch_78.exit.i
 
-uprv_stableBinarySearch_78.exit.i:                ; preds = %bb.f, %.thread.loopexit.split.loop.exit.i.i, %.preheader.i.i
-  %.234.lcssa.i.i = phi i8 [ %.133.i.i, %.preheader.i.i ], [ %.23447.i.i, %.thread.loopexit.split.loop.exit.i.i ], [ %.335.i.i, %bb.f ]
-  %.2.lcssa.i.i = phi i32 [ %.131.i.i, %.preheader.i.i ], [ %i.q, %.thread.loopexit.split.loop.exit.i.i ], [ %.029.lcssa.i38.i, %bb.f ] ; 2 uses
+uprv_stableBinarySearch_78.exit.i:                ; preds = %bb.f, %.thread.loopexit.split.loop.exit.i.i
+  %.234.lcssa.i.i = phi i8 [ %.23447.i.i, %.thread.loopexit.split.loop.exit.i.i ], [ %.335.i.i, %bb.f ]
+  %.2.lcssa.i.i = phi i32 [ %i.q, %.thread.loopexit.split.loop.exit.i.i ], [ %i.k, %bb.f ] ; 2 uses
   %.not.i.i = icmp eq i8 %.234.lcssa.i.i, 0
   %i.r = add nsw i32 %.2.lcssa.i.i, -1
   %i.s = xor i32 %.2.lcssa.i.i, -1
