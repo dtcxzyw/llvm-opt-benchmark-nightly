@@ -203,10 +203,10 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.at, label %.loopexit352, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.au = tail call fastcc ptr @ddSymmSiftingDown(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %3) ; 5 uses
+  %i.au = tail call fastcc ptr @ddSymmSiftingDown(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %3) ; 6 uses
   %magicptr = ptrtoint ptr %i.au to i64
   switch i64 %magicptr, label %bb.k [
-    i64 1, label %.thread424.thread
+    i64 1, label %bb.av
     i64 0, label %.loopexit352
   ]
 
@@ -261,10 +261,10 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bq, label %.loopexit352, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.br = tail call fastcc ptr @ddSymmSiftingUp(ptr noundef nonnull %0, i32 noundef %i.bp, i32 noundef %2) ; 5 uses
+  %i.br = tail call fastcc ptr @ddSymmSiftingUp(ptr noundef nonnull %0, i32 noundef %i.bp, i32 noundef %2) ; 6 uses
   %magicptr342 = ptrtoint ptr %i.br to i64
   switch i64 %magicptr342, label %bb.t [
-    i64 1, label %.thread424.thread
+    i64 1, label %.thread424
     i64 0, label %.loopexit352
   ]
 
@@ -305,10 +305,10 @@ bb.x:                                             ; preds = %bb.q
   br i1 %i.cj, label %bb.y, label %bb.ai
 
 bb.y:                                             ; preds = %bb.x
-  %i.ck = tail call fastcc ptr @ddSymmSiftingDown(ptr noundef nonnull %0, i32 noundef %.0294, i32 noundef %3) ; 6 uses
+  %i.ck = tail call fastcc ptr @ddSymmSiftingDown(ptr noundef nonnull %0, i32 noundef %.0294, i32 noundef %3) ; 7 uses
   %magicptr343 = ptrtoint ptr %i.ck to i64
   switch i64 %magicptr343, label %bb.z [
-    i64 1, label %.thread424.thread
+    i64 1, label %bb.av
     i64 0, label %.preheader357
   ]
 
@@ -344,7 +344,7 @@ bb.ab:                                            ; preds = %.preheader357, %bb.
   %.1295 = phi i32 [ %i.cn, %bb.aa ], [ %i.cx, %bb.ab ] ; 4 uses
   %.5 = phi i32 [ %.3, %bb.aa ], [ %.4, %bb.ab ]
   %i.cz = sub nsw i32 %.5, %.1295
-  %i.da = tail call fastcc ptr @ddSymmSiftingUp(ptr noundef nonnull %0, i32 noundef %.1295, i32 noundef %2) ; 5 uses
+  %i.da = tail call fastcc ptr @ddSymmSiftingUp(ptr noundef nonnull %0, i32 noundef %.1295, i32 noundef %2) ; 6 uses
   %magicptr344 = ptrtoint ptr %i.da to i64
   switch i64 %magicptr344, label %bb.ac [
     i64 1, label %bb.av
@@ -428,10 +428,10 @@ bb.ai:                                            ; preds = %bb.x
   %i.ec = getelementptr inbounds [56 x i8], ptr %i.eb, i64 %i.an
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 28
   %i.ee = load i32, ptr %i.ed, align 4, !tbaa !27 ; 2 uses
-  %i.ef = tail call fastcc ptr @ddSymmSiftingUp(ptr noundef nonnull %0, i32 noundef %i.ee, i32 noundef %2) ; 6 uses
+  %i.ef = tail call fastcc ptr @ddSymmSiftingUp(ptr noundef nonnull %0, i32 noundef %i.ee, i32 noundef %2) ; 7 uses
   %magicptr345 = ptrtoint ptr %i.ef to i64
   switch i64 %magicptr345, label %bb.aj [
-    i64 1, label %.thread424.thread
+    i64 1, label %.thread424
     i64 0, label %.preheader361
   ]
 
@@ -461,10 +461,10 @@ bb.ak:                                            ; preds = %.preheader361, %bb.
   %.5299 = phi i32 [ %i.eh, %bb.aj ], [ %.4298, %bb.ak ] ; 4 uses
   %.7 = phi i32 [ %i.em, %bb.aj ], [ %i.eq, %bb.ak ]
   %i.es = sub nsw i32 %.5299, %.7
-  %i.et = tail call fastcc ptr @ddSymmSiftingDown(ptr noundef nonnull %0, i32 noundef %.5299, i32 noundef %3) ; 5 uses
+  %i.et = tail call fastcc ptr @ddSymmSiftingDown(ptr noundef nonnull %0, i32 noundef %.5299, i32 noundef %3) ; 6 uses
   %magicptr346 = ptrtoint ptr %i.et to i64
   switch i64 %magicptr346, label %bb.al [
-    i64 1, label %.thread424
+    i64 1, label %bb.av
     i64 0, label %bb.an
   ]
 
@@ -592,9 +592,9 @@ bb.au:                                            ; preds = %.lr.ph394, %bb.au
   %.not341 = icmp eq ptr %i.ge, null
   br i1 %.not341, label %..loopexit352_crit_edge, label %bb.au, !llvm.loop !86
 
-bb.av:                                            ; preds = %.loopexit356, %bb.ar, %bb.ah, %bb.w, %bb.p
-  %.5291 = phi ptr [ inttoptr (i64 1 to ptr), %.loopexit356 ], [ %.0286, %bb.p ], [ %i.da, %bb.ah ], [ %i.br, %bb.w ], [ %.2288, %bb.ar ] ; 2 uses
-  %.5284 = phi ptr [ %i.ck, %.loopexit356 ], [ %i.au, %bb.p ], [ %.2281, %bb.ah ], [ %.0279, %bb.w ], [ %i.et, %bb.ar ] ; 2 uses
+bb.av:                                            ; preds = %.loopexit362, %.loopexit356, %bb.y, %bb.j, %bb.ar, %bb.ah, %bb.w, %bb.p
+  %.5291 = phi ptr [ null, %bb.j ], [ %.0286, %bb.p ], [ %i.ef, %.loopexit362 ], [ %i.br, %bb.w ], [ null, %bb.y ], [ %i.da, %.loopexit356 ], [ %i.da, %bb.ah ], [ %.2288, %bb.ar ] ; 2 uses
+  %.5284 = phi ptr [ %i.au, %bb.j ], [ %i.au, %bb.p ], [ %i.et, %.loopexit362 ], [ %.0279, %bb.w ], [ %i.ck, %bb.y ], [ %i.ck, %.loopexit356 ], [ %.2281, %bb.ah ], [ %i.et, %bb.ar ] ; 2 uses
   %i.gh = icmp ult ptr %.5284, inttoptr (i64 2 to ptr)
   br i1 %i.gh, label %.thread424, label %.preheader349
 
@@ -619,11 +619,8 @@ bb.aw:                                            ; preds = %.preheader349, %bb.
   store ptr %.6285, ptr %i.gi, align 8, !tbaa !78
   br label %.thread424
 
-.thread424.thread:                                ; preds = %bb.ai, %bb.y, %bb.s, %bb.j
-  br label %.loopexit352
-
-.thread424:                                       ; preds = %.loopexit362, %.loopexit350, %bb.av
-  %.5291427 = phi ptr [ %.5291, %bb.av ], [ %.5291, %.loopexit350 ], [ %i.ef, %.loopexit362 ] ; 2 uses
+.thread424:                                       ; preds = %bb.ai, %bb.s, %.loopexit350, %bb.av
+  %.5291427 = phi ptr [ %.5291, %bb.av ], [ %.5291, %.loopexit350 ], [ %i.ef, %bb.ai ], [ %i.br, %bb.s ] ; 2 uses
   %i.go = icmp ult ptr %.5291427, inttoptr (i64 2 to ptr)
   br i1 %i.go, label %.loopexit352, label %.preheader
 
@@ -652,8 +649,8 @@ bb.ax:                                            ; preds = %.preheader, %bb.ax
   store ptr %.4290393, ptr %i.fw, align 8, !tbaa !78
   br label %.loopexit352
 
-.loopexit352:                                     ; preds = %.thread424.thread, %.preheader351, %..loopexit352_crit_edge, %.loopexit, %.thread424, %bb.s, %bb.r, %bb.j, %bb.i
-  %.0293 = phi i32 [ 1, %bb.r ], [ 0, %.loopexit ], [ 1, %bb.i ], [ 1, %bb.s ], [ 1, %bb.j ], [ 0, %.thread424 ], [ 1, %..loopexit352_crit_edge ], [ 1, %.preheader351 ], [ 0, %.thread424.thread ]
+.loopexit352:                                     ; preds = %.preheader351, %..loopexit352_crit_edge, %.loopexit, %.thread424, %bb.s, %bb.r, %bb.j, %bb.i
+  %.0293 = phi i32 [ 1, %bb.r ], [ 0, %.loopexit ], [ 1, %bb.i ], [ 1, %bb.s ], [ 1, %bb.j ], [ 0, %.thread424 ], [ 1, %..loopexit352_crit_edge ], [ 1, %.preheader351 ]
   ret i32 %.0293
 }
 
@@ -1005,10 +1002,10 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.fe = sub nsw i32 %1, %i.ez
-  %i.ff = tail call fastcc ptr @ddSymmSiftingDown(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %2) ; 5 uses
+  %i.ff = tail call fastcc ptr @ddSymmSiftingDown(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %2) ; 6 uses
   %magicptr.i = ptrtoint ptr %i.ff to i64
   switch i64 %magicptr.i, label %bb.o [
-    i64 1, label %ddSymmSiftingConvAux.exit
+    i64 1, label %bb.ba
     i64 0, label %ddSymmSiftingConvAux.exit.thread
   ]
 
@@ -1073,10 +1070,10 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.ge, label %ddSymmSiftingConvAux.exit.thread, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.gf = tail call fastcc ptr @ddSymmSiftingUp(ptr noundef nonnull %0, i32 noundef %i.gc, i32 noundef %1) ; 5 uses
+  %i.gf = tail call fastcc ptr @ddSymmSiftingUp(ptr noundef nonnull %0, i32 noundef %i.gc, i32 noundef %1) ; 6 uses
   %magicptr297.i = ptrtoint ptr %i.gf to i64
   switch i64 %magicptr297.i, label %bb.y [
-    i64 1, label %ddSymmSiftingConvAux.exit
+    i64 1, label %.thread356.i
     i64 0, label %ddSymmSiftingConvAux.exit.thread
   ]
 
@@ -1117,10 +1114,10 @@ bb.ac:                                            ; preds = %bb.u
   br i1 %i.gx, label %bb.ad, label %bb.an
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.gy = tail call fastcc ptr @ddSymmSiftingDown(ptr noundef nonnull %0, i32 noundef %i.eu, i32 noundef %2) ; 6 uses
+  %i.gy = tail call fastcc ptr @ddSymmSiftingDown(ptr noundef nonnull %0, i32 noundef %i.eu, i32 noundef %2) ; 7 uses
   %magicptr298.i = ptrtoint ptr %i.gy to i64
   switch i64 %magicptr298.i, label %bb.ae [
-    i64 1, label %ddSymmSiftingConvAux.exit
+    i64 1, label %bb.ba
     i64 0, label %.preheader313.i
   ]
 
@@ -1156,7 +1153,7 @@ bb.ag:                                            ; preds = %bb.ag, %.preheader3
   %.2255.i = phi i32 [ %i.hb, %bb.af ], [ %i.hl, %bb.ag ] ; 4 uses
   %.2.i = phi i32 [ %.1.i, %bb.af ], [ %.1254.i, %bb.ag ]
   %i.hn = sub nsw i32 %.2.i, %.2255.i
-  %i.ho = tail call fastcc ptr @ddSymmSiftingUp(ptr noundef nonnull %0, i32 noundef %.2255.i, i32 noundef %1) ; 5 uses
+  %i.ho = tail call fastcc ptr @ddSymmSiftingUp(ptr noundef nonnull %0, i32 noundef %.2255.i, i32 noundef %1) ; 6 uses
   %magicptr299.i = ptrtoint ptr %i.ho to i64
   switch i64 %magicptr299.i, label %bb.ah [
     i64 1, label %bb.ba
@@ -1239,10 +1236,10 @@ bb.an:                                            ; preds = %bb.ac
   %i.ip = getelementptr inbounds [56 x i8], ptr %i.io, i64 %i.ew
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ip, i64 28
   %i.ir = load i32, ptr %i.iq, align 4, !tbaa !27 ; 3 uses
-  %i.is = tail call fastcc ptr @ddSymmSiftingUp(ptr noundef nonnull %0, i32 noundef %i.ir, i32 noundef %1) ; 6 uses
+  %i.is = tail call fastcc ptr @ddSymmSiftingUp(ptr noundef nonnull %0, i32 noundef %i.ir, i32 noundef %1) ; 7 uses
   %magicptr300.i = ptrtoint ptr %i.is to i64
   switch i64 %magicptr300.i, label %bb.ao [
-    i64 1, label %ddSymmSiftingConvAux.exit
+    i64 1, label %.thread356.i
     i64 0, label %.preheader317.i
   ]
 
@@ -1272,10 +1269,10 @@ bb.ap:                                            ; preds = %bb.ap, %.preheader3
   %.6259.i = phi i32 [ %i.iu, %bb.ao ], [ %.5258.i, %bb.ap ] ; 4 uses
   %.4.i = phi i32 [ %i.iz, %bb.ao ], [ %i.ir, %bb.ap ]
   %i.jf = sub nsw i32 %.6259.i, %.4.i
-  %i.jg = tail call fastcc ptr @ddSymmSiftingDown(ptr noundef nonnull %0, i32 noundef %.6259.i, i32 noundef %2) ; 5 uses
+  %i.jg = tail call fastcc ptr @ddSymmSiftingDown(ptr noundef nonnull %0, i32 noundef %.6259.i, i32 noundef %2) ; 6 uses
   %magicptr301.i = ptrtoint ptr %i.jg to i64
   switch i64 %magicptr301.i, label %bb.aq [
-    i64 1, label %.thread356.i
+    i64 1, label %bb.ba
     i64 0, label %bb.as
   ]
 
@@ -1400,9 +1397,9 @@ bb.az:                                            ; preds = %bb.az, %.lr.ph335.i
   %.not296.i = icmp eq ptr %i.ko, null
   br i1 %.not296.i, label %..loopexit307_crit_edge.i, label %bb.az, !llvm.loop !103
 
-bb.ba:                                            ; preds = %bb.aw, %bb.am, %.loopexit312.i, %bb.ab, %bb.t
-  %.5250.i = phi ptr [ inttoptr (i64 1 to ptr), %.loopexit312.i ], [ %.0245.i, %bb.t ], [ %i.ho, %bb.am ], [ %i.gf, %bb.ab ], [ %.2247.i, %bb.aw ] ; 2 uses
-  %.5243.i = phi ptr [ %i.gy, %.loopexit312.i ], [ %i.ff, %bb.t ], [ %.2240.i, %bb.am ], [ %.0238.i, %bb.ab ], [ %i.jg, %bb.aw ] ; 2 uses
+bb.ba:                                            ; preds = %bb.aw, %.loopexit318.i, %bb.am, %.loopexit312.i, %bb.ad, %bb.ab, %bb.t, %bb.n
+  %.5250.i = phi ptr [ null, %bb.n ], [ %.0245.i, %bb.t ], [ %i.is, %.loopexit318.i ], [ %i.gf, %bb.ab ], [ null, %bb.ad ], [ %i.ho, %.loopexit312.i ], [ %i.ho, %bb.am ], [ %.2247.i, %bb.aw ] ; 2 uses
+  %.5243.i = phi ptr [ %i.ff, %bb.n ], [ %i.ff, %bb.t ], [ %i.jg, %.loopexit318.i ], [ %.0238.i, %bb.ab ], [ %i.gy, %bb.ad ], [ %i.gy, %.loopexit312.i ], [ %.2240.i, %bb.am ], [ %i.jg, %bb.aw ] ; 2 uses
   %i.kr = icmp ult ptr %.5243.i, inttoptr (i64 2 to ptr)
   br i1 %i.kr, label %.thread356.i, label %.preheader304.i
 
@@ -1426,8 +1423,8 @@ bb.bb:                                            ; preds = %bb.bb, %.preheader3
   store ptr %.6244.i, ptr %i.dr, align 8, !tbaa !78
   br label %.thread356.i
 
-.thread356.i:                                     ; preds = %.loopexit318.i, %.loopexit305.i, %bb.ba
-  %.5250359.i = phi ptr [ %.5250.i, %bb.ba ], [ %.5250.i, %.loopexit305.i ], [ %i.is, %.loopexit318.i ] ; 2 uses
+.thread356.i:                                     ; preds = %bb.an, %bb.x, %.loopexit305.i, %bb.ba
+  %.5250359.i = phi ptr [ %.5250.i, %bb.ba ], [ %.5250.i, %.loopexit305.i ], [ %i.gf, %bb.x ], [ %i.is, %bb.an ] ; 2 uses
   %i.kx = icmp ult ptr %.5250359.i, inttoptr (i64 2 to ptr)
   br i1 %i.kx, label %ddSymmSiftingConvAux.exit, label %.preheader.i
 
@@ -1522,7 +1519,7 @@ bb.be:                                            ; preds = %ddSymmSummary.exit
   store ptr null, ptr @entry, align 8, !tbaa !48
   br label %bb.bi
 
-ddSymmSiftingConvAux.exit:                        ; preds = %bb.h, %bb.n, %bb.x, %bb.ad, %bb.an, %.loopexit.i, %.thread356.i, %bb.c
+ddSymmSiftingConvAux.exit:                        ; preds = %bb.h, %.loopexit.i, %.thread356.i, %bb.c
   %.pr = load ptr, ptr @entry, align 8, !tbaa !48 ; 2 uses
   %.not130 = icmp eq ptr %.pr, null
   br i1 %.not130, label %bb.bg, label %bb.bf
