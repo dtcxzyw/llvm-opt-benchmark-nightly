@@ -200,25 +200,15 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph75, %._crit_edge
-  %indvars.iv84 = phi i64 [ 0, %.lr.ph75 ], [ %indvars.iv.next85, %._crit_edge ] ; 21 uses
+  %indvars.iv84 = phi i64 [ 0, %.lr.ph75 ], [ %indvars.iv.next85, %._crit_edge ] ; 20 uses
   %indvars.iv79 = phi i64 [ %indvars.iv, %.lr.ph75 ], [ %indvars.iv.next80, %._crit_edge ] ; 2 uses
-  %2 = add i64 %i.u, %indvars.iv84
-  %3 = trunc i64 %2 to i32
-  %umin114 = call i32 @llvm.umin.i32(i32 %3, i32 50) ; 2 uses
-  %4 = trunc i64 %indvars.iv84 to i32             ; 2 uses
-  %5 = sub i32 %umin114, %4
-  %6 = zext i32 %5 to i64
-  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
-  %8 = shl nuw nsw i64 %indvars.iv84, 3           ; 3 uses
-  %9 = add nuw i64 %8, 8
-  %i.am = add i64 %i.w, %indvars.iv84
+  %i.am = add i64 %i.u, %indvars.iv84
   %i.an = trunc i64 %i.am to i32
-  %umin.a = call i32 @llvm.umin.i32(i32 %i.an, i32 50)
-  %i.ao = trunc i64 %indvars.iv84 to i32
+  %umin.a = call i32 @llvm.umin.i32(i32 %i.an, i32 50) ; 2 uses
+  %i.ao = trunc i64 %indvars.iv84 to i32          ; 2 uses
   %i.ap = sub i32 %umin.a, %i.ao
   %i.aq = zext i32 %i.ap to i64
-  %10 = shl nuw nsw i64 %i.aq, 3
-  %i.ar = add i64 %9, %10                         ; 2 uses
+  %i.ar = add nuw nsw i64 %i.aq, 1                ; 2 uses
   %i.as = add i64 %i.y, %indvars.iv84
   %i.at = sub i64 %i.z, %indvars.iv84
   %i.au = shl nuw nsw i64 %indvars.iv84, 3        ; 2 uses
@@ -237,36 +227,42 @@ bb.b:                                             ; preds = %.lr.ph75, %._crit_e
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %i.bb
   %i.bg = load double, ptr %i.bf, align 8, !tbaa !11
   call void @Givens(double noundef %i.be, double noundef %i.bg, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5
-  %i.bh = load double, ptr %i.a, align 8, !tbaa !11 ; 6 uses
-  %i.bi = load double, ptr %i.b, align 8, !tbaa !11 ; 6 uses
-  %.not49.i = icmp samesign ugt i64 %indvars.iv84, 50
-  br i1 %.not49.i, label %ApplyGivens.exit, label %.lr.ph.i
+  %i.bh = load double, ptr %i.a, align 8, !tbaa !11 ; 5 uses
+  %i.bi = load double, ptr %i.b, align 8, !tbaa !11 ; 5 uses
+  %2 = add nuw nsw i64 %indvars.iv84, %i.ak
+  %3 = trunc nsw i64 %2 to i32
+  %4 = call i32 @llvm.umin.i32(i32 %3, i32 50)
+  %5 = getelementptr inbounds [8 x i8], ptr %0, i64 %i.bc
+  %6 = load ptr, ptr %5, align 8, !tbaa !8        ; 4 uses
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bb
+  %8 = load ptr, ptr %7, align 8, !tbaa !8        ; 4 uses
+  %9 = add nuw nsw i32 %4, 1                      ; 2 uses
+  %min.iters.check113 = icmp eq i32 %umin.a, %i.ao
+  br i1 %min.iters.check113, label %scalar.ph115.preheader, label %vector.memcheck106
 
-.lr.ph.i:                                         ; preds = %bb.b
-  %11 = add nuw nsw i64 %indvars.iv84, %i.ak
-  %12 = trunc nuw nsw i64 %11 to i32
-  %13 = call i32 @llvm.umin.i32(i32 %12, i32 50)
-  %14 = getelementptr inbounds [8 x i8], ptr %0, i64 %i.bc
-  %15 = load ptr, ptr %14, align 8, !tbaa !8      ; 4 uses
-  %16 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bb
-  %17 = load ptr, ptr %16, align 8, !tbaa !8      ; 4 uses
-  %18 = add nuw nsw i32 %13, 1                    ; 2 uses
-  %min.iters.check116 = icmp eq i32 %umin114, %4
-  br i1 %min.iters.check116, label %scalar.ph115.preheader, label %vector.memcheck106
-
-vector.memcheck106:                               ; preds = %.lr.ph.i
-  %scevgep107.a = getelementptr nuw i8, ptr %15, i64 %8
-  %scevgep108 = getelementptr i8, ptr %15, i64 %i.ar
-  %scevgep109 = getelementptr nuw i8, ptr %17, i64 %8
-  %scevgep110 = getelementptr i8, ptr %17, i64 %i.ar
+vector.memcheck106:                               ; preds = %bb.b
+  %10 = shl nuw nsw i64 %indvars.iv84, 3          ; 3 uses
+  %11 = add nuw i64 %10, 8
+  %12 = add i64 %i.w, %indvars.iv84
+  %13 = trunc i64 %12 to i32
+  %umin = call i32 @llvm.umin.i32(i32 %13, i32 50)
+  %14 = trunc i64 %indvars.iv84 to i32
+  %15 = sub i32 %umin, %14
+  %16 = zext i32 %15 to i64
+  %17 = shl nuw nsw i64 %16, 3
+  %18 = add i64 %11, %17                          ; 2 uses
+  %scevgep107.a = getelementptr nuw i8, ptr %6, i64 %10
+  %scevgep108 = getelementptr i8, ptr %6, i64 %18
+  %scevgep109 = getelementptr nuw i8, ptr %8, i64 %10
+  %scevgep110 = getelementptr i8, ptr %8, i64 %18
   %bound0111 = icmp ult ptr %scevgep107.a, %scevgep110
   %bound1112 = icmp ult ptr %scevgep109, %scevgep108
   %found.conflict113 = and i1 %bound0111, %bound1112
   br i1 %found.conflict113, label %scalar.ph115.preheader, label %vector.ph117
 
 vector.ph117:                                     ; preds = %vector.memcheck106
-  %n.vec118 = and i64 %7, 8589934590              ; 3 uses
-  %i.bj = add nuw nsw i64 %indvars.iv84, %n.vec118
+  %n.vec118 = and i64 %i.ar, 8589934590           ; 3 uses
+  %i.bj = add nuw i64 %indvars.iv84, %n.vec118
   %broadcast.splatinsert119 = insertelement <2 x double> poison, double %i.bh, i64 0
   %broadcast.splat120 = shufflevector <2 x double> %broadcast.splatinsert119, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert121 = insertelement <2 x double> poison, double %i.bi, i64 0
@@ -276,9 +272,9 @@ vector.ph117:                                     ; preds = %vector.memcheck106
 vector.body123:                                   ; preds = %vector.body123, %vector.ph117
   %index124 = phi i64 [ 0, %vector.ph117 ], [ %index.next127, %vector.body123 ] ; 2 uses
   %i.bk = add nuw i64 %indvars.iv84, %index124    ; 2 uses
-  %i.bl = getelementptr inbounds nuw [8 x i8], ptr %15, i64 %i.bk ; 2 uses
+  %i.bl = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.bk ; 2 uses
   %wide.load125 = load <2 x double>, ptr %i.bl, align 8, !tbaa !11, !alias.scope !24, !noalias !27 ; 2 uses
-  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %17, i64 %i.bk ; 2 uses
+  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.bk ; 2 uses
   %wide.load126 = load <2 x double>, ptr %i.bm, align 8, !tbaa !11, !alias.scope !27 ; 2 uses
   %i.bn = fneg <2 x double> %wide.load126
   %i.bo = fmul <2 x double> %broadcast.splat120, %i.bn
@@ -292,11 +288,11 @@ vector.body123:                                   ; preds = %vector.body123, %ve
   br i1 %i.bs, label %middle.block128, label %vector.body123, !llvm.loop !29
 
 middle.block128:                                  ; preds = %vector.body123
-  %cmp.n129 = icmp eq i64 %7, %n.vec118
+  %cmp.n129 = icmp eq i64 %i.ar, %n.vec118
   br i1 %cmp.n129, label %.lr.ph53.i.preheader, label %scalar.ph115.preheader
 
-scalar.ph115.preheader:                           ; preds = %vector.memcheck106, %.lr.ph.i, %middle.block128
-  %indvars.iv.i.ph = phi i64 [ %indvars.iv84, %vector.memcheck106 ], [ %indvars.iv84, %.lr.ph.i ], [ %i.bj, %middle.block128 ]
+scalar.ph115.preheader:                           ; preds = %vector.memcheck106, %bb.b, %middle.block128
+  %indvars.iv.i.ph = phi i64 [ %indvars.iv84, %vector.memcheck106 ], [ %indvars.iv84, %bb.b ], [ %i.bj, %middle.block128 ]
   %i.bt = insertelement <2 x double> poison, double %i.bi, i64 0
   %i.bu = insertelement <2 x double> %i.bt, double %i.bh, i64 1
   %i.bv = insertelement <2 x double> poison, double %i.bh, i64 0
@@ -305,9 +301,9 @@ scalar.ph115.preheader:                           ; preds = %vector.memcheck106,
 
 scalar.ph115:                                     ; preds = %scalar.ph115.preheader, %scalar.ph115
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %scalar.ph115 ], [ %indvars.iv.i.ph, %scalar.ph115.preheader ] ; 3 uses
-  %i.bx = getelementptr inbounds nuw [8 x i8], ptr %15, i64 %indvars.iv.i ; 2 uses
+  %i.bx = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv.i ; 2 uses
   %i.by = load double, ptr %i.bx, align 8, !tbaa !11
-  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %17, i64 %indvars.iv.i ; 2 uses
+  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %indvars.iv.i ; 2 uses
   %i.ca = load double, ptr %i.bz, align 8, !tbaa !11 ; 2 uses
   %i.cb = fneg double %i.ca
   %i.cc = insertelement <2 x double> poison, double %i.ca, i64 0
@@ -322,7 +318,7 @@ scalar.ph115:                                     ; preds = %scalar.ph115.prehea
   store double %i.cj, ptr %i.bz, align 8, !tbaa !11
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
-  %exitcond.not.i = icmp eq i32 %18, %lftr.wideiv.i
+  %exitcond.not.i = icmp eq i32 %9, %lftr.wideiv.i
   br i1 %exitcond.not.i, label %.lr.ph53.i.preheader, label %scalar.ph115, !llvm.loop !30
 
 .lr.ph53.i.preheader:                             ; preds = %scalar.ph115, %middle.block128
@@ -350,19 +346,14 @@ scalar.ph115:                                     ; preds = %scalar.ph115.prehea
   store <2 x double> %i.da, ptr %i.cq, align 8, !tbaa !11
   %indvars.iv.next56.i = add nuw nsw i64 %indvars.iv55.i, 1 ; 2 uses
   %lftr.wideiv58.i = trunc i64 %indvars.iv.next56.i to i32
-  %exitcond59.not.i = icmp eq i32 %18, %lftr.wideiv58.i
-  br i1 %exitcond59.not.i, label %ApplyGivens.exit.loopexit, label %.lr.ph53.i, !llvm.loop !23
+  %exitcond59.not.i = icmp eq i32 %9, %lftr.wideiv58.i
+  br i1 %exitcond59.not.i, label %ApplyGivens.exit, label %.lr.ph53.i, !llvm.loop !23
 
-ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
-  %.pre = load double, ptr %i.a, align 8, !tbaa !11
-  %.pre90 = load double, ptr %i.b, align 8, !tbaa !11
-  br label %ApplyGivens.exit
-
-ApplyGivens.exit:                                 ; preds = %ApplyGivens.exit.loopexit, %bb.b
-  %19 = phi double [ %.pre90, %ApplyGivens.exit.loopexit ], [ %i.bi, %bb.b ]
-  %20 = phi double [ %.pre, %ApplyGivens.exit.loopexit ], [ %i.bh, %bb.b ]
+ApplyGivens.exit:                                 ; preds = %.lr.ph53.i
+  %19 = load double, ptr %i.a, align 8, !tbaa !11
+  %20 = load double, ptr %i.b, align 8, !tbaa !11
   %i.db = trunc nsw i64 %i.bb to i32
-  call void @ApplyRGivens(ptr noundef %i.c, double noundef %20, double noundef %19, i32 noundef %.reass, i32 noundef %i.db) #5
+  call void @ApplyRGivens(ptr noundef %i.c, double noundef %19, double noundef %20, i32 noundef %.reass, i32 noundef %i.db) #5
   %i.dc = icmp slt i64 %i.bb, %i.ai
   br i1 %i.dc, label %.lr.ph, label %._crit_edge
 

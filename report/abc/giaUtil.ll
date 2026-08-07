@@ -204,14 +204,13 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #38
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
-  %spec.store.select = tail call i32 @llvm.smax.i32(i32 %1, i32 1) ; 2 uses
+  %spec.store.select = tail call i32 @llvm.smax.i32(i32 %1, i32 1)
   %i.c = getelementptr i8, ptr %0, i64 72         ; 9 uses
   %.val464 = load ptr, ptr %i.c, align 8, !tbaa !68 ; 2 uses
   %i.d = getelementptr i8, ptr %.val464, i64 4    ; 2 uses
   %.val464.val = load i32, ptr %i.d, align 4, !tbaa !64 ; 3 uses
   %i.e = shl nsw i32 %spec.store.select, 5
-  %4 = tail call i32 @llvm.umax.i32(i32 %i.e, i32 %spec.store.select)
-  %i.f = tail call noundef i32 @llvm.smin.i32(i32 %.val464.val, i32 %4) ; 3 uses
+  %i.f = tail call noundef i32 @llvm.smin.i32(i32 %.val464.val, i32 %i.e) ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 640 ; 8 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !346  ; 3 uses
   %.not.i = icmp eq ptr %i.h, null
@@ -612,9 +611,6 @@ declare i64 @llvm.ctpop.i64(i64) #35
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #35
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #35
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #35

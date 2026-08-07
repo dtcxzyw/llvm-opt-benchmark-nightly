@@ -203,8 +203,8 @@ bb.j:                                             ; preds = %bb.b
   unreachable
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RNvMs5_NtNtNtNtCscShS5OxKAqE_6chrono6offset5local7tz_info8timezoneNtB5_13LocalTimeType3new(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 1), (8, 9), (17, 18)) %0, i32 noundef %1, i1 noundef zeroext %2, ptr noalias noundef readonly captures(address_is_null) %3, i64 %4) unnamed_addr #1 {
+; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
+define hidden void @_RNvMs5_NtNtNtNtCscShS5OxKAqE_6chrono6offset5local7tz_info8timezoneNtB5_13LocalTimeType3new(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, i32 noundef %1, i1 noundef zeroext %2, ptr noalias noundef readonly captures(address_is_null) %3, i64 %4) unnamed_addr #1 {
 bb.a:
   %i.a = icmp eq i32 %1, -2147483648
   br i1 %i.a, label %bb.b, label %bb.c
@@ -230,6 +230,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %spec.select.i.i, label %.lr.ph.preheader.i, label %bb.r
 
 .lr.ph.preheader.i:                               ; preds = %bb.e
+  %5 = trunc nuw i64 %4 to i56
   %i.c = load i8, ptr %3, align 1, !alias.scope !73, !noalias !76, !noundef !4 ; 4 uses
   %i.d = add i8 %i.c, -48
   %or.cond.i = icmp ult i8 %i.d, 10
@@ -237,15 +238,16 @@ bb.e:                                             ; preds = %bb.c
   %i.f = add i8 %i.e, -65
   %i.g = icmp ult i8 %i.f, 26
   %or.cond16.i = or i1 %or.cond.i, %i.g
-  br i1 %or.cond16.i, label %.lr.ph.1.i, label %bb.f
+  br i1 %or.cond16.i, label %bb.f, label %bb.p
 
-bb.f:                                             ; preds = %.lr.ph.preheader.i
-  switch i8 %i.c, label %bb.r [
-    i8 43, label %.lr.ph.1.i
-    i8 45, label %.lr.ph.1.i
-  ]
+bb.f:                                             ; preds = %bb.p, %bb.p, %.lr.ph.preheader.i
+  %.sroa.0.1.insert.ext = zext i8 %i.c to i56
+  %.sroa.0.1.insert.shift = shl nuw nsw i56 %.sroa.0.1.insert.ext, 8
+  %.sroa.0.1.insert.insert = or disjoint i56 %.sroa.0.1.insert.shift, %5 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %4, 1
+  br i1 %exitcond.not.i, label %bb.s, label %.lr.ph.1.i
 
-.lr.ph.1.i:                                       ; preds = %bb.f, %bb.f, %.lr.ph.preheader.i
+.lr.ph.1.i:                                       ; preds = %bb.f
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 1
   %i.i = load i8, ptr %i.h, align 1, !alias.scope !73, !noalias !76, !noundef !4 ; 4 uses
   %i.j = add i8 %i.i, -48
@@ -254,15 +256,22 @@ bb.f:                                             ; preds = %.lr.ph.preheader.i
   %i.l = add i8 %i.k, -65
   %i.m = icmp ult i8 %i.l, 26
   %or.cond16.1.i = or i1 %or.cond.1.i, %i.m
-  br i1 %or.cond16.1.i, label %.lr.ph.2.i, label %bb.g
+  br i1 %or.cond16.1.i, label %6, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.1.i
   switch i8 %i.i, label %bb.r [
-    i8 43, label %.lr.ph.2.i
-    i8 45, label %.lr.ph.2.i
+    i8 43, label %6
+    i8 45, label %6
   ]
 
-.lr.ph.2.i:                                       ; preds = %bb.g, %bb.g, %.lr.ph.1.i
+6:                                                ; preds = %bb.g, %bb.g, %.lr.ph.1.i
+  %.sroa.0.2.insert.ext = zext i8 %i.i to i56
+  %.sroa.0.2.insert.shift = shl nuw nsw i56 %.sroa.0.2.insert.ext, 16
+  %.sroa.0.2.insert.insert = or disjoint i56 %.sroa.0.1.insert.insert, %.sroa.0.2.insert.shift ; 2 uses
+  %exitcond.not.i.1 = icmp eq i64 %4, 2
+  br i1 %exitcond.not.i.1, label %bb.s, label %.lr.ph.2.i
+
+.lr.ph.2.i:                                       ; preds = %6
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 2
   %i.o = load i8, ptr %i.n, align 1, !alias.scope !73, !noalias !76, !noundef !4 ; 4 uses
   %i.p = add i8 %i.o, -48
@@ -280,12 +289,15 @@ bb.h:                                             ; preds = %.lr.ph.2.i
   ]
 
 bb.i:                                             ; preds = %bb.h, %bb.h, %.lr.ph.2.i
+  %.sroa.0.3.insert.ext = zext i8 %i.o to i56
+  %.sroa.0.3.insert.shift = shl nuw nsw i56 %.sroa.0.3.insert.ext, 24
+  %.sroa.0.3.insert.insert = or disjoint i56 %.sroa.0.2.insert.insert, %.sroa.0.3.insert.shift ; 2 uses
   %exitcond19.2.not.i = icmp eq i64 %4, 3
   br i1 %exitcond19.2.not.i, label %bb.s, label %.lr.ph.3.i
 
 .lr.ph.3.i:                                       ; preds = %bb.i
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 3
-  %i.u = load i8, ptr %i.t, align 1, !alias.scope !73, !noalias !76, !noundef !4 ; 9 uses
+  %i.u = load i8, ptr %i.t, align 1, !alias.scope !73, !noalias !76, !noundef !4 ; 4 uses
   %i.v = add i8 %i.u, -48
   %or.cond.3.i = icmp ult i8 %i.v, 10
   %i.w = and i8 %i.u, -33
@@ -301,12 +313,15 @@ bb.j:                                             ; preds = %.lr.ph.3.i
   ]
 
 bb.k:                                             ; preds = %bb.j, %bb.j, %.lr.ph.3.i
+  %.sroa.0.4.insert.ext = zext i8 %i.u to i56
+  %.sroa.0.4.insert.shift = shl nuw nsw i56 %.sroa.0.4.insert.ext, 32
+  %.sroa.0.4.insert.insert = or disjoint i56 %.sroa.0.3.insert.insert, %.sroa.0.4.insert.shift ; 2 uses
   %exitcond19.3.not.i = icmp eq i64 %4, 4
   br i1 %exitcond19.3.not.i, label %bb.s, label %.lr.ph.4.i
 
 .lr.ph.4.i:                                       ; preds = %bb.k
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %i.aa = load i8, ptr %i.z, align 1, !alias.scope !73, !noalias !76, !noundef !4 ; 8 uses
+  %i.aa = load i8, ptr %i.z, align 1, !alias.scope !73, !noalias !76, !noundef !4 ; 4 uses
   %i.ab = add i8 %i.aa, -48
   %or.cond.4.i = icmp ult i8 %i.ab, 10
   %i.ac = and i8 %i.aa, -33
@@ -322,12 +337,16 @@ bb.l:                                             ; preds = %.lr.ph.4.i
   ]
 
 bb.m:                                             ; preds = %bb.l, %bb.l, %.lr.ph.4.i
+  %.sroa.0.5.insert.ext = zext i8 %i.aa to i56
+  %.sroa.0.5.insert.shift = shl nuw nsw i56 %.sroa.0.5.insert.ext, 40
+  %.sroa.0.5.insert.mask = and i56 %.sroa.0.4.insert.insert, -280375465082881
+  %.sroa.0.5.insert.insert = or disjoint i56 %.sroa.0.5.insert.mask, %.sroa.0.5.insert.shift ; 2 uses
   %exitcond19.4.not.i = icmp eq i64 %4, 5
   br i1 %exitcond19.4.not.i, label %bb.s, label %.lr.ph.5.i
 
 .lr.ph.5.i:                                       ; preds = %bb.m
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 5
-  %i.ag = load i8, ptr %i.af, align 1, !alias.scope !73, !noalias !76, !noundef !4 ; 7 uses
+  %i.ag = load i8, ptr %i.af, align 1, !alias.scope !73, !noalias !76, !noundef !4 ; 4 uses
   %i.ah = add i8 %i.ag, -48
   %or.cond.5.i = icmp ult i8 %i.ah, 10
   %i.ai = and i8 %i.ag, -33
@@ -343,6 +362,10 @@ bb.n:                                             ; preds = %.lr.ph.5.i
   ]
 
 bb.o:                                             ; preds = %bb.n, %bb.n, %.lr.ph.5.i
+  %.sroa.0.6.insert.ext = zext i8 %i.ag to i56
+  %.sroa.0.6.insert.shift = shl nuw i56 %.sroa.0.6.insert.ext, 48
+  %.sroa.0.6.insert.mask = and i56 %.sroa.0.5.insert.insert, 281474976710655
+  %.sroa.0.6.insert.insert = or disjoint i56 %.sroa.0.6.insert.mask, %.sroa.0.6.insert.shift ; 4 uses
   %exitcond19.5.not.i = icmp eq i64 %4, 6
   br i1 %exitcond19.5.not.i, label %bb.s, label %.lr.ph.6.i
 
@@ -355,12 +378,18 @@ bb.o:                                             ; preds = %bb.n, %bb.n, %.lr.p
   %i.ap = add i8 %i.ao, -65
   %i.aq = icmp ult i8 %i.ap, 26
   %or.cond16.6.i = or i1 %or.cond.6.i, %i.aq
-  br i1 %or.cond16.6.i, label %bb.s, label %bb.p
+  br i1 %or.cond16.6.i, label %bb.s, label %7
 
-bb.p:                                             ; preds = %.lr.ph.6.i
+7:                                                ; preds = %.lr.ph.6.i
   switch i8 %i.am, label %bb.r [
     i8 43, label %bb.s
     i8 45, label %bb.s
+  ]
+
+bb.p:                                             ; preds = %.lr.ph.preheader.i
+  switch i8 %i.c, label %bb.r [
+    i8 43, label %bb.f
+    i8 45, label %bb.f
   ]
 
 bb.q:                                             ; preds = %bb.c
@@ -374,55 +403,29 @@ bb.q:                                             ; preds = %bb.c
   store i8 -1, ptr %0, align 8
   br label %bb.d
 
-bb.r:                                             ; preds = %bb.f, %bb.g, %bb.h, %bb.j, %bb.l, %bb.n, %bb.p, %bb.e
-  %.sink = phi ptr [ @7, %bb.e ], [ @9, %bb.p ], [ @9, %bb.n ], [ @9, %bb.l ], [ @9, %bb.j ], [ @9, %bb.h ], [ @9, %bb.g ], [ @9, %bb.f ]
-  %.sroa.843.7..sroa.843.7..sroa.843.7..sroa.843.8..sroa.432.0.copyload41 = phi i8 [ ptrtoint (ptr @7 to i8), %bb.e ], [ ptrtoint (ptr @9 to i8), %bb.p ], [ ptrtoint (ptr @9 to i8), %bb.n ], [ ptrtoint (ptr @9 to i8), %bb.l ], [ ptrtoint (ptr @9 to i8), %bb.j ], [ ptrtoint (ptr @9 to i8), %bb.h ], [ ptrtoint (ptr @9 to i8), %bb.g ], [ ptrtoint (ptr @9 to i8), %bb.f ]
-  %.sroa.16.0.ph = phi i64 [ 51, %bb.e ], [ 36, %bb.p ], [ 36, %bb.n ], [ 36, %bb.l ], [ 36, %bb.j ], [ 36, %bb.h ], [ 36, %bb.g ], [ 36, %bb.f ]
+bb.r:                                             ; preds = %bb.p, %bb.g, %bb.h, %bb.j, %bb.l, %bb.n, %7, %bb.e
+  %.sink = phi ptr [ @7, %bb.e ], [ @9, %7 ], [ @9, %bb.n ], [ @9, %bb.l ], [ @9, %bb.j ], [ @9, %bb.h ], [ @9, %bb.g ], [ @9, %bb.p ]
+  %.sroa.16.0.ph = phi i64 [ 51, %bb.e ], [ 36, %7 ], [ 36, %bb.n ], [ 36, %bb.l ], [ 36, %bb.j ], [ 36, %bb.h ], [ 36, %bb.g ], [ 36, %bb.p ]
+  %8 = ptrtoint ptr %.sink to i64
   store i8 2, ptr %0, align 8
-  %.sroa.435.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %.sroa.843.7..sroa.843.7..sroa.843.7..sroa.843.8..sroa.432.0.copyload41, ptr %.sroa.435.0..sroa_idx.sroa_idx, align 8
-  %.sroa.536.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %5 = ptrtoint ptr %.sink to i64
-  %.sroa.843.sroa.0.8.extract.shift = lshr i64 %5, 8
-  %.sroa.843.sroa.0.8.extract.trunc = trunc nuw i64 %.sroa.843.sroa.0.8.extract.shift to i56
-  store i56 %.sroa.843.sroa.0.8.extract.trunc, ptr %.sroa.536.0..sroa_idx, align 1
+  %.sroa.536.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %8, ptr %.sroa.536.0..sroa_idx, align 8
   %.sroa.536.sroa.4.0..sroa.536.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.sroa.16.0.ph, ptr %.sroa.536.sroa.4.0..sroa.536.0..sroa_idx.sroa_idx, align 8
   br label %bb.d
 
-bb.s:                                             ; preds = %bb.p, %bb.p, %.lr.ph.6.i, %bb.o, %bb.m, %bb.k, %bb.i
-  %.sroa.9.1.i = phi i8 [ 0, %bb.i ], [ 0, %bb.k ], [ 0, %bb.o ], [ 0, %bb.m ], [ %i.am, %bb.p ], [ %i.am, %bb.p ], [ %i.am, %.lr.ph.6.i ]
-  %.sroa.8.1.i = phi i8 [ 0, %bb.i ], [ 0, %bb.k ], [ %i.ag, %bb.o ], [ 0, %bb.m ], [ %i.ag, %bb.p ], [ %i.ag, %bb.p ], [ %i.ag, %.lr.ph.6.i ]
-  %.sroa.7.1.i = phi i8 [ 0, %bb.i ], [ 0, %bb.k ], [ %i.aa, %bb.o ], [ %i.aa, %bb.m ], [ %i.aa, %bb.p ], [ %i.aa, %bb.p ], [ %i.aa, %.lr.ph.6.i ]
-  %.sroa.6.1.i = phi i8 [ 0, %bb.i ], [ %i.u, %bb.k ], [ %i.u, %bb.o ], [ %i.u, %bb.m ], [ %i.u, %bb.p ], [ %i.u, %bb.p ], [ %i.u, %.lr.ph.6.i ]
-  %6 = zext i8 %.sroa.8.1.i to i64
-  %7 = shl nuw nsw i64 %6, 48
-  %8 = zext i8 %.sroa.7.1.i to i64
-  %9 = shl nuw nsw i64 %8, 40
-  %10 = or disjoint i64 %7, %9
-  %11 = zext i8 %.sroa.6.1.i to i64
-  %12 = shl nuw nsw i64 %11, 32
-  %13 = zext i8 %i.o to i64
-  %14 = shl nuw nsw i64 %13, 24
-  %15 = or disjoint i64 %12, %14
-  %16 = or disjoint i64 %15, %10
-  %17 = zext i8 %i.i to i64
-  %18 = shl nuw nsw i64 %17, 16
-  %19 = zext i8 %i.c to i64
-  %20 = shl nuw nsw i64 %19, 8
-  %21 = or disjoint i64 %18, %20
-  %22 = or disjoint i64 %21, %16
-  %23 = or disjoint i64 %22, %4
-  %24 = trunc nuw i64 %23 to i56
+bb.s:                                             ; preds = %.lr.ph.6.i, %7, %7, %bb.o, %bb.m, %bb.k, %bb.i, %6, %bb.f
+  %.sroa.0.0 = phi i56 [ %.sroa.0.1.insert.insert, %bb.f ], [ %.sroa.0.2.insert.insert, %6 ], [ %.sroa.0.3.insert.insert, %bb.i ], [ %.sroa.0.4.insert.insert, %bb.k ], [ %.sroa.0.5.insert.insert, %bb.m ], [ %.sroa.0.6.insert.insert, %bb.o ], [ %.sroa.0.6.insert.insert, %7 ], [ %.sroa.0.6.insert.insert, %7 ], [ %.sroa.0.6.insert.insert, %.lr.ph.6.i ]
+  %.sroa.12.0 = phi i8 [ 0, %bb.f ], [ 0, %6 ], [ 0, %bb.i ], [ 0, %bb.k ], [ 0, %bb.m ], [ 0, %bb.o ], [ %i.am, %7 ], [ %i.am, %7 ], [ %i.am, %.lr.ph.6.i ]
   %i.at = zext i1 %2 to i8
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %1, ptr %i.au, align 4
   %.sroa.422.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 1, ptr %.sroa.422.0..sroa_idx, align 8
   %.sroa.422.sroa.4.0..sroa.422.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i56 %24, ptr %.sroa.422.sroa.4.0..sroa.422.0..sroa_idx.sroa_idx, align 1
+  store i56 %.sroa.0.0, ptr %.sroa.422.sroa.4.0..sroa.422.0..sroa_idx.sroa_idx, align 1
   %.sroa.422.sroa.4.0..sroa.422.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sroa.9.1.i, ptr %.sroa.422.sroa.4.0..sroa.422.0..sroa_idx.sroa_idx.sroa_idx, align 8
+  store i8 %.sroa.12.0, ptr %.sroa.422.sroa.4.0..sroa.422.0..sroa_idx.sroa_idx.sroa_idx, align 8
   %.sroa.523.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 17
   store i8 %i.at, ptr %.sroa.523.0..sroa_idx, align 1
   store i8 -1, ptr %0, align 8
@@ -598,7 +601,7 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #12
 declare noalias noundef ptr @_RNvCs9wFQrvczXsK_7___rustc19___rust_alloc_zeroed(i64 noundef, i64 allocalign noundef range(i64 1, -9223372036854775807)) local_unnamed_addr #13
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #1 = { nofree norecurse nosync nounwind nonlazybind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #2 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }

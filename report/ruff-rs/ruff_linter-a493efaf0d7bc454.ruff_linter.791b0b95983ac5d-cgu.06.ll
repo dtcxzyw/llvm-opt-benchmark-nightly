@@ -203,16 +203,16 @@ bb.z:                                             ; preds = %bb.y
   br i1 %switch.i, label %bb.aa, label %.thread25
 
 bb.aa:                                            ; preds = %bb.z
-  %i.dd = call noundef align 8 ptr @_RNvMNtCs7bpTdHNYxeX_20ruff_python_semantic7bindingNtB2_7Binding9statement(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %i.da, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(472) %i.v) ; 25 uses
+  %i.dd = call noundef align 8 ptr @_RNvMNtCs7bpTdHNYxeX_20ruff_python_semantic7bindingNtB2_7Binding9statement(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %i.da, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(472) %i.v) ; 5 uses
   %.not.i14 = icmp eq ptr %i.dd, null
   br i1 %.not.i14, label %.thread25, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 84
-  %i.df = load i8, ptr %i.de, align 4, !range !1915, !noundef !21 ; 3 uses
+  %i.df = load i8, ptr %i.de, align 4, !range !1915, !noundef !21 ; 4 uses
   %i.dg = icmp samesign ugt i8 %i.df, 1
   %i.dh = zext nneg i8 %i.df to i64
-  %i.di = add nsw i64 %i.dh, -1                   ; 2 uses
+  %i.di = add nsw i64 %i.dh, -1
   %i.dj = select i1 %i.dg, i64 %i.di, i64 0
   switch i64 %i.dj, label %.thread25 [
     i64 16, label %bb.ad
@@ -239,114 +239,21 @@ _RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules32lazy_im
   br i1 %switch, label %bb.af, label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules32lazy_import_immediately_resolved24lazy_import_prefix_range.exit
 
 bb.af:                                            ; preds = %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules32lazy_import_immediately_resolved21lazy_import_statement.exit
-  %i.dn = getelementptr inbounds nuw i8, ptr %i.dd, i64 16 ; 2 uses
+  %i.dn = getelementptr inbounds nuw i8, ptr %i.dd, i64 16
   %i.do = load i64, ptr %i.dn, align 8, !noundef !21 ; 2 uses
   %i.dp = icmp ult i64 %i.do, 115292150460684698
   call void @llvm.assume(i1 %i.dp)
   %i.dq = icmp eq i64 %i.do, 1
-  br i1 %i.dq, label %2, label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules32lazy_import_immediately_resolved24lazy_import_prefix_range.exit
+  br i1 %i.dq, label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i, label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules32lazy_import_immediately_resolved24lazy_import_prefix_range.exit
 
-2:                                                ; preds = %bb.af
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 920
-  %4 = load ptr, ptr %3, align 8, !nonnull !21, !align !22, !noundef !21
-  switch i64 %i.di, label %5 [
-    i64 0, label %6
-    i64 1, label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-    i64 2, label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-    i64 3, label %8
-    i64 4, label %10
-    i64 5, label %11
-    i64 6, label %10
-    i64 7, label %10
-    i64 8, label %13
-    i64 9, label %15
-    i64 10, label %17
-    i64 11, label %19
-    i64 12, label %21
-    i64 13, label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-    i64 14, label %23
-    i64 15, label %25
-    i64 16, label %27
-    i64 17, label %29
-    i64 18, label %31
-    i64 19, label %33
-    i64 20, label %35
-    i64 21, label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-    i64 22, label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-    i64 23, label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-    i64 24, label %10
-  ]
-
-5:                                                ; preds = %2
-  unreachable
-
-6:                                                ; preds = %2
-  %7 = getelementptr inbounds nuw i8, ptr %i.dd, i64 56
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-8:                                                ; preds = %2
-  %9 = getelementptr inbounds nuw i8, ptr %i.dd, i64 24
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-10:                                               ; preds = %2, %2, %2, %2
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-11:                                               ; preds = %2
-  %12 = getelementptr inbounds nuw i8, ptr %i.dd, i64 32
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-13:                                               ; preds = %2
-  %14 = getelementptr inbounds nuw i8, ptr %i.dd, i64 32
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-15:                                               ; preds = %2
-  %16 = getelementptr inbounds nuw i8, ptr %i.dd, i64 24
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-17:                                               ; preds = %2
-  %18 = getelementptr inbounds nuw i8, ptr %i.dd, i64 40
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-19:                                               ; preds = %2
-  %20 = getelementptr inbounds nuw i8, ptr %i.dd, i64 32
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-21:                                               ; preds = %2
-  %22 = getelementptr inbounds nuw i8, ptr %i.dd, i64 32
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-23:                                               ; preds = %2
-  %24 = getelementptr inbounds nuw i8, ptr %i.dd, i64 48
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-25:                                               ; preds = %2
-  %26 = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-27:                                               ; preds = %2
-  %28 = getelementptr inbounds nuw i8, ptr %i.dd, i64 24
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-29:                                               ; preds = %2
-  %30 = getelementptr inbounds nuw i8, ptr %i.dd, i64 56
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-31:                                               ; preds = %2
-  %32 = getelementptr inbounds nuw i8, ptr %i.dd, i64 24
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-33:                                               ; preds = %2
-  %34 = getelementptr inbounds nuw i8, ptr %i.dd, i64 24
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-35:                                               ; preds = %2
-  %36 = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
-  br label %_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i
-
-_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i: ; preds = %35, %33, %31, %29, %27, %25, %23, %21, %19, %17, %15, %13, %11, %10, %8, %6, %2, %2, %2, %2, %2, %2
-  %.sroa.0.0.in.i.i = phi ptr [ %i.dd, %2 ], [ %i.dd, %2 ], [ %i.dd, %2 ], [ %i.dd, %2 ], [ %36, %35 ], [ %34, %33 ], [ %32, %31 ], [ %30, %29 ], [ %28, %27 ], [ %26, %25 ], [ %24, %23 ], [ %i.dd, %2 ], [ %22, %21 ], [ %20, %19 ], [ %18, %17 ], [ %16, %15 ], [ %14, %13 ], [ %7, %6 ], [ %i.dd, %2 ], [ %12, %11 ], [ %i.dn, %10 ], [ %9, %8 ]
-  %.sroa.0.0.i.i = load i32, ptr %.sroa.0.0.in.i.i, align 8, !noalias !4286, !noundef !21
-  %i.dr = call { ptr, i64 } @_RNvMNtNtCskLngH8kgpZI_15ruff_python_ast5token6tokensNtB2_6Tokens5after(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i32 noundef %.sroa.0.0.i.i), !noalias !4290 ; 2 uses
+_RNvXss_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB5_4StmtNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit.i: ; preds = %bb.af
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 920
+  %3 = load ptr, ptr %2, align 8, !nonnull !21, !align !22, !noundef !21
+  %4 = icmp eq i8 %i.df, 18
+  %. = select i1 %4, i64 56, i64 24
+  %5 = getelementptr inbounds nuw i8, ptr %i.dd, i64 %.
+  %.sroa.0.0.i.i = load i32, ptr %5, align 8, !noalias !4286, !noundef !21
+  %i.dr = call { ptr, i64 } @_RNvMNtNtCskLngH8kgpZI_15ruff_python_ast5token6tokensNtB2_6Tokens5after(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %3, i32 noundef %.sroa.0.0.i.i), !noalias !4290 ; 2 uses
   %i.ds = extractvalue { ptr, i64 } %i.dr, 0      ; 3 uses
   %i.dt = extractvalue { ptr, i64 } %i.dr, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ds) ]

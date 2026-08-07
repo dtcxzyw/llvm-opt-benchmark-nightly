@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.i = sext i32 %i.d to i64
-  %i.j = mul nsw i64 %i.i, 24                     ; 3 uses
-  %i.k = mul nsw i64 %i.f, 24                     ; 4 uses
+  %i.j = mul nsw i64 %i.i, 24                     ; 2 uses
+  %i.k = mul nsw i64 %i.f, 24                     ; 3 uses
   %i.l = icmp eq i32 %i.e, 0
   br i1 %i.l, label %bb.d, label %bb.e
 
@@ -214,9 +214,9 @@ bb.d:                                             ; preds = %bb.c
   br label %gv_recalloc.exit
 
 bb.e:                                             ; preds = %bb.c
-  %i.m = tail call ptr @realloc(ptr noundef %i.b, i64 noundef %i.k) #23 ; 4 uses
+  %i.m = tail call ptr @realloc(ptr noundef %i.b, i64 noundef %i.k) #23 ; 3 uses
   %i.n = icmp eq ptr %i.m, null
-  br i1 %i.n, label %bb.f, label %4
+  br i1 %i.n, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.o = load ptr, ptr @stderr, align 8, !tbaa !28
@@ -224,18 +224,14 @@ bb.f:                                             ; preds = %bb.e
   tail call fastcc void @graphviz_exit() #21
   unreachable
 
-4:                                                ; preds = %bb.e
-  %5 = icmp ugt i64 %i.k, %i.j
-  br i1 %5, label %bb.g, label %gv_recalloc.exit
-
-bb.g:                                             ; preds = %4
+bb.g:                                             ; preds = %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.j
   %i.r = sub nuw nsw i64 %i.k, %i.j
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.q, i8 0, i64 %i.r, i1 false)
   br label %gv_recalloc.exit
 
-gv_recalloc.exit:                                 ; preds = %bb.d, %4, %bb.g
-  %.0.i.i = phi ptr [ null, %bb.d ], [ %i.m, %bb.g ], [ %i.m, %4 ] ; 2 uses
+gv_recalloc.exit:                                 ; preds = %bb.d, %bb.g
+  %.0.i.i = phi ptr [ null, %bb.d ], [ %i.m, %bb.g ] ; 2 uses
   store ptr %.0.i.i, ptr %i.a, align 8, !tbaa !27
   %i.s = load i32, ptr %i.c, align 8, !tbaa !172
   %i.t = sext i32 %i.s to i64

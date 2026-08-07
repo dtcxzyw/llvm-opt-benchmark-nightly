@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c, %bb.d
 ; Function Attrs: mustprogress nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZL21bn_mul_part_recursivePmPKmS1_iiiS_(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, ptr noundef %6) unnamed_addr #23 {
 bb.a:
-  %i.a = shl nsw i32 %3, 1                        ; 7 uses
+  %i.a = shl nsw i32 %3, 1                        ; 6 uses
   %i.b = icmp slt i32 %3, 8
   br i1 %i.b, label %bb.b, label %bb.d
 
@@ -234,8 +234,8 @@ bb.d:                                             ; preds = %bb.a
   %i.q = zext nneg i32 %3 to i64                  ; 5 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.q ; 6 uses
   %i.s = sub nsw i32 %3, %4                       ; 3 uses
-  %i.t = zext nneg i32 %i.a to i64                ; 20 uses
-  %i.u = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.t ; 21 uses
+  %i.t = zext nneg i32 %i.a to i64                ; 15 uses
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.t ; 18 uses
   %i.v = tail call fastcc noundef i64 @_ZL17bn_sub_part_wordsPmPKmS1_ii(ptr noundef nonnull %i.u, ptr noundef readonly %1, ptr noundef nonnull readonly %i.r, i32 noundef %4, i32 noundef %i.s)
   %i.w = sub nsw i32 0, %i.s
   %i.x = tail call fastcc noundef i64 @_ZL17bn_sub_part_wordsPmPKmS1_ii(ptr noundef %6, ptr noundef nonnull readonly %i.r, ptr noundef readonly %1, i32 noundef %4, i32 noundef %i.w) ; 0 uses
@@ -465,7 +465,7 @@ bb.g:                                             ; preds = %_ZL14OPENSSL_memset
   %i.dt = sext i32 %4 to i64
   %i.du = sext i32 %5 to i64
   tail call fastcc void @_ZL13bn_mul_normalPmPKmmS1_m(ptr noundef nonnull %i.dp, ptr noundef nonnull %i.r, i64 noundef %i.dt, ptr noundef nonnull %i.ay, i64 noundef %i.du)
-  br label %.preheader42.i
+  br label %.preheader42.i.thread
 
 bb.h:                                             ; preds = %.preheader, %bb.j
   %.0174 = phi i32 [ %i.dv, %bb.j ], [ %3, %.preheader ]
@@ -477,7 +477,7 @@ bb.i:                                             ; preds = %bb.h
   %i.dw = sub nsw i32 %4, %i.dv
   %i.dx = sub nsw i32 %5, %i.dv
   tail call fastcc void @_ZL21bn_mul_part_recursivePmPKmS1_iiiS_(ptr noundef nonnull %i.dp, ptr noundef nonnull %i.r, ptr noundef nonnull %i.ay, i32 noundef %i.dv, i32 noundef %i.dw, i32 noundef %i.dx, ptr noundef nonnull %i.do)
-  br label %.preheader42.i
+  br label %.preheader42.i.thread
 
 bb.j:                                             ; preds = %bb.h
   %i.dy = icmp eq i32 %i.dv, %4
@@ -489,40 +489,22 @@ bb.k:                                             ; preds = %bb.j
   %i.ea = sub nsw i32 %4, %i.dv
   %i.eb = sub nsw i32 %5, %i.dv
   tail call fastcc void @_ZL16bn_mul_recursivePmPKmS1_iiiS_(ptr noundef nonnull %i.dp, ptr noundef nonnull %i.r, ptr noundef nonnull %i.ay, i32 noundef %i.dv, i32 noundef %i.ea, i32 noundef %i.eb, ptr noundef nonnull %i.do)
-  br label %.preheader42.i
+  br label %.preheader42.i.thread
 
-.preheader42.i.thread:                            ; preds = %bb.e, %bb.f
+.preheader42.i.thread:                            ; preds = %bb.i, %bb.k, %bb.g, %bb.e, %bb.f
   %i.ec = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.t
-  br label %.lr.ph.i.preheader
-
-.preheader42.i:                                   ; preds = %bb.i, %bb.k, %bb.g
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.t ; 2 uses
-  %.not43.i = icmp ult i32 %i.a, 4
-  br i1 %.not43.i, label %.lr.ph59.preheader.i, label %.lr.ph.i.preheader
-
-.lr.ph.i.preheader:                               ; preds = %.preheader42.i.thread, %.preheader42.i
-  %.02647.i.ph = phi ptr [ %7, %.preheader42.i ], [ %i.ec, %.preheader42.i.thread ]
   br label %.lr.ph.i
 
 .preheader.i:                                     ; preds = %.lr.ph.i
   %.not3453.i = icmp eq i64 %i.gd, 0
-  br i1 %.not3453.i, label %.preheader42.i191, label %.lr.ph59.preheader.i
+  br i1 %.not3453.i, label %.preheader42.i191, label %.lr.ph59.i
 
-.lr.ph59.preheader.i:                             ; preds = %.preheader.i, %.preheader42.i
-  %.not43.i340 = phi i1 [ false, %.preheader.i ], [ true, %.preheader42.i ]
-  %.0.lcssa77.i = phi i64 [ %i.gd, %.preheader.i ], [ %i.t, %.preheader42.i ]
-  %.026.lcssa76.i = phi ptr [ %i.gb, %.preheader.i ], [ %7, %.preheader42.i ]
-  %.028.lcssa75.i = phi ptr [ %i.ga, %.preheader.i ], [ %0, %.preheader42.i ]
-  %.030.lcssa74.i = phi ptr [ %i.gc, %.preheader.i ], [ %6, %.preheader42.i ]
-  %.040.lcssa73.i = phi i64 [ %i.fy, %.preheader.i ], [ 0, %.preheader42.i ]
-  br label %.lr.ph59.i
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.048.i = phi i64 [ %i.gd, %.lr.ph.i ], [ %i.t, %.lr.ph.i.preheader ]
-  %.02647.i = phi ptr [ %i.gb, %.lr.ph.i ], [ %.02647.i.ph, %.lr.ph.i.preheader ] ; 5 uses
-  %.02846.i = phi ptr [ %i.ga, %.lr.ph.i ], [ %0, %.lr.ph.i.preheader ] ; 5 uses
-  %.03045.i = phi ptr [ %i.gc, %.lr.ph.i ], [ %6, %.lr.ph.i.preheader ] ; 5 uses
-  %.04044.i = phi i64 [ %i.fy, %.lr.ph.i ], [ 0, %.lr.ph.i.preheader ]
+.lr.ph.i:                                         ; preds = %.preheader42.i.thread, %.lr.ph.i
+  %.048.i = phi i64 [ %i.gd, %.lr.ph.i ], [ %i.t, %.preheader42.i.thread ]
+  %.02647.i = phi ptr [ %i.gb, %.lr.ph.i ], [ %i.ec, %.preheader42.i.thread ] ; 5 uses
+  %.02846.i = phi ptr [ %i.ga, %.lr.ph.i ], [ %0, %.preheader42.i.thread ] ; 5 uses
+  %.03045.i = phi ptr [ %i.gc, %.lr.ph.i ], [ %6, %.preheader42.i.thread ] ; 5 uses
+  %.04044.i = phi i64 [ %i.fy, %.lr.ph.i ], [ 0, %.preheader42.i.thread ]
   %i.ed = load i64, ptr %.02846.i, align 8, !tbaa !94
   %i.ee = load i64, ptr %.02647.i, align 8, !tbaa !94
   %i.ef = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.ed, i64 %i.ee) ; 2 uses
@@ -583,12 +565,12 @@ bb.k:                                             ; preds = %bb.j
   %.not.i = icmp ult i64 %i.gd, 4
   br i1 %.not.i, label %.preheader.i, label %.lr.ph.i, !llvm.loop !199
 
-.lr.ph59.i:                                       ; preds = %.lr.ph59.i, %.lr.ph59.preheader.i
-  %.158.i = phi i64 [ %i.gr, %.lr.ph59.i ], [ %.0.lcssa77.i, %.lr.ph59.preheader.i ]
-  %.12757.i = phi ptr [ %i.gp, %.lr.ph59.i ], [ %.026.lcssa76.i, %.lr.ph59.preheader.i ] ; 2 uses
-  %.12956.i = phi ptr [ %i.go, %.lr.ph59.i ], [ %.028.lcssa75.i, %.lr.ph59.preheader.i ] ; 2 uses
-  %.13155.i = phi ptr [ %i.gq, %.lr.ph59.i ], [ %.030.lcssa74.i, %.lr.ph59.preheader.i ] ; 2 uses
-  %.14154.i = phi i64 [ %i.gn, %.lr.ph59.i ], [ %.040.lcssa73.i, %.lr.ph59.preheader.i ]
+.lr.ph59.i:                                       ; preds = %.preheader.i, %.lr.ph59.i
+  %.158.i = phi i64 [ %i.gr, %.lr.ph59.i ], [ %i.gd, %.preheader.i ]
+  %.12757.i = phi ptr [ %i.gp, %.lr.ph59.i ], [ %i.gb, %.preheader.i ] ; 2 uses
+  %.12956.i = phi ptr [ %i.go, %.lr.ph59.i ], [ %i.ga, %.preheader.i ] ; 2 uses
+  %.13155.i = phi ptr [ %i.gq, %.lr.ph59.i ], [ %i.gc, %.preheader.i ] ; 2 uses
+  %.14154.i = phi i64 [ %i.gn, %.lr.ph59.i ], [ %i.fy, %.preheader.i ]
   %i.ge = load i64, ptr %.12956.i, align 8, !tbaa !94
   %i.gf = load i64, ptr %.12757.i, align 8, !tbaa !94
   %i.gg = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.ge, i64 %i.gf) ; 2 uses
@@ -608,28 +590,15 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not34.i, label %.preheader42.i191, label %.lr.ph59.i, !llvm.loop !200
 
 .preheader42.i191:                                ; preds = %.lr.ph59.i, %.preheader.i
-  %.not43.i338 = phi i1 [ false, %.preheader.i ], [ %.not43.i340, %.lr.ph59.i ] ; 3 uses
-  %.032.i = phi i64 [ %i.fy, %.preheader.i ], [ %i.gn, %.lr.ph59.i ] ; 3 uses
+  %.032.i = phi i64 [ %i.fy, %.preheader.i ], [ %i.gn, %.lr.ph59.i ] ; 2 uses
   %i.gs = shl i32 %3, 2                           ; 3 uses
   %i.gt = zext i32 %i.gs to i64                   ; 2 uses
-  %i.gu = getelementptr [8 x i8], ptr %6, i64 %i.gt ; 6 uses
-  br i1 %.not43.i338, label %.lr.ph59.i208.preheader, label %.lr.ph.i193
-
-.lr.ph59.i208.preheader:                          ; preds = %.preheader.i200, %.preheader42.i191
-  %.158.i209.ph = phi i64 [ %i.t, %.preheader42.i191 ], [ %i.iv, %.preheader.i200 ]
-  %.12757.i210.ph = phi ptr [ %i.u, %.preheader42.i191 ], [ %i.it, %.preheader.i200 ]
-  %.12956.i211.ph = phi ptr [ %6, %.preheader42.i191 ], [ %i.is, %.preheader.i200 ]
-  %.13155.i212.ph = phi ptr [ %i.gu, %.preheader42.i191 ], [ %i.iu, %.preheader.i200 ]
-  %.14154.i213.ph = phi i64 [ 0, %.preheader42.i191 ], [ %i.iq, %.preheader.i200 ]
-  br label %.lr.ph59.i208
+  %i.gu = getelementptr [8 x i8], ptr %6, i64 %i.gt ; 5 uses
+  br label %.lr.ph.i193
 
 .preheader.i200:                                  ; preds = %.lr.ph.i193
   %.not3453.i201 = icmp eq i64 %i.iv, 0
-  br i1 %.not3453.i201, label %.preheader42.i216.thread, label %.lr.ph59.i208.preheader
-
-.preheader42.i216.thread:                         ; preds = %.preheader.i200
-  %8 = sub nsw i64 %.032.i, %i.iq
-  br label %.lr.ph.i218.preheader
+  br i1 %.not3453.i201, label %.lr.ph.i218.preheader, label %.lr.ph59.i208
 
 .lr.ph.i193:                                      ; preds = %.preheader42.i191, %.lr.ph.i193
   %.048.i194 = phi i64 [ %i.iv, %.lr.ph.i193 ], [ %i.t, %.preheader42.i191 ]
@@ -697,12 +666,12 @@ bb.k:                                             ; preds = %bb.j
   %.not.i199 = icmp ult i64 %i.iv, 4
   br i1 %.not.i199, label %.preheader.i200, label %.lr.ph.i193, !llvm.loop !219
 
-.lr.ph59.i208:                                    ; preds = %.lr.ph59.i208.preheader, %.lr.ph59.i208
-  %.158.i209 = phi i64 [ %i.jj, %.lr.ph59.i208 ], [ %.158.i209.ph, %.lr.ph59.i208.preheader ]
-  %.12757.i210 = phi ptr [ %i.jh, %.lr.ph59.i208 ], [ %.12757.i210.ph, %.lr.ph59.i208.preheader ] ; 2 uses
-  %.12956.i211 = phi ptr [ %i.jg, %.lr.ph59.i208 ], [ %.12956.i211.ph, %.lr.ph59.i208.preheader ] ; 2 uses
-  %.13155.i212 = phi ptr [ %i.ji, %.lr.ph59.i208 ], [ %.13155.i212.ph, %.lr.ph59.i208.preheader ] ; 2 uses
-  %.14154.i213 = phi i64 [ %i.jf, %.lr.ph59.i208 ], [ %.14154.i213.ph, %.lr.ph59.i208.preheader ]
+.lr.ph59.i208:                                    ; preds = %.preheader.i200, %.lr.ph59.i208
+  %.158.i209 = phi i64 [ %i.jj, %.lr.ph59.i208 ], [ %i.iv, %.preheader.i200 ]
+  %.12757.i210 = phi ptr [ %i.jh, %.lr.ph59.i208 ], [ %i.it, %.preheader.i200 ] ; 2 uses
+  %.12956.i211 = phi ptr [ %i.jg, %.lr.ph59.i208 ], [ %i.is, %.preheader.i200 ] ; 2 uses
+  %.13155.i212 = phi ptr [ %i.ji, %.lr.ph59.i208 ], [ %i.iu, %.preheader.i200 ] ; 2 uses
+  %.14154.i213 = phi i64 [ %i.jf, %.lr.ph59.i208 ], [ %i.iq, %.preheader.i200 ]
   %i.iw = load i64, ptr %.12956.i211, align 8, !tbaa !94
   %i.ix = load i64, ptr %.12757.i210, align 8, !tbaa !94
   %i.iy = tail call { i64, i1 } @llvm.usub.with.overflow.i64(i64 %i.iw, i64 %i.ix) ; 2 uses
@@ -719,27 +688,16 @@ bb.k:                                             ; preds = %bb.j
   %i.ji = getelementptr inbounds nuw i8, ptr %.13155.i212, i64 8
   %i.jj = add i64 %.158.i209, -1                  ; 2 uses
   %.not34.i214 = icmp eq i64 %i.jj, 0
-  br i1 %.not34.i214, label %.preheader42.i216, label %.lr.ph59.i208, !llvm.loop !220
+  br i1 %.not34.i214, label %.lr.ph.i218.preheader, label %.lr.ph59.i208, !llvm.loop !220
 
-.preheader42.i216:                                ; preds = %.lr.ph59.i208
-  %9 = sub nsw i64 %.032.i, %i.jf                 ; 2 uses
-  br i1 %.not43.i338, label %.lr.ph59.preheader.i227, label %.lr.ph.i218.preheader
-
-.lr.ph.i218.preheader:                            ; preds = %.preheader42.i216.thread, %.preheader42.i216
-  %i.jk = phi i64 [ %8, %.preheader42.i216.thread ], [ %9, %.preheader42.i216 ] ; 2 uses
+.lr.ph.i218.preheader:                            ; preds = %.lr.ph59.i208, %.preheader.i200
+  %i.jk = phi i64 [ %i.iq, %.preheader.i200 ], [ %i.jf, %.lr.ph59.i208 ]
   br label %.lr.ph.i218
 
-.preheader.i225:                                  ; preds = %.lr.ph.i218
+.lr.ph59.preheader.i227:                          ; preds = %.lr.ph.i218
+  %7 = sub nsw i64 %.032.i, %i.jk
   %.not3453.i226 = icmp eq i64 %i.lh, 0
-  br i1 %.not3453.i226, label %.lr.ph.i243, label %.lr.ph59.preheader.i227
-
-.lr.ph59.preheader.i227:                          ; preds = %.preheader.i225, %.preheader42.i216
-  %10 = phi i64 [ %i.jk, %.preheader.i225 ], [ %9, %.preheader42.i216 ]
-  %.0.lcssa77.i228 = phi i64 [ %i.lh, %.preheader.i225 ], [ %i.t, %.preheader42.i216 ]
-  %.026.lcssa76.i229 = phi ptr [ %i.lg, %.preheader.i225 ], [ %i.u, %.preheader42.i216 ] ; 2 uses
-  %.028.lcssa75.i230 = phi ptr [ %i.lf, %.preheader.i225 ], [ %6, %.preheader42.i216 ]
-  %.040.lcssa73.i232 = phi i64 [ %i.le, %.preheader.i225 ], [ 0, %.preheader42.i216 ]
-  br label %.lr.ph59.i233
+  br i1 %.not3453.i226, label %.lr.ph.i243, label %.lr.ph59.i233
 
 .lr.ph.i218:                                      ; preds = %.lr.ph.i218.preheader, %.lr.ph.i218
   %.048.i219 = phi i64 [ %i.lh, %.lr.ph.i218 ], [ %i.t, %.lr.ph.i218.preheader ]
@@ -800,16 +758,15 @@ bb.k:                                             ; preds = %bb.j
   %i.lg = getelementptr i8, ptr %.02647.i220, i64 32 ; 2 uses
   %i.lh = add i64 %.048.i219, -4                  ; 4 uses
   %.not.i224 = icmp ult i64 %i.lh, 4
-  br i1 %.not.i224, label %.preheader.i225, label %.lr.ph.i218, !llvm.loop !199
+  br i1 %.not.i224, label %.lr.ph59.preheader.i227, label %.lr.ph.i218, !llvm.loop !199
 
-.lr.ph59.i233:                                    ; preds = %.lr.ph59.i233, %.lr.ph59.preheader.i227
-  %.158.i234 = phi i64 [ %i.lu, %.lr.ph59.i233 ], [ %.0.lcssa77.i228, %.lr.ph59.preheader.i227 ]
-  %.12757.i235 = phi ptr [ %i.ls, %.lr.ph59.i233 ], [ %.026.lcssa76.i229, %.lr.ph59.preheader.i227 ] ; 2 uses
-  %.12956.i236.a = phi ptr [ %11, %.lr.ph59.i233 ], [ %.028.lcssa75.i230, %.lr.ph59.preheader.i227 ] ; 2 uses
-  %.13155.i237 = phi ptr [ %i.lt, %.lr.ph59.i233 ], [ %.026.lcssa76.i229, %.lr.ph59.preheader.i227 ] ; 2 uses
-  %.14154.i238 = phi i64 [ %i.lr, %.lr.ph59.i233 ], [ %.040.lcssa73.i232, %.lr.ph59.preheader.i227 ]
-  %i.li = load i64, ptr %.12956.i236.a, align 8, !tbaa !94
-  %i.lj = load i64, ptr %.12757.i235, align 8, !tbaa !94
+.lr.ph59.i233:                                    ; preds = %.lr.ph59.preheader.i227, %.lr.ph59.i233
+  %.158.i234 = phi i64 [ %i.lu, %.lr.ph59.i233 ], [ %i.lh, %.lr.ph59.preheader.i227 ]
+  %.12956.i236.a = phi ptr [ %i.lt, %.lr.ph59.i233 ], [ %i.lg, %.lr.ph59.preheader.i227 ] ; 3 uses
+  %.13155.i237 = phi ptr [ %i.ls, %.lr.ph59.i233 ], [ %i.lf, %.lr.ph59.preheader.i227 ] ; 2 uses
+  %.14154.i238 = phi i64 [ %i.lr, %.lr.ph59.i233 ], [ %i.le, %.lr.ph59.preheader.i227 ]
+  %i.li = load i64, ptr %.13155.i237, align 8, !tbaa !94
+  %i.lj = load i64, ptr %.12956.i236.a, align 8, !tbaa !94
   %i.lk = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.li, i64 %i.lj) ; 2 uses
   %i.ll = extractvalue { i64, i1 } %i.lk, 1
   %i.lm = extractvalue { i64, i1 } %i.lk, 0
@@ -818,17 +775,15 @@ bb.k:                                             ; preds = %bb.j
   %i.lp = extractvalue { i64, i1 } %i.ln, 0
   %i.lq = or i1 %i.ll, %i.lo
   %i.lr = zext i1 %i.lq to i64                    ; 2 uses
-  store i64 %i.lp, ptr %.13155.i237, align 8, !tbaa !94
-  %11 = getelementptr inbounds nuw i8, ptr %.12956.i236.a, i64 8
-  %i.ls = getelementptr inbounds nuw i8, ptr %.12757.i235, i64 8
-  %i.lt = getelementptr inbounds nuw i8, ptr %.13155.i237, i64 8
+  store i64 %i.lp, ptr %.12956.i236.a, align 8, !tbaa !94
+  %i.ls = getelementptr inbounds nuw i8, ptr %.13155.i237, i64 8
+  %i.lt = getelementptr i8, ptr %.12956.i236.a, i64 8
   %i.lu = add i64 %.158.i234, -1                  ; 2 uses
   %.not34.i239 = icmp eq i64 %i.lu, 0
   br i1 %.not34.i239, label %.lr.ph.i243, label %.lr.ph59.i233, !llvm.loop !200
 
-.lr.ph.i243:                                      ; preds = %.lr.ph59.i233, %.preheader.i225
-  %12 = phi i64 [ %i.jk, %.preheader.i225 ], [ %10, %.lr.ph59.i233 ]
-  %.032.i240 = phi i64 [ %i.le, %.preheader.i225 ], [ %i.lr, %.lr.ph59.i233 ]
+.lr.ph.i243:                                      ; preds = %.lr.ph59.i233, %.lr.ph59.preheader.i227
+  %.032.i240 = phi i64 [ %i.le, %.lr.ph59.preheader.i227 ], [ %i.lr, %.lr.ph59.i233 ]
   %i.lv = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.cz) #38 ; 5 uses
   %i.lw = xor i64 %i.lv, -1                       ; 4 uses
   %min.iters.check419 = icmp ult i32 %i.a, 10
@@ -877,7 +832,7 @@ vector.body426:                                   ; preds = %vector.body426, %ve
 
 middle.block433:                                  ; preds = %vector.body426
   %cmp.n434 = icmp eq i64 %n.vec421, %i.t
-  br i1 %cmp.n434, label %.preheader42.i244.a, label %scalar.ph418.preheader
+  br i1 %cmp.n434, label %.preheader42.i244, label %scalar.ph418.preheader
 
 scalar.ph418.preheader:                           ; preds = %vector.memcheck412, %.lr.ph.i243, %middle.block433
   %.09.i.ph = phi i64 [ 0, %vector.memcheck412 ], [ 0, %.lr.ph.i243 ], [ %n.vec421, %middle.block433 ]
@@ -904,32 +859,25 @@ scalar.ph418:                                     ; preds = %scalar.ph418, %scal
   store i64 %i.mz, ptr %i.mv, align 8, !tbaa !94
   %i.na = add nuw i64 %.09.i, 2                   ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.na, %i.t
-  br i1 %exitcond.not.i.1, label %.preheader42.i244.a, label %scalar.ph418, !llvm.loop !1462
+  br i1 %exitcond.not.i.1, label %.preheader42.i244, label %scalar.ph418, !llvm.loop !1462
 
-.preheader42.i244.a:                              ; preds = %scalar.ph418, %middle.block433
+.preheader42.i244:                                ; preds = %scalar.ph418, %middle.block433
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.q
+  br label %.lr.ph.i246
+
+.preheader42.i244.a:                              ; preds = %.lr.ph.i246
   %i.nb = add nuw nsw i64 %.032.i240, %.032.i
-  %i.nc = and i64 %i.lv, %12
+  %i.nc = and i64 %i.lv, %7
   %i.nd = and i64 %i.nb, %i.lw
   %i.ne = or disjoint i64 %i.nc, %i.nd
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.q ; 2 uses
-  br i1 %.not43.i338, label %.lr.ph59.i261.preheader, label %.lr.ph.i246
-
-.lr.ph59.i261.preheader:                          ; preds = %.preheader.i253, %.preheader42.i244.a
-  %.158.i262.ph = phi i64 [ %i.t, %.preheader42.i244.a ], [ %i.pb, %.preheader.i253 ]
-  %.12757.i263.ph = phi ptr [ %i.u, %.preheader42.i244.a ], [ %i.pa, %.preheader.i253 ]
-  %.13155.i265.ph = phi ptr [ %13, %.preheader42.i244.a ], [ %i.oz, %.preheader.i253 ] ; 2 uses
-  %.14154.i266.ph = phi i64 [ 0, %.preheader42.i244.a ], [ %i.oy, %.preheader.i253 ]
-  br label %.lr.ph59.i261
-
-.preheader.i253:                                  ; preds = %.lr.ph.i246
   %.not3453.i254 = icmp eq i64 %i.pb, 0
-  br i1 %.not3453.i254, label %bn_add_words.exit269, label %.lr.ph59.i261.preheader
+  br i1 %.not3453.i254, label %bn_add_words.exit269, label %.lr.ph59.i261
 
-.lr.ph.i246:                                      ; preds = %.preheader42.i244.a, %.lr.ph.i246
-  %.048.i247 = phi i64 [ %i.pb, %.lr.ph.i246 ], [ %i.t, %.preheader42.i244.a ]
-  %.02647.i248 = phi ptr [ %i.pa, %.lr.ph.i246 ], [ %i.u, %.preheader42.i244.a ] ; 5 uses
-  %.02846.i249 = phi ptr [ %i.oz, %.lr.ph.i246 ], [ %13, %.preheader42.i244.a ] ; 6 uses
-  %.04044.i251 = phi i64 [ %i.oy, %.lr.ph.i246 ], [ 0, %.preheader42.i244.a ]
+.lr.ph.i246:                                      ; preds = %.preheader42.i244, %.lr.ph.i246
+  %.048.i247 = phi i64 [ %i.pb, %.lr.ph.i246 ], [ %i.t, %.preheader42.i244 ]
+  %.02647.i248 = phi ptr [ %i.pa, %.lr.ph.i246 ], [ %i.u, %.preheader42.i244 ] ; 5 uses
+  %.02846.i249 = phi ptr [ %i.oz, %.lr.ph.i246 ], [ %8, %.preheader42.i244 ] ; 6 uses
+  %.04044.i251 = phi i64 [ %i.oy, %.lr.ph.i246 ], [ 0, %.preheader42.i244 ]
   %i.nf = load i64, ptr %.02846.i249, align 8, !tbaa !94
   %i.ng = load i64, ptr %.02647.i248, align 8, !tbaa !94
   %i.nh = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.nf, i64 %i.ng) ; 2 uses
@@ -984,16 +932,15 @@ scalar.ph418:                                     ; preds = %scalar.ph418, %scal
   %i.pa = getelementptr inbounds nuw i8, ptr %.02647.i248, i64 32 ; 2 uses
   %i.pb = add i64 %.048.i247, -4                  ; 4 uses
   %.not.i252 = icmp ult i64 %i.pb, 4
-  br i1 %.not.i252, label %.preheader.i253, label %.lr.ph.i246, !llvm.loop !199
+  br i1 %.not.i252, label %.preheader42.i244.a, label %.lr.ph.i246, !llvm.loop !199
 
-.lr.ph59.i261:                                    ; preds = %.lr.ph59.i261.preheader, %.lr.ph59.i261
-  %.158.i262 = phi i64 [ %i.po, %.lr.ph59.i261 ], [ %.158.i262.ph, %.lr.ph59.i261.preheader ]
-  %.12757.i263 = phi ptr [ %i.pm, %.lr.ph59.i261 ], [ %.12757.i263.ph, %.lr.ph59.i261.preheader ] ; 2 uses
-  %.12956.i264.a = phi ptr [ %14, %.lr.ph59.i261 ], [ %.13155.i265.ph, %.lr.ph59.i261.preheader ] ; 2 uses
-  %.13155.i265 = phi ptr [ %i.pn, %.lr.ph59.i261 ], [ %.13155.i265.ph, %.lr.ph59.i261.preheader ] ; 2 uses
-  %.14154.i266 = phi i64 [ %i.pl, %.lr.ph59.i261 ], [ %.14154.i266.ph, %.lr.ph59.i261.preheader ]
-  %i.pc = load i64, ptr %.12956.i264.a, align 8, !tbaa !94
-  %i.pd = load i64, ptr %.12757.i263, align 8, !tbaa !94
+.lr.ph59.i261:                                    ; preds = %.preheader42.i244.a, %.lr.ph59.i261
+  %.158.i262 = phi i64 [ %i.po, %.lr.ph59.i261 ], [ %i.pb, %.preheader42.i244.a ]
+  %.12956.i264.a = phi ptr [ %i.pn, %.lr.ph59.i261 ], [ %i.pa, %.preheader42.i244.a ] ; 2 uses
+  %.13155.i265 = phi ptr [ %i.pm, %.lr.ph59.i261 ], [ %i.oz, %.preheader42.i244.a ] ; 3 uses
+  %.14154.i266 = phi i64 [ %i.pl, %.lr.ph59.i261 ], [ %i.oy, %.preheader42.i244.a ]
+  %i.pc = load i64, ptr %.13155.i265, align 8, !tbaa !94
+  %i.pd = load i64, ptr %.12956.i264.a, align 8, !tbaa !94
   %i.pe = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.pc, i64 %i.pd) ; 2 uses
   %i.pf = extractvalue { i64, i1 } %i.pe, 1
   %i.pg = extractvalue { i64, i1 } %i.pe, 0
@@ -1003,15 +950,14 @@ scalar.ph418:                                     ; preds = %scalar.ph418, %scal
   %i.pk = or i1 %i.pf, %i.pi
   %i.pl = zext i1 %i.pk to i64                    ; 2 uses
   store i64 %i.pj, ptr %.13155.i265, align 8, !tbaa !94
-  %14 = getelementptr inbounds nuw i8, ptr %.12956.i264.a, i64 8
-  %i.pm = getelementptr inbounds nuw i8, ptr %.12757.i263, i64 8
-  %i.pn = getelementptr inbounds nuw i8, ptr %.13155.i265, i64 8
+  %i.pm = getelementptr i8, ptr %.13155.i265, i64 8
+  %i.pn = getelementptr inbounds nuw i8, ptr %.12956.i264.a, i64 8
   %i.po = add i64 %.158.i262, -1                  ; 2 uses
   %.not34.i267 = icmp eq i64 %i.po, 0
   br i1 %.not34.i267, label %bn_add_words.exit269, label %.lr.ph59.i261, !llvm.loop !200
 
-bn_add_words.exit269:                             ; preds = %.lr.ph59.i261, %.preheader.i253
-  %.032.i268 = phi i64 [ %i.oy, %.preheader.i253 ], [ %i.pl, %.lr.ph59.i261 ]
+bn_add_words.exit269:                             ; preds = %.lr.ph59.i261, %.preheader42.i244.a
+  %.032.i268 = phi i64 [ %i.oy, %.preheader42.i244.a ], [ %i.pl, %.lr.ph59.i261 ]
   %i.pp = mul nuw nsw i32 %3, 3                   ; 2 uses
   %i.pq = icmp slt i32 %i.pp, %i.gs
   br i1 %i.pq, label %.lr.ph.preheader, label %_ZL14OPENSSL_memsetPvim.exit
