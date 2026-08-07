@@ -203,8 +203,10 @@ bb.a:
   br i1 %i.c, label %.Abc_CexDup.exit_crit_edge, label %bb.b
 
 .Abc_CexDup.exit_crit_edge:                       ; preds = %bb.a
-  %.pre = load i32, ptr inttoptr (i64 5 to ptr), align 4, !tbaa !13
-  %.pre15 = load i32, ptr inttoptr (i64 17 to ptr), align 4, !tbaa !11
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !13
+  %.phi.trans.insert14 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.pre15 = load i32, ptr %.phi.trans.insert14, align 4, !tbaa !11
   %.pre16 = add nsw i32 %.pre, 1
   br label %Abc_CexDup.exit
 
