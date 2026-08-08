@@ -204,7 +204,7 @@ bb.bg:                                            ; preds = %.thread
 bb.bh:                                            ; preds = %bb.bg, %.thread
   %i.cw = and i32 %4, 32                          ; 4 uses
   %i.cx = icmp ne i32 %i.cw, 0                    ; 19 uses
-  %i.cy = and i32 %4, -33                         ; 2 uses
+  %i.cy = and i32 %4, -33                         ; 3 uses
   %i.cz = icmp eq i32 %i.cy, 3
   %spec.store.select = select i1 %i.cz, i32 1, i32 %i.cy ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #24
@@ -228,10 +228,10 @@ bb.bk:                                            ; preds = %bb.bi
   %i.dc = load i32, ptr %15, align 8, !tbaa !94   ; 2 uses
   %i.dd = and i32 %i.dc, 4095                     ; 2 uses
   %i.de = and i32 %i.dc, 31                       ; 4 uses
-  switch i32 %spec.store.select, label %bb.cy [
+  switch i32 %i.cy, label %35 [
     i32 0, label %bb.bl
     i32 1, label %bb.bx
-    i32 4, label %bb.cq
+    i32 3, label %bb.bx
   ]
 
 bb.bl:                                            ; preds = %bb.bk
@@ -312,7 +312,7 @@ bb.bw:                                            ; preds = %bb.bm
   invoke void @_ZN2cv12cpu_baseline25remapNearestInvoker_32FC4EPKfmiiPfmiiiPKdS2_mS2_mb(ptr noundef %i.di, i64 noundef %i.dm, i32 noundef %i.ds, i32 noundef %i.dt, ptr noundef %i.dk, i64 noundef %i.dn, i32 noundef %i.du, i32 noundef %i.dv, i32 noundef %5, ptr noundef nonnull %6, ptr noundef %i.dx, i64 noundef %i.dp, ptr noundef %i.dz, i64 noundef %i.dr, i1 noundef zeroext %i.cx)
           to label %.critedge493 unwind label %bb.bn
 
-bb.bx:                                            ; preds = %bb.bk
+bb.bx:                                            ; preds = %bb.bk, %bb.bk
   %i.eb = load i32, ptr %16, align 8, !tbaa !94
   %i.ec = and i32 %i.eb, 31
   %i.ed = icmp eq i32 %i.ec, 5
@@ -447,7 +447,11 @@ bb.cp:                                            ; preds = %bb.by, %bb.bx
   %i.fn = load ptr, ptr %i.fm, align 8, !tbaa !28
   br label %bb.dd
 
-bb.cq:                                            ; preds = %bb.bk
+35:                                               ; preds = %bb.bk
+  %36 = icmp eq i32 %spec.store.select, 4
+  br i1 %36, label %bb.cq, label %bb.cy
+
+bb.cq:                                            ; preds = %35
   %.lobit560 = lshr exact i32 %i.cw, 5
   %i.fo = zext nneg i32 %.lobit560 to i64
   %i.fp = getelementptr inbounds nuw [64 x i8], ptr @_ZZN2cv5remapERKNS_11_InputArrayERKNS_12_OutputArrayES2_S2_iiRKNS_7Scalar_IdEENS_13AlgorithmHintEE12lanczos4_tab, i64 %i.fo
@@ -504,7 +508,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit537: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #24
   br label %bb.ei
 
-bb.cy:                                            ; preds = %bb.bk
+bb.cy:                                            ; preds = %35
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #24
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %27, ptr noundef nonnull @.str.10, ptr noundef nonnull align 1 dereferenceable(1) %28)
@@ -907,7 +911,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.dh
 
 bb.d:                                             ; preds = %bb.b, %bb.a
-  %i.e = and i32 %4, 7                            ; 3 uses
+  %i.e = and i32 %4, 7                            ; 4 uses
   %i.f = invoke noundef i32 @_ZNK2cv11_InputArray8channelsEi(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef -1)
           to label %bb.e unwind label %bb.g
 
@@ -1221,7 +1225,7 @@ bb.as:                                            ; preds = %bb.ao, %bb.al
 
 bb.at:                                            ; preds = %bb.as
   %i.bz = icmp eq i32 %i.e, 3
-  %spec.store.select = select i1 %i.bz, i32 1, i32 %i.e ; 3 uses
+  %spec.store.select = select i1 %i.bz, i32 1, i32 %i.e ; 2 uses
   %i.ca = load i32, ptr %19, align 8, !tbaa !94
   %i.cb = and i32 %i.ca, 4095                     ; 2 uses
   %i.cc = icmp eq i32 %i.cb, 5
@@ -1414,9 +1418,10 @@ bb.bl:                                            ; preds = %bb.bj
           to label %bb.bm unwind label %bb.bo
 
 bb.bm:                                            ; preds = %.noexc90
-  switch i32 %spec.store.select, label %bb.cj [
+  switch i32 %i.e, label %bb.cj [
     i32 0, label %bb.bn
     i32 1, label %bb.bz
+    i32 3, label %bb.bz
   ]
 
 bb.bn:                                            ; preds = %bb.bm
@@ -1478,7 +1483,7 @@ bb.by:                                            ; preds = %bb.bn
   invoke void @_ZN2cv12cpu_baseline30warpAffineNearestInvoker_32FC4EPKfmiiPfmiiPKdiS5_(ptr noundef %i.eg, i64 noundef %i.ei, i32 noundef %i.ek, i32 noundef %i.ej, ptr noundef %i.el, i64 noundef %i.en, i32 noundef %i.er, i32 noundef %i.ep, ptr noundef nonnull %i.a, i32 noundef %5, ptr noundef nonnull %6)
           to label %_ZN2cv3halL10warpAffineEiPKhmiiPhmiiPKdiiS5_NS_13AlgorithmHintE.exit unwind label %bb.bq
 
-bb.bz:                                            ; preds = %bb.bm
+bb.bz:                                            ; preds = %bb.bm, %bb.bm
   switch i32 %i.ef, label %bb.cj [
     i32 0, label %bb.ca
     i32 64, label %bb.cb
@@ -1527,7 +1532,7 @@ bb.ci:                                            ; preds = %bb.bz
   invoke void @_ZN2cv12cpu_baseline29warpAffineLinearInvoker_32FC4EPKfmiiPfmiiPKdiS5_(ptr noundef %i.eg, i64 noundef %i.ei, i32 noundef %i.ek, i32 noundef %i.ej, ptr noundef %i.el, i64 noundef %i.en, i32 noundef %i.er, i32 noundef %i.ep, ptr noundef nonnull %i.a, i32 noundef %5, ptr noundef nonnull %6)
           to label %_ZN2cv3halL10warpAffineEiPKhmiiPhmiiPKdiiS5_NS_13AlgorithmHintE.exit unwind label %bb.bq
 
-bb.cj:                                            ; preds = %bb.bz, %bb.bn, %bb.bm
+bb.cj:                                            ; preds = %bb.bm, %bb.bz, %bb.bn
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #24
   %i.eu = getelementptr inbounds nuw i8, ptr %9, i64 12
   %i.ev = load i32, ptr %i.eu, align 4, !tbaa !104 ; 7 uses
@@ -1930,7 +1935,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.j,
   br label %bb.ct
 
 bb.k:                                             ; preds = %bb.e
-  %i.m = and i32 %4, 7                            ; 2 uses
+  %i.m = and i32 %4, 7                            ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #24
   %i.n = invoke noundef i32 @_ZNK2cv11_InputArray4kindEv(ptr noundef nonnull align 8 dereferenceable(24) %0)
           to label %.noexc unwind label %bb.ad
@@ -2138,7 +2143,7 @@ bb.ak:                                            ; preds = %bb.ac, %_ZNK2cv11_I
 
 bb.al:                                            ; preds = %bb.ak
   %i.bk = icmp eq i32 %i.m, 3
-  %spec.store.select = select i1 %i.bk, i32 1, i32 %i.m ; 3 uses
+  %spec.store.select = select i1 %i.bk, i32 1, i32 %i.m ; 2 uses
   %i.bl = load i32, ptr %18, align 8, !tbaa !94
   %i.bm = and i32 %i.bl, 4095                     ; 2 uses
   %i.bn = icmp eq i32 %i.bm, 5
@@ -2309,9 +2314,10 @@ bb.bf:                                            ; preds = %bb.bd
   %i.di = load i32, ptr %i.dh, align 8, !tbaa !103 ; 19 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %21, i64 24
   %i.dk = load ptr, ptr %i.dj, align 8, !tbaa !102 ; 19 uses
-  switch i32 %spec.store.select, label %bb.ca [
+  switch i32 %i.m, label %bb.ca [
     i32 0, label %bb.bg
     i32 1, label %bb.bq
+    i32 3, label %bb.bq
   ]
 
 bb.bg:                                            ; preds = %bb.bf
@@ -2363,7 +2369,7 @@ bb.bp:                                            ; preds = %bb.bg
   invoke void @_ZN2cv12cpu_baseline35warpPerspectiveNearestInvoker_32FC4EPKfmiiPfmiiPKdiS5_(ptr noundef %i.cv, i64 noundef %i.cx, i32 noundef %i.db, i32 noundef %i.cz, ptr noundef %i.dc, i64 noundef %i.de, i32 noundef %i.di, i32 noundef %i.dg, ptr noundef %i.dk, i32 noundef %5, ptr noundef nonnull %6)
           to label %_ZN2cv3halL15warpPerspectiveEiPKhmiiPhmiiPKdiiS5_NS_13AlgorithmHintE.exit unwind label %bb.aq
 
-bb.bq:                                            ; preds = %bb.bf
+bb.bq:                                            ; preds = %bb.bf, %bb.bf
   switch i32 %i.cu, label %bb.ca [
     i32 0, label %bb.br
     i32 64, label %bb.bs
@@ -2412,7 +2418,7 @@ bb.bz:                                            ; preds = %bb.bq
   invoke void @_ZN2cv12cpu_baseline34warpPerspectiveLinearInvoker_32FC4EPKfmiiPfmiiPKdiS5_(ptr noundef %i.cv, i64 noundef %i.cx, i32 noundef %i.db, i32 noundef %i.cz, ptr noundef %i.dc, i64 noundef %i.de, i32 noundef %i.di, i32 noundef %i.dg, ptr noundef %i.dk, i32 noundef %5, ptr noundef nonnull %6)
           to label %_ZN2cv3halL15warpPerspectiveEiPKhmiiPhmiiPKdiiS5_NS_13AlgorithmHintE.exit unwind label %bb.aq
 
-bb.ca:                                            ; preds = %bb.bq, %bb.bg, %bb.bf
+bb.ca:                                            ; preds = %bb.bf, %bb.bq, %bb.bg
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   %.sroa.2283.0.insert.ext.i = zext i32 %i.db to i64
   %.sroa.2283.0.insert.shift.i = shl nuw i64 %.sroa.2283.0.insert.ext.i, 32

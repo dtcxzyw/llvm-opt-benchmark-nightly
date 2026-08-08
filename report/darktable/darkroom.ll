@@ -203,6 +203,7 @@ begin_hunk_0
 @.str.286 = private unnamed_addr constant [18 x i8] c"pin current image\00", align 1
 @.str.287 = private unnamed_addr constant [19 x i8] c"enter-notify-event\00", align 1
 @switch.table.expose = private unnamed_addr constant [7 x ptr] [ptr @.str.7, ptr @.str.13, ptr @.str.9, ptr @.str.10, ptr @.str.11, ptr @.str.8, ptr @.str.12], align 8
+@switch.table._change_slider_accel_precision = private unnamed_addr constant [4 x ptr] [ptr @.str.264, ptr @.str.263, ptr @.str.265, ptr @.str.264], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef i32 @dt_module_dt_version() local_unnamed_addr #0 {
@@ -605,16 +606,23 @@ bb.a:
 define internal void @_change_slider_accel_precision(ptr nofree readnone captures(none) %0) #1 {
 bb.a:
   %i.a = tail call i32 @dt_conf_get_int(ptr noundef nonnull @.str.262) #16
-  %i.b = add nsw i32 %i.a, 1                      ; 2 uses
+  %i.b = add nsw i32 %i.a, 1                      ; 4 uses
   %i.c = icmp eq i32 %i.b, 3
-  %i.d = select i1 %i.c, i32 0, i32 %i.b          ; 3 uses
+  %i.d = select i1 %i.c, i32 0, i32 %i.b
   tail call void @dt_conf_set_int(ptr noundef nonnull @.str.262, i32 noundef %i.d) #16
-  %switch.selectcmp = icmp eq i32 %i.d, 0
-  %switch.select = select i1 %switch.selectcmp, ptr @.str.264, ptr @.str.265
-  %switch.selectcmp5 = icmp eq i32 %i.d, 1
-  %switch.select6 = select i1 %switch.selectcmp5, ptr @.str.263, ptr %switch.select
-  %1 = tail call ptr @dcgettext(ptr noundef null, ptr noundef nonnull %switch.select6, i32 noundef 5) #16
-  tail call void (ptr, ...) @dt_toast_log(ptr noundef %1) #16
+  %1 = icmp ult i32 %i.b, 4
+  br i1 %1, label %switch.lookup, label %3
+
+switch.lookup:                                    ; preds = %bb.a
+  %2 = zext nneg i32 %i.b to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._change_slider_accel_precision, i64 %2
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  br label %3
+
+3:                                                ; preds = %bb.a, %switch.lookup
+  %.str.264.sink = phi ptr [ %switch.load, %switch.lookup ], [ @.str.265, %bb.a ]
+  %4 = tail call ptr @dcgettext(ptr noundef null, ptr noundef nonnull %.str.264.sink, i32 noundef 5) #16
+  tail call void (ptr, ...) @dt_toast_log(ptr noundef %4) #16
   ret void
 }
 

@@ -203,9 +203,9 @@ bb.a:
   %3 = alloca %"class.cvc5::internal::FatalStream", align 1 ; 5 uses
   %4 = alloca %"class.cvc5::internal::FatalStream", align 1 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 200
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !436  ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !436  ; 3 uses
   %i.c = icmp eq i32 %i.b, 4
-  %.0.i = select i1 %i.c, i32 5, i32 %i.b         ; 3 uses
+  %.0.i = select i1 %i.c, i32 5, i32 %i.b         ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 200
   %i.e = load i32, ptr %i.d, align 8, !tbaa !436  ; 2 uses
   %i.f = icmp eq i32 %i.e, 4
@@ -214,14 +214,14 @@ bb.a:
   br i1 %i.g, label %bb.b, label %bb.ai
 
 bb.b:                                             ; preds = %bb.a
-  switch i32 %.0.i, label %bb.ae [
+  switch i32 %i.b, label %bb.ae [
     i32 0, label %bb.c
     i32 1, label %bb.f
     i32 2, label %bb.l
     i32 5, label %bb.o
     i32 6, label %bb.w
     i32 7, label %bb.z
-    i32 4, label %bb.aa
+    i32 4, label %bb.o
     i32 3, label %bb.aa
   ]
 
@@ -317,7 +317,7 @@ bb.n:                                             ; preds = %bb.l
   %i.az = tail call noundef zeroext i1 @_ZNK4cvc58internal6theory5arith6linear14ArithVariables14hasEitherBoundEj(ptr noundef nonnull align 8 dereferenceable(568) %i.ax, i32 noundef %i.ay)
   br label %_ZNK4cvc58internal6theory5arith6linear20LinearEqualityModule18preferNeitherBoundERKNS3_10UpdateInfoES7_.exit
 
-bb.o:                                             ; preds = %bb.b
+bb.o:                                             ; preds = %bb.b, %bb.b
   %i.ba = load i32, ptr %1, align 8, !tbaa !421   ; 2 uses
   %i.bb = load i32, ptr %2, align 8, !tbaa !421   ; 2 uses
   %i.bc = icmp eq i32 %i.ba, %i.bb
@@ -416,7 +416,7 @@ bb.z:                                             ; preds = %bb.b
   %i.cr = icmp uge i32 %i.cp, %i.cq
   br label %_ZNK4cvc58internal6theory5arith6linear20LinearEqualityModule18preferNeitherBoundERKNS3_10UpdateInfoES7_.exit
 
-bb.aa:                                            ; preds = %bb.b, %bb.b
+bb.aa:                                            ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   call void @_ZN4cvc58internal11FatalStreamC1EPKcS3_i(ptr noundef nonnull align 1 dereferenceable(1) %3, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK4cvc58internal6theory5arith6linear20LinearEqualityModule13preferWitnessILb0EEEbRKNS3_10UpdateInfoES8_, ptr noundef nonnull @.str.68, i32 noundef 465)
   %i.cs = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN4cvc58internal11FatalStream6streamEv(ptr noundef nonnull align 1 dereferenceable(1) %3)
@@ -471,9 +471,9 @@ bb.a:
   %3 = alloca %"class.cvc5::internal::FatalStream", align 1 ; 5 uses
   %4 = alloca %"class.cvc5::internal::FatalStream", align 1 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 200
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !436  ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !436  ; 3 uses
   %i.c = icmp eq i32 %i.b, 4
-  %.0.i = select i1 %i.c, i32 6, i32 %i.b         ; 3 uses
+  %.0.i = select i1 %i.c, i32 6, i32 %i.b         ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 200
   %i.e = load i32, ptr %i.d, align 8, !tbaa !436  ; 2 uses
   %i.f = icmp eq i32 %i.e, 4
@@ -482,14 +482,14 @@ bb.a:
   br i1 %i.g, label %bb.b, label %bb.ai
 
 bb.b:                                             ; preds = %bb.a
-  switch i32 %.0.i, label %bb.ae [
+  switch i32 %i.b, label %bb.ae [
     i32 0, label %bb.c
     i32 1, label %bb.f
     i32 2, label %bb.l
     i32 5, label %bb.o
     i32 6, label %bb.w
     i32 7, label %bb.z
-    i32 4, label %bb.aa
+    i32 4, label %bb.w
     i32 3, label %bb.aa
   ]
 
@@ -658,7 +658,7 @@ bb.v:                                             ; preds = %bb.o
   %i.cd = icmp ugt i32 %i.ba, %i.bb
   br label %_ZNK4cvc58internal6theory5arith6linear20LinearEqualityModule18preferNeitherBoundERKNS3_10UpdateInfoES7_.exit
 
-bb.w:                                             ; preds = %bb.b
+bb.w:                                             ; preds = %bb.b, %bb.b
   %i.ce = load ptr, ptr %0, align 8, !tbaa !523, !nonnull !177, !align !178
   %i.cf = load i32, ptr %1, align 8, !tbaa !421
   %i.cg = tail call noundef zeroext i1 @_ZNK4cvc58internal6theory5arith6linear14ArithVariables14hasEitherBoundEj(ptr noundef nonnull align 8 dereferenceable(568) %i.ce, i32 noundef %i.cf)
@@ -684,7 +684,7 @@ bb.z:                                             ; preds = %bb.b
   %i.cr = icmp uge i32 %i.cp, %i.cq
   br label %_ZNK4cvc58internal6theory5arith6linear20LinearEqualityModule18preferNeitherBoundERKNS3_10UpdateInfoES7_.exit
 
-bb.aa:                                            ; preds = %bb.b, %bb.b
+bb.aa:                                            ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   call void @_ZN4cvc58internal11FatalStreamC1EPKcS3_i(ptr noundef nonnull align 1 dereferenceable(1) %3, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK4cvc58internal6theory5arith6linear20LinearEqualityModule13preferWitnessILb1EEEbRKNS3_10UpdateInfoES8_, ptr noundef nonnull @.str.68, i32 noundef 465)
   %i.cs = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN4cvc58internal11FatalStream6streamEv(ptr noundef nonnull align 1 dereferenceable(1) %3)

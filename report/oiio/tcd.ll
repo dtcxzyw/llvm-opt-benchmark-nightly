@@ -204,32 +204,13 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %.0118 = load ptr, ptr %i.dm, align 8, !tbaa !264 ; 6 uses
   %.not136 = icmp ne i32 %i.ci, 0
   %i.dn = zext i1 %.not136 to i32
-  %spec.select = add nuw nsw i32 %i.ch, %i.dn     ; 2 uses
-  %3 = icmp eq i32 %spec.select, 3
-  %spec.store.select = select i1 %3, i32 4, i32 %spec.select
-  switch i32 %spec.store.select, label %.loopexit [
+  %spec.select = add nuw nsw i32 %i.ch, %i.dn
+  switch i32 %spec.select, label %.loopexit [
     i32 1, label %bb.p
     i32 2, label %bb.q
-    i32 4, label %.preheader153
+    i32 4, label %3
+    i32 3, label %3
   ]
-
-.preheader153:                                    ; preds = %bb.o
-  %4 = extractelement <2 x i32> %i.dk, i64 1      ; 4 uses
-  %.not212 = icmp eq i32 %4, 0
-  br i1 %.not212, label %.loopexit, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.preheader153
-  %5 = zext i32 %i.dl to i64                      ; 6 uses
-  %6 = shl nuw nsw i64 %5, 2                      ; 5 uses
-  %7 = add i32 %i.dl, %.0121
-  %8 = zext i32 %7 to i64                         ; 5 uses
-  %xtraiter = and i32 %4, 3                       ; 3 uses
-  %9 = icmp ult i32 %4, 4
-  br i1 %9, label %.epil.preheader, label %.lr.ph.new
-
-.lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i32 %4, -4
-  br label %bb.r
 
 bb.p:                                             ; preds = %bb.o
   %i.do = getelementptr inbounds nuw i8, ptr %.0130206, i64 32
@@ -633,6 +614,24 @@ scalar.ph337:                                     ; preds = %scalar.ph337.prol.l
   %exitcond245.not = icmp eq i32 %i.mx, %i.if
   br i1 %exitcond245.not, label %.loopexit, label %.preheader144.us, !llvm.loop !311
 
+3:                                                ; preds = %bb.o, %bb.o
+  %4 = extractelement <2 x i32> %i.dk, i64 1      ; 4 uses
+  %.not211 = icmp eq i32 %4, 0
+  br i1 %.not211, label %.loopexit, label %.lr.ph
+
+.lr.ph:                                           ; preds = %3
+  %5 = zext i32 %i.dl to i64                      ; 6 uses
+  %6 = shl nuw nsw i64 %5, 2                      ; 5 uses
+  %7 = add i32 %i.dl, %.0121
+  %8 = zext i32 %7 to i64                         ; 5 uses
+  %xtraiter = and i32 %4, 3                       ; 3 uses
+  %9 = icmp ult i32 %4, 4
+  br i1 %9, label %.epil.preheader, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i32 %4, -4
+  br label %bb.r
+
 bb.r:                                             ; preds = %bb.r, %.lr.ph.new
   %.0158 = phi ptr [ %.0118, %.lr.ph.new ], [ %i.nf, %bb.r ] ; 2 uses
   %.0100157 = phi ptr [ %.0102209, %.lr.ph.new ], [ %i.ne, %bb.r ] ; 2 uses
@@ -675,8 +674,8 @@ bb.s:                                             ; preds = %bb.s, %.epil.prehea
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.loopexit, label %bb.s, !llvm.loop !313
 
-.loopexit:                                        ; preds = %.loopexit.loopexit380.unr-lcssa, %bb.s, %._crit_edge.us, %._crit_edge.us180, %._crit_edge.us192, %._crit_edge.us204, %.preheader144.lr.ph, %.preheader145.lr.ph, %.preheader.lr.ph, %.preheader143.lr.ph, %.preheader153, %.preheader151, %.preheader149, %.preheader147, %.preheader146, %bb.o
-  %.1 = phi ptr [ %.0102209, %bb.o ], [ %.lcssa294, %._crit_edge.us204 ], [ %.lcssa290, %._crit_edge.us180 ], [ %.lcssa288, %._crit_edge.us ], [ %.0102209, %.preheader144.lr.ph ], [ %.0102209, %.preheader146 ], [ %.0102209, %.preheader143.lr.ph ], [ %.0102209, %.preheader147 ], [ %.lcssa292, %._crit_edge.us192 ], [ %.0102209, %.preheader149 ], [ %.0102209, %.preheader145.lr.ph ], [ %.0102209, %.preheader151 ], [ %.0102209, %.preheader.lr.ph ], [ %.0102209, %.preheader153 ], [ %i.ne, %.loopexit.loopexit380.unr-lcssa ], [ %i.ng, %bb.s ]
+.loopexit:                                        ; preds = %.loopexit.loopexit380.unr-lcssa, %bb.s, %._crit_edge.us, %._crit_edge.us180, %._crit_edge.us192, %._crit_edge.us204, %.preheader144.lr.ph, %.preheader145.lr.ph, %.preheader.lr.ph, %.preheader143.lr.ph, %3, %.preheader151, %.preheader149, %.preheader147, %.preheader146, %bb.o
+  %.1 = phi ptr [ %.0102209, %bb.o ], [ %.lcssa294, %._crit_edge.us204 ], [ %.lcssa290, %._crit_edge.us180 ], [ %.lcssa288, %._crit_edge.us ], [ %.0102209, %.preheader144.lr.ph ], [ %.0102209, %.preheader146 ], [ %.0102209, %.preheader143.lr.ph ], [ %.0102209, %.preheader147 ], [ %.lcssa292, %._crit_edge.us192 ], [ %.0102209, %.preheader149 ], [ %.0102209, %.preheader145.lr.ph ], [ %.0102209, %.preheader151 ], [ %.0102209, %.preheader.lr.ph ], [ %.0102209, %3 ], [ %i.ne, %.loopexit.loopexit380.unr-lcssa ], [ %i.ng, %bb.s ]
   %i.ni = getelementptr inbounds nuw i8, ptr %.0130206, i64 64
   %i.nj = getelementptr inbounds nuw i8, ptr %.0129207, i64 112
   %i.nk = add nuw i32 %.0122208, 1                ; 2 uses
@@ -852,13 +851,12 @@ opj_tcd_get_encoder_input_buffer_size.exit.thread: ; preds = %.lr.ph.i
   %i.bf = mul nsw i64 %i.be, %i.ay                ; 31 uses
   %.not75 = icmp ne i32 %i.at, 0
   %i.bg = zext i1 %.not75 to i32
-  %spec.select = add nuw nsw i32 %i.as, %i.bg     ; 2 uses
-  %3 = icmp eq i32 %spec.select, 3
-  %spec.store.select = select i1 %3, i32 4, i32 %spec.select
-  switch i32 %spec.store.select, label %.loopexit [
+  %spec.select = add nuw nsw i32 %i.as, %i.bg
+  switch i32 %spec.select, label %.loopexit [
     i32 1, label %bb.b
     i32 2, label %bb.c
     i32 4, label %bb.d
+    i32 3, label %bb.d
   ]
 
 bb.b:                                             ; preds = %.lr.ph113
@@ -1241,7 +1239,7 @@ middle.block194:                                  ; preds = %vector.body187
   %exitcond130.not = icmp eq i64 %i.gs, %i.bf
   br i1 %exitcond130.not, label %.loopexit, label %.lr.ph97, !llvm.loop !336
 
-bb.d:                                             ; preds = %.lr.ph113
+bb.d:                                             ; preds = %.lr.ph113, %.lr.ph113
   %.not115 = icmp eq i64 %i.bf, 0
   br i1 %.not115, label %.loopexit, label %.lr.ph.preheader
 

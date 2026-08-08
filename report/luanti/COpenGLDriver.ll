@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = icmp eq i32 %1, 19
-  %spec.store.select = select i1 %i.a, i32 2, i32 %1 ; 3 uses
+  %spec.store.select = select i1 %i.a, i32 2, i32 %1 ; 2 uses
   %or.cond61 = icmp sgt i32 %spec.store.select, 3
   br i1 %or.cond61, label %bb.r, label %bb.c
 
@@ -219,17 +219,18 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  switch i32 %spec.store.select, label %bb.i [
+  switch i32 %1, label %bb.i [
     i32 0, label %bb.j
     i32 1, label %bb.f
     i32 2, label %bb.g
     i32 3, label %bb.h
+    i32 19, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
   br label %bb.j
 
-bb.g:                                             ; preds = %bb.e
+bb.g:                                             ; preds = %bb.e, %bb.e
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.e

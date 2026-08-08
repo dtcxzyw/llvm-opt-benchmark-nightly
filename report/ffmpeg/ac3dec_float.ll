@@ -204,7 +204,7 @@ bb.gt:                                            ; preds = %bb.gs
   %i.bua = trunc nuw nsw i32 %i.btz to i8
   %i.bub = getelementptr inbounds nuw [256 x i8], ptr %i.gn, i64 %indvars.iv897.i ; 2 uses
   store i8 %i.bua, ptr %i.bub, align 16, !tbaa !46
-  %i.buc = load i32, ptr %i.bth, align 4, !tbaa !45 ; 2 uses
+  %i.buc = load i32, ptr %i.bth, align 4, !tbaa !45
   %i.bud = getelementptr inbounds nuw [4 x i8], ptr %i.cg, i64 %indvars.iv897.i
   %i.bue = load i32, ptr %i.bud, align 4, !tbaa !45 ; 3 uses
   %i.buf = getelementptr inbounds nuw [4 x i8], ptr %i.ce, i64 %indvars.iv897.i
@@ -214,8 +214,6 @@ bb.gt:                                            ; preds = %bb.gs
   %i.buj = sext i32 %i.bui to i64
   %i.buk = getelementptr inbounds i8, ptr %i.bub, i64 %i.buj ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #11
-  %11 = icmp eq i32 %i.buc, 3
-  %12 = select i1 %11, i32 4, i32 %i.buc
   %i.bul = icmp sgt i32 %i.bue, 0
   br i1 %i.bul, label %.lr.ph.i654.i, label %.loopexit757.i
 
@@ -282,10 +280,11 @@ bb.gw:                                            ; preds = %.lr.ph54.i.i
   br label %decode_exponents.exit.i
 
 bb.gx:                                            ; preds = %.lr.ph54.i.i
-  switch i32 %12, label %bb.hb [
+  switch i32 %i.buc, label %bb.hb [
     i32 4, label %bb.gy
     i32 2, label %._crit_edge64.i.i
     i32 1, label %._crit_edge63.i.i
+    i32 3, label %bb.gy
   ]
 
 ._crit_edge64.i.i:                                ; preds = %bb.gx
@@ -296,7 +295,7 @@ bb.gx:                                            ; preds = %.lr.ph54.i.i
   %.pre65.i661.i = trunc nuw nsw i32 %i.bvn to i8
   br label %bb.ha
 
-bb.gy:                                            ; preds = %bb.gx
+bb.gy:                                            ; preds = %bb.gx, %bb.gx
   %i.bvq = trunc nuw nsw i32 %i.bvn to i8         ; 3 uses
   %i.bvr = sext i32 %.04050.i.i to i64
   %i.bvs = getelementptr inbounds i8, ptr %i.buk, i64 %i.bvr ; 2 uses

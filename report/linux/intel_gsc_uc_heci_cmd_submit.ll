@@ -201,9 +201,12 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.0.i.i = phi i32 [ %i.ac, %bb.c ], [ %i.ad, %bb.d ] ; 4 uses
-  %6 = icmp eq i32 %.0.i.i, 0
-  br i1 %6, label %bb.f, label %7
+  %.0.i.i = phi i32 [ %i.ac, %bb.c ], [ %i.ad, %bb.d ] ; 2 uses
+  switch i32 %.0.i.i, label %intel_context_unpin.exit.thread137 [
+    i32 0, label %bb.f
+    i32 -35, label %bb.h
+    i32 -114, label %bb.j
+  ]
 
 bb.f:                                             ; preds = %bb.e
   %i.ae = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.x, i32 1, ptr elementtype(i32) %i.x) #8, !srcloc !10 ; 3 uses
@@ -229,17 +232,9 @@ i915_gem_object_get.exit.i.i:                     ; preds = %.sink.split.i.i.i.i
   %i.aj = getelementptr i8, ptr %i.x, i64 552
   store ptr %i.ai, ptr %i.aj, align 8
   store volatile ptr %i.ah, ptr %i.ai, align 8
-  br label %7
+  br label %bb.j
 
-7:                                                ; preds = %i915_gem_object_get.exit.i.i, %bb.e
-  %8 = icmp eq i32 %.0.i.i, -114
-  %spec.store.select.i6.i = select i1 %8, i32 0, i32 %.0.i.i
-  switch i32 %spec.store.select.i6.i, label %intel_context_unpin.exit.thread137 [
-    i32 -35, label %bb.h
-    i32 0, label %bb.j
-  ]
-
-bb.h:                                             ; preds = %7
+bb.h:                                             ; preds = %bb.e
   %i.ak = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.x, i32 1, ptr elementtype(i32) %i.x) #8, !srcloc !10 ; 3 uses
   %.not.i.i.i.i.i.i19.i7.i = icmp eq i32 %i.ak, 0
   br i1 %.not.i.i.i.i.i.i19.i7.i, label %.sink.split.i.i.i.i.i.i21.i9.i, label %bb.i, !prof !11
@@ -255,7 +250,7 @@ bb.i:                                             ; preds = %bb.h
   call void @refcount_warn_saturate(ptr noundef %i.x, i32 noundef %.sink.i.i.i.i.i.i22.i10.i) #7
   br label %intel_context_unpin.exit.thread.sink.split
 
-bb.j:                                             ; preds = %7
+bb.j:                                             ; preds = %i915_gem_object_get.exit.i.i, %bb.e
   %i.an = load ptr, ptr %i.e, align 8
   %i.ao = getelementptr i8, ptr %i.an, i64 184
   %i.ap = load ptr, ptr %i.ao, align 8            ; 11 uses
@@ -274,9 +269,12 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %.0.i.i87 = phi i32 [ %i.au, %bb.k ], [ %i.av, %bb.l ] ; 4 uses
-  %9 = icmp eq i32 %.0.i.i87, 0
-  br i1 %9, label %bb.n, label %10
+  %.0.i.i87 = phi i32 [ %i.au, %bb.k ], [ %i.av, %bb.l ] ; 2 uses
+  switch i32 %.0.i.i87, label %intel_context_unpin.exit.thread137 [
+    i32 0, label %bb.n
+    i32 -35, label %bb.p
+    i32 -114, label %bb.r
+  ]
 
 bb.n:                                             ; preds = %bb.m
   %i.aw = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ap, i32 1, ptr elementtype(i32) %i.ap) #8, !srcloc !10 ; 3 uses
@@ -302,17 +300,9 @@ i915_gem_object_get.exit.i.i99:                   ; preds = %.sink.split.i.i.i.i
   %i.bb = getelementptr i8, ptr %i.ap, i64 552
   store ptr %i.ba, ptr %i.bb, align 8
   store volatile ptr %i.az, ptr %i.ba, align 8
-  br label %10
+  br label %bb.r
 
-10:                                               ; preds = %i915_gem_object_get.exit.i.i99, %bb.m
-  %11 = icmp eq i32 %.0.i.i87, -114
-  %spec.store.select.i6.i88 = select i1 %11, i32 0, i32 %.0.i.i87
-  switch i32 %spec.store.select.i6.i88, label %intel_context_unpin.exit.thread137 [
-    i32 -35, label %bb.p
-    i32 0, label %bb.r
-  ]
-
-bb.p:                                             ; preds = %10
+bb.p:                                             ; preds = %bb.m
   %i.bc = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ap, i32 1, ptr elementtype(i32) %i.ap) #8, !srcloc !10 ; 3 uses
   %.not.i.i.i.i.i.i19.i7.i90 = icmp eq i32 %i.bc, 0
   br i1 %.not.i.i.i.i.i.i19.i7.i90, label %.sink.split.i.i.i.i.i.i21.i9.i92, label %bb.q, !prof !11
@@ -328,7 +318,7 @@ bb.q:                                             ; preds = %bb.p
   call void @refcount_warn_saturate(ptr noundef %i.ap, i32 noundef %.sink.i.i.i.i.i.i22.i10.i93) #7
   br label %intel_context_unpin.exit.thread.sink.split
 
-bb.r:                                             ; preds = %10
+bb.r:                                             ; preds = %i915_gem_object_get.exit.i.i99, %bb.m
   %i.bf = load volatile i32, ptr %i.f, align 4    ; 2 uses
   %.not.i.i = icmp eq i32 %i.bf, 0
   br i1 %.not.i.i, label %intel_context_pin_ww.exit, label %.lr.ph.i.i, !prof !18
@@ -641,8 +631,8 @@ bb.aq:                                            ; preds = %intel_context_unpin
   %exitcond.not = icmp eq i32 %i.ff, 10
   br i1 %exitcond.not, label %intel_context_unpin.exit.thread137, label %bb.b
 
-intel_context_unpin.exit.thread137:               ; preds = %10, %7, %bb.aq, %intel_context_unpin.exit.thread, %intel_context_unpin.exit
-  %.4 = phi i32 [ %i.fe, %intel_context_unpin.exit.thread ], [ %.3, %intel_context_unpin.exit ], [ -11, %bb.aq ], [ %.0.i.i87, %10 ], [ %.0.i.i, %7 ]
+intel_context_unpin.exit.thread137:               ; preds = %intel_context_unpin.exit, %intel_context_unpin.exit.thread, %bb.aq, %bb.e, %bb.m
+  %.4 = phi i32 [ %.0.i.i87, %bb.m ], [ %.3, %intel_context_unpin.exit ], [ -11, %bb.aq ], [ %i.fe, %intel_context_unpin.exit.thread ], [ %.0.i.i, %bb.e ]
   call void @i915_gem_ww_ctx_fini(ptr noundef nonnull %5) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
   ret i32 %.4

@@ -1,4 +1,4 @@
-inline.NumInlined: 97
+inline.NumInlined: 99
 inline.NumDeleted: 34
 begin_hunk_0_@load_key_certs_crls:bb.a
   %.3170.ph = phi ptr [ null, %bb.au ], [ %.0167350, %.lr.ph ], [ null, %bb.bq ]
@@ -201,27 +201,28 @@ declare ptr @X509_CRL_load_http(ptr noundef, ptr noundef, ptr noundef, i32 nound
 define dso_local ptr @load_csr(ptr noundef %0, i32 noundef %1, ptr noundef %2) local_unnamed_addr #1 {
 bb.a:
   %i.a = icmp eq i32 %1, 0
-  %spec.store.select = select i1 %i.a, i32 32773, i32 %1 ; 3 uses
+  %spec.store.select = select i1 %i.a, i32 32773, i32 %1
   %i.b = tail call fastcc ptr @bio_open_default_(ptr noundef %0, i8 noundef signext 114, i32 noundef %spec.store.select, i32 noundef 0) ; 4 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  switch i32 %spec.store.select, label %bb.e [
+  switch i32 %1, label %bb.e [
     i32 4, label %bb.c
     i32 32773, label %bb.d
+    i32 0, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.b
   %i.d = tail call ptr @d2i_X509_REQ_bio(ptr noundef nonnull %i.b, ptr noundef null) #25
   br label %bb.f
 
-bb.d:                                             ; preds = %bb.b
+bb.d:                                             ; preds = %bb.b, %bb.b
   %i.e = tail call ptr @PEM_read_bio_X509_REQ(ptr noundef nonnull %i.b, ptr noundef null, ptr noundef null, ptr noundef null) #25
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.b
-  tail call void @print_format_error(i32 noundef %spec.store.select, i64 noundef 6) #25
+  tail call void @print_format_error(i32 noundef %1, i64 noundef 6) #25
   br label %.thread
 
 bb.f:                                             ; preds = %bb.c, %bb.d
@@ -266,20 +267,45 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = load ptr, ptr @bio_err, align 8, !tbaa !12
+  %i.a = load ptr, ptr @bio_err, align 8, !tbaa !12 ; 2 uses
   store ptr null, ptr @bio_err, align 8, !tbaa !12
-  %4 = tail call ptr @load_csr(ptr noundef %0, i32 noundef 32773, ptr noundef null) ; 2 uses
-  store ptr %i.a, ptr @bio_err, align 8, !tbaa !12
+  %4 = tail call fastcc ptr @bio_open_default_(ptr noundef %0, i8 noundef signext 114, i32 noundef 32773, i32 noundef 0) ; 4 uses
   %i.b = icmp eq ptr %4, null
-  br i1 %i.b, label %bb.c, label %.thread27
+  br i1 %i.b, label %bb.c, label %5
 
-bb.c:                                             ; preds = %bb.b
+5:                                                ; preds = %bb.b
+  %6 = tail call ptr @PEM_read_bio_X509_REQ(ptr noundef nonnull %4, ptr noundef null, ptr noundef null, ptr noundef null) #25 ; 2 uses
+  %7 = icmp eq ptr %6, null
+  br i1 %7, label %bb.c, label %.thread
+
+.thread:                                          ; preds = %5
+  %8 = tail call i32 @BIO_free(ptr noundef nonnull %4) #25 ; 0 uses
+  store ptr %i.a, ptr @bio_err, align 8, !tbaa !12
+  br label %.thread27
+
+bb.c:                                             ; preds = %bb.b, %5
+  %9 = load ptr, ptr @bio_err, align 8, !tbaa !12
+  tail call void @ERR_print_errors(ptr noundef %9) #25
+  %10 = tail call i32 @BIO_free(ptr noundef %4) #25 ; 0 uses
+  store ptr %i.a, ptr @bio_err, align 8, !tbaa !12
   tail call void @ERR_clear_error() #25
-  %5 = tail call ptr @load_csr(ptr noundef %0, i32 noundef 4, ptr noundef null) ; 2 uses
-  %i.c = icmp eq ptr %5, null
-  br i1 %i.c, label %.thread32, label %.thread27
+  %11 = tail call fastcc ptr @bio_open_default_(ptr noundef %0, i8 noundef signext 114, i32 noundef 4, i32 noundef 0) ; 4 uses
+  %i.c = icmp eq ptr %11, null
+  br i1 %i.c, label %.thread32, label %12
 
-.thread32:                                        ; preds = %bb.c
+12:                                               ; preds = %bb.c
+  %13 = tail call ptr @d2i_X509_REQ_bio(ptr noundef nonnull %11, ptr noundef null) #25 ; 2 uses
+  %14 = icmp eq ptr %13, null
+  br i1 %14, label %.thread32, label %15
+
+15:                                               ; preds = %12
+  %16 = tail call i32 @BIO_free(ptr noundef nonnull %11) #25 ; 0 uses
+  br label %.thread27
+
+.thread32:                                        ; preds = %12, %bb.c
+  %17 = load ptr, ptr @bio_err, align 8, !tbaa !12
+  tail call void @ERR_print_errors(ptr noundef %17) #25
+  %18 = tail call i32 @BIO_free(ptr noundef %11) #25 ; 0 uses
   %i.d = load ptr, ptr @bio_err, align 8, !tbaa !12
   %i.e = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.d, ptr noundef nonnull @.str.24, ptr noundef %3, ptr noundef %0) #25 ; 0 uses
   br label %bb.h
@@ -289,8 +315,8 @@ bb.d:                                             ; preds = %bb.a
   %.not25 = icmp eq ptr %i.f, null
   br i1 %.not25, label %bb.h, label %.thread27
 
-.thread27:                                        ; preds = %bb.b, %bb.c, %bb.d
-  %.130 = phi ptr [ %i.f, %bb.d ], [ %5, %bb.c ], [ %4, %bb.b ] ; 5 uses
+.thread27:                                        ; preds = %.thread, %15, %bb.d
+  %.130 = phi ptr [ %i.f, %bb.d ], [ %6, %.thread ], [ %13, %15 ] ; 5 uses
   %i.g = tail call ptr @X509_REQ_get0_pubkey(ptr noundef nonnull %.130) #25 ; 2 uses
   %i.h = tail call i32 @do_X509_REQ_verify(ptr noundef nonnull %.130, ptr noundef %i.g, ptr noundef %2) ; 2 uses
   %i.i = icmp eq ptr %i.g, null

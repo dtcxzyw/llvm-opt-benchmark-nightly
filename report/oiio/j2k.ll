@@ -204,9 +204,7 @@ opj_get_tile_dimensions.exit.i:                   ; preds = %.loopexit.i, %opj_g
   %i.ej = and i32 %i.eh, 7
   %.not.i.i = icmp ne i32 %i.ej, 0
   %i.ek = zext i1 %.not.i.i to i32
-  %i.el = add nuw nsw i32 %i.ei, %i.ek            ; 2 uses
-  %3 = icmp eq i32 %i.el, 3
-  %.0104.i = select i1 %3, i32 4, i32 %i.el
+  %i.el = add nuw nsw i32 %i.ei, %i.ek
   %i.em = getelementptr inbounds nuw i8, ptr %i.ec, i64 8
   %i.en = load i32, ptr %i.em, align 8, !tbaa !359 ; 19 uses
   %i.eo = load i32, ptr %i.ec, align 8, !tbaa !360 ; 20 uses
@@ -250,13 +248,14 @@ opj_get_tile_dimensions.exit.i:                   ; preds = %.loopexit.i, %opj_g
   %i.ga = load ptr, ptr %i.fz, align 8, !tbaa !332
   %i.gb = zext i32 %i.fy to i64
   %i.gc = getelementptr inbounds nuw [4 x i8], ptr %i.ga, i64 %i.gb ; 5 uses
-  switch i32 %.0104.i, label %.loopexit.i [
+  switch i32 %i.el, label %.loopexit.i [
     i32 1, label %bb.p
     i32 2, label %bb.q
     i32 4, label %.preheader116.i
+    i32 3, label %.preheader116.i
   ]
 
-.preheader116.i:                                  ; preds = %opj_get_tile_dimensions.exit.i
+.preheader116.i:                                  ; preds = %opj_get_tile_dimensions.exit.i, %opj_get_tile_dimensions.exit.i
   %.not173.i = icmp eq i32 %i.er, %i.et
   br i1 %.not173.i, label %.loopexit.i, label %.preheader108.lr.ph.i
 

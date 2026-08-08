@@ -23,13 +23,14 @@ bb.a:
 define dso_local range(i32 0, 2) i32 @SipHash_set_hash_size(ptr nofree noundef captures(none) %0, i64 noundef %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = icmp eq i64 %1, 0
-  %spec.store.select.i = select i1 %i.a, i64 16, i64 %1 ; 3 uses
-  switch i64 %spec.store.select.i, label %bb.d [
+  %spec.store.select.i = select i1 %i.a, i64 16, i64 %1 ; 2 uses
+  switch i64 %1, label %bb.d [
     i64 16, label %bb.b
     i64 8, label %bb.b
+    i64 0, label %bb.b
   ]
 
-bb.b:                                             ; preds = %bb.a, %bb.a
+bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 3 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !10   ; 2 uses
   %i.d = icmp eq i32 %i.c, 0
@@ -48,7 +49,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 %i.h, ptr %i.b, align 4, !tbaa !10
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
+bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
   %.0 = phi i32 [ 0, %bb.a ], [ 1, %bb.c ], [ 1, %bb.b ]
   ret i32 %.0
 }

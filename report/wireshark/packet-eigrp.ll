@@ -201,9 +201,9 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.preheader, %dissect_eigrp_general_tlv.exit
   %.0121 = phi i32 [ %i.nx, %dissect_eigrp_general_tlv.exit ], [ 20, %.preheader ] ; 13 uses
-  %i.bb = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %.0121) ; 2 uses
+  %i.bb = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %.0121) ; 3 uses
   %i.bc = icmp eq i16 %i.bb, 245
-  %spec.store.select = select i1 %i.bc, i16 8, i16 %i.bb ; 10 uses
+  %spec.store.select = select i1 %i.bc, i16 8, i16 %i.bb ; 9 uses
   %i.bd = add i32 %.0121, 2                       ; 2 uses
   %i.be = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %i.bd) ; 2 uses
   %i.bf = zext i16 %i.be to i32                   ; 9 uses
@@ -240,7 +240,7 @@ bb.e:                                             ; preds = %bb.d
   %i.bs = add i32 %.0121, 4
   %i.bt = add nsw i32 %i.bf, -4
   %i.bu = call ptr @tvb_new_subset_length(ptr noundef %0, i32 noundef %i.bs, i32 noundef %i.bt) ; 39 uses
-  switch i16 %spec.store.select, label %bb.ac [
+  switch i16 %i.bb, label %bb.ac [
     i16 1, label %bb.f
     i16 2, label %bb.h
     i16 3, label %bb.p
@@ -249,6 +249,7 @@ bb.e:                                             ; preds = %bb.d
     i16 6, label %bb.z
     i16 7, label %bb.aa
     i16 8, label %bb.ab
+    i16 245, label %bb.ab
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -441,7 +442,7 @@ bb.aa:                                            ; preds = %bb.e
   %i.fd = call ptr @expert_add_info(ptr noundef %1, ptr noundef %i.br, ptr noundef nonnull @ei_eigrp_peer_termination_graceful) ; 0 uses
   br label %dissect_eigrp_general_tlv.exit
 
-bb.ab:                                            ; preds = %bb.e
+bb.ab:                                            ; preds = %bb.e, %bb.e
   %i.fe = load i32, ptr @hf_eigrp_tidlist_flags, align 4
   %i.ff = call ptr @proto_tree_add_item(ptr noundef %i.bm, i32 noundef %i.fe, ptr noundef %i.bu, i32 noundef 0, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.fg = call zeroext i16 @tvb_get_ntohs(ptr noundef %i.bu, i32 noundef 2)

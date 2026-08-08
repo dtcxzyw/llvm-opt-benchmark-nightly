@@ -49,7 +49,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.22 = private unnamed_addr constant [22 x i8] c"time_divide: overflow\00", align 1
 @.str.23 = private unnamed_addr constant [30 x i8] c"time_divide: division by zero\00", align 1
 @__func__.time_divide = private unnamed_addr constant [12 x i8] c"time_divide\00", align 1
-@switch.table.absolute_val_to_repr = private unnamed_addr constant [5 x i8] c"\12\13\13\13\16", align 4
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define hidden void @ftype_register_time() local_unnamed_addr #0 {
@@ -396,19 +395,25 @@ bb.a:
   %.not = icmp eq i32 %i.a, 3
   %spec.select = select i1 %.not, i32 1, i32 9    ; 2 uses
   %i.b = icmp eq i32 %3, 0
-  %spec.store.select = select i1 %i.b, i32 18, i32 %3 ; 3 uses
+  %spec.store.select = select i1 %i.b, i32 18, i32 %3 ; 6 uses
   switch i32 %2, label %bb.d [
     i32 0, label %bb.e
     i32 3, label %bb.e
-    i32 1, label %bb.b
+    i32 1, label %4
     i32 2, label %bb.c
     i32 4, label %bb.c
   ]
 
-bb.b:                                             ; preds = %bb.a
-  %switch.tableidx = add i32 %spec.store.select, -18 ; 2 uses
-  %4 = icmp ult i32 %switch.tableidx, 5
-  br i1 %4, label %switch.lookup, label %bb.e
+4:                                                ; preds = %bb.a
+  switch i32 %3, label %bb.b [
+    i32 0, label %bb.e
+    i32 18, label %bb.e
+    i32 22, label %bb.e
+    i32 19, label %bb.e
+  ]
+
+bb.b:                                             ; preds = %4
+  br label %bb.e
 
 bb.c:                                             ; preds = %bb.a, %bb.a
   br label %bb.e
@@ -417,16 +422,9 @@ bb.d:                                             ; preds = %bb.a
   tail call void (ptr, i32, ptr, i64, ptr, ptr, ...) @ws_log_fatal_full(ptr noundef nonnull @.str.15, i32 noundef 7, ptr noundef nonnull @.str.16, i64 noundef 505, ptr noundef nonnull @__func__.absolute_val_to_repr, ptr noundef nonnull @.str.17) #16
   unreachable
 
-switch.lookup:                                    ; preds = %bb.b
-  %5 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.absolute_val_to_repr, i64 %5
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i32
-  br label %bb.e
-
-bb.e:                                             ; preds = %bb.b, %switch.lookup, %bb.a, %bb.a, %bb.c
-  %.111 = phi i32 [ %spec.store.select, %bb.a ], [ %spec.store.select, %bb.a ], [ 19, %bb.c ], [ %switch.ext, %switch.lookup ], [ 19, %bb.b ]
-  %.1 = phi i32 [ %spec.select, %bb.a ], [ %spec.select, %bb.a ], [ 9, %bb.c ], [ 11, %switch.lookup ], [ 11, %bb.b ]
+bb.e:                                             ; preds = %bb.b, %4, %4, %4, %4, %bb.a, %bb.a, %bb.c
+  %.111 = phi i32 [ %spec.store.select, %bb.a ], [ %spec.store.select, %bb.a ], [ 19, %bb.c ], [ 19, %bb.b ], [ %spec.store.select, %4 ], [ %spec.store.select, %4 ], [ %spec.store.select, %4 ], [ %spec.store.select, %4 ]
+  %.1 = phi i32 [ %spec.select, %bb.a ], [ %spec.select, %bb.a ], [ 9, %bb.c ], [ 11, %bb.b ], [ 11, %4 ], [ 11, %4 ], [ 11, %4 ], [ 11, %4 ]
   %i.c = getelementptr i8, ptr %1, i64 8
   %i.d = tail call ptr @abs_time_to_str_ex(ptr noundef %0, ptr noundef %i.c, i32 noundef %.111, i32 noundef %.1)
   ret ptr %i.d

@@ -203,16 +203,15 @@ bb.c:                                             ; preds = %bb.b
   %i.l = icmp eq i8 %i.k, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 5
   %i.n = load i8, ptr %i.m, align 1               ; 2 uses
-  %6 = icmp eq i8 %i.n, 4
-  %spec.select.i = select i1 %6, i8 1, i8 %i.n    ; 2 uses
   br i1 %i.l, label %bb.d, label %bb.o
 
 bb.d:                                             ; preds = %bb.c
-  switch i8 %spec.select.i, label %.critedge146 [
+  switch i8 %i.n, label %.critedge146 [
     i8 0, label %bb.e
     i8 1, label %bb.f
     i8 2, label %bb.m
     i8 3, label %bb.n
+    i8 4, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -224,7 +223,7 @@ bb.e:                                             ; preds = %bb.d
   call fastcc void @_ZN2v88internal8compiler12_GLOBAL__N_116VisitWordCompareEPNS1_19InstructionSelectorENS1_10turboshaft7OpIndexEjPNS1_17FlagsContinuationE(ptr noundef nonnull %0, i32 %.sroa.0.0.copyload.pre197, i32 noundef 184, ptr noundef nonnull %3)
   br label %.critedge146.thread
 
-bb.f:                                             ; preds = %bb.d
+bb.f:                                             ; preds = %bb.d, %bb.d
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.t = load i8, ptr %i.s, align 4
   %i.u = icmp eq i8 %i.t, 0
@@ -374,11 +373,12 @@ bb.n:                                             ; preds = %bb.d
   br label %.critedge146.thread
 
 bb.o:                                             ; preds = %bb.c
-  switch i8 %spec.select.i, label %.critedge146 [
+  switch i8 %i.n, label %.critedge146 [
     i8 0, label %bb.p
     i8 1, label %bb.q
     i8 2, label %bb.r
     i8 3, label %bb.u
+    i8 4, label %bb.q
   ]
 
 bb.p:                                             ; preds = %bb.o
@@ -393,7 +393,7 @@ bb.p:                                             ; preds = %bb.o
   call fastcc void @_ZN2v88internal8compiler12_GLOBAL__N_116VisitWordCompareEPNS1_19InstructionSelectorENS1_10turboshaft7OpIndexEjPNS1_17FlagsContinuationE(ptr noundef %0, i32 %.sroa.046.0.copyload, i32 noundef 184, ptr noundef nonnull %3)
   br label %.critedge146.thread
 
-bb.q:                                             ; preds = %bb.o
+bb.q:                                             ; preds = %bb.o, %bb.o
   %i.db = call noundef zeroext i8 @_ZNK2v88internal8compiler19InstructionSelector26GetComparisonFlagConditionERKNS1_10turboshaft12ComparisonOpE(ptr noundef nonnull align 8 dereferenceable(752) %0, ptr noundef nonnull align 4 dereferenceable(6) %i.h) #25
   %i.dc = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.dd = load i8, ptr %i.dc, align 4
@@ -580,8 +580,8 @@ bb.al:                                            ; preds = %bb.ac
   call void @_ZN2v88internal8compiler19InstructionSelector28VisitStackPointerGreaterThanENS1_10turboshaft7OpIndexEPNS1_17FlagsContinuationE(ptr noundef nonnull align 8 dereferenceable(752) %0, i32 %.sroa.0.0.copyload.pre197, ptr noundef %3)
   br label %.critedge146.thread
 
-.critedge146:                                     ; preds = %..critedge146_crit_edge, %bb.ac, %bb.ae, %bb.ad, %bb.d, %bb.o, %bb.a
-  %.sroa.0.0.copyload = phi i32 [ %.sroa.0.0.copyload.pre, %..critedge146_crit_edge ], [ %.sroa.0.0.copyload.pre197, %bb.ac ], [ %.sroa.0.0.copyload.pre197, %bb.ae ], [ %.sroa.0.0.copyload.pre197, %bb.ad ], [ %.sroa.0.0.copyload.pre197, %bb.d ], [ %.sroa.0.0.copyload.pre197, %bb.o ], [ %.sroa.0.0.copyload.pre197, %bb.a ]
+.critedge146:                                     ; preds = %..critedge146_crit_edge, %bb.ac, %bb.d, %bb.o, %bb.ae, %bb.ad, %bb.a
+  %.sroa.0.0.copyload = phi i32 [ %.sroa.0.0.copyload.pre, %..critedge146_crit_edge ], [ %.sroa.0.0.copyload.pre197, %bb.ac ], [ %.sroa.0.0.copyload.pre197, %bb.d ], [ %.sroa.0.0.copyload.pre197, %bb.o ], [ %.sroa.0.0.copyload.pre197, %bb.ae ], [ %.sroa.0.0.copyload.pre197, %bb.ad ], [ %.sroa.0.0.copyload.pre197, %bb.a ]
   %.sroa.07.0.copyload = load i32, ptr %4, align 4
   call fastcc void @_ZN2v88internal8compiler12_GLOBAL__N_116VisitCompareZeroEPNS1_19InstructionSelectorENS1_10turboshaft7OpIndexES6_jPNS1_17FlagsContinuationE(ptr noundef %0, i32 %.sroa.07.0.copyload, i32 %.sroa.0.0.copyload, i32 noundef 184, ptr noundef %3)
   br label %.critedge146.thread

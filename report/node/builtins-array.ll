@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN2v88internal12_GLOBAL__N_118ArrayConcatVisitor21increase_index_offsetEj.exit
 
 _ZN2v88internal12_GLOBAL__N_118ArrayConcatVisitor21increase_index_offsetEj.exit: ; preds = %_ZN2v88internal11HandleScopeD2Ev.exit, %.split, %bb.h, %bb.g, %._crit_edge
-  %.04074 = phi i1 [ true, %._crit_edge ], [ true, %bb.h ], [ true, %bb.g ], [ false, %.split ], [ false, %_ZN2v88internal11HandleScopeD2Ev.exit ]
+  %.04074 = phi i1 [ true, %bb.h ], [ true, %._crit_edge ], [ true, %bb.g ], [ false, %.split ], [ false, %_ZN2v88internal11HandleScopeD2Ev.exit ]
   ret i1 %.04074
 }
 

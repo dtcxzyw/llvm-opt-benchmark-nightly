@@ -204,10 +204,8 @@ bb.do:                                            ; preds = %bb.dn, %bb.dm
   %i.rd = phi ptr [ %i.rc, %bb.dn ], [ null, %bb.dm ]
   %i.re = load ptr, ptr %i.qx, align 8            ; 3 uses
   %i.rf = getelementptr i8, ptr %i.re, i64 200    ; 2 uses
-  %i.rg = load i32, ptr %i.rf, align 8            ; 2 uses
-  %.not38.i.i.i.i.i = icmp eq i32 %i.rg, 0
-  %..i30.i.i.i.i = select i1 %.not38.i.i.i.i.i, i32 8, i32 %i.rg ; 2 uses
-  switch i32 %..i30.i.i.i.i, label %bpc_to_bpp.exit.i.i.i.i.i [
+  %i.rg = load i32, ptr %i.rf, align 8            ; 3 uses
+  switch i32 %i.rg, label %bpc_to_bpp.exit.i.i.i.i.i [
     i32 6, label %bb.ds
     i32 7, label %bb.ds
     i32 8, label %bb.dp
@@ -219,9 +217,10 @@ bb.do:                                            ; preds = %bb.dn, %bb.dm
     i32 14, label %bb.dr
     i32 15, label %bb.dr
     i32 16, label %bb.dr
+    i32 0, label %bb.dp
   ]
 
-bb.dp:                                            ; preds = %bb.do, %bb.do
+bb.dp:                                            ; preds = %bb.do, %bb.do, %bb.do
   br label %bb.ds
 
 bb.dq:                                            ; preds = %bb.do, %bb.do
@@ -231,7 +230,9 @@ bb.dr:                                            ; preds = %bb.do, %bb.do, %bb.
   br label %bb.ds
 
 bpc_to_bpp.exit.i.i.i.i.i:                        ; preds = %bb.do
-  %i.rh = sext i32 %..i30.i.i.i.i to i64
+  %.not38.i.i.i.i.i = icmp eq i32 %i.rg, 0
+  %..i31.i.i.i.i = select i1 %.not38.i.i.i.i.i, i32 8, i32 %i.rg
+  %i.rh = sext i32 %..i31.i.i.i.i to i64
   %i.ri = call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.12, ptr nonnull @.str.1, i32 4354, i32 2321, i64 16) #25, !srcloc !285
   call void (ptr, ...) @__SCT__WARN_trap(ptr noundef %i.ri, ptr noundef nonnull @.str.275, i64 noundef %i.rh) #24
   call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #25, !srcloc !286

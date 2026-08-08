@@ -166,8 +166,8 @@ bb.a:
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %i.d = icmp eq i64 %1, 0                        ; 2 uses
-  %spec.select = select i1 %i.d, i64 20, i64 %1   ; 4 uses
-  %spec.select48 = select i1 %i.d, ptr @.str, ptr %2 ; 3 uses
+  %spec.select = select i1 %i.d, i64 20, i64 %1   ; 3 uses
+  %spec.select48 = select i1 %i.d, ptr @.str, ptr %2 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   call void @_ZN3gmx23TextLineWrapperSettingsC1Ev(ptr noundef nonnull align 4 dereferenceable(14) %4)
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -209,13 +209,11 @@ bb.c:                                             ; preds = %bb.a
 
 ._crit_edge.i.i.i.i:                              ; preds = %.noexc15, %bb.c
   %i.l = phi ptr [ %i.j, %.noexc15 ], [ %i.g, %bb.c ] ; 2 uses
-  switch i64 %spec.select, label %bb.e [
-    i64 1, label %bb.d
-    i64 0, label %bb.f
-  ]
+  %cond64 = icmp eq i64 %1, 1
+  br i1 %cond64, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge.i.i.i.i
-  %i.m = load i8, ptr %spec.select48, align 1, !tbaa !31
+  %i.m = load i8, ptr %2, align 1, !tbaa !31
   store i8 %i.m, ptr %i.l, align 1, !tbaa !31
   br label %bb.f
 
@@ -223,7 +221,7 @@ bb.e:                                             ; preds = %._crit_edge.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.l, ptr noundef nonnull align 1 dereferenceable(1) %spec.select48, i64 %spec.select, i1 false)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %._crit_edge.i.i.i.i
+bb.f:                                             ; preds = %bb.e, %bb.d
   %i.n = load i64, ptr %i.c, align 8, !tbaa !30   ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i64 %i.n, ptr %i.o, align 8, !tbaa !9

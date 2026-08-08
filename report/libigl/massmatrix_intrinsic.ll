@@ -204,18 +204,17 @@ bb.a:
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %81 = icmp eq i32 %2, 3
-  %.0170 = select i1 %81, i32 0, i32 %2
   call void @llvm.lifetime.start.p0(ptr nonnull %61) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %61, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %62) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %62, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %63, i8 0, i64 16, i1 false)
-  switch i32 %.0170, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
+  switch i32 %2, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
     i32 0, label %bb.d
     i32 1, label %bb.q
     i32 2, label %bb.dj
+    i32 3, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.a
@@ -223,7 +222,7 @@ bb.c:                                             ; preds = %bb.a
           cleanup
   br label %bb.eo
 
-bb.d:                                             ; preds = %bb.b
+bb.d:                                             ; preds = %bb.b, %bb.b
   %sext2796 = mul i64 %i.b, 12884901888
   %i.e = ashr exact i64 %sext2796, 32             ; 3 uses
   invoke void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %61, i64 noundef %i.e, i64 noundef 1)
@@ -626,7 +625,7 @@ bb.el:                                            ; preds = %bb.eg
   call void @llvm.lifetime.end.p0(ptr nonnull %80) #14
   br label %bb.en
 
-_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i, %middle.block3634, %._crit_edge.i.i.i.i.i.i, %bb.b, %bb.eh, %bb.cx
+_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i, %middle.block3634, %bb.b, %._crit_edge.i.i.i.i.i.i, %bb.eh, %bb.cx
   %i.dhb = sext i32 %3 to i64                     ; 2 uses
   invoke void @_ZN3igl6sparseIN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEES3_NS2_IdLin1ELi1ELi0ELin1ELi1EEEdEEvRKT_RKT0_RKT1_mmRNS1_12SparseMatrixIT2_Li0EiEE(ptr noundef nonnull align 8 dereferenceable(16) %61, ptr noundef nonnull align 8 dereferenceable(16) %62, ptr noundef nonnull align 8 dereferenceable(16) %63, i64 noundef %i.dhb, i64 noundef %i.dhb, ptr noundef nonnull align 8 dereferenceable(72) %4)
           to label %bb.em unwind label %bb.m
@@ -1029,18 +1028,17 @@ bb.a:
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %41 = icmp eq i32 %2, 3
-  %.0170 = select i1 %41, i32 1, i32 %2
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %27, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %28, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %29, i8 0, i64 16, i1 false)
-  switch i32 %.0170, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
+  switch i32 %2, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
     i32 0, label %bb.d
     i32 1, label %bb.j
     i32 2, label %bb.cv
+    i32 3, label %bb.j
   ]
 
 bb.c:                                             ; preds = %bb.a
@@ -1443,7 +1441,7 @@ bb.i:                                             ; preds = %thread-pre-split.i.
           cleanup
   br label %bb.df
 
-bb.j:                                             ; preds = %bb.b
+bb.j:                                             ; preds = %bb.b, %bb.b
   %sext2747 = mul i64 %i.b, 12884901888
   %i.ih = ashr exact i64 %sext2747, 32            ; 3 uses
   invoke void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %27, i64 noundef %i.ih, i64 noundef 1)
@@ -1846,7 +1844,7 @@ bb.dd:                                            ; preds = %bb.da
   call void @llvm.lifetime.end.p0(ptr nonnull %40) #14
   br label %bb.df
 
-_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i, %middle.block3435, %._crit_edge.i.i.i.i.i.i, %bb.b, %bb.db, %bb.cm
+_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i, %middle.block3435, %bb.b, %._crit_edge.i.i.i.i.i.i, %bb.db, %bb.cm
   %i.cqg = sext i32 %3 to i64                     ; 2 uses
   invoke void @_ZN3igl6sparseIN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEES3_NS2_IdLin1ELi1ELi0ELin1ELi1EEEdEEvRKT_RKT0_RKT1_mmRNS1_12SparseMatrixIT2_Li0EiEE(ptr noundef nonnull align 8 dereferenceable(16) %27, ptr noundef nonnull align 8 dereferenceable(16) %28, ptr noundef nonnull align 8 dereferenceable(16) %29, i64 noundef %i.cqg, i64 noundef %i.cqg, ptr noundef nonnull align 8 dereferenceable(72) %4)
           to label %bb.de unwind label %bb.i
@@ -2145,18 +2143,17 @@ bb.a:
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %81 = icmp eq i32 %2, 3
-  %.0170 = select i1 %81, i32 1, i32 %2
   call void @llvm.lifetime.start.p0(ptr nonnull %61) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %61, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %62) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %62, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %63, i8 0, i64 16, i1 false)
-  switch i32 %.0170, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
+  switch i32 %2, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
     i32 0, label %bb.d
     i32 1, label %bb.q
     i32 2, label %bb.dj
+    i32 3, label %bb.q
   ]
 
 bb.c:                                             ; preds = %bb.a
@@ -2535,7 +2532,7 @@ bb.p:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %66) #14
   br label %bb.en
 
-bb.q:                                             ; preds = %bb.b
+bb.q:                                             ; preds = %bb.b, %bb.b
   %sext2786 = mul i64 %i.b, 12884901888
   %i.ef = ashr exact i64 %sext2786, 32            ; 3 uses
   invoke void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %61, i64 noundef %i.ef, i64 noundef 1)
@@ -2938,7 +2935,7 @@ bb.el:                                            ; preds = %bb.eg
   call void @llvm.lifetime.end.p0(ptr nonnull %80) #14
   br label %bb.en
 
-_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i, %middle.block3634, %._crit_edge.i.i.i.i.i.i, %bb.b, %bb.eh, %bb.cx
+_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i, %middle.block3634, %bb.b, %._crit_edge.i.i.i.i.i.i, %bb.eh, %bb.cx
   %i.dhb = sext i32 %3 to i64                     ; 2 uses
   invoke void @_ZN3igl6sparseIN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEES3_NS2_IdLin1ELi1ELi0ELin1ELi1EEEdEEvRKT_RKT0_RKT1_mmRNS1_12SparseMatrixIT2_Li0EiEE(ptr noundef nonnull align 8 dereferenceable(16) %61, ptr noundef nonnull align 8 dereferenceable(16) %62, ptr noundef nonnull align 8 dereferenceable(16) %63, i64 noundef %i.dhb, i64 noundef %i.dhb, ptr noundef nonnull align 8 dereferenceable(72) %4)
           to label %bb.em unwind label %bb.m

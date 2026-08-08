@@ -63,7 +63,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.at
   %indvars.iv = phi i64 [ %i.j, %.lr.ph ], [ %indvars.iv.next, %bb.at ] ; 8 uses
   %.0163226 = phi i1 [ false, %.lr.ph ], [ %.2165, %bb.at ] ; 18 uses
-  %.0168225 = phi i32 [ 8, %.lr.ph ], [ %.5173, %bb.at ] ; 2 uses
+  %.0168225 = phi i32 [ 8, %.lr.ph ], [ %.5173, %bb.at ]
   %.0174223 = phi i32 [ 0, %.lr.ph ], [ %.1175, %bb.at ] ; 9 uses
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
   %i.l = load i32, ptr %i.k, align 4
@@ -123,8 +123,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br label %bb.ar
 
 bb.i:                                             ; preds = %bb.d, %bb.e, %bb.b, %bb.b
-  %6 = icmp eq i32 %.0168225, 8
-  %.1169 = select i1 %6, i32 18, i32 %.0168225
   %i.ae = tail call ptr @__errno_location() #15   ; 5 uses
   store i32 0, ptr %i.ae, align 4
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv ; 3 uses
@@ -200,7 +198,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.j, %bb.p, %bb.o
   %.2160 = phi double [ 0.000000e+00, %bb.j ], [ %i.bk, %bb.p ], [ %i.bd, %bb.o ] ; 18 uses
-  switch i32 %.1169, label %.thread [
+  switch i32 %.0168225, label %.thread [
     i32 30, label %bb.r
     i32 29, label %bb.s
     i32 18, label %bb.t
@@ -213,6 +211,7 @@ bb.q:                                             ; preds = %bb.j, %bb.p, %bb.o
     i32 26, label %bb.aj
     i32 27, label %bb.ak
     i32 28, label %bb.al
+    i32 8, label %bb.t
   ]
 
 bb.r:                                             ; preds = %bb.q
@@ -242,7 +241,7 @@ bb.s:                                             ; preds = %bb.q
   store i32 8192, ptr %i.b, align 4
   br label %bb.ar
 
-bb.t:                                             ; preds = %bb.q
+bb.t:                                             ; preds = %bb.q, %bb.q
   %i.cc = load i32, ptr %i.c, align 4
   %i.cd = load i32, ptr %4, align 8
   %i.ce = add i32 %i.cd, %i.cc
@@ -595,7 +594,7 @@ bb.ax:                                            ; preds = %bb.aw
   store <2 x i32> %i.jd, ptr %i.jb, align 8
   br label %.thread
 
-.thread:                                          ; preds = %bb.l, %bb.k, %bb.ar, %bb.b, %bb.an, %bb.q, %bb.j, %bb.m, %bb.n, %bb.i, %bb.c, %bb.a, %bb.aw, %bb.ax, %._crit_edge
+.thread:                                          ; preds = %bb.q, %bb.l, %bb.k, %bb.ar, %bb.b, %bb.an, %bb.j, %bb.m, %bb.n, %bb.i, %bb.c, %bb.a, %bb.aw, %bb.ax, %._crit_edge
   %.5 = phi i32 [ 0, %bb.aw ], [ -1, %._crit_edge ], [ 0, %bb.ax ], [ -1, %bb.a ], [ -1, %bb.l ], [ -1, %bb.n ], [ -1, %bb.ar ], [ -1, %bb.q ], [ -1, %bb.m ], [ -2, %bb.i ], [ -1, %bb.j ], [ %i.o, %bb.c ], [ -1, %bb.b ], [ -1, %bb.an ], [ -2, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13

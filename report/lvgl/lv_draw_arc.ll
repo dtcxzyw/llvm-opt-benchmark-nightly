@@ -179,13 +179,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %i.r = phi i32 [ %i.q, %bb.d ], [ 0, %bb.c ]    ; 32 uses
-  %i.s = sdiv i32 %spec.select, 90
+  %i.s = sdiv i32 %spec.select, 90                ; 2 uses
   %i.t = sdiv i32 %.0239, 90
   %i.u = and i32 %i.s, 255                        ; 2 uses
   %i.v = icmp eq i32 %i.u, 4
   %i.w = and i32 %i.t, 255                        ; 2 uses
   %i.x = icmp eq i32 %i.w, 4
-  %i.y = select i1 %i.v, i32 3, i32 %i.u          ; 6 uses
+  %i.y = select i1 %i.v, i32 3, i32 %i.u          ; 5 uses
   %i.z = select i1 %i.x, i32 3, i32 %i.w          ; 5 uses
   %i.aa = icmp ne i32 %i.y, %i.z
   %.not = icmp sgt i32 %spec.select, %.0239
@@ -193,12 +193,13 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   br i1 %or.cond243, label %bb.k, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %trunc = trunc nuw i32 %i.y to i8
+  %trunc = trunc i32 %i.s to i8
   switch i8 %trunc, label %bb.t [
     i8 0, label %bb.g
     i8 1, label %bb.h
     i8 2, label %bb.i
     i8 3, label %bb.j
+    i8 4, label %bb.j
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -303,7 +304,7 @@ bb.i:                                             ; preds = %bb.f
   store i32 %i.dc, ptr %i.dd, align 4, !tbaa !40
   br label %bb.t
 
-bb.j:                                             ; preds = %bb.f
+bb.j:                                             ; preds = %bb.f, %bb.f
   %i.de = trunc i32 %spec.select to i16           ; 2 uses
   %i.df = add i16 %i.de, 90
   %i.dg = tail call i32 @lv_trigo_sin(i16 noundef signext %i.df) #4
@@ -517,7 +518,7 @@ bb.s:                                             ; preds = %bb.q
   store i32 %i.iy, ptr %i.iz, align 4, !tbaa !41
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.h, %bb.j, %bb.i, %bb.g, %bb.n, %bb.r, %bb.s, %bb.p, %bb.l, %bb.f, %bb.b
+bb.t:                                             ; preds = %bb.f, %bb.h, %bb.j, %bb.i, %bb.g, %bb.n, %bb.r, %bb.s, %bb.p, %bb.l, %bb.b
   ret void
 }
 

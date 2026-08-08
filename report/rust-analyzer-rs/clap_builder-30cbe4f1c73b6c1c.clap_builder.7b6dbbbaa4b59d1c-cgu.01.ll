@@ -203,10 +203,8 @@ bb.cw:                                            ; preds = %bb.hj, %bb.ga, %bb.
 
 bb.cx:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters9enumerate9EnumerateINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtNtCscAsMj0W7j8b_3std3ffi6os_str8OsStringEEECsaB0tVqiIPBo_12clap_builder.exit188, %bb.by, %bb.bx, %bb.bl, %bb.bo
   %i.iu = getelementptr inbounds nuw i8, ptr %4, i64 596
-  %i.iv = load i8, ptr %i.iu, align 4, !range !430, !noundef !9 ; 2 uses
-  %.not126 = icmp eq i8 %i.iv, -1
-  %9 = select i1 %.not126, i8 0, i8 %i.iv
-  switch i8 %9, label %default.unreachable [
+  %i.iv = load i8, ptr %i.iu, align 4, !range !430, !noundef !9
+  switch i8 %i.iv, label %default.unreachable [
     i8 0, label %bb.cy
     i8 1, label %bb.cz
     i8 2, label %bb.da
@@ -216,12 +214,13 @@ bb.cx:                                            ; preds = %_RINvNtCshzWfHUSfYa
     i8 6, label %bb.de
     i8 7, label %bb.df
     i8 8, label %bb.dg
+    i8 -1, label %bb.cy
   ]
 
 default.unreachable:                              ; preds = %bb.cx
   unreachable
 
-bb.cy:                                            ; preds = %bb.cx
+bb.cy:                                            ; preds = %bb.cx, %bb.cx
   br i1 %.not304, label %switch.early.test, label %bb.dh
 
 switch.early.test:                                ; preds = %bb.cy

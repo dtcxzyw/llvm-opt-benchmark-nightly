@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.bn = icmp eq i32 %4, 0
-  %spec.store.select = select i1 %i.bn, i32 3, i32 %4 ; 12 uses
+  %spec.store.select = select i1 %i.bn, i32 3, i32 %4 ; 10 uses
   %i.bo = or i32 %i.bm, %i.ax
   %or.cond.not.i.i = icmp sgt i32 %i.bo, -1
   br i1 %or.cond.not.i.i, label %bb.k, label %_ZL21stbi__mad4sizes_validiiiii.exit.thread
@@ -416,11 +416,12 @@ bb.z:                                             ; preds = %bb.x
   br label %_ZL17stbi__hdr_convertPfPhi.exit
 
 bb.aa:                                            ; preds = %_ZL10stbi__getnP13stbi__contextPhi.exit
-  switch i32 %spec.store.select, label %_ZL17stbi__hdr_convertPfPhi.exit [
+  switch i32 %4, label %_ZL17stbi__hdr_convertPfPhi.exit [
     i32 4, label %bb.ab
     i32 3, label %bb.ac
     i32 2, label %bb.ad
     i32 1, label %bb.ae
+    i32 0, label %bb.ac
   ]
 
 bb.ab:                                            ; preds = %bb.aa
@@ -428,7 +429,7 @@ bb.ab:                                            ; preds = %bb.aa
   store float 1.000000e+00, ptr %i.fa, align 4, !tbaa !58
   br label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ab, %bb.aa
+bb.ac:                                            ; preds = %bb.aa, %bb.aa, %bb.ab
   %i.fb = getelementptr inbounds nuw i8, ptr %i.dv, i64 8
   store float 0.000000e+00, ptr %i.fb, align 4, !tbaa !58
   store <2 x float> zeroinitializer, ptr %i.dv, align 4, !tbaa !58
@@ -439,11 +440,11 @@ bb.ad:                                            ; preds = %bb.aa
   store float 1.000000e+00, ptr %i.fc, align 4, !tbaa !58
   br label %bb.ae
 
-bb.ae:                                            ; preds = %bb.ad, %bb.aa
+bb.ae:                                            ; preds = %bb.aa, %bb.ad
   store float 0.000000e+00, ptr %i.dv, align 4, !tbaa !58
   br label %_ZL17stbi__hdr_convertPfPhi.exit
 
-_ZL17stbi__hdr_convertPfPhi.exit:                 ; preds = %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ac, %bb.ae
+_ZL17stbi__hdr_convertPfPhi.exit:                 ; preds = %bb.aa, %bb.x, %bb.y, %bb.z, %bb.ac, %bb.ae
   %i.fd = add nsw i32 %.1124, 1
   br label %bb.p, !llvm.loop !376
 
@@ -846,11 +847,12 @@ bb.ce:                                            ; preds = %bb.cc
   br label %_ZL17stbi__hdr_convertPfPhi.exit192
 
 bb.cf:                                            ; preds = %bb.by
-  switch i32 %spec.store.select, label %_ZL17stbi__hdr_convertPfPhi.exit192 [
+  switch i32 %4, label %_ZL17stbi__hdr_convertPfPhi.exit192 [
     i32 4, label %bb.cg
     i32 3, label %bb.ch
     i32 2, label %bb.ci
     i32 1, label %bb.cj
+    i32 0, label %bb.ch
   ]
 
 bb.cg:                                            ; preds = %bb.cf
@@ -858,7 +860,7 @@ bb.cg:                                            ; preds = %bb.cf
   store float 1.000000e+00, ptr %i.ls, align 4, !tbaa !58
   br label %bb.ch
 
-bb.ch:                                            ; preds = %bb.cg, %bb.cf
+bb.ch:                                            ; preds = %bb.cf, %bb.cf, %bb.cg
   %i.lt = getelementptr inbounds nuw i8, ptr %i.kj, i64 8
   store float 0.000000e+00, ptr %i.lt, align 4, !tbaa !58
   store <2 x float> zeroinitializer, ptr %i.kj, align 4, !tbaa !58
@@ -869,11 +871,11 @@ bb.ci:                                            ; preds = %bb.cf
   store float 1.000000e+00, ptr %i.lu, align 4, !tbaa !58
   br label %bb.cj
 
-bb.cj:                                            ; preds = %bb.ci, %bb.cf
+bb.cj:                                            ; preds = %bb.cf, %bb.ci
   store float 0.000000e+00, ptr %i.kj, align 4, !tbaa !58
   br label %_ZL17stbi__hdr_convertPfPhi.exit192
 
-_ZL17stbi__hdr_convertPfPhi.exit192:              ; preds = %bb.cc, %bb.cd, %bb.ce, %bb.cf, %bb.ch, %bb.cj
+_ZL17stbi__hdr_convertPfPhi.exit192:              ; preds = %bb.cf, %bb.cc, %bb.cd, %bb.ce, %bb.ch, %bb.cj
   %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 1 ; 2 uses
   %exitcond102.not = icmp eq i64 %indvars.iv.next100, %wide.trip.count
   br i1 %exitcond102.not, label %._crit_edge54, label %bb.by, !llvm.loop !383

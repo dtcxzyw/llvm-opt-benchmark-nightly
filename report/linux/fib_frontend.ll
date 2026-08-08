@@ -99,7 +99,7 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoli
 define dso_local ptr @fib_new_table(ptr nofree noundef captures(address) %0, i32 noundef %1) #0 align 16 prefalign(16) {
 bb.a:
   %i.a = icmp eq i32 %1, 0
-  %spec.store.select = select i1 %i.a, i32 254, i32 %1 ; 5 uses
+  %spec.store.select = select i1 %i.a, i32 254, i32 %1 ; 4 uses
   %i.b = and i32 %spec.store.select, 255
   %i.c = getelementptr i8, ptr %0, i64 1344       ; 2 uses
   %i.d = load ptr, ptr %i.c, align 64
@@ -148,12 +148,13 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not28, label %fib_get_table.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  switch i32 %spec.store.select, label %bb.j [
+  switch i32 %1, label %bb.j [
     i32 254, label %bb.h
     i32 253, label %bb.i
+    i32 0, label %bb.h
   ]
 
-bb.h:                                             ; preds = %bb.g
+bb.h:                                             ; preds = %bb.g, %bb.g
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !14
   %i.t = getelementptr i8, ptr %0, i64 1320
   store volatile ptr %i.s, ptr %i.t, align 8

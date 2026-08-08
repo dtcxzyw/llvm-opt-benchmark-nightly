@@ -203,8 +203,8 @@ bb.o:                                             ; preds = %bb.n
   %exitcond.not = icmp eq i32 %i.am, %i.i
   br i1 %exitcond.not, label %.thread63, label %bb.d, !llvm.loop !8
 
-.thread63:                                        ; preds = %bb.m, %_ZNK6icu_7813CharacterNode8getValueEi.exit, %.critedge48, %bb.i, %bb.j, %_ZNK6icu_7813CharacterNode11countValuesEv.exit, %bb.b, %bb.l, %.critedge, %bb.a
-  %.7 = phi i8 [ 0, %bb.a ], [ 0, %bb.l ], [ 0, %.critedge ], [ 0, %bb.i ], [ 1, %bb.b ], [ 1, %_ZNK6icu_7813CharacterNode11countValuesEv.exit ], [ 0, %bb.j ], [ 0, %bb.m ], [ 1, %.critedge48 ], [ 1, %_ZNK6icu_7813CharacterNode8getValueEi.exit ]
+.thread63:                                        ; preds = %_ZNK6icu_7813CharacterNode8getValueEi.exit, %.critedge48, %bb.m, %bb.i, %bb.j, %_ZNK6icu_7813CharacterNode11countValuesEv.exit, %bb.l, %.critedge, %bb.b, %bb.a
+  %.7 = phi i8 [ 0, %bb.i ], [ 0, %bb.a ], [ 0, %bb.l ], [ 1, %bb.b ], [ 0, %.critedge ], [ 1, %_ZNK6icu_7813CharacterNode11countValuesEv.exit ], [ 0, %bb.j ], [ 1, %_ZNK6icu_7813CharacterNode8getValueEi.exit ], [ 0, %bb.m ], [ 1, %.critedge48 ]
   ret i8 %.7
 }
 

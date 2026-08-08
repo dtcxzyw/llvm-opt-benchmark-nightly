@@ -204,16 +204,14 @@ switch.lookup:                                    ; preds = %bb.a
   %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 4
   %i.ay = load i32, ptr %i.ax, align 4, !noalias !28, !noundef !3
   call void @_RNvMs5_NtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevarNtB5_20BoundTypeVarInstance8identity(ptr noalias noundef nonnull sret([28 x i8]) align 4 captures(address) dereferenceable(28) %i.a, i32 noundef %i.aw, i32 noundef %i.ay, ptr noundef nonnull %i.ar, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.at), !noalias !28
-  %i.az = call noundef i8 @_RNvXsp_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB5_4TypeNtNtB5_8variance17VarianceInferable11variance_of(ptr noalias noundef nonnull align 4 captures(address) dereferenceable(16) %i.b, ptr noundef nonnull %i.ar, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.at, ptr noundef nonnull align 4 %i.c, ptr noalias noundef nonnull readonly align 4 captures(address) dereferenceable(28) %i.a), !noalias !28 ; 2 uses
+  %i.az = call noundef i8 @_RNvXsp_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB5_4TypeNtNtB5_8variance17VarianceInferable11variance_of(ptr noalias noundef nonnull align 4 captures(address) dereferenceable(16) %i.b, ptr noundef nonnull %i.ar, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.at, ptr noundef nonnull align 4 %i.c, ptr noalias noundef nonnull readonly align 4 captures(address) dereferenceable(28) %i.a), !noalias !28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !28
-  %2 = icmp eq i8 %i.az, 3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !28
   %i.ba = shl nuw nsw i8 %i.az, 3
-  %3 = select i1 %2, i8 8, i8 %i.ba
-  %switch.shiftamt = zext nneg i8 %3 to i24
-  %switch.downshift = lshr i24 66048, %switch.shiftamt
-  %switch.masked = trunc i24 %switch.downshift to i8
+  %switch.shiftamt = zext nneg i8 %i.ba to i32
+  %switch.downshift = lshr i32 33620480, %switch.shiftamt
+  %switch.masked = trunc i32 %switch.downshift to i8
   br label %bb.d
 
 bb.d:                                             ; preds = %switch.lookup, %bb.a, %bb.b, %bb.c

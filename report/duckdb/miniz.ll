@@ -204,15 +204,16 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = icmp eq i32 %1, 1
-  %spec.store.select = select i1 %i.e, i32 2, i32 %1 ; 3 uses
+  %spec.store.select = select i1 %i.e, i32 2, i32 %1 ; 2 uses
   %i.f = icmp ne i32 %spec.store.select, 4        ; 2 uses
-  switch i32 %spec.store.select, label %.loopexit [
+  switch i32 %1, label %.loopexit [
     i32 4, label %bb.d
     i32 2, label %bb.d
     i32 0, label %bb.d
+    i32 1, label %bb.d
   ]
 
-bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c
+bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c, %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 11016
   %i.h = load i32, ptr %i.g, align 8, !tbaa !73
   %i.i = icmp sgt i32 %i.h, 0
@@ -462,7 +463,7 @@ bb.t:                                             ; preds = %bb.s
   %i.ei = zext i1 %.not135 to i32
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.t, %bb.r, %bb.n, %bb.m, %.critedge, %bb.k, %bb.l, %bb.h, %bb.g, %bb.e, %bb.d, %bb.c, %bb.a, %bb.b, %bb.q, %bb.i
+.loopexit:                                        ; preds = %bb.t, %bb.r, %bb.n, %bb.m, %bb.c, %.critedge, %bb.k, %bb.l, %bb.h, %bb.g, %bb.e, %bb.d, %bb.a, %bb.b, %bb.q, %bb.i
   %.0 = phi i32 [ -2, %bb.a ], [ -2, %bb.c ], [ -3, %bb.d ], [ -2, %bb.e ], [ -5, %bb.i ], [ -3, %bb.g ], [ 1, %bb.h ], [ %i.cp, %bb.l ], [ %i.eg, %bb.q ], [ -2, %bb.b ], [ 0, %bb.k ], [ %i.ei, %.critedge ], [ 0, %bb.t ], [ -3, %bb.m ], [ -5, %bb.r ], [ -5, %bb.n ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
