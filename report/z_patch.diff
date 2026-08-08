@@ -1,0 +1,113 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 70d584740f5b9..c463ca6b30ee2 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -4095,6 +4095,49 @@ Instruction *InstCombinerImpl::foldICmpBinOpWithConstant(ICmpInst &Cmp,
+   return foldICmpBinOpWithConstantViaTruthTable(Cmp, BO, C);
+ }
+ 
++/// Fold uadd.sat(X, C) <u C2 to X <u C2 - C when C2 >=u C is
++/// known to hold.
++static Instruction *foldICmpUAddSat(ICmpInst &Cmp, SaturatingInst *II,
++                                    InstCombiner::BuilderTy &Builder,
++                                    const SimplifyQuery &Q) {
++  // This transform may end up producing more than one instruction for the
++  // intrinsic, so limit it to one user of the intrinsic.
++  if (!II->hasOneUse())
++    return nullptr;
++
++  if (Cmp.getPredicate() != ICmpInst::ICMP_ULT)
++    return nullptr;
++
++  Value *X = II->getOperand(0);
++  Value *C = II->getOperand(1);
++  Value *C2 = Cmp.getOperand(1);
++
++  // Check whether C2 >=u C is known from assumptions or dominating conditions.
++  Value *IsKnown = simplifyICmpInst(ICmpInst::ICMP_UGE, C2, C, Q);
++
++  if (!IsKnown || !match(IsKnown, m_One()))
++    return nullptr;
++
++  Value *Limit = Builder.CreateSub(C2, C);
++  return new ICmpInst(ICmpInst::ICMP_ULT, X, Limit);
++}
++
++/// Try to fold an integer comparison whose operands are
++/// not required to be constants.
++Instruction *InstCombinerImpl::foldICmpInst(ICmpInst &Cmp) {
++  if (auto *II = dyn_cast<IntrinsicInst>(Cmp.getOperand(0))) {
++    switch (II->getIntrinsicID()) {
++    default:
++      break;
++    case Intrinsic::uadd_sat:
++      return foldICmpUAddSat(Cmp, cast<SaturatingInst>(II), Builder,
++                             SQ.getWithInstruction(&Cmp));
++    }
++  }
++
++  return nullptr;
++}
++
+ static Instruction *
+ foldICmpUSubSatOrUAddSatWithConstant(CmpPredicate Pred, SaturatingInst *II,
+                                      const APInt &C,
+@@ -7943,6 +7986,9 @@ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+   if (Instruction *Res = foldICmpInstWithConstant(I))
+     return Res;
+ 
++  if (Instruction *Res = foldICmpInst(I))
++    return Res;
++
+   // Try to match comparison as a sign bit test. Intentionally do this after
+   // foldICmpInstWithConstant() to potentially let other folds to happen first.
+   if (Instruction *New = foldSignBitTest(I))
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+index 8b759e701da60..3abb2b4163514 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
++++ b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+@@ -736,6 +736,7 @@ class LLVM_LIBRARY_VISIBILITY InstCombinerImpl final
+   Instruction *foldICmpWithConstant(ICmpInst &Cmp);
+   Instruction *foldIsMultipleOfAPowerOfTwo(ICmpInst &Cmp);
+   Instruction *foldICmpUsingBoolRange(ICmpInst &I);
++  Instruction *foldICmpInst(ICmpInst &Cmp);
+   Instruction *foldICmpInstWithConstant(ICmpInst &Cmp);
+   Instruction *foldICmpInstWithConstantNotInt(ICmpInst &Cmp);
+   Instruction *foldICmpInstWithConstantAllowPoison(ICmpInst &Cmp,
+diff --git a/llvm/test/Transforms/InstCombine/icmp-uadd-sat.ll b/llvm/test/Transforms/InstCombine/icmp-uadd-sat.ll
+index fc582708e0b75..76d6bfc590958 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-uadd-sat.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-uadd-sat.ll
+@@ -119,6 +119,25 @@ define i1 @icmp_sgt_basic(i16 %arg) {
+   ret i1 %cmp
+ }
+ 
++; ==============================================================================
++; Test with non-constant operands
++; ==============================================================================
++define i1 @icmp_ult_nonconstant(i8 %x, i8 %c, i8 %c2) {
++; CHECK-LABEL: define i1 @icmp_ult_nonconstant(
++; CHECK-SAME: i8 [[X:%.*]], i8 [[C:%.*]], i8 [[C2:%.*]]) {
++; CHECK-NEXT:    [[COND:%.*]] = icmp ule i8 [[C]], [[C2]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[COND]])
++; CHECK-NEXT:    [[LIMIT:%.*]] = sub i8 [[C2]], [[C]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i8 [[X]], [[LIMIT]]
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %cond = icmp ule i8 %c, %c2
++  call void @llvm.assume(i1 %cond)
++  %sat = call i8 @llvm.uadd.sat.i8(i8 %x, i8 %c)
++  %cmp = icmp ult i8 %sat, %c2
++  ret i1 %cmp
++}
++
+ ; ==============================================================================
+ ; Tests with more than user
+ ; ==============================================================================
+@@ -258,5 +277,6 @@ declare <2 x i32> @llvm.uadd.sat.v2i32(<2 x i32>, <2 x i32>)
+ declare <2 x i16> @llvm.uadd.sat.v2i16(<2 x i16>, <2 x i16>)
+ declare <2 x i8> @llvm.uadd.sat.v2i8(<2 x i8>, <2 x i8>)
+ 
++declare void @llvm.assume(i1 noundef)
+ declare void @use.i8(i8)
+ declare void @use.v2i8(<2 x i8>)
