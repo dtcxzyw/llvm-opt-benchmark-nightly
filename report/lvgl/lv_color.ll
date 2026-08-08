@@ -139,11 +139,11 @@ bb.a:
 define i24 @lv_color_hsv_to_rgb(i16 noundef zeroext %0, i8 noundef zeroext %1, i8 noundef zeroext %2) local_unnamed_addr #1 {
 bb.a:
   %i.a = zext i8 %1 to i16
-  %i.b = mul nuw i16 %i.a, 255
-  %i.c = udiv i16 %i.b, 100
+  %i.b = mul nuw nsw i16 %i.a, 51
+  %i.c = udiv i16 %i.b, 20
   %i.d = zext i8 %2 to i16
-  %i.e = mul nuw i16 %i.d, 255
-  %i.f = udiv i16 %i.e, 100                       ; 3 uses
+  %i.e = mul nuw nsw i16 %i.d, 51
+  %i.f = udiv i16 %i.e, 20                        ; 3 uses
   %i.g = trunc i16 %i.f to i8                     ; 6 uses
   %i.h = and i16 %i.c, 255                        ; 3 uses
   %i.i = icmp eq i16 %i.h, 0
@@ -158,9 +158,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.j = zext nneg i16 %i.h to i32                ; 2 uses
   %i.k = zext i16 %0 to i32
-  %i.l = mul nuw nsw i32 %i.k, 255                ; 2 uses
-  %i.m = udiv i32 %i.l, 360
-  %i.n = udiv i32 %i.l, 15480                     ; 2 uses
+  %i.l = mul nuw nsw i32 %i.k, 17                 ; 2 uses
+  %i.m = udiv i32 %i.l, 24
+  %i.n = udiv i32 %i.l, 1032                      ; 2 uses
   %.neg = mul nuw nsw i32 %i.n, 213
   %i.o = add nuw nsw i32 %.neg, %i.m
   %i.p = mul nuw nsw i32 %i.o, 6

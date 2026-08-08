@@ -204,8 +204,8 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.ai = and i32 %i.b, -4                        ; 2 uses
   %i.aj = getelementptr i8, ptr %0, i64 12
-  %i.ak = mul nsw i32 %i.ai, 18
-  %i.al = ashr exact i32 %i.ak, 2
+  %i.ak = mul nsw i32 %i.ai, 9
+  %i.al = ashr exact i32 %i.ak, 1
   %i.am = shl nuw nsw i32 %i.aa, 2
   %i.an = add nsw i32 %i.al, %i.am
   %.not = icmp eq i32 %i.aa, 0                    ; 2 uses

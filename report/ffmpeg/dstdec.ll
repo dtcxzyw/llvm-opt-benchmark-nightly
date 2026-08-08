@@ -46,8 +46,8 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.i = sext i32 %i.g to i64
-  %i.j = shl nsw i64 %i.i, 3
-  %i.k = sdiv i64 %i.j, 44100
+  %i.j = shl nsw i64 %i.i, 1
+  %i.k = sdiv i64 %i.j, 11025
   %i.l = and i64 %i.k, 1
   %.not = icmp eq i64 %i.l, 0
   br i1 %.not, label %bb.e, label %bb.g
@@ -90,8 +90,8 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.e = load i32, ptr %i.d, align 8, !tbaa !30
   %i.f = sext i32 %i.e to i64
-  %i.g = shl nsw i64 %i.f, 3                      ; 2 uses
-  %i.h = sdiv i64 %i.g, 44100
+  %i.g = shl nsw i64 %i.f, 1                      ; 2 uses
+  %i.h = sdiv i64 %i.g, 11025
   %i.i = trunc nsw i64 %i.h to i32
   %i.j = mul nsw i32 %i.i, 588                    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
@@ -489,8 +489,8 @@ bb.ab:                                            ; preds = %bb.aa
   br label %ac_get.exit188
 
 ac_get.exit188:                                   ; preds = %bb.aa, %bb.ab
-  %.off = add nsw i64 %i.g, 44099
-  %.not219 = icmp ult i64 %.off, 88199
+  %.off = add nsw i64 %i.g, 11024
+  %.not219 = icmp ult i64 %.off, 22049
   br i1 %.not219, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %ac_get.exit188

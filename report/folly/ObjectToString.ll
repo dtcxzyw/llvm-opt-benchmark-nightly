@@ -201,8 +201,8 @@ bb.a:
 _ZN5folly6detail19to_ascii_size_clzllILm10EEEmm.exit.i.i.i: ; preds = %bb.a
   %i.c = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %0, i1 true)
   %i.d = sub nuw nsw i64 64, %i.c
-  %i.e = mul nuw nsw i64 %i.d, 78
-  %i.f = lshr i64 %i.e, 8                         ; 2 uses
+  %i.e = mul nuw nsw i64 %i.d, 39
+  %i.f = lshr i64 %i.e, 7                         ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr @_ZN5folly6detail15to_ascii_powersILm10EmE4dataE, i64 %i.f
   %i.h = load i64, ptr %i.g, align 8, !tbaa !30
   %i.i = icmp uge i64 %0, %i.h

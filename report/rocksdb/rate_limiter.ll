@@ -203,8 +203,8 @@ bb.g:                                             ; preds = %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 600
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !50, !noalias !115
   %i.as = sdiv i64 %i.ar, 20
-  %i.at = mul nsw i64 %.sroa.speculated24.i, 100
-  %i.au = sdiv i64 %i.at, 105
+  %i.at = mul nsw i64 %.sroa.speculated24.i, 20
+  %i.au = sdiv i64 %i.at, 21
   %.sroa.speculated18.i = tail call i64 @llvm.smax.i64(i64 %i.as, i64 %i.au)
   br label %bb.j
 
@@ -215,8 +215,8 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.h
   %.sroa.speculated14.i = tail call i64 @llvm.smin.i64(i64 %i.ak, i64 87841638446235960)
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 600
-  %i.ax = mul nsw i64 %.sroa.speculated14.i, 105
-  %i.ay = sdiv i64 %i.ax, 100
+  %i.ax = mul nsw i64 %.sroa.speculated14.i, 21
+  %i.ay = sdiv i64 %i.ax, 20
   %i.az = load i64, ptr %i.aw, align 8, !tbaa !114, !noalias !115
   %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %i.ay, i64 %i.az)
   br label %bb.j
@@ -619,8 +619,8 @@ bb.d:                                             ; preds = %bb.c
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 600
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !50
   %i.ae = sdiv i64 %i.ad, 20
-  %i.af = mul nsw i64 %.sroa.speculated24, 100
-  %i.ag = sdiv i64 %i.af, 105
+  %i.af = mul nsw i64 %.sroa.speculated24, 20
+  %i.ag = sdiv i64 %i.af, 21
   %.sroa.speculated18 = tail call i64 @llvm.smax.i64(i64 %i.ae, i64 %i.ag)
   br label %bb.g
 
@@ -631,8 +631,8 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   %.sroa.speculated14 = tail call i64 @llvm.smin.i64(i64 %i.w, i64 87841638446235960)
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 600
-  %i.aj = mul nsw i64 %.sroa.speculated14, 105
-  %i.ak = sdiv i64 %i.aj, 100
+  %i.aj = mul nsw i64 %.sroa.speculated14, 21
+  %i.ak = sdiv i64 %i.aj, 20
   %i.al = load i64, ptr %i.ai, align 8, !tbaa !114
   %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %i.ak, i64 %i.al)
   br label %bb.g

@@ -204,11 +204,11 @@ bb.ex:                                            ; preds = %bb.ew
   %i.aer = load i32, ptr %i.zw, align 8, !tbaa !238
   %i.aes = load i32, ptr %i.zx, align 4, !tbaa !238
   %i.aet = call i32 @llvm.smax.i32(i32 %i.aer, i32 %i.aes) ; 3 uses
-  %i.aeu = mul nsw i32 %i.aet, 20
-  %i.aev = sdiv i32 %i.aeu, 512
+  %i.aeu = mul nsw i32 %i.aet, 5
+  %i.aev = sdiv i32 %i.aeu, 128
   %.sroa.speculated877 = call i32 @llvm.smin.i32(i32 %i.aev, i32 %.0917)
-  %i.aew = mul nsw i32 %i.aet, 400
-  %i.aex = sdiv i32 %i.aew, 512
+  %i.aew = mul nsw i32 %i.aet, 25
+  %i.aex = sdiv i32 %i.aew, 32
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %i.aex, i32 %.0919)
   br label %._crit_edge.i.i701
 

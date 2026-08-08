@@ -203,8 +203,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr i8, ptr %0, i64 76
   store i32 %1, ptr %i.e, align 4
-  %i.f = shl nuw nsw i32 %1, 10
-  %i.g = udiv i32 %i.f, 1000000
+  %i.f = shl nuw nsw i32 %1, 4
+  %i.g = udiv i32 %i.f, 15625
   %i.h = getelementptr i8, ptr %0, i64 80
   store i32 %i.g, ptr %i.h, align 8
   br label %bb.d
@@ -276,8 +276,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr i8, ptr %0, i64 76
   store i32 %i.a, ptr %i.f, align 4
-  %i.g = mul i32 %1, 10240000
-  %i.h = udiv i32 %i.g, 1000000
+  %i.g = mul i32 %1, 160000
+  %i.h = udiv i32 %i.g, 15625
   %i.i = getelementptr i8, ptr %0, i64 80
   store i32 %i.h, ptr %i.i, align 8
   br label %bb.d
@@ -513,8 +513,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.ac = getelementptr i8, ptr %0, i64 76
   store i32 %i.x, ptr %i.ac, align 4
-  %i.ad = shl nuw nsw i32 %i.x, 10
-  %i.ae = udiv i32 %i.ad, 1000000
+  %i.ad = shl nuw nsw i32 %i.x, 4
+  %i.ae = udiv i32 %i.ad, 15625
   %i.af = getelementptr i8, ptr %0, i64 80
   store i32 %i.ae, ptr %i.af, align 8
   br label %bb.f
@@ -917,8 +917,8 @@ bb.y:                                             ; preds = %fls64.exit.i
   %i.fu = sext i32 %i.fq to i64
   %i.fv = sext i32 %i.fs to i64
   %i.fw = sub nsw i64 %i.fu, %i.fv
-  %i.fx = mul nsw i64 %i.fw, 10000
-  %i.fy = sdiv i64 %i.fx, 1024
+  %i.fx = mul nsw i64 %i.fw, 625
+  %i.fy = sdiv i64 %i.fx, 64
   %i.fz = add nsw i64 %i.fy, 10
   br label %bb.z
 

@@ -203,10 +203,10 @@ bb.fk:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.ajs = load i32, ptr %i.ahh, align 8, !tbaa !234
   %i.ajt = load i32, ptr %i.ahi, align 4, !tbaa !234
   %i.aju = call i32 @llvm.smax.i32(i32 %i.ajs, i32 %i.ajt) ; 2 uses
-  %i.ajv = mul nsw i32 %i.aju, 15                 ; 2 uses
-  %i.ajw = sdiv i32 %i.ajv, 768                   ; 7 uses
-  %i.ajx = mul nsw i32 %i.aju, 150
-  %i.ajy = sdiv i32 %i.ajx, 768                   ; 3 uses
+  %i.ajv = mul nsw i32 %i.aju, 5                  ; 2 uses
+  %i.ajw = sdiv i32 %i.ajv, 256                   ; 7 uses
+  %i.ajx = mul nsw i32 %i.aju, 25
+  %i.ajy = sdiv i32 %i.ajx, 128                   ; 3 uses
   %i.ajz = load i32, ptr %i.agm, align 8, !tbaa !301
   %i.aka = icmp ugt i32 %i.ajz, 1
   br i1 %i.aka, label %bb.fl, label %bb.gt
@@ -265,7 +265,7 @@ bb.fo:                                            ; preds = %bb.fn
   store ptr %77, ptr %i.ahm, align 8, !tbaa !341
   %i.akt = mul nsw i32 %i.ajw, 10
   %i.aku = mul nsw i32 %i.ajw, 3                  ; 2 uses
-  %i.akv = sdiv i32 %i.ajv, 3072
+  %i.akv = sdiv i32 %i.ajv, 1024
   %i.akw = add nsw i32 %i.aku, %i.akv
   call void @llvm.lifetime.start.p0(ptr nonnull %81) #26
   store <2 x double> splat (double 2.550000e+02), ptr %81, align 16, !tbaa !229, !alias.scope !342
@@ -668,10 +668,10 @@ bb.ih:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.arg = load i32, ptr %i.apd, align 8, !tbaa !234
   %i.arh = load i32, ptr %i.ape, align 4, !tbaa !234
   %i.ari = call i32 @llvm.smax.i32(i32 %i.arg, i32 %i.arh) ; 2 uses
-  %i.arj = mul nsw i32 %i.ari, 15
-  %i.ark = sdiv i32 %i.arj, 768                   ; 2 uses
-  %i.arl = mul nsw i32 %i.ari, 150
-  %i.arm = sdiv i32 %i.arl, 768
+  %i.arj = mul nsw i32 %i.ari, 5
+  %i.ark = sdiv i32 %i.arj, 256                   ; 2 uses
+  %i.arl = mul nsw i32 %i.ari, 25
+  %i.arm = sdiv i32 %i.arl, 128
   call void @llvm.lifetime.start.p0(ptr nonnull %99) #26
   %i.arn = invoke noundef double @_ZN2cv16getTickFrequencyEv()
           to label %bb.ii unwind label %bb.is
@@ -1074,8 +1074,8 @@ bb.a:
   %i.e = tail call i32 @llvm.smax.i32(i32 %i.c, i32 %i.d) ; 4 uses
   %i.f = mul nsw i32 %i.e, 15                     ; 2 uses
   %i.g = sdiv i32 %i.f, 512                       ; 2 uses
-  %i.h = mul nsw i32 %i.e, 150
-  %i.i = sdiv i32 %i.h, 512                       ; 2 uses
+  %i.h = mul nsw i32 %i.e, 75
+  %i.i = sdiv i32 %i.h, 256                       ; 2 uses
   %i.j = sdiv i32 %i.e, 256
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !333

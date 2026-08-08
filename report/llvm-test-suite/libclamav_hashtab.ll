@@ -46,8 +46,8 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.a, ptr %i.c, align 8, !tbaa !13
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %i.d, align 8, !tbaa !14
-  %i.e = shl nuw nsw i64 %i.a, 3
-  %i.f = udiv i64 %i.e, 10
+  %i.e = shl nuw nsw i64 %i.a, 2
+  %i.f = udiv i64 %i.e, 5
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.f, ptr %i.g, align 8, !tbaa !15
   br label %bb.d
@@ -450,8 +450,8 @@ bb.d:                                             ; preds = %._crit_edge.thread,
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.047.lcssa, ptr %i.ax, align 8, !tbaa !14
   store i64 %i.c, ptr %i.a, align 8, !tbaa !13
-  %i.ay = shl nuw nsw i64 %i.c, 3
-  %i.az = udiv i64 %i.ay, 10
+  %i.ay = shl nuw nsw i64 %i.c, 2
+  %i.az = udiv i64 %i.ay, 5
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.az, ptr %i.ba, align 8, !tbaa !15
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.18, ptr noundef nonnull %0, i64 noundef %i.c) #13

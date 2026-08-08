@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 312
   %i.e = load i64, ptr %i.d, align 8
   %i.f = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 236), align 4
-  %i.g = shl nsw i32 %i.f, 18
-  %i.h = sdiv i32 %i.g, 100
+  %i.g = shl nsw i32 %i.f, 16
+  %i.h = sdiv i32 %i.g, 25
   %i.i = sext i32 %i.h to i64
   %i.j = icmp ule i64 %i.e, %i.i
   br label %bb.c
@@ -608,8 +608,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 312
   %i.e = load i64, ptr %i.d, align 8
   %i.f = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 236), align 4
-  %i.g = shl nsw i32 %i.f, 18
-  %i.h = sdiv i32 %i.g, 100
+  %i.g = shl nsw i32 %i.f, 16
+  %i.h = sdiv i32 %i.g, 25
   %i.i = sext i32 %i.h to i64
   %i.j = icmp ule i64 %i.e, %i.i
   br label %_ZNK2v88internal21PagedSpaceForNewSpace20IsPromotionCandidateEPKNS0_19MutablePageMetadataE.exit

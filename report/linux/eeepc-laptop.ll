@@ -201,8 +201,8 @@ bb.a:
   %i.b = call i32 @ec_read(i8 noundef zeroext 99, ptr noundef nonnull %i.a) #10 ; 0 uses
   %i.c = load i8, ptr %i.a, align 1
   %i.d = zext i8 %i.c to i16
-  %.lhs.trunc.i.i = mul nuw i16 %i.d, 255
-  %i.e = udiv i16 %.lhs.trunc.i.i, 100
+  %.lhs.trunc.i.i = mul nuw nsw i16 %i.d, 51
+  %i.e = udiv i16 %.lhs.trunc.i.i, 20
   %.zext.i.i = zext nneg i16 %i.e to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   %i.f = call i32 (ptr, ptr, ...) @sysfs_emit(ptr noundef %2, ptr noundef nonnull @.str.59, i32 noundef %.zext.i.i) #10
@@ -228,8 +228,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.e = call i32 @llvm.smax.i32(i32 %i.c, i32 0)
   %i.f = trunc nuw nsw i32 %i.e to i16
-  %.lhs.trunc.i.i = mul nuw nsw i16 %i.f, 100
-  %i.g = udiv i16 %.lhs.trunc.i.i, 255
+  %.lhs.trunc.i.i = mul nuw nsw i16 %i.f, 20
+  %i.g = udiv i16 %.lhs.trunc.i.i, 51
   %i.h = trunc nuw nsw i16 %i.g to i8
   br label %eeepc_set_fan_pwm.exit
 
