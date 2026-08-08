@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.c
   %.not.i83 = icmp eq i8 %i.q, 0
   br i1 %.not.i83, label %.lr.ph, label %._crit_edge
 
-._crit_edge:                                      ; preds = %.backedge, %skip_base_block.exit.thread, %bb.d
-  %.lcssa = phi i8 [ %i.p, %bb.d ], [ %i.ar, %skip_base_block.exit.thread ], [ %.pre.a, %.backedge ]
+._crit_edge:                                      ; preds = %.backedge, %bb.d
+  %.lcssa = phi i8 [ %i.p, %bb.d ], [ %.pre.a, %.backedge ]
   %i.r = and i8 %.lcssa, -5
   store i8 %i.r, ptr %i.o, align 4
   %.val.i49103 = load ptr, ptr %i.n, align 8, !tbaa !32
@@ -257,7 +257,7 @@ advance_multivolume.exit.thread73:                ; preds = %skip_base_block.exi
   %.val.i45 = load ptr, ptr %i.n, align 8, !tbaa !32
   %.val.val.i46 = load ptr, ptr %.val.i45, align 8, !tbaa !48 ; 2 uses
   %i.ah = tail call ptr @archive_entry_new() #14, !inline_history !106 ; 2 uses
-  %i.ai = tail call fastcc i32 @process_base_block(ptr noundef nonnull %0, ptr noundef %i.ah), !inline_history !106 ; 3 uses
+  %i.ai = tail call fastcc i32 @process_base_block(ptr noundef nonnull %0, ptr noundef %i.ah), !inline_history !106 ; 4 uses
   tail call void @archive_entry_free(ptr noundef %i.ah) #14, !inline_history !106
   %i.aj = icmp eq i32 %i.ai, -30
   br i1 %i.aj, label %advance_multivolume.exit.thread, label %bb.g
@@ -277,20 +277,21 @@ bb.h:                                             ; preds = %bb.g
 
 skip_base_block.exit:                             ; preds = %bb.h, %bb.g
   %i.aq = icmp eq i32 %i.ai, 0
-  %spec.select76 = select i1 %i.aq, i32 -10, i32 %i.ai ; 3 uses
-  switch i32 %spec.select76, label %skip_base_block.exit.thread [
+  %spec.select76 = select i1 %i.aq, i32 -10, i32 %i.ai ; 2 uses
+  switch i32 %i.ai, label %skip_base_block.exit.thread [
     i32 -25, label %advance_multivolume.exit.thread
     i32 -10, label %.backedge
+    i32 0, label %.backedge
   ]
 
 skip_base_block.exit.thread:                      ; preds = %bb.h, %skip_base_block.exit
   %.0.i4763 = phi i32 [ %spec.select76, %skip_base_block.exit ], [ 0, %bb.h ] ; 2 uses
-  %i.ar = load i8, ptr %i.o, align 4              ; 2 uses
+  %i.ar = load i8, ptr %i.o, align 4
   %i.as = and i8 %i.ar, 4
   %i.at = icmp eq i8 %i.as, 0
-  br i1 %i.at, label %advance_multivolume.exit, label %._crit_edge
+  br i1 %i.at, label %advance_multivolume.exit, label %.backedge
 
-.backedge:                                        ; preds = %skip_base_block.exit
+.backedge:                                        ; preds = %skip_base_block.exit.thread, %skip_base_block.exit, %skip_base_block.exit
   %.pre.a = load i8, ptr %i.o, align 4            ; 2 uses
   %.pre88 = and i8 %.pre.a, 4
   %i.au = icmp eq i8 %.pre88, 0
@@ -540,8 +541,8 @@ bb.k:                                             ; preds = %bb.j
   %.not.i.i23415 = icmp eq i8 %i.bc, 0
   br i1 %.not.i.i23415, label %.lr.ph, label %._crit_edge
 
-._crit_edge:                                      ; preds = %.backedge243, %skip_base_block.exit.thread, %skip_base_block.exit.thread.thread, %.preheader
-  %.lcssa253 = phi i8 [ %i.ax, %.preheader ], [ %i.ca, %skip_base_block.exit.thread ], [ %i.cd, %skip_base_block.exit.thread.thread ], [ %.pre536, %.backedge243 ]
+._crit_edge:                                      ; preds = %.backedge243, %.preheader
+  %.lcssa253 = phi i8 [ %i.ax, %.preheader ], [ %.pre536, %.backedge243 ]
   %i.bd = and i8 %.lcssa253, -5
   store i8 %i.bd, ptr %i.aw, align 4
   %.val.i62869 = load ptr, ptr %i.n, align 8, !tbaa !32
@@ -586,7 +587,7 @@ skip_base_block.exit67.thread102:                 ; preds = %bb.m, %bb.m
   %.val.i57 = load ptr, ptr %i.n, align 8, !tbaa !32
   %.val.val.i58 = load ptr, ptr %.val.i57, align 8, !tbaa !48 ; 2 uses
   %i.br = call ptr @archive_entry_new() #14, !inline_history !110 ; 2 uses
-  %i.bs = call fastcc i32 @process_base_block(ptr noundef nonnull %0, ptr noundef %i.br), !inline_history !110 ; 3 uses
+  %i.bs = call fastcc i32 @process_base_block(ptr noundef nonnull %0, ptr noundef %i.br), !inline_history !110 ; 4 uses
   call void @archive_entry_free(ptr noundef %i.br) #14, !inline_history !110
   %i.bt = icmp eq i32 %i.bs, -30
   br i1 %i.bt, label %do_uncompress_file.exit.thread, label %bb.n
@@ -605,32 +606,31 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not.i61, label %skip_base_block.exit, label %skip_base_block.exit.thread.thread
 
 skip_base_block.exit:                             ; preds = %bb.o, %bb.n
-  %1 = icmp eq i32 %i.bs, 0
-  %spec.select = select i1 %1, i32 -10, i32 %i.bs ; 2 uses
-  switch i32 %spec.select, label %skip_base_block.exit.thread [
-    i32 -25, label %process_block.exit.thread
+  switch i32 %i.bs, label %skip_base_block.exit.thread [
+    i32 -25, label %process_block.exit.loopexit623
     i32 -10, label %.backedge243
+    i32 0, label %.backedge243
   ]
 
 skip_base_block.exit.thread:                      ; preds = %skip_base_block.exit
-  %i.ca = load i8, ptr %i.aw, align 4             ; 2 uses
+  %i.ca = load i8, ptr %i.aw, align 4
   %i.cb = and i8 %i.ca, 4
   %i.cc = icmp eq i8 %i.cb, 0
-  br i1 %i.cc, label %process_block.exit, label %._crit_edge
+  br i1 %i.cc, label %process_block.exit.loopexit623, label %.backedge243
 
 skip_base_block.exit.thread.thread:               ; preds = %bb.o
-  %i.cd = load i8, ptr %i.aw, align 4             ; 2 uses
+  %i.cd = load i8, ptr %i.aw, align 4
   %i.ce = and i8 %i.cd, 4
   %i.cf = icmp eq i8 %i.ce, 0
-  br i1 %i.cf, label %advance_multivolume.exit.i.thread114, label %._crit_edge
+  br i1 %i.cf, label %advance_multivolume.exit.i.thread114, label %.backedge243
 
-.backedge243:                                     ; preds = %skip_base_block.exit
+.backedge243:                                     ; preds = %skip_base_block.exit.thread.thread, %skip_base_block.exit.thread, %skip_base_block.exit, %skip_base_block.exit
   %.pre536 = load i8, ptr %i.aw, align 4          ; 2 uses
   %.pre539 = and i8 %.pre536, 4
   %i.cg = icmp eq i8 %.pre539, 0
   br i1 %i.cg, label %.lr.ph, label %._crit_edge
 
-advance_multivolume.exit.i.thread114:             ; preds = %bb.l, %skip_base_block.exit.thread.thread, %bb.k, %bb.j
+advance_multivolume.exit.i.thread114:             ; preds = %skip_base_block.exit.thread.thread, %bb.l, %bb.k, %bb.j
   %i.ch = getelementptr inbounds nuw i8, ptr %.val.val.i10, i64 56 ; 7 uses
   %i.ci = load i8, ptr %i.ch, align 8
   %i.cj = and i8 %i.ci, 8
@@ -640,7 +640,7 @@ advance_multivolume.exit.i.thread114:             ; preds = %bb.l, %skip_base_bl
 bb.p:                                             ; preds = %advance_multivolume.exit.i.thread114
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #14
   store i64 -1, ptr %i.k, align 8, !tbaa !29
-  %i.ck = call ptr @__archive_read_ahead(ptr noundef %0, i64 noundef 6, ptr noundef nonnull %i.k) #14, !inline_history !111 ; 3 uses
+  %i.ck = call ptr @__archive_read_ahead(ptr noundef nonnull %0, i64 noundef 6, ptr noundef nonnull %i.k) #14, !inline_history !111 ; 3 uses
   %.not230 = icmp eq ptr %i.ck, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #14
   br i1 %.not230, label %do_uncompress_file.exit.thread, label %bb.q
@@ -659,7 +659,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.ct = zext nneg i8 %i.cp to i32
-  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef %0, i32 noundef 84, ptr noundef nonnull @.str.42, i32 noundef %i.ct) #14, !inline_history !111
+  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef nonnull %0, i32 noundef 84, ptr noundef nonnull @.str.42, i32 noundef %i.ct) #14, !inline_history !111
   br label %do_uncompress_file.exit.thread
 
 bb.s:                                             ; preds = %bb.q
@@ -701,7 +701,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
   br i1 %.not.i78.i, label %parse_block_header.exit.i, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef %0, i32 noundef 84, ptr noundef nonnull @.str.43, i32 noundef %i.cs, i32 noundef %i.dj) #14, !inline_history !111
+  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef nonnull %0, i32 noundef 84, ptr noundef nonnull @.str.43, i32 noundef %i.cs, i32 noundef %i.dj) #14, !inline_history !111
   br label %do_uncompress_file.exit.thread
 
 default.unreachable:                              ; preds = %bb.s
@@ -710,7 +710,7 @@ default.unreachable:                              ; preds = %bb.s
 parse_block_header.exit.i:                        ; preds = %bb.w
   %narrow.i = add nuw nsw i8 %i.cp, 3
   %i.dk = zext nneg i8 %narrow.i to i64           ; 3 uses
-  %i.dl = call i64 @__archive_read_consume(ptr noundef %0, i64 noundef %i.dk) #14, !inline_history !111
+  %i.dl = call i64 @__archive_read_consume(ptr noundef nonnull %0, i64 noundef %i.dk) #14, !inline_history !111
   %i.dm = icmp eq i64 %i.dl, %i.dk
   br i1 %i.dm, label %bb.y, label %do_uncompress_file.exit.thread
 
@@ -769,7 +769,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.ed, label %.split._crit_edge, label %.lr.ph425
 
 .split._crit_edge:                                ; preds = %.split, %bb.an
-  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef %0, i32 noundef 84, ptr noundef nonnull @.str.46) #14, !inline_history !112
+  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef nonnull %0, i32 noundef 84, ptr noundef nonnull @.str.46) #14, !inline_history !112
   br label %do_uncompress_file.exit.thread
 
 .lr.ph425:                                        ; preds = %.split, %bb.an
@@ -777,7 +777,7 @@ bb.ae:                                            ; preds = %bb.ad
   %.045.i423 = phi i64 [ %i.ef, %bb.an ], [ 0, %.split ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   store i64 -1, ptr %i.a, align 8, !tbaa !29
-  %i.ee = call ptr @__archive_read_ahead(ptr noundef %0, i64 noundef %..i45424, ptr noundef nonnull %i.a) #14, !inline_history !112 ; 2 uses
+  %i.ee = call ptr @__archive_read_ahead(ptr noundef nonnull %0, i64 noundef %..i45424, ptr noundef nonnull %i.a) #14, !inline_history !112 ; 2 uses
   %.not232 = icmp eq ptr %i.ee, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   br i1 %.not232, label %do_uncompress_file.exit.thread, label %bb.af
@@ -787,7 +787,7 @@ bb.af:                                            ; preds = %.lr.ph425
   %i.eg = load ptr, ptr %i.dw, align 8, !tbaa !73
   %i.eh = getelementptr inbounds i8, ptr %i.eg, i64 %.045.i423
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.eh, ptr noundef nonnull align 1 dereferenceable(1) %i.ee, i64 %..i45424, i1 false)
-  %i.ei = call i64 @__archive_read_consume(ptr noundef %0, i64 noundef %..i45424) #14, !inline_history !112
+  %i.ei = call i64 @__archive_read_consume(ptr noundef nonnull %0, i64 noundef %..i45424) #14, !inline_history !112
   %i.ej = icmp eq i64 %..i45424, %i.ei
   br i1 %i.ej, label %bb.ag, label %do_uncompress_file.exit.thread
 
@@ -814,14 +814,14 @@ bb.ai:                                            ; preds = %bb.ah
   %.not.i.i49416 = icmp eq i8 %i.es, 0
   br i1 %.not.i.i49416, label %.lr.ph418, label %._crit_edge419
 
-._crit_edge419:                                   ; preds = %.backedge, %skip_base_block.exit.i.thread, %bb.ai
-  %.lcssa259 = phi i8 [ %i.er, %bb.ai ], [ %i.ft, %skip_base_block.exit.i.thread ], [ %.pre537, %.backedge ]
+._crit_edge419:                                   ; preds = %.backedge, %bb.ai
+  %.lcssa259 = phi i8 [ %i.er, %bb.ai ], [ %.pre537, %.backedge ]
   %i.et = and i8 %.lcssa259, -5
   store i8 %i.et, ptr %i.eq, align 4
   %.val.i63.i873 = load ptr, ptr %i.n, align 8, !tbaa !32
   %.val.val.i64.i874.a = load ptr, ptr %.val.i63.i873, align 8, !tbaa !48
   %i.eu = call ptr @archive_entry_new() #14, !inline_history !113 ; 2 uses
-  %i.ev = call fastcc i32 @process_base_block(ptr noundef %0, ptr noundef %i.eu), !inline_history !113 ; 3 uses
+  %i.ev = call fastcc i32 @process_base_block(ptr noundef nonnull %0, ptr noundef %i.eu), !inline_history !113 ; 3 uses
   call void @archive_entry_free(ptr noundef %i.eu) #14, !inline_history !113
   %i.ew = icmp eq i32 %i.ev, -30
   br i1 %i.ew, label %advance_multivolume.exit.i55.thread201, label %.lr.ph876
@@ -851,7 +851,7 @@ skip_base_block.exit68.i.thread122:               ; preds = %bb.ak, %bb.ak
   %.val.i63.i = load ptr, ptr %i.n, align 8, !tbaa !32
   %.val.val.i64.i = load ptr, ptr %.val.i63.i, align 8, !tbaa !48
   %i.fe = call ptr @archive_entry_new() #14, !inline_history !113 ; 2 uses
-  %i.ff = call fastcc i32 @process_base_block(ptr noundef %0, ptr noundef %i.fe), !inline_history !113 ; 3 uses
+  %i.ff = call fastcc i32 @process_base_block(ptr noundef nonnull %0, ptr noundef %i.fe), !inline_history !113 ; 3 uses
   call void @archive_entry_free(ptr noundef %i.fe) #14, !inline_history !113
   %i.fg = icmp eq i32 %i.ff, -30
   br i1 %i.fg, label %advance_multivolume.exit.i55.thread201, label %.lr.ph876, !llvm.loop !107
@@ -867,7 +867,7 @@ advance_multivolume.exit.i55.thread201:           ; preds = %._crit_edge419, %sk
   %.val.i59.i = load ptr, ptr %i.n, align 8, !tbaa !32
   %.val.val.i60.i = load ptr, ptr %.val.i59.i, align 8, !tbaa !48 ; 2 uses
   %i.fj = call ptr @archive_entry_new() #14, !inline_history !113 ; 2 uses
-  %i.fk = call fastcc i32 @process_base_block(ptr noundef %0, ptr noundef %i.fj), !inline_history !113 ; 3 uses
+  %i.fk = call fastcc i32 @process_base_block(ptr noundef nonnull %0, ptr noundef %i.fj), !inline_history !113 ; 4 uses
   call void @archive_entry_free(ptr noundef %i.fj) #14, !inline_history !113
   %i.fl = icmp eq i32 %i.fk, -30
   br i1 %i.fl, label %advance_multivolume.exit.i55.thread, label %bb.al
@@ -887,20 +887,21 @@ bb.am:                                            ; preds = %bb.al
 
 skip_base_block.exit.i:                           ; preds = %bb.am, %bb.al
   %i.fs = icmp eq i32 %i.fk, 0
-  %spec.select229 = select i1 %i.fs, i32 -10, i32 %i.fk ; 3 uses
-  switch i32 %spec.select229, label %skip_base_block.exit.i.thread [
+  %spec.select229 = select i1 %i.fs, i32 -10, i32 %i.fk ; 2 uses
+  switch i32 %i.fk, label %skip_base_block.exit.i.thread [
     i32 -25, label %advance_multivolume.exit.i55.thread
     i32 -10, label %.backedge
+    i32 0, label %.backedge
   ]
 
 skip_base_block.exit.i.thread:                    ; preds = %bb.am, %skip_base_block.exit.i
   %.0.i61.i128 = phi i32 [ %spec.select229, %skip_base_block.exit.i ], [ 0, %bb.am ] ; 2 uses
-  %i.ft = load i8, ptr %i.eq, align 4             ; 2 uses
+  %i.ft = load i8, ptr %i.eq, align 4
   %i.fu = and i8 %i.ft, 4
   %i.fv = icmp eq i8 %i.fu, 0
-  br i1 %i.fv, label %advance_multivolume.exit.i55, label %._crit_edge419
+  br i1 %i.fv, label %advance_multivolume.exit.i55, label %.backedge
 
-.backedge:                                        ; preds = %skip_base_block.exit.i
+.backedge:                                        ; preds = %skip_base_block.exit.i.thread, %skip_base_block.exit.i, %skip_base_block.exit.i
   %.pre537 = load i8, ptr %i.eq, align 4          ; 2 uses
   %.pre538 = and i8 %.pre537, 4
   %i.fw = icmp eq i8 %.pre538, 0
@@ -944,7 +945,7 @@ bb.ap:                                            ; preds = %bb.y
   %i.gj = add nuw nsw i64 %.sink.i.i, 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #14
   store i64 -1, ptr %i.j, align 8, !tbaa !29
-  %i.gk = call ptr @__archive_read_ahead(ptr noundef %0, i64 noundef %i.gj, ptr noundef nonnull %i.j) #14, !inline_history !111 ; 2 uses
+  %i.gk = call ptr @__archive_read_ahead(ptr noundef nonnull %0, i64 noundef %i.gj, ptr noundef nonnull %i.j) #14, !inline_history !111 ; 2 uses
   %.not231 = icmp eq ptr %i.gk, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #14
   br i1 %.not231, label %do_uncompress_file.exit.thread, label %bb.aq
@@ -981,7 +982,7 @@ bb.as:                                            ; preds = %.loopexit.i, %bb.ar
   br i1 %.not117.i, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef %0, i32 noundef 84, ptr noundef nonnull @.str.48) #14
+  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef nonnull %0, i32 noundef 84, ptr noundef nonnull @.str.48) #14
   br label %parse_tables.exit.thread
 
 bb.au:                                            ; preds = %bb.as
@@ -1063,12 +1064,12 @@ bb.ay:                                            ; preds = %.loopexit.i
 bb.az:                                            ; preds = %.thread153.i, %bb.ay
   %.4186.i = phi i32 [ 0, %bb.ay ], [ %.10.i, %.thread153.i ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #14
-  %i.if = call fastcc i32 @decode_number(ptr noundef %0, ptr noundef nonnull %i.ie, ptr noundef readonly %.283, ptr noundef %i.d)
+  %i.if = call fastcc i32 @decode_number(ptr noundef nonnull %0, ptr noundef nonnull %i.ie, ptr noundef readonly %.283, ptr noundef %i.d)
   %.not.i35 = icmp eq i32 %i.if, 0
   br i1 %.not.i35, label %bb.bb, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef %0, i32 noundef 84, ptr noundef nonnull @.str.49) #14
+  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef nonnull %0, i32 noundef 84, ptr noundef nonnull @.str.49) #14
   br label %.thread159.i
 
 bb.bb:                                            ; preds = %bb.az
@@ -1096,7 +1097,7 @@ bb.be:                                            ; preds = %bb.bd
   br i1 %.not.i.i36, label %bb.bf, label %read_bits_16.exit.i38
 
 read_bits_16.exit.i38:                            ; preds = %bb.be
-  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef %0, i32 noundef 22, ptr noundef nonnull @.str.55) #14
+  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef nonnull %0, i32 noundef 22, ptr noundef nonnull @.str.55) #14
   br label %.thread159.i
 
 bb.bf:                                            ; preds = %bb.be
@@ -1158,7 +1159,7 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %i.jp, label %.lr.ph184.i, label %.thread153.loopexit.i, !llvm.loop !121
 
 bb.bg:                                            ; preds = %bb.bf
-  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef %0, i32 noundef 84, ptr noundef nonnull @.str.50) #14
+  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef nonnull %0, i32 noundef 84, ptr noundef nonnull @.str.50) #14
   br label %.thread159.i
 
 bb.bh:                                            ; preds = %bb.bd
@@ -1212,7 +1213,7 @@ bb.bh:                                            ; preds = %bb.bd
   br label %.thread153.i
 
 bb.bi:                                            ; preds = %bb.bh
-  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef %0, i32 noundef 22, ptr noundef nonnull @.str.55) #14
+  call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef nonnull %0, i32 noundef 22, ptr noundef nonnull @.str.55) #14
   br label %.thread159.i
 
 .thread159.i:                                     ; preds = %bb.bi, %bb.bg, %read_bits_16.exit.i38, %bb.ba
@@ -1615,14 +1616,19 @@ bb.dr:                                            ; preds = %bb.dq
   store i8 %i.afc, ptr %i.ch, align 8
   br label %process_block.exit.thread
 
-process_block.exit:                               ; preds = %bb.m, %advance_multivolume.exit.i55, %skip_base_block.exit.thread, %parse_filter.exit.thread.i.i, %advance_multivolume.exit.i55.thread201, %advance_multivolume.exit.i55.thread
-  %.1.i12 = phi i32 [ %.118.i.i56.ph, %advance_multivolume.exit.i55.thread ], [ %.0.i61.i128, %advance_multivolume.exit.i55 ], [ %.lcssa789, %advance_multivolume.exit.i55.thread201 ], [ %spec.select, %skip_base_block.exit.thread ], [ %.1.i144.ph.i.i, %parse_filter.exit.thread.i.i ], [ %i.bh, %bb.m ] ; 3 uses
+process_block.exit.loopexit623:                   ; preds = %skip_base_block.exit.thread, %skip_base_block.exit
+  %1 = icmp eq i32 %i.bs, 0
+  %spec.select.le = select i1 %1, i32 -10, i32 %i.bs
+  br label %process_block.exit
+
+process_block.exit:                               ; preds = %bb.m, %advance_multivolume.exit.i55, %process_block.exit.loopexit623, %parse_filter.exit.thread.i.i, %advance_multivolume.exit.i55.thread201, %advance_multivolume.exit.i55.thread
+  %.1.i12 = phi i32 [ %.118.i.i56.ph, %advance_multivolume.exit.i55.thread ], [ %spec.select.le, %process_block.exit.loopexit623 ], [ %.lcssa789, %advance_multivolume.exit.i55.thread201 ], [ %.1.i144.ph.i.i, %parse_filter.exit.thread.i.i ], [ %.0.i61.i128, %advance_multivolume.exit.i55 ], [ %i.bh, %bb.m ] ; 3 uses
   switch i32 %.1.i12, label %process_block.exit.thread [
     i32 -30, label %do_uncompress_file.exit
     i32 1, label %do_uncompress_file.exit
   ]
 
-process_block.exit.thread:                        ; preds = %skip_base_block.exit, %bb.dn, %bb.dp, %bb.dr, %bb.dq, %process_block.exit
+process_block.exit.thread:                        ; preds = %bb.dn, %bb.dp, %bb.dr, %bb.dq, %process_block.exit
   %i.afd = load i64, ptr %i.at, align 8, !tbaa !59
   %i.afe = load i64, ptr %i.au, align 8, !tbaa !86
   %i.aff = icmp eq i64 %i.afd, %i.afe

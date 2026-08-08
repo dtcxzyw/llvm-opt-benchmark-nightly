@@ -204,7 +204,7 @@ bb.dk:                                            ; preds = %bb.dh
   br label %bb.es
 
 bb.dl:                                            ; preds = %._crit_edge997
-  %.not423 = icmp eq i32 %i.abx, 0                ; 3 uses
+  %.not423 = icmp eq i32 %i.abx, 0
   br i1 %.not423, label %bb.dm, label %.thread609
 
 bb.dm:                                            ; preds = %bb.dl
@@ -607,12 +607,12 @@ bb.eq:                                            ; preds = %bb.en, %bb.ep
   br i1 %exitcond1295.not, label %._crit_edge1010, label %bb.el, !llvm.loop !608
 
 .thread609:                                       ; preds = %.loopexit, %bb.dl, %bb.dt
-  %14 = phi i1 [ false, %bb.dt ], [ %.not423, %bb.dl ], [ %.not423, %.loopexit ] ; 2 uses
+  %.7361 = phi i32 [ 1, %bb.dt ], [ 47, %.loopexit ], [ 1, %bb.dl ] ; 2 uses
   %.not.i.i.i538 = icmp eq ptr %.sroa.0575.4, null
   br i1 %.not.i.i.i538, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %bb.er
 
 bb.er:                                            ; preds = %.thread609.thread, %.thread609
-  %cond659 = phi i1 [ false, %.thread609.thread ], [ %14, %.thread609 ]
+  %.7361657 = phi i32 [ 1, %.thread609.thread ], [ %.7361, %.thread609 ]
   %i.aki = ptrtoint ptr %.sroa.23.4 to i64
   %i.akj = ptrtoint ptr %.sroa.0575.4 to i64
   %i.akk = sub i64 %i.aki, %i.akj
@@ -620,7 +620,7 @@ bb.er:                                            ; preds = %.thread609.thread, 
   br label %_ZNSt6vectorIdSaIdEED2Ev.exit
 
 _ZNSt6vectorIdSaIdEED2Ev.exit:                    ; preds = %.thread609, %bb.er
-  %cond660 = phi i1 [ %14, %.thread609 ], [ %cond659, %bb.er ] ; 2 uses
+  %.7361658 = phi i32 [ %.7361, %.thread609 ], [ %.7361657, %bb.er ]
   %.not.i.i.i539 = icmp eq ptr %.sroa.0591.4, null
   br i1 %.not.i.i.i539, label %_ZNSt6vectorIdSaIdEED2Ev.exit540, label %.split
 
@@ -629,10 +629,11 @@ _ZNSt6vectorIdSaIdEED2Ev.exit:                    ; preds = %.thread609, %bb.er
   %i.akm = ptrtoint ptr %.sroa.0591.4 to i64
   %i.akn = sub i64 %i.akl, %i.akm
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0591.4, i64 noundef %i.akn) #27
-  br i1 %cond660, label %_ZNSt6vectorIdSaIdEED2Ev.exit540.thread, label %.loopexit680
+  br label %_ZNSt6vectorIdSaIdEED2Ev.exit540
 
-_ZNSt6vectorIdSaIdEED2Ev.exit540:                 ; preds = %_ZNSt6vectorIdSaIdEED2Ev.exit
-  br i1 %cond660, label %_ZNSt6vectorIdSaIdEED2Ev.exit540.thread, label %.loopexit680
+_ZNSt6vectorIdSaIdEED2Ev.exit540:                 ; preds = %_ZNSt6vectorIdSaIdEED2Ev.exit, %.split
+  %14 = icmp eq i32 %.7361658, 1
+  br i1 %14, label %.loopexit680, label %_ZNSt6vectorIdSaIdEED2Ev.exit540.thread
 
 bb.es:                                            ; preds = %.loopexit667, %.loopexit.split-lp, %.loopexit669, %.loopexit.split-lp670, %bb.dj, %bb.dk, %bb.dp, %bb.ed, %bb.eo, %bb.ek, %bb.ej, %bb.be
   %.sroa.23.3 = phi ptr [ %.sroa.23.01013, %bb.be ], [ %.sroa.23.4, %bb.dp ], [ %.sroa.23.4, %bb.ed ], [ %.sroa.23.4, %bb.eo ], [ %.sroa.23.4, %bb.ek ], [ %.sroa.23.4, %bb.ej ], [ %.sroa.23.01013, %.loopexit.split-lp670 ], [ %.sroa.23.4, %bb.dk ], [ %.sroa.23.4, %bb.dj ], [ %.sroa.23.1.ph, %.loopexit669 ], [ %.sroa.23.4, %.loopexit667 ], [ %.sroa.23.4, %.loopexit.split-lp ]
@@ -672,11 +673,11 @@ _ZNSt6vectorIdSaIdEED2Ev.exit542.thread:          ; preds = %_ZNSt6vectorIdSaIdE
 _ZNSt6vectorIdSaIdEED2Ev.exit544:                 ; preds = %_ZNSt6vectorIdSaIdEED2Ev.exit542, %_ZNSt6vectorIdSaIdEED2Ev.exit542.thread
   resume { ptr, i32 } %.pn428.pn.pn627
 
-_ZNSt6vectorIdSaIdEED2Ev.exit540.thread:          ; preds = %bb.bb, %.split, %_ZNSt6vectorIdSaIdEED2Ev.exit540, %.critedge
+_ZNSt6vectorIdSaIdEED2Ev.exit540.thread:          ; preds = %bb.bb, %_ZNSt6vectorIdSaIdEED2Ev.exit540, %.critedge
   br label %.loopexit680
 
-.loopexit680:                                     ; preds = %._crit_edge954, %._crit_edge967, %bb.ah, %.split, %_ZNSt6vectorIdSaIdEED2Ev.exit540, %._crit_edge, %_ZNSt6vectorIdSaIdEED2Ev.exit540.thread
-  %.12 = phi i32 [ 1, %.split ], [ 0, %_ZNSt6vectorIdSaIdEED2Ev.exit540.thread ], [ 1, %_ZNSt6vectorIdSaIdEED2Ev.exit540 ], [ 1, %._crit_edge ], [ 1, %bb.ah ], [ 1, %._crit_edge967 ], [ 1, %._crit_edge954 ]
+.loopexit680:                                     ; preds = %._crit_edge954, %._crit_edge967, %bb.ah, %_ZNSt6vectorIdSaIdEED2Ev.exit540, %._crit_edge, %_ZNSt6vectorIdSaIdEED2Ev.exit540.thread
+  %.12 = phi i32 [ 1, %._crit_edge967 ], [ 0, %_ZNSt6vectorIdSaIdEED2Ev.exit540.thread ], [ 1, %_ZNSt6vectorIdSaIdEED2Ev.exit540 ], [ 1, %._crit_edge ], [ 1, %bb.ah ], [ 1, %._crit_edge954 ]
   ret i32 %.12
 }
 

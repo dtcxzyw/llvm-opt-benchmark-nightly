@@ -54,9 +54,10 @@ bb.b:                                             ; preds = %bb.a
   %i.o = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.n, ptr noundef null) #12 ; 3 uses
   %i.p = icmp eq i32 %i.o, -114
   %spec.store.select.i.i = select i1 %i.p, i32 0, i32 %i.o
-  switch i32 %spec.store.select.i.i, label %bb.x [
+  switch i32 %i.o, label %bb.x [
     i32 -35, label %bb.c
     i32 0, label %bb.e
+    i32 -114, label %bb.e
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -79,7 +80,7 @@ i915_gem_object_lock_interruptible.exit.thread:   ; preds = %bb.d, %.sink.split.
   store ptr %0, ptr inttoptr (i64 40 to ptr), align 8
   br label %bb.x
 
-bb.e:                                             ; preds = %bb.b
+bb.e:                                             ; preds = %bb.b, %bb.b
   %i.t = getelementptr i8, ptr %0, i64 1032       ; 3 uses
   %i.u = load i64, ptr %i.t, align 8
   %i.v = icmp eq i64 %i.l, %i.u
@@ -259,7 +260,7 @@ bb.w:                                             ; preds = %.loopexit
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.b, %i915_gem_object_lock_interruptible.exit.thread, %.loopexit, %bb.w, %bb.n, %i915_gem_object_unlock.exit82, %bb.a, %i915_gem_object_unlock.exit
-  %.0 = phi i32 [ %.0.i80, %i915_gem_object_unlock.exit82 ], [ -14, %bb.a ], [ 0, %i915_gem_object_unlock.exit ], [ %i.o, %bb.b ], [ -12, %bb.n ], [ %.261, %bb.w ], [ %.261, %.loopexit ], [ -35, %i915_gem_object_lock_interruptible.exit.thread ]
+  %.0 = phi i32 [ %.0.i80, %i915_gem_object_unlock.exit82 ], [ -14, %bb.a ], [ 0, %i915_gem_object_unlock.exit ], [ %spec.store.select.i.i, %bb.b ], [ -12, %bb.n ], [ %.261, %bb.w ], [ %.261, %.loopexit ], [ -35, %i915_gem_object_lock_interruptible.exit.thread ]
   ret i32 %.0
 }
 
@@ -347,9 +348,10 @@ bb.b:                                             ; preds = %bb.a
   %i.d = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.c, ptr noundef null) #12 ; 3 uses
   %i.e = icmp eq i32 %i.d, -114
   %spec.store.select.i.i = select i1 %i.e, i32 0, i32 %i.d
-  switch i32 %spec.store.select.i.i, label %bb.h [
+  switch i32 %i.d, label %bb.h [
     i32 -35, label %bb.c
     i32 0, label %bb.e
+    i32 -114, label %bb.e
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -372,7 +374,7 @@ i915_gem_object_lock_interruptible.exit.thread:   ; preds = %bb.d, %.sink.split.
   store ptr %0, ptr inttoptr (i64 40 to ptr), align 8
   br label %bb.h
 
-bb.e:                                             ; preds = %bb.b
+bb.e:                                             ; preds = %bb.b, %bb.b
   %i.i = getelementptr i8, ptr %0, i64 688        ; 5 uses
   %i.j = load volatile i32, ptr %i.i, align 8     ; 2 uses
   %i.k = icmp eq i32 %i.j, 0
@@ -421,7 +423,7 @@ i915_gem_object_unlock.exit:                      ; preds = %bb.f, %bb.g
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.b, %i915_gem_object_lock_interruptible.exit.thread, %i915_gem_object_unlock.exit, %bb.a
-  %.010 = phi i32 [ %i.a, %bb.a ], [ %i.d, %bb.b ], [ %.0.i18, %i915_gem_object_unlock.exit ], [ -35, %i915_gem_object_lock_interruptible.exit.thread ]
+  %.010 = phi i32 [ %i.a, %bb.a ], [ %spec.store.select.i.i, %bb.b ], [ %.0.i18, %i915_gem_object_unlock.exit ], [ -35, %i915_gem_object_lock_interruptible.exit.thread ]
   ret i32 %.010
 }
 

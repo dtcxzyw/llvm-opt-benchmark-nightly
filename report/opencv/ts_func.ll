@@ -204,8 +204,6 @@ bb.ai:                                            ; preds = %.split1133, %.split
   br label %bb.kx
 
 bb.aj:                                            ; preds = %bb.n
-  %27 = icmp eq i32 %1, 5
-  %28 = select i1 %27, i32 4, i32 %1
   %i.cu = invoke noundef zeroext i1 @_ZNK2cv3Mat5emptyEv(ptr noundef nonnull align 8 dereferenceable(208) %4)
           to label %bb.ak unwind label %bb.ao
 
@@ -273,10 +271,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit179: ; preds = %bb
   br label %bb.kx
 
 bb.au:                                            ; preds = %bb.an, %bb.an, %bb.ak
-  switch i32 %28, label %bb.av [
+  switch i32 %1, label %bb.av [
     i32 4, label %bb.ba
     i32 2, label %bb.ba
     i32 1, label %bb.ba
+    i32 5, label %bb.ba
   ]
 
 bb.av:                                            ; preds = %bb.au
@@ -317,7 +316,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit182: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #30
   br label %bb.kx
 
-bb.ba:                                            ; preds = %bb.au, %bb.au, %bb.au
+bb.ba:                                            ; preds = %bb.au, %bb.au, %bb.au, %bb.au
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #30
   store ptr %3, ptr %i.b, align 16, !tbaa !38
   %i.dp = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -720,7 +719,7 @@ bb.g:                                             ; preds = %.noexc211
 _ZNK2cv11_InputArray6getMatEi.exit214:            ; preds = %bb.f, %bb.g
   %i.o = and i32 %2, 8
   %.not.not = icmp eq i32 %i.o, 0
-  %i.p = and i32 %2, -9                           ; 13 uses
+  %i.p = and i32 %2, -9                           ; 18 uses
   %i.q = icmp eq i32 %i.p, 6                      ; 2 uses
   %i.r = and i32 %2, -10
   %or.cond = icmp eq i32 %i.r, 6
@@ -1073,7 +1072,7 @@ bb.af:                                            ; preds = %bb.ae, %_ZNSt7__cxx
 
 bb.ag:                                            ; preds = %_ZNK2cv11_InputArray6getMatEi.exit214
   %i.cs = icmp eq i32 %i.p, 5
-  %i.ct = select i1 %i.cs, i32 4, i32 %i.p        ; 6 uses
+  %i.ct = select i1 %i.cs, i32 4, i32 %i.p
   %i.cu = load i32, ptr %12, align 8, !tbaa !45
   %i.cv = and i32 %i.cu, 4095                     ; 2 uses
   %i.cw = load i32, ptr %13, align 8, !tbaa !45
@@ -1303,10 +1302,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit231: ; preds = %bb
   br label %bb.bl
 
 bb.bl:                                            ; preds = %.critedge, %bb.be
-  switch i32 %i.ct, label %bb.bm [
+  switch i32 %i.p, label %bb.bm [
     i32 4, label %bb.br
     i32 2, label %bb.br
     i32 1, label %bb.br
+    i32 5, label %bb.br
   ]
 
 bb.bm:                                            ; preds = %bb.bl
@@ -1347,7 +1347,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit234: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %35) #30
   br label %bb.lx
 
-bb.br:                                            ; preds = %bb.bl, %bb.bl, %bb.bl
+bb.br:                                            ; preds = %bb.bl, %bb.bl, %bb.bl, %bb.bl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #30
   store ptr %12, ptr %i.b, align 16, !tbaa !38
   %i.ez = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -1750,10 +1750,11 @@ bb.gl:                                            ; preds = %.lr.ph
   %.not.i782 = icmp eq ptr %i.fs, null            ; 4 uses
   %i.aqf = select i1 %.not.i782, i64 %i.fo, i64 1
   %.0123.i = mul i64 %i.aqf, %i.fc                ; 12 uses
-  switch i32 %i.ct, label %bb.hi [
+  switch i32 %i.p, label %bb.hi [
     i32 1, label %bb.gm
     i32 2, label %bb.gt
     i32 4, label %bb.ha
+    i32 5, label %bb.ha
   ]
 
 bb.gm:                                            ; preds = %bb.gl
@@ -1918,7 +1919,7 @@ bb.gz:                                            ; preds = %bb.gy, %.lr.ph192.i
   %exitcond230.not.i = icmp eq i64 %i.asj, %.0123.i
   br i1 %exitcond230.not.i, label %_ZN6cvtestL5norm_IbEEdPKT_S3_miidPKh.exit, label %.lr.ph192.i, !llvm.loop !1807
 
-bb.ha:                                            ; preds = %bb.gl
+bb.ha:                                            ; preds = %bb.gl, %bb.gl
   %.not208.i = icmp eq i64 %.0123.i, 0            ; 2 uses
   br i1 %.not.i782, label %.preheader169.i, label %.preheader172.i
 
@@ -2062,10 +2063,11 @@ bb.hl:                                            ; preds = %.lr.ph
   %.not.i792 = icmp eq ptr %i.fs, null            ; 4 uses
   %i.auc = select i1 %.not.i792, i64 %i.fo, i64 1
   %.0123.i793 = mul i64 %i.auc, %i.fc             ; 15 uses
-  switch i32 %i.ct, label %bb.ij [
+  switch i32 %i.p, label %bb.ij [
     i32 1, label %bb.hm
     i32 2, label %bb.ht
     i32 4, label %bb.ib
+    i32 5, label %bb.ib
   ]
 
 bb.hm:                                            ; preds = %bb.hl
@@ -2251,7 +2253,7 @@ bb.ia:                                            ; preds = %bb.hz, %.lr.ph192.i
   %niter1650.ncmp.1 = icmp eq i64 %niter1650.next.1, %unroll_iter1649
   br i1 %niter1650.ncmp.1, label %_ZN6cvtestL5norm_IbEEdPKT_S3_miidPKh.exit.loopexit1608.unr-lcssa, label %.lr.ph192.i837, !llvm.loop !1816
 
-bb.ib:                                            ; preds = %bb.hl
+bb.ib:                                            ; preds = %bb.hl, %bb.hl
   %.not208.i812 = icmp eq i64 %.0123.i793, 0      ; 2 uses
   br i1 %.not.i792, label %.preheader169.i811, label %.preheader172.i794
 
@@ -2389,10 +2391,11 @@ bb.im:                                            ; preds = %.lr.ph
   %.not.i875 = icmp eq ptr %i.fs, null            ; 4 uses
   %i.axw = select i1 %.not.i875, i64 %i.fo, i64 1
   %.0123.i876 = mul i64 %i.axw, %i.fc             ; 9 uses
-  switch i32 %i.ct, label %bb.kg [
+  switch i32 %i.p, label %bb.kg [
     i32 1, label %bb.in
     i32 2, label %bb.jc
     i32 4, label %bb.jr
+    i32 5, label %bb.jr
   ]
 
 bb.in:                                            ; preds = %bb.im
@@ -2765,7 +2768,7 @@ bb.jq:                                            ; preds = %_ZNK2cv6hfloatcvfEv
   %exitcond252.not.i = icmp eq i64 %i.bea, %.0123.i876
   br i1 %exitcond252.not.i, label %_ZN6cvtestL5norm_IbEEdPKT_S3_miidPKh.exit, label %.lr.ph214.i, !llvm.loop !1825
 
-bb.jr:                                            ; preds = %bb.im
+bb.jr:                                            ; preds = %bb.im, %bb.im
   %.not230.i = icmp eq i64 %.0123.i876, 0         ; 2 uses
   br i1 %.not.i875, label %.preheader191.i, label %.preheader194.i
 
@@ -2983,10 +2986,11 @@ bb.kj:                                            ; preds = %.lr.ph
   %.not.i905 = icmp eq ptr %i.fs, null            ; 4 uses
   %i.bhh = select i1 %.not.i905, i64 %i.fo, i64 1
   %.0123.i906 = mul i64 %i.bhh, %i.fc             ; 9 uses
-  switch i32 %i.ct, label %bb.lf [
+  switch i32 %i.p, label %bb.lf [
     i32 1, label %bb.kk
     i32 2, label %bb.kr
     i32 4, label %bb.ky
+    i32 5, label %bb.ky
   ]
 
 bb.kk:                                            ; preds = %bb.kj
@@ -3167,7 +3171,7 @@ bb.kx:                                            ; preds = %bb.kw, %.lr.ph192.i
   %exitcond230.not.i955 = icmp eq i64 %i.bkb, %.0123.i906
   br i1 %exitcond230.not.i955, label %_ZN6cvtestL5norm_IbEEdPKT_S3_miidPKh.exit, label %.lr.ph192.i950, !llvm.loop !1834
 
-bb.ky:                                            ; preds = %bb.kj
+bb.ky:                                            ; preds = %bb.kj, %bb.kj
   %.not208.i925 = icmp eq i64 %.0123.i906, 0      ; 2 uses
   br i1 %.not.i905, label %.preheader169.i924, label %.preheader172.i907
 

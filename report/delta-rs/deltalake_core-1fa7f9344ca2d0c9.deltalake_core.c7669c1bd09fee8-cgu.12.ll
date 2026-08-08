@@ -204,12 +204,11 @@ bb.a:
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 216
   %.pre = load ptr, ptr %.phi.trans.insert, align 8
   %.phi.trans.insert36 = getelementptr inbounds nuw i8, ptr %.pre, i64 514
-  %.pre37 = load i8, ptr %.phi.trans.insert36, align 2, !range !294 ; 4 uses
+  %.pre37 = load i8, ptr %.phi.trans.insert36, align 2, !range !294
+  %.pre37.fr = freeze i8 %.pre37                  ; 4 uses
   br i1 %.not, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.not9 = icmp eq i8 %.pre37, 3
-  %. = select i1 %.not9, i8 0, i8 %.pre37
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 264
   %.val = load ptr, ptr %i.a, align 8, !nonnull !10, !noundef !10 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 272
@@ -257,10 +256,11 @@ _RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14delt
   br i1 %spec.select9.i, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread, label %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.thread.thread.i
 
 _RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.thread.thread.i: ; preds = %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.thread.i, %bb.b
-  switch i8 %., label %default.unreachable.i [
+  switch i8 %.pre37.fr, label %default.unreachable.i [
     i8 0, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit
     i8 1, label %bb.d
-    i8 2, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread
+    i8 2, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread
+    i8 3, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit
   ]
 
 default.unreachable.i:                            ; preds = %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.thread.thread.i
@@ -270,7 +270,7 @@ bb.c:                                             ; preds = %bb.e
   unreachable
 
 bb.d:                                             ; preds = %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.thread.thread.i
-  br i1 %.not49, label %bb.e, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread
+  br i1 %.not49, label %bb.e, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.o = icmp ne i64 %.val13, 3
@@ -280,19 +280,19 @@ bb.e:                                             ; preds = %bb.d
   %i.r = select i1 %i.q, i64 %i.p, i64 1
   switch i64 %i.r, label %bb.c [
     i64 0, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17
-    i64 1, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread
-    i64 2, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread
-    i64 3, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread
-    i64 4, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread
+    i64 1, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread
+    i64 2, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread
+    i64 3, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread
+    i64 4, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread
     i64 5, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17
     i64 6, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17
     i64 7, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17
-    i64 8, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread
-    i64 9, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread
+    i64 8, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread
+    i64 9, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread
     i64 10, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17
     i64 11, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17
-    i64 12, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread
-    i64 13, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread
+    i64 12, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread
+    i64 13, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread
     i64 14, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17
     i64 15, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17
     i64 16, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17
@@ -328,16 +328,19 @@ bb.f:                                             ; preds = %.loopexit34, %.loop
   %i.x = icmp eq ptr %i.j, %i.c
   br i1 %i.x, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread, label %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.i, !llvm.loop !18607
 
-_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread: ; preds = %.thread.i.peel, %.thread.i, %bb.a, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.d, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.thread.thread.i, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.thread.i, %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit
-  %.not10 = icmp eq i8 %.pre37, 3
-  %.11 = select i1 %.not10, i8 0, i8 %.pre37
+_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread: ; preds = %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.thread.thread.i, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.d
   br label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17
 
-_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit: ; preds = %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.thread.thread.i
+_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread: ; preds = %.thread.i.peel, %.thread.i, %bb.a, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.thread.i, %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit
+  %.not10 = icmp eq i8 %.pre37.fr, 3
+  %.11 = select i1 %.not10, i8 0, i8 %.pre37.fr
+  br label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17
+
+_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit: ; preds = %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.thread.thread.i, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models6ActionENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBV_.exit.thread.thread.i
   br i1 %.not49, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17, label %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread
 
-_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17: ; preds = %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit, %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread
-  %.sroa.02.1 = phi i8 [ %.11, %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread ], [ 2, %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ]
+_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread17: ; preds = %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread, %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit
+  %.sroa.02.1 = phi i8 [ 2, %bb.e ], [ 2, %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ 2, %bb.e ], [ %.pre37.fr, %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread.thread ], [ %.11, %_RINvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel11transaction16conflict_checker35can_downgrade_to_snapshot_isolationRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtB6_6models6ActionEEB8_.exit.thread ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(240) %0, ptr noundef nonnull align 16 dereferenceable(240) %1, i64 240, i1 false)
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 240
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(280) %i.y, ptr noundef nonnull align 8 dereferenceable(280) %2, i64 280, i1 false)

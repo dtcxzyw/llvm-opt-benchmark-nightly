@@ -201,9 +201,10 @@ bb.m:                                             ; preds = %bb.i
   %i.ar = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.aq, ptr noundef null) #7 ; 3 uses
   %i.as = icmp eq i32 %i.ar, -114
   %spec.store.select.i.i = select i1 %i.as, i32 0, i32 %i.ar
-  switch i32 %spec.store.select.i.i, label %bb.r [
+  switch i32 %i.ar, label %bb.r [
     i32 -35, label %bb.n
     i32 0, label %bb.p
+    i32 -114, label %bb.p
   ]
 
 bb.n:                                             ; preds = %bb.m
@@ -226,7 +227,7 @@ i915_gem_object_lock_interruptible.exit.thread:   ; preds = %bb.o, %.sink.split.
   store ptr %i.x, ptr inttoptr (i64 40 to ptr), align 8
   br label %bb.r
 
-bb.p:                                             ; preds = %bb.m
+bb.p:                                             ; preds = %bb.m, %bb.m
   %i.aw = tail call i32 @i915_gem_object_set_cache_level(ptr noundef nonnull %i.x, i32 noundef %.023) #9
   %i.ax = load ptr, ptr %i.al, align 8
   %i.ay = getelementptr i8, ptr %i.ax, i64 80
@@ -244,7 +245,7 @@ i915_gem_object_unlock.exit:                      ; preds = %bb.p, %bb.q
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.m, %i915_gem_object_lock_interruptible.exit.thread, %i915_gem_object_lookup.exit, %bb.k, %bb.l, %i915_gem_object_unlock.exit
-  %.0 = phi i32 [ %i.aw, %i915_gem_object_unlock.exit ], [ -6, %bb.l ], [ 0, %bb.k ], [ %i.ar, %bb.m ], [ -95, %i915_gem_object_lookup.exit ], [ -35, %i915_gem_object_lock_interruptible.exit.thread ] ; 3 uses
+  %.0 = phi i32 [ %i.aw, %i915_gem_object_unlock.exit ], [ -6, %bb.l ], [ 0, %bb.k ], [ %spec.store.select.i.i, %bb.m ], [ -95, %i915_gem_object_lookup.exit ], [ -35, %i915_gem_object_lock_interruptible.exit.thread ] ; 3 uses
   %i.bb = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) %i.x, i32 -1, ptr nonnull elementtype(i32) %i.x) #8, !srcloc !10 ; 2 uses
   %i.bc = icmp eq i32 %i.bb, 1
   br i1 %i.bc, label %bb.u, label %bb.s

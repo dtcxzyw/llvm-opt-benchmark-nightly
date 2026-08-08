@@ -16,6 +16,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.4 = private unnamed_addr constant [2 x i8] c" \00", align 1
 @.str.5 = private unnamed_addr constant [4 x i8] c"UTC\00", align 1
 @.str.6 = private unnamed_addr constant [14 x i8] c"epan/to_str.c\00", align 1
+@__func__.abs_time_to_str_ex = private unnamed_addr constant [19 x i8] c"abs_time_to_str_ex\00", align 1
 @.str.7 = private unnamed_addr constant [31 x i8] c"assertion \22not reached\22 failed\00", align 1
 @.str.8 = private unnamed_addr constant [10 x i8] c"0 seconds\00", align 1
 @.str.9 = private unnamed_addr constant [20 x i8] c"0.000000000 seconds\00", align 1
@@ -65,13 +66,14 @@ bb.a:
   %i.b = alloca [32 x i8], align 16               ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   %i.c = icmp eq i32 %2, 0
-  %spec.store.select = select i1 %i.c, i32 18, i32 %2 ; 5 uses
-  switch i32 %spec.store.select, label %bb.g [
+  %spec.store.select = select i1 %i.c, i32 18, i32 %2 ; 2 uses
+  switch i32 %2, label %bb.g [
     i32 22, label %bb.b
     i32 21, label %bb.c
     i32 19, label %.thread
     i32 20, label %.thread
     i32 18, label %bb.f
+    i32 0, label %bb.f
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -100,7 +102,7 @@ bb.e:                                             ; preds = %bb.d, %bb.d
   %i.j = tail call ptr @gmtime(ptr noundef %1) #10
   br label %get_fmt_broken_down_time.exit
 
-bb.f:                                             ; preds = %bb.a
+bb.f:                                             ; preds = %bb.a, %bb.a
   %i.k = tail call ptr @localtime(ptr noundef %1) #10
   br label %get_fmt_broken_down_time.exit
 
@@ -142,11 +144,12 @@ bb.l:                                             ; preds = %bb.k
   %.not40.i = icmp eq i32 %i.t, 0
   %or.cond.i = or i1 %.not39.i, %.not40.i
   %.0.i39 = select i1 %or.cond.i, i8 %i.s, i8 1   ; 3 uses
-  switch i32 %spec.store.select, label %default.unreachable48 [
+  switch i32 %2, label %default.unreachable48 [
     i32 20, label %bb.m
     i32 21, label %bb.n
     i32 19, label %bb.n
     i32 18, label %bb.o
+    i32 0, label %bb.o
   ]
 
 bb.m:                                             ; preds = %bb.l
@@ -187,7 +190,7 @@ bb.n:                                             ; preds = %bb.l, %bb.l
   %i.az = call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %i.aj, i32 noundef %i.am, i32 noundef %i.ap, i32 noundef %i.ar, i32 noundef %i.at, i32 noundef %i.av, i32 noundef %i.aw, ptr noundef nonnull %i.b, ptr noundef nonnull %i.ay, ptr noundef nonnull %i.aj)
   br label %snprint_abs_time_iso8601.exit
 
-bb.o:                                             ; preds = %bb.l
+bb.o:                                             ; preds = %bb.l, %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i64 0, ptr %i.a, align 8
   %i.ba = trunc i8 %.0.i39 to i1
@@ -227,34 +230,36 @@ bb.r:                                             ; preds = %bb.k
   br i1 %or.cond, label %bb.v, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %4 = icmp eq i32 %spec.store.select, 18
-  br i1 %4, label %bb.t, label %bb.v
+  switch i32 %2, label %.thread42 [
+    i32 19, label %bb.v
+    i32 20, label %bb.v
+    i32 21, label %bb.v
+    i32 18, label %bb.t
+    i32 0, label %bb.t
+  ]
 
-bb.t:                                             ; preds = %bb.s
-  br i1 %.not37, label %.thread42, label %bb.u
+bb.t:                                             ; preds = %bb.s, %bb.s
+  br i1 %.not37, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.bt = getelementptr i8, ptr %.0.i, i64 48
   %.val = load ptr, ptr %i.bt, align 8
-  br label %.thread42
+  br label %bb.v
 
-.thread42:                                        ; preds = %bb.u, %bb.t
-  %.031.ph = phi ptr [ @.str.3, %bb.t ], [ @.str.4, %bb.u ]
-  %.0.ph = phi ptr [ @.str.3, %bb.t ], [ %.val, %bb.u ]
-  %5 = and i32 %3, 2
-  %6 = icmp ne i32 %5, 0
-  br label %bb.x
+.thread42:                                        ; preds = %bb.s
+  call void (ptr, i32, ptr, i64, ptr, ptr, ...) @ws_log_fatal_full(ptr noundef nonnull @.str.3, i32 noundef 7, ptr noundef nonnull @.str.6, i64 noundef 290, ptr noundef nonnull @__func__.abs_time_to_str_ex, ptr noundef nonnull @.str.7) #12
+  unreachable
 
-bb.v:                                             ; preds = %bb.s, %bb.r
-  %.031 = phi ptr [ @.str.3, %bb.r ], [ @.str.4, %bb.s ] ; 2 uses
-  %.0 = phi ptr [ @.str.3, %bb.r ], [ @.str.5, %bb.s ] ; 2 uses
+bb.v:                                             ; preds = %bb.s, %bb.s, %bb.s, %bb.r, %bb.u, %bb.t
+  %.031 = phi ptr [ @.str.3, %bb.r ], [ @.str.4, %bb.u ], [ @.str.3, %bb.t ], [ @.str.4, %bb.s ], [ @.str.4, %bb.s ], [ @.str.4, %bb.s ] ; 2 uses
+  %.0 = phi ptr [ @.str.3, %bb.r ], [ %.val, %bb.u ], [ @.str.3, %bb.t ], [ @.str.5, %bb.s ], [ @.str.5, %bb.s ], [ @.str.5, %bb.s ] ; 2 uses
   %i.bu = and i32 %3, 2
-  %7 = icmp ne i32 %i.bu, 0                       ; 2 uses
+  %.not42 = icmp eq i32 %i.bu, 0
   %i.bv = icmp eq i32 %spec.store.select, 20
+  %4 = select i1 %.not42, ptr @.str.3, ptr @.str.26 ; 4 uses
   br i1 %i.bv, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
-  %8 = select i1 %7, ptr @.str.26, ptr @.str.3    ; 2 uses
   %i.bw = getelementptr i8, ptr %.0.i, i64 20
   %i.bx = load i32, ptr %i.bw, align 4
   %i.by = add i32 %i.bx, 1900
@@ -266,14 +271,10 @@ bb.w:                                             ; preds = %bb.v
   %i.ce = getelementptr i8, ptr %.0.i, i64 4
   %i.cf = load i32, ptr %i.ce, align 4
   %i.cg = load i32, ptr %.0.i, align 8
-  %i.ch = call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %0, ptr noundef nonnull @.str.30, ptr noundef nonnull %8, i32 noundef %i.by, i32 noundef %i.cb, i32 noundef %i.cd, i32 noundef %i.cf, i32 noundef %i.cg, ptr noundef nonnull %i.b, ptr noundef nonnull %.031, ptr noundef nonnull %.0, ptr noundef nonnull %8)
+  %i.ch = call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %0, ptr noundef nonnull @.str.30, ptr noundef nonnull %4, i32 noundef %i.by, i32 noundef %i.cb, i32 noundef %i.cd, i32 noundef %i.cf, i32 noundef %i.cg, ptr noundef nonnull %i.b, ptr noundef nonnull %.031, ptr noundef %.0, ptr noundef nonnull %4)
   br label %snprint_abs_time_iso8601.exit
 
-bb.x:                                             ; preds = %bb.v, %.thread42
-  %9 = phi i1 [ %6, %.thread42 ], [ %7, %bb.v ]
-  %.046 = phi ptr [ %.0.ph, %.thread42 ], [ %.0, %bb.v ]
-  %.03145 = phi ptr [ %.031.ph, %.thread42 ], [ %.031, %bb.v ]
-  %10 = select i1 %9, ptr @.str.26, ptr @.str.3   ; 2 uses
+bb.x:                                             ; preds = %bb.v
   %i.ci = getelementptr i8, ptr %.0.i, i64 16
   %i.cj = load i32, ptr %i.ci, align 8
   %i.ck = sext i32 %i.cj to i64
@@ -288,7 +289,7 @@ bb.x:                                             ; preds = %bb.v, %.thread42
   %i.ct = getelementptr i8, ptr %.0.i, i64 4
   %i.cu = load i32, ptr %i.ct, align 4
   %i.cv = load i32, ptr %.0.i, align 8
-  %i.cw = call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %0, ptr noundef nonnull @.str.31, ptr noundef nonnull %10, ptr noundef %i.cl, i32 noundef %i.cn, i32 noundef %i.cq, i32 noundef %i.cs, i32 noundef %i.cu, i32 noundef %i.cv, ptr noundef nonnull %i.b, ptr noundef nonnull %.03145, ptr noundef %.046, ptr noundef nonnull %10)
+  %i.cw = call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %0, ptr noundef nonnull @.str.31, ptr noundef nonnull %4, ptr noundef %i.cl, i32 noundef %i.cn, i32 noundef %i.cq, i32 noundef %i.cs, i32 noundef %i.cu, i32 noundef %i.cv, ptr noundef nonnull %i.b, ptr noundef nonnull %.031, ptr noundef %.0, ptr noundef nonnull %4)
   br label %snprint_abs_time_iso8601.exit
 
 snprint_abs_time_iso8601.exit:                    ; preds = %bb.x, %bb.w, %bb.q, %bb.n, %bb.m, %bb.h, %bb.e, %bb.b

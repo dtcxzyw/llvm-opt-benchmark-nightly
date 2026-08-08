@@ -203,14 +203,14 @@ i915_gem_object_get.exit.i.i.i:                   ; preds = %.sink.split.i.i.i.i
   %i.bd = getelementptr i8, ptr %i.aq, i64 552
   store ptr %i.bc, ptr %i.bd, align 8
   store volatile ptr %i.bb, ptr %i.bc, align 8
-  br label %bb.k
+  br label %bb.n
 
-bb.k:                                             ; preds = %i915_gem_object_get.exit.i.i.i, %bb.h
+bb.k:                                             ; preds = %bb.h
   %i.be = icmp eq i32 %.0.i.i.i, -114
   %spec.store.select.i6.i.i = select i1 %i.be, i32 0, i32 %.0.i.i.i
-  switch i32 %spec.store.select.i6.i.i, label %intel_context_unpin.exit.i [
+  switch i32 %.0.i.i.i, label %intel_context_pin_ww.exit.i [
     i32 -35, label %bb.l
-    i32 0, label %bb.n
+    i32 -114, label %bb.n
   ]
 
 bb.l:                                             ; preds = %bb.k
@@ -233,10 +233,10 @@ intel_context_unpin.exit.thread.i:                ; preds = %.sink.split.i.i.i.i
   store ptr %i.aq, ptr %i.aj, align 8
   br label %bb.bk
 
-bb.n:                                             ; preds = %bb.k
+bb.n:                                             ; preds = %bb.k, %i915_gem_object_get.exit.i.i.i
   %i.bi = load volatile i32, ptr %i.ai, align 4   ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.bi, 0
-  br i1 %.not.i.i.i, label %intel_context_pin_ww.exit.i, label %.lr.ph.i.i68.i, !prof !111
+  br i1 %.not.i.i.i, label %.loopexit.i.i, label %.lr.ph.i.i68.i, !prof !111
 
 .lr.ph.i.i68.i:                                   ; preds = %bb.n, %arch_atomic_try_cmpxchg.exit.i.i69.i
   %.04.i.i.i = phi i32 [ %i.bo, %arch_atomic_try_cmpxchg.exit.i.i69.i ], [ %i.bi, %bb.n ] ; 2 uses
@@ -251,11 +251,15 @@ bb.n:                                             ; preds = %bb.k
 arch_atomic_try_cmpxchg.exit.i.i69.i:             ; preds = %.lr.ph.i.i68.i
   %i.bo = extractvalue { i8, i32 } %i.bk, 1       ; 2 uses
   %.not7.i.i.i = icmp eq i32 %i.bo, 0
-  br i1 %.not7.i.i.i, label %intel_context_pin_ww.exit.i, label %.lr.ph.i.i68.i, !prof !113
+  br i1 %.not7.i.i.i, label %.loopexit.i.i, label %.lr.ph.i.i68.i, !prof !113
 
-intel_context_pin_ww.exit.i:                      ; preds = %arch_atomic_try_cmpxchg.exit.i.i69.i, %bb.n
-  %3 = call i32 @__intel_context_do_pin_ww(ptr noundef %i.b, ptr noundef nonnull %2) #10 ; 2 uses
-  %.not62.i = icmp eq i32 %3, 0
+.loopexit.i.i:                                    ; preds = %arch_atomic_try_cmpxchg.exit.i.i69.i, %bb.n
+  %3 = call i32 @__intel_context_do_pin_ww(ptr noundef %i.b, ptr noundef nonnull %2) #10
+  br label %intel_context_pin_ww.exit.i
+
+intel_context_pin_ww.exit.i:                      ; preds = %.loopexit.i.i, %bb.k
+  %.0.i = phi i32 [ %3, %.loopexit.i.i ], [ %spec.store.select.i6.i.i, %bb.k ] ; 2 uses
+  %.not62.i = icmp eq i32 %.0.i, 0
   br i1 %.not62.i, label %intel_context_pin_ww.exit.thread.i, label %intel_context_unpin.exit.i
 
 intel_context_pin_ww.exit.thread.i:               ; preds = %.lr.ph.i.i68.i, %intel_context_pin_ww.exit.i
@@ -658,8 +662,8 @@ bb.bj:                                            ; preds = %atomic_add_unless.e
   call void %i.hu(ptr noundef %i.b) #10, !inline_history !127
   br label %intel_context_unpin.exit.i
 
-intel_context_unpin.exit.i:                       ; preds = %.lr.ph.i81.i, %bb.bj, %bb.bi, %intel_context_pin_ww.exit.i, %bb.k
-  %.7.i = phi i32 [ %3, %intel_context_pin_ww.exit.i ], [ %.6.i, %bb.bj ], [ %.6.i, %bb.bi ], [ %.0.i.i.i, %bb.k ], [ %.6.i, %.lr.ph.i81.i ] ; 2 uses
+intel_context_unpin.exit.i:                       ; preds = %.lr.ph.i81.i, %bb.bj, %bb.bi, %intel_context_pin_ww.exit.i
+  %.7.i = phi i32 [ %.0.i, %intel_context_pin_ww.exit.i ], [ %.6.i, %bb.bj ], [ %.6.i, %bb.bi ], [ %.6.i, %.lr.ph.i81.i ] ; 2 uses
   %i.hv = icmp eq i32 %.7.i, -35
   br i1 %i.hv, label %bb.bk, label %bb.bl
 

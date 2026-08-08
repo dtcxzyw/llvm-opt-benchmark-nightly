@@ -204,15 +204,16 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 bb.h:                                             ; preds = %.critedge71.thread, %.critedge71
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
-  %i.ab = load i8, ptr %i.aa, align 8, !tbaa !2326 ; 2 uses
+  %i.ab = load i8, ptr %i.aa, align 8, !tbaa !2326 ; 3 uses
   %i.ac = icmp eq i8 %i.ab, 127
-  %spec.store.select = select i1 %i.ac, i8 1, i8 %i.ab
-  switch i8 %spec.store.select, label %bb.ad [
+  %spec.store.select = select i1 %i.ac, i8 1, i8 %i.ab ; 6 uses
+  switch i8 %i.ab, label %bb.ad [
     i8 1, label %bb.i
     i8 0, label %bb.x
+    i8 127, label %bb.i
   ]
 
-bb.i:                                             ; preds = %bb.h
+bb.i:                                             ; preds = %bb.h, %bb.h
   %i.ad = load i64, ptr %i.a, align 8, !tbaa !289
   %.not142 = icmp eq i64 %i.ad, -1
   br i1 %.not142, label %bb.j, label %._crit_edge.i.i94
@@ -557,7 +558,7 @@ bb.ah:                                            ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.aj
 
 bb.ai:                                            ; preds = %bb.p, %bb.x, %bb.y, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit103, %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit119, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit87
-  %.028 = phi i8 [ 0, %bb.y ], [ 1, %bb.q ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit103 ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit87 ], [ 0, %bb.x ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit119 ], [ 0, %bb.p ]
+  %.028 = phi i8 [ %spec.store.select, %bb.y ], [ %spec.store.select, %bb.q ], [ %spec.store.select, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit103 ], [ %spec.store.select, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit87 ], [ %spec.store.select, %bb.x ], [ %spec.store.select, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit119 ], [ 0, %bb.p ]
   store i8 %.028, ptr %i.aa, align 8, !tbaa !2326
   ret void
 

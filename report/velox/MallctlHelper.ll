@@ -203,9 +203,9 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 36
-  %i.e = load i8, ptr %i.d, align 4, !tbaa !61    ; 2 uses
+  %i.e = load i8, ptr %i.d, align 4, !tbaa !61    ; 4 uses
   %i.f = icmp eq i8 %i.e, 0
-  %spec.store.select = select i1 %i.f, i8 99, i8 %i.e ; 3 uses
+  %spec.store.select = select i1 %i.f, i8 99, i8 %i.e
   store i8 %spec.store.select, ptr %i.a, align 1
   %i.g = load i8, ptr %0, align 1, !tbaa !81      ; 5 uses
   %i.h = icmp slt i8 %i.g, 0
@@ -238,7 +238,7 @@ bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e,
   %.0 = phi i8 [ %i.i, %bb.b ], [ %i.g, %bb.e ], [ %i.g, %bb.d ], [ %i.g, %bb.c ] ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #22
-  switch i8 %spec.store.select, label %bb.ah [
+  switch i8 %i.e, label %bb.ah [
     i8 110, label %bb.g
     i8 100, label %bb.j
     i8 99, label %bb.m
@@ -248,6 +248,7 @@ bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e,
     i8 88, label %bb.y
     i8 98, label %bb.ac
     i8 66, label %bb.ac
+    i8 0, label %bb.m
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -305,7 +306,7 @@ bb.l:                                             ; preds = %_ZNK5folly9FormatAr
   call void @_ZN5folly6detail29insertThousandsGroupingUnsafeEPcPS1_(ptr noundef nonnull %i.z, ptr noundef nonnull %i.c)
   br label %bb.ai
 
-bb.m:                                             ; preds = %bb.f
+bb.m:                                             ; preds = %bb.f, %bb.f
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 19
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !105, !range !106, !noundef !39
   %i.aj = trunc nuw i8 %i.ai to i1
@@ -503,7 +504,7 @@ _ZN5folly6detail12uintToBinaryIhEEmPcmT_.exit:    ; preds = %bb.af, %bb.ae
 
 bb.ag:                                            ; preds = %_ZN5folly6detail12uintToBinaryIhEEmPcmT_.exit
   %i.db = getelementptr inbounds i8, ptr %i.cx, i64 -1
-  store i8 %spec.store.select, ptr %i.db, align 1, !tbaa !28
+  store i8 %i.e, ptr %i.db, align 1, !tbaa !28
   %i.dc = getelementptr inbounds i8, ptr %i.cx, i64 -2 ; 2 uses
   store i8 48, ptr %i.dc, align 1, !tbaa !28
   br label %bb.ai
@@ -906,9 +907,9 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 36
-  %i.e = load i8, ptr %i.d, align 4, !tbaa !61    ; 2 uses
+  %i.e = load i8, ptr %i.d, align 4, !tbaa !61    ; 4 uses
   %i.f = icmp eq i8 %i.e, 0
-  %spec.store.select = select i1 %i.f, i8 100, i8 %i.e ; 3 uses
+  %spec.store.select = select i1 %i.f, i8 100, i8 %i.e
   store i8 %spec.store.select, ptr %i.a, align 1
   %i.g = load i32, ptr %0, align 4, !tbaa !113    ; 5 uses
   %i.h = icmp slt i32 %i.g, 0
@@ -938,7 +939,7 @@ bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e,
   %.0 = phi i32 [ %i.i, %bb.b ], [ %i.g, %bb.e ], [ %i.g, %bb.d ], [ %i.g, %bb.c ] ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #22
-  switch i8 %spec.store.select, label %bb.ag [
+  switch i8 %i.e, label %bb.ag [
     i8 110, label %bb.g
     i8 100, label %bb.j
     i8 99, label %bb.m
@@ -948,6 +949,7 @@ bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e,
     i8 88, label %bb.y
     i8 98, label %bb.ac
     i8 66, label %bb.ac
+    i8 0, label %bb.j
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -979,7 +981,7 @@ _ZNK5folly9FormatArg7enforceIbJRA26_KcRcRA12_S2_EEEvRKT_DpOT0_.exit: ; preds = %
   store ptr %i.v, ptr %i.c, align 8, !tbaa !12
   br label %bb.ah
 
-bb.j:                                             ; preds = %bb.f
+bb.j:                                             ; preds = %bb.f, %bb.f
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 19
   %i.x = load i8, ptr %i.w, align 1, !tbaa !105, !range !106, !noundef !39
   %i.y = trunc nuw i8 %i.x to i1
@@ -1307,7 +1309,7 @@ _ZN5folly6detail12uintToBinaryIjEEmPcmT_.exit:    ; preds = %.preheader.i, %bb.a
 
 bb.af:                                            ; preds = %_ZN5folly6detail12uintToBinaryIjEEmPcmT_.exit
   %i.fn = getelementptr inbounds i8, ptr %i.fj, i64 -1
-  store i8 %spec.store.select, ptr %i.fn, align 1, !tbaa !28
+  store i8 %i.e, ptr %i.fn, align 1, !tbaa !28
   %i.fo = getelementptr inbounds i8, ptr %i.fj, i64 -2 ; 2 uses
   store i8 48, ptr %i.fo, align 1, !tbaa !28
   br label %bb.ah

@@ -201,17 +201,16 @@ bb.ar:                                            ; preds = %__rpm_get_callback.
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
-  %.0.i124 = phi i32 [ %i.ed, %bb.aq ], [ %i.eh, %bb.ar ] ; 2 uses
-  %3 = icmp eq i32 %.0.i124, -13
-  %spec.store.select.i = select i1 %3, i32 -11, i32 %.0.i124 ; 4 uses
-  switch i32 %spec.store.select.i, label %rpm_callback.exit [
+  %.0.i124 = phi i32 [ %i.ed, %bb.aq ], [ %i.eh, %bb.ar ] ; 5 uses
+  switch i32 %.0.i124, label %rpm_callback.exit [
     i32 -11, label %rpm_callback.exit.thread
     i32 -16, label %rpm_callback.exit.thread
+    i32 -13, label %rpm_callback.exit.thread
   ]
 
 rpm_callback.exit:                                ; preds = %bb.as
-  store i32 %spec.store.select.i, ptr %i.l, align 4
-  %.not103 = icmp eq i32 %spec.store.select.i, 0
+  store i32 %.0.i124, ptr %i.l, align 4
+  %.not103 = icmp eq i32 %.0.i124, 0
   br i1 %.not103, label %bb.at, label %rpm_callback.exit.thread
 
 bb.at:                                            ; preds = %rpm_callback.exit
@@ -383,7 +382,7 @@ rpm_suspend_suppliers.exit:                       ; preds = %.lr.ph227, %bb.bg
   br label %rpm_check_suspend_allowed.exit.thread
 
 rpm_check_suspend_allowed.exit.thread:            ; preds = %rpm_check_suspend_allowed.exit, %bb.f, %pm_runtime_autosuspend_expiration.exit152.backedge, %bb.e, %bb.h, %bb.j, %bb.m, %bb.l, %trace_rpm_suspend.exit, %.thread162, %bb.s, %bb.bf, %rpm_suspend_suppliers.exit, %bb.bb, %bb.aa, %bb.ab, %pm_runtime_cancel_pending.exit154, %bb.ba
-  %.3 = phi i32 [ %spec.store.select.i, %pm_runtime_cancel_pending.exit154 ], [ 0, %bb.s ], [ -115, %.thread162 ], [ -11, %bb.ba ], [ 0, %bb.bb ], [ 0, %rpm_suspend_suppliers.exit ], [ 0, %bb.bf ], [ 0, %bb.aa ], [ 0, %bb.ab ], [ -22, %trace_rpm_suspend.exit ], [ -11, %bb.f ], [ -22, %pm_runtime_autosuspend_expiration.exit152.backedge ], [ -13, %bb.e ], [ -16, %bb.h ], [ -11, %bb.j ], [ -1, %bb.m ], [ %.086, %rpm_check_suspend_allowed.exit ], [ -11, %bb.l ] ; 2 uses
+  %.3 = phi i32 [ %spec.store.select.i.le, %pm_runtime_cancel_pending.exit154 ], [ 0, %bb.s ], [ -115, %.thread162 ], [ -11, %bb.ba ], [ 0, %bb.bb ], [ 0, %rpm_suspend_suppliers.exit ], [ 0, %bb.bf ], [ 0, %bb.aa ], [ 0, %bb.ab ], [ -22, %trace_rpm_suspend.exit ], [ -11, %bb.f ], [ -22, %pm_runtime_autosuspend_expiration.exit152.backedge ], [ -13, %bb.e ], [ -16, %bb.h ], [ -11, %bb.j ], [ -1, %bb.m ], [ %.086, %rpm_check_suspend_allowed.exit ], [ -11, %bb.l ] ; 2 uses
   %i.gn = tail call i64 asm "lea 0(%rip), $0", "=r,~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !36
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_rpm_return_int, i64 8), i1 false) #8
           to label %trace_rpm_return_int.exit [label %arch_test_bit.exit.i.i137], !srcloc !17
@@ -420,7 +419,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh
 trace_rpm_return_int.exit:                        ; preds = %rpm_check_suspend_allowed.exit.thread, %arch_test_bit.exit.i.i137, %bb.bj
   ret i32 %.3
 
-rpm_callback.exit.thread:                         ; preds = %bb.as, %bb.as, %rpm_callback.exit
+rpm_callback.exit.thread:                         ; preds = %bb.as, %bb.as, %bb.as, %rpm_callback.exit
   call void @dev_pm_disable_wake_irq_check(ptr noundef %0, i1 noundef zeroext true) #7
   %i.gz = load i16, ptr %i.n, align 8
   %i.ha = and i16 %i.gz, 7
@@ -510,6 +509,8 @@ bb.bq:                                            ; preds = %bb.bp
   br i1 %i.ii, label %pm_runtime_autosuspend_expiration.exit152.backedge, label %pm_runtime_autosuspend_expiration.exit152.thread
 
 pm_runtime_autosuspend_expiration.exit152.thread: ; preds = %bb.bp, %bb.bq, %bb.bo, %__update_runtime_status.exit148
+  %3 = icmp eq i32 %.0.i124, -13
+  %spec.store.select.i.le = select i1 %3, i32 -11, i32 %.0.i124
   %i.ij = load i64, ptr %i.w, align 8
   %.not.i.i153 = icmp eq i64 %i.ij, 0
   br i1 %.not.i.i153, label %pm_runtime_cancel_pending.exit154, label %bb.br
@@ -912,20 +913,21 @@ bb.av:                                            ; preds = %__rpm_get_callback.
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au
-  %.0.i = phi i32 [ %i.el, %bb.au ], [ %i.ep, %bb.av ] ; 3 uses
+  %.0.i = phi i32 [ %i.el, %bb.au ], [ %i.ep, %bb.av ] ; 6 uses
   %i.eq = icmp eq i32 %.0.i, -13
-  %spec.store.select.i = select i1 %i.eq, i32 -11, i32 %.0.i ; 5 uses
-  switch i32 %spec.store.select.i, label %rpm_callback.exit [
+  %spec.store.select.i = select i1 %i.eq, i32 -11, i32 %.0.i ; 2 uses
+  switch i32 %.0.i, label %rpm_callback.exit [
     i32 -11, label %rpm_callback.exit.thread
     i32 -16, label %rpm_callback.exit.thread
+    i32 -13, label %rpm_callback.exit.thread
   ]
 
 rpm_callback.exit:                                ; preds = %bb.aw
-  store i32 %spec.store.select.i, ptr %i.l, align 4
-  %.not114 = icmp eq i32 %spec.store.select.i, 0
+  store i32 %.0.i, ptr %i.l, align 4
+  %.not114 = icmp eq i32 %.0.i, 0
   br i1 %.not114, label %bb.bc, label %rpm_callback.exit.thread
 
-rpm_callback.exit.thread:                         ; preds = %bb.aw, %bb.aw, %rpm_callback.exit
+rpm_callback.exit.thread:                         ; preds = %bb.aw, %bb.aw, %bb.aw, %rpm_callback.exit
   %i.er = load i16, ptr %i.m, align 8
   %i.es = and i16 %i.er, 7
   %.not.i.i132 = icmp eq i16 %i.es, 0

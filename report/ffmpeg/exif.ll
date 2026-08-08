@@ -203,7 +203,7 @@ bb.l:                                             ; preds = %exif_decode_tag.exi
   %i.ax = call i32 @ff_tget_short(ptr noundef nonnull %1, i32 noundef %2) #14, !inline_history !64
   %i.ay = trunc i32 %i.ax to i16
   store i16 %i.ay, ptr %i.as, align 8, !tbaa !44
-  %i.az = call i32 @ff_tget_short(ptr noundef nonnull %1, i32 noundef %2) #14, !inline_history !64 ; 6 uses
+  %i.az = call i32 @ff_tget_short(ptr noundef nonnull %1, i32 noundef %2) #14, !inline_history !64 ; 7 uses
   %i.ba = call i32 @ff_tget_long(ptr noundef nonnull %1, i32 noundef %2) #14, !inline_history !64 ; 5 uses
   %i.bb = call i32 @ff_tget_long(ptr noundef nonnull %1, i32 noundef %2) #14, !inline_history !64 ; 5 uses
   %i.bc = load i16, ptr %i.as, align 8, !tbaa !44
@@ -473,7 +473,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %.thread66
 
 .thread66:                                        ; preds = %bb.v, %bb.v, %exif_get_makernote_offset.exit, %bb.u, %bb.s, %bb.q, %bb.aa
-  %i.gc = select i1 %i.bg, i32 7, i32 %i.az       ; 3 uses
+  %i.gc = select i1 %i.bg, i32 7, i32 %i.az       ; 2 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %i.as, i64 4 ; 2 uses
   store i32 %i.gc, ptr %i.gd, align 4, !tbaa !22
   %i.ge = getelementptr inbounds nuw i8, ptr %i.as, i64 8 ; 18 uses
@@ -510,7 +510,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.hd, label %exif_decode_tag.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %.thread66
-  switch i32 %i.gc, label %default.unreachable [
+  switch i32 %i.az, label %default.unreachable [
     i32 3, label %bb.ac
     i32 4, label %bb.ac
     i32 8, label %bb.ad
@@ -523,6 +523,7 @@ bb.ab:                                            ; preds = %.thread66
     i32 1, label %bb.ag
     i32 6, label %bb.ah
     i32 2, label %bb.ai
+    i32 13, label %bb.ag
   ]
 
 default.unreachable:                              ; preds = %bb.ab
@@ -544,7 +545,7 @@ bb.af:                                            ; preds = %bb.ab, %bb.ab
   %i.hh = call noalias ptr @av_calloc(i64 noundef %i.gf, i64 noundef 8) #14
   br label %bb.aj
 
-bb.ag:                                            ; preds = %bb.ab, %bb.ab
+bb.ag:                                            ; preds = %bb.ab, %bb.ab, %bb.ab
   %i.hi = call noalias ptr @av_mallocz(i64 noundef %i.gf) #14
   br label %bb.aj
 

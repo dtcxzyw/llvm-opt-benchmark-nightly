@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = icmp eq i32 %spec.store.select, 8
   %spec.store.select2 = select i1 %i.d, i32 0, i32 %spec.store.select ; 2 uses
   %i.e = icmp eq i32 %spec.store.select2, 4
-  %spec.store.select1 = select i1 %i.e, i32 6, i32 %spec.store.select2 ; 9 uses
+  %spec.store.select1 = select i1 %i.e, i32 6, i32 %spec.store.select2 ; 8 uses
   %.not = icmp eq ptr %2, null
   br i1 %.not, label %bb.aa, label %bb.c
 
@@ -289,14 +289,15 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.aa
 
 bb.n:                                             ; preds = %bb.c
-  switch i32 %spec.store.select1, label %bb.s [
+  switch i32 %1, label %bb.s [
     i32 3, label %bb.o
     i32 6, label %bb.o
     i32 7, label %bb.p
+    i32 4, label %bb.o
   ]
 
-bb.o:                                             ; preds = %bb.n, %bb.n
-  %i.ag = zext nneg i32 %spec.store.select1 to i64
+bb.o:                                             ; preds = %bb.n, %bb.n, %bb.n
+  %i.ag = zext i32 %spec.store.select1 to i64
   %i.ah = getelementptr inbounds nuw [24 x i8], ptr @p, i64 %i.ag
   br label %bb.t
 
@@ -410,18 +411,19 @@ bb.b:                                             ; preds = %bb.a
   %i.c = icmp eq i32 %1, 1
   %spec.store.select = select i1 %i.c, i32 0, i32 %1 ; 2 uses
   %i.d = icmp eq i32 %spec.store.select, 4
-  %spec.store.select2 = select i1 %i.d, i32 6, i32 %spec.store.select ; 3 uses
+  %spec.store.select2 = select i1 %i.d, i32 6, i32 %spec.store.select ; 2 uses
   %cond = icmp eq i32 %0, 3
   br i1 %cond, label %bb.c, label %bb.p
 
 bb.c:                                             ; preds = %bb.b
-  switch i32 %spec.store.select2, label %bb.g [
+  switch i32 %1, label %bb.g [
     i32 6, label %.thread
     i32 3, label %.thread
     i32 7, label %bb.d
+    i32 4, label %.thread
   ]
 
-.thread:                                          ; preds = %bb.c, %bb.c
+.thread:                                          ; preds = %bb.c, %bb.c, %bb.c
   %i.e = zext nneg i32 %spec.store.select2 to i64 ; 2 uses
   %i.f = getelementptr inbounds nuw [24 x i8], ptr @p, i64 %i.e
   %i.g = getelementptr inbounds nuw [40 x i8], ptr @int_cg, i64 %i.e
