@@ -203,21 +203,23 @@ hsw_wrpll_get_budget_for_freq.exit.i.i:           ; preds = %bb.d
   br label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge.i.i, %.preheader31.i.i
-  %indvars.iv56.i.i = phi i64 [ 14, %.preheader31.i.i ], [ %indvars.iv.next57.i.i, %._crit_edge.i.i ] ; 3 uses
-  %indvars.iv51.i.i = phi i64 [ 33600, %.preheader31.i.i ], [ %indvars.iv.next52.i.i, %._crit_edge.i.i ] ; 2 uses
+  %indvars.iv56.i.i = phi i64 [ 14, %.preheader31.i.i ], [ %indvars.iv.next57.i.i, %._crit_edge.i.i ] ; 4 uses
+  %indvars.iv51.i.i = phi i64 [ 112, %.preheader31.i.i ], [ %indvars.iv.next52.i.i, %._crit_edge.i.i ] ; 2 uses
   %.sroa.15.047.i.i = phi i32 [ 0, %.preheader31.i.i ], [ %.sroa.15.1.lcssa.i.i, %._crit_edge.i.i ] ; 2 uses
   %.sroa.9.046.i.i = phi i32 [ 0, %.preheader31.i.i ], [ %.sroa.9.1.lcssa.i.i, %._crit_edge.i.i ] ; 2 uses
   %.sroa.0.045.i.i = phi i32 [ 0, %.preheader31.i.i ], [ %.sroa.0.1.lcssa.i.i, %._crit_edge.i.i ] ; 2 uses
-  %indvars58.i.i = trunc i64 %indvars.iv56.i.i to i32 ; 7 uses
-  %3 = mul i32 %indvars58.i.i, 2400
-  %4 = udiv i32 %3, 2700
-  %5 = mul i32 %indvars58.i.i, 4800
-  %i.u = udiv i32 %5, 2700                        ; 2 uses
-  %.not.not38.i.i = icmp samesign ult i32 %4, %i.u
+  %indvars58.i.i = trunc i64 %indvars.iv56.i.i to i32 ; 6 uses
+  %.0.tr.i.i = trunc i64 %indvars.iv56.i.i to i16
+  %.lhs.trunc.i.i = shl nuw nsw i16 %.0.tr.i.i, 3
+  %3 = udiv i16 %.lhs.trunc.i.i, 9
+  %.zext.i.i = zext nneg i16 %3 to i32
+  %4 = shl i32 %indvars58.i.i, 4
+  %i.u = udiv i32 %4, 9                           ; 2 uses
+  %.not.not38.i.i = icmp samesign ugt i32 %i.u, %.zext.i.i
   br i1 %.not.not38.i.i, label %.preheader.lr.ph.i.i, label %._crit_edge.i.i
 
 .preheader.lr.ph.i.i:                             ; preds = %bb.i
-  %i.v = udiv i64 %indvars.iv51.i.i, 2700
+  %i.v = udiv i64 %indvars.iv51.i.i, 9
   %i.w = mul nuw nsw i32 %indvars58.i.i, %indvars58.i.i
   %i.x = zext nneg i32 %i.u to i64
   br label %.preheader.i.i
@@ -311,7 +313,7 @@ hsw_wrpll_update_rnp.exit.i.i:                    ; preds = %bb.p, %bb.o, %bb.n,
   %.sroa.9.1.lcssa.i.i = phi i32 [ %.sroa.9.046.i.i, %bb.i ], [ %.sroa.9.3.i.i, %.loopexit.i.i ] ; 2 uses
   %.sroa.15.1.lcssa.i.i = phi i32 [ %.sroa.15.047.i.i, %bb.i ], [ %.sroa.15.3.i.i, %.loopexit.i.i ] ; 3 uses
   %indvars.iv.next57.i.i = add nuw nsw i64 %indvars.iv56.i.i, 1 ; 2 uses
-  %indvars.iv.next52.i.i = add nuw nsw i64 %indvars.iv51.i.i, 2400
+  %indvars.iv.next52.i.i = add nuw nsw i64 %indvars.iv51.i.i, 8
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next57.i.i, 113
   br i1 %exitcond.not.i.i, label %hsw_ddi_calculate_wrpll.exit.loopexit.i, label %bb.i, !llvm.loop !217
 

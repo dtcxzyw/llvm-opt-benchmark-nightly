@@ -204,17 +204,19 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.e
-  %i.ao = shl nuw nsw i32 %i.aj, 4
-  %i.ap = udiv i32 %i.ao, 10
+  %i.ao = shl nuw nsw i32 %i.aj, 3
+  %i.ap = udiv i32 %i.ao, 5
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.e
-  %2 = mul nuw nsw i32 %i.aj, 15
-  %3 = udiv i32 %2, 9
+  %2 = trunc nuw nsw i32 %i.aj to i16
+  %.lhs.trunc32.i = mul nuw i16 %2, 5
+  %3 = udiv i16 %.lhs.trunc32.i, 3
+  %.zext33.i = zext nneg i16 %3 to i32
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f
-  %.0.i = phi i32 [ %.zext.i, %bb.f ], [ %i.an, %bb.g ], [ %i.ap, %bb.h ], [ %3, %bb.i ] ; 4 uses
+  %.0.i = phi i32 [ %.zext.i, %bb.f ], [ %i.an, %bb.g ], [ %i.ap, %bb.h ], [ %.zext33.i, %bb.i ] ; 4 uses
   %i.aq = getelementptr i8, ptr %i.m, i64 2       ; 4 uses
   %i.ar = load i8, ptr %i.aq, align 1
   %i.as = and i8 %i.ar, 2
@@ -617,8 +619,8 @@ bb.cb:                                            ; preds = %bb.ca
   br i1 %i.id, label %bb.cg, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.ie = mul nuw nsw i32 %i.ib, 10
-  %i.if = lshr exact i32 %i.ie, 4
+  %i.ie = mul nuw nsw i32 %i.ib, 5
+  %i.if = lshr exact i32 %i.ie, 3
   br label %bb.cg
 
 bb.cd:                                            ; preds = %bb.ca

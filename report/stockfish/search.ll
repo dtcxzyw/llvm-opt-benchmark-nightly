@@ -204,8 +204,8 @@ _ZN9Stockfish6Search6Worker7do_moveERNS_8PositionENS_4MoveERNS_9StateInfoEbPNS0_
   %i.abd = mul nsw i32 %i.aaw, 608
   %i.abe = load i32, ptr %i.se, align 8, !tbaa !275
   %i.abf = sdiv i32 %i.abd, %i.abe
-  %i.abg = mul nsw i32 %i.abc, 238
-  %i.abh = sdiv i32 %i.abg, 512
+  %i.abg = mul nsw i32 %i.abc, 119
+  %i.abh = sdiv i32 %i.abg, 256
   %i.abi = select i1 %i.sc, i32 0, i32 %i.abh
   %i.abj = add i32 %i.abc, 1182
   %i.abk = sub i32 %i.abj, %i.abf
@@ -288,8 +288,8 @@ bb.cb:                                            ; preds = %bb.ca
   %i.adf = zext i8 %i.ade to i64
   %i.adg = getelementptr inbounds nuw [4 x i8], ptr @_ZN9StockfishL10PieceValueE, i64 %i.adf
   %i.adh = load i32, ptr %i.adg, align 4, !tbaa !138
-  %i.adi = mul nsw i32 %i.adh, 868
-  %i.adj = sdiv i32 %i.adi, 128
+  %i.adi = mul nsw i32 %i.adh, 217
+  %i.adj = sdiv i32 %i.adi, 32
   %i.adk = zext i8 %i.aat to i64
   %i.adl = getelementptr inbounds nuw [1024 x i8], ptr %i.ro, i64 %i.adk
   %i.adm = getelementptr inbounds nuw [16 x i8], ptr %i.adl, i64 %i.aah
@@ -323,8 +323,8 @@ bb.cd:                                            ; preds = %bb.cc, %bb.cb
   %i.aef = sext i16 %.sink1155 to i32
   %i.aeg = add nsw i32 %.sink, %i.aef             ; 2 uses
   store i32 %i.aeg, ptr %i.am, align 4, !tbaa !323
-  %i.aeh = mul nsw i32 %i.aeg, 850
-  %.neg445 = sdiv i32 %i.aeh, -8192
+  %i.aeh = mul nsw i32 %i.aeg, 425
+  %.neg445 = sdiv i32 %i.aeh, -4096
   %i.aei = add i32 %.neg445, %.5397               ; 3 uses
   %i.aej = icmp sgt i32 %.4740.ph1007, 1
   %i.aek = icmp ne i64 %indvars.iv, 0             ; 3 uses
@@ -727,8 +727,8 @@ bb.es:                                            ; preds = %bb.er, %bb.eq
   %i.anl = zext nneg i8 %i.aj to i64              ; 2 uses
   %i.anm = getelementptr inbounds nuw i8, ptr %1, i64 %i.anl ; 2 uses
   %i.ann = load i8, ptr %i.anm, align 1, !tbaa !330
-  %i.ano = mul nsw i32 %i.anj, 406
-  %i.anp = sdiv i32 %i.ano, 32768
+  %i.ano = mul nsw i32 %i.anj, 203
+  %i.anp = sdiv i32 %i.ano, 16384
   call fastcc void @_ZN9Stockfish12_GLOBAL__N_129update_continuation_historiesEPNS_6Search5StackENS_5PieceENS_6SquareEi(ptr noundef nonnull %i.ank, i8 noundef zeroext %i.ann, i8 noundef zeroext %i.aj, i32 noundef %i.anp)
   %i.anq = xor i8 %i.q, 1
   %i.anr = zext i8 %i.anq to i64
@@ -771,8 +771,8 @@ bb.et:                                            ; preds = %bb.es
   %i.aos = zext i8 %i.aof to i64
   %i.aot = getelementptr inbounds nuw [128 x i8], ptr %i.aor, i64 %i.aos
   %i.aou = getelementptr inbounds nuw [2 x i8], ptr %i.aot, i64 %i.anl ; 2 uses
-  %i.aov = mul nsw i32 %i.anj, 290
-  %i.aow = sdiv i32 %i.aov, 8192
+  %i.aov = mul nsw i32 %i.anj, 145
+  %i.aow = sdiv i32 %i.aov, 4096
   %.sroa.speculate.load.false.sroa.speculated.i521 = call i32 @llvm.smax.i32(i32 %i.aow, i32 -8192)
   %.sroa.speculated.i522 = call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i521, i32 8192) ; 2 uses
   %i.aox = load atomic i16, ptr %i.aou monotonic, align 2
@@ -806,8 +806,8 @@ bb.ev:                                            ; preds = %bb.eu
   %i.apq = load i16, ptr %i.app, align 2, !tbaa !355
   %i.apr = sext i16 %i.apq to i32                 ; 2 uses
   %i.aps = add nsw i32 %i.apr, 1012
-  %i.apt = mul nsw i32 %i.apr, 1012
-  %.neg.i524 = sdiv i32 %i.apt, -10692
+  %i.apt = mul nsw i32 %i.apr, 23
+  %.neg.i524 = sdiv i32 %i.apt, -243
   %i.apu = add nsw i32 %i.aps, %.neg.i524
   %i.apv = trunc i32 %i.apu to i16
   store i16 %i.apv, ptr %i.app, align 2, !tbaa !355
@@ -1210,8 +1210,8 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 11421112
   %i.k = load i32, ptr %i.j, align 8, !tbaa !275
   %i.l = sdiv i32 %i.i, %i.k
-  %i.m = mul nsw i32 %i.h, 238
-  %i.n = sdiv i32 %i.m, 512
+  %i.m = mul nsw i32 %i.h, 119
+  %i.n = sdiv i32 %i.m, 256
   %i.o = select i1 %1, i32 0, i32 %i.n
   %i.p = add i32 %i.h, 1182
   %i.q = sub i32 %i.p, %i.l
@@ -1614,8 +1614,8 @@ bb.dc:                                            ; preds = %bb.db
   %i.xr = mul nsw i32 %i.xi, 608
   %i.xs = load i32, ptr %i.vx, align 8, !tbaa !275
   %i.xt = sdiv i32 %i.xr, %i.xs
-  %i.xu = mul nsw i32 %i.xq, 238
-  %i.xv = sdiv i32 %i.xu, 512
+  %i.xu = mul nsw i32 %i.xq, 119
+  %i.xv = sdiv i32 %i.xu, 256
   %i.xw = select i1 %i.xk, i32 0, i32 %i.xv
   %i.xx = add i32 %i.xq, 1182
   %i.xy = sub i32 %i.xx, %i.xt
@@ -2007,8 +2007,8 @@ bb.ed:                                            ; preds = %bb.ec
   %i.agm = zext i8 %i.agl to i64
   %i.agn = getelementptr inbounds nuw [4 x i8], ptr @_ZN9StockfishL10PieceValueE, i64 %i.agm
   %i.ago = load i32, ptr %i.agn, align 4, !tbaa !138
-  %i.agp = mul nsw i32 %i.ago, 868
-  %i.agq = sdiv i32 %i.agp, 128
+  %i.agp = mul nsw i32 %i.ago, 217
+  %i.agq = sdiv i32 %i.agp, 32
   %i.agr = zext i8 %i.xf to i64
   %i.ags = getelementptr inbounds nuw [1024 x i8], ptr %i.vr, i64 %i.agr
   %i.agt = getelementptr inbounds nuw [16 x i8], ptr %i.ags, i64 %i.wt
@@ -2043,8 +2043,8 @@ bb.ef:                                            ; preds = %bb.ee, %bb.ed
   %i.ahn = add nsw i32 %.sink1406, %i.ahm         ; 2 uses
   %i.aho = getelementptr inbounds nuw i8, ptr %i.afj, i64 36
   store i32 %i.ahn, ptr %i.aho, align 4, !tbaa !323
-  %i.ahp = mul nsw i32 %i.ahn, 850
-  %.neg637 = sdiv i32 %i.ahp, -8192
+  %i.ahp = mul nsw i32 %i.ahn, 425
+  %.neg637 = sdiv i32 %i.ahp, -4096
   %i.ahq = add i32 %.neg637, %spec.select662      ; 3 uses
   br i1 %6, label %bb.eh, label %bb.eg
 
@@ -2376,8 +2376,8 @@ bb.fm:                                            ; preds = %bb.fl, %bb.fk
   %i.and = zext nneg i8 %i.cg to i64              ; 2 uses
   %i.ane = getelementptr inbounds nuw i8, ptr %1, i64 %i.and ; 2 uses
   %i.anf = load i8, ptr %i.ane, align 1, !tbaa !330
-  %i.ang = mul nsw i32 %i.anb, 406
-  %i.anh = sdiv i32 %i.ang, 32768
+  %i.ang = mul nsw i32 %i.anb, 203
+  %i.anh = sdiv i32 %i.ang, 16384
   call fastcc void @_ZN9Stockfish12_GLOBAL__N_129update_continuation_historiesEPNS_6Search5StackENS_5PieceENS_6SquareEi(ptr noundef nonnull %i.anc, i8 noundef zeroext %i.anf, i8 noundef zeroext %i.cg, i32 noundef %i.anh)
   %i.ani = xor i8 %i.ag, 1
   %i.anj = zext i8 %i.ani to i64
@@ -2422,8 +2422,8 @@ bb.fn:                                            ; preds = %bb.fm
   %i.aom = zext i8 %i.anz to i64
   %i.aon = getelementptr inbounds nuw [128 x i8], ptr %i.aol, i64 %i.aom
   %i.aoo = getelementptr inbounds nuw [2 x i8], ptr %i.aon, i64 %i.and ; 2 uses
-  %i.aop = mul nsw i32 %i.anb, 290
-  %i.aoq = sdiv i32 %i.aop, 8192
+  %i.aop = mul nsw i32 %i.anb, 145
+  %i.aoq = sdiv i32 %i.aop, 4096
   %.sroa.speculate.load.false.sroa.speculated.i718 = call i32 @llvm.smax.i32(i32 %i.aoq, i32 -8192)
   %.sroa.speculated.i719 = call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i718, i32 8192) ; 2 uses
   %i.aor = load atomic i16, ptr %i.aoo monotonic, align 2
@@ -2457,8 +2457,8 @@ bb.fp:                                            ; preds = %bb.fo
   %i.apk = load i16, ptr %i.apj, align 2, !tbaa !355
   %i.apl = sext i16 %i.apk to i32                 ; 2 uses
   %i.apm = add nsw i32 %i.apl, 1012
-  %i.apn = mul nsw i32 %i.apl, 1012
-  %.neg.i721 = sdiv i32 %i.apn, -10692
+  %i.apn = mul nsw i32 %i.apl, 23
+  %.neg.i721 = sdiv i32 %i.apn, -243
   %i.apo = add nsw i32 %i.apm, %.neg.i721
   %i.app = trunc i32 %i.apo to i16
   store i16 %i.app, ptr %i.apj, align 2, !tbaa !355
@@ -2861,8 +2861,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.b = load i8, ptr %i.a, align 4, !tbaa !317, !range !221, !noundef !48
   %i.c = trunc nuw i8 %i.b to i1
-  %i.d = zext i8 %1 to i64                        ; 7 uses
-  %i.e = zext i8 %2 to i64                        ; 7 uses
+  %i.d = zext i8 %1 to i64                        ; 8 uses
+  %i.e = zext i8 %2 to i64                        ; 8 uses
   %i.f = getelementptr inbounds i8, ptr %0, i64 -28
   %i.g = load i16, ptr %i.f, align 4, !tbaa !234  ; 2 uses
   br i1 %i.c, label %.split.preheader, label %.split.us.preheader
@@ -2935,8 +2935,8 @@ bb.d:                                             ; preds = %.split.us.2
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !247
   %i.ap = getelementptr inbounds nuw [128 x i8], ptr %i.ao, i64 %i.d
   %i.aq = getelementptr inbounds nuw [2 x i8], ptr %i.ap, i64 %i.e ; 2 uses
-  %i.ar = mul nsw i32 %3, 312
-  %i.as = sdiv i32 %i.ar, 1024
+  %i.ar = mul nsw i32 %3, 39
+  %i.as = sdiv i32 %i.ar, 128
   %.sroa.speculate.load.false.sroa.speculated.i.us.2 = tail call i32 @llvm.smax.i32(i32 %i.as, i32 -30000)
   %.sroa.speculated.i.us.2 = tail call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i.us.2, i32 30000) ; 2 uses
   %i.at = load i16, ptr %i.aq, align 2, !tbaa !167
@@ -2963,8 +2963,8 @@ bb.e:                                             ; preds = %.split.us.3
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !247
   %i.be = getelementptr inbounds nuw [128 x i8], ptr %i.bd, i64 %i.d
   %i.bf = getelementptr inbounds nuw [2 x i8], ptr %i.be, i64 %i.e ; 2 uses
-  %i.bg = mul nsw i32 %3, 582
-  %i.bh = sdiv i32 %i.bg, 1024
+  %i.bg = mul nsw i32 %3, 291
+  %i.bh = sdiv i32 %i.bg, 512
   %.sroa.speculate.load.false.sroa.speculated.i.us.3 = tail call i32 @llvm.smax.i32(i32 %i.bh, i32 -30000)
   %.sroa.speculated.i.us.3 = tail call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i.us.3, i32 30000) ; 2 uses
   %i.bi = load i16, ptr %i.bf, align 2, !tbaa !167
@@ -3009,10 +3009,30 @@ bb.f:                                             ; preds = %.split.us.4
 .split.us.5:                                      ; preds = %bb.f, %.split.us.4, %.split.us.4
   %i.ce = getelementptr inbounds i8, ptr %0, i64 -308
   %i.cf = load i16, ptr %i.ce, align 4, !tbaa !234
-  switch i16 %i.cf, label %.critedge.sink.split [
+  switch i16 %i.cf, label %4 [
     i16 65, label %.critedge
     i16 0, label %.critedge
   ]
+
+4:                                                ; preds = %.split.us.5
+  %5 = getelementptr inbounds i8, ptr %0, i64 -328
+  %6 = load ptr, ptr %5, align 8, !tbaa !247
+  %7 = getelementptr inbounds nuw [128 x i8], ptr %6, i64 %i.d
+  %8 = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %i.e ; 2 uses
+  %9 = mul nsw i32 %3, 237
+  %10 = sdiv i32 %9, 512
+  %.sroa.speculate.load.false.sroa.speculated.i.us.5 = tail call i32 @llvm.smax.i32(i32 %10, i32 -30000)
+  %.sroa.speculated.i.us.5 = tail call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i.us.5, i32 30000) ; 2 uses
+  %11 = load i16, ptr %8, align 2, !tbaa !167
+  %12 = sext i16 %11 to i32                       ; 2 uses
+  %13 = add nsw i32 %.sroa.speculated.i.us.5, %12
+  %14 = tail call i32 @llvm.abs.i32(i32 %.sroa.speculated.i.us.5, i1 true)
+  %15 = mul nsw i32 %14, %12
+  %.neg.i.us.5 = sdiv i32 %15, -30000
+  %16 = add nsw i32 %13, %.neg.i.us.5
+  %17 = trunc i32 %16 to i16
+  store i16 %17, ptr %8, align 2, !tbaa !167
+  br label %.critedge
 
 .split.preheader:                                 ; preds = %bb.a
   switch i16 %i.g, label %bb.g [
@@ -3049,14 +3069,12 @@ bb.g:                                             ; preds = %.split.preheader
     i16 0, label %.critedge
   ]
 
-.critedge.sink.split:                             ; preds = %.split.1, %.split.us.5
-  %.sink31 = phi i64 [ -328, %.split.us.5 ], [ -104, %.split.1 ]
-  %.sink = phi i32 [ 474, %.split.us.5 ], [ 683, %.split.1 ]
-  %i.cx = getelementptr inbounds i8, ptr %0, i64 %.sink31
+.critedge.sink.split:                             ; preds = %.split.1
+  %i.cx = getelementptr inbounds i8, ptr %0, i64 -104
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !247
   %i.cz = getelementptr inbounds nuw [128 x i8], ptr %i.cy, i64 %i.d
   %i.da = getelementptr inbounds nuw [2 x i8], ptr %i.cz, i64 %i.e ; 2 uses
-  %i.db = mul nsw i32 %3, %.sink
+  %i.db = mul nsw i32 %3, 683
   %i.dc = sdiv i32 %i.db, 1024
   %.sroa.speculate.load.false.sroa.speculated.i.1 = tail call i32 @llvm.smax.i32(i32 %i.dc, i32 -30000)
   %.sroa.speculated.i.1 = tail call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i.1, i32 30000) ; 2 uses
@@ -3071,7 +3089,7 @@ bb.g:                                             ; preds = %.split.preheader
   store i16 %i.dj, ptr %i.da, align 2, !tbaa !167
   br label %.critedge
 
-.critedge:                                        ; preds = %.critedge.sink.split, %.split.1, %.split.1, %.split.us.5, %.split.us.5
+.critedge:                                        ; preds = %.split.1, %.split.1, %.critedge.sink.split, %.split.us.5, %.split.us.5, %4
   ret void
 }
 
@@ -3474,8 +3492,8 @@ bb.ck:                                            ; preds = %bb.cj
   %i.vg = mul nsw i32 %i.ux, 608
   %i.vh = load i32, ptr %i.tk, align 8, !tbaa !275
   %i.vi = sdiv i32 %i.vg, %i.vh
-  %i.vj = mul nsw i32 %i.vf, 238
-  %i.vk = sdiv i32 %i.vj, 512
+  %i.vj = mul nsw i32 %i.vf, 119
+  %i.vk = sdiv i32 %i.vj, 256
   %i.vl = select i1 %i.uz, i32 0, i32 %i.vk
   %i.vm = add i32 %i.vf, 1182
   %i.vn = sub i32 %i.vm, %i.vi
@@ -3861,8 +3879,8 @@ bb.dk:                                            ; preds = %bb.dj
   %i.adz = zext i8 %i.ady to i64
   %i.aea = getelementptr inbounds nuw [4 x i8], ptr @_ZN9StockfishL10PieceValueE, i64 %i.adz
   %i.aeb = load i32, ptr %i.aea, align 4, !tbaa !138
-  %i.aec = mul nsw i32 %i.aeb, 868
-  %i.aed = sdiv i32 %i.aec, 128
+  %i.aec = mul nsw i32 %i.aeb, 217
+  %i.aed = sdiv i32 %i.aec, 32
   %i.aee = zext i8 %i.uu to i64
   %i.aef = getelementptr inbounds nuw [1024 x i8], ptr %i.te, i64 %i.aee
   %i.aeg = getelementptr inbounds nuw [16 x i8], ptr %i.aef, i64 %i.ui
@@ -3897,8 +3915,8 @@ bb.dm:                                            ; preds = %bb.dl, %bb.dk
   %i.afa = add nsw i32 %.sink1379, %i.aez         ; 2 uses
   %i.afb = getelementptr inbounds nuw i8, ptr %i.acx, i64 36
   store i32 %i.afa, ptr %i.afb, align 4, !tbaa !323
-  %i.afc = mul nsw i32 %i.afa, 850
-  %.neg540 = sdiv i32 %i.afc, -8192
+  %i.afc = mul nsw i32 %i.afa, 425
+  %.neg540 = sdiv i32 %i.afc, -4096
   %i.afd = add i32 %.neg540, %.5444               ; 3 uses
   %i.afe = icmp sgt i32 %.6988, 1
   %i.aff = icmp ne i64 %indvars.iv, 0             ; 2 uses
@@ -4276,8 +4294,8 @@ bb.ew:                                            ; preds = %bb.ev, %bb.eu
   %i.akx = zext nneg i8 %i.cg to i64              ; 2 uses
   %i.aky = getelementptr inbounds nuw i8, ptr %1, i64 %i.akx ; 2 uses
   %i.akz = load i8, ptr %i.aky, align 1, !tbaa !330
-  %i.ala = mul nsw i32 %i.akv, 406
-  %i.alb = sdiv i32 %i.ala, 32768
+  %i.ala = mul nsw i32 %i.akv, 203
+  %i.alb = sdiv i32 %i.ala, 16384
   call fastcc void @_ZN9Stockfish12_GLOBAL__N_129update_continuation_historiesEPNS_6Search5StackENS_5PieceENS_6SquareEi(ptr noundef nonnull %i.akw, i8 noundef zeroext %i.akz, i8 noundef zeroext %i.cg, i32 noundef %i.alb)
   %i.alc = xor i8 %i.af, 1
   %i.ald = zext i8 %i.alc to i64
@@ -4322,8 +4340,8 @@ bb.ex:                                            ; preds = %bb.ew
   %i.amg = zext i8 %i.alt to i64
   %i.amh = getelementptr inbounds nuw [128 x i8], ptr %i.amf, i64 %i.amg
   %i.ami = getelementptr inbounds nuw [2 x i8], ptr %i.amh, i64 %i.akx ; 2 uses
-  %i.amj = mul nsw i32 %i.akv, 290
-  %i.amk = sdiv i32 %i.amj, 8192
+  %i.amj = mul nsw i32 %i.akv, 145
+  %i.amk = sdiv i32 %i.amj, 4096
   %.sroa.speculate.load.false.sroa.speculated.i616 = call i32 @llvm.smax.i32(i32 %i.amk, i32 -8192)
   %.sroa.speculated.i617 = call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i616, i32 8192) ; 2 uses
   %i.aml = load atomic i16, ptr %i.ami monotonic, align 2
@@ -4357,8 +4375,8 @@ bb.ez:                                            ; preds = %bb.ey
   %i.ane = load i16, ptr %i.and, align 2, !tbaa !355
   %i.anf = sext i16 %i.ane to i32                 ; 2 uses
   %i.ang = add nsw i32 %i.anf, 1012
-  %i.anh = mul nsw i32 %i.anf, 1012
-  %.neg.i619 = sdiv i32 %i.anh, -10692
+  %i.anh = mul nsw i32 %i.anf, 23
+  %.neg.i619 = sdiv i32 %i.anh, -243
   %i.ani = add nsw i32 %i.ang, %.neg.i619
   %i.anj = trunc i32 %i.ani to i16
   store i16 %i.anj, ptr %i.and, align 2, !tbaa !355
@@ -4518,8 +4536,8 @@ bb.a:
   br i1 %i.w, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.x = mul nsw i32 %i.k, 910
-  %i.y = sdiv i32 %i.x, 1024
+  %i.x = mul nsw i32 %i.k, 455
+  %i.y = sdiv i32 %i.x, 512
   tail call fastcc void @_ZN9Stockfish12_GLOBAL__N_122update_quiet_historiesERKNS_8PositionEPNS_6Search5StackERNS4_6WorkerENS_4MoveEi(ptr noundef nonnull align 8 dereferenceable(1048) %0, ptr noundef nonnull %1, ptr noundef nonnull align 64 dereferenceable(14279296) %2, i16 %3, i32 noundef %i.y)
   %i.z = getelementptr inbounds nuw i8, ptr %5, i64 64
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !315 ; 7 uses
@@ -4857,10 +4875,10 @@ _ZN9Stockfish10MultiArrayINS_16CorrectionBundleIsLi1024EEELm2EJEE2atEm.exit35: ;
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 2 ; 2 uses
   %i.ah = insertelement <2 x i32> poison, i32 %2, i64 0
   %i.ai = shufflevector <2 x i32> %i.ah, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.aj = mul nsw <2 x i32> %i.ai, <i32 156, i32 178>
+  %i.aj = mul nsw <2 x i32> %i.ai, <i32 39, i32 89>
   %i.ak = load atomic i16, ptr %i.ag monotonic, align 2
   %i.al = sext i16 %i.ak to i32                   ; 2 uses
-  %i.am = sdiv <2 x i32> %i.aj, splat (i32 128)
+  %i.am = sdiv <2 x i32> %i.aj, <i32 32, i32 64>
   %i.an = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.am, <2 x i32> splat (i32 -1024)) ; 2 uses
   %i.ao = extractelement <2 x i32> %i.an, i64 0
   %.sroa.speculated.i29 = tail call i32 @llvm.smin.i32(i32 %i.ao, i32 1024) ; 2 uses
@@ -5015,8 +5033,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !330
   %i.ai = trunc i16 %3 to i8
   %i.aj = and i8 %i.ai, 63                        ; 2 uses
-  %i.ak = mul nsw i32 %4, 896
-  %i.al = sdiv i32 %i.ak, 1024
+  %i.ak = mul nsw i32 %4, 7
+  %i.al = sdiv i32 %i.ak, 8
   tail call fastcc void @_ZN9Stockfish12_GLOBAL__N_129update_continuation_historiesEPNS_6Search5StackENS_5PieceENS_6SquareEi(ptr noundef nonnull %1, i8 noundef zeroext %i.ah, i8 noundef zeroext %i.aj, i32 noundef %i.al)
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 11419656
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !139, !nonnull !48, !align !49 ; 2 uses

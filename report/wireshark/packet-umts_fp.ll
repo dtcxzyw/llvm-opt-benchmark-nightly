@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not118, label %.preheader, label %.thread
 
 .preheader:                                       ; preds = %bb.j, %bb.q
-  %.09 = phi i32 [ %i.bj, %bb.q ], [ 0, %bb.j ]   ; 4 uses
+  %.09 = phi i32 [ %i.bj, %bb.q ], [ 0, %bb.j ]   ; 5 uses
   %.0968 = phi i32 [ %i.bi, %bb.q ], [ 0, %bb.j ]
   %.0977 = phi i32 [ %.198, %bb.q ], [ 6, %bb.j ]
   %i.ak = mul nuw nsw i32 %.09, 3
@@ -215,21 +215,22 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %.preheader
   %i.am = and i32 %.09, 1                         ; 2 uses
   %i.an = icmp eq i32 %i.am, 0
-  %3 = mul nuw nsw i32 %.09, 25                   ; 2 uses
   br i1 %i.an, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %.udiv = udiv i32 %3, 10
+  %3 = mul nuw nsw i32 %.09, 5
+  %.udiv15 = lshr exact i32 %3, 1
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k
-  %i.ao = add nsw i32 %3, -25
+  %4 = mul nuw nsw i32 %.09, 25
+  %i.ao = add nsw i32 %4, -25
   %i.ap = udiv i32 %i.ao, 10
   %i.aq = add nuw nsw i32 %i.ap, 2
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %.0103 = phi i32 [ %.udiv, %bb.l ], [ %i.aq, %bb.m ]
+  %.0103 = phi i32 [ %.udiv15, %bb.l ], [ %i.aq, %bb.m ]
   %i.ar = and i32 %.0103, 65535                   ; 3 uses
   %i.as = add nuw nsw i32 %i.ar, 6
   %i.at = tail call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %i.as, i32 noundef 0)
