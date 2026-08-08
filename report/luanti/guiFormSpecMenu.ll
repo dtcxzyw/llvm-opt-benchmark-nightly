@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %.noexc248
   %i.lm = bitcast i32 %.sroa.5486.sroa.0.0.extract.trunc to float
   %i.ln = and i64 %i.ll, 4294967296
   %.not515 = icmp eq i64 %i.ln, 0                 ; 2 uses
-  %.sroa.3.0.i.sroa.speculated = select i1 %.not515, float 0.000000e+00, float %i.lm ; 2 uses
+  %.sroa.3.0.i.sroa.speculated = select i1 %.not515, float 0.000000e+00, float %i.lm
   %.sroa.02.0.i = select i1 %.not515, <2 x float> zeroinitializer, <2 x float> %i.lk ; 2 uses
   %i.lo = load ptr, ptr %5, align 8, !tbaa !191   ; 2 uses
   %i.lp = icmp eq ptr %i.lo, %i.ld
@@ -242,36 +242,26 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit251: ; preds = %bb
           to label %bb.ar unwind label %bb.bh
 
 bb.ar:                                            ; preds = %.noexc254
-  %14 = call i32 @llvm.smax.i32(i32 %i.lz, i32 0)
-  %15 = call noundef i32 @llvm.umin.i32(i32 %14, i32 255)
   %.sroa.083.0.vec.extract = extractelement <2 x float> %.sroa.02.0.i, i64 0 ; 2 uses
-  %16 = fcmp nsz olt float %.sroa.083.0.vec.extract, 0.000000e+00
-  %.v.i = select i1 %16, float -5.000000e-01, float 5.000000e-01
-  %17 = fadd nsz float %.sroa.083.0.vec.extract, %.v.i
-  %18 = fptosi float %17 to i32
-  %19 = call i32 @llvm.smax.i32(i32 %18, i32 0)
-  %20 = call noundef i32 @llvm.umin.i32(i32 %19, i32 255)
-  %.sroa.083.4.vec.extract = extractelement <2 x float> %.sroa.02.0.i, i64 1 ; 2 uses
-  %i.ma = fcmp nsz olt float %.sroa.083.4.vec.extract, 0.000000e+00
+  %i.ma = fcmp nsz olt float %.sroa.083.0.vec.extract, 0.000000e+00
   %.v.i256 = select i1 %i.ma, float -5.000000e-01, float 5.000000e-01
-  %i.mb = fadd nsz float %.sroa.083.4.vec.extract, %.v.i256
+  %i.mb = fadd nsz float %.sroa.083.0.vec.extract, %.v.i256
   %i.mc = fptosi float %i.mb to i32
-  %21 = call i32 @llvm.smax.i32(i32 %i.mc, i32 0)
-  %22 = call noundef i32 @llvm.umin.i32(i32 %21, i32 255)
-  %23 = fcmp nsz olt float %.sroa.3.0.i.sroa.speculated, 0.000000e+00
-  %.v.i257 = select i1 %23, float -5.000000e-01, float 5.000000e-01
-  %24 = fadd nsz float %.sroa.3.0.i.sroa.speculated, %.v.i257
-  %25 = fptosi float %24 to i32
-  %26 = call i32 @llvm.smax.i32(i32 %25, i32 0)
-  %27 = call noundef i32 @llvm.umin.i32(i32 %26, i32 255)
-  %28 = shl nuw i32 %15, 24
-  %29 = shl nuw nsw i32 %20, 16
-  %30 = or disjoint i32 %28, %29
-  %31 = shl nuw nsw i32 %22, 8
-  %32 = or disjoint i32 %30, %31
-  %33 = or disjoint i32 %32, %27
+  %14 = insertelement <2 x float> %.sroa.02.0.i, float %.sroa.3.0.i.sroa.speculated, i64 0 ; 2 uses
+  %15 = fcmp nsz olt <2 x float> %14, zeroinitializer
+  %16 = select <2 x i1> %15, <2 x float> splat (float -5.000000e-01), <2 x float> splat (float 5.000000e-01)
+  %17 = fadd nsz <2 x float> %14, %16
+  %18 = insertelement <4 x i32> poison, i32 %i.mc, i64 2
+  %19 = insertelement <4 x i32> %18, i32 %i.lz, i64 3
+  %20 = shufflevector <2 x float> %17, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %21 = fptosi <4 x float> %20 to <4 x i32>
+  %22 = shufflevector <4 x i32> %21, <4 x i32> %19, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %23 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %22, <4 x i32> zeroinitializer)
+  %24 = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %23, <4 x i32> splat (i32 255))
+  %25 = shl nuw <4 x i32> %24, <i32 0, i32 8, i32 16, i32 24>
+  %26 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %25)
   %i.md = getelementptr inbounds nuw i8, ptr %0, i64 2016
-  store i32 %33, ptr %i.md, align 8, !tbaa !347
+  store i32 %26, ptr %i.md, align 8, !tbaa !347
   %i.me = load ptr, ptr %6, align 8, !tbaa !191   ; 2 uses
   %i.mf = icmp eq ptr %i.me, %i.lt
   br i1 %i.mf, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i259, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i258
@@ -673,6 +663,15 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #14
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

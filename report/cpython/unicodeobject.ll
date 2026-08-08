@@ -204,38 +204,31 @@ bb.z:                                             ; preds = %bb.v
   br i1 %i.dx, label %.lr.ph120.i, label %._crit_edge121.i
 
 .lr.ph120.i:                                      ; preds = %bb.z, %bb.aa
-  %.3118.i = phi ptr [ %i.fc, %bb.aa ], [ %i.dv, %bb.z ] ; 6 uses
+  %.3118.i = phi ptr [ %i.fc, %bb.aa ], [ %i.dv, %bb.z ] ; 3 uses
   %.474117.i = phi ptr [ %i.fd, %bb.aa ], [ %.1208270, %bb.z ] ; 6 uses
-  %3 = load i16, ptr %.3118.i, align 2, !tbaa !208 ; 2 uses
-  %4 = xor i16 %3, -10240
-  %5 = getelementptr i8, ptr %.3118.i, i64 2
-  %6 = load i16, ptr %5, align 2, !tbaa !208      ; 2 uses
-  %7 = xor i16 %6, -10240
-  %8 = and i16 %7, %4
-  %9 = getelementptr i8, ptr %.3118.i, i64 4
-  %10 = load i16, ptr %9, align 2, !tbaa !208     ; 2 uses
-  %11 = xor i16 %10, -10240
-  %12 = and i16 %8, %11
-  %13 = getelementptr i8, ptr %.3118.i, i64 6
-  %14 = load i16, ptr %13, align 2, !tbaa !208    ; 2 uses
-  %15 = xor i16 %14, -10240
-  %16 = and i16 %12, %15
-  %i.ey = icmp ult i16 %16, 2048
+  %3 = load <4 x i16>, ptr %.3118.i, align 2, !tbaa !208 ; 5 uses
+  %4 = xor <4 x i16> %3, splat (i16 -10240)
+  %5 = call i16 @llvm.vector.reduce.and.v4i16(<4 x i16> %4)
+  %i.ey = icmp ult i16 %5, 2048
   br i1 %i.ey, label %._crit_edge121.i, label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph120.i
-  %trunc.i.i = zext i16 %3 to i32
+  %6 = extractelement <4 x i16> %3, i64 0
+  %trunc.i.i = zext i16 %6 to i32
   %rev.i.i = call noundef i32 @llvm.bswap.i32(i32 %trunc.i.i)
   store i32 %rev.i.i, ptr %.474117.i, align 4, !tbaa !7
-  %trunc.i80.i = zext i16 %6 to i32
+  %7 = extractelement <4 x i16> %3, i64 1
+  %trunc.i80.i = zext i16 %7 to i32
   %rev.i81.i = call noundef i32 @llvm.bswap.i32(i32 %trunc.i80.i)
   %i.ez = getelementptr i8, ptr %.474117.i, i64 4
   store i32 %rev.i81.i, ptr %i.ez, align 4, !tbaa !7
-  %trunc.i82.i = zext i16 %10 to i32
+  %8 = extractelement <4 x i16> %3, i64 2
+  %trunc.i82.i = zext i16 %8 to i32
   %rev.i83.i = call noundef i32 @llvm.bswap.i32(i32 %trunc.i82.i)
   %i.fa = getelementptr i8, ptr %.474117.i, i64 8
   store i32 %rev.i83.i, ptr %i.fa, align 4, !tbaa !7
-  %trunc.i84.i = zext i16 %14 to i32
+  %9 = extractelement <4 x i16> %3, i64 3
+  %trunc.i84.i = zext i16 %9 to i32
   %rev.i85.i = call noundef i32 @llvm.bswap.i32(i32 %trunc.i84.i)
   %i.fb = getelementptr i8, ptr %.474117.i, i64 12
   store i32 %rev.i85.i, ptr %i.fb, align 4, !tbaa !7

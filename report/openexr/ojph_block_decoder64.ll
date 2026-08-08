@@ -204,34 +204,29 @@ bb.bz:                                            ; preds = %.lr.ph1440, %._crit
   %.07921431 = phi ptr [ %i.aho, %.lr.ph1435 ], [ %i.aha, %.lr.ph1435.preheader ] ; 5 uses
   %i.ahc = load i16, ptr %.07921431, align 2, !tbaa !24 ; 2 uses
   %i.ahd = lshr i16 %i.ahc, 4
-  %12 = and i16 %i.ahd, 3
   %i.ahe = lshr i16 %i.ahc, 2
-  %13 = and i16 %i.ahe, 48
   %i.ahf = getelementptr inbounds nuw i8, ptr %.07921431, i64 4
   %i.ahg = load i16, ptr %i.ahf, align 2, !tbaa !24 ; 2 uses
   %i.ahh = shl i16 %i.ahg, 4
-  %14 = and i16 %i.ahh, 768
   %i.ahi = shl i16 %i.ahg, 6
-  %15 = and i16 %i.ahi, 12288
   %i.ahj = getelementptr inbounds nuw [2 x i8], ptr %.07921431, i64 %i.agn
   %i.ahk = load i16, ptr %i.ahj, align 2, !tbaa !24 ; 2 uses
   %i.ahl = lshr i16 %i.ahk, 2
-  %16 = and i16 %i.ahl, 12
-  %17 = and i16 %i.ahk, 192
-  %18 = getelementptr inbounds nuw [2 x i8], ptr %.07921431, i64 %i.agp
-  %19 = load i16, ptr %18, align 2, !tbaa !24     ; 2 uses
-  %i.ahm = shl i16 %19, 6
-  %20 = and i16 %i.ahm, 3072
-  %21 = shl i16 %19, 8
-  %22 = and i16 %21, -16384
-  %23 = or disjoint i16 %12, %13
-  %24 = or disjoint i16 %23, %15
-  %25 = or disjoint i16 %24, %14
-  %26 = or disjoint i16 %25, %17
-  %27 = or disjoint i16 %26, %16
-  %28 = or disjoint i16 %27, %22
-  %29 = or disjoint i16 %28, %20
-  store i16 %29, ptr %.07911432, align 2, !tbaa !24
+  %12 = getelementptr inbounds nuw [2 x i8], ptr %.07921431, i64 %i.agp
+  %13 = load i16, ptr %12, align 2, !tbaa !24     ; 2 uses
+  %14 = shl i16 %13, 6
+  %i.ahm = shl i16 %13, 8
+  %15 = insertelement <8 x i16> poison, i16 %i.ahd, i64 0
+  %16 = insertelement <8 x i16> %15, i16 %i.ahe, i64 1
+  %17 = insertelement <8 x i16> %16, i16 %i.ahi, i64 2
+  %18 = insertelement <8 x i16> %17, i16 %i.ahh, i64 3
+  %19 = insertelement <8 x i16> %18, i16 %i.ahk, i64 4
+  %20 = insertelement <8 x i16> %19, i16 %i.ahl, i64 5
+  %21 = insertelement <8 x i16> %20, i16 %i.ahm, i64 6
+  %22 = insertelement <8 x i16> %21, i16 %14, i64 7
+  %23 = and <8 x i16> %22, <i16 3, i16 48, i16 12288, i16 768, i16 192, i16 12, i16 -16384, i16 3072>
+  %24 = tail call i16 @llvm.vector.reduce.or.v8i16(<8 x i16> %23)
+  store i16 %24, ptr %.07911432, align 2, !tbaa !24
   %i.ahn = add nuw i32 %.07901433, 4              ; 2 uses
   %i.aho = getelementptr inbounds nuw i8, ptr %.07921431, i64 8
   %i.ahp = getelementptr inbounds nuw i8, ptr %.07911432, i64 2 ; 2 uses
@@ -633,6 +628,9 @@ declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.vector.reduce.or.v8i16(<8 x i16>) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8

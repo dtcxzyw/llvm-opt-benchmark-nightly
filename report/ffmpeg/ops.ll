@@ -1,3 +1,8 @@
+inline.NumInlined: 45
+inline.NumDeleted: 14
+loop-unroll.NumCompletelyUnrolled: 46
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 50
 begin_hunk_0_@ff_sws_op_list_is_noop:bb.a
   %i.e = icmp ne i32 %i.d, 1
   %i.f = sext i32 %i.b to i64
@@ -199,129 +204,99 @@ define range(i32 0, 1048576) i32 @ff_sws_linear_mask(ptr nofree noundef readonly
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = load i64, ptr %i.h, align 8
   %i.j = tail call i32 @av_cmp_q64(i64 %i.g, i64 %i.i, i64 0, i64 1) #15
-  %.not.1 = icmp eq i32 %i.j, 0
-  %1 = select i1 %.not.1, i32 0, i32 2
-  %.2.1 = or disjoint i32 %1, %i.e
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.l = load i64, ptr %i.k, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.n = load i64, ptr %i.m, align 8
   %i.o = tail call i32 @av_cmp_q64(i64 %i.l, i64 %i.n, i64 0, i64 1) #15
-  %.not.2 = icmp eq i32 %i.o, 0
-  %2 = select i1 %.not.2, i32 0, i32 4
-  %.2.2 = or disjoint i32 %2, %.2.1
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.q = load i64, ptr %i.p, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.s = load i64, ptr %i.r, align 8
   %i.t = tail call i32 @av_cmp_q64(i64 %i.q, i64 %i.s, i64 0, i64 1) #15
-  %.not.3 = icmp eq i32 %i.t, 0
-  %3 = select i1 %.not.3, i32 0, i32 8
-  %.2.3 = or disjoint i32 %3, %.2.2
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.v = load i64, ptr %i.u, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.x = load i64, ptr %i.w, align 8
   %i.y = tail call i32 @av_cmp_q64(i64 %i.v, i64 %i.x, i64 0, i64 1) #15
-  %.not.4 = icmp eq i32 %i.y, 0
-  %4 = select i1 %.not.4, i32 0, i32 16
-  %.2.4 = or disjoint i32 %4, %.2.3
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.aa = load i64, ptr %i.z, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = tail call i32 @av_cmp_q64(i64 %i.aa, i64 %i.ac, i64 0, i64 1) #15
-  %.not.120 = icmp eq i32 %i.ad, 0
-  %5 = select i1 %.not.120, i32 0, i32 32
-  %.2.121 = or disjoint i32 %5, %.2.4
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.af = load i64, ptr %i.ae, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.ah = load i64, ptr %i.ag, align 8
   %i.ai = tail call i32 @av_cmp_q64(i64 %i.af, i64 %i.ah, i64 1, i64 1) #15
-  %.not.1.1 = icmp eq i32 %i.ai, 0
-  %6 = select i1 %.not.1.1, i32 0, i32 64
-  %.2.1.1 = or i32 %6, %.2.121
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.ak = load i64, ptr %i.aj, align 8
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.am = load i64, ptr %i.al, align 8
   %i.an = tail call i32 @av_cmp_q64(i64 %i.ak, i64 %i.am, i64 0, i64 1) #15
-  %.not.2.1 = icmp eq i32 %i.an, 0
-  %7 = select i1 %.not.2.1, i32 0, i32 128
-  %.2.2.1 = or i32 %7, %.2.1.1
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.ap = load i64, ptr %i.ao, align 8
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.ar = load i64, ptr %i.aq, align 8
   %i.as = tail call i32 @av_cmp_q64(i64 %i.ap, i64 %i.ar, i64 0, i64 1) #15
-  %.not.3.1 = icmp eq i32 %i.as, 0
-  %8 = select i1 %.not.3.1, i32 0, i32 256
-  %.2.3.1 = or i32 %8, %.2.2.1
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.au = load i64, ptr %i.at, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.aw = load i64, ptr %i.av, align 8
   %i.ax = tail call i32 @av_cmp_q64(i64 %i.au, i64 %i.aw, i64 0, i64 1) #15
-  %.not.4.1 = icmp eq i32 %i.ax, 0
-  %9 = select i1 %.not.4.1, i32 0, i32 512
-  %.2.4.1 = or i32 %9, %.2.3.1
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.az = load i64, ptr %i.ay, align 8
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.bb = load i64, ptr %i.ba, align 8
   %i.bc = tail call i32 @av_cmp_q64(i64 %i.az, i64 %i.bb, i64 0, i64 1) #15
-  %.not.222 = icmp eq i32 %i.bc, 0
-  %10 = select i1 %.not.222, i32 0, i32 1024
-  %.2.223 = or i32 %10, %.2.4.1
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.be = load i64, ptr %i.bd, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.bg = load i64, ptr %i.bf, align 8
   %i.bh = tail call i32 @av_cmp_q64(i64 %i.be, i64 %i.bg, i64 0, i64 1) #15
-  %.not.1.2 = icmp eq i32 %i.bh, 0
-  %11 = select i1 %.not.1.2, i32 0, i32 2048
-  %.2.1.2 = or i32 %11, %.2.223
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.bj = load i64, ptr %i.bi, align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.bl = load i64, ptr %i.bk, align 8
   %i.bm = tail call i32 @av_cmp_q64(i64 %i.bj, i64 %i.bl, i64 1, i64 1) #15
-  %.not.2.2 = icmp eq i32 %i.bm, 0
-  %12 = select i1 %.not.2.2, i32 0, i32 4096
-  %.2.2.2 = or i32 %12, %.2.1.2
-  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %2 = load i64, ptr %1, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 216
+  %4 = load i64, ptr %3, align 8
+  %5 = tail call i32 @av_cmp_q64(i64 %2, i64 %4, i64 0, i64 1) #15
+  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.bo = load i64, ptr %i.bn, align 8
-  %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 216
+  %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.bq = load i64, ptr %i.bp, align 8
   %i.br = tail call i32 @av_cmp_q64(i64 %i.bo, i64 %i.bq, i64 0, i64 1) #15
-  %.not.3.2 = icmp eq i32 %i.br, 0
-  %13 = select i1 %.not.3.2, i32 0, i32 8192
-  %.2.3.2 = or i32 %13, %.2.2.2
-  %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 224
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 240
+  %7 = load i64, ptr %6, align 8
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 248
+  %9 = load i64, ptr %8, align 8
+  %10 = tail call i32 @av_cmp_q64(i64 %7, i64 %9, i64 0, i64 1) #15
+  %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.bt = load i64, ptr %i.bs, align 8
-  %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 232
+  %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 264
   %i.bv = load i64, ptr %i.bu, align 8
   %i.bw = tail call i32 @av_cmp_q64(i64 %i.bt, i64 %i.bv, i64 0, i64 1) #15
-  %.not.4.2 = icmp eq i32 %i.bw, 0
-  %14 = select i1 %.not.4.2, i32 0, i32 16384
-  %.2.4.2 = or i32 %14, %.2.3.2
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 240
-  %16 = load i64, ptr %15, align 8
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 248
-  %18 = load i64, ptr %17, align 8
-  %19 = tail call i32 @av_cmp_q64(i64 %16, i64 %18, i64 0, i64 1) #15
-  %.not.324 = icmp eq i32 %19, 0
-  %20 = select i1 %.not.324, i32 0, i32 32768
-  %.2.325 = or i32 %20, %.2.4.2
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 256
-  %22 = load i64, ptr %21, align 8
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 264
-  %24 = load i64, ptr %23, align 8
-  %25 = tail call i32 @av_cmp_q64(i64 %22, i64 %24, i64 0, i64 1) #15
-  %.not.1.3 = icmp eq i32 %25, 0
-  %26 = select i1 %.not.1.3, i32 0, i32 65536
-  %.2.1.3 = or i32 %26, %.2.325
+  %11 = insertelement <16 x i32> poison, i32 %i.j, i64 0
+  %12 = insertelement <16 x i32> %11, i32 %i.o, i64 1
+  %13 = insertelement <16 x i32> %12, i32 %i.t, i64 2
+  %14 = insertelement <16 x i32> %13, i32 %i.y, i64 3
+  %15 = insertelement <16 x i32> %14, i32 %i.ad, i64 4
+  %16 = insertelement <16 x i32> %15, i32 %i.ai, i64 5
+  %17 = insertelement <16 x i32> %16, i32 %i.an, i64 6
+  %18 = insertelement <16 x i32> %17, i32 %i.as, i64 7
+  %19 = insertelement <16 x i32> %18, i32 %i.ax, i64 8
+  %20 = insertelement <16 x i32> %19, i32 %i.bc, i64 9
+  %21 = insertelement <16 x i32> %20, i32 %i.bh, i64 10
+  %22 = insertelement <16 x i32> %21, i32 %i.bm, i64 11
+  %23 = insertelement <16 x i32> %22, i32 %5, i64 12
+  %24 = insertelement <16 x i32> %23, i32 %i.br, i64 13
+  %25 = insertelement <16 x i32> %24, i32 %10, i64 14
+  %26 = insertelement <16 x i32> %25, i32 %i.bw, i64 15
+  %27 = icmp eq <16 x i32> %26, zeroinitializer
+  %28 = select <16 x i1> %27, <16 x i32> zeroinitializer, <16 x i32> <i32 2, i32 4, i32 8, i32 16, i32 32, i32 64, i32 128, i32 256, i32 512, i32 1024, i32 2048, i32 4096, i32 8192, i32 16384, i32 32768, i32 65536>
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 272
   %i.by = load i64, ptr %i.bx, align 8
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 280
@@ -329,7 +304,6 @@ define range(i32 0, 1048576) i32 @ff_sws_linear_mask(ptr nofree noundef readonly
   %i.cb = tail call i32 @av_cmp_q64(i64 %i.by, i64 %i.ca, i64 0, i64 1) #15
   %.not.2.3 = icmp eq i32 %i.cb, 0
   %i.cc = select i1 %.not.2.3, i32 0, i32 131072
-  %.2.2.3 = or i32 %i.cc, %.2.1.3
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.ce = load i64, ptr %i.cd, align 8
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 296
@@ -337,7 +311,6 @@ define range(i32 0, 1048576) i32 @ff_sws_linear_mask(ptr nofree noundef readonly
   %i.ch = tail call i32 @av_cmp_q64(i64 %i.ce, i64 %i.cg, i64 1, i64 1) #15
   %.not.3.3 = icmp eq i32 %i.ch, 0
   %i.ci = select i1 %.not.3.3, i32 0, i32 262144
-  %.2.3.3 = or i32 %i.ci, %.2.2.3
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.ck = load i64, ptr %i.cj, align 8
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 312
@@ -345,7 +318,11 @@ define range(i32 0, 1048576) i32 @ff_sws_linear_mask(ptr nofree noundef readonly
   %i.cn = tail call i32 @av_cmp_q64(i64 %i.ck, i64 %i.cm, i64 0, i64 1) #15
   %.not.4.3 = icmp eq i32 %i.cn, 0
   %i.co = select i1 %.not.4.3, i32 0, i32 524288
-  %.2.4.3 = or i32 %i.co, %.2.3.3
+  %29 = tail call i32 @llvm.vector.reduce.or.v16i32(<16 x i32> %28)
+  %op.rdx = or disjoint i32 %29, %i.e
+  %op.rdx26 = or disjoint i32 %i.cc, %i.ci
+  %op.rdx27 = or disjoint i32 %op.rdx, %op.rdx26
+  %.2.4.3 = or disjoint i32 %op.rdx27, %i.co
   ret i32 %.2.4.3
 }
 
@@ -747,6 +724,9 @@ declare i32 @llvm.cttz.i32(i32, i1 immarg) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v16i32(<16 x i32>) #12
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

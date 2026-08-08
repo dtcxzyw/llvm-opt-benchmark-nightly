@@ -142,6 +142,10 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.sroa.14.0 = phi i64 [ undef, %bb.g ], [ %i.t, %bb.h ] ; 2 uses
   %i.u = trunc i64 %0 to i32
   %i.v = and i32 %i.u, 65535
+  %1 = insertelement <4 x i64> poison, i64 %.sroa.6.0, i64 0
+  %2 = insertelement <4 x i64> %1, i64 %.sroa.0.0, i64 1
+  %3 = insertelement <4 x i64> %2, i64 %.sroa.10.0, i64 2
+  %4 = insertelement <4 x i64> %3, i64 %.sroa.14.0, i64 3
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %bb.i
@@ -153,29 +157,19 @@ bb.j:                                             ; preds = %bb.k, %bb.i
   br i1 %.not.i, label %bb.k, label %.preheader.preheader.i
 
 .preheader.preheader.i:                           ; preds = %bb.j
-  %1 = and i32 %.01721.i, 1
-  %sext.i = add nsw i32 %1, -1
-  %2 = sext i32 %sext.i to i64
-  %3 = xor i64 %.sroa.0.0, %2
-  %i.y = lshr i32 %.01721.i, 1
-  %4 = and i32 %i.y, 1
-  %sext = add nsw i32 %4, -1
-  %5 = sext i32 %sext to i64
-  %6 = xor i64 %.sroa.6.0, %5
-  %7 = and i64 %6, %3
+  %i.y = lshr i32 %.01721.i, 3
   %i.z = lshr i32 %.01721.i, 2
-  %8 = and i32 %i.z, 1
-  %sext34 = add nsw i32 %8, -1
-  %9 = sext i32 %sext34 to i64
-  %10 = xor i64 %.sroa.10.0, %9
-  %11 = and i64 %7, %10
-  %12 = lshr i32 %.01721.i, 3
-  %13 = and i32 %12, 1
-  %sext35 = add nsw i32 %13, -1
-  %14 = sext i32 %sext35 to i64
-  %15 = xor i64 %.sroa.14.0, %14
-  %16 = and i64 %11, %15
-  %i.aa = or i64 %16, %.022.i
+  %5 = lshr i32 %.01721.i, 1
+  %6 = insertelement <4 x i32> poison, i32 %5, i64 0
+  %7 = insertelement <4 x i32> %6, i32 %.01721.i, i64 1
+  %8 = insertelement <4 x i32> %7, i32 %i.z, i64 2
+  %9 = insertelement <4 x i32> %8, i32 %i.y, i64 3
+  %10 = and <4 x i32> %9, splat (i32 1)
+  %11 = add nsw <4 x i32> %10, splat (i32 -1)
+  %12 = sext <4 x i32> %11 to <4 x i64>
+  %13 = xor <4 x i64> %4, %12
+  %14 = tail call i64 @llvm.vector.reduce.and.v4i64(<4 x i64> %13)
+  %i.aa = or i64 %14, %.022.i
   br label %bb.k
 
 bb.k:                                             ; preds = %.preheader.preheader.i, %bb.j
@@ -264,6 +258,10 @@ If_Dec6ComposeLut4.exit.3:                        ; preds = %bb.r, %bb.s, %If_De
   %i.ba = lshr i64 %0, 32
   %i.bb = trunc nuw i64 %i.ba to i32
   %i.bc = and i32 %i.bb, 65535
+  %15 = insertelement <4 x i64> poison, i64 %.sroa.6.1, i64 0
+  %16 = insertelement <4 x i64> %15, i64 %.sroa.0.1, i64 1
+  %17 = insertelement <4 x i64> %16, i64 %.sroa.10.1, i64 2
+  %18 = insertelement <4 x i64> %17, i64 %.sroa.14.1, i64 3
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.u, %If_Dec6ComposeLut4.exit.3
@@ -275,29 +273,19 @@ bb.t:                                             ; preds = %bb.u, %If_Dec6Compo
   br i1 %.not.i23, label %bb.u, label %.preheader.preheader.i24
 
 .preheader.preheader.i24:                         ; preds = %bb.t
-  %17 = and i32 %.01721.i22, 1
-  %sext.i25 = add nsw i32 %17, -1
-  %18 = sext i32 %sext.i25 to i64
-  %19 = xor i64 %.sroa.0.1, %18
-  %i.bf = lshr i32 %.01721.i22, 1
-  %20 = and i32 %i.bf, 1
-  %sext36 = add nsw i32 %20, -1
-  %21 = sext i32 %sext36 to i64
-  %22 = xor i64 %.sroa.6.1, %21
-  %23 = and i64 %22, %19
+  %i.bf = lshr i32 %.01721.i22, 3
   %i.bg = lshr i32 %.01721.i22, 2
-  %24 = and i32 %i.bg, 1
-  %sext37 = add nsw i32 %24, -1
-  %25 = sext i32 %sext37 to i64
-  %26 = xor i64 %.sroa.10.1, %25
-  %27 = and i64 %23, %26
-  %28 = lshr i32 %.01721.i22, 3
-  %29 = and i32 %28, 1
-  %sext38 = add nsw i32 %29, -1
-  %30 = sext i32 %sext38 to i64
-  %31 = xor i64 %.sroa.14.1, %30
-  %32 = and i64 %27, %31
-  %i.bh = or i64 %32, %.022.i21
+  %19 = lshr i32 %.01721.i22, 1
+  %20 = insertelement <4 x i32> poison, i32 %19, i64 0
+  %21 = insertelement <4 x i32> %20, i32 %.01721.i22, i64 1
+  %22 = insertelement <4 x i32> %21, i32 %i.bg, i64 2
+  %23 = insertelement <4 x i32> %22, i32 %i.bf, i64 3
+  %24 = and <4 x i32> %23, splat (i32 1)
+  %25 = add nsw <4 x i32> %24, splat (i32 -1)
+  %26 = sext <4 x i32> %25 to <4 x i64>
+  %27 = xor <4 x i64> %18, %26
+  %28 = tail call i64 @llvm.vector.reduce.and.v4i64(<4 x i64> %27)
+  %i.bh = or i64 %28, %.022.i21
   br label %bb.u
 
 bb.u:                                             ; preds = %.preheader.preheader.i24, %bb.t
@@ -699,6 +687,9 @@ declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.and.v4i64(<4 x i64>) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14

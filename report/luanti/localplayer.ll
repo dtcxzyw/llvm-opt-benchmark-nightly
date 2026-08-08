@@ -203,10 +203,8 @@ bb.a:
   %i.r = fdiv nsz <2 x float> %i.o, %i.q
   %i.s = fptosi <2 x float> %i.r to <2 x i16>
   %i.t = zext <2 x i16> %i.s to <2 x i48>
-  %i.u = shl nuw <2 x i48> %i.t, <i48 32, i48 16> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.u, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i48> %i.u, %shift
-  %.sroa.2.0.insert.insert = extractelement <2 x i48> %foldExtExtBinop, i64 0
+  %i.u = shl nuw <2 x i48> %i.t, <i48 32, i48 16>
+  %.sroa.2.0.insert.insert = tail call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.u)
   %.sroa.0.0.insert.ext = zext i16 %i.g to i48
   %.sroa.0.0.insert.insert = or disjoint i48 %.sroa.2.0.insert.insert, %.sroa.0.0.insert.ext
   ret i48 %.sroa.0.0.insert.insert
@@ -267,10 +265,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.q = fdiv nsz <2 x float> %i.p, splat (float 1.000000e+01)
   %i.r = fptosi <2 x float> %i.q to <2 x i16>
   %i.s = zext <2 x i16> %i.r to <2 x i48>
-  %i.t = shl nuw <2 x i48> %i.s, <i48 32, i48 16> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.t, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i48> %i.t, %shift
-  %.sroa.2.0.insert.insert.i = extractelement <2 x i48> %foldExtExtBinop, i64 0
+  %i.t = shl nuw <2 x i48> %i.s, <i48 32, i48 16>
+  %.sroa.2.0.insert.insert.i = tail call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.t)
   %.sroa.0.0.insert.ext.i = zext i16 %i.l to i48
   %.sroa.0.0.insert.insert.i = or disjoint i48 %.sroa.2.0.insert.insert.i, %.sroa.0.0.insert.ext.i
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 616
@@ -673,10 +669,8 @@ bb.b:                                             ; preds = %bb.a
   %i.r = fdiv nsz <2 x float> %i.q, splat (float 1.000000e+01)
   %i.s = fptosi <2 x float> %i.r to <2 x i16>
   %i.t = zext <2 x i16> %i.s to <2 x i48>
-  %i.u = shl nuw <2 x i48> %i.t, <i48 16, i48 32> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.u, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i48> %i.u, %shift
-  %.sroa.2.0.insert.insert.i = extractelement <2 x i48> %foldExtExtBinop, i64 0
+  %i.u = shl nuw <2 x i48> %i.t, <i48 16, i48 32>
+  %.sroa.2.0.insert.insert.i = tail call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.u)
   %.sroa.0.0.insert.ext.i = zext i16 %i.o to i48
   %.sroa.0.0.insert.insert.i = or disjoint i48 %.sroa.2.0.insert.insert.i, %.sroa.0.0.insert.ext.i
   br label %bb.f
@@ -749,10 +743,8 @@ bb.a:
   %i.n = fdiv nsz <2 x float> %i.m, splat (float 1.000000e+01)
   %i.o = fptosi <2 x float> %i.n to <2 x i16>
   %i.p = zext <2 x i16> %i.o to <2 x i48>
-  %i.q = shl nuw <2 x i48> %i.p, <i48 16, i48 32> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.q, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i48> %shift, %i.q
-  %.sroa.2.0.insert.insert.i = extractelement <2 x i48> %foldExtExtBinop, i64 0
+  %i.q = shl nuw <2 x i48> %i.p, <i48 16, i48 32>
+  %.sroa.2.0.insert.insert.i = tail call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.q)
   %.sroa.0.0.insert.ext.i = zext i16 %i.h to i48
   %.sroa.0.0.insert.insert.i = or disjoint i48 %.sroa.2.0.insert.insert.i, %.sroa.0.0.insert.ext.i
   ret i48 %.sroa.0.0.insert.insert.i
@@ -1153,6 +1145,9 @@ declare i64 @llvm.umin.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare { float, float } @llvm.sincos.f32(float) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i48 @llvm.vector.reduce.or.v2i48(<2 x i48>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #12

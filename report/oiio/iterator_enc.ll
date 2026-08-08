@@ -204,22 +204,15 @@ bb.a:
 define hidden void @VP8IteratorBytesToNz(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #8 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 132
-  %1 = load <8 x i32>, ptr %i.a, align 4, !tbaa !3
-  %2 = shl <8 x i32> %1, <i32 12, i32 13, i32 14, i32 15, i32 18, i32 19, i32 22, i32 23> ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 164
-  %4 = load <4 x i32>, ptr %3, align 4, !tbaa !3
-  %5 = shl <4 x i32> %4, <i32 24, i32 3, i32 7, i32 11>
+  %1 = load <12 x i32>, ptr %i.a, align 4, !tbaa !3
+  %2 = shl <12 x i32> %1, <i32 12, i32 13, i32 14, i32 15, i32 18, i32 19, i32 22, i32 23, i32 24, i32 3, i32 7, i32 11>
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.c = load i32, ptr %i.b, align 4, !tbaa !3
   %i.d = shl i32 %i.c, 17
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.f = load i32, ptr %i.e, align 4, !tbaa !3
   %i.g = shl i32 %i.f, 21
-  %6 = shufflevector <8 x i32> %2, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %rdx.op = or <4 x i32> %6, %5
-  %7 = shufflevector <4 x i32> %rdx.op, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %8 = shufflevector <8 x i32> %7, <8 x i32> %2, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
-  %i.h = tail call i32 @llvm.vector.reduce.or.v8i32(<8 x i32> %8)
+  %i.h = tail call i32 @llvm.vector.reduce.or.v12i32(<12 x i32> %2)
   %op.rdx = or i32 %i.h, %i.d
   %op.rdx25 = or i32 %op.rdx, %i.g
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -622,7 +615,7 @@ declare i32 @llvm.smin.i32(i32, i32) #10
 declare void @llvm.assume(i1 noundef) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v8i32(<8 x i32>) #10
+declare i32 @llvm.vector.reduce.or.v12i32(<12 x i32>) #10
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -204,51 +204,43 @@ _RNvMs2_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7Checker16any_rule_enabl
   %i.o = alloca [24 x i8], align 8                ; 6 uses
   %i.p = alloca [48 x i8], align 8                ; 7 uses
   %i.q = getelementptr i8, ptr %0, i64 1024       ; 18 uses
-  %.val32 = load ptr, ptr %i.q, align 8, !nonnull !4, !align !10, !noundef !4 ; 8 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %.val32, i64 184
-  %1 = load i64, ptr %i.r, align 8, !alias.scope !7808, !noalias !7811, !noundef !4 ; 3 uses
-  %2 = and i64 %1, 4611686018427387904
-  %i.s = getelementptr inbounds nuw i8, ptr %.val32, i64 168
-  %3 = load i64, ptr %i.s, align 8, !alias.scope !7808, !noalias !7811, !noundef !4
-  %4 = and i64 %3, 192
-  %5 = or disjoint i64 %2, %4
-  %i.t = getelementptr inbounds nuw i8, ptr %.val32, i64 160
-  %6 = load i64, ptr %i.t, align 8, !alias.scope !7808, !noalias !7811, !noundef !4 ; 2 uses
-  %7 = and i64 %6, 1125899906842624
-  %8 = or disjoint i64 %5, %7
-  %i.u = getelementptr inbounds nuw i8, ptr %.val32, i64 112
-  %i.v = load i64, ptr %i.u, align 8, !alias.scope !7808, !noalias !7811, !noundef !4 ; 2 uses
-  %9 = and i64 %i.v, 137438953472
-  %10 = or disjoint i64 %8, %9
-  %11 = getelementptr inbounds nuw i8, ptr %.val32, i64 104
-  %12 = load i64, ptr %11, align 8, !alias.scope !7808, !noalias !7811, !noundef !4
-  %13 = and i64 %12, 1125899906842624
-  %14 = or i64 %10, %13
-  %15 = getelementptr inbounds nuw i8, ptr %.val32, i64 192
-  %16 = load i64, ptr %15, align 8, !alias.scope !7808, !noalias !7811, !noundef !4 ; 3 uses
-  %17 = and i64 %16, 8
-  %18 = or disjoint i64 %14, %17
-  %19 = and i64 %6, 2147483648
-  %20 = or i64 %18, %19
-  %i.w = getelementptr inbounds nuw i8, ptr %.val32, i64 128
-  %21 = load i64, ptr %i.w, align 8, !alias.scope !7808, !noalias !7811, !noundef !4
-  %22 = and i64 %21, 549755813888
-  %23 = or i64 %20, %22
-  %24 = and i64 %16, 536870912
-  %25 = or i64 %23, %24
-  %26 = getelementptr inbounds nuw i8, ptr %.val32, i64 120
-  %27 = load i64, ptr %26, align 8, !alias.scope !7808, !noalias !7811, !noundef !4 ; 2 uses
-  %i.x = and i64 %27, 4294967296
-  %i.y = or i64 %25, %i.x
-  %i.z = and i64 %1, 262144
-  %28 = or i64 %i.y, %i.z
-  %29 = and i64 %i.v, 8589934592
-  %30 = or i64 %28, %29
-  %31 = and i64 %1, 256
-  %32 = or i64 %30, %31
-  %i.aa = or i64 %27, %16
-  %33 = and i64 %i.aa, 70368744177664
-  %i.ab = or i64 %32, %33
+  %.val32 = load ptr, ptr %i.q, align 8, !nonnull !4, !align !10, !noundef !4 ; 7 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.val32, i64 184 ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %.val32, i64 160
+  %i.t = getelementptr inbounds nuw i8, ptr %.val32, i64 112
+  %1 = getelementptr inbounds nuw i8, ptr %.val32, i64 104
+  %2 = getelementptr inbounds nuw i8, ptr %.val32, i64 192
+  %i.u = getelementptr inbounds nuw i8, ptr %.val32, i64 128
+  %i.v = load i64, ptr %i.u, align 8, !alias.scope !7808, !noalias !7811, !noundef !4
+  %3 = load <2 x i64>, ptr %i.s, align 8, !alias.scope !7808, !noalias !7811 ; 2 uses
+  %4 = load <2 x i64>, ptr %1, align 8, !alias.scope !7808, !noalias !7811 ; 2 uses
+  %5 = load <2 x i64>, ptr %i.r, align 8, !alias.scope !7808, !noalias !7811 ; 2 uses
+  %6 = shufflevector <2 x i64> %5, <2 x i64> %3, <7 x i32> <i32 0, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %7 = shufflevector <2 x i64> %3, <2 x i64> %4, <7 x i32> <i32 poison, i32 poison, i32 0, i32 3, i32 poison, i32 poison, i32 poison>
+  %8 = shufflevector <7 x i64> %6, <7 x i64> %7, <7 x i32> <i32 0, i32 1, i32 9, i32 10, i32 poison, i32 poison, i32 poison>
+  %9 = shufflevector <2 x i64> %4, <2 x i64> %5, <7 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 3, i32 poison>
+  %10 = shufflevector <7 x i64> %8, <7 x i64> %9, <7 x i32> <i32 0, i32 1, i32 2, i32 3, i32 11, i32 12, i32 poison>
+  %11 = insertelement <7 x i64> poison, i64 %i.v, i64 6
+  %12 = shufflevector <7 x i64> %10, <7 x i64> %11, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 2, i32 13>
+  %13 = and <8 x i64> %12, <i64 4611686018427387904, i64 192, i64 1125899906842624, i64 137438953472, i64 1125899906842624, i64 8, i64 2147483648, i64 549755813888> ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %.val32, i64 120
+  %14 = load <2 x i64>, ptr %i.r, align 8, !alias.scope !7808, !noalias !7811
+  %15 = load i64, ptr %2, align 8, !alias.scope !7808, !noalias !7811, !noundef !4
+  %16 = load i64, ptr %i.r, align 8, !alias.scope !7808, !noalias !7811, !noundef !4
+  %17 = load <2 x i64>, ptr %i.t, align 8, !alias.scope !7808, !noalias !7811
+  %18 = load i64, ptr %i.w, align 8, !alias.scope !7808, !noalias !7811, !noundef !4
+  %19 = shufflevector <2 x i64> %14, <2 x i64> %17, <4 x i32> <i32 1, i32 3, i32 0, i32 2>
+  %20 = and <4 x i64> %19, <i64 536870912, i64 4294967296, i64 262144, i64 8589934592>
+  %i.x = and i64 %16, 256
+  %i.y = or i64 %18, %15
+  %i.z = and i64 %i.y, 70368744177664
+  %21 = shufflevector <8 x i64> %13, <8 x i64> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %rdx.op = or disjoint <4 x i64> %21, %20
+  %22 = shufflevector <4 x i64> %rdx.op, <4 x i64> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %23 = shufflevector <8 x i64> %22, <8 x i64> %13, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
+  %24 = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %23)
+  %i.aa = or i64 %24, %i.x
+  %i.ab = or i64 %i.aa, %i.z
   %.not121 = icmp eq i64 %i.ab, 0
   br i1 %.not121, label %.loopexit, label %bb.a
 
@@ -650,6 +642,9 @@ declare i64 @llvm.umax.i64(i64, i64) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.usub.sat.i8(i8, i8) #28
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.or.v8i64(<8 x i64>) #28
 
 attributes #0 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

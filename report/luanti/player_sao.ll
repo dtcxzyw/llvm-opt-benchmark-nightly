@@ -203,10 +203,8 @@ bb.f:                                             ; preds = %bb.e
   %i.bb = fdiv nsz <2 x float> %i.ba, splat (float 1.000000e+01)
   %i.bc = fptosi <2 x float> %i.bb to <2 x i16>
   %i.bd = zext <2 x i16> %i.bc to <2 x i48>
-  %i.be = shl nuw <2 x i48> %i.bd, <i48 16, i48 32> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.be, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i48> %i.be, %shift
-  %.sroa.2.0.insert.insert.i = extractelement <2 x i48> %foldExtExtBinop, i64 0
+  %i.be = shl nuw <2 x i48> %i.bd, <i48 16, i48 32>
+  %.sroa.2.0.insert.insert.i = call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.be)
   %.sroa.0.0.insert.ext.i = zext i16 %i.av to i48
   %.sroa.0.0.insert.insert.i = or disjoint i48 %.sroa.2.0.insert.insert.i, %.sroa.0.0.insert.ext.i ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
@@ -445,10 +443,8 @@ bb.v:                                             ; preds = %bb.u
   %i.fl = fdiv nsz <2 x float> %i.fk, splat (float 1.000000e+01)
   %i.fm = fptosi <2 x float> %i.fl to <2 x i16>
   %i.fn = zext <2 x i16> %i.fm to <2 x i48>
-  %i.fo = shl nuw <2 x i48> %i.fn, <i48 16, i48 32> ; 2 uses
-  %shift421 = shufflevector <2 x i48> %i.fo, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop422 = or disjoint <2 x i48> %i.fo, %shift421
-  %.sroa.2.0.insert.insert.i196 = extractelement <2 x i48> %foldExtExtBinop422, i64 0
+  %i.fo = shl nuw <2 x i48> %i.fn, <i48 16, i48 32>
+  %.sroa.2.0.insert.insert.i196 = call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.fo)
   %.sroa.0.0.insert.ext.i197 = zext i16 %i.ff to i48
   %.sroa.0.0.insert.insert.i198 = or disjoint i48 %.sroa.2.0.insert.insert.i196, %.sroa.0.0.insert.ext.i197
   %i.fp = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
@@ -774,10 +770,8 @@ bb.as:                                            ; preds = %.thread325
 
 bb.at:                                            ; preds = %bb.as
   %i.ma = zext <2 x i16> %i.lv to <2 x i48>
-  %i.mb = shl nuw <2 x i48> %i.ma, <i48 16, i48 32> ; 2 uses
-  %shift424 = shufflevector <2 x i48> %i.mb, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop425 = or disjoint <2 x i48> %i.mb, %shift424
-  %.sroa.7315.0.insert.insert = extractelement <2 x i48> %foldExtExtBinop425, i64 0
+  %i.mb = shl nuw <2 x i48> %i.ma, <i48 16, i48 32>
+  %.sroa.7315.0.insert.insert = call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.mb)
   %.sroa.0313.0.insert.ext = zext i16 %.sroa.0313.2331 to i48
   %.sroa.0313.0.insert.insert = or disjoint i48 %.sroa.7315.0.insert.insert, %.sroa.0313.0.insert.ext
   invoke void @_ZN20PlayerHPChangeReasonC2ENS_4TypeENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4core8vector3dIsEE(ptr noundef nonnull align 8 dereferenceable(54) %8, i8 noundef zeroext 4, ptr noundef nonnull align 8 %9, i48 %.sroa.0313.0.insert.insert)
@@ -1179,6 +1173,9 @@ declare i16 @llvm.umin.i16(i16, i16) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #27
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i48 @llvm.vector.reduce.or.v2i48(<2 x i48>) #27
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="64" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

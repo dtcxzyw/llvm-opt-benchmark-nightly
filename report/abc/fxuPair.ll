@@ -201,18 +201,14 @@ bb.d:                                             ; preds = %.backedge, %bb.c
   %.1147.sink = phi ptr [ %i.n, %bb.c ], [ %.1147.sink.be, %.backedge ] ; 24 uses
   %.1145.sink = phi ptr [ %i.r, %bb.c ], [ %.1145.sink.be, %.backedge ] ; 24 uses
   %.1.sink = phi ptr [ %i.v, %bb.c ], [ %.1.sink.be, %.backedge ] ; 24 uses
-  %.not197 = icmp eq ptr %.1149.sink, null
-  %2 = select i1 %.not197, i32 0, i32 8
-  %.not198 = icmp eq ptr %.1147.sink, null
-  %3 = select i1 %.not198, i32 0, i32 4
-  %4 = or disjoint i32 %3, %2
-  %.not199 = icmp eq ptr %.1145.sink, null
-  %5 = select i1 %.not199, i32 0, i32 2
-  %6 = or disjoint i32 %4, %5
-  %.not200 = icmp ne ptr %.1.sink, null
-  %7 = zext i1 %.not200 to i32
-  %8 = or disjoint i32 %6, %7
-  switch i32 %8, label %default.unreachable216 [
+  %2 = insertelement <4 x ptr> poison, ptr %.1.sink, i64 0
+  %3 = insertelement <4 x ptr> %2, ptr %.1147.sink, i64 1
+  %4 = insertelement <4 x ptr> %3, ptr %.1149.sink, i64 2
+  %5 = insertelement <4 x ptr> %4, ptr %.1145.sink, i64 3
+  %.not222 = icmp eq <4 x ptr> %5, splat (ptr null)
+  %6 = select <4 x i1> %.not222, <4 x i32> zeroinitializer, <4 x i32> <i32 1, i32 4, i32 8, i32 2>
+  %7 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %6)
+  switch i32 %7, label %default.unreachable216 [
     i32 0, label %.loopexit.loopexit
     i32 1, label %.loopexit
     i32 2, label %.loopexit
@@ -614,6 +610,9 @@ declare i32 @llvm.smin.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.xor.v4i32(<4 x i32>) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14

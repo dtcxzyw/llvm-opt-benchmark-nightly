@@ -9,108 +9,82 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local void @ubc_check(ptr nofree noundef readonly %0, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 172
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 164
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 188
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 212
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 204
-  %5 = load i32, ptr %i.a, align 4, !tbaa !12     ; 16 uses
-  %6 = lshr i32 %5, 4
-  %7 = load i32, ptr %i.f, align 4, !tbaa !12     ; 8 uses
-  %8 = load i32, ptr %i.g, align 4, !tbaa !12     ; 13 uses
-  %9 = load i32, ptr %2, align 4, !tbaa !12       ; 11 uses
-  %10 = lshr i32 %8, 25
-  %i.h = load i32, ptr %i.b, align 4, !tbaa !12   ; 15 uses
-  %i.i = load i32, ptr %i.c, align 4, !tbaa !12   ; 13 uses
-  %11 = xor i32 %i.h, %5
-  %12 = lshr i32 %i.h, 4
-  %13 = lshr i32 %9, 25
-  %14 = lshr i32 %11, 29
-  %15 = load <4 x i32>, ptr %4, align 4, !tbaa !12 ; 14 uses
-  %16 = extractelement <4 x i32> %15, i64 2       ; 4 uses
-  %17 = lshr i32 %16, 29
-  %i.j = extractelement <4 x i32> %15, i64 1      ; 6 uses
-  %18 = lshr i32 %i.j, 29
-  %i.k = extractelement <4 x i32> %15, i64 0      ; 11 uses
-  %i.l = xor i32 %5, %i.k
-  %19 = load <4 x i32>, ptr %3, align 4, !tbaa !12 ; 11 uses
-  %20 = shufflevector <4 x i32> %15, <4 x i32> %19, <4 x i32> <i32 0, i32 3, i32 5, i32 2>
-  %21 = shufflevector <4 x i32> %15, <4 x i32> %19, <4 x i32> <i32 1, i32 5, i32 6, i32 3>
-  %22 = xor <4 x i32> %20, %21
-  %23 = lshr <4 x i32> %15, splat (i32 4)
-  %24 = lshr i32 %i.l, 29
-  %i.m = xor i32 %6, %17
-  %i.n = lshr <4 x i32> %22, splat (i32 29)
-  %i.o = lshr <4 x i32> %19, splat (i32 29)
-  %25 = extractelement <4 x i32> %19, i64 2       ; 8 uses
-  %26 = extractelement <4 x i32> %19, i64 3       ; 7 uses
-  %27 = xor i32 %12, %18
-  %i.p = xor <4 x i32> %23, %i.o
-  %28 = shufflevector <4 x i32> %15, <4 x i32> %19, <4 x i32> <i32 poison, i32 2, i32 6, i32 poison>
-  %i.q = insertelement <4 x i32> %28, i32 %9, i64 0
-  %i.r = insertelement <4 x i32> %i.q, i32 %13, i64 3
-  %29 = shufflevector <4 x i32> %19, <4 x i32> %15, <4 x i32> <i32 3, i32 5, i32 3, i32 1>
-  %30 = xor <4 x i32> %i.r, %29
-  %i.s = lshr <4 x i32> %30, <i32 29, i32 29, i32 29, i32 0>
-  %31 = shufflevector <4 x i32> %i.s, <4 x i32> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %32 = shufflevector <4 x i32> %i.p, <4 x i32> %i.n, <16 x i32> <i32 2, i32 6, i32 1, i32 3, i32 5, i32 7, i32 0, i32 4, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %33 = shufflevector <16 x i32> %31, <16 x i32> %32, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 poison, i32 poison, i32 poison, i32 poison>
-  %34 = insertelement <16 x i32> %33, i32 %i.m, i64 12
-  %35 = insertelement <16 x i32> %34, i32 %24, i64 13
-  %36 = insertelement <16 x i32> %35, i32 %27, i64 14
-  %37 = insertelement <16 x i32> %36, i32 %14, i64 15
-  %38 = and <16 x i32> %37, <i32 1, i32 1, i32 1, i32 16, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
-  %39 = add <16 x i32> %38, <i32 -1, i32 67108863, i32 2147483647, i32 -16, i32 1073741823, i32 1073741823, i32 536870911, i32 2147483647, i32 536870911, i32 268435455, i32 268435455, i32 16777215, i32 67108863, i32 4194303, i32 16777215, i32 2097151>
-  %40 = or <16 x i32> %39, <i32 1031733239, i32 -42180737, i32 -1621131269, i32 2113854943, i32 -538976805, i32 -808460291, i32 -269486219, i32 -1082165385, i32 -404228098, i32 -168460801, i32 -134742566, i32 -10561569, i32 -33718411, i32 -3148297, i32 -8462374, i32 -1573509> ; 2 uses
-  %i.t = xor i32 %10, %25
-  %41 = and i32 %i.t, 16
-  %42 = add nuw nsw i32 %41, 268435440
-  %43 = or i32 %42, -134383745
-  %44 = lshr i32 %i.i, 4
-  %45 = lshr i32 %7, 25
-  %46 = lshr i32 %i.k, 29
-  %47 = xor i32 %8, %9
-  %48 = xor i32 %45, %26
-  %49 = xor i32 %44, %46
-  %50 = xor i32 %i.i, %i.h
-  %51 = lshr i32 %47, 29
-  %52 = load <2 x i32>, ptr %i.d, align 4, !tbaa !12 ; 2 uses
-  %53 = extractelement <2 x i32> %52, i64 1       ; 9 uses
-  %54 = load <2 x i32>, ptr %i.e, align 4, !tbaa !12 ; 7 uses
-  %55 = extractelement <2 x i32> %54, i64 0       ; 7 uses
-  %56 = lshr i32 %55, 25
-  %57 = xor i32 %7, %55
-  %58 = xor i32 %56, %9
-  %59 = xor <2 x i32> %54, %52
-  %60 = lshr i32 %57, 29
-  %61 = lshr <2 x i32> %59, splat (i32 29)
-  %62 = lshr i32 %50, 29
-  %63 = insertelement <8 x i32> poison, i32 %62, i64 0
-  %64 = insertelement <8 x i32> %63, i32 %49, i64 1
-  %65 = shufflevector <2 x i32> %61, <2 x i32> poison, <8 x i32> <i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %66 = shufflevector <8 x i32> %64, <8 x i32> %65, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 poison, i32 poison, i32 poison, i32 poison>
-  %67 = insertelement <8 x i32> %66, i32 %58, i64 4
-  %68 = insertelement <8 x i32> %67, i32 %60, i64 5
-  %69 = insertelement <8 x i32> %68, i32 %48, i64 6
-  %70 = insertelement <8 x i32> %69, i32 %51, i64 7
-  %71 = and <8 x i32> %70, <i32 1, i32 1, i32 1, i32 1, i32 16, i32 1, i32 16, i32 1>
-  %72 = add <8 x i32> %71, <i32 -1, i32 -1, i32 -1, i32 2147483647, i32 1073741808, i32 1073741823, i32 536870896, i32 -1>
-  %73 = or <8 x i32> %72, <i32 2146828125, i32 2145384437, i32 1064820735, i32 -1612843009, i32 -538085377, i32 -806420993, i32 -269033985, i32 1979580383>
-  %74 = shufflevector <16 x i32> %40, <16 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %rdx.op = and <8 x i32> %74, %73
-  %75 = shufflevector <8 x i32> %rdx.op, <8 x i32> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %76 = shufflevector <16 x i32> %75, <16 x i32> %40, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %i.u = tail call i32 @llvm.vector.reduce.and.v16i32(<16 x i32> %76)
-  %op.rdx629 = and i32 %i.u, %43                  ; 2 uses
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !12   ; 13 uses
+  %i.i = load i32, ptr %i.f, align 4, !tbaa !12   ; 8 uses
+  %2 = load <2 x i32>, ptr %i.d, align 4, !tbaa !12 ; 2 uses
+  %i.j = extractelement <2 x i32> %2, i64 1       ; 9 uses
+  %3 = load <2 x i32>, ptr %i.e, align 4, !tbaa !12 ; 8 uses
+  %i.k = extractelement <2 x i32> %3, i64 0       ; 6 uses
+  %i.l = xor i32 %i.i, %i.k
+  %4 = xor <2 x i32> %3, %2
+  %5 = lshr <2 x i32> %4, splat (i32 29)
+  %6 = load <4 x i32>, ptr %i.b, align 4, !tbaa !12 ; 7 uses
+  %7 = load <4 x i32>, ptr %i.a, align 4, !tbaa !12 ; 19 uses
+  %8 = extractelement <4 x i32> %6, i64 3         ; 9 uses
+  %i.m = xor i32 %i.h, %8
+  %i.n = lshr <4 x i32> %7, <i32 4, i32 4, i32 4, i32 0>
+  %i.o = lshr <4 x i32> %6, <i32 29, i32 29, i32 29, i32 25>
+  %9 = shufflevector <4 x i32> %6, <4 x i32> %7, <4 x i32> <i32 1, i32 5, i32 0, i32 3>
+  %10 = shufflevector <4 x i32> %6, <4 x i32> %7, <4 x i32> <i32 2, i32 4, i32 1, i32 2>
+  %i.p = xor <4 x i32> %9, %10
+  %11 = shufflevector <2 x i32> %3, <2 x i32> poison, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>
+  %i.q = insertelement <4 x i32> %11, i32 %i.i, i64 0
+  %i.r = insertelement <4 x i32> %i.q, i32 %i.l, i64 2
+  %12 = insertelement <4 x i32> %i.r, i32 %i.m, i64 3
+  %i.s = lshr <4 x i32> %12, <i32 25, i32 25, i32 29, i32 29> ; 3 uses
+  %13 = extractelement <4 x i32> %6, i64 2        ; 6 uses
+  %14 = extractelement <4 x i32> %i.s, i64 0
+  %i.t = xor i32 %14, %13
+  %15 = extractelement <4 x i32> %i.s, i64 1
+  %16 = xor i32 %15, %8
+  %17 = load <4 x i32>, ptr %i.c, align 4, !tbaa !12 ; 12 uses
+  %18 = lshr <4 x i32> %17, splat (i32 4)
+  %19 = shufflevector <4 x i32> %7, <4 x i32> %17, <4 x i32> <i32 7, i32 0, i32 1, i32 2>
+  %20 = lshr <4 x i32> %19, splat (i32 29)
+  %21 = shufflevector <4 x i32> %7, <4 x i32> %17, <4 x i32> <i32 5, i32 6, i32 7, i32 0>
+  %22 = xor <4 x i32> %17, %21
+  %23 = lshr <4 x i32> %22, splat (i32 29)
+  %24 = xor <4 x i32> %18, %20
+  %25 = shufflevector <4 x i32> %7, <4 x i32> poison, <2 x i32> <i32 2, i32 2>
+  %26 = shufflevector <4 x i32> %7, <4 x i32> poison, <2 x i32> <i32 3, i32 1>
+  %27 = xor <2 x i32> %25, %26
+  %28 = lshr <2 x i32> %27, splat (i32 29)
+  %29 = xor <4 x i32> %i.n, %i.o
+  %30 = lshr <4 x i32> %i.p, splat (i32 29)
+  %31 = shufflevector <4 x i32> %30, <4 x i32> %29, <24 x i32> <i32 3, i32 1, i32 0, i32 7, i32 5, i32 2, i32 4, i32 6, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %32 = shufflevector <2 x i32> %28, <2 x i32> poison, <24 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %33 = shufflevector <24 x i32> %31, <24 x i32> %32, <24 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 24, i32 25, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %34 = shufflevector <4 x i32> %24, <4 x i32> %23, <24 x i32> <i32 3, i32 7, i32 2, i32 6, i32 1, i32 5, i32 4, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %35 = shufflevector <24 x i32> %33, <24 x i32> %34, <24 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %36 = shufflevector <2 x i32> %5, <2 x i32> poison, <24 x i32> <i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %37 = shufflevector <24 x i32> %35, <24 x i32> %36, <24 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 24, i32 25, i32 poison, i32 poison, i32 poison, i32 poison>
+  %38 = insertelement <24 x i32> %37, i32 %16, i64 20
+  %39 = shufflevector <4 x i32> %i.s, <4 x i32> poison, <24 x i32> <i32 poison, i32 poison, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %40 = shufflevector <24 x i32> %38, <24 x i32> %39, <24 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 26, i32 poison, i32 27>
+  %41 = insertelement <24 x i32> %40, i32 %i.t, i64 22
+  %42 = and <24 x i32> %41, <i32 1, i32 1, i32 1, i32 16, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 16, i32 1, i32 16, i32 1>
+  %43 = add <24 x i32> %42, <i32 -1, i32 67108863, i32 2147483647, i32 -16, i32 1073741823, i32 1073741823, i32 536870911, i32 2147483647, i32 536870911, i32 268435455, i32 268435455, i32 16777215, i32 67108863, i32 4194303, i32 16777215, i32 2097151, i32 -1, i32 -1, i32 -1, i32 2147483647, i32 1073741808, i32 1073741823, i32 536870896, i32 -1>
+  %44 = or <24 x i32> %43, <i32 1031733239, i32 -42180737, i32 -1621131269, i32 2113854943, i32 -538976805, i32 -808460291, i32 -269486219, i32 -1082165385, i32 -404228098, i32 -168460801, i32 -134742566, i32 -10561569, i32 -33718411, i32 -3148297, i32 -8462374, i32 -1573509, i32 2146828125, i32 2145384437, i32 1064820735, i32 -1612843009, i32 -538085377, i32 -806420993, i32 -269033985, i32 1979580383>
+  %45 = lshr i32 %i.h, 25
+  %46 = extractelement <4 x i32> %6, i64 1        ; 9 uses
+  %47 = xor i32 %45, %46
+  %48 = and i32 %47, 16
+  %49 = add nuw nsw i32 %48, 268435440
+  %50 = or i32 %49, -134383745
+  %i.u = tail call i32 @llvm.vector.reduce.and.v24i32(<24 x i32> %44)
+  %op.rdx629 = and i32 %i.u, %50                  ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 156
   %i.w = load i32, ptr %i.v, align 4, !tbaa !12   ; 13 uses
   %i.x = lshr i32 %i.w, 4
-  %i.y = lshr i32 %5, 29
+  %51 = extractelement <4 x i32> %17, i64 2       ; 12 uses
+  %i.y = lshr i32 %51, 29
   %i.z = xor i32 %i.x, %i.y
   %i.aa = and i32 %i.z, 1
   %i.ab = add nuw i32 %i.aa, 2147483647
@@ -124,7 +98,8 @@ bb.b:                                             ; preds = %bb.a
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !12
   %i.ah = lshr i32 %i.ag, 4
-  %i.ai = lshr i32 %i.h, 29
+  %52 = extractelement <4 x i32> %17, i64 1
+  %i.ai = lshr i32 %52, 29
   %i.aj = xor i32 %i.ah, %i.ai
   %i.ak = and i32 %i.aj, 1
   %i.al = add nsw i32 %i.ak, -1
@@ -137,7 +112,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 148
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !12 ; 12 uses
   %i.aq = lshr i32 %i.ap, 4
-  %i.ar = lshr i32 %i.i, 29                       ; 2 uses
+  %53 = extractelement <4 x i32> %17, i64 0       ; 11 uses
+  %i.ar = lshr i32 %53, 29                        ; 2 uses
   %i.as = xor i32 %i.aq, %i.ar
   %i.at = and i32 %i.as, 1
   %i.au = add nuw i32 %i.at, 2147483647
@@ -150,7 +126,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !12
-  %i.ba = xor i32 %i.az, %53
+  %i.ba = xor i32 %i.az, %i.j
   %i.bb = lshr i32 %i.ba, 29
   %i.bc = and i32 %i.bb, 1
   %i.bd = add nsw i32 %i.bc, -1
@@ -165,8 +141,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not490, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.bh = lshr i32 %53, 25
-  %i.bi = xor i32 %7, %i.bh
+  %i.bh = lshr i32 %i.j, 25
+  %i.bi = xor i32 %i.i, %i.bh
   %i.bj = and i32 %i.bi, 16
   %i.bk = add nsw i32 %i.bj, -16
   %i.bl = or i32 %i.bk, 2138013695
@@ -180,9 +156,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %.not491, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.bo = extractelement <2 x i32> %54, i64 1
+  %i.bo = extractelement <2 x i32> %3, i64 1
   %i.bp = lshr i32 %i.bo, 25
-  %i.bq = xor i32 %8, %i.bp
+  %i.bq = xor i32 %i.h, %i.bp
   %i.br = and i32 %i.bq, 16
   %i.bs = add nuw i32 %i.br, 2147483632
   %i.bt = or i32 %i.bs, -1076371457
@@ -196,7 +172,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %.not492, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.bw = xor i32 %8, %7
+  %i.bw = xor i32 %i.h, %i.i
   %i.bx = lshr i32 %i.bw, 29
   %i.by = and i32 %i.bx, 1
   %i.bz = add nuw nsw i32 %i.by, 536870911
@@ -230,7 +206,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 bb.n:                                             ; preds = %bb.m
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.cn = load i32, ptr %i.cm, align 4, !tbaa !12
-  %i.co = xor i32 %i.cn, %55
+  %i.co = xor i32 %i.cn, %i.k
   %i.cp = shl i32 %i.co, 2
   %i.cq = ashr i32 %i.cp, 31
   %i.cr = or i32 %i.cq, -3178497
@@ -244,8 +220,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %.not495, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.cu = extractelement <2 x i32> %54, i64 1
-  %i.cv = xor i32 %8, %i.cu
+  %i.cu = extractelement <2 x i32> %3, i64 1
+  %i.cv = xor i32 %i.h, %i.cu
   %i.cw = shl i32 %i.cv, 2
   %i.cx = ashr i32 %i.cw, 31
   %i.cy = or i32 %i.cx, -657409
@@ -259,7 +235,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br i1 %.not496, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.db = xor i32 %7, %9
+  %i.db = xor i32 %i.i, %8
   %i.dc = shl i32 %i.db, 2
   %i.dd = ashr i32 %i.dc, 31
   %i.de = or i32 %i.dd, -74241
@@ -273,7 +249,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br i1 %.not497, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.dh = xor i32 %8, %26
+  %i.dh = xor i32 %i.h, %13
   %i.di = shl i32 %i.dh, 2
   %i.dj = ashr i32 %i.di, 31
   %i.dk = or i32 %i.dj, -34945
@@ -287,7 +263,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %.not498, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.dn = xor i32 %25, %9
+  %i.dn = xor i32 %46, %8
   %i.do = shl i32 %i.dn, 2
   %i.dp = ashr i32 %i.do, 31
   %i.dq = or i32 %i.dp, -8737
@@ -301,8 +277,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br i1 %.not499, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.dt = extractelement <4 x i32> %19, i64 1
-  %i.du = xor i32 %i.dt, %26
+  %i.dt = extractelement <4 x i32> %7, i64 3
+  %i.du = xor i32 %i.dt, %13
   %i.dv = shl i32 %i.du, 2
   %i.dw = ashr i32 %i.dv, 31
   %i.dx = or i32 %i.dw, -2185
@@ -316,8 +292,8 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br i1 %.not500, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.ea = extractelement <4 x i32> %15, i64 3
-  %i.eb = xor i32 %i.ea, %25
+  %i.ea = extractelement <4 x i32> %7, i64 2
+  %i.eb = xor i32 %i.ea, %46
   %i.ec = shl i32 %i.eb, 2
   %i.ed = ashr i32 %i.ec, 31
   %i.ee = or i32 %i.ed, -549
@@ -330,9 +306,9 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   %.not501 = icmp eq i32 %i.eg, 0
   %i.eh = and i32 %.12, 37
   %.not502 = icmp eq i32 %i.eh, 0
-  %77 = shufflevector <4 x i32> %15, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  %78 = shufflevector <4 x i32> %19, <4 x i32> %15, <2 x i32> <i32 1, i32 5>
-  %i.ei = xor <2 x i32> %77, %78                  ; 3 uses
+  %54 = shufflevector <4 x i32> %7, <4 x i32> poison, <2 x i32> <i32 1, i32 2>
+  %55 = shufflevector <4 x i32> %7, <4 x i32> poison, <2 x i32> <i32 3, i32 0>
+  %i.ei = xor <2 x i32> %54, %55                  ; 3 uses
   %i.ej = extractelement <2 x i32> %i.ei, i64 0   ; 2 uses
   %i.ek = and i32 %i.ej, 64
   %i.el = add nuw nsw i32 %i.ek, 32704
@@ -353,13 +329,14 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   %i.fa = and i32 %i.ez, %i.ew
   %i.fb = and i32 %i.fa, %i.ey
   %.14 = and i32 %i.fb, %.12                      ; 2 uses
-  %i.fc = lshr i32 %5, 5                          ; 2 uses
-  %i.fd = xor i32 %i.h, %i.fc
+  %i.fc = lshr i32 %51, 5                         ; 2 uses
+  %56 = extractelement <4 x i32> %17, i64 1       ; 11 uses
+  %i.fd = xor i32 %56, %i.fc
   %i.fe = and i32 %i.fd, 2
   %i.ff = sub nsw i32 0, %i.fe
   %i.fg = or i32 %i.ff, -67371265
-  %i.fh = lshr i32 %i.h, 5                        ; 2 uses
-  %i.fi = xor i32 %i.i, %i.fh
+  %i.fh = lshr i32 %56, 5                         ; 2 uses
+  %i.fi = xor i32 %53, %i.fh
   %i.fj = and i32 %i.fi, 2
   %i.fk = sub nsw i32 0, %i.fj
   %i.fl = or i32 %i.fk, -16793665
@@ -370,7 +347,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br i1 %.not503, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.fp = xor i32 %i.i, %5
+  %i.fp = xor i32 %53, %51
   %i.fq = shl i32 %i.fp, 27
   %i.fr = ashr i32 %i.fq, 31
   %i.fs = or i32 %i.fr, 2147483637
@@ -379,7 +356,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %.15 = phi i32 [ %i.ft, %bb.ab ], [ %i.fn, %bb.aa ] ; 2 uses
-  %i.fu = lshr i32 %i.i, 5                        ; 2 uses
+  %i.fu = lshr i32 %53, 5                         ; 2 uses
   %i.fv = xor i32 %i.w, %i.fu
   %i.fw = and i32 %i.fv, 2
   %i.fx = sub nsw i32 0, %i.fw
@@ -390,7 +367,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   br i1 %.not504, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.gb = xor i32 %i.w, %i.h
+  %i.gb = xor i32 %i.w, %56
   %i.gc = shl i32 %i.gb, 27
   %i.gd = ashr i32 %i.gc, 31
   %i.ge = or i32 %i.gd, -1073741830
@@ -406,7 +383,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
 bb.af:                                            ; preds = %bb.ae
   %i.gh = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.gi = load i32, ptr %i.gh, align 4, !tbaa !12
-  %i.gj = xor i32 %i.gi, %i.i
+  %i.gj = xor i32 %i.gi, %53
   %i.gk = shl i32 %i.gj, 27
   %i.gl = ashr i32 %i.gk, 31
   %i.gm = or i32 %i.gl, 1610612733
@@ -648,7 +625,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.lp = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.lq = load i32, ptr %i.lp, align 4, !tbaa !12
   %i.lr = lshr i32 %i.lq, 25
-  %i.ls = xor i32 %i.lr, %53
+  %i.ls = xor i32 %i.lr, %i.j
   %i.lt = and i32 %i.ls, 16
   %i.lu = add nuw nsw i32 %i.lt, 536870896
   %i.lv = or i32 %i.lu, -301989889
@@ -665,7 +642,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.ly = getelementptr inbounds nuw i8, ptr %0, i64 228
   %i.lz = load i32, ptr %i.ly, align 4, !tbaa !12
   %i.ma = lshr i32 %i.lz, 25
-  %i.mb = extractelement <2 x i32> %54, i64 1
+  %i.mb = extractelement <2 x i32> %3, i64 1
   %i.mc = xor i32 %i.ma, %i.mb
   %i.md = and i32 %i.mc, 16
   %i.me = add nuw nsw i32 %i.md, 268435440
@@ -683,7 +660,7 @@ bb.bg:                                            ; preds = %bb.bf
   %i.mi = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.mj = load i32, ptr %i.mi, align 4, !tbaa !12
   %i.mk = lshr i32 %i.mj, 25
-  %i.ml = xor i32 %i.mk, %55
+  %i.ml = xor i32 %i.mk, %i.k
   %i.mm = and i32 %i.ml, 16
   %i.mn = add nuw nsw i32 %i.mm, 67108848
   %i.mo = or i32 %i.mn, -35651585
@@ -692,11 +669,11 @@ bb.bg:                                            ; preds = %bb.bf
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bf
   %.32 = phi i32 [ %i.mp, %bb.bg ], [ %.31, %bb.bf ] ; 2 uses
-  %i.mq = lshr i32 %9, 5
-  %i.mr = xor i32 %8, %i.mq
+  %i.mq = lshr i32 %8, 5
+  %i.mr = xor i32 %i.h, %i.mq
   %i.ms = and i32 %i.mr, 2
   %i.mt = add nuw nsw i32 %i.ms, 524286
-  %i.mu = xor i32 %25, %9
+  %i.mu = xor i32 %46, %8
   %i.mv = and i32 %i.mu, 64
   %i.mw = add nuw nsw i32 %i.mv, 524224
   %i.mx = and i32 %i.mt, %i.mw
@@ -707,7 +684,7 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf
   br i1 %.not521, label %bb.bj, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.nb = xor i32 %53, %25
+  %i.nb = xor i32 %i.j, %46
   %i.nc = shl i32 %i.nb, 2
   %i.nd = ashr i32 %i.nc, 31
   %i.ne = or i32 %i.nd, -40961
@@ -716,45 +693,47 @@ bb.bi:                                            ; preds = %bb.bh
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh
   %.33 = phi i32 [ %i.nf, %bb.bi ], [ %i.mz, %bb.bh ] ; 2 uses
-  %i.ng = extractelement <4 x i32> %19, i64 1     ; 5 uses
-  %79 = xor i32 %i.ng, %26
-  %80 = and i32 %79, 64
-  %81 = add nuw nsw i32 %80, 32704
-  %82 = or i32 %81, -17409
-  %i.nh = lshr i32 %i.ng, 5
-  %i.ni = extractelement <4 x i32> %15, i64 3     ; 4 uses
+  %i.ng = extractelement <4 x i32> %7, i64 3      ; 3 uses
+  %57 = lshr i32 %i.ng, 5
+  %58 = extractelement <4 x i32> %7, i64 2        ; 4 uses
+  %i.nh = lshr i32 %58, 5
+  %i.ni = extractelement <4 x i32> %7, i64 1      ; 3 uses
   %i.nj = lshr i32 %i.ni, 5
-  %83 = lshr i32 %16, 5
-  %84 = xor i32 %83, %i.j
-  %85 = and i32 %84, 2
-  %86 = xor i32 %5, %i.j
-  %87 = sub nsw i32 0, %85
-  %88 = lshr i32 %86, 6
-  %89 = xor i32 %i.fh, %5
-  %i.nk = xor i32 %i.fc, %i.k
-  %i.nl = xor i32 %i.nj, %i.ng
-  %90 = shufflevector <4 x i32> %15, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
-  %i.nm = insertelement <2 x i32> %90, i32 %i.nh, i64 1
-  %91 = shufflevector <4 x i32> %15, <4 x i32> %19, <2 x i32> <i32 2, i32 6>
-  %i.nn = xor <2 x i32> %i.nm, %91
-  %92 = xor i32 %i.ni, %25                        ; 2 uses
-  %93 = insertelement <8 x i32> poison, i32 %87, i64 0
-  %94 = insertelement <8 x i32> %93, i32 %92, i64 1
-  %95 = shufflevector <2 x i32> %i.nn, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %96 = shufflevector <8 x i32> %94, <8 x i32> %95, <8 x i32> <i32 0, i32 1, i32 9, i32 8, i32 poison, i32 poison, i32 poison, i32 poison>
-  %97 = insertelement <8 x i32> %96, i32 %i.nl, i64 4
-  %i.no = insertelement <8 x i32> %97, i32 %i.nk, i64 5
-  %98 = insertelement <8 x i32> %i.no, i32 %88, i64 6
-  %99 = insertelement <8 x i32> %98, i32 %89, i64 7
-  %100 = and <8 x i32> %99, <i32 -1, i32 64, i32 2, i32 64, i32 2, i32 2, i32 1, i32 2>
-  %i.np = add nuw nsw <8 x i32> %100, <i32 0, i32 8128, i32 134217726, i32 1984, i32 33554430, i32 134217726, i32 511, i32 33554430>
-  %i.nq = or <8 x i32> %i.np, <i32 -4210689, i32 -4353, i32 -67108929, i32 -1089, i32 -16777233, i32 -67371009, i32 -273, i32 -16793601>
-  %i.nr = xor i32 %i.fu, %i.h
+  %59 = shufflevector <4 x i32> %17, <4 x i32> %7, <4 x i32> <i32 2, i32 3, i32 7, i32 3>
+  %60 = shufflevector <4 x i32> %7, <4 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 1>
+  %61 = insertelement <4 x i32> %60, i32 %i.fc, i64 1
+  %62 = insertelement <4 x i32> %61, i32 %i.nh, i64 2
+  %63 = xor <4 x i32> %59, %62                    ; 2 uses
+  %64 = extractelement <4 x i32> %63, i64 0
+  %65 = lshr i32 %64, 6
+  %i.nk = xor i32 %57, %46
+  %i.nl = xor i32 %58, %46                        ; 2 uses
+  %66 = shufflevector <4 x i32> %6, <4 x i32> poison, <2 x i32> <i32 poison, i32 2>
+  %i.nm = insertelement <2 x i32> %66, i32 %i.nj, i64 0
+  %67 = shufflevector <4 x i32> %7, <4 x i32> poison, <2 x i32> <i32 0, i32 3>
+  %i.nn = xor <2 x i32> %i.nm, %67                ; 2 uses
+  %68 = insertelement <2 x i32> %i.nn, i32 %i.nl, i64 1
+  %69 = and <2 x i32> %68, <i32 2, i32 -1>
+  %70 = shufflevector <2 x i32> %i.nn, <2 x i32> %69, <8 x i32> <i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %71 = insertelement <8 x i32> %70, i32 %i.nk, i64 3
+  %72 = shufflevector <4 x i32> %63, <4 x i32> poison, <8 x i32> <i32 poison, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %73 = shufflevector <8 x i32> %71, <8 x i32> %72, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 11, i32 10, i32 9, i32 poison>
+  %i.no = insertelement <8 x i32> %73, i32 %65, i64 7 ; 2 uses
+  %74 = and <8 x i32> %i.no, <i32 64, i32 poison, i32 64, i32 2, i32 64, i32 2, i32 2, i32 1>
+  %75 = sub nsw <8 x i32> <i32 poison, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>, %i.no
+  %76 = shufflevector <8 x i32> %74, <8 x i32> %75, <8 x i32> <i32 0, i32 9, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.np = add nuw nsw <8 x i32> %76, <i32 32704, i32 0, i32 8128, i32 134217726, i32 1984, i32 33554430, i32 134217726, i32 511>
+  %i.nq = or <8 x i32> %i.np, <i32 -17409, i32 -4210689, i32 -4353, i32 -67108929, i32 -1089, i32 -16777233, i32 -67371009, i32 -273>
+  %77 = xor i32 %i.fh, %51
+  %78 = and i32 %77, 2
+  %79 = add nuw nsw i32 %78, 33554430
+  %80 = or i32 %79, -16793601
+  %i.nr = xor i32 %i.fu, %56
   %i.ns = and i32 %i.nr, 2
   %i.nt = add nuw nsw i32 %i.ns, 8388606
   %i.nu = or i32 %i.nt, -4198401
   %i.nv = tail call i32 @llvm.vector.reduce.and.v8i32(<8 x i32> %i.nq)
-  %op.rdx = and i32 %i.nv, %82
+  %op.rdx = and i32 %i.nv, %80
   %op.rdx627 = and i32 %i.nu, %.33
   %op.rdx628 = and i32 %op.rdx, %op.rdx627        ; 2 uses
   %i.nw = and i32 %.33, 33587200
@@ -762,7 +741,8 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh
   br i1 %.not522, label %bb.bl, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.nx = lshr i32 %i.k, 25
+  %81 = extractelement <4 x i32> %17, i64 3
+  %i.nx = lshr i32 %81, 25
   %i.ny = xor i32 %i.w, %i.nx
   %i.nz = and i32 %i.ny, 16
   %i.oa = add nuw nsw i32 %i.nz, 67108848
@@ -779,7 +759,7 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj
 bb.bm:                                            ; preds = %bb.bl
   %i.oe = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.of = load i32, ptr %i.oe, align 4, !tbaa !12
-  %i.og = lshr i32 %5, 25
+  %i.og = lshr i32 %51, 25
   %i.oh = xor i32 %i.of, %i.og
   %i.oi = and i32 %i.oh, 16
   %i.oj = add nuw nsw i32 %i.oi, 16777200
@@ -811,7 +791,7 @@ bb.bp:                                            ; preds = %bb.bo, %bb.bn
   br i1 %.not525, label %bb.br, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.ow = lshr i32 %i.h, 25
+  %i.ow = lshr i32 %56, 25
   %i.ox = xor i32 %i.ap, %i.ow
   %i.oy = and i32 %i.ox, 16
   %i.oz = add nuw nsw i32 %i.oy, 4194288
@@ -943,7 +923,7 @@ bb.cg:                                            ; preds = %bb.ce, %bb.cf, %bb.
   br i1 %.not537, label %bb.ci, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg
-  %i.ri = xor i32 %i.i, %5
+  %i.ri = xor i32 %53, %51
   %i.rj = lshr i32 %i.ri, 2
   %i.rk = xor i32 %i.rj, -1
   %i.rl = or i32 %i.rk, -17
@@ -966,7 +946,8 @@ bb.cj:                                            ; preds = %bb.ci
   br i1 %.not539, label %bb.cl, label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj
-  %i.rt = xor i32 %i.h, %i.k
+  %82 = extractelement <4 x i32> %17, i64 3
+  %i.rt = xor i32 %56, %82
   %i.ru = and i32 %i.rt, 64
   %.not540 = icmp eq i32 %i.ru, 0
   br i1 %.not540, label %bb.cm, label %bb.cl
@@ -993,8 +974,8 @@ bb.cn:                                            ; preds = %bb.cm
   br i1 %.not542, label %bb.cp, label %bb.co
 
 bb.co:                                            ; preds = %bb.cn
-  %i.se = shl i32 %26, 5
-  %i.sf = xor i32 %25, %i.se
+  %i.se = shl i32 %13, 5
+  %i.sf = xor i32 %46, %i.se
   %i.sg = and i32 %i.sf, 64
   %.not543 = icmp eq i32 %i.sg, 0
   br i1 %.not543, label %bb.cq, label %bb.cp
@@ -1010,20 +991,20 @@ bb.cq:                                            ; preds = %bb.co, %bb.cp, %bb.
   br i1 %.not544, label %bb.cw, label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq
-  %i.sj = shl i32 %9, 5
-  %i.sk = xor i32 %i.sj, %26
+  %i.sj = shl i32 %8, 5
+  %i.sk = xor i32 %i.sj, %13
   %i.sl = and i32 %i.sk, 64
   %.not545 = icmp eq i32 %i.sl, 0
   br i1 %.not545, label %bb.cs, label %bb.cv
 
 bb.cs:                                            ; preds = %bb.cr
-  %i.sm = xor i32 %5, %9
+  %i.sm = xor i32 %51, %8
   %i.sn = and i32 %i.sm, 2
   %.not546 = icmp eq i32 %i.sn, 0
   br i1 %.not546, label %bb.cv, label %bb.ct
 
 bb.ct:                                            ; preds = %bb.cs
-  %i.so = shl i32 %i.i, 5
+  %i.so = shl i32 %53, 5
   %i.sp = xor i32 %i.w, %i.so
   %i.sq = and i32 %i.sp, 64
   %.not547 = icmp eq i32 %i.sq, 0
@@ -1032,7 +1013,7 @@ bb.ct:                                            ; preds = %bb.cs
 bb.cu:                                            ; preds = %bb.ct
   %i.sr = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.ss = load i32, ptr %i.sr, align 4, !tbaa !12
-  %i.st = xor i32 %i.ss, %i.i
+  %i.st = xor i32 %i.ss, %53
   %i.su = and i32 %i.st, 2
   %.not548 = icmp eq i32 %i.su, 0
   br i1 %.not548, label %bb.cv, label %bb.cw
@@ -1051,7 +1032,8 @@ bb.cw:                                            ; preds = %bb.cu, %bb.cv, %bb.
   %i.ta = select i1 %.not549, i32 -1, i32 %i.sz
   %i.tb = and i32 %.45, 4096
   %.not550 = icmp eq i32 %i.tb, 0
-  %i.tc = xor i32 %8, %i.k
+  %83 = extractelement <4 x i32> %17, i64 3       ; 6 uses
+  %i.tc = xor i32 %i.h, %83
   %i.td = shl i32 %i.tc, 11
   %i.te = or i32 %i.td, -4097
   %i.tf = select i1 %.not550, i32 -1, i32 %i.te
@@ -1077,14 +1059,14 @@ bb.cy:                                            ; preds = %bb.cx, %bb.cw
   br i1 %.not552, label %bb.de, label %bb.cz
 
 bb.cz:                                            ; preds = %bb.cy
-  %i.tp = shl i32 %7, 5
-  %i.tq = xor i32 %8, %i.tp
+  %i.tp = shl i32 %i.i, 5
+  %i.tq = xor i32 %i.h, %i.tp
   %i.tr = and i32 %i.tq, 64
   %.not553 = icmp eq i32 %i.tr, 0
   br i1 %.not553, label %bb.da, label %bb.dd
 
 bb.da:                                            ; preds = %bb.cz
-  %i.ts = xor i32 %8, %26
+  %i.ts = xor i32 %i.h, %13
   %i.tt = and i32 %i.ts, 64
   %.not554 = icmp eq i32 %i.tt, 0
   br i1 %.not554, label %bb.db, label %bb.dd
@@ -1125,7 +1107,7 @@ bb.dg:                                            ; preds = %bb.df, %bb.de
   %.50 = phi i32 [ %i.ug, %bb.df ], [ %.49, %bb.de ] ; 3 uses
   %i.uh = and i32 %.50, 262144
   %.not558 = icmp eq i32 %i.uh, 0
-  %i.ui = xor i32 %8, %i.ng
+  %i.ui = xor i32 %i.h, %i.ng
   %i.uj = shl i32 %i.ui, 17
   %i.uk = or i32 %i.uj, -262145
   %i.ul = select i1 %.not558, i32 -1, i32 %i.uk
@@ -1135,14 +1117,14 @@ bb.dg:                                            ; preds = %bb.df, %bb.de
   br i1 %.not559, label %bb.dk, label %bb.dh
 
 bb.dh:                                            ; preds = %bb.dg
-  %i.un = lshr i32 %i.i, 25
+  %i.un = lshr i32 %53, 25
   %i.uo = xor i32 %i.gv, %i.un
   %i.up = and i32 %i.uo, 8
   %.not560 = icmp eq i32 %i.up, 0
   br i1 %.not560, label %bb.di, label %bb.dj
 
 bb.di:                                            ; preds = %bb.dh
-  %i.uq = shl i32 %i.i, 2
+  %i.uq = shl i32 %53, 2
   %i.ur = xor i32 %i.pl, %i.uq
   %i.us = and i32 %i.ur, 1073741824
   %.not561 = icmp eq i32 %i.us, 0
@@ -1159,14 +1141,14 @@ bb.dk:                                            ; preds = %bb.di, %bb.dj, %bb.
   br i1 %.not562, label %bb.do, label %bb.dl
 
 bb.dl:                                            ; preds = %bb.dk
-  %i.uv = lshr i32 %i.h, 25
+  %i.uv = lshr i32 %56, 25
   %i.uw = xor i32 %i.ap, %i.uv
   %i.ux = and i32 %i.uw, 8
   %.not563 = icmp eq i32 %i.ux, 0
   br i1 %.not563, label %bb.dm, label %bb.dn
 
 bb.dm:                                            ; preds = %bb.dl
-  %i.uy = shl i32 %i.h, 2
+  %i.uy = shl i32 %56, 2
   %i.uz = xor i32 %i.gv, %i.uy
   %i.va = and i32 %i.uz, 1073741824
   %.not564 = icmp eq i32 %i.va, 0
@@ -1183,41 +1165,41 @@ bb.do:                                            ; preds = %bb.dm, %bb.dn, %bb.
   br i1 %.not565, label %bb.dw, label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do
-  %i.vd = extractelement <2 x i32> %54, i64 1     ; 2 uses
+  %i.vd = extractelement <2 x i32> %3, i64 1      ; 2 uses
   %i.ve = shl i32 %i.vd, 5
-  %i.vf = xor i32 %55, %i.ve
+  %i.vf = xor i32 %i.k, %i.ve
   %i.vg = and i32 %i.vf, 64
   %.not566 = icmp eq i32 %i.vg, 0
   br i1 %.not566, label %bb.dq, label %bb.dv
 
 bb.dq:                                            ; preds = %bb.dp
-  %i.vh = xor i32 %8, %55
+  %i.vh = xor i32 %i.h, %i.k
   %i.vi = and i32 %i.vh, 64
   %.not567 = icmp eq i32 %i.vi, 0
   br i1 %.not567, label %bb.dr, label %bb.dv
 
 bb.dr:                                            ; preds = %bb.dq
-  %i.vj = xor i32 %i.vd, %9
+  %i.vj = xor i32 %i.vd, %8
   %i.vk = and i32 %i.vj, 2
   %.not568 = icmp eq i32 %i.vk, 0
   br i1 %.not568, label %bb.dv, label %bb.ds
 
 bb.ds:                                            ; preds = %bb.dr
-  %i.vl = shl i32 %i.ni, 5
-  %i.vm = xor i32 %i.vl, %16
+  %i.vl = shl i32 %58, 5
+  %i.vm = xor i32 %i.vl, %i.ni
   %i.vn = and i32 %i.vm, 64
   %.not569 = icmp eq i32 %i.vn, 0
   br i1 %.not569, label %bb.dt, label %bb.dv
 
 bb.dt:                                            ; preds = %bb.ds
-  %i.vo = lshr i32 %i.h, 25
+  %i.vo = lshr i32 %56, 25
   %i.vp = xor i32 %i.ap, %i.vo
   %i.vq = and i32 %i.vp, 32
   %.not570 = icmp eq i32 %i.vq, 0
   br i1 %.not570, label %bb.du, label %bb.dv
 
 bb.du:                                            ; preds = %bb.dt
-  %i.vr = lshr i32 %i.h, 30
+  %i.vr = lshr i32 %56, 30
   %i.vs = xor i32 %i.gv, %i.vr
   %i.vt = and i32 %i.vs, 1
   %.not571 = icmp eq i32 %i.vt, 0
@@ -1236,7 +1218,7 @@ bb.dw:                                            ; preds = %bb.du, %bb.dv, %bb.
 bb.dx:                                            ; preds = %bb.dw
   %i.vw = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.vx = load i32, ptr %i.vw, align 4, !tbaa !12
-  %i.vy = xor i32 %i.vx, %53
+  %i.vy = xor i32 %i.vx, %i.j
   %i.vz = and i32 %i.vy, 536870912
   %.not573 = icmp eq i32 %i.vz, 0
   br i1 %.not573, label %bb.ea, label %bb.dy
@@ -1244,14 +1226,14 @@ bb.dx:                                            ; preds = %bb.dw
 bb.dy:                                            ; preds = %bb.dx
   %i.wa = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.wb = load i32, ptr %i.wa, align 4, !tbaa !12
-  %i.wc = lshr i32 %5, 25
+  %i.wc = lshr i32 %51, 25
   %i.wd = xor i32 %i.wb, %i.wc
   %i.we = and i32 %i.wd, 8
   %.not574 = icmp eq i32 %i.we, 0
   br i1 %.not574, label %bb.dz, label %bb.ea
 
 bb.dz:                                            ; preds = %bb.dy
-  %i.wf = shl i32 %5, 2
+  %i.wf = shl i32 %51, 2
   %i.wg = xor i32 %i.ap, %i.wf
   %i.wh = and i32 %i.wg, 1073741824
   %.not575 = icmp eq i32 %i.wh, 0
@@ -1268,21 +1250,21 @@ bb.eb:                                            ; preds = %bb.dz, %bb.ea, %bb.
   br i1 %.not576, label %bb.ei, label %bb.ec
 
 bb.ec:                                            ; preds = %bb.eb
-  %i.wk = shl i32 %53, 5
-  %i.wl = extractelement <2 x i32> %54, i64 1     ; 2 uses
+  %i.wk = shl i32 %i.j, 5
+  %i.wl = extractelement <2 x i32> %3, i64 1      ; 2 uses
   %i.wm = xor i32 %i.wk, %i.wl
   %i.wn = and i32 %i.wm, 64
   %.not577 = icmp eq i32 %i.wn, 0
   br i1 %.not577, label %bb.ed, label %bb.eh
 
 bb.ed:                                            ; preds = %bb.ec
-  %i.wo = xor i32 %7, %i.wl
+  %i.wo = xor i32 %i.i, %i.wl
   %i.wp = and i32 %i.wo, 64
   %.not578 = icmp eq i32 %i.wp, 0
   br i1 %.not578, label %bb.ee, label %bb.eh
 
 bb.ee:                                            ; preds = %bb.ed
-  %i.wq = xor i32 %8, %53
+  %i.wq = xor i32 %i.h, %i.j
   %i.wr = and i32 %i.wq, 2
   %.not579 = icmp eq i32 %i.wr, 0
   %i.ws = and i32 %i.ej, 2
@@ -1293,14 +1275,14 @@ bb.ee:                                            ; preds = %bb.ed
 bb.ef:                                            ; preds = %bb.ee
   %i.wt = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.wu = load i32, ptr %i.wt, align 4, !tbaa !12
-  %i.wv = lshr i32 %5, 25
+  %i.wv = lshr i32 %51, 25
   %i.ww = xor i32 %i.wu, %i.wv
   %i.wx = and i32 %i.ww, 32
   %.not581 = icmp eq i32 %i.wx, 0
   br i1 %.not581, label %bb.eg, label %bb.eh
 
 bb.eg:                                            ; preds = %bb.ef
-  %i.wy = lshr i32 %5, 30
+  %i.wy = lshr i32 %51, 30
   %i.wz = xor i32 %i.ap, %i.wy
   %i.xa = and i32 %i.wz, 1
   %.not582 = icmp eq i32 %i.xa, 0
@@ -1317,7 +1299,7 @@ bb.ei:                                            ; preds = %bb.eg, %bb.eh, %bb.
   br i1 %.not583, label %bb.em, label %bb.ej
 
 bb.ej:                                            ; preds = %bb.ei
-  %i.xd = lshr i32 %i.k, 25
+  %i.xd = lshr i32 %83, 25
   %i.xe = xor i32 %i.w, %i.xd
   %i.xf = and i32 %i.xe, 8
   %.not584 = icmp eq i32 %i.xf, 0
@@ -1326,7 +1308,7 @@ bb.ej:                                            ; preds = %bb.ei
 bb.ek:                                            ; preds = %bb.ej
   %i.xg = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.xh = load i32, ptr %i.xg, align 4, !tbaa !12
-  %i.xi = shl i32 %i.k, 2
+  %i.xi = shl i32 %83, 2
   %i.xj = xor i32 %i.xh, %i.xi
   %i.xk = and i32 %i.xj, 1073741824
   %.not585 = icmp eq i32 %i.xk, 0
@@ -1346,28 +1328,28 @@ bb.en:                                            ; preds = %bb.em
   %i.xn = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.xo = load i32, ptr %i.xn, align 4, !tbaa !12 ; 2 uses
   %i.xp = shl i32 %i.xo, 5
-  %i.xq = xor i32 %i.xp, %53
+  %i.xq = xor i32 %i.xp, %i.j
   %i.xr = and i32 %i.xq, 64
   %.not587 = icmp eq i32 %i.xr, 0
   br i1 %.not587, label %bb.eo, label %bb.es
 
 bb.eo:                                            ; preds = %bb.en
-  %i.xs = xor i32 %55, %53
+  %i.xs = xor i32 %i.k, %i.j
   %i.xt = and i32 %i.xs, 64
   %.not588 = icmp eq i32 %i.xt, 0
   br i1 %.not588, label %bb.ep, label %bb.es
 
 bb.ep:                                            ; preds = %bb.eo
-  %i.xu = xor i32 %i.xo, %7
+  %i.xu = xor i32 %i.xo, %i.i
   %i.xv = and i32 %i.xu, 2
   %.not589 = icmp eq i32 %i.xv, 0
-  %i.xw = and i32 %92, 2
+  %i.xw = and i32 %i.nl, 2
   %.not590 = icmp eq i32 %i.xw, 0
   %or.cond621 = select i1 %.not589, i1 true, i1 %.not590
   br i1 %or.cond621, label %bb.es, label %bb.eq
 
 bb.eq:                                            ; preds = %bb.ep
-  %i.xx = lshr i32 %i.k, 25
+  %i.xx = lshr i32 %83, 25
   %i.xy = xor i32 %i.w, %i.xx
   %i.xz = and i32 %i.xy, 32
   %.not591 = icmp eq i32 %i.xz, 0
@@ -1376,7 +1358,7 @@ bb.eq:                                            ; preds = %bb.ep
 bb.er:                                            ; preds = %bb.eq
   %i.ya = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.yb = load i32, ptr %i.ya, align 4, !tbaa !12
-  %i.yc = lshr i32 %i.k, 30
+  %i.yc = lshr i32 %83, 30
   %i.yd = xor i32 %i.yb, %i.yc
   %i.ye = and i32 %i.yd, 1
   %.not592 = icmp eq i32 %i.ye, 0
@@ -1403,14 +1385,15 @@ bb.eu:                                            ; preds = %bb.et
   br i1 %.not594, label %bb.ev, label %bb.ex
 
 bb.ev:                                            ; preds = %bb.eu
-  %i.yn = lshr i32 %i.j, 25
-  %i.yo = xor i32 %i.i, %i.yn
+  %84 = extractelement <4 x i32> %7, i64 0        ; 2 uses
+  %i.yn = lshr i32 %84, 25
+  %i.yo = xor i32 %53, %i.yn
   %i.yp = and i32 %i.yo, 24
   %or.cond = icmp eq i32 %i.yp, 0
   br i1 %or.cond, label %bb.ew, label %bb.ex
 
 bb.ew:                                            ; preds = %bb.ev
-  %i.yq = shl i32 %i.j, 2
+  %i.yq = shl i32 %84, 2
   %i.yr = xor i32 %i.w, %i.yq
   %i.ys = and i32 %i.yr, 1073741824
   %.not597 = icmp eq i32 %i.ys, 0
@@ -1444,8 +1427,8 @@ bb.fa:                                            ; preds = %bb.ez
   br i1 %.not600, label %bb.fb, label %bb.fc
 
 bb.fb:                                            ; preds = %bb.fa
-  %i.ze = lshr i32 %16, 25
-  %i.zf = xor i32 %i.h, %i.ze
+  %i.ze = lshr i32 %i.ni, 25
+  %i.zf = xor i32 %56, %i.ze
   %i.zg = and i32 %i.zf, 24
   %or.cond616 = icmp eq i32 %i.zg, 0
   br i1 %or.cond616, label %bb.fd, label %bb.fc
@@ -1470,8 +1453,8 @@ bb.fe:                                            ; preds = %bb.fd
   br i1 %.not604, label %bb.ff, label %bb.fg
 
 bb.ff:                                            ; preds = %bb.fe
-  %i.zo = lshr i32 %i.ni, 25
-  %i.zp = xor i32 %5, %i.zo
+  %i.zo = lshr i32 %58, 25
+  %i.zp = xor i32 %51, %i.zo
   %i.zq = and i32 %i.zp, 24
   %or.cond617 = icmp eq i32 %i.zq, 0
   br i1 %or.cond617, label %bb.fh, label %bb.fg
@@ -1508,7 +1491,7 @@ bb.fj:                                            ; preds = %bb.fi
 
 bb.fk:                                            ; preds = %bb.fj
   %i.aaf = lshr i32 %i.ng, 25
-  %i.aag = xor i32 %i.k, %i.aaf
+  %i.aag = xor i32 %83, %i.aaf
   %i.aah = and i32 %i.aag, 24
   %or.cond618 = icmp eq i32 %i.aah, 0
   br i1 %or.cond618, label %bb.fm, label %bb.fl
@@ -1534,8 +1517,9 @@ bb.fn:                                            ; preds = %bb.fm
   br i1 %.not613, label %bb.fo, label %bb.fp
 
 bb.fo:                                            ; preds = %bb.fn
-  %i.aaq = lshr i32 %25, 25
-  %i.aar = xor i32 %i.aaq, %i.j
+  %i.aaq = lshr i32 %46, 25
+  %85 = extractelement <4 x i32> %7, i64 0
+  %i.aar = xor i32 %i.aaq, %85
   %i.aas = and i32 %i.aar, 24
   %or.cond619 = icmp eq i32 %i.aas, 0
   br i1 %or.cond619, label %bb.fq, label %bb.fp
@@ -1554,7 +1538,7 @@ bb.fq:                                            ; preds = %bb.fo, %bb.fm, %bb.
 declare i32 @llvm.vector.reduce.and.v8i32(<8 x i32>) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.and.v16i32(<16 x i32>) #1
+declare i32 @llvm.vector.reduce.and.v24i32(<24 x i32>) #1
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

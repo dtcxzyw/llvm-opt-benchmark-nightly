@@ -204,12 +204,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 
 bb.bg:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bz, i64 40
-  %i.cg = load i64, ptr %i.cf, align 8            ; 5 uses
+  %i.cg = load i64, ptr %i.cf, align 8            ; 2 uses
   %.sroa.7.0.extract.shift = lshr i64 %i.cg, 32
-  %7 = and i64 %i.cg, 4278190080
-  %8 = and i64 %i.cg, 16711680
-  %9 = and i64 %i.cg, 65280
-  %10 = and i64 %i.cg, 255
+  %7 = insertelement <4 x i64> poison, i64 %i.cg, i64 0
+  %8 = shufflevector <4 x i64> %7, <4 x i64> poison, <4 x i32> zeroinitializer
+  %9 = and <4 x i64> %8, <i64 4278190080, i64 16711680, i64 65280, i64 255>
+  %10 = call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %9)
   br label %bb.bn
 
 bb.bh:                                            ; preds = %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d
@@ -312,16 +312,10 @@ _ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit: ;
   br label %bb.bn
 
 bb.bn:                                            ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.bm, %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit, %bb.bg
-  %.sroa.023.0 = phi i64 [ %10, %bb.bg ], [ 13, %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit ], [ 0, %bb.bm ], [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ]
-  %.sroa.4.0 = phi i64 [ %9, %bb.bg ], [ 256, %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit ], [ 256, %bb.bm ], [ 256, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ]
-  %.sroa.5.0 = phi i64 [ %8, %bb.bg ], [ 0, %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit ], [ 0, %bb.bm ], [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ]
-  %.sroa.6.0 = phi i64 [ %7, %bb.bg ], [ 0, %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit ], [ 0, %bb.bm ], [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ]
-  %.sroa.7.0 = phi i64 [ %.sroa.7.0.extract.shift, %bb.bg ], [ %i.dt, %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit ], [ 0, %bb.bm ], [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ]
-  %.sroa.7.0.insert.shift = shl nuw i64 %.sroa.7.0, 32
-  %.sroa.6.0.insert.insert = or disjoint i64 %.sroa.7.0.insert.shift, %.sroa.6.0
-  %.sroa.5.0.insert.insert = or disjoint i64 %.sroa.6.0.insert.insert, %.sroa.5.0
-  %.sroa.4.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.insert, %.sroa.4.0
-  %.sroa.023.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.insert, %.sroa.023.0
+  %.sroa.6.0 = phi i64 [ %.sroa.7.0.extract.shift, %bb.bg ], [ %i.dt, %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit ], [ 0, %bb.bm ], [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ]
+  %.sroa.7.0 = phi i64 [ %10, %bb.bg ], [ 269, %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit ], [ 256, %bb.bm ], [ 256, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ]
+  %.sroa.7.0.insert.shift = shl nuw i64 %.sroa.6.0, 32
+  %.sroa.023.0.insert.insert = or disjoint i64 %.sroa.7.0, %.sroa.7.0.insert.shift
   ret i64 %.sroa.023.0.insert.insert
 
 bb.bo:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17, %.loopexit
@@ -722,6 +716,9 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.or.v4i64(<4 x i64>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.ceil.v2f32(<2 x float>) #8

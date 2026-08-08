@@ -203,15 +203,13 @@ bb.a:
   %14 = alloca %struct.geod_geodesicline, align 8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #15
   %.not = icmp eq ptr %6, null
-  %15 = select i1 %.not, i32 0, i32 128
-  %.not23 = icmp eq ptr %7, null
-  %i.a = select i1 %.not23, i32 0, i32 264
-  %.not24 = icmp eq ptr %8, null
-  %16 = select i1 %.not24, i32 0, i32 512
-  %.not25 = icmp eq ptr %9, null
-  %17 = select i1 %.not25, i32 0, i32 1025
-  %.not26 = icmp eq ptr %10, null
-  %18 = select i1 %.not26, i32 0, i32 4101
+  %i.a = select i1 %.not, i32 0, i32 128
+  %15 = insertelement <4 x ptr> poison, ptr %7, i64 0
+  %16 = insertelement <4 x ptr> %15, ptr %8, i64 1
+  %17 = insertelement <4 x ptr> %16, ptr %9, i64 2
+  %18 = insertelement <4 x ptr> %17, ptr %10, i64 3
+  %19 = icmp eq <4 x ptr> %18, splat (ptr null)
+  %20 = select <4 x i1> %19, <4 x i32> zeroinitializer, <4 x i32> <i32 264, i32 512, i32 1025, i32 4101>
   %i.b = icmp ne ptr %11, null
   %i.c = icmp ne ptr %12, null
   %i.d = or i1 %i.b, %i.c
@@ -221,13 +219,11 @@ bb.a:
   %i.g = and i32 %4, 1
   %.not28 = icmp eq i32 %i.g, 0
   %i.h = select i1 %.not28, i32 2051, i32 0
-  %19 = or disjoint i32 %15, %i.h
-  %20 = or disjoint i32 %19, %i.a
-  %21 = or disjoint i32 %20, %16
-  %i.i = or i32 %21, %17
-  %i.j = or i32 %i.i, %18
-  %i.k = or i32 %i.j, %i.e
-  %i.l = or i32 %i.k, %i.f
+  %21 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %20)
+  %i.i = or disjoint i32 %21, %i.a
+  %i.j = or i32 %i.h, %i.e
+  %i.k = or i32 %i.i, %i.j
+  %i.l = or disjoint i32 %i.k, %i.f
   call void @geod_lineinit(ptr noundef nonnull %14, ptr noundef %0, double noundef %1, double noundef %2, double noundef %3, i32 noundef %i.l)
   %i.m = call double @geod_genposition(ptr noundef nonnull %14, i32 noundef %4, double noundef %5, ptr noundef %6, ptr noundef %7, ptr noundef %8, ptr noundef %9, ptr noundef %10, ptr noundef %11, ptr noundef %12, ptr noundef %13)
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #15
@@ -628,6 +624,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.maxnum.v2f64(<2 x double>, <2 x double>) #2

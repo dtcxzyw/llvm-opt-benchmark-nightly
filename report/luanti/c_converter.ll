@@ -201,10 +201,8 @@ bb.a:
   %i.h = fadd nsz <2 x double> %i.e, %i.g
   %i.i = fptosi <2 x double> %i.h to <2 x i16>
   %i.j = zext <2 x i16> %i.i to <2 x i48>
-  %i.k = shl nuw <2 x i48> %i.j, <i48 16, i48 32> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.k, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i48> %shift, %i.k
-  %.sroa.2.0.insert.insert.i = extractelement <2 x i48> %foldExtExtBinop, i64 0
+  %i.k = shl nuw <2 x i48> %i.j, <i48 16, i48 32>
+  %.sroa.2.0.insert.insert.i = tail call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.k)
   %.sroa.0.0.insert.ext.i = zext i16 %i.d to i48
   %.sroa.0.0.insert.insert.i = or disjoint i48 %.sroa.2.0.insert.insert.i, %.sroa.0.0.insert.ext.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
@@ -607,10 +605,8 @@ _ZL9check_v3dP9lua_Statei.exit:                   ; preds = %bb.bs
   %i.il = fadd nsz <2 x double> %i.ig, %i.ik
   %i.im = fptosi <2 x double> %i.il to <2 x i16>
   %i.in = zext <2 x i16> %i.im to <2 x i48>
-  %i.io = shl nuw <2 x i48> %i.in, <i48 32, i48 16> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.io, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i48> %i.io, %shift
-  %.sroa.2.0.insert.insert.i = extractelement <2 x i48> %foldExtExtBinop, i64 0
+  %i.io = shl nuw <2 x i48> %i.in, <i48 32, i48 16>
+  %.sroa.2.0.insert.insert.i = tail call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.io)
   %.sroa.0.0.insert.ext.i = zext i16 %i.ij to i48
   %.sroa.0.0.insert.insert.i = or disjoint i48 %.sroa.2.0.insert.insert.i, %.sroa.0.0.insert.ext.i
   ret i48 %.sroa.0.0.insert.insert.i
@@ -1011,6 +1007,9 @@ declare i64 @llvm.umax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i48 @llvm.vector.reduce.or.v2i48(<2 x i48>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.minnum.v2f64(<2 x double>, <2 x double>) #15

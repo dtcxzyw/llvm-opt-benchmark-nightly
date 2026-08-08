@@ -203,10 +203,8 @@ point_zorder_internal.exit:                       ; preds = %ieee_float32_to_uin
   %i.al = shl nuw nsw i64 %i.ak, 1
   %i.am = insertelement <2 x i64> %i.ai, i64 %i.al, i64 0
   %i.an = or <2 x i64> %i.aj, %i.am
-  %i.ao = and <2 x i64> %i.an, <i64 -6148914691236517206, i64 6148914691236517205> ; 2 uses
-  %shift = shufflevector <2 x i64> %i.ao, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i64> %i.ao, %shift
-  %2 = extractelement <2 x i64> %foldExtExtBinop, i64 0
+  %i.ao = and <2 x i64> %i.an, <i64 -6148914691236517206, i64 6148914691236517205>
+  %2 = tail call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %i.ao)
   ret i64 %2
 }
 
@@ -290,10 +288,8 @@ point_zorder_internal.exit:                       ; preds = %ieee_float32_to_uin
   %i.as = shl nuw nsw <2 x i64> %i.ap, splat (i64 1)
   %i.at = insertelement <2 x i64> %i.ap, i64 %i.ar, i64 1
   %i.au = or <2 x i64> %i.as, %i.at
-  %i.av = and <2 x i64> %i.au, <i64 6148914691236517205, i64 -6148914691236517206> ; 2 uses
-  %shift = shufflevector <2 x i64> %i.av, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i64> %shift, %i.av
-  %3 = extractelement <2 x i64> %foldExtExtBinop, i64 0 ; 2 uses
+  %i.av = and <2 x i64> %i.au, <i64 6148914691236517205, i64 -6148914691236517206>
+  %3 = tail call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %i.av) ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.ax = load double, ptr %i.aw, align 8         ; 2 uses
   %i.ay = fptrunc double %i.ax to float           ; 2 uses
@@ -349,10 +345,8 @@ point_zorder_internal.exit23:                     ; preds = %ieee_float32_to_uin
   %i.ce = shl nuw nsw i64 %i.cd, 1
   %i.cf = insertelement <2 x i64> %i.cb, i64 %i.ce, i64 0
   %i.cg = or <2 x i64> %i.cc, %i.cf
-  %i.ch = and <2 x i64> %i.cg, <i64 -6148914691236517206, i64 6148914691236517205> ; 2 uses
-  %shift30 = shufflevector <2 x i64> %i.ch, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop31 = or disjoint <2 x i64> %i.ch, %shift30
-  %4 = extractelement <2 x i64> %foldExtExtBinop31, i64 0 ; 2 uses
+  %i.ch = and <2 x i64> %i.cg, <i64 -6148914691236517206, i64 6148914691236517205>
+  %4 = tail call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %i.ch) ; 2 uses
   %i.ci = icmp ugt i64 %3, %4
   br i1 %i.ci, label %bb.h, label %bb.g
 
@@ -529,6 +523,9 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

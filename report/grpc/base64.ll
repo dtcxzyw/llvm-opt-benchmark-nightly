@@ -26,7 +26,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress nounwind uwtable
 define ptr @EVP_ENCODE_CTX_new() local_unnamed_addr #1 {
 bb.a:
-  %i.a = tail call ptr @OPENSSL_zalloc(i64 noundef 56) #8
+  %i.a = tail call ptr @OPENSSL_zalloc(i64 noundef 56) #9
   ret ptr %i.a
 }
 
@@ -35,7 +35,7 @@ declare ptr @OPENSSL_zalloc(i64 noundef) local_unnamed_addr #2
 ; Function Attrs: mustprogress nounwind uwtable
 define void @EVP_ENCODE_CTX_free(ptr noundef %0) local_unnamed_addr #1 {
 bb.a:
-  tail call void @OPENSSL_free(ptr noundef %0) #8
+  tail call void @OPENSSL_free(ptr noundef %0) #9
   ret void
 }
 
@@ -194,7 +194,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.l = trunc nuw nsw i32 %i.k to i8             ; 3 uses
   %isneg.i41 = icmp eq i32 %i.k, 62
   %i.m = select i1 %isneg.i41, i64 255, i64 0
-  %i.n = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.m) #9, !srcloc !17
+  %i.n = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.m) #10, !srcloc !17
   %i.o = trunc i64 %i.n to i8                     ; 2 uses
   %i.p = and i8 %i.o, 43
   %i.q = and i8 %i.o, 47
@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.t = icmp samesign ult i32 %.031, 16252928
   %i.u = select i1 %i.t, i64 255, i64 0
   %i.v = add nsw i8 %i.l, -4
-  %i.w = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.u) #9, !srcloc !17
+  %i.w = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.u) #10, !srcloc !17
   %i.x = trunc i64 %i.w to i8                     ; 2 uses
   %i.y = and i8 %i.v, %i.x
   %i.z = xor i8 %i.x, -1
@@ -212,7 +212,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ac = icmp samesign ult i32 %.031, 13631488
   %i.ad = select i1 %i.ac, i64 255, i64 0
   %i.ae = add nuw i8 %i.l, 71
-  %i.af = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ad) #9, !srcloc !17
+  %i.af = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ad) #10, !srcloc !17
   %i.ag = trunc i64 %i.af to i8                   ; 2 uses
   %i.ah = and i8 %i.ae, %i.ag
   %i.ai = xor i8 %i.ag, -1
@@ -221,7 +221,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.al = icmp samesign ult i32 %.031, 6815744
   %i.am = select i1 %i.al, i64 255, i64 0
   %narrow.i42 = add nuw i8 %i.l, 65
-  %i.an = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.am) #9, !srcloc !17
+  %i.an = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.am) #10, !srcloc !17
   %i.ao = trunc i64 %i.an to i8                   ; 2 uses
   %i.ap = and i8 %narrow.i42, %i.ao
   %i.aq = xor i8 %i.ao, -1
@@ -234,7 +234,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.aw = and i8 %i.av, 63                        ; 7 uses
   %isneg.i43 = icmp eq i8 %i.aw, 62
   %i.ax = select i1 %isneg.i43, i64 255, i64 0
-  %i.ay = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ax) #9, !srcloc !17
+  %i.ay = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ax) #10, !srcloc !17
   %i.az = trunc i64 %i.ay to i8                   ; 2 uses
   %i.ba = and i8 %i.az, 43
   %i.bb = and i8 %i.az, 47
@@ -243,7 +243,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.be = icmp samesign ult i8 %i.aw, 62
   %i.bf = select i1 %i.be, i64 255, i64 0
   %i.bg = add nsw i8 %i.aw, -4
-  %i.bh = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.bf) #9, !srcloc !17
+  %i.bh = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.bf) #10, !srcloc !17
   %i.bi = trunc i64 %i.bh to i8                   ; 2 uses
   %i.bj = and i8 %i.bg, %i.bi
   %i.bk = xor i8 %i.bi, -1
@@ -252,7 +252,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bn = icmp samesign ult i8 %i.aw, 52
   %i.bo = select i1 %i.bn, i64 255, i64 0
   %i.bp = add nuw i8 %i.aw, 71
-  %i.bq = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.bo) #9, !srcloc !17
+  %i.bq = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.bo) #10, !srcloc !17
   %i.br = trunc i64 %i.bq to i8                   ; 2 uses
   %i.bs = and i8 %i.bp, %i.br
   %i.bt = xor i8 %i.br, -1
@@ -261,7 +261,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bw = icmp samesign ult i8 %i.aw, 26
   %i.bx = select i1 %i.bw, i64 255, i64 0
   %narrow.i44 = add nuw i8 %i.aw, 65
-  %i.by = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.bx) #9, !srcloc !17
+  %i.by = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.bx) #10, !srcloc !17
   %i.bz = trunc i64 %i.by to i8                   ; 2 uses
   %i.ca = and i8 %narrow.i44, %i.bz
   %i.cb = xor i8 %i.bz, -1
@@ -278,7 +278,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ci = and i8 %i.ch, 63                        ; 7 uses
   %isneg.i45 = icmp eq i8 %i.ci, 62
   %i.cj = select i1 %isneg.i45, i64 255, i64 0
-  %i.ck = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.cj) #9, !srcloc !17
+  %i.ck = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.cj) #10, !srcloc !17
   %i.cl = trunc i64 %i.ck to i8                   ; 2 uses
   %i.cm = and i8 %i.cl, 43
   %i.cn = and i8 %i.cl, 47
@@ -287,7 +287,7 @@ bb.e:                                             ; preds = %bb.d
   %i.cq = icmp samesign ult i8 %i.ci, 62
   %i.cr = select i1 %i.cq, i64 255, i64 0
   %i.cs = add nsw i8 %i.ci, -4
-  %i.ct = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.cr) #9, !srcloc !17
+  %i.ct = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.cr) #10, !srcloc !17
   %i.cu = trunc i64 %i.ct to i8                   ; 2 uses
   %i.cv = and i8 %i.cs, %i.cu
   %i.cw = xor i8 %i.cu, -1
@@ -296,7 +296,7 @@ bb.e:                                             ; preds = %bb.d
   %i.cz = icmp samesign ult i8 %i.ci, 52
   %i.da = select i1 %i.cz, i64 255, i64 0
   %i.db = add nuw i8 %i.ci, 71
-  %i.dc = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.da) #9, !srcloc !17
+  %i.dc = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.da) #10, !srcloc !17
   %i.dd = trunc i64 %i.dc to i8                   ; 2 uses
   %i.de = and i8 %i.db, %i.dd
   %i.df = xor i8 %i.dd, -1
@@ -305,7 +305,7 @@ bb.e:                                             ; preds = %bb.d
   %i.di = icmp samesign ult i8 %i.ci, 26
   %i.dj = select i1 %i.di, i64 255, i64 0
   %narrow.i46 = add nuw i8 %i.ci, 65
-  %i.dk = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.dj) #9, !srcloc !17
+  %i.dk = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.dj) #10, !srcloc !17
   %i.dl = trunc i64 %i.dk to i8                   ; 2 uses
   %i.dm = and i8 %narrow.i46, %i.dl
   %i.dn = xor i8 %i.dl, -1
@@ -345,10 +345,10 @@ bb.f:                                             ; preds = %.lr.ph
   %i.em = lshr i8 %i.b, 2                         ; 2 uses
   %isneg.i = icmp eq i8 %i.em, 62
   %i.en = select i1 %isneg.i, i64 255, i64 0
-  %i.eo = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.en) #9, !srcloc !17
-  %i.ep = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ed) #9, !srcloc !17
-  %i.eq = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ef) #9, !srcloc !17
-  %i.er = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.eh) #9, !srcloc !17
+  %i.eo = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.en) #10, !srcloc !17
+  %i.ep = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ed) #10, !srcloc !17
+  %i.eq = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ef) #10, !srcloc !17
+  %i.er = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.eh) #10, !srcloc !17
   %i.es = insertelement <4 x i8> poison, i8 %i.em, i64 0
   %i.et = insertelement <4 x i8> %i.es, i8 %i.ej, i64 1
   %i.eu = insertelement <4 x i8> %i.et, i8 %i.el, i64 2
@@ -357,33 +357,33 @@ bb.f:                                             ; preds = %.lr.ph
   %i.ex = and i8 %i.ej, 63                        ; 4 uses
   %isneg.i35 = icmp eq i8 %i.ex, 62
   %i.ey = select i1 %isneg.i35, i64 255, i64 0
-  %i.ez = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ey) #9, !srcloc !17
+  %i.ez = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ey) #10, !srcloc !17
   %i.fa = icmp samesign ult i8 %i.ex, 62
   %i.fb = select i1 %i.fa, i64 255, i64 0
-  %i.fc = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fb) #9, !srcloc !17
+  %i.fc = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fb) #10, !srcloc !17
   %i.fd = icmp samesign ult i8 %i.ex, 52
   %i.fe = select i1 %i.fd, i64 255, i64 0
-  %i.ff = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fe) #9, !srcloc !17
+  %i.ff = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fe) #10, !srcloc !17
   %i.fg = icmp samesign ult i8 %i.ex, 26
   %i.fh = select i1 %i.fg, i64 255, i64 0
-  %i.fi = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fh) #9, !srcloc !17
+  %i.fi = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fh) #10, !srcloc !17
   %i.fj = extractelement <4 x i8> %i.ew, i64 2    ; 4 uses
   %isneg.i37 = icmp eq i8 %i.fj, 62
   %i.fk = select i1 %isneg.i37, i64 255, i64 0
-  %i.fl = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fk) #9, !srcloc !17
+  %i.fl = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fk) #10, !srcloc !17
   %i.fm = icmp samesign ult i8 %i.fj, 62
   %i.fn = select i1 %i.fm, i64 255, i64 0
-  %i.fo = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fn) #9, !srcloc !17
+  %i.fo = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fn) #10, !srcloc !17
   %i.fp = icmp samesign ult i8 %i.fj, 52
   %i.fq = select i1 %i.fp, i64 255, i64 0
-  %i.fr = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fq) #9, !srcloc !17
+  %i.fr = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fq) #10, !srcloc !17
   %i.fs = icmp samesign ult i8 %i.fj, 26
   %i.ft = select i1 %i.fs, i64 255, i64 0
-  %i.fu = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ft) #9, !srcloc !17
+  %i.fu = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ft) #10, !srcloc !17
   %i.fv = extractelement <4 x i8> %i.ew, i64 3    ; 4 uses
   %isneg.i39 = icmp eq i8 %i.fv, 62
   %i.fw = select i1 %isneg.i39, i64 255, i64 0
-  %i.fx = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fw) #9, !srcloc !17
+  %i.fx = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.fw) #10, !srcloc !17
   %i.fy = insertelement <4 x i64> poison, i64 %i.eo, i64 0
   %i.fz = insertelement <4 x i64> %i.fy, i64 %i.ez, i64 1
   %i.ga = insertelement <4 x i64> %i.fz, i64 %i.fl, i64 2
@@ -396,7 +396,7 @@ bb.f:                                             ; preds = %.lr.ph
   %i.gh = icmp samesign ult i8 %i.fv, 62
   %i.gi = select i1 %i.gh, i64 255, i64 0
   %i.gj = add nsw <4 x i8> %i.ew, splat (i8 -4)
-  %i.gk = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.gi) #9, !srcloc !17
+  %i.gk = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.gi) #10, !srcloc !17
   %i.gl = trunc i64 %i.ep to i8
   %i.gm = insertelement <4 x i8> poison, i8 %i.gl, i64 0
   %i.gn = trunc i64 %i.fc to i8
@@ -412,7 +412,7 @@ bb.f:                                             ; preds = %.lr.ph
   %i.gx = icmp samesign ult i8 %i.fv, 52
   %i.gy = select i1 %i.gx, i64 255, i64 0
   %i.gz = add nuw <4 x i8> %i.ew, splat (i8 71)
-  %i.ha = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.gy) #9, !srcloc !17
+  %i.ha = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.gy) #10, !srcloc !17
   %i.hb = trunc i64 %i.eq to i8
   %i.hc = insertelement <4 x i8> poison, i8 %i.hb, i64 0
   %i.hd = trunc i64 %i.ff to i8
@@ -428,7 +428,7 @@ bb.f:                                             ; preds = %.lr.ph
   %i.hn = icmp samesign ult i8 %i.fv, 26
   %i.ho = select i1 %i.hn, i64 255, i64 0
   %i.hp = add nuw <4 x i8> %i.ew, splat (i8 65)
-  %i.hq = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ho) #9, !srcloc !17
+  %i.hq = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 256) %i.ho) #10, !srcloc !17
   %i.hr = trunc i64 %i.er to i8
   %i.hs = insertelement <4 x i8> poison, i8 %i.hr, i64 0
   %i.ht = trunc i64 %i.fi to i8
@@ -562,7 +562,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.m, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.n = call fastcc noundef i32 @_ZL18base64_decode_quadPhPmPKh(ptr noundef %.03654, ptr noundef %i.a, ptr noundef nonnull %i.e)
   %.not42.not = icmp eq i32 %i.n, 0
   br i1 %.not42.not, label %select.unfold, label %bb.g
@@ -580,12 +580,12 @@ bb.h:                                             ; preds = %bb.g
   br label %.thread49
 
 .thread49:                                        ; preds = %bb.g, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %bb.i
 
 select.unfold:                                    ; preds = %bb.f
   store i8 1, ptr %i.b, align 1, !tbaa !20
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %bb.k
 
 bb.i:                                             ; preds = %.thread49, %bb.b, %bb.b, %bb.b, %bb.b, %bb.e
@@ -622,7 +622,7 @@ bb.k:                                             ; preds = %bb.d, %select.unfol
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define internal fastcc noundef range(i32 0, 2) i32 @_ZL18base64_decode_quadPhPmPKh(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef nonnull writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #6 {
 bb.a:
-  %i.a = load <4 x i8>, ptr %2, align 1, !tbaa !16 ; 10 uses
+  %i.a = load <4 x i8>, ptr %2, align 1, !tbaa !16 ; 7 uses
   %i.b = add <4 x i8> %i.a, splat (i8 -65)        ; 2 uses
   %i.c = icmp ult <4 x i8> %i.b, splat (i8 26)    ; 2 uses
   %i.d = add <4 x i8> %i.a, splat (i8 -97)
@@ -678,24 +678,12 @@ bb.b:                                             ; preds = %bb.a
   %i.ax = shl nuw nsw i32 %i.at, 12
   %i.ay = or i32 %i.ax, %i.aw                     ; 4 uses
   %i.az = shl nuw nsw i32 %i.ar, 6
-  %3 = or i32 %i.az, %i.ap                        ; 2 uses
-  %4 = or i32 %3, %i.ay                           ; 2 uses
-  %5 = extractelement <4 x i8> %i.a, i64 0
-  %6 = icmp eq i8 %5, 61
-  %7 = select i1 %6, i32 8, i32 0
-  %8 = extractelement <4 x i8> %i.a, i64 1
-  %9 = icmp eq i8 %8, 61
-  %10 = select i1 %9, i32 4, i32 0
-  %i.ba = or disjoint i32 %10, %7
-  %11 = extractelement <4 x i8> %i.a, i64 2
-  %12 = icmp eq i8 %11, 61
-  %13 = select i1 %12, i32 2, i32 0
-  %i.bb = or disjoint i32 %i.ba, %13
-  %14 = extractelement <4 x i8> %i.a, i64 3
-  %15 = icmp eq i8 %14, 61
-  %16 = zext i1 %15 to i32
-  %17 = or disjoint i32 %i.bb, %16
-  switch i32 %17, label %bb.f [
+  %i.ba = or i32 %i.az, %i.ap                     ; 2 uses
+  %i.bb = or i32 %i.ba, %i.ay                     ; 2 uses
+  %3 = icmp eq <4 x i8> %i.a, splat (i8 61)
+  %4 = select <4 x i1> %3, <4 x i32> <i32 8, i32 4, i32 2, i32 1>, <4 x i32> zeroinitializer
+  %5 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %4)
+  switch i32 %5, label %bb.f [
     i32 0, label %bb.c
     i32 1, label %bb.d
     i32 3, label %bb.e
@@ -706,11 +694,11 @@ bb.c:                                             ; preds = %bb.b
   %i.bc = lshr i32 %i.ay, 16
   %i.bd = trunc i32 %i.bc to i8
   store i8 %i.bd, ptr %0, align 1, !tbaa !16
-  %i.be = lshr i32 %4, 8
+  %i.be = lshr i32 %i.bb, 8
   %i.bf = trunc i32 %i.be to i8
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %i.bf, ptr %i.bg, align 1, !tbaa !16
-  %i.bh = trunc i32 %3 to i8
+  %i.bh = trunc i32 %i.ba to i8
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 2
   store i8 %i.bh, ptr %i.bi, align 1, !tbaa !16
   br label %bb.f
@@ -720,7 +708,7 @@ bb.d:                                             ; preds = %bb.b
   %i.bj = lshr i32 %i.ay, 16
   %i.bk = trunc i32 %i.bj to i8
   store i8 %i.bk, ptr %0, align 1, !tbaa !16
-  %i.bl = lshr i32 %4, 8
+  %i.bl = lshr i32 %i.bb, 8
   %i.bm = trunc i32 %i.bl to i8
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %i.bm, ptr %i.bn, align 1, !tbaa !16
@@ -785,7 +773,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %.034 = phi i64 [ 0, %.lr.ph ], [ %i.k, %bb.d ]
   %.01733 = phi i64 [ 0, %.lr.ph ], [ %i.l, %bb.d ] ; 3 uses
   %.02132 = phi ptr [ %0, %.lr.ph ], [ %i.j, %bb.d ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 %.01733
   %i.h = call fastcc noundef i32 @_ZL18base64_decode_quadPhPmPKh(ptr noundef %.02132, ptr noundef %i.a, ptr noundef %i.g)
   %.not25 = icmp eq i32 %i.h, 0
@@ -801,7 +789,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %.02132, i64 %i.i
   %i.k = add i64 %i.i, %.034                      ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %i.l = add i64 %.01733, 4                       ; 2 uses
   %i.m = icmp ult i64 %i.l, %4
   br i1 %i.m, label %bb.b, label %._crit_edge, !llvm.loop !23
@@ -812,7 +800,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 .critedge:                                        ; preds = %bb.c, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %bb.e
 
 bb.e:                                             ; preds = %EVP_DecodedLength.exit, %.critedge, %._crit_edge, %bb.a
@@ -874,7 +862,7 @@ bb.e:                                             ; preds = %bb.g, %.lr.ph.i
   %.034.i = phi i64 [ 0, %.lr.ph.i ], [ %i.p, %bb.g ]
   %.01733.i = phi i64 [ 0, %.lr.ph.i ], [ %i.q, %bb.g ] ; 3 uses
   %.02132.i = phi ptr [ %0, %.lr.ph.i ], [ %i.o, %bb.g ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.l = getelementptr inbounds nuw i8, ptr %.01541, i64 %.01733.i
   %i.m = call fastcc noundef i32 @_ZL18base64_decode_quadPhPmPKh(ptr noundef %.02132.i, ptr noundef %i.a, ptr noundef nonnull readonly %i.l)
   %.not25.i = icmp eq i32 %i.m, 0
@@ -890,13 +878,13 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.o = getelementptr inbounds nuw i8, ptr %.02132.i, i64 %i.n
   %i.p = add i64 %i.n, %.034.i                    ; 4 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %i.q = add i64 %.01733.i, 4                     ; 2 uses
   %i.r = icmp ult i64 %i.q, %.148
   br i1 %i.r, label %bb.e, label %EVP_DecodeBase64.exit, !llvm.loop !23
 
 .critedge.i:                                      ; preds = %bb.f, %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %EVP_DecodedLength.exit.thread
 
 EVP_DecodeBase64.exit:                            ; preds = %bb.g
@@ -929,6 +917,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #4
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #8
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "warn-stack-size"="25344" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "warn-stack-size"="25344" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -937,8 +928,9 @@ attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 attributes #5 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "warn-stack-size"="25344" }
 attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "warn-stack-size"="25344" }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #8 = { nounwind }
-attributes #9 = { nounwind memory(none) }
+attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nounwind }
+attributes #10 = { nounwind memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

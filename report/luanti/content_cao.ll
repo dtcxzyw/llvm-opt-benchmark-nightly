@@ -203,10 +203,8 @@ bb.b:                                             ; preds = %bb.a
   %i.cp = fdiv nsz <2 x float> %i.co, splat (float 1.000000e+01)
   %i.cq = fptosi <2 x float> %i.cp to <2 x i16>
   %i.cr = zext <2 x i16> %i.cq to <2 x i48>
-  %i.cs = shl nuw <2 x i48> %i.cr, <i48 16, i48 32> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.cs, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop107 = or disjoint <2 x i48> %shift, %i.cs
-  %.sroa.2.0.insert.insert.i91 = extractelement <2 x i48> %foldExtExtBinop107, i64 0
+  %i.cs = shl nuw <2 x i48> %i.cr, <i48 16, i48 32>
+  %.sroa.2.0.insert.insert.i91 = tail call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.cs)
   %.sroa.0.0.insert.ext.i92 = zext i16 %i.ch to i48
   %.sroa.0.0.insert.insert.i93 = or disjoint i48 %.sroa.2.0.insert.insert.i91, %.sroa.0.0.insert.ext.i92
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -609,10 +607,8 @@ _ZNK10GenericCAO11getPositionEv.exit342:          ; preds = %bb.bn, %bb.bp, %bb.
   %i.qs = fadd nsz <2 x float> %i.qp, %i.qr
   %i.qt = fptosi <2 x float> %i.qs to <2 x i16>
   %i.qu = zext <2 x i16> %i.qt to <2 x i48>
-  %i.qv = shl nuw <2 x i48> %i.qu, <i48 16, i48 32> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.qv, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i48> %i.qv, %shift
-  %.sroa.2.0.insert.insert.i = extractelement <2 x i48> %foldExtExtBinop, i64 0
+  %i.qv = shl nuw <2 x i48> %i.qu, <i48 16, i48 32>
+  %.sroa.2.0.insert.insert.i = call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.qv)
   %.sroa.0.0.insert.ext.i = zext i16 %i.ql to i48
   %.sroa.0.0.insert.insert.i = or disjoint i48 %.sroa.2.0.insert.insert.i, %.sroa.0.0.insert.ext.i
   %i.qw = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1013,6 +1009,9 @@ declare i64 @llvm.umax.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i48 @llvm.vector.reduce.or.v2i48(<2 x i48>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #19

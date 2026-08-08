@@ -36,7 +36,7 @@ bb.c:                                             ; preds = %bb.g
 
 bb.d:                                             ; preds = %bb.g, %bb.b
   %.03840.i.i = phi i64 [ 0, %bb.b ], [ %i.r, %bb.g ] ; 2 uses
-  %i.e = getelementptr inbounds nuw [28 x i8], ptr @__const._ZN4ojph5localL15vlc_init_tablesEv.tbl0, i64 %.03840.i.i ; 7 uses
+  %i.e = getelementptr inbounds nuw [28 x i8], ptr @__const._ZN4ojph5localL15vlc_init_tablesEv.tbl0, i64 %.03840.i.i ; 4 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !10
   %i.g = icmp eq i32 %i.f, %i.c
   br i1 %i.g, label %bb.e, label %bb.g
@@ -54,29 +54,18 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 4
-  %0 = load i32, ptr %i.o, align 4, !tbaa !14
-  %1 = shl i32 %0, 4
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %3 = load i32, ptr %2, align 4, !tbaa !15
-  %4 = shl i32 %3, 3
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 12
-  %6 = load i32, ptr %5, align 4, !tbaa !16
-  %7 = shl i32 %6, 12
-  %8 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %9 = load i32, ptr %8, align 4, !tbaa !17
-  %10 = shl i32 %9, 8
-  %11 = or i32 %1, %4
-  %12 = or i32 %11, %7
-  %13 = or i32 %12, %10
-  %i.p = or i32 %13, %i.k
+  %0 = load <4 x i32>, ptr %i.o, align 4, !tbaa !14
+  %1 = shl <4 x i32> %0, <i32 4, i32 3, i32 12, i32 8>
+  %2 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %1)
+  %i.p = or i32 %2, %i.k
   %i.q = trunc i32 %i.p to i16
-  store i16 %i.q, ptr %i.d, align 2, !tbaa !18
+  store i16 %i.q, ptr %i.d, align 2, !tbaa !15
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %i.r = add nuw nsw i64 %.03840.i.i, 1           ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.r, 444
-  br i1 %exitcond.not.i.i, label %bb.c, label %bb.d, !llvm.loop !20
+  br i1 %exitcond.not.i.i, label %bb.c, label %bb.d, !llvm.loop !17
 
 .preheader.i.i:                                   ; preds = %bb.c, %bb.h
   %indvars.iv47.i.i = phi i64 [ %indvars.iv.next48.i.i, %bb.h ], [ 0, %bb.c ] ; 3 uses
@@ -89,11 +78,11 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
 bb.h:                                             ; preds = %bb.l
   %indvars.iv.next48.i.i = add nuw nsw i64 %indvars.iv47.i.i, 1 ; 2 uses
   %exitcond50.not.i.i = icmp eq i64 %indvars.iv.next48.i.i, 1024
-  br i1 %exitcond50.not.i.i, label %__cxx_global_var_init.exit, label %.preheader.i.i, !llvm.loop !21
+  br i1 %exitcond50.not.i.i, label %__cxx_global_var_init.exit, label %.preheader.i.i, !llvm.loop !18
 
 bb.i:                                             ; preds = %bb.l, %.preheader.i.i
   %.042.i.i = phi i64 [ 0, %.preheader.i.i ], [ %i.aj, %bb.l ] ; 2 uses
-  %i.w = getelementptr inbounds nuw [28 x i8], ptr @__const._ZN4ojph5localL15vlc_init_tablesEv.tbl1, i64 %.042.i.i ; 7 uses
+  %i.w = getelementptr inbounds nuw [28 x i8], ptr @__const._ZN4ojph5localL15vlc_init_tablesEv.tbl1, i64 %.042.i.i ; 4 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !10
   %i.y = icmp eq i32 %i.x, %i.u
   br i1 %i.y, label %bb.j, label %bb.l
@@ -111,29 +100,18 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.ag = getelementptr inbounds nuw i8, ptr %i.w, i64 4
-  %14 = load i32, ptr %i.ag, align 4, !tbaa !14
-  %15 = shl i32 %14, 4
-  %16 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  %17 = load i32, ptr %16, align 4, !tbaa !15
-  %18 = shl i32 %17, 3
-  %19 = getelementptr inbounds nuw i8, ptr %i.w, i64 12
-  %20 = load i32, ptr %19, align 4, !tbaa !16
-  %21 = shl i32 %20, 12
-  %22 = getelementptr inbounds nuw i8, ptr %i.w, i64 16
-  %23 = load i32, ptr %22, align 4, !tbaa !17
-  %24 = shl i32 %23, 8
-  %25 = or i32 %15, %18
-  %26 = or i32 %25, %21
-  %27 = or i32 %26, %24
-  %i.ah = or i32 %27, %i.ac
+  %3 = load <4 x i32>, ptr %i.ag, align 4, !tbaa !14
+  %4 = shl <4 x i32> %3, <i32 4, i32 3, i32 12, i32 8>
+  %5 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %4)
+  %i.ah = or i32 %5, %i.ac
   %i.ai = trunc i32 %i.ah to i16
-  store i16 %i.ai, ptr %i.v, align 2, !tbaa !18
+  store i16 %i.ai, ptr %i.v, align 2, !tbaa !15
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
   %i.aj = add nuw nsw i64 %.042.i.i, 1            ; 2 uses
   %exitcond46.not.i.i = icmp eq i64 %i.aj, 358
-  br i1 %exitcond46.not.i.i, label %bb.h, label %bb.i, !llvm.loop !22
+  br i1 %exitcond46.not.i.i, label %bb.h, label %bb.i, !llvm.loop !19
 
 __cxx_global_var_init.exit:                       ; preds = %bb.h, %bb.v
   %indvars.iv.i.i1 = phi i64 [ %indvars.iv.next.i.i2, %bb.v ], [ 0, %bb.h ] ; 12 uses
@@ -144,9 +122,9 @@ __cxx_global_var_init.exit:                       ; preds = %bb.h, %bb.v
 
 bb.m:                                             ; preds = %__cxx_global_var_init.exit
   %i.an = getelementptr inbounds nuw [2 x i8], ptr @_ZN4ojph5local9uvlc_tbl0E, i64 %indvars.iv.i.i1
-  store i16 0, ptr %i.an, align 2, !tbaa !18
+  store i16 0, ptr %i.an, align 2, !tbaa !15
   %i.ao = getelementptr inbounds nuw i8, ptr @_ZN4ojph5local9uvlc_biasE, i64 %indvars.iv.i.i1
-  store i8 0, ptr %i.ao, align 1, !tbaa !23
+  store i8 0, ptr %i.ao, align 1, !tbaa !20
   br label %bb.v
 
 bb.n:                                             ; preds = %__cxx_global_var_init.exit
@@ -156,7 +134,7 @@ bb.n:                                             ; preds = %__cxx_global_var_in
 bb.o:                                             ; preds = %bb.n
   %i.aq = and i64 %indvars.iv.i.i1, 7
   %i.ar = getelementptr inbounds nuw i8, ptr @_ZZN4ojph5localL16uvlc_init_tablesEvE3dec, i64 %i.aq
-  %i.as = load i8, ptr %i.ar, align 1, !tbaa !23
+  %i.as = load i8, ptr %i.ar, align 1, !tbaa !20
   %i.at = zext i8 %i.as to i16                    ; 3 uses
   %i.au = and i16 %i.at, 3
   %i.av = lshr i16 %i.at, 2
@@ -175,14 +153,14 @@ bb.o:                                             ; preds = %bb.n
   %i.bi = select i1 %i.ax, i16 0, i16 %i.bh
   %i.bj = or disjoint i16 %i.bg, %i.bi
   %i.bk = getelementptr inbounds nuw [2 x i8], ptr @_ZN4ojph5local9uvlc_tbl0E, i64 %indvars.iv.i.i1
-  store i16 %i.bj, ptr %i.bk, align 2, !tbaa !18
+  store i16 %i.bj, ptr %i.bk, align 2, !tbaa !15
   br label %bb.v
 
 bb.p:                                             ; preds = %bb.n
   %i.bl = icmp eq i32 %i.al, 3
   %i.bm = and i64 %indvars.iv.i.i1, 7
   %i.bn = getelementptr inbounds nuw i8, ptr @_ZZN4ojph5localL16uvlc_init_tablesEvE3dec, i64 %i.bm
-  %i.bo = load i8, ptr %i.bn, align 1, !tbaa !23
+  %i.bo = load i8, ptr %i.bn, align 1, !tbaa !20
   %i.bp = zext i8 %i.bo to i32                    ; 6 uses
   %i.bq = and i32 %i.bp, 3                        ; 4 uses
   %i.br = lshr i32 %i.ak, %i.bq                   ; 3 uses
@@ -203,7 +181,7 @@ bb.s:                                             ; preds = %bb.q
   %i.bx = and i32 %i.br, 7
   %i.by = zext nneg i32 %i.bx to i64
   %i.bz = getelementptr inbounds nuw i8, ptr @_ZZN4ojph5localL16uvlc_init_tablesEvE3dec, i64 %i.by
-  %i.ca = load i8, ptr %i.bz, align 1, !tbaa !23
+  %i.ca = load i8, ptr %i.bz, align 1, !tbaa !20
   %i.cb = zext i8 %i.ca to i32                    ; 3 uses
   %i.cc = and i32 %i.cb, 3
   %i.cd = add nuw nsw i32 %i.cc, %i.bq
@@ -222,7 +200,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %.0109.i.i = phi i32 [ %i.bu, %bb.r ], [ %i.cf, %bb.s ]
   %.0108.i.i = phi i32 [ 4, %bb.r ], [ %i.cd, %bb.s ]
   %i.ck = getelementptr inbounds nuw i8, ptr @_ZN4ojph5local9uvlc_biasE, i64 %indvars.iv.i.i1
-  store i8 %.sink.i.i, ptr %i.ck, align 1, !tbaa !23
+  store i8 %.sink.i.i, ptr %i.ck, align 1, !tbaa !20
   %i.cl = shl nuw nsw i32 %.0110.i.i, 3
   %i.cm = shl nuw nsw i32 %.0109.i.i, 7
   %i.cn = shl nuw nsw i32 %i.bp, 5
@@ -234,14 +212,14 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.ct = or i32 %i.cs, %i.cm
   %i.cu = trunc nuw i32 %i.ct to i16
   %i.cv = getelementptr inbounds nuw [2 x i8], ptr @_ZN4ojph5local9uvlc_tbl0E, i64 %indvars.iv.i.i1
-  store i16 %i.cu, ptr %i.cv, align 2, !tbaa !18
+  store i16 %i.cu, ptr %i.cv, align 2, !tbaa !15
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.p
   %i.cw = and i32 %i.br, 7
   %i.cx = zext nneg i32 %i.cw to i64
   %i.cy = getelementptr inbounds nuw i8, ptr @_ZZN4ojph5localL16uvlc_init_tablesEvE3dec, i64 %i.cx
-  %i.cz = load i8, ptr %i.cy, align 1, !tbaa !23
+  %i.cz = load i8, ptr %i.cy, align 1, !tbaa !20
   %i.da = zext i8 %i.cz to i32                    ; 3 uses
   %i.db = and i32 %i.da, 3
   %i.dc = add nuw nsw i32 %i.db, %i.bq
@@ -264,15 +242,15 @@ bb.u:                                             ; preds = %bb.p
   %i.dt = or i32 %i.dp, %i.ds
   %i.du = trunc i32 %i.dt to i16
   %i.dv = getelementptr inbounds nuw [2 x i8], ptr @_ZN4ojph5local9uvlc_tbl0E, i64 %indvars.iv.i.i1
-  store i16 %i.du, ptr %i.dv, align 2, !tbaa !18
+  store i16 %i.du, ptr %i.dv, align 2, !tbaa !15
   %i.dw = getelementptr inbounds nuw i8, ptr @_ZN4ojph5local9uvlc_biasE, i64 %indvars.iv.i.i1
-  store i8 10, ptr %i.dw, align 1, !tbaa !23
+  store i8 10, ptr %i.dw, align 1, !tbaa !20
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t, %bb.o, %bb.m
   %indvars.iv.next.i.i2 = add nuw nsw i64 %indvars.iv.i.i1, 1 ; 2 uses
   %exitcond.not.i.i3 = icmp eq i64 %indvars.iv.next.i.i2, 320
-  br i1 %exitcond.not.i.i3, label %.preheader.i.i4, label %__cxx_global_var_init.exit, !llvm.loop !24
+  br i1 %exitcond.not.i.i3, label %.preheader.i.i4, label %__cxx_global_var_init.exit, !llvm.loop !21
 
 .preheader.i.i4:                                  ; preds = %bb.v, %bb.z
   %indvars.iv120.i.i = phi i64 [ %indvars.iv.next121.i.i, %bb.z ], [ 0, %bb.v ] ; 5 uses
@@ -285,7 +263,7 @@ bb.w:                                             ; preds = %.preheader.i.i4
   %i.ea = icmp samesign ult i64 %indvars.iv120.i.i, 192
   %i.eb = and i64 %indvars.iv120.i.i, 7
   %i.ec = getelementptr inbounds nuw i8, ptr @_ZZN4ojph5localL16uvlc_init_tablesEvE3dec, i64 %i.eb
-  %i.ed = load i8, ptr %i.ec, align 1, !tbaa !23  ; 2 uses
+  %i.ed = load i8, ptr %i.ec, align 1, !tbaa !20  ; 2 uses
   br i1 %i.ea, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
@@ -315,7 +293,7 @@ bb.y:                                             ; preds = %bb.w
   %i.ey = and i32 %i.ex, 7
   %i.ez = zext nneg i32 %i.ey to i64
   %i.fa = getelementptr inbounds nuw i8, ptr @_ZZN4ojph5localL16uvlc_init_tablesEvE3dec, i64 %i.ez
-  %i.fb = load i8, ptr %i.fa, align 1, !tbaa !23
+  %i.fb = load i8, ptr %i.fa, align 1, !tbaa !20
   %i.fc = zext i8 %i.fb to i32                    ; 3 uses
   %i.fd = and i32 %i.fc, 3
   %i.fe = add nuw nsw i32 %i.fd, %i.ew
@@ -340,16 +318,20 @@ bb.y:                                             ; preds = %bb.w
 bb.z:                                             ; preds = %bb.y, %bb.x, %.preheader.i.i4
   %.sink126.i.i = phi i16 [ %i.eu, %bb.x ], [ %i.fu, %bb.y ], [ 0, %.preheader.i.i4 ]
   %i.fv = getelementptr inbounds nuw [2 x i8], ptr @_ZN4ojph5local9uvlc_tbl1E, i64 %indvars.iv120.i.i
-  store i16 %.sink126.i.i, ptr %i.fv, align 2, !tbaa !18
+  store i16 %.sink126.i.i, ptr %i.fv, align 2, !tbaa !15
   %indvars.iv.next121.i.i = add nuw nsw i64 %indvars.iv120.i.i, 1 ; 2 uses
   %exitcond123.not.i.i = icmp eq i64 %indvars.iv.next121.i.i, 256
-  br i1 %exitcond123.not.i.i, label %__cxx_global_var_init.1.exit, label %.preheader.i.i4, !llvm.loop !25
+  br i1 %exitcond123.not.i.i, label %__cxx_global_var_init.1.exit, label %.preheader.i.i4, !llvm.loop !22
 
 __cxx_global_var_init.1.exit:                     ; preds = %bb.z
   ret void
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #1
+
 attributes #0 = { nofree norecurse nosync nounwind memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -369,16 +351,13 @@ attributes #0 = { nofree norecurse nosync nounwind memory(write, argmem: none, i
 !11 = !{!"_ZTSZN4ojph5localL15vlc_init_tablesEvE13vlc_src_table", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !5, i64 16, !5, i64 20, !5, i64 24}
 !12 = !{!11, !5, i64 20}
 !13 = !{!11, !5, i64 24}
-!14 = !{!11, !5, i64 4}
-!15 = !{!11, !5, i64 8}
-!16 = !{!11, !5, i64 12}
-!17 = !{!11, !5, i64 16}
-!18 = !{!19, !19, i64 0}
-!19 = !{!"short", !6, i64 0}
-!20 = distinct !{!20, !9}
+!14 = !{!5, !5, i64 0}
+!15 = !{!16, !16, i64 0}
+!16 = !{!"short", !6, i64 0}
+!17 = distinct !{!17, !9}
+!18 = distinct !{!18, !9}
+!19 = distinct !{!19, !9}
+!20 = !{!6, !6, i64 0}
 !21 = distinct !{!21, !9}
 !22 = distinct !{!22, !9}
-!23 = !{!6, !6, i64 0}
-!24 = distinct !{!24, !9}
-!25 = distinct !{!25, !9}
 end_hunk_0

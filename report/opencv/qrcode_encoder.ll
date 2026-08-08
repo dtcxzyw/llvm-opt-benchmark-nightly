@@ -1,3 +1,8 @@
+inline.NumInlined: 1684
+inline.NumDeleted: 594
+loop-unroll.NumCompletelyUnrolled: 56
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 63
 begin_hunk_0_@_ZN2cv17QRCodeDecoderImpl17correctFormatInfoERt:.critedge
   br i1 %i.bj, label %bb.a, label %.critedge.31
 
@@ -199,39 +204,31 @@ bb.a:
   %.sink.i44 = getelementptr inbounds nuw i8, ptr %i.cc, i64 %i.el
   %i.em = getelementptr inbounds nuw i8, ptr %.sink.i44, i64 8
   %i.en = load i8, ptr %i.em, align 1, !tbaa !10
-  %3 = and i8 %i.en, 1
-  %4 = zext nneg i8 %3 to i16
-  %5 = shl nuw nsw i16 %4, 8
   %.reass.1 = add i32 %i.ej, -6
   %i.eo = sext i32 %.reass.1 to i64
   %i.ep = mul i64 %i.cd, %i.eo
   %.sink.i44.1 = getelementptr inbounds nuw i8, ptr %i.cc, i64 %i.ep
   %i.eq = getelementptr inbounds nuw i8, ptr %.sink.i44.1, i64 8
   %i.er = load i8, ptr %i.eq, align 1, !tbaa !10
-  %6 = and i8 %i.er, 1
-  %7 = zext nneg i8 %6 to i16
-  %8 = shl nuw nsw i16 %7, 9
-  %9 = or disjoint i16 %5, %8
   %.reass.2 = add i32 %i.ej, -5
   %i.es = sext i32 %.reass.2 to i64
   %i.et = mul i64 %i.cd, %i.es
   %.sink.i44.2 = getelementptr inbounds nuw i8, ptr %i.cc, i64 %i.et
   %i.eu = getelementptr inbounds nuw i8, ptr %.sink.i44.2, i64 8
   %i.ev = load i8, ptr %i.eu, align 1, !tbaa !10
-  %10 = and i8 %i.ev, 1
-  %11 = zext nneg i8 %10 to i16
-  %12 = shl nuw nsw i16 %11, 10
-  %13 = or disjoint i16 %9, %12
   %.reass.3 = add i32 %i.ej, -4
-  %14 = sext i32 %.reass.3 to i64
-  %15 = mul i64 %i.cd, %14
-  %.sink.i44.3 = getelementptr inbounds nuw i8, ptr %i.cc, i64 %15
-  %16 = getelementptr inbounds nuw i8, ptr %.sink.i44.3, i64 8
-  %17 = load i8, ptr %16, align 1, !tbaa !10
-  %18 = and i8 %17, 1
-  %19 = zext nneg i8 %18 to i16
-  %20 = shl nuw nsw i16 %19, 11
-  %21 = or disjoint i16 %13, %20
+  %3 = sext i32 %.reass.3 to i64
+  %4 = mul i64 %i.cd, %3
+  %.sink.i44.3 = getelementptr inbounds nuw i8, ptr %i.cc, i64 %4
+  %5 = getelementptr inbounds nuw i8, ptr %.sink.i44.3, i64 8
+  %6 = load i8, ptr %5, align 1, !tbaa !10
+  %7 = insertelement <4 x i8> poison, i8 %i.en, i64 0
+  %8 = insertelement <4 x i8> %7, i8 %i.er, i64 1
+  %9 = insertelement <4 x i8> %8, i8 %i.ev, i64 2
+  %10 = insertelement <4 x i8> %9, i8 %6, i64 3
+  %11 = and <4 x i8> %10, splat (i8 1)
+  %12 = zext nneg <4 x i8> %11 to <4 x i16>
+  %13 = shl nuw nsw <4 x i16> %12, <i16 8, i16 9, i16 10, i16 11>
   %.reass.4 = add i32 %i.ej, -3
   %i.ew = sext i32 %.reass.4 to i64
   %i.ex = mul i64 %i.cd, %i.ew
@@ -241,7 +238,6 @@ bb.a:
   %i.fa = and i8 %i.ez, 1
   %i.fb = zext nneg i8 %i.fa to i16
   %i.fc = shl nuw nsw i16 %i.fb, 12
-  %22 = or i16 %21, %i.fc
   %.reass.5 = add i32 %i.ej, -2
   %i.fd = sext i32 %.reass.5 to i64
   %i.fe = mul i64 %i.cd, %i.fd
@@ -251,7 +247,9 @@ bb.a:
   %i.fh = and i8 %i.fg, 1
   %i.fi = zext nneg i8 %i.fh to i16
   %i.fj = shl nuw nsw i16 %i.fi, 13
-  %i.fk = or i16 %22, %i.fj
+  %14 = call i16 @llvm.vector.reduce.or.v4i16(<4 x i16> %13)
+  %op.rdx = or disjoint i16 %14, %i.fc
+  %i.fk = or disjoint i16 %op.rdx, %i.fj
   %.reass.6 = add i32 %i.ej, -1
   %i.fl = sext i32 %.reass.6 to i64
   %i.fm = mul i64 %i.cd, %i.fl

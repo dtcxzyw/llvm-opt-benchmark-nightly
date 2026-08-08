@@ -204,7 +204,7 @@ define internal fastcc noundef range(i32 0, 4096) i32 @_ZN9Stockfish12_GLOBAL__N
 bb.a:
   %i.a = load i8, ptr %0, align 8, !tbaa !299
   %.not = icmp sgt i8 %i.a, -1
-  br i1 %.not, label %2, label %bb.b
+  br i1 %.not, label %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2
@@ -212,42 +212,33 @@ bb.b:                                             ; preds = %bb.a
   %i.d = zext i8 %i.c to i32
   br label %bb.i
 
-2:                                                ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %4 = load i64, ptr %3, align 8, !tbaa !486      ; 3 uses
-  %5 = udiv i64 %1, %4
-  %6 = urem i64 %1, %4
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %8 = load ptr, ptr %7, align 8, !tbaa !310
-  %9 = and i64 %5, 4294967295
-  %10 = getelementptr inbounds nuw [6 x i8], ptr %8, i64 %9 ; 2 uses
-  %.val = load i32, ptr %10, align 1              ; 5 uses
-  %.sroa.6.0.extract.shift.i = lshr i32 %.val, 8  ; 2 uses
-  %.sroa.8.0.extract.shift.i = lshr i32 %.val, 16 ; 2 uses
-  %.sroa.10.0.extract.shift.i = lshr i32 %.val, 24 ; 2 uses
-  %11 = load i8, ptr @_ZN9StockfishL14IsLittleEndianE, align 1, !tbaa !488, !range !206, !noundef !207 ; 2 uses
-  %.not3.not.i = icmp eq i8 %11, 0                ; 5 uses
-  br i1 %.not3.not.i, label %12, label %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit
-
-12:                                               ; preds = %2
-  %13 = and i32 %.val, 255
-  br label %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit
-
-_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit: ; preds = %2, %12
-  %.sroa.10.0.i = phi i32 [ %13, %12 ], [ %.sroa.10.0.extract.shift.i, %2 ]
-  %.sroa.8.0.i = phi i32 [ %.sroa.6.0.extract.shift.i, %12 ], [ %.sroa.8.0.extract.shift.i, %2 ]
-  %.sroa.6.0.in.i = phi i32 [ %.sroa.8.0.extract.shift.i, %12 ], [ %.sroa.6.0.extract.shift.i, %2 ]
-  %.sroa.0.0.in.i = phi i32 [ %.sroa.10.0.extract.shift.i, %12 ], [ %.val, %2 ]
-  %.sroa.10.0.insert.shift.i = shl nuw i32 %.sroa.10.0.i, 24
-  %.sroa.8.0.insert.ext.i = shl i32 %.sroa.8.0.i, 16
-  %.sroa.8.0.insert.shift.i = and i32 %.sroa.8.0.insert.ext.i, 16711680
-  %.sroa.8.0.insert.insert.i = or disjoint i32 %.sroa.8.0.insert.shift.i, %.sroa.10.0.insert.shift.i
-  %.sroa.6.0.insert.ext.i = shl nuw i32 %.sroa.6.0.in.i, 8
-  %.sroa.6.0.insert.shift.i = and i32 %.sroa.6.0.insert.ext.i, 65280
-  %.sroa.6.0.insert.insert.i = or disjoint i32 %.sroa.8.0.insert.insert.i, %.sroa.6.0.insert.shift.i
-  %.sroa.0.0.insert.ext.i = and i32 %.sroa.0.0.in.i, 255
-  %.sroa.0.0.insert.insert.i = or disjoint i32 %.sroa.6.0.insert.insert.i, %.sroa.0.0.insert.ext.i ; 3 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %10, i64 4
+_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit: ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %3 = load i64, ptr %2, align 8, !tbaa !486      ; 3 uses
+  %4 = udiv i64 %1, %3
+  %5 = urem i64 %1, %3
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %7 = load ptr, ptr %6, align 8, !tbaa !310
+  %8 = and i64 %4, 4294967295
+  %9 = getelementptr inbounds nuw [6 x i8], ptr %7, i64 %8 ; 2 uses
+  %.val = load i32, ptr %9, align 1               ; 2 uses
+  %10 = insertelement <2 x i32> poison, i32 %.val, i64 0 ; 2 uses
+  %11 = shufflevector <2 x i32> %10, <2 x i32> poison, <2 x i32> zeroinitializer
+  %12 = lshr <2 x i32> %11, <i32 8, i32 16>       ; 2 uses
+  %.sroa.10.0.extract.shift.i = lshr i32 %.val, 24
+  %13 = load i8, ptr @_ZN9StockfishL14IsLittleEndianE, align 1, !tbaa !488, !range !206, !noundef !207 ; 2 uses
+  %.not3.not.i = icmp eq i8 %13, 0                ; 5 uses
+  %14 = shufflevector <2 x i32> %12, <2 x i32> %10, <4 x i32> <i32 1, i32 0, i32 2, i32 poison>
+  %15 = insertelement <4 x i32> %14, i32 %.sroa.10.0.extract.shift.i, i64 3 ; 2 uses
+  %16 = shufflevector <4 x i32> %15, <4 x i32> poison, <4 x i32> <i32 poison, i32 poison, i32 3, i32 2>
+  %17 = shufflevector <2 x i32> %12, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %18 = shufflevector <4 x i32> %17, <4 x i32> %16, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %19 = and <4 x i32> %18, <i32 -1, i32 -1, i32 -1, i32 255>
+  %20 = select i1 %.not3.not.i, <4 x i32> %19, <4 x i32> %15
+  %21 = shl <4 x i32> %20, <i32 16, i32 8, i32 0, i32 24>
+  %22 = and <4 x i32> %21, <i32 16711680, i32 65280, i32 255, i32 -1>
+  %23 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %22) ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %9, i64 4
   %.val98 = load i16, ptr %i.e, align 1           ; 2 uses
   %.sroa.6.0.extract.shift.i106 = lshr i16 %.val98, 8 ; 2 uses
   %i.f = and i16 %.val98, 255                     ; 2 uses
@@ -256,8 +247,8 @@ _ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit: ; preds = %2, %12
   %.sroa.0.0.insert.ext.i110 = select i1 %.not3.not.i, i16 %.sroa.6.0.extract.shift.i106, i16 %i.f
   %.sroa.0.0.insert.insert.i111 = or disjoint i16 %.sroa.6.0.insert.shift.i109, %.sroa.0.0.insert.ext.i110
   %i.g = zext i16 %.sroa.0.0.insert.insert.i111 to i32
-  %i.h = lshr i64 %4, 1
-  %i.i = sub i64 %6, %i.h
+  %i.h = lshr i64 %3, 1
+  %i.i = sub i64 %5, %i.h
   %i.j = trunc i64 %i.i to i32
   %i.k = add nsw i32 %i.g, %i.j                   ; 3 uses
   %i.l = icmp slt i32 %i.k, 0
@@ -266,7 +257,7 @@ _ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit: ; preds = %2, %12
   br i1 %i.l, label %.lr.ph, label %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit..preheader146_crit_edge
 
 _ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit..preheader146_crit_edge: ; preds = %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit
-  %.pre174 = zext i32 %.sroa.0.0.insert.insert.i to i64 ; 2 uses
+  %.pre174 = zext i32 %23 to i64                  ; 2 uses
   %.phi.trans.insert175 = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %.pre174
   %.pre176 = load i16, ptr %.phi.trans.insert175, align 2, !tbaa !239
   %.pre183 = zext i16 %.pre176 to i32
@@ -276,12 +267,12 @@ _ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit..preheader146_crit_edge: ; p
   %.pre-phi184 = phi i32 [ %.pre183, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit..preheader146_crit_edge ], [ %i.t, %.lr.ph ] ; 2 uses
   %.pre-phi = phi i64 [ %.pre174, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit..preheader146_crit_edge ], [ %i.q, %.lr.ph ]
   %.086.lcssa = phi i32 [ %i.k, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit..preheader146_crit_edge ], [ %i.v, %.lr.ph ] ; 3 uses
-  %.084.lcssa = phi i32 [ %.sroa.0.0.insert.insert.i, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit..preheader146_crit_edge ], [ %i.p, %.lr.ph ]
+  %.084.lcssa = phi i32 [ %23, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit..preheader146_crit_edge ], [ %i.p, %.lr.ph ]
   %i.o = icmp samesign ugt i32 %.086.lcssa, %.pre-phi184
   br i1 %i.o, label %.lr.ph157, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit, %.lr.ph
-  %.084153 = phi i32 [ %i.p, %.lr.ph ], [ %.sroa.0.0.insert.insert.i, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit ]
+  %.084153 = phi i32 [ %i.p, %.lr.ph ], [ %23, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit ]
   %.086152 = phi i32 [ %i.v, %.lr.ph ], [ %i.k, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit ]
   %i.p = add i32 %.084153, -1                     ; 3 uses
   %i.q = zext i32 %i.p to i64                     ; 2 uses
@@ -323,7 +314,7 @@ _ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit..preheader146_crit_edge: ; p
   %i.ao = shufflevector <4 x i64> %i.al, <4 x i64> poison, <2 x i32> zeroinitializer
   %i.ap = lshr <2 x i64> %i.ao, <i64 40, i64 48>  ; 2 uses
   %.sroa.18.0.extract.shift.i = lshr i64 %.val105, 56
-  %i.aq = trunc nuw i8 %11 to i1                  ; 2 uses
+  %i.aq = trunc nuw i8 %13 to i1                  ; 2 uses
   %i.ar = shufflevector <2 x i64> %i.ap, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.as = shufflevector <4 x i64> %i.ar, <4 x i64> %i.an, <8 x i32> <i32 1, i32 0, i32 7, i32 6, i32 5, i32 4, i32 poison, i32 poison>
   %i.at = insertelement <8 x i64> %i.as, i64 %.val105, i64 6
@@ -352,9 +343,9 @@ _ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit..preheader146_crit_edge: ; p
 
 .outer:                                           ; preds = %_ZN9Stockfish12_GLOBAL__N_16numberIjLi0EEET_Pv.exit, %._crit_edge
   %.288.ph = phi i32 [ %i.cg, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi0EEET_Pv.exit ], [ %.187.lcssa, %._crit_edge ]
-  %.081.ph = phi ptr [ %16, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi0EEET_Pv.exit ], [ %i.bf, %._crit_edge ] ; 2 uses
+  %.081.ph = phi ptr [ %25, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi0EEET_Pv.exit ], [ %i.bf, %._crit_edge ] ; 2 uses
   %.078.ph = phi i64 [ %i.cp, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi0EEET_Pv.exit ], [ %i.be, %._crit_edge ]
-  %.076.ph = phi i32 [ %15, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi0EEET_Pv.exit ], [ 64, %._crit_edge ]
+  %.076.ph = phi i32 [ %24, %_ZN9Stockfish12_GLOBAL__N_16numberIjLi0EEET_Pv.exit ], [ 64, %._crit_edge ]
   br label %bb.c
 
 bb.c:                                             ; preds = %.outer, %bb.f
@@ -402,36 +393,27 @@ bb.f:                                             ; preds = %bb.e
   %i.ci = shl i64 %.078, %i.ch                    ; 2 uses
   %i.cj = sub nsw i32 %.076, %i.bu                ; 4 uses
   %i.ck = icmp slt i32 %i.cj, 33
-  br i1 %i.ck, label %14, label %bb.c
+  br i1 %i.ck, label %_ZN9Stockfish12_GLOBAL__N_16numberIjLi0EEET_Pv.exit, label %bb.c
 
-14:                                               ; preds = %bb.f
-  %15 = add nsw i32 %i.cj, 32
-  %16 = getelementptr inbounds nuw i8, ptr %.081.ph, i64 4
-  %.081.val = load i32, ptr %.081.ph, align 1     ; 5 uses
-  %.sroa.6.0.extract.shift.i130 = lshr i32 %.081.val, 8 ; 2 uses
-  %.sroa.8.0.extract.shift.i131 = lshr i32 %.081.val, 16 ; 2 uses
-  %.sroa.10.0.extract.shift.i132 = lshr i32 %.081.val, 24 ; 2 uses
-  br i1 %i.aq, label %17, label %_ZN9Stockfish12_GLOBAL__N_16numberIjLi0EEET_Pv.exit
-
-17:                                               ; preds = %14
-  %18 = and i32 %.081.val, 255
-  br label %_ZN9Stockfish12_GLOBAL__N_16numberIjLi0EEET_Pv.exit
-
-_ZN9Stockfish12_GLOBAL__N_16numberIjLi0EEET_Pv.exit: ; preds = %14, %17
-  %.sroa.10.0.i133 = phi i32 [ %18, %17 ], [ %.sroa.10.0.extract.shift.i132, %14 ]
-  %.sroa.8.0.i134 = phi i32 [ %.sroa.6.0.extract.shift.i130, %17 ], [ %.sroa.8.0.extract.shift.i131, %14 ]
-  %.sroa.6.0.in.i135 = phi i32 [ %.sroa.8.0.extract.shift.i131, %17 ], [ %.sroa.6.0.extract.shift.i130, %14 ]
-  %.sroa.0.0.in.i136 = phi i32 [ %.sroa.10.0.extract.shift.i132, %17 ], [ %.081.val, %14 ]
-  %.sroa.10.0.insert.shift.i137 = shl nuw i32 %.sroa.10.0.i133, 24
-  %.sroa.8.0.insert.ext.i138 = shl i32 %.sroa.8.0.i134, 16
-  %.sroa.8.0.insert.shift.i139 = and i32 %.sroa.8.0.insert.ext.i138, 16711680
-  %.sroa.8.0.insert.insert.i140 = or disjoint i32 %.sroa.8.0.insert.shift.i139, %.sroa.10.0.insert.shift.i137
-  %.sroa.6.0.insert.ext.i141 = shl nuw i32 %.sroa.6.0.in.i135, 8
-  %.sroa.6.0.insert.shift.i142 = and i32 %.sroa.6.0.insert.ext.i141, 65280
-  %.sroa.6.0.insert.insert.i143 = or disjoint i32 %.sroa.8.0.insert.insert.i140, %.sroa.6.0.insert.shift.i142
-  %.sroa.0.0.insert.ext.i144 = and i32 %.sroa.0.0.in.i136, 255
-  %.sroa.0.0.insert.insert.i145 = or disjoint i32 %.sroa.6.0.insert.insert.i143, %.sroa.0.0.insert.ext.i144
-  %i.cl = zext i32 %.sroa.0.0.insert.insert.i145 to i64
+_ZN9Stockfish12_GLOBAL__N_16numberIjLi0EEET_Pv.exit: ; preds = %bb.f
+  %24 = add nsw i32 %i.cj, 32
+  %25 = getelementptr inbounds nuw i8, ptr %.081.ph, i64 4
+  %.081.val = load i32, ptr %.081.ph, align 1     ; 2 uses
+  %26 = insertelement <2 x i32> poison, i32 %.081.val, i64 0 ; 2 uses
+  %27 = shufflevector <2 x i32> %26, <2 x i32> poison, <2 x i32> zeroinitializer
+  %28 = lshr <2 x i32> %27, <i32 8, i32 16>       ; 2 uses
+  %.sroa.10.0.extract.shift.i132 = lshr i32 %.081.val, 24
+  %29 = shufflevector <2 x i32> %28, <2 x i32> %26, <4 x i32> <i32 1, i32 0, i32 2, i32 poison>
+  %30 = insertelement <4 x i32> %29, i32 %.sroa.10.0.extract.shift.i132, i64 3 ; 2 uses
+  %31 = shufflevector <4 x i32> %30, <4 x i32> poison, <4 x i32> <i32 poison, i32 poison, i32 3, i32 2>
+  %32 = shufflevector <2 x i32> %28, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %33 = shufflevector <4 x i32> %32, <4 x i32> %31, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %34 = and <4 x i32> %33, <i32 -1, i32 -1, i32 -1, i32 255>
+  %35 = select i1 %i.aq, <4 x i32> %34, <4 x i32> %30
+  %36 = shl <4 x i32> %35, <i32 16, i32 8, i32 0, i32 24>
+  %37 = and <4 x i32> %36, <i32 16711680, i32 65280, i32 255, i32 -1>
+  %38 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %37)
+  %i.cl = zext i32 %38 to i64
   %i.cm = sub nsw i32 32, %i.cj
   %i.cn = zext nneg i32 %i.cm to i64
   %i.co = shl i64 %i.cl, %i.cn
@@ -833,6 +815,9 @@ declare <4 x i64> @llvm.ctpop.v4i64(<4 x i64>) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v8i64(<8 x i64>) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #14
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="znver5" "target-features"="+adx,+aes,+avx,+avx2,+avx512bf16,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vp2intersect,+avx512vpopcntdq,+avxvnni,+bmi,+bmi2,+clflushopt,+clwb,+clzero,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+movdir64b,+movdiri,+mwaitx,+pclmul,+pku,+popcnt,+prefetchi,+prfchw,+rdpid,+rdpru,+rdrnd,+rdseed,+sahf,+sha,+shstk,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+sse4a,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nofree nounwind }

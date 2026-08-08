@@ -203,10 +203,8 @@ bb.al:                                            ; preds = %bb.ak
   %i.fv = fdiv nsz <2 x float> %i.fu, splat (float 1.000000e+01)
   %i.fw = fptosi <2 x float> %i.fv to <2 x i16>
   %i.fx = zext <2 x i16> %i.fw to <2 x i48>
-  %i.fy = shl nuw <2 x i48> %i.fx, <i48 32, i48 16> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.fy, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i48> %i.fy, %shift
-  %.sroa.2.0.insert.insert.i = extractelement <2 x i48> %foldExtExtBinop, i64 0
+  %i.fy = shl nuw <2 x i48> %i.fx, <i48 32, i48 16>
+  %.sroa.2.0.insert.insert.i = call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.fy)
   %.sroa.0.0.insert.ext.i = zext i16 %i.fq to i48
   %.sroa.0.0.insert.insert.i = or disjoint i48 %.sroa.2.0.insert.insert.i, %.sroa.0.0.insert.ext.i
   invoke void @_ZN7Minimap6setPosEN4core8vector3dIsEE(ptr noundef nonnull align 8 dereferenceable(192) %i.ff, i48 %.sroa.0.0.insert.insert.i)
@@ -609,7 +607,8 @@ bb.br:                                            ; preds = %bb.bq
   %i.jq = fadd nnan nsz double %i.jp, -5.000000e-01
   %i.jr = fmul nnan nsz double %i.jq, f0x400921FB60000000
   %i.js = load i32, ptr %15, align 4, !tbaa !1437 ; 4 uses
-  %i.jt = and i32 %i.js, -16777216
+  %i.jt = and i32 %i.js, 255
+  %16 = uitofp nsz nneg i32 %i.jt to double
   %i.ju = fptrunc nsz double %i.jr to float       ; 3 uses
   %i.jv = fadd nsz float %i.ju, f0x3FC90FDB
   %i.jw = call nsz noundef float @llvm.sin.f32(float %i.jv)
@@ -620,6 +619,7 @@ bb.br:                                            ; preds = %bb.bq
   %i.kb = fadd nsz float %i.ju, f0x40490FDB
   %i.kc = call nsz noundef float @llvm.sin.f32(float %i.kb)
   %i.kd = fmul nsz float %i.kc, 8.000000e-02
+  %17 = and i32 %i.js, -16777216
   %i.ke = lshr i32 %i.js, 8
   %i.kf = lshr i32 %i.js, 16
   %i.kg = and i32 %i.ke, 255
@@ -634,29 +634,25 @@ bb.br:                                            ; preds = %bb.bq
   %i.kp = fptrunc <2 x double> %i.ko to <2 x float>
   %i.kq = fadd nsz <2 x float> %i.kp, splat (float 5.000000e-01)
   %i.kr = call nsz <2 x float> @llvm.floor.v2f32(<2 x float> %i.kq)
-  %16 = fptosi <2 x float> %i.kr to <2 x i32>
-  %17 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %16, <2 x i32> zeroinitializer)
-  %18 = call <2 x i32> @llvm.umin.v2i32(<2 x i32> %17, <2 x i32> splat (i32 255))
-  %19 = shl nuw nsw <2 x i32> %18, <i32 16, i32 8> ; 2 uses
-  %20 = extractelement <2 x i32> %19, i64 0
-  %21 = or disjoint i32 %20, %i.jt
-  %22 = extractelement <2 x i32> %19, i64 1
-  %23 = or disjoint i32 %21, %22
-  %24 = and i32 %i.js, 255
-  %25 = uitofp nsz nneg i32 %24 to double
-  %26 = fpext nsz float %i.kd to double
-  %27 = fadd nsz double %26, 8.000000e-01
-  %28 = fmul nsz double %27, %25
-  %29 = fptrunc nsz double %28 to float
-  %30 = fadd nsz float %29, 5.000000e-01
-  %31 = call nsz noundef float @llvm.floor.f32(float %30)
-  %32 = fptosi float %31 to i32
-  %33 = call i32 @llvm.smax.i32(i32 %32, i32 0)
-  %34 = call i32 @llvm.umin.i32(i32 %33, i32 255)
-  %35 = or disjoint i32 %23, %34
+  %18 = fpext nsz float %i.kd to double
+  %19 = fadd nsz double %18, 8.000000e-01
+  %20 = fmul nsz double %19, %16
+  %21 = fptrunc nsz double %20 to float
+  %22 = fadd nsz float %21, 5.000000e-01
+  %23 = call nsz noundef float @llvm.floor.f32(float %22)
+  %24 = fptosi float %23 to i32
+  %25 = insertelement <4 x i32> poison, i32 %24, i64 2
+  %26 = insertelement <4 x i32> %25, i32 %17, i64 3
+  %27 = shufflevector <2 x float> %i.kr, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %28 = fptosi <4 x float> %27 to <4 x i32>
+  %29 = shufflevector <4 x i32> %28, <4 x i32> %26, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %30 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %29, <4 x i32> <i32 0, i32 0, i32 0, i32 -2147483648>)
+  %31 = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %30, <4 x i32> <i32 255, i32 255, i32 255, i32 -1>)
+  %32 = shl nuw nsw <4 x i32> %31, <i32 16, i32 8, i32 0, i32 0>
+  %33 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %32)
   %i.ks = load ptr, ptr %i.a, align 8, !tbaa !252
   %i.kt = getelementptr inbounds nuw i8, ptr %i.ks, i64 288
-  store i32 %35, ptr %i.kt, align 8, !tbaa !597
+  store i32 %33, ptr %i.kt, align 8, !tbaa !597
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #34
   br label %bb.bu
 
@@ -1059,10 +1055,8 @@ bb.a:
   %i.r = fdiv nsz <2 x float> %i.o, %i.q
   %i.s = fptosi <2 x float> %i.r to <2 x i16>
   %i.t = zext <2 x i16> %i.s to <2 x i48>
-  %i.u = shl nuw <2 x i48> %i.t, <i48 32, i48 16> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.u, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i48> %i.u, %shift
-  %.sroa.2.0.insert.insert = extractelement <2 x i48> %foldExtExtBinop, i64 0
+  %i.u = shl nuw <2 x i48> %i.t, <i48 32, i48 16>
+  %.sroa.2.0.insert.insert = tail call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.u)
   %.sroa.0.0.insert.ext = zext i16 %i.g to i48
   %.sroa.0.0.insert.insert = or disjoint i48 %.sroa.2.0.insert.insert, %.sroa.0.0.insert.ext
   ret i48 %.sroa.0.0.insert.insert
@@ -1465,16 +1459,13 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 declare i16 @llvm.umin.i16(i16, i16) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i48 @llvm.vector.reduce.or.v2i48(<2 x i48>) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #16
@@ -1483,10 +1474,13 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 declare <2 x float> @llvm.floor.v2f32(<2 x float>) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #16
+declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #16
+declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #16

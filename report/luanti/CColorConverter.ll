@@ -1,7 +1,7 @@
 inline.NumInlined: 21
 inline.NumDeleted: 5
-loop-unroll.NumRuntimeUnrolled: 27
-loop-unroll.NumUnrolled: 27
+loop-unroll.NumRuntimeUnrolled: 26
+loop-unroll.NumUnrolled: 26
 begin_hunk_0_@_ZN5video15CColorConverter26convert_A8R8G8B8toA1R5G5B5EPKviPv:bb.a
 .lr.ph.preheader14:                               ; preds = %.lr.ph.preheader, %middle.block
   %.010.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.c, %middle.block ]
@@ -203,58 +203,27 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader31
 
 .lr.ph.preheader31:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.019.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.j, %middle.block ] ; 3 uses
-  %.01518.ph = phi ptr [ %2, %vector.memcheck ], [ %2, %.lr.ph.preheader ], [ %i.l, %middle.block ] ; 3 uses
-  %.01617.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %i.m, %middle.block ] ; 4 uses
-  %3 = sub i32 %1, %.01617.ph
-  %.neg = add i32 %.01617.ph, 1
-  %xtraiter = and i32 %3, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
+  %.019.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.j, %middle.block ]
+  %.01518.ph = phi ptr [ %2, %vector.memcheck ], [ %2, %.lr.ph.preheader ], [ %i.l, %middle.block ]
+  %.01617.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %i.m, %middle.block ]
+  br label %.lr.ph
 
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader31
-  %4 = load <4 x i8>, ptr %.019.ph, align 1, !tbaa !8
-  %5 = lshr <4 x i8> %4, splat (i8 3)
-  %6 = zext nneg <4 x i8> %5 to <4 x i16>
-  %7 = shl <4 x i16> %6, <i16 10, i16 5, i16 0, i16 15>
-  %8 = tail call i16 @llvm.vector.reduce.or.v4i16(<4 x i16> %7)
-  store i16 %8, ptr %.01518.ph, align 2, !tbaa !33
-  %9 = getelementptr inbounds nuw i8, ptr %.019.ph, i64 4
-  %10 = getelementptr inbounds nuw i8, ptr %.01518.ph, i64 2
-  %11 = add nuw nsw i32 %.01617.ph, 1
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader31
-  %.019.unr = phi ptr [ %.019.ph, %.lr.ph.preheader31 ], [ %9, %.lr.ph.prol ]
-  %.01518.unr = phi ptr [ %.01518.ph, %.lr.ph.preheader31 ], [ %10, %.lr.ph.prol ]
-  %.01617.unr = phi i32 [ %.01617.ph, %.lr.ph.preheader31 ], [ %11, %.lr.ph.prol ]
-  %12 = icmp eq i32 %1, %.neg
-  br i1 %12, label %._crit_edge, label %.lr.ph
-
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.a
+._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
   ret void
 
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.019 = phi ptr [ %i.ea, %.lr.ph ], [ %.019.unr, %.lr.ph.prol.loopexit ] ; 3 uses
-  %.01518 = phi ptr [ %i.eb, %.lr.ph ], [ %.01518.unr, %.lr.ph.prol.loopexit ] ; 3 uses
-  %.01617 = phi i32 [ %i.ec, %.lr.ph ], [ %.01617.unr, %.lr.ph.prol.loopexit ]
-  %13 = load <4 x i8>, ptr %.019, align 1, !tbaa !8
-  %14 = lshr <4 x i8> %13, splat (i8 3)
-  %15 = zext nneg <4 x i8> %14 to <4 x i16>
-  %16 = shl <4 x i16> %15, <i16 10, i16 5, i16 0, i16 15>
-  %17 = tail call i16 @llvm.vector.reduce.or.v4i16(<4 x i16> %16)
-  store i16 %17, ptr %.01518, align 2, !tbaa !33
-  %18 = getelementptr inbounds nuw i8, ptr %.019, i64 4
-  %19 = getelementptr inbounds nuw i8, ptr %.01518, i64 2
-  %i.dv = load <4 x i8>, ptr %18, align 1, !tbaa !8
+.lr.ph:                                           ; preds = %.lr.ph.preheader31, %.lr.ph
+  %.019 = phi ptr [ %i.ea, %.lr.ph ], [ %.019.ph, %.lr.ph.preheader31 ] ; 2 uses
+  %.01518 = phi ptr [ %i.eb, %.lr.ph ], [ %.01518.ph, %.lr.ph.preheader31 ] ; 2 uses
+  %.01617 = phi i32 [ %i.ec, %.lr.ph ], [ %.01617.ph, %.lr.ph.preheader31 ]
+  %i.dv = load <4 x i8>, ptr %.019, align 1, !tbaa !8
   %i.dw = lshr <4 x i8> %i.dv, splat (i8 3)
   %i.dx = zext nneg <4 x i8> %i.dw to <4 x i16>
   %i.dy = shl <4 x i16> %i.dx, <i16 10, i16 5, i16 0, i16 15>
   %i.dz = tail call i16 @llvm.vector.reduce.or.v4i16(<4 x i16> %i.dy)
-  store i16 %i.dz, ptr %19, align 2, !tbaa !33
-  %i.ea = getelementptr inbounds nuw i8, ptr %.019, i64 8
-  %i.eb = getelementptr inbounds nuw i8, ptr %.01518, i64 4
-  %i.ec = add nuw nsw i32 %.01617, 2              ; 2 uses
+  store i16 %i.dz, ptr %.01518, align 2, !tbaa !33
+  %i.ea = getelementptr inbounds nuw i8, ptr %.019, i64 4
+  %i.eb = getelementptr inbounds nuw i8, ptr %.01518, i64 2
+  %i.ec = add nuw nsw i32 %.01617, 1              ; 2 uses
   %exitcond.not.1 = icmp eq i32 %i.ec, %1
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !60
 }

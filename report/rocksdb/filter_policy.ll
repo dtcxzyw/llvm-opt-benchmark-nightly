@@ -204,6 +204,7 @@ bb.i:                                             ; preds = %_ZN7rocksdblsERKNS_
   %i.cq = and i32 %i.cn, 63
   %i.cr = zext nneg i32 %i.cq to i64
   %i.cs = lshr i64 %i.bg, %i.cr
+  %5 = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.cs, i64 0
   br label %_ZN7rocksdbrsERKNS_11Unsigned128Ej.exit.i
 
 bb.j:                                             ; preds = %_ZN7rocksdblsERKNS_11Unsigned128Ej.exit.i
@@ -215,17 +216,22 @@ bb.j:                                             ; preds = %_ZN7rocksdblsERKNS_
   %i.cy = shl i64 %i.cv, %i.cx
   %i.cz = lshr i64 %i.bi, %i.ct
   %i.da = or i64 %i.cy, %i.cz
+  %6 = insertelement <2 x i64> poison, i64 %i.da, i64 0
+  %7 = insertelement <2 x i64> %6, i64 %i.cu, i64 1
   br label %_ZN7rocksdbrsERKNS_11Unsigned128Ej.exit.i
 
 _ZN7rocksdbrsERKNS_11Unsigned128Ej.exit.i:        ; preds = %bb.j, %bb.i
-  %.sroa.2.0.i.i = phi i64 [ 0, %bb.i ], [ %i.cu, %bb.j ]
-  %storemerge.i.i = phi i64 [ %i.cs, %bb.i ], [ %i.da, %bb.j ]
+  %8 = phi <2 x i64> [ %5, %bb.i ], [ %7, %bb.j ]
   %.not4319.not.i = icmp eq i32 %i.bd, 0
   br i1 %.not4319.not.i, label %_ZN7rocksdb6ribbon22InterleavedFilterQueryINS0_31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEENS0_14StandardHasherIS6_EEEEbNT0_4HashENT_5IndexESD_SD_RKSA_RKSC_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN7rocksdbrsERKNS_11Unsigned128Ej.exit.i
   %i.db = add i32 %i.bd, %i.bb
   %wide.trip.count.i = zext i32 %i.bd to i64
+  %9 = insertelement <4 x i64> poison, i64 %.sroa.0.0.i.i, i64 0
+  %10 = insertelement <4 x i64> %9, i64 %.sroa.4.0.i.i, i64 1
+  %11 = shufflevector <2 x i64> %8, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %12 = shufflevector <4 x i64> %10, <4 x i64> %11, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.l
@@ -239,25 +245,17 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.i
   %i.dd = add i32 %i.bb, %i.dc
   %i.de = zext i32 %i.dd to i64
   %i.df = shl nuw nsw i64 %i.de, 4
-  %5 = getelementptr inbounds nuw i8, ptr %.val21, i64 %i.df ; 2 uses
-  %i.dg = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %.0.copyload.i.i.i.i56.i = load i64, ptr %i.dg, align 1
-  %.0.copyload.i2.i.i.i57.i = load i64, ptr %5, align 1
-  %6 = and i64 %.0.copyload.i2.i.i.i57.i, %.sroa.0.0.i.i
-  %7 = and i64 %.0.copyload.i.i.i.i56.i, %.sroa.4.0.i.i
+  %i.dg = getelementptr inbounds nuw i8, ptr %.val21, i64 %i.df
   %i.dh = add i32 %i.db, %i.dc
   %i.di = zext i32 %i.dh to i64
   %i.dj = shl nuw nsw i64 %i.di, 4
-  %8 = getelementptr inbounds nuw i8, ptr %.val21, i64 %i.dj ; 2 uses
-  %i.dk = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %.0.copyload.i.i.i.i62.i = load i64, ptr %i.dk, align 1
-  %.0.copyload.i2.i.i.i63.i = load i64, ptr %8, align 1
-  %9 = and i64 %.0.copyload.i2.i.i.i63.i, %storemerge.i.i
-  %10 = and i64 %.0.copyload.i.i.i.i62.i, %.sroa.2.0.i.i
-  %11 = xor i64 %6, %7
-  %12 = xor i64 %11, %10
-  %13 = xor i64 %12, %9
-  %i.dl = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %13)
+  %i.dk = getelementptr inbounds nuw i8, ptr %.val21, i64 %i.dj
+  %13 = load <2 x i64>, ptr %i.dg, align 1
+  %14 = load <2 x i64>, ptr %i.dk, align 1
+  %15 = shufflevector <2 x i64> %13, <2 x i64> %14, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %16 = and <4 x i64> %15, %12
+  %17 = tail call i64 @llvm.vector.reduce.xor.v4i64(<4 x i64> %16)
+  %i.dl = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %17)
   %i.dm = trunc nuw nsw i64 %i.dl to i32
   %i.dn = lshr i32 %i.bk, %i.dc
   %i.do = xor i32 %i.dn, %i.dm
@@ -416,6 +414,9 @@ bb.d:                                             ; preds = %_ZN7rocksdblsERKNS_
   %i.bs = and i32 %i.br, 63
   %i.bt = zext nneg i32 %i.bs to i64
   %i.bu = lshr i64 %i.ak, %i.bt
+  %1 = insertelement <2 x i64> poison, i64 %.sroa.0.0.i.i16, i64 0
+  %2 = insertelement <2 x i64> %1, i64 %.sroa.4.0.i.i18, i64 1
+  %3 = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.bu, i64 0
   br label %_ZN7rocksdbrsERKNS_11Unsigned128Ej.exit.i
 
 bb.e:                                             ; preds = %_ZN7rocksdblsERKNS_11Unsigned128Ej.exit.i
@@ -427,19 +428,21 @@ bb.e:                                             ; preds = %_ZN7rocksdblsERKNS_
   %i.ca = shl i64 %i.bx, %i.bz
   %i.cb = lshr i64 %i.am, %i.bv
   %i.cc = or i64 %i.ca, %i.cb
+  %4 = insertelement <2 x i64> <i64 0, i64 poison>, i64 %i.bo, i64 1
+  %5 = insertelement <2 x i64> poison, i64 %i.cc, i64 0
+  %6 = insertelement <2 x i64> %5, i64 %i.bw, i64 1
   br label %_ZN7rocksdbrsERKNS_11Unsigned128Ej.exit.i
 
 _ZN7rocksdbrsERKNS_11Unsigned128Ej.exit.i:        ; preds = %bb.e, %bb.d
-  %.sroa.4.0.i.i17 = phi i64 [ %.sroa.4.0.i.i18, %bb.d ], [ %i.bo, %bb.e ]
-  %.sroa.0.0.i.i15 = phi i64 [ %.sroa.0.0.i.i16, %bb.d ], [ 0, %bb.e ]
-  %.sroa.2.0.i.i = phi i64 [ 0, %bb.d ], [ %i.bw, %bb.e ]
-  %storemerge.i.i = phi i64 [ %i.bu, %bb.d ], [ %i.cc, %bb.e ]
+  %7 = phi <2 x i64> [ %2, %bb.d ], [ %4, %bb.e ]
+  %8 = phi <2 x i64> [ %3, %bb.d ], [ %6, %bb.e ]
   %.not4319.not.i = icmp eq i32 %i.t, 0
   br i1 %.not4319.not.i, label %_ZN7rocksdb6ribbon22InterleavedFilterQueryINS0_31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEENS0_14StandardHasherIS6_EEEEbNT0_4HashENT_5IndexESD_SD_RKSA_RKSC_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN7rocksdbrsERKNS_11Unsigned128Ej.exit.i
   %i.cd = add i32 %i.t, %i.r
   %wide.trip.count.i = zext i32 %i.t to i64
+  %9 = shufflevector <2 x i64> %7, <2 x i64> %8, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph.i
@@ -448,25 +451,17 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i
   %i.cf = add i32 %i.r, %i.ce
   %i.cg = zext i32 %i.cf to i64
   %i.ch = shl nuw nsw i64 %i.cg, 4
-  %1 = getelementptr inbounds nuw i8, ptr %.val29.i, i64 %i.ch ; 2 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.0.copyload.i.i.i.i56.i = load i64, ptr %i.ci, align 1
-  %.0.copyload.i2.i.i.i57.i = load i64, ptr %1, align 1
-  %2 = and i64 %.0.copyload.i2.i.i.i57.i, %.sroa.0.0.i.i15
-  %3 = and i64 %.0.copyload.i.i.i.i56.i, %.sroa.4.0.i.i17
+  %i.ci = getelementptr inbounds nuw i8, ptr %.val29.i, i64 %i.ch
   %i.cj = add i32 %i.cd, %i.ce
   %i.ck = zext i32 %i.cj to i64
   %i.cl = shl nuw nsw i64 %i.ck, 4
-  %4 = getelementptr inbounds nuw i8, ptr %.val29.i, i64 %i.cl ; 2 uses
-  %i.cm = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %.0.copyload.i.i.i.i62.i = load i64, ptr %i.cm, align 1
-  %.0.copyload.i2.i.i.i63.i = load i64, ptr %4, align 1
-  %5 = and i64 %.0.copyload.i2.i.i.i63.i, %storemerge.i.i
-  %6 = and i64 %.0.copyload.i.i.i.i62.i, %.sroa.2.0.i.i
-  %7 = xor i64 %2, %3
-  %8 = xor i64 %7, %6
-  %9 = xor i64 %8, %5
-  %i.cn = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %9)
+  %i.cm = getelementptr inbounds nuw i8, ptr %.val29.i, i64 %i.cl
+  %10 = load <2 x i64>, ptr %i.ci, align 1
+  %11 = load <2 x i64>, ptr %i.cm, align 1
+  %12 = shufflevector <2 x i64> %10, <2 x i64> %11, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %13 = and <4 x i64> %12, %9
+  %14 = tail call i64 @llvm.vector.reduce.xor.v4i64(<4 x i64> %13)
+  %i.cn = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %14)
   %i.co = trunc nuw nsw i64 %i.cn to i32
   %i.cp = lshr i32 %i.ao, %i.ce
   %i.cq = xor i32 %i.cp, %i.co
@@ -868,6 +863,9 @@ declare <4 x i64> @llvm.fshl.v4i64(<4 x i64>, <4 x i64>, <4 x i64>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i64> @llvm.ctpop.v4i64(<4 x i64>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.xor.v4i64(<4 x i64>) #4
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="non-leaf-no-reserve" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }

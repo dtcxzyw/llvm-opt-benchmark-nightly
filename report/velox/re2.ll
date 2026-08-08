@@ -203,43 +203,36 @@ bb.i:                                             ; preds = %bb.b, %bb.d, %bb.h,
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 15
   %i.p = load i8, ptr %i.o, align 1, !tbaa !59, !range !47, !noundef !48
   %i.q = shl nuw nsw i8 %i.p, 1
-  %2 = zext nneg i8 %i.q to i32
-  %.2 = or disjoint i32 %spec.select, %2
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.s = load i8, ptr %i.r, align 8, !tbaa !60, !range !47, !noundef !48
-  %3 = zext nneg i8 %i.s to i32
-  %4 = shl nuw nsw i32 %3, 11
-  %.3 = or disjoint i32 %.2, %4
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 17
   %i.u = load i8, ptr %i.t, align 1, !tbaa !61, !range !47, !noundef !48
   %i.v = shl nuw nsw i8 %i.u, 3
-  %5 = zext nneg i8 %i.v to i32
-  %.4 = or disjoint i32 %.3, %5
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 18
   %i.x = load i8, ptr %i.w, align 2, !tbaa !62, !range !47, !noundef !48
-  %6 = zext nneg i8 %i.x to i32
-  %7 = shl nuw nsw i32 %6, 12
-  %.5 = or i32 %.4, %7
-  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 19
-  %i.z = load i8, ptr %i.y, align 1, !tbaa !63, !range !47, !noundef !48
-  %8 = xor i8 %i.z, 1
-  %9 = zext nneg i8 %8 to i32
-  %.6 = or i32 %.5, %9
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.ab = load i8, ptr %i.aa, align 4, !tbaa !64, !range !47, !noundef !48
-  %i.ac = shl nuw i8 %i.ab, 7
-  %10 = zext i8 %i.ac to i32
-  %.7 = or i32 %.6, %10
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  %12 = load i8, ptr %11, align 1, !tbaa !65, !range !47, !noundef !48
-  %13 = zext nneg i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 8
-  %.8 = or i32 %.7, %14
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 22
-  %16 = load i8, ptr %15, align 2, !tbaa !66, !range !47, !noundef !48
-  %17 = shl nuw nsw i8 %16, 4
-  %18 = zext nneg i8 %17 to i32
-  %.9 = or i32 %.8, %18
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 19
+  %3 = load i8, ptr %2, align 1, !tbaa !63, !range !47, !noundef !48
+  %4 = xor i8 %3, 1
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %i.z = load i8, ptr %i.y, align 4, !tbaa !64, !range !47, !noundef !48
+  %5 = shl nuw i8 %i.z, 7
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 21
+  %7 = load i8, ptr %6, align 1, !tbaa !65, !range !47, !noundef !48
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 22
+  %i.ab = load i8, ptr %i.aa, align 2, !tbaa !66, !range !47, !noundef !48
+  %i.ac = shl nuw nsw i8 %i.ab, 4
+  %8 = insertelement <8 x i8> poison, i8 %i.q, i64 0
+  %9 = insertelement <8 x i8> %8, i8 %i.v, i64 1
+  %10 = insertelement <8 x i8> %9, i8 %4, i64 2
+  %11 = insertelement <8 x i8> %10, i8 %5, i64 3
+  %12 = insertelement <8 x i8> %11, i8 %i.ac, i64 4
+  %13 = insertelement <8 x i8> %12, i8 %i.s, i64 5
+  %14 = insertelement <8 x i8> %13, i8 %i.x, i64 6
+  %15 = insertelement <8 x i8> %14, i8 %7, i64 7
+  %16 = zext <8 x i8> %15 to <8 x i32>
+  %17 = shl nuw nsw <8 x i32> %16, <i32 0, i32 0, i32 0, i32 0, i32 0, i32 11, i32 12, i32 8>
+  %18 = call i32 @llvm.vector.reduce.or.v8i32(<8 x i32> %17)
+  %.9 = or i32 %18, %spec.select
   ret i32 %.9
 }
 
@@ -641,6 +634,9 @@ declare i64 @llvm.smin.i64(i64, i64) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #29
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v8i32(<8 x i32>) #29
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }

@@ -204,7 +204,7 @@ isEllipse.exit.thread:                            ; preds = %bb.o, %isEllipse.ex
   br i1 %.not59, label %.loopexit75, label %bb.c, !llvm.loop !248
 
 .loopexit75:                                      ; preds = %.loopexit, %bb.b, %bb.a
-  %.sroa.037.2 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %.sroa.037.1, %.loopexit ] ; 6 uses
+  %.sroa.037.2 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %.sroa.037.1, %.loopexit ] ; 5 uses
   %.0 = phi ptr [ null, %bb.a ], [ %i.d, %bb.b ], [ %i.d, %.loopexit ]
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !25
@@ -227,45 +227,39 @@ bb.p:                                             ; preds = %.loopexit75
   %i.bx = insertelement <2 x i32> poison, i32 %.sroa.037.2, i64 0 ; 2 uses
   %i.by = shufflevector <2 x i32> %i.bx, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.bz = and <2 x i32> %i.by, <i32 4, i32 8>
-  %i.ca = shufflevector <2 x i32> %i.bx, <2 x i32> poison, <4 x i32> zeroinitializer
-  %i.cb = and <4 x i32> %i.ca, <i32 16, i32 32, i32 64, i32 128>
-  %2 = insertelement <8 x i32> <i32 poison, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1>, i32 %i.bq, i64 0 ; 3 uses
-  %3 = and <8 x i32> %2, <i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>
+  %i.ca = shufflevector <2 x i32> %i.bx, <2 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %2 = and <4 x i32> %i.ca, <i32 16, i32 32, i32 64, i32 128>
+  %i.cb = and <4 x i32> %i.ca, <i32 256, i32 512, i32 1024, i32 2048>
+  %3 = insertelement <12 x i32> <i32 poison, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1>, i32 %i.bq, i64 0 ; 2 uses
+  %.scalar = and i32 %i.bq, 1
+  %4 = insertelement <12 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %.scalar, i64 0
   %i.cc = icmp ne <2 x i32> %i.bz, zeroinitializer
-  %i.cd = shufflevector <8 x i32> %2, <8 x i32> poison, <2 x i32> zeroinitializer
+  %i.cd = shufflevector <12 x i32> %3, <12 x i32> poison, <2 x i32> zeroinitializer
   %i.ce = and <2 x i32> %i.cd, <i32 4, i32 8>
   %i.cf = icmp ne <2 x i32> %i.ce, zeroinitializer
   %i.cg = select <2 x i1> %i.cc, <2 x i1> splat (i1 true), <2 x i1> %i.cf
-  %i.ch = icmp ne <4 x i32> %i.cb, zeroinitializer
-  %i.ci = shufflevector <8 x i32> %2, <8 x i32> poison, <4 x i32> zeroinitializer
+  %i.ch = icmp ne <4 x i32> %2, zeroinitializer
+  %i.ci = shufflevector <12 x i32> %3, <12 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.cj = and <4 x i32> %i.ci, <i32 16, i32 32, i32 64, i32 128>
   %i.ck = icmp ne <4 x i32> %i.cj, zeroinitializer
   %i.cl = select <4 x i1> %i.ch, <4 x i1> splat (i1 true), <4 x i1> %i.ck
-  %4 = insertelement <8 x i1> poison, i1 %i.br, i64 0
-  %5 = insertelement <8 x i1> %4, i1 %i.bw, i64 1
-  %6 = shufflevector <4 x i1> %i.cl, <4 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %7 = shufflevector <8 x i1> %5, <8 x i1> %6, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 8, i32 9, i32 10, i32 11>
-  %8 = shufflevector <2 x i1> %i.cg, <2 x i1> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %9 = shufflevector <8 x i1> %7, <8 x i1> %8, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 4, i32 5, i32 6, i32 7>
-  %10 = select <8 x i1> %9, <8 x i32> <i32 1, i32 2, i32 4, i32 8, i32 16, i32 32, i32 64, i32 128>, <8 x i32> %3 ; 2 uses
-  %11 = insertelement <4 x i32> poison, i32 %.sroa.037.2, i64 0
-  %12 = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> zeroinitializer
-  %i.cm = and <4 x i32> %12, <i32 256, i32 512, i32 1024, i32 2048>
+  %5 = icmp ne <4 x i32> %i.cb, zeroinitializer
+  %i.cm = and <4 x i32> %i.ci, <i32 256, i32 512, i32 1024, i32 2048>
   %i.cn = icmp ne <4 x i32> %i.cm, zeroinitializer
-  %13 = insertelement <4 x i32> poison, i32 %i.bq, i64 0
-  %14 = shufflevector <4 x i32> %13, <4 x i32> poison, <4 x i32> zeroinitializer
-  %15 = and <4 x i32> %14, <i32 256, i32 512, i32 1024, i32 2048>
-  %16 = icmp ne <4 x i32> %15, zeroinitializer
-  %17 = select <4 x i1> %i.cn, <4 x i1> splat (i1 true), <4 x i1> %16
-  %18 = select <4 x i1> %17, <4 x i32> <i32 256, i32 512, i32 1024, i32 2048>, <4 x i32> zeroinitializer
-  %19 = or i32 %i.bq, %.sroa.037.2
-  %20 = and i32 %19, 520192
-  %21 = shufflevector <8 x i32> %10, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %rdx.op = or disjoint <4 x i32> %21, %18
-  %22 = shufflevector <4 x i32> %rdx.op, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %23 = shufflevector <8 x i32> %22, <8 x i32> %10, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
-  %i.co = tail call i32 @llvm.vector.reduce.or.v8i32(<8 x i32> %23)
-  %op.rdx = or i32 %i.co, %20
+  %6 = select <4 x i1> %5, <4 x i1> splat (i1 true), <4 x i1> %i.cn
+  %7 = insertelement <12 x i1> poison, i1 %i.br, i64 0
+  %8 = insertelement <12 x i1> %7, i1 %i.bw, i64 1
+  %9 = shufflevector <4 x i1> %6, <4 x i1> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %10 = shufflevector <12 x i1> %8, <12 x i1> %9, <12 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 12, i32 13, i32 14, i32 15>
+  %11 = shufflevector <4 x i1> %i.cl, <4 x i1> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %12 = shufflevector <12 x i1> %10, <12 x i1> %11, <12 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 12, i32 13, i32 14, i32 15, i32 8, i32 9, i32 10, i32 11>
+  %13 = shufflevector <2 x i1> %i.cg, <2 x i1> poison, <12 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %14 = shufflevector <12 x i1> %12, <12 x i1> %13, <12 x i32> <i32 0, i32 1, i32 12, i32 13, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  %15 = select <12 x i1> %14, <12 x i32> <i32 1, i32 2, i32 4, i32 8, i32 16, i32 32, i32 64, i32 128, i32 256, i32 512, i32 1024, i32 2048>, <12 x i32> %4
+  %16 = or i32 %i.bq, %.sroa.037.2
+  %17 = and i32 %16, 520192
+  %i.co = tail call i32 @llvm.vector.reduce.or.v12i32(<12 x i32> %15)
+  %op.rdx = or disjoint i32 %i.co, %17
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.loopexit75
@@ -668,7 +662,7 @@ declare <4 x double> @llvm.fabs.v4f64(<4 x double>) #9
 declare <2 x double> @llvm.ceil.v2f64(<2 x double>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v8i32(<8 x i32>) #9
+declare i32 @llvm.vector.reduce.or.v12i32(<12 x i32>) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

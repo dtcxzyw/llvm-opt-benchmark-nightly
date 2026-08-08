@@ -204,7 +204,7 @@ bb.a:
   %.05571.i = phi i64 [ %.055.be.i, %.backedge.i ], [ 0, %bb.a ] ; 6 uses
   %i.b = add i64 %.05571.i, 16                    ; 2 uses
   %.not.i = icmp ugt i64 %i.b, %2
-  %.phi.trans.insert.i = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.05571.i ; 17 uses
+  %.phi.trans.insert.i = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.05571.i ; 18 uses
   br i1 %.not.i, label %.preheader64..thread_crit_edge.i, label %bb.b
 
 .preheader64..thread_crit_edge.i:                 ; preds = %.preheader64.i
@@ -212,19 +212,15 @@ bb.a:
   br label %.thread.i
 
 bb.b:                                             ; preds = %.preheader64.i
-  %.0.copyload13.i = load i64, ptr %.phi.trans.insert.i, align 2 ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 8 ; 2 uses
-  %.0.copyload9.i = load i64, ptr %i.c, align 2
-  %i.d = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 16 ; 2 uses
-  %.0.copyload5.i = load i64, ptr %i.d, align 2
-  %i.e = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 24 ; 2 uses
-  %.0.copyload.i = load i64, ptr %i.e, align 2
-  %4 = or i64 %.0.copyload9.i, %.0.copyload5.i
-  %5 = or i64 %4, %.0.copyload.i
-  %6 = or i64 %5, %.0.copyload13.i
-  %i.f = and i64 %6, -71777214294589696
+  %i.c = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 8
+  %i.d = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 16
+  %i.e = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 24
+  %.0.copyload.i = load i64, ptr %.phi.trans.insert.i, align 2 ; 2 uses
+  %4 = load <4 x i64>, ptr %.phi.trans.insert.i, align 2
+  %5 = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %4)
+  %i.f = and i64 %5, -71777214294589696
   %i.g = icmp eq i64 %i.f, 0
-  %i.h = trunc i64 %.0.copyload13.i to i16
+  %i.h = trunc i64 %.0.copyload.i to i16
   br i1 %i.g, label %.preheader.i, label %.thread.i
 
 .preheader.i:                                     ; preds = %bb.b
@@ -232,7 +228,7 @@ bb.b:                                             ; preds = %.preheader64.i
   br i1 %i.i, label %.lr.ph.preheader.i, label %.backedge.i
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
-  %i.j = trunc i64 %.0.copyload13.i to i8
+  %i.j = trunc i64 %.0.copyload.i to i8
   %i.k = getelementptr inbounds nuw i8, ptr %.05072.i, i64 1
   store i8 %i.j, ptr %.05072.i, align 1
   %i.l = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 2
@@ -359,7 +355,7 @@ bb.a:
   %.05571 = phi i64 [ %.055.be, %.backedge ], [ 0, %bb.a ] ; 21 uses
   %i.b = add i64 %.05571, 16                      ; 2 uses
   %.not = icmp ugt i64 %i.b, %1
-  %.phi.trans.insert = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %.05571 ; 5 uses
+  %.phi.trans.insert = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %.05571 ; 3 uses
   br i1 %.not, label %.preheader64..thread_crit_edge, label %bb.b
 
 .preheader64..thread_crit_edge:                   ; preds = %.preheader64
@@ -367,17 +363,10 @@ bb.a:
   br label %.thread
 
 bb.b:                                             ; preds = %.preheader64
-  %.0.copyload13 = load i64, ptr %.phi.trans.insert, align 2 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert, i64 8
-  %.0.copyload9 = load i64, ptr %3, align 2
-  %4 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert, i64 16
-  %.0.copyload5 = load i64, ptr %4, align 2
-  %5 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert, i64 24
-  %.0.copyload = load i64, ptr %5, align 2
-  %6 = or i64 %.0.copyload9, %.0.copyload5
-  %7 = or i64 %6, %.0.copyload
-  %8 = or i64 %7, %.0.copyload13                  ; 2 uses
-  %i.c = tail call i64 @llvm.fshl.i64(i64 %8, i64 %8, i64 56)
+  %.0.copyload13 = load i64, ptr %.phi.trans.insert, align 2 ; 2 uses
+  %3 = load <4 x i64>, ptr %.phi.trans.insert, align 2
+  %4 = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %3) ; 2 uses
+  %i.c = tail call i64 @llvm.fshl.i64(i64 %4, i64 %4, i64 56)
   %i.d = and i64 %i.c, -71777214294589696
   %i.e = icmp eq i64 %i.d, 0
   %i.f = trunc i64 %.0.copyload13 to i16
@@ -780,7 +769,7 @@ bb.d:                                             ; preds = %.loopexit
   %.05571.i = phi i64 [ %.055.be.i, %.backedge.i ], [ 0, %bb.d ] ; 6 uses
   %i.da = add i64 %.05571.i, 16                   ; 2 uses
   %.not.i19 = icmp ugt i64 %i.da, %i.cz
-  %.phi.trans.insert.i = getelementptr inbounds nuw [2 x i8], ptr %i.cy, i64 %.05571.i ; 17 uses
+  %.phi.trans.insert.i = getelementptr inbounds nuw [2 x i8], ptr %i.cy, i64 %.05571.i ; 18 uses
   br i1 %.not.i19, label %.preheader64..thread_crit_edge.i, label %bb.e
 
 .preheader64..thread_crit_edge.i:                 ; preds = %.preheader64.i
@@ -788,19 +777,15 @@ bb.d:                                             ; preds = %.loopexit
   br label %.thread.i
 
 bb.e:                                             ; preds = %.preheader64.i
-  %.0.copyload13.i = load i64, ptr %.phi.trans.insert.i, align 2 ; 3 uses
-  %i.db = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 8 ; 2 uses
-  %.0.copyload9.i = load i64, ptr %i.db, align 2
-  %i.dc = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 16 ; 2 uses
-  %.0.copyload5.i = load i64, ptr %i.dc, align 2
-  %i.dd = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 24 ; 2 uses
-  %.0.copyload.i = load i64, ptr %i.dd, align 2
-  %4 = or i64 %.0.copyload9.i, %.0.copyload5.i
-  %5 = or i64 %4, %.0.copyload.i
-  %6 = or i64 %5, %.0.copyload13.i
-  %i.de = and i64 %6, -71777214294589696
+  %i.db = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 8
+  %i.dc = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 16
+  %i.dd = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 24
+  %.0.copyload.i = load i64, ptr %.phi.trans.insert.i, align 2 ; 2 uses
+  %4 = load <4 x i64>, ptr %.phi.trans.insert.i, align 2
+  %5 = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %4)
+  %i.de = and i64 %5, -71777214294589696
   %i.df = icmp eq i64 %i.de, 0
-  %i.dg = trunc i64 %.0.copyload13.i to i16
+  %i.dg = trunc i64 %.0.copyload.i to i16
   br i1 %i.df, label %.preheader.i, label %.thread.i
 
 .preheader.i:                                     ; preds = %bb.e
@@ -808,7 +793,7 @@ bb.e:                                             ; preds = %.preheader64.i
   br i1 %i.dh, label %.lr.ph.preheader.i, label %.backedge.i
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
-  %i.di = trunc i64 %.0.copyload13.i to i8
+  %i.di = trunc i64 %.0.copyload.i to i8
   %i.dj = getelementptr inbounds nuw i8, ptr %.05072.i, i64 1
   store i8 %i.di, ptr %.05072.i, align 1
   %i.dk = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 2
@@ -1211,7 +1196,7 @@ bb.d:                                             ; preds = %.loopexit
   %.05571.i = phi i64 [ %.055.be.i, %.backedge.i ], [ 0, %bb.d ] ; 6 uses
   %i.bg = add i64 %.05571.i, 16                   ; 2 uses
   %.not.i19 = icmp ugt i64 %i.bg, %i.bf
-  %.phi.trans.insert.i = getelementptr inbounds nuw [2 x i8], ptr %i.be, i64 %.05571.i ; 17 uses
+  %.phi.trans.insert.i = getelementptr inbounds nuw [2 x i8], ptr %i.be, i64 %.05571.i ; 18 uses
   br i1 %.not.i19, label %.preheader64..thread_crit_edge.i, label %bb.e
 
 .preheader64..thread_crit_edge.i:                 ; preds = %.preheader64.i
@@ -1219,19 +1204,15 @@ bb.d:                                             ; preds = %.loopexit
   br label %.thread.i
 
 bb.e:                                             ; preds = %.preheader64.i
-  %.0.copyload13.i = load i64, ptr %.phi.trans.insert.i, align 2 ; 3 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 8 ; 2 uses
-  %.0.copyload9.i = load i64, ptr %i.bh, align 2
-  %i.bi = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 16 ; 2 uses
-  %.0.copyload5.i = load i64, ptr %i.bi, align 2
-  %i.bj = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 24 ; 2 uses
-  %.0.copyload.i = load i64, ptr %i.bj, align 2
-  %4 = or i64 %.0.copyload9.i, %.0.copyload5.i
-  %5 = or i64 %4, %.0.copyload.i
-  %6 = or i64 %5, %.0.copyload13.i
-  %i.bk = and i64 %6, -71777214294589696
+  %i.bh = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 8
+  %i.bi = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 16
+  %i.bj = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 24
+  %.0.copyload.i = load i64, ptr %.phi.trans.insert.i, align 2 ; 2 uses
+  %4 = load <4 x i64>, ptr %.phi.trans.insert.i, align 2
+  %5 = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %4)
+  %i.bk = and i64 %5, -71777214294589696
   %i.bl = icmp eq i64 %i.bk, 0
-  %i.bm = trunc i64 %.0.copyload13.i to i16
+  %i.bm = trunc i64 %.0.copyload.i to i16
   br i1 %i.bl, label %.preheader.i, label %.thread.i
 
 .preheader.i:                                     ; preds = %bb.e
@@ -1239,7 +1220,7 @@ bb.e:                                             ; preds = %.preheader64.i
   br i1 %i.bn, label %.lr.ph.preheader.i, label %.backedge.i
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
-  %i.bo = trunc i64 %.0.copyload13.i to i8
+  %i.bo = trunc i64 %.0.copyload.i to i8
   %i.bp = getelementptr inbounds nuw i8, ptr %.05072.i, i64 1
   store i8 %i.bo, ptr %.05072.i, align 1
   %i.bq = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 2
@@ -1640,6 +1621,9 @@ declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #39
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i16> @llvm.bswap.v4i16(<4 x i16>) #39
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.or.v4i64(<4 x i64>) #39
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.bswap.v8i16(<8 x i16>) #39

@@ -30,47 +30,20 @@ bb.a:
   %i.a = load <8 x i8>, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 832), align 64
   %i.b = shl nuw <8 x i8> %i.a, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7>
   %i.c = tail call i8 @llvm.vector.reduce.or.v8i8(<8 x i8> %i.b)
-  %.sroa.0.7 = zext i8 %i.c to i32
-  %0 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 840), align 8, !range !5, !noundef !6
-  %1 = zext nneg i8 %0 to i32
-  %2 = shl nuw nsw i32 %1, 8
-  %.sroa.0.8 = or disjoint i32 %2, %.sroa.0.7
-  %3 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 841), align 1, !range !5, !noundef !6
-  %4 = zext nneg i8 %3 to i32
-  %5 = shl nuw nsw i32 %4, 9
-  %.sroa.0.9 = or disjoint i32 %.sroa.0.8, %5
-  %6 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 842), align 2, !range !5, !noundef !6
-  %7 = zext nneg i8 %6 to i32
-  %8 = shl nuw nsw i32 %7, 10
-  %.sroa.0.10 = or disjoint i32 %.sroa.0.9, %8
-  %9 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 843), align 1, !range !5, !noundef !6
-  %i.d = zext nneg i8 %9 to i32
-  %10 = shl nuw nsw i32 %i.d, 11
-  %.sroa.0.11 = or i32 %.sroa.0.10, %10
-  %11 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 844), align 4, !range !5, !noundef !6
-  %12 = zext nneg i8 %11 to i32
-  %13 = shl nuw nsw i32 %12, 12
-  %.sroa.0.12 = or i32 %.sroa.0.11, %13
-  %i.e = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 845), align 1, !range !5, !noundef !6
+  %i.d = zext i8 %i.c to i32
+  %0 = load <8 x i8>, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 840), align 8
+  %1 = zext <8 x i8> %0 to <8 x i32>
+  %2 = shl nuw nsw <8 x i32> %1, <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.e = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 848), align 16, !range !5, !noundef !6
   %i.f = zext nneg i8 %i.e to i32
-  %i.g = shl nuw nsw i32 %i.f, 13
-  %.sroa.0.13 = or i32 %.sroa.0.12, %i.g
-  %i.h = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 846), align 2, !range !5, !noundef !6
+  %i.g = shl nuw nsw i32 %i.f, 16
+  %i.h = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 849), align 1, !range !5, !noundef !6
   %i.i = zext nneg i8 %i.h to i32
-  %i.j = shl nuw nsw i32 %i.i, 14
-  %.sroa.0.14 = or i32 %.sroa.0.13, %i.j
-  %14 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 847), align 1, !range !5, !noundef !6
-  %15 = zext nneg i8 %14 to i32
-  %16 = shl nuw nsw i32 %15, 15
-  %.sroa.0.15 = or i32 %.sroa.0.14, %16
-  %17 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 848), align 16, !range !5, !noundef !6
-  %18 = zext nneg i8 %17 to i32
-  %19 = shl nuw nsw i32 %18, 16
-  %.sroa.0.16 = or i32 %.sroa.0.15, %19
-  %20 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 849), align 1, !range !5, !noundef !6
-  %21 = zext nneg i8 %20 to i32
-  %22 = shl nuw nsw i32 %21, 17
-  %.sroa.0.17 = or i32 %.sroa.0.16, %22
+  %i.j = shl nuw nsw i32 %i.i, 17
+  %3 = tail call i32 @llvm.vector.reduce.or.v8i32(<8 x i32> %2)
+  %.sroa.0.15 = or disjoint i32 %3, %i.d
+  %.sroa.0.16 = or disjoint i32 %i.g, %i.j
+  %.sroa.0.17 = or i32 %.sroa.0.15, %.sroa.0.16
   ret i32 %.sroa.0.17
 }
 
@@ -110,69 +83,23 @@ _ZN2v88internal7Isolate14native_contextEv.exit:   ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden range(i32 0, 262144) i32 @_ZN2v88internal4wasm19WasmEnabledFeatures11FromContextEPNS0_7IsolateENS0_12DirectHandleINS0_13NativeContextEEE(ptr noundef nonnull %0, ptr %1) local_unnamed_addr #1 align 2 {
 bb.a:
-  %2 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 832), align 64, !range !5, !noundef !6
-  %3 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 833), align 1, !range !5, !noundef !6
-  %4 = shl nuw nsw i8 %3, 1
-  %.sroa.0.119.i = or disjoint i8 %4, %2
-  %5 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 834), align 2, !range !5, !noundef !6
-  %6 = shl nuw nsw i8 %5, 2
-  %.sroa.0.220.i = or disjoint i8 %.sroa.0.119.i, %6
-  %7 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 835), align 1, !range !5, !noundef !6
-  %8 = shl nuw nsw i8 %7, 3
-  %.sroa.0.321.i = or disjoint i8 %.sroa.0.220.i, %8
-  %9 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 836), align 4, !range !5, !noundef !6
-  %10 = shl nuw nsw i8 %9, 4
-  %.sroa.0.422.i = or disjoint i8 %.sroa.0.321.i, %10
-  %11 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 837), align 1, !range !5, !noundef !6
-  %12 = shl nuw nsw i8 %11, 5
-  %.sroa.0.523.i = or i8 %.sroa.0.422.i, %12
-  %13 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 838), align 2, !range !5, !noundef !6
-  %14 = shl nuw nsw i8 %13, 6
-  %.sroa.0.624.i = or i8 %.sroa.0.523.i, %14
-  %15 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 839), align 1, !range !5, !noundef !6
-  %16 = shl nuw i8 %15, 7
-  %.sroa.0.725.i = or i8 %.sroa.0.624.i, %16
-  %.sroa.0.7.i = zext i8 %.sroa.0.725.i to i32
-  %17 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 840), align 8, !range !5, !noundef !6
-  %18 = zext nneg i8 %17 to i32
-  %19 = shl nuw nsw i32 %18, 8
-  %.sroa.0.8.i = or disjoint i32 %19, %.sroa.0.7.i
-  %20 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 841), align 1, !range !5, !noundef !6
-  %21 = zext nneg i8 %20 to i32
-  %22 = shl nuw nsw i32 %21, 9
-  %.sroa.0.9.i = or disjoint i32 %.sroa.0.8.i, %22
-  %23 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 842), align 2, !range !5, !noundef !6
-  %24 = zext nneg i8 %23 to i32
-  %25 = shl nuw nsw i32 %24, 10
-  %.sroa.0.10.i = or disjoint i32 %.sroa.0.9.i, %25
-  %26 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 843), align 1, !range !5, !noundef !6
-  %i.a = zext nneg i8 %26 to i32
-  %27 = shl nuw nsw i32 %i.a, 11
-  %.sroa.0.11.i = or i32 %.sroa.0.10.i, %27
-  %28 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 844), align 4, !range !5, !noundef !6
-  %29 = zext nneg i8 %28 to i32
-  %30 = shl nuw nsw i32 %29, 12
-  %.sroa.0.12.i = or i32 %.sroa.0.11.i, %30
-  %i.b = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 845), align 1, !range !5, !noundef !6
+  %2 = load <8 x i8>, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 832), align 64
+  %3 = shl nuw <8 x i8> %2, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7>
+  %4 = tail call i8 @llvm.vector.reduce.or.v8i8(<8 x i8> %3)
+  %i.a = zext i8 %4 to i32
+  %5 = load <8 x i8>, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 840), align 8
+  %6 = zext <8 x i8> %5 to <8 x i32>
+  %7 = shl nuw nsw <8 x i32> %6, <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.b = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 848), align 16, !range !5, !noundef !6
   %i.c = zext nneg i8 %i.b to i32
-  %i.d = shl nuw nsw i32 %i.c, 13
-  %.sroa.0.13.i = or i32 %.sroa.0.12.i, %i.d
-  %i.e = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 846), align 2, !range !5, !noundef !6
+  %i.d = shl nuw nsw i32 %i.c, 16
+  %i.e = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 849), align 1, !range !5, !noundef !6
   %i.f = zext nneg i8 %i.e to i32
-  %i.g = shl nuw nsw i32 %i.f, 14
-  %.sroa.0.14.i = or i32 %.sroa.0.13.i, %i.g
-  %31 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 847), align 1, !range !5, !noundef !6
-  %32 = zext nneg i8 %31 to i32
-  %33 = shl nuw nsw i32 %32, 15
-  %.sroa.0.15.i = or i32 %.sroa.0.14.i, %33
-  %34 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 848), align 16, !range !5, !noundef !6
-  %35 = zext nneg i8 %34 to i32
-  %36 = shl nuw nsw i32 %35, 16
-  %.sroa.0.16.i = or i32 %.sroa.0.15.i, %36
-  %37 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 849), align 1, !range !5, !noundef !6
-  %38 = zext nneg i8 %37 to i32
-  %39 = shl nuw nsw i32 %38, 17
-  %.sroa.0.17.i = or i32 %.sroa.0.16.i, %39       ; 2 uses
+  %i.g = shl nuw nsw i32 %i.f, 17
+  %8 = tail call i32 @llvm.vector.reduce.or.v8i32(<8 x i32> %7)
+  %.sroa.0.15.i = or disjoint i32 %8, %i.a
+  %.sroa.0.16.i = or disjoint i32 %i.d, %i.g
+  %.sroa.0.17.i = or i32 %.sroa.0.15.i, %.sroa.0.16.i ; 2 uses
   %i.h = tail call noundef zeroext i1 @_ZN2v88internal7Isolate22IsWasmStringRefEnabledENS0_12DirectHandleINS0_13NativeContextEEE(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr %1) #4
   %i.i = or i32 %.sroa.0.17.i, 1024
   %spec.select = select i1 %i.h, i32 %i.i, i32 %.sroa.0.17.i ; 2 uses
@@ -197,6 +124,9 @@ declare noundef zeroext i1 @_ZN2v88internal7Isolate17IsWasmJSPIEnabledENS0_12Dir
 declare noundef zeroext i1 @_ZN2v88internal7Isolate30IsWasmCustomDescriptorsEnabledENS0_12DirectHandleINS0_13NativeContextEEE(ptr noundef nonnull align 8 dereferenceable(64320), ptr) local_unnamed_addr #2
 
 declare noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v8i32(<8 x i32>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.vector.reduce.or.v8i8(<8 x i8>) #3

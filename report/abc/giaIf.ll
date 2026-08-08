@@ -204,22 +204,17 @@ begin_hunk_0_@Gia_ManFromIfGetConfig2:bb.a
   br label %Gia_ManFromIfPermuteTruth4.exit
 
 .split.i:                                         ; preds = %bb.ab
-  %5 = and i64 %i.f, 1                            ; 6 uses
-  %6 = mul nuw nsw i64 %5, 126
-  %7 = shl nuw nsw i64 %5, 12
-  %8 = shl nuw nsw i64 %5, 13
-  %9 = shl nuw nsw i64 %5, 14
-  %10 = shl nuw nsw i64 %5, 15
-  %11 = mul nuw nsw i64 %5, 3969
-  %12 = or disjoint i64 %8, %7
-  %13 = or disjoint i64 %12, %9
-  %14 = or disjoint i64 %13, %10
-  %15 = or disjoint i64 %14, %6
-  %16 = or i64 %15, %11
+  %5 = trunc i64 %i.f to i16
+  %6 = and i16 %5, 1
+  %7 = insertelement <3 x i16> poison, i16 %6, i64 0
+  %8 = shufflevector <3 x i16> %7, <3 x i16> poison, <6 x i32> zeroinitializer
+  %9 = mul nuw <6 x i16> %8, <i16 8192, i16 4096, i16 16384, i16 -32768, i16 126, i16 3969>
+  %10 = tail call i16 @llvm.vector.reduce.or.v6i16(<6 x i16> %9)
+  %11 = zext i16 %10 to i64
   br label %Gia_ManFromIfPermuteTruth4.exit
 
 Gia_ManFromIfPermuteTruth4.exit:                  ; preds = %.split.i, %._crit_edge.us.15.i, %._crit_edge327
-  %.0106 = phi i64 [ %i.f, %._crit_edge327 ], [ %i.rw, %._crit_edge.us.15.i ], [ %16, %.split.i ] ; 2 uses
+  %.0106 = phi i64 [ %i.f, %._crit_edge327 ], [ %i.rw, %._crit_edge.us.15.i ], [ %11, %.split.i ] ; 2 uses
   %i.rx = lshr i64 %.0106, 8
   %i.ry = trunc i64 %i.rx to i8
   %i.rz = load i32, ptr %i.b, align 4, !tbaa !85  ; 7 uses
@@ -620,6 +615,9 @@ declare i64 @llvm.umax.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.vector.reduce.or.v6i16(<6 x i16>) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #24

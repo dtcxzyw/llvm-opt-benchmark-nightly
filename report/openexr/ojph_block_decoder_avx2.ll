@@ -204,13 +204,9 @@ _ZN4ojph5localL8rev_readEPNS0_10rev_structE.exit.i: ; preds = %_ZN4ojph5localL8r
   %i.de = add nsw <4 x i32> %i.dc, %i.dd          ; 2 uses
   %i.df = extractelement <4 x i32> %i.de, i64 3
   %i.dg = shufflevector <4 x i32> <i32 poison, i32 poison, i32 poison, i32 0>, <4 x i32> %i.de, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %i.dh = tail call <4 x i32> @llvm.x86.avx2.psllv.d(<4 x i32> %i.cn, <4 x i32> %i.dg) ; 2 uses
-  %16 = shufflevector <4 x i32> %i.dh, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
-  %17 = or <4 x i32> %i.dh, %16                   ; 2 uses
-  %shift = shufflevector <4 x i32> %17, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = or <4 x i32> %17, %shift
-  %18 = extractelement <4 x i32> %foldExtExtBinop, i64 0
-  %i.di = zext i32 %18 to i64
+  %i.dh = tail call <4 x i32> @llvm.x86.avx2.psllv.d(<4 x i32> %i.cn, <4 x i32> %i.dg)
+  %16 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %i.dh)
+  %i.di = zext i32 %16 to i64
   store i8 %i.cs, ptr %i.bc, align 8, !tbaa !29
   %i.dj = zext nneg i32 %i.bp to i64
   %i.dk = shl nuw nsw i64 %i.di, %i.dj
@@ -293,13 +289,9 @@ _ZN4ojph5localL8rev_readEPNS0_10rev_structE.exit12.i: ; preds = %_ZN4ojph5localL
   %i.ez = add nsw <4 x i32> %i.ex, %i.ey          ; 2 uses
   %i.fa = extractelement <4 x i32> %i.ez, i64 3
   %i.fb = shufflevector <4 x i32> <i32 poison, i32 poison, i32 poison, i32 0>, <4 x i32> %i.ez, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %i.fc = tail call <4 x i32> @llvm.x86.avx2.psllv.d(<4 x i32> %i.ek, <4 x i32> %i.fb) ; 2 uses
-  %19 = shufflevector <4 x i32> %i.fc, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
-  %20 = or <4 x i32> %i.fc, %19                   ; 2 uses
-  %shift1638 = shufflevector <4 x i32> %20, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop1639 = or <4 x i32> %20, %shift1638
-  %21 = extractelement <4 x i32> %foldExtExtBinop1639, i64 0
-  %i.fd = zext i32 %21 to i64
+  %i.fc = tail call <4 x i32> @llvm.x86.avx2.psllv.d(<4 x i32> %i.ek, <4 x i32> %i.fb)
+  %17 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %i.fc)
+  %i.fd = zext i32 %17 to i64
   store i8 %i.ep, ptr %i.bc, align 8, !tbaa !29
   %i.fe = zext nneg i32 %i.dm to i64
   %i.ff = shl nuw nsw i64 %i.fd, %i.fe
@@ -588,13 +580,9 @@ _ZN4ojph5localL8rev_readEPNS0_10rev_structE.exit.i869: ; preds = %_ZN4ojph5local
   %i.lo = add nsw <4 x i32> %i.lm, %i.ln          ; 2 uses
   %i.lp = extractelement <4 x i32> %i.lo, i64 3
   %i.lq = shufflevector <4 x i32> <i32 poison, i32 poison, i32 poison, i32 0>, <4 x i32> %i.lo, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %i.lr = tail call <4 x i32> @llvm.x86.avx2.psllv.d(<4 x i32> %i.kx, <4 x i32> %i.lq) ; 2 uses
-  %22 = shufflevector <4 x i32> %i.lr, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
-  %23 = or <4 x i32> %i.lr, %22                   ; 2 uses
-  %shift1641 = shufflevector <4 x i32> %23, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop1642 = or <4 x i32> %23, %shift1641
-  %24 = extractelement <4 x i32> %foldExtExtBinop1642, i64 0
-  %i.ls = zext i32 %24 to i64
+  %i.lr = tail call <4 x i32> @llvm.x86.avx2.psllv.d(<4 x i32> %i.kx, <4 x i32> %i.lq)
+  %18 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %i.lr)
+  %i.ls = zext i32 %18 to i64
   store i8 %i.lc, ptr %i.bl, align 8, !tbaa !29
   %i.lt = zext nneg i32 %i.jn to i64
   %i.lu = shl nuw nsw i64 %i.ls, %i.lt
@@ -677,13 +665,9 @@ _ZN4ojph5localL8rev_readEPNS0_10rev_structE.exit12.i872: ; preds = %_ZN4ojph5loc
   %i.nj = add nsw <4 x i32> %i.nh, %i.ni          ; 2 uses
   %i.nk = extractelement <4 x i32> %i.nj, i64 3
   %i.nl = shufflevector <4 x i32> <i32 poison, i32 poison, i32 poison, i32 0>, <4 x i32> %i.nj, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %i.nm = tail call <4 x i32> @llvm.x86.avx2.psllv.d(<4 x i32> %i.mu, <4 x i32> %i.nl) ; 2 uses
-  %25 = shufflevector <4 x i32> %i.nm, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
-  %26 = or <4 x i32> %i.nm, %25                   ; 2 uses
-  %shift1644 = shufflevector <4 x i32> %26, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop1645 = or <4 x i32> %26, %shift1644
-  %27 = extractelement <4 x i32> %foldExtExtBinop1645, i64 0
-  %i.nn = zext i32 %27 to i64
+  %i.nm = tail call <4 x i32> @llvm.x86.avx2.psllv.d(<4 x i32> %i.mu, <4 x i32> %i.nl)
+  %19 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %i.nm)
+  %i.nn = zext i32 %19 to i64
   store i8 %i.mz, ptr %i.bl, align 8, !tbaa !29
   %i.no = zext nneg i32 %i.lw to i64
   %i.np = shl nuw nsw i64 %i.nn, %i.no
@@ -1086,13 +1070,9 @@ bb.d:                                             ; preds = %bb.b
   %i.bz = add nsw <4 x i32> %i.bx, %i.by          ; 2 uses
   %i.ca = extractelement <4 x i32> %i.bz, i64 3
   %i.cb = shufflevector <4 x i32> <i32 poison, i32 poison, i32 poison, i32 0>, <4 x i32> %i.bz, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %i.cc = tail call <4 x i32> @llvm.x86.avx2.psllv.d(<4 x i32> %i.bi, <4 x i32> %i.cb) ; 2 uses
-  %4 = shufflevector <4 x i32> %i.cc, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
-  %5 = or <4 x i32> %i.cc, %4                     ; 2 uses
-  %shift = shufflevector <4 x i32> %5, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = or <4 x i32> %5, %shift
-  %6 = extractelement <4 x i32> %foldExtExtBinop, i64 0
-  %i.cd = zext i32 %6 to i64
+  %i.cc = tail call <4 x i32> @llvm.x86.avx2.psllv.d(<4 x i32> %i.bi, <4 x i32> %i.cb)
+  %4 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %i.cc)
+  %i.cd = zext i32 %4 to i64
   store i8 %i.bn, ptr %i.p, align 8, !tbaa !29
   %i.ce = zext nneg i32 %i.be to i64
   %i.cf = shl nuw i64 %i.cd, %i.ce
@@ -1495,11 +1475,11 @@ declare <2 x i64> @llvm.fshl.v2i64(<2 x i64>, <2 x i64>, <2 x i64>) #10
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i16> @llvm.umin.v16i16(<16 x i16>, <16 x i16>) #10
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #11
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #10
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #11
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="256" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }

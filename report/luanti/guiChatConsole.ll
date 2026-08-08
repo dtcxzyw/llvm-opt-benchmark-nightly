@@ -203,25 +203,23 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i72
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74: ; preds = %bb.j, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i72
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #25
   %i.dh = load i32, ptr %i.af, align 8, !tbaa !66
-  %16 = and i32 %i.dh, -16777216
-  %17 = fcmp nsz olt <2 x float> %.sroa.02.0.i, zeroinitializer
-  %18 = select <2 x i1> %17, <2 x float> splat (float -5.000000e-01), <2 x float> splat (float 5.000000e-01)
-  %19 = fadd nsz <2 x float> %.sroa.02.0.i, %18
-  %20 = fptosi <2 x float> %19 to <2 x i32>
-  %21 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %20, <2 x i32> zeroinitializer)
-  %22 = call <2 x i32> @llvm.umin.v2i32(<2 x i32> %21, <2 x i32> splat (i32 255))
-  %23 = shl nuw nsw <2 x i32> %22, <i32 16, i32 8> ; 2 uses
-  %24 = extractelement <2 x i32> %23, i64 0
-  %25 = or disjoint i32 %16, %24
-  %26 = extractelement <2 x i32> %23, i64 1
-  %27 = or disjoint i32 %25, %26
-  %28 = fcmp nsz olt float %.sroa.3.0.i.sroa.speculated, 0.000000e+00
-  %.v.i76 = select i1 %28, float -5.000000e-01, float 5.000000e-01
-  %29 = fadd nsz float %.sroa.3.0.i.sroa.speculated, %.v.i76
-  %30 = fptosi float %29 to i32
-  %31 = call i32 @llvm.smax.i32(i32 %30, i32 0)
-  %32 = call noundef i32 @llvm.umin.i32(i32 %31, i32 255)
-  %33 = or disjoint i32 %27, %32
+  %16 = fcmp nsz olt float %.sroa.3.0.i.sroa.speculated, 0.000000e+00
+  %.v.i76 = select i1 %16, float -5.000000e-01, float 5.000000e-01
+  %17 = fadd nsz float %.sroa.3.0.i.sroa.speculated, %.v.i76
+  %18 = fptosi float %17 to i32
+  %19 = and i32 %i.dh, -16777216
+  %20 = fcmp nsz olt <2 x float> %.sroa.02.0.i, zeroinitializer
+  %21 = select <2 x i1> %20, <2 x float> splat (float -5.000000e-01), <2 x float> splat (float 5.000000e-01)
+  %22 = fadd nsz <2 x float> %.sroa.02.0.i, %21
+  %23 = insertelement <4 x i32> poison, i32 %18, i64 2
+  %24 = insertelement <4 x i32> %23, i32 %19, i64 3
+  %25 = shufflevector <2 x float> %22, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %26 = fptosi <4 x float> %25 to <4 x i32>
+  %27 = shufflevector <4 x i32> %26, <4 x i32> %24, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %28 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %27, <4 x i32> <i32 0, i32 0, i32 0, i32 -2147483648>)
+  %29 = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %28, <4 x i32> <i32 255, i32 255, i32 255, i32 -1>)
+  %30 = shl nuw nsw <4 x i32> %29, <i32 16, i32 8, i32 0, i32 0>
+  %31 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %30)
   br label %._crit_edge.i.i80
 
 bb.k:                                             ; preds = %._crit_edge.i.i68
@@ -242,7 +240,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit79: ; preds = %bb.
   br label %bb.ap
 
 ._crit_edge.i.i80:                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58
-  %storemerge = phi i32 [ %33, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74 ], [ %i.cb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58 ]
+  %storemerge = phi i32 [ %31, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74 ], [ %i.cb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58 ]
   store i32 %storemerge, ptr %i.af, align 8, !tbaa !66
   %i.dn = load ptr, ptr @g_settings, align 8, !tbaa !67
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #25
@@ -645,25 +643,23 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i73
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75: ; preds = %bb.j, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i73
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #25
   %i.dc = load i32, ptr %i.aa, align 8, !tbaa !66
-  %15 = and i32 %i.dc, -16777216
-  %16 = fcmp nsz olt <2 x float> %.sroa.02.0.i, zeroinitializer
-  %17 = select <2 x i1> %16, <2 x float> splat (float -5.000000e-01), <2 x float> splat (float 5.000000e-01)
-  %18 = fadd nsz <2 x float> %.sroa.02.0.i, %17
-  %19 = fptosi <2 x float> %18 to <2 x i32>
-  %20 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %19, <2 x i32> zeroinitializer)
-  %21 = call <2 x i32> @llvm.umin.v2i32(<2 x i32> %20, <2 x i32> splat (i32 255))
-  %22 = shl nuw nsw <2 x i32> %21, <i32 16, i32 8> ; 2 uses
-  %23 = extractelement <2 x i32> %22, i64 0
-  %24 = or disjoint i32 %15, %23
-  %25 = extractelement <2 x i32> %22, i64 1
-  %26 = or disjoint i32 %24, %25
-  %27 = fcmp nsz olt float %.sroa.3.0.i.sroa.speculated, 0.000000e+00
-  %.v.i77 = select i1 %27, float -5.000000e-01, float 5.000000e-01
-  %28 = fadd nsz float %.sroa.3.0.i.sroa.speculated, %.v.i77
-  %29 = fptosi float %28 to i32
-  %30 = call i32 @llvm.smax.i32(i32 %29, i32 0)
-  %31 = call noundef i32 @llvm.umin.i32(i32 %30, i32 255)
-  %32 = or disjoint i32 %26, %31
+  %15 = fcmp nsz olt float %.sroa.3.0.i.sroa.speculated, 0.000000e+00
+  %.v.i77 = select i1 %15, float -5.000000e-01, float 5.000000e-01
+  %16 = fadd nsz float %.sroa.3.0.i.sroa.speculated, %.v.i77
+  %17 = fptosi float %16 to i32
+  %18 = and i32 %i.dc, -16777216
+  %19 = fcmp nsz olt <2 x float> %.sroa.02.0.i, zeroinitializer
+  %20 = select <2 x i1> %19, <2 x float> splat (float -5.000000e-01), <2 x float> splat (float 5.000000e-01)
+  %21 = fadd nsz <2 x float> %.sroa.02.0.i, %20
+  %22 = insertelement <4 x i32> poison, i32 %17, i64 2
+  %23 = insertelement <4 x i32> %22, i32 %18, i64 3
+  %24 = shufflevector <2 x float> %21, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %25 = fptosi <4 x float> %24 to <4 x i32>
+  %26 = shufflevector <4 x i32> %25, <4 x i32> %23, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %27 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %26, <4 x i32> <i32 0, i32 0, i32 0, i32 -2147483648>)
+  %28 = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %27, <4 x i32> <i32 255, i32 255, i32 255, i32 -1>)
+  %29 = shl nuw nsw <4 x i32> %28, <i32 16, i32 8, i32 0, i32 0>
+  %30 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %29)
   br label %._crit_edge.i.i81
 
 bb.k:                                             ; preds = %._crit_edge.i.i69
@@ -684,7 +680,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit80: ; preds = %bb.
   br label %bb.ap
 
 ._crit_edge.i.i81:                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59
-  %storemerge = phi i32 [ %32, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75 ], [ %i.bw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59 ]
+  %storemerge = phi i32 [ %30, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75 ], [ %i.bw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59 ]
   store i32 %storemerge, ptr %i.aa, align 8, !tbaa !66
   %i.di = load ptr, ptr @g_settings, align 8, !tbaa !67
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #25
@@ -1087,10 +1083,13 @@ declare i64 @llvm.umin.i64(i64, i64) #9
 declare <2 x i32> @llvm.umax.v2i32(<2 x i32>, <2 x i32>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #9
+declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #9
+declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #9
 
 attributes #0 = { uwtable "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

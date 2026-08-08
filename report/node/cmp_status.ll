@@ -70,7 +70,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not6, label %.critedge, label %bb.c, !prof !15
 
 bb.c:                                             ; preds = %bb.b
-  %i.b = tail call i32 @ossl_cmp_asn1_get_int(ptr noundef nonnull %i.a) #3 ; 2 uses
+  %i.b = tail call i32 @ossl_cmp_asn1_get_int(ptr noundef nonnull %i.a) #4 ; 2 uses
   %i.c = icmp eq i32 %i.b, -2
   %i.d = select i1 %i.c, i32 -1, i32 %i.b
   br label %.critedge
@@ -89,9 +89,9 @@ bb.a:
   br i1 %i.a, label %switch.lookup, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @ERR_new() #3
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str.7, i32 noundef 59, ptr noundef nonnull @__func__.ossl_cmp_PKIStatus_to_string) #3
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 58, i32 noundef 107, ptr noundef nonnull @.str.8, i32 noundef %0) #3
+  tail call void @ERR_new() #4
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str.7, i32 noundef 59, ptr noundef nonnull @__func__.ossl_cmp_PKIStatus_to_string) #4
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 58, i32 noundef 107, ptr noundef nonnull @.str.8, i32 noundef %0) #4
   br label %bb.c
 
 switch.lookup:                                    ; preds = %bb.a
@@ -140,139 +140,111 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not12, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.b
-  %i.c = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef nonnull %i.b, i32 noundef 0) #3
+  %i.c = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef nonnull %i.b, i32 noundef 0) #4
   %.not13 = icmp ne i32 %i.c, 0
   %i.d = zext i1 %.not13 to i32
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.f = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.e, i32 noundef 1) #3
+  %i.f = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.e, i32 noundef 1) #4
   %.not13.1 = icmp eq i32 %i.f, 0
   %i.g = select i1 %.not13.1, i32 0, i32 2
-  %.1.1 = or disjoint i32 %i.g, %i.d
   %i.h = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.i = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.h, i32 noundef 2) #3
+  %i.i = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.h, i32 noundef 2) #4
   %.not13.2 = icmp eq i32 %i.i, 0
   %i.j = select i1 %.not13.2, i32 0, i32 4
-  %.1.2 = or disjoint i32 %i.j, %.1.1
   %i.k = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.l = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.k, i32 noundef 3) #3
+  %i.l = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.k, i32 noundef 3) #4
   %.not13.3 = icmp eq i32 %i.l, 0
   %i.m = select i1 %.not13.3, i32 0, i32 8
-  %.1.3 = or disjoint i32 %i.m, %.1.2
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.o = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.n, i32 noundef 4) #3
+  %i.o = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.n, i32 noundef 4) #4
   %.not13.4 = icmp eq i32 %i.o, 0
   %i.p = select i1 %.not13.4, i32 0, i32 16
-  %.1.4 = or disjoint i32 %i.p, %.1.3
   %i.q = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.r = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.q, i32 noundef 5) #3
+  %i.r = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.q, i32 noundef 5) #4
   %.not13.5 = icmp eq i32 %i.r, 0
   %i.s = select i1 %.not13.5, i32 0, i32 32
-  %.1.5 = or disjoint i32 %i.s, %.1.4
   %i.t = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.u = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.t, i32 noundef 6) #3
+  %i.u = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.t, i32 noundef 6) #4
   %.not13.6 = icmp eq i32 %i.u, 0
   %i.v = select i1 %.not13.6, i32 0, i32 64
-  %.1.6 = or i32 %i.v, %.1.5
   %i.w = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.x = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.w, i32 noundef 7) #3
+  %i.x = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.w, i32 noundef 7) #4
   %.not13.7 = icmp eq i32 %i.x, 0
   %i.y = select i1 %.not13.7, i32 0, i32 128
-  %.1.7 = or i32 %i.y, %.1.6
   %i.z = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.aa = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.z, i32 noundef 8) #3
-  %.not13.8 = icmp eq i32 %i.aa, 0
-  %1 = select i1 %.not13.8, i32 0, i32 256
-  %.1.8 = or i32 %1, %.1.7
+  %i.aa = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.z, i32 noundef 8) #4
   %i.ab = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.ac = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.ab, i32 noundef 9) #3
-  %.not13.9 = icmp eq i32 %i.ac, 0
-  %2 = select i1 %.not13.9, i32 0, i32 512
-  %.1.9 = or i32 %2, %.1.8
+  %i.ac = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.ab, i32 noundef 9) #4
   %i.ad = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.ae = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.ad, i32 noundef 10) #3
-  %.not13.10 = icmp eq i32 %i.ae, 0
-  %3 = select i1 %.not13.10, i32 0, i32 1024
-  %.1.10 = or i32 %3, %.1.9
+  %i.ae = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.ad, i32 noundef 10) #4
   %i.af = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.ag = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.af, i32 noundef 11) #3
-  %.not13.11 = icmp eq i32 %i.ag, 0
-  %4 = select i1 %.not13.11, i32 0, i32 2048
-  %.1.11 = or i32 %4, %.1.10
+  %i.ag = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.af, i32 noundef 11) #4
   %i.ah = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.ai = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.ah, i32 noundef 12) #3
-  %.not13.12 = icmp eq i32 %i.ai, 0
-  %5 = select i1 %.not13.12, i32 0, i32 4096
-  %.1.12 = or i32 %5, %.1.11
+  %i.ai = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.ah, i32 noundef 12) #4
   %i.aj = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.ak = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.aj, i32 noundef 13) #3
-  %.not13.13 = icmp eq i32 %i.ak, 0
-  %6 = select i1 %.not13.13, i32 0, i32 8192
-  %.1.13 = or i32 %6, %.1.12
+  %i.ak = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.aj, i32 noundef 13) #4
+  %1 = load ptr, ptr %i.a, align 8, !tbaa !17
+  %2 = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %1, i32 noundef 14) #4
   %i.al = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.am = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.al, i32 noundef 14) #3
-  %.not13.14 = icmp eq i32 %i.am, 0
-  %7 = select i1 %.not13.14, i32 0, i32 16384
-  %.1.14 = or i32 %7, %.1.13
+  %i.am = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.al, i32 noundef 15) #4
+  %3 = load ptr, ptr %i.a, align 8, !tbaa !17
+  %4 = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %3, i32 noundef 16) #4
   %i.an = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.ao = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.an, i32 noundef 15) #3
-  %.not13.15 = icmp eq i32 %i.ao, 0
-  %8 = select i1 %.not13.15, i32 0, i32 32768
-  %.1.15 = or i32 %8, %.1.14
+  %i.ao = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.an, i32 noundef 17) #4
+  %5 = load ptr, ptr %i.a, align 8, !tbaa !17
+  %6 = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %5, i32 noundef 18) #4
   %i.ap = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.aq = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.ap, i32 noundef 16) #3
-  %.not13.16 = icmp eq i32 %i.aq, 0
-  %9 = select i1 %.not13.16, i32 0, i32 65536
-  %.1.16 = or i32 %9, %.1.15
+  %i.aq = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.ap, i32 noundef 19) #4
+  %7 = load ptr, ptr %i.a, align 8, !tbaa !17
+  %8 = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %7, i32 noundef 20) #4
   %i.ar = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.as = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.ar, i32 noundef 17) #3
-  %.not13.17 = icmp eq i32 %i.as, 0
-  %10 = select i1 %.not13.17, i32 0, i32 131072
-  %.1.17 = or i32 %10, %.1.16
+  %i.as = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.ar, i32 noundef 21) #4
+  %9 = load ptr, ptr %i.a, align 8, !tbaa !17
+  %10 = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %9, i32 noundef 22) #4
   %i.at = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.au = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.at, i32 noundef 18) #3
-  %.not13.18 = icmp eq i32 %i.au, 0
-  %11 = select i1 %.not13.18, i32 0, i32 262144
-  %.1.18 = or i32 %11, %.1.17
-  %12 = load ptr, ptr %i.a, align 8, !tbaa !17
-  %13 = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %12, i32 noundef 19) #3
-  %.not13.19 = icmp eq i32 %13, 0
-  %14 = select i1 %.not13.19, i32 0, i32 524288
-  %.1.19 = or i32 %14, %.1.18
-  %15 = load ptr, ptr %i.a, align 8, !tbaa !17
-  %16 = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %15, i32 noundef 20) #3
-  %.not13.20 = icmp eq i32 %16, 0
-  %17 = select i1 %.not13.20, i32 0, i32 1048576
-  %.1.20 = or i32 %17, %.1.19
-  %18 = load ptr, ptr %i.a, align 8, !tbaa !17
-  %19 = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %18, i32 noundef 21) #3
-  %.not13.21 = icmp eq i32 %19, 0
-  %20 = select i1 %.not13.21, i32 0, i32 2097152
-  %.1.21 = or i32 %20, %.1.20
+  %i.au = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.at, i32 noundef 23) #4
+  %11 = insertelement <16 x i32> poison, i32 %i.aa, i64 0
+  %12 = insertelement <16 x i32> %11, i32 %i.ac, i64 1
+  %13 = insertelement <16 x i32> %12, i32 %i.ae, i64 2
+  %14 = insertelement <16 x i32> %13, i32 %i.ag, i64 3
+  %15 = insertelement <16 x i32> %14, i32 %i.ai, i64 4
+  %16 = insertelement <16 x i32> %15, i32 %i.ak, i64 5
+  %17 = insertelement <16 x i32> %16, i32 %2, i64 6
+  %18 = insertelement <16 x i32> %17, i32 %i.am, i64 7
+  %19 = insertelement <16 x i32> %18, i32 %4, i64 8
+  %20 = insertelement <16 x i32> %19, i32 %i.ao, i64 9
+  %21 = insertelement <16 x i32> %20, i32 %6, i64 10
+  %22 = insertelement <16 x i32> %21, i32 %i.aq, i64 11
+  %23 = insertelement <16 x i32> %22, i32 %8, i64 12
+  %24 = insertelement <16 x i32> %23, i32 %i.as, i64 13
+  %25 = insertelement <16 x i32> %24, i32 %10, i64 14
+  %26 = insertelement <16 x i32> %25, i32 %i.au, i64 15
+  %27 = icmp eq <16 x i32> %26, zeroinitializer
+  %28 = select <16 x i1> %27, <16 x i32> zeroinitializer, <16 x i32> <i32 256, i32 512, i32 1024, i32 2048, i32 4096, i32 8192, i32 16384, i32 32768, i32 65536, i32 131072, i32 262144, i32 524288, i32 1048576, i32 2097152, i32 4194304, i32 8388608>
   %i.av = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.aw = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.av, i32 noundef 22) #3
+  %i.aw = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.av, i32 noundef 24) #4
   %.not13.22 = icmp eq i32 %i.aw, 0
-  %i.ax = select i1 %.not13.22, i32 0, i32 4194304
-  %.1.22 = or i32 %i.ax, %.1.21
+  %i.ax = select i1 %.not13.22, i32 0, i32 16777216
   %i.ay = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.az = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.ay, i32 noundef 23) #3
+  %i.az = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.ay, i32 noundef 25) #4
   %.not13.23 = icmp eq i32 %i.az, 0
-  %i.ba = select i1 %.not13.23, i32 0, i32 8388608
-  %.1.23 = or i32 %i.ba, %.1.22
+  %i.ba = select i1 %.not13.23, i32 0, i32 33554432
   %i.bb = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.bc = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.bb, i32 noundef 24) #3
+  %i.bc = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %i.bb, i32 noundef 26) #4
   %.not13.24 = icmp eq i32 %i.bc, 0
-  %i.bd = select i1 %.not13.24, i32 0, i32 16777216
-  %.1.24 = or i32 %i.bd, %.1.23
-  %21 = load ptr, ptr %i.a, align 8, !tbaa !17
-  %22 = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %21, i32 noundef 25) #3
-  %.not13.25 = icmp eq i32 %22, 0
-  %23 = select i1 %.not13.25, i32 0, i32 33554432
-  %.1.25 = or i32 %23, %.1.24
-  %24 = load ptr, ptr %i.a, align 8, !tbaa !17
-  %25 = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef %24, i32 noundef 26) #3
-  %.not13.26 = icmp eq i32 %25, 0
-  %26 = select i1 %.not13.26, i32 0, i32 67108864
-  %.1.26 = or i32 %26, %.1.25
+  %i.bd = select i1 %.not13.24, i32 0, i32 67108864
+  %29 = tail call i32 @llvm.vector.reduce.or.v16i32(<16 x i32> %28)
+  %.1.24 = or disjoint i32 %29, %i.d
+  %op.rdx17 = or disjoint i32 %i.g, %i.j
+  %op.rdx18 = or disjoint i32 %i.m, %i.p
+  %op.rdx19 = or disjoint i32 %i.s, %i.v
+  %op.rdx20 = or disjoint i32 %i.y, %i.ax
+  %.1.25 = or disjoint i32 %i.ba, %i.bd
+  %op.rdx22 = or disjoint i32 %.1.24, %op.rdx17
+  %op.rdx23 = or disjoint i32 %op.rdx18, %op.rdx19
+  %op.rdx24 = or disjoint i32 %op.rdx20, %.1.25
+  %op.rdx25 = or disjoint i32 %op.rdx22, %op.rdx23
+  %.1.26 = or disjoint i32 %op.rdx25, %op.rdx24
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader.preheader, %bb.b, %bb.a
@@ -299,13 +271,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @ERR_new() #3
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str.7, i32 noundef 157, ptr noundef nonnull @__func__.ossl_cmp_pkisi_check_pkifailureinfo) #3
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 58, i32 noundef 100, ptr noundef null) #3
+  tail call void @ERR_new() #4
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str.7, i32 noundef 157, ptr noundef nonnull @__func__.ossl_cmp_pkisi_check_pkifailureinfo) #4
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 58, i32 noundef 100, ptr noundef null) #4
   br label %.critedge
 
 bb.e:                                             ; preds = %bb.c
-  %i.c = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef nonnull %i.b, i32 noundef %1) #3
+  %i.c = tail call i32 @ASN1_BIT_STRING_get_bit(ptr noundef nonnull %i.b, i32 noundef %1) #4
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.a, %bb.b, %bb.e, %bb.d
@@ -320,15 +292,15 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @ERR_new() #3
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str.7, i32 noundef 246, ptr noundef nonnull @__func__.OSSL_CMP_snprint_PKIStatusInfo) #3
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 58, i32 noundef 103, ptr noundef null) #3
+  tail call void @ERR_new() #4
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str.7, i32 noundef 246, ptr noundef nonnull @__func__.OSSL_CMP_snprint_PKIStatusInfo) #4
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 58, i32 noundef 103, ptr noundef null) #4
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.b = tail call i32 @ossl_cmp_pkisi_get_pkifailureinfo(ptr noundef nonnull %0)
   %i.c = load ptr, ptr %0, align 8, !tbaa !10
-  %i.d = tail call i64 @ASN1_INTEGER_get(ptr noundef %i.c) #3
+  %i.d = tail call i64 @ASN1_INTEGER_get(ptr noundef %i.c) #4
   %i.e = trunc i64 %i.d to i32
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !16
@@ -353,16 +325,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %switch.lookup, label %ossl_cmp_PKIStatus_to_string.exit
 
 ossl_cmp_PKIStatus_to_string.exit:                ; preds = %bb.b
-  tail call void @ERR_new() #3
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str.7, i32 noundef 59, ptr noundef nonnull @__func__.ossl_cmp_PKIStatus_to_string) #3
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 58, i32 noundef 107, ptr noundef nonnull @.str.8, i32 noundef %0) #3
+  tail call void @ERR_new() #4
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str.7, i32 noundef 59, ptr noundef nonnull @__func__.ossl_cmp_PKIStatus_to_string) #4
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 58, i32 noundef 107, ptr noundef nonnull @.str.8, i32 noundef %0) #4
   br label %.loopexit
 
 switch.lookup:                                    ; preds = %bb.b
   %i.d = zext nneg i32 %0 to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.snprint_PKIStatusInfo_parts, i64 %i.d
   %switch.load = load ptr, ptr %switch.gep, align 8
-  %i.e = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef nonnull %3, i64 noundef %4, ptr noundef nonnull @.str.9, ptr noundef nonnull %switch.load) #3 ; 2 uses
+  %i.e = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef nonnull %3, i64 noundef %4, ptr noundef nonnull @.str.9, ptr noundef nonnull %switch.load) #4 ; 2 uses
   %i.f = icmp slt i32 %i.e, 0
   br i1 %i.f, label %.loopexit, label %bb.c
 
@@ -379,7 +351,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond3, label %bb.e, label %.loopexit138
 
 bb.e:                                             ; preds = %bb.d
-  %i.k = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef nonnull %i.h, i64 noundef %i.i, ptr noundef nonnull @.str.10) #3 ; 2 uses
+  %i.k = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef nonnull %i.h, i64 noundef %i.i, ptr noundef nonnull @.str.10) #4 ; 2 uses
   %i.l = icmp slt i32 %i.k, 0
   br i1 %i.l, label %.loopexit, label %bb.f
 
@@ -409,7 +381,7 @@ switch.lookup179:                                 ; preds = %bb.h
   %switch.load181 = load ptr, ptr %switch.gep180, align 8
   %.not130 = icmp eq i32 %.093148, 0
   %i.s = select i1 %.not130, ptr @.str.13, ptr @.str.12
-  %i.t = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef %.0149, i64 noundef %.097147, ptr noundef nonnull @.str.11, ptr noundef nonnull %i.s, ptr noundef nonnull %switch.load181) #3 ; 2 uses
+  %i.t = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef %.0149, i64 noundef %.097147, ptr noundef nonnull @.str.11, ptr noundef nonnull %i.s, ptr noundef nonnull %switch.load181) #4 ; 2 uses
   %i.u = icmp slt i32 %i.t, 0
   br i1 %i.u, label %.loopexit, label %bb.i
 
@@ -444,7 +416,7 @@ CMP_PKIFAILUREINFO_to_string.exit:                ; preds = %bb.h, %bb.j
   br i1 %or.cond7, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %.loopexit138
-  %i.ab = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef %.2, i64 noundef %.299, ptr noundef nonnull @.str.14) #3 ; 2 uses
+  %i.ab = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef %.2, i64 noundef %.299, ptr noundef nonnull @.str.14) #4 ; 2 uses
   %i.ac = icmp slt i32 %i.ab, 0
   br i1 %i.ac, label %.loopexit, label %bb.l
 
@@ -461,14 +433,14 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m, %.loopexit138
   %.3100 = phi i64 [ %i.af, %bb.m ], [ %.299, %.loopexit138 ] ; 3 uses
   %.3 = phi ptr [ %i.ae, %bb.m ], [ %.2, %.loopexit138 ] ; 2 uses
-  %i.ag = tail call i32 @OPENSSL_sk_num(ptr noundef %2) #3 ; 4 uses
+  %i.ag = tail call i32 @OPENSSL_sk_num(ptr noundef %2) #4 ; 4 uses
   %i.ah = icmp sgt i32 %i.ag, 0
   br i1 %i.ah, label %bb.o, label %.loopexit
 
 bb.o:                                             ; preds = %bb.n
   %.not125 = icmp eq i32 %i.ag, 1
   %i.ai = select i1 %.not125, ptr @.str.13, ptr @.str.16
-  %i.aj = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef %.3, i64 noundef %.3100, ptr noundef nonnull @.str.15, ptr noundef nonnull %i.ai) #3 ; 2 uses
+  %i.aj = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef %.3, i64 noundef %.3100, ptr noundef nonnull @.str.15, ptr noundef nonnull %i.ai) #4 ; 2 uses
   %i.ak = icmp slt i32 %i.aj, 0
   br i1 %i.ak, label %.loopexit, label %bb.p
 
@@ -487,12 +459,12 @@ bb.q:                                             ; preds = %.lr.ph, %bb.s
   %.4152 = phi ptr [ %i.an, %.lr.ph ], [ %i.ax, %bb.s ] ; 2 uses
   %.096151 = phi i32 [ 0, %.lr.ph ], [ %i.az, %bb.s ] ; 3 uses
   %.4101150 = phi i64 [ %i.am, %.lr.ph ], [ %i.ay, %bb.s ] ; 3 uses
-  %i.ap = tail call ptr @OPENSSL_sk_value(ptr noundef %2, i32 noundef %.096151) #3 ; 2 uses
-  %i.aq = tail call i32 @ASN1_STRING_length(ptr noundef %i.ap) #3
-  %i.ar = tail call ptr @ASN1_STRING_get0_data(ptr noundef %i.ap) #3
+  %i.ap = tail call ptr @OPENSSL_sk_value(ptr noundef %2, i32 noundef %.096151) #4 ; 2 uses
+  %i.aq = tail call i32 @ASN1_STRING_length(ptr noundef %i.ap) #4
+  %i.ar = tail call ptr @ASN1_STRING_get0_data(ptr noundef %i.ap) #4
   %i.as = icmp slt i32 %.096151, %i.ao
   %i.at = select i1 %i.as, ptr @.str.12, ptr @.str.13
-  %i.au = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef %.4152, i64 noundef %.4101150, ptr noundef nonnull @.str.17, i32 noundef %i.aq, ptr noundef %i.ar, ptr noundef nonnull %i.at) #3 ; 2 uses
+  %i.au = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef %.4152, i64 noundef %.4101150, ptr noundef nonnull @.str.17, i32 noundef %i.aq, ptr noundef %i.ar, ptr noundef nonnull %i.at) #4 ; 2 uses
   %i.av = icmp slt i32 %i.au, 0
   br i1 %i.av, label %.loopexit, label %bb.r
 
@@ -522,15 +494,15 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @ERR_new() #3
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str.7, i32 noundef 261, ptr noundef nonnull @__func__.OSSL_CMP_CTX_snprint_PKIStatus) #3
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 58, i32 noundef 103, ptr noundef null) #3
+  tail call void @ERR_new() #4
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str.7, i32 noundef 261, ptr noundef nonnull @__func__.OSSL_CMP_CTX_snprint_PKIStatus) #4
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 58, i32 noundef 103, ptr noundef null) #4
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.b = tail call i32 @OSSL_CMP_CTX_get_status(ptr noundef nonnull %0) #3
-  %i.c = tail call i32 @OSSL_CMP_CTX_get_failInfoCode(ptr noundef nonnull %0) #3
-  %i.d = tail call ptr @OSSL_CMP_CTX_get0_statusString(ptr noundef nonnull %0) #3
+  %i.b = tail call i32 @OSSL_CMP_CTX_get_status(ptr noundef nonnull %0) #4
+  %i.c = tail call i32 @OSSL_CMP_CTX_get_failInfoCode(ptr noundef nonnull %0) #4
+  %i.d = tail call ptr @OSSL_CMP_CTX_get0_statusString(ptr noundef nonnull %0) #4
   %i.e = tail call fastcc ptr @snprint_PKIStatusInfo_parts(i32 noundef %i.b, i32 noundef %i.c, ptr noundef %i.d, ptr noundef %1, i64 noundef %2)
   br label %bb.d
 
@@ -548,14 +520,14 @@ declare ptr @OSSL_CMP_CTX_get0_statusString(ptr noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @OSSL_CMP_STATUSINFO_new(i32 noundef %0, i32 noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @OSSL_CMP_PKISI_new() #3   ; 6 uses
+  %i.a = tail call ptr @OSSL_CMP_PKISI_new() #4   ; 6 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %.loopexit32, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %i.a, align 8, !tbaa !10
   %i.d = sext i32 %0 to i64
-  %i.e = tail call i32 @ASN1_INTEGER_set(ptr noundef %i.c, i64 noundef %i.d) #3
+  %i.e = tail call i32 @ASN1_INTEGER_set(ptr noundef %i.c, i64 noundef %i.d) #4
   %.not = icmp eq i32 %i.e, 0
   br i1 %.not, label %.loopexit32, label %bb.c
 
@@ -564,24 +536,24 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not27, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = tail call ptr @ASN1_UTF8STRING_new() #3  ; 6 uses
+  %i.f = tail call ptr @ASN1_UTF8STRING_new() #4  ; 6 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %.loopexit32, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.h = tail call i32 @ASN1_STRING_set(ptr noundef nonnull %i.f, ptr noundef nonnull %2, i32 noundef -1) #3
+  %i.h = tail call i32 @ASN1_STRING_set(ptr noundef nonnull %i.f, ptr noundef nonnull %2, i32 noundef -1) #4
   %.not28 = icmp eq i32 %i.h, 0
   br i1 %.not28, label %.loopexit32, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.i = tail call ptr @OPENSSL_sk_new_null() #3  ; 3 uses
+  %i.i = tail call ptr @OPENSSL_sk_new_null() #4  ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.i, ptr %i.j, align 8, !tbaa !16
   %i.k = icmp eq ptr %i.i, null
   br i1 %i.k, label %.loopexit32, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.l = tail call i32 @OPENSSL_sk_push(ptr noundef nonnull %i.i, ptr noundef nonnull %i.f) #3
+  %i.l = tail call i32 @OPENSSL_sk_push(ptr noundef nonnull %i.i, ptr noundef nonnull %i.f) #4
   %.not29 = icmp eq i32 %i.l, 0
   br i1 %.not29, label %.loopexit32, label %bb.h
 
@@ -602,14 +574,14 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.q, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.r = tail call ptr @ASN1_BIT_STRING_new() #3  ; 3 uses
+  %i.r = tail call ptr @ASN1_BIT_STRING_new() #4  ; 3 uses
   store ptr %i.r, ptr %i.m, align 8, !tbaa !17
   %i.s = icmp eq ptr %i.r, null
   br i1 %i.s, label %.loopexit32, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.t = phi ptr [ %i.r, %bb.k ], [ %i.p, %bb.j ]
-  %i.u = tail call i32 @ASN1_BIT_STRING_set_bit(ptr noundef nonnull %i.t, i32 noundef %.033, i32 noundef 1) #3
+  %i.u = tail call i32 @ASN1_BIT_STRING_set_bit(ptr noundef nonnull %i.t, i32 noundef %.033, i32 noundef 1) #4
   %.not31 = icmp eq i32 %i.u, 0
   br i1 %.not31, label %.loopexit32, label %bb.m
 
@@ -620,8 +592,8 @@ bb.m:                                             ; preds = %bb.i, %bb.l
 
 .loopexit32:                                      ; preds = %bb.l, %bb.k, %bb.g, %bb.f, %bb.d, %bb.e, %bb.b, %bb.a
   %.1 = phi ptr [ null, %bb.a ], [ null, %bb.d ], [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ null, %bb.b ], [ %i.f, %bb.g ], [ null, %bb.k ], [ null, %bb.l ]
-  tail call void @OSSL_CMP_PKISI_free(ptr noundef %i.a) #3
-  tail call void @ASN1_UTF8STRING_free(ptr noundef %.1) #3
+  tail call void @OSSL_CMP_PKISI_free(ptr noundef %i.a) #4
+  tail call void @ASN1_UTF8STRING_free(ptr noundef %.1) #4
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.m, %.loopexit32
@@ -659,10 +631,14 @@ declare i32 @ASN1_STRING_length(ptr noundef) local_unnamed_addr #1
 
 declare ptr @ASN1_STRING_get0_data(ptr noundef) local_unnamed_addr #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v16i32(<16 x i32>) #3
+
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

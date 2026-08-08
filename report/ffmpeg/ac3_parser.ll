@@ -1,3 +1,8 @@
+inline.NumInlined: 104
+inline.NumDeleted: 13
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@ff_ac3_parse_header:bb.a
   %i.tg = load i32, ptr %i.tf, align 1, !tbaa !9
   %i.th = tail call i32 @llvm.bswap.i32(i32 %i.tg)
@@ -199,7 +204,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.yd = load i32, ptr %i.yc, align 1, !tbaa !9
   %i.ye = tail call i32 @llvm.bswap.i32(i32 %i.yd)
   %i.yf = and i32 %spec.select.i158.i, 7
-  %i.yg = shl i32 %i.ye, %i.yf                    ; 5 uses
+  %i.yg = shl i32 %i.ye, %i.yf                    ; 4 uses
   %i.yh = add i32 %spec.select.i158.i, 16
   %i.yi = tail call i32 @llvm.umin.i32(i32 %.pre211.i, i32 %i.yh) ; 2 uses
   store i32 %i.yi, ptr %i.a, align 8, !tbaa !12
@@ -210,24 +215,14 @@ bb.ak:                                            ; preds = %bb.aj
   %.not154.1.i = icmp eq i32 %i.yk, 0
   %i.yl = load i64, ptr getelementptr inbounds nuw (i8, ptr @ff_eac3_custom_channel_map_locations, i64 24), align 8
   %i.ym = select i1 %.not154.1.i, i64 0, i64 %i.yl
-  %2 = insertelement <8 x i32> poison, i32 %i.yg, i64 0
-  %3 = shufflevector <8 x i32> %2, <8 x i32> poison, <8 x i32> zeroinitializer
-  %4 = and <8 x i32> %3, <i32 536870912, i32 268435456, i32 134217728, i32 67108864, i32 33554432, i32 16777216, i32 8388608, i32 4194304>
-  %5 = icmp eq <8 x i32> %4, zeroinitializer
-  %6 = load <15 x i64>, ptr getelementptr inbounds nuw (i8, ptr @ff_eac3_custom_channel_map_locations, i64 40), align 8
-  %7 = shufflevector <15 x i64> %6, <15 x i64> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
-  %8 = select <8 x i1> %5, <8 x i64> zeroinitializer, <8 x i64> %7 ; 2 uses
-  %9 = insertelement <6 x i32> poison, i32 %i.yg, i64 0
-  %10 = shufflevector <6 x i32> %9, <6 x i32> poison, <6 x i32> zeroinitializer
-  %11 = and <6 x i32> %10, <i32 2097152, i32 1048576, i32 524288, i32 262144, i32 131072, i32 65536>
-  %12 = icmp eq <6 x i32> %11, zeroinitializer
-  %13 = load <11 x i64>, ptr getelementptr inbounds nuw (i8, ptr @ff_eac3_custom_channel_map_locations, i64 168), align 8
-  %14 = shufflevector <11 x i64> %13, <11 x i64> poison, <6 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10>
-  %15 = select <6 x i1> %12, <6 x i64> zeroinitializer, <6 x i64> %14
-  %16 = shufflevector <6 x i64> %15, <6 x i64> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison>
-  %17 = or <8 x i64> %8, %16
-  %18 = shufflevector <8 x i64> %17, <8 x i64> %8, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 14, i32 15>
-  %i.yn = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %18)
+  %2 = insertelement <14 x i32> poison, i32 %i.yg, i64 0
+  %3 = shufflevector <14 x i32> %2, <14 x i32> poison, <14 x i32> zeroinitializer
+  %4 = and <14 x i32> %3, <i32 536870912, i32 268435456, i32 134217728, i32 67108864, i32 33554432, i32 16777216, i32 8388608, i32 4194304, i32 2097152, i32 1048576, i32 524288, i32 262144, i32 131072, i32 65536>
+  %5 = icmp eq <14 x i32> %4, zeroinitializer
+  %6 = load <27 x i64>, ptr getelementptr inbounds nuw (i8, ptr @ff_eac3_custom_channel_map_locations, i64 40), align 8
+  %7 = shufflevector <27 x i64> %6, <27 x i64> poison, <14 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24, i32 26>
+  %8 = select <14 x i1> %5, <14 x i64> zeroinitializer, <14 x i64> %7
+  %i.yn = tail call i64 @llvm.vector.reduce.or.v14i64(<14 x i64> %8)
   %op.rdx = or i64 %i.yn, %i.ym
   %op.rdx151 = or i64 %op.rdx, %spec.select.i127  ; 2 uses
   %i.yo = trunc i64 %op.rdx151 to i32
@@ -630,7 +625,7 @@ declare i8 @llvm.usub.sat.i8(i8, i8) #7
 declare i64 @llvm.bswap.i64(i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.or.v8i64(<8 x i64>) #7
+declare i64 @llvm.vector.reduce.or.v14i64(<14 x i64>) #7
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
