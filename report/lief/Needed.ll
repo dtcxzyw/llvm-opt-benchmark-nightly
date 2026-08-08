@@ -136,14 +136,13 @@ _ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit: ; preds = %bb.b, %bb.c
   br i1 %.not4149, label %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EED2Ev.exit16, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit, %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE9push_backEOS3_.exit
-  %.045 = phi i32 [ %3, %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE9push_backEOS3_.exit ], [ %i.m, %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit ] ; 4 uses
+  %.045 = phi i32 [ %i.o, %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE9push_backEOS3_.exit ], [ %i.m, %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit ] ; 3 uses
   %.sroa.022.044 = phi ptr [ %.sroa.022.1, %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE9push_backEOS3_.exit ], [ null, %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit ] ; 10 uses
   %.sroa.10.043 = phi ptr [ %.sroa.10.1, %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE9push_backEOS3_.exit ], [ null, %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit ] ; 7 uses
   %.sroa.17.042 = phi ptr [ %.sroa.17.1, %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE9push_backEOS3_.exit ], [ null, %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit ] ; 3 uses
-  %2 = sub i32 0, %.045
-  %i.o = and i32 %.045, %2                        ; 3 uses
-  %3 = xor i32 %i.o, %.045
-  %cond = icmp eq i32 %i.o, 1
+  %.06 = add i32 %.045, -1
+  %i.o = and i32 %.06, %.045                      ; 2 uses
+  %cond = trunc i32 %.045 to i1
   %.not.i.i6 = icmp eq ptr %.sroa.10.043, %.sroa.17.042 ; 2 uses
   br i1 %cond, label %bb.d, label %bb.j
 
@@ -255,7 +254,7 @@ _ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE9push_backEOS3_.exit: ; preds = %_ZN
   %.sroa.17.1 = phi ptr [ %.sroa.17.042, %bb.e ], [ %i.ae, %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.au, %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i13 ], [ %.sroa.17.042, %bb.k ] ; 2 uses
   %.sroa.10.1 = phi ptr [ %i.p, %bb.e ], [ %i.ad, %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.at, %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i13 ], [ %i.af, %bb.k ] ; 2 uses
   %.sroa.022.1 = phi ptr [ %.sroa.022.044, %bb.e ], [ %i.aa, %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.aq, %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i13 ], [ %.sroa.022.044, %bb.k ] ; 2 uses
-  %.not = icmp eq i32 %i.o, %.045
+  %.not = icmp eq i32 %i.o, 0
   br i1 %.not, label %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EED2Ev.exit16, label %.lr.ph, !llvm.loop !22
 
 _ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EED2Ev.exit16: ; preds = %_ZNSt6vectorIN4LIEF3ELF6Needed4NEEDESaIS3_EE9push_backEOS3_.exit, %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit.thread, %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit

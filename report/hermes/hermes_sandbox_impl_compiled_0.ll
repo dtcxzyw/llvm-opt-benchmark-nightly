@@ -204,13 +204,9 @@ bb.i:                                             ; preds = %bb.h
   %i.av = sub i32 0, %i.au
   %i.aw = or i32 %i.au, %i.av
   %i.ax = shl i32 %i.l, %i.k
-  %2 = and i32 %i.ax, %i.aw                       ; 3 uses
-  %3 = sub i32 0, %2
-  %i.ay = and i32 %2, %3
-  %.not3158 = icmp eq i32 %i.ay, 0
-  %i.az = tail call range(i32 2, 33) i32 @llvm.cttz.i32(i32 %2, i1 true)
-  %4 = select i1 %.not3158, i32 32, i32 %i.az     ; 2 uses
-  %i.ba = shl nuw nsw i32 %4, 3                   ; 4 uses
+  %i.ay = and i32 %i.ax, %i.aw
+  %i.az = tail call range(i32 2, 33) i32 @llvm.cttz.i32(i32 %i.ay, i1 false) ; 2 uses
+  %i.ba = shl nuw nsw i32 %i.az, 3                ; 4 uses
   %i.bb = add nuw nsw i32 %i.ba, 272076           ; 2 uses
   %i.bc = add nuw nsw i32 %i.ba, 272084
   %i.bd = zext nneg i32 %i.bc to i64              ; 2 uses
@@ -228,7 +224,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bi, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %i.bj = tail call i32 @llvm.fshl.i32(i32 -2, i32 -2, i32 %4)
+  %i.bj = tail call i32 @llvm.fshl.i32(i32 -2, i32 -2, i32 %i.az)
   %i.bk = and i32 %i.bj, %.0.copyload.i           ; 2 uses
   br label %bb.l
 
@@ -333,22 +329,18 @@ bb.q:                                             ; preds = %bb.p, %bb.l
 bb.r:                                             ; preds = %bb.h
   %.val3355 = load ptr, ptr %i.e, align 8, !tbaa !21
   %i.cz = getelementptr inbounds nuw i8, ptr %.val3355, i64 272040
-  %.0.copyload.i3575 = load i32, ptr %i.cz, align 1 ; 6 uses
+  %.0.copyload.i3575 = load i32, ptr %i.cz, align 1 ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i3575) #16, !srcloc !22
   %.not3142 = icmp eq i32 %.0.copyload.i3575, 0
   br i1 %.not3142, label %bb.az, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %5 = sub i32 0, %.0.copyload.i3575
-  %6 = and i32 %.0.copyload.i3575, %5
-  %.not3143 = icmp eq i32 %6, 0
   %i.da = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.0.copyload.i3575, i1 true)
   %i.db = shl nuw nsw i32 %i.da, 2
-  %7 = add nuw nsw i32 %i.db, 272340
-  %8 = select i1 %.not3143, i32 272468, i32 %7
-  %i.dc = zext nneg i32 %8 to i64
   %.val3354 = load ptr, ptr %i.e, align 8, !tbaa !21
-  %i.dd = getelementptr inbounds nuw i8, ptr %.val3354, i64 %i.dc
+  %i.dc = zext nneg i32 %i.db to i64
+  %2 = getelementptr inbounds nuw i8, ptr %.val3354, i64 %i.dc
+  %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 272340
   %.0.copyload.i3576 = load i32, ptr %i.dd, align 1 ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i3576) #16, !srcloc !22
   %i.de = zext i32 %.0.copyload.i3576 to i64
@@ -608,21 +600,17 @@ bb.am:                                            ; preds = %.loopexit3723
   %i.go = shl i32 2, %i.gn                        ; 2 uses
   %i.gp = sub i32 0, %i.go
   %i.gq = or i32 %i.go, %i.gp
-  %i.gr = and i32 %i.gq, %.0.copyload.i3589       ; 4 uses
+  %i.gr = and i32 %i.gq, %.0.copyload.i3589       ; 2 uses
   %.not3117 = icmp eq i32 %i.gr, 0
   br i1 %.not3117, label %bb.az, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %9 = sub i32 0, %i.gr
-  %10 = and i32 %i.gr, %9
-  %.not3118 = icmp eq i32 %10, 0
   %i.gs = tail call range(i32 1, 33) i32 @llvm.cttz.i32(i32 %i.gr, i1 true)
   %i.gt = shl nuw nsw i32 %i.gs, 2
-  %11 = add nuw nsw i32 %i.gt, 272340
-  %12 = select i1 %.not3118, i32 272468, i32 %11
-  %i.gu = zext nneg i32 %12 to i64
   %.val3336 = load ptr, ptr %i.fc, align 8, !tbaa !21
-  %i.gv = getelementptr inbounds nuw i8, ptr %.val3336, i64 %i.gu
+  %i.gu = zext nneg i32 %i.gt to i64
+  %3 = getelementptr inbounds nuw i8, ptr %.val3336, i64 %i.gu
+  %i.gv = getelementptr inbounds nuw i8, ptr %3, i64 272340
   %.0.copyload.i3594 = load i32, ptr %i.gv, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i3594) #16, !srcloc !22
   br label %bb.ao

@@ -70,7 +70,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !17   ; 5 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !17   ; 4 uses
   %i.g = and i32 %i.f, %2
   %i.h = icmp eq i32 %i.g, 0
   br i1 %i.h, label %bb.i, label %bb.n
@@ -81,16 +81,15 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   store i8 0, ptr %i.a, align 16, !tbaa !18
-  %4 = sub i32 0, %i.f
-  %5 = and i32 %i.f, %4                           ; 2 uses
-  %.not10.i = icmp eq i32 %5, 0
+  %.not10.i = icmp eq i32 %i.f, 0
   br i1 %.not10.i, label %write_all_states.exit, label %.split.i.i
 
-.split.i.i:                                       ; preds = %bb.j, %6
-  %i.i = phi i32 [ %8, %6 ], [ %5, %bb.j ]        ; 2 uses
-  %.011.i = phi i32 [ %i.j, %6 ], [ %i.f, %bb.j ] ; 3 uses
-  %i.j = xor i32 %.011.i, %i.i                    ; 3 uses
-  %i.k = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.011.i, i1 true) ; 2 uses
+.split.i.i:                                       ; preds = %bb.j, %bb.k
+  %i.i = phi i32 [ %i.j, %bb.k ], [ %i.f, %bb.j ] ; 5 uses
+  %4 = sub i32 0, %i.i
+  %5 = and i32 %i.i, %4                           ; 2 uses
+  %i.j = xor i32 %5, %i.i
+  %i.k = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.i, i1 true) ; 2 uses
   %i.l = icmp samesign ult i32 %i.k, 16
   br i1 %i.l, label %switch.lookup, label %state_name.exit.i
 
@@ -103,33 +102,26 @@ switch.lookup:                                    ; preds = %.split.i.i
 state_name.exit.i:                                ; preds = %.split.i.i, %switch.lookup
   %.0.i.i = phi ptr [ %switch.load, %switch.lookup ], [ @.str.16, %.split.i.i ]
   %i.n = call ptr @strcat(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) %.0.i.i) #11 ; 0 uses
-  %.not9.i = icmp eq i32 %i.i, %.011.i
-  br i1 %.not9.i, label %6, label %bb.k
+  %.not9.i = icmp eq i32 %5, %i.i
+  br i1 %.not9.i, label %write_all_states.exit, label %bb.k
 
 bb.k:                                             ; preds = %state_name.exit.i
   %strlen.i = call i64 @strlen(ptr nonnull dereferenceable(1) %i.a)
   %endptr.i = getelementptr inbounds i8, ptr %i.a, i64 %strlen.i
   store i16 47, ptr %endptr.i, align 1
-  br label %6
+  br label %.split.i.i
 
-6:                                                ; preds = %bb.k, %state_name.exit.i
-  %7 = sub i32 0, %i.j
-  %8 = and i32 %i.j, %7                           ; 2 uses
-  %.not.i = icmp eq i32 %8, 0
-  br i1 %.not.i, label %write_all_states.exit, label %.split.i.i, !llvm.loop !19
-
-write_all_states.exit:                            ; preds = %6, %bb.j
+write_all_states.exit:                            ; preds = %state_name.exit.i, %bb.j
   store i8 0, ptr %i.b, align 16, !tbaa !18
-  %9 = sub i32 0, %2
-  %10 = and i32 %2, %9                            ; 2 uses
-  %.not10.i21 = icmp eq i32 %10, 0
+  %.not10.i21 = icmp eq i32 %2, 0
   br i1 %.not10.i21, label %write_all_states.exit30, label %.split.i.i22
 
-.split.i.i22:                                     ; preds = %write_all_states.exit, %11
-  %i.o = phi i32 [ %13, %11 ], [ %10, %write_all_states.exit ] ; 2 uses
-  %.011.i23 = phi i32 [ %i.p, %11 ], [ %2, %write_all_states.exit ] ; 3 uses
-  %i.p = xor i32 %.011.i23, %i.o                  ; 3 uses
-  %i.q = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.011.i23, i1 true) ; 2 uses
+.split.i.i22:                                     ; preds = %write_all_states.exit, %bb.l
+  %i.o = phi i32 [ %i.p, %bb.l ], [ %2, %write_all_states.exit ] ; 5 uses
+  %6 = sub i32 0, %i.o
+  %7 = and i32 %i.o, %6                           ; 2 uses
+  %i.p = xor i32 %7, %i.o
+  %i.q = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.o, i1 true) ; 2 uses
   %i.r = icmp samesign ult i32 %i.q, 16
   br i1 %i.r, label %switch.lookup39, label %state_name.exit.i24
 
@@ -142,22 +134,16 @@ switch.lookup39:                                  ; preds = %.split.i.i22
 state_name.exit.i24:                              ; preds = %.split.i.i22, %switch.lookup39
   %.0.i.i25 = phi ptr [ %switch.load41, %switch.lookup39 ], [ @.str.16, %.split.i.i22 ]
   %i.t = call ptr @strcat(ptr noundef nonnull dereferenceable(1) %i.b, ptr noundef nonnull dereferenceable(1) %.0.i.i25) #11 ; 0 uses
-  %.not9.i26 = icmp eq i32 %i.o, %.011.i23
-  br i1 %.not9.i26, label %11, label %bb.l
+  %.not9.i26 = icmp eq i32 %7, %i.o
+  br i1 %.not9.i26, label %write_all_states.exit30, label %bb.l
 
 bb.l:                                             ; preds = %state_name.exit.i24
   %strlen.i27 = call i64 @strlen(ptr nonnull dereferenceable(1) %i.b)
   %endptr.i28 = getelementptr inbounds i8, ptr %i.b, i64 %strlen.i27
   store i16 47, ptr %endptr.i28, align 1
-  br label %11
+  br label %.split.i.i22
 
-11:                                               ; preds = %bb.l, %state_name.exit.i24
-  %12 = sub i32 0, %i.p
-  %13 = and i32 %i.p, %12                         ; 2 uses
-  %.not.i29 = icmp eq i32 %13, 0
-  br i1 %.not.i29, label %write_all_states.exit30, label %.split.i.i22, !llvm.loop !19
-
-write_all_states.exit30:                          ; preds = %11, %write_all_states.exit
+write_all_states.exit30:                          ; preds = %state_name.exit.i24, %write_all_states.exit
   call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef nonnull %0, i32 noundef -1, ptr noundef nonnull @.str.3, ptr noundef %3, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #11
   br label %bb.m
 
@@ -198,15 +184,15 @@ bb.b:                                             ; preds = %.outer.split
 
 bb.c:                                             ; preds = %bb.b
   %i.e = tail call ptr @__errno_location() #14
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !21
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !19
   %i.g = icmp eq i32 %i.f, 4
-  br i1 %i.g, label %.outer.split, label %.split, !llvm.loop !22
+  br i1 %i.g, label %.outer.split, label %.split, !llvm.loop !20
 
 .outer:                                           ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %.0.ph19, i64 %i.b
   %i.i = sub i64 %.09.ph18, %i.b                  ; 2 uses
   %.not = icmp eq i64 %i.i, 0
-  br i1 %.not, label %.split, label %.outer.split.preheader, !llvm.loop !22
+  br i1 %.not, label %.split, label %.outer.split.preheader, !llvm.loop !20
 
 .split:                                           ; preds = %.outer, %.outer.split, %bb.c, %bb.a
   ret void
@@ -282,8 +268,7 @@ attributes #15 = { noreturn nounwind }
 !16 = !{!"p1 _ZTS19archive_string_conv", !12, i64 0}
 !17 = !{!10, !6, i64 4}
 !18 = !{!7, !7, i64 0}
-!19 = distinct !{!19, !20}
-!20 = !{!"llvm.loop.mustprogress"}
-!21 = !{!6, !6, i64 0}
-!22 = distinct !{!22, !20}
+!19 = !{!6, !6, i64 0}
+!20 = distinct !{!20, !21}
+!21 = !{!"llvm.loop.mustprogress"}
 end_hunk_0
