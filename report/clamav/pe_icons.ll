@@ -204,7 +204,7 @@ bb.a:
   %i.e = alloca [6 x i32], align 16               ; 11 uses
   %i.f = alloca [6 x i32], align 16               ; 11 uses
   %i.g = alloca [125 x i8], align 16              ; 62 uses
-  %i.h = lshr i32 %0, 2                           ; 82 uses
+  %i.h = lshr i32 %0, 2                           ; 58 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
@@ -607,7 +607,7 @@ bb.t:                                             ; preds = %.loopexit1154
   br i1 %.not964, label %.preheader1151, label %.preheader1157
 
 .preheader1145:                                   ; preds = %._crit_edge1214.split
-  %i.if = mul nuw nsw i32 %i.h, %i.h              ; 12 uses
+  %i.if = mul nuw nsw i32 %i.h, %i.h              ; 24 uses
   %i.ig = load i32, ptr %i.ap, align 4, !tbaa !57
   %i.ih = udiv i32 %i.ig, %i.if
   store i32 %i.ih, ptr %i.ap, align 4, !tbaa !57
@@ -654,8 +654,8 @@ bb.t:                                             ; preds = %.loopexit1154
   store i32 %i.jl, ptr %i.jj, align 4, !tbaa !57
   %i.jm = load i32, ptr %i.q, align 4, !tbaa !124 ; 4 uses
   %i.jn = mul i32 %i.jm, 100
-  %4 = udiv i32 %i.jn, %0
-  %i.jo = udiv i32 %4, %0                         ; 2 uses
+  %4 = mul nuw nsw i32 %0, %0                     ; 2 uses
+  %i.jo = udiv i32 %i.jn, %4                      ; 2 uses
   %i.jp = icmp ugt i32 %i.jo, 5                   ; 3 uses
   br i1 %i.jp, label %bb.an, label %bb.ao
 
@@ -982,8 +982,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   br i1 %.not965, label %bb.aq, label %.preheader1143
 
 bb.aq:                                            ; preds = %bb.ap
-  %5 = mul nuw nsw i32 %0, %0
-  %i.oi = shl nuw nsw i32 %5, 3
+  %i.oi = shl nuw nsw i32 %4, 3
   %i.oj = zext nneg i32 %i.oi to i64
   tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.36, i64 noundef %i.oj) #13
   tail call void @free(ptr noundef %i.l) #13
@@ -1386,23 +1385,20 @@ bb.cs:                                            ; preds = %._crit_edge1350
   %i.apu = getelementptr inbounds nuw i8, ptr %2, i64 200 ; 3 uses
   %i.apv = getelementptr inbounds nuw i8, ptr %2, i64 212 ; 2 uses
   %i.apw = load i32, ptr %i.a, align 16, !tbaa !57
-  %6 = udiv i32 %i.apw, %i.h
-  %i.apx = udiv i32 %6, %i.h                      ; 2 uses
+  %i.apx = udiv i32 %i.apw, %i.if                 ; 2 uses
   store i32 %i.apx, ptr %i.apq, align 8, !tbaa !57
   %i.apy = load i32, ptr %i.b, align 16, !tbaa !57 ; 2 uses
   store i32 %i.apy, ptr %i.apr, align 4, !tbaa !57
   %i.apz = load i32, ptr %i.c, align 16, !tbaa !57 ; 2 uses
   store i32 %i.apz, ptr %i.aps, align 8, !tbaa !57
   %i.aqa = load i32, ptr %i.d, align 16, !tbaa !57
-  %7 = udiv i32 %i.aqa, %i.h
-  %i.aqb = udiv i32 %7, %i.h
+  %i.aqb = udiv i32 %i.aqa, %i.if
   store i32 %i.aqb, ptr %i.apt, align 4, !tbaa !57
   %i.aqc = load i32, ptr %i.e, align 16, !tbaa !57
   store i32 %i.aqc, ptr %i.apu, align 8, !tbaa !57
   %i.aqd = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.aqe = load i32, ptr %i.aqd, align 4, !tbaa !57
-  %8 = udiv i32 %i.aqe, %i.h
-  %i.aqf = udiv i32 %8, %i.h                      ; 2 uses
+  %i.aqf = udiv i32 %i.aqe, %i.if                 ; 2 uses
   %i.aqg = getelementptr inbounds nuw i8, ptr %2, i64 156 ; 2 uses
   store i32 %i.aqf, ptr %i.aqg, align 4, !tbaa !57
   %i.aqh = getelementptr inbounds nuw i8, ptr %i.b, i64 4
@@ -1415,8 +1411,7 @@ bb.cs:                                            ; preds = %._crit_edge1350
   store i32 %i.aql, ptr %i.aqm, align 4, !tbaa !57
   %i.aqn = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.aqo = load i32, ptr %i.aqn, align 4, !tbaa !57
-  %9 = udiv i32 %i.aqo, %i.h
-  %i.aqp = udiv i32 %9, %i.h
+  %i.aqp = udiv i32 %i.aqo, %i.if
   %i.aqq = getelementptr inbounds nuw i8, ptr %2, i64 192 ; 2 uses
   store i32 %i.aqp, ptr %i.aqq, align 8, !tbaa !57
   %i.aqr = getelementptr inbounds nuw i8, ptr %i.e, i64 4
@@ -1424,8 +1419,7 @@ bb.cs:                                            ; preds = %._crit_edge1350
   %i.aqt = getelementptr inbounds nuw i8, ptr %2, i64 216
   %i.aqu = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.aqv = load i32, ptr %i.aqu, align 8, !tbaa !57
-  %10 = udiv i32 %i.aqv, %i.h
-  %i.aqw = udiv i32 %10, %i.h                     ; 2 uses
+  %i.aqw = udiv i32 %i.aqv, %i.if                 ; 2 uses
   %i.aqx = getelementptr inbounds nuw i8, ptr %2, i64 160 ; 2 uses
   store i32 %i.aqw, ptr %i.aqx, align 8, !tbaa !57
   %i.aqy = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -1438,8 +1432,7 @@ bb.cs:                                            ; preds = %._crit_edge1350
   store i32 %i.arc, ptr %i.ard, align 8, !tbaa !57
   %i.are = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.arf = load i32, ptr %i.are, align 8, !tbaa !57
-  %11 = udiv i32 %i.arf, %i.h
-  %i.arg = udiv i32 %11, %i.h
+  %i.arg = udiv i32 %i.arf, %i.if
   %i.arh = getelementptr inbounds nuw i8, ptr %2, i64 196 ; 2 uses
   store i32 %i.arg, ptr %i.arh, align 4, !tbaa !57
   %i.ari = getelementptr inbounds nuw i8, ptr %2, i64 208
@@ -1456,8 +1449,7 @@ bb.cs:                                            ; preds = %._crit_edge1350
 .preheader1121:                                   ; preds = %bb.cs
   %i.arp = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.arq = load i32, ptr %i.arp, align 4, !tbaa !57
-  %12 = udiv i32 %i.arq, %i.h
-  %i.arr = udiv i32 %12, %i.h
+  %i.arr = udiv i32 %i.arq, %i.if
   store i32 %i.arr, ptr %i.ap, align 8, !tbaa !57
   %i.ars = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %i.art = load i32, ptr %i.ars, align 4, !tbaa !57 ; 2 uses
@@ -1467,15 +1459,13 @@ bb.cs:                                            ; preds = %._crit_edge1350
   store i32 %i.arv, ptr %i.ar, align 8, !tbaa !57
   %i.arw = getelementptr inbounds nuw i8, ptr %i.d, i64 12
   %i.arx = load i32, ptr %i.arw, align 4, !tbaa !57
-  %13 = udiv i32 %i.arx, %i.h
-  %i.ary = udiv i32 %13, %i.h
+  %i.ary = udiv i32 %i.arx, %i.if
   store i32 %i.ary, ptr %i.al, align 4, !tbaa !57
   store i32 %i.art, ptr %i.as, align 8, !tbaa !57
   store i32 %i.arv, ptr %i.at, align 4, !tbaa !57
   %i.arz = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.asa = load i32, ptr %i.arz, align 16, !tbaa !57
-  %14 = udiv i32 %i.asa, %i.h
-  %i.asb = udiv i32 %14, %i.h
+  %i.asb = udiv i32 %i.asa, %i.if
   store i32 %i.asb, ptr %i.io, align 4, !tbaa !57
   %i.asc = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.asd = load i32, ptr %i.asc, align 16, !tbaa !57 ; 2 uses
@@ -1487,8 +1477,7 @@ bb.cs:                                            ; preds = %._crit_edge1350
   store i32 %i.asg, ptr %i.ash, align 4, !tbaa !57
   %i.asi = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.asj = load i32, ptr %i.asi, align 16, !tbaa !57
-  %15 = udiv i32 %i.asj, %i.h
-  %i.ask = udiv i32 %15, %i.h
+  %i.ask = udiv i32 %i.asj, %i.if
   store i32 %i.ask, ptr %i.ir, align 8, !tbaa !57
   %i.asl = getelementptr inbounds nuw i8, ptr %2, i64 60
   store i32 %i.asd, ptr %i.asl, align 4, !tbaa !57
@@ -1496,8 +1485,7 @@ bb.cs:                                            ; preds = %._crit_edge1350
   store i32 %i.asg, ptr %i.asm, align 8, !tbaa !57
   %i.asn = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   %i.aso = load i32, ptr %i.asn, align 4, !tbaa !57
-  %16 = udiv i32 %i.aso, %i.h
-  %i.asp = udiv i32 %16, %i.h
+  %i.asp = udiv i32 %i.aso, %i.if
   store i32 %i.asp, ptr %i.ja, align 8, !tbaa !57
   %i.asq = getelementptr inbounds nuw i8, ptr %i.b, i64 20
   %i.asr = load i32, ptr %i.asq, align 4, !tbaa !57 ; 2 uses
@@ -1509,8 +1497,7 @@ bb.cs:                                            ; preds = %._crit_edge1350
   store i32 %i.asu, ptr %i.asv, align 8, !tbaa !57
   %i.asw = getelementptr inbounds nuw i8, ptr %i.d, i64 20
   %i.asx = load i32, ptr %i.asw, align 4, !tbaa !57
-  %17 = udiv i32 %i.asx, %i.h
-  %i.asy = udiv i32 %17, %i.h
+  %i.asy = udiv i32 %i.asx, %i.if
   store i32 %i.asy, ptr %i.jd, align 4, !tbaa !57
   %i.asz = getelementptr inbounds nuw i8, ptr %2, i64 64
   store i32 %i.asr, ptr %i.asz, align 8, !tbaa !57
