@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
 bb.i:                                             ; preds = %bb.g
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 7
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !41  ; 2 uses
-  %i.ad = zext i8 %i.ac to i32                    ; 3 uses
+  %i.ad = zext i8 %i.ac to i32                    ; 4 uses
   %i.ae = add i8 %i.ac, -7
   %or.cond3 = icmp ult i8 %i.ae, -6
   br i1 %or.cond3, label %bb.q, label %bb.j
@@ -229,14 +229,15 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %i.am, label %bb.q, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.an = mul nuw nsw i32 %i.ad, 144              ; 2 uses
+  %i.an = mul nuw nsw i32 %i.ad, 144
   %i.ao = udiv i32 2147483647, %i.an
   %i.ap = icmp samesign ugt i32 %i.ak, %i.ao
   br i1 %i.ap, label %bb.q, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.aq = mul i32 %i.an, %i.ak
-  %i.ar = lshr i32 %i.aq, 5
+  %5 = mul nuw nsw i32 %i.ad, 9
+  %i.aq = mul nuw nsw i32 %5, %i.ak
+  %i.ar = lshr i32 %i.aq, 1
   %i.as = zext nneg i32 %i.ar to i64
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %i.as, ptr %i.at, align 8, !tbaa !60

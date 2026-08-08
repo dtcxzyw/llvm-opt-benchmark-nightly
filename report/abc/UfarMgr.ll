@@ -204,7 +204,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i43
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45: ; preds = %_ZNSt7__cxx114stoiERKNS_12basic_stringIcSt11char_traitsIcESaIcEEEPmi.exit42, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i43
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #37
-  %i.hh = shl i32 %i.hb, 6
+  %i.hh = shl i32 %i.hb, 4
   br label %bb.bf
 
 bb.bf:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45, %_ZNSt7__cxx1111basic_regexIcNS_12regex_traitsIcEEED2Ev.exit29
@@ -214,7 +214,7 @@ bb.bf:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.hk = load i32, ptr %i.hj, align 4, !tbaa !77
   %i.hl = mul i32 %.0, %i.hi
   %i.hm = mul i32 %i.hl, %i.hk
-  %i.hn = sdiv i32 %i.hm, 100
+  %i.hn = sdiv i32 %i.hm, 25
   %i.ho = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.hn, ptr %i.ho, align 8, !tbaa !19
   %i.hp = load ptr, ptr %2, align 8, !tbaa !81    ; 3 uses

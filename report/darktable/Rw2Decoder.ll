@@ -203,7 +203,7 @@ bb.a:
   %i.g = zext i16 %i.f to i32                     ; 2 uses
   %i.h = tail call noundef ptr @_ZNK8rawspeed7TiffIFD8getEntryENS_7TiffTagE(ptr noundef nonnull align 8 dereferenceable(104) %i.d, i16 noundef zeroext 2)
   %i.i = tail call noundef zeroext i16 @_ZNK8rawspeed9TiffEntry6getU16Ej(ptr noundef nonnull align 8 dereferenceable(48) %i.h, i32 noundef 0) ; 5 uses
-  %i.j = zext i16 %i.i to i32                     ; 4 uses
+  %i.j = zext i16 %i.i to i32                     ; 5 uses
   br i1 %.not366, label %bb.b, label %bb.ch
 
 bb.b:                                             ; preds = %bb.a
@@ -497,8 +497,8 @@ _ZN8rawspeed8RawImageC2ERKS0_.exit154:            ; preds = %_ZNK8rawspeed6Buffe
   store i64 0, ptr %9, align 8
   %i.cq = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i64 %.sroa.0363.0.insert.insert, ptr %i.cq, align 8
-  %27 = mul nuw nsw i32 %i.j, 12
-  %28 = lshr i32 %27, 3
+  %27 = lshr i32 %i.j, 1
+  %28 = add nuw nsw i32 %27, %i.j
   %.lhs.trunc = add nuw nsw i16 %i.i, 2
   %i.cr = udiv i16 %.lhs.trunc, 10
   %.zext = zext nneg i16 %i.cr to i32

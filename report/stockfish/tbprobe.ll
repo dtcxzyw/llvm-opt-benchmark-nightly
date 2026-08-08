@@ -204,9 +204,9 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.bo = call i32 @llvm.umax.i32(i32 %i.bl, i32 130875)
-  %i.bp = mul nuw nsw i32 %i.bo, 208
-  %i.bq = add nsw i32 %i.bp, -27221376
-  %i.br = udiv i32 %i.bq, 200
+  %i.bp = mul nuw nsw i32 %i.bo, 26
+  %i.bq = add nsw i32 %i.bp, -3402672
+  %i.br = udiv i32 %i.bq, 25
   br label %bb.y
 
 bb.v:                                             ; preds = %bb.t
@@ -219,9 +219,9 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w
   %i.bu = call i32 @llvm.umin.i32(i32 %i.bl, i32 -130875)
-  %.neg93 = mul nsw i32 %i.bu, -208
-  %.nonneg = add nsw i32 %.neg93, -27221376
-  %i.bv = udiv i32 %.nonneg, 200
+  %.neg93 = mul nsw i32 %i.bu, -26
+  %.nonneg = add nsw i32 %.neg93, -3402672
+  %i.bv = udiv i32 %.nonneg, 25
   %.neg91 = sub nsw i32 0, %i.bv
   br label %bb.y
 

@@ -203,8 +203,8 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = tail call i32 @llvm.smax.i32(i32 %1, i32 0)
   %i.d = tail call i32 @llvm.umin.i32(i32 %i.c, i32 100)
-  %i.e = mul nuw nsw i32 %i.d, 65535
-  %i.f = udiv i32 %i.e, 100
+  %i.e = mul nuw nsw i32 %i.d, 13107
+  %i.f = udiv i32 %i.e, 20
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 2640
   store i32 %i.f, ptr %i.g, align 8
   ret i1 true
@@ -230,8 +230,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.i = trunc nuw nsw i32 %spec.store.select2 to i16
-  %.lhs.trunc = mul nuw nsw i16 %i.i, 90
-  %i.j = udiv i16 %.lhs.trunc, 100
+  %.lhs.trunc = mul nuw nsw i16 %i.i, 9
+  %i.j = udiv i16 %.lhs.trunc, 10
   store <4 x i8> <i8 -2, i8 3, i8 0, i8 0>, ptr %i.a, align 4
   %i.k = trunc nuw nsw i16 %i.j to i8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -248,8 +248,8 @@ bb.c:                                             ; preds = %bb.b
   br label %.thread
 
 bb.d:                                             ; preds = %bb.a
-  %i.r = mul nuw nsw i32 %spec.store.select2, 65535
-  %i.s = udiv i32 %i.r, 100                       ; 3 uses
+  %i.r = mul nuw nsw i32 %spec.store.select2, 13107
+  %i.s = udiv i32 %i.r, 20                        ; 3 uses
   store i8 -11, ptr %i.a, align 4
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 2664 ; 3 uses
   %i.u = load ptr, ptr %i.t, align 8
@@ -608,8 +608,8 @@ bb.k:                                             ; preds = %bb.j
   %i.by = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   %i.bz = load i32, ptr %i.by, align 8
   %i.ca = srem i32 %i.bz, 36000
-  %i.cb = shl nsw i32 %i.ca, 15
-  %i.cc = sdiv i32 %i.cb, 18000
+  %i.cb = shl nsw i32 %i.ca, 11
+  %i.cc = sdiv i32 %i.cb, 1125
   %i.cd = trunc i32 %i.cc to i16
   br label %get_effect_direction.exit.i.i
 
@@ -684,8 +684,8 @@ bb.s:                                             ; preds = %bb.r
   %i.dh = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   %i.di = load i32, ptr %i.dh, align 8
   %i.dj = srem i32 %i.di, 36000
-  %i.dk = shl nsw i32 %i.dj, 15
-  %i.dl = sdiv i32 %i.dk, 18000
+  %i.dk = shl nsw i32 %i.dj, 11
+  %i.dl = sdiv i32 %i.dk, 1125
   %i.dm = trunc i32 %i.dl to i16
   br label %get_effect_direction.exit.i.i
 
@@ -751,8 +751,8 @@ bb.aa:                                            ; preds = %bb.z
   %i.eq = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   %i.er = load i32, ptr %i.eq, align 8
   %i.es = srem i32 %i.er, 36000
-  %i.et = shl nsw i32 %i.es, 15
-  %i.eu = sdiv i32 %i.et, 18000
+  %i.et = shl nsw i32 %i.es, 11
+  %i.eu = sdiv i32 %i.et, 1125
   %i.ev = trunc i32 %i.eu to i16
   br label %get_effect_direction.exit.i.i
 
@@ -818,8 +818,8 @@ bb.ai:                                            ; preds = %bb.ah
   %i.fz = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   %i.ga = load i32, ptr %i.fz, align 8
   %i.gb = srem i32 %i.ga, 36000
-  %i.gc = shl nsw i32 %i.gb, 15
-  %i.gd = sdiv i32 %i.gc, 18000
+  %i.gc = shl nsw i32 %i.gb, 11
+  %i.gd = sdiv i32 %i.gc, 1125
   %i.ge = trunc i32 %i.gd to i16
   br label %get_effect_direction.exit.i.i
 
@@ -926,8 +926,8 @@ bb.ar:                                            ; preds = %get_effect_replay_d
 
 bb.as:                                            ; preds = %bb.ar, %get_effect_replay_delay.exit.i.i
   %i.hu = zext i16 %.0.i.i.i to i32
-  %i.hv = mul nuw nsw i32 %i.hu, 360
-  %i.hw = lshr i32 %i.hv, 16
+  %i.hv = mul nuw nsw i32 %i.hu, 45
+  %i.hw = lshr i32 %i.hv, 13
   %i.hx = uitofp nneg i32 %i.hw to double
   %i.hy = fmul nnan double %i.hx, f0x400921FB54442D18
   %i.hz = fdiv double %i.hy, 1.800000e+02
@@ -1053,8 +1053,8 @@ get_effect_replay_delay.exit112.i.i:              ; preds = %effect_is_periodic.
   %i.jj = getelementptr inbounds nuw i8, ptr %i.bg, i64 80
   store i64 %i.ji, ptr %i.jj, align 8
   %i.jk = zext i16 %.0.i.i.i to i32
-  %i.jl = mul nuw nsw i32 %i.jk, 360
-  %i.jm = lshr i32 %i.jl, 16
+  %i.jl = mul nuw nsw i32 %i.jk, 45
+  %i.jm = lshr i32 %i.jl, 13
   %i.jn = uitofp nneg i32 %i.jm to double
   %i.jo = fmul nnan double %i.jn, f0x400921FB54442D18
   %i.jp = fdiv double %i.jo, 1.800000e+02

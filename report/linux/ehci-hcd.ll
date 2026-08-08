@@ -204,8 +204,8 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8
   %i.j = getelementptr i8, ptr %i.i, i64 4
   %.val = load i16, ptr %i.j, align 1             ; 2 uses
-  %i.k = and i16 %.val, 2047                      ; 4 uses
-  %i.l = zext nneg i16 %i.k to i32                ; 4 uses
+  %i.k = and i16 %.val, 2047                      ; 5 uses
+  %i.l = zext nneg i16 %i.k to i32                ; 3 uses
   %i.m = getelementptr i8, ptr %i.b, i64 28       ; 2 uses
   %i.n = load i32, ptr %i.m, align 4
   %i.o = icmp eq i32 %i.n, 3
@@ -230,8 +230,8 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.u, ptr %i.aa, align 4
   %i.ab = getelementptr i8, ptr %0, i64 120
   store i32 %i.s, ptr %i.ab, align 8
-  %i.ac = mul nuw nsw i32 %i.v, 56
-  %i.ad = udiv i32 %i.ac, 6
+  %i.ac = mul nuw nsw i32 %i.v, 28
+  %i.ad = udiv i32 %i.ac, 3
   %i.ae = mul nuw nsw i32 %i.ad, 2083
   %narrow117 = add nuw nsw i32 %i.ae, 639481
   %i.af = udiv i32 %narrow117, 1000
@@ -287,9 +287,10 @@ bb.c:                                             ; preds = %bb.a
   %i.bq = or disjoint i32 %i.bo, %i.bp
   %i.br = load i32, ptr %i.b, align 8
   %i.bs = or i32 %i.bq, %i.br                     ; 2 uses
-  %2 = mul nuw nsw i32 %i.l, 56
-  %3 = udiv i32 %2, 6
-  %i.bt = mul nuw nsw i32 %3, 2083
+  %.lhs.trunc1 = mul nuw i16 %i.k, 28
+  %2 = udiv i16 %.lhs.trunc1, 3
+  %.zext2 = zext nneg i16 %2 to i32
+  %i.bt = mul nuw nsw i32 %.zext2, 2083
   %narrow = add nuw nsw i32 %i.bt, 639481
   %i.bu = udiv i32 %narrow, 1000
   %i.bv = trunc nuw i32 %i.bu to i16

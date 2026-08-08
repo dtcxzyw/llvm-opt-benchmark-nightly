@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %.split215, %switch.
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.cb = load i16, ptr %i.ca, align 4
   %i.cc = zext i16 %i.cb to i32
-  %i.cd = shl nuw i32 %i.cc, 16
-  %i.ce = udiv i32 %i.cd, 36000
+  %i.cd = shl nuw nsw i32 %i.cc, 11
+  %i.ce = udiv i32 %i.cd, 1125
   %i.cf = trunc i32 %i.ce to i16
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i16 %i.cf, ptr %i.cg, align 8
@@ -608,8 +608,8 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.c = load i32, ptr %i.b, align 4
   %i.d = srem i32 %i.c, 36000
-  %i.e = shl nsw i32 %i.d, 15
-  %i.f = sdiv i32 %i.e, 18000
+  %i.e = shl nsw i32 %i.d, 11
+  %i.f = sdiv i32 %i.e, 1125
   %i.g = trunc i32 %i.f to i16
   store i16 %i.g, ptr %0, align 2
   br label %bb.k

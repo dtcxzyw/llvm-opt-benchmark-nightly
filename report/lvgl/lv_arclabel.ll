@@ -151,9 +151,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d,
   %.065.i = phi i32 [ 0, %bb.c ], [ %i.ak, %bb.d ], [ %i.ar, %bb.e ], [ %i.au, %bb.f ]
   %i.av = getelementptr inbounds nuw i8, ptr %i.l, i64 92
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !21
-  %i.ax = mul i32 %i.ah, 804                      ; 2 uses
+  %i.ax = mul i32 %i.ah, 67                       ; 2 uses
   %i.ay = mul i32 %i.aw, %i.ax
-  %i.az = sdiv i32 %i.ay, 180
+  %i.az = sdiv i32 %i.ay, 15
   %i.ba = ashr i32 %i.az, 8                       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
   store i32 0, ptr %i.e, align 4, !tbaa !31
@@ -164,7 +164,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d,
 
 .lr.ph.i:                                         ; preds = %bb.g
   %i.bb = mul i32 %.065.i, %i.ax
-  %i.bc = sdiv i32 %i.bb, 180
+  %i.bc = sdiv i32 %i.bb, 15
   %i.bd = ashr i32 %i.bc, 8
   %i.be = getelementptr inbounds nuw i8, ptr %i.l, i64 124 ; 10 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.l, i64 88
@@ -567,9 +567,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.not44 = icmp eq i8 %i.as, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store ptr %i.g, ptr %i.a, align 8, !tbaa !24
-  %i.at = mul i32 %i.ak, 804
+  %i.at = mul i32 %i.ak, 67
   %i.au = mul i32 %i.at, %i.am
-  %i.av = sdiv i32 %i.au, 180
+  %i.av = sdiv i32 %i.au, 15
   %i.aw = ashr i32 %i.av, 8                       ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   store i32 0, ptr %i.b, align 4, !tbaa !31

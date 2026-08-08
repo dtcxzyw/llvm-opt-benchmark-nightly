@@ -86,25 +86,25 @@ bb.g:                                             ; preds = %bb.f
   %i.z = lshr i32 %i.y, 1
   %i.aa = add nsw i32 %i.z, %.028
   %i.ab = sext i32 %i.x to i64
-  %5 = mul nsw i64 %i.ab, 384
-  %i.ac = sdiv i64 %5, 720
+  %5 = shl nsw i64 %i.ab, 3
+  %i.ac = sdiv i64 %5, 15
   %i.ad = trunc nsw i64 %i.ac to i32
   %i.ae = sext i32 %i.aa to i64
-  %i.af = mul nsw i64 %i.ae, 288
-  %i.ag = sdiv i64 %i.af, 480
+  %i.af = mul nsw i64 %i.ae, 3
+  %i.ag = sdiv i64 %i.af, 5
   %i.ah = trunc nsw i64 %i.ag to i32
   call void (ptr, ptr, ...) @av_bprintf(ptr noundef nonnull %4, ptr noundef nonnull @.str.3, i32 noundef %i.ad, i32 noundef %i.ah) #3
   br label %srt_to_ass.exit
 
 bb.h:                                             ; preds = %bb.f, %bb.e
   %i.ai = zext nneg i32 %.024 to i64
-  %6 = mul nuw nsw i64 %i.ai, 384
-  %i.aj = udiv i64 %6, 720
+  %6 = shl nuw nsw i64 %i.ai, 3
+  %i.aj = udiv i64 %6, 15
   %i.ak = trunc nuw nsw i64 %i.aj to i32
   %i.al = zext nneg i32 %.028 to i64
-  %i.am = mul nuw nsw i64 %i.al, 288
-  %i.an = udiv i64 %i.am, 480
-  %i.ao = trunc nuw i64 %i.an to i32
+  %i.am = mul nuw nsw i64 %i.al, 3
+  %i.an = udiv i64 %i.am, 5
+  %i.ao = trunc nuw nsw i64 %i.an to i32
   call void (ptr, ptr, ...) @av_bprintf(ptr noundef nonnull %4, ptr noundef nonnull @.str.4, i32 noundef %i.ak, i32 noundef %i.ao) #3
   br label %srt_to_ass.exit
 

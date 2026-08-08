@@ -203,8 +203,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   store i32 %i.w, ptr %1, align 4
   %i.x = mul nuw nsw i32 %i.t, 2141
   %i.y = lshr i32 %i.x, 16                        ; 2 uses
-  %i.z = mul nuw nsw i32 %i.y, 7834
-  %i.aa = lshr i32 %i.z, 8
+  %i.z = mul nuw nsw i32 %i.y, 3917
+  %i.aa = lshr i32 %i.z, 7
   %i.ab = sub nsw i32 %i.t, %i.aa
   store i32 %i.ab, ptr %3, align 4
   %i.ac = trunc nuw nsw i32 %i.y to i8
@@ -607,8 +607,8 @@ j2date.exit:                                      ; preds = %bb.f, %bb.g
   store i32 %i.bb, ptr %i.t, align 4
   %i.bc = mul nuw nsw i32 %i.ay, 2141
   %i.bd = lshr i32 %i.bc, 16                      ; 2 uses
-  %i.be = mul nuw nsw i32 %i.bd, 7834
-  %i.bf = lshr i32 %i.be, 8
+  %i.be = mul nuw nsw i32 %i.bd, 3917
+  %i.bf = lshr i32 %i.be, 7
   %i.bg = sub nsw i32 %i.ay, %i.bf
   store i32 %i.bg, ptr %i.s, align 4
   %i.bh = trunc nuw nsw i32 %i.bd to i8
@@ -1011,8 +1011,8 @@ j2date.exit375:                                   ; preds = %bb.bb, %bb.bc
   store i32 %i.go, ptr %i.t, align 4
   %i.gp = mul nuw nsw i32 %i.gl, 2141
   %i.gq = lshr i32 %i.gp, 16                      ; 2 uses
-  %i.gr = mul nuw nsw i32 %i.gq, 7834
-  %i.gs = lshr i32 %i.gr, 8
+  %i.gr = mul nuw nsw i32 %i.gq, 3917
+  %i.gs = lshr i32 %i.gr, 7
   %i.gt = sub nsw i32 %i.gl, %i.gs
   store i32 %i.gt, ptr %i.s, align 4
   %i.gu = trunc nuw nsw i32 %i.gq to i8
@@ -1383,8 +1383,8 @@ j2date.exit388:                                   ; preds = %bb.cc, %bb.cd
   store i32 %i.mu, ptr %i.t, align 4
   %i.mv = mul nuw nsw i32 %i.mr, 2141
   %i.mw = lshr i32 %i.mv, 16                      ; 2 uses
-  %i.mx = mul nuw nsw i32 %i.mw, 7834
-  %i.my = lshr i32 %i.mx, 8
+  %i.mx = mul nuw nsw i32 %i.mw, 3917
+  %i.my = lshr i32 %i.mx, 7
   %i.mz = sub nsw i32 %i.mr, %i.my
   store i32 %i.mz, ptr %i.s, align 4
   %i.na = trunc nuw nsw i32 %i.mw to i8
@@ -1566,8 +1566,8 @@ j2date.exit403:                                   ; preds = %bb.ck, %bb.cl
   store i32 %i.qg, ptr %i.t, align 4
   %i.qh = mul nuw nsw i32 %i.qd, 2141
   %i.qi = lshr i32 %i.qh, 16                      ; 2 uses
-  %i.qj = mul nuw nsw i32 %i.qi, 7834
-  %i.qk = lshr i32 %i.qj, 8
+  %i.qj = mul nuw nsw i32 %i.qi, 3917
+  %i.qk = lshr i32 %i.qj, 7
   %i.ql = sub nsw i32 %i.qd, %i.qk
   store i32 %i.ql, ptr %i.s, align 4
   %i.qm = trunc nuw nsw i32 %i.qi to i8
@@ -1970,8 +1970,8 @@ j2date.exit:                                      ; preds = %bb.i, %bb.j
   store i32 %i.bd, ptr %i.v, align 4
   %i.be = mul nuw nsw i32 %i.ba, 2141
   %i.bf = lshr i32 %i.be, 16                      ; 2 uses
-  %i.bg = mul nuw nsw i32 %i.bf, 7834
-  %i.bh = lshr i32 %i.bg, 8
+  %i.bg = mul nuw nsw i32 %i.bf, 3917
+  %i.bh = lshr i32 %i.bg, 7
   %i.bi = sub nsw i32 %i.ba, %i.bh
   store i32 %i.bi, ptr %i.ag, align 4
   %i.bj = trunc nuw nsw i32 %i.bf to i8

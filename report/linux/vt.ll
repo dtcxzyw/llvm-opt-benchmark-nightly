@@ -204,23 +204,23 @@ bb.i:                                             ; preds = %bb.h
   %.lhs.trunc.i = add i8 %i.ae, -16               ; 3 uses
   %i.af = urem i8 %.lhs.trunc.i, 6
   %.zext.i = zext nneg i8 %i.af to i16
-  %.lhs.trunc32.i = mul nuw nsw i16 %.zext.i, 255
-  %4 = udiv i16 %.lhs.trunc32.i, 6
+  %.lhs.trunc32.i = mul nuw nsw i16 %.zext.i, 85
+  %4 = lshr i16 %.lhs.trunc32.i, 1
   %i.ag = trunc nuw i16 %4 to i8
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 2
   store i8 %i.ag, ptr %i.ah, align 1
   %i.ai = udiv i8 %.lhs.trunc.i, 6
   %i.aj = urem i8 %i.ai, 6
   %.zext37.i.a = zext nneg i8 %i.aj to i16
-  %.lhs.trunc38.i = mul nuw nsw i16 %.zext37.i.a, 255
-  %5 = udiv i16 %.lhs.trunc38.i, 6
+  %.lhs.trunc38.i = mul nuw nsw i16 %.zext37.i.a, 85
+  %5 = lshr i16 %.lhs.trunc38.i, 1
   %i.ak = trunc nuw i16 %5 to i8
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 1
   store i8 %i.ak, ptr %i.al, align 1
   %i.am = udiv i8 %.lhs.trunc.i, 36
   %.zext41.i = zext nneg i8 %i.am to i16
-  %.lhs.trunc42.i = mul nuw nsw i16 %.zext41.i, 255
-  %6 = udiv i16 %.lhs.trunc42.i, 6
+  %.lhs.trunc42.i = mul nuw nsw i16 %.zext41.i, 85
+  %6 = lshr i16 %.lhs.trunc42.i, 1
   %i.an = trunc nuw i16 %6 to i8
   store i8 %i.an, ptr %3, align 1
   br label %rgb_from_256.exit

@@ -201,8 +201,8 @@ bb.i:                                             ; preds = %bb.h
   %i.bu = urem i64 %i.bt, 27000000
   %i.bv = udiv i64 %i.bt, 27000000
   store i64 %i.bv, ptr %4, align 8
-  %i.bw = mul nuw nsw i64 %i.bu, 1000000000
-  %i.bx = udiv i64 %i.bw, 27000000
+  %i.bw = mul nuw nsw i64 %i.bu, 1000
+  %i.bx = udiv i64 %i.bw, 27
   %i.by = trunc nuw nsw i64 %i.bx to i32
   %i.bz = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 %i.by, ptr %i.bz, align 8
@@ -576,8 +576,8 @@ bb.b:                                             ; preds = %bb.a
   %i.n = urem i64 %i.m, 90000
   %i.o = udiv i64 %i.m, 90000
   store i64 %i.o, ptr %3, align 8
-  %i.p = mul nuw nsw i64 %i.n, 1000000000
-  %i.q = udiv i64 %i.p, 90000
+  %i.p = mul nuw nsw i64 %i.n, 100000
+  %i.q = udiv i64 %i.p, 9
   %i.r = trunc nuw nsw i64 %i.q to i32
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 %i.r, ptr %i.s, align 8
@@ -606,8 +606,8 @@ bb.d:                                             ; preds = %bb.c
   %i.af = urem i64 %i.ae, 90000
   %i.ag = udiv i64 %i.ae, 90000
   store i64 %i.ag, ptr %4, align 8
-  %i.ah = mul nuw nsw i64 %i.af, 1000000000
-  %i.ai = udiv i64 %i.ah, 90000
+  %i.ah = mul nuw nsw i64 %i.af, 100000
+  %i.ai = udiv i64 %i.ah, 9
   %i.aj = trunc nuw nsw i64 %i.ai to i32
   %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 %i.aj, ptr %i.ak, align 8
@@ -641,8 +641,8 @@ bb.f:                                             ; preds = %bb.e
   %i.bc = urem i64 %i.bb, 27000000
   %i.bd = udiv i64 %i.bb, 27000000
   store i64 %i.bd, ptr %5, align 8
-  %i.be = mul nuw nsw i64 %i.bc, 1000000000
-  %i.bf = udiv i64 %i.be, 27000000
+  %i.be = mul nuw nsw i64 %i.bc, 1000
+  %i.bf = udiv i64 %i.be, 27
   %i.bg = trunc nuw nsw i64 %i.bf to i32
   %i.bh = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i32 %i.bg, ptr %i.bh, align 8

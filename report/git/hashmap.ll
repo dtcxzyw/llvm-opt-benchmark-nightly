@@ -203,8 +203,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 %.0, ptr %i.j, align 4, !tbaa !21
   %i.k = tail call ptr @xcalloc(i64 noundef %i.g, i64 noundef 8) #15
   store ptr %i.k, ptr %0, align 8, !tbaa !29
-  %4 = mul nuw nsw i64 %i.g, 80
-  %i.l = udiv i64 %4, 100
+  %4 = shl nuw nsw i64 %i.g, 2
+  %i.l = udiv i64 %4, 5
   %i.m = trunc nuw i64 %i.l to i32                ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.m, ptr %i.n, align 8, !tbaa !30
@@ -548,8 +548,8 @@ bb.e:                                             ; preds = %bb.d
   %i.x = zext i32 %i.w to i64                     ; 2 uses
   %i.y = tail call ptr @xcalloc(i64 noundef %i.x, i64 noundef 8) #15 ; 2 uses
   store ptr %i.y, ptr %0, align 8, !tbaa !29
-  %2 = mul nuw nsw i64 %i.x, 80
-  %i.z = udiv i64 %2, 100
+  %2 = shl nuw nsw i64 %i.x, 2
+  %i.z = udiv i64 %2, 5
   %i.aa = trunc nuw i64 %i.z to i32               ; 2 uses
   store i32 %i.aa, ptr %i.t, align 8, !tbaa !30
   %i.ab = icmp ult i32 %i.w, 65
@@ -682,20 +682,19 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ag, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
-  %i.ah = load i32, ptr %i.b, align 4, !tbaa !21  ; 4 uses
+  %i.ah = load i32, ptr %i.b, align 4, !tbaa !21  ; 5 uses
   %i.ai = lshr i32 %i.ah, 2                       ; 2 uses
   %i.aj = load ptr, ptr %0, align 8, !tbaa !29    ; 2 uses
   store i32 %i.ai, ptr %i.b, align 4, !tbaa !21
-  %i.ak = zext nneg i32 %i.ai to i64              ; 2 uses
+  %i.ak = zext nneg i32 %i.ai to i64
   %i.al = tail call ptr @xcalloc(i64 noundef %i.ak, i64 noundef 8) #15 ; 2 uses
   store ptr %i.al, ptr %0, align 8, !tbaa !29
-  %3 = mul nuw nsw i64 %i.ak, 80
-  %4 = udiv i64 %3, 100
-  %5 = trunc nuw nsw i64 %4 to i32                ; 2 uses
+  %.lhs.trunc = and i32 %i.ah, -4                 ; 2 uses
+  %3 = udiv i32 %.lhs.trunc, 5
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 %5, ptr %i.am, align 8, !tbaa !30
+  store i32 %3, ptr %i.am, align 8, !tbaa !30
   %i.an = icmp ult i32 %i.ah, 260
-  %i.ao = udiv i32 %5, 5
+  %i.ao = udiv i32 %.lhs.trunc, 25
   %.sink.i.i = select i1 %i.an, i32 0, i32 %i.ao
   store i32 %.sink.i.i, ptr %i.ae, align 4, !tbaa !31
   %.not27.i = icmp eq i32 %i.ah, 0

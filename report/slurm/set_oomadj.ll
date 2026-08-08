@@ -68,8 +68,8 @@ bb.k:                                             ; preds = %bb.i
   br i1 %.not, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.q = mul nuw nsw i32 %0, 15
-  %i.r = udiv i32 %i.q, 1000
+  %i.q = mul nuw nsw i32 %0, 3
+  %i.r = udiv i32 %i.q, 200
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.b

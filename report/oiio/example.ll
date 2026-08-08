@@ -201,33 +201,31 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %indvars.iv70.i
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !47
   %indvars.iv70.tr.i = trunc i64 %indvars.iv70.i to i32
-  %i.bp = shl i32 %indvars.iv70.tr.i, 12
-  %i.bq = udiv i32 %i.bp, 480                     ; 2 uses
-  %i.br = trunc nuw nsw i32 %i.bq to i16
+  %i.bp = shl i32 %indvars.iv70.tr.i, 7
+  %i.bq = udiv i32 %i.bp, 15
+  %i.br = trunc nuw nsw i32 %i.bq to i16          ; 2 uses
   %i.bs = and i16 %i.br, 4095
-  %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %i.bq, i64 0
-  %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer
+  %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %i.br, i64 0
+  %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert124 = insertelement <8 x i16> poison, i16 %i.bs, i64 0
   %broadcast.splat125 = shufflevector <8 x i16> %broadcast.splatinsert124, <8 x i16> poison, <8 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %.preheader50.i.a
   %index = phi i64 [ 0, %.preheader50.i.a ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %.preheader50.i.a ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %5 = shl <8 x i32> %vec.ind, splat (i32 12)
-  %6 = udiv <8 x i32> %5, splat (i32 640)         ; 2 uses
-  %7 = trunc nuw nsw <8 x i32> %6 to <8 x i16>
+  %vec.ind = phi <8 x i16> [ <i16 0, i16 1, i16 2, i16 3, i16 4, i16 5, i16 6, i16 7>, %.preheader50.i.a ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %5 = shl nuw nsw <8 x i16> %vec.ind, splat (i16 5)
+  %6 = udiv <8 x i16> %5, splat (i16 5)           ; 2 uses
   %i.bt = mul nuw nsw i64 %index, 6
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bo, i64 %i.bt
-  %8 = add nuw nsw <8 x i32> %6, %broadcast.splat
-  %9 = trunc nuw nsw <8 x i32> %8 to <8 x i16>
-  %i.bv = and <8 x i16> %9, splat (i16 4095)
-  %i.bw = shufflevector <8 x i16> %7, <8 x i16> %broadcast.splat125, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %7 = add nuw nsw <8 x i16> %6, %broadcast.splat
+  %i.bv = and <8 x i16> %7, splat (i16 4095)
+  %i.bw = shufflevector <8 x i16> %6, <8 x i16> %broadcast.splat125, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.bx = shufflevector <8 x i16> %i.bv, <8 x i16> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec = shufflevector <16 x i16> %i.bw, <16 x i16> %i.bx, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x i16> %interleaved.vec, ptr %i.bu, align 2, !tbaa !49
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 8)
+  %vec.ind.next = add <8 x i16> %vec.ind, splat (i16 8)
   %i.by = icmp eq i64 %index.next, 640
   br i1 %i.by, label %middle.block, label %vector.body, !llvm.loop !50
 
@@ -240,17 +238,18 @@ middle.block:                                     ; preds = %vector.body
   %indvars.iv62.i = phi i64 [ %indvars.iv.next63.i, %bb.y ], [ 0, %bb.w ] ; 3 uses
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %indvars.iv62.i ; 3 uses
   %indvars.iv62.tr.i = trunc i64 %indvars.iv62.i to i32
-  %i.ca = shl i32 %indvars.iv62.tr.i, 8
-  %i.cb = udiv i32 %i.ca, 480                     ; 2 uses
+  %i.ca = shl i32 %indvars.iv62.tr.i, 3
+  %i.cb = udiv i32 %i.ca, 15                      ; 2 uses
   %i.cc = trunc i32 %i.cb to i8
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.x, %.preheader52.i
   %indvars.iv.i = phi i64 [ 0, %.preheader52.i ], [ %indvars.iv.next.i, %bb.x ] ; 3 uses
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %10 = shl i32 %indvars.iv.tr.i, 8
-  %11 = udiv i32 %10, 640                         ; 2 uses
-  %i.cd = trunc nuw i32 %11 to i8
+  %.1.tr.i = trunc i64 %indvars.iv.i to i16
+  %.lhs.trunc48.i = shl nuw nsw i16 %.1.tr.i, 1
+  %8 = udiv i16 %.lhs.trunc48.i, 5                ; 2 uses
+  %.zext49.i = zext nneg i16 %8 to i32
+  %i.cd = trunc i16 %8 to i8
   %i.ce = load ptr, ptr %i.bz, align 8, !tbaa !8
   %i.cf = mul nuw nsw i64 %indvars.iv.i, 3        ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.cf
@@ -259,7 +258,7 @@ bb.x:                                             ; preds = %bb.x, %.preheader52
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.cf
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 1
   store i8 %i.cc, ptr %i.cj, align 1, !tbaa !11
-  %i.ck = add nuw nsw i32 %11, %i.cb
+  %i.ck = add nuw nsw i32 %i.cb, %.zext49.i
   %i.cl = trunc i32 %i.ck to i8
   %i.cm = load ptr, ptr %i.bz, align 8, !tbaa !8
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.cf

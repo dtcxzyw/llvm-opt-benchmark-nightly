@@ -141,8 +141,8 @@ intel_casf_compute_win_size.exit:                 ; preds = %bb.h, %bb.j, %bb.k
   br i1 %i.ay, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %intel_casf_compute_win_size.exit
-  %i.az = shl nuw i16 %i.ax, 11
-  %i.ba = udiv i16 %i.az, 100
+  %i.az = shl nuw nsw i16 %i.ax, 9
+  %i.ba = udiv i16 %i.az, 25
   br label %convert_sharpness_coeff_binary.exit.i
 
 bb.m:                                             ; preds = %intel_casf_compute_win_size.exit
@@ -150,8 +150,8 @@ bb.m:                                             ; preds = %intel_casf_compute_
   br i1 %i.bb, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.bc = shl nuw i16 %i.ax, 10
-  %i.bd = udiv i16 %i.bc, 100
+  %i.bc = shl nuw nsw i16 %i.ax, 8
+  %i.bd = udiv i16 %i.bc, 25
   br label %convert_sharpness_coeff_binary.exit.i
 
 bb.o:                                             ; preds = %bb.m
@@ -159,14 +159,14 @@ bb.o:                                             ; preds = %bb.m
   br i1 %i.be, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.bf = shl nuw i16 %i.ax, 9
-  %i.bg = udiv i16 %i.bf, 100
+  %i.bf = shl nuw nsw i16 %i.ax, 7
+  %i.bg = udiv i16 %i.bf, 25
   br label %convert_sharpness_coeff_binary.exit.i
 
 bb.q:                                             ; preds = %bb.o
-  %i.bh = shl nuw nsw i32 %i.aw, 8
-  %i.bi = and i32 %i.bh, 16776960
-  %i.bj = udiv i32 %i.bi, 100
+  %i.bh = shl nuw nsw i32 %i.aw, 6
+  %i.bi = and i32 %i.bh, 4194240
+  %i.bj = udiv i32 %i.bi, 25
   %i.bk = trunc i32 %i.bj to i16
   br label %convert_sharpness_coeff_binary.exit.i
 
@@ -193,25 +193,25 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.bt, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.bu = shl nuw nsw i32 %i.bp, 8
-  %i.bv = and i32 %i.bu, 16776960
-  %i.bw = udiv i32 %i.bv, 100
+  %i.bu = shl nuw nsw i32 %i.bp, 6
+  %i.bv = and i32 %i.bu, 4194240
+  %i.bw = udiv i32 %i.bv, 25
   %i.bx = trunc i32 %i.bw to i16
   br label %convert_sharpness_coeff_binary.exit.1.i
 
 bb.u:                                             ; preds = %bb.s
-  %i.by = shl nuw i16 %i.bq, 9
-  %i.bz = udiv i16 %i.by, 100
+  %i.by = shl nuw nsw i16 %i.bq, 7
+  %i.bz = udiv i16 %i.by, 25
   br label %convert_sharpness_coeff_binary.exit.1.i
 
 bb.v:                                             ; preds = %bb.r
-  %i.ca = shl nuw i16 %i.bq, 10
-  %i.cb = udiv i16 %i.ca, 100
+  %i.ca = shl nuw nsw i16 %i.bq, 8
+  %i.cb = udiv i16 %i.ca, 25
   br label %convert_sharpness_coeff_binary.exit.1.i
 
 bb.w:                                             ; preds = %convert_sharpness_coeff_binary.exit.i
-  %i.cc = shl nuw i16 %i.bq, 11
-  %i.cd = udiv i16 %i.cc, 100
+  %i.cc = shl nuw nsw i16 %i.bq, 9
+  %i.cd = udiv i16 %i.cc, 25
   br label %convert_sharpness_coeff_binary.exit.1.i
 
 convert_sharpness_coeff_binary.exit.1.i:          ; preds = %bb.w, %bb.v, %bb.u, %bb.t
@@ -237,25 +237,25 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.cm, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.cn = shl nuw nsw i32 %i.ci, 8
-  %i.co = and i32 %i.cn, 16776960
-  %i.cp = udiv i32 %i.co, 100
+  %i.cn = shl nuw nsw i32 %i.ci, 6
+  %i.co = and i32 %i.cn, 4194240
+  %i.cp = udiv i32 %i.co, 25
   %i.cq = trunc i32 %i.cp to i16
   br label %convert_sharpness_coeff_binary.exit.2.i
 
 bb.aa:                                            ; preds = %bb.y
-  %i.cr = shl nuw i16 %i.cj, 9
-  %i.cs = udiv i16 %i.cr, 100
+  %i.cr = shl nuw nsw i16 %i.cj, 7
+  %i.cs = udiv i16 %i.cr, 25
   br label %convert_sharpness_coeff_binary.exit.2.i
 
 bb.ab:                                            ; preds = %bb.x
-  %i.ct = shl nuw i16 %i.cj, 10
-  %i.cu = udiv i16 %i.ct, 100
+  %i.ct = shl nuw nsw i16 %i.cj, 8
+  %i.cu = udiv i16 %i.ct, 25
   br label %convert_sharpness_coeff_binary.exit.2.i
 
 bb.ac:                                            ; preds = %convert_sharpness_coeff_binary.exit.1.i
-  %i.cv = shl nuw i16 %i.cj, 11
-  %i.cw = udiv i16 %i.cv, 100
+  %i.cv = shl nuw nsw i16 %i.cj, 9
+  %i.cw = udiv i16 %i.cv, 25
   br label %convert_sharpness_coeff_binary.exit.2.i
 
 convert_sharpness_coeff_binary.exit.2.i:          ; preds = %bb.ac, %bb.ab, %bb.aa, %bb.z
@@ -281,25 +281,25 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.df, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.dg = shl nuw nsw i32 %i.db, 8
-  %i.dh = and i32 %i.dg, 16776960
-  %i.di = udiv i32 %i.dh, 100
+  %i.dg = shl nuw nsw i32 %i.db, 6
+  %i.dh = and i32 %i.dg, 4194240
+  %i.di = udiv i32 %i.dh, 25
   %i.dj = trunc i32 %i.di to i16
   br label %convert_sharpness_coeff_binary.exit.3.i
 
 bb.ag:                                            ; preds = %bb.ae
-  %i.dk = shl nuw i16 %i.dc, 9
-  %i.dl = udiv i16 %i.dk, 100
+  %i.dk = shl nuw nsw i16 %i.dc, 7
+  %i.dl = udiv i16 %i.dk, 25
   br label %convert_sharpness_coeff_binary.exit.3.i
 
 bb.ah:                                            ; preds = %bb.ad
-  %i.dm = shl nuw i16 %i.dc, 10
-  %i.dn = udiv i16 %i.dm, 100
+  %i.dm = shl nuw nsw i16 %i.dc, 8
+  %i.dn = udiv i16 %i.dm, 25
   br label %convert_sharpness_coeff_binary.exit.3.i
 
 bb.ai:                                            ; preds = %convert_sharpness_coeff_binary.exit.2.i
-  %i.do = shl nuw i16 %i.dc, 11
-  %i.dp = udiv i16 %i.do, 100
+  %i.do = shl nuw nsw i16 %i.dc, 9
+  %i.dp = udiv i16 %i.do, 25
   br label %convert_sharpness_coeff_binary.exit.3.i
 
 convert_sharpness_coeff_binary.exit.3.i:          ; preds = %bb.ai, %bb.ah, %bb.ag, %bb.af
@@ -325,25 +325,25 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.dy, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %i.dz = shl nuw nsw i32 %i.du, 8
-  %i.ea = and i32 %i.dz, 16776960
-  %i.eb = udiv i32 %i.ea, 100
+  %i.dz = shl nuw nsw i32 %i.du, 6
+  %i.ea = and i32 %i.dz, 4194240
+  %i.eb = udiv i32 %i.ea, 25
   %i.ec = trunc i32 %i.eb to i16
   br label %convert_sharpness_coeff_binary.exit.4.i
 
 bb.am:                                            ; preds = %bb.ak
-  %i.ed = shl nuw i16 %i.dv, 9
-  %i.ee = udiv i16 %i.ed, 100
+  %i.ed = shl nuw nsw i16 %i.dv, 7
+  %i.ee = udiv i16 %i.ed, 25
   br label %convert_sharpness_coeff_binary.exit.4.i
 
 bb.an:                                            ; preds = %bb.aj
-  %i.ef = shl nuw i16 %i.dv, 10
-  %i.eg = udiv i16 %i.ef, 100
+  %i.ef = shl nuw nsw i16 %i.dv, 8
+  %i.eg = udiv i16 %i.ef, 25
   br label %convert_sharpness_coeff_binary.exit.4.i
 
 bb.ao:                                            ; preds = %convert_sharpness_coeff_binary.exit.3.i
-  %i.eh = shl nuw i16 %i.dv, 11
-  %i.ei = udiv i16 %i.eh, 100
+  %i.eh = shl nuw nsw i16 %i.dv, 9
+  %i.ei = udiv i16 %i.eh, 25
   br label %convert_sharpness_coeff_binary.exit.4.i
 
 convert_sharpness_coeff_binary.exit.4.i:          ; preds = %bb.ao, %bb.an, %bb.am, %bb.al
@@ -369,25 +369,25 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %i.er, label %bb.as, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.es = shl nuw nsw i32 %i.en, 8
-  %i.et = and i32 %i.es, 16776960
-  %i.eu = udiv i32 %i.et, 100
+  %i.es = shl nuw nsw i32 %i.en, 6
+  %i.et = and i32 %i.es, 4194240
+  %i.eu = udiv i32 %i.et, 25
   %i.ev = trunc i32 %i.eu to i16
   br label %convert_sharpness_coeff_binary.exit.5.i
 
 bb.as:                                            ; preds = %bb.aq
-  %i.ew = shl nuw i16 %i.eo, 9
-  %i.ex = udiv i16 %i.ew, 100
+  %i.ew = shl nuw nsw i16 %i.eo, 7
+  %i.ex = udiv i16 %i.ew, 25
   br label %convert_sharpness_coeff_binary.exit.5.i
 
 bb.at:                                            ; preds = %bb.ap
-  %i.ey = shl nuw i16 %i.eo, 10
-  %i.ez = udiv i16 %i.ey, 100
+  %i.ey = shl nuw nsw i16 %i.eo, 8
+  %i.ez = udiv i16 %i.ey, 25
   br label %convert_sharpness_coeff_binary.exit.5.i
 
 bb.au:                                            ; preds = %convert_sharpness_coeff_binary.exit.4.i
-  %i.fa = shl nuw i16 %i.eo, 11
-  %i.fb = udiv i16 %i.fa, 100
+  %i.fa = shl nuw nsw i16 %i.eo, 9
+  %i.fb = udiv i16 %i.fa, 25
   br label %convert_sharpness_coeff_binary.exit.5.i
 
 convert_sharpness_coeff_binary.exit.5.i:          ; preds = %bb.au, %bb.at, %bb.as, %bb.ar
@@ -413,25 +413,25 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %i.fk, label %bb.ay, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.fl = shl nuw nsw i32 %i.fg, 8
-  %i.fm = and i32 %i.fl, 16776960
-  %i.fn = udiv i32 %i.fm, 100
+  %i.fl = shl nuw nsw i32 %i.fg, 6
+  %i.fm = and i32 %i.fl, 4194240
+  %i.fn = udiv i32 %i.fm, 25
   %i.fo = trunc i32 %i.fn to i16
   br label %intel_casf_scaler_compute_coeff.exit
 
 bb.ay:                                            ; preds = %bb.aw
-  %i.fp = shl nuw i16 %i.fh, 9
-  %i.fq = udiv i16 %i.fp, 100
+  %i.fp = shl nuw nsw i16 %i.fh, 7
+  %i.fq = udiv i16 %i.fp, 25
   br label %intel_casf_scaler_compute_coeff.exit
 
 bb.az:                                            ; preds = %bb.av
-  %i.fr = shl nuw i16 %i.fh, 10
-  %i.fs = udiv i16 %i.fr, 100
+  %i.fr = shl nuw nsw i16 %i.fh, 8
+  %i.fs = udiv i16 %i.fr, 25
   br label %intel_casf_scaler_compute_coeff.exit
 
 bb.ba:                                            ; preds = %convert_sharpness_coeff_binary.exit.5.i
-  %i.ft = shl nuw i16 %i.fh, 11
-  %i.fu = udiv i16 %i.ft, 100
+  %i.ft = shl nuw nsw i16 %i.fh, 9
+  %i.fu = udiv i16 %i.ft, 25
   br label %intel_casf_scaler_compute_coeff.exit
 
 intel_casf_scaler_compute_coeff.exit:             ; preds = %bb.ax, %bb.ay, %bb.az, %bb.ba
