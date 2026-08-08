@@ -203,9 +203,10 @@ bb.a:
   %i.d = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.c, ptr noundef null) #10 ; 3 uses
   %i.e = icmp eq i32 %i.d, -114
   %spec.store.select.i.i = select i1 %i.e, i32 0, i32 %i.d
-  switch i32 %spec.store.select.i.i, label %bb.m [
+  switch i32 %i.d, label %bb.m [
     i32 -35, label %bb.b
     i32 0, label %bb.d
+    i32 -114, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -228,7 +229,7 @@ i915_gem_object_lock_interruptible.exit.thread:   ; preds = %bb.c, %.sink.split.
   store ptr %0, ptr inttoptr (i64 40 to ptr), align 8
   br label %bb.m
 
-bb.d:                                             ; preds = %bb.a
+bb.d:                                             ; preds = %bb.a, %bb.a
   store i32 0, ptr %i.a, align 4, !annotation !32
   %i.i = getelementptr i8, ptr %0, i64 688        ; 7 uses
   %i.j = load volatile i32, ptr %i.i, align 8     ; 2 uses
@@ -396,7 +397,7 @@ i915_gem_object_unlock.exit60:                    ; preds = %bb.k, %bb.l
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.a, %i915_gem_object_lock_interruptible.exit.thread, %i915_gem_object_unlock.exit60, %shmem_pread.exit._crit_edge
-  %.0 = phi i32 [ %.148, %shmem_pread.exit._crit_edge ], [ %.2, %i915_gem_object_unlock.exit60 ], [ %i.d, %bb.a ], [ -35, %i915_gem_object_lock_interruptible.exit.thread ]
+  %.0 = phi i32 [ %.148, %shmem_pread.exit._crit_edge ], [ %.2, %i915_gem_object_unlock.exit60 ], [ %spec.store.select.i.i, %bb.a ], [ -35, %i915_gem_object_lock_interruptible.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret i32 %.0
 }
@@ -799,9 +800,10 @@ bb.a:
   %i.d = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.c, ptr noundef null) #10 ; 3 uses
   %i.e = icmp eq i32 %i.d, -114
   %spec.store.select.i.i = select i1 %i.e, i32 0, i32 %i.d
-  switch i32 %spec.store.select.i.i, label %bb.n [
+  switch i32 %i.d, label %bb.n [
     i32 -35, label %bb.b
     i32 0, label %bb.d
+    i32 -114, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -824,7 +826,7 @@ i915_gem_object_lock_interruptible.exit.thread:   ; preds = %bb.c, %.sink.split.
   store ptr %0, ptr inttoptr (i64 40 to ptr), align 8
   br label %bb.n
 
-bb.d:                                             ; preds = %bb.a
+bb.d:                                             ; preds = %bb.a, %bb.a
   store i32 0, ptr %i.a, align 4, !annotation !32
   %i.i = getelementptr i8, ptr %0, i64 688        ; 7 uses
   %i.j = load volatile i32, ptr %i.i, align 8     ; 2 uses
@@ -1033,7 +1035,7 @@ i915_gem_object_unlock.exit66:                    ; preds = %bb.l, %bb.m
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.a, %i915_gem_object_lock_interruptible.exit.thread, %i915_gem_object_unlock.exit66, %i915_gem_object_frontbuffer_flush.exit
-  %.0 = phi i32 [ %.153, %i915_gem_object_frontbuffer_flush.exit ], [ %.2, %i915_gem_object_unlock.exit66 ], [ %i.d, %bb.a ], [ -35, %i915_gem_object_lock_interruptible.exit.thread ]
+  %.0 = phi i32 [ %.153, %i915_gem_object_frontbuffer_flush.exit ], [ %.2, %i915_gem_object_unlock.exit66 ], [ %spec.store.select.i.i, %bb.a ], [ -35, %i915_gem_object_lock_interruptible.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret i32 %.0
 }
@@ -1436,20 +1438,20 @@ bb.g:                                             ; preds = %bb.f
   call void @refcount_warn_saturate(ptr noundef %0, i32 noundef %.sink.i.i.i.i.i.i.i.i) #10
   br label %i915_gem_object_get.exit.i.i
 
-i915_gem_object_get.exit.i.i:                     ; preds = %.sink.split.i.i.i.i.i.i.i.i, %bb.g
+i915_gem_object_get.exit.i.i:                     ; preds = %bb.g, %.sink.split.i.i.i.i.i.i.i.i
   %i.q = load ptr, ptr %i.e, align 8              ; 2 uses
   store ptr %i.c, ptr %i.e, align 8
   store ptr %i.d, ptr %i.c, align 8
   store ptr %i.q, ptr %i.f, align 8
   store volatile ptr %i.c, ptr %i.q, align 8
-  br label %bb.h
+  br label %bb.k
 
-bb.h:                                             ; preds = %i915_gem_object_get.exit.i.i, %bb.e
+bb.h:                                             ; preds = %bb.e
   %i.r = icmp eq i32 %.0.i.i, -114
   %spec.store.select.i6.i = select i1 %i.r, i32 0, i32 %.0.i.i
-  switch i32 %spec.store.select.i6.i, label %.thread10.i [
+  switch i32 %.0.i.i, label %.thread10.i [
     i32 -35, label %bb.i
-    i32 0, label %bb.k
+    i32 -114, label %bb.k
   ]
 
 bb.i:                                             ; preds = %bb.h
@@ -1472,7 +1474,7 @@ bb.j:                                             ; preds = %bb.i
   store ptr %0, ptr %i.g, align 8
   br label %bb.m
 
-bb.k:                                             ; preds = %bb.h
+bb.k:                                             ; preds = %bb.h, %i915_gem_object_get.exit.i.i
   %i.v = call ptr @i915_gem_object_ggtt_pin_ww(ptr noundef %0, ptr noundef nonnull %5, ptr noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4) #13 ; 5 uses
   %i.w = icmp ugt ptr %i.v, inttoptr (i64 -4096 to ptr)
   br i1 %i.w, label %bb.l, label %.thread10.i
@@ -1498,7 +1500,7 @@ __i915_gem_ww_fini.exit.backedge:                 ; preds = %bb.m, %bb.m, %.thre
 
 .thread10.i:                                      ; preds = %bb.h, %bb.k, %bb.m, %bb.l
   %.11423 = phi ptr [ %.11427, %bb.m ], [ %i.v, %bb.l ], [ %i.v, %bb.k ], [ %.013, %bb.h ]
-  %.013.i = phi i32 [ %i.aa, %bb.m ], [ %i.y, %bb.l ], [ 0, %bb.k ], [ %.0.i.i, %bb.h ]
+  %.013.i = phi i32 [ %i.aa, %bb.m ], [ %i.y, %bb.l ], [ 0, %bb.k ], [ %spec.store.select.i6.i, %bb.h ]
   call void @i915_gem_ww_ctx_fini(ptr noundef nonnull %5) #10
   br label %__i915_gem_ww_fini.exit.backedge
 
@@ -1517,7 +1519,7 @@ bb.n:                                             ; preds = %__i915_gem_ww_fini.
 declare dso_local void @i915_gem_ww_ctx_init(ptr noundef, i1 noundef zeroext) local_unnamed_addr #2
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define dso_local noundef i32 @i915_gem_madvise_ioctl(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr noundef %2) local_unnamed_addr #0 align 16 prefalign(16) {
+define dso_local range(i32 -113, -114) i32 @i915_gem_madvise_ioctl(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr noundef %2) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 4          ; 3 uses
   %i.b = load i32, ptr %i.a, align 4
@@ -1576,12 +1578,13 @@ i915_gem_object_lookup.exit:                      ; preds = %kref_get_unless_zer
   tail call void @__rcu_read_unlock() #10
   %i.q = getelementptr i8, ptr %i.f, i64 248      ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8
-  %i.s = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.r, ptr noundef null) #10 ; 2 uses
+  %i.s = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.r, ptr noundef null) #10 ; 3 uses
   %i.t = icmp eq i32 %i.s, -114
-  %spec.store.select.i.i = select i1 %i.t, i32 0, i32 %i.s ; 4 uses
-  switch i32 %spec.store.select.i.i, label %bb.aa [
+  %spec.store.select.i.i = select i1 %i.t, i32 0, i32 %i.s ; 3 uses
+  switch i32 %i.s, label %bb.aa [
     i32 -35, label %bb.e
     i32 0, label %bb.g
+    i32 -114, label %bb.g
   ]
 
 bb.e:                                             ; preds = %i915_gem_object_lookup.exit
@@ -1604,7 +1607,7 @@ i915_gem_object_lock_interruptible.exit.thread:   ; preds = %bb.f, %.sink.split.
   store ptr %i.f, ptr inttoptr (i64 40 to ptr), align 8
   br label %bb.aa
 
-bb.g:                                             ; preds = %i915_gem_object_lookup.exit
+bb.g:                                             ; preds = %i915_gem_object_lookup.exit, %i915_gem_object_lookup.exit
   %i.x = getelementptr i8, ptr %i.f, i64 760      ; 3 uses
   %i.y = load volatile ptr, ptr %i.x, align 8     ; 2 uses
   %.not.i.i52 = icmp ne ptr %i.y, null
@@ -2007,9 +2010,12 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.0.i.i = phi i32 [ %i.y, %bb.c ], [ %i.z, %bb.d ] ; 4 uses
-  %4 = icmp eq i32 %.0.i.i, 0
-  br i1 %4, label %bb.f, label %5
+  %.0.i.i = phi i32 [ %i.y, %bb.c ], [ %i.z, %bb.d ] ; 2 uses
+  switch i32 %.0.i.i, label %.thread69 [
+    i32 0, label %bb.f
+    i32 -35, label %bb.h
+    i32 -114, label %bb.j
+  ]
 
 bb.f:                                             ; preds = %bb.e
   %i.aa = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) %0, i32 1, ptr nonnull elementtype(i32) %0) #11, !srcloc !16 ; 3 uses
@@ -2033,17 +2039,9 @@ i915_gem_object_get.exit.i.i:                     ; preds = %.sink.split.i.i.i.i
   store ptr %i.i, ptr %i.h, align 8
   store ptr %i.ad, ptr %i.k, align 8
   store volatile ptr %i.h, ptr %i.ad, align 8
-  br label %5
+  br label %bb.j
 
-5:                                                ; preds = %i915_gem_object_get.exit.i.i, %bb.e
-  %6 = icmp eq i32 %.0.i.i, -114
-  %spec.store.select.i6.i = select i1 %6, i32 0, i32 %.0.i.i
-  switch i32 %spec.store.select.i6.i, label %.thread69 [
-    i32 -35, label %bb.h
-    i32 0, label %bb.j
-  ]
-
-bb.h:                                             ; preds = %5
+bb.h:                                             ; preds = %bb.e
   %i.ae = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) %0, i32 1, ptr nonnull elementtype(i32) %0) #11, !srcloc !16 ; 3 uses
   %.not.i.i.i.i.i.i19.i7.i = icmp eq i32 %i.ae, 0
   br i1 %.not.i.i.i.i.i.i19.i7.i, label %.sink.split.i.i.i.i.i.i21.i9.i, label %bb.i, !prof !17
@@ -2063,7 +2061,7 @@ i915_gem_object_lock.exit.thread:                 ; preds = %bb.i, %.sink.split.
   store ptr %0, ptr %i.u, align 8
   br label %.thread64
 
-bb.j:                                             ; preds = %5
+bb.j:                                             ; preds = %i915_gem_object_get.exit.i.i, %bb.e
   %i.ah = call i32 @i915_gem_object_set_to_gtt_domain(ptr noundef nonnull %0, i1 noundef zeroext %2) #10 ; 2 uses
   %.not39 = icmp eq i32 %i.ah, 0
   br i1 %.not39, label %bb.k, label %insert_mappable_node.exit.thread
@@ -2168,8 +2166,8 @@ insert_mappable_node.exit.thread:                 ; preds = %.thread51, %bb.q, %
   call void @i915_gem_ww_ctx_fini(ptr noundef nonnull %3) #10
   br label %bb.r
 
-.thread69:                                        ; preds = %5, %insert_mappable_node.exit.thread, %.thread64
-  %.173 = phi i32 [ %i.bk, %.thread64 ], [ %.0, %insert_mappable_node.exit.thread ], [ %.0.i.i, %5 ]
+.thread69:                                        ; preds = %bb.e, %insert_mappable_node.exit.thread, %.thread64
+  %.173 = phi i32 [ %i.bk, %.thread64 ], [ %.0, %insert_mappable_node.exit.thread ], [ %.0.i.i, %bb.e ]
   call void @i915_gem_ww_ctx_fini(ptr noundef nonnull %3) #10
   %i.bl = sext i32 %.173 to i64
   %i.bm = inttoptr i64 %i.bl to ptr

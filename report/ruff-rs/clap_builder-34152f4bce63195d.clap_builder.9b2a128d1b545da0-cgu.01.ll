@@ -203,10 +203,8 @@ bb.cs:                                            ; preds = %bb.hd, %bb.fw, %bb.
 
 bb.ct:                                            ; preds = %bb.bo, %bb.bp, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters9enumerate9EnumerateINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEEECsdjW2DEjcQy2_12clap_builder.exit167
   %i.ir = getelementptr inbounds nuw i8, ptr %4, i64 668
-  %i.is = load i8, ptr %i.ir, align 4, !range !835, !alias.scope !1228, !noundef !9 ; 2 uses
-  %.not.i174 = icmp eq i8 %i.is, -1
-  %9 = select i1 %.not.i174, i8 0, i8 %i.is
-  switch i8 %9, label %default.unreachable [
+  %i.is = load i8, ptr %i.ir, align 4, !range !835, !alias.scope !1228, !noundef !9
+  switch i8 %i.is, label %default.unreachable [
     i8 0, label %bb.db
     i8 1, label %bb.ec
     i8 2, label %bb.cu
@@ -216,6 +214,7 @@ bb.ct:                                            ; preds = %bb.bo, %bb.bp, %_RI
     i8 6, label %bb.cy
     i8 7, label %bb.cz
     i8 8, label %bb.da
+    i8 -1, label %bb.db
   ]
 
 default.unreachable:                              ; preds = %bb.ct
@@ -295,7 +294,7 @@ bb.da:                                            ; preds = %bb.ct
   %i.jt = invoke noundef nonnull align 8 ptr @_RNvMNtCsdjW2DEjcQy2_12clap_builder5errorNtB2_5Error7for_appB4_(i8 noundef 14, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(776) %i.js, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.b)
           to label %bb.hv unwind label %bb.b
 
-bb.db:                                            ; preds = %bb.ct
+bb.db:                                            ; preds = %bb.ct, %bb.ct
   br i1 %.not292, label %switch.early.test, label %bb.dd
 
 switch.early.test:                                ; preds = %bb.db

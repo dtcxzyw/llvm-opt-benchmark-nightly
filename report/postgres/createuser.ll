@@ -158,8 +158,8 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   %.0111 = phi i32 [ 0, %bb.a ], [ %.0111.be, %.backedge ] ; 27 uses
   %.0108 = phi i32 [ 0, %bb.a ], [ %.0108.be, %.backedge ] ; 28 uses
   %.0106 = phi i32 [ 0, %bb.a ], [ %.0106.be, %.backedge ] ; 27 uses
-  %.0104 = phi i32 [ 0, %bb.a ], [ %.0104.be, %.backedge ] ; 28 uses
-  %.0102 = phi i32 [ 0, %bb.a ], [ %.0102.be, %.backedge ] ; 28 uses
+  %.0104 = phi i32 [ 0, %bb.a ], [ %.0104.be, %.backedge ] ; 27 uses
+  %.0102 = phi i32 [ 0, %bb.a ], [ %.0102.be, %.backedge ] ; 27 uses
   %.0100 = phi i32 [ 0, %bb.a ], [ %.0100.be, %.backedge ] ; 27 uses
   %.098 = phi i32 [ 0, %bb.a ], [ %.098.be, %.backedge ] ; 27 uses
   %.096 = phi ptr [ null, %bb.a ], [ %.096.be, %.backedge ] ; 28 uses
@@ -438,10 +438,6 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   %.2110151157 = phi i32 [ %.2110, %bb.aw ], [ %.2110, %bb.az ], [ %.2110, %bb.ay ], [ 2, %bb.ar ]
   %i.ax = phi i1 [ %i.aq, %bb.aw ], [ %i.aq, %bb.az ], [ %i.aq, %bb.ay ], [ true, %bb.ar ]
   %.3 = phi i32 [ %spec.select145, %bb.aw ], [ 1, %bb.az ], [ 2, %bb.ay ], [ 2, %bb.ar ]
-  %7 = icmp eq i32 %.0104, 0
-  %spec.store.select1 = select i1 %7, i32 2, i32 %.0104
-  %8 = icmp eq i32 %.0102, 0
-  %spec.store.select3 = select i1 %8, i32 2, i32 %.0102
   store ptr null, ptr %5, align 8
   %i.ay = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %.092, ptr %i.ay, align 8
@@ -488,47 +484,25 @@ bb.be:                                            ; preds = %bb.bd
 
 bb.bf:                                            ; preds = %bb.be, %bb.bd
   %i.bi = icmp eq i32 %.2110151157, 1
-  br i1 %i.bi, label %9, label %10
+  br i1 %i.bi, label %.sink.split268, label %.thread160
 
-9:                                                ; preds = %bb.bf
+.sink.split268:                                   ; preds = %bb.bf
   call void @appendPQExpBufferStr(ptr noundef nonnull %6, ptr noundef nonnull @.str.47) #10
-  br label %10
-
-10:                                               ; preds = %9, %bb.bf
-  %11 = icmp eq i32 %.3114158, 2
-  %.str.48..str.49 = select i1 %11, ptr @.str.48, ptr @.str.49
-  call void @appendPQExpBufferStr(ptr noundef nonnull %6, ptr noundef nonnull %.str.48..str.49) #10
-  %12 = icmp eq i32 %.3, 2
-  %spec.select269 = select i1 %12, ptr @.str.50, ptr @.str.51
-  call void @appendPQExpBufferStr(ptr noundef nonnull %6, ptr noundef nonnull %spec.select269) #10
-  switch i32 %spec.store.select1, label %14 [
-    i32 2, label %.sink.split
-    i32 1, label %13
-  ]
-
-13:                                               ; preds = %10
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %10, %13
-  %.str.52.sink = phi ptr [ @.str.53, %13 ], [ @.str.52, %10 ]
-  call void @appendPQExpBufferStr(ptr noundef nonnull %6, ptr noundef nonnull %.str.52.sink) #10
-  br label %14
-
-14:                                               ; preds = %.sink.split, %10
-  switch i32 %spec.store.select3, label %.thread160 [
-    i32 2, label %.sink.split268
-    i32 1, label %15
-  ]
-
-15:                                               ; preds = %14
-  br label %.sink.split268
-
-.sink.split268:                                   ; preds = %14, %15
-  %.str.54.sink = phi ptr [ @.str.55, %15 ], [ @.str.54, %14 ]
-  call void @appendPQExpBufferStr(ptr noundef nonnull %6, ptr noundef nonnull %.str.54.sink) #10
   br label %.thread160
 
-.thread160:                                       ; preds = %.sink.split268, %14
+.thread160:                                       ; preds = %.sink.split268, %bb.bf
+  %7 = icmp eq i32 %.3114158, 2
+  %.str.48..str.49 = select i1 %7, ptr @.str.48, ptr @.str.49
+  call void @appendPQExpBufferStr(ptr noundef nonnull %6, ptr noundef nonnull %.str.48..str.49) #10
+  %8 = icmp eq i32 %.3, 2
+  %spec.select268 = select i1 %8, ptr @.str.50, ptr @.str.51
+  call void @appendPQExpBufferStr(ptr noundef nonnull %6, ptr noundef nonnull %spec.select268) #10
+  %9 = icmp eq i32 %.0104, 1
+  %.str.53..str.52 = select i1 %9, ptr @.str.53, ptr @.str.52
+  call void @appendPQExpBufferStr(ptr noundef nonnull %6, ptr noundef nonnull %.str.53..str.52) #10
+  %10 = icmp eq i32 %.0102, 1
+  %.str.54.sink = select i1 %10, ptr @.str.55, ptr @.str.54
+  call void @appendPQExpBufferStr(ptr noundef nonnull %6, ptr noundef nonnull %.str.54.sink) #10
   %i.bj = icmp eq i32 %.0100, 2
   %.str.56..str.57 = select i1 %i.bj, ptr @.str.56, ptr @.str.57
   call void @appendPQExpBufferStr(ptr noundef nonnull %6, ptr noundef nonnull %.str.56..str.57) #10
