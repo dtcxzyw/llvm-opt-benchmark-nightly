@@ -204,10 +204,9 @@ bb.n:                                             ; preds = %.thread.thread, %_R
 _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterRNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5stats6sample10TimeSampleENtNtNtNtBb_4iter6traits8iterator8Iterator4foldoNCINvNtNtB2d_8adapters3map8map_foldRBQ_ooNCNvMs4_NtBX_5benchNtB3F_12BenchContext13compute_statss2_0NCINvXsG_NtB2b_5accumoNtB4C_3Sum3sumINtB2X_3MapBF_B3x_EE0E0EBX_.exit: ; preds = %.preheader.1, %.preheader.preheader
   %.lcssa = phi i128 [ %i.ct, %.preheader.preheader ], [ %i.cw, %.preheader.1 ]
   %i.cy = zext i32 %i.ag to i128
-  %2 = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.sroa.4.0.i.ph, i1 true)
-  %i.cz = zext nneg i64 %2 to i128
-  %3 = lshr i128 %.lcssa, %i.cz
-  %i.da = udiv i128 %3, %i.cy
+  %i.cz = zext nneg i64 %.sroa.4.0.i.ph to i128
+  %2 = mul nuw nsw i128 %i.cz, %i.cy
+  %i.da = udiv i128 %.lcssa, %2
   %i.db = uitofp nneg i64 %.sroa.4.0.i.ph to double
   br label %bb.n
 
@@ -609,9 +608,6 @@ declare i64 @llvm.smax.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.abs.i64(i64, i1 immarg) #15
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.cttz.i64(i64, i1 immarg) #15
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nofree nosync nounwind nonlazybind memory(read, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

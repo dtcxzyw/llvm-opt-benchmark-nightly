@@ -201,12 +201,13 @@ bb.aek:                                           ; preds = %bb.aej, %bb.aei
   %i.dhv = sdiv i32 %i.ddy, %i.dea                ; 4 uses
   %i.dhw = sext i32 %.01190 to i64                ; 3 uses
   %i.dhx = sext i32 %i.dhv to i64                 ; 2 uses
-  %98 = zext nneg i32 %i.dea to i64
   %factor.op.mul = mul i32 %.01190, %i.dhv
   %i.dhy = icmp sgt i32 %i.dhv, 0
   br i1 %i.dhy, label %.preheader.lr.ph.preheader, label %._crit_edge3319.split
 
 .preheader.lr.ph.preheader:                       ; preds = %.lr.ph3318
+  %98 = zext nneg i32 %i.dea to i64
+  %99 = mul nuw nsw i64 %i.dhx, %98
   %wide.trip.count3557 = zext nneg i32 %i.dhv to i64
   br label %.preheader.lr.ph
 
@@ -305,9 +306,8 @@ _ZNSt6vectorIiSaIiEED2Ev.exit2139:                ; preds = %_ZNSt6vectorIiSaIiE
   %i.din = ptrtoint ptr %i.dil to i64
   %i.dio = sub i64 %i.dim, %i.din
   %i.dip = ashr exact i64 %i.dio, 2
-  %99 = udiv i64 %i.dip, %i.dhw
-  %i.diq = udiv i64 %99, %i.dhx
-  %i.dir = udiv i64 %i.diq, %98                   ; 2 uses
+  %i.diq = udiv i64 %i.dip, %i.dhw
+  %i.dir = udiv i64 %i.diq, %99                   ; 2 uses
   %i.dis = trunc i64 %i.dir to i32                ; 2 uses
   %.reass = mul i32 %.011913316, %factor.op.mul
   %i.dit = mul nsw i32 %.reass, %i.dis

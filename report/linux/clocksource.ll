@@ -203,12 +203,12 @@ bb.f:                                             ; preds = %bb.e, %.critedge25
 
 bb.g:                                             ; preds = %bb.f
   %i.o = getelementptr i8, ptr %0, i64 8
-  %i.p = load i64, ptr %i.o, align 8              ; 2 uses
-  %i.q = zext i32 %2 to i64                       ; 5 uses
-  %3 = udiv i64 %i.p, %i.q                        ; 2 uses
-  %4 = zext i32 %1 to i64                         ; 3 uses
-  %i.r = udiv i64 %3, %4                          ; 2 uses
-  %.not59.i = icmp ult i64 %3, %4
+  %i.p = load i64, ptr %i.o, align 8              ; 3 uses
+  %i.q = zext i32 %2 to i64                       ; 4 uses
+  %3 = zext i32 %1 to i64
+  %4 = mul nuw i64 %i.q, %3                       ; 3 uses
+  %i.r = udiv i64 %i.p, %4                        ; 2 uses
+  %.not59.i = icmp ugt i64 %4, %i.p
   %i.s = icmp ugt i64 %i.p, 4294967295
   %i.t = tail call i64 @llvm.umin.i64(i64 %i.r, i64 600)
   %spec.select.i = select i1 %i.s, i64 %i.t, i64 %i.r
@@ -264,8 +264,7 @@ bb.j:                                             ; preds = %bb.i
   %i.av = trunc i64 %i.au to i32                  ; 5 uses
   store i32 %i.av, ptr %i.u, align 8
   store i32 %.022.lcssa.i.i, ptr %i.v, align 4
-  %5 = mul nuw i64 %i.q, %4
-  %i.aw = udiv i64 %5, 1000
+  %i.aw = udiv i64 %4, 1000
   %i.ax = trunc i64 %i.aw to i32
   %i.ay = getelementptr i8, ptr %0, i64 80
   store i32 %i.ax, ptr %i.ay, align 8

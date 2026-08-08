@@ -203,8 +203,8 @@ bb.j:                                             ; preds = %bb.i
   %i.cc = getelementptr i8, ptr %.160.3, i64 5
   %i.cd = load i8, ptr %i.cc, align 1
   %i.ce = zext i8 %i.cd to i32                    ; 2 uses
-  %i.cf = and i32 %i.by, 63                       ; 7 uses
-  %i.cg = add nuw nsw i32 %i.ce, 1                ; 5 uses
+  %i.cf = and i32 %i.by, 63                       ; 6 uses
+  %i.cg = add nuw nsw i32 %i.ce, 1                ; 4 uses
   %i.ch = icmp eq i32 %i.cf, 0
   br i1 %i.ch, label %.thread, label %bb.k
 
@@ -217,6 +217,7 @@ bb.k:                                             ; preds = %bb.j
   %i.cm = getelementptr i8, ptr %.160.3, i64 12
   %.val = load i32, ptr %i.cm, align 1
   %i.cn = add i32 %.val, %.val71                  ; 3 uses
+  %3 = mul nuw nsw i32 %i.cg, %i.cf               ; 2 uses
   %i.co = icmp eq i32 %i.cn, %i.ck
   br i1 %i.co, label %bb.m, label %bb.l
 
@@ -224,8 +225,7 @@ bb.l:                                             ; preds = %bb.k
   %.neg = xor i32 %i.ce, -1
   %.neg68 = mul nsw i32 %i.cf, %.neg
   %i.cp = add i32 %i.cn, %.neg68
-  %3 = udiv i32 %i.cp, %i.cg
-  %i.cq = udiv i32 %3, %i.cf
+  %i.cq = udiv i32 %i.cp, %3
   %i.cr = add i32 %i.cq, 1
   %i.cs = mul i32 %i.cg, %i.cr
   %i.ct = mul i32 %i.cs, %i.cf
@@ -238,8 +238,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   store i32 %i.cg, ptr %2, align 4
   %i.cw = getelementptr i8, ptr %2, i64 4
   store i32 %i.cf, ptr %i.cw, align 4
-  %4 = mul nuw nsw i32 %i.cg, %i.cf
-  %i.cx = zext nneg i32 %4 to i64
+  %i.cx = zext nneg i32 %3 to i64
   %i.cy = udiv i64 %1, %i.cx
   %i.cz = trunc i64 %i.cy to i32
   %i.da = getelementptr i8, ptr %2, i64 8

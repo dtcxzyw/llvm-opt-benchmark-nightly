@@ -204,14 +204,14 @@ bb.c:                                             ; preds = %bb.a
   %i.l = sub i64 %i.i, %i.k                       ; 2 uses
   %i.m = udiv i64 %i.l, 1000
   %.not = icmp ult i64 %i.l, 1000
-  %spec.select = select i1 %.not, i64 1, i64 %i.m
   %i.n = getelementptr i8, ptr %0, i64 424
   %i.o = load i64, ptr %i.n, align 8
   %i.p = add i64 %i.o, %i.h
   %i.q = sub i64 %i.e, %i.p
-  %2 = udiv i64 %i.q, %spec.select
-  %3 = lshr i64 %2, 1
-  %i.r = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef %1, ptr noundef nonnull dereferenceable(1) @.str.100, i64 noundef %3) #29
+  %2 = shl nuw nsw i64 %i.m, 1
+  %3 = select i1 %.not, i64 2, i64 %2
+  %4 = udiv i64 %i.q, %3
+  %i.r = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef %1, ptr noundef nonnull dereferenceable(1) @.str.100, i64 noundef %4) #29
   %i.s = sext i32 %i.r to i64
   br label %bb.d
 
