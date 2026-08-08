@@ -203,7 +203,7 @@ bb.aq:                                            ; preds = %bb.ap
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %i.mv = zext i16 %.0199 to i32
   %.not214 = icmp ult i32 %.1177518, %i.mv
-  br i1 %.not214, label %bb.as, label %8
+  br i1 %.not214, label %bb.as, label %.thread465
 
 bb.as:                                            ; preds = %bb.ar
   %i.mw = load i64, ptr %i.dm, align 8, !tbaa !86
@@ -594,7 +594,7 @@ bb.cb:                                            ; preds = %.loopexit, %bb.bz
   %i.tb = load i16, ptr %0, align 8, !tbaa !12
   %.sroa.0.0.copyload = load i48, ptr %7, align 8
   %i.tc = call noundef zeroext i1 @_ZN13EmergeManager18enqueueBlockEmergeEtN4core8vector3dIsEEbb(ptr noundef nonnull align 8 dereferenceable(480) %2, i16 noundef zeroext %i.tb, i48 %.sroa.0.0.copyload, i1 noundef zeroext %i.mp, i1 noundef zeroext false)
-  br i1 %i.tc, label %.thread460, label %8
+  br i1 %i.tc, label %.thread460, label %.thread465
 
 bb.cc:                                            ; preds = %bb.cb
   %i.td = icmp eq i32 %.1191512, -1
@@ -621,6 +621,12 @@ bb.cc:                                            ; preds = %bb.cb
   %.pre547 = load ptr, ptr %i.lt, align 8, !tbaa !248
   br label %bb.cd
 
+.thread465:                                       ; preds = %bb.ar, %.thread
+  %.5188 = phi i32 [ %.2185, %.thread ], [ %.1184513, %bb.ar ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #29
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #29
+  br label %.loopexit504
+
 bb.cd:                                            ; preds = %.thread460, %.thread452
   %i.tm = phi ptr [ %i.lw, %.thread452 ], [ %.pre547, %.thread460 ] ; 2 uses
   %i.tn = phi i16 [ %i.lx, %.thread452 ], [ %i.ti, %.thread460 ]
@@ -634,12 +640,6 @@ bb.cd:                                            ; preds = %.thread460, %.threa
   %.not493 = icmp eq ptr %i.tr, %i.tm
   br i1 %.not493, label %._crit_edge, label %.lr.ph, !llvm.loop !288
 
-8:                                                ; preds = %.thread, %bb.ar
-  %.5188 = phi i32 [ %.2185, %.thread ], [ %.1184513, %bb.ar ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #29
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #29
-  br label %.loopexit504
-
 ._crit_edge:                                      ; preds = %bb.cd, %bb.aj
   %.1191.lcssa = phi i32 [ %.0190527, %bb.aj ], [ %.6196457, %bb.cd ] ; 2 uses
   %.1184.lcssa = phi i32 [ %.0183528, %bb.aj ], [ %.6189458, %bb.cd ] ; 2 uses
@@ -649,10 +649,10 @@ bb.cd:                                            ; preds = %.thread460, %.threa
   %.not212 = icmp sgt i16 %i.ts, %spec.select
   br i1 %.not212, label %.loopexit504, label %bb.aj, !llvm.loop !289
 
-.loopexit504:                                     ; preds = %._crit_edge, %8
-  %i.tt = phi i16 [ %i.lq, %8 ], [ %i.ts, %._crit_edge ]
-  %.8198 = phi i32 [ %.1191512, %8 ], [ %.1191.lcssa, %._crit_edge ]
-  %.8 = phi i32 [ %.5188, %8 ], [ %.1184.lcssa, %._crit_edge ] ; 2 uses
+.loopexit504:                                     ; preds = %._crit_edge, %.thread465
+  %i.tt = phi i16 [ %i.lq, %.thread465 ], [ %i.ts, %._crit_edge ]
+  %.8198 = phi i32 [ %.1191512, %.thread465 ], [ %.1191.lcssa, %._crit_edge ]
+  %.8 = phi i32 [ %.5188, %.thread465 ], [ %.1184.lcssa, %._crit_edge ] ; 2 uses
   %.not216 = icmp eq i32 %.8, -1
   br i1 %.not216, label %.loopexit504.thread, label %.thread485
 

@@ -204,8 +204,8 @@ bb.n:                                             ; preds = %.lr.ph
   %i.bx = tail call noundef zeroext i1 @_ZNK8facebook5velox7Variant16isTypeCompatibleERKSt10shared_ptrIKNS0_4TypeEE(ptr noundef nonnull align 8 dereferenceable(10) %i.bq, ptr noundef nonnull align 8 dereferenceable(16) %i.bw) ; 3 uses
   br i1 %i.bx, label %bb.n, label %.thread84
 
-.thread84:                                        ; preds = %bb.n, %.lr.ph, %bb.k, %bb.h, %bb.l, %.thread69, %.preheader, %_ZNK8facebook5velox7Variant3mapEv.exit, %bb.f, %_ZNK8facebook5velox7Variant3rowEv.exit, %bb.m, %bb.d, %.thread, %bb.e, %bb.c, %bb.b, %bb.a
-  %.6 = phi i1 [ true, %bb.f ], [ true, %bb.a ], [ false, %bb.b ], [ false, %bb.e ], [ true, %bb.c ], [ false, %_ZNK8facebook5velox7Variant3rowEv.exit ], [ true, %_ZNK8facebook5velox7Variant3mapEv.exit ], [ true, %bb.m ], [ true, %.thread ], [ true, %bb.d ], [ true, %.preheader ], [ true, %.thread69 ], [ true, %bb.l ], [ false, %bb.h ], [ false, %bb.k ], [ %i.bx, %.lr.ph ], [ %i.bx, %bb.n ]
+.thread84:                                        ; preds = %bb.n, %.lr.ph, %bb.k, %bb.h, %bb.l, %.thread69, %.preheader, %_ZNK8facebook5velox7Variant3mapEv.exit, %_ZNK8facebook5velox7Variant3rowEv.exit, %bb.m, %bb.f, %bb.d, %.thread, %bb.e, %bb.c, %bb.b, %bb.a
+  %.6 = phi i1 [ true, %bb.m ], [ true, %bb.a ], [ false, %bb.b ], [ false, %bb.e ], [ true, %bb.c ], [ true, %.preheader ], [ true, %bb.d ], [ true, %bb.f ], [ true, %.thread ], [ false, %_ZNK8facebook5velox7Variant3rowEv.exit ], [ true, %.thread69 ], [ true, %_ZNK8facebook5velox7Variant3mapEv.exit ], [ false, %bb.h ], [ false, %bb.k ], [ true, %bb.l ], [ %i.bx, %.lr.ph ], [ %i.bx, %bb.n ]
   ret i1 %.6
 }
 

@@ -203,8 +203,7 @@ pdo_stmt_free_default_fetch_mode.exit:            ; preds = %bb.a, %bb.b, %bb.d,
 bb.k:                                             ; preds = %pdo_stmt_free_default_fetch_mode.exit
   %i.aa = trunc nuw nsw i64 %1 to i32             ; 2 uses
   %i.ab = and i32 %i.aa, 15                       ; 3 uses
-  %i.ac = icmp eq i32 %i.ab, 0                    ; 2 uses
-  %.027.i = select i1 %i.ac, i32 4, i32 %i.ab
+  %i.ac = icmp eq i32 %i.ab, 0
   %.not.i113115 = icmp samesign ult i64 %1, 16
   %.not.i113 = or i1 %.not.i113115, %i.ac
   br i1 %.not.i113, label %bb.o, label %bb.l
@@ -226,7 +225,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not32.i, label %bb.o, label %.critedge, !prof !95
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %bb.k
-  switch i32 %.027.i, label %.critedge.sink.split.i [
+  switch i32 %i.ab, label %.critedge.sink.split.i [
     i32 10, label %bb.p
     i32 1, label %pdo_verify_fetch_mode.exit
     i32 9, label %pdo_verify_fetch_mode.exit
@@ -239,17 +238,18 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.k
     i32 8, label %pdo_verify_fetch_mode.exit
     i32 11, label %pdo_verify_fetch_mode.exit
     i32 12, label %pdo_verify_fetch_mode.exit
+    i32 0, label %pdo_verify_fetch_mode.exit
   ]
 
 bb.p:                                             ; preds = %bb.o
   br label %.critedge.sink.split.i
 
-.critedge.sink.split.i:                           ; preds = %bb.p, %bb.o, %bb.l, %pdo_stmt_free_default_fetch_mode.exit
+.critedge.sink.split.i:                           ; preds = %bb.o, %bb.p, %bb.l, %pdo_stmt_free_default_fetch_mode.exit
   %.str.48.sink.i = phi ptr [ @.str.46, %bb.l ], [ @.str.48, %bb.p ], [ @.str.45, %pdo_stmt_free_default_fetch_mode.exit ], [ @.str.45, %bb.o ]
   tail call void (i32, ptr, ...) @zend_argument_value_error(i32 noundef %2, ptr noundef nonnull %.str.48.sink.i) #15
   br label %.critedge
 
-pdo_verify_fetch_mode.exit:                       ; preds = %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o
+pdo_verify_fetch_mode.exit:                       ; preds = %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o
   %i.ag = and i64 %1, 15
   switch i64 %i.ag, label %bb.bw [
     i64 0, label %bb.q

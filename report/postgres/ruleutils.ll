@@ -201,8 +201,8 @@ bb.q:                                             ; preds = %bb.o
   %exitcond234.not = icmp eq i64 %indvars.iv.next230, %wide.trip.count233
   br i1 %exitcond234.not, label %.thread174, label %bb.c
 
-.thread174:                                       ; preds = %.thread135, %.lr.ph208.a, %bb.b, %bb.a, %.split, %bb.q
-  %.14 = phi ptr [ %i.bk, %bb.q ], [ %i.ak, %.split ], [ null, %bb.a ], [ null, %bb.b ], [ null, %.lr.ph208.a ], [ null, %.thread135 ]
+.thread174:                                       ; preds = %.thread135, %.lr.ph208.a, %bb.b, %.split, %bb.q, %bb.a
+  %.14 = phi ptr [ null, %bb.a ], [ %i.ak, %.split ], [ %i.bk, %bb.q ], [ null, %bb.b ], [ null, %.lr.ph208.a ], [ null, %.thread135 ]
   ret ptr %.14
 }
 

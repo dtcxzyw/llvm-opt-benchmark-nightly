@@ -204,7 +204,7 @@ _ZNK14TextureRequestneERKS_.exit:                 ; preds = %bb.e, %_ZSteqIcSt11
 .thread:                                          ; preds = %.lr.ph109
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.077.0108, i64 8
   store i8 %3, ptr %i.as, align 8, !tbaa !221
-  br label %_ZNSt6vectorI10CallerInfoINSt6thread2idEc14TextureRequestjESaIS4_EE9push_backEOS4_.exit
+  br label %.thread91
 
 .critedge:                                        ; preds = %.lr.ph109
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.077.0108, i64 24 ; 2 uses
@@ -226,7 +226,7 @@ bb.g:                                             ; preds = %._crit_edge110
   %i.aw = load ptr, ptr %i.ap, align 8, !tbaa !227
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 24
   store ptr %i.ax, ptr %i.ap, align 8, !tbaa !227
-  br label %_ZNSt6vectorI10CallerInfoINSt6thread2idEc14TextureRequestjESaIS4_EE9push_backEOS4_.exit
+  br label %.thread91
 
 bb.h:                                             ; preds = %._crit_edge110
   %i.ay = ptrtoint ptr %i.aq to i64
@@ -288,13 +288,17 @@ _ZNSt6vectorI10CallerInfoINSt6thread2idEc14TextureRequestjESaIS4_EE17_M_realloc_
   store ptr %i.bm, ptr %i.ap, align 8, !tbaa !227
   %i.bn = getelementptr inbounds nuw [24 x i8], ptr %i.bi, i64 %i.bg
   store ptr %i.bn, ptr %i.au, align 8, !tbaa !224
-  br label %_ZNSt6vectorI10CallerInfoINSt6thread2idEc14TextureRequestjESaIS4_EE9push_backEOS4_.exit
+  br label %.thread91
 
 bb.k:                                             ; preds = %_ZNKSt6vectorI10CallerInfoINSt6thread2idEc14TextureRequestjESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i, %bb.i
   %i.bo = landingpad { ptr, i32 }
           cleanup
   %i.bp = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.a) #13 ; 0 uses
   br label %bb.x
+
+.thread91:                                        ; preds = %bb.g, %_ZNSt6vectorI10CallerInfoINSt6thread2idEc14TextureRequestjESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i, %.thread
+  %6 = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.a) #13 ; 0 uses
+  br label %bb.t
 
 .loopexit:                                        ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i, %bb.d, %bb.c
   %i.bq = getelementptr inbounds nuw i8, ptr %.sroa.082.0103, i64 56 ; 2 uses
@@ -313,10 +317,6 @@ _ZNSt15_Deque_iteratorI10GetRequestI14TextureRequestjNSt6thread2idEcERS4_PS4_Epp
   %.sroa.14.1 = phi ptr [ %i.bs, %bb.l ], [ %.sroa.14.0106, %.loopexit ]
   %.not = icmp eq ptr %.sroa.082.1, %i.f
   br i1 %.not, label %._crit_edge, label %bb.c
-
-_ZNSt6vectorI10CallerInfoINSt6thread2idEc14TextureRequestjESaIS4_EE9push_backEOS4_.exit: ; preds = %bb.g, %_ZNSt6vectorI10CallerInfoINSt6thread2idEc14TextureRequestjESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i, %.thread
-  %6 = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.a) #13 ; 0 uses
-  br label %bb.t
 
 ._crit_edge:                                      ; preds = %_ZNSt15_Deque_iteratorI10GetRequestI14TextureRequestjNSt6thread2idEcERS4_PS4_EppEv.exit, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
   %i.bv = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.a) #13 ; 0 uses
@@ -477,7 +477,7 @@ _ZN10GetRequestI14TextureRequestjNSt6thread2idEcED2Ev.exit: ; preds = %_ZSt8_Des
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   br label %bb.t
 
-bb.t:                                             ; preds = %_ZNSt6vectorI10CallerInfoINSt6thread2idEc14TextureRequestjESaIS4_EE9push_backEOS4_.exit, %_ZN10GetRequestI14TextureRequestjNSt6thread2idEcED2Ev.exit
+bb.t:                                             ; preds = %.thread91, %_ZN10GetRequestI14TextureRequestjNSt6thread2idEcED2Ev.exit
   ret void
 
 bb.u:                                             ; preds = %._crit_edge
