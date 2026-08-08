@@ -1,3 +1,7 @@
+inline.NumInlined: 3692
+inline.NumDeleted: 904
+loop-unroll.NumRuntimeUnrolled: 15
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@_ZN6colvar18CartesianBasedPath32computeDistanceToReferenceFramesERSt6vectorIdSaIdEE:bb.a
 
 ._crit_edge.us:                                   ; preds = %bb.b
@@ -199,9 +203,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cq = insertelement <2 x double> %i.cp, double %i.co, i64 1
   %i.cr = fsub <2 x double> %i.cq, %wide.load747
   %i.cs = getelementptr inbounds nuw [24 x i8], ptr %i.t, i64 %index
-  %9 = fsub <2 x double> %i.ce, %wide.load
-  %10 = fsub <2 x double> %i.ck, %wide.load746
-  %11 = shufflevector <2 x double> %9, <2 x double> %10, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %9 = shufflevector <2 x double> %i.ce, <2 x double> %i.ck, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %10 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load746, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %11 = fsub <4 x double> %9, %10
   %i.ct = shufflevector <2 x double> %i.cr, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %interleaved.vec = shufflevector <4 x double> %11, <4 x double> %i.ct, <6 x i32> <i32 0, i32 2, i32 4, i32 1, i32 3, i32 5>
   store <6 x double> %interleaved.vec, ptr %i.cs, align 8, !tbaa !142, !alias.scope !233, !noalias !235
@@ -231,9 +235,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.do = insertelement <2 x double> %i.dn, double %i.dm, i64 1
   %i.dp = fsub <2 x double> %wide.load750, %i.do
   %i.dq = getelementptr inbounds nuw [24 x i8], ptr %i.af, i64 %index
-  %12 = fsub <2 x double> %wide.load748, %i.dc
-  %13 = fsub <2 x double> %wide.load749, %i.di
-  %14 = shufflevector <2 x double> %12, <2 x double> %13, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %12 = shufflevector <2 x double> %wide.load748, <2 x double> %wide.load749, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %13 = shufflevector <2 x double> %i.dc, <2 x double> %i.di, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %14 = fsub <4 x double> %12, %13
   %i.dr = shufflevector <2 x double> %i.dp, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %interleaved.vec751 = shufflevector <4 x double> %14, <4 x double> %i.dr, <6 x i32> <i32 0, i32 2, i32 4, i32 1, i32 3, i32 5>
   store <6 x double> %interleaved.vec751, ptr %i.dq, align 8, !tbaa !142, !alias.scope !248, !noalias !249
@@ -636,9 +640,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.pz = insertelement <2 x double> %i.py, double %i.px, i64 1
   %i.qa = fsub <2 x double> %i.pz, %wide.load675
   %i.qb = getelementptr inbounds nuw [24 x i8], ptr %i.lt, i64 %index
-  %7 = fsub <2 x double> %i.pn, %wide.load
-  %8 = fsub <2 x double> %i.pt, %wide.load674
-  %9 = shufflevector <2 x double> %7, <2 x double> %8, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %7 = shufflevector <2 x double> %i.pn, <2 x double> %i.pt, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %8 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load674, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %9 = fsub <4 x double> %7, %8
   %i.qc = shufflevector <2 x double> %i.qa, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %interleaved.vec = shufflevector <4 x double> %9, <4 x double> %i.qc, <6 x i32> <i32 0, i32 2, i32 4, i32 1, i32 3, i32 5>
   store <6 x double> %interleaved.vec, ptr %i.qb, align 8, !tbaa !142, !alias.scope !471, !noalias !473
@@ -662,9 +666,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.qu = insertelement <2 x double> %i.qt, double %i.qs, i64 1
   %i.qv = fsub <2 x double> %wide.load678, %i.qu
   %i.qw = getelementptr inbounds nuw [24 x i8], ptr %i.lx, i64 %index
-  %10 = fsub <2 x double> %wide.load676, %i.qi
-  %11 = fsub <2 x double> %wide.load677, %i.qo
-  %12 = shufflevector <2 x double> %10, <2 x double> %11, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %10 = shufflevector <2 x double> %wide.load676, <2 x double> %wide.load677, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %11 = shufflevector <2 x double> %i.qi, <2 x double> %i.qo, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %12 = fsub <4 x double> %10, %11
   %i.qx = shufflevector <2 x double> %i.qv, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %interleaved.vec679 = shufflevector <4 x double> %12, <4 x double> %i.qx, <6 x i32> <i32 0, i32 2, i32 4, i32 1, i32 3, i32 5>
   store <6 x double> %interleaved.vec679, ptr %i.qw, align 8, !tbaa !142, !alias.scope !483, !noalias !484

@@ -204,7 +204,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.bq = zext i8 %i.bp to i64
   %i.br = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.bq
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !29 ; 2 uses
-  %2 = or i32 %i.bs, %i.bl
   %i.bt = trunc i32 %i.bs to i16
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bf, i64 4 ; 2 uses
   store ptr %i.bu, ptr %i.e, align 8, !tbaa !58
@@ -215,7 +214,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.bx = zext i8 %i.bw to i64
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.bx
   %i.bz = load i32, ptr %i.by, align 4, !tbaa !29 ; 2 uses
-  %3 = or i32 %2, %i.bz
   %i.ca = trunc i32 %i.bz to i16
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bf, i64 6 ; 2 uses
   store ptr %i.cb, ptr %i.e, align 8, !tbaa !58
@@ -226,7 +224,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.ce = zext i8 %i.cd to i64
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.ce
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !29 ; 2 uses
-  %4 = or i32 %3, %i.cg
   %i.ch = trunc i32 %i.cg to i16
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bf, i64 8 ; 2 uses
   store ptr %i.ci, ptr %i.e, align 8, !tbaa !58
@@ -237,7 +234,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.cl = zext i8 %i.ck to i64
   %i.cm = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.cl
   %i.cn = load i32, ptr %i.cm, align 4, !tbaa !29 ; 2 uses
-  %5 = or i32 %4, %i.cn
   %i.co = trunc i32 %i.cn to i16
   %i.cp = getelementptr inbounds nuw i8, ptr %i.bf, i64 10 ; 2 uses
   store ptr %i.cp, ptr %i.e, align 8, !tbaa !58
@@ -248,7 +244,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.cs = zext i8 %i.cr to i64
   %i.ct = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.cs
   %i.cu = load i32, ptr %i.ct, align 4, !tbaa !29 ; 2 uses
-  %6 = or i32 %5, %i.cu
   %i.cv = trunc i32 %i.cu to i16
   %i.cw = getelementptr inbounds nuw i8, ptr %i.bf, i64 12 ; 2 uses
   store ptr %i.cw, ptr %i.e, align 8, !tbaa !58
@@ -259,7 +254,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.cz = zext i8 %i.cy to i64
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.cz
   %i.db = load i32, ptr %i.da, align 4, !tbaa !29 ; 2 uses
-  %7 = or i32 %6, %i.db
   %i.dc = trunc i32 %i.db to i16
   %i.dd = getelementptr inbounds nuw i8, ptr %i.bf, i64 14 ; 2 uses
   store ptr %i.dd, ptr %i.e, align 8, !tbaa !58
@@ -270,7 +264,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.dg = zext i8 %i.df to i64
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.dg
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !29 ; 2 uses
-  %8 = or i32 %7, %i.di
   %i.dj = trunc i32 %i.di to i16
   %i.dk = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
   store i16 %i.dj, ptr %i.dd, align 2, !tbaa !64
@@ -279,7 +272,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.dn = zext i8 %i.dm to i64
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.dn
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !29 ; 2 uses
-  %9 = or i32 %8, %i.dp
   %i.dq = trunc i32 %i.dp to i16
   %i.dr = getelementptr inbounds nuw i8, ptr %i.bf, i64 18
   store i16 %i.dq, ptr %i.dk, align 2, !tbaa !64
@@ -288,7 +280,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.du = zext i8 %i.dt to i64
   %i.dv = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.du
   %i.dw = load i32, ptr %i.dv, align 4, !tbaa !29 ; 2 uses
-  %10 = or i32 %9, %i.dw
   %i.dx = trunc i32 %i.dw to i16
   %i.dy = getelementptr inbounds nuw i8, ptr %i.bf, i64 20
   store i16 %i.dx, ptr %i.dr, align 2, !tbaa !64
@@ -297,7 +288,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.eb = zext i8 %i.ea to i64
   %i.ec = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.eb
   %i.ed = load i32, ptr %i.ec, align 4, !tbaa !29 ; 2 uses
-  %11 = or i32 %10, %i.ed
   %i.ee = trunc i32 %i.ed to i16
   %i.ef = getelementptr inbounds nuw i8, ptr %i.bf, i64 22
   store i16 %i.ee, ptr %i.dy, align 2, !tbaa !64
@@ -306,7 +296,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.ei = zext i8 %i.eh to i64
   %i.ej = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.ei
   %i.ek = load i32, ptr %i.ej, align 4, !tbaa !29 ; 2 uses
-  %12 = or i32 %11, %i.ek
   %i.el = trunc i32 %i.ek to i16
   %i.em = getelementptr inbounds nuw i8, ptr %i.bf, i64 24
   store i16 %i.el, ptr %i.ef, align 2, !tbaa !64
@@ -315,7 +304,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.ep = zext i8 %i.eo to i64
   %i.eq = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.ep
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !29 ; 2 uses
-  %13 = or i32 %12, %i.er
   %i.es = trunc i32 %i.er to i16
   %i.et = getelementptr inbounds nuw i8, ptr %i.bf, i64 26
   store i16 %i.es, ptr %i.em, align 2, !tbaa !64
@@ -324,7 +312,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.ew = zext i8 %i.ev to i64
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.ew
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !29 ; 2 uses
-  %14 = or i32 %13, %i.ey
   %i.ez = trunc i32 %i.ey to i16
   %i.fa = getelementptr inbounds nuw i8, ptr %i.bf, i64 28
   store i16 %i.ez, ptr %i.et, align 2, !tbaa !64
@@ -333,7 +320,6 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.fd = zext i8 %i.fc to i64
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.fd
   %i.ff = load i32, ptr %i.fe, align 4, !tbaa !29 ; 2 uses
-  %15 = or i32 %14, %i.ff
   %i.fg = trunc i32 %i.ff to i16
   %i.fh = getelementptr inbounds nuw i8, ptr %i.bf, i64 30
   store i16 %i.fg, ptr %i.fa, align 2, !tbaa !64
@@ -343,12 +329,28 @@ bb.i:                                             ; preds = %bb.k, %bb.h
   %i.fk = zext i8 %i.fj to i64
   %i.fl = getelementptr inbounds nuw [4 x i8], ptr %.0147.i, i64 %i.fk
   %i.fm = load i32, ptr %i.fl, align 4, !tbaa !29 ; 2 uses
-  %16 = or i32 %15, %i.fm
+  %2 = insertelement <16 x i32> poison, i32 %i.bs, i64 0
+  %3 = insertelement <16 x i32> %2, i32 %i.bl, i64 1
+  %4 = insertelement <16 x i32> %3, i32 %i.bz, i64 2
+  %5 = insertelement <16 x i32> %4, i32 %i.cg, i64 3
+  %6 = insertelement <16 x i32> %5, i32 %i.cn, i64 4
+  %7 = insertelement <16 x i32> %6, i32 %i.cu, i64 5
+  %8 = insertelement <16 x i32> %7, i32 %i.db, i64 6
+  %9 = insertelement <16 x i32> %8, i32 %i.di, i64 7
+  %10 = insertelement <16 x i32> %9, i32 %i.dp, i64 8
+  %11 = insertelement <16 x i32> %10, i32 %i.dw, i64 9
+  %12 = insertelement <16 x i32> %11, i32 %i.ed, i64 10
+  %13 = insertelement <16 x i32> %12, i32 %i.ek, i64 11
+  %14 = insertelement <16 x i32> %13, i32 %i.er, i64 12
+  %15 = insertelement <16 x i32> %14, i32 %i.ey, i64 13
+  %16 = insertelement <16 x i32> %15, i32 %i.ff, i64 14
+  %17 = insertelement <16 x i32> %16, i32 %i.fm, i64 15
+  %18 = call i32 @llvm.vector.reduce.or.v16i32(<16 x i32> %17)
   %i.fn = trunc i32 %i.fm to i16
   %i.fo = getelementptr inbounds nuw i8, ptr %i.bf, i64 32 ; 3 uses
   store ptr %i.fo, ptr %i.e, align 8, !tbaa !58
   store i16 %i.fn, ptr %i.fh, align 2, !tbaa !64
-  %i.fp = icmp slt i32 %16, -2146435072
+  %i.fp = icmp slt i32 %18, -2146435072
   br i1 %i.fp, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -749,6 +751,9 @@ declare i64 @strlen(ptr captures(none)) local_unnamed_addr #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v16i32(<16 x i32>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.and.v4i32(<4 x i32>) #12

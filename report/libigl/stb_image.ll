@@ -1,3 +1,8 @@
+inline.NumInlined: 824
+inline.NumDeleted: 120
+loop-unroll.NumCompletelyUnrolled: 28
+loop-unroll.NumRuntimeUnrolled: 80
+loop-unroll.NumUnrolled: 110
 begin_hunk_0_@_ZL14stbiw__writefvP19stbi__write_contextPKcP13__va_list_tag:bb.a
   br label %bb.o
 
@@ -199,14 +204,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.et = fsub <4 x float> %i.dv, %i.er           ; 2 uses
   %i.eu = fadd <4 x float> %i.et, %i.ep
   %i.ev = fsub <4 x float> %i.et, %i.ep
-  %8 = fadd <4 x float> %i.ee, %i.ec
-  %9 = fadd <4 x float> %i.es, %i.eq
-  %10 = shufflevector <4 x float> %8, <4 x float> %9, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %8 = shufflevector <4 x float> %i.ee, <4 x float> %i.es, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %9 = shufflevector <4 x float> %i.ec, <4 x float> %i.eq, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %10 = fadd <8 x float> %8, %9
   %i.ew = shufflevector <4 x float> %i.ej, <4 x float> %i.ev, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.ex = shufflevector <4 x float> %i.eg, <4 x float> %i.eu, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %11 = fsub <4 x float> %i.ed, %i.ei
-  %12 = fsub <4 x float> %i.es, %i.eq
-  %13 = shufflevector <4 x float> %11, <4 x float> %12, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %11 = shufflevector <4 x float> %i.ed, <4 x float> %i.es, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %12 = shufflevector <4 x float> %i.ei, <4 x float> %i.eq, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %13 = fsub <8 x float> %11, %12
   %i.ey = shufflevector <8 x float> %10, <8 x float> %i.ew, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.ez = shufflevector <8 x float> %i.ex, <8 x float> %13, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %interleaved.vec = shufflevector <16 x float> %i.ey, <16 x float> %i.ez, <32 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29, i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30, i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>

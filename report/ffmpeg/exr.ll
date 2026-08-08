@@ -1,3 +1,8 @@
+inline.NumInlined: 54
+inline.NumDeleted: 26
+loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumRuntimeUnrolled: 8
+loop-unroll.NumUnrolled: 18
 begin_hunk_0_@dwa_uncompress:bb.a
   %i.jz = fsub nsz <4 x float> %i.jq, %i.iz
   store <4 x float> %i.jz, ptr %i.il, align 4, !tbaa !194
@@ -199,21 +204,21 @@ vector.body:                                      ; preds = %vector.body552, %ve
   %i.qo = fadd nsz <4 x float> %i.qm, %i.qk       ; 2 uses
   %i.qp = fsub nsz <4 x float> %i.qk, %i.qm       ; 2 uses
   %i.qq = fsub nsz <4 x float> %i.qi, %i.ql       ; 2 uses
-  %6 = fadd nsz <4 x float> %i.pa, %i.qn
-  %7 = fadd nsz <4 x float> %i.pe, %i.qo
-  %i.qr = shufflevector <4 x float> %6, <4 x float> %7, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %8 = fadd nsz <4 x float> %i.pi, %i.qp
-  %9 = fadd nsz <4 x float> %i.pm, %i.qq
-  %i.qs = shufflevector <4 x float> %8, <4 x float> %9, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.qt = shufflevector <8 x float> %i.qr, <8 x float> %i.qs, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %10 = fsub nsz <4 x float> %i.qq, %i.pm
-  %11 = fsub nsz <4 x float> %i.qp, %i.pi
-  %i.qu = shufflevector <4 x float> %10, <4 x float> %11, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %12 = fsub nsz <4 x float> %i.qo, %i.pe
-  %13 = fsub nsz <4 x float> %i.qn, %i.pa
-  %i.qv = shufflevector <4 x float> %12, <4 x float> %13, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.qw = shufflevector <8 x float> %i.qu, <8 x float> %i.qv, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %interleaved.vec = shufflevector <16 x float> %i.qt, <16 x float> %i.qw, <32 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29, i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30, i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
+  %6 = shufflevector <4 x float> %i.pa, <4 x float> %i.pe, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.qr = shufflevector <4 x float> %i.pi, <4 x float> %i.pm, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %7 = shufflevector <8 x float> %6, <8 x float> %i.qr, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %8 = shufflevector <4 x float> %i.qn, <4 x float> %i.qo, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.qs = shufflevector <4 x float> %i.qp, <4 x float> %i.qq, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.qt = shufflevector <8 x float> %8, <8 x float> %i.qs, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %9 = fadd nsz <16 x float> %7, %i.qt
+  %10 = shufflevector <4 x float> %i.qq, <4 x float> %i.qp, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.qu = shufflevector <4 x float> %i.qo, <4 x float> %i.qn, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %11 = shufflevector <8 x float> %10, <8 x float> %i.qu, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %12 = shufflevector <4 x float> %i.pm, <4 x float> %i.pi, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.qv = shufflevector <4 x float> %i.pe, <4 x float> %i.pa, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.qw = shufflevector <8 x float> %12, <8 x float> %i.qv, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %13 = fsub nsz <16 x float> %11, %i.qw
+  %interleaved.vec = shufflevector <16 x float> %9, <16 x float> %13, <32 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29, i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30, i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
   store <32 x float> %interleaved.vec, ptr %next.gep, align 4, !tbaa !194
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.qx = icmp eq i64 %index.next, 8

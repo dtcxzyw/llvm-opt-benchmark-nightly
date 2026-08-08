@@ -1,3 +1,6 @@
+inline.NumInlined: 41
+inline.NumDeleted: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@Jf:bb.a
   br label %check_retval.exit
 
@@ -199,9 +202,9 @@ vector.body127:                                   ; preds = %vector.body127, %ve
   %i.ch = insertelement <2 x double> %i.cg, double %i.cf, i64 1
   %i.ci = fsub <2 x double> %i.cb, %i.ch
   %i.cj = fmul <2 x double> %broadcast.splat126, %i.ci
-  %4 = fsub <2 x double> %i.ay, %i.be
-  %5 = fsub <2 x double> %i.bn, %i.bt
-  %6 = shufflevector <2 x double> %4, <2 x double> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %4 = shufflevector <2 x double> %i.ay, <2 x double> %i.bn, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %5 = shufflevector <2 x double> %i.be, <2 x double> %i.bt, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %6 = fsub <4 x double> %4, %5
   %i.ck = fmul <4 x double> %i.ao, %6
   %i.cl = shufflevector <2 x double> %i.cj, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %interleaved.vec129 = shufflevector <4 x double> %i.ck, <4 x double> %i.cl, <6 x i32> <i32 0, i32 2, i32 4, i32 1, i32 3, i32 5>
@@ -333,9 +336,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.fn = insertelement <2 x double> %i.fm, double %i.fl, i64 1
   %i.fo = fsub <2 x double> %i.ff, %i.fn
   %i.fp = fmul <2 x double> %broadcast.splat, %i.fo
-  %7 = fsub <2 x double> %i.eb, %i.ek
-  %8 = fsub <2 x double> %i.er, %i.ez
-  %9 = shufflevector <2 x double> %7, <2 x double> %8, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %7 = shufflevector <2 x double> %i.eb, <2 x double> %i.er, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %8 = shufflevector <2 x double> %i.ek, <2 x double> %i.ez, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %9 = fsub <4 x double> %7, %8
   %i.fq = fmul <4 x double> %i.dr, %9
   %i.fr = shufflevector <2 x double> %i.fp, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %interleaved.vec = shufflevector <4 x double> %i.fq, <4 x double> %i.fr, <6 x i32> <i32 0, i32 2, i32 4, i32 1, i32 3, i32 5>

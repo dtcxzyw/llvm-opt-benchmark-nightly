@@ -1,3 +1,8 @@
+inline.NumInlined: 2
+inline.NumDeleted: 1
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@filter_freq_expr_8:bb.a
   %i.ed = fmul nsz <4 x float> %i.dy, splat (float f0x3E8D42AF)
   %i.ee = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dv, <4 x float> splat (float f0x3FB18A86), <4 x float> %i.ed) ; 2 uses
@@ -199,9 +204,9 @@ vector.body46:                                    ; preds = %vector.body46.prehe
   %i.kx = shufflevector <4 x float> %i.kp, <4 x float> %i.kr, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.ky = shufflevector <4 x float> %i.ks, <4 x float> %i.kt, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.kz = fmul nsz <8 x float> %i.ky, splat (float f0x3F3504F3)
-  %6 = fsub nsz <4 x float> %i.ka, %i.km
-  %7 = fsub nsz <4 x float> %i.ke, %i.kj
-  %8 = shufflevector <4 x float> %6, <4 x float> %7, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %6 = shufflevector <4 x float> %i.ka, <4 x float> %i.ke, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %7 = shufflevector <4 x float> %i.km, <4 x float> %i.kj, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %8 = fsub nsz <8 x float> %6, %7
   %i.la = fmul nsz <8 x float> %8, splat (float f0x3F3504F3)
   %i.lb = shufflevector <4 x float> %i.kv, <4 x float> %i.kw, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.lc = shufflevector <8 x float> %i.kx, <8 x float> %i.kz, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
@@ -604,9 +609,9 @@ vector.body62:                                    ; preds = %pred.store.continue
   %i.ly = shufflevector <4 x float> %i.lq, <4 x float> %i.ls, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.lz = shufflevector <4 x float> %i.lt, <4 x float> %i.lu, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.ma = fmul nsz <8 x float> %i.lz, splat (float f0x3F3504F3)
-  %6 = fsub nsz <4 x float> %i.lb, %i.ln
-  %7 = fsub nsz <4 x float> %i.lf, %i.lk
-  %8 = shufflevector <4 x float> %6, <4 x float> %7, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %6 = shufflevector <4 x float> %i.lb, <4 x float> %i.lf, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %7 = shufflevector <4 x float> %i.ln, <4 x float> %i.lk, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %8 = fsub nsz <8 x float> %6, %7
   %i.mb = fmul nsz <8 x float> %8, splat (float f0x3F3504F3)
   %i.mc = shufflevector <4 x float> %i.lw, <4 x float> %i.lx, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.md = shufflevector <8 x float> %i.ly, <8 x float> %i.ma, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>

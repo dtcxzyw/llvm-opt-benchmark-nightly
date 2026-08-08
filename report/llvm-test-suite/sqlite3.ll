@@ -204,10 +204,19 @@ bb.d:                                             ; preds = %bb.c
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !632
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 112
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !802
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 36
-  %2 = load i32, ptr %i.ad, align 1, !tbaa !37
-  %i.ae = icmp eq i32 %2, 0
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !802 ; 4 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.ac, i64 36
+  %3 = load i8, ptr %2, align 1, !tbaa !37
+  %4 = getelementptr inbounds nuw i8, ptr %i.ac, i64 37
+  %5 = load i8, ptr %4, align 1, !tbaa !37
+  %6 = getelementptr inbounds nuw i8, ptr %i.ac, i64 38
+  %7 = load i8, ptr %6, align 1, !tbaa !37
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 39
+  %8 = load i8, ptr %i.ad, align 1, !tbaa !37
+  %9 = or i8 %5, %3
+  %10 = or i8 %9, %7
+  %11 = or i8 %10, %8
+  %i.ae = icmp eq i8 %11, 0
   %i.af = icmp eq i32 %1, %.054
   %or.cond = or i1 %i.af, %i.ae
   br i1 %or.cond, label %.thread, label %bb.e
@@ -610,7 +619,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.r
 
 bb.k:                                             ; preds = %bb.j
-  %i.ax = load ptr, ptr %i.ao, align 8, !tbaa !802 ; 11 uses
+  %i.ax = load ptr, ptr %i.ao, align 8, !tbaa !802 ; 17 uses
   %i.ay = load i128, ptr %i.ax, align 1
   %i.az = icmp ne i128 %i.ay, 265465397511803988906881385371554131
   %i.ba = zext i1 %i.az to i32
@@ -672,13 +681,31 @@ bb.q:                                             ; preds = %bb.p
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !37  ; 2 uses
   store i8 %i.cf, ptr %.phi.trans.insert72.i, align 4, !tbaa !1022
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ax, i64 52
-  %2 = load i32, ptr %i.cg, align 1, !tbaa !37
-  %i.ch = icmp ne i32 %2, 0
+  %2 = load i8, ptr %i.cg, align 1, !tbaa !37
+  %3 = getelementptr inbounds nuw i8, ptr %i.ax, i64 53
+  %4 = load i8, ptr %3, align 1, !tbaa !37
+  %5 = getelementptr inbounds nuw i8, ptr %i.ax, i64 54
+  %6 = load i8, ptr %5, align 1, !tbaa !37
+  %7 = getelementptr inbounds nuw i8, ptr %i.ax, i64 55
+  %8 = load i8, ptr %7, align 1, !tbaa !37
+  %9 = or i8 %4, %2
+  %10 = or i8 %9, %6
+  %11 = or i8 %10, %8
+  %i.ch = icmp ne i8 %11, 0
   %i.ci = zext i1 %i.ch to i8
   store i8 %i.ci, ptr %i.w, align 2, !tbaa !847
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ax, i64 64
-  %3 = load i32, ptr %i.cj, align 1, !tbaa !37
-  %i.ck = icmp ne i32 %3, 0
+  %12 = load i8, ptr %i.cj, align 1, !tbaa !37
+  %13 = getelementptr inbounds nuw i8, ptr %i.ax, i64 65
+  %14 = load i8, ptr %13, align 1, !tbaa !37
+  %15 = getelementptr inbounds nuw i8, ptr %i.ax, i64 66
+  %16 = load i8, ptr %15, align 1, !tbaa !37
+  %17 = getelementptr inbounds nuw i8, ptr %i.ax, i64 67
+  %18 = load i8, ptr %17, align 1, !tbaa !37
+  %19 = or i8 %14, %12
+  %20 = or i8 %19, %16
+  %21 = or i8 %20, %18
+  %i.ck = icmp ne i8 %21, 0
   %i.cl = zext i1 %i.ck to i8
   store i8 %i.cl, ptr %i.x, align 1, !tbaa !909
   br label %bb.r
@@ -1081,7 +1108,7 @@ bb.g:                                             ; preds = %sqlite3BtreeRestore
 define internal fastcc i32 @sqlite3BtreeFactory(ptr noundef %0, ptr noundef %1, i32 noundef range(i32 0, 2) %2, i32 noundef range(i32 500, 2001) %3, i32 noundef range(i32 256, 0) %4, ptr nofree noundef writeonly captures(none) %5) unnamed_addr #5 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
-  %i.b = alloca [100 x i8], align 16              ; 14 uses
+  %i.b = alloca [100 x i8], align 16              ; 20 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !327
   %i.e = icmp eq ptr %1, null
@@ -1484,14 +1511,32 @@ bb.ap:                                            ; preds = %sqlite3PagerReadFil
   %i.jq = getelementptr inbounds nuw i8, ptr %i.bk, i64 37
   store i8 1, ptr %i.jq, align 1, !tbaa !1027
   %i.jr = getelementptr inbounds nuw i8, ptr %i.b, i64 52
-  %6 = load i32, ptr %i.jr, align 4, !tbaa !37
-  %i.js = icmp ne i32 %6, 0
+  %6 = load i8, ptr %i.jr, align 4, !tbaa !37
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 53
+  %8 = load i8, ptr %7, align 1, !tbaa !37
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 54
+  %10 = load i8, ptr %9, align 2, !tbaa !37
+  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 55
+  %12 = load i8, ptr %11, align 1, !tbaa !37
+  %13 = or i8 %8, %6
+  %14 = or i8 %13, %10
+  %15 = or i8 %14, %12
+  %i.js = icmp ne i8 %15, 0
   %i.jt = zext i1 %i.js to i8
   %i.ju = getelementptr inbounds nuw i8, ptr %i.bk, i64 38
   store i8 %i.jt, ptr %i.ju, align 2, !tbaa !847
   %i.jv = getelementptr inbounds nuw i8, ptr %i.b, i64 64
-  %7 = load i32, ptr %i.jv, align 16, !tbaa !37
-  %i.jw = icmp ne i32 %7, 0
+  %16 = load i8, ptr %i.jv, align 16, !tbaa !37
+  %17 = getelementptr inbounds nuw i8, ptr %i.b, i64 65
+  %18 = load i8, ptr %17, align 1, !tbaa !37
+  %19 = getelementptr inbounds nuw i8, ptr %i.b, i64 66
+  %20 = load i8, ptr %19, align 2, !tbaa !37
+  %21 = getelementptr inbounds nuw i8, ptr %i.b, i64 67
+  %22 = load i8, ptr %21, align 1, !tbaa !37
+  %23 = or i8 %18, %16
+  %24 = or i8 %23, %20
+  %25 = or i8 %24, %22
+  %i.jw = icmp ne i8 %25, 0
   %i.jx = zext i1 %i.jw to i8
   br label %.sink.split.i
 

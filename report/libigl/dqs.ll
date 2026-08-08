@@ -1,3 +1,5 @@
+inline.NumInlined: 1311
+inline.NumDeleted: 779
 begin_hunk_0
 $_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJZN3igl12parallel_forIiZNS3_12parallel_forIiZNS3_3dqsIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEES9_NS7_10QuaternionIdLi0EEENS7_17aligned_allocatorISB_EENS8_IdLi3ELi1ELi0ELi3ELi1EEES9_EEvRKNS7_10MatrixBaseIT_EERKNSF_IT0_EERKSt6vectorIT1_T2_ERKSO_IT3_SaISU_EERNS7_15PlainObjectBaseIT4_EEEUliE_EEbSG_RKSK_mEUlmE_ZNS5_IiS13_EEbSG_S15_mEUlimE_S16_EEbSG_S15_RKSP_RKSQ_mEUliimE_iimEEEEE6_M_runEv = comdat any
 
@@ -199,18 +201,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.di = shufflevector <2 x double> %i.ba, <2 x double> %i.ao, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.dj = shufflevector <2 x double> %i.br, <2 x double> %i.cl, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.dk = shufflevector <2 x double> %i.bx, <2 x double> %i.bm, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %9 = fmul <2 x double> %i.cb, %i.bm
-  %10 = fmul <2 x double> %i.cp, %i.bx
-  %11 = shufflevector <2 x double> %9, <2 x double> %10, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %9 = shufflevector <2 x double> %i.cb, <2 x double> %i.cp, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %10 = shufflevector <2 x double> %i.bm, <2 x double> %i.bx, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %11 = fmul <4 x double> %9, %10
   %i.dl = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.dj, <4 x double> %i.dk, <4 x double> %11)
   %i.dm = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.dh, <4 x double> %i.di, <4 x double> %i.dl)
   %i.dn = shufflevector <2 x double> %i.df, <2 x double> %i.bg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.do = shufflevector <2 x double> %i.bx, <2 x double> %i.bm, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.dp = shufflevector <2 x double> %i.cx, <2 x double> %i.ak, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.dq = shufflevector <2 x double> %i.ba, <2 x double> %i.ao, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %12 = fmul <2 x double> %i.db, %i.dg
-  %13 = fmul <2 x double> %i.au, %i.ba
-  %14 = shufflevector <2 x double> %12, <2 x double> %13, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %12 = shufflevector <2 x double> %i.db, <2 x double> %i.au, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %13 = shufflevector <2 x double> %i.dg, <2 x double> %i.ba, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %14 = fmul <4 x double> %12, %13
   %i.dr = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.dp, <4 x double> %i.dq, <4 x double> %14)
   %i.ds = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.dn, <4 x double> %i.do, <4 x double> %i.dr)
   %i.dt = shufflevector <4 x double> %i.dm, <4 x double> %i.ds, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 1, i32 3, i32 5, i32 7>

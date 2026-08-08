@@ -203,10 +203,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.y = fadd nsz <2 x double> %i.v, %i.x
   %i.z = fptosi <2 x double> %i.y to <2 x i16>
   %i.aa = zext <2 x i16> %i.z to <2 x i48>
-  %i.ab = shl nuw <2 x i48> %i.aa, <i48 32, i48 16> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.ab, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i48> %i.ab, %shift
-  %.sroa.530.0.insert.insert = extractelement <2 x i48> %foldExtExtBinop, i64 0
+  %i.ab = shl nuw <2 x i48> %i.aa, <i48 32, i48 16>
+  %.sroa.530.0.insert.insert = tail call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.ab)
   %.sroa.029.0.insert.ext = zext i16 %i.p to i48
   %.sroa.029.0.insert.insert = or disjoint i48 %.sroa.530.0.insert.insert, %.sroa.029.0.insert.ext
   %i.ac = call i32 @_ZN3Map7getNodeEN4core8vector3dIsEEPb(ptr noundef nonnull align 8 dereferenceable(144) %i.t, i48 %.sroa.029.0.insert.insert, ptr noundef nonnull %i.a) ; 3 uses
@@ -607,6 +605,9 @@ declare i32 @llvm.smin.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i48 @llvm.vector.reduce.or.v2i48(<2 x i48>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i16> @llvm.smax.v2i16(<2 x i16>, <2 x i16>) #19

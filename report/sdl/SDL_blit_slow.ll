@@ -1,3 +1,5 @@
+inline.NumInlined: 17
+inline.NumDeleted: 7
 begin_hunk_0_@SDL_Blit_Slow_Float:bb.a
 bb.cg:                                            ; preds = %bb.ce
   %i.ss = load i8, ptr %i.ee, align 4
@@ -199,23 +201,20 @@ bb.db:                                            ; preds = %bb.da
   %.sink.i166 = phi float [ %i.wb, %bb.cr ], [ %i.wb, %bb.cs ], [ %i.wu, %bb.db ], [ %i.wu, %bb.da ]
   %.sink263.i = phi float [ %i.wg, %bb.cr ], [ %i.wg, %bb.cs ], [ %i.wp, %bb.db ], [ %i.wp, %bb.da ]
   %i.xe = call float @SDL_roundf_REAL(float noundef %.sink274.i) #4
-  %1 = fptoui float %i.xe to i32
-  %2 = shl i32 %1, 30
   %i.xf = call float @SDL_roundf_REAL(float noundef %.sink271.i) #4
-  %3 = fptoui float %i.xf to i32
-  %4 = shl i32 %3, 20
-  %5 = or i32 %4, %2
-  %6 = call float @SDL_roundf_REAL(float noundef %.sink.i166) #4
-  %7 = fptoui float %6 to i32
-  %8 = shl i32 %7, 10
-  %9 = or i32 %5, %8
-  %10 = call float @SDL_roundf_REAL(float noundef %.sink263.i) #4
-  %11 = fptoui float %10 to i32
-  %12 = or i32 %9, %11
+  %1 = call float @SDL_roundf_REAL(float noundef %.sink.i166) #4
+  %2 = call float @SDL_roundf_REAL(float noundef %.sink263.i) #4
+  %3 = insertelement <4 x float> poison, float %2, i64 0
+  %4 = insertelement <4 x float> %3, float %1, i64 1
+  %5 = insertelement <4 x float> %4, float %i.xf, i64 2
+  %6 = insertelement <4 x float> %5, float %i.xe, i64 3
+  %7 = fptoui <4 x float> %6 to <4 x i32>
+  %8 = shl <4 x i32> %7, <i32 0, i32 10, i32 20, i32 30>
+  %9 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %8)
   br label %bb.dc
 
 bb.dc:                                            ; preds = %.sink.split.i, %bb.cj
-  %.0228.i = phi i32 [ 0, %bb.cj ], [ %12, %.sink.split.i ]
+  %.0228.i = phi i32 [ 0, %bb.cj ], [ %9, %.sink.split.i ]
   store i32 %.0228.i, ptr %.0123185, align 4
   br label %WriteFloatPixel.exit
 
@@ -616,6 +615,9 @@ declare i32 @llvm.umin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #3

@@ -1,3 +1,6 @@
+inline.NumInlined: 19
+loop-unroll.NumCompletelyUnrolled: 63
+loop-unroll.NumUnrolled: 63
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -29,6 +32,7 @@ define void @ff_h264_idct_add_8_c(ptr nofree noundef captures(none) %0, ptr nofr
   %i.t = zext <4 x i16> %i.s to <4 x i32>         ; 2 uses
   %i.u = add nuw nsw <4 x i32> %i.t, %i.r         ; 2 uses
   %i.v = sub nsw <4 x i32> %i.r, %i.t             ; 2 uses
+  %3 = shufflevector <4 x i32> %i.u, <4 x i32> %i.v, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.w = load <4 x i16>, ptr %i.b, align 2, !tbaa !9
   %i.x = sext <4 x i16> %i.w to <4 x i32>         ; 2 uses
   %i.y = ashr <4 x i32> %i.x, splat (i32 1)
@@ -37,13 +41,12 @@ define void @ff_h264_idct_add_8_c(ptr nofree noundef captures(none) %0, ptr nofr
   %i.ab = sub nsw <4 x i32> %i.y, %i.aa           ; 2 uses
   %i.ac = ashr <4 x i32> %i.aa, splat (i32 1)
   %i.ad = add nsw <4 x i32> %i.ac, %i.x           ; 2 uses
-  %3 = add nsw <4 x i32> %i.ad, %i.u              ; 4 uses
-  %4 = add nsw <4 x i32> %i.ab, %i.v
-  %i.ae = shufflevector <4 x i32> %3, <4 x i32> %4, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %5 = sub nsw <4 x i32> %i.v, %i.ab
-  %6 = sub nsw <4 x i32> %i.u, %i.ad
-  %7 = shufflevector <4 x i32> %5, <4 x i32> %6, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.af = shufflevector <8 x i32> %i.ae, <8 x i32> %7, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %4 = shufflevector <4 x i32> %i.ad, <4 x i32> %i.ab, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %5 = add nsw <8 x i32> %4, %3                   ; 4 uses
+  %i.ae = shufflevector <4 x i32> %i.v, <4 x i32> %i.u, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %6 = shufflevector <4 x i32> %i.ab, <4 x i32> %i.ad, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %7 = sub nsw <8 x i32> %i.ae, %6
+  %i.af = shufflevector <8 x i32> %5, <8 x i32> %7, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.ag = trunc <16 x i32> %i.af to <16 x i16>    ; 16 uses
   %i.ah = extractelement <16 x i16> %i.ag, i64 0
   store i16 %i.ah, ptr %1, align 2, !tbaa !9
@@ -84,16 +87,16 @@ define void @ff_h264_idct_add_8_c(ptr nofree noundef captures(none) %0, ptr nofr
   %i.bb = sext i32 %i.ay to i64                   ; 4 uses
   %i.bc = load i16, ptr %1, align 2, !tbaa !9
   %i.bd = sext i16 %i.bc to i32                   ; 2 uses
-  %i.be = extractelement <4 x i32> %3, i64 2
+  %i.be = extractelement <8 x i32> %5, i64 2
   %sext = shl i32 %i.be, 16
   %i.bf = ashr exact i32 %sext, 16                ; 2 uses
   %i.bg = add nsw i32 %i.bf, %i.bd                ; 2 uses
   %i.bh = sub nsw i32 %i.bd, %i.bf                ; 2 uses
-  %i.bi = extractelement <4 x i32> %3, i64 1
+  %i.bi = extractelement <8 x i32> %5, i64 1
   %sext98 = shl i32 %i.bi, 16                     ; 2 uses
   %i.bj = ashr exact i32 %sext98, 16
   %i.bk = ashr i32 %sext98, 17
-  %i.bl = extractelement <4 x i32> %3, i64 3
+  %i.bl = extractelement <8 x i32> %5, i64 3
   %sext99 = shl i32 %i.bl, 16                     ; 2 uses
   %i.bm = ashr exact i32 %sext99, 16
   %i.bn = sub nsw i32 %i.bk, %i.bm                ; 2 uses

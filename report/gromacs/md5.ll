@@ -1,3 +1,7 @@
+inline.NumInlined: 3
+inline.NumDeleted: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZL11md5_processP11md5_state_sPKh:bb.a
   %i.qd = add i32 %i.qc, %i.pv                    ; 5 uses
   %i.qe = xor i32 %i.pn, -1
@@ -199,7 +203,7 @@ bb.g:                                             ; preds = %bb.f
   %i.aq = zext nneg i32 %i.ah to i64
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.aq
   %i.as = zext nneg i32 %i.ao to i64              ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ar, ptr noundef nonnull align 8 dereferenceable(1) %i.a, i64 %i.as, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ar, ptr noundef nonnull align 1 dereferenceable(1) %i.a, i64 %i.as, i1 false)
   %i.at = add nuw nsw i32 %i.ao, %i.ah
   %i.au = icmp samesign ugt i32 %i.at, 63
   br i1 %i.au, label %._crit_edge.i18, label %_Z14gmx_md5_appendP11md5_state_sPKhi.exit25
@@ -220,34 +224,39 @@ bb.g:                                             ; preds = %bb.f
   br label %_Z14gmx_md5_appendP11md5_state_sPKhi.exit25
 
 _Z14gmx_md5_appendP11md5_state_sPKhi.exit25:      ; preds = %bb.g, %._crit_edge.i18, %._crit_edge.i18.thread
-  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
-  %1 = load <4 x i32>, ptr %i.az, align 4, !tbaa !9 ; 2 uses
-  %2 = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> <i32 0, i32 2> ; 4 uses
-  %3 = and <2 x i32> %2, splat (i32 -16777216)
-  %4 = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %5 = zext <2 x i32> %4 to <2 x i64>
-  %6 = shl nuw <2 x i64> %5, splat (i64 32)
-  %7 = zext <2 x i32> %3 to <2 x i64>
-  %8 = or disjoint <2 x i64> %6, %7
-  %9 = and <2 x i32> %2, splat (i32 16711680)
-  %10 = zext nneg <2 x i32> %9 to <2 x i64>
-  %11 = or disjoint <2 x i64> %8, %10
-  %12 = and <2 x i32> %2, splat (i32 65280)
-  %13 = zext nneg <2 x i32> %12 to <2 x i64>
-  %14 = or disjoint <2 x i64> %11, %13
-  %15 = and <2 x i32> %2, splat (i32 255)
-  %16 = zext nneg <2 x i32> %15 to <2 x i64>
-  %17 = or disjoint <2 x i64> %14, %16            ; 2 uses
-  %vec2struct.slot.sroa.0.0.vec.extract = extractelement <2 x i64> %17, i64 0
-  %18 = insertvalue { i64, i64 } poison, i64 %vec2struct.slot.sroa.0.0.vec.extract, 0
-  %vec2struct.slot.sroa.0.8.vec.extract = extractelement <2 x i64> %17, i64 1
-  %vec2struct53 = insertvalue { i64, i64 } %18, i64 %vec2struct.slot.sroa.0.8.vec.extract, 1
+  %2 = load i32, ptr %i.az, align 4, !tbaa !9
+  %3 = load <2 x i32>, ptr %i.az, align 4, !tbaa !9
+  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 0, i32 0>
+  %5 = and <4 x i32> %4, <i32 -1, i32 -16777216, i32 16711680, i32 65280>
+  %6 = zext <4 x i32> %5 to <4 x i64>
+  %7 = shl nuw <4 x i64> %6, <i64 32, i64 0, i64 0, i64 0>
+  %8 = and i32 %2, 255
+  %.sroa.0.0.insert.ext = zext nneg i32 %8 to i64
+  %9 = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %7)
+  %op.rdx51 = or disjoint i64 %9, %.sroa.0.0.insert.ext
+  %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %op.rdx51, 0
+  %10 = load i32, ptr %1, align 4, !tbaa !9
+  %11 = load <2 x i32>, ptr %1, align 4, !tbaa !9
+  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 0, i32 0>
+  %13 = and <4 x i32> %12, <i32 -1, i32 -16777216, i32 16711680, i32 65280>
+  %14 = zext <4 x i32> %13 to <4 x i64>
+  %15 = shl nuw <4 x i64> %14, <i64 32, i64 0, i64 0, i64 0>
+  %16 = and i32 %10, 255
+  %.sroa.9.8.insert.ext = zext nneg i32 %16 to i64
+  %17 = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %15)
+  %op.rdx = or disjoint i64 %17, %.sroa.9.8.insert.ext
+  %vec2struct53 = insertvalue { i64, i64 } %.fca.0.insert, i64 %op.rdx, 1
   ret { i64, i64 } %vec2struct53
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.or.v4i64(<4 x i64>) #4
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }

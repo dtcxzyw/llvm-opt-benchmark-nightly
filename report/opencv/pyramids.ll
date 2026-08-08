@@ -1,3 +1,8 @@
+inline.NumInlined: 448
+inline.NumDeleted: 130
+loop-unroll.NumCompletelyUnrolled: 15
+loop-unroll.NumRuntimeUnrolled: 21
+loop-unroll.NumUnrolled: 36
 begin_hunk_0_@_ZNK2cv14PyrDownInvokerINS_7FltCastIfLi8EEEEclERKNS_5RangeE:bb.a
   %i.mb = insertelement <4 x float> poison, float %i.lx, i64 0
   %i.mc = insertelement <4 x float> %i.mb, float %i.ly, i64 1
@@ -199,9 +204,9 @@ begin_hunk_0_@_ZNK2cv14PyrDownInvokerINS_7FltCastIfLi8EEEEclERKNS_5RangeE:bb.a
   %i.tq = shufflevector <4 x float> %i.mq, <4 x float> %i.oy, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.tr = shufflevector <4 x float> %i.me, <4 x float> %i.om, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.ts = shufflevector <4 x float> %i.kv, <4 x float> %i.nc, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %7 = fadd <4 x float> %i.lh, %i.lt
-  %8 = fadd <4 x float> %i.no, %i.oa
-  %9 = shufflevector <4 x float> %7, <4 x float> %8, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %7 = shufflevector <4 x float> %i.lh, <4 x float> %i.no, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %8 = shufflevector <4 x float> %i.lt, <4 x float> %i.oa, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %9 = fadd <8 x float> %7, %8
   %i.tt = fmul <8 x float> %9, splat (float 4.000000e+00)
   %i.tu = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.ts, <8 x float> splat (float 6.000000e+00), <8 x float> %i.tt)
   %i.tv = fadd <8 x float> %i.tr, %i.tu
@@ -209,9 +214,9 @@ begin_hunk_0_@_ZNK2cv14PyrDownInvokerINS_7FltCastIfLi8EEEEclERKNS_5RangeE:bb.a
   %i.tx = shufflevector <4 x float> %i.rh, <4 x float> %i.tp, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.ty = shufflevector <4 x float> %i.qv, <4 x float> %i.td, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.tz = shufflevector <4 x float> %i.pl, <4 x float> %i.rt, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %10 = fadd <4 x float> %i.px, %i.qj
-  %11 = fadd <4 x float> %i.sf, %i.sr
-  %12 = shufflevector <4 x float> %10, <4 x float> %11, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %10 = shufflevector <4 x float> %i.px, <4 x float> %i.sf, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %11 = shufflevector <4 x float> %i.qj, <4 x float> %i.sr, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %12 = fadd <8 x float> %10, %11
   %i.ua = fmul <8 x float> %12, splat (float 4.000000e+00)
   %i.ub = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.tz, <8 x float> splat (float 6.000000e+00), <8 x float> %i.ua)
   %i.uc = fadd <8 x float> %i.ty, %i.ub
@@ -457,9 +462,9 @@ vector.body471:                                   ; preds = %vector.body471, %ve
   %i.acd = shufflevector <4 x float> %i.xg, <4 x float> %i.zo, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.ace = shufflevector <4 x float> %i.wu, <4 x float> %i.zc, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.acf = shufflevector <4 x float> %i.vl, <4 x float> %i.xs, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %13 = fadd <4 x float> %i.vx, %i.wj
-  %14 = fadd <4 x float> %i.ye, %i.yq
-  %15 = shufflevector <4 x float> %13, <4 x float> %14, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %13 = shufflevector <4 x float> %i.vx, <4 x float> %i.ye, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %14 = shufflevector <4 x float> %i.wj, <4 x float> %i.yq, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %15 = fadd <8 x float> %13, %14
   %i.acg = fmul <8 x float> %15, splat (float 4.000000e+00)
   %i.ach = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.acf, <8 x float> splat (float 6.000000e+00), <8 x float> %i.acg)
   %i.aci = fadd <8 x float> %i.ace, %i.ach
@@ -862,9 +867,9 @@ vector.body488:                                   ; preds = %vector.body488, %ve
   %i.op = shufflevector <2 x double> %i.lb, <2 x double> %i.mf, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.oq = shufflevector <2 x double> %i.kv, <2 x double> %i.lz, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.or = shufflevector <2 x double> %i.ke, <2 x double> %i.lh, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %7 = fadd <2 x double> %i.kk, %i.kq
-  %8 = fadd <2 x double> %i.ln, %i.lt
-  %9 = shufflevector <2 x double> %7, <2 x double> %8, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %7 = shufflevector <2 x double> %i.kk, <2 x double> %i.ln, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %8 = shufflevector <2 x double> %i.kq, <2 x double> %i.lt, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %9 = fadd <4 x double> %7, %8
   %i.os = fmul <4 x double> %9, splat (double 4.000000e+00)
   %i.ot = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.or, <4 x double> splat (double 6.000000e+00), <4 x double> %i.os)
   %i.ou = fadd <4 x double> %i.oq, %i.ot
@@ -872,9 +877,9 @@ vector.body488:                                   ; preds = %vector.body488, %ve
   %i.ow = shufflevector <2 x double> %i.nk, <2 x double> %i.oo, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.ox = shufflevector <2 x double> %i.ne, <2 x double> %i.oi, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.oy = shufflevector <2 x double> %i.mm, <2 x double> %i.nq, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %10 = fadd <2 x double> %i.ms, %i.my
-  %11 = fadd <2 x double> %i.nw, %i.oc
-  %12 = shufflevector <2 x double> %10, <2 x double> %11, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %10 = shufflevector <2 x double> %i.ms, <2 x double> %i.nw, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %11 = shufflevector <2 x double> %i.my, <2 x double> %i.oc, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %12 = fadd <4 x double> %10, %11
   %i.oz = fmul <4 x double> %12, splat (double 4.000000e+00)
   %i.pa = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.oy, <4 x double> splat (double 6.000000e+00), <4 x double> %i.oz)
   %i.pb = fadd <4 x double> %i.ox, %i.pa
@@ -1026,9 +1031,9 @@ vector.body469:                                   ; preds = %vector.body469, %ve
   %i.tm = shufflevector <2 x double> %i.qx, <2 x double> %i.sb, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.tn = shufflevector <2 x double> %i.qr, <2 x double> %i.rv, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.to = shufflevector <2 x double> %i.qa, <2 x double> %i.rd, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %13 = fadd <2 x double> %i.qg, %i.qm
-  %14 = fadd <2 x double> %i.rj, %i.rp
-  %15 = shufflevector <2 x double> %13, <2 x double> %14, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %13 = shufflevector <2 x double> %i.qg, <2 x double> %i.rj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %14 = shufflevector <2 x double> %i.qm, <2 x double> %i.rp, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %15 = fadd <4 x double> %13, %14
   %i.tp = fmul <4 x double> %15, splat (double 4.000000e+00)
   %i.tq = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.to, <4 x double> splat (double 6.000000e+00), <4 x double> %i.tp)
   %i.tr = fadd <4 x double> %i.tn, %i.tq

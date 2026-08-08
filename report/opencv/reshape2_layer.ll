@@ -1,3 +1,5 @@
+inline.NumInlined: 445
+inline.NumDeleted: 220
 begin_hunk_0_@_ZN2cv3dnn17Reshape2LayerImpl7forwardERKNS_11_InputArrayERKNS_12_OutputArrayES7_:bb.a
 bb.ab:                                            ; preds = %bb.aa, %bb.z
   %.pn37 = phi { ptr, i32 } [ %i.aj, %bb.aa ], [ %i.ai, %bb.z ]
@@ -199,8 +201,8 @@ bb.az:                                            ; preds = %.loopexit, %bb.ax
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #19
   br label %bb.br
 
-.body61:                                          ; preds = %bb.ar, %.body67
-  %.pn42 = phi { ptr, i32 } [ %eh.lpad-body68, %.body67 ], [ %i.bl, %bb.ar ]
+.body61:                                          ; preds = %.body67, %bb.ar
+  %.pn42 = phi { ptr, i32 } [ %i.bl, %bb.ar ], [ %eh.lpad-body68, %.body67 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #19
   br label %bb.ba
 
@@ -603,7 +605,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
 
 common.resume:                                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.aq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i50, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i46, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
-  %common.resume.op = phi { ptr, i32 } [ %i.bj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.ce, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i46 ], [ %i.co, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i50 ], [ %.pn35, %bb.aq ]
+  %common.resume.op = phi { ptr, i32 } [ %i.bj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %i.ce, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i46 ], [ %i.co, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i50 ], [ %.pn35, %bb.aq ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   resume { ptr, i32 } %common.resume.op
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.ad, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i

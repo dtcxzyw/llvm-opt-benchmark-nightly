@@ -1,3 +1,8 @@
+inline.NumInlined: 1179
+inline.NumDeleted: 280
+loop-unroll.NumCompletelyUnrolled: 238
+loop-unroll.NumRuntimeUnrolled: 42
+loop-unroll.NumUnrolled: 283
 begin_hunk_0_@_ZN11ImFontAtlas36AddFontFromMemoryCompressedBase85TTFEPKcfPK12ImFontConfigPKt:bb.a
   %i.ai = mul nsw i32 %i.ah, 85
   %i.aj = add nsw i32 %i.v, %i.ai
@@ -199,8 +204,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %7 = load i32, ptr %i.j, align 1, !tbaa !22
-  %i.k = icmp eq i32 %7, 0
+  %7 = load i8, ptr %i.j, align 1, !tbaa !22
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 5
+  %9 = load i8, ptr %8, align 1, !tbaa !22
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 6
+  %11 = load i8, ptr %10, align 1, !tbaa !22
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 7
+  %13 = load i8, ptr %12, align 1, !tbaa !22
+  %14 = or i8 %9, %7
+  %15 = or i8 %14, %11
+  %16 = or i8 %15, %13
+  %i.k = icmp eq i8 %16, 0
   br i1 %i.k, label %bb.c, label %_ZL14stb_decompressPhPKhj.exit
 
 bb.c:                                             ; preds = %bb.b

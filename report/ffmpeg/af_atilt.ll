@@ -1,3 +1,5 @@
+inline.NumInlined: 14
+inline.NumDeleted: 9
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -133,9 +135,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bg = fsub nsz <2 x double> %i.as, %broadcast.splat14
   %i.bh = fadd nsz <2 x double> %broadcast.splat14, %i.as
   %i.bi = fsub nsz <2 x double> %i.be, %broadcast.splat14
-  %6 = fdiv nsz <2 x double> %i.be, %i.as
-  %7 = fdiv nsz <2 x double> %i.bi, %i.bf
-  %8 = shufflevector <2 x double> %6, <2 x double> %7, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %6 = shufflevector <2 x double> %i.be, <2 x double> %i.bi, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %7 = shufflevector <2 x double> %i.as, <2 x double> %i.bf, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %8 = fdiv nsz <4 x double> %6, %7
   %i.bj = shufflevector <2 x double> %i.bh, <2 x double> %i.bg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.bk = shufflevector <2 x double> %i.bf, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.bl = fdiv nsz <4 x double> %i.bj, %i.bk
@@ -383,9 +385,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bm = fsub nsz <2 x double> %i.ay, %broadcast.splat12
   %i.bn = fadd nsz <2 x double> %broadcast.splat12, %i.ay
   %i.bo = fsub nsz <2 x double> %i.bk, %broadcast.splat12
-  %1 = fdiv nsz <2 x double> %i.bk, %i.ay
-  %2 = fdiv nsz <2 x double> %i.bo, %i.bl
-  %3 = shufflevector <2 x double> %1, <2 x double> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %1 = shufflevector <2 x double> %i.bk, <2 x double> %i.bo, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %2 = shufflevector <2 x double> %i.ay, <2 x double> %i.bl, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %3 = fdiv nsz <4 x double> %1, %2
   %i.bp = shufflevector <2 x double> %i.bn, <2 x double> %i.bm, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.bq = shufflevector <2 x double> %i.bl, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.br = fdiv nsz <4 x double> %i.bp, %i.bq

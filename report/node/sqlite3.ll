@@ -205,7 +205,7 @@ btreeGetPage.exit.i:                              ; preds = %bb.x
   br label %.thread152thread-pre-split
 
 bb.aa:                                            ; preds = %bb.z, %._crit_edge.i
-  %i.dc = phi ptr [ %.pre.i, %._crit_edge.i ], [ %.val.i.i.i, %bb.z ] ; 11 uses
+  %i.dc = phi ptr [ %.pre.i, %._crit_edge.i ], [ %.val.i.i.i, %bb.z ] ; 17 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #59
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 28
   %i.de = load i32, ptr %i.dd, align 1            ; 2 uses
@@ -385,13 +385,31 @@ bb.av:                                            ; preds = %bb.at, %bb.as
   store i16 %i.fv, ptr %i.aa, align 8, !tbaa !719
   store i32 %i.fi, ptr %i.bl, align 8, !tbaa !751
   %i.fw = getelementptr inbounds nuw i8, ptr %i.dc, i64 52
-  %3 = load i32, ptr %i.fw, align 1, !tbaa !229
-  %i.fx = icmp ne i32 %3, 0
+  %3 = load i8, ptr %i.fw, align 1, !tbaa !229
+  %4 = getelementptr inbounds nuw i8, ptr %i.dc, i64 53
+  %5 = load i8, ptr %4, align 1, !tbaa !229
+  %6 = getelementptr inbounds nuw i8, ptr %i.dc, i64 54
+  %7 = load i8, ptr %6, align 1, !tbaa !229
+  %8 = getelementptr inbounds nuw i8, ptr %i.dc, i64 55
+  %9 = load i8, ptr %8, align 1, !tbaa !229
+  %10 = or i8 %5, %3
+  %11 = or i8 %10, %7
+  %12 = or i8 %11, %9
+  %i.fx = icmp ne i8 %12, 0
   %i.fy = zext i1 %i.fx to i8
   store i8 %i.fy, ptr %i.bn, align 1, !tbaa !744
   %i.fz = getelementptr inbounds nuw i8, ptr %i.dc, i64 64
-  %4 = load i32, ptr %i.fz, align 1, !tbaa !229
-  %i.ga = icmp ne i32 %4, 0
+  %13 = load i8, ptr %i.fz, align 1, !tbaa !229
+  %14 = getelementptr inbounds nuw i8, ptr %i.dc, i64 65
+  %15 = load i8, ptr %14, align 1, !tbaa !229
+  %16 = getelementptr inbounds nuw i8, ptr %i.dc, i64 66
+  %17 = load i8, ptr %16, align 1, !tbaa !229
+  %18 = getelementptr inbounds nuw i8, ptr %i.dc, i64 67
+  %19 = load i8, ptr %18, align 1, !tbaa !229
+  %20 = or i8 %15, %13
+  %21 = or i8 %20, %17
+  %22 = or i8 %21, %19
+  %i.ga = icmp ne i8 %22, 0
   %i.gb = zext i1 %i.ga to i8
   store i8 %i.gb, ptr %i.bo, align 2, !tbaa !693
   br label %lockBtree.exit.thread.thread
@@ -794,10 +812,19 @@ bb.d:                                             ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !660
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 80
-  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !661
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 36
-  %4 = load i32, ptr %i.af, align 1, !tbaa !229
-  %i.ag = icmp eq i32 %4, 0
+  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !661 ; 4 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.ae, i64 36
+  %5 = load i8, ptr %4, align 1, !tbaa !229
+  %6 = getelementptr inbounds nuw i8, ptr %i.ae, i64 37
+  %7 = load i8, ptr %6, align 1, !tbaa !229
+  %8 = getelementptr inbounds nuw i8, ptr %i.ae, i64 38
+  %9 = load i8, ptr %8, align 1, !tbaa !229
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 39
+  %10 = load i8, ptr %i.af, align 1, !tbaa !229
+  %11 = or i8 %7, %5
+  %12 = or i8 %11, %9
+  %13 = or i8 %12, %10
+  %i.ag = icmp eq i8 %13, 0
   br i1 %i.ag, label %.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -1200,10 +1227,19 @@ bb.apw:                                           ; preds = %bb.apu
   %i.gfv = getelementptr inbounds nuw i8, ptr %i.gdb, i64 24
   %i.gfw = load ptr, ptr %i.gfv, align 8, !tbaa !660
   %i.gfx = getelementptr inbounds nuw i8, ptr %i.gfw, i64 80
-  %i.gfy = load ptr, ptr %i.gfx, align 8, !tbaa !661
-  %i.gfz = getelementptr inbounds nuw i8, ptr %i.gfy, i64 64
-  %20 = load i32, ptr %i.gfz, align 1, !tbaa !229
-  %i.gga = icmp eq i32 %20, 0
+  %i.gfy = load ptr, ptr %i.gfx, align 8, !tbaa !661 ; 4 uses
+  %20 = getelementptr inbounds nuw i8, ptr %i.gfy, i64 64
+  %21 = load i8, ptr %20, align 1, !tbaa !229
+  %22 = getelementptr inbounds nuw i8, ptr %i.gfy, i64 65
+  %23 = load i8, ptr %22, align 1, !tbaa !229
+  %24 = getelementptr inbounds nuw i8, ptr %i.gfy, i64 66
+  %25 = load i8, ptr %24, align 1, !tbaa !229
+  %i.gfz = getelementptr inbounds nuw i8, ptr %i.gfy, i64 67
+  %26 = load i8, ptr %i.gfz, align 1, !tbaa !229
+  %27 = or i8 %23, %21
+  %28 = or i8 %27, %25
+  %29 = or i8 %28, %26
+  %i.gga = icmp eq i8 %29, 0
   br i1 %i.gga, label %bb.apy, label %bb.apx
 
 bb.apx:                                           ; preds = %bb.apw
@@ -1606,7 +1642,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 8 uses
   %i.c = alloca i32, align 4                      ; 7 uses
-  %i.d = alloca [100 x i8], align 16              ; 8 uses
+  %i.d = alloca [100 x i8], align 16              ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #59
   %i.e = icmp eq ptr %1, null                     ; 5 uses
   br i1 %i.e, label %.thread320, label %bb.b
@@ -2009,14 +2045,32 @@ bb.cz:                                            ; preds = %bb.cw
   %i.pp = or i16 %i.po, 2
   store i16 %i.pp, ptr %i.pn, align 8, !tbaa !719
   %i.pq = getelementptr inbounds nuw i8, ptr %i.d, i64 52
-  %6 = load i32, ptr %i.pq, align 4, !tbaa !229
-  %i.pr = icmp ne i32 %6, 0
+  %6 = load i8, ptr %i.pq, align 4, !tbaa !229
+  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 53
+  %8 = load i8, ptr %7, align 1, !tbaa !229
+  %9 = getelementptr inbounds nuw i8, ptr %i.d, i64 54
+  %10 = load i8, ptr %9, align 2, !tbaa !229
+  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 55
+  %12 = load i8, ptr %11, align 1, !tbaa !229
+  %13 = or i8 %8, %6
+  %14 = or i8 %13, %10
+  %15 = or i8 %14, %12
+  %i.pr = icmp ne i8 %15, 0
   %i.ps = zext i1 %i.pr to i8
   %i.pt = getelementptr inbounds nuw i8, ptr %i.db, i64 33
   store i8 %i.ps, ptr %i.pt, align 1, !tbaa !744
   %i.pu = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  %7 = load i32, ptr %i.pu, align 16, !tbaa !229
-  %i.pv = icmp ne i32 %7, 0
+  %16 = load i8, ptr %i.pu, align 16, !tbaa !229
+  %17 = getelementptr inbounds nuw i8, ptr %i.d, i64 65
+  %18 = load i8, ptr %17, align 1, !tbaa !229
+  %19 = getelementptr inbounds nuw i8, ptr %i.d, i64 66
+  %20 = load i8, ptr %19, align 2, !tbaa !229
+  %21 = getelementptr inbounds nuw i8, ptr %i.d, i64 67
+  %22 = load i8, ptr %21, align 1, !tbaa !229
+  %23 = or i8 %18, %16
+  %24 = or i8 %23, %20
+  %25 = or i8 %24, %22
+  %i.pv = icmp ne i8 %25, 0
   %i.pw = zext i1 %i.pv to i8
   %i.px = getelementptr inbounds nuw i8, ptr %i.db, i64 34
   store i8 %i.pw, ptr %i.px, align 2, !tbaa !693
@@ -2419,11 +2473,17 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 52 ; 2 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 53
-  %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 54
-  %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 55
-  %4 = load i32, ptr %i.bn, align 1, !tbaa !229
-  %i.br = icmp ne i32 %4, 0
+  %4 = load i8, ptr %i.bn, align 1, !tbaa !229
+  %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 53 ; 2 uses
+  %5 = load i8, ptr %i.bo, align 1, !tbaa !229
+  %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 54 ; 2 uses
+  %6 = load i8, ptr %i.bp, align 1, !tbaa !229
+  %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 55 ; 2 uses
+  %7 = load i8, ptr %i.bq, align 1, !tbaa !229
+  %8 = or i8 %5, %4
+  %9 = or i8 %8, %6
+  %10 = or i8 %9, %7
+  %i.br = icmp ne i8 %10, 0
   store i8 0, ptr %i.bn, align 1, !tbaa !229
   store i8 0, ptr %i.bo, align 1, !tbaa !229
   store i8 0, ptr %i.bp, align 1, !tbaa !229

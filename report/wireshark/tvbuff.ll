@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 .preheader.i8:                                    ; preds = %bb.h, %bb.k
   %.0.i9 = phi i32 [ %i.w, %bb.k ], [ %1, %bb.h ] ; 2 uses
-  %i.r = tail call fastcc ptr @fast_ensure_contiguous(ptr noundef nonnull %0, i32 noundef %.0.i9, i32 noundef 4)
+  %i.r = tail call fastcc ptr @fast_ensure_contiguous(ptr noundef nonnull %0, i32 noundef %.0.i9, i32 noundef 4) ; 4 uses
   %i.s = zext i32 %.0.i9 to i33
   %i.t = tail call { i33, i1 } @llvm.sadd.with.overflow.i33(i33 %i.s, i33 4) ; 2 uses
   %i.u = extractvalue { i33, i1 } %i.t, 1
@@ -217,8 +217,17 @@ bb.j:                                             ; preds = %.preheader.i8
 bb.k:                                             ; preds = %.preheader.i8
   %i.v = extractvalue { i33, i1 } %i.t, 0
   %i.w = trunc nuw i33 %i.v to i32                ; 2 uses
-  %3 = load i32, ptr %i.r, align 1
-  %i.x = icmp eq i32 %3, 0
+  %3 = getelementptr i8, ptr %i.r, i64 1
+  %4 = load i8, ptr %3, align 1
+  %5 = load i8, ptr %i.r, align 1
+  %6 = getelementptr i8, ptr %i.r, i64 2
+  %7 = load i8, ptr %6, align 1
+  %8 = getelementptr i8, ptr %i.r, i64 3
+  %9 = load i8, ptr %8, align 1
+  %10 = or i8 %5, %4
+  %11 = or i8 %10, %7
+  %12 = or i8 %11, %9
+  %i.x = icmp eq i8 %12, 0
   br i1 %i.x, label %tvb_ucs_4_strsize.exit, label %.preheader.i8, !llvm.loop !48
 
 tvb_ucs_4_strsize.exit:                           ; preds = %bb.k
@@ -621,7 +630,7 @@ bb.bq:                                            ; preds = %bb.d
 
 .preheader.i.i218:                                ; preds = %bb.bq, %bb.bs
   %.0.i.i219 = phi i32 [ %i.fg, %bb.bs ], [ %2, %bb.bq ] ; 2 uses
-  %i.fb = tail call fastcc ptr @fast_ensure_contiguous(ptr noundef nonnull %1, i32 noundef %.0.i.i219, i32 noundef 4)
+  %i.fb = tail call fastcc ptr @fast_ensure_contiguous(ptr noundef nonnull %1, i32 noundef %.0.i.i219, i32 noundef 4) ; 4 uses
   %i.fc = zext i32 %.0.i.i219 to i33
   %i.fd = tail call { i33, i1 } @llvm.sadd.with.overflow.i33(i33 %i.fc, i33 4) ; 2 uses
   %i.fe = extractvalue { i33, i1 } %i.fd, 1
@@ -634,8 +643,17 @@ bb.br:                                            ; preds = %.preheader.i.i218
 bb.bs:                                            ; preds = %.preheader.i.i218
   %i.ff = extractvalue { i33, i1 } %i.fd, 0
   %i.fg = trunc nuw i33 %i.ff to i32              ; 4 uses
-  %5 = load i32, ptr %i.fb, align 1
-  %i.fh = icmp eq i32 %5, 0
+  %5 = getelementptr i8, ptr %i.fb, i64 1
+  %6 = load i8, ptr %5, align 1
+  %7 = load i8, ptr %i.fb, align 1
+  %8 = getelementptr i8, ptr %i.fb, i64 2
+  %9 = load i8, ptr %8, align 1
+  %10 = getelementptr i8, ptr %i.fb, i64 3
+  %11 = load i8, ptr %10, align 1
+  %12 = or i8 %7, %6
+  %13 = or i8 %12, %9
+  %14 = or i8 %13, %11
+  %i.fh = icmp eq i8 %14, 0
   br i1 %i.fh, label %tvb_ucs_4_strsize.exit.i, label %.preheader.i.i218, !llvm.loop !48
 
 tvb_ucs_4_strsize.exit.i:                         ; preds = %bb.bs

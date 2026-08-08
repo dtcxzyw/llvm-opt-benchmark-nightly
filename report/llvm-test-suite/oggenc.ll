@@ -204,7 +204,7 @@ define dso_local range(i32 0, 2) i32 @aiff_open(ptr noundef %0, ptr nofree nound
 bb.a:
   %i.a = alloca [1024 x i8], align 16             ; 3 uses
   %i.b = alloca i32, align 4                      ; 6 uses
-  %i.c = alloca [8 x i8], align 1                 ; 8 uses
+  %i.c = alloca [8 x i8], align 1                 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #62
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #62
   %i.d = tail call noalias dereferenceable_or_null(40) ptr @malloc(i64 noundef 40) #69 ; 7 uses
@@ -427,8 +427,17 @@ bb.w:                                             ; preds = %bb.u
   %i.ek = zext i8 %i.ej to i32
   %i.el = or disjoint i32 %i.eh, %i.ek            ; 3 uses
   %i.em = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %4 = load i32, ptr %i.em, align 1
-  %i.en = icmp eq i32 %4, 0
+  %4 = load i8, ptr %i.em, align 1
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 5
+  %6 = load i8, ptr %5, align 1
+  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 6
+  %8 = load i8, ptr %7, align 1
+  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 7
+  %10 = load i8, ptr %9, align 1
+  %11 = or i8 %6, %4
+  %12 = or i8 %11, %8
+  %13 = or i8 %12, %10
+  %i.en = icmp eq i8 %13, 0
   br i1 %i.en, label %bb.x, label %bb.aa
 
 bb.x:                                             ; preds = %bb.w

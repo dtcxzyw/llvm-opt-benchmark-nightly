@@ -1,3 +1,5 @@
+inline.NumInlined: 1
+inline.NumDeleted: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -14,7 +16,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: cold nounwind optsize uwtable
 define internal noundef i32 @mlp_init(ptr nofree readnone captures(none) %0) #0 {
 bb.a:
-  tail call void @ff_mlp_init_crc() #5
+  tail call void @ff_mlp_init_crc() #4
   ret i32 0
 }
 
@@ -85,12 +87,12 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br i1 %exitcond129.not, label %._crit_edge124, label %bb.d, !llvm.loop !25
 
 ._crit_edge124:                                   ; preds = %bb.f, %.preheader
-  %i.z = call i32 @ff_combine_frame(ptr noundef nonnull %i.c, i32 noundef -100, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5
+  %i.z = call i32 @ff_combine_frame(ptr noundef nonnull %i.c, i32 noundef -100, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #4
   %.not103 = icmp eq i32 %i.z, -1
   br i1 %.not103, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge124
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef %1, i32 noundef 24, ptr noundef nonnull @.str) #5
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef %1, i32 noundef 24, ptr noundef nonnull @.str) #4
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %._crit_edge124
@@ -102,12 +104,12 @@ bb.i:                                             ; preds = %bb.e
   %i.ab = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   store i32 0, ptr %i.ab, align 8, !tbaa !27
   %i.ac = add nsw i32 %i.w, -7                    ; 2 uses
-  %i.ad = call i32 @ff_combine_frame(ptr noundef nonnull %i.c, i32 noundef %i.ac, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5 ; 2 uses
+  %i.ad = call i32 @ff_combine_frame(ptr noundef nonnull %i.c, i32 noundef %i.ac, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #4 ; 2 uses
   %i.ae = icmp slt i32 %i.ad, 0
   br i1 %i.ae, label %bb.j, label %bb.aj
 
 bb.j:                                             ; preds = %bb.i
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef %1, i32 noundef 24, ptr noundef nonnull @.str) #5
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef %1, i32 noundef 24, ptr noundef nonnull @.str) #4
   br label %bb.aj
 
 bb.k:                                             ; preds = %bb.c
@@ -160,12 +162,12 @@ bb.l:                                             ; preds = %.lr.ph, %bb.l
   br i1 %i.be, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %._crit_edge
-  %i.bf = call i32 @ff_combine_frame(ptr noundef nonnull %i.c, i32 noundef -100, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5
+  %i.bf = call i32 @ff_combine_frame(ptr noundef nonnull %i.c, i32 noundef -100, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #4
   %.not105 = icmp eq i32 %i.bf, -1
   br i1 %.not105, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef %1, i32 noundef 24, ptr noundef nonnull @.str) #5
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef %1, i32 noundef 24, ptr noundef nonnull @.str) #4
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -215,7 +217,7 @@ bb.u:                                             ; preds = %bb.t, %bb.k
   %i.bx = phi i32 [ %i.bv, %bb.t ], [ %i.ag, %bb.k ] ; 2 uses
   %i.by = icmp sgt i32 %i.bx, %i.bw
   %spec.select = select i1 %i.by, i32 -100, i32 %i.bx ; 2 uses
-  %i.bz = call i32 @ff_combine_frame(ptr noundef nonnull %i.c, i32 noundef %spec.select, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5
+  %i.bz = call i32 @ff_combine_frame(ptr noundef nonnull %i.c, i32 noundef %spec.select, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #4
   %i.ca = icmp slt i32 %i.bz, 0
   br i1 %i.ca, label %bb.v, label %bb.w
 
@@ -253,16 +255,24 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.cn, label %bb.z, label %._crit_edge121
 
 bb.z:                                             ; preds = %.critedge
-  %i.co = load ptr, ptr %i.a, align 8, !tbaa !9   ; 3 uses
-  %8 = load <4 x i8>, ptr %i.co, align 1, !tbaa !23
-  %9 = call i8 @llvm.vector.reduce.xor.v4i8(<4 x i8> %8) ; 2 uses
+  %i.co = load ptr, ptr %i.a, align 8, !tbaa !9   ; 6 uses
+  %8 = getelementptr i8, ptr %i.co, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !23
+  %10 = load i8, ptr %i.co, align 1, !tbaa !23
+  %11 = xor i8 %9, %10
+  %12 = getelementptr inbounds nuw i8, ptr %i.co, i64 2
+  %13 = load i8, ptr %12, align 1, !tbaa !23
+  %14 = getelementptr i8, ptr %i.co, i64 3
+  %15 = load i8, ptr %14, align 1, !tbaa !23
+  %16 = xor i8 %13, %15
+  %17 = xor i8 %16, %11                           ; 2 uses
   %exitcond.peel.not = icmp eq i32 %i.cm, 0
   br i1 %exitcond.peel.not, label %._crit_edge121.loopexit, label %.peel.next
 
 .peel.next:                                       ; preds = %bb.z, %bb.ab
   %.089119 = phi i32 [ %.1, %bb.ab ], [ 4, %bb.z ] ; 3 uses
   %.191118 = phi i32 [ %i.df, %bb.ab ], [ 0, %bb.z ]
-  %.094117 = phi i8 [ %.195, %bb.ab ], [ %9, %bb.z ]
+  %.094117 = phi i8 [ %.195, %bb.ab ], [ %17, %bb.z ]
   %i.cp = sext i32 %.089119 to i64
   %i.cq = getelementptr inbounds i8, ptr %i.co, i64 %i.cp ; 3 uses
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !23  ; 2 uses
@@ -293,7 +303,7 @@ bb.ab:                                            ; preds = %.peel.next, %bb.aa
   br i1 %exitcond.not, label %._crit_edge121.loopexit, label %.peel.next, !llvm.loop !33
 
 ._crit_edge121.loopexit:                          ; preds = %bb.ab, %bb.z
-  %.195.lcssa = phi i8 [ %9, %bb.z ], [ %.195, %bb.ab ]
+  %.195.lcssa = phi i8 [ %17, %bb.z ], [ %.195, %bb.ab ]
   %i.dg = zext i8 %.195.lcssa to i32
   br label %._crit_edge121
 
@@ -306,12 +316,12 @@ bb.ab:                                            ; preds = %.peel.next, %bb.aa
   br i1 %.not107, label %bb.ah, label %bb.ac
 
 bb.ac:                                            ; preds = %._crit_edge121
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef %1, i32 noundef 32, ptr noundef nonnull @.str.1) #5
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef %1, i32 noundef 32, ptr noundef nonnull @.str.1) #4
   br label %bb.ai
 
 bb.ad:                                            ; preds = %bb.y
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #4
   %i.dj = shl i32 %i.ce, 3
   %i.dk = add i32 %i.dj, -32                      ; 2 uses
   %or.cond.i = icmp ult i32 %i.dk, 2147483135     ; 2 uses
@@ -325,7 +335,7 @@ bb.ad:                                            ; preds = %bb.y
   store i32 %i.dm, ptr %i.dn, align 8, !tbaa !38
   %i.do = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i32 0, ptr %i.do, align 8, !tbaa !39
-  %i.dp = call i32 @ff_mlp_read_major_sync(ptr noundef %1, ptr noundef nonnull %7, ptr noundef nonnull %6) #5
+  %i.dp = call i32 @ff_mlp_read_major_sync(ptr noundef %1, ptr noundef nonnull %7, ptr noundef nonnull %6) #4
   %i.dq = icmp slt i32 %i.dp, 0
   br i1 %i.dq, label %bb.ag, label %bb.ae
 
@@ -350,7 +360,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.ec = getelementptr inbounds nuw i8, ptr %1, i64 376
   store i32 %i.ea, ptr %i.ec, align 8, !tbaa !64
   %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 352 ; 2 uses
-  call void @av_channel_layout_uninit(ptr noundef nonnull %i.ed) #5
+  call void @av_channel_layout_uninit(ptr noundef nonnull %i.ed) #4
   %i.ee = load i32, ptr %7, align 8, !tbaa !65
   %i.ef = icmp eq i32 %i.ee, 187
   %i.eg = getelementptr inbounds nuw i8, ptr %7, i64 48
@@ -360,7 +370,7 @@ bb.ae:                                            ; preds = %bb.ad
   %.sink = select i1 %i.ef, i64 56, i64 %.141
   %i.ei = getelementptr inbounds nuw i8, ptr %7, i64 %.sink
   %i.ej = load i64, ptr %i.ei, align 8, !tbaa !66
-  %i.ek = call i32 @av_channel_layout_from_mask(ptr noundef nonnull %i.ed, i64 noundef %i.ej) #5 ; 0 uses
+  %i.ek = call i32 @av_channel_layout_from_mask(ptr noundef nonnull %i.ed, i64 noundef %i.ej) #4 ; 0 uses
   %i.el = getelementptr inbounds nuw i8, ptr %7, i64 88
   %i.em = load i32, ptr %i.el, align 8, !tbaa !67
   %.not110 = icmp eq i32 %i.em, 0
@@ -379,14 +389,14 @@ bb.af:                                            ; preds = %bb.ae
   %i.es = load i32, ptr %i.er, align 8, !tbaa !70
   %i.et = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   store i32 %i.es, ptr %i.et, align 8, !tbaa !32
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #4
   %.pre131 = load i32, ptr %i.b, align 4, !tbaa !12
   br label %bb.ah
 
 bb.ag:                                            ; preds = %bb.ad
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #4
   br label %bb.ai
 
 bb.ah:                                            ; preds = %.thread112, %._crit_edge121
@@ -426,15 +436,11 @@ declare i32 @av_channel_layout_from_mask(ptr noundef, i64 noundef) local_unnamed
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.vector.reduce.xor.v4i8(<4 x i8>) #4
-
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nounwind }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

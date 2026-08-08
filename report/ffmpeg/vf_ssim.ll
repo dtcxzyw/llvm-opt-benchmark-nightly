@@ -1,3 +1,8 @@
+inline.NumInlined: 20
+inline.NumDeleted: 10
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@ssim_4x4xn_8bit:bb.a
   %i.nm = load i8, ptr %i.ni, align 1, !tbaa !37, !alias.scope !116
   %i.nn = load i8, ptr %i.nj, align 1, !tbaa !37, !alias.scope !116
@@ -199,9 +204,9 @@ begin_hunk_0_@ssim_4x4xn_8bit:bb.a
   %i.vb = mul nuw nsw <4 x i32> %i.uv, %i.ui
   %i.vc = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %index
   %i.vd = shufflevector <4 x i32> %i.uw, <4 x i32> %i.ux, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %6 = add nuw nsw <4 x i32> %i.uz, %i.va
-  %7 = add nuw nsw <4 x i32> %i.vb, %i.tv
-  %8 = shufflevector <4 x i32> %6, <4 x i32> %7, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %6 = shufflevector <4 x i32> %i.uz, <4 x i32> %i.vb, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %7 = shufflevector <4 x i32> %i.va, <4 x i32> %i.tv, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %8 = add nuw nsw <8 x i32> %6, %7
   %interleaved.vec = shufflevector <8 x i32> %i.vd, <8 x i32> %8, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
   store <16 x i32> %interleaved.vec, ptr %i.vc, align 4, !tbaa !34, !alias.scope !124, !noalias !126
   %index.next = add nuw i64 %index, 4             ; 2 uses

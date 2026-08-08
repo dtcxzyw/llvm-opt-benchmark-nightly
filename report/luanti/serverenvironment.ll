@@ -203,10 +203,8 @@ bb.ad:                                            ; preds = %bb.u
   %i.fo = fdiv nsz <2 x float> %i.fn, splat (float 1.000000e+01)
   %i.fp = fptosi <2 x float> %i.fo to <2 x i16>
   %i.fq = zext <2 x i16> %i.fp to <2 x i48>
-  %i.fr = shl nuw <2 x i48> %i.fq, <i48 32, i48 16> ; 2 uses
-  %shift = shufflevector <2 x i48> %i.fr, <2 x i48> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i48> %i.fr, %shift
-  %.sroa.2.0.insert.insert.i85 = extractelement <2 x i48> %foldExtExtBinop, i64 0
+  %i.fr = shl nuw <2 x i48> %i.fq, <i48 32, i48 16>
+  %.sroa.2.0.insert.insert.i85 = call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.fr)
   %.sroa.0.0.insert.ext.i86 = zext i16 %i.fj to i48
   %.sroa.0.0.insert.insert.i87 = or disjoint i48 %.sroa.2.0.insert.insert.i85, %.sroa.0.0.insert.ext.i86
   store i48 %.sroa.0.0.insert.insert.i87, ptr %12, align 8
@@ -607,6 +605,9 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i48 @llvm.vector.reduce.or.v2i48(<2 x i48>) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #22

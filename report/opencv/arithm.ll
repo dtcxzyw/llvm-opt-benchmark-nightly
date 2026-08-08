@@ -1,3 +1,7 @@
+inline.NumInlined: 484
+inline.NumDeleted: 126
+loop-unroll.NumRuntimeUnrolled: 15
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@_ZN2cv7inRangeERKNS_11_InputArrayES2_S2_RKNS_12_OutputArrayE:bb.a
 
 _ZN2cvL13inRangeReduceEPKhPhmi.exit.us.us.us.us.us.us.us.us.us: ; preds = %.preheader.us.us.us.us.us
@@ -199,18 +203,34 @@ bb.ct:                                            ; preds = %bb.cs
   %.387.i.us = phi i64 [ 0, %.lr.ph.i.us.preheader.new ], [ %i.jo, %.lr.ph.i.us ] ; 2 uses
   %.37486.i.us = phi i64 [ 0, %.lr.ph.i.us.preheader.new ], [ %i.jn, %.lr.ph.i.us ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.i.us.preheader.new ], [ %niter.next.1, %.lr.ph.i.us ]
-  %i.jh = getelementptr inbounds nuw i8, ptr %i.dp, i64 %.387.i.us
-  %23 = load <4 x i8>, ptr %i.jh, align 1, !tbaa !18
-  %24 = call i8 @llvm.vector.reduce.and.v4i8(<4 x i8> %23)
+  %23 = getelementptr inbounds nuw i8, ptr %i.dp, i64 %.387.i.us ; 4 uses
+  %24 = load i8, ptr %23, align 1, !tbaa !18
+  %25 = getelementptr i8, ptr %23, i64 1
+  %26 = load i8, ptr %25, align 1, !tbaa !18
+  %27 = and i8 %26, %24
+  %28 = getelementptr i8, ptr %23, i64 2
+  %29 = load i8, ptr %28, align 1, !tbaa !18
+  %30 = and i8 %27, %29
+  %i.jh = getelementptr i8, ptr %23, i64 3
+  %31 = load i8, ptr %i.jh, align 1, !tbaa !18
+  %32 = and i8 %30, %31
   %i.ji = getelementptr inbounds nuw i8, ptr %i.jf, i64 %.37486.i.us
-  store i8 %24, ptr %i.ji, align 1, !tbaa !18
+  store i8 %32, ptr %i.ji, align 1, !tbaa !18
   %i.jj = add nuw nsw i64 %.387.i.us, %i.df       ; 2 uses
-  %i.jk = getelementptr inbounds nuw i8, ptr %i.dp, i64 %i.jj
-  %25 = load <4 x i8>, ptr %i.jk, align 1, !tbaa !18
-  %26 = call i8 @llvm.vector.reduce.and.v4i8(<4 x i8> %25)
+  %33 = getelementptr inbounds nuw i8, ptr %i.dp, i64 %i.jj ; 4 uses
+  %34 = load i8, ptr %33, align 1, !tbaa !18
+  %35 = getelementptr i8, ptr %33, i64 1
+  %36 = load i8, ptr %35, align 1, !tbaa !18
+  %37 = and i8 %36, %34
+  %38 = getelementptr i8, ptr %33, i64 2
+  %39 = load i8, ptr %38, align 1, !tbaa !18
+  %40 = and i8 %37, %39
+  %i.jk = getelementptr i8, ptr %33, i64 3
+  %41 = load i8, ptr %i.jk, align 1, !tbaa !18
+  %42 = and i8 %40, %41
   %i.jl = getelementptr inbounds nuw i8, ptr %i.jf, i64 %.37486.i.us
   %i.jm = getelementptr inbounds nuw i8, ptr %i.jl, i64 1
-  store i8 %26, ptr %i.jm, align 1, !tbaa !18
+  store i8 %42, ptr %i.jm, align 1, !tbaa !18
   %i.jn = add nuw nsw i64 %.37486.i.us, 2         ; 2 uses
   %i.jo = add nuw nsw i64 %i.jj, %i.df            ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
@@ -585,11 +605,19 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.37486.i.us.epil.init = phi i64 [ 0, %.lr.ph.i.us.preheader ], [ %i.jn, %.loopexit.i.us.loopexit413.unr-lcssa ]
   %lcmp.mod415 = trunc i64 %i.iw to i1
   call void @llvm.assume(i1 %lcmp.mod415)
-  %i.rl = getelementptr inbounds nuw i8, ptr %i.dp, i64 %.387.i.us.epil.init
-  %27 = load <4 x i8>, ptr %i.rl, align 1, !tbaa !18
-  %28 = call i8 @llvm.vector.reduce.and.v4i8(<4 x i8> %27)
+  %43 = getelementptr inbounds nuw i8, ptr %i.dp, i64 %.387.i.us.epil.init ; 4 uses
+  %44 = load i8, ptr %43, align 1, !tbaa !18
+  %45 = getelementptr i8, ptr %43, i64 1
+  %46 = load i8, ptr %45, align 1, !tbaa !18
+  %47 = and i8 %46, %44
+  %48 = getelementptr i8, ptr %43, i64 2
+  %49 = load i8, ptr %48, align 1, !tbaa !18
+  %50 = and i8 %47, %49
+  %i.rl = getelementptr i8, ptr %43, i64 3
+  %51 = load i8, ptr %i.rl, align 1, !tbaa !18
+  %52 = and i8 %50, %51
   %i.rm = getelementptr inbounds nuw i8, ptr %i.jf, i64 %.37486.i.us.epil.init
-  store i8 %28, ptr %i.rm, align 1, !tbaa !18
+  store i8 %52, ptr %i.rm, align 1, !tbaa !18
   br label %.loopexit.i.us
 
 .loopexit.i.us:                                   ; preds = %.lr.ph.i.us.epil.preheader, %.loopexit.i.us.loopexit413.unr-lcssa, %.lr.ph90.i.us.epil.preheader, %.loopexit.i.us.loopexit412.unr-lcssa.a, %.lr.ph93.i.us.epil.preheader, %.loopexit.i.us.loopexit411.unr-lcssa.a, %.lr.ph96.i.us.prol.loopexit, %.lr.ph96.i.us, %middle.block, %vec.epilog.middle.block
@@ -612,22 +640,38 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.498.i.us = phi i64 [ %i.rx, %.lr.ph99.i.us.new ], [ %indvars.iv.i.us, %.lr.ph99.i.us ] ; 2 uses
   %.47597.i.us = phi i64 [ %i.rw, %.lr.ph99.i.us.new ], [ 0, %.lr.ph99.i.us ] ; 3 uses
   %niter432 = phi i64 [ %niter432.next.1, %.lr.ph99.i.us.new ], [ 0, %.lr.ph99.i.us ]
-  %i.ro = getelementptr inbounds nuw i8, ptr %i.dp, i64 %.498.i.us
-  %29 = load <4 x i8>, ptr %i.ro, align 1, !tbaa !18
-  %i.rp = getelementptr inbounds nuw i8, ptr %i.jf, i64 %.47597.i.us ; 2 uses
+  %53 = getelementptr inbounds nuw i8, ptr %i.dp, i64 %.498.i.us ; 4 uses
+  %54 = load i8, ptr %53, align 1, !tbaa !18
+  %55 = getelementptr i8, ptr %53, i64 1
+  %56 = load i8, ptr %55, align 1, !tbaa !18
+  %57 = and i8 %56, %54
+  %i.ro = getelementptr i8, ptr %53, i64 2
+  %58 = load i8, ptr %i.ro, align 1, !tbaa !18
+  %59 = and i8 %57, %58
+  %i.rp = getelementptr i8, ptr %53, i64 3
   %i.rq = load i8, ptr %i.rp, align 1, !tbaa !18
-  %30 = call i8 @llvm.vector.reduce.and.v4i8(<4 x i8> %29)
-  %op.rdx = and i8 %30, %i.rq
-  store i8 %op.rdx, ptr %i.rp, align 1, !tbaa !18
+  %60 = and i8 %59, %i.rq
+  %61 = getelementptr inbounds nuw i8, ptr %i.jf, i64 %.47597.i.us ; 2 uses
+  %62 = load i8, ptr %61, align 1, !tbaa !18
+  %op.rdx = and i8 %60, %62
+  store i8 %op.rdx, ptr %61, align 1, !tbaa !18
   %i.rr = add i64 %.498.i.us, %i.df               ; 2 uses
-  %i.rs = getelementptr inbounds nuw i8, ptr %i.dp, i64 %i.rr
-  %31 = load <4 x i8>, ptr %i.rs, align 1, !tbaa !18
-  %i.rt = getelementptr inbounds nuw i8, ptr %i.jf, i64 %.47597.i.us
-  %i.ru = getelementptr inbounds nuw i8, ptr %i.rt, i64 1 ; 2 uses
+  %63 = getelementptr inbounds nuw i8, ptr %i.dp, i64 %i.rr ; 4 uses
+  %64 = load i8, ptr %63, align 1, !tbaa !18
+  %i.rs = getelementptr i8, ptr %63, i64 1
+  %65 = load i8, ptr %i.rs, align 1, !tbaa !18
+  %66 = and i8 %65, %64
+  %i.rt = getelementptr i8, ptr %63, i64 2
+  %67 = load i8, ptr %i.rt, align 1, !tbaa !18
+  %68 = and i8 %66, %67
+  %i.ru = getelementptr i8, ptr %63, i64 3
   %i.rv = load i8, ptr %i.ru, align 1, !tbaa !18
-  %32 = call i8 @llvm.vector.reduce.and.v4i8(<4 x i8> %31)
-  %op.rdx.1 = and i8 %32, %i.rv
-  store i8 %op.rdx.1, ptr %i.ru, align 1, !tbaa !18
+  %69 = and i8 %68, %i.rv
+  %70 = getelementptr inbounds nuw i8, ptr %i.jf, i64 %.47597.i.us
+  %71 = getelementptr inbounds nuw i8, ptr %70, i64 1 ; 2 uses
+  %72 = load i8, ptr %71, align 1, !tbaa !18
+  %op.rdx.1 = and i8 %69, %72
+  store i8 %op.rdx.1, ptr %71, align 1, !tbaa !18
   %i.rw = add nuw nsw i64 %.47597.i.us, 2         ; 2 uses
   %i.rx = add i64 %i.rr, %i.df                    ; 2 uses
   %niter432.next.1 = add i64 %niter432, 2         ; 2 uses
@@ -641,13 +685,21 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.498.i.us.epil.init = phi i64 [ %indvars.iv.i.us, %.lr.ph99.i.us ], [ %i.rx, %._crit_edge.i.us.unr-lcssa ]
   %.47597.i.us.epil.init = phi i64 [ 0, %.lr.ph99.i.us ], [ %i.rw, %._crit_edge.i.us.unr-lcssa ]
   call void @llvm.assume(i1 %lcmp.mod430)
-  %i.ry = getelementptr inbounds nuw i8, ptr %i.dp, i64 %.498.i.us.epil.init
-  %33 = load <4 x i8>, ptr %i.ry, align 1, !tbaa !18
-  %i.rz = getelementptr inbounds nuw i8, ptr %i.jf, i64 %.47597.i.us.epil.init ; 2 uses
+  %73 = getelementptr inbounds nuw i8, ptr %i.dp, i64 %.498.i.us.epil.init ; 4 uses
+  %74 = load i8, ptr %73, align 1, !tbaa !18
+  %75 = getelementptr i8, ptr %73, i64 1
+  %76 = load i8, ptr %75, align 1, !tbaa !18
+  %77 = and i8 %76, %74
+  %i.ry = getelementptr i8, ptr %73, i64 2
+  %78 = load i8, ptr %i.ry, align 1, !tbaa !18
+  %79 = and i8 %77, %78
+  %i.rz = getelementptr i8, ptr %73, i64 3
   %i.sa = load i8, ptr %i.rz, align 1, !tbaa !18
-  %34 = call i8 @llvm.vector.reduce.and.v4i8(<4 x i8> %33)
-  %op.rdx.epil = and i8 %34, %i.sa
-  store i8 %op.rdx.epil, ptr %i.rz, align 1, !tbaa !18
+  %80 = and i8 %79, %i.sa
+  %81 = getelementptr inbounds nuw i8, ptr %i.jf, i64 %.47597.i.us.epil.init ; 2 uses
+  %82 = load i8, ptr %81, align 1, !tbaa !18
+  %op.rdx.epil = and i8 %80, %82
+  store i8 %op.rdx.epil, ptr %81, align 1, !tbaa !18
   br label %._crit_edge.i.us
 
 ._crit_edge.i.us:                                 ; preds = %._crit_edge.i.us.unr-lcssa, %.epil.preheader
@@ -1049,9 +1101,6 @@ declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.vector.reduce.and.v4i8(<4 x i8>) #8
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

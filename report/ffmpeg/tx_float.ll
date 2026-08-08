@@ -1,3 +1,7 @@
+inline.NumInlined: 21
+loop-unroll.NumCompletelyUnrolled: 20
+loop-unroll.NumRuntimeUnrolled: 11
+loop-unroll.NumUnrolled: 32
 begin_hunk_0_@ff_tx_init_tab_65536_float:vector.ph
   %i.b = uitofp nneg <4 x i32> %vec.ind to <4 x double>
   %i.c = fmul nnan nsz <4 x double> %i.b, splat (double f0x3F1921FB54442D18)
@@ -199,9 +203,9 @@ bb.a:
   %i.bq = shufflevector <4 x float> %i.bp, <4 x float> %i.bn, <4 x i32> <i32 5, i32 poison, i32 2, i32 3>
   %i.br = shufflevector <4 x float> %i.bq, <4 x float> %i.bl, <4 x i32> <i32 0, i32 4, i32 2, i32 3>
   %i.bs = fsub nsz <4 x float> %i.bo, %i.br       ; 4 uses
-  %4 = fadd nsz <2 x float> %i.as, %i.aw
-  %5 = fadd nsz <2 x float> %i.bf, %i.bj
-  %6 = shufflevector <2 x float> %4, <2 x float> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 3 uses
+  %4 = shufflevector <2 x float> %i.as, <2 x float> %i.bf, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %5 = shufflevector <2 x float> %i.aw, <2 x float> %i.bj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %6 = fadd nsz <4 x float> %4, %5                ; 3 uses
   %foldExtExtBinop116 = fadd nsz <4 x float> %i.ah, %6
   %i.bt = extractelement <4 x float> %foldExtExtBinop116, i64 0
   store float %i.bt, ptr %1, align 4, !tbaa !49

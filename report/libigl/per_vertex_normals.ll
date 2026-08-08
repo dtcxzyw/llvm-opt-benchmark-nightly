@@ -1,3 +1,8 @@
+inline.NumInlined: 3143
+inline.NumDeleted: 1837
+loop-unroll.NumCompletelyUnrolled: 15
+loop-unroll.NumRuntimeUnrolled: 65
+loop-unroll.NumUnrolled: 80
 begin_hunk_0_@_ZN5Eigen8internal26call_dense_assignment_loopINS_6MatrixIfLin1ELi3ELi1ELin1ELi3EEENS_13CwiseBinaryOpINS0_18scalar_quotient_opIffEEKS3_KNS_9ReplicateINS_12CwiseUnaryOpINS0_14scalar_sqrt_opIfEEKNS_16PartialReduxExprIKNS9_INS0_14scalar_abs2_opIfEES7_EENS0_10member_sumIffEELi1EEEEELi1ELi3EEEEENS0_9assign_opIffEEEEvRT_RKT0_RKT1_:bb.a
   %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.prol = mul i64 %.05.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, 12
   %i.bx = getelementptr i8, ptr %i.k, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.prol ; 2 uses
@@ -199,9 +204,9 @@ vector.body40:                                    ; preds = %vector.body40, %vec
   %i.gf = insertelement <4 x float> %i.ge, float %i.gb, i64 2
   %i.gg = insertelement <4 x float> %i.gf, float %i.gc, i64 3
   %i.gh = fdiv <4 x float> %i.gg, %wide.load43
-  %4 = fdiv <4 x float> %i.fi, %wide.load
-  %5 = fdiv <4 x float> %i.fu, %wide.load42.a
-  %6 = shufflevector <4 x float> %4, <4 x float> %5, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %4 = shufflevector <4 x float> %i.fi, <4 x float> %i.fu, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %5 = shufflevector <4 x float> %wide.load, <4 x float> %wide.load42.a, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %6 = fdiv <8 x float> %4, %5
   %i.gi = shufflevector <4 x float> %i.gh, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec = shufflevector <8 x float> %6, <8 x float> %i.gi, <12 x i32> <i32 0, i32 4, i32 8, i32 1, i32 5, i32 9, i32 2, i32 6, i32 10, i32 3, i32 7, i32 11>
   store <12 x float> %interleaved.vec, ptr %i.es, align 4, !tbaa !59, !alias.scope !454, !noalias !456

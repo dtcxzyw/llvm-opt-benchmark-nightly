@@ -1,3 +1,7 @@
+inline.NumInlined: 12
+inline.NumDeleted: 7
+loop-unroll.NumRuntimeUnrolled: 32
+loop-unroll.NumUnrolled: 32
 begin_hunk_0_@x2rgb10to64_nobswap:bb.a
   %i.u = trunc nuw <8 x i32> %i.t to <8 x i16>
   %i.v = shufflevector <4 x i16> %i.o, <4 x i16> splat (i16 -1), <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
@@ -199,9 +203,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.q = and <4 x i32> %i.p, splat (i32 63)
   %i.r = or disjoint <4 x i32> %i.o, %i.q
   %i.s = trunc nuw <4 x i32> %i.r to <4 x i16>
-  %3 = or disjoint <4 x i32> %i.g, %i.h
-  %4 = or disjoint <4 x i32> %i.l, %i.n
-  %5 = shufflevector <4 x i32> %3, <4 x i32> %4, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %3 = shufflevector <4 x i32> %i.g, <4 x i32> %i.l, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %4 = shufflevector <4 x i32> %i.h, <4 x i32> %i.n, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %5 = or disjoint <8 x i32> %3, %4
   %i.t = trunc nuw <8 x i32> %5 to <8 x i16>
   %i.u = shufflevector <4 x i16> %i.s, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec = shufflevector <8 x i16> %i.t, <8 x i16> %i.u, <12 x i32> <i32 0, i32 4, i32 8, i32 1, i32 5, i32 9, i32 2, i32 6, i32 10, i32 3, i32 7, i32 11>
@@ -297,9 +301,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.q = and <4 x i32> %i.p, splat (i32 63)
   %i.r = or disjoint <4 x i32> %i.o, %i.q
   %i.s = trunc nuw <4 x i32> %i.r to <4 x i16>
-  %3 = or disjoint <4 x i32> %i.g, %i.h
-  %4 = or disjoint <4 x i32> %i.l, %i.n
-  %5 = shufflevector <4 x i32> %3, <4 x i32> %4, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %3 = shufflevector <4 x i32> %i.g, <4 x i32> %i.l, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %4 = shufflevector <4 x i32> %i.h, <4 x i32> %i.n, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %5 = or disjoint <8 x i32> %3, %4
   %i.t = trunc nuw <8 x i32> %5 to <8 x i16>
   %i.u = shufflevector <4 x i16> %i.s, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.v = shufflevector <8 x i16> %i.t, <8 x i16> %i.u, <12 x i32> <i32 0, i32 4, i32 8, i32 1, i32 5, i32 9, i32 2, i32 6, i32 10, i32 3, i32 7, i32 11>
@@ -399,9 +403,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.q = and <4 x i32> %i.p, splat (i32 63)
   %i.r = or disjoint <4 x i32> %i.o, %i.q
   %i.s = trunc nuw <4 x i32> %i.r to <4 x i16>
-  %3 = or disjoint <4 x i32> %i.g, %i.h
-  %4 = or disjoint <4 x i32> %i.l, %i.n
-  %5 = shufflevector <4 x i32> %3, <4 x i32> %4, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %3 = shufflevector <4 x i32> %i.g, <4 x i32> %i.l, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %4 = shufflevector <4 x i32> %i.h, <4 x i32> %i.n, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %5 = or disjoint <8 x i32> %3, %4
   %i.t = trunc nuw <8 x i32> %5 to <8 x i16>
   %i.u = shufflevector <4 x i16> %i.s, <4 x i16> splat (i16 -1), <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %interleaved.vec = shufflevector <8 x i16> %i.t, <8 x i16> %i.u, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
@@ -500,9 +504,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.r = or disjoint <4 x i32> %i.o, %i.q
   %i.s = trunc nuw <4 x i32> %i.r to <4 x i16>
   %i.t = tail call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %i.s)
-  %3 = or disjoint <4 x i32> %i.g, %i.h
-  %4 = or disjoint <4 x i32> %i.l, %i.n
-  %5 = shufflevector <4 x i32> %3, <4 x i32> %4, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %3 = shufflevector <4 x i32> %i.g, <4 x i32> %i.l, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %4 = shufflevector <4 x i32> %i.h, <4 x i32> %i.n, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %5 = or disjoint <8 x i32> %3, %4
   %i.u = trunc nuw <8 x i32> %5 to <8 x i16>
   %i.v = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %i.u)
   %i.w = shufflevector <4 x i16> %i.t, <4 x i16> splat (i16 -1), <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>

@@ -29,11 +29,9 @@ bb.a:
   %i.a = load <2 x i64>, ptr %0, align 1, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load <2 x i64>, ptr %i.b, align 1, !tbaa !8
-  %1 = or <2 x i64> %i.c, %i.a                    ; 2 uses
-  %2 = shufflevector <2 x i64> %1, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
-  %i.d = or <2 x i64> %1, %2
-  %3 = extractelement <2 x i64> %i.d, i64 0
-  ret i64 %3
+  %i.d = or <2 x i64> %i.c, %i.a
+  %1 = tail call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %i.d)
+  ret i64 %1
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -436,14 +434,18 @@ declare <4 x i64> @llvm.x86.avx2.pslli.q(<4 x i64>, i32) #3
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
 declare <4 x i64> @llvm.x86.avx2.psrli.q(<4 x i64>, i32) #3
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #4
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #4
+declare void @llvm.assume(i1 noundef) #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="256" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(none) }
-attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

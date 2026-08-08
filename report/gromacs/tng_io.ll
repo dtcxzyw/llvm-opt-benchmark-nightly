@@ -1,3 +1,7 @@
+inline.NumInlined: 445
+inline.NumDeleted: 32
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@tng_output_file_endianness_get:bb.a
 bb.d:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -199,17 +203,15 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.a
-  %i.s = load i64, ptr %1, align 8, !tbaa !40     ; 4 uses
-  %2 = lshr i64 %i.s, 48
-  %3 = lshr i64 %i.s, 16
-  %4 = and i64 %3, 4294901760
-  %5 = shl i64 %i.s, 16
-  %6 = and i64 %5, 281470681743360
-  %7 = shl i64 %i.s, 48
-  %8 = or disjoint i64 %7, %2
-  %9 = or disjoint i64 %8, %4
-  %10 = or disjoint i64 %9, %6
-  store i64 %10, ptr %1, align 8, !tbaa !40
+  %i.s = load i64, ptr %1, align 8, !tbaa !40
+  %2 = insertelement <4 x i64> poison, i64 %i.s, i64 0
+  %3 = shufflevector <4 x i64> %2, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
+  %4 = lshr <4 x i64> %3, <i64 16, i64 16, i64 48, i64 48>
+  %5 = shl <4 x i64> %3, <i64 16, i64 16, i64 48, i64 48>
+  %6 = shufflevector <4 x i64> %4, <4 x i64> %5, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  %7 = and <4 x i64> %6, <i64 4294901760, i64 281470681743360, i64 -1, i64 -1>
+  %8 = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %7)
+  store i64 %8, ptr %1, align 8, !tbaa !40
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.a

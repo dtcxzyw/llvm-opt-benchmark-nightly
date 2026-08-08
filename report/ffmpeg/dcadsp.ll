@@ -1,3 +1,8 @@
+inline.NumInlined: 34
+inline.NumDeleted: 12
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 15
+loop-unroll.NumUnrolled: 26
 begin_hunk_0_@assemble_freq_bands_c:bb.a
   %.14276.ph = phi ptr [ %i.ju, %vector.memcheck170 ], [ %i.ju, %.preheader ], [ %i.kd, %middle.block196 ] ; 2 uses
   %.04375.ph = phi ptr [ %2, %vector.memcheck170 ], [ %2, %.preheader ], [ %i.ke, %middle.block196 ] ; 2 uses
@@ -199,16 +204,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cr = insertelement <4 x float> %i.cq, float %i.cn, i64 2
   %i.cs = insertelement <4 x float> %i.cr, float %i.co, i64 3 ; 2 uses
   %i.ct = fmul nsz <4 x float> %broadcast.splat114, %i.cs ; 2 uses
-  %5 = fsub nsz <4 x float> %i.ct, %i.cg
-  %6 = fsub nsz <4 x float> %i.bt, %i.bc
-  %7 = fadd nsz <4 x float> %i.cf, %5
-  %8 = fadd nsz <4 x float> %i.bb, %6
-  %9 = shufflevector <4 x float> %7, <4 x float> %8, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %10 = fadd nsz <4 x float> %i.bc, %i.bt
-  %11 = fadd nsz <4 x float> %i.cg, %i.ct
-  %12 = fsub nsz <4 x float> %i.bs, %10
-  %13 = fsub nsz <4 x float> %i.cs, %11
-  %14 = shufflevector <4 x float> %12, <4 x float> %13, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %5 = shufflevector <4 x float> %i.cf, <4 x float> %i.bb, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %6 = shufflevector <4 x float> %i.ct, <4 x float> %i.bt, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %7 = shufflevector <4 x float> %i.cg, <4 x float> %i.bc, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %8 = fsub nsz <8 x float> %6, %7
+  %9 = fadd nsz <8 x float> %5, %8
+  %10 = shufflevector <4 x float> %i.bs, <4 x float> %i.cs, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %11 = shufflevector <4 x float> %i.bc, <4 x float> %i.cg, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %12 = shufflevector <4 x float> %i.bt, <4 x float> %i.ct, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %13 = fadd nsz <8 x float> %11, %12
+  %14 = fsub nsz <8 x float> %10, %13
   %interleaved.vec = shufflevector <8 x float> %9, <8 x float> %14, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
   store <16 x float> %interleaved.vec, ptr %i.bu, align 4, !tbaa !44
   %index.next = add nuw i64 %index, 4             ; 2 uses

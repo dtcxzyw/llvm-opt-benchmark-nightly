@@ -127,10 +127,8 @@ bb.a:
   %i.r = shl nuw nsw i64 %i.q, 1
   %i.s = insertelement <2 x i64> %i.o, i64 %i.r, i64 0
   %i.t = or <2 x i64> %i.p, %i.s
-  %i.u = and <2 x i64> %i.t, <i64 -6148914691236517206, i64 6148914691236517205> ; 2 uses
-  %shift = shufflevector <2 x i64> %i.u, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i64> %i.u, %shift
-  %2 = extractelement <2 x i64> %foldExtExtBinop, i64 0
+  %i.u = and <2 x i64> %i.t, <i64 -6148914691236517206, i64 6148914691236517205>
+  %2 = tail call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %i.u)
   ret i64 %2
 }
 
@@ -531,6 +529,9 @@ bb.a:
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #4

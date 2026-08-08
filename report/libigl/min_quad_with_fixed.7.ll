@@ -1,3 +1,8 @@
+inline.NumInlined: 12514
+inline.NumDeleted: 4719
+loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumRuntimeUnrolled: 215
+loop-unroll.NumUnrolled: 222
 begin_hunk_0_@_ZN5Eigen8internal29general_matrix_vector_productIldNS0_22const_blas_data_mapperIdlLi1EEELi1ELb0EdNS2_IdlLi0EEELb0ELi0EE3runEllRKS3_RKS4_Pdld:bb.a
 ._crit_edge.._crit_edge439_crit_edge:             ; preds = %._crit_edge
   %.pre = or disjoint i64 %.0206448, 1
@@ -199,11 +204,11 @@ bb.d:                                             ; preds = %.lr.ph456, %bb.d
   %.0218.lcssa = phi i64 [ 0, %.preheader407 ], [ %i.z, %bb.d ] ; 2 uses
   %i.gy = shufflevector <2 x double> %.0398.lcssa, <2 x double> %.0399.lcssa, <2 x i32> <i32 0, i32 2>
   %i.gz = shufflevector <2 x double> %.0401.lcssa, <2 x double> %.0403.lcssa, <2 x i32> <i32 0, i32 2>
-  %7 = shufflevector <2 x double> %.0398.lcssa, <2 x double> %.0399.lcssa, <2 x i32> <i32 1, i32 3>
-  %i.ha = shufflevector <2 x double> %.0401.lcssa, <2 x double> %.0403.lcssa, <2 x i32> <i32 1, i32 3>
-  %8 = fadd <2 x double> %i.gy, %7
-  %9 = fadd <2 x double> %i.gz, %i.ha
-  %10 = shufflevector <2 x double> %8, <2 x double> %9, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
+  %7 = shufflevector <2 x double> %i.gy, <2 x double> %i.gz, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.ha = shufflevector <2 x double> %.0398.lcssa, <2 x double> %.0399.lcssa, <2 x i32> <i32 1, i32 3>
+  %8 = shufflevector <2 x double> %.0401.lcssa, <2 x double> %.0403.lcssa, <2 x i32> <i32 1, i32 3>
+  %9 = shufflevector <2 x double> %i.ha, <2 x double> %8, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %10 = fadd <4 x double> %7, %9                  ; 2 uses
   %i.hb = icmp slt i64 %.0218.lcssa, %1
   br i1 %i.hb, label %.lr.ph469, label %._crit_edge457.._crit_edge470_crit_edge
 

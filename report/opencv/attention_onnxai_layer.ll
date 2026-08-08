@@ -1,3 +1,7 @@
+inline.NumInlined: 682
+inline.NumDeleted: 300
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN2cv3dnn24AttentionOnnxAiLayerImpl7forwardERKNS_11_InputArrayERKNS_12_OutputArrayES7_:bb.a
 
 bb.cz:                                            ; preds = %bb.cy
@@ -199,7 +203,7 @@ _ZNK2cv8MatShapeixEm.exit:                        ; preds = %bb.h, %bb.j
   br i1 %.not, label %bb.ab, label %bb.l
 
 common.resume:                                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit142, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i170
-  %common.resume.op = phi { ptr, i32 } [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.pn92, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit142 ], [ %i.el, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i170 ]
+  %common.resume.op = phi { ptr, i32 } [ %.pn92, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit142 ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.el, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i170 ]
   resume { ptr, i32 } %common.resume.op
 
 bb.l:                                             ; preds = %_ZNK2cv8MatShapeixEm.exit

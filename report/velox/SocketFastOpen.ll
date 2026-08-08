@@ -51,10 +51,10 @@ define noundef zeroext i1 @_ZN5folly6detail13tfo_succeededENS_13NetworkSocketE(i
 bb.a:
   %1 = alloca %struct.tcp_info, align 4           ; 4 uses
   %i.a = alloca i32, align 4                      ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i32 104, ptr %i.a, align 4, !tbaa !14
-  %i.b = tail call ptr @__errno_location() #10
+  %i.b = tail call ptr @__errno_location() #11
   store i32 0, ptr %i.b, align 4, !tbaa !14
   %i.c = call noundef i32 @_ZN5folly6netops10getsockoptENS_13NetworkSocketEiiPvPj(i32 %0, i32 noundef 6, i32 noundef 11, ptr noundef nonnull %1, ptr noundef nonnull %i.a)
   %.not = icmp eq i32 %i.c, 0
@@ -63,8 +63,8 @@ bb.a:
   %i.f = and i8 %i.e, 32
   %i.g = icmp ne i8 %i.f, 0
   %.0 = select i1 %.not, i1 %i.g, i1 false
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #10
   ret i1 %.0
 }
 
@@ -87,7 +87,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.e, !prof !15
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly6detail25tfo_platform_availabilityEvE11TFOSettings) #9
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly6detail25tfo_platform_availabilityEvE11TFOSettings) #10
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.e, label %bb.c
 
@@ -97,7 +97,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   store i64 %i.d, ptr @_ZZN5folly6detail25tfo_platform_availabilityEvE11TFOSettings.0, align 8
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5folly6detail25tfo_platform_availabilityEvE11TFOSettings) #9
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5folly6detail25tfo_platform_availabilityEvE11TFOSettings) #10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.b, %bb.a
@@ -107,7 +107,7 @@ bb.e:                                             ; preds = %bb.d, %bb.b, %bb.a
 bb.f:                                             ; preds = %bb.c
   %i.e = landingpad { ptr, i32 }
           cleanup
-  tail call void @__cxa_guard_abort(ptr nonnull @_ZGVZN5folly6detail25tfo_platform_availabilityEvE11TFOSettings) #9
+  tail call void @__cxa_guard_abort(ptr nonnull @_ZGVZN5folly6detail25tfo_platform_availabilityEvE11TFOSettings) #10
   resume { ptr, i32 } %i.e
 }
 
@@ -119,15 +119,15 @@ define internal fastcc range(i64 0, 8589934596) i64 @"_ZZN5folly6detail25tfo_pla
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %0 = alloca %"class.std::basic_ifstream", align 8 ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i64 0, ptr %i.a, align 8, !tbaa !12
-  call void @llvm.lifetime.start.p0(ptr nonnull %0) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %0) #10
   invoke void @_ZNSt14basic_ifstreamIcSt11char_traitsIcEEC1EPKcSt13_Ios_Openmode(ptr noundef nonnull align 8 dereferenceable(256) %0, ptr noundef nonnull @.str, i32 noundef 8)
           to label %bb.b unwind label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.c = call noundef zeroext i1 @_ZNKSt12__basic_fileIcE7is_openEv(ptr noundef nonnull align 8 dereferenceable(9) %i.b) #11
+  %i.c = call noundef zeroext i1 @_ZNKSt12__basic_fileIcE7is_openEv(ptr noundef nonnull align 8 dereferenceable(9) %i.b) #12
   br i1 %i.c, label %bb.c, label %_ZNSirsERm.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -144,25 +144,25 @@ bb.e:                                             ; preds = %bb.c
   %i.f = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTISt9exception
-  call void @_ZNSt14basic_ifstreamIcSt11char_traitsIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(256) %0) #9
+  call void @_ZNSt14basic_ifstreamIcSt11char_traitsIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(256) %0) #10
   br label %bb.f
 
 _ZNSirsERm.exit:                                  ; preds = %bb.c, %bb.b
-  call void @_ZNSt14basic_ifstreamIcSt11char_traitsIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(256) %0) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %0) #9
+  call void @_ZNSt14basic_ifstreamIcSt11char_traitsIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(256) %0) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %0) #10
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.pn = phi { ptr, i32 } [ %i.f, %bb.e ], [ %i.e, %bb.d ] ; 3 uses
   %.0 = extractvalue { ptr, i32 } %.pn, 1
-  call void @llvm.lifetime.end.p0(ptr nonnull %0) #9
-  %i.g = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %0) #10
+  %i.g = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #10
   %i.h = icmp eq i32 %.0, %i.g
   br i1 %i.h, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %bb.f
   %.03 = extractvalue { ptr, i32 } %.pn, 0
-  %i.i = call ptr @__cxa_begin_catch(ptr %.03) #9 ; 0 uses
+  %i.i = call ptr @__cxa_begin_catch(ptr %.03) #10 ; 0 uses
   call void @__cxa_end_catch()
   br label %bb.h
 
@@ -175,15 +175,13 @@ bb.h:                                             ; preds = %bb.g, %_ZNSirsERm.e
   %i.o = and <2 x i64> %i.l, <i64 512, i64 4>
   %i.p = icmp eq <2 x i64> %i.o, zeroinitializer
   %i.q = select <2 x i1> %i.p, <2 x i64> <i64 4294967296, i64 1>, <2 x i64> <i64 8589934592, i64 2>
-  %i.r = select <2 x i1> %i.n, <2 x i64> zeroinitializer, <2 x i64> %i.q ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  %shift = shufflevector <2 x i64> %i.r, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i64> %i.r, %shift
-  %.sroa.0.0.insert.insert = extractelement <2 x i64> %foldExtExtBinop, i64 0
+  %i.r = select <2 x i1> %i.n, <2 x i64> zeroinitializer, <2 x i64> %i.q
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  %.sroa.0.0.insert.insert = call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %i.r)
   ret i64 %.sroa.0.0.insert.insert
 
 bb.i:                                             ; preds = %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   resume { ptr, i32 } %.pn
 }
 
@@ -213,6 +211,9 @@ declare noundef zeroext i1 @_ZNKSt12__basic_fileIcE7is_openEv(ptr noundef nonnul
 
 declare noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi10_M_extractImEERSiRT_(ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 8 dereferenceable(8)) local_unnamed_addr #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #9
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -222,9 +223,10 @@ attributes #5 = { inlinehint mustprogress uwtable "min-legal-vector-width"="0" "
 attributes #6 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #7 = { nounwind memory(none) }
 attributes #8 = { mustprogress nofree nounwind willreturn memory(read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #9 = { nounwind }
-attributes #10 = { nounwind willreturn memory(none) }
-attributes #11 = { nounwind willreturn memory(read) }
+attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #10 = { nounwind }
+attributes #11 = { nounwind willreturn memory(none) }
+attributes #12 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

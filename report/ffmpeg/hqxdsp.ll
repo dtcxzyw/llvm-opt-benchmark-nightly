@@ -1,3 +1,7 @@
+inline.NumInlined: 2
+inline.NumDeleted: 2
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@hqx_idct_put:bb.a
   %i.fv = insertelement <8 x i16> %i.fu, i16 %i.fn, i64 7
   %i.fw = sext <8 x i16> %i.fv to <8 x i32>       ; 2 uses
@@ -199,19 +203,19 @@ begin_hunk_0_@hqx_idct_put:bb.a
   %i.nk = shl nsw <8 x i32> %i.iu, splat (i32 1)
   %i.nl = add nsw <8 x i32> %i.mz, splat (i32 4)  ; 2 uses
   %i.nm = shl nsw <8 x i32> %i.ip, splat (i32 1)
-  %4 = add nsw <8 x i32> %i.my, splat (i32 4)     ; 2 uses
-  %i.nn = add nsw <8 x i32> %i.nc, splat (i32 4)
-  %i.no = add nsw <8 x i32> %i.nh, %i.ng
-  %5 = add nsw <8 x i32> %i.nj, %i.nc
-  %i.np = shufflevector <8 x i32> %i.no, <8 x i32> %5, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %6 = add nsw <8 x i32> %i.nl, %i.nk
-  %7 = add nsw <8 x i32> %4, %i.nm
-  %i.nq = shufflevector <8 x i32> %6, <8 x i32> %7, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.nr = shufflevector <16 x i32> %i.np, <16 x i32> %i.nq, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %i.ns = shufflevector <8 x i32> %4, <8 x i32> %i.nl, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.nt = shufflevector <8 x i32> %i.nn, <8 x i32> %i.nh, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.nn = add nsw <8 x i32> %i.my, splat (i32 4)  ; 2 uses
+  %i.no = add nsw <8 x i32> %i.nc, splat (i32 4)
+  %4 = shufflevector <8 x i32> %i.nh, <8 x i32> %i.nj, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.np = shufflevector <8 x i32> %i.nl, <8 x i32> %i.nn, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %5 = shufflevector <16 x i32> %4, <16 x i32> %i.np, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %6 = shufflevector <8 x i32> %i.ng, <8 x i32> %i.nc, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.nq = shufflevector <8 x i32> %i.nk, <8 x i32> %i.nm, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.nr = shufflevector <16 x i32> %6, <16 x i32> %i.nq, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %7 = add nsw <32 x i32> %5, %i.nr
+  %i.ns = shufflevector <8 x i32> %i.nn, <8 x i32> %i.nl, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.nt = shufflevector <8 x i32> %i.no, <8 x i32> %i.nh, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.nu = shufflevector <16 x i32> %i.ns, <16 x i32> %i.nt, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %i.nv = shufflevector <32 x i32> %i.nr, <32 x i32> %i.nu, <64 x i32> <i32 0, i32 8, i32 16, i32 24, i32 32, i32 40, i32 48, i32 56, i32 1, i32 9, i32 17, i32 25, i32 33, i32 41, i32 49, i32 57, i32 2, i32 10, i32 18, i32 26, i32 34, i32 42, i32 50, i32 58, i32 3, i32 11, i32 19, i32 27, i32 35, i32 43, i32 51, i32 59, i32 4, i32 12, i32 20, i32 28, i32 36, i32 44, i32 52, i32 60, i32 5, i32 13, i32 21, i32 29, i32 37, i32 45, i32 53, i32 61, i32 6, i32 14, i32 22, i32 30, i32 38, i32 46, i32 54, i32 62, i32 7, i32 15, i32 23, i32 31, i32 39, i32 47, i32 55, i32 63>
+  %i.nv = shufflevector <32 x i32> %7, <32 x i32> %i.nu, <64 x i32> <i32 0, i32 8, i32 16, i32 24, i32 32, i32 40, i32 48, i32 56, i32 1, i32 9, i32 17, i32 25, i32 33, i32 41, i32 49, i32 57, i32 2, i32 10, i32 18, i32 26, i32 34, i32 42, i32 50, i32 58, i32 3, i32 11, i32 19, i32 27, i32 35, i32 43, i32 51, i32 59, i32 4, i32 12, i32 20, i32 28, i32 36, i32 44, i32 52, i32 60, i32 5, i32 13, i32 21, i32 29, i32 37, i32 45, i32 53, i32 61, i32 6, i32 14, i32 22, i32 30, i32 38, i32 46, i32 54, i32 62, i32 7, i32 15, i32 23, i32 31, i32 39, i32 47, i32 55, i32 63>
   %i.nw = lshr <64 x i32> %i.nv, splat (i32 3)
   %interleaved.vec = trunc <64 x i32> %i.nw to <64 x i16>
   store <64 x i16> %interleaved.vec, ptr %2, align 2, !tbaa !12

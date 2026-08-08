@@ -1,3 +1,7 @@
+inline.NumInlined: 669
+inline.NumDeleted: 317
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN2cv3dnn15ConcatLayerImpl7forwardERKNS_11_InputArrayERKNS_12_OutputArrayES7_:bb.a
 _ZN2cv5utils5trace7details6RegionD2Ev.exit:       ; preds = %_ZNSt6vectorIN2cv3MatESaIS1_EED2Ev.exit111, %bb.bg
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #20
@@ -199,7 +203,7 @@ bb.o:                                             ; preds = %bb.m
   %i.ac = sub nsw i32 %i.x, %narrow.i.i
   br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit
 
-_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit: ; preds = %bb.l, %bb.n, %bb.o
+_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit: ; preds = %bb.o, %bb.n, %bb.l
   %i.ad = phi i32 [ %i.ac, %bb.o ], [ %i.ab, %bb.n ], [ %i.x, %bb.l ] ; 6 uses
   %i.ae = load ptr, ptr %i.a, align 8, !tbaa !89
   %.not126 = icmp eq ptr %i.ae, %i.v
