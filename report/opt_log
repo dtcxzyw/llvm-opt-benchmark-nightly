@@ -1,0 +1,10 @@
+linux/build_policy.bc: failed to run opt
+postgres/functioncmds.bc: failed to run opt
+ffmpeg/asfdec_f.bc: failed to run opt
+ffmpeg/aacenc.bc: failed to run opt
+wireshark/packet-usb-hid.bc: failed to run opt
+openmpi/coll_base_reduce.bc: failed to run opt
+openmpi/nbc_ireduce.bc: failed to run opt
+velox/Zlib.bc: failed to run opt
+folly/Zlib.bc: failed to run opt
+opencv/net_impl_backend.bc: failed to run opt
