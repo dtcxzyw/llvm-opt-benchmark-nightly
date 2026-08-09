@@ -1,0 +1,259 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index 39f0d11df4db9..8151f8284b884 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -1528,6 +1528,103 @@ static Instruction *foldSelectCtlzToCttz(ICmpInst *ICI, Value *TrueVal,
+   return CallInst::Create(F, {X, Builder.getFalse()});
+ }
+ 
++static Value *foldSelectCtlzWithNonZeroInput(ICmpInst *ICI, Value *TrueVal,
++                                             Value *FalseVal,
++                                             InstCombinerImpl &IC) {
++  if (!ICI->isEquality() || !ICI->hasOneUse())
++    return nullptr;
++
++  ICmpInst::Predicate Pred = ICI->getPredicate();
++  Value *X;
++
++  if (match(ICI->getOperand(1), m_Zero())) {
++    X = ICI->getOperand(0);
++  } else if (match(ICI->getOperand(0), m_Zero())) {
++    X = ICI->getOperand(1);
++    Pred = ICmpInst::getSwappedCmpPredicate(Pred);
++  } else {
++    return nullptr;
++  }
++
++  // Normalize the select arms so SelectArg is selected for X != 0 and
++  // ValueOnZero is selected for X == 0.
++  Value *SelectArg = FalseVal;
++  Value *ValueOnZero = TrueVal;
++
++  if (Pred == ICmpInst::ICMP_NE)
++    std::swap(SelectArg, ValueOnZero);
++
++  if (!X->getType()->isIntegerTy())
++    return nullptr;
++
++  auto *LShr = dyn_cast<BinaryOperator>(SelectArg);
++  if (!LShr || LShr->getOpcode() != Instruction::LShr)
++    return nullptr;
++
++  auto *Sub = dyn_cast<BinaryOperator>(LShr->getOperand(0));
++  auto *ShiftC = dyn_cast<ConstantInt>(LShr->getOperand(1));
++
++  if (!Sub || Sub->getOpcode() != Instruction::Sub || !ShiftC)
++    return nullptr;
++
++  auto *BiasC = dyn_cast<ConstantInt>(Sub->getOperand(0));
++  auto *II = dyn_cast<IntrinsicInst>(Sub->getOperand(1));
++  auto *ValueOnZeroC = dyn_cast<ConstantInt>(ValueOnZero);
++
++  if (!BiasC || !II || !ValueOnZeroC ||
++      II->getIntrinsicID() != Intrinsic::ctlz || II->getArgOperand(0) != X ||
++      !match(II->getArgOperand(1), m_One()))
++    return nullptr;
++
++  unsigned BitWidth = X->getType()->getIntegerBitWidth();
++
++  // Clamp an oversized shift constant to BitWidth so it is rejected below
++  // without requiring the APInt to fit in an unsigned integer.
++  unsigned ShiftAmt = ShiftC->getValue().getLimitedValue(BitWidth);
++
++  if (ShiftAmt >= BitWidth)
++    return nullptr;
++
++  APInt CtlzAtZero(BitWidth, BitWidth - 1);
++
++  const APInt &Bias = BiasC->getValue();
++  APInt SubAtZero = Bias - CtlzAtZero;
++
++  bool UnsignedOverflow;
++  bool SignedOverflow;
++
++  (void)Bias.usub_ov(CtlzAtZero, UnsignedOverflow);
++  (void)Bias.ssub_ov(CtlzAtZero, SignedOverflow);
++
++  // Removing the select exposes the arithmetic to X == 0. Preserve the
++  // original no-wrap guarantees by rejecting a newly poisonous subtraction.
++  if ((Sub->hasNoUnsignedWrap() && UnsignedOverflow) ||
++      (Sub->hasNoSignedWrap() && SignedOverflow))
++    return nullptr;
++
++  // An exact right shift requires every shifted-out low bit to be zero.
++  if (LShr->isExact() && SubAtZero.countr_zero() < ShiftAmt)
++    return nullptr;
++
++  if (SubAtZero.lshr(ShiftAmt) != ValueOnZeroC->getValue())
++    return nullptr;
++
++  InstCombiner::BuilderTy::InsertPointGuard Guard(IC.Builder);
++  IC.Builder.SetInsertPoint(II);
++
++  // X | 1 has the same number of leading zeros as X when X is nonzero, and
++  // turns the zero input into 1 so ctlz(..., true) is always well-defined.
++  Value *NonZero =
++      IC.Builder.CreateOr(X, ConstantInt::get(X->getType(), 1), "ctlz.nonzero");
++
++  IC.replaceOperand(*II, 0, NonZero);
++
++  II->dropPoisonGeneratingAnnotations();
++
++  IC.addToWorklist(II);
++  return SelectArg;
++}
++
+ /// Attempt to fold a cttz/ctlz followed by a icmp plus select into a single
+ /// call to cttz/ctlz with flag 'is_zero_poison' cleared.
+ ///
+@@ -2463,6 +2560,9 @@ Instruction *InstCombinerImpl::foldSelectInstWithICmp(SelectInst &SI,
+   if (Value *V = foldSelectICmpLshrAshr(ICI, TrueVal, FalseVal, Builder))
+     return replaceInstUsesWith(SI, V);
+ 
++  if (Value *V = foldSelectCtlzWithNonZeroInput(ICI, TrueVal, FalseVal, *this))
++    return replaceInstUsesWith(SI, V);
++
+   if (Value *V = foldSelectCttzCtlz(ICI, TrueVal, FalseVal, *this))
+     return replaceInstUsesWith(SI, V);
+ 
+diff --git a/llvm/test/Transforms/InstCombine/select-cmp-cttz-ctlz.ll b/llvm/test/Transforms/InstCombine/select-cmp-cttz-ctlz.ll
+index 5d76cfb73f2a4..c657fb03b263e 100644
+--- a/llvm/test/Transforms/InstCombine/select-cmp-cttz-ctlz.ll
++++ b/llvm/test/Transforms/InstCombine/select-cmp-cttz-ctlz.ll
+@@ -1009,6 +1009,136 @@ define <2 x i32> @test_cttz_not_bw_odd_mul_vec_nonsplat(<2 x i32> %x) {
+   ret <2 x i32> %res
+ }
+ 
++define i64 @fold_ctlz_hex_digits(i64 noundef %x) {
++; CHECK-LABEL: @fold_ctlz_hex_digits(
++; CHECK-NEXT:    [[CTLZ_NONZERO:%.*]] = or i64 [[X:%.*]], 1
++; CHECK-NEXT:    [[LZ:%.*]] = call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 [[CTLZ_NONZERO]], i1 true)
++; CHECK-NEXT:    [[BIAS:%.*]] = sub nuw nsw i64 67, [[LZ]]
++; CHECK-NEXT:    [[DIGITS:%.*]] = lshr i64 [[BIAS]], 2
++; CHECK-NEXT:    ret i64 [[DIGITS]]
++;
++  %iszero = icmp eq i64 %x, 0
++  %lz = call i64 @llvm.ctlz.i64(i64 %x, i1 true)
++  %bias = sub nuw nsw i64 67, %lz
++  %digits = lshr i64 %bias, 2
++  %result = select i1 %iszero, i64 1, i64 %digits
++  ret i64 %result
++}
++
++define i64 @fold_ctlz_hex_digits_ne_commuted(i64 noundef %x) {
++; CHECK-LABEL: @fold_ctlz_hex_digits_ne_commuted(
++; CHECK-NEXT:    [[CTLZ_NONZERO:%.*]] = or i64 [[X:%.*]], 1
++; CHECK-NEXT:    [[LZ:%.*]] = call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 [[CTLZ_NONZERO]], i1 true)
++; CHECK-NEXT:    [[BIAS:%.*]] = sub nuw nsw i64 67, [[LZ]]
++; CHECK-NEXT:    [[DIGITS:%.*]] = lshr i64 [[BIAS]], 2
++; CHECK-NEXT:    ret i64 [[DIGITS]]
++;
++  %isnotzero = icmp ne i64 0, %x
++  %lz = call i64 @llvm.ctlz.i64(i64 %x, i1 true)
++  %bias = sub nuw nsw i64 67, %lz
++  %digits = lshr i64 %bias, 2
++  %result = select i1 %isnotzero, i64 %digits, i64 1
++  ret i64 %result
++}
++
++define i64 @fold_ctlz_hex_digits_exact(i64 noundef %x) {
++; CHECK-LABEL: @fold_ctlz_hex_digits_exact(
++; CHECK-NEXT:    [[CTLZ_NONZERO:%.*]] = or i64 [[X:%.*]], 1
++; CHECK-NEXT:    [[LZ:%.*]] = call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 [[CTLZ_NONZERO]], i1 true)
++; CHECK-NEXT:    [[BIAS:%.*]] = sub nuw nsw i64 67, [[LZ]]
++; CHECK-NEXT:    [[DIGITS:%.*]] = lshr exact i64 [[BIAS]], 2
++; CHECK-NEXT:    ret i64 [[DIGITS]]
++;
++  %iszero = icmp eq i64 %x, 0
++  %lz = call i64 @llvm.ctlz.i64(i64 %x, i1 true)
++  %bias = sub nuw nsw i64 67, %lz
++  %digits = lshr exact i64 %bias, 2
++  %result = select i1 %iszero, i64 1, i64 %digits
++  ret i64 %result
++}
++
++; The transform requires is_zero_poison=true.
++define i64 @do_not_fold_ctlz_hex_digits_defined_zero(i64 noundef %x) {
++; CHECK-LABEL: @do_not_fold_ctlz_hex_digits_defined_zero(
++; CHECK-NEXT:    [[ISZERO:%.*]] = icmp eq i64 [[X:%.*]], 0
++; CHECK-NEXT:    [[LZ:%.*]] = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 [[X]], i1 false)
++; CHECK-NEXT:    [[BIAS:%.*]] = sub nuw nsw i64 67, [[LZ]]
++; CHECK-NEXT:    [[DIGITS:%.*]] = lshr i64 [[BIAS]], 2
++; CHECK-NEXT:    [[RESULT:%.*]] = select i1 [[ISZERO]], i64 1, i64 [[DIGITS]]
++; CHECK-NEXT:    ret i64 [[RESULT]]
++;
++  %iszero = icmp eq i64 %x, 0
++  %lz = call i64 @llvm.ctlz.i64(i64 %x, i1 false)
++  %bias = sub nuw nsw i64 67, %lz
++  %digits = lshr i64 %bias, 2
++  %result = select i1 %iszero, i64 1, i64 %digits
++  ret i64 %result
++}
++
++; The expression evaluated at X == 0 does not match the selected zero value.
++define i64 @do_not_fold_ctlz_hex_digits_wrong_zero_value(i64 noundef %x) {
++; CHECK-LABEL: @do_not_fold_ctlz_hex_digits_wrong_zero_value(
++; CHECK-NEXT:    [[ISZERO:%.*]] = icmp eq i64 [[X:%.*]], 0
++; CHECK-NEXT:    [[LZ:%.*]] = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 [[X]], i1 true)
++; CHECK-NEXT:    [[BIAS:%.*]] = sub nuw nsw i64 67, [[LZ]]
++; CHECK-NEXT:    [[DIGITS:%.*]] = lshr i64 [[BIAS]], 2
++; CHECK-NEXT:    [[RESULT:%.*]] = select i1 [[ISZERO]], i64 2, i64 [[DIGITS]]
++; CHECK-NEXT:    ret i64 [[RESULT]]
++;
++  %iszero = icmp eq i64 %x, 0
++  %lz = call i64 @llvm.ctlz.i64(i64 %x, i1 true)
++  %bias = sub nuw nsw i64 67, %lz
++  %digits = lshr i64 %bias, 2
++  %result = select i1 %iszero, i64 2, i64 %digits
++  ret i64 %result
++}
++
++; Replacing X with X | 1 would make the nuw subtraction poison at X == 0.
++define i16 @do_not_fold_ctlz_nuw_poison_on_zero(i16 noundef %x) {
++; CHECK-LABEL: @do_not_fold_ctlz_nuw_poison_on_zero(
++; CHECK-NEXT:    [[LZ:%.*]] = call range(i16 0, 17) i16 @llvm.ctlz.i16(i16 [[X:%.*]], i1 false)
++; CHECK-NEXT:    [[BIAS:%.*]] = sub nsw i16 10, [[LZ]]
++; CHECK-NEXT:    [[DIGITS:%.*]] = lshr i16 [[BIAS]], 1
++; CHECK-NEXT:    ret i16 [[DIGITS]]
++;
++  %iszero = icmp eq i16 %x, 0
++  %lz = call i16 @llvm.ctlz.i16(i16 %x, i1 true)
++  %bias = sub nuw i16 10, %lz
++  %digits = lshr i16 %bias, 1
++  %result = select i1 %iszero, i16 32765, i16 %digits
++  ret i16 %result
++}
++
++define i16 @do_not_fold_ctlz_nsw_poison_on_zero(i16 noundef %x) {
++; CHECK-LABEL: @do_not_fold_ctlz_nsw_poison_on_zero(
++; CHECK-NEXT:    [[LZ:%.*]] = call range(i16 0, 17) i16 @llvm.ctlz.i16(i16 [[X:%.*]], i1 false)
++; CHECK-NEXT:    [[BIAS:%.*]] = sub nuw i16 -32760, [[LZ]]
++; CHECK-NEXT:    [[DIGITS:%.*]] = lshr i16 [[BIAS]], 1
++; CHECK-NEXT:    ret i16 [[DIGITS]]
++;
++  %iszero = icmp eq i16 %x, 0
++  %lz = call i16 @llvm.ctlz.i16(i16 %x, i1 true)
++  %bias = sub nsw i16 -32760, %lz
++  %digits = lshr i16 %bias, 1
++  %result = select i1 %iszero, i16 16380, i16 %digits
++  ret i16 %result
++}
++
++define i16 @do_not_fold_ctlz_exact_poison_on_zero(i16 noundef %x) {
++; CHECK-LABEL: @do_not_fold_ctlz_exact_poison_on_zero(
++; CHECK-NEXT:    [[LZ:%.*]] = call range(i16 0, 17) i16 @llvm.ctlz.i16(i16 [[X:%.*]], i1 false)
++; CHECK-NEXT:    [[BIAS:%.*]] = sub nuw nsw i16 20, [[LZ]]
++; CHECK-NEXT:    [[DIGITS:%.*]] = lshr i16 [[BIAS]], 2
++; CHECK-NEXT:    ret i16 [[DIGITS]]
++;
++  %iszero = icmp eq i16 %x, 0
++  %lz = call i16 @llvm.ctlz.i16(i16 %x, i1 true)
++  %bias = sub i16 20, %lz
++  %digits = lshr exact i16 %bias, 2
++  %result = select i1 %iszero, i16 1, i16 %digits
++  ret i16 %result
++}
++
+ declare i16 @llvm.ctlz.i16(i16, i1)
+ declare i32 @llvm.ctlz.i32(i32, i1)
+ declare i64 @llvm.ctlz.i64(i64, i1)
