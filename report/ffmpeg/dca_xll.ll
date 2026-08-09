@@ -204,12 +204,11 @@ bb.ep:                                            ; preds = %bb.eo, %.lr.ph.i43
 
 ._crit_edge79.i:                                  ; preds = %._crit_edge79.loopexit.i, %.preheader.lr.ph.i, %bb.ek
   %i.aqr = phi i32 [ %i.aoc, %bb.ek ], [ %i.aqm, %._crit_edge79.loopexit.i ], [ %i.aoc, %.preheader.lr.ph.i ]
-  %.val61.i = phi i32 [ %.val62.i, %bb.ek ], [ %.val61.pre.i, %._crit_edge79.loopexit.i ], [ %.val62.i, %.preheader.lr.ph.i ] ; 2 uses
-  %4 = sub nsw i32 0, %.val61.i
-  %5 = and i32 %4, 7
+  %.val61.i = phi i32 [ %.val62.i, %bb.ek ], [ %.val61.pre.i, %._crit_edge79.loopexit.i ], [ %.val62.i, %.preheader.lr.ph.i ]
   %i.aqs = load i32, ptr %i.g, align 8, !tbaa !193 ; 2 uses
-  %i.aqt = add i32 %5, %.val61.i
-  %i.aqu = tail call i32 @llvm.umin.i32(i32 %i.aqs, i32 %i.aqt)
+  %i.aqt = add i32 %.val61.i, 7
+  %4 = and i32 %i.aqt, -8
+  %i.aqu = tail call i32 @llvm.umin.i32(i32 %i.aqs, i32 %4)
   %i.aqv = add i32 %i.aqu, 16
   %i.aqw = tail call i32 @llvm.umin.i32(i32 %i.aqs, i32 %i.aqv) ; 4 uses
   store i32 %i.aqw, ptr %i.h, align 16, !tbaa !194
