@@ -204,6 +204,7 @@ bb.m:                                             ; preds = %bb.k
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ei, i64 1024
   %i.iz = getelementptr inbounds nuw i8, ptr %i.ei, i64 1032
   %i.ja = add i64 %.sroa.0.0.lcssa, -69
+  %umax.i.i = call i64 @llvm.umax.i64(i64 %i.ix, i64 1)
   br label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram14HistogramClearNtB2_16HistogramLiteralECsfISxE4fmY1Y_14polars_parquet.exit.i.i, !dbg !6088
 
 _RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram14HistogramClearNtB2_16HistogramLiteralECsfISxE4fmY1Y_14polars_parquet.exit.i.i: ; preds = %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram21HistogramAddHistogramNtB2_16HistogramLiteralECsfISxE4fmY1Y_14polars_parquet.exit.i.i, %.lr.ph.i.i.a
@@ -295,7 +296,7 @@ vector.body:                                      ; preds = %vector.body, %_RINv
 
 _RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram21HistogramAddHistogramNtB2_16HistogramLiteralECsfISxE4fmY1Y_14polars_parquet.exit.i.i: ; preds = %vector.body
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ei), !dbg !6233, !noalias !6097
-  %exitcond27.not.i.i = icmp eq i64 %i.jb, %i.ix, !dbg !6234
+  %exitcond27.not.i.i = icmp eq i64 %i.jb, %umax.i.i, !dbg !6234
   br i1 %exitcond27.not.i.i, label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter18RefineEntropyCodesNtNtB4_9histogram16HistogramLiteralhECsfISxE4fmY1Y_14polars_parquet.exit.i, label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram14HistogramClearNtB2_16HistogramLiteralECsfISxE4fmY1Y_14polars_parquet.exit.i.i, !dbg !6088
 
 _RINvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter18RefineEntropyCodesNtNtB4_9histogram16HistogramLiteralhECsfISxE4fmY1Y_14polars_parquet.exit.i: ; preds = %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram21HistogramAddHistogramNtB2_16HistogramLiteralECsfISxE4fmY1Y_14polars_parquet.exit.i.i
@@ -698,6 +699,7 @@ bb.jt:                                            ; preds = %.preheader.i.i.i67.
   %i.bgu = getelementptr inbounds nuw i8, ptr %i.cn, i64 2816 ; 2 uses
   %i.bgv = getelementptr inbounds nuw i8, ptr %i.cn, i64 2824
   %i.bgw = add i64 %3, -39
+  %umax.i.i73 = call i64 @llvm.umax.i64(i64 %i.bgt, i64 1)
   br label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram14HistogramClearNtB2_16HistogramCommandECsfISxE4fmY1Y_14polars_parquet.exit.i.i, !dbg !9054
 
 _RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram14HistogramClearNtB2_16HistogramCommandECsfISxE4fmY1Y_14polars_parquet.exit.i.i: ; preds = %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram21HistogramAddHistogramNtB2_16HistogramCommandECsfISxE4fmY1Y_14polars_parquet.exit.i.i, %.lr.ph.i.i72
@@ -798,7 +800,7 @@ vector.body4601:                                  ; preds = %vector.body4601, %_
 
 _RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram21HistogramAddHistogramNtB2_16HistogramCommandECsfISxE4fmY1Y_14polars_parquet.exit.i.i: ; preds = %vector.body4601
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cn), !dbg !9203, !noalias !9063
-  %exitcond35.not.i.i = icmp eq i64 %i.bgx, %i.bgt, !dbg !9204
+  %exitcond35.not.i.i = icmp eq i64 %i.bgx, %umax.i.i73, !dbg !9204
   br i1 %exitcond35.not.i.i, label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter18RefineEntropyCodesNtNtB4_9histogram16HistogramCommandtECsfISxE4fmY1Y_14polars_parquet.exit.i, label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram14HistogramClearNtB2_16HistogramCommandECsfISxE4fmY1Y_14polars_parquet.exit.i.i, !dbg !9054
 
 _RINvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter18RefineEntropyCodesNtNtB4_9histogram16HistogramCommandtECsfISxE4fmY1Y_14polars_parquet.exit.i: ; preds = %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram21HistogramAddHistogramNtB2_16HistogramCommandECsfISxE4fmY1Y_14polars_parquet.exit.i.i
@@ -1201,6 +1203,7 @@ bb.ue:                                            ; preds = %.preheader.i.i.i383
   %i.ddh = getelementptr inbounds nuw i8, ptr %i.as, i64 2184
   %i.ddi = getelementptr inbounds nuw i8, ptr %i.as, i64 2176 ; 2 uses
   %i.ddj = add i64 %.sroa.04.1, -39
+  %umax.i.i391 = call i64 @llvm.umax.i64(i64 %i.ddg, i64 1)
   br label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram14HistogramClearNtB2_17HistogramDistanceECsfISxE4fmY1Y_14polars_parquet.exit.i.i, !dbg !11923
 
 _RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram14HistogramClearNtB2_17HistogramDistanceECsfISxE4fmY1Y_14polars_parquet.exit.i.i: ; preds = %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram21HistogramAddHistogramNtB2_17HistogramDistanceECsfISxE4fmY1Y_14polars_parquet.exit.i.i, %.lr.ph.i.i390
@@ -1301,7 +1304,7 @@ vector.body4685:                                  ; preds = %vector.body4685, %_
 
 _RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram21HistogramAddHistogramNtB2_17HistogramDistanceECsfISxE4fmY1Y_14polars_parquet.exit.i.i: ; preds = %vector.body4685
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as), !dbg !12072, !noalias !11932
-  %exitcond35.not.i.i400 = icmp eq i64 %i.ddk, %i.ddg, !dbg !12073
+  %exitcond35.not.i.i400 = icmp eq i64 %i.ddk, %umax.i.i391, !dbg !12073
   br i1 %exitcond35.not.i.i400, label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter18RefineEntropyCodesNtNtB4_9histogram17HistogramDistancetECsfISxE4fmY1Y_14polars_parquet.exit.i, label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram14HistogramClearNtB2_17HistogramDistanceECsfISxE4fmY1Y_14polars_parquet.exit.i.i, !dbg !11923
 
 _RINvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter18RefineEntropyCodesNtNtB4_9histogram17HistogramDistancetECsfISxE4fmY1Y_14polars_parquet.exit.i: ; preds = %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9histogram21HistogramAddHistogramNtB2_17HistogramDistanceECsfISxE4fmY1Y_14polars_parquet.exit.i.i
