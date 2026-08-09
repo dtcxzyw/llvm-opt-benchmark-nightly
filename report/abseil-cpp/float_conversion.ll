@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %_ZN4absl12lts_20260
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit33: ; preds = %bb.i, %.lr.ph.i27
   %.lcssa.i26 = phi ptr [ %i.bj, %bb.i ], [ %i.bl, %.lr.ph.i27 ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i26, i8 %i.ba, i64 1, i1 false)
+  store i8 %i.ba, ptr %.lcssa.i26, align 1
   %i.bp = load ptr, ptr %i.bi, align 8, !tbaa !92
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 1
   store ptr %i.bq, ptr %i.bi, align 8, !tbaa !92
@@ -607,8 +607,8 @@ bb.a:
   %i.c = load i64, ptr %2, align 8, !tbaa !111
   %i.d = sub i64 %i.b, %i.c
   %i.e = mul i64 %i.d, 9
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !103  ; 8 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 4 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !103
   %i.h = add i64 %i.e, %i.g
   %i.i = load ptr, ptr %0, align 8, !tbaa !115, !nonnull !117, !align !118 ; 8 uses
   %i.j = getelementptr i8, ptr %i.i, i64 8
@@ -755,7 +755,7 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20260
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit16.i.i.i.i: ; preds = %.lr.ph.i10.i.i.i.i, %bb.h
   %.lcssa.i9.i.i.i.i = phi ptr [ %i.bo, %bb.h ], [ %i.bq, %.lr.ph.i10.i.i.i.i ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i9.i.i.i.i, i8 %i.bf, i64 1, i1 false)
+  store i8 %i.bf, ptr %.lcssa.i9.i.i.i.i, align 1
   %i.bu = load ptr, ptr %i.bn, align 8, !tbaa !92
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 1
   store ptr %i.bv, ptr %i.bn, align 8, !tbaa !92
@@ -831,21 +831,22 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.i20.i
   br label %_ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit26.i.i.i.i
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit26.i.i.i.i: ; preds = %._crit_edge.i17.i.i.i.i, %bb.i
+  %.pr.i.i.i.i = load i64, ptr %i.f, align 8, !tbaa !103 ; 7 uses
   %i.da = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
   %i.db = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.dd = load ptr, ptr %0, align 8, !tbaa !115, !nonnull !117, !align !118
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 24
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !33 ; 7 uses
-  %i.dg = sub i64 9, %i.g
+  %i.dg = sub i64 9, %.pr.i.i.i.i
   %i.dh = getelementptr inbounds nuw i8, ptr %i.da, i64 %i.dg ; 2 uses
-  %i.di = icmp eq i64 %i.g, 0
+  %i.di = icmp eq i64 %.pr.i.i.i.i, 0
   br i1 %i.di, label %_ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.i.i.i.i.peel, label %bb.m
 
 bb.m:                                             ; preds = %_ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit26.i.i.i.i
   %i.dj = getelementptr inbounds nuw i8, ptr %i.df, i64 16 ; 2 uses
   %i.dk = load i64, ptr %i.dj, align 8, !tbaa !88
-  %i.dl = add i64 %i.dk, %i.g
+  %i.dl = add i64 %i.dk, %.pr.i.i.i.i
   store i64 %i.dl, ptr %i.dj, align 8, !tbaa !88
   %i.dm = getelementptr inbounds nuw i8, ptr %i.df, i64 1056
   %i.dn = getelementptr inbounds nuw i8, ptr %i.df, i64 24 ; 4 uses
@@ -853,7 +854,7 @@ bb.m:                                             ; preds = %_ZN4absl12lts_20260
   %i.dp = ptrtoint ptr %i.dm to i64
   %i.dq = ptrtoint ptr %i.do to i64               ; 2 uses
   %i.dr = sub i64 %i.dp, %i.dq
-  %.not.i27.i.i.i.i.peel = icmp ult i64 %i.g, %i.dr
+  %.not.i27.i.i.i.i.peel = icmp ult i64 %.pr.i.i.i.i, %i.dr
   br i1 %.not.i27.i.i.i.i.peel, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -867,13 +868,13 @@ bb.n:                                             ; preds = %bb.m
   store ptr %i.ds, ptr %i.dn, align 8, !tbaa !92
   %i.dy = load ptr, ptr %i.dv, align 8, !tbaa !93
   %i.dz = load ptr, ptr %i.df, align 8, !tbaa !94
-  call void %i.dy(ptr noundef %i.dz, i64 %i.g, ptr nonnull %i.dh), !inline_history !124
+  call void %i.dy(ptr noundef %i.dz, i64 %.pr.i.i.i.i, ptr nonnull %i.dh), !inline_history !124
   br label %_ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.i.i.i.i.peel
 
 bb.o:                                             ; preds = %bb.m
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.do, ptr nonnull align 1 %i.dh, i64 %i.g, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.do, ptr nonnull align 1 %i.dh, i64 %.pr.i.i.i.i, i1 false)
   %i.ea = load ptr, ptr %i.dn, align 8, !tbaa !92
-  %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 %i.g
+  %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 %.pr.i.i.i.i
   store ptr %i.eb, ptr %i.dn, align 8, !tbaa !92
   br label %_ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.i.i.i.i.peel
 
@@ -1276,7 +1277,7 @@ bb.c:                                             ; preds = %_ZN4absl12lts_20260
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit.i.i.i.i: ; preds = %.lr.ph.i23.i.i.i.i, %bb.c
   %.lcssa.i.i.i.i.i = phi ptr [ %i.ch, %bb.c ], [ %i.cj, %.lr.ph.i23.i.i.i.i ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i.i.i.i.i, i8 %i.cb, i64 1, i1 false)
+  store i8 %i.cb, ptr %.lcssa.i.i.i.i.i, align 1
   %i.cn = load ptr, ptr %i.cg, align 8, !tbaa !92
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 1
   store ptr %i.co, ptr %i.cg, align 8, !tbaa !92
@@ -1397,7 +1398,7 @@ bb.i:                                             ; preds = %bb.h
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit41.i.i.i.i: ; preds = %.lr.ph.i35.i.i.i.i, %.critedge17.i.i.i.i
   %.lcssa.i34.i.i.i.i = phi ptr [ %i.ek, %.critedge17.i.i.i.i ], [ %i.em, %.lr.ph.i35.i.i.i.i ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i34.i.i.i.i, i8 %i.ee, i64 1, i1 false)
+  store i8 %i.ee, ptr %.lcssa.i34.i.i.i.i, align 1
   %i.eq = load ptr, ptr %i.ej, align 8, !tbaa !92
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 1
   store ptr %i.er, ptr %i.ej, align 8, !tbaa !92
@@ -1433,7 +1434,7 @@ _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit41.i.i
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit51.i.i.i.i: ; preds = %.lr.ph.i45.i.i.i.i, %.critedge15.i.i.i.i
   %.lcssa.i44.i.i.i.i = phi ptr [ %i.fe, %.critedge15.i.i.i.i ], [ %i.fg, %.lr.ph.i45.i.i.i.i ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i44.i.i.i.i, i8 %i.ey, i64 1, i1 false)
+  store i8 %i.ey, ptr %.lcssa.i44.i.i.i.i, align 1
   %i.fk = load ptr, ptr %i.fd, align 8, !tbaa !92
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fk, i64 1
   store ptr %i.fl, ptr %i.fd, align 8, !tbaa !92
@@ -1701,7 +1702,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit: ; preds = %bb.c, %.lr.ph.i
   %.lcssa.i = phi ptr [ %i.n, %bb.c ], [ %i.p, %.lr.ph.i ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i, i8 %i.f, i64 1, i1 false)
+  store i8 %i.f, ptr %.lcssa.i, align 1
   %i.t = load ptr, ptr %i.m, align 8, !tbaa !92
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 1
   store ptr %i.u, ptr %i.m, align 8, !tbaa !92
@@ -1978,7 +1979,7 @@ bb.s:                                             ; preds = %_ZN4absl12lts_20260
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit62: ; preds = %bb.s, %.lr.ph.i56
   %.lcssa.i55 = phi ptr [ %i.ej, %bb.s ], [ %i.el, %.lr.ph.i56 ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i55, i8 %i.eb, i64 1, i1 false)
+  store i8 %i.eb, ptr %.lcssa.i55, align 1
   %i.ep = load ptr, ptr %i.ei, align 8, !tbaa !92
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 1
   store ptr %i.eq, ptr %i.ei, align 8, !tbaa !92
@@ -2381,7 +2382,7 @@ bb.l:                                             ; preds = %_ZN4absl12lts_20260
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit68.i.i.i.i: ; preds = %.lr.ph.i62.i.i.i.i, %bb.l
   %.lcssa.i61.i.i.i.i = phi ptr [ %i.do, %bb.l ], [ %i.dq, %.lr.ph.i62.i.i.i.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i61.i.i.i.i, i8 %i.df, i64 1, i1 false)
+  store i8 %i.df, ptr %.lcssa.i61.i.i.i.i, align 1
   %i.du = load ptr, ptr %i.dn, align 8, !tbaa !92
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 1
   store ptr %i.dv, ptr %i.dn, align 8, !tbaa !92
@@ -2415,7 +2416,7 @@ bb.m:                                             ; preds = %_ZN4absl12lts_20260
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit78.i.i.i.i: ; preds = %.lr.ph.i72.i.i.i.i, %bb.m
   %.lcssa.i71.i.i.i.i = phi ptr [ %i.eg, %bb.m ], [ %i.ei, %.lr.ph.i72.i.i.i.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i71.i.i.i.i, i8 %i.ea, i64 1, i1 false)
+  store i8 %i.ea, ptr %.lcssa.i71.i.i.i.i, align 1
   %i.em = load ptr, ptr %i.ef, align 8, !tbaa !92
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 1
   store ptr %i.en, ptr %i.ef, align 8, !tbaa !92
@@ -2590,7 +2591,7 @@ bb.v:                                             ; preds = %bb.u
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit.i92.i.i.i.i: ; preds = %.lr.ph.i.i95.i.i.i.i, %bb.v
   %.lcssa.i.i94.i.i.i.i = phi ptr [ %i.hf, %bb.v ], [ %i.hj, %.lr.ph.i.i95.i.i.i.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i.i94.i.i.i.i, i8 %i.gw, i64 1, i1 false)
+  store i8 %i.gw, ptr %.lcssa.i.i94.i.i.i.i, align 1
   %i.hp = load ptr, ptr %i.hd, align 8, !tbaa !92
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 1
   store ptr %i.hq, ptr %i.hd, align 8, !tbaa !92
@@ -2733,7 +2734,7 @@ bb.af:                                            ; preds = %bb.ae
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit.i119.i.i.i.i: ; preds = %.lr.ph.i.i122.i.i.i.i, %bb.af
   %.lcssa.i.i121.i.i.i.i = phi ptr [ %i.jp, %bb.af ], [ %i.jt, %.lr.ph.i.i122.i.i.i.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i.i121.i.i.i.i, i8 %i.jg, i64 1, i1 false)
+  store i8 %i.jg, ptr %.lcssa.i.i121.i.i.i.i, align 1
   %i.jz = load ptr, ptr %i.jn, align 8, !tbaa !92
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jz, i64 1
   store ptr %i.ka, ptr %i.jn, align 8, !tbaa !92
@@ -2914,7 +2915,7 @@ _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit.i143.
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit162.i.i.i.i: ; preds = %.lr.ph.i156.i.i.i.i, %"_ZZZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_122FormatEPositiveExpSlowENS0_7uint128EibRKNS2_11FormatStateEmENK3$_0clENS2_15BinaryToDecimalEENKUlmcE_clEmc.exit152.i.i.i.i"
   %.lcssa.i155.i.i.i.i = phi ptr [ %i.mu, %"_ZZZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_122FormatEPositiveExpSlowENS0_7uint128EibRKNS2_11FormatStateEmENK3$_0clENS2_15BinaryToDecimalEENKUlmcE_clEmc.exit152.i.i.i.i" ], [ %i.mw, %.lr.ph.i156.i.i.i.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i155.i.i.i.i, i8 %i.mo, i64 1, i1 false)
+  store i8 %i.mo, ptr %.lcssa.i155.i.i.i.i, align 1
   %i.na = load ptr, ptr %i.mt, align 8, !tbaa !92
   %i.nb = getelementptr inbounds nuw i8, ptr %i.na, i64 1
   store ptr %i.nb, ptr %i.mt, align 8, !tbaa !92
@@ -2944,7 +2945,7 @@ _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit162.i.
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit172.i.i.i.i: ; preds = %.lr.ph.i166.i.i.i.i, %_ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit162.i.i.i.i
   %.lcssa.i165.i.i.i.i = phi ptr [ %i.nm, %_ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit162.i.i.i.i ], [ %i.no, %.lr.ph.i166.i.i.i.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i165.i.i.i.i, i8 %i.ng, i64 1, i1 false)
+  store i8 %i.ng, ptr %.lcssa.i165.i.i.i.i, align 1
   %i.ns = load ptr, ptr %i.nl, align 8, !tbaa !92
   %i.nt = getelementptr inbounds nuw i8, ptr %i.ns, i64 1
   store ptr %i.nt, ptr %i.nl, align 8, !tbaa !92
@@ -3347,7 +3348,7 @@ bb.p:                                             ; preds = %_ZN4absl12lts_20260
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit107.i.i.i.i: ; preds = %.lr.ph.i101.i.i.i.i, %bb.p
   %.lcssa.i100.i.i.i.i = phi ptr [ %i.ex, %bb.p ], [ %i.ez, %.lr.ph.i101.i.i.i.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i100.i.i.i.i, i8 %i.eo, i64 1, i1 false)
+  store i8 %i.eo, ptr %.lcssa.i100.i.i.i.i, align 1
   %i.fd = load ptr, ptr %i.ew, align 8, !tbaa !92
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 1
   store ptr %i.fe, ptr %i.ew, align 8, !tbaa !92
@@ -3381,7 +3382,7 @@ bb.q:                                             ; preds = %_ZN4absl12lts_20260
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit117.i.i.i.i: ; preds = %.lr.ph.i111.i.i.i.i, %bb.q
   %.lcssa.i110.i.i.i.i = phi ptr [ %i.fp, %bb.q ], [ %i.fr, %.lr.ph.i111.i.i.i.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i110.i.i.i.i, i8 %i.fj, i64 1, i1 false)
+  store i8 %i.fj, ptr %.lcssa.i110.i.i.i.i, align 1
   %i.fv = load ptr, ptr %i.fo, align 8, !tbaa !92
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 1
   store ptr %i.fw, ptr %i.fo, align 8, !tbaa !92
@@ -3694,7 +3695,7 @@ bb.x:                                             ; preds = %_ZN4absl12lts_20260
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit169.i.i.i.i: ; preds = %.lr.ph.i163.i.i.i.i, %bb.x
   %.lcssa.i162.i.i.i.i = phi ptr [ %i.kw, %bb.x ], [ %i.ky, %.lr.ph.i163.i.i.i.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i162.i.i.i.i, i8 %i.kq, i64 1, i1 false)
+  store i8 %i.kq, ptr %.lcssa.i162.i.i.i.i, align 1
   %i.lc = load ptr, ptr %i.kv, align 8, !tbaa !92
   %i.ld = getelementptr inbounds nuw i8, ptr %i.lc, i64 1
   store ptr %i.ld, ptr %i.kv, align 8, !tbaa !92
@@ -3815,7 +3816,7 @@ bb.ad:                                            ; preds = %bb.ac
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit192.i.i.i.i: ; preds = %.lr.ph.i186.i.i.i.i, %.critedge81.i.i.i.i
   %.lcssa.i185.i.i.i.i = phi ptr [ %i.mz, %.critedge81.i.i.i.i ], [ %i.nb, %.lr.ph.i186.i.i.i.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i185.i.i.i.i, i8 %i.mt, i64 1, i1 false)
+  store i8 %i.mt, ptr %.lcssa.i185.i.i.i.i, align 1
   %i.nf = load ptr, ptr %i.my, align 8, !tbaa !92
   %i.ng = getelementptr inbounds nuw i8, ptr %i.nf, i64 1
   store ptr %i.ng, ptr %i.my, align 8, !tbaa !92
@@ -3849,7 +3850,7 @@ _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit192.i.
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit202.i.i.i.i: ; preds = %.lr.ph.i196.i.i.i.i, %.critedge79.i.i.i.i
   %.lcssa.i195.i.i.i.i = phi ptr [ %i.ns, %.critedge79.i.i.i.i ], [ %i.nu, %.lr.ph.i196.i.i.i.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i195.i.i.i.i, i8 %i.nm, i64 1, i1 false)
+  store i8 %i.nm, ptr %.lcssa.i195.i.i.i.i, align 1
   %i.ny = load ptr, ptr %i.nr, align 8, !tbaa !92
   %i.nz = getelementptr inbounds nuw i8, ptr %i.ny, i64 1
   store ptr %i.nz, ptr %i.nr, align 8, !tbaa !92
@@ -4023,7 +4024,7 @@ _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit222.i.
 
 _ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit232.i.i.i.i: ; preds = %.lr.ph.i226.i.i.i.i, %_ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit222.i.i.i.i
   %.lcssa.i225.i.i.i.i = phi ptr [ %i.qw, %_ZN4absl12lts_2026052619str_format_internal14FormatSinkImpl6AppendEmc.exit222.i.i.i.i ], [ %i.qy, %.lr.ph.i226.i.i.i.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i225.i.i.i.i, i8 %i.qq, i64 1, i1 false)
+  store i8 %i.qq, ptr %.lcssa.i225.i.i.i.i, align 1
   %i.rc = load ptr, ptr %i.qv, align 8, !tbaa !92
   %i.rd = getelementptr inbounds nuw i8, ptr %i.rc, i64 1
   store ptr %i.rd, ptr %i.qv, align 8, !tbaa !92

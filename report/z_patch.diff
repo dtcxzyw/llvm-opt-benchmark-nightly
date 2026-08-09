@@ -1,0 +1,411 @@
+diff --git a/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp b/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp
+index fc8a079ed41d4..8ba7a40291413 100644
+--- a/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp
++++ b/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp
+@@ -19,6 +19,7 @@
+ #include "llvm/Analysis/AssumptionCache.h"
+ #include "llvm/Analysis/BasicAliasAnalysis.h"
+ #include "llvm/Analysis/ConstantFolding.h"
++#include "llvm/Analysis/DomConditionCache.h"
+ #include "llvm/Analysis/DomTreeUpdater.h"
+ #include "llvm/Analysis/GlobalsModRef.h"
+ #include "llvm/Analysis/TargetLibraryInfo.h"
+@@ -29,6 +30,7 @@
+ #include "llvm/IR/Function.h"
+ #include "llvm/IR/IRBuilder.h"
+ #include "llvm/IR/Instruction.h"
++#include "llvm/IR/IntrinsicInst.h"
+ #include "llvm/IR/MDBuilder.h"
+ #include "llvm/IR/PatternMatch.h"
+ #include "llvm/IR/ProfDataUtils.h"
+@@ -57,6 +59,7 @@ STATISTIC(NumSelectCTTZFolded,
+           "Number of select-based split cttz patterns folded");
+ STATISTIC(NumSelectCTLZFolded,
+           "Number of select-based split ctlz patterns folded");
++STATISTIC(NumMemSetsGuarded, "Number of memsets guarded for a zero length");
+ 
+ static cl::opt<unsigned> MaxInstrsToScan(
+     "aggressive-instcombine-max-scan-instrs", cl::init(64), cl::Hidden,
+@@ -2459,6 +2462,65 @@ static bool foldMulHigh(Instruction &I) {
+   return false;
+ }
+ 
++/// Guard a memset whose nonconstant length is known to be either zero or one.
++/// The following InstCombine pass can scalarize the length-one memset to a byte
++/// store, including when the fill value is nonconstant.
++static bool foldMemSetWithSingleByteLength(Function &F,
++                                           TargetLibraryInfo &TLI,
++                                           AssumptionCache &AC,
++                                           DominatorTree &DT) {
++  SmallVector<MemSetInst *, 4> MemSets;
++  for (BasicBlock &BB : F) {
++    if (!DT.isReachableFromEntry(&BB))
++      continue;
++
++    for (Instruction &I : BB)
++      if (auto *MI = dyn_cast<MemSetInst>(&I);
++          MI && !isa<ConstantInt>(MI->getLength()))
++        MemSets.push_back(MI);
++  }
++
++  if (MemSets.empty())
++    return false;
++
++  DomConditionCache DC;
++  for (BasicBlock &BB : F)
++    if (auto *BI = dyn_cast<CondBrInst>(BB.getTerminator()))
++      DC.registerBranch(BI);
++
++  const DataLayout &DL = F.getDataLayout();
++  SimplifyQuery SQ(DL, &TLI, &DT, &AC, nullptr,
++                   /*UseInstrInfo=*/true, /*CanUseUndef=*/false, &DC);
++  SmallVector<MemSetInst *, 4> MemSetsToGuard;
++
++  // Determine all candidates before changing the CFG so the dominating
++  // condition cache remains valid for every query.
++  for (MemSetInst *MI : MemSets) {
++    KnownBits KnownLen =
++        computeKnownBits(MI->getLength(), SQ.getWithInstruction(MI));
++    if (KnownLen.getMaxValue().isOne())
++      MemSetsToGuard.push_back(MI);
++  }
++
++  if (MemSetsToGuard.empty())
++    return false;
++
++  DomTreeUpdater DTU(DT, DomTreeUpdater::UpdateStrategy::Lazy);
++  for (MemSetInst *MI : MemSetsToGuard) {
++    IRBuilder<> B(MI);
++    B.SetCurrentDebugLocation(MI->getDebugLoc());
++    Value *IsNonZero = B.CreateIsNotNull(MI->getLength(), "memset.notzero");
++    Instruction *ThenTerm = SplitBlockAndInsertIfThen(
++        IsNonZero, MI->getIterator(), /*Unreachable=*/false,
++        /*BranchWeights=*/nullptr, &DTU);
++    MI->moveBefore(ThenTerm);
++    MI->setLength((uint64_t)1);
++    ++NumMemSetsGuarded;
++  }
++
++  return true;
++}
++
+ /// This is the entry point for folds that could be implemented in regular
+ /// InstCombine, but they are separated because they are not expected to
+ /// occur frequently and/or have more than a constant-length pattern match.
+@@ -2519,6 +2581,10 @@ static bool runImpl(Function &F, AssumptionCache &AC, TargetTransformInfo &TTI,
+   const DataLayout &DL = F.getDataLayout();
+   TruncInstCombine TIC(AC, TLI, DL, DT);
+   MadeChange |= TIC.run(F);
++  if (foldMemSetWithSingleByteLength(F, TLI, AC, DT)) {
++    MadeChange = true;
++    MadeCFGChange = true;
++  }
+   MadeChange |= foldUnusualPatterns(F, DT, TTI, TLI, AA, AC, MadeCFGChange);
+   return MadeChange;
+ }
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 5ee5009bd0262..5c5522cadd0b9 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -221,6 +221,24 @@ Instruction *InstCombinerImpl::SimplifyAnyMemTransfer(AnyMemTransferInst *MI) {
+ }
+ 
+ Instruction *InstCombinerImpl::SimplifyAnyMemSet(AnyMemSetInst *MI) {
++  ConstantInt *LenC = dyn_cast<ConstantInt>(MI->getLength());
++  Value *Fill = MI->getValue();
++
++  // Keep volatile memset scalarization limited to the single-byte case
++  // where the replacement is exactly one volatile byte store.
++  if (MI->isVolatile()) {
++    if (!LenC || !LenC->isOne() || !Fill->getType()->isIntegerTy(8))
++      return nullptr;
++
++    StoreInst *S = Builder.CreateStore(Fill, MI->getDest(), true);
++    S->copyMetadata(*MI, LLVMContext::MD_DIAssignID);
++    S->setAlignment(MI->getDestAlign().valueOrOne());
++
++    // Set the size of the copy to 0 and will be deleted on the next iteration.
++    MI->setLength((uint64_t)0);
++    return MI;
++  }
++
+   const Align KnownAlignment =
+       getKnownAlignment(MI->getDest(), DL, MI, &AC, &DT);
+   MaybeAlign MemSetAlign = MI->getDestAlign();
+@@ -247,10 +265,8 @@ Instruction *InstCombinerImpl::SimplifyAnyMemSet(AnyMemSetInst *MI) {
+     return MI;
+   }
+ 
+-  // Extract the length and alignment and fill if they are constant.
+-  ConstantInt *LenC = dyn_cast<ConstantInt>(MI->getLength());
+-  ConstantInt *FillC = dyn_cast<ConstantInt>(MI->getValue());
+-  if (!LenC || !FillC || !FillC->getType()->isIntegerTy(8))
++  // Extract the length and validate the fill type.
++  if (!LenC || !Fill->getType()->isIntegerTy(8))
+     return nullptr;
+   const uint64_t Len = LenC->getLimitedValue();
+   assert(Len && "0-sized memory setting should be removed already.");
+@@ -267,14 +283,22 @@ Instruction *InstCombinerImpl::SimplifyAnyMemSet(AnyMemSetInst *MI) {
+   if (Len <= 8 && isPowerOf2_32((uint32_t)Len)) {
+     Value *Dest = MI->getDest();
+ 
+-    // Extract the fill value and store.
+-    Constant *FillVal = ConstantInt::get(
+-        MI->getContext(), APInt::getSplat(Len * 8, FillC->getValue()));
++    // Extract the fill value and store.  A one-byte memset does not need
++    // replication so a nonconstant i8 fill can be stored directly.
++    Value *FillVal;
++    if (auto *FillC = dyn_cast<ConstantInt>(Fill))
++      FillVal = ConstantInt::get(MI->getContext(),
++                                 APInt::getSplat(Len * 8, FillC->getValue()));
++    else if (Len == 1)
++      FillVal = Fill;
++    else
++      return nullptr;
++
+     StoreInst *S = Builder.CreateStore(FillVal, Dest, MI->isVolatile());
+     S->copyMetadata(*MI, LLVMContext::MD_DIAssignID);
+     for (DbgVariableRecord *DbgAssign : at::getDVRAssignmentMarkers(S)) {
+-      if (llvm::is_contained(DbgAssign->location_ops(), FillC))
+-        DbgAssign->replaceVariableLocationOp(FillC, FillVal);
++      if (llvm::is_contained(DbgAssign->location_ops(), Fill))
++        DbgAssign->replaceVariableLocationOp(Fill, FillVal);
+     }
+ 
+     S->setAlignment(Alignment);
+@@ -2024,8 +2048,9 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       }
+     }
+ 
+-    // No other transformations apply to volatile transfers.
+-    if (MI->isVolatile())
++    // Apart from memset-to-store scalarization below no other transformations
++    // apply to volatile transfers.
++    if (MI->isVolatile() && !isa<AnyMemSetInst>(MI))
+       return nullptr;
+ 
+     if (AnyMemTransferInst *MTI = dyn_cast<AnyMemTransferInst>(MI)) {
+@@ -2050,6 +2075,8 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+     } else if (auto *MSI = dyn_cast<AnyMemSetInst>(MI)) {
+       if (Instruction *I = SimplifyAnyMemSet(MSI))
+         return I;
++      if (MI->isVolatile())
++        return nullptr;
+     }
+ 
+     // If src/dest is null, this memory intrinsic must be a noop.
+diff --git a/llvm/test/Transforms/AggressiveInstCombine/memset.ll b/llvm/test/Transforms/AggressiveInstCombine/memset.ll
+new file mode 100644
+index 0000000000000..850faf41a820d
+--- /dev/null
++++ b/llvm/test/Transforms/AggressiveInstCombine/memset.ll
+@@ -0,0 +1,144 @@
++; RUN: opt -passes=aggressive-instcombine -S < %s | FileCheck %s --check-prefix=AIC
++; RUN: opt -passes='aggressive-instcombine,instcombine' -S < %s | FileCheck %s --check-prefix=COMBINED
++
++declare void @llvm.memset.p0.i64(ptr nocapture writeonly, i8, i64, i1 immarg)
++
++define void @range_0_1(ptr %dst, i8 %value, i64 %n) {
++; AIC-LABEL: define void @range_0_1(
++; AIC-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]], i64 [[N:%.*]]) {
++; AIC:       entry:
++; AIC-NEXT:    [[LEN:%.*]] = and i64 [[N]], 1
++; AIC-NEXT:    [[MEMSET_NOTZERO:%.*]] = icmp ne i64 [[LEN]], 0
++; AIC-NEXT:    br i1 [[MEMSET_NOTZERO]], label %[[DO_MEMSET:.*]], label %[[END:.*]]
++; AIC:       [[DO_MEMSET]]:
++; AIC-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[DST]], i8 [[VALUE]], i64 1, i1 false)
++; AIC-NEXT:    br label %[[END]]
++; AIC:       [[END]]:
++; AIC-NEXT:    ret void
++;
++; COMBINED-LABEL: define void @range_0_1(
++; COMBINED-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]], i64 [[N:%.*]]) {
++; COMBINED:       [[LEN:%.*]] = and i64 [[N]], 1
++; COMBINED:       icmp {{eq|ne}} i64 [[LEN]], 0
++; COMBINED:       br i1
++; COMBINED:       store i8 [[VALUE]], ptr [[DST]], align 1
++; COMBINED-NOT:   call void @llvm.memset
++; COMBINED:       ret void
++entry:
++  %len = and i64 %n, 1
++  call void @llvm.memset.p0.i64(ptr align 1 %dst, i8 %value, i64 %len, i1 false)
++  ret void
++}
++
++define void @range_0_1_zext(ptr %dst, i8 %value, i32 %n) {
++; AIC-LABEL: define void @range_0_1_zext(
++; AIC-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]], i32 [[N:%.*]]) {
++; AIC:       entry:
++; AIC-NEXT:    [[MASKED:%.*]] = and i32 [[N]], 1
++; AIC-NEXT:    [[LEN:%.*]] = zext i32 [[MASKED]] to i64
++; AIC-NEXT:    [[MEMSET_NOTZERO:%.*]] = icmp ne i64 [[LEN]], 0
++; AIC-NEXT:    br i1 [[MEMSET_NOTZERO]], label %[[DO_MEMSET:.*]], label %[[END:.*]]
++; AIC:       [[DO_MEMSET]]:
++; AIC-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[DST]], i8 [[VALUE]], i64 1, i1 false)
++; AIC-NEXT:    br label %[[END]]
++; AIC:       [[END]]:
++; AIC-NEXT:    ret void
++;
++; COMBINED-LABEL: define void @range_0_1_zext(
++; COMBINED-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]], i32 [[N:%.*]]) {
++; COMBINED:       [[MASKED:%.*]] = and i32 [[N]], 1
++; COMBINED:       icmp {{eq|ne}} i32 [[MASKED]], 0
++; COMBINED:       br i1
++; COMBINED:       store i8 [[VALUE]], ptr [[DST]], align 1
++; COMBINED-NOT:   call void @llvm.memset
++; COMBINED:       ret void
++entry:
++  %masked = and i32 %n, 1
++  %len = zext i32 %masked to i64
++  call void @llvm.memset.p0.i64(ptr align 1 %dst, i8 %value, i64 %len, i1 false)
++  ret void
++}
++
++define void @range_0_1_dominating_condition(ptr %dst, i8 %value, i32 %n) {
++; AIC-LABEL: define void @range_0_1_dominating_condition(
++; AIC-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]], i32 [[N:%.*]]) {
++; AIC:       entry:
++; AIC-NEXT:    [[IN_RANGE:%.*]] = icmp ule i32 [[N]], 1
++; AIC-NEXT:    br i1 [[IN_RANGE]], label %[[DO:.*]], label %[[END:.*]]
++; AIC:       [[DO]]:
++; AIC-NEXT:    [[LEN:%.*]] = zext i32 [[N]] to i64
++; AIC-NEXT:    [[MEMSET_NOTZERO:%.*]] = icmp ne i64 [[LEN]], 0
++; AIC-NEXT:    br i1 [[MEMSET_NOTZERO]], label %[[DO_MEMSET:.*]], label %[[DO_END:.*]]
++; AIC:       [[DO_MEMSET]]:
++; AIC-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[DST]], i8 [[VALUE]], i64 1, i1 false)
++; AIC-NEXT:    br label %[[DO_END]]
++; AIC:       [[DO_END]]:
++; AIC-NEXT:    br label %[[END]]
++; AIC:       [[END]]:
++; AIC-NEXT:    ret void
++;
++; COMBINED-LABEL: define void @range_0_1_dominating_condition(
++; COMBINED-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]], i32 [[N:%.*]]) {
++; COMBINED:       icmp u{{le|lt}} i32 [[N]], {{1|2}}
++; COMBINED:       br i1
++; COMBINED:       icmp {{eq|ne}} i32 [[N]], 0
++; COMBINED:       br i1
++; COMBINED:       store i8 [[VALUE]], ptr [[DST]], align 1
++; COMBINED-NOT:   call void @llvm.memset
++; COMBINED:       ret void
++entry:
++  %in.range = icmp ule i32 %n, 1
++  br i1 %in.range, label %do, label %end
++
++do:
++  %len = zext i32 %n to i64
++  call void @llvm.memset.p0.i64(ptr align 1 %dst, i8 %value, i64 %len, i1 false)
++  br label %end
++
++end:
++  ret void
++}
++
++define void @range_0_1_volatile(ptr %dst, i8 %value, i64 %n) {
++; AIC-LABEL: define void @range_0_1_volatile(
++; AIC-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]], i64 [[N:%.*]]) {
++; AIC:       entry:
++; AIC-NEXT:    [[LEN:%.*]] = and i64 [[N]], 1
++; AIC-NEXT:    [[MEMSET_NOTZERO:%.*]] = icmp ne i64 [[LEN]], 0
++; AIC-NEXT:    br i1 [[MEMSET_NOTZERO]], label %[[DO_MEMSET:.*]], label %[[END:.*]]
++; AIC:       [[DO_MEMSET]]:
++; AIC-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[DST]], i8 [[VALUE]], i64 1, i1 true)
++; AIC-NEXT:    br label %[[END]]
++; AIC:       [[END]]:
++; AIC-NEXT:    ret void
++;
++; COMBINED-LABEL: define void @range_0_1_volatile(
++; COMBINED-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]], i64 [[N:%.*]]) {
++; COMBINED:       br i1
++; COMBINED:       store volatile i8 [[VALUE]], ptr [[DST]], align 1
++; COMBINED-NOT:   call void @llvm.memset
++; COMBINED:       ret void
++entry:
++  %len = and i64 %n, 1
++  call void @llvm.memset.p0.i64(ptr align 1 %dst, i8 %value, i64 %len, i1 true)
++  ret void
++}
++
++define void @range_0_2(ptr %dst, i8 %value, i64 %n) {
++; AIC-LABEL: define void @range_0_2(
++; AIC-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]], i64 [[N:%.*]]) {
++; AIC:       entry:
++; AIC-NEXT:    [[LEN:%.*]] = urem i64 [[N]], 3
++; AIC-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[DST]], i8 [[VALUE]], i64 [[LEN]], i1 false)
++; AIC-NEXT:    ret void
++;
++; COMBINED-LABEL: define void @range_0_2(
++; COMBINED-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]], i64 [[N:%.*]]) {
++; COMBINED:       [[LEN:%.*]] = urem i64 [[N]], 3
++; COMBINED-NEXT:  call void @llvm.memset.p0.i64(ptr align 1 [[DST]], i8 [[VALUE]], i64 [[LEN]], i1 false)
++; COMBINED-NEXT:  ret void
++entry:
++  %len = urem i64 %n, 3
++  call void @llvm.memset.p0.i64(ptr align 1 %dst, i8 %value, i64 %len, i1 false)
++  ret void
++}
+diff --git a/llvm/test/Transforms/InstCombine/memset-variable-fill.ll b/llvm/test/Transforms/InstCombine/memset-variable-fill.ll
+new file mode 100644
+index 0000000000000..b5547071a05d5
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/memset-variable-fill.ll
+@@ -0,0 +1,59 @@
++; RUN: opt -passes=instcombine -S < %s | FileCheck %s
++
++declare void @llvm.memset.p0.i64(ptr nocapture writeonly, i8, i64, i1 immarg)
++declare void @llvm.memset.p1.i64(ptr addrspace(1) nocapture writeonly, i8, i64, i1 immarg)
++declare void @llvm.memset.element.unordered.atomic.p0.i64(ptr nocapture writeonly, i8, i64, i32 immarg)
++
++define void @variable_fill_len1(ptr %dst, i8 %value) {
++; CHECK-LABEL: define void @variable_fill_len1(
++; CHECK-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]]) {
++; CHECK-NEXT:    store i8 [[VALUE]], ptr [[DST]], align 1
++; CHECK-NEXT:    ret void
++  call void @llvm.memset.p0.i64(ptr align 1 %dst, i8 %value, i64 1, i1 false)
++  ret void
++}
++
++define void @variable_fill_len1_volatile(ptr %dst, i8 %value) {
++; CHECK-LABEL: define void @variable_fill_len1_volatile(
++; CHECK-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]]) {
++; CHECK-NEXT:    store volatile i8 [[VALUE]], ptr [[DST]], align 1
++; CHECK-NEXT:    ret void
++  call void @llvm.memset.p0.i64(ptr align 1 %dst, i8 %value, i64 1, i1 true)
++  ret void
++}
++
++define void @variable_fill_len1_align8(ptr %dst, i8 %value) {
++; CHECK-LABEL: define void @variable_fill_len1_align8(
++; CHECK-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]]) {
++; CHECK-NEXT:    store i8 [[VALUE]], ptr [[DST]], align 8
++; CHECK-NEXT:    ret void
++  call void @llvm.memset.p0.i64(ptr align 8 %dst, i8 %value, i64 1, i1 false)
++  ret void
++}
++
++define void @variable_fill_len1_addrspace(ptr addrspace(1) %dst, i8 %value) {
++; CHECK-LABEL: define void @variable_fill_len1_addrspace(
++; CHECK-SAME: ptr addrspace(1) [[DST:%.*]], i8 [[VALUE:%.*]]) {
++; CHECK-NEXT:    store i8 [[VALUE]], ptr addrspace(1) [[DST]], align 1
++; CHECK-NEXT:    ret void
++  call void @llvm.memset.p1.i64(ptr addrspace(1) align 1 %dst, i8 %value, i64 1, i1 false)
++  ret void
++}
++
++define void @variable_fill_len1_atomic(ptr %dst, i8 %value) {
++; CHECK-LABEL: define void @variable_fill_len1_atomic(
++; CHECK-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]]) {
++; CHECK-NEXT:    store atomic i8 [[VALUE]], ptr [[DST]] unordered, align 1
++; CHECK-NEXT:    ret void
++  call void @llvm.memset.element.unordered.atomic.p0.i64(ptr align 1 %dst, i8 %value, i64 1, i32 1)
++  ret void
++}
++
++define void @variable_fill_len2(ptr %dst, i8 %value) {
++; CHECK-LABEL: define void @variable_fill_len2(
++; CHECK-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]]) {
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr {{.*}}[[DST]], i8 [[VALUE]], i64 2, i1 false)
++; CHECK-NEXT:    ret void
++  call void @llvm.memset.p0.i64(ptr align 1 %dst, i8 %value, i64 2, i1 false)
++  ret void
++}
