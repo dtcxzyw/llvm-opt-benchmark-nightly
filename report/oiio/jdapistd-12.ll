@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 412
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !50 ; 5 uses
   %i.bh = mul nsw i32 %i.bg, %i.be
-  %.fr221 = freeze i32 %i.bh                      ; 10 uses
+  %.fr221 = freeze i32 %i.bh                      ; 11 uses
   %i.bi = urem i32 %.fr223, %.fr221
   %i.bj = sub i32 %.fr221, %i.bi
   %i.bk = urem i32 %i.bj, %.fr221                 ; 8 uses
@@ -589,7 +589,7 @@ bb.an:                                            ; preds = %bb.ai, %set_wraparo
   %.sink264 = phi i32 [ %i.hh, %bb.an ], [ %i.bl, %bb.al ], [ %i.bl, %bb.am ] ; 5 uses
   %i.hi = phi i32 [ %i.cu, %bb.an ], [ %i.gz, %bb.al ], [ %i.gz, %bb.am ] ; 2 uses
   %.1.fr217 = phi i32 [ %.0165, %bb.an ], [ %i.bl, %bb.al ], [ %i.bl, %bb.am ] ; 2 uses
-  %i.hj = urem i32 %.sink264, %.fr221             ; 2 uses
+  %i.hj = urem i32 %.sink264, %.fr221
   %i.hk = udiv i32 %.sink264, %.fr221
   %i.hl = sub nuw i32 %.sink264, %i.hj            ; 5 uses
   %i.hm = sub i32 %.1.fr217, %i.hl                ; 4 uses
@@ -607,7 +607,7 @@ bb.ao:                                            ; preds = %.thread
   br i1 %.not185, label %.preheader225, label %bb.ap
 
 .preheader225:                                    ; preds = %bb.ao
-  %.not231 = icmp eq i32 %.sink264, %i.hj
+  %.not231 = icmp ult i32 %.sink264, %.fr221
   br i1 %.not231, label %._crit_edge230, label %.preheader224.lr.ph
 
 .preheader224.lr.ph:                              ; preds = %.preheader225

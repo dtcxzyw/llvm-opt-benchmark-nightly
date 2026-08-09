@@ -201,7 +201,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !15   ; 3 uses
   %i.c = tail call i64 @llvm.umax.i64(i64 %i.b, i64 8)
   %.biased.i = add i64 %i.c, 7
-  %.0.i = and i64 %.biased.i, -8                  ; 9 uses
+  %.0.i = and i64 %.biased.i, -8                  ; 10 uses
   %i.d = sub i64 0, %.0.i                         ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !117  ; 4 uses
@@ -263,11 +263,11 @@ bb.h:                                             ; preds = %.sink.split, %bb.f
   %i.ac = load ptr, ptr %0, align 8, !tbaa !122
   %reass.sub = sub i64 %.113, %.0.i
   %i.ad = add i64 %reass.sub, -16                 ; 3 uses
-  %i.ae = urem i64 %i.ad, %.0.i                   ; 2 uses
+  %i.ae = urem i64 %i.ad, %.0.i
   %i.af = sub nuw i64 %i.ad, %i.ae                ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.1, i64 %i.af ; 4 uses
   store ptr %i.ac, ptr %i.ag, align 8, !tbaa !123
-  %1 = icmp eq i64 %i.ad, %i.ae
+  %1 = icmp ult i64 %i.ad, %.0.i
   br i1 %1, label %_ZN5boost25simple_segregated_storageImE9add_blockEPvmm.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -322,7 +322,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !15   ; 4 uses
   %i.c = tail call i64 @llvm.umax.i64(i64 %i.b, i64 8)
   %.biased.i.i = add i64 %i.c, 7
-  %.0.i.i = and i64 %.biased.i.i, -8              ; 17 uses
+  %.0.i.i = and i64 %.biased.i.i, -8              ; 19 uses
   %i.d = udiv i64 -17, %.0.i.i                    ; 2 uses
   %i.e = icmp ugt i64 %1, %i.d
   br i1 %i.e, label %.thread, label %bb.b
@@ -436,11 +436,11 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.av = sub i64 %i.ao, %.0.i.i                  ; 3 uses
-  %i.aw = urem i64 %i.av, %.0.i.i                 ; 2 uses
+  %i.aw = urem i64 %i.av, %.0.i.i
   %i.ax = sub nuw i64 %i.av, %i.aw                ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.ax ; 4 uses
   store ptr %i.ap, ptr %i.ay, align 8, !tbaa !123
-  %2 = icmp eq i64 %i.av, %i.aw
+  %2 = icmp ult i64 %i.av, %.0.i.i
   br i1 %2, label %_ZN5boost25simple_segregated_storageImE17add_ordered_blockEPvmm.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -462,11 +462,11 @@ bb.j:                                             ; preds = %bb.i
 
 _ZN5boost25simple_segregated_storageImE9find_prevEPv.exit.i: ; preds = %.preheader.i.i
   %i.ba = sub i64 %i.ao, %.0.i.i                  ; 3 uses
-  %i.bb = urem i64 %i.ba, %.0.i.i                 ; 2 uses
+  %i.bb = urem i64 %i.ba, %.0.i.i
   %i.bc = sub nuw i64 %i.ba, %i.bb                ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.bc ; 4 uses
   store ptr %i.as, ptr %i.bd, align 8, !tbaa !123
-  %3 = icmp eq i64 %i.ba, %i.bb
+  %3 = icmp ult i64 %i.ba, %.0.i.i
   br i1 %3, label %_ZN5boost25simple_segregated_storageImE17add_ordered_blockEPvmm.exit, label %bb.k
 
 bb.k:                                             ; preds = %_ZN5boost25simple_segregated_storageImE9find_prevEPv.exit.i

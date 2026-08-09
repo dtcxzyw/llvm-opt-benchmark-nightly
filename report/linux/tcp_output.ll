@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %._crit_edge
   br i1 %.not155, label %bb.i, label %bb.aj
 
 bb.i:                                             ; preds = %.loopexit
-  %i.az = tail call i32 @tcp_current_mss(ptr noundef %0) #21 ; 9 uses
+  %i.az = tail call i32 @tcp_current_mss(ptr noundef %0) #21 ; 10 uses
   %i.ba = getelementptr i8, ptr %0, i64 1444
   %.val178 = load i32, ptr %i.ba, align 4
   %.val179 = load i32, ptr %i.ab, align 16        ; 2 uses
@@ -222,8 +222,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %i.bg, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %i.bh = urem i32 %.0144, %i.az                  ; 2 uses
-  %.not157 = icmp eq i32 %.0144, %i.bh
+  %i.bh = urem i32 %.0144, %i.az
+  %.not157 = icmp ult i32 %.0144, %i.az
   %i.bi = select i1 %.not157, i32 0, i32 %i.bh
   %spec.select = sub i32 %.0144, %i.bi
   br label %bb.m

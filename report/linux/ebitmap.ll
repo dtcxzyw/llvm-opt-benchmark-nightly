@@ -203,10 +203,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.i = add i32 %.sroa.5.0.copyload, 383         ; 3 uses
-  %i.j = urem i32 %i.i, 384                       ; 2 uses
+  %i.j = urem i32 %i.i, 384
   %i.k = sub i32 %i.i, %i.j
   store i32 %i.k, ptr %i.g, align 8
-  %.not93 = icmp eq i32 %i.i, %i.j
+  %.not93 = icmp ult i32 %i.i, 384
   br i1 %.not93, label %ebitmap_destroy.exit.sink.split, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
