@@ -203,12 +203,11 @@ _ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit38.i.i: ; preds = 
   store i8 48, ptr %i.h, align 16, !tbaa !58
   %i.dj = getelementptr inbounds nuw i8, ptr %i.h, i64 2 ; 2 uses
   store i8 120, ptr %i.di, align 1, !tbaa !58
-  %.not.i.i.i.i.i.i = icmp eq ptr %i.dg, null
-  %i.dk = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.dh, i1 true)
+  %ctlz.nonzero.i.i.i.i.i = or i64 %i.dh, 1
+  %i.dk = call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 %ctlz.nonzero.i.i.i.i.i, i1 true)
   %i.dl = sub nuw nsw i64 67, %i.dk
-  %i.dm = lshr i64 %i.dl, 2                       ; 2 uses
-  %.0.i2.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i64 1, i64 %i.dm, !prof !21 ; 3 uses
-  %i.dn = icmp samesign ugt i64 %.0.i2.i.i.i.i.i, 2
+  %i.dm = lshr i64 %i.dl, 2                       ; 3 uses
+  %i.dn = icmp ugt ptr %i.dg, inttoptr (i64 255 to ptr)
   br i1 %i.dn, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit38.i.i, %.lr.ph.i.i.i.i.i
@@ -225,7 +224,7 @@ _ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit38.i.i: ; preds = 
   br i1 %i.du, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, !llvm.loop !76
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i, %_ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit38.i.i
-  %.014.i.lcssa.i.i.i.i.i = phi i64 [ %.0.i2.i.i.i.i.i, %_ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit38.i.i ], [ %i.do, %.lr.ph.i.i.i.i.i ]
+  %.014.i.lcssa.i.i.i.i.i = phi i64 [ %i.dm, %_ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit38.i.i ], [ %i.do, %.lr.ph.i.i.i.i.i ]
   %.0.i3.lcssa.i.i.i.i.i = phi i64 [ %i.dh, %_ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit38.i.i ], [ %i.dp, %.lr.ph.i.i.i.i.i ]
   %i.dv = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm16ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %.0.i3.lcssa.i.i.i.i.i
   %i.dw = load i16, ptr %i.dv, align 2, !tbaa !74 ; 2 uses
@@ -244,7 +243,7 @@ bb.n:                                             ; preds = %._crit_edge.i.i.i.i
 
 _ZN5folly14to_ascii_lowerILm16EEEmPcPKcm.exit.i.i.i: ; preds = %bb.n, %bb.m
   %i.ea = load ptr, ptr @_ZN5folly10symbolizer12_GLOBAL__N_118gStackTracePrinterE, align 8, !tbaa !53
-  %i.eb = getelementptr inbounds nuw i8, ptr %i.h, i64 %.0.i2.i.i.i.i.i
+  %i.eb = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.dm
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 2
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ea, i64 16 ; 2 uses
   %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !32
@@ -296,12 +295,11 @@ _ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit46.i.i: ; preds = 
   store i8 48, ptr %i.f, align 16, !tbaa !58
   %i.fb = getelementptr inbounds nuw i8, ptr %i.f, i64 2 ; 2 uses
   store i8 120, ptr %i.fa, align 1, !tbaa !58
-  %.not.i.i.i.i47.i.i = icmp eq i64 %i.o, 0
-  %i.fc = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.o, i1 true)
+  %ctlz.nonzero.i.i.i47.i.i = or i64 %i.o, 1
+  %i.fc = call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 %ctlz.nonzero.i.i.i47.i.i, i1 true)
   %i.fd = sub nuw nsw i64 67, %i.fc
-  %i.fe = lshr i64 %i.fd, 2                       ; 2 uses
-  %.0.i2.i.i.i48.i.i = select i1 %.not.i.i.i.i47.i.i, i64 1, i64 %i.fe, !prof !21 ; 3 uses
-  %i.ff = icmp samesign ugt i64 %.0.i2.i.i.i48.i.i, 2
+  %i.fe = lshr i64 %i.fd, 2                       ; 3 uses
+  %i.ff = icmp ugt i64 %i.o, 255
   br i1 %i.ff, label %.lr.ph.i.i.i53.i.i, label %._crit_edge.i.i.i49.i.i
 
 .lr.ph.i.i.i53.i.i:                               ; preds = %_ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit46.i.i, %.lr.ph.i.i.i53.i.i
@@ -318,7 +316,7 @@ _ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit46.i.i: ; preds = 
   br i1 %i.fm, label %.lr.ph.i.i.i53.i.i, label %._crit_edge.i.i.i49.i.i, !llvm.loop !76
 
 ._crit_edge.i.i.i49.i.i:                          ; preds = %.lr.ph.i.i.i53.i.i, %_ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit46.i.i
-  %.014.i.lcssa.i.i.i50.i.i = phi i64 [ %.0.i2.i.i.i48.i.i, %_ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit46.i.i ], [ %i.fg, %.lr.ph.i.i.i53.i.i ]
+  %.014.i.lcssa.i.i.i50.i.i = phi i64 [ %i.fe, %_ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit46.i.i ], [ %i.fg, %.lr.ph.i.i.i53.i.i ]
   %.0.i3.lcssa.i.i.i51.i.i = phi i64 [ %i.o, %_ZN5folly10symbolizer12_GLOBAL__N_15printENS_5RangeIPKcEE.exit46.i.i ], [ %i.fh, %.lr.ph.i.i.i53.i.i ]
   %i.fn = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm16ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %.0.i3.lcssa.i.i.i51.i.i
   %i.fo = load i16, ptr %i.fn, align 2, !tbaa !74 ; 2 uses
@@ -337,7 +335,7 @@ bb.r:                                             ; preds = %._crit_edge.i.i.i49
 
 _ZN5folly14to_ascii_lowerILm16EEEmPcPKcm.exit.i52.i.i: ; preds = %bb.r, %bb.q
   %i.fs = load ptr, ptr @_ZN5folly10symbolizer12_GLOBAL__N_118gStackTracePrinterE, align 8, !tbaa !53
-  %i.ft = getelementptr inbounds nuw i8, ptr %i.f, i64 %.0.i2.i.i.i48.i.i
+  %i.ft = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.fe
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 2
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fs, i64 16 ; 2 uses
   %i.fw = load ptr, ptr %i.fv, align 8, !tbaa !32
