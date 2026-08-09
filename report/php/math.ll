@@ -201,13 +201,12 @@ bb.c:                                             ; preds = %zend_parse_arg_long
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedgethread-pre-split, %.thread
-  %i.j = phi i64 [ %.pr, %.critedgethread-pre-split ], [ %i.h, %.thread ] ; 3 uses
-  %2 = icmp eq i64 %i.j, 0
-  %i.k = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %i.j, i1 true)
+  %i.j = phi i64 [ %.pr, %.critedgethread-pre-split ], [ %i.h, %.thread ] ; 2 uses
+  %ctlz.nonzero = or i64 %i.j, 1
+  %i.k = call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 %ctlz.nonzero, i1 true)
   %.lhs.trunc = sub nuw nsw i64 67, %i.k
-  %.zext = lshr i64 %.lhs.trunc, 2
-  %.018.i = select i1 %2, i64 1, i64 %.zext       ; 3 uses
-  %i.l = and i64 %.018.i, 24
+  %.zext = lshr i64 %.lhs.trunc, 2                ; 3 uses
+  %i.l = and i64 %.zext, 24
   %i.m = or disjoint i64 %i.l, 32
   %i.n = call noalias ptr @_emalloc(i64 noundef %i.m) #16 ; 7 uses
   store i32 1, ptr %i.n, align 4, !tbaa !61
@@ -216,8 +215,8 @@ bb.c:                                             ; preds = %zend_parse_arg_long
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   store i64 0, ptr %i.p, align 8, !tbaa !62
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  store i64 %.018.i, ptr %i.q, align 8, !tbaa !48
-  %.add.i = add nuw nsw i64 %.018.i, 24           ; 2 uses
+  store i64 %.zext, ptr %i.q, align 8, !tbaa !48
+  %.add.i = add nuw nsw i64 %.zext, 24            ; 2 uses
   %.ptr21.i = getelementptr inbounds nuw i8, ptr %i.n, i64 %.add.i
   store i8 0, ptr %.ptr21.i, align 1, !tbaa !15
   br label %bb.d
@@ -276,13 +275,12 @@ thread-pre-split:                                 ; preds = %zend_parse_arg_long
   br label %zend_string_alloc.exit
 
 zend_string_alloc.exit:                           ; preds = %thread-pre-split, %zend_parse_arg_long_ex.exit.thread
-  %i.g = phi i64 [ %.pr, %thread-pre-split ], [ %i.e, %zend_parse_arg_long_ex.exit.thread ] ; 3 uses
-  %2 = icmp eq i64 %i.g, 0
-  %i.h = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %i.g, i1 true)
+  %i.g = phi i64 [ %.pr, %thread-pre-split ], [ %i.e, %zend_parse_arg_long_ex.exit.thread ] ; 2 uses
+  %ctlz.nonzero = or i64 %i.g, 1
+  %i.h = call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 %ctlz.nonzero, i1 true)
   %.lhs.trunc = sub nuw nsw i64 67, %i.h
-  %.zext = lshr i64 %.lhs.trunc, 2
-  %.018.i = select i1 %2, i64 1, i64 %.zext       ; 3 uses
-  %i.i = and i64 %.018.i, 24
+  %.zext = lshr i64 %.lhs.trunc, 2                ; 3 uses
+  %i.i = and i64 %.zext, 24
   %i.j = or disjoint i64 %i.i, 32
   %i.k = call noalias ptr @_emalloc(i64 noundef %i.j) #16 ; 7 uses
   store i32 1, ptr %i.k, align 4, !tbaa !61
@@ -291,8 +289,8 @@ zend_string_alloc.exit:                           ; preds = %thread-pre-split, %
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store i64 0, ptr %i.m, align 8, !tbaa !62
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 16
-  store i64 %.018.i, ptr %i.n, align 8, !tbaa !48
-  %.add.i = add nuw nsw i64 %.018.i, 24           ; 2 uses
+  store i64 %.zext, ptr %i.n, align 8, !tbaa !48
+  %.add.i = add nuw nsw i64 %.zext, 24            ; 2 uses
   %.ptr21.i = getelementptr inbounds nuw i8, ptr %i.k, i64 %.add.i
   store i8 0, ptr %.ptr21.i, align 1, !tbaa !15
   br label %bb.c
