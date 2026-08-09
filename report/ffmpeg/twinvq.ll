@@ -204,11 +204,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !32   ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 192 ; 4 uses
-  %i.e = load i16, ptr %i.d, align 8, !tbaa !39   ; 3 uses
-  %i.f = zext i16 %i.e to i32
+  %i.e = load i16, ptr %i.d, align 8, !tbaa !39   ; 2 uses
+  %i.f = zext i16 %i.e to i32                     ; 2 uses
   %i.g = load i8, ptr %i.c, align 8, !tbaa !57
-  %.rhs.trunc = zext i8 %i.g to i16
-  %1 = udiv i16 %i.e, %.rhs.trunc                 ; 2 uses
+  %1 = zext i8 %i.g to i32
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   %i.i = load i8, ptr %i.h, align 8, !tbaa !57
   %.rhs.trunc88.a = zext i8 %i.i to i16
@@ -365,9 +364,9 @@ bb.j:                                             ; preds = %._crit_edge
   %i.cc = zext i8 %i.cb to i32
   %i.cd = add nuw nsw i32 %.1.i85, %i.cc
   call void @ff_init_ff_sine_windows(i32 noundef %i.cd) #9
-  %2 = lshr i16 %1, 1
-  %3 = zext nneg i16 %2 to i32                    ; 2 uses
-  %.not11.i77 = icmp ult i16 %1, 512              ; 2 uses
+  %2 = shl nuw nsw i32 %1, 1
+  %3 = udiv i32 %i.f, %2                          ; 3 uses
+  %.not11.i77 = icmp samesign ult i32 %3, 256     ; 2 uses
   %i.ce = lshr i32 %3, 8
   %.110.i78 = select i1 %.not11.i77, i32 %3, i32 %i.ce
   %.1.i79 = select i1 %.not11.i77, i32 0, i32 8

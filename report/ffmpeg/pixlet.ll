@@ -204,7 +204,8 @@ bb.o:                                             ; preds = %bb.n
   %notmask.i = shl nsw i32 -1, %i.bp
   %i.bu = xor i32 %notmask.i, -1
   store i32 %i.bp, ptr %i.br, align 4, !tbaa !43
-  %i.bv = zext nneg i32 %i.bu to i64              ; 4 uses
+  %i.bv = zext nneg i32 %i.bu to i64              ; 2 uses
+  %4 = mul nuw nsw i64 %i.bv, %i.bv               ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.val115, i64 352 ; 2 uses
   br label %bb.p
 
@@ -212,16 +213,14 @@ bb.p:                                             ; preds = %bb.p, %bb.o
   %indvars.iv.i = phi i64 [ 0, %bb.o ], [ %indvars.iv.next.i.1, %bb.p ] ; 5 uses
   %i.bx = mul nuw nsw i64 %indvars.iv.i, 65535
   %i.by = mul i64 %i.bx, %indvars.iv.i
-  %4 = udiv i64 %i.by, %i.bv
-  %i.bz = udiv i64 %4, %i.bv
+  %i.bz = udiv i64 %i.by, %4
   %i.ca = trunc i64 %i.bz to i16
   %i.cb = getelementptr inbounds nuw [2 x i8], ptr %i.bw, i64 %indvars.iv.i
   store i16 %i.ca, ptr %i.cb, align 2, !tbaa !44
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 3 uses
   %i.cc = mul nuw nsw i64 %indvars.iv.next.i, 65535
   %i.cd = mul i64 %i.cc, %indvars.iv.next.i
-  %5 = udiv i64 %i.cd, %i.bv
-  %i.ce = udiv i64 %5, %i.bv
+  %i.ce = udiv i64 %i.cd, %4
   %i.cf = trunc i64 %i.ce to i16
   %i.cg = getelementptr inbounds nuw [2 x i8], ptr %i.bw, i64 %indvars.iv.next.i
   store i16 %i.cf, ptr %i.cg, align 2, !tbaa !44
