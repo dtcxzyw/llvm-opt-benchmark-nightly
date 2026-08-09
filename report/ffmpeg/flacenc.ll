@@ -204,11 +204,8 @@ encode_residual_ch.exit:                          ; preds = %rice_count_exact.ex
   br i1 %i.aax, label %bb.e, label %._crit_edge, !llvm.loop !204
 
 ._crit_edge:                                      ; preds = %encode_residual_ch.exit, %count_frame_header.exit
-  %.0.lcssa = phi i64 [ %i.ao, %count_frame_header.exit ], [ %i.aau, %encode_residual_ch.exit ] ; 2 uses
-  %1 = sub i64 0, %.0.lcssa
-  %2 = and i64 %1, 7
-  %3 = add i64 %.0.lcssa, 16
-  %i.aay = add i64 %3, %2                         ; 2 uses
+  %.0.lcssa = phi i64 [ %i.ao, %count_frame_header.exit ], [ %i.aau, %encode_residual_ch.exit ]
+  %i.aay = add i64 %.0.lcssa, 23                  ; 2 uses
   %i.aaz = icmp ugt i64 %i.aay, 17179869183
   %i.aba = lshr i64 %i.aay, 3
   %i.abb = trunc nuw nsw i64 %i.aba to i32

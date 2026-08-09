@@ -204,7 +204,7 @@ _ZN5NBitm8CDecoderI9CInBufferE4InitEv.exit:       ; preds = %_ZN9CInBuffer8ReadB
   br label %.loopexit.split-lp
 
 bb.k:                                             ; preds = %_ZN5NBitm8CDecoderI9CInBufferE9SetStreamEP19ISequentialInStream.exit._crit_edge, %_ZN5NBitm8CDecoderI9CInBufferE4InitEv.exit
-  %i.ac = phi i32 [ %.pre, %_ZN5NBitm8CDecoderI9CInBufferE9SetStreamEP19ISequentialInStream.exit._crit_edge ], [ %i.aa, %_ZN5NBitm8CDecoderI9CInBufferE4InitEv.exit ] ; 3 uses
+  %i.ac = phi i32 [ %.pre, %_ZN5NBitm8CDecoderI9CInBufferE9SetStreamEP19ISequentialInStream.exit._crit_edge ], [ %i.aa, %_ZN5NBitm8CDecoderI9CInBufferE4InitEv.exit ] ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 376
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !79
   %i.af = load ptr, ptr %i.b, align 8, !tbaa !28
@@ -220,11 +220,10 @@ bb.k:                                             ; preds = %_ZN5NBitm8CDecoderI
   %i.ao = sub i64 %.neg29, %i.an
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 28672
   store i64 %i.ao, ptr %i.ap, align 8, !tbaa !81
-  %6 = sub i32 0, %i.ac
-  %i.aq = and i32 %6, 7
-  %7 = add i32 %i.aq, %i.ac                       ; 3 uses
-  store i32 %7, ptr %i.a, align 8, !tbaa !27
-  %i.ar = icmp ugt i32 %7, 7
+  %6 = add i32 %i.ac, 7                           ; 2 uses
+  %i.aq = and i32 %6, -8                          ; 2 uses
+  store i32 %i.aq, ptr %i.a, align 8, !tbaa !27
+  %i.ar = icmp ugt i32 %6, 7
   br i1 %i.ar, label %.lr.ph.i.i.i, label %_ZN5NBitm8CDecoderI9CInBufferE11AlignToByteEv.exit
 
 .lr.ph.i.i.i:                                     ; preds = %bb.k
@@ -234,7 +233,7 @@ bb.k:                                             ; preds = %_ZN5NBitm8CDecoderI
   br label %bb.l
 
 bb.l:                                             ; preds = %_ZN9CInBuffer8ReadByteEv.exit.i.i.i, %.lr.ph.i.i.i
-  %i.au = phi i32 [ %7, %.lr.ph.i.i.i ], [ %i.bf, %_ZN9CInBuffer8ReadByteEv.exit.i.i.i ]
+  %i.au = phi i32 [ %i.aq, %.lr.ph.i.i.i ], [ %i.bf, %_ZN9CInBuffer8ReadByteEv.exit.i.i.i ]
   %i.av = phi i32 [ %.pre.i.i.i, %.lr.ph.i.i.i ], [ %i.be, %_ZN9CInBuffer8ReadByteEv.exit.i.i.i ]
   %i.aw = shl i32 %i.av, 8
   %i.ax = load ptr, ptr %i.b, align 8, !tbaa !28  ; 3 uses

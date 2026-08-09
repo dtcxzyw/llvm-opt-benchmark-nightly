@@ -203,7 +203,7 @@ bb.fd:                                            ; preds = %bb.et, %bb.et
 bb.fe:                                            ; preds = %bb.et
   %i.wl = tail call fastcc i32 @dissect_struct_mdt_body(ptr noundef %0, i32 noundef %i.sw, ptr noundef %3, i32 noundef 2)
   %i.wm = tail call fastcc i32 @dissect_struct_lov_mds_md(ptr noundef %0, i32 noundef %i.wl, ptr noundef %2, ptr noundef %3, i32 noundef 3)
-  %i.wn = tail call fastcc i32 @dissect_struct_acl(ptr noundef %0, i32 noundef %i.wm, ptr noundef %3, i32 noundef 4) ; 5 uses
+  %i.wn = tail call fastcc i32 @dissect_struct_acl(ptr noundef %0, i32 noundef %i.wm, ptr noundef %3, i32 noundef 4) ; 6 uses
   %i.wo = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef 8) ; 0 uses
   %i.wp = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef 8)
   %i.wq = icmp eq i32 %i.wp, 198183891
@@ -220,7 +220,7 @@ bb.ff:                                            ; preds = %bb.fe
   br label %bb.fg
 
 bb.fg:                                            ; preds = %bb.ff, %bb.fe
-  %i.wy = phi i32 [ %i.wx, %bb.ff ], [ 0, %bb.fe ]
+  %i.wy = phi i32 [ %i.wx, %bb.ff ], [ 0, %bb.fe ] ; 2 uses
   %i.wz = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef 8) ; 0 uses
   %i.xa = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef 8)
   %i.xb = icmp eq i32 %i.xa, 198183891
@@ -237,7 +237,7 @@ bb.fh:                                            ; preds = %bb.fg
   br label %bb.fi
 
 bb.fi:                                            ; preds = %bb.fh, %bb.fg
-  %i.xj = phi i32 [ %i.xi, %bb.fh ], [ 0, %bb.fg ]
+  %i.xj = phi i32 [ %i.xi, %bb.fh ], [ 0, %bb.fg ] ; 2 uses
   %i.xk = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef 8) ; 0 uses
   %i.xl = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef 8)
   %i.xm = icmp eq i32 %i.xl, 198183891
@@ -262,28 +262,28 @@ bb.fk:                                            ; preds = %bb.fj, %bb.fi
   %i.xz = tail call ptr @proto_item_add_subtree(ptr noundef %i.xx, i32 noundef %i.xy) ; 5 uses
   %i.ya = tail call fastcc i32 @display_buffer_data(ptr noundef %0, i32 noundef %i.wn, ptr noundef %i.xz, i32 noundef 5, ptr noundef nonnull @.str.1826)
   %i.yb = tail call fastcc i32 @display_buffer_data(ptr noundef %0, i32 noundef %i.ya, ptr noundef %i.xz, i32 noundef 6, ptr noundef nonnull @.str.1827)
-  %i.yc = tail call fastcc i32 @display_buffer_data(ptr noundef %0, i32 noundef %i.yb, ptr noundef %i.xz, i32 noundef 7, ptr noundef nonnull @.str.1828) ; 2 uses
+  %i.yc = tail call fastcc i32 @display_buffer_data(ptr noundef %0, i32 noundef %i.yb, ptr noundef %i.xz, i32 noundef 7, ptr noundef nonnull @.str.1828)
   %i.yd = icmp sgt i32 %i.xv, 0
   br i1 %i.yd, label %.lr.ph.i93.i.i, label %dissect_xattr_buffers.exit.i.i
 
 .lr.ph.i93.i.i:                                   ; preds = %bb.fk
-  %i.ye = add i32 %i.wy, %i.wn                    ; 3 uses
-  %6 = sub i32 0, %i.ye
-  %i.yf = and i32 %6, 7
-  %i.yg = add i32 %i.yf, %i.ye                    ; 2 uses
-  %7 = add i32 %i.xj, %i.yg                       ; 2 uses
-  %8 = sub i32 0, %7
-  %9 = and i32 %8, 7
-  %i.yh = add i32 %9, %7
+  %i.ye = add i32 %i.wn, 7
+  %6 = add i32 %i.ye, %i.wy
+  %i.yf = and i32 %6, -8                          ; 2 uses
+  %i.yg = add i32 %i.xj, %i.yf
+  %7 = sub i32 0, %i.xj
+  %8 = and i32 %7, 7
+  %9 = add i32 %i.yg, %8
+  %i.yh = add i32 %i.wy, %i.wn
   br label %bb.fl
 
 bb.fl:                                            ; preds = %bb.fl, %.lr.ph.i93.i.i
   %.04.i.i.i = phi i32 [ 0, %.lr.ph.i93.i.i ], [ %i.yz, %bb.fl ] ; 2 uses
   %.0963.i.i.i = phi i32 [ %i.wn, %.lr.ph.i93.i.i ], [ %i.ys, %bb.fl ] ; 5 uses
-  %.0972.i.i.i = phi i32 [ %i.yg, %.lr.ph.i93.i.i ], [ %i.yv, %bb.fl ] ; 2 uses
-  %.0981.i.i.i = phi i32 [ %i.yh, %.lr.ph.i93.i.i ], [ %i.yy, %bb.fl ] ; 3 uses
+  %.0972.i.i.i = phi i32 [ %i.yf, %.lr.ph.i93.i.i ], [ %i.yv, %bb.fl ] ; 2 uses
+  %.0981.i.i.i = phi i32 [ %9, %.lr.ph.i93.i.i ], [ %i.yy, %bb.fl ] ; 3 uses
   %i.yi = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %.0981.i.i.i) ; 2 uses
-  %i.yj = sub i32 %i.ye, %.0963.i.i.i
+  %i.yj = sub i32 %i.yh, %.0963.i.i.i
   %i.yk = tail call i32 @tvb_strnlen(ptr noundef %0, i32 noundef %.0963.i.i.i, i32 noundef %i.yj)
   %i.yl = add i32 %i.yk, 1                        ; 3 uses
   %i.ym = load i32, ptr @hf_lustre_xattr, align 4
@@ -305,10 +305,9 @@ bb.fl:                                            ; preds = %bb.fl, %.lr.ph.i93.
   br i1 %exitcond.not.i.i.i, label %dissect_xattr_buffers.exit.i.i, label %bb.fl, !llvm.loop !11
 
 dissect_xattr_buffers.exit.i.i:                   ; preds = %bb.fl, %bb.fk
-  %10 = sub i32 0, %i.yc
-  %i.za = and i32 %10, 7
-  %11 = add i32 %i.za, %i.yc                      ; 2 uses
-  %i.zb = sub i32 %11, %i.wn
+  %10 = add i32 %i.yc, 7
+  %i.za = and i32 %10, -8                         ; 2 uses
+  %i.zb = sub i32 %i.za, %i.wn
   tail call void @proto_item_set_len(ptr noundef %i.xz, i32 noundef %i.zb)
   br label %process_opcode_ost.exit
 
@@ -613,7 +612,7 @@ bb.gr:                                            ; preds = %bb.gp
   br label %process_opcode_ost.exit
 
 process_opcode_ost.exit:                          ; preds = %bb.gb, %.thread39.i, %bb.ga, %bb.fz, %dissect_struct_mgs_target_info.exit.i, %bb.fv, %bb.fu, %.thread.i134, %bb.fs, %bb.fs, %bb.fs, %bb.fq, %bb.fp, %bb.fo, %bb.fn, %bb.fm, %dissect_xattr_buffers.exit.i.i, %bb.fd, %bb.fc, %dissect_struct_lmv_user_md.exit.i.i, %bb.eu, %bb.es, %bb.es, %bb.es, %bb.es, %bb.er, %bb.eq, %bb.ep, %bb.eo, %bb.en, %bb.em, %bb.el, %bb.ek, %bb.ej, %dissect_struct_ldlm_gl_barrier_desc.exit.i.i, %bb.ee, %bb.ed, %bb.ec, %bb.eb, %bb.ea, %dissect_struct_layout_intent.exit.i.i, %bb.du, %bb.dt, %bb.ds, %bb.dr, %bb.ck, %bb.ci, %bb.cg, %bb.cf, %bb.ce, %dissect_struct_fid_array.exit.i, %bb.bz, %bb.by, %bb.bx, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %bb.bp, %.thread293.i, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %.thread291.i, %bb.bk, %bb.bj, %.thread289.i, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %.thread287.i, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %.thread285.i, %bb.ar, %bb.aq, %bb.ap, %.thread282.i, %bb.an, %.thread280.i, %bb.am, %bb.al, %.thread278.i, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ad, %dissect_struct_lu_ladvise_hdr.exit.i, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %.thread4.i, %bb.o, %bb.n, %.thread2.i, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %.thread.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.c, %bb.c, %bb.c, %bb.gk, %bb.a, %bb.gr, %bb.gq, %bb.go, %bb.gm, %bb.gj, %bb.gh, %bb.gf, %bb.gd
-  %.0 = phi i32 [ %1, %bb.gr ], [ %1, %bb.gk ], [ %1, %bb.x ], [ %i.eg, %bb.ai ], [ %i.adp, %.thread39.i ], [ %i.aee, %bb.gd ], [ %i.aeg, %bb.gf ], [ %i.aei, %bb.gh ], [ %i.aek, %bb.gj ], [ %1, %bb.a ], [ %i.aen, %bb.gm ], [ %i.aep, %bb.go ], [ %i.aer, %bb.gq ], [ %1, %bb.ad ], [ %i.o, %bb.e ], [ %i.m, %bb.d ], [ %i.t, %bb.g ], [ %i.p, %bb.f ], [ %i.y, %bb.i ], [ %i.u, %bb.h ], [ %i.z, %bb.j ], [ %i.aa, %bb.k ], [ %i.ad, %bb.l ], [ %i.ah, %bb.n ], [ %1, %bb.m ], [ %i.aj, %bb.p ], [ %1, %bb.o ], [ %1, %bb.c ], [ %1, %bb.c ], [ %1, %bb.c ], [ %1, %bb.c ], [ %1, %bb.q ], [ %i.al, %bb.r ], [ %1, %bb.s ], [ %i.aq, %bb.t ], [ %i.at, %bb.v ], [ %1, %bb.u ], [ %i.au, %bb.w ], [ %i.ai, %.thread4.i ], [ %i.ca, %bb.aa ], [ %i.dy, %dissect_struct_lu_ladvise_hdr.exit.i ], [ %i.x, %.thread.i ], [ %i.af, %.thread2.i ], [ %i.bz, %bb.z ], [ %1, %bb.y ], [ %1, %bb.cg ], [ %i.ek, %bb.aj ], [ %i.eb, %bb.ag ], [ %i.et, %bb.al ], [ %1, %bb.ak ], [ %i.ev, %bb.an ], [ %1, %bb.am ], [ %i.ez, %bb.aq ], [ %1, %bb.ap ], [ %1, %bb.af ], [ %i.fd, %bb.as ], [ %i.fa, %bb.ar ], [ %i.ff, %bb.au ], [ %1, %bb.at ], [ %i.fi, %bb.aw ], [ %i.fg, %bb.av ], [ %i.fk, %bb.ax ], [ %i.fp, %bb.az ], [ %1, %bb.ay ], [ %i.fs, %bb.bb ], [ %1, %bb.ba ], [ %i.ft, %bb.bc ], [ %i.fz, %bb.be ], [ %i.fu, %bb.bd ], [ %i.gc, %bb.bg ], [ %1, %bb.bf ], [ %1, %bb.bh ], [ %i.gi, %bb.bj ], [ %1, %bb.bi ], [ %i.gl, %bb.bl ], [ %i.gj, %bb.bk ], [ %i.gp, %bb.bn ], [ %1, %bb.bm ], [ %i.gs, %bb.bp ], [ %i.gq, %bb.bo ], [ %i.gv, %bb.br ], [ %1, %bb.bq ], [ %i.ha, %bb.bt ], [ %1, %bb.bs ], [ %i.hd, %bb.bv ], [ %1, %bb.bu ], [ %i.hf, %bb.bx ], [ %1, %bb.bw ], [ %i.hl, %bb.bz ], [ %1, %bb.by ], [ %i.im, %bb.ce ], [ %i.in, %bb.cf ], [ %.0.i.i, %dissect_struct_fid_array.exit.i ], [ %i.gr, %.thread293.i ], [ %i.eo, %.thread278.i ], [ %i.eu, %.thread280.i ], [ %i.ex, %.thread282.i ], [ %i.fc, %.thread285.i ], [ %i.fy, %.thread287.i ], [ %i.gf, %.thread289.i ], [ %i.gk, %.thread291.i ], [ %i.ec, %bb.ah ], [ %i.aag, %.thread.i134 ], [ %1, %bb.fo ], [ %i.zf, %bb.fn ], [ %11, %dissect_xattr_buffers.exit.i.i ], [ %1, %bb.es ], [ %1, %bb.es ], [ %1, %bb.es ], [ %1, %bb.es ], [ %1, %bb.ci ], [ %i.ze, %bb.fm ], [ %i.sz, %bb.eu ], [ %i.wb, %dissect_struct_lmv_user_md.exit.i.i ], [ %i.wi, %bb.fc ], [ %i.wk, %bb.fd ], [ %i.aad, %bb.fq ], [ %1, %bb.fp ], [ %i.rb, %bb.eo ], [ %i.rb, %bb.ep ], [ %i.sr, %bb.eq ], [ %i.ns, %bb.ek ], [ %i.qy, %bb.el ], [ %i.pd, %dissect_struct_ldlm_gl_barrier_desc.exit.i.i ], [ %i.qz, %bb.em ], [ %i.ns, %bb.ed ], [ %i.ns, %bb.ee ], [ %i.no, %bb.ea ], [ %i.nm, %dissect_struct_layout_intent.exit.i.i ], [ %i.mj, %bb.du ], [ %i.mf, %bb.dt ], [ %i.mb, %bb.ds ], [ %i.lr, %bb.dr ], [ %i.nq, %bb.ec ], [ %i.iq, %bb.ck ], [ %i.sv, %bb.er ], [ %i.ns, %bb.ej ], [ %i.ra, %bb.en ], [ %i.np, %bb.eb ], [ %1, %bb.ga ], [ %i.aai, %bb.fv ], [ %1, %bb.fu ], [ %.080.i.i, %dissect_struct_mgs_target_info.exit.i ], [ %1, %bb.fs ], [ %1, %bb.fs ], [ %1, %bb.fs ], [ %i.acq, %bb.fz ], [ %i.aec, %bb.gb ]
+  %.0 = phi i32 [ %1, %bb.gr ], [ %1, %bb.gk ], [ %1, %bb.x ], [ %i.eg, %bb.ai ], [ %i.adp, %.thread39.i ], [ %i.aee, %bb.gd ], [ %i.aeg, %bb.gf ], [ %i.aei, %bb.gh ], [ %i.aek, %bb.gj ], [ %1, %bb.a ], [ %i.aen, %bb.gm ], [ %i.aep, %bb.go ], [ %i.aer, %bb.gq ], [ %1, %bb.ad ], [ %i.o, %bb.e ], [ %i.m, %bb.d ], [ %i.t, %bb.g ], [ %i.p, %bb.f ], [ %i.y, %bb.i ], [ %i.u, %bb.h ], [ %i.z, %bb.j ], [ %i.aa, %bb.k ], [ %i.ad, %bb.l ], [ %i.ah, %bb.n ], [ %1, %bb.m ], [ %i.aj, %bb.p ], [ %1, %bb.o ], [ %1, %bb.c ], [ %1, %bb.c ], [ %1, %bb.c ], [ %1, %bb.c ], [ %1, %bb.q ], [ %i.al, %bb.r ], [ %1, %bb.s ], [ %i.aq, %bb.t ], [ %i.at, %bb.v ], [ %1, %bb.u ], [ %i.au, %bb.w ], [ %i.ai, %.thread4.i ], [ %i.ca, %bb.aa ], [ %i.dy, %dissect_struct_lu_ladvise_hdr.exit.i ], [ %i.x, %.thread.i ], [ %i.af, %.thread2.i ], [ %i.bz, %bb.z ], [ %1, %bb.y ], [ %1, %bb.cg ], [ %i.ek, %bb.aj ], [ %i.eb, %bb.ag ], [ %i.et, %bb.al ], [ %1, %bb.ak ], [ %i.ev, %bb.an ], [ %1, %bb.am ], [ %i.ez, %bb.aq ], [ %1, %bb.ap ], [ %1, %bb.af ], [ %i.fd, %bb.as ], [ %i.fa, %bb.ar ], [ %i.ff, %bb.au ], [ %1, %bb.at ], [ %i.fi, %bb.aw ], [ %i.fg, %bb.av ], [ %i.fk, %bb.ax ], [ %i.fp, %bb.az ], [ %1, %bb.ay ], [ %i.fs, %bb.bb ], [ %1, %bb.ba ], [ %i.ft, %bb.bc ], [ %i.fz, %bb.be ], [ %i.fu, %bb.bd ], [ %i.gc, %bb.bg ], [ %1, %bb.bf ], [ %1, %bb.bh ], [ %i.gi, %bb.bj ], [ %1, %bb.bi ], [ %i.gl, %bb.bl ], [ %i.gj, %bb.bk ], [ %i.gp, %bb.bn ], [ %1, %bb.bm ], [ %i.gs, %bb.bp ], [ %i.gq, %bb.bo ], [ %i.gv, %bb.br ], [ %1, %bb.bq ], [ %i.ha, %bb.bt ], [ %1, %bb.bs ], [ %i.hd, %bb.bv ], [ %1, %bb.bu ], [ %i.hf, %bb.bx ], [ %1, %bb.bw ], [ %i.hl, %bb.bz ], [ %1, %bb.by ], [ %i.im, %bb.ce ], [ %i.in, %bb.cf ], [ %.0.i.i, %dissect_struct_fid_array.exit.i ], [ %i.gr, %.thread293.i ], [ %i.eo, %.thread278.i ], [ %i.eu, %.thread280.i ], [ %i.ex, %.thread282.i ], [ %i.fc, %.thread285.i ], [ %i.fy, %.thread287.i ], [ %i.gf, %.thread289.i ], [ %i.gk, %.thread291.i ], [ %i.ec, %bb.ah ], [ %i.aag, %.thread.i134 ], [ %1, %bb.fo ], [ %i.zf, %bb.fn ], [ %i.za, %dissect_xattr_buffers.exit.i.i ], [ %1, %bb.es ], [ %1, %bb.es ], [ %1, %bb.es ], [ %1, %bb.es ], [ %1, %bb.ci ], [ %i.ze, %bb.fm ], [ %i.sz, %bb.eu ], [ %i.wb, %dissect_struct_lmv_user_md.exit.i.i ], [ %i.wi, %bb.fc ], [ %i.wk, %bb.fd ], [ %i.aad, %bb.fq ], [ %1, %bb.fp ], [ %i.rb, %bb.eo ], [ %i.rb, %bb.ep ], [ %i.sr, %bb.eq ], [ %i.ns, %bb.ek ], [ %i.qy, %bb.el ], [ %i.pd, %dissect_struct_ldlm_gl_barrier_desc.exit.i.i ], [ %i.qz, %bb.em ], [ %i.ns, %bb.ed ], [ %i.ns, %bb.ee ], [ %i.no, %bb.ea ], [ %i.nm, %dissect_struct_layout_intent.exit.i.i ], [ %i.mj, %bb.du ], [ %i.mf, %bb.dt ], [ %i.mb, %bb.ds ], [ %i.lr, %bb.dr ], [ %i.nq, %bb.ec ], [ %i.iq, %bb.ck ], [ %i.sv, %bb.er ], [ %i.ns, %bb.ej ], [ %i.ra, %bb.en ], [ %i.np, %bb.eb ], [ %1, %bb.ga ], [ %i.aai, %bb.fv ], [ %1, %bb.fu ], [ %.080.i.i, %dissect_struct_mgs_target_info.exit.i ], [ %1, %bb.fs ], [ %1, %bb.fs ], [ %1, %bb.fs ], [ %i.acq, %bb.fz ], [ %i.aec, %bb.gb ]
   ret i32 %.0
 }
 

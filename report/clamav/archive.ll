@@ -203,24 +203,23 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sub i64 0, %1
-  %i.d = and i64 %2, 15
-  %3 = add i64 %i.d, %1                           ; 2 uses
+  %2 = add i64 %1, 15
+  %i.d = and i64 %2, -16                          ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48840
   %i.f = load i32, ptr %i.e, align 8, !tbaa !62
   %i.g = icmp eq i32 %i.f, 3
   br i1 %i.g, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = add i64 %3, 16
+  %i.h = add i64 %i.d, 16
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %4 = add i64 %3, 8
+  %3 = or disjoint i64 %i.d, 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.a
-  %.0 = phi i64 [ %i.h, %bb.c ], [ %4, %bb.d ], [ %1, %bb.a ]
+  %.0 = phi i64 [ %i.h, %bb.c ], [ %3, %bb.d ], [ %1, %bb.a ]
   %i.i = trunc i64 %.0 to i32
   ret i32 %i.i
 }

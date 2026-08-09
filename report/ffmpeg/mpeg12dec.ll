@@ -204,18 +204,13 @@ bb.ht:                                            ; preds = %bb.hs, %bb.hr, %bb.
 
 align_get_bits.exit:                              ; preds = %bb.ht
   %.sroa.0.0.copyload = load ptr, ptr %i.o, align 16, !tbaa !120 ; 2 uses
-  %4 = sub nsw i32 0, %.val353
-  %5 = and i32 %4, 7
-  %i.bup = add i32 %5, %.val353                   ; 3 uses
+  %i.bup = add i32 %.val353, 7
   %i.buq = lshr i32 %i.bup, 3
   %i.bur = zext nneg i32 %i.buq to i64
   %i.bus = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 %i.bur ; 2 uses
   %i.but = load i32, ptr %i.bus, align 1, !tbaa !60
-  %6 = tail call i32 @llvm.bswap.i32(i32 %i.but)
-  %7 = and i32 %i.bup, 7                          ; 3 uses
-  %8 = shl i32 %6, %7
-  %.mask = and i32 %8, -256
-  %i.buu = icmp eq i32 %.mask, 101591808          ; 3 uses
+  %.mask = and i32 %i.but, 16777215
+  %i.buu = icmp eq i32 %.mask, 2821638            ; 3 uses
   br i1 %i.buu, label %bb.hu, label %bb.hv
 
 bb.hu:                                            ; preds = %align_get_bits.exit
@@ -228,18 +223,16 @@ bb.hv:                                            ; preds = %bb.hu, %align_get_b
 
 bb.hw:                                            ; preds = %bb.hv
   %i.buw = load i32, ptr %i.bus, align 1, !tbaa !60
-  %9 = tail call i32 @llvm.bswap.i32(i32 %i.buw)
-  %10 = shl i32 %9, %7
-  %11 = and i32 %10, -65536
-  %i.bux = add i32 %i.bup, 16
+  %4 = and i32 %i.buw, 65535
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)
+  %i.bux = add i32 %.val353, 23
   %i.buy = lshr i32 %i.bux, 3
   %i.buz = zext nneg i32 %i.buy to i64
   %i.bva = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 %i.buz
   %i.bvb = load i32, ptr %i.bva, align 1, !tbaa !60
   %i.bvc = tail call i32 @llvm.bswap.i32(i32 %i.bvb)
-  %12 = shl i32 %i.bvc, %7
-  %i.bvd = lshr i32 %12, 16
-  %i.bve = or disjoint i32 %i.bvd, %11
+  %i.bvd = lshr i32 %i.bvc, 16
+  %i.bve = or disjoint i32 %i.bvd, %5
   %i.bvf = icmp eq i32 %i.bve, 513
   br i1 %i.bvf, label %bb.hx, label %.thread396
 

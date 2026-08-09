@@ -204,11 +204,10 @@ switch.lookup:                                    ; preds = %bb.k
   %i.bl = or disjoint i32 %i.bi, 7
   %i.bm = insertelement <2 x i32> poison, i32 %i.bl, i64 0
   %i.bn = insertelement <2 x i32> %i.bm, i32 %i.bk, i64 1
-  %i.bo = sdiv <2 x i32> %i.bn, splat (i32 8)     ; 2 uses
-  %14 = sub nsw <2 x i32> zeroinitializer, %i.bo
-  %i.bp = and <2 x i32> %14, splat (i32 3)
-  %15 = add nsw <2 x i32> %i.bp, %i.bo
-  store <2 x i32> %15, ptr %i.bj, align 4, !tbaa !3
+  %i.bo = sdiv <2 x i32> %i.bn, splat (i32 8)
+  %14 = add nsw <2 x i32> %i.bo, splat (i32 3)
+  %i.bp = and <2 x i32> %14, splat (i32 -4)
+  store <2 x i32> %i.bp, ptr %i.bj, align 4, !tbaa !3
   %i.bq = load i8, ptr %i.k, align 8, !tbaa !74
   %.not.i81 = icmp eq i8 %i.bq, 2
   %i.br = load i8, ptr %i.n, align 1
