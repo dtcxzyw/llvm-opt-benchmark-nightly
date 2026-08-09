@@ -152,10 +152,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !10
-  %i.e = urem i64 %2, %i.d                        ; 2 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !10   ; 2 uses
+  %i.e = urem i64 %2, %i.d
   %i.f = sub nuw i64 %2, %i.e                     ; 2 uses
-  %3 = icmp eq i64 %2, %i.e
+  %3 = icmp ult i64 %2, %i.d
   br i1 %3, label %bb.j, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

@@ -204,7 +204,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 48
   %i.i = load ptr, ptr %i.h, align 8, !invariant.load !4, !nonnull !4
   %i.j = tail call noundef i64 %i.i(ptr noundef nonnull %4) #25
-  %i.k = shl i64 %i.j, 10                         ; 16 uses
+  %i.k = shl i64 %i.j, 10                         ; 17 uses
   %.not = icmp eq i64 %i.k, 0
   br i1 %.not, label %bb.b, label %bb.c, !prof !283
 
@@ -527,9 +527,9 @@ bb.af:                                            ; preds = %bb.p, %_RNvMs_NtCs7
   %i.cl = phi i64 [ 0, %bb.p ], [ %i.by, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCscxmO3cvmuC8_9uu_base32.exit ], [ 0, %bb.ad ]
   %.sroa.025.0 = phi i64 [ 0, %bb.p ], [ %..i, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCscxmO3cvmuC8_9uu_base32.exit ], [ %..i, %bb.ad ] ; 4 uses
   %i.cm = sub nuw i64 %i.as, %.sroa.025.0         ; 3 uses
-  %i.cn = urem i64 %i.cm, %i.k                    ; 2 uses
+  %i.cn = urem i64 %i.cm, %i.k
   %i.co = sub nuw i64 %i.cm, %i.cn                ; 3 uses
-  %.not78 = icmp eq i64 %i.cm, %i.cn
+  %.not78 = icmp ult i64 %i.cm, %i.k
   br i1 %.not78, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.aj, %bb.af

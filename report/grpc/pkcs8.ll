@@ -112,7 +112,7 @@ _ZL22pkcs12_encode_passwordPKcmPPhPm.exit:        ; preds = %bb.h
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZL22pkcs12_encode_passwordPKcmPPhPm.exit, %bb.c
-  %i.q = call i64 @EVP_MD_block_size(ptr noundef %8) #6 ; 12 uses
+  %i.q = call i64 @EVP_MD_block_size(ptr noundef %8) #6 ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
   %i.r = icmp eq i64 %i.q, 0
   br i1 %i.r, label %_ZL14OPENSSL_memsetPvim.exit, label %bb.j
@@ -140,10 +140,10 @@ bb.l:                                             ; preds = %bb.k, %_ZL14OPENSSL
   br label %.loopexit
 
 bb.m:                                             ; preds = %bb.k
-  %i.z = urem i64 %i.t, %i.q                      ; 2 uses
-  %i.aa = sub nuw i64 %i.t, %i.z                  ; 7 uses
-  %i.ab = urem i64 %i.x, %i.q                     ; 2 uses
-  %i.ac = sub nuw i64 %i.x, %i.ab                 ; 5 uses
+  %i.z = urem i64 %i.t, %i.q
+  %i.aa = sub nuw i64 %i.t, %i.z                  ; 5 uses
+  %i.ab = urem i64 %i.x, %i.q
+  %i.ac = sub nuw i64 %i.x, %i.ab                 ; 3 uses
   %i.ad = add i64 %i.ac, %i.aa                    ; 6 uses
   %i.ae = icmp ult i64 %i.ad, %i.aa
   br i1 %i.ae, label %bb.n, label %bb.o
@@ -160,16 +160,17 @@ bb.o:                                             ; preds = %bb.m
   br i1 %or.cond, label %.loopexit, label %.preheader146
 
 .preheader146:                                    ; preds = %bb.o
-  %.not165 = icmp eq i64 %i.t, %i.z
+  %.not165 = icmp ult i64 %i.t, %i.q
   br i1 %.not165, label %.preheader145, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader146
-  %xtraiter = and i64 %i.aa, 1
-  %12 = icmp eq i64 %i.aa, 1
+  %umax193 = call i64 @llvm.umax.i64(i64 %i.aa, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax193, 1
+  %12 = icmp ult i64 %i.aa, 2
   br i1 %12, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.aa, -2
+  %unroll_iter = and i64 %umax193, -2
   br label %.lr.ph
 
 .preheader145.loopexit.unr-lcssa:                 ; preds = %.lr.ph
@@ -178,7 +179,7 @@ bb.o:                                             ; preds = %bb.m
 
 .lr.ph.epil.preheader:                            ; preds = %.preheader145.loopexit.unr-lcssa, %.lr.ph.preheader
   %.095147.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.av, %.preheader145.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod194 = trunc i64 %i.aa to i1
+  %lcmp.mod194 = trunc i64 %umax193 to i1
   call void @llvm.assume(i1 %lcmp.mod194)
   %i.ai = urem i64 %.095147.epil.init, %3
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 %i.ai
@@ -189,16 +190,17 @@ bb.o:                                             ; preds = %bb.m
 
 .preheader145:                                    ; preds = %.lr.ph.epil.preheader, %.preheader145.loopexit.unr-lcssa, %.preheader146
   %invariant.gep = getelementptr i8, ptr %i.af, i64 %i.aa ; 3 uses
-  %.not166 = icmp eq i64 %i.x, %i.ab
+  %.not166 = icmp ult i64 %i.x, %i.q
   br i1 %.not166, label %.preheader143, label %.lr.ph149.preheader
 
 .lr.ph149.preheader:                              ; preds = %.preheader145
-  %xtraiter196 = and i64 %i.ac, 1
-  %13 = icmp eq i64 %i.ac, 1
+  %umax195 = call i64 @llvm.umax.i64(i64 %i.ac, i64 1) ; 3 uses
+  %xtraiter196 = and i64 %umax195, 1
+  %13 = icmp ult i64 %i.ac, 2
   br i1 %13, label %.lr.ph149.epil.preheader, label %.lr.ph149.preheader.new
 
 .lr.ph149.preheader.new:                          ; preds = %.lr.ph149.preheader
-  %unroll_iter199 = and i64 %i.ac, -2
+  %unroll_iter199 = and i64 %umax195, -2
   br label %.lr.ph149
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -226,7 +228,7 @@ bb.o:                                             ; preds = %bb.m
 
 .lr.ph149.epil.preheader:                         ; preds = %.preheader143.loopexit.unr-lcssa, %.lr.ph149.preheader
   %.094148.epil.init = phi i64 [ 0, %.lr.ph149.preheader ], [ %i.bo, %.preheader143.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod198 = trunc i64 %i.ac to i1
+  %lcmp.mod198 = trunc i64 %umax195 to i1
   call void @llvm.assume(i1 %lcmp.mod198)
   %i.aw = load ptr, ptr %i.b, align 8, !tbaa !11
   %i.ax = load i64, ptr %i.c, align 8, !tbaa !14
@@ -628,6 +630,9 @@ declare i64 @llvm.umin.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5

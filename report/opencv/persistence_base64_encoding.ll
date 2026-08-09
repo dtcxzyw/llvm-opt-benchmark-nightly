@@ -203,10 +203,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %2 ; 4 uses
-  %i.e = urem i64 %3, 3                           ; 2 uses
+  %i.e = urem i64 %3, 3
   %i.f = sub nuw i64 %3, %i.e
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.f
-  %.not = icmp eq i64 %3, %i.e
+  %.not = icmp ult i64 %3, 3
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
@@ -609,10 +609,10 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.bh = ptrtoint ptr %i.bb to i64               ; 2 uses
   %i.bi = sub i64 %i.bd, %i.bh                    ; 3 uses
-  %i.bj = urem i64 %i.bi, 3                       ; 2 uses
+  %i.bj = urem i64 %i.bi, 3
   %i.bk = sub nuw i64 %i.bi, %i.bj
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bk
-  %.not.i18 = icmp eq i64 %i.bi, %i.bj
+  %.not.i18 = icmp ult i64 %i.bi, 3
   br i1 %.not.i18, label %._crit_edge.i, label %.lr.ph.i19
 
 .lr.ph.i19:                                       ; preds = %bb.f, %.lr.ph.i19
