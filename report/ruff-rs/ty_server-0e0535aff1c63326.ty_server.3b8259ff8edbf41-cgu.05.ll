@@ -201,7 +201,6 @@ bb.r:                                             ; preds = %bb.p, %bb.q
           to label %bb.s unwind label %bb.g
 
 bb.s:                                             ; preds = %bb.r
-  %7 = tail call i64 @llvm.uadd.sat.i64(i64 %i.az, i64 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.ba = load ptr, ptr %i.c, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 48
@@ -246,8 +245,8 @@ bb.v:                                             ; preds = %switch.lookup
 bb.w:                                             ; preds = %bb.v
   %i.bq = icmp ne i64 %i.bl, 0
   call void @llvm.assume(i1 %i.bq)
-  %8 = add i64 %7, -1
-  %i.br = call i64 @llvm.uadd.sat.i64(i64 %i.bl, i64 %8)
+  %7 = call i64 @llvm.umin.i64(i64 %i.az, i64 -2)
+  %i.br = call i64 @llvm.uadd.sat.i64(i64 %i.bl, i64 %7)
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.bt = load i32, ptr %i.bs, align 4, !noundef !4
   %i.bu = invoke noundef i64 @_RNvNtNtCsjNt1Wzngcv_9ty_server8document5range18u32_index_to_usize(i32 noundef %i.bt)
@@ -649,6 +648,9 @@ declare noundef zeroext i1 @_RNvXs0_NvXNvNtNtCsk4T2nMguaqB_13gen_lsp_types9gener
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_RNvXsh_NtCs4NRVxsYgnAr_4core3fmteNtB5_5Debug3fmt(ptr noalias noundef nonnull readonly captures(address, read_provenance), i64 noundef, ptr noalias noundef align 8 dereferenceable(24)) unnamed_addr #0
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #13
