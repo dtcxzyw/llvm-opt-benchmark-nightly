@@ -204,141 +204,141 @@ vector.ph:
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %0 = uitofp nneg <2 x i32> %vec.ind to <2 x double>
-  %1 = fadd nnan nsz <2 x double> %0, splat (double 5.000000e-01)
-  %2 = fmul nnan nsz <2 x double> %1, splat (double f0x3F90C152382D7365)
-  %3 = fptrunc nsz <2 x double> %2 to <2 x float>
-  %4 = tail call nsz <2 x float> @llvm.sin.v2f32(<2 x float> %3)
-  %5 = fmul nsz <2 x float> %4, splat (float f0x4F000000)
-  %6 = fpext nsz <2 x float> %5 to <2 x double>
-  %7 = fadd nsz <2 x double> %6, splat (double 5.000000e-01)
-  %8 = tail call nsz <2 x double> @llvm.floor.v2f64(<2 x double> %7)
-  %9 = fptosi <2 x double> %8 to <2 x i32>
+  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %0 = uitofp nneg <4 x i32> %vec.ind to <4 x double>
+  %1 = fadd nnan nsz <4 x double> %0, splat (double 5.000000e-01)
+  %2 = fmul nnan nsz <4 x double> %1, splat (double f0x3F90C152382D7365)
+  %3 = fptrunc nsz <4 x double> %2 to <4 x float>
+  %4 = tail call nsz <4 x float> @llvm.sin.v4f32(<4 x float> %3)
+  %5 = fmul nsz <4 x float> %4, splat (float f0x4F000000)
+  %6 = fpext nsz <4 x float> %5 to <4 x double>
+  %7 = fadd nsz <4 x double> %6, splat (double 5.000000e-01)
+  %8 = tail call nsz <4 x double> @llvm.floor.v4f64(<4 x double> %7)
+  %9 = fptosi <4 x double> %8 to <4 x i32>
   %i.a = getelementptr inbounds nuw [4 x i8], ptr @sine_96_fixed, i64 %index
-  store <2 x i32> %9, ptr %i.a, align 8, !tbaa !66
-  %index.next = add nuw i64 %index, 2             ; 2 uses
-  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 2)
+  store <4 x i32> %9, ptr %i.a, align 16, !tbaa !66
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
   %i.b = icmp eq i64 %index.next, 96
   br i1 %i.b, label %vector.body30, label %vector.body, !llvm.loop !344
 
 vector.body30:                                    ; preds = %vector.body, %vector.body30
   %index31 = phi i64 [ %index.next33, %vector.body30 ], [ 0, %vector.body ] ; 2 uses
-  %vec.ind32 = phi <2 x i32> [ %vec.ind.next34, %vector.body30 ], [ <i32 0, i32 1>, %vector.body ] ; 2 uses
-  %10 = uitofp nneg <2 x i32> %vec.ind32 to <2 x double>
-  %11 = fadd nnan nsz <2 x double> %10, splat (double 5.000000e-01)
-  %12 = fmul nnan nsz <2 x double> %11, splat (double f0x3F8ACEE9F37BEBD5)
-  %13 = fptrunc nsz <2 x double> %12 to <2 x float>
-  %14 = tail call nsz <2 x float> @llvm.sin.v2f32(<2 x float> %13)
-  %15 = fmul nsz <2 x float> %14, splat (float f0x4F000000)
-  %16 = fpext nsz <2 x float> %15 to <2 x double>
-  %17 = fadd nsz <2 x double> %16, splat (double 5.000000e-01)
-  %18 = tail call nsz <2 x double> @llvm.floor.v2f64(<2 x double> %17)
-  %19 = fptosi <2 x double> %18 to <2 x i32>
+  %vec.ind32 = phi <4 x i32> [ %vec.ind.next34, %vector.body30 ], [ <i32 0, i32 1, i32 2, i32 3>, %vector.body ] ; 2 uses
+  %10 = uitofp nneg <4 x i32> %vec.ind32 to <4 x double>
+  %11 = fadd nnan nsz <4 x double> %10, splat (double 5.000000e-01)
+  %12 = fmul nnan nsz <4 x double> %11, splat (double f0x3F8ACEE9F37BEBD5)
+  %13 = fptrunc nsz <4 x double> %12 to <4 x float>
+  %14 = tail call nsz <4 x float> @llvm.sin.v4f32(<4 x float> %13)
+  %15 = fmul nsz <4 x float> %14, splat (float f0x4F000000)
+  %16 = fpext nsz <4 x float> %15 to <4 x double>
+  %17 = fadd nsz <4 x double> %16, splat (double 5.000000e-01)
+  %18 = tail call nsz <4 x double> @llvm.floor.v4f64(<4 x double> %17)
+  %19 = fptosi <4 x double> %18 to <4 x i32>
   %i.c = getelementptr inbounds nuw [4 x i8], ptr @sine_120_fixed, i64 %index31
-  store <2 x i32> %19, ptr %i.c, align 8, !tbaa !66
-  %index.next33 = add nuw i64 %index31, 2         ; 2 uses
-  %vec.ind.next34 = add <2 x i32> %vec.ind32, splat (i32 2)
+  store <4 x i32> %19, ptr %i.c, align 16, !tbaa !66
+  %index.next33 = add nuw i64 %index31, 4         ; 2 uses
+  %vec.ind.next34 = add <4 x i32> %vec.ind32, splat (i32 4)
   %i.d = icmp eq i64 %index.next33, 120
   br i1 %i.d, label %vector.body37, label %vector.body30, !llvm.loop !345
 
 vector.body37:                                    ; preds = %vector.body30, %vector.body37
   %index38 = phi i64 [ %index.next40, %vector.body37 ], [ 0, %vector.body30 ] ; 2 uses
-  %vec.ind39 = phi <2 x i32> [ %vec.ind.next41, %vector.body37 ], [ <i32 0, i32 1>, %vector.body30 ] ; 2 uses
-  %20 = uitofp nneg <2 x i32> %vec.ind39 to <2 x double>
-  %21 = fadd nnan nsz <2 x double> %20, splat (double 5.000000e-01)
-  %22 = fmul nnan nsz <2 x double> %21, splat (double f0x3F8921FB54442D18)
-  %23 = fptrunc nsz <2 x double> %22 to <2 x float>
-  %24 = tail call nsz <2 x float> @llvm.sin.v2f32(<2 x float> %23)
-  %25 = fmul nsz <2 x float> %24, splat (float f0x4F000000)
-  %26 = fpext nsz <2 x float> %25 to <2 x double>
-  %27 = fadd nsz <2 x double> %26, splat (double 5.000000e-01)
-  %28 = tail call nsz <2 x double> @llvm.floor.v2f64(<2 x double> %27)
-  %29 = fptosi <2 x double> %28 to <2 x i32>
+  %vec.ind39 = phi <4 x i32> [ %vec.ind.next41, %vector.body37 ], [ <i32 0, i32 1, i32 2, i32 3>, %vector.body30 ] ; 2 uses
+  %20 = uitofp nneg <4 x i32> %vec.ind39 to <4 x double>
+  %21 = fadd nnan nsz <4 x double> %20, splat (double 5.000000e-01)
+  %22 = fmul nnan nsz <4 x double> %21, splat (double f0x3F8921FB54442D18)
+  %23 = fptrunc nsz <4 x double> %22 to <4 x float>
+  %24 = tail call nsz <4 x float> @llvm.sin.v4f32(<4 x float> %23)
+  %25 = fmul nsz <4 x float> %24, splat (float f0x4F000000)
+  %26 = fpext nsz <4 x float> %25 to <4 x double>
+  %27 = fadd nsz <4 x double> %26, splat (double 5.000000e-01)
+  %28 = tail call nsz <4 x double> @llvm.floor.v4f64(<4 x double> %27)
+  %29 = fptosi <4 x double> %28 to <4 x i32>
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @sine_128_fixed, i64 %index38
-  store <2 x i32> %29, ptr %i.e, align 8, !tbaa !66
-  %index.next40 = add nuw i64 %index38, 2         ; 2 uses
-  %vec.ind.next41 = add <2 x i32> %vec.ind39, splat (i32 2)
+  store <4 x i32> %29, ptr %i.e, align 16, !tbaa !66
+  %index.next40 = add nuw i64 %index38, 4         ; 2 uses
+  %vec.ind.next41 = add <4 x i32> %vec.ind39, splat (i32 4)
   %i.f = icmp eq i64 %index.next40, 128
   br i1 %i.f, label %vector.body44, label %vector.body37, !llvm.loop !346
 
 vector.body44:                                    ; preds = %vector.body37, %vector.body44
   %index45 = phi i64 [ %index.next47, %vector.body44 ], [ 0, %vector.body37 ] ; 2 uses
-  %vec.ind46 = phi <2 x i32> [ %vec.ind.next48, %vector.body44 ], [ <i32 0, i32 1>, %vector.body37 ] ; 2 uses
-  %30 = uitofp nneg <2 x i32> %vec.ind46 to <2 x double>
-  %31 = fadd nnan nsz <2 x double> %30, splat (double 5.000000e-01)
-  %32 = fmul nnan nsz <2 x double> %31, splat (double f0x3F6921FB54442D18)
-  %33 = fptrunc nsz <2 x double> %32 to <2 x float>
-  %34 = tail call nsz <2 x float> @llvm.sin.v2f32(<2 x float> %33)
-  %35 = fmul nsz <2 x float> %34, splat (float f0x4F000000)
-  %36 = fpext nsz <2 x float> %35 to <2 x double>
-  %37 = fadd nsz <2 x double> %36, splat (double 5.000000e-01)
-  %38 = tail call nsz <2 x double> @llvm.floor.v2f64(<2 x double> %37)
-  %39 = fptosi <2 x double> %38 to <2 x i32>
+  %vec.ind46 = phi <4 x i32> [ %vec.ind.next48, %vector.body44 ], [ <i32 0, i32 1, i32 2, i32 3>, %vector.body37 ] ; 2 uses
+  %30 = uitofp nneg <4 x i32> %vec.ind46 to <4 x double>
+  %31 = fadd nnan nsz <4 x double> %30, splat (double 5.000000e-01)
+  %32 = fmul nnan nsz <4 x double> %31, splat (double f0x3F6921FB54442D18)
+  %33 = fptrunc nsz <4 x double> %32 to <4 x float>
+  %34 = tail call nsz <4 x float> @llvm.sin.v4f32(<4 x float> %33)
+  %35 = fmul nsz <4 x float> %34, splat (float f0x4F000000)
+  %36 = fpext nsz <4 x float> %35 to <4 x double>
+  %37 = fadd nsz <4 x double> %36, splat (double 5.000000e-01)
+  %38 = tail call nsz <4 x double> @llvm.floor.v4f64(<4 x double> %37)
+  %39 = fptosi <4 x double> %38 to <4 x i32>
   %i.g = getelementptr inbounds nuw [4 x i8], ptr @sine_512_fixed, i64 %index45
-  store <2 x i32> %39, ptr %i.g, align 8, !tbaa !66
-  %index.next47 = add nuw i64 %index45, 2         ; 2 uses
-  %vec.ind.next48 = add <2 x i32> %vec.ind46, splat (i32 2)
+  store <4 x i32> %39, ptr %i.g, align 16, !tbaa !66
+  %index.next47 = add nuw i64 %index45, 4         ; 2 uses
+  %vec.ind.next48 = add <4 x i32> %vec.ind46, splat (i32 4)
   %i.h = icmp eq i64 %index.next47, 512
   br i1 %i.h, label %vector.body51, label %vector.body44, !llvm.loop !347
 
 vector.body51:                                    ; preds = %vector.body44, %vector.body51
   %index52 = phi i64 [ %index.next54, %vector.body51 ], [ 0, %vector.body44 ] ; 2 uses
-  %vec.ind53 = phi <2 x i32> [ %vec.ind.next55, %vector.body51 ], [ <i32 0, i32 1>, %vector.body44 ] ; 2 uses
-  %40 = uitofp nneg <2 x i32> %vec.ind53 to <2 x double>
-  %41 = fadd nnan nsz <2 x double> %40, splat (double 5.000000e-01)
-  %42 = fmul nnan nsz <2 x double> %41, splat (double f0x3F60C152382D7365)
-  %43 = fptrunc nsz <2 x double> %42 to <2 x float>
-  %44 = tail call nsz <2 x float> @llvm.sin.v2f32(<2 x float> %43)
-  %45 = fmul nsz <2 x float> %44, splat (float f0x4F000000)
-  %46 = fpext nsz <2 x float> %45 to <2 x double>
-  %47 = fadd nsz <2 x double> %46, splat (double 5.000000e-01)
-  %48 = tail call nsz <2 x double> @llvm.floor.v2f64(<2 x double> %47)
-  %49 = fptosi <2 x double> %48 to <2 x i32>
+  %vec.ind53 = phi <4 x i32> [ %vec.ind.next55, %vector.body51 ], [ <i32 0, i32 1, i32 2, i32 3>, %vector.body44 ] ; 2 uses
+  %40 = uitofp nneg <4 x i32> %vec.ind53 to <4 x double>
+  %41 = fadd nnan nsz <4 x double> %40, splat (double 5.000000e-01)
+  %42 = fmul nnan nsz <4 x double> %41, splat (double f0x3F60C152382D7365)
+  %43 = fptrunc nsz <4 x double> %42 to <4 x float>
+  %44 = tail call nsz <4 x float> @llvm.sin.v4f32(<4 x float> %43)
+  %45 = fmul nsz <4 x float> %44, splat (float f0x4F000000)
+  %46 = fpext nsz <4 x float> %45 to <4 x double>
+  %47 = fadd nsz <4 x double> %46, splat (double 5.000000e-01)
+  %48 = tail call nsz <4 x double> @llvm.floor.v4f64(<4 x double> %47)
+  %49 = fptosi <4 x double> %48 to <4 x i32>
   %i.i = getelementptr inbounds nuw [4 x i8], ptr @sine_768_fixed, i64 %index52
-  store <2 x i32> %49, ptr %i.i, align 8, !tbaa !66
-  %index.next54 = add nuw i64 %index52, 2         ; 2 uses
-  %vec.ind.next55 = add <2 x i32> %vec.ind53, splat (i32 2)
+  store <4 x i32> %49, ptr %i.i, align 16, !tbaa !66
+  %index.next54 = add nuw i64 %index52, 4         ; 2 uses
+  %vec.ind.next55 = add <4 x i32> %vec.ind53, splat (i32 4)
   %i.j = icmp eq i64 %index.next54, 768
   br i1 %i.j, label %vector.body58, label %vector.body51, !llvm.loop !348
 
 vector.body58:                                    ; preds = %vector.body51, %vector.body58
   %index59 = phi i64 [ %index.next61, %vector.body58 ], [ 0, %vector.body51 ] ; 2 uses
-  %vec.ind60 = phi <2 x i32> [ %vec.ind.next62, %vector.body58 ], [ <i32 0, i32 1>, %vector.body51 ] ; 2 uses
-  %50 = uitofp nneg <2 x i32> %vec.ind60 to <2 x double>
-  %51 = fadd nnan nsz <2 x double> %50, splat (double 5.000000e-01)
-  %52 = fmul nnan nsz <2 x double> %51, splat (double f0x3F5ACEE9F37BEBD5)
-  %53 = fptrunc nsz <2 x double> %52 to <2 x float>
-  %54 = tail call nsz <2 x float> @llvm.sin.v2f32(<2 x float> %53)
-  %55 = fmul nsz <2 x float> %54, splat (float f0x4F000000)
-  %56 = fpext nsz <2 x float> %55 to <2 x double>
-  %57 = fadd nsz <2 x double> %56, splat (double 5.000000e-01)
-  %58 = tail call nsz <2 x double> @llvm.floor.v2f64(<2 x double> %57)
-  %59 = fptosi <2 x double> %58 to <2 x i32>
+  %vec.ind60 = phi <4 x i32> [ %vec.ind.next62, %vector.body58 ], [ <i32 0, i32 1, i32 2, i32 3>, %vector.body51 ] ; 2 uses
+  %50 = uitofp nneg <4 x i32> %vec.ind60 to <4 x double>
+  %51 = fadd nnan nsz <4 x double> %50, splat (double 5.000000e-01)
+  %52 = fmul nnan nsz <4 x double> %51, splat (double f0x3F5ACEE9F37BEBD5)
+  %53 = fptrunc nsz <4 x double> %52 to <4 x float>
+  %54 = tail call nsz <4 x float> @llvm.sin.v4f32(<4 x float> %53)
+  %55 = fmul nsz <4 x float> %54, splat (float f0x4F000000)
+  %56 = fpext nsz <4 x float> %55 to <4 x double>
+  %57 = fadd nsz <4 x double> %56, splat (double 5.000000e-01)
+  %58 = tail call nsz <4 x double> @llvm.floor.v4f64(<4 x double> %57)
+  %59 = fptosi <4 x double> %58 to <4 x i32>
   %i.k = getelementptr inbounds nuw [4 x i8], ptr @sine_960_fixed, i64 %index59
-  store <2 x i32> %59, ptr %i.k, align 8, !tbaa !66
-  %index.next61 = add nuw i64 %index59, 2         ; 2 uses
-  %vec.ind.next62 = add <2 x i32> %vec.ind60, splat (i32 2)
+  store <4 x i32> %59, ptr %i.k, align 16, !tbaa !66
+  %index.next61 = add nuw i64 %index59, 4         ; 2 uses
+  %vec.ind.next62 = add <4 x i32> %vec.ind60, splat (i32 4)
   %i.l = icmp eq i64 %index.next61, 960
   br i1 %i.l, label %vector.body65, label %vector.body58, !llvm.loop !349
 
 vector.body65:                                    ; preds = %vector.body58, %vector.body65
   %index66 = phi i64 [ %index.next68, %vector.body65 ], [ 0, %vector.body58 ] ; 2 uses
-  %vec.ind67 = phi <2 x i32> [ %vec.ind.next69, %vector.body65 ], [ <i32 0, i32 1>, %vector.body58 ] ; 2 uses
-  %60 = uitofp nneg <2 x i32> %vec.ind67 to <2 x double>
-  %61 = fadd nnan nsz <2 x double> %60, splat (double 5.000000e-01)
-  %62 = fmul nnan nsz <2 x double> %61, splat (double f0x3F5921FB54442D18)
-  %63 = fptrunc nsz <2 x double> %62 to <2 x float>
-  %64 = tail call nsz <2 x float> @llvm.sin.v2f32(<2 x float> %63)
-  %65 = fmul nsz <2 x float> %64, splat (float f0x4F000000)
-  %66 = fpext nsz <2 x float> %65 to <2 x double>
-  %67 = fadd nsz <2 x double> %66, splat (double 5.000000e-01)
-  %68 = tail call nsz <2 x double> @llvm.floor.v2f64(<2 x double> %67)
-  %69 = fptosi <2 x double> %68 to <2 x i32>
+  %vec.ind67 = phi <4 x i32> [ %vec.ind.next69, %vector.body65 ], [ <i32 0, i32 1, i32 2, i32 3>, %vector.body58 ] ; 2 uses
+  %60 = uitofp nneg <4 x i32> %vec.ind67 to <4 x double>
+  %61 = fadd nnan nsz <4 x double> %60, splat (double 5.000000e-01)
+  %62 = fmul nnan nsz <4 x double> %61, splat (double f0x3F5921FB54442D18)
+  %63 = fptrunc nsz <4 x double> %62 to <4 x float>
+  %64 = tail call nsz <4 x float> @llvm.sin.v4f32(<4 x float> %63)
+  %65 = fmul nsz <4 x float> %64, splat (float f0x4F000000)
+  %66 = fpext nsz <4 x float> %65 to <4 x double>
+  %67 = fadd nsz <4 x double> %66, splat (double 5.000000e-01)
+  %68 = tail call nsz <4 x double> @llvm.floor.v4f64(<4 x double> %67)
+  %69 = fptosi <4 x double> %68 to <4 x i32>
   %i.m = getelementptr inbounds nuw [4 x i8], ptr @sine_1024_fixed, i64 %index66
-  store <2 x i32> %69, ptr %i.m, align 8, !tbaa !66
-  %index.next68 = add nuw i64 %index66, 2         ; 2 uses
-  %vec.ind.next69 = add <2 x i32> %vec.ind67, splat (i32 2)
+  store <4 x i32> %69, ptr %i.m, align 16, !tbaa !66
+  %index.next68 = add nuw i64 %index66, 4         ; 2 uses
+  %vec.ind.next69 = add <4 x i32> %vec.ind67, splat (i32 4)
   %i.n = icmp eq i64 %index.next68, 1024
   br i1 %i.n, label %sine_window_init_fixed.exit28, label %vector.body65, !llvm.loop !350
 
@@ -377,10 +377,10 @@ declare void @llvm.assume(i1 noundef) #13
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.sin.v2f32(<2 x float>) #12
+declare <4 x float> @llvm.sin.v4f32(<4 x float>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.floor.v2f64(<2 x double>) #12
+declare <4 x double> @llvm.floor.v4f64(<4 x double>) #12
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

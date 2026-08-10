@@ -204,34 +204,18 @@ _ZN4ncnn3MatD2Ev.exit1952.i.us:                   ; preds = %_ZN4ncnn3MatD2Ev.ex
   br label %._crit_edge4913.i
 
 ._crit_edge4913.i:                                ; preds = %._crit_edge4913.loopexit.i, %_ZN4ncnn3MatD2Ev.exit1953.i
-  %i.blu = phi <8 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1953.i ], [ %i.blr, %._crit_edge4913.loopexit.i ] ; 4 uses
-  %i.blv = phi <8 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1953.i ], [ %i.bls, %._crit_edge4913.loopexit.i ] ; 4 uses
+  %i.blu = phi <8 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1953.i ], [ %i.blr, %._crit_edge4913.loopexit.i ] ; 2 uses
+  %i.blv = phi <8 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1953.i ], [ %i.bls, %._crit_edge4913.loopexit.i ] ; 2 uses
   %.01676.lcssa.i = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit1953.i ], [ %i.blt, %._crit_edge4913.loopexit.i ] ; 5 uses
   %.01670.lcssa.i = phi ptr [ %i.aup, %_ZN4ncnn3MatD2Ev.exit1953.i ], [ %.us-phi140, %._crit_edge4913.loopexit.i ] ; 3 uses
-  %10 = shufflevector <8 x i32> %i.blu, <8 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
   %i.blw = shufflevector <8 x i32> %i.blu, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %11 = add <4 x i32> %10, %i.blw                 ; 2 uses
-  %12 = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %13 = add <4 x i32> %12, %11
-  %14 = extractelement <4 x i32> %13, i64 0       ; 3 uses
-  %15 = shufflevector <8 x i32> %i.blu, <8 x i32> poison, <4 x i32> <i32 6, i32 7, i32 6, i32 7>
+  %10 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.blw) ; 3 uses
   %i.blx = shufflevector <8 x i32> %i.blu, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %16 = add <4 x i32> %15, %i.blx                 ; 2 uses
-  %17 = shufflevector <4 x i32> %16, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %18 = add <4 x i32> %17, %16
-  %19 = extractelement <4 x i32> %18, i64 0       ; 3 uses
-  %20 = shufflevector <8 x i32> %i.blv, <8 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
+  %11 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.blx) ; 3 uses
   %i.bly = shufflevector <8 x i32> %i.blv, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %21 = add <4 x i32> %20, %i.bly                 ; 2 uses
-  %22 = shufflevector <4 x i32> %21, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %23 = add <4 x i32> %22, %21
-  %24 = extractelement <4 x i32> %23, i64 0       ; 3 uses
-  %25 = shufflevector <8 x i32> %i.blv, <8 x i32> poison, <4 x i32> <i32 6, i32 7, i32 6, i32 7>
+  %12 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.bly) ; 3 uses
   %i.blz = shufflevector <8 x i32> %i.blv, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %26 = add <4 x i32> %25, %i.blz                 ; 2 uses
-  %27 = shufflevector <4 x i32> %26, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %28 = add <4 x i32> %27, %26
-  %29 = extractelement <4 x i32> %28, i64 0       ; 3 uses
+  %13 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.blz) ; 3 uses
   %i.bma = or disjoint i32 %.01676.lcssa.i, 1
   %i.bmb = icmp slt i32 %i.bma, %i.bic
   br i1 %i.bmb, label %_ZN4ncnn3MatD2Ev.exit1950.lr.ph.i, label %.preheader4383.i
@@ -287,10 +271,10 @@ _ZN4ncnn3MatD2Ev.exit1950.us.preheader.i:         ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 _ZN4ncnn3MatD2Ev.exit1950.us.i:                   ; preds = %._crit_edge4935.us.i, %_ZN4ncnn3MatD2Ev.exit1950.us.preheader.i
   %indvars.iv5750.i = phi i64 [ %i.bnf, %_ZN4ncnn3MatD2Ev.exit1950.us.preheader.i ], [ %indvars.iv.next5751.i, %._crit_edge4935.us.i ] ; 2 uses
-  %.016544946.us.i = phi i32 [ %14, %_ZN4ncnn3MatD2Ev.exit1950.us.preheader.i ], [ %.lcssa544, %._crit_edge4935.us.i ] ; 2 uses
-  %.016584945.us.i = phi i32 [ %24, %_ZN4ncnn3MatD2Ev.exit1950.us.preheader.i ], [ %.lcssa542, %._crit_edge4935.us.i ] ; 2 uses
-  %.016624944.us.i = phi i32 [ %19, %_ZN4ncnn3MatD2Ev.exit1950.us.preheader.i ], [ %.lcssa543, %._crit_edge4935.us.i ] ; 2 uses
-  %.016664943.us.i = phi i32 [ %29, %_ZN4ncnn3MatD2Ev.exit1950.us.preheader.i ], [ %.lcssa541, %._crit_edge4935.us.i ] ; 2 uses
+  %.016544946.us.i = phi i32 [ %10, %_ZN4ncnn3MatD2Ev.exit1950.us.preheader.i ], [ %.lcssa544, %._crit_edge4935.us.i ] ; 2 uses
+  %.016584945.us.i = phi i32 [ %12, %_ZN4ncnn3MatD2Ev.exit1950.us.preheader.i ], [ %.lcssa542, %._crit_edge4935.us.i ] ; 2 uses
+  %.016624944.us.i = phi i32 [ %11, %_ZN4ncnn3MatD2Ev.exit1950.us.preheader.i ], [ %.lcssa543, %._crit_edge4935.us.i ] ; 2 uses
+  %.016664943.us.i = phi i32 [ %13, %_ZN4ncnn3MatD2Ev.exit1950.us.preheader.i ], [ %.lcssa541, %._crit_edge4935.us.i ] ; 2 uses
   %.216724942.us.i = phi ptr [ %.01670.lcssa.i, %_ZN4ncnn3MatD2Ev.exit1950.us.preheader.i ], [ %scevgep5746.i, %._crit_edge4935.us.i ] ; 4 uses
   %.reass4954.us.i = mul i64 %factor.op.mul4953.i, %indvars.iv5750.i ; 2 uses
   %gep4957.us.i = getelementptr i8, ptr %invariant.gep4956.i, i64 %.reass4954.us.i ; 9 uses
@@ -559,10 +543,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 .preheader4383.i:                                 ; preds = %._crit_edge4935.us.i, %_ZN4ncnn3MatD2Ev.exit1950.preheader.i, %._crit_edge4913.i
   %.11677.lcssa.i = phi i32 [ %.01676.lcssa.i, %._crit_edge4913.i ], [ %i.bnb, %_ZN4ncnn3MatD2Ev.exit1950.preheader.i ], [ %i.bve, %._crit_edge4935.us.i ] ; 2 uses
   %.21672.lcssa.i = phi ptr [ %.01670.lcssa.i, %._crit_edge4913.i ], [ %.01670.lcssa.i, %_ZN4ncnn3MatD2Ev.exit1950.preheader.i ], [ %scevgep5746.i, %._crit_edge4935.us.i ]
-  %.01666.lcssa.i = phi i32 [ %29, %._crit_edge4913.i ], [ %29, %_ZN4ncnn3MatD2Ev.exit1950.preheader.i ], [ %.lcssa541, %._crit_edge4935.us.i ] ; 3 uses
-  %.01662.lcssa.i = phi i32 [ %19, %._crit_edge4913.i ], [ %19, %_ZN4ncnn3MatD2Ev.exit1950.preheader.i ], [ %.lcssa543, %._crit_edge4935.us.i ] ; 3 uses
-  %.01658.lcssa.i = phi i32 [ %24, %._crit_edge4913.i ], [ %24, %_ZN4ncnn3MatD2Ev.exit1950.preheader.i ], [ %.lcssa542, %._crit_edge4935.us.i ] ; 3 uses
-  %.01654.lcssa.i = phi i32 [ %14, %._crit_edge4913.i ], [ %14, %_ZN4ncnn3MatD2Ev.exit1950.preheader.i ], [ %.lcssa544, %._crit_edge4935.us.i ] ; 3 uses
+  %.01666.lcssa.i = phi i32 [ %13, %._crit_edge4913.i ], [ %13, %_ZN4ncnn3MatD2Ev.exit1950.preheader.i ], [ %.lcssa541, %._crit_edge4935.us.i ] ; 3 uses
+  %.01662.lcssa.i = phi i32 [ %11, %._crit_edge4913.i ], [ %11, %_ZN4ncnn3MatD2Ev.exit1950.preheader.i ], [ %.lcssa543, %._crit_edge4935.us.i ] ; 3 uses
+  %.01658.lcssa.i = phi i32 [ %12, %._crit_edge4913.i ], [ %12, %_ZN4ncnn3MatD2Ev.exit1950.preheader.i ], [ %.lcssa542, %._crit_edge4935.us.i ] ; 3 uses
+  %.01654.lcssa.i = phi i32 [ %10, %._crit_edge4913.i ], [ %10, %_ZN4ncnn3MatD2Ev.exit1950.preheader.i ], [ %.lcssa544, %._crit_edge4935.us.i ] ; 3 uses
   %i.bvh = icmp slt i32 %.11677.lcssa.i, %i.bic
   br i1 %i.bvh, label %_ZN4ncnn3MatD2Ev.exit1948.lr.ph.i, label %._crit_edge4988.i
 
@@ -965,21 +949,13 @@ bb.u:                                             ; preds = %bb.u, %_ZN4ncnn3Mat
   br label %._crit_edge5025.i
 
 ._crit_edge5025.i:                                ; preds = %._crit_edge5025.loopexit5410.i, %._crit_edge5025.loopexit.i, %_ZN4ncnn3MatD2Ev.exit1945.preheader.i, %_ZN4ncnn3MatD2Ev.exit1946.i
-  %i.clf = phi <8 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1946.i ], [ %.lcssa1078, %._crit_edge5025.loopexit.i ], [ %i.cky, %._crit_edge5025.loopexit5410.i ], [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1945.preheader.i ] ; 4 uses
+  %i.clf = phi <8 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1946.i ], [ %.lcssa1078, %._crit_edge5025.loopexit.i ], [ %i.cky, %._crit_edge5025.loopexit5410.i ], [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1945.preheader.i ] ; 2 uses
   %.01697.lcssa.i = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit1946.i ], [ %i.cld, %._crit_edge5025.loopexit.i ], [ %i.cle, %._crit_edge5025.loopexit5410.i ], [ %i.cij, %_ZN4ncnn3MatD2Ev.exit1945.preheader.i ] ; 6 uses
   %.01691.lcssa.i = phi ptr [ %i.bhs, %_ZN4ncnn3MatD2Ev.exit1946.i ], [ %scevgep5773.i, %._crit_edge5025.loopexit.i ], [ %scevgep5766.i, %._crit_edge5025.loopexit5410.i ], [ %i.bhs, %_ZN4ncnn3MatD2Ev.exit1945.preheader.i ] ; 3 uses
-  %30 = shufflevector <8 x i32> %i.clf, <8 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
   %i.clg = shufflevector <8 x i32> %i.clf, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %31 = add <4 x i32> %30, %i.clg                 ; 2 uses
-  %32 = shufflevector <4 x i32> %31, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %33 = add <4 x i32> %32, %31
-  %34 = extractelement <4 x i32> %33, i64 0       ; 3 uses
-  %35 = shufflevector <8 x i32> %i.clf, <8 x i32> poison, <4 x i32> <i32 6, i32 7, i32 6, i32 7>
+  %14 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.clg) ; 3 uses
   %i.clh = shufflevector <8 x i32> %i.clf, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %36 = add <4 x i32> %35, %i.clh                 ; 2 uses
-  %37 = shufflevector <4 x i32> %36, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %38 = add <4 x i32> %37, %36
-  %39 = extractelement <4 x i32> %38, i64 0       ; 3 uses
+  %15 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.clh) ; 3 uses
   %i.cli = or disjoint i32 %.01697.lcssa.i, 1
   %i.clj = icmp slt i32 %i.cli, %i.chp
   br i1 %i.clj, label %_ZN4ncnn3MatD2Ev.exit1944.lr.ph.i, label %.preheader4382.i
@@ -1036,8 +1012,8 @@ _ZN4ncnn3MatD2Ev.exit1944.us.preheader.i:         ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 iter.check694:                                    ; preds = %._crit_edge5052.us.i, %_ZN4ncnn3MatD2Ev.exit1944.us.preheader.i
   %indvars.iv5785.i = phi i64 [ %i.cmj, %_ZN4ncnn3MatD2Ev.exit1944.us.preheader.i ], [ %indvars.iv.next5786.i, %._crit_edge5052.us.i ] ; 2 uses
-  %.016835059.us.i = phi i32 [ %34, %_ZN4ncnn3MatD2Ev.exit1944.us.preheader.i ], [ %.lcssa556, %._crit_edge5052.us.i ] ; 3 uses
-  %.016875058.us.i = phi i32 [ %39, %_ZN4ncnn3MatD2Ev.exit1944.us.preheader.i ], [ %.lcssa555, %._crit_edge5052.us.i ] ; 3 uses
+  %.016835059.us.i = phi i32 [ %14, %_ZN4ncnn3MatD2Ev.exit1944.us.preheader.i ], [ %.lcssa556, %._crit_edge5052.us.i ] ; 3 uses
+  %.016875058.us.i = phi i32 [ %15, %_ZN4ncnn3MatD2Ev.exit1944.us.preheader.i ], [ %.lcssa555, %._crit_edge5052.us.i ] ; 3 uses
   %.216935057.us.i = phi ptr [ %.01691.lcssa.i, %_ZN4ncnn3MatD2Ev.exit1944.us.preheader.i ], [ %scevgep5781.i, %._crit_edge5052.us.i ] ; 7 uses
   %.reass5065.us.i = mul i64 %factor.op.mul5064.i, %indvars.iv5785.i
   %gep5068.us.i = getelementptr i8, ptr %invariant.gep5067.i, i64 %.reass5065.us.i ; 21 uses
@@ -1414,8 +1390,8 @@ vec.epilog.scalar.ph695:                          ; preds = %vec.epilog.scalar.p
 .preheader4382.i:                                 ; preds = %._crit_edge5052.us.i, %_ZN4ncnn3MatD2Ev.exit1944.preheader.i, %._crit_edge5025.i
   %.11698.lcssa.i = phi i32 [ %.01697.lcssa.i, %._crit_edge5025.i ], [ %i.cmf, %_ZN4ncnn3MatD2Ev.exit1944.preheader.i ], [ %i.cxl, %._crit_edge5052.us.i ] ; 2 uses
   %.21693.lcssa.i = phi ptr [ %.01691.lcssa.i, %._crit_edge5025.i ], [ %.01691.lcssa.i, %_ZN4ncnn3MatD2Ev.exit1944.preheader.i ], [ %scevgep5781.i, %._crit_edge5052.us.i ]
-  %.01687.lcssa.i = phi i32 [ %39, %._crit_edge5025.i ], [ %39, %_ZN4ncnn3MatD2Ev.exit1944.preheader.i ], [ %.lcssa555, %._crit_edge5052.us.i ] ; 3 uses
-  %.01683.lcssa.i = phi i32 [ %34, %._crit_edge5025.i ], [ %34, %_ZN4ncnn3MatD2Ev.exit1944.preheader.i ], [ %.lcssa556, %._crit_edge5052.us.i ] ; 3 uses
+  %.01687.lcssa.i = phi i32 [ %15, %._crit_edge5025.i ], [ %15, %_ZN4ncnn3MatD2Ev.exit1944.preheader.i ], [ %.lcssa555, %._crit_edge5052.us.i ] ; 3 uses
+  %.01683.lcssa.i = phi i32 [ %14, %._crit_edge5025.i ], [ %14, %_ZN4ncnn3MatD2Ev.exit1944.preheader.i ], [ %.lcssa556, %._crit_edge5052.us.i ] ; 3 uses
   %i.cxo = icmp slt i32 %.11698.lcssa.i, %i.chp
   br i1 %i.cxo, label %_ZN4ncnn3MatD2Ev.exit1943.lr.ph.i, label %._crit_edge5086.i
 
@@ -1818,23 +1794,15 @@ _ZN4ncnn3MatD2Ev.exit1927.i.us:                   ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.dza = phi <4 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1927.lr.ph.i ], [ %.lcssa994, %._crit_edge5229.loopexit.i.us.us ], [ %i.dyu, %._crit_edge5229.loopexit5396.i.us ]
   %.us-phi156 = phi ptr [ %i.did, %_ZN4ncnn3MatD2Ev.exit1927.lr.ph.i ], [ %scevgep5843.i.us.us, %._crit_edge5229.loopexit.i.us.us ], [ %scevgep5836.i.us, %._crit_edge5229.loopexit5396.i.us ]
   %i.dzb = and i32 %i.duh, 2147483640
+  %16 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.dyz)
+  %17 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.dza)
   br label %._crit_edge5240.i
 
 ._crit_edge5240.i:                                ; preds = %._crit_edge5240.loopexit.i, %_ZN4ncnn3MatD2Ev.exit1928.i
-  %40 = phi <4 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1928.i ], [ %i.dyz, %._crit_edge5240.loopexit.i ] ; 2 uses
-  %41 = phi <4 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1928.i ], [ %i.dza, %._crit_edge5240.loopexit.i ] ; 2 uses
+  %18 = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit1928.i ], [ %16, %._crit_edge5240.loopexit.i ] ; 3 uses
+  %19 = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit1928.i ], [ %17, %._crit_edge5240.loopexit.i ] ; 3 uses
   %.01611.lcssa.i = phi ptr [ %i.did, %_ZN4ncnn3MatD2Ev.exit1928.i ], [ %.us-phi156, %._crit_edge5240.loopexit.i ] ; 3 uses
   %.01608.lcssa.i = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit1928.i ], [ %i.dzb, %._crit_edge5240.loopexit.i ] ; 5 uses
-  %42 = shufflevector <4 x i32> %40, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
-  %43 = add <4 x i32> %42, %40                    ; 2 uses
-  %44 = shufflevector <4 x i32> %43, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %45 = add <4 x i32> %44, %43
-  %46 = extractelement <4 x i32> %45, i64 0       ; 3 uses
-  %47 = shufflevector <4 x i32> %41, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
-  %48 = add <4 x i32> %47, %41                    ; 2 uses
-  %49 = shufflevector <4 x i32> %48, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %50 = add <4 x i32> %49, %48
-  %51 = extractelement <4 x i32> %50, i64 0       ; 3 uses
   %i.dzc = or disjoint i32 %.01608.lcssa.i, 1
   %i.dzd = icmp slt i32 %i.dzc, %i.duh
   br i1 %i.dzd, label %_ZN4ncnn3MatD2Ev.exit1925.lr.ph.i, label %.preheader4378.i
@@ -1897,8 +1865,8 @@ _ZN4ncnn3MatD2Ev.exit1925.us.preheader.i:         ; preds = %_ZN4ncnn3MatD2Ev.ex
 iter.check958:                                    ; preds = %._crit_edge5260.us.i, %_ZN4ncnn3MatD2Ev.exit1925.us.preheader.i
   %indvars.iv5854.i = phi i64 [ %i.eah, %_ZN4ncnn3MatD2Ev.exit1925.us.preheader.i ], [ %indvars.iv.next5855.i, %._crit_edge5260.us.i ] ; 2 uses
   %.216135266.us.i = phi ptr [ %.01611.lcssa.i, %_ZN4ncnn3MatD2Ev.exit1925.us.preheader.i ], [ %scevgep5850.i, %._crit_edge5260.us.i ] ; 7 uses
-  %.016175265.us.i = phi i32 [ %51, %_ZN4ncnn3MatD2Ev.exit1925.us.preheader.i ], [ %.lcssa509, %._crit_edge5260.us.i ] ; 3 uses
-  %.016215264.us.i = phi i32 [ %46, %_ZN4ncnn3MatD2Ev.exit1925.us.preheader.i ], [ %.lcssa510, %._crit_edge5260.us.i ] ; 3 uses
+  %.016175265.us.i = phi i32 [ %19, %_ZN4ncnn3MatD2Ev.exit1925.us.preheader.i ], [ %.lcssa509, %._crit_edge5260.us.i ] ; 3 uses
+  %.016215264.us.i = phi i32 [ %18, %_ZN4ncnn3MatD2Ev.exit1925.us.preheader.i ], [ %.lcssa510, %._crit_edge5260.us.i ] ; 3 uses
   %.reass5273.us.i = mul i64 %factor.op.mul5272.i, %indvars.iv5854.i ; 2 uses
   %gep5276.us.i = getelementptr i8, ptr %invariant.gep5275.i, i64 %.reass5273.us.i ; 25 uses
   %gep5281.us.i = getelementptr i8, ptr %invariant.gep5280.i, i64 %.reass5273.us.i ; 25 uses
@@ -2301,8 +2269,8 @@ vec.epilog.scalar.ph959:                          ; preds = %vec.epilog.scalar.p
   br i1 %i.esn, label %iter.check958, label %.preheader4378.i, !llvm.loop !275
 
 .preheader4378.i:                                 ; preds = %._crit_edge5260.us.i, %_ZN4ncnn3MatD2Ev.exit1925.preheader.i, %._crit_edge5240.i
-  %.01621.lcssa.i = phi i32 [ %46, %._crit_edge5240.i ], [ %46, %_ZN4ncnn3MatD2Ev.exit1925.preheader.i ], [ %.lcssa510, %._crit_edge5260.us.i ] ; 3 uses
-  %.01617.lcssa.i = phi i32 [ %51, %._crit_edge5240.i ], [ %51, %_ZN4ncnn3MatD2Ev.exit1925.preheader.i ], [ %.lcssa509, %._crit_edge5260.us.i ] ; 3 uses
+  %.01621.lcssa.i = phi i32 [ %18, %._crit_edge5240.i ], [ %18, %_ZN4ncnn3MatD2Ev.exit1925.preheader.i ], [ %.lcssa510, %._crit_edge5260.us.i ] ; 3 uses
+  %.01617.lcssa.i = phi i32 [ %19, %._crit_edge5240.i ], [ %19, %_ZN4ncnn3MatD2Ev.exit1925.preheader.i ], [ %.lcssa509, %._crit_edge5260.us.i ] ; 3 uses
   %.21613.lcssa.i = phi ptr [ %.01611.lcssa.i, %._crit_edge5240.i ], [ %.01611.lcssa.i, %_ZN4ncnn3MatD2Ev.exit1925.preheader.i ], [ %scevgep5850.i, %._crit_edge5260.us.i ]
   %.11609.lcssa.i = phi i32 [ %.01608.lcssa.i, %._crit_edge5240.i ], [ %i.ead, %_ZN4ncnn3MatD2Ev.exit1925.preheader.i ], [ %i.esl, %._crit_edge5260.us.i ] ; 2 uses
   %i.eso = icmp slt i32 %.11609.lcssa.i, %i.duh
@@ -2705,14 +2673,10 @@ _ZN4ncnn3MatD2Ev.exit1920.us.i.new:               ; preds = %_ZN4ncnn3MatD2Ev.ex
   br label %._crit_edge5330.i
 
 ._crit_edge5330.i:                                ; preds = %._crit_edge5330.loopexit5400.i, %._crit_edge5330.loopexit.i, %_ZN4ncnn3MatD2Ev.exit1920.preheader.i, %_ZN4ncnn3MatD2Ev.exit1921.i
-  %i.fii = phi <4 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1921.i ], [ %.lcssa1016, %._crit_edge5330.loopexit.i ], [ %.lcssa1015, %._crit_edge5330.loopexit5400.i ], [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1920.preheader.i ] ; 2 uses
+  %i.fii = phi <4 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1921.i ], [ %.lcssa1016, %._crit_edge5330.loopexit.i ], [ %.lcssa1015, %._crit_edge5330.loopexit5400.i ], [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1920.preheader.i ]
   %.01553.lcssa.i = phi ptr [ %i.dub, %_ZN4ncnn3MatD2Ev.exit1921.i ], [ %scevgep5877.i, %._crit_edge5330.loopexit.i ], [ %scevgep5870.i, %._crit_edge5330.loopexit5400.i ], [ %i.dub, %_ZN4ncnn3MatD2Ev.exit1920.preheader.i ] ; 3 uses
   %.01550.lcssa.i = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit1921.i ], [ %i.fig, %._crit_edge5330.loopexit.i ], [ %i.fih, %._crit_edge5330.loopexit5400.i ], [ %i.fef, %_ZN4ncnn3MatD2Ev.exit1920.preheader.i ] ; 6 uses
-  %52 = shufflevector <4 x i32> %i.fii, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
-  %53 = add <4 x i32> %52, %i.fii                 ; 2 uses
-  %54 = shufflevector <4 x i32> %53, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %55 = add <4 x i32> %54, %53
-  %56 = extractelement <4 x i32> %55, i64 0       ; 3 uses
+  %20 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.fii) ; 3 uses
   %i.fij = or disjoint i32 %.01550.lcssa.i, 1
   %i.fik = icmp slt i32 %i.fij, %i.fdl
   br i1 %i.fik, label %_ZN4ncnn3MatD2Ev.exit1919.lr.ph.i, label %.preheader.i
@@ -2770,7 +2734,7 @@ _ZN4ncnn3MatD2Ev.exit1919.us.preheader.i:         ; preds = %_ZN4ncnn3MatD2Ev.ex
 iter.check867:                                    ; preds = %._crit_edge5356.us.i, %_ZN4ncnn3MatD2Ev.exit1919.us.preheader.i
   %indvars.iv5889.i = phi i64 [ %i.fjk, %_ZN4ncnn3MatD2Ev.exit1919.us.preheader.i ], [ %indvars.iv.next5890.i, %._crit_edge5356.us.i ] ; 2 uses
   %.215555360.us.i = phi ptr [ %.01553.lcssa.i, %_ZN4ncnn3MatD2Ev.exit1919.us.preheader.i ], [ %scevgep5885.i, %._crit_edge5356.us.i ] ; 7 uses
-  %.015595359.us.i = phi i32 [ %56, %_ZN4ncnn3MatD2Ev.exit1919.us.preheader.i ], [ %.lcssa518, %._crit_edge5356.us.i ] ; 3 uses
+  %.015595359.us.i = phi i32 [ %20, %_ZN4ncnn3MatD2Ev.exit1919.us.preheader.i ], [ %.lcssa518, %._crit_edge5356.us.i ] ; 3 uses
   %.reass5366.us.i = mul i64 %factor.op.mul5365.i, %indvars.iv5889.i
   %gep5369.us.i = getelementptr i8, ptr %invariant.gep5368.i, i64 %.reass5366.us.i ; 25 uses
   br i1 %min.iters.check843, label %vec.epilog.scalar.ph868.preheader, label %vector.main.loop.iter.check844
@@ -3138,7 +3102,7 @@ vec.epilog.scalar.ph868:                          ; preds = %vec.epilog.scalar.p
   br i1 %i.fuw, label %iter.check867, label %.preheader.i, !llvm.loop !295
 
 .preheader.i:                                     ; preds = %._crit_edge5356.us.i, %_ZN4ncnn3MatD2Ev.exit1919.preheader.i, %._crit_edge5330.i
-  %.01559.lcssa.i = phi i32 [ %56, %._crit_edge5330.i ], [ %56, %_ZN4ncnn3MatD2Ev.exit1919.preheader.i ], [ %.lcssa518, %._crit_edge5356.us.i ] ; 3 uses
+  %.01559.lcssa.i = phi i32 [ %20, %._crit_edge5330.i ], [ %20, %_ZN4ncnn3MatD2Ev.exit1919.preheader.i ], [ %.lcssa518, %._crit_edge5356.us.i ] ; 3 uses
   %.21555.lcssa.i = phi ptr [ %.01553.lcssa.i, %._crit_edge5330.i ], [ %.01553.lcssa.i, %_ZN4ncnn3MatD2Ev.exit1919.preheader.i ], [ %scevgep5885.i, %._crit_edge5356.us.i ]
   %.11551.lcssa.i = phi i32 [ %.01550.lcssa.i, %._crit_edge5330.i ], [ %i.fjg, %_ZN4ncnn3MatD2Ev.exit1919.preheader.i ], [ %i.fuu, %._crit_edge5356.us.i ] ; 2 uses
   %i.fux = icmp slt i32 %.11551.lcssa.i, %i.fdl
