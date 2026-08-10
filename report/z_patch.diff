@@ -1,0 +1,107 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineMulDivRem.cpp b/llvm/lib/Transforms/InstCombine/InstCombineMulDivRem.cpp
+index f63bff2f16e7a..bbd4cd297e487 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineMulDivRem.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineMulDivRem.cpp
+@@ -263,6 +263,29 @@ Instruction *InstCombinerImpl::visitMul(BinaryOperator &I) {
+     }
+   }
+ 
++  // mul (select (icmp ugt X, 1) (1, add nuw nsw X, 1)), Y  ->
++  // shl Y, zext (icmp eq X, 1)
++  {
++
++    Value *X = nullptr, *Y = nullptr;
++    Instruction *Add = nullptr;
++
++    if (match(&I, m_c_Mul(m_Select(m_SpecificICmp(ICmpInst::ICMP_UGT,
++                                                  m_Value(X), m_One()),
++                                   m_One(),
++                                   m_CombineAnd(m_Add(m_Deferred(X), m_One()),
++                                                m_Instruction(Add))),
++                          m_Value(Y)))) {
++
++      if (Add->hasNoUnsignedWrap() && Add->hasNoSignedWrap()) {
++        auto *ICmpEq = Builder.CreateICmp(ICmpInst::ICMP_EQ, X,
++                                          ConstantInt::get(X->getType(), 1));
++        auto *Zext = Builder.CreateZExt(ICmpEq, Y->getType());
++        return BinaryOperator::CreateShl(Y, Zext);
++      }
++    }
++  }
++
+   // mul (shr exact X, N), (2^N + 1) -> add (X, shr exact (X, N))
+   {
+     Value *NewOp;
+diff --git a/llvm/test/Transforms/InstCombine/mul.ll b/llvm/test/Transforms/InstCombine/mul.ll
+index f0bb1e90ec069..f4df4b974afbe 100644
+--- a/llvm/test/Transforms/InstCombine/mul.ll
++++ b/llvm/test/Transforms/InstCombine/mul.ll
+@@ -2519,6 +2519,68 @@ define i1 @neg_mul_add_one_i1(i1 %x, i1 %y) {
+   ret i1 %ret
+ }
+ 
++; fold mul (select (icmp ugt X, 1) (1, add nuw nsw X, 1)), Y  -> shl Y, zext (icmp eq X, 1)
++define i16 @mul_select_ugt(i16 noundef %x, i16 noundef %y) {
++; CHECK-LABEL: @mul_select_ugt(
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i16 [[X:%.*]], 1
++; CHECK-NEXT:    [[TMP2:%.*]] = zext i1 [[TMP1]] to i16
++; CHECK-NEXT:    [[TMP4:%.*]] = shl i16 [[Y:%.*]], [[TMP2]]
++; CHECK-NEXT:    ret i16 [[TMP4]]
++;
++  %3 = add nuw nsw i16 %x, 1
++  %4 = icmp ugt i16 %x, 1
++  %5 = select i1 %4, i16 1, i16 %3
++  %6 = mul i16 %5, %y
++  ret i16 %6
++}
++
++; commuted mul
++define i32 @mul_select_ugt_commuted(i32 %x, i32 %y) {
++; CHECK-LABEL: @mul_select_ugt_commuted(
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i32 [[X:%.*]], 1
++; CHECK-NEXT:    [[TMP2:%.*]] = zext i1 [[TMP1]] to i32
++; CHECK-NEXT:    [[MUL:%.*]] = shl i32 [[Y:%.*]], [[TMP2]]
++; CHECK-NEXT:    ret i32 [[MUL]]
++;
++  %cmp = icmp ugt i32 %x, 1
++  %add = add nuw nsw i32 %x, 1
++  %sel = select i1 %cmp, i32 1, i32 %add
++  %mul = mul i32 %y, %sel
++  ret i32 %mul
++}
++
++; negative test - swapped select arms
++define i32 @mul_select_ugt_swapped(i32 %x, i32 %y) {
++; CHECK-LABEL: @mul_select_ugt_swapped(
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ugt i32 [[X:%.*]], 1
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i32 [[X]], 1
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[CMP]], i32 [[ADD]], i32 1
++; CHECK-NEXT:    [[MUL:%.*]] = mul i32 [[SEL]], [[Y:%.*]]
++; CHECK-NEXT:    ret i32 [[MUL]]
++;
++  %cmp = icmp ugt i32 %x, 1
++  %add = add nuw nsw i32 %x, 1
++  %sel = select i1 %cmp, i32 %add, i32 1
++  %mul = mul i32 %sel, %y
++  ret i32 %mul
++}
++
++; negative test - wrong add constant
++define i32 @mul_select_ugt_wrong_add(i32 %x, i32 %y) {
++; CHECK-LABEL: @mul_select_ugt_wrong_add(
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ugt i32 [[X:%.*]], 1
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i32 [[X]], 2
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[CMP]], i32 1, i32 [[ADD]]
++; CHECK-NEXT:    [[MUL:%.*]] = mul i32 [[SEL]], [[Y:%.*]]
++; CHECK-NEXT:    ret i32 [[MUL]]
++;
++  %cmp = icmp ugt i32 %x, 1
++  %add = add nuw nsw i32 %x, 2
++  %sel = select i1 %cmp, i32 1, i32 %add
++  %mul = mul i32 %sel, %y
++  ret i32 %mul
++}
++
+ !0 = !{!"function_entry_count", i64 1000}
+ ;.
+ ; CHECK: attributes #[[ATTR0:[0-9]+]] = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
