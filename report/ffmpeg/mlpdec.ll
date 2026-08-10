@@ -204,7 +204,7 @@ bb.hd:                                            ; preds = %read_block_data.exi
   %i.axb = load i32, ptr %i.w, align 8, !tbaa !49 ; 5 uses
   %i.axc = icmp slt i32 %.val226, %i.axb
   %i.axd = zext i1 %i.axc to i32
-  %spec.select.i284 = add nsw i32 %.val226, %i.axd ; 4 uses
+  %spec.select.i284 = add nsw i32 %.val226, %i.axd ; 3 uses
   %i.axe = zext i8 %i.axa to i32
   %i.axf = and i32 %.val226, 7
   store i32 %spec.select.i284, ptr %i.x, align 8, !tbaa !50
@@ -214,10 +214,9 @@ bb.hd:                                            ; preds = %read_block_data.exi
   br i1 %.not210, label %bb.bx, label %bb.he, !llvm.loop !139
 
 bb.he:                                            ; preds = %bb.hd
-  %7 = sub nsw i32 0, %spec.select.i284
-  %i.axi = and i32 %7, 15
-  %8 = add nsw i32 %i.axi, %spec.select.i284
-  %i.axj = call i32 @llvm.umin.i32(i32 %i.axb, i32 %8) ; 6 uses
+  %7 = add nsw i32 %spec.select.i284, 15
+  %i.axi = and i32 %7, -16
+  %i.axj = call i32 @llvm.umin.i32(i32 %i.axb, i32 %i.axi) ; 6 uses
   store i32 %i.axj, ptr %i.x, align 8, !tbaa !50
   %i.axk = sub nsw i32 %i.lc, %i.axj
   %i.axl = icmp sgt i32 %i.axk, 31

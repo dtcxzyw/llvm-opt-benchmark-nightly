@@ -204,10 +204,9 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not93.i, label %Xz_ReadIndex2.exit, label %bb.k
 
 .loopexit.i:                                      ; preds = %bb.k, %bb.i
-  %.579.i = phi i64 [ %i.r, %bb.i ], [ %i.ae, %bb.k ] ; 7 uses
-  %4 = sub i64 0, %.579.i
-  %i.ar = and i64 %4, 3
-  %5 = add i64 %i.ar, %.579.i
+  %.579.i = phi i64 [ %i.r, %bb.i ], [ %i.ae, %bb.k ] ; 6 uses
+  %4 = add i64 %.579.i, 3
+  %i.ar = and i64 %4, -4
   %i.as = and i64 %.579.i, 3
   %.not87.i36 = icmp eq i64 %i.as, 0
   br i1 %.not87.i36, label %._crit_edge, label %.lr.ph
@@ -255,7 +254,7 @@ bb.p:                                             ; preds = %.lr.ph.2
   br i1 %.not88.i, label %bb.n, label %Xz_ReadIndex2.exit, !llvm.loop !53
 
 ._crit_edge:                                      ; preds = %bb.n, %bb.o, %bb.p, %.lr.ph.3, %.loopexit.i
-  %i.bh = icmp eq i64 %5, %i.j
+  %i.bh = icmp eq i64 %i.ar, %i.j
   %i.bi = select i1 %i.bh, i32 0, i32 16
   br label %Xz_ReadIndex2.exit
 

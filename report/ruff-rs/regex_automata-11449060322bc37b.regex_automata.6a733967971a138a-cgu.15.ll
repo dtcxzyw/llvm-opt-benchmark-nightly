@@ -203,7 +203,7 @@ bb.a:
   br i1 %i.g, label %.loopexit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %bb.b
-  %.sroa.02.08.i.i = phi i64 [ %i.k, %bb.b ], [ 0, %bb.a ] ; 5 uses
+  %.sroa.02.08.i.i = phi i64 [ %i.k, %bb.b ], [ 0, %bb.a ] ; 4 uses
   %i.h = phi ptr [ %i.j, %bb.b ], [ %1, %bb.a ]   ; 2 uses
   %.val.i.i = load i8, ptr %i.h, align 1, !alias.scope !336, !noalias !338, !noundef !3
   %i.i = icmp eq i8 %.val.i.i, 0
@@ -218,10 +218,9 @@ bb.b:                                             ; preds = %.lr.ph.i.i
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.m = icmp samesign ult i64 %.sroa.02.08.i.i, %.sroa.0.0.i.i
   tail call void @llvm.assume(i1 %i.m)
-  %3 = sub nsw i64 0, %.sroa.02.08.i.i
-  %i.n = and i64 %3, 3
-  %4 = add nuw nsw i64 %i.n, %.sroa.02.08.i.i     ; 3 uses
-  %i.o = icmp samesign ult i64 %2, %4
+  %3 = add nuw nsw i64 %.sroa.02.08.i.i, 3
+  %i.n = and i64 %3, 9223372036854775804          ; 3 uses
+  %i.o = icmp samesign ult i64 %2, %i.n
   br i1 %i.o, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -254,7 +253,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.aj
 
 bb.f:                                             ; preds = %bb.e
-  %i.z = sub nuw nsw i64 %2, %4
+  %i.z = sub nuw nsw i64 %2, %i.n
   %i.aa = icmp samesign ult i64 %i.z, 4
   br i1 %i.aa, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire12try_read_u32.exit.i, label %bb.g
 
@@ -265,7 +264,7 @@ _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire12try_read_u32.exit.i: ; preds =
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.f
-  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 %4
+  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 %i.n
   %.sroa.02.0.copyload.i.i.i = load i32, ptr %i.ab, align 1, !alias.scope !342, !noalias !349 ; 2 uses
   %i.ac = icmp eq i32 %.sroa.02.0.copyload.i.i.i, 65279
   br i1 %i.ac, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire21read_endianness_check.exit, label %bb.h
@@ -668,7 +667,7 @@ bb.a:
   br i1 %i.b, label %.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %bb.b
-  %.sroa.02.08.i = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 5 uses
+  %.sroa.02.08.i = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 4 uses
   %i.c = phi ptr [ %i.e, %bb.b ], [ %1, %bb.a ]   ; 2 uses
   %.val.i = load i8, ptr %i.c, align 1, !noalias !472, !noundef !3
   %i.d = icmp eq i8 %.val.i, 0
@@ -683,10 +682,9 @@ bb.b:                                             ; preds = %.lr.ph.i
 bb.c:                                             ; preds = %.lr.ph.i
   %i.h = icmp samesign ult i64 %.sroa.02.08.i, %.sroa.0.0.i
   tail call void @llvm.assume(i1 %i.h)
-  %5 = sub nsw i64 0, %.sroa.02.08.i
-  %i.i = and i64 %5, 3
-  %6 = add nuw nsw i64 %i.i, %.sroa.02.08.i       ; 2 uses
-  %i.j = icmp samesign ult i64 %2, %6
+  %5 = add nuw nsw i64 %.sroa.02.08.i, 3
+  %i.i = and i64 %5, 9223372036854775804          ; 2 uses
+  %i.j = icmp samesign ult i64 %2, %i.i
   br i1 %i.j, label %bb.d, label %bb.e
 
 .loopexit:                                        ; preds = %bb.b, %bb.a
@@ -724,7 +722,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %6, ptr %i.l, align 8
+  store i64 %i.i, ptr %i.l, align 8
   store i32 -1, ptr %0, align 8
   br label %bb.i
 
