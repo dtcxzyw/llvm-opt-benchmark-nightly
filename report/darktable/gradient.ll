@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = select i1 %.not71, ptr @.str.12, ptr @.str.11
   %i.k = tail call reassoc nsz arcp contract afn float @dt_conf_get_float(ptr noundef nonnull %i.j) #12
   %i.l = fcmp reassoc nsz arcp contract afn ogt float %i.k, 1.000000e+00
-  br i1 %i.l, label %9, label %bb.d
+  br i1 %i.l, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.m = load i32, ptr %i.g, align 8, !tbaa !28
@@ -213,31 +213,22 @@ bb.d:                                             ; preds = %bb.c
   %i.o = select i1 %.not72, ptr @.str.12, ptr @.str.11
   %i.p = tail call reassoc nsz arcp contract afn float @dt_conf_get_float(ptr noundef nonnull %i.o) #12
   %i.q = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.p, float 1.000000e-03)
-  br label %9
+  br label %bb.e
 
-9:                                                ; preds = %bb.c, %bb.d
-  %10 = phi float [ %i.q, %bb.d ], [ 1.000000e+00, %bb.c ] ; 2 uses
+bb.e:                                             ; preds = %bb.c, %bb.d
+  %.057.a = phi float [ %i.q, %bb.d ], [ 1.000000e+00, %bb.c ] ; 2 uses
   %.not73 = icmp eq i32 %3, 0
-  br i1 %.not73, label %14, label %11
-
-11:                                               ; preds = %9
-  %12 = fmul reassoc nnan nsz arcp contract afn float %10, 1.250000e+00
-  %13 = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %12, float 1.000000e+00)
-  br label %bb.e
-
-14:                                               ; preds = %9
-  %15 = fmul reassoc nnan nsz arcp contract afn float %10, 8.000000e-01
-  br label %bb.e
-
-bb.e:                                             ; preds = %14, %11
-  %.057.a = phi nsz float [ %13, %11 ], [ %15, %14 ] ; 2 uses
+  %9 = tail call reassoc nnan nsz arcp contract afn float @llvm.minnum.f32(float %.057.a, float 8.000000e-01)
+  %10 = fmul reassoc nnan nsz arcp contract afn float %9, 1.250000e+00
+  %11 = fmul reassoc nnan nsz arcp contract afn float %.057.a, 8.000000e-01
+  %.057 = select nsz i1 %.not73, float %11, float %10 ; 2 uses
   %i.r = load i32, ptr %i.g, align 8, !tbaa !28
   %i.s = and i32 %i.r, 136
   %.not74 = icmp eq i32 %i.s, 0
   %i.t = select i1 %.not74, ptr @.str.12, ptr @.str.11
-  tail call void @dt_conf_set_float(ptr noundef nonnull %i.t, float noundef %.057.a) #12
+  tail call void @dt_conf_set_float(ptr noundef nonnull %i.t, float noundef %.057) #12
   %i.u = tail call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.19, i32 noundef 5) #12
-  %i.v = fmul reassoc nnan nsz arcp contract afn float %.057.a, 1.000000e+02
+  %i.v = fmul reassoc nnan nsz arcp contract afn float %.057, 1.000000e+02
   br label %.sink.split
 
 bb.f:                                             ; preds = %bb.b
@@ -334,29 +325,20 @@ bb.r:                                             ; preds = %bb.p
   %i.bg = or i32 %i.bf, %4
   %i.bh = and i32 %i.bg, %i.be
   %.not78 = icmp eq i32 %i.bh, 1
-  br i1 %.not78, label %16, label %bb.t
+  br i1 %.not78, label %bb.s, label %bb.t
 
-16:                                               ; preds = %bb.r
-  %17 = load ptr, ptr %5, align 8, !tbaa !21
-  %18 = load ptr, ptr %17, align 8, !tbaa !24     ; 2 uses
+bb.s:                                             ; preds = %bb.r
+  %12 = load ptr, ptr %5, align 8, !tbaa !21
+  %13 = load ptr, ptr %12, align 8, !tbaa !24     ; 2 uses
   %.not63 = icmp eq i32 %3, 0
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 12 ; 2 uses
-  %20 = load float, ptr %19, align 4, !tbaa !30
-  %21 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %20, float 1.000000e-03) ; 2 uses
-  br i1 %.not63, label %25, label %22
-
-22:                                               ; preds = %16
-  %23 = fmul reassoc nnan nsz arcp contract afn float %21, 1.250000e+00
-  %24 = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %23, float 1.000000e+00)
-  br label %bb.s
-
-25:                                               ; preds = %16
-  %26 = fmul reassoc nnan nsz arcp contract afn float %21, 8.000000e-01
-  br label %bb.s
-
-bb.s:                                             ; preds = %25, %22
-  %.sink81 = phi float [ %26, %25 ], [ %24, %22 ]
-  store float %.sink81, ptr %19, align 4, !tbaa !30
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 12 ; 2 uses
+  %15 = load float, ptr %14, align 4, !tbaa !30
+  %16 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %15, float 1.000000e-03) ; 2 uses
+  %17 = fmul reassoc nnan nsz arcp contract afn float %16, 8.000000e-01
+  %18 = tail call reassoc nnan nsz arcp contract afn float @llvm.minnum.f32(float %16, float 8.000000e-01)
+  %19 = fmul reassoc nnan nsz arcp contract afn float %18, 1.250000e+00
+  %.sink81 = select i1 %.not63, float %17, float %19
+  store float %.sink81, ptr %14, align 4, !tbaa !30
   %i.bi = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 64), align 8, !tbaa !148
   tail call void @dt_dev_add_masks_history_item(ptr noundef %i.bi, ptr noundef %0, i32 noundef 1) #12
   tail call void @dt_masks_gui_form_create(ptr noundef nonnull %5, ptr noundef nonnull %7, i32 noundef %8, ptr noundef %0) #12
@@ -365,7 +347,7 @@ bb.s:                                             ; preds = %25, %22
   %i.bl = and i32 %i.bk, 136
   %.not64 = icmp eq i32 %i.bl, 0
   %i.bm = select i1 %.not64, ptr @.str.12, ptr @.str.11
-  %i.bn = getelementptr inbounds nuw i8, ptr %18, i64 12 ; 2 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %13, i64 12 ; 2 uses
   %i.bo = load float, ptr %i.bn, align 4, !tbaa !30
   tail call void @dt_conf_set_float(ptr noundef nonnull %i.bm, float noundef %i.bo) #12
   %i.bp = tail call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.19, i32 noundef 5) #12

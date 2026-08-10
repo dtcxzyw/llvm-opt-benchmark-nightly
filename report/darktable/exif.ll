@@ -203,8 +203,8 @@ bb.gx:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.gy:                                            ; preds = %bb.gx
   %.sroa.0370.0.extract.trunc = trunc i64 %i.akh to i32
   %i.aki = sitofp reassoc nsz arcp contract afn i32 %.sroa.0370.0.extract.trunc to double
-  %135 = fmul reassoc nnan nsz arcp contract afn double %i.aki, 1.000000e-03
-  %136 = call reassoc nsz arcp contract afn double @llvm.maxnum.f64(double %135, double 0.000000e+00)
+  %135 = call reassoc nnan nsz arcp contract afn double @llvm.maxnum.f64(double %i.aki, double 0.000000e+00)
+  %136 = fmul reassoc nnan nsz arcp contract afn double %135, 1.000000e-03
   %i.akj = fptrunc reassoc nsz arcp contract afn double %136 to float
   %i.akk = getelementptr inbounds nuw i8, ptr %0, i64 28
   store float %i.akj, ptr %i.akk, align 4, !tbaa !1862

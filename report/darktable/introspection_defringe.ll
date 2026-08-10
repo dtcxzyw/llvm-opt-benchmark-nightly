@@ -203,10 +203,11 @@ bb.k:                                             ; preds = %._crit_edge331
   %i.iy = load float, ptr %i.ix, align 4, !tbaa !61
   %i.iz = fpext reassoc nsz arcp contract afn float %i.iy to double
   %i.ja = fpext reassoc nsz arcp contract afn float %i.iw to double
-  %i.jb = fmul reassoc nsz arcp contract afn double %i.ja, f0x3FBF07C1F07C1F08
+  %i.jb = fmul reassoc nsz arcp contract afn double %i.ja, 4.000000e+00
   %i.jc = fmul reassoc nsz arcp contract afn double %i.jb, %i.iz
-  %i.jd = call reassoc nsz arcp contract afn double @llvm.maxnum.f64(double %i.jc, double f0x3FB99999A0000000)
-  %i.je = fptrunc reassoc nsz arcp contract afn double %i.jd to float
+  %i.jd = call reassoc nsz arcp contract afn double @llvm.maxnum.f64(double %i.jc, double f0x400A66666D000000)
+  %6 = fmul reassoc nnan nsz arcp contract afn double %i.jd, f0x3F9F07C1F07C1F08
+  %i.je = fptrunc reassoc nsz arcp contract afn double %6 to float
   br label %bb.m
 
 bb.l:                                             ; preds = %._crit_edge331
@@ -506,10 +507,11 @@ vec.epilog.middle.block722:                       ; preds = %vec.epilog.vector.b
   %i.oa = load float, ptr %i.jm, align 4, !tbaa !61
   %i.ob = fpext reassoc nsz arcp contract afn float %i.oa to double
   %i.oc = fpext reassoc nnan nsz arcp contract afn float %i.nz to double
-  %i.od = fmul reassoc nnan nsz arcp contract afn double %i.oc, f0x3FBF07C1F07C1F08
+  %i.od = fmul reassoc nnan nsz arcp contract afn double %i.oc, 4.000000e+00
   %i.oe = fmul reassoc nsz arcp contract afn double %i.od, %i.ob
-  %i.of = call reassoc nsz arcp contract afn double @llvm.maxnum.f64(double %i.oe, double f0x3FB99999A0000000)
-  %i.og = fptrunc reassoc nsz arcp contract afn double %i.of to float
+  %i.of = call reassoc nsz arcp contract afn double @llvm.maxnum.f64(double %i.oe, double f0x400A66666D000000)
+  %7 = fmul reassoc nnan nsz arcp contract afn double %i.of, f0x3F9F07C1F07C1F08
+  %i.og = fptrunc reassoc nsz arcp contract afn double %7 to float
   br label %._crit_edge401
 
 .lr.ph335:                                        ; preds = %.lr.ph335.preheader, %.lr.ph335
