@@ -191,13 +191,12 @@ bb.c:                                             ; preds = %bb.b
 _RNvMNtCs9BeaGo73rC4_16ruff_source_file10line_indexNtB2_9LineIndex10line_start.exit: ; preds = %bb.b
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.f
   %i.l = load i32, ptr %i.k, align 4, !noalias !9, !noundef !3 ; 2 uses
-  %i.m = tail call i64 @llvm.uadd.sat.i64(i64 %1, i64 1)
-  %4 = add i64 %i.m, -1                           ; 4 uses
-  %i.n = icmp eq i64 %4, %i.e
+  %i.m = tail call i64 @llvm.umin.i64(i64 %1, i64 -2) ; 4 uses
+  %i.n = icmp eq i64 %i.m, %i.e
   br i1 %i.n, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %_RNvMNtCs9BeaGo73rC4_16ruff_source_file10line_indexNtB2_9LineIndex10line_start.exit
-  %i.o = icmp ult i64 %4, %i.e
+  %i.o = icmp ult i64 %i.m, %i.e
   br i1 %i.o, label %bb.g, label %bb.h
 
 bb.e:                                             ; preds = %_RNvMNtCs9BeaGo73rC4_16ruff_source_file10line_indexNtB2_9LineIndex10line_start.exit
@@ -219,12 +218,12 @@ _RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i8: 
   br label %_RNvMNtCs9BeaGo73rC4_16ruff_source_file10line_indexNtB2_9LineIndex10line_start.exit11
 
 bb.g:                                             ; preds = %bb.d
-  %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %4
+  %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.m
   %i.t = load i32, ptr %i.s, align 4, !noalias !18, !noundef !3
   br label %_RNvMNtCs9BeaGo73rC4_16ruff_source_file10line_indexNtB2_9LineIndex10line_start.exit11
 
 bb.h:                                             ; preds = %bb.d
-  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %4, i64 noundef %i.e, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #18, !noalias !18
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.m, i64 noundef %i.e, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #18, !noalias !18
   unreachable
 
 _RNvMNtCs9BeaGo73rC4_16ruff_source_file10line_indexNtB2_9LineIndex10line_start.exit11: ; preds = %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i8, %bb.g
@@ -625,6 +624,9 @@ declare hidden { i64, i64 } @_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #11
