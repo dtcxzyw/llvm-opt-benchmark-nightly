@@ -203,13 +203,12 @@ bb.c:                                             ; preds = %bb.b
 _RNvMNtCsdrxF8xh5sUs_16ruff_source_file10line_indexNtB2_9LineIndex10line_start.exit: ; preds = %bb.b
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.h
   %i.l = load i32, ptr %i.k, align 4              ; 2 uses
-  %i.m = tail call i64 @llvm.uadd.sat.i64(i64 %1, i64 1)
-  %4 = add i64 %i.m, -1                           ; 4 uses
-  %i.n = icmp eq i64 %4, %i.g
+  %i.m = tail call i64 @llvm.umin.i64(i64 %1, i64 -2) ; 4 uses
+  %i.n = icmp eq i64 %i.m, %i.g
   br i1 %i.n, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %_RNvMNtCsdrxF8xh5sUs_16ruff_source_file10line_indexNtB2_9LineIndex10line_start.exit
-  %i.o = icmp ult i64 %4, %i.g
+  %i.o = icmp ult i64 %i.m, %i.g
   br i1 %i.o, label %bb.f, label %bb.g
 
 bb.e:                                             ; preds = %_RNvMNtCsdrxF8xh5sUs_16ruff_source_file10line_indexNtB2_9LineIndex10line_start.exit
@@ -232,12 +231,12 @@ _RNvXs_NtCs6jfqC49kXHE_14ruff_text_size6traitsReNtB4_7TextLen8text_lenCsdrxF8xh5
   br label %_RNvMNtCsdrxF8xh5sUs_16ruff_source_file10line_indexNtB2_9LineIndex10line_start.exit8
 
 bb.f:                                             ; preds = %bb.d
-  %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %4
+  %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.m
   %i.u = load i32, ptr %i.t, align 4
   br label %_RNvMNtCsdrxF8xh5sUs_16ruff_source_file10line_indexNtB2_9LineIndex10line_start.exit8
 
 bb.g:                                             ; preds = %bb.d
-  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 %4, i64 %i.g, ptr nonnull align 8 @29) #37
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 %i.m, i64 %i.g, ptr nonnull align 8 @29) #37
   unreachable
 
 _RNvMNtCsdrxF8xh5sUs_16ruff_source_file10line_indexNtB2_9LineIndex10line_start.exit8: ; preds = %_RNvXs_NtCs6jfqC49kXHE_14ruff_text_size6traitsReNtB4_7TextLen8text_lenCsdrxF8xh5sUs_16ruff_source_file.exit.i4, %bb.f
