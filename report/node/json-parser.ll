@@ -204,12 +204,13 @@ bb.d:                                             ; preds = %.critedge
   %i.z = add i32 %i.y, 1                          ; 2 uses
   %i.aa = lshr i32 %i.w, 1
   %i.ab = add i32 %i.aa, %i.w
-  %spec.select.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ab, i32 1)
+  %spec.select.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ab, i32 1) ; 2 uses
   %i.ac = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %spec.select.i.i.i, i1 false)
   %i.ad = sub nuw nsw i32 32, %i.ac
-  %6 = tail call i32 @llvm.umax.i32(i32 %i.ad, i32 2)
-  %i.ae = shl i32 9, %6
-  %.not77 = icmp ugt i32 %i.ae, %i.z
+  %6 = icmp ult i32 %spec.select.i.i.i, 2
+  %i.ae = shl i32 9, %i.ad
+  %7 = select i1 %6, i32 36, i32 %i.ae
+  %.not77 = icmp ugt i32 %7, %i.z
   %i.af = load ptr, ptr %0, align 8               ; 2 uses
   br i1 %.not77, label %bb.h, label %bb.e
 
@@ -612,12 +613,13 @@ bb.d:                                             ; preds = %.critedge
   %i.z = add i32 %i.y, 1                          ; 2 uses
   %i.aa = lshr i32 %i.w, 1
   %i.ab = add i32 %i.aa, %i.w
-  %spec.select.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ab, i32 1)
+  %spec.select.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ab, i32 1) ; 2 uses
   %i.ac = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %spec.select.i.i.i, i1 false)
   %i.ad = sub nuw nsw i32 32, %i.ac
-  %6 = tail call i32 @llvm.umax.i32(i32 %i.ad, i32 2)
-  %i.ae = shl i32 9, %6
-  %.not77 = icmp ugt i32 %i.ae, %i.z
+  %6 = icmp ult i32 %spec.select.i.i.i, 2
+  %i.ae = shl i32 9, %i.ad
+  %7 = select i1 %6, i32 36, i32 %i.ae
+  %.not77 = icmp ugt i32 %7, %i.z
   %i.af = load ptr, ptr %0, align 8               ; 2 uses
   br i1 %.not77, label %bb.h, label %bb.e
 
@@ -1020,12 +1022,13 @@ bb.d:                                             ; preds = %.critedge
   %i.z = add i32 %i.y, 1                          ; 2 uses
   %i.aa = lshr i32 %i.w, 1
   %i.ab = add i32 %i.aa, %i.w
-  %spec.select.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ab, i32 1)
+  %spec.select.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ab, i32 1) ; 2 uses
   %i.ac = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %spec.select.i.i.i, i1 false)
   %i.ad = sub nuw nsw i32 32, %i.ac
-  %6 = tail call i32 @llvm.umax.i32(i32 %i.ad, i32 2)
-  %i.ae = shl i32 9, %6
-  %.not77 = icmp ugt i32 %i.ae, %i.z
+  %6 = icmp ult i32 %spec.select.i.i.i, 2
+  %i.ae = shl i32 9, %i.ad
+  %7 = select i1 %6, i32 36, i32 %i.ae
+  %.not77 = icmp ugt i32 %7, %i.z
   %i.af = load ptr, ptr %0, align 8               ; 2 uses
   br i1 %.not77, label %bb.h, label %bb.e
 
@@ -1428,12 +1431,13 @@ bb.d:                                             ; preds = %.critedge
   %i.z = add i32 %i.y, 1                          ; 2 uses
   %i.aa = lshr i32 %i.w, 1
   %i.ab = add i32 %i.aa, %i.w
-  %spec.select.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ab, i32 1)
+  %spec.select.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ab, i32 1) ; 2 uses
   %i.ac = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %spec.select.i.i.i, i1 false)
   %i.ad = sub nuw nsw i32 32, %i.ac
-  %6 = tail call i32 @llvm.umax.i32(i32 %i.ad, i32 2)
-  %i.ae = shl i32 9, %6
-  %.not77 = icmp ugt i32 %i.ae, %i.z
+  %6 = icmp ult i32 %spec.select.i.i.i, 2
+  %i.ae = shl i32 9, %i.ad
+  %7 = select i1 %6, i32 36, i32 %i.ae
+  %.not77 = icmp ugt i32 %7, %i.z
   %i.af = load ptr, ptr %0, align 8               ; 2 uses
   br i1 %.not77, label %bb.h, label %bb.e
 

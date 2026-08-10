@@ -204,7 +204,7 @@ bb.br:                                            ; preds = %bb.aq
 
 .thread148:                                       ; preds = %.thread148thread-pre-split, %DivRound.exit
   %i.abb = phi ptr [ %.pre197, %.thread148thread-pre-split ], [ %i.ux, %DivRound.exit ] ; 4 uses
-  %i.abc = phi i32 [ %.pre199.a, %.thread148thread-pre-split ], [ %i.un, %DivRound.exit ] ; 6 uses
+  %i.abc = phi i32 [ %.pre199.a, %.thread148thread-pre-split ], [ %i.un, %DivRound.exit ] ; 4 uses
   %i.abd = mul nsw i32 %i.abc, %i.abc             ; 5 uses
   %i.abe = add nuw nsw i32 %i.abd, 1
   %i.abf = zext nneg i32 %i.abe to i64
@@ -230,11 +230,13 @@ bb.br:                                            ; preds = %bb.aq
   %i.abs = getelementptr inbounds nuw i8, ptr %17, i64 20
   %i.abt = getelementptr inbounds nuw i8, ptr %23, i64 8
   %i.abu = getelementptr inbounds nuw i8, ptr %i.abg, i64 8 ; 3 uses
+  %29 = zext nneg i32 %i.abc to i64               ; 3 uses
   br label %bb.bs
 
 .loopexit118.i:                                   ; preds = %HistoQueuePush.exit.i109, %bb.bs
   %.sroa.13.1.lcssa.i = phi i32 [ %.sroa.13.0128.i, %bb.bs ], [ %.sroa.13.7.i, %HistoQueuePush.exit.i109 ] ; 3 uses
-  %exitcond149.not.i = icmp eq i32 %29, %i.abc
+  %indvars.iv.next.i99 = add nuw nsw i64 %indvars.iv.i98, 1
+  %exitcond149.not.i = icmp eq i64 %indvars.iv.next153.i, %29
   br i1 %exitcond149.not.i, label %.preheader116.i, label %bb.bs, !llvm.loop !70
 
 .preheader116.i:                                  ; preds = %.loopexit118.i
@@ -264,29 +266,31 @@ bb.br:                                            ; preds = %bb.aq
   br label %bb.cn
 
 bb.bs:                                            ; preds = %.loopexit118.i, %.lr.ph130.i
-  %.048129.i = phi i32 [ 0, %.lr.ph130.i ], [ %29, %.loopexit118.i ] ; 3 uses
+  %indvars.iv152.i = phi i64 [ 0, %.lr.ph130.i ], [ %indvars.iv.next153.i, %.loopexit118.i ] ; 3 uses
+  %indvars.iv.i98 = phi i64 [ 1, %.lr.ph130.i ], [ %indvars.iv.next.i99, %.loopexit118.i ] ; 2 uses
   %.sroa.13.0128.i = phi i32 [ 0, %.lr.ph130.i ], [ %.sroa.13.1.lcssa.i, %.loopexit118.i ] ; 2 uses
-  %29 = add nuw nsw i32 %.048129.i, 1             ; 4 uses
-  %30 = icmp slt i32 %29, %i.abc
-  br i1 %30, label %.lr.ph.i106, label %.loopexit118.i
+  %indvars.iv.next153.i = add nuw nsw i64 %indvars.iv152.i, 1 ; 3 uses
+  %30 = icmp samesign ult i64 %indvars.iv.next153.i, %29
+  br i1 %30, label %.lr.ph.i108, label %.loopexit118.i
 
-.lr.ph.i106:                                      ; preds = %bb.bs, %HistoQueuePush.exit.i109
-  %.049127.i = phi i32 [ %34, %HistoQueuePush.exit.i109 ], [ %29, %bb.bs ] ; 3 uses
-  %.sroa.13.1126.i = phi i32 [ %.sroa.13.7.i, %HistoQueuePush.exit.i109 ], [ %.sroa.13.0128.i, %bb.bs ] ; 5 uses
+.lr.ph.i108:                                      ; preds = %bb.bs
+  %31 = getelementptr inbounds nuw [8 x i8], ptr %i.abb, i64 %indvars.iv152.i
+  %32 = trunc nuw nsw i64 %indvars.iv152.i to i32
+  br label %.lr.ph.i106
+
+.lr.ph.i106:                                      ; preds = %HistoQueuePush.exit.i109, %.lr.ph.i108
+  %indvars.iv149.i = phi i64 [ %indvars.iv.i98, %.lr.ph.i108 ], [ %indvars.iv.next150.i, %HistoQueuePush.exit.i109 ] ; 3 uses
+  %.sroa.13.1126.i = phi i32 [ %.sroa.13.0128.i, %.lr.ph.i108 ], [ %.sroa.13.7.i, %HistoQueuePush.exit.i109 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #10
   %i.acp = icmp eq i32 %.sroa.13.1126.i, %i.abd
   br i1 %i.acp, label %HistoQueuePush.exit.i109, label %bb.bt
 
 bb.bt:                                            ; preds = %.lr.ph.i106
-  %spec.select.i.i = call i32 @llvm.smax.i32(i32 %.048129.i, i32 %.049127.i) ; 2 uses
-  %spec.select26.i.i = call i32 @llvm.smin.i32(i32 %.048129.i, i32 %.049127.i) ; 2 uses
-  store i32 %spec.select26.i.i, ptr %23, align 8, !tbaa !63
-  store i32 %spec.select.i.i, ptr %i.abi, align 4, !tbaa !64
-  %31 = zext nneg i32 %spec.select26.i.i to i64
-  %32 = getelementptr inbounds nuw [8 x i8], ptr %i.abb, i64 %31
-  %i.acq = load ptr, ptr %32, align 8, !tbaa !27  ; 9 uses
-  %33 = zext nneg i32 %spec.select.i.i to i64
-  %i.acr = getelementptr inbounds nuw [8 x i8], ptr %i.abb, i64 %33
+  store i32 %32, ptr %23, align 8, !tbaa !63
+  %33 = trunc nuw nsw i64 %indvars.iv149.i to i32
+  store i32 %33, ptr %i.abi, align 4, !tbaa !64
+  %i.acq = load ptr, ptr %31, align 8, !tbaa !27  ; 9 uses
+  %i.acr = getelementptr inbounds nuw [8 x i8], ptr %i.abb, i64 %indvars.iv149.i
   %i.acs = load ptr, ptr %i.acr, align 8, !tbaa !27 ; 10 uses
   %i.act = getelementptr inbounds nuw i8, ptr %i.acq, i64 3256
   %i.acu = load i64, ptr %i.act, align 8, !tbaa !46
@@ -530,8 +534,8 @@ bb.cm:                                            ; preds = %GetCombinedHistogra
 HistoQueuePush.exit.i109:                         ; preds = %GetCombinedEntropy.exit.i.i, %bb.cm, %GetCombinedHistogramEntropy.exit.i, %bb.bt, %.lr.ph.i106
   %.sroa.13.7.i = phi i32 [ %i.abd, %.lr.ph.i106 ], [ %i.ago, %GetCombinedHistogramEntropy.exit.i ], [ %i.ago, %bb.cm ], [ %.sroa.13.1126.i, %bb.bt ], [ %.sroa.13.1126.i, %GetCombinedEntropy.exit.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #10
-  %34 = add nuw i32 %.049127.i, 1                 ; 2 uses
-  %exitcond.not.i110 = icmp eq i32 %34, %i.abc
+  %indvars.iv.next150.i = add nuw nsw i64 %indvars.iv149.i, 1 ; 2 uses
+  %exitcond.not.i110 = icmp eq i64 %indvars.iv.next150.i, %29
   br i1 %exitcond.not.i110, label %.loopexit118.i, label %.lr.ph.i106, !llvm.loop !73
 
 .loopexit.i104:                                   ; preds = %bb.du, %.preheader.i103
