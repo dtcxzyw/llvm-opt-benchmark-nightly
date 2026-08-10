@@ -204,11 +204,10 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %exitcond.not.i.i, label %.loopexit.i.i, label %bb.ac, !llvm.loop !84
 
 .loopexit.i.i:                                    ; preds = %bb.ad, %bb.ab, %bb.z
-  %.val51.i.i = phi i32 [ %spec.select.i60.i.i, %bb.z ], [ %i.mp, %bb.ab ], [ %i.nr, %bb.ad ] ; 2 uses
-  %4 = sub nsw i32 0, %.val51.i.i
-  %i.od = and i32 %4, 7
-  %5 = add i32 %i.od, %.val51.i.i
-  %i.oe = call i32 @llvm.umin.i32(i32 %i.kc, i32 %5)
+  %.val51.i.i = phi i32 [ %spec.select.i60.i.i, %bb.z ], [ %i.mp, %bb.ab ], [ %i.nr, %bb.ad ]
+  %4 = add i32 %.val51.i.i, 7
+  %i.od = and i32 %4, -8
+  %i.oe = call i32 @llvm.umin.i32(i32 %i.kc, i32 %i.od)
   %i.of = add i32 %i.oe, 16
   %i.og = call i32 @llvm.umin.i32(i32 %i.kc, i32 %i.of) ; 4 uses
   store i32 %i.og, ptr %i.l, align 16, !tbaa !28

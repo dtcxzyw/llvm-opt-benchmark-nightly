@@ -204,11 +204,9 @@ bb.e:                                             ; preds = %.epilog-lcssa
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.epilog-lcssa
-  %.047 = phi i32 [ %i.av, %bb.e ], [ %i.ar, %.epilog-lcssa ] ; 2 uses
+  %.047 = phi i32 [ %i.av, %bb.e ], [ %i.ar, %.epilog-lcssa ]
   %.0 = phi i32 [ %spec.select, %bb.e ], [ 0, %.epilog-lcssa ] ; 2 uses
-  %7 = sub i32 0, %.047
-  %8 = and i32 %7, 7
-  %i.aw = add i32 %8, %.047                       ; 3 uses
+  %i.aw = add i32 %.047, 7                        ; 2 uses
   %i.ax = icmp ugt i32 %i.aw, 65535
   br i1 %i.ax, label %bb.g, label %bb.h
 
@@ -229,8 +227,9 @@ bb.h:                                             ; preds = %bb.f
   %i.bd = getelementptr inbounds nuw i8, ptr %6, i64 14
   store i16 %i.bc, ptr %i.bd, align 2
   %i.be = trunc nuw i32 %i.aw to i16
+  %7 = and i16 %i.be, -8                          ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %6, i64 10
-  store i16 %i.be, ptr %i.bf, align 2
+  store i16 %7, ptr %i.bf, align 2
   %i.bg = getelementptr i8, ptr %1, i64 8
   %i.bh = load i64, ptr %i.bg, align 8
   %i.bi = and i64 %i.bh, 281474976710655          ; 2 uses
@@ -253,7 +252,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.br = getelementptr i8, ptr %0, i64 32        ; 2 uses
   %i.bs = load i64, ptr %i.br, align 8
-  %i.bt = zext nneg i32 %i.aw to i64
+  %i.bt = zext i16 %7 to i64
   %i.bu = add i64 %i.bs, %i.bt
   %i.bv = call fastcc zeroext i1 @erf_write_phdr(ptr noundef %0, ptr noundef nonnull %6, ptr noundef %5)
   br i1 %i.bv, label %bb.k, label %.loopexit

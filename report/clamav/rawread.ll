@@ -60,11 +60,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.c, label %bb.i
 
 bb.c:                                             ; preds = %bb.b
-  %2 = sub nuw i64 %1, %i.g                       ; 2 uses
-  %i.i = sub i64 0, %2
-  %i.j = and i64 %i.i, 15
-  %3 = add i64 %i.j, %2                           ; 3 uses
-  %i.k = add i64 %3, %i.d                         ; 4 uses
+  %2 = add i64 %1, 15
+  %i.i = sub i64 %2, %i.g
+  %i.j = and i64 %i.i, -16                        ; 3 uses
+  %i.k = add i64 %i.j, %i.d                       ; 4 uses
   store i64 %i.k, ptr %i.c, align 8, !tbaa !8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !19   ; 2 uses
@@ -119,12 +118,12 @@ _ZN5ArrayIhE3AddEm.exit:                          ; preds = %._ZN5ArrayIhE3AddEm
   %i.ad = load ptr, ptr %i.ab, align 8, !tbaa !22
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
   %i.af = load ptr, ptr %i.ae, align 8
-  %i.ag = tail call noundef i32 %i.af(ptr noundef nonnull align 8 dereferenceable(8256) %i.ab, ptr noundef nonnull %i.ac, i64 noundef %3) ; 2 uses
+  %i.ag = tail call noundef i32 %i.af(ptr noundef nonnull align 8 dereferenceable(8256) %i.ab, ptr noundef nonnull %i.ac, i64 noundef %i.j) ; 2 uses
   %i.ah = sext i32 %i.ag to i64
   %i.ai = load ptr, ptr %i.a, align 8, !tbaa !17
   %i.aj = load ptr, ptr %0, align 8, !tbaa !20
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.d
-  tail call void @_ZN9CryptData12DecryptBlockEPhm(ptr noundef nonnull align 8 dereferenceable(2516) %i.ai, ptr noundef nonnull %i.ak, i64 noundef %3)
+  tail call void @_ZN9CryptData12DecryptBlockEPhm(ptr noundef nonnull align 8 dereferenceable(2516) %i.ai, ptr noundef nonnull %i.ak, i64 noundef %i.j)
   %i.al = icmp eq i32 %i.ag, 0
   %i.am = select i1 %i.al, i64 0, i64 %1
   %i.an = load i64, ptr %i.e, align 8, !tbaa !18

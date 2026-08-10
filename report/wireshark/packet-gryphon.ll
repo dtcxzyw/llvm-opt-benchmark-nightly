@@ -203,12 +203,11 @@ bb.a:
   %i.q = add i32 %.035, 2
   %i.r = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %i.q)
   %i.s = add i16 %i.r, 8
-  %i.t = zext i16 %i.s to i32                     ; 2 uses
-  %3 = sub nsw i32 0, %i.t
-  %i.u = and i32 %3, 3
-  %4 = add nuw nsw i32 %i.u, %i.t
+  %i.t = zext i16 %i.s to i32
+  %3 = add nuw nsw i32 %i.t, 3
+  %i.u = and i32 %3, 131068
   %i.v = load i32, ptr @ett_gryphon_cmd_filter_block, align 4
-  %i.w = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %2, ptr noundef %0, i32 noundef %.035, i32 noundef %4, i32 noundef %i.v, ptr noundef null, ptr noundef nonnull @.str.1034, i32 noundef %i.p)
+  %i.w = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %2, ptr noundef %0, i32 noundef %.035, i32 noundef %i.u, i32 noundef %i.v, ptr noundef null, ptr noundef nonnull @.str.1034, i32 noundef %i.p)
   %i.x = call fastcc i32 @filter_block(ptr noundef %0, i32 noundef %.035, ptr noundef %i.w) ; 2 uses
   %i.y = add i8 %.03134, 1                        ; 2 uses
   %i.z = load i8, ptr %i.a, align 1

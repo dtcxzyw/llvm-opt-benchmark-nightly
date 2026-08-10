@@ -203,12 +203,11 @@ bb.cg:                                            ; preds = %._crit_edge
   br label %bb.ch
 
 bb.ch:                                            ; preds = %bb.bj, %bb.bm, %bb.bn, %bb.bl, %bb.cg, %bb.cf, %bb.bw
-  %.0228 = phi i32 [ 0, %bb.cg ], [ %i.lx, %bb.cf ], [ %i.lg, %bb.bw ], [ %.0, %bb.bl ], [ %.0, %bb.bn ], [ %.0, %bb.bm ], [ %.0, %bb.bj ] ; 2 uses
-  %2 = sub i32 0, %.0228
-  %i.mb = and i32 %2, 3
-  %3 = add i32 %.0228, %i.mb                      ; 3 uses
+  %.0228 = phi i32 [ 0, %bb.cg ], [ %i.lx, %bb.cf ], [ %i.lg, %bb.bw ], [ %.0, %bb.bl ], [ %.0, %bb.bn ], [ %.0, %bb.bm ], [ %.0, %bb.bj ]
+  %2 = add i32 %.0228, 3
+  %i.mb = and i32 %2, -4                          ; 3 uses
   %i.mc = getelementptr inbounds nuw i8, ptr %1, i64 92
-  store i32 %3, ptr %i.mc, align 4, !tbaa !69
+  store i32 %i.mb, ptr %i.mc, align 4, !tbaa !69
   %i.md = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.me = load i32, ptr %i.md, align 8, !tbaa !49
   %.not251 = icmp eq i32 %i.me, 0
@@ -219,7 +218,7 @@ bb.ch:                                            ; preds = %bb.bj, %bb.bm, %bb.
 bb.ci:                                            ; preds = %bb.ch
   %i.mh = getelementptr inbounds nuw i8, ptr %i.mg, i64 32
   %i.mi = load ptr, ptr %i.mh, align 8, !tbaa !70
-  %i.mj = tail call ptr %i.mi(ptr noundef nonnull %0, i32 noundef 1, i32 noundef 0, i32 noundef %3, i32 noundef %.0226, i32 noundef 1) #5
+  %i.mj = tail call ptr %i.mi(ptr noundef nonnull %0, i32 noundef 1, i32 noundef 0, i32 noundef %i.mb, i32 noundef %.0226, i32 noundef 1) #5
   %i.mk = getelementptr inbounds nuw i8, ptr %1, i64 80
   store ptr %i.mj, ptr %i.mk, align 8, !tbaa !71
   %i.ml = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -238,7 +237,7 @@ bb.cj:                                            ; preds = %bb.ci
 
 bb.ck:                                            ; preds = %bb.ch
   %i.mr = load ptr, ptr %i.mg, align 8, !tbaa !36
-  %i.ms = zext i32 %3 to i64
+  %i.ms = zext i32 %i.mb to i64
   %i.mt = tail call ptr %i.mr(ptr noundef nonnull %0, i32 noundef 1, i64 noundef %i.ms) #5
   %i.mu = getelementptr inbounds nuw i8, ptr %1, i64 112
   store ptr %i.mt, ptr %i.mu, align 8, !tbaa !77

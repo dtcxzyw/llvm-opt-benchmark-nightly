@@ -203,17 +203,16 @@ read_byte.exit:                                   ; preds = %bb.as, %bb.at
   %i.hu = load i32, ptr %i.ht, align 8, !tbaa !44
   %i.hv = icmp eq i32 %i.hu, 24
   %i.hw = mul i32 %.0161, 3                       ; 2 uses
-  %.0138 = select i1 %i.hv, i32 %i.hw, i32 %.0161 ; 2 uses
-  %2 = sub i32 0, %.0138
-  %i.hx = and i32 %2, 3
-  %3 = add i32 %.0138, %i.hx                      ; 2 uses
+  %.0138 = select i1 %i.hv, i32 %i.hw, i32 %.0161
+  %2 = add i32 %.0138, 3
+  %i.hx = and i32 %2, -4                          ; 2 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %1, i64 76
-  store i32 %3, ptr %i.hy, align 4, !tbaa !60
+  store i32 %i.hx, ptr %i.hy, align 4, !tbaa !60
   %i.hz = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !8
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 32
   %i.ic = load ptr, ptr %i.ib, align 8, !tbaa !61
-  %i.id = tail call ptr %i.ic(ptr noundef %0, i32 noundef 1, i32 noundef 0, i32 noundef %3, i32 noundef %.0145160, i32 noundef 1) #4
+  %i.id = tail call ptr %i.ic(ptr noundef %0, i32 noundef 1, i32 noundef 0, i32 noundef %i.hx, i32 noundef %.0145160, i32 noundef 1) #4
   %i.ie = getelementptr inbounds nuw i8, ptr %1, i64 64
   store ptr %i.id, ptr %i.ie, align 8, !tbaa !62
   %i.if = getelementptr inbounds nuw i8, ptr %1, i64 8
