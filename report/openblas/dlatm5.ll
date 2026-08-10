@@ -1,5 +1,5 @@
-loop-unroll.NumRuntimeUnrolled: 12
-loop-unroll.NumUnrolled: 12
+loop-unroll.NumRuntimeUnrolled: 11
+loop-unroll.NumUnrolled: 11
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -21,9 +21,9 @@ bb.a:
   %i.e = sext i32 %narrow597 to i64
   %i.f = getelementptr inbounds [8 x i8], ptr %5, i64 %i.e ; 33 uses
   %i.g = load i32, ptr %10, align 4, !tbaa !8     ; 5 uses
-  %narrow598 = xor i32 %i.g, -1                   ; 2 uses
+  %narrow598 = xor i32 %i.g, -1
   %i.h = sext i32 %narrow598 to i64
-  %i.i = getelementptr inbounds [8 x i8], ptr %9, i64 %i.h ; 21 uses
+  %i.i = getelementptr inbounds [8 x i8], ptr %9, i64 %i.h ; 13 uses
   %i.j = load i32, ptr %12, align 4, !tbaa !8     ; 5 uses
   %narrow599 = xor i32 %i.j, -1
   %i.k = sext i32 %narrow599 to i64
@@ -288,7 +288,7 @@ bb.v:                                             ; preds = %bb.r, %bb.u, %bb.t
   %i.bn = trunc nuw nsw i64 %indvars.iv811 to i32
   %i.bo = udiv i32 %i.bk, %i.bn
   %i.bp = uitofp nneg i32 %i.bo to double
-  %i.bq = tail call double @sin(double noundef %i.bp) #6
+  %i.bq = tail call double @sin(double noundef %i.bp) #5
   %i.br = fsub double 5.000000e-01, %i.bq
   %i.bs = fmul double %i.br, 2.000000e+01         ; 2 uses
   %i.bt = mul nsw i64 %indvars.iv811, %i.az
@@ -301,7 +301,7 @@ bb.v:                                             ; preds = %bb.r, %bb.u, %bb.t
   %i.bv = trunc nuw nsw i64 %indvars.iv.next812 to i32
   %i.bw = udiv i32 %i.bk, %i.bv
   %i.bx = uitofp nneg i32 %i.bw to double
-  %i.by = tail call double @sin(double noundef %i.bx) #6
+  %i.by = tail call double @sin(double noundef %i.bx) #5
   %i.bz = fsub double 5.000000e-01, %i.by
   %i.ca = fmul double %i.bz, 2.000000e+01         ; 2 uses
   %i.cb = mul nsw i64 %indvars.iv.next812, %i.az
@@ -326,7 +326,7 @@ bb.v:                                             ; preds = %bb.r, %bb.u, %bb.t
   %i.cd = trunc nuw nsw i64 %indvars.iv811.epil.init to i32
   %i.ce = udiv i32 %i.bk, %i.cd
   %i.cf = uitofp nneg i32 %i.ce to double
-  %i.cg = tail call double @sin(double noundef %i.cf) #6
+  %i.cg = tail call double @sin(double noundef %i.cf) #5
   %i.ch = fsub double 5.000000e-01, %i.cg
   %i.ci = fmul double %i.ch, 2.000000e+01         ; 2 uses
   %i.cj = mul nsw i64 %indvars.iv811.epil.init, %i.az
@@ -383,7 +383,7 @@ bb.x:                                             ; preds = %bb.ad, %.lr.ph644.n
   br i1 %.not591, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.cu = tail call double @sin(double noundef %i.cr) #6
+  %i.cu = tail call double @sin(double noundef %i.cr) #5
   %i.cv = fsub double 5.000000e-01, %i.cu
   %i.cw = fmul double %i.cv, 2.000000e+00
   %i.cx = mul nsw i64 %indvars.iv755, %i.cm
@@ -392,7 +392,7 @@ bb.y:                                             ; preds = %bb.x
   %i.cy = mul nuw nsw i64 %indvars.iv755, %indvars.iv760
   %i.cz = trunc nsw i64 %i.cy to i32
   %i.da = uitofp nneg i32 %i.cz to double
-  %i.db = tail call double @sin(double noundef %i.da) #6
+  %i.db = tail call double @sin(double noundef %i.da) #5
   %i.dc = fsub double 5.000000e-01, %i.db
   %i.dd = fmul double %i.dc, 2.000000e+00
   br label %bb.aa
@@ -413,7 +413,7 @@ bb.aa:                                            ; preds = %bb.y, %bb.z
   br i1 %.not591.1, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.dg = tail call double @sin(double noundef %i.cr) #6
+  %i.dg = tail call double @sin(double noundef %i.cr) #5
   %i.dh = fsub double 5.000000e-01, %i.dg
   %i.di = fmul double %i.dh, 2.000000e+00
   %i.dj = mul nsw i64 %indvars.iv.next756, %i.cm
@@ -422,7 +422,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.dk = mul nuw nsw i64 %indvars.iv.next756, %indvars.iv760
   %i.dl = trunc nsw i64 %i.dk to i32
   %i.dm = uitofp nneg i32 %i.dl to double
-  %i.dn = tail call double @sin(double noundef %i.dm) #6
+  %i.dn = tail call double @sin(double noundef %i.dm) #5
   %i.do = fsub double 5.000000e-01, %i.dn
   %i.dp = fmul double %i.do, 2.000000e+00
   br label %bb.ad
@@ -455,7 +455,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   br i1 %.not591.epil, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %.epil.preheader
-  %i.ds = tail call double @sin(double noundef %i.cr) #6
+  %i.ds = tail call double @sin(double noundef %i.cr) #5
   %i.dt = fsub double 5.000000e-01, %i.ds
   %i.du = fmul double %i.dt, 2.000000e+00
   %i.dv = mul nsw i64 %indvars.iv755.epil.init, %i.cm
@@ -464,7 +464,7 @@ bb.ae:                                            ; preds = %.epil.preheader
   %i.dw = mul nuw nsw i64 %indvars.iv755.epil.init, %indvars.iv760
   %i.dx = trunc nsw i64 %i.dw to i32
   %i.dy = uitofp nneg i32 %i.dx to double
-  %i.dz = tail call double @sin(double noundef %i.dy) #6
+  %i.dz = tail call double @sin(double noundef %i.dy) #5
   %i.ea = fsub double 5.000000e-01, %i.dz
   %i.eb = fmul double %i.ea, 2.000000e+00
   br label %._crit_edge645.loopexit.epilog-lcssa
@@ -530,7 +530,7 @@ bb.ag:                                            ; preds = %.lr.ph654
   %i.el = add nuw nsw i64 %indvars.iv765, %indvars.iv770
   %i.em = trunc nsw i64 %i.el to i32
   %i.en = uitofp nneg i32 %i.em to double
-  %i.eo = tail call double @sin(double noundef %i.en) #6
+  %i.eo = tail call double @sin(double noundef %i.en) #5
   %i.ep = fsub double 5.000000e-01, %i.eo
   %i.eq = fmul double %i.ep, 2.000000e+00
   %i.er = mul nsw i64 %indvars.iv765, %i.ef
@@ -538,7 +538,7 @@ bb.ag:                                            ; preds = %.lr.ph654
   store double %i.eq, ptr %gep936, align 8, !tbaa !9
   %i.es = trunc nuw nsw i64 %indvars.iv765 to i32
   %i.et = uitofp nneg i32 %i.es to double
-  %i.eu = tail call double @sin(double noundef %i.et) #6
+  %i.eu = tail call double @sin(double noundef %i.et) #5
   %i.ev = fsub double 5.000000e-01, %i.eu
   %i.ew = fmul double %i.ev, 2.000000e+00
   br label %.lr.ph654.1
@@ -562,7 +562,7 @@ bb.ai:                                            ; preds = %.lr.ph654.1
   %i.ez = add nuw nsw i64 %indvars.iv.next766, %indvars.iv770
   %i.fa = trunc nsw i64 %i.ez to i32
   %i.fb = uitofp nneg i32 %i.fa to double
-  %i.fc = tail call double @sin(double noundef %i.fb) #6
+  %i.fc = tail call double @sin(double noundef %i.fb) #5
   %i.fd = fsub double 5.000000e-01, %i.fc
   %i.fe = fmul double %i.fd, 2.000000e+00
   %i.ff = mul nsw i64 %indvars.iv.next766, %i.ef
@@ -570,7 +570,7 @@ bb.ai:                                            ; preds = %.lr.ph654.1
   store double %i.fe, ptr %gep936.1, align 8, !tbaa !9
   %i.fg = trunc nuw nsw i64 %indvars.iv.next766 to i32
   %i.fh = uitofp nneg i32 %i.fg to double
-  %i.fi = tail call double @sin(double noundef %i.fh) #6
+  %i.fi = tail call double @sin(double noundef %i.fh) #5
   %i.fj = fsub double 5.000000e-01, %i.fi
   %i.fk = fmul double %i.fj, 2.000000e+00
   br label %bb.ak
@@ -606,7 +606,7 @@ bb.al:                                            ; preds = %.lr.ph654.epil.preh
   %i.fn = add nuw nsw i64 %indvars.iv765.epil.init, %indvars.iv770
   %i.fo = trunc nsw i64 %i.fn to i32
   %i.fp = uitofp nneg i32 %i.fo to double
-  %i.fq = tail call double @sin(double noundef %i.fp) #6
+  %i.fq = tail call double @sin(double noundef %i.fp) #5
   %i.fr = fsub double 5.000000e-01, %i.fq
   %i.fs = fmul double %i.fr, 2.000000e+00
   %i.ft = mul nsw i64 %indvars.iv765.epil.init, %i.ef
@@ -614,7 +614,7 @@ bb.al:                                            ; preds = %.lr.ph654.epil.preh
   store double %i.fs, ptr %gep936.epil, align 8, !tbaa !9
   %i.fu = trunc nuw nsw i64 %indvars.iv765.epil.init to i32
   %i.fv = uitofp nneg i32 %i.fu to double
-  %i.fw = tail call double @sin(double noundef %i.fv) #6
+  %i.fw = tail call double @sin(double noundef %i.fv) #5
   %i.fx = fsub double 5.000000e-01, %i.fw
   %i.fy = fmul double %i.fx, 2.000000e+00
   br label %._crit_edge655.loopexit.epilog-lcssa
@@ -674,7 +674,7 @@ bb.am:                                            ; preds = %.lr.ph654.epil.preh
   %i.gi = mul nuw nsw i64 %indvars.iv775, %indvars.iv780
   %i.gj = trunc nuw nsw i64 %i.gi to i32
   %i.gk = uitofp nneg i32 %i.gj to double
-  %i.gl = tail call double @sin(double noundef %i.gk) #6
+  %i.gl = tail call double @sin(double noundef %i.gk) #5
   %i.gm = fsub double 5.000000e-01, %i.gl
   %i.gn = fmul double %i.gm, 2.000000e+01
   %i.go = mul nsw i64 %indvars.iv775, %i.gc
@@ -683,7 +683,7 @@ bb.am:                                            ; preds = %.lr.ph654.epil.preh
   %i.gp = add nuw nsw i64 %indvars.iv775, %indvars.iv780
   %i.gq = trunc nsw i64 %i.gp to i32
   %i.gr = uitofp nneg i32 %i.gq to double
-  %i.gs = tail call double @sin(double noundef %i.gr) #6
+  %i.gs = tail call double @sin(double noundef %i.gr) #5
   %i.gt = fsub double 5.000000e-01, %i.gs
   %i.gu = fmul double %i.gt, 2.000000e+01
   %i.gv = mul nsw i64 %indvars.iv775, %i.gd
@@ -693,7 +693,7 @@ bb.am:                                            ; preds = %.lr.ph654.epil.preh
   %i.gw = mul nuw nsw i64 %indvars.iv.next776, %indvars.iv780
   %i.gx = trunc nuw nsw i64 %i.gw to i32
   %i.gy = uitofp nneg i32 %i.gx to double
-  %i.gz = tail call double @sin(double noundef %i.gy) #6
+  %i.gz = tail call double @sin(double noundef %i.gy) #5
   %i.ha = fsub double 5.000000e-01, %i.gz
   %i.hb = fmul double %i.ha, 2.000000e+01
   %i.hc = mul nsw i64 %indvars.iv.next776, %i.gc
@@ -702,7 +702,7 @@ bb.am:                                            ; preds = %.lr.ph654.epil.preh
   %i.hd = add nuw nsw i64 %indvars.iv.next776, %indvars.iv780
   %i.he = trunc nsw i64 %i.hd to i32
   %i.hf = uitofp nneg i32 %i.he to double
-  %i.hg = tail call double @sin(double noundef %i.hf) #6
+  %i.hg = tail call double @sin(double noundef %i.hf) #5
   %i.hh = fsub double 5.000000e-01, %i.hg
   %i.hi = fmul double %i.hh, 2.000000e+01
   %i.hj = mul nsw i64 %indvars.iv.next776, %i.gd
@@ -724,7 +724,7 @@ bb.am:                                            ; preds = %.lr.ph654.epil.preh
   %i.hk = mul nuw nsw i64 %indvars.iv775.epil.init, %indvars.iv780
   %i.hl = trunc nuw nsw i64 %i.hk to i32
   %i.hm = uitofp nneg i32 %i.hl to double
-  %i.hn = tail call double @sin(double noundef %i.hm) #6
+  %i.hn = tail call double @sin(double noundef %i.hm) #5
   %i.ho = fsub double 5.000000e-01, %i.hn
   %i.hp = fmul double %i.ho, 2.000000e+01
   %i.hq = mul nsw i64 %indvars.iv775.epil.init, %i.gc
@@ -733,7 +733,7 @@ bb.am:                                            ; preds = %.lr.ph654.epil.preh
   %i.hr = add nuw nsw i64 %indvars.iv775.epil.init, %indvars.iv780
   %i.hs = trunc nsw i64 %i.hr to i32
   %i.ht = uitofp nneg i32 %i.hs to double
-  %i.hu = tail call double @sin(double noundef %i.ht) #6
+  %i.hu = tail call double @sin(double noundef %i.ht) #5
   %i.hv = fsub double 5.000000e-01, %i.hu
   %i.hw = fmul double %i.hv, 2.000000e+01
   %i.hx = mul nsw i64 %indvars.iv775.epil.init, %i.gd
@@ -798,7 +798,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.iw = getelementptr [8 x i8], ptr %i.c, i64 %i.it
   %i.ix = getelementptr [8 x i8], ptr %i.iw, i64 %indvars.iv785
   %i.iy = load double, ptr %i.ix, align 8, !tbaa !9
-  %i.iz = tail call double @sin(double noundef %i.iy) #6
+  %i.iz = tail call double @sin(double noundef %i.iy) #5
   %i.ja = fneg double %i.iz
   %i.jb = getelementptr [8 x i8], ptr %i.c, i64 %i.is
   %i.jc = getelementptr [8 x i8], ptr %i.jb, i64 %i.im
@@ -819,7 +819,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.jn = getelementptr [8 x i8], ptr %i.c, i64 %i.jk
   %i.jo = getelementptr [8 x i8], ptr %i.jn, i64 %indvars.iv.next786
   %i.jp = load double, ptr %i.jo, align 8, !tbaa !9
-  %i.jq = tail call double @sin(double noundef %i.jp) #6
+  %i.jq = tail call double @sin(double noundef %i.jp) #5
   %i.jr = fneg double %i.jq
   %i.js = getelementptr [8 x i8], ptr %i.c, i64 %i.jj
   %i.jt = getelementptr [8 x i8], ptr %i.js, i64 %i.jd
@@ -853,7 +853,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.kf = getelementptr [8 x i8], ptr %i.c, i64 %i.kc
   %i.kg = getelementptr [8 x i8], ptr %i.kf, i64 %indvars.iv785.epil.init
   %i.kh = load double, ptr %i.kg, align 8, !tbaa !9
-  %i.ki = tail call double @sin(double noundef %i.kh) #6
+  %i.ki = tail call double @sin(double noundef %i.kh) #5
   %i.kj = fneg double %i.ki
   %i.kk = getelementptr [8 x i8], ptr %i.c, i64 %i.kb
   %i.kl = getelementptr [8 x i8], ptr %i.kk, i64 %i.jv
@@ -907,7 +907,7 @@ bb.ar:                                            ; preds = %bb.aq, %._crit_edge
   %i.li = getelementptr [8 x i8], ptr %i.f, i64 %i.lf
   %i.lj = getelementptr [8 x i8], ptr %i.li, i64 %indvars.iv788
   %i.lk = load double, ptr %i.lj, align 8, !tbaa !9
-  %i.ll = tail call double @sin(double noundef %i.lk) #6
+  %i.ll = tail call double @sin(double noundef %i.lk) #5
   %i.lm = fneg double %i.ll
   %i.ln = getelementptr [8 x i8], ptr %i.f, i64 %i.le
   %i.lo = getelementptr [8 x i8], ptr %i.ln, i64 %i.ky
@@ -928,7 +928,7 @@ bb.ar:                                            ; preds = %bb.aq, %._crit_edge
   %i.lz = getelementptr [8 x i8], ptr %i.f, i64 %i.lw
   %i.ma = getelementptr [8 x i8], ptr %i.lz, i64 %indvars.iv.next789
   %i.mb = load double, ptr %i.ma, align 8, !tbaa !9
-  %i.mc = tail call double @sin(double noundef %i.mb) #6
+  %i.mc = tail call double @sin(double noundef %i.mb) #5
   %i.md = fneg double %i.mc
   %i.me = getelementptr [8 x i8], ptr %i.f, i64 %i.lv
   %i.mf = getelementptr [8 x i8], ptr %i.me, i64 %i.lp
@@ -974,7 +974,7 @@ bb.as:                                            ; preds = %bb.a
   %i.mn = mul nuw nsw i64 %indvars.iv, %indvars.iv730
   %i.mo = trunc nuw nsw i64 %i.mn to i32
   %i.mp = uitofp nneg i32 %i.mo to double
-  %i.mq = tail call double @sin(double noundef %i.mp) #6
+  %i.mq = tail call double @sin(double noundef %i.mp) #5
   %i.mr = fsub double 5.000000e-01, %i.mq
   %i.ms = fmul double %i.mr, 2.000000e+01
   %i.mt = mul nsw i64 %indvars.iv, %i.mh
@@ -983,7 +983,7 @@ bb.as:                                            ; preds = %bb.a
   %i.mu = add nuw nsw i64 %indvars.iv, %indvars.iv730
   %i.mv = trunc nsw i64 %i.mu to i32
   %i.mw = uitofp nneg i32 %i.mv to double
-  %i.mx = tail call double @sin(double noundef %i.mw) #6
+  %i.mx = tail call double @sin(double noundef %i.mw) #5
   %i.my = fsub double 5.000000e-01, %i.mx
   %i.mz = fmul double %i.my, 2.000000e+00
   %i.na = mul nsw i64 %indvars.iv, %i.mi
@@ -993,7 +993,7 @@ bb.as:                                            ; preds = %bb.a
   %i.nb = mul nuw nsw i64 %indvars.iv.next, %indvars.iv730
   %i.nc = trunc nuw nsw i64 %i.nb to i32
   %i.nd = uitofp nneg i32 %i.nc to double
-  %i.ne = tail call double @sin(double noundef %i.nd) #6
+  %i.ne = tail call double @sin(double noundef %i.nd) #5
   %i.nf = fsub double 5.000000e-01, %i.ne
   %i.ng = fmul double %i.nf, 2.000000e+01
   %i.nh = mul nsw i64 %indvars.iv.next, %i.mh
@@ -1002,7 +1002,7 @@ bb.as:                                            ; preds = %bb.a
   %i.ni = add nuw nsw i64 %indvars.iv.next, %indvars.iv730
   %i.nj = trunc nsw i64 %i.ni to i32
   %i.nk = uitofp nneg i32 %i.nj to double
-  %i.nl = tail call double @sin(double noundef %i.nk) #6
+  %i.nl = tail call double @sin(double noundef %i.nk) #5
   %i.nm = fsub double 5.000000e-01, %i.nl
   %i.nn = fmul double %i.nm, 2.000000e+00
   %i.no = mul nsw i64 %indvars.iv.next, %i.mi
@@ -1024,7 +1024,7 @@ bb.as:                                            ; preds = %bb.a
   %i.np = mul nuw nsw i64 %indvars.iv.epil.init, %indvars.iv730
   %i.nq = trunc nuw nsw i64 %i.np to i32
   %i.nr = uitofp nneg i32 %i.nq to double
-  %i.ns = tail call double @sin(double noundef %i.nr) #6
+  %i.ns = tail call double @sin(double noundef %i.nr) #5
   %i.nt = fsub double 5.000000e-01, %i.ns
   %i.nu = fmul double %i.nt, 2.000000e+01
   %i.nv = mul nsw i64 %indvars.iv.epil.init, %i.mh
@@ -1033,7 +1033,7 @@ bb.as:                                            ; preds = %bb.a
   %i.nw = add nuw nsw i64 %indvars.iv.epil.init, %indvars.iv730
   %i.nx = trunc nsw i64 %i.nw to i32
   %i.ny = uitofp nneg i32 %i.nx to double
-  %i.nz = tail call double @sin(double noundef %i.ny) #6
+  %i.nz = tail call double @sin(double noundef %i.ny) #5
   %i.oa = fsub double 5.000000e-01, %i.nz
   %i.ob = fmul double %i.oa, 2.000000e+00
   %i.oc = mul nsw i64 %indvars.iv.epil.init, %i.mi
@@ -1082,7 +1082,7 @@ bb.as:                                            ; preds = %bb.a
   %i.ok = add nuw nsw i64 %indvars.iv735, %indvars.iv740
   %i.ol = trunc nsw i64 %i.ok to i32
   %i.om = uitofp nneg i32 %i.ol to double
-  %i.on = tail call double @sin(double noundef %i.om) #6
+  %i.on = tail call double @sin(double noundef %i.om) #5
   %i.oo = fsub double 5.000000e-01, %i.on
   %i.op = fmul double %i.oo, 2.000000e+01
   %i.oq = mul nsw i64 %indvars.iv735, %i.oe
@@ -1091,7 +1091,7 @@ bb.as:                                            ; preds = %bb.a
   %i.or = mul nuw nsw i64 %indvars.iv735, %indvars.iv740
   %i.os = trunc nuw nsw i64 %i.or to i32
   %i.ot = uitofp nneg i32 %i.os to double
-  %i.ou = tail call double @sin(double noundef %i.ot) #6
+  %i.ou = tail call double @sin(double noundef %i.ot) #5
   %i.ov = fsub double 5.000000e-01, %i.ou
   %i.ow = fmul double %i.ov, 2.000000e+00
   %i.ox = mul nsw i64 %indvars.iv735, %i.of
@@ -1101,7 +1101,7 @@ bb.as:                                            ; preds = %bb.a
   %i.oy = add nuw nsw i64 %indvars.iv.next736, %indvars.iv740
   %i.oz = trunc nsw i64 %i.oy to i32
   %i.pa = uitofp nneg i32 %i.oz to double
-  %i.pb = tail call double @sin(double noundef %i.pa) #6
+  %i.pb = tail call double @sin(double noundef %i.pa) #5
   %i.pc = fsub double 5.000000e-01, %i.pb
   %i.pd = fmul double %i.pc, 2.000000e+01
   %i.pe = mul nsw i64 %indvars.iv.next736, %i.oe
@@ -1110,7 +1110,7 @@ bb.as:                                            ; preds = %bb.a
   %i.pf = mul nuw nsw i64 %indvars.iv.next736, %indvars.iv740
   %i.pg = trunc nuw nsw i64 %i.pf to i32
   %i.ph = uitofp nneg i32 %i.pg to double
-  %i.pi = tail call double @sin(double noundef %i.ph) #6
+  %i.pi = tail call double @sin(double noundef %i.ph) #5
   %i.pj = fsub double 5.000000e-01, %i.pi
   %i.pk = fmul double %i.pj, 2.000000e+00
   %i.pl = mul nsw i64 %indvars.iv.next736, %i.of
@@ -1132,7 +1132,7 @@ bb.as:                                            ; preds = %bb.a
   %i.pm = add nuw nsw i64 %indvars.iv735.epil.init, %indvars.iv740
   %i.pn = trunc nsw i64 %i.pm to i32
   %i.po = uitofp nneg i32 %i.pn to double
-  %i.pp = tail call double @sin(double noundef %i.po) #6
+  %i.pp = tail call double @sin(double noundef %i.po) #5
   %i.pq = fsub double 5.000000e-01, %i.pp
   %i.pr = fmul double %i.pq, 2.000000e+01
   %i.ps = mul nsw i64 %indvars.iv735.epil.init, %i.oe
@@ -1141,7 +1141,7 @@ bb.as:                                            ; preds = %bb.a
   %i.pt = mul nuw nsw i64 %indvars.iv735.epil.init, %indvars.iv740
   %i.pu = trunc nuw nsw i64 %i.pt to i32
   %i.pv = uitofp nneg i32 %i.pu to double
-  %i.pw = tail call double @sin(double noundef %i.pv) #6
+  %i.pw = tail call double @sin(double noundef %i.pv) #5
   %i.px = fsub double 5.000000e-01, %i.pw
   %i.py = fmul double %i.px, 2.000000e+00
   %i.pz = mul nsw i64 %indvars.iv735.epil.init, %i.of
@@ -1196,7 +1196,7 @@ bb.as:                                            ; preds = %bb.a
   %i.qk = trunc nuw nsw i64 %indvars.iv745 to i32
   %i.ql = udiv i32 %i.qk, %i.qh
   %i.qm = uitofp nneg i32 %i.ql to double
-  %i.qn = tail call double @sin(double noundef %i.qm) #6
+  %i.qn = tail call double @sin(double noundef %i.qm) #5
   %i.qo = fsub double 5.000000e-01, %i.qn
   %i.qp = fmul double %i.qo, 2.000000e+01
   %i.qq = mul nsw i64 %indvars.iv745, %i.qd
@@ -1205,7 +1205,7 @@ bb.as:                                            ; preds = %bb.a
   %i.qr = mul nuw nsw i64 %indvars.iv745, %indvars.iv750
   %i.qs = trunc nuw nsw i64 %i.qr to i32
   %i.qt = uitofp nneg i32 %i.qs to double
-  %i.qu = tail call double @sin(double noundef %i.qt) #6
+  %i.qu = tail call double @sin(double noundef %i.qt) #5
   %i.qv = fsub double 5.000000e-01, %i.qu
   %i.qw = fmul double %i.qv, 2.000000e+00
   %i.qx = mul nsw i64 %indvars.iv745, %i.qe
@@ -1215,7 +1215,7 @@ bb.as:                                            ; preds = %bb.a
   %i.qy = trunc nuw nsw i64 %indvars.iv.next746 to i32
   %i.qz = udiv i32 %i.qy, %i.qh
   %i.ra = uitofp nneg i32 %i.qz to double
-  %i.rb = tail call double @sin(double noundef %i.ra) #6
+  %i.rb = tail call double @sin(double noundef %i.ra) #5
   %i.rc = fsub double 5.000000e-01, %i.rb
   %i.rd = fmul double %i.rc, 2.000000e+01
   %i.re = mul nsw i64 %indvars.iv.next746, %i.qd
@@ -1224,7 +1224,7 @@ bb.as:                                            ; preds = %bb.a
   %i.rf = mul nuw nsw i64 %indvars.iv.next746, %indvars.iv750
   %i.rg = trunc nuw nsw i64 %i.rf to i32
   %i.rh = uitofp nneg i32 %i.rg to double
-  %i.ri = tail call double @sin(double noundef %i.rh) #6
+  %i.ri = tail call double @sin(double noundef %i.rh) #5
   %i.rj = fsub double 5.000000e-01, %i.ri
   %i.rk = fmul double %i.rj, 2.000000e+00
   %i.rl = mul nsw i64 %indvars.iv.next746, %i.qe
@@ -1246,7 +1246,7 @@ bb.as:                                            ; preds = %bb.a
   %i.rm = trunc nuw nsw i64 %indvars.iv745.epil.init to i32
   %i.rn = udiv i32 %i.rm, %i.qh
   %i.ro = uitofp nneg i32 %i.rn to double
-  %i.rp = tail call double @sin(double noundef %i.ro) #6
+  %i.rp = tail call double @sin(double noundef %i.ro) #5
   %i.rq = fsub double 5.000000e-01, %i.rp
   %i.rr = fmul double %i.rq, 2.000000e+01
   %i.rs = mul nsw i64 %indvars.iv745.epil.init, %i.qd
@@ -1255,7 +1255,7 @@ bb.as:                                            ; preds = %bb.a
   %i.rt = mul nuw nsw i64 %indvars.iv745.epil.init, %indvars.iv750
   %i.ru = trunc nuw nsw i64 %i.rt to i32
   %i.rv = uitofp nneg i32 %i.ru to double
-  %i.rw = tail call double @sin(double noundef %i.rv) #6
+  %i.rw = tail call double @sin(double noundef %i.rv) #5
   %i.rx = fsub double 5.000000e-01, %i.rw
   %i.ry = fmul double %i.rx, 2.000000e+00
   %i.rz = mul nsw i64 %indvars.iv745.epil.init, %i.qe
@@ -1314,7 +1314,7 @@ bb.au:                                            ; preds = %bb.at
   %i.so = mul nuw nsw i64 %indvars.iv821, %indvars.iv826
   %i.sp = trunc nuw nsw i64 %i.so to i32
   %i.sq = uitofp nneg i32 %i.sp to double
-  %i.sr = tail call double @sin(double noundef %i.sq) #6
+  %i.sr = tail call double @sin(double noundef %i.sq) #5
   %i.ss = fsub double 5.000000e-01, %i.sr
   %i.st = load double, ptr %19, align 8, !tbaa !9
   %i.su = fmul double %i.ss, %i.st
@@ -1325,7 +1325,7 @@ bb.au:                                            ; preds = %bb.at
   %i.sx = add nuw nsw i64 %indvars.iv821, %indvars.iv826
   %i.sy = trunc nsw i64 %i.sx to i32
   %i.sz = uitofp nneg i32 %i.sy to double
-  %i.ta = tail call double @sin(double noundef %i.sz) #6
+  %i.ta = tail call double @sin(double noundef %i.sz) #5
   %i.tb = fsub double 5.000000e-01, %i.ta
   %i.tc = load double, ptr %19, align 8, !tbaa !9
   %i.td = fmul double %i.tb, %i.tc
@@ -1337,7 +1337,7 @@ bb.au:                                            ; preds = %bb.at
   %i.tg = mul nuw nsw i64 %indvars.iv.next822, %indvars.iv826
   %i.th = trunc nuw nsw i64 %i.tg to i32
   %i.ti = uitofp nneg i32 %i.th to double
-  %i.tj = tail call double @sin(double noundef %i.ti) #6
+  %i.tj = tail call double @sin(double noundef %i.ti) #5
   %i.tk = fsub double 5.000000e-01, %i.tj
   %i.tl = load double, ptr %19, align 8, !tbaa !9
   %i.tm = fmul double %i.tk, %i.tl
@@ -1348,7 +1348,7 @@ bb.au:                                            ; preds = %bb.at
   %i.tp = add nuw nsw i64 %indvars.iv.next822, %indvars.iv826
   %i.tq = trunc nsw i64 %i.tp to i32
   %i.tr = uitofp nneg i32 %i.tq to double
-  %i.ts = tail call double @sin(double noundef %i.tr) #6
+  %i.ts = tail call double @sin(double noundef %i.tr) #5
   %i.tt = fsub double 5.000000e-01, %i.ts
   %i.tu = load double, ptr %19, align 8, !tbaa !9
   %i.tv = fmul double %i.tt, %i.tu
@@ -1372,7 +1372,7 @@ bb.au:                                            ; preds = %bb.at
   %i.ty = mul nuw nsw i64 %indvars.iv821.epil.init, %indvars.iv826
   %i.tz = trunc nuw nsw i64 %i.ty to i32
   %i.ua = uitofp nneg i32 %i.tz to double
-  %i.ub = tail call double @sin(double noundef %i.ua) #6
+  %i.ub = tail call double @sin(double noundef %i.ua) #5
   %i.uc = fsub double 5.000000e-01, %i.ub
   %i.ud = load double, ptr %19, align 8, !tbaa !9
   %i.ue = fmul double %i.uc, %i.ud
@@ -1383,7 +1383,7 @@ bb.au:                                            ; preds = %bb.at
   %i.uh = add nuw nsw i64 %indvars.iv821.epil.init, %indvars.iv826
   %i.ui = trunc nsw i64 %i.uh to i32
   %i.uj = uitofp nneg i32 %i.ui to double
-  %i.uk = tail call double @sin(double noundef %i.uj) #6
+  %i.uk = tail call double @sin(double noundef %i.uj) #5
   %i.ul = fsub double 5.000000e-01, %i.uk
   %i.um = load double, ptr %19, align 8, !tbaa !9
   %i.un = fmul double %i.ul, %i.um
@@ -1399,39 +1399,19 @@ bb.au:                                            ; preds = %bb.at
   br i1 %exitcond830.not, label %._crit_edge710, label %.lr.ph709, !llvm.loop !34
 
 ._crit_edge710:                                   ; preds = %._crit_edge705
-  %.pre = load i32, ptr %1, align 4, !tbaa !8     ; 9 uses
+  %.pre = load i32, ptr %1, align 4, !tbaa !8     ; 8 uses
   %.not566711 = icmp slt i32 %.pre, 1
   br i1 %.not566711, label %._crit_edge718, label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge710
-  %i.uq = add i32 %i.g, 1                         ; 18 uses
+  %i.uq = add i32 %i.g, 1                         ; 3 uses
   %i.ur = add nuw i32 %.pre, 1
-  %wide.trip.count834 = zext i32 %i.ur to i64     ; 3 uses
+  %wide.trip.count834 = zext i32 %i.ur to i64
   %i.us = zext nneg i32 %.pre to i64              ; 5 uses
   %min.iters.check = icmp ult i32 %.pre, 4
-  br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
+  br i1 %min.iters.check, label %vec.epilog.scalar.ph.prol.loopexit, label %vector.main.loop.iter.check
 
-vector.scevcheck:                                 ; preds = %iter.check
-  %22 = add nsw i64 %wide.trip.count834, -2       ; 2 uses
-  %23 = icmp slt i32 %i.uq, 0                     ; 2 uses
-  %24 = select i1 %23, i32 %narrow598, i32 %i.uq
-  %25 = trunc i64 %22 to i32
-  %mul = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %24, i32 %25) ; 2 uses
-  %mul.result = extractvalue { i32, i1 } %mul, 0  ; 2 uses
-  %mul.overflow = extractvalue { i32, i1 } %mul, 1
-  %26 = add i32 %i.uq, %mul.result
-  %27 = sub i32 %i.uq, %mul.result
-  %28 = icmp slt i32 %26, %i.uq
-  %29 = icmp sgt i32 %27, %i.uq
-  %30 = select i1 %23, i1 %29, i1 %28
-  %31 = or i1 %30, %mul.overflow
-  %32 = icmp ugt i64 %22, 4294967295
-  %33 = icmp ne i32 %i.uq, 0
-  %34 = and i1 %32, %33
-  %35 = or i1 %31, %34
-  br i1 %35, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
-
-vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
+vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check1006 = icmp ult i32 %.pre, 16
   br i1 %min.iters.check1006, label %vec.epilog.ph, label %vector.ph
 
@@ -1476,7 +1456,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.ut, 0
-  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !38
+  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.ph, !prof !38
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -1501,40 +1481,17 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index.next1018 = add nuw i64 %index1015, 4     ; 2 uses
   %vec.ind.next1019 = add <4 x i32> %vec.ind1016, splat (i32 4)
   %i.vi = icmp eq i64 %index.next1018, %n.vec1010
-  br i1 %i.vi, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !39
+  br i1 %i.vi, label %vec.epilog.scalar.ph.prol, label %vec.epilog.vector.body, !llvm.loop !39
 
-vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n1020 = icmp eq i64 %n.vec1010, %i.us
-  br i1 %cmp.n1020, label %.loopexit1022, label %vec.epilog.scalar.ph.preheader
+vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.vector.body
+  %prol.iter.cmp.not = icmp eq i64 %n.vec1010, %i.us
+  br i1 %prol.iter.cmp.not, label %.loopexit1022, label %vec.epilog.scalar.ph.prol.loopexit
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv831.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.scevcheck ], [ %i.uu, %vec.epilog.iter.check ], [ %i.ve, %vec.epilog.middle.block ] ; 4 uses
-  %36 = sub nsw i64 %wide.trip.count834, %indvars.iv831.ph
-  %37 = zext nneg i32 %.pre to i64
-  %38 = sub nsw i64 %37, %indvars.iv831.ph
-  %xtraiter1078 = and i64 %36, 7                  ; 2 uses
-  %lcmp.mod1079.not = icmp eq i64 %xtraiter1078, 0
-  br i1 %lcmp.mod1079.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
+vec.epilog.scalar.ph.prol.loopexit:               ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.scalar.ph.prol
+  %indvars.iv831.ph = phi i64 [ 1, %iter.check ], [ %i.uu, %vec.epilog.iter.check ], [ %i.ve, %vec.epilog.scalar.ph.prol ]
+  br label %vec.epilog.scalar.ph
 
-vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph.prol
-  %indvars.iv831.prol = phi i64 [ %indvars.iv.next832.prol, %vec.epilog.scalar.ph.prol ], [ %indvars.iv831.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
-  %prol.iter = phi i64 [ %prol.iter.next, %vec.epilog.scalar.ph.prol ], [ 0, %vec.epilog.scalar.ph.preheader ]
-  %39 = trunc nuw nsw i64 %indvars.iv831.prol to i32
-  %40 = mul i32 %i.uq, %39
-  %41 = sext i32 %40 to i64
-  %42 = getelementptr inbounds [8 x i8], ptr %i.i, i64 %41
-  store double 1.000000e+00, ptr %42, align 8, !tbaa !9
-  %indvars.iv.next832.prol = add nuw nsw i64 %indvars.iv831.prol, 1 ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter1078
-  br i1 %prol.iter.cmp.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol, !llvm.loop !40
-
-vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.ph.prol, %vec.epilog.scalar.ph.preheader
-  %indvars.iv831.unr = phi i64 [ %indvars.iv831.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next832.prol, %vec.epilog.scalar.ph.prol ]
-  %43 = icmp ult i64 %38, 7
-  br i1 %43, label %.loopexit1022, label %vec.epilog.scalar.ph
-
-.loopexit1022:                                    ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
+.loopexit1022:                                    ; preds = %vec.epilog.scalar.ph, %vec.epilog.scalar.ph.prol, %middle.block
   %i.vj = add i32 %i.a, 1                         ; 5 uses
   %i.vk = fneg double %i.sg
   %i.vl = fadd double %i.sg, 1.000000e+00
@@ -1566,57 +1523,15 @@ bb.av:                                            ; preds = %.loopexit1022
   br i1 %exitcond840.peel851.not, label %._crit_edge718, label %.peel.next841
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
-  %indvars.iv831 = phi i64 [ %indvars.iv.next832.7, %vec.epilog.scalar.ph ], [ %indvars.iv831.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 9 uses
-  %44 = trunc nuw nsw i64 %indvars.iv831 to i32
-  %45 = mul i32 %i.uq, %44
-  %46 = sext i32 %45 to i64
-  %47 = getelementptr inbounds [8 x i8], ptr %i.i, i64 %46
-  store double 1.000000e+00, ptr %47, align 8, !tbaa !9
-  %48 = trunc i64 %indvars.iv831 to i32
-  %49 = add i32 %48, 1
-  %50 = mul i32 %i.uq, %49
-  %51 = sext i32 %50 to i64
-  %52 = getelementptr inbounds [8 x i8], ptr %i.i, i64 %51
-  store double 1.000000e+00, ptr %52, align 8, !tbaa !9
-  %53 = trunc i64 %indvars.iv831 to i32
-  %54 = add i32 %53, 2
-  %55 = mul i32 %i.uq, %54
-  %56 = sext i32 %55 to i64
-  %57 = getelementptr inbounds [8 x i8], ptr %i.i, i64 %56
-  store double 1.000000e+00, ptr %57, align 8, !tbaa !9
-  %58 = trunc i64 %indvars.iv831 to i32
-  %59 = add i32 %58, 3
-  %60 = mul i32 %i.uq, %59
-  %61 = sext i32 %60 to i64
-  %62 = getelementptr inbounds [8 x i8], ptr %i.i, i64 %61
-  store double 1.000000e+00, ptr %62, align 8, !tbaa !9
-  %63 = trunc i64 %indvars.iv831 to i32
-  %64 = add i32 %63, 4
-  %65 = mul i32 %i.uq, %64
-  %66 = sext i32 %65 to i64
-  %67 = getelementptr inbounds [8 x i8], ptr %i.i, i64 %66
-  store double 1.000000e+00, ptr %67, align 8, !tbaa !9
-  %68 = trunc i64 %indvars.iv831 to i32
-  %69 = add i32 %68, 5
-  %70 = mul i32 %i.uq, %69
-  %71 = sext i32 %70 to i64
-  %72 = getelementptr inbounds [8 x i8], ptr %i.i, i64 %71
-  store double 1.000000e+00, ptr %72, align 8, !tbaa !9
-  %73 = trunc i64 %indvars.iv831 to i32
-  %74 = add i32 %73, 6
-  %75 = mul i32 %i.uq, %74
-  %76 = sext i32 %75 to i64
-  %77 = getelementptr inbounds [8 x i8], ptr %i.i, i64 %76
-  store double 1.000000e+00, ptr %77, align 8, !tbaa !9
-  %i.wb = trunc i64 %indvars.iv831 to i32
-  %78 = add i32 %i.wb, 7
-  %i.wc = mul i32 %i.uq, %78
+  %indvars.iv831 = phi i64 [ %indvars.iv.next832.7, %vec.epilog.scalar.ph ], [ %indvars.iv831.ph, %vec.epilog.scalar.ph.prol.loopexit ] ; 2 uses
+  %i.wb = trunc nuw nsw i64 %indvars.iv831 to i32
+  %i.wc = mul i32 %i.uq, %i.wb
   %i.wd = sext i32 %i.wc to i64
   %i.we = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.wd
   store double 1.000000e+00, ptr %i.we, align 8, !tbaa !9
-  %indvars.iv.next832.7 = add nuw nsw i64 %indvars.iv831, 8 ; 2 uses
+  %indvars.iv.next832.7 = add nuw nsw i64 %indvars.iv831, 1 ; 2 uses
   %exitcond835.not.7 = icmp eq i64 %indvars.iv.next832.7, %wide.trip.count834
-  br i1 %exitcond835.not.7, label %.loopexit1022, label %vec.epilog.scalar.ph, !llvm.loop !42
+  br i1 %exitcond835.not.7, label %.loopexit1022, label %vec.epilog.scalar.ph, !llvm.loop !40
 
 .peel.next841:                                    ; preds = %bb.av, %bb.ba
   %indvars.iv836 = phi i64 [ %indvars.iv.next837, %bb.ba ], [ 3, %bb.av ] ; 12 uses
@@ -1678,7 +1593,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay, %bb.
   store double %.sink977, ptr %i.wx, align 8, !tbaa !9
   %indvars.iv.next837 = add nuw nsw i64 %indvars.iv836, 1 ; 2 uses
   %exitcond840.not = icmp eq i64 %indvars.iv.next837, %wide.trip.count839
-  br i1 %exitcond840.not, label %._crit_edge718, label %.peel.next841, !llvm.loop !43
+  br i1 %exitcond840.not, label %._crit_edge718, label %.peel.next841, !llvm.loop !41
 
 ._crit_edge718:                                   ; preds = %bb.ba, %.loopexit1022, %bb.au, %._crit_edge710, %bb.av
   %i.wy = load i32, ptr %2, align 4, !tbaa !8     ; 6 uses
@@ -1846,7 +1761,7 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd
   store double %.sink984, ptr %i.aac, align 8, !tbaa !9
   %indvars.iv.next854 = add nuw nsw i64 %indvars.iv853, 1 ; 2 uses
   %exitcond857.not = icmp eq i64 %indvars.iv.next854, %wide.trip.count856
-  br i1 %exitcond857.not, label %.loopexit, label %.peel.next860, !llvm.loop !45
+  br i1 %exitcond857.not, label %.loopexit, label %.peel.next860, !llvm.loop !43
 
 .loopexit.loopexit1024.unr-lcssa:                 ; preds = %.lr.ph679
   %i.aad = and i64 %i.kv, 1
@@ -1872,7 +1787,7 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd
   %i.aao = getelementptr [8 x i8], ptr %i.f, i64 %i.aal
   %i.aap = getelementptr [8 x i8], ptr %i.aao, i64 %indvars.iv788.epil.init
   %i.aaq = load double, ptr %i.aap, align 8, !tbaa !9
-  %i.aar = tail call double @sin(double noundef %i.aaq) #6
+  %i.aar = tail call double @sin(double noundef %i.aaq) #5
   %i.aas = fneg double %i.aar
   %i.aat = getelementptr [8 x i8], ptr %i.f, i64 %i.aak
   %i.aau = getelementptr [8 x i8], ptr %i.aat, i64 %i.aae
@@ -1880,10 +1795,10 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd
   br label %.loopexit
 
 .loopexit:                                        ; preds = %._crit_edge636, %.lr.ph679.epil.preheader, %.loopexit.loopexit1024.unr-lcssa, %._crit_edge697, %.peel.next860.peel, %.peel.next860.peel1081, %.peel.next860.peel1103, %.peel.next860.peel1125, %bb.bf, %bb.bb, %bb.bc, %.lr.ph640, %._crit_edge631, %bb.ar, %.preheader609, %._crit_edge718, %._crit_edge670, %bb.at
-  tail call void @dgemm_(ptr noundef nonnull @.str, ptr noundef nonnull @.str, ptr noundef %1, ptr noundef %2, ptr noundef %1, ptr noundef nonnull @c_b29, ptr noundef %3, ptr noundef nonnull %4, ptr noundef %15, ptr noundef nonnull %16, ptr noundef nonnull @c_b30, ptr noundef %7, ptr noundef %8) #6
-  tail call void @dgemm_(ptr noundef nonnull @.str, ptr noundef nonnull @.str, ptr noundef %1, ptr noundef %2, ptr noundef %2, ptr noundef nonnull @c_b33, ptr noundef %17, ptr noundef nonnull %18, ptr noundef %5, ptr noundef nonnull %6, ptr noundef nonnull @c_b29, ptr noundef %7, ptr noundef %8) #6
-  tail call void @dgemm_(ptr noundef nonnull @.str, ptr noundef nonnull @.str, ptr noundef %1, ptr noundef %2, ptr noundef %1, ptr noundef nonnull @c_b29, ptr noundef %9, ptr noundef nonnull %10, ptr noundef %15, ptr noundef nonnull %16, ptr noundef nonnull @c_b30, ptr noundef %13, ptr noundef %14) #6
-  tail call void @dgemm_(ptr noundef nonnull @.str, ptr noundef nonnull @.str, ptr noundef %1, ptr noundef %2, ptr noundef %2, ptr noundef nonnull @c_b33, ptr noundef %17, ptr noundef nonnull %18, ptr noundef %11, ptr noundef nonnull %12, ptr noundef nonnull @c_b29, ptr noundef %13, ptr noundef %14) #6
+  tail call void @dgemm_(ptr noundef nonnull @.str, ptr noundef nonnull @.str, ptr noundef %1, ptr noundef %2, ptr noundef %1, ptr noundef nonnull @c_b29, ptr noundef %3, ptr noundef nonnull %4, ptr noundef %15, ptr noundef nonnull %16, ptr noundef nonnull @c_b30, ptr noundef %7, ptr noundef %8) #5
+  tail call void @dgemm_(ptr noundef nonnull @.str, ptr noundef nonnull @.str, ptr noundef %1, ptr noundef %2, ptr noundef %2, ptr noundef nonnull @c_b33, ptr noundef %17, ptr noundef nonnull %18, ptr noundef %5, ptr noundef nonnull %6, ptr noundef nonnull @c_b29, ptr noundef %7, ptr noundef %8) #5
+  tail call void @dgemm_(ptr noundef nonnull @.str, ptr noundef nonnull @.str, ptr noundef %1, ptr noundef %2, ptr noundef %1, ptr noundef nonnull @c_b29, ptr noundef %9, ptr noundef nonnull %10, ptr noundef %15, ptr noundef nonnull %16, ptr noundef nonnull @c_b30, ptr noundef %13, ptr noundef %14) #5
+  tail call void @dgemm_(ptr noundef nonnull @.str, ptr noundef nonnull @.str, ptr noundef %1, ptr noundef %2, ptr noundef %2, ptr noundef nonnull @c_b33, ptr noundef %17, ptr noundef nonnull %18, ptr noundef %11, ptr noundef nonnull %12, ptr noundef nonnull @c_b29, ptr noundef %13, ptr noundef %14) #5
   ret void
 }
 
@@ -1892,22 +1807,18 @@ declare double @sin(double noundef) local_unnamed_addr #1
 
 declare void @dgemm_(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #3
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
-declare void @llvm.masked.scatter.v4f64.v4p0(<4 x double>, <4 x ptr>, <4 x i1>) #4
+declare void @llvm.masked.scatter.v4f64.v4p0(<4 x double>, <4 x ptr>, <4 x i1>) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #5
+declare void @llvm.assume(i1 noundef) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
-attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #4 = { nocallback nofree nosync nounwind willreturn memory(write) }
-attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #6 = { nounwind }
+attributes #3 = { nocallback nofree nosync nounwind willreturn memory(write) }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -1953,11 +1864,9 @@ attributes #6 = { nounwind }
 !37 = !{!"llvm.loop.unroll.runtime.disable"}
 !38 = !{!"branch_weights", i32 4, i32 12}
 !39 = distinct !{!39, !12, !36, !37}
-!40 = distinct !{!40, !41}
-!41 = !{!"llvm.loop.unroll.disable"}
-!42 = distinct !{!42, !12, !36}
+!40 = distinct !{!40, !12, !37, !36}
+!41 = distinct !{!41, !12, !42}
+!42 = !{!"llvm.loop.peeled.count", i32 2}
 !43 = distinct !{!43, !12, !44}
-!44 = !{!"llvm.loop.peeled.count", i32 2}
-!45 = distinct !{!45, !12, !46}
-!46 = !{!"llvm.loop.peeled.count", i32 6}
+!44 = !{!"llvm.loop.peeled.count", i32 6}
 end_hunk_0

@@ -1,5 +1,3 @@
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -11,9 +9,9 @@ target triple = "x86_64-pc-linux-gnu"
 define void @dlaset_(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef writeonly captures(none) %5, ptr nofree noundef readonly captures(none) %6) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i32, ptr %6, align 4, !tbaa !8      ; 5 uses
-  %narrow = xor i32 %i.a, -1                      ; 2 uses
+  %narrow = xor i32 %i.a, -1
   %i.b = sext i32 %narrow to i64
-  %i.c = getelementptr inbounds [8 x i8], ptr %5, i64 %i.b ; 17 uses
+  %i.c = getelementptr inbounds [8 x i8], ptr %5, i64 %i.b ; 9 uses
   %i.d = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str) #4
   %.not = icmp eq i32 %i.d, 0
   br i1 %.not, label %bb.d, label %bb.b
@@ -346,40 +344,20 @@ vec.epilog.scalar.ph220:                          ; preds = %vec.epilog.scalar.p
 .loopexit:                                        ; preds = %._crit_edge, %.loopexit86, %._crit_edge107, %bb.b, %bb.e, %bb.f
   %i.bo = phi i32 [ %i.aw, %bb.f ], [ %i.aw, %._crit_edge107 ], [ %i.ad, %.loopexit86 ], [ %i.e, %bb.b ], [ %i.ad, %bb.e ], [ %i.e, %._crit_edge ]
   %i.bp = phi i32 [ %.pre156, %bb.f ], [ %.pre156, %._crit_edge107 ], [ %i.ac, %.loopexit86 ], [ %.pre155, %bb.b ], [ %i.ac, %bb.e ], [ %.pre155, %._crit_edge ]
-  %.85 = tail call i32 @llvm.smin.i32(i32 %i.bp, i32 %i.bo) ; 6 uses
+  %.85 = tail call i32 @llvm.smin.i32(i32 %i.bp, i32 %i.bo) ; 5 uses
   %.not81112 = icmp slt i32 %.85, 1
   br i1 %.not81112, label %._crit_edge116, label %iter.check251
 
 iter.check251:                                    ; preds = %.loopexit
-  %i.bq = add i32 %i.a, 1                         ; 18 uses
+  %i.bq = add i32 %i.a, 1                         ; 3 uses
   %i.br = add nuw i32 %.85, 1
-  %wide.trip.count151 = zext i32 %i.br to i64     ; 3 uses
-  %.pre157 = load double, ptr %4, align 8, !tbaa !9 ; 11 uses
+  %wide.trip.count151 = zext i32 %i.br to i64
+  %.pre157 = load double, ptr %4, align 8, !tbaa !9 ; 3 uses
   %i.bs = zext nneg i32 %.85 to i64               ; 5 uses
   %min.iters.check233 = icmp ult i32 %.85, 4
-  br i1 %min.iters.check233, label %vec.epilog.scalar.ph252.preheader, label %vector.scevcheck
+  br i1 %min.iters.check233, label %vec.epilog.scalar.ph252.prol.loopexit, label %vector.main.loop.iter.check234
 
-vector.scevcheck:                                 ; preds = %iter.check251
-  %7 = add nsw i64 %wide.trip.count151, -2        ; 2 uses
-  %8 = icmp slt i32 %i.bq, 0                      ; 2 uses
-  %9 = select i1 %8, i32 %narrow, i32 %i.bq
-  %10 = trunc i64 %7 to i32
-  %mul = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %9, i32 %10) ; 2 uses
-  %mul.result = extractvalue { i32, i1 } %mul, 0  ; 2 uses
-  %mul.overflow = extractvalue { i32, i1 } %mul, 1
-  %11 = add i32 %i.bq, %mul.result
-  %12 = sub i32 %i.bq, %mul.result
-  %13 = icmp slt i32 %11, %i.bq
-  %14 = icmp sgt i32 %12, %i.bq
-  %15 = select i1 %8, i1 %14, i1 %13
-  %16 = or i1 %15, %mul.overflow
-  %17 = icmp ugt i64 %7, 4294967295
-  %18 = icmp ne i32 %i.bq, 0
-  %19 = and i1 %17, %18
-  %20 = or i1 %16, %19
-  br i1 %20, label %vec.epilog.scalar.ph252.preheader, label %vector.main.loop.iter.check234
-
-vector.main.loop.iter.check234:                   ; preds = %vector.scevcheck
+vector.main.loop.iter.check234:                   ; preds = %iter.check251
   %min.iters.check235 = icmp ult i32 %.85, 16
   br i1 %min.iters.check235, label %vec.epilog.ph255, label %vector.ph236
 
@@ -426,7 +404,7 @@ middle.block248:                                  ; preds = %vector.body242
 
 vec.epilog.iter.check253:                         ; preds = %middle.block248
   %min.epilog.iters.check254 = icmp eq i64 %i.bt, 0
-  br i1 %min.epilog.iters.check254, label %vec.epilog.scalar.ph252.preheader, label %vec.epilog.ph255, !prof !15
+  br i1 %min.epilog.iters.check254, label %vec.epilog.scalar.ph252.prol.loopexit, label %vec.epilog.ph255, !prof !15
 
 vec.epilog.ph255:                                 ; preds = %vector.main.loop.iter.check234, %vec.epilog.iter.check253
   %vec.epilog.resume.val250 = phi i64 [ %n.vec237, %vec.epilog.iter.check253 ], [ 0, %vector.main.loop.iter.check234 ]
@@ -453,93 +431,28 @@ vec.epilog.vector.body263:                        ; preds = %vec.epilog.vector.b
   %index.next267 = add nuw i64 %index264, 4       ; 2 uses
   %vec.ind.next268 = add <4 x i32> %vec.ind265, splat (i32 4)
   %i.ci = icmp eq i64 %index.next267, %n.vec256
-  br i1 %i.ci, label %vec.epilog.middle.block269, label %vec.epilog.vector.body263, !llvm.loop !28
+  br i1 %i.ci, label %vec.epilog.scalar.ph252.prol, label %vec.epilog.vector.body263, !llvm.loop !28
 
-vec.epilog.middle.block269:                       ; preds = %vec.epilog.vector.body263
-  %cmp.n270 = icmp eq i64 %n.vec256, %i.bs
-  br i1 %cmp.n270, label %._crit_edge116, label %vec.epilog.scalar.ph252.preheader
+vec.epilog.scalar.ph252.prol:                     ; preds = %vec.epilog.vector.body263
+  %prol.iter.cmp.not = icmp eq i64 %n.vec256, %i.bs
+  br i1 %prol.iter.cmp.not, label %._crit_edge116, label %vec.epilog.scalar.ph252.prol.loopexit
 
-vec.epilog.scalar.ph252.preheader:                ; preds = %vector.scevcheck, %iter.check251, %vec.epilog.iter.check253, %vec.epilog.middle.block269
-  %indvars.iv148.ph = phi i64 [ 1, %iter.check251 ], [ 1, %vector.scevcheck ], [ %i.bu, %vec.epilog.iter.check253 ], [ %i.ce, %vec.epilog.middle.block269 ] ; 4 uses
-  %21 = sub nsw i64 %wide.trip.count151, %indvars.iv148.ph
-  %22 = zext nneg i32 %.85 to i64
-  %23 = sub nsw i64 %22, %indvars.iv148.ph
-  %xtraiter = and i64 %21, 7                      ; 2 uses
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph252.prol.loopexit, label %vec.epilog.scalar.ph252.prol
-
-vec.epilog.scalar.ph252.prol:                     ; preds = %vec.epilog.scalar.ph252.preheader, %vec.epilog.scalar.ph252.prol
-  %indvars.iv148.prol = phi i64 [ %indvars.iv.next149.prol, %vec.epilog.scalar.ph252.prol ], [ %indvars.iv148.ph, %vec.epilog.scalar.ph252.preheader ] ; 2 uses
-  %prol.iter = phi i64 [ %prol.iter.next, %vec.epilog.scalar.ph252.prol ], [ 0, %vec.epilog.scalar.ph252.preheader ]
-  %24 = trunc nuw nsw i64 %indvars.iv148.prol to i32
-  %25 = mul i32 %i.bq, %24
-  %26 = sext i32 %25 to i64
-  %27 = getelementptr inbounds [8 x i8], ptr %i.c, i64 %26
-  store double %.pre157, ptr %27, align 8, !tbaa !9
-  %indvars.iv.next149.prol = add nuw nsw i64 %indvars.iv148.prol, 1 ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %vec.epilog.scalar.ph252.prol.loopexit, label %vec.epilog.scalar.ph252.prol, !llvm.loop !29
-
-vec.epilog.scalar.ph252.prol.loopexit:            ; preds = %vec.epilog.scalar.ph252.prol, %vec.epilog.scalar.ph252.preheader
-  %indvars.iv148.unr = phi i64 [ %indvars.iv148.ph, %vec.epilog.scalar.ph252.preheader ], [ %indvars.iv.next149.prol, %vec.epilog.scalar.ph252.prol ]
-  %28 = icmp ult i64 %23, 7
-  br i1 %28, label %._crit_edge116, label %vec.epilog.scalar.ph252
+vec.epilog.scalar.ph252.prol.loopexit:            ; preds = %iter.check251, %vec.epilog.iter.check253, %vec.epilog.scalar.ph252.prol
+  %indvars.iv148.ph = phi i64 [ 1, %iter.check251 ], [ %i.bu, %vec.epilog.iter.check253 ], [ %i.ce, %vec.epilog.scalar.ph252.prol ]
+  br label %vec.epilog.scalar.ph252
 
 vec.epilog.scalar.ph252:                          ; preds = %vec.epilog.scalar.ph252.prol.loopexit, %vec.epilog.scalar.ph252
-  %indvars.iv148 = phi i64 [ %indvars.iv.next149.7, %vec.epilog.scalar.ph252 ], [ %indvars.iv148.unr, %vec.epilog.scalar.ph252.prol.loopexit ] ; 9 uses
-  %29 = trunc nuw nsw i64 %indvars.iv148 to i32
-  %30 = mul i32 %i.bq, %29
-  %31 = sext i32 %30 to i64
-  %32 = getelementptr inbounds [8 x i8], ptr %i.c, i64 %31
-  store double %.pre157, ptr %32, align 8, !tbaa !9
-  %33 = trunc i64 %indvars.iv148 to i32
-  %34 = add i32 %33, 1
-  %35 = mul i32 %i.bq, %34
-  %36 = sext i32 %35 to i64
-  %37 = getelementptr inbounds [8 x i8], ptr %i.c, i64 %36
-  store double %.pre157, ptr %37, align 8, !tbaa !9
-  %38 = trunc i64 %indvars.iv148 to i32
-  %39 = add i32 %38, 2
-  %40 = mul i32 %i.bq, %39
-  %41 = sext i32 %40 to i64
-  %42 = getelementptr inbounds [8 x i8], ptr %i.c, i64 %41
-  store double %.pre157, ptr %42, align 8, !tbaa !9
-  %43 = trunc i64 %indvars.iv148 to i32
-  %44 = add i32 %43, 3
-  %45 = mul i32 %i.bq, %44
-  %46 = sext i32 %45 to i64
-  %47 = getelementptr inbounds [8 x i8], ptr %i.c, i64 %46
-  store double %.pre157, ptr %47, align 8, !tbaa !9
-  %48 = trunc i64 %indvars.iv148 to i32
-  %49 = add i32 %48, 4
-  %50 = mul i32 %i.bq, %49
-  %51 = sext i32 %50 to i64
-  %52 = getelementptr inbounds [8 x i8], ptr %i.c, i64 %51
-  store double %.pre157, ptr %52, align 8, !tbaa !9
-  %53 = trunc i64 %indvars.iv148 to i32
-  %54 = add i32 %53, 5
-  %55 = mul i32 %i.bq, %54
-  %56 = sext i32 %55 to i64
-  %57 = getelementptr inbounds [8 x i8], ptr %i.c, i64 %56
-  store double %.pre157, ptr %57, align 8, !tbaa !9
-  %58 = trunc i64 %indvars.iv148 to i32
-  %59 = add i32 %58, 6
-  %60 = mul i32 %i.bq, %59
-  %61 = sext i32 %60 to i64
-  %62 = getelementptr inbounds [8 x i8], ptr %i.c, i64 %61
-  store double %.pre157, ptr %62, align 8, !tbaa !9
-  %i.cj = trunc i64 %indvars.iv148 to i32
-  %63 = add i32 %i.cj, 7
-  %i.ck = mul i32 %i.bq, %63
+  %indvars.iv148 = phi i64 [ %indvars.iv.next149.7, %vec.epilog.scalar.ph252 ], [ %indvars.iv148.ph, %vec.epilog.scalar.ph252.prol.loopexit ] ; 2 uses
+  %i.cj = trunc nuw nsw i64 %indvars.iv148 to i32
+  %i.ck = mul i32 %i.bq, %i.cj
   %i.cl = sext i32 %i.ck to i64
   %i.cm = getelementptr inbounds [8 x i8], ptr %i.c, i64 %i.cl
   store double %.pre157, ptr %i.cm, align 8, !tbaa !9
-  %indvars.iv.next149.7 = add nuw nsw i64 %indvars.iv148, 8 ; 2 uses
+  %indvars.iv.next149.7 = add nuw nsw i64 %indvars.iv148, 1 ; 2 uses
   %exitcond152.not.7 = icmp eq i64 %indvars.iv.next149.7, %wide.trip.count151
-  br i1 %exitcond152.not.7, label %._crit_edge116, label %vec.epilog.scalar.ph252, !llvm.loop !31
+  br i1 %exitcond152.not.7, label %._crit_edge116, label %vec.epilog.scalar.ph252, !llvm.loop !29
 
-._crit_edge116:                                   ; preds = %vec.epilog.scalar.ph252.prol.loopexit, %vec.epilog.scalar.ph252, %middle.block248, %vec.epilog.middle.block269, %.loopexit
+._crit_edge116:                                   ; preds = %vec.epilog.scalar.ph252, %middle.block248, %vec.epilog.scalar.ph252.prol, %.loopexit
   ret void
 }
 
@@ -547,9 +460,6 @@ declare i32 @lsame_(ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
 declare void @llvm.masked.scatter.v4f64.v4p0(<4 x double>, <4 x ptr>, <4 x i1>) #3
@@ -593,7 +503,5 @@ attributes #4 = { nounwind }
 !26 = distinct !{!26, !12}
 !27 = distinct !{!27, !12, !13, !14}
 !28 = distinct !{!28, !12, !13, !14}
-!29 = distinct !{!29, !30}
-!30 = !{!"llvm.loop.unroll.disable"}
-!31 = distinct !{!31, !12, !13}
+!29 = distinct !{!29, !12, !14, !13}
 end_hunk_0
