@@ -1,0 +1,199 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 44516103fd4e1..667ec17d4f81f 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1037,8 +1037,8 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   DomTreeNode *DTN = DT.getNode(InLoopSucc);
+ 
+   // If we looked through `PN + C`, only derive facts when that add is
+-  // really the induction's post-increment.
+-  if (IncStep && (*IncStep != *StepOffset || StepOffset->isNegative()))
++  // really the induction's post-increment or post-decrement.
++  if (IncStep && *IncStep != *StepOffset)
+     return;
+ 
+   // Handle negative steps.
+@@ -1047,23 +1047,59 @@ void State::addInfoForInductions(BasicBlock &BB) {
+     if (!(-*StepOffset).isOne())
+       return;
+ 
++    // A step of -1 with no-wrap flags is monotonically decreasing, so
++    // StartValue >= PN holds unconditionally (regardless of where the loop
++    // exits), mirroring the unconditional monotonicity facts derived for
++    // non-negative steps below. Signed decreasing monotonicity follows from an
++    // nsw decrement; if the wrap flags are missing, refine via SCEV.
++    bool MonotonicallyDecreasingUnsigned = Inc && Inc->hasNoUnsignedWrap();
++    bool MonotonicallyDecreasingSigned = Inc && Inc->hasNoSignedWrap();
++    if (!(MonotonicallyDecreasingUnsigned && MonotonicallyDecreasingSigned)) {
++      const SCEVAddRecExpr *IndAR = cast<SCEVAddRecExpr>(SE.getSCEV(PN));
++      if (!MonotonicallyDecreasingUnsigned)
++        MonotonicallyDecreasingUnsigned =
++            SE.getMonotonicPredicateType(IndAR, CmpInst::ICMP_ULT) ==
++            ScalarEvolution::MonotonicallyDecreasing;
++      if (!MonotonicallyDecreasingSigned)
++        MonotonicallyDecreasingSigned =
++            SE.getMonotonicPredicateType(IndAR, CmpInst::ICMP_SLT) ==
++            ScalarEvolution::MonotonicallyDecreasing;
++    }
++    if (MonotonicallyDecreasingUnsigned)
++      WorkList.push_back(
++          FactOrCheck::getConditionFact(DTN, CmpInst::ICMP_UGE, StartValue, PN));
++    if (MonotonicallyDecreasingSigned)
++      WorkList.push_back(
++          FactOrCheck::getConditionFact(DTN, CmpInst::ICMP_SGE, StartValue, PN));
++
++    // The loop exits when the counting value reaches B. For a raw-phi compare
++    // that is PN == B, so the body runs with B < PN <= StartValue and the
++    // induction reaches B without wrapping as long as B <= StartValue. For a
++    // post-decrement compare (`icmp (PN + Step), B`) the loop instead exits at
++    // PN == B + 1, so the body runs with B + 1 < PN <= StartValue and reaching
++    // B + 1 without wrapping requires B < StartValue (strict); the strict
++    // precondition is also what makes the derived facts hold: at B == StartValue
++    // a post-decrement loop steps past B and wraps around the whole range.
++    CmpInst::Predicate UPrecond =
++        IncStep ? CmpInst::ICMP_ULT : CmpInst::ICMP_ULE;
++    CmpInst::Predicate SPrecond =
++        IncStep ? CmpInst::ICMP_SLT : CmpInst::ICMP_SLE;
++
+     // AR may wrap.
+-    // Add StartValue >= PN conditional on B <= StartValue which guarantees that
+-    // the loop exits before wrapping with a step of -1.
++    // Add StartValue >= PN conditional on the no-wrap precondition, which
++    // guarantees that the loop exits before wrapping with a step of -1.
+     WorkList.push_back(FactOrCheck::getConditionFact(
+         DTN, CmpInst::ICMP_UGE, StartValue, PN,
+-        ConditionTy(CmpInst::ICMP_ULE, B, StartValue)));
++        ConditionTy(UPrecond, B, StartValue)));
+     WorkList.push_back(FactOrCheck::getConditionFact(
+         DTN, CmpInst::ICMP_SGE, StartValue, PN,
+-        ConditionTy(CmpInst::ICMP_SLE, B, StartValue)));
+-    // Add PN > B conditional on B <= StartValue which guarantees that the loop
+-    // exits when reaching B with a step of -1.
++        ConditionTy(SPrecond, B, StartValue)));
++    // Add PN > B conditional on the no-wrap precondition, which guarantees that
++    // the loop exits when reaching B with a step of -1.
+     WorkList.push_back(FactOrCheck::getConditionFact(
+-        DTN, CmpInst::ICMP_UGT, PN, B,
+-        ConditionTy(CmpInst::ICMP_ULE, B, StartValue)));
++        DTN, CmpInst::ICMP_UGT, PN, B, ConditionTy(UPrecond, B, StartValue)));
+     WorkList.push_back(FactOrCheck::getConditionFact(
+-        DTN, CmpInst::ICMP_SGT, PN, B,
+-        ConditionTy(CmpInst::ICMP_SLE, B, StartValue)));
++        DTN, CmpInst::ICMP_SGT, PN, B, ConditionTy(SPrecond, B, StartValue)));
+     return;
+   }
+ 
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+index 5f461545c6881..4b0ae7005b334 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+@@ -636,14 +636,10 @@ define void @header_postdec_negative_step_folds() {
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i8 [[IV_NEXT]], 2
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[UGT:%.*]] = icmp ugt i8 [[IV]], 2
+-; CHECK-NEXT:    call void @use(i1 [[UGT]])
+-; CHECK-NEXT:    [[ULE:%.*]] = icmp ule i8 [[IV]], 5
+-; CHECK-NEXT:    call void @use(i1 [[ULE]])
+-; CHECK-NEXT:    [[SGT:%.*]] = icmp sgt i8 [[IV]], 2
+-; CHECK-NEXT:    call void @use(i1 [[SGT]])
+-; CHECK-NEXT:    [[SLE:%.*]] = icmp sle i8 [[IV]], 5
+-; CHECK-NEXT:    call void @use(i1 [[SLE]])
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    ret void
+@@ -681,14 +677,10 @@ define void @latch_postdec_negative_step_folds() {
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 5, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
+-; CHECK-NEXT:    [[UGT:%.*]] = icmp ugt i8 [[IV]], 2
+-; CHECK-NEXT:    call void @use(i1 [[UGT]])
+-; CHECK-NEXT:    [[ULE:%.*]] = icmp ule i8 [[IV]], 5
+-; CHECK-NEXT:    call void @use(i1 [[ULE]])
+-; CHECK-NEXT:    [[SGT:%.*]] = icmp sgt i8 [[IV]], 2
+-; CHECK-NEXT:    call void @use(i1 [[SGT]])
+-; CHECK-NEXT:    [[SLE:%.*]] = icmp sle i8 [[IV]], 5
+-; CHECK-NEXT:    call void @use(i1 [[SLE]])
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], -1
+@@ -773,10 +765,8 @@ define void @header_postdec_negative_step_strict_precond(i8 %start, i8 %b) {
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i8 [[IV_NEXT]], [[B]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[UGT:%.*]] = icmp ugt i8 [[IV]], [[B]]
+-; CHECK-NEXT:    call void @use(i1 [[UGT]])
+-; CHECK-NEXT:    [[ULE:%.*]] = icmp ule i8 [[IV]], [[START]]
+-; CHECK-NEXT:    call void @use(i1 [[ULE]])
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    ret void
+@@ -868,10 +858,8 @@ define void @header_postdec_negative_step_signed_precond(i8 %start, i8 %b) {
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i8 [[IV_NEXT]], [[B]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[SGT:%.*]] = icmp sgt i8 [[IV]], [[B]]
+-; CHECK-NEXT:    call void @use(i1 [[SGT]])
+-; CHECK-NEXT:    [[SLE:%.*]] = icmp sle i8 [[IV]], [[START]]
+-; CHECK-NEXT:    call void @use(i1 [[SLE]])
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    [[UGT:%.*]] = icmp ugt i8 [[IV]], [[B]]
+ ; CHECK-NEXT:    call void @use(i1 [[UGT]])
+ ; CHECK-NEXT:    br label %[[LOOP]]
+@@ -912,8 +900,7 @@ define void @latch_postdec_redundant_header_guard(i32 %n) {
+ ; CHECK-NEXT:    br i1 [[GUARD]], label %[[LOOP:.*]], label %[[EXIT:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[N]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
+-; CHECK-NEXT:    [[C:%.*]] = icmp sgt i32 [[IV]], 0
+-; CHECK-NEXT:    br i1 [[C]], label %[[LOOP_LATCH]], label %[[EXIT]]
++; CHECK-NEXT:    br i1 true, label %[[LOOP_LATCH]], label %[[EXIT]]
+ ; CHECK:       [[LOOP_LATCH]]:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], -1
+ ; CHECK-NEXT:    call void @launch(i32 [[IV_NEXT]])
+@@ -967,10 +954,9 @@ define i64 @latch_postdec_umin_clamp(ptr %s, i64 %n) {
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP]]
+ ; CHECK:       [[IF_FOUND]]:
+ ; CHECK-NEXT:    [[IDX:%.*]] = sub i64 [[N]], [[IV]]
+-; CHECK-NEXT:    [[CLAMPED:%.*]] = call i64 @llvm.umin.i64(i64 [[N]], i64 [[IDX]])
+ ; CHECK-NEXT:    br label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+-; CHECK-NEXT:    [[RES:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[N]], %[[LOOP_LATCH]] ], [ [[CLAMPED]], %[[IF_FOUND]] ]
++; CHECK-NEXT:    [[RES:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[N]], %[[LOOP_LATCH]] ], [ [[IDX]], %[[IF_FOUND]] ]
+ ; CHECK-NEXT:    ret i64 [[RES]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll
+index b1895c0881df8..612a4f4f8a47f 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll
+@@ -269,8 +269,7 @@ define void @add_rec_decreasing_nsw_signed_monotonic(i8 %start, i8 %b) {
+ ; CHECK-NEXT:    [[CMP2_NOT:%.*]] = icmp eq i8 [[K_0]], [[B]]
+ ; CHECK-NEXT:    br i1 [[CMP2_NOT]], label [[EXIT:%.*]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+-; CHECK-NEXT:    [[S:%.*]] = icmp sle i8 [[K_0]], [[START]]
+-; CHECK-NEXT:    call void @use(i1 [[S]])
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    [[U:%.*]] = icmp ule i8 [[K_0]], [[START]]
+ ; CHECK-NEXT:    call void @use(i1 [[U]])
+ ; CHECK-NEXT:    [[K_DEC]] = add nsw i8 [[K_0]], -1
+@@ -311,8 +310,7 @@ define void @add_rec_decreasing_nuw_not_unsigned_monotonic(i8 %start, i8 %b) {
+ ; CHECK-NEXT:    [[CMP2_NOT:%.*]] = icmp eq i8 [[K_0]], [[B]]
+ ; CHECK-NEXT:    br i1 [[CMP2_NOT]], label [[EXIT:%.*]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+-; CHECK-NEXT:    [[U:%.*]] = icmp ule i8 [[K_0]], [[START]]
+-; CHECK-NEXT:    call void @use(i1 [[U]])
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    [[S:%.*]] = icmp sle i8 [[K_0]], [[START]]
+ ; CHECK-NEXT:    call void @use(i1 [[S]])
+ ; CHECK-NEXT:    [[K_DEC]] = add nuw i8 [[K_0]], -1
