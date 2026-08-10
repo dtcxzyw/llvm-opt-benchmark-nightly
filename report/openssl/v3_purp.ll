@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 declare i32 @OPENSSL_sk_num(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define range(i32 11, 1) i32 @X509_PURPOSE_get_unused_id(ptr nofree noundef readnone captures(none) %0) local_unnamed_addr #0 {
+define range(i32 11, 0) i32 @X509_PURPOSE_get_unused_id(ptr nofree noundef readnone captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.x509_purpose_st, align 8    ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #9
@@ -226,7 +226,7 @@ select.unfold:                                    ; preds = %.lr.ph
   br i1 %i.g, label %._crit_edge, label %.lr.ph, !llvm.loop !82
 
 ._crit_edge:                                      ; preds = %.lr.ph, %select.unfold, %bb.a
-  %.0.lcssa = phi i32 [ 11, %bb.a ], [ %.06, %.lr.ph ], [ %i.e, %select.unfold ]
+  %.0.lcssa = phi i32 [ 11, %bb.a ], [ %i.e, %select.unfold ], [ %.06, %.lr.ph ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #9
   ret i32 %.0.lcssa
 }

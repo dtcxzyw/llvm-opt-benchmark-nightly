@@ -204,7 +204,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   %i.bu = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %10)
-  %.pre = load i8, ptr %10, align 8, !tbaa !3822, !range !3831
+  %.pre = load i8, ptr %10, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.bv = trunc nuw i8 %.pre to i1
   br i1 %i.bv, label %.critedge, label %bb.ah
 
@@ -334,7 +334,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %10)
-  %.pre295 = load i8, ptr %10, align 8, !tbaa !3822, !range !3831
+  %.pre295 = load i8, ptr %10, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.cw = trunc nuw i8 %.pre295 to i1
   br i1 %i.cw, label %.critedge.1, label %bb.ah
 
@@ -363,7 +363,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %10)
-  %.pre296 = load i8, ptr %10, align 8, !tbaa !3822, !range !3831
+  %.pre296 = load i8, ptr %10, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.dd = trunc nuw i8 %.pre296 to i1
   br i1 %i.dd, label %.critedge.2, label %bb.ah
 
@@ -392,7 +392,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %10)
-  %.pre297 = load i8, ptr %10, align 8, !tbaa !3822, !range !3831
+  %.pre297 = load i8, ptr %10, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.dk = trunc nuw i8 %.pre297 to i1
   br i1 %i.dk, label %.critedge.3, label %bb.ah
 
@@ -421,7 +421,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %10)
-  %.pre298 = load i8, ptr %10, align 8, !tbaa !3822, !range !3831
+  %.pre298 = load i8, ptr %10, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.dr = trunc nuw i8 %.pre298 to i1
   br i1 %i.dr, label %.critedge.4, label %bb.ah
 
@@ -452,11 +452,19 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %i.dz = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 3 uses
   br label %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit163
 
-_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit163: ; preds = %bb.bs, %.preheader281
+.preheader280:                                    ; preds = %bb.bs
+  %28 = getelementptr inbounds nuw i8, ptr %19, i64 8 ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %19) #43
+  call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %19)
+  %29 = load i8, ptr %19, align 8, !tbaa !3822, !range !3831, !noundef !3832
+  %30 = trunc nuw i8 %29 to i1
+  br i1 %30, label %.critedge104, label %bb.bt
+
+_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit163: ; preds = %.preheader281, %bb.bs
   %.036284 = phi i64 [ 9, %.preheader281 ], [ %i.gc, %bb.bs ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %13)
-  %.pre300 = load i8, ptr %13, align 8, !tbaa !3822, !range !3831
+  %.pre300 = load i8, ptr %13, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.ea = trunc nuw i8 %.pre300 to i1
   br i1 %i.ea, label %.critedge100, label %bb.aw
 
@@ -582,11 +590,11 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @_ZdlPvm(ptr noundef nonnull %i.ev, i64 noundef 32) #44
   br label %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit184
 
-_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit184: ; preds = %.critedge100, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i179
+_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit184: ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i179, %.critedge100
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %16)
-  %.pre303 = load i8, ptr %16, align 8, !tbaa !3822, !range !3831
+  %.pre303 = load i8, ptr %16, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.fb = trunc nuw i8 %.pre303 to i1
   br i1 %i.fb, label %.critedge102, label %bb.bh
 
@@ -716,17 +724,9 @@ bb.bs:                                            ; preds = %_ZNKSt14default_del
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #43
   %i.gc = add nuw nsw i64 %.036284, 1             ; 2 uses
   %exitcond.not = icmp eq i64 %i.gc, 17
-  br i1 %exitcond.not, label %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205, label %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit163, !llvm.loop !3855
+  br i1 %exitcond.not, label %.preheader280, label %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit163, !llvm.loop !3855
 
-_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205: ; preds = %bb.bs
-  %28 = getelementptr inbounds nuw i8, ptr %19, i64 8 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %19) #43
-  call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %19)
-  %.pre305 = load i8, ptr %19, align 8, !tbaa !3822, !range !3831
-  %29 = trunc nuw i8 %.pre305 to i1
-  br i1 %29, label %.critedge104, label %bb.bt
-
-bb.bt:                                            ; preds = %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.3, %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.2, %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.1, %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205
+bb.bt:                                            ; preds = %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.3, %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.2, %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.1, %.preheader280
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #43
   invoke void @_ZN7testing7MessageC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %20)
           to label %bb.bu unwind label %bb.bz
@@ -827,7 +827,7 @@ _ZN7testing7MessageD2Ev.exit218:                  ; preds = %_ZNKSt14default_del
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #43
   br label %bb.dn
 
-.critedge104:                                     ; preds = %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205
+.critedge104:                                     ; preds = %.preheader280
   %i.gx = load ptr, ptr %28, align 8, !tbaa !3833 ; 4 uses
   %.not.i.i219 = icmp eq ptr %i.gx, null
   br i1 %.not.i.i219, label %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.1, label %bb.cd
@@ -848,11 +848,11 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @_ZdlPvm(ptr noundef nonnull %i.gx, i64 noundef 32) #44
   br label %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.1
 
-_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.1: ; preds = %.critedge104, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i221
+_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.1: ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i221, %.critedge104
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %19)
-  %.pre308 = load i8, ptr %19, align 8, !tbaa !3822, !range !3831
+  %.pre308 = load i8, ptr %19, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.hd = trunc nuw i8 %.pre308 to i1
   br i1 %i.hd, label %.critedge104.1, label %bb.bt
 
@@ -877,11 +877,11 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @_ZdlPvm(ptr noundef nonnull %i.he, i64 noundef 32) #44
   br label %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.2
 
-_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.2: ; preds = %.critedge104.1, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i221.1
+_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.2: ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i221.1, %.critedge104.1
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %19)
-  %.pre311 = load i8, ptr %19, align 8, !tbaa !3822, !range !3831
+  %.pre311 = load i8, ptr %19, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.hk = trunc nuw i8 %.pre311 to i1
   br i1 %i.hk, label %.critedge104.2, label %bb.bt
 
@@ -906,11 +906,11 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @_ZdlPvm(ptr noundef nonnull %i.hl, i64 noundef 32) #44
   br label %_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.3
 
-_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.3: ; preds = %.critedge104.2, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i221.2
+_ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit205.3: ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i221.2, %.critedge104.2
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %19)
-  %.pre314 = load i8, ptr %19, align 8, !tbaa !3822, !range !3831
+  %.pre314 = load i8, ptr %19, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.hr = trunc nuw i8 %.pre314 to i1
   br i1 %i.hr, label %.critedge104.3, label %bb.bt
 
@@ -940,7 +940,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   %i.hy = getelementptr inbounds nuw i8, ptr %22, i64 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %22)
-  %.pre317 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831
+  %.pre317 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.hz = trunc nuw i8 %.pre317 to i1
   br i1 %i.hz, label %.critedge106, label %bb.ch
 
@@ -1070,7 +1070,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %22)
-  %.pre321 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831
+  %.pre321 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.ja = trunc nuw i8 %.pre321 to i1
   br i1 %i.ja, label %.critedge106.1, label %bb.ch
 
@@ -1099,7 +1099,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %22)
-  %.pre325 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831
+  %.pre325 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.jh = trunc nuw i8 %.pre325 to i1
   br i1 %i.jh, label %.critedge106.2, label %bb.ch
 
@@ -1128,7 +1128,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %22)
-  %.pre329 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831
+  %.pre329 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.jo = trunc nuw i8 %.pre329 to i1
   br i1 %i.jo, label %.critedge106.3, label %bb.ch
 
@@ -1157,7 +1157,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %22)
-  %.pre333 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831
+  %.pre333 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.jv = trunc nuw i8 %.pre333 to i1
   br i1 %i.jv, label %.critedge106.4, label %bb.ch
 
@@ -1186,7 +1186,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %22)
-  %.pre337 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831
+  %.pre337 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.kc = trunc nuw i8 %.pre337 to i1
   br i1 %i.kc, label %.critedge106.5, label %bb.ch
 
@@ -1215,7 +1215,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %22)
-  %.pre341 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831
+  %.pre341 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.kj = trunc nuw i8 %.pre341 to i1
   br i1 %i.kj, label %.critedge106.6, label %bb.ch
 
@@ -1244,7 +1244,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %22)
-  %.pre345 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831
+  %.pre345 = load i8, ptr %22, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.kq = trunc nuw i8 %.pre345 to i1
   br i1 %i.kq, label %.critedge106.7, label %bb.ch
 
@@ -1274,7 +1274,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   %i.kx = getelementptr inbounds nuw i8, ptr %25, i64 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %25)
-  %.pre348 = load i8, ptr %25, align 8, !tbaa !3822, !range !3831
+  %.pre348 = load i8, ptr %25, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.ky = trunc nuw i8 %.pre348 to i1
   br i1 %i.ky, label %.critedge108, label %bb.cz
 
@@ -1404,7 +1404,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %25)
-  %.pre352 = load i8, ptr %25, align 8, !tbaa !3822, !range !3831
+  %.pre352 = load i8, ptr %25, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.lz = trunc nuw i8 %.pre352 to i1
   br i1 %i.lz, label %.critedge108.1, label %bb.cz
 
@@ -1433,7 +1433,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %25)
-  %.pre356 = load i8, ptr %25, align 8, !tbaa !3822, !range !3831
+  %.pre356 = load i8, ptr %25, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.mg = trunc nuw i8 %.pre356 to i1
   br i1 %i.mg, label %.critedge108.2, label %bb.cz
 
@@ -1462,7 +1462,7 @@ _ZN7testing8internal8EqHelper7CompareIimTnPNSt9enable_ifIXoontsr3std11is_integra
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #43
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %25)
-  %.pre360 = load i8, ptr %25, align 8, !tbaa !3822, !range !3831
+  %.pre360 = load i8, ptr %25, align 8, !tbaa !3822, !range !3831, !noundef !3832
   %i.mn = trunc nuw i8 %.pre360 to i1
   br i1 %i.mn, label %.critedge108.3, label %bb.cz
 

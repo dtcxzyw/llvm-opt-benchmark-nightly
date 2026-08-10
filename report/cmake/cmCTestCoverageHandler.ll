@@ -203,7 +203,7 @@ bb.cp:                                            ; preds = %.backedge
           cleanup
   br label %bb.dn
 
-bb.cq:                                            ; preds = %.preheader382, %bb.cr, %bb.cs
+bb.cq:                                            ; preds = %bb.cs, %bb.cr, %.preheader382
   %.038588.lcssa597 = phi i64 [ 4, %.preheader382 ], [ 5, %bb.cr ], [ 6, %bb.cs ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #22
   store ptr %i.gf, ptr %22, align 8, !tbaa !28, !alias.scope !921
@@ -555,7 +555,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit282: ; preds = %bb
   br label %bb.do
 
 bb.dn:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.de, %bb.cp
-  %.pn85.pn = phi { ptr, i32 } [ %i.qp, %bb.cp ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %.pn82.pn, %bb.de ], [ %lpad.loopexit, %.loopexit ]
+  %.pn85.pn = phi { ptr, i32 } [ %i.qp, %bb.cp ], [ %.pn82.pn, %bb.de ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %i.uk = load ptr, ptr %21, align 8, !tbaa !57   ; 2 uses
   %i.ul = icmp eq ptr %i.uk, %i.gd
   br i1 %i.ul, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit285, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i283

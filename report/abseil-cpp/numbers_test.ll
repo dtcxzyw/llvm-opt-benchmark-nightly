@@ -203,9 +203,14 @@ _ZN4absl12lts_2026052616strings_internal4ItoaIhEEbT_iPNSt7__cxx1112basic_stringI
   %.pre276 = load i64, ptr %i.d, align 8, !tbaa !103
   br label %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit
 
+28:                                               ; preds = %.preheader.i
+  %29 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.ca
+
 _ZN7testing8internal26AssertionResultExpectationD2Ev.exit: ; preds = %_ZN4absl12lts_2026052616strings_internal4ItoaIhEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, %_ZN4absl12lts_2026052616strings_internal4ItoaIhEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread
-  %i.ba = phi i64 [ 1, %_ZN4absl12lts_2026052616strings_internal4ItoaIhEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ], [ %.pre276, %_ZN4absl12lts_2026052616strings_internal4ItoaIhEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
-  %i.bb = phi ptr [ %i.c, %_ZN4absl12lts_2026052616strings_internal4ItoaIhEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ], [ %.pre, %_ZN4absl12lts_2026052616strings_internal4ItoaIhEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
+  %i.ba = phi i64 [ %.pre276, %_ZN4absl12lts_2026052616strings_internal4ItoaIhEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ 1, %_ZN4absl12lts_2026052616strings_internal4ItoaIhEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ]
+  %i.bb = phi ptr [ %.pre, %_ZN4absl12lts_2026052616strings_internal4ItoaIhEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ %i.c, %_ZN4absl12lts_2026052616strings_internal4ItoaIhEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
   %i.bc = invoke noundef zeroext i1 @_ZN4absl12lts_2026052616numbers_internal17safe_strtou8_baseESt17basic_string_viewIcSt11char_traitsIcEEPhi(i64 %i.ba, ptr %i.bb, ptr noundef nonnull %i.b, i32 noundef %.014273)
@@ -217,11 +222,6 @@ bb.f:                                             ; preds = %_ZN7testing8interna
   store ptr null, ptr %i.e, align 8, !tbaa !368
   store i8 1, ptr %i.f, align 8, !tbaa !369
   br i1 %i.bc, label %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit99, label %bb.h
-
-28:                                               ; preds = %.preheader.i
-  %29 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ca
 
 bb.g:                                             ; preds = %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit
   %i.be = landingpad { ptr, i32 }
@@ -625,8 +625,8 @@ _ZN4absl12lts_2026052616strings_internal4ItoaIaEEbT_iPNSt7__cxx1112basic_stringI
   br label %bb.cg
 
 _ZN7testing8internal26AssertionResultExpectationD2Ev.exit: ; preds = %_ZN4absl12lts_2026052616strings_internal4ItoaIaEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, %_ZN4absl12lts_2026052616strings_internal4ItoaIaEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread
-  %i.bd = phi i64 [ 1, %_ZN4absl12lts_2026052616strings_internal4ItoaIaEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ], [ %.pre284, %_ZN4absl12lts_2026052616strings_internal4ItoaIaEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
-  %i.be = phi ptr [ %i.c, %_ZN4absl12lts_2026052616strings_internal4ItoaIaEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ], [ %.pre, %_ZN4absl12lts_2026052616strings_internal4ItoaIaEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
+  %i.bd = phi i64 [ %.pre284, %_ZN4absl12lts_2026052616strings_internal4ItoaIaEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ 1, %_ZN4absl12lts_2026052616strings_internal4ItoaIaEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ]
+  %i.be = phi ptr [ %.pre, %_ZN4absl12lts_2026052616strings_internal4ItoaIaEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ %i.c, %_ZN4absl12lts_2026052616strings_internal4ItoaIaEEbT_iPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
   %i.bf = invoke noundef zeroext i1 @_ZN4absl12lts_2026052616numbers_internal16safe_strto8_baseESt17basic_string_viewIcSt11char_traitsIcEEPai(i64 %i.bd, ptr %i.be, ptr noundef nonnull %i.b, i32 noundef %.014281)
@@ -1029,7 +1029,7 @@ bb.cf:                                            ; preds = %bb.ce, %bb.bn, %.bo
   br label %bb.cg
 
 bb.cg:                                            ; preds = %.loopexit.split-lp, %.loopexit, %bb.cf
-  %.pn65.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn65.pn.pn.pn.pn, %bb.cf ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit, %.loopexit ]
+  %.pn65.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn65.pn.pn.pn.pn, %bb.cf ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %i.ik = load ptr, ptr %3, align 8, !tbaa !22    ; 2 uses
   %i.il = icmp eq ptr %i.ik, %i.c
   br i1 %i.il, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit177, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i175

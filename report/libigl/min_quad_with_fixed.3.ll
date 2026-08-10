@@ -204,8 +204,8 @@ bb.i:                                             ; preds = %bb.h, %._crit_edge1
 
 .lr.ph:                                           ; preds = %bb.i
   %i.em = and i64 %i.dz, 2                        ; 3 uses
-  %.not161.a = icmp eq i64 %i.em, %i.dz
-  %trunc = trunc nuw i64 %.075149 to i1
+  %.not161.a = icmp eq i64 %.075149, 0
+  %.not161 = icmp eq i64 %i.em, %i.dz
   %lcmp.mod170.not = icmp eq i64 %i.ch, 0
   br label %bb.j
 
@@ -242,7 +242,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %gep = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %.idx.i87 ; 7 uses
-  br i1 %trunc, label %bb.n, label %bb.m
+  br i1 %.not161.a, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   %i.ff = load <2 x double>, ptr %gep, align 8, !tbaa !12 ; 2 uses
@@ -250,7 +250,7 @@ bb.m:                                             ; preds = %bb.l
   %shift163 = shufflevector <2 x double> %i.fg, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop164 = fadd <2 x double> %i.fg, %shift163
   %i.fh = extractelement <2 x double> %foldExtExtBinop164, i64 0 ; 3 uses
-  br i1 %.not161.a, label %_ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEE4normEv.exit, label %.lr.ph85.i.i.i.i.i.preheader
+  br i1 %.not161, label %_ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEE4normEv.exit, label %.lr.ph85.i.i.i.i.i.preheader
 
 .lr.ph85.i.i.i.i.i.preheader:                     ; preds = %bb.m
   br i1 %lcmp.mod170.not, label %.lr.ph85.i.i.i.i.i.preheader.new, label %.lr.ph85.i.i.i.i.i.prol

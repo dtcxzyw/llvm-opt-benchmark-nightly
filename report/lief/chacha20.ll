@@ -157,7 +157,7 @@ bb.c:                                             ; preds = %bb.b
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 120
   br label %mbedtls_xor.exit40
 
-mbedtls_xor.exit40:                               ; preds = %mbedtls_xor.exit40, %.lr.ph57
+mbedtls_xor.exit40:                               ; preds = %.lr.ph57, %mbedtls_xor.exit40
   %.156 = phi i64 [ %.047, %.lr.ph57 ], [ %i.bb, %mbedtls_xor.exit40 ] ; 3 uses
   %.13455 = phi i64 [ %.03346, %.lr.ph57 ], [ %i.bc, %mbedtls_xor.exit40 ]
   tail call fastcc void @chacha20_block(ptr noundef nonnull %0, ptr noundef nonnull %i.s)
