@@ -204,6 +204,7 @@ bb.cq:                                            ; preds = %bb.cp
   br i1 %i.vw, label %.sink.split.i, label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq
+  %invariant.op.i = sub i32 %.sroa.6.0.i, %i.tu
   br i1 %i.tw, label %.lr.ph438.i, label %.thread364.i
 
 .lr.ph438.i:                                      ; preds = %bb.cr
@@ -218,7 +219,6 @@ bb.cr:                                            ; preds = %bb.cq
   %i.wf = getelementptr inbounds [4 x i8], ptr %i.tr, i64 %i.we
   %i.wg = load float, ptr %i.wf, align 4, !tbaa !11
   %i.wh = fptosi float %i.wg to i32
-  %invariant.op.i = sub i32 %.sroa.6.0.i, %i.tu
   %i.wi = shl nsw i32 %i.ai, 2
   %i.wj = getelementptr inbounds nuw i8, ptr %i.vv, i64 136 ; 10 uses
   %i.wk = getelementptr inbounds nuw i8, ptr %i.vv, i64 144 ; 3 uses
@@ -308,10 +308,10 @@ dt_masks_dynbuf_add_2.exit.i.i:                   ; preds = %bb.cw, %bb.cv, %bb.
   %i.xv = fmul reassoc nsz arcp contract afn float %i.xu, %i.xr
   %i.xw = fadd reassoc nsz arcp contract afn float %i.xv, %i.xq
   %i.xx = fptosi float %i.xw to i32
-  %17 = sitofp reassoc nsz arcp contract afn i32 %.074170.i.i to float
-  %i.xy = sitofp reassoc nsz arcp contract afn i32 %i.xx to float
-  %18 = load i64, ptr %i.wj, align 8, !tbaa !240  ; 2 uses
-  %i.xz = add i64 %18, 2                          ; 2 uses
+  %.val85.i.i = load i64, ptr %i.wj, align 8, !tbaa !240 ; 2 uses
+  %i.xy = sitofp reassoc nsz arcp contract afn i32 %.074170.i.i to float
+  %17 = sitofp reassoc nsz arcp contract afn i32 %i.xx to float
+  %i.xz = add i64 %.val85.i.i, 2                  ; 2 uses
   %i.ya = load i64, ptr %i.wk, align 8, !tbaa !241 ; 3 uses
   %.not.i100.i.i = icmp ult i64 %i.xz, %i.ya
   br i1 %.not.i100.i.i, label %bb.cz, label %bb.cx, !prof !242
@@ -334,13 +334,13 @@ bb.cy:                                            ; preds = %bb.cx
 
 bb.cz:                                            ; preds = %._crit_edge.i102.i.i, %.loopexit.i.i
   %.pre-phi.i105.i.i = phi i64 [ %.pre12.i104.i.i, %._crit_edge.i102.i.i ], [ %i.xz, %.loopexit.i.i ]
-  %i.yf = phi i64 [ %.pre.i103.i.i, %._crit_edge.i102.i.i ], [ %18, %.loopexit.i.i ]
+  %i.yf = phi i64 [ %.pre.i103.i.i, %._crit_edge.i102.i.i ], [ %.val85.i.i, %.loopexit.i.i ]
   %i.yg = load ptr, ptr %i.vv, align 8, !tbaa !234
   %i.yh = getelementptr inbounds nuw [4 x i8], ptr %i.yg, i64 %i.yf ; 2 uses
-  store float %17, ptr %i.yh, align 4, !tbaa !11
+  store float %i.xy, ptr %i.yh, align 4, !tbaa !11
   store i64 %.pre-phi.i105.i.i, ptr %i.wj, align 8, !tbaa !240
   %i.yi = getelementptr i8, ptr %i.yh, i64 4
-  store float %i.xy, ptr %i.yi, align 4, !tbaa !11
+  store float %17, ptr %i.yi, align 4, !tbaa !11
   br label %dt_masks_dynbuf_add_2.exit106.i.i
 
 dt_masks_dynbuf_add_2.exit106.i.i:                ; preds = %bb.cz, %bb.cy, %bb.cx
@@ -369,10 +369,10 @@ bb.da:                                            ; preds = %dt_masks_dynbuf_add
   %i.yt = fmul reassoc nsz arcp contract afn float %i.ys, %i.yp
   %i.yu = fadd reassoc nsz arcp contract afn float %i.yt, %i.yo
   %i.yv = fptosi float %i.yu to i32
-  %19 = sitofp reassoc nsz arcp contract afn i32 %.075161.i.i to float
-  %i.yw = sitofp reassoc nsz arcp contract afn i32 %i.yv to float
-  %20 = load i64, ptr %i.wj, align 8, !tbaa !240  ; 2 uses
-  %i.yx = add i64 %20, 2                          ; 2 uses
+  %.val83.i.i = load i64, ptr %i.wj, align 8, !tbaa !240 ; 2 uses
+  %i.yw = sitofp reassoc nsz arcp contract afn i32 %.075161.i.i to float
+  %18 = sitofp reassoc nsz arcp contract afn i32 %i.yv to float
+  %i.yx = add i64 %.val83.i.i, 2                  ; 2 uses
   %i.yy = load i64, ptr %i.wk, align 8, !tbaa !241 ; 3 uses
   %.not.i121.i.i = icmp ult i64 %i.yx, %i.yy
   br i1 %.not.i121.i.i, label %bb.dd, label %bb.db, !prof !242
@@ -395,13 +395,13 @@ bb.dc:                                            ; preds = %bb.db
 
 bb.dd:                                            ; preds = %._crit_edge.i123.i.i, %.loopexit150.i.i
   %.pre-phi.i126.i.i = phi i64 [ %.pre12.i125.i.i, %._crit_edge.i123.i.i ], [ %i.yx, %.loopexit150.i.i ]
-  %i.zd = phi i64 [ %.pre.i124.i.i, %._crit_edge.i123.i.i ], [ %20, %.loopexit150.i.i ]
+  %i.zd = phi i64 [ %.pre.i124.i.i, %._crit_edge.i123.i.i ], [ %.val83.i.i, %.loopexit150.i.i ]
   %i.ze = load ptr, ptr %i.vv, align 8, !tbaa !234
   %i.zf = getelementptr inbounds nuw [4 x i8], ptr %i.ze, i64 %i.zd ; 2 uses
-  store float %19, ptr %i.zf, align 4, !tbaa !11
+  store float %i.yw, ptr %i.zf, align 4, !tbaa !11
   store i64 %.pre-phi.i126.i.i, ptr %i.wj, align 8, !tbaa !240
   %i.zg = getelementptr i8, ptr %i.zf, i64 4
-  store float %i.yw, ptr %i.zg, align 4, !tbaa !11
+  store float %18, ptr %i.zg, align 4, !tbaa !11
   br label %dt_masks_dynbuf_add_2.exit127.i.i
 
 dt_masks_dynbuf_add_2.exit127.i.i:                ; preds = %bb.dd, %bb.dc, %bb.db

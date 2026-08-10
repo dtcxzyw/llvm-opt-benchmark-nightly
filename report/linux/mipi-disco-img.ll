@@ -203,9 +203,9 @@ next_csi2_port_index.exit112.thread.i.i:          ; preds = %next_csi2_port_inde
   store i32 0, ptr %.sroa.6162.0..sroa_idx.i.i, align 8
   %.sroa.7163.0..sroa_idx.i.i = getelementptr i8, ptr %i.dm, i64 308
   store i32 0, ptr %.sroa.7163.0..sroa_idx.i.i, align 4
+  %1 = getelementptr i8, ptr %i.dm, i64 152
   %i.eh = load i8, ptr %i.cg, align 1
   %i.ei = zext i8 %i.eh to i32
-  %1 = getelementptr i8, ptr %i.dm, i64 152
   store ptr @.str.13, ptr %1, align 8
   %.sroa.2151.0..sroa_idx.i.i = getelementptr i8, ptr %i.dm, i64 160
   store i64 4, ptr %.sroa.2151.0..sroa_idx.i.i, align 8
@@ -270,9 +270,9 @@ bb.ab:                                            ; preds = %bb.aa, %.critedge10
   store i32 0, ptr %.sroa.6141.0..sroa_idx.i.i, align 8
   %.sroa.7142.0..sroa_idx.i.i = getelementptr i8, ptr %i.dv, i64 308
   store i32 0, ptr %.sroa.7142.0..sroa_idx.i.i, align 4
+  %2 = getelementptr i8, ptr %i.dv, i64 152
   %i.es = load i8, ptr %i.cu, align 2
   %i.et = zext i8 %i.es to i32
-  %2 = getelementptr i8, ptr %i.dv, i64 152
   store ptr @.str.13, ptr %2, align 8
   %.sroa.2.0..sroa_idx131.i.i = getelementptr i8, ptr %i.dv, i64 160
   store i64 4, ptr %.sroa.2.0..sroa_idx131.i.i, align 8
@@ -394,10 +394,10 @@ bb.h:                                             ; preds = %bb.g, %bb.d
   br i1 %.not84.i, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %1 = load i32, ptr %i.d, align 4
   %i.v = add nuw nsw i32 %.2.i, 1
   %i.w = zext nneg i32 %.2.i to i64
   %i.x = getelementptr [32 x i8], ptr %i.i, i64 %i.w ; 7 uses
+  %1 = load i32, ptr %i.d, align 4
   store ptr @.str.19, ptr %i.x, align 8
   %.sroa.2136.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   store i64 4, ptr %.sroa.2136.0..sroa_idx.i, align 8
@@ -420,10 +420,10 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %.not90.i, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %2 = load i32, ptr %i.d, align 4
   %i.z = add nuw nsw i32 %.4.i, 1
   %i.aa = zext nneg i32 %.4.i to i64
   %i.ab = getelementptr [32 x i8], ptr %i.i, i64 %i.aa ; 7 uses
+  %2 = load i32, ptr %i.d, align 4
   store ptr @.str.21, ptr %i.ab, align 8
   %.sroa.2129.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   store i64 4, ptr %.sroa.2129.0..sroa_idx.i, align 8
@@ -446,10 +446,10 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %.not96.i, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %3 = load i32, ptr %i.d, align 4
   %i.ad = add nuw nsw i32 %.6.i, 1
   %i.ae = zext nneg i32 %.6.i to i64
   %i.af = getelementptr [32 x i8], ptr %i.i, i64 %i.ae ; 7 uses
+  %3 = load i32, ptr %i.d, align 4
   store ptr @.str.23, ptr %i.af, align 8
   %.sroa.2122.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   store i64 4, ptr %.sroa.2122.0..sroa_idx.i, align 8
@@ -472,9 +472,9 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %.not102.i, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %4 = load i32, ptr %i.d, align 4
   %i.ah = zext nneg i32 %.8.i to i64
   %i.ai = getelementptr [32 x i8], ptr %i.i, i64 %i.ah ; 7 uses
+  %4 = load i32, ptr %i.d, align 4
   store ptr @.str.25, ptr %i.ai, align 8
   %.sroa.2.0..sroa_idx119.i = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   store i64 4, ptr %.sroa.2.0..sroa_idx119.i, align 8
@@ -572,9 +572,9 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not.i.i, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
+  %5 = getelementptr i8, ptr %i.as, i64 312
   %i.bk = load i8, ptr %i.a, align 8
   %i.bl = zext i8 %i.bk to i32
-  %5 = getelementptr i8, ptr %i.as, i64 312
   store ptr @.str.32, ptr %5, align 8
   %.sroa.2.0..sroa_idx132.i.i = getelementptr i8, ptr %i.as, i64 320
   store i64 4, ptr %.sroa.2.0..sroa_idx132.i.i, align 8

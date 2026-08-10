@@ -204,13 +204,13 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %4 = zext nneg i32 %1 to i64
-  %5 = load ptr, ptr %i.e, align 8, !tbaa !364
+  %4 = load ptr, ptr %i.e, align 8, !tbaa !364
+  %5 = zext nneg i32 %1 to i64
   br label %bb.b
 
-bb.b:                                             ; preds = %get_frag_stream_info.exit.thread, %.lr.ph
-  %indvars.iv = phi i64 [ %4, %.lr.ph ], [ %indvars.iv.next, %get_frag_stream_info.exit.thread ] ; 2 uses
-  %i.f = getelementptr inbounds nuw [32 x i8], ptr %5, i64 %indvars.iv ; 2 uses
+bb.b:                                             ; preds = %.lr.ph, %get_frag_stream_info.exit.thread
+  %indvars.iv = phi i64 [ %5, %.lr.ph ], [ %indvars.iv.next, %get_frag_stream_info.exit.thread ] ; 2 uses
+  %i.f = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %indvars.iv ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.h = load i32, ptr %i.g, align 8, !tbaa !365  ; 2 uses
   %i.i = icmp sgt i32 %i.h, 0

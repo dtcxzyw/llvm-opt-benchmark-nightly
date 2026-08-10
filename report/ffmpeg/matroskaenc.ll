@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %ebml_length_size.ex
 
 bb.d:                                             ; preds = %ebml_length_size.exit
   %i.e = icmp eq i32 %2, 0
-  %spec.select = select i1 %i.e, i32 %i.b, i32 %2 ; 4 uses
+  %spec.select = select i1 %i.e, i32 %i.b, i32 %2 ; 3 uses
   %.not.not = icmp sgt i32 %spec.select, %.0.i.i
   br i1 %.not.not, label %bb.f, label %bb.e
 
@@ -218,15 +218,11 @@ bb.f:                                             ; preds = %bb.d
   %i.g = zext nneg i32 %i.f to i64
   %i.h = shl nuw i64 1, %i.g
   %i.i = or i64 %i.h, %1
-  %3 = icmp sgt i32 %spec.select, 0
-  br i1 %3, label %.lr.ph.preheader.i, label %put_ebml_num.exit
-
-.lr.ph.preheader.i:                               ; preds = %bb.f
-  %4 = zext nneg i32 %spec.select to i64
+  %3 = zext nneg i32 %spec.select to i64
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ %4, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 2 uses
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %bb.f
+  %indvars.iv.i = phi i64 [ %3, %bb.f ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
   %i.j = shl nsw i64 %indvars.iv.next.i, 3
   %i.k = lshr i64 %i.i, %i.j
@@ -236,7 +232,7 @@ bb.f:                                             ; preds = %bb.d
   %i.n = icmp samesign ugt i64 %indvars.iv.i, 1
   br i1 %i.n, label %.lr.ph.i, label %put_ebml_num.exit, !llvm.loop !148
 
-put_ebml_num.exit:                                ; preds = %.lr.ph.i, %bb.f
+put_ebml_num.exit:                                ; preds = %.lr.ph.i
   ret void
 }
 

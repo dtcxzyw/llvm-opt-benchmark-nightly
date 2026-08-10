@@ -204,9 +204,9 @@ _ZL6indexniPKiS0_.exit.i:                         ; preds = %._crit_edge.i.i
   br label %.lr.ph23.i213.i
 
 .lr.ph23.i213.i:                                  ; preds = %._crit_edge.i218.i, %.lr.ph23.i213.preheader.i
-  %indvars.iv30.i214.i = phi i64 [ %indvars.iv.next31.i217.i, %._crit_edge.i218.i ], [ 0, %.lr.ph23.i213.preheader.i ] ; 3 uses
-  %indvars.iv.i215.i = phi i64 [ %indvars.iv.next.i220.i, %._crit_edge.i218.i ], [ 1, %.lr.ph23.i213.preheader.i ] ; 6 uses
-  %.01620.i216.i = phi i64 [ %i.atd, %._crit_edge.i218.i ], [ 0, %.lr.ph23.i213.preheader.i ]
+  %indvars.iv30.i214.i = phi i64 [ 0, %.lr.ph23.i213.preheader.i ], [ %indvars.iv.next31.i217.i, %._crit_edge.i218.i ] ; 3 uses
+  %indvars.iv.i215.i = phi i64 [ 1, %.lr.ph23.i213.preheader.i ], [ %indvars.iv.next.i220.i, %._crit_edge.i218.i ] ; 6 uses
+  %.01620.i216.i = phi i64 [ 0, %.lr.ph23.i213.preheader.i ], [ %i.atd, %._crit_edge.i218.i ]
   %i.aru = sub i64 %i.aqa, %indvars.iv30.i214.i   ; 7 uses
   %i.arv = getelementptr inbounds nuw [4 x i8], ptr %i.aov, i64 %indvars.iv30.i214.i
   %i.arw = load i32, ptr %i.arv, align 4, !tbaa !9
@@ -350,9 +350,9 @@ _ZL27is_local_minimum_from_belowPK9t_minimumiiiPKf.exit228.i: ; preds = %bb.bw
   br label %.lr.ph23.i232.i
 
 .lr.ph23.i232.i:                                  ; preds = %._crit_edge.i237.i, %.lr.ph23.i232.preheader.i
-  %indvars.iv30.i233.i = phi i64 [ %indvars.iv.next31.i236.i, %._crit_edge.i237.i ], [ 0, %.lr.ph23.i232.preheader.i ] ; 3 uses
-  %indvars.iv.i234.i = phi i64 [ %indvars.iv.next.i239.i, %._crit_edge.i237.i ], [ 1, %.lr.ph23.i232.preheader.i ] ; 6 uses
-  %.01620.i235.i = phi i64 [ %i.aux, %._crit_edge.i237.i ], [ 0, %.lr.ph23.i232.preheader.i ]
+  %indvars.iv30.i233.i = phi i64 [ 0, %.lr.ph23.i232.preheader.i ], [ %indvars.iv.next31.i236.i, %._crit_edge.i237.i ] ; 3 uses
+  %indvars.iv.i234.i = phi i64 [ 1, %.lr.ph23.i232.preheader.i ], [ %indvars.iv.next.i239.i, %._crit_edge.i237.i ] ; 6 uses
+  %.01620.i235.i = phi i64 [ 0, %.lr.ph23.i232.preheader.i ], [ %i.aux, %._crit_edge.i237.i ]
   %i.ato = sub i64 %i.aqa, %indvars.iv30.i233.i   ; 7 uses
   %i.atp = getelementptr inbounds nuw [4 x i8], ptr %i.aov, i64 %indvars.iv30.i233.i
   %i.atq = load i32, ptr %i.atp, align 4, !tbaa !9

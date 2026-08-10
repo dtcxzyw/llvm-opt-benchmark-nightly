@@ -203,7 +203,7 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.ao, label %bb.i, label %.outer._crit_edge
 
 bb.l:                                             ; preds = %bb.m, %bb.j
-  %.sroa.010.0 = phi i64 [ %i.an, %bb.j ], [ %spec.select, %bb.m ] ; 10 uses
+  %.sroa.010.0 = phi i64 [ %i.an, %bb.j ], [ %spec.select, %bb.m ] ; 9 uses
   %i.ap = icmp ult i64 %.sroa.010.0, %2
   br i1 %i.ap, label %.lr.ph135.preheader, label %._crit_edge136
 
@@ -224,7 +224,7 @@ bb.m:                                             ; preds = %bb.j
   br label %bb.l
 
 ._crit_edge136:                                   ; preds = %.lr.ph135, %.lr.ph288, %.lr.ph135.preheader, %bb.l
-  %.sroa.020.0.lcssa = phi i64 [ %.sroa.010.0, %bb.l ], [ %.sroa.010.0, %.lr.ph135.preheader ], [ %i.bd, %.lr.ph288 ], [ %i.bd, %.lr.ph135 ] ; 9 uses
+  %.sroa.020.0.lcssa = phi i64 [ %.sroa.010.0, %bb.l ], [ %.sroa.010.0, %.lr.ph135.preheader ], [ %i.bd, %.lr.ph288 ], [ %i.bd, %.lr.ph135 ] ; 8 uses
   %.lcssa95 = phi i1 [ false, %bb.l ], [ true, %.lr.ph135.preheader ], [ %i.be, %.lr.ph288 ], [ true, %.lr.ph135 ]
   %.lcssa = phi i64 [ 0, %bb.l ], [ 0, %.lr.ph135.preheader ], [ %i.bf, %.lr.ph288 ], [ %i.bf, %.lr.ph135 ]
   %i.ay = icmp eq i64 %.sroa.020.0.lcssa, %2
@@ -280,10 +280,8 @@ bb.r:                                             ; preds = %bb.p, %bb.p, %bb.p,
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %3 = icmp ult i64 %.sroa.020.0.lcssa, %.sroa.010.0
   %.not46 = icmp ugt i64 %.sroa.020.0.lcssa, %2
-  %or.cond52 = or i1 %3, %.not46
-  br i1 %or.cond52, label %bb.s, label %bb.t, !prof !23
+  br i1 %.not46, label %bb.s, label %bb.t, !prof !23
 
 bb.s:                                             ; preds = %bb.r
   invoke void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.sroa.010.0, i64 noundef %.sroa.020.0.lcssa, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @23) #18

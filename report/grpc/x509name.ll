@@ -56,19 +56,15 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %exitcond.not, label %X509_NAME_get_index_by_OBJ.exit.thread, label %.lr.ph, !llvm.loop !17
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
-  %indvars.iv.i42 = phi i64 [ %indvars.iv.next.i, %bb.c ], [ -1, %.lr.ph.preheader ] ; 3 uses
+  %indvars.iv.i42 = phi i64 [ %indvars.iv.next.i, %bb.c ], [ -1, %.lr.ph.preheader ] ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i42, 1 ; 4 uses
   %i.g = tail call ptr @OPENSSL_sk_value(ptr noundef %i.c, i64 noundef %indvars.iv.next.i) #6
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !19
   %i.i = tail call i32 @OBJ_cmp(ptr noundef %i.h, ptr noundef %1) #6
   %.not.i = icmp eq i32 %i.i, 0
-  br i1 %.not.i, label %X509_NAME_get_index_by_OBJ.exit, label %bb.c, !llvm.loop !17
+  br i1 %.not.i, label %bb.d, label %bb.c, !llvm.loop !17
 
-X509_NAME_get_index_by_OBJ.exit:                  ; preds = %.lr.ph
-  %5 = icmp slt i64 %indvars.iv.i42, -1
-  br i1 %5, label %X509_NAME_get_index_by_OBJ.exit.thread, label %bb.d
-
-bb.d:                                             ; preds = %X509_NAME_get_index_by_OBJ.exit
+bb.d:                                             ; preds = %.lr.ph
   %i.j = load ptr, ptr %0, align 8, !tbaa !11
   %i.k = tail call i64 @OPENSSL_sk_num(ptr noundef %i.j) #6
   %.not.i25 = icmp ugt i64 %i.k, %indvars.iv.next.i
@@ -128,8 +124,8 @@ bb.k:                                             ; preds = %bb.g, %bb.j, %bb.h,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br label %X509_NAME_get_index_by_OBJ.exit.thread
 
-X509_NAME_get_index_by_OBJ.exit.thread:           ; preds = %bb.c, %bb.b, %bb.a, %X509_NAME_get_index_by_OBJ.exit, %bb.k
-  %.0 = phi i32 [ %.019, %bb.k ], [ -1, %X509_NAME_get_index_by_OBJ.exit ], [ -1, %bb.a ], [ -1, %bb.b ], [ -1, %bb.c ]
+X509_NAME_get_index_by_OBJ.exit.thread:           ; preds = %bb.c, %bb.b, %bb.a, %bb.k
+  %.0 = phi i32 [ %.019, %bb.k ], [ -1, %bb.a ], [ -1, %bb.b ], [ -1, %bb.c ]
   ret i32 %.0
 }
 

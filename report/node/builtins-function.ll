@@ -203,7 +203,7 @@ bb.a:
   %5 = alloca %"class.v8::internal::SaveAndSwitchContext", align 8 ; 4 uses
   %6 = alloca %"class.v8::internal::IncrementalStringBuilder", align 8 ; 81 uses
   %7 = alloca %"class.v8::internal::Factory::JSFunctionBuilder", align 8 ; 6 uses
-  %i.a = trunc i64 %1 to i32                      ; 4 uses
+  %i.a = trunc i64 %1 to i32                      ; 3 uses
   %i.b = add i32 %i.a, -5                         ; 5 uses
   %i.c = and i64 %1, 4294967295
   %.not.i135 = icmp eq i64 %i.c, 0
@@ -606,28 +606,18 @@ bb.bq:                                            ; preds = %_ZN2v88internal24In
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   %i.ach = sext i32 %i.b to i64
   %smax = call i32 @llvm.smax.i32(i32 %i.b, i32 0)
-  %wide.trip.count421 = zext nneg i32 %smax to i64
-  %8 = call i32 @llvm.usub.sat.i32(i32 %i.a, i32 4)
-  %wide.trip.count423 = zext i32 %8 to i64
+  %wide.trip.count423 = zext nneg i32 %smax to i64
   %exitcond422518 = icmp slt i32 %i.b, 1
-  br i1 %exitcond422518, label %._crit_edge, label %.lr.ph520
+  br i1 %exitcond422518, label %._crit_edge, label %_ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit145
 
 bb.br:                                            ; preds = %_ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit145
-  %indvars.iv.next419 = add nuw nsw i64 %indvars.iv418519, 1 ; 3 uses
-  %exitcond422 = icmp eq i64 %indvars.iv.next419, %wide.trip.count421
-  br i1 %exitcond422, label %._crit_edge, label %.lr.ph520, !llvm.loop !12
+  %indvars.iv.next419 = add nuw nsw i64 %indvars.iv417514, 1 ; 3 uses
+  %exitcond422 = icmp eq i64 %indvars.iv.next419, %wide.trip.count423
+  br i1 %exitcond422, label %._crit_edge, label %_ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit145, !llvm.loop !12
 
-.lr.ph520:                                        ; preds = %bb.bq, %bb.br
-  %indvars.iv418519 = phi i64 [ %indvars.iv.next419, %bb.br ], [ 0, %bb.bq ] ; 4 uses
-  %exitcond424 = icmp eq i64 %indvars.iv418519, %wide.trip.count423
-  br i1 %exitcond424, label %9, label %_ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit145, !prof !6
-
-9:                                                ; preds = %.lr.ph520
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.5) #13
-  unreachable
-
-_ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit145: ; preds = %.lr.ph520
-  %i.aci = shl i64 %indvars.iv418519, 32
+_ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit145: ; preds = %bb.bq, %bb.br
+  %indvars.iv417514 = phi i64 [ %indvars.iv.next419, %bb.br ], [ 0, %bb.bq ] ; 3 uses
+  %i.aci = shl i64 %indvars.iv417514, 32
   %sext512 = sub i64 -25769803776, %i.aci
   %i.acj = ashr exact i64 %sext512, 32
   %i.ack = add i64 %1, %i.acj
@@ -642,7 +632,7 @@ _ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit145._c
   br label %._crit_edge, !llvm.loop !12
 
 ._crit_edge:                                      ; preds = %bb.br, %_ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit145._crit_edge, %bb.bq
-  %indvars.iv418.lcssa = phi i64 [ %indvars.iv418519, %_ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit145._crit_edge ], [ 0, %bb.bq ], [ %indvars.iv.next419, %bb.br ]
+  %indvars.iv418.lcssa = phi i64 [ %indvars.iv417514, %_ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit145._crit_edge ], [ 0, %bb.bq ], [ %indvars.iv.next419, %bb.br ]
   %.not406.le = icmp sge i64 %indvars.iv418.lcssa, %i.ach
   %i.acq = load i64, ptr %i.g, align 8
   %i.acr = add i64 %i.acq, 39
@@ -1044,9 +1034,6 @@ declare void @llvm.assume(i1 noundef) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #11
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -203,7 +203,7 @@ _ZN11CStringBaseIwED2Ev.exit.i:                   ; preds = %bb.o, %bb.n
   call void @_ZdlPvm(ptr noundef nonnull %i.bw, i64 noundef 16) #19
   br label %_ZN13CObjectVectorI11CStringBaseIwEE6DeleteEii.exit
 
-_ZN13CObjectVectorI11CStringBaseIwEE6DeleteEii.exit: ; preds = %_ZN11CStringBaseIwED2Ev.exit.i, %.lr.ph.i17, %_ZNK9NWildcard11CCensorNode11FindSubNodeERK11CStringBaseIwE.exit
+_ZN13CObjectVectorI11CStringBaseIwEE6DeleteEii.exit: ; preds = %.lr.ph.i17, %_ZN11CStringBaseIwED2Ev.exit.i, %_ZNK9NWildcard11CCensorNode11FindSubNodeERK11CStringBaseIwE.exit
   call void @_ZN17CBaseRecordVector6DeleteEii(ptr noundef nonnull align 8 dereferenceable(32) %2, i32 noundef 0, i32 noundef %spec.select.i)
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !22
@@ -606,16 +606,16 @@ _ZN13CObjectVectorI11CStringBaseIwEEC2ERKS2_.exit: ; preds = %.noexc.i
   %i.aw = icmp sgt i32 %i.av, 0
   br i1 %i.aw, label %.lr.ph.i30, label %._crit_edge.i
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i30, %_ZN11CStringBaseIwED2Ev.exit.i, %_ZN13CObjectVectorI11CStringBaseIwEEC2ERKS2_.exit
-  invoke void @_ZN17CBaseRecordVector6DeleteEii(ptr noundef nonnull align 8 dereferenceable(32) %4, i32 noundef 0, i32 noundef %spec.select.i)
-          to label %_ZN13CObjectVectorI11CStringBaseIwEE6DeleteEii.exit unwind label %bb.n
-
 .lr.ph.i30:                                       ; preds = %_ZN13CObjectVectorI11CStringBaseIwEEC2ERKS2_.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !22
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !26 ; 3 uses
   %i.ba = icmp eq ptr %i.az, null
   br i1 %i.ba, label %._crit_edge.i, label %bb.l
+
+._crit_edge.i:                                    ; preds = %.lr.ph.i30, %_ZN11CStringBaseIwED2Ev.exit.i, %_ZN13CObjectVectorI11CStringBaseIwEEC2ERKS2_.exit
+  invoke void @_ZN17CBaseRecordVector6DeleteEii(ptr noundef nonnull align 8 dereferenceable(32) %4, i32 noundef 0, i32 noundef %spec.select.i)
+          to label %_ZN13CObjectVectorI11CStringBaseIwEE6DeleteEii.exit unwind label %bb.n
 
 bb.l:                                             ; preds = %.lr.ph.i30
   %i.bb = load ptr, ptr %i.az, align 8, !tbaa !8  ; 2 uses

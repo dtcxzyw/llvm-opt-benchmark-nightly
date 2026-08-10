@@ -201,14 +201,10 @@ bb.k:                                             ; preds = %bb.k, %bb.j
   %i.ar = add nuw nsw i32 %.013.i, 1              ; 2 uses
   %i.as = lshr i32 %.01012.i, 1                   ; 2 uses
   %.not.i = icmp eq i32 %i.as, 0
-  br i1 %.not.i, label %3, label %bb.k, !llvm.loop !82
+  br i1 %.not.i, label %max_nbits.exit, label %bb.k, !llvm.loop !82
 
-3:                                                ; preds = %bb.k
-  %spec.select = tail call i32 @llvm.umax.i32(i32 %i.ar, i32 2)
-  br label %max_nbits.exit
-
-max_nbits.exit:                                   ; preds = %3, %put_bits.exit27
-  %.0 = phi i32 [ 2, %put_bits.exit27 ], [ %spec.select, %3 ] ; 2 uses
+max_nbits.exit:                                   ; preds = %bb.k, %put_bits.exit27
+  %.0 = phi i32 [ 2, %put_bits.exit27 ], [ %i.ar, %bb.k ] ; 2 uses
   %i.at = icmp eq i32 %2, 0                       ; 2 uses
   br i1 %i.at, label %max_nbits.exit32, label %bb.l
 
@@ -610,9 +606,6 @@ declare i32 @llvm.bswap.i32(i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

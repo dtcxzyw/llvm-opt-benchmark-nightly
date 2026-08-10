@@ -204,14 +204,13 @@ bb.a:
   %i.az = ashr i64 %i.ay, 32                      ; 2 uses
   %i.ba = select i1 %6, i64 1, i64 %i.az          ; 10 uses
   %wide.trip.count33.i.i = zext i32 %0 to i64     ; 4 uses
-  %wide.trip.count.i.i = zext i32 %spec.select.i to i64 ; 23 uses
+  %wide.trip.count.i.i = zext i32 %spec.select.i to i64 ; 22 uses
   %sext19 = shl i64 %i.b, 32                      ; 2 uses
   %i.bb = ashr exact i64 %sext19, 32              ; 5 uses
   %wide.trip.count33.i112.i = zext i32 %1 to i64  ; 4 uses
   %i.bc = select i1 %6, i64 %i.az, i64 1          ; 3 uses
   %i.bd = shl i64 %8, 29
   %i.be = ashr i64 %i.bd, 32                      ; 2 uses
-  %15 = shl nuw nsw i64 %wide.trip.count.i.i, 3
   br i1 %i.av, label %.lr.ph171.i.split.us.preheader, label %.lr.ph171.i.split.preheader
 
 .lr.ph171.i.split.us.preheader:                   ; preds = %.lr.ph171.i
@@ -228,13 +227,13 @@ bb.a:
   br label %.lr.ph171.i.split.us
 
 .lr.ph171.i.split.preheader:                      ; preds = %.lr.ph171.i
+  %15 = shl nuw nsw i64 %wide.trip.count.i.i, 3   ; 2 uses
   %i.bh = add nuw nsw i64 %wide.trip.count33.i112.i, 2305843009213693951
   %i.bi = mul i64 %i.bh, %i.bb
-  %16 = shl nuw nsw i64 %wide.trip.count.i.i, 3
   %i.bj = add i64 %i.bi, %wide.trip.count.i.i
   %i.bk = shl i64 %i.bj, 3
   %scevgep = getelementptr i8, ptr %12, i64 %i.bk
-  %scevgep4 = getelementptr i8, ptr %i.f, i64 %16
+  %scevgep4 = getelementptr i8, ptr %i.f, i64 %15
   %i.bl = sub i64 %i.e, %i.a
   %i.bm = mul nsw i64 %i.bc, -8
   %i.bn = shl nuw nsw i64 %wide.trip.count.i.i, 3
@@ -391,10 +390,10 @@ _ZN2cvL8MatrAXPYIdddEEviiPKT_iPKT0_iPT1_i.exit124.i.us: ; preds = %.lr.ph162.i.u
   %exitcond213.not.i.us = icmp eq i64 %indvars.iv.next210.i.us, %wide.trip.count184.i
   br i1 %exitcond213.not.i.us, label %_ZN2cvL11SVBkSbImpl_IdEEviiPKT_iS3_ibS3_ibS3_iiPS1_iPdS1_.exit, label %.lr.ph171.i.split.us, !llvm.loop !236
 
-.lr.ph171.i.split:                                ; preds = %.lr.ph171.i.split.preheader, %_ZN2cvL8MatrAXPYIdddEEviiPKT_iPKT0_iPT1_i.exit124.i
-  %indvars.iv209.i = phi i64 [ %indvars.iv.next210.i, %_ZN2cvL8MatrAXPYIdddEEviiPKT_iPKT0_iPT1_i.exit124.i ], [ 0, %.lr.ph171.i.split.preheader ] ; 3 uses
-  %.098166.i = phi ptr [ %i.hr, %_ZN2cvL8MatrAXPYIdddEEviiPKT_iPKT0_iPT1_i.exit124.i ], [ %4, %.lr.ph171.i.split.preheader ] ; 8 uses
-  %.0104163.i = phi ptr [ %i.hs, %_ZN2cvL8MatrAXPYIdddEEviiPKT_iPKT0_iPT1_i.exit124.i ], [ %7, %.lr.ph171.i.split.preheader ] ; 2 uses
+.lr.ph171.i.split:                                ; preds = %_ZN2cvL8MatrAXPYIdddEEviiPKT_iPKT0_iPT1_i.exit124.i, %.lr.ph171.i.split.preheader
+  %indvars.iv209.i = phi i64 [ 0, %.lr.ph171.i.split.preheader ], [ %indvars.iv.next210.i, %_ZN2cvL8MatrAXPYIdddEEviiPKT_iPKT0_iPT1_i.exit124.i ] ; 3 uses
+  %.098166.i = phi ptr [ %4, %.lr.ph171.i.split.preheader ], [ %i.hr, %_ZN2cvL8MatrAXPYIdddEEviiPKT_iPKT0_iPT1_i.exit124.i ] ; 8 uses
+  %.0104163.i = phi ptr [ %7, %.lr.ph171.i.split.preheader ], [ %i.hs, %_ZN2cvL8MatrAXPYIdddEEviiPKT_iPKT0_iPT1_i.exit124.i ] ; 2 uses
   %i.dt = mul i64 %i.bm, %indvars.iv209.i
   %i.du = mul nsw i64 %indvars.iv209.i, %i.y
   %i.dv = getelementptr inbounds [8 x i8], ptr %2, i64 %i.du

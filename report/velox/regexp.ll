@@ -203,14 +203,14 @@ bb.a:
 
 .preheader47:                                     ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 2 uses
-  %i.e = load i16, ptr %i.d, align 2, !tbaa !16   ; 5 uses
+  %i.e = load i16, ptr %i.d, align 2, !tbaa !16   ; 4 uses
   %i.f = zext i16 %i.e to i32
   %.not58 = icmp eq i16 %i.e, 0
   br i1 %.not58, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader47
   %i.g = icmp eq i16 %i.e, 1
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
   %.0.i = select i1 %i.g, ptr %i.h, ptr %i.i
   %wide.trip.count = zext i16 %i.e to i64
@@ -265,15 +265,12 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph56:                                         ; preds = %bb.e, %.lr.ph56
   %indvars.iv66 = phi i64 [ %indvars.iv.next67, %.lr.ph56 ], [ %indvars.iv63, %bb.e ] ; 2 uses
-  %4 = phi i16 [ %i.ah, %.lr.ph56 ], [ %i.e, %bb.e ]
-  %5 = icmp ult i16 %4, 2
   %i.ad = load ptr, ptr %i.h, align 8
-  %.0.i45 = select i1 %5, ptr %i.h, ptr %i.ad
-  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %.0.i45, i64 %indvars.iv66
+  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %indvars.iv66
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !37
   %i.ag = tail call noundef ptr @_ZN3re26Regexp6IncrefEv(ptr noundef nonnull align 8 dereferenceable(40) %i.af) ; 0 uses
   %indvars.iv.next67 = add nuw nsw i64 %indvars.iv66, 1 ; 2 uses
-  %i.ah = load i16, ptr %i.d, align 2, !tbaa !16  ; 4 uses
+  %i.ah = load i16, ptr %i.d, align 2, !tbaa !16  ; 3 uses
   %i.ai = zext i16 %i.ah to i64
   %i.aj = icmp samesign ult i64 %indvars.iv.next67, %i.ai
   br i1 %i.aj, label %.lr.ph56, label %._crit_edge, !llvm.loop !147

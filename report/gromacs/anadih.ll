@@ -204,9 +204,9 @@ bb.a:
   br label %.lr.ph.split.split.epil
 
 .lr.ph.split.split.epil:                          ; preds = %bb.c, %.lr.ph.split.split.epil.preheader
-  %.126.epil = phi i32 [ %.2.epil, %bb.c ], [ %.126.epil.init, %.lr.ph.split.split.epil.preheader ] ; 3 uses
-  %.02024.epil = phi i64 [ %i.r, %bb.c ], [ %.02024.epil.init, %.lr.ph.split.split.epil.preheader ] ; 3 uses
-  %epil.iter = phi i64 [ %epil.iter.next, %bb.c ], [ 0, %.lr.ph.split.split.epil.preheader ]
+  %.126.epil = phi i32 [ %.126.epil.init, %.lr.ph.split.split.epil.preheader ], [ %.2.epil, %bb.c ] ; 3 uses
+  %.02024.epil = phi i64 [ %.02024.epil.init, %.lr.ph.split.split.epil.preheader ], [ %i.r, %bb.c ] ; 3 uses
+  %epil.iter = phi i64 [ 0, %.lr.ph.split.split.epil.preheader ], [ %epil.iter.next, %bb.c ]
   %i.i = getelementptr inbounds [400 x i8], ptr %2, i64 %.02024.epil
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 112
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv

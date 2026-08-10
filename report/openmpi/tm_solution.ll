@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %.preheader195, %.lo
   br label %bb.c
 
 bb.c:                                             ; preds = %gain_exchange.exit.us.us.i, %.preheader.us.i.a
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %gain_exchange.exit.us.us.i ], [ 0, %.preheader.us.i.a ] ; 5 uses
+  %indvars.iv.i = phi i64 [ 0, %.preheader.us.i.a ], [ %indvars.iv.next.i, %gain_exchange.exit.us.us.i ] ; 5 uses
   %i.ci = icmp eq i64 %indvars.iv33.i, %indvars.iv.i
   br i1 %i.ci, label %gain_exchange.exit.us.us.i, label %.lr.ph25.preheader.i.i.us.us.i
 
@@ -215,14 +215,20 @@ bb.c:                                             ; preds = %gain_exchange.exit.
   store i32 %i.cj, ptr %i.ck, align 4, !tbaa !20
   br label %.lr.ph25.i.i.us.us.i
 
-.lr.ph25.i.i.us.us.i:                             ; preds = %.loopexit.i.i.us.us.i, %.lr.ph25.preheader.i.i.us.us.i
-  %indvars.iv30.i.i.us.us.i = phi i64 [ 0, %.lr.ph25.preheader.i.i.us.us.i ], [ %indvars.iv.next31.i.i.us.us.i, %.loopexit.i.i.us.us.i ] ; 5 uses
-  %indvars.iv.i.i.us.us.i = phi i64 [ 1, %.lr.ph25.preheader.i.i.us.us.i ], [ %indvars.iv.next.i.i.us.us.i, %.loopexit.i.i.us.us.i ] ; 3 uses
-  %.01923.i.i.us.us.i = phi double [ 0.000000e+00, %.lr.ph25.preheader.i.i.us.us.i ], [ %.1.lcssa.i.i.us.us.i, %.loopexit.i.i.us.us.i ] ; 3 uses
+.loopexit.i.i.i:                                  ; preds = %.prol.loopexit310, %.lr.ph.i.i.us.us.i.new, %.lr.ph25.i.i.us.us.i
+  %.1.lcssa.i.i.i = phi double [ %.01923.i.i.us.us.i, %.lr.ph25.i.i.us.us.i ], [ %.lcssa304.unr.a, %.prol.loopexit310 ], [ %i.ep, %.lr.ph.i.i.us.us.i.new ] ; 2 uses
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.us.us.i, 1
+  %exitcond34.not.i.i.i = icmp eq i64 %indvars.iv.next31.i.i.us.us.i, %i.s
+  br i1 %exitcond34.not.i.i.i, label %.loopexit.i.i.us.us.i, label %.lr.ph25.i.i.us.us.i, !llvm.loop !67
+
+.lr.ph25.i.i.us.us.i:                             ; preds = %.loopexit.i.i.i, %.lr.ph25.preheader.i.i.us.us.i
+  %indvars.iv30.i.i.us.us.i = phi i64 [ 0, %.lr.ph25.preheader.i.i.us.us.i ], [ %indvars.iv.next31.i.i.us.us.i, %.loopexit.i.i.i ] ; 5 uses
+  %indvars.iv.i.i.us.us.i = phi i64 [ 1, %.lr.ph25.preheader.i.i.us.us.i ], [ %indvars.iv.next.i.i.i, %.loopexit.i.i.i ] ; 3 uses
+  %.01923.i.i.us.us.i = phi double [ 0.000000e+00, %.lr.ph25.preheader.i.i.us.us.i ], [ %.1.lcssa.i.i.i, %.loopexit.i.i.i ] ; 3 uses
   %i.cm = sub i64 %i.w, %indvars.iv30.i.i.us.us.i
   %indvars.iv.next31.i.i.us.us.i = add nuw nsw i64 %indvars.iv30.i.i.us.us.i, 1 ; 3 uses
   %i.cn = icmp samesign ult i64 %indvars.iv.next31.i.i.us.us.i, %i.s
-  br i1 %i.cn, label %.lr.ph.i.i.us.us.i, label %.loopexit.i.i.us.us.i
+  br i1 %i.cn, label %.lr.ph.i.i.us.us.i, label %.loopexit.i.i.i
 
 .lr.ph.i.i.us.us.i:                               ; preds = %.lr.ph25.i.i.us.us.i
   %i.co = sub i64 %i.v, %indvars.iv30.i.i.us.us.i
@@ -260,7 +266,7 @@ bb.c:                                             ; preds = %gain_exchange.exit.
   %indvars.iv27.i.i.us.us.i.unr = phi i64 [ %indvars.iv.i.i.us.us.i, %.lr.ph.i.i.us.us.i ], [ %indvars.iv.next28.i.i.us.us.i.prol, %.prol.preheader309 ]
   %.121.i.i.us.us.i.unr = phi double [ %.01923.i.i.us.us.i, %.lr.ph.i.i.us.us.i ], [ %i.de, %.prol.preheader309 ]
   %i.df = icmp ult i64 %i.cm, 3
-  br i1 %i.df, label %.loopexit.i.i.us.us.i, label %.lr.ph.i.i.us.us.i.new
+  br i1 %i.df, label %.loopexit.i.i.i, label %.lr.ph.i.i.us.us.i.new
 
 .lr.ph.i.i.us.us.i.new:                           ; preds = %.prol.loopexit310, %.lr.ph.i.i.us.us.i.new
   %indvars.iv27.i.i.us.us.i = phi i64 [ %indvars.iv.next28.i.i.us.us.i.3, %.lr.ph.i.i.us.us.i.new ], [ %indvars.iv27.i.i.us.us.i.unr, %.prol.loopexit310 ] ; 6 uses
@@ -306,16 +312,17 @@ bb.c:                                             ; preds = %gain_exchange.exit.
   %i.ep = fadd double %i.eg, %i.eo                ; 2 uses
   %indvars.iv.next28.i.i.us.us.i.3 = add nuw nsw i64 %indvars.iv27.i.i.us.us.i, 4 ; 2 uses
   %exitcond.not.i.i.us.us.i.3 = icmp eq i64 %indvars.iv.next28.i.i.us.us.i.3, %i.s
-  br i1 %exitcond.not.i.i.us.us.i.3, label %.loopexit.i.i.us.us.i, label %.lr.ph.i.i.us.us.i.new, !llvm.loop !70
+  br i1 %exitcond.not.i.i.us.us.i.3, label %.loopexit.i.i.i, label %.lr.ph.i.i.us.us.i.new, !llvm.loop !70
 
-.loopexit.i.i.us.us.i:                            ; preds = %.prol.loopexit310, %.lr.ph.i.i.us.us.i.new, %.lr.ph25.i.i.us.us.i
-  %.1.lcssa.i.i.us.us.i = phi double [ %.01923.i.i.us.us.i, %.lr.ph25.i.i.us.us.i ], [ %.lcssa304.unr.a, %.prol.loopexit310 ], [ %i.ep, %.lr.ph.i.i.us.us.i.new ] ; 2 uses
-  %indvars.iv.next.i.i.us.us.i = add nuw nsw i64 %indvars.iv.i.i.us.us.i, 1
-  %exitcond34.not.i.i.us.us.i = icmp eq i64 %indvars.iv.next31.i.i.us.us.i, %i.s
-  br i1 %exitcond34.not.i.i.us.us.i, label %eval_sol.exit.i.loopexit.us.us.i, label %.lr.ph25.i.i.us.us.i, !llvm.loop !67
+.loopexit.i.i.us.us.i:                            ; preds = %.loopexit.i.i.i
+  %6 = load i32, ptr %i.ch, align 4, !tbaa !20
+  store i32 %i.cj, ptr %i.ch, align 4, !tbaa !20
+  store i32 %6, ptr %i.ck, align 4, !tbaa !20
+  %7 = fsub double %.1.lcssa.i.i, %.1.lcssa.i.i.i
+  br label %gain_exchange.exit.us.us.i
 
-gain_exchange.exit.us.us.i:                       ; preds = %eval_sol.exit.i.loopexit.us.us.i, %bb.c
-  %.0.i.us.us.i = phi double [ %7, %eval_sol.exit.i.loopexit.us.us.i ], [ 0.000000e+00, %bb.c ] ; 2 uses
+gain_exchange.exit.us.us.i:                       ; preds = %.loopexit.i.i.us.us.i, %bb.c
+  %.0.i.us.us.i = phi double [ %7, %.loopexit.i.i.us.us.i ], [ 0.000000e+00, %bb.c ] ; 2 uses
   %i.eq = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv.i
   %i.er = load ptr, ptr %i.eq, align 8, !tbaa !34
   %i.es = getelementptr inbounds nuw [8 x i8], ptr %i.er, i64 %indvars.iv33.i
@@ -325,13 +332,6 @@ gain_exchange.exit.us.us.i:                       ; preds = %eval_sol.exit.i.loo
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %indvars.iv31.i
   br i1 %exitcond.not.i, label %.split.us.us.i, label %bb.c, !llvm.loop !72
-
-eval_sol.exit.i.loopexit.us.us.i:                 ; preds = %.loopexit.i.i.us.us.i
-  %6 = load i32, ptr %i.ch, align 4, !tbaa !20
-  store i32 %i.cj, ptr %i.ch, align 4, !tbaa !20
-  store i32 %6, ptr %i.ck, align 4, !tbaa !20
-  %7 = fsub double %.1.lcssa.i.i, %.1.lcssa.i.i.us.us.i
-  br label %gain_exchange.exit.us.us.i
 
 .split.us.us.i:                                   ; preds = %gain_exchange.exit.us.us.i
   %indvars.iv.next34.i = add nuw nsw i64 %indvars.iv33.i, 1 ; 2 uses
@@ -595,7 +595,7 @@ select_max.exit:                                  ; preds = %..loopexit_crit_edg
   br label %bb.o
 
 bb.o:                                             ; preds = %gain_exchange.exit.us.us.i150, %.preheader.us.i135
-  %indvars.iv.i138 = phi i64 [ %indvars.iv.next.i152, %gain_exchange.exit.us.us.i150 ], [ 0, %.preheader.us.i135 ] ; 5 uses
+  %indvars.iv.i138 = phi i64 [ 0, %.preheader.us.i135 ], [ %indvars.iv.next.i152, %gain_exchange.exit.us.us.i150 ] ; 5 uses
   %i.ir = icmp eq i64 %indvars.iv33.i136, %indvars.iv.i138
   br i1 %i.ir, label %gain_exchange.exit.us.us.i150, label %.lr.ph25.preheader.i.i.us.us.i139
 
@@ -607,14 +607,20 @@ bb.o:                                             ; preds = %gain_exchange.exit.
   store i32 %i.is, ptr %i.it, align 4, !tbaa !20
   br label %.lr.ph25.i.i.us.us.i140
 
-.lr.ph25.i.i.us.us.i140:                          ; preds = %.loopexit.i.i.us.us.i145, %.lr.ph25.preheader.i.i.us.us.i139
-  %indvars.iv30.i.i.us.us.i141 = phi i64 [ 0, %.lr.ph25.preheader.i.i.us.us.i139 ], [ %indvars.iv.next31.i.i.us.us.i144, %.loopexit.i.i.us.us.i145 ] ; 5 uses
-  %indvars.iv.i.i.us.us.i142 = phi i64 [ 1, %.lr.ph25.preheader.i.i.us.us.i139 ], [ %indvars.iv.next.i.i.us.us.i147, %.loopexit.i.i.us.us.i145 ] ; 3 uses
-  %.01923.i.i.us.us.i143 = phi double [ 0.000000e+00, %.lr.ph25.preheader.i.i.us.us.i139 ], [ %.1.lcssa.i.i.us.us.i146, %.loopexit.i.i.us.us.i145 ] ; 3 uses
+.loopexit.i.i.i144:                               ; preds = %.prol.loopexit326, %.lr.ph.i.i.us.us.i158.new, %.lr.ph25.i.i.us.us.i140
+  %.1.lcssa.i.i.i145 = phi double [ %.01923.i.i.us.us.i143, %.lr.ph25.i.i.us.us.i140 ], [ %.lcssa306.unr, %.prol.loopexit326 ], [ %i.ky, %.lr.ph.i.i.us.us.i158.new ] ; 2 uses
+  %indvars.iv.next.i.i.i146 = add nuw nsw i64 %indvars.iv.i.i.us.us.i142, 1
+  %exitcond34.not.i.i.i147 = icmp eq i64 %indvars.iv.next31.i.i.us.us.i144, %i.s
+  br i1 %exitcond34.not.i.i.i147, label %.loopexit.i.i.us.us.i145, label %.lr.ph25.i.i.us.us.i140, !llvm.loop !67
+
+.lr.ph25.i.i.us.us.i140:                          ; preds = %.loopexit.i.i.i144, %.lr.ph25.preheader.i.i.us.us.i139
+  %indvars.iv30.i.i.us.us.i141 = phi i64 [ 0, %.lr.ph25.preheader.i.i.us.us.i139 ], [ %indvars.iv.next31.i.i.us.us.i144, %.loopexit.i.i.i144 ] ; 5 uses
+  %indvars.iv.i.i.us.us.i142 = phi i64 [ 1, %.lr.ph25.preheader.i.i.us.us.i139 ], [ %indvars.iv.next.i.i.i146, %.loopexit.i.i.i144 ] ; 3 uses
+  %.01923.i.i.us.us.i143 = phi double [ 0.000000e+00, %.lr.ph25.preheader.i.i.us.us.i139 ], [ %.1.lcssa.i.i.i145, %.loopexit.i.i.i144 ] ; 3 uses
   %i.iv = sub i64 %i.w, %indvars.iv30.i.i.us.us.i141
   %indvars.iv.next31.i.i.us.us.i144 = add nuw nsw i64 %indvars.iv30.i.i.us.us.i141, 1 ; 3 uses
   %i.iw = icmp samesign ult i64 %indvars.iv.next31.i.i.us.us.i144, %i.s
-  br i1 %i.iw, label %.lr.ph.i.i.us.us.i158, label %.loopexit.i.i.us.us.i145
+  br i1 %i.iw, label %.lr.ph.i.i.us.us.i158, label %.loopexit.i.i.i144
 
 .lr.ph.i.i.us.us.i158:                            ; preds = %.lr.ph25.i.i.us.us.i140
   %i.ix = sub i64 %i.v, %indvars.iv30.i.i.us.us.i141
@@ -652,7 +658,7 @@ bb.o:                                             ; preds = %gain_exchange.exit.
   %indvars.iv27.i.i.us.us.i159.unr = phi i64 [ %indvars.iv.i.i.us.us.i142, %.lr.ph.i.i.us.us.i158 ], [ %indvars.iv.next28.i.i.us.us.i161.prol, %.prol.preheader325 ]
   %.121.i.i.us.us.i160.unr = phi double [ %.01923.i.i.us.us.i143, %.lr.ph.i.i.us.us.i158 ], [ %i.jn, %.prol.preheader325 ]
   %i.jo = icmp ult i64 %i.iv, 3
-  br i1 %i.jo, label %.loopexit.i.i.us.us.i145, label %.lr.ph.i.i.us.us.i158.new
+  br i1 %i.jo, label %.loopexit.i.i.i144, label %.lr.ph.i.i.us.us.i158.new
 
 .lr.ph.i.i.us.us.i158.new:                        ; preds = %.prol.loopexit326, %.lr.ph.i.i.us.us.i158.new
   %indvars.iv27.i.i.us.us.i159 = phi i64 [ %indvars.iv.next28.i.i.us.us.i161.3, %.lr.ph.i.i.us.us.i158.new ], [ %indvars.iv27.i.i.us.us.i159.unr, %.prol.loopexit326 ] ; 6 uses
@@ -698,16 +704,17 @@ bb.o:                                             ; preds = %gain_exchange.exit.
   %i.ky = fadd double %i.kp, %i.kx                ; 2 uses
   %indvars.iv.next28.i.i.us.us.i161.3 = add nuw nsw i64 %indvars.iv27.i.i.us.us.i159, 4 ; 2 uses
   %exitcond.not.i.i.us.us.i162.3 = icmp eq i64 %indvars.iv.next28.i.i.us.us.i161.3, %i.s
-  br i1 %exitcond.not.i.i.us.us.i162.3, label %.loopexit.i.i.us.us.i145, label %.lr.ph.i.i.us.us.i158.new, !llvm.loop !70
+  br i1 %exitcond.not.i.i.us.us.i162.3, label %.loopexit.i.i.i144, label %.lr.ph.i.i.us.us.i158.new, !llvm.loop !70
 
-.loopexit.i.i.us.us.i145:                         ; preds = %.prol.loopexit326, %.lr.ph.i.i.us.us.i158.new, %.lr.ph25.i.i.us.us.i140
-  %.1.lcssa.i.i.us.us.i146 = phi double [ %.01923.i.i.us.us.i143, %.lr.ph25.i.i.us.us.i140 ], [ %.lcssa306.unr, %.prol.loopexit326 ], [ %i.ky, %.lr.ph.i.i.us.us.i158.new ] ; 2 uses
-  %indvars.iv.next.i.i.us.us.i147 = add nuw nsw i64 %indvars.iv.i.i.us.us.i142, 1
-  %exitcond34.not.i.i.us.us.i148 = icmp eq i64 %indvars.iv.next31.i.i.us.us.i144, %i.s
-  br i1 %exitcond34.not.i.i.us.us.i148, label %eval_sol.exit.i.loopexit.us.us.i149, label %.lr.ph25.i.i.us.us.i140, !llvm.loop !67
+.loopexit.i.i.us.us.i145:                         ; preds = %.loopexit.i.i.i144
+  %8 = load i32, ptr %i.iq, align 4, !tbaa !20
+  store i32 %i.is, ptr %i.iq, align 4, !tbaa !20
+  store i32 %8, ptr %i.it, align 4, !tbaa !20
+  %9 = fsub double %.1.lcssa.i.i131, %.1.lcssa.i.i.i145
+  br label %gain_exchange.exit.us.us.i150
 
-gain_exchange.exit.us.us.i150:                    ; preds = %eval_sol.exit.i.loopexit.us.us.i149, %bb.o
-  %.0.i.us.us.i151 = phi double [ %9, %eval_sol.exit.i.loopexit.us.us.i149 ], [ 0.000000e+00, %bb.o ] ; 2 uses
+gain_exchange.exit.us.us.i150:                    ; preds = %.loopexit.i.i.us.us.i145, %bb.o
+  %.0.i.us.us.i151 = phi double [ %9, %.loopexit.i.i.us.us.i145 ], [ 0.000000e+00, %bb.o ] ; 2 uses
   %i.kz = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv.i138
   %i.la = load ptr, ptr %i.kz, align 8, !tbaa !34
   %i.lb = getelementptr inbounds nuw [8 x i8], ptr %i.la, i64 %indvars.iv33.i136
@@ -717,13 +724,6 @@ gain_exchange.exit.us.us.i150:                    ; preds = %eval_sol.exit.i.loo
   %indvars.iv.next.i152 = add nuw nsw i64 %indvars.iv.i138, 1 ; 2 uses
   %exitcond.not.i153 = icmp eq i64 %indvars.iv.next.i152, %indvars.iv31.i137
   br i1 %exitcond.not.i153, label %.split.us.us.i154, label %bb.o, !llvm.loop !72
-
-eval_sol.exit.i.loopexit.us.us.i149:              ; preds = %.loopexit.i.i.us.us.i145
-  %8 = load i32, ptr %i.iq, align 4, !tbaa !20
-  store i32 %i.is, ptr %i.iq, align 4, !tbaa !20
-  store i32 %8, ptr %i.it, align 4, !tbaa !20
-  %9 = fsub double %.1.lcssa.i.i131, %.1.lcssa.i.i.us.us.i146
-  br label %gain_exchange.exit.us.us.i150
 
 .split.us.us.i154:                                ; preds = %gain_exchange.exit.us.us.i150
   %indvars.iv.next34.i155 = add nuw nsw i64 %indvars.iv33.i136, 1 ; 2 uses

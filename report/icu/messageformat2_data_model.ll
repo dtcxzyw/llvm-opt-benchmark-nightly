@@ -204,7 +204,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   store i32 0, ptr %i.f, align 8, !tbaa !141
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !140  ; 6 uses
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !140  ; 5 uses
   store i32 %i.h, ptr %i.d, align 8, !tbaa !140
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.j = load i32, ptr %i.i, align 8, !tbaa !141
@@ -224,7 +224,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   store i64 %i.m, ptr %i.r, align 8
-  %.ptr26.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 4 uses
+  %.ptr26.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 3 uses
   %i.t = icmp eq i32 %i.h, 0
   br i1 %i.t, label %_ZN6icu_788message2L9copyArrayINS_13UnicodeStringEEEPT_PKS3_iR10UErrorCode.exit, label %.preheader.i.preheader
 
@@ -269,7 +269,7 @@ bb.b:                                             ; preds = %bb.a
 
 .loopexit32.i.unr-lcssa:                          ; preds = %.preheader.i
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit32.i, label %.preheader.i.epil.preheader
+  br i1 %lcmp.mod.not, label %.lr.ph.preheader.i, label %.preheader.i.epil.preheader
 
 .preheader.i.epil.preheader:                      ; preds = %.loopexit32.i.unr-lcssa, %.preheader.i.preheader
   %.idx.i.epil.init = phi i64 [ 8, %.preheader.i.preheader ], [ %.add.i.3, %.loopexit32.i.unr-lcssa ]
@@ -287,13 +287,9 @@ bb.b:                                             ; preds = %bb.a
   %.add.i.epil = add nuw nsw i64 %.idx.i.epil, 64
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.loopexit32.i, label %.preheader.i.epil, !llvm.loop !142
+  br i1 %epil.iter.cmp.not, label %.lr.ph.preheader.i, label %.preheader.i.epil, !llvm.loop !142
 
-.loopexit32.i:                                    ; preds = %.preheader.i.epil, %.loopexit32.i.unr-lcssa
-  %2 = icmp sgt i32 %i.h, 0
-  br i1 %2, label %.lr.ph.preheader.i, label %_ZN6icu_788message2L9copyArrayINS_13UnicodeStringEEEPT_PKS3_iR10UErrorCode.exit
-
-.lr.ph.preheader.i:                               ; preds = %.loopexit32.i
+.lr.ph.preheader.i:                               ; preds = %.preheader.i.epil, %.loopexit32.i.unr-lcssa
   %wide.trip.count.i = zext nneg i32 %i.h to i64
   br label %.lr.ph.i
 
@@ -313,8 +309,8 @@ bb.c:                                             ; preds = %bb.a
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZN6icu_788message2L9copyArrayINS_13UnicodeStringEEEPT_PKS3_iR10UErrorCode.exit, label %.lr.ph.i, !llvm.loop !143
 
-_ZN6icu_788message2L9copyArrayINS_13UnicodeStringEEEPT_PKS3_iR10UErrorCode.exit: ; preds = %.noexc, %bb.c, %.loopexit32.i, %bb.b
-  %.019.i = phi ptr [ %.ptr26.i, %bb.b ], [ null, %bb.c ], [ %.ptr26.i, %.loopexit32.i ], [ %.ptr26.i, %.noexc ]
+_ZN6icu_788message2L9copyArrayINS_13UnicodeStringEEEPT_PKS3_iR10UErrorCode.exit: ; preds = %.noexc, %bb.c, %bb.b
+  %.019.i = phi ptr [ %.ptr26.i, %bb.b ], [ null, %bb.c ], [ %.ptr26.i, %.noexc ]
   %i.aj = load ptr, ptr %i.c, align 8, !tbaa !138 ; 4 uses
   %i.ak = icmp eq ptr %i.aj, null
   br i1 %i.ak, label %_ZN6icu_7810LocalArrayINS_13UnicodeStringEE12adoptInsteadEPS1_.exit, label %bb.d
@@ -717,7 +713,7 @@ bb.e:                                             ; preds = %bb.b
   %.not.i = icmp eq i8 %i.o, 0                    ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.y = load i32, ptr %i.x, align 8
-  %i.z = select i1 %.not.i, i32 %i.y, i32 0       ; 6 uses
+  %i.z = select i1 %.not.i, i32 %i.y, i32 0       ; 5 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.ab = load i32, ptr %i.aa, align 8
   %i.ac = select i1 %.not.i, i32 %i.ab, i32 0     ; 2 uses
@@ -778,7 +774,7 @@ bb.f:                                             ; preds = %bb.e
 
 .loopexit32.i.unr-lcssa:                          ; preds = %.preheader.i
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit32.i, label %.preheader.i.epil.preheader
+  br i1 %lcmp.mod.not, label %.lr.ph.preheader.i, label %.preheader.i.epil.preheader
 
 .preheader.i.epil.preheader:                      ; preds = %.loopexit32.i.unr-lcssa, %.preheader.i.preheader
   %.idx.i.epil.init = phi i64 [ 8, %.preheader.i.preheader ], [ %.add.i.3, %.loopexit32.i.unr-lcssa ]
@@ -796,13 +792,9 @@ bb.f:                                             ; preds = %bb.e
   %.add.i.epil = add nuw nsw i64 %.idx.i.epil, 64
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.loopexit32.i, label %.preheader.i.epil, !llvm.loop !167
+  br i1 %epil.iter.cmp.not, label %.lr.ph.preheader.i, label %.preheader.i.epil, !llvm.loop !167
 
-.loopexit32.i:                                    ; preds = %.preheader.i.epil, %.loopexit32.i.unr-lcssa
-  %7 = icmp sgt i32 %i.z, 0
-  br i1 %7, label %.lr.ph.preheader.i, label %_ZN6icu_788message2L9copyArrayINS_13UnicodeStringEEEPT_PKS3_iR10UErrorCode.exit.thread
-
-.lr.ph.preheader.i:                               ; preds = %.loopexit32.i
+.lr.ph.preheader.i:                               ; preds = %.preheader.i.epil, %.loopexit32.i.unr-lcssa
   %wide.trip.count.i = zext nneg i32 %i.z to i64
   br label %.lr.ph.i
 
@@ -818,7 +810,7 @@ bb.f:                                             ; preds = %bb.e
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZN6icu_788message2L9copyArrayINS_13UnicodeStringEEEPT_PKS3_iR10UErrorCode.exit.thread, label %.lr.ph.i, !llvm.loop !143
 
-_ZN6icu_788message2L9copyArrayINS_13UnicodeStringEEEPT_PKS3_iR10UErrorCode.exit.thread: ; preds = %.noexc, %.loopexit32.i, %bb.f
+_ZN6icu_788message2L9copyArrayINS_13UnicodeStringEEEPT_PKS3_iR10UErrorCode.exit.thread: ; preds = %.noexc, %bb.f
   store ptr %.ptr26.i, ptr %4, align 8, !tbaa !138
   br label %_ZN6icu_7810LocalArrayINS_13UnicodeStringEEC2EPS1_R10UErrorCode.exit
 
@@ -1221,7 +1213,7 @@ _ZN6icu_7810LocalArrayINS_8message210data_model7VariantEEC2EPS3_R10UErrorCode.ex
 
 bb.i:                                             ; preds = %_ZN6icu_7810LocalArrayINS_8message210data_model7VariantEEC2EPS3_R10UErrorCode.exit
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
-  %i.cp = load i32, ptr %i.co, align 8, !tbaa !36 ; 5 uses
+  %i.cp = load i32, ptr %i.co, align 8, !tbaa !36 ; 4 uses
   %i.cq = sext i32 %i.cp to i64                   ; 2 uses
   %i.cr = icmp slt i32 %i.cp, 0
   %i.cs = shl nsw i64 %i.cq, 6                    ; 2 uses
@@ -1278,7 +1270,7 @@ bb.j:                                             ; preds = %bb.i
 
 .loopexit33.i27.unr-lcssa:                        ; preds = %.preheader.i
   %lcmp.mod144.not = icmp eq i64 %xtraiter143, 0
-  br i1 %lcmp.mod144.not, label %.loopexit33.i27, label %.preheader.i.epil.preheader
+  br i1 %lcmp.mod144.not, label %.lr.ph.preheader.i, label %.preheader.i.epil.preheader
 
 .preheader.i.epil.preheader:                      ; preds = %.loopexit33.i27.unr-lcssa, %.preheader.i.preheader
   %.idx.i24.epil.init = phi i64 [ 8, %.preheader.i.preheader ], [ %.add.i26.3, %.loopexit33.i27.unr-lcssa ]
@@ -1296,13 +1288,9 @@ bb.j:                                             ; preds = %bb.i
   %.add.i26.epil = add nuw nsw i64 %.idx.i24.epil, 64
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter143
-  br i1 %epil.iter.cmp.not, label %.loopexit33.i27, label %.preheader.i.epil, !llvm.loop !179
+  br i1 %epil.iter.cmp.not, label %.lr.ph.preheader.i, label %.preheader.i.epil, !llvm.loop !179
 
-.loopexit33.i27:                                  ; preds = %.preheader.i.epil, %.loopexit33.i27.unr-lcssa
-  %7 = icmp sgt i32 %i.cp, 0
-  br i1 %7, label %.lr.ph.preheader.i, label %_ZN6icu_7810LocalArrayINS_13UnicodeStringEEC2EPS1_R10UErrorCode.exit
-
-.lr.ph.preheader.i:                               ; preds = %.loopexit33.i27
+.lr.ph.preheader.i:                               ; preds = %.preheader.i.epil, %.loopexit33.i27.unr-lcssa
   %wide.trip.count.i28 = zext nneg i32 %i.cp to i64
   br label %.lr.ph.i29
 
@@ -1326,7 +1314,7 @@ bb.k:                                             ; preds = %bb.i
   %exitcond.not.i32 = icmp eq i64 %indvars.iv.next.i31, %wide.trip.count.i28
   br i1 %exitcond.not.i32, label %_ZN6icu_7810LocalArrayINS_13UnicodeStringEEC2EPS1_R10UErrorCode.exit, label %.lr.ph.i29, !llvm.loop !180
 
-_ZN6icu_7810LocalArrayINS_13UnicodeStringEEC2EPS1_R10UErrorCode.exit: ; preds = %.noexc34, %bb.j, %.loopexit33.i27
+_ZN6icu_7810LocalArrayINS_13UnicodeStringEEC2EPS1_R10UErrorCode.exit: ; preds = %.noexc34, %bb.j
   %.pr77 = load i32, ptr %2, align 4, !tbaa !26
   %i.do = icmp sgt i32 %.pr77, 0
   br i1 %i.do, label %bb.o, label %bb.l

@@ -203,15 +203,14 @@ bb.f:                                             ; preds = %.lr.ph307, %bb.af
 
 bb.g:                                             ; preds = %bb.f
   %i.gv = load i32, ptr %3, align 4, !tbaa !112
-  %9 = trunc i64 %indvars.iv370 to i32
-  %10 = add i32 %i.gv, %9
+  %9 = sext i32 %i.gv to i64
+  %10 = add i64 %indvars.iv370, %9
   %i.gw = load ptr, ptr %i.fr, align 8, !tbaa !121 ; 2 uses
   %i.gx = ptrtoaddr ptr %i.gw to i64
   %i.gy = load i64, ptr %i.fs, align 8, !tbaa !12
-  %11 = sext i32 %10 to i64
-  %i.gz = mul i64 %i.gy, %11                      ; 2 uses
+  %i.gz = mul i64 %i.gy, %10                      ; 2 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gw, i64 %i.gz ; 6 uses
-  br i1 %i.y, label %.lr.ph283, label %.loopexit247
+  br i1 %i.y, label %.lr.ph283, label %.loopexit245
 
 .lr.ph283:                                        ; preds = %bb.g
   %i.hb = trunc i64 %indvars.iv370 to i32
@@ -290,7 +289,7 @@ scalar.ph435:                                     ; preds = %scalar.ph435.prol.l
   %exitcond346.not.3 = icmp eq i64 %indvars.iv.next343.3, %i.gh
   br i1 %exitcond346.not.3, label %.loopexit247.thread, label %scalar.ph435, !llvm.loop !139
 
-.loopexit247:                                     ; preds = %bb.g, %bb.f
+.loopexit247:                                     ; preds = %bb.f
   br i1 %.not228, label %.loopexit245, label %bb.h
 
 .loopexit247.thread:                              ; preds = %scalar.ph435.prol.loopexit, %scalar.ph435, %middle.block444
@@ -298,23 +297,21 @@ scalar.ph435:                                     ; preds = %scalar.ph435.prol.l
 
 .thread:                                          ; preds = %.loopexit247.thread
   %i.hx = load i32, ptr %3, align 4, !tbaa !112
-  %12 = trunc nuw nsw i64 %indvars.iv370 to i32
-  %13 = add i32 %i.hx, %12
+  %11 = sext i32 %i.hx to i64
+  %12 = add nsw i64 %indvars.iv370, %11
   %i.hy = load ptr, ptr %i.ft, align 8, !tbaa !121
   %i.hz = load i64, ptr %i.fu, align 8, !tbaa !12
-  %14 = sext i32 %13 to i64
-  %i.ia = mul i64 %i.hz, %14
+  %i.ia = mul i64 %i.hz, %12
   %i.ib = getelementptr inbounds nuw i8, ptr %i.hy, i64 %i.ia
   br label %.lr.ph289
 
 bb.h:                                             ; preds = %.loopexit247
   %i.ic = load i32, ptr %3, align 4, !tbaa !112
-  %15 = trunc nuw nsw i64 %indvars.iv370 to i32
-  %16 = add i32 %i.ic, %15
+  %13 = sext i32 %i.ic to i64
+  %14 = add nsw i64 %indvars.iv370, %13
   %i.id = load ptr, ptr %i.ft, align 8, !tbaa !121
   %i.ie = load i64, ptr %i.fu, align 8, !tbaa !12
-  %17 = sext i32 %16 to i64
-  %i.if = mul i64 %i.ie, %17
+  %i.if = mul i64 %i.ie, %14
   %i.ig = getelementptr inbounds nuw i8, ptr %i.id, i64 %i.if
   br i1 %i.y, label %.lr.ph289, label %.loopexit245
 
@@ -397,7 +394,7 @@ scalar.ph421:                                     ; preds = %scalar.ph421.prol.l
   %exitcond355.not.3 = icmp eq i64 %indvars.iv.next352.3, %i.gh
   br i1 %exitcond355.not.3, label %.loopexit245, label %scalar.ph421, !llvm.loop !142
 
-.loopexit245:                                     ; preds = %scalar.ph421.prol.loopexit, %scalar.ph421, %middle.block430, %bb.h, %.loopexit247.thread, %.loopexit247
+.loopexit245:                                     ; preds = %scalar.ph421.prol.loopexit, %scalar.ph421, %middle.block430, %bb.g, %.loopexit247.thread, %bb.h, %.loopexit247
   br i1 %.not229, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %.loopexit245

@@ -203,16 +203,12 @@ Bac_ManNtk.exit65:                                ; preds = %.critedge.preheader
 
 .critedge2:                                       ; preds = %Vec_IntStartFull.exit, %.critedge2.loopexit, %.critedge.preheader, %.critedge2thread-pre-split
   %.177 = phi i32 [ %i.fb, %.critedge2thread-pre-split ], [ 1, %.critedge.preheader ], [ %i.fc, %.critedge2.loopexit ], [ 1, %Vec_IntStartFull.exit ]
-  %.val52 = phi i32 [ %.val52.pr, %.critedge2thread-pre-split ], [ %.val54, %.critedge.preheader ], [ %.val52.pr, %.critedge2.loopexit ], [ %.val5478, %Vec_IntStartFull.exit ] ; 2 uses
+  %.val52 = phi i32 [ %.val52.pr, %.critedge2thread-pre-split ], [ %.val54, %.critedge.preheader ], [ %.val52.pr, %.critedge2.loopexit ], [ %.val5478, %Vec_IntStartFull.exit ]
   %.not43 = icmp sgt i32 %.177, %.val52
-  br i1 %.not43, label %bb.at, label %1
+  br i1 %.not43, label %bb.at, label %Bac_ManNtk.exit.i66
 
-1:                                                ; preds = %.critedge2
-  %.not35.i = icmp slt i32 %.val52, 1
-  br i1 %.not35.i, label %.critedge.i, label %Bac_ManNtk.exit.i66
-
-Bac_ManNtk.exit.i66:                              ; preds = %1, %Bac_NtkFree.exit.i
-  %indvars.iv.i67 = phi i64 [ %indvars.iv.next.i69, %Bac_NtkFree.exit.i ], [ 1, %1 ] ; 3 uses
+Bac_ManNtk.exit.i66:                              ; preds = %.critedge2, %Bac_NtkFree.exit.i
+  %indvars.iv.i67 = phi i64 [ %indvars.iv.next.i69, %Bac_NtkFree.exit.i ], [ 1, %.critedge2 ] ; 3 uses
   %i.fd = load ptr, ptr %i.v, align 8, !tbaa !78
   %i.fe = getelementptr inbounds nuw [208 x i8], ptr %i.fd, i64 %indvars.iv.i67 ; 33 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fe, i64 32
@@ -386,7 +382,7 @@ Bac_NtkFree.exit.i:                               ; preds = %bb.aj, %Vec_IntEras
   %.not.not.i = icmp slt i64 %indvars.iv.i67, %i.gx
   br i1 %.not.not.i, label %Bac_ManNtk.exit.i66, label %.critedge.i, !llvm.loop !107
 
-.critedge.i:                                      ; preds = %Bac_NtkFree.exit.i, %1
+.critedge.i:                                      ; preds = %Bac_NtkFree.exit.i
   %i.gy = getelementptr inbounds nuw i8, ptr %i.f, i64 96
   %i.gz = getelementptr inbounds nuw i8, ptr %i.f, i64 104 ; 2 uses
   %i.ha = load ptr, ptr %i.gz, align 8, !tbaa !82 ; 2 uses

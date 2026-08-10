@@ -204,24 +204,19 @@ bb.n:                                             ; preds = %bb.m
   %.val80 = load ptr, ptr %i.en, align 8, !tbaa !84 ; 7 uses
   %i.er = add nuw nsw i64 %indvars.iv135, 1       ; 4 uses
   %i.es = getelementptr inbounds nuw i8, ptr %.val80, i64 4 ; 3 uses
-  %i.et = load i32, ptr %i.es, align 4, !tbaa !26 ; 4 uses
-  %i.eu = sext i32 %i.et to i64                   ; 4 uses
+  %i.et = load i32, ptr %i.es, align 4, !tbaa !26 ; 3 uses
+  %i.eu = sext i32 %i.et to i64                   ; 3 uses
   %.not.i.not.i.i = icmp slt i64 %indvars.iv135, %i.eu
   br i1 %.not.i.not.i.i, label %Gia_ObjLevelId.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.ev = load i32, ptr %.val80, align 8, !tbaa !85 ; 4 uses
   %i.ew = shl nsw i32 %i.ev, 1                    ; 2 uses
-  %3 = sext i32 %i.ew to i64
-  %.not.i.i97 = icmp slt i64 %indvars.iv135, %3
-  %i.ex = sext i32 %i.ev to i64
-  %.not.i.i.not.i.i.a = icmp slt i64 %indvars.iv135, %i.ex ; 2 uses
-  br i1 %.not.i.i97, label %bb.t, label %4
+  %i.ex = sext i32 %i.ew to i64
+  %.not.i.i.not.i.i.a = icmp slt i64 %indvars.iv135, %i.ex
+  br i1 %.not.i.i.not.i.i.a, label %bb.t, label %bb.p
 
-4:                                                ; preds = %bb.o
-  br i1 %.not.i.i.not.i.i.a, label %Vec_IntGrow.exit.i.i.i, label %bb.p
-
-bb.p:                                             ; preds = %4
+bb.p:                                             ; preds = %bb.o
   %i.ey = getelementptr inbounds nuw i8, ptr %.val80, i64 8 ; 2 uses
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !15 ; 2 uses
   %.not9.i.i.i.i = icmp eq ptr %i.ez, null
@@ -243,7 +238,9 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br label %Vec_IntGrow.exit.sink.split.i.i.i
 
 bb.t:                                             ; preds = %bb.o
-  br i1 %.not.i.i.not.i.i.a, label %Vec_IntGrow.exit.i.i.i, label %bb.u
+  %3 = sext i32 %i.ev to i64
+  %.not.i.i.not.i.i = icmp slt i64 %indvars.iv135, %3
+  br i1 %.not.i.i.not.i.i, label %Vec_IntGrow.exit.i.i.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.ff = icmp slt i32 %i.ev, 1073741823
@@ -279,9 +276,9 @@ Vec_IntGrow.exit.sink.split.i.i.i:                ; preds = %bb.y, %bb.s
   %.pre = sext i32 %.pre.i.i to i64
   br label %Vec_IntGrow.exit.i.i.i
 
-Vec_IntGrow.exit.i.i.i:                           ; preds = %Vec_IntGrow.exit.sink.split.i.i.i, %bb.u, %bb.t, %4
-  %.pre-phi = phi i64 [ %.pre, %Vec_IntGrow.exit.sink.split.i.i.i ], [ %i.eu, %bb.u ], [ %i.eu, %bb.t ], [ %i.eu, %4 ] ; 2 uses
-  %5 = phi i32 [ %.pre.i.i, %Vec_IntGrow.exit.sink.split.i.i.i ], [ %i.et, %bb.u ], [ %i.et, %bb.t ], [ %i.et, %4 ]
+Vec_IntGrow.exit.i.i.i:                           ; preds = %Vec_IntGrow.exit.sink.split.i.i.i, %bb.u, %bb.t
+  %.pre-phi = phi i64 [ %.pre, %Vec_IntGrow.exit.sink.split.i.i.i ], [ %i.eu, %bb.u ], [ %i.eu, %bb.t ] ; 2 uses
+  %4 = phi i32 [ %.pre.i.i, %Vec_IntGrow.exit.sink.split.i.i.i ], [ %i.et, %bb.u ], [ %i.et, %bb.t ]
   %.not3.i.i = icmp sgt i64 %.pre-phi, %indvars.iv135
   br i1 %.not3.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
@@ -291,7 +288,7 @@ Vec_IntGrow.exit.i.i.i:                           ; preds = %Vec_IntGrow.exit.si
   %i.fp = shl nsw i64 %.pre-phi, 2
   %scevgep.i.i.i = getelementptr i8, ptr %i.fo, i64 %i.fp
   %i.fq = trunc nuw nsw i64 %indvars.iv135 to i32
-  %i.fr = sub i32 %i.fq, %5
+  %i.fr = sub i32 %i.fq, %4
   %i.fs = zext i32 %i.fr to i64
   %i.ft = shl nuw nsw i64 %i.fs, 2
   %i.fu = add nuw nsw i64 %i.ft, 4

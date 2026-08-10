@@ -203,9 +203,9 @@ pgstat_get_kind_info.exit.thread.i:               ; preds = %bb.b
   %i.k = icmp eq ptr %.pr.i.pre, null
   br i1 %i.k, label %pgstat_init_snapshot_fixed.exit.preheader, label %pgstat_get_kind_info.exit.1.i
 
-pgstat_get_kind_info.exit.1.i:                    ; preds = %bb.b, %pgstat_get_kind_info.exit.thread.i, %pgstat_get_kind_info.exit.i
+pgstat_get_kind_info.exit.1.i:                    ; preds = %pgstat_get_kind_info.exit.thread.i, %bb.b, %pgstat_get_kind_info.exit.i
   %i.l = phi ptr [ %.pr.i.pre, %pgstat_get_kind_info.exit.thread.i ], [ %i.a, %pgstat_get_kind_info.exit.i ], [ %i.a, %bb.b ] ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  %i.m = getelementptr i8, ptr %i.l, i64 8
   %i.n = load ptr, ptr %i.m, align 8              ; 3 uses
   %.not.1.i = icmp eq ptr %i.n, null
   br i1 %.not.1.i, label %pgstat_get_kind_info.exit.2.i, label %bb.c
@@ -226,9 +226,9 @@ pgstat_get_kind_info.exit.thread.1.i:             ; preds = %bb.c
   %i.v = icmp eq ptr %.pr33.i.pre, null
   br i1 %i.v, label %pgstat_init_snapshot_fixed.exit.preheader, label %pgstat_get_kind_info.exit.2.i
 
-pgstat_get_kind_info.exit.2.i:                    ; preds = %pgstat_get_kind_info.exit.1.i, %bb.c, %pgstat_get_kind_info.exit.thread.1.i
+pgstat_get_kind_info.exit.2.i:                    ; preds = %pgstat_get_kind_info.exit.thread.1.i, %bb.c, %pgstat_get_kind_info.exit.1.i
   %.pr33.i36 = phi ptr [ %.pr33.i.pre, %pgstat_get_kind_info.exit.thread.1.i ], [ %i.l, %bb.c ], [ %i.l, %pgstat_get_kind_info.exit.1.i ] ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %.pr33.i36, i64 16
+  %i.w = getelementptr i8, ptr %.pr33.i36, i64 16
   %i.x = load ptr, ptr %i.w, align 8              ; 3 uses
   %.not.2.i = icmp eq ptr %i.x, null
   br i1 %.not.2.i, label %pgstat_get_kind_info.exit.3.i, label %bb.d
@@ -249,9 +249,9 @@ pgstat_get_kind_info.exit.thread.2.i:             ; preds = %bb.d
   %i.af = icmp eq ptr %.pr34.pr.i.pre, null
   br i1 %i.af, label %pgstat_init_snapshot_fixed.exit.preheader, label %pgstat_get_kind_info.exit.3.i
 
-pgstat_get_kind_info.exit.3.i:                    ; preds = %pgstat_get_kind_info.exit.2.i, %bb.d, %pgstat_get_kind_info.exit.thread.2.i
+pgstat_get_kind_info.exit.3.i:                    ; preds = %pgstat_get_kind_info.exit.thread.2.i, %bb.d, %pgstat_get_kind_info.exit.2.i
   %.pr34.pr.i38 = phi ptr [ %.pr34.pr.i.pre, %pgstat_get_kind_info.exit.thread.2.i ], [ %.pr33.i36, %bb.d ], [ %.pr33.i36, %pgstat_get_kind_info.exit.2.i ] ; 3 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %.pr34.pr.i38, i64 24
+  %i.ag = getelementptr i8, ptr %.pr34.pr.i38, i64 24
   %i.ah = load ptr, ptr %i.ag, align 8            ; 3 uses
   %.not.3.i = icmp eq ptr %i.ah, null
   br i1 %.not.3.i, label %pgstat_get_kind_info.exit.4.i, label %bb.e
@@ -272,9 +272,9 @@ pgstat_get_kind_info.exit.thread.3.i:             ; preds = %bb.e
   %i.ap = icmp eq ptr %.pr35.i.pre, null
   br i1 %i.ap, label %pgstat_init_snapshot_fixed.exit.preheader, label %pgstat_get_kind_info.exit.4.i
 
-pgstat_get_kind_info.exit.4.i:                    ; preds = %pgstat_get_kind_info.exit.3.i, %bb.e, %pgstat_get_kind_info.exit.thread.3.i
+pgstat_get_kind_info.exit.4.i:                    ; preds = %pgstat_get_kind_info.exit.thread.3.i, %bb.e, %pgstat_get_kind_info.exit.3.i
   %.pr35.i40 = phi ptr [ %.pr35.i.pre, %pgstat_get_kind_info.exit.thread.3.i ], [ %.pr34.pr.i38, %bb.e ], [ %.pr34.pr.i38, %pgstat_get_kind_info.exit.3.i ] ; 3 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %.pr35.i40, i64 32
+  %i.aq = getelementptr i8, ptr %.pr35.i40, i64 32
   %i.ar = load ptr, ptr %i.aq, align 8            ; 3 uses
   %.not.4.i = icmp eq ptr %i.ar, null
   br i1 %.not.4.i, label %pgstat_get_kind_info.exit.5.i, label %bb.f
@@ -295,9 +295,9 @@ pgstat_get_kind_info.exit.thread.4.i:             ; preds = %bb.f
   %i.az = icmp eq ptr %.pr36.pr.pr.i.pre, null
   br i1 %i.az, label %pgstat_init_snapshot_fixed.exit.preheader, label %pgstat_get_kind_info.exit.5.i
 
-pgstat_get_kind_info.exit.5.i:                    ; preds = %pgstat_get_kind_info.exit.4.i, %bb.f, %pgstat_get_kind_info.exit.thread.4.i
+pgstat_get_kind_info.exit.5.i:                    ; preds = %pgstat_get_kind_info.exit.thread.4.i, %bb.f, %pgstat_get_kind_info.exit.4.i
   %.pr36.pr.pr.i42 = phi ptr [ %.pr36.pr.pr.i.pre, %pgstat_get_kind_info.exit.thread.4.i ], [ %.pr35.i40, %bb.f ], [ %.pr35.i40, %pgstat_get_kind_info.exit.4.i ] ; 3 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %.pr36.pr.pr.i42, i64 40
+  %i.ba = getelementptr i8, ptr %.pr36.pr.pr.i42, i64 40
   %i.bb = load ptr, ptr %i.ba, align 8            ; 3 uses
   %.not.5.i = icmp eq ptr %i.bb, null
   br i1 %.not.5.i, label %pgstat_get_kind_info.exit.6.i, label %bb.g
@@ -318,9 +318,9 @@ pgstat_get_kind_info.exit.thread.5.i:             ; preds = %bb.g
   %i.bj = icmp eq ptr %.pr37.i.pre, null
   br i1 %i.bj, label %pgstat_init_snapshot_fixed.exit.preheader, label %pgstat_get_kind_info.exit.6.i
 
-pgstat_get_kind_info.exit.6.i:                    ; preds = %pgstat_get_kind_info.exit.5.i, %bb.g, %pgstat_get_kind_info.exit.thread.5.i
+pgstat_get_kind_info.exit.6.i:                    ; preds = %pgstat_get_kind_info.exit.thread.5.i, %bb.g, %pgstat_get_kind_info.exit.5.i
   %.pr37.i44 = phi ptr [ %.pr37.i.pre, %pgstat_get_kind_info.exit.thread.5.i ], [ %.pr36.pr.pr.i42, %bb.g ], [ %.pr36.pr.pr.i42, %pgstat_get_kind_info.exit.5.i ] ; 3 uses
-  %i.bk = getelementptr inbounds nuw i8, ptr %.pr37.i44, i64 48
+  %i.bk = getelementptr i8, ptr %.pr37.i44, i64 48
   %i.bl = load ptr, ptr %i.bk, align 8            ; 3 uses
   %.not.6.i = icmp eq ptr %i.bl, null
   br i1 %.not.6.i, label %pgstat_get_kind_info.exit.7.i, label %bb.h
@@ -341,9 +341,9 @@ pgstat_get_kind_info.exit.thread.6.i:             ; preds = %bb.h
   %i.bt = icmp eq ptr %.pr38.pr.pr.i.pre, null
   br i1 %i.bt, label %pgstat_init_snapshot_fixed.exit.preheader, label %pgstat_get_kind_info.exit.7.i
 
-pgstat_get_kind_info.exit.7.i:                    ; preds = %pgstat_get_kind_info.exit.6.i, %bb.h, %pgstat_get_kind_info.exit.thread.6.i
+pgstat_get_kind_info.exit.7.i:                    ; preds = %pgstat_get_kind_info.exit.thread.6.i, %bb.h, %pgstat_get_kind_info.exit.6.i
   %.pr38.pr.pr.i46 = phi ptr [ %.pr38.pr.pr.i.pre, %pgstat_get_kind_info.exit.thread.6.i ], [ %.pr37.i44, %bb.h ], [ %.pr37.i44, %pgstat_get_kind_info.exit.6.i ] ; 3 uses
-  %i.bu = getelementptr inbounds nuw i8, ptr %.pr38.pr.pr.i46, i64 56
+  %i.bu = getelementptr i8, ptr %.pr38.pr.pr.i46, i64 56
   %i.bv = load ptr, ptr %i.bu, align 8            ; 3 uses
   %.not.7.i = icmp eq ptr %i.bv, null
   br i1 %.not.7.i, label %pgstat_get_kind_info.exit.8.i, label %bb.i
@@ -364,9 +364,9 @@ pgstat_get_kind_info.exit.thread.7.i:             ; preds = %bb.i
   %i.cd = icmp eq ptr %.pr39.i.pre, null
   br i1 %i.cd, label %pgstat_init_snapshot_fixed.exit.preheader, label %pgstat_get_kind_info.exit.8.i
 
-pgstat_get_kind_info.exit.8.i:                    ; preds = %pgstat_get_kind_info.exit.7.i, %bb.i, %pgstat_get_kind_info.exit.thread.7.i
+pgstat_get_kind_info.exit.8.i:                    ; preds = %pgstat_get_kind_info.exit.thread.7.i, %bb.i, %pgstat_get_kind_info.exit.7.i
   %.pr39.i48 = phi ptr [ %.pr39.i.pre, %pgstat_get_kind_info.exit.thread.7.i ], [ %.pr38.pr.pr.i46, %bb.i ], [ %.pr38.pr.pr.i46, %pgstat_get_kind_info.exit.7.i ]
-  %i.ce = getelementptr inbounds nuw i8, ptr %.pr39.i48, i64 64
+  %i.ce = getelementptr i8, ptr %.pr39.i48, i64 64
   %i.cf = load ptr, ptr %i.ce, align 8            ; 3 uses
   %.not.8.i = icmp eq ptr %i.cf, null
   br i1 %.not.8.i, label %pgstat_init_snapshot_fixed.exit.preheader, label %bb.j

@@ -203,7 +203,7 @@ _RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit51: ; preds = %bb.h
   br i1 %i.ab, label %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit51.thread, label %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit51.thread67, !prof !436
 
 _RNvMsv_NtCs6JMX4GRUq9U_4core3numj27from_ascii_bytes_radix_impl.exit: ; preds = %.preheader56.i, %bb.l, %.preheader56.i.preheader, %bb.m, %.lr.ph.i57, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit54.thread, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit51.thread, %bb.j, %bb.j, %.preheader.i, %._crit_edge
-  %.sroa.01.1.lcssa122 = phi i64 [ %.sroa.01.1.lcssa, %._crit_edge ], [ %.sroa.01.1.lcssa, %bb.j ], [ %.sroa.01.1.lcssa, %.preheader.i ], [ %.sroa.01.1.lcssa, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit51.thread ], [ %.sroa.01.1.lcssa, %bb.j ], [ %.sroa.01.083117120, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit54.thread ], [ %.sroa.01.1.lcssa, %bb.m ], [ %.sroa.01.1.lcssa, %.lr.ph.i57 ], [ %.sroa.01.1.lcssa, %.preheader56.i.preheader ], [ %.sroa.01.1.lcssa, %bb.l ], [ %.sroa.01.1.lcssa, %.preheader56.i ] ; 12 uses
+  %.sroa.01.1.lcssa122 = phi i64 [ %.sroa.01.1.lcssa, %._crit_edge ], [ %.sroa.01.1.lcssa, %bb.j ], [ %.sroa.01.1.lcssa, %.preheader.i ], [ %.sroa.01.1.lcssa, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit51.thread ], [ %.sroa.01.1.lcssa, %bb.j ], [ %.sroa.01.083117120, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit54.thread ], [ %.sroa.01.1.lcssa, %bb.m ], [ %.sroa.01.1.lcssa, %.lr.ph.i57 ], [ %.sroa.01.1.lcssa, %.preheader56.i.preheader ], [ %.sroa.01.1.lcssa, %bb.l ], [ %.sroa.01.1.lcssa, %.preheader56.i ] ; 10 uses
   %.sroa.3.0 = phi i64 [ undef, %._crit_edge ], [ -1, %bb.j ], [ 0, %.preheader.i ], [ -1, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit51.thread ], [ -1, %bb.j ], [ undef, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit54.thread ], [ %i.bd, %bb.m ], [ -1, %.lr.ph.i57 ], [ -1, %.preheader56.i.preheader ], [ %i.at, %.preheader56.i ], [ -1, %bb.l ]
   %.sroa.020.0 = phi i64 [ 0, %._crit_edge ], [ 1, %bb.j ], [ 1, %.preheader.i ], [ 1, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit51.thread ], [ 1, %bb.j ], [ 0, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit54.thread ], [ 1, %bb.m ], [ 1, %.lr.ph.i57 ], [ 1, %.preheader56.i.preheader ], [ 1, %bb.l ], [ 1, %.preheader56.i ]
   %i.ac = icmp ult i64 %.sroa.01.1.lcssa122, %2
@@ -335,33 +335,25 @@ bb.p:                                             ; preds = %.lr.ph92.2
   %i.bs = and i8 %.lcssa, -33
   %i.bt = add i8 %i.bs, -91
   %or.cond77 = icmp ult i8 %i.bt, -26
-  br i1 %or.cond77, label %.critedge46, label %3
+  br i1 %or.cond77, label %.critedge46, label %bb.r
 
 .critedge46:                                      ; preds = %bb.n, %bb.o, %bb.p, %_RNvMsv_NtCs6JMX4GRUq9U_4core3numj27from_ascii_bytes_radix_impl.exit, %.critedge43
   store i64 2, ptr %0, align 8
   br label %bb.s
 
-3:                                                ; preds = %.critedge43
-  %4 = add nuw i64 %.sroa.01.291.lcssa, 1         ; 6 uses
-  %5 = icmp ugt i64 %.sroa.01.1.lcssa122, %4
-  br i1 %5, label %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread71, label %6, !prof !2740
-
-6:                                                ; preds = %3
-  %7 = icmp eq i64 %.sroa.01.1.lcssa122, %2
-  br i1 %7, label %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread, label %bb.r
-
 bb.q:                                             ; preds = %bb.r
-  %i.bu = icmp eq i64 %4, %2
+  %i.bu = icmp eq i64 %3, %2
   br i1 %i.bu, label %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread, label %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit
 
-bb.r:                                             ; preds = %6
+bb.r:                                             ; preds = %.critedge43
+  %3 = add nuw i64 %.sroa.01.291.lcssa, 1         ; 5 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.01.1.lcssa122
   %i.bw = load i8, ptr %i.bv, align 1, !alias.scope !4572, !noundef !10
   %i.bx = icmp sgt i8 %i.bw, -65
   br i1 %i.bx, label %bb.q, label %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread71, !prof !435
 
 _RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit: ; preds = %bb.q
-  %i.by = getelementptr inbounds nuw i8, ptr %1, i64 %4
+  %i.by = getelementptr inbounds nuw i8, ptr %1, i64 %3
   %i.bz = load i8, ptr %i.by, align 1, !alias.scope !4572, !noundef !10
   %i.ca = icmp sgt i8 %i.bz, -65
   br i1 %i.ca, label %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread, label %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread71, !prof !436
@@ -369,12 +361,12 @@ _RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit: ; preds = %bb.q
 bb.s:                                             ; preds = %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread, %.critedge46, %.critedge
   ret void
 
-_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread71: ; preds = %bb.r, %3, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit
-  tail call void @_RNvNtCs6JMX4GRUq9U_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.01.1.lcssa122, i64 noundef %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @189) #34
+_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread71: ; preds = %bb.r, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit
+  tail call void @_RNvNtCs6JMX4GRUq9U_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.01.1.lcssa122, i64 noundef %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @189) #34
   unreachable
 
-_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread: ; preds = %bb.q, %6, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit
-  %i.cb = sub nuw i64 %4, %.sroa.01.1.lcssa122
+_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread: ; preds = %bb.q, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit
+  %i.cb = sub nuw i64 %3, %.sroa.01.1.lcssa122
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.01.1.lcssa122
   store i64 %.sroa.020.0, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -388,7 +380,7 @@ _RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread: ; preds = %bb.q
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 %i.cb, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i64 %4, ptr %.sroa.9.0..sroa_idx, align 8
+  store i64 %3, ptr %.sroa.9.0..sroa_idx, align 8
   br label %bb.s
 }
 
