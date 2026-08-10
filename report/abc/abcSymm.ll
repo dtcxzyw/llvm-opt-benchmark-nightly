@@ -204,13 +204,13 @@ Vec_MemHashAlloc.exit:                            ; preds = %Abc_PrimeCudd.exit.
   %i.aq = icmp ult i32 %0, 6
   %smax = tail call i32 @llvm.smax.i32(i32 %i.ag, i32 1)
   %wide.trip.count = zext i32 %i.af to i64        ; 6 uses
-  %min.iters.check93 = icmp ult i32 %i.af, 8
+  %min.iters.check93 = icmp ult i32 %i.af, 4
   %min.iters.check94 = icmp ult i32 %i.af, 16
-  %i.ar = and i64 %wide.trip.count, 8
+  %i.ar = and i64 %wide.trip.count, 12
   %n.vec96 = and i64 %wide.trip.count, 2147483632 ; 4 uses
   %cmp.n105 = icmp eq i64 %n.vec96, %wide.trip.count
   %min.epilog.iters.check.not.not = icmp eq i64 %i.ar, 0
-  %n.vec106 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec106 = and i64 %wide.trip.count, 2147483644 ; 3 uses
   %cmp.n115 = icmp eq i64 %n.vec106, %wide.trip.count
   %xtraiter = and i32 %smax.i, 1
   %i.as = icmp slt i32 %i.ai, 2
@@ -261,25 +261,25 @@ vec.epilog.iter.check:                            ; preds = %middle.block104
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec96, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %broadcast.splatinsert107 = insertelement <8 x i32> poison, i32 %.03255, i64 0
-  %broadcast.splat108 = shufflevector <8 x i32> %broadcast.splatinsert107, <8 x i32> poison, <8 x i32> zeroinitializer
+  %broadcast.splatinsert107 = insertelement <4 x i32> poison, i32 %.03255, i64 0
+  %broadcast.splat108 = shufflevector <4 x i32> %broadcast.splatinsert107, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.az = trunc nuw nsw i64 %vec.epilog.resume.val to i32
-  %broadcast.splatinsert109 = insertelement <8 x i32> poison, i32 %i.az, i64 0
-  %broadcast.splat110 = shufflevector <8 x i32> %broadcast.splatinsert109, <8 x i32> poison, <8 x i32> zeroinitializer
-  %induction = or disjoint <8 x i32> %broadcast.splat110, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %broadcast.splatinsert109 = insertelement <4 x i32> poison, i32 %i.az, i64 0
+  %broadcast.splat110 = shufflevector <4 x i32> %broadcast.splatinsert109, <4 x i32> poison, <4 x i32> zeroinitializer
+  %induction = or disjoint <4 x i32> %broadcast.splat110, <i32 0, i32 1, i32 2, i32 3>
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index111 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next113, %vec.epilog.vector.body ] ; 2 uses
-  %vec.ind112 = phi <8 x i32> [ %induction, %vec.epilog.ph ], [ %vec.ind.next114, %vec.epilog.vector.body ] ; 2 uses
-  %2 = lshr <8 x i32> %broadcast.splat108, %vec.ind112
-  %3 = trunc <8 x i32> %2 to <8 x i8>
-  %4 = and <8 x i8> %3, splat (i8 1)
-  %5 = or disjoint <8 x i8> %4, splat (i8 48)
+  %vec.ind112 = phi <4 x i32> [ %induction, %vec.epilog.ph ], [ %vec.ind.next114, %vec.epilog.vector.body ] ; 2 uses
+  %2 = lshr <4 x i32> %broadcast.splat108, %vec.ind112
+  %3 = trunc <4 x i32> %2 to <4 x i8>
+  %4 = and <4 x i8> %3, splat (i8 1)
+  %5 = or disjoint <4 x i8> %4, splat (i8 48)
   %i.ba = getelementptr inbounds nuw i8, ptr %i.a, i64 %index111
-  store <8 x i8> %5, ptr %i.ba, align 8, !tbaa !57
-  %index.next113 = add nuw i64 %index111, 8       ; 2 uses
-  %vec.ind.next114 = add <8 x i32> %vec.ind112, splat (i32 8)
+  store <4 x i8> %5, ptr %i.ba, align 4, !tbaa !57
+  %index.next113 = add nuw i64 %index111, 4       ; 2 uses
+  %vec.ind.next114 = add <4 x i32> %vec.ind112, splat (i32 4)
   %i.bb = icmp eq i64 %index.next113, %n.vec106
   br i1 %i.bb, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !104
 
@@ -682,7 +682,7 @@ attributes #22 = { nounwind willreturn memory(read) }
 !100 = !{!91, !27, i64 32}
 !101 = !{!91, !27, i64 40}
 !102 = distinct !{!102, !60, !70, !71}
-!103 = !{!"branch_weights", i32 8, i32 8}
+!103 = !{!"branch_weights", i32 4, i32 12}
 !104 = distinct !{!104, !60, !70, !71}
 !105 = distinct !{!105, !60, !71, !70}
 !106 = distinct !{!106, !60, !70, !71}

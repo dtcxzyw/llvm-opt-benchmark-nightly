@@ -203,37 +203,37 @@ iter.check:                                       ; preds = %.preheader.i
   br i1 %min.iters.check, label %.lr.ph249.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check661 = icmp ult i32 %2, 16
+  %min.iters.check661 = icmp ult i32 %2, 32
   br i1 %min.iters.check661, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.pj = and i64 %wide.trip.count317.i, 12
-  %n.vec = and i64 %wide.trip.count317.i, 2147483632 ; 4 uses
+  %i.pj = and i64 %wide.trip.count317.i, 28
+  %n.vec = and i64 %wide.trip.count317.i, 2147483616 ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 5 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 5 uses
-  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
-  %step.add.2 = add <4 x i32> %vec.ind, splat (i32 8)
-  %step.add.3 = add <4 x i32> %vec.ind, splat (i32 12)
+  %vec.ind = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 5 uses
+  %step.add = add <8 x i32> %vec.ind, splat (i32 8)
+  %step.add.2 = add <8 x i32> %vec.ind, splat (i32 16)
+  %step.add.3 = add <8 x i32> %vec.ind, splat (i32 24)
   %i.pk = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0100.0.lcssa, i64 %index
   %i.pl = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0100.0.lcssa, i64 %index
-  %i.pm = getelementptr inbounds nuw i8, ptr %i.pl, i64 32
+  %i.pm = getelementptr inbounds nuw i8, ptr %i.pl, i64 64
   %i.pn = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0100.0.lcssa, i64 %index
-  %i.po = getelementptr inbounds nuw i8, ptr %i.pn, i64 64
+  %i.po = getelementptr inbounds nuw i8, ptr %i.pn, i64 128
   %i.pp = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0100.0.lcssa, i64 %index
-  %i.pq = getelementptr inbounds nuw i8, ptr %i.pp, i64 96
-  %interleaved.vec = shufflevector <4 x i32> %vec.ind, <4 x i32> splat (i32 -1), <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  store <8 x i32> %interleaved.vec, ptr %i.pk, align 4, !tbaa !39, !noalias !62
-  %interleaved.vec662 = shufflevector <4 x i32> %step.add, <4 x i32> splat (i32 -1), <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  store <8 x i32> %interleaved.vec662, ptr %i.pm, align 4, !tbaa !39, !noalias !62
-  %interleaved.vec663 = shufflevector <4 x i32> %step.add.2, <4 x i32> splat (i32 -1), <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  store <8 x i32> %interleaved.vec663, ptr %i.po, align 4, !tbaa !39, !noalias !62
-  %interleaved.vec664 = shufflevector <4 x i32> %step.add.3, <4 x i32> splat (i32 -1), <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  store <8 x i32> %interleaved.vec664, ptr %i.pq, align 4, !tbaa !39, !noalias !62
-  %index.next = add nuw i64 %index, 16            ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 16)
+  %i.pq = getelementptr inbounds nuw i8, ptr %i.pp, i64 192
+  %interleaved.vec = shufflevector <8 x i32> %vec.ind, <8 x i32> splat (i32 -1), <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
+  store <16 x i32> %interleaved.vec, ptr %i.pk, align 4, !tbaa !39, !noalias !62
+  %interleaved.vec662 = shufflevector <8 x i32> %step.add, <8 x i32> splat (i32 -1), <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
+  store <16 x i32> %interleaved.vec662, ptr %i.pm, align 4, !tbaa !39, !noalias !62
+  %interleaved.vec663 = shufflevector <8 x i32> %step.add.2, <8 x i32> splat (i32 -1), <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
+  store <16 x i32> %interleaved.vec663, ptr %i.po, align 4, !tbaa !39, !noalias !62
+  %interleaved.vec664 = shufflevector <8 x i32> %step.add.3, <8 x i32> splat (i32 -1), <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
+  store <16 x i32> %interleaved.vec664, ptr %i.pq, align 4, !tbaa !39, !noalias !62
+  %index.next = add nuw i64 %index, 32            ; 2 uses
+  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 32)
   %i.pr = icmp eq i64 %index.next, %n.vec
   br i1 %i.pr, label %middle.block, label %vector.body, !llvm.loop !73
 
@@ -636,7 +636,7 @@ attributes #22 = { nounwind }
 !73 = distinct !{!73, !13, !74, !75}
 !74 = !{!"llvm.loop.isvectorized", i32 1}
 !75 = !{!"llvm.loop.unroll.runtime.disable"}
-!76 = !{!"branch_weights", i32 4, i32 12}
+!76 = !{!"branch_weights", i32 4, i32 28}
 !77 = distinct !{!77, !13, !74, !75}
 !78 = distinct !{!78, !13}
 !79 = distinct !{!79, !13}

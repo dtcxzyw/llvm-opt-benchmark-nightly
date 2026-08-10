@@ -204,12 +204,12 @@ bb.av:                                            ; preds = %._crit_edge.i.i.i27
 bb.aw:                                            ; preds = %bb.av, %._crit_edge.i.i.i273, %bb.at
   %.sroa.064.2.i.i.i = phi <2 x i64> [ %i.lp, %bb.at ], [ %i.mk, %bb.av ], [ %i.lw, %._crit_edge.i.i.i273 ] ; 2 uses
   %i.ml = bitcast <2 x i64> %.sroa.064.2.i.i.i to <4 x i32>
-  %i.mm = bitcast <2 x i64> %.sroa.064.2.i.i.i to <4 x i32>
+  %i.mm = bitcast <2 x i64> %.sroa.064.2.i.i.i to <4 x i32> ; 2 uses
   %i.mn = shufflevector <4 x i32> %i.mm, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.mo = add <4 x i32> %i.mn, %i.ml              ; 2 uses
   %shift2736 = shufflevector <4 x i32> %i.mo, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop2737 = add nsw <4 x i32> %i.mo, %shift2736 ; 2 uses
-  %27 = extractelement <4 x i32> %foldExtExtBinop2737, i64 0 ; 2 uses
+  %foldExtExtBinop2737 = add nsw <4 x i32> %i.mo, %shift2736
+  %27 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.mm) ; 2 uses
   %i.mp = icmp slt i64 %i.lo, %i.jj
   br i1 %i.mp, label %.lr.ph80.i.i.i.preheader, label %_ZNK5Eigen9DenseBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE3sumEv.exit
 
@@ -612,12 +612,12 @@ bb.av:                                            ; preds = %._crit_edge.i.i.i27
 bb.aw:                                            ; preds = %bb.av, %._crit_edge.i.i.i273, %bb.at
   %.sroa.064.2.i.i.i = phi <2 x i64> [ %i.lp, %bb.at ], [ %i.mk, %bb.av ], [ %i.lw, %._crit_edge.i.i.i273 ] ; 2 uses
   %i.ml = bitcast <2 x i64> %.sroa.064.2.i.i.i to <4 x i32>
-  %i.mm = bitcast <2 x i64> %.sroa.064.2.i.i.i to <4 x i32>
+  %i.mm = bitcast <2 x i64> %.sroa.064.2.i.i.i to <4 x i32> ; 2 uses
   %i.mn = shufflevector <4 x i32> %i.mm, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.mo = add <4 x i32> %i.mn, %i.ml              ; 2 uses
   %shift2733 = shufflevector <4 x i32> %i.mo, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop2734 = add nsw <4 x i32> %i.mo, %shift2733 ; 2 uses
-  %27 = extractelement <4 x i32> %foldExtExtBinop2734, i64 0 ; 2 uses
+  %foldExtExtBinop2734 = add nsw <4 x i32> %i.mo, %shift2733
+  %27 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.mm) ; 2 uses
   %i.mp = icmp slt i64 %i.lo, %i.jj
   br i1 %i.mp, label %.lr.ph80.i.i.i.preheader, label %_ZNK5Eigen9DenseBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE3sumEv.exit
 

@@ -204,12 +204,12 @@ bb.r:                                             ; preds = %._crit_edge.i.i.i.i
 bb.s:                                             ; preds = %bb.r, %._crit_edge.i.i.i.i.i, %bb.p
   %.sroa.067.2.i.i.i.i.i = phi <2 x i64> [ %i.ci, %bb.p ], [ %i.dd, %bb.r ], [ %i.cp, %._crit_edge.i.i.i.i.i ] ; 2 uses
   %i.de = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i to <4 x i32>
-  %i.df = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i to <4 x i32>
+  %i.df = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i to <4 x i32> ; 2 uses
   %i.dg = shufflevector <4 x i32> %i.df, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.dh = add <4 x i32> %i.dg, %i.de              ; 2 uses
   %shift = shufflevector <4 x i32> %i.dh, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = add nsw <4 x i32> %i.dh, %shift ; 2 uses
-  %4 = extractelement <4 x i32> %foldExtExtBinop, i64 0 ; 2 uses
+  %foldExtExtBinop = add nsw <4 x i32> %i.dh, %shift
+  %4 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.df) ; 2 uses
   %i.di = icmp sgt i64 %.0.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.di, label %.lr.ph85.i.i.i.i.i.preheader, label %.preheader.i.i.i.i.i
 
@@ -612,12 +612,12 @@ bb.e:                                             ; preds = %._crit_edge.i.i.i
 bb.f:                                             ; preds = %bb.e, %._crit_edge.i.i.i, %bb.c
   %.sroa.064.2.i.i.i = phi <2 x i64> [ %i.s, %bb.c ], [ %i.an, %bb.e ], [ %i.z, %._crit_edge.i.i.i ] ; 2 uses
   %i.ao = bitcast <2 x i64> %.sroa.064.2.i.i.i to <4 x i32>
-  %i.ap = bitcast <2 x i64> %.sroa.064.2.i.i.i to <4 x i32>
+  %i.ap = bitcast <2 x i64> %.sroa.064.2.i.i.i to <4 x i32> ; 2 uses
   %i.aq = shufflevector <4 x i32> %i.ap, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.ar = add <4 x i32> %i.aq, %i.ao              ; 2 uses
   %shift = shufflevector <4 x i32> %i.ar, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = add nsw <4 x i32> %i.ar, %shift ; 2 uses
-  %3 = extractelement <4 x i32> %foldExtExtBinop, i64 0 ; 2 uses
+  %foldExtExtBinop = add nsw <4 x i32> %i.ar, %shift
+  %3 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ap) ; 2 uses
   %i.as = icmp slt i64 %i.r, %i.b
   br i1 %i.as, label %.lr.ph80.i.i.i.preheader, label %_ZNK5Eigen9DenseBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE3sumEv.exit
 
@@ -1020,12 +1020,12 @@ bb.h:                                             ; preds = %._crit_edge.i.i.i.i
 bb.i:                                             ; preds = %bb.h, %._crit_edge.i.i.i.i, %bb.f
   %.sroa.067.2.i.i.i.i = phi <2 x i64> [ %i.ag, %bb.f ], [ %i.bb, %bb.h ], [ %i.an, %._crit_edge.i.i.i.i ] ; 2 uses
   %i.bc = bitcast <2 x i64> %.sroa.067.2.i.i.i.i to <4 x i32>
-  %i.bd = bitcast <2 x i64> %.sroa.067.2.i.i.i.i to <4 x i32>
+  %i.bd = bitcast <2 x i64> %.sroa.067.2.i.i.i.i to <4 x i32> ; 2 uses
   %i.be = shufflevector <4 x i32> %i.bd, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.bf = add <4 x i32> %i.be, %i.bc              ; 2 uses
   %shift = shufflevector <4 x i32> %i.bf, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = add nsw <4 x i32> %i.bf, %shift ; 2 uses
-  %2 = extractelement <4 x i32> %foldExtExtBinop, i64 0 ; 2 uses
+  %foldExtExtBinop = add nsw <4 x i32> %i.bf, %shift
+  %2 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.bd) ; 2 uses
   %i.bg = icmp sgt i64 %.0.i.i.i.i.i.i.i.i, 0
   br i1 %i.bg, label %.lr.ph85.i.i.i.i.preheader, label %.preheader.i.i.i.i
 
@@ -1428,12 +1428,12 @@ bb.o:                                             ; preds = %._crit_edge.i.i.i.i
 bb.p:                                             ; preds = %bb.o, %._crit_edge.i.i.i.i.i, %bb.m
   %.sroa.067.2.i.i.i.i.i = phi <2 x i64> [ %i.bi, %bb.m ], [ %i.cd, %bb.o ], [ %i.bp, %._crit_edge.i.i.i.i.i ] ; 2 uses
   %i.ce = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i to <4 x i32>
-  %i.cf = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i to <4 x i32>
+  %i.cf = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i to <4 x i32> ; 2 uses
   %i.cg = shufflevector <4 x i32> %i.cf, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.ch = add <4 x i32> %i.cg, %i.ce              ; 2 uses
   %shift = shufflevector <4 x i32> %i.ch, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = add nsw <4 x i32> %i.ch, %shift ; 2 uses
-  %2 = extractelement <4 x i32> %foldExtExtBinop, i64 0 ; 2 uses
+  %foldExtExtBinop = add nsw <4 x i32> %i.ch, %shift
+  %2 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.cf) ; 2 uses
   %i.ci = icmp sgt i64 %.0.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.ci, label %.lr.ph85.i.i.i.i.i.preheader, label %.preheader.i.i.i.i.i
 
@@ -1690,12 +1690,12 @@ bb.x:                                             ; preds = %._crit_edge.i.i.i.i
 bb.y:                                             ; preds = %bb.x, %._crit_edge.i.i.i.i.i.i, %bb.v
   %.sroa.067.2.i.i.i.i.i.i = phi <2 x i64> [ %i.fc, %bb.v ], [ %i.fx, %bb.x ], [ %i.fj, %._crit_edge.i.i.i.i.i.i ] ; 2 uses
   %i.fy = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i.i to <4 x i32>
-  %i.fz = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i.i to <4 x i32>
+  %i.fz = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i.i to <4 x i32> ; 2 uses
   %i.ga = shufflevector <4 x i32> %i.fz, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.gb = add <4 x i32> %i.ga, %i.fy              ; 2 uses
   %shift106 = shufflevector <4 x i32> %i.gb, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop107 = add nsw <4 x i32> %i.gb, %shift106 ; 2 uses
-  %3 = extractelement <4 x i32> %foldExtExtBinop107, i64 0 ; 2 uses
+  %foldExtExtBinop107 = add nsw <4 x i32> %i.gb, %shift106
+  %3 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.fz) ; 2 uses
   %i.gc = icmp sgt i64 %.0.i.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.gc, label %.lr.ph85.i.i.i.i.i.i.preheader, label %.preheader.i.i.i.i.i.i
 
@@ -2098,12 +2098,12 @@ bb.o:                                             ; preds = %._crit_edge.i.i.i.i
 bb.p:                                             ; preds = %bb.o, %._crit_edge.i.i.i.i.i, %bb.m
   %.sroa.067.2.i.i.i.i.i = phi <2 x i64> [ %i.bi, %bb.m ], [ %i.cd, %bb.o ], [ %i.bp, %._crit_edge.i.i.i.i.i ] ; 2 uses
   %i.ce = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i to <4 x i32>
-  %i.cf = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i to <4 x i32>
+  %i.cf = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i to <4 x i32> ; 2 uses
   %i.cg = shufflevector <4 x i32> %i.cf, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.ch = add <4 x i32> %i.cg, %i.ce              ; 2 uses
   %shift = shufflevector <4 x i32> %i.ch, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = add nsw <4 x i32> %i.ch, %shift ; 2 uses
-  %4 = extractelement <4 x i32> %foldExtExtBinop, i64 0 ; 2 uses
+  %foldExtExtBinop = add nsw <4 x i32> %i.ch, %shift
+  %4 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.cf) ; 2 uses
   %i.ci = icmp sgt i64 %.0.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.ci, label %.lr.ph85.i.i.i.i.i.preheader, label %.preheader.i.i.i.i.i
 
@@ -2360,12 +2360,12 @@ bb.x:                                             ; preds = %._crit_edge.i.i.i.i
 bb.y:                                             ; preds = %bb.x, %._crit_edge.i.i.i.i.i169, %bb.v
   %.sroa.067.2.i.i.i.i.i154 = phi <2 x i64> [ %i.fc, %bb.v ], [ %i.fx, %bb.x ], [ %i.fj, %._crit_edge.i.i.i.i.i169 ] ; 2 uses
   %i.fy = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i154 to <4 x i32>
-  %i.fz = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i154 to <4 x i32>
+  %i.fz = bitcast <2 x i64> %.sroa.067.2.i.i.i.i.i154 to <4 x i32> ; 2 uses
   %i.ga = shufflevector <4 x i32> %i.fz, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.gb = add <4 x i32> %i.ga, %i.fy              ; 2 uses
   %shift484 = shufflevector <4 x i32> %i.gb, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop485 = add nsw <4 x i32> %i.gb, %shift484 ; 2 uses
-  %5 = extractelement <4 x i32> %foldExtExtBinop485, i64 0 ; 2 uses
+  %foldExtExtBinop485 = add nsw <4 x i32> %i.gb, %shift484
+  %5 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.fz) ; 2 uses
   %i.gc = icmp sgt i64 %.0.i.i.i.i.i.i.i.i.i151, 0
   br i1 %i.gc, label %.lr.ph85.i.i.i.i.i165.preheader, label %.preheader.i.i.i.i.i157
 
@@ -2768,12 +2768,12 @@ bb.o:                                             ; preds = %._crit_edge.i.i.i.i
 bb.p:                                             ; preds = %bb.o, %._crit_edge.i.i.i.i, %bb.m
   %.sroa.067.2.i.i.i.i = phi <2 x i64> [ %i.cn, %bb.m ], [ %i.di, %bb.o ], [ %i.cu, %._crit_edge.i.i.i.i ] ; 2 uses
   %i.dj = bitcast <2 x i64> %.sroa.067.2.i.i.i.i to <4 x i32>
-  %i.dk = bitcast <2 x i64> %.sroa.067.2.i.i.i.i to <4 x i32>
+  %i.dk = bitcast <2 x i64> %.sroa.067.2.i.i.i.i to <4 x i32> ; 2 uses
   %i.dl = shufflevector <4 x i32> %i.dk, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.dm = add <4 x i32> %i.dl, %i.dj              ; 2 uses
   %shift = shufflevector <4 x i32> %i.dm, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = add nsw <4 x i32> %i.dm, %shift ; 2 uses
-  %7 = extractelement <4 x i32> %foldExtExtBinop, i64 0 ; 2 uses
+  %foldExtExtBinop = add nsw <4 x i32> %i.dm, %shift
+  %7 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.dk) ; 2 uses
   %i.dn = icmp sgt i64 %.0.i.i.i.i.i.i.i.i, 0
   br i1 %i.dn, label %.lr.ph85.i.i.i.i.preheader, label %.preheader.i.i.i.i
 
@@ -3176,12 +3176,12 @@ bb.aa:                                            ; preds = %._crit_edge.i.i.i.i
 bb.ab:                                            ; preds = %bb.aa, %._crit_edge.i.i.i.i40, %bb.y
   %.sroa.067.2.i.i.i.i25 = phi <2 x i64> [ %i.ix, %bb.y ], [ %i.js, %bb.aa ], [ %i.je, %._crit_edge.i.i.i.i40 ] ; 2 uses
   %i.jt = bitcast <2 x i64> %.sroa.067.2.i.i.i.i25 to <4 x i32>
-  %i.ju = bitcast <2 x i64> %.sroa.067.2.i.i.i.i25 to <4 x i32>
+  %i.ju = bitcast <2 x i64> %.sroa.067.2.i.i.i.i25 to <4 x i32> ; 2 uses
   %i.jv = shufflevector <4 x i32> %i.ju, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.jw = add <4 x i32> %i.jv, %i.jt              ; 2 uses
   %shift235 = shufflevector <4 x i32> %i.jw, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop236 = add nsw <4 x i32> %i.jw, %shift235 ; 2 uses
-  %8 = extractelement <4 x i32> %foldExtExtBinop236, i64 0 ; 2 uses
+  %foldExtExtBinop236 = add nsw <4 x i32> %i.jw, %shift235
+  %8 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ju) ; 2 uses
   %i.jx = icmp sgt i64 %.0.i.i.i.i.i.i.i.i22, 0
   br i1 %i.jx, label %.lr.ph85.i.i.i.i36.preheader, label %.preheader.i.i.i.i28
 

@@ -63,7 +63,7 @@ bb.c:                                             ; preds = %bb.g, %bb.b
 
 .lr.ph:                                           ; preds = %bb.c
   %i.i = sub i64 12, %.sroa.0.061                 ; 3 uses
-  %min.iters.check = icmp ult i64 %i.i, 48
+  %min.iters.check = icmp ult i64 %i.i, 64
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph

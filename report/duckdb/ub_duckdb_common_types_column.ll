@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %_ZN6duckdbltERKNS_2
 .lr.ph.i.i.lr.ph:                                 ; preds = %.lr.ph.i.preheader
   %i.aa = xor i64 %i.l, -1
   %i.ab = add nsw i64 %i.u, %i.aa                 ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ab, 64
+  %min.iters.check = icmp ult i64 %i.ab, 48
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.ph, !llvm.loop !1278
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.lr.ph
@@ -606,7 +606,7 @@ bb.d:                                             ; preds = %_ZN6duckdbltERKNS_2
 .lr.ph.i.i.lr.ph:                                 ; preds = %.lr.ph.i.preheader
   %i.w = xor i64 %i.h, -1
   %i.x = add nsw i64 %i.q, %i.w                   ; 3 uses
-  %min.iters.check = icmp ult i64 %i.x, 64
+  %min.iters.check = icmp ult i64 %i.x, 48
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.ph, !llvm.loop !1293
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.lr.ph
@@ -989,7 +989,7 @@ bb.ap:                                            ; preds = %_ZN6duckdbltERKNS_2
 .lr.ph.i50.lr.ph:                                 ; preds = %.lr.ph.preheader
   %i.et = xor i64 %i.ed, -1
   %i.eu = add i64 %i.en, %i.et                    ; 3 uses
-  %min.iters.check131 = icmp ult i64 %i.eu, 64
+  %min.iters.check131 = icmp ult i64 %i.eu, 48
   br i1 %min.iters.check131, label %.lr.ph.i50.preheader152, label %vector.ph132, !llvm.loop !1293
 
 vector.ph132:                                     ; preds = %.lr.ph.i50.lr.ph
@@ -1392,7 +1392,7 @@ bb.s:                                             ; preds = %_ZN6duckdbltERKNS_2
 .lr.ph.i.i.lr.ph:                                 ; preds = %.lr.ph.i.preheader
   %i.ee = xor i64 %i.dp, -1
   %i.ef = add nsw i64 %i.dy, %i.ee                ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ef, 64
+  %min.iters.check = icmp ult i64 %i.ef, 48
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.ph, !llvm.loop !1278
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.lr.ph
@@ -1556,7 +1556,7 @@ bb.v:                                             ; preds = %_ZN6duckdbltERKNS_2
 .lr.ph.i45.lr.ph:                                 ; preds = %.lr.ph81.preheader
   %i.ge = xor i64 %i.fp, -1
   %i.gf = add i64 %i.fy, %i.ge                    ; 3 uses
-  %min.iters.check144 = icmp ult i64 %i.gf, 64
+  %min.iters.check144 = icmp ult i64 %i.gf, 48
   br i1 %min.iters.check144, label %.lr.ph.i45.preheader165, label %vector.ph145, !llvm.loop !1278
 
 vector.ph145:                                     ; preds = %.lr.ph.i45.lr.ph

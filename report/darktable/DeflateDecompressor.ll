@@ -204,7 +204,7 @@ iter.check:                                       ; preds = %bb.e
   %i.dp = add nsw i32 %i.q, %i.do                 ; 3 uses
   %i.dq = zext i32 %i.dp to i64
   %i.dr = add nuw nsw i64 %i.dq, 1                ; 5 uses
-  %min.iters.check332 = icmp ult i32 %i.dp, 3
+  %min.iters.check332 = icmp ult i32 %i.dp, 7
   br i1 %min.iters.check332, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck322
 
 vector.memcheck322:                               ; preds = %iter.check
@@ -225,7 +225,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck322
   br i1 %min.iters.check333, label %vec.epilog.ph, label %vector.ph334
 
 vector.ph334:                                     ; preds = %vector.main.loop.iter.check
-  %i.dw = and i64 %i.dr, 28
+  %i.dw = and i64 %i.dr, 24
   %n.vec335 = and i64 %i.dr, 8589934560           ; 4 uses
   %i.dx = add nuw nsw i64 %n.vec335, %i.dm        ; 2 uses
   %broadcast.splatinsert336 = insertelement <32 x i64> poison, i64 %i.dm, i64 0
@@ -261,7 +261,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block354
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec335, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.resume.val356 = phi i64 [ %i.dx, %vec.epilog.iter.check ], [ %i.dm, %vector.main.loop.iter.check ]
-  %n.vec357 = and i64 %i.dr, 8589934588           ; 3 uses
+  %n.vec357 = and i64 %i.dr, 8589934584           ; 3 uses
   %i.ed = add nuw nsw i64 %n.vec357, %i.dm
   %invariant.gep385 = getelementptr i8, ptr %i.dj, i64 %i.dm
   br label %vec.epilog.vector.body
@@ -270,14 +270,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index370 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next375, %vec.epilog.vector.body ] ; 2 uses
   %i.ee = phi i64 [ %bc.resume.val356, %vec.epilog.ph ], [ %i.eh, %vec.epilog.vector.body ] ; 2 uses
   %gep386 = getelementptr i8, ptr %invariant.gep385, i64 %index370 ; 2 uses
-  %wide.load373 = load <4 x i8>, ptr %gep386, align 1, !tbaa !112, !alias.scope !124, !noalias !127
+  %wide.load373 = load <8 x i8>, ptr %gep386, align 1, !tbaa !112, !alias.scope !124, !noalias !127
   %i.ef = sub nuw nsw i64 %i.ee, %i.dm
   %i.eg = getelementptr inbounds nuw i8, ptr %i.dj, i64 %i.ef
-  %wide.load374 = load <4 x i8>, ptr %i.eg, align 1, !tbaa !112, !alias.scope !127
-  %5 = add <4 x i8> %wide.load374, %wide.load373
-  store <4 x i8> %5, ptr %gep386, align 1, !tbaa !112, !alias.scope !124, !noalias !127
-  %index.next375 = add nuw i64 %index370, 4       ; 2 uses
-  %i.eh = add nuw nsw i64 %i.ee, 4
+  %wide.load374 = load <8 x i8>, ptr %i.eg, align 1, !tbaa !112, !alias.scope !127
+  %5 = add <8 x i8> %wide.load374, %wide.load373
+  store <8 x i8> %5, ptr %gep386, align 1, !tbaa !112, !alias.scope !124, !noalias !127
+  %index.next375 = add nuw i64 %index370, 8       ; 2 uses
+  %i.eh = add nuw nsw i64 %i.ee, 8
   %i.ei = icmp eq i64 %index.next375, %n.vec357
   br i1 %i.ei, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !134
 
@@ -680,7 +680,7 @@ attributes #19 = { cold }
 !130 = !{!"llvm.loop.mustprogress"}
 !131 = !{!"llvm.loop.isvectorized", i32 1}
 !132 = !{!"llvm.loop.unroll.runtime.disable"}
-!133 = !{!"branch_weights", i32 4, i32 28}
+!133 = !{!"branch_weights", i32 8, i32 24}
 !134 = distinct !{!134, !130, !131, !132}
 !135 = distinct !{!135, !130, !131}
 !136 = !{!137}

@@ -204,13 +204,13 @@ bb.e:                                             ; preds = %bb.c
 
 .lr.ph56.split.us.preheader:                      ; preds = %.lr.ph56
   %wide.trip.count64 = zext nneg i32 %1 to i64    ; 6 uses
-  %min.iters.check = icmp ult i32 %1, 8
+  %min.iters.check = icmp ult i32 %1, 4
   %min.iters.check78 = icmp ult i32 %1, 16
-  %i.k = and i64 %wide.trip.count64, 8
+  %i.k = and i64 %wide.trip.count64, 12
   %n.vec = and i64 %wide.trip.count64, 2147483632 ; 4 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count64
   %min.epilog.iters.check.not.not = icmp eq i64 %i.k, 0
-  %n.vec79 = and i64 %wide.trip.count64, 2147483640 ; 3 uses
+  %n.vec79 = and i64 %wide.trip.count64, 2147483644 ; 3 uses
   %cmp.n88 = icmp eq i64 %n.vec79, %wide.trip.count64
   br label %.lr.ph56.split.us
 
@@ -278,25 +278,25 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %broadcast.splatinsert80 = insertelement <8 x i32> poison, i32 %i.t, i64 0
-  %broadcast.splat81 = shufflevector <8 x i32> %broadcast.splatinsert80, <8 x i32> poison, <8 x i32> zeroinitializer
+  %broadcast.splatinsert80 = insertelement <4 x i32> poison, i32 %i.t, i64 0
+  %broadcast.splat81 = shufflevector <4 x i32> %broadcast.splatinsert80, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.aa = trunc nuw nsw i64 %vec.epilog.resume.val to i32
-  %broadcast.splatinsert82 = insertelement <8 x i32> poison, i32 %i.aa, i64 0
-  %broadcast.splat83 = shufflevector <8 x i32> %broadcast.splatinsert82, <8 x i32> poison, <8 x i32> zeroinitializer
-  %induction = or disjoint <8 x i32> %broadcast.splat83, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %broadcast.splatinsert82 = insertelement <4 x i32> poison, i32 %i.aa, i64 0
+  %broadcast.splat83 = shufflevector <4 x i32> %broadcast.splatinsert82, <4 x i32> poison, <4 x i32> zeroinitializer
+  %induction = or disjoint <4 x i32> %broadcast.splat83, <i32 0, i32 1, i32 2, i32 3>
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index84 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next86, %vec.epilog.vector.body ] ; 2 uses
-  %vec.ind85 = phi <8 x i32> [ %induction, %vec.epilog.ph ], [ %vec.ind.next87, %vec.epilog.vector.body ] ; 2 uses
-  %3 = shl nuw <8 x i32> splat (i32 1), %vec.ind85
-  %4 = and <8 x i32> %3, %broadcast.splat81
-  %5 = icmp eq <8 x i32> %4, zeroinitializer
-  %6 = select <8 x i1> %5, <8 x i8> splat (i8 48), <8 x i8> splat (i8 49)
+  %vec.ind85 = phi <4 x i32> [ %induction, %vec.epilog.ph ], [ %vec.ind.next87, %vec.epilog.vector.body ] ; 2 uses
+  %3 = shl nuw <4 x i32> splat (i32 1), %vec.ind85
+  %4 = and <4 x i32> %3, %broadcast.splat81
+  %5 = icmp eq <4 x i32> %4, zeroinitializer
+  %6 = select <4 x i1> %5, <4 x i8> splat (i8 48), <4 x i8> splat (i8 49)
   %i.ab = getelementptr i8, ptr %invariant.gep, i64 %index84
-  store <8 x i8> %6, ptr %i.ab, align 1, !tbaa !201
-  %index.next86 = add nuw i64 %index84, 8         ; 2 uses
-  %vec.ind.next87 = add <8 x i32> %vec.ind85, splat (i32 8)
+  store <4 x i8> %6, ptr %i.ab, align 1, !tbaa !201
+  %index.next86 = add nuw i64 %index84, 4         ; 2 uses
+  %vec.ind.next87 = add <4 x i32> %vec.ind85, splat (i32 4)
   %i.ac = icmp eq i64 %index.next86, %n.vec79
   br i1 %i.ac, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !223
 
@@ -699,7 +699,7 @@ begin_hunk_1_@llvm.smax.i32
 !219 = distinct !{!219, !66, !68, !67}
 !220 = distinct !{!220, !66}
 !221 = distinct !{!221, !66, !67, !68}
-!222 = !{!"branch_weights", i32 8, i32 8}
+!222 = !{!"branch_weights", i32 4, i32 12}
 !223 = distinct !{!223, !66, !67, !68}
 !224 = !{!225, !226, i64 0}
 !225 = !{!"_ZTSSt18_Bit_iterator_base", !226, i64 0, !5, i64 8}
