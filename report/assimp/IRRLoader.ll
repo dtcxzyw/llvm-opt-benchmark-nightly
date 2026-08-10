@@ -204,17 +204,16 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %i.f, i8 0, i64 36, i1 false)
   store i32 8, ptr %i.a, align 8
   store i32 1, ptr %i.c, align 8
-  %i.i = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znam(i64 noundef 24) #28 ; 4 uses
+  %i.i = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znam(i64 noundef 24) #28 ; 3 uses
   store i64 1, ptr %i.i, align 16
   %.ptr = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
   store ptr null, ptr %i.j, align 16
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 208
   store ptr %.ptr, ptr %i.k, align 8
   store i32 4, ptr %.ptr, align 8
   %i.l = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #28 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  store ptr %i.l, ptr %5, align 16
+  store ptr %i.l, ptr %i.j, align 16
   store <4 x i32> <i32 0, i32 1, i32 2, i32 3>, ptr %i.l, align 4
   store i32 4, ptr %i.b, align 4
   %i.m = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znam(i64 noundef 48) #28 ; 5 uses

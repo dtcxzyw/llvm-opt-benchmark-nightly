@@ -201,13 +201,13 @@ bb.az:                                            ; preds = %_ZNK6icu_7813Unicod
   %i.fp = ashr i16 %i.fn, 5
   %i.fq = sext i16 %i.fp to i32
   %i.fr = load i32, ptr %i.db, align 4
-  %i.fs = select i1 %i.fo, i32 %i.fr, i32 %i.fq   ; 2 uses
+  %i.fs = select i1 %i.fo, i32 %i.fr, i32 %i.fq
   %i.ft = icmp slt i32 %.0177.lcssa479, %i.fs
   br i1 %i.ft, label %.lr.ph.preheader, label %.critedge3
 
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.fu = zext nneg i32 %.0177.lcssa479 to i64
-  br label %.lr.ph
+  br label %bb.ba
 
 .critedge.thread:                                 ; preds = %.preheader279, %.critedge
   %i.fv = load ptr, ptr @stderr, align 8, !tbaa !12
@@ -217,32 +217,22 @@ bb.az:                                            ; preds = %_ZNK6icu_7813Unicod
 .outer.outer.backedge:                            ; preds = %.critedge.thread, %bb.bo, %.thread262
   br label %.outer.outer, !llvm.loop !43
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.bc
-  %indvars.iv455 = phi i64 [ %i.fu, %.lr.ph.preheader ], [ %indvars.iv.next456, %bb.bc ] ; 4 uses
-  %9 = phi i32 [ %i.fs, %.lr.ph.preheader ], [ %i.gj, %bb.bc ]
-  %10 = phi i16 [ %i.fn, %.lr.ph.preheader ], [ %i.ge, %bb.bc ]
+bb.ba:                                            ; preds = %.lr.ph.preheader, %bb.bc
+  %indvars.iv455 = phi i64 [ %i.fu, %.lr.ph.preheader ], [ %indvars.iv.next456, %bb.bc ] ; 3 uses
+  %9 = phi i16 [ %i.fn, %.lr.ph.preheader ], [ %i.ge, %bb.bc ]
   %.0178371 = phi i32 [ %.0177.lcssa479, %.lr.ph.preheader ], [ %i.gd, %bb.bc ]
-  %11 = zext i32 %9 to i64
-  %12 = icmp samesign ult i64 %indvars.iv455, %11
-  br i1 %12, label %bb.ba, label %_ZNK6icu_7813UnicodeStringixEi.exit246
-
-bb.ba:                                            ; preds = %.lr.ph
-  %i.fx = and i16 %10, 2
+  %i.fx = and i16 %9, 2
   %.not.i.i.i245 = icmp eq i16 %i.fx, 0
   %i.fy = load ptr, ptr %i.dd, align 8
   %i.fz = select i1 %.not.i.i.i245, ptr %i.fy, ptr %i.dc
   %i.ga = getelementptr inbounds nuw [2 x i8], ptr %i.fz, i64 %indvars.iv455
   %i.gb = load i16, ptr %i.ga, align 2, !tbaa !34
   %i.gc = zext i16 %i.gb to i32
-  br label %_ZNK6icu_7813UnicodeStringixEi.exit246
-
-_ZNK6icu_7813UnicodeStringixEi.exit246:           ; preds = %bb.ba, %.lr.ph
-  %.0.i.i244 = phi i32 [ %i.gc, %bb.ba ], [ 65535, %.lr.ph ]
-  %13 = invoke signext i8 @u_isspace_78(i32 noundef %.0.i.i244)
+  %10 = invoke signext i8 @u_isspace_78(i32 noundef %i.gc)
           to label %bb.bb unwind label %.loopexit
 
-bb.bb:                                            ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit246
-  %.not214 = icmp eq i8 %13, 0
+bb.bb:                                            ; preds = %bb.ba
+  %.not214 = icmp eq i8 %10, 0
   br i1 %.not214, label %.critedge3.loopexit.split.loop.exit567, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
@@ -253,12 +243,12 @@ bb.bc:                                            ; preds = %bb.bb
   %i.gg = ashr i16 %i.ge, 5
   %i.gh = sext i16 %i.gg to i32
   %i.gi = load i32, ptr %i.db, align 4
-  %i.gj = select i1 %i.gf, i32 %i.gi, i32 %i.gh   ; 2 uses
+  %i.gj = select i1 %i.gf, i32 %i.gi, i32 %i.gh
   %i.gk = trunc nuw i64 %indvars.iv.next456 to i32
   %i.gl = icmp sgt i32 %i.gj, %i.gk
-  br i1 %i.gl, label %.lr.ph, label %.critedge3, !llvm.loop !45
+  br i1 %i.gl, label %bb.ba, label %.critedge3, !llvm.loop !45
 
-.loopexit:                                        ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit246
+.loopexit:                                        ; preds = %bb.ba
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   br label %.body242

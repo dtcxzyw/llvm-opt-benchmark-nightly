@@ -12,126 +12,125 @@ target triple = "x86_64-unknown-linux-gnu"
 @2 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\06\01\00\00'\00\00\00" }>, align 8
 @3 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\B9\04\00\00>\00\00\00" }>, align 8
 @4 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\C7\04\00\00!\00\00\00" }>, align 8
-@5 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\BD\04\00\00\1A\00\00\00" }>, align 8
-@6 = private unnamed_addr constant [7 x i8] c"address", align 1
-@7 = private unnamed_addr constant [7 x i8] c"article", align 1
-@8 = private unnamed_addr constant [5 x i8] c"aside", align 1
-@9 = private unnamed_addr constant [4 x i8] c"base", align 1
-@10 = private unnamed_addr constant [8 x i8] c"basefont", align 1
-@11 = private unnamed_addr constant [10 x i8] c"blockquote", align 1
-@12 = private unnamed_addr constant [4 x i8] c"body", align 1
-@13 = private unnamed_addr constant [7 x i8] c"caption", align 1
-@14 = private unnamed_addr constant [6 x i8] c"center", align 1
-@15 = private unnamed_addr constant [3 x i8] c"col", align 1
-@16 = private unnamed_addr constant [8 x i8] c"colgroup", align 1
-@17 = private unnamed_addr constant [2 x i8] c"dd", align 1
-@18 = private unnamed_addr constant [7 x i8] c"details", align 1
-@19 = private unnamed_addr constant [6 x i8] c"dialog", align 1
-@20 = private unnamed_addr constant [3 x i8] c"dir", align 1
-@21 = private unnamed_addr constant [3 x i8] c"div", align 1
-@22 = private unnamed_addr constant [2 x i8] c"dl", align 1
-@23 = private unnamed_addr constant [2 x i8] c"dt", align 1
-@24 = private unnamed_addr constant [8 x i8] c"fieldset", align 1
-@25 = private unnamed_addr constant [10 x i8] c"figcaption", align 1
-@26 = private unnamed_addr constant [6 x i8] c"figure", align 1
-@27 = private unnamed_addr constant [6 x i8] c"footer", align 1
-@28 = private unnamed_addr constant [4 x i8] c"form", align 1
-@29 = private unnamed_addr constant [5 x i8] c"frame", align 1
-@30 = private unnamed_addr constant [8 x i8] c"frameset", align 1
-@31 = private unnamed_addr constant [2 x i8] c"h1", align 1
-@32 = private unnamed_addr constant [2 x i8] c"h2", align 1
-@33 = private unnamed_addr constant [2 x i8] c"h3", align 1
-@34 = private unnamed_addr constant [2 x i8] c"h4", align 1
-@35 = private unnamed_addr constant [2 x i8] c"h5", align 1
-@36 = private unnamed_addr constant [2 x i8] c"h6", align 1
-@37 = private unnamed_addr constant [4 x i8] c"head", align 1
-@38 = private unnamed_addr constant [6 x i8] c"header", align 1
-@39 = private unnamed_addr constant [2 x i8] c"hr", align 1
-@40 = private unnamed_addr constant [4 x i8] c"html", align 1
-@41 = private unnamed_addr constant [6 x i8] c"iframe", align 1
-@42 = private unnamed_addr constant [6 x i8] c"legend", align 1
-@43 = private unnamed_addr constant [2 x i8] c"li", align 1
-@44 = private unnamed_addr constant [4 x i8] c"link", align 1
-@45 = private unnamed_addr constant [4 x i8] c"main", align 1
-@46 = private unnamed_addr constant [4 x i8] c"menu", align 1
-@47 = private unnamed_addr constant [8 x i8] c"menuitem", align 1
-@48 = private unnamed_addr constant [3 x i8] c"nav", align 1
-@49 = private unnamed_addr constant [8 x i8] c"noframes", align 1
-@50 = private unnamed_addr constant [2 x i8] c"ol", align 1
-@51 = private unnamed_addr constant [8 x i8] c"optgroup", align 1
-@52 = private unnamed_addr constant [6 x i8] c"option", align 1
-@53 = private unnamed_addr constant [1 x i8] c"p", align 1
-@54 = private unnamed_addr constant [5 x i8] c"param", align 1
-@55 = private unnamed_addr constant [7 x i8] c"section", align 1
-@56 = private unnamed_addr constant [6 x i8] c"source", align 1
-@57 = private unnamed_addr constant [7 x i8] c"summary", align 1
-@58 = private unnamed_addr constant [5 x i8] c"table", align 1
-@59 = private unnamed_addr constant [5 x i8] c"tbody", align 1
-@60 = private unnamed_addr constant [2 x i8] c"td", align 1
-@61 = private unnamed_addr constant [5 x i8] c"tfoot", align 1
-@62 = private unnamed_addr constant [2 x i8] c"th", align 1
-@63 = private unnamed_addr constant [5 x i8] c"thead", align 1
-@64 = private unnamed_addr constant [5 x i8] c"title", align 1
-@65 = private unnamed_addr constant [2 x i8] c"tr", align 1
-@66 = private unnamed_addr constant [5 x i8] c"track", align 1
-@67 = private unnamed_addr constant [2 x i8] c"ul", align 1
-@68 = private unnamed_addr constant <{ ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8] }> <{ ptr @6, [8 x i8] c"\07\00\00\00\00\00\00\00", ptr @7, [8 x i8] c"\07\00\00\00\00\00\00\00", ptr @8, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @9, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @10, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @11, [8 x i8] c"\0A\00\00\00\00\00\00\00", ptr @12, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @13, [8 x i8] c"\07\00\00\00\00\00\00\00", ptr @14, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @15, [8 x i8] c"\03\00\00\00\00\00\00\00", ptr @16, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @17, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @18, [8 x i8] c"\07\00\00\00\00\00\00\00", ptr @19, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @20, [8 x i8] c"\03\00\00\00\00\00\00\00", ptr @21, [8 x i8] c"\03\00\00\00\00\00\00\00", ptr @22, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @23, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @24, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @25, [8 x i8] c"\0A\00\00\00\00\00\00\00", ptr @26, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @27, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @28, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @29, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @30, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @31, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @32, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @33, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @34, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @35, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @36, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @37, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @38, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @39, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @40, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @41, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @42, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @43, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @44, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @45, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @46, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @47, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @48, [8 x i8] c"\03\00\00\00\00\00\00\00", ptr @49, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @50, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @51, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @52, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @53, [8 x i8] c"\01\00\00\00\00\00\00\00", ptr @54, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @55, [8 x i8] c"\07\00\00\00\00\00\00\00", ptr @56, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @57, [8 x i8] c"\07\00\00\00\00\00\00\00", ptr @58, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @59, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @60, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @61, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @62, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @63, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @64, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @65, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @66, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @67, [8 x i8] c"\02\00\00\00\00\00\00\00" }>, align 8
-@69 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\D8\02\00\003\00\00\00" }>, align 8
-@70 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\E2\02\00\009\00\00\00" }>, align 8
-@71 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\E1\02\00\00\16\00\00\00" }>, align 8
-@72 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\CF\02\00\00\16\00\00\00" }>, align 8
-@73 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\85\02\00\009\00\00\00" }>, align 8
-@74 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00f\03\00\00\15\00\00\00" }>, align 8
-@75 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\22\03\00\002\00\00\00" }>, align 8
-@76 = private unnamed_addr constant [16 x i8] c"\00\00\00\00\FE\FF\00\FC\01\00\00\F8\01\00\00x", align 2
-@77 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00F\03\00\00\17\00\00\00" }>, align 8
-@78 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\1A\03\00\00!\00\00\00" }>, align 8
-@79 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\95\01\00\00\14\00\00\00" }>, align 8
-@80 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00T\02\00\00\16\00\00\00" }>, align 8
-@81 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00Q\02\00\00\1F\00\00\00" }>, align 8
-@82 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00j\02\00\003\00\00\00" }>, align 8
-@83 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\1B\02\00\00\08\00\00\00" }>, align 8
-@84 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\1F\02\00\00(\00\00\00" }>, align 8
-@85 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\1E\02\00\00\13\00\00\00" }>, align 8
-@86 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\12\04\00\00\1A\00\00\00" }>, align 8
-@87 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\08\03\00\002\00\00\00" }>, align 8
-@88 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\0D\02\00\00\1F\00\00\00" }>, align 8
-@89 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\A7\03\00\00,\00\00\00" }>, align 8
-@90 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\A4\03\00\006\00\00\00" }>, align 8
-@91 = private unnamed_addr constant [2 x i8] c"> ", align 1
-@92 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00C\04\00\00,\00\00\00" }>, align 8
-@93 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\007\04\00\006\00\00\00" }>, align 8
-@94 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\001\04\00\008\00\00\00" }>, align 8
-@95 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\000\04\00\001\00\00\00" }>, align 8
-@96 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00Y\04\00\00\1B\00\00\00" }>, align 8
-@97 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00a\04\00\00 \00\00\00" }>, align 8
-@98 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\\\04\00\00\15\00\00\00" }>, align 8
-@99 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00V\04\00\00%\00\00\00" }>, align 8
-@100 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00*\04\00\00\1A\00\00\00" }>, align 8
-@101 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00%\04\00\00\1D\00\00\00" }>, align 8
-@102 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00$\04\00\00(\00\00\00" }>, align 8
-@103 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\AE\01\00\00\14\00\00\00" }>, align 8
-@104 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\AC\01\00\004\00\00\00" }>, align 8
-@105 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\E1\04\00\00\22\00\00\00" }>, align 8
-@106 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\DB\04\00\00\1E\00\00\00" }>, align 8
-@107 = private unnamed_addr constant [6 x i8] c"CDATA[", align 1
-@108 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\F2\04\00\005\00\00\00" }>, align 8
-@109 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\EF\04\00\007\00\00\00" }>, align 8
-@110 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\EE\04\00\00%\00\00\00" }>, align 8
-@111 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\02\05\00\00\1E\00\00\00" }>, align 8
-@112 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\01\05\00\00%\00\00\00" }>, align 8
-@113 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\FC\04\00\00/\00\00\00" }>, align 8
-@114 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\E8\03\00\00\1A\00\00\00" }>, align 8
-@115 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\19\05\00\00\1A\00\00\00" }>, align 8
-@116 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\17\05\00\001\00\00\00" }>, align 8
-@117 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\85\03\00\00$\00\00\00" }>, align 8
-@118 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\82\03\00\00.\00\00\00" }>, align 8
-@119 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\8C\04\00\008\00\00\00" }>, align 8
-@120 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00p\04\00\00!\00\00\00" }>, align 8
-@121 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\DE\03\00\00\1F\00\00\00" }>, align 8
-@122 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\C6\03\00\00'\00\00\00" }>, align 8
-@123 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\CC\03\00\00+\00\00\00" }>, align 8
-@124 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\D4\03\00\00'\00\00\00" }>, align 8
+@5 = private unnamed_addr constant [7 x i8] c"address", align 1
+@6 = private unnamed_addr constant [7 x i8] c"article", align 1
+@7 = private unnamed_addr constant [5 x i8] c"aside", align 1
+@8 = private unnamed_addr constant [4 x i8] c"base", align 1
+@9 = private unnamed_addr constant [8 x i8] c"basefont", align 1
+@10 = private unnamed_addr constant [10 x i8] c"blockquote", align 1
+@11 = private unnamed_addr constant [4 x i8] c"body", align 1
+@12 = private unnamed_addr constant [7 x i8] c"caption", align 1
+@13 = private unnamed_addr constant [6 x i8] c"center", align 1
+@14 = private unnamed_addr constant [3 x i8] c"col", align 1
+@15 = private unnamed_addr constant [8 x i8] c"colgroup", align 1
+@16 = private unnamed_addr constant [2 x i8] c"dd", align 1
+@17 = private unnamed_addr constant [7 x i8] c"details", align 1
+@18 = private unnamed_addr constant [6 x i8] c"dialog", align 1
+@19 = private unnamed_addr constant [3 x i8] c"dir", align 1
+@20 = private unnamed_addr constant [3 x i8] c"div", align 1
+@21 = private unnamed_addr constant [2 x i8] c"dl", align 1
+@22 = private unnamed_addr constant [2 x i8] c"dt", align 1
+@23 = private unnamed_addr constant [8 x i8] c"fieldset", align 1
+@24 = private unnamed_addr constant [10 x i8] c"figcaption", align 1
+@25 = private unnamed_addr constant [6 x i8] c"figure", align 1
+@26 = private unnamed_addr constant [6 x i8] c"footer", align 1
+@27 = private unnamed_addr constant [4 x i8] c"form", align 1
+@28 = private unnamed_addr constant [5 x i8] c"frame", align 1
+@29 = private unnamed_addr constant [8 x i8] c"frameset", align 1
+@30 = private unnamed_addr constant [2 x i8] c"h1", align 1
+@31 = private unnamed_addr constant [2 x i8] c"h2", align 1
+@32 = private unnamed_addr constant [2 x i8] c"h3", align 1
+@33 = private unnamed_addr constant [2 x i8] c"h4", align 1
+@34 = private unnamed_addr constant [2 x i8] c"h5", align 1
+@35 = private unnamed_addr constant [2 x i8] c"h6", align 1
+@36 = private unnamed_addr constant [4 x i8] c"head", align 1
+@37 = private unnamed_addr constant [6 x i8] c"header", align 1
+@38 = private unnamed_addr constant [2 x i8] c"hr", align 1
+@39 = private unnamed_addr constant [4 x i8] c"html", align 1
+@40 = private unnamed_addr constant [6 x i8] c"iframe", align 1
+@41 = private unnamed_addr constant [6 x i8] c"legend", align 1
+@42 = private unnamed_addr constant [2 x i8] c"li", align 1
+@43 = private unnamed_addr constant [4 x i8] c"link", align 1
+@44 = private unnamed_addr constant [4 x i8] c"main", align 1
+@45 = private unnamed_addr constant [4 x i8] c"menu", align 1
+@46 = private unnamed_addr constant [8 x i8] c"menuitem", align 1
+@47 = private unnamed_addr constant [3 x i8] c"nav", align 1
+@48 = private unnamed_addr constant [8 x i8] c"noframes", align 1
+@49 = private unnamed_addr constant [2 x i8] c"ol", align 1
+@50 = private unnamed_addr constant [8 x i8] c"optgroup", align 1
+@51 = private unnamed_addr constant [6 x i8] c"option", align 1
+@52 = private unnamed_addr constant [1 x i8] c"p", align 1
+@53 = private unnamed_addr constant [5 x i8] c"param", align 1
+@54 = private unnamed_addr constant [7 x i8] c"section", align 1
+@55 = private unnamed_addr constant [6 x i8] c"source", align 1
+@56 = private unnamed_addr constant [7 x i8] c"summary", align 1
+@57 = private unnamed_addr constant [5 x i8] c"table", align 1
+@58 = private unnamed_addr constant [5 x i8] c"tbody", align 1
+@59 = private unnamed_addr constant [2 x i8] c"td", align 1
+@60 = private unnamed_addr constant [5 x i8] c"tfoot", align 1
+@61 = private unnamed_addr constant [2 x i8] c"th", align 1
+@62 = private unnamed_addr constant [5 x i8] c"thead", align 1
+@63 = private unnamed_addr constant [5 x i8] c"title", align 1
+@64 = private unnamed_addr constant [2 x i8] c"tr", align 1
+@65 = private unnamed_addr constant [5 x i8] c"track", align 1
+@66 = private unnamed_addr constant [2 x i8] c"ul", align 1
+@67 = private unnamed_addr constant <{ ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8], ptr, [8 x i8] }> <{ ptr @5, [8 x i8] c"\07\00\00\00\00\00\00\00", ptr @6, [8 x i8] c"\07\00\00\00\00\00\00\00", ptr @7, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @8, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @9, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @10, [8 x i8] c"\0A\00\00\00\00\00\00\00", ptr @11, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @12, [8 x i8] c"\07\00\00\00\00\00\00\00", ptr @13, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @14, [8 x i8] c"\03\00\00\00\00\00\00\00", ptr @15, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @16, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @17, [8 x i8] c"\07\00\00\00\00\00\00\00", ptr @18, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @19, [8 x i8] c"\03\00\00\00\00\00\00\00", ptr @20, [8 x i8] c"\03\00\00\00\00\00\00\00", ptr @21, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @22, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @23, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @24, [8 x i8] c"\0A\00\00\00\00\00\00\00", ptr @25, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @26, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @27, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @28, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @29, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @30, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @31, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @32, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @33, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @34, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @35, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @36, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @37, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @38, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @39, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @40, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @41, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @42, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @43, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @44, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @45, [8 x i8] c"\04\00\00\00\00\00\00\00", ptr @46, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @47, [8 x i8] c"\03\00\00\00\00\00\00\00", ptr @48, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @49, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @50, [8 x i8] c"\08\00\00\00\00\00\00\00", ptr @51, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @52, [8 x i8] c"\01\00\00\00\00\00\00\00", ptr @53, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @54, [8 x i8] c"\07\00\00\00\00\00\00\00", ptr @55, [8 x i8] c"\06\00\00\00\00\00\00\00", ptr @56, [8 x i8] c"\07\00\00\00\00\00\00\00", ptr @57, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @58, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @59, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @60, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @61, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @62, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @63, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @64, [8 x i8] c"\02\00\00\00\00\00\00\00", ptr @65, [8 x i8] c"\05\00\00\00\00\00\00\00", ptr @66, [8 x i8] c"\02\00\00\00\00\00\00\00" }>, align 8
+@68 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\D8\02\00\003\00\00\00" }>, align 8
+@69 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\E2\02\00\009\00\00\00" }>, align 8
+@70 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\E1\02\00\00\16\00\00\00" }>, align 8
+@71 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\CF\02\00\00\16\00\00\00" }>, align 8
+@72 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\85\02\00\009\00\00\00" }>, align 8
+@73 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00f\03\00\00\15\00\00\00" }>, align 8
+@74 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\22\03\00\002\00\00\00" }>, align 8
+@75 = private unnamed_addr constant [16 x i8] c"\00\00\00\00\FE\FF\00\FC\01\00\00\F8\01\00\00x", align 2
+@76 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00F\03\00\00\17\00\00\00" }>, align 8
+@77 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\1A\03\00\00!\00\00\00" }>, align 8
+@78 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\95\01\00\00\14\00\00\00" }>, align 8
+@79 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00T\02\00\00\16\00\00\00" }>, align 8
+@80 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00Q\02\00\00\1F\00\00\00" }>, align 8
+@81 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00j\02\00\003\00\00\00" }>, align 8
+@82 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\1B\02\00\00\08\00\00\00" }>, align 8
+@83 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\1F\02\00\00(\00\00\00" }>, align 8
+@84 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\1E\02\00\00\13\00\00\00" }>, align 8
+@85 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\12\04\00\00\1A\00\00\00" }>, align 8
+@86 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\08\03\00\002\00\00\00" }>, align 8
+@87 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\0D\02\00\00\1F\00\00\00" }>, align 8
+@88 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\A7\03\00\00,\00\00\00" }>, align 8
+@89 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\A4\03\00\006\00\00\00" }>, align 8
+@90 = private unnamed_addr constant [2 x i8] c"> ", align 1
+@91 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00C\04\00\00,\00\00\00" }>, align 8
+@92 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\007\04\00\006\00\00\00" }>, align 8
+@93 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\001\04\00\008\00\00\00" }>, align 8
+@94 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\000\04\00\001\00\00\00" }>, align 8
+@95 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00Y\04\00\00\1B\00\00\00" }>, align 8
+@96 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00a\04\00\00 \00\00\00" }>, align 8
+@97 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\\\04\00\00\15\00\00\00" }>, align 8
+@98 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00V\04\00\00%\00\00\00" }>, align 8
+@99 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00*\04\00\00\1A\00\00\00" }>, align 8
+@100 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00%\04\00\00\1D\00\00\00" }>, align 8
+@101 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00$\04\00\00(\00\00\00" }>, align 8
+@102 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\AE\01\00\00\14\00\00\00" }>, align 8
+@103 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\AC\01\00\004\00\00\00" }>, align 8
+@104 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\E1\04\00\00\22\00\00\00" }>, align 8
+@105 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\DB\04\00\00\1E\00\00\00" }>, align 8
+@106 = private unnamed_addr constant [6 x i8] c"CDATA[", align 1
+@107 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\F2\04\00\005\00\00\00" }>, align 8
+@108 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\EF\04\00\007\00\00\00" }>, align 8
+@109 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\EE\04\00\00%\00\00\00" }>, align 8
+@110 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\02\05\00\00\1E\00\00\00" }>, align 8
+@111 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\01\05\00\00%\00\00\00" }>, align 8
+@112 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\FC\04\00\00/\00\00\00" }>, align 8
+@113 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\E8\03\00\00\1A\00\00\00" }>, align 8
+@114 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\19\05\00\00\1A\00\00\00" }>, align 8
+@115 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\17\05\00\001\00\00\00" }>, align 8
+@116 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\85\03\00\00$\00\00\00" }>, align 8
+@117 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\82\03\00\00.\00\00\00" }>, align 8
+@118 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\8C\04\00\008\00\00\00" }>, align 8
+@119 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00p\04\00\00!\00\00\00" }>, align 8
+@120 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\DE\03\00\00\1F\00\00\00" }>, align 8
+@121 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\C6\03\00\00'\00\00\00" }>, align 8
+@122 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\CC\03\00\00+\00\00\00" }>, align 8
+@123 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"i\00\00\00\00\00\00\00\D4\03\00\00'\00\00\00" }>, align 8
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: read) uwtable
 define hidden noundef i64 @_RINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2_19is_ascii_whitespaceEB4_(ptr noalias nofree noundef nonnull readonly captures(address) %0, i64 noundef range(i64 0, -9223372036854775808) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -534,7 +533,7 @@ bb.c:                                             ; preds = %_RNvNtCsbNU0JlWw3cF
   ]
 
 bb.d:                                             ; preds = %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.i
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.01.018.i.i.i.i.i.i, i64 noundef range(i64 0, -9223372036854775808) %i.k, i64 noundef range(i64 0, -9223372036854775808) %i.k, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @79) #15, !noalias !54
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.01.018.i.i.i.i.i.i, i64 noundef range(i64 0, -9223372036854775808) %i.k, i64 noundef range(i64 0, -9223372036854775808) %i.k, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @78) #15, !noalias !54
   unreachable
 
 bb.e:                                             ; preds = %bb.a
@@ -937,7 +936,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %_RINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2_21is_ascii_alphanumericEB4_.exit, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @72) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @71) #15
   unreachable
 
 bb.d:                                             ; preds = %bb.b
@@ -1053,7 +1052,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.ar, label %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners9parse_hex.exit.thread, label %bb.s
 
 bb.r:                                             ; preds = %bb.p
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.aa, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @69) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.aa, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @68) #15
   unreachable
 
 bb.s:                                             ; preds = %bb.q
@@ -1121,7 +1120,7 @@ bb.x:                                             ; preds = %_RINvNtCsbNU0JlWw3c
   br i1 %i.bq, label %bb.af, label %bb.z
 
 bb.y:                                             ; preds = %_RINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2_21is_ascii_alphanumericEB4_.exit
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.bo, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @71) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.bo, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @70) #15
   unreachable
 
 bb.z:                                             ; preds = %bb.x
@@ -1135,7 +1134,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.bu, label %bb.ab, label %bb.ac, !prof !141
 
 bb.ab:                                            ; preds = %bb.aa
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @70) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @69) #15
   unreachable
 
 bb.ac:                                            ; preds = %bb.aa
@@ -1174,13 +1173,13 @@ bb.a:
   br i1 %i.a, label %bb.c, label %bb.b, !prof !19
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = sub nuw i64 %2, %3                       ; 17 uses
+  %i.b = sub nuw i64 %2, %3                       ; 14 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %3 ; 11 uses
   %i.d = icmp eq i64 %2, %3
   br i1 %i.d, label %._crit_edge.i.i.i, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #15, !noalias !145
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #15, !noalias !145
   unreachable
 
 bb.d:                                             ; preds = %bb.b
@@ -1257,7 +1256,7 @@ _RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i: ; preds = %bb.i
   br i1 %i.ab, label %bb.k, label %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.thread.i, !prof !153
 
 _RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.thread.i: ; preds = %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i, %bb.h, %bb.g
-  tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %3, i64 noundef %i.t, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #15, !noalias !147
+  tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %3, i64 noundef %i.t, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @118) #15, !noalias !147
   unreachable
 
 bb.j:                                             ; preds = %.lr.ph38.i
@@ -1351,7 +1350,7 @@ bb.n:                                             ; preds = %.lr.ph56.preheader.
   br i1 %i.av, label %.lr.ph56.i.i.i, label %._crit_edge57.i.i.i
 
 ._crit_edge57.i.i.i:                              ; preds = %bb.o, %.lr.ph56.i.i.i, %bb.n
-  %.sroa.0.3.lcssa.i.i.i = phi i64 [ %i.b, %bb.n ], [ %.sroa.0.354.i.i.i, %.lr.ph56.i.i.i ], [ %i.b, %bb.o ] ; 10 uses
+  %.sroa.0.3.lcssa.i.i.i = phi i64 [ %i.b, %bb.n ], [ %.sroa.0.354.i.i.i, %.lr.ph56.i.i.i ], [ %i.b, %bb.o ] ; 8 uses
   %i.aw = icmp eq i64 %.sroa.0.3.lcssa.i.i.i, %.sroa.0.2.i15.i.i
   %i.ax = sub i64 %.sroa.0.3.lcssa.i.i.i, %.sroa.0.2.i15.i.i
   %i.ay = icmp ugt i64 %i.ax, 63
@@ -1385,26 +1384,16 @@ bb.p:                                             ; preds = %._crit_edge57.i.i.i
 bb.q:                                             ; preds = %bb.p
   %i.bk = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.bi
   %i.bl = load i8, ptr %i.bk, align 1, !alias.scope !165, !noalias !168, !noundef !15
-  %i.bm = icmp eq i8 %i.bl, 45
-  br i1 %i.bm, label %.loopexit.i.i, label %4
+  %4 = icmp eq i8 %i.bl, 45
+  %i.bm = icmp eq i64 %i.b, %.sroa.0.3.lcssa.i.i.i
+  %or.cond.i.i1 = select i1 %4, i1 true, i1 %i.bm
+  br i1 %or.cond.i.i1, label %.loopexit.i.i, label %bb.r
 
 .noexc2.i:                                        ; preds = %bb.p
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.bi, i64 noundef %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #15, !noalias !173
   unreachable
 
-4:                                                ; preds = %bb.q
-  %5 = icmp ugt i64 %.sroa.0.3.lcssa.i.i.i, %i.b
-  br i1 %5, label %.invoke.i, label %6, !prof !19
-
-6:                                                ; preds = %4
-  %7 = icmp eq i64 %i.b, %.sroa.0.3.lcssa.i.i.i
-  br i1 %7, label %.loopexit.i.i, label %bb.r
-
-.invoke.i:                                        ; preds = %4
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.0.3.lcssa.i.i.i, i64 noundef %i.b, i64 noundef %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #15, !noalias !173
-  unreachable
-
-bb.r:                                             ; preds = %6
+bb.r:                                             ; preds = %bb.q
   %i.bn = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sroa.0.3.lcssa.i.i.i
   %i.bo = load i8, ptr %i.bn, align 1, !alias.scope !165, !noalias !168, !noundef !15
   switch i8 %i.bo, label %.loopexit.i.i [
@@ -1460,7 +1449,7 @@ bb.x:                                             ; preds = %_RNvNtNtCshzWfHUSfY
   store i8 8, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !178, !noalias !179
   br label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTjNtNtCsbNU0JlWw3cF_14pulldown_cmark7strings6CowStrNtBO_8LinkTypeEE7or_elseNCNvNtBO_8scanners13scan_autolinks_0EBO_.exit
 
-.loopexit.i.i:                                    ; preds = %bb.m, %bb.l, %bb.s, %bb.r, %6, %bb.q, %._crit_edge57.i.i.i, %.lr.ph56.preheader.i.i.i, %._crit_edge.i.i.i
+.loopexit.i.i:                                    ; preds = %bb.m, %bb.l, %bb.s, %bb.r, %bb.q, %._crit_edge57.i.i.i, %.lr.ph56.preheader.i.i.i, %._crit_edge.i.i.i
   store i8 -1, ptr %0, align 8, !alias.scope !178, !noalias !179
   br label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTjNtNtCsbNU0JlWw3cF_14pulldown_cmark7strings6CowStrNtBO_8LinkTypeEE7or_elseNCNvNtBO_8scanners13scan_autolinks_0EBO_.exit
 
@@ -1588,7 +1577,7 @@ _RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners11calc_indent.exit: ; preds = %.lr.
   br i1 %i.ai, label %bb.p, label %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners11calc_indent.exit.thread44
 
 bb.o:                                             ; preds = %bb.d
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.014.0, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @73) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.014.0, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @72) #15
   unreachable
 
 bb.p:                                             ; preds = %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners11calc_indent.exit
@@ -1649,7 +1638,7 @@ bb.r:                                             ; preds = %bb.q, %bb.q
   br label %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners15scan_blank_line.exit
 
 bb.s:                                             ; preds = %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.i
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.01.018.i.i.i.i.i.i, i64 noundef range(i64 0, -9223372036854775808) %i.u, i64 noundef range(i64 0, -9223372036854775808) %i.u, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @79) #15, !noalias !200
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.01.018.i.i.i.i.i.i, i64 noundef range(i64 0, -9223372036854775808) %i.u, i64 noundef range(i64 0, -9223372036854775808) %i.u, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @78) #15, !noalias !200
   unreachable
 
 _RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners15scan_blank_line.exit: ; preds = %_RNCINvNvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkRhjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2W_25is_ascii_whitespace_no_nlE0NCINvMB2b_B28_10wrap_mut_2jB25_NCNvYIB10_INtNtNtBg_5slice4iter4IterhEB2R_EB1i_5count0E0E0B2Y_.exit.i.i.i.i.i.i, %bb.k, %bb.r, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.thread.i, %bb.q
@@ -1732,7 +1721,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.thread, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @78) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @77) #15
   unreachable
 
 bb.d:                                             ; preds = %bb.b
@@ -1810,7 +1799,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ab, label %bb.m, label %bb.e
 
 _RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit43.thread46: ; preds = %bb.k, %bb.g, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit43
-  tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %i.n, i64 noundef %i.o, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @75) #15
+  tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %i.n, i64 noundef %i.o, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @74) #15
   unreachable
 
 _RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit43.thread: ; preds = %bb.j, %bb.h, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit43
@@ -1833,7 +1822,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.ai = lshr i8 %i.ag, 4
   %i.aj = zext nneg i8 %i.ai to i64
-  %i.ak = getelementptr inbounds nuw [2 x i8], ptr @76, i64 %i.aj
+  %i.ak = getelementptr inbounds nuw [2 x i8], ptr @75, i64 %i.aj
   %i.al = load i16, ptr %i.ak, align 2, !noundef !15
   %i.am = and i8 %i.ag, 15
   %i.an = zext nneg i8 %i.am to i16
@@ -1930,7 +1919,7 @@ bb.aa:                                            ; preds = %bb.v
 bb.ab:                                            ; preds = %bb.aa
   %i.bp = lshr i8 %i.bn, 4
   %i.bq = zext nneg i8 %i.bp to i64
-  %i.br = getelementptr inbounds nuw [2 x i8], ptr @76, i64 %i.bq
+  %i.br = getelementptr inbounds nuw [2 x i8], ptr @75, i64 %i.bq
   %i.bs = load i16, ptr %i.br, align 2, !noundef !15
   %i.bt = and i8 %i.bn, 15
   %i.bu = zext nneg i8 %i.bt to i16
@@ -1941,7 +1930,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.s
 
 _RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.thread50: ; preds = %bb.q, %._crit_edge60, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit
-  tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %3, i64 noundef %i.aq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @77) #15
+  tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %3, i64 noundef %i.aq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @76) #15
   unreachable
 
 _RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.thread: ; preds = %bb.b, %bb.p, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit
@@ -2019,7 +2008,7 @@ _RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners8scan_eol.exit: ; preds = %_RNCINvN
   ret { i64, i64 } %i.r
 
 bb.f:                                             ; preds = %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.01.018.i.i.i.i.i, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @79) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.01.018.i.i.i.i.i, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @78) #15
   unreachable
 }
 
@@ -2086,11 +2075,11 @@ _RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners13scan_nextline.exit: ; preds = %bb
   br i1 %.not40, label %bb.g, label %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners13scan_nextline.exit.thread, !prof !288
 
 bb.f:                                             ; preds = %bb.d
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.l, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @81) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.l, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @80) #15
   unreachable
 
 bb.g:                                             ; preds = %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners13scan_nextline.exit
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.w, i64 noundef %i.o, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @80) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.w, i64 noundef %i.o, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @79) #15
   unreachable
 
 _RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners13scan_nextline.exit.thread: ; preds = %bb.e, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners13scan_nextline.exit
@@ -2213,11 +2202,11 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.i.1, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.i
   %.lcssa = phi i64 [ %1, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.i ], [ %i.r, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.i.1 ] ; 2 uses
   %.sroa.01.018.i.i.i.i.i.i.lcssa.lcssa = phi i64 [ %.sroa.01.018.i.i.i.i.i.i, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.i ], [ %.sroa.01.018.i.i.i.i.i.i.1, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.i.1 ]
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.01.018.i.i.i.i.i.i.lcssa.lcssa, i64 noundef range(i64 0, -9223372036854775808) %.lcssa, i64 noundef range(i64 0, -9223372036854775808) %.lcssa, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @79) #15, !noalias !309
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.01.018.i.i.i.i.i.i.lcssa.lcssa, i64 noundef range(i64 0, -9223372036854775808) %.lcssa, i64 noundef range(i64 0, -9223372036854775808) %.lcssa, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @78) #15, !noalias !309
   unreachable
 
 bb.f:                                             ; preds = %.loopexit
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.p, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @82) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.p, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @81) #15
   unreachable
 
 .loopexit:                                        ; preds = %_RNCINvNvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkRhjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2W_25is_ascii_whitespace_no_nlE0NCINvMB2b_B28_10wrap_mut_2jB25_NCNvYIB10_INtNtNtBg_5slice4iter4IterhEB2R_EB1i_5count0E0E0B2Y_.exit.i.i.i.i.i.i, %bb.b, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.thread.i, %bb.c, %bb.d, %bb.a
@@ -2344,7 +2333,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.w, label %.invoke, label %bb.j, !prof !19
 
 bb.g:                                             ; preds = %bb.e
-  invoke void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.05.0.lcssa.i.ph, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @83) #16
+  invoke void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.05.0.lcssa.i.ph, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @82) #16
           to label %bb.i unwind label %.loopexit.split-lp
 
 bb.h:                                             ; preds = %.loopexit41, %.loopexit.split-lp, %.body
@@ -2376,7 +2365,7 @@ bb.j:                                             ; preds = %bb.f
 
 .invoke:                                          ; preds = %.lr.ph, %bb.f
   %i.aa = phi i64 [ %spec.select, %bb.f ], [ %i.z, %.lr.ph ]
-  %i.ab = phi ptr [ @85, %bb.f ], [ @84, %.lr.ph ]
+  %i.ab = phi ptr [ @84, %bb.f ], [ @83, %.lr.ph ]
   invoke void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.aa, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ab) #16
           to label %.cont unwind label %.loopexit.split-lp
 
@@ -2686,14 +2675,14 @@ bb.f:                                             ; preds = %_RNvNtCsbNU0JlWw3cF
   br label %.loopexit
 
 bb.g:                                             ; preds = %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.i
-  invoke void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.01.018.i.i.i.i.i.i, i64 noundef range(i64 0, -9223372036854775808) %i.g, i64 noundef range(i64 0, -9223372036854775808) %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @79) #15
+  invoke void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.01.018.i.i.i.i.i.i, i64 noundef range(i64 0, -9223372036854775808) %i.g, i64 noundef range(i64 0, -9223372036854775808) %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @78) #15
           to label %.noexc unwind label %bb.i
 
 .noexc:                                           ; preds = %bb.g
   unreachable
 
 bb.h:                                             ; preds = %bb.b
-  invoke void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.48.0.copyload, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @86) #16
+  invoke void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.48.0.copyload, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @85) #16
           to label %bb.l unwind label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h
@@ -3096,7 +3085,7 @@ bb.ap:                                            ; preds = %bb.an, %bb.ao, %bb.
   br label %.backedge
 
 _RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.thread157: ; preds = %bb.al, %bb.aj, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit
-  tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef 1, i64 noundef %.sroa.04.0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @87) #15
+  tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef 1, i64 noundef %.sroa.04.0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @86) #15
   unreachable
 
 _RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.thread: ; preds = %bb.am, %bb.ak, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit
@@ -3215,11 +3204,11 @@ bb.h:                                             ; preds = %bb.g
   br label %.loopexit
 
 bb.i:                                             ; preds = %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.i
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.01.018.i.i.i.i.i.i, i64 noundef range(i64 0, -9223372036854775808) %i.n, i64 noundef range(i64 0, -9223372036854775808) %i.n, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @79) #15, !noalias !433
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.01.018.i.i.i.i.i.i, i64 noundef range(i64 0, -9223372036854775808) %i.n, i64 noundef range(i64 0, -9223372036854775808) %i.n, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @78) #15, !noalias !433
   unreachable
 
 bb.j:                                             ; preds = %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners14scan_ch_repeat.exit
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.0.1.i.i.i.i, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @88) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.0.1.i.i.i.i, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @87) #15
   unreachable
 
 .loopexit:                                        ; preds = %_RNCINvNvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkRhjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2W_25is_ascii_whitespace_no_nlE0NCINvMB2b_B28_10wrap_mut_2jB25_NCNvYIB10_INtNtNtBg_5slice4iter4IterhEB2R_EB1i_5count0E0E0B2Y_.exit.i.i.i.i.i.i, %bb.f, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.thread.i, %bb.g, %bb.h, %bb.e
@@ -3240,7 +3229,7 @@ _RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners15scan_blank_line.exit: ; preds = %
 ; Function Attrs: nonlazybind uwtable
 define hidden { i64, i64 } @_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_blockquote_start(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef range(i64 0, -9223372036854775808) %1) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call noundef zeroext i1 @_RNvMNtCshzWfHUSfYae_4core5sliceSh11starts_withCsbNU0JlWw3cF_14pulldown_cmark(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @91, i64 noundef 2)
+  %i.a = tail call noundef zeroext i1 @_RNvMNtCshzWfHUSfYae_4core5sliceSh11starts_withCsbNU0JlWw3cF_14pulldown_cmark(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @90, i64 noundef 2)
   %. = zext i1 %i.a to i64
   %i.b = insertvalue { i64, i64 } poison, i64 %., 0
   %i.c = insertvalue { i64, i64 } %i.b, i64 2, 1
@@ -3268,7 +3257,7 @@ bb.a:
   %i.e = phi i64 [ %i.ct, %bb.bl ], [ %.sroa.018.4, %bb.be ], [ 2, %bb.f ], [ %i.ab, %bb.h ], [ %i.gg, %bb.ba ], [ %i.ca, %bb.s ], [ 1, %bb.a ], [ %i.as, %.preheader ], [ %.sroa.018.3, %.loopexit117 ], [ %i.bi, %bb.w ], [ %.sroa.018.2, %bb.v ], [ %i.br, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit ], [ %.sroa.6.0.i, %bb.ax ], [ %i.bd, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.us ]
   %i.f = phi i64 [ %i.gu, %bb.bl ], [ %2, %bb.be ], [ 1, %bb.f ], [ %2, %bb.h ], [ %2, %bb.ba ], [ %2, %bb.s ], [ %2, %bb.a ], [ %2, %.preheader ], [ %2, %.loopexit117 ], [ %i.ca, %bb.w ], [ %2, %bb.v ], [ %2, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit ], [ %2, %bb.ax ], [ %2, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.us ]
   %i.g = phi i64 [ %2, %bb.bl ], [ %2, %bb.be ], [ 1, %bb.f ], [ %2, %bb.h ], [ %2, %bb.ba ], [ %2, %bb.w ], [ %2, %bb.a ], [ %2, %.preheader ], [ %2, %.loopexit117 ], [ %2, %bb.v ], [ %2, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit ], [ %2, %bb.s ], [ %2, %bb.ax ], [ %2, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.us ]
-  %i.h = phi ptr [ @97, %bb.bl ], [ @98, %bb.be ], [ @101, %bb.f ], [ @100, %bb.h ], [ @96, %bb.ba ], [ @93, %bb.s ], [ @102, %bb.a ], [ @95, %.preheader ], [ @99, %.loopexit117 ], [ @92, %bb.w ], [ @95, %bb.v ], [ @94, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit ], [ @95, %bb.ax ], [ @94, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.us ]
+  %i.h = phi ptr [ @96, %bb.bl ], [ @97, %bb.be ], [ @100, %bb.f ], [ @99, %bb.h ], [ @95, %bb.ba ], [ @92, %bb.s ], [ @101, %bb.a ], [ @94, %.preheader ], [ @98, %.loopexit117 ], [ @91, %bb.w ], [ @94, %bb.v ], [ @93, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit ], [ @94, %bb.ax ], [ @93, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners21scan_whitespace_no_nl.exit.us ]
   invoke void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.e, i64 noundef %i.f, i64 noundef %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.h) #16
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -3671,7 +3660,7 @@ bb.af:                                            ; preds = %bb.ae
 .invoke419:                                       ; preds = %bb.ae, %bb.au, %bb.ar
   %i.dt = phi i64 [ %i.ex, %bb.ar ], [ %i.ep, %bb.au ], [ %i.dp, %bb.ae ]
   %i.du = phi i64 [ %2, %bb.ar ], [ %i.ex, %bb.au ], [ %2, %bb.ae ]
-  %i.dv = phi ptr [ @90, %bb.ar ], [ @89, %bb.au ], [ @74, %bb.ae ]
+  %i.dv = phi ptr [ @89, %bb.ar ], [ @88, %bb.au ], [ @73, %bb.ae ]
   invoke void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.dt, i64 noundef %i.du, i64 noundef range(i64 1, -9223372036854775808) %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.dv) #15
           to label %.cont420 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -4074,7 +4063,7 @@ _RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners14scan_ch_repeat.exit13: ; preds = 
   br i1 %i.w, label %bb.i, label %bb.f, !prof !19
 
 bb.e:                                             ; preds = %bb.c
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.0.1.i.i.i.i, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @104) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.0.1.i.i.i.i, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @103) #15
   unreachable
 
 bb.f:                                             ; preds = %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners14scan_ch_repeat.exit13
@@ -4093,7 +4082,7 @@ bb.h:                                             ; preds = %bb.g, %bb.g
   br label %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners8scan_eol.exit
 
 bb.i:                                             ; preds = %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners14scan_ch_repeat.exit13
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.v, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @103) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.v, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @102) #15
   unreachable
 }
 
@@ -4155,7 +4144,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.s, label %.lr.ph, label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.q, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @106) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.q, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @105) #15
   unreachable
 
 .lr.ph:                                           ; preds = %bb.f, %bb.h
@@ -4188,7 +4177,7 @@ bb.i:                                             ; preds = %.lr.ph95
   br i1 %i.aj, label %bb.k, label %bb.l
 
 bb.j:                                             ; preds = %.lr.ph95
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.ah, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @105) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.ah, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @104) #15
   unreachable
 
 bb.k:                                             ; preds = %bb.l, %bb.i
@@ -4222,7 +4211,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.b
   %i.ay = sub nuw nsw i64 %1, %i.d
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 %i.d
-  %i.ba = tail call noundef zeroext i1 @_RNvMNtCshzWfHUSfYae_4core5sliceSh11starts_withCsbNU0JlWw3cF_14pulldown_cmark(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.az, i64 noundef %i.ay, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @107, i64 noundef 6)
+  %i.ba = tail call noundef zeroext i1 @_RNvMNtCshzWfHUSfYae_4core5sliceSh11starts_withCsbNU0JlWw3cF_14pulldown_cmark(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.az, i64 noundef %i.ay, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @106, i64 noundef 6)
   %i.bb = load i64, ptr %3, align 8
   %.not28 = icmp uge i64 %2, %i.bb
   %or.cond35.not = select i1 %i.ba, i1 %.not28, i1 false
@@ -4255,7 +4244,7 @@ _RINvNtNtNtCslLTI5cSnp8O_6memchr4arch7generic6memchr21search_slice_with_rawNCNvN
   br i1 %i.bn, label %bb.u, label %bb.t, !prof !19
 
 bb.s:                                             ; preds = %bb.p
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.bc, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @110) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.bc, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @109) #15
   unreachable
 
 bb.t:                                             ; preds = %_RINvNtNtNtCslLTI5cSnp8O_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr6memchr0ECsbNU0JlWw3cF_14pulldown_cmark.exit38
@@ -4287,7 +4276,7 @@ _RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners14scan_ch_repeat.exit47: ; preds = 
   br i1 %i.by, label %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners14scan_ch_repeat.exit47.thread, label %bb.v
 
 bb.u:                                             ; preds = %_RINvNtNtNtCslLTI5cSnp8O_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr6memchr0ECsbNU0JlWw3cF_14pulldown_cmark.exit38
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %spec.select.i, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @109) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %spec.select.i, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @108) #15
   unreachable
 
 _RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners14scan_ch_repeat.exit47.thread: ; preds = %bb.t, %bb.y, %bb.w, %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners14scan_ch_repeat.exit47
@@ -4304,7 +4293,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.cb, label %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners14scan_ch_repeat.exit47.thread, label %bb.y
 
 bb.x:                                             ; preds = %bb.v
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.bx, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @108) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.bx, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @107) #15
   unreachable
 
 bb.y:                                             ; preds = %bb.w
@@ -4387,7 +4376,7 @@ _RINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2_19is_ascii_whites
   br i1 %i.dc, label %_RNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners14scan_ch_repeat.exit.thread, label %bb.ae
 
 bb.ad:                                            ; preds = %_RINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNCNvB2_24scan_inline_html_comments_0EB4_.exit
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.cs, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @113) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.cs, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @112) #15
   unreachable
 
 bb.ae:                                            ; preds = %_RINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2_19is_ascii_whitespaceEB4_.exit
@@ -4423,7 +4412,7 @@ _RINvNtNtNtCslLTI5cSnp8O_6memchr4arch7generic6memchr21search_slice_with_rawNCNvN
   br i1 %i.dp, label %bb.aj, label %bb.ai, !prof !19
 
 bb.ah:                                            ; preds = %bb.ae
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.dd, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @112) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.dd, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @111) #15
   unreachable
 
 bb.ai:                                            ; preds = %_RINvNtNtNtCslLTI5cSnp8O_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr6memchr0ECsbNU0JlWw3cF_14pulldown_cmark.exit
@@ -4431,7 +4420,7 @@ bb.ai:                                            ; preds = %_RINvNtNtNtCslLTI5c
   br i1 %i.dq, label %bb.ak, label %bb.al
 
 bb.aj:                                            ; preds = %_RINvNtNtNtCslLTI5cSnp8O_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr6memchr0ECsbNU0JlWw3cF_14pulldown_cmark.exit
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %spec.select.i51, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @111) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %spec.select.i51, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @110) #15
   unreachable
 
 bb.ak:                                            ; preds = %bb.al, %bb.ai
@@ -4494,7 +4483,7 @@ _RINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2_21is_ascii_alphan
   br i1 %.not, label %bb.d, label %_RINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2_21is_ascii_alphanumericEB4_.exit.thread, !prof !714
 
 bb.d:                                             ; preds = %_RINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2_21is_ascii_alphanumericEB4_.exit
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.sroa.01.018.i.i.i.i, i64 noundef %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @114) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.sroa.01.018.i.i.i.i, i64 noundef %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @113) #15
   unreachable
 
 _RINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2_21is_ascii_alphanumericEB4_.exit.thread: ; preds = %_RNCINvNvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkRhjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2W_21is_ascii_alphanumericE0NCINvMB2b_B28_10wrap_mut_2jB25_NCNvYIB10_INtNtNtBg_5slice4iter4IterhEB2R_EB1i_5count0E0E0B2Y_.exit.i.i.i.i, %bb.c, %_RINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2_21is_ascii_alphanumericEB4_.exit
@@ -4504,7 +4493,7 @@ _RINvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners10scan_whileNvB2_21is_ascii_alphan
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 6 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !715
-  call void @_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E3newCsbNU0JlWw3cF_14pulldown_cmark(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef nonnull @37, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @37, i64 4), ptr noundef nonnull readonly %i.g, ptr noundef nonnull readonly %i.s)
+  call void @_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E3newCsbNU0JlWw3cF_14pulldown_cmark(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef nonnull @36, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @36, i64 4), ptr noundef nonnull readonly %i.g, ptr noundef nonnull readonly %i.s)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !720)
   %i.w = load i64, ptr %i.u, align 8, !alias.scope !723, !noalias !715, !noundef !15 ; 2 uses
   %.promoted.i.i19.i.i = load i64, ptr %i.t, align 8, !alias.scope !723, !noalias !715 ; 3 uses
@@ -4561,7 +4550,7 @@ _RNCNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners11is_html_tag0B5_.exit31.i.i: ; p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !715
   %i.al = select i1 %.sroa.0.0.i25.i.i, i64 0, i64 31, !unpredictable !15 ; 2 uses
   %i.am = add nuw nsw i64 %i.al, 15               ; 2 uses
-  %i.an = getelementptr inbounds nuw [16 x i8], ptr @68, i64 %i.am ; 2 uses
+  %i.an = getelementptr inbounds nuw [16 x i8], ptr @67, i64 %i.am ; 2 uses
   %.val13.1.i.i = load ptr, ptr %i.an, align 8, !noalias !715, !nonnull !15, !noundef !15 ; 2 uses
   %i.ao = getelementptr i8, ptr %i.an, i64 8
   %.val14.1.i.i = load i64, ptr %i.ao, align 8, !noalias !715, !noundef !15 ; 2 uses
@@ -4605,7 +4594,7 @@ _RNCNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners11is_html_tag0B5_.exit31.1.i.i: ;
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !715
   %i.az = select i1 %.sroa.0.0.i25.1.i.i, i64 %i.al, i64 %i.am, !unpredictable !15 ; 2 uses
   %i.ba = add nuw nsw i64 %i.az, 8                ; 2 uses
-  %i.bb = getelementptr inbounds nuw [16 x i8], ptr @68, i64 %i.ba ; 2 uses
+  %i.bb = getelementptr inbounds nuw [16 x i8], ptr @67, i64 %i.ba ; 2 uses
   %.val13.2.i.i = load ptr, ptr %i.bb, align 8, !noalias !715, !nonnull !15, !noundef !15 ; 2 uses
   %i.bc = getelementptr i8, ptr %i.bb, i64 8
   %.val14.2.i.i = load i64, ptr %i.bc, align 8, !noalias !715, !noundef !15 ; 2 uses
@@ -4649,7 +4638,7 @@ _RNCNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners11is_html_tag0B5_.exit31.2.i.i: ;
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !715
   %i.bn = select i1 %.sroa.0.0.i25.2.i.i, i64 %i.az, i64 %i.ba, !unpredictable !15 ; 2 uses
   %i.bo = add nuw nsw i64 %i.bn, 4                ; 2 uses
-  %i.bp = getelementptr inbounds nuw [16 x i8], ptr @68, i64 %i.bo ; 2 uses
+  %i.bp = getelementptr inbounds nuw [16 x i8], ptr @67, i64 %i.bo ; 2 uses
   %.val13.3.i.i = load ptr, ptr %i.bp, align 8, !noalias !715, !nonnull !15, !noundef !15 ; 2 uses
   %i.bq = getelementptr i8, ptr %i.bp, i64 8
   %.val14.3.i.i = load i64, ptr %i.bq, align 8, !noalias !715, !noundef !15 ; 2 uses
@@ -4693,7 +4682,7 @@ _RNCNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners11is_html_tag0B5_.exit31.3.i.i: ;
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !715
   %i.cb = select i1 %.sroa.0.0.i25.3.i.i, i64 %i.bn, i64 %i.bo, !unpredictable !15 ; 2 uses
   %i.cc = add nuw nsw i64 %i.cb, 2                ; 2 uses
-  %i.cd = getelementptr inbounds nuw [16 x i8], ptr @68, i64 %i.cc ; 2 uses
+  %i.cd = getelementptr inbounds nuw [16 x i8], ptr @67, i64 %i.cc ; 2 uses
   %.val13.4.i.i = load ptr, ptr %i.cd, align 8, !noalias !715, !nonnull !15, !noundef !15 ; 2 uses
   %i.ce = getelementptr i8, ptr %i.cd, i64 8
   %.val14.4.i.i = load i64, ptr %i.ce, align 8, !noalias !715, !noundef !15 ; 2 uses
@@ -4737,7 +4726,7 @@ _RNCNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners11is_html_tag0B5_.exit31.4.i.i: ;
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !715
   %i.cp = select i1 %.sroa.0.0.i25.4.i.i, i64 %i.cb, i64 %i.cc, !unpredictable !15 ; 2 uses
   %i.cq = add nuw nsw i64 %i.cp, 1                ; 2 uses
-  %i.cr = getelementptr inbounds nuw [16 x i8], ptr @68, i64 %i.cq ; 2 uses
+  %i.cr = getelementptr inbounds nuw [16 x i8], ptr @67, i64 %i.cq ; 2 uses
   %.val13.5.i.i = load ptr, ptr %i.cr, align 8, !noalias !715, !nonnull !15, !noundef !15 ; 2 uses
   %i.cs = getelementptr i8, ptr %i.cr, i64 8
   %.val14.5.i.i = load i64, ptr %i.cs, align 8, !noalias !715, !noundef !15 ; 2 uses
@@ -4780,7 +4769,7 @@ _RNCNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners11is_html_tag0B5_.exit31.5.i.i: ;
   %.sroa.0.0.i25.5.i.i = phi i1 [ %i.dc, %._crit_edge.i24.5.i.i ], [ %i.da, %_RINvYINtNtNtNtCshzWfHUSfYae_4core4iter8adapters3zip3ZipINtNtNtBc_5slice4iter4IterhEBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1n_8find_map5checkTRhB2w_ENtNtBc_3cmp8OrderingNCNCNvNtCsbNU0JlWw3cF_14pulldown_cmark8scanners11is_html_tag00E0INtNtNtBc_3ops12control_flow11ControlFlowB2D_EEB35_.exit.i29.5.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !715
   %i.dd = select i1 %.sroa.0.0.i25.5.i.i, i64 %i.cp, i64 %i.cq, !unpredictable !15
-  %i.de = getelementptr inbounds nuw [16 x i8], ptr @68, i64 %i.dd ; 2 uses
+  %i.de = getelementptr inbounds nuw [16 x i8], ptr @67, i64 %i.dd ; 2 uses
   %.val17.i.i = load ptr, ptr %i.de, align 8, !noalias !715, !nonnull !15, !noundef !15 ; 2 uses
   %i.df = getelementptr i8, ptr %i.de, i64 8
   %.val18.i.i = load i64, ptr %i.df, align 8, !noalias !715, !noundef !15 ; 2 uses
@@ -4857,7 +4846,7 @@ bb.a:
   br i1 %i.i, label %.lr.ph34, label %._crit_edge35
 
 ._crit_edge:                                      ; preds = %.preheader
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %2, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @116) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %2, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @115) #15
   unreachable
 
 .lr.ph34:                                         ; preds = %.lr.ph, %bb.d
@@ -4881,7 +4870,7 @@ bb.b:                                             ; preds = %.lr.ph34
   br i1 %i.q, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %.lr.ph34
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.o, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @115) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.o, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @114) #15
   unreachable
 
 bb.d:                                             ; preds = %bb.e, %bb.b
@@ -5001,7 +4990,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not23, label %._crit_edge62, label %bb.h
 
 bb.g:                                             ; preds = %bb.d
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.p, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @118) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.p, i64 noundef %1, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @117) #15
   unreachable
 
 bb.h:                                             ; preds = %bb.f
@@ -5009,7 +4998,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.w, label %bb.i, label %bb.j, !prof !141
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.j, i64 noundef %i.p, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @117) #15
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.j, i64 noundef %i.p, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @116) #15
   unreachable
 
 bb.j:                                             ; preds = %bb.h
@@ -5210,7 +5199,7 @@ bb.p:                                             ; preds = %bb.k
 bb.q:                                             ; preds = %bb.p
   %i.al = lshr i8 %i.aj, 4
   %i.am = zext nneg i8 %i.al to i64
-  %i.an = getelementptr inbounds nuw [2 x i8], ptr @76, i64 %i.am
+  %i.an = getelementptr inbounds nuw [2 x i8], ptr @75, i64 %i.am
   %i.ao = load i16, ptr %i.an, align 2, !noundef !15
   %i.ap = and i8 %i.aj, 15
   %i.aq = zext nneg i8 %i.ap to i16
@@ -5320,7 +5309,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %.thread
 
 bb.af:                                            ; preds = %bb.y, %bb.aa
-  invoke void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.016.0116, i64 noundef %.sroa.0.0117, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @123) #16
+  invoke void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.016.0116, i64 noundef %.sroa.0.0117, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @122) #16
           to label %bb.h unwind label %.loopexit.split-lp
 
 _RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit: ; preds = %bb.aa, %bb.z
@@ -5410,7 +5399,7 @@ bb.ao:                                            ; preds = %.thread
 .invoke:                                          ; preds = %bb.o, %bb.m, %bb.t, %bb.r, %bb.e, %.split133
   %i.cn = phi i64 [ %.sroa.016.1, %.split133 ], [ %.sroa.016.1, %bb.e ], [ %.sroa.016.0116, %bb.r ], [ %.sroa.016.0116, %bb.t ], [ %.sroa.016.0116, %bb.m ], [ %.sroa.016.0116, %bb.o ]
   %i.co = phi i64 [ %2, %.split133 ], [ %2, %bb.e ], [ %.sroa.0.0117, %bb.r ], [ %.sroa.0.0117, %bb.t ], [ %.sroa.0.0117, %bb.m ], [ %.sroa.0.0117, %bb.o ]
-  %i.cp = phi ptr [ @121, %.split133 ], [ @121, %bb.e ], [ @124, %bb.o ], [ @124, %bb.m ], [ @122, %bb.t ], [ @122, %bb.r ]
+  %i.cp = phi ptr [ @120, %.split133 ], [ @120, %bb.e ], [ @123, %bb.o ], [ @123, %bb.m ], [ @121, %bb.t ], [ @121, %bb.r ]
   invoke void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %i.cn, i64 noundef %i.co, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cp) #16
           to label %.cont unwind label %.thread84.loopexit.split-lp
 

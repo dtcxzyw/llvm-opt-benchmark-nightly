@@ -203,7 +203,7 @@ _ZSt10__distanceISt23_Rb_tree_const_iteratorIlEENSt15iterator_traitsIT_E15differ
 bb.b:                                             ; preds = %_ZSt10__distanceISt23_Rb_tree_const_iteratorIlEENSt15iterator_traitsIT_E15difference_typeES3_S3_St18input_iterator_tag.exit
   %i.m = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.n = sub i64 %i.j, %i.m                       ; 5 uses
-  %i.o = ashr exact i64 %i.n, 3                   ; 5 uses
+  %i.o = ashr exact i64 %i.n, 3                   ; 4 uses
   %i.p = icmp ugt i64 %i.o, %i.c
   br i1 %i.p, label %bb.c, label %bb.j
 
@@ -271,30 +271,23 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.b
   %i.al = icmp sgt i64 %i.o, 0
-  br i1 %i.al, label %.preheader.i.a, label %.preheader7.i
+  br i1 %i.al, label %.lr.ph.i51, label %.preheader.i.a
 
-.preheader7.i:                                    ; preds = %bb.j
+.preheader.i.a:                                   ; preds = %bb.j
   %.not9.i = icmp eq ptr %i.h, %1
-  br i1 %.not9.i, label %_ZSt9__advanceISt23_Rb_tree_const_iteratorIlElEvRT_T0_St26bidirectional_iterator_tag.exit, label %.lr.ph.i51
+  tail call void @llvm.assume(i1 %.not9.i)
+  br label %_ZSt9__advanceISt23_Rb_tree_const_iteratorIlElEvRT_T0_St26bidirectional_iterator_tag.exit
 
-.preheader.i.a:                                   ; preds = %bb.j, %.preheader.i.a
-  %.012.i = phi i64 [ %5, %.preheader.i.a ], [ %i.o, %bb.j ]
-  %4 = phi ptr [ %6, %.preheader.i.a ], [ %2, %bb.j ]
-  %5 = add nsw i64 %.012.i, -1                    ; 2 uses
-  %6 = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %4) #30 ; 2 uses
-  %.not6.i = icmp eq i64 %5, 0
-  br i1 %.not6.i, label %_ZSt9__advanceISt23_Rb_tree_const_iteratorIlElEvRT_T0_St26bidirectional_iterator_tag.exit, label %.preheader.i.a, !llvm.loop !302
-
-.lr.ph.i51:                                       ; preds = %.preheader7.i, %.lr.ph.i51
-  %.110.i = phi i64 [ %i.an, %.lr.ph.i51 ], [ %i.o, %.preheader7.i ]
-  %i.am = phi ptr [ %i.ao, %.lr.ph.i51 ], [ %2, %.preheader7.i ]
-  %i.an = add nsw i64 %.110.i, 1                  ; 2 uses
-  %i.ao = tail call noundef ptr @_ZSt18_Rb_tree_decrementPKSt18_Rb_tree_node_base(ptr noundef %i.am) #30 ; 2 uses
+.lr.ph.i51:                                       ; preds = %bb.j, %.lr.ph.i51
+  %.110.i = phi i64 [ %i.an, %.lr.ph.i51 ], [ %i.o, %bb.j ]
+  %i.am = phi ptr [ %i.ao, %.lr.ph.i51 ], [ %2, %bb.j ]
+  %i.an = add nsw i64 %.110.i, -1                 ; 2 uses
+  %i.ao = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %i.am) #30 ; 2 uses
   %.not.i = icmp eq i64 %i.an, 0
-  br i1 %.not.i, label %_ZSt9__advanceISt23_Rb_tree_const_iteratorIlElEvRT_T0_St26bidirectional_iterator_tag.exit, label %.lr.ph.i51, !llvm.loop !303
+  br i1 %.not.i, label %_ZSt9__advanceISt23_Rb_tree_const_iteratorIlElEvRT_T0_St26bidirectional_iterator_tag.exit, label %.lr.ph.i51, !llvm.loop !302
 
-_ZSt9__advanceISt23_Rb_tree_const_iteratorIlElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %.lr.ph.i51, %.preheader.i.a, %.preheader7.i
-  %.sroa.0.0 = phi ptr [ %6, %.preheader.i.a ], [ %2, %.preheader7.i ], [ %i.ao, %.lr.ph.i51 ] ; 4 uses
+_ZSt9__advanceISt23_Rb_tree_const_iteratorIlElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %.lr.ph.i51, %.preheader.i.a
+  %.sroa.0.0 = phi ptr [ %2, %.preheader.i.a ], [ %i.ao, %.lr.ph.i51 ] ; 4 uses
   %i.ap = icmp eq ptr %.sroa.0.0, %3
   br i1 %i.ap, label %_ZSt22__uninitialized_copy_aISt23_Rb_tree_const_iteratorIlEPllET0_T_S4_S3_RSaIT1_E.exit, label %.lr.ph.i.i.i.i.i.i.i.i
 
@@ -313,8 +306,8 @@ _ZSt22__uninitialized_copy_aISt23_Rb_tree_const_iteratorIlEPllET0_T_S4_S3_RSaIT1
   %i.av = sub nuw i64 %i.c, %i.o
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.av ; 5 uses
   store ptr %i.aw, ptr %i.g, align 8, !tbaa !103
-  %7 = icmp sgt i64 %i.n, 8
-  br i1 %7, label %bb.k, label %bb.l, !prof !220
+  %4 = icmp samesign ugt i64 %i.n, 8
+  br i1 %4, label %bb.k, label %bb.l, !prof !220
 
 bb.k:                                             ; preds = %_ZSt22__uninitialized_copy_aISt23_Rb_tree_const_iteratorIlEPllET0_T_S4_S3_RSaIT1_E.exit
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.aw, ptr align 8 %1, i64 %i.n, i1 false)
@@ -452,9 +445,6 @@ _ZSt4copyISt23_Rb_tree_const_iteratorIlEN9__gnu_cxx17__normal_iteratorIPlSt6vect
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
 declare noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef) local_unnamed_addr #19
 
-; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
-declare noundef ptr @_ZSt18_Rb_tree_decrementPKSt18_Rb_tree_node_base(ptr noundef) local_unnamed_addr #19
-
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt8_Rb_treeIllSt9_IdentityIlESt4lessIlESaIlEE8_M_eraseEPSt13_Rb_tree_nodeIlE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
@@ -464,13 +454,13 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.07 = phi ptr [ %i.d, %.lr.ph ], [ %1, %bb.a ] ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.07, i64 24
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !304
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !303
   tail call void @_ZNSt8_Rb_treeIllSt9_IdentityIlESt4lessIlESaIlEE8_M_eraseEPSt13_Rb_tree_nodeIlE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %i.b)
   %i.c = getelementptr inbounds nuw i8, ptr %.07, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !305  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !304  ; 2 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %.07, i64 noundef 40) #27
   %.not = icmp eq ptr %i.d, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !306
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !305
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
@@ -539,7 +529,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.032.051, i64 32
   %i.al = add nsw i64 %.052, -1
   %i.am = icmp sgt i64 %.052, 1
-  br i1 %i.am, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !307
+  br i1 %i.am, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !306
 
 ._crit_edge.loopexit:                             ; preds = %bb.f
   %.pre62 = ptrtoint ptr %scevgep to i64
@@ -942,11 +932,11 @@ bb.d:                                             ; preds = %_ZN5folly17BadExpec
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.d
   %i.q = load i64, ptr %i.b, align 8, !tbaa !64
   %i.r = add i64 %i.q, 1
-  call void @_ZdlPvm(ptr noundef %i.o, i64 noundef %i.r) #27, !inline_history !308
+  call void @_ZdlPvm(ptr noundef %i.o, i64 noundef %i.r) #27, !inline_history !307
   br label %_ZN5folly17BadExpectedAccessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit
 
 _ZN5folly17BadExpectedAccessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit: ; preds = %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-  call void @_ZNSt9exceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(40) %1) #26, !inline_history !308
+  call void @_ZNSt9exceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(40) %1) #26, !inline_history !307
   %i.s = load ptr, ptr %2, align 8, !tbaa !59     ; 2 uses
   %i.t = icmp eq ptr %i.s, %i.d
   br i1 %i.t, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i2
@@ -1044,11 +1034,11 @@ bb.a:
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.a
   %i.e = load i64, ptr %i.c, align 8, !tbaa !64
   %i.f = add i64 %i.e, 1
-  tail call void @_ZdlPvm(ptr noundef %i.b, i64 noundef %i.f) #27, !inline_history !308
+  tail call void @_ZdlPvm(ptr noundef %i.b, i64 noundef %i.f) #27, !inline_history !307
   br label %_ZN5folly17BadExpectedAccessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit
 
 _ZN5folly17BadExpectedAccessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit: ; preds = %bb.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-  tail call void @_ZNSt9exceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(40) %0) #26, !inline_history !308
+  tail call void @_ZNSt9exceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(40) %0) #26, !inline_history !307
   tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 40) #27
   ret void
 }
@@ -1251,11 +1241,11 @@ bb.e:                                             ; preds = %_ZN5folly17BadExpec
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.e
   %i.x = load i64, ptr %i.o, align 8, !tbaa !64
   %i.y = add i64 %i.x, 1
-  call void @_ZdlPvm(ptr noundef %i.v, i64 noundef %i.y) #27, !inline_history !308
+  call void @_ZdlPvm(ptr noundef %i.v, i64 noundef %i.y) #27, !inline_history !307
   br label %_ZN5folly17BadExpectedAccessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit
 
 _ZN5folly17BadExpectedAccessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit: ; preds = %bb.e, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-  call void @_ZNSt9exceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(40) %1) #26, !inline_history !308
+  call void @_ZNSt9exceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(40) %1) #26, !inline_history !307
   %i.z = load ptr, ptr %2, align 8, !tbaa !59     ; 2 uses
   %i.aa = icmp eq ptr %i.z, %i.a
   br i1 %i.aa, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i2
@@ -1631,10 +1621,9 @@ attributes #30 = { nounwind willreturn memory(read) }
 !300 = distinct !{!300, !25}
 !301 = distinct !{!301, !25}
 !302 = distinct !{!302, !25}
-!303 = distinct !{!303, !25}
-!304 = !{!212, !214, i64 24}
-!305 = !{!212, !214, i64 16}
+!303 = !{!212, !214, i64 24}
+!304 = !{!212, !214, i64 16}
+!305 = distinct !{!305, !25}
 !306 = distinct !{!306, !25}
-!307 = distinct !{!307, !25}
-!308 = !{ptr @_ZN5folly17BadExpectedAccessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev}
+!307 = !{ptr @_ZN5folly17BadExpectedAccessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev}
 end_hunk_1

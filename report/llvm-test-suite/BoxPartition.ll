@@ -190,27 +190,24 @@ bb.a:
   tail call void @_Z13box_partitioniiiRK3BoxPS_(i32 noundef 0, i32 noundef %0, i32 noundef 2, ptr noundef nonnull align 4 dereferenceable(24) %2, ptr noundef nonnull %i.f)
   %i.g = sext i32 %1 to i64
   %i.h = getelementptr inbounds [24 x i8], ptr %i.f, i64 %i.g ; 9 uses
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !4    ; 5 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !4    ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 4 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !4    ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 4 uses
   %i.m = load i32, ptr %i.l, align 4, !tbaa !4    ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 4 ; 4 uses
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !4    ; 2 uses
-  %i.p = sub nsw i32 %i.o, %i.i
-  %.fr = freeze i32 %i.p                          ; 5 uses
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !4    ; 4 uses
+  %i.p = sub nsw i32 %i.o, %i.i                   ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.h, i64 12 ; 4 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !4    ; 2 uses
-  %i.s = sub nsw i32 %i.r, %i.k
-  %.fr742.i = freeze i32 %i.s                     ; 3 uses
+  %i.s = sub nsw i32 %i.r, %i.k                   ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 20 ; 4 uses
   %i.u = load i32, ptr %i.t, align 4, !tbaa !4    ; 2 uses
-  %i.v = sub nsw i32 %i.u, %i.m
-  %.fr.i = freeze i32 %i.v                        ; 3 uses
+  %i.v = sub nsw i32 %i.u, %i.m                   ; 3 uses
   %i.w = shl nsw i32 %3, 1                        ; 14 uses
-  %i.x = add nsw i32 %.fr, %i.w
-  %i.y = add nsw i32 %.fr742.i, %i.w
-  %i.z = add nsw i32 %.fr.i, %i.w
+  %i.x = add nsw i32 %i.p, %i.w
+  %i.y = add nsw i32 %i.s, %i.w
+  %i.z = add nsw i32 %i.v, %i.w
   %i.aa = mul nsw i32 %i.y, %i.x
   %i.ab = mul nsw i32 %i.aa, %i.z                 ; 3 uses
   %i.ac = sext i32 %i.ab to i64
@@ -241,13 +238,14 @@ bb.a:
   br i1 %i.at, label %.lr.ph648.i, label %_ZL18box_partition_mapsiiPK3BoxiPPiS3_S3_S3_.exit
 
 .lr.ph648.i:                                      ; preds = %.preheader277.i
-  %i.au = sub i32 0, %3                           ; 13 uses
-  %i.av = add i32 %.fr.i, %3                      ; 2 uses
+  %i.au = sub nsw i32 0, %3                       ; 13 uses
+  %i.av = add nsw i32 %i.v, %3                    ; 2 uses
   %i.aw = icmp sgt i32 %i.av, %i.au
-  %i.ax = add i32 %.fr742.i, %3                   ; 3 uses
-  %i.ay = add i32 %.fr, %3                        ; 6 uses
+  %i.ax = add nsw i32 %i.s, %3                    ; 3 uses
+  %i.ay = add i32 %i.p, %3                        ; 6 uses
   %i.az = icmp sgt i32 %i.ay, %i.au
-  br i1 %i.aw, label %.lr.ph648.split.us.i, label %.lr.ph648.split.preheader.i
+  %.fr.i = freeze i1 %i.aw
+  br i1 %.fr.i, label %.lr.ph648.split.us.i, label %.lr.ph648.split.preheader.i
 
 .lr.ph648.split.preheader.i:                      ; preds = %.lr.ph648.i
   %i.ba = zext nneg i32 %0 to i64
@@ -255,21 +253,25 @@ bb.a:
 
 .lr.ph648.split.us.i:                             ; preds = %.lr.ph648.i
   %i.bb = icmp sgt i32 %i.ax, %i.au
+  %.fr441.i = freeze i1 %i.bb
   %wide.trip.count.i = zext nneg i32 %0 to i64    ; 3 uses
-  br i1 %i.bb, label %.lr.ph648.split.us.split.us.i.preheader, label %._crit_edge.sink.split.i
+  br i1 %.fr441.i, label %.lr.ph648.split.us.split.us.i.preheader, label %._crit_edge.sink.split.i
 
 .lr.ph648.split.us.split.us.i.preheader:          ; preds = %.lr.ph648.split.us.i
-  br i1 %i.az, label %.lr.ph648.split.us.split.us.i.us.preheader, label %.lr.ph648.split.us.split.us.i.preheader45
+  %.fr = freeze i1 %i.az
+  br i1 %.fr, label %.lr.ph648.split.us.split.us.i.us.preheader, label %.lr.ph648.split.us.split.us.i.preheader45
 
 .lr.ph648.split.us.split.us.i.us.preheader:       ; preds = %.lr.ph648.split.us.split.us.i.preheader
-  %i.bc = add i32 %.fr, %i.w
+  %9 = sub i32 %i.o, %i.i
+  %i.bc = add i32 %9, %i.w
   %i.bd = add i32 %i.bc, -1
   %broadcast.splatinsert109 = insertelement <16 x i32> poison, i32 %3, i64 0
   %broadcast.splat110 = shufflevector <16 x i32> %broadcast.splatinsert109, <16 x i32> poison, <16 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert115 = insertelement <16 x i32> poison, i32 %i.au, i64 0
   %broadcast.splat116 = shufflevector <16 x i32> %broadcast.splatinsert115, <16 x i32> poison, <16 x i32> zeroinitializer
   %induction117 = add <16 x i32> %broadcast.splat116, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.be = add i32 %.fr, %i.w
+  %10 = sub i32 %i.o, %i.i
+  %i.be = add i32 %10, %i.w
   %i.bf = add i32 %i.be, -1
   %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %3, i64 0
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer ; 2 uses
@@ -350,35 +352,19 @@ _ZL12box_disjointRK3BoxS1_.exit.us.us.i.us:       ; preds = %bb.e
   %.1204517.us.us.us.us.i.us = phi ptr [ %.us-phi509.us.us.us.us.i.us, %._crit_edge361.split.us.split.us.us.us.us.us.i.us ], [ %.0203644.us.us.i.us, %.preheader276.lr.ph.us.us.i.us ] ; 2 uses
   %.1210516.us.us.us.us.i.us = phi i32 [ %.us-phi508.us.us.us.us.i.us, %._crit_edge361.split.us.split.us.us.us.us.us.i.us ], [ %.0209643.us.us.i.us, %.preheader276.lr.ph.us.us.i.us ] ; 2 uses
   %i.cg = add nsw i32 %.0168518.us.us.us.us.i.us, %i.m ; 4 uses
-  %i.ch = add i32 %.0168518.us.us.us.us.i.us, %3  ; 7 uses
-  %9 = icmp sgt i32 %i.ch, -1
+  %i.ch = add nsw i32 %.0168518.us.us.us.us.i.us, %3 ; 6 uses
   %.not179.us.us.us.us.i.us = icmp sle i32 %i.bw, %i.cg
-  %10 = icmp slt i32 %i.cg, %i.by
-  %or.cond185.not219.not221.not225.not230.us.us.us.us.i.us.a = and i1 %.not179.us.us.us.us.i.us, %10 ; 2 uses
-  %i.ci = icmp slt i32 %.0168518.us.us.us.us.i.us, %.fr.i
+  %11 = icmp slt i32 %i.cg, %i.by
+  %or.cond185.not219.not221.not225.not230.us.us.us.us.i.us = and i1 %.not179.us.us.us.us.i.us, %11 ; 2 uses
+  %12 = icmp sgt i32 %.0168518.us.us.us.us.i.us, -1
+  %or.cond185.not219.not221.not225.not230.us.us.us.us.i.us.a = and i1 %i.bz, %12
+  %i.ci = icmp slt i32 %.0168518.us.us.us.us.i.us, %i.v
   %.not182.us.us.us.us.i.us = icmp sle i32 %i.ca, %i.cg
   %i.cj = icmp slt i32 %i.cg, %i.cb
-  br i1 %9, label %.preheader.lr.ph.split.us.split.us.us.us.us.us.i.us, label %_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i
+  %or.cond.fr.us.us.us.us.i.us = freeze i1 %or.cond185.not219.not221.not225.not230.us.us.us.us.i.us.a
+  br i1 %or.cond.fr.us.us.us.us.i.us, label %.preheader.us.us.us.us.us.us.us.i.us, label %.lr.ph299.split.us378.us.us533.us.us.us.i.us
 
-.preheader.lr.ph.split.us.split.us.us.us.us.us.i.us: ; preds = %.preheader276.us.us.us.us.i.us
-  %11 = icmp sgt i32 %.0168518.us.us.us.us.i.us, -1
-  %or.cond.us.us.us.us.i.us = and i1 %i.bz, %11
-  %or.cond.fr.us.us.us.us.i.us = freeze i1 %or.cond.us.us.us.us.i.us
-  br i1 %or.cond.fr.us.us.us.us.i.us, label %.preheader.us.us.us.us.us.us.us.i.us, label %.preheader.us.us.us526.us.us.us.i.us
-
-.preheader.us.us.us526.us.us.us.i.us:             ; preds = %.preheader.lr.ph.split.us.split.us.us.us.us.us.i.us, %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us
-  %.2360.us.us.us527.us.us.us.i.us = phi i32 [ %.us-phi.us408.us.us.us.us.i.us, %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us ], [ %.1520.us.us.us.us.i.us, %.preheader.lr.ph.split.us.split.us.us.us.us.us.i.us ] ; 3 uses
-  %.0169358.us.us.us528.us.us.us.i.us = phi i32 [ %i.du, %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us ], [ %i.au, %.preheader.lr.ph.split.us.split.us.us.us.us.us.i.us ] ; 3 uses
-  %12 = add nsw i32 %.0169358.us.us.us528.us.us.us.i.us, %i.k ; 2 uses
-  %13 = add i32 %.0169358.us.us.us528.us.us.us.i.us, %3 ; 3 uses
-  %14 = icmp sgt i32 %13, -1
-  %.not180.us.us.us529.us.us.us.i.us = icmp sle i32 %i.bs, %12
-  %15 = icmp slt i32 %12, %i.bu
-  %16 = and i1 %.not180.us.us.us529.us.us.us.i.us, %15
-  %or.cond187.not222.not227.us.us.us531.us.us.us.i.us = select i1 %or.cond185.not219.not221.not225.not230.us.us.us.us.i.us.a, i1 %16, i1 false
-  br i1 %14, label %.lr.ph299.split.us378.us.us533.us.us.us.i.us, label %_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i
-
-.lr.ph299.split.us378.us.us533.us.us.us.i.us:     ; preds = %.preheader.us.us.us526.us.us.us.i.us
+.lr.ph299.split.us378.us.us533.us.us.us.i.us:     ; preds = %.preheader276.us.us.us.us.i.us
   %i.ck = load i32, ptr %i.n, align 4, !tbaa !4
   %i.cl = add i32 %i.ck, %i.w
   %i.cm = load i32, ptr %i.h, align 4, !tbaa !4
@@ -391,32 +377,44 @@ _ZL12box_disjointRK3BoxS1_.exit.us.us.i.us:       ; preds = %bb.e
   %i.ct = add nsw i32 %i.cs, %i.w
   %i.cu = load i32, ptr %i.l, align 4, !tbaa !4
   %i.cv = sub i32 %i.ct, %i.cu
-  %i.cw = icmp slt i32 %13, %i.cr
-  %17 = icmp slt i32 %i.ch, %i.cv
-  %or.cond38.i.us370.us.us.us.us.us.i.us = select i1 %i.cw, i1 %17, i1 false
-  %18 = mul nsw i32 %i.cr, %i.ch
-  %i.cx = add nuw i32 %18, %13
-  %19 = mul i32 %i.cx, %i.cn                      ; 3 uses
-  %or.cond38.i.us370.fr.us.us.us.us.us.i.us = freeze i1 %or.cond38.i.us370.us.us.us.us.us.i.us
-  br i1 %or.cond38.i.us370.fr.us.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us380.split.us.us.us.us.us.us.i.us, label %_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i
+  %i.cw = icmp slt i32 %i.ch, %i.cv
+  %13 = mul nsw i32 %i.cr, %i.ch
+  %14 = tail call i32 @llvm.smax.i32(i32 %i.cn, i32 0)
+  %15 = tail call i32 @llvm.umin.i32(i32 %14, i32 %i.bd) ; 2 uses
+  %i.cx = add nuw i32 %15, 1                      ; 2 uses
+  %min.iters.check96 = icmp samesign ult i32 %15, 15
+  %n.vec98 = and i32 %i.cx, -16                   ; 3 uses
+  %16 = sub i32 %n.vec98, %3
+  %broadcast.splatinsert101 = insertelement <16 x i32> poison, i32 %i.cn, i64 0
+  %broadcast.splat102 = shufflevector <16 x i32> %broadcast.splatinsert101, <16 x i32> poison, <16 x i32> zeroinitializer
+  %cmp.n115 = icmp eq i32 %i.cx, %n.vec98
+  br label %.lr.ph299.split.split.split.us380.split.us.us.us.us.us.us.i.us
 
-.lr.ph299.split.split.split.us380.split.us.us.us.us.us.us.i.us: ; preds = %.lr.ph299.split.us378.us.us533.us.us.us.i.us
-  %or.cond187.not222.not227.us.fr.us.us.us.us.us.i.us = freeze i1 %or.cond187.not222.not227.us.us.us531.us.us.us.i.us
-  br i1 %or.cond187.not222.not227.us.fr.us.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us380.split.us.split.us407.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader
+.lr.ph299.split.split.split.us380.split.us.us.us.us.us.us.i.us: ; preds = %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us, %.lr.ph299.split.us378.us.us533.us.us.us.i.us
+  %.2310.us.us359.us.us.us.i.us = phi i32 [ %.1520.us.us.us.us.i.us, %.lr.ph299.split.us378.us.us533.us.us.us.i.us ], [ %.us-phi.us408.us.us.us.us.i.us, %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us ] ; 3 uses
+  %.0169308.us.us360.us.us.us.i.us = phi i32 [ %i.au, %.lr.ph299.split.us378.us.us533.us.us.us.i.us ], [ %i.du, %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us ] ; 3 uses
+  %17 = add nsw i32 %.0169308.us.us360.us.us.us.i.us, %3 ; 2 uses
+  %18 = icmp slt i32 %17, %i.cr
+  %or.cond38.i.us320.us.us.us.us.i.us = select i1 %18, i1 %i.cw, i1 false
+  %19 = add nuw i32 %17, %13
+  %20 = mul i32 %19, %i.cn                        ; 3 uses
+  %or.cond187.not222.not227.us.fr.us.us.us.us.us.i.us = freeze i1 %or.cond38.i.us320.us.us.us.us.i.us
+  br i1 %or.cond187.not222.not227.us.fr.us.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader, label %_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i
 
 .lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader: ; preds = %.lr.ph299.split.split.split.us380.split.us.us.us.us.us.us.i.us
-  %20 = tail call i32 @llvm.smax.i32(i32 %i.cn, i32 0)
-  %21 = tail call i32 @llvm.umin.i32(i32 %20, i32 %i.bd) ; 2 uses
-  %22 = add nuw i32 %21, 1                        ; 2 uses
-  %min.iters.check106 = icmp samesign ult i32 %21, 15
-  br i1 %min.iters.check106, label %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader136, label %vector.ph107
+  %21 = add nsw i32 %.0169308.us.us360.us.us.us.i.us, %i.k ; 2 uses
+  %.not180.us.us361.us.us.us.i.us = icmp sle i32 %i.bs, %21
+  %22 = icmp slt i32 %21, %i.bu
+  %23 = and i1 %.not180.us.us361.us.us.us.i.us, %22
+  %or.cond187.not222.not227.us.us363.us.us.us.i.us = select i1 %or.cond185.not219.not221.not225.not230.us.us.us.us.i.us, i1 %23, i1 false
+  %or.cond187.not222.not227.us.fr.us.us.us.us.i.us = freeze i1 %or.cond187.not222.not227.us.us363.us.us.us.i.us
+  br i1 %or.cond187.not222.not227.us.fr.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us380.split.us.split.us407.us.us.us.us.i.us, label %.lr.ph299.split.us328.split.us.split.us.us.us.us.us.i.us.preheader
 
-vector.ph107:                                     ; preds = %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader
-  %n.vec108 = and i32 %22, -16                    ; 3 uses
-  %23 = sub i32 %n.vec108, %3
-  %broadcast.splatinsert111 = insertelement <16 x i32> poison, i32 %i.cn, i64 0
-  %broadcast.splat112 = shufflevector <16 x i32> %broadcast.splatinsert111, <16 x i32> poison, <16 x i32> zeroinitializer
-  %broadcast.splatinsert113 = insertelement <16 x i32> poison, i32 %19, i64 0
+.lr.ph299.split.us328.split.us.split.us.us.us.us.us.i.us.preheader: ; preds = %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader
+  br i1 %min.iters.check96, label %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader136, label %vector.ph107
+
+vector.ph107:                                     ; preds = %.lr.ph299.split.us328.split.us.split.us.us.us.us.us.i.us.preheader
+  %broadcast.splatinsert113 = insertelement <16 x i32> poison, i32 %20, i64 0
   %broadcast.splat114 = shufflevector <16 x i32> %broadcast.splatinsert113, <16 x i32> poison, <16 x i32> zeroinitializer
   %invariant.op = add <16 x i32> %broadcast.splat110, %broadcast.splat114
   br label %vector.body118
@@ -425,7 +423,7 @@ vector.body118:                                   ; preds = %vector.body.interim
   %index119 = phi i32 [ 0, %vector.ph107 ], [ %index.next121, %vector.body.interim123 ]
   %vec.ind120 = phi <16 x i32> [ %induction117, %vector.ph107 ], [ %vec.ind.next122, %vector.body.interim123 ] ; 3 uses
   %i.cy = add nsw <16 x i32> %vec.ind120, %broadcast.splat110
-  %i.cz = icmp sge <16 x i32> %i.cy, %broadcast.splat112
+  %i.cz = icmp sge <16 x i32> %i.cy, %broadcast.splat102
   %.reass = add <16 x i32> %vec.ind120, %invariant.op
   %i.da = icmp slt <16 x i32> %.reass, zeroinitializer
   %i.db = select <16 x i1> %i.cz, <16 x i1> splat (i1 true), <16 x i1> %i.da
@@ -437,22 +435,21 @@ vector.body118:                                   ; preds = %vector.body.interim
 vector.body.interim123:                           ; preds = %vector.body118
   %vec.ind.next122 = add <16 x i32> %vec.ind120, splat (i32 16)
   %index.next121 = add nuw i32 %index119, 16      ; 2 uses
-  %i.de = icmp eq i32 %index.next121, %n.vec108
+  %i.de = icmp eq i32 %index.next121, %n.vec98
   br i1 %i.de, label %middle.block124, label %vector.body118, !llvm.loop !11
 
 middle.block124:                                  ; preds = %vector.body.interim123
-  %cmp.n125 = icmp eq i32 %22, %n.vec108
-  br i1 %cmp.n125, label %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader136
+  br i1 %cmp.n115, label %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader136
 
-.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader136: ; preds = %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader, %middle.block124
-  %.0167296.us366.us.us.us.us.us.us.us.i.us.ph = phi i32 [ %i.au, %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader ], [ %23, %middle.block124 ]
+.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader136: ; preds = %.lr.ph299.split.us328.split.us.split.us.us.us.us.us.i.us.preheader, %middle.block124
+  %.0167296.us366.us.us.us.us.us.us.us.i.us.ph = phi i32 [ %i.au, %.lr.ph299.split.us328.split.us.split.us.us.us.us.us.i.us.preheader ], [ %16, %middle.block124 ]
   br label %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us
 
 .lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us: ; preds = %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader136, %bb.f
   %.0167296.us366.us.us.us.us.us.us.us.i.us = phi i32 [ %i.dj, %bb.f ], [ %.0167296.us366.us.us.us.us.us.us.us.i.us.ph, %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader136 ] ; 2 uses
   %i.df = add nsw i32 %.0167296.us366.us.us.us.us.us.us.us.i.us, %3 ; 2 uses
   %i.dg = icmp sge i32 %i.df, %i.cn
-  %i.dh = add nuw nsw i32 %i.df, %19
+  %i.dh = add nuw nsw i32 %i.df, %20
   %i.di = icmp slt i32 %i.dh, 0
   %or.cond730.i.us = select i1 %i.dg, i1 true, i1 %i.di
   br i1 %or.cond730.i.us, label %_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i, label %bb.f
@@ -462,16 +459,16 @@ bb.f:                                             ; preds = %.lr.ph299.split.spl
   %exitcond.not.i.us = icmp eq i32 %i.dj, %i.ay
   br i1 %exitcond.not.i.us, label %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us, !llvm.loop !15
 
-.lr.ph299.split.split.split.us380.split.us.split.us407.us.us.us.us.i.us: ; preds = %.lr.ph299.split.split.split.us380.split.us.us.us.us.us.us.i.us, %bb.i
-  %.3298.us365.us.us.us.us.us.us.i.us = phi i32 [ %.4.us375.us.us.us.us.us.us.i.us, %bb.i ], [ %.2360.us.us.us527.us.us.us.i.us, %.lr.ph299.split.split.split.us380.split.us.us.us.us.us.us.i.us ] ; 3 uses
-  %.0167296.us366.us.us404.us.us.us.us.i.us = phi i32 [ %i.dt, %bb.i ], [ %i.au, %.lr.ph299.split.split.split.us380.split.us.us.us.us.us.us.i.us ] ; 3 uses
+.lr.ph299.split.split.split.us380.split.us.split.us407.us.us.us.us.i.us: ; preds = %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader, %bb.i
+  %.3298.us365.us.us.us.us.us.us.i.us = phi i32 [ %.4.us375.us.us.us.us.us.us.i.us, %bb.i ], [ %.2310.us.us359.us.us.us.i.us, %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader ] ; 3 uses
+  %.0167296.us366.us.us404.us.us.us.us.i.us = phi i32 [ %i.dt, %bb.i ], [ %i.au, %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us.preheader ] ; 3 uses
   %i.dk = add nsw i32 %.0167296.us366.us.us404.us.us.us.us.i.us, %i.i ; 2 uses
   %i.dl = add nsw i32 %.0167296.us366.us.us404.us.us.us.us.i.us, %3 ; 2 uses
   %i.dm = icmp slt i32 %i.dl, %i.cn
   br i1 %i.dm, label %_ZL19box_map_local_entryRK3Boxiiii.exit.us371.us.us405.us.us.us.us.i.us, label %_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i
 
 _ZL19box_map_local_entryRK3Boxiiii.exit.us371.us.us405.us.us.us.us.i.us: ; preds = %.lr.ph299.split.split.split.us380.split.us.split.us407.us.us.us.us.i.us
-  %i.dn = add nuw nsw i32 %i.dl, %19              ; 2 uses
+  %i.dn = add nuw nsw i32 %i.dl, %20              ; 2 uses
   %i.do = icmp slt i32 %i.dn, 0
   br i1 %i.do, label %_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i, label %bb.g
 
@@ -495,37 +492,33 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %exitcond765.not.i.us, label %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us380.split.us.split.us407.us.us.us.us.i.us, !llvm.loop !16
 
 ._crit_edge.split.us376.split.us.us.us.us.us.us.i.us: ; preds = %bb.f, %bb.i, %middle.block124
-  %.us-phi.us408.us.us.us.us.i.us = phi i32 [ %.2360.us.us.us527.us.us.us.i.us, %middle.block124 ], [ %.4.us375.us.us.us.us.us.us.i.us, %bb.i ], [ %.2360.us.us.us527.us.us.us.i.us, %bb.f ] ; 2 uses
-  %i.du = add nsw i32 %.0169358.us.us.us528.us.us.us.i.us, 1 ; 2 uses
-  %exitcond766.not.i.us = icmp eq i32 %i.du, %i.ax
-  br i1 %exitcond766.not.i.us, label %._crit_edge361.split.us.split.us.us.us.us.us.i.us, label %.preheader.us.us.us526.us.us.us.i.us, !llvm.loop !17
+  %.us-phi.us408.us.us.us.us.i.us = phi i32 [ %.2310.us.us359.us.us.us.i.us, %middle.block124 ], [ %.4.us375.us.us.us.us.us.us.i.us, %bb.i ], [ %.2310.us.us359.us.us.us.i.us, %bb.f ] ; 2 uses
+  %i.du = add nsw i32 %.0169308.us.us360.us.us.us.i.us, 1 ; 2 uses
+  %24 = icmp slt i32 %i.du, %i.ax
+  br i1 %24, label %.lr.ph299.split.split.split.us380.split.us.us.us.us.us.us.i.us, label %._crit_edge361.split.us.split.us.us.us.us.us.i.us, !llvm.loop !17
 
-.preheader.us.us.us.us.us.us.us.i.us:             ; preds = %.preheader.lr.ph.split.us.split.us.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us
-  %.2360.us.us.us.us.us.us.us.i.us = phi i32 [ %.us-phi515.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.1520.us.us.us.us.i.us, %.preheader.lr.ph.split.us.split.us.us.us.us.us.i.us ] ; 4 uses
-  %.2161359.us.us.us.us.us.us.us.i.us = phi i32 [ %.us-phi514.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.1160519.us.us.us.us.i.us, %.preheader.lr.ph.split.us.split.us.us.us.us.us.i.us ] ; 4 uses
-  %.0169358.us.us.us.us.us.us.us.i.us = phi i32 [ %i.hm, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %i.au, %.preheader.lr.ph.split.us.split.us.us.us.us.us.i.us ] ; 5 uses
-  %.2205357.us.us.us.us.us.us.us.i.us = phi ptr [ %.us-phi513.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.1204517.us.us.us.us.i.us, %.preheader.lr.ph.split.us.split.us.us.us.us.us.i.us ] ; 4 uses
-  %.2211356.us.us.us.us.us.us.us.i.us = phi i32 [ %.us-phi512.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.1210516.us.us.us.us.i.us, %.preheader.lr.ph.split.us.split.us.us.us.us.us.i.us ] ; 4 uses
+.preheader.us.us.us.us.us.us.us.i.us:             ; preds = %.preheader276.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us
+  %.2360.us.us.us.us.us.us.us.i.us = phi i32 [ %.us-phi515.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.1520.us.us.us.us.i.us, %.preheader276.us.us.us.us.i.us ] ; 4 uses
+  %.2161359.us.us.us.us.us.us.us.i.us = phi i32 [ %.us-phi514.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.1160519.us.us.us.us.i.us, %.preheader276.us.us.us.us.i.us ] ; 4 uses
+  %.0169358.us.us.us.us.us.us.us.i.us = phi i32 [ %i.hm, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %i.au, %.preheader276.us.us.us.us.i.us ] ; 5 uses
+  %.2205357.us.us.us.us.us.us.us.i.us = phi ptr [ %.us-phi513.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.1204517.us.us.us.us.i.us, %.preheader276.us.us.us.us.i.us ] ; 4 uses
+  %.2211356.us.us.us.us.us.us.us.i.us = phi i32 [ %.us-phi512.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.1210516.us.us.us.us.i.us, %.preheader276.us.us.us.us.i.us ] ; 4 uses
   %i.dv = add nsw i32 %.0169358.us.us.us.us.us.us.us.i.us, %i.k ; 4 uses
-  %i.dw = add i32 %.0169358.us.us.us.us.us.us.us.i.us, %3 ; 5 uses
-  %24 = icmp sgt i32 %i.dw, -1
+  %i.dw = add nsw i32 %.0169358.us.us.us.us.us.us.us.i.us, %3 ; 4 uses
   %.not180.us.us.us.us.us.us.us.i.us = icmp sle i32 %i.bs, %i.dv
   %i.dx = icmp slt i32 %i.dv, %i.bu
   %i.dy = and i1 %.not180.us.us.us.us.us.us.us.i.us, %i.dx
-  %or.cond187.not222.not227.us.us.us.us.us.us.us.i.us = select i1 %or.cond185.not219.not221.not225.not230.us.us.us.us.i.us.a, i1 %i.dy, i1 false
+  %or.cond187.not222.not227.us.us.us.us.us.us.us.i.us = select i1 %or.cond185.not219.not221.not225.not230.us.us.us.us.i.us, i1 %i.dy, i1 false
   %or.cond187.not222.not227.us.us.us.us.fr.us.us.us.i.us = freeze i1 %or.cond187.not222.not227.us.us.us.us.us.us.us.i.us ; 2 uses
-  %i.dz = icmp slt i32 %.0169358.us.us.us.us.us.us.us.i.us, %.fr742.i
+  %25 = icmp sgt i32 %.0169358.us.us.us.us.us.us.us.i.us, -1
+  %or.cond3.us.us.us.us.us.us.i.us = and i1 %i.ci, %25
+  %i.dz = icmp slt i32 %.0169358.us.us.us.us.us.us.us.i.us, %i.s
   %.not183.us.us.us.us.us.us.us.i.us = icmp sle i32 %i.cc, %i.dv
   %i.ea = icmp slt i32 %i.dv, %i.cd
-  br i1 %24, label %.lr.ph299.split.us378.us.us.us.us.us.us.i.us, label %_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i
+  %or.cond3.us.us.fr.us.us.us.us.i.us = freeze i1 %or.cond3.us.us.us.us.us.us.i.us
+  br i1 %or.cond3.us.us.fr.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us.us.us.us.split.us.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us.us.us.us.split.us550.us.us.us.i.us
 
-.lr.ph299.split.us378.us.us.us.us.us.us.i.us:     ; preds = %.preheader.us.us.us.us.us.us.us.i.us
-  %25 = icmp sgt i32 %.0169358.us.us.us.us.us.us.us.i.us, -1
-  %or.cond3.us.us.us.us.us.us.us.i.us = and i1 %i.ci, %25
-  %or.cond3.us.us.us.fr.us.us.us.us.i.us = freeze i1 %or.cond3.us.us.us.us.us.us.us.i.us
-  br i1 %or.cond3.us.us.us.fr.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us.us.us.us.split.us.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us.us.us.us.split.us550.us.us.us.i.us
-
-.lr.ph299.split.split.split.us.us.us.us.split.us550.us.us.us.i.us: ; preds = %.lr.ph299.split.us378.us.us.us.us.us.us.i.us
+.lr.ph299.split.split.split.us.us.us.us.split.us550.us.us.us.i.us: ; preds = %.preheader.us.us.us.us.us.us.us.i.us
   %i.eb = load i32, ptr %i.n, align 4, !tbaa !4
   %i.ec = add i32 %i.eb, %i.w
   %i.ed = load i32, ptr %i.h, align 4, !tbaa !4
@@ -640,12 +633,12 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %exitcond768.not.i.us = icmp eq i32 %i.fr, %i.ay
   br i1 %exitcond768.not.i.us, label %._crit_edge.split.us.us.us.us.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us.us.us.us.split.us550.split.us.split.us607.us.us.i.us, !llvm.loop !16
 
-.lr.ph299.split.split.split.us.us.us.us.split.us.us.us.us.us.i.us: ; preds = %.lr.ph299.split.us378.us.us.us.us.us.us.i.us, %bb.v
-  %.3298.us345.us.us.us.us.us.us.us.us.i.us = phi i32 [ %.4.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2360.us.us.us.us.us.us.us.i.us, %.lr.ph299.split.us378.us.us.us.us.us.us.i.us ] ; 3 uses
-  %.3162297.us346.us.us.us.us.us.us.us.us.i.us = phi i32 [ %.4163.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2161359.us.us.us.us.us.us.us.i.us, %.lr.ph299.split.us378.us.us.us.us.us.us.i.us ] ; 4 uses
-  %.0167296.us347.us.us.us.us.us.us.us.us.i.us = phi i32 [ %i.hl, %bb.v ], [ %i.au, %.lr.ph299.split.us378.us.us.us.us.us.us.i.us ] ; 5 uses
-  %.3206295.us348.us.us.us.us.us.us.us.us.i.us = phi ptr [ %.4207.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2205357.us.us.us.us.us.us.us.i.us, %.lr.ph299.split.us378.us.us.us.us.us.us.i.us ] ; 4 uses
-  %.3212294.us349.us.us.us.us.us.us.us.us.i.us = phi i32 [ %.4213.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2211356.us.us.us.us.us.us.us.i.us, %.lr.ph299.split.us378.us.us.us.us.us.us.i.us ] ; 3 uses
+.lr.ph299.split.split.split.us.us.us.us.split.us.us.us.us.us.i.us: ; preds = %.preheader.us.us.us.us.us.us.us.i.us, %bb.v
+  %.3298.us345.us.us.us.us.us.us.us.us.i.us = phi i32 [ %.4.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2360.us.us.us.us.us.us.us.i.us, %.preheader.us.us.us.us.us.us.us.i.us ] ; 3 uses
+  %.3162297.us346.us.us.us.us.us.us.us.us.i.us = phi i32 [ %.4163.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2161359.us.us.us.us.us.us.us.i.us, %.preheader.us.us.us.us.us.us.us.i.us ] ; 4 uses
+  %.0167296.us347.us.us.us.us.us.us.us.us.i.us = phi i32 [ %i.hl, %bb.v ], [ %i.au, %.preheader.us.us.us.us.us.us.us.i.us ] ; 5 uses
+  %.3206295.us348.us.us.us.us.us.us.us.us.i.us = phi ptr [ %.4207.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2205357.us.us.us.us.us.us.us.i.us, %.preheader.us.us.us.us.us.us.us.i.us ] ; 4 uses
+  %.3212294.us349.us.us.us.us.us.us.us.us.i.us = phi i32 [ %.4213.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2211356.us.us.us.us.us.us.us.i.us, %.preheader.us.us.us.us.us.us.us.i.us ] ; 3 uses
   %i.fs = add nsw i32 %.0167296.us347.us.us.us.us.us.us.us.us.i.us, %i.i ; 4 uses
   %i.ft = load i32, ptr %i.n, align 4, !tbaa !4
   %i.fu = add nsw i32 %i.ft, %i.w
@@ -695,7 +688,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %.4.us.us.us.us.us.us.us.us.us.i.us = phi i32 [ %i.gq, %bb.p ], [ %.3298.us345.us.us.us.us.us.us.us.us.i.us, %bb.o ] ; 2 uses
   %i.gt = icmp sgt i32 %.0167296.us347.us.us.us.us.us.us.us.us.i.us, -1
   %or.cond5.not234.not239.not246.not254.not264.not273.us.us.us.us.us.us.us.us.us.i.us = and i1 %i.dz, %i.gt
-  %i.gu = icmp slt i32 %.0167296.us347.us.us.us.us.us.us.us.us.i.us, %.fr
+  %i.gu = icmp slt i32 %.0167296.us347.us.us.us.us.us.us.us.us.i.us, %i.p
   %or.cond190.not231.not236.not243.not251.not261.not270.us.us.us.us.us.us.us.us.us.i.us = and i1 %i.gu, %or.cond5.not234.not239.not246.not254.not264.not273.us.us.us.us.us.us.us.us.us.i.us
   %or.cond191.not235.not241.not249.not259.not268.us.us.us.us.us.us.us.us.us.i.us = select i1 %or.cond190.not231.not236.not243.not251.not261.not270.us.us.us.us.us.us.us.us.us.i.us, i1 %.not182.us.us.us.us.i.us, i1 false
   %or.cond193.not240.not248.not258.not267.us.us.us.us.us.us.us.us.us.i.us = select i1 %or.cond191.not235.not241.not249.not259.not268.us.us.us.us.us.us.us.us.us.i.us, i1 %i.cj, i1 false
@@ -759,8 +752,8 @@ bb.v:                                             ; preds = %_ZL10resize_intPPiS
   %.us-phi514.us.us.us.us.i.us = phi i32 [ %.2161359.us.us.us.us.us.us.us.i.us, %middle.block ], [ %.2161359.us.us.us.us.us.us.us.i.us, %bb.m ], [ %.4163.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2161359.us.us.us.us.us.us.us.i.us, %bb.j ] ; 2 uses
   %.us-phi515.us.us.us.us.i.us = phi i32 [ %.2360.us.us.us.us.us.us.us.i.us, %middle.block ], [ %.4.us.us.us.us.us547.us.us.us.us.i.us, %bb.m ], [ %.4.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2360.us.us.us.us.us.us.us.i.us, %bb.j ] ; 2 uses
   %i.hm = add nsw i32 %.0169358.us.us.us.us.us.us.us.i.us, 1 ; 2 uses
-  %exitcond770.not.i.us = icmp eq i32 %i.hm, %i.ax
-  br i1 %exitcond770.not.i.us, label %._crit_edge361.split.us.split.us.us.us.us.us.i.us, label %.preheader.us.us.us.us.us.us.us.i.us, !llvm.loop !17
+  %26 = icmp slt i32 %i.hm, %i.ax
+  br i1 %26, label %.preheader.us.us.us.us.us.us.us.i.us, label %._crit_edge361.split.us.split.us.us.us.us.us.i.us, !llvm.loop !17
 
 ._crit_edge361.split.us.split.us.us.us.us.us.i.us: ; preds = %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us
   %.us-phi508.us.us.us.us.i.us = phi i32 [ %.us-phi512.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.1210516.us.us.us.us.i.us, %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us ] ; 2 uses
@@ -768,8 +761,8 @@ bb.v:                                             ; preds = %_ZL10resize_intPPiS
   %.us-phi510.us.us.us.us.i.us = phi i32 [ %.us-phi514.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.1160519.us.us.us.us.i.us, %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us ] ; 2 uses
   %.us-phi511.us.us.us.us.i.us = phi i32 [ %.us-phi515.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.us-phi.us408.us.us.us.us.i.us, %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us ] ; 2 uses
   %i.hn = add nsw i32 %.0168518.us.us.us.us.i.us, 1 ; 2 uses
-  %exitcond771.not.i.us = icmp eq i32 %i.hn, %i.av
-  br i1 %exitcond771.not.i.us, label %_ZL12box_disjointRK3BoxS1_.exit.thread.us.us.i.us, label %.preheader276.us.us.us.us.i.us, !llvm.loop !21
+  %27 = icmp slt i32 %i.hn, %i.av
+  br i1 %27, label %.preheader276.us.us.us.us.i.us, label %_ZL12box_disjointRK3BoxS1_.exit.thread.us.us.i.us, !llvm.loop !21
 
 _ZL12box_disjointRK3BoxS1_.exit.thread.us.us.i.us: ; preds = %._crit_edge361.split.us.split.us.us.us.us.us.i.us, %_ZL12box_disjointRK3BoxS1_.exit.us.us.i.us, %bb.e, %bb.d, %bb.c, %bb.b, %.lr.ph648.split.us.split.us.i.us
   %.5214.us.us.i.us = phi i32 [ %.0209643.us.us.i.us, %.lr.ph648.split.us.split.us.i.us ], [ %.0209643.us.us.i.us, %_ZL12box_disjointRK3BoxS1_.exit.us.us.i.us ], [ %.0209643.us.us.i.us, %bb.e ], [ %.0209643.us.us.i.us, %bb.d ], [ %.0209643.us.us.i.us, %bb.c ], [ %.0209643.us.us.i.us, %bb.b ], [ %.us-phi508.us.us.us.us.i.us, %._crit_edge361.split.us.split.us.us.us.us.us.i.us ]
@@ -780,7 +773,7 @@ _ZL12box_disjointRK3BoxS1_.exit.thread.us.us.i.us: ; preds = %._crit_edge361.spl
   %exitcond773.not.i.us = icmp eq i64 %indvars.iv.next.i.us, %wide.trip.count.i
   br i1 %exitcond773.not.i.us, label %_ZL18box_partition_mapsiiPK3BoxiPPiS3_S3_S3_.exit, label %.lr.ph648.split.us.split.us.i.us, !llvm.loop !22
 
-_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i: ; preds = %.preheader276.us.us.us.us.i.us, %.lr.ph299.split.us378.us.us533.us.us.us.i.us, %.preheader.us.us.us526.us.us.us.i.us, %.lr.ph299.split.split.split.us.us.us.us.split.us550.us.us.us.i.us, %.preheader.us.us.us.us.us.us.us.i.us, %vector.body118, %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us, %_ZL19box_map_local_entryRK3Boxiiii.exit.us371.us.us405.us.us.us.us.i.us, %.lr.ph299.split.split.split.us380.split.us.split.us407.us.us.us.us.i.us, %vector.body, %.lr.ph299.split.split.split.us.us.us.us.split.us550.split.us.split.us.us.us.us.i.us, %_ZL19box_map_local_entryRK3Boxiiii.exit.us.us.us.us.us543.us.us605.us.us.i.us, %.lr.ph299.split.split.split.us.us.us.us.split.us550.split.us.split.us607.us.us.i.us, %_ZL19box_map_local_entryRK3Boxiiii.exit.us.us.us.us.us.us.us.us.us.i.us, %bb.n, %.lr.ph299.split.split.split.us.us.us.us.split.us.us.us.us.us.i.us
+_ZL19box_map_local_entryRK3Boxiiii.exit.thread.i: ; preds = %.lr.ph299.split.split.split.us380.split.us.us.us.us.us.us.i.us, %.lr.ph299.split.split.split.us.us.us.us.split.us550.us.us.us.i.us, %vector.body118, %.lr.ph299.split.split.split.us380.split.us.split.us.us.us.us.us.us.i.us, %_ZL19box_map_local_entryRK3Boxiiii.exit.us371.us.us405.us.us.us.us.i.us, %.lr.ph299.split.split.split.us380.split.us.split.us407.us.us.us.us.i.us, %vector.body, %.lr.ph299.split.split.split.us.us.us.us.split.us550.split.us.split.us.us.us.us.i.us, %_ZL19box_map_local_entryRK3Boxiiii.exit.us.us.us.us.us543.us.us605.us.us.i.us, %.lr.ph299.split.split.split.us.us.us.us.split.us550.split.us.split.us607.us.us.i.us, %_ZL19box_map_local_entryRK3Boxiiii.exit.us.us.us.us.us.us.us.us.us.i.us, %bb.n, %.lr.ph299.split.split.split.us.us.us.us.split.us.us.us.us.us.i.us
   tail call void @abort() #14
   unreachable
 

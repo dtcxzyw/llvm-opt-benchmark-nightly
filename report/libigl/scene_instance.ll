@@ -204,8 +204,7 @@ bb.n:                                             ; preds = %.lr.ph3906, %_ZNK6e
   %i.cvx = icmp eq i64 %indvars.iv3926, %i.csc
   %i.cvy = and i1 %i.crd, %i.cvx
   %i.cvz = select i1 %i.cvy, float %i.atb, float 0.000000e+00 ; 2 uses
-  %25 = call noundef i32 @llvm.smax.i32(i32 %i.cvv, i32 1)
-  %i.cwa = zext nneg i32 %25 to i64
+  %i.cwa = zext i32 %i.cvv to i64
   %i.cwb = icmp eq i64 %indvars.iv3926, %i.cwa
   %i.cwc = select i1 %i.cwb, float %i.crg, float 1.000000e+00 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #24

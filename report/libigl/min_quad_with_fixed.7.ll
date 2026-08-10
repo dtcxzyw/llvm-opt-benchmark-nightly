@@ -204,7 +204,7 @@ bb.a:
   %.sroa.speculated432 = tail call i32 @llvm.smin.i32(i32 %i.f, i32 %i.c) ; 3 uses
   %.sroa.speculated429 = tail call i32 @llvm.smax.i32(i32 %i.c, i32 %i.f) ; 2 uses
   %i.g = sext i32 %.sroa.speculated429 to i64     ; 2 uses
-  %i.h = icmp slt i32 %.sroa.speculated429, 1     ; 2 uses
+  %i.h = icmp slt i32 %.sroa.speculated429, 1
   br i1 %i.h, label %_ZN5Eigen9DenseBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE11setConstantERKi.exit, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i.i.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i.i.i.i: ; preds = %bb.a
@@ -607,24 +607,18 @@ bb.ab:                                            ; preds = %bb.aa
   %sext511 = add nsw i64 %sext507, -4294967296
   %i.kg = ashr exact i64 %sext511, 32             ; 4 uses
   %wide.trip.count631 = and i64 %i.e, 2147483647
-  br label %4
+  br label %.loopexit517
 
 bb.ac:                                            ; preds = %._crit_edge590, %bb.by, %bb.bz
   %.2206 = phi i32 [ %.0204595, %bb.bz ], [ %i.aan, %bb.by ], [ %i.aan, %._crit_edge590 ] ; 2 uses
   %indvars.iv.next629 = add nuw nsw i64 %indvars.iv628, 1 ; 2 uses
   %exitcond632.not = icmp eq i64 %indvars.iv.next629, %wide.trip.count631
-  br i1 %exitcond632.not, label %.thread498, label %4, !llvm.loop !320
+  br i1 %exitcond632.not, label %.thread498, label %.loopexit517, !llvm.loop !320
 
-4:                                                ; preds = %.lr.ph598, %bb.ac
+.loopexit517:                                     ; preds = %.lr.ph598, %bb.ac
   %indvars.iv628 = phi i64 [ 0, %.lr.ph598 ], [ %indvars.iv.next629, %bb.ac ] ; 13 uses
   %.0204595 = phi i32 [ 0, %.lr.ph598 ], [ %.2206, %bb.ac ] ; 12 uses
-  br i1 %i.h, label %.loopexit517, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i277.preheader
-
-.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i277.preheader:      ; preds = %4
   tail call void @llvm.memset.p0.i64(ptr align 4 %.sroa.0405.0455, i8 -1, i64 %.idx.i.i.i.i.i.i.i.i.i.i276, i1 false), !tbaa !104
-  br label %.loopexit517
-
-.loopexit517:                                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i277.preheader, %4
   %i.kh = load ptr, ptr %i.ai, align 8, !tbaa !145
   %i.ki = getelementptr inbounds nuw [4 x i8], ptr %i.kh, i64 %indvars.iv628 ; 2 uses
   %i.kj = load i32, ptr %i.ki, align 4, !tbaa !104
@@ -669,7 +663,7 @@ bb.ae:                                            ; preds = %_ZN5Eigen9DenseBase
 _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit: ; preds = %bb.ad, %bb.ae
   %.sink.i = phi i64 [ %i.kz, %bb.ad ], [ %i.ld, %bb.ae ] ; 2 uses
   %i.le = icmp sle i64 %.sink.i, %i.ku            ; 2 uses
-  %.not510552 = select i1 %i.le, i1 %i.ko, i1 false
+  %.not510552 = and i1 %i.le, %i.ko
   br i1 %.not510552, label %.preheader515, label %.lr.ph557
 
 .lr.ph557:                                        ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit

@@ -204,7 +204,7 @@ declare noundef i32 @fprintf(ptr noundef captures(none), ptr noundef readonly ca
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef signext range(i8 0, 2) i8 @_ZL16MBCSAddToUnicodeP8MBCSDataPKhiia(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef range(i32 -128, 128) %2, i32 noundef %3, i8 noundef signext %4) unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [10 x i8], align 1                ; 46 uses
+  %i.a = alloca [10 x i8], align 1                ; 44 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !20   ; 3 uses
@@ -245,19 +245,15 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.u = zext i32 %2 to i64
   %i.v = zext nneg i8 %.0150 to i32
   %i.w = icmp eq i32 %2, 1
-  br i1 %i.w, label %.lr.ph._crit_edge, label %.lr.ph245
+  br i1 %i.w, label %.lr.ph.i, label %.lr.ph245
 
 .lr.ph:                                           ; preds = %.lr.ph245
   %i.x = icmp eq i64 %indvars.iv.next, %i.u
-  br i1 %i.x, label %.lr.ph._crit_edge, label %.lr.ph245, !llvm.loop !99
+  br i1 %i.x, label %.lr.ph.i, label %.lr.ph245, !llvm.loop !99
 
-.lr.ph._crit_edge:                                ; preds = %.lr.ph, %.lr.ph.preheader
+.lr.ph.i:                                         ; preds = %.lr.ph, %.lr.ph.preheader
   %.1202.lcssa = phi i32 [ %i.v, %.lr.ph.preheader ], [ %i.bw, %.lr.ph ]
   %5 = load ptr, ptr @stderr, align 8, !tbaa !33
-  %6 = icmp sgt i32 %2, 0
-  br i1 %6, label %.lr.ph.i, label %_ZL10printBytesPcmPKhi.exit
-
-.lr.ph.i:                                         ; preds = %.lr.ph._crit_edge
   %i.y = load i8, ptr %1, align 1, !tbaa !17      ; 3 uses
   %i.z = lshr i8 %i.y, 4                          ; 2 uses
   %i.aa = icmp ult i8 %i.y, -96
@@ -273,8 +269,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ah = select i1 %i.af, i8 %i.ag, i8 %narrow.i17.i
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
   store i8 %i.ah, ptr %i.ad, align 1, !tbaa !17
-  %.not259 = icmp eq i32 %2, 1
-  br i1 %.not259, label %_ZL10printBytesPcmPKhi.exit, label %.lr.ph.i.1
+  %6 = icmp samesign ugt i32 %2, 1
+  br i1 %6, label %.lr.ph.i.1, label %_ZL10printBytesPcmPKhi.exit
 
 .lr.ph.i.1:                                       ; preds = %.lr.ph.i
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 1
@@ -335,9 +331,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   store i8 %i.bs, ptr %i.bo, align 1, !tbaa !17
   br label %_ZL10printBytesPcmPKhi.exit
 
-_ZL10printBytesPcmPKhi.exit:                      ; preds = %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph._crit_edge
-  %.0.lcssa.i = phi ptr [ %i.a, %.lr.ph._crit_edge ], [ %i.ai, %.lr.ph.i ], [ %i.au, %.lr.ph.i.1 ], [ %i.bh, %.lr.ph.i.2 ], [ %i.bt, %.lr.ph.i.3 ]
-  store i8 0, ptr %.0.lcssa.i, align 1, !tbaa !17
+_ZL10printBytesPcmPKhi.exit:                      ; preds = %.lr.ph.i.3, %.lr.ph.i.2, %.lr.ph.i.1, %.lr.ph.i
+  %.lcssa = phi ptr [ %i.ai, %.lr.ph.i ], [ %i.au, %.lr.ph.i.1 ], [ %i.bh, %.lr.ph.i.2 ], [ %i.bt, %.lr.ph.i.3 ]
+  store i8 0, ptr %.lcssa, align 1, !tbaa !17
   %i.bu = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %5, ptr noundef nonnull @.str.8, i32 noundef %.1202.lcssa, ptr noundef nonnull %i.a, i32 noundef %3) #16 ; 0 uses
   br label %_ZL11setFallbackP8MBCSDataji.exit
 
@@ -373,16 +369,10 @@ _ZL10printBytesPcmPKhi.exit:                      ; preds = %.lr.ph.i, %.lr.ph.i
   %.lcssa190 = phi i32 [ %i.s, %bb.e ], [ %i.cf, %._crit_edge.loopexit ] ; 7 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 %.lcssa200
   %i.ck = icmp slt i32 %.lcssa194, %2
-  br i1 %i.ck, label %7, label %bb.f
+  br i1 %i.ck, label %.lr.ph.i177, label %bb.f
 
-7:                                                ; preds = %._crit_edge
-  %8 = load ptr, ptr @stderr, align 8, !tbaa !33
-  %9 = sub nsw i32 %2, %.lcssa194
-  %10 = zext nneg i8 %.1.lcssa to i32
-  %11 = icmp sgt i32 %2, 0
-  br i1 %11, label %.lr.ph.i177, label %_ZL10printBytesPcmPKhi.exit184
-
-.lr.ph.i177:                                      ; preds = %7
+.lr.ph.i177:                                      ; preds = %._crit_edge
+  %7 = load ptr, ptr @stderr, align 8, !tbaa !33
   %i.cl = load i8, ptr %1, align 1, !tbaa !17     ; 3 uses
   %i.cm = lshr i8 %i.cl, 4                        ; 2 uses
   %i.cn = icmp ult i8 %i.cl, -96
@@ -398,8 +388,8 @@ _ZL10printBytesPcmPKhi.exit:                      ; preds = %.lr.ph.i, %.lr.ph.i
   %i.cu = select i1 %i.cs, i8 %i.ct, i8 %narrow.i17.i182
   %i.cv = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
   store i8 %i.cu, ptr %i.cq, align 1, !tbaa !17
-  %.not257 = icmp eq i32 %2, 1
-  br i1 %.not257, label %_ZL10printBytesPcmPKhi.exit184, label %.lr.ph.i177.1
+  %8 = icmp samesign ugt i32 %2, 1
+  br i1 %8, label %.lr.ph.i177.1, label %_ZL10printBytesPcmPKhi.exit184
 
 .lr.ph.i177.1:                                    ; preds = %.lr.ph.i177
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 1
@@ -460,10 +450,12 @@ _ZL10printBytesPcmPKhi.exit:                      ; preds = %.lr.ph.i, %.lr.ph.i
   store i8 %i.ef, ptr %i.eb, align 1, !tbaa !17
   br label %_ZL10printBytesPcmPKhi.exit184
 
-_ZL10printBytesPcmPKhi.exit184:                   ; preds = %.lr.ph.i177, %.lr.ph.i177.1, %.lr.ph.i177.2, %.lr.ph.i177.3, %7
-  %.0.lcssa.i176 = phi ptr [ %i.a, %7 ], [ %i.cv, %.lr.ph.i177 ], [ %i.dh, %.lr.ph.i177.1 ], [ %i.du, %.lr.ph.i177.2 ], [ %i.eg, %.lr.ph.i177.3 ]
-  store i8 0, ptr %.0.lcssa.i176, align 1, !tbaa !17
-  %i.eh = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %8, ptr noundef nonnull @.str.9, i32 noundef %9, i32 noundef %10, ptr noundef nonnull %i.a, i32 noundef %3) #16 ; 0 uses
+_ZL10printBytesPcmPKhi.exit184:                   ; preds = %.lr.ph.i177.3, %.lr.ph.i177.2, %.lr.ph.i177.1, %.lr.ph.i177
+  %.lcssa245 = phi ptr [ %i.cv, %.lr.ph.i177 ], [ %i.dh, %.lr.ph.i177.1 ], [ %i.du, %.lr.ph.i177.2 ], [ %i.eg, %.lr.ph.i177.3 ]
+  %9 = sub nsw i32 %2, %.lcssa194
+  %10 = zext nneg i8 %.1.lcssa to i32
+  store i8 0, ptr %.lcssa245, align 1, !tbaa !17
+  %i.eh = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %7, ptr noundef nonnull @.str.9, i32 noundef %9, i32 noundef %10, ptr noundef nonnull %i.a, i32 noundef %3) #16 ; 0 uses
   br label %_ZL11setFallbackP8MBCSDataji.exit
 
 bb.f:                                             ; preds = %._crit_edge

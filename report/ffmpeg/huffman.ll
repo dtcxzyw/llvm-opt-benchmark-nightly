@@ -1,7 +1,7 @@
 inline.NumInlined: 4
 inline.NumDeleted: 2
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -19,12 +19,12 @@ bb.a:
   %5 = alloca %struct.HeapElem, align 8           ; 4 uses
   %6 = alloca %struct.HeapElem, align 8           ; 4 uses
   %i.a = sext i32 %2 to i64                       ; 4 uses
-  %i.b = tail call ptr @av_malloc_array(i64 noundef %i.a, i64 noundef 56) #6 ; 34 uses
+  %i.b = tail call ptr @av_malloc_array(i64 noundef %i.a, i64 noundef 56) #6 ; 24 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.q, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = getelementptr [16 x i8], ptr %i.b, i64 %i.a ; 11 uses
+  %i.c = getelementptr [16 x i8], ptr %i.b, i64 %i.a ; 5 uses
   %i.d = shl i32 %2, 1
   %i.e = sext i32 %i.d to i64                     ; 2 uses
   %i.f = getelementptr [4 x i8], ptr %i.c, i64 %i.e ; 16 uses
@@ -201,20 +201,20 @@ bb.c:                                             ; preds = %.lr.ph.split.epil.p
   br label %.preheader110
 
 .preheader110:                                    ; preds = %.preheader110.loopexit194.unr-lcssa, %bb.c, %.lr.ph.split.epil.preheader, %.lr.ph.split.us.prol.loopexit, %.lr.ph.split.us, %middle.block, %vec.epilog.middle.block, %bb.b
-  %.086.lcssa = phi i32 [ 0, %bb.b ], [ %2, %middle.block ], [ %2, %.lr.ph.split.us.prol.loopexit ], [ %2, %vec.epilog.middle.block ], [ %2, %.lr.ph.split.us ], [ %.1.1, %.preheader110.loopexit194.unr-lcssa ], [ %.086112.epil.init, %.lr.ph.split.epil.preheader ], [ %i.au, %bb.c ] ; 25 uses
+  %.086.lcssa = phi i32 [ 0, %bb.b ], [ %2, %middle.block ], [ %2, %.lr.ph.split.us.prol.loopexit ], [ %2, %vec.epilog.middle.block ], [ %2, %.lr.ph.split.us ], [ %.1.1, %.preheader110.loopexit194.unr-lcssa ], [ %.086112.epil.init, %.lr.ph.split.epil.preheader ], [ %i.au, %bb.c ] ; 18 uses
   %i.ax = icmp sgt i32 %.086.lcssa, 0             ; 2 uses
   %i.ay = sdiv i32 %.086.lcssa, 2
-  %i.az = icmp sgt i32 %.086.lcssa, 1             ; 2 uses
+  %i.az = icmp sgt i32 %.086.lcssa, 1
   %i.ba = shl i32 %.086.lcssa, 1                  ; 4 uses
-  %i.bb = add i32 %i.ba, -1                       ; 3 uses
-  %i.bc = icmp slt i32 %.086.lcssa, %i.bb         ; 2 uses
+  %i.bb = add i32 %i.ba, -1                       ; 2 uses
+  %i.bc = icmp slt i32 %.086.lcssa, %i.bb
   %i.bd = sext i32 %i.ba to i64
   %i.be = getelementptr i8, ptr %i.g, i64 %i.bd
   %i.bf = getelementptr i8, ptr %i.be, i64 -2
   %i.bg = add nsw i32 %i.ba, -3
   %.not92123 = icmp slt i32 %i.bg, %.086.lcssa
-  %i.bh = add i32 %.086.lcssa, -1                 ; 4 uses
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 10 uses
+  %i.bh = add nsw i32 %.086.lcssa, -1             ; 3 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
   %i.bj = add i32 %i.ba, -3
   %i.bk = sext i32 %i.bj to i64
   %i.bl = sext i32 %.086.lcssa to i64
@@ -225,10 +225,6 @@ bb.c:                                             ; preds = %.lr.ph.split.epil.p
   %unroll_iter202 = and i64 %wide.trip.count147, 2147483646
   %lcmp.mod200.not = icmp eq i64 %xtraiter199, 0
   %lcmp.mod201 = trunc i32 %.086.lcssa to i1
-  %xtraiter204 = and i32 %i.bh, 1
-  %lcmp.mod205.not = icmp eq i32 %xtraiter204, 0
-  %7 = add nsw i32 %.086.lcssa, 1
-  %8 = icmp eq i32 %.086.lcssa, 2
   br label %bb.g
 
 .lr.ph.split:                                     ; preds = %bb.f, %.lr.ph.split.preheader.new
@@ -277,7 +273,7 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.split
 
 bb.g:                                             ; preds = %._crit_edge129, %.preheader110
   %.090 = phi i32 [ %i.gv, %._crit_edge129 ], [ 1, %.preheader110 ] ; 2 uses
-  br i1 %i.ax, label %.lr.ph114, label %.preheader109
+  br i1 %i.ax, label %.lr.ph114, label %heap_sift.exit100.thread.prol.loopexit
 
 .lr.ph114:                                        ; preds = %bb.g
   %i.cd = sext i32 %.090 to i64                   ; 3 uses
@@ -317,7 +313,7 @@ bb.g:                                             ; preds = %._crit_edge129, %.p
   br i1 %niter203.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph114.new, !llvm.loop !31
 
 ._crit_edge.unr-lcssa:                            ; preds = %.lr.ph114.new
-  br i1 %lcmp.mod200.not, label %._crit_edge, label %.epil.preheader
+  br i1 %lcmp.mod200.not, label %heap_sift.exit100.thread.preheader, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph114
   %indvars.iv144.epil.init = phi i64 [ 0, %.lr.ph114 ], [ %indvars.iv.next145.1, %._crit_edge.unr-lcssa ] ; 3 uses
@@ -334,60 +330,26 @@ bb.g:                                             ; preds = %._crit_edge129, %.p
   %i.dg = shl i64 %i.df, 14
   %i.dh = add i64 %i.dg, %i.cd
   store i64 %i.dh, ptr %i.cy, align 8, !tbaa !9
-  br label %._crit_edge
+  br label %heap_sift.exit100.thread.preheader
 
-._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader
-  br i1 %i.az, label %.lr.ph117, label %.preheader109.thread
+heap_sift.exit100.thread.preheader:               ; preds = %._crit_edge.unr-lcssa, %.epil.preheader
+  br i1 %i.az, label %.lr.ph.i93.us, label %heap_sift.exit100.thread.prol.loopexit
 
-.preheader109:                                    ; preds = %heap_sift.exit, %bb.g
-  br i1 %i.bc, label %.lr.ph119, label %._crit_edge120
+heap_sift.exit100.thread.prol.loopexit:           ; preds = %heap_sift.exit, %bb.g, %heap_sift.exit100.thread.preheader
+  br i1 %i.bc, label %heap_sift.exit100.us, label %._crit_edge120
 
-.preheader109.thread:                             ; preds = %._crit_edge
-  br i1 %i.bc, label %heap_sift.exit100.thread.preheader, label %._crit_edge120
+.lr.ph.i93.us:                                    ; preds = %heap_sift.exit100.thread.preheader, %heap_sift.exit
+  %.087118.us = phi i32 [ %.2, %heap_sift.exit ], [ %i.ay, %heap_sift.exit100.thread.preheader ] ; 2 uses
+  %.2 = add nsw i32 %.087118.us, -1               ; 3 uses
+  %7 = shl nuw nsw i32 %.2, 1                     ; 2 uses
+  %8 = or disjoint i32 %7, 1                      ; 2 uses
+  %9 = icmp slt i32 %8, %.086.lcssa
+  br i1 %9, label %bb.h, label %heap_sift.exit
 
-.lr.ph119:                                        ; preds = %.preheader109
-  br i1 %i.az, label %.lr.ph.i93.us, label %heap_sift.exit100.thread.preheader
-
-heap_sift.exit100.thread.preheader:               ; preds = %.preheader109.thread, %.lr.ph119
-  %.pre = load i64, ptr %i.b, align 8, !tbaa !9   ; 2 uses
-  %.pre159 = load i32, ptr %i.bi, align 8, !tbaa !29 ; 2 uses
-  br i1 %lcmp.mod205.not, label %heap_sift.exit100.thread.prol.loopexit, label %heap_sift.exit100.thread.prol
-
-heap_sift.exit100.thread.prol:                    ; preds = %heap_sift.exit100.thread.preheader
-  %9 = sext i32 %.pre159 to i64
-  %10 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %9
-  store i32 %.086.lcssa, ptr %10, align 4, !tbaa !32
-  store i64 9223372036854775807, ptr %i.b, align 8, !tbaa !9
-  %11 = load i32, ptr %i.bi, align 8, !tbaa !29
-  %12 = sext i32 %11 to i64
-  %13 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %12
-  store i32 %.086.lcssa, ptr %13, align 4, !tbaa !32
-  store i32 %.086.lcssa, ptr %i.bi, align 8, !tbaa !29
-  %14 = load i64, ptr %i.b, align 8, !tbaa !9
-  %15 = add i64 %14, %.pre                        ; 2 uses
-  store i64 %15, ptr %i.b, align 8, !tbaa !9
-  br label %heap_sift.exit100.thread.prol.loopexit
-
-heap_sift.exit100.thread.prol.loopexit:           ; preds = %heap_sift.exit100.thread.prol, %heap_sift.exit100.thread.preheader
-  %.unr = phi i32 [ %.pre159, %heap_sift.exit100.thread.preheader ], [ %.086.lcssa, %heap_sift.exit100.thread.prol ]
-  %.unr207 = phi i64 [ %.pre, %heap_sift.exit100.thread.preheader ], [ %15, %heap_sift.exit100.thread.prol ]
-  %.087118.unr = phi i32 [ %.086.lcssa, %heap_sift.exit100.thread.preheader ], [ %7, %heap_sift.exit100.thread.prol ]
-  br i1 %8, label %._crit_edge120, label %heap_sift.exit100.thread
-
-.lr.ph.i93.us:                                    ; preds = %.lr.ph119, %heap_sift.exit108.loopexit.us
-  %.087118.us = phi i32 [ %22, %heap_sift.exit108.loopexit.us ], [ %.086.lcssa, %.lr.ph119 ] ; 4 uses
-  %16 = load i64, ptr %i.b, align 8, !tbaa !9
-  %17 = load i32, ptr %i.bi, align 8, !tbaa !29
-  %18 = sext i32 %17 to i64
-  %19 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %18
-  store i32 %.087118.us, ptr %19, align 4, !tbaa !32
-  store i64 9223372036854775807, ptr %i.b, align 8, !tbaa !9
-  br label %bb.h
-
-bb.h:                                             ; preds = %bb.j, %.lr.ph.i93.us
-  %i.di = phi i32 [ 1, %.lr.ph.i93.us ], [ %i.eb, %bb.j ] ; 4 uses
-  %i.dj = phi i32 [ 0, %.lr.ph.i93.us ], [ %i.ea, %bb.j ]
-  %.02429.i94.us = phi i32 [ 0, %.lr.ph.i93.us ], [ %.023.i97.us, %bb.j ]
+bb.h:                                             ; preds = %.lr.ph.i93.us, %bb.j
+  %i.di = phi i32 [ %i.eb, %bb.j ], [ %8, %.lr.ph.i93.us ] ; 4 uses
+  %i.dj = phi i32 [ %i.ea, %bb.j ], [ %7, %.lr.ph.i93.us ]
+  %.02429.i94.us = phi i32 [ %.023.i97.us, %bb.j ], [ %.2, %.lr.ph.i93.us ]
   %i.dk = icmp slt i32 %i.di, %i.bh
   %i.dl = zext nneg i32 %i.di to i64              ; 2 uses
   %i.dm = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %i.dl
@@ -413,29 +375,32 @@ bb.i:                                             ; preds = %bb.h
   %i.dw = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %i.dv ; 3 uses
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !9
   %i.dy = icmp ugt i64 %i.dx, %i.du
-  br i1 %i.dy, label %bb.j, label %heap_sift.exit100.us
+  br i1 %i.dy, label %bb.j, label %heap_sift.exit
 
 bb.j:                                             ; preds = %._crit_edge.i95.us
   %i.dz = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %.pre-phi.i96.us ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %i.dz, i64 16, i1 false), !tbaa.struct !33
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dz, ptr noundef nonnull align 8 dereferenceable(16) %i.dw, i64 16, i1 false), !tbaa.struct !33
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dw, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !33
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  call void @llvm.lifetime.start.p0(ptr nonnull %6)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %i.dz, i64 16, i1 false), !tbaa.struct !32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dz, ptr noundef nonnull align 8 dereferenceable(16) %i.dw, i64 16, i1 false), !tbaa.struct !32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dw, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !32
+  call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.ea = shl nuw nsw i32 %.023.i97.us, 1         ; 2 uses
   %i.eb = or disjoint i32 %i.ea, 1                ; 2 uses
   %i.ec = icmp slt i32 %i.eb, %.086.lcssa
-  br i1 %i.ec, label %bb.h, label %heap_sift.exit100.us
+  br i1 %i.ec, label %bb.h, label %heap_sift.exit
 
-heap_sift.exit100.us:                             ; preds = %bb.j, %._crit_edge.i95.us
+heap_sift.exit:                                   ; preds = %._crit_edge.i95.us, %bb.j, %.lr.ph.i93.us
+  %10 = icmp sgt i32 %.087118.us, 1
+  br i1 %10, label %.lr.ph.i93.us, label %heap_sift.exit100.thread.prol.loopexit, !llvm.loop !34
+
+heap_sift.exit100.us:                             ; preds = %heap_sift.exit100.thread.prol.loopexit, %heap_sift.exit100.thread
+  %.087118 = phi i32 [ %i.fw, %heap_sift.exit100.thread ], [ %.086.lcssa, %heap_sift.exit100.thread.prol.loopexit ] ; 4 uses
+  %11 = load i64, ptr %i.b, align 8, !tbaa !9
   %i.ed = load i32, ptr %i.bi, align 8, !tbaa !29
   %i.ee = sext i32 %i.ed to i64
   %i.ef = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.ee
-  store i32 %.087118.us, ptr %i.ef, align 4, !tbaa !32
-  store i32 %.087118.us, ptr %i.bi, align 8, !tbaa !29
-  %20 = load i64, ptr %i.b, align 8, !tbaa !9
-  %21 = add i64 %20, %16
-  store i64 %21, ptr %i.b, align 8, !tbaa !9
+  store i32 %.087118, ptr %i.ef, align 4, !tbaa !33
+  store i64 9223372036854775807, ptr %i.b, align 8, !tbaa !9
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.m, %heap_sift.exit100.us
@@ -467,37 +432,35 @@ bb.l:                                             ; preds = %bb.k
   %i.eu = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %i.et ; 3 uses
   %i.ev = load i64, ptr %i.eu, align 8, !tbaa !9
   %i.ew = icmp ugt i64 %i.ev, %i.es
-  br i1 %i.ew, label %bb.m, label %heap_sift.exit108.loopexit.us
+  br i1 %i.ew, label %bb.m, label %.lr.ph117
 
 bb.m:                                             ; preds = %._crit_edge.i103.us
   %i.ex = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %.pre-phi.i104.us ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %i.ex, i64 16, i1 false), !tbaa.struct !33
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ex, ptr noundef nonnull align 8 dereferenceable(16) %i.eu, i64 16, i1 false), !tbaa.struct !33
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.eu, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !33
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %5)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %i.ex, i64 16, i1 false), !tbaa.struct !32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ex, ptr noundef nonnull align 8 dereferenceable(16) %i.eu, i64 16, i1 false), !tbaa.struct !32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.eu, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !32
+  call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %i.ey = shl nuw nsw i32 %.023.i105.us, 1        ; 2 uses
   %i.ez = or disjoint i32 %i.ey, 1                ; 2 uses
   %i.fa = icmp slt i32 %i.ez, %.086.lcssa
-  br i1 %i.fa, label %bb.k, label %heap_sift.exit108.loopexit.us
+  br i1 %i.fa, label %bb.k, label %.lr.ph117
 
-heap_sift.exit108.loopexit.us:                    ; preds = %bb.m, %._crit_edge.i103.us
-  %22 = add nuw nsw i32 %.087118.us, 1            ; 2 uses
-  %exitcond150.not = icmp eq i32 %22, %i.bb
-  br i1 %exitcond150.not, label %._crit_edge120, label %.lr.ph.i93.us, !llvm.loop !34
+.lr.ph117:                                        ; preds = %._crit_edge.i103.us, %bb.m
+  %12 = load i32, ptr %i.bi, align 8, !tbaa !29
+  %13 = sext i32 %12 to i64
+  %14 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %13
+  store i32 %.087118, ptr %14, align 4, !tbaa !33
+  store i32 %.087118, ptr %i.bi, align 8, !tbaa !29
+  %15 = load i64, ptr %i.b, align 8, !tbaa !9
+  %16 = add i64 %15, %11
+  store i64 %16, ptr %i.b, align 8, !tbaa !9
+  br label %.lr.ph.i
 
-.lr.ph117:                                        ; preds = %._crit_edge, %heap_sift.exit
-  %.2.in115 = phi i32 [ %.2, %heap_sift.exit ], [ %i.ay, %._crit_edge ] ; 2 uses
-  %.2 = add nsw i32 %.2.in115, -1                 ; 3 uses
-  %23 = shl nuw nsw i32 %.2, 1                    ; 2 uses
-  %24 = or disjoint i32 %23, 1                    ; 2 uses
-  %25 = icmp slt i32 %24, %.086.lcssa
-  br i1 %25, label %.lr.ph.i, label %heap_sift.exit
-
-.lr.ph.i:                                         ; preds = %.lr.ph117, %bb.o
-  %i.fb = phi i32 [ %i.fu, %bb.o ], [ %24, %.lr.ph117 ] ; 4 uses
-  %i.fc = phi i32 [ %i.ft, %bb.o ], [ %23, %.lr.ph117 ]
-  %.02429.i = phi i32 [ %.023.i, %bb.o ], [ %.2, %.lr.ph117 ]
+.lr.ph.i:                                         ; preds = %bb.o, %.lr.ph117
+  %i.fb = phi i32 [ 1, %.lr.ph117 ], [ %i.fu, %bb.o ] ; 4 uses
+  %i.fc = phi i32 [ 0, %.lr.ph117 ], [ %i.ft, %bb.o ]
+  %.02429.i = phi i32 [ 0, %.lr.ph117 ], [ %.023.i, %bb.o ]
   %i.fd = icmp slt i32 %i.fb, %i.bh
   %i.fe = zext nneg i32 %i.fb to i64              ; 2 uses
   %i.ff = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %i.fe
@@ -523,58 +486,26 @@ bb.n:                                             ; preds = %.lr.ph.i
   %i.fp = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %i.fo ; 3 uses
   %i.fq = load i64, ptr %i.fp, align 8, !tbaa !9
   %i.fr = icmp ugt i64 %i.fq, %i.fn
-  br i1 %i.fr, label %bb.o, label %heap_sift.exit
+  br i1 %i.fr, label %bb.o, label %heap_sift.exit100.thread
 
 bb.o:                                             ; preds = %._crit_edge.i
   %i.fs = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %.pre-phi.i ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %i.fs, i64 16, i1 false), !tbaa.struct !33
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fs, ptr noundef nonnull align 8 dereferenceable(16) %i.fp, i64 16, i1 false), !tbaa.struct !33
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fp, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !33
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %i.fs, i64 16, i1 false), !tbaa.struct !32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fs, ptr noundef nonnull align 8 dereferenceable(16) %i.fp, i64 16, i1 false), !tbaa.struct !32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fp, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !32
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.ft = shl nuw nsw i32 %.023.i, 1              ; 2 uses
   %i.fu = or disjoint i32 %i.ft, 1                ; 2 uses
   %i.fv = icmp slt i32 %i.fu, %.086.lcssa
-  br i1 %i.fv, label %.lr.ph.i, label %heap_sift.exit
+  br i1 %i.fv, label %.lr.ph.i, label %heap_sift.exit100.thread
 
-heap_sift.exit:                                   ; preds = %._crit_edge.i, %bb.o, %.lr.ph117
-  %26 = icmp sgt i32 %.2.in115, 1
-  br i1 %26, label %.lr.ph117, label %.preheader109, !llvm.loop !35
-
-heap_sift.exit100.thread:                         ; preds = %heap_sift.exit100.thread.prol.loopexit, %heap_sift.exit100.thread
-  %27 = phi i32 [ %36, %heap_sift.exit100.thread ], [ %.unr, %heap_sift.exit100.thread.prol.loopexit ]
-  %28 = phi i64 [ %43, %heap_sift.exit100.thread ], [ %.unr207, %heap_sift.exit100.thread.prol.loopexit ]
-  %.087118 = phi i32 [ %i.fw, %heap_sift.exit100.thread ], [ %.087118.unr, %heap_sift.exit100.thread.prol.loopexit ] ; 6 uses
-  %29 = sext i32 %27 to i64
-  %30 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %29
-  store i32 %.087118, ptr %30, align 4, !tbaa !32
-  store i64 9223372036854775807, ptr %i.b, align 8, !tbaa !9
-  %31 = load i32, ptr %i.bi, align 8, !tbaa !29
-  %32 = sext i32 %31 to i64
-  %33 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %32
-  store i32 %.087118, ptr %33, align 4, !tbaa !32
-  store i32 %.087118, ptr %i.bi, align 8, !tbaa !29
-  %34 = load i64, ptr %i.b, align 8, !tbaa !9
-  %35 = add i64 %34, %28                          ; 2 uses
-  store i64 %35, ptr %i.b, align 8, !tbaa !9
-  %36 = add nsw i32 %.087118, 1                   ; 4 uses
-  %37 = sext i32 %.087118 to i64
-  %38 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %37
-  store i32 %36, ptr %38, align 4, !tbaa !32
-  store i64 9223372036854775807, ptr %i.b, align 8, !tbaa !9
-  %39 = load i32, ptr %i.bi, align 8, !tbaa !29
-  %40 = sext i32 %39 to i64
-  %41 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %40
-  store i32 %36, ptr %41, align 4, !tbaa !32
-  store i32 %36, ptr %i.bi, align 8, !tbaa !29
-  %42 = load i64, ptr %i.b, align 8, !tbaa !9
-  %43 = add i64 %42, %35                          ; 2 uses
-  store i64 %43, ptr %i.b, align 8, !tbaa !9
-  %i.fw = add nsw i32 %.087118, 2                 ; 2 uses
+heap_sift.exit100.thread:                         ; preds = %bb.o, %._crit_edge.i
+  %i.fw = add nsw i32 %.087118, 1                 ; 2 uses
   %exitcond149.not.1 = icmp eq i32 %i.fw, %i.bb
-  br i1 %exitcond149.not.1, label %._crit_edge120, label %heap_sift.exit100.thread, !llvm.loop !34
+  br i1 %exitcond149.not.1, label %._crit_edge120, label %heap_sift.exit100.us, !llvm.loop !35
 
-._crit_edge120:                                   ; preds = %heap_sift.exit100.thread.prol.loopexit, %heap_sift.exit100.thread, %heap_sift.exit108.loopexit.us, %.preheader109.thread, %.preheader109
+._crit_edge120:                                   ; preds = %heap_sift.exit100.thread, %heap_sift.exit100.thread.prol.loopexit
   store i8 0, ptr %i.bf, align 1, !tbaa !9
   br i1 %.not92123, label %.preheader, label %.lr.ph126.a
 
@@ -584,7 +515,7 @@ heap_sift.exit100.thread:                         ; preds = %heap_sift.exit100.t
 .lr.ph126.a:                                      ; preds = %._crit_edge120, %.lr.ph126.a
   %indvars.iv151 = phi i64 [ %indvars.iv.next152, %.lr.ph126.a ], [ %i.bk, %._crit_edge120 ] ; 4 uses
   %i.fx = getelementptr inbounds [4 x i8], ptr %i.c, i64 %indvars.iv151
-  %i.fy = load i32, ptr %i.fx, align 4, !tbaa !32
+  %i.fy = load i32, ptr %i.fx, align 4, !tbaa !33
   %i.fz = sext i32 %i.fy to i64
   %i.ga = getelementptr inbounds i8, ptr %i.g, i64 %i.fz
   %i.gb = load i8, ptr %i.ga, align 1, !tbaa !9
@@ -598,7 +529,7 @@ heap_sift.exit100.thread:                         ; preds = %heap_sift.exit100.t
 .lr.ph128:                                        ; preds = %.preheader, %bb.p
   %indvars.iv154 = phi i64 [ %indvars.iv.next155, %bb.p ], [ 0, %.preheader ] ; 4 uses
   %i.ge = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv154
-  %i.gf = load i32, ptr %i.ge, align 4, !tbaa !32
+  %i.gf = load i32, ptr %i.ge, align 4, !tbaa !33
   %i.gg = sext i32 %i.gf to i64
   %i.gh = getelementptr inbounds i8, ptr %i.g, i64 %i.gg
   %i.gi = load i8, ptr %i.gh, align 1, !tbaa !9
@@ -1001,9 +932,9 @@ bb.aa:                                            ; preds = %.lr.ph247
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
-  store i32 0, ptr %i.c, align 4, !tbaa !32
+  store i32 0, ptr %i.c, align 4, !tbaa !33
   call fastcc void @get_tree_codes(ptr noundef %i.a, ptr noundef %i.b, ptr noundef nonnull readonly %4, i32 noundef range(i32 -2147483648, 2147483646) %i.fj, i32 noundef 0, ptr noundef %i.c, i32 noundef %i.fl)
-  %i.fm = load i32, ptr %i.c, align 4, !tbaa !32
+  %i.fm = load i32, ptr %i.c, align 4, !tbaa !33
   %i.fn = call i32 @ff_vlc_init_from_lengths(ptr noundef %1, i32 noundef %3, i32 noundef %i.fm, ptr noundef nonnull %i.a, i32 noundef 1, ptr noundef nonnull %i.b, i32 noundef 1, i32 noundef 1, i32 noundef 0, i32 noundef 0, ptr noundef %0) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
@@ -1066,18 +997,18 @@ bb.b:                                             ; preds = %.lr.ph
   %.tr35.lcssa = phi i32 [ %4, %bb.a ], [ %.tr3539, %bb.b ], [ %i.e, %tailrecurse.backedge ]
   %.lcssa = phi i16 [ %i.c, %bb.a ], [ -1, %bb.b ], [ %i.k, %tailrecurse.backedge ]
   %i.n = trunc i32 %.tr35.lcssa to i8
-  %i.o = load i32, ptr %5, align 4, !tbaa !32
+  %i.o = load i32, ptr %5, align 4, !tbaa !33
   %i.p = sext i32 %i.o to i64
   %i.q = getelementptr inbounds i8, ptr %0, i64 %i.p
   store i8 %i.n, ptr %i.q, align 1, !tbaa !9
   %i.r = trunc i16 %.lcssa to i8
-  %i.s = load i32, ptr %5, align 4, !tbaa !32
+  %i.s = load i32, ptr %5, align 4, !tbaa !33
   %i.t = sext i32 %i.s to i64
   %i.u = getelementptr inbounds i8, ptr %1, i64 %i.t
   store i8 %i.r, ptr %i.u, align 1, !tbaa !9
-  %i.v = load i32, ptr %5, align 4, !tbaa !32
+  %i.v = load i32, ptr %5, align 4, !tbaa !33
   %i.w = add nsw i32 %i.v, 1
-  store i32 %i.w, ptr %5, align 4, !tbaa !32
+  store i32 %i.w, ptr %5, align 4, !tbaa !33
   ret void
 }
 
@@ -1133,8 +1064,8 @@ attributes #6 = { nounwind }
 !29 = !{!30, !6, i64 8}
 !30 = !{!"HeapElem", !7, i64 0, !6, i64 8}
 !31 = distinct !{!31, !18}
-!32 = !{!6, !6, i64 0}
-!33 = !{i64 0, i64 8, !9, i64 8, i64 4, !32}
+!32 = !{i64 0, i64 8, !9, i64 8, i64 4, !33}
+!33 = !{!6, !6, i64 0}
 !34 = distinct !{!34, !18}
 !35 = distinct !{!35, !18}
 !36 = distinct !{!36, !18}

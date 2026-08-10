@@ -203,7 +203,7 @@ bb.q:                                             ; preds = %_ZN2v88internal11Fa
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN2v88internal12_GLOBAL__N_133MatchArrayElementsKindToArgumentsEPNS0_7IsolateENS0_12DirectHandleINS0_7JSArrayEEEPNS0_16BuiltinArgumentsEii(ptr noundef %0, ptr %1, ptr nofree noundef nonnull readonly captures(none) %2, i32 noundef range(i32 -2147483648, 2147483647) %3) unnamed_addr #0 {
 bb.a:
-  %i.a = load i64, ptr %2, align 8                ; 3 uses
+  %i.a = load i64, ptr %2, align 8                ; 2 uses
   %i.b = trunc i64 %i.a to i32                    ; 2 uses
   %i.c = add nsw i32 %i.b, -4
   %i.d = icmp slt i32 %i.b, 6
@@ -230,30 +230,20 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph:                                           ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %4 = add i64 %i.a, 4294967293
-  %wide.trip.count = and i64 %4, 4294967295
+  %4 = load ptr, ptr %i.q, align 8
+  %5 = ptrtoint ptr %4 to i64
   %wide.trip.count56 = zext nneg i32 %.sroa.speculated to i64
-  br label %5
+  br label %_ZNK2v88internal16BuiltinArgumentsixEi.exit
 
-5:                                                ; preds = %.lr.ph, %.thread
-  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %.thread ] ; 3 uses
+_ZNK2v88internal16BuiltinArgumentsixEi.exit:      ; preds = %.lr.ph, %.thread
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %.thread ] ; 2 uses
   %.02153 = phi i8 [ %i.l, %.lr.ph ], [ %.251, %.thread ]
-  %exitcond = icmp eq i64 %indvars.iv, %wide.trip.count
-  br i1 %exitcond, label %6, label %_ZNK2v88internal16BuiltinArgumentsixEi.exit, !prof !5
-
-6:                                                ; preds = %5
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #14
-  unreachable
-
-_ZNK2v88internal16BuiltinArgumentsixEi.exit:      ; preds = %5
   %i.r = shl i64 %indvars.iv, 32
   %sext = sub i64 -21474836480, %i.r
   %i.s = ashr exact i64 %sext, 32
   %i.t = add i64 %i.a, %i.s
   %i.u = shl nsw i64 %i.t, 3
-  %7 = load ptr, ptr %i.q, align 8
-  %8 = ptrtoint ptr %7 to i64
-  %i.v = sub i64 %8, %i.u
+  %i.v = sub i64 %5, %i.u
   %i.w = inttoptr i64 %i.v to ptr
   %i.x = load i64, ptr %i.w, align 8              ; 2 uses
   %i.y = trunc i64 %i.x to i1
@@ -273,7 +263,7 @@ bb.d:                                             ; preds = %_ZNK2v88internal16B
   %.251 = phi i8 [ 4, %bb.d ], [ %.02153, %_ZNK2v88internal16BuiltinArgumentsixEi.exit ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond57.not = icmp eq i64 %indvars.iv.next, %wide.trip.count56
-  br i1 %exitcond57.not, label %._crit_edge, label %5, !llvm.loop !59
+  br i1 %exitcond57.not, label %._crit_edge, label %_ZNK2v88internal16BuiltinArgumentsixEi.exit, !llvm.loop !59
 
 ._crit_edge:                                      ; preds = %bb.d, %.thread
   %.3 = phi i8 [ %.251, %.thread ], [ 2, %bb.d ]  ; 2 uses

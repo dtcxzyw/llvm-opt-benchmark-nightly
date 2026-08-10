@@ -204,24 +204,19 @@ bb.g:                                             ; preds = %bb.f
   %.val128 = load ptr, ptr %i.bh, align 8, !tbaa !164 ; 7 uses
   %i.bi = add nuw nsw i64 %indvars.iv165, 1       ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.val128, i64 4 ; 3 uses
-  %i.bk = load i32, ptr %i.bj, align 4, !tbaa !26 ; 4 uses
-  %i.bl = sext i32 %i.bk to i64                   ; 4 uses
+  %i.bk = load i32, ptr %i.bj, align 4, !tbaa !26 ; 3 uses
+  %i.bl = sext i32 %i.bk to i64                   ; 3 uses
   %.not.i.not.i.i.i = icmp slt i64 %indvars.iv165, %i.bl
   br i1 %.not.i.not.i.i.i, label %Gia_ObjLevel.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.bm = load i32, ptr %.val128, align 8, !tbaa !58 ; 4 uses
   %i.bn = shl nsw i32 %i.bm, 1                    ; 2 uses
-  %2 = sext i32 %i.bn to i64
-  %.not.i.i.i = icmp slt i64 %indvars.iv165, %2
-  %i.bo = sext i32 %i.bm to i64
-  %.not.i.i.not.i.i.i.a = icmp slt i64 %indvars.iv165, %i.bo ; 2 uses
-  br i1 %.not.i.i.i, label %bb.m, label %3
+  %i.bo = sext i32 %i.bn to i64
+  %.not.i.i.not.i.i.i.a = icmp slt i64 %indvars.iv165, %i.bo
+  br i1 %.not.i.i.not.i.i.i.a, label %bb.m, label %bb.i
 
-3:                                                ; preds = %bb.h
-  br i1 %.not.i.i.not.i.i.i.a, label %Vec_IntGrow.exit.i.i.i.i, label %bb.i
-
-bb.i:                                             ; preds = %3
+bb.i:                                             ; preds = %bb.h
   %i.bp = getelementptr inbounds nuw i8, ptr %.val128, i64 8 ; 2 uses
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !30 ; 2 uses
   %.not9.i.i.i.i.i = icmp eq ptr %i.bq, null
@@ -243,7 +238,9 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %Vec_IntGrow.exit.sink.split.i.i.i.i
 
 bb.m:                                             ; preds = %bb.h
-  br i1 %.not.i.i.not.i.i.i.a, label %Vec_IntGrow.exit.i.i.i.i, label %bb.n
+  %2 = sext i32 %i.bm to i64
+  %.not.i.i.not.i.i.i = icmp slt i64 %indvars.iv165, %2
+  br i1 %.not.i.i.not.i.i.i, label %Vec_IntGrow.exit.i.i.i.i, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bw = icmp slt i32 %i.bm, 1073741823
@@ -279,9 +276,9 @@ Vec_IntGrow.exit.sink.split.i.i.i.i:              ; preds = %bb.r, %bb.l
   %.pre179 = sext i32 %.pre.i.i.i to i64
   br label %Vec_IntGrow.exit.i.i.i.i
 
-Vec_IntGrow.exit.i.i.i.i:                         ; preds = %Vec_IntGrow.exit.sink.split.i.i.i.i, %bb.n, %bb.m, %3
-  %.pre-phi = phi i64 [ %.pre179, %Vec_IntGrow.exit.sink.split.i.i.i.i ], [ %i.bl, %bb.n ], [ %i.bl, %bb.m ], [ %i.bl, %3 ] ; 2 uses
-  %4 = phi i32 [ %.pre.i.i.i, %Vec_IntGrow.exit.sink.split.i.i.i.i ], [ %i.bk, %bb.n ], [ %i.bk, %bb.m ], [ %i.bk, %3 ]
+Vec_IntGrow.exit.i.i.i.i:                         ; preds = %Vec_IntGrow.exit.sink.split.i.i.i.i, %bb.n, %bb.m
+  %.pre-phi = phi i64 [ %.pre179, %Vec_IntGrow.exit.sink.split.i.i.i.i ], [ %i.bl, %bb.n ], [ %i.bl, %bb.m ] ; 2 uses
+  %3 = phi i32 [ %.pre.i.i.i, %Vec_IntGrow.exit.sink.split.i.i.i.i ], [ %i.bk, %bb.n ], [ %i.bk, %bb.m ]
   %.not3.i.i.i = icmp sgt i64 %.pre-phi, %indvars.iv165
   br i1 %.not3.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i
 
@@ -291,7 +288,7 @@ Vec_IntGrow.exit.i.i.i.i:                         ; preds = %Vec_IntGrow.exit.si
   %i.cg = shl nsw i64 %.pre-phi, 2
   %scevgep.i.i.i.i = getelementptr i8, ptr %i.cf, i64 %i.cg
   %i.ch = trunc nuw nsw i64 %indvars.iv165 to i32
-  %i.ci = sub i32 %i.ch, %4
+  %i.ci = sub i32 %i.ch, %3
   %i.cj = zext i32 %i.ci to i64
   %i.ck = shl nuw nsw i64 %i.cj, 2
   %i.cl = add nuw nsw i64 %i.ck, 4

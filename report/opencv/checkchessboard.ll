@@ -203,7 +203,7 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIfiESt6vectorIS3_SaIS3_EEEEPFbR
   %i.em = phi ptr [ %i.hm, %.thread ], [ %i.eh, %.lr.ph77.preheader ] ; 8 uses
   %i.en = phi ptr [ %i.hn, %.thread ], [ %i.eg, %.lr.ph77.preheader ]
   %i.eo = phi i64 [ %i.hr, %.thread ], [ %i.el, %.lr.ph77.preheader ] ; 3 uses
-  %.03275 = phi i64 [ %i.ep, %.thread ], [ 0, %.lr.ph77.preheader ] ; 8 uses
+  %.03275 = phi i64 [ %i.ep, %.thread ], [ 0, %.lr.ph77.preheader ] ; 7 uses
   %i.ep = add nuw i64 %.03275, 1                  ; 5 uses
   %i.eq = icmp ult i64 %i.ep, %i.eo
   br i1 %i.eq, label %.lr.ph, label %._crit_edge
@@ -227,7 +227,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %exitcond.not, label %._crit_edge, label %bb.j, !llvm.loop !81
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.j, %.lr.ph77
-  %.037.lcssa = phi i64 [ %i.ep, %.lr.ph77 ], [ %.03771, %bb.j ], [ %i.eo, %bb.k ] ; 5 uses
+  %.037.lcssa = phi i64 [ %i.ep, %.lr.ph77 ], [ %.03771, %bb.j ], [ %i.eo, %bb.k ] ; 4 uses
   %i.ey = add i64 %.037.lcssa, 1
   %i.ez = add i64 %.03275, %i.f
   %i.fa = icmp ugt i64 %i.ey, %i.ez
@@ -236,18 +236,14 @@ bb.k:                                             ; preds = %bb.j
 _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.i:        ; preds = %._crit_edge
   %i.fb = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #20 ; 10 uses
   store i64 0, ptr %i.fb, align 4
-  %.not10.i = icmp eq i64 %.03275, %.037.lcssa
-  br i1 %.not10.i, label %.loopexit, label %.lr.ph.i.preheader
-
-.lr.ph.i.preheader:                               ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.i
   %2 = sub i64 %.037.lcssa, %.03275
-  %xtraiter107 = and i64 %2, 3                    ; 2 uses
-  %lcmp.mod108.not = icmp eq i64 %xtraiter107, 0
-  br i1 %lcmp.mod108.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+  %xtraiter106 = and i64 %2, 3                    ; 2 uses
+  %.not10.i = icmp eq i64 %xtraiter106, 0
+  br i1 %.not10.i, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
-.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.prol
-  %.011.i.prol = phi i64 [ %i.fj, %.lr.ph.i.prol ], [ %.03275, %.lr.ph.i.preheader ] ; 2 uses
-  %prol.iter109 = phi i64 [ %prol.iter109.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
+.lr.ph.i.prol:                                    ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.i, %.lr.ph.i.prol
+  %.011.i.prol = phi i64 [ %i.fj, %.lr.ph.i.prol ], [ %.03275, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.i ] ; 2 uses
+  %prol.iter109 = phi i64 [ %prol.iter109.next, %.lr.ph.i.prol ], [ 0, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.i ]
   %i.fc = getelementptr inbounds nuw [8 x i8], ptr %i.em, i64 %.011.i.prol
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 4
   %i.fe = load i32, ptr %i.fd, align 4, !tbaa !72
@@ -258,14 +254,14 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.i:        ; preds = %._crit_edge
   store i32 %i.fi, ptr %i.fg, align 4, !tbaa !71
   %i.fj = add i64 %.011.i.prol, 1                 ; 2 uses
   %prol.iter109.next = add i64 %prol.iter109, 1   ; 2 uses
-  %prol.iter109.cmp.not = icmp eq i64 %prol.iter109.next, %xtraiter107
+  %prol.iter109.cmp.not = icmp eq i64 %prol.iter109.next, %xtraiter106
   br i1 %prol.iter109.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !82
 
-.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
-  %.011.i.unr = phi i64 [ %.03275, %.lr.ph.i.preheader ], [ %i.fj, %.lr.ph.i.prol ]
+.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.i
+  %.011.i.unr = phi i64 [ %.03275, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.i ], [ %i.fj, %.lr.ph.i.prol ]
   %i.fk = sub i64 %.03275, %.037.lcssa
   %i.fl = icmp ugt i64 %i.fk, -4
-  br i1 %i.fl, label %.loopexit.loopexit, label %.lr.ph.i
+  br i1 %i.fl, label %.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
   %.011.i = phi i64 [ %i.go, %.lr.ph.i ], [ %.011.i.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
@@ -303,15 +299,9 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.i:        ; preds = %._crit_edge
   store i32 %i.gn, ptr %i.gl, align 4, !tbaa !71
   %i.go = add i64 %.011.i, 4                      ; 2 uses
   %.not.i.3 = icmp eq i64 %i.go, %.037.lcssa
-  br i1 %.not.i.3, label %.loopexit.loopexit, label %.lr.ph.i, !llvm.loop !83
+  br i1 %.not.i.3, label %.loopexit, label %.lr.ph.i, !llvm.loop !83
 
-.loopexit.loopexit:                               ; preds = %.lr.ph.i, %.lr.ph.i.prol.loopexit
-  %.pre = load i32, ptr %i.fb, align 4, !tbaa !71
-  %3 = sitofp i32 %.pre to double
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.i
-  %4 = phi double [ %3, %.loopexit.loopexit ], [ 0.000000e+00, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.i ]
+.loopexit:                                        ; preds = %.lr.ph.i, %.lr.ph.i.prol.loopexit
   %i.gp = load <2 x i32>, ptr %1, align 4, !tbaa !71
   %i.gq = sitofp <2 x i32> %i.gp to <2 x double>
   %i.gr = fmul nnan <2 x double> %i.gq, splat (double 5.000000e-01) ; 3 uses
@@ -322,6 +312,8 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i.i:        ; preds = %._crit_edge
   %i.gw = fmul nnan double %i.gt, %i.gv
   %i.gx = insertelement <2 x double> poison, double %i.gw, i64 0
   %i.gy = tail call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %i.gx)
+  %3 = load i32, ptr %i.fb, align 4, !tbaa !71
+  %4 = sitofp i32 %3 to double
   %i.gz = sitofp i32 %i.gy to double
   %i.ha = fmul nnan double %i.gz, 7.500000e-01
   %i.hb = fcmp ogt double %i.ha, %4

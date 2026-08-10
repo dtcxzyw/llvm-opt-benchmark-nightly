@@ -203,7 +203,7 @@ bb.bf:                                            ; preds = %._crit_edge
 bb.bg:                                            ; preds = %bb.bf
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #16
   %i.df = invoke noalias noundef nonnull dereferenceable(2048) ptr @_Znam(i64 noundef 2048) #19
-          to label %.noexc.i unwind label %bb.bo  ; 12 uses
+          to label %.noexc.i unwind label %bb.bo  ; 10 uses
 
 .noexc.i:                                         ; preds = %bb.bg
   %i.dg = invoke noalias noundef nonnull dereferenceable(262144) ptr @_Znam(i64 noundef 262144) #19
@@ -247,17 +247,18 @@ bb.bg:                                            ; preds = %bb.bf
   %i.dx = icmp eq i32 %i.dw, 1
   %i.dy = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %5, i1 true)
   %i.dz = fmul float %i.cu, %i.cu
-  br i1 %i.dx, label %.lr.ph339.i.us, label %.lr.ph339.i
+  br label %.lr.ph339.i.us
 
-.lr.ph339.i.us:                                   ; preds = %.preheader.lr.ph.i, %._crit_edge340.i.us
-  %indvars.iv396.i.us = phi i64 [ %indvars.iv.next397.i.us, %._crit_edge340.i.us ], [ 0, %.preheader.lr.ph.i ] ; 6 uses
-  %60 = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %indvars.iv396.i.us
-  %61 = load ptr, ptr %60, align 8, !tbaa !35
-  %62 = trunc nuw nsw i64 %indvars.iv396.i.us to i32 ; 2 uses
-  br label %.split1.us.i.us
+.lr.ph339.i.us:                                   ; preds = %.preheader.lr.ph.i, %._crit_edge340.i
+  %indvars.iv396.i.us = phi i64 [ 0, %.preheader.lr.ph.i ], [ %indvars.iv.next397.i, %._crit_edge340.i ] ; 9 uses
+  %60 = trunc nuw nsw i64 %indvars.iv396.i.us to i32
+  %61 = uitofp nneg i32 %60 to double
+  %62 = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %indvars.iv396.i.us
+  %63 = load ptr, ptr %62, align 8, !tbaa !35     ; 2 uses
+  br i1 %i.dx, label %.split1.us.i.us, label %.lr.ph339.split.i
 
-.split1.us.i.us:                                  ; preds = %bb.bm, %.lr.ph339.i.us
-  %indvars.iv401.i.us = phi i64 [ %indvars.iv396.i.us, %.lr.ph339.i.us ], [ %indvars.iv.next402.i.us, %bb.bm ] ; 5 uses
+.split1.us.i.us:                                  ; preds = %.lr.ph339.i.us, %bb.bm
+  %indvars.iv401.i.us = phi i64 [ %indvars.iv.next402.i.us, %bb.bm ], [ %indvars.iv396.i.us, %.lr.ph339.i.us ] ; 5 uses
   %i.ea = sub nsw i64 %indvars.iv396.i.us, %indvars.iv401.i.us
   %i.eb = trunc nsw i64 %i.ea to i32
   %i.ec = sitofp i32 %i.eb to float               ; 3 uses
@@ -272,12 +273,9 @@ bb.bg:                                            ; preds = %bb.bf
   ]
 
 bb.bh:                                            ; preds = %.split1.us.i.us
-  %i.ee = trunc nuw nsw i64 %indvars.iv401.i.us to i32 ; 2 uses
-  %.sroa.speculated286.us.i.us = call i32 @llvm.umin.i32(i32 %i.ee, i32 %62)
-  %63 = uitofp nneg i32 %.sroa.speculated286.us.i.us to double
-  %.sroa.speculated283.us.i.us = call i32 @llvm.umax.i32(i32 %62, i32 %i.ee)
-  %i.ef = uitofp nneg i32 %.sroa.speculated283.us.i.us to double
-  %i.eg = fdiv double %63, %i.ef
+  %i.ee = trunc nuw nsw i64 %indvars.iv401.i.us to i32
+  %i.ef = uitofp nneg i32 %i.ee to double
+  %i.eg = fdiv double %61, %i.ef
   %i.eh = fptrunc double %i.eg to float
   br label %bb.bm
 
@@ -311,22 +309,11 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk, %bb.
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !35
   %i.ew = getelementptr inbounds nuw [4 x i8], ptr %i.ev, i64 %indvars.iv396.i.us
   store float %.0187.us.i.us, ptr %i.ew, align 4, !tbaa !48
-  %i.ex = getelementptr inbounds nuw [4 x i8], ptr %61, i64 %indvars.iv401.i.us
+  %i.ex = getelementptr inbounds nuw [4 x i8], ptr %63, i64 %indvars.iv401.i.us
   store float %.0187.us.i.us, ptr %i.ex, align 4, !tbaa !48
   %indvars.iv.next402.i.us = add nuw nsw i64 %indvars.iv401.i.us, 1 ; 2 uses
   %exitcond302.not = icmp eq i64 %indvars.iv.next402.i.us, 256
-  br i1 %exitcond302.not, label %._crit_edge340.i.us, label %.split1.us.i.us, !llvm.loop !50
-
-._crit_edge340.i.us:                              ; preds = %bb.bm
-  %indvars.iv.next397.i.us = add nuw nsw i64 %indvars.iv396.i.us, 1 ; 2 uses
-  %exitcond303.not = icmp eq i64 %indvars.iv.next397.i.us, 256
-  br i1 %exitcond303.not, label %.loopexit.i, label %.lr.ph339.i.us, !llvm.loop !51
-
-.lr.ph339.i:                                      ; preds = %.preheader.lr.ph.i, %._crit_edge340.i
-  %indvars.iv396.i = phi i64 [ %indvars.iv.next397.i, %._crit_edge340.i ], [ 0, %.preheader.lr.ph.i ] ; 5 uses
-  %64 = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %indvars.iv396.i
-  %65 = load ptr, ptr %64, align 8, !tbaa !35
-  br label %.lr.ph339.split.i
+  br i1 %exitcond302.not, label %._crit_edge340.i, label %.split1.us.i.us, !llvm.loop !50
 
 bb.bn:                                            ; preds = %bb.bf
   %i.ey = landingpad { ptr, i32 }
@@ -339,14 +326,14 @@ bb.bo:                                            ; preds = %.loopexit.i, %.noex
           cleanup
   br label %bb.dj
 
-._crit_edge340.i:                                 ; preds = %.lr.ph339.split.i
-  %indvars.iv.next397.i = add nuw nsw i64 %indvars.iv396.i, 1 ; 2 uses
+._crit_edge340.i:                                 ; preds = %.lr.ph339.split.i, %bb.bm
+  %indvars.iv.next397.i = add nuw nsw i64 %indvars.iv396.i.us, 1 ; 2 uses
   %exitcond301.not = icmp eq i64 %indvars.iv.next397.i, 256
-  br i1 %exitcond301.not, label %.loopexit.i, label %.lr.ph339.i, !llvm.loop !51
+  br i1 %exitcond301.not, label %.loopexit.i, label %.lr.ph339.i.us, !llvm.loop !51
 
-.lr.ph339.split.i:                                ; preds = %.lr.ph339.i, %.lr.ph339.split.i
-  %indvars.iv398.i = phi i64 [ %indvars.iv.next399.i, %.lr.ph339.split.i ], [ %indvars.iv396.i, %.lr.ph339.i ] ; 4 uses
-  %i.fa = sub nsw i64 %indvars.iv396.i, %indvars.iv398.i
+.lr.ph339.split.i:                                ; preds = %.lr.ph339.i.us, %.lr.ph339.split.i
+  %indvars.iv398.i = phi i64 [ %indvars.iv.next399.i, %.lr.ph339.split.i ], [ %indvars.iv396.i.us, %.lr.ph339.i.us ] ; 4 uses
+  %i.fa = sub nsw i64 %indvars.iv396.i.us, %indvars.iv398.i
   %i.fb = trunc nsw i64 %i.fa to i32
   %i.fc = sitofp i32 %i.fb to float
   %i.fd = call noundef float @llvm.fabs.f32(float %i.fc) ; 2 uses
@@ -356,9 +343,9 @@ bb.bo:                                            ; preds = %.loopexit.i, %.noex
   %i.fh = call noundef float @expf(float noundef %i.fg) #16 ; 2 uses
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %indvars.iv398.i
   %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !35
-  %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.fj, i64 %indvars.iv396.i
+  %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.fj, i64 %indvars.iv396.i.us
   store float %i.fh, ptr %i.fk, align 4, !tbaa !48
-  %i.fl = getelementptr inbounds nuw [4 x i8], ptr %65, i64 %indvars.iv398.i
+  %i.fl = getelementptr inbounds nuw [4 x i8], ptr %63, i64 %indvars.iv398.i
   store float %i.fh, ptr %i.fl, align 4, !tbaa !48
   %indvars.iv.next399.i = add nuw nsw i64 %indvars.iv398.i, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next399.i, 256
@@ -761,9 +748,9 @@ bb.di:                                            ; preds = %bb.dh, %bb.bs
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #16
   br label %bb.dj
 
-.loopexit.i:                                      ; preds = %._crit_edge340.i, %._crit_edge340.i.us, %._crit_edge337.i, %._crit_edge
-  %.0223 = phi i32 [ 256, %._crit_edge ], [ %.sroa.speculated274.i, %._crit_edge337.i ], [ 256, %._crit_edge340.i.us ], [ 256, %._crit_edge340.i ] ; 3 uses
-  %.0222 = phi ptr [ null, %._crit_edge ], [ %i.js, %._crit_edge337.i ], [ %i.df, %._crit_edge340.i.us ], [ %i.df, %._crit_edge340.i ] ; 3 uses
+.loopexit.i:                                      ; preds = %._crit_edge340.i, %._crit_edge337.i, %._crit_edge
+  %.0223 = phi i32 [ 256, %._crit_edge ], [ %.sroa.speculated274.i, %._crit_edge337.i ], [ 256, %._crit_edge340.i ] ; 3 uses
+  %.0222 = phi ptr [ null, %._crit_edge ], [ %i.js, %._crit_edge337.i ], [ %i.df, %._crit_edge340.i ] ; 3 uses
   %i.tn = invoke noundef nonnull align 8 dereferenceable(208) ptr @_ZN2cv3MataSERKS0_(ptr noundef nonnull align 8 dereferenceable(208) %43, ptr noundef nonnull align 8 dereferenceable(208) %29)
           to label %_ZN12_GLOBAL__N_115featureIndexingERN2cv3MatERPPfRifi.exit unwind label %bb.bo ; 0 uses
 
@@ -1164,12 +1151,6 @@ declare void @llvm.assume(i1 noundef) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #10
