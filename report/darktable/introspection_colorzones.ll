@@ -204,13 +204,13 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
 
 bb.c:                                             ; preds = %bb.b
   %i.ad = load float, ptr %i.s, align 4, !tbaa !16
-  %6 = fmul reassoc nsz arcp contract afn float %i.ad, f0x3C23D70A
-  %7 = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %6, float 1.000000e+00)
+  %6 = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %i.ad, float 1.000000e+02)
+  %7 = fmul reassoc nnan nsz arcp contract afn float %6, f0x3C23D70A
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
-  %8 = fmul reassoc nsz arcp contract afn float %i.ac, 7.812500e-03
-  %9 = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %8, float 1.000000e+00)
+  %8 = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %i.ac, float 1.280000e+02)
+  %9 = fmul reassoc nnan nsz arcp contract afn float %8, 7.812500e-03
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.b
