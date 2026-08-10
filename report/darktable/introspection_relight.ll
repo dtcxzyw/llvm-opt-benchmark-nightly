@@ -203,14 +203,13 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load float, ptr %i.h, align 16, !tbaa !63
   %i.j = insertelement <2 x float> poison, float %i.g, i64 0
   %i.k = insertelement <2 x float> %i.j, float %i.i, i64 1
-  %3 = fmul reassoc nsz arcp contract afn <2 x float> %i.k, splat (float f0x3C23D70A)
-  %i.l = tail call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %3, <2 x float> zeroinitializer)
-  %i.m = tail call reassoc nsz arcp contract afn <2 x float> @llvm.minnum.v2f32(<2 x float> %i.l, <2 x float> splat (float 1.000000e+00))
-  %4 = fmul reassoc nnan nsz arcp contract afn float %i.d, f0x3C23D70A
-  %i.n = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %4, float 0.000000e+00)
-  %5 = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %i.n, float 1.000000e+00)
-  %i.o = fpext <2 x float> %i.m to <2 x double>
-  %i.p = fpext reassoc nsz arcp contract afn float %5 to double
+  %i.l = tail call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.k, <2 x float> zeroinitializer)
+  %i.m = tail call reassoc nnan nsz arcp contract afn <2 x float> @llvm.minnum.v2f32(<2 x float> %i.l, <2 x float> splat (float 1.000000e+02))
+  %3 = fmul reassoc nnan nsz arcp contract afn <2 x float> %i.m, splat (float f0x3C23D70A)
+  %i.n = tail call reassoc nnan nsz arcp contract afn float @llvm.minnum.f32(float %i.d, float 1.000000e+02)
+  %4 = fmul reassoc nnan nsz arcp contract afn float %i.n, f0x3C23D70A
+  %i.o = fpext <2 x float> %3 to <2 x double>
+  %i.p = fpext reassoc nsz arcp contract afn float %4 to double
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -444,9 +443,6 @@ declare double @dtgtk_gradient_slider_get_value(ptr noundef) local_unnamed_addr 
 declare void @dt_dev_add_history_item(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
 
 declare void @gtk_widget_set_hexpand(ptr noundef, i32 noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.maxnum.f32(float, float) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.minnum.f32(float, float) #5
