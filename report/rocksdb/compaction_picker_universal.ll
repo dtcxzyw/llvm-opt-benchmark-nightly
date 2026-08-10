@@ -204,7 +204,7 @@ iter.check306:                                    ; preds = %_ZNSt6vectorIN7rock
   %i.bv = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
   store ptr %i.bt, ptr %i.bv, align 8, !tbaa !373
   store ptr %scevgep.i.i.i.i.i, ptr %i.bu, align 8, !tbaa !370
-  %min.iters.check280 = icmp ult i32 %i.bh, 4
+  %min.iters.check280 = icmp ult i32 %i.bh, 8
   br i1 %min.iters.check280, label %.lr.ph182.preheader, label %vector.main.loop.iter.check281
 
 vector.main.loop.iter.check281:                   ; preds = %iter.check306
@@ -250,34 +250,34 @@ middle.block304:                                  ; preds = %vector.body287
   br i1 %cmp.n, label %.preheader, label %vec.epilog.iter.check308
 
 vec.epilog.iter.check308:                         ; preds = %middle.block304
-  %i.by = and i32 %i.bh, 28
+  %i.by = and i32 %i.bh, 24
   %min.epilog.iters.check309 = icmp eq i32 %i.by, 0
   br i1 %min.epilog.iters.check309, label %.lr.ph182.preheader, label %vec.epilog.ph310, !prof !543
 
 vec.epilog.ph310:                                 ; preds = %vector.main.loop.iter.check281, %vec.epilog.iter.check308
   %vec.epilog.resume.val305 = phi i64 [ %n.vec284, %vec.epilog.iter.check308 ], [ 0, %vector.main.loop.iter.check281 ] ; 3 uses
-  %n.vec311 = and i64 %i.bi, -4                   ; 3 uses
-  %broadcast.splatinsert312 = insertelement <4 x i32> poison, i32 %i.ba, i64 0
-  %broadcast.splat313 = shufflevector <4 x i32> %broadcast.splatinsert312, <4 x i32> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert314 = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val305, i64 0
-  %broadcast.splat315 = shufflevector <4 x i64> %broadcast.splatinsert314, <4 x i64> poison, <4 x i32> zeroinitializer
-  %induction316 = or disjoint <4 x i64> %broadcast.splat315, <i64 0, i64 1, i64 2, i64 3>
+  %n.vec311 = and i64 %i.bi, -8                   ; 3 uses
+  %broadcast.splatinsert312 = insertelement <8 x i32> poison, i32 %i.ba, i64 0
+  %broadcast.splat313 = shufflevector <8 x i32> %broadcast.splatinsert312, <8 x i32> poison, <8 x i32> zeroinitializer
+  %broadcast.splatinsert314 = insertelement <8 x i64> poison, i64 %vec.epilog.resume.val305, i64 0
+  %broadcast.splat315 = shufflevector <8 x i64> %broadcast.splatinsert314, <8 x i64> poison, <8 x i32> zeroinitializer
+  %induction316 = or disjoint <8 x i64> %broadcast.splat315, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
   %i.bz = trunc nsw i64 %vec.epilog.resume.val305 to i32
-  %broadcast.splatinsert317 = insertelement <4 x i32> poison, i32 %i.bz, i64 0
-  %broadcast.splat318 = shufflevector <4 x i32> %broadcast.splatinsert317, <4 x i32> poison, <4 x i32> zeroinitializer
-  %induction319 = or disjoint <4 x i32> %broadcast.splat318, <i32 0, i32 1, i32 2, i32 3>
+  %broadcast.splatinsert317 = insertelement <8 x i32> poison, i32 %i.bz, i64 0
+  %broadcast.splat318 = shufflevector <8 x i32> %broadcast.splatinsert317, <8 x i32> poison, <8 x i32> zeroinitializer
+  %induction319 = or disjoint <8 x i32> %broadcast.splat318, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   br label %vec.epilog.vector.body320
 
 vec.epilog.vector.body320:                        ; preds = %vec.epilog.vector.body320, %vec.epilog.ph310
   %index321 = phi i64 [ %vec.epilog.resume.val305, %vec.epilog.ph310 ], [ %index.next325, %vec.epilog.vector.body320 ]
-  %vec.ind322 = phi <4 x i64> [ %induction316, %vec.epilog.ph310 ], [ %vec.ind.next326, %vec.epilog.vector.body320 ] ; 2 uses
-  %vec.ind323 = phi <4 x i32> [ %induction319, %vec.epilog.ph310 ], [ %vec.ind.next327, %vec.epilog.vector.body320 ] ; 2 uses
-  %12 = add nsw <4 x i32> %broadcast.splat313, %vec.ind323
-  %wide.gep324 = getelementptr inbounds nuw [56 x i8], ptr %i.bs, <4 x i64> %vec.ind322
-  tail call void @llvm.masked.scatter.v4i32.v4p0(<4 x i32> %12, <4 x ptr> align 8 %wide.gep324, <4 x i1> splat (i1 true)), !tbaa !354
-  %index.next325 = add nuw i64 %index321, 4       ; 2 uses
-  %vec.ind.next326 = add nuw <4 x i64> %vec.ind322, splat (i64 4)
-  %vec.ind.next327 = add <4 x i32> %vec.ind323, splat (i32 4)
+  %vec.ind322 = phi <8 x i64> [ %induction316, %vec.epilog.ph310 ], [ %vec.ind.next326, %vec.epilog.vector.body320 ] ; 2 uses
+  %vec.ind323 = phi <8 x i32> [ %induction319, %vec.epilog.ph310 ], [ %vec.ind.next327, %vec.epilog.vector.body320 ] ; 2 uses
+  %12 = add nsw <8 x i32> %broadcast.splat313, %vec.ind323
+  %wide.gep324 = getelementptr inbounds nuw [56 x i8], ptr %i.bs, <8 x i64> %vec.ind322
+  tail call void @llvm.masked.scatter.v8i32.v8p0(<8 x i32> %12, <8 x ptr> align 8 %wide.gep324, <8 x i1> splat (i1 true)), !tbaa !354
+  %index.next325 = add nuw i64 %index321, 8       ; 2 uses
+  %vec.ind.next326 = add nuw <8 x i64> %vec.ind322, splat (i64 8)
+  %vec.ind.next327 = add <8 x i32> %vec.ind323, splat (i32 8)
   %i.ca = icmp eq i64 %index.next325, %n.vec311
   br i1 %i.ca, label %vec.epilog.middle.block328, label %vec.epilog.vector.body320, !llvm.loop !544
 
@@ -680,7 +680,7 @@ iter.check583:                                    ; preds = %_ZNSt6vectorIN7rock
   %i.jm = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   store ptr %i.jk, ptr %i.jm, align 8, !tbaa !373
   store ptr %scevgep.i.i.i.i.i, ptr %i.jl, align 8, !tbaa !370
-  %min.iters.check557 = icmp ult i32 %i.jd, 4
+  %min.iters.check557 = icmp ult i32 %i.jd, 8
   br i1 %min.iters.check557, label %.lr.ph375.preheader, label %vector.main.loop.iter.check558
 
 vector.main.loop.iter.check558:                   ; preds = %iter.check583
@@ -726,34 +726,34 @@ middle.block581:                                  ; preds = %vector.body564
   br i1 %cmp.n, label %.preheader, label %vec.epilog.iter.check585
 
 vec.epilog.iter.check585:                         ; preds = %middle.block581
-  %i.jp = and i32 %i.jd, 28
+  %i.jp = and i32 %i.jd, 24
   %min.epilog.iters.check586 = icmp eq i32 %i.jp, 0
   br i1 %min.epilog.iters.check586, label %.lr.ph375.preheader, label %vec.epilog.ph587, !prof !543
 
 vec.epilog.ph587:                                 ; preds = %vector.main.loop.iter.check558, %vec.epilog.iter.check585
   %vec.epilog.resume.val582 = phi i64 [ %n.vec561, %vec.epilog.iter.check585 ], [ 0, %vector.main.loop.iter.check558 ] ; 3 uses
-  %n.vec588 = and i64 %i.je, -4                   ; 3 uses
-  %broadcast.splatinsert589 = insertelement <4 x i32> poison, i32 %i.hz, i64 0
-  %broadcast.splat590 = shufflevector <4 x i32> %broadcast.splatinsert589, <4 x i32> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert591 = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val582, i64 0
-  %broadcast.splat592 = shufflevector <4 x i64> %broadcast.splatinsert591, <4 x i64> poison, <4 x i32> zeroinitializer
-  %induction593 = or disjoint <4 x i64> %broadcast.splat592, <i64 0, i64 1, i64 2, i64 3>
+  %n.vec588 = and i64 %i.je, -8                   ; 3 uses
+  %broadcast.splatinsert589 = insertelement <8 x i32> poison, i32 %i.hz, i64 0
+  %broadcast.splat590 = shufflevector <8 x i32> %broadcast.splatinsert589, <8 x i32> poison, <8 x i32> zeroinitializer
+  %broadcast.splatinsert591 = insertelement <8 x i64> poison, i64 %vec.epilog.resume.val582, i64 0
+  %broadcast.splat592 = shufflevector <8 x i64> %broadcast.splatinsert591, <8 x i64> poison, <8 x i32> zeroinitializer
+  %induction593 = or disjoint <8 x i64> %broadcast.splat592, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
   %i.jq = trunc nsw i64 %vec.epilog.resume.val582 to i32
-  %broadcast.splatinsert594 = insertelement <4 x i32> poison, i32 %i.jq, i64 0
-  %broadcast.splat595 = shufflevector <4 x i32> %broadcast.splatinsert594, <4 x i32> poison, <4 x i32> zeroinitializer
-  %induction596 = or disjoint <4 x i32> %broadcast.splat595, <i32 0, i32 1, i32 2, i32 3>
+  %broadcast.splatinsert594 = insertelement <8 x i32> poison, i32 %i.jq, i64 0
+  %broadcast.splat595 = shufflevector <8 x i32> %broadcast.splatinsert594, <8 x i32> poison, <8 x i32> zeroinitializer
+  %induction596 = or disjoint <8 x i32> %broadcast.splat595, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   br label %vec.epilog.vector.body597
 
 vec.epilog.vector.body597:                        ; preds = %vec.epilog.vector.body597, %vec.epilog.ph587
   %index598 = phi i64 [ %vec.epilog.resume.val582, %vec.epilog.ph587 ], [ %index.next602, %vec.epilog.vector.body597 ]
-  %vec.ind599 = phi <4 x i64> [ %induction593, %vec.epilog.ph587 ], [ %vec.ind.next603, %vec.epilog.vector.body597 ] ; 2 uses
-  %vec.ind600 = phi <4 x i32> [ %induction596, %vec.epilog.ph587 ], [ %vec.ind.next604, %vec.epilog.vector.body597 ] ; 2 uses
-  %10 = add nsw <4 x i32> %broadcast.splat590, %vec.ind600
-  %wide.gep601 = getelementptr inbounds nuw [56 x i8], ptr %i.jj, <4 x i64> %vec.ind599
-  call void @llvm.masked.scatter.v4i32.v4p0(<4 x i32> %10, <4 x ptr> align 8 %wide.gep601, <4 x i1> splat (i1 true)), !tbaa !354
-  %index.next602 = add nuw i64 %index598, 4       ; 2 uses
-  %vec.ind.next603 = add nuw <4 x i64> %vec.ind599, splat (i64 4)
-  %vec.ind.next604 = add <4 x i32> %vec.ind600, splat (i32 4)
+  %vec.ind599 = phi <8 x i64> [ %induction593, %vec.epilog.ph587 ], [ %vec.ind.next603, %vec.epilog.vector.body597 ] ; 2 uses
+  %vec.ind600 = phi <8 x i32> [ %induction596, %vec.epilog.ph587 ], [ %vec.ind.next604, %vec.epilog.vector.body597 ] ; 2 uses
+  %10 = add nsw <8 x i32> %broadcast.splat590, %vec.ind600
+  %wide.gep601 = getelementptr inbounds nuw [56 x i8], ptr %i.jj, <8 x i64> %vec.ind599
+  call void @llvm.masked.scatter.v8i32.v8p0(<8 x i32> %10, <8 x ptr> align 8 %wide.gep601, <8 x i1> splat (i1 true)), !tbaa !354
+  %index.next602 = add nuw i64 %index598, 8       ; 2 uses
+  %vec.ind.next603 = add nuw <8 x i64> %vec.ind599, splat (i64 8)
+  %vec.ind.next604 = add <8 x i32> %vec.ind600, splat (i32 8)
   %i.jr = icmp eq i64 %index.next602, %n.vec588
   br i1 %i.jr, label %vec.epilog.middle.block605, label %vec.epilog.vector.body597, !llvm.loop !591
 
@@ -1155,9 +1155,6 @@ declare <4 x i64> @llvm.masked.gather.v4i64.v4p0(<4 x ptr>, <4 x i1>, <4 x i64>)
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
 declare void @llvm.masked.scatter.v8i32.v8p0(<8 x i32>, <8 x ptr>, <8 x i1>) #27
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
-declare void @llvm.masked.scatter.v4i32.v4p0(<4 x i32>, <4 x ptr>, <4 x i1>) #27
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { nounwind uwtable "frame-pointer"="non-leaf-no-reserve" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
@@ -1561,7 +1558,7 @@ begin_hunk_3_@llvm.masked.scatter.v4i32.v4p0/@llvm.masked.scatter.v8i32.v8p0
 !540 = distinct !{!540, !237}
 !541 = distinct !{!541, !237, !269, !268}
 !542 = distinct !{!542, !237, !268, !269}
-!543 = !{!"branch_weights", i32 4, i32 28}
+!543 = !{!"branch_weights", i32 8, i32 24}
 !544 = distinct !{!544, !237, !268, !269}
 !545 = distinct !{!545, !237, !269, !268}
 !546 = !{!547}

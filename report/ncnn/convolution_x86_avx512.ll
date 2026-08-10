@@ -204,24 +204,24 @@ begin_hunk_0_@_ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6Op
   %.02978.lcssa = phi ptr [ %i.drm, %.noexc3387 ], [ %.12979.lcssa, %._crit_edge9331.loopexit ] ; 2 uses
   %i.epp = shufflevector <16 x i32> %i.epn, <16 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.epq = shufflevector <16 x i32> %i.epn, <16 x i32> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.epr = call <8 x i32> @llvm.x86.avx2.phadd.d(<8 x i32> %i.epp, <8 x i32> %i.epq) ; 2 uses
+  %i.epr = call <8 x i32> @llvm.x86.avx2.phadd.d(<8 x i32> %i.epp, <8 x i32> %i.epq) ; 3 uses
   %i.eps = shufflevector <16 x i32> %i.epo, <16 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.ept = shufflevector <16 x i32> %i.epo, <16 x i32> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.epu = call <8 x i32> @llvm.x86.avx2.phadd.d(<8 x i32> %i.eps, <8 x i32> %i.ept) ; 2 uses
+  %i.epu = call <8 x i32> @llvm.x86.avx2.phadd.d(<8 x i32> %i.eps, <8 x i32> %i.ept) ; 3 uses
   %i.epv = shufflevector <8 x i32> %i.epr, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.epw = shufflevector <8 x i32> %i.epr, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %i.epx = add <4 x i32> %i.epv, %i.epw           ; 4 uses
+  %i.epx = add <4 x i32> %i.epv, %i.epw           ; 2 uses
   %i.epy = shufflevector <8 x i32> %i.epu, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.epz = shufflevector <8 x i32> %i.epu, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %i.eqa = add <4 x i32> %i.epy, %i.epz           ; 4 uses
-  %shift = shufflevector <4 x i32> %i.epx, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = add nsw <4 x i32> %i.epx, %shift
+  %i.eqa = add <4 x i32> %i.epy, %i.epz           ; 2 uses
+  %10 = shufflevector <8 x i32> %i.epr, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %shift12044 = shufflevector <4 x i32> %i.epx, <4 x i32> poison, <4 x i32> <i32 poison, i32 poison, i32 3, i32 poison>
   %foldExtExtBinop12045 = add nsw <4 x i32> %i.epx, %shift12044
-  %shift12047 = shufflevector <4 x i32> %i.eqa, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop12048 = add nsw <4 x i32> %i.eqa, %shift12047
+  %11 = extractelement <4 x i32> %foldExtExtBinop12045, i64 2
+  %12 = shufflevector <8 x i32> %i.epu, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %shift12050 = shufflevector <4 x i32> %i.eqa, <4 x i32> poison, <4 x i32> <i32 poison, i32 poison, i32 3, i32 poison>
   %foldExtExtBinop12051 = add nsw <4 x i32> %i.eqa, %shift12050
+  %13 = extractelement <4 x i32> %foldExtExtBinop12051, i64 2
   %i.eqb = or disjoint i32 %.02986.lcssa, 7
   %i.eqc = icmp slt i32 %i.eqb, %i.ele
   br i1 %i.eqc, label %.noexc3381.lr.ph, label %._crit_edge9362
@@ -355,40 +355,22 @@ begin_hunk_0_@_ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6Op
   br i1 %exitcond10733.not, label %._crit_edge9351.loopexit10028, label %.lr.ph9350.split, !llvm.loop !1881
 
 ._crit_edge9362:                                  ; preds = %._crit_edge9351, %._crit_edge9331
-  %i.eta = phi <8 x i32> [ zeroinitializer, %._crit_edge9331 ], [ %i.esb, %._crit_edge9351 ] ; 4 uses
-  %i.etb = phi <8 x i32> [ zeroinitializer, %._crit_edge9331 ], [ %i.esc, %._crit_edge9351 ] ; 4 uses
+  %i.eta = phi <8 x i32> [ zeroinitializer, %._crit_edge9331 ], [ %i.esb, %._crit_edge9351 ] ; 2 uses
+  %i.etb = phi <8 x i32> [ zeroinitializer, %._crit_edge9331 ], [ %i.esc, %._crit_edge9351 ] ; 2 uses
   %.12987.lcssa = phi i32 [ %.02986.lcssa, %._crit_edge9331 ], [ %i.esd, %._crit_edge9351 ] ; 6 uses
   %.22980.lcssa = phi ptr [ %.02978.lcssa, %._crit_edge9331 ], [ %.32981.lcssa, %._crit_edge9351 ] ; 3 uses
-  %10 = shufflevector <8 x i32> %i.eta, <8 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
   %i.etc = shufflevector <8 x i32> %i.eta, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %11 = add <4 x i32> %10, %i.etc                 ; 2 uses
-  %12 = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %13 = add <4 x i32> %12, %11
-  %foldExtExtBinop12053 = add nsw <4 x i32> %foldExtExtBinop, %13
-  %14 = extractelement <4 x i32> %foldExtExtBinop12053, i64 0 ; 3 uses
-  %15 = shufflevector <8 x i32> %i.eta, <8 x i32> poison, <4 x i32> <i32 6, i32 7, i32 6, i32 7>
+  %foldExtExtBinop12053 = add <4 x i32> %10, %i.etc
+  %14 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %foldExtExtBinop12053) ; 3 uses
   %i.etd = shufflevector <8 x i32> %i.eta, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %16 = add <4 x i32> %15, %i.etd                 ; 2 uses
-  %17 = shufflevector <4 x i32> %16, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %18 = add <4 x i32> %17, %16
-  %shift12055 = shufflevector <4 x i32> %foldExtExtBinop12045, <4 x i32> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop12056 = add nsw <4 x i32> %shift12055, %18
-  %19 = extractelement <4 x i32> %foldExtExtBinop12056, i64 0 ; 3 uses
-  %20 = shufflevector <8 x i32> %i.etb, <8 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
+  %15 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.etd)
+  %16 = add nsw i32 %11, %15                      ; 3 uses
   %i.ete = shufflevector <8 x i32> %i.etb, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %21 = add <4 x i32> %20, %i.ete                 ; 2 uses
-  %22 = shufflevector <4 x i32> %21, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %23 = add <4 x i32> %22, %21
-  %foldExtExtBinop12058 = add nsw <4 x i32> %foldExtExtBinop12048, %23
-  %24 = extractelement <4 x i32> %foldExtExtBinop12058, i64 0 ; 3 uses
-  %25 = shufflevector <8 x i32> %i.etb, <8 x i32> poison, <4 x i32> <i32 6, i32 7, i32 6, i32 7>
+  %foldExtExtBinop12058 = add <4 x i32> %12, %i.ete
+  %17 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %foldExtExtBinop12058) ; 3 uses
   %i.etf = shufflevector <8 x i32> %i.etb, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %26 = add <4 x i32> %25, %i.etf                 ; 2 uses
-  %27 = shufflevector <4 x i32> %26, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %28 = add <4 x i32> %27, %26
-  %shift12060 = shufflevector <4 x i32> %foldExtExtBinop12051, <4 x i32> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop12061 = add nsw <4 x i32> %shift12060, %28
-  %29 = extractelement <4 x i32> %foldExtExtBinop12061, i64 0 ; 3 uses
+  %18 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.etf)
+  %19 = add nsw i32 %13, %18                      ; 3 uses
   %i.etg = or disjoint i32 %.12987.lcssa, 1
   %i.eth = icmp slt i32 %i.etg, %i.ele
   br i1 %i.eth, label %.noexc3377.lr.ph, label %.preheader8135
@@ -453,9 +435,9 @@ begin_hunk_0_@_ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6Op
 iter.check11829:                                  ; preds = %.noexc3377.us.preheader, %._crit_edge9384.us
   %indvars.iv10749 = phi i64 [ %i.eum, %.noexc3377.us.preheader ], [ %indvars.iv.next10750, %._crit_edge9384.us ] ; 2 uses
   %.029509395.us = phi i32 [ %14, %.noexc3377.us.preheader ], [ %.lcssa11457, %._crit_edge9384.us ] ; 3 uses
-  %.029669394.us = phi i32 [ %24, %.noexc3377.us.preheader ], [ %.lcssa11455, %._crit_edge9384.us ] ; 3 uses
-  %.029709393.us = phi i32 [ %19, %.noexc3377.us.preheader ], [ %.lcssa11456, %._crit_edge9384.us ] ; 3 uses
-  %.029749392.us = phi i32 [ %29, %.noexc3377.us.preheader ], [ %.lcssa11454, %._crit_edge9384.us ] ; 3 uses
+  %.029669394.us = phi i32 [ %17, %.noexc3377.us.preheader ], [ %.lcssa11455, %._crit_edge9384.us ] ; 3 uses
+  %.029709393.us = phi i32 [ %16, %.noexc3377.us.preheader ], [ %.lcssa11456, %._crit_edge9384.us ] ; 3 uses
+  %.029749392.us = phi i32 [ %19, %.noexc3377.us.preheader ], [ %.lcssa11454, %._crit_edge9384.us ] ; 3 uses
   %.429829391.us = phi ptr [ %.22980.lcssa, %.noexc3377.us.preheader ], [ %scevgep10745, %._crit_edge9384.us ] ; 7 uses
   %.reass9403.us = mul i64 %factor.op.mul9402, %indvars.iv10749 ; 2 uses
   %gep9406.us = getelementptr i8, ptr %invariant.gep9405, i64 %.reass9403.us ; 41 uses
@@ -858,9 +840,9 @@ vec.epilog.scalar.ph11830:                        ; preds = %vec.epilog.scalar.p
 .preheader8135:                                   ; preds = %.noexc3377.preheader, %.preheader8135.loopexit, %._crit_edge9362
   %.22988.lcssa = phi i32 [ %.12987.lcssa, %._crit_edge9362 ], [ %i.fuh, %.preheader8135.loopexit ], [ %i.eui, %.noexc3377.preheader ] ; 2 uses
   %.42982.lcssa = phi ptr [ %.22980.lcssa, %._crit_edge9362 ], [ %scevgep10745, %.preheader8135.loopexit ], [ %.22980.lcssa, %.noexc3377.preheader ]
-  %.02974.lcssa = phi i32 [ %29, %._crit_edge9362 ], [ %.lcssa11454, %.preheader8135.loopexit ], [ %29, %.noexc3377.preheader ] ; 3 uses
-  %.02970.lcssa = phi i32 [ %19, %._crit_edge9362 ], [ %.lcssa11456, %.preheader8135.loopexit ], [ %19, %.noexc3377.preheader ] ; 3 uses
-  %.02966.lcssa = phi i32 [ %24, %._crit_edge9362 ], [ %.lcssa11455, %.preheader8135.loopexit ], [ %24, %.noexc3377.preheader ] ; 3 uses
+  %.02974.lcssa = phi i32 [ %19, %._crit_edge9362 ], [ %.lcssa11454, %.preheader8135.loopexit ], [ %19, %.noexc3377.preheader ] ; 3 uses
+  %.02970.lcssa = phi i32 [ %16, %._crit_edge9362 ], [ %.lcssa11456, %.preheader8135.loopexit ], [ %16, %.noexc3377.preheader ] ; 3 uses
+  %.02966.lcssa = phi i32 [ %17, %._crit_edge9362 ], [ %.lcssa11455, %.preheader8135.loopexit ], [ %17, %.noexc3377.preheader ] ; 3 uses
   %.02950.lcssa = phi i32 [ %14, %._crit_edge9362 ], [ %.lcssa11457, %.preheader8135.loopexit ], [ %14, %.noexc3377.preheader ] ; 3 uses
   %i.fui = icmp slt i32 %.22988.lcssa, %i.ele
   br i1 %i.fui, label %.noexc3373.lr.ph, label %._crit_edge9437
@@ -1263,14 +1245,14 @@ begin_hunk_2_@_ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6Op
   %.03013.lcssa = phi ptr [ %i.ekr, %.noexc3369 ], [ %scevgep10765, %._crit_edge9483.loopexit ], [ %i.ekr, %.noexc3367.preheader ] ; 2 uses
   %i.gqs = shufflevector <16 x i32> %i.gqr, <16 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.gqt = shufflevector <16 x i32> %i.gqr, <16 x i32> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.gqu = call <8 x i32> @llvm.x86.avx2.phadd.d(<8 x i32> %i.gqs, <8 x i32> %i.gqt) ; 2 uses
+  %i.gqu = call <8 x i32> @llvm.x86.avx2.phadd.d(<8 x i32> %i.gqs, <8 x i32> %i.gqt) ; 3 uses
   %i.gqv = shufflevector <8 x i32> %i.gqu, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.gqw = shufflevector <8 x i32> %i.gqu, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %i.gqx = add <4 x i32> %i.gqv, %i.gqw           ; 4 uses
-  %shift12063 = shufflevector <4 x i32> %i.gqx, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop12064 = add nsw <4 x i32> %i.gqx, %shift12063
-  %shift12066 = shufflevector <4 x i32> %i.gqx, <4 x i32> poison, <4 x i32> <i32 poison, i32 poison, i32 3, i32 poison>
-  %foldExtExtBinop12067 = add nsw <4 x i32> %i.gqx, %shift12066
+  %i.gqx = add <4 x i32> %i.gqv, %i.gqw           ; 2 uses
+  %20 = shufflevector <8 x i32> %i.gqu, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %shift12056 = shufflevector <4 x i32> %i.gqx, <4 x i32> poison, <4 x i32> <i32 poison, i32 poison, i32 3, i32 poison>
+  %foldExtExtBinop12057 = add nsw <4 x i32> %i.gqx, %shift12056
+  %21 = extractelement <4 x i32> %foldExtExtBinop12057, i64 2
   %i.gqy = or disjoint i32 %.03022.lcssa, 7
   %i.gqz = icmp slt i32 %i.gqy, %i.gka
   br i1 %i.gqz, label %.noexc3365.lr.ph, label %._crit_edge9515
@@ -1470,24 +1452,15 @@ begin_hunk_2_@_ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6Op
   br i1 %niter12444.ncmp.1, label %._crit_edge9507.loopexit10025.unr-lcssa, label %.lr.ph9506.split, !llvm.loop !1906
 
 ._crit_edge9515:                                  ; preds = %._crit_edge9507, %._crit_edge9483
-  %i.gvd = phi <8 x i32> [ zeroinitializer, %._crit_edge9483 ], [ %i.gty, %._crit_edge9507 ] ; 4 uses
+  %i.gvd = phi <8 x i32> [ zeroinitializer, %._crit_edge9483 ], [ %i.gty, %._crit_edge9507 ] ; 2 uses
   %.13023.lcssa = phi i32 [ %.03022.lcssa, %._crit_edge9483 ], [ %i.gtz, %._crit_edge9507 ] ; 6 uses
   %.23015.lcssa = phi ptr [ %.03013.lcssa, %._crit_edge9483 ], [ %.33016.lcssa, %._crit_edge9507 ] ; 3 uses
-  %30 = shufflevector <8 x i32> %i.gvd, <8 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
   %i.gve = shufflevector <8 x i32> %i.gvd, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %31 = add <4 x i32> %30, %i.gve                 ; 2 uses
-  %32 = shufflevector <4 x i32> %31, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %33 = add <4 x i32> %32, %31
-  %foldExtExtBinop12069 = add nsw <4 x i32> %foldExtExtBinop12064, %33
-  %34 = extractelement <4 x i32> %foldExtExtBinop12069, i64 0 ; 3 uses
-  %35 = shufflevector <8 x i32> %i.gvd, <8 x i32> poison, <4 x i32> <i32 6, i32 7, i32 6, i32 7>
+  %foldExtExtBinop12069 = add <4 x i32> %20, %i.gve
+  %22 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %foldExtExtBinop12069) ; 3 uses
   %i.gvf = shufflevector <8 x i32> %i.gvd, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %36 = add <4 x i32> %35, %i.gvf                 ; 2 uses
-  %37 = shufflevector <4 x i32> %36, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %38 = add <4 x i32> %37, %36
-  %shift12071 = shufflevector <4 x i32> %foldExtExtBinop12067, <4 x i32> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop12072 = add nsw <4 x i32> %shift12071, %38
-  %39 = extractelement <4 x i32> %foldExtExtBinop12072, i64 0 ; 3 uses
+  %23 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.gvf)
+  %24 = add nsw i32 %21, %23                      ; 3 uses
   %i.gvg = or disjoint i32 %.13023.lcssa, 1
   %i.gvh = icmp slt i32 %i.gvg, %i.gka
   br i1 %i.gvh, label %.noexc3363.lr.ph, label %.preheader8134
@@ -1544,8 +1517,8 @@ begin_hunk_2_@_ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6Op
 
 iter.check11701:                                  ; preds = %.noexc3363.us.preheader, %._crit_edge9529.us
   %indvars.iv10805 = phi i64 [ %i.gwh, %.noexc3363.us.preheader ], [ %indvars.iv.next10806, %._crit_edge9529.us ] ; 2 uses
-  %.030059536.us = phi i32 [ %34, %.noexc3363.us.preheader ], [ %.lcssa11472, %._crit_edge9529.us ] ; 3 uses
-  %.030099535.us = phi i32 [ %39, %.noexc3363.us.preheader ], [ %.lcssa11471, %._crit_edge9529.us ] ; 3 uses
+  %.030059536.us = phi i32 [ %22, %.noexc3363.us.preheader ], [ %.lcssa11472, %._crit_edge9529.us ] ; 3 uses
+  %.030099535.us = phi i32 [ %24, %.noexc3363.us.preheader ], [ %.lcssa11471, %._crit_edge9529.us ] ; 3 uses
   %.430179534.us = phi ptr [ %.23015.lcssa, %.noexc3363.us.preheader ], [ %scevgep10801, %._crit_edge9529.us ] ; 7 uses
   %.reass9542.us = mul i64 %factor.op.mul9541, %indvars.iv10805
   %gep9545.us = getelementptr i8, ptr %invariant.gep9544, i64 %.reass9542.us ; 41 uses
@@ -1948,8 +1921,8 @@ vec.epilog.scalar.ph11702:                        ; preds = %vec.epilog.scalar.p
 .preheader8134:                                   ; preds = %.noexc3363.preheader, %.preheader8134.loopexit, %._crit_edge9515
   %.23024.lcssa = phi i32 [ %.13023.lcssa, %._crit_edge9515 ], [ %i.hkw, %.preheader8134.loopexit ], [ %i.gwd, %.noexc3363.preheader ] ; 2 uses
   %.43017.lcssa = phi ptr [ %.23015.lcssa, %._crit_edge9515 ], [ %scevgep10801, %.preheader8134.loopexit ], [ %.23015.lcssa, %.noexc3363.preheader ]
-  %.03009.lcssa = phi i32 [ %39, %._crit_edge9515 ], [ %.lcssa11471, %.preheader8134.loopexit ], [ %39, %.noexc3363.preheader ] ; 3 uses
-  %.03005.lcssa = phi i32 [ %34, %._crit_edge9515 ], [ %.lcssa11472, %.preheader8134.loopexit ], [ %34, %.noexc3363.preheader ] ; 3 uses
+  %.03009.lcssa = phi i32 [ %24, %._crit_edge9515 ], [ %.lcssa11471, %.preheader8134.loopexit ], [ %24, %.noexc3363.preheader ] ; 3 uses
+  %.03005.lcssa = phi i32 [ %22, %._crit_edge9515 ], [ %.lcssa11472, %.preheader8134.loopexit ], [ %22, %.noexc3363.preheader ] ; 3 uses
   %i.hkx = icmp slt i32 %.23024.lcssa, %i.gka
   br i1 %i.hkx, label %.noexc3361.lr.ph, label %._crit_edge9563
 
@@ -2352,21 +2325,15 @@ begin_hunk_4_@_ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6Op
 
 ._crit_edge9795.loopexit:                         ; preds = %._crit_edge9771
   %i.iyr = and i32 %i.itq, 2147483632
+  %25 = call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.ixu)
+  %26 = call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.ixv)
   br label %._crit_edge9795
 
 ._crit_edge9795:                                  ; preds = %._crit_edge9795.loopexit, %.noexc3325
-  %40 = phi <8 x i32> [ zeroinitializer, %.noexc3325 ], [ %i.ixu, %._crit_edge9795.loopexit ] ; 2 uses
-  %41 = phi <8 x i32> [ zeroinitializer, %.noexc3325 ], [ %i.ixv, %._crit_edge9795.loopexit ] ; 2 uses
+  %27 = phi i32 [ 0, %.noexc3325 ], [ %25, %._crit_edge9795.loopexit ]
+  %28 = phi i32 [ 0, %.noexc3325 ], [ %26, %._crit_edge9795.loopexit ]
   %.02825.lcssa = phi ptr [ %i.ics, %.noexc3325 ], [ %.12826.lcssa, %._crit_edge9795.loopexit ] ; 2 uses
   %.02821.lcssa = phi i32 [ 0, %.noexc3325 ], [ %i.iyr, %._crit_edge9795.loopexit ] ; 3 uses
-  %42 = shufflevector <8 x i32> %40, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %43 = shufflevector <8 x i32> %40, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %44 = add <4 x i32> %42, %43
-  %45 = shufflevector <8 x i32> %41, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %46 = shufflevector <8 x i32> %41, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %47 = add <4 x i32> %45, %46
-  %48 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %44)
-  %49 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %47)
   %i.iys = or disjoint i32 %.02821.lcssa, 7
   %i.iyt = icmp slt i32 %i.iys, %i.itq
   br i1 %i.iyt, label %.noexc3319.lr.ph, label %._crit_edge9826
@@ -2520,7 +2487,7 @@ begin_hunk_4_@_ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6Op
   %i.jbz = add nuw nsw i32 %.128229825, 8         ; 3 uses
   %i.jca = or disjoint i32 %i.jbz, 7
   %i.jcb = icmp slt i32 %i.jca, %i.itq
-  br i1 %i.jcb, label %.noexc3319, label %._crit_edge9826, !llvm.loop !1966
+  br i1 %i.jcb, label %.noexc3319, label %._crit_edge9826.loopexit, !llvm.loop !1966
 
 .lr.ph9814.split:                                 ; preds = %.lr.ph9814, %.lr.ph9814.split
   %indvars.iv10898 = phi i64 [ %indvars.iv.next10899, %.lr.ph9814.split ], [ 0, %.lr.ph9814 ] ; 2 uses
@@ -2549,23 +2516,18 @@ begin_hunk_4_@_ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6Op
   %exitcond10904.not = icmp eq i64 %indvars.iv.next10899, %wide.trip.count10903
   br i1 %exitcond10904.not, label %._crit_edge9815.loopexit10013, label %.lr.ph9814.split, !llvm.loop !1965
 
-._crit_edge9826:                                  ; preds = %._crit_edge9815, %._crit_edge9795
-  %50 = phi <4 x i32> [ zeroinitializer, %._crit_edge9795 ], [ %i.jbx, %._crit_edge9815 ] ; 2 uses
-  %51 = phi <4 x i32> [ zeroinitializer, %._crit_edge9795 ], [ %i.jby, %._crit_edge9815 ] ; 2 uses
-  %.22827.lcssa = phi ptr [ %.02825.lcssa, %._crit_edge9795 ], [ %.32828.lcssa, %._crit_edge9815 ] ; 3 uses
-  %.12822.lcssa = phi i32 [ %.02821.lcssa, %._crit_edge9795 ], [ %i.jbz, %._crit_edge9815 ] ; 6 uses
-  %52 = shufflevector <4 x i32> %50, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
-  %53 = add <4 x i32> %52, %50                    ; 2 uses
-  %54 = shufflevector <4 x i32> %53, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %55 = add <4 x i32> %54, %53
-  %56 = extractelement <4 x i32> %55, i64 0
-  %i.jcu = add nsw i32 %56, %48                   ; 3 uses
-  %57 = shufflevector <4 x i32> %51, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
-  %58 = add <4 x i32> %57, %51                    ; 2 uses
-  %59 = shufflevector <4 x i32> %58, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %60 = add <4 x i32> %59, %58
-  %61 = extractelement <4 x i32> %60, i64 0
-  %i.jcv = add nsw i32 %61, %49                   ; 3 uses
+._crit_edge9826.loopexit:                         ; preds = %._crit_edge9815
+  %29 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.jbx)
+  %30 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.jby)
+  br label %._crit_edge9826
+
+._crit_edge9826:                                  ; preds = %._crit_edge9826.loopexit, %._crit_edge9795
+  %31 = phi i32 [ 0, %._crit_edge9795 ], [ %29, %._crit_edge9826.loopexit ]
+  %32 = phi i32 [ 0, %._crit_edge9795 ], [ %30, %._crit_edge9826.loopexit ]
+  %.22827.lcssa = phi ptr [ %.02825.lcssa, %._crit_edge9795 ], [ %.32828.lcssa, %._crit_edge9826.loopexit ] ; 3 uses
+  %.12822.lcssa = phi i32 [ %.02821.lcssa, %._crit_edge9795 ], [ %i.jbz, %._crit_edge9826.loopexit ] ; 6 uses
+  %i.jcu = add nsw i32 %31, %27                   ; 3 uses
+  %i.jcv = add nsw i32 %32, %28                   ; 3 uses
   %i.jcw = or disjoint i32 %.12822.lcssa, 1
   %i.jcx = icmp slt i32 %i.jcw, %i.itq
   br i1 %i.jcx, label %.noexc3315.lr.ph, label %.preheader8130
@@ -2968,16 +2930,13 @@ begin_hunk_5_@_ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6Op
 
 ._crit_edge9925.loopexit:                         ; preds = %._crit_edge9908.us
   %i.laa = and i32 %i.kuf, 2147483632
+  %33 = call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %.us-phi9911.us.in)
   br label %._crit_edge9925
 
 ._crit_edge9925:                                  ; preds = %.noexc3305.preheader, %._crit_edge9925.loopexit, %.noexc3307
-  %62 = phi <8 x i32> [ zeroinitializer, %.noexc3307 ], [ %.us-phi9911.us.in, %._crit_edge9925.loopexit ], [ zeroinitializer, %.noexc3305.preheader ] ; 2 uses
+  %34 = phi i32 [ 0, %.noexc3307 ], [ %33, %._crit_edge9925.loopexit ], [ 0, %.noexc3305.preheader ]
   %.02759.lcssa = phi ptr [ %i.itk, %.noexc3307 ], [ %scevgep10936, %._crit_edge9925.loopexit ], [ %i.itk, %.noexc3305.preheader ] ; 2 uses
   %.02755.lcssa = phi i32 [ 0, %.noexc3307 ], [ %i.laa, %._crit_edge9925.loopexit ], [ %i.kuz, %.noexc3305.preheader ] ; 3 uses
-  %63 = shufflevector <8 x i32> %62, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %64 = shufflevector <8 x i32> %62, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %65 = add <4 x i32> %63, %64
-  %66 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %65)
   %i.lab = or disjoint i32 %.02755.lcssa, 7
   %i.lac = icmp slt i32 %i.lab, %i.kuf
   br i1 %i.lac, label %.noexc3303.lr.ph, label %._crit_edge9957
@@ -3133,7 +3092,7 @@ begin_hunk_5_@_ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6Op
   %i.lcy = add nuw nsw i32 %.127569956, 8         ; 3 uses
   %i.lcz = or disjoint i32 %i.lcy, 7
   %i.lda = icmp slt i32 %i.lcz, %i.kuf
-  br i1 %i.lda, label %.noexc3303, label %._crit_edge9957, !llvm.loop !1992
+  br i1 %i.lda, label %.noexc3303, label %._crit_edge9957.loopexit, !llvm.loop !1992
 
 .lr.ph9948.split:                                 ; preds = %.lr.ph9948.split.preheader, %.lr.ph9948.split
   %indvars.iv10954 = phi i64 [ %indvars.iv.next10955.1, %.lr.ph9948.split ], [ 0, %.lr.ph9948.split.preheader ] ; 3 uses
@@ -3170,16 +3129,15 @@ begin_hunk_5_@_ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6Op
   %niter12488.ncmp.1 = icmp eq i64 %niter12488.next.1, %unroll_iter12487
   br i1 %niter12488.ncmp.1, label %._crit_edge9949.loopexit10010.unr-lcssa, label %.lr.ph9948.split, !llvm.loop !1991
 
-._crit_edge9957:                                  ; preds = %._crit_edge9949, %._crit_edge9925
-  %67 = phi <4 x i32> [ zeroinitializer, %._crit_edge9925 ], [ %i.lcx, %._crit_edge9949 ] ; 2 uses
-  %.22761.lcssa = phi ptr [ %.02759.lcssa, %._crit_edge9925 ], [ %.32762.lcssa, %._crit_edge9949 ] ; 3 uses
-  %.12756.lcssa = phi i32 [ %.02755.lcssa, %._crit_edge9925 ], [ %i.lcy, %._crit_edge9949 ] ; 6 uses
-  %68 = shufflevector <4 x i32> %67, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
-  %69 = add <4 x i32> %68, %67                    ; 2 uses
-  %70 = shufflevector <4 x i32> %69, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %71 = add <4 x i32> %70, %69
-  %72 = extractelement <4 x i32> %71, i64 0
-  %i.lea = add nsw i32 %72, %66                   ; 3 uses
+._crit_edge9957.loopexit:                         ; preds = %._crit_edge9949
+  %35 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.lcx)
+  br label %._crit_edge9957
+
+._crit_edge9957:                                  ; preds = %._crit_edge9957.loopexit, %._crit_edge9925
+  %36 = phi i32 [ 0, %._crit_edge9925 ], [ %35, %._crit_edge9957.loopexit ]
+  %.22761.lcssa = phi ptr [ %.02759.lcssa, %._crit_edge9925 ], [ %.32762.lcssa, %._crit_edge9957.loopexit ] ; 3 uses
+  %.12756.lcssa = phi i32 [ %.02755.lcssa, %._crit_edge9925 ], [ %i.lcy, %._crit_edge9957.loopexit ] ; 6 uses
+  %i.lea = add nsw i32 %36, %34                   ; 3 uses
   %i.leb = or disjoint i32 %.12756.lcssa, 1
   %i.lec = icmp slt i32 %i.leb, %i.kuf
   br i1 %i.lec, label %.noexc3301.lr.ph, label %.preheader

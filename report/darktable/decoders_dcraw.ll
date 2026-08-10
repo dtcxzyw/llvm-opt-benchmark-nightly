@@ -2,7 +2,7 @@ inline.NumInlined: 144
 inline.NumDeleted: 63
 loop-unroll.NumCompletelyUnrolled: 54
 loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 65
+loop-unroll.NumUnrolled: 64
 begin_hunk_0_@_ZN6LibRaw19canon_sraw_load_rawEv:bb.a
   %i.qp = load i64, ptr %i.lq, align 8, !tbaa !185 ; 2 uses
   switch i64 %i.qp, label %bb.bc [
@@ -204,28 +204,18 @@ bb.a:
   br i1 %i.c, label %.loopexit, label %vector.body
 
 vector.body:                                      ; preds = %bb.a, %vector.body
-  %index = phi i64 [ %index.next.1, %vector.body ], [ 0, %bb.a ] ; 3 uses
-  %vec.ind = phi <4 x i32> [ %vec.ind.next.1, %vector.body ], [ <i32 0, i32 1, i32 2, i32 3>, %bb.a ] ; 3 uses
-  %2 = and <4 x i32> %vec.ind, splat (i32 31)
-  %3 = uitofp nneg <4 x i32> %2 to <4 x double>
-  %4 = fmul reassoc nnan nsz arcp contract afn <4 x double> %3, splat (double f0x3FC921FB54442D18)
-  %5 = tail call reassoc nsz arcp contract afn <4 x double> @llvm.cos.v4f64(<4 x double> %4)
-  %6 = fmul reassoc nnan nsz arcp contract afn <4 x double> %5, splat (double 5.000000e-01)
-  %7 = fptrunc reassoc nsz arcp contract afn <4 x double> %6 to <4 x float>
-  %8 = getelementptr inbounds nuw [4 x i8], ptr @_ZZN6LibRaw10ljpeg_idctEP5jheadE2cs, i64 %index
-  store <4 x float> %7, ptr %8, align 32, !tbaa !190
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
-  %9 = and <4 x i32> %vec.ind.next, splat (i32 31)
-  %10 = uitofp nneg <4 x i32> %9 to <4 x double>
-  %11 = fmul reassoc nnan nsz arcp contract afn <4 x double> %10, splat (double f0x3FC921FB54442D18)
-  %12 = tail call reassoc nsz arcp contract afn <4 x double> @llvm.cos.v4f64(<4 x double> %11)
-  %13 = fmul reassoc nnan nsz arcp contract afn <4 x double> %12, splat (double 5.000000e-01)
-  %14 = fptrunc reassoc nsz arcp contract afn <4 x double> %13 to <4 x float>
+  %index = phi i64 [ %index.next.1, %vector.body ], [ 0, %bb.a ] ; 2 uses
+  %vec.ind = phi <8 x i32> [ %vec.ind.next, %vector.body ], [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %bb.a ] ; 2 uses
+  %2 = and <8 x i32> %vec.ind, splat (i32 31)
+  %3 = uitofp nneg <8 x i32> %2 to <8 x double>
+  %4 = fmul reassoc nnan nsz arcp contract afn <8 x double> %3, splat (double f0x3FC921FB54442D18)
+  %5 = tail call reassoc nsz arcp contract afn <8 x double> @llvm.cos.v8f64(<8 x double> %4)
+  %6 = fmul reassoc nnan nsz arcp contract afn <8 x double> %5, splat (double 5.000000e-01)
+  %7 = fptrunc reassoc nsz arcp contract afn <8 x double> %6 to <8 x float>
   %i.d = getelementptr inbounds nuw [4 x i8], ptr @_ZZN6LibRaw10ljpeg_idctEP5jheadE2cs, i64 %index
-  %15 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store <4 x float> %14, ptr %15, align 16, !tbaa !190
-  %index.next.1 = add nuw nsw i64 %index, 8       ; 2 uses
-  %vec.ind.next.1 = add <4 x i32> %vec.ind, splat (i32 8)
+  store <8 x float> %7, ptr %i.d, align 32, !tbaa !190
+  %index.next.1 = add nuw i64 %index, 8           ; 2 uses
+  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 8)
   %i.e = icmp eq i64 %index.next.1, 104
   br i1 %i.e, label %.preheader80, label %vector.body, !llvm.loop !191
 
@@ -628,7 +618,7 @@ declare <16 x i16> @llvm.bswap.v16i16(<16 x i16>) #11
 declare <2 x i16> @llvm.bswap.v2i16(<2 x i16>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x double> @llvm.cos.v4f64(<4 x double>) #11
+declare <8 x double> @llvm.cos.v8f64(<8 x double>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.smax.v8i32(<8 x i32>, <8 x i32>) #11

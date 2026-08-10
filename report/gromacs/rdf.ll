@@ -201,88 +201,43 @@ _ZNSt6vectorIfSaIfEE6resizeEm.exit:               ; preds = %bb.b, %.noexc
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !178, !range !167, !noundef !168
   %i.af = trunc nuw i8 %i.ae to i1
   %wide.trip.count143 = and i64 %i.p, 2147483647  ; 5 uses
-  %min.iters.check172 = icmp samesign ult i64 %wide.trip.count143, 16 ; 2 uses
+  %min.iters.check172 = icmp samesign ult i64 %wide.trip.count143, 8 ; 2 uses
   br i1 %i.af, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   br i1 %min.iters.check172, label %.lr.ph.split.preheader192, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.split.preheader
-  %n.vec = and i64 %i.p, 2147483632               ; 3 uses
-  %broadcast.splatinsert = insertelement <4 x double> poison, double %i.ac, i64 0
-  %broadcast.splat = shufflevector <4 x double> %broadcast.splatinsert, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
+  %n.vec = and i64 %i.p, 2147483640               ; 3 uses
+  %broadcast.splatinsert = insertelement <8 x double> poison, double %i.ac, i64 0
+  %broadcast.splat = shufflevector <8 x double> %broadcast.splatinsert, <8 x double> poison, <8 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vector.recur = phi <4 x float> [ <float poison, float poison, float poison, float 0.000000e+00>, %vector.ph ], [ %45, %vector.body ]
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 5 uses
-  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
-  %step.add.2 = add <4 x i32> %vec.ind, splat (i32 8)
-  %step.add.3 = add <4 x i32> %vec.ind, splat (i32 12)
-  %10 = uitofp nneg <4 x i32> %vec.ind to <4 x double>
-  %11 = uitofp nneg <4 x i32> %step.add to <4 x double>
-  %12 = uitofp nneg <4 x i32> %step.add.2 to <4 x double>
-  %13 = uitofp nneg <4 x i32> %step.add.3 to <4 x double>
-  %14 = fadd nnan <4 x double> %10, splat (double 5.000000e-01)
-  %15 = fadd nnan <4 x double> %11, splat (double 5.000000e-01)
-  %16 = fadd nnan <4 x double> %12, splat (double 5.000000e-01)
-  %17 = fadd nnan <4 x double> %13, splat (double 5.000000e-01)
-  %18 = fmul <4 x double> %14, %broadcast.splat
-  %19 = fmul <4 x double> %15, %broadcast.splat
-  %20 = fmul <4 x double> %16, %broadcast.splat
-  %21 = fmul <4 x double> %17, %broadcast.splat
-  %22 = fptrunc <4 x double> %18 to <4 x float>
-  %23 = fptrunc <4 x double> %19 to <4 x float>
-  %24 = fptrunc <4 x double> %20 to <4 x float>
-  %25 = fptrunc <4 x double> %21 to <4 x float>
-  %26 = fpext <4 x float> %22 to <4 x double>     ; 3 uses
-  %27 = fpext <4 x float> %23 to <4 x double>     ; 3 uses
-  %28 = fpext <4 x float> %24 to <4 x double>     ; 3 uses
-  %29 = fpext <4 x float> %25 to <4 x double>     ; 3 uses
-  %30 = fmul <4 x double> %26, splat (double f0x4010C152382D7365)
-  %31 = fmul <4 x double> %27, splat (double f0x4010C152382D7365)
-  %32 = fmul <4 x double> %28, splat (double f0x4010C152382D7365)
-  %33 = fmul <4 x double> %29, splat (double f0x4010C152382D7365)
-  %34 = fmul <4 x double> %30, %26
-  %35 = fmul <4 x double> %31, %27
-  %36 = fmul <4 x double> %32, %28
-  %37 = fmul <4 x double> %33, %29
-  %38 = fmul <4 x double> %34, %26
-  %39 = fmul <4 x double> %35, %27
-  %40 = fmul <4 x double> %36, %28
-  %41 = fmul <4 x double> %37, %29
-  %42 = fptrunc <4 x double> %38 to <4 x float>   ; 3 uses
-  %43 = fptrunc <4 x double> %39 to <4 x float>   ; 3 uses
-  %44 = fptrunc <4 x double> %40 to <4 x float>   ; 3 uses
-  %45 = fptrunc <4 x double> %41 to <4 x float>   ; 4 uses
-  %46 = shufflevector <4 x float> %vector.recur, <4 x float> %42, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %47 = shufflevector <4 x float> %42, <4 x float> %43, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %48 = shufflevector <4 x float> %43, <4 x float> %44, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %49 = shufflevector <4 x float> %44, <4 x float> %45, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %50 = fsub <4 x float> %42, %46
-  %51 = fsub <4 x float> %43, %47
-  %52 = fsub <4 x float> %44, %48
-  %53 = fsub <4 x float> %45, %49
-  %54 = fdiv <4 x float> splat (float 1.000000e+00), %50
-  %55 = fdiv <4 x float> splat (float 1.000000e+00), %51
-  %56 = fdiv <4 x float> splat (float 1.000000e+00), %52
-  %57 = fdiv <4 x float> splat (float 1.000000e+00), %53
-  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.1, i64 %index ; 4 uses
-  %58 = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  %59 = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
-  %60 = getelementptr inbounds nuw i8, ptr %i.ag, i64 48
-  store <4 x float> %54, ptr %i.ag, align 4, !tbaa !90
-  store <4 x float> %55, ptr %58, align 4, !tbaa !90
-  store <4 x float> %56, ptr %59, align 4, !tbaa !90
-  store <4 x float> %57, ptr %60, align 4, !tbaa !90
-  %index.next = add nuw i64 %index, 16            ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 16)
+  %vector.recur = phi <8 x float> [ <float poison, float poison, float poison, float poison, float poison, float poison, float poison, float 0.000000e+00>, %vector.ph ], [ %18, %vector.body ]
+  %vec.ind = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %10 = uitofp nneg <8 x i32> %vec.ind to <8 x double>
+  %11 = fadd nnan <8 x double> %10, splat (double 5.000000e-01)
+  %12 = fmul <8 x double> %11, %broadcast.splat
+  %13 = fptrunc <8 x double> %12 to <8 x float>
+  %14 = fpext <8 x float> %13 to <8 x double>     ; 3 uses
+  %15 = fmul <8 x double> %14, splat (double f0x4010C152382D7365)
+  %16 = fmul <8 x double> %15, %14
+  %17 = fmul <8 x double> %16, %14
+  %18 = fptrunc <8 x double> %17 to <8 x float>   ; 4 uses
+  %19 = shufflevector <8 x float> %vector.recur, <8 x float> %18, <8 x i32> <i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14>
+  %20 = fsub <8 x float> %18, %19
+  %21 = fdiv <8 x float> splat (float 1.000000e+00), %20
+  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.1, i64 %index
+  store <8 x float> %21, ptr %i.ag, align 4, !tbaa !90
+  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 8)
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !249
 
 middle.block:                                     ; preds = %vector.body
-  %vector.recur.extract = extractelement <4 x float> %45, i64 3
+  %vector.recur.extract = extractelement <8 x float> %18, i64 7
   %cmp.n = icmp eq i64 %wide.trip.count143, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.split.preheader192
 
@@ -295,77 +250,35 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check172, label %.lr.ph.split.us.preheader191, label %vector.ph173
 
 vector.ph173:                                     ; preds = %.lr.ph.split.us.preheader
-  %n.vec174 = and i64 %i.p, 2147483632            ; 3 uses
-  %broadcast.splatinsert175 = insertelement <4 x double> poison, double %i.ac, i64 0
-  %broadcast.splat176 = shufflevector <4 x double> %broadcast.splatinsert175, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
+  %n.vec174 = and i64 %i.p, 2147483640            ; 3 uses
+  %broadcast.splatinsert175 = insertelement <8 x double> poison, double %i.ac, i64 0
+  %broadcast.splat176 = shufflevector <8 x double> %broadcast.splatinsert175, <8 x double> poison, <8 x i32> zeroinitializer
   br label %vector.body177
 
 vector.body177:                                   ; preds = %vector.body177, %vector.ph173
   %index178 = phi i64 [ 0, %vector.ph173 ], [ %index.next184, %vector.body177 ] ; 2 uses
-  %vector.recur179 = phi <4 x float> [ <float poison, float poison, float poison, float 0.000000e+00>, %vector.ph173 ], [ %92, %vector.body177 ]
-  %vec.ind180 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph173 ], [ %vec.ind.next185, %vector.body177 ] ; 5 uses
-  %step.add181 = add <4 x i32> %vec.ind180, splat (i32 4)
-  %step.add.2182 = add <4 x i32> %vec.ind180, splat (i32 8)
-  %step.add.3183 = add <4 x i32> %vec.ind180, splat (i32 12)
-  %61 = uitofp nneg <4 x i32> %vec.ind180 to <4 x double>
-  %62 = uitofp nneg <4 x i32> %step.add181 to <4 x double>
-  %63 = uitofp nneg <4 x i32> %step.add.2182 to <4 x double>
-  %64 = uitofp nneg <4 x i32> %step.add.3183 to <4 x double>
-  %65 = fadd nnan <4 x double> %61, splat (double 5.000000e-01)
-  %66 = fadd nnan <4 x double> %62, splat (double 5.000000e-01)
-  %67 = fadd nnan <4 x double> %63, splat (double 5.000000e-01)
-  %68 = fadd nnan <4 x double> %64, splat (double 5.000000e-01)
-  %69 = fmul <4 x double> %65, %broadcast.splat176
-  %70 = fmul <4 x double> %66, %broadcast.splat176
-  %71 = fmul <4 x double> %67, %broadcast.splat176
-  %72 = fmul <4 x double> %68, %broadcast.splat176
-  %73 = fptrunc <4 x double> %69 to <4 x float>
-  %74 = fptrunc <4 x double> %70 to <4 x float>
-  %75 = fptrunc <4 x double> %71 to <4 x float>
-  %76 = fptrunc <4 x double> %72 to <4 x float>
-  %77 = fpext <4 x float> %73 to <4 x double>     ; 2 uses
-  %78 = fpext <4 x float> %74 to <4 x double>     ; 2 uses
-  %79 = fpext <4 x float> %75 to <4 x double>     ; 2 uses
-  %80 = fpext <4 x float> %76 to <4 x double>     ; 2 uses
-  %81 = fmul <4 x double> %77, splat (double f0x400921FB54442D18)
-  %82 = fmul <4 x double> %78, splat (double f0x400921FB54442D18)
-  %83 = fmul <4 x double> %79, splat (double f0x400921FB54442D18)
-  %84 = fmul <4 x double> %80, splat (double f0x400921FB54442D18)
-  %85 = fmul <4 x double> %81, %77
-  %86 = fmul <4 x double> %82, %78
-  %87 = fmul <4 x double> %83, %79
-  %88 = fmul <4 x double> %84, %80
-  %89 = fptrunc <4 x double> %85 to <4 x float>   ; 3 uses
-  %90 = fptrunc <4 x double> %86 to <4 x float>   ; 3 uses
-  %91 = fptrunc <4 x double> %87 to <4 x float>   ; 3 uses
-  %92 = fptrunc <4 x double> %88 to <4 x float>   ; 4 uses
-  %93 = shufflevector <4 x float> %vector.recur179, <4 x float> %89, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %94 = shufflevector <4 x float> %89, <4 x float> %90, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %95 = shufflevector <4 x float> %90, <4 x float> %91, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %96 = shufflevector <4 x float> %91, <4 x float> %92, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %97 = fsub <4 x float> %89, %93
-  %98 = fsub <4 x float> %90, %94
-  %99 = fsub <4 x float> %91, %95
-  %100 = fsub <4 x float> %92, %96
-  %101 = fdiv <4 x float> splat (float 1.000000e+00), %97
-  %102 = fdiv <4 x float> splat (float 1.000000e+00), %98
-  %103 = fdiv <4 x float> splat (float 1.000000e+00), %99
-  %104 = fdiv <4 x float> splat (float 1.000000e+00), %100
-  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.1, i64 %index178 ; 4 uses
-  %105 = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
-  %106 = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
-  %107 = getelementptr inbounds nuw i8, ptr %i.ai, i64 48
-  store <4 x float> %101, ptr %i.ai, align 4, !tbaa !90
-  store <4 x float> %102, ptr %105, align 4, !tbaa !90
-  store <4 x float> %103, ptr %106, align 4, !tbaa !90
-  store <4 x float> %104, ptr %107, align 4, !tbaa !90
-  %index.next184 = add nuw i64 %index178, 16      ; 2 uses
-  %vec.ind.next185 = add <4 x i32> %vec.ind180, splat (i32 16)
+  %vector.recur179 = phi <8 x float> [ <float poison, float poison, float poison, float poison, float poison, float poison, float poison, float 0.000000e+00>, %vector.ph173 ], [ %29, %vector.body177 ]
+  %vec.ind180 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph173 ], [ %vec.ind.next182, %vector.body177 ] ; 2 uses
+  %22 = uitofp nneg <8 x i32> %vec.ind180 to <8 x double>
+  %23 = fadd nnan <8 x double> %22, splat (double 5.000000e-01)
+  %24 = fmul <8 x double> %23, %broadcast.splat176
+  %25 = fptrunc <8 x double> %24 to <8 x float>
+  %26 = fpext <8 x float> %25 to <8 x double>     ; 2 uses
+  %27 = fmul <8 x double> %26, splat (double f0x400921FB54442D18)
+  %28 = fmul <8 x double> %27, %26
+  %29 = fptrunc <8 x double> %28 to <8 x float>   ; 4 uses
+  %30 = shufflevector <8 x float> %vector.recur179, <8 x float> %29, <8 x i32> <i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14>
+  %31 = fsub <8 x float> %29, %30
+  %32 = fdiv <8 x float> splat (float 1.000000e+00), %31
+  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.1, i64 %index178
+  store <8 x float> %32, ptr %i.ai, align 4, !tbaa !90
+  %index.next184 = add nuw i64 %index178, 8       ; 2 uses
+  %vec.ind.next182 = add <8 x i32> %vec.ind180, splat (i32 8)
   %i.aj = icmp eq i64 %index.next184, %n.vec174
   br i1 %i.aj, label %middle.block186, label %vector.body177, !llvm.loop !250
 
 middle.block186:                                  ; preds = %vector.body177
-  %vector.recur.extract187 = extractelement <4 x float> %92, i64 3
+  %vector.recur.extract187 = extractelement <8 x float> %29, i64 7
   %cmp.n188 = icmp eq i64 %wide.trip.count143, %n.vec174
   br i1 %cmp.n188, label %._crit_edge, label %.lr.ph.split.us.preheader191
 
