@@ -204,7 +204,8 @@ bb.fy:                                            ; preds = %bb.fx, %bb.ft
 
 .preheader.i172.preheader:                        ; preds = %.preheader137.i
   %broadcast.splatinsert993 = insertelement <4 x i32> poison, i32 %i.aqn, i64 0
-  %broadcast.splat994 = shufflevector <4 x i32> %broadcast.splatinsert993, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splat994 = shufflevector <4 x i32> %broadcast.splatinsert993, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %invariant.op = add <4 x i32> splat (i32 4), %broadcast.splat994
   br label %.preheader.i172
 
 .preheader.i172:                                  ; preds = %.preheader.i172.preheader, %._crit_edge189.i
@@ -217,27 +218,35 @@ bb.fy:                                            ; preds = %bb.fx, %bb.ft
 
 .lr.ph150.preheader.i:                            ; preds = %.preheader.i172
   %wide.trip.count177.i = zext nneg i32 %i.asu to i64 ; 3 uses
-  %min.iters.check990 = icmp ult i32 %i.asu, 4
+  %min.iters.check990 = icmp ult i32 %i.asu, 8
   br i1 %min.iters.check990, label %.lr.ph150.i.preheader, label %vector.ph991
 
 vector.ph991:                                     ; preds = %.lr.ph150.preheader.i
-  %n.vec992 = and i64 %wide.trip.count177.i, 2147483644 ; 3 uses
+  %n.vec992 = and i64 %wide.trip.count177.i, 2147483640 ; 3 uses
   %broadcast.splatinsert995 = insertelement <4 x i32> poison, i32 %.1108155.i, i64 0
-  %broadcast.splat996 = shufflevector <4 x i32> %broadcast.splatinsert995, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splat996 = shufflevector <4 x i32> %broadcast.splatinsert995, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body997
 
 vector.body997:                                   ; preds = %vector.body997, %vector.ph991
   %index998 = phi i64 [ 0, %vector.ph991 ], [ %index.next1000, %vector.body997 ] ; 2 uses
-  %vec.ind999 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph991 ], [ %vec.ind.next1001, %vector.body997 ] ; 3 uses
-  %i.asw = add nsw <4 x i32> %broadcast.splat994, %vec.ind999
-  %i.asx = lshr <4 x i32> %broadcast.splat996, %vec.ind999
+  %vec.ind999 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph991 ], [ %vec.ind.next1001, %vector.body997 ] ; 5 uses
+  %step.add1001 = add <4 x i32> %vec.ind999, splat (i32 4)
+  %5 = add nsw <4 x i32> %broadcast.splat994, %vec.ind999
+  %i.asw = add <4 x i32> %vec.ind999, %invariant.op
+  %6 = lshr <4 x i32> %broadcast.splat996, %vec.ind999
+  %i.asx = lshr <4 x i32> %broadcast.splat996, %step.add1001
+  %7 = and <4 x i32> %6, splat (i32 1)
   %i.asy = and <4 x i32> %i.asx, splat (i32 1)
+  %8 = shl nsw <4 x i32> %5, splat (i32 1)
   %i.asz = shl nsw <4 x i32> %i.asw, splat (i32 1)
+  %9 = or disjoint <4 x i32> %8, %7
   %i.ata = or disjoint <4 x i32> %i.asz, %i.asy
-  %i.atb = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index998
-  store <4 x i32> %i.ata, ptr %i.atb, align 16, !tbaa !20
-  %index.next1000 = add nuw i64 %index998, 4      ; 2 uses
-  %vec.ind.next1001 = add <4 x i32> %vec.ind999, splat (i32 4)
+  %i.atb = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index998 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.atb, i64 16
+  store <4 x i32> %9, ptr %i.atb, align 16, !tbaa !20
+  store <4 x i32> %i.ata, ptr %10, align 16, !tbaa !20
+  %index.next1000 = add nuw i64 %index998, 8      ; 2 uses
+  %vec.ind.next1001 = add <4 x i32> %vec.ind999, splat (i32 8)
   %i.atc = icmp eq i64 %index.next1000, %n.vec992
   br i1 %i.atc, label %middle.block1002, label %vector.body997, !llvm.loop !139
 
@@ -332,7 +341,8 @@ bb.gc:                                            ; preds = %bb.gb, %bb.ga
 
 .lr.ph157.1.i.preheader:                          ; preds = %.preheader137.1.i
   %broadcast.splatinsert977 = insertelement <4 x i32> poison, i32 %i.aqn, i64 0
-  %broadcast.splat978 = shufflevector <4 x i32> %broadcast.splatinsert977, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splat978 = shufflevector <4 x i32> %broadcast.splatinsert977, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %invariant.op1206 = add <4 x i32> splat (i32 4), %broadcast.splat978
   br label %.lr.ph157.1.i
 
 .lr.ph157.1.i:                                    ; preds = %.lr.ph157.1.i.preheader, %bb.gf
@@ -349,27 +359,35 @@ bb.gc:                                            ; preds = %bb.gb, %bb.ga
 
 .lr.ph150.preheader.1.i:                          ; preds = %.preheader.1.i177
   %wide.trip.count177.1.i = zext nneg i32 %i.aug to i64 ; 3 uses
-  %min.iters.check974 = icmp ult i32 %i.aug, 4
+  %min.iters.check974 = icmp ult i32 %i.aug, 8
   br i1 %min.iters.check974, label %.lr.ph150.1.i.preheader, label %vector.ph975
 
 vector.ph975:                                     ; preds = %.lr.ph150.preheader.1.i
-  %n.vec976 = and i64 %wide.trip.count177.1.i, 2147483644 ; 3 uses
+  %n.vec976 = and i64 %wide.trip.count177.1.i, 2147483640 ; 3 uses
   %broadcast.splatinsert979 = insertelement <4 x i32> poison, i32 %.1108155.1.i, i64 0
-  %broadcast.splat980 = shufflevector <4 x i32> %broadcast.splatinsert979, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splat980 = shufflevector <4 x i32> %broadcast.splatinsert979, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body981
 
 vector.body981:                                   ; preds = %vector.body981, %vector.ph975
   %index982 = phi i64 [ 0, %vector.ph975 ], [ %index.next984, %vector.body981 ] ; 2 uses
-  %vec.ind983 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph975 ], [ %vec.ind.next985, %vector.body981 ] ; 3 uses
-  %i.aui = add nsw <4 x i32> %broadcast.splat978, %vec.ind983
-  %i.auj = lshr <4 x i32> %broadcast.splat980, %vec.ind983
+  %vec.ind983 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph975 ], [ %vec.ind.next985, %vector.body981 ] ; 5 uses
+  %step.add984 = add <4 x i32> %vec.ind983, splat (i32 4)
+  %11 = add nsw <4 x i32> %broadcast.splat978, %vec.ind983
+  %i.aui = add <4 x i32> %vec.ind983, %invariant.op1206
+  %12 = lshr <4 x i32> %broadcast.splat980, %vec.ind983
+  %i.auj = lshr <4 x i32> %broadcast.splat980, %step.add984
+  %13 = and <4 x i32> %12, splat (i32 1)
   %i.auk = and <4 x i32> %i.auj, splat (i32 1)
+  %14 = shl nsw <4 x i32> %11, splat (i32 1)
   %i.aul = shl nsw <4 x i32> %i.aui, splat (i32 1)
+  %15 = or disjoint <4 x i32> %14, %13
   %i.aum = or disjoint <4 x i32> %i.aul, %i.auk
-  %i.aun = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index982
-  store <4 x i32> %i.aum, ptr %i.aun, align 16, !tbaa !20
-  %index.next984 = add nuw i64 %index982, 4       ; 2 uses
-  %vec.ind.next985 = add <4 x i32> %vec.ind983, splat (i32 4)
+  %i.aun = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index982 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %i.aun, i64 16
+  store <4 x i32> %15, ptr %i.aun, align 16, !tbaa !20
+  store <4 x i32> %i.aum, ptr %16, align 16, !tbaa !20
+  %index.next984 = add nuw i64 %index982, 8       ; 2 uses
+  %vec.ind.next985 = add <4 x i32> %vec.ind983, splat (i32 8)
   %i.auo = icmp eq i64 %index.next984, %n.vec976
   br i1 %i.auo, label %middle.block986, label %vector.body981, !llvm.loop !142
 

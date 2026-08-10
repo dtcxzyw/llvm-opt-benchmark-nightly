@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %.split1225.i
   br i1 %niter.ncmp.1.not, label %._crit_edge788.thread.i.unr-lcssa, label %.lr.ph787.i, !llvm.loop !291
 
 ._crit_edge788.thread.i.unr-lcssa:                ; preds = %.lr.ph787.i
-  br i1 %lcmp.mod343.not.not, label %.lr.ph787.i.epil.preheader, label %._crit_edge788.thread.i.a
+  br i1 %lcmp.mod343.not.not, label %.lr.ph787.i.epil.preheader, label %._crit_edge788.thread.i
 
 .lr.ph787.i.epil.preheader:                       ; preds = %._crit_edge788.thread.i.unr-lcssa, %.lr.ph787.i.preheader
   %.61785.i.epil.init = phi ptr [ %.60830.i, %.lr.ph787.i.preheader ], [ %i.blv, %._crit_edge788.thread.i.unr-lcssa ] ; 2 uses
@@ -221,20 +221,21 @@ bb.x:                                             ; preds = %.split1225.i
   %i.bme = tail call <4 x i32> @llvm.x86.avx512.vpdpbusd.128(<4 x i32> %.epil.init, <16 x i8> splat (i8 127), <16 x i8> %i.bmd)
   store <16 x i8> %i.bmd, ptr %.61785.i.epil.init, align 1, !tbaa !17
   %i.bmf = getelementptr inbounds nuw i8, ptr %.61785.i.epil.init, i64 16
+  br label %._crit_edge788.thread.i
+
+._crit_edge788.thread.i:                          ; preds = %._crit_edge788.thread.i.unr-lcssa, %.lr.ph787.i.epil.preheader
+  %.lcssa283 = phi <4 x i32> [ %i.blu, %._crit_edge788.thread.i.unr-lcssa ], [ %i.bme, %.lr.ph787.i.epil.preheader ]
+  %.lcssa282 = phi ptr [ %i.blv, %._crit_edge788.thread.i.unr-lcssa ], [ %i.bmf, %.lr.ph787.i.epil.preheader ]
+  %7 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %.lcssa283)
   br label %._crit_edge788.thread.i.a
 
 ._crit_edge788.i:                                 ; preds = %bb.x
   br i1 %i.bka, label %._crit_edge788.thread.i.a, label %.loopexit.i
 
-._crit_edge788.thread.i.a:                        ; preds = %.lr.ph787.i.epil.preheader, %._crit_edge788.thread.i.unr-lcssa, %._crit_edge788.i
-  %.61.lcssa1123.i = phi ptr [ %.60830.i, %._crit_edge788.i ], [ %i.blv, %._crit_edge788.thread.i.unr-lcssa ], [ %i.bmf, %.lr.ph787.i.epil.preheader ] ; 2 uses
-  %7 = phi <4 x i32> [ zeroinitializer, %._crit_edge788.i ], [ %i.blu, %._crit_edge788.thread.i.unr-lcssa ], [ %i.bme, %.lr.ph787.i.epil.preheader ] ; 2 uses
-  %8 = shufflevector <4 x i32> %7, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
-  %9 = add <4 x i32> %8, %7                       ; 2 uses
-  %10 = shufflevector <4 x i32> %9, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %11 = add <4 x i32> %10, %9
-  %12 = extractelement <4 x i32> %11, i64 0
-  store i32 %12, ptr %.61.lcssa1123.i, align 4, !tbaa !49
+._crit_edge788.thread.i.a:                        ; preds = %._crit_edge788.i, %._crit_edge788.thread.i
+  %.61.lcssa1123.i = phi ptr [ %.lcssa282, %._crit_edge788.thread.i ], [ %.60830.i, %._crit_edge788.i ] ; 2 uses
+  %8 = phi i32 [ %7, %._crit_edge788.thread.i ], [ 0, %._crit_edge788.i ]
+  store i32 %8, ptr %.61.lcssa1123.i, align 4, !tbaa !49
   %i.bmg = getelementptr inbounds nuw i8, ptr %.61.lcssa1123.i, i64 4
   br label %.loopexit.i
 

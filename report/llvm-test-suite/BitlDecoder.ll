@@ -17,12 +17,16 @@ vector.ph:
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <16 x i8> [ <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %i.a = tail call <16 x i8> @llvm.bitreverse.v16i8(<16 x i8> %vec.ind)
-  %i.b = getelementptr inbounds nuw i8, ptr @_ZN5NBitl12kInvertTableE, i64 %index
+  %vec.ind = phi <16 x i8> [ <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %step.add = add <16 x i8> %vec.ind, splat (i8 16)
+  %0 = tail call <16 x i8> @llvm.bitreverse.v16i8(<16 x i8> %vec.ind)
+  %i.a = tail call <16 x i8> @llvm.bitreverse.v16i8(<16 x i8> %step.add)
+  %1 = getelementptr inbounds nuw i8, ptr @_ZN5NBitl12kInvertTableE, i64 %index ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
+  store <16 x i8> %0, ptr %1, align 16, !tbaa !8
   store <16 x i8> %i.a, ptr %i.b, align 16, !tbaa !8
-  %index.next = add nuw i64 %index, 16            ; 2 uses
-  %vec.ind.next = add <16 x i8> %vec.ind, splat (i8 16)
+  %index.next = add nuw i64 %index, 32            ; 2 uses
+  %vec.ind.next = add <16 x i8> %vec.ind, splat (i8 32)
   %i.c = icmp eq i64 %index.next, 256
   br i1 %i.c, label %__cxx_global_var_init.exit, label %vector.body, !llvm.loop !9
 
