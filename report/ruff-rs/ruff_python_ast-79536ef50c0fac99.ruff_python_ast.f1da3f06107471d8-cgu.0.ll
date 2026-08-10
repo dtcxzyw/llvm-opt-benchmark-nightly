@@ -204,33 +204,25 @@ bb.j:                                             ; preds = %_RINvNtCs4NRVxsYgnA
 _RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordEBG_.exit
   %i.y = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.w, i64 120) ; 2 uses
   %i.z = extractvalue { i64, i1 } %i.y, 1
-  br i1 %i.z, label %1, label %bb.k, !prof !5
+  br i1 %i.z, label %bb.l, label %bb.k, !prof !5
 
 bb.k:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
   %i.aa = extractvalue { i64, i1 } %i.y, 0
   %i.ab = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.aa, i64 16) ; 2 uses
   %i.ac = extractvalue { i64, i1 } %i.ab, 1
-  br i1 %i.ac, label %bb.l, label %2, !prof !5
+  br i1 %i.ac, label %bb.m, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordEBA_.exit, !prof !5
 
-1:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
+bb.l:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
   unreachable
 
-bb.l:                                             ; preds = %bb.k
+bb.m:                                             ; preds = %bb.k
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
   unreachable
 
-2:                                                ; preds = %bb.k
-  %3 = extractvalue { i64, i1 } %i.ab, 0          ; 2 uses
-  %.not.i = icmp samesign ugt i64 %3, 9223372036854775800
-  br i1 %.not.i, label %bb.m, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordEBA_.exit, !prof !5
-
-bb.m:                                             ; preds = %2
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
-  unreachable
-
-_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordEBA_.exit: ; preds = %2
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %3, i64 noundef 8) #62
+_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordEBA_.exit: ; preds = %bb.k
+  %1 = extractvalue { i64, i1 } %i.ab, 0
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %1, i64 noundef 8) #62
   ret void
 }
 
@@ -293,33 +285,25 @@ bb.d:                                             ; preds = %_RINvNtCs4NRVxsYgnA
 _RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9DecoratorEBG_.exit
   %i.p = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.n, i64 88) ; 2 uses
   %i.q = extractvalue { i64, i1 } %i.p, 1
-  br i1 %i.q, label %1, label %bb.e, !prof !5
+  br i1 %i.q, label %bb.f, label %bb.e, !prof !5
 
 bb.e:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
   %i.r = extractvalue { i64, i1 } %i.p, 0
   %i.s = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.r, i64 16) ; 2 uses
   %i.t = extractvalue { i64, i1 } %i.s, 1
-  br i1 %i.t, label %bb.f, label %2, !prof !5
+  br i1 %i.t, label %bb.g, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9DecoratorEBA_.exit, !prof !5
 
-1:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
+bb.f:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
   unreachable
 
-bb.f:                                             ; preds = %bb.e
+bb.g:                                             ; preds = %bb.e
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
   unreachable
 
-2:                                                ; preds = %bb.e
-  %3 = extractvalue { i64, i1 } %i.s, 0           ; 2 uses
-  %.not.i = icmp samesign ugt i64 %3, 9223372036854775800
-  br i1 %.not.i, label %bb.g, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9DecoratorEBA_.exit, !prof !5
-
-bb.g:                                             ; preds = %2
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
-  unreachable
-
-_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9DecoratorEBA_.exit: ; preds = %2
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %3, i64 noundef 8) #62
+_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9DecoratorEBA_.exit: ; preds = %bb.e
+  %1 = extractvalue { i64, i1 } %i.s, 0
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %1, i64 noundef 8) #62
   ret void
 }
 
@@ -382,33 +366,25 @@ bb.f:                                             ; preds = %_RINvNtCs4NRVxsYgnA
 _RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEBG_.exit
   %i.p = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.n, i64 72) ; 2 uses
   %i.q = extractvalue { i64, i1 } %i.p, 1
-  br i1 %i.q, label %1, label %bb.g, !prof !5
+  br i1 %i.q, label %bb.h, label %bb.g, !prof !5
 
 bb.g:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
   %i.r = extractvalue { i64, i1 } %i.p, 0
   %i.s = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.r, i64 16) ; 2 uses
   %i.t = extractvalue { i64, i1 } %i.s, 1
-  br i1 %i.t, label %bb.h, label %2, !prof !5
+  br i1 %i.t, label %bb.i, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEBA_.exit, !prof !5
 
-1:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
+bb.h:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
   unreachable
 
-bb.h:                                             ; preds = %bb.g
+bb.i:                                             ; preds = %bb.g
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
   unreachable
 
-2:                                                ; preds = %bb.g
-  %3 = extractvalue { i64, i1 } %i.s, 0           ; 2 uses
-  %.not.i = icmp samesign ugt i64 %3, 9223372036854775800
-  br i1 %.not.i, label %bb.i, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEBA_.exit, !prof !5
-
-bb.i:                                             ; preds = %2
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
-  unreachable
-
-_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEBA_.exit: ; preds = %2
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %3, i64 noundef 8) #62
+_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEBA_.exit: ; preds = %bb.g
+  %1 = extractvalue { i64, i1 } %i.s, 0
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %1, i64 noundef 8) #62
   ret void
 }
 
@@ -471,33 +447,25 @@ bb.f:                                             ; preds = %_RINvNtCs4NRVxsYgnA
 _RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtEBG_.exit
   %i.p = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.n, i64 88) ; 2 uses
   %i.q = extractvalue { i64, i1 } %i.p, 1
-  br i1 %i.q, label %1, label %bb.g, !prof !5
+  br i1 %i.q, label %bb.h, label %bb.g, !prof !5
 
 bb.g:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
   %i.r = extractvalue { i64, i1 } %i.p, 0
   %i.s = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.r, i64 16) ; 2 uses
   %i.t = extractvalue { i64, i1 } %i.s, 1
-  br i1 %i.t, label %bb.h, label %2, !prof !5
+  br i1 %i.t, label %bb.i, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtEBA_.exit, !prof !5
 
-1:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
+bb.h:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
   unreachable
 
-bb.h:                                             ; preds = %bb.g
+bb.i:                                             ; preds = %bb.g
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
   unreachable
 
-2:                                                ; preds = %bb.g
-  %3 = extractvalue { i64, i1 } %i.s, 0           ; 2 uses
-  %.not.i = icmp samesign ugt i64 %3, 9223372036854775800
-  br i1 %.not.i, label %bb.i, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtEBA_.exit, !prof !5
-
-bb.i:                                             ; preds = %2
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
-  unreachable
-
-_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtEBA_.exit: ; preds = %2
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %3, i64 noundef 8) #62
+_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtEBA_.exit: ; preds = %bb.g
+  %1 = extractvalue { i64, i1 } %i.s, 0
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %1, i64 noundef 8) #62
   ret void
 }
 
@@ -560,33 +528,25 @@ bb.f:                                             ; preds = %_RINvNtCs4NRVxsYgnA
 _RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtCskLngH8kgpZI_15ruff_python_ast9generated7PatternEBG_.exit
   %i.p = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.n, i64 72) ; 2 uses
   %i.q = extractvalue { i64, i1 } %i.p, 1
-  br i1 %i.q, label %1, label %bb.g, !prof !5
+  br i1 %i.q, label %bb.h, label %bb.g, !prof !5
 
 bb.g:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
   %i.r = extractvalue { i64, i1 } %i.p, 0
   %i.s = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.r, i64 16) ; 2 uses
   %i.t = extractvalue { i64, i1 } %i.s, 1
-  br i1 %i.t, label %bb.h, label %2, !prof !5
+  br i1 %i.t, label %bb.i, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast9generated7PatternEBA_.exit, !prof !5
 
-1:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
+bb.h:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
   unreachable
 
-bb.h:                                             ; preds = %bb.g
+bb.i:                                             ; preds = %bb.g
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
   unreachable
 
-2:                                                ; preds = %bb.g
-  %3 = extractvalue { i64, i1 } %i.s, 0           ; 2 uses
-  %.not.i = icmp samesign ugt i64 %3, 9223372036854775800
-  br i1 %.not.i, label %bb.i, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast9generated7PatternEBA_.exit, !prof !5
-
-bb.i:                                             ; preds = %2
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
-  unreachable
-
-_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast9generated7PatternEBA_.exit: ; preds = %2
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %3, i64 noundef 8) #62
+_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast9generated7PatternEBA_.exit: ; preds = %bb.g
+  %1 = extractvalue { i64, i1 } %i.s, 0
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %1, i64 noundef 8) #62
   ret void
 }
 
@@ -989,39 +949,31 @@ bb.c:                                             ; preds = %bb.b
 _RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i.i.i: ; preds = %bb.b
   %i.h = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 range(i64 1, 0) %i.e, i64 120) ; 2 uses
   %i.i = extractvalue { i64, i1 } %i.h, 1
-  br i1 %i.i, label %1, label %bb.d, !prof !5
+  br i1 %i.i, label %bb.e, label %bb.d, !prof !5
 
 bb.d:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i.i.i
   %i.j = extractvalue { i64, i1 } %i.h, 0
   %i.k = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.j, i64 16) ; 2 uses
   %i.l = extractvalue { i64, i1 } %i.k, 1
-  br i1 %i.l, label %bb.e, label %2, !prof !5
+  br i1 %i.l, label %bb.f, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordEBA_.exit.i.i, !prof !5
 
-1:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i.i.i
+bb.e:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCskLngH8kgpZI_15ruff_python_ast.exit.i.i.i.i
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
   unreachable
 
-bb.e:                                             ; preds = %bb.d
+bb.f:                                             ; preds = %bb.d
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
   unreachable
 
-2:                                                ; preds = %bb.d
-  %3 = extractvalue { i64, i1 } %i.k, 0           ; 3 uses
-  %.not.i.i.i = icmp samesign ugt i64 %3, 9223372036854775800
-  br i1 %.not.i.i.i, label %bb.f, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordEBA_.exit.i.i, !prof !5
-
-bb.f:                                             ; preds = %2
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #61
-  unreachable
-
-_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordEBA_.exit.i.i: ; preds = %2
+_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordEBA_.exit.i.i: ; preds = %bb.d
+  %1 = extractvalue { i64, i1 } %i.k, 0           ; 2 uses
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #62
-  %i.m = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %3, i64 noundef 8) #62 ; 8 uses
+  %i.m = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %1, i64 noundef 8) #62 ; 8 uses
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.g, label %bb.j, !prof !5
 
 bb.g:                                             ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordEBA_.exit.i.i
-  tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef %3) #61
+  tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef %1) #61
   unreachable
 
 bb.h:                                             ; preds = %bb.n
