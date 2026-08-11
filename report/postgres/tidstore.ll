@@ -203,34 +203,34 @@ define internal fastcc nonnull ptr @shared_ts_grow_node_48(ptr nofree noundef re
   br label %bb.a
 
 bb.a:                                             ; preds = %bb.e, %.preheader.1
-  %indvars.iv63 = phi i64 [ 64, %.preheader.1 ], [ %indvars.iv.next64.1, %bb.e ] ; 4 uses
-  %indvars.iv.1 = phi i64 [ 0, %.preheader.1 ], [ %indvars.iv.next.1.1, %bb.e ] ; 3 uses
+  %indvars.iv63 = phi i64 [ 0, %.preheader.1 ], [ %indvars.iv.next.1.1, %bb.e ] ; 3 uses
+  %indvars.iv.1 = phi i64 [ 64, %.preheader.1 ], [ %indvars.iv.next64.1, %bb.e ] ; 4 uses
   %.03135.1 = phi i64 [ 0, %.preheader.1 ], [ %.132.1.1, %bb.e ] ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv63
+  %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv.1
   %i.m = load i8, ptr %i.l, align 1               ; 2 uses
   %.not.1 = icmp eq i8 %i.m, -1
   br i1 %.not.1, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.n = shl nuw i64 1, %indvars.iv.1
+  %i.n = shl nuw i64 1, %indvars.iv63
   %i.o = or i64 %i.n, %.03135.1
   %i.p = zext i8 %i.m to i64
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.p
   %i.r = load i64, ptr %i.q, align 8
-  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv63
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv.1
   store i64 %i.r, ptr %i.s, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.132.1 = phi i64 [ %i.o, %bb.b ], [ %.03135.1, %bb.a ] ; 2 uses
-  %indvars.iv.next64 = or disjoint i64 %indvars.iv63, 1 ; 2 uses
+  %indvars.iv.next64 = or disjoint i64 %indvars.iv.1, 1 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv.next64
   %i.u = load i8, ptr %i.t, align 1               ; 2 uses
   %.not.1.1 = icmp eq i8 %i.u, -1
   br i1 %.not.1.1, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.v = shl nuw i64 2, %indvars.iv.1
+  %i.v = shl nuw i64 2, %indvars.iv63
   %i.w = or i64 %i.v, %.132.1
   %i.x = zext i8 %i.u to i64
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.x
@@ -241,8 +241,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.132.1.1 = phi i64 [ %i.w, %bb.d ], [ %.132.1, %bb.c ] ; 2 uses
-  %indvars.iv.next64.1 = add nuw nsw i64 %indvars.iv63, 2
-  %indvars.iv.next.1.1 = add nuw nsw i64 %indvars.iv.1, 2 ; 2 uses
+  %indvars.iv.next64.1 = add nuw nsw i64 %indvars.iv.1, 2
+  %indvars.iv.next.1.1 = add nuw nsw i64 %indvars.iv63, 2 ; 2 uses
   %exitcond.1.not.1 = icmp eq i64 %indvars.iv.next.1.1, 64
   br i1 %exitcond.1.not.1, label %.preheader.2, label %bb.a, !llvm.loop !33
 
@@ -252,34 +252,34 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.j, %.preheader.2
-  %indvars.iv58 = phi i64 [ 128, %.preheader.2 ], [ %indvars.iv.next59.1, %bb.j ] ; 4 uses
-  %indvars.iv.2 = phi i64 [ 0, %.preheader.2 ], [ %indvars.iv.next.2.1, %bb.j ] ; 3 uses
+  %indvars.iv58 = phi i64 [ 0, %.preheader.2 ], [ %indvars.iv.next.2.1, %bb.j ] ; 3 uses
+  %indvars.iv.2 = phi i64 [ 128, %.preheader.2 ], [ %indvars.iv.next59.1, %bb.j ] ; 4 uses
   %.03135.2 = phi i64 [ 0, %.preheader.2 ], [ %.132.2.1, %bb.j ] ; 2 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv58
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv.2
   %i.ad = load i8, ptr %i.ac, align 1             ; 2 uses
   %.not.2 = icmp eq i8 %i.ad, -1
   br i1 %.not.2, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ae = shl nuw i64 1, %indvars.iv.2
+  %i.ae = shl nuw i64 1, %indvars.iv58
   %i.af = or i64 %i.ae, %.03135.2
   %i.ag = zext i8 %i.ad to i64
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.ag
   %i.ai = load i64, ptr %i.ah, align 8
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv58
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv.2
   store i64 %i.ai, ptr %i.aj, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.132.2 = phi i64 [ %i.af, %bb.g ], [ %.03135.2, %bb.f ] ; 2 uses
-  %indvars.iv.next59 = or disjoint i64 %indvars.iv58, 1 ; 2 uses
+  %indvars.iv.next59 = or disjoint i64 %indvars.iv.2, 1 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv.next59
   %i.al = load i8, ptr %i.ak, align 1             ; 2 uses
   %.not.2.1 = icmp eq i8 %i.al, -1
   br i1 %.not.2.1, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.am = shl nuw i64 2, %indvars.iv.2
+  %i.am = shl nuw i64 2, %indvars.iv58
   %i.an = or i64 %i.am, %.132.2
   %i.ao = zext i8 %i.al to i64
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.ao
@@ -290,8 +290,8 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.132.2.1 = phi i64 [ %i.an, %bb.i ], [ %.132.2, %bb.h ] ; 2 uses
-  %indvars.iv.next59.1 = add nuw nsw i64 %indvars.iv58, 2
-  %indvars.iv.next.2.1 = add nuw nsw i64 %indvars.iv.2, 2 ; 2 uses
+  %indvars.iv.next59.1 = add nuw nsw i64 %indvars.iv.2, 2
+  %indvars.iv.next.2.1 = add nuw nsw i64 %indvars.iv58, 2 ; 2 uses
   %exitcond.2.not.1 = icmp eq i64 %indvars.iv.next.2.1, 64
   br i1 %exitcond.2.not.1, label %.preheader.3, label %bb.f, !llvm.loop !33
 
@@ -301,34 +301,34 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.o, %.preheader.3
-  %indvars.iv51 = phi i64 [ 192, %.preheader.3 ], [ %indvars.iv.next52.1, %bb.o ] ; 4 uses
-  %indvars.iv.3 = phi i64 [ 0, %.preheader.3 ], [ %indvars.iv.next.3.1, %bb.o ] ; 3 uses
+  %indvars.iv51 = phi i64 [ 0, %.preheader.3 ], [ %indvars.iv.next.3.1, %bb.o ] ; 3 uses
+  %indvars.iv.3 = phi i64 [ 192, %.preheader.3 ], [ %indvars.iv.next52.1, %bb.o ] ; 4 uses
   %.03135.3 = phi i64 [ 0, %.preheader.3 ], [ %.132.3.1, %bb.o ] ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv51
+  %i.at = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv.3
   %i.au = load i8, ptr %i.at, align 1             ; 2 uses
   %.not.3 = icmp eq i8 %i.au, -1
   br i1 %.not.3, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.av = shl nuw i64 1, %indvars.iv.3
+  %i.av = shl nuw i64 1, %indvars.iv51
   %i.aw = or i64 %i.av, %.03135.3
   %i.ax = zext i8 %i.au to i64
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.ax
   %i.az = load i64, ptr %i.ay, align 8
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv51
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv.3
   store i64 %i.az, ptr %i.ba, align 8
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.132.3 = phi i64 [ %i.aw, %bb.l ], [ %.03135.3, %bb.k ] ; 2 uses
-  %indvars.iv.next52 = or disjoint i64 %indvars.iv51, 1 ; 2 uses
+  %indvars.iv.next52 = or disjoint i64 %indvars.iv.3, 1 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv.next52
   %i.bc = load i8, ptr %i.bb, align 1             ; 2 uses
   %.not.3.1 = icmp eq i8 %i.bc, -1
   br i1 %.not.3.1, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.bd = shl nuw i64 2, %indvars.iv.3
+  %i.bd = shl nuw i64 2, %indvars.iv51
   %i.be = or i64 %i.bd, %.132.3
   %i.bf = zext i8 %i.bc to i64
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.bf
@@ -339,8 +339,8 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.132.3.1 = phi i64 [ %i.be, %bb.n ], [ %.132.3, %bb.m ] ; 2 uses
-  %indvars.iv.next52.1 = add nuw nsw i64 %indvars.iv51, 2
-  %indvars.iv.next.3.1 = add nuw nsw i64 %indvars.iv.3, 2 ; 2 uses
+  %indvars.iv.next52.1 = add nuw nsw i64 %indvars.iv.3, 2
+  %indvars.iv.next.3.1 = add nuw nsw i64 %indvars.iv51, 2 ; 2 uses
   %exitcond.3.not.1 = icmp eq i64 %indvars.iv.next.3.1, 64
   br i1 %exitcond.3.not.1, label %bb.p, label %bb.k, !llvm.loop !33
 
@@ -743,34 +743,34 @@ define internal fastcc nonnull ptr @local_ts_grow_node_48(ptr %.40.val, ptr nofr
   br label %bb.a
 
 bb.a:                                             ; preds = %bb.e, %.preheader.1
-  %indvars.iv29 = phi i64 [ 64, %.preheader.1 ], [ %indvars.iv.next30.1, %bb.e ] ; 4 uses
-  %indvars.iv.1 = phi i64 [ 0, %.preheader.1 ], [ %indvars.iv.next.1.1, %bb.e ] ; 3 uses
+  %indvars.iv29 = phi i64 [ 0, %.preheader.1 ], [ %indvars.iv.next.1.1, %bb.e ] ; 3 uses
+  %indvars.iv.1 = phi i64 [ 64, %.preheader.1 ], [ %indvars.iv.next30.1, %bb.e ] ; 4 uses
   %.0291.1 = phi i64 [ 0, %.preheader.1 ], [ %.130.1.1, %bb.e ] ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv29
+  %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.1
   %i.j = load i8, ptr %i.i, align 1               ; 2 uses
   %.not.1 = icmp eq i8 %i.j, -1
   br i1 %.not.1, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = shl nuw i64 1, %indvars.iv.1
+  %i.k = shl nuw i64 1, %indvars.iv29
   %i.l = or i64 %i.k, %.0291.1
   %i.m = zext i8 %i.j to i64
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.m
   %i.o = load ptr, ptr %i.n, align 8
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv29
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv.1
   store ptr %i.o, ptr %i.p, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.130.1 = phi i64 [ %i.l, %bb.b ], [ %.0291.1, %bb.a ] ; 2 uses
-  %indvars.iv.next30 = or disjoint i64 %indvars.iv29, 1 ; 2 uses
+  %indvars.iv.next30 = or disjoint i64 %indvars.iv.1, 1 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.next30
   %i.r = load i8, ptr %i.q, align 1               ; 2 uses
   %.not.1.1 = icmp eq i8 %i.r, -1
   br i1 %.not.1.1, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.s = shl nuw i64 2, %indvars.iv.1
+  %i.s = shl nuw i64 2, %indvars.iv29
   %i.t = or i64 %i.s, %.130.1
   %i.u = zext i8 %i.r to i64
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.u
@@ -781,8 +781,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.130.1.1 = phi i64 [ %i.t, %bb.d ], [ %.130.1, %bb.c ] ; 2 uses
-  %indvars.iv.next30.1 = add nuw nsw i64 %indvars.iv29, 2
-  %indvars.iv.next.1.1 = add nuw nsw i64 %indvars.iv.1, 2 ; 2 uses
+  %indvars.iv.next30.1 = add nuw nsw i64 %indvars.iv.1, 2
+  %indvars.iv.next.1.1 = add nuw nsw i64 %indvars.iv29, 2 ; 2 uses
   %exitcond.1.not.1 = icmp eq i64 %indvars.iv.next.1.1, 64
   br i1 %exitcond.1.not.1, label %.preheader.2, label %bb.a, !llvm.loop !36
 
@@ -792,34 +792,34 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.j, %.preheader.2
-  %indvars.iv24 = phi i64 [ 128, %.preheader.2 ], [ %indvars.iv.next25.1, %bb.j ] ; 4 uses
-  %indvars.iv.2 = phi i64 [ 0, %.preheader.2 ], [ %indvars.iv.next.2.1, %bb.j ] ; 3 uses
+  %indvars.iv24 = phi i64 [ 0, %.preheader.2 ], [ %indvars.iv.next.2.1, %bb.j ] ; 3 uses
+  %indvars.iv.2 = phi i64 [ 128, %.preheader.2 ], [ %indvars.iv.next25.1, %bb.j ] ; 4 uses
   %.0291.2 = phi i64 [ 0, %.preheader.2 ], [ %.130.2.1, %bb.j ] ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv24
+  %i.z = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.2
   %i.aa = load i8, ptr %i.z, align 1              ; 2 uses
   %.not.2 = icmp eq i8 %i.aa, -1
   br i1 %.not.2, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ab = shl nuw i64 1, %indvars.iv.2
+  %i.ab = shl nuw i64 1, %indvars.iv24
   %i.ac = or i64 %i.ab, %.0291.2
   %i.ad = zext i8 %i.aa to i64
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.ad
   %i.af = load ptr, ptr %i.ae, align 8
-  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv24
+  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv.2
   store ptr %i.af, ptr %i.ag, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.130.2 = phi i64 [ %i.ac, %bb.g ], [ %.0291.2, %bb.f ] ; 2 uses
-  %indvars.iv.next25 = or disjoint i64 %indvars.iv24, 1 ; 2 uses
+  %indvars.iv.next25 = or disjoint i64 %indvars.iv.2, 1 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.next25
   %i.ai = load i8, ptr %i.ah, align 1             ; 2 uses
   %.not.2.1 = icmp eq i8 %i.ai, -1
   br i1 %.not.2.1, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.aj = shl nuw i64 2, %indvars.iv.2
+  %i.aj = shl nuw i64 2, %indvars.iv24
   %i.ak = or i64 %i.aj, %.130.2
   %i.al = zext i8 %i.ai to i64
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.al
@@ -830,8 +830,8 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.130.2.1 = phi i64 [ %i.ak, %bb.i ], [ %.130.2, %bb.h ] ; 2 uses
-  %indvars.iv.next25.1 = add nuw nsw i64 %indvars.iv24, 2
-  %indvars.iv.next.2.1 = add nuw nsw i64 %indvars.iv.2, 2 ; 2 uses
+  %indvars.iv.next25.1 = add nuw nsw i64 %indvars.iv.2, 2
+  %indvars.iv.next.2.1 = add nuw nsw i64 %indvars.iv24, 2 ; 2 uses
   %exitcond.2.not.1 = icmp eq i64 %indvars.iv.next.2.1, 64
   br i1 %exitcond.2.not.1, label %.preheader.3, label %bb.f, !llvm.loop !36
 
@@ -841,34 +841,34 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.o, %.preheader.3
-  %indvars.iv17 = phi i64 [ 192, %.preheader.3 ], [ %indvars.iv.next18.1, %bb.o ] ; 4 uses
-  %indvars.iv.3 = phi i64 [ 0, %.preheader.3 ], [ %indvars.iv.next.3.1, %bb.o ] ; 3 uses
+  %indvars.iv17 = phi i64 [ 0, %.preheader.3 ], [ %indvars.iv.next.3.1, %bb.o ] ; 3 uses
+  %indvars.iv.3 = phi i64 [ 192, %.preheader.3 ], [ %indvars.iv.next18.1, %bb.o ] ; 4 uses
   %.0291.3 = phi i64 [ 0, %.preheader.3 ], [ %.130.3.1, %bb.o ] ; 2 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv17
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.3
   %i.ar = load i8, ptr %i.aq, align 1             ; 2 uses
   %.not.3 = icmp eq i8 %i.ar, -1
   br i1 %.not.3, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.as = shl nuw i64 1, %indvars.iv.3
+  %i.as = shl nuw i64 1, %indvars.iv17
   %i.at = or i64 %i.as, %.0291.3
   %i.au = zext i8 %i.ar to i64
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.au
   %i.aw = load ptr, ptr %i.av, align 8
-  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv17
+  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv.3
   store ptr %i.aw, ptr %i.ax, align 8
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.130.3 = phi i64 [ %i.at, %bb.l ], [ %.0291.3, %bb.k ] ; 2 uses
-  %indvars.iv.next18 = or disjoint i64 %indvars.iv17, 1 ; 2 uses
+  %indvars.iv.next18 = or disjoint i64 %indvars.iv.3, 1 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.next18
   %i.az = load i8, ptr %i.ay, align 1             ; 2 uses
   %.not.3.1 = icmp eq i8 %i.az, -1
   br i1 %.not.3.1, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.ba = shl nuw i64 2, %indvars.iv.3
+  %i.ba = shl nuw i64 2, %indvars.iv17
   %i.bb = or i64 %i.ba, %.130.3
   %i.bc = zext i8 %i.az to i64
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.bc
@@ -879,8 +879,8 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.130.3.1 = phi i64 [ %i.bb, %bb.n ], [ %.130.3, %bb.m ] ; 2 uses
-  %indvars.iv.next18.1 = add nuw nsw i64 %indvars.iv17, 2
-  %indvars.iv.next.3.1 = add nuw nsw i64 %indvars.iv.3, 2 ; 2 uses
+  %indvars.iv.next18.1 = add nuw nsw i64 %indvars.iv.3, 2
+  %indvars.iv.next.3.1 = add nuw nsw i64 %indvars.iv17, 2 ; 2 uses
   %exitcond.3.not.1 = icmp eq i64 %indvars.iv.next.3.1, 64
   br i1 %exitcond.3.not.1, label %bb.p, label %bb.k, !llvm.loop !36
 

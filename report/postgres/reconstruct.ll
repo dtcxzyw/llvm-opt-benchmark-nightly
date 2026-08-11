@@ -112,7 +112,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %i.ae = add i32 %i.ad, 1
   %spec.select.i.3 = select i1 %.not.i.3, i32 %spec.select.i.2, i32 %i.ae ; 3 uses
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %find_reconstructed_block_length.exit.loopexit.unr-lcssa, label %bb.b, !llvm.loop !4
 

@@ -203,8 +203,8 @@ bb.m:                                             ; preds = %bb.l
   br label %.loopexit.us.us.i
 
 .preheader41.i:                                   ; preds = %.preheader41.lr.ph.i, %.preheader41.i
-  %.03551.i = phi ptr [ %5, %.preheader41.i ], [ %i.ad, %.preheader41.lr.ph.i ] ; 2 uses
-  %.03650.i = phi i32 [ %4, %.preheader41.i ], [ 0, %.preheader41.lr.ph.i ]
+  %indvars.iv57.i = phi i32 [ %indvars.iv.next58.i, %.preheader41.i ], [ 3, %.preheader41.lr.ph.i ] ; 2 uses
+  %.03551.i = phi ptr [ %4, %.preheader41.i ], [ %i.ad, %.preheader41.lr.ph.i ] ; 2 uses
   %.03849.i = phi ptr [ %i.bv, %.preheader41.i ], [ %i.ab, %.preheader41.lr.ph.i ] ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.03551.i, i64 8
   %i.bk = icmp eq ptr %i.ac, %.03849.i
@@ -225,13 +225,13 @@ bb.m:                                             ; preds = %bb.l
   %i.bu = load i32, ptr %i.bt, align 4
   %i.bv = getelementptr inbounds nuw i8, ptr %spec.select.2.i, i64 4
   store i32 %i.bu, ptr %spec.select.2.i, align 4
-  %4 = add i32 %.03650.i, 3                       ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.03551.i, i64 16 ; 2 uses
-  %.not.i150 = icmp eq ptr %5, %i.w
+  %4 = getelementptr inbounds nuw i8, ptr %.03551.i, i64 16 ; 2 uses
+  %.not.i150 = icmp eq ptr %4, %i.w
+  %indvars.iv.next58.i = add i32 %indvars.iv57.i, 3
   br i1 %.not.i150, label %._crit_edge.i, label %.preheader41.i, !llvm.loop !6
 
 ._crit_edge.i:                                    ; preds = %.loopexit.us.us.2.i, %.preheader41.i, %bb.g
-  %.036.lcssa.i = phi i32 [ 0, %bb.g ], [ %4, %.preheader41.i ], [ %.2.us.us.2.i, %.loopexit.us.us.2.i ]
+  %.036.lcssa.i = phi i32 [ 0, %bb.g ], [ %indvars.iv57.i, %.preheader41.i ], [ %.2.us.us.2.i, %.loopexit.us.us.2.i ]
   tail call void @_ZdaPv(ptr noundef nonnull %i.ab) #18
   %i.bw = uitofp i32 %.036.lcssa.i to float
   %i.bx = load i32, ptr %i.h, align 8

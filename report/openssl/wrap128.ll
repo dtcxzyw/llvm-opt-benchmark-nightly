@@ -34,8 +34,8 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 12 uses
   %i.m = add nsw i64 %4, -8
   %i.n = lshr exact i64 %i.m, 3                   ; 2 uses
-  %i.o = add nuw nsw i64 %i.n, 1                  ; 5 uses
-  %i.p = add nuw nsw i64 %i.n, 2                  ; 3 uses
+  %i.o = add nuw nsw i64 %i.n, 2                  ; 3 uses
+  %i.p = add nuw nsw i64 %i.n, 1                  ; 5 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader.preheader, %bb.d
@@ -74,7 +74,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   store i64 %i.ah, ptr %.03841, align 1
   %i.ai = add nuw nsw i64 %.143, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.03841, i64 8
-  %exitcond.not = icmp eq i64 %i.ai, %i.p
+  %exitcond.not = icmp eq i64 %i.ai, %i.o
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !9
 
 ._crit_edge:                                      ; preds = %bb.d
@@ -82,7 +82,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.g, %._crit_edge
-  %.143.1 = phi i64 [ %i.p, %._crit_edge ], [ %i.bd, %bb.g ] ; 6 uses
+  %.143.1 = phi i64 [ %i.o, %._crit_edge ], [ %i.bd, %bb.g ] ; 6 uses
   %.03841.1 = phi ptr [ %i.f, %._crit_edge ], [ %i.be, %bb.g ] ; 3 uses
   %i.al = load i64, ptr %.03841.1, align 1
   store i64 %i.al, ptr %i.h, align 8
@@ -121,7 +121,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %exitcond.1.not, label %._crit_edge.1, label %bb.e, !llvm.loop !9
 
 ._crit_edge.1:                                    ; preds = %bb.g
-  %i.bf = add nuw nsw i64 %i.o, %i.ak             ; 3 uses
+  %i.bf = add nuw nsw i64 %i.ak, %i.p             ; 3 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.j, %._crit_edge.1
@@ -164,7 +164,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %exitcond.2.not, label %._crit_edge.2, label %bb.h, !llvm.loop !9
 
 ._crit_edge.2:                                    ; preds = %bb.j
-  %i.ca = add nuw i64 %i.o, %i.bf                 ; 3 uses
+  %i.ca = add nuw i64 %i.bf, %i.p                 ; 3 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.m, %._crit_edge.2
@@ -207,7 +207,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %exitcond.3.not, label %._crit_edge.3, label %bb.k, !llvm.loop !9
 
 ._crit_edge.3:                                    ; preds = %bb.m
-  %i.cv = add nuw i64 %i.o, %i.ca                 ; 3 uses
+  %i.cv = add nuw i64 %i.ca, %i.p                 ; 3 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.p, %._crit_edge.3
@@ -250,7 +250,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br i1 %exitcond.4.not, label %._crit_edge.4, label %bb.n, !llvm.loop !9
 
 ._crit_edge.4:                                    ; preds = %bb.p
-  %i.dq = add nuw i64 %i.o, %i.cv
+  %i.dq = add nuw i64 %i.cv, %i.p
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.s, %._crit_edge.4

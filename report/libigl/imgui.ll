@@ -204,7 +204,7 @@ _ZN16ImGuiListClipper5BeginEif.exit:              ; preds = %bb.z, %bb.x, %bb.y
 
 .lr.ph171.us.preheader:                           ; preds = %.lr.ph172.split.us
   %i.fq = load i32, ptr %i.dp, align 4, !tbaa !1199
-  %i.fr = mul nsw i32 %i.fn, 3
+  %i.fr = mul i32 %i.fn, 3
   %i.fs = add i32 %i.fq, %i.fr
   br label %.lr.ph171.us
 
@@ -213,11 +213,11 @@ _ZN16ImGuiListClipper5BeginEif.exit:              ; preds = %bb.z, %bb.x, %bb.y
   br i1 %i.ft, label %.lr.ph172.split.us, label %._crit_edge173, !llvm.loop !1201
 
 .lr.ph171.us:                                     ; preds = %.lr.ph171.us.preheader, %_ZN5ImGui13IsItemHoveredEi.exit.thread.us.us
-  %.0114169.us.us = phi i32 [ %indvars.iv.next192.2, %_ZN5ImGui13IsItemHoveredEi.exit.thread.us.us ], [ %i.fs, %.lr.ph171.us.preheader ] ; 3 uses
-  %.0115168.us.us = phi i32 [ %i.jy, %_ZN5ImGui13IsItemHoveredEi.exit.thread.us.us ], [ %i.fn, %.lr.ph171.us.preheader ]
+  %.0114169.us.us = phi i32 [ %i.fs, %.lr.ph171.us.preheader ], [ %indvars.iv.next194, %_ZN5ImGui13IsItemHoveredEi.exit.thread.us.us ] ; 3 uses
+  %.0115168.us.us = phi i32 [ %i.fn, %.lr.ph171.us.preheader ], [ %i.jy, %_ZN5ImGui13IsItemHoveredEi.exit.thread.us.us ]
+  %9 = sext i32 %.0114169.us.us to i64            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #39
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %7, i8 0, i64 24, i1 false), !tbaa !9
-  %9 = sext i32 %.0114169.us.us to i64            ; 4 uses
   br i1 %.not141, label %.preheader.us.us.1, label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph171.us
@@ -295,7 +295,6 @@ bb.ad:                                            ; preds = %bb.ac, %.preheader.
   %i.hp = extractelement <4 x double> %i.hk, i64 2
   %i.hq = extractelement <4 x double> %i.hk, i64 3
   %i.hr = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.ha, i64 noundef %gepdiff240, ptr noundef nonnull @.str.213, ptr noundef nonnull @.str.215, i32 noundef %i.hb, double noundef %i.hn, double noundef %i.ho, double noundef %i.hp, double noundef %i.hq, i32 noundef %i.hm) ; 0 uses
-  %indvars.iv.next192.2 = add i32 %.0114169.us.us, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #39
   store <2 x float> zeroinitializer, ptr %8, align 8, !tbaa !9
   %i.hs = call noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull %i.a, i1 noundef zeroext false, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %8) ; 0 uses
@@ -433,6 +432,7 @@ _ZN5ImGui13IsItemHoveredEi.exit.thread154.us.us:  ; preds = %bb.at, %bb.as, %_ZN
 _ZN5ImGui13IsItemHoveredEi.exit.thread.us.us:     ; preds = %_ZN5ImGui13IsItemHoveredEi.exit.thread154.us.us, %bb.at, %bb.ar, %bb.aq, %bb.al, %bb.ah, %bb.ag, %_ZN5ImGui13IsItemHoveredEi.exit.us.us, %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #39
   %i.jy = add i32 %.0115168.us.us, 1              ; 2 uses
+  %indvars.iv.next194 = add i32 %.0114169.us.us, 3
   %exitcond197.not = icmp eq i32 %i.jy, %i.fo
   br i1 %exitcond197.not, label %.loopexit.us, label %.lr.ph171.us, !llvm.loop !1205
 
@@ -448,16 +448,16 @@ _ZN5ImGui13IsItemHoveredEi.exit.thread.us.us:     ; preds = %_ZN5ImGui13IsItemHo
 
 .lr.ph171.preheader:                              ; preds = %.lr.ph172.split
   %i.kd = load i32, ptr %i.dp, align 4, !tbaa !1199
-  %i.ke = mul nsw i32 %i.ka, 3
+  %i.ke = mul i32 %i.ka, 3
   %i.kf = add i32 %i.kd, %i.ke
   br label %.lr.ph171
 
 .lr.ph171:                                        ; preds = %.lr.ph171.preheader, %_ZN5ImGui13IsItemHoveredEi.exit.thread
-  %.0114169 = phi i32 [ %indvars.iv.next187.2, %_ZN5ImGui13IsItemHoveredEi.exit.thread ], [ %i.kf, %.lr.ph171.preheader ] ; 3 uses
-  %.0115168 = phi i32 [ %i.mf, %_ZN5ImGui13IsItemHoveredEi.exit.thread ], [ %i.ka, %.lr.ph171.preheader ]
+  %.0114169 = phi i32 [ %i.kf, %.lr.ph171.preheader ], [ %indvars.iv.next187, %_ZN5ImGui13IsItemHoveredEi.exit.thread ] ; 3 uses
+  %.0115168 = phi i32 [ %i.ka, %.lr.ph171.preheader ], [ %i.mf, %_ZN5ImGui13IsItemHoveredEi.exit.thread ]
+  %10 = sext i32 %.0114169 to i64                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #39
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %7, i8 0, i64 24, i1 false), !tbaa !9
-  %10 = sext i32 %.0114169 to i64                 ; 4 uses
   br i1 %.not141, label %.preheader.1, label %bb.au
 
 bb.au:                                            ; preds = %.lr.ph171
@@ -535,13 +535,13 @@ _ZN5ImGui13IsItemHoveredEi.exit.thread:           ; preds = %bb.aw, %.preheader.
   %i.mb = extractelement <4 x double> %i.lw, i64 2
   %i.mc = extractelement <4 x double> %i.lw, i64 3
   %i.md = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.lm, i64 noundef %gepdiff238, ptr noundef nonnull @.str.213, ptr noundef nonnull @.str.215, i32 noundef %i.ln, double noundef %i.lz, double noundef %i.ma, double noundef %i.mb, double noundef %i.mc, i32 noundef %i.ly) ; 0 uses
-  %indvars.iv.next187.2 = add i32 %.0114169, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #39
   store <2 x float> zeroinitializer, ptr %8, align 8, !tbaa !9
   %i.me = call noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull %i.a, i1 noundef zeroext false, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %8) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #39
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #39
   %i.mf = add i32 %.0115168, 1                    ; 2 uses
+  %indvars.iv.next187 = add i32 %.0114169, 3
   %exitcond.not = icmp eq i32 %i.mf, %i.kb
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph171, !llvm.loop !1205
 

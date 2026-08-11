@@ -203,12 +203,11 @@ bb.do:                                            ; preds = %_ZL14checkParaCount
 .lr.ph354.preheader.i:                            ; preds = %.outer227._crit_edge.i
   %i.pj = tail call i32 @llvm.umin.i32(i32 %.0167.ph233.lcssa281.i, i32 125)
   %i.pk = icmp samesign ugt i32 %.0167.ph233.lcssa281.i, 125
-  %6 = zext nneg i32 %i.pj to i64
   %spec.select700 = select i1 %i.pk, i32 2, i32 %.1173.ph231.lcssa284.i
   br label %.lr.ph354.i
 
 .lr.ph354.i:                                      ; preds = %.lr.ph354.preheader.i, %select.unfold.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %select.unfold.i ], [ %6, %.lr.ph354.preheader.i ] ; 3 uses
+  %.4352.i = phi i32 [ %7, %select.unfold.i ], [ %i.pj, %.lr.ph354.preheader.i ] ; 3 uses
   %.10351.i = phi i32 [ %i.po, %select.unfold.i ], [ %spec.select700, %.lr.ph354.preheader.i ]
   %i.pl = icmp eq i32 %.10351.i, 2
   br i1 %i.pl, label %bb.dp, label %select.unfold.i
@@ -218,10 +217,11 @@ bb.dp:                                            ; preds = %.lr.ph354.i
   br label %.loopexit.i
 
 select.unfold.i:                                  ; preds = %.lr.ph354.i
-  %i.pn = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.i
+  %6 = zext nneg i32 %.4352.i to i64
+  %i.pn = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %6
   %i.po = load i32, ptr %i.pn, align 4, !tbaa !62
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
-  %i.pp = icmp sgt i64 %indvars.iv.i, 0
+  %7 = add nsw i32 %.4352.i, -1
+  %i.pp = icmp sgt i32 %.4352.i, 0
   br i1 %i.pp, label %.lr.ph354.i, label %.loopexit.i, !llvm.loop !87
 
 .loopexit.i:                                      ; preds = %select.unfold.i, %bb.dp, %.outer227._crit_edge.i, %bb.bq

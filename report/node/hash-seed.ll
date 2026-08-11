@@ -56,14 +56,15 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 .preheader115.i:                                  ; preds = %_ZN6detailL8is_primeEy.exit.thread.i, %bb.c
   %.023125.i = phi i64 [ 0, %bb.c ], [ %i.qr, %_ZN6detailL8is_primeEy.exit.thread.i ] ; 4 uses
-  %.0106124.i = phi i64 [ %.0, %bb.c ], [ %1, %_ZN6detailL8is_primeEy.exit.thread.i ]
+  %.0106124.i = phi i64 [ %.0, %bb.c ], [ %indvars.iv.i, %_ZN6detailL8is_primeEy.exit.thread.i ]
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.023125.i
   %.not126.i = icmp eq i64 %.023125.i, 0
   %exitcond.not.i = icmp eq i64 %.023125.i, 1
   br label %bb.d
 
 bb.d:                                             ; preds = %.backedge.i, %.preheader115.i
-  %.1.i.a = phi i64 [ %.0106124.i, %.preheader115.i ], [ %1, %.backedge.i ] ; 8 uses
+  %.1.i.a = phi i64 [ %indvars.iv.i, %.backedge.i ], [ %.0106124.i, %.preheader115.i ] ; 8 uses
+  %indvars.iv.i = add i64 %.1.i.a, 7614582451446465832 ; 4 uses
   %i.m = add i64 %.1.i.a, 3257665815644502181     ; 2 uses
   %i.n = xor i64 %i.m, -8378864009470890807
   %i.o = zext i64 %i.m to i128
@@ -154,9 +155,8 @@ bb.d:                                             ; preds = %.backedge.i, %.preh
   %i.cv = load i8, ptr %i.cu, align 1
   %i.cw = zext i8 %i.cv to i64
   %i.cx = shl nuw nsw i64 %i.cw, 48
-  %1 = add i64 %.1.i.a, 7614582451446465832       ; 4 uses
-  %i.cy = xor i64 %1, -8378864009470890807
-  %i.cz = zext i64 %1 to i128
+  %i.cy = xor i64 %indvars.iv.i, -8378864009470890807
+  %i.cz = zext i64 %indvars.iv.i to i128
   %i.da = zext i64 %i.cy to i128
   %i.db = mul nuw i128 %i.da, %i.cz               ; 2 uses
   %i.dc = lshr i128 %i.db, 64

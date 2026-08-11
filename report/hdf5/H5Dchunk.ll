@@ -204,15 +204,16 @@ bb.cc:                                            ; preds = %.critedge262
 .lr.ph.i288:                                      ; preds = %.critedge4.i, %.lr.ph.preheader.i287
   %.sroa.12.0.i = phi ptr [ null, %.lr.ph.preheader.i287 ], [ %.sroa.8.1.i, %.critedge4.i ]
   %.sroa.0100.0.i = phi ptr [ %i.ld, %.lr.ph.preheader.i287 ], [ %.sroa.0.2.i, %.critedge4.i ] ; 17 uses
-  %.06190.i.a = phi i32 [ 0, %.lr.ph.preheader.i287 ], [ %.162.lcssa.i, %.critedge4.i ] ; 7 uses
-  %.sroa.0.089.i = phi i32 [ %i.ll, %.lr.ph.preheader.i287 ], [ %6, %.critedge4.i ] ; 2 uses
+  %.06190.i.a = phi i32 [ %i.ll, %.lr.ph.preheader.i287 ], [ %indvars.iv.i289, %.critedge4.i ] ; 2 uses
+  %.sroa.0.089.i = phi i32 [ 0, %.lr.ph.preheader.i287 ], [ %.162.lcssa.i, %.critedge4.i ] ; 7 uses
+  %indvars.iv.i289 = add i32 %.06190.i.a, -1
   %i.lm = load i64, ptr %i.le, align 8, !tbaa !261
   %i.ln = add i64 %i.lm, %i.s                     ; 6 uses
   %i.lo = icmp ugt i64 %i.ln, %i.la
   br i1 %i.lo, label %.preheader81.i, label %.critedge.i
 
 .preheader81.i:                                   ; preds = %.lr.ph.i288
-  %i.lp = icmp eq i32 %.sroa.0.089.i, 0
+  %i.lp = icmp eq i32 %.06190.i.a, 0
   br i1 %i.lp, label %.preheader80.split.us.i, label %.preheader80.i
 
 .preheader80.split.us.i:                          ; preds = %.preheader81.i
@@ -408,7 +409,7 @@ H5D__chunk_cache_evict.exit.i:                    ; preds = %bb.dd, %bb.dc
   store i32 %i.oi, ptr %i.og, align 8, !tbaa !262
   %i.oj = call ptr @H5FL_reg_free(ptr noundef nonnull @H5_H5D_rdcc_ent_t_reg_free_list, ptr noundef nonnull %.sroa.0100.0.i) #15 ; 0 uses
   %.lobit.i = lshr i32 %i.nb, 31
-  %spec.select.i = add nsw i32 %.lobit.i, %.06190.i.a
+  %spec.select.i = add nsw i32 %.lobit.i, %.sroa.0.089.i
   %.pre113.i = load i64, ptr %i.le, align 8, !tbaa !261
   %.pre119.i = add i64 %.pre113.i, %i.s
   br label %.thread75.i
@@ -418,7 +419,7 @@ H5D__chunk_cache_evict.exit.i:                    ; preds = %bb.dd, %bb.dc
   %.sroa.12.1.i = phi ptr [ %.us-phi.i, %bb.cl ], [ %spec.store.select.1.i, %H5D__chunk_cache_evict.exit.i ], [ %spec.store.select.1.i, %bb.cq ], [ %.us-phi.i, %bb.cg ], [ %.us-phi.i, %bb.ck ], [ %.us-phi.i, %.preheader79.preheader.i ] ; 12 uses
   %.sroa.8.0.i = phi ptr [ %i.lw, %bb.cl ], [ %.sroa.8.2.i, %H5D__chunk_cache_evict.exit.i ], [ %.sroa.8.2.i, %bb.cq ], [ %i.lw, %bb.cg ], [ %i.lw, %bb.ck ], [ %i.lw, %.preheader79.preheader.i ] ; 4 uses
   %.sroa.0.1.i = phi ptr [ %i.lt, %bb.cl ], [ %.sroa.0.0.i, %H5D__chunk_cache_evict.exit.i ], [ %.sroa.0.0.i, %bb.cq ], [ %i.lt, %bb.cg ], [ %i.lt, %bb.ck ], [ %i.lt, %.preheader79.preheader.i ] ; 4 uses
-  %.364.i = phi i32 [ %.06190.i.a, %bb.cl ], [ %spec.select.i, %H5D__chunk_cache_evict.exit.i ], [ %.06190.i.a, %bb.cq ], [ %.06190.i.a, %bb.cg ], [ %.06190.i.a, %bb.ck ], [ %.06190.i.a, %.preheader79.preheader.i ] ; 4 uses
+  %.364.i = phi i32 [ %.sroa.0.089.i, %bb.cl ], [ %spec.select.i, %H5D__chunk_cache_evict.exit.i ], [ %.sroa.0.089.i, %bb.cq ], [ %.sroa.0.089.i, %bb.cg ], [ %.sroa.0.089.i, %bb.ck ], [ %.sroa.0.089.i, %.preheader79.preheader.i ] ; 4 uses
   %i.ok = icmp ule i64 %.pre-phi.i, %i.la
   %.not135.i = icmp eq ptr %.sroa.12.1.i, null
   %or.cond137.i = select i1 %i.ok, i1 true, i1 %.not135.i
@@ -558,14 +559,13 @@ H5D__chunk_cache_evict.exit.1.i:                  ; preds = %bb.dw, %bb.dv
   %.sroa.8.1.i = phi ptr [ %.sroa.8.0.i, %.thread75.i ], [ %.sroa.8.0.i, %bb.de ], [ %.sroa.8.3.i, %H5D__chunk_cache_evict.exit.1.i ], [ %.sroa.8.3.i, %bb.dj ] ; 2 uses
   %.sroa.0.2.i = phi ptr [ %.sroa.0.1.i, %.thread75.i ], [ %.sroa.0.1.i, %bb.de ], [ %.sroa.0.3.i, %H5D__chunk_cache_evict.exit.1.i ], [ %.sroa.0.3.i, %bb.dj ] ; 2 uses
   %.162.lcssa.i = phi i32 [ %.364.i, %.thread75.i ], [ %.364.i, %bb.de ], [ %spec.select.1.i, %H5D__chunk_cache_evict.exit.1.i ], [ %.364.i, %bb.dj ] ; 2 uses
-  %6 = add i32 %.sroa.0.089.i, -1
   %i.qi = icmp ne ptr %.sroa.0.2.i, null
   %i.qj = icmp ne ptr %.sroa.8.1.i, null
   %or.cond.i289 = select i1 %i.qi, i1 true, i1 %i.qj
   br i1 %or.cond.i289, label %.lr.ph.i288, label %.critedge.i, !llvm.loop !300
 
 .critedge.i:                                      ; preds = %.critedge4.i, %.lr.ph.i288
-  %.061.lcssa.ph.i = phi i32 [ %.06190.i.a, %.lr.ph.i288 ], [ %.162.lcssa.i, %.critedge4.i ]
+  %.061.lcssa.ph.i = phi i32 [ %.sroa.0.089.i, %.lr.ph.i288 ], [ %.162.lcssa.i, %.critedge4.i ]
   %i.qk = icmp eq i32 %.061.lcssa.ph.i, 0
   br i1 %i.qk, label %bb.dx, label %.split103
 

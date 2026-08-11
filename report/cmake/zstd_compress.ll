@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %ZSTD_allocateChainT
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next7.i.i, %.preheader.i.i ], [ 0, %.preheader.i.i.preheader ] ; 2 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.preheader.i.i ], [ 0, %.preheader.i.i.preheader ] ; 2 uses
   %.021.i4.i.i = phi i32 [ %5, %.preheader.i.i ], [ 0, %.preheader.i.i.preheader ]
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %indvars.iv.i.i ; 5 uses
   %i.bw = load <4 x i32>, ptr %i.bv, align 4, !tbaa !52 ; 3 uses
@@ -238,8 +238,8 @@ bb.d:                                             ; preds = %ZSTD_allocateChainT
   %i.cv = select <4 x i1> %i.ct, <4 x i32> zeroinitializer, <4 x i32> %i.cu
   %i.cw = select <4 x i1> %i.cs, <4 x i32> splat (i32 1), <4 x i32> %i.cv
   store <4 x i32> %i.cw, ptr %i.cq, align 4, !tbaa !52
-  %indvars.iv.next7.i.i = add nuw nsw i64 %indvars.iv.i.i, 16
   %5 = add nuw nsw i32 %.021.i4.i.i, 1            ; 2 uses
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 16
   %exitcond.not.i.i = icmp eq i32 %5, %i.bp
   br i1 %exitcond.not.i.i, label %ZSTD_reduceTable_btlazy2.exit.i, label %.preheader.i.i, !llvm.loop !447
 
@@ -432,7 +432,7 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %indvars.iv = phi i64 [ %indvars.iv.next7, %.preheader ], [ 0, %.preheader.preheader ] ; 5 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader ], [ 0, %.preheader.preheader ] ; 5 uses
   %.021.i4 = phi i32 [ %3, %.preheader ], [ 0, %.preheader.preheader ]
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv ; 2 uses
   %i.i = load <4 x i32>, ptr %i.h, align 4, !tbaa !52 ; 2 uses
@@ -461,8 +461,8 @@ bb.a:
   %i.ac = sub <4 x i32> %i.aa, %i.g
   %i.ad = select <4 x i1> %i.ab, <4 x i32> zeroinitializer, <4 x i32> %i.ac
   store <4 x i32> %i.ad, ptr %i.z, align 4, !tbaa !52
-  %indvars.iv.next7 = add nuw nsw i64 %indvars.iv, 16
   %3 = add nuw nsw i32 %.021.i4, 1                ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 16
   %exitcond.not = icmp eq i32 %3, %i.a
   br i1 %exitcond.not, label %ZSTD_reduceTable_internal.exit, label %.preheader, !llvm.loop !447
 

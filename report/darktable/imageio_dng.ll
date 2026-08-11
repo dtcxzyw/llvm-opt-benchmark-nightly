@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %.thread
 
 .preheader.us.us.preheader:                       ; preds = %.preheader.lr.ph.us
   %i.bd = sext i32 %i.ay to i64                   ; 6 uses
-  %i.be = sub i32 %i.bb, %i.ay
+  %i.be = sub i32 %i.bb, %i.ay                    ; 2 uses
   %wide.trip.count = sext i32 %i.bb to i64        ; 2 uses
   %i.bf = sub nsw i64 %wide.trip.count, %i.bd     ; 6 uses
   %min.iters.check = icmp ult i64 %i.bf, 9
@@ -222,7 +222,7 @@ bb.h:                                             ; preds = %.thread
   br label %iter.check
 
 ._crit_edge142.us.loopexit:                       ; preds = %._crit_edge.us.us
-  %i.bo = call i32 @llvm.umax.i32(i32 %6, i32 1)
+  %i.bo = call i32 @llvm.umax.i32(i32 %.0101141.us.us.a, i32 1)
   br label %._crit_edge142.us
 
 ._crit_edge142.us:                                ; preds = %.preheader.lr.ph.us, %._crit_edge142.us.loopexit
@@ -250,9 +250,9 @@ bb.h:                                             ; preds = %.thread
   br i1 %exitcond173.not, label %..loopexit_crit_edge, label %.preheader.lr.ph.us
 
 iter.check:                                       ; preds = %.preheader.us.us.preheader, %._crit_edge.us.us
-  %indvars.iv164 = phi i64 [ %i.av, %.preheader.us.us.preheader ], [ %indvars.iv.next165, %._crit_edge.us.us ] ; 2 uses
-  %.0101141.us.us.a = phi i32 [ 0, %.preheader.us.us.preheader ], [ %i.el, %._crit_edge.us.us ] ; 3 uses
-  %.0105139.us.us = phi i32 [ 0, %.preheader.us.us.preheader ], [ %6, %._crit_edge.us.us ]
+  %indvars.iv164 = phi i64 [ %i.av, %.preheader.us.us.preheader ], [ %indvars.iv.next167, %._crit_edge.us.us ] ; 2 uses
+  %.0101141.us.us.a = phi i32 [ %i.be, %.preheader.us.us.preheader ], [ %indvars.iv.next164, %._crit_edge.us.us ] ; 2 uses
+  %.0105139.us.us = phi i32 [ 0, %.preheader.us.us.preheader ], [ %i.el, %._crit_edge.us.us ] ; 3 uses
   %.0107138.us.us = phi i32 [ 0, %.preheader.us.us.preheader ], [ %i.et, %._crit_edge.us.us ] ; 3 uses
   %.0109137.us.us = phi i32 [ 0, %.preheader.us.us.preheader ], [ %i.ep, %._crit_edge.us.us ] ; 3 uses
   %i.cb = mul nsw i64 %indvars.iv164, %i.ah       ; 6 uses
@@ -262,7 +262,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check195, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.cc = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %.0101141.us.us.a, i64 0
+  %i.cc = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %.0105139.us.us, i64 0
   %i.cd = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %.0107138.us.us, i64 0
   %i.ce = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %.0109137.us.us, i64 0
   %invariant.op = add i64 8, %i.cb
@@ -358,7 +358,7 @@ vec.epilog.iter.check:                            ; preds = %vector.body
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.merge.rdx = phi i32 [ %i.dq, %vec.epilog.iter.check ], [ %.0101141.us.us.a, %vector.main.loop.iter.check ]
+  %bc.merge.rdx = phi i32 [ %i.dq, %vec.epilog.iter.check ], [ %.0105139.us.us, %vector.main.loop.iter.check ]
   %bc.merge.rdx229 = phi i32 [ %i.dp, %vec.epilog.iter.check ], [ %.0107138.us.us, %vector.main.loop.iter.check ]
   %bc.merge.rdx230 = phi i32 [ %i.do, %vec.epilog.iter.check ], [ %.0109137.us.us, %vector.main.loop.iter.check ]
   %i.dr = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx, i64 0
@@ -397,7 +397,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ %i.bd, %iter.check ], [ %i.bj, %vec.epilog.iter.check ], [ %i.bn, %vec.epilog.middle.block ]
-  %.1102133.us.us.ph = phi i32 [ %.0101141.us.us.a, %iter.check ], [ %i.dq, %vec.epilog.iter.check ], [ %i.ed, %vec.epilog.middle.block ]
+  %.1102133.us.us.ph = phi i32 [ %.0105139.us.us, %iter.check ], [ %i.dq, %vec.epilog.iter.check ], [ %i.ed, %vec.epilog.middle.block ]
   %.1108130.us.us.ph = phi i32 [ %.0107138.us.us, %iter.check ], [ %i.dp, %vec.epilog.iter.check ], [ %i.ee, %vec.epilog.middle.block ]
   %.1110129.us.us.ph = phi i32 [ %.0109137.us.us, %iter.check ], [ %i.do, %vec.epilog.iter.check ], [ %i.ef, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
@@ -426,9 +426,9 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond.not, label %._crit_edge.us.us, label %vec.epilog.scalar.ph, !llvm.loop !82
 
 ._crit_edge.us.us:                                ; preds = %vec.epilog.scalar.ph
-  %6 = add i32 %i.be, %.0105139.us.us             ; 2 uses
-  %indvars.iv.next165 = add nsw i64 %indvars.iv164, 1 ; 2 uses
-  %exitcond168.not = icmp eq i64 %indvars.iv.next165, %wide.trip.count167
+  %indvars.iv.next167 = add nsw i64 %indvars.iv164, 1 ; 2 uses
+  %indvars.iv.next164 = add i32 %.0101141.us.us.a, %i.be
+  %exitcond168.not = icmp eq i64 %indvars.iv.next167, %wide.trip.count167
   br i1 %exitcond168.not, label %._crit_edge142.us.loopexit, label %iter.check
 
 bb.i:                                             ; preds = %._crit_edge.split
