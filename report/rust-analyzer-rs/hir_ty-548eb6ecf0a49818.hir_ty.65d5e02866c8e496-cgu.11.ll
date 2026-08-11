@@ -203,15 +203,14 @@ define internal fastcc noundef range(i8 1, 4) i8 @_RNvMs2_CskVLyBV5N46_15ra_ap_r
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 3 uses
-  %0 = shl i64 %.56.val, 3                        ; 2 uses
   %i.c = icmp ugt i64 %.56.val, 2305843009213693951
   br i1 %i.c, label %bb.c, label %bb.b, !prof !64
 
 bb.b:                                             ; preds = %bb.a
-  switch i64 %0, label %bb.d [
-    i64 16, label %bb.g
-    i64 32, label %bb.e
-    i64 64, label %bb.f
+  switch i64 %.56.val, label %bb.d [
+    i64 2, label %bb.g
+    i64 4, label %bb.e
+    i64 8, label %bb.f
   ], !prof !4
 
 bb.c:                                             ; preds = %bb.a
@@ -219,6 +218,7 @@ bb.c:                                             ; preds = %bb.a
   unreachable
 
 bb.d:                                             ; preds = %bb.b
+  %0 = shl nuw i64 %.56.val, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %0, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -621,29 +621,22 @@ _RINvMNtNtCscAsMj0W7j8b_3std4sync9once_lockINtB3_8OnceLockNtNtCs8K4cjrcxBsw_6hir
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.r = load ptr, ptr @_RNvNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types5TYPES, align 8, !nonnull !5, !noundef !5
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 48
-  %i.t = load i64, ptr %i.s, align 8, !noundef !5 ; 4 uses
-  %6 = shl i64 %i.t, 3                            ; 2 uses
+  %i.t = load i64, ptr %i.s, align 8, !noundef !5 ; 5 uses
   %i.u = icmp ugt i64 %i.t, 2305843009213693951
-  br i1 %i.u, label %bb.e, label %7, !prof !64
-
-7:                                                ; preds = %_RINvMNtNtCscAsMj0W7j8b_3std4sync9once_lockINtB3_8OnceLockNtNtCs8K4cjrcxBsw_6hir_ty11next_solver10DefaultAnyE15get_or_try_initNCINvB2_11get_or_initNCNvBV_13default_types0E0zEBX_.exit
-  %8 = icmp eq i64 %6, 0
-  br i1 %8, label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit, label %9
+  br i1 %i.u, label %bb.e, label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit, !prof !64
 
 bb.e:                                             ; preds = %_RINvMNtNtCscAsMj0W7j8b_3std4sync9once_lockINtB3_8OnceLockNtNtCs8K4cjrcxBsw_6hir_ty11next_solver10DefaultAnyE15get_or_try_initNCINvB2_11get_or_initNCNvBV_13default_types0E0zEBX_.exit
   call void @_RNvNvMs9_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_4Size4bits8overflow(i64 noundef %i.t) #51, !noalias !8895
   unreachable
 
-9:                                                ; preds = %7
-  %10 = sub i64 0, %6
-  %11 = and i64 %10, 120
-  %12 = zext nneg i64 %11 to i128
-  %13 = lshr i128 -1, %12
-  %14 = and i128 %13, %3
-  br label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit
-
-_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit: ; preds = %7, %9
-  %.sroa.0.0.i = phi i128 [ %14, %9 ], [ 0, %7 ]
+_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit: ; preds = %_RINvMNtNtCscAsMj0W7j8b_3std4sync9once_lockINtB3_8OnceLockNtNtCs8K4cjrcxBsw_6hir_ty11next_solver10DefaultAnyE15get_or_try_initNCINvB2_11get_or_initNCNvBV_13default_types0E0zEBX_.exit
+  %.neg.i = mul i64 %i.t, 120
+  %6 = icmp eq i64 %i.t, 0
+  %7 = and i64 %.neg.i, 120
+  %8 = zext nneg i64 %7 to i128
+  %9 = lshr i128 -1, %8
+  %10 = and i128 %9, %3
+  %.sroa.0.0.i = select i1 %6, i128 0, i128 %10
   call void @_RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw(ptr noalias nofree noundef nonnull sret([17 x i8]) align 1 captures(none) dereferenceable(17) %i.a, i128 noundef %.sroa.0.0.i, i64 noundef %i.t)
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.w = load i128, ptr %i.v, align 1, !noundef !5
@@ -1046,12 +1039,12 @@ bb.y:                                             ; preds = %bb.ad, %bb.t
   %.sroa.016.0.i = phi i64 [ %i.bu, %bb.t ], [ %i.ch, %bb.ad ] ; 5 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
   %i.bw = load i128, ptr %i.bv, align 16, !alias.scope !9135, !noalias !9141, !noundef !5 ; 2 uses
-  %14 = shl i64 %.sroa.016.0.i, 3                 ; 2 uses
+  %.neg.i.i = mul i64 %.sroa.016.0.i, 120
   %i.bx = icmp ugt i64 %.sroa.016.0.i, 2305843009213693951
   br i1 %i.bx, label %bb.aa, label %bb.z, !prof !64
 
 bb.z:                                             ; preds = %bb.y
-  %i.by = icmp eq i64 %14, 0
+  %i.by = icmp eq i64 %.sroa.016.0.i, 0
   br i1 %i.by, label %bb.ab, label %bb.ac
 
 bb.aa:                                            ; preds = %bb.y
@@ -1059,12 +1052,11 @@ bb.aa:                                            ; preds = %bb.y
   unreachable
 
 bb.ab:                                            ; preds = %bb.z
-  call void @_RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw(ptr noalias nofree noundef nonnull sret([17 x i8]) align 1 captures(none) dereferenceable(17) %i.g, i128 noundef 0, i64 noundef %.sroa.016.0.i), !noalias !9137
+  call void @_RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw(ptr noalias nofree noundef nonnull sret([17 x i8]) align 1 captures(none) dereferenceable(17) %i.g, i128 noundef 0, i64 noundef 0), !noalias !9137
   br label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt17truncate_from_intnEBc_.exit.i
 
 bb.ac:                                            ; preds = %bb.z
-  %15 = sub i64 0, %14
-  %i.bz = and i64 %15, 120
+  %i.bz = and i64 %.neg.i.i, 120
   %i.ca = zext nneg i64 %i.bz to i128             ; 3 uses
   %i.cb = lshr i128 -1, %i.ca
   %i.cc = and i128 %i.cb, %i.bw
@@ -1135,35 +1127,28 @@ bb.am:                                            ; preds = %bb.ag
   br label %bb.ap
 
 bb.an:                                            ; preds = %bb.ap, %bb.ai
-  %.sroa.011.0.i = phi i64 [ %i.cm, %bb.ai ], [ %i.cq, %bb.ap ] ; 4 uses
-  %16 = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
-  %17 = load i128, ptr %16, align 16, !alias.scope !9135, !noalias !9141, !noundef !5 ; 2 uses
-  %18 = shl i64 %.sroa.011.0.i, 3                 ; 2 uses
+  %.sroa.011.0.i = phi i64 [ %i.cm, %bb.ai ], [ %i.cq, %bb.ap ] ; 5 uses
   %i.cn = icmp ugt i64 %.sroa.011.0.i, 2305843009213693951
-  br i1 %i.cn, label %bb.ao, label %19, !prof !64
-
-19:                                               ; preds = %bb.an
-  %20 = icmp eq i64 %18, 0
-  br i1 %20, label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit.i, label %21
+  br i1 %i.cn, label %bb.ao, label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit.i, !prof !64
 
 bb.ao:                                            ; preds = %bb.an
   call void @_RNvNvMs9_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_4Size4bits8overflow(i64 noundef %.sroa.011.0.i) #51, !noalias !9146
   unreachable
 
-21:                                               ; preds = %19
-  %22 = sub i64 0, %18
-  %23 = and i64 %22, 120
-  %24 = zext nneg i64 %23 to i128
-  %25 = lshr i128 -1, %24
-  %26 = and i128 %25, %17
-  br label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit.i
-
-_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit.i: ; preds = %21, %19
-  %.sroa.0.0.i.i = phi i128 [ %26, %21 ], [ 0, %19 ]
+_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit.i: ; preds = %bb.an
+  %14 = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
+  %15 = load i128, ptr %14, align 16, !alias.scope !9135, !noalias !9141, !noundef !5 ; 2 uses
+  %.neg.i50.i = mul i64 %.sroa.011.0.i, 120
+  %16 = icmp eq i64 %.sroa.011.0.i, 0
+  %17 = and i64 %.neg.i50.i, 120
+  %18 = zext nneg i64 %17 to i128
+  %19 = lshr i128 -1, %18
+  %20 = and i128 %15, %19
+  %.sroa.0.0.i.i = select i1 %16, i128 0, i128 %20
   call void @_RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw(ptr noalias nofree noundef nonnull sret([17 x i8]) align 1 captures(none) dereferenceable(17) %i.f, i128 noundef %.sroa.0.0.i.i, i64 noundef %.sroa.011.0.i), !noalias !9137
   %i.co = getelementptr inbounds nuw i8, ptr %i.f, i64 1
   %i.cp = load i128, ptr %i.co, align 1, !noalias !9137, !noundef !5
-  %.not66.i = icmp eq i128 %i.cp, %17
+  %.not66.i = icmp eq i128 %i.cp, %15
   br i1 %.not66.i, label %bb.aq, label %bb.ar
 
 bb.ap:                                            ; preds = %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ag
@@ -1201,35 +1186,28 @@ bb.aw:                                            ; preds = %bb.ah
   br label %bb.az
 
 bb.ax:                                            ; preds = %bb.az, %bb.as
-  %.sroa.06.0.i = phi i64 [ %i.cv, %bb.as ], [ %i.cz, %bb.az ] ; 4 uses
-  %27 = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
-  %28 = load i128, ptr %27, align 16, !alias.scope !9135, !noalias !9141, !noundef !5 ; 2 uses
-  %29 = shl i64 %.sroa.06.0.i, 3                  ; 2 uses
+  %.sroa.06.0.i = phi i64 [ %i.cv, %bb.as ], [ %i.cz, %bb.az ] ; 5 uses
   %i.cw = icmp ugt i64 %.sroa.06.0.i, 2305843009213693951
-  br i1 %i.cw, label %bb.ay, label %30, !prof !64
-
-30:                                               ; preds = %bb.ax
-  %31 = icmp eq i64 %29, 0
-  br i1 %31, label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit51.i, label %32
+  br i1 %i.cw, label %bb.ay, label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit51.i, !prof !64
 
 bb.ay:                                            ; preds = %bb.ax
   call void @_RNvNvMs9_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_4Size4bits8overflow(i64 noundef %.sroa.06.0.i) #51, !noalias !9149
   unreachable
 
-32:                                               ; preds = %30
-  %33 = sub i64 0, %29
-  %34 = and i64 %33, 120
-  %35 = zext nneg i64 %34 to i128
-  %36 = lshr i128 -1, %35
-  %37 = and i128 %36, %28
-  br label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit51.i
-
-_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit51.i: ; preds = %32, %30
-  %.sroa.0.0.i50.i = phi i128 [ %37, %32 ], [ 0, %30 ]
-  call void @_RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw(ptr noalias nofree noundef nonnull sret([17 x i8]) align 1 captures(none) dereferenceable(17) %i.e, i128 noundef %.sroa.0.0.i50.i, i64 noundef %.sroa.06.0.i), !noalias !9137
+_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit51.i: ; preds = %bb.ax
+  %21 = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
+  %22 = load i128, ptr %21, align 16, !alias.scope !9135, !noalias !9141, !noundef !5 ; 2 uses
+  %.neg.i51.i = mul i64 %.sroa.06.0.i, 120
+  %23 = icmp eq i64 %.sroa.06.0.i, 0
+  %24 = and i64 %.neg.i51.i, 120
+  %25 = zext nneg i64 %24 to i128
+  %26 = lshr i128 -1, %25
+  %27 = and i128 %22, %26
+  %.sroa.0.0.i52.i = select i1 %23, i128 0, i128 %27
+  call void @_RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw(ptr noalias nofree noundef nonnull sret([17 x i8]) align 1 captures(none) dereferenceable(17) %i.e, i128 noundef %.sroa.0.0.i52.i, i64 noundef %.sroa.06.0.i), !noalias !9137
   %i.cx = getelementptr inbounds nuw i8, ptr %i.e, i64 1
   %i.cy = load i128, ptr %i.cx, align 1, !noalias !9137, !noundef !5
-  %.not65.i = icmp eq i128 %i.cy, %28
+  %.not65.i = icmp eq i128 %i.cy, %22
   br i1 %.not65.i, label %bb.ba, label %bb.bb
 
 bb.az:                                            ; preds = %bb.aw, %bb.av, %bb.au, %bb.at, %bb.ah
@@ -1291,31 +1269,24 @@ bb.bg:                                            ; preds = %bb.bc
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bf, %bb.be, %bb.bd
-  %.sroa.021.0.i = phi i64 [ %i.de, %bb.bd ], [ %i.dg, %bb.be ], [ %i.di, %bb.bf ], [ %i.dk, %bb.bg ] ; 4 uses
+  %.sroa.021.0.i = phi i64 [ %i.de, %bb.bd ], [ %i.dg, %bb.be ], [ %i.di, %bb.bf ], [ %i.dk, %bb.bg ] ; 5 uses
   %.sroa.026.0.i = phi i128 [ %i.df, %bb.bd ], [ %i.dh, %bb.be ], [ %i.dj, %bb.bf ], [ %i.dl, %bb.bg ] ; 2 uses
-  %38 = shl i64 %.sroa.021.0.i, 3                 ; 2 uses
   %i.dm = icmp ugt i64 %.sroa.021.0.i, 2305843009213693951
-  br i1 %i.dm, label %bb.bi, label %39, !prof !64
-
-39:                                               ; preds = %bb.bh
-  %40 = icmp eq i64 %38, 0
-  br i1 %40, label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit53.i, label %41
+  br i1 %i.dm, label %bb.bi, label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit53.i, !prof !64
 
 bb.bi:                                            ; preds = %bb.bh
   call void @_RNvNvMs9_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_4Size4bits8overflow(i64 noundef %.sroa.021.0.i) #51, !noalias !9152
   unreachable
 
-41:                                               ; preds = %39
-  %42 = sub i64 0, %38
-  %43 = and i64 %42, 120
-  %44 = zext nneg i64 %43 to i128
-  %45 = lshr i128 -1, %44
-  %46 = and i128 %45, %.sroa.026.0.i
-  br label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit53.i
-
-_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit53.i: ; preds = %41, %39
-  %.sroa.0.0.i52.i = phi i128 [ %46, %41 ], [ 0, %39 ]
-  call void @_RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw(ptr noalias nofree noundef nonnull sret([17 x i8]) align 1 captures(none) dereferenceable(17) %i.d, i128 noundef %.sroa.0.0.i52.i, i64 noundef %.sroa.021.0.i), !noalias !9141
+_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit53.i: ; preds = %bb.bh
+  %.neg.i54.i = mul i64 %.sroa.021.0.i, 120
+  %28 = icmp eq i64 %.sroa.021.0.i, 0
+  %29 = and i64 %.neg.i54.i, 120
+  %30 = zext nneg i64 %29 to i128
+  %31 = lshr i128 -1, %30
+  %32 = and i128 %31, %.sroa.026.0.i
+  %.sroa.0.0.i55.i = select i1 %28, i128 0, i128 %32
+  call void @_RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw(ptr noalias nofree noundef nonnull sret([17 x i8]) align 1 captures(none) dereferenceable(17) %i.d, i128 noundef %.sroa.0.0.i55.i, i64 noundef %.sroa.021.0.i), !noalias !9141
   %i.dn = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   %i.do = load i128, ptr %i.dn, align 1, !noalias !9137, !noundef !5
   %.not64.i = icmp eq i128 %i.do, %.sroa.026.0.i
@@ -1718,14 +1689,14 @@ bb.dr:                                            ; preds = %bb.dp
 
 bb.ds:                                            ; preds = %bb.dr
   %i.iu = getelementptr inbounds nuw i8, ptr %i.ag, i64 320
-  %i.iv = load i64, ptr %i.iu, align 16, !noalias !9934, !noundef !5 ; 3 uses
+  %i.iv = load i64, ptr %i.iu, align 16, !noalias !9934, !noundef !5 ; 4 uses
   %i.iw = load i128, ptr %i.ie, align 16, !noalias !9934, !noundef !5 ; 3 uses
-  %4 = shl i64 %i.iv, 3                           ; 2 uses
+  %.neg546.i = mul i64 %i.iv, 120
   %i.ix = icmp ugt i64 %i.iv, 2305843009213693951
   br i1 %i.ix, label %bb.du, label %bb.dt, !prof !64
 
 bb.dt:                                            ; preds = %bb.ds
-  %i.iy = icmp eq i64 %4, 0
+  %i.iy = icmp eq i64 %i.iv, 0
   br i1 %i.iy, label %bb.ea, label %bb.dv
 
 bb.du:                                            ; preds = %bb.ds
@@ -1733,8 +1704,7 @@ bb.du:                                            ; preds = %bb.ds
           to label %bb.dx unwind label %bb.cw, !noalias !9927
 
 bb.dv:                                            ; preds = %bb.dt
-  %5 = sub i64 0, %4
-  %i.iz = and i64 %5, 120
+  %i.iz = and i64 %.neg546.i, 120
   %i.ja = zext nneg i64 %i.iz to i128             ; 2 uses
   %i.jb = shl i128 %i.iw, %i.ja
   %i.jc = shl i128 %i.im, %i.ja
@@ -1906,13 +1876,13 @@ bb.eq:                                            ; preds = %bb.ep
   %i.kp = getelementptr inbounds nuw i8, ptr %i.kj, i64 48
   %i.kq = load i128, ptr %i.kp, align 16, !noalias !9927, !noundef !5 ; 2 uses
   %i.kr = getelementptr inbounds nuw i8, ptr %i.ag, i64 320
-  %i.ks = load i64, ptr %i.kr, align 16, !noalias !9934, !noundef !5 ; 4 uses
-  %i.kt = shl i64 %i.ks, 3                        ; 3 uses
+  %i.ks = load i64, ptr %i.kr, align 16, !noalias !9934, !noundef !5 ; 5 uses
+  %i.kt = shl nuw i64 %i.ks, 3                    ; 2 uses
   %i.ku = icmp ugt i64 %i.ks, 2305843009213693951
   br i1 %i.ku, label %bb.es, label %bb.er, !prof !64
 
 bb.er:                                            ; preds = %bb.eq
-  %i.kv = icmp eq i64 %i.kt, 0
+  %i.kv = icmp eq i64 %i.ks, 0
   br i1 %i.kv, label %.thread523.i, label %bb.et
 
 bb.es:                                            ; preds = %bb.eq

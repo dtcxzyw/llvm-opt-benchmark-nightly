@@ -16,8 +16,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden i32 @exr_attr_string_vector_init(ptr noundef %0, ptr nofree noundef captures(address_is_null) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = sext i32 %2 to i64
-  %i.a = shl nsw i64 %3, 4                        ; 2 uses
+  %3 = zext nneg i32 %2 to i64
+  %i.a = shl nuw nsw i64 %3, 4
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %.loopexit, label %bb.b
 
@@ -42,7 +42,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.loopexit
 
 bb.f:                                             ; preds = %bb.d
-  %i.i = icmp ugt i64 %i.a, 2147483647
+  %i.i = icmp samesign ugt i32 %2, 134217727
   br i1 %i.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -81,7 +81,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.v, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483644
+  %unroll_iter = and i64 %wide.trip.count, 134217724
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -201,8 +201,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = load i32, ptr %2, align 8, !tbaa !28     ; 9 uses
-  %3 = sext i32 %i.a to i64
-  %i.b = shl nsw i64 %3, 4                        ; 2 uses
+  %3 = zext i32 %i.a to i64                       ; 3 uses
+  %i.b = shl nuw nsw i64 %3, 4
   %.not.i = icmp eq ptr %0, null
   br i1 %.not.i, label %.critedge, label %bb.c
 
@@ -227,7 +227,7 @@ bb.f:                                             ; preds = %bb.e
   br label %exr_attr_string_vector_init.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.j = icmp ugt i64 %i.b, 2147483647
+  %i.j = icmp samesign ugt i32 %i.a, 134217727
   br i1 %i.j, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
@@ -260,13 +260,12 @@ bb.k:                                             ; preds = %bb.j
   store i32 %i.a, ptr %1, align 8, !tbaa !28
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.a, ptr %i.v, align 4, !tbaa !29
-  %wide.trip.count.i = zext nneg i32 %i.a to i64  ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.i, 3       ; 3 uses
+  %xtraiter = and i64 %3, 3                       ; 3 uses
   %i.w = icmp ult i32 %i.a, 4
   br i1 %i.w, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter = and i64 %wide.trip.count.i, 2147483644
+  %unroll_iter = and i64 %3, 134217724
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new

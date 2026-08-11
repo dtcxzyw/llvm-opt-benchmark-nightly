@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph43, %bb.c
 define i32 @Abc_TtGetCM6Pat(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) initializes((4, 8)) %4, ptr nofree noundef captures(none) initializes((4, 8)) %5, ptr nofree noundef captures(address_is_null) %6) local_unnamed_addr #3 {
 bb.a:
   %i.a = sub nsw i32 %1, %2                       ; 3 uses
-  %i.b = shl nuw i32 1, %i.a                      ; 2 uses
+  %i.b = shl nuw nsw i32 1, %i.a                  ; 2 uses
   %i.c = add nsw i32 %2, -6                       ; 3 uses
   %i.d = shl nuw i32 1, %i.c                      ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -221,15 +221,10 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader42
   %i.g = tail call i32 @llvm.smax.i32(i32 %i.a, i32 6)
   %i.h = add nsw i32 %i.g, -6
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.b, i32 1)
   br label %bb.b
 
 .preheader:                                       ; preds = %bb.a
-  br i1 %.not51, label %.critedge, label %.lr.ph46.preheader
-
-.lr.ph46.preheader:                               ; preds = %.preheader
-  %smax54 = tail call i32 @llvm.smax.i32(i32 %i.b, i32 1)
-  br label %.lr.ph46
+  br i1 %.not51, label %.critedge, label %.lr.ph46
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.044 = phi i32 [ 0, %.lr.ph ], [ %i.x, %bb.b ] ; 4 uses
@@ -250,17 +245,17 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.w = or i64 %i.v, %i.r
   store i64 %i.w, ptr %i.u, align 8, !tbaa !8
   %i.x = add nuw nsw i32 %.044, 1                 ; 2 uses
-  %exitcond.not = icmp eq i32 %i.x, %smax
+  %exitcond.not = icmp eq i32 %i.x, %i.b
   br i1 %exitcond.not, label %.loopexit, label %bb.b, !llvm.loop !51
 
-.lr.ph46:                                         ; preds = %.lr.ph46.preheader, %.lr.ph46
-  %.145 = phi i32 [ %i.ac, %.lr.ph46 ], [ 0, %.lr.ph46.preheader ] ; 2 uses
+.lr.ph46:                                         ; preds = %.preheader, %.lr.ph46
+  %.145 = phi i32 [ %i.ac, %.lr.ph46 ], [ 0, %.preheader ] ; 2 uses
   %i.y = shl i32 %.145, %i.c
   %i.z = sext i32 %i.y to i64
   %i.aa = getelementptr inbounds [8 x i8], ptr %0, i64 %i.z
   %i.ab = tail call i32 @Abc_TtHashLookup6(ptr noundef %i.aa, i32 noundef %i.d, ptr noundef %3, ptr noundef nonnull %4, ptr noundef nonnull %5) ; 0 uses
   %i.ac = add nuw nsw i32 %.145, 1                ; 2 uses
-  %exitcond55.not = icmp eq i32 %i.ac, %smax54
+  %exitcond55.not = icmp eq i32 %i.ac, %i.b
   br i1 %exitcond55.not, label %.loopexit, label %.lr.ph46, !llvm.loop !52
 
 .loopexit:                                        ; preds = %bb.b, %.lr.ph46

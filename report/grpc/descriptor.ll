@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.y = inttoptr i64 %i.x to ptr                 ; 2 uses
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !21   ; 12 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !24 ; 27 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !24 ; 26 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 9 uses
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !94
   %i.ae = and i32 %i.ad, 16
@@ -329,14 +329,11 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.bu = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !24 ; 6 uses
   %i.bw = load ptr, ptr %12, align 8, !tbaa !21   ; 2 uses
-  %31 = add i64 %i.ab, 1                          ; 2 uses
   %i.bx = add i64 %i.aq, 2
   %i.by = add i64 %i.bx, %i.bv                    ; 2 uses
-  %.not44.i61.i = icmp ult i64 %i.ab, 65536
   %.not44.i61.1.i = icmp ult i64 %i.aq, 65536
-  %or.cond308.i = select i1 %.not44.i61.i, i1 %.not44.i61.1.i, i1 false
-  %.not44.i61.2.i = icmp samesign ult i64 %31, 65536
-  %or.cond309.i = select i1 %or.cond308.i, i1 %.not44.i61.2.i, i1 false
+  %.not44.i61.2.i = icmp ult i64 %i.ab, 65535
+  %or.cond309.i = select i1 %.not44.i61.2.i, i1 %.not44.i61.1.i, i1 false
   %i.bz = or i64 %i.by, %i.bv
   %i.ca = icmp ult i64 %i.bz, 65536
   %or.cond311.i = select i1 %or.cond309.i, i1 %i.ca, i1 false ; 2 uses
@@ -365,14 +362,14 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.ab ; 9 uses
   store i8 0, ptr %i.cm, align 1
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 1 ; 2 uses
-  %i.co = trunc nuw i64 %i.ab to i16              ; 2 uses
+  %i.co = trunc nuw i64 %i.ab to i16              ; 3 uses
   store i16 %i.co, ptr %i.cn, align 1
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cm, i64 3
   %i.cq = trunc nuw i64 %i.aq to i16
   store i16 %i.cq, ptr %i.cp, align 1
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cm, i64 5
-  %32 = trunc nuw i64 %31 to i16
-  store i16 %32, ptr %i.cr, align 1
+  %31 = add nuw i16 %i.co, 1
+  store i16 %31, ptr %i.cr, align 1
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cm, i64 7
   store i16 %i.co, ptr %i.cs, align 1
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cm, i64 9

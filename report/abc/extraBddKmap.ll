@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.ae
 
 bb.i:                                             ; preds = %bb.g
-  %i.n = shl nuw i32 1, %4                        ; 2 uses
+  %i.n = shl nuw nsw i32 1, %4                    ; 2 uses
   %i.o = shl nuw i32 1, %5                        ; 7 uses
   %fputc = tail call i32 @fputc(i32 10, ptr %0)   ; 0 uses
   %i.p = icmp sgt i32 %4, 0                       ; 2 uses
@@ -334,7 +334,6 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.am = add nsw i32 %i.o, -1                    ; 3 uses
   %i.an = add nsw i32 %i.n, -1
   %smax386 = tail call i32 @llvm.smax.i32(i32 %i.o, i32 1) ; 3 uses
-  %smax391 = tail call i32 @llvm.smax.i32(i32 %i.n, i32 1)
   br label %.preheader319
 
 .preheader319:                                    ; preds = %.preheader319.lr.ph, %bb.aa
@@ -498,7 +497,7 @@ bb.z:                                             ; preds = %bb.y, %.lr.ph359
 
 bb.aa:                                            ; preds = %._crit_edge356, %._crit_edge348
   %i.bp = add nuw nsw i32 %.0224361, 1            ; 2 uses
-  %exitcond392.not = icmp eq i32 %i.bp, %smax391
+  %exitcond392.not = icmp eq i32 %i.bp, %i.n
   br i1 %exitcond392.not, label %.preheader, label %.preheader319, !llvm.loop !73
 
 .lr.ph364:                                        ; preds = %.lr.ph364.preheader, %.lr.ph364

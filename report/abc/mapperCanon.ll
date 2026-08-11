@@ -9,7 +9,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define i32 @Map_CanonComputeSlow(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef writeonly captures(none) %4, ptr nofree noundef captures(none) initializes((0, 4)) %5) local_unnamed_addr #0 {
 bb.a:
-  %i.a = shl nuw i32 1, %2                        ; 2 uses
+  %i.a = shl nuw nsw i32 1, %2                    ; 3 uses
   %i.b = icmp slt i32 %1, 6
   store i32 -1, ptr %5, align 4, !tbaa !8
   br i1 %i.b, label %bb.b, label %bb.t
@@ -20,7 +20,6 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph70:                                         ; preds = %bb.b
   %i.c = icmp sgt i32 %1, 0
-  %smax76 = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1) ; 2 uses
   br i1 %i.c, label %.lr.ph.preheader.i.us.preheader, label %Map_CanonComputePhase.exit
 
 .lr.ph.preheader.i.us.preheader:                  ; preds = %.lr.ph70
@@ -147,7 +146,7 @@ bb.n:                                             ; preds = %Map_CanonComputePha
 bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   %.149.us = phi i32 [ 1, %bb.n ], [ %i.ax, %bb.m ], [ %.04868.us, %bb.l ] ; 2 uses
   %i.bb = add nuw nsw i32 %.069.us, 1             ; 2 uses
-  %exitcond77.not = icmp eq i32 %i.bb, %smax76
+  %exitcond77.not = icmp eq i32 %i.bb, %i.a
   br i1 %exitcond77.not, label %._crit_edge, label %.lr.ph.preheader.i.us, !llvm.loop !10
 
 Map_CanonComputePhase.exit.loopexit.us:           ; preds = %bb.k, %bb.j, %bb.h, %bb.f, %bb.d
@@ -187,7 +186,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.p, %bb.r, %bb.q
   %.149 = phi i32 [ 1, %bb.p ], [ %i.bl, %bb.r ], [ %.04868, %bb.q ] ; 2 uses
   %i.bo = add nuw nsw i32 %.069, 1                ; 2 uses
-  %exitcond75.not = icmp eq i32 %i.bo, %smax76
+  %exitcond75.not = icmp eq i32 %i.bo, %i.a
   br i1 %exitcond75.not, label %._crit_edge, label %Map_CanonComputePhase.exit, !llvm.loop !10
 
 ._crit_edge:                                      ; preds = %bb.s, %bb.o, %bb.b
@@ -205,7 +204,6 @@ bb.t:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.t
   %wide.trip.count.i57 = zext nneg i32 %1 to i64
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
   br label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph, %bb.ac
@@ -290,7 +288,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.x, %bb.z, %bb.ab, %bb.aa
   %.3 = phi i32 [ 1, %bb.z ], [ %i.cy, %bb.ab ], [ %.266, %bb.aa ], [ %.266, %bb.x ] ; 2 uses
   %i.db = add nuw nsw i32 %.167, 1                ; 2 uses
-  %exitcond.not = icmp eq i32 %i.db, %smax
+  %exitcond.not = icmp eq i32 %i.db, %i.a
   br i1 %exitcond.not, label %.loopexit, label %bb.u, !llvm.loop !13
 
 .loopexit:                                        ; preds = %bb.ac, %bb.t, %._crit_edge
@@ -691,9 +689,6 @@ Map_CanonComputeSlow.exit:                        ; preds = %.lr.ph157, %bb.y, %
 }
 
 declare i32 @Extra_TruthPolarize(i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.smin.i8(i8, i8) #3

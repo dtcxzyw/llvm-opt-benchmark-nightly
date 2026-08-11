@@ -204,8 +204,8 @@ declare i32 @Extra_Factorial(i32 noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define void @Nf_ManPreparePrint(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @Extra_Factorial(i32 noundef %0) #30 ; 7 uses
-  %i.b = shl nuw i32 1, %0                        ; 2 uses
+  %i.a = tail call i32 @Extra_Factorial(i32 noundef %0) #30 ; 6 uses
+  %i.b = shl nuw nsw i32 1, %0                    ; 3 uses
   %i.c = icmp sgt i32 %0, 0
   br i1 %i.c, label %iter.check, label %._crit_edge
 
@@ -290,42 +290,39 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 ._crit_edge:                                      ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %bb.a
   %i.s = sext i32 %0 to i64
-  %i.t = getelementptr i8, ptr %3, i64 %i.s       ; 6 uses
+  %i.t = getelementptr i8, ptr %3, i64 %i.s       ; 5 uses
   %i.u = getelementptr i8, ptr %i.t, i64 1
   store i8 0, ptr %i.u, align 1, !tbaa !66
   %i.v = icmp sgt i32 %i.a, 0
-  br i1 %i.v, label %.split.us, label %.preheader77.thread143
+  br i1 %i.v, label %.preheader78.lr.ph.us.us.preheader.a, label %.preheader77.thread143
 
 .preheader77.thread143:                           ; preds = %._crit_edge
   store i8 45, ptr %i.t, align 1, !tbaa !66
   br label %.split106
 
-.split.us:                                        ; preds = %._crit_edge
+.preheader78.lr.ph.us.us.preheader.a:             ; preds = %._crit_edge
   %.not = icmp eq i32 %0, 31
-  br i1 %.not, label %.preheader78.lr.ph.us.preheader, label %.preheader78.lr.ph.us.us.preheader.a
-
-.preheader78.lr.ph.us.us.preheader.a:             ; preds = %.split.us
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.b, i32 1)
   store i8 43, ptr %i.t, align 1, !tbaa !66
-  %wide.trip.count126 = zext nneg i32 %i.a to i64 ; 2 uses
-  %wide.trip.count121 = zext nneg i32 %smax to i64 ; 2 uses
-  br label %.preheader78.us.us.us
+  %wide.trip.count126 = zext nneg i32 %i.a to i64 ; 7 uses
+  br i1 %.not, label %.preheader78.lr.ph.us.preheader, label %.preheader78.lr.ph.us.us.preheader
 
-.preheader78.lr.ph.us.preheader:                  ; preds = %.split.us
-  store i8 43, ptr %i.t, align 1, !tbaa !66
-  %wide.trip.count131 = zext nneg i32 %i.a to i64 ; 5 uses
-  %i.w = add nsw i64 %wide.trip.count131, -1      ; 2 uses
-  %xtraiter = and i64 %wide.trip.count131, 1
+.preheader78.lr.ph.us.preheader:                  ; preds = %.preheader78.lr.ph.us.us.preheader.a
+  %i.w = add nsw i64 %wide.trip.count126, -1      ; 2 uses
+  %xtraiter = and i64 %wide.trip.count126, 1
   %i.x = icmp eq i64 %i.w, 0
   br i1 %i.x, label %.preheader78.us90.epil.preheader, label %.preheader78.lr.ph.us.preheader.new
 
 .preheader78.lr.ph.us.preheader.new:              ; preds = %.preheader78.lr.ph.us.preheader
-  %unroll_iter = and i64 %wide.trip.count131, 2147483646
+  %unroll_iter = and i64 %wide.trip.count126, 2147483646
   br label %.preheader78.us90
 
-.preheader78.us.us.us:                            ; preds = %._crit_edge83.us.us.us, %.preheader78.lr.ph.us.us.preheader.a
-  %indvars.iv123 = phi i64 [ %indvars.iv.next124, %._crit_edge83.us.us.us ], [ 0, %.preheader78.lr.ph.us.us.preheader.a ] ; 2 uses
-  %.185.us.us.us = phi i64 [ %indvars.iv.next115, %._crit_edge83.us.us.us ], [ 0, %.preheader78.lr.ph.us.us.preheader.a ]
+.preheader78.lr.ph.us.us.preheader:               ; preds = %.preheader78.lr.ph.us.us.preheader.a
+  %wide.trip.count121 = zext nneg i32 %i.b to i64 ; 2 uses
+  br label %.preheader78.us.us.us
+
+.preheader78.us.us.us:                            ; preds = %._crit_edge83.us.us.us, %.preheader78.lr.ph.us.us.preheader
+  %indvars.iv123 = phi i64 [ %indvars.iv.next124, %._crit_edge83.us.us.us ], [ 0, %.preheader78.lr.ph.us.us.preheader ] ; 2 uses
+  %.185.us.us.us = phi i64 [ %indvars.iv.next115, %._crit_edge83.us.us.us ], [ 0, %.preheader78.lr.ph.us.us.preheader ]
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %.preheader78.us.us.us
@@ -444,7 +441,7 @@ bb.k:                                             ; preds = %.sink.split147, %bb
   store i8 %i.bh, ptr %i.bg, align 1, !tbaa !66
   %indvars.iv.next124.1 = add nuw nsw i64 %indvars.iv123.1, 1 ; 2 uses
   %exitcond127.1.not = icmp eq i64 %indvars.iv.next124.1, %wide.trip.count126
-  br i1 %exitcond127.1.not, label %.preheader76.us.preheader, label %.preheader78.us.us.us.1, !llvm.loop !189
+  br i1 %exitcond127.1.not, label %.preheader.us.us, label %.preheader78.us.us.us.1, !llvm.loop !189
 
 .preheader78.us90:                                ; preds = %.preheader78.us90, %.preheader78.lr.ph.us.preheader.new
   %indvars.iv128 = phi i64 [ 0, %.preheader78.lr.ph.us.preheader.new ], [ %indvars.iv.next129.1167, %.preheader78.us90 ] ; 3 uses
@@ -494,12 +491,12 @@ bb.k:                                             ; preds = %.sink.split147, %bb
 
 ._crit_edge86.split.us92:                         ; preds = %._crit_edge86.split.us92.unr-lcssa, %.preheader78.us90.epil.preheader
   store i8 45, ptr %i.t, align 1, !tbaa !66
-  %xtraiter169 = and i64 %wide.trip.count131, 1
+  %xtraiter169 = and i64 %wide.trip.count126, 1
   %i.cf = icmp eq i64 %i.w, 0
   br i1 %i.cf, label %.preheader78.us90.1.epil.preheader, label %._crit_edge86.split.us92.new
 
 ._crit_edge86.split.us92.new:                     ; preds = %._crit_edge86.split.us92
-  %unroll_iter172 = and i64 %wide.trip.count131, 2147483646
+  %unroll_iter172 = and i64 %wide.trip.count126, 2147483646
   br label %.preheader78.us90.1
 
 .preheader78.us90.1:                              ; preds = %.preheader78.us90.1, %._crit_edge86.split.us92.new
@@ -529,13 +526,9 @@ bb.k:                                             ; preds = %.sink.split147, %bb
   %niter173.ncmp.1 = icmp eq i64 %niter173.next.1, %unroll_iter172
   br i1 %niter173.ncmp.1, label %.split106.loopexit.unr-lcssa, label %.preheader78.us90.1, !llvm.loop !189
 
-.preheader76.us.preheader:                        ; preds = %._crit_edge83.us.us.us.1
-  %smax136 = tail call i32 @llvm.smax.i32(i32 %i.b, i32 1) ; 2 uses
-  br label %.preheader.us.us
-
-.preheader.us.us:                                 ; preds = %._crit_edge97.us.us, %.preheader76.us.preheader
-  %.499.us.us = phi i64 [ 0, %.preheader76.us.preheader ], [ %indvars.iv.next134, %._crit_edge97.us.us ]
-  %.16798.us.us = phi i32 [ 0, %.preheader76.us.preheader ], [ %i.cz, %._crit_edge97.us.us ] ; 2 uses
+.preheader.us.us:                                 ; preds = %._crit_edge83.us.us.us.1, %._crit_edge97.us.us
+  %.499.us.us = phi i64 [ %indvars.iv.next134, %._crit_edge97.us.us ], [ 0, %._crit_edge83.us.us.us.1 ]
+  %.16798.us.us = phi i32 [ %i.cz, %._crit_edge97.us.us ], [ 0, %._crit_edge83.us.us.us.1 ] ; 2 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.preheader.us.us
@@ -546,7 +539,7 @@ bb.l:                                             ; preds = %bb.l, %.preheader.u
   %i.cx = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.44, i32 noundef %i.cw, i32 noundef 0, i32 noundef %.16798.us.us, i32 noundef %.16594.us.us, ptr noundef %i.cv) ; 0 uses
   %indvars.iv.next134 = add nsw i64 %indvars.iv133, 1 ; 3 uses
   %i.cy = add nuw nsw i32 %.16594.us.us, 1        ; 2 uses
-  %exitcond137.not = icmp eq i32 %i.cy, %smax136
+  %exitcond137.not = icmp eq i32 %i.cy, %i.b
   br i1 %exitcond137.not, label %._crit_edge97.us.us, label %bb.l, !llvm.loop !190
 
 ._crit_edge97.us.us:                              ; preds = %bb.l
@@ -569,7 +562,7 @@ bb.m:                                             ; preds = %bb.m, %.preheader.u
   %i.dd = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.44, i32 noundef %i.dc, i32 noundef 1, i32 noundef %.16798.us.us.1, i32 noundef %.16594.us.us.1, ptr noundef %i.db) ; 0 uses
   %indvars.iv.next134.1 = add nsw i64 %indvars.iv133.1, 1 ; 2 uses
   %i.de = add nuw nsw i32 %.16594.us.us.1, 1      ; 2 uses
-  %exitcond137.1.not = icmp eq i32 %i.de, %smax136
+  %exitcond137.1.not = icmp eq i32 %i.de, %i.b
   br i1 %exitcond137.1.not, label %._crit_edge97.us.us.1, label %bb.m, !llvm.loop !190
 
 ._crit_edge97.us.us.1:                            ; preds = %bb.m

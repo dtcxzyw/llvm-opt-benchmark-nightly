@@ -204,13 +204,11 @@ bb.ac:                                            ; preds = %_RINvMCsg7m2K3K1Fzf
   %.fr = freeze i64 %i.hs                         ; 2 uses
   %i.ht = add i64 %.fr, 1                         ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4880)
-  %3 = shl i64 %i.ht, 3                           ; 3 uses
-  %4 = icmp ult i64 %.fr, 2305843009213693951
-  %i.hu = icmp ult i64 %3, 9223372036854775805
-  %or.cond.i = and i1 %4, %i.hu
-  br i1 %or.cond.i, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit.i, label %_RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangej2_E11try_reserveCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i.i, !prof !4883
+  %i.hu = icmp ult i64 %.fr, 1152921504606846975
+  br i1 %i.hu, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit.i, label %_RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangej2_E11try_reserveCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i.i, !prof !4883
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit.i: ; preds = %bb.ac
+  %3 = shl nuw nsw i64 %i.ht, 3                   ; 2 uses
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #46, !noalias !4884
   %i.hv = call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %3, i64 noundef 4) #46, !noalias !4884 ; 3 uses
   %i.hw = icmp eq ptr %i.hv, null
@@ -549,15 +547,13 @@ bb.as:                                            ; preds = %.loopexit34
   %.fr32 = freeze i64 %i.la                       ; 2 uses
   %i.lb = add i64 %.fr32, 1                       ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4960)
-  %5 = shl i64 %i.lb, 3                           ; 3 uses
-  %6 = icmp ult i64 %.fr32, 2305843009213693951
-  %i.lc = icmp ult i64 %5, 9223372036854775805
-  %or.cond.i224 = and i1 %6, %i.lc
-  br i1 %or.cond.i224, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit.i227, label %_RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangej2_E11try_reserveCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i.i112, !prof !4883
+  %i.lc = icmp ult i64 %.fr32, 1152921504606846975
+  br i1 %i.lc, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit.i227, label %_RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangej2_E11try_reserveCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i.i112, !prof !4883
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit.i227: ; preds = %bb.as
+  %4 = shl nuw nsw i64 %i.lb, 3                   ; 2 uses
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #46, !noalias !4963
-  %i.ld = call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %5, i64 noundef 4) #46, !noalias !4963 ; 3 uses
+  %i.ld = call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %4, i64 noundef 4) #46, !noalias !4963 ; 3 uses
   %i.le = icmp eq ptr %i.ld, null
   br i1 %i.le, label %bb.at, label %.thread.i.i114
 
@@ -574,7 +570,7 @@ _RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5ran
   br i1 %i.lh, label %.lr.ph.i.i.preheader.i81, label %._crit_edge.i.i.i89
 
 bb.at:                                            ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit.i227
-  invoke void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef range(i64 -1, -9223372036854775807) 4, i64 noundef %5) #45
+  invoke void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef range(i64 -1, -9223372036854775807) 4, i64 noundef %4) #45
           to label %.noexc3.i.i122 unwind label %.thread362, !noalias !4951
 
 .noexc3.i.i122:                                   ; preds = %bb.at
@@ -977,7 +973,7 @@ bb.l:                                             ; preds = %bb.k
 ; Function Attrs: cold nonlazybind uwtable
 define hidden void @_RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecAINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_Ej1_E21reserve_one_uncheckedCsEhZmuQNqkz_11ruff_linter(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0) unnamed_addr #9 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 4 uses
+  %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.c = load i64, ptr %i.b, align 8, !alias.scope !5194, !noalias !5197, !noundef !4 ; 8 uses
   %i.d = icmp ugt i64 %i.c, 1
@@ -1019,21 +1015,16 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.n, label %_RINvCsheqz6YZvxwl_8smallvec10infallibleuECsEhZmuQNqkz_11ruff_linter.exit, label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.o = shl i64 %i.m, 4                          ; 4 uses
-  %1 = icmp ult i64 %i.k, 1152921504606846975
-  %i.p = icmp ult i64 %i.o, 9223372036854775801
-  %or.cond.i = and i1 %1, %i.p
-  br i1 %or.cond.i, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_EECsEhZmuQNqkz_11ruff_linter.exit.i, label %bb.p, !prof !4883
+  %i.o = shl nuw nsw i64 %i.m, 4                  ; 3 uses
+  %i.p = icmp ult i64 %i.k, 576460752303423487
+  br i1 %i.p, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_EECsEhZmuQNqkz_11ruff_linter.exit.i, label %bb.p, !prof !4883
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_EECsEhZmuQNqkz_11ruff_linter.exit.i: ; preds = %bb.h
   br i1 %i.n, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_EECsEhZmuQNqkz_11ruff_linter.exit.i
-  %2 = shl i64 %.sink.i.i, 4                      ; 2 uses
-  %3 = icmp ult i64 %i.c, 1152921504606846976
-  %i.q = icmp ult i64 %2, 9223372036854775801
-  %or.cond59.i = and i1 %3, %i.q
-  br i1 %or.cond59.i, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_EECsEhZmuQNqkz_11ruff_linter.exit44.i, label %bb.p, !prof !4883
+  %i.q = icmp ult i64 %i.c, 576460752303423488
+  br i1 %i.q, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_EECsEhZmuQNqkz_11ruff_linter.exit44.i, label %bb.p, !prof !4883
 
 bb.j:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_EECsEhZmuQNqkz_11ruff_linter.exit.i
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #46, !noalias !5199
@@ -1042,7 +1033,8 @@ bb.j:                                             ; preds = %_RINvCsheqz6YZvxwl_
   br i1 %i.s, label %bb.o, label %bb.l
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_EECsEhZmuQNqkz_11ruff_linter.exit44.i: ; preds = %bb.i
-  %i.t = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.e, i64 noundef %2, i64 noundef 8, i64 noundef %i.o) #46, !noalias !5199 ; 2 uses
+  %1 = shl nuw nsw i64 %.sink.i.i, 4
+  %i.t = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.e, i64 noundef %1, i64 noundef 8, i64 noundef %i.o) #46, !noalias !5199 ; 2 uses
   %i.u = icmp eq ptr %i.t, null
   br i1 %i.u, label %bb.o, label %bb.k
 
@@ -1062,22 +1054,18 @@ bb.m:                                             ; preds = %bb.g
   %i.w = shl i64 %i.g, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(24) %0, ptr nonnull align 8 %i.e, i64 %i.w, i1 false)
   store i64 %i.g, ptr %i.b, align 8, !alias.scope !5199
-  %4 = shl i64 %.sink.i.i, 4                      ; 3 uses
-  %5 = icmp ult i64 %i.c, 1152921504606846976
-  %i.x = icmp ult i64 %4, 9223372036854775801
-  %or.cond.i.i = and i1 %5, %i.x
-  br i1 %or.cond.i.i, label %_RINvCsheqz6YZvxwl_8smallvec10deallocateINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_EECsEhZmuQNqkz_11ruff_linter.exit.i, label %bb.n, !prof !4883
+  %i.x = icmp ult i64 %i.c, 576460752303423488
+  br i1 %i.x, label %_RINvCsheqz6YZvxwl_8smallvec10deallocateINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_EECsEhZmuQNqkz_11ruff_linter.exit.i, label %bb.n, !prof !4883
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5202
   store i64 0, ptr %i.a, align 8, !noalias !5202
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %4, ptr %6, align 8, !noalias !5202
   call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @87, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @88, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #45, !noalias !5202
   unreachable
 
 _RINvCsheqz6YZvxwl_8smallvec10deallocateINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_EECsEhZmuQNqkz_11ruff_linter.exit.i: ; preds = %bb.m
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %4, i64 noundef 8) #46, !noalias !5199
+  %2 = shl nuw nsw i64 %.sink.i.i, 4
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %2, i64 noundef 8) #46, !noalias !5199
   br label %_RINvCsheqz6YZvxwl_8smallvec10infallibleuECsEhZmuQNqkz_11ruff_linter.exit
 
 bb.o:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayINtNtCscdodAO9FK5_5alloc5boxed3BoxDG_INtNtNtCs4NRVxsYgnAr_4core3ops8function2FnTQL0_NtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEEp6OutputuEL_EECsEhZmuQNqkz_11ruff_linter.exit44.i, %bb.j
@@ -1145,7 +1133,7 @@ bb.f:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc { i64, i64 } @_RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangej2_E8try_growCsEhZmuQNqkz_11ruff_linter(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(24) %0, i64 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 4 uses
+  %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.c = load i64, ptr %i.b, align 8, !noundef !4 ; 8 uses
   %i.d = icmp ult i64 %i.c, 3                     ; 2 uses
@@ -1174,21 +1162,16 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.d, label %bb.m, label %bb.k
 
 bb.f:                                             ; preds = %bb.d
-  %i.j = shl i64 %1, 3                            ; 6 uses
-  %2 = icmp ult i64 %1, 2305843009213693952
-  %i.k = icmp ult i64 %i.j, 9223372036854775805
-  %or.cond = and i1 %2, %i.k
-  br i1 %or.cond, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit, label %bb.m, !prof !4883
+  %i.j = shl nuw nsw i64 %1, 3                    ; 4 uses
+  %i.k = icmp ult i64 %1, 1152921504606846976
+  br i1 %i.k, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit, label %bb.m, !prof !4883
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.f
   br i1 %i.d, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit
-  %3 = shl i64 %.sink.i, 3                        ; 3 uses
-  %4 = icmp ult i64 %i.c, 2305843009213693952
-  %i.l = icmp ult i64 %3, 9223372036854775805
-  %or.cond59 = and i1 %4, %i.l
-  br i1 %or.cond59, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit44, label %bb.m, !prof !4883
+  %i.l = icmp ult i64 %i.c, 1152921504606846976
+  br i1 %i.l, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit44, label %bb.m, !prof !4883
 
 bb.h:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #46
@@ -1197,7 +1180,8 @@ bb.h:                                             ; preds = %_RINvCsheqz6YZvxwl_
   br i1 %i.n, label %bb.m, label %bb.j
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit44: ; preds = %bb.g
-  %i.o = tail call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %3, i64 noundef 4, i64 noundef %i.j) #46 ; 2 uses
+  %2 = shl nuw nsw i64 %.sink.i, 3
+  %i.o = tail call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %2, i64 noundef 4, i64 noundef %i.j) #46 ; 2 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %bb.m, label %bb.i
 
@@ -1217,26 +1201,22 @@ bb.k:                                             ; preds = %bb.e
   %i.r = shl i64 %.val, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 4 %i.f, i64 %i.r, i1 false)
   store i64 %.val, ptr %i.b, align 8
-  %5 = shl i64 %.sink.i, 3                        ; 3 uses
-  %6 = icmp ult i64 %i.c, 2305843009213693952
-  %i.s = icmp ult i64 %5, 9223372036854775805
-  %or.cond.i = and i1 %6, %i.s
-  br i1 %or.cond.i, label %_RINvCsheqz6YZvxwl_8smallvec10deallocateNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit, label %bb.l, !prof !4883
+  %i.s = icmp ult i64 %i.c, 1152921504606846976
+  br i1 %i.s, label %_RINvCsheqz6YZvxwl_8smallvec10deallocateNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit, label %bb.l, !prof !4883
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5216
   store i64 0, ptr %i.a, align 8, !noalias !5216
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %5, ptr %7, align 8, !noalias !5216
   call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @87, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @88, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #45, !noalias !5216
   unreachable
 
 _RINvCsheqz6YZvxwl_8smallvec10deallocateNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.k
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.f, i64 noundef %5, i64 noundef 4) #46
+  %3 = shl nuw nsw i64 %.sink.i, 3
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.f, i64 noundef %3, i64 noundef 4) #46
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.g, %bb.f, %bb.e, %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit44, %bb.h, %_RINvCsheqz6YZvxwl_8smallvec10deallocateNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit, %bb.i, %bb.d
-  %.sroa.7.1 = phi i64 [ undef, %_RINvCsheqz6YZvxwl_8smallvec10deallocateNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit ], [ undef, %bb.d ], [ undef, %bb.i ], [ %i.j, %bb.h ], [ undef, %bb.e ], [ %i.j, %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit44 ], [ %3, %bb.g ], [ %i.j, %bb.f ]
+  %.sroa.7.1 = phi i64 [ undef, %_RINvCsheqz6YZvxwl_8smallvec10deallocateNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit ], [ undef, %bb.d ], [ undef, %bb.i ], [ %i.j, %bb.h ], [ undef, %bb.e ], [ %i.j, %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit44 ], [ undef, %bb.g ], [ undef, %bb.f ]
   %.sroa.0.1 = phi i64 [ -1, %_RINvCsheqz6YZvxwl_8smallvec10deallocateNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit ], [ -1, %bb.d ], [ -1, %bb.i ], [ 4, %bb.h ], [ -1, %bb.e ], [ 4, %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeECsEhZmuQNqkz_11ruff_linter.exit44 ], [ 0, %bb.g ], [ 0, %bb.f ]
   %i.t = insertvalue { i64, i64 } poison, i64 %.sroa.0.1, 0
   %i.u = insertvalue { i64, i64 } %i.t, i64 %.sroa.7.1, 1
@@ -1432,7 +1412,7 @@ bb.f:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc { i64, i64 } @_RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecARNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultj3_E8try_growCsEhZmuQNqkz_11ruff_linter(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(32) %0, i64 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 4 uses
+  %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = load i64, ptr %0, align 8, !noundef !4   ; 6 uses
   %i.c = icmp ult i64 %i.b, 4                     ; 2 uses
   %i.d = icmp ugt i64 %i.b, 3
@@ -1461,21 +1441,16 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.c, label %bb.m, label %bb.k
 
 bb.f:                                             ; preds = %bb.d
-  %i.i = shl i64 %1, 3                            ; 6 uses
-  %2 = icmp ult i64 %1, 2305843009213693952
-  %i.j = icmp ult i64 %i.i, 9223372036854775801
-  %or.cond = and i1 %2, %i.j
-  br i1 %or.cond, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit, label %bb.m, !prof !4883
+  %i.i = shl nuw nsw i64 %1, 3                    ; 4 uses
+  %i.j = icmp ult i64 %1, 1152921504606846976
+  br i1 %i.j, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit, label %bb.m, !prof !4883
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.f
   br i1 %i.c, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit
-  %3 = shl i64 %.sink.i, 3                        ; 3 uses
-  %4 = icmp ult i64 %i.b, 2305843009213693952
-  %i.k = icmp ult i64 %3, 9223372036854775801
-  %or.cond60 = and i1 %4, %i.k
-  br i1 %or.cond60, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit45, label %bb.m, !prof !4883
+  %i.k = icmp ult i64 %i.b, 1152921504606846976
+  br i1 %i.k, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit45, label %bb.m, !prof !4883
 
 bb.h:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #46
@@ -1484,7 +1459,8 @@ bb.h:                                             ; preds = %_RINvCsheqz6YZvxwl_
   br i1 %i.m, label %bb.m, label %bb.j
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit45: ; preds = %bb.g
-  %i.n = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %3, i64 noundef 8, i64 noundef %i.i) #46 ; 2 uses
+  %2 = shl nuw nsw i64 %.sink.i, 3
+  %i.n = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %2, i64 noundef 8, i64 noundef %i.i) #46 ; 2 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %bb.m, label %bb.i
 
@@ -1505,26 +1481,22 @@ bb.k:                                             ; preds = %bb.e
   %i.q = shl i64 %i.g, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.e, ptr nonnull align 8 %i.f, i64 %i.q, i1 false)
   store i64 %i.g, ptr %0, align 8
-  %5 = shl i64 %.sink.i, 3                        ; 3 uses
-  %6 = icmp ult i64 %i.b, 2305843009213693952
-  %i.r = icmp ult i64 %5, 9223372036854775801
-  %or.cond.i = and i1 %6, %i.r
-  br i1 %or.cond.i, label %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit, label %bb.l, !prof !4883
+  %i.r = icmp ult i64 %i.b, 1152921504606846976
+  br i1 %i.r, label %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit, label %bb.l, !prof !4883
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5243
   store i64 0, ptr %i.a, align 8, !noalias !5243
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %5, ptr %7, align 8, !noalias !5243
   call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @87, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @88, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #45, !noalias !5243
   unreachable
 
 _RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.k
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.f, i64 noundef %5, i64 noundef 8) #46
+  %3 = shl nuw nsw i64 %.sink.i, 3
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.f, i64 noundef %3, i64 noundef 8) #46
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.g, %bb.f, %bb.e, %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit45, %bb.h, %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit, %bb.i, %bb.d
-  %.sroa.7.1 = phi i64 [ undef, %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit ], [ undef, %bb.d ], [ undef, %bb.i ], [ %i.i, %bb.h ], [ undef, %bb.e ], [ %i.i, %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit45 ], [ %3, %bb.g ], [ %i.i, %bb.f ]
+  %.sroa.7.1 = phi i64 [ undef, %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit ], [ undef, %bb.d ], [ undef, %bb.i ], [ %i.i, %bb.h ], [ undef, %bb.e ], [ %i.i, %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit45 ], [ undef, %bb.g ], [ undef, %bb.f ]
   %.sroa.0.1 = phi i64 [ -1, %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit ], [ -1, %bb.d ], [ -1, %bb.i ], [ 8, %bb.h ], [ -1, %bb.e ], [ 8, %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultECsEhZmuQNqkz_11ruff_linter.exit45 ], [ 0, %bb.g ], [ 0, %bb.f ]
   %i.s = insertvalue { i64, i64 } poison, i64 %.sroa.0.1, 0
   %i.t = insertvalue { i64, i64 } %i.s, i64 %.sroa.7.1, 1
@@ -1534,7 +1506,7 @@ bb.m:                                             ; preds = %bb.g, %bb.f, %bb.e,
 ; Function Attrs: cold nonlazybind uwtable
 define hidden void @_RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecARNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralj1_E21reserve_one_uncheckedCsEhZmuQNqkz_11ruff_linter(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0) unnamed_addr #9 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 4 uses
+  %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.c = load i64, ptr %i.b, align 8, !alias.scope !5246, !noalias !5249, !noundef !4 ; 8 uses
   %i.d = icmp ugt i64 %i.c, 1
@@ -1576,21 +1548,16 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.n, label %_RINvCsheqz6YZvxwl_8smallvec10infallibleuECsEhZmuQNqkz_11ruff_linter.exit, label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.o = shl i64 %i.m, 3                          ; 4 uses
-  %1 = icmp ult i64 %i.k, 2305843009213693951
-  %i.p = icmp ult i64 %i.o, 9223372036854775801
-  %or.cond.i = and i1 %1, %i.p
-  br i1 %or.cond.i, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralECsEhZmuQNqkz_11ruff_linter.exit.i, label %bb.p, !prof !4883
+  %i.o = shl nuw nsw i64 %i.m, 3                  ; 3 uses
+  %i.p = icmp ult i64 %i.k, 1152921504606846975
+  br i1 %i.p, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralECsEhZmuQNqkz_11ruff_linter.exit.i, label %bb.p, !prof !4883
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralECsEhZmuQNqkz_11ruff_linter.exit.i: ; preds = %bb.h
   br i1 %i.n, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralECsEhZmuQNqkz_11ruff_linter.exit.i
-  %2 = shl i64 %.sink.i.i, 3                      ; 2 uses
-  %3 = icmp ult i64 %i.c, 2305843009213693952
-  %i.q = icmp ult i64 %2, 9223372036854775801
-  %or.cond64.i = and i1 %3, %i.q
-  br i1 %or.cond64.i, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralECsEhZmuQNqkz_11ruff_linter.exit49.i, label %bb.p, !prof !4883
+  %i.q = icmp ult i64 %i.c, 1152921504606846976
+  br i1 %i.q, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralECsEhZmuQNqkz_11ruff_linter.exit49.i, label %bb.p, !prof !4883
 
 bb.j:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralECsEhZmuQNqkz_11ruff_linter.exit.i
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #46, !noalias !5251
@@ -1599,7 +1566,8 @@ bb.j:                                             ; preds = %_RINvCsheqz6YZvxwl_
   br i1 %i.s, label %bb.o, label %bb.l
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralECsEhZmuQNqkz_11ruff_linter.exit49.i: ; preds = %bb.i
-  %i.t = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.e, i64 noundef %2, i64 noundef 8, i64 noundef %i.o) #46, !noalias !5251 ; 2 uses
+  %1 = shl nuw nsw i64 %.sink.i.i, 3
+  %i.t = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.e, i64 noundef %1, i64 noundef 8, i64 noundef %i.o) #46, !noalias !5251 ; 2 uses
   %i.u = icmp eq ptr %i.t, null
   br i1 %i.u, label %bb.o, label %bb.k
 
@@ -1619,22 +1587,18 @@ bb.m:                                             ; preds = %bb.g
   %i.w = shl i64 %i.g, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(24) %0, ptr nonnull align 8 %i.e, i64 %i.w, i1 false)
   store i64 %i.g, ptr %i.b, align 8, !alias.scope !5251
-  %4 = shl i64 %.sink.i.i, 3                      ; 3 uses
-  %5 = icmp ult i64 %i.c, 2305843009213693952
-  %i.x = icmp ult i64 %4, 9223372036854775801
-  %or.cond.i.i = and i1 %5, %i.x
-  br i1 %or.cond.i.i, label %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralECsEhZmuQNqkz_11ruff_linter.exit.i, label %bb.n, !prof !4883
+  %i.x = icmp ult i64 %i.c, 1152921504606846976
+  br i1 %i.x, label %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralECsEhZmuQNqkz_11ruff_linter.exit.i, label %bb.n, !prof !4883
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5254
   store i64 0, ptr %i.a, align 8, !noalias !5254
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %4, ptr %6, align 8, !noalias !5254
   call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @87, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @88, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #45, !noalias !5254
   unreachable
 
 _RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralECsEhZmuQNqkz_11ruff_linter.exit.i: ; preds = %bb.m
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %4, i64 noundef 8) #46, !noalias !5251
+  %2 = shl nuw nsw i64 %.sink.i.i, 3
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %2, i64 noundef 8) #46, !noalias !5251
   br label %_RINvCsheqz6YZvxwl_8smallvec10infallibleuECsEhZmuQNqkz_11ruff_linter.exit
 
 bb.o:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15ExprNoneLiteralECsEhZmuQNqkz_11ruff_linter.exit49.i, %bb.j
@@ -1702,7 +1666,7 @@ bb.f:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc { i64, i64 } @_RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecARNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefj2_E8try_growCsEhZmuQNqkz_11ruff_linter(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(24) %0, i64 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 4 uses
+  %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.c = load i64, ptr %i.b, align 8, !noundef !4 ; 8 uses
   %i.d = icmp ult i64 %i.c, 3                     ; 2 uses
@@ -1731,21 +1695,16 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.d, label %bb.m, label %bb.k
 
 bb.f:                                             ; preds = %bb.d
-  %i.j = shl i64 %1, 3                            ; 6 uses
-  %2 = icmp ult i64 %1, 2305843009213693952
-  %i.k = icmp ult i64 %i.j, 9223372036854775801
-  %or.cond = and i1 %2, %i.k
-  br i1 %or.cond, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit, label %bb.m, !prof !4883
+  %i.j = shl nuw nsw i64 %1, 3                    ; 4 uses
+  %i.k = icmp ult i64 %1, 1152921504606846976
+  br i1 %i.k, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit, label %bb.m, !prof !4883
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.f
   br i1 %i.d, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit
-  %3 = shl i64 %.sink.i, 3                        ; 3 uses
-  %4 = icmp ult i64 %i.c, 2305843009213693952
-  %i.l = icmp ult i64 %3, 9223372036854775801
-  %or.cond59 = and i1 %4, %i.l
-  br i1 %or.cond59, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit44, label %bb.m, !prof !4883
+  %i.l = icmp ult i64 %i.c, 1152921504606846976
+  br i1 %i.l, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit44, label %bb.m, !prof !4883
 
 bb.h:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #46
@@ -1754,7 +1713,8 @@ bb.h:                                             ; preds = %_RINvCsheqz6YZvxwl_
   br i1 %i.n, label %bb.m, label %bb.j
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit44: ; preds = %bb.g
-  %i.o = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %3, i64 noundef 8, i64 noundef %i.j) #46 ; 2 uses
+  %2 = shl nuw nsw i64 %.sink.i, 3
+  %i.o = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %2, i64 noundef 8, i64 noundef %i.j) #46 ; 2 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %bb.m, label %bb.i
 
@@ -1774,26 +1734,22 @@ bb.k:                                             ; preds = %bb.e
   %i.r = shl i64 %.val, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.r, i1 false)
   store i64 %.val, ptr %i.b, align 8
-  %5 = shl i64 %.sink.i, 3                        ; 3 uses
-  %6 = icmp ult i64 %i.c, 2305843009213693952
-  %i.s = icmp ult i64 %5, 9223372036854775801
-  %or.cond.i = and i1 %6, %i.s
-  br i1 %or.cond.i, label %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit, label %bb.l, !prof !4883
+  %i.s = icmp ult i64 %i.c, 1152921504606846976
+  br i1 %i.s, label %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit, label %bb.l, !prof !4883
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5267
   store i64 0, ptr %i.a, align 8, !noalias !5267
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %5, ptr %7, align 8, !noalias !5267
   call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @87, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @88, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #45, !noalias !5267
   unreachable
 
 _RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.k
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.f, i64 noundef %5, i64 noundef 8) #46
+  %3 = shl nuw nsw i64 %.sink.i, 3
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.f, i64 noundef %3, i64 noundef 8) #46
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.g, %bb.f, %bb.e, %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit44, %bb.h, %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit, %bb.i, %bb.d
-  %.sroa.7.1 = phi i64 [ undef, %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit ], [ undef, %bb.d ], [ undef, %bb.i ], [ %i.j, %bb.h ], [ undef, %bb.e ], [ %i.j, %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit44 ], [ %3, %bb.g ], [ %i.j, %bb.f ]
+  %.sroa.7.1 = phi i64 [ undef, %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit ], [ undef, %bb.d ], [ undef, %bb.i ], [ %i.j, %bb.h ], [ undef, %bb.e ], [ %i.j, %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit44 ], [ undef, %bb.g ], [ undef, %bb.f ]
   %.sroa.0.1 = phi i64 [ -1, %_RINvCsheqz6YZvxwl_8smallvec10deallocateRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit ], [ -1, %bb.d ], [ -1, %bb.i ], [ 8, %bb.h ], [ -1, %bb.e ], [ 8, %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayRNtNtCskLngH8kgpZI_15ruff_python_ast9generated15StmtFunctionDefECsEhZmuQNqkz_11ruff_linter.exit44 ], [ 0, %bb.g ], [ 0, %bb.f ]
   %i.t = insertvalue { i64, i64 } poison, i64 %.sroa.0.1, 0
   %i.u = insertvalue { i64, i64 } %i.t, i64 %.sroa.7.1, 1
@@ -1803,7 +1759,7 @@ bb.m:                                             ; preds = %bb.g, %bb.f, %bb.e,
 ; Function Attrs: cold nonlazybind uwtable
 define hidden void @_RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecARej8_E21reserve_one_uncheckedCsEhZmuQNqkz_11ruff_linter(ptr noalias nofree noundef align 8 captures(none) dereferenceable(136) %0) unnamed_addr #9 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 4 uses
+  %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.c = load i64, ptr %i.b, align 8, !alias.scope !5270, !noalias !5273, !noundef !4 ; 8 uses
   %i.d = icmp ugt i64 %i.c, 8
@@ -1846,21 +1802,16 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.n, label %_RINvCsheqz6YZvxwl_8smallvec10infallibleuECsEhZmuQNqkz_11ruff_linter.exit, label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.p = shl i64 %i.m, 4                          ; 4 uses
-  %1 = icmp ult i64 %.sroa.02.0, 1152921504606846975
-  %i.q = icmp ult i64 %i.p, 9223372036854775801
-  %or.cond.i = and i1 %1, %i.q
-  br i1 %or.cond.i, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayReECsEhZmuQNqkz_11ruff_linter.exit.i, label %bb.p, !prof !4883
+  %i.p = shl nuw nsw i64 %i.m, 4                  ; 3 uses
+  %i.q = icmp ult i64 %.sroa.02.0, 576460752303423487
+  br i1 %i.q, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayReECsEhZmuQNqkz_11ruff_linter.exit.i, label %bb.p, !prof !4883
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayReECsEhZmuQNqkz_11ruff_linter.exit.i: ; preds = %bb.h
   br i1 %i.n, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayReECsEhZmuQNqkz_11ruff_linter.exit.i
-  %2 = shl i64 %.sink.i.i, 4                      ; 2 uses
-  %3 = icmp ult i64 %i.c, 1152921504606846976
-  %i.r = icmp ult i64 %2, 9223372036854775801
-  %or.cond60.i = and i1 %3, %i.r
-  br i1 %or.cond60.i, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayReECsEhZmuQNqkz_11ruff_linter.exit45.i, label %bb.p, !prof !4883
+  %i.r = icmp ult i64 %i.c, 576460752303423488
+  br i1 %i.r, label %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayReECsEhZmuQNqkz_11ruff_linter.exit45.i, label %bb.p, !prof !4883
 
 bb.j:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayReECsEhZmuQNqkz_11ruff_linter.exit.i
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #46, !noalias !5275
@@ -1869,7 +1820,8 @@ bb.j:                                             ; preds = %_RINvCsheqz6YZvxwl_
   br i1 %i.t, label %bb.o, label %bb.l
 
 _RINvCsheqz6YZvxwl_8smallvec12layout_arrayReECsEhZmuQNqkz_11ruff_linter.exit45.i: ; preds = %bb.i
-  %i.u = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.e, i64 noundef %2, i64 noundef 8, i64 noundef %i.p) #46, !noalias !5275 ; 2 uses
+  %1 = shl nuw nsw i64 %.sink.i.i, 4
+  %i.u = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.e, i64 noundef %1, i64 noundef 8, i64 noundef %i.p) #46, !noalias !5275 ; 2 uses
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %bb.o, label %bb.k
 
@@ -1889,22 +1841,18 @@ bb.m:                                             ; preds = %bb.g
   %i.x = shl i64 %i.g, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(136) %0, ptr nonnull align 8 %i.e, i64 %i.x, i1 false)
   store i64 %i.g, ptr %i.b, align 8, !alias.scope !5275
-  %4 = shl i64 %.sink.i.i, 4                      ; 3 uses
-  %5 = icmp ult i64 %i.c, 1152921504606846976
-  %i.y = icmp ult i64 %4, 9223372036854775801
-  %or.cond.i.i = and i1 %5, %i.y
-  br i1 %or.cond.i.i, label %_RINvCsheqz6YZvxwl_8smallvec10deallocateReECsEhZmuQNqkz_11ruff_linter.exit.i, label %bb.n, !prof !4883
+  %i.y = icmp ult i64 %i.c, 576460752303423488
+  br i1 %i.y, label %_RINvCsheqz6YZvxwl_8smallvec10deallocateReECsEhZmuQNqkz_11ruff_linter.exit.i, label %bb.n, !prof !4883
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5278
   store i64 0, ptr %i.a, align 8, !noalias !5278
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %4, ptr %6, align 8, !noalias !5278
   call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @87, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @88, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #45, !noalias !5278
   unreachable
 
 _RINvCsheqz6YZvxwl_8smallvec10deallocateReECsEhZmuQNqkz_11ruff_linter.exit.i: ; preds = %bb.m
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %4, i64 noundef 8) #46, !noalias !5275
+  %2 = shl nuw nsw i64 %.sink.i.i, 4
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %2, i64 noundef 8) #46, !noalias !5275
   br label %_RINvCsheqz6YZvxwl_8smallvec10infallibleuECsEhZmuQNqkz_11ruff_linter.exit
 
 bb.o:                                             ; preds = %_RINvCsheqz6YZvxwl_8smallvec12layout_arrayReECsEhZmuQNqkz_11ruff_linter.exit45.i, %bb.j

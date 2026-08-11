@@ -201,7 +201,7 @@ prepend_char.exit:                                ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define dso_local range(i64 -2147483648, 2147483648) i64 @__x64_sys_getcwd(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 align 16 prefalign(16) {
+define dso_local range(i64 -36, 4097) i64 @__x64_sys_getcwd(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 112
   %i.b = load i64, ptr %i.a, align 8
@@ -212,7 +212,7 @@ bb.a:
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define internal fastcc range(i64 -2147483648, 2147483648) i64 @__se_sys_getcwd(i64 noundef %0, i64 noundef %1) unnamed_addr #0 align 16 prefalign(16) {
+define internal fastcc range(i64 -36, 4097) i64 @__se_sys_getcwd(i64 noundef %0, i64 noundef %1) unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %2 = alloca %struct.path, align 8               ; 5 uses
   %3 = alloca %struct.path, align 8               ; 4 uses
@@ -298,12 +298,12 @@ bb.e:                                             ; preds = %prepend_char.exit.i
 bb.f:                                             ; preds = %bb.e, %prepend_char.exit.i
   tail call void @__rcu_read_unlock() #11
   %i.y = load i32, ptr %i.u, align 8              ; 2 uses
-  %5 = sub i32 4096, %i.y                         ; 2 uses
   %i.z = icmp ugt i32 %i.y, 4096
   br i1 %i.z, label %bb.h, label %bb.g, !prof !18
 
 bb.g:                                             ; preds = %bb.f
-  %i.aa = zext nneg i32 %5 to i64                 ; 2 uses
+  %5 = sub nuw nsw i32 4096, %i.y
+  %i.aa = zext nneg i32 %5 to i64                 ; 3 uses
   %i.ab = icmp ult i64 %1, %i.aa
   br i1 %i.ab, label %bb.h, label %check_copy_size.exit.i, !prof !18
 
@@ -311,8 +311,7 @@ check_copy_size.exit.i:                           ; preds = %bb.g
   %i.ac = load ptr, ptr %4, align 8
   %i.ad = tail call i64 @_copy_to_user(ptr noundef %i.a, ptr noundef %i.ac, i64 noundef range(i64 0, 4097) %i.aa) #11
   %.not18.i = icmp eq i64 %i.ad, 0
-  %6 = sext i32 %5 to i64
-  %spec.select.i = select i1 %.not18.i, i64 %6, i64 -14
+  %spec.select.i = select i1 %.not18.i, i64 %i.aa, i64 -14
   br label %bb.h
 
 bb.h:                                             ; preds = %check_copy_size.exit.i, %bb.g, %bb.f
@@ -333,7 +332,7 @@ __do_sys_getcwd.exit:                             ; preds = %bb.a, %bb.i
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define dso_local range(i64 -2147483648, 2147483648) i64 @__ia32_sys_getcwd(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 align 16 prefalign(16) {
+define dso_local range(i64 -36, 4097) i64 @__ia32_sys_getcwd(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 40
   %i.b = load i64, ptr %i.a, align 8

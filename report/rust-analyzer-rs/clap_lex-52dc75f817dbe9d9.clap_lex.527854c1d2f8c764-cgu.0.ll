@@ -201,48 +201,36 @@ bb.g:                                             ; preds = %_RNvXsi_NtCscAsMj0W
   %i.u = ptrtoint ptr %i.e to i64
   %i.v = sub nuw i64 %i.t, %i.u                   ; 2 uses
   %i.w = udiv exact i64 %i.v, 24                  ; 2 uses
-  %i.x = tail call i64 @llvm.umax.i64(i64 %i.w, i64 3) ; 2 uses
+  %i.x = tail call i64 @llvm.umax.i64(i64 %i.w, i64 3)
   %..i.i.i.i = add nuw nsw i64 %i.x, 1            ; 2 uses
-  %1 = mul i64 %..i.i.i.i, 24                     ; 3 uses
   %or.cond.not.i.i.i.i.i = icmp ugt i64 %i.v, 9223372036854775776
-  br i1 %or.cond.not.i.i.i.i.i, label %bb.h, label %2, !prof !71
+  br i1 %or.cond.not.i.i.i.i.i, label %bb.h, label %_RNvXs_NtCsbSS6DM8SDEO_5alloc5allocNtB4_6GlobalNtNtCshzWfHUSfYae_4core5alloc9Allocator8allocate.exit.i.i.i.i.i, !prof !71
 
-2:                                                ; preds = %bb.g
-  %3 = icmp eq i64 %1, 0
-  br i1 %3, label %bb.i, label %_RNvXs_NtCsbSS6DM8SDEO_5alloc5allocNtB4_6GlobalNtNtCshzWfHUSfYae_4core5alloc9Allocator8allocate.exit.i.i.i.i.i
-
-_RNvXs_NtCsbSS6DM8SDEO_5alloc5allocNtB4_6GlobalNtNtCshzWfHUSfYae_4core5alloc9Allocator8allocate.exit.i.i.i.i.i: ; preds = %2
+_RNvXs_NtCsbSS6DM8SDEO_5alloc5allocNtB4_6GlobalNtNtCshzWfHUSfYae_4core5alloc9Allocator8allocate.exit.i.i.i.i.i: ; preds = %bb.g
+  %1 = mul nuw nsw i64 %..i.i.i.i, 24             ; 2 uses
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #24, !noalias !72
-  %i.y = tail call noundef align 8 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 0, 9223372036854775801) %1, i64 noundef 8) #24, !noalias !72 ; 2 uses
+  %i.y = tail call noundef align 8 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 0, 9223372036854775801) %1, i64 noundef 8) #24, !noalias !72 ; 6 uses
   %i.z = icmp eq ptr %i.y, null
-  br i1 %i.z, label %bb.h, label %4
-
-4:                                                ; preds = %_RNvXs_NtCsbSS6DM8SDEO_5alloc5allocNtB4_6GlobalNtNtCshzWfHUSfYae_4core5alloc9Allocator8allocate.exit.i.i.i.i.i
-  %5 = ptrtoint ptr %i.y to i64
-  br label %bb.i
+  br i1 %i.z, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %_RNvXs_NtCsbSS6DM8SDEO_5alloc5allocNtB4_6GlobalNtNtCshzWfHUSfYae_4core5alloc9Allocator8allocate.exit.i.i.i.i.i, %bb.g
   %.sroa.4.0.ph.i.i.i.i = phi i64 [ 8, %_RNvXs_NtCsbSS6DM8SDEO_5alloc5allocNtB4_6GlobalNtNtCshzWfHUSfYae_4core5alloc9Allocator8allocate.exit.i.i.i.i.i ], [ 0, %bb.g ]
-  invoke void @_RNvNtCsbSS6DM8SDEO_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i.i.i, i64 %1) #26
+  %.sroa.10.0.ph.i.i.i.i = phi i64 [ %1, %_RNvXs_NtCsbSS6DM8SDEO_5alloc5allocNtB4_6GlobalNtNtCshzWfHUSfYae_4core5alloc9Allocator8allocate.exit.i.i.i.i.i ], [ undef, %bb.g ]
+  invoke void @_RNvNtCsbSS6DM8SDEO_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i.i.i, i64 %.sroa.10.0.ph.i.i.i.i) #26
           to label %.noexc.i.i.i unwind label %bb.e, !noalias !40
 
 .noexc.i.i.i:                                     ; preds = %bb.h
   unreachable
 
-bb.i:                                             ; preds = %4, %2
-  %.sroa.4.0.i.i.i.i = phi i64 [ %..i.i.i.i, %4 ], [ 0, %2 ] ; 2 uses
-  %.sroa.10.0.i.i.i.i = phi i64 [ %5, %4 ], [ 8, %2 ]
-  %6 = inttoptr i64 %.sroa.10.0.i.i.i.i to ptr    ; 5 uses
-  %7 = icmp samesign ult i64 %i.x, %.sroa.4.0.i.i.i.i
-  tail call void @llvm.assume(i1 %7)
-  store i64 %.sroa.0.0.copyload1.i.i.i.i, ptr %6, align 8, !noalias !40
-  %.sroa.412.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %6, i64 8
+bb.i:                                             ; preds = %_RNvXs_NtCsbSS6DM8SDEO_5alloc5allocNtB4_6GlobalNtNtCshzWfHUSfYae_4core5alloc9Allocator8allocate.exit.i.i.i.i.i
+  store i64 %.sroa.0.0.copyload1.i.i.i.i, ptr %i.y, align 8, !noalias !40
+  %.sroa.412.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   store ptr %.sroa.6.sroa.0.0.copyload.i.i.i, ptr %.sroa.412.0..sroa_idx.i.i.i, align 8, !noalias !40
-  %.sroa.513.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %.sroa.513.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   store i64 %.sroa.6.sroa.5.0.copyload.i.i.i, ptr %.sroa.513.0..sroa_idx.i.i.i, align 8, !noalias !40
-  store i64 %.sroa.4.0.i.i.i.i, ptr %i.b, align 8, !noalias !40
+  store i64 %..i.i.i.i, ptr %i.b, align 8, !noalias !40
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
-  store ptr %6, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !noalias !40
+  store ptr %i.y, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !noalias !40
   %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   store i64 1, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !noalias !40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !40
@@ -260,7 +248,7 @@ bb.i:                                             ; preds = %4, %2
   br i1 %i.aa, label %_RNvXsi_NtCscAsMj0W7j8b_3std3envNtB5_6ArgsOsNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4next.exit.i._crit_edge.i.i.i.i.i, label %_RNvXsi_NtCscAsMj0W7j8b_3std3envNtB5_6ArgsOsNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i
 
 _RNvXsi_NtCscAsMj0W7j8b_3std3envNtB5_6ArgsOsNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i: ; preds = %bb.i, %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtNtCscAsMj0W7j8b_3std3ffi6os_str8OsStringE7reserveCs74Z8AuVjqbo_8clap_lex.exit.i.i.i.i.i
-  %i.ab = phi ptr [ %i.ap, %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtNtCscAsMj0W7j8b_3std3ffi6os_str8OsStringE7reserveCs74Z8AuVjqbo_8clap_lex.exit.i.i.i.i.i ], [ %6, %bb.i ]
+  %i.ab = phi ptr [ %i.ap, %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtNtCscAsMj0W7j8b_3std3ffi6os_str8OsStringE7reserveCs74Z8AuVjqbo_8clap_lex.exit.i.i.i.i.i ], [ %i.y, %bb.i ]
   %i.ac = phi i64 [ %i.ar, %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtNtCscAsMj0W7j8b_3std3ffi6os_str8OsStringE7reserveCs74Z8AuVjqbo_8clap_lex.exit.i.i.i.i.i ], [ 1, %bb.i ] ; 6 uses
   %.val1920.i.i.i.i.i = phi ptr [ %i.ad, %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtNtCscAsMj0W7j8b_3std3ffi6os_str8OsStringE7reserveCs74Z8AuVjqbo_8clap_lex.exit.i.i.i.i.i ], [ %i.e, %bb.i ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !86)

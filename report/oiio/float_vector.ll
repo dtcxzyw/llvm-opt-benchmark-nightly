@@ -12,8 +12,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden i32 @exr_attr_float_vector_init(ptr noundef %0, ptr nofree noundef writeonly captures(address_is_null) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = sext i32 %2 to i64
-  %i.a = shl nsw i64 %3, 2                        ; 2 uses
+  %3 = zext nneg i32 %2 to i64
+  %i.a = shl nuw nsw i64 %3, 2
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.l, label %bb.b
 
@@ -39,7 +39,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.l
 
 bb.f:                                             ; preds = %bb.d
-  %i.i = icmp ugt i64 %i.a, 2147483647
+  %i.i = icmp samesign ugt i32 %2, 536870911
   br i1 %i.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -152,8 +152,8 @@ bb.c:                                             ; preds = %bb.b
   br label %exr_attr_float_vector_init.exit.thread
 
 bb.d:                                             ; preds = %bb.b
-  %4 = sext i32 %3 to i64
-  %i.f = shl nsw i64 %4, 2                        ; 2 uses
+  %4 = zext nneg i32 %3 to i64
+  %i.f = shl nuw nsw i64 %4, 2                    ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
   %i.g = icmp slt i32 %3, 0
   br i1 %i.g, label %bb.e, label %bb.f
@@ -165,14 +165,14 @@ bb.e:                                             ; preds = %bb.d
   br label %exr_attr_float_vector_init.exit.thread
 
 bb.f:                                             ; preds = %bb.d
-  %i.k = icmp ugt i64 %i.f, 2147483647
+  %i.k = icmp samesign ugt i32 %3, 536870911
   br i1 %i.k, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !23
   %i.n = tail call i32 (ptr, i32, ptr, ...) %i.m(ptr noundef nonnull %0, i32 noundef 3, ptr noundef nonnull @.str.2, i32 noundef %3) #3, !inline_history !31
-  br label %exr_attr_float_vector_init.exit
+  br label %exr_attr_float_vector_init.exit.thread
 
 bb.h:                                             ; preds = %bb.f
   %.not30.i = icmp eq i32 %3, 0
@@ -182,41 +182,31 @@ bb.i:                                             ; preds = %bb.h
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !24
   %i.q = tail call ptr %i.p(i64 noundef %i.f) #3, !inline_history !31 ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   store ptr %i.q, ptr %i.r, align 8, !tbaa !25
   %i.s = icmp eq ptr %i.q, null
-  br i1 %i.s, label %5, label %bb.j
-
-5:                                                ; preds = %bb.i
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %7 = load ptr, ptr %6, align 8, !tbaa !28
-  %8 = tail call i32 %7(ptr noundef nonnull %0, i32 noundef 1) #3, !inline_history !31
-  br label %exr_attr_float_vector_init.exit
+  br i1 %i.s, label %exr_attr_float_vector_init.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   store i32 %3, ptr %1, align 8, !tbaa !29
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %3, ptr %i.t, align 4, !tbaa !30
-  br label %exr_attr_float_vector_init.exit
+  br label %bb.k
 
-exr_attr_float_vector_init.exit:                  ; preds = %bb.g, %5, %bb.j
-  %.0.i = phi i32 [ 0, %bb.j ], [ %i.n, %bb.g ], [ %8, %5 ] ; 2 uses
-  %9 = icmp eq i32 %.0.i, 0
-  %10 = add nsw i32 %3, -1
-  %11 = icmp ult i32 %10, 536870911
-  %or.cond25 = and i1 %11, %9
-  br i1 %or.cond25, label %bb.k, label %exr_attr_float_vector_init.exit.thread
+exr_attr_float_vector_init.exit:                  ; preds = %bb.i
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %6 = load ptr, ptr %5, align 8, !tbaa !28
+  %7 = tail call i32 %6(ptr noundef nonnull %0, i32 noundef 1) #3, !inline_history !31 ; 2 uses
+  %8 = icmp eq i32 %7, 0
+  br i1 %8, label %bb.k, label %exr_attr_float_vector_init.exit.thread
 
-bb.k:                                             ; preds = %exr_attr_float_vector_init.exit
-  %12 = shl nuw nsw i32 %3, 2
-  %13 = zext nneg i32 %12 to i64
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.u = load ptr, ptr %14, align 8, !tbaa !25
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.u, ptr nonnull align 4 %2, i64 %13, i1 false)
+bb.k:                                             ; preds = %bb.j, %exr_attr_float_vector_init.exit
+  %i.u = load ptr, ptr %i.r, align 8, !tbaa !25
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.u, ptr nonnull align 4 %2, i64 %i.f, i1 false)
   br label %exr_attr_float_vector_init.exit.thread
 
-exr_attr_float_vector_init.exit.thread:           ; preds = %bb.h, %bb.e, %exr_attr_float_vector_init.exit, %bb.k, %bb.a, %bb.c
-  %.0 = phi i32 [ 2, %bb.a ], [ %i.e, %bb.c ], [ %.0.i, %exr_attr_float_vector_init.exit ], [ 0, %bb.k ], [ 0, %bb.h ], [ %i.j, %bb.e ]
+exr_attr_float_vector_init.exit.thread:           ; preds = %bb.g, %bb.h, %bb.e, %exr_attr_float_vector_init.exit, %bb.k, %bb.a, %bb.c
+  %.0 = phi i32 [ 2, %bb.a ], [ %i.e, %bb.c ], [ %7, %exr_attr_float_vector_init.exit ], [ 0, %bb.k ], [ 0, %bb.h ], [ %i.n, %bb.g ], [ %i.j, %bb.e ]
   ret i32 %.0
 }
 
