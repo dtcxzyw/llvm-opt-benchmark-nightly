@@ -204,7 +204,7 @@ vector.ph:
   %wide.load19 = load <4 x float>, ptr %4, align 4, !tbaa !159, !alias.scope !3989, !noalias !3997, !llvm.access.group !3890
   %i.c = fmul nsz <4 x float> %broadcast.splat, %wide.load
   %i.d = fadd nsz <4 x float> %broadcast.splat13, %i.c
-  store <4 x float> %i.d, ptr %2, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995
+  store <4 x float> %i.d, ptr %2, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995, !llvm.access.group !3890
   %i.e = fmul nsz <4 x float> %broadcast.splat9, %wide.load18
   %i.f = fadd nsz <4 x float> %broadcast.splat15, %i.e
   store <4 x float> %i.f, ptr %3, align 4, !tbaa !159, !alias.scope !3987, !noalias !3996, !llvm.access.group !3890
@@ -219,7 +219,7 @@ vector.ph:
   %wide.load19.1 = load <4 x float>, ptr %i.k, align 4, !tbaa !159, !alias.scope !3989, !noalias !3997, !llvm.access.group !3890
   %i.l = fmul nsz <4 x float> %broadcast.splat, %wide.load.1
   %i.m = fadd nsz <4 x float> %broadcast.splat13, %i.l
-  store <4 x float> %i.m, ptr %i.i, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995
+  store <4 x float> %i.m, ptr %i.i, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995, !llvm.access.group !3890
   %i.n = fmul nsz <4 x float> %broadcast.splat9, %wide.load18.1
   %i.o = fadd nsz <4 x float> %broadcast.splat15, %i.n
   store <4 x float> %i.o, ptr %i.j, align 4, !tbaa !159, !alias.scope !3987, !noalias !3996, !llvm.access.group !3890
@@ -234,7 +234,7 @@ vector.ph:
   %wide.load19.2 = load <4 x float>, ptr %i.t, align 4, !tbaa !159, !alias.scope !3989, !noalias !3997, !llvm.access.group !3890
   %i.u = fmul nsz <4 x float> %broadcast.splat, %wide.load.2
   %i.v = fadd nsz <4 x float> %broadcast.splat13, %i.u
-  store <4 x float> %i.v, ptr %i.r, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995
+  store <4 x float> %i.v, ptr %i.r, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995, !llvm.access.group !3890
   %i.w = fmul nsz <4 x float> %broadcast.splat9, %wide.load18.2
   %i.x = fadd nsz <4 x float> %broadcast.splat15, %i.w
   store <4 x float> %i.x, ptr %i.s, align 4, !tbaa !159, !alias.scope !3987, !noalias !3996, !llvm.access.group !3890
@@ -249,7 +249,7 @@ vector.ph:
   %wide.load19.3 = load <4 x float>, ptr %i.ac, align 4, !tbaa !159, !alias.scope !3989, !noalias !3997, !llvm.access.group !3890
   %i.ad = fmul nsz <4 x float> %broadcast.splat, %wide.load.3
   %i.ae = fadd nsz <4 x float> %broadcast.splat13, %i.ad
-  store <4 x float> %i.ae, ptr %i.aa, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995
+  store <4 x float> %i.ae, ptr %i.aa, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995, !llvm.access.group !3890
   %i.af = fmul nsz <4 x float> %broadcast.splat9, %wide.load18.3
   %i.ag = fadd nsz <4 x float> %broadcast.splat15, %i.af
   store <4 x float> %i.ag, ptr %i.ab, align 4, !tbaa !159, !alias.scope !3987, !noalias !3996, !llvm.access.group !3890
@@ -264,7 +264,7 @@ vector.ph:
   %wide.load19.4 = load <4 x float>, ptr %i.al, align 4, !tbaa !159, !alias.scope !3989, !noalias !3997, !llvm.access.group !3890
   %i.am = fmul nsz <4 x float> %broadcast.splat, %wide.load.4
   %i.an = fadd nsz <4 x float> %broadcast.splat13, %i.am
-  store <4 x float> %i.an, ptr %i.aj, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995
+  store <4 x float> %i.an, ptr %i.aj, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995, !llvm.access.group !3890
   %i.ao = fmul nsz <4 x float> %broadcast.splat9, %wide.load18.4
   %i.ap = fadd nsz <4 x float> %broadcast.splat15, %i.ao
   store <4 x float> %i.ap, ptr %i.ak, align 4, !tbaa !159, !alias.scope !3987, !noalias !3996, !llvm.access.group !3890
@@ -279,7 +279,7 @@ vector.ph:
   %wide.load19.5 = load <4 x float>, ptr %i.au, align 4, !tbaa !159, !alias.scope !3989, !noalias !3997, !llvm.access.group !3890
   %i.av = fmul nsz <4 x float> %broadcast.splat, %wide.load.5
   %i.aw = fadd nsz <4 x float> %broadcast.splat13, %i.av
-  store <4 x float> %i.aw, ptr %i.as, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995
+  store <4 x float> %i.aw, ptr %i.as, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995, !llvm.access.group !3890
   %i.ax = fmul nsz <4 x float> %broadcast.splat9, %wide.load18.5
   %i.ay = fadd nsz <4 x float> %broadcast.splat15, %i.ax
   store <4 x float> %i.ay, ptr %i.at, align 4, !tbaa !159, !alias.scope !3987, !noalias !3996, !llvm.access.group !3890
@@ -294,7 +294,7 @@ vector.ph:
   %wide.load19.6 = load <4 x float>, ptr %i.bd, align 4, !tbaa !159, !alias.scope !3989, !noalias !3997, !llvm.access.group !3890
   %i.be = fmul nsz <4 x float> %broadcast.splat, %wide.load.6
   %i.bf = fadd nsz <4 x float> %broadcast.splat13, %i.be
-  store <4 x float> %i.bf, ptr %i.bb, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995
+  store <4 x float> %i.bf, ptr %i.bb, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995, !llvm.access.group !3890
   %i.bg = fmul nsz <4 x float> %broadcast.splat9, %wide.load18.6
   %i.bh = fadd nsz <4 x float> %broadcast.splat15, %i.bg
   store <4 x float> %i.bh, ptr %i.bc, align 4, !tbaa !159, !alias.scope !3987, !noalias !3996, !llvm.access.group !3890
@@ -309,7 +309,7 @@ vector.ph:
   %wide.load19.7 = load <4 x float>, ptr %i.bm, align 4, !tbaa !159, !alias.scope !3989, !noalias !3997, !llvm.access.group !3890
   %i.bn = fmul nsz <4 x float> %broadcast.splat, %wide.load.7
   %i.bo = fadd nsz <4 x float> %broadcast.splat13, %i.bn
-  store <4 x float> %i.bo, ptr %i.bk, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995
+  store <4 x float> %i.bo, ptr %i.bk, align 4, !tbaa !159, !alias.scope !3985, !noalias !3995, !llvm.access.group !3890
   %i.bp = fmul nsz <4 x float> %broadcast.splat9, %wide.load18.7
   %i.bq = fadd nsz <4 x float> %broadcast.splat15, %i.bp
   store <4 x float> %i.bq, ptr %i.bl, align 4, !tbaa !159, !alias.scope !3987, !noalias !3996, !llvm.access.group !3890
@@ -346,7 +346,7 @@ vector.ph:
   %wide.load12 = load <4 x float>, ptr %3, align 4, !tbaa !159, !alias.scope !4003, !noalias !4012, !llvm.access.group !3890
   %wide.load13 = load <4 x float>, ptr %4, align 4, !tbaa !159, !alias.scope !4005, !noalias !4013, !llvm.access.group !3890
   %i.c = fmul nsz <4 x float> %broadcast.splat, %wide.load
-  store <4 x float> %i.c, ptr %2, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011
+  store <4 x float> %i.c, ptr %2, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011, !llvm.access.group !3890
   %i.d = fmul nsz <4 x float> %broadcast.splat9, %wide.load12
   store <4 x float> %i.d, ptr %3, align 4, !tbaa !159, !alias.scope !4003, !noalias !4012, !llvm.access.group !3890
   %i.e = fmul nsz <4 x float> %broadcast.splat11, %wide.load13
@@ -358,7 +358,7 @@ vector.ph:
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %wide.load13.1 = load <4 x float>, ptr %i.h, align 4, !tbaa !159, !alias.scope !4005, !noalias !4013, !llvm.access.group !3890
   %i.i = fmul nsz <4 x float> %broadcast.splat, %wide.load.1
-  store <4 x float> %i.i, ptr %i.f, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011
+  store <4 x float> %i.i, ptr %i.f, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011, !llvm.access.group !3890
   %i.j = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.1
   store <4 x float> %i.j, ptr %i.g, align 4, !tbaa !159, !alias.scope !4003, !noalias !4012, !llvm.access.group !3890
   %i.k = fmul nsz <4 x float> %broadcast.splat11, %wide.load13.1
@@ -370,7 +370,7 @@ vector.ph:
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   %wide.load13.2 = load <4 x float>, ptr %i.n, align 4, !tbaa !159, !alias.scope !4005, !noalias !4013, !llvm.access.group !3890
   %i.o = fmul nsz <4 x float> %broadcast.splat, %wide.load.2
-  store <4 x float> %i.o, ptr %i.l, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011
+  store <4 x float> %i.o, ptr %i.l, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011, !llvm.access.group !3890
   %i.p = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.2
   store <4 x float> %i.p, ptr %i.m, align 4, !tbaa !159, !alias.scope !4003, !noalias !4012, !llvm.access.group !3890
   %i.q = fmul nsz <4 x float> %broadcast.splat11, %wide.load13.2
@@ -382,7 +382,7 @@ vector.ph:
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
   %wide.load13.3 = load <4 x float>, ptr %i.t, align 4, !tbaa !159, !alias.scope !4005, !noalias !4013, !llvm.access.group !3890
   %i.u = fmul nsz <4 x float> %broadcast.splat, %wide.load.3
-  store <4 x float> %i.u, ptr %i.r, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011
+  store <4 x float> %i.u, ptr %i.r, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011, !llvm.access.group !3890
   %i.v = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.3
   store <4 x float> %i.v, ptr %i.s, align 4, !tbaa !159, !alias.scope !4003, !noalias !4012, !llvm.access.group !3890
   %i.w = fmul nsz <4 x float> %broadcast.splat11, %wide.load13.3
@@ -394,7 +394,7 @@ vector.ph:
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
   %wide.load13.4 = load <4 x float>, ptr %i.z, align 4, !tbaa !159, !alias.scope !4005, !noalias !4013, !llvm.access.group !3890
   %i.aa = fmul nsz <4 x float> %broadcast.splat, %wide.load.4
-  store <4 x float> %i.aa, ptr %i.x, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011
+  store <4 x float> %i.aa, ptr %i.x, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011, !llvm.access.group !3890
   %i.ab = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.4
   store <4 x float> %i.ab, ptr %i.y, align 4, !tbaa !159, !alias.scope !4003, !noalias !4012, !llvm.access.group !3890
   %i.ac = fmul nsz <4 x float> %broadcast.splat11, %wide.load13.4
@@ -406,7 +406,7 @@ vector.ph:
   %i.af = getelementptr inbounds nuw i8, ptr %4, i64 80 ; 2 uses
   %wide.load13.5 = load <4 x float>, ptr %i.af, align 4, !tbaa !159, !alias.scope !4005, !noalias !4013, !llvm.access.group !3890
   %i.ag = fmul nsz <4 x float> %broadcast.splat, %wide.load.5
-  store <4 x float> %i.ag, ptr %i.ad, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011
+  store <4 x float> %i.ag, ptr %i.ad, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011, !llvm.access.group !3890
   %i.ah = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.5
   store <4 x float> %i.ah, ptr %i.ae, align 4, !tbaa !159, !alias.scope !4003, !noalias !4012, !llvm.access.group !3890
   %i.ai = fmul nsz <4 x float> %broadcast.splat11, %wide.load13.5
@@ -418,7 +418,7 @@ vector.ph:
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 96 ; 2 uses
   %wide.load13.6 = load <4 x float>, ptr %i.al, align 4, !tbaa !159, !alias.scope !4005, !noalias !4013, !llvm.access.group !3890
   %i.am = fmul nsz <4 x float> %broadcast.splat, %wide.load.6
-  store <4 x float> %i.am, ptr %i.aj, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011
+  store <4 x float> %i.am, ptr %i.aj, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011, !llvm.access.group !3890
   %i.an = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.6
   store <4 x float> %i.an, ptr %i.ak, align 4, !tbaa !159, !alias.scope !4003, !noalias !4012, !llvm.access.group !3890
   %i.ao = fmul nsz <4 x float> %broadcast.splat11, %wide.load13.6
@@ -430,7 +430,7 @@ vector.ph:
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 112 ; 2 uses
   %wide.load13.7 = load <4 x float>, ptr %i.ar, align 4, !tbaa !159, !alias.scope !4005, !noalias !4013, !llvm.access.group !3890
   %i.as = fmul nsz <4 x float> %broadcast.splat, %wide.load.7
-  store <4 x float> %i.as, ptr %i.ap, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011
+  store <4 x float> %i.as, ptr %i.ap, align 4, !tbaa !159, !alias.scope !4001, !noalias !4011, !llvm.access.group !3890
   %i.at = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.7
   store <4 x float> %i.at, ptr %i.aq, align 4, !tbaa !159, !alias.scope !4003, !noalias !4012, !llvm.access.group !3890
   %i.au = fmul nsz <4 x float> %broadcast.splat11, %wide.load13.7
@@ -712,7 +712,7 @@ vector.ph:
   %wide.load12 = load <4 x float>, ptr %5, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.c = fmul nsz <4 x float> %broadcast.splat, %wide.load
   %i.d = fadd nsz <4 x float> %broadcast.splat11, %i.c
-  store <4 x float> %i.d, ptr %2, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054
+  store <4 x float> %i.d, ptr %2, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054, !llvm.access.group !3890
   %i.e = fmul nsz <4 x float> %broadcast.splat9, %wide.load12
   store <4 x float> %i.e, ptr %5, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
@@ -721,7 +721,7 @@ vector.ph:
   %wide.load12.1 = load <4 x float>, ptr %i.g, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.h = fmul nsz <4 x float> %broadcast.splat, %wide.load.1
   %i.i = fadd nsz <4 x float> %broadcast.splat11, %i.h
-  store <4 x float> %i.i, ptr %i.f, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054
+  store <4 x float> %i.i, ptr %i.f, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054, !llvm.access.group !3890
   %i.j = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.1
   store <4 x float> %i.j, ptr %i.g, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
@@ -730,7 +730,7 @@ vector.ph:
   %wide.load12.2 = load <4 x float>, ptr %i.l, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.m = fmul nsz <4 x float> %broadcast.splat, %wide.load.2
   %i.n = fadd nsz <4 x float> %broadcast.splat11, %i.m
-  store <4 x float> %i.n, ptr %i.k, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054
+  store <4 x float> %i.n, ptr %i.k, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054, !llvm.access.group !3890
   %i.o = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.2
   store <4 x float> %i.o, ptr %i.l, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
@@ -739,7 +739,7 @@ vector.ph:
   %wide.load12.3 = load <4 x float>, ptr %i.q, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.r = fmul nsz <4 x float> %broadcast.splat, %wide.load.3
   %i.s = fadd nsz <4 x float> %broadcast.splat11, %i.r
-  store <4 x float> %i.s, ptr %i.p, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054
+  store <4 x float> %i.s, ptr %i.p, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054, !llvm.access.group !3890
   %i.t = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.3
   store <4 x float> %i.t, ptr %i.q, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
@@ -748,7 +748,7 @@ vector.ph:
   %wide.load12.4 = load <4 x float>, ptr %i.v, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.w = fmul nsz <4 x float> %broadcast.splat, %wide.load.4
   %i.x = fadd nsz <4 x float> %broadcast.splat11, %i.w
-  store <4 x float> %i.x, ptr %i.u, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054
+  store <4 x float> %i.x, ptr %i.u, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054, !llvm.access.group !3890
   %i.y = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.4
   store <4 x float> %i.y, ptr %i.v, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 2 uses
@@ -757,7 +757,7 @@ vector.ph:
   %wide.load12.5 = load <4 x float>, ptr %i.aa, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.ab = fmul nsz <4 x float> %broadcast.splat, %wide.load.5
   %i.ac = fadd nsz <4 x float> %broadcast.splat11, %i.ab
-  store <4 x float> %i.ac, ptr %i.z, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054
+  store <4 x float> %i.ac, ptr %i.z, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054, !llvm.access.group !3890
   %i.ad = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.5
   store <4 x float> %i.ad, ptr %i.aa, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 2 uses
@@ -766,7 +766,7 @@ vector.ph:
   %wide.load12.6 = load <4 x float>, ptr %i.af, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.ag = fmul nsz <4 x float> %broadcast.splat, %wide.load.6
   %i.ah = fadd nsz <4 x float> %broadcast.splat11, %i.ag
-  store <4 x float> %i.ah, ptr %i.ae, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054
+  store <4 x float> %i.ah, ptr %i.ae, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054, !llvm.access.group !3890
   %i.ai = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.6
   store <4 x float> %i.ai, ptr %i.af, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 112 ; 2 uses
@@ -775,7 +775,7 @@ vector.ph:
   %wide.load12.7 = load <4 x float>, ptr %i.ak, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.al = fmul nsz <4 x float> %broadcast.splat, %wide.load.7
   %i.am = fadd nsz <4 x float> %broadcast.splat11, %i.al
-  store <4 x float> %i.am, ptr %i.aj, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054
+  store <4 x float> %i.am, ptr %i.aj, align 4, !tbaa !159, !alias.scope !4045, !noalias !4054, !llvm.access.group !3890
   %i.an = fmul nsz <4 x float> %broadcast.splat9, %wide.load12.7
   store <4 x float> %i.an, ptr %i.ak, align 4, !tbaa !159, !alias.scope !4047, !noalias !4055, !llvm.access.group !3890
   %i.ao = load ptr, ptr %1, align 16, !tbaa !35, !alias.scope !4042, !noalias !4049
@@ -1178,7 +1178,7 @@ vector.ph:
   %wide.load15 = load <4 x float>, ptr %4, align 4, !tbaa !159, !alias.scope !4117, !noalias !4126, !llvm.access.group !3890
   %wide.load16 = load <4 x float>, ptr %5, align 4, !tbaa !159, !alias.scope !4119, !noalias !4127, !llvm.access.group !3890
   %i.c = fmul nsz <4 x float> %broadcast.splat, %wide.load
-  store <4 x float> %i.c, ptr %2, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124
+  store <4 x float> %i.c, ptr %2, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124, !llvm.access.group !3890
   %i.d = fmul nsz <4 x float> %broadcast.splat9, %wide.load14
   store <4 x float> %i.d, ptr %3, align 4, !tbaa !159, !alias.scope !4115, !noalias !4125, !llvm.access.group !3890
   %i.e = fmul nsz <4 x float> %broadcast.splat11, %wide.load15
@@ -1194,7 +1194,7 @@ vector.ph:
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %wide.load16.1 = load <4 x float>, ptr %i.j, align 4, !tbaa !159, !alias.scope !4119, !noalias !4127, !llvm.access.group !3890
   %i.k = fmul nsz <4 x float> %broadcast.splat, %wide.load.1
-  store <4 x float> %i.k, ptr %i.g, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124
+  store <4 x float> %i.k, ptr %i.g, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124, !llvm.access.group !3890
   %i.l = fmul nsz <4 x float> %broadcast.splat9, %wide.load14.1
   store <4 x float> %i.l, ptr %i.h, align 4, !tbaa !159, !alias.scope !4115, !noalias !4125, !llvm.access.group !3890
   %i.m = fmul nsz <4 x float> %broadcast.splat11, %wide.load15.1
@@ -1210,7 +1210,7 @@ vector.ph:
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
   %wide.load16.2 = load <4 x float>, ptr %i.r, align 4, !tbaa !159, !alias.scope !4119, !noalias !4127, !llvm.access.group !3890
   %i.s = fmul nsz <4 x float> %broadcast.splat, %wide.load.2
-  store <4 x float> %i.s, ptr %i.o, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124
+  store <4 x float> %i.s, ptr %i.o, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124, !llvm.access.group !3890
   %i.t = fmul nsz <4 x float> %broadcast.splat9, %wide.load14.2
   store <4 x float> %i.t, ptr %i.p, align 4, !tbaa !159, !alias.scope !4115, !noalias !4125, !llvm.access.group !3890
   %i.u = fmul nsz <4 x float> %broadcast.splat11, %wide.load15.2
@@ -1226,7 +1226,7 @@ vector.ph:
   %i.z = getelementptr inbounds nuw i8, ptr %5, i64 48 ; 2 uses
   %wide.load16.3 = load <4 x float>, ptr %i.z, align 4, !tbaa !159, !alias.scope !4119, !noalias !4127, !llvm.access.group !3890
   %i.aa = fmul nsz <4 x float> %broadcast.splat, %wide.load.3
-  store <4 x float> %i.aa, ptr %i.w, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124
+  store <4 x float> %i.aa, ptr %i.w, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124, !llvm.access.group !3890
   %i.ab = fmul nsz <4 x float> %broadcast.splat9, %wide.load14.3
   store <4 x float> %i.ab, ptr %i.x, align 4, !tbaa !159, !alias.scope !4115, !noalias !4125, !llvm.access.group !3890
   %i.ac = fmul nsz <4 x float> %broadcast.splat11, %wide.load15.3
@@ -1242,7 +1242,7 @@ vector.ph:
   %i.ah = getelementptr inbounds nuw i8, ptr %5, i64 64 ; 2 uses
   %wide.load16.4 = load <4 x float>, ptr %i.ah, align 4, !tbaa !159, !alias.scope !4119, !noalias !4127, !llvm.access.group !3890
   %i.ai = fmul nsz <4 x float> %broadcast.splat, %wide.load.4
-  store <4 x float> %i.ai, ptr %i.ae, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124
+  store <4 x float> %i.ai, ptr %i.ae, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124, !llvm.access.group !3890
   %i.aj = fmul nsz <4 x float> %broadcast.splat9, %wide.load14.4
   store <4 x float> %i.aj, ptr %i.af, align 4, !tbaa !159, !alias.scope !4115, !noalias !4125, !llvm.access.group !3890
   %i.ak = fmul nsz <4 x float> %broadcast.splat11, %wide.load15.4
@@ -1258,7 +1258,7 @@ vector.ph:
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 80 ; 2 uses
   %wide.load16.5 = load <4 x float>, ptr %i.ap, align 4, !tbaa !159, !alias.scope !4119, !noalias !4127, !llvm.access.group !3890
   %i.aq = fmul nsz <4 x float> %broadcast.splat, %wide.load.5
-  store <4 x float> %i.aq, ptr %i.am, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124
+  store <4 x float> %i.aq, ptr %i.am, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124, !llvm.access.group !3890
   %i.ar = fmul nsz <4 x float> %broadcast.splat9, %wide.load14.5
   store <4 x float> %i.ar, ptr %i.an, align 4, !tbaa !159, !alias.scope !4115, !noalias !4125, !llvm.access.group !3890
   %i.as = fmul nsz <4 x float> %broadcast.splat11, %wide.load15.5
@@ -1274,7 +1274,7 @@ vector.ph:
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 96 ; 2 uses
   %wide.load16.6 = load <4 x float>, ptr %i.ax, align 4, !tbaa !159, !alias.scope !4119, !noalias !4127, !llvm.access.group !3890
   %i.ay = fmul nsz <4 x float> %broadcast.splat, %wide.load.6
-  store <4 x float> %i.ay, ptr %i.au, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124
+  store <4 x float> %i.ay, ptr %i.au, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124, !llvm.access.group !3890
   %i.az = fmul nsz <4 x float> %broadcast.splat9, %wide.load14.6
   store <4 x float> %i.az, ptr %i.av, align 4, !tbaa !159, !alias.scope !4115, !noalias !4125, !llvm.access.group !3890
   %i.ba = fmul nsz <4 x float> %broadcast.splat11, %wide.load15.6
@@ -1290,7 +1290,7 @@ vector.ph:
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 112 ; 2 uses
   %wide.load16.7 = load <4 x float>, ptr %i.bf, align 4, !tbaa !159, !alias.scope !4119, !noalias !4127, !llvm.access.group !3890
   %i.bg = fmul nsz <4 x float> %broadcast.splat, %wide.load.7
-  store <4 x float> %i.bg, ptr %i.bc, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124
+  store <4 x float> %i.bg, ptr %i.bc, align 4, !tbaa !159, !alias.scope !4113, !noalias !4124, !llvm.access.group !3890
   %i.bh = fmul nsz <4 x float> %broadcast.splat9, %wide.load14.7
   store <4 x float> %i.bh, ptr %i.bd, align 4, !tbaa !159, !alias.scope !4115, !noalias !4125, !llvm.access.group !3890
   %i.bi = fmul nsz <4 x float> %broadcast.splat11, %wide.load15.7
