@@ -204,7 +204,7 @@ bb.a:
   %i.f = sdiv i32 %.val157, %.val158.val          ; 23 uses
   %i.g = getelementptr i8, ptr %1, i64 4          ; 4 uses
   %.val137 = load i32, ptr %i.g, align 4, !tbaa !30 ; 3 uses
-  %i.h = shl nuw i32 1, %.val137                  ; 2 uses
+  %i.h = shl nuw nsw i32 1, %.val137              ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.j = load i32, ptr %i.i, align 4, !tbaa !39   ; 2 uses
   %.not.i = icmp eq i32 %i.j, 0
@@ -607,7 +607,6 @@ Abc_TtClear.exit:                                 ; preds = %scalar.ph294.prol.l
   %i.gh = add nsw i32 %i.h, -1
   %i.gi = getelementptr i8, ptr %1, i64 8
   %i.gj = sext i32 %i.f to i64
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.h, i32 1)
   %wide.trip.count252 = zext nneg i32 %.val133 to i64
   %min.iters.check379 = icmp ult i32 %i.f, 4
   %n.vec381 = and i64 %wide.trip.count.i178, 2147483644 ; 3 uses
@@ -1010,7 +1009,7 @@ Gia_ManSimPatSimAnd.exit210:                      ; preds = %scalar.ph336.prol.l
 .critedge8:                                       ; preds = %Gia_ManSimPatSimAnd.exit210, %.lr.ph231, %Abc_TtNot.exit
   %i.nu = shl nuw i32 1, %i.is
   %i.nv = xor i32 %i.nu, %.0117233
-  %exitcond259.not = icmp eq i32 %i.in, %smax
+  %exitcond259.not = icmp eq i32 %i.in, %i.h
   br i1 %exitcond259.not, label %.critedge6._crit_edge, label %.preheader, !llvm.loop !585
 
 .critedge6._crit_edge:                            ; preds = %.critedge8, %.critedge6, %.critedge4
@@ -1413,7 +1412,7 @@ define noundef ptr @Gia_ManRelDeriveRel(ptr noundef %0, ptr nofree noundef reado
 bb.a:
   %i.a = getelementptr i8, ptr %3, i64 4          ; 3 uses
   %.val76 = load i32, ptr %i.a, align 4, !tbaa !30 ; 2 uses
-  %i.b = shl nuw i32 1, %.val76
+  %i.b = shl nuw nsw i32 1, %.val76               ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 872
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !38
   %i.e = getelementptr i8, ptr %i.d, i64 4
@@ -1602,7 +1601,6 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   %i.ce = icmp slt i32 %.fr108, 1
   %wide.trip.count.i.i = zext i32 %.fr108 to i64  ; 9 uses
   %i.cf = icmp sgt i32 %.fr108, 0                 ; 2 uses
-  %smax123 = tail call i32 @llvm.smax.i32(i32 %i.b, i32 1) ; 2 uses
   br i1 %i.ce, label %.lr.ph106.split.us, label %.lr.ph106.split.preheader
 
 .lr.ph106.split.preheader:                        ; preds = %.lr.ph106
@@ -1697,7 +1695,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph104.us
 
 Gia_ManSimPatSimMiter.exit.us:                    ; preds = %.lr.ph.i25.i.us.preheader, %.critedge4.us
   %i.dr = add nuw nsw i32 %.2105.us, 1            ; 2 uses
-  %exitcond124.not = icmp eq i32 %i.dr, %smax123
+  %exitcond124.not = icmp eq i32 %i.dr, %i.b
   br i1 %exitcond124.not, label %.critedge2._crit_edge, label %.lr.ph106.split.us, !llvm.loop !660
 
 .lr.ph104.us:                                     ; preds = %.lr.ph106.split.us
@@ -1982,7 +1980,7 @@ middle.block:                                     ; preds = %vector.body
 
 Gia_ManSimPatSimMiter.exit:                       ; preds = %.lr.ph.i25.i, %middle.block, %.critedge.i
   %i.hz = add nuw nsw i32 %.2105, 1               ; 2 uses
-  %exitcond117.not = icmp eq i32 %i.hz, %smax123
+  %exitcond117.not = icmp eq i32 %i.hz, %i.b
   br i1 %exitcond117.not, label %.critedge2._crit_edge, label %.lr.ph106.split, !llvm.loop !660
 
 .critedge2._crit_edge:                            ; preds = %Gia_ManSimPatSimMiter.exit, %Gia_ManSimPatSimMiter.exit.us, %.critedge2.preheader

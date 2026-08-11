@@ -203,8 +203,8 @@ bb.d:                                             ; preds = %.backedge.i, %.lr.p
           to label %.noexc.i unwind label %.thread200.loopexit.split-lp.loopexit.i, !noalias !59 ; 2 uses
 
 .noexc.i:                                         ; preds = %bb.d
-  %i.bz = extractvalue { i64, i64 } %i.by, 0      ; 4 uses
-  %i.ca = extractvalue { i64, i64 } %i.by, 1      ; 3 uses
+  %i.bz = extractvalue { i64, i64 } %i.by, 0      ; 5 uses
+  %i.ca = extractvalue { i64, i64 } %i.by, 1      ; 4 uses
   %i.cb = icmp ugt i64 %i.bz, 4294967295
   br i1 %i.cb, label %.noexc._crit_edge.i, label %bb.e
 
@@ -270,7 +270,7 @@ bb.g:                                             ; preds = %bb.f
   br label %.thread.i
 
 bb.h:                                             ; preds = %bb.f
-  %i.cn = trunc nuw i64 %i.ca to i32              ; 9 uses
+  %i.cn = trunc nuw i64 %i.ca to i32              ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !52
   store i64 %i.bw, ptr %i.r, align 8, !noalias !52
   %i.co = invoke noundef range(i16 0, 329) i16 @_RNvMNtCsdVrXiLXuAnx_6parser9lexed_strNtB2_8LexedStr4kind(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(112) %i.v, i64 noundef %i.bw)
@@ -673,7 +673,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs42xZ1oUXfIG_8smol_str7SmolStrECslVwg
 
 bb.bh:                                            ; preds = %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !52
-  %i.hj = add i32 %i.cc, 1                        ; 3 uses
+  %i.hj = add nuw i32 %i.cc, 1                    ; 2 uses
   %.not81.i = icmp eq i64 %i.bz, 4294967295
   br i1 %.not81.i, label %bb.bi, label %bb.bj, !prof !13
 
@@ -789,8 +789,8 @@ bb.bt:                                            ; preds = %bb.bo, %.split.i.i
           to label %bb.ad unwind label %.loopexit.split-lp243.i, !noalias !59
 
 bb.bu:                                            ; preds = %bb.bs
-  %.not83.i = icmp ugt i32 %i.hj, %i.cn
-  br i1 %.not83.i, label %bb.bv, label %bb.bx, !prof !13
+  %.not83.not.i = icmp samesign ult i64 %i.bz, %i.ca
+  br i1 %.not83.not.i, label %bb.bx, label %bb.bv, !prof !19
 
 bb.bv:                                            ; preds = %bb.bu
   invoke void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 38, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #20

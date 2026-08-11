@@ -204,7 +204,7 @@ bb.a:
   %i.j = shl nuw i32 1, %i.i
   %i.k = select i1 %i.h, i32 1, i32 %i.j
   %.fr112 = freeze i32 %i.k                       ; 7 uses
-  %i.l = shl nuw i32 1, %2                        ; 2 uses
+  %i.l = shl nuw nsw i32 1, %2                    ; 2 uses
   %.not = icmp eq i32 %2, 31
   br i1 %.not, label %._crit_edge63, label %.lr.ph62
 
@@ -218,7 +218,6 @@ bb.a:
 
 .lr.ph62.split.us.preheader:                      ; preds = %.lr.ph62
   %i.p = sext i32 %6 to i64                       ; 3 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.l, i32 1)
   %wide.trip.count = zext nneg i32 %.09.i to i64  ; 2 uses
   %min.iters.check = icmp ult i32 %.fr112, 8
   %n.vec = and i64 %wide.trip.count.i.i, 2147483644 ; 3 uses
@@ -433,14 +432,13 @@ bb.g:                                             ; preds = %.epil.preheader
   %i.cd = add nsw i32 %.028.i.us, 1
   %i.ce = tail call noundef i32 @llvm.smax.i32(i32 %.059.us, i32 %i.cd) ; 2 uses
   %i.cf = add nuw nsw i32 %.04758.us, 1           ; 2 uses
-  %exitcond121.not = icmp eq i32 %i.cf, %smax
+  %exitcond121.not = icmp eq i32 %i.cf, %i.l
   br i1 %exitcond121.not, label %._crit_edge63, label %.lr.ph62.split.us, !llvm.loop !219
 
 .lr.ph62.split:                                   ; preds = %.lr.ph62
   br i1 %i.n, label %.lr.ph62.split.split.us.preheader, label %._crit_edge63
 
 .lr.ph62.split.split.us.preheader:                ; preds = %.lr.ph62.split
-  %smax125 = tail call i32 @llvm.smax.i32(i32 %i.l, i32 1)
   %min.iters.check151 = icmp ult i32 %.fr112, 8
   %n.vec153 = and i64 %wide.trip.count.i.i, 2147483644 ; 3 uses
   %cmp.n160 = icmp eq i64 %n.vec153, %wide.trip.count.i.i
@@ -575,7 +573,7 @@ Abc_LutCascadeLookup.exit.us88:                   ; preds = %.lr.ph.i18.i.us82.p
   %i.dv = add nsw i32 %.028.i.us89, 1
   %i.dw = tail call noundef i32 @llvm.smax.i32(i32 %.059.us64, i32 %i.dv) ; 2 uses
   %i.dx = add nuw nsw i32 %.04758.us65, 1         ; 2 uses
-  %exitcond126.not = icmp eq i32 %i.dx, %smax125
+  %exitcond126.not = icmp eq i32 %i.dx, %i.l
   br i1 %exitcond126.not, label %._crit_edge63, label %.lr.ph62.split.split.us, !llvm.loop !219
 
 ._crit_edge63:                                    ; preds = %._crit_edge.us, %Abc_LutCascadeLookup.exit.us88, %.lr.ph62.split, %bb.a
@@ -978,7 +976,7 @@ Vec_WrdFill.exit202:                              ; preds = %Vec_WrdGrow.exit.i1
   %i.hj = load ptr, ptr %i.gr, align 8, !tbaa !228
   %i.hk = getelementptr i8, ptr %i.hj, i64 8
   %.val161 = load ptr, ptr %i.hk, align 8, !tbaa !65 ; 3 uses
-  %i.hl = shl nuw i32 1, %i.ck                    ; 3 uses
+  %i.hl = shl nuw nsw i32 1, %i.ck                ; 3 uses
   %.not20 = icmp eq i32 %i.ck, 31
   br i1 %.not20, label %._crit_edge, label %.lr.ph
 
@@ -988,7 +986,6 @@ Vec_WrdFill.exit202:                              ; preds = %Vec_WrdGrow.exit.i1
   %i.ho = select i1 %i.fo, i32 0, i32 %i.fp
   %i.hp = tail call i32 @llvm.smax.i32(i32 %i.gq, i32 6)
   %i.hq = add nsw i32 %i.hp, -6
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.hl, i32 1)
   br label %bb.ao
 
 bb.ao:                                            ; preds = %.lr.ph, %bb.ao
@@ -1006,7 +1003,7 @@ bb.ao:                                            ; preds = %.lr.ph, %bb.ao
   %i.ib = getelementptr inbounds [8 x i8], ptr %.val161, i64 %i.ia
   tail call void @Abc_LutCascadeDerive(ptr noundef %i.hu, i32 noundef %i.hn, i32 noundef %i.gh, i32 noundef %i.e, ptr noundef %i.hy, ptr noundef %i.ib, i32 noundef %i.gp)
   %i.ic = add nuw nsw i32 %.08, 1                 ; 2 uses
-  %exitcond.not = icmp eq i32 %i.ic, %smax
+  %exitcond.not = icmp eq i32 %i.ic, %i.hl
   br i1 %exitcond.not, label %._crit_edge, label %bb.ao, !llvm.loop !235
 
 ._crit_edge:                                      ; preds = %bb.ao, %Vec_WrdFill.exit202

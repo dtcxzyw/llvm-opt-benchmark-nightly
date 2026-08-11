@@ -204,7 +204,7 @@ _ZN4LIEF15vector_iostream5writeIhvEERS0_RKT_.exit: ; preds = %bb.ab, %bb.ac
   %i.jr = ptrtoint ptr %i.jp to i64
   %i.js = sub i64 %i.jq, %i.jr
   %i.jt = ashr exact i64 %i.js, 5                 ; 2 uses
-  %i.ju = mul nsw i64 %i.jt, 10                   ; 3 uses
+  %i.ju = mul nuw nsw i64 %i.jt, 10               ; 3 uses
   %i.jv = load ptr, ptr %i.io, align 8, !tbaa !48 ; 4 uses
   %i.jw = icmp slt i64 %i.jt, 0
   br i1 %i.jw, label %bb.ad, label %bb.ae
@@ -607,7 +607,7 @@ _ZN4LIEF15vector_iostream5writeIhvEERS0_RKT_.exit: ; preds = %bb.ab, %bb.ac
   %i.jr = ptrtoint ptr %i.jp to i64
   %i.js = sub i64 %i.jq, %i.jr
   %i.jt = ashr exact i64 %i.js, 5                 ; 2 uses
-  %i.ju = mul nsw i64 %i.jt, 10                   ; 3 uses
+  %i.ju = mul nuw nsw i64 %i.jt, 10               ; 3 uses
   %i.jv = load ptr, ptr %i.io, align 8, !tbaa !48 ; 4 uses
   %i.jw = icmp slt i64 %i.jt, 0
   br i1 %i.jw, label %bb.ad, label %bb.ae

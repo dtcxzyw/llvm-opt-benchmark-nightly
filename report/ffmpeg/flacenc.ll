@@ -1,8 +1,8 @@
 inline.NumInlined: 99
 inline.NumDeleted: 35
-loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumCompletelyUnrolled: 6
 loop-unroll.NumRuntimeUnrolled: 15
-loop-unroll.NumUnrolled: 22
+loop-unroll.NumUnrolled: 21
 begin_hunk_0_@find_subframe_rice_params:bb.a
 
 .lr.ph56.preheader.i.i:                           ; preds = %.lr.ph62.split.i.i
@@ -204,8 +204,6 @@ calc_sum_top.exit.i:                              ; preds = %._crit_edge57.split
   %unroll_iter = and i64 %wide.trip.count.i.i.i, 4294967294
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod138 = trunc i32 %i.et to i1
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 263336
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 263344
   %xtraiter140 = and i64 %wide.trip.count.i49.i, 1
   %i.ey = icmp eq i32 %i.bx, 0
   %unroll_iter143 = and i64 %wide.trip.count.i49.i, 2147483646
@@ -214,10 +212,9 @@ calc_sum_top.exit.i:                              ; preds = %._crit_edge57.split
   br label %calc_sum_next.exit.i
 
 calc_sum_next.exit.i:                             ; preds = %calc_sum_next.exit.i.backedge, %calc_sum_top.exit.i
-  %indvars.iv68.i = phi i64 [ %i.ew, %calc_sum_top.exit.i ], [ %indvars.iv.next69.i, %calc_sum_next.exit.i.backedge ] ; 6 uses
+  %indvars.iv68.i = phi i64 [ %i.ew, %calc_sum_top.exit.i ], [ %indvars.iv.next69.i, %calc_sum_next.exit.i.backedge ] ; 7 uses
   %.041.i = phi i32 [ %.0.i42, %calc_sum_top.exit.i ], [ %.142.i, %calc_sum_next.exit.i.backedge ] ; 2 uses
   %i.ez = trunc nsw i64 %indvars.iv68.i to i32    ; 5 uses
-  %6 = shl nuw i32 1, %i.ez                       ; 4 uses
   %i.fa = shl i32 4, %i.ez
   %i.fb = sext i32 %i.fa to i64                   ; 5 uses
   %i.fc = ashr i32 %i.f, %i.ez                    ; 4 uses
@@ -225,21 +222,21 @@ calc_sum_next.exit.i:                             ; preds = %calc_sum_next.exit.
   br i1 %i.fd, label %calc_optimal_rice_params.exit.i, label %.lr.ph.i44.i
 
 .lr.ph.i44.i:                                     ; preds = %calc_sum_next.exit.i
-  %7 = sub nsw i32 %i.fc, %2                      ; 3 uses
-  %smax59.i.i = tail call i32 @llvm.smax.i32(i32 %6, i32 1)
-  %wide.trip.count60.i.i = zext nneg i32 %smax59.i.i to i64 ; 4 uses
+  %4 = shl nuw nsw i32 1, %i.ez
+  %5 = sub nsw i32 %i.fc, %2                      ; 3 uses
+  %wide.trip.count60.i.i = zext nneg i32 %4 to i64 ; 5 uses
   br i1 %.not.i, label %.lr.ph.split.us.preheader.i.i, label %.lr.ph.split.i.i
 
 .lr.ph.split.us.preheader.i.i:                    ; preds = %.lr.ph.i44.i
   %i.fe = load i64, ptr %i.av, align 8, !tbaa !111 ; 2 uses
-  %i.ff = ashr i32 %7, 1
+  %i.ff = ashr i32 %5, 1
   %i.fg = sext i32 %i.ff to i64                   ; 2 uses
   %.not.i.us.peel.i.i = icmp ugt i64 %i.fe, %i.fg
   %i.fh = sub i64 %i.fe, %i.fg                    ; 2 uses
   br i1 %.not.i.us.peel.i.i, label %bb.f, label %find_optimal_param.exit.us.peel.i.i
 
 bb.f:                                             ; preds = %.lr.ph.split.us.preheader.i.i
-  %i.fi = sext i32 %7 to i64
+  %i.fi = sext i32 %5 to i64
   %i.fj = udiv i64 %i.fh, %i.fi
   %i.fk = tail call i64 @llvm.smax.i64(i64 %i.fj, i64 -2147483648)
   %i.fl = tail call i64 @llvm.smin.i64(i64 %i.fk, i64 2147483647) ; 2 uses
@@ -264,15 +261,15 @@ bb.f:                                             ; preds = %.lr.ph.split.us.pre
 find_optimal_param.exit.us.peel.i.i:              ; preds = %bb.f, %.lr.ph.split.us.preheader.i.i
   %.0.i.us.peel.i.i = phi i32 [ %i.fu, %bb.f ], [ 0, %.lr.ph.split.us.preheader.i.i ] ; 3 uses
   %i.fv = add nsw i32 %.0.i.us.peel.i.i, 1
-  %i.fw = mul nsw i32 %i.fv, %7
+  %i.fw = mul nsw i32 %i.fv, %5
   %i.fx = sext i32 %i.fw to i64
   %i.fy = zext nneg i32 %.0.i.us.peel.i.i to i64
   %i.fz = lshr i64 %i.fh, %i.fy
   %i.ga = add i64 %i.fz, %i.fb
   %.1.us.peel.i.i = add i64 %i.ga, %i.fx          ; 2 uses
   store i32 %.0.i.us.peel.i.i, ptr %i.eu, align 4, !tbaa !47
-  %exitcond61.peel.not.i.i = icmp slt i32 %6, 2
-  br i1 %exitcond61.peel.not.i.i, label %calc_optimal_rice_params.exit.i, label %.lr.ph.split.us.peel.next.i.i
+  %6 = icmp eq i64 %indvars.iv68.i, 0
+  br i1 %6, label %calc_optimal_rice_params.exit.i, label %.lr.ph.split.us.peel.next.i.i
 
 .lr.ph.split.us.peel.next.i.i:                    ; preds = %find_optimal_param.exit.us.peel.i.i
   %i.gb = ashr i32 %i.fc, 1
@@ -332,8 +329,8 @@ find_optimal_param.exit.us.i.i:                   ; preds = %bb.g, %.lr.ph.split
 find_optimal_param_exact.exit.us.i.preheader.i:   ; preds = %.lr.ph.split.i.i
   %i.ha = shl nuw nsw i64 %wide.trip.count60.i.i, 2
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.eu, i8 0, i64 %i.ha, i1 false), !tbaa !47
-  %min.iters.check108 = icmp slt i32 %6, 4
-  br i1 %min.iters.check108, label %find_optimal_param_exact.exit.us.i.i, label %vector.ph109
+  %min.iters.check108 = icmp ult i64 %indvars.iv68.i, 2
+  br i1 %min.iters.check108, label %find_optimal_param_exact.exit.us.i.i.1, label %vector.ph109
 
 vector.ph109:                                     ; preds = %find_optimal_param_exact.exit.us.i.preheader.i
   %n.vec110 = and i64 %wide.trip.count60.i.i, 2147483644
@@ -359,22 +356,15 @@ middle.block118:                                  ; preds = %vector.body111
   %i.hh = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx119)
   br label %calc_optimal_rice_params.exit.i
 
-find_optimal_param_exact.exit.us.i.i:             ; preds = %find_optimal_param_exact.exit.us.i.preheader.i
-  %8 = load i64, ptr %i.av, align 8, !tbaa !111
-  %.1.us43.i.i = add i64 %8, %i.fb                ; 2 uses
-  %exitcond55.not.i.i = icmp slt i32 %6, 2
-  br i1 %exitcond55.not.i.i, label %calc_optimal_rice_params.exit.i, label %find_optimal_param_exact.exit.us.i.i.1
-
-find_optimal_param_exact.exit.us.i.i.1:           ; preds = %find_optimal_param_exact.exit.us.i.i
-  %i.hi = load i64, ptr %4, align 8, !tbaa !111
-  %.1.us43.i.i.1 = add i64 %i.hi, %.1.us43.i.i    ; 2 uses
-  %exitcond55.not.i.i.1 = icmp eq i64 %indvars.iv68.i, 1
-  br i1 %exitcond55.not.i.i.1, label %calc_optimal_rice_params.exit.i, label %find_optimal_param_exact.exit.us.i.i.2
-
-find_optimal_param_exact.exit.us.i.i.2:           ; preds = %find_optimal_param_exact.exit.us.i.i.1
-  %9 = load i64, ptr %5, align 8, !tbaa !111
-  %.1.us43.i.i.2 = add i64 %9, %.1.us43.i.i.1
-  br label %calc_optimal_rice_params.exit.i
+find_optimal_param_exact.exit.us.i.i.1:           ; preds = %find_optimal_param_exact.exit.us.i.preheader.i, %find_optimal_param_exact.exit.us.i.i.1
+  %indvars.iv50.i.i = phi i64 [ %.1.us43.i.i.1, %find_optimal_param_exact.exit.us.i.i.1 ], [ 0, %find_optimal_param_exact.exit.us.i.preheader.i ] ; 2 uses
+  %.040.us41.i.i = phi i64 [ %.1.us43.i.i, %find_optimal_param_exact.exit.us.i.i.1 ], [ %i.fb, %find_optimal_param_exact.exit.us.i.preheader.i ]
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv50.i.i
+  %i.hi = load i64, ptr %7, align 8, !tbaa !111
+  %.1.us43.i.i = add i64 %i.hi, %.040.us41.i.i    ; 2 uses
+  %.1.us43.i.i.1 = add nuw nsw i64 %indvars.iv50.i.i, 1 ; 2 uses
+  %exitcond55.not.i.i.1 = icmp eq i64 %.1.us43.i.i.1, %wide.trip.count60.i.i
+  br i1 %exitcond55.not.i.i.1, label %calc_optimal_rice_params.exit.i, label %find_optimal_param_exact.exit.us.i.i.1, !llvm.loop !250
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.split.i.i, %find_optimal_param_exact.exit.loopexit.i.i
   %indvars.iv.i45.i = phi i64 [ %indvars.iv.next.i46.i, %find_optimal_param_exact.exit.loopexit.i.i ], [ 0, %.lr.ph.split.i.i ] ; 4 uses
@@ -403,7 +393,7 @@ find_optimal_param_exact.exit.us.i.i.2:           ; preds = %find_optimal_param_
   %indvars.iv.next.i.i.i.1 = add nuw nsw i64 %indvars.iv.i.i.i, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %find_optimal_param_exact.exit.loopexit.i.i.unr-lcssa, label %.lr.ph.i.i.i.new, !llvm.loop !250
+  br i1 %niter.ncmp.1, label %find_optimal_param_exact.exit.loopexit.i.i.unr-lcssa, label %.lr.ph.i.i.i.new, !llvm.loop !251
 
 find_optimal_param_exact.exit.loopexit.i.i.unr-lcssa: ; preds = %.lr.ph.i.i.i.new
   br i1 %lcmp.mod.not, label %find_optimal_param_exact.exit.loopexit.i.i, label %.epil.preheader
@@ -431,11 +421,11 @@ find_optimal_param_exact.exit.loopexit.i.i:       ; preds = %find_optimal_param_
   store i32 %spec.select14.i.i.i.lcssa, ptr %i.hw, align 4, !tbaa !47
   %indvars.iv.next.i46.i = add nuw nsw i64 %indvars.iv.i45.i, 1 ; 2 uses
   %exitcond.not.i47.i = icmp eq i64 %indvars.iv.next.i46.i, %wide.trip.count60.i.i
-  br i1 %exitcond.not.i47.i, label %calc_optimal_rice_params.exit.i, label %.lr.ph.i.i.i, !llvm.loop !251
+  br i1 %exitcond.not.i47.i, label %calc_optimal_rice_params.exit.i, label %.lr.ph.i.i.i, !llvm.loop !252
 
-calc_optimal_rice_params.exit.i:                  ; preds = %find_optimal_param_exact.exit.loopexit.i.i, %find_optimal_param_exact.exit.us.i.i, %find_optimal_param_exact.exit.us.i.i.1, %find_optimal_param_exact.exit.us.i.i.2, %find_optimal_param.exit.us.i.i, %middle.block118, %find_optimal_param.exit.us.peel.i.i, %calc_sum_next.exit.i
-  %.0.lcssa.i.i = phi i64 [ %i.fb, %calc_sum_next.exit.i ], [ %.1.us.i.i, %find_optimal_param.exit.us.i.i ], [ %.1.us43.i.i.2, %find_optimal_param_exact.exit.us.i.i.2 ], [ %.1.us.peel.i.i, %find_optimal_param.exit.us.peel.i.i ], [ %i.hh, %middle.block118 ], [ %.1.us43.i.i, %find_optimal_param_exact.exit.us.i.i ], [ %.1.us43.i.i.1, %find_optimal_param_exact.exit.us.i.i.1 ], [ %.1.i.i39, %find_optimal_param_exact.exit.loopexit.i.i ] ; 2 uses
-  store i32 %i.ez, ptr %i.er, align 4, !tbaa !252
+calc_optimal_rice_params.exit.i:                  ; preds = %find_optimal_param_exact.exit.loopexit.i.i, %find_optimal_param_exact.exit.us.i.i.1, %find_optimal_param.exit.us.i.i, %middle.block118, %find_optimal_param.exit.us.peel.i.i, %calc_sum_next.exit.i
+  %.0.lcssa.i.i = phi i64 [ %i.fb, %calc_sum_next.exit.i ], [ %.1.us.i.i, %find_optimal_param.exit.us.i.i ], [ %.1.us43.i.i, %find_optimal_param_exact.exit.us.i.i.1 ], [ %.1.us.peel.i.i, %find_optimal_param.exit.us.peel.i.i ], [ %i.hh, %middle.block118 ], [ %.1.i.i39, %find_optimal_param_exact.exit.loopexit.i.i ] ; 2 uses
+  store i32 %i.ez, ptr %i.er, align 4, !tbaa !253
   %i.hx = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv68.i
   store i64 %.0.lcssa.i.i, ptr %i.hx, align 8, !tbaa !111
   %i.hy = sext i32 %.041.i to i64
@@ -446,7 +436,7 @@ calc_optimal_rice_params.exit.i:                  ; preds = %find_optimal_param_
   br i1 %or.cond.i, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %calc_optimal_rice_params.exit.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ai, ptr noundef nonnull align 4 dereferenceable(1032) %3, i64 1032, i1 false), !tbaa.struct !253
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ai, ptr noundef nonnull align 4 dereferenceable(1032) %3, i64 1032, i1 false), !tbaa.struct !254
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %calc_optimal_rice_params.exit.i
@@ -498,7 +488,7 @@ calc_sum_next.exit.i.backedge:                    ; preds = %._crit_edge.i53.i, 
   %indvars.iv.next.i51.i.1 = add nuw nsw i64 %indvars.iv.i50.i, 2 ; 2 uses
   %niter144.next.1 = add i64 %niter144, 2         ; 2 uses
   %niter144.ncmp.1 = icmp eq i64 %niter144.next.1, %unroll_iter143
-  br i1 %niter144.ncmp.1, label %._crit_edge.i53.i.unr-lcssa, label %.preheader.i.i.new, !llvm.loop !254
+  br i1 %niter144.ncmp.1, label %._crit_edge.i53.i.unr-lcssa, label %.preheader.i.i.new, !llvm.loop !255
 
 ._crit_edge.i53.i.unr-lcssa:                      ; preds = %.preheader.i.i.new
   br i1 %lcmp.mod141.not, label %._crit_edge.i53.i, label %.epil.preheader139
@@ -519,7 +509,7 @@ calc_sum_next.exit.i.backedge:                    ; preds = %._crit_edge.i53.i, 
 ._crit_edge.i53.i:                                ; preds = %._crit_edge.i53.i.unr-lcssa, %.epil.preheader139
   %indvars.iv.next22.i.i = add nuw nsw i64 %indvars.iv21.i.i, 1 ; 2 uses
   %exitcond25.not.i.i = icmp eq i64 %indvars.iv.next22.i.i, %wide.trip.count24.i.i
-  br i1 %exitcond25.not.i.i, label %calc_sum_next.exit.i.backedge, label %.preheader.i.i, !llvm.loop !255
+  br i1 %exitcond25.not.i.i, label %calc_sum_next.exit.i.backedge, label %.preheader.i.i, !llvm.loop !256
 
 calc_rice_params.exit:                            ; preds = %bb.i
   %i.jc = sext i32 %.142.i to i64
@@ -573,7 +563,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.p = add <2 x i64> %i.n, %vec.phi129          ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.q = icmp eq i64 %index.next, %n.vec
-  br i1 %i.q, label %middle.block, label %vector.body, !llvm.loop !256
+  br i1 %i.q, label %middle.block, label %vector.body, !llvm.loop !257
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <2 x i64> %i.p, %i.o
@@ -606,7 +596,7 @@ middle.block:                                     ; preds = %vector.body
   %i.z = add i64 %i.y, %.05092                    ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !257
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !258
 
 .lr.ph.preheader.i:                               ; preds = %._crit_edge
   %wide.trip.count.i = zext nneg i32 %6 to i64    ; 5 uses
@@ -631,7 +621,7 @@ vector.body166:                                   ; preds = %vector.body166, %ve
   store <2 x i32> %i.ad, ptr %i.af, align 4, !tbaa !47
   %index.next170 = add nuw i64 %index167, 4       ; 2 uses
   %i.ag = icmp eq i64 %index.next170, %n.vec165
-  br i1 %i.ag, label %middle.block171, label %vector.body166, !llvm.loop !258
+  br i1 %i.ag, label %middle.block171, label %vector.body166, !llvm.loop !259
 
 middle.block171:                                  ; preds = %vector.body166
   %cmp.n172 = icmp eq i64 %n.vec165, %wide.trip.count
@@ -707,7 +697,7 @@ vector.body184:                                   ; preds = %vector.scevcheck174
   %i.bi = add <2 x i64> %i.bg, %vec.phi187        ; 2 uses
   %index.next194 = add nuw i64 %index185, 4       ; 2 uses
   %i.bj = icmp eq i64 %index.next194, %n.vec183
-  br i1 %i.bj, label %middle.block195, label %vector.body184, !llvm.loop !259
+  br i1 %i.bj, label %middle.block195, label %vector.body184, !llvm.loop !260
 
 middle.block195:                                  ; preds = %vector.body184
   %bin.rdx196 = add <2 x i64> %i.bi, %i.bh
@@ -769,7 +759,7 @@ scalar.ph180:                                     ; preds = %scalar.ph180.prol.l
   %i.cp = add nsw i64 %i.co, %i.cf                ; 2 uses
   %indvars.iv.next61.i.1 = add nuw nsw i64 %indvars.iv60.i, 2 ; 2 uses
   %exitcond64.not.i.1 = icmp eq i64 %indvars.iv.next61.i.1, %wide.trip.count.i
-  br i1 %exitcond64.not.i.1, label %._crit_edge.us.i, label %scalar.ph180, !llvm.loop !260
+  br i1 %exitcond64.not.i.1, label %._crit_edge.us.i, label %scalar.ph180, !llvm.loop !261
 
 bb.b:                                             ; preds = %._crit_edge.us.i
   %i.cq = trunc nsw i64 %i.cv to i32
@@ -799,7 +789,7 @@ bb.b:                                             ; preds = %._crit_edge.us.i
   store i32 %i.cz, ptr %i.da, align 4, !tbaa !47
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.preheader42.i, label %.lr.ph.i, !llvm.loop !261
+  br i1 %exitcond.not.i, label %.preheader42.i, label %.lr.ph.i, !llvm.loop !262
 
 .preheader.i:                                     ; preds = %bb.c, %.preheader.preheader.i
   %indvars.iv55.i = phi i64 [ %i.an, %.preheader.preheader.i ], [ %indvars.iv.next56.i, %bb.c ] ; 3 uses
@@ -852,7 +842,7 @@ vector.body135:                                   ; preds = %vector.body135, %ve
   store <4 x i32> %wide.load138, ptr %i.dp, align 4, !tbaa !47
   %index.next139 = add nuw i64 %index136, 8       ; 2 uses
   %i.dq = icmp eq i64 %index.next139, %n.vec134
-  br i1 %i.dq, label %middle.block140, label %vector.body135, !llvm.loop !262
+  br i1 %i.dq, label %middle.block140, label %vector.body135, !llvm.loop !263
 
 middle.block140:                                  ; preds = %vector.body135
   %cmp.n141 = icmp eq i64 %n.vec134, %wide.trip.count
@@ -874,7 +864,7 @@ middle.block140:                                  ; preds = %vector.body135
   %indvars.iv.next.i66.prol = add nuw nsw i64 %indvars.iv.i65.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i64.prol.loopexit, label %.lr.ph.i64.prol, !llvm.loop !263
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i64.prol.loopexit, label %.lr.ph.i64.prol, !llvm.loop !264
 
 .lr.ph.i64.prol.loopexit:                         ; preds = %.lr.ph.i64.prol, %.lr.ph.i64.preheader
   %indvars.iv.i65.unr = phi i64 [ %indvars.iv.i65.ph, %.lr.ph.i64.preheader ], [ %indvars.iv.next.i66.prol, %.lr.ph.i64.prol ]
@@ -949,7 +939,7 @@ vector.body147:                                   ; preds = %vector.scevcheck, %
   %i.ey = add <2 x i64> %i.ew, %vec.phi150        ; 2 uses
   %index.next156 = add nuw i64 %index148, 4       ; 2 uses
   %i.ez = icmp eq i64 %index.next156, %n.vec146
-  br i1 %i.ez, label %middle.block157, label %vector.body147, !llvm.loop !264
+  br i1 %i.ez, label %middle.block157, label %vector.body147, !llvm.loop !265
 
 middle.block157:                                  ; preds = %vector.body147
   %bin.rdx158 = add <2 x i64> %i.ey, %i.ex
@@ -1014,7 +1004,7 @@ scalar.ph143:                                     ; preds = %scalar.ph143.prol.l
   %i.gi = add nsw i64 %i.gh, %i.fx                ; 2 uses
   %indvars.iv.next61.i77.1 = add nuw nsw i64 %indvars.iv60.i74, 2 ; 2 uses
   %exitcond64.not.i78.1 = icmp eq i64 %indvars.iv.next61.i77.1, %wide.trip.count.i63
-  br i1 %exitcond64.not.i78.1, label %._crit_edge.us.i79, label %scalar.ph143, !llvm.loop !265
+  br i1 %exitcond64.not.i78.1, label %._crit_edge.us.i79, label %scalar.ph143, !llvm.loop !266
 
 bb.e:                                             ; preds = %._crit_edge.us.i79
   %i.gj = trunc nsw i64 %i.gp to i32
@@ -1059,7 +1049,7 @@ bb.e:                                             ; preds = %._crit_edge.us.i79
   store i32 %i.hb, ptr %i.hc, align 4, !tbaa !47
   %indvars.iv.next.i66.3 = add nuw nsw i64 %indvars.iv.i65, 4 ; 2 uses
   %exitcond.not.i67.3 = icmp eq i64 %indvars.iv.next.i66.3, %wide.trip.count.i63
-  br i1 %exitcond.not.i67.3, label %.preheader42.i68, label %.lr.ph.i64, !llvm.loop !266
+  br i1 %exitcond.not.i67.3, label %.preheader42.i68, label %.lr.ph.i64, !llvm.loop !267
 
 .preheader.i57:                                   ; preds = %bb.f, %.preheader.preheader.i55
   %indvars.iv55.i58 = phi i64 [ %i.eb, %.preheader.preheader.i55 ], [ %indvars.iv.next56.i60, %bb.f ] ; 3 uses
@@ -1452,21 +1442,22 @@ attributes #17 = { nounwind willreturn memory(none) }
 !247 = distinct !{!247, !50, !248}
 !248 = !{!"llvm.loop.peeled.count", i32 1}
 !249 = distinct !{!249, !50, !106, !107}
-!250 = distinct !{!250, !50}
+!250 = distinct !{!250, !50, !107, !106}
 !251 = distinct !{!251, !50}
-!252 = !{!88, !6, i64 4}
-!253 = !{i64 0, i64 4, !47, i64 4, i64 4, !47, i64 8, i64 1024, !70}
-!254 = distinct !{!254, !50}
+!252 = distinct !{!252, !50}
+!253 = !{!88, !6, i64 4}
+!254 = !{i64 0, i64 4, !47, i64 4, i64 4, !47, i64 8, i64 1024, !70}
 !255 = distinct !{!255, !50}
-!256 = distinct !{!256, !50, !106, !107}
-!257 = distinct !{!257, !50, !107, !106}
-!258 = distinct !{!258, !50, !106, !107}
+!256 = distinct !{!256, !50}
+!257 = distinct !{!257, !50, !106, !107}
+!258 = distinct !{!258, !50, !107, !106}
 !259 = distinct !{!259, !50, !106, !107}
-!260 = distinct !{!260, !50, !106}
-!261 = distinct !{!261, !50, !107, !106}
-!262 = distinct !{!262, !50, !106, !107}
-!263 = distinct !{!263, !93}
-!264 = distinct !{!264, !50, !106, !107}
-!265 = distinct !{!265, !50, !106}
+!260 = distinct !{!260, !50, !106, !107}
+!261 = distinct !{!261, !50, !106}
+!262 = distinct !{!262, !50, !107, !106}
+!263 = distinct !{!263, !50, !106, !107}
+!264 = distinct !{!264, !93}
+!265 = distinct !{!265, !50, !106, !107}
 !266 = distinct !{!266, !50, !106}
+!267 = distinct !{!267, !50, !106}
 end_hunk_0

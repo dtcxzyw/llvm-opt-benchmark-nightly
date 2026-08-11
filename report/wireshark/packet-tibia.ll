@@ -204,7 +204,7 @@ bb.al:                                            ; preds = %bb.aj
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
-  %.1376 = phi i32 [ 6, %bb.ak ], [ %spec.select418, %bb.al ] ; 16 uses
+  %.1376 = phi i32 [ 6, %bb.ak ], [ %spec.select418, %bb.al ] ; 15 uses
   br i1 %i.dm, label %bb.an, label %bb.ej
 
 bb.an:                                            ; preds = %bb.am
@@ -361,8 +361,8 @@ bb.bh:                                            ; preds = %bb.bg
   br label %proto_item_set_generated.exit122.i
 
 proto_item_set_generated.exit122.i:               ; preds = %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd
-  %i.gp = load i32, ptr %i.c, align 4             ; 5 uses
-  %i.gq = add i32 %i.gp, %.1376                   ; 2 uses
+  %i.gp = load i32, ptr %i.c, align 4             ; 6 uses
+  %i.gq = add nuw i32 %i.gp, %.1376
   %i.gr = and i32 %i.gp, 7
   %.not108.i = icmp eq i32 %i.gr, 0
   br i1 %.not108.i, label %bb.bi, label %dissect_game_packet.exit
@@ -372,8 +372,8 @@ bb.bi:                                            ; preds = %proto_item_set_gene
   %i.gt = load ptr, ptr %i.gs, align 8
   %i.gu = zext i32 %i.gp to i64
   %i.gv = call noalias ptr @wmem_alloc(ptr noundef %i.gt, i64 noundef %i.gu) #19 ; 2 uses
-  %5 = icmp ult i32 %.1376, %i.gq
-  br i1 %5, label %.lr.ph.i, label %._crit_edge.i
+  %.not156.i = icmp eq i32 %i.gp, 0
+  br i1 %.not156.i, label %._crit_edge.i, label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.bi
   %i.gw = call ptr @tvb_new_child_real_data(ptr noundef %0, ptr noundef %i.gv, i32 noundef %i.gp, i32 noundef %i.gp) ; 2 uses

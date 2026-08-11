@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p
   %i.vm = add nsw i32 %i.vl, -6                   ; 3 uses
   %i.vn = shl nuw i32 1, %i.vm                    ; 2 uses
   %.not5362.not.i = icmp ne i32 %i.vm, 31
-  %i.vo = shl i32 2, %i.vm
+  %i.vo = shl nuw i32 2, %i.vm
   call void @llvm.assume(i1 %.not5362.not.i)
   %smax.i = call i32 @llvm.smax.i32(i32 %i.vn, i32 1)
   %wide.trip.count.i = zext nneg i32 %smax.i to i64
@@ -241,7 +241,7 @@ bb.s:                                             ; preds = %bb.r, %.preheader59
   br i1 %.not.us.i, label %bb.r, label %_ZN3acd21ac_decomposition_impl15has_var_supportERKN5kitty18static_truth_tableILj11ELb0EEES5_jh.exit
 
 ..critedge_crit_edge.us.i:                        ; preds = %bb.r
-  %i.wf = add i32 %.04564.us.i, %i.vo             ; 2 uses
+  %i.wf = add nuw i32 %.04564.us.i, %i.vo         ; 2 uses
   %.not54.us.i = icmp ult i32 %i.wf, %i.cb
   br i1 %.not54.us.i, label %.preheader59.us.i, label %_ZN3acd21ac_decomposition_impl15has_var_supportERKN5kitty18static_truth_tableILj11ELb0EEES5_jh.exit, !llvm.loop !315
 
@@ -644,7 +644,7 @@ bb.q:                                             ; preds = %bb.p
   %i.vh = add nsw i32 %i.vg, -6                   ; 3 uses
   %i.vi = shl nuw i32 1, %i.vh                    ; 2 uses
   %.not5362.not.i = icmp ne i32 %i.vh, 31
-  %i.vj = shl i32 2, %i.vh
+  %i.vj = shl nuw i32 2, %i.vh
   call void @llvm.assume(i1 %.not5362.not.i)
   %smax.i = call i32 @llvm.smax.i32(i32 %i.vi, i32 1)
   %wide.trip.count.i = zext nneg i32 %smax.i to i64
@@ -681,7 +681,7 @@ bb.s:                                             ; preds = %bb.r, %.preheader59
   br i1 %.not.us.i, label %bb.r, label %_ZN3acd21ac_decomposition_impl15has_var_supportERKN5kitty18static_truth_tableILj11ELb0EEES5_jh.exit
 
 ..critedge_crit_edge.us.i:                        ; preds = %bb.r
-  %i.wa = add i32 %.04564.us.i, %i.vj             ; 2 uses
+  %i.wa = add nuw i32 %.04564.us.i, %i.vj         ; 2 uses
   %.not54.us.i = icmp ult i32 %i.wa, %i.bx
   br i1 %.not54.us.i, label %.preheader59.us.i, label %_ZN3acd21ac_decomposition_impl15has_var_supportERKN5kitty18static_truth_tableILj11ELb0EEES5_jh.exit, !llvm.loop !315
 

@@ -205,10 +205,9 @@ bb.a:
   br i1 %.not13, label %._crit_edge.split, label %.lr.ph.preheader.i.preheader
 
 .lr.ph.preheader.i.preheader:                     ; preds = %bb.a
-  %i.a = shl nuw i32 1, %1                        ; 2 uses
+  %i.a = shl nuw nsw i32 1, %1                    ; 2 uses
   %wide.trip.count.i = zext nneg i32 %i.a to i64  ; 2 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %wide.trip.count = zext nneg i32 %i.a to i64
   %xtraiter = and i64 %wide.trip.count.i, 1
   %i.b = icmp eq i32 %1, 0
   %unroll_iter = and i64 %wide.trip.count.i, 2147483646

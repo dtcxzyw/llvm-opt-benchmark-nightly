@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.q
   br label %_ZN9grpc_coremiENS_9TimestampES0_.exit.i.i
 
 .thread.i.i.i:                                    ; preds = %bb.r, %bb.q
-  %i.az = sub i64 0, %i.l                         ; 2 uses
+  %i.az = sub nsw i64 0, %i.l                     ; 2 uses
   %i.ba = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i, 9223372036854775807
   %i.bb = icmp eq i64 %i.l, -9223372036854775807
   %or.cond.i.i.i.i = or i1 %i.bb, %i.ba
@@ -607,7 +607,7 @@ bb.p:                                             ; preds = %_ZN9grpc_core9Times
   br i1 %.not.i.i.i.i, label %_ZN9grpc_coremiENS_9TimestampES0_.exit.thread.i.i.i, label %_ZN9grpc_core8channelz15ZTraceCollectorINS_29http2_ztrace_collector_detail6ConfigEJNS_11H2DataTraceILb0EEENS_13H2HeaderTraceILb0EEENS_16H2RstStreamTraceILb0EEENS_15H2SettingsTraceILb0EEENS_11H2PingTraceILb0EEENS_13H2GoAwayTraceILb0EEENS_19H2WindowUpdateTraceILb0EEENS_15H2SecurityTraceILb0EEENS4_ILb1EEENS6_ILb1EEENS8_ILb1EEENSA_ILb1EEENSC_ILb1EEENSE_ILb1EEENSG_ILb1EEENSI_ILb1EEENS_19H2UnknownFrameTraceENS_18H2FlowControlStallENS_17H2BeginWriteCycleENS_15H2EndWriteCycleENS_20H2BeginEndpointWriteENS_17H2TcpMetricsTraceEEE8IsActiveEv.exit.i.i.i
 
 .thread.i.i.i.i:                                  ; preds = %bb.o, %_ZN9grpc_core9Timestamp3NowEv.exit.i.i.i
-  %i.ba = sub i64 0, %.sroa.09.0.copyload.i.i.i   ; 2 uses
+  %i.ba = sub nsw i64 0, %.sroa.09.0.copyload.i.i.i ; 2 uses
   %i.bb = icmp eq i64 %i.ay, 9223372036854775807
   %i.bc = icmp eq i64 %.sroa.09.0.copyload.i.i.i, -9223372036854775807
   %or.cond.i.i.i.i.i = or i1 %i.bb, %i.bc
@@ -1010,7 +1010,7 @@ bb.u:                                             ; preds = %.noexc8.i
   br label %_ZN9grpc_coremiENS_9TimestampES0_.exit.i.i
 
 .thread.i.i.i:                                    ; preds = %bb.t, %.noexc8.i
-  %i.bj = sub i64 0, %i.bi                        ; 2 uses
+  %i.bj = sub nsw i64 0, %i.bi                    ; 2 uses
   %i.bk = icmp eq i64 %i.ax, 9223372036854775807
   %i.bl = icmp eq i64 %i.bi, -9223372036854775807
   %or.cond.i.i.i.i = or i1 %i.bk, %i.bl

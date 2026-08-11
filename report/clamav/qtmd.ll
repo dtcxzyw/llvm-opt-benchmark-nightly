@@ -15,7 +15,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define ptr @qtmd_init(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = shl nuw i32 1, %3                        ; 2 uses
+  %i.a = shl nuw nsw i32 1, %3                    ; 2 uses
   %.not = icmp eq ptr %0, null
   %i.b = add i32 %3, -22
   %or.cond = icmp ult i32 %i.b, -12
@@ -37,7 +37,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.i = load ptr, ptr %i.f, align 8, !tbaa !8
-  %i.j = zext i32 %i.a to i64
+  %i.j = zext nneg i32 %i.a to i64
   %i.k = tail call ptr %i.i(ptr noundef nonnull %0, i64 noundef %i.j) #4
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
   store ptr %i.k, ptr %i.l, align 8, !tbaa !11

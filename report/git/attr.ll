@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i, label %read_attr_from_array.exit.i.i, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
-  %i.v = load i32, ptr %i.s, align 8, !tbaa !70   ; 3 uses
-  %i.w = add i32 %i.v, 1                          ; 3 uses
+  %i.v = load i32, ptr %i.s, align 8, !tbaa !70   ; 4 uses
+  %i.w = add nuw i32 %i.v, 1                      ; 2 uses
   %i.x = zext i32 %i.v to i64                     ; 2 uses
   %i.y = icmp eq i32 %i.v, -1
   br i1 %i.y, label %bb.g, label %bb.h
@@ -216,8 +216,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.z = load i32, ptr %i.t, align 4, !tbaa !112  ; 2 uses
-  %6 = icmp ugt i32 %i.w, %i.z
-  br i1 %6, label %st_mult.exit.i.i.i.i, label %._crit_edge.i.i.i.i
+  %.not28.i.i.i.i = icmp ult i32 %i.v, %i.z
+  br i1 %.not28.i.i.i.i, label %._crit_edge.i.i.i.i, label %st_mult.exit.i.i.i.i
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.h
   %.pre.i.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8, !tbaa !71
@@ -620,20 +620,16 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %.not.i.peel, label %handle_attr_line.exit.peel, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.z = load i32, ptr %i.s, align 8, !tbaa !70   ; 3 uses
-  %i.aa = add i32 %i.z, 1                         ; 3 uses
+  %i.z = load i32, ptr %i.s, align 8, !tbaa !70   ; 4 uses
+  %i.aa = add nuw i32 %i.z, 1                     ; 2 uses
   %i.ab = zext i32 %i.z to i64                    ; 2 uses
   %i.ac = icmp eq i32 %i.z, -1
   br i1 %i.ac, label %.loopexit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.ad = load i32, ptr %i.t, align 4, !tbaa !112 ; 2 uses
-  %4 = icmp ugt i32 %i.aa, %i.ad
-  br i1 %4, label %st_mult.exit.i.peel, label %._crit_edge.i.peel
-
-._crit_edge.i.peel:                               ; preds = %bb.q
-  %.pre.i.peel = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !71
-  br label %bb.r
+  %.not28.i.peel = icmp ult i32 %i.z, %i.ad
+  br i1 %.not28.i.peel, label %._crit_edge.i.peel, label %st_mult.exit.i.peel
 
 st_mult.exit.i.peel:                              ; preds = %bb.q
   %i.ae = mul i32 %i.ad, 3
@@ -650,7 +646,11 @@ st_mult.exit.i.peel:                              ; preds = %bb.q
   %.pre29.i.peel = zext i32 %.pre28.i.peel to i64
   br label %bb.r
 
-bb.r:                                             ; preds = %st_mult.exit.i.peel, %._crit_edge.i.peel
+._crit_edge.i.peel:                               ; preds = %bb.q
+  %.pre.i.peel = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !71
+  br label %bb.r
+
+bb.r:                                             ; preds = %._crit_edge.i.peel, %st_mult.exit.i.peel
   %.pre-phi.i.peel = phi i64 [ %i.ab, %._crit_edge.i.peel ], [ %.pre29.i.peel, %st_mult.exit.i.peel ]
   %i.al = phi ptr [ %.pre.i.peel, %._crit_edge.i.peel ], [ %i.ak, %st_mult.exit.i.peel ]
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %.pre-phi.i.peel
@@ -675,8 +675,8 @@ handle_attr_line.exit.peel:                       ; preds = %bb.r, %bb.o
   br i1 %.not.i, label %handle_attr_line.exit, label %bb.s
 
 bb.s:                                             ; preds = %.peel.next
-  %i.as = load i32, ptr %i.s, align 8, !tbaa !70  ; 3 uses
-  %i.at = add i32 %i.as, 1                        ; 3 uses
+  %i.as = load i32, ptr %i.s, align 8, !tbaa !70  ; 4 uses
+  %i.at = add nuw i32 %i.as, 1                    ; 2 uses
   %i.au = zext i32 %i.as to i64                   ; 2 uses
   %i.av = icmp eq i32 %i.as, -1
   br i1 %i.av, label %.loopexit, label %bb.t
@@ -687,8 +687,8 @@ bb.s:                                             ; preds = %.peel.next
 
 bb.t:                                             ; preds = %bb.s
   %i.aw = load i32, ptr %i.t, align 4, !tbaa !112 ; 2 uses
-  %5 = icmp ugt i32 %i.at, %i.aw
-  br i1 %5, label %st_mult.exit.i, label %._crit_edge.i
+  %.not28.i = icmp ult i32 %i.as, %i.aw
+  br i1 %.not28.i, label %._crit_edge.i, label %st_mult.exit.i
 
 ._crit_edge.i:                                    ; preds = %bb.t
   %.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !71
@@ -917,8 +917,8 @@ bb.e:                                             ; preds = %.lr.ph, %handle_att
   br i1 %.not.i, label %handle_attr_line.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.m = load i32, ptr %i.f, align 8, !tbaa !70   ; 3 uses
-  %i.n = add i32 %i.m, 1                          ; 3 uses
+  %i.m = load i32, ptr %i.f, align 8, !tbaa !70   ; 4 uses
+  %i.n = add nuw i32 %i.m, 1                      ; 2 uses
   %i.o = zext i32 %i.m to i64                     ; 2 uses
   %i.p = icmp eq i32 %i.m, -1
   br i1 %i.p, label %bb.g, label %bb.h
@@ -929,8 +929,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.q = load i32, ptr %i.g, align 4, !tbaa !112  ; 2 uses
-  %4 = icmp ugt i32 %i.n, %i.q
-  br i1 %4, label %st_mult.exit.i, label %._crit_edge.i
+  %.not28.i = icmp ult i32 %i.m, %i.q
+  br i1 %.not28.i, label %._crit_edge.i, label %st_mult.exit.i
 
 ._crit_edge.i:                                    ; preds = %bb.h
   %.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !71

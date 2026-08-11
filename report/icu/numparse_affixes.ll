@@ -203,7 +203,7 @@ bb.a:
   br i1 %.not, label %_ZN6icu_7815MaybeStackArrayIPKNS_8numparse4impl18NumberParseMatcherELi3EE6resizeEii.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = shl nsw i32 %i.b, 1                      ; 3 uses
+  %i.f = shl nuw nsw i32 %i.b, 1                  ; 3 uses
   %i.g = icmp sgt i32 %i.b, 0
   br i1 %i.g, label %bb.c, label %_ZN6icu_7815MaybeStackArrayIPKNS_8numparse4impl18NumberParseMatcherELi3EE6resizeEii.exit
 
@@ -260,7 +260,7 @@ bb.a:
   br i1 %.not.i, label %_ZN6icu_788numparse4impl26AffixPatternMatcherBuilder10addMatcherERNS1_18NumberParseMatcherE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = shl nsw i32 %i.b, 1                      ; 3 uses
+  %i.f = shl nuw nsw i32 %i.b, 1                  ; 3 uses
   %i.g = icmp sgt i32 %i.b, 0
   br i1 %i.g, label %bb.c, label %_ZN6icu_788numparse4impl26AffixPatternMatcherBuilder10addMatcherERNS1_18NumberParseMatcherE.exit
 
@@ -663,7 +663,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
   %i.g = load i32, ptr %i.f, align 4
   %i.h = select i1 %i.c, i32 %i.g, i32 %i.e       ; 2 uses
-  %i.i = add nsw i32 %i.h, 1                      ; 2 uses
+  %i.i = add nuw nsw i32 %i.h, 1                  ; 2 uses
   %i.j = load i32, ptr %2, align 4, !tbaa !66
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 14
   store ptr %i.k, ptr %0, align 8, !tbaa !87

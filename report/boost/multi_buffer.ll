@@ -203,7 +203,7 @@ _ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_
   %i.bf = phi i64 [ %i.b, %.critedge.thread ], [ %.pre110, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit._ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread88_crit_edge ] ; 3 uses
   %.198 = phi i64 [ %.1100, %.critedge.thread ], [ %.197, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit._ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread88_crit_edge ] ; 2 uses
   %.12395 = phi i64 [ %.123101, %.critedge.thread ], [ %.12394, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit._ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread88_crit_edge ]
-  %i.bg = shl i64 %i.bf, 1
+  %i.bg = shl nuw i64 %i.bf, 1
   %i.bh = sub i64 %i.be, %.12395                  ; 2 uses
   %.sroa.speculated50 = call i64 @llvm.umax.i64(i64 %i.bg, i64 %.198)
   %i.bi = call i64 @llvm.umax.i64(i64 %.sroa.speculated50, i64 512)
@@ -606,7 +606,7 @@ _ZN5boost5beast18basic_multi_bufferINS0_4test14test_allocatorIcLb1ELb1ELb1ELb1EL
   br i1 %.not3290, label %bb.t, label %bb.q
 
 bb.q:                                             ; preds = %_ZN5boost5beast18basic_multi_bufferINS0_4test14test_allocatorIcLb1ELb1ELb1ELb1ELb1EEEE7destroyERNS_9intrusive9list_implINS6_8bhtraitsINS5_7elementENS6_16list_node_traitsIPvEELNS6_14link_mode_typeE0ENS6_7dft_tagELj1EEEmLb0EvEE.exit
-  %i.be = shl i64 %.pre105, 1
+  %i.be = shl nuw i64 %.pre105, 1
   %i.bf = load i64, ptr %i.c, align 8, !tbaa !349
   %i.bg = sub i64 %i.bf, %.12492                  ; 2 uses
   %.sroa.speculated50 = call i64 @llvm.umax.i64(i64 %i.be, i64 %.194)
@@ -1009,7 +1009,7 @@ _ZN5boost5beast18basic_multi_bufferINS0_4test14test_allocatorIcLb0ELb1ELb1ELb1EL
   br i1 %.not3290, label %bb.t, label %bb.q
 
 bb.q:                                             ; preds = %_ZN5boost5beast18basic_multi_bufferINS0_4test14test_allocatorIcLb0ELb1ELb1ELb1ELb1EEEE7destroyERNS_9intrusive9list_implINS6_8bhtraitsINS5_7elementENS6_16list_node_traitsIPvEELNS6_14link_mode_typeE0ENS6_7dft_tagELj1EEEmLb0EvEE.exit
-  %i.be = shl i64 %.pre105, 1
+  %i.be = shl nuw i64 %.pre105, 1
   %i.bf = load i64, ptr %i.c, align 8, !tbaa !317
   %i.bg = sub i64 %i.bf, %.12492                  ; 2 uses
   %.sroa.speculated50 = call i64 @llvm.umax.i64(i64 %i.be, i64 %.194)
@@ -1412,7 +1412,7 @@ _ZN5boost5beast18basic_multi_bufferINS0_4test14test_allocatorIcLb0ELb1ELb0ELb1EL
   br i1 %.not3187, label %bb.t, label %bb.q
 
 bb.q:                                             ; preds = %_ZN5boost5beast18basic_multi_bufferINS0_4test14test_allocatorIcLb0ELb1ELb0ELb1ELb1EEEE7destroyERNS_9intrusive9list_implINS6_8bhtraitsINS5_7elementENS6_16list_node_traitsIPvEELNS6_14link_mode_typeE0ENS6_7dft_tagELj1EEEmLb0EvEE.exit
-  %i.be = shl i64 %.pre102, 1
+  %i.be = shl nuw i64 %.pre102, 1
   %i.bf = load i64, ptr %i.c, align 8, !tbaa !698
   %i.bg = sub i64 %i.bf, %.12389                  ; 2 uses
   %.sroa.speculated47 = call i64 @llvm.umax.i64(i64 %i.be, i64 %.191)
@@ -1815,7 +1815,7 @@ _ZN5boost5beast18basic_multi_bufferINS0_4test14test_allocatorIcLb1ELb1ELb0ELb1EL
   br i1 %.not3187, label %bb.t, label %bb.q
 
 bb.q:                                             ; preds = %_ZN5boost5beast18basic_multi_bufferINS0_4test14test_allocatorIcLb1ELb1ELb0ELb1ELb1EEEE7destroyERNS_9intrusive9list_implINS6_8bhtraitsINS5_7elementENS6_16list_node_traitsIPvEELNS6_14link_mode_typeE0ENS6_7dft_tagELj1EEEmLb0EvEE.exit
-  %i.be = shl i64 %.pre102, 1
+  %i.be = shl nuw i64 %.pre102, 1
   %i.bf = load i64, ptr %i.c, align 8, !tbaa !804
   %i.bg = sub i64 %i.bf, %.12389                  ; 2 uses
   %.sroa.speculated47 = call i64 @llvm.umax.i64(i64 %i.be, i64 %.191)
@@ -2218,7 +2218,7 @@ _ZN5boost5beast18basic_multi_bufferINS0_4test14test_allocatorIcLb1ELb0ELb1ELb1EL
   br i1 %.not3187, label %bb.t, label %bb.q
 
 bb.q:                                             ; preds = %_ZN5boost5beast18basic_multi_bufferINS0_4test14test_allocatorIcLb1ELb0ELb1ELb1ELb1EEEE7destroyERNS_9intrusive9list_implINS6_8bhtraitsINS5_7elementENS6_16list_node_traitsIPvEELNS6_14link_mode_typeE0ENS6_7dft_tagELj1EEEmLb0EvEE.exit
-  %i.be = shl i64 %.pre102, 1
+  %i.be = shl nuw i64 %.pre102, 1
   %i.bf = load i64, ptr %i.c, align 8, !tbaa !958
   %i.bg = sub i64 %i.bf, %.12389                  ; 2 uses
   %.sroa.speculated47 = call i64 @llvm.umax.i64(i64 %i.be, i64 %.191)
@@ -2621,7 +2621,7 @@ _ZN5boost5beast18basic_multi_bufferINS0_4test14test_allocatorIcLb1ELb1ELb1ELb0EL
   br i1 %.not3187, label %bb.t, label %bb.q
 
 bb.q:                                             ; preds = %_ZN5boost5beast18basic_multi_bufferINS0_4test14test_allocatorIcLb1ELb1ELb1ELb0ELb1EEEE7destroyERNS_9intrusive9list_implINS6_8bhtraitsINS5_7elementENS6_16list_node_traitsIPvEELNS6_14link_mode_typeE0ENS6_7dft_tagELj1EEEmLb0EvEE.exit
-  %i.be = shl i64 %.pre102, 1
+  %i.be = shl nuw i64 %.pre102, 1
   %i.bf = load i64, ptr %i.c, align 8, !tbaa !2814
   %i.bg = sub i64 %i.bf, %.12389                  ; 2 uses
   %.sroa.speculated47 = call i64 @llvm.umax.i64(i64 %i.be, i64 %.191)

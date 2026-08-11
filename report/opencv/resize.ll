@@ -204,7 +204,7 @@ _ZN2cv10AutoBufferIiLm264EED2Ev.exit38:           ; preds = %._crit_edge80, %bb.
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNK2cv13HResizeLinearIhisLi2048ENS_12HResizeNoVecEEclEPPKhPPiiPKiPKsiiiii(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #4 comdat align 2 {
 bb.a:
-  %i.a = add i32 %3, -2                           ; 3 uses
+  %i.a = add nsw i32 %3, -2                       ; 3 uses
   %.not102 = icmp slt i32 %3, 2
   br i1 %.not102, label %.preheader97, label %.lr.ph105
 
@@ -607,7 +607,7 @@ _ZN2cv10AutoBufferIfLm264EED2Ev.exit38:           ; preds = %._crit_edge80, %bb.
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNK2cv13HResizeLinearItffLi1ENS_12HResizeNoVecEEclEPPKtPPfiPKiPKfiiiii(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #4 comdat align 2 {
 bb.a:
-  %i.a = add i32 %3, -2                           ; 3 uses
+  %i.a = add nsw i32 %3, -2                       ; 3 uses
   %.not102 = icmp slt i32 %3, 2
   br i1 %.not102, label %.preheader97, label %.lr.ph105
 
@@ -1010,7 +1010,7 @@ _ZN2cv10AutoBufferIfLm264EED2Ev.exit38:           ; preds = %._crit_edge80, %bb.
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNK2cv13HResizeLinearIsffLi1ENS_12HResizeNoVecEEclEPPKsPPfiPKiPKfiiiii(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #4 comdat align 2 {
 bb.a:
-  %i.a = add i32 %3, -2                           ; 3 uses
+  %i.a = add nsw i32 %3, -2                       ; 3 uses
   %.not102 = icmp slt i32 %3, 2
   br i1 %.not102, label %.preheader97, label %.lr.ph105
 
@@ -1413,7 +1413,7 @@ _ZN2cv10AutoBufferIfLm264EED2Ev.exit38:           ; preds = %._crit_edge80, %bb.
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNK2cv13HResizeLinearIfffLi1ENS_12HResizeNoVecEEclEPPKfPPfiPKiS4_iiiii(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #4 comdat align 2 {
 bb.a:
-  %i.a = add i32 %3, -2                           ; 3 uses
+  %i.a = add nsw i32 %3, -2                       ; 3 uses
   %.not102 = icmp slt i32 %3, 2
   br i1 %.not102, label %.preheader97, label %.lr.ph105
 
@@ -1816,7 +1816,7 @@ _ZN2cv10AutoBufferIdLm136EED2Ev.exit38:           ; preds = %._crit_edge80, %bb.
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNK2cv13HResizeLinearIddfLi1ENS_12HResizeNoVecEEclEPPKdPPdiPKiPKfiiiii(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #4 comdat align 2 {
 bb.a:
-  %i.a = add i32 %3, -2                           ; 3 uses
+  %i.a = add nsw i32 %3, -2                       ; 3 uses
   %.not102 = icmp slt i32 %3, 2
   br i1 %.not102, label %.preheader97, label %.lr.ph105
 

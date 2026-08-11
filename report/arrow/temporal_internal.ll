@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.l
   %i.y = add i8 %i.x, -48                         ; 2 uses
   %narrow.i.i = mul nuw nsw i8 %i.u, 10
   %i.z = icmp ult i8 %i.y, 10
-  %i.aa = add i8 %i.y, %narrow.i.i                ; 2 uses
+  %i.aa = add nuw nsw i8 %i.y, %narrow.i.i        ; 2 uses
   br i1 %i.z, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i, label %_ZN5arrow8internal6detailL10ParseHH_MMINSt6chrono8durationIlSt5ratioILl60ELl1EEEEEEbPKcPT_.exit.thread, !prof !43
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i:  ; preds = %bb.m
@@ -220,7 +220,7 @@ bb.n:                                             ; preds = %_ZN5arrow8internal1
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit11.i: ; preds = %bb.n
   %narrow.i10.i = mul nuw nsw i8 %i.ad, 10
-  %i.aj = add nuw i8 %i.ah, %narrow.i10.i         ; 2 uses
+  %i.aj = add nuw nsw i8 %i.ah, %narrow.i10.i     ; 2 uses
   %i.ak = icmp ugt i8 %i.aa, 23
   %i.al = icmp ugt i8 %i.aj, 59
   %or.cond8.i = select i1 %i.ak, i1 true, i1 %i.al, !prof !44
@@ -239,7 +239,7 @@ bb.o:                                             ; preds = %_ZN5arrow8internal6
   %i.as = add i8 %i.ar, -48                       ; 2 uses
   %narrow.i.i17 = mul nuw nsw i8 %i.ao, 10
   %i.at = icmp ult i8 %i.as, 10
-  %i.au = add i8 %i.as, %narrow.i.i17             ; 2 uses
+  %i.au = add nuw nsw i8 %i.as, %narrow.i.i17     ; 2 uses
   br i1 %i.at, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i18, label %_ZN5arrow8internal6detailL9ParseHHMMINSt6chrono8durationIlSt5ratioILl60ELl1EEEEEEbPKcPT_.exit.thread, !prof !43
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i18: ; preds = %bb.o
@@ -258,7 +258,7 @@ bb.p:                                             ; preds = %_ZN5arrow8internal1
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit9.i: ; preds = %bb.p
   %narrow.i8.i = mul nuw nsw i8 %i.ax, 10
-  %i.bd = add nuw i8 %i.bb, %narrow.i8.i          ; 2 uses
+  %i.bd = add nuw nsw i8 %i.bb, %narrow.i8.i      ; 2 uses
   %i.be = icmp ugt i8 %i.au, 23
   %i.bf = icmp ugt i8 %i.bd, 59
   %or.cond6.i = select i1 %i.be, i1 true, i1 %i.bf, !prof !44

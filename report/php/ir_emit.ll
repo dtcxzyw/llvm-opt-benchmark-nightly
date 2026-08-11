@@ -204,8 +204,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !59   ; 4 uses
-  %i.p = add i64 %i.o, 200                        ; 2 uses
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !59   ; 5 uses
+  %i.p = add nuw i64 %i.o, 200
   %i.q = icmp ult i64 %i.o, -200
   br i1 %i.q, label %bb.c, label %..critedge_crit_edge
 
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.critedge
 
 bb.c:                                             ; preds = %bb.b
-  %i.r = icmp ult i64 %i.p, 67108865
+  %i.r = icmp ult i64 %i.o, 67108665
   br i1 %i.r, label %bb.d, label %.thread
 
 .thread:                                          ; preds = %bb.c

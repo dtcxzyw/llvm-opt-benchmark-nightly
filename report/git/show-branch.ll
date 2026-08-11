@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %bb.ap
 .lr.ph308:                                        ; preds = %bb.az
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #16
   %i.nq = trunc nuw nsw i64 %indvars.iv.next357 to i32
-  %i.nr = shl nuw i32 4, %i.nq
+  %i.nr = shl nuw nsw i32 4, %i.nq
   %exitcond = icmp eq i64 %indvars.iv.next357, 27
   br i1 %exitcond, label %bb.ar, label %bb.as, !llvm.loop !50
 
@@ -258,8 +258,8 @@ bb.ax:                                            ; preds = %bb.aw
 
 mark_seen.exit:                                   ; preds = %bb.aw, %bb.ax
   %i.ol = phi i64 [ %i.oi, %bb.aw ], [ %.pre374, %bb.ax ]
-  %i.om = zext i32 %i.nt to i64
-  %i.on = shl nuw i64 %i.om, 32
+  %i.om = zext nneg i32 %i.nt to i64
+  %i.on = shl nuw nsw i64 %i.om, 32
   %i.oo = and i64 %i.on, 2305842992033824768
   %i.op = or i64 %i.ol, %i.oo                     ; 2 uses
   store i64 %i.op, ptr %i.ob, align 8

@@ -201,19 +201,19 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.w = load i8, ptr %i.v, align 8, !range !119, !noundef !3 ; 2 uses
   %i.x = icmp eq i8 %i.w, 0                       ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.z = load i64, ptr %i.y, align 8, !noundef !3 ; 3 uses
+  %i.z = load i64, ptr %i.y, align 8, !noundef !3 ; 4 uses
   br i1 %i.x, label %bb.e, label %bb.j
 
 default.unreachable374:                           ; preds = %bb.ao
   unreachable
 
 bb.e:                                             ; preds = %bb.d
-  %i.aa = shl i64 %i.z, 1                         ; 2 uses
+  %i.aa = shl nuw i64 %i.z, 1
   %i.ab = icmp slt i64 %i.z, 0
   br i1 %i.ab, label %bb.g, label %bb.f, !prof !4
 
 bb.f:                                             ; preds = %bb.e
-  %i.ac = icmp ult i64 %i.aa, 4
+  %i.ac = icmp samesign ult i64 %i.z, 2
   br i1 %i.ac, label %bb.i, label %bb.h, !prof !4
 
 bb.g:                                             ; preds = %bb.e
