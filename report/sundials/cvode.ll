@@ -204,14 +204,12 @@ scalar.ph813.2:                                   ; preds = %scalar.ph813.1
   br i1 %.not79.i.i.i, label %.lr.ph103.preheader.i.i.i, label %.lr.ph100.i.i.i.preheader
 
 .lr.ph100.i.i.i.preheader:                        ; preds = %._crit_edge96.i.i.i
-  %i.adj = call i64 @llvm.smin.i64(i64 %.pre-phi.i.i.i, i64 1)
-  %5 = sub nsw i64 %.pre-phi.i.i.i, %i.adj        ; 2 uses
-  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
-  %min.iters.check792 = icmp ult i64 %5, 3
+  %i.adj = call i64 @llvm.smax.i64(i64 %.pre-phi.i.i.i, i64 1) ; 2 uses
+  %min.iters.check792 = icmp samesign ult i64 %.pre-phi.i.i.i, 4
   br i1 %min.iters.check792, label %.lr.ph100.i.i.i.preheader844, label %vector.ph793
 
 vector.ph793:                                     ; preds = %.lr.ph100.i.i.i.preheader
-  %n.vec794 = and i64 %6, 9223372036854775804     ; 3 uses
+  %n.vec794 = and i64 %i.adj, 2147483644          ; 3 uses
   %i.adk = sub nsw i64 %.pre-phi.i.i.i, %n.vec794
   %broadcast.splatinsert795 = insertelement <2 x double> poison, double %i.adh, i64 0 ; 2 uses
   %i.adl = shufflevector <2 x double> %broadcast.splatinsert795, <2 x double> poison, <2 x i32> zeroinitializer
@@ -242,7 +240,7 @@ vector.body797:                                   ; preds = %vector.body797, %ve
   br i1 %i.adw, label %middle.block810, label %vector.body797, !llvm.loop !157
 
 middle.block810:                                  ; preds = %vector.body797
-  %cmp.n811 = icmp eq i64 %6, %n.vec794
+  %cmp.n811 = icmp eq i64 %i.adj, %n.vec794
   br i1 %cmp.n811, label %.lr.ph103.preheader.i.i.i, label %.lr.ph100.i.i.i.preheader844
 
 .lr.ph100.i.i.i.preheader844:                     ; preds = %.lr.ph100.i.i.i.preheader, %middle.block810
@@ -263,14 +261,12 @@ middle.block810:                                  ; preds = %vector.body797
   br i1 %i.aed, label %.lr.ph100.i.i.i, label %.lr.ph103.preheader.i.i.i, !llvm.loop !158
 
 .lr.ph103.preheader.i.i.i:                        ; preds = %.lr.ph100.i.i.i, %middle.block810, %._crit_edge96.i.i.i
-  %i.aee = call i64 @llvm.smin.i64(i64 %.pre-phi.i.i.i, i64 1)
-  %7 = sub nsw i64 %.pre-phi.i.i.i, %i.aee        ; 2 uses
-  %8 = add nuw nsw i64 %7, 1                      ; 2 uses
-  %min.iters.check770 = icmp ult i64 %7, 3
+  %i.aee = call i64 @llvm.smax.i64(i64 %.pre-phi.i.i.i, i64 1) ; 2 uses
+  %min.iters.check770 = icmp samesign ult i64 %.pre-phi.i.i.i, 4
   br i1 %min.iters.check770, label %.lr.ph103.i.i.i.preheader, label %vector.ph771
 
 vector.ph771:                                     ; preds = %.lr.ph103.preheader.i.i.i
-  %n.vec772 = and i64 %8, 9223372036854775804     ; 3 uses
+  %n.vec772 = and i64 %i.aee, 2147483644          ; 3 uses
   %i.aef = sub nsw i64 %.pre-phi.i.i.i, %n.vec772
   %broadcast.splatinsert773 = insertelement <2 x double> poison, double %i.adc, i64 0 ; 2 uses
   %i.aeg = shufflevector <2 x double> %broadcast.splatinsert773, <2 x double> poison, <2 x i32> zeroinitializer
@@ -298,7 +294,7 @@ vector.body775:                                   ; preds = %vector.body775, %ve
   br i1 %i.aeo, label %middle.block788, label %vector.body775, !llvm.loop !159
 
 middle.block788:                                  ; preds = %vector.body775
-  %cmp.n789 = icmp eq i64 %8, %n.vec772
+  %cmp.n789 = icmp eq i64 %i.aee, %n.vec772
   br i1 %cmp.n789, label %.loopexit.i.i.i, label %.lr.ph103.i.i.i.preheader
 
 .lr.ph103.i.i.i.preheader:                        ; preds = %.lr.ph103.preheader.i.i.i, %middle.block788
@@ -701,7 +697,7 @@ declare i32 @llvm.vector.reduce.mul.v4i32(<4 x i32>) #6
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #6
+declare i64 @llvm.smax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #6

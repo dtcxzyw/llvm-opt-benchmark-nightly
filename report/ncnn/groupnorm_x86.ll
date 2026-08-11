@@ -202,8 +202,9 @@ bb.a:
   %unroll_iter = and i32 %i.i, 2147483644
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   %lcmp.mod392 = icmp ne i32 %xtraiter, 0
-  %i.k = and i32 %5, 3
-  %i.l = add nsw i32 %i.k, -1                     ; 2 uses
+  %i.k = and i32 %5, 2147483644
+  %8 = xor i32 %i.k, -1
+  %i.l = add nsw i32 %5, %8                       ; 2 uses
   %i.m = zext i32 %i.l to i64
   %i.n = add nuw nsw i64 %i.m, 1                  ; 2 uses
   %min.iters.check = icmp ult i32 %i.l, 7
@@ -606,8 +607,9 @@ bb.a:
   %i.k = and i32 %i.g, 4
   %lcmp.mod.not.not = icmp eq i32 %i.k, 0
   %lcmp.mod398 = trunc i32 %i.i to i1
-  %i.l = and i32 %5, 3
-  %i.m = add nsw i32 %i.l, -1                     ; 2 uses
+  %i.l = and i32 %5, 2147483644
+  %8 = xor i32 %i.l, -1
+  %i.m = add nsw i32 %5, %8                       ; 2 uses
   %i.n = zext i32 %i.m to i64
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check = icmp ult i32 %i.m, 7

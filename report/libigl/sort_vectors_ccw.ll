@@ -204,11 +204,10 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %i.ah, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader, label %_ZN5Eigen5BlockINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi1ELin1ELb0EEaSINS0_IKS2_Li1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit
 
 .lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader:         ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i
-  %4 = lshr i64 %i.w, 1
-  %5 = mul nuw nsw i64 %4, -2
-  %i.ai = sub nsw i64 %5, %.0.i.i.i.i.i.i.i.i.i.i.i
-  %6 = add nsw i64 %i.ai, 3                       ; 3 uses
-  %min.iters.check = icmp ult i64 %6, 8
+  %4 = and i64 %i.w, 2
+  %5 = xor i64 %.0.i.i.i.i.i.i.i.i.i.i.i, 3
+  %i.ai = sub nsw i64 %5, %4                      ; 3 uses
+  %min.iters.check = icmp ult i64 %i.ai, 8
   br i1 %min.iters.check, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader27, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader
@@ -220,7 +219,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i17.i.i.i.i.
   br i1 %diff.check, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader27, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %6, -4                         ; 3 uses
+  %n.vec = and i64 %i.ai, -4                      ; 3 uses
   %i.an = or disjoint i64 %i.y, %n.vec
   br label %vector.body
 
@@ -240,7 +239,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !110
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %6, %n.vec
+  %cmp.n = icmp eq i64 %i.ai, %n.vec
   br i1 %cmp.n, label %_ZN5Eigen5BlockINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi1ELin1ELb0EEaSINS0_IKS2_Li1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader27
 
 .lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader27:       ; preds = %vector.memcheck, %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader, %middle.block

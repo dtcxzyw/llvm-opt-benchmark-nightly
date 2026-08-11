@@ -203,8 +203,8 @@ middle.block169:                                  ; preds = %vector.body162
 
 .lr.ph107.preheader:                              ; preds = %._crit_edge104
   %i.bn = zext nneg i32 %i.bk to i64              ; 6 uses
-  %4 = sub i32 %i.bl, %3
-  %5 = add i32 %4, -3                             ; 2 uses
+  %4 = add i32 %i.bl, -3
+  %5 = sub i32 %4, %3                             ; 2 uses
   %i.bo = zext i32 %5 to i64
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
   %min.iters.check178 = icmp ugt i32 %5, 26
@@ -437,8 +437,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph99.preheader:                               ; preds = %._crit_edge
   %i.fk = zext nneg i32 %i.fh to i64              ; 6 uses
-  %6 = sub i32 %i.fi, %3
-  %7 = add i32 %6, -3                             ; 2 uses
+  %6 = add i32 %i.fi, -3
+  %7 = sub i32 %6, %3                             ; 2 uses
   %i.fl = zext i32 %7 to i64
   %i.fm = add nuw nsw i64 %i.fl, 1                ; 2 uses
   %min.iters.check140 = icmp ugt i32 %7, 26

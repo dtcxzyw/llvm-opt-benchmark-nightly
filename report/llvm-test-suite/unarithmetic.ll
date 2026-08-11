@@ -1,7 +1,7 @@
 inline.NumInlined: 7
 inline.NumDeleted: 6
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@do_deari:vector.ph
   br label %input_bit.exit.i
 
@@ -203,7 +203,7 @@ bb.p:                                             ; preds = %decode_symbol.exit
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.loopexit.i.preheader, %.loopexit.i
-  %indvars.iv38.i = phi i64 [ %indvars.iv.next39.i, %.loopexit.i ], [ %indvars.iv.i8, %.loopexit.i.preheader ] ; 7 uses
+  %indvars.iv38.i = phi i64 [ %indvars.iv.next39.i, %.loopexit.i ], [ %indvars.iv.i8, %.loopexit.i.preheader ] ; 9 uses
   %i.eq = getelementptr inbounds [4 x i8], ptr @freq, i64 %indvars.iv38.i ; 3 uses
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !4  ; 2 uses
   %i.es = getelementptr i8, ptr %i.eq, i64 -4
@@ -237,17 +237,13 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br i1 %i.fd, label %.lr.ph.preheader.i, label %start_decoding.exit.backedge
 
 .lr.ph.preheader.i:                               ; preds = %bb.s
-  %i.fe = and i64 %indvars.iv38.i, 4294967295     ; 5 uses
-  %1 = icmp ne i64 %i.fe, 0
-  %.neg = sext i1 %1 to i64
-  %2 = add nsw i64 %i.fe, %.neg
-  %3 = add nsw i64 %2, 1                          ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 8
+  %i.fe = and i64 %indvars.iv38.i, 4294967295     ; 4 uses
+  %min.iters.check = icmp samesign ult i64 %i.fe, 8
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph93
 
 vector.ph93:                                      ; preds = %.lr.ph.preheader.i
-  %n.vec = and i64 %3, -8                         ; 3 uses
-  %4 = sub nsw i64 %i.fe, %n.vec
+  %n.vec = and i64 %indvars.iv38.i, 4294967288    ; 2 uses
+  %1 = and i64 %indvars.iv38.i, 7
   %i.ff = getelementptr [4 x i8], ptr @cum_freq, i64 %i.fe
   br label %vector.body94
 
@@ -268,25 +264,74 @@ vector.body94:                                    ; preds = %vector.body94, %vec
   br i1 %i.fm, label %middle.block98, label %vector.body94, !llvm.loop !23
 
 middle.block98:                                   ; preds = %vector.body94
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %i.fe, %n.vec
   br i1 %cmp.n, label %start_decoding.exit.backedge, label %.lr.ph.i.preheader
 
-start_decoding.exit.backedge:                     ; preds = %.lr.ph.i, %middle.block98, %bb.s
+start_decoding.exit.backedge:                     ; preds = %.lr.ph.i.preheader, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i, %.lr.ph.i.5, %.lr.ph.i.6, %middle.block98, %bb.s
   br label %start_decoding.exit
 
-.lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i, %middle.block98
-  %indvars.iv43.i.ph = phi i64 [ %i.fe, %.lr.ph.preheader.i ], [ %4, %middle.block98 ]
-  br label %.lr.ph.i
+.lr.ph.i.preheader:                               ; preds = %middle.block98, %.lr.ph.preheader.i
+  %indvars.iv43.i.ph = phi i64 [ %i.fe, %.lr.ph.preheader.i ], [ %1, %middle.block98 ] ; 13 uses
+  %2 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
+  %3 = getelementptr i8, ptr %2, i64 -4           ; 2 uses
+  %4 = load i32, ptr %3, align 4, !tbaa !4
+  %5 = add nsw i32 %4, 1
+  store i32 %5, ptr %3, align 4, !tbaa !4
+  %6 = icmp samesign ugt i64 %indvars.iv43.i.ph, 1
+  br i1 %6, label %.lr.ph.i.1, label %start_decoding.exit.backedge
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %indvars.iv43.i = phi i64 [ %indvars.iv.next44.i, %.lr.ph.i ], [ %indvars.iv43.i.ph, %.lr.ph.i.preheader ] ; 2 uses
-  %indvars.iv.next44.i = add nsw i64 %indvars.iv43.i, -1 ; 2 uses
-  %5 = getelementptr inbounds nuw [4 x i8], ptr @cum_freq, i64 %indvars.iv.next44.i ; 2 uses
-  %i.fn = load i32, ptr %5, align 4, !tbaa !4
+.lr.ph.i.1:                                       ; preds = %.lr.ph.i.preheader
+  %7 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
+  %8 = getelementptr i8, ptr %7, i64 -8           ; 2 uses
+  %9 = load i32, ptr %8, align 4, !tbaa !4
+  %10 = add nsw i32 %9, 1
+  store i32 %10, ptr %8, align 4, !tbaa !4
+  %.not = icmp eq i64 %indvars.iv43.i.ph, 2
+  br i1 %.not, label %start_decoding.exit.backedge, label %.lr.ph.i.2
+
+.lr.ph.i.2:                                       ; preds = %.lr.ph.i.1
+  %11 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
+  %12 = getelementptr i8, ptr %11, i64 -12        ; 2 uses
+  %13 = load i32, ptr %12, align 4, !tbaa !4
+  %14 = add nsw i32 %13, 1
+  store i32 %14, ptr %12, align 4, !tbaa !4
+  %15 = icmp samesign ugt i64 %indvars.iv43.i.ph, 3
+  br i1 %15, label %.lr.ph.i.3, label %start_decoding.exit.backedge
+
+.lr.ph.i.3:                                       ; preds = %.lr.ph.i.2
+  %16 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
+  %17 = getelementptr i8, ptr %16, i64 -16        ; 2 uses
+  %18 = load i32, ptr %17, align 4, !tbaa !4
+  %19 = add nsw i32 %18, 1
+  store i32 %19, ptr %17, align 4, !tbaa !4
+  %.not108 = icmp eq i64 %indvars.iv43.i.ph, 4
+  br i1 %.not108, label %start_decoding.exit.backedge, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.3
+  %20 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
+  %21 = getelementptr i8, ptr %20, i64 -20        ; 2 uses
+  %i.fn = load i32, ptr %21, align 4, !tbaa !4
   %i.fo = add nsw i32 %i.fn, 1
-  store i32 %i.fo, ptr %5, align 4, !tbaa !4
-  %i.fp = icmp samesign ugt i64 %indvars.iv43.i, 1
-  br i1 %i.fp, label %.lr.ph.i, label %start_decoding.exit.backedge, !llvm.loop !24
+  store i32 %i.fo, ptr %21, align 4, !tbaa !4
+  %i.fp = icmp samesign ugt i64 %indvars.iv43.i.ph, 5
+  br i1 %i.fp, label %.lr.ph.i.5, label %start_decoding.exit.backedge
+
+.lr.ph.i.5:                                       ; preds = %.lr.ph.i
+  %22 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
+  %23 = getelementptr i8, ptr %22, i64 -24        ; 2 uses
+  %24 = load i32, ptr %23, align 4, !tbaa !4
+  %25 = add nsw i32 %24, 1
+  store i32 %25, ptr %23, align 4, !tbaa !4
+  %26 = icmp eq i64 %indvars.iv43.i.ph, 7
+  br i1 %26, label %.lr.ph.i.6, label %start_decoding.exit.backedge
+
+.lr.ph.i.6:                                       ; preds = %.lr.ph.i.5
+  %27 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
+  %28 = getelementptr i8, ptr %27, i64 -28        ; 2 uses
+  %29 = load i32, ptr %28, align 4, !tbaa !4
+  %30 = add nsw i32 %29, 1
+  store i32 %30, ptr %28, align 4, !tbaa !4
+  br label %start_decoding.exit.backedge
 
 bb.t:                                             ; preds = %decode_symbol.exit
   %i.fq = load i32, ptr @deari_pos, align 4, !tbaa !4
@@ -333,5 +378,4 @@ attributes #4 = { cold noreturn nounwind }
 !21 = distinct !{!21, !10}
 !22 = distinct !{!22, !10}
 !23 = distinct !{!23, !10, !11, !12}
-!24 = distinct !{!24, !10, !12, !11}
 end_hunk_0

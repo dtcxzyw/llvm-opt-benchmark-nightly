@@ -203,23 +203,22 @@ bb.n:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.bo, label %.lr.ph.i.preheader, label %_PyUnicode_Fill.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.n
-  %i.bp = ptrtoaddr ptr %.0.i61 to i64            ; 3 uses
-  %i.bq = shl i64 %i.ab, 2                        ; 2 uses
-  %10 = shl i64 %5, 2
-  %11 = sub i64 %i.bp, %10
-  %i.br = add i64 %11, %i.bq
-  %12 = add i64 %i.br, 4
-  %13 = add i64 %i.bq, %i.bp
-  %i.bs = tail call i64 @llvm.umax.i64(i64 %12, i64 %13)
+  %i.bp = ptrtoaddr ptr %.0.i61 to i64            ; 2 uses
+  %i.bq = shl i64 %i.ab, 2
+  %10 = add i64 %i.bq, %i.bp                      ; 2 uses
+  %i.br = add i64 %10, 4
+  %11 = shl i64 %5, 2
+  %12 = sub i64 %i.br, %11
+  %i.bs = tail call i64 @llvm.umax.i64(i64 %12, i64 %10)
   %i.bt = shl i64 %5, 2
-  %14 = shl i64 %i.ab, 2
-  %15 = add i64 %14, %i.bp
-  %16 = sub i64 %i.bs, %15
-  %17 = add i64 %16, %i.bt
-  %18 = add i64 %17, -1                           ; 2 uses
-  %i.bu = lshr i64 %18, 2
+  %13 = add i64 %i.bs, %i.bt
+  %14 = xor i64 %i.bp, -1
+  %15 = add i64 %13, %14
+  %16 = shl i64 %i.ab, 2
+  %17 = sub i64 %15, %16                          ; 2 uses
+  %i.bu = lshr i64 %17, 2
   %i.bv = add nuw nsw i64 %i.bu, 1                ; 2 uses
-  %min.iters.check126 = icmp ult i64 %18, 28
+  %min.iters.check126 = icmp ult i64 %17, 28
   br i1 %min.iters.check126, label %.lr.ph.i.preheader165, label %vector.ph127
 
 vector.ph127:                                     ; preds = %.lr.ph.i.preheader
@@ -391,13 +390,13 @@ bb.t:                                             ; preds = %_PyUnicode_DATA.exi
   %i.dt = add i64 %i.ds, %i.dr
   %i.du = add i64 %i.ds, 4
   %i.dv = tail call i64 @llvm.umax.i64(i64 %i.dt, i64 %i.du)
+  %18 = xor i64 %i.dp, -1
+  %i.dw = add i64 %i.dv, %18
   %19 = shl i64 %i.cl, 2
-  %i.dw = add i64 %19, %i.dp
-  %20 = xor i64 %i.dw, -1
-  %21 = add i64 %i.dv, %20                        ; 2 uses
-  %i.dx = lshr i64 %21, 2
+  %20 = sub i64 %i.dw, %19                        ; 2 uses
+  %i.dx = lshr i64 %20, 2
   %i.dy = add nuw nsw i64 %i.dx, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %21, 28
+  %min.iters.check = icmp ult i64 %20, 28
   br i1 %min.iters.check, label %.lr.ph.i70.preheader167, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i70.preheader

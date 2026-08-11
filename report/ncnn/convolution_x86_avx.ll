@@ -204,6 +204,7 @@ bb.ad:                                            ; preds = %bb.ac, %.thread973.
   %unroll_iter = and i32 %i.xw, 1073741820
   %lcmp.mod411.not = icmp eq i32 %xtraiter410, 0
   %lcmp.mod414 = icmp ne i32 %xtraiter410, 0
+  %16 = add i32 %.sroa.speculated114, -2
   br label %bb.af
 
 bb.ae:                                            ; preds = %._crit_edge1102.i, %.lr.ph1106.i
@@ -572,12 +573,11 @@ bb.af:                                            ; preds = %._crit_edge1135.i, 
   br i1 %i.aef, label %.lr.ph1127.i.preheader, label %.preheader.i
 
 .lr.ph1127.i.preheader:                           ; preds = %.preheader985.i
-  %i.aeg = sub i32 %.sroa.speculated114, %.1637.lcssa.i
-  %16 = add i32 %i.aeg, -2                        ; 2 uses
-  %i.aeh = lshr i32 %16, 1
+  %i.aeg = sub i32 %16, %.1637.lcssa.i            ; 2 uses
+  %i.aeh = lshr i32 %i.aeg, 1
   %narrow = add nuw i32 %i.aeh, 1
   %i.aei = zext i32 %narrow to i64                ; 2 uses
-  %min.iters.check311 = icmp ult i32 %16, 10
+  %min.iters.check311 = icmp ult i32 %i.aeg, 10
   br i1 %min.iters.check311, label %.lr.ph1127.i.preheader369, label %vector.memcheck307
 
 vector.memcheck307:                               ; preds = %.lr.ph1127.i.preheader

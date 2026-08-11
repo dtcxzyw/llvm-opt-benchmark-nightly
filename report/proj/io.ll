@@ -205,8 +205,8 @@ _ZNKSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14def
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14default_deleteIS7_EEEESaISB_EE11_S_relocateEPSB_SE_SE_RSC_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc243
-  %10 = sub i64 %i.ff, %i.fg
-  %11 = add i64 %10, -8                           ; 2 uses
+  %10 = add i64 %i.ff, -8
+  %11 = sub i64 %10, %i.fg                        ; 2 uses
   %i.fs = lshr i64 %11, 3
   %i.ft = add nuw nsw i64 %i.fs, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %11, 56
@@ -609,8 +609,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj4util11PropertyMapESt14default_deleteIS
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj4util11PropertyMapESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc332
-  %43 = sub i64 %i.v, %i.w
-  %44 = add i64 %43, -8                           ; 2 uses
+  %43 = add i64 %i.v, -8
+  %44 = sub i64 %43, %i.w                         ; 2 uses
   %i.ah = lshr i64 %44, 3
   %i.ai = add nuw nsw i64 %i.ah, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %44, 136
@@ -1013,8 +1013,8 @@ _ZNKSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14def
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14default_deleteIS7_EEEESaISB_EE11_S_relocateEPSB_SE_SE_RSC_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14default_deleteIS7_EEEESaISB_EE12_M_check_lenEmPKc.exit
-  %3 = sub i64 %i.m, %i.e
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.m, -8
+  %4 = sub i64 %3, %i.e                           ; 2 uses
   %i.s = lshr i64 %4, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 136
@@ -1088,8 +1088,8 @@ _ZNSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14defa
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14default_deleteIS7_EEEESaISB_EE11_S_relocateEPSB_SE_SE_RSC_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorIN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io7WKTNodeESt14default_deleteIS7_EEEESaISB_EE11_S_relocateEPSB_SE_SE_RSC_.exit
-  %5 = sub i64 %i.d, %i.m
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.d, -8
+  %6 = sub i64 %5, %i.m                           ; 2 uses
   %i.ak = lshr i64 %6, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check46 = icmp ult i64 %6, 152

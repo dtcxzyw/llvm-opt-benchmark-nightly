@@ -204,7 +204,7 @@ scalar.ph252.epil:                                ; preds = %scalar.ph252.epil, 
   %i.hj = zext nneg i32 %i.hi to i64
   %.neg = sdiv i32 %6, -2
   %i.hk = sext i32 %.neg to i64                   ; 2 uses
-  %i.hl = zext nneg i32 %i.hb to i64              ; 8 uses
+  %i.hl = zext nneg i32 %i.hb to i64              ; 6 uses
   %smin = tail call i64 @llvm.smin.i64(i64 %i.hl, i64 1) ; 2 uses
   %i.hm = add nsw i64 %smin, %i.hf
   %i.hn = shl nsw i64 %i.hm, 1
@@ -228,36 +228,29 @@ scalar.ph252.epil:                                ; preds = %scalar.ph252.epil, 
   %i.ic = shl nuw nsw i64 %smin, 1
   %i.id = sub nuw nsw i64 %i.ib, %i.ic
   %scevgep269 = getelementptr i8, ptr %0, i64 %i.id
-  %i.ie = tail call i64 @llvm.smin.i64(i64 %i.hl, i64 1)
-  %8 = sub nsw i64 %i.hl, %i.ie                   ; 2 uses
-  %9 = add nuw nsw i64 %8, 1                      ; 2 uses
-  %min.iters.check275 = icmp ugt i64 %8, 6
+  %i.ie = tail call i64 @llvm.smax.i64(i64 %i.hl, i64 1)
   %ident.check264.not = icmp eq i32 %i.gw, 0
-  %or.cond340 = and i1 %min.iters.check275, %ident.check264.not
   %bound0270 = icmp ult ptr %scevgep266, %scevgep269
   %bound1271 = icmp ult ptr %i.hh, %scevgep268
   %found.conflict272 = and i1 %bound0270, %bound1271
   %stride.check273 = icmp sgt i32 %6, 1
   %i.if = or i1 %found.conflict272, %stride.check273
-  %n.vec277 = and i64 %9, 56                      ; 4 uses
-  %10 = sub nsw i64 %i.hl, %n.vec277
-  %cmp.n283 = icmp eq i64 %9, %n.vec277
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us172
   %i.ig = phi ptr [ %i.iq, %._crit_edge.us172 ], [ %i.hg, %.lr.ph.us.preheader ] ; 3 uses
   %.0145167.us = phi i32 [ %i.ir, %._crit_edge.us172 ], [ %i.hc, %.lr.ph.us.preheader ] ; 2 uses
   %.0147166.us = phi ptr [ %i.ip, %._crit_edge.us172 ], [ %i.hh, %.lr.ph.us.preheader ] ; 3 uses
-  %or.cond340.not = xor i1 %or.cond340, true
+  %or.cond340.not = xor i1 %ident.check264.not, true
   %brmerge374 = select i1 %or.cond340.not, i1 true, i1 %i.if
-  br i1 %brmerge374, label %scalar.ph274.preheader, label %vector.ph276
+  br i1 %brmerge374, label %scalar.ph274, label %vector.ph276
 
 vector.ph276:                                     ; preds = %.lr.ph.us
   %invariant.gep = getelementptr [2 x i8], ptr %i.ig, i64 %i.hl
   br label %vector.body278
 
-vector.body278:                                   ; preds = %vector.body278, %vector.ph276
-  %index279 = phi i64 [ 0, %vector.ph276 ], [ %index.next281, %vector.body278 ] ; 3 uses
+vector.body278:                                   ; preds = %vector.ph276, %vector.body278
+  %index279 = phi i64 [ %index.next281, %vector.body278 ], [ 0, %vector.ph276 ] ; 3 uses
   %i.ih = xor i64 %index279, -1
   %i.ii = getelementptr inbounds nuw [2 x i8], ptr %.0147166.us, i64 %index279
   %wide.load280 = load <8 x i16>, ptr %i.ii, align 2, !tbaa !79, !alias.scope !110
@@ -266,20 +259,12 @@ vector.body278:                                   ; preds = %vector.body278, %ve
   %reverse = shufflevector <8 x i16> %wide.load280, <8 x i16> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   store <8 x i16> %reverse, ptr %i.ij, align 2, !tbaa !79, !alias.scope !113, !noalias !110
   %index.next281 = add nuw i64 %index279, 8       ; 2 uses
-  %i.ik = icmp eq i64 %index.next281, %n.vec277
-  br i1 %i.ik, label %middle.block282, label %vector.body278, !llvm.loop !115
+  %i.ik = icmp eq i64 %index.next281, %i.ie
+  br i1 %i.ik, label %._crit_edge.us172, label %vector.body278, !llvm.loop !115
 
-middle.block282:                                  ; preds = %vector.body278
-  br i1 %cmp.n283, label %._crit_edge.us172, label %scalar.ph274.preheader
-
-scalar.ph274.preheader:                           ; preds = %.lr.ph.us, %middle.block282
-  %indvars.iv198.ph = phi i64 [ %10, %middle.block282 ], [ %i.hl, %.lr.ph.us ]
-  %indvars.iv196.ph = phi i64 [ %n.vec277, %middle.block282 ], [ 0, %.lr.ph.us ]
-  br label %scalar.ph274
-
-scalar.ph274:                                     ; preds = %scalar.ph274.preheader, %scalar.ph274
-  %indvars.iv198 = phi i64 [ %indvars.iv.next199, %scalar.ph274 ], [ %indvars.iv198.ph, %scalar.ph274.preheader ] ; 2 uses
-  %indvars.iv196 = phi i64 [ %indvars.iv.next197, %scalar.ph274 ], [ %indvars.iv196.ph, %scalar.ph274.preheader ] ; 2 uses
+scalar.ph274:                                     ; preds = %.lr.ph.us, %scalar.ph274
+  %indvars.iv198 = phi i64 [ %indvars.iv.next199, %scalar.ph274 ], [ %i.hl, %.lr.ph.us ] ; 2 uses
+  %indvars.iv196 = phi i64 [ %indvars.iv.next197, %scalar.ph274 ], [ 0, %.lr.ph.us ] ; 2 uses
   %indvars.iv.next199 = add nsw i64 %indvars.iv198, -1 ; 2 uses
   %i.il = getelementptr inbounds nuw [2 x i8], ptr %.0147166.us, i64 %indvars.iv196
   %i.im = load i16, ptr %i.il, align 2, !tbaa !79
@@ -289,7 +274,7 @@ scalar.ph274:                                     ; preds = %scalar.ph274.prehea
   %i.io = icmp sgt i64 %indvars.iv198, 1
   br i1 %i.io, label %scalar.ph274, label %._crit_edge.us172, !llvm.loop !116
 
-._crit_edge.us172:                                ; preds = %scalar.ph274, %middle.block282
+._crit_edge.us172:                                ; preds = %vector.body278, %scalar.ph274
   %i.ip = getelementptr inbounds nuw [2 x i8], ptr %.0147166.us, i64 %i.hj
   %i.iq = getelementptr inbounds [2 x i8], ptr %i.ig, i64 %i.hk
   %i.ir = add nsw i32 %.0145167.us, -1
@@ -311,7 +296,7 @@ scalar.ph274:                                     ; preds = %scalar.ph274.prehea
 
 .lr.ph168.1:                                      ; preds = %.thread157.1
   %i.jc = load i32, ptr %i.gz, align 4, !tbaa !64 ; 2 uses
-  %i.jd = add nsw i32 %i.gw, %i.jc                ; 2 uses
+  %i.jd = add nsw i32 %i.gw, %i.jc                ; 3 uses
   %.not178.1 = icmp ugt i32 %i.jd, 4
   %i.je = lshr i32 16, %i.jc
   %i.jf = shl i32 %i.je, %i.gw
@@ -322,7 +307,7 @@ scalar.ph274:                                     ; preds = %scalar.ph274.prehea
 
 .lr.ph.us.preheader.1:                            ; preds = %.lr.ph168.1
   %i.ji = lshr i32 16, %i.jd
-  %i.jj = zext nneg i32 %i.ji to i64              ; 8 uses
+  %i.jj = zext nneg i32 %i.ji to i64              ; 7 uses
   %smin289 = tail call i64 @llvm.smin.i64(i64 %i.jj, i64 1) ; 2 uses
   %i.jk = add nsw i64 %smin289, %i.ja
   %i.jl = shl nsw i64 %i.jk, 1
@@ -344,10 +329,8 @@ scalar.ph274:                                     ; preds = %scalar.ph274.prehea
   %i.jy = shl nuw nsw i64 %smin289, 1
   %i.jz = sub i64 %i.jx, %i.jy
   %scevgep293 = getelementptr i8, ptr %0, i64 %i.jz
-  %i.ka = tail call i64 @llvm.smin.i64(i64 %i.jj, i64 1)
-  %11 = sub nsw i64 %i.jj, %i.ka                  ; 2 uses
-  %12 = add nuw nsw i64 %11, 1                    ; 2 uses
-  %min.iters.check300 = icmp ugt i64 %11, 6
+  %i.ka = tail call i64 @llvm.smax.i64(i64 %i.jj, i64 1) ; 2 uses
+  %min.iters.check300 = icmp ult i32 %i.jd, 2
   %ident.check287.not = icmp eq i32 %i.gw, 0
   %or.cond341 = and i1 %min.iters.check300, %ident.check287.not
   %bound0294 = icmp ult ptr %scevgep290, %scevgep293
@@ -355,9 +338,9 @@ scalar.ph274:                                     ; preds = %scalar.ph274.prehea
   %found.conflict296 = and i1 %bound0294, %bound1295
   %stride.check297 = icmp sgt i32 %5, 1
   %i.kb = or i1 %found.conflict296, %stride.check297
-  %n.vec302 = and i64 %12, 9223372036854775800    ; 4 uses
+  %n.vec302 = and i64 %i.ka, 24                   ; 4 uses
   %i.kc = sub nsw i64 %i.jj, %n.vec302
-  %cmp.n309 = icmp eq i64 %12, %n.vec302
+  %cmp.n309 = icmp eq i64 %i.ka, %n.vec302
   br label %.lr.ph.us.1
 
 .lr.ph.us.1:                                      ; preds = %._crit_edge.us172.1, %.lr.ph.us.preheader.1
@@ -426,7 +409,7 @@ scalar.ph299:                                     ; preds = %scalar.ph299.prehea
 
 .lr.ph168.2:                                      ; preds = %.thread157.2
   %i.ky = load i32, ptr %i.gz, align 4, !tbaa !64 ; 2 uses
-  %i.kz = add nsw i32 %i.gw, %i.ky                ; 2 uses
+  %i.kz = add nsw i32 %i.gw, %i.ky                ; 3 uses
   %.not178.2 = icmp ugt i32 %i.kz, 4
   %i.la = lshr i32 16, %i.ky
   %i.lb = shl i32 %i.la, %i.gw
@@ -437,7 +420,7 @@ scalar.ph299:                                     ; preds = %scalar.ph299.prehea
 
 .lr.ph.us.preheader.2:                            ; preds = %.lr.ph168.2
   %i.le = lshr i32 16, %i.kz
-  %i.lf = zext nneg i32 %i.le to i64              ; 8 uses
+  %i.lf = zext nneg i32 %i.le to i64              ; 7 uses
   %smin315 = tail call i64 @llvm.smin.i64(i64 %i.lf, i64 1) ; 2 uses
   %i.lg = add nsw i64 %smin315, %i.kw
   %i.lh = shl nsw i64 %i.lg, 1
@@ -459,10 +442,8 @@ scalar.ph299:                                     ; preds = %scalar.ph299.prehea
   %i.lu = shl nuw nsw i64 %smin315, 1
   %i.lv = sub i64 %i.lt, %i.lu
   %scevgep319 = getelementptr i8, ptr %0, i64 %i.lv
-  %i.lw = tail call i64 @llvm.smin.i64(i64 %i.lf, i64 1)
-  %13 = sub nsw i64 %i.lf, %i.lw                  ; 2 uses
-  %14 = add nuw nsw i64 %13, 1                    ; 2 uses
-  %min.iters.check326 = icmp ugt i64 %13, 6
+  %i.lw = tail call i64 @llvm.smax.i64(i64 %i.lf, i64 1) ; 2 uses
+  %min.iters.check326 = icmp ult i32 %i.kz, 2
   %ident.check313.not = icmp eq i32 %i.gw, 0
   %or.cond342 = and i1 %min.iters.check326, %ident.check313.not
   %bound0320 = icmp ult ptr %scevgep316, %scevgep319
@@ -470,9 +451,9 @@ scalar.ph299:                                     ; preds = %scalar.ph299.prehea
   %found.conflict322 = and i1 %bound0320, %bound1321
   %stride.check323 = icmp sgt i32 %5, 1
   %i.lx = or i1 %found.conflict322, %stride.check323
-  %n.vec328 = and i64 %14, 9223372036854775800    ; 4 uses
+  %n.vec328 = and i64 %i.lw, 24                   ; 4 uses
   %i.ly = sub nsw i64 %i.lf, %n.vec328
-  %cmp.n335 = icmp eq i64 %14, %n.vec328
+  %cmp.n335 = icmp eq i64 %i.lw, %n.vec328
   br label %.lr.ph.us.2
 
 .lr.ph.us.2:                                      ; preds = %._crit_edge.us172.2, %.lr.ph.us.preheader.2
@@ -874,6 +855,9 @@ declare i32 @llvm.fshl.i32(i32, i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12

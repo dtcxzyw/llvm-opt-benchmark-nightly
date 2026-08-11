@@ -203,6 +203,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not134155, label %.lr.ph181.split.us.preheader, label %.lr.ph181.split.split.preheader
 
 .lr.ph181.split.split.preheader:                  ; preds = %.lr.ph181
+  %7 = add nsw i32 %5, -2
   %i.p = add nsw i32 %i.k, -1
   br label %.lr.ph181.split.split
 
@@ -347,9 +348,8 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 .lr.ph.split.split.us:                            ; preds = %.lr.ph
   store i32 1, ptr %6, align 4, !tbaa !21
   %i.ca = sext i32 %i.br to i64                   ; 3 uses
-  %i.cb = sub i32 %5, %.0121177
-  %7 = add i32 %i.cb, -2
-  %i.cc = call i32 @llvm.umin.i32(i32 %7, i32 %i.p) ; 2 uses
+  %i.cb = sub i32 %7, %.0121177
+  %i.cc = call i32 @llvm.umin.i32(i32 %i.cb, i32 %i.p) ; 2 uses
   %i.cd = zext i32 %i.cc to i64
   %i.ce = add nuw nsw i64 %i.cd, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.cc, 3

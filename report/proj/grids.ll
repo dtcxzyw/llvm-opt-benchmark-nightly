@@ -204,8 +204,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteI
   br i1 %.not10.i.i.i.i138, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i150, label %.lr.ph.i.i.i.i139.preheader
 
 .lr.ph.i.i.i.i139.preheader:                      ; preds = %.noexc154
-  %12 = sub i64 %i.ie, %i.if
-  %13 = add i64 %12, -8                           ; 2 uses
+  %12 = add i64 %i.ie, -8
+  %13 = sub i64 %12, %i.if                        ; 2 uses
   %i.ir = lshr i64 %13, 3
   %i.is = add nuw nsw i64 %i.ir, 1                ; 2 uses
   %min.iters.check521 = icmp ult i64 %13, 56
@@ -528,8 +528,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteI
   br i1 %.not10.i.i.i.i129, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i130.preheader
 
 .lr.ph.i.i.i.i130.preheader:                      ; preds = %.noexc134
-  %14 = sub i64 %i.mj, %i.mk
-  %15 = add i64 %14, -8                           ; 2 uses
+  %14 = add i64 %i.mj, -8
+  %15 = sub i64 %14, %i.mk                        ; 2 uses
   %i.mw = lshr i64 %15, 3
   %i.mx = add nuw nsw i64 %i.mw, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %15, 56
@@ -932,8 +932,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteI
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc114
-  %9 = sub i64 %i.af, %i.ag
-  %10 = add i64 %9, -8                            ; 2 uses
+  %9 = add i64 %i.af, -8
+  %10 = sub i64 %9, %i.ag                         ; 2 uses
   %i.as = lshr i64 %10, 3
   %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
   %min.iters.check189 = icmp ult i64 %10, 136
@@ -1228,8 +1228,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteI
   br i1 %.not10.i.i.i.i118, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i130, label %.lr.ph.i.i.i.i119.preheader
 
 .lr.ph.i.i.i.i119.preheader:                      ; preds = %.noexc134
-  %11 = sub i64 %i.dn, %i.do
-  %12 = add i64 %11, -8                           ; 2 uses
+  %11 = add i64 %i.dn, -8
+  %12 = sub i64 %11, %i.do                        ; 2 uses
   %i.ea = lshr i64 %12, 3
   %i.eb = add nuw nsw i64 %i.ea, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %12, 136
@@ -1632,8 +1632,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_delet
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc133
-  %12 = sub i64 %i.af, %i.ag
-  %13 = add i64 %12, -8                           ; 2 uses
+  %12 = add i64 %i.af, -8
+  %13 = sub i64 %12, %i.ag                        ; 2 uses
   %i.as = lshr i64 %13, 3
   %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %13, 136
@@ -2036,8 +2036,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj16GenericShiftGridESt14default_deleteIS
   br i1 %.not10.i.i.i.i150, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj16GenericShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i162, label %.lr.ph.i.i.i.i151.preheader
 
 .lr.ph.i.i.i.i151.preheader:                      ; preds = %.noexc166
-  %13 = sub i64 %i.ja, %i.jb
-  %14 = add i64 %13, -8                           ; 2 uses
+  %13 = add i64 %i.ja, -8
+  %14 = sub i64 %13, %i.jb                        ; 2 uses
   %i.jn = lshr i64 %14, 3
   %i.jo = add nuw nsw i64 %i.jn, 1                ; 2 uses
   %min.iters.check498 = icmp ult i64 %14, 56
@@ -2382,8 +2382,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj16GenericShiftGridESt14default_deleteIS
   br i1 %.not10.i.i.i.i141, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj16GenericShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i142.preheader
 
 .lr.ph.i.i.i.i142.preheader:                      ; preds = %.noexc146
-  %15 = sub i64 %i.nq, %i.nr
-  %16 = add i64 %15, -8                           ; 2 uses
+  %15 = add i64 %i.nq, -8
+  %16 = sub i64 %15, %i.nr                        ; 2 uses
   %i.od = lshr i64 %16, 3
   %i.oe = add nuw nsw i64 %i.od, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %16, 56
@@ -2786,8 +2786,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj16GenericShiftGridESt14default_deleteIS
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj16GenericShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc55
-  %7 = sub i64 %i.ag, %i.ah
-  %8 = add i64 %7, -8                             ; 2 uses
+  %7 = add i64 %i.ag, -8
+  %8 = sub i64 %7, %i.ah                          ; 2 uses
   %i.at = lshr i64 %8, 3
   %i.au = add nuw nsw i64 %i.at, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %8, 136
@@ -3190,8 +3190,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj19GenericShiftGridSetESt14default_delet
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj19GenericShiftGridSetESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc87
-  %9 = sub i64 %i.cc, %i.cd
-  %10 = add i64 %9, -8                            ; 2 uses
+  %9 = add i64 %i.cc, -8
+  %10 = sub i64 %9, %i.cd                         ; 2 uses
   %i.co = lshr i64 %10, 3
   %i.cp = add nuw nsw i64 %i.co, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %10, 56
@@ -3594,8 +3594,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj22HorizontalShiftGridSetESt14default_de
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj22HorizontalShiftGridSetESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc63.i
-  %9 = sub i64 %i.cb, %i.cc
-  %10 = add i64 %9, -8                            ; 2 uses
+  %9 = add i64 %i.cb, -8
+  %10 = sub i64 %9, %i.cc                         ; 2 uses
   %i.cn = lshr i64 %10, 3
   %i.co = add nuw nsw i64 %i.cn, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %10, 56
@@ -3998,8 +3998,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj20VerticalShiftGridSetESt14default_dele
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj20VerticalShiftGridSetESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc87
-  %9 = sub i64 %i.cc, %i.cd
-  %10 = add i64 %9, -8                            ; 2 uses
+  %9 = add i64 %i.cc, -8
+  %10 = sub i64 %9, %i.cd                         ; 2 uses
   %i.co = lshr i64 %10, 3
   %i.cp = add nuw nsw i64 %i.co, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %10, 56
@@ -4402,8 +4402,8 @@ bb.m:                                             ; preds = %bb.l
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.ao, 3
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx.i.i.i.i.i ; 3 uses
   %i.aq = shl i64 %2, 3
-  %4 = sub i64 %i.aq, %i.k
-  %5 = add i64 %4, -8                             ; 2 uses
+  %4 = add i64 %i.aq, -8
+  %5 = sub i64 %4, %i.k                           ; 2 uses
   %i.ar = lshr i64 %5, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 24
@@ -4471,8 +4471,8 @@ _ZSt22__uninitialized_move_aIPdS0_SaIdEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not6.i.i.i70, label %_ZSt4fillIPddEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPdS0_SaIdEET0_T_S3_S2_RT1_.exit69
-  %6 = sub i64 %i.f, %i.j
-  %7 = add i64 %6, -8                             ; 2 uses
+  %6 = add i64 %i.f, -8
+  %7 = sub i64 %6, %i.j                           ; 2 uses
   %i.be = lshr i64 %7, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %7, 24
@@ -4875,8 +4875,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteI
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %3 = sub i64 %i.m, %i.e
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.m, -8
+  %4 = sub i64 %3, %i.e                           ; 2 uses
   %i.s = lshr i64 %4, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 136
@@ -4950,8 +4950,8 @@ _ZNSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteIS
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj17VerticalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
-  %5 = sub i64 %i.d, %i.m
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.d, -8
+  %6 = sub i64 %5, %i.m                           ; 2 uses
   %i.ak = lshr i64 %6, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check46 = icmp ult i64 %6, 152
@@ -5354,8 +5354,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_delet
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %3 = sub i64 %i.m, %i.e
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.m, -8
+  %4 = sub i64 %3, %i.e                           ; 2 uses
   %i.s = lshr i64 %4, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 136
@@ -5429,8 +5429,8 @@ _ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_delete
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
-  %5 = sub i64 %i.d, %i.m
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.d, -8
+  %6 = sub i64 %5, %i.m                           ; 2 uses
   %i.ak = lshr i64 %6, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check46 = icmp ult i64 %6, 152
@@ -5833,8 +5833,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_delet
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %3 = sub i64 %i.m, %i.e
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.m, -8
+  %4 = sub i64 %3, %i.e                           ; 2 uses
   %i.s = lshr i64 %4, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 136
@@ -5908,8 +5908,8 @@ _ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_delete
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
-  %5 = sub i64 %i.d, %i.m
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.d, -8
+  %6 = sub i64 %5, %i.m                           ; 2 uses
   %i.ak = lshr i64 %6, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check46 = icmp ult i64 %6, 152
@@ -6312,8 +6312,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_delet
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %3 = sub i64 %i.m, %i.e
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.m, -8
+  %4 = sub i64 %3, %i.e                           ; 2 uses
   %i.s = lshr i64 %4, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 136
@@ -6387,8 +6387,8 @@ _ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_delete
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj19HorizontalShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
-  %5 = sub i64 %i.d, %i.m
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.d, -8
+  %6 = sub i64 %5, %i.m                           ; 2 uses
   %i.ak = lshr i64 %6, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check46 = icmp ult i64 %6, 152
@@ -6514,8 +6514,8 @@ _ZNKSt6vectorISt10unique_ptrIN5osgeo4proj16GenericShiftGridESt14default_deleteIS
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj16GenericShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN5osgeo4proj16GenericShiftGridESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %3 = sub i64 %i.m, %i.e
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.m, -8
+  %4 = sub i64 %3, %i.e                           ; 2 uses
   %i.s = lshr i64 %4, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 136
@@ -6589,8 +6589,8 @@ _ZNSt6vectorISt10unique_ptrIN5osgeo4proj16GenericShiftGridESt14default_deleteIS3
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj16GenericShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN5osgeo4proj16GenericShiftGridESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
-  %5 = sub i64 %i.d, %i.m
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.d, -8
+  %6 = sub i64 %5, %i.m                           ; 2 uses
   %i.ak = lshr i64 %6, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check46 = icmp ult i64 %6, 152

@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.d, %bb.a
   br i1 %i.i, label %bb.f, label %.loopexit
 
 bb.f:                                             ; preds = %bb.e
-  %i.j = add nuw nsw i32 %1, %0                   ; 3 uses
+  %i.j = add nuw nsw i32 %1, %0                   ; 4 uses
   %i.k = lshr i32 %i.j, 1                         ; 4 uses
   tail call fastcc void @mymergesort(i32 noundef %0, i32 noundef %i.k, ptr noundef %2)
   %i.l = add nuw nsw i32 %i.k, 1                  ; 3 uses
@@ -216,10 +216,10 @@ bb.f:                                             ; preds = %bb.e
   %i.n = zext nneg i32 %0 to i64                  ; 7 uses
   %wide.trip.count = zext nneg i32 %i.l to i64
   %i.o = lshr i32 %i.j, 1
-  %3 = zext nneg i32 %i.o to i64                  ; 3 uses
-  %4 = sub nsw i64 %3, %i.n
-  %5 = add nsw i64 %4, 1                          ; 3 uses
-  %min.iters.check = icmp ult i64 %5, 10
+  %narrow = add nuw i32 %i.o, 1
+  %3 = zext i32 %narrow to i64
+  %4 = sub nsw i64 %3, %i.n                       ; 3 uses
+  %min.iters.check = icmp ult i64 %4, 10
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
@@ -231,7 +231,7 @@ vector.memcheck:                                  ; preds = %.lr.ph
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %5, -4                         ; 6 uses
+  %n.vec = and i64 %4, -4                         ; 6 uses
   %i.t = add nsw i64 %n.vec, %i.n
   %invariant.gep = getelementptr [8 x i8], ptr %2, i64 %i.n
   br label %vector.body
@@ -252,15 +252,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %ind.escape = add nsw i64 %n.vec, -1
-  %cmp.n = icmp eq i64 %5, %n.vec
+  %cmp.n = icmp eq i64 %4, %n.vec
   br i1 %cmp.n, label %.loopexit90, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
   %indvars.iv44.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 2 uses
   %indvars.iv.ph = phi i64 [ %i.n, %vector.memcheck ], [ %i.n, %.lr.ph ], [ %i.t, %middle.block ] ; 4 uses
-  %i.y = add nuw nsw i64 %3, 1
+  %5 = lshr i32 %i.j, 1
+  %6 = zext nneg i32 %5 to i64                    ; 2 uses
+  %i.y = add nuw nsw i64 %6, 1
   %i.z = sub nsw i64 %i.y, %indvars.iv.ph
-  %i.aa = sub nsw i64 %3, %indvars.iv.ph
+  %i.aa = sub nsw i64 %6, %indvars.iv.ph
   %xtraiter = and i64 %i.z, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
@@ -339,11 +341,11 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.bb = sext i32 %mymergesort.j.promoted36 to i64 ; 6 uses
   %i.bc = sext i32 %mymergesort.k.promoted37 to i64 ; 5 uses
   %i.bd = lshr i32 %i.j, 1
-  %i.be = zext nneg i32 %i.bd to i64
+  %narrow91 = add nuw i32 %i.bd, 1
+  %i.be = zext i32 %narrow91 to i64
   %i.bf = add nsw i64 %i.bb, %i.n
-  %i.bg = sub nsw i64 %i.be, %i.bf
-  %6 = add nsw i64 %i.bg, 1                       ; 3 uses
-  %min.iters.check78 = icmp ult i64 %6, 14
+  %i.bg = sub nsw i64 %i.be, %i.bf                ; 3 uses
+  %min.iters.check78 = icmp ult i64 %i.bg, 14
   br i1 %min.iters.check78, label %scalar.ph77.preheader, label %vector.memcheck75
 
 vector.memcheck75:                                ; preds = %.lr.ph38
@@ -357,7 +359,7 @@ vector.memcheck75:                                ; preds = %.lr.ph38
   br i1 %diff.check76, label %scalar.ph77.preheader, label %vector.ph79
 
 vector.ph79:                                      ; preds = %vector.memcheck75
-  %n.vec80 = and i64 %6, -4                       ; 4 uses
+  %n.vec80 = and i64 %i.bg, -4                    ; 4 uses
   %i.bn = add nsw i64 %n.vec80, %i.bc
   %i.bo = add nsw i64 %n.vec80, %i.bb
   %invariant.gep98 = getelementptr [8 x i8], ptr %i.ba, i64 %i.bb
@@ -379,7 +381,7 @@ vector.body81:                                    ; preds = %vector.body81, %vec
   br i1 %i.br, label %middle.block86, label %vector.body81, !llvm.loop !100
 
 middle.block86:                                   ; preds = %vector.body81
-  %cmp.n87 = icmp eq i64 %6, %n.vec80
+  %cmp.n87 = icmp eq i64 %i.bg, %n.vec80
   br i1 %cmp.n87, label %.loopexit, label %scalar.ph77.preheader
 
 scalar.ph77.preheader:                            ; preds = %vector.memcheck75, %.lr.ph38, %middle.block86

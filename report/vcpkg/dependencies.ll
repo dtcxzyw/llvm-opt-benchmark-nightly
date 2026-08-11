@@ -203,8 +203,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc751
-  %113 = sub i64 %i.ao, %i.ap
-  %114 = add i64 %113, -8                         ; 2 uses
+  %113 = add i64 %i.ao, -8
+  %114 = sub i64 %113, %i.ap                      ; 2 uses
   %i.ba = lshr i64 %114, 3
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %114, 136
@@ -441,8 +441,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i755, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i767, label %.lr.ph.i.i.i.i756.preheader
 
 .lr.ph.i.i.i.i756.preheader:                      ; preds = %.noexc771
-  %115 = sub i64 %i.dh, %i.di
-  %116 = add i64 %115, -8                         ; 2 uses
+  %115 = add i64 %i.dh, -8
+  %116 = sub i64 %115, %i.di                      ; 2 uses
   %i.dt = lshr i64 %116, 3
   %i.du = add nuw nsw i64 %i.dt, 1                ; 2 uses
   %min.iters.check1206 = icmp ult i64 %116, 136
@@ -679,8 +679,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i776, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i788, label %.lr.ph.i.i.i.i777.preheader
 
 .lr.ph.i.i.i.i777.preheader:                      ; preds = %.noexc792
-  %117 = sub i64 %i.ga, %i.gb
-  %118 = add i64 %117, -8                         ; 2 uses
+  %117 = add i64 %i.ga, -8
+  %118 = sub i64 %117, %i.gb                      ; 2 uses
   %i.gm = lshr i64 %118, 3
   %i.gn = add nuw nsw i64 %i.gm, 1                ; 2 uses
   %min.iters.check1227 = icmp ult i64 %118, 136
@@ -1083,8 +1083,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc271
-  %39 = sub i64 %i.bl, %i.bm
-  %40 = add i64 %39, -8                           ; 2 uses
+  %39 = add i64 %i.bl, -8
+  %40 = sub i64 %39, %i.bm                        ; 2 uses
   %i.bx = lshr i64 %40, 3
   %i.by = add nuw nsw i64 %i.bx, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %40, 136
@@ -1296,8 +1296,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i275, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i287, label %.lr.ph.i.i.i.i276.preheader
 
 .lr.ph.i.i.i.i276.preheader:                      ; preds = %.noexc291
-  %41 = sub i64 %i.dw, %i.dx
-  %42 = add i64 %41, -8                           ; 2 uses
+  %41 = add i64 %i.dw, -8
+  %42 = sub i64 %41, %i.dx                        ; 2 uses
   %i.ej = lshr i64 %42, 3
   %i.ek = add nuw nsw i64 %i.ej, 1                ; 2 uses
   %min.iters.check459 = icmp ult i64 %42, 136
@@ -1700,8 +1700,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc425
-  %69 = sub i64 %i.bo, %i.bp
-  %70 = add i64 %69, -8                           ; 2 uses
+  %69 = add i64 %i.bo, -8
+  %70 = sub i64 %69, %i.bp                        ; 2 uses
   %i.ca = lshr i64 %70, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %70, 136
@@ -1912,8 +1912,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i429, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i441, label %.lr.ph.i.i.i.i430.preheader
 
 .lr.ph.i.i.i.i430.preheader:                      ; preds = %.noexc445
-  %71 = sub i64 %i.dz, %i.ea
-  %72 = add i64 %71, -8                           ; 2 uses
+  %71 = add i64 %i.dz, -8
+  %72 = sub i64 %71, %i.ea                        ; 2 uses
   %i.em = lshr i64 %72, 3
   %i.en = add nuw nsw i64 %i.em, 1                ; 2 uses
   %min.iters.check698 = icmp ult i64 %72, 136
@@ -2154,8 +2154,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i450, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i462, label %.lr.ph.i.i.i.i451.preheader
 
 .lr.ph.i.i.i.i451.preheader:                      ; preds = %.noexc466
-  %73 = sub i64 %i.gy, %i.gz
-  %74 = add i64 %73, -8                           ; 2 uses
+  %73 = add i64 %i.gy, -8
+  %74 = sub i64 %73, %i.gz                        ; 2 uses
   %i.hk = lshr i64 %74, 3
   %i.hl = add nuw nsw i64 %i.hk, 1                ; 2 uses
   %min.iters.check719 = icmp ult i64 %74, 136
@@ -2558,8 +2558,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc126
-  %28 = sub i64 %i.bl, %i.bm
-  %29 = add i64 %28, -8                           ; 2 uses
+  %28 = add i64 %i.bl, -8
+  %29 = sub i64 %28, %i.bm                        ; 2 uses
   %i.by = lshr i64 %29, 3
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %29, 136
@@ -2962,8 +2962,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc126
-  %28 = sub i64 %i.bl, %i.bm
-  %29 = add i64 %28, -8                           ; 2 uses
+  %28 = add i64 %i.bl, -8
+  %29 = sub i64 %28, %i.bm                        ; 2 uses
   %i.by = lshr i64 %29, 3
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %29, 136
@@ -3366,8 +3366,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc369
-  %59 = sub i64 %i.bn, %i.bo
-  %60 = add i64 %59, -8                           ; 2 uses
+  %59 = add i64 %i.bn, -8
+  %60 = sub i64 %59, %i.bo                        ; 2 uses
   %i.ca = lshr i64 %60, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %60, 136
@@ -3770,8 +3770,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc572
-  %63 = sub i64 %i.kj, %i.kk
-  %64 = add i64 %63, -8                           ; 2 uses
+  %63 = add i64 %i.kj, -8
+  %64 = sub i64 %63, %i.kk                        ; 2 uses
   %i.kw = lshr i64 %64, 3
   %i.kx = add nuw nsw i64 %i.kw, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %64, 136
@@ -3900,8 +3900,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i576, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i588, label %.lr.ph.i.i.i.i577.preheader
 
 .lr.ph.i.i.i.i577.preheader:                      ; preds = %.noexc592
-  %65 = sub i64 %i.lw, %i.lx
-  %66 = add i64 %65, -8                           ; 2 uses
+  %65 = add i64 %i.lw, -8
+  %66 = sub i64 %65, %i.lx                        ; 2 uses
   %i.mi = lshr i64 %66, 3
   %i.mj = add nuw nsw i64 %i.mi, 1                ; 2 uses
   %min.iters.check927 = icmp ult i64 %66, 136
@@ -4037,8 +4037,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i597, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i609, label %.lr.ph.i.i.i.i598.preheader
 
 .lr.ph.i.i.i.i598.preheader:                      ; preds = %.noexc613
-  %67 = sub i64 %i.ni, %i.nj
-  %68 = add i64 %67, -8                           ; 2 uses
+  %67 = add i64 %i.ni, -8
+  %68 = sub i64 %67, %i.nj                        ; 2 uses
   %i.nu = lshr i64 %68, 3
   %i.nv = add nuw nsw i64 %i.nu, 1                ; 2 uses
   %min.iters.check948 = icmp ult i64 %68, 136
@@ -4441,8 +4441,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc237
-  %39 = sub i64 %i.bh, %i.bi
-  %40 = add i64 %39, -8                           ; 2 uses
+  %39 = add i64 %i.bh, -8
+  %40 = sub i64 %39, %i.bi                        ; 2 uses
   %i.bu = lshr i64 %40, 3
   %i.bv = add nuw nsw i64 %i.bu, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %40, 136
@@ -4845,8 +4845,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc475
-  %56 = sub i64 %i.bh, %i.bi
-  %57 = add i64 %56, -8                           ; 2 uses
+  %56 = add i64 %i.bh, -8
+  %57 = sub i64 %56, %i.bi                        ; 2 uses
   %i.bu = lshr i64 %57, 3
   %i.bv = add nuw nsw i64 %i.bu, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %57, 136
@@ -5168,8 +5168,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i479, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i491, label %.lr.ph.i.i.i.i480.preheader
 
 .lr.ph.i.i.i.i480.preheader:                      ; preds = %.noexc495
-  %58 = sub i64 %i.fl, %i.fm
-  %59 = add i64 %58, -8                           ; 2 uses
+  %58 = add i64 %i.fl, -8
+  %59 = sub i64 %58, %i.fm                        ; 2 uses
   %i.fy = lshr i64 %59, 3
   %i.fz = add nuw nsw i64 %i.fy, 1                ; 2 uses
   %min.iters.check779 = icmp ult i64 %59, 136
@@ -5491,8 +5491,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i500, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i512, label %.lr.ph.i.i.i.i501.preheader
 
 .lr.ph.i.i.i.i501.preheader:                      ; preds = %.noexc516
-  %60 = sub i64 %i.jp, %i.jq
-  %61 = add i64 %60, -8                           ; 2 uses
+  %60 = add i64 %i.jp, -8
+  %61 = sub i64 %60, %i.jq                        ; 2 uses
   %i.kc = lshr i64 %61, 3
   %i.kd = add nuw nsw i64 %i.kc, 1                ; 2 uses
   %min.iters.check800 = icmp ult i64 %61, 136
@@ -5895,8 +5895,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc219
-  %34 = sub i64 %i.cb, %i.cc
-  %35 = add i64 %34, -8                           ; 2 uses
+  %34 = add i64 %i.cb, -8
+  %35 = sub i64 %34, %i.cc                        ; 2 uses
   %i.co = lshr i64 %35, 3
   %i.cp = add nuw nsw i64 %i.co, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %35, 136
@@ -6190,8 +6190,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i223, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i235, label %.lr.ph.i.i.i.i224.preheader
 
 .lr.ph.i.i.i.i224.preheader:                      ; preds = %.noexc239
-  %36 = sub i64 %i.fx, %i.fy
-  %37 = add i64 %36, -8                           ; 2 uses
+  %36 = add i64 %i.fx, -8
+  %37 = sub i64 %36, %i.fy                        ; 2 uses
   %i.gk = lshr i64 %37, 3
   %i.gl = add nuw nsw i64 %i.gk, 1                ; 2 uses
   %min.iters.check401 = icmp ult i64 %37, 136
@@ -6355,8 +6355,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i244, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i256, label %.lr.ph.i.i.i.i245.preheader
 
 .lr.ph.i.i.i.i245.preheader:                      ; preds = %.noexc260
-  %38 = sub i64 %i.hw, %i.hx
-  %39 = add i64 %38, -8                           ; 2 uses
+  %38 = add i64 %i.hw, -8
+  %39 = sub i64 %38, %i.hx                        ; 2 uses
   %i.ij = lshr i64 %39, 3
   %i.ik = add nuw nsw i64 %i.ij, 1                ; 2 uses
   %min.iters.check422 = icmp ult i64 %39, 136
@@ -6759,8 +6759,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc124
-  %25 = sub i64 %i.bz, %i.ca
-  %26 = add i64 %25, -8                           ; 2 uses
+  %25 = add i64 %i.bz, -8
+  %26 = sub i64 %25, %i.ca                        ; 2 uses
   %i.cm = lshr i64 %26, 3
   %i.cn = add nuw nsw i64 %i.cm, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %26, 136
@@ -7163,8 +7163,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc421
-  %47 = sub i64 %i.is, %i.it
-  %48 = add i64 %47, -8                           ; 2 uses
+  %47 = add i64 %i.is, -8
+  %48 = sub i64 %47, %i.it                        ; 2 uses
   %i.jf = lshr i64 %48, 3
   %i.jg = add nuw nsw i64 %i.jf, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %48, 136
@@ -7567,8 +7567,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc620
-  %69 = sub i64 %i.cu, %i.cv
-  %70 = add i64 %69, -8                           ; 2 uses
+  %69 = add i64 %i.cu, -8
+  %70 = sub i64 %69, %i.cv                        ; 2 uses
   %i.dg = lshr i64 %70, 3
   %i.dh = add nuw nsw i64 %i.dg, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %70, 136
@@ -7803,8 +7803,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i624, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i636, label %.lr.ph.i.i.i.i625.preheader
 
 .lr.ph.i.i.i.i625.preheader:                      ; preds = %.noexc640
-  %71 = sub i64 %i.fm, %i.fn
-  %72 = add i64 %71, -8                           ; 2 uses
+  %71 = add i64 %i.fm, -8
+  %72 = sub i64 %71, %i.fn                        ; 2 uses
   %i.fy = lshr i64 %72, 3
   %i.fz = add nuw nsw i64 %i.fy, 1                ; 2 uses
   %min.iters.check1028 = icmp ult i64 %72, 136
@@ -8207,8 +8207,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc294
-  %67 = sub i64 %i.cm, %i.cn
-  %68 = add i64 %67, -8                           ; 2 uses
+  %67 = add i64 %i.cm, -8
+  %68 = sub i64 %67, %i.cn                        ; 2 uses
   %i.cy = lshr i64 %68, 3
   %i.cz = add nuw nsw i64 %i.cy, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %68, 136
@@ -8611,8 +8611,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc310
-  %69 = sub i64 %i.cv, %i.cw
-  %70 = add i64 %69, -8                           ; 2 uses
+  %69 = add i64 %i.cv, -8
+  %70 = sub i64 %69, %i.cw                        ; 2 uses
   %i.dh = lshr i64 %70, 3
   %i.di = add nuw nsw i64 %i.dh, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %70, 136
@@ -9015,8 +9015,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg15StatusParagraphESt14default_deleteIS2_EESa
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg15StatusParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i1004.preheader
 
 .lr.ph.i.i.i.i1004.preheader:                     ; preds = %.noexc1007
-  %166 = sub i64 %i.k, %i.l
-  %167 = add i64 %166, -8                         ; 2 uses
+  %166 = add i64 %i.k, -8
+  %167 = sub i64 %166, %i.l                       ; 2 uses
   %i.x = lshr i64 %167, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %167, 136
@@ -9163,8 +9163,8 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg15StatusParagraphESt14default_deleteIS2_EESa
   br i1 %.not10.i.i.i.i1011, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg15StatusParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i1023, label %.lr.ph.i.i.i.i1012.preheader
 
 .lr.ph.i.i.i.i1012.preheader:                     ; preds = %.noexc1027
-  %168 = sub i64 %i.av, %i.aw
-  %169 = add i64 %168, -8                         ; 2 uses
+  %168 = add i64 %i.av, -8
+  %169 = sub i64 %168, %i.aw                      ; 2 uses
   %i.bi = lshr i64 %169, 3
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
   %min.iters.check1514 = icmp ult i64 %169, 136

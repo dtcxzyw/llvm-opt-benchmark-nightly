@@ -129,7 +129,7 @@ define internal fastcc i32 @BuildHuffmanTable(ptr noundef %0, i32 noundef %1, pt
 bb.a:
   %i.a = alloca [16 x i32], align 16              ; 23 uses
   %i.b = alloca [16 x i32], align 16              ; 21 uses
-  %i.c = shl nuw i32 1, %1                        ; 9 uses
+  %i.c = shl nuw i32 1, %1                        ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.a, i8 0, i64 64, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
@@ -413,18 +413,16 @@ bb.y:                                             ; preds = %bb.x
   %i.do = load i16, ptr %4, align 2, !tbaa !19
   %.sroa.441.0.insert.ext = zext i16 %i.do to i32
   %.sroa.441.0.insert.shift = shl nuw i32 %.sroa.441.0.insert.ext, 16 ; 2 uses
-  %i.dp = sext i32 %i.c to i64                    ; 5 uses
-  %i.dq = tail call i64 @llvm.smin.i64(i64 %i.dp, i64 1)
-  %5 = sub i64 %i.dp, %i.dq
-  %6 = add i64 %5, 1                              ; 3 uses
-  %min.iters.check = icmp ult i64 %6, 8
+  %i.dp = sext i32 %i.c to i64                    ; 4 uses
+  %i.dq = tail call i64 @llvm.smax.i64(i64 %i.dp, i64 1) ; 2 uses
+  %min.iters.check = icmp slt i32 %i.c, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.y
-  %n.vec = and i64 %6, -8                         ; 3 uses
+  %n.vec = and i64 %i.dq, 2147483640              ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.sroa.441.0.insert.shift, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.dr = sub i64 %i.dp, %n.vec
+  %i.dr = sub nsw i64 %i.dp, %n.vec
   %invariant.gep = getelementptr [4 x i8], ptr %0, i64 %i.dp
   br label %vector.body
 
@@ -441,7 +439,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.dv, label %middle.block, label %vector.body, !llvm.loop !21
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %6, %n.vec
+  %cmp.n = icmp eq i64 %i.dq, %n.vec
   br i1 %cmp.n, label %.critedge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %bb.y, %middle.block
@@ -844,7 +842,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare i32 @llvm.smax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #5
+declare i64 @llvm.smax.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6

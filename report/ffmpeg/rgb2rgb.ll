@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @rgb24tobgr16_c(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 7 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 8 uses
   %i.b = zext i32 %2 to i64                       ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %i.b
   %i.d = icmp sgt i32 %2, 0
@@ -213,11 +213,11 @@ bb.a:
   %i.e = add i64 %i.a, %i.b
   %i.f = add i64 %i.a, 3
   %i.g = tail call i64 @llvm.umax.i64(i64 %i.e, i64 %i.f)
-  %3 = sub i64 %i.g, %i.a                         ; 2 uses
-  %i.h = icmp ne i64 %3, 3
+  %3 = add i64 %i.g, -3                           ; 2 uses
+  %i.h = icmp ne i64 %3, %i.a
   %i.i = zext i1 %i.h to i64                      ; 2 uses
-  %4 = sub i64 %3, %i.i
-  %5 = add i64 %4, -3
+  %4 = add i64 %i.a, %i.i
+  %5 = sub i64 %3, %4
   %i.j = udiv i64 %5, 3
   %i.k = add nuw nsw i64 %i.j, %i.i               ; 2 uses
   %i.l = add nuw i64 %i.k, 1                      ; 2 uses
@@ -390,7 +390,7 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @rgb24tobgr15_c(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 7 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 8 uses
   %i.b = zext i32 %2 to i64                       ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %i.b
   %i.d = icmp sgt i32 %2, 0
@@ -400,11 +400,11 @@ bb.a:
   %i.e = add i64 %i.a, %i.b
   %i.f = add i64 %i.a, 3
   %i.g = tail call i64 @llvm.umax.i64(i64 %i.e, i64 %i.f)
-  %3 = sub i64 %i.g, %i.a                         ; 2 uses
-  %i.h = icmp ne i64 %3, 3
+  %3 = add i64 %i.g, -3                           ; 2 uses
+  %i.h = icmp ne i64 %3, %i.a
   %i.i = zext i1 %i.h to i64                      ; 2 uses
-  %4 = sub i64 %3, %i.i
-  %5 = add i64 %4, -3
+  %4 = add i64 %i.a, %i.i
+  %5 = sub i64 %3, %4
   %i.j = udiv i64 %5, 3
   %i.k = add nuw nsw i64 %i.j, %i.i               ; 2 uses
   %i.l = add nuw i64 %i.k, 1                      ; 2 uses
@@ -807,7 +807,7 @@ bb.a:
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @rgb24to15_c(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 7 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 8 uses
   %i.b = zext i32 %2 to i64                       ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %i.b
   %i.d = icmp sgt i32 %2, 0
@@ -817,11 +817,11 @@ bb.a:
   %i.e = add i64 %i.a, %i.b
   %i.f = add i64 %i.a, 3
   %i.g = tail call i64 @llvm.umax.i64(i64 %i.e, i64 %i.f)
-  %3 = sub i64 %i.g, %i.a                         ; 2 uses
-  %i.h = icmp ne i64 %3, 3
+  %3 = add i64 %i.g, -3                           ; 2 uses
+  %i.h = icmp ne i64 %3, %i.a
   %i.i = zext i1 %i.h to i64                      ; 2 uses
-  %4 = sub i64 %3, %i.i
-  %5 = add i64 %4, -3
+  %4 = add i64 %i.a, %i.i
+  %5 = sub i64 %3, %4
   %i.j = udiv i64 %5, 3
   %i.k = add nuw nsw i64 %i.j, %i.i               ; 2 uses
   %i.l = add nuw i64 %i.k, 1                      ; 2 uses
@@ -994,7 +994,7 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @rgb24to16_c(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 7 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 8 uses
   %i.b = zext i32 %2 to i64                       ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %i.b
   %i.d = icmp sgt i32 %2, 0
@@ -1004,11 +1004,11 @@ bb.a:
   %i.e = add i64 %i.a, %i.b
   %i.f = add i64 %i.a, 3
   %i.g = tail call i64 @llvm.umax.i64(i64 %i.e, i64 %i.f)
-  %3 = sub i64 %i.g, %i.a                         ; 2 uses
-  %i.h = icmp ne i64 %3, 3
+  %3 = add i64 %i.g, -3                           ; 2 uses
+  %i.h = icmp ne i64 %3, %i.a
   %i.i = zext i1 %i.h to i64                      ; 2 uses
-  %4 = sub i64 %3, %i.i
-  %5 = add i64 %4, -3
+  %4 = add i64 %i.a, %i.i
+  %5 = sub i64 %3, %4
   %i.j = udiv i64 %5, 3
   %i.k = add nuw nsw i64 %i.j, %i.i               ; 2 uses
   %i.l = add nuw i64 %i.k, 1                      ; 2 uses

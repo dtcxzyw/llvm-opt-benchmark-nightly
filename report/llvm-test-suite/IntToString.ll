@@ -149,7 +149,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %indvars.iv12 = phi i32 [ %indvars.iv.next13, %bb.b ], [ 1, %bb.a ] ; 2 uses
+  %indvars.iv12 = phi i32 [ %indvars.iv.next13, %bb.b ], [ 1, %bb.a ] ; 3 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %.08 = phi i64 [ %i.f, %bb.b ], [ %0, %bb.a ]   ; 3 uses
   %i.b = urem i64 %.08, 10
@@ -164,17 +164,15 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   br i1 %.not, label %.preheader.preheader, label %bb.b, !llvm.loop !19
 
 .preheader.preheader:                             ; preds = %bb.b
-  %i.g = sext i32 %indvars.iv12 to i64            ; 5 uses
-  %i.h = tail call i64 @llvm.smin.i64(i64 %i.g, i64 1)
-  %2 = sub i64 %i.g, %i.h
-  %3 = add i64 %2, 1                              ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 8
+  %i.g = sext i32 %indvars.iv12 to i64            ; 4 uses
+  %i.h = tail call i64 @llvm.smax.i64(i64 %i.g, i64 1) ; 2 uses
+  %min.iters.check = icmp slt i32 %indvars.iv12, 8
   br i1 %min.iters.check, label %.preheader.preheader20, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.preheader
-  %n.vec = and i64 %3, -8                         ; 4 uses
-  %i.i = sub i64 %i.g, %n.vec
-  %i.j = shl i64 %n.vec, 2
+  %n.vec = and i64 %i.h, 2147483640               ; 4 uses
+  %i.i = sub nsw i64 %i.g, %n.vec
+  %i.j = shl nuw nsw i64 %n.vec, 2
   %i.k = getelementptr i8, ptr %1, i64 %i.j       ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.a, i64 %i.g
   br label %vector.body
@@ -199,7 +197,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.q, label %middle.block, label %vector.body, !llvm.loop !20
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %i.h, %n.vec
   br i1 %cmp.n, label %.loopexit, label %.preheader.preheader20
 
 .preheader.preheader20:                           ; preds = %.preheader.preheader, %middle.block
@@ -349,7 +347,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %indvars.iv12.i = phi i32 [ %indvars.iv.next13.i, %bb.b ], [ 1, %bb.a ] ; 2 uses
+  %indvars.iv12.i = phi i32 [ %indvars.iv.next13.i, %bb.b ], [ 1, %bb.a ] ; 3 uses
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %.08.i = phi i64 [ %i.g, %bb.b ], [ %i.b, %bb.a ] ; 3 uses
   %i.c = urem i64 %.08.i, 10
@@ -364,17 +362,15 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i, label %.preheader.preheader.i, label %bb.b, !llvm.loop !19
 
 .preheader.preheader.i:                           ; preds = %bb.b
-  %i.h = sext i32 %indvars.iv12.i to i64          ; 5 uses
-  %i.i = tail call i64 @llvm.smin.i64(i64 %i.h, i64 1)
-  %2 = sub i64 %i.h, %i.i
-  %3 = add i64 %2, 1                              ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 8
+  %i.h = sext i32 %indvars.iv12.i to i64          ; 4 uses
+  %i.i = tail call i64 @llvm.smax.i64(i64 %i.h, i64 1) ; 2 uses
+  %min.iters.check = icmp slt i32 %indvars.iv12.i, 8
   br i1 %min.iters.check, label %.preheader.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.preheader.i
-  %n.vec = and i64 %3, -8                         ; 4 uses
-  %i.j = sub i64 %i.h, %n.vec
-  %i.k = shl i64 %n.vec, 2
+  %n.vec = and i64 %i.i, 2147483640               ; 4 uses
+  %i.j = sub nsw i64 %i.h, %n.vec
+  %i.k = shl nuw nsw i64 %n.vec, 2
   %i.l = getelementptr i8, ptr %1, i64 %i.k       ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.a, i64 %i.h
   br label %vector.body
@@ -399,7 +395,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.r, label %middle.block, label %vector.body, !llvm.loop !25
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %i.i, %n.vec
   br i1 %cmp.n, label %_Z21ConvertUInt64ToStringyPw.exit, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %.preheader.preheader.i, %middle.block
@@ -571,7 +567,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
-  %indvars.iv12.i = phi i32 [ %indvars.iv.next13.i, %bb.d ], [ 1, %bb.c ] ; 2 uses
+  %indvars.iv12.i = phi i32 [ %indvars.iv.next13.i, %bb.d ], [ 1, %bb.c ] ; 3 uses
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.08.i = phi i64 [ %i.i, %bb.d ], [ %.04, %bb.c ] ; 3 uses
   %i.e = urem i64 %.08.i, 10
@@ -586,17 +582,15 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   br i1 %.not.i, label %.preheader.preheader.i, label %bb.d, !llvm.loop !19
 
 .preheader.preheader.i:                           ; preds = %bb.d
-  %i.j = sext i32 %indvars.iv12.i to i64          ; 5 uses
-  %i.k = tail call i64 @llvm.smin.i64(i64 %i.j, i64 1)
-  %2 = sub i64 %i.j, %i.k
-  %3 = add i64 %2, 1                              ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 8
+  %i.j = sext i32 %indvars.iv12.i to i64          ; 4 uses
+  %i.k = tail call i64 @llvm.smax.i64(i64 %i.j, i64 1) ; 2 uses
+  %min.iters.check = icmp slt i32 %indvars.iv12.i, 8
   br i1 %min.iters.check, label %.preheader.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.preheader.i
-  %n.vec = and i64 %3, -8                         ; 4 uses
-  %i.l = sub i64 %i.j, %n.vec
-  %i.m = shl i64 %n.vec, 2
+  %n.vec = and i64 %i.k, 2147483640               ; 4 uses
+  %i.l = sub nsw i64 %i.j, %n.vec
+  %i.m = shl nuw nsw i64 %n.vec, 2
   %i.n = getelementptr i8, ptr %.0, i64 %i.m      ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.a, i64 %i.j
   br label %vector.body
@@ -621,7 +615,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !30
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %i.k, %n.vec
   br i1 %cmp.n, label %_Z21ConvertUInt64ToStringyPw.exit, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %.preheader.preheader.i, %middle.block
@@ -703,9 +697,6 @@ bb.a:
   store i8 0, ptr %i.as, align 1, !tbaa !8
   ret void
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #3

@@ -204,18 +204,17 @@ middle.block697:                                  ; preds = %vector.body692
   br i1 %i.aap, label %.lr.ph49.i.i.i.i.i.i.i.i.i.i.preheader, label %.loopexit533
 
 .lr.ph49.i.i.i.i.i.i.i.i.i.i.preheader:           ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i300
-  %40 = lshr i64 %i.aaj, 1
-  %41 = mul i64 %40, -2
-  %i.aaq = sub i64 %41, %i.aai
-  %42 = add i64 %i.aaq, %i.oo                     ; 3 uses
-  %min.iters.check703 = icmp ult i64 %42, 8
+  %40 = and i64 %i.aaj, -2
+  %41 = add i64 %i.aai, %40
+  %i.aaq = sub i64 %i.oo, %41                     ; 3 uses
+  %min.iters.check703 = icmp ult i64 %i.aaq, 8
   %i.aar = sub i64 %i.yy, %i.yz
   %diff.check701 = icmp ugt i64 %i.aar, -32
   %or.cond842 = select i1 %min.iters.check703, i1 true, i1 %diff.check701
   br i1 %or.cond842, label %.lr.ph49.i.i.i.i.i.i.i.i.i.i.preheader854, label %vector.ph704
 
 vector.ph704:                                     ; preds = %.lr.ph49.i.i.i.i.i.i.i.i.i.i.preheader
-  %n.vec705 = and i64 %42, -4                     ; 3 uses
+  %n.vec705 = and i64 %i.aaq, -4                  ; 3 uses
   %i.aas = add i64 %i.aal, %n.vec705
   br label %vector.body706
 
@@ -235,7 +234,7 @@ vector.body706:                                   ; preds = %vector.body706, %ve
   br i1 %i.aay, label %middle.block711, label %vector.body706, !llvm.loop !256
 
 middle.block711:                                  ; preds = %vector.body706
-  %cmp.n712 = icmp eq i64 %42, %n.vec705
+  %cmp.n712 = icmp eq i64 %i.aaq, %n.vec705
   br i1 %cmp.n712, label %.loopexit533, label %.lr.ph49.i.i.i.i.i.i.i.i.i.i.preheader854
 
 .lr.ph49.i.i.i.i.i.i.i.i.i.i.preheader854:        ; preds = %.lr.ph49.i.i.i.i.i.i.i.i.i.i.preheader, %middle.block711

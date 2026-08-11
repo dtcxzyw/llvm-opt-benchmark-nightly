@@ -204,6 +204,7 @@ scalar.ph3636:                                    ; preds = %scalar.ph3636.prehe
 .lr.ph881.i:                                      ; preds = %.lr.ph872.i, %.preheader832.i
   %i.jps = add nsw i32 %i.jke, -2                 ; 2 uses
   %i.jpt = add i32 %smin3506, -5
+  %6 = add i32 %smin1164, -5
   br label %bb.pe
 
 .lr.ph855.preheader.i:                            ; preds = %.lr.ph855.preheader.i.preheader, %.loopexit.i545
@@ -606,6 +607,7 @@ middle.block3584:                                 ; preds = %vector.body3575
 .lr.ph889.i:                                      ; preds = %.preheader831.i
   %i.jyz = add nsw i32 %i.jke, -4                 ; 2 uses
   %i.jza = add i32 %smin3415, -9
+  %7 = add i32 %smin1164, -9
   br label %bb.pf
 
 bb.pe:                                            ; preds = %._crit_edge879.i, %.lr.ph881.i
@@ -623,12 +625,11 @@ bb.pe:                                            ; preds = %._crit_edge879.i, %
   %i.jzh = or disjoint i32 %i.jze, %indvars.iv995.i
   %i.jzi = zext i32 %i.jzh to i64                 ; 5 uses
   %i.jzj = lshr i64 %i.jzi, 1                     ; 4 uses
-  %i.jzk = sub i32 %smin1164, %i.jze
-  %6 = add i32 %i.jzk, -5                         ; 2 uses
-  %i.jzl = lshr i32 %6, 1
+  %i.jzk = sub i32 %6, %i.jze                     ; 2 uses
+  %i.jzl = lshr i32 %i.jzk, 1
   %narrow4625 = add nuw i32 %i.jzl, 1
   %i.jzm = zext i32 %narrow4625 to i64            ; 2 uses
-  %min.iters.check3516 = icmp ult i32 %6, 16
+  %min.iters.check3516 = icmp ult i32 %i.jzk, 16
   br i1 %min.iters.check3516, label %.lr.ph878.i.preheader, label %vector.memcheck3502
 
 .lr.ph878.i.preheader:                            ; preds = %vector.body3519, %vector.memcheck3502, %.lr.ph878.preheader.i
@@ -792,12 +793,11 @@ bb.pf:                                            ; preds = %._crit_edge887.i, %
   %i.kcu = or disjoint i32 %i.kcr, %indvars.iv1002.i
   %i.kcv = zext i32 %i.kcu to i64                 ; 6 uses
   %i.kcw = lshr i64 %i.kcv, 1                     ; 4 uses
-  %i.kcx = sub i32 %smin1164, %i.kcr
-  %7 = add i32 %i.kcx, -9                         ; 2 uses
-  %i.kcy = lshr i32 %7, 1
+  %i.kcx = sub i32 %7, %i.kcr                     ; 2 uses
+  %i.kcy = lshr i32 %i.kcx, 1
   %narrow4627 = add nuw i32 %i.kcy, 1
   %i.kcz = zext i32 %narrow4627 to i64            ; 2 uses
-  %min.iters.check3441 = icmp ult i32 %7, 16
+  %min.iters.check3441 = icmp ult i32 %i.kcx, 16
   br i1 %min.iters.check3441, label %.lr.ph886.i.preheader, label %vector.memcheck3410
 
 .lr.ph886.i.preheader:                            ; preds = %vector.body3447, %vector.memcheck3410, %.lr.ph886.preheader.i
@@ -1185,6 +1185,7 @@ vector.body3447:                                  ; preds = %vector.body3447, %v
 
 .lr.ph906.i:                                      ; preds = %.preheader829.i
   %i.kns = add nsw i32 %i.jke, -4                 ; 6 uses
+  %8 = add i32 %smin1164, -9
   br label %bb.pg
 
 .lr.ph894.i:                                      ; preds = %._crit_edge895.i, %.lr.ph894.preheader.i
@@ -1454,12 +1455,11 @@ bb.pg:                                            ; preds = %._crit_edge904.i, %
   %i.ktn = add i32 %i.ktd, %indvars.iv1027.i
   %i.kto = lshr i32 %i.ktn, 1
   %i.ktp = zext nneg i32 %i.kto to i64            ; 5 uses
-  %i.ktq = sub i32 %smin1164, %i.ktd
-  %8 = add i32 %i.ktq, -9                         ; 2 uses
-  %i.ktr = lshr i32 %8, 1
+  %i.ktq = sub i32 %8, %i.ktd                     ; 2 uses
+  %i.ktr = lshr i32 %i.ktq, 1
   %narrow4628 = add nuw i32 %i.ktr, 1
   %i.kts = zext i32 %narrow4628 to i64            ; 2 uses
-  %min.iters.check3306 = icmp ult i32 %8, 14
+  %min.iters.check3306 = icmp ult i32 %i.ktq, 14
   br i1 %min.iters.check3306, label %.lr.ph903.i.preheader, label %vector.memcheck3291
 
 vector.memcheck3291:                              ; preds = %.lr.ph903.preheader.i
@@ -1541,6 +1541,7 @@ middle.block3318:                                 ; preds = %vector.body3309
 
 .preheader828.i.preheader:                        ; preds = %._crit_edge904.i
   %i.kvh = add i32 %smin3072, -9
+  %9 = add i32 %smin1164, -9
   br label %.preheader828.i
 
 .lr.ph903.i:                                      ; preds = %.lr.ph903.i.preheader, %.lr.ph903.i
@@ -1616,12 +1617,11 @@ middle.block3318:                                 ; preds = %vector.body3309
   %i.kxg = sext i32 %i.kwt to i64                 ; 5 uses
   %i.kxh = lshr exact i32 %indvars.iv1032.i, 1
   %i.kxi = zext nneg i32 %i.kxh to i64            ; 4 uses
-  %i.kxj = sub i32 %smin1164, %i.kwn
-  %9 = add i32 %i.kxj, -9                         ; 2 uses
-  %i.kxk = lshr i32 %9, 1
+  %i.kxj = sub i32 %9, %i.kwn                     ; 2 uses
+  %i.kxk = lshr i32 %i.kxj, 1
   %narrow4629 = add nuw i32 %i.kxk, 1
   %i.kxl = zext i32 %narrow4629 to i64            ; 2 uses
-  %min.iters.check3234 = icmp ult i32 %9, 16
+  %min.iters.check3234 = icmp ult i32 %i.kxj, 16
   br i1 %min.iters.check3234, label %scalar.ph3233.preheader, label %vector.memcheck3067
 
 scalar.ph3233.preheader:                          ; preds = %vector.body3240, %vector.memcheck3067, %.lr.ph913.i
@@ -1948,6 +1948,7 @@ vector.body3240:                                  ; preds = %vector.body3240, %v
 
 .preheader.i542.preheader:                        ; preds = %._crit_edge914.i
   %i.lcj = add i32 %smin2983, -9
+  %10 = add i32 %smin1164, -9
   br label %.preheader.i542
 
 scalar.ph3233:                                    ; preds = %scalar.ph3233.preheader, %scalar.ph3233
@@ -2114,12 +2115,11 @@ scalar.ph3233:                                    ; preds = %scalar.ph3233.prehe
 .lr.ph921.preheader.i:                            ; preds = %.preheader.i542
   %i.lhm = or disjoint i32 %i.lhj, %indvars.iv1050.i
   %i.lhn = sext i32 %i.lhm to i64                 ; 5 uses
-  %i.lho = sub i32 %smin1164, %i.lhj
-  %10 = add i32 %i.lho, -9                        ; 2 uses
-  %i.lhp = lshr i32 %10, 1
+  %i.lho = sub i32 %10, %i.lhj                    ; 2 uses
+  %i.lhp = lshr i32 %i.lho, 1
   %narrow4631 = add nuw i32 %i.lhp, 1
   %i.lhq = zext i32 %narrow4631 to i64            ; 2 uses
-  %min.iters.check2993 = icmp ult i32 %10, 16
+  %min.iters.check2993 = icmp ult i32 %i.lho, 16
   br i1 %min.iters.check2993, label %.lr.ph921.i.preheader, label %vector.memcheck2978
 
 .lr.ph921.i.preheader:                            ; preds = %vector.body2999, %vector.memcheck2978, %.lr.ph921.preheader.i
@@ -2522,8 +2522,8 @@ bb.py:                                            ; preds = %._crit_edge1040.i, 
   %i.mgz = zext nneg i32 %i.mgy to i64            ; 2 uses
   %i.mha = or disjoint i64 %i.mgz, 4
   %i.mhb = call i64 @llvm.smax.i64(i64 %i.mby, i64 %i.mha)
-  %11 = sub nsw i64 %i.mhb, %i.mgz
-  %12 = add i64 %11, -3                           ; 2 uses
+  %11 = add nsw i64 %i.mhb, -3
+  %12 = sub i64 %11, %i.mgz                       ; 2 uses
   %min.iters.check4426 = icmp ult i64 %12, 16
   br i1 %min.iters.check4426, label %scalar.ph4425.preheader, label %vector.ph4427
 
@@ -2662,8 +2662,8 @@ vector.body4432:                                  ; preds = %vector.body4432, %v
   %i.mjz = zext nneg i32 %i.mjy to i64            ; 2 uses
   %i.mka = or disjoint i64 %i.mjz, 4
   %i.mkb = call i64 @llvm.smax.i64(i64 %i.mby, i64 %i.mka)
-  %13 = sub nsw i64 %i.mkb, %i.mjz
-  %14 = add i64 %13, -3                           ; 2 uses
+  %13 = add nsw i64 %i.mkb, -3
+  %14 = sub i64 %13, %i.mjz                       ; 2 uses
   %min.iters.check4390 = icmp ult i64 %14, 16
   br i1 %min.iters.check4390, label %scalar.ph4389.preheader, label %vector.ph4391
 
@@ -3066,8 +3066,8 @@ bb.qp:                                            ; preds = %._crit_edge1050.i, 
   %i.mvj = zext nneg i32 %i.mvi to i64            ; 2 uses
   %i.mvk = or disjoint i64 %i.mvj, 4
   %i.mvl = call i64 @llvm.smax.i64(i64 %i.mvk, i64 %i.mpt)
-  %15 = sub nsw i64 %i.mvl, %i.mvj
-  %16 = add i64 %15, -3                           ; 2 uses
+  %15 = add nsw i64 %i.mvl, -3
+  %16 = sub i64 %15, %i.mvj                       ; 2 uses
   %min.iters.check4283 = icmp ult i64 %16, 16
   br i1 %min.iters.check4283, label %scalar.ph4282.preheader, label %vector.ph4284
 
@@ -3470,8 +3470,8 @@ bb.qy:                                            ; preds = %._crit_edge1068.i, 
   %i.nms = zext nneg i32 %i.nmr to i64            ; 2 uses
   %i.nmt = add nuw nsw i64 %i.nms, 3
   %i.nmu = call i64 @llvm.smax.i64(i64 %i.nii, i64 %i.nmt)
-  %17 = sub nsw i64 %i.nmu, %i.nms
-  %18 = add i64 %17, -2                           ; 2 uses
+  %17 = add nsw i64 %i.nmu, -2
+  %18 = sub i64 %17, %i.nms                       ; 2 uses
   %i.nmv = lshr i64 %18, 1
   %i.nmw = add nuw nsw i64 %i.nmv, 1              ; 2 uses
   %min.iters.check4249 = icmp ult i64 %18, 16
@@ -3685,8 +3685,8 @@ scalar.ph4248:                                    ; preds = %scalar.ph4248.prehe
   %i.nra = or disjoint i64 %n.vec4123, 1
   %cmp.n4146 = icmp eq i64 %n.vec4123, %i.nqe
   %i.nrb = add i32 %.neg.i555, %i.mbg
-  %19 = sub i32 %i.nrb, %i.npw
-  %20 = add i32 %19, 6                            ; 2 uses
+  %19 = add i32 %i.nrb, 6
+  %20 = sub i32 %19, %i.npw                       ; 2 uses
   %i.nrc = lshr i32 %20, 1
   %narrow4618 = add nuw i32 %i.nrc, 1
   %i.nrd = zext i32 %narrow4618 to i64            ; 2 uses
@@ -3700,8 +3700,8 @@ scalar.ph4248:                                    ; preds = %scalar.ph4248.prehe
   %i.nrj = add i32 %i.npw, %i.nri
   %i.nrk = shl nsw i64 %n.vec4074, 3              ; 7 uses
   %i.nrl = add i32 %.neg.i555, %i.mbg
-  %21 = sub i32 %i.nrl, %i.npw
-  %22 = add i32 %21, 6                            ; 2 uses
+  %21 = add i32 %i.nrl, 6
+  %22 = sub i32 %21, %i.npw                       ; 2 uses
   %i.nrm = lshr i32 %22, 1
   %narrow4619 = add nuw i32 %i.nrm, 1
   %i.nrn = zext i32 %narrow4619 to i64            ; 2 uses
@@ -3753,8 +3753,8 @@ bb.qz:                                            ; preds = %._crit_edge1075.i, 
   %i.nst = zext nneg i32 %i.nss to i64            ; 2 uses
   %i.nsu = add nuw nsw i64 %i.nst, 3
   %i.nsv = call i64 @llvm.umax.i64(i64 %i.nsu, i64 %i.nlr)
-  %23 = sub nsw i64 %i.nsv, %i.nst
-  %24 = add nsw i64 %23, -2                       ; 2 uses
+  %23 = add nsw i64 %i.nsv, -2
+  %24 = sub nsw i64 %23, %i.nst                   ; 2 uses
   %i.nsw = lshr i64 %24, 1
   %i.nsx = add nuw nsw i64 %i.nsw, 1              ; 2 uses
   %min.iters.check4192 = icmp ult i64 %24, 8
@@ -4157,9 +4157,9 @@ bb.rg:                                            ; preds = %bb.rg, %.preheader1
   %i.owe = or disjoint i64 %i.ort, %i.owd
   %i.owf = add nuw nsw i64 %i.owe, 4
   %i.owg = call i64 @llvm.smax.i64(i64 %i.owf, i64 %i.orw)
-  %25 = or disjoint i64 %i.ort, %i.owd
-  %26 = sub nsw i64 %i.owg, %25
-  %27 = add i64 %26, -3                           ; 2 uses
+  %25 = add nsw i64 %i.owg, -3
+  %26 = or disjoint i64 %i.ort, %i.owd
+  %27 = sub i64 %25, %26                          ; 2 uses
   %i.owh = lshr i64 %27, 1
   %i.owi = add nuw i64 %i.owh, 1                  ; 2 uses
   %min.iters.check3942 = icmp ult i64 %27, 8
@@ -4409,9 +4409,9 @@ scalar.ph3941:                                    ; preds = %scalar.ph3941.prehe
   %i.pco = or disjoint i64 %i.orx, %i.pcn
   %i.pcp = add nuw nsw i64 %i.pco, 4
   %i.pcq = call i64 @llvm.smax.i64(i64 %i.pcp, i64 %i.osa)
-  %28 = or disjoint i64 %i.orx, %i.pcn
-  %29 = sub nsw i64 %i.pcq, %28
-  %30 = add i64 %29, -3                           ; 2 uses
+  %28 = add nsw i64 %i.pcq, -3
+  %29 = or disjoint i64 %i.orx, %i.pcn
+  %30 = sub i64 %28, %29                          ; 2 uses
   %i.pcr = lshr i64 %30, 1
   %i.pcs = add nuw i64 %i.pcr, 1                  ; 2 uses
   %min.iters.check3863 = icmp ult i64 %30, 8
@@ -4786,9 +4786,9 @@ vector.body3869:                                  ; preds = %vector.body3869, %v
   %i.pmg = or disjoint i64 %i.osb, %i.pmf
   %i.pmh = add nuw nsw i64 %i.pmg, 4
   %i.pmi = call i64 @llvm.smax.i64(i64 %i.pmh, i64 %i.ose)
-  %31 = or disjoint i64 %i.osb, %i.pmf
-  %32 = sub nsw i64 %i.pmi, %31
-  %33 = add i64 %32, -3                           ; 2 uses
+  %31 = add nsw i64 %i.pmi, -3
+  %32 = or disjoint i64 %i.osb, %i.pmf
+  %33 = sub i64 %31, %32                          ; 2 uses
   %i.pmj = lshr i64 %33, 1
   %i.pmk = add nuw i64 %i.pmj, 1                  ; 2 uses
   %min.iters.check3796 = icmp ult i64 %33, 8

@@ -204,6 +204,7 @@ bb.j:                                             ; preds = %.lr.ph283.i
   %invariant.op488.i = add nsw i64 %i.kk, -1
   %i.km = shl nuw nsw i64 %i.d, 2                 ; 4 uses
   %i.kn = add nuw i64 %i.km, 4                    ; 2 uses
+  %6 = add i32 %5, -2
   %i.ko = add i32 %5, -2
   br label %bb.r
 
@@ -606,17 +607,16 @@ bb.r:                                             ; preds = %._crit_edge357.i, %
   br i1 %i.vm, label %.lr.ph349.i.preheader, label %.preheader250.i
 
 .lr.ph349.i.preheader:                            ; preds = %.preheader251.i
-  %i.vn = sub i32 %5, %.1633.lcssa.i
-  %6 = add i32 %i.vn, -2                          ; 2 uses
-  %i.vo = lshr i32 %6, 1
+  %i.vn = sub i32 %i.ko, %.1633.lcssa.i           ; 2 uses
+  %i.vo = lshr i32 %i.vn, 1
   %narrow = add nuw i32 %i.vo, 1
   %i.vp = zext i32 %narrow to i64                 ; 2 uses
-  %min.iters.check219 = icmp ult i32 %6, 46
+  %min.iters.check219 = icmp ult i32 %i.vn, 46
   br i1 %min.iters.check219, label %.lr.ph349.i.preheader341, label %vector.memcheck168
 
 vector.memcheck168:                               ; preds = %.lr.ph349.i.preheader
   %scevgep169 = getelementptr i8, ptr %.1629.lcssa.i, i64 4 ; 5 uses
-  %i.vq = sub i32 %i.ko, %.1633.lcssa.i
+  %i.vq = sub i32 %6, %.1633.lcssa.i
   %i.vr = lshr i32 %i.vq, 1
   %i.vs = zext nneg i32 %i.vr to i64              ; 2 uses
   %i.vt = shl nuw nsw i64 %i.vs, 3                ; 4 uses

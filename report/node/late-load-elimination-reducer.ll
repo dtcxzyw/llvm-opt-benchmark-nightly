@@ -205,7 +205,7 @@ _ZN2v88internal10ZoneVectorIPNS0_8compiler10turboshaft18SnapshotTableEntryINS3_7
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ah, i64 48
   %i.bm = load ptr, ptr %i.i, align 8             ; 5 uses
   %i.bn = ptrtoint ptr %i.bk to i64               ; 3 uses
-  %i.bo = ptrtoint ptr %i.bm to i64               ; 4 uses
+  %i.bo = ptrtoint ptr %i.bm to i64               ; 5 uses
   %i.bp = sub i64 %i.bn, %i.bo                    ; 4 uses
   %i.bq = ashr exact i64 %i.bp, 2                 ; 2 uses
   %i.br = xor i64 %i.bq, -1
@@ -290,18 +290,19 @@ _ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInser
   %i.cv = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 %.idx
   %.pre20.i.i = load i32, ptr %i.bl, align 8      ; 2 uses
   %i.cw = ptrtoaddr ptr %.pn to i64               ; 2 uses
-  %i.cx = add i64 %i.cw, %i.bn
-  %i.cy = sub i64 %i.cx, %i.bo                    ; 2 uses
-  %i.cz = add i64 %i.cy, %.idx
-  %5 = add i64 %i.cy, 4
-  %i.da = tail call i64 @llvm.umax.i64(i64 %i.cz, i64 %5)
+  %5 = add i64 %i.cw, %i.bn                       ; 2 uses
+  %i.cx = add i64 %5, %.idx
+  %i.cy = sub i64 %i.cx, %i.bo
+  %i.cz = add i64 %5, 4
+  %6 = sub i64 %i.cz, %i.bo
+  %i.da = tail call i64 @llvm.umax.i64(i64 %i.cy, i64 %6)
   %i.db = add i64 %i.da, %i.bo
-  %6 = add i64 %i.cw, %i.bn
-  %7 = xor i64 %6, -1
-  %8 = add i64 %i.db, %7                          ; 2 uses
-  %i.dc = lshr i64 %8, 2
+  %7 = xor i64 %i.cw, -1
+  %8 = add i64 %i.db, %7
+  %9 = sub i64 %8, %i.bn                          ; 2 uses
+  %i.dc = lshr i64 %9, 2
   %i.dd = add nuw nsw i64 %i.dc, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %8, 28
+  %min.iters.check = icmp ult i64 %9, 28
   br i1 %min.iters.check, label %.lr.ph18.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %._crit_edge.i.i
@@ -704,7 +705,7 @@ _ZN2v88internal10ZoneVectorIPNS0_8compiler10turboshaft18SnapshotTableEntryINS3_7
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ah, i64 48
   %i.bm = load ptr, ptr %i.i, align 8             ; 5 uses
   %i.bn = ptrtoint ptr %i.bk to i64               ; 3 uses
-  %i.bo = ptrtoint ptr %i.bm to i64               ; 4 uses
+  %i.bo = ptrtoint ptr %i.bm to i64               ; 5 uses
   %i.bp = sub i64 %i.bn, %i.bo                    ; 4 uses
   %i.bq = ashr exact i64 %i.bp, 2                 ; 2 uses
   %i.br = xor i64 %i.bq, -1
@@ -789,18 +790,19 @@ _ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInser
   %i.cv = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 %.idx
   %.pre20.i.i = load i32, ptr %i.bl, align 8      ; 2 uses
   %i.cw = ptrtoaddr ptr %.pn to i64               ; 2 uses
-  %i.cx = add i64 %i.cw, %i.bn
-  %i.cy = sub i64 %i.cx, %i.bo                    ; 2 uses
-  %i.cz = add i64 %i.cy, %.idx
-  %5 = add i64 %i.cy, 4
-  %i.da = tail call i64 @llvm.umax.i64(i64 %i.cz, i64 %5)
+  %5 = add i64 %i.cw, %i.bn                       ; 2 uses
+  %i.cx = add i64 %5, %.idx
+  %i.cy = sub i64 %i.cx, %i.bo
+  %i.cz = add i64 %5, 4
+  %6 = sub i64 %i.cz, %i.bo
+  %i.da = tail call i64 @llvm.umax.i64(i64 %i.cy, i64 %6)
   %i.db = add i64 %i.da, %i.bo
-  %6 = add i64 %i.cw, %i.bn
-  %7 = xor i64 %6, -1
-  %8 = add i64 %i.db, %7                          ; 2 uses
-  %i.dc = lshr i64 %8, 2
+  %7 = xor i64 %i.cw, -1
+  %8 = add i64 %i.db, %7
+  %9 = sub i64 %8, %i.bn                          ; 2 uses
+  %i.dc = lshr i64 %9, 2
   %i.dd = add nuw nsw i64 %i.dc, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %8, 28
+  %min.iters.check = icmp ult i64 %9, 28
   br i1 %min.iters.check, label %.lr.ph18.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %._crit_edge.i.i

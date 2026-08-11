@@ -204,8 +204,8 @@ _ZNKSt6vectorI14aiVertexWeightSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %b
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc190
   %i.ka = ptrtoaddr ptr %i.jx to i64
-  %14 = sub i64 %i.jn, %i.jo
-  %15 = add i64 %14, -8                           ; 2 uses
+  %14 = add i64 %i.jn, -8
+  %15 = sub i64 %14, %i.jo                        ; 2 uses
   %i.kb = lshr i64 %15, 3
   %i.kc = add nuw nsw i64 %i.kb, 1                ; 2 uses
   %min.iters.check815 = icmp ult i64 %15, 24
@@ -334,8 +334,8 @@ _ZNKSt6vectorI14aiVertexWeightSaIS0_EE12_M_check_lenEmPKc.exit.i.i.1: ; preds = 
 
 .lr.ph.i.i.i.i.i.1.preheader:                     ; preds = %.noexc190.1
   %i.ls = ptrtoaddr ptr %i.lp to i64
-  %16 = sub i64 %i.lf, %i.lg
-  %17 = add i64 %16, -8                           ; 2 uses
+  %16 = add i64 %i.lf, -8
+  %17 = sub i64 %16, %i.lg                        ; 2 uses
   %i.lt = lshr i64 %17, 3
   %i.lu = add nuw nsw i64 %i.lt, 1                ; 2 uses
   %min.iters.check798 = icmp ult i64 %17, 24
@@ -464,8 +464,8 @@ _ZNKSt6vectorI14aiVertexWeightSaIS0_EE12_M_check_lenEmPKc.exit.i.i.2: ; preds = 
 
 .lr.ph.i.i.i.i.i.2.preheader:                     ; preds = %.noexc190.2
   %i.nk = ptrtoaddr ptr %i.nh to i64
-  %18 = sub i64 %i.mx, %i.my
-  %19 = add i64 %18, -8                           ; 2 uses
+  %18 = add i64 %i.mx, -8
+  %19 = sub i64 %18, %i.my                        ; 2 uses
   %i.nl = lshr i64 %19, 3
   %i.nm = add nuw nsw i64 %i.nl, 1                ; 2 uses
   %min.iters.check781 = icmp ult i64 %19, 24
@@ -594,8 +594,8 @@ _ZNKSt6vectorI14aiVertexWeightSaIS0_EE12_M_check_lenEmPKc.exit.i.i.3: ; preds = 
 
 .lr.ph.i.i.i.i.i.3.preheader:                     ; preds = %.noexc190.3
   %i.pc = ptrtoaddr ptr %i.oz to i64
-  %20 = sub i64 %i.op, %i.oq
-  %21 = add i64 %20, -8                           ; 2 uses
+  %20 = add i64 %i.op, -8
+  %21 = sub i64 %20, %i.oq                        ; 2 uses
   %i.pd = lshr i64 %21, 3
   %i.pe = add nuw nsw i64 %i.pd, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %21, 24
@@ -998,8 +998,8 @@ _ZNKSt6vectorISt10unique_ptrI10aiMaterialSt14default_deleteIS1_EESaIS4_EE12_M_ch
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrI10aiMaterialSt14default_deleteIS1_EESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc107
-  %23 = sub i64 %i.eq, %i.er
-  %24 = add i64 %23, -8                           ; 2 uses
+  %23 = add i64 %i.eq, -8
+  %24 = sub i64 %23, %i.er                        ; 2 uses
   %i.fc = lshr i64 %24, 3
   %i.fd = add nuw nsw i64 %i.fc, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %24, 56
@@ -1402,10 +1402,11 @@ bb.y:                                             ; preds = %.lr.ph61, %bb.ac
   %i.dd = zext i64 %i.dc to i128
   %i.de = add nuw nsw i128 %i.dd, 1
   %i.df = add i64 %.promoted, 4
-  %i.dg = zext i64 %i.df to i128
-  %i.dh = tail call i128 @llvm.usub.sat.i128(i128 %i.de, i128 %i.dg)
+  %i.dg = zext i64 %i.df to i128                  ; 2 uses
+  %i.dh = tail call i128 @llvm.umax.i128(i128 %i.de, i128 %i.dg)
   %i.di = add nuw nsw i128 %i.dh, 3
-  %i.dj = lshr i128 %i.di, 2
+  %10 = sub nsw i128 %i.di, %i.dg
+  %i.dj = lshr i128 %10, 2
   %i.dk = add nsw i64 %wide.trip.count, -1
   %i.dl = zext i64 %i.dk to i128
   %i.dm = tail call i128 @llvm.umin.i128(i128 %i.dj, i128 %i.dl)
@@ -1808,8 +1809,8 @@ _ZNKSt6vectorISt10unique_ptrI6aiMeshSt14default_deleteIS1_EESaIS4_EE12_M_check_l
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrI6aiMeshSt14default_deleteIS1_EESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc82
-  %15 = sub i64 %i.cr, %i.cs
-  %16 = add i64 %15, -8                           ; 2 uses
+  %15 = add i64 %i.cr, -8
+  %16 = sub i64 %15, %i.cs                        ; 2 uses
   %i.dd = lshr i64 %16, 3
   %i.de = add nuw nsw i64 %i.dd, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %16, 136
@@ -2212,8 +2213,8 @@ _ZNKSt6vectorISt10unique_ptrI11aiAnimationSt14default_deleteIS1_EESaIS4_EE12_M_c
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrI11aiAnimationSt14default_deleteIS1_EESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc15
-  %8 = sub i64 %i.bd, %i.be
-  %9 = add i64 %8, -8                             ; 2 uses
+  %8 = add i64 %i.bd, -8
+  %9 = sub i64 %8, %i.be                          ; 2 uses
   %i.bp = lshr i64 %9, 3
   %i.bq = add nuw nsw i64 %i.bp, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %9, 136
@@ -2616,8 +2617,8 @@ _ZNKSt6vectorISt10unique_ptrI10aiNodeAnimSt14default_deleteIS1_EESaIS4_EE12_M_ch
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrI10aiNodeAnimSt14default_deleteIS1_EESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc83
-  %5 = sub i64 %i.lp, %i.lq
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.lp, -8
+  %6 = sub i64 %5, %i.lq                          ; 2 uses
   %i.mb = lshr i64 %6, 3
   %i.mc = add nuw nsw i64 %i.mb, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %6, 136
@@ -3020,8 +3021,8 @@ _ZNKSt6vectorISt10unique_ptrI10aiMaterialSt14default_deleteIS1_EESaIS4_EE12_M_ch
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrI10aiMaterialSt14default_deleteIS1_EESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrI10aiMaterialSt14default_deleteIS1_EESaIS4_EE12_M_check_lenEmPKc.exit
-  %3 = sub i64 %i.m, %i.e
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.m, -8
+  %4 = sub i64 %3, %i.e                           ; 2 uses
   %i.s = lshr i64 %4, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 136
@@ -3095,8 +3096,8 @@ _ZNSt6vectorISt10unique_ptrI10aiMaterialSt14default_deleteIS1_EESaIS4_EE11_S_rel
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrI10aiMaterialSt14default_deleteIS1_EESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrI10aiMaterialSt14default_deleteIS1_EESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit
-  %5 = sub i64 %i.d, %i.m
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.d, -8
+  %6 = sub i64 %5, %i.m                           ; 2 uses
   %i.ak = lshr i64 %6, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check46 = icmp ult i64 %6, 152
@@ -3497,9 +3498,6 @@ declare i128 @llvm.umax.i128(i128, i128) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i128 @llvm.umin.i128(i128, i128) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i128 @llvm.usub.sat.i128(i128, i128) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #14

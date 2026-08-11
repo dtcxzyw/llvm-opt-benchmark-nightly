@@ -203,9 +203,9 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not342.i.i, label %.thread.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.c
-  %0 = sub nuw i32 %i.a, %i.n                     ; 2 uses
-  %1 = add nuw nsw i32 %0, 1                      ; 2 uses
-  %min.iters.check = icmp samesign ult i32 %0, 3
+  %0 = add nuw nsw i32 %i.a, 1
+  %1 = sub nuw i32 %0, %i.n                       ; 3 uses
+  %min.iters.check = icmp samesign ult i32 %1, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader12, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.preheader
@@ -435,9 +435,9 @@ st_mult.exit.i.i.i:                               ; preds = %bb.e
   br i1 %.not332.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %st_mult.exit.i.i.i
-  %3 = sub nuw i32 %i.o, %i.v                     ; 2 uses
-  %4 = add nuw nsw i32 %3, 1                      ; 2 uses
-  %min.iters.check = icmp samesign ult i32 %3, 3
+  %3 = add nuw nsw i32 %i.o, 1
+  %4 = sub nuw i32 %3, %i.v                       ; 3 uses
+  %min.iters.check = icmp samesign ult i32 %4, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader14, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
@@ -832,9 +832,9 @@ st_mult.exit.i.i:                                 ; preds = %bb.a
   br i1 %.not332.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %st_mult.exit.i.i
-  %2 = sub nuw i32 %i.d, %i.k                     ; 2 uses
-  %3 = add nuw nsw i32 %2, 1                      ; 2 uses
-  %min.iters.check = icmp samesign ult i32 %2, 3
+  %2 = add nuw nsw i32 %i.d, 1
+  %3 = sub nuw i32 %2, %i.k                       ; 3 uses
+  %min.iters.check = icmp samesign ult i32 %3, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader39, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.preheader
@@ -914,9 +914,9 @@ st_mult.exit.i.i7:                                ; preds = %commit_pos_at.exit
   br i1 %.not332.i.i8, label %._crit_edge.i.i12, label %.lr.ph.i.i9.preheader
 
 .lr.ph.i.i9.preheader:                            ; preds = %st_mult.exit.i.i7
-  %4 = sub nuw i32 %i.af, %i.al                   ; 2 uses
-  %5 = add nuw nsw i32 %4, 1                      ; 2 uses
-  %min.iters.check29 = icmp samesign ult i32 %4, 3
+  %4 = add nuw nsw i32 %i.af, 1
+  %5 = sub nuw i32 %4, %i.al                      ; 3 uses
+  %min.iters.check29 = icmp samesign ult i32 %5, 4
   br i1 %min.iters.check29, label %.lr.ph.i.i9.preheader38, label %vector.ph30
 
 vector.ph30:                                      ; preds = %.lr.ph.i.i9.preheader

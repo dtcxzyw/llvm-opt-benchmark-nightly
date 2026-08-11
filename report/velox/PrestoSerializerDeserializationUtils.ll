@@ -204,9 +204,9 @@ bb.w:                                             ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i49.i.i.i.preheader.i:                     ; preds = %bb.w
   %smax.i = call i32 @llvm.smax.i32(i32 %.promoted.i.i.i.i.i, i32 %.pre.i) ; 3 uses
-  %18 = sub i32 %i.dl, %.promoted.i.i.i.i.i
-  %19 = add i32 %18, %i.du
-  %i.dx = add i32 %19, -1
+  %18 = or disjoint i32 %i.dl, %i.du
+  %19 = xor i32 %.promoted.i.i.i.i.i, -1
+  %i.dx = add i32 %18, %19
   %i.dy = sub i32 %smax.i, %.promoted.i.i.i.i.i
   %i.dz = call i32 @llvm.umin.i32(i32 %i.dx, i32 %i.dy)
   %i.ea = add i32 %i.dz, 1                        ; 3 uses

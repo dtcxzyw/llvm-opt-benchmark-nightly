@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   %i.c = ptrtoaddr ptr %i.b to i64                ; 2 uses
   %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !3136 ; 5 uses
   %.promoted.i.i.i3 = ptrtoaddr ptr %.promoted.i.i.i to i64 ; 2 uses
-  %i.d = mul i64 %.promoted.i.i.i3, -768614336404564651
-  %i.e = mul i64 %i.c, 768614336404564651
+  %i.d = mul i64 %i.c, 768614336404564651
+  %i.e = mul i64 %.promoted.i.i.i3, -768614336404564651
   %i.f = add i64 %i.d, %i.e
   %i.g = lshr i64 %i.f, 3
   %i.h = add i64 %1, -1
@@ -279,8 +279,8 @@ bb.a:
   br i1 %.not.i.i, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.a = mul i64 %.pre9, -768614336404564651
-  %i.b = mul i64 %.pre38, 768614336404564651
+  %i.a = mul i64 %.pre38, 768614336404564651
+  %i.b = mul i64 %.pre9, -768614336404564651
   %i.c = add i64 %i.a, %i.b
   %i.d = lshr i64 %i.c, 3
   %i.e = add i64 %2, -1

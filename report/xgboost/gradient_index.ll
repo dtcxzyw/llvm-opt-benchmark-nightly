@@ -203,8 +203,8 @@ bb.m:                                             ; preds = %bb.l
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.ao, 3
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx.i.i.i.i.i ; 3 uses
   %i.aq = shl i64 %2, 3
-  %4 = sub i64 %i.aq, %i.k
-  %5 = add i64 %4, -8                             ; 2 uses
+  %4 = add i64 %i.aq, -8
+  %5 = sub i64 %4, %i.k                           ; 2 uses
   %i.ar = lshr i64 %5, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 24
@@ -272,8 +272,8 @@ _ZSt22__uninitialized_move_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPmmEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit69
-  %6 = sub i64 %i.f, %i.j
-  %7 = add i64 %6, -8                             ; 2 uses
+  %6 = add i64 %i.f, -8
+  %7 = sub i64 %6, %i.j                           ; 2 uses
   %i.be = lshr i64 %7, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %7, 24
@@ -676,11 +676,13 @@ bb.d:                                             ; preds = %bb.c
   %.idx.i.i.i.i = shl nuw nsw i64 %i.r, 3
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %.idx.i.i.i.i
   %i.y = load i64, ptr %i.t, align 8, !tbaa !8    ; 2 uses
-  %10 = sub i64 %i.p, %i.o
-  %i.z = add i64 %10, 2305843009213693951
-  %11 = and i64 %i.z, 2305843009213693951         ; 2 uses
-  %i.aa = add nuw nsw i64 %11, 1                  ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %11, 3
+  %10 = shl i64 %i.p, 3
+  %i.z = add i64 %10, -8
+  %11 = shl i64 %i.o, 3
+  %12 = sub i64 %i.z, %11                         ; 2 uses
+  %13 = lshr exact i64 %12, 3
+  %i.aa = add nuw nsw i64 %13, 1                  ; 2 uses
+  %min.iters.check = icmp ult i64 %12, 24
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.d
@@ -1069,11 +1071,13 @@ bb.c:                                             ; preds = %.noexc
   %.idx.i.i.i.i = shl nuw nsw i64 %i.q, 3
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %.idx.i.i.i.i
   %i.x = load i64, ptr %i.s, align 8, !tbaa !8    ; 2 uses
-  %8 = sub i64 %i.o, %i.m
-  %i.y = add i64 %8, 2305843009213693951
-  %9 = and i64 %i.y, 2305843009213693951          ; 2 uses
-  %i.z = add nuw nsw i64 %9, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %9, 3
+  %8 = shl i64 %i.o, 3
+  %i.y = add i64 %8, -8
+  %9 = shl i64 %i.m, 3
+  %10 = sub i64 %i.y, %9                          ; 2 uses
+  %11 = lshr exact i64 %10, 3
+  %i.z = add nuw nsw i64 %11, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %10, 24
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.c

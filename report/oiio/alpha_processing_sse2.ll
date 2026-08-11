@@ -202,14 +202,12 @@ bb.a:
 .preheader46.us.preheader:                        ; preds = %.preheader46.lr.ph
   %i.f = zext nneg i32 %i.a to i64                ; 3 uses
   %i.g = zext nneg i32 %2 to i64                  ; 2 uses
-  %6 = add nsw i64 %i.f, -16
   %i.h = or disjoint i64 %i.f, 1
   %i.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 %i.g) ; 2 uses
-  %i.j = sub nsw i64 %i.i, %6
-  %7 = add nsw i64 %i.j, -16                      ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 8
+  %i.j = sub nsw i64 %i.i, %i.f                   ; 2 uses
+  %min.iters.check = icmp ult i64 %i.j, 8
   %i.k = and i64 %i.i, 7                          ; 2 uses
-  %n.vec = sub nuw nsw i64 %7, %i.k               ; 2 uses
+  %n.vec = sub nuw nsw i64 %i.j, %i.k             ; 2 uses
   %cmp.n = icmp eq i64 %i.k, 0
   br label %.preheader46.us
 
@@ -414,16 +412,14 @@ bb.a:
   %i.m = and i64 %i.i, 8
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   %lcmp.mod118 = trunc i64 %i.k to i1
-  %6 = add nsw i64 %i.g, -8
   %i.n = or disjoint i64 %i.g, 1
   %i.o = tail call i64 @llvm.umax.i64(i64 %i.n, i64 %i.h) ; 2 uses
-  %i.p = sub i64 %i.o, %6
-  %7 = add i64 %i.p, -8                           ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 9
+  %i.p = sub i64 %i.o, %i.g                       ; 2 uses
+  %min.iters.check = icmp ult i64 %i.p, 9
   %i.q = and i64 %i.o, 7                          ; 2 uses
   %i.r = icmp eq i64 %i.q, 0
   %i.s = select i1 %i.r, i64 8, i64 %i.q
-  %n.vec = sub i64 %7, %i.s                       ; 2 uses
+  %n.vec = sub i64 %i.p, %i.s                     ; 2 uses
   br label %.preheader50.us
 
 .preheader50.us:                                  ; preds = %.preheader50.us.preheader, %._crit_edge.us

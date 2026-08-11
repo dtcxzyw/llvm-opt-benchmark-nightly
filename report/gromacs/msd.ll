@@ -203,9 +203,9 @@ _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN3gmx11BasicVectorIdEESt6vectorIS4_SaI
 
 .lr.ph.i35.preheader.i:                           ; preds = %._crit_edge.i
   %.val27.i = load ptr, ptr %i.eh, align 8        ; 7 uses
-  %28 = sub i64 %i.gj, %i.gh
-  %29 = mul i64 %28, 768614336404564651
-  %30 = add i64 %29, -8                           ; 2 uses
+  %28 = add i64 %i.gj, -24
+  %29 = sub i64 %28, %i.gh
+  %30 = mul i64 %29, 768614336404564651           ; 2 uses
   %i.gk = lshr i64 %30, 3
   %i.gl = add nuw nsw i64 %i.gk, 1                ; 2 uses
   %min.iters.check375 = icmp ult i64 %30, 160

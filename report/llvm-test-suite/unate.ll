@@ -203,8 +203,8 @@ bb.o:                                             ; preds = %bb.n, %unate_inters
   %i.gl = zext nneg i32 %i.gk to i64              ; 6 uses
   %i.gm = icmp ne i32 %i.gk, 0
   %.neg = sext i1 %i.gm to i64
-  %i.gn = add nsw i64 %.neg, %i.gl
-  %i.go = add nsw i64 %i.gn, 1                    ; 3 uses
+  %i.gn = add nuw nsw i64 %i.gl, 1
+  %i.go = add nsw i64 %i.gn, %.neg                ; 3 uses
   %min.iters.check = icmp ult i64 %i.go, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 

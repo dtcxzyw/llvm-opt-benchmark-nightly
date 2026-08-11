@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r, %bb.p
   %.187 = phi i64 [ %i.y, %bb.p ], [ %i.bq, %bb.r ], [ %i.y, %bb.t ], [ %i.y, %bb.s ] ; 12 uses
-  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 11 uses
+  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 12 uses
   %i.cc = add nsw i64 %i.b, 2                     ; 2 uses
   %i.cd = sub nsw i64 %.187, %.0                  ; 2 uses
   %.not96107 = icmp slt i64 %i.cd, %i.cc
@@ -213,11 +213,12 @@ bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r,
 .lr.ph:                                           ; preds = %bb.u
   %invariant.op = add i64 %.187, -2               ; 2 uses
   %i.ce = sub nuw nsw i64 64, %i.d                ; 2 uses
-  %2 = sub i64 %.187, %.0                         ; 2 uses
-  %3 = add i64 %2, -1
+  %2 = add i64 %.187, -1                          ; 2 uses
+  %3 = sub i64 %2, %.0
   %i.cf = add i64 %i.b, 1
   %i.cg = tail call i64 @llvm.smin.i64(i64 %3, i64 %i.cf)
-  %i.ch = sub i64 %2, %i.cg                       ; 3 uses
+  %4 = add i64 %.0, %i.cg
+  %i.ch = sub i64 %.187, %4                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.ch, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -289,8 +290,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.do, label %middle.block, label %vector.body, !llvm.loop !746
 
 middle.block:                                     ; preds = %vector.body
-  %i.dp = add i64 %.0, %n.vec
-  %i.dq = sub i64 %.187, %i.dp
+  %5 = add i64 %n.vec, -1
+  %i.dp = add i64 %.0, %5
+  %i.dq = sub i64 %2, %i.dp
   %cmp.n = icmp eq i64 %i.ch, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
@@ -693,7 +695,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r, %bb.p
   %.187 = phi i64 [ %i.y, %bb.p ], [ %i.bq, %bb.r ], [ %i.y, %bb.t ], [ %i.y, %bb.s ] ; 12 uses
-  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 11 uses
+  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 12 uses
   %i.cc = add nsw i64 %i.b, 2                     ; 2 uses
   %i.cd = sub nsw i64 %.187, %.0                  ; 2 uses
   %.not96107 = icmp slt i64 %i.cd, %i.cc
@@ -702,11 +704,12 @@ bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r,
 .lr.ph:                                           ; preds = %bb.u
   %invariant.op = add i64 %.187, -2               ; 2 uses
   %i.ce = sub nuw nsw i64 64, %i.d                ; 2 uses
-  %2 = sub i64 %.187, %.0                         ; 2 uses
-  %3 = add i64 %2, -1
+  %2 = add i64 %.187, -1                          ; 2 uses
+  %3 = sub i64 %2, %.0
   %i.cf = add i64 %i.b, 1
   %i.cg = tail call i64 @llvm.smin.i64(i64 %3, i64 %i.cf)
-  %i.ch = sub i64 %2, %i.cg                       ; 3 uses
+  %4 = add i64 %.0, %i.cg
+  %i.ch = sub i64 %.187, %4                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.ch, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -778,8 +781,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.do, label %middle.block, label %vector.body, !llvm.loop !1093
 
 middle.block:                                     ; preds = %vector.body
-  %i.dp = add i64 %.0, %n.vec
-  %i.dq = sub i64 %.187, %i.dp
+  %5 = add i64 %n.vec, -1
+  %i.dp = add i64 %.0, %5
+  %i.dq = sub i64 %2, %i.dp
   %cmp.n = icmp eq i64 %i.ch, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
@@ -1182,8 +1186,8 @@ bb.d:                                             ; preds = %_ZNSt12_Vector_base
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN4CGAL7Point_3INS0_5EpeckEEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.d
-  %8 = sub i64 %i.m, %i.e
-  %9 = add i64 %8, -8                             ; 2 uses
+  %8 = add i64 %i.m, -8
+  %9 = sub i64 %8, %i.e                           ; 2 uses
   %i.t = lshr i64 %9, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %9, 136
@@ -1256,8 +1260,8 @@ _ZNSt6vectorIN4CGAL7Point_3INS0_5EpeckEEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.ex
   br i1 %.not10.i.i.i28, label %_ZNSt6vectorIN4CGAL7Point_3INS0_5EpeckEEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit34, label %.lr.ph.i.i.i29.preheader
 
 .lr.ph.i.i.i29.preheader:                         ; preds = %_ZNSt6vectorIN4CGAL7Point_3INS0_5EpeckEEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit
-  %10 = sub i64 %i.d, %i.m
-  %11 = add i64 %10, -8                           ; 2 uses
+  %10 = add i64 %i.d, -8
+  %11 = sub i64 %10, %i.m                         ; 2 uses
   %i.ak = lshr i64 %11, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check62 = icmp ult i64 %11, 152
@@ -1660,8 +1664,8 @@ bb.d:                                             ; preds = %_ZNSt12_Vector_base
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN4CGAL7Point_3INS0_5EpeckEEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.d
-  %8 = sub i64 %i.m, %i.e
-  %9 = add i64 %8, -8                             ; 2 uses
+  %8 = add i64 %i.m, -8
+  %9 = sub i64 %8, %i.e                           ; 2 uses
   %i.t = lshr i64 %9, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %9, 136
@@ -1734,8 +1738,8 @@ _ZNSt6vectorIN4CGAL7Point_3INS0_5EpeckEEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.ex
   br i1 %.not10.i.i.i28, label %_ZNSt6vectorIN4CGAL7Point_3INS0_5EpeckEEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit34, label %.lr.ph.i.i.i29.preheader
 
 .lr.ph.i.i.i29.preheader:                         ; preds = %_ZNSt6vectorIN4CGAL7Point_3INS0_5EpeckEEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit
-  %10 = sub i64 %i.d, %i.m
-  %11 = add i64 %10, -8                           ; 2 uses
+  %10 = add i64 %i.d, -8
+  %11 = sub i64 %10, %i.m                         ; 2 uses
   %i.ak = lshr i64 %11, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check62 = icmp ult i64 %11, 152

@@ -203,18 +203,24 @@ bb.ag:                                            ; preds = %bb.af
 
 .lr.ph.preheader.i:                               ; preds = %bb.ag
   %i.jl = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.jm = load ptr, ptr %i.jl, align 8, !tbaa !103 ; 4 uses
+  %i.jm = load ptr, ptr %i.jl, align 8, !tbaa !103 ; 5 uses
   %i.jn = zext nneg i32 %i.je to i64
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jm, i64 %i.jn
-  %i.jp = and i32 %i.jb, 131071                   ; 2 uses
-  %narrow = add nuw nsw i32 %i.jp, 1
-  %2 = zext nneg i32 %narrow to i64               ; 2 uses
-  %min.iters.check = icmp samesign ult i32 %i.jp, 7
+  %2 = ptrtoaddr ptr %i.jm to i64                 ; 2 uses
+  %3 = shl i32 %i.jb, 2
+  %i.jp = and i32 %3, 524284
+  %4 = zext nneg i32 %i.jp to i64
+  %5 = add nuw i64 %2, %4
+  %6 = add i64 %5, 3
+  %7 = sub i64 %6, %2                             ; 2 uses
+  %8 = lshr i64 %7, 2
+  %9 = add nuw nsw i64 %8, 1                      ; 2 uses
+  %min.iters.check = icmp ult i64 %7, 28
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
-  %n.vec = and i64 %2, 262136                     ; 3 uses
-  %i.jq = shl nuw nsw i64 %n.vec, 2
+  %n.vec = and i64 %9, 9223372036854775800        ; 3 uses
+  %i.jq = shl i64 %n.vec, 2
   %i.jr = getelementptr i8, ptr %i.jm, i64 %i.jq
   br label %vector.body
 
@@ -234,7 +240,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.jw, label %middle.block, label %vector.body, !llvm.loop !104
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %2
+  %cmp.n = icmp eq i64 %9, %n.vec
   br i1 %cmp.n, label %._crit_edge.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i, %middle.block

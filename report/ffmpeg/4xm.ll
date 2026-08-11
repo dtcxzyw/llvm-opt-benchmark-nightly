@@ -204,11 +204,11 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge.i, %bb.f
-  %.088.in.i = phi i8 [ %i.aa, %bb.f ], [ %i.by, %._crit_edge.i ] ; 4 uses
+  %.088.in.i = phi i8 [ %i.aa, %bb.f ], [ %i.by, %._crit_edge.i ] ; 3 uses
   %.086.in.in.i = phi ptr [ %i.z, %bb.f ], [ %i.bx, %._crit_edge.i ]
   %.pn.i = phi ptr [ %i.w, %bb.f ], [ %.184.lcssa.i, %._crit_edge.i ] ; 2 uses
   %.083.i = getelementptr inbounds nuw i8, ptr %.pn.i, i64 2 ; 7 uses
-  %.086.in.i = load i8, ptr %.086.in.in.i, align 1, !tbaa !43 ; 5 uses
+  %.086.in.i = load i8, ptr %.086.in.in.i, align 1, !tbaa !43 ; 4 uses
   %.086.i = zext i8 %.086.in.i to i32             ; 2 uses
   %.088.i = zext i8 %.088.in.i to i32
   %i.ac = ptrtoint ptr %.083.i to i64
@@ -225,13 +225,13 @@ bb.g:                                             ; preds = %._crit_edge.i, %bb.
   br i1 %.not111.i, label %._crit_edge.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %.preheader110.i
-  %i.aj = zext i8 %.088.in.i to i64               ; 6 uses
+  %i.aj = zext i8 %.088.in.i to i64               ; 7 uses
   %i.ak = add nuw nsw i32 %.086.i, 1
   %wide.trip.count.i = zext nneg i32 %i.ak to i64
-  %narrow = sub nuw i8 %.086.in.i, %.088.in.i     ; 2 uses
-  %3 = zext i8 %narrow to i64
-  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
-  %min.iters.check = icmp ult i8 %narrow, 7
+  %3 = zext i8 %.086.in.i to i64                  ; 3 uses
+  %4 = add nuw nsw i64 %3, 1
+  %5 = sub nsw i64 %4, %i.aj                      ; 3 uses
+  %min.iters.check = icmp ult i64 %5, 8
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
@@ -249,8 +249,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
   br i1 %found.conflict, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %4, 504                        ; 4 uses
-  %i.ap = add nuw nsw i64 %n.vec, %i.aj
+  %n.vec = and i64 %5, -8                         ; 4 uses
+  %i.ap = add nsw i64 %n.vec, %i.aj
   %i.aq = getelementptr i8, ptr %.083.i, i64 %n.vec ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.a, i64 %i.aj
   br label %vector.body
@@ -272,16 +272,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.av, label %middle.block, label %vector.body, !llvm.loop !95
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %4, %n.vec
+  %cmp.n = icmp eq i64 %5, %n.vec
   br i1 %cmp.n, label %._crit_edge.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %vector.memcheck, %.lr.ph.preheader.i, %middle.block
   %indvars.iv.i.ph = phi i64 [ %i.aj, %vector.memcheck ], [ %i.aj, %.lr.ph.preheader.i ], [ %i.ap, %middle.block ] ; 4 uses
   %.184112.i.ph = phi ptr [ %.083.i, %vector.memcheck ], [ %.083.i, %.lr.ph.preheader.i ], [ %i.aq, %middle.block ] ; 2 uses
-  %5 = zext i8 %.086.in.i to i64                  ; 2 uses
-  %i.aw = add nuw nsw i64 %5, 1
+  %i.aw = add nuw nsw i64 %3, 1
   %i.ax = sub nsw i64 %i.aw, %indvars.iv.i.ph
-  %i.ay = sub nsw i64 %5, %indvars.iv.i.ph
+  %i.ay = sub nsw i64 %3, %indvars.iv.i.ph
   %xtraiter = and i64 %i.ax, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol

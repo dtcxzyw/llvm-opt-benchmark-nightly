@@ -204,9 +204,9 @@ bb.ci:                                            ; preds = %bb.ch
   br i1 %.not331.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.ci
-  %10 = sub nuw i32 %i.wi, %i.wp                  ; 2 uses
-  %11 = add nuw nsw i32 %10, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i32 %10, 3
+  %10 = add nuw nsw i32 %i.wi, 1
+  %11 = sub nuw i32 %10, %i.wp                    ; 3 uses
+  %min.iters.check = icmp samesign ult i32 %11, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader528, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -350,9 +350,9 @@ bb.cn:                                            ; preds = %.lr.ph22.i
   br i1 %.not331.i.i.i62.i, label %._crit_edge.i.i.i66.i, label %.lr.ph.i.i.i63.i.preheader
 
 .lr.ph.i.i.i63.i.preheader:                       ; preds = %bb.cn
-  %12 = sub nuw i32 %i.xz, %i.yg                  ; 2 uses
-  %13 = add nuw nsw i32 %12, 1                    ; 2 uses
-  %min.iters.check501 = icmp samesign ult i32 %12, 3
+  %12 = add nuw nsw i32 %i.xz, 1
+  %13 = sub nuw i32 %12, %i.yg                    ; 3 uses
+  %min.iters.check501 = icmp samesign ult i32 %13, 4
   br i1 %min.iters.check501, label %.lr.ph.i.i.i63.i.preheader527, label %vector.ph502
 
 vector.ph502:                                     ; preds = %.lr.ph.i.i.i63.i.preheader
@@ -440,9 +440,9 @@ bb.cr:                                            ; preds = %bb.cq
   br i1 %.not331.i.i.i71.i, label %._crit_edge.i.i.i75.i, label %.lr.ph.i.i.i72.i.preheader
 
 .lr.ph.i.i.i72.i.preheader:                       ; preds = %bb.cr
-  %14 = sub nuw i32 %i.za, %i.zh                  ; 2 uses
-  %15 = add nuw nsw i32 %14, 1                    ; 2 uses
-  %min.iters.check491 = icmp samesign ult i32 %14, 3
+  %14 = add nuw nsw i32 %i.za, 1
+  %15 = sub nuw i32 %14, %i.zh                    ; 3 uses
+  %min.iters.check491 = icmp samesign ult i32 %15, 4
   br i1 %min.iters.check491, label %.lr.ph.i.i.i72.i.preheader526, label %vector.ph492
 
 vector.ph492:                                     ; preds = %.lr.ph.i.i.i72.i.preheader
@@ -549,9 +549,9 @@ bb.cv:                                            ; preds = %bb.cu
   br i1 %.not331.i.i.i80.i, label %._crit_edge.i.i.i84.i, label %.lr.ph.i.i.i81.i.preheader
 
 .lr.ph.i.i.i81.i.preheader:                       ; preds = %bb.cv
-  %16 = sub nuw i32 %i.aaj, %i.aaq                ; 2 uses
-  %17 = add nuw nsw i32 %16, 1                    ; 2 uses
-  %min.iters.check481 = icmp samesign ult i32 %16, 3
+  %16 = add nuw nsw i32 %i.aaj, 1
+  %17 = sub nuw i32 %16, %i.aaq                   ; 3 uses
+  %min.iters.check481 = icmp samesign ult i32 %17, 4
   br i1 %min.iters.check481, label %.lr.ph.i.i.i81.i.preheader525, label %vector.ph482
 
 vector.ph482:                                     ; preds = %.lr.ph.i.i.i81.i.preheader
@@ -700,9 +700,9 @@ bb.dg:                                            ; preds = %bb.df
   br i1 %.not331.i.i.i89.i, label %._crit_edge.i.i.i93.i, label %.lr.ph.i.i.i90.i.preheader
 
 .lr.ph.i.i.i90.i.preheader:                       ; preds = %bb.dg
-  %18 = sub nuw i32 %i.abx, %i.ace                ; 2 uses
-  %19 = add nuw nsw i32 %18, 1                    ; 2 uses
-  %min.iters.check471 = icmp samesign ult i32 %18, 3
+  %18 = add nuw nsw i32 %i.abx, 1
+  %19 = sub nuw i32 %18, %i.ace                   ; 3 uses
+  %min.iters.check471 = icmp samesign ult i32 %19, 4
   br i1 %min.iters.check471, label %.lr.ph.i.i.i90.i.preheader524, label %vector.ph472
 
 vector.ph472:                                     ; preds = %.lr.ph.i.i.i90.i.preheader
@@ -787,9 +787,9 @@ bb.dk:                                            ; preds = %bb.dj
   br i1 %.not331.i.i11.i.i, label %._crit_edge.i.i15.i.i, label %.lr.ph.i.i12.i.i.preheader
 
 .lr.ph.i.i12.i.i.preheader:                       ; preds = %bb.dk
-  %20 = sub nuw i32 %i.ada, %i.adh                ; 2 uses
-  %21 = add nuw nsw i32 %20, 1                    ; 2 uses
-  %min.iters.check461 = icmp samesign ult i32 %20, 3
+  %20 = add nuw nsw i32 %i.ada, 1
+  %21 = sub nuw i32 %20, %i.adh                   ; 3 uses
+  %min.iters.check461 = icmp samesign ult i32 %21, 4
   br i1 %min.iters.check461, label %.lr.ph.i.i12.i.i.preheader523, label %vector.ph462
 
 vector.ph462:                                     ; preds = %.lr.ph.i.i12.i.i.preheader

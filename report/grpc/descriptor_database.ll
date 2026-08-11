@@ -203,8 +203,8 @@ _ZNKSt6vectorISt10unique_ptrIKN6google8protobuf19FileDescriptorProtoESt14default
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIKN6google8protobuf19FileDescriptorProtoESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorISt10unique_ptrIKN6google8protobuf19FileDescriptorProtoESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i.i
-  %2 = sub i64 %i.h, %i.i
-  %3 = add i64 %2, -8                             ; 2 uses
+  %2 = add i64 %i.h, -8
+  %3 = sub i64 %2, %i.i                           ; 2 uses
   %i.t = lshr i64 %3, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 136
@@ -607,11 +607,13 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4less
 
 .lr.ph.i47.preheader:                             ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEE10transfer_nEmmmPS8_PS6_.exit
   %i.ay = zext i8 %i.ar to i64
-  %4 = sub nsw i64 %i.ay, %i.av
-  %i.az = add nsw i64 %4, 4611686018427387903
-  %5 = and i64 %i.az, 4611686018427387903         ; 2 uses
-  %i.ba = add nuw nsw i64 %5, 1                   ; 2 uses
-  %min.iters.check66 = icmp samesign ult i64 %5, 7
+  %4 = shl nuw nsw i64 %i.ay, 2
+  %i.az = add nsw i64 %4, -4
+  %5 = shl nuw nsw i64 %i.av, 2
+  %6 = sub nsw i64 %i.az, %5                      ; 2 uses
+  %7 = lshr exact i64 %6, 2
+  %i.ba = add nuw nsw i64 %7, 1                   ; 2 uses
+  %min.iters.check66 = icmp ult i64 %6, 28
   br i1 %min.iters.check66, label %.lr.ph.i47.preheader80, label %vector.ph67
 
 vector.ph67:                                      ; preds = %.lr.ph.i47.preheader

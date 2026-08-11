@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r, %bb.p
   %.187 = phi i64 [ %i.y, %bb.p ], [ %i.bq, %bb.r ], [ %i.y, %bb.t ], [ %i.y, %bb.s ] ; 12 uses
-  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 11 uses
+  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 12 uses
   %i.cc = add nsw i64 %i.b, 2                     ; 2 uses
   %i.cd = sub nsw i64 %.187, %.0                  ; 2 uses
   %.not96107 = icmp slt i64 %i.cd, %i.cc
@@ -213,11 +213,12 @@ bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r,
 .lr.ph:                                           ; preds = %bb.u
   %invariant.op = add i64 %.187, -2               ; 2 uses
   %i.ce = sub nuw nsw i64 64, %i.d                ; 2 uses
-  %2 = sub i64 %.187, %.0                         ; 2 uses
-  %3 = add i64 %2, -1
+  %2 = add i64 %.187, -1                          ; 2 uses
+  %3 = sub i64 %2, %.0
   %i.cf = add i64 %i.b, 1
   %i.cg = tail call i64 @llvm.smin.i64(i64 %3, i64 %i.cf)
-  %i.ch = sub i64 %2, %i.cg                       ; 3 uses
+  %4 = add i64 %.0, %i.cg
+  %i.ch = sub i64 %.187, %4                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.ch, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -289,8 +290,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.do, label %middle.block, label %vector.body, !llvm.loop !374
 
 middle.block:                                     ; preds = %vector.body
-  %i.dp = add i64 %.0, %n.vec
-  %i.dq = sub i64 %.187, %i.dp
+  %5 = add i64 %n.vec, -1
+  %i.dp = add i64 %.0, %5
+  %i.dq = sub i64 %2, %i.dp
   %cmp.n = icmp eq i64 %i.ch, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 

@@ -204,7 +204,7 @@ bb.kx:                                            ; preds = %bb.kw, %bb.kv
   br i1 %.not275, label %bb.la, label %bb.ky
 
 bb.ky:                                            ; preds = %.loopexit292
-  %i.bhh = mul i32 %i.bfg, %i.bfe                 ; 8 uses
+  %i.bhh = mul i32 %i.bfg, %i.bfe                 ; 9 uses
   %i.bhi = getelementptr inbounds nuw i8, ptr %i.ak, i64 20
   %i.bhj = load i32, ptr %i.bhi, align 4, !tbaa !167
   %i.bhk = icmp eq i32 %i.bhj, 1
@@ -276,8 +276,9 @@ bb.kz:                                            ; preds = %bb.ky
   br i1 %i.bia, label %.lr.ph375.preheader, label %.loopexit
 
 .lr.ph375.preheader:                              ; preds = %.preheader288
-  %i.bib = and i32 %i.bhh, 15
-  %i.bic = add nsw i32 %i.bib, -1                 ; 2 uses
+  %i.bib = and i32 %i.bhh, -16
+  %2 = xor i32 %i.bib, -1
+  %i.bic = add i32 %i.bhh, %2                     ; 2 uses
   %i.bid = zext i32 %i.bic to i64
   %i.bie = add nuw nsw i64 %i.bid, 1              ; 2 uses
   %min.iters.check794 = icmp ult i32 %i.bic, 7

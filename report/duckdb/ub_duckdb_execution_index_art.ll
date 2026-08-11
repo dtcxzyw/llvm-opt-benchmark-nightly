@@ -204,8 +204,8 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb4NodeEESaIS3_EE12_M_check_lenEmPKc.e
 
 .lr.ph.i.i.i.i.i.i43.preheader:                   ; preds = %.noexc52
   %i.ah = ptrtoaddr ptr %i.af to i64
-  %7 = sub i64 %i.v, %i.w
-  %8 = add i64 %7, -8                             ; 2 uses
+  %7 = add i64 %i.v, -8
+  %8 = sub i64 %7, %i.w                           ; 2 uses
   %i.ai = lshr i64 %8, 3
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %8, 24
@@ -372,8 +372,8 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb4NodeEESaIS3_EE12_M_check_lenEmPKc.e
 
 .lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %.noexc59
   %i.bv = ptrtoaddr ptr %i.bt to i64
-  %9 = sub i64 %i.bj, %i.bk
-  %10 = add i64 %9, -8                            ; 2 uses
+  %9 = add i64 %i.bj, -8
+  %10 = sub i64 %9, %i.bk                         ; 2 uses
   %i.bw = lshr i64 %10, 3
   %i.bx = add nuw nsw i64 %i.bw, 1                ; 2 uses
   %min.iters.check241 = icmp ult i64 %10, 24
@@ -526,8 +526,8 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb4NodeEESaIS3_EE12_M_check_lenEmPKc.e
 
 .lr.ph.i.i.i.i.i.i.i.i.i74.preheader:             ; preds = %.noexc87
   %i.do = ptrtoaddr ptr %i.dm to i64
-  %11 = sub i64 %i.dc, %i.dd
-  %12 = add i64 %11, -8                           ; 2 uses
+  %11 = add i64 %i.dc, -8
+  %12 = sub i64 %11, %i.dd                        ; 2 uses
   %i.dp = lshr i64 %12, 3
   %i.dq = add nuw nsw i64 %i.dp, 1                ; 2 uses
   %min.iters.check258 = icmp ult i64 %12, 24
@@ -679,8 +679,8 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb4NodeEESaIS3_EE12_M_check_lenEmPKc.e
 
 .lr.ph.i.i.i.i.i.i.i.i.i95.preheader:             ; preds = %.noexc106
   %i.fj = ptrtoaddr ptr %i.fh to i64
-  %13 = sub i64 %i.ex, %i.ey
-  %14 = add i64 %13, -8                           ; 2 uses
+  %13 = add i64 %i.ex, -8
+  %14 = sub i64 %13, %i.ey                        ; 2 uses
   %i.fk = lshr i64 %14, 3
   %i.fl = add nuw nsw i64 %i.fk, 1                ; 2 uses
   %min.iters.check275 = icmp ult i64 %14, 24
@@ -822,8 +822,8 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb4NodeEESaIS3_EE12_M_check_lenEmPKc.e
 
 .lr.ph.i.i.i.i.i.i.i.i.i115.preheader:            ; preds = %.noexc126
   %i.gy = ptrtoaddr ptr %i.gw to i64
-  %15 = sub i64 %i.gm, %i.gn
-  %16 = add i64 %15, -8                           ; 2 uses
+  %15 = add i64 %i.gm, -8
+  %16 = sub i64 %15, %i.gn                        ; 2 uses
   %i.gz = lshr i64 %16, 3
   %i.ha = add nuw nsw i64 %i.gz, 1                ; 2 uses
   %min.iters.check292 = icmp ult i64 %16, 24
@@ -1226,7 +1226,7 @@ bb.a:
   call void @_ZN6duckdb10NodeHandleINS_5Node4EEC2ERNS_3ARTENS_4NodeE(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(433) %0, i64 %.sroa.03.0.copyload)
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1376, !nonnull !36, !align !37 ; 13 uses
-  %i.c = load i8, ptr %i.b, align 8, !tbaa !203   ; 11 uses
+  %i.c = load i8, ptr %i.b, align 8, !tbaa !203   ; 10 uses
   %.not.not = icmp eq i8 %i.c, 4                  ; 2 uses
   br i1 %.not.not, label %bb.d, label %bb.b
 
@@ -1255,12 +1255,10 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
   %i.j = add i8 %i.c, -1
-  %i.k = call i8 @llvm.umin.i8(i8 %i.h, i8 %i.j)
-  %6 = xor i8 %i.k, -1
-  %7 = add i8 %i.c, %6                            ; 2 uses
-  %i.l = zext i8 %7 to i64
+  %i.k = call i8 @llvm.usub.sat.i8(i8 %i.j, i8 %i.h) ; 2 uses
+  %i.l = zext i8 %i.k to i64
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
-  %min.iters.check = icmp ult i8 %7, 57
+  %min.iters.check = icmp ult i8 %i.k, 57
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.critedge.i
@@ -1663,7 +1661,7 @@ bb.a:
   call void @_ZN6duckdb10NodeHandleINS_6Node16EEC2ERNS_3ARTENS_4NodeE(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(433) %0, i64 %.sroa.03.0.copyload)
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1461, !nonnull !36, !align !37 ; 13 uses
-  %i.c = load i8, ptr %i.b, align 8, !tbaa !901   ; 11 uses
+  %i.c = load i8, ptr %i.b, align 8, !tbaa !901   ; 10 uses
   %.not.not = icmp eq i8 %i.c, 16                 ; 2 uses
   br i1 %.not.not, label %bb.d, label %bb.b
 
@@ -1692,12 +1690,10 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 4 uses
   %i.j = add i8 %i.c, -1
-  %i.k = call i8 @llvm.umin.i8(i8 %i.h, i8 %i.j)
-  %6 = xor i8 %i.k, -1
-  %7 = add i8 %i.c, %6                            ; 2 uses
-  %i.l = zext i8 %7 to i64
+  %i.k = call i8 @llvm.usub.sat.i8(i8 %i.j, i8 %i.h) ; 2 uses
+  %i.l = zext i8 %i.k to i64
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
-  %min.iters.check = icmp ult i8 %7, 57
+  %min.iters.check = icmp ult i8 %i.k, 57
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.critedge.i

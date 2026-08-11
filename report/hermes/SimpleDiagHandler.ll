@@ -201,9 +201,9 @@ _ZSt4copyIPSt4pairIjjES2_ET0_T_S4_S3_.exit:       ; preds = %.lr.ph.i.i.i.i.i26,
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPSt4pairIjjES2_ET0_T_S4_S3_.exit
   %i.bd = add i64 %i.l, %i.d
-  %i.be = add i64 %i.e, %i.x
-  %2 = sub i64 %i.bd, %i.be
-  %3 = add i64 %2, -8                             ; 2 uses
+  %i.be = add i64 %i.bd, -8
+  %2 = add i64 %i.e, %i.x
+  %3 = sub i64 %i.be, %2                          ; 2 uses
   %i.bf = lshr i64 %3, 3
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
   %min.iters.check102 = icmp ult i64 %3, 72

@@ -204,9 +204,9 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not341.i.i, label %.thread.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.r
-  %7 = sub nuw i32 %i.an, %i.au                   ; 2 uses
-  %8 = add nuw nsw i32 %7, 1                      ; 2 uses
-  %min.iters.check = icmp samesign ult i32 %7, 3
+  %7 = add nuw nsw i32 %i.an, 1
+  %8 = sub nuw i32 %7, %i.au                      ; 3 uses
+  %min.iters.check = icmp samesign ult i32 %8, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader390, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.preheader

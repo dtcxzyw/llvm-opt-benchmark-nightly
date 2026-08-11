@@ -204,11 +204,10 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %i.js, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i62.preheader, label %_ZN5Eigen5BlockINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEELin1ELi1ELb0EEaSINS_13CwiseBinaryOpINS_8internal17scalar_product_opIddEEKNS_14CwiseNullaryOpINS6_18scalar_constant_opIdEEKS2_EEKNS0_INS1_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit
 
 .lr.ph.i17.i.i.i.i.i.i.i.i.i.i62.preheader:       ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i61
-  %18 = lshr i64 %i.je, 1
-  %19 = mul nuw nsw i64 %18, -2
-  %i.jt = sub nsw i64 %19, %.0.i.i.i.i.i.i.i.i.i.i.i60
-  %20 = add nsw i64 %i.jt, 3                      ; 3 uses
-  %min.iters.check = icmp ult i64 %20, 8
+  %18 = and i64 %i.je, 2
+  %19 = xor i64 %.0.i.i.i.i.i.i.i.i.i.i.i60, 3
+  %i.jt = sub nsw i64 %19, %18                    ; 3 uses
+  %min.iters.check = icmp ult i64 %i.jt, 8
   br i1 %min.iters.check, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i62.preheader181, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i62.preheader
@@ -221,7 +220,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i17.i.i.i.i.
   br i1 %diff.check, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i62.preheader181, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %20, -4                        ; 3 uses
+  %n.vec = and i64 %i.jt, -4                      ; 3 uses
   %i.jz = or disjoint i64 %i.jg, %n.vec
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.it, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -245,7 +244,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.kh, label %middle.block, label %vector.body, !llvm.loop !578
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %20, %n.vec
+  %cmp.n = icmp eq i64 %i.jt, %n.vec
   br i1 %cmp.n, label %_ZN5Eigen5BlockINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEELin1ELi1ELb0EEaSINS_13CwiseBinaryOpINS_8internal17scalar_product_opIddEEKNS_14CwiseNullaryOpINS6_18scalar_constant_opIdEEKS2_EEKNS0_INS1_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i62.preheader181
 
 .lr.ph.i17.i.i.i.i.i.i.i.i.i.i62.preheader181:    ; preds = %vector.memcheck, %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i62.preheader, %middle.block
@@ -648,15 +647,14 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %i.w, label %.lr.ph.i17.i.i.i.i.i.i.preheader, label %_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELin1ELb1EEEEmLERKd.exit
 
 .lr.ph.i17.i.i.i.i.i.i.preheader:                 ; preds = %._crit_edge.i.i.i.i.i.i
-  %9 = lshr i64 %i.k, 1
-  %10 = mul nuw nsw i64 %9, -2
-  %i.x = sub nsw i64 %10, %.0.i.i.i.i.i.i.i
-  %11 = add nsw i64 %i.x, 3                       ; 3 uses
-  %min.iters.check = icmp ult i64 %11, 4
+  %9 = and i64 %i.k, 2
+  %10 = xor i64 %.0.i.i.i.i.i.i.i, 3
+  %i.x = sub nsw i64 %10, %9                      ; 3 uses
+  %min.iters.check = icmp ult i64 %i.x, 4
   br i1 %min.iters.check, label %.lr.ph.i17.i.i.i.i.i.i.preheader39, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i17.i.i.i.i.i.i.preheader
-  %n.vec = and i64 %11, -4                        ; 3 uses
+  %n.vec = and i64 %i.x, -4                       ; 3 uses
   %i.y = or disjoint i64 %i.m, %n.vec
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.e, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -678,7 +676,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !1013
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %11, %n.vec
+  %cmp.n = icmp eq i64 %i.x, %n.vec
   br i1 %cmp.n, label %_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELin1ELb1EEEEmLERKd.exit, label %.lr.ph.i17.i.i.i.i.i.i.preheader39
 
 .lr.ph.i17.i.i.i.i.i.i.preheader39:               ; preds = %.lr.ph.i17.i.i.i.i.i.i.preheader, %middle.block

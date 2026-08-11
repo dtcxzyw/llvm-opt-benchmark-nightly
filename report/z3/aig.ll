@@ -204,11 +204,13 @@ bb.p:                                             ; preds = %_ZNK6vectorI7aig_li
   %i.cf = zext i32 %.0.i17.i.i40.ph to i64        ; 2 uses
   %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %i.cf ; 3 uses
   %.pre.i.i44 = load i64, ptr @_ZN7aig_lit4nullE, align 8, !tbaa !26 ; 2 uses
-  %2 = sub nsw i64 %i.cd, %i.cf
-  %i.ch = add nsw i64 %2, 2305843009213693951
-  %3 = and i64 %i.ch, 2305843009213693951         ; 2 uses
-  %i.ci = add nuw nsw i64 %3, 1                   ; 2 uses
-  %min.iters.check172 = icmp samesign ult i64 %3, 3
+  %2 = shl nuw nsw i64 %i.cd, 3
+  %i.ch = add nsw i64 %2, -8
+  %3 = shl nuw nsw i64 %i.cf, 3
+  %4 = sub nsw i64 %i.ch, %3                      ; 2 uses
+  %5 = lshr exact i64 %4, 3
+  %i.ci = add nuw nsw i64 %5, 1                   ; 2 uses
+  %min.iters.check172 = icmp ult i64 %4, 24
   br i1 %min.iters.check172, label %.lr.ph.i.i45.preheader, label %vector.ph173
 
 vector.ph173:                                     ; preds = %.lr.ph.preheader.i.i43
@@ -414,11 +416,13 @@ bb.ab:                                            ; preds = %_ZNK6vectorI7aig_li
   %i.fg = zext i32 %.0.i17.i.i66.ph to i64        ; 2 uses
   %i.fh = getelementptr inbounds nuw [8 x i8], ptr %i.ey, i64 %i.fg ; 3 uses
   %.pre.i.i70 = load i64, ptr @_ZN7aig_lit4nullE, align 8, !tbaa !26 ; 2 uses
-  %4 = sub nsw i64 %i.fe, %i.fg
-  %i.fi = add nsw i64 %4, 2305843009213693951
-  %5 = and i64 %i.fi, 2305843009213693951         ; 2 uses
-  %i.fj = add nuw nsw i64 %5, 1                   ; 2 uses
-  %min.iters.check159 = icmp samesign ult i64 %5, 3
+  %6 = shl nuw nsw i64 %i.fe, 3
+  %i.fi = add nsw i64 %6, -8
+  %7 = shl nuw nsw i64 %i.fg, 3
+  %8 = sub nsw i64 %i.fi, %7                      ; 2 uses
+  %9 = lshr exact i64 %8, 3
+  %i.fj = add nuw nsw i64 %9, 1                   ; 2 uses
+  %min.iters.check159 = icmp ult i64 %8, 24
   br i1 %min.iters.check159, label %.lr.ph.i.i71.preheader, label %vector.ph160
 
 vector.ph160:                                     ; preds = %.lr.ph.preheader.i.i69
@@ -579,11 +583,13 @@ bb.aj:                                            ; preds = %_ZNK6vectorI7aig_li
   %i.hl = zext i32 %.0.i17.i.i.ph to i64          ; 2 uses
   %i.hm = getelementptr inbounds nuw [8 x i8], ptr %i.hd, i64 %i.hl ; 3 uses
   %.pre.i.i27 = load i64, ptr @_ZN7aig_lit4nullE, align 8, !tbaa !26 ; 2 uses
-  %6 = sub nsw i64 %i.hj, %i.hl
-  %i.hn = add nsw i64 %6, 2305843009213693951
-  %7 = and i64 %i.hn, 2305843009213693951         ; 2 uses
-  %i.ho = add nuw nsw i64 %7, 1                   ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %7, 3
+  %10 = shl nuw nsw i64 %i.hj, 3
+  %i.hn = add nsw i64 %10, -8
+  %11 = shl nuw nsw i64 %i.hl, 3
+  %12 = sub nsw i64 %i.hn, %11                    ; 2 uses
+  %13 = lshr exact i64 %12, 3
+  %i.ho = add nuw nsw i64 %13, 1                  ; 2 uses
+  %min.iters.check = icmp ult i64 %12, 24
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i
@@ -777,11 +783,13 @@ bb.d:                                             ; preds = %_ZNK6vectorI7aig_li
   %i.u = zext i32 %.0.i17.i.ph to i64             ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.u ; 3 uses
   %.pre.i = load i64, ptr @_ZN7aig_lit4nullE, align 8, !tbaa !26 ; 2 uses
-  %2 = sub nsw i64 %i.s, %i.u
-  %i.w = add nsw i64 %2, 2305843009213693951
-  %3 = and i64 %i.w, 2305843009213693951          ; 2 uses
-  %i.x = add nuw nsw i64 %3, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %3, 3
+  %2 = shl nuw nsw i64 %i.s, 3
+  %i.w = add nsw i64 %2, -8
+  %3 = shl nuw nsw i64 %i.u, 3
+  %4 = sub nsw i64 %i.w, %3                       ; 2 uses
+  %5 = lshr exact i64 %4, 3
+  %i.x = add nuw nsw i64 %5, 1                    ; 2 uses
+  %min.iters.check = icmp ult i64 %4, 24
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
@@ -1184,11 +1192,13 @@ bb.d:                                             ; preds = %_ZNK6vectorI7aig_li
   %i.u = zext i32 %.0.i17.i.ph to i64             ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.u ; 3 uses
   %.pre.i = load i64, ptr @_ZN7aig_lit4nullE, align 8, !tbaa !26 ; 2 uses
-  %3 = sub nsw i64 %i.s, %i.u
-  %i.w = add nsw i64 %3, 2305843009213693951
-  %4 = and i64 %i.w, 2305843009213693951          ; 2 uses
-  %i.x = add nuw nsw i64 %4, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 3
+  %3 = shl nuw nsw i64 %i.s, 3
+  %i.w = add nsw i64 %3, -8
+  %4 = shl nuw nsw i64 %i.u, 3
+  %5 = sub nsw i64 %i.w, %4                       ; 2 uses
+  %6 = lshr exact i64 %5, 3
+  %i.x = add nuw nsw i64 %6, 1                    ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 24
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
