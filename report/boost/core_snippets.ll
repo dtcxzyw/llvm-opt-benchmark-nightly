@@ -203,7 +203,7 @@ _ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_
   %i.bf = phi i64 [ %i.b, %.critedge.thread ], [ %.pre110, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit._ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread88_crit_edge ] ; 3 uses
   %.198 = phi i64 [ %.1100, %.critedge.thread ], [ %.197, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit._ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread88_crit_edge ] ; 2 uses
   %.12395 = phi i64 [ %.123101, %.critedge.thread ], [ %.12394, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit._ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread88_crit_edge ]
-  %i.bg = shl i64 %i.bf, 1
+  %i.bg = shl nuw i64 %i.bf, 1
   %i.bh = sub i64 %i.be, %.12395                  ; 2 uses
   %.sroa.speculated50 = call i64 @llvm.umax.i64(i64 %i.bg, i64 %.198)
   %i.bi = call i64 @llvm.umax.i64(i64 %.sroa.speculated50, i64 512)

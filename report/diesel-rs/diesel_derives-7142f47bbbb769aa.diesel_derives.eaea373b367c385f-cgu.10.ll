@@ -142,8 +142,8 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   store ptr %i.i, ptr %i.h, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.l = load i64, ptr %i.k, align 8              ; 2 uses
-  %i.m = add i64 %i.l, 1                          ; 2 uses
+  %i.l = load i64, ptr %i.k, align 8              ; 3 uses
+  %i.m = add nuw i64 %i.l, 1
   %i.n = icmp eq i64 %i.l, -1
   br i1 %i.n, label %bb.c, label %bb.b
 
@@ -156,8 +156,8 @@ bb.b:                                             ; preds = %bb.a
   %i.t = mul nuw i64 %i.s, 7
   %.sroa.02.0.i = select i1 %i.q, i64 %i.p, i64 %i.t ; 2 uses
   %i.u = lshr i64 %.sroa.02.0.i, 1
-  %.not.i = icmp ugt i64 %i.m, %i.u
-  br i1 %.not.i, label %bb.d, label %bb.k
+  %.not.i.not = icmp ult i64 %i.l, %i.u
+  br i1 %.not.i.not, label %bb.k, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.v = call { i64, i64 } @_RNvMNtCsfKiFC1ztrmh_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 zeroext true) ; 0 uses

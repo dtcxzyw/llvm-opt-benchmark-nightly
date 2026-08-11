@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.c
   %i.e = add i64 %i.d, 1
   %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #23
   %i.g = add i64 %i.e, %i.f                       ; 2 uses
-  %i.h = add i64 %i.g, 1                          ; 3 uses
+  %i.h = add nuw nsw i64 %i.g, 1                  ; 3 uses
   %or.cond = icmp ugt i64 %i.g, 1073741823
   br i1 %or.cond, label %bb.f, label %bb.g
 
@@ -226,7 +226,7 @@ bb.i:                                             ; preds = %bb.f, %bb.h
   br label %bb.j
 
 cli_max_calloc.exit:                              ; preds = %bb.g
-  %i.j = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull %i.i, i64 noundef %i.h, ptr noundef nonnull @.str.40, ptr noundef nonnull %i.b, ptr noundef nonnull %1) #22 ; 0 uses
+  %i.j = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.i, i64 noundef %i.h, ptr noundef nonnull @.str.40, ptr noundef nonnull %i.b, ptr noundef nonnull %1) #22 ; 0 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %cli_max_calloc.exit, %bb.i, %bb.d
@@ -307,7 +307,7 @@ bb.e:                                             ; preds = %bb.c
   %i.e = add i64 %i.d, 1
   %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.c) #23
   %i.g = add i64 %i.e, %i.f                       ; 2 uses
-  %i.h = add i64 %i.g, 1                          ; 3 uses
+  %i.h = add nuw nsw i64 %i.g, 1                  ; 3 uses
   %or.cond = icmp ugt i64 %i.g, 1073741823
   br i1 %or.cond, label %bb.f, label %bb.g
 
@@ -331,7 +331,7 @@ bb.i:                                             ; preds = %bb.f, %bb.h
   br label %bb.j
 
 cli_max_calloc.exit:                              ; preds = %bb.g
-  %i.j = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull %i.i, i64 noundef %i.h, ptr noundef nonnull @.str.40, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #22 ; 0 uses
+  %i.j = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.i, i64 noundef %i.h, ptr noundef nonnull @.str.40, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #22 ; 0 uses
   tail call void @free(ptr noundef nonnull %i.c) #22
   br label %bb.j
 

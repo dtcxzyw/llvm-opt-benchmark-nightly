@@ -77,7 +77,7 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.073 = phi i32 [ %i.p, %bb.e ], [ %i.y, %bb.f ] ; 5 uses
-  %i.z = sub i32 0, %.0
+  %i.z = sub nsw i32 0, %.0
   %i.aa = icmp eq i32 %7, 5
   %i.ab = add i32 %7, -5
   %or.cond = icmp ult i32 %i.ab, 2
@@ -113,7 +113,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.j,
   resume { ptr, i32 } %i.ac
 
 bb.k:                                             ; preds = %bb.g
-  %i.ai = sub i32 0, %.073
+  %i.ai = sub nsw i32 0, %.073
   %i.aj = shl nsw i32 %.073, 1
   %i.ak = or disjoint i32 %i.aj, 1
   %i.al = shl nsw i32 %.0, 1

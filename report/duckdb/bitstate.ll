@@ -88,7 +88,7 @@ define hidden void @_ZN10duckdb_re28BitState9GrowStackEv(ptr nofree noundef nonn
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !52   ; 2 uses
-  %i.c = shl nsw i32 %i.b, 1                      ; 2 uses
+  %i.c = shl nuw nsw i32 %i.b, 1                  ; 2 uses
   %i.d = icmp slt i32 %i.b, 0
   br i1 %i.d, label %.noexc.i, label %_ZN10duckdb_re28PODArrayINS_3JobEEC2Ei.exit, !prof !53
 
@@ -141,7 +141,7 @@ bb.a:
   br i1 %.not, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = shl nsw i32 %i.d, 1                      ; 3 uses
+  %i.e = shl nuw nsw i32 %i.d, 1                  ; 3 uses
   %i.f = icmp slt i32 %i.d, 0
   br i1 %i.f, label %.noexc.i.i, label %_ZN10duckdb_re28PODArrayINS_3JobEEC2Ei.exit.i, !prof !53
 

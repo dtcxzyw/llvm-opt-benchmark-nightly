@@ -203,7 +203,10 @@ bb.d:                                             ; preds = %bb.b
   %i.h = icmp slt i64 %i.b, 0
   br i1 %i.h, label %2, label %bb.e, !prof !4
 
-bb.e:                                             ; preds = %bb.b, %2, %bb.d
+2:                                                ; preds = %bb.d
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.b, %bb.d, %2
   %.sroa.01.0.i = phi i64 [ %i.g, %bb.d ], [ -1, %2 ], [ 4, %bb.b ]
   %..i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.01.0.i, i64 %i.f)
   tail call fastcc void @_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def11ModuleDefIdE10reallocateBI_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %..i.i)
@@ -211,12 +214,9 @@ bb.e:                                             ; preds = %bb.b, %2, %bb.d
   %.pre = load i64, ptr %.val.pre, align 8, !noalias !6366
   br label %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def11ModuleDefIdE7reserveBI_.exit
 
-2:                                                ; preds = %bb.d
-  br label %bb.e
-
-_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def11ModuleDefIdE7reserveBI_.exit: ; preds = %bb.e, %bb.a
-  %i.i = phi i64 [ %.pre, %bb.e ], [ %i.b, %bb.a ] ; 2 uses
-  %.val = phi ptr [ %.val.pre, %bb.e ], [ %i.a, %bb.a ] ; 2 uses
+_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def11ModuleDefIdE7reserveBI_.exit: ; preds = %bb.a, %bb.e
+  %i.i = phi i64 [ %i.b, %bb.a ], [ %.pre, %bb.e ] ; 2 uses
+  %.val = phi ptr [ %i.a, %bb.a ], [ %.val.pre, %bb.e ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.k = getelementptr inbounds nuw [16 x i8], ptr %i.j, i64 %i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.k, ptr noundef nonnull readonly align 4 dereferenceable(16) %1, i64 16, i1 false)
@@ -476,7 +476,10 @@ bb.d:                                             ; preds = %bb.b
   %i.h = icmp slt i64 %i.b, 0
   br i1 %i.h, label %3, label %bb.e, !prof !4
 
-bb.e:                                             ; preds = %bb.b, %3, %bb.d
+3:                                                ; preds = %bb.d
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.b, %bb.d, %3
   %.sroa.01.0.i = phi i64 [ %i.g, %bb.d ], [ -1, %3 ], [ 4, %bb.b ]
   %..i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.01.0.i, i64 %i.f)
   tail call fastcc void @_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def13ExternBlockIdE10reallocateBI_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %..i.i)
@@ -484,12 +487,9 @@ bb.e:                                             ; preds = %bb.b, %3, %bb.d
   %.pre = load i64, ptr %.val.pre, align 8
   br label %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def13ExternBlockIdE7reserveBI_.exit
 
-3:                                                ; preds = %bb.d
-  br label %bb.e
-
-_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def13ExternBlockIdE7reserveBI_.exit: ; preds = %bb.e, %bb.a
-  %i.i = phi i64 [ %.pre, %bb.e ], [ %i.b, %bb.a ] ; 2 uses
-  %.val = phi ptr [ %.val.pre, %bb.e ], [ %i.a, %bb.a ] ; 2 uses
+_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def13ExternBlockIdE7reserveBI_.exit: ; preds = %bb.a, %bb.e
+  %i.i = phi i64 [ %i.b, %bb.a ], [ %.pre, %bb.e ] ; 2 uses
+  %.val = phi ptr [ %i.a, %bb.a ], [ %.val.pre, %bb.e ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.i ; 2 uses
   store i32 %1, ptr %i.k, align 4
@@ -751,7 +751,10 @@ bb.d:                                             ; preds = %bb.b
   %i.h = icmp slt i64 %i.b, 0
   br i1 %i.h, label %3, label %bb.e, !prof !4
 
-bb.e:                                             ; preds = %bb.b, %3, %bb.d
+3:                                                ; preds = %bb.d
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.b, %bb.d, %3
   %.sroa.01.0.i = phi i64 [ %i.g, %bb.d ], [ -1, %3 ], [ 4, %bb.b ]
   %..i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.01.0.i, i64 %i.f)
   tail call fastcc void @_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def13ExternCrateIdE10reallocateBI_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %..i.i)
@@ -759,12 +762,9 @@ bb.e:                                             ; preds = %bb.b, %3, %bb.d
   %.pre = load i64, ptr %.val.pre, align 8
   br label %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def13ExternCrateIdE7reserveBI_.exit
 
-3:                                                ; preds = %bb.d
-  br label %bb.e
-
-_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def13ExternCrateIdE7reserveBI_.exit: ; preds = %bb.e, %bb.a
-  %i.i = phi i64 [ %.pre, %bb.e ], [ %i.b, %bb.a ] ; 2 uses
-  %.val = phi ptr [ %.val.pre, %bb.e ], [ %i.a, %bb.a ] ; 2 uses
+_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def13ExternCrateIdE7reserveBI_.exit: ; preds = %bb.a, %bb.e
+  %i.i = phi i64 [ %i.b, %bb.a ], [ %.pre, %bb.e ] ; 2 uses
+  %.val = phi ptr [ %i.a, %bb.a ], [ %.val.pre, %bb.e ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.i ; 2 uses
   store i32 %1, ptr %i.k, align 4
@@ -1026,7 +1026,10 @@ bb.d:                                             ; preds = %bb.b
   %i.h = icmp slt i64 %i.b, 0
   br i1 %i.h, label %3, label %bb.e, !prof !4
 
-bb.e:                                             ; preds = %bb.b, %3, %bb.d
+3:                                                ; preds = %bb.d
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.b, %bb.d, %3
   %.sroa.01.0.i = phi i64 [ %i.g, %bb.d ], [ -1, %3 ], [ 4, %bb.b ]
   %..i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.01.0.i, i64 %i.f)
   tail call fastcc void @_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def19BuiltinDeriveImplIdE10reallocateBI_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %..i.i)
@@ -1034,12 +1037,9 @@ bb.e:                                             ; preds = %bb.b, %3, %bb.d
   %.pre = load i64, ptr %.val.pre, align 8
   br label %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def19BuiltinDeriveImplIdE7reserveBI_.exit
 
-3:                                                ; preds = %bb.d
-  br label %bb.e
-
-_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def19BuiltinDeriveImplIdE7reserveBI_.exit: ; preds = %bb.e, %bb.a
-  %i.i = phi i64 [ %.pre, %bb.e ], [ %i.b, %bb.a ] ; 2 uses
-  %.val = phi ptr [ %.val.pre, %bb.e ], [ %i.a, %bb.a ] ; 2 uses
+_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def19BuiltinDeriveImplIdE7reserveBI_.exit: ; preds = %bb.a, %bb.e
+  %i.i = phi i64 [ %i.b, %bb.a ], [ %.pre, %bb.e ] ; 2 uses
+  %.val = phi ptr [ %i.a, %bb.a ], [ %.val.pre, %bb.e ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.i ; 2 uses
   store i32 %1, ptr %i.k, align 4
@@ -1442,7 +1442,10 @@ bb.d:                                             ; preds = %bb.b
   %i.h = icmp slt i64 %i.b, 0
   br i1 %i.h, label %3, label %bb.e, !prof !4
 
-bb.e:                                             ; preds = %bb.b, %3, %bb.d
+3:                                                ; preds = %bb.d
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.b, %bb.d, %3
   %.sroa.01.0.i = phi i64 [ %i.g, %bb.d ], [ -1, %3 ], [ 4, %bb.b ]
   %..i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.01.0.i, i64 %i.f)
   tail call fastcc void @_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def7ConstIdE10reallocateBI_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %..i.i)
@@ -1450,12 +1453,9 @@ bb.e:                                             ; preds = %bb.b, %3, %bb.d
   %.pre = load i64, ptr %.val.pre, align 8
   br label %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def7ConstIdE7reserveBI_.exit
 
-3:                                                ; preds = %bb.d
-  br label %bb.e
-
-_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def7ConstIdE7reserveBI_.exit: ; preds = %bb.e, %bb.a
-  %i.i = phi i64 [ %.pre, %bb.e ], [ %i.b, %bb.a ] ; 2 uses
-  %.val = phi ptr [ %.val.pre, %bb.e ], [ %i.a, %bb.a ] ; 2 uses
+_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtCsileJQcQObtj_7hir_def7ConstIdE7reserveBI_.exit: ; preds = %bb.a, %bb.e
+  %i.i = phi i64 [ %i.b, %bb.a ], [ %.pre, %bb.e ] ; 2 uses
+  %.val = phi ptr [ %i.a, %bb.a ], [ %.val.pre, %bb.e ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.i ; 2 uses
   store i32 %1, ptr %i.k, align 4
@@ -1858,7 +1858,10 @@ bb.d:                                             ; preds = %bb.b
   %i.h = icmp slt i64 %i.b, 0
   br i1 %i.h, label %2, label %bb.e, !prof !4
 
-bb.e:                                             ; preds = %bb.b, %2, %bb.d
+2:                                                ; preds = %bb.d
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.b, %bb.d, %2
   %.sroa.01.0.i = phi i64 [ %i.g, %bb.d ], [ -1, %2 ], [ 4, %bb.b ]
   %..i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.01.0.i, i64 %i.f)
   tail call fastcc void @_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecTINtNtCs33K2ylI4knu_10hir_expand5files13InFileWrapperNtBM_9HirFileIdINtNtCsdovh4xi6v3I_4span6ast_id9FileAstIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ItemEENtBM_11MacroCallIdEE10reallocateCsileJQcQObtj_7hir_def(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %..i.i)
@@ -1866,12 +1869,9 @@ bb.e:                                             ; preds = %bb.b, %2, %bb.d
   %.pre = load i64, ptr %.val.pre, align 8, !noalias !6423
   br label %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecTINtNtCs33K2ylI4knu_10hir_expand5files13InFileWrapperNtBM_9HirFileIdINtNtCsdovh4xi6v3I_4span6ast_id9FileAstIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ItemEENtBM_11MacroCallIdEE7reserveCsileJQcQObtj_7hir_def.exit
 
-2:                                                ; preds = %bb.d
-  br label %bb.e
-
-_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecTINtNtCs33K2ylI4knu_10hir_expand5files13InFileWrapperNtBM_9HirFileIdINtNtCsdovh4xi6v3I_4span6ast_id9FileAstIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ItemEENtBM_11MacroCallIdEE7reserveCsileJQcQObtj_7hir_def.exit: ; preds = %bb.e, %bb.a
-  %i.i = phi i64 [ %.pre, %bb.e ], [ %i.b, %bb.a ] ; 2 uses
-  %.val = phi ptr [ %.val.pre, %bb.e ], [ %i.a, %bb.a ] ; 2 uses
+_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecTINtNtCs33K2ylI4knu_10hir_expand5files13InFileWrapperNtBM_9HirFileIdINtNtCsdovh4xi6v3I_4span6ast_id9FileAstIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ItemEENtBM_11MacroCallIdEE7reserveCsileJQcQObtj_7hir_def.exit: ; preds = %bb.a, %bb.e
+  %i.i = phi i64 [ %i.b, %bb.a ], [ %.pre, %bb.e ] ; 2 uses
+  %.val = phi ptr [ %i.a, %bb.a ], [ %.val.pre, %bb.e ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.k = getelementptr inbounds nuw [24 x i8], ptr %i.j, i64 %i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.k, ptr noundef nonnull readonly align 4 dereferenceable(24) %1, i64 24, i1 false)
@@ -2135,7 +2135,10 @@ bb.d:                                             ; preds = %bb.b
   %i.h = icmp slt i64 %i.b, 0
   br i1 %i.h, label %2, label %bb.e, !prof !4
 
-bb.e:                                             ; preds = %bb.b, %2, %bb.d
+2:                                                ; preds = %bb.d
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.b, %bb.d, %2
   %.sroa.01.0.i = phi i64 [ %i.g, %bb.d ], [ -1, %2 ], [ 4, %bb.b ]
   %..i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.01.0.i, i64 %i.f)
   tail call fastcc void @_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecTNtCsileJQcQObtj_7hir_def6ImplIdbEE10reallocateBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %..i.i)
@@ -2143,12 +2146,9 @@ bb.e:                                             ; preds = %bb.b, %2, %bb.d
   %.pre = load i64, ptr %.val.pre, align 8, !noalias !6429
   br label %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecTNtCsileJQcQObtj_7hir_def6ImplIdbEE7reserveBJ_.exit
 
-2:                                                ; preds = %bb.d
-  br label %bb.e
-
-_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecTNtCsileJQcQObtj_7hir_def6ImplIdbEE7reserveBJ_.exit: ; preds = %bb.e, %bb.a
-  %i.i = phi i64 [ %.pre, %bb.e ], [ %i.b, %bb.a ] ; 2 uses
-  %.val = phi ptr [ %.val.pre, %bb.e ], [ %i.a, %bb.a ] ; 2 uses
+_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecTNtCsileJQcQObtj_7hir_def6ImplIdbEE7reserveBJ_.exit: ; preds = %bb.a, %bb.e
+  %i.i = phi i64 [ %i.b, %bb.a ], [ %.pre, %bb.e ] ; 2 uses
+  %.val = phi ptr [ %i.a, %bb.a ], [ %.val.pre, %bb.e ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.k = getelementptr inbounds nuw [12 x i8], ptr %i.j, i64 %i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.k, ptr noundef nonnull readonly align 4 dereferenceable(12) %1, i64 12, i1 false)
@@ -2372,7 +2372,10 @@ bb.d:                                             ; preds = %bb.b
   %i.h = icmp slt i64 %i.b, 0
   br i1 %i.h, label %2, label %bb.e, !prof !4
 
-bb.e:                                             ; preds = %bb.b, %2, %bb.d
+2:                                                ; preds = %bb.d
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.b, %bb.d, %2
   %.sroa.01.0.i = phi i64 [ %i.g, %bb.d ], [ -1, %2 ], [ 4, %bb.b ]
   %..i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.01.0.i, i64 %i.f)
   tail call fastcc void @_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecTNtCsileJQcQObtj_7hir_def7TraitIdINtNtBJ_6per_ns4ItemuEEE10reallocateBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %..i.i)
@@ -2380,12 +2383,9 @@ bb.e:                                             ; preds = %bb.b, %2, %bb.d
   %.pre = load i64, ptr %.val.pre, align 8, !noalias !6435
   br label %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecTNtCsileJQcQObtj_7hir_def7TraitIdINtNtBJ_6per_ns4ItemuEEE7reserveBJ_.exit
 
-2:                                                ; preds = %bb.d
-  br label %bb.e
-
-_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecTNtCsileJQcQObtj_7hir_def7TraitIdINtNtBJ_6per_ns4ItemuEEE7reserveBJ_.exit: ; preds = %bb.e, %bb.a
-  %i.i = phi i64 [ %.pre, %bb.e ], [ %i.b, %bb.a ] ; 2 uses
-  %.val = phi ptr [ %.val.pre, %bb.e ], [ %i.a, %bb.a ] ; 2 uses
+_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecTNtCsileJQcQObtj_7hir_def7TraitIdINtNtBJ_6per_ns4ItemuEEE7reserveBJ_.exit: ; preds = %bb.a, %bb.e
+  %i.i = phi i64 [ %i.b, %bb.a ], [ %.pre, %bb.e ] ; 2 uses
+  %.val = phi ptr [ %i.a, %bb.a ], [ %.val.pre, %bb.e ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.k = getelementptr inbounds nuw [32 x i8], ptr %i.j, i64 %i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.k, ptr noundef nonnull readonly align 4 dereferenceable(32) %1, i64 32, i1 false)
