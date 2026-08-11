@@ -204,10 +204,9 @@ bb.aj:                                            ; preds = %bb.ag, %bb.ah, %bb.
   %i.cc = trunc i64 %i.cb to i32
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 68664 ; 2 uses
   store i32 %i.cc, ptr %i.cd, align 8, !tbaa !312
-  %i.ce = shl i64 %i.cb, 32
-  %sext = add i64 %i.ce, 12884901888              ; 2 uses
-  %1 = lshr exact i64 %sext, 29
-  %2 = trunc i64 %1 to i32
+  %i.ce = shl i64 %i.cb, 3
+  %1 = trunc i64 %i.ce to i32
+  %2 = add i32 %1, 24                             ; 2 uses
   %i.cf = tail call noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #41 ; 4 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.z, i64 160
   %i.ch = load i32, ptr %i.cg, align 8, !tbaa !261
@@ -236,8 +235,7 @@ bb.am:                                            ; preds = %bb.aj
   br label %bb.da
 
 bb.an:                                            ; preds = %bb.al, %bb.ak
-  %sext52 = shl i64 %sext, 3
-  %3 = ashr exact i64 %sext52, 32
+  %3 = sext i32 %2 to i64
   %i.cq = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %3) #41 ; 6 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 68584
   store ptr %i.cq, ptr %i.cr, align 8, !tbaa !349

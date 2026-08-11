@@ -204,16 +204,13 @@ bb.a:
   %i.h = icmp slt i32 %0, 6
   %i.i = add nsw i32 %0, -6
   %i.j = shl nuw i32 1, %i.i
-  %i.k = select i1 %i.h, i32 1, i32 %i.j          ; 3 uses
+  %i.k = select i1 %i.h, i32 1, i32 %i.j          ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 4 ; 3 uses
   store i32 %i.k, ptr %i.l, align 4, !tbaa !14
-  %1 = sext i32 %i.k to i64
-  %2 = shl nsw i64 %1, 3                          ; 2 uses
-  %3 = add nsw i64 %2, 8
-  %4 = lshr exact i64 %3, 2
-  %5 = trunc i64 %4 to i32
+  %1 = shl i32 %i.k, 1
+  %2 = add i32 %1, 2
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  store i32 %5, ptr %i.m, align 8, !tbaa !50
+  store i32 %2, ptr %i.m, align 8, !tbaa !50
   %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 12
   store i32 8147, ptr %i.n, align 4, !tbaa !15
   %i.o = tail call noalias dereferenceable_or_null(32588) ptr @calloc(i64 noundef 8147, i64 noundef 4) #13
@@ -235,7 +232,9 @@ bb.a:
   store i64 2, ptr %i.v, align 8, !tbaa !16
   %i.x = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   store ptr %i.q, ptr %i.x, align 8, !tbaa !24
-  %i.y = tail call noalias ptr @malloc(i64 noundef %2) #16
+  %3 = sext i32 %i.k to i64
+  %4 = shl nsw i64 %3, 3
+  %i.y = tail call noalias ptr @malloc(i64 noundef %4) #16
   %i.z = getelementptr inbounds nuw i8, ptr %i.g, i64 32 ; 6 uses
   store ptr %i.y, ptr %i.z, align 8, !tbaa !59
   %i.aa = icmp sgt i32 %0, 0
