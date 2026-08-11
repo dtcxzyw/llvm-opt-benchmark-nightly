@@ -201,11 +201,11 @@ bb.p:                                             ; preds = %_RNvMs_NtNtNtCsau3t
   %i.by = sub nuw nsw i64 %i.bk, %i.bv
   br label %.lr.ph.i92.i
 
-.lr.ph.i92.i:                                     ; preds = %bb.p, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif13LocalTimeTypeE8push_mutBK_.exit.i.i
-  %.sroa.63.013.i.i = phi i64 [ %i.ca, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif13LocalTimeTypeE8push_mutBK_.exit.i.i ], [ %i.bv, %bb.p ]
-  %.sroa.02.012.i.i = phi ptr [ %i.bz, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif13LocalTimeTypeE8push_mutBK_.exit.i.i ], [ %i.bj, %bb.p ] ; 4 uses
+.lr.ph.i92.i:                                     ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif13LocalTimeTypeE8push_mutBK_.exit.i.i, %bb.p
+  %.sroa.63.013.i.i = phi i64 [ %i.bv, %bb.p ], [ %i.ca, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif13LocalTimeTypeE8push_mutBK_.exit.i.i ]
+  %.sroa.02.012.i.i = phi ptr [ %i.bj, %bb.p ], [ %i.bz, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif13LocalTimeTypeE8push_mutBK_.exit.i.i ] ; 4 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.02.012.i.i, i64 6
-  %i.ca = add nsw i64 %.sroa.63.013.i.i, -6       ; 2 uses
+  %i.ca = add i64 %.sroa.63.013.i.i, -6           ; 2 uses
   %.sroa.02.0.copyload.i.i.i101 = load i32, ptr %.sroa.02.012.i.i, align 1, !alias.scope !258, !noalias !261
   %i.cb = call noundef i32 @llvm.bswap.i32(i32 %.sroa.02.0.copyload.i.i.i101) ; 3 uses
   %i.cc = add i32 %i.cb, 93599
@@ -530,10 +530,10 @@ bb.ao:                                            ; preds = %_RNvMs_NtNtNtCsau3t
   br label %.lr.ph.i145.i
 
 .lr.ph.i145.i:                                    ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif13LocalTimeTypeE8push_mutBK_.exit.i.i128, %bb.ao
-  %.sroa.63.013.i.i116 = phi i64 [ %i.fu, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif13LocalTimeTypeE8push_mutBK_.exit.i.i128 ], [ %i.fp, %bb.ao ]
-  %.sroa.02.012.i.i117 = phi ptr [ %i.ft, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif13LocalTimeTypeE8push_mutBK_.exit.i.i128 ], [ %i.fd, %bb.ao ] ; 4 uses
+  %.sroa.63.013.i.i116 = phi i64 [ %i.fp, %bb.ao ], [ %i.fu, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif13LocalTimeTypeE8push_mutBK_.exit.i.i128 ]
+  %.sroa.02.012.i.i117 = phi ptr [ %i.fd, %bb.ao ], [ %i.ft, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif13LocalTimeTypeE8push_mutBK_.exit.i.i128 ] ; 4 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %.sroa.02.012.i.i117, i64 6
-  %i.fu = add nsw i64 %.sroa.63.013.i.i116, -6    ; 2 uses
+  %i.fu = add i64 %.sroa.63.013.i.i116, -6        ; 2 uses
   %.sroa.02.0.copyload.i.i.i118 = load i32, ptr %.sroa.02.012.i.i117, align 1, !alias.scope !326, !noalias !329
   %i.fv = call noundef i32 @llvm.bswap.i32(i32 %.sroa.02.0.copyload.i.i.i118) ; 3 uses
   %i.fw = add i32 %i.fv, 93599

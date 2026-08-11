@@ -203,28 +203,20 @@ bb.a:
   br i1 %i.b, label %.lr.ph59, label %._crit_edge60.thread
 
 .lr.ph59:                                         ; preds = %.preheader, %bb.c
-  %.058 = phi ptr [ %.1.lcssa70, %bb.c ], [ %0, %.preheader ] ; 4 uses
-  %.04657 = phi ptr [ %.2, %bb.c ], [ %2, %.preheader ] ; 2 uses
-  %.04856 = phi i64 [ %6, %bb.c ], [ %1, %.preheader ] ; 4 uses
+  %.058 = phi ptr [ %i.j, %bb.c ], [ %0, %.preheader ] ; 3 uses
+  %.04657 = phi ptr [ %.2, %bb.c ], [ %2, %.preheader ]
+  %.04856 = phi i64 [ %i.aq, %bb.c ], [ %1, %.preheader ] ; 3 uses
   %i.c = urem i64 %.04856, 3
-  %i.d = sub nuw i64 %.04856, %i.c                ; 3 uses
-  %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.d, i64 57) ; 3 uses
+  %i.d = sub nuw i64 %.04856, %i.c                ; 2 uses
+  %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.d, i64 57) ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.058, i64 %.sroa.speculated
-  %3 = icmp ugt i64 %i.d, 2
-  br i1 %3, label %.lr.ph.preheader, label %._crit_edge.thread
-
-._crit_edge.thread:                               ; preds = %.lr.ph59
-  %4 = sub i64 %.04856, %.sroa.speculated
-  br label %bb.c
-
-.lr.ph.preheader:                                 ; preds = %.lr.ph59
-  %5 = getelementptr inbounds nuw i8, ptr %.058, i64 2
+  %3 = getelementptr inbounds nuw i8, ptr %.058, i64 2
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.f = phi ptr [ %i.ao, %.lr.ph ], [ %5, %.lr.ph.preheader ]
-  %.154 = phi ptr [ %i.j, %.lr.ph ], [ %.058, %.lr.ph.preheader ] ; 4 uses
-  %.14753 = phi ptr [ %i.an, %.lr.ph ], [ %.04657, %.lr.ph.preheader ] ; 7 uses
+.lr.ph:                                           ; preds = %.lr.ph59, %.lr.ph
+  %i.f = phi ptr [ %i.ao, %.lr.ph ], [ %3, %.lr.ph59 ]
+  %.154 = phi ptr [ %i.j, %.lr.ph ], [ %.058, %.lr.ph59 ] ; 4 uses
+  %.14753 = phi ptr [ %i.an, %.lr.ph ], [ %.04657, %.lr.ph59 ] ; 7 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.154, i64 1
   %i.h = load i8, ptr %.154, align 1, !tbaa !8
   %i.i = load i8, ptr %i.g, align 1, !tbaa !8
@@ -268,7 +260,7 @@ bb.a:
   br i1 %i.ap, label %.lr.ph, label %._crit_edge, !llvm.loop !182
 
 ._crit_edge:                                      ; preds = %.lr.ph
-  %i.aq = sub i64 %.04856, %.sroa.speculated      ; 3 uses
+  %i.aq = sub i64 %.04856, %.sroa.speculated      ; 5 uses
   %i.ar = icmp ugt i64 %i.d, 56
   %i.as = icmp ne i64 %i.aq, 0
   %or.cond = and i1 %i.ar, %i.as
@@ -281,21 +273,19 @@ bb.b:                                             ; preds = %._crit_edge
   store i8 10, ptr %i.at, align 1, !tbaa !8
   br label %bb.c
 
-bb.c:                                             ; preds = %._crit_edge.thread, %bb.b, %._crit_edge
-  %6 = phi i64 [ %i.aq, %bb.b ], [ %i.aq, %._crit_edge ], [ %4, %._crit_edge.thread ] ; 4 uses
-  %.1.lcssa70 = phi ptr [ %i.j, %bb.b ], [ %i.j, %._crit_edge ], [ %.058, %._crit_edge.thread ] ; 2 uses
-  %.2 = phi ptr [ %i.au, %bb.b ], [ %i.an, %._crit_edge ], [ %.04657, %._crit_edge.thread ] ; 2 uses
-  %i.av = icmp ugt i64 %6, 2
+bb.c:                                             ; preds = %bb.b, %._crit_edge
+  %.2 = phi ptr [ %i.au, %bb.b ], [ %i.an, %._crit_edge ] ; 2 uses
+  %i.av = icmp ugt i64 %i.aq, 2
   br i1 %i.av, label %.lr.ph59, label %._crit_edge60, !llvm.loop !183
 
 ._crit_edge60:                                    ; preds = %bb.c
-  %.not = icmp eq i64 %6, 0
+  %.not = icmp eq i64 %i.aq, 0
   br i1 %.not, label %bb.f, label %._crit_edge60.thread
 
 ._crit_edge60.thread:                             ; preds = %.preheader, %._crit_edge60
-  %.0.lcssa77 = phi ptr [ %.1.lcssa70, %._crit_edge60 ], [ %0, %.preheader ] ; 2 uses
+  %.0.lcssa77 = phi ptr [ %i.j, %._crit_edge60 ], [ %0, %.preheader ] ; 2 uses
   %.046.lcssa76 = phi ptr [ %.2, %._crit_edge60 ], [ %2, %.preheader ] ; 6 uses
-  %.048.lcssa75 = phi i64 [ %6, %._crit_edge60 ], [ %1, %.preheader ]
+  %.048.lcssa75 = phi i64 [ %i.aq, %._crit_edge60 ], [ %1, %.preheader ]
   %i.aw = load i8, ptr %.0.lcssa77, align 1, !tbaa !8
   %i.ax = zext i8 %i.aw to i32                    ; 3 uses
   %i.ay = lshr i32 %i.ax, 2
