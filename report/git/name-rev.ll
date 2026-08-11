@@ -203,9 +203,9 @@ bb.x:                                             ; preds = %commit_is_before_cu
   br i1 %.not342.i.i.i.i, label %.thread.i.i.i.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.x
-  %13 = sub nuw i32 %i.hc, %i.hk                  ; 2 uses
-  %14 = add nuw nsw i32 %13, 1                    ; 2 uses
-  %min.iters.check125 = icmp samesign ult i32 %13, 3
+  %13 = add nuw nsw i32 %i.hc, 1
+  %14 = sub nuw i32 %13, %i.hk                    ; 3 uses
+  %min.iters.check125 = icmp samesign ult i32 %14, 4
   br i1 %min.iters.check125, label %.lr.ph.i.i.i.i.preheader136, label %vector.ph126
 
 vector.ph126:                                     ; preds = %.lr.ph.i.i.i.i.preheader
@@ -475,9 +475,9 @@ bb.an:                                            ; preds = %bb.am
   br i1 %.not342.i.i.i.i.i, label %.thread.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.an
-  %15 = sub nuw i32 %i.kt, %i.lb                  ; 2 uses
-  %16 = add nuw nsw i32 %15, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i32 %15, 3
+  %15 = add nuw nsw i32 %i.kt, 1
+  %16 = sub nuw i32 %15, %i.lb                    ; 3 uses
+  %min.iters.check = icmp samesign ult i32 %16, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader135, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.preheader

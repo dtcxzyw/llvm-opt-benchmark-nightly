@@ -204,8 +204,8 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs1N9T06jgEdt_11arrow_array12rec
   br i1 %i.n, label %_RNvXs_NtNtCs6Po7BT7Nknu_5alloc3vec21spec_from_iter_nestedINtB6_3VecRNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchEINtB4_18SpecFromIterNestedB13_INtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterB14_EE9from_iterCs14kWLkQVSKO_14deltalake_core.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchE7reserveCs14kWLkQVSKO_14deltalake_core.exit.i.i.i
-  %3 = sub i64 %i.b, %i.c
-  %4 = add i64 %3, -40                            ; 2 uses
+  %3 = add i64 %i.b, -40
+  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.o = udiv i64 %4, 40
   %i.p = add nuw nsw i64 %i.o, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 120
@@ -608,8 +608,8 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs8VI8w5SIoU4_15datafusion_expr4
   br i1 %i.n, label %.loopexit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprE7reserveCs14kWLkQVSKO_14deltalake_core.exit.i.i
-  %3 = sub i64 %i.b, %i.c
-  %4 = add i64 %3, -112                           ; 2 uses
+  %3 = add i64 %i.b, -112
+  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.o = udiv i64 %4, 112
   %i.p = add nuw nsw i64 %i.o, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 336
@@ -696,8 +696,8 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs90oH6M0AZ2B_22datafusion_expr_
   br i1 %i.n, label %.loopexit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs90oH6M0AZ2B_22datafusion_expr_common19interval_arithmetic8IntervalE7reserveCs14kWLkQVSKO_14deltalake_core.exit.i.i
-  %3 = sub i64 %i.b, %i.c
-  %4 = add i64 %3, -128                           ; 2 uses
+  %3 = add i64 %i.b, -128
+  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.o = lshr i64 %4, 7
   %i.p = add nuw nsw i64 %i.o, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 384

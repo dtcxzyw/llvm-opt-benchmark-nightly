@@ -203,8 +203,8 @@ _ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = 
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.cu = ptrtoaddr ptr %i.cs to i64
-  %3 = sub i64 %i.ci, %i.cj
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.ci, -8
+  %4 = sub i64 %3, %i.cj                          ; 2 uses
   %i.cv = lshr i64 %4, 3
   %i.cw = add nuw nsw i64 %i.cv, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 24
@@ -607,8 +607,8 @@ _ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %b
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %i.qh = ptrtoaddr ptr %i.qf to i64
-  %5 = sub i64 %i.pn, %i.po
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.pn, -8
+  %6 = sub i64 %5, %i.po                          ; 2 uses
   %i.qi = lshr i64 %6, 3
   %i.qj = add nuw nsw i64 %i.qi, 1                ; 2 uses
   %min.iters.check486 = icmp ult i64 %6, 24
@@ -1011,8 +1011,8 @@ _ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i181: ; preds =
 
 .lr.ph.i.i.i.i.i184.preheader:                    ; preds = %_ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i181
   %i.xe = ptrtoaddr ptr %i.xc to i64
-  %7 = sub i64 %i.wk, %i.wl
-  %8 = add i64 %7, -8                             ; 2 uses
+  %7 = add i64 %i.wk, -8
+  %8 = sub i64 %7, %i.wl                          ; 2 uses
   %i.xf = lshr i64 %8, 3
   %i.xg = add nuw nsw i64 %i.xf, 1                ; 2 uses
   %min.iters.check520 = icmp ult i64 %8, 24
@@ -1178,8 +1178,8 @@ _ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i196: ; preds =
 
 .lr.ph.i.i.i.i.i199.preheader:                    ; preds = %_ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i196
   %i.zm = ptrtoaddr ptr %i.zk to i64
-  %9 = sub i64 %i.ys, %i.yt
-  %10 = add i64 %9, -8                            ; 2 uses
+  %9 = add i64 %i.ys, -8
+  %10 = sub i64 %9, %i.yt                         ; 2 uses
   %i.zn = lshr i64 %10, 3
   %i.zo = add nuw nsw i64 %i.zn, 1                ; 2 uses
   %min.iters.check503 = icmp ult i64 %10, 24
@@ -1582,8 +1582,8 @@ _ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i
   %i.y = ptrtoaddr ptr %i.w to i64
-  %2 = sub i64 %i.d, %i.e
-  %3 = add i64 %2, -8                             ; 2 uses
+  %2 = add i64 %i.d, -8
+  %3 = sub i64 %2, %i.e                           ; 2 uses
   %i.z = lshr i64 %3, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72
@@ -1986,8 +1986,8 @@ _ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = 
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc107
   %i.hw = ptrtoaddr ptr %i.hu to i64
-  %7 = sub i64 %i.hk, %i.hl
-  %8 = add i64 %7, -8                             ; 2 uses
+  %7 = add i64 %i.hk, -8
+  %8 = sub i64 %7, %i.hl                          ; 2 uses
   %i.hx = lshr i64 %8, 3
   %i.hy = add nuw nsw i64 %i.hx, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %8, 24
@@ -2390,8 +2390,8 @@ _ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = 
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc20
   %i.bj = ptrtoaddr ptr %i.bh to i64
-  %3 = sub i64 %i.ax, %i.ay
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.ax, -8
+  %4 = sub i64 %3, %i.ay                          ; 2 uses
   %i.bk = lshr i64 %4, 3
   %i.bl = add nuw nsw i64 %i.bk, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 24

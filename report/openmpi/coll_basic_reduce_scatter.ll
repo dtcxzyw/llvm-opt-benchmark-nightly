@@ -203,9 +203,9 @@ bb.y:                                             ; preds = %.lr.ph432
 
 .lr.ph422.preheader:                              ; preds = %bb.y
   %i.ez = zext i32 %i.ex to i64                   ; 3 uses
-  %7 = add i32 %.0266429, %.0269428
-  %8 = xor i32 %7, -1
-  %9 = add i32 %.0262430, %8                      ; 2 uses
+  %7 = xor i32 %.0266429, -1
+  %8 = add i32 %.0262430, %7
+  %9 = sub i32 %8, %.0269428                      ; 2 uses
   %i.fa = zext i32 %9 to i64
   %i.fb = add nuw nsw i64 %i.fa, 1                ; 2 uses
   %min.iters.check513 = icmp ult i32 %9, 7
@@ -351,9 +351,9 @@ middle.block555:                                  ; preds = %vector.body548
 
 .lr.ph417.preheader:                              ; preds = %.preheader396
   %i.go = zext i32 %i.ex to i64                   ; 3 uses
-  %10 = add i32 %.0266429, %.0269428
-  %11 = xor i32 %10, -1
-  %12 = add i32 %.0262430, %11                    ; 2 uses
+  %10 = xor i32 %.0266429, -1
+  %11 = add i32 %.0262430, %10
+  %12 = sub i32 %11, %.0269428                    ; 2 uses
   %i.gp = zext i32 %12 to i64
   %i.gq = add nuw nsw i64 %i.gp, 1                ; 2 uses
   %min.iters.check529 = icmp ult i32 %12, 7

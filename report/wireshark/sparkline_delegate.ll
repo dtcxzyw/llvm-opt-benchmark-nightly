@@ -201,14 +201,14 @@ _ZN5QListIiE3endEv.exit:                          ; preds = %_ZNK17QArrayDataPoi
 
 .lr.ph308.preheader:                              ; preds = %_ZN5QListIiE3endEv.exit
   %i.ck = ptrtoaddr ptr %i.ch to i64
-  %22 = ptrtoaddr ptr %i.cf to i64
   %i.cl = shl i64 %i.ci, 2
-  %23 = sub i64 %i.ck, %22
-  %i.cm = add i64 %23, %i.cl
-  %i.cn = add i64 %i.cm, -4                       ; 2 uses
-  %i.co = lshr i64 %i.cn, 2
+  %22 = ptrtoaddr ptr %i.cf to i64
+  %i.cm = add i64 %i.cl, %i.ck
+  %i.cn = add i64 %i.cm, -4
+  %23 = sub i64 %i.cn, %22                        ; 2 uses
+  %i.co = lshr i64 %23, 2
   %i.cp = add nuw nsw i64 %i.co, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cn, 28
+  %min.iters.check = icmp ult i64 %23, 28
   br i1 %min.iters.check, label %.lr.ph308.preheader428, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph308.preheader
@@ -319,14 +319,14 @@ _ZN5QListIiE3endEv.exit178:                       ; preds = %_ZNK17QArrayDataPoi
 
 .lr.ph314.preheader:                              ; preds = %_ZN5QListIiE3endEv.exit178
   %i.dw = ptrtoaddr ptr %i.ds to i64
-  %24 = ptrtoaddr ptr %i.dq to i64
   %i.dx = shl i64 %i.du, 2
-  %25 = sub i64 %i.dw, %24
-  %i.dy = add i64 %25, %i.dx
-  %i.dz = add i64 %i.dy, -4                       ; 2 uses
-  %i.ea = lshr i64 %i.dz, 2
+  %24 = ptrtoaddr ptr %i.dq to i64
+  %i.dy = add i64 %i.dx, %i.dw
+  %i.dz = add i64 %i.dy, -4
+  %25 = sub i64 %i.dz, %24                        ; 2 uses
+  %i.ea = lshr i64 %25, 2
   %i.eb = add nuw nsw i64 %i.ea, 1                ; 2 uses
-  %min.iters.check405 = icmp ult i64 %i.dz, 28
+  %min.iters.check405 = icmp ult i64 %25, 28
   br i1 %min.iters.check405, label %.lr.ph314.preheader424, label %vector.ph406
 
 vector.ph406:                                     ; preds = %.lr.ph314.preheader

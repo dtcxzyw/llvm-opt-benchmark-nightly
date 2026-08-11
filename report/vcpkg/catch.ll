@@ -204,8 +204,8 @@ _ZNKSt6vectorISt10unique_ptrIN5Catch6Detail8EnumInfoESt14default_deleteIS3_EESaI
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5Catch6Detail8EnumInfoESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc11
-  %7 = sub i64 %i.i, %i.j
-  %8 = add i64 %7, -8                             ; 2 uses
+  %7 = add i64 %i.i, -8
+  %8 = sub i64 %7, %i.j                           ; 2 uses
   %i.v = lshr i64 %8, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %8, 136
@@ -510,8 +510,8 @@ _ZNKSt6vectorISt10unique_ptrIKN5Catch20IExceptionTranslatorESt14default_deleteIS
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIKN5Catch20IExceptionTranslatorESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = sub i64 %i.i, %i.j
-  %3 = add i64 %2, -8                             ; 2 uses
+  %2 = add i64 %i.i, -8
+  %3 = sub i64 %2, %i.j                           ; 2 uses
   %i.v = lshr i64 %3, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 136
@@ -914,8 +914,8 @@ _ZNKSt6vectorISt10unique_ptrIN5Catch18IStreamingReporterESt14default_deleteIS2_E
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5Catch18IStreamingReporterESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc64.i.i
-  %19 = sub i64 %i.jt, %i.ju
-  %20 = add i64 %19, -8                           ; 2 uses
+  %19 = add i64 %i.jt, -8
+  %20 = sub i64 %19, %i.ju                        ; 2 uses
   %i.kg = lshr i64 %20, 3
   %i.kh = add nuw nsw i64 %i.kg, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %20, 56
@@ -1318,8 +1318,8 @@ _ZNKSt6vectorISt10unique_ptrINSt7__cxx1119basic_ostringstreamIcSt11char_traitsIc
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrINSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEESt14default_deleteIS6_EESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc12
-  %1 = sub i64 %i.n, %i.o
-  %2 = add i64 %1, -8                             ; 2 uses
+  %1 = add i64 %i.n, -8
+  %2 = sub i64 %1, %i.o                           ; 2 uses
   %i.aa = lshr i64 %2, 3
   %i.ab = add nuw nsw i64 %i.aa, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %2, 136
@@ -1722,8 +1722,8 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %3 = sub i64 %i.aa, %i.ab
-  %4 = add i64 %3, -4                             ; 2 uses
+  %3 = add i64 %i.aa, -4
+  %4 = sub i64 %3, %i.ab                          ; 2 uses
   %i.an = lshr i64 %4, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 44
@@ -2126,8 +2126,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.cw = ptrtoaddr ptr %i.cu to i64              ; 2 uses
   %i.cx = ptrtoaddr ptr %i.cq to i64
   %i.cy = ptrtoaddr ptr %i.cv to i64
-  %2 = sub i64 %i.cy, %i.cw
-  %3 = add i64 %2, -4                             ; 2 uses
+  %2 = add i64 %i.cy, -4
+  %3 = sub i64 %2, %i.cw                          ; 2 uses
   %i.cz = lshr i64 %3, 2
   %i.da = add nuw nsw i64 %i.cz, 1                ; 2 uses
   %min.iters.check61 = icmp ult i64 %3, 44
@@ -2320,8 +2320,8 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %3 = sub i64 %i.aa, %i.ab
-  %4 = add i64 %3, -4                             ; 2 uses
+  %3 = add i64 %i.aa, -4
+  %4 = sub i64 %3, %i.ab                          ; 2 uses
   %i.an = lshr i64 %4, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 44
@@ -2724,8 +2724,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.bk = ptrtoaddr ptr %i.bi to i64              ; 2 uses
   %i.bl = ptrtoaddr ptr %i.be to i64
   %i.bm = ptrtoaddr ptr %i.bj to i64
-  %2 = sub i64 %i.bm, %i.bk
-  %3 = add i64 %2, -4                             ; 2 uses
+  %2 = add i64 %i.bm, -4
+  %3 = sub i64 %2, %i.bk                          ; 2 uses
   %i.bn = lshr i64 %3, 2
   %i.bo = add nuw nsw i64 %i.bn, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 44
@@ -3120,8 +3120,8 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %3 = sub i64 %i.aa, %i.ab
-  %4 = add i64 %3, -4                             ; 2 uses
+  %3 = add i64 %i.aa, -4
+  %4 = sub i64 %3, %i.ab                          ; 2 uses
   %i.an = lshr i64 %4, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 44
@@ -3524,8 +3524,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.cw = ptrtoaddr ptr %i.cu to i64              ; 2 uses
   %i.cx = ptrtoaddr ptr %i.cq to i64
   %i.cy = ptrtoaddr ptr %i.cv to i64
-  %2 = sub i64 %i.cy, %i.cw
-  %3 = add i64 %2, -4                             ; 2 uses
+  %2 = add i64 %i.cy, -4
+  %3 = sub i64 %2, %i.cw                          ; 2 uses
   %i.cz = lshr i64 %3, 2
   %i.da = add nuw nsw i64 %i.cz, 1                ; 2 uses
   %min.iters.check61 = icmp ult i64 %3, 44
@@ -3718,8 +3718,8 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %3 = sub i64 %i.aa, %i.ab
-  %4 = add i64 %3, -4                             ; 2 uses
+  %3 = add i64 %i.aa, -4
+  %4 = sub i64 %3, %i.ab                          ; 2 uses
   %i.an = lshr i64 %4, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 44
@@ -4122,8 +4122,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.bk = ptrtoaddr ptr %i.bi to i64              ; 2 uses
   %i.bl = ptrtoaddr ptr %i.be to i64
   %i.bm = ptrtoaddr ptr %i.bj to i64
-  %2 = sub i64 %i.bm, %i.bk
-  %3 = add i64 %2, -4                             ; 2 uses
+  %2 = add i64 %i.bm, -4
+  %3 = sub i64 %2, %i.bk                          ; 2 uses
   %i.bn = lshr i64 %3, 2
   %i.bo = add nuw nsw i64 %i.bn, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 44
@@ -4526,8 +4526,8 @@ _ZNSt15__exception_ptr13exception_ptrC2ERKS0_.exit: ; preds = %_ZNKSt6vectorINSt
   br i1 %.not10.i.i.i, label %_ZNSt6vectorINSt15__exception_ptr13exception_ptrESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNSt15__exception_ptr13exception_ptrC2ERKS0_.exit
-  %3 = sub i64 %i.m, %i.e
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.m, -8
+  %4 = sub i64 %3, %i.e                           ; 2 uses
   %i.s = lshr i64 %4, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 136
@@ -4600,8 +4600,8 @@ _ZNSt6vectorINSt15__exception_ptr13exception_ptrESaIS1_EE11_S_relocateEPS1_S4_S4
   br i1 %.not10.i.i.i17, label %_ZNSt6vectorINSt15__exception_ptr13exception_ptrESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit23, label %.lr.ph.i.i.i18.preheader
 
 .lr.ph.i.i.i18.preheader:                         ; preds = %_ZNSt6vectorINSt15__exception_ptr13exception_ptrESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
-  %5 = sub i64 %i.d, %i.m
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.d, -8
+  %6 = sub i64 %5, %i.m                           ; 2 uses
   %i.aj = lshr i64 %6, 3
   %i.ak = add nuw nsw i64 %i.aj, 1                ; 2 uses
   %min.iters.check47 = icmp ult i64 %6, 152
@@ -5004,8 +5004,8 @@ _ZNKSt6vectorISt10unique_ptrIN5Catch18IStreamingReporterESt14default_deleteIS2_E
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5Catch18IStreamingReporterESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN5Catch18IStreamingReporterESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit
-  %3 = sub i64 %i.m, %i.e
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.m, -8
+  %4 = sub i64 %3, %i.e                           ; 2 uses
   %i.s = lshr i64 %4, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 136
@@ -5079,8 +5079,8 @@ _ZNSt6vectorISt10unique_ptrIN5Catch18IStreamingReporterESt14default_deleteIS2_EE
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN5Catch18IStreamingReporterESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN5Catch18IStreamingReporterESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit
-  %5 = sub i64 %i.d, %i.m
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.d, -8
+  %6 = sub i64 %5, %i.m                           ; 2 uses
   %i.ak = lshr i64 %6, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check46 = icmp ult i64 %6, 152

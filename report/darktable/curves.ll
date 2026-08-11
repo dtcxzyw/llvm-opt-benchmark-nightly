@@ -201,11 +201,11 @@ vec.epilog.middle.block362:                       ; preds = %vec.epilog.vector.b
   br i1 %.not320, label %.preheader.split.preheader, label %.lr.ph198.preheader
 
 .lr.ph198.preheader:                              ; preds = %._crit_edge195
-  %i.ca = zext i32 %i.bz to i64                   ; 7 uses
+  %i.ca = zext i32 %i.bz to i64                   ; 6 uses
   %i.cb = icmp ne i32 %i.bz, 0
   %.neg = sext i1 %i.cb to i64
-  %4 = add nsw i64 %.neg, %i.ca
-  %i.cc = add nsw i64 %4, 1                       ; 3 uses
+  %4 = zext nneg i32 %3 to i64
+  %i.cc = add nsw i64 %.neg, %4                   ; 3 uses
   %min.iters.check380 = icmp ult i64 %i.cc, 24
   br i1 %min.iters.check380, label %.lr.ph198.preheader515, label %vector.memcheck
 

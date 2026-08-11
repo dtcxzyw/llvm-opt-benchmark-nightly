@@ -203,8 +203,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   br i1 %exitcond.peel.not, label %..loopexit_crit_edge, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.d
-  %i.j = mul i64 %i.i, -104811045873349725
-  %i.k = mul i64 %i.d, 104811045873349725
+  %i.j = mul i64 %i.d, 104811045873349725
+  %i.k = mul i64 %i.i, -104811045873349725
   %i.l = add i64 %i.j, %i.k
   %i.m = lshr i64 %i.l, 4
   %i.n = add i64 %1, -2
@@ -309,8 +309,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %exitcond.peel.not.i, label %.thread, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.d
-  %i.i = mul i64 %i.h, -104811045873349725
-  %i.j = mul i64 %i.c, 104811045873349725
+  %i.i = mul i64 %i.c, 104811045873349725
+  %i.j = mul i64 %i.h, -104811045873349725
   %i.k = add i64 %i.i, %i.j
   %i.l = lshr i64 %i.k, 4
   %i.m = add i64 %1, -2
@@ -565,8 +565,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   br i1 %exitcond.peel.not, label %..loopexit_crit_edge, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.d
-  %i.j = mul i64 %i.i, -576460752303423487
-  %i.k = mul i64 %i.d, 576460752303423487
+  %i.j = mul i64 %i.d, 576460752303423487
+  %i.k = mul i64 %i.i, -576460752303423487
   %i.l = add i64 %i.j, %i.k
   %i.m = lshr i64 %i.l, 5
   %i.n = add i64 %1, -2
@@ -671,8 +671,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %exitcond.peel.not.i, label %.thread, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.d
-  %i.i = mul i64 %i.h, -576460752303423487
-  %i.j = mul i64 %i.c, 576460752303423487
+  %i.i = mul i64 %i.c, 576460752303423487
+  %i.j = mul i64 %i.h, -576460752303423487
   %i.k = add i64 %i.i, %i.j
   %i.l = lshr i64 %i.k, 5
   %i.m = add i64 %1, -2
@@ -927,8 +927,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   br i1 %exitcond.peel.not, label %..loopexit_crit_edge, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.d
-  %i.j = mul i64 %i.i, -1257732550480196701
-  %i.k = mul i64 %i.d, 1257732550480196701
+  %i.j = mul i64 %i.d, 1257732550480196701
+  %i.k = mul i64 %i.i, -1257732550480196701
   %i.l = add i64 %i.j, %i.k
   %i.m = lshr i64 %i.l, 3
   %i.n = add i64 %1, -2
@@ -1033,8 +1033,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %exitcond.peel.not.i, label %.thread, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.d
-  %i.i = mul i64 %i.h, -1257732550480196701
-  %i.j = mul i64 %i.c, 1257732550480196701
+  %i.i = mul i64 %i.c, 1257732550480196701
+  %i.j = mul i64 %i.h, -1257732550480196701
   %i.k = add i64 %i.i, %i.j
   %i.l = lshr i64 %i.k, 3
   %i.m = add i64 %1, -2
@@ -1289,8 +1289,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   br i1 %exitcond.peel.not, label %..loopexit_crit_edge, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.d
-  %i.j = mul i64 %i.i, -76861433640456465
-  %i.k = mul i64 %i.d, 76861433640456465
+  %i.j = mul i64 %i.d, 76861433640456465
+  %i.k = mul i64 %i.i, -76861433640456465
   %i.l = add i64 %i.j, %i.k
   %i.m = lshr i64 %i.l, 4
   %i.n = add i64 %1, -2
@@ -1395,8 +1395,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %exitcond.peel.not.i, label %.thread, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.d
-  %i.i = mul i64 %i.h, -76861433640456465
-  %i.j = mul i64 %i.c, 76861433640456465
+  %i.i = mul i64 %i.c, 76861433640456465
+  %i.j = mul i64 %i.h, -76861433640456465
   %i.k = add i64 %i.i, %i.j
   %i.l = lshr i64 %i.k, 4
   %i.m = add i64 %1, -2
@@ -1651,8 +1651,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   br i1 %exitcond.peel.not, label %..loopexit_crit_edge, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.d
-  %i.j = mul i64 %i.i, -230584300921369395
-  %i.k = mul i64 %i.d, 230584300921369395
+  %i.j = mul i64 %i.d, 230584300921369395
+  %i.k = mul i64 %i.i, -230584300921369395
   %i.l = add i64 %i.j, %i.k
   %i.m = lshr i64 %i.l, 6
   %i.n = add i64 %1, -2
@@ -1757,8 +1757,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %exitcond.peel.not.i, label %.thread, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.d
-  %i.i = mul i64 %i.h, -230584300921369395
-  %i.j = mul i64 %i.c, 230584300921369395
+  %i.i = mul i64 %i.c, 230584300921369395
+  %i.j = mul i64 %i.h, -230584300921369395
   %i.k = add i64 %i.i, %i.j
   %i.l = lshr i64 %i.k, 6
   %i.m = add i64 %1, -2
@@ -2013,8 +2013,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   br i1 %exitcond.peel.not, label %..loopexit_crit_edge, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.d
-  %i.j = mul i64 %i.i, -810161057291297875
-  %i.k = mul i64 %i.d, 810161057291297875
+  %i.j = mul i64 %i.d, 810161057291297875
+  %i.k = mul i64 %i.i, -810161057291297875
   %i.l = add i64 %i.j, %i.k
   %i.m = lshr i64 %i.l, 3
   %i.n = add i64 %1, -2
@@ -2119,8 +2119,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %exitcond.peel.not.i, label %.thread, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.d
-  %i.i = mul i64 %i.h, -810161057291297875
-  %i.j = mul i64 %i.c, 810161057291297875
+  %i.i = mul i64 %i.c, 810161057291297875
+  %i.j = mul i64 %i.h, -810161057291297875
   %i.k = add i64 %i.i, %i.j
   %i.l = lshr i64 %i.k, 3
   %i.m = add i64 %1, -2
@@ -2375,8 +2375,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   br i1 %exitcond.peel.not, label %..loopexit_crit_edge, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.d
-  %i.j = mul i64 %i.i, -384307168202282325
-  %i.k = mul i64 %i.d, 384307168202282325
+  %i.j = mul i64 %i.d, 384307168202282325
+  %i.k = mul i64 %i.i, -384307168202282325
   %i.l = add i64 %i.j, %i.k
   %i.m = lshr i64 %i.l, 5
   %i.n = add i64 %1, -2
@@ -2481,8 +2481,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %exitcond.peel.not.i, label %.thread, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.d
-  %i.i = mul i64 %i.h, -384307168202282325
-  %i.j = mul i64 %i.c, 384307168202282325
+  %i.i = mul i64 %i.c, 384307168202282325
+  %i.j = mul i64 %i.h, -384307168202282325
   %i.k = add i64 %i.i, %i.j
   %i.l = lshr i64 %i.k, 5
   %i.m = add i64 %1, -2
@@ -2737,8 +2737,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   br i1 %exitcond.peel.not, label %..loopexit_crit_edge, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.d
-  %i.j = mul i64 %i.i, -230584300921369395
-  %i.k = mul i64 %i.d, 230584300921369395
+  %i.j = mul i64 %i.d, 230584300921369395
+  %i.k = mul i64 %i.i, -230584300921369395
   %i.l = add i64 %i.j, %i.k
   %i.m = lshr i64 %i.l, 6
   %i.n = add i64 %1, -2
@@ -2843,8 +2843,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %exitcond.peel.not.i, label %.thread, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.d
-  %i.i = mul i64 %i.h, -230584300921369395
-  %i.j = mul i64 %i.c, 230584300921369395
+  %i.i = mul i64 %i.c, 230584300921369395
+  %i.j = mul i64 %i.h, -230584300921369395
   %i.k = add i64 %i.i, %i.j
   %i.l = lshr i64 %i.k, 6
   %i.m = add i64 %1, -2
@@ -3099,8 +3099,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   br i1 %exitcond.peel.not, label %..loopexit_crit_edge, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.d
-  %i.j = mul i64 %i.i, -1317624576693539401
-  %i.k = mul i64 %i.d, 1317624576693539401
+  %i.j = mul i64 %i.d, 1317624576693539401
+  %i.k = mul i64 %i.i, -1317624576693539401
   %i.l = add i64 %i.j, %i.k
   %i.m = lshr i64 %i.l, 3
   %i.n = add i64 %1, -2
@@ -3205,8 +3205,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %exitcond.peel.not.i, label %.thread, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.d
-  %i.i = mul i64 %i.h, -1317624576693539401
-  %i.j = mul i64 %i.c, 1317624576693539401
+  %i.i = mul i64 %i.c, 1317624576693539401
+  %i.j = mul i64 %i.h, -1317624576693539401
   %i.k = add i64 %i.i, %i.j
   %i.l = lshr i64 %i.k, 3
   %i.m = add i64 %1, -2
@@ -3461,8 +3461,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   br i1 %exitcond.peel.not, label %..loopexit_crit_edge, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.d
-  %i.j = mul i64 %i.i, -1446037141371299597
-  %i.k = mul i64 %i.d, 1446037141371299597
+  %i.j = mul i64 %i.d, 1446037141371299597
+  %i.k = mul i64 %i.i, -1446037141371299597
   %i.l = add i64 %i.j, %i.k
   %i.m = lshr i64 %i.l, 3
   %i.n = add i64 %1, -2
@@ -3567,8 +3567,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %exitcond.peel.not.i, label %.thread, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.d
-  %i.i = mul i64 %i.h, -1446037141371299597
-  %i.j = mul i64 %i.c, 1446037141371299597
+  %i.i = mul i64 %i.c, 1446037141371299597
+  %i.j = mul i64 %i.h, -1446037141371299597
   %i.k = add i64 %i.i, %i.j
   %i.l = lshr i64 %i.k, 3
   %i.m = add i64 %1, -2
@@ -3823,8 +3823,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   br i1 %exitcond.peel.not, label %..loopexit_crit_edge, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.d
-  %i.j = mul i64 %i.i, -1383505805528216371
-  %i.k = mul i64 %i.d, 1383505805528216371
+  %i.j = mul i64 %i.d, 1383505805528216371
+  %i.k = mul i64 %i.i, -1383505805528216371
   %i.l = add i64 %i.j, %i.k
   %i.m = lshr i64 %i.l, 3
   %i.n = add i64 %1, -2
@@ -3929,8 +3929,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %exitcond.peel.not.i, label %.thread, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.d
-  %i.i = mul i64 %i.h, -1383505805528216371
-  %i.j = mul i64 %i.c, 1383505805528216371
+  %i.i = mul i64 %i.c, 1383505805528216371
+  %i.j = mul i64 %i.h, -1383505805528216371
   %i.k = add i64 %i.i, %i.j
   %i.l = lshr i64 %i.k, 3
   %i.m = add i64 %1, -2
@@ -4185,8 +4185,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   br i1 %exitcond.peel.not, label %..loopexit_crit_edge, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.d
-  %i.j = mul i64 %i.i, -1187858519897963551
-  %i.k = mul i64 %i.d, 1187858519897963551
+  %i.j = mul i64 %i.d, 1187858519897963551
+  %i.k = mul i64 %i.i, -1187858519897963551
   %i.l = add i64 %i.j, %i.k
   %i.m = lshr i64 %i.l, 3
   %i.n = add i64 %1, -2
@@ -4291,8 +4291,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %exitcond.peel.not.i, label %.thread, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.d
-  %i.i = mul i64 %i.h, -1187858519897963551
-  %i.j = mul i64 %i.c, 1187858519897963551
+  %i.i = mul i64 %i.c, 1187858519897963551
+  %i.j = mul i64 %i.h, -1187858519897963551
   %i.k = add i64 %i.i, %i.j
   %i.l = lshr i64 %i.k, 3
   %i.m = add i64 %1, -2

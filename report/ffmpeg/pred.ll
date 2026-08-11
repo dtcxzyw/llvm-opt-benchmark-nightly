@@ -202,8 +202,8 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.l = zext i32 %i.j to i64                     ; 5 uses
   %i.m = tail call i32 @llvm.smin.i32(i32 %i.j, i32 0)
-  %5 = xor i32 %i.m, -1
-  %6 = add i32 %i.a, %5                           ; 2 uses
+  %5 = add nsw i32 %i.a, -2
+  %6 = sub i32 %5, %i.m                           ; 2 uses
   %min.iters.check = icmp ult i32 %6, 16
   br i1 %min.iters.check, label %.lr.ph.preheader83, label %vector.memcheck
 
@@ -311,8 +311,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
 .lr.ph42.preheader:                               ; preds = %._crit_edge
   %i.bw = zext i32 %i.j to i64                    ; 5 uses
   %i.bx = tail call i32 @llvm.smin.i32(i32 %i.j, i32 0)
-  %7 = xor i32 %i.bx, -1
-  %8 = add i32 %i.a, %7                           ; 2 uses
+  %7 = add nsw i32 %i.a, -2
+  %8 = sub i32 %7, %i.bx                          ; 2 uses
   %min.iters.check66 = icmp ult i32 %8, 16
   br i1 %min.iters.check66, label %.lr.ph42.preheader82, label %vector.memcheck56
 
@@ -715,8 +715,8 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.l = zext i32 %i.j to i64                     ; 5 uses
   %i.m = tail call i32 @llvm.smin.i32(i32 %i.j, i32 0)
-  %5 = xor i32 %i.m, -1
-  %6 = add i32 %i.a, %5                           ; 2 uses
+  %5 = add nsw i32 %i.a, -2
+  %6 = sub i32 %5, %i.m                           ; 2 uses
   %min.iters.check = icmp ult i32 %6, 16
   br i1 %min.iters.check, label %.lr.ph.preheader83, label %vector.memcheck
 
@@ -824,8 +824,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
 .lr.ph42.preheader:                               ; preds = %._crit_edge
   %i.bw = zext i32 %i.j to i64                    ; 5 uses
   %i.bx = tail call i32 @llvm.smin.i32(i32 %i.j, i32 0)
-  %7 = xor i32 %i.bx, -1
-  %8 = add i32 %i.a, %7                           ; 2 uses
+  %7 = add nsw i32 %i.a, -2
+  %8 = sub i32 %7, %i.bx                          ; 2 uses
   %min.iters.check66 = icmp ult i32 %8, 16
   br i1 %min.iters.check66, label %.lr.ph42.preheader82, label %vector.memcheck56
 
@@ -1228,8 +1228,8 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.l = zext i32 %i.j to i64                     ; 5 uses
   %i.m = tail call i32 @llvm.smin.i32(i32 %i.j, i32 0)
-  %5 = xor i32 %i.m, -1
-  %6 = add i32 %i.a, %5                           ; 2 uses
+  %5 = add nsw i32 %i.a, -2
+  %6 = sub i32 %5, %i.m                           ; 2 uses
   %min.iters.check = icmp ult i32 %6, 16
   br i1 %min.iters.check, label %.lr.ph.preheader83, label %vector.memcheck
 
@@ -1337,8 +1337,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
 .lr.ph42.preheader:                               ; preds = %._crit_edge
   %i.bw = zext i32 %i.j to i64                    ; 5 uses
   %i.bx = tail call i32 @llvm.smin.i32(i32 %i.j, i32 0)
-  %7 = xor i32 %i.bx, -1
-  %8 = add i32 %i.a, %7                           ; 2 uses
+  %7 = add nsw i32 %i.a, -2
+  %8 = sub i32 %7, %i.bx                          ; 2 uses
   %min.iters.check66 = icmp ult i32 %8, 16
   br i1 %min.iters.check66, label %.lr.ph42.preheader82, label %vector.memcheck56
 

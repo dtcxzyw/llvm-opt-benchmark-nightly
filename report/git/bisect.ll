@@ -203,9 +203,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not331.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.f
-  %5 = sub nuw i32 %i.w, %i.ad                    ; 2 uses
-  %6 = add nuw nsw i32 %5, 1                      ; 2 uses
-  %min.iters.check202 = icmp samesign ult i32 %5, 3
+  %5 = add nuw nsw i32 %i.w, 1
+  %6 = sub nuw i32 %5, %i.ad                      ; 3 uses
+  %min.iters.check202 = icmp samesign ult i32 %6, 4
   br i1 %min.iters.check202, label %.lr.ph.i.i.i.preheader362, label %vector.ph203
 
 vector.ph203:                                     ; preds = %.lr.ph.i.i.i.preheader
@@ -336,9 +336,9 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not331.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.j
-  %7 = sub nuw i32 %i.bi, %i.bp                   ; 2 uses
-  %8 = add nuw nsw i32 %7, 1                      ; 2 uses
-  %min.iters.check = icmp samesign ult i32 %7, 3
+  %7 = add nuw nsw i32 %i.bi, 1
+  %8 = sub nuw i32 %7, %i.bp                      ; 3 uses
+  %min.iters.check = icmp samesign ult i32 %8, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader359, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -425,9 +425,9 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not331.i.i.i112.i, label %._crit_edge.i.i.i116.i, label %.lr.ph.i.i.i113.i.preheader
 
 .lr.ph.i.i.i113.i.preheader:                      ; preds = %bb.n
-  %9 = sub nuw i32 %i.cl, %i.cs                   ; 2 uses
-  %10 = add nuw nsw i32 %9, 1                     ; 2 uses
-  %min.iters.check192 = icmp samesign ult i32 %9, 3
+  %9 = add nuw nsw i32 %i.cl, 1
+  %10 = sub nuw i32 %9, %i.cs                     ; 3 uses
+  %min.iters.check192 = icmp samesign ult i32 %10, 4
   br i1 %min.iters.check192, label %.lr.ph.i.i.i113.i.preheader361, label %vector.ph193
 
 vector.ph193:                                     ; preds = %.lr.ph.i.i.i113.i.preheader
@@ -517,9 +517,9 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not331.i.i.i121.i, label %._crit_edge.i.i.i125.i, label %.lr.ph.i.i.i122.i.preheader
 
 .lr.ph.i.i.i122.i.preheader:                      ; preds = %bb.r
-  %11 = sub nuw i32 %i.dn, %i.du                  ; 2 uses
-  %12 = add nuw nsw i32 %11, 1                    ; 2 uses
-  %min.iters.check182 = icmp samesign ult i32 %11, 3
+  %11 = add nuw nsw i32 %i.dn, 1
+  %12 = sub nuw i32 %11, %i.du                    ; 3 uses
+  %min.iters.check182 = icmp samesign ult i32 %12, 4
   br i1 %min.iters.check182, label %.lr.ph.i.i.i122.i.preheader360, label %vector.ph183
 
 vector.ph183:                                     ; preds = %.lr.ph.i.i.i122.i.preheader
@@ -656,9 +656,9 @@ bb.x:                                             ; preds = %bb.w
   br i1 %.not331.i.i.i130.i, label %._crit_edge.i.i.i134.i, label %.lr.ph.i.i.i131.i.preheader
 
 .lr.ph.i.i.i131.i.preheader:                      ; preds = %bb.x
-  %13 = sub nuw i32 %i.ez, %i.fg                  ; 2 uses
-  %14 = add nuw nsw i32 %13, 1                    ; 2 uses
-  %min.iters.check232 = icmp samesign ult i32 %13, 3
+  %13 = add nuw nsw i32 %i.ez, 1
+  %14 = sub nuw i32 %13, %i.fg                    ; 3 uses
+  %min.iters.check232 = icmp samesign ult i32 %14, 4
   br i1 %min.iters.check232, label %.lr.ph.i.i.i131.i.preheader355, label %vector.ph233
 
 vector.ph233:                                     ; preds = %.lr.ph.i.i.i131.i.preheader
@@ -753,9 +753,9 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %.not331.i.i.i138.i, label %._crit_edge.i.i.i142.i, label %.lr.ph.i.i.i139.i.preheader
 
 .lr.ph.i.i.i139.i.preheader:                      ; preds = %bb.ad
-  %15 = sub nuw i32 %i.ge, %i.gl                  ; 2 uses
-  %16 = add nuw nsw i32 %15, 1                    ; 2 uses
-  %min.iters.check222 = icmp samesign ult i32 %15, 3
+  %15 = add nuw nsw i32 %i.ge, 1
+  %16 = sub nuw i32 %15, %i.gl                    ; 3 uses
+  %min.iters.check222 = icmp samesign ult i32 %16, 4
   br i1 %min.iters.check222, label %.lr.ph.i.i.i139.i.preheader354, label %vector.ph223
 
 vector.ph223:                                     ; preds = %.lr.ph.i.i.i139.i.preheader
@@ -861,9 +861,9 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %.not331.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.ai
-  %17 = sub nuw i32 %i.ho, %i.hv                  ; 2 uses
-  %18 = add nuw nsw i32 %17, 1                    ; 2 uses
-  %min.iters.check212 = icmp samesign ult i32 %17, 3
+  %17 = add nuw nsw i32 %i.ho, 1
+  %18 = sub nuw i32 %17, %i.hv                    ; 3 uses
+  %min.iters.check212 = icmp samesign ult i32 %18, 4
   br i1 %min.iters.check212, label %.lr.ph.i.i.i.i.i.preheader353, label %vector.ph213
 
 vector.ph213:                                     ; preds = %.lr.ph.i.i.i.i.i.preheader
@@ -979,9 +979,9 @@ bb.am:                                            ; preds = %.preheader.i
   br i1 %.not331.i.i.i149.i, label %._crit_edge.i.i.i153.i, label %.lr.ph.i.i.i150.i.preheader
 
 .lr.ph.i.i.i150.i.preheader:                      ; preds = %bb.am
-  %19 = sub nuw i32 %i.jc, %i.jj                  ; 2 uses
-  %20 = add nuw nsw i32 %19, 1                    ; 2 uses
-  %min.iters.check302 = icmp samesign ult i32 %19, 3
+  %19 = add nuw nsw i32 %i.jc, 1
+  %20 = sub nuw i32 %19, %i.jj                    ; 3 uses
+  %min.iters.check302 = icmp samesign ult i32 %20, 4
   br i1 %min.iters.check302, label %.lr.ph.i.i.i150.i.preheader350, label %vector.ph303
 
 vector.ph303:                                     ; preds = %.lr.ph.i.i.i150.i.preheader
@@ -1098,9 +1098,9 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %.not331.i.i.i158.i, label %._crit_edge.i.i.i162.i, label %.lr.ph.i.i.i159.i.preheader
 
 .lr.ph.i.i.i159.i.preheader:                      ; preds = %bb.ar
-  %21 = sub nuw i32 %i.km, %i.kt                  ; 2 uses
-  %22 = add nuw nsw i32 %21, 1                    ; 2 uses
-  %min.iters.check292 = icmp samesign ult i32 %21, 3
+  %21 = add nuw nsw i32 %i.km, 1
+  %22 = sub nuw i32 %21, %i.kt                    ; 3 uses
+  %min.iters.check292 = icmp samesign ult i32 %22, 4
   br i1 %min.iters.check292, label %.lr.ph.i.i.i159.i.preheader344, label %vector.ph293
 
 vector.ph293:                                     ; preds = %.lr.ph.i.i.i159.i.preheader
@@ -1215,9 +1215,9 @@ bb.ay:                                            ; preds = %bb.ax
   br i1 %.not331.i.i.i167.i, label %._crit_edge.i.i.i171.i, label %.lr.ph.i.i.i168.i.preheader
 
 .lr.ph.i.i.i168.i.preheader:                      ; preds = %bb.ay
-  %23 = sub nuw i32 %i.lt, %i.ma                  ; 2 uses
-  %24 = add nuw nsw i32 %23, 1                    ; 2 uses
-  %min.iters.check262 = icmp samesign ult i32 %23, 3
+  %23 = add nuw nsw i32 %i.lt, 1
+  %24 = sub nuw i32 %23, %i.ma                    ; 3 uses
+  %min.iters.check262 = icmp samesign ult i32 %24, 4
   br i1 %min.iters.check262, label %.lr.ph.i.i.i168.i.preheader347, label %vector.ph263
 
 vector.ph263:                                     ; preds = %.lr.ph.i.i.i168.i.preheader
@@ -1309,9 +1309,9 @@ bb.bb:                                            ; preds = %weight.exit173.i
   br i1 %.not331.i.i.i176.i, label %._crit_edge.i.i.i180.i, label %.lr.ph.i.i.i177.i.preheader
 
 .lr.ph.i.i.i177.i.preheader:                      ; preds = %bb.bb
-  %25 = sub nuw i32 %i.nb, %i.nh                  ; 2 uses
-  %26 = add nuw nsw i32 %25, 1                    ; 2 uses
-  %min.iters.check252 = icmp samesign ult i32 %25, 3
+  %25 = add nuw nsw i32 %i.nb, 1
+  %26 = sub nuw i32 %25, %i.nh                    ; 3 uses
+  %min.iters.check252 = icmp samesign ult i32 %26, 4
   br i1 %min.iters.check252, label %.lr.ph.i.i.i177.i.preheader346, label %vector.ph253
 
 vector.ph253:                                     ; preds = %.lr.ph.i.i.i177.i.preheader
@@ -1395,9 +1395,9 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %.not331.i.i.i185.i, label %._crit_edge.i.i.i189.i, label %.lr.ph.i.i.i186.i.preheader
 
 .lr.ph.i.i.i186.i.preheader:                      ; preds = %bb.bf
-  %27 = sub nuw i32 %i.lt, %i.og                  ; 2 uses
-  %28 = add nuw nsw i32 %27, 1                    ; 2 uses
-  %min.iters.check282 = icmp samesign ult i32 %27, 3
+  %27 = add nuw nsw i32 %i.lt, 1
+  %28 = sub nuw i32 %27, %i.og                    ; 3 uses
+  %min.iters.check282 = icmp samesign ult i32 %28, 4
   br i1 %min.iters.check282, label %.lr.ph.i.i.i186.i.preheader349, label %vector.ph283
 
 vector.ph283:                                     ; preds = %.lr.ph.i.i.i186.i.preheader
@@ -1489,9 +1489,9 @@ bb.bi:                                            ; preds = %weight.exit191.i
   br i1 %.not331.i.i.i194.i, label %._crit_edge.i.i.i198.i, label %.lr.ph.i.i.i195.i.preheader
 
 .lr.ph.i.i.i195.i.preheader:                      ; preds = %bb.bi
-  %29 = sub nuw i32 %i.pf, %i.pl                  ; 2 uses
-  %30 = add nuw nsw i32 %29, 1                    ; 2 uses
-  %min.iters.check272 = icmp samesign ult i32 %29, 3
+  %29 = add nuw nsw i32 %i.pf, 1
+  %30 = sub nuw i32 %29, %i.pl                    ; 3 uses
+  %min.iters.check272 = icmp samesign ult i32 %30, 4
   br i1 %min.iters.check272, label %.lr.ph.i.i.i195.i.preheader348, label %vector.ph273
 
 vector.ph273:                                     ; preds = %.lr.ph.i.i.i195.i.preheader
@@ -1597,9 +1597,9 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %.not331.i.i.i.i206.i, label %._crit_edge.i.i.i.i210.i, label %.lr.ph.i.i.i.i207.i.preheader
 
 .lr.ph.i.i.i.i207.i.preheader:                    ; preds = %bb.bo
-  %31 = sub nuw i32 %i.qi, %i.qp                  ; 2 uses
-  %32 = add nuw nsw i32 %31, 1                    ; 2 uses
-  %min.iters.check242 = icmp samesign ult i32 %31, 3
+  %31 = add nuw nsw i32 %i.qi, 1
+  %32 = sub nuw i32 %31, %i.qp                    ; 3 uses
+  %min.iters.check242 = icmp samesign ult i32 %32, 4
   br i1 %min.iters.check242, label %.lr.ph.i.i.i.i207.i.preheader345, label %vector.ph243
 
 vector.ph243:                                     ; preds = %.lr.ph.i.i.i.i207.i.preheader
@@ -1738,9 +1738,9 @@ bb.bt:                                            ; preds = %bb.bs
   br i1 %.not331.i.i.i.i222.i, label %._crit_edge.i.i.i.i226.i, label %.lr.ph.i.i.i.i223.i.preheader
 
 .lr.ph.i.i.i.i223.i.preheader:                    ; preds = %bb.bt
-  %33 = sub nuw i32 %i.rv, %i.sc                  ; 2 uses
-  %34 = add nuw nsw i32 %33, 1                    ; 2 uses
-  %min.iters.check322 = icmp samesign ult i32 %33, 3
+  %33 = add nuw nsw i32 %i.rv, 1
+  %34 = sub nuw i32 %33, %i.sc                    ; 3 uses
+  %min.iters.check322 = icmp samesign ult i32 %34, 4
   br i1 %min.iters.check322, label %.lr.ph.i.i.i.i223.i.preheader342, label %vector.ph323
 
 vector.ph323:                                     ; preds = %.lr.ph.i.i.i.i223.i.preheader
@@ -1854,9 +1854,9 @@ bb.bz:                                            ; preds = %bb.by
   br i1 %.not331.i.i.i.i235.i, label %._crit_edge.i.i.i.i239.i, label %.lr.ph.i.i.i.i236.i.preheader
 
 .lr.ph.i.i.i.i236.i.preheader:                    ; preds = %bb.bz
-  %35 = sub nuw i32 %i.ti, %i.tp                  ; 2 uses
-  %36 = add nuw nsw i32 %35, 1                    ; 2 uses
-  %min.iters.check312 = icmp samesign ult i32 %35, 3
+  %35 = add nuw nsw i32 %i.ti, 1
+  %36 = sub nuw i32 %35, %i.tp                    ; 3 uses
+  %min.iters.check312 = icmp samesign ult i32 %36, 4
   br i1 %min.iters.check312, label %.lr.ph.i.i.i.i236.i.preheader343, label %vector.ph313
 
 vector.ph313:                                     ; preds = %.lr.ph.i.i.i.i236.i.preheader
@@ -2066,9 +2066,9 @@ bb.cm:                                            ; preds = %bb.cl
   br i1 %.not331.i.i.i50, label %._crit_edge.i.i.i54, label %.lr.ph.i.i.i51.preheader
 
 .lr.ph.i.i.i51.preheader:                         ; preds = %bb.cm
-  %37 = sub nuw i32 %i.vu, %i.wb                  ; 2 uses
-  %38 = add nuw nsw i32 %37, 1                    ; 2 uses
-  %min.iters.check332 = icmp samesign ult i32 %37, 3
+  %37 = add nuw nsw i32 %i.vu, 1
+  %38 = sub nuw i32 %37, %i.wb                    ; 3 uses
+  %min.iters.check332 = icmp samesign ult i32 %38, 4
   br i1 %min.iters.check332, label %.lr.ph.i.i.i51.preheader341, label %vector.ph333
 
 vector.ph333:                                     ; preds = %.lr.ph.i.i.i51.preheader

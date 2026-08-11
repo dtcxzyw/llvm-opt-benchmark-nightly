@@ -204,8 +204,8 @@ _ZNKSt6vectorISt10unique_ptrIN5faiss15VectorTransformESt14default_deleteIS2_EESa
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5faiss15VectorTransformESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc711
-  %86 = sub i64 %i.afj, %i.afk
-  %87 = add i64 %86, -8                           ; 2 uses
+  %86 = add i64 %i.afj, -8
+  %87 = sub i64 %86, %i.afk                       ; 2 uses
   %i.afv = lshr i64 %87, 3
   %i.afw = add nuw nsw i64 %i.afv, 1              ; 2 uses
   %min.iters.check = icmp ult i64 %87, 56
@@ -608,8 +608,8 @@ _ZNKSt6vectorISt10unique_ptrIN5faiss5IndexESt14default_deleteIS2_EESaIS5_EE12_M_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5faiss5IndexESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc1079
-  %88 = sub i64 %i.amt, %i.amu
-  %89 = add i64 %88, -8                           ; 2 uses
+  %88 = add i64 %i.amt, -8
+  %89 = sub i64 %88, %i.amu                       ; 2 uses
   %i.ant = lshr i64 %89, 3
   %i.anu = add nuw nsw i64 %i.ant, 1              ; 2 uses
   %min.iters.check2919 = icmp ult i64 %89, 56
@@ -1012,8 +1012,8 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %3 = sub i64 %i.aa, %i.ab
-  %4 = add i64 %3, -4                             ; 2 uses
+  %3 = add i64 %i.aa, -4
+  %4 = sub i64 %3, %i.ab                          ; 2 uses
   %i.an = lshr i64 %4, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 44
@@ -1416,8 +1416,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.cz = ptrtoaddr ptr %i.cw to i64              ; 2 uses
   %i.da = ptrtoaddr ptr %i.cs to i64
   %i.db = ptrtoaddr ptr %i.cx to i64
-  %2 = sub i64 %i.db, %i.cz
-  %3 = add i64 %2, -4                             ; 2 uses
+  %2 = add i64 %i.db, -4
+  %3 = sub i64 %2, %i.cz                          ; 2 uses
   %i.dc = lshr i64 %3, 2
   %i.dd = add nuw nsw i64 %i.dc, 1                ; 2 uses
   %min.iters.check59 = icmp ult i64 %3, 44
@@ -1730,8 +1730,8 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %3 = sub i64 %i.aa, %i.ab
-  %4 = add i64 %3, -4                             ; 2 uses
+  %3 = add i64 %i.aa, -4
+  %4 = sub i64 %3, %i.ab                          ; 2 uses
   %i.an = lshr i64 %4, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 44
@@ -2134,8 +2134,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.bl = ptrtoaddr ptr %i.bi to i64              ; 2 uses
   %i.bm = ptrtoaddr ptr %i.be to i64
   %i.bn = ptrtoaddr ptr %i.bj to i64
-  %2 = sub i64 %i.bn, %i.bl
-  %3 = add i64 %2, -4                             ; 2 uses
+  %2 = add i64 %i.bn, -4
+  %3 = sub i64 %2, %i.bl                          ; 2 uses
   %i.bo = lshr i64 %3, 2
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 44
@@ -2538,8 +2538,8 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %3 = sub i64 %i.aa, %i.ab
-  %4 = add i64 %3, -4                             ; 2 uses
+  %3 = add i64 %i.aa, -4
+  %4 = sub i64 %3, %i.ab                          ; 2 uses
   %i.an = lshr i64 %4, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 44
@@ -2942,8 +2942,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.cz = ptrtoaddr ptr %i.cw to i64              ; 2 uses
   %i.da = ptrtoaddr ptr %i.cs to i64
   %i.db = ptrtoaddr ptr %i.cx to i64
-  %2 = sub i64 %i.db, %i.cz
-  %3 = add i64 %2, -4                             ; 2 uses
+  %2 = add i64 %i.db, -4
+  %3 = sub i64 %2, %i.cz                          ; 2 uses
   %i.dc = lshr i64 %3, 2
   %i.dd = add nuw nsw i64 %i.dc, 1                ; 2 uses
   %min.iters.check59 = icmp ult i64 %3, 44
@@ -3136,8 +3136,8 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %3 = sub i64 %i.aa, %i.ab
-  %4 = add i64 %3, -4                             ; 2 uses
+  %3 = add i64 %i.aa, -4
+  %4 = sub i64 %3, %i.ab                          ; 2 uses
   %i.an = lshr i64 %4, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 44
@@ -3540,8 +3540,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.bl = ptrtoaddr ptr %i.bi to i64              ; 2 uses
   %i.bm = ptrtoaddr ptr %i.be to i64
   %i.bn = ptrtoaddr ptr %i.bj to i64
-  %2 = sub i64 %i.bn, %i.bl
-  %3 = add i64 %2, -4                             ; 2 uses
+  %2 = add i64 %i.bn, -4
+  %3 = sub i64 %2, %i.bl                          ; 2 uses
   %i.bo = lshr i64 %3, 2
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 44
@@ -3944,8 +3944,8 @@ bb.m:                                             ; preds = %bb.l
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.ao, 3
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx.i.i.i.i.i ; 3 uses
   %i.aq = shl i64 %2, 3
-  %4 = sub i64 %i.aq, %i.k
-  %5 = add i64 %4, -8                             ; 2 uses
+  %4 = add i64 %i.aq, -8
+  %5 = sub i64 %4, %i.k                           ; 2 uses
   %i.ar = lshr i64 %5, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 24
@@ -4013,8 +4013,8 @@ _ZSt22__uninitialized_move_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPmmEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit69
-  %6 = sub i64 %i.f, %i.j
-  %7 = add i64 %6, -8                             ; 2 uses
+  %6 = add i64 %i.f, -8
+  %7 = sub i64 %6, %i.j                           ; 2 uses
   %i.be = lshr i64 %7, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %7, 24

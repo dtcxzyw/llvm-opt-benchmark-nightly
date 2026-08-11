@@ -147,8 +147,8 @@ bb.d:                                             ; preds = %bb.c
   %cmp.n631 = icmp eq i64 %i.cd, %n.vec620
   %i.ci = icmp ne i32 %i.w, 0
   %.neg = sext i1 %i.ci to i64
-  %i.cj = add nsw i64 %.neg, %i.y
-  %i.ck = add nsw i64 %i.cj, 1                    ; 3 uses
+  %i.cj = add nsw i64 %i.y, 1
+  %i.ck = add nsw i64 %i.cj, %.neg                ; 3 uses
   %min.iters.check = icmp ult i64 %i.ck, 16
   %i.cl = trunc nsw i64 %i.ac to i35
   %mul.result = shl i35 %i.cl, 3                  ; 2 uses
@@ -310,8 +310,8 @@ bb.g:                                             ; preds = %.unr-lcssa, %.epil.
   %invariant.gep502 = getelementptr [8 x i8], ptr %i.h, i64 %i.p ; 2 uses
   %i.fm = icmp ne i32 %i.cn, 0
   %.neg698 = sext i1 %i.fm to i64
-  %i.fn = add nsw i64 %.neg698, %i.ct
-  %i.fo = add nsw i64 %i.fn, 1                    ; 3 uses
+  %i.fn = add nsw i64 %i.ct, 1
+  %i.fo = add nsw i64 %i.fn, %.neg698             ; 3 uses
   %min.iters.check670 = icmp ult i64 %i.fo, 32
   br i1 %min.iters.check670, label %scalar.ph669.preheader, label %vector.scevcheck633
 

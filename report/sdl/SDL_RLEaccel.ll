@@ -203,9 +203,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph188.split.us.preheader:                     ; preds = %.lr.ph188
   %i.dc = tail call i32 @llvm.smin.i32(i32 %i.cd, i32 131070)
-  %i.dd = add i32 %.0153, %i.dc
-  %1 = sub i32 %.1154.lcssa230, %i.dd
-  %2 = add i32 %1, 65534                          ; 2 uses
+  %i.dd = add i32 %.1154.lcssa230, 65534
+  %1 = add i32 %.0153, %i.dc
+  %2 = sub i32 %i.dd, %1                          ; 2 uses
   %i.de = udiv i32 %2, 65535
   %narrow283 = add nuw nsw i32 %i.de, 1
   %i.df = zext nneg i32 %narrow283 to i64         ; 2 uses
@@ -608,8 +608,8 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.ew, label %.lr.ph310.preheader, label %._crit_edge311
 
 .lr.ph310.preheader:                              ; preds = %.critedge6
-  %1 = sub i32 %.4.lcssa363, %.3
-  %2 = add i32 %1, -65536                         ; 2 uses
+  %1 = add i32 %.4.lcssa363, -65536
+  %2 = sub i32 %1, %.3                            ; 2 uses
   %i.ex = udiv i32 %2, 65535
   %narrow = add nuw nsw i32 %i.ex, 1
   %i.ey = zext nneg i32 %narrow to i64            ; 2 uses

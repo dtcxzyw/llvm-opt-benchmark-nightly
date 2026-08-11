@@ -203,11 +203,11 @@ _ZNSt6vectorIjSaIjEE6resizeEm.exit:               ; preds = %bb.c, %bb.d, %bb.e,
   br i1 %.not.i.i.i.i.i.us42, label %.split.us, label %_ZN8rawspeed10ByteStream3getIjEET_v.exit.lr.ph
 
 _ZN8rawspeed10ByteStream3getIjEET_v.exit.lr.ph:   ; preds = %.lr.ph.split.preheader
-  %3 = sub i64 %i.z, %i.aa
-  %4 = add i64 %3, -4
+  %3 = add i64 %i.z, -4
+  %4 = sub i64 %3, %i.aa
   %i.ae = lshr i64 %4, 2
-  %5 = sub nuw nsw i64 %i.e, %i.ac
-  %6 = add nsw i64 %5, -4
+  %5 = add nsw i64 %i.e, -4
+  %6 = sub nsw i64 %5, %i.ac
   %i.af = lshr i64 %6, 2
   %i.ag = tail call i64 @llvm.umin.i64(i64 %i.ae, i64 %i.af) ; 2 uses
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses
@@ -275,11 +275,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %.not.i.i.i.i.i.us42, label %.split.us, label %_ZN8rawspeed10ByteStream3getIjEET_v.exit.us.lr.ph
 
 _ZN8rawspeed10ByteStream3getIjEET_v.exit.us.lr.ph: ; preds = %.lr.ph.split.us.preheader
-  %7 = sub i64 %i.z, %i.aa
-  %8 = add i64 %7, -4
+  %7 = add i64 %i.z, -4
+  %8 = sub i64 %7, %i.aa
   %i.bf = lshr i64 %8, 2
-  %9 = sub nuw nsw i64 %i.e, %i.ac
-  %10 = add nsw i64 %9, -4
+  %9 = add nsw i64 %i.e, -4
+  %10 = sub nsw i64 %9, %i.ac
   %i.bg = lshr i64 %10, 2
   %i.bh = tail call i64 @llvm.umin.i64(i64 %i.bf, i64 %i.bg) ; 2 uses
   %i.bi = add nuw nsw i64 %i.bh, 1                ; 2 uses
@@ -464,11 +464,11 @@ _ZNSt6vectorItSaItEE6resizeEm.exit:               ; preds = %bb.c, %bb.d, %bb.e,
   br i1 %.not.i.i.i.i.i.us42, label %.split.us, label %_ZN8rawspeed10ByteStream3getItEET_v.exit.lr.ph
 
 _ZN8rawspeed10ByteStream3getItEET_v.exit.lr.ph:   ; preds = %.lr.ph.split.preheader
-  %3 = sub i64 %i.z, %i.aa
-  %4 = add i64 %3, -2
+  %3 = add i64 %i.z, -2
+  %4 = sub i64 %3, %i.aa
   %i.ae = lshr i64 %4, 1
-  %5 = sub nuw nsw i64 %i.e, %i.ac
-  %6 = add nsw i64 %5, -2
+  %5 = add nsw i64 %i.e, -2
+  %6 = sub nsw i64 %5, %i.ac
   %i.af = lshr i64 %6, 1
   %i.ag = tail call i64 @llvm.umin.i64(i64 %i.ae, i64 %i.af) ; 2 uses
   %i.ah = add nuw i64 %i.ag, 1                    ; 2 uses
@@ -533,11 +533,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %.not.i.i.i.i.i.us42, label %.split.us, label %_ZN8rawspeed10ByteStream3getItEET_v.exit.us.lr.ph
 
 _ZN8rawspeed10ByteStream3getItEET_v.exit.us.lr.ph: ; preds = %.lr.ph.split.us.preheader
-  %7 = sub i64 %i.z, %i.aa
-  %8 = add i64 %7, -2
+  %7 = add i64 %i.z, -2
+  %8 = sub i64 %7, %i.aa
   %i.bf = lshr i64 %8, 1
-  %9 = sub nuw nsw i64 %i.e, %i.ac
-  %10 = add nsw i64 %9, -2
+  %9 = add nsw i64 %i.e, -2
+  %10 = sub nsw i64 %9, %i.ac
   %i.bg = lshr i64 %10, 1
   %i.bh = tail call i64 @llvm.umin.i64(i64 %i.bf, i64 %i.bg) ; 2 uses
   %i.bi = add nuw i64 %i.bh, 1                    ; 2 uses

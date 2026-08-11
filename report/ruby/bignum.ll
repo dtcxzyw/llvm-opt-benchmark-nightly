@@ -204,8 +204,8 @@ bb.ba:                                            ; preds = %bary_small_rshift.e
   br i1 %or.cond1991, label %.lr.ph93.i.i1308.preheader, label %bary_2comp.exit1330
 
 .lr.ph93.i.i1308.preheader:                       ; preds = %.loopexit74.i.i1300
-  %8 = sub nuw i64 %i.j, %.5.i.i1301
-  %9 = add i64 %8, 1                              ; 3 uses
+  %8 = or disjoint i64 %i.j, 1
+  %9 = sub nuw i64 %8, %.5.i.i1301                ; 3 uses
   %min.iters.check3061 = icmp ult i64 %9, 12
   br i1 %min.iters.check3061, label %.lr.ph93.i.i1308.preheader3251, label %vector.memcheck3058
 

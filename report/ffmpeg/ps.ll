@@ -204,7 +204,7 @@ bb.dz:                                            ; preds = %bb.dy
 
 bb.ea:                                            ; preds = %bb.dz
   %i.atp = getelementptr inbounds nuw i8, ptr %i.asw, i64 3088
-  %i.atq = load i8, ptr %i.atp, align 8, !tbaa !286 ; 6 uses
+  %i.atq = load i8, ptr %i.atp, align 8, !tbaa !286 ; 5 uses
   store i8 %i.atq, ptr %i.asq, align 8, !tbaa !288
   %i.atr = getelementptr inbounds nuw i8, ptr %i.asw, i64 3089
   %i.ats = load i8, ptr %i.atr, align 1, !tbaa !289
@@ -224,18 +224,18 @@ bb.ea:                                            ; preds = %bb.dz
 .lr.ph.i.i:                                       ; preds = %bb.ea
   %i.atx = getelementptr inbounds nuw i8, ptr %i.asw, i64 3124 ; 2 uses
   %i.aty = getelementptr inbounds nuw i8, ptr %i.asw, i64 3092 ; 2 uses
-  %i.atz = zext i8 %i.atq to i64                  ; 4 uses
+  %i.atz = zext i8 %i.atq to i64                  ; 5 uses
   %i.aua = add nuw nsw i32 %i.atw, 1
   %wide.trip.count.i.i = zext nneg i32 %i.aua to i64
-  %narrow = sub nuw i8 %i.att, %i.atq             ; 2 uses
-  %2 = zext i8 %narrow to i64
-  %3 = add nuw nsw i64 %2, 1                      ; 2 uses
-  %min.iters.check316 = icmp ult i8 %narrow, 7
+  %2 = zext i8 %i.att to i64
+  %3 = add nuw nsw i64 %2, 1
+  %4 = sub nsw i64 %3, %i.atz                     ; 3 uses
+  %min.iters.check316 = icmp ult i64 %4, 8
   br i1 %min.iters.check316, label %scalar.ph315.preheader, label %vector.ph317
 
 vector.ph317:                                     ; preds = %.lr.ph.i.i
-  %n.vec318 = and i64 %3, 504                     ; 3 uses
-  %i.aub = add nuw nsw i64 %n.vec318, %i.atz
+  %n.vec318 = and i64 %4, -8                      ; 3 uses
+  %i.aub = add nsw i64 %n.vec318, %i.atz
   %broadcast.splatinsert319 = insertelement <4 x i32> poison, i32 %i.atc, i64 0
   %broadcast.splat320 = shufflevector <4 x i32> %broadcast.splatinsert319, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body321
@@ -278,7 +278,7 @@ vector.body321:                                   ; preds = %vector.body321, %ve
 middle.block328:                                  ; preds = %vector.body321
   %bin.rdx = add <4 x i32> %i.auw, %i.auv
   %i.auy = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n329 = icmp eq i64 %3, %n.vec318
+  %cmp.n329 = icmp eq i64 %4, %n.vec318
   br i1 %cmp.n329, label %._crit_edge.i.i, label %scalar.ph315.preheader
 
 scalar.ph315.preheader:                           ; preds = %.lr.ph.i.i, %middle.block328

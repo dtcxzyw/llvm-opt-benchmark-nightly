@@ -203,9 +203,9 @@ fb_set_range.exit:                                ; preds = %._crit_edge.i43, %f
 
 .lr.ph.preheader:                                 ; preds = %fb_set_range.exit
   %i.by = tail call i64 @llvm.umin.i64(i64 %i.an, i64 64)
-  %2 = sub nsw i64 %i.a, %i.by
-  %i.bz = add nsw i64 %2, %i.am
-  %3 = add nsw i64 %i.bz, -65                     ; 2 uses
+  %2 = add nuw nsw i64 %i.a, %i.am
+  %i.bz = add nsw i64 %2, -65
+  %3 = sub nsw i64 %i.bz, %i.by                   ; 2 uses
   %i.ca = lshr i64 %3, 6
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 192

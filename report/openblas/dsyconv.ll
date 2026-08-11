@@ -93,6 +93,7 @@ bb.j:                                             ; preds = %bb.i
   %scevgep584 = getelementptr i8, ptr %3, i64 -16
   %scevgep586 = getelementptr i8, ptr %3, i64 -8
   %i.v = add nuw i32 %i.k, 1
+  %8 = add nsw i32 %i.k, -2
   %ident.check578.not = icmp eq i32 %i.b, 1
   %ident.check550.not = icmp eq i32 %i.b, 1
   br label %.lr.ph388
@@ -495,11 +496,10 @@ bb.t:                                             ; preds = %bb.s
   %i.fp = sext i32 %i.fo to i64                   ; 6 uses
   %i.fq = sext i32 %i.ec to i64                   ; 7 uses
   %invariant.gep486 = getelementptr [8 x i8], ptr %i.d, i64 %i.ea ; 6 uses
-  %i.fr = sub i32 %i.k, %.4315387
-  %8 = add i32 %i.fr, -2                          ; 2 uses
-  %i.fs = zext i32 %8 to i64
+  %i.fr = sub i32 %8, %.4315387                   ; 2 uses
+  %i.fs = zext i32 %i.fr to i64
   %i.ft = add nuw nsw i64 %i.fs, 1                ; 2 uses
-  %min.iters.check592 = icmp ugt i32 %8, 10
+  %min.iters.check592 = icmp ugt i32 %i.fr, 10
   %or.cond719 = select i1 %min.iters.check592, i1 %ident.check578.not, i1 false
   br i1 %or.cond719, label %vector.memcheck579, label %.lr.ph382.preheader730
 
