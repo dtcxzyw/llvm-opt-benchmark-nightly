@@ -203,7 +203,7 @@ begin_hunk_0_@main:bb.a
   %i.aa = load ptr, ptr %90, align 8, !tbaa !35   ; 6 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %90, i64 8 ; 11 uses
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !38 ; 7 uses
-  %.idx.i.i = shl i64 %i.ac, 4                    ; 3 uses
+  %.idx.i.i = shl i64 %i.ac, 4                    ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.idx.i.i
   %.not16.i.i.i.i.i = icmp eq i64 %i.ac, 0
   %.promoted.i.i.pre.i.i.i.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -282,19 +282,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i, label %bb.b
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i: ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.i.i.i.i.i.prol.loopexit
-  %234 = add i64 %.idx.i.i, 68719476720
-  %235 = lshr exact i64 %234, 4
-  %i.bm = trunc i64 %235 to i32
-  %236 = add i32 %.promoted.i.i.pre.i.i.i.i, 1
-  %i.bn = add i32 %236, %i.bm
+  %i.bm = trunc i64 %i.ac to i32                  ; 2 uses
+  %i.bn = add i32 %.promoted.i.i.pre.i.i.i.i, %i.bm
   store i32 %i.bn, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i = icmp eq ptr %i.aa, null
   br i1 %.not.i5.i.i, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i, label %.lr.ph.preheader.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i
   %.promoted.i.i.i.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %237 = trunc i64 %i.ac to i32
-  %i.bo = add i32 %.promoted.i.i.i.i, %237
+  %i.bo = add i32 %.promoted.i.i.i.i, %i.bm
   store i32 %i.bo, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.b
 
@@ -630,7 +626,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit:        ; preds = %_ZN5boost9container
   %i.gd = load ptr, ptr %96, align 8, !tbaa !35   ; 6 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %96, i64 8 ; 12 uses
   %i.gf = load i64, ptr %i.ge, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i304 = shl i64 %i.gf, 4                 ; 3 uses
+  %.idx.i.i304 = shl i64 %i.gf, 4                 ; 2 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gd, i64 %.idx.i.i304
   %.not16.i.i.i.i.i305 = icmp eq i64 %i.gf, 0
   %.promoted.i.i.pre.i.i.i.i306 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -709,19 +705,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i318, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i316, label %bb.o
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i311: ; preds = %.lr.ph.i.i.i.i.i307, %.lr.ph.i.i.i.i.i307.prol.loopexit
-  %238 = add i64 %.idx.i.i304, 68719476720
-  %239 = lshr exact i64 %238, 4
-  %i.hp = trunc i64 %239 to i32
-  %240 = add i32 %.promoted.i.i.pre.i.i.i.i306, 1
-  %i.hq = add i32 %240, %i.hp
+  %i.hp = trunc i64 %i.gf to i32                  ; 2 uses
+  %i.hq = add i32 %.promoted.i.i.pre.i.i.i.i306, %i.hp
   store i32 %i.hq, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i312 = icmp eq ptr %i.gd, null
   br i1 %.not.i5.i.i312, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i316, label %.lr.ph.preheader.i.i.i.i313
 
 .lr.ph.preheader.i.i.i.i313:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i311
   %.promoted.i.i.i.i314 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %241 = trunc i64 %i.gf to i32
-  %i.hr = add i32 %.promoted.i.i.i.i314, %241
+  %i.hr = add i32 %.promoted.i.i.i.i314, %i.hp
   store i32 %i.hr, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.o
 
@@ -1059,7 +1051,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit354:     ; preds = %_ZN5boost9container
   %i.mh = load ptr, ptr %102, align 8, !tbaa !35  ; 6 uses
   %i.mi = getelementptr inbounds nuw i8, ptr %102, i64 8 ; 12 uses
   %i.mj = load i64, ptr %i.mi, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i355 = shl i64 %i.mj, 4                 ; 3 uses
+  %.idx.i.i355 = shl i64 %i.mj, 4                 ; 2 uses
   %i.mk = getelementptr inbounds nuw i8, ptr %i.mh, i64 %.idx.i.i355
   %.not16.i.i.i.i.i356 = icmp eq i64 %i.mj, 0
   %.promoted.i.i.pre.i.i.i.i357 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -1138,19 +1130,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i369, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i367, label %bb.ab
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i362: ; preds = %.lr.ph.i.i.i.i.i358, %.lr.ph.i.i.i.i.i358.prol.loopexit
-  %242 = add i64 %.idx.i.i355, 68719476720
-  %243 = lshr exact i64 %242, 4
-  %i.nt = trunc i64 %243 to i32
-  %244 = add i32 %.promoted.i.i.pre.i.i.i.i357, 1
-  %i.nu = add i32 %244, %i.nt
+  %i.nt = trunc i64 %i.mj to i32                  ; 2 uses
+  %i.nu = add i32 %.promoted.i.i.pre.i.i.i.i357, %i.nt
   store i32 %i.nu, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i363 = icmp eq ptr %i.mh, null
   br i1 %.not.i5.i.i363, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i367, label %.lr.ph.preheader.i.i.i.i364
 
 .lr.ph.preheader.i.i.i.i364:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i362
   %.promoted.i.i.i.i365 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %245 = trunc i64 %i.mj to i32
-  %i.nv = add i32 %.promoted.i.i.i.i365, %245
+  %i.nv = add i32 %.promoted.i.i.i.i365, %i.nt
   store i32 %i.nv, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.ab
 
@@ -1490,7 +1478,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit405:     ; preds = %_ZN5boost9container
   %i.sl = load ptr, ptr %108, align 8, !tbaa !35  ; 6 uses
   %i.sm = getelementptr inbounds nuw i8, ptr %108, i64 8 ; 12 uses
   %i.sn = load i64, ptr %i.sm, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i406 = shl i64 %i.sn, 4                 ; 3 uses
+  %.idx.i.i406 = shl i64 %i.sn, 4                 ; 2 uses
   %i.so = getelementptr inbounds nuw i8, ptr %i.sl, i64 %.idx.i.i406
   %.not16.i.i.i.i.i407 = icmp eq i64 %i.sn, 0
   %.promoted.i.i.pre.i.i.i.i408 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -1569,19 +1557,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i420, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i418, label %bb.ao
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i413: ; preds = %.lr.ph.i.i.i.i.i409, %.lr.ph.i.i.i.i.i409.prol.loopexit
-  %246 = add i64 %.idx.i.i406, 68719476720
-  %247 = lshr exact i64 %246, 4
-  %i.tx = trunc i64 %247 to i32
-  %248 = add i32 %.promoted.i.i.pre.i.i.i.i408, 1
-  %i.ty = add i32 %248, %i.tx
+  %i.tx = trunc i64 %i.sn to i32                  ; 2 uses
+  %i.ty = add i32 %.promoted.i.i.pre.i.i.i.i408, %i.tx
   store i32 %i.ty, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i414 = icmp eq ptr %i.sl, null
   br i1 %.not.i5.i.i414, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i418, label %.lr.ph.preheader.i.i.i.i415
 
 .lr.ph.preheader.i.i.i.i415:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i413
   %.promoted.i.i.i.i416 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %249 = trunc i64 %i.sn to i32
-  %i.tz = add i32 %.promoted.i.i.i.i416, %249
+  %i.tz = add i32 %.promoted.i.i.i.i416, %i.tx
   store i32 %i.tz, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.ao
 
@@ -1938,7 +1922,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit458:     ; preds = %_ZN5boost9container
   %i.yx = load ptr, ptr %114, align 8, !tbaa !35  ; 6 uses
   %i.yy = getelementptr inbounds nuw i8, ptr %114, i64 8 ; 12 uses
   %i.yz = load i64, ptr %i.yy, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i459 = shl i64 %i.yz, 4                 ; 3 uses
+  %.idx.i.i459 = shl i64 %i.yz, 4                 ; 2 uses
   %i.za = getelementptr inbounds nuw i8, ptr %i.yx, i64 %.idx.i.i459
   %.not16.i.i.i.i.i460 = icmp eq i64 %i.yz, 0
   %.promoted.i.i.pre.i.i.i.i461 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -2017,19 +2001,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i473, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i471, label %bb.bb
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i466: ; preds = %.lr.ph.i.i.i.i.i462, %.lr.ph.i.i.i.i.i462.prol.loopexit
-  %250 = add i64 %.idx.i.i459, 68719476720
-  %251 = lshr exact i64 %250, 4
-  %i.aaj = trunc i64 %251 to i32
-  %252 = add i32 %.promoted.i.i.pre.i.i.i.i461, 1
-  %i.aak = add i32 %252, %i.aaj
+  %i.aaj = trunc i64 %i.yz to i32                 ; 2 uses
+  %i.aak = add i32 %.promoted.i.i.pre.i.i.i.i461, %i.aaj
   store i32 %i.aak, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i467 = icmp eq ptr %i.yx, null
   br i1 %.not.i5.i.i467, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i471, label %.lr.ph.preheader.i.i.i.i468
 
 .lr.ph.preheader.i.i.i.i468:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i466
   %.promoted.i.i.i.i469 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %253 = trunc i64 %i.yz to i32
-  %i.aal = add i32 %.promoted.i.i.i.i469, %253
+  %i.aal = add i32 %.promoted.i.i.i.i469, %i.aaj
   store i32 %i.aal, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.bb
 
@@ -2375,7 +2355,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit509:     ; preds = %_ZN5boost9container
   %i.afd = load ptr, ptr %120, align 8, !tbaa !35 ; 6 uses
   %i.afe = getelementptr inbounds nuw i8, ptr %120, i64 8 ; 12 uses
   %i.aff = load i64, ptr %i.afe, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i510 = shl i64 %i.aff, 4                ; 3 uses
+  %.idx.i.i510 = shl i64 %i.aff, 4                ; 2 uses
   %i.afg = getelementptr inbounds nuw i8, ptr %i.afd, i64 %.idx.i.i510
   %.not16.i.i.i.i.i511 = icmp eq i64 %i.aff, 0
   %.promoted.i.i.pre.i.i.i.i512 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -2454,19 +2434,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i524, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i522, label %bb.bp
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i517: ; preds = %.lr.ph.i.i.i.i.i513, %.lr.ph.i.i.i.i.i513.prol.loopexit
-  %254 = add i64 %.idx.i.i510, 68719476720
-  %255 = lshr exact i64 %254, 4
-  %i.agp = trunc i64 %255 to i32
-  %256 = add i32 %.promoted.i.i.pre.i.i.i.i512, 1
-  %i.agq = add i32 %256, %i.agp
+  %i.agp = trunc i64 %i.aff to i32                ; 2 uses
+  %i.agq = add i32 %.promoted.i.i.pre.i.i.i.i512, %i.agp
   store i32 %i.agq, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i518 = icmp eq ptr %i.afd, null
   br i1 %.not.i5.i.i518, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i522, label %.lr.ph.preheader.i.i.i.i519
 
 .lr.ph.preheader.i.i.i.i519:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i517
   %.promoted.i.i.i.i520 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %257 = trunc i64 %i.aff to i32
-  %i.agr = add i32 %.promoted.i.i.i.i520, %257
+  %i.agr = add i32 %.promoted.i.i.i.i520, %i.agp
   store i32 %i.agr, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.bp
 
@@ -2829,7 +2805,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit562:     ; preds = %_ZN5boost9container
   %i.alr = load ptr, ptr %126, align 8, !tbaa !35 ; 6 uses
   %i.als = getelementptr inbounds nuw i8, ptr %126, i64 8 ; 12 uses
   %i.alt = load i64, ptr %i.als, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i564 = shl i64 %i.alt, 4                ; 3 uses
+  %.idx.i.i564 = shl i64 %i.alt, 4                ; 2 uses
   %i.alu = getelementptr inbounds nuw i8, ptr %i.alr, i64 %.idx.i.i564
   %.not16.i.i.i.i.i565 = icmp eq i64 %i.alt, 0
   %.promoted.i.i.pre.i.i.i.i566 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -2908,19 +2884,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i578, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i576, label %bb.cd
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i571: ; preds = %.lr.ph.i.i.i.i.i567, %.lr.ph.i.i.i.i.i567.prol.loopexit
-  %258 = add i64 %.idx.i.i564, 68719476720
-  %259 = lshr exact i64 %258, 4
-  %i.and = trunc i64 %259 to i32
-  %260 = add i32 %.promoted.i.i.pre.i.i.i.i566, 1
-  %i.ane = add i32 %260, %i.and
+  %i.and = trunc i64 %i.alt to i32                ; 2 uses
+  %i.ane = add i32 %.promoted.i.i.pre.i.i.i.i566, %i.and
   store i32 %i.ane, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i572 = icmp eq ptr %i.alr, null
   br i1 %.not.i5.i.i572, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i576, label %.lr.ph.preheader.i.i.i.i573
 
 .lr.ph.preheader.i.i.i.i573:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i571
   %.promoted.i.i.i.i574 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %261 = trunc i64 %i.alt to i32
-  %i.anf = add i32 %.promoted.i.i.i.i574, %261
+  %i.anf = add i32 %.promoted.i.i.i.i574, %i.and
   store i32 %i.anf, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.cd
 
@@ -3256,7 +3228,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit616:     ; preds = %_ZN5boost9container
   %i.ars = load ptr, ptr %132, align 8, !tbaa !35 ; 6 uses
   %i.art = getelementptr inbounds nuw i8, ptr %132, i64 8 ; 12 uses
   %i.aru = load i64, ptr %i.art, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i617 = shl i64 %i.aru, 4                ; 3 uses
+  %.idx.i.i617 = shl i64 %i.aru, 4                ; 2 uses
   %i.arv = getelementptr inbounds nuw i8, ptr %i.ars, i64 %.idx.i.i617
   %.not16.i.i.i.i.i618 = icmp eq i64 %i.aru, 0
   %.promoted.i.i.pre.i.i.i.i619 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -3335,19 +3307,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i631, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i629, label %bb.cq
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i624: ; preds = %.lr.ph.i.i.i.i.i620, %.lr.ph.i.i.i.i.i620.prol.loopexit
-  %262 = add i64 %.idx.i.i617, 68719476720
-  %263 = lshr exact i64 %262, 4
-  %i.ate = trunc i64 %263 to i32
-  %264 = add i32 %.promoted.i.i.pre.i.i.i.i619, 1
-  %i.atf = add i32 %264, %i.ate
+  %i.ate = trunc i64 %i.aru to i32                ; 2 uses
+  %i.atf = add i32 %.promoted.i.i.pre.i.i.i.i619, %i.ate
   store i32 %i.atf, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i625 = icmp eq ptr %i.ars, null
   br i1 %.not.i5.i.i625, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i629, label %.lr.ph.preheader.i.i.i.i626
 
 .lr.ph.preheader.i.i.i.i626:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i624
   %.promoted.i.i.i.i627 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %265 = trunc i64 %i.aru to i32
-  %i.atg = add i32 %.promoted.i.i.i.i627, %265
+  %i.atg = add i32 %.promoted.i.i.i.i627, %i.ate
   store i32 %i.atg, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.cq
 
@@ -3700,7 +3668,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit669:     ; preds = %_ZN5boost9container
   %i.ayb = load ptr, ptr %138, align 8, !tbaa !35 ; 6 uses
   %i.ayc = getelementptr inbounds nuw i8, ptr %138, i64 8 ; 12 uses
   %i.ayd = load i64, ptr %i.ayc, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i671 = shl i64 %i.ayd, 4                ; 3 uses
+  %.idx.i.i671 = shl i64 %i.ayd, 4                ; 2 uses
   %i.aye = getelementptr inbounds nuw i8, ptr %i.ayb, i64 %.idx.i.i671
   %.not16.i.i.i.i.i672 = icmp eq i64 %i.ayd, 0
   %.promoted.i.i.pre.i.i.i.i673 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -3779,19 +3747,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i685, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i683, label %bb.dd
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i678: ; preds = %.lr.ph.i.i.i.i.i674, %.lr.ph.i.i.i.i.i674.prol.loopexit
-  %266 = add i64 %.idx.i.i671, 68719476720
-  %267 = lshr exact i64 %266, 4
-  %i.azn = trunc i64 %267 to i32
-  %268 = add i32 %.promoted.i.i.pre.i.i.i.i673, 1
-  %i.azo = add i32 %268, %i.azn
+  %i.azn = trunc i64 %i.ayd to i32                ; 2 uses
+  %i.azo = add i32 %.promoted.i.i.pre.i.i.i.i673, %i.azn
   store i32 %i.azo, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i679 = icmp eq ptr %i.ayb, null
   br i1 %.not.i5.i.i679, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i683, label %.lr.ph.preheader.i.i.i.i680
 
 .lr.ph.preheader.i.i.i.i680:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i678
   %.promoted.i.i.i.i681 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %269 = trunc i64 %i.ayd to i32
-  %i.azp = add i32 %.promoted.i.i.i.i681, %269
+  %i.azp = add i32 %.promoted.i.i.i.i681, %i.azn
   store i32 %i.azp, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.dd
 
@@ -4132,7 +4096,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit723:     ; preds = %_ZN5boost9container
   %i.bef = load ptr, ptr %144, align 8, !tbaa !35 ; 6 uses
   %i.beg = getelementptr inbounds nuw i8, ptr %144, i64 8 ; 12 uses
   %i.beh = load i64, ptr %i.beg, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i724 = shl i64 %i.beh, 4                ; 3 uses
+  %.idx.i.i724 = shl i64 %i.beh, 4                ; 2 uses
   %i.bei = getelementptr inbounds nuw i8, ptr %i.bef, i64 %.idx.i.i724
   %.not16.i.i.i.i.i725 = icmp eq i64 %i.beh, 0
   %.promoted.i.i.pre.i.i.i.i726 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -4211,19 +4175,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i738, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i736, label %bb.dq
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i731: ; preds = %.lr.ph.i.i.i.i.i727, %.lr.ph.i.i.i.i.i727.prol.loopexit
-  %270 = add i64 %.idx.i.i724, 68719476720
-  %271 = lshr exact i64 %270, 4
-  %i.bfr = trunc i64 %271 to i32
-  %272 = add i32 %.promoted.i.i.pre.i.i.i.i726, 1
-  %i.bfs = add i32 %272, %i.bfr
+  %i.bfr = trunc i64 %i.beh to i32                ; 2 uses
+  %i.bfs = add i32 %.promoted.i.i.pre.i.i.i.i726, %i.bfr
   store i32 %i.bfs, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i732 = icmp eq ptr %i.bef, null
   br i1 %.not.i5.i.i732, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i736, label %.lr.ph.preheader.i.i.i.i733
 
 .lr.ph.preheader.i.i.i.i733:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i731
   %.promoted.i.i.i.i734 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %273 = trunc i64 %i.beh to i32
-  %i.bft = add i32 %.promoted.i.i.i.i734, %273
+  %i.bft = add i32 %.promoted.i.i.i.i734, %i.bfr
   store i32 %i.bft, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.dq
 
@@ -4581,7 +4541,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit776:     ; preds = %_ZN5boost9container
   %i.bkr = load ptr, ptr %150, align 8, !tbaa !35 ; 6 uses
   %i.bks = getelementptr inbounds nuw i8, ptr %150, i64 8 ; 12 uses
   %i.bkt = load i64, ptr %i.bks, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i778 = shl i64 %i.bkt, 4                ; 3 uses
+  %.idx.i.i778 = shl i64 %i.bkt, 4                ; 2 uses
   %i.bku = getelementptr inbounds nuw i8, ptr %i.bkr, i64 %.idx.i.i778
   %.not16.i.i.i.i.i779 = icmp eq i64 %i.bkt, 0
   %.promoted.i.i.pre.i.i.i.i780 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -4660,19 +4620,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i792, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i790, label %bb.ed
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i785: ; preds = %.lr.ph.i.i.i.i.i781, %.lr.ph.i.i.i.i.i781.prol.loopexit
-  %274 = add i64 %.idx.i.i778, 68719476720
-  %275 = lshr exact i64 %274, 4
-  %i.bmd = trunc i64 %275 to i32
-  %276 = add i32 %.promoted.i.i.pre.i.i.i.i780, 1
-  %i.bme = add i32 %276, %i.bmd
+  %i.bmd = trunc i64 %i.bkt to i32                ; 2 uses
+  %i.bme = add i32 %.promoted.i.i.pre.i.i.i.i780, %i.bmd
   store i32 %i.bme, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i786 = icmp eq ptr %i.bkr, null
   br i1 %.not.i5.i.i786, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i790, label %.lr.ph.preheader.i.i.i.i787
 
 .lr.ph.preheader.i.i.i.i787:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i785
   %.promoted.i.i.i.i788 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %277 = trunc i64 %i.bkt to i32
-  %i.bmf = add i32 %.promoted.i.i.i.i788, %277
+  %i.bmf = add i32 %.promoted.i.i.i.i788, %i.bmd
   store i32 %i.bmf, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.ed
 
@@ -5012,7 +4968,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit830:     ; preds = %_ZN5boost9container
   %i.bqv = load ptr, ptr %156, align 8, !tbaa !35 ; 6 uses
   %i.bqw = getelementptr inbounds nuw i8, ptr %156, i64 8 ; 12 uses
   %i.bqx = load i64, ptr %i.bqw, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i831 = shl i64 %i.bqx, 4                ; 3 uses
+  %.idx.i.i831 = shl i64 %i.bqx, 4                ; 2 uses
   %i.bqy = getelementptr inbounds nuw i8, ptr %i.bqv, i64 %.idx.i.i831
   %.not16.i.i.i.i.i832 = icmp eq i64 %i.bqx, 0
   %.promoted.i.i.pre.i.i.i.i833 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -5091,19 +5047,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i845, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i843, label %bb.eq
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i838: ; preds = %.lr.ph.i.i.i.i.i834, %.lr.ph.i.i.i.i.i834.prol.loopexit
-  %278 = add i64 %.idx.i.i831, 68719476720
-  %279 = lshr exact i64 %278, 4
-  %i.bsh = trunc i64 %279 to i32
-  %280 = add i32 %.promoted.i.i.pre.i.i.i.i833, 1
-  %i.bsi = add i32 %280, %i.bsh
+  %i.bsh = trunc i64 %i.bqx to i32                ; 2 uses
+  %i.bsi = add i32 %.promoted.i.i.pre.i.i.i.i833, %i.bsh
   store i32 %i.bsi, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i839 = icmp eq ptr %i.bqv, null
   br i1 %.not.i5.i.i839, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i843, label %.lr.ph.preheader.i.i.i.i840
 
 .lr.ph.preheader.i.i.i.i840:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i838
   %.promoted.i.i.i.i841 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %281 = trunc i64 %i.bqx to i32
-  %i.bsj = add i32 %.promoted.i.i.i.i841, %281
+  %i.bsj = add i32 %.promoted.i.i.i.i841, %i.bsh
   store i32 %i.bsj, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.eq
 
@@ -5460,7 +5412,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit883:     ; preds = %_ZN5boost9container
   %i.bxh = load ptr, ptr %162, align 8, !tbaa !35 ; 6 uses
   %i.bxi = getelementptr inbounds nuw i8, ptr %162, i64 8 ; 12 uses
   %i.bxj = load i64, ptr %i.bxi, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i885 = shl i64 %i.bxj, 4                ; 3 uses
+  %.idx.i.i885 = shl i64 %i.bxj, 4                ; 2 uses
   %i.bxk = getelementptr inbounds nuw i8, ptr %i.bxh, i64 %.idx.i.i885
   %.not16.i.i.i.i.i886 = icmp eq i64 %i.bxj, 0
   %.promoted.i.i.pre.i.i.i.i887 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -5539,19 +5491,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i899, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i897, label %bb.fd
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i892: ; preds = %.lr.ph.i.i.i.i.i888, %.lr.ph.i.i.i.i.i888.prol.loopexit
-  %282 = add i64 %.idx.i.i885, 68719476720
-  %283 = lshr exact i64 %282, 4
-  %i.byt = trunc i64 %283 to i32
-  %284 = add i32 %.promoted.i.i.pre.i.i.i.i887, 1
-  %i.byu = add i32 %284, %i.byt
+  %i.byt = trunc i64 %i.bxj to i32                ; 2 uses
+  %i.byu = add i32 %.promoted.i.i.pre.i.i.i.i887, %i.byt
   store i32 %i.byu, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i893 = icmp eq ptr %i.bxh, null
   br i1 %.not.i5.i.i893, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i897, label %.lr.ph.preheader.i.i.i.i894
 
 .lr.ph.preheader.i.i.i.i894:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i892
   %.promoted.i.i.i.i895 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %285 = trunc i64 %i.bxj to i32
-  %i.byv = add i32 %.promoted.i.i.i.i895, %285
+  %i.byv = add i32 %.promoted.i.i.i.i895, %i.byt
   store i32 %i.byv, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.fd
 
@@ -5887,7 +5835,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit937:     ; preds = %_ZN5boost9container
   %i.cdi = load ptr, ptr %168, align 8, !tbaa !35 ; 6 uses
   %i.cdj = getelementptr inbounds nuw i8, ptr %168, i64 8 ; 12 uses
   %i.cdk = load i64, ptr %i.cdj, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i938 = shl i64 %i.cdk, 4                ; 3 uses
+  %.idx.i.i938 = shl i64 %i.cdk, 4                ; 2 uses
   %i.cdl = getelementptr inbounds nuw i8, ptr %i.cdi, i64 %.idx.i.i938
   %.not16.i.i.i.i.i939 = icmp eq i64 %i.cdk, 0
   %.promoted.i.i.pre.i.i.i.i940 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -5966,19 +5914,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i952, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i950, label %bb.fq
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i945: ; preds = %.lr.ph.i.i.i.i.i941, %.lr.ph.i.i.i.i.i941.prol.loopexit
-  %286 = add i64 %.idx.i.i938, 68719476720
-  %287 = lshr exact i64 %286, 4
-  %i.ceu = trunc i64 %287 to i32
-  %288 = add i32 %.promoted.i.i.pre.i.i.i.i940, 1
-  %i.cev = add i32 %288, %i.ceu
+  %i.ceu = trunc i64 %i.cdk to i32                ; 2 uses
+  %i.cev = add i32 %.promoted.i.i.pre.i.i.i.i940, %i.ceu
   store i32 %i.cev, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i946 = icmp eq ptr %i.cdi, null
   br i1 %.not.i5.i.i946, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i950, label %.lr.ph.preheader.i.i.i.i947
 
 .lr.ph.preheader.i.i.i.i947:                      ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i945
   %.promoted.i.i.i.i948 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %289 = trunc i64 %i.cdk to i32
-  %i.cew = add i32 %.promoted.i.i.i.i948, %289
+  %i.cew = add i32 %.promoted.i.i.i.i948, %i.ceu
   store i32 %i.cew, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.fq
 
@@ -6331,7 +6275,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit990:     ; preds = %_ZN5boost9container
   %i.cjr = load ptr, ptr %174, align 8, !tbaa !35 ; 6 uses
   %i.cjs = getelementptr inbounds nuw i8, ptr %174, i64 8 ; 11 uses
   %i.cjt = load i64, ptr %i.cjs, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i992 = shl i64 %i.cjt, 4                ; 3 uses
+  %.idx.i.i992 = shl i64 %i.cjt, 4                ; 2 uses
   %i.cju = getelementptr inbounds nuw i8, ptr %i.cjr, i64 %.idx.i.i992
   %.not16.i.i.i.i.i993 = icmp eq i64 %i.cjt, 0
   %.promoted.i.i.pre.i.i.i.i994 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -6410,19 +6354,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i1006, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1004, label %bb.gd
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i999: ; preds = %.lr.ph.i.i.i.i.i995, %.lr.ph.i.i.i.i.i995.prol.loopexit
-  %290 = add i64 %.idx.i.i992, 68719476720
-  %291 = lshr exact i64 %290, 4
-  %i.cld = trunc i64 %291 to i32
-  %292 = add i32 %.promoted.i.i.pre.i.i.i.i994, 1
-  %i.cle = add i32 %292, %i.cld
+  %i.cld = trunc i64 %i.cjt to i32                ; 2 uses
+  %i.cle = add i32 %.promoted.i.i.pre.i.i.i.i994, %i.cld
   store i32 %i.cle, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i1000 = icmp eq ptr %i.cjr, null
   br i1 %.not.i5.i.i1000, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1004, label %.lr.ph.preheader.i.i.i.i1001
 
 .lr.ph.preheader.i.i.i.i1001:                     ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i999
   %.promoted.i.i.i.i1002 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %293 = trunc i64 %i.cjt to i32
-  %i.clf = add i32 %.promoted.i.i.i.i1002, %293
+  %i.clf = add i32 %.promoted.i.i.i.i1002, %i.cld
   store i32 %i.clf, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.gd
 
@@ -6656,7 +6596,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1033:    ; preds = %_ZN5boost9container
   %i.coa = load ptr, ptr %179, align 8, !tbaa !35 ; 6 uses
   %i.cob = getelementptr inbounds nuw i8, ptr %179, i64 8 ; 11 uses
   %i.coc = load i64, ptr %i.cob, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i1034 = shl i64 %i.coc, 4               ; 3 uses
+  %.idx.i.i1034 = shl i64 %i.coc, 4               ; 2 uses
   %i.cod = getelementptr inbounds nuw i8, ptr %i.coa, i64 %.idx.i.i1034
   %.not16.i.i.i.i.i1035 = icmp eq i64 %i.coc, 0
   %.promoted.i.i.pre.i.i.i.i1036 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -6735,19 +6675,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i1048, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1046, label %bb.go
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1041: ; preds = %.lr.ph.i.i.i.i.i1037, %.lr.ph.i.i.i.i.i1037.prol.loopexit
-  %294 = add i64 %.idx.i.i1034, 68719476720
-  %295 = lshr exact i64 %294, 4
-  %i.cpm = trunc i64 %295 to i32
-  %296 = add i32 %.promoted.i.i.pre.i.i.i.i1036, 1
-  %i.cpn = add i32 %296, %i.cpm
+  %i.cpm = trunc i64 %i.coc to i32                ; 2 uses
+  %i.cpn = add i32 %.promoted.i.i.pre.i.i.i.i1036, %i.cpm
   store i32 %i.cpn, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i1042 = icmp eq ptr %i.coa, null
   br i1 %.not.i5.i.i1042, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1046, label %.lr.ph.preheader.i.i.i.i1043
 
 .lr.ph.preheader.i.i.i.i1043:                     ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1041
   %.promoted.i.i.i.i1044 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %297 = trunc i64 %i.coc to i32
-  %i.cpo = add i32 %.promoted.i.i.i.i1044, %297
+  %i.cpo = add i32 %.promoted.i.i.i.i1044, %i.cpm
   store i32 %i.cpo, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.go
 
@@ -6998,7 +6934,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1075:    ; preds = %_ZN5boost9container
   %i.csr = load ptr, ptr %184, align 8, !tbaa !35 ; 6 uses
   %i.css = getelementptr inbounds nuw i8, ptr %184, i64 8 ; 11 uses
   %i.cst = load i64, ptr %i.css, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i1077 = shl i64 %i.cst, 4               ; 3 uses
+  %.idx.i.i1077 = shl i64 %i.cst, 4               ; 2 uses
   %i.csu = getelementptr inbounds nuw i8, ptr %i.csr, i64 %.idx.i.i1077
   %.not16.i.i.i.i.i1078 = icmp eq i64 %i.cst, 0
   %.promoted.i.i.pre.i.i.i.i1079 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -7077,19 +7013,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i1091, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1089, label %bb.gz
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1084: ; preds = %.lr.ph.i.i.i.i.i1080, %.lr.ph.i.i.i.i.i1080.prol.loopexit
-  %298 = add i64 %.idx.i.i1077, 68719476720
-  %299 = lshr exact i64 %298, 4
-  %i.cud = trunc i64 %299 to i32
-  %300 = add i32 %.promoted.i.i.pre.i.i.i.i1079, 1
-  %i.cue = add i32 %300, %i.cud
+  %i.cud = trunc i64 %i.cst to i32                ; 2 uses
+  %i.cue = add i32 %.promoted.i.i.pre.i.i.i.i1079, %i.cud
   store i32 %i.cue, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i1085 = icmp eq ptr %i.csr, null
   br i1 %.not.i5.i.i1085, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1089, label %.lr.ph.preheader.i.i.i.i1086
 
 .lr.ph.preheader.i.i.i.i1086:                     ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1084
   %.promoted.i.i.i.i1087 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %301 = trunc i64 %i.cst to i32
-  %i.cuf = add i32 %.promoted.i.i.i.i1087, %301
+  %i.cuf = add i32 %.promoted.i.i.i.i1087, %i.cud
   store i32 %i.cuf, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.gz
 
@@ -7323,7 +7255,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1119:    ; preds = %_ZN5boost9container
   %i.cxa = load ptr, ptr %189, align 8, !tbaa !35 ; 6 uses
   %i.cxb = getelementptr inbounds nuw i8, ptr %189, i64 8 ; 11 uses
   %i.cxc = load i64, ptr %i.cxb, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i1120 = shl i64 %i.cxc, 4               ; 3 uses
+  %.idx.i.i1120 = shl i64 %i.cxc, 4               ; 2 uses
   %i.cxd = getelementptr inbounds nuw i8, ptr %i.cxa, i64 %.idx.i.i1120
   %.not16.i.i.i.i.i1121 = icmp eq i64 %i.cxc, 0
   %.promoted.i.i.pre.i.i.i.i1122 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -7402,19 +7334,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i1134, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1132, label %bb.hk
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1127: ; preds = %.lr.ph.i.i.i.i.i1123, %.lr.ph.i.i.i.i.i1123.prol.loopexit
-  %302 = add i64 %.idx.i.i1120, 68719476720
-  %303 = lshr exact i64 %302, 4
-  %i.cym = trunc i64 %303 to i32
-  %304 = add i32 %.promoted.i.i.pre.i.i.i.i1122, 1
-  %i.cyn = add i32 %304, %i.cym
+  %i.cym = trunc i64 %i.cxc to i32                ; 2 uses
+  %i.cyn = add i32 %.promoted.i.i.pre.i.i.i.i1122, %i.cym
   store i32 %i.cyn, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i1128 = icmp eq ptr %i.cxa, null
   br i1 %.not.i5.i.i1128, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1132, label %.lr.ph.preheader.i.i.i.i1129
 
 .lr.ph.preheader.i.i.i.i1129:                     ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1127
   %.promoted.i.i.i.i1130 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %305 = trunc i64 %i.cxc to i32
-  %i.cyo = add i32 %.promoted.i.i.i.i1130, %305
+  %i.cyo = add i32 %.promoted.i.i.i.i1130, %i.cym
   store i32 %i.cyo, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.hk
 
@@ -7665,7 +7593,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1162:    ; preds = %_ZN5boost9container
   %i.dbr = load ptr, ptr %194, align 8, !tbaa !35 ; 6 uses
   %i.dbs = getelementptr inbounds nuw i8, ptr %194, i64 8 ; 11 uses
   %i.dbt = load i64, ptr %i.dbs, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i1164 = shl i64 %i.dbt, 4               ; 3 uses
+  %.idx.i.i1164 = shl i64 %i.dbt, 4               ; 2 uses
   %i.dbu = getelementptr inbounds nuw i8, ptr %i.dbr, i64 %.idx.i.i1164
   %.not16.i.i.i.i.i1165 = icmp eq i64 %i.dbt, 0
   %.promoted.i.i.pre.i.i.i.i1166 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -7744,19 +7672,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i1178, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1176, label %bb.hv
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1171: ; preds = %.lr.ph.i.i.i.i.i1167, %.lr.ph.i.i.i.i.i1167.prol.loopexit
-  %306 = add i64 %.idx.i.i1164, 68719476720
-  %307 = lshr exact i64 %306, 4
-  %i.ddd = trunc i64 %307 to i32
-  %308 = add i32 %.promoted.i.i.pre.i.i.i.i1166, 1
-  %i.dde = add i32 %308, %i.ddd
+  %i.ddd = trunc i64 %i.dbt to i32                ; 2 uses
+  %i.dde = add i32 %.promoted.i.i.pre.i.i.i.i1166, %i.ddd
   store i32 %i.dde, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i1172 = icmp eq ptr %i.dbr, null
   br i1 %.not.i5.i.i1172, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1176, label %.lr.ph.preheader.i.i.i.i1173
 
 .lr.ph.preheader.i.i.i.i1173:                     ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1171
   %.promoted.i.i.i.i1174 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %309 = trunc i64 %i.dbt to i32
-  %i.ddf = add i32 %.promoted.i.i.i.i1174, %309
+  %i.ddf = add i32 %.promoted.i.i.i.i1174, %i.ddd
   store i32 %i.ddf, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.hv
 
@@ -7986,7 +7910,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1206:    ; preds = %_ZN5boost9container
   %i.dfx = load ptr, ptr %199, align 8, !tbaa !35 ; 6 uses
   %i.dfy = getelementptr inbounds nuw i8, ptr %199, i64 8 ; 11 uses
   %i.dfz = load i64, ptr %i.dfy, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i1207 = shl i64 %i.dfz, 4               ; 3 uses
+  %.idx.i.i1207 = shl i64 %i.dfz, 4               ; 2 uses
   %i.dga = getelementptr inbounds nuw i8, ptr %i.dfx, i64 %.idx.i.i1207
   %.not16.i.i.i.i.i1208 = icmp eq i64 %i.dfz, 0
   %.promoted.i.i.pre.i.i.i.i1209 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -8065,19 +7989,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i1221, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1219, label %bb.ig
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1214: ; preds = %.lr.ph.i.i.i.i.i1210, %.lr.ph.i.i.i.i.i1210.prol.loopexit
-  %310 = add i64 %.idx.i.i1207, 68719476720
-  %311 = lshr exact i64 %310, 4
-  %i.dhj = trunc i64 %311 to i32
-  %312 = add i32 %.promoted.i.i.pre.i.i.i.i1209, 1
-  %i.dhk = add i32 %312, %i.dhj
+  %i.dhj = trunc i64 %i.dfz to i32                ; 2 uses
+  %i.dhk = add i32 %.promoted.i.i.pre.i.i.i.i1209, %i.dhj
   store i32 %i.dhk, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i1215 = icmp eq ptr %i.dfx, null
   br i1 %.not.i5.i.i1215, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1219, label %.lr.ph.preheader.i.i.i.i1216
 
 .lr.ph.preheader.i.i.i.i1216:                     ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1214
   %.promoted.i.i.i.i1217 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %313 = trunc i64 %i.dfz to i32
-  %i.dhl = add i32 %.promoted.i.i.i.i1217, %313
+  %i.dhl = add i32 %.promoted.i.i.i.i1217, %i.dhj
   store i32 %i.dhl, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.ig
 
@@ -8324,7 +8244,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1249:    ; preds = %_ZN5boost9container
   %i.dkl = load ptr, ptr %204, align 8, !tbaa !35 ; 6 uses
   %i.dkm = getelementptr inbounds nuw i8, ptr %204, i64 8 ; 11 uses
   %i.dkn = load i64, ptr %i.dkm, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i1251 = shl i64 %i.dkn, 4               ; 3 uses
+  %.idx.i.i1251 = shl i64 %i.dkn, 4               ; 2 uses
   %i.dko = getelementptr inbounds nuw i8, ptr %i.dkl, i64 %.idx.i.i1251
   %.not16.i.i.i.i.i1252 = icmp eq i64 %i.dkn, 0
   %.promoted.i.i.pre.i.i.i.i1253 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -8403,19 +8323,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i1265, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1263, label %bb.ir
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1258: ; preds = %.lr.ph.i.i.i.i.i1254, %.lr.ph.i.i.i.i.i1254.prol.loopexit
-  %314 = add i64 %.idx.i.i1251, 68719476720
-  %315 = lshr exact i64 %314, 4
-  %i.dlx = trunc i64 %315 to i32
-  %316 = add i32 %.promoted.i.i.pre.i.i.i.i1253, 1
-  %i.dly = add i32 %316, %i.dlx
+  %i.dlx = trunc i64 %i.dkn to i32                ; 2 uses
+  %i.dly = add i32 %.promoted.i.i.pre.i.i.i.i1253, %i.dlx
   store i32 %i.dly, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i1259 = icmp eq ptr %i.dkl, null
   br i1 %.not.i5.i.i1259, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1263, label %.lr.ph.preheader.i.i.i.i1260
 
 .lr.ph.preheader.i.i.i.i1260:                     ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1258
   %.promoted.i.i.i.i1261 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %317 = trunc i64 %i.dkn to i32
-  %i.dlz = add i32 %.promoted.i.i.i.i1261, %317
+  %i.dlz = add i32 %.promoted.i.i.i.i1261, %i.dlx
   store i32 %i.dlz, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.ir
 
@@ -8649,7 +8565,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1293:    ; preds = %_ZN5boost9container
   %i.dou = load ptr, ptr %209, align 8, !tbaa !35 ; 6 uses
   %i.dov = getelementptr inbounds nuw i8, ptr %209, i64 8 ; 11 uses
   %i.dow = load i64, ptr %i.dov, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i1294 = shl i64 %i.dow, 4               ; 3 uses
+  %.idx.i.i1294 = shl i64 %i.dow, 4               ; 2 uses
   %i.dox = getelementptr inbounds nuw i8, ptr %i.dou, i64 %.idx.i.i1294
   %.not16.i.i.i.i.i1295 = icmp eq i64 %i.dow, 0
   %.promoted.i.i.pre.i.i.i.i1296 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -8728,19 +8644,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i1308, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1306, label %bb.jc
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1301: ; preds = %.lr.ph.i.i.i.i.i1297, %.lr.ph.i.i.i.i.i1297.prol.loopexit
-  %318 = add i64 %.idx.i.i1294, 68719476720
-  %319 = lshr exact i64 %318, 4
-  %i.dqg = trunc i64 %319 to i32
-  %320 = add i32 %.promoted.i.i.pre.i.i.i.i1296, 1
-  %i.dqh = add i32 %320, %i.dqg
+  %i.dqg = trunc i64 %i.dow to i32                ; 2 uses
+  %i.dqh = add i32 %.promoted.i.i.pre.i.i.i.i1296, %i.dqg
   store i32 %i.dqh, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i1302 = icmp eq ptr %i.dou, null
   br i1 %.not.i5.i.i1302, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1306, label %.lr.ph.preheader.i.i.i.i1303
 
 .lr.ph.preheader.i.i.i.i1303:                     ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1301
   %.promoted.i.i.i.i1304 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %321 = trunc i64 %i.dow to i32
-  %i.dqi = add i32 %.promoted.i.i.i.i1304, %321
+  %i.dqi = add i32 %.promoted.i.i.i.i1304, %i.dqg
   store i32 %i.dqi, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.jc
 
@@ -8991,7 +8903,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1336:    ; preds = %_ZN5boost9container
   %i.dtl = load ptr, ptr %214, align 8, !tbaa !35 ; 6 uses
   %i.dtm = getelementptr inbounds nuw i8, ptr %214, i64 8 ; 11 uses
   %i.dtn = load i64, ptr %i.dtm, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i1338 = shl i64 %i.dtn, 4               ; 3 uses
+  %.idx.i.i1338 = shl i64 %i.dtn, 4               ; 2 uses
   %i.dto = getelementptr inbounds nuw i8, ptr %i.dtl, i64 %.idx.i.i1338
   %.not16.i.i.i.i.i1339 = icmp eq i64 %i.dtn, 0
   %.promoted.i.i.pre.i.i.i.i1340 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -9070,19 +8982,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i1352, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1350, label %bb.jn
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1345: ; preds = %.lr.ph.i.i.i.i.i1341, %.lr.ph.i.i.i.i.i1341.prol.loopexit
-  %322 = add i64 %.idx.i.i1338, 68719476720
-  %323 = lshr exact i64 %322, 4
-  %i.dux = trunc i64 %323 to i32
-  %324 = add i32 %.promoted.i.i.pre.i.i.i.i1340, 1
-  %i.duy = add i32 %324, %i.dux
+  %i.dux = trunc i64 %i.dtn to i32                ; 2 uses
+  %i.duy = add i32 %.promoted.i.i.pre.i.i.i.i1340, %i.dux
   store i32 %i.duy, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i1346 = icmp eq ptr %i.dtl, null
   br i1 %.not.i5.i.i1346, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1350, label %.lr.ph.preheader.i.i.i.i1347
 
 .lr.ph.preheader.i.i.i.i1347:                     ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1345
   %.promoted.i.i.i.i1348 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %325 = trunc i64 %i.dtn to i32
-  %i.duz = add i32 %.promoted.i.i.i.i1348, %325
+  %i.duz = add i32 %.promoted.i.i.i.i1348, %i.dux
   store i32 %i.duz, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.jn
 
@@ -9316,7 +9224,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1380:    ; preds = %_ZN5boost9container
   %i.dxu = load ptr, ptr %219, align 8, !tbaa !35 ; 6 uses
   %i.dxv = getelementptr inbounds nuw i8, ptr %219, i64 8 ; 11 uses
   %i.dxw = load i64, ptr %i.dxv, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i1381 = shl i64 %i.dxw, 4               ; 3 uses
+  %.idx.i.i1381 = shl i64 %i.dxw, 4               ; 2 uses
   %i.dxx = getelementptr inbounds nuw i8, ptr %i.dxu, i64 %.idx.i.i1381
   %.not16.i.i.i.i.i1382 = icmp eq i64 %i.dxw, 0
   %.promoted.i.i.pre.i.i.i.i1383 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -9395,19 +9303,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i1395, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1393, label %bb.jy
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1388: ; preds = %.lr.ph.i.i.i.i.i1384, %.lr.ph.i.i.i.i.i1384.prol.loopexit
-  %326 = add i64 %.idx.i.i1381, 68719476720
-  %327 = lshr exact i64 %326, 4
-  %i.dzg = trunc i64 %327 to i32
-  %328 = add i32 %.promoted.i.i.pre.i.i.i.i1383, 1
-  %i.dzh = add i32 %328, %i.dzg
+  %i.dzg = trunc i64 %i.dxw to i32                ; 2 uses
+  %i.dzh = add i32 %.promoted.i.i.pre.i.i.i.i1383, %i.dzg
   store i32 %i.dzh, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i1389 = icmp eq ptr %i.dxu, null
   br i1 %.not.i5.i.i1389, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1393, label %.lr.ph.preheader.i.i.i.i1390
 
 .lr.ph.preheader.i.i.i.i1390:                     ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1388
   %.promoted.i.i.i.i1391 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %329 = trunc i64 %i.dxw to i32
-  %i.dzi = add i32 %.promoted.i.i.i.i1391, %329
+  %i.dzi = add i32 %.promoted.i.i.i.i1391, %i.dzg
   store i32 %i.dzi, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.jy
 
@@ -9658,7 +9562,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1423:    ; preds = %_ZN5boost9container
   %i.ecl = load ptr, ptr %224, align 8, !tbaa !35 ; 6 uses
   %i.ecm = getelementptr inbounds nuw i8, ptr %224, i64 8 ; 11 uses
   %i.ecn = load i64, ptr %i.ecm, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i1425 = shl i64 %i.ecn, 4               ; 3 uses
+  %.idx.i.i1425 = shl i64 %i.ecn, 4               ; 2 uses
   %i.eco = getelementptr inbounds nuw i8, ptr %i.ecl, i64 %.idx.i.i1425
   %.not16.i.i.i.i.i1426 = icmp eq i64 %i.ecn, 0
   %.promoted.i.i.pre.i.i.i.i1427 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -9737,19 +9641,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i1439, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1437, label %bb.kj
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1432: ; preds = %.lr.ph.i.i.i.i.i1428, %.lr.ph.i.i.i.i.i1428.prol.loopexit
-  %330 = add i64 %.idx.i.i1425, 68719476720
-  %331 = lshr exact i64 %330, 4
-  %i.edx = trunc i64 %331 to i32
-  %332 = add i32 %.promoted.i.i.pre.i.i.i.i1427, 1
-  %i.edy = add i32 %332, %i.edx
+  %i.edx = trunc i64 %i.ecn to i32                ; 2 uses
+  %i.edy = add i32 %.promoted.i.i.pre.i.i.i.i1427, %i.edx
   store i32 %i.edy, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i1433 = icmp eq ptr %i.ecl, null
   br i1 %.not.i5.i.i1433, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1437, label %.lr.ph.preheader.i.i.i.i1434
 
 .lr.ph.preheader.i.i.i.i1434:                     ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1432
   %.promoted.i.i.i.i1435 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %333 = trunc i64 %i.ecn to i32
-  %i.edz = add i32 %.promoted.i.i.i.i1435, %333
+  %i.edz = add i32 %.promoted.i.i.i.i1435, %i.edx
   store i32 %i.edz, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.kj
 
@@ -9978,7 +9878,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1467:    ; preds = %_ZN5boost9container
   %i.egs = load ptr, ptr %229, align 8, !tbaa !35 ; 6 uses
   %i.egt = getelementptr inbounds nuw i8, ptr %229, i64 8 ; 11 uses
   %i.egu = load i64, ptr %i.egt, align 8, !tbaa !38 ; 4 uses
-  %.idx.i.i1468 = shl i64 %i.egu, 4               ; 3 uses
+  %.idx.i.i1468 = shl i64 %i.egu, 4               ; 2 uses
   %i.egv = getelementptr inbounds nuw i8, ptr %i.egs, i64 %.idx.i.i1468
   %.not16.i.i.i.i.i1469 = icmp eq i64 %i.egu, 0
   %.promoted.i.i.pre.i.i.i.i1470 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16
@@ -10057,19 +9957,15 @@ _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XE
   br i1 %.not.i.i.i1482, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1480, label %bb.ku
 
 _ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1475: ; preds = %.lr.ph.i.i.i.i.i1471, %.lr.ph.i.i.i.i.i1471.prol.loopexit
-  %334 = add i64 %.idx.i.i1468, 68719476720
-  %335 = lshr exact i64 %334, 4
-  %i.eie = trunc i64 %335 to i32
-  %336 = add i32 %.promoted.i.i.pre.i.i.i.i1470, 1
-  %i.eif = add i32 %336, %i.eie
+  %i.eie = trunc i64 %i.egu to i32                ; 2 uses
+  %i.eif = add i32 %.promoted.i.i.pre.i.i.i.i1470, %i.eie
   store i32 %i.eif, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 16), align 16, !tbaa !28
   %.not.i5.i.i1476 = icmp eq ptr %i.egs, null
   br i1 %.not.i5.i.i1476, label %_ZN5boost9container6vectorI1XvvE23priv_move_to_new_bufferEmNS_11move_detail17integral_constantIjLj1EEE.exit.i1480, label %.lr.ph.preheader.i.i.i.i1477
 
 .lr.ph.preheader.i.i.i.i1477:                     ; preds = %_ZN5boost9container35uninitialized_move_and_insert_allocINS0_13new_allocatorI1XEEPS3_S5_NS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIS5_EEEEEEvRT_T0_SD_SD_T1_mT2_.exit.i.thread.i.i1475
   %.promoted.i.i.i.i1478 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4
-  %337 = trunc i64 %i.egu to i32
-  %i.eig = add i32 %.promoted.i.i.i.i1478, %337
+  %i.eig = add i32 %.promoted.i.i.i.i1478, %i.eie
   store i32 %i.eig, ptr getelementptr inbounds nuw (i8, ptr @_ZN1X2spE, i64 4), align 4, !tbaa !25
   br label %bb.ku
 

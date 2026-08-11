@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %.preheader, %bb.e
   %i.h = sext i8 %i.g to i64
   %i.i = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.h
   %i.j = load i32, ptr %i.i, align 4, !tbaa !4
-  %.fr36 = freeze i32 %i.j                        ; 2 uses
-  %sext = shl i32 %.fr36, 24                      ; 2 uses
+  %.fr36 = freeze i32 %i.j                        ; 3 uses
+  %sext = shl i32 %.fr36, 24
   %i.k = ashr exact i32 %sext, 24
   %i.l = sext i32 %i.k to i64
   %i.m = getelementptr inbounds [2 x i8], ptr %i.f, i64 %i.l
@@ -221,14 +221,12 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.r, label %bb.d, label %switch.early.test
 
 switch.early.test:                                ; preds = %bb.c
-  %2 = add i32 %sext, -1627389952
-  %3 = lshr exact i32 %2, 24
-  %trunc = trunc nuw i32 %3 to i8
+  %trunc = trunc i32 %.fr36 to i8
   switch i8 %trunc, label %bb.e [
-    i8 20, label %bb.d
-    i8 19, label %bb.d
-    i8 13, label %bb.d
-    i8 0, label %bb.d
+    i8 117, label %bb.d
+    i8 116, label %bb.d
+    i8 110, label %bb.d
+    i8 97, label %bb.d
   ]
 
 bb.d:                                             ; preds = %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %bb.c
@@ -270,8 +268,8 @@ bb.b:                                             ; preds = %bb.e, %bb.a
   %i.f = sext i8 %i.e to i64
   %i.g = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.f
   %i.h = load i32, ptr %i.g, align 4, !tbaa !4
-  %.fr32 = freeze i32 %i.h                        ; 2 uses
-  %sext = shl i32 %.fr32, 24                      ; 2 uses
+  %.fr32 = freeze i32 %i.h                        ; 3 uses
+  %sext = shl i32 %.fr32, 24
   %i.i = ashr exact i32 %sext, 24
   %i.j = sext i32 %i.i to i64
   %i.k = getelementptr inbounds [2 x i8], ptr %i.d, i64 %i.j
@@ -287,14 +285,12 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.p, label %bb.d, label %switch.early.test
 
 switch.early.test:                                ; preds = %bb.c
-  %1 = add i32 %sext, -1627389952
-  %2 = lshr exact i32 %1, 24
-  %trunc = trunc nuw i32 %2 to i8
+  %trunc = trunc i32 %.fr32 to i8
   switch i8 %trunc, label %bb.e [
-    i8 20, label %bb.d
-    i8 19, label %bb.d
-    i8 13, label %bb.d
-    i8 0, label %bb.d
+    i8 117, label %bb.d
+    i8 116, label %bb.d
+    i8 110, label %bb.d
+    i8 97, label %bb.d
   ]
 
 bb.d:                                             ; preds = %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %bb.c
@@ -504,8 +500,8 @@ bb.j:                                             ; preds = %bb.m, %.preheader.i
   %i.ap = sext i8 %i.ao to i64
   %i.aq = getelementptr inbounds [4 x i8], ptr %i.al, i64 %i.ap
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !4
-  %.fr36.i = freeze i32 %i.ar                     ; 2 uses
-  %sext.i = shl i32 %.fr36.i, 24                  ; 2 uses
+  %.fr36.i = freeze i32 %i.ar                     ; 3 uses
+  %sext.i = shl i32 %.fr36.i, 24
   %i.as = ashr exact i32 %sext.i, 24
   %i.at = sext i32 %i.as to i64
   %i.au = getelementptr inbounds [2 x i8], ptr %i.an, i64 %i.at
@@ -521,14 +517,12 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.az, label %bb.l, label %switch.early.test.i
 
 switch.early.test.i:                              ; preds = %bb.k
-  %2 = add i32 %sext.i, -1627389952
-  %3 = lshr exact i32 %2, 24
-  %trunc.i = trunc nuw i32 %3 to i8
+  %trunc.i = trunc i32 %.fr36.i to i8
   switch i8 %trunc.i, label %bb.m [
-    i8 20, label %bb.l
-    i8 19, label %bb.l
-    i8 13, label %bb.l
-    i8 0, label %bb.l
+    i8 117, label %bb.l
+    i8 116, label %bb.l
+    i8 110, label %bb.l
+    i8 97, label %bb.l
   ]
 
 bb.l:                                             ; preds = %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %bb.k
@@ -703,8 +697,8 @@ bb.g:                                             ; preds = %bb.j, %.preheader.i
   %i.ad = sext i8 %i.ac to i64
   %i.ae = getelementptr inbounds [4 x i8], ptr %i.z, i64 %i.ad
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !4
-  %.fr36.i = freeze i32 %i.af                     ; 2 uses
-  %sext.i = shl i32 %.fr36.i, 24                  ; 2 uses
+  %.fr36.i = freeze i32 %i.af                     ; 3 uses
+  %sext.i = shl i32 %.fr36.i, 24
   %i.ag = ashr exact i32 %sext.i, 24
   %i.ah = sext i32 %i.ag to i64
   %i.ai = getelementptr inbounds [2 x i8], ptr %i.ab, i64 %i.ah
@@ -720,14 +714,12 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.an, label %bb.i, label %switch.early.test.i
 
 switch.early.test.i:                              ; preds = %bb.h
-  %1 = add i32 %sext.i, -1627389952
-  %2 = lshr exact i32 %1, 24
-  %trunc.i = trunc nuw i32 %2 to i8
+  %trunc.i = trunc i32 %.fr36.i to i8
   switch i8 %trunc.i, label %bb.j [
-    i8 20, label %bb.i
-    i8 19, label %bb.i
-    i8 13, label %bb.i
-    i8 0, label %bb.i
+    i8 117, label %bb.i
+    i8 116, label %bb.i
+    i8 110, label %bb.i
+    i8 97, label %bb.i
   ]
 
 bb.i:                                             ; preds = %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %bb.h

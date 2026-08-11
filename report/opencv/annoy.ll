@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 136
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 152
   %i.o = sext i32 %1 to i64
-  %i.p = shl nsw i64 %i.o, 2                      ; 2 uses
+  %i.p = shl nsw i64 %i.o, 2
   %i.q = add nsw i64 %i.p, 16
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store i64 %i.q, ptr %i.r, align 8, !tbaa !90, !noalias !66
@@ -212,11 +212,9 @@ bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %i.s, align 1, !tbaa !91, !noalias !66
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 169
   store i8 0, ptr %i.t, align 1, !tbaa !92, !noalias !66
-  %2 = add nsw i64 %i.p, 8
-  %3 = lshr exact i64 %2, 2
-  %4 = trunc i64 %3 to i32
+  %2 = add i32 %1, 2
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 144
-  store i32 %4, ptr %i.u, align 8, !tbaa !93, !noalias !66
+  store i32 %2, ptr %i.u, align 8, !tbaa !93, !noalias !66
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 164
   store i32 0, ptr %i.v, align 4, !tbaa !94, !noalias !66
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 48
@@ -619,7 +617,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 136
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 152
   %i.o = sext i32 %1 to i64
-  %i.p = shl nsw i64 %i.o, 2                      ; 2 uses
+  %i.p = shl nsw i64 %i.o, 2
   %i.q = add nsw i64 %i.p, 16
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store i64 %i.q, ptr %i.r, align 8, !tbaa !367, !noalias !360
@@ -627,11 +625,9 @@ bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %i.s, align 1, !tbaa !368, !noalias !360
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 169
   store i8 0, ptr %i.t, align 1, !tbaa !369, !noalias !360
-  %2 = add nsw i64 %i.p, 8
-  %3 = lshr exact i64 %2, 2
-  %4 = trunc i64 %3 to i32
+  %2 = add i32 %1, 2
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 144
-  store i32 %4, ptr %i.u, align 8, !tbaa !370, !noalias !360
+  store i32 %2, ptr %i.u, align 8, !tbaa !370, !noalias !360
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 164
   store i32 0, ptr %i.v, align 4, !tbaa !371, !noalias !360
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 48
@@ -1034,7 +1030,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 136
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 152
   %i.o = sext i32 %1 to i64
-  %i.p = shl nsw i64 %i.o, 2                      ; 2 uses
+  %i.p = shl nsw i64 %i.o, 2
   %i.q = add nsw i64 %i.p, 12
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store i64 %i.q, ptr %i.r, align 8, !tbaa !496, !noalias !489
@@ -1042,11 +1038,9 @@ bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %i.s, align 1, !tbaa !497, !noalias !489
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 169
   store i8 0, ptr %i.t, align 1, !tbaa !498, !noalias !489
-  %2 = add nsw i64 %i.p, 8
-  %3 = lshr exact i64 %2, 2
-  %4 = trunc i64 %3 to i32
+  %2 = add i32 %1, 2
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 144
-  store i32 %4, ptr %i.u, align 8, !tbaa !499, !noalias !489
+  store i32 %2, ptr %i.u, align 8, !tbaa !499, !noalias !489
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 164
   store i32 0, ptr %i.v, align 4, !tbaa !500, !noalias !489
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 48
@@ -1449,7 +1443,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 136
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 152
   %i.o = sext i32 %1 to i64
-  %i.p = shl nsw i64 %i.o, 2                      ; 2 uses
+  %i.p = shl nsw i64 %i.o, 2
   %i.q = add nsw i64 %i.p, 24
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store i64 %i.q, ptr %i.r, align 8, !tbaa !819, !noalias !812
@@ -1457,11 +1451,9 @@ bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %i.s, align 1, !tbaa !820, !noalias !812
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 169
   store i8 0, ptr %i.t, align 1, !tbaa !821, !noalias !812
-  %2 = add nsw i64 %i.p, 20
-  %3 = lshr exact i64 %2, 2
-  %4 = trunc i64 %3 to i32
+  %2 = add i32 %1, 5
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 144
-  store i32 %4, ptr %i.u, align 8, !tbaa !822, !noalias !812
+  store i32 %2, ptr %i.u, align 8, !tbaa !822, !noalias !812
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 164
   store i32 0, ptr %i.v, align 4, !tbaa !823, !noalias !812
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 48

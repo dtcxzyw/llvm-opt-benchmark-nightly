@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %bb.s
   br i1 %.not60.i.i, label %._crit_edge.i.i, label %bb.s, !llvm.loop !6223
 
 ._crit_edge.i.i:                                  ; preds = %.thread193.i.i, %.thread.i.i
-  %.051.lcssa.i.i = phi i64 [ 0, %.thread.i.i ], [ %i.de, %.thread193.i.i ] ; 4 uses
+  %.051.lcssa.i.i = phi i64 [ 0, %.thread.i.i ], [ %i.de, %.thread193.i.i ] ; 3 uses
   %i.dh = shl i64 %.051.lcssa.i.i, 3
   %i.di = add i64 %i.dh, 36                       ; 2 uses
   %i.dj = call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %.str.1590..i) #60, !inline_history !6224
@@ -234,12 +234,9 @@ bb.ag:                                            ; preds = %sqlite3_malloc64.ex
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.dn, i8 0, i64 range(i64 -9223372036854775807, -9223372036854775808) %i.dl, i1 false)
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dn, i64 24 ; 2 uses
   store i32 28, ptr %i.dp, align 8, !tbaa !24
-  %i.dq = trunc i64 %.051.lcssa.i.i to i32
-  %6 = shl i64 %.051.lcssa.i.i, 32
-  %sext.i.i.i = add i64 %6, 4294967296
-  %7 = lshr exact i64 %sext.i.i.i, 30
-  %8 = trunc i64 %7 to i32
-  %i.dr = add i32 %8, 28
+  %i.dq = trunc i64 %.051.lcssa.i.i to i32        ; 2 uses
+  %6 = shl i32 %i.dq, 2
+  %i.dr = add i32 %6, 32
   %i.ds = getelementptr [4 x i8], ptr %i.dp, i64 %.051.lcssa.i.i
   %i.dt = getelementptr i8, ptr %i.ds, i64 4
   store i32 %i.dr, ptr %i.dt, align 4, !tbaa !24
