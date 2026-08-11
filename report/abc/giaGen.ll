@@ -204,7 +204,7 @@ bb.a:
   %.neg = shl nsw i32 -1, %i.q
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv55
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !213
-  %i.t = zext i32 %i.o to i64
+  %i.t = zext nneg i32 %i.o to i64
   %i.u = sext i32 %i.n to i64
   br label %bb.b
 
@@ -255,7 +255,7 @@ bb.c:                                             ; preds = %._crit_edge44, %._c
   %i.ar = xor i64 %indvars.iv61, -1
   %i.as = getelementptr [8 x i8], ptr %i.ai, i64 %i.ar
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !213
-  %i.au = zext i32 %i.am to i64
+  %i.au = zext nneg i32 %i.am to i64
   %i.av = sext i32 %i.ak to i64
   %i.aw = zext nneg i32 %i.aq to i64
   %i.ax = sext i32 %i.al to i64
@@ -658,7 +658,7 @@ bb.k:                                             ; preds = %bb.j
   %.neg.i = shl nsw i32 -1, %i.ca
   %i.cb = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv55.i
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !213
-  %i.cd = zext i32 %i.bz to i64
+  %i.cd = zext nneg i32 %i.bz to i64
   %i.ce = sext i32 %i.by to i64
   br label %bb.l
 
@@ -708,7 +708,7 @@ bb.m:                                             ; preds = %._crit_edge48.i, %.
   %i.da = xor i64 %indvars.iv61.i, -1
   %i.db = getelementptr [8 x i8], ptr %i.cs, i64 %i.da
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !213
-  %i.dd = zext i32 %i.cw to i64
+  %i.dd = zext nneg i32 %i.cw to i64
   %i.de = sext i32 %i.cu to i64
   %i.df = zext nneg i32 %i.cz to i64
   %i.dg = sext i32 %i.cv to i64

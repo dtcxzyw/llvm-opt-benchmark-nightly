@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br i1 %.not12, label %._crit_edge44, label %.lr.ph33.preheader
 
 .lr.ph33.preheader:                               ; preds = %.preheader
-  %i.bb = add i32 %i.i, %.sroa.0.0.extract.trunc
+  %i.bb = add nsw i32 %i.i, %.sroa.0.0.extract.trunc
   %i.bc = sub i32 %.sroa.0.0.extract.trunc, %i.i
   %i.bd = sext i32 %i.bc to i64                   ; 3 uses
   %i.be = sext i16 %i.g to i64                    ; 2 uses
