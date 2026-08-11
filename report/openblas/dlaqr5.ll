@@ -201,8 +201,8 @@ bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r
   %i.jc = sext i32 %i.fe to i64                   ; 3 uses
   %invariant.gep1705 = getelementptr [8 x i8], ptr %i.m, i64 %i.jc ; 2 uses
   %i.jd = call i64 @llvm.smax.i64(i64 %i.jb, i64 %i.iz)
-  %25 = sub i64 %i.jd, %i.iz
-  %26 = add i64 %25, 1                            ; 3 uses
+  %25 = add i64 %i.jd, 1
+  %26 = sub i64 %25, %i.iz                        ; 3 uses
   %min.iters.check2142 = icmp ugt i64 %26, 7
   %or.cond2208 = select i1 %min.iters.check2142, i1 %ident.check2118.not, i1 false
   br i1 %or.cond2208, label %vector.memcheck2119, label %scalar.ph2141.preheader
@@ -523,15 +523,16 @@ bb.ao:                                            ; preds = %bb.an
   %i.pv = mul nsw i32 %i.pu, %i.t
   %i.pw = add i32 %indvars.iv1594, %i.ks
   %smax = call i32 @llvm.smax.i32(i32 %i.pw, i32 1)
-  %i.px = zext nneg i32 %smax to i64              ; 8 uses
+  %i.px = zext nneg i32 %smax to i64              ; 9 uses
   %i.py = sext i32 %i.ps to i64                   ; 3 uses
   %i.pz = sext i32 %i.pv to i64                   ; 3 uses
   %i.qa = zext nneg i32 %i.pk to i64              ; 3 uses
   %invariant.gep1711 = getelementptr [8 x i8], ptr %i.v, i64 %i.py ; 2 uses
   %invariant.gep1713 = getelementptr [8 x i8], ptr %i.v, i64 %i.pz ; 2 uses
-  %i.qb = call i64 @llvm.usub.sat.i64(i64 %i.qa, i64 %i.px) ; 2 uses
-  %i.qc = add nuw nsw i64 %i.qb, 1                ; 2 uses
-  %min.iters.check2052 = icmp samesign ult i64 %i.qb, 7
+  %i.qb = call i64 @llvm.umax.i64(i64 %i.qa, i64 %i.px)
+  %i.qc = add nuw nsw i64 %i.qb, 1
+  %27 = sub nsw i64 %i.qc, %i.px                  ; 3 uses
+  %min.iters.check2052 = icmp ult i64 %27, 8
   br i1 %min.iters.check2052, label %scalar.ph2051.preheader, label %vector.memcheck2028
 
 vector.memcheck2028:                              ; preds = %.lr.ph1512
@@ -566,8 +567,8 @@ vector.memcheck2028:                              ; preds = %.lr.ph1512
   br i1 %conflict.rdx2050, label %scalar.ph2051.preheader, label %vector.ph2053
 
 vector.ph2053:                                    ; preds = %vector.memcheck2028
-  %n.vec2054 = and i64 %i.qc, 4294967288          ; 3 uses
-  %i.qo = add nuw nsw i64 %n.vec2054, %i.px
+  %n.vec2054 = and i64 %27, -8                    ; 3 uses
+  %i.qo = add nsw i64 %n.vec2054, %i.px
   %i.qp = load double, ptr %i.pq, align 8, !tbaa !9, !alias.scope !35
   %broadcast.splatinsert2063 = insertelement <4 x double> poison, double %i.qp, i64 0
   %broadcast.splat2064 = shufflevector <4 x double> %broadcast.splatinsert2063, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -610,7 +611,7 @@ vector.body2055:                                  ; preds = %vector.body2055, %v
   br i1 %i.rg, label %middle.block2070, label %vector.body2055, !llvm.loop !43
 
 middle.block2070:                                 ; preds = %vector.body2055
-  %cmp.n2071 = icmp eq i64 %i.qc, %n.vec2054
+  %cmp.n2071 = icmp eq i64 %27, %n.vec2054
   br i1 %cmp.n2071, label %.loopexit1489, label %scalar.ph2051.preheader
 
 scalar.ph2051.preheader:                          ; preds = %vector.memcheck2028, %.lr.ph1512, %middle.block2070
@@ -1013,9 +1014,9 @@ bb.bv:                                            ; preds = %.lr.ph1531, %._crit
   %invariant.gep1725 = getelementptr [8 x i8], ptr %i.m, i64 %i.akh ; 2 uses
   %i.aki = call i32 @llvm.smax.i32(i32 %.113881695, i32 %indvars.iv1604)
   %i.akj = sext i32 %i.aki to i64
-  %27 = sub nsw i64 %i.akj, %smax1606
-  %28 = add nsw i64 %27, 1                        ; 3 uses
-  %min.iters.check1930 = icmp ugt i64 %28, 7
+  %28 = add nsw i64 %i.akj, 1
+  %29 = sub nsw i64 %28, %smax1606                ; 3 uses
+  %min.iters.check1930 = icmp ugt i64 %29, 7
   %or.cond2209 = select i1 %min.iters.check1930, i1 %ident.check.not, i1 false
   br i1 %or.cond2209, label %vector.memcheck1880, label %scalar.ph1929.preheader
 
@@ -1047,7 +1048,7 @@ vector.memcheck1880:                              ; preds = %.lr.ph1526
   br i1 %conflict.rdx1928, label %scalar.ph1929.preheader, label %vector.ph1931
 
 vector.ph1931:                                    ; preds = %vector.memcheck1880
-  %n.vec1932 = and i64 %28, -2                    ; 3 uses
+  %n.vec1932 = and i64 %29, -2                    ; 3 uses
   %i.akl = add nsw i64 %n.vec1932, %smax1606
   %i.akm = load double, ptr %i.akc, align 8, !tbaa !9, !alias.scope !69
   %broadcast.splatinsert1942 = insertelement <2 x double> poison, double %i.akm, i64 0
@@ -1092,7 +1093,7 @@ vector.body1933:                                  ; preds = %vector.body1933, %v
   br i1 %i.alc, label %middle.block1951, label %vector.body1933, !llvm.loop !80
 
 middle.block1951:                                 ; preds = %vector.body1933
-  %cmp.n1952 = icmp eq i64 %28, %n.vec1932
+  %cmp.n1952 = icmp eq i64 %29, %n.vec1932
   br i1 %cmp.n1952, label %._crit_edge1527, label %scalar.ph1929.preheader
 
 scalar.ph1929.preheader:                          ; preds = %vector.memcheck1880, %.lr.ph1526, %middle.block1951
@@ -1217,7 +1218,7 @@ bb.bw:                                            ; preds = %.lr.ph1548, %._crit
 .lr.ph1544:                                       ; preds = %bb.bw
   %smax1622 = call i32 @llvm.smax.i32(i32 %indvars.iv1620, i32 %i.amc)
   %smax1623 = call i32 @llvm.smax.i32(i32 %smax1622, i32 1)
-  %i.ans = zext nneg i32 %smax1623 to i64         ; 5 uses
+  %i.ans = zext nneg i32 %smax1623 to i64         ; 6 uses
   %i.ant = add i32 %i.alx, %i.ano                 ; 3 uses
   %i.anu = mul nsw i64 %indvars.iv1628, %i.bw
   %i.anv = getelementptr [8 x i8], ptr %i.s, i64 %i.anu ; 3 uses
@@ -1236,9 +1237,10 @@ bb.bw:                                            ; preds = %.lr.ph1548, %._crit
   %invariant.gep1733 = getelementptr [8 x i8], ptr %i.v, i64 %i.aof ; 2 uses
   %invariant.gep1735 = getelementptr [8 x i8], ptr %i.v, i64 %i.aog ; 2 uses
   %invariant.gep1737 = getelementptr [8 x i8], ptr %i.v, i64 %i.aoh ; 2 uses
-  %i.aoi = call i64 @llvm.usub.sat.i64(i64 %i.amd, i64 %i.ans) ; 2 uses
-  %i.aoj = add nuw nsw i64 %i.aoi, 1              ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.aoi, 7
+  %i.aoi = call i64 @llvm.umax.i64(i64 %i.amd, i64 %i.ans)
+  %i.aoj = add nuw nsw i64 %i.aoi, 1
+  %30 = sub nsw i64 %i.aoj, %i.ans                ; 3 uses
+  %min.iters.check = icmp ult i64 %30, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph1544
@@ -1269,8 +1271,8 @@ vector.memcheck:                                  ; preds = %.lr.ph1544
   br i1 %conflict.rdx1789, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.aoj, 8589934588             ; 3 uses
-  %i.aol = add nuw nsw i64 %n.vec, %i.ans
+  %n.vec = and i64 %30, -4                        ; 3 uses
+  %i.aol = add nsw i64 %n.vec, %i.ans
   %i.aom = load double, ptr %i.anw, align 8, !tbaa !9, !alias.scope !83
   %broadcast.splatinsert1794 = insertelement <4 x double> poison, double %i.aom, i64 0
   %broadcast.splat1795 = shufflevector <4 x double> %broadcast.splatinsert1794, <4 x double> poison, <4 x i32> zeroinitializer
@@ -1312,7 +1314,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.apa, label %middle.block, label %vector.body, !llvm.loop !94
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.aoj, %n.vec
+  %cmp.n = icmp eq i64 %30, %n.vec
   br i1 %cmp.n, label %._crit_edge1545, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph1544, %middle.block
@@ -1714,9 +1716,6 @@ declare i64 @llvm.smax.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -204,9 +204,9 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %i.dp, label %.lr.ph.i17.i.i.i.i.i.i.preheader, label %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_3RefINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0ENS_11OuterStrideILin1EEEEELin1ELi1ELb1EEELin1ELi1ELb0EEEEdVERKd.exit
 
 .lr.ph.i17.i.i.i.i.i.i.preheader:                 ; preds = %._crit_edge.i.i.i.i.i.i
-  %3 = mul i64 %i.db, -2
-  %4 = sub i64 %3, %.0.i.i.i.i.i.i.i
-  %5 = add i64 %4, %i.cr                          ; 3 uses
+  %3 = shl nsw i64 %i.db, 1
+  %4 = add i64 %.0.i.i.i.i.i.i.i, %3
+  %5 = sub i64 %i.cr, %4                          ; 3 uses
   %min.iters.check220 = icmp ult i64 %5, 2
   br i1 %min.iters.check220, label %.lr.ph.i17.i.i.i.i.i.i.preheader270, label %vector.ph221
 
@@ -446,9 +446,9 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %i.hp, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i.i.preheader, label %_ZNK5Eigen8internal20generic_product_implINS_5BlockINS2_INS_3RefINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0ENS_11OuterStrideILin1EEEEELin1ELi1ELb1EEELin1ELi1ELb0EEENS2_INS2_IS8_Li1ELin1ELb0EEELi1ELin1ELb0EEENS_10DenseShapeESD_Li5EE3subclINS2_INS2_IS8_Lin1ELin1ELb0EEELin1ELi1ELb1EEENS_13CwiseBinaryOpINS0_17scalar_product_opIddEEKNS_14CwiseNullaryOpINS0_18scalar_constant_opIdEEKNS4_IdLin1ELi1ELi0ELin1ELi1EEEEEKSA_EEEEvRKT_RKT0_.exit.i.i.i.i.i
 
 .lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i.i.preheader:     ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i
-  %6 = mul i64 %i.gb, -2
-  %7 = sub i64 %6, %.0.i.i.i.i.i.i.i.i.i.i.i.i.i
-  %8 = add i64 %7, %i.el                          ; 3 uses
+  %6 = shl nsw i64 %i.gb, 1
+  %7 = add i64 %.0.i.i.i.i.i.i.i.i.i.i.i.i.i, %6
+  %8 = sub i64 %i.el, %7                          ; 3 uses
   %min.iters.check = icmp ult i64 %8, 8
   br i1 %min.iters.check, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i.i.preheader268, label %vector.memcheck
 
@@ -851,18 +851,17 @@ bb.o:                                             ; preds = %._crit_edge.i, %.lr
   %i.fr = getelementptr [8 x i8], ptr %i.cx, i64 %i.fq ; 2 uses
   %i.fs = mul nsw i64 %.03453.i, %i.db
   %invariant.gep50.i = getelementptr [8 x i8], ptr %i.cy, i64 %i.fs ; 2 uses
-  %6 = lshr i64 %i.fd, 1
-  %7 = mul i64 %6, -2
-  %i.ft = sub i64 %7, %.03552.i
-  %8 = add i64 %i.ft, %i.cr                       ; 3 uses
-  %min.iters.check140 = icmp ult i64 %8, 4
+  %6 = and i64 %i.fd, -2
+  %7 = add i64 %.03552.i, %6
+  %i.ft = sub i64 %i.cr, %7                       ; 3 uses
+  %min.iters.check140 = icmp ult i64 %i.ft, 4
   %.reass = add i64 %i.fc, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   %or.cond172 = select i1 %min.iters.check140, i1 true, i1 %diff.check
   br i1 %or.cond172, label %scalar.ph139.preheader, label %vector.ph141
 
 vector.ph141:                                     ; preds = %.lr.ph49.i
-  %n.vec142 = and i64 %8, -4                      ; 3 uses
+  %n.vec142 = and i64 %i.ft, -4                   ; 3 uses
   %i.fu = add i64 %i.ff, %n.vec142
   br label %vector.body143
 
@@ -882,7 +881,7 @@ vector.body143:                                   ; preds = %vector.body143, %ve
   br i1 %i.ga, label %middle.block148, label %vector.body143, !llvm.loop !1456
 
 middle.block148:                                  ; preds = %vector.body143
-  %cmp.n149 = icmp eq i64 %8, %n.vec142
+  %cmp.n149 = icmp eq i64 %i.ft, %n.vec142
   br i1 %cmp.n149, label %._crit_edge.i, label %scalar.ph139.preheader
 
 scalar.ph139.preheader:                           ; preds = %.lr.ph49.i, %middle.block148
@@ -1285,18 +1284,17 @@ bb.o:                                             ; preds = %._crit_edge.i, %.lr
   %i.fi = getelementptr [8 x i8], ptr %i.da, i64 %i.fh ; 2 uses
   %.idx.i.i.i38.i = mul nuw nsw i64 %.03455.i, 24
   %invariant.gep52.i = getelementptr i8, ptr %i.cr, i64 %.idx.i.i.i38.i ; 2 uses
-  %6 = lshr i64 %i.ew, 1
-  %7 = mul i64 %6, -2
-  %i.fj = sub i64 %7, %.03554.i
-  %8 = add i64 %i.fj, %i.cu                       ; 3 uses
-  %min.iters.check135 = icmp ult i64 %8, 4
+  %6 = and i64 %i.ew, -2
+  %7 = add i64 %.03554.i, %6
+  %i.fj = sub i64 %i.cu, %7                       ; 3 uses
+  %min.iters.check135 = icmp ult i64 %i.fj, 4
   %.reass = add i64 %i.ev, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   %or.cond166 = select i1 %min.iters.check135, i1 true, i1 %diff.check
   br i1 %or.cond166, label %scalar.ph134.preheader, label %vector.ph136
 
 vector.ph136:                                     ; preds = %.lr.ph51.i
-  %n.vec137 = and i64 %8, -4                      ; 3 uses
+  %n.vec137 = and i64 %i.fj, -4                   ; 3 uses
   %i.fk = add i64 %i.ey, %n.vec137
   br label %vector.body138
 
@@ -1316,7 +1314,7 @@ vector.body138:                                   ; preds = %vector.body138, %ve
   br i1 %i.fq, label %middle.block142, label %vector.body138, !llvm.loop !1938
 
 middle.block142:                                  ; preds = %vector.body138
-  %cmp.n = icmp eq i64 %8, %n.vec137
+  %cmp.n = icmp eq i64 %i.fj, %n.vec137
   br i1 %cmp.n, label %._crit_edge.i, label %scalar.ph134.preheader
 
 scalar.ph134.preheader:                           ; preds = %.lr.ph51.i, %middle.block142
@@ -1719,18 +1717,17 @@ bb.o:                                             ; preds = %._crit_edge.i, %.lr
   %i.fi = getelementptr [8 x i8], ptr %i.da, i64 %i.fh ; 2 uses
   %.idx.i.i.i38.i = mul nuw nsw i64 %.03455.i, 48
   %invariant.gep52.i = getelementptr i8, ptr %i.cr, i64 %.idx.i.i.i38.i ; 2 uses
-  %6 = lshr i64 %i.ew, 1
-  %7 = mul i64 %6, -2
-  %i.fj = sub i64 %7, %.03554.i
-  %8 = add i64 %i.fj, %i.cu                       ; 3 uses
-  %min.iters.check135 = icmp ult i64 %8, 4
+  %6 = and i64 %i.ew, -2
+  %7 = add i64 %.03554.i, %6
+  %i.fj = sub i64 %i.cu, %7                       ; 3 uses
+  %min.iters.check135 = icmp ult i64 %i.fj, 4
   %.reass = add i64 %i.ev, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   %or.cond166 = select i1 %min.iters.check135, i1 true, i1 %diff.check
   br i1 %or.cond166, label %scalar.ph134.preheader, label %vector.ph136
 
 vector.ph136:                                     ; preds = %.lr.ph51.i
-  %n.vec137 = and i64 %8, -4                      ; 3 uses
+  %n.vec137 = and i64 %i.fj, -4                   ; 3 uses
   %i.fk = add i64 %i.ey, %n.vec137
   br label %vector.body138
 
@@ -1750,7 +1747,7 @@ vector.body138:                                   ; preds = %vector.body138, %ve
   br i1 %i.fq, label %middle.block142, label %vector.body138, !llvm.loop !2259
 
 middle.block142:                                  ; preds = %vector.body138
-  %cmp.n = icmp eq i64 %8, %n.vec137
+  %cmp.n = icmp eq i64 %i.fj, %n.vec137
   br i1 %cmp.n, label %._crit_edge.i, label %scalar.ph134.preheader
 
 scalar.ph134.preheader:                           ; preds = %.lr.ph51.i, %middle.block142
@@ -2153,18 +2150,17 @@ bb.o:                                             ; preds = %._crit_edge.i, %.lr
   %i.fi = getelementptr [8 x i8], ptr %i.da, i64 %i.fh ; 2 uses
   %.idx.i.i.i38.i = mul nuw nsw i64 %.03455.i, 56
   %invariant.gep52.i = getelementptr i8, ptr %i.cr, i64 %.idx.i.i.i38.i ; 2 uses
-  %6 = lshr i64 %i.ew, 1
-  %7 = mul i64 %6, -2
-  %i.fj = sub i64 %7, %.03554.i
-  %8 = add i64 %i.fj, %i.cu                       ; 3 uses
-  %min.iters.check135 = icmp ult i64 %8, 4
+  %6 = and i64 %i.ew, -2
+  %7 = add i64 %.03554.i, %6
+  %i.fj = sub i64 %i.cu, %7                       ; 3 uses
+  %min.iters.check135 = icmp ult i64 %i.fj, 4
   %.reass = add i64 %i.ev, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   %or.cond166 = select i1 %min.iters.check135, i1 true, i1 %diff.check
   br i1 %or.cond166, label %scalar.ph134.preheader, label %vector.ph136
 
 vector.ph136:                                     ; preds = %.lr.ph51.i
-  %n.vec137 = and i64 %8, -4                      ; 3 uses
+  %n.vec137 = and i64 %i.fj, -4                   ; 3 uses
   %i.fk = add i64 %i.ey, %n.vec137
   br label %vector.body138
 
@@ -2184,7 +2180,7 @@ vector.body138:                                   ; preds = %vector.body138, %ve
   br i1 %i.fq, label %middle.block142, label %vector.body138, !llvm.loop !2564
 
 middle.block142:                                  ; preds = %vector.body138
-  %cmp.n = icmp eq i64 %8, %n.vec137
+  %cmp.n = icmp eq i64 %i.fj, %n.vec137
   br i1 %cmp.n, label %._crit_edge.i, label %scalar.ph134.preheader
 
 scalar.ph134.preheader:                           ; preds = %.lr.ph51.i, %middle.block142

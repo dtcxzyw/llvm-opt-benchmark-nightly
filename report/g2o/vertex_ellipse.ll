@@ -204,8 +204,8 @@ _ZNKSt6vectorIN5Eigen6MatrixIfLi2ELi1ELi0ELi2ELi1EEESaIS2_EE12_M_check_lenEmPKc.
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN5Eigen6MatrixIfLi2ELi1ELi0ELi2ELi1EEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.cr = ptrtoaddr ptr %i.cp to i64
-  %5 = sub i64 %i.cf, %i.cg
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.cf, -8
+  %6 = sub i64 %5, %i.cg                          ; 2 uses
   %i.cs = lshr i64 %6, 3
   %i.ct = add nuw nsw i64 %i.cs, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %6, 24
@@ -608,17 +608,15 @@ bb.a:
   %i.w = sub i64 %i.s, %i.t
   %i.x = sub i64 %i.s, %i.t
   %i.y = tail call i64 @llvm.smax.i64(i64 %i.e, i64 4) ; 2 uses
-  %7 = add nsw i64 %i.y, -4
   %i.z = or disjoint i64 %i.y, 1
   %i.aa = tail call i64 @llvm.smax.i64(i64 %3, i64 %i.z) ; 2 uses
-  %i.ab = sub i64 %i.aa, %7
-  %8 = add i64 %i.ab, -4                          ; 2 uses
-  %min.iters.check = icmp ult i64 %8, 44
+  %i.ab = sub nsw i64 %i.aa, %i.y                 ; 2 uses
+  %min.iters.check = icmp ult i64 %i.ab, 44
   %mul.result = shl i64 %i.k, 4                   ; 3 uses
   %mul.overflow = icmp ugt i64 %i.k, 1152921504606846975
   %invariant.gep = getelementptr i8, ptr %1, i64 %i.r
   %i.ac = and i64 %i.aa, 3                        ; 2 uses
-  %n.vec = sub i64 %8, %i.ac                      ; 3 uses
+  %n.vec = sub i64 %i.ab, %i.ac                   ; 3 uses
   %i.ad = shl i64 %n.vec, 2
   %cmp.n = icmp eq i64 %i.ac, 0
   br label %.lr.ph.us

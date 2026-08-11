@@ -204,7 +204,7 @@ bb.pu:                                            ; preds = %bb.pt
 
 bb.pv:                                            ; preds = %bb.pu, %bb.pt
   %.in.in.i = phi ptr [ %i.ckd, %bb.pu ], [ %.2295550.i, %bb.pt ]
-  %.in.i = load i8, ptr %.in.in.i, align 1, !tbaa !80 ; 8 uses
+  %.in.i = load i8, ptr %.in.in.i, align 1, !tbaa !80 ; 7 uses
   %i.cke = sext i8 %.in.i to i32                  ; 2 uses
   %.3296.i = getelementptr inbounds nuw i8, ptr %.2295550.i, i64 1 ; 8 uses
   %i.ckf = icmp sgt i8 %.in.i, -1
@@ -250,10 +250,8 @@ bb.py:                                            ; preds = %bb.px
 
 .lr.ph544.preheader.i:                            ; preds = %bb.py
   %narrow718.i = add nuw i8 %.in.i, 1
-  %i.ckt = zext i8 %narrow718.i to i64            ; 6 uses
+  %i.ckt = zext i8 %narrow718.i to i64            ; 8 uses
   %i.cku = sext i32 %.0304549.i to i64            ; 4 uses
-  %narrow = add nuw i8 %.in.i, 1
-  %9 = zext i8 %narrow to i64                     ; 2 uses
   %min.iters.check3350 = icmp ult i8 %.in.i, 7
   br i1 %min.iters.check3350, label %.lr.ph544.i.preheader, label %vector.memcheck3340
 
@@ -271,8 +269,8 @@ vector.memcheck3340:                              ; preds = %.lr.ph544.preheader
   br i1 %found.conflict3348, label %.lr.ph544.i.preheader, label %vector.ph3351
 
 vector.ph3351:                                    ; preds = %vector.memcheck3340
-  %n.vec3352 = and i64 %9, 248                    ; 3 uses
-  %10 = sub nsw i64 %i.ckt, %n.vec3352
+  %n.vec3352 = and i64 %i.ckt, 248                ; 2 uses
+  %9 = and i64 %i.ckt, 7
   %invariant.op3969 = add i64 -1, %i.cku
   br label %vector.body3353
 
@@ -295,11 +293,11 @@ vector.body3353:                                  ; preds = %vector.body3353, %v
   br i1 %i.clg, label %middle.block3363, label %vector.body3353, !llvm.loop !201
 
 middle.block3363:                                 ; preds = %vector.body3353
-  %cmp.n3364 = icmp eq i64 %n.vec3352, %9
+  %cmp.n3364 = icmp eq i64 %n.vec3352, %i.ckt
   br i1 %cmp.n3364, label %horizontal_fill.exit357.i, label %.lr.ph544.i.preheader
 
 .lr.ph544.i.preheader:                            ; preds = %vector.memcheck3340, %.lr.ph544.preheader.i, %middle.block3363
-  %indvars.iv633.i.ph = phi i64 [ %i.ckt, %vector.memcheck3340 ], [ %i.ckt, %.lr.ph544.preheader.i ], [ %10, %middle.block3363 ]
+  %indvars.iv633.i.ph = phi i64 [ %i.ckt, %vector.memcheck3340 ], [ %i.ckt, %.lr.ph544.preheader.i ], [ %9, %middle.block3363 ]
   br label %.lr.ph544.i
 
 .lr.ph546.preheader.i:                            ; preds = %bb.py

@@ -21,7 +21,7 @@ bb.a:
 .lr.ph546:                                        ; preds = %bb.a
   %.not387 = icmp eq ptr %3, null                 ; 7 uses
   %sext471 = shl i64 %2, 32
-  %i.i = ashr exact i64 %sext471, 32              ; 45 uses
+  %i.i = ashr exact i64 %sext471, 32              ; 51 uses
   %i.j = lshr i64 %i.i, 3                         ; 35 uses
   %i.k = and i64 %i.i, -8
   %.not = icmp eq i64 %i.j, 0
@@ -47,15 +47,11 @@ bb.a:
   %n.vec1211 = and i64 %i.n, 9223372036854775804  ; 5 uses
   %i.v = sub nsw i64 %i.i, %n.vec1211
   %cmp.n1220 = icmp eq i64 %i.n, %n.vec1211
-  %4 = icmp ne i64 %i.j, 0
-  %.neg = sext i1 %4 to i64
-  %5 = add nsw i64 %i.j, %.neg
-  %6 = add nsw i64 %5, 1                          ; 3 uses
-  %min.iters.check1162 = icmp ult i64 %6, 4
-  %n.vec1164 = and i64 %6, -4                     ; 4 uses
-  %i.w = shl i64 %n.vec1164, 3                    ; 2 uses
-  %7 = sub i64 %i.j, %n.vec1164
-  %cmp.n1175 = icmp eq i64 %6, %n.vec1164
+  %min.iters.check1162 = icmp ult i64 %i.i, 32
+  %n.vec1164 = and i64 %i.j, 2305843009213693948  ; 3 uses
+  %i.w = shl nuw i64 %n.vec1164, 3                ; 2 uses
+  %4 = and i64 %i.j, 3
+  %cmp.n1175 = icmp eq i64 %i.j, %n.vec1164
   %min.iters.check1116 = icmp slt i64 %i.i, 4
   %min.iters.check1118 = icmp slt i64 %i.i, 32
   %i.x = and i64 %i.n, 28
@@ -66,15 +62,11 @@ bb.a:
   %n.vec1141 = and i64 %i.n, 9223372036854775804  ; 5 uses
   %i.z = sub nsw i64 %i.i, %n.vec1141
   %cmp.n1150 = icmp eq i64 %i.n, %n.vec1141
-  %8 = icmp ne i64 %i.j, 0
-  %.neg1551 = sext i1 %8 to i64
-  %9 = add nsw i64 %i.j, %.neg1551
-  %10 = add nsw i64 %9, 1                         ; 3 uses
-  %min.iters.check1092 = icmp ult i64 %10, 4
-  %n.vec1094 = and i64 %10, -4                    ; 4 uses
-  %i.aa = shl i64 %n.vec1094, 3                   ; 2 uses
-  %11 = sub i64 %i.j, %n.vec1094
-  %cmp.n1105 = icmp eq i64 %10, %n.vec1094
+  %min.iters.check1092 = icmp ult i64 %i.i, 32
+  %n.vec1094 = and i64 %i.j, 2305843009213693948  ; 3 uses
+  %i.aa = shl nuw i64 %n.vec1094, 3               ; 2 uses
+  %5 = and i64 %i.j, 3
+  %cmp.n1105 = icmp eq i64 %i.j, %n.vec1094
   %min.iters.check1044 = icmp slt i64 %i.i, 4
   %min.iters.check1046 = icmp slt i64 %i.i, 32
   %i.ab = and i64 %i.n, 28
@@ -85,15 +77,11 @@ bb.a:
   %n.vec1069 = and i64 %i.n, 9223372036854775804  ; 5 uses
   %i.ad = sub nsw i64 %i.i, %n.vec1069
   %cmp.n1078 = icmp eq i64 %i.n, %n.vec1069
-  %12 = icmp ne i64 %i.j, 0
-  %.neg1553 = sext i1 %12 to i64
-  %13 = add nsw i64 %i.j, %.neg1553
-  %14 = add nsw i64 %13, 1                        ; 3 uses
-  %min.iters.check1020 = icmp ult i64 %14, 4
-  %n.vec1022 = and i64 %14, -4                    ; 4 uses
-  %i.ae = shl i64 %n.vec1022, 3                   ; 2 uses
-  %15 = sub i64 %i.j, %n.vec1022
-  %cmp.n1033 = icmp eq i64 %14, %n.vec1022
+  %min.iters.check1020 = icmp ult i64 %i.i, 32
+  %n.vec1022 = and i64 %i.j, 2305843009213693948  ; 3 uses
+  %i.ae = shl nuw i64 %n.vec1022, 3               ; 2 uses
+  %6 = and i64 %i.j, 3
+  %cmp.n1033 = icmp eq i64 %i.j, %n.vec1022
   %min.iters.check974 = icmp slt i64 %i.i, 4
   %min.iters.check976 = icmp slt i64 %i.i, 32
   %i.af = and i64 %i.n, 28
@@ -104,15 +92,11 @@ bb.a:
   %n.vec999 = and i64 %i.n, 9223372036854775804   ; 5 uses
   %i.ah = sub nsw i64 %i.i, %n.vec999
   %cmp.n1008 = icmp eq i64 %i.n, %n.vec999
-  %16 = icmp ne i64 %i.j, 0
-  %.neg1552 = sext i1 %16 to i64
-  %17 = add nsw i64 %i.j, %.neg1552
-  %18 = add nsw i64 %17, 1                        ; 3 uses
-  %min.iters.check949 = icmp ult i64 %18, 6
-  %n.vec951 = and i64 %18, -4                     ; 4 uses
-  %i.ai = shl i64 %n.vec951, 3                    ; 2 uses
-  %19 = sub i64 %i.j, %n.vec951
-  %cmp.n962 = icmp eq i64 %18, %n.vec951
+  %min.iters.check949 = icmp ult i64 %i.i, 48
+  %n.vec951 = and i64 %i.j, 2305843009213693948   ; 3 uses
+  %i.ai = shl nuw i64 %n.vec951, 3                ; 2 uses
+  %7 = and i64 %i.j, 3
+  %cmp.n962 = icmp eq i64 %i.j, %n.vec951
   br label %bb.b
 
 .preheader480:                                    ; preds = %bb.bq, %bb.a
@@ -130,7 +114,7 @@ bb.a:
   %.not395 = icmp eq ptr %3, null                 ; 3 uses
   %i.am = icmp eq i32 %.lcssa, 0
   %sext476 = shl i64 %2, 32
-  %i.an = ashr exact i64 %sext476, 32             ; 18 uses
+  %i.an = ashr exact i64 %sext476, 32             ; 20 uses
   %i.ao = lshr i64 %i.an, 3                       ; 11 uses
   br i1 %i.am, label %.preheader479.lr.ph.split.us, label %.preheader479.lr.ph.split
 
@@ -207,27 +191,19 @@ swapfunc.exit.us.us590:                           ; preds = %.lr.ph577.us
   br i1 %.not395, label %.preheader479.us594.us.preheader, label %.preheader479.us594.preheader
 
 .preheader479.us594.preheader:                    ; preds = %.preheader479.lr.ph.split.split.us
-  %20 = icmp ne i64 %i.ao, 0
-  %.neg1563 = sext i1 %20 to i64
-  %21 = add nsw i64 %i.ao, %.neg1563
-  %22 = add nsw i64 %21, 1                        ; 3 uses
-  %min.iters.check1501 = icmp ult i64 %22, 4
-  %n.vec1503 = and i64 %22, -4                    ; 4 uses
-  %i.bn = shl i64 %n.vec1503, 3                   ; 2 uses
-  %23 = sub i64 %i.ao, %n.vec1503
-  %cmp.n1514 = icmp eq i64 %22, %n.vec1503
+  %min.iters.check1501 = icmp ult i64 %i.an, 32
+  %n.vec1503 = and i64 %i.ao, 2305843009213693948 ; 3 uses
+  %i.bn = shl nuw i64 %n.vec1503, 3               ; 2 uses
+  %8 = and i64 %i.ao, 3
+  %cmp.n1514 = icmp eq i64 %i.ao, %n.vec1503
   br label %.preheader479.us594
 
 .preheader479.us594.us.preheader:                 ; preds = %.preheader479.lr.ph.split.split.us
-  %24 = icmp ne i64 %i.ao, 0
-  %.neg1565 = sext i1 %24 to i64
-  %25 = add nsw i64 %i.ao, %.neg1565
-  %26 = add nsw i64 %25, 1                        ; 3 uses
-  %min.iters.check1531 = icmp ult i64 %26, 4
-  %n.vec1533 = and i64 %26, -4                    ; 4 uses
-  %i.bo = shl i64 %n.vec1533, 3                   ; 2 uses
-  %27 = sub i64 %i.ao, %n.vec1533
-  %cmp.n1544 = icmp eq i64 %26, %n.vec1533
+  %min.iters.check1531 = icmp ult i64 %i.an, 32
+  %n.vec1533 = and i64 %i.ao, 2305843009213693948 ; 3 uses
+  %i.bo = shl nuw i64 %n.vec1533, 3               ; 2 uses
+  %9 = and i64 %i.ao, 3
+  %cmp.n1544 = icmp eq i64 %i.ao, %n.vec1533
   br label %.preheader479.us594.us
 
 .preheader479.us594.us:                           ; preds = %.preheader479.us594.us.preheader, %.critedge.us596.us
@@ -307,7 +283,7 @@ middle.block1543:                                 ; preds = %vector.body1534
 scalar.ph1530.preheader:                          ; preds = %vector.memcheck1518, %.preheader769, %middle.block1543
   %.022.i.us.us.us.us.ph = phi ptr [ %i.cb, %vector.memcheck1518 ], [ %i.cb, %.preheader769 ], [ %i.cf, %middle.block1543 ]
   %.021.i.us.us.us.us.ph = phi ptr [ %.0348576.us579.us.us.us, %vector.memcheck1518 ], [ %.0348576.us579.us.us.us, %.preheader769 ], [ %i.cg, %middle.block1543 ]
-  %.0.i.us.us.us.us.ph = phi i64 [ %i.ao, %vector.memcheck1518 ], [ %i.ao, %.preheader769 ], [ %27, %middle.block1543 ]
+  %.0.i.us.us.us.us.ph = phi i64 [ %i.ao, %vector.memcheck1518 ], [ %i.ao, %.preheader769 ], [ %9, %middle.block1543 ]
   br label %scalar.ph1530
 
 scalar.ph1530:                                    ; preds = %scalar.ph1530.preheader, %scalar.ph1530
@@ -403,7 +379,7 @@ middle.block1513:                                 ; preds = %vector.body1504
 scalar.ph1500.preheader:                          ; preds = %vector.memcheck1488, %.preheader771, %middle.block1513
   %.022.i.us.us.ph = phi ptr [ %i.dd, %vector.memcheck1488 ], [ %i.dd, %.preheader771 ], [ %i.dg, %middle.block1513 ]
   %.021.i.us.us.ph = phi ptr [ %.0348576.us579.us, %vector.memcheck1488 ], [ %.0348576.us579.us, %.preheader771 ], [ %i.dh, %middle.block1513 ]
-  %.0.i.us.us.ph = phi i64 [ %i.ao, %vector.memcheck1488 ], [ %i.ao, %.preheader771 ], [ %23, %middle.block1513 ]
+  %.0.i.us.us.ph = phi i64 [ %i.ao, %vector.memcheck1488 ], [ %i.ao, %.preheader771 ], [ %8, %middle.block1513 ]
   br label %scalar.ph1500
 
 scalar.ph1500:                                    ; preds = %scalar.ph1500.preheader, %scalar.ph1500
@@ -806,7 +782,7 @@ middle.block1174:                                 ; preds = %vector.body1165
 .preheader624.preheader1586:                      ; preds = %vector.memcheck1154, %.preheader624.preheader, %middle.block1174
   %.022.i407.ph = phi ptr [ %.2353, %vector.memcheck1154 ], [ %.2353, %.preheader624.preheader ], [ %i.mc, %middle.block1174 ]
   %.021.i408.ph = phi ptr [ %.0543, %vector.memcheck1154 ], [ %.0543, %.preheader624.preheader ], [ %i.md, %middle.block1174 ]
-  %.0.i409.ph = phi i64 [ %i.j, %vector.memcheck1154 ], [ %i.j, %.preheader624.preheader ], [ %7, %middle.block1174 ]
+  %.0.i409.ph = phi i64 [ %i.j, %vector.memcheck1154 ], [ %i.j, %.preheader624.preheader ], [ %4, %middle.block1174 ]
   br label %.preheader624
 
 .preheader624:                                    ; preds = %.preheader624.preheader1586, %.preheader624
@@ -1010,7 +986,7 @@ middle.block1104:                                 ; preds = %vector.body1095
 .preheader617.preheader1579:                      ; preds = %vector.memcheck1082, %.preheader617.preheader, %middle.block1104
   %.022.i414.ph = phi ptr [ %.1339516, %vector.memcheck1082 ], [ %.1339516, %.preheader617.preheader ], [ %i.nt, %middle.block1104 ]
   %.021.i415.ph = phi ptr [ %.1518, %vector.memcheck1082 ], [ %.1518, %.preheader617.preheader ], [ %i.nu, %middle.block1104 ]
-  %.0.i416.ph = phi i64 [ %i.j, %vector.memcheck1082 ], [ %i.j, %.preheader617.preheader ], [ %11, %middle.block1104 ]
+  %.0.i416.ph = phi i64 [ %i.j, %vector.memcheck1082 ], [ %i.j, %.preheader617.preheader ], [ %5, %middle.block1104 ]
   br label %.preheader617
 
 .preheader617:                                    ; preds = %.preheader617.preheader1579, %.preheader617
@@ -1214,7 +1190,7 @@ middle.block1032:                                 ; preds = %vector.body1023
 .preheader615.preheader1577:                      ; preds = %vector.memcheck1012, %.preheader615.preheader, %middle.block1032
   %.022.i421.ph = phi ptr [ %.1343527, %vector.memcheck1012 ], [ %.1343527, %.preheader615.preheader ], [ %i.pi, %middle.block1032 ]
   %.021.i422.ph = phi ptr [ %.1341528, %vector.memcheck1012 ], [ %.1341528, %.preheader615.preheader ], [ %i.pj, %middle.block1032 ]
-  %.0.i423.ph = phi i64 [ %i.j, %vector.memcheck1012 ], [ %i.j, %.preheader615.preheader ], [ %15, %middle.block1032 ]
+  %.0.i423.ph = phi i64 [ %i.j, %vector.memcheck1012 ], [ %i.j, %.preheader615.preheader ], [ %6, %middle.block1032 ]
   br label %.preheader615
 
 .preheader615:                                    ; preds = %.preheader615.preheader1577, %.preheader615
@@ -1385,7 +1361,7 @@ middle.block961:                                  ; preds = %vector.body952
 .preheader619.preheader1581:                      ; preds = %vector.memcheck941, %.preheader619.preheader, %middle.block961
   %.022.i428.ph = phi ptr [ %.1341528, %vector.memcheck941 ], [ %.1341528, %.preheader619.preheader ], [ %i.qq, %middle.block961 ]
   %.021.i429.ph = phi ptr [ %.1339.lcssa, %vector.memcheck941 ], [ %.1339.lcssa, %.preheader619.preheader ], [ %i.qr, %middle.block961 ]
-  %.0.i430.ph = phi i64 [ %i.j, %vector.memcheck941 ], [ %i.j, %.preheader619.preheader ], [ %19, %middle.block961 ]
+  %.0.i430.ph = phi i64 [ %i.j, %vector.memcheck941 ], [ %i.j, %.preheader619.preheader ], [ %7, %middle.block961 ]
   br label %.preheader619
 
 .preheader619:                                    ; preds = %.preheader619.preheader1581, %.preheader619
@@ -1510,27 +1486,19 @@ swapfunc.exit438.us.us564:                        ; preds = %.lr.ph552.us
   br i1 %.not387, label %.preheader483.us568.us.preheader, label %.preheader483.us568.preheader
 
 .preheader483.us568.preheader:                    ; preds = %.preheader483.lr.ph.split.split.us
-  %28 = icmp ne i64 %i.j, 0
-  %.neg1559 = sext i1 %28 to i64
-  %29 = add nsw i64 %i.j, %.neg1559
-  %30 = add nsw i64 %29, 1                        ; 3 uses
-  %min.iters.check1337 = icmp ult i64 %30, 4
-  %n.vec1339 = and i64 %30, -4                    ; 4 uses
-  %i.so = shl i64 %n.vec1339, 3                   ; 2 uses
-  %31 = sub i64 %i.j, %n.vec1339
-  %cmp.n1350 = icmp eq i64 %30, %n.vec1339
+  %min.iters.check1337 = icmp ult i64 %i.i, 32
+  %n.vec1339 = and i64 %i.j, 2305843009213693948  ; 3 uses
+  %i.so = shl nuw i64 %n.vec1339, 3               ; 2 uses
+  %10 = and i64 %i.j, 3
+  %cmp.n1350 = icmp eq i64 %i.j, %n.vec1339
   br label %.preheader483.us568
 
 .preheader483.us568.us.preheader:                 ; preds = %.preheader483.lr.ph.split.split.us
-  %32 = icmp ne i64 %i.j, 0
-  %.neg1561 = sext i1 %32 to i64
-  %33 = add nsw i64 %i.j, %.neg1561
-  %34 = add nsw i64 %33, 1                        ; 3 uses
-  %min.iters.check1367 = icmp ult i64 %34, 4
-  %n.vec1369 = and i64 %34, -4                    ; 4 uses
-  %i.sp = shl i64 %n.vec1369, 3                   ; 2 uses
-  %35 = sub i64 %i.j, %n.vec1369
-  %cmp.n1380 = icmp eq i64 %34, %n.vec1369
+  %min.iters.check1367 = icmp ult i64 %i.i, 32
+  %n.vec1369 = and i64 %i.j, 2305843009213693948  ; 3 uses
+  %i.sp = shl nuw i64 %n.vec1369, 3               ; 2 uses
+  %11 = and i64 %i.j, 3
+  %cmp.n1380 = icmp eq i64 %i.j, %n.vec1369
   br label %.preheader483.us568.us
 
 .preheader483.us568.us:                           ; preds = %.preheader483.us568.us.preheader, %.critedge6.us570.us
@@ -1610,7 +1578,7 @@ middle.block1379:                                 ; preds = %vector.body1370
 scalar.ph1366.preheader:                          ; preds = %vector.memcheck1354, %.preheader777, %middle.block1379
   %.022.i435.us.us.us.us.ph = phi ptr [ %i.td, %vector.memcheck1354 ], [ %i.td, %.preheader777 ], [ %i.th, %middle.block1379 ]
   %.021.i436.us.us.us.us.ph = phi ptr [ %.2350551.us554.us.us.us, %vector.memcheck1354 ], [ %.2350551.us554.us.us.us, %.preheader777 ], [ %i.ti, %middle.block1379 ]
-  %.0.i437.us.us.us.us.ph = phi i64 [ %i.j, %vector.memcheck1354 ], [ %i.j, %.preheader777 ], [ %35, %middle.block1379 ]
+  %.0.i437.us.us.us.us.ph = phi i64 [ %i.j, %vector.memcheck1354 ], [ %i.j, %.preheader777 ], [ %11, %middle.block1379 ]
   br label %scalar.ph1366
 
 scalar.ph1366:                                    ; preds = %scalar.ph1366.preheader, %scalar.ph1366
@@ -1706,7 +1674,7 @@ middle.block1349:                                 ; preds = %vector.body1340
 scalar.ph1336.preheader:                          ; preds = %vector.memcheck1324, %.preheader779, %middle.block1349
   %.022.i435.us.us.ph = phi ptr [ %i.ug, %vector.memcheck1324 ], [ %i.ug, %.preheader779 ], [ %i.uj, %middle.block1349 ]
   %.021.i436.us.us.ph = phi ptr [ %.2350551.us554.us, %vector.memcheck1324 ], [ %.2350551.us554.us, %.preheader779 ], [ %i.uk, %middle.block1349 ]
-  %.0.i437.us.us.ph = phi i64 [ %i.j, %vector.memcheck1324 ], [ %i.j, %.preheader779 ], [ %31, %middle.block1349 ]
+  %.0.i437.us.us.ph = phi i64 [ %i.j, %vector.memcheck1324 ], [ %i.j, %.preheader779 ], [ %10, %middle.block1349 ]
   br label %scalar.ph1336
 
 scalar.ph1336:                                    ; preds = %scalar.ph1336.preheader, %scalar.ph1336
@@ -2014,7 +1982,7 @@ bb.bj:                                            ; preds = %.critedge2._crit_ed
   br i1 %i.xr, label %bb.bk, label %swapfunc.exit445
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.xs = and i64 %.399, 2147483647               ; 13 uses
+  %i.xs = and i64 %.399, 2147483647               ; 14 uses
   %i.xt = sub nsw i64 0, %i.xs
   %i.xu = getelementptr i8, ptr %.1339.lcssa, i64 %i.xt ; 12 uses
   br i1 %or.cond544, label %bb.bl, label %iter.check923
@@ -2101,11 +2069,7 @@ vec.epilog.middle.block936:                       ; preds = %vec.epilog.vector.b
 
 bb.bl:                                            ; preds = %bb.bk
   %i.yh = lshr i64 %i.xs, 3                       ; 6 uses
-  %36 = icmp ne i64 %i.yh, 0
-  %.neg1554 = sext i1 %36 to i64
-  %37 = add nsw i64 %i.yh, %.neg1554
-  %38 = add nsw i64 %37, 1                        ; 3 uses
-  %min.iters.check875 = icmp ult i64 %38, 8
+  %min.iters.check875 = icmp samesign ult i64 %i.xs, 64
   br i1 %min.iters.check875, label %scalar.ph874.preheader, label %vector.memcheck865
 
 vector.memcheck865:                               ; preds = %bb.bl
@@ -2125,11 +2089,11 @@ vector.memcheck865:                               ; preds = %bb.bl
   br i1 %found.conflict873, label %scalar.ph874.preheader, label %vector.ph876
 
 vector.ph876:                                     ; preds = %vector.memcheck865
-  %n.vec877 = and i64 %38, -4                     ; 4 uses
-  %i.yn = shl nsw i64 %n.vec877, 3                ; 2 uses
+  %n.vec877 = and i64 %i.yh, 268435452            ; 3 uses
+  %i.yn = shl nuw nsw i64 %n.vec877, 3            ; 2 uses
   %i.yo = getelementptr i8, ptr %i.xu, i64 %i.yn
   %i.yp = getelementptr i8, ptr %.0543, i64 %i.yn
-  %39 = sub nsw i64 %i.yh, %n.vec877
+  %12 = and i64 %i.yh, 3
   br label %vector.body878
 
 vector.body878:                                   ; preds = %vector.body878, %vector.ph876
@@ -2152,13 +2116,13 @@ vector.body878:                                   ; preds = %vector.body878, %ve
   br i1 %i.yt, label %middle.block887, label %vector.body878, !llvm.loop !148
 
 middle.block887:                                  ; preds = %vector.body878
-  %cmp.n888 = icmp eq i64 %38, %n.vec877
+  %cmp.n888 = icmp eq i64 %i.yh, %n.vec877
   br i1 %cmp.n888, label %swapfunc.exit445, label %scalar.ph874.preheader
 
 scalar.ph874.preheader:                           ; preds = %vector.memcheck865, %bb.bl, %middle.block887
   %.022.i442.ph = phi ptr [ %i.xu, %vector.memcheck865 ], [ %i.xu, %bb.bl ], [ %i.yo, %middle.block887 ]
   %.021.i443.ph = phi ptr [ %.0543, %vector.memcheck865 ], [ %.0543, %bb.bl ], [ %i.yp, %middle.block887 ]
-  %.0.i444.ph = phi i64 [ %i.yh, %vector.memcheck865 ], [ %i.yh, %bb.bl ], [ %39, %middle.block887 ]
+  %.0.i444.ph = phi i64 [ %i.yh, %vector.memcheck865 ], [ %i.yh, %bb.bl ], [ %12, %middle.block887 ]
   br label %scalar.ph874
 
 scalar.ph874:                                     ; preds = %scalar.ph874.preheader, %scalar.ph874
@@ -2202,7 +2166,7 @@ swapfunc.exit445:                                 ; preds = %.preheader494, %sca
   br i1 %i.zn, label %bb.bm, label %swapfunc.exit452
 
 bb.bm:                                            ; preds = %swapfunc.exit445
-  %i.zo = and i64 %.400, 2147483647               ; 13 uses
+  %i.zo = and i64 %.400, 2147483647               ; 14 uses
   %i.zp = sub nsw i64 0, %i.zo
   %i.zq = getelementptr i8, ptr %i.rm, i64 %i.zp  ; 12 uses
   br i1 %or.cond544, label %bb.bn, label %iter.check
@@ -2290,11 +2254,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 bb.bn:                                            ; preds = %bb.bm
   %i.aad = lshr i64 %i.zo, 3                      ; 6 uses
-  %40 = icmp ne i64 %i.aad, 0
-  %.neg1556 = sext i1 %40 to i64
-  %41 = add nsw i64 %i.aad, %.neg1556
-  %42 = add nsw i64 %41, 1                        ; 3 uses
-  %min.iters.check = icmp ult i64 %42, 10
+  %min.iters.check = icmp samesign ult i64 %i.zo, 80
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.bn
@@ -2315,11 +2275,11 @@ vector.memcheck:                                  ; preds = %bb.bn
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %42, -4                        ; 4 uses
-  %i.aak = shl nsw i64 %n.vec, 3                  ; 2 uses
+  %n.vec = and i64 %i.aad, 268435452              ; 3 uses
+  %i.aak = shl nuw nsw i64 %n.vec, 3              ; 2 uses
   %i.aal = getelementptr i8, ptr %i.zq, i64 %i.aak
   %i.aam = getelementptr i8, ptr %.1339.lcssa, i64 %i.aak
-  %43 = sub nsw i64 %i.aad, %n.vec
+  %13 = and i64 %i.aad, 3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -2342,13 +2302,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aaq, label %middle.block, label %vector.body, !llvm.loop !163
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %42, %n.vec
+  %cmp.n = icmp eq i64 %i.aad, %n.vec
   br i1 %cmp.n, label %swapfunc.exit452, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.bn, %middle.block
   %.022.i449.ph = phi ptr [ %i.zq, %vector.memcheck ], [ %i.zq, %bb.bn ], [ %i.aal, %middle.block ]
   %.021.i450.ph = phi ptr [ %.1339.lcssa, %vector.memcheck ], [ %.1339.lcssa, %bb.bn ], [ %i.aam, %middle.block ]
-  %.0.i451.ph = phi i64 [ %i.aad, %vector.memcheck ], [ %i.aad, %bb.bn ], [ %43, %middle.block ]
+  %.0.i451.ph = phi i64 [ %i.aad, %vector.memcheck ], [ %i.aad, %bb.bn ], [ %13, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
@@ -2430,7 +2390,7 @@ bb.a:
 .lr.ph555:                                        ; preds = %bb.a
   %.not396 = icmp eq ptr %3, null                 ; 7 uses
   %sext480 = shl i64 %2, 32
-  %i.i = ashr exact i64 %sext480, 32              ; 45 uses
+  %i.i = ashr exact i64 %sext480, 32              ; 51 uses
   %i.j = lshr i64 %i.i, 3                         ; 35 uses
   %i.k = and i64 %i.i, -8
   %.not = icmp eq i64 %i.j, 0
@@ -2456,15 +2416,11 @@ bb.a:
   %n.vec1220 = and i64 %i.n, 9223372036854775804  ; 5 uses
   %i.v = sub nsw i64 %i.i, %n.vec1220
   %cmp.n1229 = icmp eq i64 %i.n, %n.vec1220
-  %5 = icmp ne i64 %i.j, 0
-  %.neg = sext i1 %5 to i64
-  %6 = add nsw i64 %i.j, %.neg
-  %7 = add nsw i64 %6, 1                          ; 3 uses
-  %min.iters.check1171 = icmp ult i64 %7, 4
-  %n.vec1173 = and i64 %7, -4                     ; 4 uses
-  %i.w = shl i64 %n.vec1173, 3                    ; 2 uses
-  %8 = sub i64 %i.j, %n.vec1173
-  %cmp.n1184 = icmp eq i64 %7, %n.vec1173
+  %min.iters.check1171 = icmp ult i64 %i.i, 32
+  %n.vec1173 = and i64 %i.j, 2305843009213693948  ; 3 uses
+  %i.w = shl nuw i64 %n.vec1173, 3                ; 2 uses
+  %5 = and i64 %i.j, 3
+  %cmp.n1184 = icmp eq i64 %i.j, %n.vec1173
   %min.iters.check1125 = icmp slt i64 %i.i, 4
   %min.iters.check1127 = icmp slt i64 %i.i, 32
   %i.x = and i64 %i.n, 28
@@ -2475,15 +2431,11 @@ bb.a:
   %n.vec1150 = and i64 %i.n, 9223372036854775804  ; 5 uses
   %i.z = sub nsw i64 %i.i, %n.vec1150
   %cmp.n1159 = icmp eq i64 %i.n, %n.vec1150
-  %9 = icmp ne i64 %i.j, 0
-  %.neg1560 = sext i1 %9 to i64
-  %10 = add nsw i64 %i.j, %.neg1560
-  %11 = add nsw i64 %10, 1                        ; 3 uses
-  %min.iters.check1101 = icmp ult i64 %11, 4
-  %n.vec1103 = and i64 %11, -4                    ; 4 uses
-  %i.aa = shl i64 %n.vec1103, 3                   ; 2 uses
-  %12 = sub i64 %i.j, %n.vec1103
-  %cmp.n1114 = icmp eq i64 %11, %n.vec1103
+  %min.iters.check1101 = icmp ult i64 %i.i, 32
+  %n.vec1103 = and i64 %i.j, 2305843009213693948  ; 3 uses
+  %i.aa = shl nuw i64 %n.vec1103, 3               ; 2 uses
+  %6 = and i64 %i.j, 3
+  %cmp.n1114 = icmp eq i64 %i.j, %n.vec1103
   %min.iters.check1053 = icmp slt i64 %i.i, 4
   %min.iters.check1055 = icmp slt i64 %i.i, 32
   %i.ab = and i64 %i.n, 28
@@ -2494,15 +2446,11 @@ bb.a:
   %n.vec1078 = and i64 %i.n, 9223372036854775804  ; 5 uses
   %i.ad = sub nsw i64 %i.i, %n.vec1078
   %cmp.n1087 = icmp eq i64 %i.n, %n.vec1078
-  %13 = icmp ne i64 %i.j, 0
-  %.neg1562 = sext i1 %13 to i64
-  %14 = add nsw i64 %i.j, %.neg1562
-  %15 = add nsw i64 %14, 1                        ; 3 uses
-  %min.iters.check1029 = icmp ult i64 %15, 4
-  %n.vec1031 = and i64 %15, -4                    ; 4 uses
-  %i.ae = shl i64 %n.vec1031, 3                   ; 2 uses
-  %16 = sub i64 %i.j, %n.vec1031
-  %cmp.n1042 = icmp eq i64 %15, %n.vec1031
+  %min.iters.check1029 = icmp ult i64 %i.i, 32
+  %n.vec1031 = and i64 %i.j, 2305843009213693948  ; 3 uses
+  %i.ae = shl nuw i64 %n.vec1031, 3               ; 2 uses
+  %7 = and i64 %i.j, 3
+  %cmp.n1042 = icmp eq i64 %i.j, %n.vec1031
   %min.iters.check983 = icmp slt i64 %i.i, 4
   %min.iters.check985 = icmp slt i64 %i.i, 32
   %i.af = and i64 %i.n, 28
@@ -2513,15 +2461,11 @@ bb.a:
   %n.vec1008 = and i64 %i.n, 9223372036854775804  ; 5 uses
   %i.ah = sub nsw i64 %i.i, %n.vec1008
   %cmp.n1017 = icmp eq i64 %i.n, %n.vec1008
-  %17 = icmp ne i64 %i.j, 0
-  %.neg1561 = sext i1 %17 to i64
-  %18 = add nsw i64 %i.j, %.neg1561
-  %19 = add nsw i64 %18, 1                        ; 3 uses
-  %min.iters.check958 = icmp ult i64 %19, 6
-  %n.vec960 = and i64 %19, -4                     ; 4 uses
-  %i.ai = shl i64 %n.vec960, 3                    ; 2 uses
-  %20 = sub i64 %i.j, %n.vec960
-  %cmp.n971 = icmp eq i64 %19, %n.vec960
+  %min.iters.check958 = icmp ult i64 %i.i, 48
+  %n.vec960 = and i64 %i.j, 2305843009213693948   ; 3 uses
+  %i.ai = shl nuw i64 %n.vec960, 3                ; 2 uses
+  %8 = and i64 %i.j, 3
+  %cmp.n971 = icmp eq i64 %i.j, %n.vec960
   br label %bb.b
 
 .preheader489:                                    ; preds = %bb.bq, %bb.a
@@ -2539,7 +2483,7 @@ bb.a:
   %.not404 = icmp eq ptr %3, null                 ; 3 uses
   %i.am = icmp eq i32 %.lcssa, 0
   %sext485 = shl i64 %2, 32
-  %i.an = ashr exact i64 %sext485, 32             ; 18 uses
+  %i.an = ashr exact i64 %sext485, 32             ; 20 uses
   %i.ao = lshr i64 %i.an, 3                       ; 11 uses
   br i1 %i.am, label %.preheader488.lr.ph.split.us, label %.preheader488.lr.ph.split
 
@@ -2616,27 +2560,19 @@ swapfunc.exit.us.us599:                           ; preds = %.lr.ph586.us
   br i1 %.not404, label %.preheader488.us603.us.preheader, label %.preheader488.us603.preheader
 
 .preheader488.us603.preheader:                    ; preds = %.preheader488.lr.ph.split.split.us
-  %21 = icmp ne i64 %i.ao, 0
-  %.neg1572 = sext i1 %21 to i64
-  %22 = add nsw i64 %i.ao, %.neg1572
-  %23 = add nsw i64 %22, 1                        ; 3 uses
-  %min.iters.check1510 = icmp ult i64 %23, 4
-  %n.vec1512 = and i64 %23, -4                    ; 4 uses
-  %i.bn = shl i64 %n.vec1512, 3                   ; 2 uses
-  %24 = sub i64 %i.ao, %n.vec1512
-  %cmp.n1523 = icmp eq i64 %23, %n.vec1512
+  %min.iters.check1510 = icmp ult i64 %i.an, 32
+  %n.vec1512 = and i64 %i.ao, 2305843009213693948 ; 3 uses
+  %i.bn = shl nuw i64 %n.vec1512, 3               ; 2 uses
+  %9 = and i64 %i.ao, 3
+  %cmp.n1523 = icmp eq i64 %i.ao, %n.vec1512
   br label %.preheader488.us603
 
 .preheader488.us603.us.preheader:                 ; preds = %.preheader488.lr.ph.split.split.us
-  %25 = icmp ne i64 %i.ao, 0
-  %.neg1574 = sext i1 %25 to i64
-  %26 = add nsw i64 %i.ao, %.neg1574
-  %27 = add nsw i64 %26, 1                        ; 3 uses
-  %min.iters.check1540 = icmp ult i64 %27, 4
-  %n.vec1542 = and i64 %27, -4                    ; 4 uses
-  %i.bo = shl i64 %n.vec1542, 3                   ; 2 uses
-  %28 = sub i64 %i.ao, %n.vec1542
-  %cmp.n1553 = icmp eq i64 %27, %n.vec1542
+  %min.iters.check1540 = icmp ult i64 %i.an, 32
+  %n.vec1542 = and i64 %i.ao, 2305843009213693948 ; 3 uses
+  %i.bo = shl nuw i64 %n.vec1542, 3               ; 2 uses
+  %10 = and i64 %i.ao, 3
+  %cmp.n1553 = icmp eq i64 %i.ao, %n.vec1542
   br label %.preheader488.us603.us
 
 .preheader488.us603.us:                           ; preds = %.preheader488.us603.us.preheader, %.critedge.us605.us
@@ -2716,7 +2652,7 @@ middle.block1552:                                 ; preds = %vector.body1543
 scalar.ph1539.preheader:                          ; preds = %vector.memcheck1527, %.preheader778, %middle.block1552
   %.022.i.us.us.us.us.ph = phi ptr [ %i.cb, %vector.memcheck1527 ], [ %i.cb, %.preheader778 ], [ %i.cf, %middle.block1552 ]
   %.021.i.us.us.us.us.ph = phi ptr [ %.0357585.us588.us.us.us, %vector.memcheck1527 ], [ %.0357585.us588.us.us.us, %.preheader778 ], [ %i.cg, %middle.block1552 ]
-  %.0.i.us.us.us.us.ph = phi i64 [ %i.ao, %vector.memcheck1527 ], [ %i.ao, %.preheader778 ], [ %28, %middle.block1552 ]
+  %.0.i.us.us.us.us.ph = phi i64 [ %i.ao, %vector.memcheck1527 ], [ %i.ao, %.preheader778 ], [ %10, %middle.block1552 ]
   br label %scalar.ph1539
 
 scalar.ph1539:                                    ; preds = %scalar.ph1539.preheader, %scalar.ph1539
@@ -2812,7 +2748,7 @@ middle.block1522:                                 ; preds = %vector.body1513
 scalar.ph1509.preheader:                          ; preds = %vector.memcheck1497, %.preheader780, %middle.block1522
   %.022.i.us.us.ph = phi ptr [ %i.dd, %vector.memcheck1497 ], [ %i.dd, %.preheader780 ], [ %i.dg, %middle.block1522 ]
   %.021.i.us.us.ph = phi ptr [ %.0357585.us588.us, %vector.memcheck1497 ], [ %.0357585.us588.us, %.preheader780 ], [ %i.dh, %middle.block1522 ]
-  %.0.i.us.us.ph = phi i64 [ %i.ao, %vector.memcheck1497 ], [ %i.ao, %.preheader780 ], [ %24, %middle.block1522 ]
+  %.0.i.us.us.ph = phi i64 [ %i.ao, %vector.memcheck1497 ], [ %i.ao, %.preheader780 ], [ %9, %middle.block1522 ]
   br label %scalar.ph1509
 
 scalar.ph1509:                                    ; preds = %scalar.ph1509.preheader, %scalar.ph1509
@@ -3215,7 +3151,7 @@ middle.block1183:                                 ; preds = %vector.body1174
 .preheader633.preheader1595:                      ; preds = %vector.memcheck1163, %.preheader633.preheader, %middle.block1183
   %.022.i416.ph = phi ptr [ %.2362, %vector.memcheck1163 ], [ %.2362, %.preheader633.preheader ], [ %i.mc, %middle.block1183 ]
   %.021.i417.ph = phi ptr [ %.0552, %vector.memcheck1163 ], [ %.0552, %.preheader633.preheader ], [ %i.md, %middle.block1183 ]
-  %.0.i418.ph = phi i64 [ %i.j, %vector.memcheck1163 ], [ %i.j, %.preheader633.preheader ], [ %8, %middle.block1183 ]
+  %.0.i418.ph = phi i64 [ %i.j, %vector.memcheck1163 ], [ %i.j, %.preheader633.preheader ], [ %5, %middle.block1183 ]
   br label %.preheader633
 
 .preheader633:                                    ; preds = %.preheader633.preheader1595, %.preheader633
@@ -3419,7 +3355,7 @@ middle.block1113:                                 ; preds = %vector.body1104
 .preheader626.preheader1588:                      ; preds = %vector.memcheck1091, %.preheader626.preheader, %middle.block1113
   %.022.i423.ph = phi ptr [ %.1348525, %vector.memcheck1091 ], [ %.1348525, %.preheader626.preheader ], [ %i.nt, %middle.block1113 ]
   %.021.i424.ph = phi ptr [ %.1527, %vector.memcheck1091 ], [ %.1527, %.preheader626.preheader ], [ %i.nu, %middle.block1113 ]
-  %.0.i425.ph = phi i64 [ %i.j, %vector.memcheck1091 ], [ %i.j, %.preheader626.preheader ], [ %12, %middle.block1113 ]
+  %.0.i425.ph = phi i64 [ %i.j, %vector.memcheck1091 ], [ %i.j, %.preheader626.preheader ], [ %6, %middle.block1113 ]
   br label %.preheader626
 
 .preheader626:                                    ; preds = %.preheader626.preheader1588, %.preheader626
@@ -3623,7 +3559,7 @@ middle.block1041:                                 ; preds = %vector.body1032
 .preheader624.preheader1586:                      ; preds = %vector.memcheck1021, %.preheader624.preheader, %middle.block1041
   %.022.i430.ph = phi ptr [ %.1352536, %vector.memcheck1021 ], [ %.1352536, %.preheader624.preheader ], [ %i.pi, %middle.block1041 ]
   %.021.i431.ph = phi ptr [ %.1350537, %vector.memcheck1021 ], [ %.1350537, %.preheader624.preheader ], [ %i.pj, %middle.block1041 ]
-  %.0.i432.ph = phi i64 [ %i.j, %vector.memcheck1021 ], [ %i.j, %.preheader624.preheader ], [ %16, %middle.block1041 ]
+  %.0.i432.ph = phi i64 [ %i.j, %vector.memcheck1021 ], [ %i.j, %.preheader624.preheader ], [ %7, %middle.block1041 ]
   br label %.preheader624
 
 .preheader624:                                    ; preds = %.preheader624.preheader1586, %.preheader624
@@ -3794,7 +3730,7 @@ middle.block970:                                  ; preds = %vector.body961
 .preheader628.preheader1590:                      ; preds = %vector.memcheck950, %.preheader628.preheader, %middle.block970
   %.022.i437.ph = phi ptr [ %.1350537, %vector.memcheck950 ], [ %.1350537, %.preheader628.preheader ], [ %i.qq, %middle.block970 ]
   %.021.i438.ph = phi ptr [ %.1348.lcssa, %vector.memcheck950 ], [ %.1348.lcssa, %.preheader628.preheader ], [ %i.qr, %middle.block970 ]
-  %.0.i439.ph = phi i64 [ %i.j, %vector.memcheck950 ], [ %i.j, %.preheader628.preheader ], [ %20, %middle.block970 ]
+  %.0.i439.ph = phi i64 [ %i.j, %vector.memcheck950 ], [ %i.j, %.preheader628.preheader ], [ %8, %middle.block970 ]
   br label %.preheader628
 
 .preheader628:                                    ; preds = %.preheader628.preheader1590, %.preheader628
@@ -3919,27 +3855,19 @@ swapfunc.exit447.us.us573:                        ; preds = %.lr.ph561.us
   br i1 %.not396, label %.preheader492.us577.us.preheader, label %.preheader492.us577.preheader
 
 .preheader492.us577.preheader:                    ; preds = %.preheader492.lr.ph.split.split.us
-  %29 = icmp ne i64 %i.j, 0
-  %.neg1568 = sext i1 %29 to i64
-  %30 = add nsw i64 %i.j, %.neg1568
-  %31 = add nsw i64 %30, 1                        ; 3 uses
-  %min.iters.check1346 = icmp ult i64 %31, 4
-  %n.vec1348 = and i64 %31, -4                    ; 4 uses
-  %i.so = shl i64 %n.vec1348, 3                   ; 2 uses
-  %32 = sub i64 %i.j, %n.vec1348
-  %cmp.n1359 = icmp eq i64 %31, %n.vec1348
+  %min.iters.check1346 = icmp ult i64 %i.i, 32
+  %n.vec1348 = and i64 %i.j, 2305843009213693948  ; 3 uses
+  %i.so = shl nuw i64 %n.vec1348, 3               ; 2 uses
+  %11 = and i64 %i.j, 3
+  %cmp.n1359 = icmp eq i64 %i.j, %n.vec1348
   br label %.preheader492.us577
 
 .preheader492.us577.us.preheader:                 ; preds = %.preheader492.lr.ph.split.split.us
-  %33 = icmp ne i64 %i.j, 0
-  %.neg1570 = sext i1 %33 to i64
-  %34 = add nsw i64 %i.j, %.neg1570
-  %35 = add nsw i64 %34, 1                        ; 3 uses
-  %min.iters.check1376 = icmp ult i64 %35, 4
-  %n.vec1378 = and i64 %35, -4                    ; 4 uses
-  %i.sp = shl i64 %n.vec1378, 3                   ; 2 uses
-  %36 = sub i64 %i.j, %n.vec1378
-  %cmp.n1389 = icmp eq i64 %35, %n.vec1378
+  %min.iters.check1376 = icmp ult i64 %i.i, 32
+  %n.vec1378 = and i64 %i.j, 2305843009213693948  ; 3 uses
+  %i.sp = shl nuw i64 %n.vec1378, 3               ; 2 uses
+  %12 = and i64 %i.j, 3
+  %cmp.n1389 = icmp eq i64 %i.j, %n.vec1378
   br label %.preheader492.us577.us
 
 .preheader492.us577.us:                           ; preds = %.preheader492.us577.us.preheader, %.critedge6.us579.us
@@ -4019,7 +3947,7 @@ middle.block1388:                                 ; preds = %vector.body1379
 scalar.ph1375.preheader:                          ; preds = %vector.memcheck1363, %.preheader786, %middle.block1388
   %.022.i444.us.us.us.us.ph = phi ptr [ %i.td, %vector.memcheck1363 ], [ %i.td, %.preheader786 ], [ %i.th, %middle.block1388 ]
   %.021.i445.us.us.us.us.ph = phi ptr [ %.2359560.us563.us.us.us, %vector.memcheck1363 ], [ %.2359560.us563.us.us.us, %.preheader786 ], [ %i.ti, %middle.block1388 ]
-  %.0.i446.us.us.us.us.ph = phi i64 [ %i.j, %vector.memcheck1363 ], [ %i.j, %.preheader786 ], [ %36, %middle.block1388 ]
+  %.0.i446.us.us.us.us.ph = phi i64 [ %i.j, %vector.memcheck1363 ], [ %i.j, %.preheader786 ], [ %12, %middle.block1388 ]
   br label %scalar.ph1375
 
 scalar.ph1375:                                    ; preds = %scalar.ph1375.preheader, %scalar.ph1375
@@ -4115,7 +4043,7 @@ middle.block1358:                                 ; preds = %vector.body1349
 scalar.ph1345.preheader:                          ; preds = %vector.memcheck1333, %.preheader788, %middle.block1358
   %.022.i444.us.us.ph = phi ptr [ %i.ug, %vector.memcheck1333 ], [ %i.ug, %.preheader788 ], [ %i.uj, %middle.block1358 ]
   %.021.i445.us.us.ph = phi ptr [ %.2359560.us563.us, %vector.memcheck1333 ], [ %.2359560.us563.us, %.preheader788 ], [ %i.uk, %middle.block1358 ]
-  %.0.i446.us.us.ph = phi i64 [ %i.j, %vector.memcheck1333 ], [ %i.j, %.preheader788 ], [ %32, %middle.block1358 ]
+  %.0.i446.us.us.ph = phi i64 [ %i.j, %vector.memcheck1333 ], [ %i.j, %.preheader788 ], [ %11, %middle.block1358 ]
   br label %scalar.ph1345
 
 scalar.ph1345:                                    ; preds = %scalar.ph1345.preheader, %scalar.ph1345
@@ -4423,7 +4351,7 @@ bb.bj:                                            ; preds = %.critedge2._crit_ed
   br i1 %i.xr, label %bb.bk, label %swapfunc.exit454
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.xs = and i64 %.408, 2147483647               ; 13 uses
+  %i.xs = and i64 %.408, 2147483647               ; 14 uses
   %i.xt = sub nsw i64 0, %i.xs
   %i.xu = getelementptr i8, ptr %.1348.lcssa, i64 %i.xt ; 12 uses
   br i1 %or.cond553, label %bb.bl, label %iter.check932
@@ -4510,11 +4438,7 @@ vec.epilog.middle.block945:                       ; preds = %vec.epilog.vector.b
 
 bb.bl:                                            ; preds = %bb.bk
   %i.yh = lshr i64 %i.xs, 3                       ; 6 uses
-  %37 = icmp ne i64 %i.yh, 0
-  %.neg1563 = sext i1 %37 to i64
-  %38 = add nsw i64 %i.yh, %.neg1563
-  %39 = add nsw i64 %38, 1                        ; 3 uses
-  %min.iters.check884 = icmp ult i64 %39, 8
+  %min.iters.check884 = icmp samesign ult i64 %i.xs, 64
   br i1 %min.iters.check884, label %scalar.ph883.preheader, label %vector.memcheck874
 
 vector.memcheck874:                               ; preds = %bb.bl
@@ -4534,11 +4458,11 @@ vector.memcheck874:                               ; preds = %bb.bl
   br i1 %found.conflict882, label %scalar.ph883.preheader, label %vector.ph885
 
 vector.ph885:                                     ; preds = %vector.memcheck874
-  %n.vec886 = and i64 %39, -4                     ; 4 uses
-  %i.yn = shl nsw i64 %n.vec886, 3                ; 2 uses
+  %n.vec886 = and i64 %i.yh, 268435452            ; 3 uses
+  %i.yn = shl nuw nsw i64 %n.vec886, 3            ; 2 uses
   %i.yo = getelementptr i8, ptr %i.xu, i64 %i.yn
   %i.yp = getelementptr i8, ptr %.0552, i64 %i.yn
-  %40 = sub nsw i64 %i.yh, %n.vec886
+  %13 = and i64 %i.yh, 3
   br label %vector.body887
 
 vector.body887:                                   ; preds = %vector.body887, %vector.ph885
@@ -4561,13 +4485,13 @@ vector.body887:                                   ; preds = %vector.body887, %ve
   br i1 %i.yt, label %middle.block896, label %vector.body887, !llvm.loop !299
 
 middle.block896:                                  ; preds = %vector.body887
-  %cmp.n897 = icmp eq i64 %39, %n.vec886
+  %cmp.n897 = icmp eq i64 %i.yh, %n.vec886
   br i1 %cmp.n897, label %swapfunc.exit454, label %scalar.ph883.preheader
 
 scalar.ph883.preheader:                           ; preds = %vector.memcheck874, %bb.bl, %middle.block896
   %.022.i451.ph = phi ptr [ %i.xu, %vector.memcheck874 ], [ %i.xu, %bb.bl ], [ %i.yo, %middle.block896 ]
   %.021.i452.ph = phi ptr [ %.0552, %vector.memcheck874 ], [ %.0552, %bb.bl ], [ %i.yp, %middle.block896 ]
-  %.0.i453.ph = phi i64 [ %i.yh, %vector.memcheck874 ], [ %i.yh, %bb.bl ], [ %40, %middle.block896 ]
+  %.0.i453.ph = phi i64 [ %i.yh, %vector.memcheck874 ], [ %i.yh, %bb.bl ], [ %13, %middle.block896 ]
   br label %scalar.ph883
 
 scalar.ph883:                                     ; preds = %scalar.ph883.preheader, %scalar.ph883
@@ -4611,7 +4535,7 @@ swapfunc.exit454:                                 ; preds = %.preheader503, %sca
   br i1 %i.zn, label %bb.bm, label %swapfunc.exit461
 
 bb.bm:                                            ; preds = %swapfunc.exit454
-  %i.zo = and i64 %.409, 2147483647               ; 13 uses
+  %i.zo = and i64 %.409, 2147483647               ; 14 uses
   %i.zp = sub nsw i64 0, %i.zo
   %i.zq = getelementptr i8, ptr %i.rm, i64 %i.zp  ; 12 uses
   br i1 %or.cond553, label %bb.bn, label %iter.check
@@ -4699,11 +4623,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 bb.bn:                                            ; preds = %bb.bm
   %i.aad = lshr i64 %i.zo, 3                      ; 6 uses
-  %41 = icmp ne i64 %i.aad, 0
-  %.neg1565 = sext i1 %41 to i64
-  %42 = add nsw i64 %i.aad, %.neg1565
-  %43 = add nsw i64 %42, 1                        ; 3 uses
-  %min.iters.check = icmp ult i64 %43, 10
+  %min.iters.check = icmp samesign ult i64 %i.zo, 80
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.bn
@@ -4724,11 +4644,11 @@ vector.memcheck:                                  ; preds = %bb.bn
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %43, -4                        ; 4 uses
-  %i.aak = shl nsw i64 %n.vec, 3                  ; 2 uses
+  %n.vec = and i64 %i.aad, 268435452              ; 3 uses
+  %i.aak = shl nuw nsw i64 %n.vec, 3              ; 2 uses
   %i.aal = getelementptr i8, ptr %i.zq, i64 %i.aak
   %i.aam = getelementptr i8, ptr %.1348.lcssa, i64 %i.aak
-  %44 = sub nsw i64 %i.aad, %n.vec
+  %14 = and i64 %i.aad, 3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -4751,13 +4671,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aaq, label %middle.block, label %vector.body, !llvm.loop !314
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %43, %n.vec
+  %cmp.n = icmp eq i64 %i.aad, %n.vec
   br i1 %cmp.n, label %swapfunc.exit461, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.bn, %middle.block
   %.022.i458.ph = phi ptr [ %i.zq, %vector.memcheck ], [ %i.zq, %bb.bn ], [ %i.aal, %middle.block ]
   %.021.i459.ph = phi ptr [ %.1348.lcssa, %vector.memcheck ], [ %.1348.lcssa, %bb.bn ], [ %i.aam, %middle.block ]
-  %.0.i460.ph = phi i64 [ %i.aad, %vector.memcheck ], [ %i.aad, %bb.bn ], [ %44, %middle.block ]
+  %.0.i460.ph = phi i64 [ %i.aad, %vector.memcheck ], [ %i.aad, %bb.bn ], [ %14, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
