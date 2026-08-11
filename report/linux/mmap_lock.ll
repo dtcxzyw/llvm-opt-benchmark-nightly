@@ -201,9 +201,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 2 uses
   %i.b = getelementptr i8, ptr %0, i64 12
   %.val = load i8, ptr %i.b, align 4, !range !38, !noundef !39
-  %1 = xor i8 %.val, 1
-  %not..i = zext nneg i8 %1 to i32
-  %2 = or disjoint i32 %not..i, 1073741824
+  %not..i = zext nneg i8 %.val to i32
   %i.c = getelementptr i8, ptr %i.a, i64 16       ; 4 uses
   %i.d = load ptr, ptr %i.c, align 16
   %i.e = getelementptr i8, ptr %i.d, i64 464
@@ -284,7 +282,8 @@ arch_static_branch.exit:                          ; preds = %bb.f, %bb.g
   %i.ab = load i32, ptr %i.x, align 8
   %i.ac = tail call i32 asm sideeffect "xchgl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.y, i32 %i.ab, ptr elementtype(i32) %i.y) #11, !srcloc !52 ; 0 uses
   %i.ad = load volatile i32, ptr %i.h, align 16
-  %i.ae = icmp eq i32 %i.ad, %2
+  %1 = xor i32 %i.ad, %not..i
+  %i.ae = icmp eq i32 %1, 1073741825
   br i1 %i.ae, label %bb.l, label %bb.h
 
 bb.h:                                             ; preds = %arch_static_branch.exit

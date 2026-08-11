@@ -19,10 +19,9 @@ bb.a:
   %i.d = and i32 %2, 255
   %i.e = shl i32 %1, 8
   %i.f = and i32 %i.e, 65280
-  %3 = or disjoint i32 %i.f, %i.d
-  %i.g = or disjoint i32 %3, 16842752
+  %i.g = or disjoint i32 %i.f, %i.d
   %i.h = zext nneg i32 %i.g to i64
-  %i.i = xor i64 %i.h, 7640891576956012808
+  %i.i = xor i64 %i.h, 7640891576939301128
   %i.j = insertelement <4 x i64> <i64 poison, i64 -4942790177534073029, i64 4354685564936845355, i64 -6534734903238641935>, i64 %i.i, i64 0
   store <4 x i64> %i.j, ptr %0, align 32, !tbaa !10
   store <4 x i64> <i64 5840696475078001361, i64 -7276294671716946913, i64 2270897969802886507, i64 6620516959819538809>, ptr %i.a, align 32, !tbaa !10
@@ -425,10 +424,9 @@ bb.a:
   %i.g = and i32 %1, 255
   %i.h = shl i32 %5, 8
   %i.i = and i32 %i.h, 65280
-  %6 = or disjoint i32 %i.g, %i.i
-  %i.j = or disjoint i32 %6, 16842752
+  %i.j = or disjoint i32 %i.i, %i.g
   %i.k = zext nneg i32 %i.j to i64
-  %i.l = xor i64 %i.k, 7640891576956012808
+  %i.l = xor i64 %i.k, 7640891576939301128
   %i.m = insertelement <4 x i64> <i64 poison, i64 -4942790177534073029, i64 4354685564936845355, i64 -6534734903238641935>, i64 %i.l, i64 0
   store <4 x i64> %i.m, ptr %i.b, align 32, !tbaa !10
   store <4 x i64> <i64 5840696475078001361, i64 -7276294671716946913, i64 2270897969802886507, i64 6620516959819538809>, ptr %i.d, align 32, !tbaa !10

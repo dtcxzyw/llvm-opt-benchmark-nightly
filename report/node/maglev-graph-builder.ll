@@ -204,9 +204,9 @@ bb.aa:                                            ; preds = %.critedge45
   %i.fm = inttoptr i64 %i.fl to ptr               ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fm, i64 16
   %i.fo = load i32, ptr %i.fn, align 8
-  %20 = icmp ne i32 %i.fo, -2
+  %20 = icmp eq i32 %i.fo, -2
   %.sroa.4.8.insert.ext.i = zext i1 %20 to i64
-  %.sroa.4.9.insert.insert.i = or disjoint i64 %.sroa.4.8.insert.ext.i, 256
+  %.sroa.4.9.insert.insert.i = xor i64 %.sroa.4.8.insert.ext.i, 257
   br label %_ZN2v88internal6maglev18MaglevGraphBuilder35GetTryCatchBlockForNonEagerInliningEPNS1_20ExceptionHandlerInfoE.exit
 
 bb.ab:                                            ; preds = %.critedge45
@@ -609,9 +609,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ae = load i32, ptr %i.ad, align 8
-  %2 = icmp ne i32 %i.ae, -2
+  %2 = icmp eq i32 %i.ae, -2
   %.sroa.4.8.insert.ext = zext i1 %2 to i64
-  %.sroa.4.9.insert.insert = or disjoint i64 %.sroa.4.8.insert.ext, 256
+  %.sroa.4.9.insert.insert = xor i64 %.sroa.4.8.insert.ext, 257
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a

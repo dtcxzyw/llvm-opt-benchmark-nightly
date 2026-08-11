@@ -204,7 +204,7 @@ _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = and i8 %1, 7
-  %.not = icmp eq i8 %i.a, 0                      ; 2 uses
+  %10 = icmp ne i8 %i.a, 0                        ; 2 uses
   %i.b = load i8, ptr getelementptr inbounds nuw (i8, ptr @v3Global, i64 948), align 4, !tbaa !402, !range !66, !noundef !67
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
@@ -232,9 +232,9 @@ bb.a:                                             ; preds = %_ZNSt8__detail14__t
 
 _ZNSt7__cxx119to_stringEi.exit:                   ; preds = %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
   %i.i = load ptr, ptr %6, align 8, !tbaa !10, !alias.scope !990
-  %i.j = zext i1 %.not to i8
-  %10 = or disjoint i8 %i.j, 48
-  store i8 %10, ptr %i.i, align 1, !tbaa !18
+  %i.j = zext i1 %10 to i8
+  %11 = xor i8 %i.j, 49
+  store i8 %11, ptr %i.i, align 1, !tbaa !18
   call void @llvm.experimental.noalias.scope.decl(metadata !993)
   %i.k = load i64, ptr %i.d, align 8, !tbaa !16, !noalias !993 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -501,7 +501,7 @@ bb.l:                                             ; preds = %_ZStplIcSt11char_tr
 _ZNSt7__cxx119to_stringEi.exit47:                 ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_S9_.exit32
   %i.cu = load ptr, ptr %8, align 8, !tbaa !10, !alias.scope !1002
   %i.cv = or disjoint i8 %i.b, 48
-  %i.cw = select i1 %.not, i8 48, i8 %i.cv
+  %i.cw = select i1 %10, i8 %i.cv, i8 48
   store i8 %i.cw, ptr %i.cu, align 1, !tbaa !18
   call void @llvm.experimental.noalias.scope.decl(metadata !1005)
   %i.cx = getelementptr inbounds nuw i8, ptr %3, i64 8

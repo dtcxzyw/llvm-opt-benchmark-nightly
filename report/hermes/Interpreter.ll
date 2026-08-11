@@ -203,14 +203,13 @@ bb.ky:                                            ; preds = %.backedge
   %i.caw = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.cav
   %.sroa.0107.0.copyload = load i64, ptr %i.caw, align 8, !tbaa !61
   %i.cax = call noundef zeroext i1 @_ZN6hermes2vm18strictEqualityTestENS0_11HermesValueES1_(i64 %.sroa.0108.0.copyload, i64 %.sroa.0107.0.copyload) #10
-  %17 = xor i1 %i.cax, true
-  %i.cay = zext i1 %17 to i64
-  %18 = or disjoint i64 %i.cay, -1407374883553280
+  %i.cay = zext i1 %i.cax to i64
+  %17 = xor i64 %i.cay, -1407374883553279
   %i.caz = getelementptr inbounds nuw i8, ptr %.sink4083.sink.in, i64 1
   %i.cba = load i8, ptr %i.caz, align 1, !tbaa !81
   %i.cbb = zext i8 %i.cba to i64
   %i.cbc = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.cbb
-  store i64 %18, ptr %i.cbc, align 8, !tbaa !69
+  store i64 %17, ptr %i.cbc, align 8, !tbaa !69
   %i.cbd = getelementptr inbounds nuw i8, ptr %.sink4083.sink.in, i64 4
   br label %.backedge.backedge
 
@@ -221,14 +220,13 @@ bb.kz:                                            ; preds = %.backedge
   %i.cbh = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.cbg
   %.sroa.0106.0.copyload = load i64, ptr %i.cbh, align 8, !tbaa !61
   %i.cbi = call noundef zeroext i1 @_ZN6hermes2vm9toBooleanENS0_11HermesValueE(i64 %.sroa.0106.0.copyload) #10
-  %19 = xor i1 %i.cbi, true
-  %i.cbj = zext i1 %19 to i64
-  %20 = or disjoint i64 %i.cbj, -1407374883553280
+  %i.cbj = zext i1 %i.cbi to i64
+  %18 = xor i64 %i.cbj, -1407374883553279
   %i.cbk = getelementptr inbounds nuw i8, ptr %.sink4083.sink.in, i64 1
   %i.cbl = load i8, ptr %i.cbk, align 1, !tbaa !81
   %i.cbm = zext i8 %i.cbl to i64
   %i.cbn = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.cbm
-  store i64 %20, ptr %i.cbn, align 8, !tbaa !69
+  store i64 %18, ptr %i.cbn, align 8, !tbaa !69
   %i.cbo = getelementptr inbounds nuw i8, ptr %.sink4083.sink.in, i64 3
   br label %.backedge.backedge
 
