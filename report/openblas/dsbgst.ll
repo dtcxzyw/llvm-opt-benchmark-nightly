@@ -201,10 +201,9 @@ vec.epilog.scalar.ph4427:                         ; preds = %vec.epilog.scalar.p
   %invariant.op2974 = add i32 %i.hc, %i.bw        ; 3 uses
   %i.hd = sext i32 %i.bv to i64                   ; 6 uses
   %i.he = sub i32 %.02605.ph, %i.bs
-  %i.hf = zext nneg i32 %i.ek to i64              ; 11 uses
-  %13 = sext i32 %i.ha to i64                     ; 4 uses
-  %smax4275 = call i64 @llvm.smax.i64(i64 %13, i64 %i.hf)
-  %14 = sub nsw i64 %smax4275, %i.hf              ; 2 uses
+  %i.hf = zext nneg i32 %i.ek to i64              ; 10 uses
+  %13 = zext i32 %i.ha to i64                     ; 4 uses
+  %smax4275 = call i64 @llvm.usub.sat.i64(i64 %13, i64 %i.hf)
   %i.hg = add i32 %i.bw, %i.ek
   %i.hh = call i32 @llvm.smin.i32(i32 %i.bp, i32 %i.br)
   %i.hi = xor i32 %i.hh, -1
@@ -221,7 +220,7 @@ vec.epilog.scalar.ph4427:                         ; preds = %vec.epilog.scalar.p
   %i.ht = add i32 %.02605.ph, %i.hs
   %i.hu = mul i32 %.0255729803502, %i.ht
   %i.hv = add i32 %i.hq, %i.hu
-  %smax4281 = call i64 @llvm.smax.i64(i64 %13, i64 %i.hf)
+  %smax4281 = call i64 @llvm.umax.i64(i64 %i.hf, i64 %13)
   %i.hw = shl nuw nsw i64 %smax4281, 3            ; 2 uses
   %i.hx = shl nuw nsw i64 %i.hf, 3                ; 2 uses
   %i.hy = sub nsw i64 %i.hw, %i.hx
@@ -235,12 +234,12 @@ vec.epilog.scalar.ph4427:                         ; preds = %vec.epilog.scalar.p
   %i.if = sext i32 %i.ie to i64
   %i.ig = shl nsw i64 %i.if, 3                    ; 2 uses
   %scevgep4289 = getelementptr i8, ptr %scevgep4288.a, i64 %i.ig
-  %i.ih = add i64 %i.hw, %i.ig
-  %i.ii = sub i64 %i.ih, %i.hx
+  %i.ih = add nsw i64 %i.hw, %i.ig
+  %i.ii = sub nsw i64 %i.ih, %i.hx
   %scevgep4291 = getelementptr i8, ptr %scevgep4290.a, i64 %i.ii
-  %smax4296 = call i64 @llvm.smax.i64(i64 %13, i64 %i.hf)
-  %i.ij = add nuw i64 %smax4296, 1
-  %i.ik = sub i64 %i.ij, %i.hf                    ; 7 uses
+  %smax4296 = call i64 @llvm.umax.i64(i64 %i.hf, i64 %13)
+  %i.ij = add nuw nsw i64 %smax4296, 1
+  %i.ik = sub nsw i64 %i.ij, %i.hf                ; 7 uses
   %i.il = call i32 @llvm.smin.i32(i32 %i.bp, i32 %i.br) ; 5 uses
   %i.im = sub i32 %i.il, %i.bs
   %i.in = add i32 %.02605.ph, -1                  ; 2 uses
@@ -278,19 +277,17 @@ vec.epilog.scalar.ph4427:                         ; preds = %vec.epilog.scalar.p
   %i.jo = call i32 @llvm.smin.i32(i32 %i.bp, i32 %i.br)
   %i.jp = sub i32 %i.jo, %i.bs
   %min.iters.check4298 = icmp ult i64 %i.ik, 4
-  %i.jq = trunc i64 %14 to i32                    ; 2 uses
+  %i.jq = trunc nuw i64 %smax4275 to i32          ; 2 uses
   %i.jr = add i32 %i.hp, %i.jq
   %i.js = icmp slt i32 %i.jr, %i.hp
-  %15 = icmp ugt i64 %14, 4294967295
-  %16 = or i1 %i.js, %15
   %min.iters.check4300 = icmp ult i64 %i.ik, 16
   %i.jt = and i64 %i.ik, 12
   %n.vec4302 = and i64 %i.ik, -16                 ; 4 uses
-  %i.ju = add i64 %n.vec4302, %i.hf
+  %i.ju = add nsw i64 %n.vec4302, %i.hf
   %cmp.n4317 = icmp eq i64 %i.ik, %n.vec4302
   %min.epilog.iters.check4323 = icmp eq i64 %i.jt, 0
   %n.vec4325 = and i64 %i.ik, -4                  ; 3 uses
-  %i.jv = add i64 %n.vec4325, %i.hf
+  %i.jv = add nsw i64 %n.vec4325, %i.hf
   %cmp.n4334 = icmp eq i64 %i.ik, %n.vec4325
   br label %bb.t
 
@@ -564,7 +561,7 @@ iter.check4320:                                   ; preds = %._crit_edge2964
 vector.scevcheck4274:                             ; preds = %iter.check4320
   %i.pv = add i32 %i.kz, %i.jq
   %i.pw = icmp slt i32 %i.pv, %i.kz
-  %i.px = or i1 %i.pw, %16
+  %i.px = or i1 %i.pw, %i.js
   br i1 %i.px, label %vec.epilog.scalar.ph4321.preheader, label %vector.memcheck4277
 
 vector.memcheck4277:                              ; preds = %vector.scevcheck4274
@@ -678,7 +675,7 @@ vec.epilog.scalar.ph4321:                         ; preds = %vec.epilog.scalar.p
   %i.rq = call double @llvm.fmuladd.f64(double %i.rp, double %i.rl, double %i.ro)
   store double %i.rq, ptr %i.rn, align 8, !tbaa !9
   %indvars.iv.next3563 = add nuw nsw i64 %indvars.iv3562, 1
-  %.not2697.not = icmp slt i64 %indvars.iv3562, %13
+  %.not2697.not = icmp samesign ult i64 %indvars.iv3562, %13
   br i1 %.not2697.not, label %vec.epilog.scalar.ph4321, label %._crit_edge2973, !llvm.loop !48
 
 ._crit_edge2973:                                  ; preds = %vec.epilog.scalar.ph4321, %middle.block4316, %vec.epilog.middle.block4333, %._crit_edge2964
@@ -1081,7 +1078,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.auk = sext i32 %i.bq to i64                  ; 4 uses
   %i.aul = sub i32 %.02605.ph, %i.bs
   %i.aum = zext nneg i32 %i.ask to i64
-  %17 = sext i32 %i.aui to i64
+  %14 = zext nneg i32 %i.aui to i64
   %i.aun = mul nsw i64 %i.auj, %i.bb              ; 2 uses
   %invariant.gep4774 = getelementptr [8 x i8], ptr %i.p, i64 %i.aun
   %i.auo = sub nsw i64 %i.auk, %i.auj
@@ -1233,7 +1230,7 @@ bb.bq:                                            ; preds = %.lr.ph3021, %bb.bq
   %i.ayl = call double @llvm.fmuladd.f64(double %i.ayk, double %i.aye, double %i.ayj)
   store double %i.ayl, ptr %i.ayi, align 8, !tbaa !9
   %indvars.iv.next3597 = add nuw nsw i64 %indvars.iv3596, 1
-  %.not2674.not = icmp slt i64 %indvars.iv3596, %17
+  %.not2674.not = icmp samesign ult i64 %indvars.iv3596, %14
   br i1 %.not2674.not, label %bb.bq, label %._crit_edge3022, !llvm.loop !76
 
 ._crit_edge3022:                                  ; preds = %bb.bq, %._crit_edge3015
@@ -1636,10 +1633,16 @@ declare i32 @llvm.smin.i32(i32, i32) #3
 declare i32 @llvm.smax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #3
+declare i64 @llvm.umax.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

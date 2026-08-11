@@ -201,7 +201,7 @@ native_read_msr.exit24:                           ; preds = %native_read_msr.exi
           to label %arch_static_branch_jump.exit.i [label %_static_cpu_has.exit], !srcloc !21
 
 arch_static_branch_jump.exit.i:                   ; preds = %native_read_msr.exit24
-  %i.ab = shl i64 %i.p, 20                        ; 2 uses
+  %i.ab = shl nuw i64 %i.p, 20                    ; 2 uses
   %i.ac = icmp ugt i64 %i.p, 17592186044415
   br i1 %i.ac, label %bb.i, label %bb.e
 
@@ -227,10 +227,11 @@ bb.g:                                             ; preds = %arch_static_branch.
   %.0.i25 = phi i64 [ %i.aj, %bb.f ], [ %i.ak, %arch_static_branch.exit.i ]
   %i.al = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.s, i64 %.0.i25) ; 2 uses
   %i.am = extractvalue { i64, i1 } %i.al, 1
-  %i.an = extractvalue { i64, i1 } %i.al, 0       ; 2 uses
-  %0 = add i64 %i.an, -1
-  %1 = icmp uge i64 %0, %i.ab
-  %or.cond.i = or i1 %i.am, %1
+  %i.an = extractvalue { i64, i1 } %i.al, 0       ; 3 uses
+  %0 = icmp eq i64 %i.an, 0
+  %or.cond6.not.i = or i1 %i.am, %0
+  %.not.i = icmp ugt i64 %i.an, %i.ab
+  %or.cond.i = select i1 %or.cond6.not.i, i1 true, i1 %.not.i
   br i1 %or.cond.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g

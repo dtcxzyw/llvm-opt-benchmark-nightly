@@ -204,8 +204,8 @@ define linkonce_odr hidden void @_ZSt22__stable_sort_adaptiveIPN2cv4text4nodeES3
 bb.a:
   %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %0 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 3 uses
-  %4 = sdiv exact i64 %i.c, 24                    ; 2 uses
+  %i.c = sub i64 %i.a, %i.b                       ; 4 uses
+  %4 = udiv exact i64 %i.c, 24
   %i.d = getelementptr inbounds i8, ptr %3, i64 %i.c
   tail call void @_ZSt22__chunk_insertion_sortIPN2cv4text4nodeElN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S7_T0_T1_(ptr noundef %0, ptr noundef %1, i64 noundef 7)
   %i.e = icmp sgt i64 %i.c, 168
@@ -222,8 +222,8 @@ bb.a:
 
 _ZSt24__merge_sort_with_bufferIPN2cv4text4nodeES3_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_S7_T0_T1_.exit: ; preds = %.lr.ph.i, %bb.a
   %i.i = ptrtoint ptr %2 to i64
-  %i.j = sub i64 %i.i, %i.a                       ; 3 uses
-  %5 = sdiv exact i64 %i.j, 24                    ; 2 uses
+  %i.j = sub i64 %i.i, %i.a                       ; 4 uses
+  %5 = udiv exact i64 %i.j, 24
   %i.k = getelementptr inbounds i8, ptr %3, i64 %i.j
   tail call void @_ZSt22__chunk_insertion_sortIPN2cv4text4nodeElN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S7_T0_T1_(ptr noundef %1, ptr noundef %2, i64 noundef 7)
   %i.l = icmp sgt i64 %i.j, 168
@@ -239,7 +239,9 @@ _ZSt24__merge_sort_with_bufferIPN2cv4text4nodeES3_N9__gnu_cxx5__ops15_Iter_less_
   br i1 %i.o, label %.lr.ph.i14, label %_ZSt24__merge_sort_with_bufferIPN2cv4text4nodeES3_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_S7_T0_T1_.exit16, !llvm.loop !817
 
 _ZSt24__merge_sort_with_bufferIPN2cv4text4nodeES3_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_S7_T0_T1_.exit16: ; preds = %.lr.ph.i14, %_ZSt24__merge_sort_with_bufferIPN2cv4text4nodeES3_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_S7_T0_T1_.exit
-  tail call void @_ZSt16__merge_adaptiveIPN2cv4text4nodeElS3_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_S7_S7_T0_S8_T1_T2_(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %4, i64 noundef %5, ptr noundef %3)
+  %6 = sdiv exact i64 %i.c, 24
+  %7 = sdiv exact i64 %i.j, 24
+  tail call void @_ZSt16__merge_adaptiveIPN2cv4text4nodeElS3_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_S7_S7_T0_S8_T1_T2_(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %6, i64 noundef %7, ptr noundef %3)
   ret void
 }
 
@@ -642,7 +644,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.m = sub i64 %i.l, %i.a                       ; 3 uses
   %i.n = ashr exact i64 %i.m, 2                   ; 3 uses
   %i.o = add nsw i64 %i.n, -1
-  %4 = sdiv i64 %i.o, 2
+  %4 = lshr i64 %i.o, 1
   %i.p = icmp sgt i64 %i.n, 2
   br i1 %i.p, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -681,7 +683,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ai
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !25
-  %i.al = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !25
   br label %.lr.ph.i.i.i.i.i.preheader
 

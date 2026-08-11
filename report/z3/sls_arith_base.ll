@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 _ZmiILb1EE13checked_int64IXT_EERKS1_S3_.exit:     ; preds = %_ZngILb1EE13checked_int64IXT_EERKS1_.exit34, %bb.p
-  %.neg67 = add i64 %i.ah, 1
+  %.neg67 = add nuw i64 %i.ah, 1
   %i.am = xor i64 %i.ah, -1
   %i.an = icmp slt i64 %i.ai, 1
   %i.ao = icmp slt i64 %i.ah, 0
@@ -607,8 +607,8 @@ define linkonce_odr hidden void @_ZSt22__stable_sort_adaptiveIPN3sls10arith_base
 bb.a:
   %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %0 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 3 uses
-  %4 = sdiv exact i64 %i.c, 24                    ; 2 uses
+  %i.c = sub i64 %i.a, %i.b                       ; 4 uses
+  %4 = udiv exact i64 %i.c, 24
   %i.d = getelementptr inbounds i8, ptr %3, i64 %i.c
   tail call void @_ZSt22__chunk_insertion_sortIPN3sls10arith_baseI13checked_int64ILb1EEE15nonlinear_coeffElN9__gnu_cxx5__ops15_Iter_comp_iterIZNS4_9init_ineqEjRNS4_4ineqEEUlRKT_RKT0_E1_EEEvSC_SC_SF_T1_(ptr noundef %0, ptr noundef %1, i64 noundef 7)
   %i.e = icmp sgt i64 %i.c, 168
@@ -625,8 +625,8 @@ bb.a:
 
 _ZSt24__merge_sort_with_bufferIPN3sls10arith_baseI13checked_int64ILb1EEE15nonlinear_coeffES6_N9__gnu_cxx5__ops15_Iter_comp_iterIZNS4_9init_ineqEjRNS4_4ineqEEUlRKT_RKT0_E1_EEEvSC_SC_SF_T1_.exit: ; preds = %.lr.ph.i, %bb.a
   %i.i = ptrtoint ptr %2 to i64
-  %i.j = sub i64 %i.i, %i.a                       ; 3 uses
-  %5 = sdiv exact i64 %i.j, 24                    ; 2 uses
+  %i.j = sub i64 %i.i, %i.a                       ; 4 uses
+  %5 = udiv exact i64 %i.j, 24
   %i.k = getelementptr inbounds i8, ptr %3, i64 %i.j
   tail call void @_ZSt22__chunk_insertion_sortIPN3sls10arith_baseI13checked_int64ILb1EEE15nonlinear_coeffElN9__gnu_cxx5__ops15_Iter_comp_iterIZNS4_9init_ineqEjRNS4_4ineqEEUlRKT_RKT0_E1_EEEvSC_SC_SF_T1_(ptr noundef %1, ptr noundef %2, i64 noundef 7)
   %i.l = icmp sgt i64 %i.j, 168
@@ -642,7 +642,9 @@ _ZSt24__merge_sort_with_bufferIPN3sls10arith_baseI13checked_int64ILb1EEE15nonlin
   br i1 %i.o, label %.lr.ph.i19, label %_ZSt24__merge_sort_with_bufferIPN3sls10arith_baseI13checked_int64ILb1EEE15nonlinear_coeffES6_N9__gnu_cxx5__ops15_Iter_comp_iterIZNS4_9init_ineqEjRNS4_4ineqEEUlRKT_RKT0_E1_EEEvSC_SC_SF_T1_.exit21, !llvm.loop !1525
 
 _ZSt24__merge_sort_with_bufferIPN3sls10arith_baseI13checked_int64ILb1EEE15nonlinear_coeffES6_N9__gnu_cxx5__ops15_Iter_comp_iterIZNS4_9init_ineqEjRNS4_4ineqEEUlRKT_RKT0_E1_EEEvSC_SC_SF_T1_.exit21: ; preds = %.lr.ph.i19, %_ZSt24__merge_sort_with_bufferIPN3sls10arith_baseI13checked_int64ILb1EEE15nonlinear_coeffES6_N9__gnu_cxx5__ops15_Iter_comp_iterIZNS4_9init_ineqEjRNS4_4ineqEEUlRKT_RKT0_E1_EEEvSC_SC_SF_T1_.exit
-  tail call void @_ZSt16__merge_adaptiveIPN3sls10arith_baseI13checked_int64ILb1EEE15nonlinear_coeffElS6_N9__gnu_cxx5__ops15_Iter_comp_iterIZNS4_9init_ineqEjRNS4_4ineqEEUlRKT_RKT0_E1_EEEvSC_SC_SC_SF_SF_T1_T2_(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %4, i64 noundef %5, ptr noundef %3)
+  %6 = sdiv exact i64 %i.c, 24
+  %7 = sdiv exact i64 %i.j, 24
+  tail call void @_ZSt16__merge_adaptiveIPN3sls10arith_baseI13checked_int64ILb1EEE15nonlinear_coeffElS6_N9__gnu_cxx5__ops15_Iter_comp_iterIZNS4_9init_ineqEjRNS4_4ineqEEUlRKT_RKT0_E1_EEEvSC_SC_SC_SF_SF_T1_T2_(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %6, i64 noundef %7, ptr noundef %3)
   ret void
 }
 

@@ -204,12 +204,12 @@ bb.bb:                                            ; preds = %.thread
 bb.bc:                                            ; preds = %bb.bb
   %i.id = and i32 %i.ic, 31
   %i.ie = icmp eq i32 %i.id, 0
-  %i.if = load i32, ptr %i.o, align 8, !tbaa !100 ; 3 uses
-  %14 = sext i32 %i.if to i64                     ; 2 uses
+  %i.if = load i32, ptr %i.o, align 8, !tbaa !100 ; 4 uses
   br i1 %i.ie, label %bb.bd, label %bb.be
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.ig = getelementptr inbounds i8, ptr %i.fm, i64 %14
+  %14 = zext nneg i32 %i.if to i64
+  %i.ig = getelementptr inbounds nuw i8, ptr %i.fm, i64 %14
   %i.ih = icmp sgt i32 %i.if, 0
   br i1 %i.ih, label %.lr.ph265, label %.loopexit
 
@@ -228,8 +228,9 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %i.in, label %.lr.ph265, label %.loopexit, !llvm.loop !132
 
 bb.be:                                            ; preds = %bb.bc
-  %.idx = shl nsw i64 %14, 1
-  %i.io = getelementptr inbounds i8, ptr %i.fm, i64 %.idx
+  %15 = sext i32 %i.if to i64
+  %.idx = shl nuw nsw i64 %15, 1
+  %i.io = getelementptr inbounds nuw i8, ptr %i.fm, i64 %.idx
   %i.ip = icmp sgt i32 %i.if, 0
   br i1 %i.ip, label %.lr.ph261, label %.loopexit
 
@@ -632,7 +633,7 @@ bb.bp:                                            ; preds = %bb.bo
   %i.il = icmp samesign ugt i32 %i.n, 1
   %or.cond3 = or i1 %i.p, %i.il
   %i.im = zext nneg i32 %i.q to i64               ; 2 uses
-  %22 = sext i32 %.reass to i64
+  %22 = zext nneg i32 %.reass to i64
   %wide.trip.count501 = zext nneg i32 %i.d to i64
   %brmerge = select i1 %i.ij, i1 true, i1 %i.ik
   %min.iters.check = icmp ult i32 %i.b, 8
@@ -821,7 +822,7 @@ bb.cc:                                            ; preds = %bb.cb
   store i8 %i.kn, ptr %i.kk, align 1, !tbaa !80
   store i8 %i.kl, ptr %i.km, align 1, !tbaa !80
   %indvars.iv.next492 = add nuw nsw i64 %indvars.iv491, 2 ; 2 uses
-  %23 = icmp slt i64 %indvars.iv.next492, %22
+  %23 = icmp samesign ult i64 %indvars.iv.next492, %22
   br i1 %23, label %.lr.ph450, label %.thread391, !llvm.loop !175
 
 .thread391:                                       ; preds = %.lr.ph450, %.thread392, %.thread393, %bb.by, %bb.ca

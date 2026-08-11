@@ -204,7 +204,7 @@ _kzalloc_noprof.exit:                             ; preds = %._crit_edge, %._cri
   %.067117131 = phi i32 [ %.067117132, %bb.g ], [ %.067117132, %._crit_edge.thread ], [ %.067116, %._crit_edge ]
   %.066119129 = phi i32 [ %.066119130, %bb.g ], [ %.066119130, %._crit_edge.thread ], [ %.066118, %._crit_edge ]
   %.not97121127 = phi i1 [ %.not97121128, %bb.g ], [ %.not97121128, %._crit_edge.thread ], [ false, %._crit_edge ]
-  %.264 = phi i32 [ %i.ac, %bb.g ], [ %.062.lcssa133, %._crit_edge.thread ], [ %.163, %._crit_edge ] ; 3 uses
+  %.264 = phi i32 [ %i.ac, %bb.g ], [ %.062.lcssa133, %._crit_edge.thread ], [ %.163, %._crit_edge ] ; 4 uses
   %.2 = phi i32 [ %i.ad, %bb.g ], [ %.058.lcssa134, %._crit_edge.thread ], [ %.1, %._crit_edge ] ; 2 uses
   %i.ae = icmp slt i32 %.2, 0
   %i.af = sext i32 %.2 to i64
@@ -215,7 +215,7 @@ _kzalloc_noprof.exit:                             ; preds = %._crit_edge, %._cri
   br i1 %.not71, label %bb.m, label %_kmalloc_noprof.exit
 
 _kmalloc_noprof.exit:                             ; preds = %_kzalloc_noprof.exit
-  %i.ai = sext i32 %.264 to i64                   ; 2 uses
+  %i.ai = sext i32 %.264 to i64
   %i.aj = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 -140735340871680, 140735340806146) %i.ai, i32 noundef 3264) #31 ; 5 uses
   %.not72 = icmp eq ptr %i.aj, null
   br i1 %.not72, label %bb.h, label %.preheader
@@ -299,6 +299,7 @@ virtnet_make_stat_req.exit86:                     ; preds = %bb.l, %bb.k, %._cri
 
 .preheader.i:                                     ; preds = %virtnet_make_stat_req.exit86
   %i.bj = ptrtoint ptr %i.aj to i64
+  %5 = zext nneg i32 %.264 to i64
   %i.bk = icmp sgt i32 %.264, 0
   br i1 %i.bk, label %.lr.ph.i, label %__virtnet_get_hw_stats.exit
 
@@ -315,7 +316,7 @@ virtnet_make_stat_req.exit86:                     ; preds = %bb.l, %bb.k, %._cri
   %i.bs = getelementptr i8, ptr %.021.i, i64 %i.br ; 2 uses
   %i.bt = ptrtoint ptr %i.bs to i64
   %i.bu = sub i64 %i.bt, %i.bj
-  %i.bv = icmp slt i64 %i.bu, %i.ai
+  %i.bv = icmp slt i64 %i.bu, %5
   br i1 %i.bv, label %.lr.ph.i, label %__virtnet_get_hw_stats.exit, !llvm.loop !181
 
 __virtnet_get_hw_stats.exit:                      ; preds = %.lr.ph.i, %virtnet_make_stat_req.exit86, %.preheader.i

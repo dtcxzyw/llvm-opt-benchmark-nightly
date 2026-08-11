@@ -203,22 +203,24 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr
   %i.vf = call ptr @PartitionDirectoryLookup(ptr noundef %i.ve, ptr noundef nonnull %i.k) #9 ; 2 uses
   %i.vg = call ptr @RelationGetPartitionKey(ptr noundef nonnull %i.k) #9 ; 12 uses
   %i.vh = getelementptr inbounds nuw i8, ptr %i.vg, i64 4 ; 2 uses
-  %i.vi = load i16, ptr %i.vh, align 4            ; 3 uses
-  %wide.trip.count97.i.i = sext i16 %i.vi to i64  ; 11 uses
+  %i.vi = load i16, ptr %i.vh, align 4            ; 5 uses
+  %wide.trip.count97.i.i = zext nneg i16 %i.vi to i64
   %i.vj = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 3 uses
   %i.vk = load ptr, ptr %i.vj, align 8            ; 3 uses
   %.not.i.i337 = icmp eq ptr %i.vk, null
   br i1 %.not.i.i337, label %.._crit_edge_crit_edge.i.i, label %.lr.ph.i.i
 
 .._crit_edge_crit_edge.i.i:                       ; preds = %bb.ct
-  %.pre99.i.i = shl nsw i64 %wide.trip.count97.i.i, 2
+  %.pre.i.i = sext i16 %i.vi to i64               ; 2 uses
+  %.pre99.i.i = shl nsw i64 %.pre.i.i, 2
   br label %._crit_edge.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.ct
   %i.vl = getelementptr inbounds nuw i8, ptr %i.vk, i64 4
   %i.vm = load i32, ptr %i.vl, align 4            ; 2 uses
   %i.vn = getelementptr inbounds nuw i8, ptr %i.vg, i64 24
-  %i.vo = shl nsw i64 %wide.trip.count97.i.i, 2   ; 5 uses
+  %4 = sext i16 %i.vi to i64                      ; 3 uses
+  %i.vo = shl nsw i64 %4, 2                       ; 5 uses
   %i.vp = getelementptr inbounds nuw i8, ptr %i.vg, i64 32
   %i.vq = getelementptr inbounds nuw i8, ptr %i.vg, i64 48
   %i.vr = icmp sgt i32 %i.vm, 0
@@ -277,6 +279,7 @@ bb.cz:                                            ; preds = %bb.cy, %bb.cx, %bb.
 
 ._crit_edge.i.i:                                  ; preds = %bb.cz, %.lr.ph.i.i, %.._crit_edge_crit_edge.i.i
   %.pre-phi100.i.i = phi i64 [ %.pre99.i.i, %.._crit_edge_crit_edge.i.i ], [ %i.vo, %.lr.ph.i.i ], [ %i.vo, %bb.cz ] ; 3 uses
+  %.pre-phi.i.i = phi i64 [ %.pre.i.i, %.._crit_edge_crit_edge.i.i ], [ %4, %.lr.ph.i.i ], [ %4, %bb.cz ] ; 8 uses
   %i.wk = call ptr @palloc0(i64 noundef 56) #9    ; 10 uses
   %i.wl = load i32, ptr %i.vg, align 8
   %i.wm = trunc i32 %i.wl to i8
@@ -284,38 +287,38 @@ bb.cz:                                            ; preds = %bb.cy, %bb.cx, %bb.
   %i.wn = load i16, ptr %i.vh, align 4
   %i.wo = getelementptr inbounds nuw i8, ptr %i.wk, i64 2
   store i16 %i.wn, ptr %i.wo, align 2
-  %i.wp = call ptr @palloc_mul(i64 noundef 4, i64 noundef %wide.trip.count97.i.i) #9 ; 2 uses
+  %i.wp = call ptr @palloc_mul(i64 noundef 4, i64 noundef %.pre-phi.i.i) #9 ; 2 uses
   %i.wq = getelementptr inbounds nuw i8, ptr %i.wk, i64 8
   store ptr %i.wp, ptr %i.wq, align 8
   %i.wr = getelementptr inbounds nuw i8, ptr %i.vg, i64 24
   %i.ws = load ptr, ptr %i.wr, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.wp, ptr align 4 %i.ws, i64 %.pre-phi100.i.i, i1 false)
-  %i.wt = call ptr @palloc_mul(i64 noundef 4, i64 noundef %wide.trip.count97.i.i) #9 ; 2 uses
+  %i.wt = call ptr @palloc_mul(i64 noundef 4, i64 noundef %.pre-phi.i.i) #9 ; 2 uses
   %i.wu = getelementptr inbounds nuw i8, ptr %i.wk, i64 16
   store ptr %i.wt, ptr %i.wu, align 8
   %i.wv = getelementptr inbounds nuw i8, ptr %i.vg, i64 32
   %i.ww = load ptr, ptr %i.wv, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.wt, ptr align 4 %i.ww, i64 %.pre-phi100.i.i, i1 false)
-  %i.wx = call ptr @palloc_mul(i64 noundef 4, i64 noundef %wide.trip.count97.i.i) #9 ; 2 uses
+  %i.wx = call ptr @palloc_mul(i64 noundef 4, i64 noundef %.pre-phi.i.i) #9 ; 2 uses
   %i.wy = getelementptr inbounds nuw i8, ptr %i.wk, i64 24
   store ptr %i.wx, ptr %i.wy, align 8
   %i.wz = getelementptr inbounds nuw i8, ptr %i.vg, i64 48
   %i.xa = load ptr, ptr %i.wz, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.wx, ptr align 4 %i.xa, i64 %.pre-phi100.i.i, i1 false)
-  %i.xb = call ptr @palloc_mul(i64 noundef 2, i64 noundef %wide.trip.count97.i.i) #9 ; 2 uses
+  %i.xb = call ptr @palloc_mul(i64 noundef 2, i64 noundef %.pre-phi.i.i) #9 ; 2 uses
   %i.xc = getelementptr inbounds nuw i8, ptr %i.wk, i64 32
   store ptr %i.xb, ptr %i.xc, align 8
   %i.xd = getelementptr inbounds nuw i8, ptr %i.vg, i64 72
   %i.xe = load ptr, ptr %i.xd, align 8
-  %i.xf = shl nsw i64 %wide.trip.count97.i.i, 1
+  %i.xf = shl nsw i64 %.pre-phi.i.i, 1
   call void @llvm.memcpy.p0.p0.i64(ptr align 2 %i.xb, ptr align 2 %i.xe, i64 %i.xf, i1 false)
-  %i.xg = call ptr @palloc_mul(i64 noundef 1, i64 noundef %wide.trip.count97.i.i) #9 ; 2 uses
+  %i.xg = call ptr @palloc_mul(i64 noundef 1, i64 noundef %.pre-phi.i.i) #9 ; 2 uses
   %i.xh = getelementptr inbounds nuw i8, ptr %i.wk, i64 40
   store ptr %i.xg, ptr %i.xh, align 8
   %i.xi = getelementptr inbounds nuw i8, ptr %i.vg, i64 80
   %i.xj = load ptr, ptr %i.xi, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.xg, ptr align 1 %i.xj, i64 %wide.trip.count97.i.i, i1 false)
-  %i.xk = call ptr @palloc_mul(i64 noundef 48, i64 noundef %wide.trip.count97.i.i) #9
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.xg, ptr align 1 %i.xj, i64 %.pre-phi.i.i, i1 false)
+  %i.xk = call ptr @palloc_mul(i64 noundef 48, i64 noundef %.pre-phi.i.i) #9
   %i.xl = getelementptr inbounds nuw i8, ptr %i.wk, i64 48 ; 2 uses
   store ptr %i.xk, ptr %i.xl, align 8
   %i.xm = icmp sgt i16 %i.vi, 0

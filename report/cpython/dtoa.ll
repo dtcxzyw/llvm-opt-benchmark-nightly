@@ -204,7 +204,7 @@ bb.bc:                                            ; preds = %._crit_edge878
   %i.hf = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
   %i.hg = lshr i32 %i.hd, 20
   %i.hh = and i32 %i.hg, 2047                     ; 5 uses
-  %i.hi = sub nsw i32 107, %i.hh
+  %i.hi = sub nuw nsw i32 107, %i.hh
   %i.hj = icmp samesign ult i32 %i.hh, 107
   br i1 %i.hj, label %bb.bd, label %thread-pre-split
 
@@ -556,8 +556,10 @@ bb.bj:                                            ; preds = %bb.as, %bb.bi, %bb.
   %.3473 = phi i32 [ %i.ev, %bb.bj ], [ %i.jy, %.thread1122 ] ; 3 uses
   %.0448 = phi i32 [ %.0454.lcssa11081118, %bb.bj ], [ %.3457.lcssa.ph, %.thread1122 ] ; 5 uses
   %.3447 = phi i32 [ %spec.select56811111116, %bb.bj ], [ %spec.select5691124, %.thread1122 ] ; 3 uses
-  %4 = add nuw nsw i32 %.0448, 8
-  %5 = udiv i32 %4, 9
+  %4 = trunc i32 %.0448 to i8
+  %.lhs.trunc = add i8 %4, 8
+  %5 = udiv i8 %.lhs.trunc, 9
+  %.zext = zext nneg i8 %5 to i32
   %i.mw = icmp sgt i32 %.0448, 9
   br i1 %i.mw, label %.lr.ph.i, label %._crit_edge.thread.i
 
@@ -574,7 +576,7 @@ bb.bj:                                            ; preds = %bb.as, %bb.bi, %bb.
   %.02843.i = phi i32 [ %i.mz, %.lr.ph.i ], [ 0, %.loopexit733 ]
   %i.my = shl i32 %.044.i, 1                      ; 2 uses
   %i.mz = add i32 %.02843.i, 1                    ; 5 uses
-  %6 = icmp sgt i32 %5, %i.my
+  %6 = icmp slt i32 %i.my, %.zext
   br i1 %6, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !38
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i

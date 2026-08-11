@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %._crit_edge483.i.i.
 
 .preheader415.preheader.i.i.i:                    ; preds = %bb.d
   %i.bc = add i32 %indvars.iv.i.i, %i.ay
-  %smin.i.i = tail call i32 @llvm.smin.i32(i32 %i.bc, i32 10)
-  %i.bd = zext i32 %smin.i.i to i64               ; 3 uses
+  %smin.i.i = tail call i32 @llvm.umin.i32(i32 %i.bc, i32 10)
+  %i.bd = zext nneg i32 %smin.i.i to i64          ; 3 uses
   br label %.preheader415.i.i.i
 
 .preheader417.i.i.i:                              ; preds = %.preheader415.i.i.i
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %.sroa.0.0.copyload.i = load ptr, ptr %2, align 8, !tbaa !289 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.p = add nsw i64 %i.o, -1
-  %4 = sdiv i64 %i.p, 2
+  %4 = lshr i64 %i.p, 1
   %i.q = icmp sgt i64 %i.o, 2
   br i1 %i.q, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -643,7 +643,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   %i.af = shl nuw nsw i64 %.0.lcssa.i.i, 1
   %i.ag = or disjoint i64 %i.af, 1                ; 2 uses
   %i.ah = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.ag
-  %i.ai = getelementptr inbounds [16 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.ai = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.0.lcssa.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ai, ptr noundef nonnull align 4 dereferenceable(16) %i.ah, i64 16, i1 false)
   store <2 x float> %i.h, ptr %3, align 8, !tbaa !33
   store float %i.j, ptr %i.e, align 8, !tbaa !33
@@ -1046,7 +1046,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %i.i = sub i64 %i.h, %i.a                       ; 3 uses
   %i.j = ashr exact i64 %i.i, 2                   ; 3 uses
   %i.k = add nsw i64 %i.j, -1
-  %3 = sdiv i64 %i.k, 2
+  %3 = lshr i64 %i.k, 1
   %i.l = icmp sgt i64 %i.j, 2
   br i1 %i.l, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -1095,7 +1095,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   %i.ao = or disjoint i64 %i.an, 1                ; 2 uses
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ao
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !32
-  %i.ar = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.ar = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.aq, ptr %i.ar, align 4, !tbaa !32
   br label %.lr.ph.i.i.i
 
@@ -1177,6 +1177,9 @@ declare i32 @llvm.umax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.ctpop.i64(i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #7

@@ -35,7 +35,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %4 = sdiv i32 %3, 8
+  %4 = lshr i32 %3, 3
+  %.zext = and i32 %4, 31
   %i.r = icmp sgt i32 %3, 71
   br i1 %i.r, label %parse_codebook_idx.exit, label %.preheader
 
@@ -48,7 +49,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 19 uses
   %i.u = load ptr, ptr %1, align 8, !tbaa !14     ; 10 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 8 uses
-  %wide.trip.count = zext nneg i32 %4 to i64
+  %wide.trip.count = zext nneg i32 %.zext to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.i

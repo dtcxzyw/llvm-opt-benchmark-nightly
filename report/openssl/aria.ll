@@ -199,8 +199,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a, %._cri
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define range(i32 -2, 1) i32 @ossl_aria_set_encrypt_key(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, ptr nofree noundef writeonly %2) local_unnamed_addr #1 {
 bb.a:
-  %i.a = add nsw i32 %1, 256
-  %3 = sdiv i32 %i.a, 32
+  %i.a = add i32 %1, 256
+  %3 = lshr i32 %i.a, 5
+  %.zext = and i32 %3, 2047
   %i.b = icmp eq ptr %0, null
   %i.c = icmp eq ptr %2, null
   %or.cond = or i1 %i.b, %i.c
@@ -215,7 +216,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 272
-  store i32 %3, ptr %i.d, align 4, !tbaa !8
+  store i32 %.zext, ptr %i.d, align 4, !tbaa !8
   %i.e = add nsw i32 %1, -128
   %i.f = lshr exact i32 %i.e, 6
   %i.g = zext nneg i32 %i.f to i64
