@@ -202,9 +202,9 @@ _ZN2v88internal8FlagList13ResetFlagHashEv.exit.i.i.i: ; preds = %bb.an
   br label %_ZN2v88internal4Flag17set_bool_variableEbNS1_5SetByE.exit
 
 bb.ap:                                            ; preds = %bb.ak
-  %5 = xor i8 %.0182, 1                           ; 3 uses
-  %.sroa.0.0.insert.ext = zext nneg i8 %5 to i16
-  %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
+  %.sroa.0.0.insert.ext = zext nneg i8 %.0182 to i16
+  %.sroa.0.0.insert.insert = xor i16 %.sroa.0.0.insert.ext, 257 ; 2 uses
+  %.sroa.03.0.extract.trunc.i.i = trunc i16 %.sroa.0.0.insert.insert to i8 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.ap, i64 16 ; 2 uses
   %i.bv = load ptr, ptr %i.bu, align 8            ; 2 uses
   %i.bw = icmp eq ptr %i.bv, null
@@ -215,7 +215,7 @@ bb.ap:                                            ; preds = %bb.ak
   %.sroa.0.0.extract.trunc.i.i = trunc i16 %.sroa.0.0.i.i.i to i8
   %.sroa.4.0.extract.shift.i.i.mask = and i16 %.sroa.0.0.i.i.i, -256
   %i.bz = icmp ne i16 %.sroa.4.0.extract.shift.i.i.mask, 256
-  %i.ca = icmp ne i8 %5, %.sroa.0.0.extract.trunc.i.i
+  %i.ca = icmp ne i8 %.sroa.0.0.extract.trunc.i.i, %.sroa.03.0.extract.trunc.i.i
   %i.cb = or i1 %i.bz, %i.ca
   %i.cc = call noundef zeroext i1 @_ZN2v88internal4Flag15CheckFlagChangeENS1_5SetByEbPKc(ptr noundef nonnull align 8 dereferenceable(56) %i.ap, i32 noundef 3, i1 noundef zeroext %i.cb, ptr noundef null), !inline_history !59
   br i1 %i.cc, label %bb.aq, label %_ZN2v88internal4Flag17set_bool_variableEbNS1_5SetByE.exit
@@ -226,7 +226,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.cf = load i8, ptr %i.ce, align 1, !range !9, !noundef !10
   %i.cg = icmp eq i8 %i.cf, 0
   %i.ch = load i8, ptr %i.cd, align 1, !range !9
-  %i.ci = icmp ne i8 %i.ch, %5
+  %i.ci = icmp ne i8 %i.ch, %.sroa.03.0.extract.trunc.i.i
   %i.cj = select i1 %i.cg, i1 true, i1 %i.ci
   br i1 %i.cj, label %bb.ar, label %_ZN2v88internal4Flag17set_bool_variableEbNS1_5SetByE.exit
 
