@@ -201,18 +201,17 @@ define void @_RNvMNtNtNtCslrJNpMdrWwK_15icu_locale_core10extensions7unicode5valu
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 5 uses
   %i.b = alloca [32 x i8], align 8                ; 9 uses
-  %.sroa.0 = alloca [9 x i8], align 8             ; 10 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  store i8 -1, ptr %.sroa.0, align 8
-  %.sroa.0.1..sroa_idx127 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
-  store i64 255, ptr %.sroa.0.1..sroa_idx127, align 1
   %i.c = icmp eq i64 %2, 0
   br i1 %i.c, label %bb.b, label %.preheader
 
 bb.b:                                             ; preds = %._crit_edge, %bb.a
+  %.sroa.0.sroa.8.0 = phi i64 [ 255, %bb.a ], [ %.sroa.0.sroa.8.2, %._crit_edge ]
+  %.sroa.0.sroa.0.0 = phi i8 [ -1, %bb.a ], [ %.sroa.0.sroa.0.2, %._crit_edge ]
   %.sroa.19.0 = phi i48 [ undef, %bb.a ], [ %.sroa.19.1.lcssa, %._crit_edge ]
   %.sroa.16.0 = phi i8 [ undef, %bb.a ], [ %.sroa.16.1.lcssa, %._crit_edge ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %0, ptr noundef nonnull align 8 dereferenceable(9) %.sroa.0, i64 9, i1 false)
+  store i8 %.sroa.0.sroa.0.0, ptr %0, align 1
+  %.sroa.091.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
+  store i64 %.sroa.0.sroa.8.0, ptr %.sroa.091.sroa.4.0..sroa_idx, align 1
   %.sroa.492.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
   store i8 %.sroa.16.0, ptr %.sroa.492.0..sroa_idx, align 1
   %.sroa.593.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
@@ -232,13 +231,7 @@ bb.c:                                             ; preds = %.preheader, %bb.d
   %i.d = call { ptr, i64 } @_RNvXs_NtCslrJNpMdrWwK_15icu_locale_core6parserNtB4_14SubtagIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.b) ; 2 uses
   %i.e = extractvalue { ptr, i64 } %i.d, 0        ; 2 uses
   %.not108 = icmp eq ptr %i.e, null
-  br i1 %.not108, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %bb.c
-  %.sroa.0.1..sroa_idx128 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
-  %.sroa.0.8..sroa_idx130 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 8
-  %.sroa.0.1..sroa_idx129 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
-  br label %bb.e
+  br i1 %.not108, label %._crit_edge, label %bb.e
 
 .preheader:                                       ; preds = %bb.a, %bb.d
   %.sroa.037.0107 = phi i64 [ %i.i, %bb.d ], [ 0, %bb.a ] ; 3 uses
@@ -252,32 +245,33 @@ bb.d:                                             ; preds = %.preheader
   %exitcond.not = icmp eq i64 %i.i, %2
   br i1 %exitcond.not, label %bb.c, label %.preheader
 
-bb.e:                                             ; preds = %.lr.ph, %bb.h
-  %.sroa.0.1..sroa.0.1..sroa.0.1..sroa.0.1..sroa.0.1. = phi i8 [ -1, %.lr.ph ], [ %.sroa.0.1..sroa.0.1..sroa.0.1..sroa.0.1..sroa.0.1.120, %bb.h ] ; 2 uses
-  %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0. = phi i8 [ -1, %.lr.ph ], [ %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0.118, %bb.h ] ; 2 uses
-  %i.j = phi ptr [ %i.e, %.lr.ph ], [ %i.q, %bb.h ]
-  %i.k = phi { ptr, i64 } [ %i.d, %.lr.ph ], [ %i.p, %bb.h ]
-  %.sroa.16.1110 = phi i8 [ undef, %.lr.ph ], [ %.sroa.16.2, %bb.h ]
-  %.sroa.19.1109 = phi i48 [ undef, %.lr.ph ], [ %.sroa.19.2, %bb.h ]
+bb.e:                                             ; preds = %bb.c, %bb.h
+  %.sroa.0.sroa.8.1 = phi i64 [ %.sroa.0.sroa.8.3, %bb.h ], [ 255, %bb.c ] ; 4 uses
+  %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0. = phi i8 [ %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0.118, %bb.h ], [ -1, %bb.c ] ; 2 uses
+  %i.j = phi ptr [ %i.q, %bb.h ], [ %i.e, %bb.c ]
+  %i.k = phi { ptr, i64 } [ %i.p, %bb.h ], [ %i.d, %bb.c ]
+  %.sroa.16.1110 = phi i8 [ %.sroa.16.2, %bb.h ], [ undef, %bb.c ]
+  %.sroa.19.1109 = phi i48 [ %.sroa.19.2, %bb.h ], [ undef, %bb.c ]
   %i.l = extractvalue { ptr, i64 } %i.k, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.m = call i64 @_RNvMs1_NtCslrJNpMdrWwK_15icu_locale_core7subtagsNtB5_6Subtag13try_from_utf8(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.j, i64 noundef %i.l) ; 5 uses
-  %.sroa.067.0.extract.trunc = trunc i64 %i.m to i8 ; 3 uses
+  %i.m = call i64 @_RNvMs1_NtCslrJNpMdrWwK_15icu_locale_core7subtagsNtB5_6Subtag13try_from_utf8(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.j, i64 noundef %i.l) ; 6 uses
   %.sroa.468.0.extract.shift = lshr i64 %i.m, 8
   %.sroa.468.0.extract.trunc = trunc i64 %.sroa.468.0.extract.shift to i8 ; 2 uses
   %.sroa.569.0.extract.shift = lshr i64 %i.m, 16
   %.sroa.569.0.extract.trunc = trunc nuw i64 %.sroa.569.0.extract.shift to i48
-  %i.n = icmp eq i8 %.sroa.067.0.extract.trunc, -1
+  %3 = and i64 %i.m, 255
+  %i.n = icmp eq i64 %3, 255
   br i1 %i.n, label %bb.l, label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.h, %bb.c
+  %.sroa.0.sroa.8.2 = phi i64 [ 255, %bb.c ], [ %.sroa.0.sroa.8.3, %bb.h ]
+  %.sroa.0.sroa.0.2 = phi i8 [ -1, %bb.c ], [ %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0.118, %bb.h ]
   %.sroa.19.1.lcssa = phi i48 [ undef, %bb.c ], [ %.sroa.19.2, %bb.h ]
   %.sroa.16.1.lcssa = phi i8 [ undef, %bb.c ], [ %.sroa.16.2, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.b
 
 bb.f:                                             ; preds = %bb.l, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret void
 
 bb.g:                                             ; preds = %bb.e
@@ -285,11 +279,11 @@ bb.g:                                             ; preds = %bb.e
   %i.o = call noundef zeroext i1 @_RNvXs2_NtNtCs4NRVxsYgnAr_4core5slice3cmpNtNtCsjAQzpv9Sak5_7tinystr9asciibyte9AsciiByteINtB5_14SlicePartialEqBC_E17equal_same_lengthCslrJNpMdrWwK_15icu_locale_core(ptr noundef nonnull %i.a, ptr noundef nonnull @0, i64 noundef 8)
   br i1 %i.o, label %bb.h, label %bb.i
 
-bb.h:                                             ; preds = %3, %bb.k, %bb.g
-  %.sroa.0.1..sroa.0.1..sroa.0.1..sroa.0.1..sroa.0.1.120 = phi i8 [ %6, %bb.k ], [ %.sroa.067.0.extract.trunc, %3 ], [ %.sroa.0.1..sroa.0.1..sroa.0.1..sroa.0.1..sroa.0.1., %bb.g ]
-  %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0.118 = phi i8 [ %4, %bb.k ], [ -1, %3 ], [ %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0., %bb.g ]
-  %.sroa.19.2 = phi i48 [ %.sroa.569.0.extract.trunc, %bb.k ], [ undef, %3 ], [ %.sroa.19.1109, %bb.g ] ; 2 uses
-  %.sroa.16.2 = phi i8 [ %.sroa.468.0.extract.trunc, %bb.k ], [ undef, %3 ], [ %.sroa.16.1110, %bb.g ] ; 2 uses
+bb.h:                                             ; preds = %bb.i, %bb.k, %bb.g
+  %.sroa.0.sroa.8.3 = phi i64 [ %.sroa.0.sroa.8.1, %bb.g ], [ %.sroa.0.sroa.8.8.insert.insert, %bb.k ], [ %i.m, %bb.i ] ; 2 uses
+  %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0.118 = phi i8 [ %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0., %bb.g ], [ %.sroa.0.sroa.8.1.extract.trunc120, %bb.k ], [ -1, %bb.i ] ; 2 uses
+  %.sroa.19.2 = phi i48 [ %.sroa.19.1109, %bb.g ], [ %.sroa.569.0.extract.trunc, %bb.k ], [ undef, %bb.i ] ; 2 uses
+  %.sroa.16.2 = phi i8 [ %.sroa.16.1110, %bb.g ], [ %.sroa.468.0.extract.trunc, %bb.k ], [ undef, %bb.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.p = call { ptr, i64 } @_RNvXs_NtCslrJNpMdrWwK_15icu_locale_core6parserNtB4_14SubtagIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.b) ; 2 uses
   %i.q = extractvalue { ptr, i64 } %i.p, 0        ; 2 uses
@@ -298,27 +292,24 @@ bb.h:                                             ; preds = %3, %bb.k, %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %.not94 = icmp eq i8 %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0., -1 ; 2 uses
-  %i.r = icmp eq i8 %.sroa.0.1..sroa.0.1..sroa.0.1..sroa.0.1..sroa.0.1., -1 ; 2 uses
+  %.sroa.0.sroa.8.1.extract.trunc120 = trunc i64 %.sroa.0.sroa.8.1 to i8 ; 2 uses
+  %i.r = icmp eq i8 %.sroa.0.sroa.8.1.extract.trunc120, -1 ; 2 uses
   %or.cond = select i1 %.not94, i1 %i.r, i1 false
-  br i1 %or.cond, label %3, label %bb.j
+  br i1 %or.cond, label %bb.h, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %not..not94 = xor i1 %.not94, true
   %i.s = select i1 %not..not94, i1 true, i1 %i.r
   br i1 %i.s, label %bb.l, label %bb.k
 
-3:                                                ; preds = %bb.i
-  store i8 -1, ptr %.sroa.0, align 8
-  store i64 %i.m, ptr %.sroa.0.1..sroa_idx129, align 1
-  br label %bb.h
-
 bb.k:                                             ; preds = %bb.j
-  %.sroa.0.1..sroa.0.1..sroa.030.0.copyload = load i64, ptr %.sroa.0.1..sroa_idx128, align 1 ; 3 uses
-  store i64 %.sroa.0.1..sroa.0.1..sroa.030.0.copyload, ptr %.sroa.0, align 8
-  store i8 %.sroa.067.0.extract.trunc, ptr %.sroa.0.8..sroa_idx130, align 8
-  %4 = trunc i64 %.sroa.0.1..sroa.0.1..sroa.030.0.copyload to i8
-  %5 = lshr i64 %.sroa.0.1..sroa.0.1..sroa.030.0.copyload, 8
-  %6 = trunc i64 %5 to i8
+  %.sroa.0.sroa.8.2.extract.shift = lshr i64 %.sroa.0.sroa.8.1, 8
+  %.sroa.0.sroa.8.1.insert.ext = and i64 %.sroa.0.sroa.8.2.extract.shift, 281474976710655
+  %4 = lshr i64 %.sroa.0.sroa.8.1, 8
+  %.sroa.0.sroa.8.7.insert.shift = and i64 %4, 71776119061217280
+  %.sroa.0.sroa.8.7.insert.insert = or disjoint i64 %.sroa.0.sroa.8.1.insert.ext, %.sroa.0.sroa.8.7.insert.shift
+  %.sroa.0.sroa.8.8.insert.ext = shl i64 %i.m, 56
+  %.sroa.0.sroa.8.8.insert.insert = or disjoint i64 %.sroa.0.sroa.8.7.insert.insert, %.sroa.0.sroa.8.8.insert.ext
   br label %bb.h
 
 bb.l:                                             ; preds = %bb.j, %bb.e
