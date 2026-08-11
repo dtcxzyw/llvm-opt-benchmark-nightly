@@ -204,9 +204,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 200
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(201) %i.c, i8 0, i64 201, i1 false)
   %i.e = urem i64 %1, 136                         ; 11 uses
-  %i.f = sub nuw nsw i64 %1, %i.e                 ; 3 uses
+  %i.f = sub nuw nsw i64 %1, %i.e                 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %i.f ; 10 uses
-  %.not38.i = icmp samesign ult i64 %i.f, 136
+  %.not38.i = icmp samesign ult i64 %1, 136
   br i1 %.not38.i, label %._crit_edge.i, label %_RINvYINtNtNtCs6JMX4GRUq9U_4core5slice4iter7IterMutyENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_11ChunksExacthEECs84qwSrTN5pO_7uu_shuf.exit.preheader.i
 
 _RINvYINtNtNtCs6JMX4GRUq9U_4core5slice4iter7IterMutyENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_11ChunksExacthEECs84qwSrTN5pO_7uu_shuf.exit.preheader.i: ; preds = %bb.a
