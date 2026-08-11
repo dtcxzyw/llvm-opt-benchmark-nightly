@@ -204,14 +204,15 @@ Abc_SopGetVarNum.exit:                            ; preds = %bb.b
   %i.c = ptrtoint ptr %.0.i to i64
   %i.d = ptrtoint ptr %0 to i64
   %i.e = sub i64 %i.c, %i.d                       ; 2 uses
-  %i.f = trunc i64 %i.e to i32                    ; 2 uses
+  %i.f = trunc i64 %i.e to i32                    ; 3 uses
   %i.g = add i32 %i.f, -2                         ; 3 uses
   %i.h = icmp sgt i32 %i.g, 0
   br i1 %i.h, label %.lr.ph.us.preheader, label %.preheader
 
 .lr.ph.us.preheader:                              ; preds = %Abc_SopGetVarNum.exit
+  %2 = add i32 %i.f, 1
+  %invariant.op = add i32 %i.f, -3
   %wide.trip.count = zext nneg i32 %i.g to i64    ; 2 uses
-  %invariant.op = add i32 %i.f, 1
   %xtraiter = and i64 %wide.trip.count, 1
   %i.i = icmp eq i32 %i.g, 1
   %unroll_iter = and i64 %wide.trip.count, 2147483646
@@ -220,9 +221,9 @@ Abc_SopGetVarNum.exit:                            ; preds = %bb.b
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
-  %.027.us = phi i64 [ %i.am, %._crit_edge.us ], [ 0, %.lr.ph.us.preheader ]
-  %.024.us = phi i32 [ %.reass, %._crit_edge.us ], [ 0, %.lr.ph.us.preheader ] ; 2 uses
-  %i.j = sext i32 %.024.us to i64                 ; 2 uses
+  %indvars.iv = phi i32 [ 0, %.lr.ph.us.preheader ], [ %indvars.iv.next, %._crit_edge.us ] ; 3 uses
+  %.027.us = phi i64 [ 0, %.lr.ph.us.preheader ], [ %i.am, %._crit_edge.us ]
+  %i.j = sext i32 %indvars.iv to i64              ; 2 uses
   br i1 %i.i, label %.epil.preheader, label %.lr.ph.us.new
 
 .lr.ph.us.new:                                    ; preds = %.lr.ph.us, %bb.i
@@ -312,12 +313,14 @@ bb.k:                                             ; preds = %.epil.preheader
 
 ._crit_edge.us:                                   ; preds = %.epil.preheader, %bb.j, %bb.k, %._crit_edge.us.unr-lcssa
   %.1.us.lcssa = phi i64 [ %.1.us.1, %._crit_edge.us.unr-lcssa ], [ %i.al, %bb.k ], [ %i.ai, %bb.j ], [ %.042.us.epil.init, %.epil.preheader ]
+  %3 = add i32 %invariant.op, %indvars.iv
   %i.am = or i64 %.1.us.lcssa, %.027.us           ; 2 uses
-  %.reass = add i32 %.024.us, %invariant.op       ; 2 uses
-  %2 = sext i32 %.reass to i64
-  %i.an = getelementptr inbounds i8, ptr %0, i64 %2
+  %4 = sext i32 %3 to i64
+  %5 = getelementptr i8, ptr %0, i64 %4
+  %i.an = getelementptr i8, ptr %5, i64 4
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !8
   %.not.us = icmp eq i8 %i.ao, 0
+  %indvars.iv.next = add i32 %indvars.iv, %2
   br i1 %.not.us, label %.preheader, label %.lr.ph.us, !llvm.loop !115
 
 .preheader:                                       ; preds = %bb.b, %._crit_edge.us, %Abc_SopGetVarNum.exit
@@ -381,7 +384,7 @@ Abc_SopGetVarNum.exit:                            ; preds = %bb.b
   %i.e = ptrtoint ptr %.0.i to i64
   %i.f = ptrtoint ptr %0 to i64
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
-  %i.h = trunc i64 %i.g to i32                    ; 2 uses
+  %i.h = trunc i64 %i.g to i32                    ; 3 uses
   %i.i = add i32 %i.h, -2                         ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.k = icmp sgt i32 %i.i, 0
@@ -389,8 +392,9 @@ Abc_SopGetVarNum.exit:                            ; preds = %bb.b
   br i1 %i.k, label %.lr.ph.us.preheader, label %Abc_SopGetVarNum.exit.split
 
 .lr.ph.us.preheader:                              ; preds = %Abc_SopGetVarNum.exit
+  %3 = add i32 %i.h, 1
+  %invariant.op = add i32 %i.h, -3
   %wide.trip.count = zext nneg i32 %i.i to i64    ; 2 uses
-  %invariant.op = add i32 %i.h, 1
   %xtraiter = and i64 %wide.trip.count, 1
   %i.l = icmp eq i32 %i.i, 1
   %unroll_iter = and i64 %wide.trip.count, 2147483646
@@ -399,8 +403,8 @@ Abc_SopGetVarNum.exit:                            ; preds = %bb.b
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
-  %.0.us = phi i32 [ %.reass, %._crit_edge.us ], [ 0, %.lr.ph.us.preheader ] ; 2 uses
-  %i.m = phi <2 x i64> [ %i.at, %._crit_edge.us ], [ zeroinitializer, %.lr.ph.us.preheader ]
+  %.0.us = phi i32 [ 0, %.lr.ph.us.preheader ], [ %indvars.iv.next, %._crit_edge.us ] ; 3 uses
+  %i.m = phi <2 x i64> [ zeroinitializer, %.lr.ph.us.preheader ], [ %i.at, %._crit_edge.us ]
   %i.n = sext i32 %.0.us to i64                   ; 2 uses
   br i1 %i.l, label %.epil.preheader, label %.lr.ph.us.new
 
@@ -491,13 +495,15 @@ bb.k:                                             ; preds = %.epil.preheader
 
 ._crit_edge.us:                                   ; preds = %.epil.preheader, %bb.j, %bb.k, %._crit_edge.us.unr-lcssa
   %.lcssa = phi <2 x i64> [ %i.aj, %._crit_edge.us.unr-lcssa ], [ %i.as, %bb.k ], [ %i.ap, %bb.j ], [ %.epil.init, %.epil.preheader ]
+  %4 = add i32 %invariant.op, %.0.us
   %i.at = or <2 x i64> %i.m, %.lcssa              ; 3 uses
   store <2 x i64> %i.at, ptr %2, align 8, !tbaa !52
-  %.reass = add i32 %.0.us, %invariant.op         ; 2 uses
-  %3 = sext i32 %.reass to i64
-  %i.au = getelementptr inbounds i8, ptr %0, i64 %3
+  %5 = sext i32 %4 to i64
+  %6 = getelementptr i8, ptr %0, i64 %5
+  %i.au = getelementptr i8, ptr %6, i64 4
   %i.av = load i8, ptr %i.au, align 1, !tbaa !8
   %.not.us = icmp eq i8 %i.av, 0
+  %indvars.iv.next = add i32 %.0.us, %3
   br i1 %.not.us, label %.preheader.loopexit, label %.lr.ph.us, !llvm.loop !117
 
 Abc_SopGetVarNum.exit.split:                      ; preds = %Abc_SopGetVarNum.exit.thread, %Abc_SopGetVarNum.exit

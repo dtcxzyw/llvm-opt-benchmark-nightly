@@ -204,7 +204,7 @@ bb.bd:                                            ; preds = %bb.bd, %.lr.ph.i105
   %spec.select.i.i.i.i.3 = select i1 %i.jo, i32 %i.jp, i32 %spec.select.i.i.i.i.2 ; 3 uses
   %spec.select17.i.i.i.i.3 = tail call i32 @llvm.smin.i32(i32 %i.jn, i32 %spec.select17.i.i.i.i.2) ; 2 uses
   %indvars.iv.next.i108.i.i.i.3 = add nuw nsw i64 %indvars.iv.i107.i.i.i, 4 ; 2 uses
-  %niter396.next.3 = add i64 %niter396, 4         ; 2 uses
+  %niter396.next.3 = add nuw i64 %niter396, 4     ; 2 uses
   %niter396.ncmp.3 = icmp eq i64 %niter396.next.3, %unroll_iter395
   br i1 %niter396.ncmp.3, label %_ZN6icu_7812_GLOBAL__N_113AllSameBlocks3addEiij.exit.i.i.i.loopexit.unr-lcssa, label %bb.bd, !llvm.loop !64
 
@@ -312,7 +312,7 @@ bb.bh:                                            ; preds = %bb.bh, %.lr.ph.i112
   %spec.select.i117.i.i.i.3 = select i1 %i.kx, i32 %i.ky, i32 %spec.select.i117.i.i.i.2 ; 3 uses
   %spec.select17.i118.i.i.i.3 = tail call i32 @llvm.smin.i32(i32 %i.kw, i32 %spec.select17.i118.i.i.i.2) ; 2 uses
   %indvars.iv.next.i119.i.i.i.3 = add nuw nsw i64 %indvars.iv.i114.i.i.i, 4 ; 2 uses
-  %niter388.next.3 = add i64 %niter388, 4         ; 2 uses
+  %niter388.next.3 = add nuw i64 %niter388, 4     ; 2 uses
   %niter388.ncmp.3 = icmp eq i64 %niter388.next.3, %unroll_iter387
   br i1 %niter388.ncmp.3, label %.thread129.i.i.i.loopexit.unr-lcssa, label %bb.bh, !llvm.loop !64
 
@@ -536,7 +536,7 @@ bb.bt:                                            ; preds = %bb.bt, %.lr.ph.i67.
   %spec.select.i69.i.i.3 = select i1 %i.nl, i32 %i.nm, i32 %spec.select.i69.i.i.2 ; 3 uses
   %spec.select13.i.i.i.3 = tail call i32 @llvm.smax.i32(i32 %i.nk, i32 %spec.select13.i.i.i.2) ; 2 uses
   %indvars.iv.next.i70.i.i.3 = add nuw nsw i64 %indvars.iv.i68.i.i, 4 ; 2 uses
-  %niter404.next.3 = add i64 %niter404, 4         ; 2 uses
+  %niter404.next.3 = add nuw i64 %niter404, 4     ; 2 uses
   %niter404.ncmp.3 = icmp eq i64 %niter404.next.3, %unroll_iter403
   br i1 %niter404.ncmp.3, label %._crit_edge.loopexit.i.i.i.unr-lcssa, label %bb.bt, !llvm.loop !72
 
@@ -939,17 +939,19 @@ bb.dj:                                            ; preds = %bb.di, %bb.dh, %bb.
 .preheader376.lr.ph.i.i.i:                        ; preds = %._crit_edge.i.i94.i.i
   %i.zu = load i32, ptr %i.yt, align 4, !tbaa !16
   %i.zv = load ptr, ptr %0, align 8, !tbaa !10    ; 2 uses
-  %i.zw = zext nneg i32 %i.zq to i64
+  %i.zw = zext nneg i32 %i.zq to i64              ; 2 uses
+  %7 = or disjoint i64 %i.zw, 32
   %sext.i.i = zext nneg i32 %i.zs to i64
   br label %.preheader376.i.i.i
 
 .preheader376.i.i.i:                              ; preds = %bb.dr, %.preheader376.lr.ph.i.i.i
-  %indvars.iv458.i.i.i = phi i64 [ %i.zw, %.preheader376.lr.ph.i.i.i ], [ %7, %bb.dr ] ; 6 uses
-  %.2241396.i.i.i = phi i32 [ %i.zu, %.preheader376.lr.ph.i.i.i ], [ %.3242.i.i.i, %bb.dr ] ; 5 uses
-  %.0252395.i.i.i = phi i32 [ 0, %.preheader376.lr.ph.i.i.i ], [ %.3255.i.i.i, %bb.dr ] ; 5 uses
-  %.0269394.i.i.i = phi i1 [ false, %.preheader376.lr.ph.i.i.i ], [ %.2271.i.i.i, %bb.dr ] ; 4 uses
+  %indvars.iv243.i.i = phi i64 [ %indvars.iv.next244.i.i, %bb.dr ], [ %i.zw, %.preheader376.lr.ph.i.i.i ] ; 6 uses
+  %indvars.iv458.i.i.i = phi i64 [ %indvars.iv.next242.i.i, %bb.dr ], [ %7, %.preheader376.lr.ph.i.i.i ] ; 2 uses
+  %.2241396.i.i.i = phi i32 [ %.3242.i.i.i, %bb.dr ], [ %i.zu, %.preheader376.lr.ph.i.i.i ] ; 5 uses
+  %.0252395.i.i.i = phi i32 [ %.3255.i.i.i, %bb.dr ], [ 0, %.preheader376.lr.ph.i.i.i ] ; 5 uses
+  %.0269394.i.i.i = phi i1 [ %.2271.i.i.i, %bb.dr ], [ false, %.preheader376.lr.ph.i.i.i ] ; 4 uses
   %i.zx = load i32, ptr %i.yn, align 8, !tbaa !17
-  %i.zy = getelementptr inbounds nuw [4 x i8], ptr %i.zv, i64 %indvars.iv458.i.i.i ; 2 uses
+  %i.zy = getelementptr inbounds nuw [4 x i8], ptr %i.zv, i64 %indvars.iv243.i.i ; 2 uses
   %i.zz = load <32 x i32>, ptr %i.zy, align 4, !tbaa !26 ; 33 uses
   %i.aaa = extractelement <32 x i32> %i.zz, i64 0
   %i.aab = extractelement <32 x i32> %i.zz, i64 1
@@ -1020,7 +1022,6 @@ bb.dj:                                            ; preds = %bb.di, %bb.dh, %bb.
   %i.aco = freeze <32 x i1> %i.acn
   %i.acp = bitcast <32 x i1> %i.aco to i32
   %i.acq = icmp eq i32 %i.acp, -1
-  %7 = add nuw nsw i64 %indvars.iv458.i.i.i, 32   ; 2 uses
   br i1 %i.acq, label %bb.dk, label %bb.dm
 
 ._crit_edge.i95.i.i:                              ; preds = %bb.dr, %._crit_edge.i.i94.i.i
@@ -1046,7 +1047,7 @@ bb.dj:                                            ; preds = %bb.di, %bb.dh, %bb.
   br i1 %i.add, label %bb.ds, label %bb.dt
 
 bb.dk:                                            ; preds = %.preheader376.i.i.i
-  %i.ade = getelementptr inbounds nuw i8, ptr %i.gm, i64 %indvars.iv458.i.i.i
+  %i.ade = getelementptr inbounds nuw i8, ptr %i.gm, i64 %indvars.iv243.i.i
   store i8 0, ptr %i.ade, align 1, !tbaa !33
   %i.adf = icmp slt i32 %.2241396.i.i.i, 0
   br i1 %i.adf, label %bb.dl, label %bb.dr
@@ -1063,10 +1064,10 @@ bb.dm:                                            ; preds = %.preheader376.i.i.i
   br i1 %i.adh, label %bb.dn, label %bb.dq
 
 bb.dn:                                            ; preds = %bb.dm
-  %i.adi = trunc nuw nsw i64 %indvars.iv458.i.i.i to i32
+  %i.adi = trunc nuw nsw i64 %indvars.iv243.i.i to i32
   %i.adj = call fastcc noundef i32 @_ZNK6icu_7812_GLOBAL__N_111MixedBlocks9findBlockItjEEiPKT_PKT0_i(ptr noundef nonnull align 8 dereferenceable(28) %6, ptr noundef nonnull %i.a, ptr noundef nonnull %i.zv, i32 noundef %i.adi) ; 2 uses
   %i.adk = icmp sgt i32 %i.adj, -1
-  %i.adl = getelementptr inbounds nuw i8, ptr %i.gm, i64 %indvars.iv458.i.i.i ; 2 uses
+  %i.adl = getelementptr inbounds nuw i8, ptr %i.gm, i64 %indvars.iv243.i.i ; 2 uses
   br i1 %i.adk, label %bb.do, label %bb.dp
 
 bb.do:                                            ; preds = %bb.dn
@@ -1080,7 +1081,7 @@ bb.dp:                                            ; preds = %bb.dn
   br label %bb.dr
 
 bb.dq:                                            ; preds = %bb.dm
-  %i.adn = getelementptr inbounds nuw i8, ptr %i.gm, i64 %indvars.iv458.i.i.i
+  %i.adn = getelementptr inbounds nuw i8, ptr %i.gm, i64 %indvars.iv243.i.i
   store i8 3, ptr %i.adn, align 1, !tbaa !33
   %i.ado = add nsw i32 %.0252395.i.i.i, 36
   br label %bb.dr
@@ -1089,7 +1090,9 @@ bb.dr:                                            ; preds = %bb.dq, %bb.dp, %bb.
   %.2271.i.i.i = phi i1 [ %.1270.i.i.i, %bb.dl ], [ %.0269394.i.i.i, %bb.dk ], [ true, %bb.dq ], [ %.0269394.i.i.i, %bb.dp ], [ %.0269394.i.i.i, %bb.do ] ; 2 uses
   %.3255.i.i.i = phi i32 [ %.1253.i.i.i, %bb.dl ], [ %.0252395.i.i.i, %bb.dk ], [ %i.ado, %bb.dq ], [ %i.adm, %bb.dp ], [ %.0252395.i.i.i, %bb.do ] ; 2 uses
   %.3242.i.i.i = phi i32 [ 0, %bb.dl ], [ %.2241396.i.i.i, %bb.dk ], [ %.2241396.i.i.i, %bb.dq ], [ %.2241396.i.i.i, %bb.dp ], [ %.2241396.i.i.i, %bb.do ]
-  %i.adp = icmp samesign ult i64 %7, %sext.i.i
+  %i.adp = icmp samesign ult i64 %indvars.iv458.i.i.i, %sext.i.i
+  %indvars.iv.next242.i.i = add nuw nsw i64 %indvars.iv458.i.i.i, 32
+  %indvars.iv.next244.i.i = add nuw nsw i64 %indvars.iv243.i.i, 32
   br i1 %i.adp, label %.preheader376.i.i.i, label %._crit_edge.i95.i.i, !llvm.loop !100
 
 bb.ds:                                            ; preds = %.noexc115.i.i

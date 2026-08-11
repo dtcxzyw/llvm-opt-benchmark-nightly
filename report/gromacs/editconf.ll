@@ -204,7 +204,7 @@ bb.ld:                                            ; preds = %bb.lc, %bb.lb
   %i.ceu = add nsw i32 %i.ceq, 1                  ; 6 uses
   %i.cev = add nsw i32 %i.cet, 1                  ; 2 uses
   %i.cew = call float @llvm.rint.f32(float %i.cek)
-  %i.cex = fptosi float %i.cew to i32             ; 3 uses
+  %i.cex = fptosi float %i.cew to i32             ; 4 uses
   %i.cey = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZZ12gmx_editconfiPPcE6visbox, i64 4), align 4, !tbaa !53
   %i.cez = call float @llvm.rint.f32(float %i.cey)
   %i.cfa = fptosi float %i.cez to i32             ; 3 uses
@@ -358,6 +358,7 @@ bb.le:                                            ; preds = %bb.ld
   br i1 %or.cond.i496, label %.preheader8.us.preheader.i, label %.preheader4.i
 
 .preheader8.us.preheader.i:                       ; preds = %.preheader8.lr.ph.i
+  %32 = mul i32 %i.cex, 24
   %i.cjb = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   %i.cjc = getelementptr inbounds nuw i8, ptr %i.ad, i64 20
   %i.cjd = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
@@ -366,8 +367,10 @@ bb.le:                                            ; preds = %bb.ld
   %scevgep1082 = getelementptr i8, ptr %i.cix, i64 284 ; 4 uses
   %scevgep1084 = getelementptr i8, ptr %i.cix, i64 8 ; 4 uses
   %scevgep1086 = getelementptr i8, ptr %i.cix, i64 288 ; 4 uses
-  %i.cje = getelementptr inbounds nuw i8, ptr %i.cix, i64 96
-  %i.cjf = getelementptr inbounds nuw i8, ptr %i.cix, i64 192
+  %33 = getelementptr inbounds nuw i8, ptr %i.cix, i64 96
+  %i.cje = getelementptr i8, ptr %i.cix, i64 96
+  %34 = getelementptr inbounds nuw i8, ptr %i.cix, i64 192
+  %i.cjf = getelementptr i8, ptr %i.cix, i64 192
   %i.cjg = getelementptr inbounds nuw i8, ptr %i.cix, i64 8
   %i.cjh = getelementptr inbounds nuw i8, ptr %i.cix, i64 12
   %i.cji = getelementptr inbounds nuw i8, ptr %i.cix, i64 20
@@ -419,29 +422,30 @@ bb.le:                                            ; preds = %bb.ld
 
 .preheader8.us.i:                                 ; preds = %._crit_edge27.split.us.us.i, %.preheader8.us.preheader.i
   %.030.us.i = phi i32 [ %i.ctf, %._crit_edge27.split.us.us.i ], [ 0, %.preheader8.us.preheader.i ] ; 2 uses
-  %.09529.us.i = phi i64 [ %indvars.iv.next.i498.lcssa, %._crit_edge27.split.us.us.i ], [ 0, %.preheader8.us.preheader.i ]
+  %.09529.us.i = phi i32 [ %indvars.iv52.i, %._crit_edge27.split.us.us.i ], [ 0, %.preheader8.us.preheader.i ]
   %i.clb = uitofp nneg i32 %.030.us.i to float    ; 2 uses
   %i.clc = insertelement <2 x float> poison, float %i.clb, i64 0
   %i.cld = shufflevector <2 x float> %i.clc, <2 x float> poison, <2 x i32> zeroinitializer
   br label %.preheader7.us.us.i
 
 .preheader7.us.us.i:                              ; preds = %._crit_edge.us.us.i, %.preheader8.us.i
-  %.09126.us.us.i = phi i32 [ 0, %.preheader8.us.i ], [ %i.cte, %._crit_edge.us.us.i ] ; 2 uses
-  %.19625.us.us.i = phi i64 [ %.09529.us.i, %.preheader8.us.i ], [ %indvars.iv.next.i498.lcssa, %._crit_edge.us.us.i ]
+  %.09126.us.us.i = phi i32 [ %i.cte, %._crit_edge.us.us.i ], [ 0, %.preheader8.us.i ] ; 2 uses
+  %.19625.us.us.i = phi i32 [ %indvars.iv52.i, %._crit_edge.us.us.i ], [ %.09529.us.i, %.preheader8.us.i ] ; 2 uses
   %i.cle = uitofp nneg i32 %.09126.us.us.i to float ; 2 uses
   %i.clf = insertelement <2 x float> poison, float %i.cle, i64 0
   %i.clg = shufflevector <2 x float> %i.clf, <2 x float> poison, <2 x i32> zeroinitializer
   br label %.preheader6.us.us.i
 
 .loopexit1151:                                    ; preds = %vector.body1142, %scalar.ph1134.preheader
-  %indvars.iv.next.i498.lcssa = add i64 %.223.us.us.i, 24 ; 3 uses
-  %i.clh = add nuw nsw i32 %.09324.us.us.i, 1     ; 2 uses
-  %exitcond50.not.i = icmp eq i32 %i.clh, %i.cex
+  %35 = add nuw nsw i32 %.09324.us.us.i, 1        ; 2 uses
+  %i.clh = add i32 %indvars.iv.i497, 24
+  %exitcond50.not.i = icmp eq i32 %35, %i.cex
   br i1 %exitcond50.not.i, label %._crit_edge.us.us.i, label %.preheader6.us.us.i, !llvm.loop !159
 
 .preheader6.us.us.i:                              ; preds = %.loopexit1151, %.preheader7.us.us.i
-  %.09324.us.us.i = phi i32 [ 0, %.preheader7.us.us.i ], [ %i.clh, %.loopexit1151 ] ; 2 uses
-  %.223.us.us.i = phi i64 [ %.19625.us.us.i, %.preheader7.us.us.i ], [ %indvars.iv.next.i498.lcssa, %.loopexit1151 ] ; 29 uses
+  %indvars.iv.i497 = phi i32 [ %i.clh, %.loopexit1151 ], [ %.19625.us.us.i, %.preheader7.us.us.i ] ; 3 uses
+  %.09324.us.us.i = phi i32 [ %35, %.loopexit1151 ], [ 0, %.preheader7.us.us.i ] ; 2 uses
+  %36 = sext i32 %indvars.iv.i497 to i64          ; 27 uses
   %i.cli = uitofp nneg i32 %.09324.us.us.i to float ; 2 uses
   %i.clj = load <2 x float>, ptr %i.ad, align 16, !tbaa !53
   %i.clk = load <2 x float>, ptr %i.cfg, align 4, !tbaa !53
@@ -457,64 +461,65 @@ bb.le:                                            ; preds = %bb.ld
   %i.clu = call float @llvm.fmuladd.f32(float %i.cli, float %i.clr, float %i.clt)
   %i.clv = load float, ptr %i.cjd, align 16, !tbaa !53
   %i.clw = call float @llvm.fmuladd.f32(float %i.clb, float %i.clv, float %i.clu) ; 25 uses
-  %i.clx = mul i64 %.223.us.us.i, 12              ; 6 uses
-  %scevgep1077.a = getelementptr i8, ptr %i.cix, i64 %i.clx ; 5 uses
-  %scevgep1079.a = getelementptr i8, ptr %scevgep1078, i64 %i.clx ; 5 uses
-  %scevgep1081.a = getelementptr i8, ptr %scevgep1080, i64 %i.clx ; 5 uses
-  %scevgep1083 = getelementptr i8, ptr %scevgep1082, i64 %i.clx ; 5 uses
-  %scevgep1085 = getelementptr i8, ptr %scevgep1084, i64 %i.clx ; 5 uses
-  %scevgep1087 = getelementptr i8, ptr %scevgep1086, i64 %i.clx ; 5 uses
-  %bound01088 = icmp ult ptr %scevgep1077.a, %scevgep1083
-  %bound11089 = icmp ult ptr %scevgep1081.a, %scevgep1079.a
+  %37 = sext i32 %indvars.iv.i497 to i64
+  %i.clx = mul nsw i64 %37, 12                    ; 6 uses
+  %scevgep1077.a = getelementptr i8, ptr %scevgep1086, i64 %i.clx ; 5 uses
+  %scevgep1079.a = getelementptr i8, ptr %scevgep1084, i64 %i.clx ; 5 uses
+  %scevgep1081.a = getelementptr i8, ptr %scevgep1082, i64 %i.clx ; 5 uses
+  %scevgep1083 = getelementptr i8, ptr %scevgep1080, i64 %i.clx ; 5 uses
+  %scevgep1085 = getelementptr i8, ptr %scevgep1078, i64 %i.clx ; 5 uses
+  %scevgep1087 = getelementptr i8, ptr %i.cix, i64 %i.clx ; 5 uses
+  %bound01088 = icmp ult ptr %scevgep1087, %scevgep1081.a
+  %bound11089 = icmp ult ptr %scevgep1083, %scevgep1085
   %found.conflict1090 = and i1 %bound01088, %bound11089
-  %bound01091 = icmp ult ptr %scevgep1077.a, %scevgep1087
-  %bound11092 = icmp ult ptr %scevgep1085, %scevgep1079.a
+  %bound01091 = icmp ult ptr %scevgep1087, %scevgep1077.a
+  %bound11092 = icmp ult ptr %scevgep1079.a, %scevgep1085
   %found.conflict1093 = and i1 %bound01091, %bound11092
   %conflict.rdx = or i1 %found.conflict1090, %found.conflict1093
-  %bound01094 = icmp ult ptr %scevgep1077.a, %scevgep1078
-  %bound11095 = icmp ult ptr %i.cix, %scevgep1079.a
+  %bound01094 = icmp ult ptr %scevgep1087, %scevgep1078
+  %bound11095 = icmp ult ptr %i.cix, %scevgep1085
   %found.conflict1096 = and i1 %bound01094, %bound11095
   %conflict.rdx1097 = or i1 %conflict.rdx, %found.conflict1096
-  %bound01098 = icmp ult ptr %scevgep1077.a, %scevgep1082
-  %bound11099 = icmp ult ptr %scevgep1080, %scevgep1079.a
+  %bound01098 = icmp ult ptr %scevgep1087, %scevgep1082
+  %bound11099 = icmp ult ptr %scevgep1080, %scevgep1085
   %found.conflict1100 = and i1 %bound01098, %bound11099
   %conflict.rdx1101 = or i1 %conflict.rdx1097, %found.conflict1100
-  %bound01102 = icmp ult ptr %scevgep1077.a, %scevgep1086
-  %bound11103 = icmp ult ptr %scevgep1084, %scevgep1079.a
+  %bound01102 = icmp ult ptr %scevgep1087, %scevgep1086
+  %bound11103 = icmp ult ptr %scevgep1084, %scevgep1085
   %found.conflict1104 = and i1 %bound01102, %bound11103
   %conflict.rdx1105 = or i1 %conflict.rdx1101, %found.conflict1104
-  %bound01106 = icmp ult ptr %scevgep1081.a, %scevgep1087
-  %bound11107 = icmp ult ptr %scevgep1085, %scevgep1083
+  %bound01106 = icmp ult ptr %scevgep1083, %scevgep1077.a
+  %bound11107 = icmp ult ptr %scevgep1079.a, %scevgep1081.a
   %found.conflict1108 = and i1 %bound01106, %bound11107
   %conflict.rdx1109 = or i1 %conflict.rdx1105, %found.conflict1108
-  %bound01110 = icmp ult ptr %scevgep1081.a, %scevgep1078
-  %bound11111 = icmp ult ptr %i.cix, %scevgep1083
+  %bound01110 = icmp ult ptr %scevgep1083, %scevgep1078
+  %bound11111 = icmp ult ptr %i.cix, %scevgep1081.a
   %found.conflict1112 = and i1 %bound01110, %bound11111
   %conflict.rdx1113 = or i1 %conflict.rdx1109, %found.conflict1112
-  %bound01114 = icmp ult ptr %scevgep1081.a, %scevgep1082
-  %bound11115 = icmp ult ptr %scevgep1080, %scevgep1083
+  %bound01114 = icmp ult ptr %scevgep1083, %scevgep1082
+  %bound11115 = icmp ult ptr %scevgep1080, %scevgep1081.a
   %found.conflict1116 = and i1 %bound01114, %bound11115
   %conflict.rdx1117 = or i1 %conflict.rdx1113, %found.conflict1116
-  %bound01118 = icmp ult ptr %scevgep1081.a, %scevgep1086
-  %bound11119 = icmp ult ptr %scevgep1084, %scevgep1083
+  %bound01118 = icmp ult ptr %scevgep1083, %scevgep1086
+  %bound11119 = icmp ult ptr %scevgep1084, %scevgep1081.a
   %found.conflict1120 = and i1 %bound01118, %bound11119
   %conflict.rdx1121 = or i1 %conflict.rdx1117, %found.conflict1120
-  %bound01122 = icmp ult ptr %scevgep1085, %scevgep1078
-  %bound11123 = icmp ult ptr %i.cix, %scevgep1087
+  %bound01122 = icmp ult ptr %scevgep1079.a, %scevgep1078
+  %bound11123 = icmp ult ptr %i.cix, %scevgep1077.a
   %found.conflict1124 = and i1 %bound01122, %bound11123
   %conflict.rdx1125 = or i1 %conflict.rdx1121, %found.conflict1124
-  %bound01126 = icmp ult ptr %scevgep1085, %scevgep1082
-  %bound11127 = icmp ult ptr %scevgep1080, %scevgep1087
+  %bound01126 = icmp ult ptr %scevgep1079.a, %scevgep1082
+  %bound11127 = icmp ult ptr %scevgep1080, %scevgep1077.a
   %found.conflict1128 = and i1 %bound01126, %bound11127
   %conflict.rdx1129 = or i1 %conflict.rdx1125, %found.conflict1128
-  %bound01130 = icmp ult ptr %scevgep1085, %scevgep1086
-  %bound11131 = icmp ult ptr %scevgep1084, %scevgep1087
+  %bound01130 = icmp ult ptr %scevgep1079.a, %scevgep1086
+  %bound11131 = icmp ult ptr %scevgep1084, %scevgep1077.a
   %found.conflict1132 = and i1 %bound01130, %bound11131
   %conflict.rdx1133 = or i1 %conflict.rdx1129, %found.conflict1132
   br i1 %conflict.rdx1133, label %scalar.ph1134.preheader, label %vector.body1142
 
 scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
-  %i.cly = getelementptr inbounds [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cly = getelementptr inbounds [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.clz = load float, ptr %i.cjg, align 4, !tbaa !53
   %i.cma = fadd float %i.clw, %i.clz
   %i.cmb = load <2 x float>, ptr %i.cix, align 4, !tbaa !53
@@ -522,7 +527,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cmc, ptr %i.cly, align 4, !tbaa !53
   %i.cmd = getelementptr inbounds nuw i8, ptr %i.cly, i64 8
   store float %i.cma, ptr %i.cmd, align 4, !tbaa !53
-  %i.cme = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cme = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cmf = getelementptr i8, ptr %i.cme, i64 12
   %i.cmg = load float, ptr %i.cji, align 4, !tbaa !53
   %i.cmh = fadd float %i.clw, %i.cmg
@@ -531,7 +536,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cmj, ptr %i.cmf, align 4, !tbaa !53
   %i.cmk = getelementptr i8, ptr %i.cme, i64 20
   store float %i.cmh, ptr %i.cmk, align 4, !tbaa !53
-  %i.cml = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cml = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cmm = getelementptr i8, ptr %i.cml, i64 24
   %i.cmn = load float, ptr %i.cjk, align 4, !tbaa !53
   %i.cmo = fadd float %i.clw, %i.cmn
@@ -540,7 +545,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cmq, ptr %i.cmm, align 4, !tbaa !53
   %i.cmr = getelementptr i8, ptr %i.cml, i64 32
   store float %i.cmo, ptr %i.cmr, align 4, !tbaa !53
-  %i.cms = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cms = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cmt = getelementptr i8, ptr %i.cms, i64 36
   %i.cmu = load float, ptr %i.cjm, align 4, !tbaa !53
   %i.cmv = fadd float %i.clw, %i.cmu
@@ -549,7 +554,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cmx, ptr %i.cmt, align 4, !tbaa !53
   %i.cmy = getelementptr i8, ptr %i.cms, i64 44
   store float %i.cmv, ptr %i.cmy, align 4, !tbaa !53
-  %i.cmz = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cmz = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cna = getelementptr i8, ptr %i.cmz, i64 48
   %i.cnb = load float, ptr %i.cjo, align 4, !tbaa !53
   %i.cnc = fadd float %i.clw, %i.cnb
@@ -558,7 +563,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cne, ptr %i.cna, align 4, !tbaa !53
   %i.cnf = getelementptr i8, ptr %i.cmz, i64 56
   store float %i.cnc, ptr %i.cnf, align 4, !tbaa !53
-  %i.cng = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cng = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cnh = getelementptr i8, ptr %i.cng, i64 60
   %i.cni = load float, ptr %i.cjq, align 4, !tbaa !53
   %i.cnj = fadd float %i.clw, %i.cni
@@ -567,7 +572,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cnl, ptr %i.cnh, align 4, !tbaa !53
   %i.cnm = getelementptr i8, ptr %i.cng, i64 68
   store float %i.cnj, ptr %i.cnm, align 4, !tbaa !53
-  %i.cnn = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cnn = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cno = getelementptr i8, ptr %i.cnn, i64 72
   %i.cnp = load float, ptr %i.cjs, align 4, !tbaa !53
   %i.cnq = fadd float %i.clw, %i.cnp
@@ -576,7 +581,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cns, ptr %i.cno, align 4, !tbaa !53
   %i.cnt = getelementptr i8, ptr %i.cnn, i64 80
   store float %i.cnq, ptr %i.cnt, align 4, !tbaa !53
-  %i.cnu = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cnu = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cnv = getelementptr i8, ptr %i.cnu, i64 84
   %i.cnw = load float, ptr %i.cju, align 4, !tbaa !53
   %i.cnx = fadd float %i.clw, %i.cnw
@@ -585,7 +590,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cnz, ptr %i.cnv, align 4, !tbaa !53
   %i.coa = getelementptr i8, ptr %i.cnu, i64 92
   store float %i.cnx, ptr %i.coa, align 4, !tbaa !53
-  %i.cob = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cob = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.coc = getelementptr i8, ptr %i.cob, i64 96
   %i.cod = load float, ptr %i.cjw, align 4, !tbaa !53
   %i.coe = fadd float %i.clw, %i.cod
@@ -594,7 +599,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cog, ptr %i.coc, align 4, !tbaa !53
   %i.coh = getelementptr i8, ptr %i.cob, i64 104
   store float %i.coe, ptr %i.coh, align 4, !tbaa !53
-  %i.coi = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.coi = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.coj = getelementptr i8, ptr %i.coi, i64 108
   %i.cok = load float, ptr %i.cjy, align 4, !tbaa !53
   %i.col = fadd float %i.clw, %i.cok
@@ -603,7 +608,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.con, ptr %i.coj, align 4, !tbaa !53
   %i.coo = getelementptr i8, ptr %i.coi, i64 116
   store float %i.col, ptr %i.coo, align 4, !tbaa !53
-  %i.cop = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cop = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.coq = getelementptr i8, ptr %i.cop, i64 120
   %i.cor = load float, ptr %i.cka, align 4, !tbaa !53
   %i.cos = fadd float %i.clw, %i.cor
@@ -612,7 +617,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cou, ptr %i.coq, align 4, !tbaa !53
   %i.cov = getelementptr i8, ptr %i.cop, i64 128
   store float %i.cos, ptr %i.cov, align 4, !tbaa !53
-  %i.cow = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cow = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cox = getelementptr i8, ptr %i.cow, i64 132
   %i.coy = load float, ptr %i.ckc, align 4, !tbaa !53
   %i.coz = fadd float %i.clw, %i.coy
@@ -621,7 +626,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cpb, ptr %i.cox, align 4, !tbaa !53
   %i.cpc = getelementptr i8, ptr %i.cow, i64 140
   store float %i.coz, ptr %i.cpc, align 4, !tbaa !53
-  %i.cpd = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cpd = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cpe = getelementptr i8, ptr %i.cpd, i64 144
   %i.cpf = load float, ptr %i.cke, align 4, !tbaa !53
   %i.cpg = fadd float %i.clw, %i.cpf
@@ -630,7 +635,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cpi, ptr %i.cpe, align 4, !tbaa !53
   %i.cpj = getelementptr i8, ptr %i.cpd, i64 152
   store float %i.cpg, ptr %i.cpj, align 4, !tbaa !53
-  %i.cpk = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cpk = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cpl = getelementptr i8, ptr %i.cpk, i64 156
   %i.cpm = load float, ptr %i.ckg, align 4, !tbaa !53
   %i.cpn = fadd float %i.clw, %i.cpm
@@ -639,7 +644,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cpp, ptr %i.cpl, align 4, !tbaa !53
   %i.cpq = getelementptr i8, ptr %i.cpk, i64 164
   store float %i.cpn, ptr %i.cpq, align 4, !tbaa !53
-  %i.cpr = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cpr = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cps = getelementptr i8, ptr %i.cpr, i64 168
   %i.cpt = load float, ptr %i.cki, align 4, !tbaa !53
   %i.cpu = fadd float %i.clw, %i.cpt
@@ -648,7 +653,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cpw, ptr %i.cps, align 4, !tbaa !53
   %i.cpx = getelementptr i8, ptr %i.cpr, i64 176
   store float %i.cpu, ptr %i.cpx, align 4, !tbaa !53
-  %i.cpy = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cpy = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cpz = getelementptr i8, ptr %i.cpy, i64 180
   %i.cqa = load float, ptr %i.ckk, align 4, !tbaa !53
   %i.cqb = fadd float %i.clw, %i.cqa
@@ -657,7 +662,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cqd, ptr %i.cpz, align 4, !tbaa !53
   %i.cqe = getelementptr i8, ptr %i.cpy, i64 188
   store float %i.cqb, ptr %i.cqe, align 4, !tbaa !53
-  %i.cqf = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cqf = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cqg = getelementptr i8, ptr %i.cqf, i64 192
   %i.cqh = load float, ptr %i.ckm, align 4, !tbaa !53
   %i.cqi = fadd float %i.clw, %i.cqh
@@ -666,7 +671,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cqk, ptr %i.cqg, align 4, !tbaa !53
   %i.cql = getelementptr i8, ptr %i.cqf, i64 200
   store float %i.cqi, ptr %i.cql, align 4, !tbaa !53
-  %i.cqm = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cqm = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cqn = getelementptr i8, ptr %i.cqm, i64 204
   %i.cqo = load float, ptr %i.cko, align 4, !tbaa !53
   %i.cqp = fadd float %i.clw, %i.cqo
@@ -675,7 +680,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cqr, ptr %i.cqn, align 4, !tbaa !53
   %i.cqs = getelementptr i8, ptr %i.cqm, i64 212
   store float %i.cqp, ptr %i.cqs, align 4, !tbaa !53
-  %i.cqt = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cqt = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cqu = getelementptr i8, ptr %i.cqt, i64 216
   %i.cqv = load float, ptr %i.ckq, align 4, !tbaa !53
   %i.cqw = fadd float %i.clw, %i.cqv
@@ -684,7 +689,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.cqy, ptr %i.cqu, align 4, !tbaa !53
   %i.cqz = getelementptr i8, ptr %i.cqt, i64 224
   store float %i.cqw, ptr %i.cqz, align 4, !tbaa !53
-  %i.cra = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cra = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.crb = getelementptr i8, ptr %i.cra, i64 228
   %i.crc = load float, ptr %i.cks, align 4, !tbaa !53
   %i.crd = fadd float %i.clw, %i.crc
@@ -693,7 +698,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.crf, ptr %i.crb, align 4, !tbaa !53
   %i.crg = getelementptr i8, ptr %i.cra, i64 236
   store float %i.crd, ptr %i.crg, align 4, !tbaa !53
-  %i.crh = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.crh = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.cri = getelementptr i8, ptr %i.crh, i64 240
   %i.crj = load float, ptr %i.cku, align 4, !tbaa !53
   %i.crk = fadd float %i.clw, %i.crj
@@ -702,7 +707,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.crm, ptr %i.cri, align 4, !tbaa !53
   %i.crn = getelementptr i8, ptr %i.crh, i64 248
   store float %i.crk, ptr %i.crn, align 4, !tbaa !53
-  %i.cro = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.cro = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.crp = getelementptr i8, ptr %i.cro, i64 252
   %i.crq = load float, ptr %i.ckw, align 4, !tbaa !53
   %i.crr = fadd float %i.clw, %i.crq
@@ -711,7 +716,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.crt, ptr %i.crp, align 4, !tbaa !53
   %i.cru = getelementptr i8, ptr %i.cro, i64 260
   store float %i.crr, ptr %i.cru, align 4, !tbaa !53
-  %i.crv = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.crv = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.crw = getelementptr i8, ptr %i.crv, i64 264
   %i.crx = load float, ptr %i.cky, align 4, !tbaa !53
   %i.cry = fadd float %i.clw, %i.crx
@@ -720,7 +725,7 @@ scalar.ph1134.preheader:                          ; preds = %.preheader6.us.us.i
   store <2 x float> %i.csa, ptr %i.crw, align 4, !tbaa !53
   %i.csb = getelementptr i8, ptr %i.crv, i64 272
   store float %i.cry, ptr %i.csb, align 4, !tbaa !53
-  %i.csc = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i ; 2 uses
+  %i.csc = getelementptr [12 x i8], ptr %i.cix, i64 %36 ; 2 uses
   %i.csd = getelementptr i8, ptr %i.csc, i64 276
   %i.cse = load float, ptr %i.cla, align 4, !tbaa !53
   %i.csf = fadd float %i.clw, %i.cse
@@ -735,7 +740,7 @@ vector.body1142:                                  ; preds = %.preheader6.us.us.i
   %broadcast.splatinsert1140 = insertelement <8 x float> poison, float %i.clw, i64 0 ; 3 uses
   %broadcast.splat1139 = shufflevector <2 x float> %i.clq, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 3 uses
   %broadcast.splat1137 = shufflevector <2 x float> %i.clq, <2 x float> poison, <8 x i32> zeroinitializer ; 3 uses
-  %i.csj = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i
+  %i.csj = getelementptr [12 x i8], ptr %i.cix, i64 %36
   %wide.vec1144 = load <24 x float>, ptr %i.cix, align 4, !tbaa !53 ; 3 uses
   %strided.vec1145 = shufflevector <24 x float> %wide.vec1144, <24 x float> poison, <8 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
   %strided.vec1146 = shufflevector <24 x float> %wide.vec1144, <24 x float> poison, <8 x i32> <i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
@@ -747,9 +752,8 @@ vector.body1142:                                  ; preds = %.preheader6.us.us.i
   %i.csp = fadd <16 x float> %i.csn, %i.cso
   %interleaved.vec1148 = shufflevector <16 x float> %i.csm, <16 x float> %i.csp, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec1148, ptr %i.csj, align 4, !tbaa !53
-  %i.csq = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i
-  %32 = getelementptr i8, ptr %i.csq, i64 96
-  %wide.vec1144.1 = load <24 x float>, ptr %i.cje, align 4, !tbaa !53 ; 3 uses
+  %i.csq = getelementptr [12 x i8], ptr %i.cje, i64 %36
+  %wide.vec1144.1 = load <24 x float>, ptr %33, align 4, !tbaa !53 ; 3 uses
   %strided.vec1145.1 = shufflevector <24 x float> %wide.vec1144.1, <24 x float> poison, <8 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
   %strided.vec1146.1 = shufflevector <24 x float> %wide.vec1144.1, <24 x float> poison, <8 x i32> <i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
   %i.csr = fadd <8 x float> %broadcast.splat1137, %strided.vec1145.1
@@ -759,10 +763,9 @@ vector.body1142:                                  ; preds = %.preheader6.us.us.i
   %i.csv = shufflevector <24 x float> %wide.vec1144.1, <24 x float> poison, <16 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.csw = fadd <16 x float> %i.csu, %i.csv
   %interleaved.vec1148.1 = shufflevector <16 x float> %i.cst, <16 x float> %i.csw, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
-  store <24 x float> %interleaved.vec1148.1, ptr %32, align 4, !tbaa !53
-  %i.csx = getelementptr [12 x i8], ptr %i.cix, i64 %.223.us.us.i
-  %33 = getelementptr i8, ptr %i.csx, i64 192
-  %wide.vec1144.2 = load <24 x float>, ptr %i.cjf, align 4, !tbaa !53 ; 3 uses
+  store <24 x float> %interleaved.vec1148.1, ptr %i.csq, align 4, !tbaa !53
+  %i.csx = getelementptr [12 x i8], ptr %i.cjf, i64 %36
+  %wide.vec1144.2 = load <24 x float>, ptr %34, align 4, !tbaa !53 ; 3 uses
   %strided.vec1145.2 = shufflevector <24 x float> %wide.vec1144.2, <24 x float> poison, <8 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
   %strided.vec1146.2 = shufflevector <24 x float> %wide.vec1144.2, <24 x float> poison, <8 x i32> <i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
   %i.csy = fadd <8 x float> %broadcast.splat1137, %strided.vec1145.2
@@ -772,10 +775,11 @@ vector.body1142:                                  ; preds = %.preheader6.us.us.i
   %i.ctc = shufflevector <24 x float> %wide.vec1144.2, <24 x float> poison, <16 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.ctd = fadd <16 x float> %i.ctb, %i.ctc
   %interleaved.vec1148.2 = shufflevector <16 x float> %i.cta, <16 x float> %i.ctd, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
-  store <24 x float> %interleaved.vec1148.2, ptr %33, align 4, !tbaa !53
+  store <24 x float> %interleaved.vec1148.2, ptr %i.csx, align 4, !tbaa !53
   br label %.loopexit1151
 
 ._crit_edge.us.us.i:                              ; preds = %.loopexit1151
+  %indvars.iv52.i = add i32 %.19625.us.us.i, %32  ; 2 uses
   %i.cte = add nuw nsw i32 %.09126.us.us.i, 1     ; 2 uses
   %exitcond51.not.i = icmp eq i32 %i.cte, %i.cfa
   br i1 %exitcond51.not.i, label %._crit_edge27.split.us.us.i, label %.preheader7.us.us.i, !llvm.loop !160
@@ -1178,7 +1182,7 @@ bb.j:                                             ; preds = %.lr.ph.split.3
 bb.k:                                             ; preds = %bb.j, %.lr.ph.split.3
   %.1.3 = phi i32 [ %i.bw, %bb.j ], [ %.1.2, %.lr.ph.split.3 ] ; 2 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit16.unr-lcssa, label %.lr.ph.split, !llvm.loop !130
 

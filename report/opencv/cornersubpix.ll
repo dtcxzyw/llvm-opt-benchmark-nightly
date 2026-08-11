@@ -201,10 +201,8 @@ bb.ar:                                            ; preds = %bb.ao
   %i.du = uitofp nneg i32 %.sroa.0153.0.extract.trunc to float
   %i.dv = uitofp nneg i32 %.sroa.10.0.extract.trunc to float
   %i.dw = sext i32 %i.b to i64                    ; 2 uses
-  %smax378 = call i32 @llvm.smax.i32(i32 %i.a, i32 0) ; 2 uses
-  %23 = or disjoint i32 %smax378, 1
-  %24 = zext nneg i32 %23 to i64
-  %i.dx = or disjoint i32 %smax378, 1
+  %smax378 = call i32 @llvm.smax.i32(i32 %i.a, i32 0)
+  %i.dx = or disjoint i32 %smax378, 1             ; 2 uses
   %smax384 = call i32 @llvm.smax.i32(i32 %i.c, i32 0)
   %wide.trip.count390 = zext nneg i32 %i.v to i64
   %wide.trip.count382 = zext nneg i32 %i.dx to i64
@@ -305,13 +303,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit268: ; preds = %bb
   br label %.lr.ph324
 
 .lr.ph324:                                        ; preds = %.lr.ph324.preheader, %._crit_edge325
-  %.2339.a = phi i32 [ %i.gu, %._crit_edge325 ], [ 0, %.lr.ph324.preheader ] ; 3 uses
-  %.0173338 = phi i64 [ %25, %._crit_edge325 ], [ 0, %.lr.ph324.preheader ] ; 2 uses
-  %.0198337 = phi ptr [ %i.gv, %._crit_edge325 ], [ %i.ex, %.lr.ph324.preheader ] ; 5 uses
-  %.0205334 = phi double [ %i.gl, %._crit_edge325 ], [ 0.000000e+00, %.lr.ph324.preheader ]
-  %i.ey = phi <2 x double> [ %i.gk, %._crit_edge325 ], [ zeroinitializer, %.lr.ph324.preheader ]
-  %i.ez = phi <2 x double> [ %i.gs, %._crit_edge325 ], [ zeroinitializer, %.lr.ph324.preheader ]
-  %i.fa = sub nsw i32 %.2339.a, %.sroa.10.0.extract.trunc
+  %.2339.a = phi i32 [ 0, %.lr.ph324.preheader ], [ %indvars.iv.next378, %._crit_edge325 ] ; 2 uses
+  %.2339 = phi i32 [ 0, %.lr.ph324.preheader ], [ %i.gu, %._crit_edge325 ] ; 3 uses
+  %.0198337 = phi ptr [ %i.ex, %.lr.ph324.preheader ], [ %i.gv, %._crit_edge325 ] ; 5 uses
+  %.0205334 = phi double [ 0.000000e+00, %.lr.ph324.preheader ], [ %i.gl, %._crit_edge325 ]
+  %i.ey = phi <2 x double> [ zeroinitializer, %.lr.ph324.preheader ], [ %i.gk, %._crit_edge325 ]
+  %i.ez = phi <2 x double> [ zeroinitializer, %.lr.ph324.preheader ], [ %i.gs, %._crit_edge325 ]
+  %23 = sext i32 %.2339.a to i64
+  %i.fa = sub nsw i32 %.2339, %.sroa.10.0.extract.trunc
   %i.fb = sitofp i32 %i.fa to double
   %invariant.gep408 = getelementptr [4 x i8], ptr %.0198337, i64 %i.dw
   %i.fc = insertelement <2 x double> poison, double %i.fb, i64 0
@@ -319,12 +318,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit268: ; preds = %bb
   br label %bb.ay
 
 bb.ay:                                            ; preds = %.lr.ph324, %bb.ay
-  %indvars.iv376 = phi i64 [ %.0173338, %.lr.ph324 ], [ %indvars.iv.next377, %bb.ay ] ; 2 uses
+  %indvars.iv376 = phi i64 [ %23, %.lr.ph324 ], [ %indvars.iv.next377, %bb.ay ] ; 2 uses
   %indvars.iv374 = phi i64 [ 0, %.lr.ph324 ], [ %indvars.iv.next375, %bb.ay ] ; 5 uses
   %.1206318 = phi double [ %.0205334, %.lr.ph324 ], [ %i.gl, %bb.ay ]
   %i.fe = phi <2 x double> [ %i.ey, %.lr.ph324 ], [ %i.gk, %bb.ay ]
   %i.ff = phi <2 x double> [ %i.ez, %.lr.ph324 ], [ %i.gs, %bb.ay ]
-  %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %indvars.iv376
+  %i.fg = getelementptr inbounds [4 x i8], ptr %i.bt, i64 %indvars.iv376
   %i.fh = load float, ptr %i.fg, align 4, !tbaa !34
   %i.fi = fpext float %i.fh to double             ; 2 uses
   %indvars.iv.next375 = add nuw nsw i64 %indvars.iv374, 1 ; 3 uses
@@ -366,7 +365,7 @@ bb.ay:                                            ; preds = %.lr.ph324, %bb.ay
   %i.gq = shufflevector <2 x double> %i.gp, <2 x double> poison, <2 x i32> zeroinitializer
   %i.gr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gf, <2 x double> %i.gq, <2 x double> %i.go)
   %i.gs = fadd <2 x double> %i.ff, %i.gr          ; 4 uses
-  %indvars.iv.next377 = add nuw nsw i64 %indvars.iv376, 1
+  %indvars.iv.next377 = add nsw i64 %indvars.iv376, 1
   %exitcond383.not = icmp eq i64 %indvars.iv.next375, %wide.trip.count382
   br i1 %exitcond383.not, label %._crit_edge325, label %bb.ay, !llvm.loop !45
 
@@ -378,10 +377,10 @@ bb.az:                                            ; preds = %.preheader
   br label %bb.bf
 
 ._crit_edge325:                                   ; preds = %bb.ay
-  %25 = add nuw nsw i64 %.0173338, %24
-  %i.gu = add nuw nsw i32 %.2339.a, 1
+  %i.gu = add nuw nsw i32 %.2339, 1
   %i.gv = getelementptr inbounds nuw [4 x i8], ptr %.0198337, i64 %.sroa.0271.0.insert.ext
-  %exitcond385.not = icmp eq i32 %.2339.a, %smax384
+  %indvars.iv.next378 = add i32 %.2339.a, %i.dx
+  %exitcond385.not = icmp eq i32 %.2339, %smax384
   br i1 %exitcond385.not, label %._crit_edge342, label %.lr.ph324, !llvm.loop !46
 
 ._crit_edge342:                                   ; preds = %._crit_edge325

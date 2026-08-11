@@ -204,7 +204,7 @@ bb.a:
   br label %.lr.ph.i
 
 ._crit_edge.i.thread:                             ; preds = %.lr.ph.i
-  store i32 %2, ptr @_ZN5boost9container4test19non_copymovable_int5countE, align 4, !tbaa !45
+  store i32 %indvars.iv, ptr @_ZN5boost9container4test19non_copymovable_int5countE, align 4, !tbaa !45
   br label %bb.b
 
 ._crit_edge.i:                                    ; preds = %.preheader.i
@@ -212,11 +212,11 @@ bb.a:
   br i1 %.not12.i, label %bb.c, label %bb.b
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
-  %.pre.i = phi i32 [ %2, %.lr.ph.i ], [ %.pre.pre.i, %.lr.ph.preheader.i ]
+  %.pre.i = phi i32 [ %indvars.iv, %.lr.ph.i ], [ %.pre.pre.i, %.lr.ph.preheader.i ]
   %.029.i = phi ptr [ %.0.i, %.lr.ph.i ], [ %.028.i, %.lr.ph.preheader.i ] ; 2 uses
+  %indvars.iv = add i32 %.pre.i, -256             ; 2 uses
   %1 = load ptr, ptr %.029.i, align 8, !tbaa !1097
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1024) %1, i8 0, i64 1024, i1 false), !tbaa !1099
-  %2 = add i32 %.pre.i, -256                      ; 2 uses
   %.0.i = getelementptr inbounds nuw i8, ptr %.029.i, i64 8 ; 2 uses
   %i.k = icmp ult ptr %.0.i, %i.f
   br i1 %i.k, label %.lr.ph.i, label %._crit_edge.i.thread, !llvm.loop !1112
@@ -619,7 +619,7 @@ bb.e:                                             ; preds = %bb.c
   br label %.lr.ph.i
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
-  store i32 %3, ptr @_ZN5boost9container4test19non_copymovable_int5countE, align 4, !tbaa !45
+  store i32 %indvars.iv, ptr @_ZN5boost9container4test19non_copymovable_int5countE, align 4, !tbaa !45
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %.preheader.i
@@ -627,11 +627,11 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not12.i, label %bb.g, label %bb.f
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
-  %.pre.i = phi i32 [ %3, %.lr.ph.i ], [ %.pre.pre.i, %.lr.ph.preheader.i ]
+  %.pre.i = phi i32 [ %indvars.iv, %.lr.ph.i ], [ %.pre.pre.i, %.lr.ph.preheader.i ]
   %.029.i = phi ptr [ %.0.i, %.lr.ph.i ], [ %.028.i, %.lr.ph.preheader.i ] ; 2 uses
+  %indvars.iv = add i32 %.pre.i, -256             ; 2 uses
   %2 = load ptr, ptr %.029.i, align 8, !tbaa !1097
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1024) %2, i8 0, i64 1024, i1 false), !tbaa !1099
-  %3 = add i32 %.pre.i, -256                      ; 2 uses
   %.0.i = getelementptr inbounds nuw i8, ptr %.029.i, i64 8 ; 2 uses
   %i.aa = icmp ult ptr %.0.i, %i.e
   br i1 %i.aa, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !1112

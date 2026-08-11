@@ -204,7 +204,7 @@ bb.a:
   %i.a = tail call noalias ptr @fopen(ptr noundef %2, ptr noundef nonnull @.str.21) ; 4 uses
   %i.b = getelementptr i8, ptr %0, i64 4
   %.val15 = load i32, ptr %i.b, align 4, !tbaa !40
-  %i.c = sdiv i32 %.val15, %1                     ; 2 uses
+  %i.c = sdiv i32 %.val15, %1                     ; 3 uses
   %i.d = icmp sgt i32 %1, 0
   br i1 %i.d, label %.preheader.lr.ph, label %._crit_edge20
 
@@ -214,26 +214,27 @@ bb.a:
   br i1 %i.e, label %.preheader.us, label %.preheader
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph, %._crit_edge.us
-  %.019.us.a = phi i32 [ %i.k, %._crit_edge.us ], [ 0, %.preheader.lr.ph ]
-  %.01318.us = phi i32 [ %3, %._crit_edge.us ], [ 0, %.preheader.lr.ph ] ; 2 uses
-  %i.g = sext i32 %.01318.us to i64
-  %3 = add i32 %i.c, %.01318.us                   ; 2 uses
+  %.019.us.a = phi i32 [ %indvars.iv.next, %._crit_edge.us ], [ 0, %.preheader.lr.ph ] ; 2 uses
+  %.01318.us = phi i32 [ %i.k, %._crit_edge.us ], [ 0, %.preheader.lr.ph ]
+  %i.g = sext i32 %.019.us.a to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader.us, %bb.b
   %indvars.iv = phi i64 [ %i.g, %.preheader.us ], [ %indvars.iv.next.a, %bb.b ] ; 2 uses
-  %indvars.iv.next.a = add nsw i64 %indvars.iv, 1 ; 2 uses
+  %.01416.us = phi i32 [ 0, %.preheader.us ], [ %3, %bb.b ]
+  %indvars.iv.next.a = add nsw i64 %indvars.iv, 1
   %.val.us = load ptr, ptr %i.f, align 8, !tbaa !39
   %i.h = getelementptr inbounds [4 x i8], ptr %.val.us, i64 %indvars.iv
   %i.i = load i32, ptr %i.h, align 4, !tbaa !36
   %i.j = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.a, ptr noundef nonnull @.str.2, i32 noundef %i.i) #25 ; 0 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.a to i32
-  %exitcond23.not = icmp eq i32 %3, %lftr.wideiv
+  %3 = add nuw nsw i32 %.01416.us, 1              ; 2 uses
+  %exitcond23.not = icmp eq i32 %3, %i.c
   br i1 %exitcond23.not, label %._crit_edge.us, label %bb.b, !llvm.loop !106
 
 ._crit_edge.us:                                   ; preds = %bb.b
-  %i.k = add nuw nsw i32 %.019.us.a, 1            ; 2 uses
+  %i.k = add nuw nsw i32 %.01318.us, 1            ; 2 uses
   %fputc.us = tail call i32 @fputc(i32 10, ptr %i.a) ; 0 uses
+  %indvars.iv.next = add i32 %.019.us.a, %i.c
   %exitcond24.not = icmp eq i32 %i.k, %1
   br i1 %exitcond24.not, label %._crit_edge20, label %.preheader.us, !llvm.loop !107
 

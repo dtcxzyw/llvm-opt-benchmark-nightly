@@ -204,32 +204,40 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f
 getTuple.exit:                                    ; preds = %bb.b, %bb.j
   %.276.i = phi i32 [ %i.e, %bb.b ], [ %i.aw, %bb.j ] ; 2 uses
   %.273.i = phi i32 [ %i.i, %bb.b ], [ %i.ax, %bb.j ] ; 2 uses
-  %.270.i = phi i32 [ %i.j, %bb.b ], [ %.169.i, %bb.j ] ; 2 uses
+  %.270.i = phi i32 [ %i.j, %bb.b ], [ %.169.i, %bb.j ] ; 4 uses
   %i.ay = add nsw i32 %.276.i, -1
   %i.az = add nsw i32 %.273.i, -1
-  %i.ba = add nsw i32 %.270.i, -1
+  %i.ba = add i32 %.270.i, -1                     ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
+  %3 = sext i32 %.270.i to i64
+  %4 = add nsw i64 %3, 1
+  %5 = sext i32 %i.ba to i64
+  %smax = tail call i64 @llvm.smax.i64(i64 %4, i64 %5)
+  %6 = trunc i64 %smax to i32
+  %7 = add i32 %6, 2
+  %8 = sub i32 %7, %.270.i
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.m
-  %3 = trunc nsw i64 %indvars.iv.next.a to i32
-  ret i32 %3
+  ret i32 %9
 
 bb.l:                                             ; preds = %getTuple.exit, %bb.m
   %.01530 = phi i32 [ %i.ay, %getTuple.exit ], [ %i.be, %bb.m ] ; 5 uses
-  %.01629 = phi i64 [ 0, %getTuple.exit ], [ %indvars.iv.next.a, %bb.m ]
+  %.01629 = phi i32 [ 0, %getTuple.exit ], [ %9, %bb.m ]
   %i.bd = icmp eq i32 %.01530, -1
   %i.be = add i32 %.01530, 1                      ; 5 uses
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.o
+  %9 = trunc nsw i64 %indvars.iv.next.a to i32    ; 2 uses
   %.not = icmp sgt i32 %.01530, %.276.i
   br i1 %.not, label %bb.k, label %bb.l
 
 bb.n:                                             ; preds = %bb.l, %bb.o
+  %indvars.iv = phi i32 [ %.01629, %bb.l ], [ %indvars.iv.next, %bb.o ] ; 2 uses
   %.01428 = phi i32 [ %i.az, %bb.l ], [ %i.bh, %bb.o ] ; 9 uses
-  %.127 = phi i64 [ %.01629, %bb.l ], [ %indvars.iv.next.a, %bb.o ]
+  %10 = sext i32 %indvars.iv to i64
   %i.bf = icmp eq i32 %.01428, -1
   %i.bg = shl i32 %.01428, 1
   %i.bh = add nsw i32 %.01428, 1                  ; 2 uses
@@ -238,10 +246,11 @@ bb.n:                                             ; preds = %bb.l, %bb.o
 
 bb.o:                                             ; preds = %getBoxFromTuple.exit
   %.not17 = icmp sgt i32 %.01428, %.273.i
+  %indvars.iv.next = add i32 %indvars.iv, %8
   br i1 %.not17, label %bb.m, label %bb.n
 
 bb.p:                                             ; preds = %bb.n, %getBoxFromTuple.exit
-  %indvars.iv.a = phi i64 [ %.127, %bb.n ], [ %indvars.iv.next.a, %getBoxFromTuple.exit ] ; 2 uses
+  %indvars.iv.a = phi i64 [ %10, %bb.n ], [ %indvars.iv.next.a, %getBoxFromTuple.exit ] ; 2 uses
   %.026 = phi i32 [ %i.ba, %bb.n ], [ %i.di, %getBoxFromTuple.exit ] ; 10 uses
   %i.bj = load i32, ptr %i.bb, align 4, !tbaa !4  ; 6 uses
   %i.bk = icmp eq i32 %.026, %i.bj
@@ -344,7 +353,7 @@ bb.ab:                                            ; preds = %bb.z
 
 getBoxFromTuple.exit:                             ; preds = %bb.q, %bb.s, %bb.u, %bb.w, %bb.y, %bb.aa, %bb.ab
   %.0.i19 = phi i32 [ %i.bt, %bb.q ], [ %i.cd, %bb.s ], [ %i.cm, %bb.u ], [ %i.cv, %bb.w ], [ %i.da, %bb.y ], [ %i.de, %bb.aa ], [ %i.dg, %bb.ab ]
-  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1 ; 4 uses
+  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1 ; 2 uses
   %i.dh = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv.a
   store i32 %.0.i19, ptr %i.dh, align 4, !tbaa !4
   %i.di = add nsw i32 %.026, 1
@@ -745,6 +754,9 @@ declare double @llvm.floor.f64(double) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #11

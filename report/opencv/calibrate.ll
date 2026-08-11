@@ -204,7 +204,7 @@ bb.bc:                                            ; preds = %.lr.ph.i.i.i.i.i
   %i.hp = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.hq = getelementptr inbounds nuw i8, ptr %30, i64 8
   %i.hr = getelementptr inbounds nuw i8, ptr %30, i64 16
-  %umax431 = call i64 @llvm.umax.i64(i64 %i.gd, i64 1)
+  %umax431 = call i64 @llvm.umax.i64(i64 %i.gd, i64 1) ; 2 uses
   br label %bb.be
 
 bb.bd:                                            ; preds = %.loopexit
@@ -296,15 +296,17 @@ _ZNK2cv7MatExprcvNS_3MatEEv.exit223:              ; preds = %bb.bg
   %i.iv = ptrtoint ptr %i.in to i64
   %i.iw = ptrtoint ptr %i.io to i64
   %i.ix = sub i64 %i.iv, %i.iw
-  %i.iy = sdiv exact i64 %i.ix, 208
+  %i.iy = sdiv exact i64 %i.ix, 208               ; 3 uses
   %i.iz = load i32, ptr %i.gn, align 4, !tbaa !123
   %i.ja = icmp slt i32 %i.iz, 2
+  %35 = trunc i64 %i.iy to i32
   %i.jb = trunc nuw nsw i64 %indvars.iv441 to i32
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %._crit_edge.us405, %.preheader.lr.ph.split.us
-  %.0120402.us = phi i64 [ 0, %.preheader.lr.ph.split.us ], [ %i.mh, %._crit_edge.us405 ] ; 3 uses
-  %.0121401.us = phi i64 [ 0, %.preheader.lr.ph.split.us ], [ %indvars.iv.next.a, %._crit_edge.us405 ]
+  %indvars.iv = phi i32 [ %indvars.iv.next, %._crit_edge.us405 ], [ 0, %.preheader.lr.ph.split.us ] ; 2 uses
+  %.0120402.us = phi i64 [ %i.mh, %._crit_edge.us405 ], [ 0, %.preheader.lr.ph.split.us ] ; 3 uses
+  %36 = sext i32 %indvars.iv to i64
   %i.jc = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0296.4, i64 %.0120402.us ; 2 uses
   %i.jd = getelementptr inbounds nuw i8, ptr %i.jc, i64 4
   %i.je = load i32, ptr %i.jd, align 4, !tbaa !124
@@ -329,7 +331,7 @@ _ZNK2cv7MatExprcvNS_3MatEEv.exit223:              ; preds = %bb.bg
   br label %bb.bh
 
 bb.bh:                                            ; preds = %.preheader.us, %bb.bv
-  %indvars.iv.a = phi i64 [ %.0121401.us, %.preheader.us ], [ %indvars.iv.next.a, %bb.bv ] ; 4 uses
+  %indvars.iv.a = phi i64 [ %36, %.preheader.us ], [ %indvars.iv.next.a, %bb.bv ] ; 4 uses
   %.0119398.us = phi i64 [ 0, %.preheader.us ], [ %i.mg, %bb.bv ] ; 6 uses
   %i.jv = getelementptr inbounds nuw [208 x i8], ptr %i.io, i64 %.0119398.us
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 24
@@ -456,15 +458,16 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt, %bb.
   %.sink.i232.us = getelementptr inbounds nuw i8, ptr %i.iu, i64 %.sink.idx.i231.us
   %i.mf = fmul float %i.ld, %i.mc
   store float %i.mf, ptr %.sink.i232.us, align 4, !tbaa !69
-  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1 ; 3 uses
+  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1
   %i.mg = add nuw i64 %.0119398.us, 1             ; 2 uses
   %exitcond430.not = icmp eq i64 %i.mg, %i.iy
   br i1 %exitcond430.not, label %._crit_edge.us405, label %bb.bh, !llvm.loop !128
 
 ._crit_edge.us405:                                ; preds = %bb.bv
   %i.mh = add nuw i64 %.0120402.us, 1             ; 2 uses
+  %indvars.iv.next = add i32 %indvars.iv, %35
   %exitcond432.not = icmp eq i64 %i.mh, %umax431
-  br i1 %exitcond432.not, label %._crit_edge403, label %.preheader.us, !llvm.loop !129
+  br i1 %exitcond432.not, label %._crit_edge403.loopexit413, label %.preheader.us, !llvm.loop !129
 
 bb.bw:                                            ; preds = %bb.be
   %i.mi = landingpad { ptr, i32 }
@@ -486,8 +489,14 @@ bb.bz:                                            ; preds = %.body221, %bb.by
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #22
   br label %bb.cr
 
-._crit_edge403:                                   ; preds = %._crit_edge.us405, %.preheader.lr.ph, %_ZNK2cv7MatExprcvNS_3MatEEv.exit223
-  %.0121.lcssa = phi i64 [ 0, %_ZNK2cv7MatExprcvNS_3MatEEv.exit223 ], [ 0, %.preheader.lr.ph ], [ %indvars.iv.next.a, %._crit_edge.us405 ] ; 2 uses
+._crit_edge403.loopexit413:                       ; preds = %._crit_edge.us405
+  %37 = mul i64 %umax431, %i.iy
+  %sext = shl i64 %37, 32
+  %38 = ashr exact i64 %sext, 32
+  br label %._crit_edge403
+
+._crit_edge403:                                   ; preds = %.preheader.lr.ph, %._crit_edge403.loopexit413, %_ZNK2cv7MatExprcvNS_3MatEEv.exit223
+  %.0121.lcssa = phi i64 [ 0, %_ZNK2cv7MatExprcvNS_3MatEEv.exit223 ], [ %38, %._crit_edge403.loopexit413 ], [ 0, %.preheader.lr.ph ] ; 2 uses
   %i.mk = icmp slt i32 %.pre445, 2                ; 4 uses
   %i.ml = load i64, ptr %i.gw, align 8
   %i.mm = mul i64 %i.ml, %.0121.lcssa

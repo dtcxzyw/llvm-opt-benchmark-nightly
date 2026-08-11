@@ -204,7 +204,7 @@ bb.de:                                            ; preds = %.thread510
   %i.vt = getelementptr inbounds nuw i8, ptr %0, i64 153088 ; 2 uses
   store i32 %i.vs, ptr %i.vt, align 8, !tbaa !109
   %i.vu = getelementptr inbounds nuw i8, ptr %0, i64 381832
-  %i.vv = load i32, ptr %i.vu, align 8, !tbaa !187 ; 4 uses
+  %i.vv = load i32, ptr %i.vu, align 8, !tbaa !187 ; 10 uses
   %i.vw = icmp eq i32 %i.vv, 2
   br i1 %i.vw, label %bb.df, label %bb.dy
 
@@ -478,7 +478,7 @@ bb.dz:                                            ; preds = %bb.dy
   %i.aax = getelementptr inbounds nuw i8, ptr %0, i64 154268 ; 2 uses
   %i.aay = load i32, ptr %i.aax, align 4, !tbaa !83 ; 3 uses
   %i.aaz = getelementptr inbounds nuw i8, ptr %0, i64 154272 ; 2 uses
-  %i.aba = load i32, ptr %i.aaz, align 8, !tbaa !83 ; 5 uses
+  %i.aba = load i32, ptr %i.aaz, align 8, !tbaa !83 ; 6 uses
   %i.abb = mul i32 %i.aay, %i.vv
   %i.abc = mul i32 %i.abb, %i.aba
   %i.abd = getelementptr inbounds nuw i8, ptr %0, i64 170664
@@ -497,7 +497,8 @@ bb.ea:                                            ; preds = %bb.dz
   br i1 %or.cond808, label %.preheader525.thread, label %.preheader527.us.preheader
 
 .preheader527.us.preheader:                       ; preds = %bb.ea
-  %wide.trip.count709 = zext nneg i32 %i.vv to i64 ; 6 uses
+  %1 = mul i32 %i.aba, %i.vv
+  %wide.trip.count709 = zext nneg i32 %i.vv to i64
   %i.abg = add i32 %i.aba, -1
   %trip.count.minus.1906 = add nsw i64 %wide.trip.count709, -1
   %broadcast.splatinsert907 = insertelement <4 x i64> poison, i64 %trip.count.minus.1906, i64 0
@@ -512,14 +513,14 @@ bb.ea:                                            ; preds = %bb.dz
 
 .preheader527.us:                                 ; preds = %.preheader527.us.preheader, %._crit_edge595.split.us.us
   %.0335598.us = phi i32 [ %i.aby, %._crit_edge595.split.us.us ], [ 0, %.preheader527.us.preheader ]
-  %.0336597.us = phi i64 [ %.lcssa983, %._crit_edge595.split.us.us ], [ 6, %.preheader527.us.preheader ] ; 2 uses
+  %.0336597.us = phi i32 [ %7, %._crit_edge595.split.us.us ], [ 6, %.preheader527.us.preheader ] ; 3 uses
   br i1 %i.abi, label %vector.ph903.epil.preheader, label %vector.ph903
 
 vector.ph903:                                     ; preds = %.preheader527.us, %vector.ph903
-  %.1337593.us.us = phi i64 [ %4, %vector.ph903 ], [ %.0336597.us, %.preheader527.us ] ; 2 uses
+  %indvars.iv704 = phi i32 [ %indvars.iv.next705.3, %vector.ph903 ], [ %.0336597.us, %.preheader527.us ] ; 2 uses
   %niter = phi i32 [ %niter.next.3, %vector.ph903 ], [ 0, %.preheader527.us ]
-  %1 = add i64 %.1337593.us.us, %wide.trip.count709 ; 2 uses
-  %i.abj = getelementptr [4 x i8], ptr %i.aaw, i64 %.1337593.us.us
+  %2 = sext i32 %indvars.iv704 to i64
+  %i.abj = getelementptr [4 x i8], ptr %i.aaw, i64 %2
   %wide.masked.load912 = call <4 x i32> @llvm.masked.load.v4i32.p0(ptr align 4 %i.abj, <4 x i1> %i.abh, <4 x i32> poison), !tbaa !83
   %unmaskedload1014 = load <4 x i32>, ptr %i.g, align 16, !tbaa !83
   %i.abk = add <4 x i32> %unmaskedload1014, %wide.masked.load912
@@ -527,8 +528,9 @@ vector.ph903:                                     ; preds = %.preheader527.us, %
   %unmaskedload1015 = load <4 x i32>, ptr %i.h, align 16, !tbaa !83
   %i.abl = add nsw <4 x i32> %unmaskedload1015, splat (i32 1)
   call void @llvm.masked.store.v4i32.p0(<4 x i32> %i.abl, ptr align 16 %i.h, <4 x i1> %i.abh), !tbaa !83
-  %2 = add i64 %1, %wide.trip.count709            ; 2 uses
-  %i.abm = getelementptr [4 x i8], ptr %i.aaw, i64 %1
+  %indvars.iv.next705 = add i32 %indvars.iv704, %i.vv ; 2 uses
+  %3 = sext i32 %indvars.iv.next705 to i64
+  %i.abm = getelementptr [4 x i8], ptr %i.aaw, i64 %3
   %wide.masked.load912.1 = call <4 x i32> @llvm.masked.load.v4i32.p0(ptr align 4 %i.abm, <4 x i1> %i.abh, <4 x i32> poison), !tbaa !83
   %unmaskedload1016 = load <4 x i32>, ptr %i.g, align 16, !tbaa !83
   %i.abn = add <4 x i32> %unmaskedload1016, %wide.masked.load912.1
@@ -536,8 +538,9 @@ vector.ph903:                                     ; preds = %.preheader527.us, %
   %unmaskedload1017 = load <4 x i32>, ptr %i.h, align 16, !tbaa !83
   %i.abo = add nsw <4 x i32> %unmaskedload1017, splat (i32 1)
   call void @llvm.masked.store.v4i32.p0(<4 x i32> %i.abo, ptr align 16 %i.h, <4 x i1> %i.abh), !tbaa !83
-  %3 = add i64 %2, %wide.trip.count709            ; 2 uses
-  %i.abp = getelementptr [4 x i8], ptr %i.aaw, i64 %2
+  %indvars.iv.next705.1 = add i32 %indvars.iv.next705, %i.vv ; 2 uses
+  %4 = sext i32 %indvars.iv.next705.1 to i64
+  %i.abp = getelementptr [4 x i8], ptr %i.aaw, i64 %4
   %wide.masked.load912.2 = call <4 x i32> @llvm.masked.load.v4i32.p0(ptr align 4 %i.abp, <4 x i1> %i.abh, <4 x i32> poison), !tbaa !83
   %unmaskedload1018 = load <4 x i32>, ptr %i.g, align 16, !tbaa !83
   %i.abq = add <4 x i32> %unmaskedload1018, %wide.masked.load912.2
@@ -545,8 +548,9 @@ vector.ph903:                                     ; preds = %.preheader527.us, %
   %unmaskedload1019 = load <4 x i32>, ptr %i.h, align 16, !tbaa !83
   %i.abr = add nsw <4 x i32> %unmaskedload1019, splat (i32 1)
   call void @llvm.masked.store.v4i32.p0(<4 x i32> %i.abr, ptr align 16 %i.h, <4 x i1> %i.abh), !tbaa !83
-  %4 = add i64 %3, %wide.trip.count709            ; 3 uses
-  %i.abs = getelementptr [4 x i8], ptr %i.aaw, i64 %3
+  %indvars.iv.next705.2 = add i32 %indvars.iv.next705.1, %i.vv ; 2 uses
+  %5 = sext i32 %indvars.iv.next705.2 to i64
+  %i.abs = getelementptr [4 x i8], ptr %i.aaw, i64 %5
   %wide.masked.load912.3 = call <4 x i32> @llvm.masked.load.v4i32.p0(ptr align 4 %i.abs, <4 x i1> %i.abh, <4 x i32> poison), !tbaa !83
   %unmaskedload1020 = load <4 x i32>, ptr %i.g, align 16, !tbaa !83
   %i.abt = add <4 x i32> %unmaskedload1020, %wide.masked.load912.3
@@ -554,6 +558,7 @@ vector.ph903:                                     ; preds = %.preheader527.us, %
   %unmaskedload1021 = load <4 x i32>, ptr %i.h, align 16, !tbaa !83
   %i.abu = add nsw <4 x i32> %unmaskedload1021, splat (i32 1)
   call void @llvm.masked.store.v4i32.p0(<4 x i32> %i.abu, ptr align 16 %i.h, <4 x i1> %i.abh), !tbaa !83
+  %indvars.iv.next705.3 = add i32 %indvars.iv.next705.2, %i.vv ; 2 uses
   %niter.next.3 = add nuw i32 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge595.split.us.us.unr-lcssa, label %vector.ph903, !llvm.loop !276
@@ -562,15 +567,15 @@ vector.ph903:                                     ; preds = %.preheader527.us, %
   br i1 %lcmp.mod.not, label %._crit_edge595.split.us.us, label %vector.ph903.epil.preheader
 
 vector.ph903.epil.preheader:                      ; preds = %._crit_edge595.split.us.us.unr-lcssa, %.preheader527.us
-  %.1337593.us.us.epil.init = phi i64 [ %.0336597.us, %.preheader527.us ], [ %4, %._crit_edge595.split.us.us.unr-lcssa ]
+  %indvars.iv704.epil.init = phi i32 [ %.0336597.us, %.preheader527.us ], [ %indvars.iv.next705.3, %._crit_edge595.split.us.us.unr-lcssa ]
   call void @llvm.assume(i1 %lcmp.mod991)
   br label %vector.ph903.epil
 
 vector.ph903.epil:                                ; preds = %vector.ph903.epil, %vector.ph903.epil.preheader
-  %.1337593.us.us.epil = phi i64 [ %.1337593.us.us.epil.init, %vector.ph903.epil.preheader ], [ %5, %vector.ph903.epil ] ; 2 uses
-  %epil.iter = phi i32 [ 0, %vector.ph903.epil.preheader ], [ %epil.iter.next, %vector.ph903.epil ]
-  %5 = add i64 %.1337593.us.us.epil, %wide.trip.count709 ; 2 uses
-  %i.abv = getelementptr [4 x i8], ptr %i.aaw, i64 %.1337593.us.us.epil
+  %indvars.iv704.epil = phi i32 [ %indvars.iv.next705.epil, %vector.ph903.epil ], [ %indvars.iv704.epil.init, %vector.ph903.epil.preheader ] ; 2 uses
+  %epil.iter = phi i32 [ %epil.iter.next, %vector.ph903.epil ], [ 0, %vector.ph903.epil.preheader ]
+  %6 = sext i32 %indvars.iv704.epil to i64
+  %i.abv = getelementptr [4 x i8], ptr %i.aaw, i64 %6
   %wide.masked.load912.epil = call <4 x i32> @llvm.masked.load.v4i32.p0(ptr align 4 %i.abv, <4 x i1> %i.abh, <4 x i32> poison), !tbaa !83
   %unmaskedload1022 = load <4 x i32>, ptr %i.g, align 16, !tbaa !83
   %i.abw = add <4 x i32> %unmaskedload1022, %wide.masked.load912.epil
@@ -578,12 +583,13 @@ vector.ph903.epil:                                ; preds = %vector.ph903.epil, 
   %unmaskedload1023 = load <4 x i32>, ptr %i.h, align 16, !tbaa !83
   %i.abx = add nsw <4 x i32> %unmaskedload1023, splat (i32 1)
   call void @llvm.masked.store.v4i32.p0(<4 x i32> %i.abx, ptr align 16 %i.h, <4 x i1> %i.abh), !tbaa !83
+  %indvars.iv.next705.epil = add i32 %indvars.iv704.epil, %i.vv
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge595.split.us.us, label %vector.ph903.epil, !llvm.loop !277
 
 ._crit_edge595.split.us.us:                       ; preds = %vector.ph903.epil, %._crit_edge595.split.us.us.unr-lcssa
-  %.lcssa983 = phi i64 [ %4, %._crit_edge595.split.us.us.unr-lcssa ], [ %5, %vector.ph903.epil ]
+  %7 = add i32 %1, %.0336597.us
   %i.aby = add nuw i32 %.0335598.us, 1            ; 2 uses
   %exitcond712.not = icmp eq i32 %i.aby, %i.aay
   br i1 %exitcond712.not, label %.preheader525, label %.preheader527.us, !llvm.loop !278

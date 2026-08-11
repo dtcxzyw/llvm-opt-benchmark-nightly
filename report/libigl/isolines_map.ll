@@ -203,20 +203,20 @@ _ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS1_IdLi1
 
 .preheader42.us.us90:                             ; preds = %.preheader42.us.us90.preheader, %._crit_edge.split.us.us.us105
   %indvars.iv134.a = phi i64 [ %indvars.iv.next135, %._crit_edge.split.us.us.us105 ], [ 0, %.preheader42.us.us90.preheader ] ; 3 uses
-  %.02450.us.us92 = phi i32 [ %6, %._crit_edge.split.us.us.us105 ], [ 0, %.preheader42.us.us90.preheader ] ; 3 uses
+  %.02450.us.us92 = phi i32 [ %indvars.iv.next133, %._crit_edge.split.us.us.us105 ], [ 0, %.preheader42.us.us90.preheader ] ; 3 uses
   %i.do = shl i64 %indvars.iv134.a, 3
   %i.dp = add i64 %i.do, %i.t
   %i.dq = sub i64 %i.v, %i.dp
   %i.dr = sext i32 %.02450.us.us92 to i64
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv134.a ; 6 uses
   %i.ds = sext i32 %.02450.us.us92 to i64
-  %6 = add i32 %2, %.02450.us.us92                ; 2 uses
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv134.a ; 6 uses
   %invariant.op = add i64 %i.dq, -1
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader.us.us.us98
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.preheader.us.us.us98:  ; preds = %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS0_IKS2_Li1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.us.us104, %.preheader42.us.us90
   %indvar170 = phi i64 [ %indvar.next171, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS0_IKS2_Li1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.us.us104 ], [ 0, %.preheader42.us.us90 ] ; 2 uses
   %indvars.iv130 = phi i64 [ %indvars.iv.next131, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS0_IKS2_Li1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.us.us104 ], [ %i.ds, %.preheader42.us.us90 ] ; 2 uses
+  %.02244.us.us.us99 = phi i32 [ %6, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS0_IKS2_Li1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.us.us104 ], [ 0, %.preheader42.us.us90 ]
   %i.dt = getelementptr inbounds [8 x i8], ptr %i.u, i64 %indvars.iv130 ; 6 uses
   br i1 %min.iters.check174, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.us.us101.preheader, label %vector.scevcheck166
 
@@ -303,14 +303,15 @@ middle.block182:                                  ; preds = %vector.body177
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.us.us.us103.3, label %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS0_IKS2_Li1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.us.us104, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.us.us101, !llvm.loop !44
 
 _ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS0_IKS2_Li1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.us.us104: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.us.us101.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.us.us101, %middle.block182
-  %indvars.iv.next131 = add nsw i64 %indvars.iv130, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next131 to i32
-  %exitcond133.not = icmp eq i32 %6, %lftr.wideiv
+  %indvars.iv.next131 = add nsw i64 %indvars.iv130, 1
+  %6 = add nuw nsw i32 %.02244.us.us.us99, 1      ; 2 uses
+  %exitcond133.not = icmp eq i32 %6, %2
   %indvar.next171 = add i64 %indvar170, 1
   br i1 %exitcond133.not, label %._crit_edge.split.us.us.us105, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader.us.us.us98, !llvm.loop !37
 
 ._crit_edge.split.us.us.us105:                    ; preds = %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS0_IKS2_Li1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.us.us104
   %indvars.iv.next135 = add nuw nsw i64 %indvars.iv134.a, 1 ; 2 uses
+  %indvars.iv.next133 = add i32 %.02450.us.us92, %2
   %exitcond137.not = icmp eq i64 %indvars.iv.next135, %i.m
   br i1 %exitcond137.not, label %._crit_edge52, label %.preheader42.us.us90, !llvm.loop !24
 

@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.d, %.new
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.bg
   store i64 %i.bf, ptr %i.bh, align 8, !tbaa !392
   %indvars.iv.next.i.i.3 = add nuw nsw i64 %indvars.iv.i.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.d, !llvm.loop !629
 
@@ -456,7 +456,7 @@ bb.d:                                             ; preds = %bb.d, %.new
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.bg
   store i64 %i.bf, ptr %i.bh, align 8, !tbaa !392
   %indvars.iv.next.i.i.i.3 = add nuw nsw i64 %indvars.iv.i.i.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.d, !llvm.loop !629
 

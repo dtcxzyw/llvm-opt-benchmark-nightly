@@ -201,25 +201,30 @@ bb.a:
   %i.h = fcmp ult double %i.g, 1.000000e+00
   %.not = icmp eq i32 %1, 0
   %or.cond = or i1 %i.h, %.not
-  br i1 %or.cond, label %._crit_edge17, label %.preheader.us
+  br i1 %or.cond, label %._crit_edge17, label %.preheader.us.preheader
 
-.preheader.us:                                    ; preds = %bb.a, %._crit_edge.us
-  %.01116.us.a = phi i32 [ %i.j, %._crit_edge.us ], [ 1, %bb.a ] ; 2 uses
-  %.01215.us.a = phi i32 [ %3, %._crit_edge.us ], [ 2, %bb.a ] ; 2 uses
-  %3 = add i32 %1, %.01215.us.a                   ; 2 uses
+.preheader.us.preheader:                          ; preds = %bb.a
+  %3 = add i32 %1, 2
+  br label %.preheader.us
+
+.preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
+  %.01116.us.a = phi i32 [ %3, %.preheader.us.preheader ], [ %indvars.iv.next, %._crit_edge.us ] ; 3 uses
+  %.01215.us.a = phi i32 [ 1, %.preheader.us.preheader ], [ %i.j, %._crit_edge.us ] ; 2 uses
+  %.01215.us = phi i32 [ 2, %.preheader.us.preheader ], [ %.01116.us.a, %._crit_edge.us ]
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader.us, %bb.b
-  %.113.us = phi i32 [ %.01215.us.a, %.preheader.us ], [ %i.i, %bb.b ] ; 2 uses
+  %.113.us = phi i32 [ %.01215.us, %.preheader.us ], [ %i.i, %bb.b ] ; 2 uses
   %i.i = add i32 %.113.us, 1                      ; 2 uses
-  tail call void %2(i32 noundef %.01116.us.a, i32 noundef %.113.us) #15
-  %exitcond.not = icmp eq i32 %i.i, %3
+  tail call void %2(i32 noundef %.01215.us.a, i32 noundef %.113.us) #15
+  %exitcond.not = icmp eq i32 %i.i, %.01116.us.a
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.b, !llvm.loop !37
 
 ._crit_edge.us:                                   ; preds = %bb.b
-  %i.j = add i32 %.01116.us.a, 1                  ; 2 uses
+  %i.j = add i32 %.01215.us.a, 1                  ; 2 uses
   %i.k = uitofp i32 %i.j to double
   %i.l = fcmp ult double %i.g, %i.k
+  %indvars.iv.next = add i32 %.01116.us.a, %1
   br i1 %i.l, label %._crit_edge17, label %.preheader.us, !llvm.loop !38
 
 ._crit_edge17:                                    ; preds = %._crit_edge.us, %bb.a

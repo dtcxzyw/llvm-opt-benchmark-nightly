@@ -165,15 +165,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.d
   %i.j = load i32, ptr @hf_vlp16_data_gps_timestamp, align 4
-  %i.k = tail call ptr @proto_tree_add_item(ptr noundef %i.g, i32 noundef %i.j, ptr noundef %0, i32 noundef %i.ah, i32 noundef 4, i32 noundef -2147483648) ; 0 uses
-  %4 = add i32 %.153, 7
+  %i.k = tail call ptr @proto_tree_add_item(ptr noundef %i.g, i32 noundef %i.j, ptr noundef %0, i32 noundef 1200, i32 noundef 4, i32 noundef -2147483648) ; 0 uses
   %i.l = load i32, ptr @hf_vlp16_data_factory_field1, align 4
-  %i.m = tail call ptr @proto_tree_add_item(ptr noundef %i.g, i32 noundef %i.l, ptr noundef %0, i32 noundef %4, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
-  %5 = add i32 %.153, 8
+  %i.m = tail call ptr @proto_tree_add_item(ptr noundef %i.g, i32 noundef %i.l, ptr noundef %0, i32 noundef 1204, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
   %i.n = load i32, ptr @hf_vlp16_data_factory_field2, align 4
-  %i.o = tail call ptr @proto_tree_add_item(ptr noundef %i.g, i32 noundef %i.n, ptr noundef %0, i32 noundef %5, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
-  %6 = add i32 %.153, 9
-  ret i32 %6
+  %i.o = tail call ptr @proto_tree_add_item(ptr noundef %i.g, i32 noundef %i.n, ptr noundef %0, i32 noundef 1205, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
+  ret i32 1206
 
 bb.c:                                             ; preds = %bb.a, %bb.d
   %.05156 = phi i32 [ 1, %bb.a ], [ %i.z, %bb.d ] ; 2 uses
@@ -182,10 +179,10 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.q = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.i, ptr noundef %0, i32 noundef %.05255, i32 noundef 100, i32 noundef %i.p, ptr noundef null, ptr noundef nonnull @.str.48, i32 noundef %.05156) ; 3 uses
   %i.r = load i32, ptr @hf_vlp16_data_block_id, align 4
   %i.s = tail call ptr @proto_tree_add_item(ptr noundef %i.q, i32 noundef %i.r, ptr noundef %0, i32 noundef %.05255, i32 noundef 2, i32 noundef -2147483648) ; 0 uses
-  %i.t = add i32 %.05255, 2
+  %i.t = add nuw nsw i32 %.05255, 2
   %i.u = load i32, ptr @hf_vlp16_data_rotational_position, align 4
   %i.v = tail call ptr @proto_tree_add_item(ptr noundef %i.q, i32 noundef %i.u, ptr noundef %0, i32 noundef %i.t, i32 noundef 2, i32 noundef -2147483648) ; 0 uses
-  %i.w = add i32 %.05255, 4                       ; 2 uses
+  %i.w = add nuw nsw i32 %.05255, 4               ; 2 uses
   %i.x = load i32, ptr @ett_vlp16_data_laser_returns, align 4
   %i.y = tail call ptr @proto_tree_add_subtree(ptr noundef %i.q, ptr noundef %0, i32 noundef %i.w, i32 noundef 96, i32 noundef %i.x, ptr noundef null, ptr noundef nonnull @.str.49)
   br label %bb.e
@@ -197,15 +194,15 @@ bb.d:                                             ; preds = %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.e
   %.054 = phi i32 [ 1, %bb.c ], [ %i.ai, %bb.e ]  ; 2 uses
-  %.153 = phi i32 [ %i.w, %bb.c ], [ %i.ah, %bb.e ] ; 7 uses
+  %.153 = phi i32 [ %i.w, %bb.c ], [ %i.ah, %bb.e ] ; 4 uses
   %i.aa = load i32, ptr @ett_vlp16_data_laser_return_item, align 4
   %i.ab = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.y, ptr noundef %0, i32 noundef %.153, i32 noundef 3, i32 noundef %i.aa, ptr noundef null, ptr noundef nonnull @.str.50, i32 noundef %.054) ; 2 uses
   %i.ac = load i32, ptr @hf_vlp16_data_laser_distance, align 4
   %i.ad = tail call ptr @proto_tree_add_item(ptr noundef %i.ab, i32 noundef %i.ac, ptr noundef %0, i32 noundef %.153, i32 noundef 2, i32 noundef -2147483648) ; 0 uses
-  %i.ae = add i32 %.153, 2
+  %i.ae = add nuw nsw i32 %.153, 2
   %i.af = load i32, ptr @hf_vlp16_data_laser_intensity, align 4
   %i.ag = tail call ptr @proto_tree_add_item(ptr noundef %i.ab, i32 noundef %i.af, ptr noundef %0, i32 noundef %i.ae, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
-  %i.ah = add i32 %.153, 3                        ; 3 uses
+  %i.ah = add nuw nsw i32 %.153, 3                ; 2 uses
   %i.ai = add nuw nsw i32 %.054, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.ai, 33
   br i1 %exitcond.not, label %bb.d, label %bb.e, !llvm.loop !8

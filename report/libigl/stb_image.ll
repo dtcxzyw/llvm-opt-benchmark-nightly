@@ -204,18 +204,17 @@ bb.g:                                             ; preds = %.preheader.us, %bb.
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.j, %bb.g
-  %.1192.us = phi i32 [ %.0151202.us, %bb.g ], [ %i.ss, %bb.j ] ; 2 uses
-  %.0149191.us = phi i32 [ 0, %bb.g ], [ %7, %bb.j ] ; 2 uses
-  %i.rj = call i32 @llvm.smin.i32(i32 %.1192.us, i32 %i.rg) ; 2 uses
+  %indvars.iv234 = phi i64 [ %indvars.iv.next235, %bb.j ], [ 8, %bb.g ] ; 2 uses
+  %indvars.iv226 = phi i64 [ %indvars.iv.next227, %bb.j ], [ 0, %bb.g ] ; 2 uses
+  %.0149191.us = phi i32 [ %i.ss, %bb.j ], [ %.0151202.us, %bb.g ] ; 2 uses
+  %i.rj = call i32 @llvm.smin.i32(i32 %.0149191.us, i32 %i.rg) ; 2 uses
   %i.rk = sub nsw i32 %i.rg, %i.rj
   %i.rl = select i1 %.not168.us, i32 %i.rj, i32 %i.rk
   %i.rm = mul nsw i32 %i.rl, %1
-  %6 = sext i32 %.0149191.us to i64
-  %7 = add i32 %.0149191.us, 8                    ; 2 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %bb.h
-  %indvars.iv228 = phi i64 [ %indvars.iv.next229, %bb.i ], [ %6, %bb.h ] ; 4 uses
+  %indvars.iv228 = phi i64 [ %indvars.iv.next229, %bb.i ], [ %indvars.iv226, %bb.h ] ; 4 uses
   %.1145190.us = phi i32 [ %i.sr, %bb.i ], [ %.0152196.us, %bb.h ] ; 2 uses
   %i.rn = call i32 @llvm.smin.i32(i32 %.1145190.us, i32 %i.rh)
   %i.ro = add i32 %i.rn, %i.rm
@@ -238,26 +237,27 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %i.sf = call float @llvm.fmuladd.f32(float %i.rt, float 2.990000e-01, float %i.se)
   %i.sg = call float @llvm.fmuladd.f32(float %i.sd, float 1.140000e-01, float %i.sf)
   %i.sh = fadd float %i.sg, -1.280000e+02
-  %i.si = getelementptr inbounds [4 x i8], ptr %i.p, i64 %indvars.iv228
+  %i.si = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %indvars.iv228
   store float %i.sh, ptr %i.si, align 4, !tbaa !58
   %i.sj = fmul nnan float %i.ry, -3.312600e-01
   %i.sk = call float @llvm.fmuladd.f32(float %i.rt, float -1.687400e-01, float %i.sj)
   %i.sl = call float @llvm.fmuladd.f32(float %i.sd, float 5.000000e-01, float %i.sk)
-  %i.sm = getelementptr inbounds [4 x i8], ptr %i.q, i64 %indvars.iv228
+  %i.sm = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %indvars.iv228
   store float %i.sl, ptr %i.sm, align 4, !tbaa !58
   %i.sn = fmul nnan float %i.ry, -4.186900e-01
   %i.so = call float @llvm.fmuladd.f32(float %i.rt, float 5.000000e-01, float %i.sn)
   %i.sp = call float @llvm.fmuladd.f32(float %i.sd, float f0xBDA685DB, float %i.so)
-  %i.sq = getelementptr inbounds [4 x i8], ptr %i.r, i64 %indvars.iv228
+  %i.sq = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv228
   store float %i.sp, ptr %i.sq, align 4, !tbaa !58
   %i.sr = add nuw nsw i32 %.1145190.us, 1
-  %indvars.iv.next229 = add nsw i64 %indvars.iv228, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next229 to i32
-  %exitcond231.not = icmp eq i32 %7, %lftr.wideiv
+  %indvars.iv.next229 = add nuw nsw i64 %indvars.iv228, 1 ; 2 uses
+  %exitcond231.not = icmp eq i64 %indvars.iv.next229, %indvars.iv234
   br i1 %exitcond231.not, label %bb.j, label %bb.i, !llvm.loop !184
 
 bb.j:                                             ; preds = %bb.i
-  %i.ss = add nuw nsw i32 %.1192.us, 1            ; 2 uses
+  %i.ss = add nuw nsw i32 %.0149191.us, 1         ; 2 uses
+  %indvars.iv.next227 = add nuw nsw i64 %indvars.iv226, 8
+  %indvars.iv.next235 = add nuw nsw i64 %indvars.iv234, 8
   %exitcond234.not = icmp eq i32 %i.ss, %indvars.iv232
   br i1 %exitcond234.not, label %bb.k, label %bb.h, !llvm.loop !185
 

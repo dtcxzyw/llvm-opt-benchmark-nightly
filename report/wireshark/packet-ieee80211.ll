@@ -204,8 +204,8 @@ bb.hx:                                            ; preds = %bb.hw
   br label %bb.hy
 
 bb.hy:                                            ; preds = %bb.ia, %bb.hx
-  %indvars.iv112.i = phi i64 [ %indvars.iv.next113.i, %bb.ia ], [ 32, %bb.hx ] ; 3 uses
-  %indvars.iv106.1.i = phi i64 [ %indvars.iv.next107.1.i, %bb.ia ], [ 0, %bb.hx ] ; 3 uses
+  %indvars.iv112.i = phi i64 [ 32, %bb.hx ], [ %indvars.iv.next113.i, %bb.ia ] ; 3 uses
+  %indvars.iv106.1.i = phi i64 [ 0, %bb.hx ], [ %indvars.iv.next107.1.i, %bb.ia ] ; 3 uses
   %i.bgl = shl nuw i64 1, %indvars.iv112.i
   %i.bgm = and i64 %i.bgl, %i.bfg
   %.not.1.i = icmp eq i64 %i.bgm, 0

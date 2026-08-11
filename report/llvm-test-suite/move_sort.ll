@@ -151,10 +151,9 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 
 .lr.ph72.split:                                   ; preds = %.preheader53.thread, %.lr.ph72
   %i.as = load i32, ptr %i.b, align 16, !tbaa !4
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.as, i32 1)
-  %i.at = zext nneg i32 %smax to i64              ; 2 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.as, i32 1) ; 2 uses
+  %i.at = zext nneg i32 %smax to i64
   %i.au = mul nuw nsw i64 %i.at, 12
-  %4 = sext i32 %1 to i64
   br label %.preheader
 
 bb.c:                                             ; preds = %.lr.ph, %bb.e
@@ -216,13 +215,13 @@ bb.h:                                             ; preds = %.loopexit, %bb.g
   br i1 %exitcond83.not, label %.preheader53, label %.preheader54, !llvm.loop !17
 
 .preheader:                                       ; preds = %.lr.ph72.split, %.preheader
-  %.071 = phi i64 [ %4, %.lr.ph72.split ], [ %5, %.preheader ] ; 2 uses
-  %i.bp = mul nsw i64 %.071, 12
+  %indvars.iv87 = phi i32 [ %1, %.lr.ph72.split ], [ %indvars.iv.next88, %.preheader ] ; 2 uses
+  %4 = sext i32 %indvars.iv87 to i64
+  %i.bp = mul nsw i64 %4, 12
   %scevgep = getelementptr i8, ptr %0, i64 %i.bp
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 16 dereferenceable(1) %3, i64 %i.au, i1 false)
-  %5 = add nsw i64 %.071, %i.at                   ; 2 uses
-  %6 = trunc nsw i64 %5 to i32
-  %.not = icmp eq i32 %2, %6
+  %indvars.iv.next88 = add i32 %indvars.iv87, %smax ; 2 uses
+  %.not = icmp eq i32 %indvars.iv.next88, %2
   br i1 %.not, label %._crit_edge, label %.preheader, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %.preheader, %..preheader_crit_edge.us, %.preheader53.thread, %.preheader53

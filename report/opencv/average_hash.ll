@@ -203,8 +203,9 @@ _ZNK2cv11_InputArray6getMatEi.exit51:             ; preds = %bb.w, %bb.x
   br label %bb.y
 
 bb.y:                                             ; preds = %_ZNSt6bitsetILm8EE9referenceaSEb.exit.preheader, %_ZNK2cv11_InputArray6getMatEi.exit51
-  %.016 = phi i64 [ 0, %_ZNK2cv11_InputArray6getMatEi.exit51 ], [ %17, %_ZNSt6bitsetILm8EE9referenceaSEb.exit.preheader ] ; 7 uses
-  %.015 = phi i64 [ 0, %_ZNK2cv11_InputArray6getMatEi.exit51 ], [ %i.ce, %_ZNSt6bitsetILm8EE9referenceaSEb.exit.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNSt6bitsetILm8EE9referenceaSEb.exit.preheader ], [ 8, %_ZNK2cv11_InputArray6getMatEi.exit51 ] ; 2 uses
+  %.016 = phi i64 [ %indvars.iv, %_ZNSt6bitsetILm8EE9referenceaSEb.exit.preheader ], [ 0, %_ZNK2cv11_InputArray6getMatEi.exit51 ] ; 6 uses
+  %.015 = phi i64 [ %i.ce, %_ZNSt6bitsetILm8EE9referenceaSEb.exit.preheader ], [ 0, %_ZNK2cv11_InputArray6getMatEi.exit51 ] ; 2 uses
   %i.bi = invoke noundef i64 @_ZNK2cv3Mat5totalEv(ptr noundef nonnull align 8 dereferenceable(208) %i.av)
           to label %bb.z unwind label %bb.ag
 
@@ -242,10 +243,10 @@ _ZNSt6bitsetILm8EE9referenceaSEb.exit.preheader:  ; preds = %bb.z
   %i.cb = select <4 x i1> %i.ca, <4 x i8> zeroinitializer, <4 x i8> <i8 16, i8 32, i8 64, i8 -128>
   %i.cc = call i8 @llvm.vector.reduce.or.v4i8(<4 x i8> %i.cb)
   %op.rdx = or disjoint i8 %i.cc, %.sroa.0.2.3
-  %17 = add i64 %.016, 8
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bf, i64 %.015
   store i8 %op.rdx, ptr %i.cd, align 1, !tbaa !31
   %i.ce = add i64 %.015, 1
+  %indvars.iv.next = add i64 %indvars.iv, 8
   br label %bb.y, !llvm.loop !64
 
 bb.aa:                                            ; preds = %bb.z

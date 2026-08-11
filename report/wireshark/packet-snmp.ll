@@ -204,23 +204,22 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.split.us, label %.split34.us, !llvm.loop !36
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit
-  %.02332 = phi i32 [ %i.x, %.loopexit ], [ 0, %.preheader.preheader ] ; 2 uses
-  %.02431 = phi i32 [ %i.q, %.loopexit ], [ 0, %.preheader.preheader ]
+  %.02431 = phi i32 [ %i.x, %.loopexit ], [ 0, %.preheader.preheader ] ; 3 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.preheader
   %.030 = phi ptr [ %i.b, %.preheader ], [ %i.v, %bb.c ] ; 3 uses
   %.128 = phi i32 [ %.02431, %.preheader ], [ %i.q, %bb.c ] ; 3 uses
-  %6 = add i32 %.128, 1
+  %6 = or disjoint i32 %.128, 1
   %i.l = urem i32 %.128, %2
-  %i.m = zext i32 %i.l to i64
+  %i.m = zext nneg i32 %i.l to i64
   %i.n = getelementptr i8, ptr %1, i64 %i.m
   %i.o = load i8, ptr %i.n, align 1
   %i.p = getelementptr i8, ptr %.030, i64 1       ; 2 uses
   store i8 %i.o, ptr %.030, align 1
-  %i.q = add i32 %.128, 2                         ; 2 uses
+  %i.q = add nuw nsw i32 %.128, 2
   %i.r = urem i32 %6, %2
-  %i.s = zext i32 %i.r to i64
+  %i.s = zext nneg i32 %i.r to i64
   %i.t = getelementptr i8, ptr %1, i64 %i.s
   %i.u = load i8, ptr %i.t, align 1
   %i.v = getelementptr i8, ptr %.030, i64 2
@@ -231,8 +230,8 @@ bb.c:                                             ; preds = %bb.c, %.preheader
 .loopexit:                                        ; preds = %bb.c
   %i.w = load ptr, ptr %i.a, align 8
   call void @gcry_md_write(ptr noundef %i.w, ptr noundef nonnull %i.b, i64 noundef 64)
-  %i.x = add nuw nsw i32 %.02332, 64
-  %i.y = icmp samesign ult i32 %.02332, 1048512
+  %i.x = add nuw nsw i32 %.02431, 64
+  %i.y = icmp samesign ult i32 %.02431, 1048512
   br i1 %i.y, label %.preheader, label %.split34.us, !llvm.loop !36
 
 .split34.us:                                      ; preds = %.loopexit, %.split.us

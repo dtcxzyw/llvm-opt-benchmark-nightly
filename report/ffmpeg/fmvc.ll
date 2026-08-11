@@ -121,7 +121,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ai, label %.preheader.lr.ph, label %._crit_edge118.split
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %i.aj = load i32, ptr %i.n, align 8, !tbaa !37  ; 3 uses
+  %i.aj = load i32, ptr %i.n, align 8, !tbaa !37  ; 4 uses
   %i.ak = icmp sgt i32 %i.aj, 0
   %i.al = add nsw i32 %i.ah, -1
   %i.am = add nsw i32 %i.aj, -1
@@ -131,13 +131,14 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ak, label %.preheader, label %._crit_edge118.split
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
-  %.095117 = phi i64 [ %indvars.iv.next.a, %._crit_edge ], [ 0, %.preheader.lr.ph ]
+  %indvars.iv = phi i32 [ %indvars.iv.next, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 2 uses
   %.097116 = phi i32 [ %i.ay, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 2 uses
+  %1 = sext i32 %indvars.iv to i64
   %.not108 = icmp eq i32 %.097116, %i.al          ; 2 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %.preheader, %bb.v
-  %indvars.iv.a = phi i64 [ %.095117, %.preheader ], [ %indvars.iv.next.a, %bb.v ] ; 2 uses
+  %indvars.iv.a = phi i64 [ %1, %.preheader ], [ %indvars.iv.next.a, %bb.v ] ; 2 uses
   %.096114 = phi i32 [ 0, %.preheader ], [ %i.ax, %bb.v ] ; 2 uses
   %.not109 = icmp eq i32 %.096114, %i.am          ; 2 uses
   %or.cond = select i1 %.not108, i1 %.not109, i1 false
@@ -181,13 +182,14 @@ bb.u:                                             ; preds = %bb.o
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.q, %bb.t, %bb.s, %bb.u
-  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1
   %i.ax = add nuw nsw i32 %.096114, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %i.ax, %i.aj
   br i1 %exitcond.not, label %._crit_edge, label %bb.o, !llvm.loop !46
 
 ._crit_edge:                                      ; preds = %bb.v
   %i.ay = add nuw nsw i32 %.097116, 1             ; 2 uses
+  %indvars.iv.next = add i32 %indvars.iv, %i.aj
   %exitcond120.not = icmp eq i32 %i.ay, %i.ah
   br i1 %exitcond120.not, label %._crit_edge118.split, label %.preheader, !llvm.loop !48
 

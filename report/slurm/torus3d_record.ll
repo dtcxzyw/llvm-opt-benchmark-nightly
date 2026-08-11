@@ -201,7 +201,7 @@ bb.bw:                                            ; preds = %bb.bu
   %i.js = load i16, ptr %i.b, align 2             ; 3 uses
   %i.jt = zext i16 %i.js to i64                   ; 2 uses
   %i.ju = mul nuw nsw i64 %i.jt, %i.jr
-  %i.jv = load i16, ptr %i.c, align 2             ; 3 uses
+  %i.jv = load i16, ptr %i.c, align 2             ; 4 uses
   %i.jw = zext i16 %i.jv to i64                   ; 2 uses
   %i.jx = mul nuw nsw i64 %i.ju, %i.jw            ; 3 uses
   %i.jy = add nsw i64 %i.jx, -2147483648
@@ -245,22 +245,27 @@ bb.by:                                            ; preds = %bb.bw
   %.not80.i = icmp eq i16 %i.js, 0
   %.not81.i = icmp eq i16 %i.jv, 0
   %or.cond111.i = or i1 %.not80.i, %.not81.i
-  br i1 %or.cond111.i, label %.loopexit, label %.preheader67.us.i
+  br i1 %or.cond111.i, label %.loopexit, label %.preheader67.us.preheader.i
 
-.preheader67.us.i:                                ; preds = %.preheader67.lr.ph.i, %._crit_edge73.split.us.us.i
-  %indvars.iv93.i = phi i64 [ %indvars.iv.next94.i, %._crit_edge73.split.us.us.i ], [ 0, %.preheader67.lr.ph.i ] ; 2 uses
-  %.06075.us.i = phi i64 [ %indvars.iv.next86.i.a, %._crit_edge73.split.us.us.i ], [ 0, %.preheader67.lr.ph.i ]
+.preheader67.us.preheader.i:                      ; preds = %.preheader67.lr.ph.i
+  %1 = zext i16 %i.jv to i32
+  br label %.preheader67.us.i
+
+.preheader67.us.i:                                ; preds = %._crit_edge73.split.us.us.i, %.preheader67.us.preheader.i
+  %indvars.iv93.i = phi i64 [ 0, %.preheader67.us.preheader.i ], [ %indvars.iv.next94.i, %._crit_edge73.split.us.us.i ] ; 2 uses
+  %.06075.us.i = phi i32 [ 0, %.preheader67.us.preheader.i ], [ %3, %._crit_edge73.split.us.us.i ]
   %i.kn = getelementptr inbounds nuw [2 x i8], ptr %i.jj, i64 %indvars.iv93.i
   br label %.preheader.us.us.i
 
 .preheader.us.us.i:                               ; preds = %._crit_edge.us.us.i, %.preheader67.us.i
   %indvars.iv88.i = phi i64 [ %indvars.iv.next89.i, %._crit_edge.us.us.i ], [ 0, %.preheader67.us.i ] ; 2 uses
-  %.171.us.us.i = phi i64 [ %indvars.iv.next86.i.a, %._crit_edge.us.us.i ], [ %.06075.us.i, %.preheader67.us.i ]
+  %indvars.iv85.i = phi i32 [ %indvars.iv.next86.i, %._crit_edge.us.us.i ], [ %.06075.us.i, %.preheader67.us.i ] ; 2 uses
+  %2 = sext i32 %indvars.iv85.i to i64
   %i.ko = getelementptr inbounds nuw [2 x i8], ptr %i.jm, i64 %indvars.iv88.i
   br label %bb.bz
 
 bb.bz:                                            ; preds = %_build_anchor_bitmap.exit.us.us.i, %.preheader.us.us.i
-  %indvars.iv85.i.a = phi i64 [ %indvars.iv.next86.i.a, %_build_anchor_bitmap.exit.us.us.i ], [ %.171.us.us.i, %.preheader.us.us.i ] ; 3 uses
+  %indvars.iv85.i.a = phi i64 [ %indvars.iv.next86.i.a, %_build_anchor_bitmap.exit.us.us.i ], [ %2, %.preheader.us.us.i ] ; 3 uses
   %indvars.iv.i68 = phi i64 [ %indvars.iv.next.i69, %_build_anchor_bitmap.exit.us.us.i ], [ 0, %.preheader.us.us.i ] ; 2 uses
   %i.kp = load i16, ptr %i.kn, align 2
   %i.kq = load i16, ptr %i.ko, align 2
@@ -377,17 +382,19 @@ _build_anchor_bitmap.exit.us.us.i:                ; preds = %._crit_edge34.i.us.
   %i.mu = load ptr, ptr %i.kg, align 8
   %i.mv = getelementptr inbounds [4 x i8], ptr %i.mu, i64 %indvars.iv85.i.a
   store i32 %i.mt, ptr %i.mv, align 4
-  %indvars.iv.next86.i.a = add nsw i64 %indvars.iv85.i.a, 1 ; 3 uses
+  %indvars.iv.next86.i.a = add nsw i64 %indvars.iv85.i.a, 1 ; 2 uses
   %indvars.iv.next.i69 = add nuw nsw i64 %indvars.iv.i68, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i69, %i.jw
   br i1 %exitcond.not.i, label %._crit_edge.us.us.i, label %bb.bz, !llvm.loop !19
 
 ._crit_edge.us.us.i:                              ; preds = %_build_anchor_bitmap.exit.us.us.i
   %indvars.iv.next89.i = add nuw nsw i64 %indvars.iv88.i, 1 ; 2 uses
+  %indvars.iv.next86.i = add i32 %indvars.iv85.i, %1
   %exitcond92.not.i = icmp eq i64 %indvars.iv.next89.i, %i.jt
   br i1 %exitcond92.not.i, label %._crit_edge73.split.us.us.i, label %.preheader.us.us.i, !llvm.loop !20
 
 ._crit_edge73.split.us.us.i:                      ; preds = %._crit_edge.us.us.i
+  %3 = trunc nsw i64 %indvars.iv.next86.i.a to i32
   %indvars.iv.next94.i = add nuw nsw i64 %indvars.iv93.i, 1 ; 2 uses
   %exitcond97.not.i = icmp eq i64 %indvars.iv.next94.i, %i.jr
   br i1 %exitcond97.not.i, label %.loopexit, label %.preheader67.us.i, !llvm.loop !21

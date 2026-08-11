@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %._crit_edge124, %bb
   %i.bb = sext i16 %.sroa.051.0.extract.trunc to i32
   %i.bc = sext i16 %.sroa.7.0.extract.trunc to i32 ; 2 uses
   %i.bd = add nsw i32 %i.bb, 1
-  %i.be = sub nsw i32 %i.bd, %i.aj
+  %i.be = sub nsw i32 %i.bd, %i.aj                ; 2 uses
   %smax122 = call i32 @llvm.smax.i32(i32 %i.bc, i32 %.pre-phi)
   br label %.lr.ph108
 
@@ -210,15 +210,15 @@ bb.h:                                             ; preds = %._crit_edge124, %bb
   ret void
 
 .lr.ph108:                                        ; preds = %.lr.ph108.preheader, %._crit_edge
-  %.0111 = phi i64 [ %i.fj, %._crit_edge ], [ 0, %.lr.ph108.preheader ] ; 2 uses
-  %.063110.a = phi i32 [ %i.bf, %._crit_edge ], [ %i.bc, %.lr.ph108.preheader ] ; 3 uses
-  %8 = trunc i64 %.0111 to i32
-  %9 = add i32 %i.be, %8
+  %.063110.a = phi i32 [ %i.be, %.lr.ph108.preheader ], [ %i.bf, %._crit_edge ] ; 2 uses
+  %.0111 = phi i64 [ 0, %.lr.ph108.preheader ], [ %i.fj, %._crit_edge ]
+  %.063110 = phi i32 [ %i.bc, %.lr.ph108.preheader ], [ %8, %._crit_edge ] ; 3 uses
   br label %bb.i
 
 ._crit_edge:                                      ; preds = %_ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit.thread
-  %i.bf = add nsw i32 %.063110.a, 1
-  %exitcond123.not = icmp eq i32 %.063110.a, %smax122
+  %8 = add nsw i32 %.063110, 1
+  %i.bf = add i32 %.063110.a, %i.be
+  %exitcond123.not = icmp eq i32 %.063110, %smax122
   br i1 %exitcond123.not, label %._crit_edge114.split, label %.lr.ph108, !llvm.loop !139
 
 bb.i:                                             ; preds = %.lr.ph108, %_ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit.thread
@@ -309,7 +309,7 @@ _ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit: ; preds = %b
   %.065103 = phi i32 [ %i.fh, %_ZNK9VoxelArea8containsEi.exit.thread ], [ %i.cw, %_ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit ] ; 3 uses
   %i.da = load i16, ptr %i.at, align 4, !tbaa !115
   %i.db = sext i16 %i.da to i32
-  %i.dc = sub nsw i32 %.063110.a, %i.db
+  %i.dc = sub nsw i32 %.063110, %i.db
   %i.dd = load i32, ptr %i.av, align 4, !tbaa !118 ; 2 uses
   %i.de = mul nsw i32 %i.dc, %i.dd
   %i.df = load i32, ptr %i.au, align 4, !tbaa !119 ; 2 uses
@@ -453,9 +453,9 @@ _ZNK9VoxelArea8containsEi.exit.thread:            ; preds = %._crit_edge.i.i.i, 
 
 _ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit.thread: ; preds = %.lr.ph.i.i.i.i, %_ZNK9VoxelArea8containsEi.exit.thread, %_ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit, %bb.l, %..loopexit_crit_edge21.i.i.i.i, %bb.i
   %i.fi = add nsw i32 %.066105, 1
-  %i.fj = add i64 %.1107, 1                       ; 3 uses
+  %i.fj = add nuw nsw i64 %.1107, 1               ; 3 uses
   %lftr.wideiv = trunc i64 %i.fj to i32
-  %exitcond121.not = icmp eq i32 %9, %lftr.wideiv
+  %exitcond121.not = icmp eq i32 %.063110.a, %lftr.wideiv
   br i1 %exitcond121.not, label %._crit_edge, label %bb.i, !llvm.loop !144
 }
 
@@ -858,7 +858,7 @@ bb.j:                                             ; preds = %._crit_edge136, %bb
   %i.bc = sext i16 %.sroa.049.0.extract.trunc to i32
   %i.bd = sext i16 %.sroa.7.0.extract.trunc to i32 ; 2 uses
   %i.be = add nsw i32 %i.bc, 1
-  %i.bf = sub nsw i32 %i.be, %i.ak
+  %i.bf = sub nsw i32 %i.be, %i.ak                ; 2 uses
   %smax132 = call i32 @llvm.smax.i32(i32 %i.bd, i32 %.pre-phi)
   br label %.lr.ph117
 
@@ -867,15 +867,15 @@ bb.j:                                             ; preds = %._crit_edge136, %bb
   ret void
 
 .lr.ph117:                                        ; preds = %.lr.ph117.preheader, %._crit_edge
-  %.062122 = phi i1 [ %.3, %._crit_edge ], [ false, %.lr.ph117.preheader ]
-  %.064121 = phi i64 [ %i.fr, %._crit_edge ], [ 0, %.lr.ph117.preheader ] ; 2 uses
-  %.066120 = phi i32 [ %i.bg, %._crit_edge ], [ %i.bd, %.lr.ph117.preheader ] ; 3 uses
-  %8 = trunc i64 %.064121 to i32
-  %9 = add i32 %i.bf, %8
+  %indvars.iv = phi i32 [ %i.bf, %.lr.ph117.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
+  %.062122 = phi i1 [ false, %.lr.ph117.preheader ], [ %.3, %._crit_edge ]
+  %.064121 = phi i64 [ 0, %.lr.ph117.preheader ], [ %i.fr, %._crit_edge ]
+  %.066120 = phi i32 [ %i.bd, %.lr.ph117.preheader ], [ %i.bg, %._crit_edge ] ; 3 uses
   br label %bb.k
 
 ._crit_edge:                                      ; preds = %_ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit.thread
   %i.bg = add nsw i32 %.066120, 1
+  %indvars.iv.next = add i32 %indvars.iv, %i.bf
   %exitcond133.not = icmp eq i32 %.066120, %smax132
   br i1 %exitcond133.not, label %._crit_edge125.split, label %.lr.ph117, !llvm.loop !152
 
@@ -1142,9 +1142,9 @@ _ZNK9VoxelArea8containsEi.exit.thread:            ; preds = %._crit_edge.i.i.i, 
 _ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit.thread: ; preds = %.lr.ph.i.i.i.i, %_ZNK9VoxelArea8containsEi.exit.thread, %bb.u, %bb.n, %..loopexit_crit_edge21.i.i.i.i, %bb.k
   %.3 = phi i1 [ true, %bb.u ], [ %.1116, %bb.k ], [ %.1116, %..loopexit_crit_edge21.i.i.i.i ], [ %.1116, %bb.n ], [ true, %_ZNK9VoxelArea8containsEi.exit.thread ], [ %.1116, %.lr.ph.i.i.i.i ] ; 2 uses
   %i.fq = add nsw i32 %.072113, 1
-  %i.fr = add i64 %.165115, 1                     ; 3 uses
+  %i.fr = add nuw nsw i64 %.165115, 1             ; 3 uses
   %lftr.wideiv = trunc i64 %i.fr to i32
-  %exitcond131.not = icmp eq i32 %9, %lftr.wideiv
+  %exitcond131.not = icmp eq i32 %indvars.iv, %lftr.wideiv
   br i1 %exitcond131.not, label %._crit_edge, label %bb.k, !llvm.loop !154
 }
 
@@ -1294,7 +1294,7 @@ bb.a:
   %i.t = mul i32 %i.s, %i.j                       ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 166
   %i.v = load i16, ptr %i.u, align 2, !tbaa !56   ; 3 uses
-  %i.w = sext i16 %i.v to i32                     ; 11 uses
+  %i.w = sext i16 %i.v to i32                     ; 10 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.y = load i32, ptr %i.x, align 8, !tbaa !84   ; 2 uses
   %i.z = udiv i32 %i.t, %i.y
@@ -1352,9 +1352,6 @@ bb.e:                                             ; preds = %bb.c, %bb.a
   %.sroa.6.0.insert.shift = shl nuw i32 %.sroa.6.0.insert.ext, 24
   %.sroa.098.0.insert.ext = zext i16 %i.d to i32
   %.sroa.098.0.insert.insert = or disjoint i32 %.sroa.6.0.insert.shift, %.sroa.098.0.insert.ext
-  %8 = add nsw i32 %i.w, -1
-  %9 = zext i32 %8 to i64
-  %10 = add nuw nsw i64 %9, 1
   br label %bb.f
 
 ._crit_edge139:                                   ; preds = %_ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit.thread, %bb.e
@@ -1433,7 +1430,7 @@ _ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit: ; preds = %b
 
 .preheader109:                                    ; preds = %.preheader109.lr.ph, %._crit_edge128.split
   %.078135 = phi i1 [ false, %.preheader109.lr.ph ], [ %.4, %._crit_edge128.split ]
-  %.079134 = phi i64 [ 0, %.preheader109.lr.ph ], [ %11, %._crit_edge128.split ]
+  %.079134 = phi i64 [ 0, %.preheader109.lr.ph ], [ %i.fn, %._crit_edge128.split ]
   %.082133 = phi i32 [ 0, %.preheader109.lr.ph ], [ %i.cq, %._crit_edge128.split ] ; 3 uses
   %i.ch = add i32 %.082133, %i.bb
   %sext = shl i32 %i.ch, 16
@@ -1444,7 +1441,7 @@ _ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit: ; preds = %b
 
 .preheader:                                       ; preds = %.preheader109, %._crit_edge
   %.1127 = phi i1 [ %.078135, %.preheader109 ], [ %.4, %._crit_edge ]
-  %.180126 = phi i64 [ %.079134, %.preheader109 ], [ %11, %._crit_edge ] ; 2 uses
+  %.180126 = phi i64 [ %.079134, %.preheader109 ], [ %i.fn, %._crit_edge ]
   %.083125 = phi i32 [ 0, %.preheader109 ], [ %i.cr, %._crit_edge ] ; 3 uses
   %i.cl = add i32 %.083125, %i.ba
   %sext101 = shl i32 %i.cl, 16
@@ -1460,7 +1457,6 @@ _ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit: ; preds = %b
   br i1 %.not89, label %_ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit.thread, label %.preheader109, !llvm.loop !157
 
 ._crit_edge:                                      ; preds = %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEEtET_S7_S7_RKT0_.exit.thread
-  %11 = add i64 %10, %.180126                     ; 2 uses
   %i.cr = add i32 %.083125, 1                     ; 2 uses
   %.not90 = icmp eq i32 %i.cr, %i.w
   br i1 %.not90, label %._crit_edge128.split, label %.preheader, !llvm.loop !158
@@ -1629,7 +1625,7 @@ bb.x:                                             ; preds = %bb.w
 _ZSt4findIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEEtET_S7_S7_RKT0_.exit.thread: ; preds = %._crit_edge.i.i.i, %bb.x, %bb.w, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEEtET_S7_S7_RKT0_.exit
   %.4 = phi i1 [ %.2122, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEEtET_S7_S7_RKT0_.exit ], [ true, %bb.w ], [ true, %bb.x ], [ %.2122, %._crit_edge.i.i.i ] ; 3 uses
   %i.fm = add i32 %.084120, 1                     ; 2 uses
-  %i.fn = add i64 %.281121, 1
+  %i.fn = add i64 %.281121, 1                     ; 3 uses
   %.not91 = icmp eq i32 %i.fm, %i.w
   br i1 %.not91, label %._crit_edge, label %bb.l, !llvm.loop !159
 
@@ -1988,17 +1984,19 @@ bb.k:                                             ; preds = %._crit_edge129, %bb
 
 .preheader89.preheader:                           ; preds = %.preheader89.lr.ph
   %i.ay = add nsw i32 %i.g, 1
-  %i.az = sub nsw i32 %i.ay, %i.h
+  %i.az = sub nsw i32 %i.ay, %i.h                 ; 2 uses
   %smax127 = call i32 @llvm.smax.i32(i32 %.pre-phi, i32 %.pre-phi131)
   br label %.preheader89
 
 .preheader89:                                     ; preds = %.preheader89.preheader, %._crit_edge108.split
   %.061116 = phi i1 [ %.4, %._crit_edge108.split ], [ false, %.preheader89.preheader ]
-  %.062115 = phi i64 [ %i.fj, %._crit_edge108.split ], [ 0, %.preheader89.preheader ]
+  %.062115 = phi i64 [ %i.fj, %._crit_edge108.split ], [ 0, %.preheader89.preheader ] ; 2 uses
   %.065113 = phi i32 [ %i.bd, %._crit_edge108.split ], [ %.pre-phi, %.preheader89.preheader ] ; 4 uses
   %i.ba = sub nsw i32 %.065113, %.pre-phi
   %i.bb = mul nsw i32 %i.ba, %i.j
   %i.bc = sub i32 %i.bb, %i.h
+  %8 = trunc i64 %.062115 to i32
+  %9 = add i32 %i.az, %8
   br label %.preheader
 
 ._crit_edge117.split:                             ; preds = %._crit_edge108.split, %.preheader89.lr.ph, %bb.k
@@ -2006,11 +2004,10 @@ bb.k:                                             ; preds = %._crit_edge129, %bb
   ret void
 
 .preheader:                                       ; preds = %.preheader89, %._crit_edge
+  %indvars.iv = phi i32 [ %9, %.preheader89 ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
   %.1107 = phi i1 [ %.061116, %.preheader89 ], [ %.4, %._crit_edge ]
-  %.163106 = phi i64 [ %.062115, %.preheader89 ], [ %i.fj, %._crit_edge ] ; 2 uses
+  %.163106 = phi i64 [ %.062115, %.preheader89 ], [ %i.fj, %._crit_edge ]
   %.067105 = phi i32 [ %i.l, %.preheader89 ], [ %i.be, %._crit_edge ] ; 3 uses
-  %8 = trunc i64 %.163106 to i32
-  %9 = add i32 %i.az, %8
   br label %bb.l
 
 ._crit_edge108.split:                             ; preds = %._crit_edge
@@ -2020,6 +2017,7 @@ bb.k:                                             ; preds = %._crit_edge129, %bb
 
 ._crit_edge:                                      ; preds = %_ZNK9VoxelArea8containsEi.exit.thread
   %i.be = add nsw i32 %.067105, 1
+  %indvars.iv.next = add i32 %indvars.iv, %i.az
   %exitcond126.not = icmp eq i32 %.067105, %i.k
   br i1 %exitcond126.not, label %._crit_edge108.split, label %.preheader, !llvm.loop !171
 
@@ -2255,7 +2253,7 @@ _ZNK9VoxelArea8containsEi.exit.thread:            ; preds = %.lr.ph.i.i.i.i, %bb
   %i.fi = add nsw i32 %.06899, 1
   %i.fj = add i64 %.264101, 1                     ; 4 uses
   %lftr.wideiv = trunc i64 %i.fj to i32
-  %exitcond.not = icmp eq i32 %9, %lftr.wideiv
+  %exitcond.not = icmp eq i32 %indvars.iv, %lftr.wideiv
   br i1 %exitcond.not, label %._crit_edge, label %bb.l, !llvm.loop !172
 }
 
@@ -2648,7 +2646,7 @@ bb.m:                                             ; preds = %bb.l, %bb.g
   %i.bk = sext i16 %.sroa.041.0.extract.trunc to i32
   %i.bl = sext i16 %.sroa.9.0.extract.trunc to i32
   %i.bm = add nsw i32 %i.bk, 1
-  %i.bn = sub nsw i32 %i.bm, %i.ap
+  %i.bn = sub nsw i32 %i.bm, %i.ap                ; 2 uses
   %i.bo = call i16 @llvm.smax.i16(i16 %.sroa.9.0.extract.trunc, i16 %.sroa.7.0.extract.trunc)
   %smax128 = sext i16 %i.bo to i32
   br label %.lr.ph112
@@ -2658,15 +2656,15 @@ bb.m:                                             ; preds = %bb.l, %bb.g
   ret void
 
 .lr.ph112:                                        ; preds = %.lr.ph112.preheader, %._crit_edge
-  %.060115 = phi i64 [ %i.fu, %._crit_edge ], [ 0, %.lr.ph112.preheader ] ; 2 uses
-  %.062114.a = phi i32 [ %i.bp, %._crit_edge ], [ %i.bl, %.lr.ph112.preheader ] ; 3 uses
-  %8 = trunc i64 %.060115 to i32
-  %9 = add i32 %i.bn, %8
+  %.062114.a = phi i32 [ %i.bn, %.lr.ph112.preheader ], [ %i.bp, %._crit_edge ] ; 2 uses
+  %.060115 = phi i64 [ 0, %.lr.ph112.preheader ], [ %i.fu, %._crit_edge ]
+  %.062114 = phi i32 [ %i.bl, %.lr.ph112.preheader ], [ %8, %._crit_edge ] ; 3 uses
   br label %bb.n
 
 ._crit_edge:                                      ; preds = %_ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit.thread
-  %i.bp = add nsw i32 %.062114.a, 1
-  %exitcond129.not = icmp eq i32 %.062114.a, %smax128
+  %8 = add nsw i32 %.062114, 1
+  %i.bp = add i32 %.062114.a, %i.bn
+  %exitcond129.not = icmp eq i32 %.062114, %smax128
   br i1 %exitcond129.not, label %._crit_edge118.split, label %.lr.ph112, !llvm.loop !179
 
 bb.n:                                             ; preds = %.lr.ph112, %_ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit.thread
@@ -2778,7 +2776,7 @@ bb.x:                                             ; preds = %_ZNSt13unordered_se
 bb.y:                                             ; preds = %.lr.ph
   %i.dl = load i16, ptr %i.bc, align 4, !tbaa !115
   %i.dm = sext i16 %i.dl to i32
-  %i.dn = sub nsw i32 %.062114.a, %i.dm
+  %i.dn = sub nsw i32 %.062114, %i.dm
   %i.do = load i32, ptr %i.be, align 4, !tbaa !118 ; 2 uses
   %i.dp = mul nsw i32 %i.dn, %i.do
   %i.dq = load i32, ptr %i.bd, align 4, !tbaa !119 ; 2 uses
@@ -2922,9 +2920,9 @@ _ZNK9VoxelArea8containsEi.exit.thread:            ; preds = %._crit_edge.i.i.i, 
 
 _ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit.thread: ; preds = %.lr.ph.i.i.i.i, %_ZNK9VoxelArea8containsEi.exit.thread, %bb.x, %bb.p, %..loopexit_crit_edge21.i.i.i.i
   %i.ft = add nsw i32 %.066109, 1
-  %i.fu = add i64 %.1111, 1                       ; 3 uses
+  %i.fu = add nuw nsw i64 %.1111, 1               ; 3 uses
   %lftr.wideiv = trunc i64 %i.fu to i32
-  %exitcond127.not = icmp eq i32 %9, %lftr.wideiv
+  %exitcond127.not = icmp eq i32 %.062114.a, %lftr.wideiv
   br i1 %exitcond127.not, label %._crit_edge, label %bb.n, !llvm.loop !181
 
 bb.aj:                                            ; preds = %bb.k, %bb.e

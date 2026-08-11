@@ -204,6 +204,7 @@ bb.d:                                             ; preds = %.lr.ph73, %.loopexi
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZN4ncnnL16pack_A_tile_bf16ERKNS_3MatERS0_iiii(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(72) %0, ptr nofree writeonly captures(none) %.0.val, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) unnamed_addr #10 {
 bb.a:
+  %.0.val136 = ptrtoaddr ptr %.0.val to i64
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load i32, ptr %i.a, align 8, !tbaa !85
   %i.c = icmp eq i32 %i.b, 3
@@ -606,12 +607,16 @@ middle.block178:                                  ; preds = %vector.body166
   %i.fs = sext i32 %1 to i64                      ; 2 uses
   %i.ft = zext nneg i32 %2 to i64
   %i.fu = mul i64 %i.i, %i.fs
-  %5 = mul i64 %i.fu, -2
-  %i.fv = shl nsw i64 %i.n, 1
-  %6 = sub i64 %5, %i.fv
-  %7 = mul i64 %i.i, -8
+  %5 = add i64 %i.fu, %i.n
+  %6 = shl i64 %5, 1
+  %7 = add nsw i32 %4, -1
+  %8 = zext i32 %7 to i64
+  %i.fv = shl nuw nsw i64 %8, 3
+  %9 = add nuw nsw i64 %i.fv, 8
+  %10 = shl i64 %i.i, 3
+  %11 = sub i64 %9, %10
   %i.fw = zext nneg i32 %4 to i64                 ; 2 uses
-  %min.iters.check = icmp ult i32 %4, 6
+  %min.iters.check = icmp ult i32 %4, 4
   %n.vec = and i64 %i.fw, 2147483644              ; 4 uses
   %i.fx = shl nuw nsw i64 %n.vec, 3               ; 2 uses
   %i.fy = trunc nuw nsw i64 %n.vec to i32
@@ -625,7 +630,7 @@ middle.block178:                                  ; preds = %vector.body166
 .preheader3.us42.us:                              ; preds = %.preheader3.us42.us.preheader, %..loopexit4_crit_edge.us46.us
   %indvar = phi i64 [ 0, %.preheader3.us42.us.preheader ], [ %indvar.next, %..loopexit4_crit_edge.us46.us ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.preheader3.us42.us.preheader ], [ %indvars.iv.next, %..loopexit4_crit_edge.us46.us ] ; 2 uses
-  %.010731.us36.us = phi ptr [ %.0.val, %.preheader3.us42.us.preheader ], [ %.lcssa135, %..loopexit4_crit_edge.us46.us ] ; 5 uses
+  %.010731.us36.us = phi ptr [ %.0.val, %.preheader3.us42.us.preheader ], [ %.lcssa135, %..loopexit4_crit_edge.us46.us ] ; 4 uses
   %i.ga = load ptr, ptr %0, align 8, !tbaa !18    ; 2 uses
   %i.gb = add nsw i64 %indvars.iv, %i.fs
   %i.gc = mul i64 %i.i, %i.gb
@@ -635,11 +640,10 @@ middle.block178:                                  ; preds = %vector.body166
 
 vector.memcheck:                                  ; preds = %.preheader3.us42.us
   %i.gf = ptrtoaddr ptr %i.ga to i64
-  %i.gg = mul i64 %7, %indvar
-  %i.gh = add i64 %6, %i.gg
-  %.010731.us36.us136 = ptrtoaddr ptr %.010731.us36.us to i64
-  %i.gi = add i64 %i.gh, %.010731.us36.us136
-  %i.gj = sub i64 %i.gf, %i.gi
+  %i.gg = mul i64 %11, %indvar
+  %i.gh = add i64 %i.gg, %.0.val136
+  %i.gi = add i64 %6, %i.gf
+  %i.gj = sub i64 %i.gi, %i.gh
   %diff.check = icmp ugt i64 %i.gj, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 

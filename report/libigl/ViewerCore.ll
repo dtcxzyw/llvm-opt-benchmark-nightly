@@ -204,7 +204,7 @@ bb.a:
   %i.r = load float, ptr %i.q, align 4
   %i.s = fptoui float %i.r to i32
   %.073 = select i1 %or.cond, i32 %i.s, i32 %i.k  ; 11 uses
-  %.068 = select i1 %or.cond, i32 %i.p, i32 %i.h  ; 11 uses
+  %.068 = select i1 %or.cond, i32 %i.p, i32 %i.h  ; 12 uses
   %i.t = zext i32 %.068 to i64                    ; 10 uses
   %i.u = zext i32 %.073 to i64                    ; 10 uses
   %i.v = icmp eq i32 %.068, 0
@@ -514,7 +514,8 @@ bb.v:                                             ; preds = %.sink.split.i.i91, 
 
 .preheader:                                       ; preds = %bb.v, %._crit_edge
   %indvars.iv133 = phi i64 [ %indvars.iv.next134, %._crit_edge ], [ 0, %bb.v ] ; 5 uses
-  %.067124 = phi i64 [ %indvars.iv.next129.a, %._crit_edge ], [ 0, %bb.v ]
+  %indvars.iv128 = phi i32 [ %indvars.iv.next129, %._crit_edge ], [ 0, %bb.v ] ; 2 uses
+  %7 = sext i32 %indvars.iv128 to i64
   br label %bb.w
 
 ._crit_edge126.split:                             ; preds = %._crit_edge, %bb.v
@@ -528,11 +529,12 @@ bb.v:                                             ; preds = %.sink.split.i.i91, 
 
 ._crit_edge:                                      ; preds = %bb.w
   %indvars.iv.next134 = add nuw nsw i64 %indvars.iv133, 1 ; 2 uses
+  %indvars.iv.next129 = add i32 %indvars.iv128, %.068
   %exitcond137.not = icmp eq i64 %indvars.iv.next134, %i.u
   br i1 %exitcond137.not, label %._crit_edge126.split, label %.preheader, !llvm.loop !159
 
 bb.w:                                             ; preds = %.preheader, %bb.w
-  %indvars.iv128.a = phi i64 [ %.067124, %.preheader ], [ %indvars.iv.next129.a, %bb.w ] ; 2 uses
+  %indvars.iv128.a = phi i64 [ %7, %.preheader ], [ %indvars.iv.next129.a, %bb.w ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.w ] ; 5 uses
   %i.ed = shl nsw i64 %indvars.iv128.a, 2
   %i.ee = getelementptr inbounds i8, ptr %i.dr, i64 %i.ed ; 4 uses
@@ -567,7 +569,7 @@ bb.w:                                             ; preds = %.preheader, %bb.w
   %i.fe = getelementptr i8, ptr %i.fb, i64 %indvars.iv
   %i.ff = getelementptr i8, ptr %i.fe, i64 %i.fd
   store i8 %i.fa, ptr %i.ff, align 1, !tbaa !51
-  %indvars.iv.next129.a = add nsw i64 %indvars.iv128.a, 1 ; 2 uses
+  %indvars.iv.next129.a = add nsw i64 %indvars.iv128.a, 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.t
   br i1 %exitcond.not, label %._crit_edge, label %bb.w, !llvm.loop !160

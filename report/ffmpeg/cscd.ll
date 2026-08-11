@@ -203,8 +203,8 @@ bb.a:
   br i1 %.not28, label %._crit_edge32.split, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.a
-  %i.b = add nsw i32 %2, 3
-  %i.c = and i32 %i.b, -4
+  %i.b = add i32 %2, 3
+  %i.c = and i32 %i.b, -4                         ; 2 uses
   %.not2223 = icmp eq i32 %2, 0
   %i.d = sub nsw i32 %i.c, %2
   %i.e = sext i32 %i.d to i64
@@ -217,9 +217,23 @@ bb.a:
   %i.i = mul nsw i32 %i.g, %i.h
   %i.j = sext i32 %i.i to i64
   %i.k = getelementptr inbounds i8, ptr %i.f, i64 %i.j
-  %i.l = zext i32 %2 to i64                       ; 2 uses
+  %4 = add i32 %2, -1
+  %5 = zext i32 %4 to i64                         ; 2 uses
+  %i.l = zext i32 %2 to i64
+  %6 = sext i32 %i.c to i64
+  %7 = add nsw i64 %6, %5
+  %8 = add nsw i64 %7, 1
+  %9 = sext i32 %2 to i64
+  %10 = sub nsw i64 %8, %9                        ; 2 uses
+  %11 = add i32 %3, -1
+  %12 = zext i32 %11 to i64
+  %13 = mul i64 %10, %12
+  %14 = getelementptr i8, ptr %1, i64 %13
+  %15 = getelementptr i8, ptr %14, i64 %5
+  %scevgep38 = getelementptr i8, ptr %15, i64 1
   %i.m = zext i32 %2 to i64                       ; 5 uses
   %min.iters.check = icmp ult i32 %2, 4
+  %stride.check = icmp slt i64 %10, 0
   %min.iters.check39 = icmp ult i32 %2, 32
   %i.n = and i64 %i.m, 28
   %n.vec = and i64 %i.m, 4294967264               ; 6 uses
@@ -235,17 +249,17 @@ bb.a:
 
 iter.check:                                       ; preds = %.preheader.preheader, %._crit_edge
   %.031 = phi ptr [ %i.bl, %._crit_edge ], [ %i.k, %.preheader.preheader ] ; 8 uses
-  %.01830 = phi ptr [ %i.bg, %._crit_edge ], [ %1, %.preheader.preheader ] ; 8 uses
+  %.01830 = phi ptr [ %i.bg, %._crit_edge ], [ %1, %.preheader.preheader ] ; 6 uses
   %.02129 = phi i32 [ %i.bm, %._crit_edge ], [ %3, %.preheader.preheader ]
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
   %scevgep = getelementptr i8, ptr %.031, i64 %i.l
-  %scevgep38 = getelementptr i8, ptr %.01830, i64 %i.l
-  %bound0.a = icmp ult ptr %.031, %scevgep38
-  %bound1 = icmp ult ptr %.01830, %scevgep
-  %found.conflict = and i1 %bound0.a, %bound1
-  br i1 %found.conflict, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
+  %bound0 = icmp ult ptr %.031, %scevgep38
+  %bound0.a = icmp ult ptr %1, %scevgep
+  %found.conflict = and i1 %bound0, %bound0.a
+  %16 = or i1 %found.conflict, %stride.check
+  br i1 %16, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check39, label %vec.epilog.ph, label %vector.ph

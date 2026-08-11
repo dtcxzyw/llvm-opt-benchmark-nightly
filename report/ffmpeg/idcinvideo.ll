@@ -45,15 +45,15 @@ bb.c:                                             ; preds = %bb.a
 
 .preheader:                                       ; preds = %bb.c, %bb.e
   %indvars.iv30 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next31, %bb.e ] ; 3 uses
-  %.01824 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next.a, %bb.e ]
+  %.01824 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next, %bb.e ] ; 2 uses
   %i.i = getelementptr inbounds nuw [8192 x i8], ptr %i.h, i64 %indvars.iv30
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %bb.d
   %indvars.iv25.a = phi i64 [ 0, %.preheader ], [ %indvars.iv.next26, %bb.d ] ; 2 uses
   %indvars.iv = phi i64 [ %.01824, %.preheader ], [ %indvars.iv.next.a, %bb.d ] ; 2 uses
-  %indvars.iv.next.a = add nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.j = getelementptr inbounds i8, ptr %i.g, i64 %indvars.iv
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 1
+  %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv
   %i.k = load i8, ptr %i.j, align 1, !tbaa !35
   %i.l = zext i8 %i.k to i32
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.i, i64 %indvars.iv25.a
@@ -66,6 +66,7 @@ bb.e:                                             ; preds = %bb.d
   %i.n = trunc nuw nsw i64 %indvars.iv30 to i32
   tail call fastcc void @huff_build_tree(ptr noundef nonnull %i.b, i32 noundef %i.n) #8
   %indvars.iv.next31 = add nuw nsw i64 %indvars.iv30, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %.01824, 256
   %exitcond33.not = icmp eq i64 %indvars.iv.next31, 256
   br i1 %exitcond33.not, label %.loopexit, label %.preheader, !llvm.loop !40
 

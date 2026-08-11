@@ -203,33 +203,31 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 4, !tbaa !75   ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 52
   %i.e = load i32, ptr %i.d, align 4, !tbaa !74   ; 2 uses
+  %1 = sdiv i32 %i.e, 16                          ; 2 uses
   %i.f = icmp sgt i32 %i.c, 15
   %i.g = icmp sgt i32 %i.e, 15
   %or.cond = select i1 %i.f, i1 %i.g, i1 false
   br i1 %or.cond, label %.preheader.preheader, label %._crit_edge48.split
 
 .preheader.preheader:                             ; preds = %bb.a
-  %1 = lshr i32 %i.e, 4                           ; 2 uses
   %i.h = lshr i32 %i.c, 4
-  %2 = add nsw i32 %1, -1
-  %3 = zext i32 %2 to i64
-  %4 = add nuw nsw i64 %3, 1
   %wide.trip.count57 = zext nneg i32 %i.h to i64
   %wide.trip.count = zext nneg i32 %1 to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
-  %indvars.iv54 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next55, %._crit_edge ] ; 2 uses
-  %.047.a = phi i32 [ 0, %.preheader.preheader ], [ %.537, %._crit_edge ]
-  %.02445 = phi i64 [ 0, %.preheader.preheader ], [ %i.be, %._crit_edge ] ; 2 uses
+  %indvars.iv54 = phi i64 [ 0, %.preheader.preheader ], [ %i.be, %._crit_edge ] ; 2 uses
+  %.047.a = phi i32 [ 0, %.preheader.preheader ], [ %indvars.iv.next50, %._crit_edge ] ; 2 uses
+  %.047 = phi i32 [ 0, %.preheader.preheader ], [ %.537, %._crit_edge ]
   %.02644 = phi i32 [ -1, %.preheader.preheader ], [ %.22834, %._crit_edge ]
+  %2 = sext i32 %.047.a to i64
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv54 ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %bb.f
-  %indvars.iv49 = phi i64 [ %.02445, %.preheader ], [ %indvars.iv.next50.a, %bb.f ] ; 2 uses
+  %indvars.iv49 = phi i64 [ %2, %.preheader ], [ %indvars.iv.next50.a, %bb.f ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.f ] ; 3 uses
-  %.141 = phi i32 [ %.047.a, %.preheader ], [ %.537, %bb.f ]
+  %.141 = phi i32 [ %.047, %.preheader ], [ %.537, %bb.f ]
   %.12738 = phi i32 [ %.02644, %.preheader ], [ %.22834, %bb.f ] ; 3 uses
   %i.j = load ptr, ptr @input, align 8, !tbaa !8
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 264
@@ -241,7 +239,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = load ptr, ptr @img, align 8, !tbaa !8
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 14224
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !87
-  %i.p = getelementptr inbounds nuw [536 x i8], ptr %i.o, i64 %indvars.iv49
+  %i.p = getelementptr inbounds [536 x i8], ptr %i.o, i64 %indvars.iv49
   %i.q = load i32, ptr %i.p, align 8, !tbaa !88
   %.not29 = icmp eq i32 %i.q, %.12738
   br i1 %.not29, label %bb.e, label %bb.d
@@ -312,15 +310,15 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 bb.f:                                             ; preds = %.sink.split, %.thread
   %.537 = phi i32 [ %.536, %.thread ], [ %.537.ph, %.sink.split ] ; 2 uses
   %.22834 = phi i32 [ %.22835, %.thread ], [ %.22834.ph, %.sink.split ] ; 2 uses
-  %indvars.iv.next50.a = add nuw nsw i64 %indvars.iv49, 1
+  %indvars.iv.next50.a = add nsw i64 %indvars.iv49, 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !93
 
 ._crit_edge:                                      ; preds = %bb.f
-  %i.be = add nuw nsw i64 %4, %.02445
-  %indvars.iv.next55 = add nuw nsw i64 %indvars.iv54, 1 ; 2 uses
-  %exitcond58.not = icmp eq i64 %indvars.iv.next55, %wide.trip.count57
+  %i.be = add nuw nsw i64 %indvars.iv54, 1        ; 2 uses
+  %indvars.iv.next50 = add i32 %.047.a, %1
+  %exitcond58.not = icmp eq i64 %i.be, %wide.trip.count57
   br i1 %exitcond58.not, label %._crit_edge48.split, label %.preheader, !llvm.loop !94
 
 ._crit_edge48.split:                              ; preds = %._crit_edge, %bb.a

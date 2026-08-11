@@ -140,9 +140,11 @@ gv_calloc.exit40:                                 ; preds = %bb.f
   br i1 %niter.ncmp.3, label %.preheader.preheader.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !15
 
 .preheader:                                       ; preds = %.preheader.preheader, %.unr-lcssa
-  %indvars.iv51.a = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next52, %.unr-lcssa ] ; 11 uses
-  %.03146 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next50.lcssa, %.unr-lcssa ] ; 3 uses
+  %indvars.iv51.a = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next56, %.unr-lcssa ] ; 11 uses
+  %indvars.iv51 = phi i32 [ 0, %.preheader.preheader ], [ %indvars.iv.next52, %.unr-lcssa ] ; 2 uses
+  %indvars.iv49 = phi i32 [ %1, %.preheader.preheader ], [ %indvars.iv.next50, %.unr-lcssa ] ; 2 uses
   %i.am = sub nsw i64 %wide.trip.count61, %indvars.iv51.a
+  %2 = sext i32 %indvars.iv51 to i64              ; 3 uses
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv51.a
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !11 ; 3 uses
   %xtraiter66 = and i64 %i.am, 1
@@ -150,7 +152,7 @@ gv_calloc.exit40:                                 ; preds = %bb.f
   br i1 %lcmp.mod67.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.preheader
-  %i.ap = getelementptr inbounds [4 x i8], ptr %0, i64 %.03146
+  %i.ap = getelementptr inbounds [4 x i8], ptr %0, i64 %2
   %i.aq = load float, ptr %i.ap, align 4, !tbaa !17 ; 2 uses
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %indvars.iv51.a
   store float %i.aq, ptr %i.ar, align 4, !tbaa !17
@@ -159,13 +161,12 @@ gv_calloc.exit40:                                 ; preds = %bb.f
   %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.at, i64 %indvars.iv51.a
   store float %i.aq, ptr %i.au, align 4, !tbaa !17
   %indvars.iv.next54.prol.a = add nuw nsw i64 %indvars.iv51.a, 1
-  %indvars.iv.next50.prol = add nsw i64 %.03146, 1 ; 2 uses
+  %indvars.iv.next50.prol = add nsw i64 %2, 1
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.preheader
-  %indvars.iv.next50.lcssa.unr = phi i64 [ poison, %.preheader ], [ %indvars.iv.next50.prol, %.prol.loopexit.unr-lcssa ]
   %indvars.iv53.unr.a = phi i64 [ %indvars.iv51.a, %.preheader ], [ %indvars.iv.next54.prol.a, %.prol.loopexit.unr-lcssa ]
-  %indvars.iv49.unr = phi i64 [ %.03146, %.preheader ], [ %indvars.iv.next50.prol, %.prol.loopexit.unr-lcssa ]
+  %indvars.iv49.unr = phi i64 [ %2, %.preheader ], [ %indvars.iv.next50.prol, %.prol.loopexit.unr-lcssa ]
   %i.av = icmp eq i64 %indvars.iv51.a, %i.z
   br i1 %i.av, label %.unr-lcssa, label %.preheader.new
 
@@ -191,14 +192,15 @@ gv_calloc.exit40:                                 ; preds = %bb.f
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %indvars.iv51.a
   store float %i.be, ptr %i.bi, align 4, !tbaa !17
   %indvars.iv.next54.1.a = add nuw nsw i64 %indvars.iv53.a, 2 ; 2 uses
-  %indvars.iv.next50.1 = add nsw i64 %indvars.iv49.a, 2 ; 2 uses
+  %indvars.iv.next50.1 = add nsw i64 %indvars.iv49.a, 2
   %exitcond59.not.1 = icmp eq i64 %indvars.iv.next54.1.a, %wide.trip.count61
   br i1 %exitcond59.not.1, label %.unr-lcssa, label %.preheader.new, !llvm.loop !19
 
 .unr-lcssa:                                       ; preds = %.preheader.new, %.prol.loopexit
-  %indvars.iv.next50.lcssa = phi i64 [ %indvars.iv.next50.lcssa.unr, %.prol.loopexit ], [ %indvars.iv.next50.1, %.preheader.new ]
-  %indvars.iv.next52 = add nuw nsw i64 %indvars.iv51.a, 1 ; 2 uses
-  %exitcond62.not = icmp eq i64 %indvars.iv.next52, %wide.trip.count61
+  %indvars.iv.next56 = add nuw nsw i64 %indvars.iv51.a, 1 ; 2 uses
+  %indvars.iv.next50 = add i32 %indvars.iv49, -1
+  %indvars.iv.next52 = add i32 %indvars.iv51, %indvars.iv49
+  %exitcond62.not = icmp eq i64 %indvars.iv.next56, %wide.trip.count61
   br i1 %exitcond62.not, label %._crit_edge, label %.preheader, !llvm.loop !20
 
 ._crit_edge:                                      ; preds = %.unr-lcssa, %.preheader42

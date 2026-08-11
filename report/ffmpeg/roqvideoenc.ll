@@ -203,41 +203,43 @@ bb.a:
   br i1 %i.m, label %.preheader25, label %.loopexit
 
 .preheader25:                                     ; preds = %.preheader25.lr.ph, %._crit_edge
-  %.02232 = phi i64 [ %indvars.iv.next.3, %._crit_edge ], [ 0, %.preheader25.lr.ph ]
+  %.02232 = phi i32 [ %indvars.iv.next34.3, %._crit_edge ], [ 0, %.preheader25.lr.ph ]
   %.02331 = phi i32 [ %i.ad, %._crit_edge ], [ 0, %.preheader25.lr.ph ] ; 4 uses
   %i.n = or disjoint i32 %.02331, 8               ; 2 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader25, %.preheader
+  %indvars.iv = phi i32 [ %.02232, %.preheader25 ], [ %indvars.iv.next, %.preheader ] ; 3 uses
   %.02130 = phi i32 [ 0, %.preheader25 ], [ %i.ab, %.preheader ] ; 4 uses
-  %.129 = phi i64 [ %.02232, %.preheader25 ], [ %indvars.iv.next.3, %.preheader ] ; 5 uses
-  %i.o = getelementptr inbounds [248 x i8], ptr %i.h, i64 %.129 ; 2 uses
+  %1 = sext i32 %indvars.iv to i64                ; 4 uses
+  %i.o = getelementptr inbounds [248 x i8], ptr %i.h, i64 %1 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 240
   store i32 %.02130, ptr %i.p, align 4, !tbaa !88
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 244
   store i32 %.02331, ptr %i.q, align 4, !tbaa !85
   %i.r = or disjoint i32 %.02130, 8               ; 2 uses
-  %i.s = getelementptr [248 x i8], ptr %i.h, i64 %.129 ; 2 uses
+  %i.s = getelementptr [248 x i8], ptr %i.h, i64 %1 ; 2 uses
   %i.t = getelementptr i8, ptr %i.s, i64 488
   store i32 %i.r, ptr %i.t, align 4, !tbaa !88
   %i.u = getelementptr i8, ptr %i.s, i64 492
   store i32 %.02331, ptr %i.u, align 4, !tbaa !85
-  %i.v = getelementptr [248 x i8], ptr %i.h, i64 %.129 ; 2 uses
+  %i.v = getelementptr [248 x i8], ptr %i.h, i64 %1 ; 2 uses
   %i.w = getelementptr i8, ptr %i.v, i64 736
   store i32 %.02130, ptr %i.w, align 4, !tbaa !88
   %i.x = getelementptr i8, ptr %i.v, i64 740
   store i32 %i.n, ptr %i.x, align 4, !tbaa !85
-  %i.y = getelementptr [248 x i8], ptr %i.h, i64 %.129 ; 2 uses
+  %i.y = getelementptr [248 x i8], ptr %i.h, i64 %1 ; 2 uses
   %i.z = getelementptr i8, ptr %i.y, i64 984
   store i32 %i.r, ptr %i.z, align 4, !tbaa !88
-  %indvars.iv.next.3 = add nsw i64 %.129, 4       ; 2 uses
   %i.aa = getelementptr i8, ptr %i.y, i64 988
   store i32 %i.n, ptr %i.aa, align 4, !tbaa !85
   %i.ab = add nuw nsw i32 %.02130, 16             ; 2 uses
   %i.ac = icmp slt i32 %i.ab, %i.l
+  %indvars.iv.next = add i32 %indvars.iv, 4
   br i1 %i.ac, label %.preheader, label %._crit_edge, !llvm.loop !114
 
 ._crit_edge:                                      ; preds = %.preheader
+  %indvars.iv.next34.3 = add i32 %indvars.iv, 4
   %i.ad = add nuw nsw i32 %.02331, 16             ; 2 uses
   %i.ae = icmp slt i32 %i.ad, %i.j
   br i1 %i.ae, label %.preheader25, label %.loopexit, !llvm.loop !115

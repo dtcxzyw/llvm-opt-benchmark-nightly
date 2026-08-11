@@ -204,7 +204,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1608
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !499  ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 1144
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !234  ; 10 uses
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !234  ; 11 uses
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -235,12 +235,14 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 1176
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !235
   %i.r = load ptr, ptr %i.o, align 8, !tbaa !307
+  %1 = shl i64 %i.e, 1
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %bb.d, %.preheader.lr.ph.split.us
-  %.018.lcssa47.us = phi double [ %i.bi, %.preheader.lr.ph.split.us ], [ %.018.lcssa46.us, %bb.d ] ; 2 uses
-  %.01943.us = phi i64 [ 1, %.preheader.lr.ph.split.us ], [ %i.an, %bb.d ] ; 2 uses
-  %.02042.us = phi i64 [ %i.e, %.preheader.lr.ph.split.us ], [ %1, %bb.d ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ %1, %.preheader.lr.ph.split.us ] ; 2 uses
+  %.018.lcssa47.us = phi double [ %.018.lcssa46.us, %bb.d ], [ %i.bi, %.preheader.lr.ph.split.us ] ; 2 uses
+  %.01943.us = phi i64 [ %i.an, %bb.d ], [ 1, %.preheader.lr.ph.split.us ] ; 2 uses
+  %.02042.us = phi i64 [ %indvars.iv, %bb.d ], [ %i.e, %.preheader.lr.ph.split.us ]
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader.us, %bb.b
@@ -279,11 +281,11 @@ bb.c:                                             ; preds = %._crit_edge39.us
 bb.d:                                             ; preds = %bb.c, %._crit_edge39.us
   %.018.lcssa46.us = phi double [ %i.al, %bb.c ], [ %.018.lcssa47.us, %._crit_edge39.us ] ; 2 uses
   %i.an = add nuw i64 %.01943.us, 1               ; 2 uses
+  %indvars.iv.next = add i64 %indvars.iv, %i.e
   %exitcond52.not = icmp eq i64 %i.an, %i.m
   br i1 %exitcond52.not, label %._crit_edge44, label %.preheader.us, !llvm.loop !529
 
 ._crit_edge39.us:                                 ; preds = %bb.b
-  %1 = add i64 %i.e, %.02042.us
   %i.ao = fcmp olt double %i.al, %.018.lcssa47.us
   br i1 %i.ao, label %bb.c, label %bb.d
 

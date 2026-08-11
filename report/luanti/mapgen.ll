@@ -204,10 +204,10 @@ bb.d:                                             ; preds = %_ZNK14NodeDefManage
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @_ZN6Mapgen15updateHeightmapEN4core8vector3dIsEES2_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(200) %0, i48 %1, i48 %2) local_unnamed_addr #11 align 2 {
 bb.a:
-  %.sroa.09.0.extract.trunc = trunc i48 %1 to i16 ; 7 uses
+  %.sroa.09.0.extract.trunc = trunc i48 %1 to i16 ; 10 uses
   %.sroa.210.0.extract.shift = lshr i48 %1, 16
   %.sroa.210.0.extract.trunc = trunc i48 %.sroa.210.0.extract.shift to i16 ; 2 uses
-  %.sroa.0.0.extract.trunc = trunc i48 %2 to i16  ; 4 uses
+  %.sroa.0.0.extract.trunc = trunc i48 %2 to i16  ; 5 uses
   %.sroa.2.0.extract.shift = lshr i48 %2, 16
   %.sroa.2.0.extract.trunc = trunc i48 %.sroa.2.0.extract.shift to i16 ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -246,8 +246,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not18.i, label %.preheader.us23.preheader, label %.preheader.lr.ph.split.split
 
 .preheader.us23.preheader:                        ; preds = %.preheader.lr.ph.split
-  %i.s = add i16 %.sroa.09.0.extract.trunc, 1
-  %i.t = add i16 %.sroa.0.0.extract.trunc, 1
+  %i.s = add i16 %.sroa.09.0.extract.trunc, 1     ; 2 uses
+  %i.t = add i16 %.sroa.0.0.extract.trunc, 1      ; 2 uses
+  %smax32 = tail call i16 @llvm.smax.i16(i16 %i.s, i16 %i.t)
+  %3 = xor i16 %.sroa.09.0.extract.trunc, -1
+  %4 = add i16 %smax32, %3
+  %5 = zext i16 %4 to i32
+  %6 = add nuw nsw i32 %5, 1
   %smax.a = tail call i16 @llvm.smax.i16(i16 %i.s, i16 %i.t)
   %i.u = xor i16 %.sroa.09.0.extract.trunc, -1
   %i.v = add i16 %smax.a, %i.u                    ; 3 uses
@@ -268,16 +273,17 @@ bb.b:                                             ; preds = %bb.a
   br label %iter.check
 
 iter.check:                                       ; preds = %.preheader.us23.preheader, %._crit_edge.split.us.us
-  %.022.us24 = phi i64 [ %indvars.iv.next31.lcssa, %._crit_edge.split.us.us ], [ 0, %.preheader.us23.preheader ] ; 5 uses
-  %.01321.us25 = phi i16 [ %i.ao, %._crit_edge.split.us.us ], [ %.sroa.311.0.extract.trunc, %.preheader.us23.preheader ]
+  %indvars.iv33 = phi i32 [ 0, %.preheader.us23.preheader ], [ %indvars.iv.next34, %._crit_edge.split.us.us ] ; 2 uses
+  %.01321.us25 = phi i16 [ %.sroa.311.0.extract.trunc, %.preheader.us23.preheader ], [ %i.ao, %._crit_edge.split.us.us ]
+  %7 = sext i32 %indvars.iv33 to i64              ; 5 uses
   br i1 %min.iters.check, label %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.us.us.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check38, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.ad = add i64 %.022.us24, %n.vec              ; 2 uses
-  %i.ae = getelementptr [2 x i8], ptr %i.b, i64 %.022.us24
+  %i.ad = add nsw i64 %n.vec, %7
+  %i.ae = getelementptr [2 x i8], ptr %i.b, i64 %7
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -298,8 +304,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %i.ai = add i64 %.022.us24, %n.vec40            ; 2 uses
-  %i.aj = getelementptr [2 x i8], ptr %i.b, i64 %.022.us24
+  %i.ai = add nsw i64 %n.vec40, %7
+  %i.aj = getelementptr [2 x i8], ptr %i.b, i64 %7
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -314,7 +320,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n43, label %._crit_edge.split.us.us, label %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.us.us.preheader
 
 _ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.us.us.preheader: ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv30.ph = phi i64 [ %.022.us24, %iter.check ], [ %i.ad, %vec.epilog.iter.check ], [ %i.ai, %vec.epilog.middle.block ]
+  %indvars.iv30.ph = phi i64 [ %7, %iter.check ], [ %i.ad, %vec.epilog.iter.check ], [ %i.ai, %vec.epilog.middle.block ]
   %.01218.us.us.ph = phi i16 [ %.sroa.09.0.extract.trunc, %iter.check ], [ %i.aa, %vec.epilog.iter.check ], [ %i.ac, %vec.epilog.middle.block ]
   br label %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.us.us
 
@@ -324,15 +330,15 @@ _ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.us.us: ; preds = %_ZN6Map
   %i.am = getelementptr inbounds [2 x i8], ptr %i.b, i64 %indvars.iv30.a
   store i16 -31007, ptr %i.am, align 2, !tbaa !154
   %i.an = add i16 %.01218.us.us, 1                ; 2 uses
-  %indvars.iv.next31.a = add nsw i64 %indvars.iv30.a, 1 ; 2 uses
+  %indvars.iv.next31.a = add nsw i64 %indvars.iv30.a, 1
   %.not15.us.us = icmp sgt i16 %i.an, %.sroa.0.0.extract.trunc
   br i1 %.not15.us.us, label %._crit_edge.split.us.us, label %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.us.us, !llvm.loop !160
 
 ._crit_edge.split.us.us:                          ; preds = %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.us.us, %vec.epilog.middle.block, %middle.block
-  %indvars.iv.next31.lcssa = phi i64 [ %i.ai, %vec.epilog.middle.block ], [ %i.ad, %middle.block ], [ %indvars.iv.next31.a, %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.us.us ]
   %i.ao = add i16 %.01321.us25, 1                 ; 2 uses
   %i.ap = sext i16 %i.ao to i32
   %.not14.us26 = icmp sgt i32 %i.ap, %i.d
+  %indvars.iv.next34 = add i32 %indvars.iv33, %6
   br i1 %.not14.us26, label %.loopexit, label %iter.check, !llvm.loop !161
 
 .preheader.lr.ph.split.split:                     ; preds = %.preheader.lr.ph.split
@@ -345,11 +351,19 @@ _ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.us.us: ; preds = %_ZN6Map
   %i.aw = sub i64 %i.au, %i.av
   %i.ax = sdiv exact i64 %i.aw, 2072
   %i.ay = getelementptr inbounds nuw i8, ptr %i.at, i64 259000
+  %8 = add i16 %.sroa.09.0.extract.trunc, 1
+  %9 = add i16 %.sroa.0.0.extract.trunc, 1
+  %smax = tail call i16 @llvm.smax.i16(i16 %8, i16 %9)
+  %10 = xor i16 %.sroa.09.0.extract.trunc, -1
+  %11 = add i16 %smax, %10
+  %12 = zext i16 %11 to i32
+  %13 = add nuw nsw i32 %12, 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph.split.split, %._crit_edge.split
-  %.022 = phi i64 [ 0, %.preheader.lr.ph.split.split ], [ %indvars.iv.next.a, %._crit_edge.split ]
+  %indvars.iv = phi i32 [ 0, %.preheader.lr.ph.split.split ], [ %indvars.iv.next, %._crit_edge.split ] ; 2 uses
   %.01321 = phi i16 [ %.sroa.311.0.extract.trunc, %.preheader.lr.ph.split.split ], [ %i.ba, %._crit_edge.split ] ; 2 uses
+  %14 = sext i32 %indvars.iv to i64
   %i.az = sext i16 %.01321 to i32
   br label %.lr.ph.i
 
@@ -357,10 +371,11 @@ _ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.us.us: ; preds = %_ZN6Map
   %i.ba = add i16 %.01321, 1                      ; 2 uses
   %i.bb = sext i16 %i.ba to i32
   %.not14 = icmp sgt i32 %i.bb, %i.d
+  %indvars.iv.next = add i32 %indvars.iv, %13
   br i1 %.not14, label %.loopexit, label %.preheader, !llvm.loop !161
 
 .lr.ph.i:                                         ; preds = %.preheader, %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.loopexit
-  %indvars.iv.a = phi i64 [ %.022, %.preheader ], [ %indvars.iv.next.a, %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.loopexit ] ; 2 uses
+  %indvars.iv.a = phi i64 [ %14, %.preheader ], [ %indvars.iv.next.a, %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.loopexit ] ; 2 uses
   %.01218 = phi i16 [ %.sroa.09.0.extract.trunc, %.preheader ], [ %i.cg, %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.loopexit ] ; 2 uses
   %i.bc = sext i16 %.01218 to i32
   %i.bd = load i16, ptr %i.h, align 8, !tbaa !102
@@ -416,7 +431,7 @@ _ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.loopexit: ; preds = %bb.f
   %i.cf = getelementptr inbounds [2 x i8], ptr %i.b, i64 %indvars.iv.a
   store i16 %narrow.i.ph, ptr %i.cf, align 2, !tbaa !154
   %i.cg = add i16 %.01218, 1                      ; 2 uses
-  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1
   %.not15 = icmp sgt i16 %i.cg, %.sroa.0.0.extract.trunc
   br i1 %.not15, label %._crit_edge.split, label %.lr.ph.i, !llvm.loop !162
 

@@ -204,7 +204,7 @@ declare void @_ZSt9terminatev() local_unnamed_addr #9
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZL17outputEscapedCharR12OutputStreamj(ptr nofree noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1) unnamed_addr #3 {
 bb.a:
-  %i.a = alloca [17 x i8], align 16               ; 6 uses
+  %i.a = alloca [17 x i8], align 16               ; 5 uses
   switch i32 %1, label %bb.af [
     i32 39, label %bb.b
     i32 34, label %bb.e
@@ -607,9 +607,10 @@ bb.an:                                            ; preds = %bb.aj
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i, %bb.an
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader.i ], [ 14, %bb.an ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader.i ], [ 12, %bb.an ] ; 3 uses
   %.01226.i = phi i32 [ %i.fp, %.preheader.i ], [ %1, %bb.an ] ; 2 uses
-  %i.fc = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv ; 3 uses
+  %2 = getelementptr i8, ptr %i.a, i64 %indvars.iv ; 4 uses
+  %i.fc = getelementptr i8, ptr %2, i64 2
   %i.fd = trunc i32 %.01226.i to i8               ; 3 uses
   %i.fe = and i8 %i.fd, 15                        ; 3 uses
   %i.ff = icmp samesign ult i8 %i.fe, 10
@@ -617,8 +618,7 @@ bb.an:                                            ; preds = %bb.aj
   %i.fh = add nuw nsw i8 %i.fe, 55
   %i.fi = select i1 %i.ff, i8 %i.fg, i8 %i.fh
   store i8 %i.fi, ptr %i.fc, align 2, !tbaa !9
-  %2 = getelementptr i8, ptr %i.a, i64 %indvars.iv
-  %i.fj = getelementptr i8, ptr %2, i64 -1
+  %i.fj = getelementptr i8, ptr %2, i64 1
   %i.fk = lshr i8 %i.fd, 4                        ; 2 uses
   %i.fl = icmp ult i8 %i.fd, -96
   %i.fm = or disjoint i8 %i.fk, 48
@@ -626,17 +626,17 @@ bb.an:                                            ; preds = %bb.aj
   %i.fo = select i1 %i.fl, i8 %i.fm, i8 %i.fn
   store i8 %i.fo, ptr %i.fj, align 1, !tbaa !9
   %i.fp = lshr i32 %.01226.i, 8                   ; 2 uses
-  %3 = getelementptr i8, ptr %i.fc, i64 -2
-  store i8 120, ptr %3, align 2, !tbaa !9
-  %indvars.iv.next = add nsw i64 %indvars.iv, -4  ; 2 uses
-  %i.fq = getelementptr i8, ptr %i.fc, i64 -3
+  store i8 120, ptr %2, align 4, !tbaa !9
+  %i.fq = getelementptr i8, ptr %2, i64 -1
   store i8 92, ptr %i.fq, align 1, !tbaa !9
   %.not.i = icmp eq i32 %i.fp, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -4
   br i1 %.not.i, label %bb.ao, label %.preheader.i, !llvm.loop !168
 
 bb.ao:                                            ; preds = %.preheader.i
-  %sext = shl i64 %indvars.iv.next, 32
-  %i.fr = ashr exact i64 %sext, 32
+  %sext = shl nsw i64 %indvars.iv, 32
+  %sext.i = add i64 %sext, -8589934592
+  %i.fr = ashr exact i64 %sext.i, 32
   %i.fs = getelementptr i8, ptr %i.a, i64 %i.fr
   %i.ft = getelementptr i8, ptr %i.fs, i64 1      ; 2 uses
   %i.fu = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ft) #21 ; 4 uses

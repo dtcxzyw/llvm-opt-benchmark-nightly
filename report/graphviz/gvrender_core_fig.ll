@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %fig_line_style.exit
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
-  %.055.lcssa = phi i32 [ 1, %bb.b ], [ %7, %.lr.ph ] ; 4 uses
+  %.055.lcssa = phi i32 [ 1, %bb.b ], [ %indvars.iv, %.lr.ph ] ; 4 uses
   call void (ptr, ptr, ...) @gvprintf(ptr noundef nonnull %0, ptr noundef nonnull @.str.33, i32 noundef 3, i32 noundef %.051, i32 noundef %.sink1.i, double noundef %i.e, i32 noundef %i.g, i32 noundef %.052, i32 noundef %i.h, i32 noundef 0, i32 noundef %.057, double noundef %.sink.i, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef %.055.lcssa) #16
   %i.s = getelementptr inbounds nuw i8, ptr %5, i64 31 ; 6 uses
   %.val.i = load i8, ptr %i.s, align 1, !tbaa !38 ; 3 uses
@@ -288,11 +288,11 @@ agxbfree.exit:                                    ; preds = %agxbuse.exit, %bb.g
   br label %bb.h
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %6 = phi i64 [ %8, %.lr.ph ], [ 3, %.lr.ph.preheader ] ; 2 uses
-  %.05466.a = phi i64 [ %6, %.lr.ph ], [ 0, %.lr.ph.preheader ]
-  %.05565 = phi i32 [ %7, %.lr.ph ], [ 1, %.lr.ph.preheader ]
+  %indvars.iv = phi i32 [ 7, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
+  %.05466.a = phi i64 [ 3, %.lr.ph.preheader ], [ %6, %.lr.ph ] ; 2 uses
+  %.05466 = phi i64 [ 0, %.lr.ph.preheader ], [ %.05466.a, %.lr.ph ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %i.l, i64 16, i1 false), !tbaa.struct !70
-  %i.an = getelementptr [16 x i8], ptr %1, i64 %.05466.a ; 3 uses
+  %i.an = getelementptr [16 x i8], ptr %1, i64 %.05466 ; 3 uses
   %i.ao = getelementptr i8, ptr %i.an, i64 16
   %i.ap = load <2 x double>, ptr %i.ao, align 8, !tbaa !69
   store <2 x double> %i.ap, ptr %i.q, align 16, !tbaa !69
@@ -326,10 +326,10 @@ agxbfree.exit:                                    ; preds = %agxbuse.exit, %bb.g
   %i.bk = extractvalue { double, double } %i.bj, 0
   %i.bl = extractvalue { double, double } %i.bj, 1
   call void (ptr, ptr, ...) @agxbprint(ptr noundef %5, ptr nonnull poison, double noundef %i.bk, double noundef %i.bl)
-  %7 = add i32 %.05565, 6                         ; 2 uses
-  %8 = add i64 %6, 3                              ; 2 uses
-  %9 = icmp ult i64 %8, %2
-  br i1 %9, label %.lr.ph, label %._crit_edge, !llvm.loop !71
+  %6 = add i64 %.05466.a, 3                       ; 2 uses
+  %7 = icmp ult i64 %6, %2
+  %indvars.iv.next = add i32 %indvars.iv, 6
+  br i1 %7, label %.lr.ph, label %._crit_edge, !llvm.loop !71
 
 ._crit_edge69:                                    ; preds = %bb.h, %agxbfree.exit
   %i.bm = call i32 @gvputs(ptr noundef nonnull %0, ptr noundef nonnull @.str.32) #16 ; 0 uses

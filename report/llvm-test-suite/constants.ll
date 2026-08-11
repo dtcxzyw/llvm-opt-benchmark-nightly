@@ -204,8 +204,9 @@ bb.i:                                             ; preds = %bb.a, %bb.b, %bb.d,
 
 .preheader64:                                     ; preds = %bb.i, %bb.k
   %indvars.iv87.a = phi i64 [ 0, %bb.i ], [ %indvars.iv.next88.a, %bb.k ] ; 6 uses
-  %indvars.iv85 = phi i64 [ 1, %bb.i ], [ %indvars.iv.next86, %bb.k ] ; 4 uses
-  %.05568 = phi i64 [ 0, %bb.i ], [ %indvars.iv.next.lcssa, %bb.k ] ; 2 uses
+  %indvars.iv85 = phi i64 [ 1, %bb.i ], [ %indvars.iv.next86, %bb.k ] ; 5 uses
+  %indvars.iv78 = phi i32 [ 0, %bb.i ], [ %indvars.iv.next79, %bb.k ] ; 2 uses
+  %5 = sext i32 %indvars.iv78 to i64              ; 2 uses
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv87.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !16   ; 3 uses
   %xtraiter = and i64 %indvars.iv85, 1
@@ -218,7 +219,7 @@ bb.i:                                             ; preds = %bb.a, %bb.b, %bb.d,
 
 bb.j:                                             ; preds = %bb.j, %.preheader64.new
   %indvars.iv78.a = phi i64 [ 0, %.preheader64.new ], [ %indvars.iv.next79.1, %bb.j ] ; 4 uses
-  %indvars.iv = phi i64 [ %.05568, %.preheader64.new ], [ %indvars.iv.next.1, %bb.j ] ; 3 uses
+  %indvars.iv = phi i64 [ %5, %.preheader64.new ], [ %indvars.iv.next.1, %bb.j ] ; 3 uses
   %niter = phi i64 [ 0, %.preheader64.new ], [ %niter.next.1, %bb.j ]
   %i.g = getelementptr inbounds [8 x i8], ptr %.0, i64 %indvars.iv
   %i.h = load double, ptr %i.g, align 8, !tbaa !8 ; 2 uses
@@ -229,7 +230,7 @@ bb.j:                                             ; preds = %bb.j, %.preheader64
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv78.a
   store double %i.h, ptr %i.l, align 8, !tbaa !8
   %indvars.iv.next79.a = or disjoint i64 %indvars.iv78.a, 1 ; 2 uses
-  %indvars.iv.next.1 = add nsw i64 %indvars.iv, 2 ; 3 uses
+  %indvars.iv.next.1 = add nsw i64 %indvars.iv, 2 ; 2 uses
   %i.m = getelementptr [8 x i8], ptr %.0, i64 %indvars.iv
   %i.n = getelementptr i8, ptr %i.m, i64 8
   %i.o = load double, ptr %i.n, align 8, !tbaa !8 ; 2 uses
@@ -250,10 +251,9 @@ bb.j:                                             ; preds = %bb.j, %.preheader64
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %.preheader64
   %indvars.iv78.epil.init = phi i64 [ 0, %.preheader64 ], [ %indvars.iv.next79.1, %.unr-lcssa ] ; 2 uses
-  %indvars.iv.epil.init = phi i64 [ %.05568, %.preheader64 ], [ %indvars.iv.next.1, %.unr-lcssa ] ; 2 uses
+  %indvars.iv.epil.init = phi i64 [ %5, %.preheader64 ], [ %indvars.iv.next.1, %.unr-lcssa ]
   %lcmp.mod117 = trunc i64 %indvars.iv85 to i1
   tail call void @llvm.assume(i1 %lcmp.mod117)
-  %indvars.iv.next.epil = add nsw i64 %indvars.iv.epil.init, 1
   %i.t = getelementptr inbounds [8 x i8], ptr %.0, i64 %indvars.iv.epil.init
   %i.u = load double, ptr %i.t, align 8, !tbaa !8 ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv78.epil.init
@@ -265,9 +265,10 @@ bb.j:                                             ; preds = %bb.j, %.preheader64
   br label %bb.k
 
 bb.k:                                             ; preds = %.unr-lcssa, %.epil.preheader
-  %indvars.iv.next.lcssa = phi i64 [ %indvars.iv.next.1, %.unr-lcssa ], [ %indvars.iv.next.epil, %.epil.preheader ]
   %indvars.iv.next88.a = add nuw nsw i64 %indvars.iv87.a, 1 ; 2 uses
   %indvars.iv.next86 = add nuw nsw i64 %indvars.iv85, 1
+  %6 = trunc nuw nsw i64 %indvars.iv85 to i32
+  %indvars.iv.next79 = add i32 %indvars.iv78, %6
   %exitcond92.not = icmp eq i64 %indvars.iv.next88.a, 20
   br i1 %exitcond92.not, label %bb.l, label %.preheader64, !llvm.loop !23
 

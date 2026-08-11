@@ -203,7 +203,7 @@ bb.a:
   %i.k = load float, ptr %i.j, align 4, !tbaa !86 ; 2 uses
   %i.l = getelementptr inbounds nuw [64 x i8], ptr %i.c, i64 %i.e ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 32
-  %i.n = load i8, ptr %i.m, align 8, !tbaa !67    ; 3 uses
+  %i.n = load i8, ptr %i.m, align 8, !tbaa !67    ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.p = load i8, ptr %i.o, align 8, !tbaa !87    ; 2 uses
   %i.q = udiv i8 %i.p, %i.n
@@ -223,6 +223,7 @@ bb.a:
   %.not = icmp eq i32 %2, 0                       ; 2 uses
   %i.aa = fpext nsz float %i.k to double
   %i.ab = fsub nsz double 1.000000e+00, %i.aa
+  %7 = zext i8 %i.n to i64                        ; 3 uses
   %wide.trip.count102 = zext i8 %i.n to i64       ; 3 uses
   br i1 %i.v, label %.preheader.lr.ph.split.us, label %.preheader
 
@@ -230,14 +231,14 @@ bb.a:
   br i1 %.not, label %.preheader.us.us, label %.preheader.us
 
 .preheader.us.us:                                 ; preds = %.preheader.lr.ph.split.us, %.split.us.us.split.us.us
+  %indvars.iv97 = phi i64 [ %indvars.iv.next98, %.split.us.us.split.us.us ], [ 0, %.preheader.lr.ph.split.us ] ; 2 uses
   %.05269.us.us = phi ptr [ %i.bf, %.split.us.us.split.us.us ], [ %4, %.preheader.lr.ph.split.us ]
   %.05468.us.us = phi i32 [ %i.bg, %.split.us.us.split.us.us ], [ 0, %.preheader.lr.ph.split.us ] ; 2 uses
-  %.05567.us.us = phi i64 [ %indvars.iv.next95, %.split.us.us.split.us.us ], [ 0, %.preheader.lr.ph.split.us ]
   br label %bb.b
 
 bb.b:                                             ; preds = %twinvq_memset_float.exit.us.us.us.us, %.preheader.us.us
   %indvars.iv96 = phi i64 [ %indvars.iv.next97, %twinvq_memset_float.exit.us.us.us.us ], [ 0, %.preheader.us.us ] ; 2 uses
-  %indvars.iv94 = phi i64 [ %indvars.iv.next95, %twinvq_memset_float.exit.us.us.us.us ], [ %.05567.us.us, %.preheader.us.us ] ; 3 uses
+  %indvars.iv94 = phi i64 [ %indvars.iv.next95, %twinvq_memset_float.exit.us.us.us.us ], [ %indvars.iv97, %.preheader.us.us ] ; 3 uses
   %.15365.us.us.us.us = phi ptr [ %i.bf, %twinvq_memset_float.exit.us.us.us.us ], [ %.05269.us.us, %.preheader.us.us ] ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv96
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !31
@@ -250,13 +251,13 @@ bb.b:                                             ; preds = %twinvq_memset_float
   %i.ak = sitofp i16 %i.aj to float
   %i.al = fmul nnan nsz float %i.ak, f0x3A000000  ; 2 uses
   %i.am = fadd nsz float %i.al, 1.000000e+00      ; 2 uses
-  %i.an = getelementptr inbounds [4 x i8], ptr %i.h, i64 %indvars.iv94
+  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv94
   store float %i.al, ptr %i.an, align 4, !tbaa !86
   %i.ao = fpext nsz float %i.am to double
   %i.ap = fcmp nsz olt double %i.ao, 1.000000e-01
   %.1.us.us.us.us = select nsz i1 %i.ap, float 1.000000e-01, float %i.am
   %i.aq = fmul nsz float %5, %.1.us.us.us.us      ; 2 uses
-  %i.ar = getelementptr inbounds [2 x i8], ptr %i.z, i64 %indvars.iv94
+  %i.ar = getelementptr inbounds nuw [2 x i8], ptr %i.z, i64 %indvars.iv94
   %i.as = load i16, ptr %i.ar, align 2, !tbaa !90 ; 5 uses
   %.not3.i.us.us.us.us = icmp eq i16 %i.as, 0
   br i1 %.not3.i.us.us.us.us, label %twinvq_memset_float.exit.us.us.us.us, label %.lr.ph.i.us.us.us.us.preheader
@@ -310,24 +311,25 @@ twinvq_memset_float.exit.us.us.us.us:             ; preds = %.lr.ph.i.us.us.us.u
   %i.be = zext i16 %i.as to i64
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %.15365.us.us.us.us, i64 %i.be ; 2 uses
   %indvars.iv.next97 = add nuw nsw i64 %indvars.iv96, 1 ; 2 uses
-  %indvars.iv.next95 = add nsw i64 %indvars.iv94, 1 ; 2 uses
+  %indvars.iv.next95 = add nuw nsw i64 %indvars.iv94, 1
   %exitcond103.not = icmp eq i64 %indvars.iv.next97, %wide.trip.count102
   br i1 %exitcond103.not, label %.split.us.us.split.us.us, label %bb.b, !llvm.loop !95
 
 .split.us.us.split.us.us:                         ; preds = %twinvq_memset_float.exit.us.us.us.us
   %i.bg = add nuw nsw i32 %.05468.us.us, 1        ; 2 uses
   %i.bh = icmp samesign ult i32 %i.bg, %i.r
+  %indvars.iv.next98 = add nuw nsw i64 %indvars.iv97, %7
   br i1 %i.bh, label %.preheader.us.us, label %._crit_edge, !llvm.loop !96
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph.split.us, %.split.us.us.split
+  %indvars.iv86 = phi i64 [ %indvars.iv.next87, %.split.us.us.split ], [ 0, %.preheader.lr.ph.split.us ] ; 2 uses
   %.05269.us = phi ptr [ %i.cn, %.split.us.us.split ], [ %4, %.preheader.lr.ph.split.us ]
   %.05468.us = phi i32 [ %i.co, %.split.us.us.split ], [ 0, %.preheader.lr.ph.split.us ] ; 2 uses
-  %.05567.us = phi i64 [ %indvars.iv.next85, %.split.us.us.split ], [ 0, %.preheader.lr.ph.split.us ]
   br label %bb.c
 
 bb.c:                                             ; preds = %twinvq_memset_float.exit.us.us, %.preheader.us
   %indvars.iv86.a = phi i64 [ %indvars.iv.next87.a, %twinvq_memset_float.exit.us.us ], [ 0, %.preheader.us ] ; 2 uses
-  %indvars.iv84 = phi i64 [ %indvars.iv.next85, %twinvq_memset_float.exit.us.us ], [ %.05567.us, %.preheader.us ] ; 3 uses
+  %indvars.iv84 = phi i64 [ %indvars.iv.next85, %twinvq_memset_float.exit.us.us ], [ %indvars.iv86, %.preheader.us ] ; 3 uses
   %.15365.us.us = phi ptr [ %i.cn, %twinvq_memset_float.exit.us.us ], [ %.05269.us, %.preheader.us ] ; 4 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv86.a
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !31
@@ -339,7 +341,7 @@ bb.c:                                             ; preds = %twinvq_memset_float
   %i.bp = load i16, ptr %i.bo, align 2, !tbaa !90
   %i.bq = sitofp i16 %i.bp to float
   %i.br = fmul nnan nsz float %i.bq, f0x3A000000  ; 2 uses
-  %i.bs = getelementptr inbounds [4 x i8], ptr %i.h, i64 %indvars.iv84 ; 2 uses
+  %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv84 ; 2 uses
   %i.bt = load float, ptr %i.bs, align 4, !tbaa !86
   %i.bu = tail call nsz float @llvm.fmuladd.f32(float %i.bt, float 5.000000e-01, float %i.br)
   %i.bv = fadd nsz float %i.bu, 1.000000e+00      ; 2 uses
@@ -348,7 +350,7 @@ bb.c:                                             ; preds = %twinvq_memset_float
   %i.bx = fcmp nsz olt double %i.bw, 1.000000e-01
   %.1.us.us = select nsz i1 %i.bx, float 1.000000e-01, float %i.bv
   %i.by = fmul nsz float %5, %.1.us.us            ; 2 uses
-  %i.bz = getelementptr inbounds [2 x i8], ptr %i.z, i64 %indvars.iv84
+  %i.bz = getelementptr inbounds nuw [2 x i8], ptr %i.z, i64 %indvars.iv84
   %i.ca = load i16, ptr %i.bz, align 2, !tbaa !90 ; 5 uses
   %.not3.i.us.us = icmp eq i16 %i.ca, 0
   br i1 %.not3.i.us.us, label %twinvq_memset_float.exit.us.us, label %.lr.ph.i.us.us.preheader
@@ -402,24 +404,25 @@ twinvq_memset_float.exit.us.us:                   ; preds = %.lr.ph.i.us.us, %mi
   %i.cm = zext i16 %i.ca to i64
   %i.cn = getelementptr inbounds nuw [4 x i8], ptr %.15365.us.us, i64 %i.cm ; 2 uses
   %indvars.iv.next87.a = add nuw nsw i64 %indvars.iv86.a, 1 ; 2 uses
-  %indvars.iv.next85 = add nsw i64 %indvars.iv84, 1 ; 2 uses
+  %indvars.iv.next85 = add nuw nsw i64 %indvars.iv84, 1
   %exitcond93.not = icmp eq i64 %indvars.iv.next87.a, %wide.trip.count102
   br i1 %exitcond93.not, label %.split.us.us.split, label %bb.c, !llvm.loop !95
 
 .split.us.us.split:                               ; preds = %twinvq_memset_float.exit.us.us
   %i.co = add nuw nsw i32 %.05468.us, 1           ; 2 uses
   %i.cp = icmp samesign ult i32 %i.co, %i.r
+  %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, %7
   br i1 %i.cp, label %.preheader.us, label %._crit_edge, !llvm.loop !96
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.split
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.split ], [ 0, %.preheader.lr.ph ] ; 2 uses
   %.05269 = phi ptr [ %i.ea, %.split ], [ %4, %.preheader.lr.ph ]
   %.05468 = phi i32 [ %i.eb, %.split ], [ 0, %.preheader.lr.ph ] ; 2 uses
-  %.05567 = phi i64 [ %indvars.iv.next.a, %.split ], [ 0, %.preheader.lr.ph ]
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %twinvq_memset_float.exit
   %indvars.iv79.a = phi i64 [ 0, %.preheader ], [ %indvars.iv.next80.a, %twinvq_memset_float.exit ] ; 2 uses
-  %indvars.iv.a = phi i64 [ %.05567, %.preheader ], [ %indvars.iv.next.a, %twinvq_memset_float.exit ] ; 4 uses
+  %indvars.iv.a = phi i64 [ %indvars.iv, %.preheader ], [ %indvars.iv.next.a, %twinvq_memset_float.exit ] ; 4 uses
   %.15365 = phi ptr [ %.05269, %.preheader ], [ %i.ea, %twinvq_memset_float.exit ] ; 4 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv79.a
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !31
@@ -435,7 +438,7 @@ bb.d:                                             ; preds = %.preheader, %twinvq
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.db = getelementptr inbounds [4 x i8], ptr %i.h, i64 %indvars.iv.a
+  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv.a
   %i.dc = load float, ptr %i.db, align 4, !tbaa !86
   %i.dd = fmul nsz float %i.k, %i.dc
   %i.de = fpext nsz float %i.dd to double
@@ -446,13 +449,13 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %.in = phi double [ %i.df, %bb.e ], [ %i.da, %bb.d ]
   %i.dg = fadd nsz double %.in, 1.000000e+00
   %i.dh = fptrunc nsz double %i.dg to float       ; 2 uses
-  %i.di = getelementptr inbounds [4 x i8], ptr %i.h, i64 %indvars.iv.a
+  %i.di = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv.a
   store float %i.cz, ptr %i.di, align 4, !tbaa !86
   %i.dj = fpext nsz float %i.dh to double
   %i.dk = fcmp nsz olt double %i.dj, 1.000000e-01
   %.1 = select nsz i1 %i.dk, float 1.000000e-01, float %i.dh
   %i.dl = fmul nsz float %5, %.1                  ; 2 uses
-  %i.dm = getelementptr inbounds [2 x i8], ptr %i.z, i64 %indvars.iv.a
+  %i.dm = getelementptr inbounds nuw [2 x i8], ptr %i.z, i64 %indvars.iv.a
   %i.dn = load i16, ptr %i.dm, align 2, !tbaa !90 ; 5 uses
   %.not3.i = icmp eq i16 %i.dn, 0
   br i1 %.not3.i, label %twinvq_memset_float.exit, label %.lr.ph.i.preheader
@@ -506,13 +509,14 @@ twinvq_memset_float.exit:                         ; preds = %.lr.ph.i, %middle.b
   %i.dz = zext i16 %i.dn to i64
   %i.ea = getelementptr inbounds nuw [4 x i8], ptr %.15365, i64 %i.dz ; 2 uses
   %indvars.iv.next80.a = add nuw nsw i64 %indvars.iv79.a, 1 ; 2 uses
-  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next80.a, %wide.trip.count102
   br i1 %exitcond.not, label %.split, label %bb.d, !llvm.loop !95
 
 .split:                                           ; preds = %twinvq_memset_float.exit
   %i.eb = add nuw nsw i32 %.05468, 1              ; 2 uses
   %i.ec = icmp samesign ult i32 %i.eb, %i.r
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, %7
   br i1 %i.ec, label %.preheader, label %._crit_edge, !llvm.loop !96
 
 ._crit_edge:                                      ; preds = %.split, %.split.us.us.split, %.split.us.us.split.us.us, %bb.a

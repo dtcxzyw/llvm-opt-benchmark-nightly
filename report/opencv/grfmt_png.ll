@@ -204,7 +204,9 @@ declare i32 @deflateReset(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: mustprogress uwtable
 define hidden noundef zeroext i1 @_ZN2cv10PngEncoder7getRectEjjPhS1_S1_jjijji(ptr noundef nonnull align 8 dereferenceable(9064) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10, i32 noundef %11) local_unnamed_addr #2 align 2 {
 bb.a:
+  %12 = ptrtoaddr ptr %4 to i64
   %i.a = ptrtoaddr ptr %3 to i64                  ; 4 uses
+  %13 = ptrtoaddr ptr %5 to i64                   ; 2 uses
   %i.b = add i32 %1, -1                           ; 8 uses
   %i.c = add i32 %2, -1                           ; 6 uses
   %.not = icmp ne i32 %9, 0                       ; 3 uses
@@ -224,10 +226,14 @@ bb.a:
 
 .preheader327.us.preheader:                       ; preds = %.preheader328
   %i.d = zext i32 %i.b to i64
-  %i.e = shl nuw nsw i64 %i.d, 2                  ; 2 uses
-  %12 = sub nuw nsw i64 -4, %i.e
+  %i.e = shl nuw nsw i64 %i.d, 2
   %i.f = zext i32 %1 to i64                       ; 2 uses
   %min.iters.check = icmp ult i32 %1, 4
+  %14 = sub i64 %i.a, %13
+  %diff.check = icmp ugt i64 %14, -16
+  %15 = sub i64 %12, %13
+  %diff.check707 = icmp ugt i64 %15, -16
+  %conflict.rdx = or i1 %diff.check, %diff.check707
   %n.vec = and i64 %i.f, 4294967292               ; 4 uses
   %i.g = shl nuw nsw i64 %n.vec, 2                ; 3 uses
   %i.h = trunc nuw i64 %n.vec to i32
@@ -235,30 +241,19 @@ bb.a:
   br label %.preheader327.us
 
 .preheader327.us:                                 ; preds = %.preheader327.us.preheader, %._crit_edge.us
-  %indvar = phi i64 [ 0, %.preheader327.us.preheader ], [ %indvar.next, %._crit_edge.us ] ; 2 uses
-  %.0168357.us = phi ptr [ %5, %.preheader327.us.preheader ], [ %.lcssa706, %._crit_edge.us ] ; 5 uses
-  %.0169356.us = phi ptr [ %4, %.preheader327.us.preheader ], [ %.lcssa705, %._crit_edge.us ] ; 5 uses
-  %.0171355.us = phi ptr [ %3, %.preheader327.us.preheader ], [ %scevgep, %._crit_edge.us ] ; 5 uses
-  %.3186354.us = phi i32 [ 0, %.preheader327.us.preheader ], [ %i.an, %._crit_edge.us ] ; 4 uses
-  %.12353.us = phi i32 [ %spec.store.select, %.preheader327.us.preheader ], [ %.15.us.lcssa, %._crit_edge.us ] ; 3 uses
-  %.9213352.us = phi i32 [ 0, %.preheader327.us.preheader ], [ %.11215.us.lcssa, %._crit_edge.us ] ; 3 uses
-  %.9226351.us = phi i32 [ 0, %.preheader327.us.preheader ], [ %.11228.us.lcssa, %._crit_edge.us ] ; 3 uses
-  %.12242350.us = phi i32 [ 0, %.preheader327.us.preheader ], [ %.15245.us.lcssa, %._crit_edge.us ] ; 3 uses
-  %.12259349.us = phi i32 [ %i.c, %.preheader327.us.preheader ], [ %.15262.us.lcssa, %._crit_edge.us ] ; 3 uses
-  %.12276348.us = phi i32 [ %i.b, %.preheader327.us.preheader ], [ %.15279.us.lcssa, %._crit_edge.us ] ; 3 uses
+  %.0168357.us = phi ptr [ %.lcssa706, %._crit_edge.us ], [ %5, %.preheader327.us.preheader ] ; 4 uses
+  %.0169356.us = phi ptr [ %.lcssa705, %._crit_edge.us ], [ %4, %.preheader327.us.preheader ] ; 4 uses
+  %.0171355.us = phi ptr [ %scevgep, %._crit_edge.us ], [ %3, %.preheader327.us.preheader ] ; 5 uses
+  %.3186354.us = phi i32 [ %i.an, %._crit_edge.us ], [ 0, %.preheader327.us.preheader ] ; 4 uses
+  %.12353.us = phi i32 [ %.15.us.lcssa, %._crit_edge.us ], [ %spec.store.select, %.preheader327.us.preheader ] ; 3 uses
+  %.9213352.us = phi i32 [ %.11215.us.lcssa, %._crit_edge.us ], [ 0, %.preheader327.us.preheader ] ; 3 uses
+  %.9226351.us = phi i32 [ %.11228.us.lcssa, %._crit_edge.us ], [ 0, %.preheader327.us.preheader ] ; 3 uses
+  %.12242350.us = phi i32 [ %.15245.us.lcssa, %._crit_edge.us ], [ 0, %.preheader327.us.preheader ] ; 3 uses
+  %.12259349.us = phi i32 [ %.15262.us.lcssa, %._crit_edge.us ], [ %i.c, %.preheader327.us.preheader ] ; 3 uses
+  %.12276348.us = phi i32 [ %.15279.us.lcssa, %._crit_edge.us ], [ %i.b, %.preheader327.us.preheader ] ; 3 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader327.us
-  %.0169356.us708 = ptrtoaddr ptr %.0169356.us to i64
-  %13 = mul i64 %12, %indvar
-  %14 = sub i64 %13, %i.a
-  %.0168357.us707 = ptrtoaddr ptr %.0168357.us to i64 ; 2 uses
-  %15 = add i64 %14, %.0168357.us707
-  %16 = add i64 %15, -1
-  %diff.check = icmp ult i64 %16, 15
-  %17 = sub i64 %.0169356.us708, %.0168357.us707
-  %diff.check709 = icmp ugt i64 %17, -16
-  %conflict.rdx = or i1 %diff.check, %diff.check709
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -400,7 +395,6 @@ bb.c:                                             ; preds = %bb.b, %scalar.ph
   %scevgep = getelementptr i8, ptr %i.am, i64 4
   %i.an = add nuw i32 %.3186354.us, 1             ; 2 uses
   %exitcond625.not = icmp eq i32 %i.an, %2
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond625.not, label %.loopexit, label %.preheader327.us, !llvm.loop !360
 
 .preheader325:                                    ; preds = %bb.a

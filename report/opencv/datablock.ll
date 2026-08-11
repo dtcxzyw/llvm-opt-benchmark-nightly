@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %.noexc129, %_ZNSt12
   br label %._crit_edge216
 
 ._crit_edge216:                                   ; preds = %._crit_edge216.loopexit, %bb.i
-  %.096.lcssa = phi i32 [ 0, %bb.i ], [ %i.ai, %._crit_edge216.loopexit ] ; 8 uses
+  %.096.lcssa = phi i32 [ 0, %bb.i ], [ %i.ai, %._crit_edge216.loopexit ] ; 11 uses
   %i.aj = load ptr, ptr %i.ad, align 8, !tbaa !30
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 32
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !17 ; 2 uses
@@ -522,7 +522,7 @@ _ZN5zxing12ErrorHandlerD2Ev.exit144:              ; preds = %bb.ah, %_ZNKSt7__cx
           to label %bb.ai unwind label %bb.aj
 
 bb.ai:                                            ; preds = %.thread176
-  %i.ej = sub nsw i32 %i.at, %i.ei                ; 5 uses
+  %i.ej = sub nsw i32 %i.at, %i.ei                ; 6 uses
   %i.ek = icmp sgt i32 %i.ej, 0
   br i1 %i.ek, label %.preheader185.lr.ph, label %.preheader184
 
@@ -543,11 +543,12 @@ bb.ai:                                            ; preds = %.thread176
 
 .preheader185.us:                                 ; preds = %.preheader185.us.preheader, %._crit_edge221.us
   %indvars.iv279 = phi i64 [ 0, %.preheader185.us.preheader ], [ %indvars.iv.next280, %._crit_edge221.us ] ; 4 uses
-  %.072223.us = phi i64 [ 0, %.preheader185.us.preheader ], [ %indvars.iv.next273.lcssa, %._crit_edge221.us ] ; 2 uses
+  %indvars.iv272 = phi i32 [ 0, %.preheader185.us.preheader ], [ %indvars.iv.next273, %._crit_edge221.us ] ; 2 uses
+  %8 = sext i32 %indvars.iv272 to i64             ; 2 uses
   br i1 %i.eo, label %.epil.preheader, label %.preheader185.us.new
 
 .preheader185.us.new:                             ; preds = %.preheader185.us, %.preheader185.us.new
-  %indvars.iv272.a = phi i64 [ %indvars.iv.next273.1, %.preheader185.us.new ], [ %.072223.us, %.preheader185.us ] ; 3 uses
+  %indvars.iv272.a = phi i64 [ %indvars.iv.next273.1, %.preheader185.us.new ], [ %8, %.preheader185.us ] ; 3 uses
   %indvars.iv270 = phi i64 [ %indvars.iv.next271.1, %.preheader185.us.new ], [ 0, %.preheader185.us ] ; 3 uses
   %niter = phi i64 [ %niter.next.1, %.preheader185.us.new ], [ 0, %.preheader185.us ]
   %i.ep = load ptr, ptr %i.em, align 8, !tbaa !17
@@ -563,7 +564,7 @@ bb.ai:                                            ; preds = %.thread176
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !40
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 %indvars.iv279
   store i8 %i.et, ptr %i.fa, align 1, !tbaa !53
-  %indvars.iv.next273.1 = add nsw i64 %indvars.iv272.a, 2 ; 3 uses
+  %indvars.iv.next273.1 = add nsw i64 %indvars.iv272.a, 2 ; 2 uses
   %i.fb = load ptr, ptr %i.em, align 8, !tbaa !17
   %i.fc = getelementptr inbounds nuw i8, ptr %i.fb, i64 16
   %i.fd = load ptr, ptr %i.fc, align 8, !tbaa !40
@@ -588,10 +589,9 @@ bb.ai:                                            ; preds = %.thread176
   br i1 %lcmp.mod.not, label %._crit_edge221.us, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge221.us.unr-lcssa, %.preheader185.us
-  %indvars.iv272.epil.init = phi i64 [ %.072223.us, %.preheader185.us ], [ %indvars.iv.next273.1, %._crit_edge221.us.unr-lcssa ] ; 2 uses
+  %indvars.iv272.epil.init = phi i64 [ %8, %.preheader185.us ], [ %indvars.iv.next273.1, %._crit_edge221.us.unr-lcssa ]
   %indvars.iv270.epil.init = phi i64 [ 0, %.preheader185.us ], [ %indvars.iv.next271.1, %._crit_edge221.us.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod401)
-  %indvars.iv.next273.epil = add nsw i64 %indvars.iv272.epil.init, 1
   %i.fp = load ptr, ptr %i.em, align 8, !tbaa !17
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 16
   %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !40
@@ -608,17 +608,17 @@ bb.ai:                                            ; preds = %.thread176
   br label %._crit_edge221.us
 
 ._crit_edge221.us:                                ; preds = %._crit_edge221.us.unr-lcssa, %.epil.preheader
-  %indvars.iv.next273.lcssa = phi i64 [ %indvars.iv.next273.1, %._crit_edge221.us.unr-lcssa ], [ %indvars.iv.next273.epil, %.epil.preheader ] ; 2 uses
   %indvars.iv.next280 = add nuw nsw i64 %indvars.iv279, 1 ; 2 uses
   %i.gb = icmp samesign ult i64 %indvars.iv.next280, %i.en
+  %indvars.iv.next273 = add i32 %indvars.iv272, %.096.lcssa
   br i1 %i.gb, label %.preheader185.us, label %.preheader184.loopexit, !llvm.loop !55
 
 .preheader184.loopexit:                           ; preds = %._crit_edge221.us
-  %8 = trunc nsw i64 %indvars.iv.next273.lcssa to i32
+  %9 = mul i32 %.096.lcssa, %i.ej
   br label %.preheader184
 
 .preheader184:                                    ; preds = %.preheader185.lr.ph, %.preheader184.loopexit, %bb.ai
-  %.072.lcssa = phi i32 [ 0, %bb.ai ], [ %8, %.preheader184.loopexit ], [ 0, %.preheader185.lr.ph ] ; 2 uses
+  %.072.lcssa = phi i32 [ 0, %bb.ai ], [ %9, %.preheader184.loopexit ], [ 0, %.preheader185.lr.ph ] ; 2 uses
   %i.gc = icmp slt i32 %.093.in.lcssa, %.096.lcssa
   br i1 %i.gc, label %.lr.ph229, label %._crit_edge230
 
@@ -692,19 +692,19 @@ bb.aj:                                            ; preds = %.thread176
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
   %i.hm = sext i32 %.093.lcssa to i64
-  %9 = sext i32 %.2.lcssa to i64
   %wide.trip.count301 = zext nneg i32 %.096.lcssa to i64
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge235.us
-  %.067238.us = phi i32 [ %i.ic, %._crit_edge235.us ], [ %i.ej, %.preheader.us.preheader ] ; 2 uses
-  %.3237.us = phi i64 [ %indvars.iv.next296.a, %._crit_edge235.us ], [ %9, %.preheader.us.preheader ]
+  %indvars.iv297 = phi i32 [ %.2.lcssa, %.preheader.us.preheader ], [ %indvars.iv.next298, %._crit_edge235.us ] ; 2 uses
+  %.067238.us = phi i32 [ %i.ej, %.preheader.us.preheader ], [ %i.ic, %._crit_edge235.us ] ; 2 uses
+  %10 = sext i32 %indvars.iv297 to i64
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.preheader.us, %bb.ak
-  %indvars.iv295.a = phi i64 [ %.3237.us, %.preheader.us ], [ %indvars.iv.next296.a, %bb.ak ] ; 2 uses
+  %indvars.iv295.a = phi i64 [ %10, %.preheader.us ], [ %indvars.iv.next296.a, %bb.ak ] ; 2 uses
   %indvars.iv293 = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next294, %bb.ak ] ; 3 uses
-  %indvars.iv.next296.a = add nsw i64 %indvars.iv295.a, 1 ; 3 uses
+  %indvars.iv.next296.a = add nsw i64 %indvars.iv295.a, 1 ; 2 uses
   %i.hn = load ptr, ptr %i.hl, align 8, !tbaa !17
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hn, i64 16
   %i.hp = load ptr, ptr %i.ho, align 8, !tbaa !40
@@ -729,6 +729,7 @@ bb.ak:                                            ; preds = %.preheader.us, %bb.
 ._crit_edge235.us:                                ; preds = %bb.ak
   %i.ic = add nsw i32 %.067238.us, 1              ; 2 uses
   %i.id = icmp slt i32 %i.ic, %i.hi
+  %indvars.iv.next298 = add i32 %indvars.iv297, %.096.lcssa
   br i1 %i.id, label %.preheader.us, label %._crit_edge239.loopexit, !llvm.loop !57
 
 .lr.ph229.new:                                    ; preds = %.prol.loopexit, %.lr.ph229.new

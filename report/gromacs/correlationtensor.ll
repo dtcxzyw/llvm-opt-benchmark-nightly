@@ -203,8 +203,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph, %.loopexit102
   %indvars.iv49.a = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next50.a, %.loopexit102 ] ; 5 uses
-  %indvars.iv47 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next48, %.loopexit102 ] ; 6 uses
-  %.036 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.lcssa, %.loopexit102 ] ; 5 uses
+  %indvars.iv47 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next48, %.loopexit102 ] ; 7 uses
+  %indvars.iv40 = phi i32 [ 0, %.lr.ph ], [ %indvars.iv.next41, %.loopexit102 ] ; 3 uses
+  %1 = sext i32 %indvars.iv40 to i64              ; 4 uses
   %i.p = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %indvars.iv49.a ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 4 uses
   %min.iters.check = icmp ult i64 %indvars.iv47, 4
@@ -217,25 +218,26 @@ vector.memcheck:                                  ; preds = %bb.c
   %i.t = shl i64 %indvars.iv49.a, 3
   %i.u = getelementptr i8, ptr %i.n, i64 %i.t
   %scevgep62 = getelementptr i8, ptr %i.u, i64 8
-  %i.v = shl i64 %.036, 3                         ; 2 uses
-  %scevgep.a = getelementptr nuw i8, ptr %i.n, i64 %i.v ; 3 uses
-  %scevgep63 = getelementptr i8, ptr %scevgep62, i64 %i.v ; 3 uses
-  %bound0 = icmp ult ptr %scevgep.a, %scevgep64.a
-  %bound1 = icmp ult ptr %i.f, %scevgep63
+  %2 = sext i32 %indvars.iv40 to i64
+  %i.v = shl nsw i64 %2, 3                        ; 2 uses
+  %scevgep.a = getelementptr i8, ptr %scevgep62, i64 %i.v ; 3 uses
+  %scevgep63 = getelementptr nuw i8, ptr %i.n, i64 %i.v ; 3 uses
+  %bound0 = icmp ult ptr %scevgep63, %scevgep64.a
+  %bound1 = icmp ult ptr %i.f, %scevgep.a
   %found.conflict = and i1 %bound0, %bound1
-  %bound067 = icmp ult ptr %scevgep.a, %scevgep65.a
-  %bound168 = icmp ult ptr %i.f, %scevgep63
+  %bound067 = icmp ult ptr %scevgep63, %scevgep65.a
+  %bound168 = icmp ult ptr %i.f, %scevgep.a
   %found.conflict69 = and i1 %bound067, %bound168
   %conflict.rdx = or i1 %found.conflict, %found.conflict69
-  %bound070 = icmp ult ptr %scevgep.a, %scevgep66
-  %bound171 = icmp ult ptr %0, %scevgep63
+  %bound070 = icmp ult ptr %scevgep63, %scevgep66
+  %bound171 = icmp ult ptr %0, %scevgep.a
   %found.conflict72 = and i1 %bound070, %bound171
   %conflict.rdx73 = or i1 %conflict.rdx, %found.conflict72
   br i1 %conflict.rdx73, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %indvars.iv47, -4              ; 4 uses
-  %i.w = add i64 %.036, %n.vec                    ; 2 uses
+  %i.w = add i64 %n.vec, %1
   %i.x = load double, ptr %i.q, align 8, !tbaa !57, !alias.scope !59
   %i.y = load <2 x double>, ptr %i.a, align 8     ; 2 uses
   %broadcast.splatinsert74 = shufflevector <2 x double> %i.y, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
@@ -253,7 +255,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.ag = fdiv <4 x double> %i.af, %broadcast.splatinsert74
   %i.ah = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.ag, <4 x double> %broadcast.splatinsert, <4 x double> %broadcast.splatinsert78)
   %i.ai = shufflevector <4 x double> %i.ah, <4 x double> poison, <4 x i32> zeroinitializer
-  %i.aj = getelementptr [8 x i8], ptr %i.n, i64 %.036
+  %i.aj = getelementptr [8 x i8], ptr %i.n, i64 %1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -280,7 +282,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.c, %middle.block
   %indvars.iv40.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.c ], [ %n.vec, %middle.block ] ; 4 uses
-  %indvars.iv.ph = phi i64 [ %.036, %vector.memcheck ], [ %.036, %bb.c ], [ %i.w, %middle.block ] ; 3 uses
+  %indvars.iv.ph = phi i64 [ %1, %vector.memcheck ], [ %1, %bb.c ], [ %i.w, %middle.block ] ; 3 uses
   %xtraiter = and i64 %indvars.iv47, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
@@ -311,21 +313,21 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.bo = load double, ptr %i.bn, align 8, !tbaa !9
   %i.bp = tail call double @llvm.fmuladd.f64(double %i.bk, double %i.bm, double %i.bo)
   store double %i.bp, ptr %i.bn, align 8, !tbaa !9
-  %indvars.iv.next.prol = add nsw i64 %indvars.iv.ph, 1 ; 2 uses
+  %indvars.iv.next.prol = add nsw i64 %indvars.iv.ph, 1
   %indvars.iv.next41.prol = or disjoint i64 %indvars.iv40.ph, 1
   br label %scalar.ph.prol.loopexit
 
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
-  %indvars.iv.next.lcssa104.unr = phi i64 [ poison, %scalar.ph.preheader ], [ %indvars.iv.next.prol, %scalar.ph.prol ]
   %indvars.iv40.unr = phi i64 [ %indvars.iv40.ph, %scalar.ph.preheader ], [ %indvars.iv.next41.prol, %scalar.ph.prol ]
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.prol, %scalar.ph.prol ]
   %i.bq = icmp eq i64 %indvars.iv49.a, %indvars.iv40.ph
   br i1 %i.bq, label %.loopexit102, label %scalar.ph
 
 .loopexit102:                                     ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
-  %indvars.iv.next.lcssa = phi i64 [ %i.w, %middle.block ], [ %indvars.iv.next.lcssa104.unr, %scalar.ph.prol.loopexit ], [ %indvars.iv.next.1, %scalar.ph ]
   %indvars.iv.next50.a = add nuw nsw i64 %indvars.iv49.a, 1 ; 2 uses
   %indvars.iv.next48 = add nuw i64 %indvars.iv47, 1
+  %3 = trunc i64 %indvars.iv47 to i32
+  %indvars.iv.next41 = add i32 %indvars.iv40, %3
   %exitcond55.not = icmp eq i64 %indvars.iv.next50.a, %wide.trip.count54
   br i1 %exitcond55.not, label %.loopexit.loopexit, label %bb.c, !llvm.loop !71
 
@@ -384,7 +386,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.dn = load double, ptr %i.dm, align 8, !tbaa !9
   %i.do = tail call double @llvm.fmuladd.f64(double %i.di, double %i.dk, double %i.dn)
   store double %i.do, ptr %i.dm, align 8, !tbaa !9
-  %indvars.iv.next.1 = add nsw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next.1 = add nsw i64 %indvars.iv, 2
   %indvars.iv.next41.1 = add nuw nsw i64 %indvars.iv40.a, 2 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next41.1, %indvars.iv47
   br i1 %exitcond.not.1, label %.loopexit102, label %scalar.ph, !llvm.loop !72

@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %_ZN6duckdb12_GLOBAL
 _ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationIiNS0_11MinMaxStateIiEENS0_12MinOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.us.i.i.3: ; preds = %bb.aq, %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationIiNS0_11MinMaxStateIiEENS0_12MinOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.us.i.i.2
   %i.ey = phi i32 [ %.val.us.i.i.3, %bb.aq ], [ %i.eu, %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationIiNS0_11MinMaxStateIiEENS0_12MinOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.us.i.i.2 ] ; 2 uses
   %i.ez = add nuw i64 %.04.us.i.i, 4              ; 2 uses
-  %niter69.next.3 = add i64 %niter69, 4           ; 2 uses
+  %niter69.next.3 = add nuw i64 %niter69, 4       ; 2 uses
   %niter69.ncmp.3 = icmp eq i64 %niter69.next.3, %unroll_iter68
   br i1 %niter69.ncmp.3, label %_ZN6duckdb17AggregateExecutor15UnaryUpdateLoopINS_12_GLOBAL__N_111MinMaxStateIiEEiNS2_12MinOperationEEEvPKT0_RNS_18AggregateInputDataEPT_mRNS_12ValidityMaskERKNS_15SelectionVectorE.exit.i.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit22.us.i.peel.next.i, !llvm.loop !3508
 
@@ -607,7 +607,7 @@ bb.aq:                                            ; preds = %_ZN6duckdb12_GLOBAL
 _ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationIjNS0_11MinMaxStateIjEENS0_12MinOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.us.i.i.3: ; preds = %bb.aq, %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationIjNS0_11MinMaxStateIjEENS0_12MinOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.us.i.i.2
   %i.ey = phi i32 [ %.val.us.i.i.3, %bb.aq ], [ %i.eu, %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationIjNS0_11MinMaxStateIjEENS0_12MinOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.us.i.i.2 ] ; 2 uses
   %i.ez = add nuw i64 %.04.us.i.i, 4              ; 2 uses
-  %niter69.next.3 = add i64 %niter69, 4           ; 2 uses
+  %niter69.next.3 = add nuw i64 %niter69, 4       ; 2 uses
   %niter69.ncmp.3 = icmp eq i64 %niter69.next.3, %unroll_iter68
   br i1 %niter69.ncmp.3, label %_ZN6duckdb17AggregateExecutor15UnaryUpdateLoopINS_12_GLOBAL__N_111MinMaxStateIjEEjNS2_12MinOperationEEEvPKT0_RNS_18AggregateInputDataEPT_mRNS_12ValidityMaskERKNS_15SelectionVectorE.exit.i.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit22.us.i.peel.next.i, !llvm.loop !3809
 
@@ -1010,7 +1010,7 @@ bb.aq:                                            ; preds = %_ZN6duckdb12_GLOBAL
 _ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationIiNS0_11MinMaxStateIiEENS0_12MaxOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.us.i.i.3: ; preds = %bb.aq, %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationIiNS0_11MinMaxStateIiEENS0_12MaxOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.us.i.i.2
   %i.ey = phi i32 [ %.val.us.i.i.3, %bb.aq ], [ %i.eu, %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationIiNS0_11MinMaxStateIiEENS0_12MaxOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.us.i.i.2 ] ; 2 uses
   %i.ez = add nuw i64 %.04.us.i.i, 4              ; 2 uses
-  %niter69.next.3 = add i64 %niter69, 4           ; 2 uses
+  %niter69.next.3 = add nuw i64 %niter69, 4       ; 2 uses
   %niter69.ncmp.3 = icmp eq i64 %niter69.next.3, %unroll_iter68
   br i1 %niter69.ncmp.3, label %_ZN6duckdb17AggregateExecutor15UnaryUpdateLoopINS_12_GLOBAL__N_111MinMaxStateIiEEiNS2_12MaxOperationEEEvPKT0_RNS_18AggregateInputDataEPT_mRNS_12ValidityMaskERKNS_15SelectionVectorE.exit.i.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit22.us.i.peel.next.i, !llvm.loop !4587
 
@@ -1413,7 +1413,7 @@ bb.aq:                                            ; preds = %_ZN6duckdb12_GLOBAL
 _ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationIjNS0_11MinMaxStateIjEENS0_12MaxOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.us.i.i.3: ; preds = %bb.aq, %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationIjNS0_11MinMaxStateIjEENS0_12MaxOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.us.i.i.2
   %i.ey = phi i32 [ %.val.us.i.i.3, %bb.aq ], [ %i.eu, %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationIjNS0_11MinMaxStateIjEENS0_12MaxOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.us.i.i.2 ] ; 2 uses
   %i.ez = add nuw i64 %.04.us.i.i, 4              ; 2 uses
-  %niter69.next.3 = add i64 %niter69, 4           ; 2 uses
+  %niter69.next.3 = add nuw i64 %niter69, 4       ; 2 uses
   %niter69.ncmp.3 = icmp eq i64 %niter69.next.3, %unroll_iter68
   br i1 %niter69.ncmp.3, label %_ZN6duckdb17AggregateExecutor15UnaryUpdateLoopINS_12_GLOBAL__N_111MinMaxStateIjEEjNS2_12MaxOperationEEEvPKT0_RNS_18AggregateInputDataEPT_mRNS_12ValidityMaskERKNS_15SelectionVectorE.exit.i.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit22.us.i.peel.next.i, !llvm.loop !4867
 
