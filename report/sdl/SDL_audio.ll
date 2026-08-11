@@ -204,15 +204,14 @@ SDL_GetDefaultSampleFramesFromFreq.exit:          ; preds = %bb.j, %bb.k, %bb.l,
   store i32 %i.af, ptr %i.ag, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.e, i64 88
   store ptr %3, ptr %i.ah, align 8
-  %not..i = xor i1 %1, true
-  %i.ai = zext i1 %not..i to i32
-  %5 = or disjoint i32 %i.ai, 2
+  %i.ai = zext i1 %1 to i32
   %i.aj = tail call i32 @SDL_AddAtomicInt_REAL(ptr noundef nonnull @last_device_instance_id, i32 noundef 1) #11
   %i.ak = shl i32 %i.aj, 2
   %i.al = add i32 %i.ak, 4
-  %i.am = or disjoint i32 %i.al, %5
+  %i.am = or disjoint i32 %i.al, %i.ai
+  %5 = xor i32 %i.am, 3
   %i.an = getelementptr inbounds nuw i8, ptr %i.e, i64 80 ; 2 uses
-  store i32 %i.am, ptr %i.an, align 8
+  store i32 %5, ptr %i.an, align 8
   %i.ao = load ptr, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 136), align 8
   tail call void @SDL_LockRWLockForWriting_REAL(ptr noundef %i.ao) #11
   %i.ap = load ptr, ptr getelementptr inbounds nuw (i8, ptr @current_audio, i64 144), align 16

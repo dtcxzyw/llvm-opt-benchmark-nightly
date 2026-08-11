@@ -204,9 +204,8 @@ bb.d:                                             ; preds = %bb.b
 
 _ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit: ; preds = %bb.a, %bb.c, %bb.d
   store ptr null, ptr %11, align 8, !tbaa !238
-  %not. = xor i1 %3, true
-  %.sroa.031.0.insert.ext = zext i1 %not. to i64
-  %.sroa.031.0.insert.insert = or disjoint i64 %.sroa.031.0.insert.ext, 4294967296
+  %.sroa.031.0.insert.ext = zext i1 %3 to i64
+  %.sroa.031.0.insert.insert = xor i64 %.sroa.031.0.insert.ext, 4294967297
   %i.j = zext i32 %2 to i64
   %i.k = or disjoint i64 %i.j, 4294967296
   %.sroa.028.0.insert.insert = select i1 %3, i64 %i.k, i64 4294967296
@@ -609,10 +608,9 @@ _ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEaSERKS3_.exit: ; preds = %bb.c, 
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.aq = zext i1 %i.ao to i8
   store i8 %i.aq, ptr %i.ap, align 8, !tbaa !26295
-  %not. = xor i1 %i.ao, true
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %.sroa.010.0.insert.ext = zext i1 %not. to i64
-  %.sroa.010.0.insert.insert = or disjoint i64 %.sroa.010.0.insert.ext, 4294967296
+  %.sroa.010.0.insert.ext = zext i1 %i.ao to i64
+  %.sroa.010.0.insert.insert = xor i64 %.sroa.010.0.insert.ext, 4294967297
   store i64 %.sroa.010.0.insert.insert, ptr %i.ar, align 4
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.at = load i32, ptr %i.as, align 8, !tbaa !239
@@ -1015,10 +1013,9 @@ _ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEaSERKS3_.exit: ; preds = %bb.c, 
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.aq = zext i1 %i.ao to i8
   store i8 %i.aq, ptr %i.ap, align 8, !tbaa !360
-  %not. = xor i1 %i.ao, true
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %.sroa.010.0.insert.ext = zext i1 %not. to i64
-  %.sroa.010.0.insert.insert = or disjoint i64 %.sroa.010.0.insert.ext, 4294967296
+  %.sroa.010.0.insert.ext = zext i1 %i.ao to i64
+  %.sroa.010.0.insert.insert = xor i64 %.sroa.010.0.insert.ext, 4294967297
   store i64 %.sroa.010.0.insert.insert, ptr %i.ar, align 4
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.at = load i32, ptr %i.as, align 8, !tbaa !239
@@ -1421,9 +1418,8 @@ bb.d:                                             ; preds = %bb.b
 
 _ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit: ; preds = %bb.a, %bb.c, %bb.d
   store ptr null, ptr %11, align 8, !tbaa !238
-  %not. = xor i1 %3, true
-  %.sroa.031.0.insert.ext = zext i1 %not. to i64
-  %.sroa.031.0.insert.insert = or disjoint i64 %.sroa.031.0.insert.ext, 4294967296
+  %.sroa.031.0.insert.ext = zext i1 %3 to i64
+  %.sroa.031.0.insert.insert = xor i64 %.sroa.031.0.insert.ext, 4294967297
   %i.j = zext i32 %2 to i64
   %i.k = or disjoint i64 %i.j, 4294967296
   %.sroa.028.0.insert.insert = select i1 %3, i64 %i.k, i64 4294967296
@@ -1826,9 +1822,8 @@ bb.d:                                             ; preds = %bb.b
 
 _ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit: ; preds = %bb.a, %bb.c, %bb.d
   store ptr null, ptr %11, align 8, !tbaa !238
-  %not. = xor i1 %3, true
-  %.sroa.031.0.insert.ext = zext i1 %not. to i64
-  %.sroa.031.0.insert.insert = or disjoint i64 %.sroa.031.0.insert.ext, 4294967296
+  %.sroa.031.0.insert.ext = zext i1 %3 to i64
+  %.sroa.031.0.insert.insert = xor i64 %.sroa.031.0.insert.ext, 4294967297
   %i.j = zext i32 %2 to i64
   %i.k = or disjoint i64 %i.j, 4294967296
   %.sroa.028.0.insert.insert = select i1 %3, i64 %i.k, i64 4294967296
@@ -2231,10 +2226,9 @@ _ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEaSERKS3_.exit: ; preds = %bb.c, 
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
   %i.aq = zext i1 %i.ao to i8
   store i8 %i.aq, ptr %i.ap, align 8, !tbaa !26831
-  %not. = xor i1 %i.ao, true
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %.sroa.010.0.insert.ext = zext i1 %not. to i64
-  %.sroa.010.0.insert.insert = or disjoint i64 %.sroa.010.0.insert.ext, 4294967296
+  %.sroa.010.0.insert.ext = zext i1 %i.ao to i64
+  %.sroa.010.0.insert.insert = xor i64 %.sroa.010.0.insert.ext, 4294967297
   store i64 %.sroa.010.0.insert.insert, ptr %i.ar, align 4
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.at = load i32, ptr %i.as, align 8, !tbaa !239

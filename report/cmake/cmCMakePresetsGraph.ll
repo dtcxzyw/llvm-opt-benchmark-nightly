@@ -203,9 +203,8 @@ bb.i:                                             ; preds = %bb.g, %bb.c, %bb.e
 
 ._crit_edge:                                      ; preds = %bb.h, %.._crit_edge_crit_edge
   %i.u = phi i8 [ %.pre, %.._crit_edge_crit_edge ], [ %i.q, %bb.h ]
-  %5 = xor i8 %i.u, 1
-  %.sroa.0.0.insert.ext = zext nneg i8 %5 to i16
-  %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
+  %.sroa.0.0.insert.ext = zext nneg i8 %i.u to i16
+  %.sroa.0.0.insert.insert = xor i16 %.sroa.0.0.insert.ext, 257
   store i16 %.sroa.0.0.insert.insert, ptr %3, align 1
   br label %bb.j
 
