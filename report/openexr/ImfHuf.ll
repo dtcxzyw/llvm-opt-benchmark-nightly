@@ -203,7 +203,7 @@ bb.p:                                             ; preds = %.loopexit.i, %.lr.p
   %i.ed = add nsw i64 %.idx.i, -8                 ; 2 uses
   %i.ee = ashr exact i64 %i.ed, 3                 ; 3 uses
   %i.ef = add nsw i64 %i.ee, -1
-  %3 = sdiv i64 %i.ef, 2
+  %3 = lshr i64 %i.ef, 1
   %i.eg = icmp sgt i64 %i.ee, 2
   br i1 %i.eg, label %.lr.ph.i.i.i75.i, label %._crit_edge.i.i.i66.i
 
@@ -304,7 +304,7 @@ bb.u:                                             ; preds = %_ZSt10__pop_heapIPP
   %i.gb = add nsw i64 %.idx131.i, -8              ; 2 uses
   %i.gc = ashr exact i64 %i.gb, 3                 ; 3 uses
   %i.gd = add nsw i64 %i.gc, -1
-  %4 = sdiv i64 %i.gd, 2
+  %4 = lshr i64 %i.gd, 1
   %i.ge = icmp sgt i64 %i.gc, 2
   br i1 %i.ge, label %.lr.ph.i.i.i93.i, label %._crit_edge.i.i.i80.i
 

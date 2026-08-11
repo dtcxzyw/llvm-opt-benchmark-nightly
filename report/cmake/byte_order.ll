@@ -201,7 +201,7 @@ define dso_local void @rhash_u32_mem_swap(ptr nofree noundef captures(address) %
 bb.a:
   %i.a = sext i32 %1 to i64
   %.idx = shl nsw i64 %i.a, 2                     ; 2 uses
-  %i.b = getelementptr inbounds i8, ptr %0, i64 %.idx
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.c = icmp sgt i32 %1, 0
   br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
 

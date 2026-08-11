@@ -204,7 +204,7 @@ bb.a:
   %i.i = sub i64 %i.h, %i.a                       ; 3 uses
   %i.j = ashr exact i64 %i.i, 2                   ; 3 uses
   %i.k = add nsw i64 %i.j, -1
-  %3 = sdiv i64 %i.k, 2
+  %3 = lshr i64 %i.k, 1
   %i.l = icmp sgt i64 %i.j, 2
   br i1 %i.l, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -249,7 +249,7 @@ bb.b:                                             ; preds = %._crit_edge.i.i
   %i.ak = or disjoint i64 %i.aj, 1                ; 2 uses
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ak
   %i.am = load i32, ptr %i.al, align 4, !tbaa !168
-  %i.an = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.an = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   store i32 %i.am, ptr %i.an, align 4, !tbaa !168
   br label %.lr.ph.i.i.i
 

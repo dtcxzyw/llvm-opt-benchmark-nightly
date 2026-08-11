@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 6 uses
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !147 ; 5 uses
   %i.ae = sub nsw i32 %i.ab, %i.ad                ; 2 uses
-  %i.af = add nsw i32 %i.ae, 1
+  %i.af = add nuw nsw i32 %i.ae, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
   %i.ag = load ptr, ptr %i.e, align 8, !tbaa !205 ; 7 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 68

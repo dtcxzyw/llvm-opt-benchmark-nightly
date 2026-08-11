@@ -203,7 +203,7 @@ declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #11
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN5folly4bserL13bserEncodeIntElRNS_2io13QueueAppenderE(i64 noundef %0, ptr noundef nonnull align 8 dereferenceable(48) %1) unnamed_addr #3 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = trunc i64 %0 to i8
+  %i.a = trunc nsw i64 %0 to i8
   %i.b = add i64 %0, 128
   %i.c = icmp ult i64 %i.b, 256
   br i1 %i.c, label %bb.d, label %bb.b

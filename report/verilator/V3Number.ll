@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %.lr.ph64
 
 .preheader:                                       ; preds = %_ZNK12V3NumberData3numEv.exit
   %i.cw = load i32, ptr %i.ai, align 8, !tbaa !41 ; 3 uses
-  %i.cx = add nsw i32 %i.cw, 31
+  %i.cx = add nuw nsw i32 %i.cw, 31
   %i.cy = sdiv i32 %i.cx, 32
   %i.cz = icmp sgt i32 %i.cw, 0
   br i1 %i.cz, label %.lr.ph60, label %.loopexit55
@@ -607,7 +607,7 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i32, ptr %i.d, align 8, !tbaa !41   ; 3 uses
-  %i.f = add nsw i32 %i.e, 31
+  %i.f = add nuw nsw i32 %i.e, 31
   %i.g = sdiv i32 %i.f, 32
   %i.h = icmp sgt i32 %i.e, 0
   br i1 %i.h, label %.lr.ph, label %.loopexit
@@ -673,7 +673,7 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i32, ptr %i.d, align 8, !tbaa !41   ; 3 uses
-  %i.f = add nsw i32 %i.e, 31
+  %i.f = add nuw nsw i32 %i.e, 31
   %i.g = sdiv i32 %i.f, 32
   %i.h = icmp slt i32 %i.e, 1
   br i1 %i.h, label %.loopexit, label %.lr.ph
@@ -1076,7 +1076,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.d, label %.preheader
 
 .preheader:                                       ; preds = %bb.c
-  %i.k = add nsw i32 %i.j, 31
+  %i.k = add nuw nsw i32 %i.j, 31
   %i.l = sdiv i32 %i.k, 32
   %i.m = icmp sgt i32 %i.j, 64
   br i1 %i.m, label %.lr.ph, label %.loopexit
@@ -1479,7 +1479,7 @@ bb.f:                                             ; preds = %bb.d
   store ptr %i.ah, ptr %i.ag, align 8, !tbaa !37
   %i.ai = load i32, ptr %i.a, align 8, !tbaa !41
   %.fr.i.i = freeze i32 %i.ai                     ; 7 uses
-  %i.aj = icmp ult i32 %.fr.i.i, 129
+  %i.aj = icmp samesign ult i32 %.fr.i.i, 129
   %.026193 = add nsw i32 %.fr.i.i, -1             ; 5 uses
   %i.ak = icmp sgt i32 %.fr.i.i, 0
   br i1 %i.ak, label %.lr.ph, label %._crit_edge220
@@ -1882,7 +1882,7 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = load i32, ptr %i.b, align 8, !tbaa !41   ; 3 uses
-  %i.d = add nsw i32 %i.c, 31
+  %i.d = add nuw nsw i32 %i.c, 31
   %i.e = sdiv i32 %i.d, 32
   %i.f = icmp slt i32 %i.c, 33
   br i1 %i.f, label %.loopexit, label %.lr.ph
@@ -1984,7 +1984,7 @@ bb.a:
   br i1 %i.e, label %_ZNK12V3NumberData3strB5cxx11Ev.exit, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.f = add nsw i32 %i.b, 31
+  %i.f = add nuw nsw i32 %i.b, 31
   %i.g = sdiv i32 %i.f, 32
   %i.h = icmp sgt i32 %i.b, 0
   br i1 %i.h, label %.lr.ph, label %.loopexit
@@ -2102,7 +2102,7 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i32, ptr %i.d, align 8, !tbaa !41   ; 3 uses
-  %i.f = add nsw i32 %i.e, 31
+  %i.f = add nuw nsw i32 %i.e, 31
   %i.g = sdiv i32 %i.f, 32
   %i.h = icmp sgt i32 %i.e, 0
   br i1 %i.h, label %.lr.ph, label %.loopexit
@@ -2505,7 +2505,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %.not, label %.preheader, label %.loopexit
 
 .preheader:                                       ; preds = %bb.h
-  %i.bd = add nsw i32 %i.ba, 31
+  %i.bd = add nuw nsw i32 %i.ba, 31
   %i.be = sdiv i32 %i.bd, 32
   %i.bf = icmp slt i32 %i.ba, 1
   br i1 %i.bf, label %.loopexit, label %.lr.ph

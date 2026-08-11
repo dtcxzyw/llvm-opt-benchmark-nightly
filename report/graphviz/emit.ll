@@ -204,7 +204,7 @@ declare i32 @shapeOf(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nofree nounwind uwtable
 define internal fastcc noundef ptr @pEllipse(double noundef %0, double noundef %1, i64 noundef range(i64 -2147483648, 2147483648) %2) unnamed_addr #3 {
 bb.a:
-  %i.a = uitofp i64 %2 to double
+  %i.a = uitofp nneg i64 %2 to double
   %i.b = fdiv double f0x401921FB54442D18, %i.a    ; 2 uses
   %.not = icmp eq i64 %2, 0
   br i1 %.not, label %gv_calloc.exit.thread, label %bb.b

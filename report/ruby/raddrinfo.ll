@@ -205,7 +205,7 @@ bb.au:                                            ; preds = %RSTRING_PTR.exit42
   unreachable
 
 RSTRING_LENINT.exit:                              ; preds = %RSTRING_PTR.exit42
-  %i.fi = trunc nsw i64 %i.fg to i32
+  %i.fi = trunc nuw nsw i64 %i.fg to i32
   %i.fj = icmp ugt i64 %i.fg, 2048
   br i1 %i.fj, label %bb.av, label %bb.aw
 
@@ -608,7 +608,7 @@ bb.a:
 
 .lr.ph24:                                         ; preds = %.lr.ph, %.backedge
   %i.i = load i32, ptr %i.e, align 8, !tbaa !61   ; 3 uses
-  %1 = sext i32 %i.i to i64
+  %1 = zext nneg i32 %i.i to i64
   %i.j = icmp eq i32 %i.i, 0
   br i1 %i.j, label %bb.d, label %bb.b
 

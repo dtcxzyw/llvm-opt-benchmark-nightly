@@ -203,7 +203,7 @@ _RNvNtNtNtCs6t3BXPRE3GP_6base646engine15general_purpose6decode13decode_helper.ex
 ; Function Attrs: nonlazybind uwtable
 define noundef i64 @_RNvXs_NtNtCs6t3BXPRE3GP_6base646engine15general_purposeNtB4_14GeneralPurposeNtB6_6Engine15internal_encode(ptr noalias nofree noundef readonly captures(none) dereferenceable(323) %0, ptr noalias nofree noundef nonnull readonly captures(none) %1, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias nofree noundef nonnull writeonly captures(none) %3, i64 noundef range(i64 0, -9223372036854775808) %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
-  %5 = tail call i64 @llvm.usub.sat.i64(i64 %2, i64 26)
+  %5 = add nsw i64 %2, -26
   %.not = icmp samesign ult i64 %2, 27
   br i1 %.not, label %.loopexit, label %.preheader
 

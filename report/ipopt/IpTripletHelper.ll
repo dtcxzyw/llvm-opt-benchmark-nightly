@@ -203,10 +203,10 @@ bb.g:                                             ; preds = %bb.a
   %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.dh = sext i32 %i.de to i64
   %i.di = icmp sgt i32 %i.de, 0
-  %i.dj = zext i32 %i.de to i64
+  %i.dj = zext nneg i32 %i.de to i64
   %i.dk = shl nuw nsw i64 %i.dj, 3
   %i.dl = add i32 %i.de, -1
-  %i.dm = zext i32 %i.dl to i64
+  %i.dm = zext nneg i32 %i.dl to i64
   %i.dn = shl nuw nsw i64 %i.dm, 3
   %wide.trip.count167 = zext nneg i32 %i.d to i64
   br label %bb.h

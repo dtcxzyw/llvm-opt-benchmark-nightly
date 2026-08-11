@@ -203,7 +203,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %exitcond152.not, label %._crit_edge, label %bb.w, !dbg !1347
 
 bb.ab:                                            ; preds = %._crit_edge
-  %4 = sdiv i64 %.sroa.017.0, 2, !dbg !1430
+  %4 = lshr i64 %.sroa.017.0, 1, !dbg !1430
   %i.eh = icmp sgt i64 %.sroa.017.0, 1, !dbg !1431
   br i1 %i.eh, label %.lr.ph146, label %.loopexit, !dbg !1439
 

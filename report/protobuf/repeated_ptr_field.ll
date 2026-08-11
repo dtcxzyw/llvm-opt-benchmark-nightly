@@ -203,8 +203,8 @@ _ZNK6google8protobuf8internal20RepeatedPtrFieldBase12ClearedCountEv.exit: ; pred
   %i.bb = sub nsw i32 %i.az, %i.ba
   %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %i.ah, i32 %i.bb) ; 2 uses
   %i.bc = sext i32 %.sroa.speculated to i64
-  %.idx = shl nsw i64 %i.bc, 3
-  %i.bd = getelementptr inbounds i8, ptr %i.ap, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.bc, 3
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.ap, i64 %.idx
   %i.be = icmp sgt i32 %.sroa.speculated, 0
   br i1 %i.be, label %.lr.ph, label %.preheader41
 
@@ -432,8 +432,8 @@ _ZNK6google8protobuf8internal20RepeatedPtrFieldBase12ClearedCountEv.exit21: ; pr
   %i.ew = sub nsw i32 %i.ev, %.sink93
   %.sroa.speculated35 = tail call i32 @llvm.smin.i32(i32 %i.eb, i32 %i.ew) ; 2 uses
   %i.ex = sext i32 %.sroa.speculated35 to i64
-  %.idx60 = shl nsw i64 %i.ex, 3
-  %i.ey = getelementptr inbounds i8, ptr %i.el, i64 %.idx60
+  %.idx60 = shl nuw nsw i64 %i.ex, 3
+  %i.ey = getelementptr inbounds nuw i8, ptr %i.el, i64 %.idx60
   %i.ez = icmp sgt i32 %.sroa.speculated35, 0
   br i1 %i.ez, label %.lr.ph53, label %.preheader
 
@@ -836,8 +836,8 @@ _ZNK6google8protobuf8internal20RepeatedPtrFieldBase12ClearedCountEv.exit: ; pred
   %i.bl = sub nsw i32 %i.bj, %i.bk
   %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %i.ar, i32 %i.bl) ; 2 uses
   %i.bm = sext i32 %.sroa.speculated to i64
-  %.idx = shl nsw i64 %i.bm, 3
-  %i.bn = getelementptr inbounds i8, ptr %i.az, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.bm, 3
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.az, i64 %.idx
   %i.bo = icmp sgt i32 %.sroa.speculated, 0
   br i1 %i.bo, label %.lr.ph, label %.preheader
 

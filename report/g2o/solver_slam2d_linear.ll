@@ -203,7 +203,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %i.cz = sext i32 %i.cy to i64                   ; 2 uses
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %.03370
   %i.db = load i32, ptr %i.da, align 4, !tbaa !33 ; 2 uses
-  %3 = sext i32 %i.db to i64
+  %3 = zext nneg i32 %i.db to i64
   %i.dc = add nsw i64 %3, %i.cz
   %i.dd = icmp sgt i32 %i.db, 0
   br i1 %i.dd, label %.lr.ph, label %._crit_edge
@@ -395,7 +395,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %i.gq = sext i32 %i.gp to i64                   ; 2 uses
   %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %indvars.iv
   %i.gs = load i32, ptr %i.gr, align 4, !tbaa !33 ; 2 uses
-  %4 = sext i32 %i.gs to i64
+  %4 = zext nneg i32 %i.gs to i64
   %i.gt = add nsw i64 %4, %i.gq
   %i.gu = icmp sgt i32 %i.gs, 0
   br i1 %i.gu, label %.lr.ph78.preheader, label %._crit_edge79

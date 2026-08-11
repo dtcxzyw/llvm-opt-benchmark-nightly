@@ -204,7 +204,7 @@ bb.hm:                                            ; preds = %bb.hr, %.split.i.i
   %i.awl = load float, ptr %i.awk, align 4, !dbg !8356, !alias.scope !7921, !noalias !7980, !noundef !14
   %gep.i.i = getelementptr [1040 x i8], ptr %invariant.gep.i.i, i64 %.sroa.069.0349.i.i, !dbg !8358
   %i.awm = load i32, ptr %gep.i.i, align 4, !dbg !8358, !alias.scope !7919, !noalias !8359, !noundef !14 ; 4 uses
-  %i.awn = zext i32 %i.awm to i64, !dbg !8358
+  %i.awn = zext nneg i32 %i.awm to i64, !dbg !8358
   %i.awo = icmp eq i32 %i.awm, 0, !dbg !8360
   br i1 %i.awo, label %bb.ho, label %bb.hn, !dbg !8360
 
@@ -607,7 +607,7 @@ bb.rx:                                            ; preds = %bb.sc, %.split.i.i1
   %i.cun = load float, ptr %i.cum, align 4, !dbg !11244, !alias.scope !10861, !noalias !10920, !noundef !14
   %gep.i.i104 = getelementptr [2832 x i8], ptr %invariant.gep.i.i102, i64 %.sroa.069.0349.i.i103, !dbg !11246
   %i.cuo = load i32, ptr %gep.i.i104, align 4, !dbg !11246, !alias.scope !10859, !noalias !11247, !noundef !14 ; 4 uses
-  %i.cup = zext i32 %i.cuo to i64, !dbg !11246
+  %i.cup = zext nneg i32 %i.cuo to i64, !dbg !11246
   %i.cuq = icmp eq i32 %i.cuo, 0, !dbg !11248
   br i1 %i.cuq, label %bb.rz, label %bb.ry, !dbg !11248
 
@@ -1010,7 +1010,7 @@ bb.aci:                                           ; preds = %bb.acn, %.split.i.i
   %i.eqz = load float, ptr %i.eqy, align 4, !dbg !14105, !alias.scope !13730, !noalias !13789, !noundef !14
   %gep.i.i443 = getelementptr [2192 x i8], ptr %invariant.gep.i.i440, i64 %.sroa.069.0349.i.i441, !dbg !14107
   %i.era = load i32, ptr %gep.i.i443, align 4, !dbg !14107, !alias.scope !13728, !noalias !14108, !noundef !14 ; 4 uses
-  %i.erb = zext i32 %i.era to i64, !dbg !14107
+  %i.erb = zext nneg i32 %i.era to i64, !dbg !14107
   %i.erc = icmp eq i32 %i.era, 0, !dbg !14109
   br i1 %i.erc, label %bb.ack, label %bb.acj, !dbg !14109
 

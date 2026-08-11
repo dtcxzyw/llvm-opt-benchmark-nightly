@@ -203,10 +203,10 @@ bb.a:
   %10 = alloca %"class.std::basic_string_view", align 8 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
   %i.d = sext i32 %0 to i64                       ; 4 uses
-  %.idx88 = shl nsw i64 %i.d, 3
-  %i.e = getelementptr inbounds i8, ptr %1, i64 %.idx88
+  %.idx88 = shl nuw nsw i64 %i.d, 3
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %.idx88
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
-  %.idx = shl nsw i64 %i.d, 4
+  %.idx = shl nuw nsw i64 %i.d, 4
   %i.f = icmp slt i32 %0, 0
   br i1 %i.f, label %.noexc.i, label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i
 
