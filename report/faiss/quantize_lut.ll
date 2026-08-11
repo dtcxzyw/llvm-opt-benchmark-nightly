@@ -203,27 +203,28 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit430:            ; preds = %_ZSt6fill_nIPfmfET_
 
 .preheader631.lr.ph.us:                           ; preds = %.preheader631.lr.ph.us.preheader, %._crit_edge688.split.us.us
   %.0245692.us = phi i64 [ %i.ux, %._crit_edge688.split.us.us ], [ 0, %.preheader631.lr.ph.us.preheader ] ; 2 uses
-  %.0246691.us = phi i64 [ %12, %._crit_edge688.split.us.us ], [ 0, %.preheader631.lr.ph.us.preheader ]
+  %.0246691.us = phi i64 [ %.0240687.us.us.a, %._crit_edge688.split.us.us ], [ 0, %.preheader631.lr.ph.us.preheader ] ; 2 uses
   %i.uf = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.0245692.us
   %i.ug = load float, ptr %i.uf, align 4, !tbaa !9
   %i.uh = fdiv float %i.ug, %i.ue                 ; 2 uses
+  %12 = add i64 %2, %.0246691.us
   %broadcast.splatinsert1006 = insertelement <4 x float> poison, float %i.uh, i64 0
   %broadcast.splat1007 = shufflevector <4 x float> %broadcast.splatinsert1006, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %.preheader631.us.us
 
 .preheader631.us.us:                              ; preds = %._crit_edge684.us.us, %.preheader631.lr.ph.us
-  %.0240687.us.us.a = phi i64 [ 0, %.preheader631.lr.ph.us ], [ %i.uw, %._crit_edge684.us.us ]
-  %.1247686.us.us.a = phi i64 [ %.0246691.us, %.preheader631.lr.ph.us ], [ %12, %._crit_edge684.us.us ] ; 4 uses
-  %12 = add i64 %2, %.1247686.us.us.a             ; 3 uses
+  %.0240687.us.us.a = phi i64 [ %i.uw, %._crit_edge684.us.us ], [ %12, %.preheader631.lr.ph.us ] ; 4 uses
+  %.1247686.us.us.a = phi i64 [ %13, %._crit_edge684.us.us ], [ 0, %.preheader631.lr.ph.us ]
+  %.1247686.us.us = phi i64 [ %.0240687.us.us.a, %._crit_edge684.us.us ], [ %.0246691.us, %.preheader631.lr.ph.us ] ; 3 uses
   br i1 %min.iters.check1003, label %scalar.ph1002.preheader, label %vector.ph1004
 
 vector.ph1004:                                    ; preds = %.preheader631.us.us
-  %i.ui = add i64 %.1247686.us.us.a, %n.vec1005
+  %i.ui = add i64 %.1247686.us.us, %n.vec1005
   br label %vector.body1008
 
 vector.body1008:                                  ; preds = %vector.body1008, %vector.ph1004
   %index1009 = phi i64 [ 0, %vector.ph1004 ], [ %index.next1012, %vector.body1008 ] ; 2 uses
-  %i.uj = add i64 %.1247686.us.us.a, %index1009   ; 2 uses
+  %i.uj = add i64 %.1247686.us.us, %index1009     ; 2 uses
   %i.uk = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.uj ; 2 uses
   %i.ul = getelementptr inbounds nuw i8, ptr %i.uk, i64 16
   %wide.load1010.a = load <4 x float>, ptr %i.uk, align 4, !tbaa !9
@@ -242,7 +243,7 @@ middle.block1013:                                 ; preds = %vector.body1008
   br i1 %cmp.n1014, label %._crit_edge684.us.us, label %scalar.ph1002.preheader
 
 scalar.ph1002.preheader:                          ; preds = %.preheader631.us.us, %middle.block1013
-  %.2248681.us.us.ph = phi i64 [ %.1247686.us.us.a, %.preheader631.us.us ], [ %i.ui, %middle.block1013 ]
+  %.2248681.us.us.ph = phi i64 [ %.1247686.us.us, %.preheader631.us.us ], [ %i.ui, %middle.block1013 ]
   br label %scalar.ph1002
 
 scalar.ph1002:                                    ; preds = %scalar.ph1002.preheader, %scalar.ph1002
@@ -253,12 +254,13 @@ scalar.ph1002:                                    ; preds = %scalar.ph1002.prehe
   %i.uu = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0504.0, i64 %.2248681.us.us
   store float %i.ut, ptr %i.uu, align 4, !tbaa !9
   %i.uv = add i64 %.2248681.us.us, 1              ; 2 uses
-  %exitcond787.not = icmp eq i64 %i.uv, %12
+  %exitcond787.not = icmp eq i64 %i.uv, %.0240687.us.us.a
   br i1 %exitcond787.not, label %._crit_edge684.us.us, label %scalar.ph1002, !llvm.loop !95
 
 ._crit_edge684.us.us:                             ; preds = %scalar.ph1002, %middle.block1013
-  %i.uw = add nuw i64 %.0240687.us.us.a, 1        ; 2 uses
-  %exitcond788.not = icmp eq i64 %i.uw, %1
+  %13 = add nuw i64 %.1247686.us.us.a, 1          ; 2 uses
+  %i.uw = add i64 %.0240687.us.us.a, %2
+  %exitcond788.not = icmp eq i64 %13, %1
   br i1 %exitcond788.not, label %._crit_edge688.split.us.us, label %.preheader631.us.us, !llvm.loop !96
 
 ._crit_edge688.split.us.us:                       ; preds = %._crit_edge684.us.us

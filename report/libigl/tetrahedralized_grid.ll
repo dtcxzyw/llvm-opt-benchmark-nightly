@@ -22,7 +22,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.e = load i32, ptr %i.d, align 4, !tbaa !9    ; 2 uses
   %i.f = add nsw i32 %i.a, -1                     ; 3 uses
   %i.g = add nsw i32 %i.c, -1                     ; 3 uses
-  %i.h = add nsw i32 %i.e, -1                     ; 3 uses
+  %i.h = add nsw i32 %i.e, -1                     ; 5 uses
   %switch.selectcmp = icmp eq i32 %1, 1
   %switch.select = select i1 %switch.selectcmp, i32 6, i32 -1
   %switch.selectcmp132 = icmp eq i32 %1, 0
@@ -72,18 +72,19 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
 
 .preheader629.us.us.us:                           ; preds = %._crit_edge641.split.us.split.us.us.us.us, %.preheader629.lr.ph.split.us.split.us.split.us
   %.0129661.us.us.us = phi i32 [ 0, %.preheader629.lr.ph.split.us.split.us.split.us ], [ %i.ah, %._crit_edge641.split.us.split.us.us.us.us ] ; 5 uses
-  %.0130660.us.us.us = phi i64 [ 0, %.preheader629.lr.ph.split.us.split.us.split.us ], [ %indvars.iv.next694, %._crit_edge641.split.us.split.us.us.us.us ]
+  %.0130660.us.us.us = phi i32 [ 0, %.preheader629.lr.ph.split.us.split.us.split.us ], [ %4, %._crit_edge641.split.us.split.us.us.us.us ]
   %i.ah = add nuw nsw i32 %.0129661.us.us.us, 1   ; 6 uses
   br label %.preheader.us.us.us.us.us
 
 .preheader.us.us.us.us.us:                        ; preds = %._crit_edge.split.us.us.us.us.us.us, %.preheader629.us.us.us
-  %.0128638.us.us.us.us.us = phi i32 [ 0, %.preheader629.us.us.us ], [ %i.ai, %._crit_edge.split.us.us.us.us.us.us ] ; 3 uses
-  %.1637.us.us.us.us.us = phi i64 [ %.0130660.us.us.us, %.preheader629.us.us.us ], [ %indvars.iv.next694, %._crit_edge.split.us.us.us.us.us.us ]
+  %indvars.iv695 = phi i32 [ %indvars.iv.next696, %._crit_edge.split.us.us.us.us.us.us ], [ %.0130660.us.us.us, %.preheader629.us.us.us ] ; 2 uses
+  %.0128638.us.us.us.us.us = phi i32 [ %i.ai, %._crit_edge.split.us.us.us.us.us.us ], [ 0, %.preheader629.us.us.us ] ; 3 uses
+  %3 = sext i32 %indvars.iv695 to i64
   %i.ai = add nuw nsw i32 %.0128638.us.us.us.us.us, 1 ; 4 uses
   br label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit.us.us.us.us.us.us
 
 _ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit.us.us.us.us.us.us: ; preds = %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit.us.us.us.us.us.us, %.preheader.us.us.us.us.us
-  %indvars.iv693 = phi i64 [ %indvars.iv.next694, %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit.us.us.us.us.us.us ], [ %.1637.us.us.us.us.us, %.preheader.us.us.us.us.us ] ; 2 uses
+  %indvars.iv693 = phi i64 [ %indvars.iv.next694, %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit.us.us.us.us.us.us ], [ %3, %.preheader.us.us.us.us.us ] ; 2 uses
   %.0127631.us.us.us.us.us.us = phi i32 [ %i.as, %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit.us.us.us.us.us.us ], [ 0, %.preheader.us.us.us.us.us ] ; 2 uses
   %i.aj = mul nuw nsw i32 %.0127631.us.us.us.us.us.us, %i.c ; 2 uses
   %i.ak = add nuw nsw i32 %i.aj, %.0128638.us.us.us.us.us
@@ -177,15 +178,17 @@ _ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1E
   %i.cw = getelementptr [4 x i8], ptr %i.cv, i64 %.sroa.6411.1.us.us.us.us.us.us
   %i.cx = getelementptr [4 x i8], ptr %i.cw, i64 %i.af
   store i32 %i.bb, ptr %i.cx, align 4, !tbaa !9
-  %indvars.iv.next694 = add nsw i64 %indvars.iv693, 1 ; 3 uses
+  %indvars.iv.next694 = add nsw i64 %indvars.iv693, 1 ; 2 uses
   %exitcond696.not = icmp eq i32 %i.as, %i.h
   br i1 %exitcond696.not, label %._crit_edge.split.us.us.us.us.us.us, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit.us.us.us.us.us.us, !llvm.loop !38
 
 ._crit_edge.split.us.us.us.us.us.us:              ; preds = %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit.us.us.us.us.us.us
+  %indvars.iv.next696 = add i32 %indvars.iv695, %i.h
   %exitcond697.not = icmp eq i32 %i.ai, %i.g
   br i1 %exitcond697.not, label %._crit_edge641.split.us.split.us.us.us.us, label %.preheader.us.us.us.us.us, !llvm.loop !40
 
 ._crit_edge641.split.us.split.us.us.us.us:        ; preds = %._crit_edge.split.us.us.us.us.us.us
+  %4 = trunc nsw i64 %indvars.iv.next694 to i32
   %exitcond698.not = icmp eq i32 %i.ah, %i.f
   br i1 %exitcond698.not, label %._crit_edge, label %.preheader629.us.us.us, !llvm.loop !41
 
@@ -211,19 +214,20 @@ _ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1E
 
 .preheader629.us.us.us677:                        ; preds = %._crit_edge641.split.us.split.split.us.us.us.us, %.preheader629.lr.ph.split.us.split.us.split.us676
   %.0129661.us.us.us678 = phi i32 [ 0, %.preheader629.lr.ph.split.us.split.us.split.us676 ], [ %i.dn, %._crit_edge641.split.us.split.split.us.us.us.us ] ; 6 uses
-  %.0130660.us.us.us679 = phi i64 [ 0, %.preheader629.lr.ph.split.us.split.us.split.us676 ], [ %indvars.iv.next.a, %._crit_edge641.split.us.split.split.us.us.us.us ]
+  %.0130660.us.us.us679 = phi i32 [ 0, %.preheader629.lr.ph.split.us.split.us.split.us676 ], [ %6, %._crit_edge641.split.us.split.split.us.us.us.us ]
   %i.dn = add nuw nsw i32 %.0129661.us.us.us678, 1 ; 6 uses
   br label %.preheader.us.us651.us.us.us
 
 .preheader.us.us651.us.us.us:                     ; preds = %._crit_edge.split.split.us.us.us.us.us.us, %.preheader629.us.us.us677
-  %.0128638.us.us652.us.us.us = phi i32 [ 0, %.preheader629.us.us.us677 ], [ %i.do, %._crit_edge.split.split.us.us.us.us.us.us ] ; 4 uses
-  %.1637.us.us653.us.us.us = phi i64 [ %.0130660.us.us.us679, %.preheader629.us.us.us677 ], [ %indvars.iv.next.a, %._crit_edge.split.split.us.us.us.us.us.us ]
+  %indvars.iv = phi i32 [ %indvars.iv.next, %._crit_edge.split.split.us.us.us.us.us.us ], [ %.0130660.us.us.us679, %.preheader629.us.us.us677 ] ; 2 uses
+  %.0128638.us.us652.us.us.us = phi i32 [ %i.do, %._crit_edge.split.split.us.us.us.us.us.us ], [ 0, %.preheader629.us.us.us677 ] ; 4 uses
+  %5 = sext i32 %indvars.iv to i64
   %i.do = add nuw nsw i32 %.0128638.us.us652.us.us.us, 1 ; 4 uses
   %i.dp = xor i32 %.0128638.us.us652.us.us.us, %.0129661.us.us.us678
   br label %bb.a
 
 bb.a:                                             ; preds = %bb.d, %.preheader.us.us651.us.us.us
-  %indvars.iv.a = phi i64 [ %indvars.iv.next.a, %bb.d ], [ %.1637.us.us653.us.us.us, %.preheader.us.us651.us.us.us ] ; 2 uses
+  %indvars.iv.a = phi i64 [ %indvars.iv.next.a, %bb.d ], [ %5, %.preheader.us.us651.us.us.us ] ; 2 uses
   %.0127631.us633.us.us.us.us.us = phi i32 [ %i.dz, %bb.d ], [ 0, %.preheader.us.us651.us.us.us ] ; 3 uses
   %i.dq = mul nuw nsw i32 %.0127631.us633.us.us.us.us.us, %i.c ; 2 uses
   %i.dr = add nuw nsw i32 %i.dq, %.0128638.us.us652.us.us.us
@@ -353,15 +357,17 @@ bb.c:                                             ; preds = %_ZN5Eigen16CommaIni
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit205.us.us.us.us.us.us
-  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1 ; 3 uses
+  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1 ; 2 uses
   %exitcond.not = icmp eq i32 %i.dz, %i.h
   br i1 %exitcond.not, label %._crit_edge.split.split.us.us.us.us.us.us, label %bb.a, !llvm.loop !38
 
 ._crit_edge.split.split.us.us.us.us.us.us:        ; preds = %bb.d
+  %indvars.iv.next = add i32 %indvars.iv, %i.h
   %exitcond691.not = icmp eq i32 %i.do, %i.g
   br i1 %exitcond691.not, label %._crit_edge641.split.us.split.split.us.us.us.us, label %.preheader.us.us651.us.us.us, !llvm.loop !40
 
 ._crit_edge641.split.us.split.split.us.us.us.us:  ; preds = %._crit_edge.split.split.us.us.us.us.us.us
+  %6 = trunc nsw i64 %indvars.iv.next.a to i32
   %exitcond692.not = icmp eq i32 %i.dn, %i.f
   br i1 %exitcond692.not, label %._crit_edge, label %.preheader629.us.us.us677, !llvm.loop !41
 

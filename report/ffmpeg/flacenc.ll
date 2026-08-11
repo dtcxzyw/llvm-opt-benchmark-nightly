@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.w
 
 bb.z:                                             ; preds = %bb.y, %bb.x, %.thread.i
   %i.ee = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 8 uses
-  %i.ef = load i32, ptr %i.ee, align 8, !tbaa !46 ; 12 uses
+  %i.ef = load i32, ptr %i.ee, align 8, !tbaa !46 ; 14 uses
   %i.eg = icmp slt i32 %i.ef, 1                   ; 3 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.c, i64 7350000
   %.pre = load ptr, ptr %.phi.trans.insert, align 16, !tbaa !31 ; 5 uses
@@ -384,12 +384,13 @@ init_frame.exit:                                  ; preds = %init_frame.exit.loo
 
 .preheader.i:                                     ; preds = %._crit_edge43.i, %.preheader.preheader.i
   %indvars.iv66.i = phi i64 [ 0, %.preheader.preheader.i ], [ %indvars.iv.next67.i, %._crit_edge43.i ] ; 6 uses
-  %.03045.i = phi i64 [ 0, %.preheader.preheader.i ], [ %indvars.iv.next58.i.lcssa, %._crit_edge43.i ] ; 2 uses
+  %indvars.iv59.i = phi i32 [ 0, %.preheader.preheader.i ], [ %indvars.iv.next60.i, %._crit_edge43.i ] ; 2 uses
+  %4 = sext i32 %indvars.iv59.i to i64            ; 2 uses
   br i1 %i.gi, label %.epil.preheader623, label %.preheader.i.new
 
 .preheader.i.new:                                 ; preds = %.preheader.i, %.preheader.i.new
   %indvars.iv59.i.a = phi i64 [ %indvars.iv.next60.i.3, %.preheader.i.new ], [ 0, %.preheader.i ] ; 5 uses
-  %indvars.iv57.i = phi i64 [ %indvars.iv.next58.i.3, %.preheader.i.new ], [ %.03045.i, %.preheader.i ] ; 5 uses
+  %indvars.iv57.i = phi i64 [ %indvars.iv.next58.i.3, %.preheader.i.new ], [ %4, %.preheader.i ] ; 5 uses
   %niter630 = phi i64 [ %niter630.next.3, %.preheader.i.new ], [ 0, %.preheader.i ]
   %i.gj = getelementptr inbounds [2 x i8], ptr %i.gb, i64 %indvars.iv57.i
   %i.gk = load i16, ptr %i.gj, align 2, !tbaa !97
@@ -423,7 +424,7 @@ init_frame.exit:                                  ; preds = %init_frame.exit.loo
   %i.hj = getelementptr inbounds nuw [4 x i8], ptr %i.hi, i64 %indvars.iv66.i
   store i32 %i.hg, ptr %i.hj, align 4, !tbaa !47
   %indvars.iv.next60.i.3 = add nuw nsw i64 %indvars.iv59.i.a, 4 ; 2 uses
-  %indvars.iv.next58.i.3 = add nsw i64 %indvars.iv57.i, 4 ; 3 uses
+  %indvars.iv.next58.i.3 = add nsw i64 %indvars.iv57.i, 4 ; 2 uses
   %niter630.next.3 = add i64 %niter630, 4         ; 2 uses
   %niter630.ncmp.3 = icmp eq i64 %niter630.next.3, %unroll_iter629
   br i1 %niter630.ncmp.3, label %._crit_edge43.i.unr-lcssa, label %.preheader.i.new, !llvm.loop !99
@@ -433,7 +434,7 @@ init_frame.exit:                                  ; preds = %init_frame.exit.loo
 
 .epil.preheader623:                               ; preds = %._crit_edge43.i.unr-lcssa, %.preheader.i
   %indvars.iv59.i.epil.init = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next60.i.3, %._crit_edge43.i.unr-lcssa ]
-  %indvars.iv57.i.epil.init = phi i64 [ %.03045.i, %.preheader.i ], [ %indvars.iv.next58.i.3, %._crit_edge43.i.unr-lcssa ]
+  %indvars.iv57.i.epil.init = phi i64 [ %4, %.preheader.i ], [ %indvars.iv.next58.i.3, %._crit_edge43.i.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod628)
   br label %bb.aa
 
@@ -449,17 +450,17 @@ bb.aa:                                            ; preds = %bb.aa, %.epil.prehe
   %i.hp = getelementptr inbounds nuw [4 x i8], ptr %i.ho, i64 %indvars.iv66.i
   store i32 %i.hm, ptr %i.hp, align 4, !tbaa !47
   %indvars.iv.next60.i.epil = add nuw nsw i64 %indvars.iv59.i.epil, 1
-  %indvars.iv.next58.i.epil = add nsw i64 %indvars.iv57.i.epil, 1 ; 2 uses
+  %indvars.iv.next58.i.epil = add nsw i64 %indvars.iv57.i.epil, 1
   %epil.iter625.next = add i64 %epil.iter625, 1   ; 2 uses
   %epil.iter625.cmp.not = icmp eq i64 %epil.iter625.next, %xtraiter624
   br i1 %epil.iter625.cmp.not, label %._crit_edge43.i, label %bb.aa, !llvm.loop !100
 
 ._crit_edge43.i:                                  ; preds = %bb.aa, %._crit_edge43.i.unr-lcssa
-  %indvars.iv.next58.i.lcssa = phi i64 [ %indvars.iv.next58.i.3, %._crit_edge43.i.unr-lcssa ], [ %indvars.iv.next58.i.epil, %bb.aa ]
   %indvars.iv.next67.i = add nuw nsw i64 %indvars.iv66.i, 1 ; 2 uses
   %i.hq = load i32, ptr %i.cb, align 16, !tbaa !85 ; 2 uses
   %i.hr = sext i32 %i.hq to i64
   %i.hs = icmp slt i64 %indvars.iv.next67.i, %i.hr
+  %indvars.iv.next60.i = add i32 %indvars.iv59.i, %i.ef
   br i1 %i.hs, label %.preheader.i, label %copy_samples.exit, !llvm.loop !101
 
 bb.ab:                                            ; preds = %init_frame.exit
@@ -481,12 +482,13 @@ bb.ab:                                            ; preds = %init_frame.exit
 
 .preheader35.i:                                   ; preds = %._crit_edge.i, %.preheader35.preheader.i
   %indvars.iv54.i = phi i64 [ 0, %.preheader35.preheader.i ], [ %indvars.iv.next55.i, %._crit_edge.i ] ; 4 uses
-  %.239.i = phi i64 [ 0, %.preheader35.preheader.i ], [ %indvars.iv.next.i85.lcssa, %._crit_edge.i ] ; 2 uses
+  %indvars.iv.i84 = phi i32 [ 0, %.preheader35.preheader.i ], [ %indvars.iv.next.i86, %._crit_edge.i ] ; 2 uses
+  %5 = sext i32 %indvars.iv.i84 to i64            ; 2 uses
   br i1 %i.hx, label %.epil.preheader, label %.preheader35.i.new
 
 .preheader35.i.new:                               ; preds = %.preheader35.i, %.preheader35.i.new
   %indvars.iv49.i.a = phi i64 [ %indvars.iv.next50.i.1.a, %.preheader35.i.new ], [ 0, %.preheader35.i ] ; 3 uses
-  %indvars.iv.i84.a = phi i64 [ %indvars.iv.next.i85.1, %.preheader35.i.new ], [ %.239.i, %.preheader35.i ] ; 3 uses
+  %indvars.iv.i84.a = phi i64 [ %indvars.iv.next.i85.1, %.preheader35.i.new ], [ %5, %.preheader35.i ] ; 3 uses
   %niter622 = phi i64 [ %niter622.next.1, %.preheader35.i.new ], [ 0, %.preheader35.i ]
   %i.hy = getelementptr inbounds [4 x i8], ptr %i.gb, i64 %indvars.iv.i84.a
   %i.hz = load i32, ptr %i.hy, align 4, !tbaa !47
@@ -504,7 +506,7 @@ bb.ab:                                            ; preds = %init_frame.exit
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %i.ij, i64 %indvars.iv54.i
   store i32 %i.ih, ptr %i.ik, align 4, !tbaa !47
   %indvars.iv.next50.i.1.a = add nuw nsw i64 %indvars.iv49.i.a, 2 ; 2 uses
-  %indvars.iv.next.i85.1 = add nsw i64 %indvars.iv.i84.a, 2 ; 3 uses
+  %indvars.iv.next.i85.1 = add nsw i64 %indvars.iv.i84.a, 2 ; 2 uses
   %niter622.next.1 = add i64 %niter622, 2         ; 2 uses
   %niter622.ncmp.1 = icmp eq i64 %niter622.next.1, %unroll_iter621
   br i1 %niter622.ncmp.1, label %._crit_edge.i.unr-lcssa, label %.preheader35.i.new, !llvm.loop !102
@@ -514,7 +516,7 @@ bb.ab:                                            ; preds = %init_frame.exit
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.unr-lcssa, %.preheader35.i
   %indvars.iv49.i.epil.init.a = phi i64 [ 0, %.preheader35.i ], [ %indvars.iv.next50.i.1.a, %._crit_edge.i.unr-lcssa ]
-  %indvars.iv.i84.epil.init = phi i64 [ %.239.i, %.preheader35.i ], [ %indvars.iv.next.i85.1, %._crit_edge.i.unr-lcssa ] ; 2 uses
+  %indvars.iv.i84.epil.init = phi i64 [ %5, %.preheader35.i ], [ %indvars.iv.next.i85.1, %._crit_edge.i.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod620)
   %i.il = getelementptr inbounds [4 x i8], ptr %i.gb, i64 %indvars.iv.i84.epil.init
   %i.im = load i32, ptr %i.il, align 4, !tbaa !47
@@ -523,15 +525,14 @@ bb.ab:                                            ; preds = %init_frame.exit
   %i.ip = getelementptr inbounds nuw i8, ptr %i.io, i64 328968
   %i.iq = getelementptr inbounds nuw [4 x i8], ptr %i.ip, i64 %indvars.iv54.i
   store i32 %i.in, ptr %i.iq, align 4, !tbaa !47
-  %indvars.iv.next.i85.epil = add nsw i64 %indvars.iv.i84.epil.init, 1
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.unr-lcssa, %.epil.preheader
-  %indvars.iv.next.i85.lcssa = phi i64 [ %indvars.iv.next.i85.1, %._crit_edge.i.unr-lcssa ], [ %indvars.iv.next.i85.epil, %.epil.preheader ]
   %indvars.iv.next55.i = add nuw nsw i64 %indvars.iv54.i, 1 ; 2 uses
   %i.ir = load i32, ptr %i.cb, align 16, !tbaa !85 ; 2 uses
   %i.is = sext i32 %i.ir to i64
   %i.it = icmp slt i64 %indvars.iv.next55.i, %i.is
+  %indvars.iv.next.i86 = add i32 %indvars.iv.i84, %i.ef
   br i1 %i.it, label %.preheader35.i, label %copy_samples.exit, !llvm.loop !103
 
 copy_samples.exit:                                ; preds = %._crit_edge.i, %._crit_edge43.i, %bb.ab, %.preheader34.i

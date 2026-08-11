@@ -204,7 +204,7 @@ Aig_ObjChild0Copy.exit120:                        ; preds = %bb.ac, %bb.ad
 
 .lr.ph189:                                        ; preds = %.critedge6.preheader, %.critedge10
   %.val95228 = phi i32 [ %.val95, %.critedge10 ], [ %.val95185, %.critedge6.preheader ]
-  %indvars.iv211 = phi i64 [ %indvars.iv.next212, %.critedge10 ], [ 0, %.critedge6.preheader ] ; 4 uses
+  %indvars.iv211 = phi i64 [ %indvars.iv.next212, %.critedge10 ], [ 0, %.critedge6.preheader ] ; 5 uses
   %.0188 = phi i32 [ %.1.lcssa, %.critedge10 ], [ 0, %.critedge6.preheader ] ; 2 uses
   %.val97 = load ptr, ptr %i.f, align 8, !tbaa !134
   %i.fu = getelementptr inbounds nuw [8 x i8], ptr %.val97, i64 %indvars.iv211
@@ -217,18 +217,19 @@ Aig_ObjChild0Copy.exit120:                        ; preds = %bb.ac, %bb.ad
   br i1 %or.cond, label %.critedge10, label %.preheader.lr.ph.split.us
 
 .preheader.lr.ph.split.us:                        ; preds = %.lr.ph189
-  %6 = sext i32 %.0188 to i64
+  %6 = trunc nuw nsw i64 %indvars.iv211 to i32
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %._crit_edge180.us, %.preheader.lr.ph.split.us
-  %.1183.us = phi i64 [ %6, %.preheader.lr.ph.split.us ], [ %indvars.iv.next208.a, %._crit_edge180.us ]
-  %.177182.us = phi i32 [ 0, %.preheader.lr.ph.split.us ], [ %i.gd, %._crit_edge180.us ]
+  %indvars.iv207 = phi i32 [ %indvars.iv.next208, %._crit_edge180.us ], [ %.0188, %.preheader.lr.ph.split.us ] ; 2 uses
+  %.177182.us = phi i32 [ %i.gd, %._crit_edge180.us ], [ 0, %.preheader.lr.ph.split.us ]
+  %7 = sext i32 %indvars.iv207 to i64
   br label %bb.ae
 
 bb.ae:                                            ; preds = %.preheader.us, %bb.ae
-  %indvars.iv207.a = phi i64 [ %.1183.us, %.preheader.us ], [ %indvars.iv.next208.a, %bb.ae ] ; 2 uses
+  %indvars.iv207.a = phi i64 [ %7, %.preheader.us ], [ %indvars.iv.next208.a, %bb.ae ] ; 2 uses
   %.179177.us = phi i32 [ 0, %.preheader.us ], [ %i.gb, %bb.ae ]
-  %indvars.iv.next208.a = add nsw i64 %indvars.iv207.a, 1 ; 3 uses
+  %indvars.iv.next208.a = add nsw i64 %indvars.iv207.a, 1 ; 2 uses
   %i.fy = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %indvars.iv207.a
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !31
   %i.ga = tail call ptr @Aig_ObjCreateCo(ptr noundef %i.as, ptr noundef %i.fz) #19 ; 0 uses
@@ -241,6 +242,7 @@ bb.ae:                                            ; preds = %.preheader.us, %bb.
   %i.gd = add nuw nsw i32 %.177182.us, 1          ; 2 uses
   %.val85.us = load i32, ptr %i.fw, align 4, !tbaa !29
   %i.ge = icmp slt i32 %i.gd, %.val85.us
+  %indvars.iv.next208 = add i32 %indvars.iv207, %6
   br i1 %i.ge, label %.preheader.us, label %.critedge10.loopexit192, !llvm.loop !208
 
 .critedge10.loopexit192:                          ; preds = %._crit_edge180.us

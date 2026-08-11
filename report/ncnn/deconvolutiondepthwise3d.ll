@@ -203,7 +203,7 @@ _ZNK4ncnn3Mat5emptyEv.exit45:                     ; preds = %bb.r
 bb.s:                                             ; preds = %_ZNK4ncnn3Mat5emptyEv.exit45
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 456 ; 2 uses
-  %i.ef = load i32, ptr %i.t, align 4, !tbaa !37  ; 6 uses
+  %i.ef = load i32, ptr %i.t, align 4, !tbaa !37  ; 7 uses
   %i.eg = load i32, ptr %i.aa, align 8, !tbaa !38 ; 4 uses
   %i.eh = load i32, ptr %i.ah, align 4, !tbaa !39 ; 3 uses
   %i.ei = load i32, ptr %i.an, align 4, !tbaa !43
@@ -234,7 +234,7 @@ bb.s:                                             ; preds = %_ZNK4ncnn3Mat5empty
   %i.ex = load i32, ptr %i.bq, align 16, !tbaa !69
   %i.ey = load i32, ptr %i.br, align 8, !tbaa !67 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #9
-  %i.ez = mul nsw i32 %i.eg, %i.ef
+  %i.ez = mul nsw i32 %i.eg, %i.ef                ; 2 uses
   %i.fa = mul nsw i32 %i.ez, %i.eh                ; 4 uses
   store i32 %i.fa, ptr %i.f, align 4, !tbaa !66
   %i.fb = sext i32 %i.fa to i64                   ; 3 uses
@@ -307,23 +307,24 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit.i:             ; preds = %_ZSt6fill_nIPimiET_
 
 .preheader63.us.i:                                ; preds = %.preheader63.us.i.preheader, %._crit_edge71.split.us.us.i
   %.05377.us.i = phi i32 [ %i.gi, %._crit_edge71.split.us.us.i ], [ 0, %.preheader63.us.i.preheader ]
-  %.05476.us.i = phi i64 [ %indvars.iv.next.i.lcssa, %._crit_edge71.split.us.us.i ], [ 0, %.preheader63.us.i.preheader ]
+  %.05476.us.i = phi i32 [ %7, %._crit_edge71.split.us.us.i ], [ 0, %.preheader63.us.i.preheader ] ; 2 uses
   %.05575.us.i = phi i32 [ %i.gh, %._crit_edge71.split.us.us.i ], [ 0, %.preheader63.us.i.preheader ]
   br label %.preheader.us.us.i
 
 .preheader.us.us.i:                               ; preds = %._crit_edge.us.us.i, %.preheader63.us.i
-  %.05270.us.us.i.a = phi i32 [ 0, %.preheader63.us.i ], [ %i.gg, %._crit_edge.us.us.i ]
-  %.169.us.us.i = phi i64 [ %.05476.us.i, %.preheader63.us.i ], [ %indvars.iv.next.i.lcssa, %._crit_edge.us.us.i ] ; 3 uses
-  %.15668.us.us.i = phi i32 [ %.05575.us.i, %.preheader63.us.i ], [ %i.gf, %._crit_edge.us.us.i ] ; 3 uses
+  %.05270.us.us.i.a = phi i32 [ %i.gg, %._crit_edge.us.us.i ], [ %.05476.us.i, %.preheader63.us.i ] ; 2 uses
+  %.05270.us.us.i = phi i32 [ %i.gf, %._crit_edge.us.us.i ], [ 0, %.preheader63.us.i ]
+  %.15668.us.us.i = phi i32 [ %6, %._crit_edge.us.us.i ], [ %.05575.us.i, %.preheader63.us.i ] ; 3 uses
+  %5 = sext i32 %.05270.us.us.i.a to i64          ; 3 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.us.us.i
-  %i.fw = add i64 %.169.us.us.i, %n.vec           ; 2 uses
+  %i.fw = add nsw i64 %n.vec, %5
   %i.fx = add i32 %.15668.us.us.i, %i.ft          ; 2 uses
   %broadcast.splatinsert71 = insertelement <4 x i32> poison, i32 %.15668.us.us.i, i64 0
   %broadcast.splat72 = shufflevector <4 x i32> %broadcast.splatinsert71, <4 x i32> poison, <4 x i32> zeroinitializer
   %induction = add nsw <4 x i32> %broadcast.splat72, %i.fv
-  %i.fy = getelementptr [4 x i8], ptr %.sroa.060.0.i, i64 %.169.us.us.i
+  %i.fy = getelementptr [4 x i8], ptr %.sroa.060.0.i, i64 %5
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -343,7 +344,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge.us.us.i, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.preheader.us.us.i, %middle.block
-  %indvars.iv.i.ph = phi i64 [ %.169.us.us.i, %.preheader.us.us.i ], [ %i.fw, %middle.block ]
+  %indvars.iv.i.ph = phi i64 [ %5, %.preheader.us.us.i ], [ %i.fw, %middle.block ]
   %.066.us.us.i.ph = phi i32 [ 0, %.preheader.us.us.i ], [ %i.fs, %middle.block ]
   %.25764.us.us.i.ph = phi i32 [ %.15668.us.us.i, %.preheader.us.us.i ], [ %i.fx, %middle.block ]
   br label %scalar.ph
@@ -354,22 +355,23 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.25764.us.us.i = phi i32 [ %i.gd, %scalar.ph ], [ %.25764.us.us.i.ph, %scalar.ph.preheader ] ; 2 uses
   %i.gc = getelementptr inbounds [4 x i8], ptr %.sroa.060.0.i, i64 %indvars.iv.i
   store i32 %.25764.us.us.i, ptr %i.gc, align 4, !tbaa !66
-  %indvars.iv.next.i.a = add nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %indvars.iv.next.i.a = add nsw i64 %indvars.iv.i, 1
   %i.gd = add nsw i32 %.25764.us.us.i, %i.el      ; 2 uses
   %i.ge = add nuw nsw i32 %.066.us.us.i, 1        ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.ge, %i.ef
   br i1 %exitcond.not.i, label %._crit_edge.us.us.i, label %scalar.ph, !llvm.loop !77
 
 ._crit_edge.us.us.i:                              ; preds = %scalar.ph, %middle.block
-  %indvars.iv.next.i.lcssa = phi i64 [ %i.fw, %middle.block ], [ %indvars.iv.next.i.a, %scalar.ph ] ; 2 uses
   %.lcssa = phi i32 [ %i.fx, %middle.block ], [ %i.gd, %scalar.ph ]
-  %i.gf = add nsw i32 %.lcssa, %i.fl              ; 2 uses
-  %i.gg = add nuw nsw i32 %.05270.us.us.i.a, 1    ; 2 uses
-  %exitcond85.not.i = icmp eq i32 %i.gg, %i.eg
+  %6 = add nsw i32 %.lcssa, %i.fl                 ; 2 uses
+  %i.gf = add nuw nsw i32 %.05270.us.us.i, 1      ; 2 uses
+  %i.gg = add i32 %.05270.us.us.i.a, %i.ef
+  %exitcond85.not.i = icmp eq i32 %i.gf, %i.eg
   br i1 %exitcond85.not.i, label %._crit_edge71.split.us.us.i, label %.preheader.us.us.i, !llvm.loop !78
 
 ._crit_edge71.split.us.us.i:                      ; preds = %._crit_edge.us.us.i
-  %i.gh = add i32 %i.gf, %reass.mul.i
+  %7 = add i32 %.05476.us.i, %i.ez
+  %i.gh = add i32 %6, %reass.mul.i
   %i.gi = add nuw nsw i32 %.05377.us.i, 1         ; 2 uses
   %exitcond86.not.i = icmp eq i32 %i.gi, %i.eh
   br i1 %exitcond86.not.i, label %._crit_edge.split.i, label %.preheader63.us.i, !llvm.loop !79

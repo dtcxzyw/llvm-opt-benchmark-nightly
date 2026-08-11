@@ -204,7 +204,7 @@ bb.a:
   %i.f = sub i64 %i.d, %i.e
   %i.g = sdiv exact i64 %i.f, 56
   %i.h = trunc i64 %i.g to i32
-  %i.i = add i32 %i.h, -2                         ; 3 uses
+  %i.i = add i32 %i.h, -2                         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
   %i.j = tail call noundef ptr @_Z6ftp2fniiPK8t_filenm(i32 noundef 1, i32 noundef %1, ptr noundef nonnull %0)
@@ -371,13 +371,14 @@ bb.f:                                             ; preds = %bb.a
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
   %indvars.iv79 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next80, %._crit_edge ] ; 4 uses
-  %.05166 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next73.a, %._crit_edge ]
+  %indvars.iv72 = phi i32 [ 0, %.preheader.preheader ], [ %indvars.iv.next73, %._crit_edge ] ; 2 uses
+  %14 = sext i32 %indvars.iv72 to i64
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv79
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %indvars.iv79
   br label %bb.g
 
 bb.g:                                             ; preds = %.preheader, %bb.i
-  %indvars.iv72.a = phi i64 [ %.05166, %.preheader ], [ %indvars.iv.next73.a, %bb.i ] ; 6 uses
+  %indvars.iv72.a = phi i64 [ %14, %.preheader ], [ %indvars.iv.next73.a, %bb.i ] ; 6 uses
   %indvars.iv70 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next71, %bb.i ]
   %i.br = load ptr, ptr %i.bp, align 8, !tbaa !58
   %indvars.iv.next71 = add nuw nsw i64 %indvars.iv70, 1 ; 5 uses
@@ -442,12 +443,13 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.dj = load ptr, ptr %i.aq, align 8, !tbaa !185
   %i.dk = getelementptr inbounds [32 x i8], ptr %i.dj, i64 %i.dh
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.dk, ptr noundef nonnull align 8 dereferenceable(32) %i.di, i64 32, i1 false), !tbaa.struct !186
-  %indvars.iv.next73.a = add nsw i64 %indvars.iv72.a, 1 ; 2 uses
+  %indvars.iv.next73.a = add nsw i64 %indvars.iv72.a, 1
   %exitcond78.not = icmp eq i64 %indvars.iv.next71, %wide.trip.count77
   br i1 %exitcond78.not, label %._crit_edge, label %bb.g, !llvm.loop !187
 
 ._crit_edge:                                      ; preds = %bb.i
   %indvars.iv.next80 = add nuw nsw i64 %indvars.iv79, 1 ; 2 uses
+  %indvars.iv.next73 = add i32 %indvars.iv72, %i.i
   %exitcond83.not = icmp eq i64 %indvars.iv.next80, %wide.trip.count82
   br i1 %exitcond83.not, label %._crit_edge68.split, label %.preheader, !llvm.loop !188
 

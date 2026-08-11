@@ -204,7 +204,7 @@ bb.a:
   %i.e = trunc i64 %i.d to i32                    ; 3 uses
   %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #18
   %i.g = udiv i64 %i.f, %i.c
-  %i.h = trunc i64 %i.g to i32                    ; 3 uses
+  %i.h = trunc i64 %i.g to i32                    ; 4 uses
   %i.i = mul nsw i32 %i.h, %i.e                   ; 3 uses
   %i.j = icmp sgt i32 %i.i, 0
   %i.k = icmp sgt i32 %5, 0
@@ -304,12 +304,13 @@ bb.a:
 
 .preheader71.us.us:                               ; preds = %.preheader71.us.us.preheader, %._crit_edge80.split.us.us.us
   %indvars.iv112 = phi i64 [ 0, %.preheader71.us.us.preheader ], [ %indvars.iv.next113, %._crit_edge80.split.us.us.us ] ; 2 uses
-  %.06281.us.us = phi i64 [ 0, %.preheader71.us.us.preheader ], [ %indvars.iv.next110.a, %._crit_edge80.split.us.us.us ]
+  %indvars.iv109 = phi i32 [ 0, %.preheader71.us.us.preheader ], [ %indvars.iv.next110, %._crit_edge80.split.us.us.us ] ; 2 uses
+  %9 = sext i32 %indvars.iv109 to i64
   %invariant.gep = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv112 ; 3 uses
   br label %.preheader70.us.us.us
 
 .preheader70.us.us.us:                            ; preds = %._crit_edge77.us.us.us, %.preheader71.us.us
-  %indvars.iv109.a = phi i64 [ %indvars.iv.next110.a, %._crit_edge77.us.us.us ], [ %.06281.us.us, %.preheader71.us.us ] ; 2 uses
+  %indvars.iv109.a = phi i64 [ %indvars.iv.next110.a, %._crit_edge77.us.us.us ], [ %9, %.preheader71.us.us ] ; 2 uses
   %.06079.us.us.us = phi i32 [ %i.bs, %._crit_edge77.us.us.us ], [ 0, %.preheader71.us.us ]
   %i.aq = getelementptr inbounds [8 x i8], ptr %7, i64 %indvars.iv109.a ; 3 uses
   br i1 %i.ap, label %.epil.preheader, label %.preheader70.us.us.us.new
@@ -380,7 +381,7 @@ bb.f:                                             ; preds = %.epil.preheader
   br label %._crit_edge77.us.us.us
 
 ._crit_edge77.us.us.us:                           ; preds = %.epil.preheader, %bb.f, %._crit_edge77.us.us.us.unr-lcssa
-  %indvars.iv.next110.a = add nsw i64 %indvars.iv109.a, 1 ; 2 uses
+  %indvars.iv.next110.a = add nsw i64 %indvars.iv109.a, 1
   %i.bs = add nuw nsw i32 %.06079.us.us.us, 1     ; 2 uses
   %i.bt = icmp slt i32 %i.bs, %i.h
   br i1 %i.bt, label %.preheader70.us.us.us, label %._crit_edge80.split.us.us.us, !llvm.loop !99
@@ -391,6 +392,7 @@ bb.f:                                             ; preds = %.epil.preheader
   %i.bv = trunc i64 %i.bu to i32
   %i.bw = trunc nuw i64 %indvars.iv.next113 to i32
   %i.bx = icmp slt i32 %i.bw, %i.bv
+  %indvars.iv.next110 = add i32 %indvars.iv109, %i.h
   br i1 %i.bx, label %.preheader71.us.us, label %.preheader69, !llvm.loop !100
 
 .preheader69:                                     ; preds = %._crit_edge80.split.us.us.us, %.preheader72

@@ -204,9 +204,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.d = load i32, ptr %i.c, align 4, !tbaa !32   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !32   ; 3 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !32   ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !32   ; 6 uses
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !32   ; 8 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.j = load i32, ptr %i.i, align 4, !tbaa !32
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -381,6 +381,7 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit49:             ; preds = %bb.l, %bb.m, %bb.n,
 .lr.ph.split.split.us:                            ; preds = %_ZNSt6vectorIiSaIiEE6resizeEm.exit49
   %i.by = load ptr, ptr %i.au, align 8, !tbaa !73 ; 3 uses
   %i.bz = load ptr, ptr %i.bi, align 8, !tbaa !73 ; 3 uses
+  %5 = mul i32 %i.f, %i.h
   %xtraiter = and i32 %i.h, 1
   %i.ca = icmp eq i32 %i.h, 1
   %unroll_iter = and i32 %i.h, 2147483646
@@ -390,21 +391,22 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit49:             ; preds = %bb.l, %bb.m, %bb.n,
 
 .lr.ph55.us:                                      ; preds = %._crit_edge56.split.us.us, %.lr.ph.split.split.us
   %.059.us = phi i32 [ 0, %.lr.ph.split.split.us ], [ %i.de, %._crit_edge56.split.us.us ] ; 2 uses
-  %.03858.us = phi i64 [ 0, %.lr.ph.split.split.us ], [ %indvars.iv.next.lcssa, %._crit_edge56.split.us.us ]
+  %.03858.us = phi i32 [ 0, %.lr.ph.split.split.us ], [ %8, %._crit_edge56.split.us.us ] ; 2 uses
   %i.cb = mul nsw i32 %.059.us, %i.j              ; 4 uses
   %i.cc = mul nsw i32 %i.cb, %i.ac
   br label %.lr.ph.us.us
 
 .lr.ph.us.us:                                     ; preds = %._crit_edge.us.us, %.lr.ph55.us
-  %.153.us.us = phi i64 [ %.03858.us, %.lr.ph55.us ], [ %indvars.iv.next.lcssa, %._crit_edge.us.us ] ; 2 uses
-  %.03952.us.us = phi i32 [ 0, %.lr.ph55.us ], [ %i.dd, %._crit_edge.us.us ] ; 2 uses
+  %indvars.iv = phi i32 [ %i.dd, %._crit_edge.us.us ], [ %.03858.us, %.lr.ph55.us ] ; 2 uses
+  %.03952.us.us = phi i32 [ %7, %._crit_edge.us.us ], [ 0, %.lr.ph55.us ] ; 2 uses
+  %6 = sext i32 %indvars.iv to i64                ; 2 uses
   %i.cd = mul nsw i32 %.03952.us.us, %i.l         ; 4 uses
   %i.ce = add nsw i32 %i.cd, %i.cc
   %i.cf = mul nsw i32 %i.ce, %i.ap                ; 3 uses
   br i1 %i.ca, label %.epil.preheader, label %.lr.ph.us.us.new
 
 .lr.ph.us.us.new:                                 ; preds = %.lr.ph.us.us, %.lr.ph.us.us.new
-  %indvars.iv.a = phi i64 [ %indvars.iv.next.1, %.lr.ph.us.us.new ], [ %.153.us.us, %.lr.ph.us.us ] ; 4 uses
+  %indvars.iv.a = phi i64 [ %indvars.iv.next.1, %.lr.ph.us.us.new ], [ %6, %.lr.ph.us.us ] ; 4 uses
   %.03751.us.us = phi i32 [ %i.cv, %.lr.ph.us.us.new ], [ 0, %.lr.ph.us.us ] ; 3 uses
   %niter = phi i32 [ %niter.next.1, %.lr.ph.us.us.new ], [ 0, %.lr.ph.us.us ]
   %i.cg = mul nsw i32 %.03751.us.us, %i.n         ; 2 uses
@@ -434,7 +436,7 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit49:             ; preds = %bb.l, %bb.m, %bb.n,
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %indvars.iv.next.a
   store i32 %i.ct, ptr %i.cu, align 4, !tbaa !32
   %i.cv = add nuw nsw i32 %.03751.us.us, 2        ; 2 uses
-  %indvars.iv.next.1 = add nsw i64 %indvars.iv.a, 2 ; 3 uses
+  %indvars.iv.next.1 = add nsw i64 %indvars.iv.a, 2 ; 2 uses
   %niter.next.1 = add nuw nsw i32 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.us.us.unr-lcssa, label %.lr.ph.us.us.new, !llvm.loop !74
@@ -443,7 +445,7 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit49:             ; preds = %bb.l, %bb.m, %bb.n,
   br i1 %lcmp.mod.not, label %._crit_edge.us.us, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.us.us.unr-lcssa, %.lr.ph.us.us
-  %indvars.iv.epil.init = phi i64 [ %.153.us.us, %.lr.ph.us.us ], [ %indvars.iv.next.1, %._crit_edge.us.us.unr-lcssa ] ; 3 uses
+  %indvars.iv.epil.init = phi i64 [ %6, %.lr.ph.us.us ], [ %indvars.iv.next.1, %._crit_edge.us.us.unr-lcssa ] ; 2 uses
   %.03751.us.us.epil.init = phi i32 [ 0, %.lr.ph.us.us ], [ %i.cv, %._crit_edge.us.us.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod88)
   %i.cw = mul nsw i32 %.03751.us.us.epil.init, %i.n ; 2 uses
@@ -458,16 +460,16 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit49:             ; preds = %bb.l, %bb.m, %bb.n,
   %i.db = mul nsw i32 %i.da, %i.at
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %indvars.iv.epil.init
   store i32 %i.db, ptr %i.dc, align 4, !tbaa !32
-  %indvars.iv.next.epil = add nsw i64 %indvars.iv.epil.init, 1
   br label %._crit_edge.us.us
 
 ._crit_edge.us.us:                                ; preds = %._crit_edge.us.us.unr-lcssa, %.epil.preheader
-  %indvars.iv.next.lcssa = phi i64 [ %indvars.iv.next.1, %._crit_edge.us.us.unr-lcssa ], [ %indvars.iv.next.epil, %.epil.preheader ] ; 2 uses
-  %i.dd = add nuw nsw i32 %.03952.us.us, 1        ; 2 uses
-  %exitcond64.not = icmp eq i32 %i.dd, %i.f
+  %7 = add nuw nsw i32 %.03952.us.us, 1           ; 2 uses
+  %i.dd = add i32 %indvars.iv, %i.h
+  %exitcond64.not = icmp eq i32 %7, %i.f
   br i1 %exitcond64.not, label %._crit_edge56.split.us.us, label %.lr.ph.us.us, !llvm.loop !75
 
 ._crit_edge56.split.us.us:                        ; preds = %._crit_edge.us.us
+  %8 = add i32 %5, %.03858.us
   %i.de = add nuw nsw i32 %.059.us, 1             ; 2 uses
   %exitcond65.not = icmp eq i32 %i.de, %i.d
   br i1 %exitcond65.not, label %._crit_edge.split, label %.lr.ph55.us, !llvm.loop !76

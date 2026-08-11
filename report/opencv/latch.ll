@@ -203,13 +203,14 @@ bb.e:                                             ; preds = %bb.g
 
 bb.f:                                             ; preds = %bb.d, %bb.g
   %indvars.iv50 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next51, %bb.g ] ; 2 uses
-  %.03244 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.a, %bb.g ]
+  %.03244 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next, %bb.g ] ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ab, i64 %indvars.iv50 ; 2 uses
   store i8 0, ptr %i.ay, align 1, !tbaa !37
   br label %bb.h
 
 bb.g:                                             ; preds = %_ZN2cv11xfeatures2d12CalcuateSumsEiRKSt6vectorIiSaIiEEbRKNS_3MatERKNS_8KeyPointERiSC_ffi.exit
   %indvars.iv.next51 = add nuw nsw i64 %indvars.iv50, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %.03244, 48
   %exitcond.not = icmp eq i64 %indvars.iv.next51, 4
   br i1 %exitcond.not, label %bb.e, label %bb.f, !llvm.loop !99
 
@@ -430,7 +431,7 @@ _ZN2cv11xfeatures2d12CalcuateSumsEiRKSt6vectorIiSaIiEEbRKNS_3MatERKNS_8KeyPointE
   %i.gj = trunc i32 %i.gi to i8
   %i.gk = add i8 %i.az, %i.gj                     ; 2 uses
   store i8 %i.gk, ptr %i.ay, align 1, !tbaa !37
-  %indvars.iv.next.a = add nsw i64 %indvars.iv, 6 ; 2 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 6
   %i.gl = add nsw i32 %.03043, -1
   %.not = icmp eq i32 %.03043, 0
   br i1 %.not, label %bb.g, label %bb.h, !llvm.loop !102
@@ -526,13 +527,14 @@ bb.e:                                             ; preds = %bb.g
 
 bb.f:                                             ; preds = %bb.d, %bb.g
   %indvars.iv50 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next51, %bb.g ] ; 2 uses
-  %.03244 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.a, %bb.g ]
+  %.03244 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next, %bb.g ] ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ab, i64 %indvars.iv50 ; 2 uses
   store i8 0, ptr %i.ay, align 1, !tbaa !37
   br label %bb.h
 
 bb.g:                                             ; preds = %_ZN2cv11xfeatures2d12CalcuateSumsEiRKSt6vectorIiSaIiEEbRKNS_3MatERKNS_8KeyPointERiSC_ffi.exit
   %indvars.iv.next51 = add nuw nsw i64 %indvars.iv50, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %.03244, 48
   %exitcond.not = icmp eq i64 %indvars.iv.next51, 8
   br i1 %exitcond.not, label %bb.e, label %bb.f, !llvm.loop !107
 
@@ -753,7 +755,7 @@ _ZN2cv11xfeatures2d12CalcuateSumsEiRKSt6vectorIiSaIiEEbRKNS_3MatERKNS_8KeyPointE
   %i.gj = trunc i32 %i.gi to i8
   %i.gk = add i8 %i.az, %i.gj                     ; 2 uses
   store i8 %i.gk, ptr %i.ay, align 1, !tbaa !37
-  %indvars.iv.next.a = add nsw i64 %indvars.iv, 6 ; 2 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 6
   %i.gl = add nsw i32 %.03043, -1
   %.not = icmp eq i32 %.03043, 0
   br i1 %.not, label %bb.g, label %bb.h, !llvm.loop !110
@@ -849,13 +851,14 @@ bb.e:                                             ; preds = %bb.g
 
 bb.f:                                             ; preds = %bb.d, %bb.g
   %indvars.iv50 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next51, %bb.g ] ; 2 uses
-  %.03244 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.a, %bb.g ]
+  %.03244 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next, %bb.g ] ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ab, i64 %indvars.iv50 ; 2 uses
   store i8 0, ptr %i.ay, align 1, !tbaa !37
   br label %bb.h
 
 bb.g:                                             ; preds = %_ZN2cv11xfeatures2d12CalcuateSumsEiRKSt6vectorIiSaIiEEbRKNS_3MatERKNS_8KeyPointERiSC_ffi.exit
   %indvars.iv.next51 = add nuw nsw i64 %indvars.iv50, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %.03244, 48
   %exitcond.not = icmp eq i64 %indvars.iv.next51, 16
   br i1 %exitcond.not, label %bb.e, label %bb.f, !llvm.loop !115
 
@@ -1076,7 +1079,7 @@ _ZN2cv11xfeatures2d12CalcuateSumsEiRKSt6vectorIiSaIiEEbRKNS_3MatERKNS_8KeyPointE
   %i.gj = trunc i32 %i.gi to i8
   %i.gk = add i8 %i.az, %i.gj                     ; 2 uses
   store i8 %i.gk, ptr %i.ay, align 1, !tbaa !37
-  %indvars.iv.next.a = add nsw i64 %indvars.iv, 6 ; 2 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 6
   %i.gl = add nsw i32 %.03043, -1
   %.not = icmp eq i32 %.03043, 0
   br i1 %.not, label %bb.g, label %bb.h, !llvm.loop !118
@@ -1172,13 +1175,14 @@ bb.e:                                             ; preds = %bb.g
 
 bb.f:                                             ; preds = %bb.d, %bb.g
   %indvars.iv50 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next51, %bb.g ] ; 2 uses
-  %.03244 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.a, %bb.g ]
+  %.03244 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next, %bb.g ] ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ab, i64 %indvars.iv50 ; 2 uses
   store i8 0, ptr %i.ay, align 1, !tbaa !37
   br label %bb.h
 
 bb.g:                                             ; preds = %_ZN2cv11xfeatures2d12CalcuateSumsEiRKSt6vectorIiSaIiEEbRKNS_3MatERKNS_8KeyPointERiSC_ffi.exit
   %indvars.iv.next51 = add nuw nsw i64 %indvars.iv50, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %.03244, 48
   %exitcond.not = icmp eq i64 %indvars.iv.next51, 32
   br i1 %exitcond.not, label %bb.e, label %bb.f, !llvm.loop !123
 
@@ -1399,7 +1403,7 @@ _ZN2cv11xfeatures2d12CalcuateSumsEiRKSt6vectorIiSaIiEEbRKNS_3MatERKNS_8KeyPointE
   %i.gj = trunc i32 %i.gi to i8
   %i.gk = add i8 %i.az, %i.gj                     ; 2 uses
   store i8 %i.gk, ptr %i.ay, align 1, !tbaa !37
-  %indvars.iv.next.a = add nsw i64 %indvars.iv, 6 ; 2 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 6
   %i.gl = add nsw i32 %.03043, -1
   %.not = icmp eq i32 %.03043, 0
   br i1 %.not, label %bb.g, label %bb.h, !llvm.loop !126
@@ -1495,13 +1499,14 @@ bb.e:                                             ; preds = %bb.g
 
 bb.f:                                             ; preds = %bb.d, %bb.g
   %indvars.iv50 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next51, %bb.g ] ; 2 uses
-  %.03244 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.a, %bb.g ]
+  %.03244 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next, %bb.g ] ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ab, i64 %indvars.iv50 ; 2 uses
   store i8 0, ptr %i.ay, align 1, !tbaa !37
   br label %bb.h
 
 bb.g:                                             ; preds = %_ZN2cv11xfeatures2d12CalcuateSumsEiRKSt6vectorIiSaIiEEbRKNS_3MatERKNS_8KeyPointERiSC_ffi.exit
   %indvars.iv.next51 = add nuw nsw i64 %indvars.iv50, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %.03244, 48
   %exitcond.not = icmp eq i64 %indvars.iv.next51, 64
   br i1 %exitcond.not, label %bb.e, label %bb.f, !llvm.loop !131
 
@@ -1722,7 +1727,7 @@ _ZN2cv11xfeatures2d12CalcuateSumsEiRKSt6vectorIiSaIiEEbRKNS_3MatERKNS_8KeyPointE
   %i.gj = trunc i32 %i.gi to i8
   %i.gk = add i8 %i.az, %i.gj                     ; 2 uses
   store i8 %i.gk, ptr %i.ay, align 1, !tbaa !37
-  %indvars.iv.next.a = add nsw i64 %indvars.iv, 6 ; 2 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 6
   %i.gl = add nsw i32 %.03043, -1
   %.not = icmp eq i32 %.03043, 0
   br i1 %.not, label %bb.g, label %bb.h, !llvm.loop !134

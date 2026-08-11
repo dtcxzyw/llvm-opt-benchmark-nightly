@@ -204,10 +204,11 @@ bb.dz:                                            ; preds = %bb.fg, %bb.dy
   %indvars.iv.i357.i = phi i64 [ 0, %bb.dy ], [ %indvars.iv.next.i360.i, %bb.fg ] ; 7 uses
   %.070111.i.i = phi i32 [ 0, %bb.dy ], [ %.2.3.i.i, %bb.fg ] ; 2 uses
   %.078110.i.i = phi i32 [ 0, %bb.dy ], [ %.280.3.i.i, %bb.fg ] ; 2 uses
-  %3 = or disjoint i64 %indvars.iv.i357.i, 3      ; 3 uses
+  %indvars120.i.i = trunc i64 %indvars.iv.i357.i to i32 ; 2 uses
+  %3 = or disjoint i32 %indvars120.i.i, 3
   %i.bik = load i16, ptr %i.bii, align 16, !tbaa !218
-  %4 = zext i16 %i.bik to i64
-  %i.bil = icmp samesign ult i64 %3, %4
+  %4 = zext i16 %i.bik to i32
+  %i.bil = icmp samesign ult i32 %3, %4
   br i1 %i.bil, label %bb.ea, label %.critedge.i.i
 
 bb.ea:                                            ; preds = %bb.dz
@@ -610,6 +611,7 @@ bb.fc:                                            ; preds = %bb.fa
 bb.fd:                                            ; preds = %bb.fc, %bb.fb
   %.280.2.i.i = phi i32 [ 0, %bb.fb ], [ %i.bxy, %bb.fc ] ; 2 uses
   %.2.2.i.i = phi i32 [ %.2.1.i.i, %bb.fb ], [ %i.bye, %bb.fc ] ; 2 uses
+  %indvars.iv.next116.2.i.i = or disjoint i64 %indvars.iv.i357.i, 3 ; 2 uses
   %.not90.3.i.i = icmp eq i32 %.sroa.14.0.i.i, 0
   br i1 %.not90.3.i.i, label %bb.ff, label %bb.fe
 
@@ -633,13 +635,13 @@ bb.fe:                                            ; preds = %bb.fd
   %i.byt = shl i32 %i.bys, 31
   %i.byu = xor i32 %i.byt, %.sroa.14.0.i.i
   %i.byv = load ptr, ptr %i.bij, align 8, !tbaa !184
-  %i.byw = getelementptr inbounds nuw [4 x i8], ptr %i.byv, i64 %3
+  %i.byw = getelementptr inbounds nuw [4 x i8], ptr %i.byv, i64 %indvars.iv.next116.2.i.i
   store i32 %i.byu, ptr %i.byw, align 4, !tbaa !53
   br label %bb.fg
 
 bb.ff:                                            ; preds = %bb.fd
   %i.byx = load ptr, ptr %i.bij, align 8, !tbaa !184
-  %i.byy = getelementptr inbounds nuw [4 x i8], ptr %i.byx, i64 %3
+  %i.byy = getelementptr inbounds nuw [4 x i8], ptr %i.byx, i64 %indvars.iv.next116.2.i.i
   store float 0.000000e+00, ptr %i.byy, align 4, !tbaa !125
   %i.byz = add nsw i32 %.280.2.i.i, 1
   %i.bza = load i16, ptr %i.sr, align 8, !tbaa !187
@@ -658,11 +660,14 @@ bb.fg:                                            ; preds = %bb.ff, %bb.fe
   %i.bzh = icmp eq i8 %i.bzg, 0
   %i.bzi = icmp ne i32 %.2.3.i.i, 0
   %or.cond.i.i = select i1 %i.bzh, i1 %i.bzi, i1 false
-  br i1 %or.cond.i.i, label %.critedge.i.i, label %bb.dz, !llvm.loop !236
+  br i1 %or.cond.i.i, label %.critedge.split.loop.exit.i.i, label %bb.dz, !llvm.loop !236
 
-.critedge.i.i:                                    ; preds = %bb.fg, %bb.dz
-  %.081.lcssa.in.i.i = phi i64 [ %indvars.iv.next.i360.i, %bb.fg ], [ %indvars.iv.i357.i, %bb.dz ] ; 2 uses
-  %.081.lcssa.i.i = trunc i64 %.081.lcssa.in.i.i to i32 ; 3 uses
+.critedge.split.loop.exit.i.i:                    ; preds = %bb.fg
+  %indvars.le.i.i = trunc i64 %indvars.iv.next.i360.i to i32
+  br label %.critedge.i.i
+
+.critedge.i.i:                                    ; preds = %bb.dz, %.critedge.split.loop.exit.i.i
+  %.081.lcssa.i.i = phi i32 [ %indvars.le.i.i, %.critedge.split.loop.exit.i.i ], [ %indvars120.i.i, %bb.dz ] ; 4 uses
   %i.bzj = load i16, ptr %i.sr, align 8, !tbaa !187
   %i.bzk = sext i16 %i.bzj to i32                 ; 2 uses
   %i.bzl = icmp slt i32 %.081.lcssa.i.i, %i.bzk
@@ -670,9 +675,8 @@ bb.fg:                                            ; preds = %bb.ff, %bb.fe
 
 bb.fh:                                            ; preds = %.critedge.i.i
   %i.bzm = load ptr, ptr %i.bij, align 8, !tbaa !184
-  %sext.i.i = shl i64 %.081.lcssa.in.i.i, 32
-  %5 = ashr exact i64 %sext.i.i, 30
-  %6 = getelementptr inbounds i8, ptr %i.bzm, i64 %5
+  %5 = sext i32 %.081.lcssa.i.i to i64
+  %6 = getelementptr inbounds [4 x i8], ptr %i.bzm, i64 %5
   %i.bzn = sub nsw i32 %i.bzk, %.081.lcssa.i.i
   %i.bzo = zext nneg i32 %i.bzn to i64
   %i.bzp = shl nuw nsw i64 %i.bzo, 2

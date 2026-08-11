@@ -204,37 +204,39 @@ GSIter.exit:                                      ; preds = %._crit_edge410.spli
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   %i.anb = getelementptr inbounds nuw i8, ptr %8, i64 32
-  %i.anc = load i32, ptr %i.n, align 8, !tbaa !87 ; 2 uses
+  %i.anc = load i32, ptr %i.n, align 8, !tbaa !87 ; 3 uses
   %i.and = load i32, ptr %i.p, align 4, !tbaa !114 ; 2 uses
   %i.ane = getelementptr inbounds nuw i8, ptr %8, i64 92
-  %i.anf = load i32, ptr %i.ane, align 4, !tbaa !84
+  %9 = load i32, ptr %i.ane, align 4, !tbaa !84
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 72
+  %i.anf = load i32, ptr %10, align 8, !tbaa !81  ; 2 uses
   %i.ang = getelementptr inbounds nuw i8, ptr %8, i64 128
   %i.anh = getelementptr inbounds nuw i8, ptr %8, i64 152
   %i.ani = icmp sgt i32 %i.and, 0
   br i1 %i.ani, label %.lr.ph56, label %._crit_edge57.split
 
 .lr.ph56:                                         ; preds = %GSIter.exit
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 72
-  %10 = load i32, ptr %9, align 8, !tbaa !81
   %i.anj = icmp sgt i32 %i.anc, 0
-  %i.ank = sext i32 %10 to i64                    ; 2 uses
+  %i.ank = sext i32 %i.anf to i64                 ; 2 uses
   br i1 %i.anj, label %.lr.ph.preheader, label %._crit_edge57.split
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph56
+  %11 = mul i32 %i.anc, %i.anf
   %wide.trip.count80 = zext nneg i32 %i.and to i64
   %wide.trip.count = zext nneg i32 %i.anc to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
   %indvars.iv77 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next78, %._crit_edge ] ; 2 uses
-  %.03754 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next73.a, %._crit_edge ]
+  %indvars.iv72 = phi i32 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next73, %._crit_edge ] ; 2 uses
+  %12 = sext i32 %indvars.iv72 to i64
   %i.anl = getelementptr inbounds nuw [4 x i8], ptr %i.anh, i64 %indvars.iv77
   %i.anm = load i32, ptr %i.anl, align 4, !tbaa !29
-  %i.ann = mul nsw i32 %i.anm, %i.anf
+  %i.ann = mul nsw i32 %i.anm, %9
   br label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph, %bb.v
-  %indvars.iv72.a = phi i64 [ %.03754, %.lr.ph ], [ %indvars.iv.next73.a, %bb.v ] ; 2 uses
+  %indvars.iv72.a = phi i64 [ %12, %.lr.ph ], [ %indvars.iv.next73.a, %bb.v ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.v ] ; 2 uses
   %i.ano = getelementptr inbounds nuw [4 x i8], ptr %i.ang, i64 %indvars.iv
   %i.anp = load i32, ptr %i.ano, align 4, !tbaa !29
@@ -247,13 +249,14 @@ bb.v:                                             ; preds = %.lr.ph, %bb.v
   %i.anw = tail call ptr @N_VGetArrayPointer(ptr noundef %4) #11
   %i.anx = getelementptr inbounds [8 x i8], ptr %i.anw, i64 %indvars.iv72.a
   tail call void @SUNDlsMat_denseGETRS(ptr noundef %i.ant, i64 noundef %i.ank, ptr noundef %i.anv, ptr noundef %i.anx) #11
-  %indvars.iv.next73.a = add nsw i64 %indvars.iv72.a, %i.ank ; 2 uses
+  %indvars.iv.next73.a = add nsw i64 %indvars.iv72.a, %i.ank
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.v
 
 ._crit_edge:                                      ; preds = %bb.v
   %indvars.iv.next78 = add nuw nsw i64 %indvars.iv77, 1 ; 2 uses
+  %indvars.iv.next73 = add i32 %indvars.iv72, %11
   %exitcond81.not = icmp eq i64 %indvars.iv.next78, %wide.trip.count80
   br i1 %exitcond81.not, label %._crit_edge57.split, label %.lr.ph
 

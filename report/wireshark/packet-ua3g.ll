@@ -203,17 +203,17 @@ bb.am:                                            ; preds = %bb.b
   br label %.preheader777
 
 .loopexit778:                                     ; preds = %bb.an
-  %6 = add i32 %i.fj, %.6710837                   ; 2 uses
-  %.not901 = icmp eq i32 %6, 0
+  %.not901 = icmp eq i32 %indvars.iv, 0
   br i1 %.not901, label %.loopexit, label %.preheader777, !llvm.loop !14
 
 .preheader777:                                    ; preds = %.preheader777.preheader, %.loopexit778
-  %.6838.a = phi i32 [ %i.gh, %.loopexit778 ], [ 5, %.preheader777.preheader ]
-  %.6710837 = phi i32 [ %6, %.loopexit778 ], [ %i.fe, %.preheader777.preheader ]
+  %.6838.a = phi i32 [ %i.fe, %.preheader777.preheader ], [ %indvars.iv, %.loopexit778 ]
+  %.6710837 = phi i32 [ 5, %.preheader777.preheader ], [ %i.gh, %.loopexit778 ]
+  %indvars.iv = add i32 %i.fj, %.6838.a           ; 2 uses
   br label %bb.an
 
 bb.an:                                            ; preds = %.preheader777, %bb.an
-  %.7836 = phi i32 [ %.6838.a, %.preheader777 ], [ %i.gh, %bb.an ] ; 7 uses
+  %.7836 = phi i32 [ %.6710837, %.preheader777 ], [ %i.gh, %bb.an ] ; 7 uses
   %.0727834 = phi i32 [ 1, %.preheader777 ], [ %i.gi, %bb.an ] ; 3 uses
   %i.fk = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %1, i32 noundef %.7836)
   %i.fl = add i32 %.7836, 2                       ; 2 uses
@@ -616,8 +616,9 @@ bb.a:
   br i1 %.not6, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.0128 = phi i32 [ %i.s, %.lr.ph ], [ %2, %bb.a ]
-  %.0137 = phi i32 [ %.114.7, %.lr.ph ], [ 3, %bb.a ] ; 10 uses
+  %.0128 = phi i32 [ %indvars.iv, %.lr.ph ], [ %2, %bb.a ]
+  %.0137 = phi i32 [ %i.s, %.lr.ph ], [ 3, %bb.a ] ; 10 uses
+  %indvars.iv = add i32 %.0128, -9                ; 2 uses
   %i.a = load i32, ptr @hf_ua3g_dwl_special_char_character_number, align 4
   %i.b = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.a, ptr noundef %1, i32 noundef %.0137, i32 noundef 1, i32 noundef 0) ; 0 uses
   %.1142 = add i32 %.0137, 1
@@ -644,9 +645,8 @@ bb.a:
   %.114.6 = add i32 %.0137, 8
   %i.q = load i32, ptr @hf_ua3g_dwl_special_char_byte, align 4
   %i.r = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.q, ptr noundef %1, i32 noundef %.114.6, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %.114.7 = add i32 %.0137, 9
-  %i.s = add i32 %.0128, -9                       ; 2 uses
-  %.not = icmp eq i32 %i.s, 0
+  %i.s = add i32 %.0137, 9
+  %.not = icmp eq i32 %indvars.iv, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !26
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
@@ -749,7 +749,7 @@ bb.e:                                             ; preds = %bb.b
   %i.af = zext i8 %i.ae to i32                    ; 2 uses
   %i.ag = load i32, ptr @hf_ua3g_beep_number_of_notes, align 4
   %i.ah = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.ag, ptr noundef %1, i32 noundef 5, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.ai = add nsw i32 %3, -3                      ; 3 uses
+  %i.ai = add nsw i32 %3, -3                      ; 2 uses
   %.not99108 = icmp eq i32 %i.ai, 0
   br i1 %.not99108, label %.loopexit, label %.preheader.lr.ph
 
@@ -758,8 +758,9 @@ bb.e:                                             ; preds = %bb.b
   br i1 %.not100103, label %.preheader.us, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %.neg = mul nsw i32 %i.af, -3
-  %invariant.op = add nsw i32 %.neg, -1
+  %.neg = mul nuw nsw i32 %i.af, 3                ; 2 uses
+  %4 = sub nsw i32 %3, %.neg
+  %5 = xor i32 %.neg, -1
   br label %.preheader
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph, %.preheader.us
@@ -773,12 +774,12 @@ bb.e:                                             ; preds = %bb.b
   br i1 %.not99.us, label %.loopexit, label %.preheader.us, !llvm.loop !28
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
-  %.1110.a = phi i32 [ %i.bl, %._crit_edge ], [ 6, %.preheader.preheader ]
-  %.194109 = phi i32 [ %.reass, %._crit_edge ], [ %i.ai, %.preheader.preheader ]
+  %.1110.a = phi i32 [ %4, %.preheader.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
+  %.194109 = phi i32 [ 6, %.preheader.preheader ], [ %i.bl, %._crit_edge ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.preheader, %bb.f
-  %.2106 = phi i32 [ %.1110.a, %.preheader ], [ %i.bh, %bb.f ] ; 8 uses
+  %.2106 = phi i32 [ %.194109, %.preheader ], [ %i.bh, %bb.f ] ; 8 uses
   %.096104 = phi i32 [ 1, %.preheader ], [ %i.bi, %bb.f ] ; 3 uses
   %i.an = load i32, ptr @ett_ua3g_note, align 4
   %i.ao = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %0, ptr noundef %1, i32 noundef %.2106, i32 noundef 3, i32 noundef %i.an, ptr noundef null, ptr noundef nonnull @.str.1233, i32 noundef %.096104) ; 3 uses
@@ -809,8 +810,8 @@ bb.f:                                             ; preds = %.preheader, %bb.f
   %i.bj = load i32, ptr @hf_ua3g_beep_terminator, align 4
   %i.bk = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.bj, ptr noundef %1, i32 noundef %i.bh, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.bl = add i32 %.2106, 4
-  %.reass = add i32 %.194109, %invariant.op       ; 2 uses
-  %.not99 = icmp eq i32 %.reass, 0
+  %.not99 = icmp eq i32 %.1110.a, 4
+  %indvars.iv.next = add i32 %.1110.a, %5
   br i1 %.not99, label %.loopexit, label %.preheader, !llvm.loop !28
 
 bb.g:                                             ; preds = %bb.a

@@ -203,7 +203,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %.thread154, %bb.p, %bb.o
   %i.z = phi i1 [ true, %bb.p ], [ %i.v, %bb.o ], [ %i.a, %.thread154 ]
-  %i.aa = phi i32 [ %spec.select160, %bb.p ], [ %spec.select160, %bb.o ], [ 0, %.thread154 ] ; 2 uses
+  %i.aa = phi i32 [ %spec.select160, %bb.p ], [ %spec.select160, %bb.o ], [ 0, %.thread154 ] ; 4 uses
   %.2125150159 = phi i8 [ %.0123, %bb.p ], [ %.0123, %bb.o ], [ 0, %.thread154 ] ; 4 uses
   %.0121152158 = phi i32 [ %3, %bb.p ], [ %3, %bb.o ], [ 0, %.thread154 ]
   %.0118 = phi i64 [ %i.y, %bb.p ], [ 0, %bb.o ], [ 0, %.thread154 ] ; 2 uses
@@ -221,7 +221,7 @@ bb.s:                                             ; preds = %bb.q
   %i.af = zext i32 %i.aa to i64
   %.not137 = icmp ugt i64 %1, %i.af               ; 2 uses
   %spec.select = select i1 %.not137, i32 %.0121152158, i32 0 ; 2 uses
-  %spec.select141 = select i1 %.not137, i32 %i.aa, i32 0 ; 10 uses
+  %spec.select141 = select i1 %.not137, i32 %i.aa, i32 0 ; 9 uses
   %.not138 = icmp eq i32 %4, 0
   br i1 %.not138, label %bb.v, label %bb.t
 
@@ -511,9 +511,7 @@ bb.ac:                                            ; preds = %_PyUnicode_DATA.exi
   br i1 %.not202, label %.preheader164.preheader, label %.preheader164.us.preheader
 
 .preheader164.us.preheader:                       ; preds = %.preheader164.lr.ph
-  %xtraiter263 = and i32 %spec.select141, 1
-  %lcmp.mod264.not = icmp eq i32 %xtraiter263, 0
-  %5 = icmp eq i32 %spec.select141, 1
+  %5 = add i32 %i.aa, -1
   br label %.preheader164.us
 
 .preheader164.preheader:                          ; preds = %.preheader164.lr.ph
@@ -521,11 +519,17 @@ bb.ac:                                            ; preds = %_PyUnicode_DATA.exi
   br label %.preheader162
 
 .preheader164.us:                                 ; preds = %.preheader164.us.preheader, %._crit_edge.us194
-  %.0102191.us = phi i64 [ %i.ht, %._crit_edge.us194 ], [ 0, %.preheader164.us.preheader ]
+  %indvars.iv = phi i32 [ %indvars.iv.next, %._crit_edge.us194 ], [ %i.aa, %.preheader164.us.preheader ] ; 3 uses
+  %.0102191.us = phi i64 [ %i.ht, %._crit_edge.us194 ], [ 0, %.preheader164.us.preheader ] ; 2 uses
   %.0106190.us = phi i64 [ %i.hr, %._crit_edge.us194 ], [ 0, %.preheader164.us.preheader ] ; 4 uses
   %.0110189.us = phi i64 [ %.lcssa252, %._crit_edge.us194 ], [ 0, %.preheader164.us.preheader ] ; 4 uses
-  %i.fq = trunc i64 %.0110189.us to i32
-  %i.fr = add i32 %spec.select141, %i.fq
+  %6 = trunc i64 %.0110189.us to i32              ; 2 uses
+  %7 = sub i32 %indvars.iv, %6
+  %i.fq = trunc i64 %.0102191.us to i32
+  %8 = mul i32 %spec.select141, %i.fq
+  %i.fr = add i32 %8, %5
+  %xtraiter263 = and i32 %7, 1
+  %lcmp.mod264.not = icmp eq i32 %xtraiter263, 0
   br i1 %lcmp.mod264.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.preheader164.us
@@ -555,7 +559,8 @@ bb.ac:                                            ; preds = %_PyUnicode_DATA.exi
   %.lcssa251.unr = phi i64 [ poison, %.preheader164.us ], [ %i.gh, %.prol.loopexit.unr-lcssa ]
   %.1107185.us.unr = phi i64 [ %.0106190.us, %.preheader164.us ], [ %i.gh, %.prol.loopexit.unr-lcssa ]
   %.1111184.us.unr = phi i64 [ %.0110189.us, %.preheader164.us ], [ %i.fs, %.prol.loopexit.unr-lcssa ]
-  br i1 %5, label %._crit_edge.us194, label %.preheader164.us.new
+  %9 = icmp eq i32 %i.fr, %6
+  br i1 %9, label %._crit_edge.us194, label %.preheader164.us.new
 
 .preheader164.us.new:                             ; preds = %.prol.loopexit, %.preheader164.us.new
   %.1107185.us = phi i64 [ %i.hp, %.preheader164.us.new ], [ %.1107185.us.unr, %.prol.loopexit ] ; 3 uses
@@ -599,7 +604,7 @@ bb.ac:                                            ; preds = %_PyUnicode_DATA.exi
   %i.hq = getelementptr i8, ptr %i.hj, i64 1
   store i8 %i.ho, ptr %i.hq, align 1, !tbaa !11
   %lftr.wideiv.1 = trunc i64 %i.gz to i32
-  %exitcond217.not.1 = icmp eq i32 %i.fr, %lftr.wideiv.1
+  %exitcond217.not.1 = icmp eq i32 %indvars.iv, %lftr.wideiv.1
   br i1 %exitcond217.not.1, label %._crit_edge.us194, label %.preheader164.us.new, !llvm.loop !33
 
 ._crit_edge.us194:                                ; preds = %.preheader164.us.new, %.prol.loopexit
@@ -610,6 +615,7 @@ bb.ac:                                            ; preds = %_PyUnicode_DATA.exi
   %i.hs = getelementptr i8, ptr %.0116, i64 %.lcssa251
   store i8 %.2125150159, ptr %i.hs, align 1, !tbaa !11
   %i.ht = add nuw nsw i64 %.0102191.us, 1         ; 2 uses
+  %indvars.iv.next = add i32 %indvars.iv, %spec.select141
   %exitcond218.not = icmp eq i64 %i.ht, %i.di
   br i1 %exitcond218.not, label %.preheader162, label %.preheader164.us, !llvm.loop !34
 

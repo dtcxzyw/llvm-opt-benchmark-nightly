@@ -204,7 +204,7 @@ declare i32 @Extra_Factorial(i32 noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define void @Nf_ManPreparePrint(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @Extra_Factorial(i32 noundef %0) #30 ; 7 uses
+  %i.a = tail call i32 @Extra_Factorial(i32 noundef %0) #30 ; 9 uses
   %i.b = shl nuw i32 1, %0                        ; 2 uses
   %i.c = icmp sgt i32 %0, 0
   br i1 %i.c, label %iter.check, label %._crit_edge
@@ -305,7 +305,9 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %.not, label %.preheader78.lr.ph.us.preheader, label %.preheader78.lr.ph.us.us.preheader
 
 .preheader78.lr.ph.us.us.preheader:               ; preds = %.split.us
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.b, i32 1)
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.b, i32 1) ; 4 uses
+  %4 = mul i32 %i.a, %smax                        ; 2 uses
+  %5 = sext i32 %4 to i64
   store i8 43, ptr %i.t, align 1, !tbaa !66
   %wide.trip.count126 = zext nneg i32 %i.a to i64 ; 2 uses
   %wide.trip.count121 = zext nneg i32 %smax to i64 ; 2 uses
@@ -325,13 +327,14 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 .preheader78.us.us.us:                            ; preds = %._crit_edge83.us.us.us, %.preheader78.lr.ph.us.us.preheader
   %indvars.iv123 = phi i64 [ %indvars.iv.next124, %._crit_edge83.us.us.us ], [ 0, %.preheader78.lr.ph.us.us.preheader ] ; 2 uses
-  %.185.us.us.us = phi i64 [ %indvars.iv.next115.a, %._crit_edge83.us.us.us ], [ 0, %.preheader78.lr.ph.us.us.preheader ]
+  %indvars.iv114 = phi i32 [ %indvars.iv.next115, %._crit_edge83.us.us.us ], [ 0, %.preheader78.lr.ph.us.us.preheader ] ; 2 uses
+  %6 = sext i32 %indvars.iv114 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %.preheader78.us.us.us
   %indvars.iv116.a = phi i64 [ %indvars.iv.next117, %bb.f ], [ 0, %.preheader78.us.us.us ] ; 2 uses
-  %indvars.iv114.a = phi i64 [ %indvars.iv.next115.a, %bb.f ], [ %.185.us.us.us, %.preheader78.us.us.us ] ; 2 uses
-  %indvars.iv.next115.a = add nsw i64 %indvars.iv114.a, 1 ; 5 uses
+  %indvars.iv114.a = phi i64 [ %indvars.iv.next115.a, %bb.f ], [ %6, %.preheader78.us.us.us ] ; 2 uses
+  %indvars.iv.next115.a = add nsw i64 %indvars.iv114.a, 1 ; 2 uses
   %i.y = getelementptr inbounds [8 x i8], ptr %3, i64 %indvars.iv.next115.a ; 3 uses
   %i.z = getelementptr inbounds [8 x i8], ptr %3, i64 %indvars.iv114.a
   %i.aa = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.y, ptr noundef nonnull dereferenceable(1) %i.z) #30 ; 0 uses
@@ -378,25 +381,25 @@ bb.f:                                             ; preds = %.sink.split, %bb.c
   store i8 %i.ap, ptr %i.am, align 1, !tbaa !66
   store i8 %i.ao, ptr %i.an, align 1, !tbaa !66
   %indvars.iv.next124 = add nuw nsw i64 %indvars.iv123, 1 ; 2 uses
+  %indvars.iv.next115 = add i32 %indvars.iv114, %smax
   %exitcond127.not = icmp eq i64 %indvars.iv.next124, %wide.trip.count126
   br i1 %exitcond127.not, label %._crit_edge86.split.us.us.us, label %.preheader78.us.us.us, !llvm.loop !189
 
 ._crit_edge86.split.us.us.us:                     ; preds = %._crit_edge83.us.us.us
-  %gep.us.us.1 = getelementptr [8 x i8], ptr %i.t, i64 %indvars.iv.next115.a
+  %gep.us.us.1 = getelementptr [8 x i8], ptr %i.t, i64 %5
   store i8 45, ptr %gep.us.us.1, align 1, !tbaa !66
   br label %.preheader78.us.us.us.1
 
 .preheader78.us.us.us.1:                          ; preds = %._crit_edge83.us.us.us.1, %._crit_edge86.split.us.us.us
-  %indvars.iv123.1 = phi i64 [ %indvars.iv.next124.1, %._crit_edge83.us.us.us.1 ], [ 0, %._crit_edge86.split.us.us.us ] ; 2 uses
-  %.185.us.us.us.1.in = phi i64 [ %indvars.iv.next115.1.a, %._crit_edge83.us.us.us.1 ], [ %indvars.iv.next115.a, %._crit_edge86.split.us.us.us ]
-  %sext = shl i64 %.185.us.us.us.1.in, 32
-  %4 = ashr exact i64 %sext, 32
+  %.185.us.us.us.1.in = phi i64 [ %indvars.iv.next124.1, %._crit_edge83.us.us.us.1 ], [ 0, %._crit_edge86.split.us.us.us ] ; 2 uses
+  %indvars.iv114.1 = phi i32 [ %indvars.iv.next115.1, %._crit_edge83.us.us.us.1 ], [ %4, %._crit_edge86.split.us.us.us ] ; 2 uses
+  %7 = sext i32 %indvars.iv114.1 to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.k, %.preheader78.us.us.us.1
   %indvars.iv116.1.a = phi i64 [ %indvars.iv.next117.1, %bb.k ], [ 0, %.preheader78.us.us.us.1 ] ; 2 uses
-  %indvars.iv114.1.a = phi i64 [ %indvars.iv.next115.1.a, %bb.k ], [ %4, %.preheader78.us.us.us.1 ] ; 2 uses
-  %indvars.iv.next115.1.a = add nsw i64 %indvars.iv114.1.a, 1 ; 3 uses
+  %indvars.iv114.1.a = phi i64 [ %indvars.iv.next115.1.a, %bb.k ], [ %7, %.preheader78.us.us.us.1 ] ; 2 uses
+  %indvars.iv.next115.1.a = add nsw i64 %indvars.iv114.1.a, 1 ; 2 uses
   %i.aq = getelementptr inbounds [8 x i8], ptr %3, i64 %indvars.iv.next115.1.a ; 3 uses
   %i.ar = getelementptr inbounds [8 x i8], ptr %3, i64 %indvars.iv114.1.a
   %i.as = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.aq, ptr noundef nonnull dereferenceable(1) %i.ar) #30 ; 0 uses
@@ -433,7 +436,7 @@ bb.k:                                             ; preds = %.sink.split147, %bb
   br i1 %exitcond122.1.not, label %._crit_edge83.us.us.us.1, label %bb.g, !llvm.loop !188
 
 ._crit_edge83.us.us.us.1:                         ; preds = %bb.k
-  %i.bb = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv123.1
+  %i.bb = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.185.us.us.us.1.in
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !75
   %i.bd = sext i32 %i.bc to i64
   %i.be = getelementptr inbounds i8, ptr %i.aq, i64 %i.bd ; 3 uses
@@ -442,7 +445,8 @@ bb.k:                                             ; preds = %.sink.split147, %bb
   %i.bh = load i8, ptr %i.bf, align 1, !tbaa !66
   store i8 %i.bh, ptr %i.be, align 1, !tbaa !66
   store i8 %i.bg, ptr %i.bf, align 1, !tbaa !66
-  %indvars.iv.next124.1 = add nuw nsw i64 %indvars.iv123.1, 1 ; 2 uses
+  %indvars.iv.next124.1 = add nuw nsw i64 %.185.us.us.us.1.in, 1 ; 2 uses
+  %indvars.iv.next115.1 = add i32 %indvars.iv114.1, %smax
   %exitcond127.1.not = icmp eq i64 %indvars.iv.next124.1, %wide.trip.count126
   br i1 %exitcond127.1.not, label %.preheader76.us.preheader, label %.preheader78.us.us.us.1, !llvm.loop !189
 
@@ -530,51 +534,54 @@ bb.k:                                             ; preds = %.sink.split147, %bb
   br i1 %niter173.ncmp.1, label %.split106.loopexit.unr-lcssa, label %.preheader78.us90.1, !llvm.loop !189
 
 .preheader76.us.preheader:                        ; preds = %._crit_edge83.us.us.us.1
-  %smax136 = tail call i32 @llvm.smax.i32(i32 %i.b, i32 1) ; 2 uses
+  %smax136 = tail call i32 @llvm.smax.i32(i32 %i.b, i32 1) ; 5 uses
+  %8 = mul i32 %i.a, %smax136
   br label %.preheader.us.us
 
 .preheader.us.us:                                 ; preds = %._crit_edge97.us.us, %.preheader76.us.preheader
-  %.499.us.us = phi i64 [ 0, %.preheader76.us.preheader ], [ %indvars.iv.next134, %._crit_edge97.us.us ]
-  %.16798.us.us = phi i32 [ 0, %.preheader76.us.preheader ], [ %i.cy, %._crit_edge97.us.us ] ; 2 uses
+  %indvars.iv138 = phi i32 [ %indvars.iv.next139, %._crit_edge97.us.us ], [ 0, %.preheader76.us.preheader ] ; 2 uses
+  %.16798.us.us = phi i32 [ %i.cy, %._crit_edge97.us.us ], [ 0, %.preheader76.us.preheader ] ; 2 uses
+  %9 = sext i32 %indvars.iv138 to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.preheader.us.us
-  %indvars.iv133 = phi i64 [ %indvars.iv.next134, %bb.l ], [ %.499.us.us, %.preheader.us.us ] ; 3 uses
+  %indvars.iv133 = phi i64 [ %indvars.iv.next134, %bb.l ], [ %9, %.preheader.us.us ] ; 3 uses
   %.16594.us.us = phi i32 [ %i.cx, %bb.l ], [ 0, %.preheader.us.us ] ; 2 uses
   %i.cu = getelementptr inbounds [8 x i8], ptr %3, i64 %indvars.iv133
   %i.cv = trunc nsw i64 %indvars.iv133 to i32
   %i.cw = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.44, i32 noundef %i.cv, i32 noundef 0, i32 noundef %.16798.us.us, i32 noundef %.16594.us.us, ptr noundef %i.cu) ; 0 uses
-  %indvars.iv.next134 = add nsw i64 %indvars.iv133, 1 ; 3 uses
+  %indvars.iv.next134 = add nsw i64 %indvars.iv133, 1
   %i.cx = add nuw nsw i32 %.16594.us.us, 1        ; 2 uses
   %exitcond137.not = icmp eq i32 %i.cx, %smax136
   br i1 %exitcond137.not, label %._crit_edge97.us.us, label %bb.l, !llvm.loop !190
 
 ._crit_edge97.us.us:                              ; preds = %bb.l
   %i.cy = add nuw nsw i32 %.16798.us.us, 1        ; 2 uses
+  %indvars.iv.next139 = add i32 %indvars.iv138, %smax136
   %exitcond138.not = icmp eq i32 %i.cy, %i.a
   br i1 %exitcond138.not, label %.preheader.us.us.1, label %.preheader.us.us, !llvm.loop !191
 
 .preheader.us.us.1:                               ; preds = %._crit_edge97.us.us, %._crit_edge97.us.us.1
-  %.499.us.us.1.in = phi i64 [ %indvars.iv.next134.1, %._crit_edge97.us.us.1 ], [ %indvars.iv.next134, %._crit_edge97.us.us ]
-  %.16798.us.us.1.a = phi i32 [ %i.dd, %._crit_edge97.us.us.1 ], [ 0, %._crit_edge97.us.us ] ; 2 uses
-  %sext142 = shl i64 %.499.us.us.1.in, 32
-  %5 = ashr exact i64 %sext142, 32
+  %.16798.us.us.1.a = phi i32 [ %i.dd, %._crit_edge97.us.us.1 ], [ %8, %._crit_edge97.us.us ] ; 2 uses
+  %.16798.us.us.1 = phi i32 [ %11, %._crit_edge97.us.us.1 ], [ 0, %._crit_edge97.us.us ] ; 2 uses
+  %10 = sext i32 %.16798.us.us.1.a to i64
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.m, %.preheader.us.us.1
-  %indvars.iv133.1 = phi i64 [ %indvars.iv.next134.1, %bb.m ], [ %5, %.preheader.us.us.1 ] ; 3 uses
+  %indvars.iv133.1 = phi i64 [ %indvars.iv.next134.1, %bb.m ], [ %10, %.preheader.us.us.1 ] ; 3 uses
   %.16594.us.us.1 = phi i32 [ %i.dc, %bb.m ], [ 0, %.preheader.us.us.1 ] ; 2 uses
   %i.cz = getelementptr inbounds [8 x i8], ptr %3, i64 %indvars.iv133.1
   %i.da = trunc nsw i64 %indvars.iv133.1 to i32
-  %i.db = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.44, i32 noundef %i.da, i32 noundef 1, i32 noundef %.16798.us.us.1.a, i32 noundef %.16594.us.us.1, ptr noundef %i.cz) ; 0 uses
-  %indvars.iv.next134.1 = add nsw i64 %indvars.iv133.1, 1 ; 2 uses
+  %i.db = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.44, i32 noundef %i.da, i32 noundef 1, i32 noundef %.16798.us.us.1, i32 noundef %.16594.us.us.1, ptr noundef %i.cz) ; 0 uses
+  %indvars.iv.next134.1 = add nsw i64 %indvars.iv133.1, 1
   %i.dc = add nuw nsw i32 %.16594.us.us.1, 1      ; 2 uses
   %exitcond137.1.not = icmp eq i32 %i.dc, %smax136
   br i1 %exitcond137.1.not, label %._crit_edge97.us.us.1, label %bb.m, !llvm.loop !190
 
 ._crit_edge97.us.us.1:                            ; preds = %bb.m
-  %i.dd = add nuw nsw i32 %.16798.us.us.1.a, 1    ; 2 uses
-  %exitcond138.1.not = icmp eq i32 %i.dd, %i.a
+  %11 = add nuw nsw i32 %.16798.us.us.1, 1        ; 2 uses
+  %i.dd = add i32 %.16798.us.us.1.a, %smax136
+  %exitcond138.1.not = icmp eq i32 %11, %i.a
   br i1 %exitcond138.1.not, label %.split106, label %.preheader.us.us.1, !llvm.loop !191
 
 .split106.loopexit.unr-lcssa:                     ; preds = %.preheader78.us90.1

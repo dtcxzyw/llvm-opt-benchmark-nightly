@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %bb.ad
   br i1 %i.hc, label %.lr.ph493, label %._crit_edge494.loopexit, !llvm.loop !143
 
 bb.ah:                                            ; preds = %bb.ac
-  %i.hd = load i32, ptr %i.y, align 4, !tbaa !58  ; 7 uses
+  %i.hd = load i32, ptr %i.y, align 4, !tbaa !58  ; 8 uses
   %i.he = icmp eq i32 %i.hd, 3
   %.pre565 = load i32, ptr %i.ae, align 8, !tbaa !59 ; 4 uses
   %i.hf = icmp eq i32 %.pre565, 3
@@ -607,7 +607,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
   %n.vec672 = and i64 %i.pb, 2147483640           ; 4 uses
   %broadcast.splatinsert673 = insertelement <4 x i32> poison, i32 %i.ow, i64 0
   %broadcast.splat674 = shufflevector <4 x i32> %broadcast.splatinsert673, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.pc = trunc nuw nsw i64 %n.vec672 to i32
+  %i.pc = trunc nuw nsw i64 %n.vec672 to i32      ; 2 uses
   %i.pd = mul i32 %i.ow, %i.pc
   %i.pe = shl <4 x i32> %broadcast.splat674, splat (i32 2) ; 3 uses
   %i.pf = mul nsw <4 x i32> %broadcast.splat674, <i32 0, i32 1, i32 2, i32 3>
@@ -616,17 +616,16 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge505
-  %.0195510.a = phi i32 [ %i.ps, %._crit_edge505 ], [ 0, %.preheader.preheader ]
-  %.0198509.a = phi i32 [ %i.pr, %._crit_edge505 ], [ 0, %.preheader.preheader ] ; 3 uses
-  %.0200508 = phi i32 [ %24, %._crit_edge505 ], [ 0, %.preheader.preheader ] ; 2 uses
-  %i.pg = sext i32 %.0200508 to i64               ; 3 uses
-  %24 = add i32 %i.hd, %.0200508                  ; 2 uses
+  %.0195510.a = phi i32 [ %i.ps, %._crit_edge505 ], [ 0, %.preheader.preheader ] ; 2 uses
+  %.0198509.a = phi i32 [ %i.pr, %._crit_edge505 ], [ 0, %.preheader.preheader ]
+  %.0200508 = phi i32 [ %24, %._crit_edge505 ], [ 0, %.preheader.preheader ] ; 3 uses
+  %i.pg = sext i32 %.0195510.a to i64             ; 3 uses
   br i1 %min.iters.check670, label %scalar.ph669.preheader, label %vector.ph671
 
 vector.ph671:                                     ; preds = %.preheader
   %i.ph = add nsw i64 %n.vec672, %i.pg
-  %i.pi = add i32 %.0198509.a, %i.pd              ; 2 uses
-  %broadcast.splatinsert675 = insertelement <4 x i32> poison, i32 %.0198509.a, i64 0
+  %i.pi = add i32 %.0200508, %i.pd                ; 2 uses
+  %broadcast.splatinsert675 = insertelement <4 x i32> poison, i32 %.0200508, i64 0
   %broadcast.splat676 = shufflevector <4 x i32> %broadcast.splatinsert675, <4 x i32> poison, <4 x i32> zeroinitializer
   %induction = add nsw <4 x i32> %broadcast.splat676, %i.pf
   %invariant.gep = getelementptr [4 x i8], ptr %.sroa.0388.0, i64 %i.pg
@@ -650,7 +649,8 @@ middle.block680:                                  ; preds = %vector.body677
 
 scalar.ph669.preheader:                           ; preds = %.preheader, %middle.block680
   %indvars.iv542.ph = phi i64 [ %i.pg, %.preheader ], [ %i.ph, %middle.block680 ]
-  %.1199502.ph = phi i32 [ %.0198509.a, %.preheader ], [ %i.pi, %middle.block680 ]
+  %.0194503.ph = phi i32 [ 0, %.preheader ], [ %i.pc, %middle.block680 ]
+  %.1199502.ph = phi i32 [ %.0200508, %.preheader ], [ %i.pi, %middle.block680 ]
   br label %scalar.ph669
 
 ._crit_edge511.split:                             ; preds = %._crit_edge505, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit
@@ -681,20 +681,22 @@ bb.cr:                                            ; preds = %bb.cp, %bb.co
 
 ._crit_edge505:                                   ; preds = %scalar.ph669, %middle.block680
   %.lcssa662 = phi i32 [ %i.pi, %middle.block680 ], [ %i.pu, %scalar.ph669 ]
-  %i.pr = add nsw i32 %i.oy, %.lcssa662
-  %i.ps = add nuw nsw i32 %.0195510.a, 1          ; 2 uses
-  %exitcond546.not = icmp eq i32 %i.ps, %.pre565
+  %24 = add nsw i32 %i.oy, %.lcssa662
+  %i.pr = add nuw nsw i32 %.0198509.a, 1          ; 2 uses
+  %i.ps = add i32 %.0195510.a, %i.hd
+  %exitcond546.not = icmp eq i32 %i.pr, %.pre565
   br i1 %exitcond546.not, label %._crit_edge511.split, label %.preheader, !llvm.loop !153
 
 scalar.ph669:                                     ; preds = %scalar.ph669.preheader, %scalar.ph669
   %indvars.iv542 = phi i64 [ %indvars.iv.next543, %scalar.ph669 ], [ %indvars.iv542.ph, %scalar.ph669.preheader ] ; 2 uses
+  %.0194503 = phi i32 [ %25, %scalar.ph669 ], [ %.0194503.ph, %scalar.ph669.preheader ]
   %.1199502 = phi i32 [ %i.pu, %scalar.ph669 ], [ %.1199502.ph, %scalar.ph669.preheader ] ; 2 uses
   %i.pt = getelementptr inbounds [4 x i8], ptr %.sroa.0388.0, i64 %indvars.iv542
   store i32 %.1199502, ptr %i.pt, align 4, !tbaa !72
-  %indvars.iv.next543 = add nsw i64 %indvars.iv542, 1 ; 2 uses
+  %indvars.iv.next543 = add nsw i64 %indvars.iv542, 1
   %i.pu = add nsw i32 %.1199502, %i.ow            ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next543 to i32
-  %exitcond545.not = icmp eq i32 %24, %lftr.wideiv
+  %25 = add nuw nsw i32 %.0194503, 1              ; 2 uses
+  %exitcond545.not = icmp eq i32 %25, %i.hd
   br i1 %exitcond545.not, label %._crit_edge505, label %scalar.ph669, !llvm.loop !154
 
 _ZNK4ncnn3Mat5emptyEv.exit352.thread:             ; preds = %.invoke, %_ZNSt6vectorIiSaIiEED2Ev.exit, %bb.aa, %_ZNSt6vectorIiSaIiEED2Ev.exit387, %bb.cn, %bb.bl, %bb.ac, %_ZNK4ncnn3Mat5emptyEv.exit352

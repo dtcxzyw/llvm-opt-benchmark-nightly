@@ -204,9 +204,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.f
+  %indvars.iv220 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next221, %bb.f ] ; 2 uses
   %indvars.iv217 = phi i32 [ -3, %bb.a ], [ %indvars.iv.next218, %bb.f ] ; 2 uses
   %.0139210 = phi float [ -5.000000e-01, %bb.a ], [ %i.ak, %bb.f ]
-  %.0141209 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next221.a, %bb.f ]
   %.0144208 = phi i32 [ -8, %bb.a ], [ %i.ff, %bb.f ] ; 4 uses
   %.0146207 = phi float [ 0.000000e+00, %bb.a ], [ %i.ck, %bb.f ]
   %i.aj = add nsw i32 %.0144208, -4
@@ -219,7 +219,7 @@ bb.b:                                             ; preds = %bb.a, %bb.f
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.d
-  %indvars.iv220.a = phi i64 [ %.0141209, %bb.b ], [ %indvars.iv.next221.a, %bb.d ] ; 2 uses
+  %indvars.iv220.a = phi i64 [ %indvars.iv220, %bb.b ], [ %indvars.iv.next221.a, %bb.d ] ; 2 uses
   %indvars.iv = phi i32 [ -3, %bb.b ], [ %indvars.iv.next, %bb.d ] ; 2 uses
   %.0138206 = phi float [ -5.000000e-01, %bb.b ], [ %i.bs, %bb.d ]
   %.0143204 = phi i32 [ -8, %bb.b ], [ %i.cl, %bb.d ] ; 4 uses
@@ -269,8 +269,8 @@ bb.d:                                             ; preds = %bb.e
   %i.bv = tail call float @llvm.fmuladd.f32(float %i.ap, float %i.ap, float %i.bu)
   %i.bw = fdiv float %i.bv, -4.500000e+00
   %i.bx = tail call noundef float @expf(float noundef %i.bw) #22 ; 3 uses
-  %i.by = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv220.a
-  %indvars.iv.next221.a = add nsw i64 %indvars.iv220.a, 4 ; 2 uses
+  %i.by = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv220.a
+  %indvars.iv.next221.a = add nuw nsw i64 %indvars.iv220.a, 4
   %i.bz = insertelement <4 x float> poison, float %i.bx, i64 0
   %i.ca = shufflevector <4 x float> %i.bz, <4 x float> poison, <4 x i32> zeroinitializer
   %i.cb = fmul <4 x float> %i.fd, %i.ca
@@ -373,6 +373,7 @@ bb.f:                                             ; preds = %bb.d
   %i.ff = add nsw i32 %.0144208, 5
   %i.fg = icmp slt i32 %.0144208, 7
   %indvars.iv.next218 = add nsw i32 %indvars.iv217, 5
+  %indvars.iv.next221 = add nuw nsw i64 %indvars.iv220, 16
   br i1 %i.fg, label %bb.b, label %vector.ph, !llvm.loop !216
 
 vector.ph:                                        ; preds = %bb.f
@@ -489,9 +490,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.f
+  %indvars.iv245 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next246, %bb.f ] ; 2 uses
   %indvars.iv242 = phi i32 [ -3, %bb.a ], [ %indvars.iv.next243, %bb.f ] ; 2 uses
   %.0162235 = phi float [ -5.000000e-01, %bb.a ], [ %i.an, %bb.f ]
-  %.0164234 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next246.a, %bb.f ]
   %.0167233 = phi i32 [ -8, %bb.a ], [ %i.fr, %bb.f ] ; 4 uses
   %.0171232 = phi float [ 0.000000e+00, %bb.a ], [ %i.cd, %bb.f ]
   %i.am = add nsw i32 %.0167233, -4
@@ -506,7 +507,7 @@ bb.b:                                             ; preds = %bb.a, %bb.f
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.d
-  %indvars.iv245.a = phi i64 [ %.0164234, %bb.b ], [ %indvars.iv.next246.a, %bb.d ] ; 2 uses
+  %indvars.iv245.a = phi i64 [ %indvars.iv245, %bb.b ], [ %indvars.iv.next246.a, %bb.d ] ; 2 uses
   %indvars.iv = phi i32 [ -3, %bb.b ], [ %indvars.iv.next, %bb.d ] ; 2 uses
   %.0161231 = phi float [ -5.000000e-01, %bb.b ], [ %i.bl, %bb.d ]
   %.0166229 = phi i32 [ -8, %bb.b ], [ %i.ce, %bb.d ] ; 5 uses
@@ -540,8 +541,8 @@ bb.d:                                             ; preds = %bb.e
   %i.bo = tail call float @llvm.fmuladd.f32(float %i.au, float %i.au, float %i.bn)
   %i.bp = fdiv float %i.bo, -4.500000e+00
   %i.bq = tail call noundef float @expf(float noundef %i.bp) #22 ; 3 uses
-  %i.br = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv245.a
-  %indvars.iv.next246.a = add nsw i64 %indvars.iv245.a, 4 ; 2 uses
+  %i.br = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv245.a
+  %indvars.iv.next246.a = add nuw nsw i64 %indvars.iv245.a, 4
   %i.bs = insertelement <4 x float> poison, float %i.bq, i64 0
   %i.bt = shufflevector <4 x float> %i.bs, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bu = fmul <4 x float> %i.fp, %i.bt
@@ -670,6 +671,7 @@ bb.f:                                             ; preds = %bb.d
   %i.fr = add nsw i32 %.0167233, 5
   %i.fs = icmp slt i32 %.0167233, 7
   %indvars.iv.next243 = add nsw i32 %indvars.iv242, 5
+  %indvars.iv.next246 = add nuw nsw i64 %indvars.iv245, 16
   br i1 %i.fs, label %bb.b, label %vector.ph, !llvm.loop !220
 
 vector.ph:                                        ; preds = %bb.f
@@ -783,9 +785,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.l
+  %indvars.iv273 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next274, %bb.l ] ; 2 uses
   %indvars.iv270 = phi i32 [ -3, %bb.a ], [ %indvars.iv.next271, %bb.l ] ; 2 uses
   %.0173267 = phi float [ -5.000000e-01, %bb.a ], [ %i.ak, %bb.l ]
-  %.0196266 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next274.a, %bb.l ]
   %.0199265 = phi i32 [ -8, %bb.a ], [ %i.fs, %bb.l ] ; 4 uses
   %.0201264 = phi float [ 0.000000e+00, %bb.a ], [ %i.cz, %bb.l ]
   %i.aj = add nsw i32 %.0199265, -4
@@ -798,7 +800,7 @@ bb.b:                                             ; preds = %bb.a, %bb.l
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.d
-  %indvars.iv273.a = phi i64 [ %.0196266, %bb.b ], [ %indvars.iv.next274.a, %bb.d ] ; 2 uses
+  %indvars.iv273.a = phi i64 [ %indvars.iv273, %bb.b ], [ %indvars.iv.next274.a, %bb.d ] ; 2 uses
   %indvars.iv = phi i32 [ -3, %bb.b ], [ %indvars.iv.next, %bb.d ] ; 2 uses
   %.0172263 = phi float [ -5.000000e-01, %bb.b ], [ %i.bs, %bb.d ]
   %.0198261 = phi i32 [ -8, %bb.b ], [ %i.da, %bb.d ] ; 4 uses
@@ -855,7 +857,7 @@ bb.d:                                             ; preds = %bb.e
   %i.bw = fdiv float %i.bv, -4.500000e+00
   %i.bx = tail call noundef float @expf(float noundef %i.bw) #22 ; 7 uses
   %i.by = fmul float %.2195, %i.bx
-  %i.bz = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv273.a ; 5 uses
+  %i.bz = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv273.a ; 5 uses
   store float %i.by, ptr %i.bz, align 4, !tbaa !10
   %i.ca = getelementptr i8, ptr %i.bz, i64 4
   %i.cb = insertelement <4 x float> poison, float %.2183, i64 0
@@ -875,7 +877,7 @@ bb.d:                                             ; preds = %bb.e
   store float %i.cl, ptr %i.cm, align 4, !tbaa !10
   %i.cn = extractelement <2 x float> %i.fq, i64 1 ; 3 uses
   %i.co = fmul float %i.cn, %i.bx
-  %indvars.iv.next274.a = add nsw i64 %indvars.iv273.a, 8 ; 2 uses
+  %indvars.iv.next274.a = add nuw nsw i64 %indvars.iv273.a, 8
   %i.cp = getelementptr i8, ptr %i.bz, i64 28
   store float %i.co, ptr %i.cp, align 4, !tbaa !10
   %i.cq = fmul float %.2183, %.2183
@@ -1004,6 +1006,7 @@ bb.l:                                             ; preds = %bb.d
   %i.fs = add nsw i32 %.0199265, 5
   %i.ft = icmp slt i32 %.0199265, 7
   %indvars.iv.next271 = add nsw i32 %indvars.iv270, 5
+  %indvars.iv.next274 = add nuw nsw i64 %indvars.iv273, 32
   br i1 %i.ft, label %bb.b, label %vector.ph, !llvm.loop !224
 
 vector.ph:                                        ; preds = %bb.l
@@ -1184,9 +1187,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.l
+  %indvars.iv298 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next299, %bb.l ] ; 2 uses
   %indvars.iv295 = phi i32 [ -3, %bb.a ], [ %indvars.iv.next296, %bb.l ] ; 2 uses
   %.0196292 = phi float [ -5.000000e-01, %bb.a ], [ %i.an, %bb.l ]
-  %.0197291 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next299.a, %bb.l ]
   %.0199290 = phi i32 [ -8, %bb.a ], [ %i.go, %bb.l ] ; 4 uses
   %.0224289 = phi float [ 0.000000e+00, %bb.a ], [ %i.cs, %bb.l ]
   %i.am = add nsw i32 %.0199290, -4
@@ -1201,7 +1204,7 @@ bb.b:                                             ; preds = %bb.a, %bb.l
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.d
-  %indvars.iv298.a = phi i64 [ %.0197291, %bb.b ], [ %indvars.iv.next299.a, %bb.d ] ; 2 uses
+  %indvars.iv298.a = phi i64 [ %indvars.iv298, %bb.b ], [ %indvars.iv.next299.a, %bb.d ] ; 2 uses
   %indvars.iv = phi i32 [ -3, %bb.b ], [ %indvars.iv.next, %bb.d ] ; 2 uses
   %.0195288 = phi float [ -5.000000e-01, %bb.b ], [ %i.bl, %bb.d ]
   %.0198286 = phi i32 [ -8, %bb.b ], [ %i.ct, %bb.d ] ; 5 uses
@@ -1242,7 +1245,7 @@ bb.d:                                             ; preds = %bb.e
   %i.bp = fdiv float %i.bo, -4.500000e+00
   %i.bq = tail call noundef float @expf(float noundef %i.bp) #22 ; 7 uses
   %i.br = fmul float %.2223, %i.bq
-  %i.bs = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv298.a ; 5 uses
+  %i.bs = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv298.a ; 5 uses
   store float %i.br, ptr %i.bs, align 4, !tbaa !10
   %i.bt = getelementptr i8, ptr %i.bs, i64 4
   %i.bu = insertelement <4 x float> poison, float %.2211, i64 0
@@ -1262,7 +1265,7 @@ bb.d:                                             ; preds = %bb.e
   store float %i.ce, ptr %i.cf, align 4, !tbaa !10
   %i.cg = extractelement <2 x float> %i.gm, i64 1 ; 3 uses
   %i.ch = fmul float %i.cg, %i.bq
-  %indvars.iv.next299.a = add nsw i64 %indvars.iv298.a, 8 ; 2 uses
+  %indvars.iv.next299.a = add nuw nsw i64 %indvars.iv298.a, 8
   %i.ci = getelementptr i8, ptr %i.bs, i64 28
   store float %i.ch, ptr %i.ci, align 4, !tbaa !10
   %i.cj = fmul float %.2211, %.2211
@@ -1427,6 +1430,7 @@ bb.l:                                             ; preds = %bb.d
   %i.go = add nsw i32 %.0199290, 5
   %i.gp = icmp slt i32 %.0199290, 7
   %indvars.iv.next296 = add nsw i32 %indvars.iv295, 5
+  %indvars.iv.next299 = add nuw nsw i64 %indvars.iv298, 32
   br i1 %i.gp, label %bb.b, label %vector.ph, !llvm.loop !228
 
 vector.ph:                                        ; preds = %bb.l

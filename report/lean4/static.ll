@@ -205,7 +205,8 @@ bb.d:                                             ; preds = %bb.c
           to label %_ZL20mi_debug_show_bitmapPKcS0_mPSt6atomicImEm.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .lr.ph.i:                                         ; preds = %.noexc, %.noexc24
-  %.06.i = phi i64 [ %0, %.noexc24 ], [ 0, %.noexc ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.noexc24 ], [ 64, %.noexc ] ; 2 uses
+  %.06.i = phi i64 [ %indvars.iv.i, %.noexc24 ], [ 0, %.noexc ]
   %.0235.i = phi i64 [ %.3.i.1, %.noexc24 ], [ 0, %.noexc ]
   %.0254.i = phi i64 [ %i.u, %.noexc24 ], [ 0, %.noexc ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #55
@@ -219,9 +220,9 @@ bb.e:                                             ; preds = %bb.j
           to label %.noexc24 unwind label %.loopexit.split-lp.loopexit
 
 .noexc24:                                         ; preds = %bb.e
-  %0 = add i64 %.06.i, 64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #55
   %i.u = add nuw i64 %.0254.i, 1                  ; 2 uses
+  %indvars.iv.next.i = add i64 %indvars.iv.i, 64
   %exitcond8.not.i = icmp eq i64 %i.u, %i.r
   br i1 %exitcond8.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !188
 
@@ -293,7 +294,8 @@ bb.k:                                             ; preds = %_ZL20mi_debug_show_
           to label %_ZL20mi_debug_show_bitmapPKcS0_mPSt6atomicImEm.exit45.thread47 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .lr.ph.i26:                                       ; preds = %.noexc42, %.noexc44
-  %.06.i27 = phi i64 [ %1, %.noexc44 ], [ 0, %.noexc42 ] ; 2 uses
+  %indvars.iv.i27 = phi i64 [ %indvars.iv.next.i37, %.noexc44 ], [ 64, %.noexc42 ] ; 2 uses
+  %.06.i27 = phi i64 [ %indvars.iv.i27, %.noexc44 ], [ 0, %.noexc42 ]
   %.0235.i28 = phi i64 [ %.3.i34.1, %.noexc44 ], [ 0, %.noexc42 ]
   %.0254.i29 = phi i64 [ %i.aq, %.noexc44 ], [ 0, %.noexc42 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #55
@@ -307,9 +309,9 @@ bb.l:                                             ; preds = %bb.q
           to label %.noexc44 unwind label %.loopexit
 
 .noexc44:                                         ; preds = %bb.l
-  %1 = add i64 %.06.i27, 64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #55
   %i.aq = add nuw i64 %.0254.i29, 1               ; 2 uses
+  %indvars.iv.next.i37 = add i64 %indvars.iv.i27, 64
   %exitcond8.not.i36 = icmp eq i64 %i.aq, %i.an
   br i1 %exitcond8.not.i36, label %._crit_edge.i37, label %.lr.ph.i26, !llvm.loop !188
 

@@ -204,8 +204,9 @@ bb.a:
   br i1 %i.a, label %.lr.ph.us.preheader, label %.preheader
 
 .lr.ph.us.preheader:                              ; preds = %bb.a
+  %2 = add nuw i32 %1, 3
+  %invariant.op = add nsw i32 %1, -1
   %wide.trip.count = zext nneg i32 %1 to i64      ; 2 uses
-  %invariant.op = add nuw i32 %1, 3
   %xtraiter = and i64 %wide.trip.count, 1
   %i.b = icmp eq i32 %1, 1
   %unroll_iter = and i64 %wide.trip.count, 2147483646
@@ -214,9 +215,9 @@ bb.a:
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
-  %.024.us = phi i64 [ %i.af, %._crit_edge.us ], [ 0, %.lr.ph.us.preheader ]
-  %.0.us = phi i32 [ %.reass, %._crit_edge.us ], [ 0, %.lr.ph.us.preheader ] ; 2 uses
-  %i.c = sext i32 %.0.us to i64                   ; 2 uses
+  %indvars.iv = phi i32 [ 0, %.lr.ph.us.preheader ], [ %indvars.iv.next, %._crit_edge.us ] ; 3 uses
+  %.024.us = phi i64 [ 0, %.lr.ph.us.preheader ], [ %i.af, %._crit_edge.us ]
+  %i.c = sext i32 %indvars.iv to i64              ; 2 uses
   br i1 %i.b, label %.epil.preheader, label %.lr.ph.us.new
 
 .lr.ph.us.new:                                    ; preds = %.lr.ph.us, %bb.g
@@ -306,12 +307,14 @@ bb.i:                                             ; preds = %.epil.preheader
 
 ._crit_edge.us:                                   ; preds = %.epil.preheader, %bb.h, %bb.i, %._crit_edge.us.unr-lcssa
   %.127.us.lcssa = phi i64 [ %.127.us.1, %._crit_edge.us.unr-lcssa ], [ %i.ae, %bb.i ], [ %i.ab, %bb.h ], [ %.02636.us.epil.init, %.epil.preheader ]
+  %3 = add i32 %invariant.op, %indvars.iv
   %i.af = or i64 %.127.us.lcssa, %.024.us         ; 2 uses
-  %.reass = add i32 %.0.us, %invariant.op         ; 2 uses
-  %2 = sext i32 %.reass to i64
-  %i.ag = getelementptr inbounds i8, ptr %0, i64 %2
+  %4 = sext i32 %3 to i64
+  %5 = getelementptr i8, ptr %0, i64 %4
+  %i.ag = getelementptr i8, ptr %5, i64 4
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !8
   %.not.us = icmp eq i8 %i.ah, 0
+  %indvars.iv.next = add i32 %indvars.iv, %2
   br i1 %.not.us, label %.preheader, label %.lr.ph.us, !llvm.loop !50
 
 .preheader:                                       ; preds = %._crit_edge.us, %bb.a

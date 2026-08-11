@@ -204,21 +204,22 @@ Vec_WecStart.exit:                                ; preds = %bb.a, %bb.b
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
   %indvars.iv27 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next28, %._crit_edge ] ; 2 uses
-  %.01724 = phi i32 [ 0, %.lr.ph.preheader ], [ %7, %._crit_edge ] ; 2 uses
-  %4 = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv27 ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
-  %6 = sext i32 %.01724 to i64
-  %7 = add i32 %2, %.01724                        ; 2 uses
+  %.01724 = phi i32 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
+  %4 = sext i32 %.01724 to i64
+  %5 = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv27 ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.n
   %indvars.iv.next28 = add nuw nsw i64 %indvars.iv27, 1 ; 2 uses
+  %indvars.iv.next = add i32 %.01724, %2
   %exitcond30.not = icmp eq i64 %indvars.iv.next28, %wide.trip.count
   br i1 %exitcond30.not, label %.critedge, label %.lr.ph, !llvm.loop !32
 
 bb.c:                                             ; preds = %.lr.ph, %bb.n
-  %indvars.iv = phi i64 [ %6, %.lr.ph ], [ %indvars.iv.next, %bb.n ] ; 2 uses
+  %indvars.iv = phi i64 [ %4, %.lr.ph ], [ %indvars.iv.next27, %bb.n ] ; 2 uses
+  %.022 = phi i32 [ 0, %.lr.ph ], [ %7, %bb.n ]
   %i.k = getelementptr inbounds i8, ptr %3, i64 %indvars.iv
   %i.l = load i8, ptr %i.k, align 1, !tbaa !33    ; 2 uses
   switch i8 %i.l, label %bb.d [
@@ -233,13 +234,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %i.o = phi i32 [ %i.n, %bb.d ], [ -1, %bb.c ]
-  %i.p = load i32, ptr %5, align 4, !tbaa !14     ; 7 uses
-  %i.q = load i32, ptr %4, align 8, !tbaa !21
+  %i.p = load i32, ptr %i.j, align 4, !tbaa !14   ; 7 uses
+  %i.q = load i32, ptr %5, align 8, !tbaa !21
   %i.r = icmp eq i32 %i.p, %i.q
   br i1 %i.r, label %bb.f, label %.Vec_IntPush.exit_crit_edge
 
 .Vec_IntPush.exit_crit_edge:                      ; preds = %bb.e
-  %.pre = load ptr, ptr %i.j, align 8, !tbaa !17
+  %.pre = load ptr, ptr %6, align 8, !tbaa !17
   br label %Vec_IntPush.exit
 
 bb.f:                                             ; preds = %bb.e
@@ -247,7 +248,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.s, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
-  %i.t = load ptr, ptr %i.j, align 8, !tbaa !17   ; 2 uses
+  %i.t = load ptr, ptr %6, align 8, !tbaa !17     ; 2 uses
   %.not9.i.i = icmp eq ptr %i.t, null
   br i1 %.not9.i.i, label %bb.i, label %bb.h
 
@@ -264,7 +265,7 @@ bb.j:                                             ; preds = %bb.f
   %i.x = shl nuw nsw i32 %i.p, 1
   %spec.select.i = select i1 %i.w, i32 %i.x, i32 2147483647 ; 4 uses
   %.not.i9.i = icmp samesign ult i32 %i.p, %spec.select.i
-  %.pre31 = load ptr, ptr %i.j, align 8, !tbaa !17 ; 3 uses
+  %.pre31 = load ptr, ptr %6, align 8, !tbaa !17  ; 3 uses
   br i1 %.not.i9.i, label %bb.k, label %Vec_IntPush.exit
 
 bb.k:                                             ; preds = %bb.j
@@ -284,25 +285,25 @@ bb.m:                                             ; preds = %bb.k
 Vec_IntGrow.exit11.sink.split.i:                  ; preds = %bb.l, %bb.m, %bb.h, %bb.i
   %i.ac = phi ptr [ %i.v, %bb.i ], [ %i.u, %bb.h ], [ %i.aa, %bb.l ], [ %i.ab, %bb.m ] ; 2 uses
   %spec.select.sink.i = phi i32 [ 16, %bb.i ], [ 16, %bb.h ], [ %spec.select.i, %bb.l ], [ %spec.select.i, %bb.m ]
-  store ptr %i.ac, ptr %i.j, align 8, !tbaa !17
-  store i32 %spec.select.sink.i, ptr %4, align 8, !tbaa !21
-  %.pre32 = load i32, ptr %5, align 4, !tbaa !14
+  store ptr %i.ac, ptr %6, align 8, !tbaa !17
+  store i32 %spec.select.sink.i, ptr %5, align 8, !tbaa !21
+  %.pre32 = load i32, ptr %i.j, align 4, !tbaa !14
   br label %Vec_IntPush.exit
 
 Vec_IntPush.exit:                                 ; preds = %.Vec_IntPush.exit_crit_edge, %bb.j, %Vec_IntGrow.exit11.sink.split.i
   %i.ad = phi i32 [ %i.p, %.Vec_IntPush.exit_crit_edge ], [ %i.p, %bb.j ], [ %.pre32, %Vec_IntGrow.exit11.sink.split.i ] ; 2 uses
   %i.ae = phi ptr [ %.pre, %.Vec_IntPush.exit_crit_edge ], [ %.pre31, %bb.j ], [ %i.ac, %Vec_IntGrow.exit11.sink.split.i ]
   %i.af = add nsw i32 %i.ad, 1
-  store i32 %i.af, ptr %5, align 4, !tbaa !14
+  store i32 %i.af, ptr %i.j, align 4, !tbaa !14
   %i.ag = sext i32 %i.ad to i64
   %i.ah = getelementptr inbounds [4 x i8], ptr %i.ae, i64 %i.ag
   store i32 %i.o, ptr %i.ah, align 4, !tbaa !20
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.c, %Vec_IntPush.exit
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %7, %lftr.wideiv
+  %7 = add nuw nsw i32 %.022, 1                   ; 2 uses
+  %indvars.iv.next27 = add nsw i64 %indvars.iv, 1
+  %exitcond.not = icmp eq i32 %7, %2
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !34
 
 .critedge:                                        ; preds = %._crit_edge, %Vec_WecStart.exit

@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %.preheader, %middle
   %indvars.iv276 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next277, %middle.block ] ; 8 uses
   %i.zi = getelementptr inbounds nuw [24 x i8], ptr %i.xc, i64 %indvars.iv276 ; 27 uses
   %.idx = mul nuw nsw i64 %indvars.iv276, 320
-  %i.zj = getelementptr inbounds nuw i8, ptr %i.dj, i64 %.idx ; 24 uses
+  %i.zj = getelementptr inbounds nuw i8, ptr %i.dj, i64 %.idx ; 25 uses
   %i.zk = load ptr, ptr %i.xd, align 8, !tbaa !35 ; 9 uses
   %i.zl = load i32, ptr %i.do, align 8, !tbaa !59 ; 2 uses
   %i.zm = icmp ult i32 %i.zl, 2
@@ -607,36 +607,38 @@ de_emphasis.exit:                                 ; preds = %bb.bh
   br label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bi, %de_emphasis.exit
-  %indvars.iv42.i = phi i64 [ 0, %de_emphasis.exit ], [ %indvars.iv.next43.i, %bb.bi ] ; 2 uses
-  %indvars.iv.i217 = phi i64 [ 0, %de_emphasis.exit ], [ %indvars.iv.next41.i, %bb.bi ] ; 3 uses
+  %indvars.iv47.i = phi i64 [ 0, %de_emphasis.exit ], [ %indvars.iv.next43.i, %bb.bi ] ; 2 uses
+  %indvars.iv42.i = phi i64 [ 0, %de_emphasis.exit ], [ %indvars.iv.next41.i, %bb.bi ] ; 3 uses
+  %indvars.iv.i217 = phi i64 [ 1, %de_emphasis.exit ], [ %indvars.iv.next.i218, %bb.bi ] ; 2 uses
   %.02130.i = phi i32 [ 0, %de_emphasis.exit ], [ %i.bqk, %bb.bi ]
-  %i.bps = getelementptr inbounds nuw [4 x i8], ptr %i.yd, i64 %indvars.iv.i217
+  %i.bps = getelementptr inbounds nuw [4 x i8], ptr %i.yd, i64 %indvars.iv42.i
   %i.bpt = load float, ptr %i.bps, align 4, !tbaa !46
-  %i.bpu = getelementptr inbounds nuw [4 x i8], ptr %i.zj, i64 %indvars.iv42.i ; 5 uses
+  %i.bpu = getelementptr inbounds nuw [4 x i8], ptr %i.zj, i64 %indvars.iv47.i
   store float %i.bpt, ptr %i.bpu, align 4, !tbaa !46
   %i.bpv = load ptr, ptr %i.xl, align 8, !tbaa !94
-  %i.bpw = getelementptr inbounds nuw [4 x i8], ptr %i.ye, i64 %indvars.iv.i217 ; 4 uses
+  %i.bpw = getelementptr inbounds nuw [4 x i8], ptr %i.ye, i64 %indvars.iv42.i ; 4 uses
   %i.bpx = call nsz float %i.bpv(ptr noundef nonnull %i.bpw, ptr noundef nonnull @upsample_fir, i32 noundef 24) #10, !inline_history !117
-  %4 = getelementptr inbounds nuw i8, ptr %i.bpu, i64 4
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.zj, i64 %indvars.iv.i217 ; 4 uses
   store float %i.bpx, ptr %4, align 4, !tbaa !46
   %i.bpy = load ptr, ptr %i.xl, align 8, !tbaa !94
   %i.bpz = getelementptr inbounds nuw i8, ptr %i.bpw, i64 4
   %i.bqa = call nsz float %i.bpy(ptr noundef nonnull %i.bpz, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @upsample_fir, i64 96), i32 noundef 24) #10, !inline_history !117
-  %i.bqb = getelementptr inbounds nuw i8, ptr %i.bpu, i64 8
+  %i.bqb = getelementptr inbounds nuw i8, ptr %4, i64 4
   store float %i.bqa, ptr %i.bqb, align 4, !tbaa !46
   %i.bqc = load ptr, ptr %i.xl, align 8, !tbaa !94
   %i.bqd = getelementptr inbounds nuw i8, ptr %i.bpw, i64 8
   %i.bqe = call nsz float %i.bqc(ptr noundef nonnull %i.bqd, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @upsample_fir, i64 192), i32 noundef 24) #10, !inline_history !117
-  %i.bqf = getelementptr inbounds nuw i8, ptr %i.bpu, i64 12
+  %i.bqf = getelementptr inbounds nuw i8, ptr %4, i64 8
   store float %i.bqe, ptr %i.bqf, align 4, !tbaa !46
   %i.bqg = load ptr, ptr %i.xl, align 8, !tbaa !94
   %i.bqh = getelementptr inbounds nuw i8, ptr %i.bpw, i64 12
   %i.bqi = call nsz float %i.bqg(ptr noundef nonnull %i.bqh, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @upsample_fir, i64 288), i32 noundef 24) #10, !inline_history !117
-  %i.bqj = getelementptr inbounds nuw i8, ptr %i.bpu, i64 16
+  %i.bqj = getelementptr inbounds nuw i8, ptr %4, i64 12
   store float %i.bqi, ptr %i.bqj, align 4, !tbaa !46
-  %indvars.iv.next41.i = add nuw nsw i64 %indvars.iv.i217, 4
-  %indvars.iv.next43.i = add nuw nsw i64 %indvars.iv42.i, 5
+  %indvars.iv.next41.i = add nuw nsw i64 %indvars.iv42.i, 4
+  %indvars.iv.next43.i = add nuw nsw i64 %indvars.iv47.i, 5
   %i.bqk = add nuw nsw i32 %.02130.i, 1           ; 2 uses
+  %indvars.iv.next.i218 = add nuw nsw i64 %indvars.iv.i217, 5
   %exitcond.not.i218 = icmp eq i32 %i.bqk, 16
   br i1 %exitcond.not.i218, label %upsample_5_4.exit, label %bb.bi, !llvm.loop !118
 

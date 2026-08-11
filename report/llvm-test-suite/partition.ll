@@ -150,32 +150,33 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph565, %bb.d
   %indvars.iv593 = phi i32 [ 128, %.lr.ph565 ], [ %indvars.iv.next594, %bb.d ] ; 2 uses
-  %.0564 = phi i64 [ 0, %.lr.ph565 ], [ %9, %bb.d ] ; 2 uses
+  %indvars.iv590 = phi i32 [ 0, %.lr.ph565 ], [ %indvars.iv.next591, %bb.d ] ; 2 uses
   %.0264563 = phi i32 [ 0, %.lr.ph565 ], [ %i.as, %bb.d ] ; 2 uses
   %i.aq = phi double [ %_ZZN4Mesh17partition_measureEvE13offtile_ratio.promoted, %.lr.ph565 ], [ %i.aw, %bb.d ]
+  %9 = sext i32 %indvars.iv590 to i64
   %i.ar = shl i32 %.0264563, 7                    ; 8 uses
   %i.as = add nuw i32 %.0264563, 1                ; 3 uses
   %i.at = shl i32 %i.as, 7                        ; 8 uses
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.n
-  %9 = add nuw nsw i64 %.0564, 128
   %i.au = sitofp i32 %.8 to double
   %i.av = fmul nnan double %i.au, 7.812500e-03
   %i.aw = fadd double %i.av, %i.aq                ; 2 uses
+  %indvars.iv.next591 = add i32 %indvars.iv590, 128
   %indvars.iv.next594 = add i32 %indvars.iv593, 128
   %exitcond597.not = icmp eq i32 %i.as, %i.f
   br i1 %exitcond597.not, label %..loopexit_crit_edge, label %bb.c, !llvm.loop !44
 
 bb.e:                                             ; preds = %bb.c, %bb.n
-  %indvars.iv590.a = phi i64 [ %.0564, %bb.c ], [ %indvars.iv.next591.a, %bb.n ] ; 7 uses
+  %indvars.iv590.a = phi i64 [ %9, %bb.c ], [ %indvars.iv.next591.a, %bb.n ] ; 7 uses
   %.0265561 = phi i32 [ 0, %bb.c ], [ %.8, %bb.n ] ; 2 uses
   %.not361 = icmp ugt i64 %i.c, %indvars.iv590.a
   br i1 %.not361, label %bb.f, label %bb.n
 
 bb.f:                                             ; preds = %bb.e
   %i.ax = load ptr, ptr %i.al, align 8, !tbaa !46
-  %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv590.a
+  %i.ay = getelementptr inbounds [4 x i8], ptr %i.ax, i64 %indvars.iv590.a
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !4  ; 3 uses
   %i.ba = icmp slt i32 %i.az, %i.ar
   %.not362 = icmp sge i32 %i.az, %i.at
@@ -186,7 +187,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bd = sext i32 %i.az to i64                   ; 2 uses
   %i.be = getelementptr inbounds [4 x i8], ptr %i.bc, i64 %i.bd
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !4
-  %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.bc, i64 %indvars.iv590.a
+  %i.bg = getelementptr inbounds [4 x i8], ptr %i.bc, i64 %indvars.iv590.a
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !4  ; 4 uses
   %i.bi = icmp sgt i32 %i.bf, %i.bh
   br i1 %i.bi, label %bb.g, label %bb.h
@@ -205,7 +206,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.2 = phi i32 [ %.1266, %bb.f ], [ %spec.select, %bb.g ]
   %i.bo = load ptr, ptr %i.ao, align 8, !tbaa !49 ; 3 uses
-  %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %indvars.iv590.a
+  %i.bp = getelementptr inbounds [4 x i8], ptr %i.bo, i64 %indvars.iv590.a
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !4  ; 3 uses
   %i.br = icmp slt i32 %i.bq, %i.ar
   %.not364 = icmp sge i32 %i.bq, %i.at
@@ -232,7 +233,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.4 = phi i32 [ %.3, %bb.h ], [ %spec.select401, %bb.i ]
   %i.cc = load ptr, ptr %i.ap, align 8, !tbaa !50
-  %i.cd = getelementptr inbounds nuw [4 x i8], ptr %i.cc, i64 %indvars.iv590.a
+  %i.cd = getelementptr inbounds [4 x i8], ptr %i.cc, i64 %indvars.iv590.a
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !4  ; 3 uses
   %i.cf = icmp slt i32 %i.ce, %i.ar
   %.not366 = icmp sge i32 %i.ce, %i.at
@@ -258,7 +259,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k, %bb.j
   %.6 = phi i32 [ %.5, %bb.j ], [ %spec.select402, %bb.k ]
   %i.cp = load ptr, ptr %i.an, align 8, !tbaa !48
-  %i.cq = getelementptr inbounds nuw [4 x i8], ptr %i.cp, i64 %indvars.iv590.a
+  %i.cq = getelementptr inbounds [4 x i8], ptr %i.cp, i64 %indvars.iv590.a
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !4  ; 3 uses
   %i.cs = icmp slt i32 %i.cr, %i.ar
   %.not368 = icmp sge i32 %i.cr, %i.at
@@ -283,7 +284,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.e
   %.8 = phi i32 [ %.0265561, %bb.e ], [ %.7, %bb.l ], [ %spec.select403, %bb.m ] ; 2 uses
-  %indvars.iv.next591.a = add nuw nsw i64 %indvars.iv590.a, 1 ; 2 uses
+  %indvars.iv.next591.a = add nsw i64 %indvars.iv590.a, 1 ; 2 uses
   %lftr.wideiv595 = trunc i64 %indvars.iv.next591.a to i32
   %exitcond596.not = icmp eq i32 %indvars.iv593, %lftr.wideiv595
   br i1 %exitcond596.not, label %bb.d, label %bb.e, !llvm.loop !51

@@ -204,38 +204,40 @@ bb.a:
   tail call fastcc void @GSIter(double noundef %5, ptr noundef %4, ptr noundef %i.b, ptr noundef %8)
   %i.c = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.d = getelementptr inbounds nuw i8, ptr %8, i64 80
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !73   ; 2 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !73   ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %8, i64 84
   %i.g = load i32, ptr %i.f, align 4, !tbaa !100  ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %8, i64 92
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !70
+  %9 = load i32, ptr %i.h, align 4, !tbaa !70
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 72
+  %i.i = load i32, ptr %10, align 8, !tbaa !67    ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %8, i64 128
   %i.k = getelementptr inbounds nuw i8, ptr %8, i64 208
   %i.l = icmp sgt i32 %i.g, 0
   br i1 %i.l, label %.lr.ph43, label %._crit_edge44.split
 
 .lr.ph43:                                         ; preds = %bb.a
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 72
-  %10 = load i32, ptr %9, align 8, !tbaa !67
   %i.m = icmp sgt i32 %i.e, 0
-  %i.n = sext i32 %10 to i64                      ; 2 uses
+  %i.n = sext i32 %i.i to i64                     ; 2 uses
   br i1 %i.m, label %.lr.ph.preheader, label %._crit_edge44.split
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph43
+  %11 = mul i32 %i.e, %i.i
   %wide.trip.count53 = zext nneg i32 %i.g to i64
   %wide.trip.count = zext nneg i32 %i.e to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
   %indvars.iv50 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next51, %._crit_edge ] ; 2 uses
-  %.03740 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next46.a, %._crit_edge ]
+  %indvars.iv45 = phi i32 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next46, %._crit_edge ] ; 2 uses
+  %12 = sext i32 %indvars.iv45 to i64
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv50
   %i.p = load i32, ptr %i.o, align 4, !tbaa !25
-  %i.q = mul nsw i32 %i.p, %i.i
+  %i.q = mul nsw i32 %i.p, %9
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %indvars.iv45.a = phi i64 [ %.03740, %.lr.ph ], [ %indvars.iv.next46.a, %bb.b ] ; 2 uses
+  %indvars.iv45.a = phi i64 [ %12, %.lr.ph ], [ %indvars.iv.next46.a, %bb.b ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv
   %i.s = load i32, ptr %i.r, align 4, !tbaa !25
@@ -248,13 +250,14 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.z = tail call ptr @N_VGetArrayPointer(ptr noundef %4) #10
   %i.aa = getelementptr inbounds [8 x i8], ptr %i.z, i64 %indvars.iv45.a
   tail call void @SUNDlsMat_denseGETRS(ptr noundef %i.w, i64 noundef %i.n, ptr noundef %i.y, ptr noundef %i.aa) #10
-  %indvars.iv.next46.a = add nsw i64 %indvars.iv45.a, %i.n ; 2 uses
+  %indvars.iv.next46.a = add nsw i64 %indvars.iv45.a, %i.n
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.b
   %indvars.iv.next51 = add nuw nsw i64 %indvars.iv50, 1 ; 2 uses
+  %indvars.iv.next46 = add i32 %indvars.iv45, %11
   %exitcond54.not = icmp eq i64 %indvars.iv.next51, %wide.trip.count53
   br i1 %exitcond54.not, label %._crit_edge44.split, label %.lr.ph
 
@@ -657,38 +660,40 @@ bb.a:
   tail call fastcc void @GSIter(double noundef %i.a, ptr noundef %5, ptr noundef %i.c, ptr noundef %9)
   %i.d = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.e = getelementptr inbounds nuw i8, ptr %9, i64 80
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !73   ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !73   ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %9, i64 84
   %i.h = load i32, ptr %i.g, align 4, !tbaa !100  ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %9, i64 92
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !70
+  %10 = load i32, ptr %i.i, align 4, !tbaa !70
+  %11 = getelementptr inbounds nuw i8, ptr %9, i64 72
+  %i.j = load i32, ptr %11, align 8, !tbaa !67    ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %9, i64 128
   %i.l = getelementptr inbounds nuw i8, ptr %9, i64 208
   %i.m = icmp sgt i32 %i.h, 0
   br i1 %i.m, label %.lr.ph43, label %._crit_edge44.split
 
 .lr.ph43:                                         ; preds = %bb.a
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 72
-  %11 = load i32, ptr %10, align 8, !tbaa !67
   %i.n = icmp sgt i32 %i.f, 0
-  %i.o = sext i32 %11 to i64                      ; 2 uses
+  %i.o = sext i32 %i.j to i64                     ; 2 uses
   br i1 %i.n, label %.lr.ph.preheader, label %._crit_edge44.split
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph43
+  %12 = mul i32 %i.f, %i.j
   %wide.trip.count53 = zext nneg i32 %i.h to i64
   %wide.trip.count = zext nneg i32 %i.f to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
   %indvars.iv50 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next51, %._crit_edge ] ; 2 uses
-  %.03740 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next46.a, %._crit_edge ]
+  %indvars.iv45 = phi i32 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next46, %._crit_edge ] ; 2 uses
+  %13 = sext i32 %indvars.iv45 to i64
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv50
   %i.q = load i32, ptr %i.p, align 4, !tbaa !25
-  %i.r = mul nsw i32 %i.q, %i.j
+  %i.r = mul nsw i32 %i.q, %10
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %indvars.iv45.a = phi i64 [ %.03740, %.lr.ph ], [ %indvars.iv.next46.a, %bb.b ] ; 2 uses
+  %indvars.iv45.a = phi i64 [ %13, %.lr.ph ], [ %indvars.iv.next46.a, %bb.b ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv
   %i.t = load i32, ptr %i.s, align 4, !tbaa !25
@@ -701,13 +706,14 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.aa = tail call ptr @N_VGetArrayPointer(ptr noundef %5) #10
   %i.ab = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %indvars.iv45.a
   tail call void @SUNDlsMat_denseGETRS(ptr noundef %i.x, i64 noundef %i.o, ptr noundef %i.z, ptr noundef %i.ab) #10
-  %indvars.iv.next46.a = add nsw i64 %indvars.iv45.a, %i.o ; 2 uses
+  %indvars.iv.next46.a = add nsw i64 %indvars.iv45.a, %i.o
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.b
   %indvars.iv.next51 = add nuw nsw i64 %indvars.iv50, 1 ; 2 uses
+  %indvars.iv.next46 = add i32 %indvars.iv45, %12
   %exitcond54.not = icmp eq i64 %indvars.iv.next51, %wide.trip.count53
   br i1 %exitcond54.not, label %._crit_edge44.split, label %.lr.ph
 

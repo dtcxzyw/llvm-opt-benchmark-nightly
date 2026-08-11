@@ -150,6 +150,8 @@ bb.f:                                             ; preds = %bb.e
   %i.aq = add nsw i32 %i.ap, -1
   %i.ar = mul i32 %i.aq, %i.ad
   %i.as = shl i32 %i.ad, 2
+  %4 = shl i32 %i.ad, 1
+  %5 = mul i32 %i.ad, -3
   %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 6
   br label %.lr.ph.i
 
@@ -271,7 +273,7 @@ bb.p:                                             ; preds = %bb.o
   %i.dd = getelementptr i8, ptr %i.ci, i64 3
   store i8 %i.dc, ptr %i.dd, align 1, !tbaa !48
   %i.de = lshr i16 %i.bx, 4
-  %i.df = trunc i64 %indvars.iv213.i to i32
+  %i.df = trunc nsw i64 %indvars.iv213.i to i32
   %i.dg = sub i32 %i.df, %i.ad                    ; 2 uses
   %i.dh = sext i32 %i.dg to i64
   %i.di = and i16 %i.de, 1
@@ -422,7 +424,7 @@ bb.s:                                             ; preds = %bb.r
   %i.hu = getelementptr i8, ptr %i.gz, i64 3
   store i8 %i.ht, ptr %i.hu, align 1, !tbaa !48
   %i.hv = lshr i16 %i.gq, 4
-  %i.hw = trunc i64 %indvars.iv213.i to i32
+  %i.hw = trunc nsw i64 %indvars.iv213.i to i32
   %i.hx = sub i32 %i.hw, %i.ad                    ; 2 uses
   %i.hy = sext i32 %i.hx to i64
   %i.hz = and i16 %i.hv, 1
@@ -525,17 +527,17 @@ bb.s:                                             ; preds = %bb.r
   store i8 %i.be, ptr %i.b, align 8, !tbaa !48
   %scevgep.i = getelementptr i8, ptr %i.ab, i64 %indvars.iv213.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(4) %scevgep.i, i8 %i.be, i64 4, i1 false), !tbaa !48
-  %i.ld = trunc i64 %indvars.iv213.i to i32
-  %i.le = sub i32 %i.ld, %i.ad                    ; 2 uses
+  %i.ld = trunc nsw i64 %indvars.iv213.i to i32   ; 3 uses
+  %i.le = sub i32 %i.ld, %i.ad
   %i.lf = sext i32 %i.le to i64
   %scevgep.1.i = getelementptr i8, ptr %i.ab, i64 %i.lf
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(4) %scevgep.1.i, i8 %i.be, i64 4, i1 false), !tbaa !48
-  %i.lg = sub i32 %i.le, %i.ad                    ; 2 uses
+  %i.lg = sub i32 %i.ld, %4
   %i.lh = sext i32 %i.lg to i64
   %scevgep.2.i = getelementptr i8, ptr %i.ab, i64 %i.lh
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(4) %scevgep.2.i, i8 %i.be, i64 4, i1 false), !tbaa !48
-  %4 = sub i32 %i.lg, %i.ad
-  %i.li = sext i32 %4 to i64
+  %6 = add i32 %5, %i.ld
+  %i.li = sext i32 %6 to i64
   %scevgep.3.i = getelementptr i8, ptr %i.ab, i64 %i.li
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(4) %scevgep.3.i, i8 %i.be, i64 4, i1 false), !tbaa !48
   br label %.loopexit.i
@@ -721,7 +723,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ox = getelementptr i8, ptr %i.oc, i64 6
   store i16 %i.ow, ptr %i.ox, align 2, !tbaa !52
   %i.oy = lshr i16 %i.np, 4
-  %i.oz = trunc i64 %indvars.iv234.i to i32
+  %i.oz = trunc nsw i64 %indvars.iv234.i to i32
   %i.pa = sub i32 %i.oz, %i.ly                    ; 2 uses
   %i.pb = sext i32 %i.pa to i64
   %i.pc = and i16 %i.oy, 1
@@ -872,7 +874,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.tu = getelementptr i8, ptr %i.sz, i64 6
   store i16 %i.tt, ptr %i.tu, align 2, !tbaa !52
   %i.tv = lshr i16 %i.np, 4
-  %i.tw = trunc i64 %indvars.iv234.i to i32
+  %i.tw = trunc nsw i64 %indvars.iv234.i to i32
   %i.tx = sub i32 %i.tw, %i.ly                    ; 2 uses
   %i.ty = sext i32 %i.tx to i64
   %i.tz = and i16 %i.tv, 1
@@ -975,7 +977,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.xc = insertelement <4 x i16> poison, i16 %i.np, i64 0
   %i.xd = shufflevector <4 x i16> %i.xc, <4 x i16> poison, <4 x i32> zeroinitializer ; 4 uses
   store <4 x i16> %i.xd, ptr %i.xb, align 2, !tbaa !52
-  %i.xe = trunc i64 %indvars.iv234.i to i32
+  %i.xe = trunc nsw i64 %indvars.iv234.i to i32
   %i.xf = sub i32 %i.xe, %i.ly                    ; 2 uses
   %i.xg = sext i32 %i.xf to i64
   %i.xh = getelementptr inbounds [2 x i8], ptr %i.lv, i64 %i.xg

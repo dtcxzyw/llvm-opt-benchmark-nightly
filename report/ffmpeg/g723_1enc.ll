@@ -91,7 +91,7 @@ define internal range(i32 -2147483648, 1) i32 @g723_1_encode_frame(ptr noundef %
 bb.a:
   %4 = alloca %struct.FCBParam, align 8           ; 10 uses
   %i.a = alloca [5 x [60 x i16]], align 16        ; 39 uses
-  %i.b = alloca [80 x i32], align 16              ; 9 uses
+  %i.b = alloca [80 x i32], align 16              ; 13 uses
   %i.c = alloca [15 x i32], align 16              ; 10 uses
   %i.d = alloca [250 x i16], align 16             ; 6 uses
   %i.e = alloca [4 x i16], align 2                ; 7 uses
@@ -494,11 +494,11 @@ scalar.ph419:                                     ; preds = %vector.body423
   %.0.i171.4.i = select i1 %.not.i170.4.i, i32 %i.byc, i32 %i.byb
   %i.byd = getelementptr inbounds nuw i8, ptr %i.bxb, i64 16
   store i32 %.0.i171.4.i, ptr %i.byd, align 16, !tbaa !41
-  %i.bye = shl nuw nsw i64 %indvars.iv267.i, 32
+  %i.bye = shl nuw nsw i64 %indvars.iv267.i, 32   ; 5 uses
   %sext.i172 = add nuw nsw i64 %i.bye, 21474836480
   %i.byf = call i32 @ff_g723_1_dot_product(ptr noundef nonnull %i.a, ptr noundef nonnull %i.a, i32 noundef 60) #9
   %i.byg = lshr exact i64 %sext.i172, 30
-  %i.byh = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.byg ; 15 uses
+  %i.byh = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.byg ; 5 uses
   store i32 %i.byf, ptr %i.byh, align 4, !tbaa !41
   %i.byi = call i32 @ff_g723_1_dot_product(ptr noundef nonnull %i.bah, ptr noundef nonnull %i.bah, i32 noundef 60) #9
   %i.byj = getelementptr i8, ptr %i.byh, i64 4
@@ -512,6 +512,7 @@ scalar.ph419:                                     ; preds = %vector.body423
   %i.byo = call i32 @ff_g723_1_dot_product(ptr noundef nonnull %i.bab, ptr noundef nonnull %i.bab, i32 noundef 60) #9
   %i.byp = getelementptr i8, ptr %i.byh, i64 16
   store i32 %i.byo, ptr %i.byp, align 4, !tbaa !41
+  %sext299.i = add nuw nsw i64 %i.bye, 42949672960
   %i.byq = call i64 @ff_dot_product(ptr noundef nonnull %i.bah, ptr noundef nonnull %i.a, i32 noundef 60) #9 ; 2 uses
   %i.byr = shl nsw i64 %i.byq, 2                  ; 2 uses
   %i.bys = add i64 %i.byr, 2147483648
@@ -520,8 +521,10 @@ scalar.ph419:                                     ; preds = %vector.body423
   %i.byu = select i1 %i.byt, i32 2147483647, i32 -2147483648
   %i.byv = trunc i64 %i.byr to i32
   %.0.i169.i = select i1 %.not.i168.i, i32 %i.byv, i32 %i.byu
-  %i.byw = getelementptr i8, ptr %i.byh, i64 20
+  %6 = lshr exact i64 %sext299.i, 30
+  %i.byw = getelementptr inbounds nuw i8, ptr %i.b, i64 %6
   store i32 %.0.i169.i, ptr %i.byw, align 8, !tbaa !41
+  %sext297.i = add nuw nsw i64 %i.bye, 47244640256
   %i.byx = call i64 @ff_dot_product(ptr noundef nonnull %i.baf, ptr noundef nonnull %i.a, i32 noundef 60) #9 ; 2 uses
   %i.byy = shl nsw i64 %i.byx, 2                  ; 2 uses
   %i.byz = add i64 %i.byy, 2147483648
@@ -530,7 +533,8 @@ scalar.ph419:                                     ; preds = %vector.body423
   %i.bzb = select i1 %i.bza, i32 2147483647, i32 -2147483648
   %i.bzc = trunc i64 %i.byy to i32
   %.0.i169.1.i = select i1 %.not.i168.1.i, i32 %i.bzc, i32 %i.bzb
-  %i.bzd = getelementptr i8, ptr %i.byh, i64 24
+  %7 = lshr exact i64 %sext297.i, 30
+  %i.bzd = getelementptr inbounds nuw i8, ptr %i.b, i64 %7 ; 2 uses
   store i32 %.0.i169.1.i, ptr %i.bzd, align 4, !tbaa !41
   %i.bze = call i64 @ff_dot_product(ptr noundef nonnull %i.baf, ptr noundef nonnull %i.bah, i32 noundef 60) #9 ; 2 uses
   %i.bzf = shl nsw i64 %i.bze, 2                  ; 2 uses
@@ -540,8 +544,9 @@ scalar.ph419:                                     ; preds = %vector.body423
   %i.bzi = select i1 %i.bzh, i32 2147483647, i32 -2147483648
   %i.bzj = trunc i64 %i.bzf to i32
   %.0.i169.1.1.i = select i1 %.not.i168.1.1.i, i32 %i.bzj, i32 %i.bzi
-  %i.bzk = getelementptr i8, ptr %i.byh, i64 28
+  %i.bzk = getelementptr i8, ptr %i.bzd, i64 4
   store i32 %.0.i169.1.1.i, ptr %i.bzk, align 16, !tbaa !41
+  %sext298.i = add nuw nsw i64 %i.bye, 55834574848
   %i.bzl = call i64 @ff_dot_product(ptr noundef nonnull %i.bad, ptr noundef nonnull %i.a, i32 noundef 60) #9 ; 2 uses
   %i.bzm = shl nsw i64 %i.bzl, 2                  ; 2 uses
   %i.bzn = add i64 %i.bzm, 2147483648
@@ -550,7 +555,8 @@ scalar.ph419:                                     ; preds = %vector.body423
   %i.bzp = select i1 %i.bzo, i32 2147483647, i32 -2147483648
   %i.bzq = trunc i64 %i.bzm to i32
   %.0.i169.2.i = select i1 %.not.i168.2.i, i32 %i.bzq, i32 %i.bzp
-  %i.bzr = getelementptr i8, ptr %i.byh, i64 32
+  %8 = lshr exact i64 %sext298.i, 30
+  %i.bzr = getelementptr inbounds nuw i8, ptr %i.b, i64 %8 ; 3 uses
   store i32 %.0.i169.2.i, ptr %i.bzr, align 4, !tbaa !41
   %i.bzs = call i64 @ff_dot_product(ptr noundef nonnull %i.bad, ptr noundef nonnull %i.bah, i32 noundef 60) #9 ; 2 uses
   %i.bzt = shl nsw i64 %i.bzs, 2                  ; 2 uses
@@ -560,7 +566,7 @@ scalar.ph419:                                     ; preds = %vector.body423
   %i.bzw = select i1 %i.bzv, i32 2147483647, i32 -2147483648
   %i.bzx = trunc i64 %i.bzt to i32
   %.0.i169.2.1.i = select i1 %.not.i168.2.1.i, i32 %i.bzx, i32 %i.bzw
-  %i.bzy = getelementptr i8, ptr %i.byh, i64 36
+  %i.bzy = getelementptr i8, ptr %i.bzr, i64 4
   store i32 %.0.i169.2.1.i, ptr %i.bzy, align 8, !tbaa !41
   %i.bzz = call i64 @ff_dot_product(ptr noundef nonnull %i.bad, ptr noundef nonnull %i.baf, i32 noundef 60) #9 ; 2 uses
   %i.caa = shl nsw i64 %i.bzz, 2                  ; 2 uses
@@ -570,8 +576,9 @@ scalar.ph419:                                     ; preds = %vector.body423
   %i.cad = select i1 %i.cac, i32 2147483647, i32 -2147483648
   %i.cae = trunc i64 %i.caa to i32
   %.0.i169.2.2.i = select i1 %.not.i168.2.2.i, i32 %i.cae, i32 %i.cad
-  %i.caf = getelementptr i8, ptr %i.byh, i64 40
+  %i.caf = getelementptr i8, ptr %i.bzr, i64 8
   store i32 %.0.i169.2.2.i, ptr %i.caf, align 4, !tbaa !41
+  %sext300.i = add nuw nsw i64 %i.bye, 68719476736
   %i.cag = call i64 @ff_dot_product(ptr noundef nonnull %i.bab, ptr noundef nonnull %i.a, i32 noundef 60) #9 ; 2 uses
   %i.cah = shl nsw i64 %i.cag, 2                  ; 2 uses
   %i.cai = add i64 %i.cah, 2147483648
@@ -580,7 +587,8 @@ scalar.ph419:                                     ; preds = %vector.body423
   %i.cak = select i1 %i.caj, i32 2147483647, i32 -2147483648
   %i.cal = trunc i64 %i.cah to i32
   %.0.i169.3.i = select i1 %.not.i168.3.i, i32 %i.cal, i32 %i.cak
-  %i.cam = getelementptr i8, ptr %i.byh, i64 44
+  %9 = lshr exact i64 %sext300.i, 30
+  %i.cam = getelementptr inbounds nuw i8, ptr %i.b, i64 %9 ; 4 uses
   store i32 %.0.i169.3.i, ptr %i.cam, align 16, !tbaa !41
   %i.can = call i64 @ff_dot_product(ptr noundef nonnull %i.bab, ptr noundef nonnull %i.bah, i32 noundef 60) #9 ; 2 uses
   %i.cao = shl nsw i64 %i.can, 2                  ; 2 uses
@@ -590,7 +598,7 @@ scalar.ph419:                                     ; preds = %vector.body423
   %i.car = select i1 %i.caq, i32 2147483647, i32 -2147483648
   %i.cas = trunc i64 %i.cao to i32
   %.0.i169.3.1.i = select i1 %.not.i168.3.1.i, i32 %i.cas, i32 %i.car
-  %i.cat = getelementptr i8, ptr %i.byh, i64 48
+  %i.cat = getelementptr i8, ptr %i.cam, i64 4
   store i32 %.0.i169.3.1.i, ptr %i.cat, align 4, !tbaa !41
   %i.cau = call i64 @ff_dot_product(ptr noundef nonnull %i.bab, ptr noundef nonnull %i.baf, i32 noundef 60) #9 ; 2 uses
   %i.cav = shl nsw i64 %i.cau, 2                  ; 2 uses
@@ -600,7 +608,7 @@ scalar.ph419:                                     ; preds = %vector.body423
   %i.cay = select i1 %i.cax, i32 2147483647, i32 -2147483648
   %i.caz = trunc i64 %i.cav to i32
   %.0.i169.3.2.i = select i1 %.not.i168.3.2.i, i32 %i.caz, i32 %i.cay
-  %i.cba = getelementptr i8, ptr %i.byh, i64 52
+  %i.cba = getelementptr i8, ptr %i.cam, i64 8
   store i32 %.0.i169.3.2.i, ptr %i.cba, align 8, !tbaa !41
   %i.cbb = call i64 @ff_dot_product(ptr noundef nonnull %i.bab, ptr noundef nonnull %i.bad, i32 noundef 60) #9 ; 2 uses
   %i.cbc = shl nsw i64 %i.cbb, 2                  ; 2 uses
@@ -610,7 +618,7 @@ scalar.ph419:                                     ; preds = %vector.body423
   %i.cbf = select i1 %i.cbe, i32 2147483647, i32 -2147483648
   %i.cbg = trunc i64 %i.cbc to i32
   %.0.i169.3.3.i = select i1 %.not.i168.3.3.i, i32 %i.cbg, i32 %i.cbf
-  %i.cbh = getelementptr i8, ptr %i.byh, i64 56
+  %i.cbh = getelementptr i8, ptr %i.cam, i64 12
   store i32 %.0.i169.3.3.i, ptr %i.cbh, align 4, !tbaa !41
   %indvars.iv.next268.i = add nuw nsw i64 %indvars.iv267.i, 20
   %i.cbi = add nuw nsw i32 %.0132198.i, 1         ; 2 uses

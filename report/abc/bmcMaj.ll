@@ -205,7 +205,8 @@ bb.af:                                            ; preds = %bb.ae, %.thread118
   %i.re = phi ptr [ %i.qo, %.preheader.lr.ph.i ], [ %i.si, %Exa_ManFindFanin.exit.1.i67 ]
   %i.rf = phi i32 [ %i.qz, %.preheader.lr.ph.i ], [ %i.sl, %Exa_ManFindFanin.exit.1.i67 ] ; 2 uses
   %indvars.iv.i65.a = phi i64 [ %i.rd, %.preheader.lr.ph.i ], [ %indvars.iv.next27.i, %Exa_ManFindFanin.exit.1.i67 ] ; 2 uses
-  %.021.i = phi i64 [ 0, %.preheader.lr.ph.i ], [ %indvars.iv.next.1.i, %Exa_ManFindFanin.exit.1.i67 ] ; 3 uses
+  %indvars.iv.i65 = phi i32 [ 0, %.preheader.lr.ph.i ], [ %indvars.iv.next.i69, %Exa_ManFindFanin.exit.1.i67 ] ; 2 uses
+  %5 = sext i32 %indvars.iv.i65 to i64            ; 2 uses
   %i.rg = getelementptr inbounds [512 x i8], ptr %i.rb, i64 %indvars.iv.i65.a ; 2 uses
   %i.rh = icmp sgt i32 %i.rf, 0
   br i1 %i.rh, label %.lr.ph.i.i80, label %Exa_ManFindFanin.exit.i66
@@ -249,7 +250,7 @@ Exa_ManFindFanin.exit.i66:                        ; preds = %Exa_ManFindFanin.ex
   %.0.lcssa.i.i = phi i32 [ -1, %.preheader.i ], [ %.1.i.i87, %Exa_ManFindFanin.exit.loopexit.i ]
   %i.rt = getelementptr inbounds nuw i8, ptr %i.rs, i64 168
   %i.ru = load ptr, ptr %i.rt, align 8, !tbaa !198 ; 2 uses
-  %i.rv = getelementptr inbounds nuw [4 x i8], ptr %i.ru, i64 %.021.i
+  %i.rv = getelementptr inbounds [4 x i8], ptr %i.ru, i64 %5
   store i32 %.0.lcssa.i.i, ptr %i.rv, align 4, !tbaa !38
   %i.rw = load i32, ptr %i.qy, align 8, !tbaa !90 ; 2 uses
   %i.rx = icmp sgt i32 %i.rw, 0
@@ -291,14 +292,14 @@ Exa_ManFindFanin.exit.1.i67:                      ; preds = %Exa_ManFindFanin.ex
   %i.sh = phi ptr [ %i.ru, %Exa_ManFindFanin.exit.i66 ], [ %.pre30.i, %Exa_ManFindFanin.exit.loopexit.1.i78 ]
   %i.si = phi ptr [ %i.rs, %Exa_ManFindFanin.exit.i66 ], [ %.pre29.i, %Exa_ManFindFanin.exit.loopexit.1.i78 ]
   %.0.lcssa.i.1.i68 = phi i32 [ -1, %Exa_ManFindFanin.exit.i66 ], [ %.1.i.1.i76, %Exa_ManFindFanin.exit.loopexit.1.i78 ]
-  %indvars.iv.next.1.i = add nuw nsw i64 %.021.i, 2
-  %i.sj = getelementptr inbounds nuw [4 x i8], ptr %i.sh, i64 %.021.i
-  %i.sk = getelementptr inbounds nuw i8, ptr %i.sj, i64 4
+  %i.sj = getelementptr [4 x i8], ptr %i.sh, i64 %5
+  %i.sk = getelementptr i8, ptr %i.sj, i64 4
   store i32 %.0.lcssa.i.1.i68, ptr %i.sk, align 4, !tbaa !38
   %indvars.iv.next27.i = add nsw i64 %indvars.iv.i65.a, 1 ; 2 uses
   %i.sl = load i32, ptr %i.qy, align 8, !tbaa !90 ; 2 uses
   %i.sm = sext i32 %i.sl to i64
   %i.sn = icmp slt i64 %indvars.iv.next27.i, %i.sm
+  %indvars.iv.next.i69 = add i32 %indvars.iv.i65, 2
   br i1 %i.sn, label %.preheader.i, label %Exa_ManSaveSolution.exit, !llvm.loop !199
 
 Exa_ManSaveSolution.exit:                         ; preds = %Exa_ManFindFanin.exit.1.i67, %bb.af
@@ -701,21 +702,22 @@ Vec_WecStart.exit:                                ; preds = %bb.a, %bb.b
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
   %indvars.iv27 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next28, %._crit_edge ] ; 2 uses
-  %.01724 = phi i32 [ 0, %.lr.ph.preheader ], [ %7, %._crit_edge ] ; 2 uses
-  %4 = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv27 ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
-  %6 = sext i32 %.01724 to i64
-  %7 = add i32 %2, %.01724                        ; 2 uses
+  %.01724 = phi i32 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
+  %4 = sext i32 %.01724 to i64
+  %5 = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv27 ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.n
   %indvars.iv.next28 = add nuw nsw i64 %indvars.iv27, 1 ; 2 uses
+  %indvars.iv.next = add i32 %.01724, %2
   %exitcond30.not = icmp eq i64 %indvars.iv.next28, %wide.trip.count
   br i1 %exitcond30.not, label %.critedge, label %.lr.ph, !llvm.loop !212
 
 bb.c:                                             ; preds = %.lr.ph, %bb.n
-  %indvars.iv = phi i64 [ %6, %.lr.ph ], [ %indvars.iv.next, %bb.n ] ; 2 uses
+  %indvars.iv = phi i64 [ %4, %.lr.ph ], [ %indvars.iv.next27, %bb.n ] ; 2 uses
+  %.022 = phi i32 [ 0, %.lr.ph ], [ %7, %bb.n ]
   %i.k = getelementptr inbounds i8, ptr %3, i64 %indvars.iv
   %i.l = load i8, ptr %i.k, align 1, !tbaa !120   ; 2 uses
   switch i8 %i.l, label %bb.d [
@@ -730,13 +732,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %i.o = phi i32 [ %i.n, %bb.d ], [ -1, %bb.c ]
-  %i.p = load i32, ptr %5, align 4, !tbaa !45     ; 7 uses
-  %i.q = load i32, ptr %4, align 8, !tbaa !48
+  %i.p = load i32, ptr %i.j, align 4, !tbaa !45   ; 7 uses
+  %i.q = load i32, ptr %5, align 8, !tbaa !48
   %i.r = icmp eq i32 %i.p, %i.q
   br i1 %i.r, label %bb.f, label %.Vec_IntPush.exit_crit_edge
 
 .Vec_IntPush.exit_crit_edge:                      ; preds = %bb.e
-  %.pre = load ptr, ptr %i.j, align 8, !tbaa !49
+  %.pre = load ptr, ptr %6, align 8, !tbaa !49
   br label %Vec_IntPush.exit
 
 bb.f:                                             ; preds = %bb.e
@@ -744,7 +746,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.s, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
-  %i.t = load ptr, ptr %i.j, align 8, !tbaa !49   ; 2 uses
+  %i.t = load ptr, ptr %6, align 8, !tbaa !49     ; 2 uses
   %.not9.i.i = icmp eq ptr %i.t, null
   br i1 %.not9.i.i, label %bb.i, label %bb.h
 
@@ -761,7 +763,7 @@ bb.j:                                             ; preds = %bb.f
   %i.x = shl nuw nsw i32 %i.p, 1
   %spec.select.i = select i1 %i.w, i32 %i.x, i32 2147483647 ; 4 uses
   %.not.i9.i = icmp samesign ult i32 %i.p, %spec.select.i
-  %.pre31 = load ptr, ptr %i.j, align 8, !tbaa !49 ; 3 uses
+  %.pre31 = load ptr, ptr %6, align 8, !tbaa !49  ; 3 uses
   br i1 %.not.i9.i, label %bb.k, label %Vec_IntPush.exit
 
 bb.k:                                             ; preds = %bb.j
@@ -781,25 +783,25 @@ bb.m:                                             ; preds = %bb.k
 Vec_IntGrow.exit11.sink.split.i:                  ; preds = %bb.l, %bb.m, %bb.h, %bb.i
   %i.ac = phi ptr [ %i.v, %bb.i ], [ %i.u, %bb.h ], [ %i.aa, %bb.l ], [ %i.ab, %bb.m ] ; 2 uses
   %spec.select.sink.i = phi i32 [ 16, %bb.i ], [ 16, %bb.h ], [ %spec.select.i, %bb.l ], [ %spec.select.i, %bb.m ]
-  store ptr %i.ac, ptr %i.j, align 8, !tbaa !49
-  store i32 %spec.select.sink.i, ptr %4, align 8, !tbaa !48
-  %.pre32 = load i32, ptr %5, align 4, !tbaa !45
+  store ptr %i.ac, ptr %6, align 8, !tbaa !49
+  store i32 %spec.select.sink.i, ptr %5, align 8, !tbaa !48
+  %.pre32 = load i32, ptr %i.j, align 4, !tbaa !45
   br label %Vec_IntPush.exit
 
 Vec_IntPush.exit:                                 ; preds = %.Vec_IntPush.exit_crit_edge, %bb.j, %Vec_IntGrow.exit11.sink.split.i
   %i.ad = phi i32 [ %i.p, %.Vec_IntPush.exit_crit_edge ], [ %i.p, %bb.j ], [ %.pre32, %Vec_IntGrow.exit11.sink.split.i ] ; 2 uses
   %i.ae = phi ptr [ %.pre, %.Vec_IntPush.exit_crit_edge ], [ %.pre31, %bb.j ], [ %i.ac, %Vec_IntGrow.exit11.sink.split.i ]
   %i.af = add nsw i32 %i.ad, 1
-  store i32 %i.af, ptr %5, align 4, !tbaa !45
+  store i32 %i.af, ptr %i.j, align 4, !tbaa !45
   %i.ag = sext i32 %i.ad to i64
   %i.ah = getelementptr inbounds [4 x i8], ptr %i.ae, i64 %i.ag
   store i32 %i.o, ptr %i.ah, align 4, !tbaa !38
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.c, %Vec_IntPush.exit
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %7, %lftr.wideiv
+  %7 = add nuw nsw i32 %.022, 1                   ; 2 uses
+  %indvars.iv.next27 = add nsw i64 %indvars.iv, 1
+  %exitcond.not = icmp eq i32 %7, %2
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !213
 
 .critedge:                                        ; preds = %._crit_edge, %Vec_WecStart.exit

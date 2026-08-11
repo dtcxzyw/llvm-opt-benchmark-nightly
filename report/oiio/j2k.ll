@@ -204,7 +204,7 @@ declare noundef i32 @snprintf(ptr noalias noundef writeonly captures(none), i64 
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @opj_j2k_check_poc_val(ptr nofree noundef nonnull readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, ptr noundef %6) unnamed_addr #3 {
 bb.a:
-  %i.a = mul i32 %4, %3                           ; 3 uses
+  %i.a = mul i32 %4, %3                           ; 4 uses
   %i.b = zext i32 %i.a to i64
   %i.c = zext i32 %5 to i64
   %i.d = mul nuw i64 %i.b, %i.c
@@ -243,15 +243,18 @@ bb.b:                                             ; preds = %bb.a
   br label %.preheader76.us.us
 
 .preheader76.us.us:                               ; preds = %.preheader76.us.us.preheader, %._crit_edge100.split.us.us.us
-  %.1106.us.us = phi i32 [ %i.bn, %._crit_edge100.split.us.us.us ], [ 0, %.preheader76.us.us.preheader ] ; 2 uses
+  %indvars.iv126 = phi i32 [ %i.bo, %._crit_edge100.split.us.us.us ], [ %i.a, %.preheader76.us.us.preheader ] ; 2 uses
+  %.1106.us.us = phi i32 [ %indvars.iv126, %._crit_edge100.split.us.us.us ], [ 0, %.preheader76.us.us.preheader ] ; 2 uses
   %.065105.us.us = phi i32 [ %.lcssa, %._crit_edge100.split.us.us.us ], [ 0, %.preheader76.us.us.preheader ]
-  %.173104.us.us = phi i32 [ %i.bo, %._crit_edge100.split.us.us.us ], [ 0, %.preheader76.us.us.preheader ]
+  %.173104.us.us = phi i32 [ %i.bn, %._crit_edge100.split.us.us.us ], [ 0, %.preheader76.us.us.preheader ]
+  %7 = add i32 %4, %.1106.us.us
   br label %.preheader.us.us.us
 
 .preheader.us.us.us:                              ; preds = %._crit_edge95.us.us.us, %.preheader76.us.us
-  %.299.us.us.us = phi i32 [ %.1106.us.us, %.preheader76.us.us ], [ %i.bl, %._crit_edge95.us.us.us ] ; 5 uses
-  %.16698.us.us.us = phi i32 [ %.065105.us.us, %.preheader76.us.us ], [ %.lcssa, %._crit_edge95.us.us.us ] ; 2 uses
-  %.16997.us.us.us = phi i32 [ 0, %.preheader76.us.us ], [ %i.bm, %._crit_edge95.us.us.us ]
+  %indvars.iv123 = phi i32 [ %i.bm, %._crit_edge95.us.us.us ], [ %7, %.preheader76.us.us ] ; 2 uses
+  %.299.us.us.us = phi i32 [ %indvars.iv123, %._crit_edge95.us.us.us ], [ %.1106.us.us, %.preheader76.us.us ] ; 4 uses
+  %.16698.us.us.us = phi i32 [ %.lcssa, %._crit_edge95.us.us.us ], [ %.065105.us.us, %.preheader76.us.us ] ; 2 uses
+  %.16997.us.us.us = phi i32 [ %i.bl, %._crit_edge95.us.us.us ], [ 0, %.preheader76.us.us ]
   %i.j = icmp ugt i32 %.299.us.us.us, %i.i
   %or.cond7 = select i1 %min.iters.check, i1 true, i1 %i.j
   br i1 %or.cond7, label %scalar.ph.preheader, label %vector.ph
@@ -356,15 +359,15 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 ._crit_edge95.us.us.us:                           ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %.lcssa = phi i32 [ %i.x, %middle.block ], [ %.lcssa10.unr, %scalar.ph.prol.loopexit ], [ %i.bi, %scalar.ph ] ; 3 uses
-  %i.bl = add i32 %4, %.299.us.us.us
-  %i.bm = add nuw i32 %.16997.us.us.us, 1         ; 2 uses
-  %exitcond124.not = icmp eq i32 %i.bm, %3
+  %i.bl = add nuw i32 %.16997.us.us.us, 1         ; 2 uses
+  %i.bm = add i32 %indvars.iv123, %4
+  %exitcond124.not = icmp eq i32 %i.bl, %3
   br i1 %exitcond124.not, label %._crit_edge100.split.us.us.us, label %.preheader.us.us.us, !llvm.loop !165
 
 ._crit_edge100.split.us.us.us:                    ; preds = %._crit_edge95.us.us.us
-  %i.bn = add i32 %i.a, %.1106.us.us
-  %i.bo = add nuw i32 %.173104.us.us, 1           ; 2 uses
-  %exitcond125.not = icmp eq i32 %i.bo, %5
+  %i.bn = add nuw i32 %.173104.us.us, 1           ; 2 uses
+  %i.bo = add i32 %indvars.iv126, %i.a
+  %exitcond125.not = icmp eq i32 %i.bn, %5
   br i1 %exitcond125.not, label %._crit_edge107, label %.preheader76.us.us, !llvm.loop !166
 
 bb.c:                                             ; preds = %.lr.ph90, %.loopexit

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not, label %._crit_edge90.split, label %.preheader82.lr.ph
 
 .preheader82.lr.ph:                               ; preds = %.preheader83
-  %i.n = shl nuw nsw i64 %.pre108, 2
+  %i.n = shl nuw nsw i64 %.pre108, 2              ; 2 uses
   %.not98 = icmp eq i32 %5, 0
   br i1 %.not98, label %._crit_edge90.split, label %.preheader82.preheader
 
@@ -455,11 +455,11 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   br i1 %niter.ncmp.3, label %._crit_edge93.unr-lcssa, label %.preheader79.new, !llvm.loop !440
 
 .preheader82:                                     ; preds = %.preheader82.preheader, %._crit_edge
-  %.05389.a = phi i64 [ %i.co, %._crit_edge ], [ 0, %.preheader82.preheader ]
-  %.05488.a = phi i64 [ %7, %._crit_edge ], [ 0, %.preheader82.preheader ] ; 3 uses
-  %7 = add i64 %i.n, %.05488.a                    ; 2 uses
-  %.184 = or disjoint i64 %.05488.a, 1
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %3, i64 %.05488.a
+  %.05389.a = phi i64 [ %i.co, %._crit_edge ], [ %i.n, %.preheader82.preheader ] ; 3 uses
+  %.05488.a = phi i64 [ %7, %._crit_edge ], [ 0, %.preheader82.preheader ]
+  %.05488 = phi i64 [ %.05389.a, %._crit_edge ], [ 0, %.preheader82.preheader ] ; 2 uses
+  %.184 = add nuw nsw i64 %.05488, 1
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %3, i64 %.05488
   %.pre = load i8, ptr %.phi.trans.insert, align 1, !tbaa !14
   br label %bb.g
 
@@ -527,8 +527,9 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.i64, label %_ZN11OpenImageIO4v3_113byteswap_spanIjEEvNS0_4spanIT_Lm18446744073709551615EEE.exit, label %.lr.ph.i62, !llvm.loop !443
 
 ._crit_edge:                                      ; preds = %.preheader82.new, %.prol.loopexit
-  %i.co = add nuw nsw i64 %.05389.a, 1            ; 2 uses
-  %exitcond103.not = icmp eq i64 %i.co, %i.m
+  %7 = add nuw nsw i64 %.05488.a, 1               ; 2 uses
+  %i.co = add i64 %.05389.a, %i.n
+  %exitcond103.not = icmp eq i64 %7, %i.m
   br i1 %exitcond103.not, label %._crit_edge90.split, label %.preheader82, !llvm.loop !444
 
 .preheader82.new:                                 ; preds = %.prol.loopexit, %.preheader82.new
@@ -554,7 +555,7 @@ middle.block:                                     ; preds = %vector.body
   %i.de = add i8 %i.da, %i.dd                     ; 2 uses
   store i8 %i.de, ptr %i.dc, align 1, !tbaa !14
   %.1.3 = add i64 %.187, 4                        ; 2 uses
-  %exitcond.not.3 = icmp eq i64 %.1.3, %7
+  %exitcond.not.3 = icmp eq i64 %.1.3, %.05389.a
   br i1 %exitcond.not.3, label %._crit_edge, label %.preheader82.new, !llvm.loop !445
 
 bb.h:                                             ; preds = %bb.c

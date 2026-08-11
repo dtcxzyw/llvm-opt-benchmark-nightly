@@ -204,14 +204,15 @@ vector.main.loop.iter.check59:                    ; preds = %iter.check77
 vector.ph61:                                      ; preds = %vector.main.loop.iter.check59
   %i.ac = and i64 %smax189.i, 24
   %n.vec62 = and i64 %smax189.i, 268435424        ; 5 uses
-  %i.ad = shl nuw nsw i64 %n.vec62, 3
+  %i.ad = shl nuw nsw i64 %n.vec62, 3             ; 2 uses
+  %3 = or disjoint i64 %i.ad, 8
   br label %vector.body67
 
 vector.body67:                                    ; preds = %vector.body67, %vector.ph61
   %index68 = phi i64 [ 0, %vector.ph61 ], [ %index.next71, %vector.body67 ] ; 2 uses
   %vec.phi69 = phi <16 x i1> [ zeroinitializer, %vector.ph61 ], [ %i.ahi, %vector.body67 ]
   %vec.phi70 = phi <16 x i1> [ zeroinitializer, %vector.ph61 ], [ %i.ahj, %vector.body67 ]
-  %i.ae = shl nuw i64 %index68, 3                 ; 32 uses
+  %i.ae = shl i64 %index68, 3                     ; 32 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.088173.i, i64 %i.ae ; 8 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.088173.i, i64 %i.ae ; 8 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
@@ -614,14 +615,15 @@ vec.epilog.ph81:                                  ; preds = %vector.main.loop.it
   %vec.epilog.resume.val75 = phi i64 [ %n.vec62, %vec.epilog.iter.check79 ], [ 0, %vector.main.loop.iter.check59 ]
   %bc.merge.rdx76 = phi i1 [ %i.ahm, %vec.epilog.iter.check79 ], [ false, %vector.main.loop.iter.check59 ]
   %n.vec82 = and i64 %smax189.i, 268435448        ; 4 uses
-  %i.ahn = shl nuw nsw i64 %n.vec82, 3
+  %i.ahn = shl nuw nsw i64 %n.vec82, 3            ; 2 uses
+  %4 = or disjoint i64 %i.ahn, 8
   %i.aho = insertelement <8 x i1> <i1 poison, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false>, i1 %bc.merge.rdx76, i64 0
   br label %vec.epilog.vector.body87
 
 vec.epilog.vector.body87:                         ; preds = %vec.epilog.vector.body87, %vec.epilog.ph81
   %index88 = phi i64 [ %vec.epilog.resume.val75, %vec.epilog.ph81 ], [ %index.next90, %vec.epilog.vector.body87 ] ; 2 uses
   %vec.phi89 = phi <8 x i1> [ %i.aho, %vec.epilog.ph81 ], [ %i.aqm, %vec.epilog.vector.body87 ]
-  %i.ahp = shl nuw i64 %index88, 3                ; 8 uses
+  %i.ahp = shl i64 %index88, 3                    ; 8 uses
   %i.ahq = getelementptr inbounds nuw i8, ptr %.088173.i, i64 %i.ahp ; 8 uses
   %i.ahr = getelementptr inbounds nuw i8, ptr %.088173.i, i64 %i.ahp ; 8 uses
   %i.ahs = getelementptr inbounds nuw i8, ptr %i.ahr, i64 8
@@ -864,6 +866,7 @@ vec.epilog.middle.block91:                        ; preds = %vec.epilog.vector.b
   br i1 %cmp.n92, label %.preheader137.loopexit.i, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %iter.check77, %vec.epilog.iter.check79, %vec.epilog.middle.block91
+  %indvars.iv190.i.ph = phi i64 [ 8, %iter.check77 ], [ %3, %vec.epilog.iter.check79 ], [ %4, %vec.epilog.middle.block91 ]
   %.081158.i.ph = phi i64 [ 0, %iter.check77 ], [ %n.vec62, %vec.epilog.iter.check79 ], [ %n.vec82, %vec.epilog.middle.block91 ]
   %.082157.i.ph = phi i64 [ 0, %iter.check77 ], [ %i.ad, %vec.epilog.iter.check79 ], [ %i.ahn, %vec.epilog.middle.block91 ]
   %.085156.i.ph = phi i1 [ false, %iter.check77 ], [ %i.ahm, %vec.epilog.iter.check79 ], [ %i.aqp, %vec.epilog.middle.block91 ]
@@ -965,8 +968,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_8Int8TypeEaEENS_6StatusERK
   br label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_8Int8TypeEaEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlaE_clEa.exit119.i
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader, %.preheader.i
-  %.081158.i = phi i64 [ %i.asg, %.preheader.i ], [ %.081158.i.ph, %.preheader.i.preheader ]
-  %.082157.i = phi i64 [ %i.asf, %.preheader.i ], [ %.082157.i.ph, %.preheader.i.preheader ] ; 2 uses
+  %indvars.iv190.i = phi i64 [ %i.asg, %.preheader.i ], [ %indvars.iv190.i.ph, %.preheader.i.preheader ] ; 2 uses
+  %.081158.i = phi i64 [ %i.asf, %.preheader.i ], [ %.081158.i.ph, %.preheader.i.preheader ]
+  %.082157.i = phi i64 [ %indvars.iv190.i, %.preheader.i ], [ %.082157.i.ph, %.preheader.i.preheader ]
   %.085156.i = phi i1 [ %op.rdx, %.preheader.i ], [ %.085156.i.ph, %.preheader.i.preheader ]
   %i.ary = getelementptr inbounds nuw i8, ptr %.088173.i, i64 %.082157.i
   %i.arz = load <8 x i8>, ptr %i.ary, align 1, !tbaa !8, !noalias !561 ; 2 uses
@@ -976,9 +980,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_8Int8TypeEaEENS_6StatusERK
   %i.asd = bitcast <16 x i1> %i.asc to i16
   %i.ase = icmp ne i16 %i.asd, 0
   %op.rdx = or i1 %i.ase, %.085156.i              ; 2 uses
-  %i.asf = add nuw nsw i64 %.082157.i, 8
-  %i.asg = add nuw nsw i64 %.081158.i, 1          ; 2 uses
-  %exitcond190.not.i = icmp eq i64 %i.asg, %smax189.i
+  %i.asf = add nuw nsw i64 %.081158.i, 1          ; 2 uses
+  %i.asg = add nuw nsw i64 %indvars.iv190.i, 8
+  %exitcond190.not.i = icmp eq i64 %i.asf, %smax189.i
   br i1 %exitcond190.not.i, label %.preheader137.loopexit.i, label %.preheader.i, !llvm.loop !572
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_8Int8TypeEaEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlaE_clEa.exit119.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_8Int8TypeEaEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlaE_clEa.exit119.i.preheader, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_8Int8TypeEaEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlaE_clEa.exit119.i
@@ -1068,9 +1072,10 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_8Int8TypeEaEENS_6StatusERK
   br i1 %i.aub, label %.loopexit.i, label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_8Int8TypeEaEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlabE_clEab.exit120.i
 
 .preheader133.i:                                  ; preds = %.preheader133.i, %.preheader133.preheader.i
-  %.075148.i = phi i64 [ %i.aww, %.preheader133.i ], [ 0, %.preheader133.preheader.i ]
-  %.076147.i = phi i64 [ %i.awv, %.preheader133.i ], [ 0, %.preheader133.preheader.i ] ; 10 uses
-  %.3146.i = phi i1 [ %op.rdx96, %.preheader133.i ], [ false, %.preheader133.preheader.i ]
+  %indvars.iv.i = phi i64 [ 8, %.preheader133.preheader.i ], [ %i.aww, %.preheader133.i ] ; 2 uses
+  %.075148.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %i.awv, %.preheader133.i ]
+  %.076147.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %indvars.iv.i, %.preheader133.i ] ; 9 uses
+  %.3146.i = phi i1 [ false, %.preheader133.preheader.i ], [ %op.rdx96, %.preheader133.i ]
   %i.auc = getelementptr inbounds nuw i8, ptr %.088173.i, i64 %.076147.i
   %i.aud = add nsw i64 %.076147.i, %.092169.i
   %i.aue = lshr i64 %i.aud, 3
@@ -1143,9 +1148,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_8Int8TypeEaEENS_6StatusERK
   %i.awt = bitcast <8 x i1> %i.aws to i8
   %i.awu = icmp ne i8 %i.awt, 0
   %op.rdx96 = or i1 %i.awu, %.3146.i              ; 2 uses
-  %i.awv = add nuw nsw i64 %.076147.i, 8
-  %i.aww = add nuw nsw i64 %.075148.i, 1          ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.aww, %smax.i
+  %i.awv = add nuw nsw i64 %.075148.i, 1          ; 2 uses
+  %i.aww = add nuw nsw i64 %indvars.iv.i, 8
+  %exitcond.not.i = icmp eq i64 %i.awv, %smax.i
   br i1 %exitcond.not.i, label %.preheader139.loopexit.i, label %.preheader133.i, !llvm.loop !574
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_8Int8TypeEaEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlabE_clEab.exit120.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_8Int8TypeEaEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlabE_clEab.exit120.i.prol.loopexit, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_8Int8TypeEaEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlabE_clEab.exit120.i
@@ -1367,14 +1372,15 @@ vector.main.loop.iter.check59:                    ; preds = %iter.check77
 vector.ph61:                                      ; preds = %vector.main.loop.iter.check59
   %i.ac = and i64 %smax189.i, 12
   %n.vec62 = and i64 %smax189.i, 268435440        ; 5 uses
-  %i.ad = shl nuw nsw i64 %n.vec62, 3
+  %i.ad = shl nuw nsw i64 %n.vec62, 3             ; 2 uses
+  %3 = or disjoint i64 %i.ad, 8
   br label %vector.body67
 
 vector.body67:                                    ; preds = %vector.body67, %vector.ph61
   %index68 = phi i64 [ 0, %vector.ph61 ], [ %index.next71, %vector.body67 ] ; 2 uses
   %vec.phi69 = phi <8 x i1> [ zeroinitializer, %vector.ph61 ], [ %i.ry, %vector.body67 ]
   %vec.phi70 = phi <8 x i1> [ zeroinitializer, %vector.ph61 ], [ %i.rz, %vector.body67 ]
-  %i.ae = shl nuw i64 %index68, 3                 ; 16 uses
+  %i.ae = shl i64 %index68, 3                     ; 16 uses
   %i.af = getelementptr inbounds nuw [2 x i8], ptr %.088173.i, i64 %i.ae ; 8 uses
   %i.ag = getelementptr inbounds nuw [2 x i8], ptr %.088173.i, i64 %i.ae ; 8 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
@@ -1777,14 +1783,15 @@ vec.epilog.ph81:                                  ; preds = %vector.main.loop.it
   %vec.epilog.resume.val75 = phi i64 [ %n.vec62, %vec.epilog.iter.check79 ], [ 0, %vector.main.loop.iter.check59 ]
   %bc.merge.rdx76 = phi i1 [ %i.sc, %vec.epilog.iter.check79 ], [ false, %vector.main.loop.iter.check59 ]
   %n.vec82 = and i64 %smax189.i, 268435452        ; 4 uses
-  %i.sd = shl nuw nsw i64 %n.vec82, 3
+  %i.sd = shl nuw nsw i64 %n.vec82, 3             ; 2 uses
+  %4 = or disjoint i64 %i.sd, 8
   %i.se = insertelement <4 x i1> <i1 poison, i1 false, i1 false, i1 false>, i1 %bc.merge.rdx76, i64 0
   br label %vec.epilog.vector.body87
 
 vec.epilog.vector.body87:                         ; preds = %vec.epilog.vector.body87, %vec.epilog.ph81
   %index88 = phi i64 [ %vec.epilog.resume.val75, %vec.epilog.ph81 ], [ %index.next90, %vec.epilog.vector.body87 ] ; 2 uses
   %vec.phi89 = phi <4 x i1> [ %i.se, %vec.epilog.ph81 ], [ %i.xg, %vec.epilog.vector.body87 ]
-  %i.sf = shl nuw i64 %index88, 3                 ; 4 uses
+  %i.sf = shl i64 %index88, 3                     ; 4 uses
   %i.sg = getelementptr inbounds nuw [2 x i8], ptr %.088173.i, i64 %i.sf ; 8 uses
   %i.sh = getelementptr inbounds nuw [2 x i8], ptr %.088173.i, i64 %i.sf ; 8 uses
   %i.si = getelementptr inbounds nuw i8, ptr %i.sh, i64 16
@@ -1927,6 +1934,7 @@ vec.epilog.middle.block91:                        ; preds = %vec.epilog.vector.b
   br i1 %cmp.n92, label %.preheader137.loopexit.i, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %iter.check77, %vec.epilog.iter.check79, %vec.epilog.middle.block91
+  %indvars.iv190.i.ph = phi i64 [ 8, %iter.check77 ], [ %3, %vec.epilog.iter.check79 ], [ %4, %vec.epilog.middle.block91 ]
   %.081158.i.ph = phi i64 [ 0, %iter.check77 ], [ %n.vec62, %vec.epilog.iter.check79 ], [ %n.vec82, %vec.epilog.middle.block91 ]
   %.082157.i.ph = phi i64 [ 0, %iter.check77 ], [ %i.ad, %vec.epilog.iter.check79 ], [ %i.sd, %vec.epilog.middle.block91 ]
   %.085156.i.ph = phi i1 [ false, %iter.check77 ], [ %i.sc, %vec.epilog.iter.check79 ], [ %i.xj, %vec.epilog.middle.block91 ]
@@ -2028,8 +2036,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int16TypeEsEENS_6StatusER
   br label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int16TypeEsEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlsE_clEs.exit119.i
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader, %.preheader.i
-  %.081158.i = phi i64 [ %i.za, %.preheader.i ], [ %.081158.i.ph, %.preheader.i.preheader ]
-  %.082157.i = phi i64 [ %i.yz, %.preheader.i ], [ %.082157.i.ph, %.preheader.i.preheader ] ; 2 uses
+  %indvars.iv190.i = phi i64 [ %i.za, %.preheader.i ], [ %indvars.iv190.i.ph, %.preheader.i.preheader ] ; 2 uses
+  %.081158.i = phi i64 [ %i.yz, %.preheader.i ], [ %.081158.i.ph, %.preheader.i.preheader ]
+  %.082157.i = phi i64 [ %indvars.iv190.i, %.preheader.i ], [ %.082157.i.ph, %.preheader.i.preheader ]
   %.085156.i = phi i1 [ %op.rdx, %.preheader.i ], [ %.085156.i.ph, %.preheader.i.preheader ]
   %i.ys = getelementptr inbounds nuw [2 x i8], ptr %.088173.i, i64 %.082157.i
   %i.yt = load <8 x i16>, ptr %i.ys, align 2, !tbaa !18, !noalias !583 ; 2 uses
@@ -2039,9 +2048,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int16TypeEsEENS_6StatusER
   %i.yx = bitcast <16 x i1> %i.yw to i16
   %i.yy = icmp ne i16 %i.yx, 0
   %op.rdx = or i1 %i.yy, %.085156.i               ; 2 uses
-  %i.yz = add nuw nsw i64 %.082157.i, 8
-  %i.za = add nuw nsw i64 %.081158.i, 1           ; 2 uses
-  %exitcond190.not.i = icmp eq i64 %i.za, %smax189.i
+  %i.yz = add nuw nsw i64 %.081158.i, 1           ; 2 uses
+  %i.za = add nuw nsw i64 %indvars.iv190.i, 8
+  %exitcond190.not.i = icmp eq i64 %i.yz, %smax189.i
   br i1 %exitcond190.not.i, label %.preheader137.loopexit.i, label %.preheader.i, !llvm.loop !594
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int16TypeEsEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlsE_clEs.exit119.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int16TypeEsEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlsE_clEs.exit119.i.preheader, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int16TypeEsEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlsE_clEs.exit119.i
@@ -2131,9 +2140,10 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int16TypeEsEENS_6StatusER
   br i1 %i.aav, label %.loopexit.i, label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int16TypeEsEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlsbE_clEsb.exit120.i
 
 .preheader133.i:                                  ; preds = %.preheader133.i, %.preheader133.preheader.i
-  %.075148.i = phi i64 [ %i.adq, %.preheader133.i ], [ 0, %.preheader133.preheader.i ]
-  %.076147.i = phi i64 [ %i.adp, %.preheader133.i ], [ 0, %.preheader133.preheader.i ] ; 10 uses
-  %.3146.i = phi i1 [ %op.rdx96, %.preheader133.i ], [ false, %.preheader133.preheader.i ]
+  %indvars.iv.i = phi i64 [ 8, %.preheader133.preheader.i ], [ %i.adq, %.preheader133.i ] ; 2 uses
+  %.075148.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %i.adp, %.preheader133.i ]
+  %.076147.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %indvars.iv.i, %.preheader133.i ] ; 9 uses
+  %.3146.i = phi i1 [ false, %.preheader133.preheader.i ], [ %op.rdx96, %.preheader133.i ]
   %i.aaw = getelementptr inbounds nuw [2 x i8], ptr %.088173.i, i64 %.076147.i
   %i.aax = add nsw i64 %.076147.i, %.092169.i
   %i.aay = lshr i64 %i.aax, 3
@@ -2206,9 +2216,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int16TypeEsEENS_6StatusER
   %i.adn = bitcast <8 x i1> %i.adm to i8
   %i.ado = icmp ne i8 %i.adn, 0
   %op.rdx96 = or i1 %i.ado, %.3146.i              ; 2 uses
-  %i.adp = add nuw nsw i64 %.076147.i, 8
-  %i.adq = add nuw nsw i64 %.075148.i, 1          ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.adq, %smax.i
+  %i.adp = add nuw nsw i64 %.075148.i, 1          ; 2 uses
+  %i.adq = add nuw nsw i64 %indvars.iv.i, 8
+  %exitcond.not.i = icmp eq i64 %i.adp, %smax.i
   br i1 %exitcond.not.i, label %.preheader139.loopexit.i, label %.preheader133.i, !llvm.loop !596
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int16TypeEsEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlsbE_clEsb.exit120.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int16TypeEsEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlsbE_clEsb.exit120.i.prol.loopexit, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int16TypeEsEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlsbE_clEsb.exit120.i
@@ -2417,14 +2427,15 @@ bb.c:                                             ; preds = %bb.a
 
 vector.ph47:                                      ; preds = %.preheader.preheader.i
   %n.vec48 = and i64 %smax189.i, 268435448        ; 4 uses
-  %i.ac = shl nuw nsw i64 %n.vec48, 3
+  %i.ac = shl nuw nsw i64 %n.vec48, 3             ; 2 uses
+  %3 = or disjoint i64 %i.ac, 8
   br label %vector.body53
 
 vector.body53:                                    ; preds = %vector.body53, %vector.ph47
   %index54 = phi i64 [ 0, %vector.ph47 ], [ %index.next57, %vector.body53 ] ; 2 uses
   %vec.phi55 = phi <4 x i1> [ zeroinitializer, %vector.ph47 ], [ %i.kf, %vector.body53 ]
   %vec.phi56 = phi <4 x i1> [ zeroinitializer, %vector.ph47 ], [ %i.kg, %vector.body53 ]
-  %i.ad = shl nuw i64 %index54, 3                 ; 8 uses
+  %i.ad = shl i64 %index54, 3                     ; 8 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %.088173.i, i64 %i.ad ; 8 uses
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %.088173.i, i64 %i.ad ; 8 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 32
@@ -2700,6 +2711,7 @@ middle.block58:                                   ; preds = %vector.body53
   br i1 %cmp.n60, label %.preheader137.loopexit.i, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %.preheader.preheader.i, %middle.block58
+  %indvars.iv190.i.ph = phi i64 [ 8, %.preheader.preheader.i ], [ %3, %middle.block58 ]
   %.081158.i.ph = phi i64 [ 0, %.preheader.preheader.i ], [ %n.vec48, %middle.block58 ]
   %.082157.i.ph = phi i64 [ 0, %.preheader.preheader.i ], [ %i.ac, %middle.block58 ]
   %.085156.i.ph = phi i1 [ false, %.preheader.preheader.i ], [ %i.kj, %middle.block58 ]
@@ -2764,8 +2776,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int32TypeEiEENS_6StatusER
   br label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int32TypeEiEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUliE_clEi.exit119.i
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader, %.preheader.i
-  %.081158.i = phi i64 [ %i.lo, %.preheader.i ], [ %.081158.i.ph, %.preheader.i.preheader ]
-  %.082157.i = phi i64 [ %i.ln, %.preheader.i ], [ %.082157.i.ph, %.preheader.i.preheader ] ; 2 uses
+  %indvars.iv190.i = phi i64 [ %i.lo, %.preheader.i ], [ %indvars.iv190.i.ph, %.preheader.i.preheader ] ; 2 uses
+  %.081158.i = phi i64 [ %i.ln, %.preheader.i ], [ %.081158.i.ph, %.preheader.i.preheader ]
+  %.082157.i = phi i64 [ %indvars.iv190.i, %.preheader.i ], [ %.082157.i.ph, %.preheader.i.preheader ]
   %.085156.i = phi i1 [ %op.rdx, %.preheader.i ], [ %.085156.i.ph, %.preheader.i.preheader ]
   %i.lg = getelementptr inbounds nuw [4 x i8], ptr %.088173.i, i64 %.082157.i
   %i.lh = load <8 x i32>, ptr %i.lg, align 4, !tbaa !9, !noalias !604 ; 2 uses
@@ -2775,9 +2788,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int32TypeEiEENS_6StatusER
   %i.ll = bitcast <16 x i1> %i.lk to i16
   %i.lm = icmp ne i16 %i.ll, 0
   %op.rdx = or i1 %i.lm, %.085156.i               ; 2 uses
-  %i.ln = add nuw nsw i64 %.082157.i, 8
-  %i.lo = add nuw nsw i64 %.081158.i, 1           ; 2 uses
-  %exitcond190.not.i = icmp eq i64 %i.lo, %smax189.i
+  %i.ln = add nuw nsw i64 %.081158.i, 1           ; 2 uses
+  %i.lo = add nuw nsw i64 %indvars.iv190.i, 8
+  %exitcond190.not.i = icmp eq i64 %i.ln, %smax189.i
   br i1 %exitcond190.not.i, label %.preheader137.loopexit.i, label %.preheader.i, !llvm.loop !612
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int32TypeEiEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUliE_clEi.exit119.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int32TypeEiEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUliE_clEi.exit119.i.preheader66, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int32TypeEiEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUliE_clEi.exit119.i
@@ -2867,9 +2880,10 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int32TypeEiEENS_6StatusER
   br i1 %i.nj, label %.loopexit.i, label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int32TypeEiEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlibE_clEib.exit120.i
 
 .preheader133.i:                                  ; preds = %.preheader133.i, %.preheader133.preheader.i
-  %.075148.i = phi i64 [ %i.qe, %.preheader133.i ], [ 0, %.preheader133.preheader.i ]
-  %.076147.i = phi i64 [ %i.qd, %.preheader133.i ], [ 0, %.preheader133.preheader.i ] ; 10 uses
-  %.3146.i = phi i1 [ %op.rdx64, %.preheader133.i ], [ false, %.preheader133.preheader.i ]
+  %indvars.iv.i = phi i64 [ 8, %.preheader133.preheader.i ], [ %i.qe, %.preheader133.i ] ; 2 uses
+  %.075148.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %i.qd, %.preheader133.i ]
+  %.076147.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %indvars.iv.i, %.preheader133.i ] ; 9 uses
+  %.3146.i = phi i1 [ false, %.preheader133.preheader.i ], [ %op.rdx64, %.preheader133.i ]
   %i.nk = getelementptr inbounds nuw [4 x i8], ptr %.088173.i, i64 %.076147.i
   %i.nl = add nsw i64 %.076147.i, %.092169.i
   %i.nm = lshr i64 %i.nl, 3
@@ -2942,9 +2956,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int32TypeEiEENS_6StatusER
   %i.qb = bitcast <8 x i1> %i.qa to i8
   %i.qc = icmp ne i8 %i.qb, 0
   %op.rdx64 = or i1 %i.qc, %.3146.i               ; 2 uses
-  %i.qd = add nuw nsw i64 %.076147.i, 8
-  %i.qe = add nuw nsw i64 %.075148.i, 1           ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.qe, %smax.i
+  %i.qd = add nuw nsw i64 %.075148.i, 1           ; 2 uses
+  %i.qe = add nuw nsw i64 %indvars.iv.i, 8
+  %exitcond.not.i = icmp eq i64 %i.qd, %smax.i
   br i1 %exitcond.not.i, label %.preheader139.loopexit.i, label %.preheader133.i, !llvm.loop !614
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int32TypeEiEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlibE_clEib.exit120.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int32TypeEiEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlibE_clEib.exit120.i.prol.loopexit, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int32TypeEiEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlibE_clEib.exit120.i
@@ -3175,9 +3189,10 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int64TypeElEENS_6StatusER
   br i1 %i.af, label %.loopexit.i, label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int64TypeElEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUllE_clEl.exit119.i
 
 .preheader.i:                                     ; preds = %.preheader.i, %.preheader.preheader.i
-  %.081158.i = phi i64 [ %i.cg, %.preheader.i ], [ 0, %.preheader.preheader.i ]
-  %.082157.i = phi i64 [ %i.cf, %.preheader.i ], [ 0, %.preheader.preheader.i ] ; 2 uses
-  %.085156.i = phi i1 [ %op.rdx, %.preheader.i ], [ false, %.preheader.preheader.i ]
+  %indvars.iv190.i = phi i64 [ 8, %.preheader.preheader.i ], [ %i.cg, %.preheader.i ] ; 2 uses
+  %.081158.i = phi i64 [ 0, %.preheader.preheader.i ], [ %i.cf, %.preheader.i ]
+  %.082157.i = phi i64 [ 0, %.preheader.preheader.i ], [ %indvars.iv190.i, %.preheader.i ]
+  %.085156.i = phi i1 [ false, %.preheader.preheader.i ], [ %op.rdx, %.preheader.i ]
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %.088173.i, i64 %.082157.i ; 8 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
@@ -3230,9 +3245,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int64TypeElEENS_6StatusER
   %i.cd = bitcast <16 x i1> %i.cc to i16
   %i.ce = icmp ne i16 %i.cd, 0
   %op.rdx = or i1 %i.ce, %.085156.i               ; 2 uses
-  %i.cf = add nuw nsw i64 %.082157.i, 8
-  %i.cg = add nuw nsw i64 %.081158.i, 1           ; 2 uses
-  %exitcond190.not.i = icmp eq i64 %i.cg, %smax189.i
+  %i.cf = add nuw nsw i64 %.081158.i, 1           ; 2 uses
+  %i.cg = add nuw nsw i64 %indvars.iv190.i, 8
+  %exitcond190.not.i = icmp eq i64 %i.cf, %smax189.i
   br i1 %exitcond190.not.i, label %.preheader137.loopexit.i, label %.preheader.i, !llvm.loop !629
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int64TypeElEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUllE_clEl.exit119.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int64TypeElEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUllE_clEl.exit119.i.prol.loopexit, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int64TypeElEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUllE_clEl.exit119.i
@@ -3343,9 +3358,10 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int64TypeElEENS_6StatusER
   br i1 %i.et, label %.loopexit.i, label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int64TypeElEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUllbE_clElb.exit120.i
 
 .preheader133.i:                                  ; preds = %.preheader133.i, %.preheader133.preheader.i
-  %.075148.i = phi i64 [ %i.iu, %.preheader133.i ], [ 0, %.preheader133.preheader.i ]
-  %.076147.i = phi i64 [ %i.it, %.preheader133.i ], [ 0, %.preheader133.preheader.i ] ; 10 uses
-  %.3146.i = phi i1 [ %i.is, %.preheader133.i ], [ false, %.preheader133.preheader.i ]
+  %indvars.iv.i = phi i64 [ 8, %.preheader133.preheader.i ], [ %i.iu, %.preheader133.i ] ; 2 uses
+  %.075148.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %i.it, %.preheader133.i ]
+  %.076147.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %indvars.iv.i, %.preheader133.i ] ; 9 uses
+  %.3146.i = phi i1 [ false, %.preheader133.preheader.i ], [ %i.is, %.preheader133.i ]
   %i.eu = getelementptr inbounds nuw [8 x i8], ptr %.088173.i, i64 %.076147.i
   %i.ev = load i64, ptr %i.eu, align 8, !tbaa !32, !noalias !622 ; 2 uses
   %i.ew = add nsw i64 %.076147.i, %.092169.i
@@ -3457,9 +3473,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int64TypeElEENS_6StatusER
   %spec.select129.7.i = or i1 %i.ip, %i.iq
   %i.ir = select i1 %i.io, i1 %spec.select129.7.i, i1 false
   %i.is = or i1 %i.if, %i.ir                      ; 2 uses
-  %i.it = add nuw nsw i64 %.076147.i, 8
-  %i.iu = add nuw nsw i64 %.075148.i, 1           ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.iu, %smax.i
+  %i.it = add nuw nsw i64 %.075148.i, 1           ; 2 uses
+  %i.iu = add nuw nsw i64 %indvars.iv.i, 8
+  %exitcond.not.i = icmp eq i64 %i.it, %smax.i
   br i1 %exitcond.not.i, label %.preheader139.loopexit.i, label %.preheader133.i, !llvm.loop !631
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int64TypeElEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUllbE_clElb.exit120.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int64TypeElEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUllbE_clElb.exit120.i.prol.loopexit, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9Int64TypeElEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUllbE_clElb.exit120.i
@@ -3681,14 +3697,15 @@ vector.main.loop.iter.check59:                    ; preds = %iter.check77
 vector.ph61:                                      ; preds = %vector.main.loop.iter.check59
   %i.ac = and i64 %smax189.i, 24
   %n.vec62 = and i64 %smax189.i, 268435424        ; 5 uses
-  %i.ad = shl nuw nsw i64 %n.vec62, 3
+  %i.ad = shl nuw nsw i64 %n.vec62, 3             ; 2 uses
+  %3 = or disjoint i64 %i.ad, 8
   br label %vector.body67
 
 vector.body67:                                    ; preds = %vector.body67, %vector.ph61
   %index68 = phi i64 [ 0, %vector.ph61 ], [ %index.next71, %vector.body67 ] ; 2 uses
   %vec.phi69 = phi <16 x i1> [ zeroinitializer, %vector.ph61 ], [ %i.ahi, %vector.body67 ]
   %vec.phi70 = phi <16 x i1> [ zeroinitializer, %vector.ph61 ], [ %i.ahj, %vector.body67 ]
-  %i.ae = shl nuw i64 %index68, 3                 ; 32 uses
+  %i.ae = shl i64 %index68, 3                     ; 32 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.088173.i, i64 %i.ae ; 8 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.088173.i, i64 %i.ae ; 8 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
@@ -4091,14 +4108,15 @@ vec.epilog.ph81:                                  ; preds = %vector.main.loop.it
   %vec.epilog.resume.val75 = phi i64 [ %n.vec62, %vec.epilog.iter.check79 ], [ 0, %vector.main.loop.iter.check59 ]
   %bc.merge.rdx76 = phi i1 [ %i.ahm, %vec.epilog.iter.check79 ], [ false, %vector.main.loop.iter.check59 ]
   %n.vec82 = and i64 %smax189.i, 268435448        ; 4 uses
-  %i.ahn = shl nuw nsw i64 %n.vec82, 3
+  %i.ahn = shl nuw nsw i64 %n.vec82, 3            ; 2 uses
+  %4 = or disjoint i64 %i.ahn, 8
   %i.aho = insertelement <8 x i1> <i1 poison, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false>, i1 %bc.merge.rdx76, i64 0
   br label %vec.epilog.vector.body87
 
 vec.epilog.vector.body87:                         ; preds = %vec.epilog.vector.body87, %vec.epilog.ph81
   %index88 = phi i64 [ %vec.epilog.resume.val75, %vec.epilog.ph81 ], [ %index.next90, %vec.epilog.vector.body87 ] ; 2 uses
   %vec.phi89 = phi <8 x i1> [ %i.aho, %vec.epilog.ph81 ], [ %i.aqm, %vec.epilog.vector.body87 ]
-  %i.ahp = shl nuw i64 %index88, 3                ; 8 uses
+  %i.ahp = shl i64 %index88, 3                    ; 8 uses
   %i.ahq = getelementptr inbounds nuw i8, ptr %.088173.i, i64 %i.ahp ; 8 uses
   %i.ahr = getelementptr inbounds nuw i8, ptr %.088173.i, i64 %i.ahp ; 8 uses
   %i.ahs = getelementptr inbounds nuw i8, ptr %i.ahr, i64 8
@@ -4341,6 +4359,7 @@ vec.epilog.middle.block91:                        ; preds = %vec.epilog.vector.b
   br i1 %cmp.n92, label %.preheader137.loopexit.i, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %iter.check77, %vec.epilog.iter.check79, %vec.epilog.middle.block91
+  %indvars.iv190.i.ph = phi i64 [ 8, %iter.check77 ], [ %3, %vec.epilog.iter.check79 ], [ %4, %vec.epilog.middle.block91 ]
   %.081158.i.ph = phi i64 [ 0, %iter.check77 ], [ %n.vec62, %vec.epilog.iter.check79 ], [ %n.vec82, %vec.epilog.middle.block91 ]
   %.082157.i.ph = phi i64 [ 0, %iter.check77 ], [ %i.ad, %vec.epilog.iter.check79 ], [ %i.ahn, %vec.epilog.middle.block91 ]
   %.085156.i.ph = phi i1 [ false, %iter.check77 ], [ %i.ahm, %vec.epilog.iter.check79 ], [ %i.aqp, %vec.epilog.middle.block91 ]
@@ -4442,8 +4461,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9UInt8TypeEhEENS_6StatusER
   br label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9UInt8TypeEhEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlhE_clEh.exit119.i
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader, %.preheader.i
-  %.081158.i = phi i64 [ %i.asg, %.preheader.i ], [ %.081158.i.ph, %.preheader.i.preheader ]
-  %.082157.i = phi i64 [ %i.asf, %.preheader.i ], [ %.082157.i.ph, %.preheader.i.preheader ] ; 2 uses
+  %indvars.iv190.i = phi i64 [ %i.asg, %.preheader.i ], [ %indvars.iv190.i.ph, %.preheader.i.preheader ] ; 2 uses
+  %.081158.i = phi i64 [ %i.asf, %.preheader.i ], [ %.081158.i.ph, %.preheader.i.preheader ]
+  %.082157.i = phi i64 [ %indvars.iv190.i, %.preheader.i ], [ %.082157.i.ph, %.preheader.i.preheader ]
   %.085156.i = phi i1 [ %op.rdx, %.preheader.i ], [ %.085156.i.ph, %.preheader.i.preheader ]
   %i.ary = getelementptr inbounds nuw i8, ptr %.088173.i, i64 %.082157.i
   %i.arz = load <8 x i8>, ptr %i.ary, align 1, !tbaa !8, !noalias !639 ; 2 uses
@@ -4453,9 +4473,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9UInt8TypeEhEENS_6StatusER
   %i.asd = bitcast <16 x i1> %i.asc to i16
   %i.ase = icmp ne i16 %i.asd, 0
   %op.rdx = or i1 %i.ase, %.085156.i              ; 2 uses
-  %i.asf = add nuw nsw i64 %.082157.i, 8
-  %i.asg = add nuw nsw i64 %.081158.i, 1          ; 2 uses
-  %exitcond190.not.i = icmp eq i64 %i.asg, %smax189.i
+  %i.asf = add nuw nsw i64 %.081158.i, 1          ; 2 uses
+  %i.asg = add nuw nsw i64 %indvars.iv190.i, 8
+  %exitcond190.not.i = icmp eq i64 %i.asf, %smax189.i
   br i1 %exitcond190.not.i, label %.preheader137.loopexit.i, label %.preheader.i, !llvm.loop !649
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9UInt8TypeEhEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlhE_clEh.exit119.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9UInt8TypeEhEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlhE_clEh.exit119.i.preheader, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9UInt8TypeEhEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlhE_clEh.exit119.i
@@ -4547,9 +4567,10 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9UInt8TypeEhEENS_6StatusER
   br i1 %i.aud, label %.loopexit.i, label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9UInt8TypeEhEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlhbE_clEhb.exit120.i
 
 .preheader133.i:                                  ; preds = %.preheader133.i, %.preheader133.preheader.i
-  %.075148.i = phi i64 [ %i.awk, %.preheader133.i ], [ 0, %.preheader133.preheader.i ]
-  %.076147.i = phi i64 [ %i.awj, %.preheader133.i ], [ 0, %.preheader133.preheader.i ] ; 10 uses
-  %.3146.i = phi i1 [ %op.rdx96, %.preheader133.i ], [ false, %.preheader133.preheader.i ]
+  %indvars.iv.i = phi i64 [ 8, %.preheader133.preheader.i ], [ %i.awk, %.preheader133.i ] ; 2 uses
+  %.075148.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %i.awj, %.preheader133.i ]
+  %.076147.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %indvars.iv.i, %.preheader133.i ] ; 9 uses
+  %.3146.i = phi i1 [ false, %.preheader133.preheader.i ], [ %op.rdx96, %.preheader133.i ]
   %i.aue = getelementptr inbounds nuw i8, ptr %.088173.i, i64 %.076147.i
   %i.auf = add nsw i64 %.076147.i, %.092169.i
   %i.aug = lshr i64 %i.auf, 3
@@ -4608,9 +4629,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9UInt8TypeEhEENS_6StatusER
   %i.awh = bitcast <8 x i1> %i.awg to i8
   %i.awi = icmp ne i8 %i.awh, 0
   %op.rdx96 = or i1 %i.awi, %.3146.i              ; 2 uses
-  %i.awj = add nuw nsw i64 %.076147.i, 8
-  %i.awk = add nuw nsw i64 %.075148.i, 1          ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.awk, %smax.i
+  %i.awj = add nuw nsw i64 %.075148.i, 1          ; 2 uses
+  %i.awk = add nuw nsw i64 %indvars.iv.i, 8
+  %exitcond.not.i = icmp eq i64 %i.awj, %smax.i
   br i1 %exitcond.not.i, label %.preheader139.loopexit.i, label %.preheader133.i, !llvm.loop !651
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9UInt8TypeEhEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlhbE_clEhb.exit120.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9UInt8TypeEhEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlhbE_clEhb.exit120.i.prol.loopexit, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_9UInt8TypeEhEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlhbE_clEhb.exit120.i
@@ -4832,14 +4853,15 @@ vector.main.loop.iter.check59:                    ; preds = %iter.check77
 vector.ph61:                                      ; preds = %vector.main.loop.iter.check59
   %i.ac = and i64 %smax189.i, 8
   %n.vec62 = and i64 %smax189.i, 268435440        ; 5 uses
-  %i.ad = shl nuw nsw i64 %n.vec62, 3
+  %i.ad = shl nuw nsw i64 %n.vec62, 3             ; 2 uses
+  %3 = or disjoint i64 %i.ad, 8
   br label %vector.body67
 
 vector.body67:                                    ; preds = %vector.body67, %vector.ph61
   %index68 = phi i64 [ 0, %vector.ph61 ], [ %index.next71, %vector.body67 ] ; 2 uses
   %vec.phi69 = phi <8 x i1> [ zeroinitializer, %vector.ph61 ], [ %i.ry, %vector.body67 ]
   %vec.phi70 = phi <8 x i1> [ zeroinitializer, %vector.ph61 ], [ %i.rz, %vector.body67 ]
-  %i.ae = shl nuw i64 %index68, 3                 ; 16 uses
+  %i.ae = shl i64 %index68, 3                     ; 16 uses
   %i.af = getelementptr inbounds nuw [2 x i8], ptr %.088173.i, i64 %i.ae ; 8 uses
   %i.ag = getelementptr inbounds nuw [2 x i8], ptr %.088173.i, i64 %i.ae ; 8 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
@@ -5242,14 +5264,15 @@ vec.epilog.ph81:                                  ; preds = %vector.main.loop.it
   %vec.epilog.resume.val75 = phi i64 [ %n.vec62, %vec.epilog.iter.check79 ], [ 0, %vector.main.loop.iter.check59 ]
   %bc.merge.rdx76 = phi i1 [ %i.sc, %vec.epilog.iter.check79 ], [ false, %vector.main.loop.iter.check59 ]
   %n.vec82 = and i64 %smax189.i, 268435448        ; 4 uses
-  %i.sd = shl nuw nsw i64 %n.vec82, 3
+  %i.sd = shl nuw nsw i64 %n.vec82, 3             ; 2 uses
+  %4 = or disjoint i64 %i.sd, 8
   %i.se = insertelement <8 x i1> <i1 poison, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false>, i1 %bc.merge.rdx76, i64 0
   br label %vec.epilog.vector.body87
 
 vec.epilog.vector.body87:                         ; preds = %vec.epilog.vector.body87, %vec.epilog.ph81
   %index88 = phi i64 [ %vec.epilog.resume.val75, %vec.epilog.ph81 ], [ %index.next90, %vec.epilog.vector.body87 ] ; 2 uses
   %vec.phi89 = phi <8 x i1> [ %i.se, %vec.epilog.ph81 ], [ %i.abc, %vec.epilog.vector.body87 ]
-  %i.sf = shl nuw i64 %index88, 3                 ; 8 uses
+  %i.sf = shl i64 %index88, 3                     ; 8 uses
   %i.sg = getelementptr inbounds nuw [2 x i8], ptr %.088173.i, i64 %i.sf ; 8 uses
   %i.sh = getelementptr inbounds nuw [2 x i8], ptr %.088173.i, i64 %i.sf ; 8 uses
   %i.si = getelementptr inbounds nuw i8, ptr %i.sh, i64 16
@@ -5492,6 +5515,7 @@ vec.epilog.middle.block91:                        ; preds = %vec.epilog.vector.b
   br i1 %cmp.n92, label %.preheader137.loopexit.i, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %iter.check77, %vec.epilog.iter.check79, %vec.epilog.middle.block91
+  %indvars.iv190.i.ph = phi i64 [ 8, %iter.check77 ], [ %3, %vec.epilog.iter.check79 ], [ %4, %vec.epilog.middle.block91 ]
   %.081158.i.ph = phi i64 [ 0, %iter.check77 ], [ %n.vec62, %vec.epilog.iter.check79 ], [ %n.vec82, %vec.epilog.middle.block91 ]
   %.082157.i.ph = phi i64 [ 0, %iter.check77 ], [ %i.ad, %vec.epilog.iter.check79 ], [ %i.sd, %vec.epilog.middle.block91 ]
   %.085156.i.ph = phi i1 [ false, %iter.check77 ], [ %i.sc, %vec.epilog.iter.check79 ], [ %i.abf, %vec.epilog.middle.block91 ]
@@ -5593,8 +5617,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt16TypeEtEENS_6Status
   br label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt16TypeEtEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUltE_clEt.exit119.i
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader, %.preheader.i
-  %.081158.i = phi i64 [ %i.acw, %.preheader.i ], [ %.081158.i.ph, %.preheader.i.preheader ]
-  %.082157.i = phi i64 [ %i.acv, %.preheader.i ], [ %.082157.i.ph, %.preheader.i.preheader ] ; 2 uses
+  %indvars.iv190.i = phi i64 [ %i.acw, %.preheader.i ], [ %indvars.iv190.i.ph, %.preheader.i.preheader ] ; 2 uses
+  %.081158.i = phi i64 [ %i.acv, %.preheader.i ], [ %.081158.i.ph, %.preheader.i.preheader ]
+  %.082157.i = phi i64 [ %indvars.iv190.i, %.preheader.i ], [ %.082157.i.ph, %.preheader.i.preheader ]
   %.085156.i = phi i1 [ %op.rdx, %.preheader.i ], [ %.085156.i.ph, %.preheader.i.preheader ]
   %i.aco = getelementptr inbounds nuw [2 x i8], ptr %.088173.i, i64 %.082157.i
   %i.acp = load <8 x i16>, ptr %i.aco, align 2, !tbaa !18, !noalias !659 ; 2 uses
@@ -5604,9 +5629,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt16TypeEtEENS_6Status
   %i.act = bitcast <16 x i1> %i.acs to i16
   %i.acu = icmp ne i16 %i.act, 0
   %op.rdx = or i1 %i.acu, %.085156.i              ; 2 uses
-  %i.acv = add nuw nsw i64 %.082157.i, 8
-  %i.acw = add nuw nsw i64 %.081158.i, 1          ; 2 uses
-  %exitcond190.not.i = icmp eq i64 %i.acw, %smax189.i
+  %i.acv = add nuw nsw i64 %.081158.i, 1          ; 2 uses
+  %i.acw = add nuw nsw i64 %indvars.iv190.i, 8
+  %exitcond190.not.i = icmp eq i64 %i.acv, %smax189.i
   br i1 %exitcond190.not.i, label %.preheader137.loopexit.i, label %.preheader.i, !llvm.loop !670
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt16TypeEtEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUltE_clEt.exit119.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt16TypeEtEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUltE_clEt.exit119.i.preheader, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt16TypeEtEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUltE_clEt.exit119.i
@@ -5696,9 +5721,10 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt16TypeEtEENS_6Status
   br i1 %i.aer, label %.loopexit.i, label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt16TypeEtEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUltbE_clEtb.exit120.i
 
 .preheader133.i:                                  ; preds = %.preheader133.i, %.preheader133.preheader.i
-  %.075148.i = phi i64 [ %i.ahm, %.preheader133.i ], [ 0, %.preheader133.preheader.i ]
-  %.076147.i = phi i64 [ %i.ahl, %.preheader133.i ], [ 0, %.preheader133.preheader.i ] ; 10 uses
-  %.3146.i = phi i1 [ %op.rdx96, %.preheader133.i ], [ false, %.preheader133.preheader.i ]
+  %indvars.iv.i = phi i64 [ 8, %.preheader133.preheader.i ], [ %i.ahm, %.preheader133.i ] ; 2 uses
+  %.075148.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %i.ahl, %.preheader133.i ]
+  %.076147.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %indvars.iv.i, %.preheader133.i ] ; 9 uses
+  %.3146.i = phi i1 [ false, %.preheader133.preheader.i ], [ %op.rdx96, %.preheader133.i ]
   %i.aes = getelementptr inbounds nuw [2 x i8], ptr %.088173.i, i64 %.076147.i
   %i.aet = add nsw i64 %.076147.i, %.092169.i
   %i.aeu = lshr i64 %i.aet, 3
@@ -5771,9 +5797,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt16TypeEtEENS_6Status
   %i.ahj = bitcast <8 x i1> %i.ahi to i8
   %i.ahk = icmp ne i8 %i.ahj, 0
   %op.rdx96 = or i1 %i.ahk, %.3146.i              ; 2 uses
-  %i.ahl = add nuw nsw i64 %.076147.i, 8
-  %i.ahm = add nuw nsw i64 %.075148.i, 1          ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.ahm, %smax.i
+  %i.ahl = add nuw nsw i64 %.075148.i, 1          ; 2 uses
+  %i.ahm = add nuw nsw i64 %indvars.iv.i, 8
+  %exitcond.not.i = icmp eq i64 %i.ahl, %smax.i
   br i1 %exitcond.not.i, label %.preheader139.loopexit.i, label %.preheader133.i, !llvm.loop !672
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt16TypeEtEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUltbE_clEtb.exit120.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt16TypeEtEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUltbE_clEtb.exit120.i.prol.loopexit, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt16TypeEtEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUltbE_clEtb.exit120.i
@@ -5982,14 +6008,15 @@ bb.c:                                             ; preds = %bb.a
 
 vector.ph47:                                      ; preds = %.preheader.preheader.i
   %n.vec48 = and i64 %smax189.i, 268435448        ; 4 uses
-  %i.ac = shl nuw nsw i64 %n.vec48, 3
+  %i.ac = shl nuw nsw i64 %n.vec48, 3             ; 2 uses
+  %3 = or disjoint i64 %i.ac, 8
   br label %vector.body53
 
 vector.body53:                                    ; preds = %vector.body53, %vector.ph47
   %index54 = phi i64 [ 0, %vector.ph47 ], [ %index.next57, %vector.body53 ] ; 2 uses
   %vec.phi55 = phi <4 x i1> [ zeroinitializer, %vector.ph47 ], [ %i.kf, %vector.body53 ]
   %vec.phi56 = phi <4 x i1> [ zeroinitializer, %vector.ph47 ], [ %i.kg, %vector.body53 ]
-  %i.ad = shl nuw i64 %index54, 3                 ; 8 uses
+  %i.ad = shl i64 %index54, 3                     ; 8 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %.088173.i, i64 %i.ad ; 8 uses
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %.088173.i, i64 %i.ad ; 8 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 32
@@ -6265,6 +6292,7 @@ middle.block58:                                   ; preds = %vector.body53
   br i1 %cmp.n60, label %.preheader137.loopexit.i, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %.preheader.preheader.i, %middle.block58
+  %indvars.iv190.i.ph = phi i64 [ 8, %.preheader.preheader.i ], [ %3, %middle.block58 ]
   %.081158.i.ph = phi i64 [ 0, %.preheader.preheader.i ], [ %n.vec48, %middle.block58 ]
   %.082157.i.ph = phi i64 [ 0, %.preheader.preheader.i ], [ %i.ac, %middle.block58 ]
   %.085156.i.ph = phi i1 [ false, %.preheader.preheader.i ], [ %i.kj, %middle.block58 ]
@@ -6329,8 +6357,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt32TypeEjEENS_6Status
   br label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt32TypeEjEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUljE_clEj.exit119.i
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader, %.preheader.i
-  %.081158.i = phi i64 [ %i.lo, %.preheader.i ], [ %.081158.i.ph, %.preheader.i.preheader ]
-  %.082157.i = phi i64 [ %i.ln, %.preheader.i ], [ %.082157.i.ph, %.preheader.i.preheader ] ; 2 uses
+  %indvars.iv190.i = phi i64 [ %i.lo, %.preheader.i ], [ %indvars.iv190.i.ph, %.preheader.i.preheader ] ; 2 uses
+  %.081158.i = phi i64 [ %i.ln, %.preheader.i ], [ %.081158.i.ph, %.preheader.i.preheader ]
+  %.082157.i = phi i64 [ %indvars.iv190.i, %.preheader.i ], [ %.082157.i.ph, %.preheader.i.preheader ]
   %.085156.i = phi i1 [ %op.rdx, %.preheader.i ], [ %.085156.i.ph, %.preheader.i.preheader ]
   %i.lg = getelementptr inbounds nuw [4 x i8], ptr %.088173.i, i64 %.082157.i
   %i.lh = load <8 x i32>, ptr %i.lg, align 4, !tbaa !9, !noalias !680 ; 2 uses
@@ -6340,9 +6369,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt32TypeEjEENS_6Status
   %i.ll = bitcast <16 x i1> %i.lk to i16
   %i.lm = icmp ne i16 %i.ll, 0
   %op.rdx = or i1 %i.lm, %.085156.i               ; 2 uses
-  %i.ln = add nuw nsw i64 %.082157.i, 8
-  %i.lo = add nuw nsw i64 %.081158.i, 1           ; 2 uses
-  %exitcond190.not.i = icmp eq i64 %i.lo, %smax189.i
+  %i.ln = add nuw nsw i64 %.081158.i, 1           ; 2 uses
+  %i.lo = add nuw nsw i64 %indvars.iv190.i, 8
+  %exitcond190.not.i = icmp eq i64 %i.ln, %smax189.i
   br i1 %exitcond190.not.i, label %.preheader137.loopexit.i, label %.preheader.i, !llvm.loop !688
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt32TypeEjEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUljE_clEj.exit119.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt32TypeEjEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUljE_clEj.exit119.i.preheader66, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt32TypeEjEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUljE_clEj.exit119.i
@@ -6432,9 +6461,10 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt32TypeEjEENS_6Status
   br i1 %i.nj, label %.loopexit.i, label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt32TypeEjEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUljbE_clEjb.exit120.i
 
 .preheader133.i:                                  ; preds = %.preheader133.i, %.preheader133.preheader.i
-  %.075148.i = phi i64 [ %i.qe, %.preheader133.i ], [ 0, %.preheader133.preheader.i ]
-  %.076147.i = phi i64 [ %i.qd, %.preheader133.i ], [ 0, %.preheader133.preheader.i ] ; 10 uses
-  %.3146.i = phi i1 [ %op.rdx64, %.preheader133.i ], [ false, %.preheader133.preheader.i ]
+  %indvars.iv.i = phi i64 [ 8, %.preheader133.preheader.i ], [ %i.qe, %.preheader133.i ] ; 2 uses
+  %.075148.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %i.qd, %.preheader133.i ]
+  %.076147.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %indvars.iv.i, %.preheader133.i ] ; 9 uses
+  %.3146.i = phi i1 [ false, %.preheader133.preheader.i ], [ %op.rdx64, %.preheader133.i ]
   %i.nk = getelementptr inbounds nuw [4 x i8], ptr %.088173.i, i64 %.076147.i
   %i.nl = add nsw i64 %.076147.i, %.092169.i
   %i.nm = lshr i64 %i.nl, 3
@@ -6507,9 +6537,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt32TypeEjEENS_6Status
   %i.qb = bitcast <8 x i1> %i.qa to i8
   %i.qc = icmp ne i8 %i.qb, 0
   %op.rdx64 = or i1 %i.qc, %.3146.i               ; 2 uses
-  %i.qd = add nuw nsw i64 %.076147.i, 8
-  %i.qe = add nuw nsw i64 %.075148.i, 1           ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.qe, %smax.i
+  %i.qd = add nuw nsw i64 %.075148.i, 1           ; 2 uses
+  %i.qe = add nuw nsw i64 %indvars.iv.i, 8
+  %exitcond.not.i = icmp eq i64 %i.qd, %smax.i
   br i1 %exitcond.not.i, label %.preheader139.loopexit.i, label %.preheader133.i, !llvm.loop !690
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt32TypeEjEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUljbE_clEjb.exit120.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt32TypeEjEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUljbE_clEjb.exit120.i.prol.loopexit, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt32TypeEjEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUljbE_clEjb.exit120.i
@@ -6740,9 +6770,10 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt64TypeEmEENS_6Status
   br i1 %i.af, label %.loopexit.i, label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt64TypeEmEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlmE_clEm.exit119.i
 
 .preheader.i:                                     ; preds = %.preheader.i, %.preheader.preheader.i
-  %.081158.i = phi i64 [ %i.cg, %.preheader.i ], [ 0, %.preheader.preheader.i ]
-  %.082157.i = phi i64 [ %i.cf, %.preheader.i ], [ 0, %.preheader.preheader.i ] ; 2 uses
-  %.085156.i = phi i1 [ %op.rdx, %.preheader.i ], [ false, %.preheader.preheader.i ]
+  %indvars.iv190.i = phi i64 [ 8, %.preheader.preheader.i ], [ %i.cg, %.preheader.i ] ; 2 uses
+  %.081158.i = phi i64 [ 0, %.preheader.preheader.i ], [ %i.cf, %.preheader.i ]
+  %.082157.i = phi i64 [ 0, %.preheader.preheader.i ], [ %indvars.iv190.i, %.preheader.i ]
+  %.085156.i = phi i1 [ false, %.preheader.preheader.i ], [ %op.rdx, %.preheader.i ]
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %.088173.i, i64 %.082157.i ; 8 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
@@ -6795,9 +6826,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt64TypeEmEENS_6Status
   %i.cd = bitcast <16 x i1> %i.cc to i16
   %i.ce = icmp ne i16 %i.cd, 0
   %op.rdx = or i1 %i.ce, %.085156.i               ; 2 uses
-  %i.cf = add nuw nsw i64 %.082157.i, 8
-  %i.cg = add nuw nsw i64 %.081158.i, 1           ; 2 uses
-  %exitcond190.not.i = icmp eq i64 %i.cg, %smax189.i
+  %i.cf = add nuw nsw i64 %.081158.i, 1           ; 2 uses
+  %i.cg = add nuw nsw i64 %indvars.iv190.i, 8
+  %exitcond190.not.i = icmp eq i64 %i.cf, %smax189.i
   br i1 %exitcond190.not.i, label %.preheader137.loopexit.i, label %.preheader.i, !llvm.loop !705
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt64TypeEmEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlmE_clEm.exit119.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt64TypeEmEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlmE_clEm.exit119.i.prol.loopexit, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt64TypeEmEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlmE_clEm.exit119.i
@@ -6908,9 +6939,10 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt64TypeEmEENS_6Status
   br i1 %i.et, label %.loopexit.i, label %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt64TypeEmEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlmbE_clEmb.exit120.i
 
 .preheader133.i:                                  ; preds = %.preheader133.i, %.preheader133.preheader.i
-  %.075148.i = phi i64 [ %i.iu, %.preheader133.i ], [ 0, %.preheader133.preheader.i ]
-  %.076147.i = phi i64 [ %i.it, %.preheader133.i ], [ 0, %.preheader133.preheader.i ] ; 10 uses
-  %.3146.i = phi i1 [ %i.is, %.preheader133.i ], [ false, %.preheader133.preheader.i ]
+  %indvars.iv.i = phi i64 [ 8, %.preheader133.preheader.i ], [ %i.iu, %.preheader133.i ] ; 2 uses
+  %.075148.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %i.it, %.preheader133.i ]
+  %.076147.i = phi i64 [ 0, %.preheader133.preheader.i ], [ %indvars.iv.i, %.preheader133.i ] ; 9 uses
+  %.3146.i = phi i1 [ false, %.preheader133.preheader.i ], [ %i.is, %.preheader133.i ]
   %i.eu = getelementptr inbounds nuw [8 x i8], ptr %.088173.i, i64 %.076147.i
   %i.ev = load i64, ptr %i.eu, align 8, !tbaa !32, !noalias !698 ; 2 uses
   %i.ew = add nsw i64 %.076147.i, %.092169.i
@@ -7022,9 +7054,9 @@ _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt64TypeEmEENS_6Status
   %spec.select129.7.i = or i1 %i.ip, %i.iq
   %i.ir = select i1 %i.io, i1 %spec.select129.7.i, i1 false
   %i.is = or i1 %i.if, %i.ir                      ; 2 uses
-  %i.it = add nuw nsw i64 %.076147.i, 8
-  %i.iu = add nuw nsw i64 %.075148.i, 1           ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.iu, %smax.i
+  %i.it = add nuw nsw i64 %.075148.i, 1           ; 2 uses
+  %i.iu = add nuw nsw i64 %indvars.iv.i, 8
+  %exitcond.not.i = icmp eq i64 %i.it, %smax.i
   br i1 %exitcond.not.i, label %.preheader139.loopexit.i, label %.preheader133.i, !llvm.loop !707
 
 _ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt64TypeEmEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlmbE_clEmb.exit120.i: ; preds = %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt64TypeEmEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlmbE_clEmb.exit120.i.prol.loopexit, %_ZZN5arrow8internal12_GLOBAL__N_115IntegersInRangeINS_10UInt64TypeEmEENS_6StatusERKNS_9ArraySpanET0_S8_ENKUlmbE_clEmb.exit120.i

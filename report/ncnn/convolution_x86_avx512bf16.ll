@@ -204,7 +204,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
   %n.vec = and i64 %i.aw, 2147483584              ; 5 uses
   %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %6, i64 0
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer ; 2 uses
-  %i.ay = trunc nuw nsw i64 %n.vec to i32
+  %i.ay = trunc nuw nsw i64 %n.vec to i32         ; 2 uses
   %i.az = mul i32 %6, %i.ay
   %i.ba = shl <16 x i32> %broadcast.splat, splat (i32 4) ; 5 uses
   %broadcast.splatinsert6208 = insertelement <16 x i32> poison, i32 %i.n, i64 0
@@ -216,7 +216,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
   %cmp.n = icmp eq i64 %n.vec, %i.aw
   %min.epilog.iters.check = icmp eq i64 %i.ax, 0
   %n.vec6213 = and i64 %i.aw, 2147483640          ; 4 uses
-  %i.bc = trunc nuw nsw i64 %n.vec6213 to i32
+  %i.bc = trunc nuw nsw i64 %n.vec6213 to i32     ; 2 uses
   %i.bd = mul i32 %6, %i.bc
   %broadcast.splatinsert6214 = insertelement <8 x i32> poison, i32 %i.n, i64 0
   %broadcast.splat6215 = shufflevector <8 x i32> %broadcast.splatinsert6214, <8 x i32> poison, <8 x i32> zeroinitializer
@@ -230,11 +230,10 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
   br label %iter.check
 
 iter.check:                                       ; preds = %.preheader4375.preheader, %._crit_edge
-  %.017034384 = phi i32 [ %13, %._crit_edge ], [ 0, %.preheader4375.preheader ] ; 2 uses
+  %.017034384 = phi i32 [ %indvars.iv.next, %._crit_edge ], [ 0, %.preheader4375.preheader ] ; 2 uses
   %.017064383 = phi i32 [ %i.cj, %._crit_edge ], [ 0, %.preheader4375.preheader ] ; 5 uses
   %.017084382 = phi i32 [ %i.ck, %._crit_edge ], [ 0, %.preheader4375.preheader ]
   %i.bg = sext i32 %.017034384 to i64             ; 5 uses
-  %13 = add i32 %4, %.017034384                   ; 2 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -306,6 +305,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ %i.bg, %iter.check ], [ %i.bh, %vec.epilog.iter.check ], [ %i.br, %vec.epilog.middle.block ]
   %.117074379.ph = phi i32 [ %.017064383, %iter.check ], [ %i.bi, %vec.epilog.iter.check ], [ %i.bs, %vec.epilog.middle.block ]
+  %.017114378.ph = phi i32 [ 0, %iter.check ], [ %i.ay, %vec.epilog.iter.check ], [ %i.bc, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
 ._crit_edge4385.split:                            ; preds = %._crit_edge, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit
@@ -340,19 +340,21 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   %.lcssa6206 = phi i32 [ %i.bs, %vec.epilog.middle.block ], [ %i.bi, %middle.block ], [ %i.cn, %vec.epilog.scalar.ph ]
   %i.cj = add nsw i32 %i.at, %.lcssa6206
   %i.ck = add nuw nsw i32 %.017084382, 1          ; 2 uses
+  %indvars.iv.next = add i32 %.017034384, %4
   %exitcond5403.not = icmp eq i32 %i.ck, %5
   br i1 %exitcond5403.not, label %._crit_edge4385.split, label %iter.check, !llvm.loop !127
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.a, %vec.epilog.scalar.ph ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
-  %.117074379.a = phi i32 [ %i.cn, %vec.epilog.scalar.ph ], [ %.117074379.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
-  %i.cl = mul nsw i32 %.117074379.a, %i.n
+  %.117074379 = phi i32 [ %i.cn, %vec.epilog.scalar.ph ], [ %.117074379.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
+  %.117074379.a = phi i32 [ %13, %vec.epilog.scalar.ph ], [ %.017114378.ph, %vec.epilog.scalar.ph.preheader ]
+  %i.cl = mul nsw i32 %.117074379, %i.n
   %i.cm = getelementptr inbounds [4 x i8], ptr %.sroa.03778.0, i64 %indvars.iv
   store i32 %i.cl, ptr %i.cm, align 4, !tbaa !113
-  %indvars.iv.next.a = add nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.cn = add nsw i32 %.117074379.a, %6           ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.a to i32
-  %exitcond.not = icmp eq i32 %13, %lftr.wideiv
+  %indvars.iv.next.a = add nsw i64 %indvars.iv, 1
+  %i.cn = add nsw i32 %.117074379, %6             ; 2 uses
+  %13 = add nuw nsw i32 %.117074379.a, 1          ; 2 uses
+  %exitcond.not = icmp eq i32 %13, %4
   br i1 %exitcond.not, label %._crit_edge, label %vec.epilog.scalar.ph, !llvm.loop !128
 
 ._crit_edge4602:                                  ; preds = %._crit_edge4600.split, %._crit_edge4385.split

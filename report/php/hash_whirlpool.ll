@@ -41,34 +41,36 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %bb.a
-  %indvars.iv.a = phi i64 [ 31, %bb.a ], [ %indvars.iv.next.1, %bb.d ] ; 3 uses
-  %.090 = phi i64 [ %i.a, %bb.a ], [ %i.ah, %bb.d ] ; 4 uses
+  %indvars.iv.a = phi i64 [ %i.a, %bb.a ], [ %i.ah, %bb.d ] ; 4 uses
+  %.07389 = phi i32 [ 31, %bb.a ], [ %6, %bb.d ]  ; 3 uses
   %.07488 = phi i32 [ 0, %bb.a ], [ %i.ag, %bb.d ] ; 2 uses
   %i.i = icmp ne i32 %.07488, 0
-  %i.j = icmp ne i64 %.090, 0
+  %i.j = icmp ne i64 %indvars.iv.a, 0
   %i.k = select i1 %i.i, i1 true, i1 %i.j
   br i1 %i.k, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv.a ; 2 uses
+  %3 = zext nneg i32 %.07389 to i64
+  %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 %3 ; 2 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !16
   %i.n = zext i8 %i.m to i32
-  %i.o = trunc i64 %.090 to i32
+  %i.o = trunc i64 %indvars.iv.a to i32
   %i.p = and i32 %i.o, 255
   %i.q = add nuw nsw i32 %i.p, %.07488
   %i.r = add nuw nsw i32 %i.q, %i.n               ; 2 uses
   %i.s = trunc i32 %i.r to i8
   store i8 %i.s, ptr %i.l, align 1, !tbaa !16
   %i.t = lshr i32 %i.r, 8                         ; 2 uses
-  %i.u = lshr i64 %.090, 8                        ; 2 uses
+  %i.u = lshr i64 %indvars.iv.a, 8                ; 2 uses
   %i.v = icmp ne i32 %i.t, 0
   %i.w = icmp ne i64 %i.u, 0
   %i.x = select i1 %i.v, i1 true, i1 %i.w
   br i1 %i.x, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
-  %indvars.iv.next = add nsw i64 %indvars.iv.a, -1 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv.next ; 2 uses
+  %4 = add nsw i32 %.07389, -1                    ; 2 uses
+  %5 = zext nneg i32 %4 to i64
+  %i.y = getelementptr inbounds nuw i8, ptr %i.g, i64 %5 ; 2 uses
   %i.z = load i8, ptr %i.y, align 1, !tbaa !16
   %i.aa = zext i8 %i.z to i32
   %i.ab = trunc i64 %i.u to i32
@@ -78,9 +80,9 @@ bb.d:                                             ; preds = %bb.c
   %i.af = trunc i32 %i.ae to i8
   store i8 %i.af, ptr %i.y, align 1, !tbaa !16
   %i.ag = lshr i32 %i.ae, 8
-  %i.ah = lshr i64 %.090, 16
-  %indvars.iv.next.1 = add nsw i64 %indvars.iv.a, -2
-  %.not109.1 = icmp eq i64 %indvars.iv.next, 0
+  %i.ah = lshr i64 %indvars.iv.a, 16
+  %6 = add nsw i32 %.07389, -2
+  %.not109.1 = icmp eq i32 %4, 0
   br i1 %.not109.1, label %.critedge, label %bb.b, !llvm.loop !17
 
 .critedge:                                        ; preds = %bb.d, %bb.c, %bb.b

@@ -201,7 +201,7 @@ _ZNSt6vectorIdSaIdEED2Ev.exit133:                 ; preds = %.noexc128, %_ZSt6fi
   store ptr %i.bl, ptr %i.c, align 8, !tbaa !46
   store ptr %i.br, ptr %i.bs, align 8, !tbaa !47
   store ptr %i.bm, ptr %i.bt, align 8, !tbaa !48
-  %i.bu = udiv i32 %2, 49                         ; 3 uses
+  %i.bu = udiv i32 %2, 49                         ; 5 uses
   %i.bv = uitofp nneg i32 %i.bu to double         ; 2 uses
   %i.bw = icmp samesign ugt i32 %2, 48
   br i1 %i.bw, label %.lr.ph.us.preheader, label %.split.us
@@ -222,8 +222,9 @@ _ZNSt6vectorIdSaIdEED2Ev.exit133:                 ; preds = %.noexc128, %_ZSt6fi
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %..loopexit_crit_edge.us
   %i.ce = phi double [ %i.cp, %..loopexit_crit_edge.us ], [ %i.ao, %.lr.ph.us.preheader ] ; 3 uses
   %indvars.iv359 = phi i64 [ %indvars.iv.next360, %..loopexit_crit_edge.us ], [ 0, %.lr.ph.us.preheader ]
-  %.065356.us = phi i64 [ %indvars.iv.next.lcssa, %..loopexit_crit_edge.us ], [ 0, %.lr.ph.us.preheader ] ; 3 uses
+  %indvars.iv = phi i32 [ %indvars.iv.next, %..loopexit_crit_edge.us ], [ 0, %.lr.ph.us.preheader ] ; 2 uses
   %i.cf = phi <2 x double> [ %i.cl, %..loopexit_crit_edge.us ], [ %i.bx, %.lr.ph.us.preheader ] ; 4 uses
+  %5 = sext i32 %indvars.iv to i64                ; 3 uses
   %indvars.iv.next360 = add nuw nsw i64 %indvars.iv359, 1 ; 5 uses
   %i.cg = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0235.0, i64 %indvars.iv.next360
   %i.ch = load double, ptr %i.cg, align 8, !tbaa !41
@@ -240,7 +241,7 @@ _ZNSt6vectorIdSaIdEED2Ev.exit133:                 ; preds = %.noexc128, %_ZSt6fi
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.us
-  %i.cs = add i64 %.065356.us, %n.vec             ; 2 uses
+  %i.cs = add nsw i64 %n.vec, %5
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.ce, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splat382 = shufflevector <2 x double> %i.cf, <2 x double> poison, <2 x i32> zeroinitializer
@@ -254,7 +255,7 @@ vector.ph:                                        ; preds = %.lr.ph.us
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %i.ct = add i64 %.065356.us, %index             ; 3 uses
+  %i.ct = add i64 %index, %5                      ; 3 uses
   %i.cu = uitofp nneg <2 x i32> %vec.ind to <2 x double> ; 3 uses
   %i.cv = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cu, <2 x double> %broadcast.splat386, <2 x double> %broadcast.splat384)
   %i.cw = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.ct
@@ -274,7 +275,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %..loopexit_crit_edge.us, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.us, %middle.block
-  %indvars.iv.ph = phi i64 [ %.065356.us, %.lr.ph.us ], [ %i.cs, %middle.block ]
+  %indvars.iv.ph = phi i64 [ %5, %.lr.ph.us ], [ %i.cs, %middle.block ]
   %.068353.us.ph = phi i32 [ 0, %.lr.ph.us ], [ %i.cd, %middle.block ]
   br label %scalar.ph
 
@@ -292,7 +293,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.dj = extractelement <2 x double> %i.dg, i64 0
   store double %i.dj, ptr %i.di, align 8, !tbaa !41
   %i.dk = tail call double @llvm.fmuladd.f64(double %i.dc, double %i.cr, double %i.ce)
-  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, 1
   %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %indvars.iv.a
   store double %i.dk, ptr %i.dl, align 8, !tbaa !41
   %i.dm = add nuw nsw i32 %.068353.us, 1          ; 2 uses
@@ -300,12 +301,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond.not, label %..loopexit_crit_edge.us, label %scalar.ph, !llvm.loop !53
 
 ..loopexit_crit_edge.us:                          ; preds = %scalar.ph, %middle.block
-  %indvars.iv.next.lcssa = phi i64 [ %i.cs, %middle.block ], [ %indvars.iv.next.a, %scalar.ph ] ; 2 uses
+  %indvars.iv.next = add i32 %indvars.iv, %i.bu
   %exitcond362.not = icmp eq i64 %indvars.iv.next360, 49
   br i1 %exitcond362.not, label %.split.us.loopexit, label %.lr.ph.us, !llvm.loop !54
 
 .split.us.loopexit:                               ; preds = %..loopexit_crit_edge.us
-  %5 = trunc nsw i64 %indvars.iv.next.lcssa to i32
+  %6 = mul nuw nsw i32 %i.bu, 49
   br label %.split.us
 
 .split.us:                                        ; preds = %_ZNSt6vectorIdSaIdEED2Ev.exit133, %_ZNSt6vectorIdSaIdEED2Ev.exit133.thread, %.split.us.loopexit
@@ -315,7 +316,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.dq = phi ptr [ %i.at, %.split.us.loopexit ], [ null, %_ZNSt6vectorIdSaIdEED2Ev.exit133.thread ], [ %i.at, %_ZNSt6vectorIdSaIdEED2Ev.exit133 ] ; 3 uses
   %i.dr = phi ptr [ %i.bc, %.split.us.loopexit ], [ null, %_ZNSt6vectorIdSaIdEED2Ev.exit133.thread ], [ %i.bc, %_ZNSt6vectorIdSaIdEED2Ev.exit133 ] ; 3 uses
   %i.ds = phi ptr [ %.ph378, %.split.us.loopexit ], [ null, %_ZNSt6vectorIdSaIdEED2Ev.exit133.thread ], [ %.ph378, %_ZNSt6vectorIdSaIdEED2Ev.exit133 ] ; 3 uses
-  %.us-phi = phi i32 [ %5, %.split.us.loopexit ], [ 0, %_ZNSt6vectorIdSaIdEED2Ev.exit133.thread ], [ 0, %_ZNSt6vectorIdSaIdEED2Ev.exit133 ] ; 3 uses
+  %.us-phi = phi i32 [ %6, %.split.us.loopexit ], [ 0, %_ZNSt6vectorIdSaIdEED2Ev.exit133.thread ], [ 0, %_ZNSt6vectorIdSaIdEED2Ev.exit133 ] ; 3 uses
   %i.dt = icmp slt i32 %.us-phi, %2
   br i1 %i.dt, label %bb.w, label %_ZNSt6vectorIdSaIdEED2Ev.exit150
 
@@ -335,8 +336,8 @@ bb.v:                                             ; preds = %bb.s
   br label %_ZNSt6vectorIdSaIdEED2Ev.exit152.thread314
 
 bb.w:                                             ; preds = %.split.us
-  %6 = sext i32 %.us-phi to i64                   ; 6 uses
-  %i.dx = getelementptr inbounds [8 x i8], ptr %i.dq, i64 %6 ; 4 uses
+  %7 = zext nneg i32 %.us-phi to i64              ; 6 uses
+  %i.dx = getelementptr inbounds nuw [8 x i8], ptr %i.dq, i64 %7 ; 4 uses
   %i.dy = add nsw i32 %.us-phi, -1
   %i.dz = sext i32 %i.dy to i64                   ; 3 uses
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr %i.dq, i64 %i.dz
@@ -348,7 +349,7 @@ bb.w:                                             ; preds = %.split.us
   %i.ec = ptrtoaddr ptr %i.dp to i64
   %i.ed = ptrtoaddr ptr %i.dq to i64
   %i.ee = add i64 %i.ec, -8
-  %i.ef = shl nsw i64 %6, 3
+  %i.ef = shl nuw nsw i64 %7, 3
   %i.eg = add i64 %i.ef, %i.ed
   %i.eh = sub i64 %i.ee, %i.eg                    ; 2 uses
   %i.ei = lshr i64 %i.eh, 3
@@ -391,7 +392,7 @@ middle.block401:                                  ; preds = %vector.body398
   br i1 %.not.i.i.i.i134, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !56
 
 _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit: ; preds = %.lr.ph.i.i.i.i, %middle.block401, %bb.w
-  %i.eq = getelementptr inbounds [8 x i8], ptr %i.dr, i64 %6 ; 4 uses
+  %i.eq = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %7 ; 4 uses
   %i.er = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %i.dz
   %i.es = load double, ptr %i.er, align 8, !tbaa !41 ; 2 uses
   %.not6.i.i.i.i135 = icmp eq ptr %i.eq, %i.ds
@@ -401,7 +402,7 @@ _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit
   %i.et = ptrtoaddr ptr %i.ds to i64
   %i.eu = ptrtoaddr ptr %i.dr to i64
   %i.ev = add i64 %i.et, -8
-  %i.ew = shl nsw i64 %6, 3
+  %i.ew = shl nuw nsw i64 %7, 3
   %i.ex = add i64 %i.ew, %i.eu
   %i.ey = sub i64 %i.ev, %i.ex                    ; 2 uses
   %i.ez = lshr i64 %i.ey, 3
@@ -444,7 +445,7 @@ middle.block414:                                  ; preds = %vector.body410
   br i1 %.not.i.i.i.i138, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit139, label %.lr.ph.i.i.i.i136, !llvm.loop !58
 
 _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit139: ; preds = %.lr.ph.i.i.i.i136, %middle.block414, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit
-  %i.fh = getelementptr inbounds [8 x i8], ptr %i.do, i64 %6 ; 4 uses
+  %i.fh = getelementptr inbounds nuw [8 x i8], ptr %i.do, i64 %7 ; 4 uses
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %i.do, i64 %i.dz
   %i.fj = load double, ptr %i.fi, align 8, !tbaa !41 ; 2 uses
   %.not6.i.i.i.i140 = icmp eq ptr %i.fh, %i.dn
@@ -454,7 +455,7 @@ _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit
   %i.fk = ptrtoaddr ptr %i.dn to i64
   %i.fl = ptrtoaddr ptr %i.do to i64
   %i.fm = add i64 %i.fk, -8
-  %i.fn = shl nsw i64 %6, 3
+  %i.fn = shl nuw nsw i64 %7, 3
   %i.fo = add i64 %i.fn, %i.fl
   %i.fp = sub i64 %i.fm, %i.fo                    ; 2 uses
   %i.fq = lshr i64 %i.fp, 3

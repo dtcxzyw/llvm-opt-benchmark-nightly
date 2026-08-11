@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %._crit_edge50.split
 
 ._crit_edge.i.i:                                  ; preds = %bb.b, %._crit_edge.loopexit.i.i
   %i.cs = phi i32 [ %.pre91.i.i, %._crit_edge.loopexit.i.i ], [ 1, %bb.b ] ; 3 uses
-  %i.ct = phi i32 [ %.pre.i.i, %._crit_edge.loopexit.i.i ], [ 0, %bb.b ] ; 3 uses
+  %i.ct = phi i32 [ %.pre.i.i, %._crit_edge.loopexit.i.i ], [ 0, %bb.b ] ; 4 uses
   %i.cu = add i32 %i.ct, 1                        ; 2 uses
   %i.cv = sext i32 %i.ct to i64
   %i.cw = getelementptr inbounds [4 x i8], ptr %i.bc, i64 %i.cv
@@ -242,7 +242,7 @@ tn_vi_push.exit.i.i:                              ; preds = %bb.c, %._crit_edge.
   %i.dr = phi ptr [ %i.bg, %._crit_edge.i.i ], [ %i.dg, %bb.c ] ; 2 uses
   %i.ds = phi ptr [ %i.bh, %._crit_edge.i.i ], [ %i.dg, %bb.c ] ; 3 uses
   %.lcssa48.lcssa65.i.i = phi i32 [ %.lcssa48.lcssa62.i.i, %._crit_edge.i.i ], [ %i.dd, %bb.c ] ; 2 uses
-  %i.dt = add nsw i32 %.lcssa46.lcssa58.i.i, 1    ; 2 uses
+  %i.dt = add i32 %.lcssa46.lcssa58.i.i, 1        ; 2 uses
   %i.du = sext i32 %.lcssa46.lcssa58.i.i to i64
   %i.dv = getelementptr inbounds [4 x i8], ptr %i.ds, i64 %i.du
   store i32 %i.cy, ptr %i.dv, align 4, !tbaa !8
@@ -252,8 +252,9 @@ tn_vi_push.exit.i.i:                              ; preds = %bb.c, %._crit_edge.
   br i1 %or.cond.i.i, label %._crit_edge50.split.i.i, label %.preheader.preheader.i.i
 
 .preheader.preheader.i.i:                         ; preds = %tn_vi_push.exit.i.i
-  %wide.trip.count88.i.i = zext nneg i32 %i.cs to i64
-  %10 = sext i32 %i.dt to i64
+  %10 = shl nuw i32 %i.ct, 1
+  %11 = add i32 %10, 2
+  %wide.trip.count90.i.i = zext nneg i32 %i.cs to i64
   %wide.trip.count83.i.i = zext i32 %i.cu to i64
   br label %.preheader.i.i
 
@@ -261,8 +262,9 @@ tn_vi_push.exit.i.i:                              ; preds = %bb.c, %._crit_edge.
   %i.dx = phi ptr [ %i.dr, %.preheader.preheader.i.i ], [ %i.fw, %._crit_edge45.i.i ]
   %i.dy = phi ptr [ %i.ds, %.preheader.preheader.i.i ], [ %i.fw, %._crit_edge45.i.i ]
   %indvars.iv85.i.i = phi i64 [ 0, %.preheader.preheader.i.i ], [ %indvars.iv.next86.i.i, %._crit_edge45.i.i ] ; 2 uses
+  %indvars.iv76.i.i = phi i32 [ %i.dt, %.preheader.preheader.i.i ], [ %indvars.iv.next77.i.i, %._crit_edge45.i.i ] ; 2 uses
   %.lcssa4853.i.i = phi i32 [ %.lcssa48.lcssa65.i.i, %.preheader.preheader.i.i ], [ %i.fx, %._crit_edge45.i.i ]
-  %.lcssa4652.i.i = phi i64 [ %10, %.preheader.preheader.i.i ], [ %indvars.iv.next77.i.i.a, %._crit_edge45.i.i ]
+  %12 = sext i32 %indvars.iv76.i.i to i64
   %i.dz = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %indvars.iv85.i.i
   %i.ea = load i32, ptr %i.dz, align 4, !tbaa !8
   br label %bb.e
@@ -271,7 +273,7 @@ bb.e:                                             ; preds = %tn_vi_push.exit34.i
   %i.eb = phi ptr [ %i.dx, %.preheader.i.i ], [ %i.fw, %tn_vi_push.exit34.i.i ]
   %i.ec = phi ptr [ %i.dy, %.preheader.i.i ], [ %i.fw, %tn_vi_push.exit34.i.i ] ; 2 uses
   %indvars.iv78.i.i.a = phi i64 [ 0, %.preheader.i.i ], [ %indvars.iv.next79.i.i, %tn_vi_push.exit34.i.i ] ; 2 uses
-  %indvars.iv76.i.i.a = phi i64 [ %.lcssa4652.i.i, %.preheader.i.i ], [ %indvars.iv.next77.i.i.a, %tn_vi_push.exit34.i.i ] ; 4 uses
+  %indvars.iv76.i.i.a = phi i64 [ %12, %.preheader.i.i ], [ %indvars.iv.next77.i.i.a, %tn_vi_push.exit34.i.i ] ; 4 uses
   %i.ed = phi i32 [ %.lcssa4853.i.i, %.preheader.i.i ], [ %i.fx, %tn_vi_push.exit34.i.i ] ; 5 uses
   %i.ee = sext i32 %i.ed to i64                   ; 2 uses
   %i.ef = icmp slt i64 %indvars.iv76.i.i.a, %i.ee
@@ -341,7 +343,7 @@ bb.i:                                             ; preds = %bb.h
 tn_vi_push.exit34.i.i:                            ; preds = %bb.h, %tn_vi_push.exit32.i.i
   %i.fw = phi ptr [ %i.ex, %tn_vi_push.exit32.i.i ], [ %i.fl, %bb.h ] ; 7 uses
   %i.fx = phi i32 [ %i.ez, %tn_vi_push.exit32.i.i ], [ %i.fi, %bb.h ] ; 3 uses
-  %indvars.iv.next77.i.i.a = add nsw i64 %indvars.iv76.i.i.a, 2 ; 3 uses
+  %indvars.iv.next77.i.i.a = add nsw i64 %indvars.iv76.i.i.a, 2 ; 2 uses
   %i.fy = getelementptr inbounds [4 x i8], ptr %i.fw, i64 %i.fa
   store i32 %i.fd, ptr %i.fy, align 4, !tbaa !8
   %indvars.iv.next79.i.i = add nuw nsw i64 %indvars.iv78.i.i.a, 1 ; 2 uses
@@ -350,7 +352,8 @@ tn_vi_push.exit34.i.i:                            ; preds = %bb.h, %tn_vi_push.e
 
 ._crit_edge45.i.i:                                ; preds = %tn_vi_push.exit34.i.i
   %indvars.iv.next86.i.i = add nuw nsw i64 %indvars.iv85.i.i, 1 ; 2 uses
-  %exitcond89.not.i.i = icmp eq i64 %indvars.iv.next86.i.i, %wide.trip.count88.i.i
+  %indvars.iv.next77.i.i = add i32 %11, %indvars.iv76.i.i
+  %exitcond89.not.i.i = icmp eq i64 %indvars.iv.next86.i.i, %wide.trip.count90.i.i
   br i1 %exitcond89.not.i.i, label %._crit_edge50.split.loopexit.i.i, label %.preheader.i.i, !llvm.loop !68
 
 ._crit_edge50.split.loopexit.i.i:                 ; preds = %._crit_edge45.i.i
@@ -415,6 +418,7 @@ tn_vi_push.exit34.i.i:                            ; preds = %bb.h, %tn_vi_push.e
   %.promoted.us145.i.i = phi i32 [ 1000, %.lr.ph.i.preheader.us.preheader.i.i ], [ %.promoted.us147.i.i, %._crit_edge106.us.i.i ]
   %.promoted97.us141.i.i = phi i32 [ 3, %.lr.ph.i.preheader.us.preheader.i.i ], [ %.promoted97.us143.i.i, %._crit_edge106.us.i.i ]
   %indvars.iv136.i.i = phi i64 [ 1, %.lr.ph.i.preheader.us.preheader.i.i ], [ %indvars.iv.next137.i.i, %._crit_edge106.us.i.i ] ; 17 uses
+  %indvars.iv128.i.i = phi i32 [ 4, %.lr.ph.i.preheader.us.preheader.i.i ], [ %indvars.iv.next129.i.i, %._crit_edge106.us.i.i ] ; 2 uses
   %min.iters.check619 = icmp samesign ult i64 %indvars.iv136.i.i, 8
   br i1 %min.iters.check619, label %.lr.ph.i.us.i.i.preheader, label %vector.ph620
 
@@ -579,12 +583,14 @@ scalar.ph589:                                     ; preds = %scalar.ph589.prehea
   %exitcond125.not.i.i = icmp eq i64 %indvars.iv.next.i72.i, %indvars.iv136.i.i
   br i1 %exitcond125.not.i.i, label %.preheader.us.i.i, label %scalar.ph589, !llvm.loop !75
 
-.lr.ph95.us.i.i.a:                                ; preds = %.preheader.us.i.i, %Tn_GetNextPerm.exit.us.i.i
-  %i.if = phi ptr [ %i.lz, %Tn_GetNextPerm.exit.us.i.i ], [ %i.nh, %.preheader.us.i.i ]
-  %i.ig = phi ptr [ %i.lz, %Tn_GetNextPerm.exit.us.i.i ], [ %i.ni, %.preheader.us.i.i ] ; 2 uses
-  %.lcssa91102.us.i.i = phi i32 [ %.lcssa91103.us.i.i, %Tn_GetNextPerm.exit.us.i.i ], [ %.promoted.us.i.i, %.preheader.us.i.i ] ; 5 uses
-  %.lcssa8998.us.i.i = phi i32 [ %i.ma, %Tn_GetNextPerm.exit.us.i.i ], [ %.promoted97.us.i.i, %.preheader.us.i.i ] ; 4 uses
-  %.094.us.i.i = phi i32 [ %i.na, %Tn_GetNextPerm.exit.us.i.i ], [ 0, %.preheader.us.i.i ]
+.lr.ph95.us.i.i.a:                                ; preds = %.lr.ph95.us.i.i, %Tn_GetNextPerm.exit.us.i.i
+  %i.if = phi ptr [ %i.nh, %.lr.ph95.us.i.i ], [ %i.lz, %Tn_GetNextPerm.exit.us.i.i ]
+  %i.ig = phi ptr [ %i.ni, %.lr.ph95.us.i.i ], [ %i.lz, %Tn_GetNextPerm.exit.us.i.i ] ; 2 uses
+  %indvars.iv130.i.i = phi i32 [ %14, %.lr.ph95.us.i.i ], [ %indvars.iv.next131.i.i, %Tn_GetNextPerm.exit.us.i.i ] ; 2 uses
+  %.lcssa91102.us.i.i = phi i32 [ %.promoted.us.i.i, %.lr.ph95.us.i.i ], [ %.lcssa91103.us.i.i, %Tn_GetNextPerm.exit.us.i.i ] ; 5 uses
+  %.lcssa8998.us.i.i = phi i32 [ %.promoted97.us.i.i, %.lr.ph95.us.i.i ], [ %i.ma, %Tn_GetNextPerm.exit.us.i.i ] ; 3 uses
+  %.094.us.i.i = phi i32 [ 0, %.lr.ph95.us.i.i ], [ %i.na, %Tn_GetNextPerm.exit.us.i.i ]
+  %13 = sext i32 %indvars.iv130.i.i to i64
   %i.ih = icmp slt i32 %.lcssa8998.us.i.i, %.lcssa91102.us.i.i
   br i1 %i.ih, label %tn_vi_push.exit66.us.i.i, label %bb.n
 
@@ -651,17 +657,15 @@ tn_vi_push.exit68.us.i.i:                         ; preds = %bb.p, %tn_vi_push.e
   %i.jw = phi ptr [ %i.iz, %tn_vi_push.exit66.us.i.i ], [ %i.jl, %bb.p ]
   %i.jx = phi ptr [ %i.ja, %tn_vi_push.exit66.us.i.i ], [ %i.jl, %bb.p ] ; 2 uses
   %.lcssa91100.us.i.i = phi i32 [ %.lcssa91101.us.i.i, %tn_vi_push.exit66.us.i.i ], [ %i.ji, %bb.p ]
-  %11 = add i32 %.lcssa8998.us.i.i, 2
   %i.jy = sext i32 %i.jb to i64
   %i.jz = getelementptr inbounds [4 x i8], ptr %i.jx, i64 %i.jy
   store i32 0, ptr %i.jz, align 4, !tbaa !8
-  %12 = sext i32 %11 to i64
   br label %bb.r
 
 bb.r:                                             ; preds = %tn_vi_push.exit70.us.i.i, %tn_vi_push.exit68.us.i.i
   %i.ka = phi ptr [ %i.lb, %tn_vi_push.exit70.us.i.i ], [ %i.jw, %tn_vi_push.exit68.us.i.i ]
   %i.kb = phi ptr [ %i.lc, %tn_vi_push.exit70.us.i.i ], [ %i.jx, %tn_vi_push.exit68.us.i.i ] ; 2 uses
-  %indvars.iv128.i.i.a = phi i64 [ %indvars.iv.next129.i.i.a, %tn_vi_push.exit70.us.i.i ], [ %12, %tn_vi_push.exit68.us.i.i ] ; 4 uses
+  %indvars.iv128.i.i.a = phi i64 [ %indvars.iv.next129.i.i.a, %tn_vi_push.exit70.us.i.i ], [ %13, %tn_vi_push.exit68.us.i.i ] ; 4 uses
   %indvars.iv126.i.i = phi i64 [ %indvars.iv.next127.i.i, %tn_vi_push.exit70.us.i.i ], [ 0, %tn_vi_push.exit68.us.i.i ] ; 2 uses
   %i.kc = phi i32 [ %i.ld, %tn_vi_push.exit70.us.i.i ], [ %.lcssa91100.us.i.i, %tn_vi_push.exit68.us.i.i ] ; 5 uses
   %i.kd = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv126.i.i
@@ -812,6 +816,7 @@ bb.x:                                             ; preds = %.lr.ph587
 Tn_GetNextPerm.exit.us.i.i:                       ; preds = %bb.x, %.lr.ph55.i.us.i.i, %tn_vi_push.exit72.us.i.i, %.critedge2.i.us.i.i
   %i.na = add nuw nsw i32 %.094.us.i.i, 1         ; 2 uses
   %i.nb = icmp slt i32 %i.na, %.lcssa545
+  %indvars.iv.next131.i.i = add i32 %indvars.iv130.i.i, %indvars.iv128.i.i
   br i1 %i.nb, label %.lr.ph95.us.i.i.a, label %._crit_edge96.us.i.i, !llvm.loop !79
 
 bb.y:                                             ; preds = %._crit_edge96.us.i.i, %.preheader.us.i.i
@@ -833,13 +838,13 @@ bb.z:                                             ; preds = %bb.y, %._crit_edge.
   br i1 %exitcond135.not.i.i, label %._crit_edge106.us.i.i, label %.lr.ph.us.preheader.i.i, !llvm.loop !80
 
 .preheader.us.i.i:                                ; preds = %scalar.ph589, %middle.block599
-  br i1 %i.gy, label %.lr.ph95.us.i.i.a, label %bb.y
+  br i1 %i.gy, label %.lr.ph95.us.i.i, label %bb.y
 
 .lr.ph.us.preheader.i.i:                          ; preds = %bb.z, %Tn_Factorial.exit.us.i.i
   %i.nh = phi ptr [ %i.gp, %Tn_Factorial.exit.us.i.i ], [ %i.ne, %bb.z ] ; 3 uses
   %i.ni = phi ptr [ %i.gq, %Tn_Factorial.exit.us.i.i ], [ %i.nf, %bb.z ] ; 3 uses
   %.promoted.us.i.i = phi i32 [ %.promoted.us145.i.i, %Tn_Factorial.exit.us.i.i ], [ %.promoted.us147.i.i, %bb.z ] ; 3 uses
-  %.promoted97.us.i.i = phi i32 [ %.promoted97.us141.i.i, %Tn_Factorial.exit.us.i.i ], [ %.promoted97.us143.i.i, %bb.z ] ; 3 uses
+  %.promoted97.us.i.i = phi i32 [ %.promoted97.us141.i.i, %Tn_Factorial.exit.us.i.i ], [ %.promoted97.us143.i.i, %bb.z ] ; 4 uses
   %.057104.us.i.i = phi i32 [ 0, %Tn_Factorial.exit.us.i.i ], [ %i.ng, %bb.z ] ; 6 uses
   br i1 %min.iters.check603, label %.lr.ph.us.i.i.preheader, label %vector.ph604
 
@@ -875,6 +880,10 @@ middle.block615:                                  ; preds = %vector.body608
   %.05581.us.i.i.ph = phi i32 [ 0, %.lr.ph.us.preheader.i.i ], [ %n.vec605, %middle.block615 ]
   br label %.lr.ph.us.i.i
 
+.lr.ph95.us.i.i:                                  ; preds = %.preheader.us.i.i
+  %14 = add i32 %.promoted97.us.i.i, 2
+  br label %.lr.ph95.us.i.i.a
+
 ._crit_edge96.us.i.i:                             ; preds = %Tn_GetNextPerm.exit.us.i.i
   store i32 %i.ma, ptr %i.ge, align 8
   store i32 %.lcssa91103.us.i.i, ptr %i.gf, align 4
@@ -882,6 +891,7 @@ middle.block615:                                  ; preds = %vector.body608
 
 ._crit_edge106.us.i.i:                            ; preds = %bb.z
   %indvars.iv.next137.i.i = add nuw nsw i64 %indvars.iv136.i.i, 1 ; 2 uses
+  %indvars.iv.next129.i.i = add nuw i32 %indvars.iv128.i.i, 1
   %exitcond140.not.i.i = icmp eq i64 %indvars.iv.next137.i.i, %wide.trip.count139.i.i
   br i1 %exitcond140.not.i.i, label %Tn_PathGen.exit.i, label %.lr.ph.i.preheader.us.i.i, !llvm.loop !82
 

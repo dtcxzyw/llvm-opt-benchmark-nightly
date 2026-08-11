@@ -203,7 +203,7 @@ build_elision_headers.exit:                       ; preds = %bb.ab
   %i.fs = load i32, ptr %i.r, align 4, !tbaa !37  ; 3 uses
   %i.ft = icmp ugt i32 %i.fs, 2                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
-  %i.fu = getelementptr inbounds nuw i8, ptr %i.fr, i64 16 ; 7 uses
+  %i.fu = getelementptr inbounds nuw i8, ptr %i.fr, i64 16 ; 8 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fr, i64 28
   store i16 4096, ptr %i.fv, align 2, !tbaa !82
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fr, i64 32
@@ -368,9 +368,9 @@ find_header_idx.exit.us.i:                        ; preds = %bb.ak, %._crit_edge
   br label %.split.us.1.i
 
 .split.us.1.i:                                    ; preds = %find_header_idx.exit.us.i, %.split.us.preheader.i
-  %.1162.us.i = phi i32 [ %i.ik, %find_header_idx.exit.us.i ], [ %i.gu, %.split.us.preheader.i ] ; 2 uses
+  %.1162.us.i = phi i32 [ %i.ik, %find_header_idx.exit.us.i ], [ %i.gu, %.split.us.preheader.i ] ; 3 uses
   %i.il = sext i32 %.1162.us.i to i64
-  %i.im = getelementptr [12 x i8], ptr %i.fu, i64 %i.il ; 28 uses
+  %i.im = getelementptr [12 x i8], ptr %i.fu, i64 %i.il ; 16 uses
   store i16 41, ptr %i.im, align 2, !tbaa !82
   %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 2
   store i8 %i.hm, ptr %i.in, align 2, !tbaa !89
@@ -773,16 +773,18 @@ find_header_idx.exit192.1.i:                      ; preds = %bb.bi, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   %i.ow = getelementptr i8, ptr %i.im, i64 35
   store i8 %.0.i182.1.i, ptr %i.ow, align 1, !tbaa !91
+  %indvars.iv.next.i106 = add i32 %.1162.us.i, 3
+  %2 = sext i32 %indvars.iv.next.i106 to i64
   %i.ox = trunc i32 %spec.store.select283.i to i16 ; 2 uses
-  %2 = getelementptr i8, ptr %i.im, i64 36
-  store i16 1, ptr %2, align 2, !tbaa !82
-  %i.oy = getelementptr i8, ptr %i.im, i64 38
+  %3 = getelementptr inbounds [12 x i8], ptr %i.fu, i64 %2 ; 12 uses
+  store i16 1, ptr %3, align 2, !tbaa !82
+  %i.oy = getelementptr inbounds nuw i8, ptr %3, i64 2
   store i8 %i.hm, ptr %i.oy, align 2, !tbaa !89
-  %i.oz = getelementptr i8, ptr %i.im, i64 40
+  %i.oz = getelementptr inbounds nuw i8, ptr %3, i64 4
   store i16 %i.kx, ptr %i.oz, align 2, !tbaa !85
-  %i.pa = getelementptr i8, ptr %i.im, i64 42
+  %i.pa = getelementptr inbounds nuw i8, ptr %3, i64 6
   store i16 %i.kw, ptr %i.pa, align 2, !tbaa !94
-  %i.pb = getelementptr i8, ptr %i.im, i64 44
+  %i.pb = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i16 %i.ox, ptr %i.pb, align 2, !tbaa !86
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   br i1 %i.lr, label %find_expected_header.exit.i180.1244.i, label %bb.bj
@@ -891,17 +893,17 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
 find_header_idx.exit192.1256.i:                   ; preds = %bb.br, %._crit_edge.loopexit.split.loop.exit11.i190.1253.i, %find_expected_header.exit.i180.1244.i
   %.0.i182.1254.i = phi i8 [ 0, %find_expected_header.exit.i180.1244.i ], [ %i.qm, %._crit_edge.loopexit.split.loop.exit11.i190.1253.i ], [ 0, %bb.br ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
-  %i.qn = getelementptr i8, ptr %i.im, i64 47
+  %i.qn = getelementptr inbounds nuw i8, ptr %3, i64 11
   store i8 %.0.i182.1254.i, ptr %i.qn, align 1, !tbaa !91
-  %i.qo = getelementptr i8, ptr %i.im, i64 48
+  %i.qo = getelementptr i8, ptr %3, i64 12
   store i16 1, ptr %i.qo, align 2, !tbaa !82
-  %i.qp = getelementptr i8, ptr %i.im, i64 50
+  %i.qp = getelementptr i8, ptr %3, i64 14
   store i8 %i.hm, ptr %i.qp, align 2, !tbaa !89
-  %i.qq = getelementptr i8, ptr %i.im, i64 52
+  %i.qq = getelementptr i8, ptr %3, i64 16
   store i16 %i.kx, ptr %i.qq, align 2, !tbaa !85
-  %i.qr = getelementptr i8, ptr %i.im, i64 54
+  %i.qr = getelementptr i8, ptr %3, i64 18
   store i16 %i.ni, ptr %i.qr, align 2, !tbaa !94
-  %i.qs = getelementptr i8, ptr %i.im, i64 56
+  %i.qs = getelementptr i8, ptr %3, i64 20
   store i16 %i.ox, ptr %i.qs, align 2, !tbaa !86
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   br i1 %i.nl, label %find_expected_header.exit.i180.1.1.i, label %bb.bs
@@ -1009,7 +1011,7 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by
 find_header_idx.exit192.1.1.i:                    ; preds = %bb.ca, %._crit_edge.loopexit.split.loop.exit11.i190.1.1.i, %find_expected_header.exit.i180.1.1.i
   %.0.i182.1.1.i = phi i8 [ 0, %find_expected_header.exit.i180.1.1.i ], [ %i.sc, %._crit_edge.loopexit.split.loop.exit11.i190.1.1.i ], [ 0, %bb.ca ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
-  %i.sd = getelementptr i8, ptr %i.im, i64 59
+  %i.sd = getelementptr i8, ptr %3, i64 23
   store i8 %.0.i182.1.1.i, ptr %i.sd, align 1, !tbaa !91
   %indvars.iv.next.1.1.i = add i32 %.1162.us.i, 5
   br label %.loopexit215.i
