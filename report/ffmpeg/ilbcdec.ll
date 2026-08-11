@@ -204,7 +204,7 @@ lsp_interpolate.exit:                             ; preds = %bb.ae, %lsp_interpo
   %i.bqv = getelementptr inbounds nuw i8, ptr %i.e, i64 224 ; 2 uses
   %i.bqw = load i32, ptr %i.bqv, align 8, !tbaa !42 ; 11 uses
   %i.bqx = trunc i32 %i.bqw to i16                ; 6 uses
-  %i.bqy = sub i16 80, %i.bqx                     ; 7 uses
+  %i.bqy = sub i16 80, %i.bqx                     ; 5 uses
   %i.bqz = getelementptr inbounds nuw i8, ptr %i.e, i64 90 ; 2 uses
   %i.bra = load i16, ptr %i.bqz, align 2, !tbaa !48 ; 2 uses
   %i.brb = icmp eq i16 %i.bra, 1
@@ -607,12 +607,12 @@ reverse_memcpy.exit.i:                            ; preds = %reverse_memcpy.exit
   %i.cfa = getelementptr inbounds nuw i8, ptr %i.e, i64 58
   %i.cfb = getelementptr inbounds nuw i8, ptr %i.e, i64 2174
   tail call fastcc void @construct_vector(ptr noundef nonnull %i.bqt, ptr noundef nonnull readonly %i.cez, ptr noundef nonnull readonly %i.cfa, ptr noundef nonnull %i.cfb, i16 noundef signext 85, i16 noundef signext %i.bqy)
-  %4 = sext i16 %i.bqy to i32                     ; 2 uses
+  %4 = zext i16 %i.bqy to i32                     ; 2 uses
   %i.cfc = icmp sgt i16 %i.bqy, 0
   br i1 %i.cfc, label %.lr.ph.i114.i.preheader, label %reverse_memcpy.exit119.i
 
 .lr.ph.i114.i.preheader:                          ; preds = %reverse_memcpy.exit.i
-  %xtraiter321 = and i32 %4, 7
+  %xtraiter321 = and i32 %4, 7                    ; 3 uses
   %i.cfd = icmp ult i16 %i.bqy, 8
   br i1 %i.cfd, label %.lr.ph.i114.i.epil.preheader, label %.lr.ph.i114.i.preheader.new
 
@@ -661,15 +661,13 @@ reverse_memcpy.exit.i:                            ; preds = %reverse_memcpy.exit
   br i1 %niter326.ncmp.7, label %reverse_memcpy.exit119.i.loopexit.unr-lcssa, label %.lr.ph.i114.i, !llvm.loop !74
 
 reverse_memcpy.exit119.i.loopexit.unr-lcssa:      ; preds = %.lr.ph.i114.i
-  %5 = and i16 %i.bqy, 7
-  %lcmp.mod323.not = icmp eq i16 %5, 0
+  %lcmp.mod323.not = icmp eq i32 %xtraiter321, 0
   br i1 %lcmp.mod323.not, label %reverse_memcpy.exit119.i, label %.lr.ph.i114.i.epil.preheader
 
 .lr.ph.i114.i.epil.preheader:                     ; preds = %reverse_memcpy.exit119.i.loopexit.unr-lcssa, %.lr.ph.i114.i.preheader
   %.069.i116.i.epil.init = phi ptr [ %i.bqt, %.lr.ph.i114.i.preheader ], [ %i.cfs, %reverse_memcpy.exit119.i.loopexit.unr-lcssa ]
   %.078.i117.pn.i.epil.init = phi ptr [ %i.brk, %.lr.ph.i114.i.preheader ], [ %.078.i117.i.7, %reverse_memcpy.exit119.i.loopexit.unr-lcssa ]
-  %6 = and i16 %i.bqy, 7
-  %lcmp.mod324 = icmp ne i16 %6, 0
+  %lcmp.mod324 = icmp ne i32 %xtraiter321, 0
   tail call void @llvm.assume(i1 %lcmp.mod324)
   br label %.lr.ph.i114.i.epil
 

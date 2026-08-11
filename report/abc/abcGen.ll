@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 ; Function Attrs: nounwind uwtable
 define void @Abc_GenFpga(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #3 {
 bb.a:
-  %i.a = shl nuw i32 1, %1
+  %i.a = shl nuw nsw i32 1, %1
   %i.b = add nsw i32 %3, %2                       ; 2 uses
   %i.c = add nsw i32 %i.b, -1                     ; 6 uses
   %i.d = icmp ult i32 %i.c, 2
@@ -309,7 +309,6 @@ bb.a:
 .lr.ph182:                                        ; preds = %._crit_edge173
   %.not206 = icmp eq i32 %1, 31
   %i.aw = icmp sgt i32 %1, 0
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
   br label %bb.k
 
 .preheader155:                                    ; preds = %._crit_edge179
@@ -527,7 +526,7 @@ bb.l:                                             ; preds = %.lr.ph176, %bb.l
   %i.ep = add nsw i32 %.0174, %i.en
   %i.eq = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.127, i32 noundef %.0174, i32 noundef %i.ep) #22 ; 0 uses
   %i.er = add nuw nsw i32 %.0174, 1               ; 2 uses
-  %exitcond216.not = icmp eq i32 %i.er, %smax
+  %exitcond216.not = icmp eq i32 %i.er, %i.a
   br i1 %exitcond216.not, label %.preheader156, label %bb.l, !llvm.loop !55
 
 bb.m:                                             ; preds = %.lr.ph178, %bb.m

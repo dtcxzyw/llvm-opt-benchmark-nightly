@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.d
   %fputs94 = call i32 @fputs(ptr nonnull %i.y, ptr %0) ; 0 uses
   %i.z = load i16, ptr %i.m, align 8, !tbaa !16   ; 4 uses
   %i.aa = sext i16 %i.z to i32                    ; 2 uses
-  %5 = icmp sgt i16 %i.z, 5
+  %5 = icmp samesign ugt i16 %i.z, 5
   %i.ab = add nsw i32 %i.aa, -2
   %i.ac = icmp slt i16 %i.z, 2
   br i1 %i.ac, label %bb.f, label %bb.g
@@ -606,8 +606,8 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a
   %.053.lcssa = phi ptr [ %i.b, %bb.a ], [ %.154, %bb.d ] ; 3 uses
-  %.lcssa.in = phi i16 [ %i.d, %bb.a ], [ %i.al, %bb.d ] ; 5 uses
-  %.lcssa = sext i16 %.lcssa.in to i64            ; 2 uses
+  %.lcssa.in = phi i16 [ %i.d, %bb.a ], [ %i.al, %bb.d ] ; 3 uses
+  %.lcssa = zext i16 %.lcssa.in to i64            ; 2 uses
   %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.g, label %.preheader
 
@@ -618,7 +618,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 .lr.ph60:                                         ; preds = %.preheader
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !17 ; 5 uses
-  %xtraiter = and i64 %.lcssa, 3
+  %xtraiter = and i64 %.lcssa, 3                  ; 3 uses
   %i.ar = icmp ult i16 %.lcssa.in, 4
   br i1 %i.ar, label %.epil.preheader, label %.lr.ph60.new
 
@@ -674,14 +674,12 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph60.new
   br i1 %niter.ncmp.3, label %._crit_edge61.loopexit.unr-lcssa, label %bb.e, !llvm.loop !98
 
 ._crit_edge61.loopexit.unr-lcssa:                 ; preds = %bb.e
-  %3 = and i16 %.lcssa.in, 3
-  %lcmp.mod.not = icmp eq i16 %3, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge61, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge61.loopexit.unr-lcssa, %.lr.ph60
   %indvars.iv64.epil.init = phi i64 [ 0, %.lr.ph60 ], [ %indvars.iv.next65.3, %._crit_edge61.loopexit.unr-lcssa ]
-  %4 = and i16 %.lcssa.in, 3
-  %lcmp.mod70 = icmp ne i16 %4, 0
+  %lcmp.mod70 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod70)
   br label %bb.f
 

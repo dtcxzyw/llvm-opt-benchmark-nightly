@@ -203,7 +203,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %0, i64 8          ; 2 uses
   tail call void @_raw_read_lock(ptr noundef %i.b) #22
-  %2 = add i64 %1, 1
   %.val = load ptr, ptr %0, align 8               ; 2 uses
   %.not11.i = icmp eq ptr %.val, null
   br i1 %.not11.i, label %sp_lookup.exit.thread, label %.lr.ph.i
@@ -218,8 +217,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph.i
   %i.e = getelementptr i8, ptr %.02512.i, i64 24
   %i.f = load i64, ptr %i.e, align 8
-  %.not30.i = icmp ugt i64 %2, %i.f
-  br i1 %.not30.i, label %.preheader.i, label %bb.d
+  %.not30.i.not = icmp ult i64 %1, %i.f
+  br i1 %.not30.i.not, label %bb.d, label %.preheader.i
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   %.sink.i = phi i64 [ 8, %.lr.ph.i ], [ 16, %bb.c ]

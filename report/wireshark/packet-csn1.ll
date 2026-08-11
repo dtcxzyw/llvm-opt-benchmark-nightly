@@ -201,7 +201,6 @@ bb.gi:                                            ; preds = %bb.gh
 .preheader1932:                                   ; preds = %bb.gi
   %i.agz = getelementptr i8, ptr %.01324, i64 2
   %i.aha = load i16, ptr %i.agz, align 2          ; 2 uses
-  %15 = sext i16 %i.aha to i32
   %i.ahb = icmp sgt i16 %i.aha, 0
   br i1 %i.ahb, label %.lr.ph2200, label %._crit_edge2201.thread
 
@@ -226,9 +225,9 @@ bb.gi:                                            ; preds = %bb.gh
   %i.ahh = trunc nuw i8 %i.ahg to i1
   %spec.select = select i1 %i.ahh, i8 %.015552197, i8 0 ; 3 uses
   %i.ahi = add i8 %.015532199, 1                  ; 2 uses
-  %16 = zext i8 %i.ahi to i32
-  %17 = icmp samesign ult i32 %16, %15
-  br i1 %17, label %.lr.ph2200, label %._crit_edge2201, !llvm.loop !15
+  %15 = zext i8 %i.ahi to i16
+  %16 = icmp ugt i16 %i.aha, %15
+  br i1 %16, label %.lr.ph2200, label %._crit_edge2201, !llvm.loop !15
 
 ._crit_edge2201:                                  ; preds = %.lr.ph2200
   %i.ahj = icmp eq i8 %spec.select, 0
@@ -300,7 +299,6 @@ bb.gn:                                            ; preds = %tvb_get_masked_bits
 .preheader1933:                                   ; preds = %bb.gn
   %i.air = getelementptr i8, ptr %.01324, i64 2
   %i.ais = load i16, ptr %i.air, align 2          ; 2 uses
-  %18 = sext i16 %i.ais to i32
   %i.ait = icmp sgt i16 %i.ais, 0
   br i1 %i.ait, label %.lr.ph2194, label %._crit_edge2195.thread
 
@@ -325,9 +323,9 @@ bb.gn:                                            ; preds = %tvb_get_masked_bits
   %i.aiz = trunc nuw i8 %i.aiy to i1
   %spec.select1660 = select i1 %i.aiz, i8 %.015502191, i8 0 ; 3 uses
   %i.aja = add i8 %.015482193, 1                  ; 2 uses
-  %19 = zext i8 %i.aja to i32
-  %20 = icmp samesign ult i32 %19, %18
-  br i1 %20, label %.lr.ph2194, label %._crit_edge2195, !llvm.loop !16
+  %17 = zext i8 %i.aja to i16
+  %18 = icmp ugt i16 %i.ais, %17
+  br i1 %18, label %.lr.ph2194, label %._crit_edge2195, !llvm.loop !16
 
 ._crit_edge2195:                                  ; preds = %.lr.ph2194
   %i.ajb = icmp eq i8 %spec.select1660, 0

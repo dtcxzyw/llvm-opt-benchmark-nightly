@@ -204,8 +204,7 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.c
 
 bb.e:                                             ; preds = %bb.b
-  %.not.i = icmp eq ptr %i.f, null                ; 2 uses
-  %spec.select.i = sext i1 %.not.i to i8
+  %.not.i = icmp eq ptr %i.f, null
   br i1 %.not.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -272,7 +271,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtNtNtCsEhZmuQNqkz_11ruff_linter5r
   %i.y = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %i.h ; 2 uses
   store ptr %i.f, ptr %i.y, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  store i8 %spec.select.i, ptr %i.z, align 8
+  store i8 0, ptr %i.z, align 8
   %i.aa = add nuw nsw i64 %i.h, 1
   store i64 %i.aa, ptr %i.d, align 8
   br label %bb.b

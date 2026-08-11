@@ -204,9 +204,8 @@ sync_rcu_exp_done.exit85:                         ; preds = %bb.ad, %bb.ae
 
 bb.af:                                            ; preds = %sync_rcu_exp_done.exit85
   %i.ci = load volatile ptr, ptr %i.ao, align 32
-  %2 = icmp ne ptr %i.ci, null                    ; 2 uses
-  %3 = zext i1 %2 to i32
-  br i1 %2, label %bb.au, label %bb.ag
+  %.not96 = icmp eq ptr %i.ci, null
+  br i1 %.not96, label %bb.ag, label %bb.au
 
 bb.ag:                                            ; preds = %bb.af
   %i.cj = load ptr, ptr @rcu_preempt_deferred_qs_irqrestore.___tp_str.273, align 8
@@ -241,7 +240,7 @@ bb.ah:                                            ; preds = %arch_test_bit.exit.
 bb.ai:                                            ; preds = %bb.ah
   %i.cz = getelementptr i8, ptr %i.cy, i64 8
   %i.da = load ptr, ptr %i.cz, align 8
-  %i.db = tail call i32 @__SCT__tp_func_rcu_quiescent_state_report(ptr noundef %i.da, ptr noundef %i.cj, i64 noundef %i.ck, i64 noundef 0, i64 noundef %i.cm, i8 noundef zeroext %i.cn, i32 noundef %i.cp, i32 noundef %i.cr, i32 noundef range(i32 0, 2) %3) #31 ; 0 uses
+  %i.db = tail call i32 @__SCT__tp_func_rcu_quiescent_state_report(ptr noundef %i.da, ptr noundef %i.cj, i64 noundef %i.ck, i64 noundef 0, i64 noundef %i.cm, i8 noundef zeroext %i.cn, i32 noundef %i.cp, i32 noundef %i.cr, i32 noundef range(i32 0, 2) 0) #31 ; 0 uses
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah

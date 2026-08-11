@@ -203,7 +203,7 @@ _ZNSt6vectorIxSaIxEEC2EmRKxRKS0_.exit:            ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.dg
   %i.dk = load i64, ptr %i.dj, align 8, !tbaa !49 ; 4 uses
   %i.dl = sdiv i64 %.06.lcssa.i168170177, %i.dk   ; 3 uses
-  %i.dm = add nsw i64 %i.bs, -1                   ; 13 uses
+  %i.dm = add nsw i64 %i.bs, -1                   ; 14 uses
   %i.dn = icmp ugt i64 %i.dm, 1152921504606846975
   br i1 %i.dn, label %bb.j, label %_ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i88
 
@@ -443,9 +443,8 @@ _ZNSt6vectorIxSaIxEEC2EmRKS0_.exit115.thread:     ; preds = %_ZNSt6vectorIxSaIxE
   %i.hd = sub i64 %i.hb, %i.hc
   %i.he = ashr exact i64 %i.hd, 3                 ; 2 uses
   %i.hf = icmp samesign ugt i64 %i.bs, 2
-  %3 = tail call i64 @llvm.umax.i64(i64 %i.dm, i64 1) ; 2 uses
   %min.iters.check373 = icmp ult i64 %i.bs, 5
-  %n.vec375 = and i64 %3, 1152921504606846972     ; 3 uses
+  %n.vec375 = and i64 %i.dm, 1152921504606846972  ; 3 uses
   %cmp.n384 = icmp eq i64 %i.dm, %n.vec375
   %i.hg = add nsw i64 %i.dk, -1
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.di, i64 0
@@ -594,7 +593,7 @@ vector.body362:                                   ; preds = %vector.body362, %ve
   %i.ix = mul nsw i64 %i.iw, %i.iu
   %i.iy = add nsw i64 %i.ix, %.060204             ; 2 uses
   %i.iz = add nuw nsw i64 %.059205, 1             ; 2 uses
-  %exitcond226.not = icmp eq i64 %i.iz, %3
+  %exitcond226.not = icmp eq i64 %i.iz, %i.dm
   br i1 %exitcond226.not, label %.preheader, label %.lr.ph206, !llvm.loop !138
 
 ._crit_edge211:                                   ; preds = %bb.q, %.preheader

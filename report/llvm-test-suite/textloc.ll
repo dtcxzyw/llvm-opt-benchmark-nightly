@@ -55,8 +55,8 @@ bb.a:
   store ptr %i.h, ptr %i.i, align 8, !tbaa !18
   %i.j = load i32, ptr %i.a, align 4, !tbaa !8
   %i.k = load i32, ptr %i.c, align 8, !tbaa !17
-  %i.l = mul nsw i32 %i.k, %i.j                   ; 4 uses
-  %1 = sext i32 %i.l to i64                       ; 7 uses
+  %i.l = mul nsw i32 %i.k, %i.j                   ; 3 uses
+  %1 = zext i32 %i.l to i64                       ; 7 uses
   %i.m = icmp sgt i32 %i.l, 0
   br i1 %i.m, label %.lr.ph, label %._crit_edge
 
@@ -101,9 +101,8 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
   %.010.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 3 uses
-  %xtraiter = and i64 %1, 3
-  %2 = and i32 %i.l, 3
-  %lcmp.mod.not = icmp eq i32 %2, 0
+  %xtraiter = and i64 %1, 3                       ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
@@ -182,7 +181,7 @@ bb.a:
   %i.l = add i32 %i.k, -10                        ; 2 uses
   %i.m = icmp sgt i32 %i.k, 20
   %i.n = load i32, ptr @HVAR_WINDOW, align 4      ; 7 uses
-  %i.o = sub i32 0, %i.n
+  %i.o = sub nsw i32 0, %i.n
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.q = shl nsw i32 %i.n, 1
   %i.r = or disjoint i32 %i.q, 1

@@ -204,8 +204,7 @@ bb.ep:                                            ; preds = %bb.eg
   br i1 %.not276, label %slice_end.exit, label %.thread
 
 bb.eq:                                            ; preds = %bb.t
-  %sext = shl i64 %i.fo, 32
-  %5 = ashr exact i64 %sext, 32
+  %5 = and i64 %i.fo, 4294967295
   %i.aks = load ptr, ptr %i.d, align 8, !tbaa !9  ; 16 uses
   %i.akt = icmp sgt i32 %i.fp, 29
   br i1 %i.akt, label %.preheader.i395, label %.loopexit.i

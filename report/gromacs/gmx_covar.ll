@@ -204,8 +204,8 @@ bb.am:                                            ; preds = %.lr.ph891, %bb.am
 bb.an:                                            ; preds = %._crit_edge
   %i.nd = load ptr, ptr @stderr, align 8, !tbaa !67
   %i.ne = call i64 @fwrite(ptr nonnull @.str.56, i64 152, i64 1, ptr %i.nd) #27 ; 0 uses
-  %i.nf = load i32, ptr %i.w, align 4, !tbaa !9   ; 5 uses
-  %42 = sext i32 %i.nf to i64                     ; 5 uses
+  %i.nf = load i32, ptr %i.w, align 4, !tbaa !9   ; 4 uses
+  %42 = zext i32 %i.nf to i64                     ; 6 uses
   %i.ng = icmp sgt i32 %i.nf, 0
   br i1 %i.ng, label %iter.check1312, label %.loopexit863
 
@@ -219,6 +219,7 @@ vector.main.loop.iter.check1296:                  ; preds = %iter.check1312
   br i1 %min.iters.check1297, label %vec.epilog.ph1316, label %vector.ph1298
 
 vector.ph1298:                                    ; preds = %vector.main.loop.iter.check1296
+  %43 = and i64 %42, 28
   %n.vec1299 = and i64 %42, 2147483616            ; 4 uses
   br label %vector.body1300
 
@@ -253,8 +254,7 @@ middle.block1309:                                 ; preds = %vector.body1300
   br i1 %cmp.n1310, label %.loopexit863, label %vec.epilog.iter.check1314
 
 vec.epilog.iter.check1314:                        ; preds = %middle.block1309
-  %43 = and i32 %i.nf, 28
-  %min.epilog.iters.check1315 = icmp eq i32 %43, 0
+  %min.epilog.iters.check1315 = icmp eq i64 %43, 0
   br i1 %min.epilog.iters.check1315, label %vec.epilog.scalar.ph1313.preheader, label %vec.epilog.ph1316, !prof !61
 
 vec.epilog.ph1316:                                ; preds = %vector.main.loop.iter.check1296, %vec.epilog.iter.check1314
@@ -646,19 +646,20 @@ bb.ch:                                            ; preds = %bb.cg
           to label %bb.ci unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
 
 bb.ci:                                            ; preds = %bb.ch, %bb.cf
-  %i.rs = load i32, ptr %i.l, align 4, !tbaa !9   ; 5 uses
+  %i.rs = load i32, ptr %i.l, align 4, !tbaa !9   ; 4 uses
+  %44 = zext i32 %i.rs to i64                     ; 2 uses
   %i.rt = icmp sgt i32 %i.rs, 0
   %.pre = load ptr, ptr %i.g, align 8, !tbaa !74  ; 4 uses
   br i1 %i.rt, label %.lr.ph899, label %._crit_edge900
 
 .lr.ph899:                                        ; preds = %bb.ci
   %i.ru = load ptr, ptr %i.x, align 8, !tbaa !34  ; 3 uses
+  %xtraiter1629 = and i64 %44, 1
   %i.rv = icmp eq i32 %i.rs, 1
   br i1 %i.rv, label %.epil.preheader, label %.lr.ph899.new
 
 .lr.ph899.new:                                    ; preds = %.lr.ph899
-  %44 = and i32 %i.rs, 2147483646
-  %unroll_iter1633 = zext nneg i32 %44 to i64
+  %unroll_iter1633 = and i64 %44, 2147483646
   br label %bb.cj
 
 bb.cj:                                            ; preds = %bb.cj, %.lr.ph899.new
@@ -701,8 +702,7 @@ bb.cj:                                            ; preds = %bb.cj, %.lr.ph899.n
   br i1 %niter1634.ncmp.1, label %._crit_edge900.loopexit.unr-lcssa, label %bb.cj, !llvm.loop !78
 
 ._crit_edge900.loopexit.unr-lcssa:                ; preds = %bb.cj
-  %45 = and i32 %i.rs, 1
-  %lcmp.mod1631.not = icmp eq i32 %45, 0
+  %lcmp.mod1631.not = icmp eq i64 %xtraiter1629, 0
   br i1 %lcmp.mod1631.not, label %._crit_edge900, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge900.loopexit.unr-lcssa, %.lr.ph899
@@ -744,19 +744,20 @@ bb.cm:                                            ; preds = %bb.cl
   %i.tp = uitofp nneg i32 %i.qs to double
   %i.tq = fdiv nnan double 1.000000e+00, %i.tp
   %i.tr = fptrunc nnan double %i.tq to float      ; 9 uses
-  %i.ts = load i32, ptr %i.l, align 4, !tbaa !9   ; 5 uses
+  %i.ts = load i32, ptr %i.l, align 4, !tbaa !9   ; 4 uses
+  %45 = zext i32 %i.ts to i64                     ; 2 uses
   %i.tt = icmp sgt i32 %i.ts, 0
   br i1 %i.tt, label %.preheader859.lr.ph, label %._crit_edge903
 
 .preheader859.lr.ph:                              ; preds = %bb.cm
   %i.tu = load ptr, ptr %i.g, align 8, !tbaa !74  ; 3 uses
   %i.tv = load ptr, ptr %i.x, align 8, !tbaa !34  ; 3 uses
+  %xtraiter1635 = and i64 %45, 1
   %i.tw = icmp eq i32 %i.ts, 1
   br i1 %i.tw, label %.preheader859.epil.preheader, label %.preheader859.lr.ph.new
 
 .preheader859.lr.ph.new:                          ; preds = %.preheader859.lr.ph
-  %46 = and i32 %i.ts, 2147483646
-  %unroll_iter1639 = zext nneg i32 %46 to i64
+  %unroll_iter1639 = and i64 %45, 2147483646
   br label %.preheader859
 
 .preheader859:                                    ; preds = %.preheader859, %.preheader859.lr.ph.new
@@ -811,8 +812,7 @@ bb.cm:                                            ; preds = %bb.cl
   br i1 %niter1640.ncmp.1, label %._crit_edge903.loopexit.unr-lcssa, label %.preheader859, !llvm.loop !82
 
 ._crit_edge903.loopexit.unr-lcssa:                ; preds = %.preheader859
-  %47 = and i32 %i.ts, 1
-  %lcmp.mod1637.not = icmp eq i32 %47, 0
+  %lcmp.mod1637.not = icmp eq i64 %xtraiter1635, 0
   br i1 %lcmp.mod1637.not, label %._crit_edge903, label %.preheader859.epil.preheader
 
 .preheader859.epil.preheader:                     ; preds = %._crit_edge903.loopexit.unr-lcssa, %.preheader859.lr.ph
@@ -1215,7 +1215,7 @@ bb.fr:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.fs:                                            ; preds = %._crit_edge972
   %i.bki = load i8, ptr @_ZZ9gmx_covariPPcE4bFit, align 1, !tbaa !30, !range !32, !noundef !33
   %i.bkj = trunc nuw i8 %i.bki to i1
-  %.pre1051 = load i32, ptr %i.l, align 4, !tbaa !9 ; 7 uses
+  %.pre1051 = load i32, ptr %i.l, align 4, !tbaa !9 ; 5 uses
   br i1 %i.bkj, label %bb.ft, label %.loopexit
 
 bb.ft:                                            ; preds = %bb.fs
@@ -1224,19 +1224,19 @@ bb.ft:                                            ; preds = %bb.fs
   br i1 %i.bkl, label %.preheader, label %.loopexit
 
 .preheader:                                       ; preds = %bb.ft
-  %48 = sext i32 %.pre1051 to i64                 ; 2 uses
+  %46 = zext i32 %.pre1051 to i64                 ; 2 uses
   %i.bkm = icmp sgt i32 %.pre1051, 0
   br i1 %i.bkm, label %.lr.ph974, label %.loopexit
 
 .lr.ph974:                                        ; preds = %.preheader
   %i.bkn = load ptr, ptr %i.h, align 8, !tbaa !74 ; 5 uses
   %i.bko = load ptr, ptr %i.y, align 8, !tbaa !34 ; 5 uses
-  %xtraiter1702 = and i64 %48, 3
+  %xtraiter1702 = and i64 %46, 3                  ; 3 uses
   %i.bkp = icmp ult i32 %.pre1051, 4
   br i1 %i.bkp, label %.epil.preheader1701, label %.lr.ph974.new
 
 .lr.ph974.new:                                    ; preds = %.lr.ph974
-  %unroll_iter1706 = and i64 %48, 2147483644
+  %unroll_iter1706 = and i64 %46, 2147483644
   br label %bb.fu
 
 bb.fu:                                            ; preds = %bb.fu, %.lr.ph974.new
@@ -1316,14 +1316,12 @@ bb.fv:                                            ; preds = %.loopexit, %._crit_
   br label %bb.hh
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.fu
-  %49 = and i32 %.pre1051, 3
-  %lcmp.mod1704.not = icmp eq i32 %49, 0
+  %lcmp.mod1704.not = icmp eq i64 %xtraiter1702, 0
   br i1 %lcmp.mod1704.not, label %.loopexit, label %.epil.preheader1701
 
 .epil.preheader1701:                              ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph974
   %.22429973.epil.init = phi i64 [ 0, %.lr.ph974 ], [ %i.bmp, %.loopexit.loopexit.unr-lcssa ]
-  %50 = and i32 %.pre1051, 3
-  %lcmp.mod1705 = icmp ne i32 %50, 0
+  %lcmp.mod1705 = icmp ne i64 %xtraiter1702, 0
   call void @llvm.assume(i1 %lcmp.mod1705)
   br label %bb.fw
 

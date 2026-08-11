@@ -35,7 +35,7 @@ bb.b:                                             ; preds = %bb.a
   %i.p = sdiv i32 %4, 8
   %i.q = sext i32 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %12 = sdiv i32 %5, 8
+  %12 = lshr i32 %5, 3
   %i.s = shl i64 %i.l, 3
   %i.t = sext i32 %4 to i64
   %i.u = icmp sgt i32 %5, 3
@@ -286,7 +286,7 @@ _ZN4ncnn3MatD2Ev.exit390.i.us.i:                  ; preds = %.lr.ph158.i.i, %.lo
   %i.eo = sdiv i32 %4, 8
   %i.ep = sext i32 %i.eo to i64
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %13 = sdiv i32 %5, 8                            ; 3 uses
+  %13 = lshr i32 %5, 3                            ; 3 uses
   %i.er = shl i64 %i.l, 3                         ; 2 uses
   %i.es = sext i32 %4 to i64
   %i.et = icmp sgt i32 %5, 3
@@ -317,11 +317,10 @@ _ZN4ncnn3MatD2Ev.exit390.i.us.i:                  ; preds = %.lr.ph158.i.i, %.lo
   br i1 %i.fg, label %_ZN4ncnn3MatD2Ev.exit389.i.us.us.i.preheader, label %_ZN4ncnn3MatD2Ev.exit389.i.us.preheader.i
 
 _ZN4ncnn3MatD2Ev.exit389.i.us.us.i.preheader:     ; preds = %.lr.ph187.i.split.us.i
-  %xtraiter485 = and i32 %13, 1
-  %i.fh = and i32 %5, 2147483640
-  %14 = icmp eq i32 %i.fh, 8
-  %unroll_iter = and i32 %13, 268435454
-  %lcmp.mod486.not = icmp eq i32 %xtraiter485, 0
+  %14 = icmp eq i32 %13, 1
+  %i.fh = and i32 %13, 268435454
+  %unroll_iter = and i32 %5, 8
+  %lcmp.mod486.not = icmp eq i32 %unroll_iter, 0
   %lcmp.mod488 = trunc i32 %13 to i1
   br label %_ZN4ncnn3MatD2Ev.exit389.i.us.us.i
 
@@ -373,7 +372,7 @@ _ZN4ncnn3MatD2Ev.exit389.i.us.us.i:               ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.gk = getelementptr inbounds nuw i8, ptr %.8163.i.us.us.i, i64 64 ; 3 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gd, i64 %i.er ; 2 uses
   %niter.next.1 = add i32 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
+  %niter.ncmp.1 = icmp eq i32 %niter.next.1, %i.fh
   br i1 %niter.ncmp.1, label %.loopexit126.i.loopexit.us.us.i.unr-lcssa, label %.lr.ph164.i.us.us.i, !llvm.loop !36
 
 .loopexit126.i.loopexit.us.us.i.unr-lcssa:        ; preds = %.lr.ph164.i.us.us.i
@@ -640,7 +639,7 @@ _ZN4ncnn3MatD2Ev.exit388.i.us.i:                  ; preds = %.lr.ph187.i.i, %.lo
   %i.lx = sdiv i32 %4, 8
   %i.ly = sext i32 %i.lx to i64
   %i.lz = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %15 = sdiv i32 %5, 8                            ; 3 uses
+  %15 = lshr i32 %5, 3                            ; 3 uses
   %i.ma = shl i64 %i.l, 3                         ; 5 uses
   %i.mb = sext i32 %4 to i64
   %i.mc = icmp sgt i32 %5, 3
@@ -1043,7 +1042,7 @@ begin_hunk_1_@_ZN4ncnn46convolution_im2col_input_tile_int8_avxvnniint8ERKNS_3Mat
   %i.bfz = insertelement <4 x i32> poison, i32 %.scalar518.i.i, i64 0
   %i.bga = shufflevector <4 x i32> %i.bfz, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.bgb = icmp ne i32 %i.yc, 8
-  %16 = sdiv i32 %5, 8
+  %16 = lshr i32 %5, 3
   %i.bgc = icmp slt i32 %5, 8
   %i.bgd = sdiv i32 %4, 8
   %brmerge448.i.i = or i1 %i.bgc, %i.bgb

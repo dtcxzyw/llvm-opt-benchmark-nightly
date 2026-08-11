@@ -204,7 +204,7 @@ middle.block459:                                  ; preds = %vector.body453
   %i.fm = zext nneg i32 %4 to i64                 ; 3 uses
   %i.fn = zext nneg i32 %4 to i64                 ; 3 uses
   %i.fo = sext i32 %i.c to i64
-  %6 = sext i32 %i.e to i64
+  %6 = zext i32 %i.e to i64
   %i.fp = add nsw i64 %6, -1                      ; 2 uses
   %i.fq = icmp ult i64 %i.fp, %i.fm
   br label %.preheader
@@ -607,7 +607,7 @@ vec.epilog.middle.block497:                       ; preds = %vec.epilog.vector.b
   %i.hk = zext nneg i32 %4 to i64                 ; 3 uses
   %i.hl = zext nneg i32 %4 to i64                 ; 3 uses
   %i.hm = sext i32 %i.c to i64
-  %6 = sext i32 %i.e to i64
+  %6 = zext i32 %i.e to i64
   %i.hn = add nsw i64 %6, -1                      ; 2 uses
   %i.ho = icmp ult i64 %i.hn, %i.hk
   br label %.preheader
@@ -1010,7 +1010,7 @@ bb.b:                                             ; preds = %bb.a
   %i.do = zext nneg i32 %4 to i64                 ; 3 uses
   %i.dp = zext nneg i32 %4 to i64                 ; 3 uses
   %i.dq = sext i32 %i.c to i64
-  %6 = sext i32 %i.e to i64
+  %6 = zext i32 %i.e to i64
   %i.dr = add nsw i64 %6, -1                      ; 2 uses
   %i.ds = icmp ult i64 %i.dr, %i.do
   br label %.preheader
@@ -1413,7 +1413,7 @@ middle.block428:                                  ; preds = %vector.body422
   %i.dp = zext nneg i32 %4 to i64                 ; 3 uses
   %i.dq = zext nneg i32 %4 to i64                 ; 3 uses
   %i.dr = sext i32 %i.c to i64
-  %6 = sext i32 %i.e to i64
+  %6 = zext i32 %i.e to i64
   %i.ds = add nsw i64 %6, -1                      ; 2 uses
   %i.dt = icmp ult i64 %i.ds, %i.dp
   br label %.preheader
@@ -1816,7 +1816,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ck = zext nneg i32 %4 to i64                 ; 3 uses
   %i.cl = zext nneg i32 %4 to i64                 ; 3 uses
   %i.cm = sext i32 %i.c to i64
-  %6 = sext i32 %i.e to i64
+  %6 = zext i32 %i.e to i64
   %i.cn = add nsw i64 %6, -1                      ; 2 uses
   %i.co = icmp ult i64 %i.cn, %i.ck
   br label %.preheader
@@ -2219,7 +2219,7 @@ middle.block423:                                  ; preds = %vector.body417
   %i.da = zext nneg i32 %4 to i64                 ; 3 uses
   %i.db = zext nneg i32 %4 to i64                 ; 3 uses
   %i.dc = sext i32 %i.c to i64
-  %6 = sext i32 %i.e to i64
+  %6 = zext i32 %i.e to i64
   %i.dd = add nsw i64 %6, -1                      ; 2 uses
   %i.de = icmp ult i64 %i.dd, %i.da
   br label %.preheader
@@ -2622,7 +2622,7 @@ middle.block441:                                  ; preds = %vector.body435
   %i.ew = zext nneg i32 %4 to i64                 ; 3 uses
   %i.ex = zext nneg i32 %4 to i64                 ; 3 uses
   %i.ey = sext i32 %i.e to i64
-  %6 = sext i32 %i.g to i64
+  %6 = zext i32 %i.g to i64
   %i.ez = add nsw i64 %6, -1                      ; 2 uses
   %i.fa = icmp ult i64 %i.ez, %i.ew
   br label %.preheader
@@ -3025,7 +3025,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ck = zext nneg i32 %4 to i64                 ; 3 uses
   %i.cl = zext nneg i32 %4 to i64                 ; 3 uses
   %i.cm = sext i32 %i.c to i64
-  %6 = sext i32 %i.e to i64
+  %6 = zext i32 %i.e to i64
   %i.cn = add nsw i64 %6, -1                      ; 2 uses
   %i.co = icmp ult i64 %i.cn, %i.ck
   br label %.preheader
@@ -3428,7 +3428,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ct = zext nneg i32 %4 to i64                 ; 3 uses
   %i.cu = zext nneg i32 %4 to i64                 ; 3 uses
   %i.cv = sext i32 %i.c to i64
-  %6 = sext i32 %i.e to i64
+  %6 = zext i32 %i.e to i64
   %i.cw = add nsw i64 %6, -1                      ; 2 uses
   %i.cx = icmp ult i64 %i.cw, %i.ct
   br label %.preheader
@@ -3831,7 +3831,7 @@ bb.b:                                             ; preds = %bb.a
   %i.er = zext nneg i32 %4 to i64                 ; 3 uses
   %i.es = zext nneg i32 %4 to i64                 ; 3 uses
   %i.et = sext i32 %i.e to i64
-  %6 = sext i32 %i.g to i64
+  %6 = zext i32 %i.g to i64
   %i.eu = add nsw i64 %6, -1                      ; 2 uses
   %i.ev = icmp ult i64 %i.eu, %i.er
   br label %.preheader
@@ -4234,7 +4234,7 @@ bb.o:                                             ; preds = %bb.i
   %i.cl = add nsw i32 %5, -2
   %.not132147 = icmp slt i32 %5, 2                ; 2 uses
   %i.cm = sext i32 %3 to i64                      ; 2 uses
-  %9 = sext i32 %i.cl to i64                      ; 2 uses
+  %9 = zext nneg i32 %i.cl to i64                 ; 2 uses
   %wide.trip.count185 = zext i32 %5 to i64        ; 2 uses
   br i1 %i.c, label %.preheader137.us.preheader, label %.preheader140
 
@@ -4282,7 +4282,7 @@ bb.o:                                             ; preds = %bb.i
   %i.dq = fsub <2 x double> %i.de, %i.dp
   store <2 x double> %i.dq, ptr %i.cw, align 8, !tbaa !285
   %indvars.iv.next180 = add nuw nsw i64 %indvars.iv179, 2 ; 3 uses
-  %.not133.us = icmp sgt i64 %indvars.iv.next180, %9
+  %.not133.us = icmp samesign ugt i64 %indvars.iv.next180, %9
   br i1 %.not133.us, label %.preheader.us.loopexit, label %.lr.ph154.us, !llvm.loop !724
 
 .lr.ph157.us:                                     ; preds = %.lr.ph157.us.preheader, %.lr.ph157.us
@@ -4379,7 +4379,7 @@ bb.o:                                             ; preds = %bb.i
   %i.fp = fsub <2 x double> %i.fe, %i.fo
   store <2 x double> %i.fp, ptr %i.ew, align 8, !tbaa !285
   %indvars.iv.next172 = add nuw nsw i64 %indvars.iv171, 2 ; 3 uses
-  %.not132 = icmp sgt i64 %indvars.iv.next172, %9
+  %.not132 = icmp samesign ugt i64 %indvars.iv.next172, %9
   br i1 %.not132, label %.preheader138.loopexit, label %.lr.ph, !llvm.loop !727
 
 .lr.ph151:                                        ; preds = %.lr.ph151.preheader, %.lr.ph151
@@ -4782,7 +4782,7 @@ bb.o:                                             ; preds = %bb.i
   %i.cn = add nsw i32 %5, -2
   %.not132147 = icmp slt i32 %5, 2                ; 2 uses
   %i.co = sext i32 %3 to i64                      ; 2 uses
-  %9 = sext i32 %i.cn to i64                      ; 2 uses
+  %9 = zext nneg i32 %i.cn to i64                 ; 2 uses
   %wide.trip.count185 = zext i32 %5 to i64        ; 2 uses
   br i1 %i.c, label %.preheader137.us.preheader, label %.preheader140
 
@@ -4827,7 +4827,7 @@ bb.o:                                             ; preds = %bb.i
   %i.dp = fsub <2 x double> %i.dd, %i.do
   store <2 x double> %i.dp, ptr %i.cv, align 8, !tbaa !285
   %indvars.iv.next180 = add nuw nsw i64 %indvars.iv179, 2 ; 3 uses
-  %.not133.us = icmp sgt i64 %indvars.iv.next180, %9
+  %.not133.us = icmp samesign ugt i64 %indvars.iv.next180, %9
   br i1 %.not133.us, label %.preheader.us.loopexit, label %.lr.ph154.us, !llvm.loop !763
 
 .lr.ph157.us:                                     ; preds = %.lr.ph157.us.preheader, %.lr.ph157.us
@@ -4921,7 +4921,7 @@ bb.o:                                             ; preds = %bb.i
   %i.fl = fsub <2 x double> %i.fa, %i.fk
   store <2 x double> %i.fl, ptr %i.es, align 8, !tbaa !285
   %indvars.iv.next172 = add nuw nsw i64 %indvars.iv171, 2 ; 3 uses
-  %.not132 = icmp sgt i64 %indvars.iv.next172, %9
+  %.not132 = icmp samesign ugt i64 %indvars.iv.next172, %9
   br i1 %.not132, label %.preheader138.loopexit, label %.lr.ph, !llvm.loop !766
 
 .lr.ph151:                                        ; preds = %.lr.ph151.preheader, %.lr.ph151
@@ -5324,7 +5324,7 @@ bb.o:                                             ; preds = %bb.i
   %i.cn = add nsw i32 %5, -2
   %.not132147 = icmp slt i32 %5, 2                ; 2 uses
   %i.co = sext i32 %3 to i64                      ; 2 uses
-  %9 = sext i32 %i.cn to i64                      ; 2 uses
+  %9 = zext nneg i32 %i.cn to i64                 ; 2 uses
   %wide.trip.count185 = zext i32 %5 to i64        ; 2 uses
   br i1 %i.c, label %.preheader137.us.preheader, label %.preheader140
 
@@ -5369,7 +5369,7 @@ bb.o:                                             ; preds = %bb.i
   %i.dp = fsub <2 x double> %i.dd, %i.do
   store <2 x double> %i.dp, ptr %i.cv, align 8, !tbaa !285
   %indvars.iv.next180 = add nuw nsw i64 %indvars.iv179, 2 ; 3 uses
-  %.not133.us = icmp sgt i64 %indvars.iv.next180, %9
+  %.not133.us = icmp samesign ugt i64 %indvars.iv.next180, %9
   br i1 %.not133.us, label %.preheader.us.loopexit, label %.lr.ph154.us, !llvm.loop !802
 
 .lr.ph157.us:                                     ; preds = %.lr.ph157.us.preheader, %.lr.ph157.us
@@ -5463,7 +5463,7 @@ bb.o:                                             ; preds = %bb.i
   %i.fl = fsub <2 x double> %i.fa, %i.fk
   store <2 x double> %i.fl, ptr %i.es, align 8, !tbaa !285
   %indvars.iv.next172 = add nuw nsw i64 %indvars.iv171, 2 ; 3 uses
-  %.not132 = icmp sgt i64 %indvars.iv.next172, %9
+  %.not132 = icmp samesign ugt i64 %indvars.iv.next172, %9
   br i1 %.not132, label %.preheader138.loopexit, label %.lr.ph, !llvm.loop !805
 
 .lr.ph151:                                        ; preds = %.lr.ph151.preheader, %.lr.ph151
@@ -5866,35 +5866,32 @@ bb.o:                                             ; preds = %bb.i
   %i.cq = add i32 %5, -2
   %.not131142 = icmp slt i32 %5, 2                ; 2 uses
   %i.cr = sext i32 %3 to i64                      ; 2 uses
-  %9 = sext i32 %i.cq to i64                      ; 5 uses
+  %9 = zext i32 %i.cq to i64                      ; 5 uses
   %wide.trip.count177 = zext i32 %5 to i64        ; 9 uses
   %i.cs = shl nuw nsw i64 %wide.trip.count177, 2  ; 5 uses
   %scevgep260.a = getelementptr i8, ptr %i.cn, i64 %i.cs ; 4 uses
-  %10 = call i64 @llvm.smax.i64(i64 %9, i64 1)
-  %i.ct = shl nuw nsw i64 %10, 2
-  %i.cu = and i64 %i.ct, 9223372036854775800
+  %i.ct = shl nuw nsw i64 %9, 2
+  %i.cu = and i64 %i.ct, 17179869176
   %i.cv = add nuw nsw i64 %i.cu, 8                ; 5 uses
   %scevgep287.a = getelementptr i8, ptr %i.cn, i64 %i.cv ; 4 uses
   br i1 %i.c, label %.preheader133.us.preheader, label %.preheader136.preheader
 
 .preheader136.preheader:                          ; preds = %.lr.ph156
-  %11 = call i64 @llvm.smax.i64(i64 %9, i64 1)
-  %i.cw = lshr i64 %11, 1                         ; 2 uses
+  %i.cw = lshr i64 %9, 1                          ; 2 uses
   %i.cx = add nuw nsw i64 %i.cw, 1                ; 2 uses
   %min.iters.check241 = icmp eq i64 %i.cw, 0
-  %n.vec243 = and i64 %i.cx, 9223372036854775806  ; 3 uses
-  %i.cy = shl nuw i64 %n.vec243, 1                ; 2 uses
+  %n.vec243 = and i64 %i.cx, 4294967294           ; 3 uses
+  %i.cy = shl nuw nsw i64 %n.vec243, 1            ; 2 uses
   %cmp.n256 = icmp eq i64 %i.cx, %n.vec243
   %i.cz = add nsw i64 %wide.trip.count177, -1
   br label %.preheader136
 
 .preheader133.us.preheader:                       ; preds = %.lr.ph156
-  %12 = call i64 @llvm.smax.i64(i64 %9, i64 1)
-  %i.da = lshr i64 %12, 1                         ; 2 uses
+  %i.da = lshr i64 %9, 1                          ; 2 uses
   %i.db = add nuw nsw i64 %i.da, 1                ; 2 uses
   %min.iters.check298 = icmp eq i64 %i.da, 0
-  %n.vec300 = and i64 %i.db, 9223372036854775806  ; 3 uses
-  %i.dc = shl nuw i64 %n.vec300, 1                ; 2 uses
+  %n.vec300 = and i64 %i.db, 4294967294           ; 3 uses
+  %i.dc = shl nuw nsw i64 %n.vec300, 1            ; 2 uses
   %broadcast.splatinsert301 = insertelement <2 x double> poison, double %i.b, i64 0
   %broadcast.splat302 = shufflevector <2 x double> %broadcast.splatinsert301, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %cmp.n318 = icmp eq i64 %i.db, %n.vec300
@@ -5987,7 +5984,7 @@ middle.block317:                                  ; preds = %vector.body303
   %i.el = sub nsw <2 x i32> %i.eg, %i.ek
   store <2 x i32> %i.el, ptr %i.eb, align 4, !tbaa !228
   %indvars.iv.next172 = add nuw nsw i64 %indvars.iv171, 2 ; 3 uses
-  %.not132.us = icmp sgt i64 %indvars.iv.next172, %9
+  %.not132.us = icmp samesign ugt i64 %indvars.iv.next172, %9
   br i1 %.not132.us, label %.preheader.us.loopexit, label %.lr.ph149.us, !llvm.loop !943
 
 .lr.ph152.us:                                     ; preds = %.lr.ph152.us.prol.loopexit, %.lr.ph152.us
@@ -6287,7 +6284,7 @@ middle.block225:                                  ; preds = %vector.body219
   %i.ir = sub nsw <2 x i32> %i.in, %i.iq
   store <2 x i32> %i.ir, ptr %i.ii, align 4, !tbaa !228
   %indvars.iv.next164 = add nuw nsw i64 %indvars.iv163, 2 ; 3 uses
-  %.not131 = icmp sgt i64 %indvars.iv.next164, %9
+  %.not131 = icmp samesign ugt i64 %indvars.iv.next164, %9
   br i1 %.not131, label %.preheader134.loopexit, label %.lr.ph, !llvm.loop !975
 
 .lr.ph146:                                        ; preds = %.lr.ph146.prol.loopexit, %.lr.ph146
@@ -6689,9 +6686,6 @@ declare <8 x i32> @llvm.umin.v8i32(<8 x i32>, <8 x i32>) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smin.v4i32(<4 x i32>, <4 x i32>) #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #20
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

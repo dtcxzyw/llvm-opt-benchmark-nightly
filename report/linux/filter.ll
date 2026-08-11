@@ -203,7 +203,7 @@ sk_filter_release.exit:                           ; preds = %bb.h, %bb.g, %bb.f,
 define dso_local i32 @bpf_prog_create(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #0 align 16 prefalign(16) {
 bb.a:
   %i.a = load i16, ptr %1, align 8                ; 3 uses
-  %i.b = zext i16 %i.a to i64
+  %i.b = zext nneg i16 %i.a to i64
   %i.c = shl nuw nsw i64 %i.b, 3
   %i.d = getelementptr i8, ptr %1, i64 8          ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -606,8 +606,7 @@ bb.a:
   %i.a = inttoptr i64 %0 to ptr                   ; 5 uses
   %i.b = inttoptr i64 %1 to ptr                   ; 4 uses
   %i.c = trunc i64 %2 to i32                      ; 3 uses
-  %5 = and i64 %3, 1
-  %.not.i = icmp eq i64 %5, 0
+  %.not.i = icmp eq i64 %3, 0
   %i.d = getelementptr i8, ptr %i.a, i64 48
   %.val = load i8, ptr %i.d, align 8              ; 2 uses
   %i.e = icmp ult i8 %.val, 16

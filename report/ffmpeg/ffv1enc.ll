@@ -204,7 +204,7 @@ load_plane.exit491.critedge:                      ; preds = %bb.bf
 load_plane.exit491:                               ; preds = %._crit_edge.split.i, %._crit_edge.split.us.us.i, %._crit_edge.split.i598, %._crit_edge.split.us.us.i601, %..loopexit41_crit_edge.i548, %..loopexit39_crit_edge.us.i560, %..loopexit_crit_edge.us.i574, %..loopexit41_crit_edge.i462, %..loopexit39_crit_edge.us.i474, %..loopexit_crit_edge.us.i488, %.preheader1.i, %.preheader3.i, %load_plane.exit491.critedge, %.lr.ph49.split.split.i539, %.lr.ph49.split.split.us.i551, %.lr.ph49.split.us.i563, %.lr.ph49.split.split.i453, %.lr.ph49.split.split.us.i465, %.lr.ph49.split.us.i477, %bb.bb, %load_plane.exit448
   %i.btf = load i32, ptr %i.ail, align 4, !tbaa !45
   %.fr105.i = freeze i32 %i.btf                   ; 2 uses
-  %i.btg = shl nuw i32 1, %.fr105.i
+  %i.btg = shl nuw nsw i32 1, %.fr105.i
   %i.bth = load i32, ptr %i.aik, align 8, !tbaa !150
   %i.bti = icmp eq i32 %i.bth, 2
   %i.btj = load i32, ptr %i.ajc, align 4, !tbaa !46
@@ -217,14 +217,10 @@ load_plane.exit491:                               ; preds = %._crit_edge.split.i
 
 .lr.ph103.i:                                      ; preds = %load_plane.exit491
   %.not.i608 = icmp eq i32 %.fr105.i, 31
-  br i1 %.not.i608, label %.lr.ph103.split.i, label %.lr.ph96.us.preheader.i
+  br i1 %.not.i608, label %.lr.ph103.split.i, label %.lr.ph96.us.i
 
-.lr.ph96.us.preheader.i:                          ; preds = %.lr.ph103.i
-  %smax.i609 = call i32 @llvm.smax.i32(i32 %i.btg, i32 1)
-  br label %.lr.ph96.us.i
-
-.lr.ph96.us.i:                                    ; preds = %bb.dq, %.lr.ph96.us.preheader.i
-  %indvars.iv117.i = phi i64 [ 0, %.lr.ph96.us.preheader.i ], [ %indvars.iv.next118.i, %bb.dq ] ; 3 uses
+.lr.ph96.us.i:                                    ; preds = %.lr.ph103.i, %bb.dq
+  %indvars.iv117.i = phi i64 [ %indvars.iv.next118.i, %bb.dq ], [ 0, %.lr.ph103.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.n, i8 -128, i64 64, i1 false)
   call fastcc void @put_symbol(ptr noundef nonnull %i.aj, ptr noundef %i.n, i32 noundef 0, i32 noundef 0)
@@ -627,7 +623,7 @@ put_symbol_inline.exit.us.i:                      ; preds = %put_rac.exit161.i.u
   %.2.us.i = phi i32 [ %.03892.us.i, %bb.do ], [ %i.bty, %bb.dj ], [ %i.bty, %renorm_encoder.exit80.us.i ], [ %.03892.us.i, %put_rac.exit178.i.us.i ], [ %.03892.us.i, %put_rac.exit175.i.us.i ], [ %.03892.us.i, %put_rac.exit161.i.us.i ] ; 2 uses
   %.1.us.i = phi i32 [ %i.cht, %bb.do ], [ 0, %bb.dj ], [ 0, %renorm_encoder.exit80.us.i ], [ 0, %put_rac.exit178.i.us.i ], [ 0, %put_rac.exit175.i.us.i ], [ 0, %put_rac.exit161.i.us.i ] ; 3 uses
   %i.chu = add nuw nsw i32 %.03694.us.i, 1        ; 2 uses
-  %exitcond116.not.i = icmp eq i32 %i.chu, %smax.i609
+  %exitcond116.not.i = icmp eq i32 %i.chu, %i.btg
   br i1 %exitcond116.not.i, label %._crit_edge97.us.i, label %bb.bv, !llvm.loop !286
 
 bb.dp:                                            ; preds = %._crit_edge97.us.i

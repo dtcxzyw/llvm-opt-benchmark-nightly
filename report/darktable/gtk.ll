@@ -203,24 +203,19 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 3 uses
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !68
   %i.at = icmp eq i32 %i.as, 4
-  br i1 %i.at, label %3, label %bb.g
+  br i1 %i.at, label %bb.g, label %bb.z
 
-3:                                                ; preds = %bb.f
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %5 = load i8, ptr %4, align 8
-  %6 = and i8 %5, 1
-  %.not75 = icmp eq i8 %6, 0
-  br label %bb.g
-
-bb.g:                                             ; preds = %3, %bb.f
-  %7 = phi i1 [ false, %bb.f ], [ %.not75, %3 ]   ; 2 uses
+bb.g:                                             ; preds = %bb.f
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 88
+  %4 = load i8, ptr %3, align 8
+  %5 = and i8 %4, 1
+  %.not75 = icmp eq i8 %5, 0                      ; 2 uses
   %i.au = icmp eq i32 %i.d, 0
   %or.cond = select i1 %i.au, i1 true, i1 %i.k
   %or.cond.not = xor i1 %or.cond, true
   %or.cond3 = select i1 %i.am, i1 true, i1 %i.ap
   %or.cond85 = select i1 %or.cond.not, i1 %or.cond3, i1 false
-  %i.av = select i1 %or.cond85, i1 %7, i1 false   ; 2 uses
-  %8 = zext i1 %i.av to i32
+  %i.av = select i1 %or.cond85, i1 %.not75, i1 false
   br i1 %i.av, label %bb.h, label %bb.v
 
 bb.h:                                             ; preds = %bb.g
@@ -331,7 +326,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.z
 
 bb.v:                                             ; preds = %bb.g
-  br i1 %7, label %bb.w, label %bb.z
+  br i1 %.not75, label %bb.w, label %bb.z
 
 bb.w:                                             ; preds = %bb.v
   %i.ca = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !117
@@ -350,10 +345,10 @@ bb.y:                                             ; preds = %bb.x
 .thread102:                                       ; preds = %bb.x, %bb.y
   %i.ce = phi ptr [ %i.cc, %bb.y ], [ @.str.212, %bb.x ]
   %i.cf = phi i32 [ %i.cd, %bb.y ], [ -1, %bb.x ]
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.216, i32 noundef %i.d, i32 noundef %i.l, i32 noundef %i.an, i32 noundef %i.aq, i32 noundef %8, ptr noundef %i.ce, i32 noundef %i.cf) #16
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.216, i32 noundef %i.d, i32 noundef %i.l, i32 noundef %i.an, i32 noundef %i.aq, i32 noundef 0, ptr noundef %i.ce, i32 noundef %i.cf) #16
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.u, %bb.t, %..thread47.i_crit_edge, %bb.v, %.thread102, %bb.w
+bb.z:                                             ; preds = %bb.f, %bb.u, %bb.t, %..thread47.i_crit_edge, %bb.v, %.thread102, %bb.w
   %i.cg = tail call i32 @gdk_event_get_pointer_emulated(ptr noundef nonnull %1) #16
   %.not.i.i = icmp eq i32 %i.cg, 0
   br i1 %.not.i.i, label %bb.aa, label %.critedge

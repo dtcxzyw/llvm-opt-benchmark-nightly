@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
 _ZN5video23COpenGLExtensionHandler23extGlGetAttachedShadersEjiPiPj.exit: ; preds = %bb.g
   %.pre = load i32, ptr %i.b, align 4, !tbaa !32  ; 2 uses
   %.pre28.pre = load ptr, ptr %i.y, align 8, !tbaa !10 ; 3 uses
-  %.sroa.speculated = call i32 @llvm.smin.i32(i32 %.pre, i32 8)
+  %.sroa.speculated = call i32 @llvm.umin.i32(i32 %.pre, i32 8)
   %i.ac = icmp sgt i32 %.pre, 0
   br i1 %i.ac, label %.lr.ph, label %._crit_edge
 
@@ -606,9 +606,6 @@ declare i64 @llvm.umin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #22
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #22
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

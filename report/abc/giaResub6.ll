@@ -204,7 +204,7 @@ Abc_TtCopy.exit.us.us.1:                          ; preds = %.lr.ph.i.us.us.1.pr
 .preheader100:                                    ; preds = %Abc_TtCopy.exit.us.us.1, %.preheader102.lr.ph, %.preheader103
   %i.hz = getelementptr inbounds nuw i8, ptr %i.ev, i64 12
   %i.ia = load i32, ptr %i.hz, align 4, !tbaa !58 ; 2 uses
-  %i.ib = shl nuw i32 1, %i.ia
+  %i.ib = shl nuw nsw i32 1, %i.ia
   %.not127 = icmp eq i32 %i.ia, 31
   br i1 %.not127, label %.preheader99, label %.lr.ph
 
@@ -219,8 +219,7 @@ Abc_TtCopy.exit.us.us.1:                          ; preds = %.lr.ph.i.us.us.1.pr
 
 .lr.ph18.preheader.i64.preheader:                 ; preds = %.lr.ph
   %.val204 = ptrtoaddr ptr %.val to i64
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.ib, i32 1)
-  %wide.trip.count139 = zext nneg i32 %smax to i64
+  %wide.trip.count139 = zext nneg i32 %i.ib to i64
   %i.ig = mul nsw i64 %wide.trip.count24.i65, -8
   %min.iters.check207 = icmp ult i32 %i.ie, 4
   %n.vec209 = and i64 %wide.trip.count24.i65, 2147483644 ; 3 uses

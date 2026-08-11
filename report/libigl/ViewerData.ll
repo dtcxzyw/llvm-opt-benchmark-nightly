@@ -204,7 +204,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %.invoke, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i: ; preds = %bb.b
-  %12 = mul nsw i64 %i.e, 3
   %.not.i = icmp eq i64 %i.e, 0
   br i1 %.not.i, label %_ZN5Eigen8internal17resize_if_allowedINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS_14CwiseNullaryOpINS0_18scalar_constant_opIdEES3_EEddEEvRT_RKT0_RKNS0_9assign_opIT1_T2_EE.exit.i.i.i.i.i.i.i.thread, label %bb.c
 
@@ -223,7 +222,7 @@ _ZN5Eigen8internal17resize_if_allowedINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS_1
   br label %.loopexit
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = icmp samesign ugt i64 %12, 2305843009213693951
+  %i.j = icmp ugt i64 %i.e, 768614336404564650
   br i1 %i.j, label %.invoke, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i: ; preds = %bb.d
@@ -626,7 +625,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %.invoke, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i: ; preds = %bb.b
-  %9 = mul nsw i64 %i.e, 3
   %.not.i40 = icmp eq i64 %i.e, 0
   br i1 %.not.i40, label %_ZN5Eigen8internal17resize_if_allowedINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS_14CwiseNullaryOpINS0_18scalar_constant_opIdEES3_EEddEEvRT_RKT0_RKNS0_9assign_opIT1_T2_EE.exit.i.i.i.i.i.i.i.thread, label %bb.c
 
@@ -645,7 +643,7 @@ _ZN5Eigen8internal17resize_if_allowedINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS_1
   br label %.loopexit
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = icmp samesign ugt i64 %9, 2305843009213693951
+  %i.j = icmp ugt i64 %i.e, 768614336404564650
   br i1 %i.j, label %.invoke, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i: ; preds = %bb.d
@@ -1048,7 +1046,6 @@ _ZN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEC2IliEERKT_RKT0_.exit: ; preds = %.si
   br i1 %i.q, label %.invoke, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %_ZN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEC2IliEERKT_RKT0_.exit
-  %21 = mul nsw i64 %i.p, 3
   %i.r = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
   %.not.i44 = icmp eq i64 %i.p, 0
@@ -1059,7 +1056,7 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.t, label %bb.e, label %.sink.split.i45
 
 bb.e:                                             ; preds = %bb.d
-  %i.u = icmp samesign ugt i64 %21, 2305843009213693951
+  %i.u = icmp ugt i64 %i.p, 768614336404564650
   br i1 %i.u, label %.invoke, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i: ; preds = %bb.e
@@ -1462,7 +1459,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %.invoke, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i: ; preds = %bb.b
-  %16 = mul nsw i64 %i.e, 3
   %.not.i90 = icmp eq i64 %i.e, 0
   br i1 %.not.i90, label %_ZN5Eigen8internal17resize_if_allowedINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS_14CwiseNullaryOpINS0_18scalar_constant_opIdEES3_EEddEEvRT_RKT0_RKNS0_9assign_opIT1_T2_EE.exit.i.i.i.i.i.i.i.thread, label %bb.c
 
@@ -1482,7 +1478,7 @@ _ZN5Eigen8internal17resize_if_allowedINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS_1
   br label %.loopexit150
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = icmp samesign ugt i64 %16, 2305843009213693951
+  %i.j = icmp ugt i64 %i.e, 768614336404564650
   br i1 %i.j, label %.invoke, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i: ; preds = %bb.d
@@ -1564,7 +1560,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.af, label %.invoke199, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i43
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i43: ; preds = %bb.f
-  %17 = mul nsw i64 %i.ab, 3
   %.not.i93 = icmp eq i64 %i.ab, 0
   br i1 %.not.i93, label %_ZN5Eigen8internal17resize_if_allowedINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS_14CwiseNullaryOpINS0_18scalar_constant_opIdEES3_EEddEEvRT_RKT0_RKNS0_9assign_opIT1_T2_EE.exit.i.i.i.i.i.i.i46.thread190, label %bb.g
 
@@ -1584,7 +1579,7 @@ _ZN5Eigen8internal17resize_if_allowedINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS_1
   br label %.loopexit149
 
 bb.h:                                             ; preds = %bb.g
-  %i.ah = icmp samesign ugt i64 %17, 2305843009213693951
+  %i.ah = icmp ugt i64 %i.ab, 768614336404564650
   br i1 %i.ah, label %.invoke199, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i96
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i96: ; preds = %bb.h

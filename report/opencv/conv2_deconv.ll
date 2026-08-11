@@ -204,15 +204,14 @@ bb.g:                                             ; preds = %bb.f
   %i.fy = load ptr, ptr %i.ak, align 8, !tbaa !104, !nonnull !84, !align !85
   %i.fz = load i32, ptr %i.fy, align 4, !tbaa !35
   %i.ga = load ptr, ptr %i.al, align 8, !tbaa !105, !nonnull !84, !align !85
-  %i.gb = load i32, ptr %i.ga, align 4, !tbaa !35 ; 3 uses
-  %2 = sext i32 %i.gb to i64
+  %i.gb = load i32, ptr %i.ga, align 4, !tbaa !35 ; 2 uses
+  %2 = zext nneg i32 %i.gb to i64                 ; 2 uses
   %i.gc = sext i32 %i.fu to i64                   ; 6 uses
   %i.gd = mul nsw i64 %i.gc, %i.q                 ; 2 uses
   %i.ge = mul i64 %i.gd, %2
   %i.gf = load ptr, ptr %i.am, align 8, !tbaa !106, !nonnull !84, !align !85
   %i.gg = load i32, ptr %i.gf, align 4, !tbaa !35
   %i.gh = icmp sgt i32 %i.gb, 0
-  %wide.trip.count97.i.us.i.i = zext nneg i32 %i.gb to i64
   br i1 %i.gh, label %.lr.ph43.split.us.preheader.i.us.us.i.i, label %.thread8.i.us.i.i.preheader
 
 .thread8.i.us.i.i.preheader:                      ; preds = %.lr.ph49.i.us.i.i
@@ -365,7 +364,7 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
 ._crit_edge38.us.i.us.us.i.i:                     ; preds = %bb.h, %._crit_edge38.us.i.us.us.i.i.unr-lcssa
   %.lcssa90 = phi float [ %i.ih, %._crit_edge38.us.i.us.us.i.i.unr-lcssa ], [ %i.im, %bb.h ] ; 2 uses
   %indvars.iv.next93.i.us.us.i.i = add nuw nsw i64 %indvars.iv92.i.us.us.i.i, 1 ; 2 uses
-  %exitcond98.not.i.us.us.i.i = icmp eq i64 %indvars.iv.next93.i.us.us.i.i, %wide.trip.count97.i.us.i.i
+  %exitcond98.not.i.us.us.i.i = icmp eq i64 %indvars.iv.next93.i.us.us.i.i, %2
   br i1 %exitcond98.not.i.us.us.i.i, label %.thread8.i.loopexit.us.us.i.i, label %.lr.ph43.split.us.i.us.us.i.i, !llvm.loop !113
 
 .thread8.i.loopexit.us.us.i.i:                    ; preds = %._crit_edge38.us.i.us.us.i.i, %.lr.ph43.split.us.i.us.us.i.i

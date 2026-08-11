@@ -205,7 +205,7 @@ Mini_AigPoNum.exit:                               ; preds = %Mini_AigPoNum.exit.
 
 bb.d:                                             ; preds = %Mini_AigPoNum.exit
   %i.bw = load i32, ptr %1, align 8, !tbaa !19    ; 4 uses
-  %i.bx = shl nsw i32 %i.bw, 1
+  %i.bx = shl nuw nsw i32 %i.bw, 1
   %i.by = icmp slt i32 %i.bw, 32
   br i1 %i.by, label %bb.e, label %bb.h
 
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %.preheader46.us, %b
 ; Function Attrs: nofree nounwind uwtable
 define void @Exa6_WriteFile2(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5) local_unnamed_addr #17 {
 bb.a:
-  %i.a = shl nuw i32 1, %3
+  %i.a = shl nuw nsw i32 1, %3
   %i.b = tail call noalias ptr @fopen(ptr noundef %0, ptr noundef nonnull @.str.16) ; 10 uses
   %i.c = getelementptr i8, ptr %5, i64 4          ; 4 uses
   %.val42 = load i32, ptr %i.c, align 4, !tbaa !23
@@ -700,7 +700,6 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
 
 .lr.ph54:                                         ; preds = %._crit_edge47
   %i.ao = getelementptr i8, ptr %5, i64 8
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph54, %._crit_edge51
@@ -734,7 +733,7 @@ bb.e:                                             ; preds = %.lr.ph50, %bb.e
 ._crit_edge51:                                    ; preds = %bb.e, %bb.d
   %i.bd = add nuw nsw i32 %.03552, 1              ; 2 uses
   %fputc38 = tail call i32 @fputc(i32 10, ptr %i.b) ; 0 uses
-  %exitcond66.not = icmp eq i32 %i.bd, %smax
+  %exitcond66.not = icmp eq i32 %i.bd, %i.a
   br i1 %exitcond66.not, label %._crit_edge55, label %bb.d, !llvm.loop !547
 
 ._crit_edge55:                                    ; preds = %._crit_edge51, %._crit_edge47
@@ -1137,7 +1136,7 @@ Vec_WrdStart.exit73:                              ; preds = %._crit_edge97.split
   br i1 %or.cond151, label %.preheader.lr.ph.split, label %._crit_edge103.split
 
 .preheader.lr.ph.split:                           ; preds = %Vec_WrdStart.exit73
-  %i.mf = shl nuw i32 1, %i.eo
+  %i.mf = shl nuw nsw i32 1, %i.eo
   %i.mg = getelementptr i8, ptr %i.ir, i64 24
   %i.mh = getelementptr i8, ptr %i.ir, i64 12
   %.val64 = load i32, ptr %i.mh, align 4, !tbaa !689
@@ -1145,8 +1144,7 @@ Vec_WrdStart.exit73:                              ; preds = %._crit_edge97.split
   %i.mi = getelementptr i8, ptr %.val65, i64 8
   %.val65.val = load ptr, ptr %i.mi, align 8, !tbaa !22
   %i.mj = sext i32 %.val64 to i64
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.mf, i32 1)
-  %wide.trip.count122 = zext nneg i32 %smax to i64
+  %wide.trip.count122 = zext nneg i32 %i.mf to i64
   %wide.trip.count117 = zext nneg i32 %i.kq to i64
   br label %.preheader
 

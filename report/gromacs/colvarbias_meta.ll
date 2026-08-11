@@ -203,7 +203,6 @@ bb.a:
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = sub i64 %i.n, %i.o                       ; 3 uses
-  %17 = ashr exact i64 %i.p, 3
   %i.q = icmp eq ptr %i.l, %i.m
   br i1 %i.q, label %bb.b, label %_ZNSt6vectorIP15colvarbias_metaSaIS1_EE9push_backEOS1_.exit
 
@@ -220,7 +219,7 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZNSt6vectorIP15colvarbias_metaSaIS1_EE9push_backEOS1_.exit
 
 _ZNSt6vectorIP15colvarbias_metaSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i: ; preds = %bb.b
-  %i.u = add nuw nsw i64 %17, 1                   ; 2 uses
+  %i.u = add nuw nsw i64 %i.p, 1                  ; 2 uses
   %i.v = shl nuw nsw i64 %i.u, 3
   %i.w = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #27 ; 3 uses
   %i.x = getelementptr inbounds i8, ptr %i.w, i64 %i.p ; 2 uses

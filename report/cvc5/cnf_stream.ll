@@ -204,7 +204,6 @@ bb.c:                                             ; preds = %bb.a
   %i.u = and i64 %i.t, 67108863
   %i.v = sext i1 %i.i to i64
   %i.w = add nsw i64 %i.u, %i.v                   ; 10 uses
-  %7 = trunc nsw i64 %i.w to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   %i.x = icmp ugt i64 %i.w, 1152921504606846975
   br i1 %i.x, label %.noexc, label %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
@@ -295,8 +294,6 @@ bb.d:                                             ; preds = %.loopexit
   %i.aw = icmp eq i32 %i.av, 2
   %spec.select.v.i.i23 = select i1 %i.aw, i64 32, i64 24
   %spec.select.i.i24 = getelementptr inbounds nuw i8, ptr %i.ao, i64 %spec.select.v.i.i23
-  %smax = tail call i32 @llvm.smax.i32(i32 %7, i32 1)
-  %wide.trip.count = zext nneg i32 %smax to i64
   br label %bb.f
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.d
@@ -323,7 +320,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.az, ptr %i.ba, align 8, !tbaa !76
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.0.038, i64 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.w
   br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !281
 
 bb.h:                                             ; preds = %bb.f
@@ -726,7 +723,6 @@ bb.b:                                             ; preds = %bb.a
   %i.l = and i64 %i.k, 67108863
   %i.m = sext i1 %i.i to i64
   %i.n = add nsw i64 %i.l, %i.m                   ; 10 uses
-  %6 = trunc nsw i64 %i.n to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   %i.o = icmp ugt i64 %i.n, 1152921504606846975
   br i1 %i.o, label %.noexc, label %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
@@ -817,8 +813,6 @@ bb.c:                                             ; preds = %.loopexit33
   %i.an = icmp eq i32 %i.am, 2
   %spec.select.v.i.i = select i1 %i.an, i64 32, i64 24
   %spec.select.i.i = getelementptr inbounds nuw i8, ptr %i.af, i64 %spec.select.v.i.i
-  %smax = tail call i32 @llvm.smax.i32(i32 %6, i32 1)
-  %wide.trip.count = zext nneg i32 %smax to i64
   br label %bb.e
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.c
@@ -844,7 +838,7 @@ bb.f:                                             ; preds = %bb.e
   store i64 %i.ar, ptr %i.as, align 8, !tbaa !76
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.029.034, i64 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.n
   br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !293
 
 bb.g:                                             ; preds = %bb.e
@@ -1246,9 +1240,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #21
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #21
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -201,7 +201,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   store i64 0, ptr %i.a, align 8, !tbaa !27
-  %5 = sitofp i64 %1 to double
+  %5 = uitofp nneg i64 %1 to double               ; 3 uses
   %i.d = icmp slt i64 %1, 1
   br i1 %i.d, label %bb.ae, label %bb.b
 
@@ -438,8 +438,7 @@ printBytes.exit:                                  ; preds = %bb.t, %bb.v, %bb.w
   br i1 %i.dt, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %printBytes.exit
-  %6 = uitofp nneg i64 %1 to double
-  %i.du = fmul nnan double %6, f0x3EB0000000000000
+  %i.du = fmul nnan double %5, f0x3EB0000000000000
   %i.dv = load ptr, ptr @stdout, align 8, !tbaa !33
   %i.dw = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.dv, ptr noundef nonnull @.str.193, double noundef %i.du) #20 ; 0 uses
   br label %printBytes.exit41
@@ -449,8 +448,7 @@ bb.y:                                             ; preds = %printBytes.exit
   br i1 %i.dx, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  %7 = uitofp nneg i64 %1 to double
-  %i.dy = fmul nnan double %7, f0x3F50000000000000
+  %i.dy = fmul nnan double %5, f0x3F50000000000000
   %i.dz = load ptr, ptr @stdout, align 8, !tbaa !33
   %i.ea = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.dz, ptr noundef nonnull @.str.195, double noundef %i.dy) #20 ; 0 uses
   br label %printBytes.exit41

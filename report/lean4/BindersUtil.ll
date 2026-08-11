@@ -203,8 +203,7 @@ lean_nat_eq.exit:
   %i.a = getelementptr i8, ptr %1, i64 8
   %.val376 = load i64, ptr %i.a, align 8, !tbaa !12
   %.mask = and i64 %.val376, 9223372036854775807
-  %i.b = icmp eq i64 %.mask, 0                    ; 2 uses
-  %4 = zext i1 %i.b to i8
+  %i.b = icmp eq i64 %.mask, 0
   br i1 %i.b, label %bb.fe, label %bb.a
 
 bb.a:                                             ; preds = %lean_nat_eq.exit
@@ -607,7 +606,7 @@ bb.ef:                                            ; preds = %bb.ee
 
 lean_dec.exit288:                                 ; preds = %bb.ef, %bb.ee, %bb.ed, %lean_dec.exit290
   %i.hc = tail call ptr @l___private_Init_Data_Array_Basic_0__Array_mapMUnsafe_map___at___00Lean_Elab_Term_clearInMatch_spec__0(ptr noundef nonnull %1, i64 noundef %.val, i64 noundef 0, ptr noundef nonnull %i.gl) ; 4 uses
-  %i.hd = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef %i.gk, i8 noundef zeroext %4) #4 ; 18 uses
+  %i.hd = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef %i.gk, i8 noundef zeroext 0) #4 ; 18 uses
   %i.he = ptrtoint ptr %i.hd to i64
   %i.hf = and i64 %i.he, 1
   %.not.i357 = icmp eq i64 %i.hf, 0               ; 3 uses

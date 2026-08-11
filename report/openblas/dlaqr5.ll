@@ -201,7 +201,7 @@ scalar.ph1930:                                    ; preds = %scalar.ph1930.prehe
   %i.ame = call i32 @llvm.smin.i32(i32 %i.amd, i32 %.reass) ; 2 uses
   %i.amf = add i32 %i.fd, -1
   %i.amg = add i32 %indvars.iv1594, %i.aiu        ; 2 uses
-  %25 = sext i32 %i.ame to i64                    ; 3 uses
+  %25 = zext i32 %i.ame to i64                    ; 3 uses
   %i.amh = sext i32 %i.ez to i64
   %smin1627 = call i64 @llvm.smin.i64(i64 %i.bv, i64 %i.amh)
   %i.ami = sext i32 %i.ew to i64
@@ -232,9 +232,9 @@ bb.bw:                                            ; preds = %.lr.ph1548, %._crit
   %i.amx = add nsw i64 %i.amv, %i.amw
   %i.amy = shl nsw i64 %i.amx, 3
   %scevgep1754 = getelementptr i8, ptr %scevgep, i64 %i.amy ; 3 uses
-  %smax1756 = call i64 @llvm.smax.i64(i64 %25, i64 %i.amw) ; 3 uses
-  %i.amz = add i64 %smax1756, %i.u
-  %i.ana = add i64 %i.amz, %i.amv
+  %smax1756 = call i64 @llvm.umax.i64(i64 %25, i64 %i.amw) ; 3 uses
+  %i.amz = add nsw i64 %smax1756, %i.u
+  %i.ana = add nsw i64 %i.amz, %i.amv
   %i.anb = shl nsw i64 %i.ana, 3
   %scevgep1757 = getelementptr i8, ptr %scevgep1755, i64 %i.anb ; 3 uses
   %i.anc = add i32 %i.amo, %i.amt
@@ -242,8 +242,8 @@ bb.bw:                                            ; preds = %.lr.ph1548, %._crit
   %i.ane = add nsw i64 %i.and, %i.amw
   %i.anf = shl nsw i64 %i.ane, 3
   %scevgep1759 = getelementptr i8, ptr %scevgep1758.a, i64 %i.anf ; 3 uses
-  %i.ang = add i64 %smax1756, %i.u
-  %i.anh = add i64 %i.ang, %i.and
+  %i.ang = add nsw i64 %smax1756, %i.u
+  %i.anh = add nsw i64 %i.ang, %i.and
   %i.ani = shl nsw i64 %i.anh, 3
   %scevgep1761 = getelementptr i8, ptr %scevgep1760.a, i64 %i.ani ; 3 uses
   %i.anj = add i32 %i.amq, %i.amt
@@ -251,8 +251,8 @@ bb.bw:                                            ; preds = %.lr.ph1548, %._crit
   %i.anl = add nsw i64 %i.ank, %i.amw
   %i.anm = shl nsw i64 %i.anl, 3
   %scevgep1763 = getelementptr i8, ptr %scevgep1762.a, i64 %i.anm ; 3 uses
-  %i.ann = add i64 %smax1756, %i.u
-  %i.ano = add i64 %i.ann, %i.ank
+  %i.ann = add nsw i64 %smax1756, %i.u
+  %i.ano = add nsw i64 %i.ann, %i.ank
   %i.anp = shl nsw i64 %i.ano, 3
   %scevgep1765 = getelementptr i8, ptr %scevgep1764.a, i64 %i.anp ; 3 uses
   %i.anq = trunc nsw i64 %indvars.iv1628 to i32
@@ -266,7 +266,7 @@ bb.bw:                                            ; preds = %.lr.ph1548, %._crit
 .lr.ph1544:                                       ; preds = %bb.bw
   %smax1622 = call i32 @llvm.smax.i32(i32 %indvars.iv1620, i32 %i.amg)
   %smax1623 = call i32 @llvm.smax.i32(i32 %smax1622, i32 1)
-  %i.anv = zext nneg i32 %smax1623 to i64         ; 6 uses
+  %i.anv = zext nneg i32 %smax1623 to i64         ; 5 uses
   %i.anw = add i32 %i.amb, %i.anr                 ; 3 uses
   %i.anx = mul nsw i64 %indvars.iv1628, %i.bw
   %i.any = getelementptr [8 x i8], ptr %i.s, i64 %i.anx ; 3 uses
@@ -285,10 +285,9 @@ bb.bw:                                            ; preds = %.lr.ph1548, %._crit
   %invariant.gep1733 = getelementptr [8 x i8], ptr %i.v, i64 %i.aoi ; 2 uses
   %invariant.gep1735 = getelementptr [8 x i8], ptr %i.v, i64 %i.aoj ; 2 uses
   %invariant.gep1737 = getelementptr [8 x i8], ptr %i.v, i64 %i.aok ; 2 uses
-  %i.aol = call i64 @llvm.smax.i64(i64 %25, i64 %i.anv)
-  %26 = sub nsw i64 %i.aol, %i.anv
-  %i.aom = add i64 %26, 1                         ; 3 uses
-  %min.iters.check = icmp ult i64 %i.aom, 8
+  %i.aol = call i64 @llvm.usub.sat.i64(i64 %25, i64 %i.anv) ; 2 uses
+  %i.aom = add nuw nsw i64 %i.aol, 1              ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %i.aol, 7
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph1544
@@ -319,8 +318,8 @@ vector.memcheck:                                  ; preds = %.lr.ph1544
   br i1 %conflict.rdx1790, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.aom, -4                     ; 3 uses
-  %i.aoo = add i64 %n.vec, %i.anv
+  %n.vec = and i64 %i.aom, 8589934588             ; 3 uses
+  %i.aoo = add nuw nsw i64 %n.vec, %i.anv
   %i.aop = load double, ptr %i.anz, align 8, !tbaa !9, !alias.scope !83
   %broadcast.splatinsert1795 = insertelement <4 x double> poison, double %i.aop, i64 0
   %broadcast.splat1796 = shufflevector <4 x double> %broadcast.splatinsert1795, <4 x double> poison, <4 x i32> zeroinitializer
@@ -395,7 +394,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.apu = call double @llvm.fmuladd.f64(double %i.apq, double %i.aps, double %i.apt)
   store double %i.apu, ptr %gep1738, align 8, !tbaa !9
   %indvars.iv.next1625 = add nuw nsw i64 %indvars.iv1624, 1
-  %.not1466.not = icmp slt i64 %indvars.iv1624, %25
+  %.not1466.not = icmp samesign ult i64 %indvars.iv1624, %25
   br i1 %.not1466.not, label %scalar.ph, label %._crit_edge1545, !llvm.loop !95
 
 ._crit_edge1545:                                  ; preds = %scalar.ph, %middle.block, %bb.bw
@@ -798,16 +797,16 @@ declare i32 @llvm.smax.i32(i32, i32) #3
 declare i64 @llvm.smin.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #3
+declare i64 @llvm.umax.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3
+declare i64 @llvm.smax.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #3
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #3

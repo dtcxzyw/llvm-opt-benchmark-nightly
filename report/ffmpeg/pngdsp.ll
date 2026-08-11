@@ -186,15 +186,14 @@ bb.a:
   %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = ptrtoaddr ptr %0 to i64                  ; 4 uses
   %i.d = add i32 %3, -4                           ; 2 uses
-  %4 = sext i32 %i.d to i64                       ; 2 uses
+  %4 = zext i32 %i.d to i64                       ; 2 uses
   %.not21 = icmp slt i32 %3, 4
   br i1 %.not21, label %.preheader, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %5 = tail call i64 @llvm.smax.i64(i64 %4, i64 3)
-  %i.e = lshr i64 %5, 2
+  %i.e = lshr i64 %4, 2
   %i.f = add nuw nsw i64 %i.e, 1                  ; 2 uses
-  %min.iters.check = icmp slt i32 %i.d, 28
+  %min.iters.check = icmp ult i32 %i.d, 28
   br i1 %min.iters.check, label %.lr.ph.preheader56, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
@@ -206,7 +205,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %conflict.rdx, label %.lr.ph.preheader56, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.f, 1073741816               ; 3 uses
+  %n.vec = and i64 %i.f, 2147483640               ; 3 uses
   %i.i = shl nuw nsw i64 %n.vec, 2                ; 2 uses
   br label %vector.body
 
@@ -374,7 +373,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 %.022
   store i32 %i.bu, ptr %i.bv, align 1, !tbaa !9
   %i.bw = add nuw nsw i64 %.022, 4                ; 3 uses
-  %.not = icmp sgt i64 %i.bw, %4
+  %.not = icmp samesign ugt i64 %i.bw, %4
   br i1 %.not, label %.preheader, label %.lr.ph, !llvm.loop !27
 
 .lr.ph24:                                         ; preds = %.lr.ph24.prol.loopexit, %.lr.ph24
@@ -424,13 +423,9 @@ declare <16 x i32> @llvm.abs.v16i32(<16 x i32>, i1 immarg) #1
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #1
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #3
-
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #2 = { cold mustprogress nofree norecurse nosync nounwind optsize willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

@@ -204,7 +204,7 @@ bb.a:
   %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr @_ZN6duckdb10ArrayStats13GetChildStatsERKNS_14BaseStatisticsE(ptr noundef nonnull align 8 dereferenceable(128) %0)
   %i.b = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb11ArrayVector8GetEntryERNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %1)
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = tail call noundef i64 @_ZN6duckdb9ArrayType7GetSizeERKNS_11LogicalTypeE(ptr noundef nonnull align 8 dereferenceable(24) %i.c) ; 6 uses
+  %i.d = tail call noundef i64 @_ZN6duckdb9ArrayType7GetSizeERKNS_11LogicalTypeE(ptr noundef nonnull align 8 dereferenceable(24) %i.c) ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
   call void @_ZN6duckdb19UnifiedVectorFormatC1Ev(ptr noundef nonnull align 8 dereferenceable(73) %4)
   invoke void @_ZN6duckdb6Vector15ToUnifiedFormatEmRNS_19UnifiedVectorFormatE(ptr noundef nonnull align 8 dereferenceable(104) %1, i64 noundef %3, ptr noundef nonnull align 8 dereferenceable(73) %4)
@@ -502,9 +502,8 @@ _ZN6duckdb15SelectionVectorC2Em.exit.preheader:   ; preds = %._crit_edge
   %.not.i67 = icmp eq ptr %i.ed, null
   %.not110 = icmp eq i64 %i.d, 0                  ; 2 uses
   %i.ee = load ptr, ptr %5, align 8               ; 2 uses
-  %umax = call i64 @llvm.umax.i64(i64 %i.d, i64 1) ; 2 uses
   %min.iters.check161 = icmp ult i64 %i.d, 8
-  %n.vec163 = and i64 %umax, -8                   ; 4 uses
+  %n.vec163 = and i64 %i.d, -8                    ; 4 uses
   %cmp.n173 = icmp eq i64 %i.d, %n.vec163
   br label %bb.d
 
@@ -650,7 +649,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit69: ; preds = %_ZNK6duck
   store i32 %i.gj, ptr %i.gk, align 4, !tbaa !3
   %i.gl = add i64 %.14799, 1                      ; 2 uses
   %i.gm = add nuw i64 %.0100, 1                   ; 2 uses
-  %exitcond130.not = icmp eq i64 %i.gm, %umax
+  %exitcond130.not = icmp eq i64 %i.gm, %i.d
   br i1 %exitcond130.not, label %_ZN6duckdb15SelectionVectorC2Em.exit, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit69, !llvm.loop !332
 
 _ZN6duckdb15SelectionVectorC2Em.exit:             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit69, %middle.block172, %.split, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit69.preheader

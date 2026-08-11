@@ -17,14 +17,13 @@ define void @_ZN15pme_spline_workC2Ei(ptr nofree noundef nonnull writeonly align
   br i1 %i.a, label %.preheader.lr.ph, label %._crit_edge
 
 .preheader.lr.ph:                                 ; preds = %.preheader34.preheader
-  %i.b = sub i32 9, %1                            ; 2 uses
+  %i.b = sub i32 9, %1                            ; 3 uses
   %i.c = freeze <8 x float> poison                ; 13 uses
   %i.d = freeze <4 x float> poison                ; 13 uses
   %i.e = shufflevector <4 x float> zeroinitializer, <4 x float> %i.d, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.f = shufflevector <8 x float> %i.e, <8 x float> %i.c, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15> ; 12 uses
   %i.g = sext i32 %1 to i64                       ; 3 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.b, i32 1) ; 2 uses
-  %wide.trip.count = zext nneg i32 %smax to i64   ; 2 uses
+  %wide.trip.count = zext i32 %i.b to i64         ; 2 uses
   %i.h = insertelement <4 x i32> poison, i32 %1, i64 0
   %i.i = shufflevector <4 x i32> %i.h, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
   %i.j = icmp slt <4 x i32> %i.i, <i32 1, i32 2, i32 3, i32 4>
@@ -182,7 +181,7 @@ define void @_ZN15pme_spline_workC2Ei(ptr nofree noundef nonnull writeonly align
 
 .preheader.epil.preheader:                        ; preds = %._crit_edge.loopexit.unr-lcssa, %.preheader.peel.next67
   %indvars.iv.epil.init = phi i64 [ 4, %.preheader.peel.next67 ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 4 uses
-  %lcmp.mod158 = trunc i32 %smax to i1
+  %lcmp.mod158 = trunc i32 %i.b to i1
   tail call void @llvm.assume(i1 %lcmp.mod158)
   %i.dh = add nsw i64 %indvars.iv.epil.init, %i.g
   %i.di = insertelement <4 x i64> poison, i64 %indvars.iv.epil.init, i64 0
@@ -207,15 +206,11 @@ define void @_ZN15pme_spline_workC2Ei(ptr nofree noundef nonnull writeonly align
   ret void
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #1
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #2
+declare void @llvm.assume(i1 noundef) #1
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(argmem: write) uwtable "min-legal-vector-width"="512" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
-attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #2 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #1 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

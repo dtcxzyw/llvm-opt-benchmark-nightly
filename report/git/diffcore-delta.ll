@@ -201,7 +201,7 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge
   %i.q = load i32, ptr %0, align 4, !tbaa !29     ; 3 uses
-  %i.r = shl nuw i32 1, %i.q
+  %i.r = shl nuw nsw i32 1, %i.q
   %i.s = shl i32 2, %i.q                          ; 4 uses
   %i.t = sext i32 %i.s to i64                     ; 2 uses
   %i.u = icmp slt i32 %i.s, 0
@@ -230,8 +230,7 @@ st_mult.exit35.i:                                 ; preds = %bb.b
 
 .lr.ph44.i:                                       ; preds = %st_mult.exit35.i
   %i.af = add nsw i32 %i.s, -1
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.r, i32 1)
-  %wide.trip.count.i = zext nneg i32 %smax.i to i64
+  %wide.trip.count.i = zext nneg i32 %i.r to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.f, %.lr.ph44.i
@@ -352,9 +351,6 @@ declare void @qsort(ptr noundef, i64 noundef, i64 noundef, ptr noundef captures(
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #7

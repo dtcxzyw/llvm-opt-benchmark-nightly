@@ -13,7 +13,7 @@ bb.a:
   br i1 %i.c, label %_RNCNvMs9_NtNtCscdodAO9FK5_5alloc11collections11binary_heapINtB7_10BinaryHeapINtNtCs4NRVxsYgnAr_4core3cmp7ReversejEE3pop0Cs1hjZZAukk1a_12thread_local.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = add nsw i64 %i.b, -1                     ; 9 uses
+  %i.d = add nsw i64 %i.b, -1                     ; 8 uses
   store i64 %i.d, ptr %i.a, align 8
   %i.e = load i64, ptr %0, align 8, !range !4, !noundef !3
   %i.f = icmp samesign ult i64 %i.d, %i.e
@@ -30,13 +30,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %.sroa.0.0.copyload.i = load i64, ptr %i.h, align 8
   store i64 %i.k, ptr %i.h, align 8
-  %1 = tail call i64 @llvm.usub.sat.i64(i64 %i.d, i64 2)
+  %1 = add nsw i64 %i.b, -3                       ; 2 uses
   %.not.not8.i.i = icmp samesign ult i64 %i.b, 4
   br i1 %.not.not8.i.i, label %._crit_edge.i.thread.i, label %.lr.ph.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
-  %2 = add nsw i64 %i.b, -3
-  %i.m = icmp eq i64 %i.ai, %2
+  %i.m = icmp eq i64 %i.ai, %1
   br i1 %i.m, label %.thread.i.i, label %bb.d
 
 ._crit_edge.i.thread.i:                           ; preds = %bb.c
@@ -175,18 +174,14 @@ declare noundef range(i32 0, 10) i32 @rust_eh_personality(i32 noundef, i32 nound
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #3
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #4
-
 ; Function Attrs: noinline nonlazybind uwtable
-declare void @_RNvMs3_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecINtNtCs4NRVxsYgnAr_4core3cmp7ReversejEE8grow_oneCs1hjZZAukk1a_12thread_local(ptr noalias noundef align 8 dereferenceable(16)) unnamed_addr #5
+declare void @_RNvMs3_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecINtNtCs4NRVxsYgnAr_4core3cmp7ReversejEE8grow_oneCs1hjZZAukk1a_12thread_local(ptr noalias noundef align 8 dereferenceable(16)) unnamed_addr #4
 
 attributes #0 = { nofree norecurse nosync nounwind nonlazybind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #2 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #4 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

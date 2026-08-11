@@ -201,7 +201,7 @@ bb.a:
   %10 = alloca %"class.std::basic_string_view", align 8 ; 3 uses
   %11 = alloca %"class.bssl::Span", align 8       ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !161  ; 5 uses
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !161  ; 4 uses
   %i.g = add i64 %8, 8                            ; 3 uses
   %i.h = icmp ult i64 %i.f, %i.g
   br i1 %i.h, label %bb.b, label %bb.c
@@ -212,7 +212,6 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.i = load ptr, ptr %7, align 8, !tbaa !159    ; 3 uses
-  %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.f, i64 4)
   %i.j = load ptr, ptr %0, align 8, !tbaa !11
   %i.k = tail call i32 @SSL_is_dtls(ptr noundef %i.j)
   %.not = icmp eq i32 %i.k, 0
@@ -246,7 +245,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.t, label %bb.g, label %bb.ac
 
 bb.g:                                             ; preds = %bb.f
-  %i.u = invoke i32 @EVP_DigestUpdate(ptr noundef nonnull %9, ptr noundef %i.i, i64 noundef %.sroa.speculated.i)
+  %i.u = invoke i32 @EVP_DigestUpdate(ptr noundef nonnull %9, ptr noundef %i.i, i64 noundef 4)
           to label %bb.h unwind label %bb.q
 
 bb.h:                                             ; preds = %bb.g

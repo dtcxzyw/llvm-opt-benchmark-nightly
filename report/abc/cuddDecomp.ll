@@ -203,7 +203,6 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.y = load i32, ptr %i.w, align 4, !tbaa !32   ; 2 uses
-  %spec.select.i = call i32 @llvm.smax.i32(i32 %i.y, i32 5)
   %i.z = icmp slt i32 %i.y, 5
   br i1 %i.z, label %bb.f, label %bb.i
 
@@ -292,7 +291,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bg, label %.preheader154.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bh = call fastcc ptr @BuildConjuncts(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %i.o, ptr noundef %i.bd, i32 noundef %spec.select.i, i32 noundef %.0.lcssa.i, ptr noundef %i.bf, ptr noundef %i.aw) ; 3 uses
+  %i.bh = call fastcc ptr @BuildConjuncts(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %i.o, ptr noundef %i.bd, i32 noundef %i.y, i32 noundef %.0.lcssa.i, ptr noundef %i.bf, ptr noundef %i.aw) ; 3 uses
   %i.bi = icmp eq ptr %i.bh, null
   br i1 %i.bi, label %.preheader154.i, label %bb.n
 

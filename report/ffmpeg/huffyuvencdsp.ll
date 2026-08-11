@@ -92,15 +92,14 @@ bb.b:                                             ; preds = %bb.a
   %i.ba = mul i32 %i.az, 65537                    ; 3 uses
   %i.bb = add i32 %i.ba, 65537                    ; 3 uses
   %i.bc = add i32 %4, -2                          ; 2 uses
-  %5 = sext i32 %i.bc to i64                      ; 2 uses
+  %5 = zext i32 %i.bc to i64                      ; 2 uses
   %.not6164 = icmp slt i32 %4, 2
   br i1 %.not6164, label %.loopexit, label %.lr.ph66.preheader
 
 .lr.ph66.preheader:                               ; preds = %bb.b
-  %6 = tail call i64 @llvm.smax.i64(i64 %5, i64 1)
-  %i.bd = lshr i64 %6, 1
+  %i.bd = lshr i64 %5, 1
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
-  %min.iters.check = icmp slt i32 %i.bc, 14
+  %min.iters.check = icmp ult i32 %i.bc, 14
   br i1 %min.iters.check, label %.lr.ph66.preheader113, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph66.preheader
@@ -112,7 +111,7 @@ vector.memcheck:                                  ; preds = %.lr.ph66.preheader
   br i1 %conflict.rdx, label %.lr.ph66.preheader113, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.be, 2147483640              ; 3 uses
+  %n.vec = and i64 %i.be, 4294967288              ; 3 uses
   %i.bh = shl nuw nsw i64 %n.vec, 1               ; 2 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.bb, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
@@ -177,7 +176,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cp = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %.165
   store i32 %i.co, ptr %i.cp, align 4, !tbaa !17
   %i.cq = add nuw nsw i64 %.165, 2                ; 3 uses
-  %.not61 = icmp sgt i64 %i.cq, %5
+  %.not61 = icmp samesign ugt i64 %i.cq, %5
   br i1 %.not61, label %.loopexit, label %.lr.ph66, !llvm.loop !21
 
 .loopexit:                                        ; preds = %.lr.ph, %.lr.ph66, %middle.block, %.preheader, %bb.b
@@ -469,9 +468,6 @@ declare i32 @llvm.umin.i32(i32, i32) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.umin.v8i32(<8 x i32>, <8 x i32>) #2

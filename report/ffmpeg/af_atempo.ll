@@ -203,8 +203,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph308:                                        ; preds = %.preheader218
   %i.v = icmp sgt i32 %i.p, 1
-  %2 = add i32 %i.p, -2
-  %i.w = zext i32 %2 to i64
+  %i.w = zext nneg i32 %i.p to i64
   br label %bb.c
 
 .preheader:                                       ; preds = %bb.b
@@ -309,12 +308,11 @@ bb.c:                                             ; preds = %.lr.ph308, %._crit_
 
 ._crit_edge303.loopexit:                          ; preds = %.lr.ph302
   %i.be = getelementptr i8, ptr %.1307, i64 %i.w
-  %scevgep341 = getelementptr i8, ptr %i.be, i64 2
   br label %._crit_edge303
 
 ._crit_edge303:                                   ; preds = %._crit_edge303.loopexit, %bb.c
   %.0189.lcssa = phi float [ %i.av, %bb.c ], [ %.1190, %._crit_edge303.loopexit ]
-  %.2.lcssa = phi ptr [ %.2296, %bb.c ], [ %scevgep341, %._crit_edge303.loopexit ] ; 2 uses
+  %.2.lcssa = phi ptr [ %.2296, %bb.c ], [ %i.be, %._crit_edge303.loopexit ] ; 2 uses
   store float %.0189.lcssa, ptr %.1179306, align 4, !tbaa !76
   %i.bf = getelementptr inbounds nuw i8, ptr %.1179306, i64 4
   %i.bg = icmp ult ptr %.2.lcssa, %i.s
@@ -340,7 +338,7 @@ bb.d:                                             ; preds = %bb.a
 .lr.ph292:                                        ; preds = %.preheader222
   %i.br = icmp sgt i32 %i.bk, 1
   %i.bs = add i32 %i.bk, -2
-  %i.bt = zext i32 %i.bs to i64
+  %i.bt = zext nneg i32 %i.bs to i64
   %i.bu = shl nuw nsw i64 %i.bt, 1
   br label %bb.e
 
@@ -470,7 +468,7 @@ bb.f:                                             ; preds = %bb.a
 .lr.ph276:                                        ; preds = %.preheader226
   %i.dr = icmp sgt i32 %i.dk, 1
   %i.ds = add i32 %i.dk, -2
-  %i.dt = zext i32 %i.ds to i64
+  %i.dt = zext nneg i32 %i.ds to i64
   %i.du = shl nuw nsw i64 %i.dt, 2
   br label %bb.g
 
@@ -599,7 +597,7 @@ bb.h:                                             ; preds = %bb.a
 .lr.ph260:                                        ; preds = %.preheader230
   %i.fq = icmp sgt i32 %i.fi, 1
   %i.fr = add i32 %i.fi, -2
-  %i.fs = zext i32 %i.fr to i64
+  %i.fs = zext nneg i32 %i.fr to i64
   %i.ft = shl nuw nsw i64 %i.fs, 2
   br label %bb.i
 
@@ -725,7 +723,7 @@ bb.j:                                             ; preds = %bb.a
 .lr.ph244:                                        ; preds = %.preheader234
   %i.hk = icmp sgt i32 %i.hd, 1
   %i.hl = add i32 %i.hd, -2
-  %i.hm = zext i32 %i.hl to i64
+  %i.hm = zext nneg i32 %i.hl to i64
   %i.hn = shl nuw nsw i64 %i.hm, 3
   br label %bb.k
 

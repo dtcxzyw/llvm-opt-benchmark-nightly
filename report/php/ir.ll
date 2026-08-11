@@ -203,8 +203,8 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.g
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.an = load i8, ptr %i.am, align 8, !tbaa !12  ; 5 uses
-  %4 = sext i8 %i.an to i32
+  %i.an = load i8, ptr %i.am, align 8, !tbaa !12  ; 4 uses
+  %4 = zext i8 %i.an to i32                       ; 2 uses
   switch i8 %i.an, label %bb.s [
     i8 92, label %bb.q
     i8 39, label %bb.r
@@ -251,8 +251,7 @@ bb.y:                                             ; preds = %bb.u
   br label %bb.ao
 
 bb.z:                                             ; preds = %bb.u
-  %5 = zext i8 %i.an to i32
-  %i.aw = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.163, i32 noundef %5) #22 ; 0 uses
+  %i.aw = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.163, i32 noundef %4) #22 ; 0 uses
   br label %bb.ao
 
 bb.aa:                                            ; preds = %bb.g

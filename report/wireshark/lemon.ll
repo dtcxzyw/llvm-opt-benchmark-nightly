@@ -204,8 +204,6 @@ bb.au:                                            ; preds = %bb.at, %append_str.
 bb.av:                                            ; preds = %.lr.ph290, %bb.bj
   %indvars.iv305 = phi i64 [ 0, %.lr.ph290 ], [ %indvars.iv.next306, %bb.bj ] ; 11 uses
   %i.gj = phi i32 [ %i.ga, %.lr.ph290 ], [ %i.ik, %bb.bj ]
-  %2 = trunc nuw nsw i64 %indvars.iv305 to i32
-  %3 = call i32 @llvm.umax.i32(i32 %2, i32 1)
   %i.gk = load ptr, ptr %i.gc, align 8
   %i.gl = getelementptr [8 x i8], ptr %i.gk, i64 %indvars.iv305
   %i.gm = load ptr, ptr %i.gl, align 8            ; 3 uses
@@ -242,7 +240,6 @@ bb.az:                                            ; preds = %bb.ay
 .lr.ph285:                                        ; preds = %bb.ax, %bb.ay, %bb.az
   %i.gy = load ptr, ptr %i.gc, align 8            ; 2 uses
   %i.gz = getelementptr [8 x i8], ptr %i.gy, i64 %indvars.iv305
-  %wide.trip.count303 = zext nneg i32 %3 to i64
   br label %bb.ba
 
 bb.ba:                                            ; preds = %.lr.ph285, %bb.bd
@@ -269,7 +266,7 @@ bb.bc:                                            ; preds = %bb.bb
 
 bb.bd:                                            ; preds = %bb.ba, %bb.bb
   %indvars.iv.next301 = add nuw nsw i64 %indvars.iv300, 1 ; 2 uses
-  %exitcond304.not = icmp eq i64 %indvars.iv.next301, %wide.trip.count303
+  %exitcond304.not = icmp eq i64 %indvars.iv.next301, %indvars.iv305
   br i1 %exitcond304.not, label %.loopexit, label %bb.ba, !llvm.loop !297
 
 .loopexit:                                        ; preds = %bb.bd, %bb.bc, %bb.aw
@@ -670,9 +667,6 @@ declare i32 @llvm.smax.i32(i32, i32) #37
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #38
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #37
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #37

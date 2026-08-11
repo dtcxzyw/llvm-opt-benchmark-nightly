@@ -203,15 +203,15 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 81
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %or.cond = icmp ugt i8 %i.e, 10
-  %narrow = select i1 %or.cond, i8 2, i8 %i.e     ; 6 uses
-  %spec.store.select = sext i8 %narrow to i32     ; 2 uses
+  %narrow = select i1 %or.cond, i8 2, i8 %i.e     ; 4 uses
+  %spec.store.select = zext i8 %narrow to i32     ; 2 uses
   %i.f = tail call ptr @int64_to_numeric(i64 noundef %i.b) #11
   %i.g = ptrtoint ptr %i.f to i64                 ; 2 uses
   %i.h = icmp sgt i8 %narrow, 0
   br i1 %i.h, label %.preheader.preheader, label %bb.b
 
 .preheader.preheader:                             ; preds = %bb.a
-  %xtraiter = and i32 %spec.store.select, 7
+  %xtraiter = and i32 %spec.store.select, 7       ; 3 uses
   %i.i = icmp ult i8 %narrow, 8
   br i1 %i.i, label %.preheader.epil.preheader, label %.preheader.preheader.new
 
@@ -228,14 +228,12 @@ bb.a:
   br i1 %niter.ncmp.7, label %.unr-lcssa, label %.preheader, !llvm.loop !18
 
 .unr-lcssa:                                       ; preds = %.preheader
-  %1 = and i8 %narrow, 7
-  %lcmp.mod.not = icmp eq i8 %1, 0
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.epilog-lcssa, label %.preheader.epil.preheader
 
 .preheader.epil.preheader:                        ; preds = %.unr-lcssa, %.preheader.preheader
   %.01920.epil.init = phi i64 [ 1, %.preheader.preheader ], [ %i.j, %.unr-lcssa ]
-  %2 = and i8 %narrow, 7
-  %lcmp.mod23 = icmp ne i8 %2, 0
+  %lcmp.mod23 = icmp ne i32 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod23)
   br label %.preheader.epil
 
@@ -281,13 +279,13 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 81
   %i.g = load i8, ptr %i.f, align 1               ; 2 uses
   %or.cond = icmp ugt i8 %i.g, 10
-  %narrow = select i1 %or.cond, i8 2, i8 %i.g     ; 5 uses
-  %spec.store.select = sext i8 %narrow to i32     ; 2 uses
+  %narrow = select i1 %or.cond, i8 2, i8 %i.g     ; 3 uses
+  %spec.store.select = zext i8 %narrow to i32     ; 2 uses
   %i.h = icmp sgt i8 %narrow, 0
   br i1 %i.h, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %xtraiter = and i32 %spec.store.select, 7
+  %xtraiter = and i32 %spec.store.select, 7       ; 3 uses
   %i.i = icmp ult i8 %narrow, 8
   br i1 %i.i, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -304,14 +302,12 @@ bb.a:
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !21
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %1 = and i8 %narrow, 7
-  %lcmp.mod.not = icmp eq i8 %1, 0
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.02531.epil.init = phi i64 [ 1, %.lr.ph.preheader ], [ %i.j, %._crit_edge.loopexit.unr-lcssa ]
-  %2 = and i8 %narrow, 7
-  %lcmp.mod36 = icmp ne i8 %2, 0
+  %lcmp.mod36 = icmp ne i32 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod36)
   br label %.lr.ph.epil
 
@@ -384,13 +380,13 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 81
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %or.cond = icmp ugt i8 %i.e, 10
-  %narrow = select i1 %or.cond, i8 2, i8 %i.e     ; 5 uses
-  %spec.store.select = sext i8 %narrow to i32     ; 2 uses
+  %narrow = select i1 %or.cond, i8 2, i8 %i.e     ; 3 uses
+  %spec.store.select = zext i8 %narrow to i32     ; 2 uses
   %i.f = icmp sgt i8 %narrow, 0
   br i1 %i.f, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %xtraiter = and i32 %spec.store.select, 7
+  %xtraiter = and i32 %spec.store.select, 7       ; 3 uses
   %i.g = icmp ult i8 %narrow, 8
   br i1 %i.g, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -407,14 +403,12 @@ bb.a:
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !25
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %1 = and i8 %narrow, 7
-  %lcmp.mod.not = icmp eq i8 %1, 0
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.01516.epil.init = phi i64 [ 1, %.lr.ph.preheader ], [ %i.h, %._crit_edge.loopexit.unr-lcssa ]
-  %2 = and i8 %narrow, 7
-  %lcmp.mod19 = icmp ne i8 %2, 0
+  %lcmp.mod19 = icmp ne i32 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod19)
   br label %.lr.ph.epil
 
@@ -461,13 +455,13 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 81
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %or.cond = icmp ugt i8 %i.e, 10
-  %narrow = select i1 %or.cond, i8 2, i8 %i.e     ; 5 uses
-  %spec.store.select = sext i8 %narrow to i32     ; 2 uses
+  %narrow = select i1 %or.cond, i8 2, i8 %i.e     ; 3 uses
+  %spec.store.select = zext i8 %narrow to i32     ; 2 uses
   %i.f = icmp sgt i8 %narrow, 0
   br i1 %i.f, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %xtraiter = and i32 %spec.store.select, 7
+  %xtraiter = and i32 %spec.store.select, 7       ; 3 uses
   %i.g = icmp ult i8 %narrow, 8
   br i1 %i.g, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -484,14 +478,12 @@ bb.a:
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !27
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %1 = and i8 %narrow, 7
-  %lcmp.mod.not = icmp eq i8 %1, 0
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.01516.epil.init = phi i64 [ 1, %.lr.ph.preheader ], [ %i.h, %._crit_edge.loopexit.unr-lcssa ]
-  %2 = and i8 %narrow, 7
-  %lcmp.mod19 = icmp ne i8 %2, 0
+  %lcmp.mod19 = icmp ne i32 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod19)
   br label %.lr.ph.epil
 

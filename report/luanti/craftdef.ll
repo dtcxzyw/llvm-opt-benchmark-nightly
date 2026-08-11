@@ -204,7 +204,7 @@ _ZNKSt6vectorIS_ItSaItEESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.ao
 
 ._crit_edge208:                                   ; preds = %bb.ao, %._crit_edge208.loopexit
   %i.ht = phi i64 [ %i.hs, %._crit_edge208.loopexit ], [ 0, %bb.ao ] ; 4 uses
-  %i.hu = trunc i64 %i.ht to i16                  ; 4 uses
+  %i.hu = trunc i64 %i.ht to i16                  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   store i16 %i.hu, ptr %i.a, align 2, !tbaa !147
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
@@ -406,9 +406,7 @@ _ZSt6fill_nIPtitET_S1_T0_RKT1_.exit27.preheader.i: ; preds = %.lr.ph.i.i.i.i24.i
   %i.jm = getelementptr inbounds nuw i8, ptr %6, i64 72 ; 7 uses
   %i.jn = getelementptr inbounds nuw i8, ptr %6, i64 56 ; 5 uses
   %i.jo = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
-  %umax.i = call i16 @llvm.umax.i16(i16 %i.hu, i16 1)
-  %wide.trip.count.i = zext i16 %umax.i to i64
-  %wide.trip.count105.i = and i64 %i.ht, 65535
+  %wide.trip.count105.i = and i64 %i.ht, 65535    ; 2 uses
   br label %_ZSt6fill_nIPtitET_S1_T0_RKT1_.exit27.i
 
 _ZSt6fill_nIPtitET_S1_T0_RKT1_.exit27.loopexit.i: ; preds = %bb.bx, %.preheader.i
@@ -528,7 +526,7 @@ bb.aw:                                            ; preds = %.lr.ph.i.i
 
 _ZNSt5queueItSt5dequeItSaItEEE4pushERKt.exit.i.i: ; preds = %bb.aw, %.noexc.i, %bb.as
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count105.i
   br i1 %exitcond.not.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !259
 
 .lr.ph20.i.i:                                     ; preds = %._crit_edge.i.i, %.loopexit.i.i
@@ -930,9 +928,6 @@ declare i32 @llvm.umin.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.umax.i16(i16, i16) #19
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

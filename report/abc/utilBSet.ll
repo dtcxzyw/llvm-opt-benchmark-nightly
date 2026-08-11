@@ -204,10 +204,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ap = getelementptr i8, ptr %i.al, i64 8
   %.val69.us = load ptr, ptr %i.ap, align 8, !tbaa !18
   %i.aq = trunc nuw nsw i64 %indvars.iv130 to i32 ; 2 uses
-  %i.ar = shl nuw i32 1, %i.aq
+  %i.ar = shl nuw nsw i32 1, %i.aq
   %.not27.i.us = icmp eq i64 %indvars.iv130, 31
-  %smax.i.us = tail call i32 @llvm.smax.i32(i32 %i.ar, i32 1)
-  %wide.trip.count.i.us = zext nneg i32 %smax.i.us to i64
+  %wide.trip.count.i.us = zext nneg i32 %i.ar to i64
   br i1 %.not27.i.us, label %._crit_edge.us, label %.critedge2.us81.us
 
 .critedge2.us81.us:                               ; preds = %.critedge2.lr.ph.us, %Abc_BSEvalCountUniqueMax.exit.thread.us86.us
@@ -610,10 +609,9 @@ bb.v:                                             ; preds = %bb.u
   %i.hp = getelementptr i8, ptr %i.hk, i64 8
   %.val69.us.i = load ptr, ptr %i.hp, align 8, !tbaa !18
   %i.hq = trunc nuw nsw i64 %indvars.iv130.i to i32 ; 2 uses
-  %i.hr = shl nuw i32 1, %i.hq
+  %i.hr = shl nuw nsw i32 1, %i.hq
   %.not27.i.us.i = icmp eq i64 %indvars.iv130.i, 31
-  %smax.i.us.i = tail call i32 @llvm.smax.i32(i32 %i.hr, i32 1)
-  %wide.trip.count.i.us.i = zext nneg i32 %smax.i.us.i to i64
+  %wide.trip.count.i.us.i = zext nneg i32 %i.hr to i64
   br i1 %.not27.i.us.i, label %._crit_edge.us.i, label %.critedge2.us81.us.i.preheader
 
 .critedge2.us81.us.i.preheader:                   ; preds = %.critedge2.lr.ph.us.i
@@ -1016,10 +1014,9 @@ bb.bh:                                            ; preds = %bb.bg
   %i.pq = getelementptr i8, ptr %i.pl, i64 8
   %.val69.us.i409 = load ptr, ptr %i.pq, align 8, !tbaa !18
   %i.pr = trunc nuw nsw i64 %indvars.iv130.i399 to i32 ; 2 uses
-  %i.ps = shl nuw i32 1, %i.pr
+  %i.ps = shl nuw nsw i32 1, %i.pr
   %.not27.i.us.i410 = icmp eq i64 %indvars.iv130.i399, 31
-  %smax.i.us.i411 = tail call i32 @llvm.smax.i32(i32 %i.ps, i32 1)
-  %wide.trip.count.i.us.i412 = zext nneg i32 %smax.i.us.i411 to i64
+  %wide.trip.count.i.us.i412 = zext nneg i32 %i.ps to i64
   br i1 %.not27.i.us.i410, label %._crit_edge.us.i403, label %.critedge2.us81.us.i413.preheader
 
 .critedge2.us81.us.i413.preheader:                ; preds = %.critedge2.lr.ph.us.i408

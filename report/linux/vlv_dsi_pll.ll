@@ -203,9 +203,8 @@ mipi_dsi_pixel_format_to_bpp.exit:                ; preds = %bb.c, %bb.d, %bb.e,
   %i.o = load i32, ptr %i.n, align 8
   %i.p = lshr i32 %i.o, 15
   %i.q = and i32 %i.p, 2044
-  %i.r = tail call i32 asm "bsrl $1,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 range(i32 0, 2045) %i.q, i32 -1) #6, !srcloc !14
-  %i.s = add i32 %i.r, 1                          ; 2 uses
-  %spec.select = tail call i32 @llvm.usub.sat.i32(i32 %i.s, i32 1)
+  %i.r = tail call i32 asm "bsrl $1,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 range(i32 0, 2045) %i.q, i32 -1) #6, !srcloc !14 ; 2 uses
+  %i.s = add i32 %i.r, 1
   %.not43 = icmp ult i32 %i.s, 2
   br i1 %.not43, label %bb.h, label %.preheader.preheader
 
@@ -400,7 +399,7 @@ __drm_to_dev.exit46:                              ; preds = %bb.j, %bb.k
 .thread:                                          ; preds = %.preheader.preheader, %.thread.fold.split92, %.thread.fold.split91, %.thread.fold.split90, %.thread.fold.split89, %.thread.fold.split88, %.thread.fold.split87, %.thread.fold.split86, %.thread.fold.split85, %.thread.fold.split84, %.thread.fold.split83, %.thread.fold.split82, %.thread.fold.split81, %.thread.fold.split80, %.thread.fold.split79, %.thread.fold.split78, %.thread.fold.split77, %.thread.fold.split76, %.thread.fold.split75, %.thread.fold.split74, %.thread.fold.split73, %.thread.fold.split72, %.thread.fold.split71, %.thread.fold.split70, %.thread.fold.split69, %.thread.fold.split68, %.thread.fold.split67, %.thread.fold.split66, %.thread.fold.split65, %.thread.fold.split64, %.thread.fold.split63, %.thread.fold.split62, %.thread.fold.split61, %.thread.fold.split60, %.thread.fold.split59, %.thread.fold.split58, %.thread.fold.split57, %.thread.fold.split56, %.thread.fold.split
   %.03649.lcssa.wide = phi i32 [ 62, %.preheader.preheader ], [ 99, %.thread.fold.split91 ], [ 63, %.thread.fold.split ], [ 64, %.thread.fold.split56 ], [ 65, %.thread.fold.split57 ], [ 66, %.thread.fold.split58 ], [ 67, %.thread.fold.split59 ], [ 68, %.thread.fold.split60 ], [ 69, %.thread.fold.split61 ], [ 70, %.thread.fold.split62 ], [ 71, %.thread.fold.split63 ], [ 72, %.thread.fold.split64 ], [ 73, %.thread.fold.split65 ], [ 74, %.thread.fold.split66 ], [ 75, %.thread.fold.split67 ], [ 76, %.thread.fold.split68 ], [ 77, %.thread.fold.split69 ], [ 78, %.thread.fold.split70 ], [ 79, %.thread.fold.split71 ], [ 80, %.thread.fold.split72 ], [ 81, %.thread.fold.split73 ], [ 82, %.thread.fold.split74 ], [ 83, %.thread.fold.split75 ], [ 84, %.thread.fold.split76 ], [ 85, %.thread.fold.split77 ], [ 86, %.thread.fold.split78 ], [ 87, %.thread.fold.split79 ], [ 88, %.thread.fold.split80 ], [ 89, %.thread.fold.split81 ], [ 90, %.thread.fold.split82 ], [ 91, %.thread.fold.split83 ], [ 92, %.thread.fold.split84 ], [ 93, %.thread.fold.split85 ], [ 94, %.thread.fold.split86 ], [ 95, %.thread.fold.split87 ], [ 96, %.thread.fold.split88 ], [ 97, %.thread.fold.split89 ], [ 98, %.thread.fold.split90 ], [ 100, %.thread.fold.split92 ]
   %i.ac = mul nuw nsw i32 %.03649.lcssa.wide, %i.i
-  %i.ad = shl i32 %spec.select, %i.m
+  %i.ad = shl i32 %i.r, %i.m
   %i.ae = udiv i32 %i.ac, %i.ad
   %i.af = getelementptr i8, ptr %0, i64 684
   %i.ag = load i32, ptr %i.af, align 4
@@ -802,9 +801,6 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #4
 
 attributes #0 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { noredzone null_pointer_is_valid "no-builtin-wcslen" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" }
