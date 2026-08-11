@@ -26,7 +26,7 @@ target triple = "x86_64-pc-linux-gnu"
 define internal range(i32 -1163346256, 1) i32 @decode_init(ptr nofree noundef captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 648
   %i.d = load i32, ptr %i.c, align 8, !tbaa !29   ; 2 uses
   switch i32 %i.d, label %bb.c [
@@ -76,19 +76,17 @@ bb.g:                                             ; preds = %bb.e
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   br label %.preheader43
 
-.preheader43:                                     ; preds = %.preheader44, %middle.block
-  %.03648 = phi i32 [ -4, %.preheader44 ], [ %i.r, %middle.block ] ; 2 uses
-  %.03747 = phi i32 [ 0, %.preheader44 ], [ %2, %middle.block ] ; 2 uses
-  %1 = sext i32 %.03747 to i64
-  %2 = add i32 %.03747, 16
-  %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %.03648, i64 0
-  %invariant.gep = getelementptr [8 x i8], ptr %i.o, i64 %1
+.preheader43:                                     ; preds = %middle.block, %.preheader44
+  %indvars.iv = phi i64 [ 0, %.preheader44 ], [ %indvars.iv.next, %middle.block ] ; 2 uses
+  %.03747 = phi i32 [ -4, %.preheader44 ], [ %i.r, %middle.block ] ; 2 uses
+  %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %.03747, i64 0
+  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %.preheader43
   %index = phi i64 [ 0, %.preheader43 ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <2 x i32> [ <i32 -14, i32 -13>, %.preheader43 ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %index
+  %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %index
   %interleaved.vec = shufflevector <2 x i32> %vec.ind, <2 x i32> %broadcast.splatinsert, <4 x i32> <i32 0, i32 2, i32 1, i32 2>
   store <4 x i32> %interleaved.vec, ptr %gep, align 4, !tbaa !38
   %index.next = add nuw i64 %index, 2             ; 2 uses
@@ -97,29 +95,29 @@ vector.body:                                      ; preds = %vector.body, %.preh
   br i1 %i.p, label %middle.block, label %vector.body, !llvm.loop !39
 
 .preheader42:                                     ; preds = %middle.block
-  %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 1056
-  %3 = getelementptr i8, ptr %i.b, i64 1072
+  %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 1056 ; 2 uses
   br label %.preheader
 
 middle.block:                                     ; preds = %vector.body
-  %i.r = add nsw i32 %.03648, 1                   ; 2 uses
+  %i.r = add nsw i32 %.03747, 1                   ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 16
   %exitcond55.not = icmp eq i32 %i.r, 4
   br i1 %exitcond55.not, label %.preheader42, label %.preheader43, !llvm.loop !43
 
-.preheader:                                       ; preds = %.preheader42, %.preheader
-  %.03352 = phi i32 [ -5, %.preheader42 ], [ %i.u, %.preheader ] ; 3 uses
-  %.03451 = phi i32 [ 0, %.preheader42 ], [ %4, %.preheader ] ; 2 uses
-  %broadcast.splatinsert67 = insertelement <2 x i32> poison, i32 %.03352, i64 0 ; 2 uses
-  %4 = add i32 %.03451, 4
-  %5 = sext i32 %.03451 to i64                    ; 2 uses
-  %i.s = getelementptr [8 x i8], ptr %i.q, i64 %5
+.preheader:                                       ; preds = %.preheader, %.preheader42
+  %indvars.iv63 = phi i64 [ 0, %.preheader42 ], [ %indvars.iv.next64, %.preheader ] ; 3 uses
+  %.03451 = phi i32 [ -5, %.preheader42 ], [ %i.u, %.preheader ] ; 3 uses
+  %broadcast.splatinsert67 = insertelement <2 x i32> poison, i32 %.03451, i64 0 ; 2 uses
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %indvars.iv63
   %interleaved.vec72 = shufflevector <2 x i32> <i32 -5, i32 -3>, <2 x i32> %broadcast.splatinsert67, <4 x i32> <i32 0, i32 2, i32 1, i32 2>
   store <4 x i32> %interleaved.vec72, ptr %i.s, align 4, !tbaa !38
-  %i.t = getelementptr [8 x i8], ptr %3, i64 %5
+  %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %indvars.iv63
+  %1 = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %interleaved.vec72.1 = shufflevector <2 x i32> <i32 -1, i32 1>, <2 x i32> %broadcast.splatinsert67, <4 x i32> <i32 0, i32 2, i32 1, i32 2>
-  store <4 x i32> %interleaved.vec72.1, ptr %i.t, align 4, !tbaa !38
-  %i.u = add nsw i32 %.03352, 2
-  %i.v = icmp slt i32 %.03352, 0
+  store <4 x i32> %interleaved.vec72.1, ptr %1, align 4, !tbaa !38
+  %i.u = add nsw i32 %.03451, 2
+  %i.v = icmp slt i32 %.03451, 0
+  %indvars.iv.next64 = add nuw nsw i64 %indvars.iv63, 4
   br i1 %i.v, label %.preheader, label %.loopexit, !llvm.loop !44
 
 .loopexit:                                        ; preds = %.preheader, %bb.g, %bb.f, %bb.c

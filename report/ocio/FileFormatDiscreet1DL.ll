@@ -1,8 +1,7 @@
 inline.NumInlined: 455
 inline.NumDeleted: 212
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZNK16OpenColorIO_v2_512_GLOBAL__N_115LocalFileFormat4readERSiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_13InterpolationE:bb.a
   br label %.thread
 
@@ -204,7 +203,7 @@ switch.lookup322:                                 ; preds = %_ZN16OpenColorIO_v2
 _ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit78: ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit, %switch.lookup322
   %.0.i77 = phi i32 [ %switch.ext, %switch.lookup322 ], [ 0, %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit ] ; 2 uses
   %i.qr = getelementptr inbounds nuw i8, ptr %.1, i64 4
-  %i.qs = load i32, ptr %i.qr, align 4, !tbaa !88 ; 6 uses
+  %i.qs = load i32, ptr %i.qr, align 4, !tbaa !88 ; 4 uses
   %i.qt = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #27
           to label %bb.ds unwind label %bb.em     ; 8 uses
 
@@ -371,51 +370,56 @@ bb.ej:                                            ; preds = %bb.ei
   %i.ss = icmp eq i32 %i.sr, -16
   %i.st = getelementptr inbounds nuw i8, ptr %i.sq, i64 200
   %i.su = getelementptr inbounds nuw i8, ptr %.1, i64 16
-  %i.sv = load ptr, ptr %i.su, align 8, !tbaa !33 ; 7 uses
-  %i.sw = load ptr, ptr %i.st, align 8, !tbaa !138 ; 12 uses
+  %i.sv = load ptr, ptr %i.su, align 8, !tbaa !33 ; 6 uses
+  %i.sw = load ptr, ptr %i.st, align 8, !tbaa !138 ; 6 uses
   %.sroa.speculated.us.us = call i32 @llvm.smin.i32(i32 %i.sp, i32 0)
   %i.sx = sext i32 %.sroa.speculated.us.us to i64
   %i.sy = getelementptr inbounds [8 x i8], ptr %i.sv, i64 %i.sx
   %wide.trip.count192 = zext nneg i32 %i.qs to i64 ; 5 uses
-  %.pre196 = load ptr, ptr %i.sy, align 8, !tbaa !37 ; 5 uses
+  %.pre196 = load ptr, ptr %i.sy, align 8, !tbaa !37 ; 3 uses
   %.sroa.speculated.us.us.1 = call i32 @llvm.smin.i32(i32 %i.sp, i32 1)
   %i.sz = sext i32 %.sroa.speculated.us.us.1 to i64
   %i.ta = getelementptr inbounds [8 x i8], ptr %i.sv, i64 %i.sz
-  %i.tb = load ptr, ptr %i.ta, align 8, !tbaa !37 ; 5 uses
+  %i.tb = load ptr, ptr %i.ta, align 8, !tbaa !37 ; 3 uses
   %.sroa.speculated.us.us.2 = call i32 @llvm.smin.i32(i32 %i.sp, i32 2)
   %i.tc = sext i32 %.sroa.speculated.us.us.2 to i64
   %i.td = getelementptr inbounds [8 x i8], ptr %i.sv, i64 %i.tc
-  %i.te = load ptr, ptr %i.td, align 8, !tbaa !37 ; 5 uses
-  br i1 %i.ss, label %.preheader.us.preheader, label %.preheader.preheader
+  %i.te = load ptr, ptr %i.td, align 8, !tbaa !37 ; 3 uses
+  br i1 %i.ss, label %.preheader.us, label %.preheader.us.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %xtraiter = and i64 %wide.trip.count192, 1
-  %20 = icmp eq i32 %i.qs, 1
-  br i1 %20, label %.preheader.us.epil.preheader, label %.preheader.us.preheader.new
+  %min.iters.check314 = icmp ult i32 %i.qs, 4
+  br i1 %min.iters.check314, label %.preheader.preheader325, label %.preheader.preheader
 
-.preheader.us.preheader.new:                      ; preds = %.preheader.us.preheader
-  %unroll_iter = and i64 %wide.trip.count192, 2147483646
-  br label %.preheader.us
-
-.preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %min.iters.check309 = icmp ult i32 %i.qs, 4
-  br i1 %min.iters.check309, label %.preheader.preheader325, label %vector.ph310
+.preheader.preheader:                             ; preds = %.preheader.us.preheader
+  %20 = add nsw i64 %wide.trip.count192, -1       ; 2 uses
+  %21 = trunc nsw i64 %20 to i32
+  %mul = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %21, i32 3) ; 2 uses
+  %mul.result = extractvalue { i32, i1 } %mul, 0
+  %mul.overflow = extractvalue { i32, i1 } %mul, 1
+  %22 = icmp slt i32 %mul.result, 0
+  %23 = or i1 %22, %mul.overflow
+  %24 = icmp ugt i64 %20, 4294967295
+  %25 = or i1 %23, %24
+  br i1 %25, label %.preheader.preheader325, label %vector.ph310
 
 vector.ph310:                                     ; preds = %.preheader.preheader
   %n.vec311 = and i64 %wide.trip.count192, 2147483644 ; 4 uses
-  %21 = mul nuw nsw i64 %n.vec311, 3
+  %26 = trunc nuw nsw i64 %n.vec311 to i32
+  %27 = mul i32 %26, 3
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.sm, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 3 uses
   br label %vector.body312
 
 vector.body312:                                   ; preds = %vector.body312, %vector.ph310
   %index313 = phi i64 [ 0, %vector.ph310 ], [ %index.next317, %vector.body312 ] ; 5 uses
+  %sext = mul i64 %index313, 12884901888
   %i.tf = getelementptr inbounds nuw [2 x i8], ptr %.pre196, i64 %index313
   %wide.load314 = load <4 x i16>, ptr %i.tf, align 2, !tbaa !39
   %i.tg = uitofp <4 x i16> %wide.load314 to <4 x float>
   %i.th = fdiv <4 x float> %i.tg, %broadcast.splat
-  %.idx = mul nuw i64 %index313, 12
-  %i.ti = getelementptr inbounds nuw i8, ptr %i.sw, i64 %.idx
+  %28 = ashr exact i64 %sext, 30
+  %i.ti = getelementptr inbounds nuw i8, ptr %i.sw, i64 %28
   %i.tj = getelementptr inbounds nuw [2 x i8], ptr %i.tb, i64 %index313
   %wide.load315 = load <4 x i16>, ptr %i.tj, align 2, !tbaa !39
   %i.tk = uitofp <4 x i16> %wide.load315 to <4 x float>
@@ -436,79 +440,53 @@ middle.block318:                                  ; preds = %vector.body312
   %cmp.n319 = icmp eq i64 %n.vec311, %wide.trip.count192
   br i1 %cmp.n319, label %.preheader13.i.i, label %.preheader.preheader325
 
-.preheader.preheader325:                          ; preds = %.preheader.preheader, %middle.block318
-  %indvars.iv.ph = phi i64 [ 0, %.preheader.preheader ], [ %n.vec311, %middle.block318 ]
-  %.026164.ph = phi i64 [ 0, %.preheader.preheader ], [ %21, %middle.block318 ]
+.preheader.preheader325:                          ; preds = %.preheader.preheader, %.preheader.us.preheader, %middle.block318
+  %indvars.iv185.ph = phi i64 [ 0, %.preheader.preheader ], [ 0, %.preheader.us.preheader ], [ %n.vec311, %middle.block318 ]
+  %indvars.iv.ph = phi i32 [ 0, %.preheader.preheader ], [ 0, %.preheader.us.preheader ], [ %27, %middle.block318 ]
   %i.ts = insertelement <2 x float> poison, float %i.sm, i64 0
   %i.tt = shufflevector <2 x float> %i.ts, <2 x float> poison, <2 x i32> zeroinitializer
   br label %.preheader
 
-.preheader.us:                                    ; preds = %.preheader.us, %.preheader.us.preheader.new
-  %indvars.iv189 = phi i64 [ 0, %.preheader.us.preheader.new ], [ %indvars.iv.next190.1, %.preheader.us ] ; 5 uses
-  %.026164.us = phi i64 [ 0, %.preheader.us.preheader.new ], [ %indvars.iv.next186.2.1, %.preheader.us ] ; 5 uses
-  %niter = phi i64 [ 0, %.preheader.us.preheader.new ], [ %niter.next.1, %.preheader.us ]
-  %22 = load ptr, ptr @imath_half_to_float_table, align 8 ; 3 uses
-  %23 = getelementptr inbounds nuw [2 x i8], ptr %.pre196, i64 %indvars.iv189
-  %24 = load i16, ptr %23, align 2, !tbaa !39
-  %25 = zext i16 %24 to i64
-  %26 = getelementptr inbounds nuw [4 x i8], ptr %22, i64 %25
-  %27 = load float, ptr %26, align 4, !tbaa !17
-  %28 = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %.026164.us
-  store float %27, ptr %28, align 4, !tbaa !139
-  %29 = getelementptr inbounds nuw [2 x i8], ptr %i.tb, i64 %indvars.iv189
-  %30 = load i16, ptr %29, align 2, !tbaa !39
-  %31 = zext i16 %30 to i64
-  %32 = getelementptr inbounds nuw [4 x i8], ptr %22, i64 %31
-  %33 = load float, ptr %32, align 4, !tbaa !17
-  %34 = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %.026164.us
-  %35 = getelementptr inbounds nuw i8, ptr %34, i64 4
-  store float %33, ptr %35, align 4, !tbaa !139
-  %36 = getelementptr inbounds nuw [2 x i8], ptr %i.te, i64 %indvars.iv189
-  %37 = load i16, ptr %36, align 2, !tbaa !39
-  %38 = zext i16 %37 to i64
-  %39 = getelementptr inbounds nuw [4 x i8], ptr %22, i64 %38
-  %40 = load float, ptr %39, align 4, !tbaa !17
-  %41 = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %.026164.us
-  %42 = getelementptr inbounds nuw i8, ptr %41, i64 8
-  store float %40, ptr %42, align 4, !tbaa !139
-  %indvars.iv.next186.2 = add nuw nsw i64 %.026164.us, 3 ; 3 uses
-  %indvars.iv.next190 = or disjoint i64 %indvars.iv189, 1 ; 3 uses
+.preheader.us:                                    ; preds = %.preheader.lr.ph, %.preheader.us
+  %niter = phi i64 [ %indvars.iv.next190.1, %.preheader.us ], [ 0, %.preheader.lr.ph ] ; 4 uses
+  %indvars.iv188 = phi i32 [ %indvars.iv.next189, %.preheader.us ], [ 0, %.preheader.lr.ph ] ; 2 uses
+  %29 = sext i32 %indvars.iv188 to i64            ; 3 uses
   %i.tu = load ptr, ptr @imath_half_to_float_table, align 8 ; 3 uses
-  %i.tv = getelementptr inbounds nuw [2 x i8], ptr %.pre196, i64 %indvars.iv.next190
+  %i.tv = getelementptr inbounds nuw [2 x i8], ptr %.pre196, i64 %niter
   %i.tw = load i16, ptr %i.tv, align 2, !tbaa !39
   %i.tx = zext i16 %i.tw to i64
   %i.ty = getelementptr inbounds nuw [4 x i8], ptr %i.tu, i64 %i.tx
   %i.tz = load float, ptr %i.ty, align 4, !tbaa !17
-  %i.ua = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %indvars.iv.next186.2
+  %i.ua = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %29
   store float %i.tz, ptr %i.ua, align 4, !tbaa !139
-  %i.ub = getelementptr inbounds nuw [2 x i8], ptr %i.tb, i64 %indvars.iv.next190
+  %i.ub = getelementptr inbounds nuw [2 x i8], ptr %i.tb, i64 %niter
   %i.uc = load i16, ptr %i.ub, align 2, !tbaa !39
   %i.ud = zext i16 %i.uc to i64
   %i.ue = getelementptr inbounds nuw [4 x i8], ptr %i.tu, i64 %i.ud
   %i.uf = load float, ptr %i.ue, align 4, !tbaa !17
-  %i.ug = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %indvars.iv.next186.2
-  %i.uh = getelementptr inbounds nuw i8, ptr %i.ug, i64 4
+  %i.ug = getelementptr [4 x i8], ptr %i.sw, i64 %29
+  %i.uh = getelementptr i8, ptr %i.ug, i64 4
   store float %i.uf, ptr %i.uh, align 4, !tbaa !139
-  %i.ui = getelementptr inbounds nuw [2 x i8], ptr %i.te, i64 %indvars.iv.next190
+  %i.ui = getelementptr inbounds nuw [2 x i8], ptr %i.te, i64 %niter
   %i.uj = load i16, ptr %i.ui, align 2, !tbaa !39
   %i.uk = zext i16 %i.uj to i64
   %i.ul = getelementptr inbounds nuw [4 x i8], ptr %i.tu, i64 %i.uk
   %i.um = load float, ptr %i.ul, align 4, !tbaa !17
-  %i.un = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %indvars.iv.next186.2
-  %i.uo = getelementptr inbounds nuw i8, ptr %i.un, i64 8
+  %i.un = getelementptr [4 x i8], ptr %i.sw, i64 %29
+  %i.uo = getelementptr i8, ptr %i.un, i64 8
   store float %i.um, ptr %i.uo, align 4, !tbaa !139
-  %indvars.iv.next186.2.1 = add nuw nsw i64 %.026164.us, 6 ; 2 uses
-  %indvars.iv.next190.1 = add nuw nsw i64 %indvars.iv189, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.preheader13.i.i.loopexit.unr-lcssa, label %.preheader.us, !llvm.loop !142
+  %indvars.iv.next190.1 = add nuw nsw i64 %niter, 1 ; 2 uses
+  %indvars.iv.next189 = add i32 %indvars.iv188, 3
+  %niter.ncmp.1 = icmp eq i64 %indvars.iv.next190.1, %wide.trip.count192
+  br i1 %niter.ncmp.1, label %.preheader13.i.i, label %.preheader.us, !llvm.loop !142
 
 .preheader:                                       ; preds = %.preheader.preheader325, %.preheader
-  %indvars.iv.a = phi i64 [ %indvars.iv.next183, %.preheader ], [ %indvars.iv.ph, %.preheader.preheader325 ] ; 4 uses
-  %.026164 = phi i64 [ %indvars.iv.next.2, %.preheader ], [ %.026164.ph, %.preheader.preheader325 ] ; 3 uses
+  %indvars.iv.a = phi i64 [ %indvars.iv.next.2, %.preheader ], [ %indvars.iv185.ph, %.preheader.preheader325 ] ; 4 uses
+  %indvars.iv = phi i32 [ %indvars.iv.next, %.preheader ], [ %indvars.iv.ph, %.preheader.preheader325 ] ; 2 uses
+  %30 = sext i32 %indvars.iv to i64               ; 2 uses
   %i.up = getelementptr inbounds nuw [2 x i8], ptr %.pre196, i64 %indvars.iv.a
   %i.uq = load i16, ptr %i.up, align 2, !tbaa !39
-  %i.ur = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %.026164
+  %i.ur = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %30
   %i.us = getelementptr inbounds nuw [2 x i8], ptr %i.tb, i64 %indvars.iv.a
   %i.ut = load i16, ptr %i.us, align 2, !tbaa !39
   %i.uu = insertelement <2 x i16> poison, i16 %i.uq, i64 0
@@ -520,12 +498,12 @@ middle.block318:                                  ; preds = %vector.body312
   %i.uz = load i16, ptr %i.uy, align 2, !tbaa !39
   %i.va = uitofp i16 %i.uz to float
   %i.vb = fdiv float %i.va, %i.sm
-  %i.vc = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %.026164
-  %i.vd = getelementptr inbounds nuw i8, ptr %i.vc, i64 8
+  %i.vc = getelementptr [4 x i8], ptr %i.sw, i64 %30
+  %i.vd = getelementptr i8, ptr %i.vc, i64 8
   store float %i.vb, ptr %i.vd, align 4, !tbaa !139
-  %indvars.iv.next.2 = add nuw nsw i64 %.026164, 3
-  %indvars.iv.next183 = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next183, %wide.trip.count192
+  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %indvars.iv.next = add i32 %indvars.iv, 3
+  %exitcond.not = icmp eq i64 %indvars.iv.next.2, %wide.trip.count192
   br i1 %exitcond.not, label %.preheader13.i.i, label %.preheader, !llvm.loop !143
 
 ._crit_edge:                                      ; preds = %bb.ej
@@ -534,43 +512,8 @@ middle.block318:                                  ; preds = %vector.body312
   %.not.i.i86 = icmp eq ptr %.pre197, null
   br i1 %.not.i.i86, label %_ZNSt12__shared_ptrIN16OpenColorIO_v2_512_GLOBAL__N_115LocalCachedFileELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %.preheader13.i.i
 
-.preheader13.i.i.loopexit.unr-lcssa:              ; preds = %.preheader.us
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader13.i.i, label %.preheader.us.epil.preheader
-
-.preheader.us.epil.preheader:                     ; preds = %.preheader13.i.i.loopexit.unr-lcssa, %.preheader.us.preheader
-  %indvars.iv189.epil.init = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next190.1, %.preheader13.i.i.loopexit.unr-lcssa ] ; 3 uses
-  %.026164.us.epil.init = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next186.2.1, %.preheader13.i.i.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod342 = trunc i32 %i.qs to i1
-  call void @llvm.assume(i1 %lcmp.mod342)
-  %43 = load ptr, ptr @imath_half_to_float_table, align 8 ; 3 uses
-  %44 = getelementptr inbounds nuw [2 x i8], ptr %.pre196, i64 %indvars.iv189.epil.init
-  %45 = load i16, ptr %44, align 2, !tbaa !39
-  %46 = zext i16 %45 to i64
-  %47 = getelementptr inbounds nuw [4 x i8], ptr %43, i64 %46
-  %48 = load float, ptr %47, align 4, !tbaa !17
-  %49 = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %.026164.us.epil.init
-  store float %48, ptr %49, align 4, !tbaa !139
-  %50 = getelementptr inbounds nuw [2 x i8], ptr %i.tb, i64 %indvars.iv189.epil.init
-  %51 = load i16, ptr %50, align 2, !tbaa !39
-  %52 = zext i16 %51 to i64
-  %53 = getelementptr inbounds nuw [4 x i8], ptr %43, i64 %52
-  %54 = load float, ptr %53, align 4, !tbaa !17
-  %55 = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %.026164.us.epil.init
-  %56 = getelementptr inbounds nuw i8, ptr %55, i64 4
-  store float %54, ptr %56, align 4, !tbaa !139
-  %57 = getelementptr inbounds nuw [2 x i8], ptr %i.te, i64 %indvars.iv189.epil.init
-  %58 = load i16, ptr %57, align 2, !tbaa !39
-  %59 = zext i16 %58 to i64
-  %60 = getelementptr inbounds nuw [4 x i8], ptr %43, i64 %59
-  %61 = load float, ptr %60, align 4, !tbaa !17
-  %62 = getelementptr inbounds nuw [4 x i8], ptr %i.sw, i64 %.026164.us.epil.init
-  %63 = getelementptr inbounds nuw i8, ptr %62, i64 8
-  store float %61, ptr %63, align 4, !tbaa !139
-  br label %.preheader13.i.i
-
-.preheader13.i.i:                                 ; preds = %.preheader, %.preheader.us.epil.preheader, %.preheader13.i.i.loopexit.unr-lcssa, %middle.block318, %._crit_edge
-  %64 = phi ptr [ %.pre197, %._crit_edge ], [ %i.sv, %middle.block318 ], [ %i.sv, %.preheader.us.epil.preheader ], [ %i.sv, %.preheader13.i.i.loopexit.unr-lcssa ], [ %i.sv, %.preheader ]
+.preheader13.i.i:                                 ; preds = %.preheader, %.preheader.us, %middle.block318, %._crit_edge
+  %31 = phi ptr [ %.pre197, %._crit_edge ], [ %i.sv, %middle.block318 ], [ %i.sv, %.preheader.us ], [ %i.sv, %.preheader ]
   %i.ve = getelementptr inbounds nuw i8, ptr %.1, i64 16 ; 2 uses
   %i.vf = icmp sgt i32 %i.sn, 0
   br i1 %i.vf, label %.lr.ph18.i.i, label %._crit_edge19.i.i
@@ -580,7 +523,7 @@ middle.block318:                                  ; preds = %vector.body312
   br label %._crit_edge19.i.i
 
 ._crit_edge19.i.i:                                ; preds = %._crit_edge19.loopexit.i.i, %.preheader13.i.i
-  %i.vg = phi ptr [ %.pre25.i.i, %._crit_edge19.loopexit.i.i ], [ %64, %.preheader13.i.i ]
+  %i.vg = phi ptr [ %.pre25.i.i, %._crit_edge19.loopexit.i.i ], [ %31, %.preheader13.i.i ]
   call void @free(ptr noundef %i.vg) #28
   br label %_ZNSt12__shared_ptrIN16OpenColorIO_v2_512_GLOBAL__N_115LocalCachedFileELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
@@ -983,6 +926,9 @@ declare i32 @llvm.smin.i32(i32, i32) #24
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #24
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #24
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
@@ -1167,7 +1113,7 @@ attributes #35 = { nounwind allocsize(0) }
 !140 = !{!"float", !6, i64 0}
 !141 = distinct !{!141, !68, !81, !82}
 !142 = distinct !{!142, !68}
-!143 = distinct !{!143, !68, !82, !81}
+!143 = distinct !{!143, !68, !81}
 !144 = !{!145, !146, i64 0}
 !145 = !{!"_ZTSSt12__shared_ptrIN16OpenColorIO_v2_510CachedFileELN9__gnu_cxx12_Lock_policyE2EE", !146, i64 0, !98, i64 8}
 !146 = !{!"p1 _ZTSN16OpenColorIO_v2_510CachedFileE", !13, i64 0}
