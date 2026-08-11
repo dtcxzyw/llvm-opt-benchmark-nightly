@@ -204,11 +204,13 @@ _ZN4absl12lts_2026052613cord_internal12CordRepBtree10AlignBeginEv.exit.i: ; pred
 .lr.ph.i49:                                       ; preds = %_ZN4absl12lts_2026052613cord_internal12CordRepBtree10AlignBeginEv.exit.i
   %i.cw = zext i8 %i.cu to i64                    ; 5 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 16 ; 2 uses
-  %3 = sub nsw i64 %.pre-phi71, %.pre-phi
-  %i.cy = add nsw i64 %3, 2305843009213693951
-  %4 = and i64 %i.cy, 2305843009213693951         ; 2 uses
-  %i.cz = add nuw nsw i64 %4, 1                   ; 2 uses
-  %min.iters.check85 = icmp samesign ult i64 %4, 17
+  %3 = shl nuw nsw i64 %.pre-phi71, 3
+  %i.cy = add nsw i64 %3, -8
+  %4 = shl nuw nsw i64 %.pre-phi, 3
+  %5 = sub nsw i64 %i.cy, %4                      ; 2 uses
+  %6 = lshr exact i64 %5, 3
+  %i.cz = add nuw nsw i64 %6, 1                   ; 2 uses
+  %min.iters.check85 = icmp ult i64 %5, 136
   br i1 %min.iters.check85, label %scalar.ph84.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i49
@@ -595,11 +597,13 @@ _ZN4absl12lts_2026052613cord_internal12CordRepBtree8AlignEndEv.exit.i: ; preds =
 
 .lr.ph.i48:                                       ; preds = %_ZN4absl12lts_2026052613cord_internal12CordRepBtree8AlignEndEv.exit.i
   %i.cu = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 16 ; 2 uses
-  %3 = sub nsw i64 %.pre-phi68, %.pre-phi
-  %i.cv = add nsw i64 %3, 2305843009213693951
-  %4 = and i64 %i.cv, 2305843009213693951         ; 2 uses
-  %i.cw = add nuw nsw i64 %4, 1                   ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 17
+  %3 = shl nuw nsw i64 %.pre-phi68, 3
+  %i.cv = add nsw i64 %3, -8
+  %4 = shl nuw nsw i64 %.pre-phi, 3
+  %5 = sub nsw i64 %i.cv, %4                      ; 2 uses
+  %6 = lshr exact i64 %5, 3
+  %i.cw = add nuw nsw i64 %6, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 136
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i48

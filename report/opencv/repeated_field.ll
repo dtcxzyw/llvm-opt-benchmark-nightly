@@ -203,11 +203,13 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.b
   %i.i = sext i32 %i.e to i64                     ; 2 uses
   %i.j = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.i ; 3 uses
-  %3 = sub nsw i64 %i.f, %i.i
-  %i.k = add nsw i64 %3, 4611686018427387903
-  %4 = and i64 %i.k, 4611686018427387903          ; 2 uses
-  %i.l = add nuw nsw i64 %4, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7
+  %3 = shl nsw i64 %i.f, 2
+  %i.k = add nsw i64 %3, -4
+  %4 = shl nsw i64 %i.i, 2
+  %5 = sub nsw i64 %i.k, %4                       ; 2 uses
+  %6 = lshr exact i64 %5, 2
+  %i.l = add nuw nsw i64 %6, 1                    ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader5, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
@@ -610,11 +612,13 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.b
   %i.i = sext i32 %i.e to i64                     ; 2 uses
   %i.j = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.i ; 3 uses
-  %3 = sub nsw i64 %i.f, %i.i
-  %i.k = add nsw i64 %3, 4611686018427387903
-  %4 = and i64 %i.k, 4611686018427387903          ; 2 uses
-  %i.l = add nuw nsw i64 %4, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7
+  %3 = shl nsw i64 %i.f, 2
+  %i.k = add nsw i64 %3, -4
+  %4 = shl nsw i64 %i.i, 2
+  %5 = sub nsw i64 %i.k, %4                       ; 2 uses
+  %6 = lshr exact i64 %5, 2
+  %i.l = add nuw nsw i64 %6, 1                    ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader5, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
@@ -1017,11 +1021,13 @@ _ZN6google8protobuf13RepeatedFieldIlE7ReserveEi.exit: ; preds = %bb.b, %bb.i, %b
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZN6google8protobuf13RepeatedFieldIlE7ReserveEi.exit
   %i.ak = sext i32 %i.ag to i64                   ; 2 uses
   %i.al = getelementptr inbounds [8 x i8], ptr %i.af, i64 %i.ak ; 3 uses
-  %3 = sub nsw i64 %i.ah, %i.ak
-  %i.am = add nsw i64 %3, 2305843009213693951
-  %4 = and i64 %i.am, 2305843009213693951         ; 2 uses
-  %i.an = add nuw nsw i64 %4, 1                   ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 3
+  %3 = shl nsw i64 %i.ah, 3
+  %i.am = add nsw i64 %3, -8
+  %4 = shl nsw i64 %i.ak, 3
+  %5 = sub nsw i64 %i.am, %4                      ; 2 uses
+  %6 = lshr exact i64 %5, 3
+  %i.an = add nuw nsw i64 %6, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 24
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader8, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
@@ -1424,11 +1430,13 @@ _ZN6google8protobuf13RepeatedFieldImE7ReserveEi.exit: ; preds = %bb.b, %bb.i, %b
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZN6google8protobuf13RepeatedFieldImE7ReserveEi.exit
   %i.ak = sext i32 %i.ag to i64                   ; 2 uses
   %i.al = getelementptr inbounds [8 x i8], ptr %i.af, i64 %i.ak ; 3 uses
-  %3 = sub nsw i64 %i.ah, %i.ak
-  %i.am = add nsw i64 %3, 2305843009213693951
-  %4 = and i64 %i.am, 2305843009213693951         ; 2 uses
-  %i.an = add nuw nsw i64 %4, 1                   ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 3
+  %3 = shl nsw i64 %i.ah, 3
+  %i.am = add nsw i64 %3, -8
+  %4 = shl nsw i64 %i.ak, 3
+  %5 = sub nsw i64 %i.am, %4                      ; 2 uses
+  %6 = lshr exact i64 %5, 3
+  %i.an = add nuw nsw i64 %6, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 24
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader8, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
@@ -1831,11 +1839,13 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.b
   %i.i = sext i32 %i.e to i64                     ; 2 uses
   %i.j = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.i ; 3 uses
-  %3 = sub nsw i64 %i.f, %i.i
-  %i.k = add nsw i64 %3, 4611686018427387903
-  %4 = and i64 %i.k, 4611686018427387903          ; 2 uses
-  %i.l = add nuw nsw i64 %4, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7
+  %3 = shl nsw i64 %i.f, 2
+  %i.k = add nsw i64 %3, -4
+  %4 = shl nsw i64 %i.i, 2
+  %5 = sub nsw i64 %i.k, %4                       ; 2 uses
+  %6 = lshr exact i64 %5, 2
+  %i.l = add nuw nsw i64 %6, 1                    ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader5, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
@@ -2238,11 +2248,13 @@ _ZN6google8protobuf13RepeatedFieldIdE7ReserveEi.exit: ; preds = %bb.b, %bb.i, %b
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZN6google8protobuf13RepeatedFieldIdE7ReserveEi.exit
   %i.ak = sext i32 %i.ag to i64                   ; 2 uses
   %i.al = getelementptr inbounds [8 x i8], ptr %i.af, i64 %i.ak ; 3 uses
-  %3 = sub nsw i64 %i.ah, %i.ak
-  %i.am = add nsw i64 %3, 2305843009213693951
-  %4 = and i64 %i.am, 2305843009213693951         ; 2 uses
-  %i.an = add nuw nsw i64 %4, 1                   ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 3
+  %3 = shl nsw i64 %i.ah, 3
+  %i.am = add nsw i64 %3, -8
+  %4 = shl nsw i64 %i.ak, 3
+  %5 = sub nsw i64 %i.am, %4                      ; 2 uses
+  %6 = lshr exact i64 %5, 3
+  %i.an = add nuw nsw i64 %6, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 24
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader8, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader

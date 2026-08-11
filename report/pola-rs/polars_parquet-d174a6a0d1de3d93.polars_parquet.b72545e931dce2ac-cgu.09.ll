@@ -204,11 +204,13 @@ bb.u:                                             ; preds = %bb.s
   br i1 %i.cj, label %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit.thread, label %.lr.ph174.preheader, !dbg !7368
 
 .lr.ph174.preheader:                              ; preds = %bb.u
-  %6 = sub nsw i64 %i.cc, %i.bx, !dbg !7368
-  %i.ck = add nsw i64 %6, 4611686018427387903, !dbg !7368
-  %7 = and i64 %i.ck, 4611686018427387903, !dbg !7368 ; 2 uses
-  %i.cl = add nuw nsw i64 %7, 1, !dbg !7368       ; 2 uses
-  %min.iters.check268 = icmp samesign ult i64 %7, 7, !dbg !7368
+  %6 = shl nuw nsw i64 %i.cc, 2, !dbg !7368
+  %i.ck = add nsw i64 %6, -4, !dbg !7368
+  %7 = shl nuw nsw i64 %i.bx, 2, !dbg !7368
+  %8 = sub nsw i64 %i.ck, %7, !dbg !7368          ; 2 uses
+  %9 = lshr exact i64 %8, 2, !dbg !7368
+  %i.cl = add nuw nsw i64 %9, 1, !dbg !7368       ; 2 uses
+  %min.iters.check268 = icmp ult i64 %8, 28, !dbg !7368
   br i1 %min.iters.check268, label %.lr.ph174.preheader287, label %vector.ph269, !dbg !7368
 
 vector.ph269:                                     ; preds = %.lr.ph174.preheader
@@ -611,11 +613,13 @@ bb.w:                                             ; preds = %bb.u
   br i1 %i.cf, label %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit.thread, label %.lr.ph173.preheader, !dbg !7700
 
 .lr.ph173.preheader:                              ; preds = %bb.w
-  %5 = sub nsw i64 %i.by, %i.bt, !dbg !7700
-  %i.cg = add nsw i64 %5, 4611686018427387903, !dbg !7700
-  %6 = and i64 %i.cg, 4611686018427387903, !dbg !7700 ; 2 uses
-  %i.ch = add nuw nsw i64 %6, 1, !dbg !7700       ; 2 uses
-  %min.iters.check266 = icmp samesign ult i64 %6, 7, !dbg !7700
+  %5 = shl nuw nsw i64 %i.by, 2, !dbg !7700
+  %i.cg = add nsw i64 %5, -4, !dbg !7700
+  %6 = shl nuw nsw i64 %i.bt, 2, !dbg !7700
+  %7 = sub nsw i64 %i.cg, %6, !dbg !7700          ; 2 uses
+  %8 = lshr exact i64 %7, 2, !dbg !7700
+  %i.ch = add nuw nsw i64 %8, 1, !dbg !7700       ; 2 uses
+  %min.iters.check266 = icmp ult i64 %7, 28, !dbg !7700
   br i1 %min.iters.check266, label %.lr.ph173.preheader285, label %vector.ph267, !dbg !7700
 
 vector.ph267:                                     ; preds = %.lr.ph173.preheader
@@ -1018,11 +1022,13 @@ bb.u:                                             ; preds = %bb.s
   br i1 %i.cj, label %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit.thread, label %.lr.ph174.preheader, !dbg !8036
 
 .lr.ph174.preheader:                              ; preds = %bb.u
-  %6 = sub nsw i64 %i.cc, %i.bx, !dbg !8036
-  %i.ck = add nsw i64 %6, 4611686018427387903, !dbg !8036
-  %7 = and i64 %i.ck, 4611686018427387903, !dbg !8036 ; 2 uses
-  %i.cl = add nuw nsw i64 %7, 1, !dbg !8036       ; 2 uses
-  %min.iters.check268 = icmp samesign ult i64 %7, 7, !dbg !8036
+  %6 = shl nuw nsw i64 %i.cc, 2, !dbg !8036
+  %i.ck = add nsw i64 %6, -4, !dbg !8036
+  %7 = shl nuw nsw i64 %i.bx, 2, !dbg !8036
+  %8 = sub nsw i64 %i.ck, %7, !dbg !8036          ; 2 uses
+  %9 = lshr exact i64 %8, 2, !dbg !8036
+  %i.cl = add nuw nsw i64 %9, 1, !dbg !8036       ; 2 uses
+  %min.iters.check268 = icmp ult i64 %8, 28, !dbg !8036
   br i1 %min.iters.check268, label %.lr.ph174.preheader287, label %vector.ph269, !dbg !8036
 
 vector.ph269:                                     ; preds = %.lr.ph174.preheader
@@ -1425,11 +1431,13 @@ bb.w:                                             ; preds = %bb.u
   br i1 %i.cf, label %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit.thread, label %.lr.ph173.preheader, !dbg !8351
 
 .lr.ph173.preheader:                              ; preds = %bb.w
-  %5 = sub nsw i64 %i.by, %i.bt, !dbg !8351
-  %i.cg = add nsw i64 %5, 4611686018427387903, !dbg !8351
-  %6 = and i64 %i.cg, 4611686018427387903, !dbg !8351 ; 2 uses
-  %i.ch = add nuw nsw i64 %6, 1, !dbg !8351       ; 2 uses
-  %min.iters.check266 = icmp samesign ult i64 %6, 7, !dbg !8351
+  %5 = shl nuw nsw i64 %i.by, 2, !dbg !8351
+  %i.cg = add nsw i64 %5, -4, !dbg !8351
+  %6 = shl nuw nsw i64 %i.bt, 2, !dbg !8351
+  %7 = sub nsw i64 %i.cg, %6, !dbg !8351          ; 2 uses
+  %8 = lshr exact i64 %7, 2, !dbg !8351
+  %i.ch = add nuw nsw i64 %8, 1, !dbg !8351       ; 2 uses
+  %min.iters.check266 = icmp ult i64 %7, 28, !dbg !8351
   br i1 %min.iters.check266, label %.lr.ph173.preheader285, label %vector.ph267, !dbg !8351
 
 vector.ph267:                                     ; preds = %.lr.ph173.preheader
@@ -1832,11 +1840,13 @@ bb.u:                                             ; preds = %bb.s
   br i1 %i.cj, label %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit.thread, label %.lr.ph174.preheader, !dbg !8688
 
 .lr.ph174.preheader:                              ; preds = %bb.u
-  %6 = sub nsw i64 %i.cc, %i.bx, !dbg !8688
-  %i.ck = add nsw i64 %6, 4611686018427387903, !dbg !8688
-  %7 = and i64 %i.ck, 4611686018427387903, !dbg !8688 ; 2 uses
-  %i.cl = add nuw nsw i64 %7, 1, !dbg !8688       ; 2 uses
-  %min.iters.check268 = icmp samesign ult i64 %7, 7, !dbg !8688
+  %6 = shl nuw nsw i64 %i.cc, 2, !dbg !8688
+  %i.ck = add nsw i64 %6, -4, !dbg !8688
+  %7 = shl nuw nsw i64 %i.bx, 2, !dbg !8688
+  %8 = sub nsw i64 %i.ck, %7, !dbg !8688          ; 2 uses
+  %9 = lshr exact i64 %8, 2, !dbg !8688
+  %i.cl = add nuw nsw i64 %9, 1, !dbg !8688       ; 2 uses
+  %min.iters.check268 = icmp ult i64 %8, 28, !dbg !8688
   br i1 %min.iters.check268, label %.lr.ph174.preheader287, label %vector.ph269, !dbg !8688
 
 vector.ph269:                                     ; preds = %.lr.ph174.preheader
@@ -2239,11 +2249,13 @@ bb.w:                                             ; preds = %bb.u
   br i1 %i.ce, label %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit.thread, label %.lr.ph173.preheader, !dbg !9002
 
 .lr.ph173.preheader:                              ; preds = %bb.w
-  %5 = sub nsw i64 %i.by, %i.bt, !dbg !9002
-  %i.cf = add nsw i64 %5, 4611686018427387903, !dbg !9002
-  %6 = and i64 %i.cf, 4611686018427387903, !dbg !9002 ; 2 uses
-  %i.cg = add nuw nsw i64 %6, 1, !dbg !9002       ; 2 uses
-  %min.iters.check266 = icmp samesign ult i64 %6, 7, !dbg !9002
+  %5 = shl nuw nsw i64 %i.by, 2, !dbg !9002
+  %i.cf = add nsw i64 %5, -4, !dbg !9002
+  %6 = shl nuw nsw i64 %i.bt, 2, !dbg !9002
+  %7 = sub nsw i64 %i.cf, %6, !dbg !9002          ; 2 uses
+  %8 = lshr exact i64 %7, 2, !dbg !9002
+  %i.cg = add nuw nsw i64 %8, 1, !dbg !9002       ; 2 uses
+  %min.iters.check266 = icmp ult i64 %7, 28, !dbg !9002
   br i1 %min.iters.check266, label %.lr.ph173.preheader285, label %vector.ph267, !dbg !9002
 
 vector.ph267:                                     ; preds = %.lr.ph173.preheader
@@ -2646,11 +2658,13 @@ bb.v:                                             ; preds = %bb.t
   br i1 %i.cj, label %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit.thread, label %.lr.ph174.preheader, !dbg !9340
 
 .lr.ph174.preheader:                              ; preds = %bb.v
-  %6 = sub nsw i64 %i.cc, %i.bx, !dbg !9340
-  %i.ck = add nsw i64 %6, 4611686018427387903, !dbg !9340
-  %7 = and i64 %i.ck, 4611686018427387903, !dbg !9340 ; 2 uses
-  %i.cl = add nuw nsw i64 %7, 1, !dbg !9340       ; 2 uses
-  %min.iters.check268 = icmp samesign ult i64 %7, 7, !dbg !9340
+  %6 = shl nuw nsw i64 %i.cc, 2, !dbg !9340
+  %i.ck = add nsw i64 %6, -4, !dbg !9340
+  %7 = shl nuw nsw i64 %i.bx, 2, !dbg !9340
+  %8 = sub nsw i64 %i.ck, %7, !dbg !9340          ; 2 uses
+  %9 = lshr exact i64 %8, 2, !dbg !9340
+  %i.cl = add nuw nsw i64 %9, 1, !dbg !9340       ; 2 uses
+  %min.iters.check268 = icmp ult i64 %8, 28, !dbg !9340
   br i1 %min.iters.check268, label %.lr.ph174.preheader287, label %vector.ph269, !dbg !9340
 
 vector.ph269:                                     ; preds = %.lr.ph174.preheader
@@ -3053,11 +3067,13 @@ bb.v:                                             ; preds = %bb.t
   br i1 %i.ck, label %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit.thread, label %.lr.ph169.preheader, !dbg !9677
 
 .lr.ph169.preheader:                              ; preds = %bb.v
-  %6 = sub nsw i64 %i.cd, %i.by, !dbg !9677
-  %i.cl = add nsw i64 %6, 4611686018427387903, !dbg !9677
-  %7 = and i64 %i.cl, 4611686018427387903, !dbg !9677 ; 2 uses
-  %i.cm = add nuw nsw i64 %7, 1, !dbg !9677       ; 2 uses
-  %min.iters.check263 = icmp samesign ult i64 %7, 7, !dbg !9677
+  %6 = shl nuw nsw i64 %i.cd, 2, !dbg !9677
+  %i.cl = add nsw i64 %6, -4, !dbg !9677
+  %7 = shl nuw nsw i64 %i.by, 2, !dbg !9677
+  %8 = sub nsw i64 %i.cl, %7, !dbg !9677          ; 2 uses
+  %9 = lshr exact i64 %8, 2, !dbg !9677
+  %i.cm = add nuw nsw i64 %9, 1, !dbg !9677       ; 2 uses
+  %min.iters.check263 = icmp ult i64 %8, 28, !dbg !9677
   br i1 %min.iters.check263, label %.lr.ph169.preheader282, label %vector.ph264, !dbg !9677
 
 vector.ph264:                                     ; preds = %.lr.ph169.preheader
@@ -3460,11 +3476,13 @@ bb.v:                                             ; preds = %bb.t
   br i1 %i.ck, label %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit.thread, label %.lr.ph169.preheader, !dbg !10014
 
 .lr.ph169.preheader:                              ; preds = %bb.v
-  %6 = sub nsw i64 %i.cd, %i.by, !dbg !10014
-  %i.cl = add nsw i64 %6, 4611686018427387903, !dbg !10014
-  %7 = and i64 %i.cl, 4611686018427387903, !dbg !10014 ; 2 uses
-  %i.cm = add nuw nsw i64 %7, 1, !dbg !10014      ; 2 uses
-  %min.iters.check263 = icmp samesign ult i64 %7, 7, !dbg !10014
+  %6 = shl nuw nsw i64 %i.cd, 2, !dbg !10014
+  %i.cl = add nsw i64 %6, -4, !dbg !10014
+  %7 = shl nuw nsw i64 %i.by, 2, !dbg !10014
+  %8 = sub nsw i64 %i.cl, %7, !dbg !10014         ; 2 uses
+  %9 = lshr exact i64 %8, 2, !dbg !10014
+  %i.cm = add nuw nsw i64 %9, 1, !dbg !10014      ; 2 uses
+  %min.iters.check263 = icmp ult i64 %8, 28, !dbg !10014
   br i1 %min.iters.check263, label %.lr.ph169.preheader282, label %vector.ph264, !dbg !10014
 
 vector.ph264:                                     ; preds = %.lr.ph169.preheader
@@ -3867,11 +3885,13 @@ bb.v:                                             ; preds = %bb.t
   br i1 %i.ck, label %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit.thread, label %.lr.ph169.preheader, !dbg !10351
 
 .lr.ph169.preheader:                              ; preds = %bb.v
-  %6 = sub nsw i64 %i.cd, %i.by, !dbg !10351
-  %i.cl = add nsw i64 %6, 4611686018427387903, !dbg !10351
-  %7 = and i64 %i.cl, 4611686018427387903, !dbg !10351 ; 2 uses
-  %i.cm = add nuw nsw i64 %7, 1, !dbg !10351      ; 2 uses
-  %min.iters.check263 = icmp samesign ult i64 %7, 7, !dbg !10351
+  %6 = shl nuw nsw i64 %i.cd, 2, !dbg !10351
+  %i.cl = add nsw i64 %6, -4, !dbg !10351
+  %7 = shl nuw nsw i64 %i.by, 2, !dbg !10351
+  %8 = sub nsw i64 %i.cl, %7, !dbg !10351         ; 2 uses
+  %9 = lshr exact i64 %8, 2, !dbg !10351
+  %i.cm = add nuw nsw i64 %9, 1, !dbg !10351      ; 2 uses
+  %min.iters.check263 = icmp ult i64 %8, 28, !dbg !10351
   br i1 %min.iters.check263, label %.lr.ph169.preheader282, label %vector.ph264, !dbg !10351
 
 vector.ph264:                                     ; preds = %.lr.ph169.preheader
@@ -4274,11 +4294,13 @@ bb.v:                                             ; preds = %bb.t
   br i1 %i.ck, label %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit.thread, label %.lr.ph169.preheader, !dbg !10688
 
 .lr.ph169.preheader:                              ; preds = %bb.v
-  %6 = sub nsw i64 %i.cd, %i.by, !dbg !10688
-  %i.cl = add nsw i64 %6, 4611686018427387903, !dbg !10688
-  %7 = and i64 %i.cl, 4611686018427387903, !dbg !10688 ; 2 uses
-  %i.cm = add nuw nsw i64 %7, 1, !dbg !10688      ; 2 uses
-  %min.iters.check263 = icmp samesign ult i64 %7, 7, !dbg !10688
+  %6 = shl nuw nsw i64 %i.cd, 2, !dbg !10688
+  %i.cl = add nsw i64 %6, -4, !dbg !10688
+  %7 = shl nuw nsw i64 %i.by, 2, !dbg !10688
+  %8 = sub nsw i64 %i.cl, %7, !dbg !10688         ; 2 uses
+  %9 = lshr exact i64 %8, 2, !dbg !10688
+  %i.cm = add nuw nsw i64 %9, 1, !dbg !10688      ; 2 uses
+  %min.iters.check263 = icmp ult i64 %8, 28, !dbg !10688
   br i1 %min.iters.check263, label %.lr.ph169.preheader282, label %vector.ph264, !dbg !10688
 
 vector.ph264:                                     ; preds = %.lr.ph169.preheader

@@ -203,11 +203,13 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph.preheader:                                 ; preds = %bb.m
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.ai, !dbg !228206 ; 3 uses
-  %3 = sub i64 %i.aw, %i.ai, !dbg !228199
-  %i.bc = add i64 %3, 4611686018427387903, !dbg !228199
-  %4 = and i64 %i.bc, 4611686018427387903, !dbg !228199 ; 2 uses
-  %i.bd = add nuw nsw i64 %4, 1, !dbg !228199     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !228199
+  %3 = shl i64 %i.aw, 2, !dbg !228199
+  %i.bc = add i64 %3, -4, !dbg !228199
+  %4 = shl nuw nsw i64 %i.ai, 2, !dbg !228199
+  %5 = sub i64 %i.bc, %4, !dbg !228199            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !228199
+  %i.bd = add nuw nsw i64 %6, 1, !dbg !228199     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !228199
   br i1 %min.iters.check, label %.lr.ph.preheader63, label %vector.ph, !dbg !228199
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -610,11 +612,13 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph.preheader:                                 ; preds = %bb.m
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.ai, !dbg !318410 ; 3 uses
-  %3 = sub i64 %i.aw, %i.ai, !dbg !318403
-  %i.bc = add i64 %3, 4611686018427387903, !dbg !318403
-  %4 = and i64 %i.bc, 4611686018427387903, !dbg !318403 ; 2 uses
-  %i.bd = add nuw nsw i64 %4, 1, !dbg !318403     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !318403
+  %3 = shl i64 %i.aw, 2, !dbg !318403
+  %i.bc = add i64 %3, -4, !dbg !318403
+  %4 = shl nuw nsw i64 %i.ai, 2, !dbg !318403
+  %5 = sub i64 %i.bc, %4, !dbg !318403            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !318403
+  %i.bd = add nuw nsw i64 %6, 1, !dbg !318403     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !318403
   br i1 %min.iters.check, label %.lr.ph.preheader63, label %vector.ph, !dbg !318403
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -1017,11 +1021,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !346142 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !346135
-  %i.br = add i64 %3, 4611686018427387903, !dbg !346135
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !346135 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !346135     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !346135
+  %3 = shl i64 %i.bl, 2, !dbg !346135
+  %i.br = add i64 %3, -4, !dbg !346135
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !346135
+  %5 = sub i64 %i.br, %4, !dbg !346135            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !346135
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !346135     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !346135
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !346135
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -1294,11 +1300,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !346343 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !346336
-  %i.br = add i64 %3, 4611686018427387903, !dbg !346336
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !346336 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !346336     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !346336
+  %3 = shl i64 %i.bl, 2, !dbg !346336
+  %i.br = add i64 %3, -4, !dbg !346336
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !346336
+  %5 = sub i64 %i.br, %4, !dbg !346336            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !346336
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !346336     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !346336
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !346336
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -1571,11 +1579,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !346544 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !346537
-  %i.br = add i64 %3, 4611686018427387903, !dbg !346537
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !346537 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !346537     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !346537
+  %3 = shl i64 %i.bl, 2, !dbg !346537
+  %i.br = add i64 %3, -4, !dbg !346537
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !346537
+  %5 = sub i64 %i.br, %4, !dbg !346537            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !346537
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !346537     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !346537
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !346537
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -1848,11 +1858,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !346745 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !346738
-  %i.br = add i64 %3, 4611686018427387903, !dbg !346738
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !346738 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !346738     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !346738
+  %3 = shl i64 %i.bl, 2, !dbg !346738
+  %i.br = add i64 %3, -4, !dbg !346738
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !346738
+  %5 = sub i64 %i.br, %4, !dbg !346738            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !346738
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !346738     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !346738
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !346738
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -2125,11 +2137,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !346946 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !346939
-  %i.br = add i64 %3, 4611686018427387903, !dbg !346939
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !346939 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !346939     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !346939
+  %3 = shl i64 %i.bl, 2, !dbg !346939
+  %i.br = add i64 %3, -4, !dbg !346939
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !346939
+  %5 = sub i64 %i.br, %4, !dbg !346939            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !346939
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !346939     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !346939
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !346939
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -2402,11 +2416,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !347147 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !347140
-  %i.br = add i64 %3, 4611686018427387903, !dbg !347140
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !347140 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !347140     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !347140
+  %3 = shl i64 %i.bl, 2, !dbg !347140
+  %i.br = add i64 %3, -4, !dbg !347140
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !347140
+  %5 = sub i64 %i.br, %4, !dbg !347140            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !347140
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !347140     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !347140
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !347140
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -2679,11 +2695,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !347348 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !347341
-  %i.br = add i64 %3, 4611686018427387903, !dbg !347341
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !347341 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !347341     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !347341
+  %3 = shl i64 %i.bl, 2, !dbg !347341
+  %i.br = add i64 %3, -4, !dbg !347341
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !347341
+  %5 = sub i64 %i.br, %4, !dbg !347341            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !347341
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !347341     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !347341
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !347341
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -2956,11 +2974,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !347549 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !347542
-  %i.br = add i64 %3, 4611686018427387903, !dbg !347542
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !347542 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !347542     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !347542
+  %3 = shl i64 %i.bl, 2, !dbg !347542
+  %i.br = add i64 %3, -4, !dbg !347542
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !347542
+  %5 = sub i64 %i.br, %4, !dbg !347542            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !347542
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !347542     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !347542
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !347542
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -3233,11 +3253,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !347750 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !347743
-  %i.br = add i64 %3, 4611686018427387903, !dbg !347743
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !347743 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !347743     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !347743
+  %3 = shl i64 %i.bl, 2, !dbg !347743
+  %i.br = add i64 %3, -4, !dbg !347743
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !347743
+  %5 = sub i64 %i.br, %4, !dbg !347743            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !347743
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !347743     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !347743
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !347743
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -3510,11 +3532,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !347951 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !347944
-  %i.br = add i64 %3, 4611686018427387903, !dbg !347944
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !347944 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !347944     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !347944
+  %3 = shl i64 %i.bl, 2, !dbg !347944
+  %i.br = add i64 %3, -4, !dbg !347944
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !347944
+  %5 = sub i64 %i.br, %4, !dbg !347944            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !347944
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !347944     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !347944
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !347944
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -3787,11 +3811,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !348152 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !348145
-  %i.br = add i64 %3, 4611686018427387903, !dbg !348145
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !348145 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !348145     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !348145
+  %3 = shl i64 %i.bl, 2, !dbg !348145
+  %i.br = add i64 %3, -4, !dbg !348145
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !348145
+  %5 = sub i64 %i.br, %4, !dbg !348145            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !348145
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !348145     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !348145
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !348145
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -4064,11 +4090,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !348353 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !348346
-  %i.br = add i64 %3, 4611686018427387903, !dbg !348346
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !348346 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !348346     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !348346
+  %3 = shl i64 %i.bl, 2, !dbg !348346
+  %i.br = add i64 %3, -4, !dbg !348346
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !348346
+  %5 = sub i64 %i.br, %4, !dbg !348346            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !348346
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !348346     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !348346
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !348346
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -4342,11 +4370,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !348555 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !348548
-  %i.br = add i64 %3, 4611686018427387903, !dbg !348548
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !348548 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !348548     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !348548
+  %3 = shl i64 %i.bl, 2, !dbg !348548
+  %i.br = add i64 %3, -4, !dbg !348548
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !348548
+  %5 = sub i64 %i.br, %4, !dbg !348548            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !348548
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !348548     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !348548
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !348548
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -4619,11 +4649,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !348756 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !348749
-  %i.br = add i64 %3, 4611686018427387903, !dbg !348749
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !348749 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !348749     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !348749
+  %3 = shl i64 %i.bl, 2, !dbg !348749
+  %i.br = add i64 %3, -4, !dbg !348749
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !348749
+  %5 = sub i64 %i.br, %4, !dbg !348749            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !348749
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !348749     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !348749
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !348749
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -4896,11 +4928,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !348957 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !348950
-  %i.br = add i64 %3, 4611686018427387903, !dbg !348950
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !348950 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !348950     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !348950
+  %3 = shl i64 %i.bl, 2, !dbg !348950
+  %i.br = add i64 %3, -4, !dbg !348950
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !348950
+  %5 = sub i64 %i.br, %4, !dbg !348950            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !348950
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !348950     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !348950
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !348950
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -5173,11 +5207,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !349158 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !349151
-  %i.br = add i64 %3, 4611686018427387903, !dbg !349151
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !349151 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !349151     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !349151
+  %3 = shl i64 %i.bl, 2, !dbg !349151
+  %i.br = add i64 %3, -4, !dbg !349151
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !349151
+  %5 = sub i64 %i.br, %4, !dbg !349151            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !349151
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !349151     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !349151
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !349151
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -5450,11 +5486,13 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.preheader:                                 ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.ax, !dbg !349359 ; 3 uses
-  %3 = sub i64 %i.bl, %i.ax, !dbg !349352
-  %i.br = add i64 %3, 4611686018427387903, !dbg !349352
-  %4 = and i64 %i.br, 4611686018427387903, !dbg !349352 ; 2 uses
-  %i.bs = add nuw nsw i64 %4, 1, !dbg !349352     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !349352
+  %3 = shl i64 %i.bl, 2, !dbg !349352
+  %i.br = add i64 %3, -4, !dbg !349352
+  %4 = shl nuw nsw i64 %i.ax, 2, !dbg !349352
+  %5 = sub i64 %i.br, %4, !dbg !349352            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !349352
+  %i.bs = add nuw nsw i64 %6, 1, !dbg !349352     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !349352
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.ph, !dbg !349352
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -5857,11 +5895,13 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph.preheader:                                 ; preds = %bb.m
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.ai, !dbg !416893 ; 3 uses
-  %3 = sub i64 %i.aw, %i.ai, !dbg !416886
-  %i.bc = add i64 %3, 4611686018427387903, !dbg !416886
-  %4 = and i64 %i.bc, 4611686018427387903, !dbg !416886 ; 2 uses
-  %i.bd = add nuw nsw i64 %4, 1, !dbg !416886     ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !416886
+  %3 = shl i64 %i.aw, 2, !dbg !416886
+  %i.bc = add i64 %3, -4, !dbg !416886
+  %4 = shl nuw nsw i64 %i.ai, 2, !dbg !416886
+  %5 = sub i64 %i.bc, %4, !dbg !416886            ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !416886
+  %i.bd = add nuw nsw i64 %6, 1, !dbg !416886     ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !416886
   br i1 %min.iters.check, label %.lr.ph.preheader63, label %vector.ph, !dbg !416886
 
 vector.ph:                                        ; preds = %.lr.ph.preheader

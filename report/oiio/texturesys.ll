@@ -204,16 +204,18 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 .lr.ph312:                                        ; preds = %.preheader308
   %i.dh = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %i.di = tail call i32 @llvm.umin.i32(i32 %10, i32 %spec.select.i) ; 2 uses
+  %i.di = tail call i32 @llvm.umin.i32(i32 %10, i32 %spec.select.i) ; 4 uses
   %i.dj = zext nneg i32 %i.di to i64              ; 3 uses
   %i.dk = add nuw nsw i32 %10, %i.di
   %i.dl = sub i32 %i.dk, %.1.i
   %.pre = load float, ptr %i.dh, align 8, !tbaa !259 ; 2 uses
+  %18 = add i32 %10, %i.di
   %i.dm = xor i32 %.1.i, -1
-  %i.dn = add i32 %10, %i.dm                      ; 2 uses
-  %i.do = zext i32 %i.dn to i64
+  %i.dn = add i32 %18, %i.dm
+  %19 = sub i32 %i.dn, %i.di                      ; 2 uses
+  %i.do = zext i32 %19 to i64
   %i.dp = add nuw nsw i64 %i.do, 1                ; 2 uses
-  %min.iters.check343 = icmp ult i32 %i.dn, 7
+  %min.iters.check343 = icmp ult i32 %19, 7
   br i1 %min.iters.check343, label %scalar.ph342.preheader, label %vector.ph344
 
 vector.ph344:                                     ; preds = %.lr.ph312
@@ -616,8 +618,8 @@ _ZNKSt6vectorIN11OpenImageIO4v3_113intrusive_ptrINS1_14ImageCacheFileEEESaIS4_EE
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN11OpenImageIO4v3_113intrusive_ptrINS1_14ImageCacheFileEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc180
-  %12 = sub i64 %i.v, %i.w
-  %13 = add i64 %12, -8                           ; 2 uses
+  %12 = add i64 %i.v, -8
+  %13 = sub i64 %12, %i.w                         ; 2 uses
   %i.ai = lshr i64 %13, 3
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %13, 56
@@ -1020,8 +1022,8 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
   %i.dl = ptrtoaddr ptr %i.dk to i64              ; 2 uses
   %i.dm = load ptr, ptr %7, align 8, !tbaa !926   ; 4 uses
   %i.dn = ptrtoaddr ptr %i.dj to i64
-  %9 = sub i64 %i.dn, %i.dl
-  %10 = add i64 %9, -4                            ; 2 uses
+  %9 = add i64 %i.dn, -4
+  %10 = sub i64 %9, %i.dl                         ; 2 uses
   %i.do = lshr i64 %10, 2
   %i.dp = add nuw nsw i64 %i.do, 1                ; 2 uses
   %min.iters.check1663 = icmp ult i64 %10, 44
@@ -1117,8 +1119,8 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
   %i.ep = ptrtoaddr ptr %i.eo to i64              ; 2 uses
   %i.eq = load ptr, ptr %8, align 8, !tbaa !926   ; 7 uses
   %i.er = ptrtoaddr ptr %i.en to i64
-  %11 = sub i64 %i.er, %i.ep
-  %12 = add i64 %11, -4                           ; 2 uses
+  %11 = add i64 %i.er, -4
+  %12 = sub i64 %11, %i.ep                        ; 2 uses
   %i.es = lshr i64 %12, 2
   %i.et = add nuw nsw i64 %i.es, 1                ; 2 uses
   %min.iters.check1679 = icmp ult i64 %12, 44

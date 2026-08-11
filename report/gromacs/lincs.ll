@@ -204,11 +204,13 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 .lr.ph.preheader:                                 ; preds = %bb.e
   %i.bd = sext i32 %i.ay to i64                   ; 2 uses
   %i.be = getelementptr inbounds [4 x i8], ptr %i.u, i64 %i.bd ; 3 uses
-  %2 = sub nsw i64 %i.bb, %i.bd
-  %i.bf = add nsw i64 %2, 4611686018427387903
-  %3 = and i64 %i.bf, 4611686018427387903         ; 2 uses
-  %i.bg = add nuw nsw i64 %3, 1                   ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %3, 7
+  %2 = shl nsw i64 %i.bb, 2
+  %i.bf = add nsw i64 %2, -4
+  %3 = shl nsw i64 %i.bd, 2
+  %4 = sub nsw i64 %i.bf, %3                      ; 2 uses
+  %5 = lshr exact i64 %4, 2
+  %i.bg = add nuw nsw i64 %5, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %4, 28
   br i1 %min.iters.check, label %.lr.ph.preheader137, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader

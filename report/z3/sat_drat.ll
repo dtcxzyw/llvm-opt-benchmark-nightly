@@ -204,6 +204,8 @@ _ZN6vectorISt4pairIRN3sat6clauseENS1_6statusEELb0EjE3endEv.exit: ; preds = %_ZN7
 
 .lr.ph:                                           ; preds = %_ZN6vectorISt4pairIRN3sat6clauseENS1_6statusEELb0EjE3endEv.exit
   %i.z = zext i32 %1 to i64                       ; 2 uses
+  %7 = shl nuw nsw i64 %i.z, 2
+  %8 = add nsw i64 %7, -4
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %.critedge48
@@ -547,11 +549,11 @@ bb.y:                                             ; preds = %_ZNK6vectorIN3sat7l
 .lr.ph.preheader.i64:                             ; preds = %bb.y
   %i.dt = zext i32 %.0.i16.i.ph to i64            ; 2 uses
   %i.du = getelementptr inbounds nuw [4 x i8], ptr %.pre9397, i64 %i.dt ; 3 uses
-  %7 = sub nsw i64 %i.z, %i.dt
-  %8 = add nsw i64 %7, 4611686018427387903
-  %9 = and i64 %8, 4611686018427387903            ; 2 uses
-  %i.dv = add nuw nsw i64 %9, 1                   ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %9, 7
+  %9 = shl nuw nsw i64 %i.dt, 2
+  %10 = sub nsw i64 %8, %9                        ; 2 uses
+  %11 = lshr exact i64 %10, 2
+  %i.dv = add nuw nsw i64 %11, 1                  ; 2 uses
+  %min.iters.check = icmp ult i64 %10, 28
   br i1 %min.iters.check, label %.lr.ph.i65.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i64
@@ -954,9 +956,9 @@ _ZNK3sat4drat5valueENS_7literalE.exit67.thread:   ; preds = %_ZNK6vectorI5lboolL
   %.089141 = ptrtoaddr ptr %.089 to i64           ; 2 uses
   %.04691140 = ptrtoaddr ptr %.04691 to i64
   %i.cl = ptrtoaddr ptr %i.e to i64
-  %2 = sub i64 %i.cl, %.089141
-  %i.cm = add i64 %2, %i.j
-  %3 = add i64 %i.cm, -4                          ; 2 uses
+  %2 = add i64 %i.j, %i.cl
+  %i.cm = add i64 %2, -4
+  %3 = sub i64 %i.cm, %.089141                    ; 2 uses
   %i.cn = lshr i64 %3, 2
   %i.co = add nuw nsw i64 %i.cn, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 44

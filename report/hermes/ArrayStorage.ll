@@ -203,11 +203,13 @@ bb.f:                                             ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.z ; 3 uses
   %i.ab = zext i32 %2 to i64                      ; 2 uses
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.ab
-  %3 = sub nsw i64 %i.ab, %i.z
-  %i.ad = add nsw i64 %3, 4611686018427387903
-  %4 = and i64 %i.ad, 4611686018427387903         ; 2 uses
-  %i.ae = add nuw nsw i64 %4, 1                   ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7
+  %3 = shl nuw nsw i64 %i.ab, 2
+  %i.ad = add nsw i64 %3, -4
+  %4 = shl nuw nsw i64 %i.z, 2
+  %5 = sub nsw i64 %i.ad, %4                      ; 2 uses
+  %6 = lshr exact i64 %5, 2
+  %i.ae = add nuw nsw i64 %6, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.f
@@ -295,11 +297,13 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.f ; 3 uses
   %i.h = zext i32 %2 to i64                       ; 2 uses
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.h
-  %3 = sub nsw i64 %i.h, %i.f
-  %i.j = add nsw i64 %3, 4611686018427387903
-  %4 = and i64 %i.j, 4611686018427387903          ; 2 uses
-  %i.k = add nuw nsw i64 %4, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7
+  %3 = shl nuw nsw i64 %i.h, 2
+  %i.j = add nsw i64 %3, -4
+  %4 = shl nuw nsw i64 %i.f, 2
+  %5 = sub nsw i64 %i.j, %4                       ; 2 uses
+  %6 = lshr exact i64 %5, 2
+  %i.k = add nuw nsw i64 %6, 1                    ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.b
@@ -595,15 +599,16 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.o = zext i32 %i.k to i64                     ; 2 uses
   %.idx88.i.i = shl nuw nsw i64 %i.o, 2
-  %i.p = zext nneg i32 %i.f to i64                ; 2 uses
-  %.idx89.i.i = shl nuw nsw i64 %i.p, 2
+  %i.p = zext nneg i32 %i.f to i64
+  %.idx89.i.i = shl nuw nsw i64 %i.p, 2           ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx89.i.i
   %i.r = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx88.i.i ; 3 uses
-  %3 = sub nsw i64 %i.p, %i.o
-  %4 = add nsw i64 %3, 4611686018427387903
-  %5 = and i64 %4, 4611686018427387903            ; 2 uses
-  %i.s = add nuw nsw i64 %5, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %5, 7
+  %3 = add nsw i64 %.idx89.i.i, -4
+  %4 = shl nuw nsw i64 %i.o, 2
+  %5 = sub nsw i64 %3, %4                         ; 2 uses
+  %6 = lshr exact i64 %5, 2
+  %i.s = add nuw nsw i64 %6, 1                    ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28
   br i1 %min.iters.check, label %.lr.ph.i65.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.c
@@ -1006,8 +1011,8 @@ _ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE18uninitialized_fillIPS3_E
   br i1 %i.bi, label %bb.i, label %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE18uninitialized_fillIPS3_EEvT_S6_S2_RNS0_7HadesGCE.exit41
 
 bb.i:                                             ; preds = %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE18uninitialized_fillIPS3_EEvT_S6_S2_RNS0_7HadesGCE.exit
-  %i.bj = zext i32 %5 to i64                      ; 2 uses
-  %.idx56 = shl nuw nsw i64 %i.bj, 2              ; 2 uses
+  %i.bj = zext i32 %5 to i64
+  %.idx56 = shl nuw nsw i64 %i.bj, 2              ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.an, i64 %.idx56
   %i.bl = add nuw nsw i64 %.idx, %.idx54
   %.not1421.i37 = icmp samesign eq i64 %i.bl, %.idx56
@@ -1016,11 +1021,12 @@ bb.i:                                             ; preds = %_ZN6hermes2vm17GCHe
 .lr.ph.i38.preheader:                             ; preds = %bb.i
   %i.bm = getelementptr inbounds nuw i8, ptr %i.ap, i64 %.idx ; 3 uses
   %i.bn = add nuw nsw i64 %i.aq, %i.ao
-  %6 = sub nsw i64 %i.bj, %i.bn
-  %7 = add nsw i64 %6, 4611686018427387903
-  %8 = and i64 %7, 4611686018427387903            ; 2 uses
-  %i.bo = add nuw nsw i64 %8, 1                   ; 2 uses
-  %min.iters.check63 = icmp samesign ult i64 %8, 7
+  %6 = add nsw i64 %.idx56, -4
+  %7 = shl nuw nsw i64 %i.bn, 2
+  %8 = sub nsw i64 %6, %7                         ; 2 uses
+  %9 = lshr exact i64 %8, 2
+  %i.bo = add nuw nsw i64 %9, 1                   ; 2 uses
+  %min.iters.check63 = icmp ult i64 %8, 28
   br i1 %min.iters.check63, label %.lr.ph.i38.preheader73, label %vector.ph64
 
 vector.ph64:                                      ; preds = %.lr.ph.i38.preheader
@@ -1094,15 +1100,16 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = zext i32 %i.i to i64                     ; 2 uses
   %.idx88.i = shl nuw nsw i64 %i.m, 2
-  %i.n = zext nneg i32 %2 to i64                  ; 2 uses
-  %.idx89.i = shl nuw nsw i64 %i.n, 2
+  %i.n = zext nneg i32 %2 to i64
+  %.idx89.i = shl nuw nsw i64 %i.n, 2             ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx89.i
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx88.i ; 3 uses
-  %3 = sub nsw i64 %i.n, %i.m
-  %4 = add nsw i64 %3, 4611686018427387903
-  %5 = and i64 %4, 4611686018427387903            ; 2 uses
-  %i.q = add nuw nsw i64 %5, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %5, 7
+  %3 = add nsw i64 %.idx89.i, -4
+  %4 = shl nuw nsw i64 %i.m, 2
+  %5 = sub nsw i64 %3, %4                         ; 2 uses
+  %6 = lshr exact i64 %5, 2
+  %i.q = add nuw nsw i64 %6, 1                    ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28
   br i1 %min.iters.check, label %.lr.ph.i65.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.c
@@ -1359,11 +1366,11 @@ bb.l:                                             ; preds = %_ZN6hermes2vm17GCHe
   %i.by = getelementptr inbounds nuw i8, ptr %i.bq, i64 %.idx88 ; 3 uses
   %i.bz = ptrtoaddr ptr %i.br to i64
   %i.ca = ptrtoaddr ptr %i.bq to i64
-  %5 = shl nuw nsw i64 %i.bu, 2
-  %i.cb = add i64 %5, %i.ca
-  %6 = sub i64 %i.bz, %i.cb
-  %i.cc = add i64 %6, %.idx89
-  %7 = add i64 %i.cc, -4                          ; 2 uses
+  %5 = add i64 %.idx89, %i.bz
+  %i.cb = add i64 %5, -4
+  %6 = shl nuw nsw i64 %i.bu, 2
+  %i.cc = add i64 %6, %i.ca
+  %7 = sub i64 %i.cb, %i.cc                       ; 2 uses
   %i.cd = lshr i64 %7, 2
   %i.ce = add nuw nsw i64 %i.cd, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %7, 28
@@ -1473,11 +1480,13 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.e ; 3 uses
   %i.g = zext i32 %2 to i64                       ; 2 uses
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.g
-  %3 = sub nsw i64 %i.g, %i.e
-  %i.i = add nsw i64 %3, 4611686018427387903
-  %4 = and i64 %i.i, 4611686018427387903          ; 2 uses
-  %i.j = add nuw nsw i64 %4, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7
+  %3 = shl nuw nsw i64 %i.g, 2
+  %i.i = add nsw i64 %3, -4
+  %4 = shl nuw nsw i64 %i.e, 2
+  %5 = sub nsw i64 %i.i, %4                       ; 2 uses
+  %6 = lshr exact i64 %5, 2
+  %i.j = add nuw nsw i64 %6, 1                    ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.b

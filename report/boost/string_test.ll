@@ -204,11 +204,11 @@ bb.l:                                             ; preds = %bb.i
   br i1 %.not9.i120, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyIPKwPwEEmT_S9_T0_.exit, label %.lr.ph.i121.preheader
 
 .lr.ph.i121.preheader:                            ; preds = %bb.l
-  %5 = shl i64 %i.q, 2
-  %i.bx = add i64 %5, %i.j
-  %6 = sub i64 %i.i, %i.bx
-  %i.by = add i64 %6, %i.av
-  %7 = add i64 %i.by, -8                          ; 2 uses
+  %5 = add i64 %i.av, %i.i
+  %i.bx = add i64 %5, -8
+  %6 = shl i64 %i.q, 2
+  %i.by = add i64 %6, %i.j
+  %7 = sub i64 %i.bx, %i.by                       ; 2 uses
   %i.bz = lshr i64 %7, 2
   %i.ca = add nuw nsw i64 %i.bz, 1                ; 2 uses
   %min.iters.check300 = icmp ult i64 %7, 60
@@ -289,12 +289,12 @@ _ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIwEEvE9priv_sizeEm
 
 .lr.ph.i128.preheader:                            ; preds = %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIwEEvE9priv_sizeEm.exit
   %i.cy = getelementptr inbounds [4 x i8], ptr %i.x, i64 %i.co ; 4 uses
-  %8 = sub i64 %i.y, %i.h
-  %9 = lshr i64 %8, 2
-  %10 = add nuw i64 %9, %i.q
-  %11 = and i64 %10, 4611686018427387903          ; 2 uses
+  %8 = shl i64 %i.q, 2
+  %9 = add i64 %8, %i.y
+  %10 = sub i64 %9, %i.h                          ; 2 uses
+  %11 = lshr i64 %10, 2
   %i.cz = add nuw nsw i64 %11, 1                  ; 2 uses
-  %min.iters.check317 = icmp samesign ult i64 %11, 19
+  %min.iters.check317 = icmp ult i64 %10, 76
   br i1 %min.iters.check317, label %.lr.ph.i128.preheader333, label %vector.memcheck314
 
 vector.memcheck314:                               ; preds = %.lr.ph.i128.preheader
@@ -396,14 +396,14 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not9.i137, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyIPKwPwEEmT_S9_T0_.exit144, label %.lr.ph.i138.preheader
 
 .lr.ph.i138.preheader:                            ; preds = %bb.s
-  %12 = sub i64 %i.h, %i.y
-  %13 = add i64 %12, -4                           ; 2 uses
+  %12 = add i64 %i.h, -4
+  %13 = sub i64 %12, %i.y                         ; 2 uses
   %i.eb = lshr i64 %13, 2
   %i.ec = add nuw nsw i64 %i.eb, 1                ; 2 uses
   %min.iters.check225 = icmp ult i64 %13, 28
   %i.ed = sub i64 %i.y, %i.ar
   %diff.check223 = icmp ugt i64 %i.ed, -16
-  %or.cond = select i1 %min.iters.check225, i1 true, i1 %diff.check223
+  %or.cond = or i1 %min.iters.check225, %diff.check223
   br i1 %or.cond, label %.lr.ph.i138.preheader338, label %vector.ph226
 
 vector.ph226:                                     ; preds = %.lr.ph.i138.preheader
@@ -456,8 +456,8 @@ middle.block236:                                  ; preds = %vector.body228
 _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyIPKwPwEEmT_S9_T0_.exit144: ; preds = %.lr.ph.i138, %middle.block236, %bb.s
   %.0.lcssa.i143 = phi i64 [ 0, %bb.s ], [ %i.el, %middle.block236 ], [ %i.ep, %.lr.ph.i138 ] ; 3 uses
   %i.eq = getelementptr inbounds [4 x i8], ptr %i.aq, i64 %.0.lcssa.i143 ; 4 uses
-  %14 = sub i64 %i.i, %i.j
-  %15 = add i64 %14, -4                           ; 2 uses
+  %14 = add i64 %i.i, -4
+  %15 = sub i64 %14, %i.j                         ; 2 uses
   %i.er = lshr i64 %15, 2
   %i.es = add nuw nsw i64 %i.er, 1                ; 2 uses
   %min.iters.check243 = icmp ult i64 %15, 52
@@ -527,9 +527,9 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_cop
 .lr.ph.i154.preheader:                            ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyIPKwPwEEmT_S9_T0_.exit152
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.aq, i64 %i.fi ; 4 uses
   %i.fl = shl i64 %i.q, 2
-  %16 = sub i64 %i.y, %i.h
-  %i.fm = add i64 %16, %i.fl
-  %17 = add i64 %i.fm, -4                         ; 2 uses
+  %16 = add i64 %i.fl, %i.y
+  %i.fm = add i64 %16, -4
+  %17 = sub i64 %i.fm, %i.h                       ; 2 uses
   %i.fn = lshr i64 %17, 2
   %i.fo = add nuw nsw i64 %i.fn, 1                ; 2 uses
   %min.iters.check264 = icmp ult i64 %17, 52
@@ -649,8 +649,8 @@ bb.w:                                             ; preds = %_ZNSt11char_traitsI
   br label %_ZNSt11char_traitsIwE4moveEPwPKwm.exit164
 
 _ZNSt11char_traitsIwE4moveEPwPKwm.exit164:        ; preds = %_ZNSt11char_traitsIwE4moveEPwPKwm.exit162, %bb.w
-  %18 = sub i64 %i.i, %i.j
-  %19 = add i64 %18, -4                           ; 2 uses
+  %18 = add i64 %i.i, -4
+  %19 = sub i64 %18, %i.j                         ; 2 uses
   %i.hh = lshr i64 %19, 2
   %i.hi = add nuw nsw i64 %i.hh, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %19, 76
@@ -783,8 +783,8 @@ bb.a:
   br i1 %i.h, label %.lr.ph.i.preheader, label %._crit_edge.i
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
-  %4 = sub i64 %i.c, %i.b
-  %5 = add i64 %4, -4
+  %4 = add i64 %i.c, -4
+  %5 = sub i64 %4, %i.b
   %i.i = lshr i64 %5, 2
   %i.j = add i64 %.idx, -4
   %i.k = lshr exact i64 %i.j, 2
@@ -1187,11 +1187,13 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.i.preheader:                               ; preds = %bb.j
   %i.ax = getelementptr i8, ptr %i.u, i64 %.idx   ; 3 uses
-  %7 = sub i64 %3, %5
-  %i.ay = add i64 %7, 4611686018427387903
-  %8 = and i64 %i.ay, 4611686018427387903         ; 2 uses
-  %i.az = add nuw nsw i64 %8, 1                   ; 2 uses
-  %min.iters.check300 = icmp samesign ult i64 %8, 7
+  %7 = shl i64 %3, 2
+  %i.ay = add i64 %7, -4
+  %8 = shl i64 %5, 2
+  %9 = sub i64 %i.ay, %8                          ; 2 uses
+  %10 = lshr exact i64 %9, 2
+  %i.az = add nuw nsw i64 %10, 1                  ; 2 uses
+  %min.iters.check300 = icmp ult i64 %9, 28
   br i1 %min.iters.check300, label %.lr.ph.i.preheader376, label %vector.ph301
 
 vector.ph301:                                     ; preds = %.lr.ph.i.preheader
@@ -1302,14 +1304,14 @@ bb.l:                                             ; preds = %bb.i
 .lr.ph.preheader.i128:                            ; preds = %bb.l
   %.pre.i129 = load i32, ptr %2, align 4, !tbaa !322 ; 2 uses
   %i.ca = add i64 %i.at, %3
-  %9 = add i64 %i.n, %5
-  %10 = xor i64 %9, -1
-  %11 = add i64 %i.ca, %10                        ; 3 uses
-  %min.iters.check329 = icmp ult i64 %11, 8
+  %11 = xor i64 %i.n, -1
+  %12 = add i64 %i.ca, %11
+  %13 = sub i64 %12, %5                           ; 3 uses
+  %min.iters.check329 = icmp ult i64 %13, 8
   br i1 %min.iters.check329, label %.lr.ph.i130.preheader, label %vector.ph330
 
 vector.ph330:                                     ; preds = %.lr.ph.preheader.i128
-  %n.vec331 = and i64 %11, -8                     ; 4 uses
+  %n.vec331 = and i64 %13, -8                     ; 4 uses
   %i.cb = shl i64 %n.vec331, 2
   %i.cc = getelementptr i8, ptr %i.bz, i64 %i.cb
   %i.cd = sub i64 %i.bx, %n.vec331
@@ -1329,7 +1331,7 @@ vector.body334:                                   ; preds = %vector.body334, %ve
   br i1 %i.cg, label %middle.block338, label %vector.body334, !llvm.loop !1207
 
 middle.block338:                                  ; preds = %vector.body334
-  %cmp.n339 = icmp eq i64 %11, %n.vec331
+  %cmp.n339 = icmp eq i64 %13, %n.vec331
   br i1 %cmp.n339, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyINS0_17constant_iteratorIwEEPwEEmT_S9_T0_.exit, label %.lr.ph.i130.preheader
 
 .lr.ph.i130.preheader:                            ; preds = %.lr.ph.preheader.i128, %middle.block338
@@ -1374,12 +1376,12 @@ _ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIwEEvE9priv_sizeEm
 
 .lr.ph.i134.preheader:                            ; preds = %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIwEEvE9priv_sizeEm.exit
   %i.cu = getelementptr inbounds [4 x i8], ptr %i.u, i64 %i.ck ; 4 uses
-  %12 = sub i64 %i.v, %i.h
-  %13 = lshr i64 %12, 2
-  %14 = add nuw i64 %13, %i.n
-  %15 = and i64 %14, 4611686018427387903          ; 2 uses
-  %i.cv = add nuw nsw i64 %15, 1                  ; 2 uses
-  %min.iters.check345 = icmp samesign ult i64 %15, 19
+  %14 = shl i64 %i.n, 2
+  %15 = add i64 %14, %i.v
+  %16 = sub i64 %15, %i.h                         ; 2 uses
+  %17 = lshr i64 %16, 2
+  %i.cv = add nuw nsw i64 %17, 1                  ; 2 uses
+  %min.iters.check345 = icmp ult i64 %16, 76
   br i1 %min.iters.check345, label %.lr.ph.i134.preheader374, label %vector.memcheck342
 
 vector.memcheck342:                               ; preds = %.lr.ph.i134.preheader
@@ -1436,13 +1438,13 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_cop
 
 .lr.ph.preheader.i141:                            ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyIPKwPwEEmT_S9_T0_.exit
   %.pre.i142 = load i32, ptr %2, align 4, !tbaa !322 ; 2 uses
-  %16 = sub i64 %i.n, %i.at
-  %17 = add i64 %16, 1                            ; 3 uses
-  %min.iters.check360 = icmp ult i64 %17, 8
+  %18 = add nuw i64 %i.n, 1
+  %19 = sub i64 %18, %i.at                        ; 3 uses
+  %min.iters.check360 = icmp ult i64 %19, 8
   br i1 %min.iters.check360, label %.lr.ph.i143.preheader, label %vector.ph361
 
 vector.ph361:                                     ; preds = %.lr.ph.preheader.i141
-  %n.vec362 = and i64 %17, -8                     ; 4 uses
+  %n.vec362 = and i64 %19, -8                     ; 4 uses
   %i.dj = shl i64 %n.vec362, 2
   %i.dk = getelementptr i8, ptr %1, i64 %i.dj
   %i.dl = sub i64 %3, %n.vec362
@@ -1462,7 +1464,7 @@ vector.body365:                                   ; preds = %vector.body365, %ve
   br i1 %i.do, label %middle.block369, label %vector.body365, !llvm.loop !1211
 
 middle.block369:                                  ; preds = %vector.body365
-  %cmp.n370 = icmp eq i64 %17, %n.vec362
+  %cmp.n370 = icmp eq i64 %19, %n.vec362
   br i1 %cmp.n370, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE9priv_copyINS0_17constant_iteratorIwEEPwEEvT_S9_T0_.exit, label %.lr.ph.i143.preheader
 
 .lr.ph.i143.preheader:                            ; preds = %.lr.ph.preheader.i141, %middle.block369
@@ -1517,14 +1519,14 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not9.i149, label %.lr.ph.preheader.i158, label %.lr.ph.i150.preheader
 
 .lr.ph.i150.preheader:                            ; preds = %bb.r
-  %18 = sub i64 %i.h, %i.v
-  %19 = add i64 %18, -4                           ; 2 uses
-  %i.ec = lshr i64 %19, 2
+  %20 = add i64 %i.h, -4
+  %21 = sub i64 %20, %i.v                         ; 2 uses
+  %i.ec = lshr i64 %21, 2
   %i.ed = add nuw nsw i64 %i.ec, 1                ; 2 uses
-  %min.iters.check250 = icmp ult i64 %19, 28
+  %min.iters.check250 = icmp ult i64 %21, 28
   %i.ee = sub i64 %i.v, %i.ao
   %diff.check = icmp ugt i64 %i.ee, -16
-  %or.cond = select i1 %min.iters.check250, i1 true, i1 %diff.check
+  %or.cond = or i1 %min.iters.check250, %diff.check
   br i1 %or.cond, label %.lr.ph.i150.preheader378, label %vector.ph251
 
 vector.ph251:                                     ; preds = %.lr.ph.i150.preheader
@@ -1628,12 +1630,12 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_cop
 .lr.ph.i168.preheader:                            ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyINS0_17constant_iteratorIwEEPwEEmT_S9_T0_.exit166
   %i.fc = getelementptr inbounds [4 x i8], ptr %i.an, i64 %i.fa ; 4 uses
   %i.fd = shl i64 %i.n, 2
-  %20 = sub i64 %i.v, %i.h
-  %i.fe = add i64 %20, %i.fd
-  %21 = add i64 %i.fe, -4                         ; 2 uses
-  %i.ff = lshr i64 %21, 2
+  %22 = add i64 %i.fd, %i.v
+  %i.fe = add i64 %22, -4
+  %23 = sub i64 %i.fe, %i.h                       ; 2 uses
+  %i.ff = lshr i64 %23, 2
   %i.fg = add nuw nsw i64 %i.ff, 1                ; 2 uses
-  %min.iters.check281 = icmp ult i64 %21, 52
+  %min.iters.check281 = icmp ult i64 %23, 52
   br i1 %min.iters.check281, label %.lr.ph.i168.preheader377, label %vector.memcheck278
 
 vector.memcheck278:                               ; preds = %.lr.ph.i168.preheader
@@ -2036,8 +2038,8 @@ bb.k:                                             ; preds = %_ZN5boost9container
   br label %_ZNSt11char_traitsIwE4moveEPwPKwm.exit
 
 _ZNSt11char_traitsIwE4moveEPwPKwm.exit:           ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyIPwS6_EEmT_S7_T0_.exit, %bb.k
-  %5 = sub i64 %i.i, %i.j
-  %6 = add i64 %5, -4                             ; 2 uses
+  %5 = add i64 %i.i, -4
+  %6 = sub i64 %5, %i.j                           ; 2 uses
   %i.bt = lshr i64 %6, 2
   %i.bu = add nuw nsw i64 %i.bt, 1                ; 2 uses
   %min.iters.check301 = icmp ult i64 %6, 44
@@ -2097,11 +2099,11 @@ bb.l:                                             ; preds = %bb.i
   br i1 %.not7.i, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyIN9__gnu_cxx17__normal_iteratorIPwNSt7__cxx1112basic_stringIwS3_SaIwEEEEES8_EEmT_SE_T0_.exit, label %.lr.ph.i117.preheader
 
 .lr.ph.i117.preheader:                            ; preds = %bb.l
-  %7 = shl i64 %i.q, 2
-  %i.ck = add i64 %7, %i.j
-  %8 = sub i64 %i.i, %i.ck
-  %i.cl = add i64 %8, %i.av
-  %9 = add i64 %i.cl, -8                          ; 2 uses
+  %7 = add i64 %i.av, %i.i
+  %i.ck = add i64 %7, -8
+  %8 = shl i64 %i.q, 2
+  %i.cl = add i64 %8, %i.j
+  %9 = sub i64 %i.ck, %i.cl                       ; 2 uses
   %i.cm = lshr i64 %9, 2
   %i.cn = add nuw nsw i64 %i.cm, 1                ; 2 uses
   %min.iters.check318 = icmp ult i64 %9, 60
@@ -2182,12 +2184,12 @@ _ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIwEEvE9priv_sizeEm
 
 .lr.ph.i121.preheader:                            ; preds = %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIwEEvE9priv_sizeEm.exit
   %i.dl = getelementptr inbounds [4 x i8], ptr %i.x, i64 %i.db ; 4 uses
-  %10 = sub i64 %i.y, %i.h
-  %11 = lshr i64 %10, 2
-  %12 = add nuw i64 %11, %i.q
-  %13 = and i64 %12, 4611686018427387903          ; 2 uses
+  %10 = shl i64 %i.q, 2
+  %11 = add i64 %10, %i.y
+  %12 = sub i64 %11, %i.h                         ; 2 uses
+  %13 = lshr i64 %12, 2
   %i.dm = add nuw nsw i64 %13, 1                  ; 2 uses
-  %min.iters.check335 = icmp samesign ult i64 %13, 19
+  %min.iters.check335 = icmp ult i64 %12, 76
   br i1 %min.iters.check335, label %.lr.ph.i121.preheader371, label %vector.memcheck332
 
 vector.memcheck332:                               ; preds = %.lr.ph.i121.preheader
@@ -2330,14 +2332,14 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not9.i134, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyIPKwPwEEmT_S9_T0_.exit141, label %.lr.ph.i135.preheader
 
 .lr.ph.i135.preheader:                            ; preds = %bb.r
-  %14 = sub i64 %i.h, %i.y
-  %15 = add i64 %14, -4                           ; 2 uses
+  %14 = add i64 %i.h, -4
+  %15 = sub i64 %14, %i.y                         ; 2 uses
   %i.ey = lshr i64 %15, 2
   %i.ez = add nuw nsw i64 %i.ey, 1                ; 2 uses
   %min.iters.check226 = icmp ult i64 %15, 28
   %i.fa = sub i64 %i.y, %i.ar
   %diff.check224 = icmp ugt i64 %i.fa, -16
-  %or.cond369 = select i1 %min.iters.check226, i1 true, i1 %diff.check224
+  %or.cond369 = or i1 %min.iters.check226, %diff.check224
   br i1 %or.cond369, label %.lr.ph.i135.preheader377, label %vector.ph227
 
 vector.ph227:                                     ; preds = %.lr.ph.i135.preheader
@@ -2390,8 +2392,8 @@ middle.block237:                                  ; preds = %vector.body229
 _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyIPKwPwEEmT_S9_T0_.exit141: ; preds = %.lr.ph.i135, %middle.block237, %bb.r
   %.0.lcssa.i140 = phi i64 [ 0, %bb.r ], [ %i.fi, %middle.block237 ], [ %i.fm, %.lr.ph.i135 ] ; 3 uses
   %i.fn = getelementptr inbounds [4 x i8], ptr %i.aq, i64 %.0.lcssa.i140 ; 4 uses
-  %16 = sub i64 %i.i, %i.j
-  %17 = add i64 %16, -4                           ; 2 uses
+  %16 = add i64 %i.i, -4
+  %17 = sub i64 %16, %i.j                         ; 2 uses
   %i.fo = lshr i64 %17, 2
   %i.fp = add nuw nsw i64 %i.fo, 1                ; 2 uses
   %min.iters.check244 = icmp ult i64 %17, 52
@@ -2461,9 +2463,9 @@ _ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_cop
 .lr.ph.i151.preheader:                            ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyIN9__gnu_cxx17__normal_iteratorIPwNSt7__cxx1112basic_stringIwS3_SaIwEEEEES8_EEmT_SE_T0_.exit149
   %i.gh = getelementptr inbounds [4 x i8], ptr %i.aq, i64 %i.gf ; 4 uses
   %i.gi = shl i64 %i.q, 2
-  %18 = sub i64 %i.y, %i.h
-  %i.gj = add i64 %18, %i.gi
-  %19 = add i64 %i.gj, -4                         ; 2 uses
+  %18 = add i64 %i.gi, %i.y
+  %i.gj = add i64 %18, -4
+  %19 = sub i64 %i.gj, %i.h                       ; 2 uses
   %i.gk = lshr i64 %19, 2
   %i.gl = add nuw nsw i64 %i.gk, 1                ; 2 uses
   %min.iters.check265 = icmp ult i64 %19, 52
@@ -2583,8 +2585,8 @@ bb.v:                                             ; preds = %_ZNSt11char_traitsI
   br label %_ZNSt11char_traitsIwE4moveEPwPKwm.exit161
 
 _ZNSt11char_traitsIwE4moveEPwPKwm.exit161:        ; preds = %_ZNSt11char_traitsIwE4moveEPwPKwm.exit159, %bb.v
-  %20 = sub i64 %i.i, %i.j
-  %21 = add i64 %20, -4                           ; 2 uses
+  %20 = add i64 %i.i, -4
+  %21 = sub i64 %20, %i.j                         ; 2 uses
   %i.ie = lshr i64 %21, 2
   %i.if = add nuw nsw i64 %i.ie, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %21, 76

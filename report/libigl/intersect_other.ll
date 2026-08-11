@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r, %bb.p
   %.187 = phi i64 [ %i.y, %bb.p ], [ %i.bq, %bb.r ], [ %i.y, %bb.t ], [ %i.y, %bb.s ] ; 12 uses
-  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 11 uses
+  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 12 uses
   %i.cc = add nsw i64 %i.b, 2                     ; 2 uses
   %i.cd = sub nsw i64 %.187, %.0                  ; 2 uses
   %.not96107 = icmp slt i64 %i.cd, %i.cc
@@ -213,11 +213,12 @@ bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r,
 .lr.ph:                                           ; preds = %bb.u
   %invariant.op = add i64 %.187, -2               ; 2 uses
   %i.ce = sub nuw nsw i64 64, %i.d                ; 2 uses
-  %2 = sub i64 %.187, %.0                         ; 2 uses
-  %3 = add i64 %2, -1
+  %2 = add i64 %.187, -1                          ; 2 uses
+  %3 = sub i64 %2, %.0
   %i.cf = add i64 %i.b, 1
   %i.cg = tail call i64 @llvm.smin.i64(i64 %3, i64 %i.cf)
-  %i.ch = sub i64 %2, %i.cg                       ; 3 uses
+  %4 = add i64 %.0, %i.cg
+  %i.ch = sub i64 %.187, %4                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.ch, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -289,8 +290,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.do, label %middle.block, label %vector.body, !llvm.loop !297
 
 middle.block:                                     ; preds = %vector.body
-  %i.dp = add i64 %.0, %n.vec
-  %i.dq = sub i64 %.187, %i.dp
+  %5 = add i64 %n.vec, -1
+  %i.dp = add i64 %.0, %5
+  %i.dq = sub i64 %2, %i.dp
   %cmp.n = icmp eq i64 %i.ch, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
@@ -693,7 +695,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r, %bb.p
   %.187 = phi i64 [ %i.y, %bb.p ], [ %i.bq, %bb.r ], [ %i.y, %bb.t ], [ %i.y, %bb.s ] ; 12 uses
-  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 11 uses
+  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 12 uses
   %i.cc = add nsw i64 %i.b, 2                     ; 2 uses
   %i.cd = sub nsw i64 %.187, %.0                  ; 2 uses
   %.not96107 = icmp slt i64 %i.cd, %i.cc
@@ -702,11 +704,12 @@ bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r,
 .lr.ph:                                           ; preds = %bb.u
   %invariant.op = add i64 %.187, -2               ; 2 uses
   %i.ce = sub nuw nsw i64 64, %i.d                ; 2 uses
-  %2 = sub i64 %.187, %.0                         ; 2 uses
-  %3 = add i64 %2, -1
+  %2 = add i64 %.187, -1                          ; 2 uses
+  %3 = sub i64 %2, %.0
   %i.cf = add i64 %i.b, 1
   %i.cg = tail call i64 @llvm.smin.i64(i64 %3, i64 %i.cf)
-  %i.ch = sub i64 %2, %i.cg                       ; 3 uses
+  %4 = add i64 %.0, %i.cg
+  %i.ch = sub i64 %.187, %4                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.ch, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -778,8 +781,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.do, label %middle.block, label %vector.body, !llvm.loop !711
 
 middle.block:                                     ; preds = %vector.body
-  %i.dp = add i64 %.0, %n.vec
-  %i.dq = sub i64 %.187, %i.dp
+  %5 = add i64 %n.vec, -1
+  %i.dp = add i64 %.0, %5
+  %i.dq = sub i64 %2, %i.dp
   %cmp.n = icmp eq i64 %i.ch, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
@@ -1182,8 +1186,8 @@ _ZSt27__uninitialized_default_n_aIPN4CGAL7Point_3INS0_5EpeckEEEmS3_ET_S5_T0_RSaI
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN4CGAL7Point_3INS0_5EpeckEEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZSt27__uninitialized_default_n_aIPN4CGAL7Point_3INS0_5EpeckEEEmS3_ET_S5_T0_RSaIT1_E.exit
-  %2 = sub i64 %i.d, %i.e
-  %3 = add i64 %2, -8                             ; 2 uses
+  %2 = add i64 %i.d, -8
+  %3 = sub i64 %2, %i.e                           ; 2 uses
   %i.ab = lshr i64 %3, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 136
@@ -1586,8 +1590,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %.idx = sub i64 0, %i.d
   %i.q = getelementptr i8, ptr %i.i, i64 %.idx    ; 11 uses
-  %4 = sub i64 %i.b, %i.c
-  %5 = add i64 %4, -8                             ; 2 uses
+  %4 = add i64 %i.b, -8
+  %5 = sub i64 %4, %i.c                           ; 2 uses
   %i.r = lshr i64 %5, 3
   %i.s = add nuw nsw i64 %i.r, 1                  ; 2 uses
   %min.iters.check166 = icmp ult i64 %5, 200
@@ -1851,8 +1855,8 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPN4CGAL10Triangle_3I
   br i1 %.not11.i.i.i.i.i54, label %_ZSt22__uninitialized_move_aIPN4CGAL10Triangle_3INS0_5EpeckEEES4_SaIS3_EET0_T_S7_S6_RT1_.exit60, label %.lr.ph.i.i.i.i.i55.preheader
 
 .lr.ph.i.i.i.i.i55.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPN4CGAL10Triangle_3INS2_5EpeckEEESt6vectorIS5_SaIS5_EEEES6_S5_ET0_T_SC_SB_RSaIT1_E.exit
-  %6 = sub i64 %i.k, %i.m
-  %7 = add i64 %6, -8                             ; 2 uses
+  %6 = add i64 %i.k, -8
+  %7 = sub i64 %6, %i.m                           ; 2 uses
   %i.cz = lshr i64 %7, 3
   %i.da = add nuw nsw i64 %i.cz, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %7, 200
@@ -2032,8 +2036,8 @@ _ZNSt12_Vector_baseIN4CGAL10Triangle_3INS0_5EpeckEEESaIS3_EE11_M_allocateEm.exit
   br i1 %.not11.i.i.i.i.i74, label %_ZSt34__uninitialized_move_if_noexcept_aIPN4CGAL10Triangle_3INS0_5EpeckEEES4_SaIS3_EET0_T_S7_S6_RT1_.exit, label %.lr.ph.i.i.i.i.i75.preheader
 
 .lr.ph.i.i.i.i.i75.preheader:                     ; preds = %_ZNSt12_Vector_baseIN4CGAL10Triangle_3INS0_5EpeckEEESaIS3_EE11_M_allocateEm.exit
-  %8 = sub i64 %i.a, %i.fa
-  %9 = add i64 %8, -8                             ; 2 uses
+  %8 = add i64 %i.a, -8
+  %9 = sub i64 %8, %i.fa                          ; 2 uses
   %i.fm = lshr i64 %9, 3
   %i.fn = add nuw nsw i64 %i.fm, 1                ; 2 uses
   %min.iters.check211 = icmp ult i64 %9, 136
@@ -2131,8 +2135,8 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPN4CGAL10Triangle_3I
   br i1 %.not11.i.i.i.i.i89, label %_ZSt34__uninitialized_move_if_noexcept_aIPN4CGAL10Triangle_3INS0_5EpeckEEES4_SaIS3_EET0_T_S7_S6_RT1_.exit95, label %.lr.ph.i.i.i.i.i90.preheader
 
 .lr.ph.i.i.i.i.i90.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPN4CGAL10Triangle_3INS2_5EpeckEEESt6vectorIS5_SaIS5_EEEES6_S5_ET0_T_SC_SB_RSaIT1_E.exit88
-  %10 = sub i64 %i.k, %i.a
-  %11 = add i64 %10, -8                           ; 2 uses
+  %10 = add i64 %i.k, -8
+  %11 = sub i64 %10, %i.a                         ; 2 uses
   %i.gk = lshr i64 %11, 3
   %i.gl = add nuw nsw i64 %i.gk, 1                ; 2 uses
   %min.iters.check233 = icmp ult i64 %11, 216

@@ -203,14 +203,16 @@ bb.m:                                             ; preds = %bb.k
 
 .lr.ph.preheader.i:                               ; preds = %bb.m
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.aw ; 4 uses
-  %10 = sub i64 %i.at, %i.aw
-  %i.bd = add i64 %10, 2305843009213693951
-  %11 = and i64 %i.bd, 2305843009213693951        ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %11, 4
+  %10 = shl i64 %i.at, 3
+  %i.bd = add i64 %10, -8
+  %11 = shl nuw nsw i64 %i.aw, 3
+  %12 = sub i64 %i.bd, %11                        ; 2 uses
+  %min.iters.check = icmp ult i64 %12, 32
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
-  %i.be = add nuw nsw i64 %11, 1                  ; 2 uses
+  %13 = lshr exact i64 %12, 3
+  %i.be = add nuw nsw i64 %13, 1                  ; 2 uses
   %i.bf = and i64 %i.be, 3                        ; 2 uses
   %i.bg = icmp eq i64 %i.bf, 0
   %i.bh = select i1 %i.bg, i64 4, i64 %i.bf
@@ -613,14 +615,16 @@ bb.m:                                             ; preds = %bb.k
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.m
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.br, i64 %i.bo ; 4 uses
-  %10 = sub i64 %i.bl, %i.bo
-  %i.bv = add i64 %10, 2305843009213693951
-  %11 = and i64 %i.bv, 2305843009213693951        ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %11, 4
+  %10 = shl i64 %i.bl, 3
+  %i.bv = add i64 %10, -8
+  %11 = shl nuw nsw i64 %i.bo, 3
+  %12 = sub i64 %i.bv, %11                        ; 2 uses
+  %min.iters.check = icmp ult i64 %12, 32
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i
-  %i.bw = add nuw nsw i64 %11, 1                  ; 2 uses
+  %13 = lshr exact i64 %12, 3
+  %i.bw = add nuw nsw i64 %13, 1                  ; 2 uses
   %i.bx = and i64 %i.bw, 3                        ; 2 uses
   %i.by = icmp eq i64 %i.bx, 0
   %i.bz = select i1 %i.by, i64 4, i64 %i.bx

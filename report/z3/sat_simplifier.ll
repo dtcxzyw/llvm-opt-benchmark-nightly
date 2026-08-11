@@ -203,9 +203,9 @@ bb.u:                                             ; preds = %.split79, %.split, 
   %.094150152 = ptrtoaddr ptr %.094 to i64        ; 2 uses
   %.06093147151 = ptrtoaddr ptr %.06093 to i64
   %i.az = ptrtoaddr ptr %i.b to i64
-  %7 = sub i64 %i.az, %.094150152
-  %i.ba = add i64 %7, %i.g
-  %8 = add i64 %i.ba, -8                          ; 2 uses
+  %7 = add i64 %i.g, %i.az
+  %i.ba = add i64 %7, -8
+  %8 = sub i64 %i.ba, %.094150152                 ; 2 uses
   %i.bb = lshr i64 %8, 3
   %i.bc = add nuw nsw i64 %i.bb, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %8, 72
@@ -608,11 +608,13 @@ bb.ad:                                            ; preds = %_ZNK6vectorIN3sat7l
 .lr.ph.preheader.i:                               ; preds = %bb.ad
   %i.jy = zext i32 %.0.i16.i.ph to i64            ; 2 uses
   %i.jz = getelementptr inbounds nuw [4 x i8], ptr %i.jq, i64 %i.jy ; 3 uses
-  %2 = sub nsw i64 %i.jw, %i.jy
-  %i.ka = add nsw i64 %2, 4611686018427387903
-  %3 = and i64 %i.ka, 4611686018427387903         ; 2 uses
-  %i.kb = add nuw nsw i64 %3, 1                   ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %3, 7
+  %2 = shl nuw nsw i64 %i.jw, 2
+  %i.ka = add nsw i64 %2, -4
+  %3 = shl nuw nsw i64 %i.jy, 2
+  %4 = sub nsw i64 %i.ka, %3                      ; 2 uses
+  %5 = lshr exact i64 %4, 2
+  %i.kb = add nuw nsw i64 %5, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %4, 28
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
@@ -1015,8 +1017,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.k, label %.lr.ph.i.preheader, label %bb.d
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
-  %3 = sub i64 %i.g, %i.d
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.g, -8
+  %4 = sub i64 %3, %i.d                           ; 2 uses
   %i.l = lshr i64 %4, 3
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check174 = icmp ult i64 %4, 104
@@ -1419,8 +1421,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.k, label %.lr.ph.i.preheader, label %bb.d
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
-  %3 = sub i64 %i.g, %i.d
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.g, -8
+  %4 = sub i64 %3, %i.d                           ; 2 uses
   %i.l = lshr i64 %4, 3
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check143 = icmp ult i64 %4, 56

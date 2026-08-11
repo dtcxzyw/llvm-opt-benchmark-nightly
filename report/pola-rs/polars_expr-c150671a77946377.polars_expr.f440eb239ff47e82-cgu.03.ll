@@ -204,11 +204,13 @@ bb.c:                                             ; preds = %._crit_edge.i
 
 .lr.ph17.i:                                       ; preds = %bb.c
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %3, !dbg !180451 ; 3 uses
-  %8 = sub i64 %4, %3, !dbg !180450
-  %i.e = add i64 %8, 4611686018427387903, !dbg !180450
-  %9 = and i64 %i.e, 4611686018427387903, !dbg !180450 ; 2 uses
-  %i.f = add nuw nsw i64 %9, 1, !dbg !180450      ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %9, 7, !dbg !180450
+  %8 = shl i64 %4, 2, !dbg !180450
+  %i.e = add i64 %8, -4, !dbg !180450
+  %9 = shl i64 %3, 2, !dbg !180450
+  %10 = sub i64 %i.e, %9, !dbg !180450            ; 2 uses
+  %11 = lshr exact i64 %10, 2, !dbg !180450
+  %i.f = add nuw nsw i64 %11, 1, !dbg !180450     ; 2 uses
+  %min.iters.check = icmp ult i64 %10, 28, !dbg !180450
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph, !dbg !180450
 
 vector.ph:                                        ; preds = %.lr.ph17.i
@@ -323,11 +325,13 @@ bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.i, !dbg !180502 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %.promoted = load i32, ptr %i.q, align 8, !alias.scope !180505 ; 2 uses
-  %3 = sub i64 %1, %i.i, !dbg !180496
-  %i.r = add i64 %3, 4611686018427387903, !dbg !180496
-  %4 = and i64 %i.r, 4611686018427387903, !dbg !180496 ; 2 uses
-  %i.s = add nuw nsw i64 %4, 1, !dbg !180496      ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !180496
+  %3 = shl i64 %1, 2, !dbg !180496
+  %i.r = add i64 %3, -4, !dbg !180496
+  %4 = shl i64 %i.i, 2, !dbg !180496
+  %5 = sub i64 %i.r, %4, !dbg !180496             ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !180496
+  %i.s = add nuw nsw i64 %6, 1, !dbg !180496      ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !180496
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph, !dbg !180496
 
 vector.ph:                                        ; preds = %.lr.ph
@@ -396,11 +400,13 @@ bb.g:                                             ; preds = %bb.f
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.h, !dbg !180533 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %.promoted19 = load i32, ptr %i.al, align 8, !alias.scope !180535 ; 2 uses
-  %5 = sub i64 %2, %i.h, !dbg !180532
-  %i.am = add i64 %5, 4611686018427387903, !dbg !180532
-  %6 = and i64 %i.am, 4611686018427387903, !dbg !180532 ; 2 uses
-  %i.an = add nuw nsw i64 %6, 1, !dbg !180532     ; 2 uses
-  %min.iters.check33 = icmp samesign ult i64 %6, 7, !dbg !180532
+  %7 = shl i64 %2, 2, !dbg !180532
+  %i.am = add i64 %7, -4, !dbg !180532
+  %8 = shl i64 %i.h, 2, !dbg !180532
+  %9 = sub i64 %i.am, %8, !dbg !180532            ; 2 uses
+  %10 = lshr exact i64 %9, 2, !dbg !180532
+  %i.an = add nuw nsw i64 %10, 1, !dbg !180532    ; 2 uses
+  %min.iters.check33 = icmp ult i64 %9, 28, !dbg !180532
   br i1 %min.iters.check33, label %scalar.ph32.preheader, label %vector.ph34, !dbg !180532
 
 vector.ph34:                                      ; preds = %.lr.ph17
@@ -528,11 +534,13 @@ bb.c:                                             ; preds = %._crit_edge.i
 
 .lr.ph17.i:                                       ; preds = %bb.c
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %3, !dbg !180619 ; 3 uses
-  %8 = sub i64 %4, %3, !dbg !180618
-  %i.e = add i64 %8, 4611686018427387903, !dbg !180618
-  %9 = and i64 %i.e, 4611686018427387903, !dbg !180618 ; 2 uses
-  %i.f = add nuw nsw i64 %9, 1, !dbg !180618      ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %9, 7, !dbg !180618
+  %8 = shl i64 %4, 2, !dbg !180618
+  %i.e = add i64 %8, -4, !dbg !180618
+  %9 = shl i64 %3, 2, !dbg !180618
+  %10 = sub i64 %i.e, %9, !dbg !180618            ; 2 uses
+  %11 = lshr exact i64 %10, 2, !dbg !180618
+  %i.f = add nuw nsw i64 %11, 1, !dbg !180618     ; 2 uses
+  %min.iters.check = icmp ult i64 %10, 28, !dbg !180618
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph, !dbg !180618
 
 vector.ph:                                        ; preds = %.lr.ph17.i
@@ -647,11 +655,13 @@ bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.i, !dbg !180670 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %.promoted = load i32, ptr %i.q, align 8, !alias.scope !180673 ; 2 uses
-  %3 = sub i64 %1, %i.i, !dbg !180664
-  %i.r = add i64 %3, 4611686018427387903, !dbg !180664
-  %4 = and i64 %i.r, 4611686018427387903, !dbg !180664 ; 2 uses
-  %i.s = add nuw nsw i64 %4, 1, !dbg !180664      ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 7, !dbg !180664
+  %3 = shl i64 %1, 2, !dbg !180664
+  %i.r = add i64 %3, -4, !dbg !180664
+  %4 = shl i64 %i.i, 2, !dbg !180664
+  %5 = sub i64 %i.r, %4, !dbg !180664             ; 2 uses
+  %6 = lshr exact i64 %5, 2, !dbg !180664
+  %i.s = add nuw nsw i64 %6, 1, !dbg !180664      ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 28, !dbg !180664
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph, !dbg !180664
 
 vector.ph:                                        ; preds = %.lr.ph
@@ -720,11 +730,13 @@ bb.g:                                             ; preds = %bb.f
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.h, !dbg !180701 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %.promoted19 = load i32, ptr %i.al, align 8, !alias.scope !180703 ; 2 uses
-  %5 = sub i64 %2, %i.h, !dbg !180700
-  %i.am = add i64 %5, 4611686018427387903, !dbg !180700
-  %6 = and i64 %i.am, 4611686018427387903, !dbg !180700 ; 2 uses
-  %i.an = add nuw nsw i64 %6, 1, !dbg !180700     ; 2 uses
-  %min.iters.check33 = icmp samesign ult i64 %6, 7, !dbg !180700
+  %7 = shl i64 %2, 2, !dbg !180700
+  %i.am = add i64 %7, -4, !dbg !180700
+  %8 = shl i64 %i.h, 2, !dbg !180700
+  %9 = sub i64 %i.am, %8, !dbg !180700            ; 2 uses
+  %10 = lshr exact i64 %9, 2, !dbg !180700
+  %i.an = add nuw nsw i64 %10, 1, !dbg !180700    ; 2 uses
+  %min.iters.check33 = icmp ult i64 %9, 28, !dbg !180700
   br i1 %min.iters.check33, label %scalar.ph32.preheader, label %vector.ph34, !dbg !180700
 
 vector.ph34:                                      ; preds = %.lr.ph17
@@ -1127,11 +1139,13 @@ bb.c:                                             ; preds = %._crit_edge.i
 
 .lr.ph17.i:                                       ; preds = %bb.c
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %3, !dbg !181455 ; 3 uses
-  %8 = sub i64 %4, %3, !dbg !181454
-  %i.e = add i64 %8, 2305843009213693951, !dbg !181454
-  %9 = and i64 %i.e, 2305843009213693951, !dbg !181454 ; 2 uses
-  %i.f = add nuw nsw i64 %9, 1, !dbg !181454      ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %9, 3, !dbg !181454
+  %8 = shl i64 %4, 3, !dbg !181454
+  %i.e = add i64 %8, -8, !dbg !181454
+  %9 = shl i64 %3, 3, !dbg !181454
+  %10 = sub i64 %i.e, %9, !dbg !181454            ; 2 uses
+  %11 = lshr exact i64 %10, 3, !dbg !181454
+  %i.f = add nuw nsw i64 %11, 1, !dbg !181454     ; 2 uses
+  %min.iters.check = icmp ult i64 %10, 24, !dbg !181454
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph, !dbg !181454
 
 vector.ph:                                        ; preds = %.lr.ph17.i
@@ -1238,11 +1252,13 @@ bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.f, !dbg !181504 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %.promoted = load i64, ptr %i.n, align 8, !alias.scope !181507 ; 2 uses
-  %3 = sub i64 %1, %i.f, !dbg !181498
-  %i.o = add i64 %3, 2305843009213693951, !dbg !181498
-  %4 = and i64 %i.o, 2305843009213693951, !dbg !181498 ; 2 uses
-  %i.p = add nuw nsw i64 %4, 1, !dbg !181498      ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 3, !dbg !181498
+  %3 = shl i64 %1, 3, !dbg !181498
+  %i.o = add i64 %3, -8, !dbg !181498
+  %4 = shl i64 %i.f, 3, !dbg !181498
+  %5 = sub i64 %i.o, %4, !dbg !181498             ; 2 uses
+  %6 = lshr exact i64 %5, 3, !dbg !181498
+  %i.p = add nuw nsw i64 %6, 1, !dbg !181498      ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 24, !dbg !181498
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph, !dbg !181498
 
 vector.ph:                                        ; preds = %.lr.ph
@@ -1311,11 +1327,13 @@ bb.g:                                             ; preds = %bb.f
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.e, !dbg !181535 ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %.promoted19 = load i64, ptr %i.ai, align 8, !alias.scope !181537 ; 2 uses
-  %5 = sub i64 %2, %i.e, !dbg !181534
-  %i.aj = add i64 %5, 2305843009213693951, !dbg !181534
-  %6 = and i64 %i.aj, 2305843009213693951, !dbg !181534 ; 2 uses
-  %i.ak = add nuw nsw i64 %6, 1, !dbg !181534     ; 2 uses
-  %min.iters.check33 = icmp samesign ult i64 %6, 3, !dbg !181534
+  %7 = shl i64 %2, 3, !dbg !181534
+  %i.aj = add i64 %7, -8, !dbg !181534
+  %8 = shl i64 %i.e, 3, !dbg !181534
+  %9 = sub i64 %i.aj, %8, !dbg !181534            ; 2 uses
+  %10 = lshr exact i64 %9, 3, !dbg !181534
+  %i.ak = add nuw nsw i64 %10, 1, !dbg !181534    ; 2 uses
+  %min.iters.check33 = icmp ult i64 %9, 24, !dbg !181534
   br i1 %min.iters.check33, label %scalar.ph32.preheader, label %vector.ph34, !dbg !181534
 
 vector.ph34:                                      ; preds = %.lr.ph17
@@ -1443,11 +1461,13 @@ bb.c:                                             ; preds = %._crit_edge.i
 
 .lr.ph17.i:                                       ; preds = %bb.c
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %3, !dbg !181621 ; 3 uses
-  %8 = sub i64 %4, %3, !dbg !181620
-  %i.e = add i64 %8, 2305843009213693951, !dbg !181620
-  %9 = and i64 %i.e, 2305843009213693951, !dbg !181620 ; 2 uses
-  %i.f = add nuw nsw i64 %9, 1, !dbg !181620      ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %9, 3, !dbg !181620
+  %8 = shl i64 %4, 3, !dbg !181620
+  %i.e = add i64 %8, -8, !dbg !181620
+  %9 = shl i64 %3, 3, !dbg !181620
+  %10 = sub i64 %i.e, %9, !dbg !181620            ; 2 uses
+  %11 = lshr exact i64 %10, 3, !dbg !181620
+  %i.f = add nuw nsw i64 %11, 1, !dbg !181620     ; 2 uses
+  %min.iters.check = icmp ult i64 %10, 24, !dbg !181620
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph, !dbg !181620
 
 vector.ph:                                        ; preds = %.lr.ph17.i
@@ -1554,11 +1574,13 @@ bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.f, !dbg !181670 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %.promoted = load i64, ptr %i.n, align 8, !alias.scope !181673 ; 2 uses
-  %3 = sub i64 %1, %i.f, !dbg !181664
-  %i.o = add i64 %3, 2305843009213693951, !dbg !181664
-  %4 = and i64 %i.o, 2305843009213693951, !dbg !181664 ; 2 uses
-  %i.p = add nuw nsw i64 %4, 1, !dbg !181664      ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 3, !dbg !181664
+  %3 = shl i64 %1, 3, !dbg !181664
+  %i.o = add i64 %3, -8, !dbg !181664
+  %4 = shl i64 %i.f, 3, !dbg !181664
+  %5 = sub i64 %i.o, %4, !dbg !181664             ; 2 uses
+  %6 = lshr exact i64 %5, 3, !dbg !181664
+  %i.p = add nuw nsw i64 %6, 1, !dbg !181664      ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 24, !dbg !181664
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph, !dbg !181664
 
 vector.ph:                                        ; preds = %.lr.ph
@@ -1627,11 +1649,13 @@ bb.g:                                             ; preds = %bb.f
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.e, !dbg !181701 ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %.promoted19 = load i64, ptr %i.ai, align 8, !alias.scope !181703 ; 2 uses
-  %5 = sub i64 %2, %i.e, !dbg !181700
-  %i.aj = add i64 %5, 2305843009213693951, !dbg !181700
-  %6 = and i64 %i.aj, 2305843009213693951, !dbg !181700 ; 2 uses
-  %i.ak = add nuw nsw i64 %6, 1, !dbg !181700     ; 2 uses
-  %min.iters.check33 = icmp samesign ult i64 %6, 3, !dbg !181700
+  %7 = shl i64 %2, 3, !dbg !181700
+  %i.aj = add i64 %7, -8, !dbg !181700
+  %8 = shl i64 %i.e, 3, !dbg !181700
+  %9 = sub i64 %i.aj, %8, !dbg !181700            ; 2 uses
+  %10 = lshr exact i64 %9, 3, !dbg !181700
+  %i.ak = add nuw nsw i64 %10, 1, !dbg !181700    ; 2 uses
+  %min.iters.check33 = icmp ult i64 %9, 24, !dbg !181700
   br i1 %min.iters.check33, label %scalar.ph32.preheader, label %vector.ph34, !dbg !181700
 
 vector.ph34:                                      ; preds = %.lr.ph17
